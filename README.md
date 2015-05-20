@@ -11,9 +11,24 @@ gEditorial is a fork in structure of [EditFlow](http://editflow.org/).
 [![Gratipay](http://img.shields.io/gratipay/geminorum.svg?style=flat)](https://gratipay.com/geminorum/)
 [![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/geminorum/geditorial?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
-### Included Packages
-
 ### Included Modules
+####Audit (Content Inventory Tools)
+Adding auditing functionality to WordPress with custom taxonomies.
+
+Idea originally from [Content Audit](http://stephanieleary.com/code/wordpress/content-audit/) ([+](http://www.adaptivepath.com/ideas/doing-content-inventory/)) by [Stephanie Leary](https://profiles.wordpress.org/sillybean)
+
+* Audited
+* Outdated
+* Redundant
+* Review SEO
+* Review Style
+* Trivial
+
+Planning
+- set via ajax adminbar button
+- content stats
+
+### Included Packages
 
 ## Installation
 
