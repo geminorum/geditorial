@@ -1,0 +1,11 @@
+
+.geditorial-admin-wrap {
+    @extend %box-reset;
+    & *,
+    &:after,
+    & *:after,
+    &:before,
+    & *:before {
+        @extend %box-reset;
+    }
+}

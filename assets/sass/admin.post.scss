@@ -1,0 +1,66 @@
+
+@import "modules/all";
+@import "partials/base";
+
+@import "editorial/admin.all";
+//@import "editorial/admin.post";
+//@import "editorial/like.admin.post";
+@import "editorial/specs.admin.post";
+
+
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+//---Default-Enhancements-------------------------------------------------------
+#postexcerpt div.inside p,
+#postcustom div.inside > p
+{ display:none; visibility:hidden; }
+
+input#post_name { width:99%; }
+body.rtl #sample-permalink { margin-left:5px; }
+body.rtl input#post_name { direction:ltr; }
+
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+//---ALL-MODULES----------------------------------------------------------------
+div.p111111ostbox[id^="geditorial-"] div.inside { padding-bottom:0 !important; }
+.geditorial-meta-box-title-action { position:absolute; padding:0; right:40px; top:6px; }
+body.rtl .geditorial-meta-box-title-action { left:40px; right:auto; font-family:tahoma; }
+.geditorial-meta-box-title-action a, .geditorial-meta-box-title-action a:hover { text-decoration:none; }
+
+div.postbox select.geditorial-meta-box-dropbown { width:99%; }
+div.postbox select#parent_id { width:99%; }
+div.postbox p.geditorial-meta-box-field-wrap {}
+
+////////////////////////////////////////////////////////////////////////////////
+/**---META--------------------------------------------------**/
+#geditorial-meta-ot { margin:0 0 5px 1px; width:100%; padding: 3px 8px; font-size: 1.3em; }
+#geditorial-meta-st { margin:5px 0 15px 1px; width: 100%; padding: 3px 8px; font-size: 1.3em; }
+
+p.geditorial-meta-post-meta-box-p {}
+p.geditorial-meta-post-meta-box-p-actions {}
+p.geditorial-meta-post-meta-box-p-actions a.button { width:100%; }
+p.geditorial-meta-post-meta-box-p-table {}
+.geditorial-meta-postbox { margin:10px 0 0 0; }
+.geditorial-meta-postbox textarea { width:99%; margin:12px 0 0 0; resize:vertical; }
+////////////////////////////////////////////////////////////////////////////////
+/**---CONTEST-----------------------------------------------**/
+.geditorial_contest_term_wrap {}
+.geditorial_contest_term_wrap select { width:99%; }
+#geditorial-contest select#parent_id { width:99%; }
+////////////////////////////////////////////////////////////////////////////////
+/**---MAGAZINE----------------------------------------------**/
+select.g1111editorial_magazine_issue_term_dropdown { width:99%; }
+
+////////////////////////////////////////////////////////////////////////////////
+/**---SERIES------------------------------------------------**/
+.geditorial_series_term_wrap { margin-bottom:10px; }
+.geditorial_series_term_dropdown { width:99%; }
+.geditorial_series_term_wrap p { margin:0 0 2px 0; }
+.geditorial-series-term-posts {}
+.geditorial-series-term-posts h4 { font-size:0.8em !important; margin:2px 0 0 0 !important; padding:0 0 0 0 !important; }
+.geditorial-series-term-posts span.edit { font-size:0.8em  }
+.geditorial-series-term-posts ul {}
+.geditorial-series-term-posts ul li{}
+#geditorial-series select#parent_id { width:99%; }

@@ -1,0 +1,127 @@
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+//---Module: Specs---------------------------------------------------------------
+
+.geditorial-admin-wrap.specs {
+
+	margin-top:11px;
+
+	ol.geditorial-specs {
+	    list-style:none;
+	    margin:0;
+
+		li {
+			margin-bottom:2px;
+
+			select {
+
+			}
+		}
+
+		p {
+	        margin:0;
+	    }
+
+		.geditorial-spec-head {
+		    border:1px solid #dfdfdf;
+		    background-color:#f1f1f1;
+		    //1padding:2px;
+
+			span.geditorial-spec-handle {
+				margin:2px;
+				// margin:5px 5px 0 5px;
+				// background:transparent url('../images/fugue/icons-16/arrow-in-out.png') no-repeat center center;
+				// width:16px;
+				// height:16px;
+				// display:inline-block;
+				cursor:pointer;
+			}
+
+			span.geditorial-spec-excerpt {
+				font-size:0.89em;
+				vertical-align:top;
+				padding:3px 5px 0;
+				line-height:16px;
+				display:inline-block;
+				cursor:pointer;
+			}
+
+			span.geditorial-spec-delete {
+				float:right;
+				margin:2px;
+				//background:transparent url('../images/fugue/icons-16/minus.png') no-repeat center center;
+				//width:16px;
+				//height:16px;
+				//display:inline-block;
+				cursor:pointer;
+
+				// &:before {
+				// 	content: "\f182";
+				// }
+
+				body.rtl & {
+					float:left;
+				}
+			}
+		}
+
+		.geditorial-spec-body {
+			padding:5px 0;
+			display:none;
+			border:1px solid #dfdfdf;
+			background-color:#f9f9f9;
+			padding:2px;
+			border-top:none;
+
+			.geditorial-specs-post-meta-box-p {
+				margin:3px 3px 2px 3px;
+
+				textarea {
+					width:100%;
+					padding:4px 2px;
+
+					border: 1px solid #ddd;
+					box-shadow: inset 0 1px 2px rgba( 0, 0, 0, 0.07 );
+					background-color: #fff;
+					color: #32373c;
+				}
+
+				input[type="text"] {
+					width:100%;
+					padding:4px 2px;
+				}
+			}
+
+			.geditorial-specs-select-wrap {
+				margin-top:6px;
+			}
+		}
+	}
+
+	ul.geditorial-spec-new {
+		.dashicons,
+		.dashicons-before:before,
+		.geditorial-specs-post-meta-box-p {
+			display:none;
+		}
+		.geditorial-specs-select-wrap {
+			margin:6px 0px 0px;
+		}
+	}
+
+	.geditorial-specs-select-wrap {
+		margin:3px;
+
+		select {
+			width:100%;
+
+			border: 1px solid #ddd;
+			box-shadow: inset 0 1px 2px rgba( 0, 0, 0, 0.07 );
+			background-color: #fff;
+			color: #32373c;
+		}
+	}
+
+    body.rtl & {}
+}
