@@ -5,7 +5,7 @@ class gEditorial
 
     var $options_group      = 'geditorial_';
 	var $options_group_name = 'geditorial_options';
-	
+
     var $_asset_config      = false;
 
 	function __construct()
@@ -31,7 +31,7 @@ class gEditorial
 		add_action( 'admin_init', array( &$this, 'admin_init' ) );
         add_action( 'wp_footer' , array( &$this, 'wp_footer'  ), 999 );
 	}
-    
+
     public function admin_init()
     {
         add_action( 'admin_print_styles', array( $this, 'admin_print_styles' ) );
@@ -54,7 +54,7 @@ class gEditorial
 		// scan the modules directory and include any modules that exist there
 		$module_dirs = apply_filters( 'geditorial_modules', scandir( GEDITORIAL_DIR.'modules/' ) );
 		$class_names = array();
-        
+
 		foreach( $module_dirs as $module_dir ) {
 			if ( file_exists( GEDITORIAL_DIR."modules/{$module_dir}/$module_dir.php" ) ) {
 				include_once( GEDITORIAL_DIR."modules/{$module_dir}/$module_dir.php" );
@@ -146,7 +146,7 @@ class gEditorial
 		$args['name'] = $name;
 		$args['options_group_name'] = $this->options_group.$name.'_options';
 		if ( ! isset( $args['settings_slug'] ) )
-			$args['settings_slug'] = 'geditorial-'.$args['slug'].'-settings';
+			$args['settings_slug'] = 'geditorial-settings-'.$args['slug'];
 
 		$this->modules->$name = (object) $args;
 
@@ -274,7 +274,7 @@ class gEditorial
 	}
 
 	// geditorial global styles
-	// just the sake of simplicity!
+	// just for the sake of simplicity!
     public function admin_print_styles()
 	{
 		$screen = get_current_screen();
@@ -283,23 +283,30 @@ class gEditorial
 			gEditorialHelper::linkStyleSheet( GEDITORIAL_URL.'assets/css/admin.post.css' );
 		else if ( 'edit' == $screen->base )
 			gEditorialHelper::linkStyleSheet( GEDITORIAL_URL.'assets/css/admin.edit.css' );
+        else if ( gEditorialHelper::isSettings( $screen ) )
+            gEditorialHelper::linkStyleSheet( GEDITORIAL_URL.'assets/css/admin.settings.css' );
+        else if ( gEditorialHelper::isTools( $screen ) )
+            gEditorialHelper::linkStyleSheet( GEDITORIAL_URL.'assets/css/admin.tools.css' );
+        else {
+            // gnetwork_dump( $screen ); die();
+        }
 	}
 
-    // see it working on like module   
-    // TODO: accept an array of vars to include via the gEditorial js object 
+    // see it working on like module
+    // TODO: accept an array of vars to include via the gEditorial js object
     public function enqueue_asset_config( $vars = array() )
     {
         $this->_asset_config = true;
     }
-    
+
     // must be better!
     public function wp_footer()
     {
         if ( ! $this->_asset_config )
             return;
-        
+
         $endpoint = defined( 'GNETWORK_AJAX_ENDPOINT' ) && GNETWORK_AJAX_ENDPOINT ? GNETWORK_AJAX_ENDPOINT : admin_url( 'admin-ajax.php' );
-        
+
         ?>
 <script type="text/javascript">
 /* <![CDATA[ */
@@ -307,6 +314,6 @@ class gEditorial
 /* ]]> */
 </script>
 <?php
-        
+
     }
 }

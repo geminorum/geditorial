@@ -8,4 +8,37 @@
     & *:before {
         @extend %box-reset;
     }
+	padding:0;
+	margin:0;
+	border:0;
+}
+
+.geditorial-admin-wrap {
+	.credits {
+		direction:ltr;
+
+		p {
+			color: #777;
+			font-size:0.98em;
+		}
+	}
+
+	.signature {
+		body.rtl & {
+			direction:ltr;
+			//margin-left:5px;
+		}
+	}
+
+	.credits,
+	.signature {
+		a {
+			color:inherit;
+			text-decoration:none;
+		}
+		a:hover {
+			color:#111;
+			text-decoration:underline;
+		}
+	}
 }

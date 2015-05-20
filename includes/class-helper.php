@@ -1,6 +1,6 @@
 <?php defined( 'ABSPATH' ) or die( 'Restricted access' );
 
-class gEditorialHelper 
+class gEditorialHelper
 {
 
     function dump( &$var, $htmlSafe = true )
@@ -193,7 +193,7 @@ class gEditorialHelper
 			'type' => 'text/css',
 			'media' => $media,
 		) )."\n";
-	}	
+	}
 
 	public static function IP()
 	{
@@ -378,14 +378,14 @@ class gEditorialHelper
 
 		return false;
 	}
-    
+
     // debug on developmnet env
     public static function isDev()
 	{
 		if ( defined( 'WP_STAGE' )
 			&& 'development' == constant( 'WP_STAGE' ) )
 				return true;
-                
+
 		return false;
 	}
 
@@ -397,7 +397,7 @@ class gEditorialHelper
 
 		return false;
 	}
-    
+
     // debug on production env
     public static function isDebug()
 	{
@@ -405,7 +405,7 @@ class gEditorialHelper
 			return true;
 
 		return false;
-	}    
+	}
 
 	public static function notice( $notice, $class = 'updated fade', $echo = true )
 	{
@@ -624,25 +624,50 @@ class gEditorialHelper
         return true;
     }
 
+    const SETTINGS_SLUG = 'geditorial-settings';
+    const TOOLS_SLUG    = 'geditorial-tools';
+
     public static function settingsURL( $full = true )
     {
-        //$relative = current_user_can( 'manage_options' ) ? 'admin.php?page=geditorial-settings' : 'index.php?page=geditorial-settings';
-        $relative = 'admin.php?page=geditorial-settings';
+        //$relative = current_user_can( 'manage_options' ) ? 'admin.php?page='.self::SETTINGS_SLUG : 'index.php?page='.self::SETTINGS_SLUG;
+        $relative = 'admin.php?page='.self::SETTINGS_SLUG;
 
         if ( $full )
             return get_admin_url( null, $relative );
 
         return $relative;
     }
-    
+
     public static function toolsURL( $full = true )
     {
-        //$relative = current_user_can( 'manage_options' ) ? 'admin.php?page=geditorial-tools' : 'index.php?page=geditorial-tools';
-        $relative = 'admin.php?page=geditorial-tools';
+        //$relative = current_user_can( 'manage_options' ) ? 'admin.php?page='.self::TOOLS_SLUG : 'index.php?page='.self::TOOLS_SLUG;
+        $relative = 'admin.php?page='.self::TOOLS_SLUG;
 
         if ( $full )
             return get_admin_url( null, $relative );
 
         return $relative;
+    }
+
+    public static function isSettings( $screen = null )
+    {
+        if ( is_null( $screen) )
+            $screen = get_current_screen();
+
+        if ( isset( $screen->base ) && false !== strripos( $screen->base, self::SETTINGS_SLUG ) )
+            return true;
+
+        return false;
+    }
+
+    public static function isTools( $screen = null )
+    {
+        if ( is_null( $screen) )
+            $screen = get_current_screen();
+
+        if ( isset( $screen->base ) && false !== strripos( $screen->base, self::TOOLS_SLUG ) )
+            return true;
+
+        return false;
     }
 }

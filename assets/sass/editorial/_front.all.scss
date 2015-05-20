@@ -23,4 +23,7 @@
     & *:before {
         @extend %box-reset;
     }
+	padding:0;
+    margin:0;
+    border:0;
 }
