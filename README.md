@@ -39,6 +39,10 @@ Features
 Planning
 - comment action row support for front-end
 
+####Contests (Contest Management)
+Set of tools to create and manage text contests and/or gather assignments.
+
+
 ### Included Packages
 
 ## Installation
