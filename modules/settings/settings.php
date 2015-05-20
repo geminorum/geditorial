@@ -319,8 +319,13 @@ class gEditorialSettings extends gEditorialModuleCore
 
 	public function admin_settings_load()
 	{
-		$this->admin_settings_save();
+		$page = isset( $_REQUEST['page'] ) ? $_REQUEST['page'] : null;
 
+		$this->admin_settings_reset( $page );
+		$this->admin_settings_save( $page );
+		do_action( 'geditorial_settings_load', $page );
+
+		// DEPRECATED: use 'geditorial_settings_load'
 		do_action( 'geditorial_settings_register_settings' );
 
 		wp_enqueue_script( 'geditorial-settings',
@@ -331,7 +336,37 @@ class gEditorialSettings extends gEditorialModuleCore
 			true );
 	}
 
-	public function admin_settings_save()
+	private function admin_settings_verify( $options_group_name )
+	{
+		if ( ! current_user_can( 'manage_options' ) )
+			return false;
+
+		if ( ! wp_verify_nonce( $_POST['_wpnonce'], $options_group_name.'-options' ) )
+			return false;
+
+		return true;
+	}
+
+	public function admin_settings_reset( $page = null )
+	{
+		if ( ! isset( $_POST['reset-settings'], $_POST['geditorial_module_name'] ) )
+			return;
+
+		global $gEditorial;
+		$module_name = sanitize_key( $_POST['geditorial_module_name'] );
+
+		if ( ! $this->admin_settings_verify( $gEditorial->$module_name->module->options_group_name ) )
+			wp_die( __( 'Cheatin&#8217; uh?' ) );
+
+		$gEditorial->update_all_module_options( $gEditorial->$module_name->module->name, array(
+			'enabled' => 'on',
+		) );
+
+		wp_redirect( add_query_arg( 'message', 'settings-reset', remove_query_arg( array( 'message' ), wp_get_referer() ) ) );
+		exit;
+	}
+
+	public function admin_settings_save( $page = null )
 	{
 		if ( ! isset(
 			$_POST['_wpnonce'],
@@ -351,7 +386,8 @@ class gEditorialSettings extends gEditorialModuleCore
 			|| $_POST['option_page'] != $gEditorial->$module_name->module->options_group_name )
 			return false;
 
-		if ( ! current_user_can( 'manage_options' ) || !wp_verify_nonce( $_POST['_wpnonce'], $gEditorial->$module_name->module->options_group_name.'-options' ) )
+		//if ( ! current_user_can( 'manage_options' ) || !wp_verify_nonce( $_POST['_wpnonce'], $gEditorial->$module_name->module->options_group_name.'-options' ) )
+		if ( ! $this->admin_settings_verify( $gEditorial->$module_name->module->options_group_name ) )
 			wp_die( __( 'Cheatin&#8217; uh?' ) );
 
 		$new_options = ( isset( $_POST[$gEditorial->$module_name->module->options_group_name] ) ) ? $_POST[$gEditorial->$module_name->module->options_group_name] : array();
@@ -365,7 +401,7 @@ class gEditorialSettings extends gEditorialModuleCore
 		$gEditorial->update_all_module_options( $gEditorial->$module_name->module->name, $new_options );
 
 		// Redirect back to the settings page that was submitted without any previous messages
-		$goback = add_query_arg( 'message', 'settings-updated',  remove_query_arg( array( 'message'), wp_get_referer() ) );
+		$goback = add_query_arg( 'message', 'settings-updated',  remove_query_arg( array( 'message' ), wp_get_referer() ) );
 		wp_redirect( $goback );
 		exit;
 	}

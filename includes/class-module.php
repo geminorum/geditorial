@@ -338,8 +338,6 @@ class gEditorialModuleCore
 			echo '<input id="geditorial_module_name" name="geditorial_module_name" type="hidden" value="'.esc_attr( $this->module->name ).'" />';
 
 			echo '<p class="submit">';
-				//submit_button( __( 'Save Changes', GEDITORIAL_TEXTDOMAIN ), 'primary', 'submit', false ); echo '&nbsp;&nbsp;';
-				//submit_button( __( 'Reset Settings', GEDITORIAL_TEXTDOMAIN ), 'secondary', 'reset', false ); echo '&nbsp;&nbsp;';
 
 				foreach ( $this->_settings_buttons as $action => $button ) {
 					submit_button( $button['value'], $button['type'], $action, false, $button['atts'] );
@@ -519,7 +517,7 @@ class gEditorialModuleCore
 	}
 
 	// mine
-	public function register_settings()
+	public function register_settings( $page = null )
 	{
 		if ( ! isset( $this->module->settings ) )
 			return;
@@ -541,7 +539,7 @@ class gEditorialModuleCore
 		}
 
 		$this->register_settings_button( 'submit', __( 'Save Changes', GEDITORIAL_TEXTDOMAIN ), array( 'default' => 'default' ), 'primary' );
-		$this->register_settings_button( 'reset', __( 'Reset Settings', GEDITORIAL_TEXTDOMAIN ), sprintf( 'onclick="return confirm( \'%s\' )"', __( 'Are you sure? This operation can not be undone.', GEDITORIAL_TEXTDOMAIN ) ) );
+		$this->register_settings_button( 'reset-settings', __( 'Reset Settings', GEDITORIAL_TEXTDOMAIN ), sprintf( 'onclick="return confirm( \'%s\' )"', __( 'Are you sure? This operation can not be undone.', GEDITORIAL_TEXTDOMAIN ) ) );
 
 		$screen = get_current_screen();
 
@@ -729,26 +727,26 @@ class gEditorialModuleCore
 		global $_wp_theme_features;
 		$feature = 'post-thumbnails';
 		//$post_types = (array) $post_types;
-		
-		if ( isset( $_wp_theme_features[$feature] ) 
+
+		if ( isset( $_wp_theme_features[$feature] )
 			&& true !== $_wp_theme_features[$feature]
 			&& is_array( $_wp_theme_features[$feature][0] ) ) {
 				$_wp_theme_features[$feature][0] = array_merge( $_wp_theme_features[$feature][0], $post_types );
 		} else {
 			$_wp_theme_features[$feature] = array( $post_types );
 		}
-		
-	}		
-	
+
+	}
+
 	// WARNING: every asset must have a .min copy
 	public function enqueue_asset_js( $name = 'front', $deps = array( 'jquery' ), $handle = null )
     {
 		global $gEditorial;
-		
+
 		$suffix = ( ( ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) || gEditorialHelper::isDev() ) ? '' : '.min' );
         wp_enqueue_script( ( $handle ? $handle : 'geditorial-'.$this->module_name ), $this->module_url.'assets/'.$name.$suffix.'.js', $deps, GEDITORIAL_VERSION );
 		$gEditorial->enqueue_asset_config();
     }
-	
+
 
 }
