@@ -1,0 +1,51 @@
+
+@import "modules/all";
+@import "partials/base";
+
+@import "editorial/admin.all";
+//@import "editorial/admin.post";
+//@import "editorial/like.admin.post";
+//@import "editorial/specs.admin.post";
+
+body.edit-comments-php {
+
+	.geditorial-comments-row-action {
+		cursor:pointer;
+		&:after {
+			content: " | ";
+			padding:0 2px 0 2px;
+			color:#555;
+		}
+
+		&:last-child:after {
+			content: "";
+		}
+
+		&.unfeature,
+		&.unbury,
+		&.featured.feature,
+		&.buried.bury
+		{
+			display:none;
+		}
+
+		&.featured.unfeature,
+		&.buried.unbury
+		{
+			display:inline;
+		}
+	}
+
+}
+
+#the-comment-list {
+	tr {
+		&.featured {
+			background-color: #dfd;
+		}
+
+		&.buried {
+			opacity: 0.5;
+		}
+	}
+}

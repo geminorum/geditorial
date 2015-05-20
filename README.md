@@ -17,6 +17,7 @@ Adding auditing functionality to WordPress with custom taxonomies.
 
 Idea originally from [Content Audit](http://stephanieleary.com/code/wordpress/content-audit/) ([+](http://www.adaptivepath.com/ideas/doing-content-inventory/)) by [Stephanie Leary](https://profiles.wordpress.org/sillybean)
 
+Default Attributes
 * Audited
 * Outdated
 * Redundant
@@ -25,8 +26,18 @@ Idea originally from [Content Audit](http://stephanieleary.com/code/wordpress/co
 * Trivial
 
 Planning
-- set via ajax adminbar button
+- set via ajax admin-bar button
 - content stats
+
+####Comments (Comment Managment Enhancements)
+Series of tools to help better managing the comments on a magazine
+
+Features
+* featured / un-featured a comment
+* bury / un-bury a comment
+
+Planning
+- comment action row support for front-end
 
 ### Included Packages
 
