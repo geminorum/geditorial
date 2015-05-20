@@ -1,0 +1,13 @@
+{
+  "name": "geditorial",
+  "private": true,
+  "dependencies": {
+
+  },
+  "devDependencies": {
+    "jquery-colorbox": "~1.6.1"
+  },
+  "install" : {
+    "path" : "assets/packages"
+  }
+}
