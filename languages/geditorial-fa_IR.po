@@ -1,0 +1,3070 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial v0.1.14\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2015-05-20 09:39+0330\n"
+"Last-Translator: geminorum <contact@geminorum.ir>\n"
+"Language-Team: \n"
+"Language: fa_IR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Poedit 1.7.6\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;"
+"_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2\n"
+"X-Textdomain-Support: yes\n"
+"X-Poedit-SearchPath-0: .\n"
+
+# @ default
+#: ..\..\plugins\geditorialincludes/class-helper.php:322
+#: ..\..\plugins\geditorialmodules/reference/reference.php:895
+#: ..\..\plugins\geditorialmodules/resource/resource.php:874
+msgid "Click to toggle"
+msgstr ""
+
+# @ geditorial
+# @ default
+#: ..\..\plugins\geditorialincludes/class-main.php:125
+#: ..\..\plugins\geditorialmodules/contest/contest.php:564
+#: ..\..\plugins\geditorialmodules/meta/meta.php:257
+#: ..\..\plugins\geditorialmodules/reference/reference.php:769
+#: ..\..\plugins\geditorialmodules/resource/resource.php:748
+#: ..\..\plugins\geditorialmodules/series/series.php:257
+#: ..\..\plugins\geditorialmodules/specs/specs.php:412
+msgid "Configure"
+msgstr "تنظیمات"
+
+# @ geditorial
+#: ..\..\plugins\geditorialincludes/class-main.php:134
+msgid "Settings updated."
+msgstr "تنظیمات ذخیره شد."
+
+# @ geditorial
+#: ..\..\plugins\geditorialincludes/class-main.php:135
+msgid "Please correct your form errors below and try again."
+msgstr ""
+
+# @ geditorial
+# @ default
+#: ..\..\plugins\geditorialincludes/class-main.php:136
+#: ..\..\plugins\geditorialmodules/settings/settings.php:129
+#: ..\..\plugins\geditorialmodules/settings/settings.php:325
+msgid "Cheatin&#8217; uh?"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialincludes/class-main.php:137
+msgid "You do not have necessary permissions to complete this action."
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialincludes/class-main.php:138
+msgid "Post does not exist"
+msgstr ""
+
+# @ default
+#: ..\..\plugins\geditorialincludes/class-module.php:59
+#: ..\..\plugins\geditorialincludes/class-module.php:99
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:91
+#: ..\..\plugins\geditorialmodules/reference/reference.php:604
+#: ..\..\plugins\geditorialmodules/resource/resource.php:583
+msgid "Posts"
+msgstr "نوشته‌ها"
+
+# @ default
+#: ..\..\plugins\geditorialincludes/class-module.php:60
+#: ..\..\plugins\geditorialincludes/class-module.php:100
+#: ..\..\plugins\geditorialmodules/reference/reference.php:605
+#: ..\..\plugins\geditorialmodules/resource/resource.php:584
+msgid "Pages"
+msgstr "برگه‌ها"
+
+# @ geditorial
+#: ..\..\plugins\geditorialincludes/class-module.php:259
+#: ..\..\plugins\geditorialmodules/reference/reference.php:524
+#: ..\..\plugins\geditorialmodules/resource/resource.php:503
+msgid "Enable for these post types:"
+msgstr "فعال برای این پست‌تایپ‌ها:"
+
+# @ geditorial
+#: ..\..\plugins\geditorialincludes/class-module.php:274
+#: ..\..\plugins\geditorialmodules/reference/reference.php:534
+#: ..\..\plugins\geditorialmodules/resource/resource.php:513
+msgid "Fields for %s"
+msgstr "فیلد‌ها برای %s"
+
+# @ geditorial
+#: ..\..\plugins\geditorialincludes/class-module.php:298
+#: ..\..\plugins\geditorialmodules/reference/reference.php:560
+#: ..\..\plugins\geditorialmodules/resource/resource.php:539
+msgid "No fields supported for %s"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialincludes/class-module.php:319
+msgid "No description available."
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialincludes/class-module.php:349
+#: ..\..\plugins\geditorialmodules/reference/reference.php:641
+#: ..\..\plugins\geditorialmodules/resource/resource.php:620
+#: ..\..\plugins\geditorialmodules/settings/settings.php:187
+msgid "Back to Editorial"
+msgstr "بازگشت به تحریریه"
+
+# @ geditorial
+#: ..\..\plugins\geditorialincludes/class-module.php:543
+msgid "Save Changes"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialincludes/class-module.php:544
+msgid "Reset Settings"
+msgstr ""
+
+#: ..\..\plugins\geditorialincludes/class-module.php:544
+msgid "Are you sure? This operation can not be undone."
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialincludes/class-module.php:618
+msgid "Disabled"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialincludes/class-module.php:619
+msgid "Enabled"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialincludes/class-module.php:667
+msgid "Error: setting type undefined."
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/audit/audit.php:19
+msgid "Audit"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/audit/audit.php:20
+msgid "Content Inventory Tools"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/audit/audit.php:21
+msgid "Adding auditing functionality to WordPress with custom taxonomies."
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/audit/audit.php:75
+#: ..\..\plugins\geditorialmodules/audit/audit.php:89
+msgid "Audit Attributes"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/audit/audit.php:76
+msgid "Audit Attribute"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/audit/audit.php:77
+msgid "Search Audit Attributes"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/audit/audit.php:79
+msgid "All Audit Attributes"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/audit/audit.php:80
+msgid "Parent Audit Attribute"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/audit/audit.php:81
+msgid "Parent Audit Attribute:"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/audit/audit.php:82
+msgid "Edit Audit Attribute"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/audit/audit.php:83
+msgid "Update Audit Attribute"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/audit/audit.php:84
+msgid "Add New Audit Attribute"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/audit/audit.php:85
+msgid "New Audit Attribute"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/audit/audit.php:86
+msgid "Separate audit attributes with commas"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/audit/audit.php:87
+msgid "Add or remove audit attributes"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/audit/audit.php:88
+msgid "Choose from most used audit attributes"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/audit/audit.php:94
+msgid "Audited"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/audit/audit.php:95
+#: ..\..\plugins\geditorialmodules/gallery/gallery.php:116
+#: ..\..\plugins\geditorialmodules/go/go.php:98
+msgid "Outdated"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/audit/audit.php:96
+#: ..\..\plugins\geditorialmodules/gallery/gallery.php:117
+#: ..\..\plugins\geditorialmodules/go/go.php:99
+msgid "Redundant"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/audit/audit.php:97
+#: ..\..\plugins\geditorialmodules/gallery/gallery.php:118
+#: ..\..\plugins\geditorialmodules/go/go.php:100
+msgid "Review SEO"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/audit/audit.php:98
+#: ..\..\plugins\geditorialmodules/gallery/gallery.php:119
+#: ..\..\plugins\geditorialmodules/go/go.php:101
+msgid "Review Style"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/audit/audit.php:99
+#: ..\..\plugins\geditorialmodules/gallery/gallery.php:120
+#: ..\..\plugins\geditorialmodules/go/go.php:102
+msgid "Trivial"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/audit/audit.php:106
+#: ..\..\plugins\geditorialmodules/comments/comments.php:114
+#: ..\..\plugins\geditorialmodules/contact/contact.php:80
+#: ..\..\plugins\geditorialmodules/contest/contest.php:149
+#: ..\..\plugins\geditorialmodules/divisions/divisions.php:113
+#: ..\..\plugins\geditorialmodules/entry/entry.php:122
+#: ..\..\plugins\geditorialmodules/gallery/gallery.php:128
+#: ..\..\plugins\geditorialmodules/go/go.php:110
+#: ..\..\plugins\geditorialmodules/like/like.php:76
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:148
+#: ..\..\plugins\geditorialmodules/reference/reference.php:83
+#: ..\..\plugins\geditorialmodules/resource/resource.php:57
+#: ..\..\plugins\geditorialmodules/series/series.php:105
+#: ..\..\plugins\geditorialmodules/specs/specs.php:105
+#: ..\..\plugins\geditorialmodules/submit/submit.php:90
+#: ..\..\plugins\geditorialmodules/toc/toc.php:76
+msgid "help-tab-title"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/audit/audit.php:107
+#: ..\..\plugins\geditorialmodules/comments/comments.php:115
+#: ..\..\plugins\geditorialmodules/contact/contact.php:81
+#: ..\..\plugins\geditorialmodules/contest/contest.php:150
+#: ..\..\plugins\geditorialmodules/divisions/divisions.php:114
+#: ..\..\plugins\geditorialmodules/entry/entry.php:123
+#: ..\..\plugins\geditorialmodules/gallery/gallery.php:129
+#: ..\..\plugins\geditorialmodules/go/go.php:111
+#: ..\..\plugins\geditorialmodules/like/like.php:77
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:149
+#: ..\..\plugins\geditorialmodules/meta/meta.php:128
+#: ..\..\plugins\geditorialmodules/meta/meta.php:133
+#: ..\..\plugins\geditorialmodules/reference/reference.php:84
+#: ..\..\plugins\geditorialmodules/resource/resource.php:58
+#: ..\..\plugins\geditorialmodules/series/series.php:106
+#: ..\..\plugins\geditorialmodules/specs/specs.php:106
+#: ..\..\plugins\geditorialmodules/submit/submit.php:91
+#: ..\..\plugins\geditorialmodules/toc/toc.php:77
+msgid "<p>help-tab-content</p>"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/audit/audit.php:110
+#: ..\..\plugins\geditorialmodules/comments/comments.php:118
+#: ..\..\plugins\geditorialmodules/contact/contact.php:84
+#: ..\..\plugins\geditorialmodules/contest/contest.php:153
+#: ..\..\plugins\geditorialmodules/divisions/divisions.php:117
+#: ..\..\plugins\geditorialmodules/entry/entry.php:126
+#: ..\..\plugins\geditorialmodules/gallery/gallery.php:134
+#: ..\..\plugins\geditorialmodules/go/go.php:116
+#: ..\..\plugins\geditorialmodules/like/like.php:80
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:152
+#: ..\..\plugins\geditorialmodules/meta/meta.php:137
+#: ..\..\plugins\geditorialmodules/resource/resource.php:61
+#: ..\..\plugins\geditorialmodules/series/series.php:109
+#: ..\..\plugins\geditorialmodules/specs/specs.php:109
+#: ..\..\plugins\geditorialmodules/submit/submit.php:94
+#: ..\..\plugins\geditorialmodules/toc/toc.php:80
+msgid ""
+"<p><strong>For more information</strong>:</p><p><a href=\"%1$s\">%2$s</a></"
+"p><p><a href=\"%3$s\">gEditorial on GitHub</a></p>"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/audit/audit.php:112
+msgid "Editorial Audit Documentations"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/audit/audit.php:151
+#: ..\..\plugins\geditorialmodules/gallery/gallery.php:185
+#: ..\..\plugins\geditorialmodules/go/go.php:170
+msgid "Install Default Attributes"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/comments/comments.php:19
+#: ..\..\plugins\geditorialmodules/comments/comments.php:87
+#: ..\..\plugins\geditorialmodules/comments/comments.php:93
+#: ..\..\plugins\geditorialmodules/comments/comments.php:94
+#: ..\..\plugins\geditorialmodules/comments/comments.php:107
+msgid "Comments"
+msgstr "دیدگاه‌ها"
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/comments/comments.php:20
+msgid "Comment Managment Enhancements"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/comments/comments.php:21
+msgid "Series of tools to help better managing the comments on a magazine."
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/comments/comments.php:47
+msgid "Frontpage Actions"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/comments/comments.php:48
+msgid "Appends the actions to the comment text on frontpage."
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/comments/comments.php:53
+msgid "Form Notes"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/comments/comments.php:54
+msgid "Removes extra notes after comment form on frontpage."
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/comments/comments.php:59
+msgid "Force Widget"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/comments/comments.php:60
+msgid ""
+"Force Recent Comments Widget to show only featured and non-buried comments."
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/comments/comments.php:70
+msgid "Feature"
+msgstr "برگزیده"
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/comments/comments.php:71
+msgid "Unfeature"
+msgstr "نابرگزیده"
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/comments/comments.php:72
+msgid "Bury"
+msgstr "کم‌اهمیت"
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/comments/comments.php:73
+msgid "Unbury"
+msgstr "ناکم‌اهمیت"
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/comments/comments.php:78
+msgid "Feature this comment"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/comments/comments.php:79
+msgid "Unfeature this comment"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/comments/comments.php:80
+msgid "Bury this comment"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/comments/comments.php:81
+msgid "Unbury this comment"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/comments/comments.php:86
+msgid "Featured Comments"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/comments/comments.php:88
+msgid "&mdash; Choose a Comments &mdash;"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/comments/comments.php:95
+msgid "Search Comments"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/comments/comments.php:97
+msgid "All Comments"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/comments/comments.php:98
+msgid "Parent Comments"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/comments/comments.php:99
+msgid "Parent Comments:"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/comments/comments.php:100
+msgid "Edit Comments"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/comments/comments.php:101
+msgid "Update Comments"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/comments/comments.php:102
+msgid "Add New Comments"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/comments/comments.php:103
+msgid "New Comments Name"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/comments/comments.php:104
+msgid "Separate comments with commas"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/comments/comments.php:105
+msgid "Add or remove comments"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/comments/comments.php:106
+msgid "Choose from the most used comments"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/comments/comments.php:120
+msgid "Editorial Comments Documentations"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/comments/comments.php:294
+msgid "You are not allowed to edit comments on this post."
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/comments/comments.php:308
+msgid "Featured"
+msgstr "برگزیده"
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/comments/comments.php:310
+msgid "Buried"
+msgstr "کم‌اهمیت"
+
+#: ..\..\plugins\geditorialmodules/contact/contact.php:25
+msgid "Contact"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/contact/contact.php:26
+msgid "Simple Contact Form"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/contact/contact.php:27
+msgid "Adding simple contact form on wordpress"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/contact/contact.php:86
+msgid "Editorial Contact Documentations"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/contact/contact.php:303
+msgctxt "gEditorial Contact"
+msgid "Loading&hellip;"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/contact/contact.php:361
+#: ..\..\plugins\geditorialmodules/like/like.php:220
+msgctxt "Ajax Error"
+msgid "Waht?!"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/contact/contact.php:366
+msgctxt "gEditorial Contact"
+msgid "Uncontact"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/contact/contact.php:366
+msgctxt "gEditorial Contact"
+msgid "Contact"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/contest/contest.php:20
+#: ..\..\plugins\geditorialmodules/contest/contest.php:84
+#: ..\..\plugins\geditorialmodules/contest/contest.php:112
+msgid "Contest"
+msgstr "فراخوان"
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/contest/contest.php:21
+msgid "Contest Management"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/contest/contest.php:22
+msgid ""
+"Set of tools to create and manage text contests and/or gather assignments"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/contest/contest.php:55
+msgid "Multiple Contests"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/contest/contest.php:56
+msgid "Using multiple contests for appplies."
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/contest/contest.php:74
+#: ..\..\plugins\geditorialmodules/contest/contest.php:77
+#: ..\..\plugins\geditorialmodules/contest/contest.php:83
+#: ..\..\plugins\geditorialmodules/contest/contest.php:94
+#: ..\..\plugins\geditorialmodules/contest/contest.php:111
+#: ..\..\plugins\geditorialmodules/contest/contest.php:125
+msgid "Contests"
+msgstr "فراخوان‌ها"
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/contest/contest.php:75
+msgid "The Contest"
+msgstr "فراخوان"
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/contest/contest.php:76
+msgid "Contest Poster"
+msgstr "پوستر فراخوان"
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/contest/contest.php:78
+msgid "&mdash; Choose a Contest &mdash;"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/contest/contest.php:85
+#: ..\..\plugins\geditorialmodules/contest/contest.php:99
+#: ..\..\plugins\geditorialmodules/entry/entry.php:88
+#: ..\..\plugins\geditorialmodules/gallery/gallery.php:80
+#: ..\..\plugins\geditorialmodules/go/go.php:62
+#: ..\..\plugins\geditorialmodules/go/go.php:294
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:97
+msgid "Add New"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/contest/contest.php:86
+#: ..\..\plugins\geditorialmodules/contest/contest.php:120
+msgid "Add New Contest"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/contest/contest.php:87
+#: ..\..\plugins\geditorialmodules/contest/contest.php:118
+msgid "Edit Contest"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/contest/contest.php:88
+#: ..\..\plugins\geditorialmodules/contest/contest.php:121
+msgid "New Contest"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/contest/contest.php:89
+msgid "View Contest"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/contest/contest.php:90
+#: ..\..\plugins\geditorialmodules/contest/contest.php:113
+msgid "Search Contests"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/contest/contest.php:91
+msgid "No contests found"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/contest/contest.php:92
+msgid "No contests found in Trash"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/contest/contest.php:93
+#: ..\..\plugins\geditorialmodules/contest/contest.php:117
+msgid "Parent Contest:"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/contest/contest.php:97
+#: ..\..\plugins\geditorialmodules/contest/contest.php:108
+msgid "Applies"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/contest/contest.php:98
+msgid "Apply"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/contest/contest.php:100
+msgid "Add New Apply"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/contest/contest.php:101
+msgid "Edit Apply"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/contest/contest.php:102
+msgid "New Apply"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/contest/contest.php:103
+msgid "View Apply"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/contest/contest.php:104
+msgid "Search Applies"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/contest/contest.php:105
+msgid "No applies found"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/contest/contest.php:106
+msgid "No applies found in Trash"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/contest/contest.php:107
+msgid "Parent Apply:"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/contest/contest.php:115
+msgid "All Contests"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/contest/contest.php:116
+msgid "Parent Contest"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/contest/contest.php:119
+msgid "Update Contest"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/contest/contest.php:122
+msgid "Separate contests with commas"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/contest/contest.php:123
+msgid "Add or remove Contests"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/contest/contest.php:124
+msgid "Choose from most used Contests"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/contest/contest.php:128
+#: ..\..\plugins\geditorialmodules/contest/contest.php:142
+msgid "Apply Statuses"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/contest/contest.php:129
+msgid "Apply Status"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/contest/contest.php:130
+msgid "Search Apply Statuses"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/contest/contest.php:132
+msgid "All Apply Statuses"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/contest/contest.php:133
+msgid "Parent Apply Status"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/contest/contest.php:134
+msgid "Parent Apply Status:"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/contest/contest.php:135
+msgid "Edit Apply Status"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/contest/contest.php:136
+msgid "Update Apply Status"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/contest/contest.php:137
+msgid "Add New Apply Status"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/contest/contest.php:138
+msgid "New Apply Status"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/contest/contest.php:139
+msgid "Separate apply statuses with commas"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/contest/contest.php:140
+msgid "Add or remove Apply Statuses"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/contest/contest.php:141
+msgid "Choose from most used Apply Statuses"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/contest/contest.php:155
+msgid "Editorial Contest Documentations"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/contest/contest.php:474
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:476
+msgid "you're doing it wrong!"
+msgstr ""
+
+# @ default
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/contest/contest.php:537
+#: ..\..\plugins\geditorialmodules/contest/contest.php:538
+#: ..\..\plugins\geditorialmodules/contest/contest.php:581
+#: ..\..\plugins\geditorialmodules/contest/contest.php:582
+#: ..\..\plugins\geditorialmodules/divisions/divisions.php:69
+#: ..\..\plugins\geditorialmodules/entry/entry.php:66
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:788
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:789
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:965
+#: ..\..\plugins\geditorialmodules/series/series.php:64
+#: ..\..\plugins\geditorialmodules/specs/specs.php:64
+msgid "Order"
+msgstr "ترتیب"
+
+# @ default
+#: ..\..\plugins\geditorialmodules/contest/contest.php:546
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:798
+msgid "(no parent)"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/divisions/divisions.php:15
+#: ..\..\plugins\geditorialmodules/divisions/divisions.php:82
+#: ..\..\plugins\geditorialmodules/divisions/divisions.php:83
+#: ..\..\plugins\geditorialmodules/divisions/divisions.php:89
+#: ..\..\plugins\geditorialmodules/divisions/divisions.php:92
+#: ..\..\plugins\geditorialmodules/divisions/divisions.php:106
+msgid "Divisions"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/divisions/divisions.php:16
+msgid "Post Divisions Management"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/divisions/divisions.php:17
+msgid "Adding Post Divisions Functionality to WordPress With Custom Post Types"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/divisions/divisions.php:51
+msgid "Multiple Divisions"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/divisions/divisions.php:52
+msgid "Using multiple divisions for each post."
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/divisions/divisions.php:57
+msgctxt "Divisions Editor Button"
+msgid "Editor Button"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/divisions/divisions.php:58
+#: ..\..\plugins\geditorialmodules/entry/entry.php:55
+#: ..\..\plugins\geditorialmodules/series/series.php:53
+#: ..\..\plugins\geditorialmodules/specs/specs.php:53
+#: ..\..\plugins\geditorialmodules/submit/submit.php:57
+msgid "Adding an Editor Button to insert shortcodes"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/divisions/divisions.php:68
+#: ..\..\plugins\geditorialmodules/divisions/divisions.php:241
+#: ..\..\plugins\geditorialmodules/entry/entry.php:65
+#: ..\..\plugins\geditorialmodules/go/go.php:319
+#: ..\..\plugins\geditorialmodules/reference/reference.php:1294
+#: ..\..\plugins\geditorialmodules/resource/resource.php:1273
+#: ..\..\plugins\geditorialmodules/series/series.php:63
+#: ..\..\plugins\geditorialmodules/specs/specs.php:63
+#: ..\..\plugins\geditorialmodules/submit/submit.php:68
+msgid "Title"
+msgstr "عنوان"
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/divisions/divisions.php:70
+#: ..\..\plugins\geditorialmodules/entry/entry.php:67
+#: ..\..\plugins\geditorialmodules/reference/reference.php:237
+#: ..\..\plugins\geditorialmodules/reference/reference.php:1295
+#: ..\..\plugins\geditorialmodules/reference/reference.php:1472
+#: ..\..\plugins\geditorialmodules/resource/resource.php:216
+#: ..\..\plugins\geditorialmodules/resource/resource.php:1274
+#: ..\..\plugins\geditorialmodules/resource/resource.php:1451
+#: ..\..\plugins\geditorialmodules/series/series.php:65
+#: ..\..\plugins\geditorialmodules/specs/specs.php:65
+msgid "Description"
+msgstr "توضیحات"
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/divisions/divisions.php:75
+msgid "In Divisions Title"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/divisions/divisions.php:76
+msgid "In Divisions Order"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/divisions/divisions.php:77
+msgid "In Divisions Description"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/divisions/divisions.php:84
+msgid "&mdash; Choose a Divisions &mdash;"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/divisions/divisions.php:93
+#: ..\..\plugins\geditorialmodules/divisions/divisions.php:222
+msgid "Division"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/divisions/divisions.php:94
+msgid "Search Divisions"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/divisions/divisions.php:96
+msgid "All Divisions"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/divisions/divisions.php:97
+msgid "Parent Division"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/divisions/divisions.php:98
+msgid "Parent Division:"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/divisions/divisions.php:99
+msgid "Edit Division"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/divisions/divisions.php:100
+msgid "Update Division"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/divisions/divisions.php:101
+msgid "Add New Division"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/divisions/divisions.php:102
+msgid "New Division Name"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/divisions/divisions.php:103
+msgid "Separate divisions with commas"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/divisions/divisions.php:104
+msgid "Add or remove divisions"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/divisions/divisions.php:105
+msgid "Choose from the most used divisions"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/divisions/divisions.php:119
+msgid "Editorial Divisions Documentations"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/divisions/divisions.php:212
+msgid "Connected Divisions"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/divisions/divisions.php:213
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:522
+msgid "Connected Posts"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/divisions/divisions.php:216
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:525
+msgid "Post"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/divisions/divisions.php:217
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:526
+msgid "Search posts"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/divisions/divisions.php:218
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:527
+msgid "No posts found."
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/divisions/divisions.php:219
+msgid "Create Posts"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/divisions/divisions.php:223
+msgid "Search divisions"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/divisions/divisions.php:224
+msgid "No divisions found."
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/divisions/divisions.php:225
+msgid "Create Divisions"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/divisions/divisions.php:229
+msgid "Visibility"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/divisions/divisions.php:232
+msgid "Public"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/divisions/divisions.php:233
+msgid "Logged in"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/divisions/divisions.php:234
+msgid "Editors"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/entry/entry.php:15
+#: ..\..\plugins\geditorialmodules/entry/entry.php:79
+#: ..\..\plugins\geditorialmodules/entry/entry.php:80
+#: ..\..\plugins\geditorialmodules/entry/entry.php:87
+msgid "Entry"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/entry/entry.php:16
+msgid "Posts Entries, Wiki-like"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/entry/entry.php:48
+msgid "Multiple Entry"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/entry/entry.php:49
+msgid "Using multiple entry for each post."
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/entry/entry.php:54
+msgctxt "Entry Editor Button"
+msgid "Editor Button"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/entry/entry.php:72
+msgid "In Entry Title"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/entry/entry.php:73
+msgid "In Entry Order"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/entry/entry.php:74
+msgid "In Entry Description"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/entry/entry.php:81
+msgid "&mdash; Choose a Entry &mdash;"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/entry/entry.php:86
+#: ..\..\plugins\geditorialmodules/entry/entry.php:97
+msgid "Entries"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/entry/entry.php:89
+msgid "Add New Entry"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/entry/entry.php:90
+msgid "Edit Entry"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/entry/entry.php:91
+msgid "New Entry"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/entry/entry.php:92
+msgid "View Entry"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/entry/entry.php:93
+msgid "Search Entries"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/entry/entry.php:94
+msgid "No entries found"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/entry/entry.php:95
+msgid "No entries found in Trash"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/entry/entry.php:96
+msgid "Parent Entry:"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/entry/entry.php:101
+#: ..\..\plugins\geditorialmodules/entry/entry.php:115
+#: ..\..\plugins\geditorialmodules/entry/entry.php:219
+msgid "Sections"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/entry/entry.php:102
+msgid "Section"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/entry/entry.php:103
+msgid "Search Sections"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/entry/entry.php:105
+msgid "All Sections"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/entry/entry.php:106
+msgid "Parent Section"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/entry/entry.php:107
+msgid "Parent Section:"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/entry/entry.php:108
+msgid "Edit Section"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/entry/entry.php:109
+msgid "Update Section"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/entry/entry.php:110
+msgid "Add New Section"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/entry/entry.php:111
+msgid "New Section Name"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/entry/entry.php:112
+msgid "Separate sections with commas"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/entry/entry.php:113
+msgid "Add or remove section"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/entry/entry.php:114
+msgid "Choose from the most used sections"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/entry/entry.php:128
+msgid "Editorial Entry Documentations"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/entry/entry.php:220
+msgctxt "manage_posts_columns"
+msgid "O"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/entry/entry.php:260
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:922
+msgid "<span title=\"No Order\">&mdash;</span>"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/gallery/gallery.php:19
+#: ..\..\plugins\geditorialmodules/gallery/gallery.php:89
+msgid "Gallery"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/gallery/gallery.php:20
+msgid "Photo Directory and Gallery for WordPress Editorial"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/gallery/gallery.php:21
+msgid ""
+"Adding gallery functionality to WordPress with custom posttypes and "
+"taxonomies."
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/gallery/gallery.php:78
+#: ..\..\plugins\geditorialmodules/gallery/gallery.php:96
+#: ..\..\plugins\geditorialmodules/gallery/gallery.php:110
+#: ..\..\plugins\geditorialmodules/go/go.php:60
+#: ..\..\plugins\geditorialmodules/go/go.php:78
+#: ..\..\plugins\geditorialmodules/go/go.php:92
+msgid "Photo Albums"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/gallery/gallery.php:79
+#: ..\..\plugins\geditorialmodules/gallery/gallery.php:97
+#: ..\..\plugins\geditorialmodules/go/go.php:61
+#: ..\..\plugins\geditorialmodules/go/go.php:79
+msgid "Photo Album"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/gallery/gallery.php:81
+#: ..\..\plugins\geditorialmodules/gallery/gallery.php:105
+#: ..\..\plugins\geditorialmodules/go/go.php:63
+#: ..\..\plugins\geditorialmodules/go/go.php:87
+msgid "Add New Photo Album"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/gallery/gallery.php:82
+#: ..\..\plugins\geditorialmodules/gallery/gallery.php:103
+#: ..\..\plugins\geditorialmodules/go/go.php:64
+#: ..\..\plugins\geditorialmodules/go/go.php:85
+msgid "Edit Photo Album"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/gallery/gallery.php:83
+#: ..\..\plugins\geditorialmodules/gallery/gallery.php:106
+#: ..\..\plugins\geditorialmodules/go/go.php:65
+#: ..\..\plugins\geditorialmodules/go/go.php:88
+msgid "New Photo Album"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/gallery/gallery.php:84
+#: ..\..\plugins\geditorialmodules/go/go.php:66
+msgid "View Photo Album"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/gallery/gallery.php:85
+#: ..\..\plugins\geditorialmodules/gallery/gallery.php:98
+#: ..\..\plugins\geditorialmodules/go/go.php:67
+#: ..\..\plugins\geditorialmodules/go/go.php:80
+msgid "Search Photo Albums"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/gallery/gallery.php:86
+#: ..\..\plugins\geditorialmodules/go/go.php:68
+msgid "No photo albums found"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/gallery/gallery.php:87
+#: ..\..\plugins\geditorialmodules/go/go.php:69
+msgid "No photo albums found in Trash"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/gallery/gallery.php:88
+#: ..\..\plugins\geditorialmodules/gallery/gallery.php:102
+#: ..\..\plugins\geditorialmodules/go/go.php:70
+#: ..\..\plugins\geditorialmodules/go/go.php:84
+msgid "Parent Photo Album:"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/gallery/gallery.php:100
+#: ..\..\plugins\geditorialmodules/go/go.php:82
+msgid "All Photo Albums"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/gallery/gallery.php:101
+#: ..\..\plugins\geditorialmodules/go/go.php:83
+msgid "Parent Photo Album"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/gallery/gallery.php:104
+#: ..\..\plugins\geditorialmodules/go/go.php:86
+msgid "Update Photo Album"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/gallery/gallery.php:107
+#: ..\..\plugins\geditorialmodules/go/go.php:89
+msgid "Separate photo albums with commas"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/gallery/gallery.php:108
+#: ..\..\plugins\geditorialmodules/go/go.php:90
+msgid "Add or remove photo albums"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/gallery/gallery.php:109
+#: ..\..\plugins\geditorialmodules/go/go.php:91
+msgid "Choose from most used photo albums"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/gallery/gallery.php:115
+msgid "Galleryed"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/gallery/gallery.php:136
+msgid "Editorial Gallery Documentations"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/go/go.php:19
+#: ..\..\plugins\geditorialmodules/go/go.php:71
+msgid "Go"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/go/go.php:21
+msgid ""
+"A complete URL management system that allows you create, manage, and track "
+"outbound links from your site by using custom post types and 301 redirects."
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/go/go.php:97
+msgid "Goed"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/go/go.php:118
+msgid "Editorial Go Documentations"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/go/go.php:292
+msgid "Simple URLs"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/go/go.php:293
+#: ..\..\plugins\geditorialmodules/reference/reference.php:219
+#: ..\..\plugins\geditorialmodules/reference/reference.php:1293
+#: ..\..\plugins\geditorialmodules/resource/resource.php:198
+#: ..\..\plugins\geditorialmodules/resource/resource.php:1272
+msgid "URL"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/go/go.php:295
+msgid "Add New URL"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/go/go.php:296
+#: ..\..\plugins\geditorialmodules/reference/reference.php:1410
+#: ..\..\plugins\geditorialmodules/resource/resource.php:1389
+msgid "Edit"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/go/go.php:297
+msgid "Edit URL"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/go/go.php:298
+msgid "New URL"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/go/go.php:299
+#: ..\..\plugins\geditorialmodules/go/go.php:300
+msgid "View URL"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/go/go.php:301
+msgid "Search URL"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/go/go.php:302
+msgid "No URLs found"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/go/go.php:303
+msgid "No URLs found in Trash"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/go/go.php:320
+msgid "Redirect to"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/go/go.php:321
+msgid "Permalink"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/go/go.php:322
+msgid "Clicks"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/go/go.php:349
+msgid "URL Information"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/go/go.php:357
+msgid "Redirect URI"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/like/like.php:18
+msgid "Like"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/like/like.php:19
+msgid "Like Button for Posts and Comments"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/like/like.php:20
+msgid "Adding Like Functionality to WordPress With Custom Post Types"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/like/like.php:48
+msgctxt "Enable Like for Comments"
+msgid "Comments"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/like/like.php:49
+msgid "Like button for enabled post types comments"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/like/like.php:55
+msgctxt "Enable Like for Comments"
+msgid "Avatars"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/like/like.php:56
+msgid "Display avatars alongside like button"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/like/like.php:82
+msgid "Editorial Like Documentations"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/like/like.php:141
+msgctxt "gEditorial Like"
+msgid "Loading&hellip;"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/like/like.php:225
+msgctxt "gEditorial Like"
+msgid "Unlike"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/like/like.php:225
+msgctxt "gEditorial Like"
+msgid "Like"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:32
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:1111
+msgid "Magazine"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:33
+msgid "Issue Management for Magazines"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:34
+msgid "Magazine suite for wordpress"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:65
+msgctxt "Enable Magazine for Comments"
+msgid "Comments"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:66
+msgid "Magazine button for enabled post types comments"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:72
+msgctxt "Enable Magazine for Comments"
+msgid "Avatars"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:73
+msgid "Display avatars alongside magazine button"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:86
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:95
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:106
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:109
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:123
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:574
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:650
+msgid "Issues"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:87
+msgid "The Issue"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:88
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:90
+msgid "Cover"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:89
+msgid "O"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:96
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:110
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:531
+msgid "Issue"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:98
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:118
+msgid "Add New Issue"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:99
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:116
+msgid "Edit Issue"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:100
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:119
+msgid "New Issue"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:101
+msgid "View Issue"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:102
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:111
+msgid "Search Issues"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:103
+msgid "No issues found"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:104
+msgid "No issues found in Trash"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:105
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:115
+msgid "Parent Issue:"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:113
+msgid "All Issues"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:114
+msgid "Parent Issue"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:117
+msgid "Update Issue"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:120
+msgid "Separate issues with commas"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:121
+msgid "Add or remove Issues"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:122
+msgid "Choose from most used Issues"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:126
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:140
+msgid "Spans"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:127
+msgid "Span"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:128
+msgid "Search Spans"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:130
+msgid "All Spans"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:131
+msgid "Parent Span"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:132
+msgid "Parent Span:"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:133
+msgid "Edit Span"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:134
+msgid "Update Span"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:135
+msgid "Add New Span"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:136
+msgid "New Span"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:137
+msgid "Separate spans with commas"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:138
+msgid "Add or remove Spans"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:139
+msgid "Choose from most used Spans"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:154
+msgid "Editorial Magazine Documentations"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:521
+msgid "Connected Issues"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:528
+msgid "Connect to a post"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:532
+msgid "Search issues"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:533
+msgid "No issues found."
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:534
+msgid "Connect to an issue"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:545
+msgid "Thumbnail"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:551
+msgid "Medium"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:557
+msgid "Large"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:677
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:694
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:731
+#: ..\..\plugins\geditorialmodules/magazine/widgets.php:182
+msgid "&mdash; Select an Issue &mdash;"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:743
+msgid "There are no issues!"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:903
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:914
+msgid "<span title=\"No Posts\">&mdash;</span>"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:912
+msgctxt "issues column terms between"
+msgid ", "
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:961
+msgid "Number Line"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:962
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:967
+msgid "Total Pages"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:966
+msgid "Page Start"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:972
+msgid "The issue number line"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:973
+msgid "The issue total pages"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:976
+msgid "Post order in issue list"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:977
+msgid "Post start page on issue (printed)"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:978
+msgid "Post total pages on issue (printed)"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:1093
+msgid "Issue updated. <a href=\"%s\">View issue</a>"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:1094
+msgid "Custom field updated."
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:1095
+msgid "Custom field deleted."
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:1096
+msgid "Issue updated."
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:1097
+msgid "Issue restored to revision from %s"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:1098
+msgid "Issue published. <a href=\"%s\">View issue</a>"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:1099
+msgid "Issue saved."
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:1100
+msgid "Issue submitted. <a target=\"_blank\" href=\"%s\">Preview issue</a>"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:1101
+msgid ""
+"Issue scheduled for: <strong>%1$s</strong>. <a target=\"_blank\" href=\"%2$s"
+"\">Preview issue</a>"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:1101
+msgid "M j, Y @ G:i"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:1102
+msgid "Issue draft updated. <a target=\"_blank\" href=\"%s\">Preview issue</a>"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:1120
+msgid "%s Issue Post(s) Created"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:1123
+msgid "No Issue Post Created"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:1131
+msgid "Magazine Tools"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:1134
+msgid "Current Issues"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:1163
+msgid "Click Check button below"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:1168
+msgid "From Terms"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:1170
+#: ..\..\plugins\geditorialmodules/meta/meta.php:633
+msgid "Check"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:1171
+msgid "Create"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/magazine.php:1175
+msgid "Check for new Issue taxs and create the corresponding Issue Posts."
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/widgets.php:8
+msgid "Magazine: Issue Cover"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/widgets.php:10
+msgid "Displays selected issue cover"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/widgets.php:141
+msgid "The Latest Issue"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/widgets.php:151
+msgid "Default Title"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/widgets.php:159
+msgid "Always the latest issue"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/widgets.php:166
+msgid "Link to the issue"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/widgets.php:173
+msgid "Display the number meta"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/widgets.php:187
+msgid "Size:"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/magazine/widgets.php:190
+msgid "&mdash; Select &mdash;"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/meta/meta.php:21
+msgid "Meta"
+msgstr "متا"
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/meta/meta.php:22
+msgid "Metadata, magazine style."
+msgstr "اطلاعات بیشتر، به سبک مجله‌ها"
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/meta/meta.php:23
+msgid "Meta extended desc"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/meta/meta.php:73
+#: ..\..\plugins\geditorialmodules/reference/reference.php:47
+msgid "OverTitle"
+msgstr "روتیتر"
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/meta/meta.php:74
+#: ..\..\plugins\geditorialmodules/reference/reference.php:48
+msgid "SubTitle"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/meta/meta.php:75
+#: ..\..\plugins\geditorialmodules/reference/reference.php:49
+msgid "Author"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/meta/meta.php:76
+#: ..\..\plugins\geditorialmodules/reference/reference.php:50
+msgid "Lead"
+msgstr "لید"
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/meta/meta.php:77
+#: ..\..\plugins\geditorialmodules/meta/meta.php:105
+#: ..\..\plugins\geditorialmodules/reference/reference.php:51
+#: ..\..\plugins\geditorialmodules/reference/reference.php:692
+#: ..\..\plugins\geditorialmodules/resource/resource.php:671
+msgid "Column Header"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/meta/meta.php:78
+#: ..\..\plugins\geditorialmodules/reference/reference.php:52
+msgid "Column Header Taxonomy"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/meta/meta.php:79
+#: ..\..\plugins\geditorialmodules/meta/meta.php:92
+#: ..\..\plugins\geditorialmodules/reference/reference.php:53
+#: ..\..\plugins\geditorialmodules/reference/reference.php:67
+msgid "Column Header Override"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/meta/meta.php:80
+#: ..\..\plugins\geditorialmodules/reference/reference.php:54
+msgid "External Link"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/meta/meta.php:81
+#: ..\..\plugins\geditorialmodules/reference/reference.php:55
+msgid "Old Link"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/meta/meta.php:86
+#: ..\..\plugins\geditorialmodules/reference/reference.php:61
+msgid "String to place over the post title"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/meta/meta.php:87
+#: ..\..\plugins\geditorialmodules/reference/reference.php:62
+msgid "String to place under the post title"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/meta/meta.php:88
+#: ..\..\plugins\geditorialmodules/reference/reference.php:63
+msgid "String to override the post author"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/meta/meta.php:89
+msgid "Editorial paragraph presented before post content"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/meta/meta.php:90
+#: ..\..\plugins\geditorialmodules/reference/reference.php:65
+msgid "String to reperesent that the post is on a column or section"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/meta/meta.php:91
+#: ..\..\plugins\geditorialmodules/reference/reference.php:66
+msgid "Taxonomy for better categorizing columns"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/meta/meta.php:93
+#: ..\..\plugins\geditorialmodules/reference/reference.php:68
+msgid "URL of the external source of the post"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/meta/meta.php:94
+#: ..\..\plugins\geditorialmodules/reference/reference.php:69
+msgid "URL of the post on a previous site"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/meta/meta.php:98
+#: ..\..\plugins\geditorialmodules/meta/meta.php:99
+msgid "Metadata"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/meta/meta.php:104
+#: ..\..\plugins\geditorialmodules/meta/meta.php:118
+#: ..\..\plugins\geditorialmodules/reference/reference.php:691
+#: ..\..\plugins\geditorialmodules/reference/reference.php:705
+#: ..\..\plugins\geditorialmodules/resource/resource.php:670
+#: ..\..\plugins\geditorialmodules/resource/resource.php:684
+msgid "Column Headers"
+msgstr "سرستون‌ها"
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/meta/meta.php:106
+#: ..\..\plugins\geditorialmodules/reference/reference.php:693
+#: ..\..\plugins\geditorialmodules/resource/resource.php:672
+msgid "Search Column Headers"
+msgstr "جست‌وجوی سرستون‌ها"
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/meta/meta.php:108
+#: ..\..\plugins\geditorialmodules/reference/reference.php:695
+#: ..\..\plugins\geditorialmodules/resource/resource.php:674
+msgid "All Column Headers"
+msgstr "همهٔ سرستون‌ها"
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/meta/meta.php:109
+#: ..\..\plugins\geditorialmodules/reference/reference.php:696
+#: ..\..\plugins\geditorialmodules/resource/resource.php:675
+msgid "Parent Column Header"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/meta/meta.php:110
+#: ..\..\plugins\geditorialmodules/reference/reference.php:697
+#: ..\..\plugins\geditorialmodules/resource/resource.php:676
+msgid "Parent Column Header:"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/meta/meta.php:111
+#: ..\..\plugins\geditorialmodules/reference/reference.php:698
+#: ..\..\plugins\geditorialmodules/resource/resource.php:677
+msgid "Edit Column Header"
+msgstr "ویرایش سرستون"
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/meta/meta.php:112
+#: ..\..\plugins\geditorialmodules/reference/reference.php:699
+#: ..\..\plugins\geditorialmodules/resource/resource.php:678
+msgid "Update Column Header"
+msgstr "به‌روزرسانی سرستون"
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/meta/meta.php:113
+#: ..\..\plugins\geditorialmodules/reference/reference.php:700
+#: ..\..\plugins\geditorialmodules/resource/resource.php:679
+msgid "Add New Column Header"
+msgstr "افزودن سرستون تازه"
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/meta/meta.php:114
+#: ..\..\plugins\geditorialmodules/reference/reference.php:701
+#: ..\..\plugins\geditorialmodules/resource/resource.php:680
+msgid "New Column Header Name"
+msgstr "عنوان سرستون تازه"
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/meta/meta.php:115
+#: ..\..\plugins\geditorialmodules/reference/reference.php:702
+#: ..\..\plugins\geditorialmodules/resource/resource.php:681
+msgid "Separate column headers with commas"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/meta/meta.php:116
+#: ..\..\plugins\geditorialmodules/reference/reference.php:703
+#: ..\..\plugins\geditorialmodules/resource/resource.php:682
+msgid "Add or remove column headers"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/meta/meta.php:117
+#: ..\..\plugins\geditorialmodules/reference/reference.php:704
+#: ..\..\plugins\geditorialmodules/resource/resource.php:683
+msgid "Choose from the most used column headers"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/meta/meta.php:127
+msgid "Overview"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/meta/meta.php:132
+msgid "Troubleshooting"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/meta/meta.php:139
+msgid "Editorial Meta Documentations"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/meta/meta.php:294
+msgid "&mdash; Select a Column Header &mdash;"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/meta/meta.php:524
+#: ..\..\plugins\geditorialmodules/reference/reference.php:1121
+#: ..\..\plugins\geditorialmodules/resource/resource.php:1100
+msgid "-Not Set-"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/meta/meta.php:529
+#: ..\..\plugins\geditorialmodules/reference/reference.php:1126
+#: ..\..\plugins\geditorialmodules/resource/resource.php:1105
+msgid "<em>Create labels first</em>"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/meta/meta.php:548
+msgctxt "Meta: tools tab title"
+msgid "Meta"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/meta/meta.php:557
+msgid "Field %s Converted"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/meta/meta.php:558
+msgid "Field %s Deleted"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/meta/meta.php:560
+msgid "No Field"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/meta/meta.php:569
+msgid "Meta Tools"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/meta/meta.php:572
+msgid "Maintenance Tasks"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/meta/meta.php:579
+msgid "Empty"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/meta/meta.php:585
+msgid "Import Custom Fields"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/meta/meta.php:629
+msgid "Check for Custom Fields and import them into Meta"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/meta/meta.php:634
+msgid "Covert"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/meta/meta.php:635
+#: ..\..\plugins\geditorialmodules/reference/reference.php:1416
+#: ..\..\plugins\geditorialmodules/resource/resource.php:1395
+msgid "Delete"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/reference/reference.php:19
+msgid "Reference"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/reference/reference.php:20
+msgid "The In-Post Reference Manager"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/reference/reference.php:21
+msgid "[reference extended desc.]"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/reference/reference.php:45
+#: ..\..\plugins\geditorialmodules/reference/reference.php:46
+#: ..\..\plugins\geditorialmodules/reference/reference.php:59
+#: ..\..\plugins\geditorialmodules/reference/reference.php:60
+msgid "Referencedata"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/reference/reference.php:56
+#: ..\..\plugins\geditorialmodules/reference/reference.php:729
+#: ..\..\plugins\geditorialmodules/reference/reference.php:730
+#: ..\..\plugins\geditorialmodules/reference/reference.php:743
+#: ..\..\plugins\geditorialmodules/resource/resource.php:708
+#: ..\..\plugins\geditorialmodules/resource/resource.php:709
+#: ..\..\plugins\geditorialmodules/resource/resource.php:722
+#: ..\..\plugins\geditorialmodules/series/series.php:15
+#: ..\..\plugins\geditorialmodules/series/series.php:77
+#: ..\..\plugins\geditorialmodules/series/series.php:78
+#: ..\..\plugins\geditorialmodules/series/series.php:84
+#: ..\..\plugins\geditorialmodules/series/series.php:85
+#: ..\..\plugins\geditorialmodules/series/series.php:98
+msgid "Series"
+msgstr "مجموعه‌ها"
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/reference/reference.php:64
+msgid "Paragraph presented before post content"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/reference/reference.php:70
+msgid "Taxonomy for helping serializing posts"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/reference/reference.php:73
+msgid "Reference link added."
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/reference/reference.php:74
+msgid "Reference link updated."
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/reference/reference.php:75
+msgid "Reference link doesn't exist."
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/reference/reference.php:76
+msgid "Reference link deleted."
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/reference/reference.php:77
+msgid "Reference link order updated."
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/reference/reference.php:78
+msgid "Reference link visibility changed."
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/reference/reference.php:86
+msgid ""
+"<p><strong>For more information:</strong></p><p><a href=\"http://geminorum."
+"ir/wordpress/geditorial/modules/reference\">Editorial Reference "
+"Documentation</a></p><p><a href=\"https://github.com/geminorum/gEditorial"
+"\">gEditorial on Github</a></p>"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/reference/reference.php:146
+msgid "Editorial: Reference Manager"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/reference/reference.php:147
+#: ..\..\plugins\geditorialmodules/resource/resource.php:126
+msgid "Adding&hellip;"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/reference/reference.php:148
+msgid "References usually have URL!"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/reference/reference.php:149
+msgid "New reference succesfully added."
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/reference/reference.php:150
+msgid "Already added this reference."
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/reference/reference.php:173
+msgid "Add or insert references to this post"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/reference/reference.php:173
+#: ..\..\plugins\geditorialmodules/reference/reference.php:245
+msgid "Add Reference"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/reference/reference.php:203
+msgid "Saved References"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/reference/reference.php:213
+#: ..\..\plugins\geditorialmodules/resource/resource.php:192
+msgid "Try a URL"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/reference/reference.php:216
+msgid "Add New Reference"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/reference/reference.php:222
+msgid "http://example.com/a-great-reference"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/reference/reference.php:225
+#: ..\..\plugins\geditorialmodules/reference/reference.php:1292
+#: ..\..\plugins\geditorialmodules/resource/resource.php:204
+#: ..\..\plugins\geditorialmodules/resource/resource.php:1271
+msgid "Label"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/reference/reference.php:228
+msgid "A Great Reference"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/reference/reference.php:231
+#: ..\..\plugins\geditorialmodules/resource/resource.php:210
+msgid "Title Attribute"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/reference/reference.php:234
+#: ..\..\plugins\geditorialmodules/resource/resource.php:213
+msgid "See more on example.com"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/reference/reference.php:240
+#: ..\..\plugins\geditorialmodules/resource/resource.php:219
+msgid "The description will be displayed if the current theme supports it."
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/reference/reference.php:249
+msgid "[reference table bottom]"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/reference/reference.php:589
+#: ..\..\plugins\geditorialmodules/resource/resource.php:568
+msgid "No description."
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/reference/reference.php:731
+#: ..\..\plugins\geditorialmodules/resource/resource.php:710
+#: ..\..\plugins\geditorialmodules/series/series.php:86
+msgid "Search Series"
+msgstr "جست‌وجوی مجموعه‌ها"
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/reference/reference.php:733
+#: ..\..\plugins\geditorialmodules/resource/resource.php:712
+#: ..\..\plugins\geditorialmodules/series/series.php:88
+msgid "All Series"
+msgstr "همهٔ مجموعه‌ها"
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/reference/reference.php:734
+#: ..\..\plugins\geditorialmodules/resource/resource.php:713
+#: ..\..\plugins\geditorialmodules/series/series.php:89
+msgid "Parent Series"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/reference/reference.php:735
+#: ..\..\plugins\geditorialmodules/resource/resource.php:714
+#: ..\..\plugins\geditorialmodules/series/series.php:90
+msgid "Parent Series:"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/reference/reference.php:736
+#: ..\..\plugins\geditorialmodules/resource/resource.php:715
+#: ..\..\plugins\geditorialmodules/series/series.php:91
+msgid "Edit Series"
+msgstr "ویرایش مجموعه"
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/reference/reference.php:737
+#: ..\..\plugins\geditorialmodules/resource/resource.php:716
+#: ..\..\plugins\geditorialmodules/series/series.php:92
+msgid "Update Series"
+msgstr "به‌روزرسانی مجموعه"
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/reference/reference.php:738
+#: ..\..\plugins\geditorialmodules/resource/resource.php:717
+#: ..\..\plugins\geditorialmodules/series/series.php:93
+msgid "Add New Series"
+msgstr "افزودن مجموعهٔ تازه"
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/reference/reference.php:739
+#: ..\..\plugins\geditorialmodules/resource/resource.php:718
+#: ..\..\plugins\geditorialmodules/series/series.php:94
+msgid "New Series Name"
+msgstr "عنوان مجموعهٔ تازه"
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/reference/reference.php:740
+#: ..\..\plugins\geditorialmodules/resource/resource.php:719
+#: ..\..\plugins\geditorialmodules/series/series.php:95
+msgid "Separate series with commas"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/reference/reference.php:741
+#: ..\..\plugins\geditorialmodules/resource/resource.php:720
+#: ..\..\plugins\geditorialmodules/series/series.php:96
+msgid "Add or remove series"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/reference/reference.php:742
+#: ..\..\plugins\geditorialmodules/resource/resource.php:721
+#: ..\..\plugins\geditorialmodules/series/series.php:97
+msgid "Choose from the most used series"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/reference/reference.php:1282
+msgid "No references found."
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/reference/reference.php:1291
+#: ..\..\plugins\geditorialmodules/resource/resource.php:1270
+msgid "ID"
+msgstr ""
+
+# @ default
+#: ..\..\plugins\geditorialmodules/reference/reference.php:1336
+#: ..\..\plugins\geditorialmodules/resource/resource.php:1315
+msgid "Filter"
+msgstr ""
+
+# @ default
+#: ..\..\plugins\geditorialmodules/reference/reference.php:1340
+#: ..\..\plugins\geditorialmodules/resource/resource.php:1319
+msgid "Scan for lost attachments"
+msgstr ""
+
+# @ default
+#: ..\..\plugins\geditorialmodules/reference/reference.php:1342
+#: ..\..\plugins\geditorialmodules/resource/resource.php:1321
+msgid "Empty Trash"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/reference/reference.php:1402
+#: ..\..\plugins\geditorialmodules/resource/resource.php:1381
+msgid "Default"
+msgstr ""
+
+# @ default
+#: ..\..\plugins\geditorialmodules/reference/reference.php:1411
+#: ..\..\plugins\geditorialmodules/resource/resource.php:1390
+msgid "Quick&nbsp;Edit"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/reference/reference.php:1413
+#: ..\..\plugins\geditorialmodules/resource/resource.php:1392
+msgid "Make&nbsp;Default"
+msgstr ""
+
+# @ default
+#: ..\..\plugins\geditorialmodules/reference/reference.php:1466
+#: ..\..\plugins\geditorialmodules/resource/resource.php:1445
+msgid "Quick Edit"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/reference/reference.php:1468
+#: ..\..\plugins\geditorialmodules/resource/resource.php:1447
+msgid "Name"
+msgstr ""
+
+# @ default
+#: ..\..\plugins\geditorialmodules/reference/reference.php:1477
+#: ..\..\plugins\geditorialmodules/resource/resource.php:1456
+msgid "Cancel"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/reference/reference.php:1478
+#: ..\..\plugins\geditorialmodules/resource/resource.php:1457
+msgid "Update Status"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/resource/resource.php:23
+#: ..\..\plugins\geditorialmodules/resource/resource.php:49
+#: ..\..\plugins\geditorialmodules/resource/resource.php:50
+msgid "Resources"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/resource/resource.php:24
+msgid "The In-Post Link Manager"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/resource/resource.php:25
+msgid "[resources extended desc.]"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/resource/resource.php:63
+msgid "Editorial Resources Documentations"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/resource/resource.php:125
+msgid "Editorial: Resource Manager"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/resource/resource.php:127
+msgid "Resources usually have URL!"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/resource/resource.php:128
+msgid "New resource succesfully added."
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/resource/resource.php:129
+msgid "Already added this resource."
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/resource/resource.php:152
+msgid "Add or insert resources to this post"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/resource/resource.php:152
+#: ..\..\plugins\geditorialmodules/resource/resource.php:224
+msgid "Add Resource"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/resource/resource.php:182
+msgid "Saved Resources"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/resource/resource.php:195
+msgid "Add New Resource"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/resource/resource.php:201
+msgid "http://example.com/a-great-resource"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/resource/resource.php:207
+msgid "A Great Resource"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/resource/resource.php:228
+msgid "[resource table bottom]"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/resource/resource.php:1261
+msgid "No resources found."
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/series/series.php:16
+msgid "Post Series Management"
+msgstr "مدیریت مجموعهٔ نوشته‌ها"
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/series/series.php:17
+msgid "Adding Post Series Functionality to WordPress With Taxonomies"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/series/series.php:46
+msgid "Multiple Series"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/series/series.php:47
+msgid "Using multiple series for each post."
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/series/series.php:52
+#: ..\..\plugins\geditorialmodules/submit/submit.php:56
+msgctxt "Series Editor Button"
+msgid "Editor Button"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/series/series.php:70
+msgid "In Series Title"
+msgstr "عنوان در مجموعه"
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/series/series.php:71
+msgid "In Series Order"
+msgstr "چیدمان در مجموعه"
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/series/series.php:72
+msgid "In Series Description"
+msgstr "توضیحات در مجموعه"
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/series/series.php:79
+msgid "&mdash; Choose a Series &mdash;"
+msgstr "&mdash; انتخاب یک مجموعه &mdash;"
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/series/series.php:111
+msgid "Editorial Series Documentations"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/series/series.php:397
+msgid "Other Posts on <a href=\"%1$s\" target=\"_blank\">%2$s</a> Series:"
+msgstr "نوشته‌های دیگر در مجموعهٔ <a href=\"%1$s\" target=\"_blank\">%2$s</a>:"
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/series/series.php:406
+#: ..\..\plugins\geditorialmodules/specs/specs.php:597
+msgid "(<a href=\"%1$s\" target=\"_blank\">Edit</a>)"
+msgstr "(<a href=\"%1$s\" target=\"_blank\">ویرایش</a>)"
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/series/series.php:574
+msgctxt "series hide link title"
+msgid "More in this series"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/series/series.php:574
+msgctxt "series hide link"
+msgid "More&hellip;"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/settings/settings.php:15
+#: ..\..\plugins\geditorialmodules/settings/settings.php:183
+msgid "Editorial"
+msgstr "تحریریه"
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/settings/settings.php:16
+msgid "WordPress, Magazine Style."
+msgstr "وردپرس، برای تحریریه شما"
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/settings/settings.php:17
+msgid "[editorial extended desc.]"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/settings/settings.php:52
+#: ..\..\plugins\geditorialmodules/settings/settings.php:92
+msgid "gEditorial Tools"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/settings/settings.php:53
+msgctxt "Admin Tools Menu Title"
+msgid "Tools"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/settings/settings.php:82
+msgctxt "gEditorial Tools"
+msgid "Overview"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/settings/settings.php:83
+msgctxt "gEditorial Tools"
+msgid "General"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/settings/settings.php:87
+msgctxt "gEditorial Tools"
+msgid "Console"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/settings/settings.php:160
+msgid "Not a registered Editorial module"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/settings/settings.php:173
+msgid ""
+"Module not enabled. Please enable it from the <a href=\"%1$s\">Editorial "
+"settings page</a>."
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/settings/settings.php:185
+msgid "Editorial: %s"
+msgstr ""
+
+# @ default
+#: ..\..\plugins\geditorialmodules/settings/settings.php:231
+msgid ""
+"&#8220;<a href=\"%1$s\" title=\"Editorial\" >gEditorial</a>&#8221; is a <a "
+"href=\"%2$s\">geminorum</a> project"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/settings/settings.php:275
+msgid "Enable"
+msgstr "فعال شود"
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/settings/settings.php:278
+msgid "Disable"
+msgstr "غیرفعال شود"
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/settings/settings.php:289
+msgid "There are no Editorial modules registered"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/specs/specs.php:15
+#: ..\..\plugins\geditorialmodules/specs/specs.php:77
+#: ..\..\plugins\geditorialmodules/specs/specs.php:78
+#: ..\..\plugins\geditorialmodules/specs/specs.php:84
+#: ..\..\plugins\geditorialmodules/specs/specs.php:85
+#: ..\..\plugins\geditorialmodules/specs/specs.php:98
+msgid "Specifications"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/specs/specs.php:16
+msgid "Post Specifications Management"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/specs/specs.php:17
+msgid "Adding Post Specifications Functionality to WordPress With Taxonomies"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/specs/specs.php:46
+msgid "Multiple Specifications"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/specs/specs.php:47
+msgid "Using multiple specs for each post."
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/specs/specs.php:52
+msgctxt "Specifications Editor Button"
+msgid "Editor Button"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/specs/specs.php:70
+msgid "In Specifications Title"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/specs/specs.php:71
+msgid "In Specifications Order"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/specs/specs.php:72
+msgid "In Specifications Description"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/specs/specs.php:79
+msgid "&mdash; Choose a Specification &mdash;"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/specs/specs.php:86
+msgid "Search Specifications"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/specs/specs.php:88
+msgid "All Specifications"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/specs/specs.php:89
+msgid "Parent Specifications"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/specs/specs.php:90
+msgid "Parent Specifications:"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/specs/specs.php:91
+msgid "Edit Specifications"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/specs/specs.php:92
+msgid "Update Specifications"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/specs/specs.php:93
+msgid "Add New Specifications"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/specs/specs.php:94
+msgid "New Specifications Name"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/specs/specs.php:95
+msgid "Separate specs with commas"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/specs/specs.php:96
+msgid "Add or remove specs"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/specs/specs.php:97
+msgid "Choose from the most used specs"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/specs/specs.php:111
+msgid "Editorial Specifications Documentations"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/specs/specs.php:438
+#: ..\..\plugins\geditorialmodules/specs/specs.php:642
+msgid "UnKnown Field"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/specs/specs.php:588
+msgid ""
+"Other Posts on <a href=\"%1$s\" target=\"_blank\">%2$s</a> Specifications:"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/specs/specs.php:814
+msgctxt "specs hide link title"
+msgid "More in this specs"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/specs/specs.php:814
+msgctxt "specs hide link"
+msgid "More&hellip;"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/status/_temp_status.php:11
+msgctxt "post"
+msgid "Archive"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/status/_temp_status.php:16
+msgid "Archive <span class=\"count\">(%s)</span>"
+msgid_plural "Archive <span class=\"count\">(%s)</span>"
+msgstr[0] ""
+msgstr[1] ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/submit/submit.php:19
+#: ..\..\plugins\geditorialmodules/submit/submit.php:82
+#: ..\..\plugins\geditorialmodules/submit/submit.php:83
+msgid "Submit"
+msgstr "ارائه"
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/submit/submit.php:20
+msgid "FrontPage Submissions"
+msgstr "دریافت مطالب از طریق غیر بخش مدیریت"
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/submit/submit.php:21
+msgid "Set of tools to accept post and images from frontpage"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/submit/submit.php:69
+msgid "Content"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/submit/submit.php:70
+msgid "Registered Submitter"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/submit/submit.php:75
+msgid "Post Title"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/submit/submit.php:76
+msgid "Post Content"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/submit/submit.php:77
+msgid "Post Author"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/submit/submit.php:96
+msgid "Editorial Submit Documentations"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/submit/submit.php:107
+msgid ""
+"Use these short codes:<br /><span dir=\"ltr\"><code>[%1$s]</code></span> for "
+"submit for on any post."
+msgstr ""
+
+# @ default
+#: ..\..\plugins\geditorialmodules/submit/submit.php:151
+msgid "You can not post here!"
+msgstr ""
+
+# @ default
+#: ..\..\plugins\geditorialmodules/submit/submit.php:162
+msgid "Submit your post"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/submit/submit.php:174
+msgid "Your Name"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/submit/submit.php:175
+msgid "Your Email"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/submit/submit.php:176
+msgid "Your URL"
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/submit/submit.php:177
+msgid "Submit Post"
+msgstr ""
+
+# @ default
+#: ..\..\plugins\geditorialmodules/submit/submit.php:181
+msgid "post_title desc"
+msgstr ""
+
+# @ default
+#: ..\..\plugins\geditorialmodules/submit/submit.php:182
+msgid "post_content desc"
+msgstr ""
+
+# @ default
+#: ..\..\plugins\geditorialmodules/submit/submit.php:183
+msgid "post_author desc"
+msgstr ""
+
+# @ default
+#: ..\..\plugins\geditorialmodules/submit/submit.php:184
+msgid "Email desc"
+msgstr ""
+
+# @ default
+#: ..\..\plugins\geditorialmodules/submit/submit.php:185
+msgid "URL desc"
+msgstr ""
+
+# @ default
+#: ..\..\plugins\geditorialmodules/submit/submit.php:224
+msgid "Your post (%s) submitted successfully."
+msgstr ""
+
+# @ default
+#: ..\..\plugins\geditorialmodules/submit/submit.php:238
+msgid "Please try again."
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/submit/submit.php:458
+msgid "Content can not be empty."
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/submit/submit.php:463
+#: ..\..\plugins\geditorialmodules/submit/submit.php:472
+msgid "Sorry, we can not accept this."
+msgstr ""
+
+# @ geditorial
+#: ..\..\plugins\geditorialmodules/submit/submit.php:467
+#: ..\..\plugins\geditorialmodules/submit/submit.php:477
+msgid "Please enter your name"
+msgstr ""
+
+# @ default
+#: ..\..\plugins\geditorialmodules/submit/submit.php:480
+msgid ""
+"You cannot use that email address to submit posts. We are having problems "
+"with them blocking some of our email. Please use another email provider."
+msgstr ""
+
+# @ default
+#: ..\..\plugins\geditorialmodules/terms/searchablecategories.php:37
+msgid "Most Used"
+msgstr ""
+
+# @ default
+#. translators: %s: add new taxonomy label
+#: ..\..\plugins\geditorialmodules/terms/searchablecategories.php:61
+msgid "+ %s"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/toc/toc.php:19
+msgid "Table of Contents"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/toc/toc.php:20
+msgid "ToC for Post Types"
+msgstr ""
+
+#: ..\..\plugins\geditorialmodules/toc/toc.php:82
+msgid "Editorial ToC Documentations"
+msgstr ""
+
+# @ default
+#~ msgid "Invalid Taxonomy"
+#~ msgstr "رده‌بندی نامعتبر"
