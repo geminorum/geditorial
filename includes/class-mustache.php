@@ -15,7 +15,7 @@ abstract class gEditorialMustache {
 		if ( !class_exists( 'MustacheLoader' ) )
 			require_once( GEDITORIAL_DIR.'/assets/libs/mustache/MustacheLoader.php' );
 
-		self::$loader = new MustacheLoader( GEDITORIAL_DIR.'/layouts', 'html' );
+		self::$loader = new MustacheLoader( GEDITORIAL_DIR.'/assets/layouts', 'html' );
 
 		self::$mustache = new Mustache( null, null, self::$loader );
 	}
