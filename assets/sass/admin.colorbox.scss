@@ -1,0 +1,36 @@
+
+@import "modules/all";
+@import "partials/base";
+
+//@import "editorial/admin.all";
+@import "vendor/colorbox";
+
+// CUSTOM
+.rtl {
+
+	#cboxClose {
+		right:auto;
+		left:5px;
+	}
+
+	#cboxTitle{
+		left:auto;
+		right:0;
+	}
+}
+
+#cboxLoadingGraphic{
+	background:url(../images/colorbox/loading.gif) no-repeat center center;
+}
+
+#cboxClose{
+	background:url(../images/colorbox/controls.png) no-repeat top center;
+}
+
+#cboxPrevious{
+	background:url(../images/colorbox/controls.png) no-repeat top left;
+}
+
+#cboxNext{
+	background:url(../images/colorbox/controls.png) no-repeat top right;
+}

@@ -450,8 +450,8 @@ class gEditorialHelper
 
 	public static function register_colorbox()
 	{
-		wp_register_style( 'jquery-colorbox', GEDITORIAL_URL.'assets/js/colorbox/colorbox.edited.css', array(), '1.5.14', 'screen' );
-		wp_register_script( 'jquery-colorbox', GEDITORIAL_URL.'assets/js/colorbox/jquery.colorbox-min.js', array( 'jquery'), '1.5.14', true );
+		wp_register_style( 'jquery-colorbox', GEDITORIAL_URL.'assets/css/admin.colorbox.css', array(), '1.6.1', 'screen' );
+		wp_register_script( 'jquery-colorbox', GEDITORIAL_URL.'assets/packages/jquery-colorbox/jquery.colorbox.min.js', array( 'jquery'), '1.6.1', true );
 	}
 
 	public static function enqueue_colorbox()
