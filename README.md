@@ -29,7 +29,7 @@ Planning
 - set via ajax admin-bar button
 - content stats
 
-####Comments (Comment Managment Enhancements)
+####Comments
 Series of tools to help better managing the comments on a magazine
 
 Features
@@ -39,9 +39,10 @@ Features
 Planning
 - comment action row support for front-end
 
-####Contests (Contest Management)
+####Contests
 Set of tools to create and manage text contests and/or gather assignments.
 
+####Divisions
 
 ### Included Packages
 
