@@ -3,20 +3,23 @@
 ////////////////////////////////////////////////////////////////////////////////
 //---Module: Like---------------------------------------------------------------
 
-.geditorial-wrap.like { 
-    
+.geditorial-wrap.like {
+
+	@include main-wrap();
+
     line-height:32px;
-    
-    > div { 
-        display:inline-block; 
-        float:right; 
-    }
-    
-    a.geditorial-like { 
-        //box-shadow: 0 1px 0 rgba(0,0,0,.1);
+
+    > div {
         display:inline-block;
+        float:right;
+    }
+
+    a.like {
+        //box-shadow: 0 1px 0 rgba(0,0,0,.1);
+		text-decoration:none;
+		display:inline-block;
         outline:0 none;
-        cursor: pointer; 
+        cursor: pointer;
         width:34px;
         height:34px;
 
@@ -31,28 +34,34 @@
         padding: 0px 2px 3px 3px;
         //line-height:30px;
     }
-    a.geditorial-like:hover { 
-        background: #eee; 
-        border: 1px solid #ccc; 
-        text-decoration:none; 
-    } 
-    a.geditorial-like.loading { 
-        .genericon{ 
-            color:#f7f7f7; 
+
+    a.like:hover {
+        background: #eee;
+        border: 1px solid #ccc;
+        text-decoration:none;
+    }
+
+	a.like:focus {
+
+	}
+
+    a.like.loading {
+        .genericon{
+            color:#f7f7f7;
         }
-    } 
-    a.geditorial-like.like { 
-        .genericon{ 
+    }
+    a.like.dolike {
+        .genericon{
         }
-    } 
-    a.geditorial-like.unlike { 
-        .genericon{ 
-            color:#dd4b39; 
+    }
+    a.like.unlike {
+        .genericon{
+            color:#dd4b39;
         }
-    } 
-    span.geditorial-like {
+    }
+    span.like {
     	display:inline-block;
-    	
+
     	position: relative;
         background: #fff;
         border: 1px solid #ddd;
@@ -60,11 +69,16 @@
         margin-left:6px;
         font-size: 20px;
         font-family: Arial;
-    
+
     	padding:0 6px;
     	//vertical-align: top;
+
+		@include body-rtl() {
+			margin-left:0;
+            margin-right:6px;
+		}
     }
-    span.geditorial-like:before {
+    span.like:before {
         content: "";
         position: absolute;
         top:14px;
@@ -79,45 +93,56 @@
         -moz-transform: rotate(45deg);
         -ms-transform: rotate(45deg);
         -o-transform: rotate(45deg);
-    }
-    span.genericon { 
-    	vertical-align:middle; 
-    	font-size:28px; 
-    	line-height:1.2; 
-    	font-weight:bold; 
-    	text-shadow: 1px 1px 1px rgba(0,0,0,0.004);
-    }
-    ul.geditorial-like { 
-        display:inline-block; margin:1px 0 0 8px; float:right; 
-        li{ display:inline-block; margin:0 4px 0 0; 
-            a { display:innline-block; outline:0 none; 
-                img { max-width:32px; max-height:32px; 
-                    //padding:0; 
-                }            
-            }
-        }
-    }
-}
 
-body.rtl { 
-    div.geditorial-wrap.like { 
-        ul.geditorial-like { 
-            margin:1px 8px 0 0; 
-            li{ 
-                margin:0 0 0 4px; 
-            }
-        }
-        span.geditorial-like { 
-            margin-left:0;  
-            margin-right:6px; 
-        }
-        span.geditorial-like:before { 
-        	left:auto; 
+		@include body-rtl() {
+			left:auto;
             right:-3px;
             -webkit-transform: rotate(225deg);
             -moz-transform: rotate(225deg);
             -ms-transform: rotate(225deg);
             -o-transform: rotate(225deg);
-        }        
+		}
+
+    }
+
+    span.genericon {
+    	vertical-align:middle;
+    	font-size:28px;
+    	line-height:1.2;
+    	font-weight:bold;
+    	text-shadow: 1px 1px 1px rgba(0,0,0,0.004);
+    }
+
+    ul.like {
+
+		display:inline-block;
+		margin:1px 0 0 8px;
+		float:right;
+
+		@include body-rtl() {
+			margin:1px 8px 0 0;
+		}
+
+		li {
+			display:inline-block;
+			margin:0 4px 0 0;
+
+			@include body-rtl() {
+				margin:0 0 0 4px;
+			}
+
+            a {
+				display:innline-block;
+				outline:0 none;
+
+                img {
+					max-width:32px;
+					max-height:32px;
+
+					display:inline-block;
+                    //padding:0;
+                }
+            }
+        }
     }
 }

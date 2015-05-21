@@ -46,6 +46,9 @@ Set of tools to create and manage text contests and/or gather assignments.
 
 ####Entry (Posts Entries, Wiki-like)
 
+####Like ()
+Like Button for Posts and Comments
+
 ### Included Packages
 
 ## Installation
