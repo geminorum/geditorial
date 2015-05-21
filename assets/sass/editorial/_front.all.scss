@@ -14,16 +14,19 @@
 //     border:0;
 // }
 
-.geditorial-wrap {
-    @extend %box-reset;
-    & *,
-    &:after,
-    & *:after,
-    &:before,
-    & *:before {
-        @extend %box-reset;
-    }
-	padding:0;
-    margin:0;
-    border:0;
-}
+// USE: .geditorial-wrap.module { @include main-wrap(); }
+
+
+// .geditorial-wrap {
+//     @extend %box-reset;
+//     & *,
+//     &:after,
+//     & *:after,
+//     &:before,
+//     & *:before {
+//         @extend %box-reset;
+//     }
+// 	padding:0;
+//     margin:0;
+//     border:0;
+// }

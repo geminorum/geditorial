@@ -6,6 +6,25 @@
     box-sizing:border-box;
 }
 
+@mixin main-wrap() {
+	@extend %box-reset;
+    & *,
+    &:after,
+    & *:after,
+    &:before,
+    & *:before {
+        @extend %box-reset;
+    }
+	padding:0;
+	margin:0;
+	border:0;
+}
+
+@mixin body-rtl() {
+	body.rtl & {
+		@content;
+	}
+}
 
 // http://www.stefanwienert.de/blog/2012/05/18/easy-css-vendor-prefix-mixin-for-sass/
 // Easy css vendor prefix mixin for SASS

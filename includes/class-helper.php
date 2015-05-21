@@ -3,7 +3,7 @@
 class gEditorialHelper
 {
 
-    function dump( &$var, $htmlSafe = true )
+    public static function dump( &$var, $htmlSafe = true )
     {
 		$result = var_export( $var, true );
 		echo '<pre dir="ltr" style="text-align:left;direction:ltr;">'.( $htmlSafe ? htmlspecialchars( $result ) : $result).'</pre>';

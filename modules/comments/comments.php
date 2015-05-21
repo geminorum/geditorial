@@ -136,37 +136,37 @@ class gEditorialComments extends gEditorialModuleCore
 		$this->do_filters();
 
 		if ( is_admin() ) {
-			add_action( 'admin_init', array( & $this, 'admin_init' ) );
-			//add_action( 'admin_menu', array( & $this, 'add_meta_box' ) );
-			//add_action( 'edit_comment', array( & $this, 'save_meta_box_postdata' ) );
-			add_filter( 'comment_row_actions', array( & $this, 'comment_row_actions' ) );
-			add_action( 'wp_ajax_geditorial_comments', array( & $this, 'ajax' ) );
+			add_action( 'admin_init', array( &$this, 'admin_init' ) );
+			//add_action( 'admin_menu', array( &$this, 'add_meta_box' ) );
+			//add_action( 'edit_comment', array( &$this, 'save_meta_box_postdata' ) );
+			add_filter( 'comment_row_actions', array( &$this, 'comment_row_actions' ) );
+			add_action( 'wp_ajax_geditorial_comments', array( &$this, 'ajax' ) );
 		} else {
-			add_filter( 'comment_class', array( & $this, 'comment_class' ) );
+			add_filter( 'comment_class', array( &$this, 'comment_class' ) );
 
 			if ( $this->get_setting( 'widget_args', false ) )
-				add_filter( 'widget_comments_args', array( & $this, 'widget_comments_args' ) );
+				add_filter( 'widget_comments_args', array( &$this, 'widget_comments_args' ) );
 
 			if ( $this->get_setting( 'front_actions', false ) )
-				add_filter( 'comment_text', array( & $this, 'comment_text' ), 10, 3 );
+				add_filter( 'comment_text', array( &$this, 'comment_text' ), 10, 3 );
 
 			if ( ! $this->get_setting( 'disable_notes', false ) )
-				add_filter( 'comment_form_defaults', array( & $this, 'comment_form_defaults' ), 12 );
+				add_filter( 'comment_form_defaults', array( &$this, 'comment_form_defaults' ), 12 );
 
-			//add_shortcode( 'comments', array( $this, 'shortcode_comments' ) );
+			//add_shortcode( 'comments', array( &$this, 'shortcode_comments' ) );
 
-			//add_filter( 'gtheme_comment_actions', array( & $this, 'gtheme_comment_actions' ), 10, 4 );
+			//add_filter( 'gtheme_comment_actions', array( &$this, 'gtheme_comment_actions' ), 10, 4 );
 		}
 
-		//add_action( 'wp_print_scripts', array( $this, 'wp_print_scripts' ) );
-		//add_action( 'wp_print_styles', array( $this, 'wp_print_styles' ) );
+		//add_action( 'wp_print_scripts', array( &$this, 'wp_print_scripts' ) );
+		//add_action( 'wp_print_styles', array( &$this, 'wp_print_styles' ) );
 
 	}
 
 	function admin_init()
 	{
-		add_action( 'geditorial_settings_register_settings', array( & $this, 'register_settings' ) );
-		add_action( 'admin_print_styles', array( & $this, 'admin_print_styles' ) );
+		add_action( 'geditorial_settings_register_settings', array( &$this, 'register_settings' ) );
+		add_action( 'admin_print_styles', array( &$this, 'admin_print_styles' ) );
 	}
 
 	function comment_form_defaults( $defaults )
@@ -197,7 +197,7 @@ class gEditorialComments extends gEditorialModuleCore
 	{
 		add_meta_box( 'comment_meta_box',
 			$this->get_string( 'box_title', 'comments', 'misc' ),
-			array( $this, 'comment_meta_box' ),
+			array( &$this, 'comment_meta_box' ),
 			'comment',
 			'normal'
 		);

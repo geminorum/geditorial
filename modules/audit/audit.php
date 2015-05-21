@@ -98,14 +98,11 @@ class gEditorialAudit extends gEditorialModuleCore
 
 	public function setup()
 	{
-		add_action( 'init', array( & $this, 'init' ) );
+		add_action( 'init', array( &$this, 'init' ) );
 
 		if ( is_admin() ) {
-			add_action( 'admin_init', array( & $this, 'admin_init' ) );
-
-		} else {
-
-		}
+			add_action( 'geditorial_settings_load', array( &$this, 'register_settings' ) );
+		} 
 	}
 
 	public function init()
@@ -114,11 +111,6 @@ class gEditorialAudit extends gEditorialModuleCore
 
 		$this->do_filters();
 		$this->register_taxonomies();
-	}
-
-	function admin_init()
-	{
-		add_action( 'geditorial_settings_load', array( & $this, 'register_settings' ) );
 	}
 
 	public function register_settings( $page = null )

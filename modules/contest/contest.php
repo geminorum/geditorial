@@ -14,8 +14,8 @@ class gEditorialContest extends gEditorialModuleCore
 		global $gEditorial;
 
 		// adding support for another internal module : gEditorialMeta
-		add_filter( 'geditorial_module_defaults_meta', array( $this, 'module_defaults_meta' ), 10, 2 );
-		add_action( 'geditorial_meta_init', array( $this, 'meta_init' ) );
+		add_filter( 'geditorial_module_defaults_meta', array( &$this, 'module_defaults_meta' ), 10, 2 );
+		add_action( 'geditorial_meta_init', array( &$this, 'meta_init' ) );
 
 		$this->module_url = $this->get_module_url( __FILE__ );
 		$args = array(
@@ -181,9 +181,9 @@ class gEditorialContest extends gEditorialModuleCore
 		if ( ! self::enabled( $this->module_name ) )
 			return;
 
-		add_filter( 'geditorial_meta_strings', array( $this, 'meta_strings' ), 6 , 1 );
-		add_filter( 'geditorial_meta_box_callback', array( $this, 'meta_box_callback' ), 10 , 2 );
-		add_filter( 'geditorial_meta_dbx_callback', array( $this, 'meta_dbx_callback' ), 10 , 2 );
+		add_filter( 'geditorial_meta_strings', array( &$this, 'meta_strings' ), 6 , 1 );
+		add_filter( 'geditorial_meta_box_callback', array( &$this, 'meta_box_callback' ), 10 , 2 );
+		add_filter( 'geditorial_meta_dbx_callback', array( &$this, 'meta_dbx_callback' ), 10 , 2 );
 	}
 
 	function meta_box_callback( $func, $post_type )
@@ -219,28 +219,28 @@ class gEditorialContest extends gEditorialModuleCore
 		$this->register_post_types();
 		$this->register_taxonomies();
 
-		add_action( 'admin_init', array( $this, 'admin_init' ) );
-		//add_action( 'admin_menu', array( $this, 'admin_menu' ) );
-		//add_filter( 'parent_file', array( $this, 'parent_file' ) );
+		add_action( 'admin_init', array( &$this, 'admin_init' ) );
+		//add_action( 'admin_menu', array( &$this, 'admin_menu' ) );
+		//add_filter( 'parent_file', array( &$this, 'parent_file' ) );
 
-		add_filter( 'term_link', array( $this, 'term_link' ), 10, 3 );
-		add_action( 'template_redirect', array( $this, 'template_redirect' ) );
+		add_filter( 'term_link', array( &$this, 'term_link' ), 10, 3 );
+		add_action( 'template_redirect', array( &$this, 'template_redirect' ) );
 
-        add_action( 'save_post', array( $this, 'save_post_contest_cpt' ), 20, 2 );
-        add_filter( 'pre_insert_term', array( $this, 'pre_insert_term' ), 10, 2 );
-        add_action( 'import_start', array( $this, 'import_start' ) );
-        add_action( 'save_post', array( $this, 'save_post_apply_cpt' ), 20, 2 );
+        add_action( 'save_post', array( &$this, 'save_post_contest_cpt' ), 20, 2 );
+        add_filter( 'pre_insert_term', array( &$this, 'pre_insert_term' ), 10, 2 );
+        add_action( 'import_start', array( &$this, 'import_start' ) );
+        add_action( 'save_post', array( &$this, 'save_post_apply_cpt' ), 20, 2 );
 	}
 
 	function admin_init()
 	{
-		add_action( 'geditorial_settings_register_settings', array( & $this, 'register_settings' ) );
+		add_action( 'geditorial_settings_register_settings', array( &$this, 'register_settings' ) );
 
-		add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ), 12, 2 );
-        add_action( 'add_meta_boxes', array( $this, 'remove_meta_boxes' ), 20, 2 );
+		add_action( 'add_meta_boxes', array( &$this, 'add_meta_boxes' ), 12, 2 );
+        add_action( 'add_meta_boxes', array( &$this, 'remove_meta_boxes' ), 20, 2 );
 
         // internal actions:
-        add_action( 'geditorial_contest_meta_box', array( $this, 'geditorial_contest_meta_box' ), 5, 2 );
+        add_action( 'geditorial_contest_meta_box', array( &$this, 'geditorial_contest_meta_box' ), 5, 2 );
 
 	}
 
@@ -513,7 +513,7 @@ class gEditorialContest extends gEditorialModuleCore
             remove_meta_box( 'pageparentdiv', $post_type, 'side' );
             add_meta_box( 'geditorial-contest',
 				$this->get_string( 'contest_box_title', 'post', 'misc' ),
-				array( $this, 'do_meta_box_contest_cpt' ), $post_type, 'side', 'high' );
+				array( &$this, 'do_meta_box_contest_cpt' ), $post_type, 'side', 'high' );
 
             remove_meta_box( 'postimagediv', $post_type, 'side' );
             add_meta_box( 'postimagediv',
@@ -565,7 +565,7 @@ class gEditorialContest extends gEditorialModuleCore
 			$url = add_query_arg( 'page', 'geditorial-contest-settings', get_admin_url( null, 'admin.php' ) );
 			$title .= ' <span class="geditorial-meta-box-title-action"><a href="'.esc_url( $url ).'" class="edit-box open-box" >'.__( 'Configure', GEDITORIAL_TEXTDOMAIN ).'</a></span>';
 		}
-		add_meta_box( 'geditorial-contests', $title, array( $this, 'do_meta_box_applies' ), $post_type, 'side' );
+		add_meta_box( 'geditorial-contests', $title, array( &$this, 'do_meta_box_applies' ), $post_type, 'side' );
     }
 
 	function do_meta_box_applies( $post )

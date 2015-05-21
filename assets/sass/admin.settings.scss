@@ -10,6 +10,8 @@
 
 .geditorial-admin-wrap.geditorial-settings {
 
+	@include main-wrap();
+
 	.explanation {
 
 		margin-bottom: 1em;
