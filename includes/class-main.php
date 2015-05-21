@@ -6,6 +6,7 @@ class gEditorial
     var $options_group      = 'geditorial_';
 	var $options_group_name = 'geditorial_options';
 
+    var $_asset_styles      = false;
     var $_asset_config      = false;
 
 	function __construct()
@@ -30,6 +31,7 @@ class gEditorial
         add_action( 'init'      , array( &$this, 'init_late'  ), 999 );
 		add_action( 'admin_init', array( &$this, 'admin_init' ) );
         add_action( 'wp_footer' , array( &$this, 'wp_footer'  ), 999 );
+        add_action( 'wp_enqueue_scripts', array( &$this, 'wp_enqueue_scripts' ) );
 	}
 
     public function admin_init()
@@ -288,9 +290,25 @@ class gEditorial
         else if ( gEditorialHelper::isTools( $screen ) )
             gEditorialHelper::linkStyleSheet( GEDITORIAL_URL.'assets/css/admin.tools.css' );
         else {
-            // gnetwork_dump( $screen ); die();
+            // gEditorialHelper::dump( $screen ); die();
         }
 	}
+
+    public function enqueue_styles()
+    {
+        $this->_asset_styles = true;
+    }
+
+    public function wp_enqueue_scripts()
+    {
+        if ( ! $this->_asset_styles )
+            return;
+
+        if ( defined( 'GEDITORIAL_DISABLE_FRONT_STYLES' ) && GEDITORIAL_DISABLE_FRONT_STYLES )
+            return;
+
+        wp_enqueue_style( 'geditorial-front-all', GEDITORIAL_URL.'assets/css/front.all.css', array(), GEDITORIAL_VERSION );
+    }
 
     // see it working on like module
     // TODO: accept an array of vars to include via the gEditorial js object

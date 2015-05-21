@@ -2,6 +2,7 @@
 
 class gEditorialModuleCore
 {
+
 	var $enabled = false;
 	var $meta_key = '_ge';
 	var $cookie = 'geditorial';
@@ -359,8 +360,8 @@ class gEditorialModuleCore
 	{
 		$this->_settings_buttons[$key] = array(
 			'value' => $value,
-			'atts' => $atts,
-			'type' => $type,
+			'atts'  => $atts,
+			'type'  => $type,
 		);
 	}
 
@@ -439,7 +440,6 @@ class gEditorialModuleCore
 		return $fields;
 	}
 
-
 	// DEPRECATED : use post_type_all_fields()
 	// MINE
 	// Moved here form : Meta
@@ -452,7 +452,6 @@ class gEditorialModuleCore
 				$fields[] = $field;
 		return $fields;
 	}
-
 
 	// mine
 	public function get_string( $string, $post_type = 'post', $group = 'titles', $fallback = false )
@@ -615,7 +614,7 @@ class gEditorialModuleCore
 				?><select name="<?php echo $name; ?>" id="<?php echo $id; ?>" class="<?php echo $args['class']; ?>" >
 					<option value="0" <?php selected( $option, 0 ); ?>><?php esc_html_e( 'Disabled', GEDITORIAL_TEXTDOMAIN ); ?></option>
 					<option value="1" <?php selected( $option, 1 ); ?>><?php esc_html_e( 'Enabled', GEDITORIAL_TEXTDOMAIN ); ?></option>
-				</select><?php
+				</select> <?php
 
 				if ( $args['description'] )
 					echo '<p class="description">'.esc_html( $args['description'] ).'</p>';
@@ -626,7 +625,7 @@ class gEditorialModuleCore
 				?><input type="text" class="regular-text <?php echo $args['class']; ?>"
 					name="<?php echo $name; ?>" id="<?php echo $id; ?>"
 					value="<?php echo esc_attr( $option ); ?>"
-					<?php if ( $args['dir'] ) echo 'dir="'.$args['dir'].'"'; ?> /><?php
+					<?php if ( $args['dir'] ) echo 'dir="'.$args['dir'].'"'; ?> /> <?php
 				if ( $args['description'] )
 					echo '<p class="description">'.esc_html( $args['description'] ).'</p>';
 
@@ -654,7 +653,7 @@ class gEditorialModuleCore
 						foreach ( $args['values'] as $value_name => $value_title ) {
 							?><option value="<?php echo esc_attr( $value_name ); ?>" <?php selected( $value_name, $option );?>><?php echo esc_html( $value_title ); ?></option><?php
 						}
-					?></select><?php
+					?></select> <?php
 					if ( $args['description'] )
 						echo '<p class="description">'.$args['description'].'</p>';
 				}
@@ -738,15 +737,29 @@ class gEditorialModuleCore
 
 	}
 
+	// FRONT ONLY: cause will called from 'wp_footer'
 	// WARNING: every asset must have a .min copy
 	public function enqueue_asset_js( $name = 'front', $deps = array( 'jquery' ), $handle = null )
     {
 		global $gEditorial;
 
 		$suffix = ( ( ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) || gEditorialHelper::isDev() ) ? '' : '.min' );
-        wp_enqueue_script( ( $handle ? $handle : 'geditorial-'.$this->module_name ), $this->module_url.'assets/'.$name.$suffix.'.js', $deps, GEDITORIAL_VERSION );
+
+		wp_enqueue_script(
+			( $handle ? $handle : 'geditorial-'.$this->module_name ),
+			// $this->module_url.'assets/'.$name.$suffix.'.js',
+			GEDITORIAL_URL.'assets/js/geditorial/front.'.$this->module_name.$suffix.'.js',
+			$deps,
+			GEDITORIAL_VERSION );
+
 		$gEditorial->enqueue_asset_config();
     }
 
-
+	// FRONT ONLY: combined global styles
+	// TODO: also we need api for module specified css
+	public function enqueue_styles()
+	{
+		global $gEditorial;
+		$gEditorial->enqueue_styles();
+	}
 }
