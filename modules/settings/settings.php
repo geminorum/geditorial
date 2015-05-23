@@ -4,6 +4,7 @@ class gEditorialSettings extends gEditorialModuleCore
 {
 
 	var $module;
+	var $module_name = 'settings';
 
     public function __construct()
     {
@@ -45,7 +46,7 @@ class gEditorialSettings extends gEditorialModuleCore
             $this->module->title,
             'manage_options',
             $this->module->settings_slug,
-            array( $this, 'admin_settings_page' ),
+            array( &$this, 'admin_settings_page' ),
             'dashicons-screenoptions'
         );
 
@@ -54,11 +55,11 @@ class gEditorialSettings extends gEditorialModuleCore
             _x( 'Tools', 'Admin Tools Menu Title', GEDITORIAL_TEXTDOMAIN ),
 			'manage_options',
 			'geditorial-tools',
-			array( & $this, 'admin_tools_page' )
+			array( &$this, 'admin_tools_page' )
 		);
 
-		add_action( 'load-'.$hook_settings, array( & $this, 'admin_settings_load' ) );
-		add_action( 'load-'.$hook_tools, array( & $this, 'admin_tools_load' ) );
+		add_action( 'load-'.$hook_settings, array( &$this, 'admin_settings_load' ) );
+		add_action( 'load-'.$hook_tools, array( &$this, 'admin_tools_load' ) );
 
 		foreach ( $gEditorial->modules as $mod_name => $mod_data ) {
 			if ( isset( $mod_data->options->enabled ) && $mod_data->options->enabled == 'on'
@@ -67,9 +68,9 @@ class gEditorialSettings extends gEditorialModuleCore
 						$mod_data->title, $mod_data->title,
 						'manage_options',
 						$mod_data->settings_slug,
-						array( & $this, 'admin_settings_page' )
+						array( &$this, 'admin_settings_page' )
 					);
-					add_action( 'load-'.$hook_module, array( & $this, 'admin_settings_load' ) );
+					add_action( 'load-'.$hook_module, array( &$this, 'admin_settings_load' ) );
 			}
 		}
 	}
@@ -328,12 +329,7 @@ class gEditorialSettings extends gEditorialModuleCore
 		// DEPRECATED: use 'geditorial_settings_load'
 		do_action( 'geditorial_settings_register_settings' );
 
-		wp_enqueue_script( 'geditorial-settings',
-			//GEDITORIAL_URL.'assets/js/geditorial/admin.settings.js',
-			GEDITORIAL_URL.'assets/js/geditorial/admin.settings.min.js',
-			array( 'jquery' ),
-			GEDITORIAL_VERSION,
-			true );
+		$this->enqueue_asset_js();
 	}
 
 	private function admin_settings_verify( $options_group_name )
