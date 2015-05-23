@@ -8,6 +8,7 @@ class gEditorial
 
     var $_asset_styles      = false;
     var $_asset_config      = false;
+    var $_asset_args        = array();
 
 	function __construct()
     {
@@ -30,13 +31,14 @@ class gEditorial
 
         add_action( 'init'      , array( &$this, 'init_late'  ), 999 );
 		add_action( 'admin_init', array( &$this, 'admin_init' ) );
-        add_action( 'wp_footer' , array( &$this, 'wp_footer'  ), 999 );
+        add_action( 'wp_footer' , array( &$this, 'footer_asset_config'  ), 999 );
         add_action( 'wp_enqueue_scripts', array( &$this, 'wp_enqueue_scripts' ) );
 	}
 
     public function admin_init()
     {
         add_action( 'admin_print_styles', array( $this, 'admin_print_styles' ) );
+        add_action( 'admin_print_footer_scripts', array( $this, 'footer_asset_config' ), 999 );
     }
 
 	// include the common resources to Edit Flow and dynamically load the modules
@@ -285,6 +287,8 @@ class gEditorial
 			gEditorialHelper::linkStyleSheet( GEDITORIAL_URL.'assets/css/admin.post.css' );
 		else if ( 'edit' == $screen->base )
 			gEditorialHelper::linkStyleSheet( GEDITORIAL_URL.'assets/css/admin.edit.css' );
+		else if ( 'widgets' == $screen->base )
+			gEditorialHelper::linkStyleSheet( GEDITORIAL_URL.'assets/css/admin.widgets.css' );
         else if ( gEditorialHelper::isSettings( $screen ) )
             gEditorialHelper::linkStyleSheet( GEDITORIAL_URL.'assets/css/admin.settings.css' );
         else if ( gEditorialHelper::isTools( $screen ) )
@@ -310,28 +314,24 @@ class gEditorial
         wp_enqueue_style( 'geditorial-front-all', GEDITORIAL_URL.'assets/css/front.all.css', array(), GEDITORIAL_VERSION );
     }
 
-    // see it working on like module
-    // TODO: accept an array of vars to include via the gEditorial js object
-    public function enqueue_asset_config( $vars = array() )
+    public function enqueue_asset_config( $args = array(), $module = null )
     {
         $this->_asset_config = true;
+
+		if ( count( $args ) ) {
+			if ( is_null( $module ) )
+				$this->_asset_args = array_merge( $this->_asset_args, $args );
+			else
+				$this->_asset_args = array_merge( $this->_asset_args, array( $module => $args ) );
+		}
     }
 
-    // must be better!
-    public function wp_footer()
+    // front & admin
+    public function footer_asset_config()
     {
         if ( ! $this->_asset_config )
             return;
 
-        $endpoint = defined( 'GNETWORK_AJAX_ENDPOINT' ) && GNETWORK_AJAX_ENDPOINT ? GNETWORK_AJAX_ENDPOINT : admin_url( 'admin-ajax.php' );
-
-        ?>
-<script type="text/javascript">
-/* <![CDATA[ */
-    var gEditorial = {"api": "<?php echo esc_js($endpoint); ?>" };
-/* ]]> */
-</script>
-<?php
-
+		gEditorialHelper::printJSConfig( $this->_asset_args );
     }
 }

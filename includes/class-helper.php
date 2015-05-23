@@ -254,16 +254,16 @@ class gEditorialHelper
 					$title = $gEditorial->meta->get_string( $field, $post->post_type );
 
 				$atts = array(
-					'type' => 'text',
-					'autocomplete' => 'off',
-					'style' => 'width:99%;',
-					'class' => 'geditorial-meta-prompt geditorial-meta-field-'.$field,
-					'name' => 'geditorial-meta-'.$field,
-					'id' => 'geditorial-meta-'.$field,
-					'value' => $gEditorial->meta->get_postmeta( $post->ID, $field ),
-					'title' => $title,
-					'placeholder' => $title,
-					'readonly' => ! $gEditorial->meta->user_can( 'edit', $field ),
+                    'type'         => 'text',
+                    'autocomplete' => 'off',
+                    // 'style'        => 'width:99%;',
+                    'class'        => 'field-text geditorial-meta-field-'.$field,
+                    'name'         => 'geditorial-meta-'.$field,
+                    'id'           => 'geditorial-meta-'.$field,
+                    'value'        => $gEditorial->meta->get_postmeta( $post->ID, $field ),
+                    'title'        => $title,
+                    'placeholder'  => $title,
+                    'readonly'     => ! $gEditorial->meta->user_can( 'edit', $field ),
 				);
 
 				if ( $ltr )
@@ -271,8 +271,8 @@ class gEditorialHelper
 
 				$html = self::html( 'input', $atts );
 
-				echo self::html( 'p', array(
-					'class' => 'geditorial-meta-box-field-wrap',
+				echo self::html( 'div', array(
+					'class' => 'field-wrap',
 				), $html );
 		}
 
@@ -290,15 +290,15 @@ class gEditorialHelper
 					$title = $gEditorial->meta->get_string( $field, $post->post_type );
 
 				$atts = array(
-					'type' => 'text',
-					'autocomplete' => 'off',
-					'class' => 'geditorial-meta-prompt geditorial-meta-field-'.$field,
-					'name' => 'geditorial-meta-'.$field,
-					'id' => 'geditorial-meta-'.$field,
-					'value' => $gEditorial->meta->get_postmeta( $post->ID, $field ),
-					'title' => $title,
-					'placeholder' => $title,
-					'readonly' => ! $gEditorial->meta->user_can( 'edit', $field ),
+                    'type'         => 'text',
+                    'autocomplete' => 'off',
+                    'class'        => 'field-text geditorial-meta-field-'.$field,
+                    'name'         => 'geditorial-meta-'.$field,
+                    'id'           => 'geditorial-meta-'.$field,
+                    'value'        => $gEditorial->meta->get_postmeta( $post->ID, $field ),
+                    'title'        => $title,
+                    'placeholder'  => $title,
+                    'readonly'     => ! $gEditorial->meta->user_can( 'edit', $field ),
 				);
 
 				if ( $ltr )
@@ -322,16 +322,50 @@ class gEditorialHelper
 				$html .= '<div class="handlediv" title="'.esc_attr__( 'Click to toggle' ).'"><br></div><h3 class="hndle"><span>'.$title.'</span></h3>';
 				$html .= '<div class="inside"><label class="screen-reader-text" for="geditorial-meta-'.$field.'">'.$title.'</label>';
 				$html .= self::html( 'textarea', array(
-					'rows' => '1',
-					'cols' => '40',
-					'name' => 'geditorial-meta-'.$field,
-					'id' => 'geditorial-meta-'.$field,
-					'class' => 'textarea-autosize geditorial-meta-field-'.$field,
-					'readonly' => ! $gEditorial->meta->user_can( 'edit', $field ),
+                    'rows'     => '1',
+                    'cols'     => '40',
+                    'name'     => 'geditorial-meta-'.$field,
+                    'id'       => 'geditorial-meta-'.$field,
+                    'class'    => 'textarea-autosize geditorial-meta-field-'.$field,
+                    'readonly' => ! $gEditorial->meta->user_can( 'edit', $field ),
 				), esc_textarea( $gEditorial->meta->get_postmeta( $post->ID, $field ) ) );
 				$html .= '</div></div>';
 
 				echo $html;
+		}
+	}
+
+	public static function getTermsEditRow( $post_id, $post_type, $taxonomy, $before = '', $after = '' )
+	{
+		$taxonomy_object = get_taxonomy( $taxonomy );
+
+		if ( $terms = get_the_terms( $post_id, $taxonomy ) ) {
+
+            $out = array();
+
+            foreach ( $terms as $t ) {
+
+                $query = array();
+
+				if ( 'post' != $post_type )
+                    $query['post_type'] = $post_type;
+
+                if ( $taxonomy_object->query_var ) {
+                    $query[$taxonomy_object->query_var] = $t->slug;
+
+                } else {
+                    $query['taxonomy'] = $taxonomy;
+                    $query['term']     = $t->slug;
+				}
+
+				$out[] = sprintf( '<a href="%s">%s</a>',
+					esc_url( add_query_arg( $query, 'edit.php' ) ),
+					esc_html( sanitize_term_field( 'name', $t->name, $t->term_id, $taxonomy, 'display' ) )
+				);
+			}
+
+            //printf( 'Types: %s', join( __( ', ' ), $out ) );
+            echo $before.join( __( ', ' ), $out ).$after;
 		}
 	}
 
@@ -669,5 +703,19 @@ class gEditorialHelper
             return true;
 
         return false;
+    }
+
+    public static function printJSConfig( $args, $object = 'gEditorial' )
+    {
+        $args['api'] = defined( 'GNETWORK_AJAX_ENDPOINT' ) && GNETWORK_AJAX_ENDPOINT ? GNETWORK_AJAX_ENDPOINT : admin_url( 'admin-ajax.php' );
+
+    ?> <script type="text/javascript">
+/* <![CDATA[ */
+    var <?php echo $object; ?> = <?php echo wp_json_encode( $args ); ?>;
+
+    <?php if ( gEditorialHelper::isDev() ) echo 'console.log('.$object.');'; ?>
+
+/* ]]> */
+</script> <?php
     }
 }

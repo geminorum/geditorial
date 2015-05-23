@@ -8,6 +8,7 @@ class gEditorialModuleCore
 	var $cookie = 'geditorial';
 
 	var $_post_types_excluded = array();
+	var $_taxonomies_excluded = array();
 	var $_kses_allowed = array();
 
 	var $_settings_buttons = array();
@@ -15,14 +16,12 @@ class gEditorialModuleCore
 	public function __construct() { }
 
 	// returns whether the module with the given name is enabled.
-	//function module_enabled( $slug )
 	public static function enabled( $slug )
 	{
 		global $gEditorial;
 		return isset( $gEditorial->$slug ) && $gEditorial->$slug->module->options->enabled == 'on';
 	}
 
-	// mine
 	// enabled post types for this module
 	public function post_types()
 	{
@@ -47,7 +46,6 @@ class gEditorialModuleCore
 		return $post_types;
 	}
 
-	// mine
 	// applicable post types for this module
 	public function all_post_types()
 	{
@@ -70,7 +68,47 @@ class gEditorialModuleCore
 		return $post_types;
 	}
 
-	// mine
+	// enabled post types for this module
+	public function taxonomies()
+	{
+		$taxonomies = array();
+
+		if ( isset( $this->module->options->taxonomies )
+			&& is_array( $this->module->options->taxonomies ) ) {
+
+				foreach( $this->module->options->taxonomies as $taxonomy => $value ) {
+
+					if ( 'off' === $value )
+						$value = false;
+
+					if ( in_array( $taxonomy, $this->_taxonomies_excluded ) )
+						$value = false;
+
+					if ( $value )
+						$taxonomies[] = $taxonomy;
+				}
+		}
+
+		return $taxonomies;
+	}
+
+	public function all_taxonomies()
+	{
+		$tax_list = get_taxonomies( array(
+			// 'show_ui' => true,
+		), 'objects' );
+
+		$taxonomies = array();
+
+		foreach ( $tax_list as $tax => $tax_obj )
+		$taxonomies[$tax] = $tax_obj->label;
+
+		if ( count( $this->_taxonomies_excluded ) )
+			$taxonomies = array_diff_key( $taxonomies, array_flip( $this->_taxonomies_excluded ) );
+
+		return $taxonomies;
+	}
+
 	// for supporting late registered custom post types
 	public function sanitize_post_types( $module_post_types = array() )
 	{
@@ -130,7 +168,6 @@ class gEditorialModuleCore
 		return $normalized;
 	}
 
-
 	// DEPRECATED
 	// get all of the possible post types that can be used with a given module
 	public function get_supported_post_types_for_module( $module = null )
@@ -151,8 +188,7 @@ class gEditorialModuleCore
 		return $post_types;
 	}
 
-	// Generate an option field to turn post type support on/off for a given module
-	public function helper_option_custom_post_type()
+	public function settings_post_types_option( $section )
 	{
 		foreach( $this->all_post_types() as $post_type => $label ) {
 			$html = gEditorialHelper::html( 'input', array(
@@ -164,6 +200,21 @@ class gEditorialModuleCore
 
 			echo '<p>'.gEditorialHelper::html( 'label', array(
 				'for' => 'type-'.$post_type,
+			), $html.'&nbsp;'.esc_html( $label ) ).'</p>';
+		}
+	}
+
+	public function settings_taxonomies_option( $section )
+	{
+		foreach( $this->all_taxonomies() as $taxonomy => $label ) {
+			$html = gEditorialHelper::html( 'input', array(
+				'type' => 'checkbox',
+				'id' => 'tax-'.$taxonomy,
+				'name' => $this->module->options_group_name.'[taxonomies]['.$taxonomy.']',
+				'checked' => isset( $this->module->options->taxonomies[$taxonomy] ) && $this->module->options->taxonomies[$taxonomy],
+			) );
+			echo '<p>'.gEditorialHelper::html( 'label', array(
+				'for' => 'tax-'.$taxonomy,
 			), $html.'&nbsp;'.esc_html( $label ) ).'</p>';
 		}
 	}
@@ -251,7 +302,6 @@ class gEditorialModuleCore
 		return $enabled_post_types;
 	}
 
-	// Moved here form : Meta
 	public function register_settings_post_types_option()
 	{
 		$section = $this->module->options_group_name.'_posttypes';
@@ -264,7 +314,18 @@ class gEditorialModuleCore
 		);
 	}
 
-	// Moved here form : Meta
+	public function register_settings_taxonomies_option()
+	{
+		$section = $this->module->options_group_name.'_taxonomies';
+		add_settings_section( $section, false, '__return_false', $this->module->options_group_name );
+		add_settings_field( 'taxonomies',
+			__( 'Enable for these taxonomies:', GEDITORIAL_TEXTDOMAIN ),
+			array( $this, 'settings_taxonomies_option' ),
+			$this->module->options_group_name,
+			$section
+		);
+	}
+
 	public function register_settings_post_types_fields()
 	{
 		$all = $this->all_post_types();
@@ -287,11 +348,11 @@ class gEditorialModuleCore
 						$this->module->options_group_name,
 						$post_type.'_fields',
 						array(
-							//'label_for' => $post_type.'_'.$field, // NO NEED beacause we use check box and label is better to be on next to it
-							'id' => $post_type.'_'.$field,
-							'title' => $this->get_string( $field, $post_type ),
+							// 'label_for' => $post_type.'_'.$field, // NO NEED beacause we use check box and label is better to be on next to it
+							'id'        => $post_type.'_'.$field,
+							'title'     => $this->get_string( $field, $post_type ),
 							'post_type' => $post_type,
-							'field' => $field,
+							'field'     => $field,
 						)
 					);
 			} else {
@@ -305,7 +366,6 @@ class gEditorialModuleCore
 		}
 	}
 
-	// Moved here form : Meta
 	public function do_post_type_fields_option( $args )
 	{
 		//$fields = $this->get_post_type_fields( $this->module, $args['post_type'] );
@@ -316,19 +376,12 @@ class gEditorialModuleCore
 		if ( isset( $this->module->options->{$args['post_type'].'_fields'}[$args['field']] ) )
 			checked( $this->module->options->{$args['post_type'].'_fields'}[$args['field']], 'on' );
 
-		echo ' type="checkbox" />&nbsp;'.esc_html( $args['title'] ).'<p class="description">';
-		echo $this->get_string( $args['field'], $args['post_type'], 'descriptions', __( 'No description available.', GEDITORIAL_TEXTDOMAIN ) ).'</p></label>';
+		echo ' type="checkbox" />&nbsp;'.esc_html( $args['title'] )
+			.'<p class="description">';
+		echo $this->get_string( $args['field'], $args['post_type'], 'descriptions',
+			__( 'No description available.', GEDITORIAL_TEXTDOMAIN ) ).'</p></label>';
 	}
 
-	// Moved here form : Meta
-	public function settings_post_types_option( $section )
-	{
-		//global $gEditorial;
-		//$gEditorial->settings->helper_option_custom_post_type( $this->module );
-		$this->helper_option_custom_post_type();
-	}
-
-	// Moved here form : Meta
 	public function print_configure_view()
 	{
 		$action = add_query_arg( 'page', $this->module->settings_slug, get_admin_url( null, 'admin.php' ) );
@@ -345,7 +398,8 @@ class gEditorialModuleCore
 					echo '&nbsp;&nbsp;';
 				}
 
-			echo '<a class="button" href="'.gEditorialHelper::settingsURL().'">'.__( 'Back to Editorial', GEDITORIAL_TEXTDOMAIN ).'</a></p>';
+			echo '<a class="button" href="'.gEditorialHelper::settingsURL().'">'
+				.__( 'Back to Editorial', GEDITORIAL_TEXTDOMAIN ).'</a></p>';
 
 		echo '</form>';
 
@@ -365,7 +419,6 @@ class gEditorialModuleCore
 		);
 	}
 
-	// Moved here form : Meta
 	// Validate our user input as the settings are being saved
 	public function settings_validate( $new_options )
 	{
@@ -441,8 +494,6 @@ class gEditorialModuleCore
 	}
 
 	// DEPRECATED : use post_type_all_fields()
-	// MINE
-	// Moved here form : Meta
 	public function get_post_type_supported_fields( $module, $post_type = 'post' )
 	{
 		$key = $post_type.'_fields';
@@ -453,7 +504,6 @@ class gEditorialModuleCore
 		return $fields;
 	}
 
-	// mine
 	public function get_string( $string, $post_type = 'post', $group = 'titles', $fallback = false )
 	{
 		if( isset( $this->module->strings[$group][$post_type][$string] ) )
@@ -471,7 +521,6 @@ class gEditorialModuleCore
 		return $fallback;
 	}
 
-	// mine
 	public function do_filters()
 	{
 		if ( has_filter( 'geditorial_'.$this->module_name.'_strings' ) )
@@ -481,7 +530,6 @@ class gEditorialModuleCore
 			$this->module->constants = apply_filters( 'geditorial_'.$this->module_name.'_constants', $this->module->constants );
 	}
 
-	// mine
 	// convert the numbers in other language into english
 	public function intval( $text, $intval = true )
 	{
@@ -501,8 +549,6 @@ class gEditorialModuleCore
 		return apply_filters( 'geditorial_kses', wp_kses( $text, $allowed ) );
 	}
 
-	// mine
-	// Moved here form : Meta
 	public function user_can( $action = 'view', $field = '', $post_type = 'post' )
 	{
 		global $geditorial_modules_caps;
@@ -515,7 +561,6 @@ class gEditorialModuleCore
 		return true;
 	}
 
-	// mine
 	public function register_settings( $page = null )
 	{
 		if ( ! isset( $this->module->settings ) )
@@ -552,10 +597,8 @@ class gEditorialModuleCore
 			$screen->set_help_sidebar( $this->module->settings_help_sidebar );
 	}
 
-	//mine
 	public function add_settings_field( $r )
 	{
-		//$args = shortcode_atts( array(
 		$args = array_merge( array(
 			'page' => $this->module->options_group_name,
 			'section' => $this->module->options_group_name.'_general',
@@ -573,10 +616,8 @@ class gEditorialModuleCore
 			$args['title'] = $args['field'];
 
 		add_settings_field( $args['field'], $args['title'], $args['callback'], $args['page'], $args['section'], $args );
-			//	'label_for' => $this->option_group.'['.$field_name.']',
 	}
 
-	// mine
 	public function do_settings_field( $r )
 	{
 		$args = shortcode_atts( array(
@@ -607,8 +648,6 @@ class gEditorialModuleCore
 		else
 			$option = null;
 
-		//echo $this->get_setting( $args['field'], 'HELLO' ).'<br />';
-
 		switch ( $args['type'] ) {
 			case 'enabled' :
 				?><select name="<?php echo $name; ?>" id="<?php echo $id; ?>" class="<?php echo $args['class']; ?>" >
@@ -636,7 +675,7 @@ class gEditorialModuleCore
 					foreach( $args['values'] as $value_name => $value_title ) {
 						?><input type="checkbox" name="<?php echo $name.'['.esc_attr( $value_name ).']'; ?>" id="<?php echo $id.'-'.esc_attr( $value_name ); ?>" value="1"  class="<?php echo $args['class']; ?>" <?php
 						checked( true, in_array( $value_name, ( array ) $option ) );?> /><?php
-						?>&nbsp;<span><?php echo esc_html( $value_title ); ?></span><br /><?php
+						?>&nbsp;<span><?php echo esc_html( $value_title ); ?></span><br /> <?php
 					}
 				} else {
 					?><input type="checkbox" name="<?php echo $name; ?>" id="<?php echo $name; ?>" value="1"  class="<?php echo $args['class']; ?>" <?php checked( 1, $option );?> /><?php
@@ -668,7 +707,6 @@ class gEditorialModuleCore
 		}
 	}
 
-	// mine
 	public function get_setting( $field, $default = null )
 	{
 		if ( isset( $this->module->options->settings[$field] ) )
@@ -679,14 +717,13 @@ class gEditorialModuleCore
 			return $default;
 	}
 
-	// since wp 4.1 use: wp_json_encode()
 	public function set_cookie( $array, $append = true, $expire = '+ 365 day' )
 	{
 		if ( $append ) {
 			$old = isset( $_COOKIE[$this->cookie] ) ? json_decode( wp_unslash( $_COOKIE[$this->cookie] ) ) : array();
-			$new = json_encode( gEditorialHelper::parse_args_r( $array, $old ) );
+			$new = wp_json_encode( gEditorialHelper::parse_args_r( $array, $old ) );
 		} else {
-			$new = json_encode( $array );
+			$new = wp_json_encode( $array );
 		}
 
 		setcookie( $this->cookie, $new, strtotime( $expire ), COOKIEPATH, COOKIE_DOMAIN, false );
@@ -739,20 +776,23 @@ class gEditorialModuleCore
 
 	// FRONT ONLY: cause will called from 'wp_footer'
 	// WARNING: every asset must have a .min copy
-	public function enqueue_asset_js( $name = 'front', $deps = array( 'jquery' ), $handle = null )
+	public function enqueue_asset_js( $args = array(), $name = null, $deps = array( 'jquery' ), $handle = null )
     {
 		global $gEditorial;
 
+		if ( is_null( $name ) )
+			$name = $this->module_name;
+
+		$prefix = is_admin() ? 'admin' : 'front';
 		$suffix = ( ( ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) || gEditorialHelper::isDev() ) ? '' : '.min' );
 
 		wp_enqueue_script(
-			( $handle ? $handle : 'geditorial-'.$this->module_name ),
-			// $this->module_url.'assets/'.$name.$suffix.'.js',
-			GEDITORIAL_URL.'assets/js/geditorial/front.'.$this->module_name.$suffix.'.js',
+			( $handle ? $handle : 'geditorial-'.$name ),
+			GEDITORIAL_URL.'assets/js/geditorial/'.$prefix.'.'.$name.$suffix.'.js',
 			$deps,
 			GEDITORIAL_VERSION );
 
-		$gEditorial->enqueue_asset_config();
+		$gEditorial->enqueue_asset_config( $args, $this->module_name );
     }
 
 	// FRONT ONLY: combined global styles

@@ -3,35 +3,16 @@
 @import "partials/base";
 
 @import "editorial/admin.all";
-//@import "editorial/admin.post";
-//@import "editorial/like.admin.post";
-//@import "editorial/specs.admin.post";
+//@import "editorial/admin.edit";
+//@import "editorial/like.admin.edit";
+//@import "editorial/specs.admin.edit";
+@import "editorial/magazine.admin.edit";
+@import "editorial/tweaks.admin.edit";
 
+.geditorial-admin-wrap-column {
 
-////////////////////////////////////////////////////////////////////////////////
-//--MAGAZINE--------------------------------------------------------------------
-.column-taxonomy-issues {
-    width:120px;
 }
 
-body.post-type-issue {
-
-    th#issue_order {
-        width:45px !important;
-    }
-
-    th.column-cover {
-        width:45px !important;
-    }
-
-    th.column-taxonomy-span {
-        width:125px !important;
-    }
-
-    th.column-issue_posts {
-        width:55px !important;
-    }
-}
 
 ////////////////////////////////////////////////////////////////////////////////
 //--ENTRY-----------------------------------------------------------------------

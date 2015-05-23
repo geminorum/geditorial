@@ -6,6 +6,66 @@
 //@import "editorial/admin.post";
 //@import "editorial/like.admin.post";
 @import "editorial/specs.admin.post";
+@import "editorial/magazine.admin.post";
+
+
+.geditorial-admin-wrap {
+	//@include main-wrap();
+}
+
+.geditorial-admin-action-metabox {
+	position:absolute;
+	padding:0;
+	right:40px;
+	top:6px;
+
+	@include body-rtl() {
+		left:40px;
+		right:auto;
+		font-family:tahoma;
+	}
+
+	a,
+	a:hover {
+		text-decoration:none;
+	}
+}
+
+.geditorial-admin-wrap-metabox {
+	@include main-wrap();
+
+	margin-top:12px;
+
+	.field-wrap {
+		margin-bottom:2px;
+
+		// wp_dropdown_pages() does not suport css class
+		#parent_id {
+			width:100%;
+		}
+	}
+
+	.field-wrap-wrap {
+		margin-bottom:2px;
+		.field-wrap {
+			margin-bottom:0px;
+		}
+	}
+
+	.field-text {
+		width:100%;
+	}
+
+	.field-order {
+		width:auto;
+	}
+
+}
+
+.geditorial-admin-dropbown {
+	@extend %box-reset;
+	width:100%;
+}
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -21,38 +81,15 @@ body.rtl #sample-permalink { margin-left:5px; }
 body.rtl input#post_name { direction:ltr; }
 
 ////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
-//---ALL-MODULES----------------------------------------------------------------
-div.p111111ostbox[id^="geditorial-"] div.inside { padding-bottom:0 !important; }
-.geditorial-meta-box-title-action { position:absolute; padding:0; right:40px; top:6px; }
-body.rtl .geditorial-meta-box-title-action { left:40px; right:auto; font-family:tahoma; }
-.geditorial-meta-box-title-action a, .geditorial-meta-box-title-action a:hover { text-decoration:none; }
-
-div.postbox select.geditorial-meta-box-dropbown { width:99%; }
-div.postbox select#parent_id { width:99%; }
-div.postbox p.geditorial-meta-box-field-wrap {}
-
-////////////////////////////////////////////////////////////////////////////////
 /**---META--------------------------------------------------**/
 #geditorial-meta-ot { margin:0 0 5px 1px; width:100%; padding: 3px 8px; font-size: 1.3em; }
 #geditorial-meta-st { margin:5px 0 15px 1px; width: 100%; padding: 3px 8px; font-size: 1.3em; }
 
-p.geditorial-meta-post-meta-box-p {}
 p.geditorial-meta-post-meta-box-p-actions {}
 p.geditorial-meta-post-meta-box-p-actions a.button { width:100%; }
 p.geditorial-meta-post-meta-box-p-table {}
 .geditorial-meta-postbox { margin:10px 0 0 0; }
 .geditorial-meta-postbox textarea { width:99%; margin:12px 0 0 0; resize:vertical; }
-////////////////////////////////////////////////////////////////////////////////
-/**---CONTEST-----------------------------------------------**/
-.geditorial_contest_term_wrap {}
-.geditorial_contest_term_wrap select { width:99%; }
-#geditorial-contest select#parent_id { width:99%; }
-////////////////////////////////////////////////////////////////////////////////
-/**---MAGAZINE----------------------------------------------**/
-select.g1111editorial_magazine_issue_term_dropdown { width:99%; }
-
 ////////////////////////////////////////////////////////////////////////////////
 /**---SERIES------------------------------------------------**/
 .geditorial_series_term_wrap { margin-bottom:10px; }

@@ -1,0 +1,22 @@
+
+@import "modules/all";
+@import "partials/base";
+
+@import "editorial/admin.all";
+// @import "editorial/admin.widgets";
+// @import "editorial/like.admin.widgets";
+// @import "editorial/specs.admin.widgets";
+// @import "editorial/magazine.admin.widgets";
+// @import "editorial/tweaks.admin.widgets";
+
+.geditorial-admin-wrap-widgetform {
+	@include main-wrap();
+
+	margin-bottom:2em;
+
+	p {
+		select {
+			width:100%;
+		}
+	}
+}
