@@ -12,7 +12,7 @@ gEditorial is a fork in structure of [EditFlow](http://editflow.org/).
 [![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/geminorum/geditorial?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 ### Included Modules
-####Audit (Content Inventory Tools)
+#####Audit (Content Inventory Tools)
 Adding auditing functionality to WordPress with custom taxonomies.
 
 Idea originally from [Content Audit](http://stephanieleary.com/code/wordpress/content-audit/) ([+](http://www.adaptivepath.com/ideas/doing-content-inventory/)) by [Stephanie Leary](https://profiles.wordpress.org/sillybean)
@@ -29,7 +29,7 @@ Planning
 - set via ajax admin-bar button
 - content stats
 
-####Comments
+#####Comments
 Series of tools to help better managing the comments on a magazine
 
 Features
@@ -39,17 +39,38 @@ Features
 Planning
 - comment action row support for front-end
 
-####Contests
+#####Contests
 Set of tools to create and manage text contests and/or gather assignments.
 
-####Divisions
+#####Divisions
+Post Divisions Management
 
-####Entry (Posts Entries, Wiki-like)
+#####Entry
+Posts Entries, Wiki-like
 
-####Like ()
+#####Like
 Like Button for Posts and Comments
 
+#####Magazine
+Issue Management for Magazines
+
+#####Meta
+Metadata, magazine style.
+
+#####Series
+Post Series Management
+
+#####Specs
+Post Specifications Management
+
+#####Tweaks
+Admin UI Enhancement
+
+* Taxonomies in rows on post types edit
+
 ### Included Packages
+
+* [Colorbox](http://jacklmoore.com/colorbox/) by [Jack Moore](http://github.com/jackmoore)
 
 ## Installation
 
