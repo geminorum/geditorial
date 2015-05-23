@@ -8,7 +8,7 @@ class gEditorialAudit extends gEditorialModuleCore
 	var $meta_key = '_ge_audit';
 	var $cookie = 'geditorial-audit';
 
-	function __construct()
+	public function __construct()
 	{
 		global $gEditorial;
 
@@ -102,7 +102,7 @@ class gEditorialAudit extends gEditorialModuleCore
 
 		if ( is_admin() ) {
 			add_action( 'geditorial_settings_load', array( &$this, 'register_settings' ) );
-		} 
+		}
 	}
 
 	public function init()
@@ -127,23 +127,23 @@ class gEditorialAudit extends gEditorialModuleCore
 		$editor = current_user_can( 'edit_others_posts' );
 
 		register_taxonomy( $this->module->constants['audit_tax'], $this->post_types(), array(
-			'labels' => $this->module->strings['labels']['audit_tax'],
-			'public' => false,
-			'show_in_nav_menus' => false,
-			'show_ui' => $editor,
-			'show_admin_column' => $editor,
-			'show_tagcloud' => false,
-			'hierarchical' => false,
+			'labels'                => $this->module->strings['labels']['audit_tax'],
+			'public'                => false,
+			'show_in_nav_menus'     => false,
+			'show_ui'               => $editor,
+			'show_admin_column'     => $editor,
+			'show_tagcloud'         => false,
+			'hierarchical'          => false,
 			'update_count_callback' => array( 'gEditorialHelper', 'update_count_callback' ),
-			'rewrite' => array(
-				'slug' => $this->module->constants['audit_tax'],
+			'query_var'             => true,
+			'rewrite'               => array(
+				'slug'         => $this->module->constants['audit_tax'],
 				'hierarchical' => true,
-				'with_front' => true
+				'with_front'   => true
 			),
-			'query_var' => true,
 			'capabilities' => array(
 				'manage_terms' => 'edit_others_posts',
-				'edit_terms' => 'edit_others_posts',
+				'edit_terms'   => 'edit_others_posts',
 				'delete_terms' => 'edit_others_posts',
 				'assign_terms' => 'edit_published_posts'
 			)
