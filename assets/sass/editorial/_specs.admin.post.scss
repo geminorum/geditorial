@@ -5,6 +5,8 @@
 
 .geditorial-admin-wrap.specs {
 
+	@include main-wrap();
+
 	margin-top:11px;
 
 	ol.geditorial-specs {
