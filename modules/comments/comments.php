@@ -20,18 +20,18 @@ class gEditorialComments extends gEditorialModuleCore
 
 		$this->module_url = $this->get_module_url( __FILE__ );
 		$args = array(
-			'title' => __( 'Comments', GEDITORIAL_TEXTDOMAIN ),
-			'short_description' => __( 'Comment Managment Enhancements', GEDITORIAL_TEXTDOMAIN ),
+			'title'                => __( 'Comments', GEDITORIAL_TEXTDOMAIN ),
+			'short_description'    => __( 'Comment Managment Enhancements', GEDITORIAL_TEXTDOMAIN ),
 			'extended_description' => __( 'Series of tools to help better managing the comments on a magazine.', GEDITORIAL_TEXTDOMAIN ),
-			'module_url' => $this->module_url,
-			'dashicon' => 'admin-comments',
-			'slug' => 'comments',
-			'load_frontend' => true,
-			'constants' => array(
+			'module_url'           => $this->module_url,
+			'dashicon'             => 'admin-comments',
+			'slug'                 => 'comments',
+			'load_frontend'        => true,
+			'constants'            => array(
 				'comments_shortcode' => 'comments',
 			),
 			'default_options' => array(
-				'enabled' => 'off',
+				'enabled'    => 'off',
 				'post_types' => array(
 					'post' => 'on',
 					'page' => 'off',
@@ -39,7 +39,7 @@ class gEditorialComments extends gEditorialModuleCore
 				'post_fields' => array(
 					'in_comments_title' => 'on',
 					'in_comments_order' => 'on',
-					'in_comments_desc' => 'off',
+					'in_comments_desc'  => 'off',
 				),
 				'settings' => array(
 				),
@@ -47,26 +47,24 @@ class gEditorialComments extends gEditorialModuleCore
 			'settings' => array(
 				'_general' => array(
 					array(
-						'field' => 'front_actions',
-						'title' => __( 'Frontpage Actions', GEDITORIAL_TEXTDOMAIN ),
+						'field'       => 'front_actions',
+						'title'       => __( 'Frontpage Actions', GEDITORIAL_TEXTDOMAIN ),
 						'description' => __( 'Appends the actions to the comment text on frontpage.', GEDITORIAL_TEXTDOMAIN ),
-						'default' => 0,
+						'default'     => 0,
 					),
 					array(
-						'field' => 'disable_notes',
-						'title' => __( 'Form Notes', GEDITORIAL_TEXTDOMAIN ),
+						'field'       => 'disable_notes',
+						'title'       => __( 'Form Notes', GEDITORIAL_TEXTDOMAIN ),
 						'description' => __( 'Removes extra notes after comment form on frontpage.', GEDITORIAL_TEXTDOMAIN ),
-						'default' => 1,
+						'default'     => 1,
 					),
 					array(
-						'field' => 'widget_args',
-						'title' => __( 'Force Widget', GEDITORIAL_TEXTDOMAIN ),
+						'field'       => 'widget_args',
+						'title'       => __( 'Force Widget', GEDITORIAL_TEXTDOMAIN ),
 						'description' => __( 'Force Recent Comments Widget to show only featured and non-buried comments.', GEDITORIAL_TEXTDOMAIN ),
-						'default' => 0,
+						'default'     => 0,
 					),
 				),
-				//'post_types_option' => 'post_types_option',
-				//'post_types_fields' => 'post_types_fields',
 			),
 			'strings' => array(
 				'titles' => array(
@@ -87,35 +85,35 @@ class gEditorialComments extends gEditorialModuleCore
 				),
 				'misc' => array(
 					'comments' => array(
-						'box_title' => __( 'Featured Comments', GEDITORIAL_TEXTDOMAIN ),
-						'column_title' => __( 'Comments', GEDITORIAL_TEXTDOMAIN ),
+						'box_title'       => __( 'Featured Comments', GEDITORIAL_TEXTDOMAIN ),
+						'column_title'    => __( 'Comments', GEDITORIAL_TEXTDOMAIN ),
 						'select_comments' => __( '&mdash; Choose a Comments &mdash;', GEDITORIAL_TEXTDOMAIN ),
 					),
 				),
 				'labels' => array(
 					'comments_tax' => array(
-						'name' => __( 'Comments', GEDITORIAL_TEXTDOMAIN ),
-						'singular_name' => __( 'Comments', GEDITORIAL_TEXTDOMAIN ),
-						'search_items' => __( 'Search Comments', GEDITORIAL_TEXTDOMAIN ),
-						'popular_items' => null, // to disable tag cloud on edit tag page // __( 'Popular Comments', GEDITORIAL_TEXTDOMAIN ),
-						'all_items' => __( 'All Comments', GEDITORIAL_TEXTDOMAIN ),
-						'parent_item' => __( 'Parent Comments', GEDITORIAL_TEXTDOMAIN ),
-						'parent_item_colon' => __( 'Parent Comments:', GEDITORIAL_TEXTDOMAIN ),
-						'edit_item' => __( 'Edit Comments', GEDITORIAL_TEXTDOMAIN ),
-						'update_item' => __( 'Update Comments', GEDITORIAL_TEXTDOMAIN ),
-						'add_new_item' => __( 'Add New Comments', GEDITORIAL_TEXTDOMAIN ),
-						'new_item_name' => __( 'New Comments Name', GEDITORIAL_TEXTDOMAIN ),
+						'name'                       => __( 'Comments', GEDITORIAL_TEXTDOMAIN ),
+						'singular_name'              => __( 'Comments', GEDITORIAL_TEXTDOMAIN ),
+						'search_items'               => __( 'Search Comments', GEDITORIAL_TEXTDOMAIN ),
+						'popular_items'              => null, // to disable tag cloud on edit tag page // __( 'Popular Comments', GEDITORIAL_TEXTDOMAIN ),
+						'all_items'                  => __( 'All Comments', GEDITORIAL_TEXTDOMAIN ),
+						'parent_item'                => __( 'Parent Comments', GEDITORIAL_TEXTDOMAIN ),
+						'parent_item_colon'          => __( 'Parent Comments:', GEDITORIAL_TEXTDOMAIN ),
+						'edit_item'                  => __( 'Edit Comments', GEDITORIAL_TEXTDOMAIN ),
+						'update_item'                => __( 'Update Comments', GEDITORIAL_TEXTDOMAIN ),
+						'add_new_item'               => __( 'Add New Comments', GEDITORIAL_TEXTDOMAIN ),
+						'new_item_name'              => __( 'New Comments Name', GEDITORIAL_TEXTDOMAIN ),
 						'separate_items_with_commas' => __( 'Separate comments with commas', GEDITORIAL_TEXTDOMAIN ),
-						'add_or_remove_items' => __( 'Add or remove comments', GEDITORIAL_TEXTDOMAIN ),
-						'choose_from_most_used' => __( 'Choose from the most used comments', GEDITORIAL_TEXTDOMAIN ),
-						'menu_name' => __( 'Comments', GEDITORIAL_TEXTDOMAIN ),
+						'add_or_remove_items'        => __( 'Add or remove comments', GEDITORIAL_TEXTDOMAIN ),
+						'choose_from_most_used'      => __( 'Choose from the most used comments', GEDITORIAL_TEXTDOMAIN ),
+						'menu_name'                  => __( 'Comments', GEDITORIAL_TEXTDOMAIN ),
 					),
 				),
 			),
 			'configure_page_cb' => 'print_configure_view',
 			'settings_help_tab' => array(
-				'id' => 'geditorial-comments-overview',
-				'title' => __( 'help-tab-title', GEDITORIAL_TEXTDOMAIN ),
+				'id'      => 'geditorial-comments-overview',
+				'title'   => __( 'help-tab-title', GEDITORIAL_TEXTDOMAIN ),
 				'content' => __( '<p>help-tab-content</p>', GEDITORIAL_TEXTDOMAIN ),
 				),
 			'settings_help_sidebar' => sprintf(
@@ -129,19 +127,33 @@ class gEditorialComments extends gEditorialModuleCore
 		$gEditorial->register_module( $this->module_name, $args );
 	}
 
-	function init()
+	public function setup()
+	{
+		add_action( 'init', array( &$this, 'init' ) );
+
+		if ( is_admin() ) {
+			add_action( 'admin_init', array( &$this, 'admin_init' ) );
+			add_action( 'geditorial_settings_load', array( &$this, 'register_settings' ) );
+
+			//add_action( 'admin_menu', array( &$this, 'add_meta_box' ) );
+			//add_action( 'edit_comment', array( &$this, 'save_meta_box_postdata' ) );
+
+			add_filter( 'comment_row_actions', array( &$this, 'comment_row_actions' ) );
+			add_action( 'wp_ajax_geditorial_comments', array( &$this, 'ajax' ) );
+
+		} else {
+
+			require_once( GEDITORIAL_DIR.'modules/meta/templates.php' );
+		}
+	}
+
+	public function init()
     {
 		do_action( 'geditorial_comments_init', $this->module );
 
 		$this->do_filters();
 
-		if ( is_admin() ) {
-			add_action( 'admin_init', array( &$this, 'admin_init' ) );
-			//add_action( 'admin_menu', array( &$this, 'add_meta_box' ) );
-			//add_action( 'edit_comment', array( &$this, 'save_meta_box_postdata' ) );
-			add_filter( 'comment_row_actions', array( &$this, 'comment_row_actions' ) );
-			add_action( 'wp_ajax_geditorial_comments', array( &$this, 'ajax' ) );
-		} else {
+		if ( ! is_admin() ) {
 			add_filter( 'comment_class', array( &$this, 'comment_class' ) );
 
 			if ( $this->get_setting( 'widget_args', false ) )
@@ -157,25 +169,20 @@ class gEditorialComments extends gEditorialModuleCore
 
 			//add_filter( 'gtheme_comment_actions', array( &$this, 'gtheme_comment_actions' ), 10, 4 );
 		}
-
-		//add_action( 'wp_print_scripts', array( &$this, 'wp_print_scripts' ) );
-		//add_action( 'wp_print_styles', array( &$this, 'wp_print_styles' ) );
-
 	}
 
-	function admin_init()
+	public function admin_init()
 	{
-		add_action( 'geditorial_settings_register_settings', array( &$this, 'register_settings' ) );
 		add_action( 'admin_print_styles', array( &$this, 'admin_print_styles' ) );
 	}
 
-	function comment_form_defaults( $defaults )
+	public function comment_form_defaults( $defaults )
 	{
 		$defaults['comment_notes_after'] = '';
 		return $defaults;
 	}
 
-	function admin_print_styles()
+	public function admin_print_styles()
 	{
 		if ( ! current_user_can( 'moderate_comments' ) )
 			return;
@@ -184,16 +191,11 @@ class gEditorialComments extends gEditorialModuleCore
 
 		if ( 'edit-comments' == $screen->base ) {
 			gEditorialHelper::linkStyleSheet( GEDITORIAL_URL.'assets/css/admin.comments.css' );
-			wp_enqueue_script( 'geditorial-comments',
-				// GEDITORIAL_URL.'assets/js/geditorial/admin.comments.js',
-				GEDITORIAL_URL.'assets/js/geditorial/admin.comments.min.js',
-				array( 'jquery' ),
-				GEDITORIAL_VERSION,
-				true );
+			$this->enqueue_asset_js();
 		}
 	}
 
-	function add_meta_box()
+	public function add_meta_box()
 	{
 		add_meta_box( 'comment_meta_box',
 			$this->get_string( 'box_title', 'comments', 'misc' ),
@@ -203,7 +205,7 @@ class gEditorialComments extends gEditorialModuleCore
 		);
 	}
 
-	function ajax()
+	public function ajax()
 	{
 		if ( ! isset( $_POST['do'] ) )
 			die;
@@ -227,7 +229,7 @@ class gEditorialComments extends gEditorialModuleCore
 		die;
 	}
 
-	function widget_comments_args( $args )
+	public function widget_comments_args( $args )
 	{
 		return array_merge( $args, array(
 			'meta_query' => array(
@@ -246,7 +248,7 @@ class gEditorialComments extends gEditorialModuleCore
 		) );
 	}
 
-	function comment_row_actions( $actions )
+	public function comment_row_actions( $actions )
 	{
 		global $comment;
 		$actions['geditorial_comments'] = $this->get_row_actions( $comment->comment_ID );
@@ -254,7 +256,7 @@ class gEditorialComments extends gEditorialModuleCore
 	}
 
 	// UNFINISHED
-	function comment_text( $comment_text )
+	public function comment_text( $comment_text )
 	{
 		if ( is_admin()
 			|| ! current_user_can( 'moderate_comments' ) )
@@ -268,7 +270,7 @@ class gEditorialComments extends gEditorialModuleCore
     }
 
 	// Internal
-	function get_row_actions( $comment_id )
+	public function get_row_actions( $comment_id )
 	{
 		$output = '';
 		$current_status = implode( ' ', $this->comment_class( array( 'geditorial-comments-row-action', 'hide-if-no-js' ) ) );
@@ -292,7 +294,7 @@ class gEditorialComments extends gEditorialModuleCore
 	}
 
 	// UNFINISHED
-	function save_meta_box_postdata( $comment_id )
+	public function save_meta_box_postdata( $comment_id )
 	{
 		if ( ! wp_verify_nonce( $_POST['featured_comments_nonce'], plugin_basename( __FILE__ ) ) )
 			return;
@@ -305,7 +307,7 @@ class gEditorialComments extends gEditorialModuleCore
 	}
 
 	// UNFINISHED
-	function comment_meta_box()
+	public function comment_meta_box()
 	{
 		global $comment;
 		$comment_id = $comment->comment_ID;
@@ -318,7 +320,7 @@ class gEditorialComments extends gEditorialModuleCore
 		echo '</p>';
 	}
 
-	function comment_class( $classes = array() )
+	public function comment_class( $classes = array() )
 	{
 		global $comment;
 
@@ -333,7 +335,7 @@ class gEditorialComments extends gEditorialModuleCore
 		return $classes;
 	}
 
-	function is_comment_featured( $comment_id )
+	public function is_comment_featured( $comment_id )
 	{
 		if ( '1' == get_comment_meta( $comment_id, 'featured', true ) )
 			return 1;
@@ -341,7 +343,7 @@ class gEditorialComments extends gEditorialModuleCore
 	}
 
 
-	function is_comment_buried( $comment_id )
+	public function is_comment_buried( $comment_id )
 	{
 	    if( '1' == get_comment_meta( $comment_id, 'buried', true ) )
 	        return 1;
