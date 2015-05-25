@@ -12,7 +12,7 @@ class gEditorialMeta extends gEditorialModuleCore
 	var $ct_tax = 'label'; // DEPRECATED
 
 	public function __construct()
-    {
+	{
 		global $gEditorial;
 
 		// MUST DEPRECATE: at this point, there's no way knowing if the module is active or not!
@@ -144,7 +144,7 @@ class gEditorialMeta extends gEditorialModuleCore
 	}
 
 	public function init()
-    {
+	{
 		do_action( 'geditorial_meta_init', $this->module );
 
 		$this->do_filters();
@@ -180,7 +180,7 @@ class gEditorialMeta extends gEditorialModuleCore
 	}
 
 	public function admin_print_styles()
-    {
+	{
 		$screen = get_current_screen();
 
 		if ( 'post' != $screen->base && 'edit' != $screen->base )
@@ -199,7 +199,7 @@ class gEditorialMeta extends gEditorialModuleCore
 			$localize[$field] = $this->get_string( $field, $screen->post_type );
 
 		$this->enqueue_asset_js( $localize, 'meta.'.$screen->base );
-    }
+	}
 
 	public function register_taxonomies()
 	{
@@ -210,7 +210,7 @@ class gEditorialMeta extends gEditorialModuleCore
 				$register_for[] = $post_type;
 
 		if ( count( $register_for ) ) {
-            register_taxonomy( $this->module->constants['ct_tax'], $register_for, array(
+			register_taxonomy( $this->module->constants['ct_tax'], $register_for, array(
 				'labels'                => $this->module->strings['labels']['ct_tax'],
 				'public'                => true,
 				'show_in_nav_menus'     => true,
@@ -227,9 +227,9 @@ class gEditorialMeta extends gEditorialModuleCore
 					'edit_terms'   => 'manage_categories',
 					'delete_terms' => 'manage_categories',
 					'assign_terms' => 'edit_posts'
-                )
-            ) );
-        }
+				)
+			) );
+		}
 	}
 
 	public function add_meta_boxes( $post_type, $post )
@@ -283,7 +283,7 @@ class gEditorialMeta extends gEditorialModuleCore
 				'hide_if_empty'     => true,
 				// 'echo'              => 0,
 				// 'exclude'           => $excludes,
-            ) );
+			) );
 			echo '</div>';
 			$ch_override = true;
 		}
@@ -441,11 +441,11 @@ class gEditorialMeta extends gEditorialModuleCore
 
 		$fields = $this->post_type_fields( $post->post_type );
 
-        switch ( $column_name ) {
+		switch ( $column_name ) {
 
 			case 'author' :
 			case 'gpeople' :
-            case 'geditorial-meta-author' :
+			case 'geditorial-meta-author' :
 				if ( in_array( 'as', $fields ) && self::user_can( 'view', 'as' )  ) {
 					$as = $this->get_postmeta( $post->ID, 'as', '' );
 					echo '<div class="hidden geditorial-meta-as-value">'.$as.'</div>'.$as.'<br />';
@@ -463,18 +463,18 @@ class gEditorialMeta extends gEditorialModuleCore
 			break;
 			case 'geditorial-meta-column' :
 
-                echo $ot = $this->get_postmeta( $post->ID, 'ot', '' );
+				echo $ot = $this->get_postmeta( $post->ID, 'ot', '' );
 				echo '<br />';
-                echo $st = $this->get_postmeta( $post->ID, 'st', '' );
+				echo $st = $this->get_postmeta( $post->ID, 'st', '' );
 				echo '<div class="hidden geditorial-meta-ot-value">'.$ot.'</div>';
 				echo '<div class="hidden geditorial-meta-st-value">'.$st.'</div>';
-            break;
-        }
-    }
+			break;
+		}
+	}
 
 	public function quick_edit_custom_box( $column_name, $screen )
 	{
-        if ( $column_name != 'geditorial-meta-column' )
+		if ( $column_name != 'geditorial-meta-column' )
 			return false;
 
 		global $typenow; //, $post;
@@ -502,35 +502,35 @@ class gEditorialMeta extends gEditorialModuleCore
 		}
 
 		wp_nonce_field( 'geditorial_meta_post_raw', '_geditorial_meta_post_raw' );
-    }
+	}
 
 	// DEPRECATERD
 	public function select_label( $current, $label, $name, $inline = '' )
-    {
-        $terms = get_terms( $this->module->constants['ct_tax'], 'orderby=name&hide_empty=0' );
-        if ( count( $terms ) ) {
-            echo '<label title="'.$label.'"><select name="'.$name.'" id="'.$name.'"'.$inline.'>';
-            echo '<option value="no" '.( 'no' == $current ? 'selected="selected"' : '').'>'.__( '-Not Set-', GEDITORIAL_TEXTDOMAIN ).'</option>';
-            foreach( $terms as $key => $term )
-                echo '<option value="'.$term->term_id.'" '.selected( $current, $term->term_id, false ).'>'.esc_html( $term->name.' ('.number_format_i18n( $term->count ).') ' ).' </option>';
-            echo '</select></label>';
-        } else {
-            echo '<span class="geditorial-meta-ct-notfound"'.$inline.'><a href="'.get_admin_url( null, 'edit-tags.php?taxonomy='.$this->module->constants['ct_tax'] ).'">'.__( '<em>Create labels first</em>' , GEDITORIAL_TEXTDOMAIN ).'</a></span>';
-        }
-    }
+	{
+		$terms = get_terms( $this->module->constants['ct_tax'], 'orderby=name&hide_empty=0' );
+		if ( count( $terms ) ) {
+			echo '<label title="'.$label.'"><select name="'.$name.'" id="'.$name.'"'.$inline.'>';
+			echo '<option value="no" '.( 'no' == $current ? 'selected="selected"' : '').'>'.__( '-Not Set-', GEDITORIAL_TEXTDOMAIN ).'</option>';
+			foreach( $terms as $key => $term )
+				echo '<option value="'.$term->term_id.'" '.selected( $current, $term->term_id, false ).'>'.esc_html( $term->name.' ('.number_format_i18n( $term->count ).') ' ).' </option>';
+				echo '</select></label>';
+			} else {
+			echo '<span class="geditorial-meta-ct-notfound"'.$inline.'><a href="'.get_admin_url( null, 'edit-tags.php?taxonomy='.$this->module->constants['ct_tax'] ).'">'.__( '<em>Create labels first</em>' , GEDITORIAL_TEXTDOMAIN ).'</a></span>';
+		}
+	}
 
 	// DEPRECATED
 	public function get_label( $post_ID, $object = false )
-    {
-        $terms = get_the_terms( $post_ID, $this->module->constants['ct_tax'] );
-        if ( $terms && ! is_wp_error( $terms ) )
-            foreach ( $terms as $term )
-                if ( $object )
+	{
+		$terms = get_the_terms( $post_ID, $this->module->constants['ct_tax'] );
+		if ( $terms && ! is_wp_error( $terms ) )
+			foreach ( $terms as $term )
+				if ( $object )
 					return $term;
 				else
 					return $term->term_id;
-        return '0';
-    }
+		return '0';
+	}
 
 	public function tools_subs( $subs )
 	{

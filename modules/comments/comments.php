@@ -14,8 +14,8 @@ class gEditorialComments extends gEditorialModuleCore
 		'bury',
 	);
 
-    public function __construct()
-    {
+	public function __construct()
+	{
 		global $gEditorial;
 
 		$this->module_url = $this->get_module_url( __FILE__ );
@@ -148,7 +148,7 @@ class gEditorialComments extends gEditorialModuleCore
 	}
 
 	public function init()
-    {
+	{
 		do_action( 'geditorial_comments_init', $this->module );
 
 		$this->do_filters();
@@ -223,7 +223,7 @@ class gEditorialComments extends gEditorialModuleCore
 				case 'feature'  : add_comment_meta(    $comment_id, 'featured', '1' ); break;
 				case 'unfeature': delete_comment_meta( $comment_id, 'featured'      ); break;
 				case 'bury'     : add_comment_meta(    $comment_id, 'buried',   '1' ); break;
-                case 'unbury'   : delete_comment_meta( $comment_id, 'buried'        ); break;
+				case 'unbury'   : delete_comment_meta( $comment_id, 'buried'        ); break;
 			}
 		}
 		die;
@@ -267,7 +267,7 @@ class gEditorialComments extends gEditorialModuleCore
 			'<div class="geditorial-comments comment-actions">'.
 				$this->get_row_actions( $comment->comment_ID ).
 			'</div>';
-    }
+	}
 
 	// Internal
 	public function get_row_actions( $comment_id )
@@ -345,8 +345,8 @@ class gEditorialComments extends gEditorialModuleCore
 
 	public function is_comment_buried( $comment_id )
 	{
-	    if( '1' == get_comment_meta( $comment_id, 'buried', true ) )
-	        return 1;
-	    return 0;
+		if( '1' == get_comment_meta( $comment_id, 'buried', true ) )
+			return 1;
+		return 0;
 	}
 }

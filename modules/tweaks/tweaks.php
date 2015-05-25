@@ -151,7 +151,7 @@ class gEditorialTweaks extends gEditorialModuleCore
 	{
 		global $post;
 
-        switch ( $column_name ) {
+		switch ( $column_name ) {
 			case 'geditorial-tweaks-group_taxes' :
 
 				echo '<div class="geditorial-admin-wrap-column tweaks">';
@@ -175,6 +175,6 @@ class gEditorialTweaks extends gEditorialModuleCore
 
 				echo '</div>';
 			break;
-        }
-    }
+		}
+	}
 }

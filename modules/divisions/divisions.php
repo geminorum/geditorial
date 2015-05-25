@@ -9,8 +9,8 @@ class gEditorialDivisions extends gEditorialModuleCore
 
 	var $pre_term    = 'gXsXsE-';
 
-    function __construct()
-    {
+	function __construct()
+	{
 		global $gEditorial;
 
 		$this->module_url = $this->get_module_url( __FILE__ );
@@ -139,7 +139,7 @@ class gEditorialDivisions extends gEditorialModuleCore
 	}
 
 	public function init()
-    {
+	{
 		do_action( 'geditorial_divisions_init', $this->module );
 
 		$this->do_filters();
@@ -151,111 +151,111 @@ class gEditorialDivisions extends gEditorialModuleCore
 	{
 		$post_type_support = $this->post_types();
 
-        register_post_type( $this->module->constants['division_cpt'], array(
-            'labels' => $this->module->strings['labels']['division_cpt'],
-            'hierarchical' => true,
+		register_post_type( $this->module->constants['division_cpt'], array(
+			'labels' => $this->module->strings['labels']['division_cpt'],
+			'hierarchical' => true,
 			'supports' => array( 'title', 'editor', 'excerpt', 'author', 'thumbnail', 'trackbacks', 'custom-fields', 'comments', 'revisions', 'page-attributes' ),
-            'taxonomies' => array( 'category', 'post_tag', $this->module->constants['division_tax'] ),
-            'public' => true,
-            'show_ui' => true,
-            // 'show_in_menu' => ( 1 == count( $post_type_support ) ? 'edit.php?post_type='.$post_type_support[0] : 'index.php' ) ,
-            // 'menu_position' => 5,
-            'menu_icon' => 'dashicons-networking',
-            'show_in_nav_menus' => false,
-            'publicly_queryable' => true,
-            'exclude_from_search' => false,
-            'has_archive' => $this->module->constants['division_archives'],
-            'query_var' => $this->module->constants['division_cpt'],
-            'can_export' => true,
-            'rewrite' =>  array(
-                'slug' => $this->module->constants['division_cpt'],
-                'with_front' => false,
-            ),
-            // 'capabilities' => $this->options['publication_capabilities'],
+			'taxonomies' => array( 'category', 'post_tag', $this->module->constants['division_tax'] ),
+			'public' => true,
+			'show_ui' => true,
+			// 'show_in_menu' => ( 1 == count( $post_type_support ) ? 'edit.php?post_type='.$post_type_support[0] : 'index.php' ) ,
+			// 'menu_position' => 5,
+			'menu_icon' => 'dashicons-networking',
+			'show_in_nav_menus' => false,
+			'publicly_queryable' => true,
+			'exclude_from_search' => false,
+			'has_archive' => $this->module->constants['division_archives'],
+			'query_var' => $this->module->constants['division_cpt'],
+			'can_export' => true,
+			'rewrite' =>  array(
+				'slug' => $this->module->constants['division_cpt'],
+				'with_front' => false,
+			),
+			// 'capabilities' => $this->options['publication_capabilities'],
 			'map_meta_cap' => true,
-        ) );
+		) );
 	}
 
 	public function register_taxonomies()
 	{
-        register_taxonomy( $this->module->constants['division_tax'], $this->post_types(), array(
-            'labels' => $this->module->strings['labels']['division_tax'],
-            'public' => true,
-            'show_in_nav_menus' => false,
-            // 'show_ui' => true, //current_user_can( 'update_plugins' ),
-            'show_ui' => false,
-            'show_admin_column' => false,
-            'show_tagcloud' => false,
-            'hierarchical' => false,
-            'update_count_callback' => array( 'gEditorialHelper', 'update_count_callback' ),
-            'rewrite' => array(
+		register_taxonomy( $this->module->constants['division_tax'], $this->post_types(), array(
+			'labels' => $this->module->strings['labels']['division_tax'],
+			'public' => true,
+			'show_in_nav_menus' => false,
+			// 'show_ui' => true, //current_user_can( 'update_plugins' ),
+			'show_ui' => false,
+			'show_admin_column' => false,
+			'show_tagcloud' => false,
+			'hierarchical' => false,
+			'update_count_callback' => array( 'gEditorialHelper', 'update_count_callback' ),
+			'rewrite' => array(
 				'slug' => $this->module->constants['division_tax'],
 				'hierarchical' => false,
 				'with_front' => false,
 			),
-            'query_var' => true,
-            'capabilities' => array(
-                'manage_terms' => 'edit_others_posts',
-                'edit_terms' => 'edit_others_posts',
-                'delete_terms' => 'edit_others_posts',
-                'assign_terms' => 'edit_published_posts'
-            )
-        ) );
-    }
+			'query_var' => true,
+			'capabilities' => array(
+				'manage_terms' => 'edit_others_posts',
+				'edit_terms' => 'edit_others_posts',
+				'delete_terms' => 'edit_others_posts',
+				'assign_terms' => 'edit_published_posts'
+			)
+		) );
+	}
 
-    public function p2p_init()
-    {
+	public function p2p_init()
+	{
 		// https://github.com/scribu/wp-posts-to-posts/wiki/Connection-information
 		p2p_register_connection_type( array(
-            'name' => $this->module->constants['p2p_connection_name'],
-            'from' => $this->post_types(),
-            'to' => $this->module->constants['division_cpt'],
+			'name' => $this->module->constants['p2p_connection_name'],
+			'from' => $this->post_types(),
+			'to' => $this->module->constants['division_cpt'],
 
 			'sortable' => 'any',
 			// 'admin_dropdown' => 'any', // temporarly
 
 			'title' => array(
 				'from' => __( 'Connected Divisions', GEDITORIAL_TEXTDOMAIN ),
-                'to' => __( 'Connected Posts', GEDITORIAL_TEXTDOMAIN ),
-            ),
-            'from_labels' => array(
-                'singular_name' => __( 'Post', GEDITORIAL_TEXTDOMAIN ),
-                'search_items' => __( 'Search posts', GEDITORIAL_TEXTDOMAIN ),
-                'not_found' => __( 'No posts found.', GEDITORIAL_TEXTDOMAIN ),
-                'create' => __( 'Create Posts', GEDITORIAL_TEXTDOMAIN ),
-            ),
-            'to_labels' => array(
-                'singular_name' => __( 'Division', GEDITORIAL_TEXTDOMAIN ),
-                'search_items' => __( 'Search divisions', GEDITORIAL_TEXTDOMAIN ),
-                'not_found' => __( 'No divisions found.', GEDITORIAL_TEXTDOMAIN ),
-                'create' => __( 'Create Divisions', GEDITORIAL_TEXTDOMAIN ),
-            ),
+				'to' => __( 'Connected Posts', GEDITORIAL_TEXTDOMAIN ),
+			),
+			'from_labels' => array(
+				'singular_name' => __( 'Post', GEDITORIAL_TEXTDOMAIN ),
+				'search_items' => __( 'Search posts', GEDITORIAL_TEXTDOMAIN ),
+				'not_found' => __( 'No posts found.', GEDITORIAL_TEXTDOMAIN ),
+				'create' => __( 'Create Posts', GEDITORIAL_TEXTDOMAIN ),
+			),
+			'to_labels' => array(
+				'singular_name' => __( 'Division', GEDITORIAL_TEXTDOMAIN ),
+				'search_items' => __( 'Search divisions', GEDITORIAL_TEXTDOMAIN ),
+				'not_found' => __( 'No divisions found.', GEDITORIAL_TEXTDOMAIN ),
+				'create' => __( 'Create Divisions', GEDITORIAL_TEXTDOMAIN ),
+			),
 			'fields' => array(
-                'visibility' => array(
-                    'title' => __( 'Visibility', GEDITORIAL_TEXTDOMAIN ),
-                    'type' => 'select',
-                    'values' => apply_filters( 'gidea_ring_values_labels', array(
-                        'public' => __( 'Public', GEDITORIAL_TEXTDOMAIN ),
-                        'read' => __( 'Logged in', GEDITORIAL_TEXTDOMAIN ),
-                        'edit_others_posts' => __( 'Editors', GEDITORIAL_TEXTDOMAIN ),
-                    ) ),
-                    'default' => 'public',
+				'visibility' => array(
+					'title' => __( 'Visibility', GEDITORIAL_TEXTDOMAIN ),
+					'type' => 'select',
+					'values' => apply_filters( 'gidea_ring_values_labels', array(
+						'public' => __( 'Public', GEDITORIAL_TEXTDOMAIN ),
+						'read' => __( 'Logged in', GEDITORIAL_TEXTDOMAIN ),
+						'edit_others_posts' => __( 'Editors', GEDITORIAL_TEXTDOMAIN ),
+					) ),
+					'default' => 'public',
 
-                ),
+				),
 
-                'title' => array(
-                    'title' => __( 'Title', GEDITORIAL_TEXTDOMAIN ),
-                    'type' => 'text',
-                    'value' => '%s',
-                ),
-                // 'access' => array(
-                //     'title' => 'Access',
-                //     'type' => 'checkbox'
-                // ),
+				'title' => array(
+					'title' => __( 'Title', GEDITORIAL_TEXTDOMAIN ),
+					'type' => 'text',
+					'value' => '%s',
+				),
+				// 'access' => array(
+				//     'title' => 'Access',
+				//     'type' => 'checkbox'
+				// ),
 			),
 
 		) );
-    }
+	}
 
 	public function get_connected( $atts = array() )
 	{

@@ -271,8 +271,8 @@ class gEditorialModuleCore
 
 		$postmeta = get_metadata( 'post', $post_id, $key, true );
 
-        if ( empty( $postmeta ) )
-            return $default;
+		if ( empty( $postmeta ) )
+			return $default;
 
 		if ( false === $field )
 			return $postmeta;
@@ -778,7 +778,7 @@ class gEditorialModuleCore
 	// FRONT ONLY: cause will called from 'wp_footer'
 	// WARNING: every asset must have a .min copy
 	public function enqueue_asset_js( $args = array(), $name = null, $deps = array( 'jquery' ), $handle = null )
-    {
+	{
 		global $gEditorial;
 
 		if ( is_null( $name ) )
@@ -794,7 +794,7 @@ class gEditorialModuleCore
 			GEDITORIAL_VERSION );
 
 		$gEditorial->enqueue_asset_config( $args, $this->module_name );
-    }
+	}
 
 	// FRONT ONLY: combined global styles
 	// TODO: also we need api for module specified css
@@ -805,18 +805,18 @@ class gEditorialModuleCore
 	}
 
 	public function get_meta_box_title( $post_type = 'post', $url = null )
-    {
+	{
 		$title = $this->get_string( 'meta_box_title', $post_type, 'misc', _x( 'Settings', 'MetaBox default title', GEDITORIAL_TEXTDOMAIN ) );
 
-        if ( current_user_can( 'manage_options' ) ) {
+		if ( current_user_can( 'manage_options' ) ) {
 
-            if ( is_null( $url ) )
+			if ( is_null( $url ) )
 				$url = add_query_arg( 'page', 'geditorial-settings-'.$this->module_name, get_admin_url( null, 'admin.php' ) );
 
 			$action = $this->get_string( 'meta_box_action', $post_type, 'misc', _x( 'Configure', 'MetaBox default action', GEDITORIAL_TEXTDOMAIN ) );
-            $title .= ' <span class="geditorial-admin-action-metabox"><a href="'.esc_url( $url ).'" target="_blank">'.$action.'</a></span>';
-        }
+			$title .= ' <span class="geditorial-admin-action-metabox"><a href="'.esc_url( $url ).'" target="_blank">'.$action.'</a></span>';
+		}
 
-        return $title;
-    }
+		return $title;
+	}
 }

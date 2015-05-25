@@ -8,8 +8,8 @@ class gEditorialSpecs extends gEditorialModuleCore
 	var $meta_key    = '_ge_specs';
 	var $pre_term    = 'gXsPsP-';
 
-    public function __construct()
-    {
+	public function __construct()
+	{
 		global $gEditorial;
 
 		$args = array(
@@ -128,7 +128,7 @@ class gEditorialSpecs extends gEditorialModuleCore
 	}
 
 	public function init()
-    {
+	{
 		do_action( 'geditorial_specs_init', $this->module );
 
 		$this->do_filters();
@@ -143,11 +143,11 @@ class gEditorialSpecs extends gEditorialModuleCore
 		add_action( 'admin_print_styles', array( &$this, 'admin_print_styles' ) );
 
 		add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ), 12, 2 );
-        add_action( 'add_meta_boxes', array( $this, 'remove_meta_boxes' ), 20, 2 );
+		add_action( 'add_meta_boxes', array( $this, 'remove_meta_boxes' ), 20, 2 );
 
-        // internal
-        add_action( 'geditorial_specs_meta_box', array( $this, 'geditorial_specs_meta_box' ), 5, 2 );
-        // add_action( 'geditorial_specs_meta_box_item', array( $this, 'geditorial_specs_meta_box_item' ), 5, 5 );
+		// internal
+		add_action( 'geditorial_specs_meta_box', array( $this, 'geditorial_specs_meta_box' ), 5, 2 );
+		// add_action( 'geditorial_specs_meta_box_item', array( $this, 'geditorial_specs_meta_box_item' ), 5, 5 );
 	}
 
 	public function admin_print_styles()
@@ -181,7 +181,7 @@ class gEditorialSpecs extends gEditorialModuleCore
 
 	public function register_taxonomies()
 	{
-        register_taxonomy( $this->module->constants['specs_tax'],
+		register_taxonomy( $this->module->constants['specs_tax'],
 			$this->post_types(), array(
 				'labels'                => $this->module->strings['labels']['specs_tax'],
 				'public'                => true,
@@ -202,20 +202,20 @@ class gEditorialSpecs extends gEditorialModuleCore
 					'edit_terms'   => 'edit_others_posts',
 					'delete_terms' => 'edit_others_posts',
 					'assign_terms' => 'edit_published_posts'
-	            )
-        	)
+				)
+			)
 		);
-    }
+	}
 
 	public function save_post( $post_id, $post )
 	{
-        if ( ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE )
+		if ( ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE )
 			|| empty( $_POST )
 			|| $post->post_type == 'revision' )
 				return $post_id;
 
-        if ( ! in_array( $post->post_type, $this->post_types() ) )
-            return $post_id;
+		if ( ! in_array( $post->post_type, $this->post_types() ) )
+			return $post_id;
 
 		$postmeta = $this->sanitize_post_meta(
 			$this->get_postmeta( $post_id ),
@@ -227,7 +227,7 @@ class gEditorialSpecs extends gEditorialModuleCore
 		update_post_meta( $post_id, $this->meta_key, $postmeta );
 		wp_cache_flush();
 
-        return $post_id;
+		return $post_id;
 	}
 
 	// programatically sets specs for the post
@@ -364,16 +364,16 @@ class gEditorialSpecs extends gEditorialModuleCore
 	}
 
 	public function remove_meta_boxes( $post_type, $post )
-    {
+	{
 		if ( ! in_array( $post_type, $this->post_types() ) )
 			return;
 
 		//if ( ! current_user_can( 'edit_published_posts' ) )
 			remove_meta_box( 'tagsdiv-'.$this->module->constants['specs_tax'], $post_type, 'side' );
-    }
+	}
 
 	public function add_meta_boxes( $post_type, $post )
-    {
+	{
 		if ( ! in_array( $post_type, $this->post_types() ) )
 			return;
 
@@ -383,7 +383,7 @@ class gEditorialSpecs extends gEditorialModuleCore
 			array( $this, 'do_meta_box' ),
 			$post_type,
 			'side' );
-    }
+	}
 
 	public function do_meta_box( $post )
 	{
@@ -512,8 +512,8 @@ class gEditorialSpecs extends gEditorialModuleCore
 
 	public function shortcode_specs( $atts, $content = null, $tag = '' )
 	{
-        global $post;
-        $error = false;
+		global $post;
+		$error = false;
 
 		$args = shortcode_atts( array(
 			'slug'      => '',
@@ -558,8 +558,8 @@ class gEditorialSpecs extends gEditorialModuleCore
 	}
 
 	public function shortcode_multiple_specs( $atts, $content = null, $tag = '' )
-    {
-        global $post;
+	{
+		global $post;
 
 		$args = shortcode_atts( array(
 			'ids'       => array(),
@@ -579,7 +579,7 @@ class gEditorialSpecs extends gEditorialModuleCore
 			return null;
 
 		if ( empty( $args['ids'] ) || ! count( $args['ids'] ) ) {
-            $terms = wp_get_object_terms( (int) $post->ID, $this->module->constants['specs_tax'], array(
+			$terms = wp_get_object_terms( (int) $post->ID, $this->module->constants['specs_tax'], array(
 				'order'   => $args['order'],
 				'orderby' => $args['orderby'],
 				'fields'  => 'ids',

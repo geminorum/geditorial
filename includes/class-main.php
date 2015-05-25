@@ -3,55 +3,55 @@
 class gEditorial
 {
 
-    var $options_group      = 'geditorial_';
+	var $options_group      = 'geditorial_';
 	var $options_group_name = 'geditorial_options';
 
-    var $_asset_styles      = false;
-    var $_asset_config      = false;
-    var $_asset_args        = array();
+	var $_asset_styles      = false;
+	var $_asset_config      = false;
+	var $_asset_args        = array();
 
 	function __construct()
-    {
-        load_plugin_textdomain( GEDITORIAL_TEXTDOMAIN, false, 'geditorial/languages' );
+	{
+		load_plugin_textdomain( GEDITORIAL_TEXTDOMAIN, false, 'geditorial/languages' );
 
 		$this->modules = new stdClass();
 
 		add_action( 'plugins_loaded', function(){
-            // allow dependent plugins and core actions to attach themselves in a safe way
-            do_action( 'geditorial_loaded' );
-        }, 20 );
+			// allow dependent plugins and core actions to attach themselves in a safe way
+			do_action( 'geditorial_loaded' );
+		}, 20 );
 
 		// load all of our modules. 'geditorial_loaded' happens after 'plugins_loaded' so other plugins can hook into the action we have at the end
 		add_action( 'geditorial_loaded', array( &$this, 'geditorial_loaded' ) );
 
 		// Load the module options later on, and offer a function to happen way after init
 		add_action( 'init', function(){
-            do_action( 'geditorial_init' );
-        } );
+			do_action( 'geditorial_init' );
+		} );
 
-        add_action( 'init'      , array( &$this, 'init_late'  ), 999 );
+		add_action( 'init'      , array( &$this, 'init_late'  ), 999 );
 		add_action( 'admin_init', array( &$this, 'admin_init' ) );
-        add_action( 'wp_footer' , array( &$this, 'footer_asset_config'  ), 999 );
-        add_action( 'wp_enqueue_scripts', array( &$this, 'wp_enqueue_scripts' ) );
-        add_filter( 'mce_external_languages', array( &$this, 'mce_external_languages' ) );
+		add_action( 'wp_footer' , array( &$this, 'footer_asset_config'  ), 999 );
+		add_action( 'wp_enqueue_scripts', array( &$this, 'wp_enqueue_scripts' ) );
+		add_filter( 'mce_external_languages', array( &$this, 'mce_external_languages' ) );
 	}
 
-    public function admin_init()
-    {
-        add_action( 'admin_print_styles', array( $this, 'admin_print_styles' ) );
-        add_action( 'admin_print_footer_scripts', array( $this, 'footer_asset_config' ), 999 );
-    }
+	public function admin_init()
+	{
+		add_action( 'admin_print_styles', array( $this, 'admin_print_styles' ) );
+		add_action( 'admin_print_footer_scripts', array( $this, 'footer_asset_config' ), 999 );
+	}
 
 	// include the common resources to Edit Flow and dynamically load the modules
 	public function geditorial_loaded()
-    {
-        if ( is_admin() ) {
-            require_once( GEDITORIAL_DIR.'includes/class-mustache.php' );
-            gEditorialMustache::init();
-        }
+	{
+		if ( is_admin() ) {
+			require_once( GEDITORIAL_DIR.'includes/class-mustache.php' );
+			gEditorialMustache::init();
+		}
 
-        require_once( GEDITORIAL_DIR.'includes/class-helper.php' );
-        require_once( GEDITORIAL_DIR.'includes/class-module.php' );
+		require_once( GEDITORIAL_DIR.'includes/class-helper.php' );
+		require_once( GEDITORIAL_DIR.'includes/class-module.php' );
 
 		if ( ! class_exists( 'WP_List_Table' ) )
 			require_once( ABSPATH.'wp-admin/includes/class-wp-list-table.php' );
@@ -71,7 +71,7 @@ class gEditorial
 					$class_name .= ucfirst( $word ).'';
 					$slug_name .= $word.'';
 				}
-                $class_names[$slug_name] = 'gEditorial'.$class_name;
+				$class_names[$slug_name] = 'gEditorial'.$class_name;
 			}
 		}
 
@@ -110,7 +110,7 @@ class gEditorial
 
 	// register a new module with the pluign
 	public function register_module( $name, $args = array() )
-    {
+	{
 		// A title and name is required for every module
 		if ( ! isset( $args['title'], $name ) )
 			return false;
@@ -119,8 +119,8 @@ class gEditorial
 			'title'                => '',
 			'short_description'    => '',
 			'extended_description' => '',
-            'slug'                 => '',
-            'img_url'              => false,
+			'slug'                 => '',
+			'img_url'              => false,
 			'dashicon'             => false, // dashicon class
 
 			//'post_type_support' => '',
@@ -128,10 +128,10 @@ class gEditorial
 			'options'                   => false,
 			'configure_pageditorial_cb' => false,
 			'configure_link_text'       => __( 'Configure', GEDITORIAL_TEXTDOMAIN ),
-            'autoload'                  => false, // autoloading a module will remove the ability to enable or disable it
-            'load_frontend'             => false, // Whether or not the module should be loaded on the frontend too
+			'autoload'                  => false, // autoloading a module will remove the ability to enable or disable it
+			'load_frontend'             => false, // Whether or not the module should be loaded on the frontend too
 
-            'default_options' => array(),
+			'default_options' => array(),
 			'constants'       => array(),
 			'strings'         => array(),
 
@@ -163,7 +163,7 @@ class gEditorial
 	// Load all of the module options from the database
 	// If a given option isn't yet set, then set it to the module's default (upgrades, etc.)
 	public function load_module_options()
-    {
+	{
 		foreach ( $this->modules as $mod_name => $mod_data ) {
 
 			// don't load modules on the frontend unless they're explictly defined as such
@@ -194,8 +194,8 @@ class gEditorial
 				$this->modules->$mod_name->options->post_types = $this->helpers->clean_post_type_options( $this->modules->$mod_name->options->post_types, $mod_data->post_type_support );
 			**/
 
-            if ( ! isset( $this->$mod_name ) )
-                $this->$mod_name = new stdClass;
+			if ( ! isset( $this->$mod_name ) )
+				$this->$mod_name = new stdClass;
 
 			$this->$mod_name->module = $this->modules->$mod_name;
 		}
@@ -206,7 +206,7 @@ class gEditorial
 	// Load the post type options again so we give add_post_type_support() a chance to work
 	// @see http://dev.editflow.org/2011/11/17/geditorial-v0-7-alpha2-notes/#comment-232
 	public function init_late()
-    {
+	{
 		foreach ( $this->modules as $mod_name => $mod_data ) {
 			// don't load modules on the frontend unless they're explictly defined as such
 			if ( ! is_admin() && ! $mod_data->load_frontend )
@@ -229,9 +229,9 @@ class gEditorial
 		}
 	}
 
-    // get a module by one of its descriptive values
+	// get a module by one of its descriptive values
 	public function get_module_by( $key, $value )
-    {
+	{
 		$module = false;
 
 		foreach ( $this->modules as $mod_name => $mod_data ) {
@@ -251,7 +251,7 @@ class gEditorial
 
 	// mine
 	public function get_module_constant( $module, $key, $default = null )
-    {
+	{
 		if ( isset( $this->modules->{$module}->constants[$key] ) )
 			return $this->modules->{$module}->constants[$key];
 
@@ -280,7 +280,7 @@ class gEditorial
 
 	// geditorial global styles
 	// just for the sake of simplicity!
-    public function admin_print_styles()
+	public function admin_print_styles()
 	{
 		$screen = get_current_screen();
 
@@ -290,40 +290,40 @@ class gEditorial
 			gEditorialHelper::linkStyleSheet( GEDITORIAL_URL.'assets/css/admin.edit.css' );
 		else if ( 'widgets' == $screen->base )
 			gEditorialHelper::linkStyleSheet( GEDITORIAL_URL.'assets/css/admin.widgets.css' );
-        else if ( gEditorialHelper::isSettings( $screen ) )
-            gEditorialHelper::linkStyleSheet( GEDITORIAL_URL.'assets/css/admin.settings.css' );
-        else if ( gEditorialHelper::isTools( $screen ) )
-            gEditorialHelper::linkStyleSheet( GEDITORIAL_URL.'assets/css/admin.tools.css' );
-        else {
-            // gEditorialHelper::dump( $screen ); die();
-        }
+		else if ( gEditorialHelper::isSettings( $screen ) )
+			gEditorialHelper::linkStyleSheet( GEDITORIAL_URL.'assets/css/admin.settings.css' );
+		else if ( gEditorialHelper::isTools( $screen ) )
+			gEditorialHelper::linkStyleSheet( GEDITORIAL_URL.'assets/css/admin.tools.css' );
+		else {
+			// gEditorialHelper::dump( $screen ); die();
+		}
 	}
 
-    public function mce_external_languages( $languages )
-    {
-        $languages['geditorial'] = GEDITORIAL_DIR.'includes/mce-languages.php';
-        return $languages;
-    }
+	public function mce_external_languages( $languages )
+	{
+		$languages['geditorial'] = GEDITORIAL_DIR.'includes/mce-languages.php';
+		return $languages;
+	}
 
-    public function enqueue_styles()
-    {
-        $this->_asset_styles = true;
-    }
+	public function enqueue_styles()
+	{
+		$this->_asset_styles = true;
+	}
 
-    public function wp_enqueue_scripts()
-    {
-        if ( ! $this->_asset_styles )
-            return;
+	public function wp_enqueue_scripts()
+	{
+		if ( ! $this->_asset_styles )
+			return;
 
-        if ( defined( 'GEDITORIAL_DISABLE_FRONT_STYLES' ) && GEDITORIAL_DISABLE_FRONT_STYLES )
-            return;
+		if ( defined( 'GEDITORIAL_DISABLE_FRONT_STYLES' ) && GEDITORIAL_DISABLE_FRONT_STYLES )
+			return;
 
-        wp_enqueue_style( 'geditorial-front-all', GEDITORIAL_URL.'assets/css/front.all.css', array(), GEDITORIAL_VERSION );
-    }
+		wp_enqueue_style( 'geditorial-front-all', GEDITORIAL_URL.'assets/css/front.all.css', array(), GEDITORIAL_VERSION );
+	}
 
-    public function enqueue_asset_config( $args = array(), $module = null )
-    {
-        $this->_asset_config = true;
+	public function enqueue_asset_config( $args = array(), $module = null )
+	{
+		$this->_asset_config = true;
 
 		if ( count( $args ) ) {
 			if ( is_null( $module ) )
@@ -331,14 +331,14 @@ class gEditorial
 			else
 				$this->_asset_args = array_merge( $this->_asset_args, array( $module => $args ) );
 		}
-    }
+	}
 
-    // front & admin
-    public function footer_asset_config()
-    {
-        if ( ! $this->_asset_config )
-            return;
+	// front & admin
+	public function footer_asset_config()
+	{
+		if ( ! $this->_asset_config )
+			return;
 
 		gEditorialHelper::printJSConfig( $this->_asset_args );
-    }
+	}
 }

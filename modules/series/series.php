@@ -8,8 +8,8 @@ class gEditorialSeries extends gEditorialModuleCore
 	var $meta_key    = '_ge_series';
 	var $pre_term    = 'gXsXsE-';
 
-    public function __construct()
-    {
+	public function __construct()
+	{
 		global $gEditorial;
 
 		$args = array(
@@ -124,14 +124,11 @@ class gEditorialSeries extends gEditorialModuleCore
 			add_action( 'geditorial_settings_load', array( &$this, 'register_settings' ) );
 
 			add_action( 'save_post', array( $this, 'save_post' ), 20, 2 );
-
-			// add_action( 'admin_menu', array( &$this, 'admin_menu' ) );
-			// add_filter( 'parent_file', array( &$this, 'parent_file' ) );
 		}
 	}
 
 	public function init()
-    {
+	{
 		do_action( 'geditorial_series_init', $this->module );
 
 		$this->do_filters();
@@ -144,7 +141,7 @@ class gEditorialSeries extends gEditorialModuleCore
 	public function admin_init()
 	{
 		add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ), 12, 2 );
-        add_action( 'add_meta_boxes', array( $this, 'remove_meta_boxes' ), 20, 2 );
+		add_action( 'add_meta_boxes', array( $this, 'remove_meta_boxes' ), 20, 2 );
 
 		if ( $this->get_setting( 'editor_button', true )
 			&& current_user_can( 'edit_posts' )
@@ -153,14 +150,14 @@ class gEditorialSeries extends gEditorialModuleCore
 				add_filter( 'mce_external_plugins', array( $this, 'mce_external_plugins' ) );
 		}
 
-        // internal actions:
-        add_action( 'geditorial_series_meta_box', array( $this, 'geditorial_series_meta_box' ), 5, 2 );
-        add_action( 'geditorial_series_meta_box_item', array( $this, 'geditorial_series_meta_box_item' ), 5, 4 );
+		// internal actions:
+		add_action( 'geditorial_series_meta_box', array( $this, 'geditorial_series_meta_box' ), 5, 2 );
+		add_action( 'geditorial_series_meta_box_item', array( $this, 'geditorial_series_meta_box_item' ), 5, 4 );
 	}
 
 	public function register_taxonomies()
 	{
-        register_taxonomy( $this->module->constants['series_tax'],
+		register_taxonomy( $this->module->constants['series_tax'],
 			$this->post_types(), array(
 				'labels'                => $this->module->strings['labels']['series_tax'],
 				'public'                => true,
@@ -176,15 +173,15 @@ class gEditorialSeries extends gEditorialModuleCore
 					'hierarchical' => false,
 					'with_front'   => false,
 				),
-	            'capabilities' => array(
+				'capabilities' => array(
 					'manage_terms' => 'edit_others_posts',
 					'edit_terms'   => 'edit_others_posts',
 					'delete_terms' => 'edit_others_posts',
 					'assign_terms' => 'edit_published_posts'
-	            )
-        	)
+				)
+			)
 		);
-    }
+	}
 
 	public function tinymce_strings( $strings )
 	{
@@ -197,13 +194,13 @@ class gEditorialSeries extends gEditorialModuleCore
 
 	public function save_post( $post_id, $post )
 	{
-        if ( ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE )
+		if ( ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE )
 			|| empty( $_POST )
 			|| $post->post_type == 'revision' )
 				return $post_id;
 
-        if ( ! in_array( $post->post_type, $this->post_types() ) )
-            return $post_id;
+		if ( ! in_array( $post->post_type, $this->post_types() ) )
+			return $post_id;
 
 		$postmeta = $this->sanitize_post_meta(
 			$this->get_postmeta( $post_id ),
@@ -215,7 +212,7 @@ class gEditorialSeries extends gEditorialModuleCore
 		update_post_meta( $post_id, $this->meta_key, $postmeta );
 		wp_cache_flush();
 
-        return $post_id;
+		return $post_id;
 	}
 
 	private function sanitize_post_meta( $postmeta, $fields, $post_id, $post_type )
@@ -261,16 +258,16 @@ class gEditorialSeries extends gEditorialModuleCore
 	}
 
 	public function remove_meta_boxes( $post_type, $post )
-    {
+	{
 		if ( ! in_array( $post_type, $this->post_types() ) )
 			return;
 
 		//if ( ! current_user_can( 'edit_published_posts' ) )
 			remove_meta_box( 'tagsdiv-'.$this->module->constants['series_tax'], $post_type, 'side' );
-    }
+	}
 
 	public function add_meta_boxes( $post_type, $post )
-    {
+	{
 		if ( ! in_array( $post_type, $this->post_types() ) )
 			return;
 
@@ -280,13 +277,13 @@ class gEditorialSeries extends gEditorialModuleCore
 			array( $this, 'do_meta_box' ),
 			$post_type,
 			'side' );
-    }
+	}
 
 	public function do_meta_box( $post )
 	{
 		echo '<div class="geditorial-admin-wrap-metabox series">';
 		$series = gEditorialHelper::getTerms( $this->module->constants['series_tax'], $post->ID, true );
-        do_action( 'geditorial_series_meta_box', $post, $series );
+		do_action( 'geditorial_series_meta_box', $post, $series );
 		echo '</div>';
 	}
 
@@ -297,8 +294,8 @@ class gEditorialSeries extends gEditorialModuleCore
 		$series_dropdowns = $series_posts = $map = array();
 		$i                = 1;
 
-        foreach ( $the_terms as $the_term ) {
-            $series_dropdowns[$i] = wp_dropdown_categories( array(
+		foreach ( $the_terms as $the_term ) {
+			$series_dropdowns[$i] = wp_dropdown_categories( array(
 				'taxonomy'         => $this->module->constants['series_tax'],
 				'selected'         => $the_term->term_id,
 				'show_option_none' => $this->get_string( 'select_series', 'post', 'misc' ),
@@ -308,7 +305,7 @@ class gEditorialSeries extends gEditorialModuleCore
 				'show_count'       => 1,
 				'hide_empty'       => 0,
 				'echo'             => 0,
-            ) );
+			) );
 
 			$series_posts[$i] = gEditorialHelper::getTermPosts( $this->module->constants['series_tax'], $the_term, array( $post->ID ) );
 			$map[$i]          = $the_term->term_id;
@@ -316,7 +313,7 @@ class gEditorialSeries extends gEditorialModuleCore
 		}
 
 		if ( $this->get_setting( 'multiple', false ) || ! count( $the_terms ) )
-            $series_dropdowns[0] = wp_dropdown_categories( array(
+			$series_dropdowns[0] = wp_dropdown_categories( array(
 				'taxonomy'         => $this->module->constants['series_tax'],
 				'selected'         => 0,
 				'show_option_none' => $this->get_string( 'select_series', 'post', 'misc' ),
@@ -327,16 +324,16 @@ class gEditorialSeries extends gEditorialModuleCore
 				'hide_empty'       => 0,
 				'echo'             => 0,
 				'exclude'          => $map,
-            ) );
+			) );
 
 		$map[0] = false;
 
-        foreach( $series_dropdowns as $counter => $series_dropdown ) {
-            if ( $series_dropdown ) {
-                // echo '<div class="geditorial_series_term_wrap">';
+		foreach( $series_dropdowns as $counter => $series_dropdown ) {
+			if ( $series_dropdown ) {
+				// echo '<div class="geditorial_series_term_wrap">';
 				echo '<div class="field-wrap-group">';
 				echo '<div class="field-wrap field-wrap-select">';
-                echo $series_dropdown;
+				echo $series_dropdown;
 				echo '</div>';
 				do_action( 'geditorial_series_meta_box_item', $counter, $map[$counter], $fields, $post );
 
@@ -344,8 +341,8 @@ class gEditorialSeries extends gEditorialModuleCore
 					echo $series_posts[$counter];
 
 				echo '</div>';
-            }
-        }
+			}
+		}
 
 		do_action( 'geditorial_series_box_after', $this->module, $post, $fields );
 		wp_nonce_field( 'geditorial_series_post_main', '_geditorial_series_post_main' );
@@ -419,14 +416,14 @@ class gEditorialSeries extends gEditorialModuleCore
 		}
 	}
 
-    // [series]
-    // [series slug="wordpress-themes"]
-    // [series id="146"]
-    // [series title="More WordPress Theme Lists" title_wrap="h4" limit="5" list="ol" future="off" single="off"]
+	// [series]
+	// [series slug="wordpress-themes"]
+	// [series id="146"]
+	// [series title="More WordPress Theme Lists" title_wrap="h4" limit="5" list="ol" future="off" single="off"]
 	public function shortcode_series( $atts, $content = null, $tag = '' )
-    {
-        global $post;
-        $error = false;
+	{
+		global $post;
+		$error = false;
 
 		$args = shortcode_atts( array(
 			'slug'      => '',
@@ -451,26 +448,26 @@ class gEditorialSeries extends gEditorialModuleCore
 		if ( false === $args['context'] ) // bailing
 			return null;
 
-        $key = md5( serialize( $args ) );
-        $cache = wp_cache_get( $key, $this->module->constants['series_shortcode'] );
-        if ( false !== $cache )
-            return $cache;
+		$key = md5( serialize( $args ) );
+		$cache = wp_cache_get( $key, $this->module->constants['series_shortcode'] );
+		if ( false !== $cache )
+			return $cache;
 
-        if ( $args['cb'] && ! is_callable( $args['cb'] ) )
-            $args['cb'] = false;
+		if ( $args['cb'] && ! is_callable( $args['cb'] ) )
+			$args['cb'] = false;
 
-        if ( true === $args['exclude'] )
-            $args['exclude'] = array( $post->ID );
+		if ( true === $args['exclude'] )
+			$args['exclude'] = array( $post->ID );
 		else if ( false === $args['exclude'] )
 			$args['exclude'] = array();
 
-        if( $args['id'] ) {
-            $tax_query = array( array(
+		if( $args['id'] ) {
+			$tax_query = array( array(
 				'taxonomy' => $this->module->constants['series_tax'],
 				'field'    => 'id',
 				'terms'    => $args['id'],
 			) );
-        } else if ( $args['slug'] ) {
+		} else if ( $args['slug'] ) {
 			$the_term = get_term_by( 'slug', $args['slug'], $this->module->constants['series_tax'] );
 			if ( false !== $the_term ) {
 				$args['id'] = $the_term->term_id;
@@ -484,8 +481,8 @@ class gEditorialSeries extends gEditorialModuleCore
 				return $content;
 			}
 
-        } else { // Use post's own Series tax if neither "id" nor "slug" exist
-            $terms = wp_get_object_terms( (int) $post->ID, $this->module->constants['series_tax'], array( 'fields' => 'ids' ) );
+		} else { // Use post's own Series tax if neither "id" nor "slug" exist
+			$terms = wp_get_object_terms( (int) $post->ID, $this->module->constants['series_tax'], array( 'fields' => 'ids' ) );
 			if ( $terms && ! is_wp_error( $terms ) ) {
 				$args['id'] = $terms[0];
 				$tax_query = array( array(
@@ -495,11 +492,11 @@ class gEditorialSeries extends gEditorialModuleCore
 				) );
 
 			} else {
-                $error = true;
-            }
+				$error = true;
+			}
 		}
 
-        if( $error == false ) {
+		if( $error == false ) {
 
 			if( $args['title'] ) {
 				if ( false !== strpos( $args['title'], '%' ) ) {
@@ -521,23 +518,23 @@ class gEditorialSeries extends gEditorialModuleCore
 				$post_status = 'publish';
 			}
 
-            $query_args = array(
+			$query_args = array(
 				'tax_query'      => $tax_query,
 				'posts_per_page' => intval( $args['limit'] ),
 				'orderby'        => ( $args['orderby'] == 'order' ? 'date' : $args['orderby'] ),
 				'order'          => $args['order'],
 				'post_status'    => $post_status,
 				'post__not_in'   => $args['exclude'],
-            );
+			);
 
-            $the_posts = get_posts( $query_args );
+			$the_posts = get_posts( $query_args );
 			$count = count( $the_posts );
 
-            if( $count > 1 || ( $args['single'] == 'on' && $count > 0 ) ) {
+			if( $count > 1 || ( $args['single'] == 'on' && $count > 0 ) ) {
 				if ( $count > 1 && 'order' == $args['orderby'] && $args['id'] ) {
 					$i = 1000;
 					$ordered_posts = array();
-                    foreach( $the_posts as & $the_post ) {
+					foreach( $the_posts as & $the_post ) {
 						$the_post->series_meta = $this->get_postmeta( $the_post->ID, $args['id'], array() );
 						//$the_post->menu_order = isset( $the_post->series_meta['in_series_order'] ) ? $the_post->series_meta['in_series_order'] : '0';
 						if ( isset( $the_post->series_meta['in_series_order'] ) && $the_post->series_meta['in_series_order'] )
@@ -548,24 +545,24 @@ class gEditorialSeries extends gEditorialModuleCore
 						$the_post->menu_order = $order_key;
 						$ordered_posts[$order_key] = $the_post;
 						$i++;
-                    }
+					}
 
-                    if ( $args['order'] == 'DESC' )
+					if ( $args['order'] == 'DESC' )
 						ksort( $ordered_posts, SORT_NUMERIC );
 					else
 						krsort( $ordered_posts, SORT_NUMERIC );
-                    $the_posts = $ordered_posts;
-                    unset( $ordered_posts, $the_post, $i );
+					$the_posts = $ordered_posts;
+					unset( $ordered_posts, $the_post, $i );
 				}
 
 				$offset = 1;
 				$more = false;
-                $output = $args['title'].'<'.$args['list'].' class="post-series-list">';
-                foreach( $the_posts as $post ) {
-                    setup_postdata( $post );
-                    if ( $args['cb'] ) {
-                        $output .= call_user_func_array( $args['cb'], array( $post, $args, $offset ) );
-                    } else {
+				$output = $args['title'].'<'.$args['list'].' class="post-series-list">';
+				foreach( $the_posts as $post ) {
+					setup_postdata( $post );
+					if ( $args['cb'] ) {
+						$output .= call_user_func_array( $args['cb'], array( $post, $args, $offset ) );
+					} else {
 						if( $post->post_status == 'publish' )
 							$link = '<span class="the-title in-series-publish"><a href="'.get_permalink( $post->ID ).'">'.get_the_title( $post->ID ).'</a>';
 						else
@@ -590,13 +587,13 @@ class gEditorialSeries extends gEditorialModuleCore
 						$output .= '</li>';
 					}
 					$offset++;
-                }
-                wp_reset_query();
+				}
+				wp_reset_query();
 
 				// $the_series = get_term_by( 'id', $args['id'], $this->module->constants['series_tax'] );
 				// $output .= '<br />'.$the_series->name;
 
-                $output .= '</'.$args['list'].'>';
+				$output .= '</'.$args['list'].'>';
 
 				if ( $more ) {
 					$output .= '<script>
@@ -617,15 +614,15 @@ class gEditorialSeries extends gEditorialModuleCore
 				$output = $args['before'].$output.$args['after'];
 
 				wp_cache_set( $key, $output, $this->module->constants['series_shortcode'] );
-                return $output;
-            }
-        }
+				return $output;
+			}
+		}
 		return null;
-    }
+	}
 
 	public function shortcode_multiple_series( $atts, $content = null, $tag = '' )
-    {
-        global $post;
+	{
+		global $post;
 
 		$args = shortcode_atts( array(
 			'ids'       => array(),
@@ -645,7 +642,7 @@ class gEditorialSeries extends gEditorialModuleCore
 			return null;
 
 		if ( empty( $args['ids'] ) || ! count( $args['ids'] ) ) {
-            $terms = wp_get_object_terms( (int) $post->ID, $this->module->constants['series_tax'], array(
+			$terms = wp_get_object_terms( (int) $post->ID, $this->module->constants['series_tax'], array(
 				'order'   => $args['order'],
 				'orderby' => $args['orderby'],
 				'fields'  => 'ids',
@@ -671,14 +668,14 @@ class gEditorialSeries extends gEditorialModuleCore
 	}
 
 	public function mce_buttons( $buttons )
-    {
+	{
 		array_push( $buttons, '|', 'ge_series' );
 		return $buttons;
-    }
+	}
 
 	public function mce_external_plugins( $plugin_array )
-    {
+	{
 		$plugin_array['ge_series'] = GEDITORIAL_URL.'assets/js/geditorial/tinymce.series.js';
 		return $plugin_array;
-    }
+	}
 }

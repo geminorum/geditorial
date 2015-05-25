@@ -3,11 +3,11 @@
 class gEditorialHelper
 {
 
-    public static function dump( &$var, $htmlSafe = true )
-    {
+	public static function dump( &$var, $htmlSafe = true )
+	{
 		$result = var_export( $var, true );
 		echo '<pre dir="ltr" style="text-align:left;direction:ltr;">'.( $htmlSafe ? htmlspecialchars( $result ) : $result).'</pre>';
-    }
+	}
 
 	// originally from P2
 	public static function excerpted_title( $content, $word_count )
@@ -47,7 +47,7 @@ class gEditorialHelper
 	private static function _tag_open( $tag, $atts, $content = true )
 	{
 		$html = '<'.$tag;
-        foreach( $atts as $key => $att ) {
+		foreach( $atts as $key => $att ) {
 
 			if ( is_array( $att ) && count( $att ) )
 				$att = implode( ' ', array_unique( $att ) );
@@ -80,21 +80,21 @@ class gEditorialHelper
 			$html .= ' '.$key.'="'.$att.'"';
 		}
 		if ( false === $content )
-            return $html.' />';
+			return $html.' />';
 		return $html.'>';
 	}
 
-    public static function html( $tag, $atts = array(), $content = false, $sep = '' )
+	public static function html( $tag, $atts = array(), $content = false, $sep = '' )
 	{
 		$html = self::_tag_open( $tag, $atts, $content );
 
 		if ( false === $content )
 			return $html.$sep;
 
-        if ( is_null( $content ) )
-            return $html.'</'.$tag.'>'.$sep;
+		if ( is_null( $content ) )
+			return $html.'</'.$tag.'>'.$sep;
 
-        return $html.$content.'</'.$tag.'>'.$sep;
+		return $html.$content.'</'.$tag.'>'.$sep;
 	}
 
 	public static function getCurrentURL( $trailingslashit = false )
@@ -103,8 +103,8 @@ class gEditorialHelper
 
 		if ( is_admin() )
 			$current_url = add_query_arg( $wp->query_string, '', home_url( $wp->request ) );
-        else
-            $current_url = home_url( add_query_arg( array(), ( empty( $wp->request ) ? false : $wp->request ) ) );
+		else
+			$current_url = home_url( add_query_arg( array(), ( empty( $wp->request ) ? false : $wp->request ) ) );
 
 		if ( $trailingslashit )
 			return trailingslashit( $current_url );
@@ -112,21 +112,21 @@ class gEditorialHelper
 		return $current_url;
 	}
 
-    public static function getRegisterURL( $register = false )
-    {
-        if ( function_exists( 'buddypress' ) ) {
-            if ( bp_get_signup_allowed() )
-                return bp_get_signup_page();
-        } else if ( get_option( 'users_can_register' ) ) {
-            if ( is_multisite() )
-                return apply_filters( 'wp_signup_location', network_site_url( 'wp-signup.php' ) );
-            else
-                return site_url( 'wp-login.php?action=register', 'login' );
-        } else if ( 'site' == $register ) {
-            return  site_url( '/' );
-        }
-        return $register;
-    }
+	public static function getRegisterURL( $register = false )
+	{
+		if ( function_exists( 'buddypress' ) ) {
+			if ( bp_get_signup_allowed() )
+				return bp_get_signup_page();
+		} else if ( get_option( 'users_can_register' ) ) {
+			if ( is_multisite() )
+				return apply_filters( 'wp_signup_location', network_site_url( 'wp-signup.php' ) );
+			else
+				return site_url( 'wp-login.php?action=register', 'login' );
+		} else if ( 'site' == $register ) {
+			return  site_url( '/' );
+		}
+		return $register;
+	}
 
 
 	// http://teleogistic.net/2013/05/a-recursive-sorta-version-of-wp_parse_args/
@@ -180,10 +180,10 @@ class gEditorialHelper
 		if ( ! $term->description )
 			return;
 
-        if ( ! $echo_att )
+		if ( ! $echo_att )
 			return $term->name.' :: '.strip_tags( $term->description );
 
-        // Bootstrap 3
+		// Bootstrap 3
 		echo ' title="'.esc_attr( $term->name ).'"  data-toggle="popover" data-trigger="hover" data-content="'.$term->description.'"';
 	}
 
@@ -255,15 +255,15 @@ class gEditorialHelper
 					$title = $gEditorial->meta->get_string( $field, $post->post_type );
 
 				$atts = array(
-                    'type'         => 'text',
-                    'autocomplete' => 'off',
-                    'class'        => 'field-text geditorial-meta-field-'.$field,
-                    'name'         => 'geditorial-meta-'.$field.( $key === false ? '' : '['.$key.']' ),
-                    'id'           => 'geditorial-meta-'.$field.( $key === false ? '' : '-'.$key ),
-                    'value'        => $gEditorial->meta->get_postmeta( $post->ID, $field ),
-                    'title'        => $title,
-                    'placeholder'  => $title,
-                    'readonly'     => ! $gEditorial->meta->user_can( 'edit', $field ),
+					'type'         => 'text',
+					'autocomplete' => 'off',
+					'class'        => 'field-text geditorial-meta-field-'.$field,
+					'name'         => 'geditorial-meta-'.$field.( $key === false ? '' : '['.$key.']' ),
+					'id'           => 'geditorial-meta-'.$field.( $key === false ? '' : '-'.$key ),
+					'value'        => $gEditorial->meta->get_postmeta( $post->ID, $field ),
+					'title'        => $title,
+					'placeholder'  => $title,
+					'readonly'     => ! $gEditorial->meta->user_can( 'edit', $field ),
 				);
 
 				if ( $ltr )
@@ -277,9 +277,9 @@ class gEditorialHelper
 		}
 	}
 
-    public static function meta_admin_textarea_field( $field, $fields, $post, $ltr = false, $title = null, $key = false )
-    {
-        global $gEditorial;
+	public static function meta_admin_textarea_field( $field, $fields, $post, $ltr = false, $title = null, $key = false )
+	{
+		global $gEditorial;
 
 		if ( in_array( $field, $fields )
 			&& $gEditorial->meta->user_can( 'view', $field )  ) {
@@ -288,14 +288,14 @@ class gEditorialHelper
 					$title = $gEditorial->meta->get_string( $field, $post->post_type );
 
 				$atts = array(
-                    // 'rows'         => '5',
-                    // 'cols'         => '40',
-                    'class'        => 'field-textarea geditorial-meta-field-'.$field,
-                    'name'         => 'geditorial-meta-'.$field.( $key === false ? '' : '['.$key.']' ),
-                    'id'           => 'geditorial-meta-'.$field.( $key === false ? '' : '-'.$key ),
-                    'title'        => $title,
-                    'placeholder'  => $title,
-                    'readonly'     => ! $gEditorial->meta->user_can( 'edit', $field ),
+					// 'rows'         => '5',
+					// 'cols'         => '40',
+					'class'        => 'field-textarea geditorial-meta-field-'.$field,
+					'name'         => 'geditorial-meta-'.$field.( $key === false ? '' : '['.$key.']' ),
+					'id'           => 'geditorial-meta-'.$field.( $key === false ? '' : '-'.$key ),
+					'title'        => $title,
+					'placeholder'  => $title,
+					'readonly'     => ! $gEditorial->meta->user_can( 'edit', $field ),
 				);
 
 				if ( $ltr )
@@ -307,7 +307,7 @@ class gEditorialHelper
 					'class' => 'field-wrap field-wrap-textarea',
 				), $html );
 		}
-    }
+	}
 
 	// for meta fields before and after post title
 	public static function meta_admin_title_field( $field, $fields, $post, $ltr = false, $title = null, $key = false )
@@ -321,15 +321,15 @@ class gEditorialHelper
 					$title = $gEditorial->meta->get_string( $field, $post->post_type );
 
 				$atts = array(
-                    'type'         => 'text',
-                    'autocomplete' => 'off',
-                    'class'        => 'field-text geditorial-meta-field-'.$field,
-                    'name'         => 'geditorial-meta-'.$field.( $key === false ? '' : '['.$key.']' ),
-                    'id'           => 'geditorial-meta-'.$field.( $key === false ? '' : '-'.$key ),
-                    'value'        => $gEditorial->meta->get_postmeta( $post->ID, $field ),
-                    'title'        => $title,
-                    'placeholder'  => $title,
-                    'readonly'     => ! $gEditorial->meta->user_can( 'edit', $field ),
+					'type'         => 'text',
+					'autocomplete' => 'off',
+					'class'        => 'field-text geditorial-meta-field-'.$field,
+					'name'         => 'geditorial-meta-'.$field.( $key === false ? '' : '['.$key.']' ),
+					'id'           => 'geditorial-meta-'.$field.( $key === false ? '' : '-'.$key ),
+					'value'        => $gEditorial->meta->get_postmeta( $post->ID, $field ),
+					'title'        => $title,
+					'placeholder'  => $title,
+					'readonly'     => ! $gEditorial->meta->user_can( 'edit', $field ),
 				);
 
 				if ( $ltr )
@@ -353,12 +353,12 @@ class gEditorialHelper
 				$html .= '<div class="handlediv" title="'.esc_attr__( 'Click to toggle' ).'"><br></div><h3 class="hndle"><span>'.$title.'</span></h3>';
 				$html .= '<div class="inside"><label class="screen-reader-text" for="geditorial-meta-'.$field.'">'.$title.'</label>';
 				$html .= self::html( 'textarea', array(
-                    'rows'     => '1',
-                    'cols'     => '40',
-                    'name'     => 'geditorial-meta-'.$field.( $key === false ? '' : '['.$key.']' ),
-                    'id'       => 'geditorial-meta-'.$field.( $key === false ? '' : '-'.$key ),
-                    'class'    => 'textarea-autosize geditorial-meta-field-'.$field,
-                    'readonly' => ! $gEditorial->meta->user_can( 'edit', $field ),
+					'rows'     => '1',
+					'cols'     => '40',
+					'name'     => 'geditorial-meta-'.$field.( $key === false ? '' : '['.$key.']' ),
+					'id'       => 'geditorial-meta-'.$field.( $key === false ? '' : '-'.$key ),
+					'class'    => 'textarea-autosize geditorial-meta-field-'.$field,
+					'readonly' => ! $gEditorial->meta->user_can( 'edit', $field ),
 				), esc_textarea( $gEditorial->meta->get_postmeta( $post->ID, $field ) ) );
 				$html .= '</div></div>';
 
@@ -372,21 +372,21 @@ class gEditorialHelper
 
 		if ( $terms = get_the_terms( $post_id, $taxonomy ) ) {
 
-            $out = array();
+			$out = array();
 
-            foreach ( $terms as $t ) {
+			foreach ( $terms as $t ) {
 
-                $query = array();
+				$query = array();
 
 				if ( 'post' != $post_type )
-                    $query['post_type'] = $post_type;
+					$query['post_type'] = $post_type;
 
-                if ( $taxonomy_object->query_var ) {
-                    $query[$taxonomy_object->query_var] = $t->slug;
+				if ( $taxonomy_object->query_var ) {
+					$query[$taxonomy_object->query_var] = $t->slug;
 
-                } else {
-                    $query['taxonomy'] = $taxonomy;
-                    $query['term']     = $t->slug;
+				} else {
+					$query['taxonomy'] = $taxonomy;
+					$query['term']     = $t->slug;
 				}
 
 				$out[] = sprintf( '<a href="%s">%s</a>',
@@ -395,8 +395,8 @@ class gEditorialHelper
 				);
 			}
 
-            //printf( 'Types: %s', join( __( ', ' ), $out ) );
-            echo $before.join( __( ', ' ), $out ).$after;
+			//printf( 'Types: %s', join( __( ', ' ), $out ) );
+			echo $before.join( __( ', ' ), $out ).$after;
 		}
 	}
 
@@ -430,7 +430,7 @@ class gEditorialHelper
 		return $text;
 	}
 
-    // DEPRECATED use : gEditorialHelper::isDev()
+	// DEPRECATED use : gEditorialHelper::isDev()
 	public static function is_dev()
 	{
 		if ( defined( 'GTHEME_DEV_ENVIRONMENT' ) && constant( 'GTHEME_DEV_ENVIRONMENT' ) )
@@ -444,8 +444,8 @@ class gEditorialHelper
 		return false;
 	}
 
-    // debug on developmnet env
-    public static function isDev()
+	// debug on developmnet env
+	public static function isDev()
 	{
 		if ( defined( 'WP_STAGE' )
 			&& 'development' == constant( 'WP_STAGE' ) )
@@ -454,7 +454,7 @@ class gEditorialHelper
 		return false;
 	}
 
-    // DEPRECATED use : gEditorialHelper::isDebug()
+	// DEPRECATED use : gEditorialHelper::isDebug()
 	public static function is_debug()
 	{
 		if ( WP_DEBUG && WP_DEBUG_DISPLAY && ! self::is_dev() )
@@ -463,8 +463,8 @@ class gEditorialHelper
 		return false;
 	}
 
-    // debug on production env
-    public static function isDebug()
+	// debug on production env
+	public static function isDebug()
 	{
 		if ( WP_DEBUG && WP_DEBUG_DISPLAY && ! self::isDev() )
 			return true;
@@ -503,15 +503,15 @@ class gEditorialHelper
 	}
 
 	public static function update_count_callback( $terms, $taxonomy )
-    {
-        global $wpdb;
-        foreach ( (array) $terms as $term ) {
-            $count = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM $wpdb->term_relationships WHERE term_taxonomy_id = %d", $term ) );
-            do_action( 'edit_term_taxonomy', $term, $taxonomy );
-            $wpdb->update( $wpdb->term_taxonomy, compact( 'count' ), array( 'term_taxonomy_id' => $term ) );
-            do_action( 'edited_term_taxonomy', $term, $taxonomy );
-        }
-    }
+	{
+		global $wpdb;
+		foreach ( (array) $terms as $term ) {
+			$count = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM $wpdb->term_relationships WHERE term_taxonomy_id = %d", $term ) );
+			do_action( 'edit_term_taxonomy', $term, $taxonomy );
+			$wpdb->update( $wpdb->term_taxonomy, compact( 'count' ), array( 'term_taxonomy_id' => $term ) );
+			do_action( 'edited_term_taxonomy', $term, $taxonomy );
+		}
+	}
 
 	public static function register_colorbox()
 	{
@@ -525,38 +525,38 @@ class gEditorialHelper
 		wp_enqueue_script( 'jquery-colorbox' );
 	}
 
-    // fall back for meta_term
-    public static function get_post_id_by_slug( $slug, $post_type )
-    {
-        global $wpdb;
+	// fall back for meta_term
+	public static function get_post_id_by_slug( $slug, $post_type )
+	{
+		global $wpdb;
 
-        $slug = rawurlencode( urldecode( $slug ) );
-        $slug = sanitize_title( basename( $slug ) );
+		$slug = rawurlencode( urldecode( $slug ) );
+		$slug = sanitize_title( basename( $slug ) );
 
-        $post_id = $wpdb->get_var( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE post_name = %s AND post_type = %s", $slug, $post_type ) );
+		$post_id = $wpdb->get_var( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE post_name = %s AND post_type = %s", $slug, $post_type ) );
 
-        if ( is_array( $post_id ) )
-            return $post_id[0];
-        elseif ( !empty( $post_id ) )
-            return $post_id;
+		if ( is_array( $post_id ) )
+			return $post_id[0];
+		elseif ( !empty( $post_id ) )
+			return $post_id;
 
-        return false;
-    }
+		return false;
+	}
 
-    public static function the_term( $taxonomy, $post_ID, $object = false )
-    {
-        $terms = get_the_terms( $post_ID, $taxonomy );
-        if ( $terms && ! is_wp_error( $terms ) )
-            foreach ( $terms as $term )
-                if ( $object )
+	public static function the_term( $taxonomy, $post_ID, $object = false )
+	{
+		$terms = get_the_terms( $post_ID, $taxonomy );
+		if ( $terms && ! is_wp_error( $terms ) )
+			foreach ( $terms as $term )
+				if ( $object )
 					return $term;
 				else
 					return $term->term_id;
-        return '0';
-    }
+		return '0';
+	}
 
 	public static function getTerms( $taxonomy = 'category', $post_id = false, $object = false, $key = 'term_id' )
-    {
+	{
 		$the_terms = array();
 
 		if ( false === $post_id ) {
@@ -569,23 +569,23 @@ class gEditorialHelper
 			$terms = get_the_terms( $post_id, $taxonomy );
 		}
 
-        if ( is_wp_error( $terms ) || false === $terms )
-            return $the_terms;
+		if ( is_wp_error( $terms ) || false === $terms )
+			return $the_terms;
 
 		$the_list = wp_list_pluck( $terms, $key );
 		$terms = array_combine( $the_list, $terms );
 
-        if ( $object )
-            return $terms;
+		if ( $object )
+			return $terms;
 
-        foreach ( $terms as $term )
-            $the_terms[] = $term->term_id;
+		foreach ( $terms as $term )
+			$the_terms[] = $term->term_id;
 
 		return $the_terms;
-    }
+	}
 
-    public static function getTermPosts( $taxonomy, $term_or_id, $exclude = array() )
-    {
+	public static function getTermPosts( $taxonomy, $term_or_id, $exclude = array() )
+	{
 		if ( is_object( $term_or_id ) )
 			$term = $term_or_id;
 		else if ( is_numeric( $term_or_id ) )
@@ -623,23 +623,23 @@ class gEditorialHelper
 			setup_postdata( $post );
 
 			$url = add_query_arg( array(
-                'action' => 'edit',
-                'post'   => $post->ID,
-            ), get_admin_url( null, 'post.php' ) );
+				'action' => 'edit',
+				'post'   => $post->ID,
+			), get_admin_url( null, 'post.php' ) );
 
 			$output .= '<li><a href="'.get_permalink( $post->ID ).'">'
-    				.get_the_title( $post->ID ).'</a>'
-    				.'&nbsp;<span class="edit">'
-    				.sprintf( __( '&ndash; <a href="%1$s" target="_blank" title="Edit this post">%2$s</a>', GEDITORIAL_TEXTDOMAIN ),
-    					esc_url( $url ),
-    					'<span class="dashicons dashicons-welcome-write-blog"></span>'
-    				).'</span></li>';
+					.get_the_title( $post->ID ).'</a>'
+					.'&nbsp;<span class="edit">'
+					.sprintf( __( '&ndash; <a href="%1$s" target="_blank" title="Edit this post">%2$s</a>', GEDITORIAL_TEXTDOMAIN ),
+						esc_url( $url ),
+						'<span class="dashicons dashicons-welcome-write-blog"></span>'
+					).'</span></li>';
 		}
 		wp_reset_query();
 		$output .= '</ol></div>';
 
 		return $output;
-    }
+	}
 
 	public static function newPostFromTerm( $term, $taxonomy = 'category', $post_type = 'post' )
 	{
@@ -703,7 +703,7 @@ class gEditorialHelper
 				FROM $wpdb->postmeta
 				WHERE meta_key = %s
 				GROUP BY post_id
-	 			LIMIT %d
+				 LIMIT %d
 			", $meta_key, $limit );
 		else
 			$query = $wpdb->prepare( "
@@ -752,83 +752,83 @@ class gEditorialHelper
 		return $wpdb->query( $query );
 	}
 
-    public static function insertDefaultTerms( $taxonomy, $defaults )
-    {
-        if ( ! taxonomy_exists( $taxonomy ) )
-            return false;
+	public static function insertDefaultTerms( $taxonomy, $defaults )
+	{
+		if ( ! taxonomy_exists( $taxonomy ) )
+			return false;
 
-        foreach ( $defaults as $term_slug => $term_name )
-            if ( ! term_exists( $term_slug, $taxonomy ) )
-                wp_insert_term( $term_name, $taxonomy, array( 'slug' => $term_slug ) );
+		foreach ( $defaults as $term_slug => $term_name )
+			if ( ! term_exists( $term_slug, $taxonomy ) )
+				wp_insert_term( $term_name, $taxonomy, array( 'slug' => $term_slug ) );
 
-        return true;
-    }
+		return true;
+	}
 
-    const SETTINGS_SLUG = 'geditorial-settings';
-    const TOOLS_SLUG    = 'geditorial-tools';
+	const SETTINGS_SLUG = 'geditorial-settings';
+	const TOOLS_SLUG    = 'geditorial-tools';
 
-    public static function settingsURL( $full = true )
-    {
-        //$relative = current_user_can( 'manage_options' ) ? 'admin.php?page='.self::SETTINGS_SLUG : 'index.php?page='.self::SETTINGS_SLUG;
-        $relative = 'admin.php?page='.self::SETTINGS_SLUG;
+	public static function settingsURL( $full = true )
+	{
+		//$relative = current_user_can( 'manage_options' ) ? 'admin.php?page='.self::SETTINGS_SLUG : 'index.php?page='.self::SETTINGS_SLUG;
+		$relative = 'admin.php?page='.self::SETTINGS_SLUG;
 
-        if ( $full )
-            return get_admin_url( null, $relative );
+		if ( $full )
+			return get_admin_url( null, $relative );
 
-        return $relative;
-    }
+		return $relative;
+	}
 
-    public static function toolsURL( $full = true )
-    {
-        //$relative = current_user_can( 'manage_options' ) ? 'admin.php?page='.self::TOOLS_SLUG : 'index.php?page='.self::TOOLS_SLUG;
-        $relative = 'admin.php?page='.self::TOOLS_SLUG;
+	public static function toolsURL( $full = true )
+	{
+		//$relative = current_user_can( 'manage_options' ) ? 'admin.php?page='.self::TOOLS_SLUG : 'index.php?page='.self::TOOLS_SLUG;
+		$relative = 'admin.php?page='.self::TOOLS_SLUG;
 
-        if ( $full )
-            return get_admin_url( null, $relative );
+		if ( $full )
+			return get_admin_url( null, $relative );
 
-        return $relative;
-    }
+		return $relative;
+	}
 
-    public static function isSettings( $screen = null )
-    {
-        if ( is_null( $screen) )
-            $screen = get_current_screen();
+	public static function isSettings( $screen = null )
+	{
+		if ( is_null( $screen) )
+			$screen = get_current_screen();
 
-        if ( isset( $screen->base ) && false !== strripos( $screen->base, self::SETTINGS_SLUG ) )
-            return true;
+		if ( isset( $screen->base ) && false !== strripos( $screen->base, self::SETTINGS_SLUG ) )
+			return true;
 
-        return false;
-    }
+		return false;
+	}
 
-    public static function isTools( $screen = null )
-    {
-        if ( is_null( $screen) )
-            $screen = get_current_screen();
+	public static function isTools( $screen = null )
+	{
+		if ( is_null( $screen) )
+			$screen = get_current_screen();
 
-        if ( isset( $screen->base ) && false !== strripos( $screen->base, self::TOOLS_SLUG ) )
-            return true;
+		if ( isset( $screen->base ) && false !== strripos( $screen->base, self::TOOLS_SLUG ) )
+			return true;
 
-        return false;
-    }
+		return false;
+	}
 
-    public static function getTinyMceStrings( $locale )
-    {
-        $strings = apply_filters( 'geditorial_tinymce_strings', array() );
+	public static function getTinyMceStrings( $locale )
+	{
+		$strings = apply_filters( 'geditorial_tinymce_strings', array() );
 
-        return count( $strings ) ? 'tinyMCE.addI18n("'.$locale.'.geditorial", '.wp_json_encode( $strings ).');'."\n" : '';
-    }
+		return count( $strings ) ? 'tinyMCE.addI18n("'.$locale.'.geditorial", '.wp_json_encode( $strings ).');'."\n" : '';
+	}
 
-    public static function printJSConfig( $args, $object = 'gEditorial' )
-    {
-        $args['api'] = defined( 'GNETWORK_AJAX_ENDPOINT' ) && GNETWORK_AJAX_ENDPOINT ? GNETWORK_AJAX_ENDPOINT : admin_url( 'admin-ajax.php' );
+	public static function printJSConfig( $args, $object = 'gEditorial' )
+	{
+		$args['api'] = defined( 'GNETWORK_AJAX_ENDPOINT' ) && GNETWORK_AJAX_ENDPOINT ? GNETWORK_AJAX_ENDPOINT : admin_url( 'admin-ajax.php' );
 
-    ?> <script type="text/javascript">
+	?> <script type="text/javascript">
 /* <![CDATA[ */
-    var <?php echo $object; ?> = <?php echo wp_json_encode( $args ); ?>;
+	var <?php echo $object; ?> = <?php echo wp_json_encode( $args ); ?>;
 
-    <?php if ( gEditorialHelper::isDev() ) echo 'console.log('.$object.');'; ?>
+	<?php if ( gEditorialHelper::isDev() ) echo 'console.log('.$object.');'; ?>
 
 /* ]]> */
 </script> <?php
-    }
+	}
 }

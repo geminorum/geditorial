@@ -10,7 +10,7 @@ class gEditorialMagazineWidget_IssueCover extends WP_Widget
 				'classname'   => 'widget-geditorialmagazine-issue-cover',
 				'description' => _x( 'Displays selected issue cover', 'Magazine: Widget: description', GEDITORIAL_TEXTDOMAIN ),
 		) );
-        $this->alt_option_name = 'widget_geditorialmagazine_issue_cover';
+		$this->alt_option_name = 'widget_geditorialmagazine_issue_cover';
 
 		add_action( 'save_post', array( $this, 'flush_widget_cache' ) );
 		add_action( 'deleted_post', array( $this, 'flush_widget_cache' ) );
@@ -18,25 +18,25 @@ class gEditorialMagazineWidget_IssueCover extends WP_Widget
 	}
 
 	public function widget( $args, $instance )
-    {
-        global $gEditorial;
+	{
+		global $gEditorial;
 
-        if ( ! $instance['latest'] && empty ( $instance['issue'] ) && ! is_singular() )
-            return;
+		if ( ! $instance['latest'] && empty ( $instance['issue'] ) && ! is_singular() )
+			return;
 
-        $id = false;
+		$id = false;
 
-        if ( ! isset( $args['widget_id'] ) )
+		if ( ! isset( $args['widget_id'] ) )
 			$args['widget_id'] = $this->id;
 
-        if ( ! empty( $instance['latest'] ) ) {
-            $key = $args['widget_id'].'_latest';
-        } else if ( ! empty ( $instance['issue'] ) ) {
-            $key = $args['widget_id'].'_issue_'.$instance['issue'];
-        } else {
-            $id = get_queried_object_id();
-            $key = $args['widget_id'].'_queried_'.$id;
-        }
+		if ( ! empty( $instance['latest'] ) ) {
+			$key = $args['widget_id'].'_latest';
+		} else if ( ! empty ( $instance['issue'] ) ) {
+			$key = $args['widget_id'].'_issue_'.$instance['issue'];
+		} else {
+			$id = get_queried_object_id();
+			$key = $args['widget_id'].'_queried_'.$id;
+		}
 
 		$cache = wp_cache_get( $this->alt_option_name, 'widget' );
 
@@ -48,59 +48,59 @@ class gEditorialMagazineWidget_IssueCover extends WP_Widget
 			return;
 		}
 
-        $issue_func = array( 'gEditorialMagazineTemplates', 'issue_cover' );
+		$issue_func = array( 'gEditorialMagazineTemplates', 'issue_cover' );
 		$title = apply_filters( 'widget_title',
 			empty( $instance['title'] ) ? '' : $instance['title'],
 			$instance,
 			$this->id_base
 		);
 
-        if ( $title )
-            $title = $args['before_title'].$title.$args['after_title'];
+		if ( $title )
+			$title = $args['before_title'].$title.$args['after_title'];
 
-        if ( ! empty( $instance['latest'] ) ) {
-            $the_post = get_posts( array(
+		if ( ! empty( $instance['latest'] ) ) {
+			$the_post = get_posts( array(
 				'numberposts' => 1,
 				'orderby'     => 'menu_order', //'post_date',
 				'order'       => 'DESC',
 				'post_type'   => $gEditorial->get_module_constant( 'magazine', 'issue_cpt', 'issue' ),
 				'post_status' => 'publish',
-            ) );
-            if ( count ( $the_post ) )
-                $id = $the_post[0]->ID;
-        } else if ( ! empty ( $instance['issue'] ) ) {
-            $id = $instance['issue'];
-        } else {
-            $issue_cpt = $gEditorial->get_module_constant( 'magazine', 'issue_cpt', 'issue' );
-            if ( $issue_cpt != get_post_type( $id ) )
-                $issue_func = array( 'gEditorialMagazineTemplates', 'the_issue_cover' );
-        }
+			) );
+			if ( count ( $the_post ) )
+				$id = $the_post[0]->ID;
+		} else if ( ! empty ( $instance['issue'] ) ) {
+			$id = $instance['issue'];
+		} else {
+			$issue_cpt = $gEditorial->get_module_constant( 'magazine', 'issue_cpt', 'issue' );
+			if ( $issue_cpt != get_post_type( $id ) )
+				$issue_func = array( 'gEditorialMagazineTemplates', 'the_issue_cover' );
+		}
 
-        if ( false === $id || ! is_callable( $issue_func ) )
-            return;
+		if ( false === $id || ! is_callable( $issue_func ) )
+			return;
 
-        $issue_func_args = array( '', '',
-            ( empty( $instance['size'] ) ? 'issue-thumbnail' : $instance['size'] ),
-            ( $instance['link'] ? 'parent' : false ), // WHATIF? : custom link?
-            array(
+		$issue_func_args = array( '', '',
+			( empty( $instance['size'] ) ? 'issue-thumbnail' : $instance['size'] ),
+			( $instance['link'] ? 'parent' : false ), // WHATIF? : custom link?
+			array(
 				'id'    => $id,
 				'echo'  => 'false',
 				'cb'    => apply_filters( 'geditorial_magazine_widget_issue_cover_cb',
 					array( 'gEditorialMagazineTemplates', 'issue_cover_callback' ), $instance, $this->id_base ),
 				'title' => ( $instance['number'] ? 'number' : false ), // INFO: or false / 'title'
-            ),
-        );
+			),
+		);
 
-        $result = call_user_func_array( $issue_func, $issue_func_args );
+		$result = call_user_func_array( $issue_func, $issue_func_args );
 
-        if ( ! $result )
-            return;
+		if ( ! $result )
+			return;
 
-        $result = $args['before_widget'].$title.$result.$args['after_widget'];
+		$result = $args['before_widget'].$title.$result.$args['after_widget'];
 
-        $cache[$key] = $result;
+		$cache[$key] = $result;
 		wp_cache_set( $this->alt_option_name, $cache, 'widget' );
-        echo $result;
+		echo $result;
 	}
 
 	public function update( $new_instance, $old_instance )
@@ -126,17 +126,17 @@ class gEditorialMagazineWidget_IssueCover extends WP_Widget
 	}
 
 	public function get_images_sizes()
-    {
+	{
 		global $gEditorial;
 
-        $images = array();
-        foreach( $gEditorial->magazine->get_image_sizes() as $name => $size )
-            $images[$name] = $size['n'].' ('.number_format_i18n( $size['w'] ).'&nbsp;&times;&nbsp;'.number_format_i18n( $size['h'] ).')';
-        return $images;
-    }
+		$images = array();
+		foreach( $gEditorial->magazine->get_image_sizes() as $name => $size )
+			$images[$name] = $size['n'].' ('.number_format_i18n( $size['w'] ).'&nbsp;&times;&nbsp;'.number_format_i18n( $size['h'] ).')';
+		return $images;
+	}
 
 	public function form( $instance )
-    {
+	{
 		global $gEditorial;
 
 		echo '<div class="geditorial-admin-wrap-widgetform">';
@@ -163,7 +163,7 @@ class gEditorialMagazineWidget_IssueCover extends WP_Widget
 			// 'hierarchical'     => 0,
 			'sort_column'      => 'menu_order, post_title',
 			'echo'             => 0,
-        ) );
+		) );
 
 		echo '<p>'.gEditorialHelper::html( 'label', array(
 			'for' => $this->get_field_id( 'issue' ),

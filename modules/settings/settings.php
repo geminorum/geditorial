@@ -6,8 +6,8 @@ class gEditorialSettings extends gEditorialModuleCore
 	var $module;
 	var $module_name = 'settings';
 
-    public function __construct()
-    {
+	public function __construct()
+	{
 		global $gEditorial;
 
 		$this->module_url = $this->get_module_url( __FILE__ );
@@ -30,7 +30,7 @@ class gEditorialSettings extends gEditorialModuleCore
 	}
 
 	public function setup()
-    {
+	{
 		if ( ! is_admin() )
 			return;
 
@@ -39,20 +39,20 @@ class gEditorialSettings extends gEditorialModuleCore
 	}
 
 	public function admin_menu()
-    {
+	{
 		global $gEditorial;
 
 		$hook_settings = add_menu_page( $this->module->title,
-            $this->module->title,
-            'manage_options',
-            $this->module->settings_slug,
-            array( &$this, 'admin_settings_page' ),
-            'dashicons-screenoptions'
-        );
+			$this->module->title,
+			'manage_options',
+			$this->module->settings_slug,
+			array( &$this, 'admin_settings_page' ),
+			'dashicons-screenoptions'
+		);
 
 		$hook_tools = add_submenu_page( $this->module->settings_slug,
-            __( 'gEditorial Tools', GEDITORIAL_TEXTDOMAIN ),
-            _x( 'Tools', 'Admin Tools Menu Title', GEDITORIAL_TEXTDOMAIN ),
+			__( 'gEditorial Tools', GEDITORIAL_TEXTDOMAIN ),
+			_x( 'Tools', 'Admin Tools Menu Title', GEDITORIAL_TEXTDOMAIN ),
 			'manage_options',
 			'geditorial-tools',
 			array( &$this, 'admin_tools_page' )
@@ -77,7 +77,7 @@ class gEditorialSettings extends gEditorialModuleCore
 
 	public function admin_tools_page()
 	{
-        //$settings_uri = 'admin.php?page=geditorial-tools';
+		//$settings_uri = 'admin.php?page=geditorial-tools';
 		$settings_uri = gEditorialHelper::toolsURL( false );
 		$sub = isset( $_GET['sub'] ) ? trim( $_GET['sub'] ) : 'general';
 		$subs = apply_filters( 'geditorial_tools_subs', array(
@@ -163,14 +163,14 @@ class gEditorialSettings extends gEditorialModuleCore
 	}
 
 	public function admin_settings_page()
-    {
+	{
 		global $gEditorial;
 
 		$requested_module = $gEditorial->get_module_by( 'settings_slug', $_GET['page'] );
 		if ( ! $requested_module )
 			wp_die( __( 'Not a registered Editorial module', GEDITORIAL_TEXTDOMAIN ) );
 
-        $configure_callback = $requested_module->configure_page_cb;
+		$configure_callback = $requested_module->configure_page_cb;
 		$requested_module_name = $requested_module->name;
 
 		if ( self::enabled( $requested_module_name ) ) {
@@ -188,7 +188,7 @@ class gEditorialSettings extends gEditorialModuleCore
 	}
 
 	public function print_default_header( $current_module )
-    {
+	{
 		global $gEditorial;
 
 		if ( 'settings' == $current_module->name )
@@ -221,27 +221,27 @@ class gEditorialSettings extends gEditorialModuleCore
 	}
 
 	private function print_default_settings()
-    {
+	{
 		?><div class="modules"><?php
 			$this->print_modules();
 		?></div> <?php
 	}
 
 	private function print_default_footer( $current_module )
-    {
+	{
 		if ( 'settings' == $current_module->slug ) {
-            ?><div class="credits">
+			?><div class="credits">
 				<p>You're using gEditorial v<?php echo GEDITORIAL_VERSION; ?>
 				<br /><a href="https://github.com/geminorum/geditorial/issues">feedback, ideas, bug reports</a>
 				<br />gEditorial is a fork in structure of <a href="http://editflow.org/">EditFlow</a>
-                </p>
-            </div> <?php
-        }
+				</p>
+			</div> <?php
+		}
 	}
 
 	private function print_default_signature( $current_module = null )
 	{
-        ?><div class="signature"><p><?php
+		?><div class="signature"><p><?php
 			printf( __( '<a href="%1$s" title="Editorial">gEditorial</a> is a <a href="%2$s">geminorum</a> project.'),
 				'http://github.com/geminorum/geditorial',
 				'http://geminorum.ir/' );
@@ -249,7 +249,7 @@ class gEditorialSettings extends gEditorialModuleCore
 	}
 
 	private function print_modules()
-    {
+	{
 		global $gEditorial;
 
 		if ( count( $gEditorial->modules ) ) {

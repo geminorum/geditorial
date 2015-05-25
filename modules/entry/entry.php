@@ -7,8 +7,8 @@ class gEditorialEntry extends gEditorialModuleCore
 	var $module_name = 'entry';
 	var $meta_key    = '_ge_entry';
 
-    public function __construct()
-    {
+	public function __construct()
+	{
 		global $gEditorial;
 
 		$this->module_url = $this->get_module_url( __FILE__ );
@@ -142,15 +142,15 @@ class gEditorialEntry extends gEditorialModuleCore
 			add_action( 'admin_init', array( &$this, 'admin_init' ) );
 
 			add_action( 'restrict_manage_posts', array( &$this, 'restrict_manage_posts' ) );
-            add_filter( 'pre_get_posts', array( &$this, 'pre_get_posts' ) );
-            add_filter( 'parse_query', array( &$this, 'parse_query' ) );
+			add_filter( 'pre_get_posts', array( &$this, 'pre_get_posts' ) );
+			add_filter( 'parse_query', array( &$this, 'parse_query' ) );
 		} else {
 
 		}
 	}
 
 	public function init()
-    {
+	{
 		do_action( 'geditorial_entry_init', $this->module );
 
 		$this->do_filters();
@@ -162,16 +162,16 @@ class gEditorialEntry extends gEditorialModuleCore
 		add_shortcode( $this->module->constants['entry_shortcode'], array( &$this, 'shortcode_entry' ) );
 	}
 
-    public function admin_init()
-    {
+	public function admin_init()
+	{
 		add_filter( "manage_{$this->module->constants['entry_cpt']}_posts_columns", array( &$this, 'posts_columns' ) );
 		add_filter( "manage_edit-{$this->module->constants['entry_cpt']}_sortable_columns", array( &$this, 'sortable_columns' ) );
 		add_action( "manage_{$this->module->constants['entry_cpt']}_posts_custom_column", array( &$this, 'custom_column'), 10, 2 );
-    }
+	}
 
-    public function restrict_manage_posts()
-    {
-        global $typenow;
+	public function restrict_manage_posts()
+	{
+		global $typenow;
 
 		if ( $typenow != $this->module->constants['entry_cpt'] )
 			return;
@@ -192,23 +192,23 @@ class gEditorialEntry extends gEditorialModuleCore
 			'show_count' => false,
 			'hide_empty' => true
 		) );
-    }
+	}
 
-    public function pre_get_posts( $wp_query )
-    {
-        if ( is_admin() && isset( $wp_query->query['post_type'] ) ) {
-            if ( $this->module->constants['entry_cpt'] == $wp_query->query['post_type'] ) {
-                if ( ! isset( $_GET['orderby'] ) )
-                    $wp_query->set( 'orderby', 'menu_order' );
-                if ( ! isset( $_GET['order'] ) )
-                    $wp_query->set( 'order', 'DESC' );
-            }
-        }
-    }
+	public function pre_get_posts( $wp_query )
+	{
+		if ( is_admin() && isset( $wp_query->query['post_type'] ) ) {
+			if ( $this->module->constants['entry_cpt'] == $wp_query->query['post_type'] ) {
+				if ( ! isset( $_GET['orderby'] ) )
+					$wp_query->set( 'orderby', 'menu_order' );
+				if ( ! isset( $_GET['order'] ) )
+					$wp_query->set( 'order', 'DESC' );
+			}
+		}
+	}
 
-    public function parse_query( $query )
-    {
-        global $pagenow, $typenow;
+	public function parse_query( $query )
+	{
+		global $pagenow, $typenow;
 
 		if ( 'edit.php' != $pagenow || $typenow != $this->module->constants['entry_cpt'] )
 			return;
@@ -218,66 +218,66 @@ class gEditorialEntry extends gEditorialModuleCore
 			if ( ! empty( $section ) && ! is_wp_error( $section ) )
 				$query->query_vars[$this->module->constants['section_tax']] = $section->slug;
 		}
-    }
+	}
 
-    public function posts_columns( $posts_columns )
-    {
-        $new_columns = array();
+	public function posts_columns( $posts_columns )
+	{
+		$new_columns = array();
 		foreach( $posts_columns as $key => $value ) {
 			if ( $key == 'title' ) {
-                $new_columns['taxonomy-section'] = __( 'Sections', GEDITORIAL_TEXTDOMAIN );
-                $new_columns['entry_order'] = _x( 'O', 'manage_posts_columns', GEDITORIAL_TEXTDOMAIN );
-                $new_columns[$key] = $value;
+				$new_columns['taxonomy-section'] = __( 'Sections', GEDITORIAL_TEXTDOMAIN );
+				$new_columns['entry_order'] = _x( 'O', 'manage_posts_columns', GEDITORIAL_TEXTDOMAIN );
+				$new_columns[$key] = $value;
 				//$new_columns['entry_section'] = __( 'Sections', GEDITORIAL_TEXTDOMAIN );
-            //} elseif ( in_array( $key, array( 'author', 'date', 'comments' ) ) ) {
-            } elseif ( in_array( $key, array( 'author', 'taxonomy-section' ) ) ) {
+			//} elseif ( in_array( $key, array( 'author', 'date', 'comments' ) ) ) {
+			} elseif ( in_array( $key, array( 'author', 'taxonomy-section' ) ) ) {
 				continue; // hehe!
-            } else {
-                $new_columns[$key] = $value;
-            }
+			} else {
+				$new_columns[$key] = $value;
+			}
 		}
 		return $new_columns;
-    }
+	}
 
-    public function sortable_columns( $columns )
-    {
-        $columns['entry_order'] = 'menu_order';
-    	return $columns;
-    }
+	public function sortable_columns( $columns )
+	{
+		$columns['entry_order'] = 'menu_order';
+		return $columns;
+	}
 
 
-    public function custom_column( $column_name, $post_id )
-    {
-        /*
-        if ( 'entry_section' == $column_name ) {
-        //    $post_type = get_post_type( $post_id );
-            $terms = get_the_terms( $post_id, $this->_constants['section_tax'] );
-            if ( ! empty( $terms ) ) {
-                foreach ( $terms as $term ) {
-                    $post_terms[] = "<a href='edit.php?post_type={$this->_constants['entry_cpt']}&{$this->_constants['section_tax']}={$term->slug}'> " . esc_html(sanitize_term_field('name', $term->name, $term->term_id, $this->_constants['section_tax'], 'edit')) . '</a>';
-                }
-                echo join( ', ', $post_terms );
-            }
-            else echo '<i>No terms.</i>';
-        } else
-        */
+	public function custom_column( $column_name, $post_id )
+	{
+		/*
+		if ( 'entry_section' == $column_name ) {
+		//    $post_type = get_post_type( $post_id );
+			$terms = get_the_terms( $post_id, $this->_constants['section_tax'] );
+			if ( ! empty( $terms ) ) {
+				foreach ( $terms as $term ) {
+					$post_terms[] = "<a href='edit.php?post_type={$this->_constants['entry_cpt']}&{$this->_constants['section_tax']}={$term->slug}'> " . esc_html(sanitize_term_field('name', $term->name, $term->term_id, $this->_constants['section_tax'], 'edit')) . '</a>';
+				}
+				echo join( ', ', $post_terms );
+			}
+			else echo '<i>No terms.</i>';
+		} else
+		*/
 
-        if ( 'entry_order' == $column_name ) {
-            $post = get_post( $post_id );
-            if ( ! empty( $post->menu_order ) )
-                echo number_format_i18n( $post->menu_order );
-            else
-                _e( '<span title="No Order">&mdash;</span>', GEDITORIAL_TEXTDOMAIN );
+		if ( 'entry_order' == $column_name ) {
+			$post = get_post( $post_id );
+			if ( ! empty( $post->menu_order ) )
+				echo number_format_i18n( $post->menu_order );
+			else
+				_e( '<span title="No Order">&mdash;</span>', GEDITORIAL_TEXTDOMAIN );
 
-        }
-    }
+		}
+	}
 
 	public function register_post_types()
-    {
-        register_post_type( $this->module->constants['entry_cpt'], array(
-            'labels' => $this->module->strings['labels']['entry_cpt'],
-            'hierarchical' => false,
-            'supports' => array(
+	{
+		register_post_type( $this->module->constants['entry_cpt'], array(
+			'labels' => $this->module->strings['labels']['entry_cpt'],
+			'hierarchical' => false,
+			'supports' => array(
 				'title',
 				'editor',
 				'excerpt',
@@ -289,54 +289,54 @@ class gEditorialEntry extends gEditorialModuleCore
 				'revisions',
 				'page-attributes',
 			),
-            'taxonomies' => array( $this->module->constants['section_tax'] ),
-            'public' => true,
-            'show_ui' => true,
-            'show_in_menu' => true,
-            'menu_position' => 4,
-            'show_in_nav_menus' => true,
-            'publicly_queryable' => true,
-            'exclude_from_search' => false,
-            'has_archive' => $this->module->constants['entry_archives'],
-            'query_var' => $this->module->constants['entry_cpt'],
-            'can_export' => true,
-            'rewrite' => array(
+			'taxonomies' => array( $this->module->constants['section_tax'] ),
+			'public' => true,
+			'show_ui' => true,
+			'show_in_menu' => true,
+			'menu_position' => 4,
+			'show_in_nav_menus' => true,
+			'publicly_queryable' => true,
+			'exclude_from_search' => false,
+			'has_archive' => $this->module->constants['entry_archives'],
+			'query_var' => $this->module->constants['entry_cpt'],
+			'can_export' => true,
+			'rewrite' => array(
 				'slug' => $this->module->constants['entry_cpt'],
 				'with_front' => false
 			),
 			'map_meta_cap' => true,
-        ) );
+		) );
 	}
 
 	public function register_taxonomies()
 	{
-        register_taxonomy( $this->module->constants['section_tax'], array( $this->module->constants['entry_cpt'] ), array(
-            'labels' => $this->module->strings['labels']['section_tax'],
-            'public' => true,
-            'show_in_nav_menus' => true,
-            'show_ui' => true,
-            'show_admin_column' => true,
-            'show_tagcloud' => false,
-            'hierarchical' => true,
-            'update_count_callback' => array( 'gEditorialHelper', 'update_count_callback' ),
-            'rewrite' => array(
+		register_taxonomy( $this->module->constants['section_tax'], array( $this->module->constants['entry_cpt'] ), array(
+			'labels' => $this->module->strings['labels']['section_tax'],
+			'public' => true,
+			'show_in_nav_menus' => true,
+			'show_ui' => true,
+			'show_admin_column' => true,
+			'show_tagcloud' => false,
+			'hierarchical' => true,
+			'update_count_callback' => array( 'gEditorialHelper', 'update_count_callback' ),
+			'rewrite' => array(
 				'slug' => $this->module->constants['section_tax'],
 				'hierarchical' => true,
 				'with_front' => true
 			),
-            'query_var' => true,
-            'capabilities' => array(
-                'manage_terms' => 'edit_others_posts',
-                'edit_terms' => 'edit_others_posts',
-                'delete_terms' => 'edit_others_posts',
-                'assign_terms' => 'edit_published_posts'
-            )
-        ) );
+			'query_var' => true,
+			'capabilities' => array(
+				'manage_terms' => 'edit_others_posts',
+				'edit_terms' => 'edit_others_posts',
+				'delete_terms' => 'edit_others_posts',
+				'assign_terms' => 'edit_published_posts'
+			)
+		) );
 	}
 
 	public function generate_rewrite_rules( $wp_rewrite )
-    {
-        $new_rules = array(
+	{
+		$new_rules = array(
 			$this->module->constants['rewrite_prefix'].'/(.*)/(.*)'
 				=> 'index.php?post_type='.$this->module->constants['entry_cpt']
 				  .'&'.$this->module->constants['section_tax'].'='.$wp_rewrite->preg_index( 1 )
@@ -344,98 +344,98 @@ class gEditorialEntry extends gEditorialModuleCore
 		);
 
 		$wp_rewrite->rules = $new_rules + $wp_rewrite->rules;
-    }
+	}
 
 	public function shortcode_series( $atts, $content = null, $tag = '' )
 	{
-        global $post;
-        $error = $the_term = false;
+		global $post;
+		$error = $the_term = false;
 
-        $args = shortcode_atts( array(
-            //'section' => '',
-            'slug' => '',
-            'id' => '',
-            'title' => 'def',
-            'title_wrap' => 'h3',
-            'list' => 'ul',
-            'limit' => -1,
-            'order' => 'ASC',
-            'orderby' => 'menu_order',
-            //'future' => 'on',
-            'li_before' => '',
-            'order_before' => false,
-            'order_sep' => ' - ',
+		$args = shortcode_atts( array(
+			//'section' => '',
+			'slug' => '',
+			'id' => '',
+			'title' => 'def',
+			'title_wrap' => 'h3',
+			'list' => 'ul',
+			'limit' => -1,
+			'order' => 'ASC',
+			'orderby' => 'menu_order',
+			//'future' => 'on',
+			'li_before' => '',
+			'order_before' => false,
+			'order_sep' => ' - ',
 			'order_zeroise' => false,
 
 			'context' => null,
 		), $atts, $this->module->constants['entry_shortcode'] );
 
 
-        if ( $args['id'] ) {
-            $the_term = get_term_by( 'id', $args['id'], $this->module->constants['section_tax'] );
-            $tax_query = array( array(
+		if ( $args['id'] ) {
+			$the_term = get_term_by( 'id', $args['id'], $this->module->constants['section_tax'] );
+			$tax_query = array( array(
 				'taxonomy' => $this->module->constants['section_tax'],
 				'field' => 'id',
 				'terms' => array( $args['id'] ),
 			) );
-        } else if ( $args['slug'] ) {
-            $the_term = get_term_by( 'slug', $args['slug'], $this->module->constants['section_tax'] );
-            $tax_query = array( array(
+		} else if ( $args['slug'] ) {
+			$the_term = get_term_by( 'slug', $args['slug'], $this->module->constants['section_tax'] );
+			$tax_query = array( array(
 				'taxonomy' => $this->module->constants['section_tax'],
 				'field' => 'slug',
 				'terms' => array( $args['slug'] ),
 			) );
-        } else if ( $post->post_type == $this->module->constants['entry_cpt'] ) {
-            $terms = get_the_terms( $post->ID, $this->module->constants['section_tax'] );
-            if ( $terms && ! is_wp_error( $terms ) ) {
-                foreach ( $terms as $term )
-                    $term_list[] = $term->slug;
-                $tax_query = array( array(
-                    'taxonomy' => $this->module->constants['section_tax'],
-                    'field' => 'slug',
-                    'terms' => $term_list,
-                ) );
-            } else {
-                $error = true;
-            }
-        } else {
-            $error = true;
-        }
+		} else if ( $post->post_type == $this->module->constants['entry_cpt'] ) {
+			$terms = get_the_terms( $post->ID, $this->module->constants['section_tax'] );
+			if ( $terms && ! is_wp_error( $terms ) ) {
+				foreach ( $terms as $term )
+					$term_list[] = $term->slug;
+				$tax_query = array( array(
+					'taxonomy' => $this->module->constants['section_tax'],
+					'field' => 'slug',
+					'terms' => $term_list,
+				) );
+			} else {
+				$error = true;
+			}
+		} else {
+			$error = true;
+		}
 
-        if ( $error )
-            return $content;
+		if ( $error )
+			return $content;
 
-        $html = '<div>';
-        if ( $args['title'] && 'def' == $args['title'] ) {
-            if ( $the_term )
-                $args['title'] = $the_term->name;
-            else
-                $args['title'] = false;
-        }
-        if ( $args['title'] )
-            $html .= '<'.$args['title_wrap'].'>'.esc_html( $args['title'] ).'</'.$args['title_wrap'].'>';
-        $html .= '<ul>';
+		$html = '<div>';
+		if ( $args['title'] && 'def' == $args['title'] ) {
+			if ( $the_term )
+				$args['title'] = $the_term->name;
+			else
+				$args['title'] = false;
+		}
+		if ( $args['title'] )
+			$html .= '<'.$args['title_wrap'].'>'.esc_html( $args['title'] ).'</'.$args['title_wrap'].'>';
+		$html .= '<ul>';
 
-        $entry_query_args = array(
-            'tax_query' => $tax_query,
-            'posts_per_page' => $args['limit'],
-            'orderby' => $args['orderby'],
-            'order' => $args['order'],
-            //'post_status' => $post_status
-        );
-        $entry_query = new WP_Query( $entry_query_args );
+		$entry_query_args = array(
+			'tax_query' => $tax_query,
+			'posts_per_page' => $args['limit'],
+			'orderby' => $args['orderby'],
+			'order' => $args['order'],
+			//'post_status' => $post_status
+		);
+		$entry_query = new WP_Query( $entry_query_args );
 
-        if ( $entry_query->have_posts() ) {
+		if ( $entry_query->have_posts() ) {
 			while ( $entry_query->have_posts() ) {
 				$entry_query->the_post();
 				$order_before = ( $args['order_before'] ? number_format_i18n( $args['order_zeroise'] ? zeroise( $post->menu_order, $args['order_zeroise'] ) : $post->menu_order ).$args['order_sep'] : '' );
-                $html .= '<li>'.$args['li_before'].'<a href="'.get_permalink().'">'.$order_before.get_the_title().'</a></li>';
+				$html .= '<li>'.$args['li_before'].'<a href="'.get_permalink().'">'.$order_before.get_the_title().'</a></li>';
 			}
 			$html .= '</ul></div>';
-            wp_reset_postdata();
-            return $html;
+			wp_reset_postdata();
+			return $html;
 		}
-        return $content;
+		return $content;
 	}
 
 	///////////////////////////////////////////////////////////
@@ -444,75 +444,75 @@ class gEditorialEntry extends gEditorialModuleCore
 	/////MUST REWRITE//////////////////////////////////////////
 	///////////////////////////////////////////////////////////
 
-    function sections( $sections = array(), $active_section = null )
-    {
-        $taxonomy = 'section';
-        $link_class = '';
-        if ( empty( $sections ) ) {
-            $link_class = 'root';
-            $sections = get_terms( $taxonomy, array( 'parent' => 0, 'hide_empty' => 0 ) );
-            $active_section = self::active_section();
-            echo '<ul id="kb-sections" class="unstyled">';
-        }
-        if ( empty( $active_section ) ) {
-            $active_section = '';
-        }
-        foreach ( $sections as $section ) {
-            $toggle = '';
-            $section_children = get_terms( $taxonomy, array( 'parent' => $section->term_id, 'hide_empty' => 0 ) );
-            if ( !empty( $section_children ) && $link_class != 'root' ) {
-                $toggle = '<i class="toggle"></i>';
-            }
-            echo '<li class="'.( $section->term_id == $active_section ? 'active' : '' ).'">';
-            echo '<a  href="'.get_term_link( $section, $taxonomy ).'" class="'.$link_class.'" rel="'.$section->slug.'">'.$toggle.$section->name.'</a>';
+	function sections( $sections = array(), $active_section = null )
+	{
+		$taxonomy = 'section';
+		$link_class = '';
+		if ( empty( $sections ) ) {
+			$link_class = 'root';
+			$sections = get_terms( $taxonomy, array( 'parent' => 0, 'hide_empty' => 0 ) );
+			$active_section = self::active_section();
+			echo '<ul id="kb-sections" class="unstyled">';
+		}
+		if ( empty( $active_section ) ) {
+			$active_section = '';
+		}
+		foreach ( $sections as $section ) {
+			$toggle = '';
+			$section_children = get_terms( $taxonomy, array( 'parent' => $section->term_id, 'hide_empty' => 0 ) );
+			if ( !empty( $section_children ) && $link_class != 'root' ) {
+				$toggle = '<i class="toggle"></i>';
+			}
+			echo '<li class="'.( $section->term_id == $active_section ? 'active' : '' ).'">';
+			echo '<a  href="'.get_term_link( $section, $taxonomy ).'" class="'.$link_class.'" rel="'.$section->slug.'">'.$toggle.$section->name.'</a>';
 
-            if ( !empty( $section_children ) ) {
-                echo '<ul id="'.$section->slug.'" class="children">';
-                self::sections( $section_children, $active_section );
-            }
-            echo "</li>";
-        }
-        echo "</ul>";
-    }
+			if ( !empty( $section_children ) ) {
+				echo '<ul id="'.$section->slug.'" class="children">';
+				self::sections( $section_children, $active_section );
+			}
+			echo "</li>";
+		}
+		echo "</ul>";
+	}
 
-    function active_section()
-    {
-        $taxonomy = 'section';
-        $current_section = '';
-        if ( is_single() ) {
-            $sections = explode( '/', get_query_var( $taxonomy ) );
-            $section_slug = end( $sections );
-            if ( $section_slug != '' ) {
-                $term = get_term_by( 'slug', $section_slug, $taxonomy );
-            } else {
-                $terms = wp_get_post_terms( get_the_ID(), $taxonomy );
-                $term = $terms[0];
-            }
-            if ( $term )
-                $current_section = $term->term_id;
-        } else {
-            $term = get_term_by( 'slug', get_query_var( $taxonomy ), get_query_var( 'taxonomy' ) );
-            if ( $term )
-                $current_section = $term->term_id;
-        }
-        return $current_section;
-    }
+	function active_section()
+	{
+		$taxonomy = 'section';
+		$current_section = '';
+		if ( is_single() ) {
+			$sections = explode( '/', get_query_var( $taxonomy ) );
+			$section_slug = end( $sections );
+			if ( $section_slug != '' ) {
+				$term = get_term_by( 'slug', $section_slug, $taxonomy );
+			} else {
+				$terms = wp_get_post_terms( get_the_ID(), $taxonomy );
+				$term = $terms[0];
+			}
+			if ( $term )
+				$current_section = $term->term_id;
+		} else {
+			$term = get_term_by( 'slug', get_query_var( $taxonomy ), get_query_var( 'taxonomy' ) );
+			if ( $term )
+				$current_section = $term->term_id;
+		}
+		return $current_section;
+	}
 
-    function article_permalink( $article_id, $section_id )
-    {
-        $taxonomy = 'section';
-        $article = get_post( $article_id );
-        $section = get_term( $section_id, $taxonomy );
-        $section_ancestors = get_ancestors( $section->term_id, $taxonomy );
-        krsort( $section_ancestors );
-        $permalink = '<a href="/entry/';
-        foreach( $section_ancestors as $ancestor ):
-            $section_ancestor = get_term( $ancestor, $taxonomy );
-            $permalink.= $section_ancestor->slug.'/';
-        endforeach;
-        $permalink.= $section->slug.'/'.$article->post_name.'/" >'.$article->post_title.'</a>';
-        return $permalink;
-    }
+	function article_permalink( $article_id, $section_id )
+	{
+		$taxonomy = 'section';
+		$article = get_post( $article_id );
+		$section = get_term( $section_id, $taxonomy );
+		$section_ancestors = get_ancestors( $section->term_id, $taxonomy );
+		krsort( $section_ancestors );
+		$permalink = '<a href="/entry/';
+		foreach( $section_ancestors as $ancestor ):
+			$section_ancestor = get_term( $ancestor, $taxonomy );
+			$permalink.= $section_ancestor->slug.'/';
+		endforeach;
+		$permalink.= $section->slug.'/'.$article->post_name.'/" >'.$article->post_title.'</a>';
+		return $permalink;
+	}
 
 	// JUST COPY : https://wordpress.org/plugins/word-highlighter/
 	// add_filter( 'the_content', 'apply_word_highligher' );

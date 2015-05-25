@@ -11,7 +11,7 @@ class gEditorialLike extends gEditorialModuleCore
 	var $cookie = 'geditorial-like';
 
 	public function __construct()
-    {
+	{
 		global $gEditorial;
 
 		$this->module_url = $this->get_module_url( __FILE__ );
