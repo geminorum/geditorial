@@ -33,6 +33,7 @@ class gEditorial
 		add_action( 'admin_init', array( &$this, 'admin_init' ) );
         add_action( 'wp_footer' , array( &$this, 'footer_asset_config'  ), 999 );
         add_action( 'wp_enqueue_scripts', array( &$this, 'wp_enqueue_scripts' ) );
+        add_filter( 'mce_external_languages', array( &$this, 'mce_external_languages' ) );
 	}
 
     public function admin_init()
@@ -297,6 +298,12 @@ class gEditorial
             // gEditorialHelper::dump( $screen ); die();
         }
 	}
+
+    public function mce_external_languages( $languages )
+    {
+        $languages['geditorial'] = GEDITORIAL_DIR.'includes/mce-languages.php';
+        return $languages;
+    }
 
     public function enqueue_styles()
     {

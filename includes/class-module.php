@@ -19,7 +19,10 @@ class gEditorialModuleCore
 	public static function enabled( $slug )
 	{
 		global $gEditorial;
-		return isset( $gEditorial->$slug ) && $gEditorial->$slug->module->options->enabled == 'on';
+
+		return isset( $gEditorial->$slug ) &&
+			( 'on' == $gEditorial->$slug->module->options->enabled
+				|| true === $gEditorial->$slug->module->options->enabled );
 	}
 
 	// enabled post types for this module
@@ -51,7 +54,7 @@ class gEditorialModuleCore
 	{
 		$registered = get_post_types( array(
 			'_builtin' => false,
-			'public' => true,
+			'public'   => true,
 		), 'objects' );
 
 		$post_types = array(
@@ -177,7 +180,7 @@ class gEditorialModuleCore
 
 		$args = apply_filters( 'geditorial_supported_module_post_types_args', array(
 			'_builtin' => false,
-			'public' => true,
+			'public'   => true,
 		), $module );
 
 		$post_types = get_post_types( $args, 'objects' );
@@ -192,9 +195,9 @@ class gEditorialModuleCore
 	{
 		foreach( $this->all_post_types() as $post_type => $label ) {
 			$html = gEditorialHelper::html( 'input', array(
-				'type' => 'checkbox',
-				'id' => 'type-'.$post_type,
-				'name' => $this->module->options_group_name.'[post_types]['.$post_type.']',
+				'type'    => 'checkbox',
+				'id'      => 'type-'.$post_type,
+				'name'    => $this->module->options_group_name.'[post_types]['.$post_type.']',
 				'checked' => $this->module->options->post_types[$post_type],
 			) );
 
@@ -208,9 +211,9 @@ class gEditorialModuleCore
 	{
 		foreach( $this->all_taxonomies() as $taxonomy => $label ) {
 			$html = gEditorialHelper::html( 'input', array(
-				'type' => 'checkbox',
-				'id' => 'tax-'.$taxonomy,
-				'name' => $this->module->options_group_name.'[taxonomies]['.$taxonomy.']',
+				'type'    => 'checkbox',
+				'id'      => 'tax-'.$taxonomy,
+				'name'    => $this->module->options_group_name.'[taxonomies]['.$taxonomy.']',
 				'checked' => isset( $this->module->options->taxonomies[$taxonomy] ) && $this->module->options->taxonomies[$taxonomy],
 			) );
 			echo '<p>'.gEditorialHelper::html( 'label', array(
@@ -552,8 +555,10 @@ class gEditorialModuleCore
 	public function user_can( $action = 'view', $field = '', $post_type = 'post' )
 	{
 		global $geditorial_modules_caps;
-		if ( empty( $geditorial_modules_caps ) && isset( $geditorial_modules_caps[$this->module_name] ) )
-			$geditorial_modules_caps[$this->module_name] = apply_filters( 'geditorial_'.$this->module_name.'_caps', array() );
+
+		if ( empty( $geditorial_modules_caps )
+			&& isset( $geditorial_modules_caps[$this->module_name] ) )
+				$geditorial_modules_caps[$this->module_name] = apply_filters( 'geditorial_'.$this->module_name.'_caps', array() );
 
 		if ( isset( $geditorial_modules_caps[$this->module_name][$action][$post_type][$field] ) )
 			return current_user_can( $geditorial_modules_caps[$this->module_name][$action][$post_type][$field] );
@@ -600,13 +605,13 @@ class gEditorialModuleCore
 	public function add_settings_field( $r )
 	{
 		$args = array_merge( array(
-			'page' => $this->module->options_group_name,
-			'section' => $this->module->options_group_name.'_general',
-			'field' => false,
-			//'label_for' => '',
-			'title' => '',
+			'page'        => $this->module->options_group_name,
+			'section'     => $this->module->options_group_name.'_general',
+			'field'       => false,
+			// 'label_for'   => '',
+			'title'       => '',
 			'description' => '',
-			'callback' => array( $this, 'do_settings_field' ),
+			'callback'    => array( $this, 'do_settings_field' ),
 		), $r );
 
 		if ( ! $args['field'] )
@@ -621,16 +626,15 @@ class gEditorialModuleCore
 	public function do_settings_field( $r )
 	{
 		$args = shortcode_atts( array(
-			'type' => 'enabled',
-			'field' => false,
-			'values' => array(),
-			'filter' => false, // will use via sanitize
-			'dir' => false,
-			'default' => '',
+			'type'        => 'enabled',
+			'field'       => false,
+			'values'      => array(),
+			'filter'      => false, // will use via sanitize
+			'dir'         => false,
+			'default'     => '',
 			'description' => '',
-			'class' => 'geditorial-settings-field',
-
-			'name_group' => 'settings',
+			'class'       => 'geditorial-settings-field',
+			'name_group'  => 'settings',
 		), $r );
 
 		if ( ! $args['field'] )

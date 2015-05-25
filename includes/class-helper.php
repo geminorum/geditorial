@@ -179,10 +179,12 @@ class gEditorialHelper
 	{
 		if ( ! $term->description )
 			return;
-		$att = $term-name.' :: '.strip_tags( $term->description );
-		if ( ! $echo_att )
-			return $att;
-		echo ' title="'.esc_attr( $att ).'"';
+
+        if ( ! $echo_att )
+			return $term->name.' :: '.strip_tags( $term->description );
+
+        // Bootstrap 3
+		echo ' title="'.esc_attr( $term->name ).'"  data-toggle="popover" data-trigger="hover" data-content="'.$term->description.'"';
 	}
 
 	public static function linkStyleSheet( $url, $version = GEDITORIAL_VERSION, $media = false )
@@ -242,8 +244,7 @@ class gEditorialHelper
 		), $html );
 	}
 
-
-	public static function meta_admin_field( $field, $fields, $post, $ltr = false, $title = null )
+	public static function meta_admin_field( $field, $fields, $post, $ltr = false, $title = null, $key = false )
 	{
 		global $gEditorial;
 
@@ -256,10 +257,9 @@ class gEditorialHelper
 				$atts = array(
                     'type'         => 'text',
                     'autocomplete' => 'off',
-                    // 'style'        => 'width:99%;',
                     'class'        => 'field-text geditorial-meta-field-'.$field,
-                    'name'         => 'geditorial-meta-'.$field,
-                    'id'           => 'geditorial-meta-'.$field,
+                    'name'         => 'geditorial-meta-'.$field.( $key === false ? '' : '['.$key.']' ),
+                    'id'           => 'geditorial-meta-'.$field.( $key === false ? '' : '-'.$key ),
                     'value'        => $gEditorial->meta->get_postmeta( $post->ID, $field ),
                     'title'        => $title,
                     'placeholder'  => $title,
@@ -272,14 +272,45 @@ class gEditorialHelper
 				$html = self::html( 'input', $atts );
 
 				echo self::html( 'div', array(
-					'class' => 'field-wrap',
+					'class' => 'field-wrap field-wrap-inputtext',
 				), $html );
 		}
-
 	}
 
+    public static function meta_admin_textarea_field( $field, $fields, $post, $ltr = false, $title = null, $key = false )
+    {
+        global $gEditorial;
+
+		if ( in_array( $field, $fields )
+			&& $gEditorial->meta->user_can( 'view', $field )  ) {
+
+				if ( is_null( $title ) )
+					$title = $gEditorial->meta->get_string( $field, $post->post_type );
+
+				$atts = array(
+                    // 'rows'         => '5',
+                    // 'cols'         => '40',
+                    'class'        => 'field-textarea geditorial-meta-field-'.$field,
+                    'name'         => 'geditorial-meta-'.$field.( $key === false ? '' : '['.$key.']' ),
+                    'id'           => 'geditorial-meta-'.$field.( $key === false ? '' : '-'.$key ),
+                    'title'        => $title,
+                    'placeholder'  => $title,
+                    'readonly'     => ! $gEditorial->meta->user_can( 'edit', $field ),
+				);
+
+				if ( $ltr )
+					$atts['dir'] = 'ltr';
+
+				$html = self::html( 'textarea', $atts, esc_textarea( $gEditorial->meta->get_postmeta( $post->ID, $field ) ) );
+
+				echo self::html( 'div', array(
+					'class' => 'field-wrap field-wrap-textarea',
+				), $html );
+		}
+    }
+
 	// for meta fields before and after post title
-	public static function meta_admin_title_field( $field, $fields, $post, $ltr = false, $title = null )
+	public static function meta_admin_title_field( $field, $fields, $post, $ltr = false, $title = null, $key = false )
 	{
 		global $gEditorial;
 
@@ -293,8 +324,8 @@ class gEditorialHelper
                     'type'         => 'text',
                     'autocomplete' => 'off',
                     'class'        => 'field-text geditorial-meta-field-'.$field,
-                    'name'         => 'geditorial-meta-'.$field,
-                    'id'           => 'geditorial-meta-'.$field,
+                    'name'         => 'geditorial-meta-'.$field.( $key === false ? '' : '['.$key.']' ),
+                    'id'           => 'geditorial-meta-'.$field.( $key === false ? '' : '-'.$key ),
                     'value'        => $gEditorial->meta->get_postmeta( $post->ID, $field ),
                     'title'        => $title,
                     'placeholder'  => $title,
@@ -308,7 +339,7 @@ class gEditorialHelper
 		}
 	}
 
-	public static function meta_admin_text_field( $field, $fields, $post, $ltr = false, $title = null )
+	public static function meta_admin_text_field( $field, $fields, $post, $ltr = false, $title = null, $key = false )
 	{
 		global $gEditorial;
 
@@ -324,8 +355,8 @@ class gEditorialHelper
 				$html .= self::html( 'textarea', array(
                     'rows'     => '1',
                     'cols'     => '40',
-                    'name'     => 'geditorial-meta-'.$field,
-                    'id'       => 'geditorial-meta-'.$field,
+                    'name'     => 'geditorial-meta-'.$field.( $key === false ? '' : '['.$key.']' ),
+                    'id'       => 'geditorial-meta-'.$field.( $key === false ? '' : '-'.$key ),
                     'class'    => 'textarea-autosize geditorial-meta-field-'.$field,
                     'readonly' => ! $gEditorial->meta->user_can( 'edit', $field ),
 				), esc_textarea( $gEditorial->meta->get_postmeta( $post->ID, $field ) ) );
@@ -703,6 +734,25 @@ class gEditorialHelper
             return true;
 
         return false;
+    }
+
+    public static function getTinyMceStrings( $locale )
+    {
+        $strings = apply_filters( 'geditorial_tinymce_strings', array() );
+
+        if ( ! count( $strings ) )
+            return '';
+
+        array(
+            'ge_series-title' => 'series-titleEE',
+            'series' => array(
+                'msg' => 'YOOHA!',
+            ),
+            'button_label' => __('My test button I', 'gk_tc_button2'),
+            'msg'          => __('Hello World!!!!', 'gk_tc_button2')
+        );
+
+        return 'tinyMCE.addI18n("'.$locale.'.geditorial", '.wp_json_encode( $strings ).');'."\n";
     }
 
     public static function printJSConfig( $args, $object = 'gEditorial' )
