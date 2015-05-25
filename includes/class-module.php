@@ -222,7 +222,7 @@ class gEditorialModuleCore
 		}
 	}
 
-	// DEPRECATED
+	// DEPRECATED: use $this->post_types()
 	// collect all of the active post types for a given module
 	public function get_post_types_for_module( $module )
 	{
@@ -371,8 +371,6 @@ class gEditorialModuleCore
 
 	public function do_post_type_fields_option( $args )
 	{
-		//$fields = $this->get_post_type_fields( $this->module, $args['post_type'] );
-
 		echo '<label class="selectit" for="'.esc_attr( $args['id'] ).'">';
 		echo '<input id="'.esc_attr( $args['id'] ).'" name="'.$this->module->options_group_name.'['.esc_attr( $args['post_type'] ).'_fields]['.esc_attr( $args['field'] ).']"';
 
@@ -468,7 +466,7 @@ class gEditorialModuleCore
 		return $list;
 	}
 
-	// DEPRECATED : use post_type_fields()
+	// DEPRECATED: use $this->post_type_fields()
 	// get enabled fields for a post type
 	// Moved here form : Meta
 	public function get_post_type_fields( $module, $post_type = 'post', $all = false )
@@ -787,12 +785,12 @@ class gEditorialModuleCore
 		if ( is_null( $name ) )
 			$name = $this->module_name;
 
-		$prefix = is_admin() ? 'admin' : 'front';
+		$prefix = is_admin() ? 'admin.' : 'front.';
 		$suffix = ( ( ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) || gEditorialHelper::isDev() ) ? '' : '.min' );
 
 		wp_enqueue_script(
 			( $handle ? $handle : 'geditorial-'.$name ),
-			GEDITORIAL_URL.'assets/js/geditorial/'.$prefix.'.'.$name.$suffix.'.js',
+			GEDITORIAL_URL.'assets/js/geditorial/'.$prefix.$name.$suffix.'.js',
 			$deps,
 			GEDITORIAL_VERSION );
 
@@ -806,4 +804,20 @@ class gEditorialModuleCore
 		global $gEditorial;
 		$gEditorial->enqueue_styles();
 	}
+
+	public function get_meta_box_title( $post_type = 'post', $url = null )
+    {
+		$title = $this->get_string( 'meta_box_title', $post_type, 'misc', _x( 'Settings', 'MetaBox default title', GEDITORIAL_TEXTDOMAIN ) );
+
+        if ( current_user_can( 'manage_options' ) ) {
+
+            if ( is_null( $url ) )
+				$url = add_query_arg( 'page', 'geditorial-settings-'.$this->module_name, get_admin_url( null, 'admin.php' ) );
+
+			$action = $this->get_string( 'meta_box_action', $post_type, 'misc', _x( 'Configure', 'MetaBox default action', GEDITORIAL_TEXTDOMAIN ) );
+            $title .= ' <span class="geditorial-admin-action-metabox"><a href="'.esc_url( $url ).'" target="_blank">'.$action.'</a></span>';
+        }
+
+        return $title;
+    }
 }
