@@ -584,10 +584,17 @@ class gEditorialHelper
 		return $the_terms;
     }
 
-    public static function getTermPosts( $taxonomy, $term, $exclude = array() )
+    public static function getTermPosts( $taxonomy, $term_or_id, $exclude = array() )
     {
+		if ( is_object( $term_or_id ) )
+			$term = $term_or_id;
+		else if ( is_numeric( $term_or_id ) )
+			$term = get_term_by( 'id', $term_or_id, $taxonomy );
+		else
+			$term = get_term_by( 'slug', $term_or_id, $taxonomy );
 
-        // TODO: check for term_id or term object
+		if ( ! $term )
+			return '';
 
 		$query_args = array(
 			'posts_per_page' => -1,
@@ -634,6 +641,23 @@ class gEditorialHelper
 		return $output;
     }
 
+	public static function newPostFromTerm( $term, $taxonomy = 'category', $post_type = 'post' )
+	{
+		if ( ! is_object( $term ) && ! is_array( $term ) )
+			$term = get_term( $term, $taxonomy );
+
+		$new_post = array(
+			'post_title'   => $term->name,
+			'post_name'    => $term->slug,
+			'post_content' => $term->description,
+			'post_status'  => 'draft',
+			'post_author'  => self::getEditorialUserID(),
+			'post_type'    => $post_type,
+		);
+
+		$this->_import = true;
+		return wp_insert_post( $new_post );
+	}
 
 	public static function table( $columns, $data = array() )
 	{

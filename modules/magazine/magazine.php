@@ -671,7 +671,8 @@ class gEditorialMagazine extends gEditorialModuleCore
     public function do_meta_box_issues( $post )
     {
 		echo '<div class="geditorial-admin-wrap-metabox magazine">';
-        do_action( 'geditorial_magazine_issues_meta_box', $post, $this->get_issue( $post->ID, true ) );
+		$issues = gEditorialHelper::getTerms( $this->module->constants['issue_tax'], $post->ID, true );
+        do_action( 'geditorial_magazine_issues_meta_box', $post, $issues );
 		echo '</div>';
     }
 
@@ -820,30 +821,17 @@ class gEditorialMagazine extends gEditorialModuleCore
 				), $pages );
 		}
 
+		$term_id = get_post_meta( $post->ID, '_'.$this->module->constants['issue_cpt'].'_term_id', true );
+		echo gEditorialHelper::getTermPosts( $this->module->constants['issue_tax'], intval( $term_id ) );
+
 		echo '</div>';
-    }
-
-    public function get_issue( $post_ID, $object = false )
-    {
-        $the_terms = array();
-        $terms = get_the_terms( $post_ID, $this->module->constants['issue_tax'] );
-        if ( is_wp_error( $terms ) || false === $terms )
-            return $the_terms;
-
-        if ( $object )
-            return $terms;
-
-        foreach ( $terms as $term )
-            $the_terms[] = $term->term_id;
-
-        return $the_terms;
     }
 
     public function get_issue_post( $post_ID = null )
     {
         $post_ID = ( null === $post_ID ) ? get_the_ID() : $post_ID;
 
-        $terms = self::get_issue( $post_ID, true );
+		$terms = gEditorialHelper::getTerms( $this->module->constants['issue_tax'], $post_ID, true );
         if ( ! count( $terms ) )
             return false;
 
@@ -880,7 +868,7 @@ class gEditorialMagazine extends gEditorialModuleCore
                 $new_columns['cover'] = $this->get_string( 'cover_column_title', null, 'misc' );
                 $new_columns[$key] = $value;
             } else if ( 'author' == $key ){
-                //$new_columns[$key] = $value;
+                // $new_columns[$key] = $value;
             } else if ( 'comments' == $key ){
                 $new_columns['issue_posts'] = $this->get_string( 'posts_column_title', null, 'misc' );
                 $new_columns[$key] = $value;
@@ -920,7 +908,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 
 
         } else if ( 'XSVWSVWVWV' == $column_name ) { // disabled!
-            $issues = $this->get_issue( $post_id, true );
+			$issues = gEditorialHelper::getTerms( $this->module->constants['issue_tax'], $post_id, true );
             if ( $issues ) {
                 $issue_terms = array();
                 foreach ( $issues as $term )
@@ -957,8 +945,8 @@ class gEditorialMagazine extends gEditorialModuleCore
 	{
 		return array(
 			$this->module->constants['issue_cpt'] => array (
-				'ot' => 'off',
-				'st' => 'on',
+				'ot'                => 'off',
+				'st'                => 'on',
 				'issue_number_line' => 'on',
 				'issue_total_pages' => 'on',
 			 ),
@@ -1172,12 +1160,11 @@ class gEditorialMagazine extends gEditorialModuleCore
 					$issue_post_id = gEditorialHelper::get_post_id_by_slug( $term->slug, $this->module->constants['issue_cpt'] ) ;
 					if ( $issue_post_id ){
 						echo ' :: ISSUE POST ID: '.$issue_post_id;
-						echo ' :: POST COUNT: '.$this->issue_post_count( $issue_post_id );
+						echo ' :: POST COUNT: '.number_format_i18n( $this->issue_post_count( $issue_post_id ) );
 
-                //echo number_format_i18n( $count );
 					} else {
 						echo ' :: NO ISSUE POST';
-						echo ' :: POST COUNT: '.$term->count;
+						echo ' :: POST COUNT: '.number_format_i18n( $term->count );
 					}
 					if ( $term->description )
 						echo gEditorialHelper::html( 'p', array(
@@ -1185,7 +1172,6 @@ class gEditorialMagazine extends gEditorialModuleCore
 						), $term->description );
 					echo '<br />';
 				}
-				//gEditorialHelper::dump( $terms );
 
 			} else {
 				echo gEditorialHelper::html( 'p', array(
@@ -1207,11 +1193,6 @@ class gEditorialMagazine extends gEditorialModuleCore
 			echo '</td></tr>';
 			echo '</table>';
 
-			// echo '<p class="submit">';
-			// 	submit_button( 'Grab Target', 'primary', 'grab_target', false, array( 'default' => 'default' ) ); echo '&nbsp;&nbsp;';
-			// 	submit_button( 'Send The Next Batch', 'secondary', 'batch', false ); echo '&nbsp;&nbsp;';
-			// echo '</p>';
-
 			wp_referer_field();
 		echo '</form>';
 
@@ -1221,7 +1202,9 @@ class gEditorialMagazine extends gEditorialModuleCore
 	{
 		if ( 'magazine' == $sub ) {
 			if ( ! empty( $_POST ) ) {
-				//check_admin_referer( 'gnetwork_'.$sub.'-options' );
+
+				// check_admin_referer( 'geditorial_tools_'.$sub.'-options' );
+
 				if ( isset( $_POST['issue_post_create'] ) ) {
 
 					$terms = gEditorialHelper::getTerms( $this->module->constants['issue_tax'], false, true );
@@ -1230,7 +1213,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 					foreach ( $terms as $term_id => $term ) {
 						$issue_post_id = gEditorialHelper::get_post_id_by_slug( $term->slug, $this->module->constants['issue_cpt'] ) ;
 						if ( false === $issue_post_id ) {
-							$posts[] = $this->create_issue_post( $term );
+							$posts[] = gEditorialHelper::newPostFromTerm( $term, $this->module->constants['issue_tax'], $this->module->constants['issue_cpt'] );
 
 							break;
 						}
@@ -1244,23 +1227,5 @@ class gEditorialMagazine extends gEditorialModuleCore
 				}
 			}
 		}
-	}
-
-	public function create_issue_post( $term )
-	{
-		if ( ! is_object( $term ) && ! is_array( $term ) )
-			$term = get_term( $term, $this->module->constants['issue_tax'] );
-
-		$new_post = array(
-			'post_title'   => $term->name,
-			'post_name'    => $term->slug,
-			'post_content' => $term->description,
-			'post_status'  => 'draft',
-			'post_author'  => self::getEditorialUserID(),
-			'post_type'    => $this->module->constants['issue_cpt'],
-		);
-
-		$this->_import = true;
-		return wp_insert_post( $new_post );
 	}
 }
