@@ -516,7 +516,7 @@ class gEditorialHelper
 	public static function register_colorbox()
 	{
 		wp_register_style( 'jquery-colorbox', GEDITORIAL_URL.'assets/css/admin.colorbox.css', array(), '1.6.1', 'screen' );
-		wp_register_script( 'jquery-colorbox', GEDITORIAL_URL.'assets/packages/jquery-colorbox/jquery.colorbox.min.js', array( 'jquery'), '1.6.1', true );
+		wp_register_script( 'jquery-colorbox', GEDITORIAL_URL.'assets/packages/jquery-colorbox/jquery.colorbox-min.js', array( 'jquery'), '1.6.1', true );
 	}
 
 	public static function enqueue_colorbox()
@@ -740,19 +740,7 @@ class gEditorialHelper
     {
         $strings = apply_filters( 'geditorial_tinymce_strings', array() );
 
-        if ( ! count( $strings ) )
-            return '';
-
-        array(
-            'ge_series-title' => 'series-titleEE',
-            'series' => array(
-                'msg' => 'YOOHA!',
-            ),
-            'button_label' => __('My test button I', 'gk_tc_button2'),
-            'msg'          => __('Hello World!!!!', 'gk_tc_button2')
-        );
-
-        return 'tinyMCE.addI18n("'.$locale.'.geditorial", '.wp_json_encode( $strings ).');'."\n";
+        return count( $strings ) ? 'tinyMCE.addI18n("'.$locale.'.geditorial", '.wp_json_encode( $strings ).');'."\n" : '';
     }
 
     public static function printJSConfig( $args, $object = 'gEditorial' )
