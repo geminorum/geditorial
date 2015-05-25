@@ -40,7 +40,7 @@ define( 'GEDITORIAL_URL', plugin_dir_url( __FILE__ ) );
 defined( 'DS' ) or define( 'DS', DIRECTORY_SEPARATOR );
 defined( 'GEDITORIAL_TEXTDOMAIN' ) or define( 'GEDITORIAL_TEXTDOMAIN', 'geditorial' );
 
-require_once( GEDITORIAL_DIR.'/includes/class-main.php' );
+require_once( GEDITORIAL_DIR.'includes/class-main.php' );
 
 global $gEditorial;
 $gEditorial = new gEditorial();

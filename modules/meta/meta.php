@@ -186,6 +186,9 @@ class gEditorialMeta extends gEditorialModuleCore
 		if ( 'post' != $screen->base && 'edit' != $screen->base )
 			return;
 
+		if ( ! in_array( $screen->post_type, $this->post_types() ) )
+			return;
+
 		$localize = array(
 			'constants' => array(
 				'ct' => $this->module->constants['ct_tax'],
@@ -234,21 +237,14 @@ class gEditorialMeta extends gEditorialModuleCore
 		if ( ! in_array( $post_type, $this->post_types() ) )
 			return;
 
-		$title = $this->get_string( 'meta_box_title', $post_type, 'misc' );
-		if ( current_user_can( 'manage_options' ) ) {
-			$url = add_query_arg( 'page', 'geditorial-meta-settings', get_admin_url( null, 'admin.php' ) );
-			$title .= ' <span class="geditorial-admin-action-metabox"><a href="'.esc_url( $url ).'" class="edit-box open-box" >'.__( 'Configure', GEDITORIAL_TEXTDOMAIN ).'</a></span>';
-		}
-
 		// we use filter to override the whole functionality, no just adding the actions
 		$box_func = apply_filters( 'geditorial_meta_box_callback', array( &$this, $post_type.'_meta_box' ), $post_type );
 		if ( is_callable( $box_func ) )
-			add_meta_box( 'geditorial-meta-'.$post_type, $title, $box_func, $post_type, 'side', 'high' );
+			add_meta_box( 'geditorial-meta-'.$post_type, $this->get_meta_box_title( $post_type ), $box_func, $post_type, 'side', 'high' );
 
 		$dbx_func = apply_filters( 'geditorial_meta_dbx_callback', array( &$this, $post_type.'_meta_raw' ), $post_type );
 		if ( is_callable( $dbx_func ) )
 			add_action( 'dbx_post_sidebar', $dbx_func, 10, 1 );
-
 	}
 
 	public function remove_meta_boxes( $post_type, $post )

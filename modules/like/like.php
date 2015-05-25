@@ -121,7 +121,7 @@ class gEditorialLike extends gEditorialModuleCore
 
 		$post = get_queried_object();
 
-		if ( ! in_array( $post->post_type, $this->get_post_types_for_module( $this->module ) ) )
+		if ( ! in_array( $post->post_type, $this->post_types() ) )
 			return;
 
 		$this->post_id = $post->ID;

@@ -149,7 +149,7 @@ class gEditorialDivisions extends gEditorialModuleCore
 
 	public function register_post_types()
 	{
-		$post_type_support = $this->get_post_types_for_module( $this->module );
+		$post_type_support = $this->post_types();
 
         register_post_type( $this->module->constants['division_cpt'], array(
             'labels' => $this->module->strings['labels']['division_cpt'],
@@ -178,7 +178,7 @@ class gEditorialDivisions extends gEditorialModuleCore
 
 	public function register_taxonomies()
 	{
-        register_taxonomy( $this->module->constants['division_tax'], $this->get_post_types_for_module( $this->module ), array(
+        register_taxonomy( $this->module->constants['division_tax'], $this->post_types(), array(
             'labels' => $this->module->strings['labels']['division_tax'],
             'public' => true,
             'show_in_nav_menus' => false,
@@ -208,7 +208,7 @@ class gEditorialDivisions extends gEditorialModuleCore
 		// https://github.com/scribu/wp-posts-to-posts/wiki/Connection-information
 		p2p_register_connection_type( array(
             'name' => $this->module->constants['p2p_connection_name'],
-            'from' => $this->get_post_types_for_module( $this->module ),
+            'from' => $this->post_types(),
             'to' => $this->module->constants['division_cpt'],
 
 			'sortable' => 'any',

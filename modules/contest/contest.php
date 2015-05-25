@@ -17,21 +17,19 @@ class gEditorialContest extends gEditorialModuleCore
 		add_filter( 'geditorial_module_defaults_meta', array( &$this, 'module_defaults_meta' ), 10, 2 );
 		add_action( 'geditorial_meta_init', array( &$this, 'meta_init' ) );
 
-		$this->module_url = $this->get_module_url( __FILE__ );
 		$args = array(
 			'title'                => __( 'Contest', GEDITORIAL_TEXTDOMAIN ),
 			'short_description'    => __( 'Contest Management', GEDITORIAL_TEXTDOMAIN ),
 			'extended_description' => __( 'Set of tools to create and manage text contests and/or gather assignments', GEDITORIAL_TEXTDOMAIN ),
-			'module_url'           => $this->module_url,
 			'dashicon'             => 'smiley',
 			'slug'                 => 'contest',
 			'load_frontend'        => true,
 			'constants'            => array(
-				'contest_cpt' => 'contest',
+				'contest_cpt'      => 'contest',
 				'contest_archives' => 'contests',
-				'apply_cpt' => 'apply',
-				'apply_archives' => 'applies',
-				'contest_tax' => 'contests',
+				'apply_cpt'        => 'apply',
+				'apply_archives'   => 'applies',
+				'contest_tax'      => 'contests',
 				'apply_status_tax' => 'apply_status',
 
 			),
@@ -222,6 +220,8 @@ class gEditorialContest extends gEditorialModuleCore
 			// add_action( 'admin_menu', array( &$this, 'admin_menu' ) );
 			// add_filter( 'parent_file', array( &$this, 'parent_file' ) );
 		}
+
+		$this->_post_types_excluded = array( $this->module->constants['contest_cpt'] );
 	}
 
 	public function init()
@@ -271,19 +271,11 @@ class gEditorialContest extends gEditorialModuleCore
         return $parent_file;
     }
 
-	// cannot move up because of the filter
-	public function settings_post_types_option( $section )
-	{
-		global $gEditorial;
-		$gEditorial->settings->helper_option_custom_post_type( $this->module, array(), array( $this->module->constants['contest_cpt'] ) );
-	}
-
 	public function register_post_types()
     {
         register_post_type( $this->module->constants['contest_cpt'], array(
 			'labels'              => $this->module->strings['labels']['contest_cpt'],
 			'hierarchical'        => true,
-			// 'description'         => 'Contest Description',
 			'supports'            => array( 'title', 'editor', 'excerpt', 'author', 'thumbnail', 'trackbacks', 'custom-fields', 'comments', 'revisions', 'page-attributes' ),
 			'taxonomies'          => array( 'category', 'post_tag' ),
 			'public'              => true,
@@ -331,57 +323,60 @@ class gEditorialContest extends gEditorialModuleCore
 
 	public function register_taxonomies()
 	{
-        register_taxonomy( $this->module->constants['contest_tax'], $this->get_post_types_for_module( $this->module ), array(
-			'labels'                => $this->module->strings['labels']['contest_tax'],
-			'public'                => true,
-			'show_in_nav_menus'     => false,
-			'show_ui'               => false, //current_user_can( 'update_plugins' ),
-			'show_admin_column'     => true,
-			'show_tagcloud'         => false,
-			'hierarchical'          => false,
-			'update_count_callback' => array( 'gEditorialHelper', 'update_count_callback' ),
-			'query_var'             => true,
-			'rewrite'               => array(
-				'slug'         => $this->module->constants['contest_tax'],
-				'hierarchical' => false,
-				'with_front'   => false
-			),
-            'capabilities' => array(
-				'manage_terms' => 'edit_others_posts',
-				'edit_terms'   => 'edit_others_posts',
-				'delete_terms' => 'edit_others_posts',
-				'assign_terms' => 'edit_published_posts'
-            )
-        ) );
+        register_taxonomy( $this->module->constants['contest_tax'],
+			$this->post_types(), array(
+				'labels'                => $this->module->strings['labels']['contest_tax'],
+				'public'                => true,
+				'show_in_nav_menus'     => false,
+				'show_ui'               => false, //current_user_can( 'update_plugins' ),
+				'show_admin_column'     => true,
+				'show_tagcloud'         => false,
+				'hierarchical'          => false,
+				'update_count_callback' => array( 'gEditorialHelper', 'update_count_callback' ),
+				'query_var'             => true,
+				'rewrite'               => array(
+					'slug'         => $this->module->constants['contest_tax'],
+					'hierarchical' => false,
+					'with_front'   => false
+				),
+	            'capabilities' => array(
+					'manage_terms' => 'edit_others_posts',
+					'edit_terms'   => 'edit_others_posts',
+					'delete_terms' => 'edit_others_posts',
+					'assign_terms' => 'edit_published_posts'
+	            )
+        	)
+		);
 
-        register_taxonomy( $this->module->constants['apply_status_tax'], $this->get_post_types_for_module( $this->module ), array(
-            'labels' => $this->module->strings['labels']['apply_status_tax'],
-			apply_filters( 'geditorial_contest_apply_status_tax_labels', array(
+        register_taxonomy( $this->module->constants['apply_status_tax'],
+			$this->post_types(), array(
+	            'labels' => $this->module->strings['labels']['apply_status_tax'],
+				apply_filters( 'geditorial_contest_apply_status_tax_labels', array(
 
-            ) ),
-			'public'                => true,
-			'show_in_nav_menus'     => false,
-			'show_ui'               => true,
-			'show_admin_column'     => true,
-			'show_tagcloud'         => false,
-			'hierarchical'          => true,
-			'update_count_callback' => array( 'gEditorialHelper', 'update_count_callback' ),
-			'query_var'             => true,
-			'rewrite'               => array(
-				'slug'         => $this->module->constants['apply_status_tax'],
-				'hierarchical' => true,
-				'with_front'   => false
-			),
-			'capabilities' => array(
-				'manage_terms' => 'edit_others_posts',
-				'edit_terms'   => 'edit_others_posts',
-				'delete_terms' => 'edit_others_posts',
-				'assign_terms' => 'edit_published_posts'
-            )
-        ) );
+	            ) ),
+				'public'                => true,
+				'show_in_nav_menus'     => false,
+				'show_ui'               => true,
+				'show_admin_column'     => true,
+				'show_tagcloud'         => false,
+				'hierarchical'          => true,
+				'update_count_callback' => array( 'gEditorialHelper', 'update_count_callback' ),
+				'query_var'             => true,
+				'rewrite'               => array(
+					'slug'         => $this->module->constants['apply_status_tax'],
+					'hierarchical' => true,
+					'with_front'   => false
+				),
+				'capabilities' => array(
+					'manage_terms' => 'edit_others_posts',
+					'edit_terms'   => 'edit_others_posts',
+					'delete_terms' => 'edit_others_posts',
+					'assign_terms' => 'edit_published_posts'
+	            )
+        	)
+		);
     }
 
-    // http://justintadlock.com/archives/2010/08/20/linking-terms-to-a-specific-post
     public function term_link( $link, $term, $taxonomy )
     {
         if ( $this->module->constants['contest_tax'] == $taxonomy ) {
@@ -491,7 +486,7 @@ class gEditorialContest extends gEditorialModuleCore
 			|| $post->post_type == 'revision' )
 				return $post_id;
 
-        if ( ! in_array( $post->post_type, $this->get_post_types_for_module( $this->module ) ) )
+        if ( ! in_array( $post->post_type, $this->post_types() ) )
             return $post_id;
 
         if ( isset( $_POST['geditorial_contest_terms'] ) ) {
@@ -522,7 +517,7 @@ class gEditorialContest extends gEditorialModuleCore
                 'post_thumbnail_meta_box', $post_type, 'side', 'high' );
         }
 
-        // } else if ( ! in_array( $post_type, $this->get_post_types_for_module( $this->module ) ) ) return;
+        // } else if ( ! in_array( $post_type, $this->post_types() ) ) return;
 		//
         // remove issue tax box for contributors
         // if ( ! current_user_can( 'edit_published_posts' ) )
@@ -575,7 +570,7 @@ class gEditorialContest extends gEditorialModuleCore
 
     public function add_meta_boxes( $post_type, $post )
     {
-		if ( ! in_array( $post_type, $this->get_post_types_for_module( $this->module ) ) )
+		if ( ! in_array( $post_type, $this->post_types() ) )
 			return;
 
 		$title = $this->get_string( 'apply_box_title', 'post', 'misc' );

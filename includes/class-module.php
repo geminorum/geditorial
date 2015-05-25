@@ -680,7 +680,7 @@ class gEditorialModuleCore
 						?>&nbsp;<span><?php echo esc_html( $value_title ); ?></span><br /> <?php
 					}
 				} else {
-					?><input type="checkbox" name="<?php echo $name; ?>" id="<?php echo $name; ?>" value="1"  class="<?php echo $args['class']; ?>" <?php checked( 1, $option );?> /><?php
+					?><input type="checkbox" name="<?php echo $name; ?>" id="<?php echo $name; ?>" value="1"  class="<?php echo $args['class']; ?>" <?php checked( 1, $option );?> /> <?php
 				}
 				if ( $args['description'] )
 					echo ' <span class="description" style="vertical-align:base;">'.esc_html( $args['description'] ).'</span>';
@@ -688,11 +688,10 @@ class gEditorialModuleCore
 			break;
 
 			case 'select' :
-				// alow hiding
-				if ( false !== $args['values'] ) {
+				if ( false !== $args['values'] ) { // alow hiding
 					?><select name="<?php echo $name; ?>" id="<?php echo $id; ?>" class="<?php echo $args['class']; ?>"><?php
 						foreach ( $args['values'] as $value_name => $value_title ) {
-							?><option value="<?php echo esc_attr( $value_name ); ?>" <?php selected( $value_name, $option );?>><?php echo esc_html( $value_title ); ?></option><?php
+							?><option value="<?php echo esc_attr( $value_name ); ?>" <?php selected( $value_name, $option );?>><?php echo esc_html( $value_title ); ?></option> <?php
 						}
 					?></select> <?php
 					if ( $args['description'] )

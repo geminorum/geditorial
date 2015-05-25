@@ -19,8 +19,6 @@ class gEditorialMagazine extends gEditorialModuleCore
     {
 		global $gEditorial;
 
-		//add_action( 'geditorial_modules_loaded', array( &$this, 'modules_loaded' ) );
-
 		// adding support for another internal module : gEditorialMeta
 		add_filter( 'geditorial_module_defaults_meta', array( &$this, 'module_defaults_meta' ), 10, 2 );
 		add_action( 'geditorial_meta_init', array( &$this, 'meta_init' ) );
@@ -618,6 +616,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 				'show_option_all' => $tax_obj->labels->all_items,
 				'taxonomy'        => $this->module->constants['issue_tax'],
 				'name'            => $tax_obj->name,
+				'class'            => 'geditorial-admin-dropbown',
 				// 'orderby'         => 'slug',
 				'order'           => 'DESC',
 				'selected'        => $selected,
@@ -671,7 +670,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 
     public function do_meta_box_issues( $post )
     {
-		echo '<div class="geditorial-admin-wrap-metabox">';
+		echo '<div class="geditorial-admin-wrap-metabox magazine">';
         do_action( 'geditorial_magazine_issues_meta_box', $post, $this->get_issue( $post->ID, true ) );
 		echo '</div>';
     }
@@ -1028,7 +1027,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 	{
 		global $gEditorial, $post;
 
-		$fields = $gEditorial->meta->get_post_type_fields( $gEditorial->meta->module, $post->post_type );
+		$fields = $gEditorial->meta->post_type_fields( $post->post_type );
 
 		gEditorialHelper::meta_admin_title_field( 'ot', $fields, $post );
 		gEditorialHelper::meta_admin_title_field( 'st', $fields, $post );
@@ -1083,7 +1082,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 	{
 		global $gEditorial;
 
-		$fields = $gEditorial->meta->get_post_type_fields( $gEditorial->meta->module, $post->post_type );
+		$fields = $gEditorial->meta->post_type_fields( $post->post_type );
 
 		do_action( 'geditorial_meta_box_before', $gEditorial->meta->module, $post, $fields );
 
@@ -1103,7 +1102,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 			return;
 
 		global $gEditorial;
-		$fields = $gEditorial->meta->get_post_type_fields( $gEditorial->meta->module, $post->post_type );
+		$fields = $gEditorial->meta->post_type_fields( $post->post_type );
 
 		gEditorialHelper::meta_admin_field( 'in_issue_page_start', $fields, $post );
 		gEditorialHelper::meta_admin_field( 'in_issue_order', $fields, $post );
@@ -1166,7 +1165,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 
 			if ( ! empty( $_POST ) && isset( $_POST['issue_tax_check'] ) ) {
 
-				$terms = gEditorialHelper::get_terms( $this->module->constants['issue_tax'], false, true );
+				$terms = gEditorialHelper::getTerms( $this->module->constants['issue_tax'], false, true );
 
 				foreach ( $terms as $term_id => $term ) {
 					echo $term->name;
@@ -1225,7 +1224,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 				//check_admin_referer( 'gnetwork_'.$sub.'-options' );
 				if ( isset( $_POST['issue_post_create'] ) ) {
 
-					$terms = gEditorialHelper::get_terms( $this->module->constants['issue_tax'], false, true );
+					$terms = gEditorialHelper::getTerms( $this->module->constants['issue_tax'], false, true );
 					$posts = array();
 
 					foreach ( $terms as $term_id => $term ) {
