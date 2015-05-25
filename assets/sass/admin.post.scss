@@ -132,6 +132,13 @@
 			}
 		}
 
+		ol {
+			body.locale-fa-ir & {
+				list-style-type: -moz-persian;
+				list-style-type: persian;
+			}
+		}
+
 		.dashicons {
 			width:14px;
 			height:14px;
