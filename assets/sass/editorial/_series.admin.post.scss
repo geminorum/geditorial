@@ -1,0 +1,29 @@
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+//---Module: SERIES---------------------------------------------------------------
+
+// .geditorial_series_term_wrap { margin-bottom:10px; }
+// .geditorial_series_term_wrap p { margin:0 0 2px 0; }
+// .geditorial-series-term-posts {}
+// .geditorial-series-term-posts h4 { font-size:0.8em !important; margin:2px 0 0 0 !important; padding:0 0 0 0 !important; }
+// .geditorial-series-term-posts span.edit { font-size:0.8em  }
+// .geditorial-series-term-posts ul {}
+// .geditorial-series-term-posts ul li{}
+// #geditorial-series select#parent_id { width:99%; }
+
+
+.geditorial-admin-wrap.series {
+
+	// @include main-wrap();
+
+	// margin-top:11px;
+
+
+}
+
+.geditorial-tinymce-icon {
+	&.icon-ge_series:before {
+		content: "\f164";
+	}
+}
