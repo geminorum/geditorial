@@ -1,20 +1,5 @@
 
-
 // USE: .geditorial-admin-wrap.module { @include main-wrap(); }
-
-// .geditorial-admin-wrap {
-//     @extend %box-reset;
-//     & *,
-//     &:after,
-//     & *:after,
-//     &:before,
-//     & *:before {
-//         @extend %box-reset;
-//     }
-// 	padding:0;
-// 	margin:0;
-// 	border:0;
-// }
 
 .geditorial-admin-wrap {
 	.credits {
@@ -43,5 +28,18 @@
 			color:#111;
 			text-decoration:underline;
 		}
+	}
+}
+
+// TINYMCE BUTTON ICONS
+.geditorial-tinymce-icon {
+
+	&:before {
+	    font-family: "dashicons";
+		content: "\f159"; // DEFAULT
+	}
+
+	&.icon-ge_series:before {
+		// content: "\f100";
 	}
 }
