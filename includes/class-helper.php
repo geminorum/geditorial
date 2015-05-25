@@ -555,7 +555,7 @@ class gEditorialHelper
         return '0';
     }
 
-	public static function get_terms( $taxonomy = 'category', $post_id = false, $object = false, $key = 'term_id' )
+	public static function getTerms( $taxonomy = 'category', $post_id = false, $object = false, $key = 'term_id' )
     {
 		$the_terms = array();
 
@@ -583,6 +583,57 @@ class gEditorialHelper
 
 		return $the_terms;
     }
+
+    public static function getTermPosts( $taxonomy, $term, $exclude = array() )
+    {
+
+        // TODO: check for term_id or term object
+
+		$query_args = array(
+			'posts_per_page' => -1,
+			'orderby'        => 'date',
+			'order'          => 'DESC',
+			'post_status'    => array( 'publish', 'pending', 'draft' ),
+			'post__not_in'   => $exclude,
+			'tax_query'      => array( array(
+				'taxonomy' => $taxonomy,
+				'field'    => 'id',
+				'terms'    => $term->term_id,
+			) ),
+		);
+
+		$the_posts = get_posts( $query_args );
+		if ( ! count( $the_posts ) )
+			return false;
+
+		$output = '<div class="field-wrap field-wrap-list"><h4>';
+		$output .= sprintf( __( 'Other Posts on <a href="%1$s" target="_blank">%2$s</a>:', GEDITORIAL_TEXTDOMAIN ),
+			get_term_link( $term, $term->taxonomy ),
+			sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' )
+		).'</h4><ol>';
+
+		foreach( $the_posts as $post ) {
+			setup_postdata( $post );
+
+			$url = add_query_arg( array(
+                'action' => 'edit',
+                'post'   => $post->ID,
+            ), get_admin_url( null, 'post.php' ) );
+
+			$output .= '<li><a href="'.get_permalink( $post->ID ).'">'
+    				.get_the_title( $post->ID ).'</a>'
+    				.'&nbsp;<span class="edit">'
+    				.sprintf( __( '&ndash; <a href="%1$s" target="_blank" title="Edit this post">%2$s</a>', GEDITORIAL_TEXTDOMAIN ),
+    					esc_url( $url ),
+    					'<span class="dashicons dashicons-welcome-write-blog"></span>'
+    				).'</span></li>';
+		}
+		wp_reset_query();
+		$output .= '</ol></div>';
+
+		return $output;
+    }
+
 
 	public static function table( $columns, $data = array() )
 	{
