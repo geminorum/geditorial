@@ -1,12 +1,12 @@
-
+@charset "UTF-8";
 
 @import "modules/all";
 @import "partials/base";
 
-@import "editorial/admin.all";
-//@import "editorial/admin.post";
-//@import "editorial/like.admin.post";
-//@import "editorial/specs.admin.post";
+@import "partials/admin.all";
+// @import "partials/admin.post";
+// @import "partials/like.admin.post";
+// @import "partials/specs.admin.post";
 
 .geditorial-admin-wrap.geditorial-settings {
 
