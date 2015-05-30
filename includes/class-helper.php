@@ -70,7 +70,9 @@ class gEditorialHelper
 			if ( 'class' == $key )
 				//$att = sanitize_html_class( $att, false );
 				$att = $att;
-			else if ( 'href' == $key || 'src' == $key )
+			else if ( 'href' == $key && '#' != $att )
+				$att = esc_url( $att );
+			else if ( 'src' == $key )
 				$att = esc_url( $att );
 			//else if ( 'input' == $tag && 'value' == $key )
 				//$att = $att;
