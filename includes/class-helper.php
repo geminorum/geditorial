@@ -528,32 +528,48 @@ class gEditorialHelper
 	}
 
 	// fall back for meta_term
-	public static function get_post_id_by_slug( $slug, $post_type )
+	// before : get_post_id_by_slug()
+	public static function getPostIDbySlug( $slug, $post_type, $url = false )
 	{
 		global $wpdb;
 
-		$slug = rawurlencode( urldecode( $slug ) );
-		$slug = sanitize_title( basename( $slug ) );
+		if ( $url ) {
+			$slug = rawurlencode( urldecode( $slug ) );
+			$slug = sanitize_title( basename( $slug ) );
+		}
 
-		$post_id = $wpdb->get_var( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE post_name = %s AND post_type = %s", $slug, $post_type ) );
+		$post_id = $wpdb->get_var(
+			$wpdb->prepare(
+				"SELECT ID FROM $wpdb->posts WHERE post_name = %s AND post_type = %s",
+				trim( $slug ),
+				$post_type
+			)
+		);
 
 		if ( is_array( $post_id ) )
 			return $post_id[0];
-		elseif ( !empty( $post_id ) )
+
+		elseif ( ! empty( $post_id ) )
 			return $post_id;
 
 		return false;
 	}
 
-	public static function the_term( $taxonomy, $post_ID, $object = false )
+	// before: the_term()
+	public static function theTerm( $taxonomy, $post_ID, $object = false )
 	{
 		$terms = get_the_terms( $post_ID, $taxonomy );
-		if ( $terms && ! is_wp_error( $terms ) )
-			foreach ( $terms as $term )
-				if ( $object )
+
+		if ( $terms && ! is_wp_error( $terms ) ) {
+			foreach ( $terms as $term ) {
+				if ( $object ) {
 					return $term;
-				else
+				} else {
 					return $term->term_id;
+				}
+			}
+		}
+
 		return '0';
 	}
 
@@ -661,35 +677,70 @@ class gEditorialHelper
 		return wp_insert_post( $new_post );
 	}
 
+	// MAYBE: add general options for gEditorial
+	public static function getEditorialUserID( $fallback = true )
+	{
+		if ( defined( 'GNETWORK_SITE_USER_ID' ) && constant( 'GNETWORK_SITE_USER_ID' ) )
+			return GNETWORK_SITE_USER_ID;
+
+		if ( function_exists( 'gtheme_get_option' ) ) {
+			$gtheme_user = gtheme_get_option( 'default_user', 0 );
+			if ( $gtheme_user )
+				return $gtheme_user;
+		}
+
+		if ( $fallback )
+			return get_current_user_id();
+
+		return 0;
+	}
+
 	public static function table( $columns, $data = array() )
 	{
 		if ( ! count( $columns ) )
 			return false;
 
-		$keys = array();
 		echo '<table class="widefat helper-table" width="100%;"><thead><tr>';
-		foreach ( $columns as $key => $column ) {
-			echo '<th class="helper-column-'.esc_attr( $key ).'">'.$column.'</th>';
-			$keys[] = $key;
-		}
+			foreach ( $columns as $key => $column ) {
+
+				if ( is_array( $column ) )
+					$title = isset( $column['title'] ) ? $column['title'] : $key;
+				else
+					$title = $column;
+
+				echo '<th class="helper-column helper-column-'.esc_attr( $key ).'">'.$title.'</th>';
+			}
 		echo '</tr></thead>';
 
 		$alt = true;
 		foreach ( $data as $index => $row ) {
-			echo '<tr class="helper-column-row-'.$index.( $alt ? ' alternate' : '' ).'">';
+
+			echo '<tr class="helper-column-row helper-column-row-'.$index.( $alt ? ' alternate' : '' ).'">';
+
 			foreach ( $columns as $key => $column ) {
+
+				$callback = ( is_array( $column ) && isset( $column['callback'] ) ) ? $column['callback'] : false;
+
 				if ( is_array( $row ) && isset( $row[$key] ) ) {
-					echo '<td class="helper-column-row-cell-'.$key.'">'.$row[$key].'</td>';
+					echo '<td class="helper-column-row-cell helper-column-row-cell-'.$key.'">';
+						echo ( $callback ? call_user_func_array( $callback, array( $row[$key], $row, $column ) ) : $row[$key] );
+					echo '</td>';
 				} else if ( is_object( $row ) && isset( $row->{$key} ) ) {
-					echo '<td class="helper-column-row-cell-'.$key.'">'.$row->{$key}.'</td>';
+					echo '<td class="helper-column-row-cell helper-column-row-cell-'.$key.'">';
+						echo ( $callback ? call_user_func_array( $callback, array( $row->{$key}, $row, $column ) ) : $row->{$key} );
+					echo '</td>';
+				} else if ( $callback ){
+					echo '<td class="helper-column-row-cell helper-column-row-cell-'.$key.'">';
+						echo call_user_func_array( $callback, array( null, $row, $column ) );
+					echo '</td>';
 				} else {
-					echo '<td class="helper-column-row-cell-empty">&nbsp;</td>';
+					echo '<td class="helper-column-row-cell helper-column-row-cell-empty">&nbsp;</td>';
 				}
 			}
 
-			echo '</tr>';
-			//$alt = $alt ? false : true;
 			$alt = ! $alt;
+
+			echo '</tr>';
 		}
 		echo '</table>';
 	}

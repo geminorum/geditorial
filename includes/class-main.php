@@ -38,8 +38,8 @@ class gEditorial
 
 	public function admin_init()
 	{
-		add_action( 'admin_print_styles', array( $this, 'admin_print_styles' ) );
-		add_action( 'admin_print_footer_scripts', array( $this, 'footer_asset_config' ), 999 );
+		add_action( 'admin_print_styles', array( &$this, 'admin_print_styles' ) );
+		add_action( 'admin_print_footer_scripts', array( &$this, 'footer_asset_config' ), 999 );
 	}
 
 	// include the common resources to Edit Flow and dynamically load the modules

@@ -1,4 +1,6 @@
 
+@import "admin.table";
+
 // USE: .geditorial-admin-wrap.module { @include main-wrap(); }
 
 .geditorial-admin-wrap {
@@ -31,6 +33,28 @@
 			margin-left:25px;
 		}
 	}
+}
+
+.geditorial-admin-action-metabox {
+	padding:0;
+	position:absolute;
+	right:40px;
+	top:6px;
+
+	body.rtl & {
+		left:40px;
+		right:auto;
+		font-family:tahoma;
+	}
+
+	a,
+	a:hover {
+		text-decoration:none;
+	}
+}
+
+.geditorial-admin-wrap-metabox {
+
 }
 
 // TINYMCE BUTTON ICONS

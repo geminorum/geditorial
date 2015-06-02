@@ -272,7 +272,7 @@ class gEditorialMeta extends gEditorialModuleCore
 			echo '<div class="field-wrap">';
 			wp_dropdown_categories( array(
 				'taxonomy'          => $this->module->constants['ct_tax'],
-				'selected'          => gEditorialHelper::the_term( $this->module->constants['ct_tax'], $post->ID ),
+				'selected'          => gEditorialHelper::theTerm( $this->module->constants['ct_tax'], $post->ID ),
 				'show_option_none'  => __( '&mdash; Select a Column Header &mdash;', GEDITORIAL_TEXTDOMAIN ),
 				'option_none_value' => '0',
 				'name'              => 'geditorial-meta-ct',

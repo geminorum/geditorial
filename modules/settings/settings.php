@@ -15,7 +15,7 @@ class gEditorialSettings extends gEditorialModuleCore
 		$args = array(
 			'title'                => __( 'Editorial', GEDITORIAL_TEXTDOMAIN ),
 			'short_description'    => __( 'WordPress, Magazine Style.', GEDITORIAL_TEXTDOMAIN ),
-			'extended_description' => __( '[editorial extended desc.]', GEDITORIAL_TEXTDOMAIN ),
+			// 'extended_description' => __( '[editorial extended desc.]', GEDITORIAL_TEXTDOMAIN ),
 			'module_url'           => $this->module_url,
 			'slug'                 => 'settings',
 			'settings_slug'        => 'geditorial-settings',
@@ -118,12 +118,7 @@ class gEditorialSettings extends gEditorialModuleCore
 	public function admin_tools_load()
 	{
 		$sub = isset( $_REQUEST['sub'] ) ? $_REQUEST['sub'] : null;
-
 		do_action( 'geditorial_tools_load', $sub );
-
-		// ALL DEPRECATED
-		do_action( 'geditorial_tools_save', $sub );
-		do_action( 'geditorial_tools_help', $sub );
 	}
 
 	public function ajax_settings()

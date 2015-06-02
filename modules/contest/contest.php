@@ -386,7 +386,7 @@ class gEditorialContest extends gEditorialModuleCore
 				$post_id = get_term_meta( $term->term_id, $this->module->constants['contest_cpt'].'_linked', true );
 
 			if ( false == $post_id || empty( $post_id ) )
-				$post_id = gEditorialHelper::get_post_id_by_slug( $term->slug, $this->module->constants['contest_cpt'] );
+				$post_id = gEditorialHelper::getPostIDbySlug( $term->slug, $this->module->constants['contest_cpt'] );
 
 			if ( ! empty( $post_id ) )
 				return get_permalink( $post_id );
@@ -409,7 +409,7 @@ class gEditorialContest extends gEditorialModuleCore
 				$post_id = get_term_meta( $term->term_id, $this->module->constants['contest_cpt'].'_linked', true );
 
 			if ( false == $post_id || empty( $post_id ) )
-				$post_id = gEditorialHelper::get_post_id_by_slug( $term->slug, $this->module->constants['contest_cpt'] );
+				$post_id = gEditorialHelper::getPostIDbySlug( $term->slug, $this->module->constants['contest_cpt'] );
 
 			if ( ! empty( $post_id ) )
 				wp_redirect( get_permalink( $post_id ), 301 );

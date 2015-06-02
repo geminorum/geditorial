@@ -735,24 +735,6 @@ class gEditorialModuleCore
 		return isset( $_COOKIE[$this->cookie] ) ? json_decode( wp_unslash( $_COOKIE[$this->cookie] ), true ) : array();
 	}
 
-	// MAYBE: add general options for gEditorial
-	public static function getEditorialUserID( $fallback = true )
-	{
-		if ( defined( 'GNETWORK_SITE_USER_ID' ) && constant( 'GNETWORK_SITE_USER_ID' ) )
-			return GNETWORK_SITE_USER_ID;
-
-		if ( function_exists( 'gtheme_get_option' ) ) {
-			$gtheme_user = gtheme_get_option( 'default_user', 0 );
-			if ( $gtheme_user )
-				return $gtheme_user;
-		}
-
-		if ( $fallback )
-			return get_current_user_id();
-
-		return 0;
-	}
-
 	// will extended by module
 	public function register_post_types() {}
 	public function register_taxonomies() {}
@@ -763,7 +745,7 @@ class gEditorialModuleCore
 	{
 		global $_wp_theme_features;
 		$feature = 'post-thumbnails';
-		//$post_types = (array) $post_types;
+		// $post_types = (array) $post_types;
 
 		if ( isset( $_wp_theme_features[$feature] )
 			&& true !== $_wp_theme_features[$feature]

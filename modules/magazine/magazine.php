@@ -19,21 +19,10 @@ class gEditorialMagazine extends gEditorialModuleCore
 	{
 		global $gEditorial;
 
-		// adding support for another internal module : gEditorialMeta
-		add_filter( 'geditorial_module_defaults_meta', array( &$this, 'module_defaults_meta' ), 10, 2 );
-		add_action( 'geditorial_meta_init', array( &$this, 'meta_init' ) );
-
-		add_action( 'geditorial_tweaks_strings', array( &$this, 'tweaks_strings' ) );
-
-		// support for gPeople
-		add_filter( 'gpeople_remote_support_post_types', array( &$this, 'gpeople_remote_support_post_types' ) );
-
-		$this->module_url = $this->get_module_url( __FILE__ );
 		$args = array(
 			'title'                => __( 'Magazine', GEDITORIAL_TEXTDOMAIN ),
 			'short_description'    => __( 'Issue Management for Magazines', GEDITORIAL_TEXTDOMAIN ),
-			'extended_description' => __( 'Magazine suite for wordpress', GEDITORIAL_TEXTDOMAIN ),
-			'module_url'           => $this->module_url,
+			'extended_description' => __( 'Magazine suite for WordPress', GEDITORIAL_TEXTDOMAIN ),
 			'dashicon'             => 'book',
 			'slug'                 => 'magazine',
 			'load_frontend'        => true,
@@ -60,22 +49,15 @@ class gEditorialMagazine extends gEditorialModuleCore
 			'settings' => array(
 				'_general' => array(
 					array(
-						'field'       => 'comments',
-						'type'        => 'enabled',
-						'title'       => _x( 'Comments', 'Enable Magazine for Comments', GEDITORIAL_TEXTDOMAIN ),
-						'description' => __( 'Magazine button for enabled post types comments', GEDITORIAL_TEXTDOMAIN ),
+						'field'       => 'redirect_spans',
+						'type'        => 'text',
+						'title'       => _x( 'Redirect Spans', 'Enable Magazine for Comments', GEDITORIAL_TEXTDOMAIN ),
+						'description' => __( 'Redirect all Span Archives to a Page', GEDITORIAL_TEXTDOMAIN ),
 						'default'     => 0,
-					),
-					array(
-						'field'       => 'avatars',
-						'type'        => 'enabled',
-						'title'       => _x( 'Avatars', 'Enable Magazine for Comments', GEDITORIAL_TEXTDOMAIN ),
-						'description' => __( 'Display avatars alongside magazine button', GEDITORIAL_TEXTDOMAIN ),
-						'default'     => 0,
+						'dir'         => 'ltr',
 					),
 				),
 				'post_types_option' => 'post_types_option',
-				//'post_types_fields' => 'post_types_fields',
 			),
 			'strings' => array(
 				'titles' => array(
@@ -157,41 +139,20 @@ class gEditorialMagazine extends gEditorialModuleCore
 		);
 
 		$gEditorial->register_module( $this->module_name, $args );
-	}
 
-	// default options for meta module
-	public function module_defaults_meta( $default_options, $mod_data )
-	{
-		if ( ! self::enabled( $this->module_name ) )
-			return $default_options;
+		add_filter( 'geditorial_module_defaults_meta', array( &$this, 'module_defaults_meta' ), 10, 2 );
 
-		$fields = $this->get_meta_fields();
-
-		$default_options['post_types'][$this->module->constants['issue_cpt']] = true;
-		$default_options[$this->module->constants['issue_cpt'].'_fields'] = $fields[$this->module->constants['issue_cpt']];
-		$default_options['post_fields'] = array_merge( $default_options['post_fields'], $fields['post'] );
-
-		return $default_options;
-	}
-
-	// setup actions and filters for meta module
-	public function meta_init( $meta_module )
-	{
-		if ( ! self::enabled( $this->module_name ) )
-			return;
-
-		add_filter( 'geditorial_meta_strings', array( &$this, 'meta_strings' ), 6, 1 );
-
-		//add_filter( 'geditorial_meta_box_callback', array( &$this, 'meta_box_callback' ), 10, 2 );
-		add_filter( 'geditorial_meta_dbx_callback', array( &$this, 'meta_dbx_callback' ), 10, 2 );
-		add_filter( 'geditorial_meta_sanitize_post_meta', array( &$this, 'meta_sanitize_post_meta' ), 10 , 4 );
-
-		add_action( 'geditorial_magazine_issue_meta_box', array( &$this, 'meta_issue_meta_box' ), 10, 1 );
-		add_action( 'geditorial_magazine_issues_meta_box', array( &$this, 'meta_issues_meta_box' ), 10, 2 );
+		// support for gPeople
+		add_filter( 'gpeople_remote_support_post_types', array( &$this, 'gpeople_remote_support_post_types' ) );
 	}
 
 	public function setup()
 	{
+		// adding support for another internal module : gEditorialMeta
+
+		add_action( 'geditorial_meta_init', array( &$this, 'meta_init' ) );
+		add_filter( 'geditorial_tweaks_strings', array( &$this, 'tweaks_strings' ) );
+
 		require_once( GEDITORIAL_DIR.'modules/magazine/templates.php' );
 
 		add_action( 'after_setup_theme', array( &$this, 'after_setup_theme' ), 20 );
@@ -210,6 +171,12 @@ class gEditorialMagazine extends gEditorialModuleCore
 			add_action( 'template_redirect', array( &$this, 'template_redirect' ) );
 
 			add_action( 'admin_bar_menu', array( &$this, 'admin_bar_menu' ), 36 );
+
+			add_action( 'gnetwork_debugbar_panel_geditorial_magazine', array( &$this, 'gnetwork_debugbar_panel' ) );
+			add_filter( 'gnetwork_debugbar_panel_groups', function( $groups ){
+				$groups['geditorial_magazine'] = __( 'gEditorial Magazine', GEDITORIAL_TEXTDOMAIN );
+				return $groups;
+			} );
 		}
 
 		add_action( 'split_shared_term', array( &$this, 'split_shared_term' ), 10, 4 );
@@ -264,6 +231,45 @@ class gEditorialMagazine extends gEditorialModuleCore
 		require_once( GEDITORIAL_DIR.'modules/magazine/widgets.php' );
 
 		register_widget( 'gEditorialMagazineWidget_IssueCover' );
+	}
+
+	public function module_defaults_meta( $default_options, $mod_data )
+	{
+		$fields = $this->get_meta_fields();
+
+		$default_options['post_types'][$this->module->constants['issue_cpt']] = TRUE;
+		$default_options[$this->module->constants['issue_cpt'].'_fields'] = $fields[$this->module->constants['issue_cpt']];
+		$default_options['post_fields'] = array_merge( $default_options['post_fields'], $fields['post'] );
+
+		return $default_options;
+	}
+
+	// setup actions and filters for meta module
+	public function meta_init( $meta_module )
+	{
+		add_filter( 'geditorial_meta_strings', array( &$this, 'meta_strings' ), 6, 1 );
+
+		//add_filter( 'geditorial_meta_box_callback', array( &$this, 'meta_box_callback' ), 10, 2 );
+		add_filter( 'geditorial_meta_dbx_callback', array( &$this, 'meta_dbx_callback' ), 10, 2 );
+		add_filter( 'geditorial_meta_sanitize_post_meta', array( &$this, 'meta_sanitize_post_meta' ), 10 , 4 );
+
+		add_action( 'geditorial_magazine_issue_meta_box', array( &$this, 'meta_issue_meta_box' ), 10, 1 );
+		add_action( 'geditorial_magazine_issues_meta_box', array( &$this, 'meta_issues_meta_box' ), 10, 2 );
+	}
+
+	public function tweaks_strings( $strings )
+	{
+		$new = array(
+			'taxonomies' => array(
+				$this->module->constants['issue_tax'] => array(
+					'column'     => 'taxonomy-'.$this->module->constants['issue_tax'],
+					'dashicon'   => 'book',
+					'title_attr' => $this->get_string( 'name', 'issue_tax', 'labels' ),
+				),
+			),
+		);
+
+		return gEditorialHelper::parse_args_r( $new, $strings );
 	}
 
 	public function register_post_types()
@@ -363,7 +369,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 				//$post_id = get_term_meta( $term->term_id, $this->module->constants['issue_cpt'].'_linked', true );
 
 			if ( false == $post_id || empty( $post_id ) )
-				$post_id = gEditorialHelper::get_post_id_by_slug( $term->slug, $this->module->constants['issue_cpt'] );
+				$post_id = gEditorialHelper::getPostIDbySlug( $term->slug, $this->module->constants['issue_cpt'] );
 
 			if ( ! empty( $post_id ) )
 				return get_permalink( $post_id );
@@ -387,10 +393,16 @@ class gEditorialMagazine extends gEditorialModuleCore
 				//$post_id = get_term_meta( $term->term_id, $this->module->constants['issue_cpt'].'_linked', true );
 
 			if ( false == $post_id || empty( $post_id ) )
-				$post_id = gEditorialHelper::get_post_id_by_slug( $term->slug, $this->module->constants['issue_cpt'] );
+				$post_id = gEditorialHelper::getPostIDbySlug( $term->slug, $this->module->constants['issue_cpt'] );
 
 			if ( ! empty( $post_id ) )
 				wp_redirect( get_permalink( $post_id ), 301 );
+
+		} else if ( $this->module->constants['span_tax'] == $term->taxonomy ) {
+
+			$redirect = $this->get_setting( 'redirect_spans', false );
+			if ( $redirect )
+				wp_redirect( $redirect, 301 );
 		}
 	}
 
@@ -412,6 +424,11 @@ class gEditorialMagazine extends gEditorialModuleCore
 		//         // TODO: update term parent
 		//     }
 		// }
+
+		// FIXME: check if it's working : probably the importer will add the tax too!
+		// FIXME: how about term_id of not-yet-created issue tax!?
+		if ( $this->_import )
+			return $post_id;
 
 		$term           = get_term_by( 'slug', $post->post_name, $this->module->constants['issue_tax'] );
 		$pre_meta_issue = get_post_meta( $post_id, '_'.$this->module->constants['issue_cpt'].'_term_id', true );
@@ -651,14 +668,9 @@ class gEditorialMagazine extends gEditorialModuleCore
 	{
 		if ( in_array( $post_type, $this->post_types() ) ) {
 
-			$title = $this->get_string( 'meta_box_title', $post_type, 'misc' );
-			if ( current_user_can( 'edit_others_posts' ) ) {
-				$url = add_query_arg( 'post_type', $this->module->constants['issue_cpt'], get_admin_url( null, 'edit.php' ) );
-				$title .= ' <span class="geditorial-admin-action-metabox"><a href="'.esc_url( $url ).'" class="edit-box open-box">'.__( 'Issues', GEDITORIAL_TEXTDOMAIN ).'</a></span>';
-			}
-
+			$url = add_query_arg( 'post_type', $this->module->constants['issue_cpt'], get_admin_url( null, 'edit.php' ) );
 			add_meta_box( 'geditorial-magazine-issues',
-				$title,
+				$this->get_meta_box_title( $post_type, $url ),
 				array( &$this, 'do_meta_box_issues' ),
 				$post_type,
 				'side'
@@ -843,7 +855,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 				//$the_id = get_term_meta( $term->term_id, $this->module->constants['issue_cpt'].'_linked', true );
 
 			if ( false == $the_id || empty( $the_id ) )
-				$the_id = gEditorialHelper::get_post_id_by_slug( $term->slug, $this->module->constants['issue_cpt'] );
+				$the_id = gEditorialHelper::getPostIDbySlug( $term->slug, $this->module->constants['issue_cpt'] );
 
 			if ( false != $the_id && ! empty( $the_id ) ) {
 				$status = get_post_status( $the_id );
@@ -986,22 +998,6 @@ class gEditorialMagazine extends gEditorialModuleCore
 
 		return gEditorialHelper::parse_args_r( $new, $strings );
 	}
-
-	public function tweaks_strings( $strings )
-	{
-		$new = array(
-			'taxonomies' => array(
-				$this->module->constants['issue_tax'] => array(
-					'column'     => 'taxonomy-'.$this->module->constants['issue_tax'],
-					'dashicon'   => 'book',
-					'title_attr' => $this->get_string( 'name', 'issue_tax', 'labels' ),
-				),
-			),
-		);
-
-		return gEditorialHelper::parse_args_r( $new, $strings );
-	}
-
 
 	public function meta_dbx_callback( $func, $post_type )
 	{
@@ -1157,7 +1153,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 
 				foreach ( $terms as $term_id => $term ) {
 					echo $term->name;
-					$issue_post_id = gEditorialHelper::get_post_id_by_slug( $term->slug, $this->module->constants['issue_cpt'] ) ;
+					$issue_post_id = gEditorialHelper::getPostIDbySlug( $term->slug, $this->module->constants['issue_cpt'] ) ;
 					if ( $issue_post_id ){
 						echo ' :: ISSUE POST ID: '.$issue_post_id;
 						echo ' :: POST COUNT: '.number_format_i18n( $this->issue_post_count( $issue_post_id ) );
@@ -1211,7 +1207,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 					$posts = array();
 
 					foreach ( $terms as $term_id => $term ) {
-						$issue_post_id = gEditorialHelper::get_post_id_by_slug( $term->slug, $this->module->constants['issue_cpt'] ) ;
+						$issue_post_id = gEditorialHelper::getPostIDbySlug( $term->slug, $this->module->constants['issue_cpt'] ) ;
 						if ( false === $issue_post_id ) {
 							$posts[] = gEditorialHelper::newPostFromTerm( $term, $this->module->constants['issue_tax'], $this->module->constants['issue_cpt'] );
 
@@ -1228,4 +1224,15 @@ class gEditorialMagazine extends gEditorialModuleCore
 			}
 		}
 	}
+
+	// FIXME: finish this!
+	public function gnetwork_debugbar_panel()
+	{
+		if ( ! is_singular() )
+			return;
+
+
+
+	}
+
 }

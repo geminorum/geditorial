@@ -134,7 +134,7 @@ class gEditorialMagazineTemplates
 					unset( $ordered_posts, $the_post, $i );
 				}
 
-				$output = $title_output.'<'.$args['list'].' class="post-series-list">';
+				$output = $title_output.'<'.$args['list'].'>';
 				foreach( $the_posts as $post ) {
 					setup_postdata( $post );
 					if ( $args['cb'] ) {
@@ -172,20 +172,22 @@ class gEditorialMagazineTemplates
 		$span_tax = $gEditorial->get_module_constant( 'magazine', 'span_tax', 'span' );
 
 		$args = shortcode_atts( array(
-			'slug'       => '',
-			'id'         => '',
-			'title'      => '',
-			'title_wrap' => 'h3',
-			'list'       => 'ul',
-			'list_class' => 'issue-series-list',
-			'limit'      => -1,
-			'future'     => 'on',
-			'li_before'  => '',
-			'orderby'    => 'date',
-			'order'      => 'ASC',
-			'cb'         => false,
-			'link'       => 'title', //not used yet
-			'cover'      => false,
+			'slug'        => '',
+			'id'          => '',
+			'title'       => '',
+			'title_wrap'  => 'h3',
+			'title_link'  => FALSE,
+			'title_title' => __( 'Permanent link to this span', GEDITORIAL_TEXTDOMAIN ), // if title_link
+			'list'        => 'ul',
+			'list_class'  => 'issue-list',
+			'limit'       => -1,
+			'future'      => 'on',
+			'li_before'   => '',
+			'orderby'     => 'date',
+			'order'       => 'ASC',
+			'cb'          => false,
+			'link'        => 'title', //not used yet
+			'cover'       => false,
 		), $atts, $gEditorial->get_module_constant( 'magazine', 'span_shortcode', 'span' ) );
 
 		$key = md5( serialize( $args ) );
@@ -225,7 +227,11 @@ class gEditorialMagazineTemplates
 		}
 
 		if ( $args['title'] ) {
-			// Create the title if the "title" attribute exists
+
+			// TODO: get span link of $args['title_link'] is_null
+			if ( false !== $args['title_link'] )
+				$args['title'] = '<a href="'.$args['title_link'].'" title="'.$args['title_title'].'">'.$args['title'].'</a>';
+
 			$title_output = '<'.$args['title_wrap'].' class="issue-list-title">'.$args['title'].'</'.$args['title_wrap'].'>';
 		}
 

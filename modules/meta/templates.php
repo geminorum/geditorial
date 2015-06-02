@@ -86,7 +86,7 @@ class gEditorialMetaTemplates
 		global $gEditorial, $post;
 		$id = isset( $args['id'] ) ? $args['id'] : $post->ID;
 
-		$term = gEditorialHelper::the_term( $gEditorial->meta->ct_tax, $id, true );
+		$term = gEditorialHelper::theTerm( $gEditorial->meta->ct_tax, $id, true );
 		$title = self::get_meta( 'ch', array( 'id' => $id, 'def' => false ) );
 		$link = $term ? get_term_link( $term, $gEditorial->meta->ct_tax ) : ( $title ? get_option( 'home' ).'/?s='.urlencode( $title ) : false );
 		$desc = $term ? $term->name.( $term->description ? strip_tags( ' :: '.$term->description ) : '' ) : sprintf( apply_filters( 'gmeta_search_link_title_attr', _x( 'Search %1$s for %2$s', GEDITORIAL_TEXTDOMAIN ) ), get_bloginfo( 'name' ), $title );
