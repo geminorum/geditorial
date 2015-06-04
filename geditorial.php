@@ -3,13 +3,12 @@
 Plugin Name: gEditorial
 Plugin URI: http://geminorum.ir/wordpress/geditorial
 Description: Our Editorial.
-Version: 0.2.0
+Version: 0.2.1
 License: GNU/GPL 2
 Author: geminorum
 Author URI: http://geminorum.ir/
 TextDomain: geditorial
 DomainPath: /languages
-Plugin URI: http://geminorum.ir/wordpress/geditorial
 GitHub Plugin URI: https://github.com/geminorum/geditorial
 GitHub Branch: develop
 */
@@ -32,7 +31,7 @@ GitHub Branch: develop
 	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-define( 'GEDITORIAL_VERSION', '0.2.0' );
+define( 'GEDITORIAL_VERSION', '0.2.1' );
 define( 'GEDITORIAL_VERSION_DB', '0.1' );
 define( 'GEDITORIAL_FILE', __FILE__ );
 define( 'GEDITORIAL_DIR', plugin_dir_path( __FILE__ ) );
