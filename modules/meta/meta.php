@@ -132,6 +132,8 @@ class gEditorialMeta extends gEditorialModuleCore
 
 	public function setup()
 	{
+		add_filter( 'geditorial_tweaks_strings', array( &$this, 'tweaks_strings' ) );
+
 		add_action( 'init', array( &$this, 'init' ) );
 
 		if ( is_admin() ) {
@@ -141,6 +143,21 @@ class gEditorialMeta extends gEditorialModuleCore
 
 			require_once( GEDITORIAL_DIR.'modules/meta/templates.php' );
 		}
+	}
+
+	public function tweaks_strings( $strings )
+	{
+		$new = array(
+			'taxonomies' => array(
+				$this->module->constants['ct_tax'] => array(
+					'column'     => 'taxonomy-'.$this->module->constants['ct_tax'],
+					'dashicon'   => 'admin-post',
+					'title_attr' => $this->get_string( 'name', 'ct_tax', 'labels' ),
+				),
+			),
+		);
+
+		return gEditorialHelper::parse_args_r( $new, $strings );
 	}
 
 	public function init()
