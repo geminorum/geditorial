@@ -754,7 +754,20 @@ class gEditorialModuleCore
 		} else {
 			$_wp_theme_features[$feature] = array( $post_types );
 		}
+	}
 
+	// this must be wp core future!!
+	// core duplication with post_type : add_image_size()
+	public static function addImageSize( $name, $width = 0, $height = 0, $crop = FALSE, $post_type = array( 'post' ) )
+	{
+		global $_wp_additional_image_sizes;
+
+		$_wp_additional_image_sizes[ $name ] = array(
+			'width'     => absint( $width ),
+			'height'    => absint( $height ),
+			'crop'      => $crop,
+			'post_type' => $post_type,
+		);
 	}
 
 	// FRONT ONLY: cause will called from 'wp_footer'

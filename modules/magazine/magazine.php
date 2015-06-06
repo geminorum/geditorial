@@ -530,7 +530,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 		self::themeThumbnails( array( $this->module->constants['issue_cpt'] ) );
 
 		foreach( $this->get_image_sizes() as $name => $size )
-			add_image_size( $name, $size['w'], $size['h'], $size['c'] );
+			self::addImageSize( $name, $size['w'], $size['h'], $size['c'], array( $this->module->constants['issue_cpt'] ) );
 	}
 
 	public function p2p_init()
