@@ -209,7 +209,7 @@ class gEditorialSeries extends gEditorialModuleCore
 			$post->post_type
 		);
 
-		update_post_meta( $post_id, $this->meta_key, $postmeta );
+		$this->set_meta( $post_id, $postmeta );
 		wp_cache_flush();
 
 		return $post_id;

@@ -229,7 +229,7 @@ class gEditorialLike extends gEditorialModuleCore
 			$key = array_search( get_current_user_id(), $users );
 			if ( false !== $key ) {
 				unset( $users[$key] );
-				update_post_meta( $post_id, $this->meta_key.'_users', $users );
+				$this->set_meta( $post_id, $users, '_users' );
 				$count--;
 			}
 		}
@@ -241,7 +241,7 @@ class gEditorialLike extends gEditorialModuleCore
 			$timestamp = array_search( $cookie[$post_id], $guests );
 			if ( $timestamp ) {
 				unset( $guests[$timestamp] );
-				update_post_meta( $post_id, $this->meta_key.'_guests', $guests );
+				$this->set_meta( $post_id, $guests, '_guests' );
 				$count--;
 			}
 
@@ -264,7 +264,7 @@ class gEditorialLike extends gEditorialModuleCore
 			$user_id = get_current_user_id();
 			if ( ! array_search( $user_id, $users ) ) {
 				$users[$timestamp] = $user_id;
-				update_post_meta( $post_id, $this->meta_key.'_users', $users );
+				$this->set_meta( $post_id, $users, '_users' );
 				$count++;
 			}
 			return array( true, $count );
@@ -272,7 +272,7 @@ class gEditorialLike extends gEditorialModuleCore
 			$cookie = $this->get_cookie();
 			if ( ! array_key_exists( $post_id, $cookie ) ) {
 				$guests[$timestamp] = gEditorialHelper::IP();
-				update_post_meta( $post_id, $this->meta_key.'_guests', $guests );
+				$this->set_meta( $post_id, $guests, '_guests' );
 				$this->set_cookie( array( $post_id => $guests[$timestamp] ) );
 				$count++;
 			}

@@ -283,6 +283,14 @@ class gEditorialModuleCore
 		return $default;
 	}
 
+	public function set_meta( $post_id, $postmeta, $key_suffix = '' )
+	{
+		if ( $postmeta && count( $postmeta ) )
+			update_post_meta( $post_id, $this->meta_key.$key_suffix, $postmeta );
+		else
+			delete_post_meta( $post_id, $this->meta_key.$key_suffix );
+	}
+
 	// DEPRECATED
 	// MINE
 	// Moved here form : Meta

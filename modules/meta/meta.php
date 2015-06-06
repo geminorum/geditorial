@@ -366,15 +366,6 @@ class gEditorialMeta extends gEditorialModuleCore
 		return $post_id;
 	}
 
-	// helper for importers
-	public function set_meta( $post_id, $postmeta )
-	{
-		if ( $postmeta && count( $postmeta ) )
-			update_post_meta( $post_id, $this->meta_key, $postmeta );
-		else
-			delete_post_meta( $post_id, $this->meta_key );
-	}
-
 	private function sanitize_post_meta( $postmeta, $fields, $post_id, $post_type )
 	{
 		if ( wp_verify_nonce( @$_REQUEST['_geditorial_meta_post_main'], 'geditorial_meta_post_main' )

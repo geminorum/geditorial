@@ -224,7 +224,7 @@ class gEditorialSpecs extends gEditorialModuleCore
 			$post->post_type
 		);
 
-		update_post_meta( $post_id, $this->meta_key, $postmeta );
+		$this->set_meta( $post_id, $postmeta );
 		wp_cache_flush();
 
 		return $post_id;
@@ -304,7 +304,7 @@ class gEditorialSpecs extends gEditorialModuleCore
 			//$meta = array_combine( $the_list, $meta );
 			ksort( $meta );
 
-			update_post_meta( $post_id, $this->meta_key, $meta );
+			$this->set_meta( $post_id, $meta );
 			wp_set_object_terms( $post_id, ( count( $terms ) ? $terms : null ), $this->module->constants['specs_tax'], false );
 
 			return $post_id;
