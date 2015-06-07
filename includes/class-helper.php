@@ -10,7 +10,7 @@ class gEditorialHelper
 	}
 
 	// originally from P2
-	public static function excerpted_title( $content, $word_count )
+	public static function excerptedTitle( $content, $word_count )
 	{
 		$content = strip_tags( $content );
 		$words = preg_split( '/([\s_;?!\/\(\)\[\]{}<>\r\n\t"]|\.$|(?<=\D)[:,.\-]|[:,.\-](?=\D))/', $content, $word_count + 1, PREG_SPLIT_NO_EMPTY );
@@ -29,18 +29,23 @@ class gEditorialHelper
 	}
 
 	// parsing: 'category:12,11|post_tag:3|people:58'
-	public static function parse_terms( $string )
+	public static function parseTerms( $string )
 	{
 		if ( empty( $string ) || ! $string )
 			return false;
 
 		$taxonomies = array();
+
 		foreach ( explode( '|', $string ) as $taxonomy ) {
+
 			list( $tax, $terms ) = explode( ':', $taxonomy );
+
 			$terms = explode( ',', $terms );
 			$terms = array_map( 'intval', $terms );
+
 			$taxonomies[$tax] = array_unique( $terms );
 		}
+
 		return $taxonomies;
 	}
 
