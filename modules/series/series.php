@@ -217,8 +217,9 @@ class gEditorialSeries extends gEditorialModuleCore
 
 	private function sanitize_post_meta( $postmeta, $fields, $post_id, $post_type )
 	{
-		if ( ! wp_verify_nonce( @ $_REQUEST['_geditorial_series_post_main'], 'geditorial_series_post_main' ) )
-			return $postmeta;
+		if ( ! isset( $_REQUEST['_geditorial_series_post_main'] ) ||
+			! wp_verify_nonce( $_REQUEST['_geditorial_series_post_main'], 'geditorial_series_post_main' ) )
+				return $postmeta;
 
 		if ( ! isset( $_POST['geditorial-series-terms'] ) )
 			return $postmeta;
