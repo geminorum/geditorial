@@ -506,7 +506,7 @@ class gEditorialHelper
 		if ( isset( $_REQUEST['post_type'] ) )
 			return sanitize_key( $_REQUEST['post_type'] );
 
-		return null;
+		return NULL;
 	}
 
 	public static function update_count_callback( $terms, $taxonomy )
@@ -534,7 +534,7 @@ class gEditorialHelper
 
 	// fall back for meta_term
 	// before : get_post_id_by_slug()
-	public static function getPostIDbySlug( $slug, $post_type, $url = false )
+	public static function getPostIDbySlug( $slug, $post_type, $url = FALSE )
 	{
 		global $wpdb;
 
@@ -557,11 +557,11 @@ class gEditorialHelper
 		elseif ( ! empty( $post_id ) )
 			return $post_id;
 
-		return false;
+		return FALSE;
 	}
 
 	// before: the_term()
-	public static function theTerm( $taxonomy, $post_ID, $object = false )
+	public static function theTerm( $taxonomy, $post_ID, $object = FALSE )
 	{
 		$terms = get_the_terms( $post_ID, $taxonomy );
 
@@ -578,21 +578,21 @@ class gEditorialHelper
 		return '0';
 	}
 
-	public static function getTerms( $taxonomy = 'category', $post_id = false, $object = false, $key = 'term_id' )
+	public static function getTerms( $taxonomy = 'category', $post_id = FALSE, $object = FALSE, $key = 'term_id' )
 	{
 		$the_terms = array();
 
-		if ( false === $post_id ) {
+		if ( FALSE === $post_id ) {
 			$terms = get_terms( $taxonomy, array(
-				'hide_empty' => false,
-				'orderby' => 'name',
-				'order' => 'ASC'
+				'hide_empty' => FALSE,
+				'orderby'    => 'name',
+				'order'      => 'ASC'
 			) );
 		} else {
 			$terms = get_the_terms( $post_id, $taxonomy );
 		}
 
-		if ( is_wp_error( $terms ) || false === $terms )
+		if ( is_wp_error( $terms ) || FALSE === $terms )
 			return $the_terms;
 
 		$the_list = wp_list_pluck( $terms, $key );
@@ -621,8 +621,8 @@ class gEditorialHelper
 
 		$query_args = array(
 			'posts_per_page' => -1,
-			'orderby'        => 'date',
-			'order'          => 'DESC',
+			'orderby'        => array( 'menu_order', 'date' ),
+			'order'          => 'ASC',
 			'post_status'    => array( 'publish', 'pending', 'draft' ),
 			'post__not_in'   => $exclude,
 			'tax_query'      => array( array(
@@ -634,7 +634,7 @@ class gEditorialHelper
 
 		$the_posts = get_posts( $query_args );
 		if ( ! count( $the_posts ) )
-			return false;
+			return FALSE;
 
 		$output = '<div class="field-wrap field-wrap-list"><h4>';
 		$output .= sprintf( __( 'Other Posts on <a href="%1$s" target="_blank">%2$s</a>:', GEDITORIAL_TEXTDOMAIN ),
@@ -648,7 +648,7 @@ class gEditorialHelper
 			$url = add_query_arg( array(
 				'action' => 'edit',
 				'post'   => $post->ID,
-			), get_admin_url( null, 'post.php' ) );
+			), get_admin_url( NULL, 'post.php' ) );
 
 			$output .= '<li><a href="'.get_permalink( $post->ID ).'">'
 					.get_the_title( $post->ID ).'</a>'
@@ -700,22 +700,28 @@ class gEditorialHelper
 		return 0;
 	}
 
-	public static function table( $columns, $data = array() )
+	public static function table( $columns, $data = array(), $actions = array() )
 	{
 		if ( ! count( $columns ) )
-			return false;
+			return FALSE;
 
 		echo '<table class="widefat helper-table" width="100%;"><thead><tr>';
 			foreach ( $columns as $key => $column ) {
 
-				if ( is_array( $column ) )
-					$title = isset( $column['title'] ) ? $column['title'] : $key;
-				else
-					$title = $column;
+				$class = '';
 
-				echo '<th class="helper-column helper-column-'.esc_attr( $key ).'">'.$title.'</th>';
+				if ( is_array( $column ) ) {
+					$title = isset( $column['title'] ) ? $column['title'] : $key;
+				} else if ( '_cb' == $key ) {
+					$title = '<input type="checkbox" id="cb-select-all-1" class="helper-column-cb-all" />';
+					$class = ' check-column';
+				} else {
+					$title = $column;
+				}
+
+				echo '<th class="helper-column helper-column-'.esc_attr( $key ).$class.'">'.$title.'</th>';
 			}
-		echo '</tr></thead>';
+		echo '</tr></thead><tbody>';
 
 		$alt = true;
 		foreach ( $data as $index => $row ) {
@@ -724,30 +730,55 @@ class gEditorialHelper
 
 			foreach ( $columns as $key => $column ) {
 
-				$callback = ( is_array( $column ) && isset( $column['callback'] ) ) ? $column['callback'] : false;
+				$class = $callback = '';
+				$cell = 'td';
 
-				if ( is_array( $row ) && isset( $row[$key] ) ) {
-					echo '<td class="helper-column-row-cell helper-column-row-cell-'.$key.'">';
-						echo ( $callback ? call_user_func_array( $callback, array( $row[$key], $row, $column ) ) : $row[$key] );
-					echo '</td>';
+				if ( '_cb' == $key ) {
+					if ( is_array( $row ) && isset( $row[$column] ) )
+						$value = $row[$column];
+					else if ( is_object( $row ) && isset( $row->{$column} ) )
+						$value = $row->{$column};
+					else
+						$value = '';
+					$value = '<input type="checkbox" name="_cb[]" value="'.esc_attr( $value ).'" class="helper-column-cb" />';
+					$class .= ' check-column';
+					$cell = 'th';
+				} else if ( is_array( $row ) && isset( $row[$key] ) ) {
+					$value = $row[$key];
 				} else if ( is_object( $row ) && isset( $row->{$key} ) ) {
-					echo '<td class="helper-column-row-cell helper-column-row-cell-'.$key.'">';
-						echo ( $callback ? call_user_func_array( $callback, array( $row->{$key}, $row, $column ) ) : $row->{$key} );
-					echo '</td>';
-				} else if ( $callback ){
-					echo '<td class="helper-column-row-cell helper-column-row-cell-'.$key.'">';
-						echo call_user_func_array( $callback, array( null, $row, $column ) );
-					echo '</td>';
+					$value = $row->{$key};
 				} else {
-					echo '<td class="helper-column-row-cell helper-column-row-cell-empty">&nbsp;</td>';
+					$value = null;
 				}
+
+				if ( is_array( $column ) ) {
+					if ( isset( $column['class'] ) )
+						$class .= ' '.esc_attr( $column['class'] );
+
+					if ( isset( $column['callback'] ) )
+						$callback = $column['callback'];
+				}
+
+				echo '<'.$cell.' class="helper-column-row-cell helper-column-row-cell-'.$key.$class.'">';
+
+				if ( $callback ){
+					echo call_user_func_array( $callback, array( $value, $row, $column ) );
+
+				} else if ( $value ) {
+					echo $value;
+
+				} else {
+					echo '&nbsp;';
+
+				}
+				echo '</'.$cell.'>';
 			}
 
 			$alt = ! $alt;
 
 			echo '</tr>';
 		}
-		echo '</table>';
+		echo '</tbody></table>';
 	}
 
 	// from : Custom Field Taxonomies : https://github.com/scribu/wp-custom-field-taxonomies
@@ -888,5 +919,48 @@ class gEditorialHelper
 
 /* ]]> */
 </script> <?php
+	}
+
+	public static function getLastPostOrder( $post_type = 'post', $exclude = '' )
+	{
+		$post = get_posts( array(
+			'posts_per_page' => 1,
+			'orderby'        => 'menu_order',
+			'exclude'        => $exclude,
+			'post_type'      => $post_type,
+			'post_status'    => 'publish,private,draft',
+		) );
+
+		if ( ! count( $post ) )
+			return 0;
+
+		return intval( $post[0]->menu_order );
+	}
+}
+
+
+class gEditorial_Walker_PageDropdown extends Walker_PageDropdown
+{
+
+	public function start_el( &$output, $page, $depth = 0, $args = array(), $id = 0 ) {
+		$pad = str_repeat('&nbsp;', $depth * 3);
+
+		if ( ! isset( $args['value_field'] ) || ! isset( $page->{$args['value_field']} ) ) {
+			$args['value_field'] = 'ID';
+		}
+
+		$output .= "\t<option class=\"level-$depth\" value=\"" . esc_attr( $page->{$args['value_field']} ) . "\"";
+		if ( $page->{$args['value_field']} == $args['selected'] ) // <---- CHANGED
+			$output .= ' selected="selected"';
+		$output .= '>';
+
+		$title = $page->post_title;
+		if ( '' === $title ) {
+			$title = sprintf( __( '#%d (no title)' ), $page->ID );
+		}
+
+		$title = apply_filters( 'list_pages', $title, $page );
+		$output .= $pad . esc_html( $title );
+		$output .= "</option>\n";
 	}
 }
