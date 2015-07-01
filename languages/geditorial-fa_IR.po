@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gEditorial v0.2.1\n"
+"Project-Id-Version: gEditorial v0.2.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2015-06-04 19:22+0330\n"
+"PO-Revision-Date: 2015-07-01 09:12+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: geminorum <contact@geminorum.ir>\n"
 "Language: fa_IR\n"
@@ -18,2063 +18,2163 @@ msgstr ""
 "X-Textdomain-Support: yes\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: ../includes/class-helper.php:355
+#: includes/class-helper.php:360
 msgid "Click to toggle"
 msgstr "برای تغییر وضعیت کلیک کنید"
 
-#: ../includes/class-helper.php:401
+#: includes/class-helper.php:406
 msgid ", "
 msgstr ""
 
-#: ../includes/class-helper.php:635
+#: includes/class-helper.php:640
 msgid "Other Posts on <a href=\"%1$s\" target=\"_blank\">%2$s</a>:"
-msgstr ""
+msgstr "نوشته‌های دیگر در <a href=\"%1$s\" target=\"_blank\">%2$s</a>:"
 
-#: ../includes/class-helper.php:651
+#: includes/class-helper.php:656
 msgid ""
 "&ndash; <a href=\"%1$s\" target=\"_blank\" title=\"Edit this post\">%2$s</a>"
 msgstr ""
 
-#: ../includes/class-main.php:130 ../modules/contest/contest.php:579
+#: includes/class-helper.php:959
+msgid "#%d (no title)"
+msgstr ""
+
+#: includes/class-main.php:134 modules/contest/contest.php:579
 msgid "Configure"
 msgstr "تنظیمات"
 
-#: ../includes/class-main.php:139
+#: includes/class-main.php:143
 msgid "Settings updated."
 msgstr "تنظیمات ذخیره شد."
 
-#: ../includes/class-main.php:140
+#: includes/class-main.php:144
 msgid "Please correct your form errors below and try again."
 msgstr ""
 
-#: ../includes/class-main.php:141 ../modules/settings/settings.php:129
-#: ../modules/settings/settings.php:135 ../modules/settings/settings.php:350
-#: ../modules/settings/settings.php:382
+#: includes/class-main.php:145 modules/settings/settings.php:129
+#: modules/settings/settings.php:135 modules/settings/settings.php:350
+#: modules/settings/settings.php:382
 msgid "Cheatin&#8217; uh?"
 msgstr "کلک میزنی؟!"
 
-#: ../includes/class-main.php:142
+#: includes/class-main.php:146
 msgid "You do not have necessary permissions to complete this action."
 msgstr ""
 
-#: ../includes/class-main.php:143
+#: includes/class-main.php:147
 msgid "Post does not exist"
 msgstr ""
 
-#: ../includes/class-module.php:61 ../includes/class-module.php:141
-#: ../modules/magazine/magazine.php:73
+#: includes/class-module.php:61 includes/class-module.php:141
+#: modules/magazine/magazine.php:76
 msgid "Posts"
 msgstr "نوشته‌ها"
 
-#: ../includes/class-module.php:62 ../includes/class-module.php:142
+#: includes/class-module.php:62 includes/class-module.php:142
 msgid "Pages"
 msgstr "برگه‌ها"
 
-#: ../includes/class-module.php:313
+#: includes/class-module.php:321
 msgid "Enable for these post types:"
 msgstr "فعال برای این پست‌تایپ‌ها:"
 
-#: ../includes/class-module.php:325
+#: includes/class-module.php:333
 msgid "Enable for these taxonomies:"
 msgstr ""
 
-#: ../includes/class-module.php:339
+#: includes/class-module.php:347
 msgid "Fields for %s"
 msgstr "فیلد‌ها برای %s"
 
-#: ../includes/class-module.php:363
+#: includes/class-module.php:371
 msgid "No fields supported for %s"
 msgstr ""
 
-#: ../includes/class-module.php:383
+#: includes/class-module.php:391
 msgid "No description available."
 msgstr ""
 
-#: ../includes/class-module.php:403 ../modules/settings/settings.php:194
+#: includes/class-module.php:411 modules/settings/settings.php:194
 msgid "Back to Editorial"
 msgstr "بازگشت به تحریریه"
 
-#: ../includes/class-module.php:588
+#: includes/class-module.php:596
 msgid "Save Changes"
-msgstr ""
+msgstr "ذخیره تغییرات"
 
-#: ../includes/class-module.php:589
+#: includes/class-module.php:597
 msgid "Reset Settings"
-msgstr ""
+msgstr "بازنشانی تنظیمات اولیه"
 
-#: ../includes/class-module.php:589
+#: includes/class-module.php:597
 msgid "Are you sure? This operation can not be undone."
 msgstr ""
 
-#: ../includes/class-module.php:656
+#: includes/class-module.php:664
 msgid "Disabled"
-msgstr ""
+msgstr "غیرفعال"
 
-#: ../includes/class-module.php:657
+#: includes/class-module.php:665
 msgid "Enabled"
-msgstr ""
+msgstr "فعال"
 
-#: ../includes/class-module.php:704
+#: includes/class-module.php:712
 msgid "Error: setting type undefined."
 msgstr ""
 
-#: ../includes/class-module.php:791
+#: includes/class-module.php:812
 msgctxt "MetaBox default title"
 msgid "Settings"
 msgstr "تنظیمات"
 
-#: ../includes/class-module.php:798
+#: includes/class-module.php:819
 msgctxt "MetaBox default action"
 msgid "Configure"
 msgstr "پیکربندی"
 
-#: ../modules/alphabets/alphabets.php:16
+#: modules/alphabets/alphabets.php:16
 msgid "Alphabets"
 msgstr "الفبا"
 
-#: ../modules/alphabets/alphabets.php:17
+#: modules/alphabets/alphabets.php:17
 msgid "A to Z Glossaries for Post Types, Taxonomies and Users"
 msgstr ""
 
-#: ../modules/alphabets/alphabets.php:45 ../modules/alphabets/alphabets.php:46
+#: modules/alphabets/alphabets.php:45 modules/alphabets/alphabets.php:46
 msgid "Glossary"
 msgstr ""
 
 #. translators: A single line translators comment.
-#: ../modules/alphabets/alphabets.php:52
-#: ../node_modules/grunt-wp-i18n/test/fixtures/translator-comments/translator-comments.php:7
+#: modules/alphabets/alphabets.php:52
+#: node_modules/grunt-wp-i18n/test/fixtures/translator-comments/translator-comments.php:7
 msgid "A"
 msgstr ""
 
-#: ../modules/alphabets/alphabets.php:53
-#: ../node_modules/grunt-wp-i18n/test/fixtures/translator-comments/translator-comments.php:15
+#: modules/alphabets/alphabets.php:53
+#: node_modules/grunt-wp-i18n/test/fixtures/translator-comments/translator-comments.php:15
 msgid "B"
 msgstr ""
 
-#: ../modules/alphabets/alphabets.php:54
+#: modules/alphabets/alphabets.php:54
 msgid "C"
 msgstr ""
 
-#: ../modules/alphabets/alphabets.php:55
+#: modules/alphabets/alphabets.php:55
 msgid "D"
 msgstr ""
 
-#: ../modules/alphabets/alphabets.php:56
+#: modules/alphabets/alphabets.php:56
 msgid "E"
 msgstr ""
 
-#: ../modules/alphabets/alphabets.php:57
+#: modules/alphabets/alphabets.php:57
 msgid "F"
 msgstr ""
 
-#: ../modules/alphabets/alphabets.php:58
+#: modules/alphabets/alphabets.php:58
 msgid "G"
 msgstr ""
 
-#: ../modules/alphabets/alphabets.php:59
+#: modules/alphabets/alphabets.php:59
 msgid "H"
 msgstr ""
 
-#: ../modules/alphabets/alphabets.php:60
+#: modules/alphabets/alphabets.php:60
 msgid "I"
 msgstr ""
 
-#: ../modules/alphabets/alphabets.php:61
+#: modules/alphabets/alphabets.php:61
 msgid "J"
 msgstr ""
 
-#: ../modules/alphabets/alphabets.php:62
+#: modules/alphabets/alphabets.php:62
 msgid "K"
 msgstr ""
 
-#: ../modules/alphabets/alphabets.php:63
+#: modules/alphabets/alphabets.php:63
 msgid "L"
 msgstr ""
 
-#: ../modules/alphabets/alphabets.php:64
+#: modules/alphabets/alphabets.php:64
 msgid "M"
 msgstr ""
 
-#: ../modules/alphabets/alphabets.php:65
+#: modules/alphabets/alphabets.php:65
 msgid "N"
 msgstr ""
 
-#: ../modules/alphabets/alphabets.php:66 ../modules/magazine/magazine.php:71
+#: modules/alphabets/alphabets.php:66 modules/magazine/magazine.php:74
 msgid "O"
 msgstr ""
 
-#: ../modules/alphabets/alphabets.php:67
+#: modules/alphabets/alphabets.php:67
 msgid "P"
 msgstr ""
 
-#: ../modules/alphabets/alphabets.php:68
+#: modules/alphabets/alphabets.php:68
 msgid "Q"
 msgstr ""
 
-#: ../modules/alphabets/alphabets.php:69
+#: modules/alphabets/alphabets.php:69
 msgid "R"
 msgstr ""
 
-#: ../modules/alphabets/alphabets.php:70
+#: modules/alphabets/alphabets.php:70
 msgid "S"
 msgstr ""
 
-#: ../modules/alphabets/alphabets.php:71
+#: modules/alphabets/alphabets.php:71
 msgid "T"
 msgstr ""
 
-#: ../modules/alphabets/alphabets.php:72
+#: modules/alphabets/alphabets.php:72
 msgid "U"
 msgstr ""
 
-#: ../modules/alphabets/alphabets.php:73
+#: modules/alphabets/alphabets.php:73
 msgid "X"
 msgstr ""
 
-#: ../modules/alphabets/alphabets.php:74
+#: modules/alphabets/alphabets.php:74
 msgid "Y"
 msgstr ""
 
-#: ../modules/alphabets/alphabets.php:75
+#: modules/alphabets/alphabets.php:75
 msgid "Z"
 msgstr ""
 
-#: ../modules/alphabets/alphabets.php:83 ../modules/audit/audit.php:85
-#: ../modules/comments/comments.php:116 ../modules/contest/contest.php:149
-#: ../modules/divisions/divisions.php:115 ../modules/entry/entry.php:123
-#: ../modules/gallery/gallery.php:70 ../modules/like/like.php:77
-#: ../modules/magazine/magazine.php:130 ../modules/series/series.php:104
-#: ../modules/specs/specs.php:104 ../modules/tweaks/tweaks.php:82
+#: modules/alphabets/alphabets.php:83 modules/audit/audit.php:85
+#: modules/comments/comments.php:116 modules/contest/contest.php:149
+#: modules/divisions/divisions.php:115 modules/entry/entry.php:123
+#: modules/gallery/gallery.php:73 modules/like/like.php:77
+#: modules/magazine/magazine.php:133 modules/series/series.php:104
+#: modules/specs/specs.php:104 modules/submit/submit.php:75
+#: modules/tweaks/tweaks.php:82
 msgid "help-tab-title"
 msgstr ""
 
-#: ../modules/alphabets/alphabets.php:84 ../modules/audit/audit.php:86
-#: ../modules/comments/comments.php:117 ../modules/contest/contest.php:150
-#: ../modules/divisions/divisions.php:116 ../modules/entry/entry.php:124
-#: ../modules/gallery/gallery.php:71 ../modules/like/like.php:78
-#: ../modules/magazine/magazine.php:131 ../modules/meta/meta.php:115
-#: ../modules/meta/meta.php:120 ../modules/series/series.php:105
-#: ../modules/specs/specs.php:105 ../modules/tweaks/tweaks.php:83
+#: modules/alphabets/alphabets.php:84 modules/audit/audit.php:86
+#: modules/comments/comments.php:117 modules/contest/contest.php:150
+#: modules/divisions/divisions.php:116 modules/entry/entry.php:124
+#: modules/gallery/gallery.php:74 modules/like/like.php:78
+#: modules/magazine/magazine.php:134 modules/meta/meta.php:115
+#: modules/meta/meta.php:120 modules/series/series.php:105
+#: modules/specs/specs.php:105 modules/submit/submit.php:76
+#: modules/tweaks/tweaks.php:83
 msgid "<p>help-tab-content</p>"
 msgstr ""
 
-#: ../modules/alphabets/alphabets.php:89 ../modules/audit/audit.php:89
-#: ../modules/comments/comments.php:120 ../modules/contest/contest.php:153
-#: ../modules/divisions/divisions.php:119 ../modules/entry/entry.php:127
-#: ../modules/gallery/gallery.php:76 ../modules/like/like.php:81
-#: ../modules/magazine/magazine.php:134 ../modules/meta/meta.php:124
-#: ../modules/series/series.php:108 ../modules/specs/specs.php:108
-#: ../modules/tweaks/tweaks.php:86
+#: modules/alphabets/alphabets.php:89 modules/audit/audit.php:89
+#: modules/comments/comments.php:120 modules/contest/contest.php:153
+#: modules/divisions/divisions.php:119 modules/entry/entry.php:127
+#: modules/gallery/gallery.php:79 modules/like/like.php:81
+#: modules/magazine/magazine.php:137 modules/meta/meta.php:124
+#: modules/series/series.php:108 modules/specs/specs.php:108
+#: modules/submit/submit.php:79 modules/tweaks/tweaks.php:86
 msgid ""
 "<p><strong>For more information</strong>:</p><p><a href=\"%1$s\">%2$s</a></"
 "p><p><a href=\"%3$s\">gEditorial on GitHub</a></p>"
 msgstr ""
 
-#: ../modules/alphabets/alphabets.php:91
+#: modules/alphabets/alphabets.php:91
 msgid "Editorial Alphabets Documentations"
 msgstr ""
 
-#: ../modules/alphabets/alphabets.php:190
+#: modules/alphabets/alphabets.php:190
 msgid "Install Default Alphabets"
 msgstr ""
 
-#: ../modules/alphabets/alphabets.php:210
+#: modules/alphabets/alphabets.php:210
 msgid "Add to Glossary"
 msgstr ""
 
-#: ../modules/alphabets/alphabets.php:253
+#: modules/alphabets/alphabets.php:253
 msgid "&mdash; Select &mdash;"
 msgstr ""
 
-#: ../modules/audit/audit.php:19
+#: modules/audit/audit.php:19
 msgid "Audit"
 msgstr ""
 
-#: ../modules/audit/audit.php:20
+#: modules/audit/audit.php:20
 msgid "Content Inventory Tools"
 msgstr ""
 
-#: ../modules/audit/audit.php:21
+#: modules/audit/audit.php:21
 msgid "Adding auditing functionality to WordPress with custom taxonomies."
 msgstr ""
 
-#: ../modules/audit/audit.php:54 ../modules/audit/audit.php:68
+#: modules/audit/audit.php:54 modules/audit/audit.php:68
 msgid "Audit Attributes"
 msgstr ""
 
-#: ../modules/audit/audit.php:55
+#: modules/audit/audit.php:55
 msgid "Audit Attribute"
 msgstr ""
 
-#: ../modules/audit/audit.php:56
+#: modules/audit/audit.php:56
 msgid "Search Audit Attributes"
 msgstr ""
 
-#: ../modules/audit/audit.php:58
+#: modules/audit/audit.php:58
 msgid "All Audit Attributes"
 msgstr ""
 
-#: ../modules/audit/audit.php:59
+#: modules/audit/audit.php:59
 msgid "Parent Audit Attribute"
 msgstr ""
 
-#: ../modules/audit/audit.php:60
+#: modules/audit/audit.php:60
 msgid "Parent Audit Attribute:"
 msgstr ""
 
-#: ../modules/audit/audit.php:61
+#: modules/audit/audit.php:61
 msgid "Edit Audit Attribute"
 msgstr ""
 
-#: ../modules/audit/audit.php:62
+#: modules/audit/audit.php:62
 msgid "Update Audit Attribute"
 msgstr ""
 
-#: ../modules/audit/audit.php:63
+#: modules/audit/audit.php:63
 msgid "Add New Audit Attribute"
 msgstr ""
 
-#: ../modules/audit/audit.php:64
+#: modules/audit/audit.php:64
 msgid "New Audit Attribute"
 msgstr ""
 
-#: ../modules/audit/audit.php:65
+#: modules/audit/audit.php:65
 msgid "Separate audit attributes with commas"
 msgstr ""
 
-#: ../modules/audit/audit.php:66
+#: modules/audit/audit.php:66
 msgid "Add or remove audit attributes"
 msgstr ""
 
-#: ../modules/audit/audit.php:67
+#: modules/audit/audit.php:67
 msgid "Choose from most used audit attributes"
 msgstr ""
 
-#: ../modules/audit/audit.php:73
+#: modules/audit/audit.php:73
 msgid "Audited"
 msgstr ""
 
-#: ../modules/audit/audit.php:74
+#: modules/audit/audit.php:74
 msgid "Outdated"
 msgstr ""
 
-#: ../modules/audit/audit.php:75
+#: modules/audit/audit.php:75
 msgid "Redundant"
 msgstr ""
 
-#: ../modules/audit/audit.php:76
+#: modules/audit/audit.php:76
 msgid "Review SEO"
 msgstr ""
 
-#: ../modules/audit/audit.php:77
+#: modules/audit/audit.php:77
 msgid "Review Style"
 msgstr ""
 
-#: ../modules/audit/audit.php:78
+#: modules/audit/audit.php:78
 msgid "Trivial"
 msgstr ""
 
-#: ../modules/audit/audit.php:91
+#: modules/audit/audit.php:91
 msgid "Editorial Audit Documentations"
 msgstr ""
 
-#: ../modules/audit/audit.php:122
+#: modules/audit/audit.php:122
 msgid "Install Default Attributes"
 msgstr ""
 
-#: ../modules/comments/comments.php:23 ../modules/comments/comments.php:89
-#: ../modules/comments/comments.php:95 ../modules/comments/comments.php:96
-#: ../modules/comments/comments.php:109
+#: modules/comments/comments.php:23 modules/comments/comments.php:89
+#: modules/comments/comments.php:95 modules/comments/comments.php:96
+#: modules/comments/comments.php:109
 msgid "Comments"
 msgstr "دیدگاه‌ها"
 
-#: ../modules/comments/comments.php:24
+#: modules/comments/comments.php:24
 msgid "Comment Managment Enhancements"
 msgstr ""
 
-#: ../modules/comments/comments.php:25
+#: modules/comments/comments.php:25
 msgid "Series of tools to help better managing the comments on a magazine."
 msgstr ""
 
-#: ../modules/comments/comments.php:51
+#: modules/comments/comments.php:51
 msgid "Frontpage Actions"
 msgstr ""
 
-#: ../modules/comments/comments.php:52
+#: modules/comments/comments.php:52
 msgid "Appends the actions to the comment text on frontpage."
 msgstr ""
 
-#: ../modules/comments/comments.php:57 ../modules/tweaks/tweaks.php:48
+#: modules/comments/comments.php:57 modules/tweaks/tweaks.php:48
 msgid "Form Notes"
 msgstr ""
 
-#: ../modules/comments/comments.php:58 ../modules/tweaks/tweaks.php:49
+#: modules/comments/comments.php:58 modules/tweaks/tweaks.php:49
 msgid "Removes extra notes after comment form on frontpage."
 msgstr ""
 
-#: ../modules/comments/comments.php:63 ../modules/tweaks/tweaks.php:54
+#: modules/comments/comments.php:63 modules/tweaks/tweaks.php:54
 msgid "Force Widget"
 msgstr ""
 
-#: ../modules/comments/comments.php:64 ../modules/tweaks/tweaks.php:55
+#: modules/comments/comments.php:64 modules/tweaks/tweaks.php:55
 msgid ""
 "Force Recent Comments Widget to show only featured and non-buried comments."
 msgstr ""
 
-#: ../modules/comments/comments.php:72
+#: modules/comments/comments.php:72
 msgid "Feature"
 msgstr "برگزیده"
 
-#: ../modules/comments/comments.php:73
+#: modules/comments/comments.php:73
 msgid "Unfeature"
 msgstr "نابرگزیده"
 
-#: ../modules/comments/comments.php:74
+#: modules/comments/comments.php:74
 msgid "Bury"
 msgstr "کم‌اهمیت"
 
-#: ../modules/comments/comments.php:75
+#: modules/comments/comments.php:75
 msgid "Unbury"
 msgstr "ناکم‌اهمیت"
 
-#: ../modules/comments/comments.php:80
+#: modules/comments/comments.php:80
 msgid "Feature this comment"
 msgstr ""
 
-#: ../modules/comments/comments.php:81
+#: modules/comments/comments.php:81
 msgid "Unfeature this comment"
 msgstr ""
 
-#: ../modules/comments/comments.php:82
+#: modules/comments/comments.php:82
 msgid "Bury this comment"
 msgstr ""
 
-#: ../modules/comments/comments.php:83
+#: modules/comments/comments.php:83
 msgid "Unbury this comment"
 msgstr ""
 
-#: ../modules/comments/comments.php:88
+#: modules/comments/comments.php:88
 msgid "Featured Comments"
 msgstr ""
 
-#: ../modules/comments/comments.php:90
+#: modules/comments/comments.php:90
 msgid "&mdash; Choose a Comments &mdash;"
 msgstr ""
 
-#: ../modules/comments/comments.php:97
+#: modules/comments/comments.php:97
 msgid "Search Comments"
 msgstr ""
 
-#: ../modules/comments/comments.php:99
+#: modules/comments/comments.php:99
 msgid "All Comments"
 msgstr ""
 
-#: ../modules/comments/comments.php:100
+#: modules/comments/comments.php:100
 msgid "Parent Comments"
 msgstr ""
 
-#: ../modules/comments/comments.php:101
+#: modules/comments/comments.php:101
 msgid "Parent Comments:"
 msgstr ""
 
-#: ../modules/comments/comments.php:102
+#: modules/comments/comments.php:102
 msgid "Edit Comments"
 msgstr ""
 
-#: ../modules/comments/comments.php:103
+#: modules/comments/comments.php:103
 msgid "Update Comments"
 msgstr ""
 
-#: ../modules/comments/comments.php:104
+#: modules/comments/comments.php:104
 msgid "Add New Comments"
 msgstr ""
 
-#: ../modules/comments/comments.php:105
+#: modules/comments/comments.php:105
 msgid "New Comments Name"
 msgstr ""
 
-#: ../modules/comments/comments.php:106
+#: modules/comments/comments.php:106
 msgid "Separate comments with commas"
 msgstr ""
 
-#: ../modules/comments/comments.php:107
+#: modules/comments/comments.php:107
 msgid "Add or remove comments"
 msgstr ""
 
-#: ../modules/comments/comments.php:108
+#: modules/comments/comments.php:108
 msgid "Choose from the most used comments"
 msgstr ""
 
-#: ../modules/comments/comments.php:122
+#: modules/comments/comments.php:122
 msgid "Editorial Comments Documentations"
 msgstr ""
 
-#: ../modules/comments/comments.php:303
+#: modules/comments/comments.php:303
 msgid "You are not allowed to edit comments on this post."
 msgstr ""
 
-#: ../modules/comments/comments.php:317
+#: modules/comments/comments.php:317
 msgid "Featured"
 msgstr "برگزیده"
 
-#: ../modules/comments/comments.php:319
+#: modules/comments/comments.php:319
 msgid "Buried"
 msgstr "کم‌اهمیت"
 
-#: ../modules/contest/contest.php:21 ../modules/contest/contest.php:84
-#: ../modules/contest/contest.php:112
+#: modules/contest/contest.php:21 modules/contest/contest.php:84
+#: modules/contest/contest.php:112
 msgid "Contest"
 msgstr "فراخوان"
 
-#: ../modules/contest/contest.php:22
+#: modules/contest/contest.php:22
 msgid "Contest Management"
 msgstr ""
 
-#: ../modules/contest/contest.php:23
+#: modules/contest/contest.php:23
 msgid ""
 "Set of tools to create and manage text contests and/or gather assignments"
 msgstr ""
 
-#: ../modules/contest/contest.php:55
+#: modules/contest/contest.php:55
 msgid "Multiple Contests"
 msgstr ""
 
-#: ../modules/contest/contest.php:56
+#: modules/contest/contest.php:56
 msgid "Using multiple contests for appplies."
 msgstr ""
 
-#: ../modules/contest/contest.php:74 ../modules/contest/contest.php:77
-#: ../modules/contest/contest.php:83 ../modules/contest/contest.php:94
-#: ../modules/contest/contest.php:111 ../modules/contest/contest.php:125
+#: modules/contest/contest.php:74 modules/contest/contest.php:77
+#: modules/contest/contest.php:83 modules/contest/contest.php:94
+#: modules/contest/contest.php:111 modules/contest/contest.php:125
 msgid "Contests"
 msgstr "فراخوان‌ها"
 
-#: ../modules/contest/contest.php:75
+#: modules/contest/contest.php:75
 msgid "The Contest"
 msgstr "فراخوان"
 
-#: ../modules/contest/contest.php:76
+#: modules/contest/contest.php:76
 msgid "Contest Poster"
 msgstr "پوستر فراخوان"
 
-#: ../modules/contest/contest.php:78
+#: modules/contest/contest.php:78
 msgid "&mdash; Choose a Contest &mdash;"
 msgstr ""
 
-#: ../modules/contest/contest.php:85 ../modules/contest/contest.php:99
-#: ../modules/entry/entry.php:89 ../modules/gallery/gallery.php:50
-#: ../modules/magazine/magazine.php:79
+#: modules/contest/contest.php:85 modules/contest/contest.php:99
+#: modules/entry/entry.php:89 modules/gallery/gallery.php:50
+#: modules/magazine/magazine.php:82
 msgid "Add New"
 msgstr ""
 
-#: ../modules/contest/contest.php:86 ../modules/contest/contest.php:120
+#: modules/contest/contest.php:86 modules/contest/contest.php:120
 msgid "Add New Contest"
 msgstr ""
 
-#: ../modules/contest/contest.php:87 ../modules/contest/contest.php:118
+#: modules/contest/contest.php:87 modules/contest/contest.php:118
 msgid "Edit Contest"
 msgstr ""
 
-#: ../modules/contest/contest.php:88 ../modules/contest/contest.php:121
+#: modules/contest/contest.php:88 modules/contest/contest.php:121
 msgid "New Contest"
 msgstr ""
 
-#: ../modules/contest/contest.php:89
+#: modules/contest/contest.php:89
 msgid "View Contest"
 msgstr ""
 
-#: ../modules/contest/contest.php:90 ../modules/contest/contest.php:113
+#: modules/contest/contest.php:90 modules/contest/contest.php:113
 msgid "Search Contests"
 msgstr ""
 
-#: ../modules/contest/contest.php:91
+#: modules/contest/contest.php:91
 msgid "No contests found"
 msgstr ""
 
-#: ../modules/contest/contest.php:92
+#: modules/contest/contest.php:92
 msgid "No contests found in Trash"
 msgstr ""
 
-#: ../modules/contest/contest.php:93 ../modules/contest/contest.php:117
+#: modules/contest/contest.php:93 modules/contest/contest.php:117
 msgid "Parent Contest:"
 msgstr ""
 
-#: ../modules/contest/contest.php:97 ../modules/contest/contest.php:108
+#: modules/contest/contest.php:97 modules/contest/contest.php:108
 msgid "Applies"
 msgstr ""
 
-#: ../modules/contest/contest.php:98
+#: modules/contest/contest.php:98
 msgid "Apply"
 msgstr ""
 
-#: ../modules/contest/contest.php:100
+#: modules/contest/contest.php:100
 msgid "Add New Apply"
 msgstr ""
 
-#: ../modules/contest/contest.php:101
+#: modules/contest/contest.php:101
 msgid "Edit Apply"
 msgstr ""
 
-#: ../modules/contest/contest.php:102
+#: modules/contest/contest.php:102
 msgid "New Apply"
 msgstr ""
 
-#: ../modules/contest/contest.php:103
+#: modules/contest/contest.php:103
 msgid "View Apply"
 msgstr ""
 
-#: ../modules/contest/contest.php:104
+#: modules/contest/contest.php:104
 msgid "Search Applies"
 msgstr ""
 
-#: ../modules/contest/contest.php:105
+#: modules/contest/contest.php:105
 msgid "No applies found"
 msgstr ""
 
-#: ../modules/contest/contest.php:106
+#: modules/contest/contest.php:106
 msgid "No applies found in Trash"
 msgstr ""
 
-#: ../modules/contest/contest.php:107
+#: modules/contest/contest.php:107
 msgid "Parent Apply:"
 msgstr ""
 
-#: ../modules/contest/contest.php:115
+#: modules/contest/contest.php:115
 msgid "All Contests"
 msgstr ""
 
-#: ../modules/contest/contest.php:116
+#: modules/contest/contest.php:116
 msgid "Parent Contest"
 msgstr ""
 
-#: ../modules/contest/contest.php:119
+#: modules/contest/contest.php:119
 msgid "Update Contest"
 msgstr ""
 
-#: ../modules/contest/contest.php:122
+#: modules/contest/contest.php:122
 msgid "Separate contests with commas"
 msgstr ""
 
-#: ../modules/contest/contest.php:123
+#: modules/contest/contest.php:123
 msgid "Add or remove Contests"
 msgstr ""
 
-#: ../modules/contest/contest.php:124
+#: modules/contest/contest.php:124
 msgid "Choose from most used Contests"
 msgstr ""
 
-#: ../modules/contest/contest.php:128 ../modules/contest/contest.php:142
+#: modules/contest/contest.php:128 modules/contest/contest.php:142
 msgid "Apply Statuses"
 msgstr ""
 
-#: ../modules/contest/contest.php:129
+#: modules/contest/contest.php:129
 msgid "Apply Status"
 msgstr ""
 
-#: ../modules/contest/contest.php:130
+#: modules/contest/contest.php:130
 msgid "Search Apply Statuses"
 msgstr ""
 
-#: ../modules/contest/contest.php:132
+#: modules/contest/contest.php:132
 msgid "All Apply Statuses"
 msgstr ""
 
-#: ../modules/contest/contest.php:133
+#: modules/contest/contest.php:133
 msgid "Parent Apply Status"
 msgstr ""
 
-#: ../modules/contest/contest.php:134
+#: modules/contest/contest.php:134
 msgid "Parent Apply Status:"
 msgstr ""
 
-#: ../modules/contest/contest.php:135
+#: modules/contest/contest.php:135
 msgid "Edit Apply Status"
 msgstr ""
 
-#: ../modules/contest/contest.php:136
+#: modules/contest/contest.php:136
 msgid "Update Apply Status"
 msgstr ""
 
-#: ../modules/contest/contest.php:137
+#: modules/contest/contest.php:137
 msgid "Add New Apply Status"
 msgstr ""
 
-#: ../modules/contest/contest.php:138
+#: modules/contest/contest.php:138
 msgid "New Apply Status"
 msgstr ""
 
-#: ../modules/contest/contest.php:139
+#: modules/contest/contest.php:139
 msgid "Separate apply statuses with commas"
 msgstr ""
 
-#: ../modules/contest/contest.php:140
+#: modules/contest/contest.php:140
 msgid "Add or remove Apply Statuses"
 msgstr ""
 
-#: ../modules/contest/contest.php:141
+#: modules/contest/contest.php:141
 msgid "Choose from most used Apply Statuses"
 msgstr ""
 
-#: ../modules/contest/contest.php:155
+#: modules/contest/contest.php:155
 msgid "Editorial Contest Documentations"
 msgstr ""
 
-#: ../modules/contest/contest.php:472 ../modules/magazine/magazine.php:499
+#: modules/contest/contest.php:472 modules/magazine/magazine.php:628
 msgid "you're doing it wrong!"
 msgstr ""
 
-#: ../modules/contest/contest.php:541 ../modules/contest/contest.php:542
-#: ../modules/contest/contest.php:600 ../modules/contest/contest.php:601
-#: ../modules/divisions/divisions.php:71 ../modules/entry/entry.php:67
-#: ../modules/magazine/magazine.php:809 ../modules/magazine/magazine.php:810
-#: ../modules/magazine/magazine.php:981 ../modules/series/series.php:63
-#: ../modules/specs/specs.php:63
+#: modules/contest/contest.php:541 modules/contest/contest.php:542
+#: modules/contest/contest.php:600 modules/contest/contest.php:601
+#: modules/divisions/divisions.php:71 modules/entry/entry.php:67
+#: modules/magazine/magazine.php:988 modules/magazine/magazine.php:989
+#: modules/magazine/magazine.php:1164 modules/series/series.php:63
+#: modules/specs/specs.php:63
 msgid "Order"
 msgstr "ترتیب"
 
-#: ../modules/contest/contest.php:557 ../modules/magazine/magazine.php:825
+#: modules/contest/contest.php:557 modules/magazine/magazine.php:1004
 msgid "(no parent)"
-msgstr ""
+msgstr "(بدون مادر)"
 
-#: ../modules/divisions/divisions.php:18 ../modules/divisions/divisions.php:84
-#: ../modules/divisions/divisions.php:85 ../modules/divisions/divisions.php:91
-#: ../modules/divisions/divisions.php:94
-#: ../modules/divisions/divisions.php:108
+#: modules/divisions/divisions.php:18 modules/divisions/divisions.php:84
+#: modules/divisions/divisions.php:85 modules/divisions/divisions.php:91
+#: modules/divisions/divisions.php:94 modules/divisions/divisions.php:108
 msgid "Divisions"
 msgstr ""
 
-#: ../modules/divisions/divisions.php:19
+#: modules/divisions/divisions.php:19
 msgid "Post Divisions Management"
 msgstr ""
 
-#: ../modules/divisions/divisions.php:20
+#: modules/divisions/divisions.php:20
 msgid "Adding Post Divisions Functionality to WordPress With Custom Post Types"
 msgstr ""
 
-#: ../modules/divisions/divisions.php:53
+#: modules/divisions/divisions.php:53
 msgid "Multiple Divisions"
 msgstr ""
 
-#: ../modules/divisions/divisions.php:54
+#: modules/divisions/divisions.php:54
 msgid "Using multiple divisions for each post."
 msgstr ""
 
-#: ../modules/divisions/divisions.php:59
+#: modules/divisions/divisions.php:59
 msgctxt "Divisions Editor Button"
 msgid "Editor Button"
 msgstr ""
 
-#: ../modules/divisions/divisions.php:60 ../modules/entry/entry.php:56
-#: ../modules/series/series.php:52 ../modules/specs/specs.php:52
+#: modules/divisions/divisions.php:60 modules/entry/entry.php:56
+#: modules/series/series.php:52 modules/specs/specs.php:52
+#: modules/submit/submit.php:43
 msgid "Adding an Editor Button to insert shortcodes"
 msgstr ""
 
-#: ../modules/divisions/divisions.php:70
-#: ../modules/divisions/divisions.php:247 ../modules/entry/entry.php:66
-#: ../modules/series/series.php:62 ../modules/specs/specs.php:62
+#: modules/divisions/divisions.php:70 modules/divisions/divisions.php:247
+#: modules/entry/entry.php:66 modules/series/series.php:62
+#: modules/specs/specs.php:62 modules/submit/submit.php:53
 msgid "Title"
 msgstr "عنوان"
 
-#: ../modules/divisions/divisions.php:72 ../modules/entry/entry.php:68
-#: ../modules/series/series.php:64 ../modules/specs/specs.php:64
+#: modules/divisions/divisions.php:72 modules/entry/entry.php:68
+#: modules/magazine/magazine.php:1356 modules/series/series.php:64
+#: modules/specs/specs.php:64
 msgid "Description"
 msgstr "توضیحات"
 
-#: ../modules/divisions/divisions.php:77
+#: modules/divisions/divisions.php:77
 msgid "In Divisions Title"
 msgstr ""
 
-#: ../modules/divisions/divisions.php:78
+#: modules/divisions/divisions.php:78
 msgid "In Divisions Order"
 msgstr ""
 
-#: ../modules/divisions/divisions.php:79
+#: modules/divisions/divisions.php:79
 msgid "In Divisions Description"
 msgstr ""
 
-#: ../modules/divisions/divisions.php:86
+#: modules/divisions/divisions.php:86
 msgid "&mdash; Choose a Divisions &mdash;"
 msgstr ""
 
-#: ../modules/divisions/divisions.php:95
-#: ../modules/divisions/divisions.php:228
+#: modules/divisions/divisions.php:95 modules/divisions/divisions.php:228
 msgid "Division"
 msgstr ""
 
-#: ../modules/divisions/divisions.php:96
+#: modules/divisions/divisions.php:96
 msgid "Search Divisions"
 msgstr ""
 
-#: ../modules/divisions/divisions.php:98
+#: modules/divisions/divisions.php:98
 msgid "All Divisions"
 msgstr ""
 
-#: ../modules/divisions/divisions.php:99
+#: modules/divisions/divisions.php:99
 msgid "Parent Division"
 msgstr ""
 
-#: ../modules/divisions/divisions.php:100
+#: modules/divisions/divisions.php:100
 msgid "Parent Division:"
 msgstr ""
 
-#: ../modules/divisions/divisions.php:101
+#: modules/divisions/divisions.php:101
 msgid "Edit Division"
 msgstr ""
 
-#: ../modules/divisions/divisions.php:102
+#: modules/divisions/divisions.php:102
 msgid "Update Division"
 msgstr ""
 
-#: ../modules/divisions/divisions.php:103
+#: modules/divisions/divisions.php:103
 msgid "Add New Division"
 msgstr ""
 
-#: ../modules/divisions/divisions.php:104
+#: modules/divisions/divisions.php:104
 msgid "New Division Name"
 msgstr ""
 
-#: ../modules/divisions/divisions.php:105
+#: modules/divisions/divisions.php:105
 msgid "Separate divisions with commas"
 msgstr ""
 
-#: ../modules/divisions/divisions.php:106
+#: modules/divisions/divisions.php:106
 msgid "Add or remove divisions"
 msgstr ""
 
-#: ../modules/divisions/divisions.php:107
+#: modules/divisions/divisions.php:107
 msgid "Choose from the most used divisions"
 msgstr ""
 
-#: ../modules/divisions/divisions.php:121
+#: modules/divisions/divisions.php:121
 msgid "Editorial Divisions Documentations"
 msgstr ""
 
-#: ../modules/divisions/divisions.php:218
+#: modules/divisions/divisions.php:218
 msgid "Connected Divisions"
 msgstr ""
 
-#: ../modules/divisions/divisions.php:219 ../modules/magazine/magazine.php:545
+#: modules/divisions/divisions.php:219 modules/magazine/magazine.php:682
 msgid "Connected Posts"
 msgstr ""
 
-#: ../modules/divisions/divisions.php:222 ../modules/magazine/magazine.php:548
+#: modules/divisions/divisions.php:222 modules/magazine/magazine.php:685
 msgid "Post"
 msgstr ""
 
-#: ../modules/divisions/divisions.php:223 ../modules/magazine/magazine.php:549
+#: modules/divisions/divisions.php:223 modules/magazine/magazine.php:686
 msgid "Search posts"
 msgstr ""
 
-#: ../modules/divisions/divisions.php:224 ../modules/magazine/magazine.php:550
+#: modules/divisions/divisions.php:224 modules/magazine/magazine.php:687
 msgid "No posts found."
 msgstr ""
 
-#: ../modules/divisions/divisions.php:225
+#: modules/divisions/divisions.php:225
 msgid "Create Posts"
 msgstr ""
 
-#: ../modules/divisions/divisions.php:229
+#: modules/divisions/divisions.php:229
 msgid "Search divisions"
 msgstr ""
 
-#: ../modules/divisions/divisions.php:230
+#: modules/divisions/divisions.php:230
 msgid "No divisions found."
 msgstr ""
 
-#: ../modules/divisions/divisions.php:231
+#: modules/divisions/divisions.php:231
 msgid "Create Divisions"
 msgstr ""
 
-#: ../modules/divisions/divisions.php:235
+#: modules/divisions/divisions.php:235
 msgid "Visibility"
 msgstr ""
 
-#: ../modules/divisions/divisions.php:238
+#: modules/divisions/divisions.php:238
 msgid "Public"
 msgstr ""
 
-#: ../modules/divisions/divisions.php:239
+#: modules/divisions/divisions.php:239
 msgid "Logged in"
 msgstr ""
 
-#: ../modules/divisions/divisions.php:240
+#: modules/divisions/divisions.php:240
 msgid "Editors"
 msgstr ""
 
-#: ../modules/entry/entry.php:16 ../modules/entry/entry.php:80
-#: ../modules/entry/entry.php:81 ../modules/entry/entry.php:88
+#: modules/entry/entry.php:16 modules/entry/entry.php:80
+#: modules/entry/entry.php:81 modules/entry/entry.php:88
 msgid "Entry"
 msgstr ""
 
-#: ../modules/entry/entry.php:17
+#: modules/entry/entry.php:17
 msgid "Posts Entries, Wiki-like"
 msgstr ""
 
-#: ../modules/entry/entry.php:49
+#: modules/entry/entry.php:49
 msgid "Multiple Entry"
 msgstr ""
 
-#: ../modules/entry/entry.php:50
+#: modules/entry/entry.php:50
 msgid "Using multiple entry for each post."
 msgstr ""
 
-#: ../modules/entry/entry.php:55
+#: modules/entry/entry.php:55
 msgctxt "Entry Editor Button"
 msgid "Editor Button"
 msgstr ""
 
-#: ../modules/entry/entry.php:73
+#: modules/entry/entry.php:73
 msgid "In Entry Title"
 msgstr ""
 
-#: ../modules/entry/entry.php:74
+#: modules/entry/entry.php:74
 msgid "In Entry Order"
 msgstr ""
 
-#: ../modules/entry/entry.php:75
+#: modules/entry/entry.php:75
 msgid "In Entry Description"
 msgstr ""
 
-#: ../modules/entry/entry.php:82
+#: modules/entry/entry.php:82
 msgid "&mdash; Choose a Entry &mdash;"
 msgstr ""
 
-#: ../modules/entry/entry.php:87 ../modules/entry/entry.php:98
+#: modules/entry/entry.php:87 modules/entry/entry.php:98
 msgid "Entries"
 msgstr ""
 
-#: ../modules/entry/entry.php:90
+#: modules/entry/entry.php:90
 msgid "Add New Entry"
 msgstr ""
 
-#: ../modules/entry/entry.php:91
+#: modules/entry/entry.php:91
 msgid "Edit Entry"
 msgstr ""
 
-#: ../modules/entry/entry.php:92
+#: modules/entry/entry.php:92
 msgid "New Entry"
 msgstr ""
 
-#: ../modules/entry/entry.php:93
+#: modules/entry/entry.php:93
 msgid "View Entry"
 msgstr ""
 
-#: ../modules/entry/entry.php:94
+#: modules/entry/entry.php:94
 msgid "Search Entries"
 msgstr ""
 
-#: ../modules/entry/entry.php:95
+#: modules/entry/entry.php:95
 msgid "No entries found"
 msgstr ""
 
-#: ../modules/entry/entry.php:96
+#: modules/entry/entry.php:96
 msgid "No entries found in Trash"
 msgstr ""
 
-#: ../modules/entry/entry.php:97
+#: modules/entry/entry.php:97
 msgid "Parent Entry:"
 msgstr ""
 
-#: ../modules/entry/entry.php:102 ../modules/entry/entry.php:116
-#: ../modules/entry/entry.php:228
+#: modules/entry/entry.php:102 modules/entry/entry.php:116
+#: modules/entry/entry.php:228
 msgid "Sections"
 msgstr ""
 
-#: ../modules/entry/entry.php:103
+#: modules/entry/entry.php:103
 msgid "Section"
 msgstr ""
 
-#: ../modules/entry/entry.php:104
+#: modules/entry/entry.php:104
 msgid "Search Sections"
 msgstr ""
 
-#: ../modules/entry/entry.php:106
+#: modules/entry/entry.php:106
 msgid "All Sections"
 msgstr ""
 
-#: ../modules/entry/entry.php:107
+#: modules/entry/entry.php:107
 msgid "Parent Section"
 msgstr ""
 
-#: ../modules/entry/entry.php:108
+#: modules/entry/entry.php:108
 msgid "Parent Section:"
 msgstr ""
 
-#: ../modules/entry/entry.php:109
+#: modules/entry/entry.php:109
 msgid "Edit Section"
 msgstr ""
 
-#: ../modules/entry/entry.php:110
+#: modules/entry/entry.php:110
 msgid "Update Section"
 msgstr ""
 
-#: ../modules/entry/entry.php:111
+#: modules/entry/entry.php:111
 msgid "Add New Section"
 msgstr ""
 
-#: ../modules/entry/entry.php:112
+#: modules/entry/entry.php:112
 msgid "New Section Name"
 msgstr ""
 
-#: ../modules/entry/entry.php:113
+#: modules/entry/entry.php:113
 msgid "Separate sections with commas"
 msgstr ""
 
-#: ../modules/entry/entry.php:114
+#: modules/entry/entry.php:114
 msgid "Add or remove section"
 msgstr ""
 
-#: ../modules/entry/entry.php:115
+#: modules/entry/entry.php:115
 msgid "Choose from the most used sections"
 msgstr ""
 
-#: ../modules/entry/entry.php:129
+#: modules/entry/entry.php:129
 msgid "Editorial Entry Documentations"
 msgstr ""
 
-#: ../modules/entry/entry.php:229
+#: modules/entry/entry.php:229
 msgctxt "manage_posts_columns"
 msgid "O"
 msgstr "ت"
 
-#: ../modules/entry/entry.php:270 ../modules/magazine/magazine.php:938
+#: modules/entry/entry.php:270 modules/magazine/magazine.php:1121
 msgid "<span title=\"No Order\">&mdash;</span>"
 msgstr "<span title=\"بدون ترتیب\">&mdash;</span>"
 
-#: ../modules/gallery/gallery.php:16 ../modules/gallery/gallery.php:59
+#: modules/gallery/gallery.php:16 modules/gallery/gallery.php:59
 msgid "Gallery"
 msgstr ""
 
-#: ../modules/gallery/gallery.php:17
+#: modules/gallery/gallery.php:17
 msgid "Photo Directory and Gallery for WordPress Editorial"
 msgstr ""
 
-#: ../modules/gallery/gallery.php:18
+#: modules/gallery/gallery.php:18
 msgid ""
 "Adding gallery functionality to WordPress with custom posttypes and "
 "taxonomies."
 msgstr ""
 
-#: ../modules/gallery/gallery.php:48
+#: modules/gallery/gallery.php:48
 msgid "Photo Albums"
 msgstr ""
 
-#: ../modules/gallery/gallery.php:49
+#: modules/gallery/gallery.php:49
 msgid "Photo Album"
 msgstr ""
 
-#: ../modules/gallery/gallery.php:51
+#: modules/gallery/gallery.php:51
 msgid "Add New Photo Album"
 msgstr ""
 
-#: ../modules/gallery/gallery.php:52
+#: modules/gallery/gallery.php:52
 msgid "Edit Photo Album"
 msgstr ""
 
-#: ../modules/gallery/gallery.php:53
+#: modules/gallery/gallery.php:53
 msgid "New Photo Album"
 msgstr ""
 
-#: ../modules/gallery/gallery.php:54
+#: modules/gallery/gallery.php:54
 msgid "View Photo Album"
 msgstr ""
 
-#: ../modules/gallery/gallery.php:55
+#: modules/gallery/gallery.php:55
 msgid "Search Photo Albums"
 msgstr ""
 
-#: ../modules/gallery/gallery.php:56
+#: modules/gallery/gallery.php:56
 msgid "No photo albums found"
 msgstr ""
 
-#: ../modules/gallery/gallery.php:57
+#: modules/gallery/gallery.php:57
 msgid "No photo albums found in Trash"
 msgstr ""
 
-#: ../modules/gallery/gallery.php:58
+#: modules/gallery/gallery.php:58
 msgid "Parent Photo Album:"
 msgstr ""
 
-#: ../modules/gallery/gallery.php:78
+#: modules/gallery/gallery.php:81
 msgid "Editorial Gallery Documentations"
 msgstr ""
 
-#: ../modules/like/like.php:19
+#: modules/gallery/gallery.php:129
+msgid "Install Default Album Cats"
+msgstr ""
+
+#: modules/like/like.php:19
 msgid "Like"
 msgstr "پسند"
 
-#: ../modules/like/like.php:20
+#: modules/like/like.php:20
 msgid "Like Button for Posts and Comments"
 msgstr ""
 
-#: ../modules/like/like.php:49
+#: modules/like/like.php:49
 msgctxt "Enable Like for Comments"
 msgid "Comments"
 msgstr ""
 
-#: ../modules/like/like.php:50
+#: modules/like/like.php:50
 msgid "Like button for enabled post types comments"
 msgstr ""
 
-#: ../modules/like/like.php:56
+#: modules/like/like.php:56
 msgctxt "Enable Like for Comments"
 msgid "Avatars"
 msgstr ""
 
-#: ../modules/like/like.php:57
+#: modules/like/like.php:57
 msgid "Display avatars alongside like button"
 msgstr ""
 
-#: ../modules/like/like.php:83
+#: modules/like/like.php:83
 msgid "Editorial Like Documentations"
 msgstr ""
 
-#: ../modules/like/like.php:102
+#: modules/like/like.php:102
 msgid "gEditorial Like"
 msgstr ""
 
-#: ../modules/like/like.php:137
+#: modules/like/like.php:137
 msgctxt "gEditorial Like"
 msgid "Loading&hellip;"
 msgstr ""
 
-#: ../modules/like/like.php:214 ../modules/settings/settings.php:154
+#: modules/like/like.php:214 modules/settings/settings.php:154
 msgctxt "Ajax Notice"
 msgid "Waht?!"
 msgstr ""
 
-#: ../modules/like/like.php:219
+#: modules/like/like.php:219
 msgctxt "gEditorial Like"
 msgid "Unlike"
 msgstr ""
 
-#: ../modules/like/like.php:219
+#: modules/like/like.php:219
 msgctxt "gEditorial Like"
 msgid "Like"
 msgstr ""
 
-#: ../modules/magazine/magazine.php:23 ../modules/magazine/magazine.php:1125
+#: modules/magazine/magazine.php:23 modules/magazine/magazine.php:1308
 msgid "Magazine"
 msgstr "مجله"
 
-#: ../modules/magazine/magazine.php:24
+#: modules/magazine/magazine.php:24
 msgid "Issue Management for Magazines"
 msgstr ""
 
-#: ../modules/magazine/magazine.php:25
+#: modules/magazine/magazine.php:25
 msgid "Magazine suite for WordPress"
 msgstr ""
 
-#: ../modules/magazine/magazine.php:54
+#: modules/magazine/magazine.php:50
+msgid "Multiple Issues"
+msgstr ""
+
+#: modules/magazine/magazine.php:51
+msgid "Using multiple issues for posts."
+msgstr ""
+
+#: modules/magazine/magazine.php:57
 msgctxt "Enable Magazine for Comments"
 msgid "Redirect Spans"
 msgstr ""
 
-#: ../modules/magazine/magazine.php:55
+#: modules/magazine/magazine.php:58
 msgid "Redirect all Span Archives to a Page"
 msgstr ""
 
-#: ../modules/magazine/magazine.php:68 ../modules/magazine/magazine.php:77
-#: ../modules/magazine/magazine.php:88 ../modules/magazine/magazine.php:91
-#: ../modules/magazine/magazine.php:105 ../modules/magazine/magazine.php:597
+#: modules/magazine/magazine.php:71 modules/magazine/magazine.php:80
+#: modules/magazine/magazine.php:91 modules/magazine/magazine.php:94
+#: modules/magazine/magazine.php:108 modules/magazine/magazine.php:734
 msgid "Issues"
 msgstr ""
 
-#: ../modules/magazine/magazine.php:69
+#: modules/magazine/magazine.php:72
 msgid "The Issue"
 msgstr ""
 
-#: ../modules/magazine/magazine.php:70 ../modules/magazine/magazine.php:72
+#: modules/magazine/magazine.php:73 modules/magazine/magazine.php:75
 msgid "Cover"
 msgstr ""
 
-#: ../modules/magazine/magazine.php:78 ../modules/magazine/magazine.php:92
-#: ../modules/magazine/magazine.php:554
+#: modules/magazine/magazine.php:81 modules/magazine/magazine.php:95
+#: modules/magazine/magazine.php:691 modules/magazine/magazine.php:1340
 msgid "Issue"
 msgstr ""
 
-#: ../modules/magazine/magazine.php:80 ../modules/magazine/magazine.php:100
+#: modules/magazine/magazine.php:83 modules/magazine/magazine.php:103
 msgid "Add New Issue"
 msgstr ""
 
-#: ../modules/magazine/magazine.php:81 ../modules/magazine/magazine.php:98
+#: modules/magazine/magazine.php:84 modules/magazine/magazine.php:101
 msgid "Edit Issue"
 msgstr ""
 
-#: ../modules/magazine/magazine.php:82 ../modules/magazine/magazine.php:101
+#: modules/magazine/magazine.php:85 modules/magazine/magazine.php:104
 msgid "New Issue"
 msgstr ""
 
-#: ../modules/magazine/magazine.php:83
+#: modules/magazine/magazine.php:86
 msgid "View Issue"
 msgstr ""
 
-#: ../modules/magazine/magazine.php:84 ../modules/magazine/magazine.php:93
+#: modules/magazine/magazine.php:87 modules/magazine/magazine.php:96
 msgid "Search Issues"
 msgstr ""
 
-#: ../modules/magazine/magazine.php:85
+#: modules/magazine/magazine.php:88
 msgid "No issues found"
 msgstr ""
 
-#: ../modules/magazine/magazine.php:86
+#: modules/magazine/magazine.php:89
 msgid "No issues found in Trash"
 msgstr ""
 
-#: ../modules/magazine/magazine.php:87 ../modules/magazine/magazine.php:97
+#: modules/magazine/magazine.php:90 modules/magazine/magazine.php:100
 msgid "Parent Issue:"
 msgstr ""
 
-#: ../modules/magazine/magazine.php:95
+#: modules/magazine/magazine.php:98
 msgid "All Issues"
 msgstr ""
 
-#: ../modules/magazine/magazine.php:96
+#: modules/magazine/magazine.php:99
 msgid "Parent Issue"
 msgstr ""
 
-#: ../modules/magazine/magazine.php:99
+#: modules/magazine/magazine.php:102
 msgid "Update Issue"
 msgstr ""
 
-#: ../modules/magazine/magazine.php:102
+#: modules/magazine/magazine.php:105
 msgid "Separate issues with commas"
 msgstr ""
 
-#: ../modules/magazine/magazine.php:103
+#: modules/magazine/magazine.php:106
 msgid "Add or remove Issues"
 msgstr ""
 
-#: ../modules/magazine/magazine.php:104
+#: modules/magazine/magazine.php:107
 msgid "Choose from most used Issues"
 msgstr ""
 
-#: ../modules/magazine/magazine.php:108 ../modules/magazine/magazine.php:122
+#: modules/magazine/magazine.php:111 modules/magazine/magazine.php:125
 msgid "Spans"
 msgstr ""
 
-#: ../modules/magazine/magazine.php:109
+#: modules/magazine/magazine.php:112
 msgid "Span"
 msgstr ""
 
-#: ../modules/magazine/magazine.php:110
+#: modules/magazine/magazine.php:113
 msgid "Search Spans"
 msgstr ""
 
-#: ../modules/magazine/magazine.php:112
+#: modules/magazine/magazine.php:115
 msgid "All Spans"
 msgstr ""
 
-#: ../modules/magazine/magazine.php:113
+#: modules/magazine/magazine.php:116
 msgid "Parent Span"
 msgstr ""
 
-#: ../modules/magazine/magazine.php:114
+#: modules/magazine/magazine.php:117
 msgid "Parent Span:"
 msgstr ""
 
-#: ../modules/magazine/magazine.php:115
+#: modules/magazine/magazine.php:118
 msgid "Edit Span"
 msgstr ""
 
-#: ../modules/magazine/magazine.php:116
+#: modules/magazine/magazine.php:119
 msgid "Update Span"
 msgstr ""
 
-#: ../modules/magazine/magazine.php:117
+#: modules/magazine/magazine.php:120
 msgid "Add New Span"
 msgstr ""
 
-#: ../modules/magazine/magazine.php:118
+#: modules/magazine/magazine.php:121
 msgid "New Span"
 msgstr ""
 
-#: ../modules/magazine/magazine.php:119
+#: modules/magazine/magazine.php:122
 msgid "Separate spans with commas"
 msgstr ""
 
-#: ../modules/magazine/magazine.php:120
+#: modules/magazine/magazine.php:123
 msgid "Add or remove Spans"
 msgstr ""
 
-#: ../modules/magazine/magazine.php:121
+#: modules/magazine/magazine.php:124
 msgid "Choose from most used Spans"
 msgstr ""
 
-#: ../modules/magazine/magazine.php:136
+#: modules/magazine/magazine.php:139
 msgid "Editorial Magazine Documentations"
 msgstr ""
 
-#: ../modules/magazine/magazine.php:177
+#: modules/magazine/magazine.php:176
 msgid "gEditorial Magazine"
 msgstr ""
 
-#: ../modules/magazine/magazine.php:544
+#: modules/magazine/magazine.php:495 modules/magazine/magazine.php:505
+msgctxt "Suffix for term name linked to trashed post"
+msgid "(Trashed)"
+msgstr ""
+
+#: modules/magazine/magazine.php:681
 msgid "Connected Issues"
 msgstr ""
 
-#: ../modules/magazine/magazine.php:551
+#: modules/magazine/magazine.php:688
 msgid "Connect to a post"
 msgstr ""
 
-#: ../modules/magazine/magazine.php:555
+#: modules/magazine/magazine.php:692
 msgid "Search issues"
 msgstr ""
 
-#: ../modules/magazine/magazine.php:556
+#: modules/magazine/magazine.php:693
 msgid "No issues found."
 msgstr ""
 
-#: ../modules/magazine/magazine.php:557
+#: modules/magazine/magazine.php:694
 msgid "Connect to an issue"
 msgstr ""
 
-#: ../modules/magazine/magazine.php:568
+#: modules/magazine/magazine.php:705
 msgid "Thumbnail"
 msgstr ""
 
-#: ../modules/magazine/magazine.php:574
+#: modules/magazine/magazine.php:711
 msgid "Medium"
 msgstr ""
 
-#: ../modules/magazine/magazine.php:580
+#: modules/magazine/magazine.php:717
 msgid "Large"
 msgstr ""
 
-#: ../modules/magazine/magazine.php:698 ../modules/magazine/magazine.php:714
-#: ../modules/magazine/magazine.php:750 ../modules/magazine/widgets.php:162
+#: modules/magazine/magazine.php:832 modules/magazine/magazine.php:851
+#: modules/magazine/magazine.php:879 modules/magazine/magazine.php:894
+#: modules/magazine/magazine.php:929 modules/magazine/widgets.php:162
 msgid "&mdash; Select an Issue &mdash;"
 msgstr ""
 
-#: ../modules/magazine/magazine.php:759
+#: modules/magazine/magazine.php:938
 msgid "There are no issues!"
 msgstr ""
 
-#: ../modules/magazine/magazine.php:919 ../modules/magazine/magazine.php:930
+#: modules/magazine/magazine.php:1102 modules/magazine/magazine.php:1113
 msgid "<span title=\"No Posts\">&mdash;</span>"
 msgstr ""
 
-#: ../modules/magazine/magazine.php:928
+#: modules/magazine/magazine.php:1111
 msgctxt "issues column terms between"
 msgid ", "
 msgstr ""
 
-#: ../modules/magazine/magazine.php:977
+#: modules/magazine/magazine.php:1160
 msgid "Number Line"
 msgstr ""
 
-#: ../modules/magazine/magazine.php:978 ../modules/magazine/magazine.php:983
+#: modules/magazine/magazine.php:1161 modules/magazine/magazine.php:1166
 msgid "Total Pages"
 msgstr ""
 
-#: ../modules/magazine/magazine.php:982
+#: modules/magazine/magazine.php:1165
 msgid "Page Start"
 msgstr ""
 
-#: ../modules/magazine/magazine.php:988
+#: modules/magazine/magazine.php:1171
 msgid "The issue number line"
 msgstr ""
 
-#: ../modules/magazine/magazine.php:989
+#: modules/magazine/magazine.php:1172
 msgid "The issue total pages"
 msgstr ""
 
-#: ../modules/magazine/magazine.php:992
+#: modules/magazine/magazine.php:1175
 msgid "Post order in issue list"
 msgstr ""
 
-#: ../modules/magazine/magazine.php:993
+#: modules/magazine/magazine.php:1176
 msgid "Post start page on issue (printed)"
 msgstr ""
 
-#: ../modules/magazine/magazine.php:994
+#: modules/magazine/magazine.php:1177
 msgid "Post total pages on issue (printed)"
 msgstr ""
 
-#: ../modules/magazine/magazine.php:1107
+#: modules/magazine/magazine.php:1290
 msgid "Issue updated. <a href=\"%s\">View issue</a>"
 msgstr ""
 
-#: ../modules/magazine/magazine.php:1108
+#: modules/magazine/magazine.php:1291
 msgid "Custom field updated."
 msgstr ""
 
-#: ../modules/magazine/magazine.php:1109
+#: modules/magazine/magazine.php:1292
 msgid "Custom field deleted."
 msgstr ""
 
-#: ../modules/magazine/magazine.php:1110
+#: modules/magazine/magazine.php:1293
 msgid "Issue updated."
 msgstr ""
 
-#: ../modules/magazine/magazine.php:1111
+#: modules/magazine/magazine.php:1294
 msgid "Issue restored to revision from %s"
 msgstr ""
 
-#: ../modules/magazine/magazine.php:1112
+#: modules/magazine/magazine.php:1295
 msgid "Issue published. <a href=\"%s\">View issue</a>"
 msgstr ""
 
-#: ../modules/magazine/magazine.php:1113
+#: modules/magazine/magazine.php:1296
 msgid "Issue saved."
 msgstr ""
 
-#: ../modules/magazine/magazine.php:1114
+#: modules/magazine/magazine.php:1297
 msgid "Issue submitted. <a target=\"_blank\" href=\"%s\">Preview issue</a>"
 msgstr ""
 
-#: ../modules/magazine/magazine.php:1115
+#: modules/magazine/magazine.php:1298
 msgid ""
 "Issue scheduled for: <strong>%1$s</strong>. <a target=\"_blank\" href=\"%2$s"
 "\">Preview issue</a>"
 msgstr ""
 
-#: ../modules/magazine/magazine.php:1115
+#: modules/magazine/magazine.php:1298
 msgid "M j, Y @ G:i"
 msgstr ""
 
-#: ../modules/magazine/magazine.php:1116
+#: modules/magazine/magazine.php:1299
 msgid "Issue draft updated. <a target=\"_blank\" href=\"%s\">Preview issue</a>"
 msgstr ""
 
-#: ../modules/magazine/magazine.php:1134
+#: modules/magazine/magazine.php:1317
 msgid "%s Issue Post(s) Created"
 msgstr ""
 
-#: ../modules/magazine/magazine.php:1137
+#: modules/magazine/magazine.php:1320
 msgid "No Issue Post Created"
 msgstr ""
 
-#: ../modules/magazine/magazine.php:1145
+#: modules/magazine/magazine.php:1328
 msgid "Magazine Tools"
 msgstr ""
 
-#: ../modules/magazine/magazine.php:1148
-msgid "Current Issues"
-msgstr ""
-
-#: ../modules/magazine/magazine.php:1175
-msgid "Click Check button below"
-msgstr ""
-
-#: ../modules/magazine/magazine.php:1180
+#: modules/magazine/magazine.php:1331
 msgid "From Terms"
 msgstr ""
 
-#: ../modules/magazine/magazine.php:1182 ../modules/meta/meta.php:622
-msgid "Check"
+#: modules/magazine/magazine.php:1337
+msgid "ID"
 msgstr ""
 
-#: ../modules/magazine/magazine.php:1183
-msgid "Create"
+#: modules/magazine/magazine.php:1338
+msgid "Name"
 msgstr ""
 
-#: ../modules/magazine/magazine.php:1187
-msgid "Check for new Issue taxs and create the corresponding Issue Posts."
+#: modules/magazine/magazine.php:1344
+msgid "&mdash;&mdash;&mdash;&mdash; No Issue"
 msgstr ""
 
-#: ../modules/magazine/templates.php:180
+#: modules/magazine/magazine.php:1348
+msgid "Count"
+msgstr ""
+
+#: modules/magazine/magazine.php:1364
+msgid "Check Terms"
+msgstr ""
+
+#: modules/magazine/magazine.php:1365
+msgid "Create Issue"
+msgstr ""
+
+#: modules/magazine/magazine.php:1366
+msgid "Store Orders"
+msgstr ""
+
+#: modules/magazine/magazine.php:1370
+msgid "Check for Issue terms and Create corresponding Issue posts."
+msgstr ""
+
+#: modules/magazine/templates.php:169
 msgid "Permanent link to this span"
 msgstr ""
 
-#: ../modules/magazine/widgets.php:9
+#: modules/magazine/widgets.php:9
 msgctxt "Magazine: Widget: title"
 msgid "Issue Cover"
 msgstr ""
 
-#: ../modules/magazine/widgets.php:11
+#: modules/magazine/widgets.php:11
 msgctxt "Magazine: Widget: description"
 msgid "Displays selected issue cover"
 msgstr ""
 
-#: ../modules/magazine/widgets.php:149
+#: modules/magazine/widgets.php:149
 msgid "The Latest Issue"
 msgstr ""
 
-#: ../modules/magazine/widgets.php:154
+#: modules/magazine/widgets.php:154
 msgid "Title:"
 msgstr ""
 
-#: ../modules/magazine/widgets.php:170
+#: modules/magazine/widgets.php:170
 msgctxt "Magazine: Widget: Issue Cover"
 msgid "The Issue:"
 msgstr ""
 
-#: ../modules/magazine/widgets.php:189
+#: modules/magazine/widgets.php:189
 msgctxt "Magazine: Widget: Issue Cover"
 msgid "Image Size:"
 msgstr ""
 
-#: ../modules/magazine/widgets.php:200
+#: modules/magazine/widgets.php:200
 msgctxt "Magazine: Widget: Issue Cover"
 msgid "Always the latest issue"
 msgstr ""
 
-#: ../modules/magazine/widgets.php:211
+#: modules/magazine/widgets.php:211
 msgctxt "Magazine: Widget: Issue Cover"
 msgid "Link to the issue"
 msgstr ""
 
-#: ../modules/magazine/widgets.php:222
+#: modules/magazine/widgets.php:222
 msgctxt "Magazine: Widget: Issue Cover"
 msgid "Display the number meta"
 msgstr ""
 
-#: ../modules/meta/meta.php:23
+#: modules/meta/meta.php:23
 msgid "Meta"
 msgstr "متا"
 
-#: ../modules/meta/meta.php:24
+#: modules/meta/meta.php:24
 msgid "Metadata, magazine style."
 msgstr "اطلاعات بیشتر، به سبک مجله‌ها"
 
-#: ../modules/meta/meta.php:25
+#: modules/meta/meta.php:25
 msgid "Meta extended desc"
 msgstr ""
 
-#: ../modules/meta/meta.php:60
+#: modules/meta/meta.php:60
 msgid "OverTitle"
 msgstr "روتیتر"
 
-#: ../modules/meta/meta.php:61
+#: modules/meta/meta.php:61
 msgid "SubTitle"
 msgstr ""
 
-#: ../modules/meta/meta.php:62
+#: modules/meta/meta.php:62 modules/submit/submit.php:54
 msgid "Author"
 msgstr ""
 
-#: ../modules/meta/meta.php:63
+#: modules/meta/meta.php:63
 msgid "Lead"
 msgstr "لید"
 
-#: ../modules/meta/meta.php:64 ../modules/meta/meta.php:92
+#: modules/meta/meta.php:64 modules/meta/meta.php:92
 msgid "Column Header"
 msgstr ""
 
-#: ../modules/meta/meta.php:65
+#: modules/meta/meta.php:65
 msgid "Column Header Taxonomy"
 msgstr ""
 
-#: ../modules/meta/meta.php:66 ../modules/meta/meta.php:79
+#: modules/meta/meta.php:66 modules/meta/meta.php:79
 msgid "Column Header Override"
 msgstr ""
 
-#: ../modules/meta/meta.php:67
+#: modules/meta/meta.php:67
 msgid "External Link"
 msgstr ""
 
-#: ../modules/meta/meta.php:68
+#: modules/meta/meta.php:68
 msgid "Old Link"
 msgstr ""
 
-#: ../modules/meta/meta.php:73
+#: modules/meta/meta.php:73
 msgid "String to place over the post title"
 msgstr ""
 
-#: ../modules/meta/meta.php:74
+#: modules/meta/meta.php:74
 msgid "String to place under the post title"
 msgstr ""
 
-#: ../modules/meta/meta.php:75
+#: modules/meta/meta.php:75
 msgid "String to override the post author"
 msgstr ""
 
-#: ../modules/meta/meta.php:76
+#: modules/meta/meta.php:76
 msgid "Editorial paragraph presented before post content"
 msgstr ""
 
-#: ../modules/meta/meta.php:77
+#: modules/meta/meta.php:77
 msgid "String to reperesent that the post is on a column or section"
 msgstr ""
 
-#: ../modules/meta/meta.php:78
+#: modules/meta/meta.php:78
 msgid "Taxonomy for better categorizing columns"
 msgstr ""
 
-#: ../modules/meta/meta.php:80
+#: modules/meta/meta.php:80
 msgid "URL of the external source of the post"
 msgstr ""
 
-#: ../modules/meta/meta.php:81
+#: modules/meta/meta.php:81
 msgid "URL of the post on a previous site"
 msgstr ""
 
-#: ../modules/meta/meta.php:85 ../modules/meta/meta.php:86
+#: modules/meta/meta.php:85 modules/meta/meta.php:86
 msgid "Metadata"
 msgstr ""
 
-#: ../modules/meta/meta.php:91 ../modules/meta/meta.php:105
+#: modules/meta/meta.php:91 modules/meta/meta.php:105
 msgid "Column Headers"
 msgstr "سرستون‌ها"
 
-#: ../modules/meta/meta.php:93
+#: modules/meta/meta.php:93
 msgid "Search Column Headers"
 msgstr "جست‌وجوی سرستون‌ها"
 
-#: ../modules/meta/meta.php:95
+#: modules/meta/meta.php:95
 msgid "All Column Headers"
 msgstr "همهٔ سرستون‌ها"
 
-#: ../modules/meta/meta.php:96
+#: modules/meta/meta.php:96
 msgid "Parent Column Header"
 msgstr ""
 
-#: ../modules/meta/meta.php:97
+#: modules/meta/meta.php:97
 msgid "Parent Column Header:"
 msgstr ""
 
-#: ../modules/meta/meta.php:98
+#: modules/meta/meta.php:98
 msgid "Edit Column Header"
 msgstr "ویرایش سرستون"
 
-#: ../modules/meta/meta.php:99
+#: modules/meta/meta.php:99
 msgid "Update Column Header"
 msgstr "به‌روزرسانی سرستون"
 
-#: ../modules/meta/meta.php:100
+#: modules/meta/meta.php:100
 msgid "Add New Column Header"
 msgstr "افزودن سرستون تازه"
 
-#: ../modules/meta/meta.php:101
+#: modules/meta/meta.php:101
 msgid "New Column Header Name"
 msgstr "عنوان سرستون تازه"
 
-#: ../modules/meta/meta.php:102
+#: modules/meta/meta.php:102
 msgid "Separate column headers with commas"
 msgstr ""
 
-#: ../modules/meta/meta.php:103
+#: modules/meta/meta.php:103
 msgid "Add or remove column headers"
 msgstr ""
 
-#: ../modules/meta/meta.php:104
+#: modules/meta/meta.php:104
 msgid "Choose from the most used column headers"
 msgstr ""
 
-#: ../modules/meta/meta.php:114
+#: modules/meta/meta.php:114
 msgid "Overview"
 msgstr "در یک نگاه"
 
-#: ../modules/meta/meta.php:119
+#: modules/meta/meta.php:119
 msgid "Troubleshooting"
 msgstr ""
 
-#: ../modules/meta/meta.php:126
+#: modules/meta/meta.php:126
 msgid "Editorial Meta Documentations"
 msgstr ""
 
-#: ../modules/meta/meta.php:276
+#: modules/meta/meta.php:293
 msgid "&mdash; Select a Column Header &mdash;"
 msgstr ""
 
-#: ../modules/meta/meta.php:513
+#: modules/meta/meta.php:522
 msgid "-Not Set-"
 msgstr ""
 
-#: ../modules/meta/meta.php:518
+#: modules/meta/meta.php:527
 msgid "<em>Create labels first</em>"
 msgstr ""
 
-#: ../modules/meta/meta.php:537
+#: modules/meta/meta.php:546
 msgctxt "Meta: tools tab title"
 msgid "Meta"
 msgstr ""
 
-#: ../modules/meta/meta.php:546
+#: modules/meta/meta.php:555
 msgid "Field %s Converted"
 msgstr ""
 
-#: ../modules/meta/meta.php:547
+#: modules/meta/meta.php:556
 msgid "Field %s Deleted"
 msgstr ""
 
-#: ../modules/meta/meta.php:549
+#: modules/meta/meta.php:558
 msgid "No Field"
 msgstr ""
 
-#: ../modules/meta/meta.php:558
+#: modules/meta/meta.php:567
 msgid "Meta Tools"
 msgstr ""
 
-#: ../modules/meta/meta.php:561
+#: modules/meta/meta.php:570
 msgid "Maintenance Tasks"
 msgstr ""
 
-#: ../modules/meta/meta.php:568
+#: modules/meta/meta.php:577
 msgid "Empty"
 msgstr ""
 
-#: ../modules/meta/meta.php:574
+#: modules/meta/meta.php:583
 msgid "Import Custom Fields"
 msgstr ""
 
-#: ../modules/meta/meta.php:618
+#: modules/meta/meta.php:627
 msgid "Check for Custom Fields and import them into Meta"
 msgstr ""
 
-#: ../modules/meta/meta.php:623
+#: modules/meta/meta.php:631
+msgid "Check"
+msgstr ""
+
+#: modules/meta/meta.php:632
 msgid "Covert"
 msgstr ""
 
-#: ../modules/meta/meta.php:624
+#: modules/meta/meta.php:633
 msgid "Delete"
 msgstr ""
 
-#: ../modules/series/series.php:16 ../modules/series/series.php:76
-#: ../modules/series/series.php:77 ../modules/series/series.php:83
-#: ../modules/series/series.php:84 ../modules/series/series.php:97
+#: modules/series/series.php:16 modules/series/series.php:76
+#: modules/series/series.php:77 modules/series/series.php:83
+#: modules/series/series.php:84 modules/series/series.php:97
 msgid "Series"
 msgstr "مجموعه‌ها"
 
-#: ../modules/series/series.php:17
+#: modules/series/series.php:17
 msgid "Post Series Management"
 msgstr "مدیریت مجموعهٔ نوشته‌ها"
 
-#: ../modules/series/series.php:18
+#: modules/series/series.php:18
 msgid "Adding Post Series Functionality to WordPress With Taxonomies"
 msgstr ""
 
-#: ../modules/series/series.php:45
+#: modules/series/series.php:45
 msgid "Multiple Series"
 msgstr ""
 
-#: ../modules/series/series.php:46
+#: modules/series/series.php:46
 msgid "Using multiple series for each post."
 msgstr ""
 
-#: ../modules/series/series.php:51
+#: modules/series/series.php:51 modules/submit/submit.php:42
 msgctxt "Series Editor Button"
 msgid "Editor Button"
 msgstr ""
 
-#: ../modules/series/series.php:69
+#: modules/series/series.php:69
 msgid "In Series Title"
 msgstr "عنوان در مجموعه"
 
-#: ../modules/series/series.php:70
+#: modules/series/series.php:70
 msgid "In Series Order"
 msgstr "چیدمان در مجموعه"
 
-#: ../modules/series/series.php:71
+#: modules/series/series.php:71
 msgid "In Series Description"
 msgstr "توضیحات در مجموعه"
 
-#: ../modules/series/series.php:78
+#: modules/series/series.php:78
 msgid "&mdash; Choose a Series &mdash;"
 msgstr "&mdash; انتخاب یک مجموعه &mdash;"
 
-#: ../modules/series/series.php:85
+#: modules/series/series.php:85
 msgid "Search Series"
 msgstr "جست‌وجوی مجموعه‌ها"
 
-#: ../modules/series/series.php:87
+#: modules/series/series.php:87
 msgid "All Series"
 msgstr "همهٔ مجموعه‌ها"
 
-#: ../modules/series/series.php:88
+#: modules/series/series.php:88
 msgid "Parent Series"
 msgstr ""
 
-#: ../modules/series/series.php:89
+#: modules/series/series.php:89
 msgid "Parent Series:"
 msgstr ""
 
-#: ../modules/series/series.php:90
+#: modules/series/series.php:90
 msgid "Edit Series"
 msgstr "ویرایش مجموعه"
 
-#: ../modules/series/series.php:91
+#: modules/series/series.php:91
 msgid "Update Series"
 msgstr "به‌روزرسانی مجموعه"
 
-#: ../modules/series/series.php:92
+#: modules/series/series.php:92
 msgid "Add New Series"
 msgstr "افزودن مجموعهٔ تازه"
 
-#: ../modules/series/series.php:93
+#: modules/series/series.php:93
 msgid "New Series Name"
 msgstr "عنوان مجموعهٔ تازه"
 
-#: ../modules/series/series.php:94
+#: modules/series/series.php:94
 msgid "Separate series with commas"
 msgstr ""
 
-#: ../modules/series/series.php:95
+#: modules/series/series.php:95
 msgid "Add or remove series"
 msgstr ""
 
-#: ../modules/series/series.php:96
+#: modules/series/series.php:96
 msgid "Choose from the most used series"
 msgstr ""
 
-#: ../modules/series/series.php:110
+#: modules/series/series.php:110
 msgid "Editorial Series Documentations"
 msgstr ""
 
-#: ../modules/series/series.php:189
+#: modules/series/series.php:189
 msgid "Add Series Shortcode"
 msgstr ""
 
-#: ../modules/series/series.php:574
+#: modules/series/series.php:575
 msgctxt "series hide link title"
 msgid "More in this series"
 msgstr ""
 
-#: ../modules/series/series.php:574
+#: modules/series/series.php:575
 msgctxt "series hide link"
 msgid "More&hellip;"
 msgstr "بیشتر &hellip;"
 
-#: ../modules/settings/settings.php:16 ../modules/settings/settings.php:190
+#: modules/settings/settings.php:16 modules/settings/settings.php:190
 msgid "Editorial"
 msgstr "تحریریه"
 
-#: ../modules/settings/settings.php:17
+#: modules/settings/settings.php:17
 msgid "WordPress, Magazine Style."
 msgstr "وردپرس، برای تحریریه شما"
 
-#: ../modules/settings/settings.php:54 ../modules/settings/settings.php:96
+#: modules/settings/settings.php:54 modules/settings/settings.php:96
 msgid "gEditorial Tools"
 msgstr "ابزارهای تحریریه"
 
-#: ../modules/settings/settings.php:55
+#: modules/settings/settings.php:55
 msgctxt "Admin Tools Menu Title"
 msgid "Tools"
 msgstr "ابزارها"
 
-#: ../modules/settings/settings.php:84
+#: modules/settings/settings.php:84
 msgctxt "gEditorial Tools"
 msgid "Overview"
 msgstr "در یک نگاه"
 
-#: ../modules/settings/settings.php:85
+#: modules/settings/settings.php:85
 msgctxt "gEditorial Tools"
 msgid "General"
 msgstr "همگانی"
 
-#: ../modules/settings/settings.php:89
+#: modules/settings/settings.php:89
 msgctxt "gEditorial Tools"
 msgid "Console"
 msgstr "کنسول"
 
-#: ../modules/settings/settings.php:138
+#: modules/settings/settings.php:138
 msgctxt "Ajax Notice"
 msgid "No Action of Slug!"
 msgstr ""
 
-#: ../modules/settings/settings.php:143
+#: modules/settings/settings.php:143
 msgctxt "Ajax Notice"
 msgid "Cannot find the module!"
 msgstr ""
 
-#: ../modules/settings/settings.php:147
+#: modules/settings/settings.php:147
 msgctxt "Ajax Notice"
 msgid "Module state succesfully changed"
 msgstr ""
 
-#: ../modules/settings/settings.php:149
+#: modules/settings/settings.php:149
 msgctxt "Ajax Notice"
 msgid "Cannot change module state"
 msgstr ""
 
-#: ../modules/settings/settings.php:166
+#: modules/settings/settings.php:166
 msgid "Not a registered Editorial module"
 msgstr ""
 
-#: ../modules/settings/settings.php:180
+#: modules/settings/settings.php:180
 msgid ""
 "Module not enabled. Please enable it from the <a href=\"%1$s\">Editorial "
 "settings page</a>."
 msgstr ""
 
-#: ../modules/settings/settings.php:192
+#: modules/settings/settings.php:192
 msgid "Editorial: %s"
 msgstr "تحریریه: %s"
 
-#: ../modules/settings/settings.php:240
+#: modules/settings/settings.php:240
 msgid ""
 "<a href=\"%1$s\" title=\"Editorial\">gEditorial</a> is a <a href=\"%2$s"
 "\">geminorum</a> project."
 msgstr ""
 
-#: ../modules/settings/settings.php:294
+#: modules/settings/settings.php:294
 msgid "Enable"
 msgstr "فعال شود"
 
-#: ../modules/settings/settings.php:299
+#: modules/settings/settings.php:299
 msgid "Disable"
 msgstr "غیرفعال شود"
 
-#: ../modules/settings/settings.php:311
+#: modules/settings/settings.php:311
 msgid "There are no Editorial modules registered"
 msgstr ""
 
-#: ../modules/specs/specs.php:16 ../modules/specs/specs.php:76
-#: ../modules/specs/specs.php:77 ../modules/specs/specs.php:83
-#: ../modules/specs/specs.php:84 ../modules/specs/specs.php:97
+#: modules/specs/specs.php:16 modules/specs/specs.php:76
+#: modules/specs/specs.php:77 modules/specs/specs.php:83
+#: modules/specs/specs.php:84 modules/specs/specs.php:97
 msgid "Specifications"
 msgstr ""
 
-#: ../modules/specs/specs.php:17
+#: modules/specs/specs.php:17
 msgid "Post Specifications Management"
 msgstr ""
 
-#: ../modules/specs/specs.php:18
+#: modules/specs/specs.php:18
 msgid "Adding Post Specifications Functionality to WordPress With Taxonomies"
 msgstr ""
 
-#: ../modules/specs/specs.php:45
+#: modules/specs/specs.php:45
 msgid "Multiple Specifications"
 msgstr ""
 
-#: ../modules/specs/specs.php:46
+#: modules/specs/specs.php:46
 msgid "Using multiple specs for each post."
 msgstr ""
 
-#: ../modules/specs/specs.php:51
+#: modules/specs/specs.php:51
 msgctxt "Specifications Editor Button"
 msgid "Editor Button"
 msgstr ""
 
-#: ../modules/specs/specs.php:69
+#: modules/specs/specs.php:69
 msgid "In Specifications Title"
 msgstr ""
 
-#: ../modules/specs/specs.php:70
+#: modules/specs/specs.php:70
 msgid "In Specifications Order"
 msgstr ""
 
-#: ../modules/specs/specs.php:71
+#: modules/specs/specs.php:71
 msgid "In Specifications Description"
 msgstr ""
 
-#: ../modules/specs/specs.php:78
+#: modules/specs/specs.php:78
 msgid "&mdash; Choose a Specification &mdash;"
 msgstr ""
 
-#: ../modules/specs/specs.php:85
+#: modules/specs/specs.php:85
 msgid "Search Specifications"
 msgstr ""
 
-#: ../modules/specs/specs.php:87
+#: modules/specs/specs.php:87
 msgid "All Specifications"
 msgstr ""
 
-#: ../modules/specs/specs.php:88
+#: modules/specs/specs.php:88
 msgid "Parent Specifications"
 msgstr ""
 
-#: ../modules/specs/specs.php:89
+#: modules/specs/specs.php:89
 msgid "Parent Specifications:"
 msgstr ""
 
-#: ../modules/specs/specs.php:90
+#: modules/specs/specs.php:90
 msgid "Edit Specifications"
 msgstr ""
 
-#: ../modules/specs/specs.php:91
+#: modules/specs/specs.php:91
 msgid "Update Specifications"
 msgstr ""
 
-#: ../modules/specs/specs.php:92
+#: modules/specs/specs.php:92
 msgid "Add New Specifications"
 msgstr ""
 
-#: ../modules/specs/specs.php:93
+#: modules/specs/specs.php:93
 msgid "New Specifications Name"
 msgstr ""
 
-#: ../modules/specs/specs.php:94
+#: modules/specs/specs.php:94
 msgid "Separate specs with commas"
 msgstr ""
 
-#: ../modules/specs/specs.php:95
+#: modules/specs/specs.php:95
 msgid "Add or remove specs"
 msgstr ""
 
-#: ../modules/specs/specs.php:96
+#: modules/specs/specs.php:96
 msgid "Choose from the most used specs"
 msgstr ""
 
-#: ../modules/specs/specs.php:110
+#: modules/specs/specs.php:110
 msgid "Editorial Specifications Documentations"
 msgstr ""
 
-#: ../modules/specs/specs.php:401
+#: modules/specs/specs.php:401
 msgctxt "Sortable handler title attr"
 msgid "Sort me!"
 msgstr ""
 
-#: ../modules/specs/specs.php:402
+#: modules/specs/specs.php:402
 msgctxt "Sortable trash title attr"
 msgid "Trash me!"
 msgstr ""
 
-#: ../modules/specs/specs.php:410 ../modules/specs/specs.php:549
+#: modules/specs/specs.php:410 modules/specs/specs.php:549
 msgid "UnKnown Field"
 msgstr ""
 
-#: ../modules/tweaks/tweaks.php:14
+#: modules/submit/submit.php:14 modules/submit/submit.php:58
+#: modules/submit/submit.php:349
+msgid "Submit"
+msgstr "ارائه"
+
+#: modules/submit/submit.php:15
+msgid "FrontPage Submissions"
+msgstr "دریافت مطالب از طریق غیر بخش مدیریت"
+
+#: modules/submit/submit.php:16
+msgid "Set of tools to accept post and images from frontpage"
+msgstr ""
+
+#: modules/submit/submit.php:55
+msgid "Email"
+msgstr ""
+
+#: modules/submit/submit.php:56
+msgid "URL"
+msgstr ""
+
+#: modules/submit/submit.php:57
+msgid "Content"
+msgstr ""
+
+#: modules/submit/submit.php:63
+msgid "Title of your application"
+msgstr ""
+
+#: modules/submit/submit.php:64
+msgid "Author of the application"
+msgstr ""
+
+#: modules/submit/submit.php:65
+msgid "Contact email"
+msgstr ""
+
+#: modules/submit/submit.php:66
+msgid "URL for more information"
+msgstr ""
+
+#: modules/submit/submit.php:67
+msgid "Content of the application"
+msgstr ""
+
+#: modules/submit/submit.php:68
+msgid "Submit the application"
+msgstr ""
+
+#: modules/submit/submit.php:81
+msgid "Editorial Submit Documentations"
+msgstr ""
+
+#: modules/submit/submit.php:130
+msgid "You can not post here!"
+msgstr ""
+
+#: modules/submit/submit.php:139
+msgid "Submit your Application"
+msgstr ""
+
+#: modules/submit/submit.php:195
+msgid "Your post (%s) submitted successfully."
+msgstr ""
+
+#: modules/submit/submit.php:214
+msgid "Please try again."
+msgstr ""
+
+#: modules/submit/submit.php:374
+msgid "Content can not be empty."
+msgstr ""
+
+#: modules/submit/submit.php:379 modules/submit/submit.php:388
+msgid "Sorry, we can not accept this."
+msgstr ""
+
+#: modules/submit/submit.php:383 modules/submit/submit.php:393
+msgid "Please enter your name"
+msgstr ""
+
+#: modules/submit/submit.php:396
+msgid ""
+"You cannot use that email address to submit posts. We are having problems "
+"with them blocking some of our email. Please use another email provider."
+msgstr ""
+
+#: modules/submit/submit.php:447
+msgid ""
+"Use these short codes:<br /><span dir=\"ltr\"><code>[%1$s]</code></span> for "
+"submit for on any post."
+msgstr ""
+
+#: modules/tweaks/tweaks.php:14
 msgid "Tweaks"
 msgstr ""
 
-#: ../modules/tweaks/tweaks.php:15
+#: modules/tweaks/tweaks.php:15
 msgid "Admin UI Enhancement"
 msgstr ""
 
-#: ../modules/tweaks/tweaks.php:42
+#: modules/tweaks/tweaks.php:42
 msgid "Group Default Taxonomies"
 msgstr ""
 
-#: ../modules/tweaks/tweaks.php:64
+#: modules/tweaks/tweaks.php:64
 msgid "Taxonomies"
 msgstr "رده‌بندی‌ها"
 
-#: ../modules/tweaks/tweaks.php:70
+#: modules/tweaks/tweaks.php:70
 msgid "Categories"
 msgstr ""
 
-#: ../modules/tweaks/tweaks.php:75
+#: modules/tweaks/tweaks.php:75
 msgid "Tags"
 msgstr ""
 
-#: ../modules/tweaks/tweaks.php:88
+#: modules/tweaks/tweaks.php:88
 msgid "Editorial Tweaks Documentations"
 msgstr ""
-
-#: ../node_modules/grunt-wp-i18n/test/fixtures/basic-theme/exclude/file.php:3
-#: ../node_modules/grunt-wp-i18n/test/fixtures/plugin-include/plugin-include.php:6
-msgid "Exclude"
-msgstr ""
-
-#: ../node_modules/grunt-wp-i18n/test/fixtures/plugin-include/include/file.php:2
-msgid "Include"
-msgstr ""
-
-#: ../node_modules/grunt-wp-i18n/test/fixtures/text-domains/add-domain.php:2
-#: ../node_modules/grunt-wp-i18n/test/fixtures/text-domains/update-all-domains.php:2
-#: ../node_modules/grunt-wp-i18n/test/fixtures/text-domains/update-all-domains.php:3
-#: ../node_modules/grunt-wp-i18n/test/fixtures/text-domains/update-all-domains.php:4
-#: ../node_modules/grunt-wp-i18n/test/fixtures/text-domains/update-domains.php:2
-#: ../node_modules/grunt-wp-i18n/test/fixtures/text-domains/update-domains.php:3
-msgid "String"
-msgstr ""
-
-#: ../node_modules/grunt-wp-i18n/test/fixtures/text-domains/update-all-domains.php:6
-#: ../node_modules/grunt-wp-i18n/test/fixtures/text-domains/update-all-domains.php:7
-#: ../node_modules/grunt-wp-i18n/test/fixtures/text-domains/update-all-domains.php:8
-msgctxt "a string"
-msgid "String"
-msgstr ""
-
-#: ../node_modules/grunt-wp-i18n/test/fixtures/text-domains/update-all-domains.php:9
-#: ../node_modules/grunt-wp-i18n/test/fixtures/text-domains/update-all-domains.php:10
-#: ../node_modules/grunt-wp-i18n/test/fixtures/text-domains/update-all-domains.php:11
-msgid "1 Star"
-msgid_plural "%s Stars"
-msgstr[0] ""
-msgstr[1] ""
 
 #~ msgid "Other Posts on <a href=\"%1$s\" target=\"_blank\">%2$s</a> Series:"
 #~ msgstr ""
@@ -2082,12 +2182,6 @@ msgstr[1] ""
 
 #~ msgid "(<a href=\"%1$s\" target=\"_blank\">Edit</a>)"
 #~ msgstr "(<a href=\"%1$s\" target=\"_blank\">ویرایش</a>)"
-
-#~ msgid "Submit"
-#~ msgstr "ارائه"
-
-#~ msgid "FrontPage Submissions"
-#~ msgstr "دریافت مطالب از طریق غیر بخش مدیریت"
 
 #~ msgid "Invalid Taxonomy"
 #~ msgstr "رده‌بندی نامعتبر"
