@@ -3,17 +3,20 @@
 class gEditorialHelper
 {
 
-	public static function dump( &$var, $htmlSafe = true )
+	public static function dump( &$var, $htmlSafe = TRUE )
 	{
-		$result = var_export( $var, true );
-		echo '<pre dir="ltr" style="text-align:left;direction:ltr;">'.( $htmlSafe ? htmlspecialchars( $result ) : $result).'</pre>';
+		$result = var_export( $var, TRUE );
+
+		echo '<pre dir="ltr" style="text-align:left;direction:ltr;">'
+			.( $htmlSafe ? htmlspecialchars( $result ) : $result )
+			.'</pre>';
 	}
 
 	// originally from P2
 	public static function excerptedTitle( $content, $word_count )
 	{
 		$content = strip_tags( $content );
-		$words = preg_split( '/([\s_;?!\/\(\)\[\]{}<>\r\n\t"]|\.$|(?<=\D)[:,.\-]|[:,.\-](?=\D))/', $content, $word_count + 1, PREG_SPLIT_NO_EMPTY );
+		$words   = preg_split( '/([\s_;?!\/\(\)\[\]{}<>\r\n\t"]|\.$|(?<=\D)[:,.\-]|[:,.\-](?=\D))/', $content, $word_count + 1, PREG_SPLIT_NO_EMPTY );
 
 		if ( count( $words ) > $word_count ) {
 			array_pop( $words ); // remove remainder of words
@@ -135,36 +138,7 @@ class gEditorialHelper
 		return $register;
 	}
 
-
-	// http://teleogistic.net/2013/05/a-recursive-sorta-version-of-wp_parse_args/
 	// https://gist.github.com/boonebgorges/5510970
-	/**
-	* Recursive argument parsing
-	*
-	* This acts like a multi-dimensional version of wp_parse_args() (minus
-	* the querystring parsing - you must pass arrays).
-	*
-	* Values from $a override those from $b; keys in $b that don't exist
-	* in $a are passed through.
-	*
-	* This is different from array_merge_recursive(), both because of the
-	* order of preference ($a overrides $b) and because of the fact that
-	* array_merge_recursive() combines arrays deep in the tree, rather
-	* than overwriting the b array with the a array.
-	*
-	* The implementation of this function is specific to the needs of
-	* BP_Group_Extension, where we know that arrays will always be
-	* associative, and that an argument under a given key in one array
-	* will be matched by a value of identical depth in the other one. The
-	* function is NOT designed for general use, and will probably result
-	* in unexpected results when used with data in the wild. See, eg,
-	* http://core.trac.wordpress.org/ticket/19888
-	*
-	* @since BuddyPress (1.8)
-	* @arg array $a
-	* @arg array $b
-	* @return array
-	*/
 	public static function parse_args_r( &$a, $b )
 	{
 		$a = (array) $a;
@@ -172,34 +146,34 @@ class gEditorialHelper
 		$r = $b;
 
 		foreach ( $a as $k => &$v ) {
-			if ( is_array( $v ) && isset( $r[ $k ] ) ) {
-				$r[ $k ] = self::parse_args_r( $v, $r[ $k ] );
+			if ( is_array( $v ) && isset( $r[$k] ) ) {
+				$r[$k] = self::parse_args_r( $v, $r[$k] );
 			} else {
-				$r[ $k ] = $v;
+				$r[$k] = $v;
 			}
 		}
 
 		return $r;
 	}
 
-	public static function term_description( $term, $echo_att = false )
+	public static function term_description( $term, $echo_attr = FALSE )
 	{
 		if ( ! $term->description )
 			return;
 
-		if ( ! $echo_att )
+		if ( ! $echo_attr )
 			return $term->name.' :: '.strip_tags( $term->description );
 
 		// Bootstrap 3
 		echo ' title="'.esc_attr( $term->name ).'"  data-toggle="popover" data-trigger="hover" data-content="'.$term->description.'"';
 	}
 
-	public static function linkStyleSheet( $url, $version = GEDITORIAL_VERSION, $media = false )
+	public static function linkStyleSheet( $url, $version = GEDITORIAL_VERSION, $media = FALSE )
 	{
 		echo "\t".self::html( 'link', array(
-			'rel' => 'stylesheet',
-			'href' => add_query_arg( 'ver', $version, $url ),
-			'type' => 'text/css',
+			'rel'   => 'stylesheet',
+			'href'  => add_query_arg( 'ver', $version, $url ),
+			'type'  => 'text/css',
 			'media' => $media,
 		) )."\n";
 	}
@@ -230,7 +204,7 @@ class gEditorialHelper
 		foreach ( $array as $k => $val )
 			if ( $val[$key] == $value )
 				return $k;
-		return null;
+		return NULL;
 	}
 
 	public static function header_nav( $settings_uri = '', $active = '', $sub_pages = array(), $class_prefix = 'nav-tab-', $tag = 'h3' )
@@ -243,7 +217,7 @@ class gEditorialHelper
 		foreach ( $sub_pages as $page_slug => $sub_page )
 			$html .= self::html( 'a', array(
 				'class' => 'nav-tab '.$class_prefix.$page_slug.( $page_slug == $active ? ' nav-tab-active' : '' ),
-				'href' => add_query_arg( 'sub', $page_slug, $settings_uri ),
+				'href'  => add_query_arg( 'sub', $page_slug, $settings_uri ),
 			), esc_html( $sub_page ) );
 
 		echo self::html( $tag, array(
@@ -251,7 +225,7 @@ class gEditorialHelper
 		), $html );
 	}
 
-	public static function meta_admin_field( $field, $fields, $post, $ltr = false, $title = null, $key = false )
+	public static function meta_admin_field( $field, $fields, $post, $ltr = FALSE, $title = NULL, $key = FALSE )
 	{
 		global $gEditorial;
 
@@ -265,8 +239,8 @@ class gEditorialHelper
 					'type'         => 'text',
 					'autocomplete' => 'off',
 					'class'        => 'field-text geditorial-meta-field-'.$field,
-					'name'         => 'geditorial-meta-'.$field.( $key === false ? '' : '['.$key.']' ),
-					'id'           => 'geditorial-meta-'.$field.( $key === false ? '' : '-'.$key ),
+					'name'         => 'geditorial-meta-'.$field.( FALSE === $key ? '' : '['.$key.']' ),
+					'id'           => 'geditorial-meta-'.$field.( FALSE === $key ? '' : '-'.$key ),
 					'value'        => $gEditorial->meta->get_postmeta( $post->ID, $field ),
 					'title'        => $title,
 					'placeholder'  => $title,
@@ -284,7 +258,7 @@ class gEditorialHelper
 		}
 	}
 
-	public static function meta_admin_textarea_field( $field, $fields, $post, $ltr = false, $title = null, $key = false )
+	public static function meta_admin_textarea_field( $field, $fields, $post, $ltr = FALSE, $title = NULL, $key = FALSE )
 	{
 		global $gEditorial;
 
@@ -298,8 +272,8 @@ class gEditorialHelper
 					// 'rows'         => '5',
 					// 'cols'         => '40',
 					'class'        => 'field-textarea geditorial-meta-field-'.$field,
-					'name'         => 'geditorial-meta-'.$field.( $key === false ? '' : '['.$key.']' ),
-					'id'           => 'geditorial-meta-'.$field.( $key === false ? '' : '-'.$key ),
+					'name'         => 'geditorial-meta-'.$field.( FALSE === $key ? '' : '['.$key.']' ),
+					'id'           => 'geditorial-meta-'.$field.( FALSE === $key ? '' : '-'.$key ),
 					'title'        => $title,
 					'placeholder'  => $title,
 					'readonly'     => ! $gEditorial->meta->user_can( 'edit', $field ),
@@ -317,7 +291,7 @@ class gEditorialHelper
 	}
 
 	// for meta fields before and after post title
-	public static function meta_admin_title_field( $field, $fields, $post, $ltr = false, $title = null, $key = false )
+	public static function meta_admin_title_field( $field, $fields, $post, $ltr = FALSE, $title = NULL, $key = FALSE )
 	{
 		global $gEditorial;
 
@@ -331,8 +305,8 @@ class gEditorialHelper
 					'type'         => 'text',
 					'autocomplete' => 'off',
 					'class'        => 'field-text geditorial-meta-field-'.$field,
-					'name'         => 'geditorial-meta-'.$field.( $key === false ? '' : '['.$key.']' ),
-					'id'           => 'geditorial-meta-'.$field.( $key === false ? '' : '-'.$key ),
+					'name'         => 'geditorial-meta-'.$field.( FALSE === $key ? '' : '['.$key.']' ),
+					'id'           => 'geditorial-meta-'.$field.( FALSE === $key ? '' : '-'.$key ),
 					'value'        => $gEditorial->meta->get_postmeta( $post->ID, $field ),
 					'title'        => $title,
 					'placeholder'  => $title,
@@ -346,7 +320,7 @@ class gEditorialHelper
 		}
 	}
 
-	public static function meta_admin_text_field( $field, $fields, $post, $ltr = false, $title = null, $key = false )
+	public static function meta_admin_text_field( $field, $fields, $post, $ltr = FALSE, $title = NULL, $key = FALSE )
 	{
 		global $gEditorial;
 
@@ -362,8 +336,8 @@ class gEditorialHelper
 				$html .= self::html( 'textarea', array(
 					'rows'     => '1',
 					'cols'     => '40',
-					'name'     => 'geditorial-meta-'.$field.( $key === false ? '' : '['.$key.']' ),
-					'id'       => 'geditorial-meta-'.$field.( $key === false ? '' : '-'.$key ),
+					'name'     => 'geditorial-meta-'.$field.( FALSE === $key ? '' : '['.$key.']' ),
+					'id'       => 'geditorial-meta-'.$field.( FALSE === $key ? '' : '-'.$key ),
 					'class'    => 'textarea-autosize geditorial-meta-field-'.$field,
 					'readonly' => ! $gEditorial->meta->user_can( 'edit', $field ),
 				), esc_textarea( $gEditorial->meta->get_postmeta( $post->ID, $field ) ) );
@@ -402,13 +376,11 @@ class gEditorialHelper
 				);
 			}
 
-			//printf( 'Types: %s', join( __( ', ' ), $out ) );
 			echo $before.join( __( ', ' ), $out ).$after;
 		}
 	}
 
-	// Originally From : http://wp.tutsplus.com/tutorials/creative-coding/add-a-custom-column-in-posts-and-custom-post-types-admin-screen/
-	public static function get_featured_image_src( $post_id, $size = 'thumbnail', $default = false )
+	public static function getFeaturedImage( $post_id, $size = 'thumbnail', $default = FALSE )
 	{
 		$post_thumbnail_id = get_post_thumbnail_id( $post_id );
 		if ( ! $post_thumbnail_id )
@@ -419,69 +391,47 @@ class gEditorialHelper
 	}
 
 	// http://bavotasan.com/2012/trim-characters-using-php/
-	public static function trim_characters( $text, $length = 45, $append = '&hellip;' ) {
-
+	public static function trimChars( $text, $length = 45, $append = '&hellip;' )
+	{
 		$length = (int) $length;
-		$text = trim( strip_tags( $text ) );
+		$text   = trim( strip_tags( $text ) );
 
 		if ( strlen( $text ) > $length ) {
-			$text = substr( $text, 0, $length + 1 );
+
+			$text  = substr( $text, 0, $length + 1 );
 			$words = preg_split( "/[\s]|&nbsp;/", $text, -1, PREG_SPLIT_NO_EMPTY );
+
 			preg_match( "/[\s]|&nbsp;/", $text, $lastchar, 0, $length );
+
 			if ( empty( $lastchar ) )
 				array_pop( $words );
 
-			$text = implode( ' ', $words ) . $append;
+			$text = implode( ' ', $words ).$append;
 		}
 
 		return $text;
 	}
 
-	// DEPRECATED use : gEditorialHelper::isDev()
-	public static function is_dev()
-	{
-		if ( defined( 'GTHEME_DEV_ENVIRONMENT' ) && constant( 'GTHEME_DEV_ENVIRONMENT' ) )
-			return true;
-
-		if ( defined( 'WP_STAGE' ) && 'development' == constant( 'WP_STAGE' ) )
-			return true;
-
-		// TODO : check stage production and debug constant then true
-
-		return false;
-	}
-
-	// debug on developmnet env
 	public static function isDev()
 	{
 		if ( defined( 'WP_STAGE' )
 			&& 'development' == constant( 'WP_STAGE' ) )
-				return true;
+				return TRUE;
 
-		return false;
+		return FALSE;
 	}
 
-	// DEPRECATED use : gEditorialHelper::isDebug()
-	public static function is_debug()
-	{
-		if ( WP_DEBUG && WP_DEBUG_DISPLAY && ! self::is_dev() )
-			return true;
-
-		return false;
-	}
-
-	// debug on production env
 	public static function isDebug()
 	{
 		if ( WP_DEBUG && WP_DEBUG_DISPLAY && ! self::isDev() )
-			return true;
+			return TRUE;
 
-		return false;
+		return FALSE;
 	}
 
-	public static function notice( $notice, $class = 'updated fade', $echo = true )
+	public static function notice( $notice, $class = 'updated fade', $echo = TRUE )
 	{
-		$html = sprintf( '<div id="message" class="%s"><p>%s</p></div>', $class, $notice );
+		$html = sprintf( '<div id="message" class="%s notice is-dismissible"><p>%s</p></div>', $class, $notice );
 
 		if ( ! $echo )
 			return $html;

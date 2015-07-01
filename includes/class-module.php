@@ -134,7 +134,7 @@ class gEditorialModuleCore
 	// @return array post-type-slug => post-type-label
 	public function get_all_post_types( $module = null )
 	{
-		if ( gEditorialHelper::is_dev() )
+		if ( gEditorialHelper::isDev() )
 			_deprecated_function( __FUNCTION__, GEDITORIAL_VERSION, 'all_post_types' );
 
 		$allowed = array(
@@ -156,7 +156,7 @@ class gEditorialModuleCore
 	 */
 	public function clean_post_type_options( $module_post_types = array(), $post_type_support = null )
 	{
-		if ( gEditorialHelper::is_dev() )
+		if ( gEditorialHelper::isDev() )
 			_deprecated_function( __FUNCTION__, GEDITORIAL_VERSION, 'sanitize_post_types' );
 
 		$normalized = array();
@@ -175,7 +175,7 @@ class gEditorialModuleCore
 	// get all of the possible post types that can be used with a given module
 	public function get_supported_post_types_for_module( $module = null )
 	{
-		if ( gEditorialHelper::is_dev() )
+		if ( gEditorialHelper::isDev() )
 			_deprecated_function( __FUNCTION__, GEDITORIAL_VERSION, 'post_types' );
 
 		$args = apply_filters( 'geditorial_supported_module_post_types_args', array(
@@ -296,7 +296,7 @@ class gEditorialModuleCore
 	// Moved here form : Meta
 	public function get_post_types( $module, $enabled = true )
 	{
-		if ( gEditorialHelper::is_dev() )
+		if ( gEditorialHelper::isDev() )
 			_deprecated_function( __FUNCTION__, GEDITORIAL_VERSION, 'post_types' );
 
 		$all_post_types = $this->get_all_post_types( $module );
@@ -412,7 +412,7 @@ class gEditorialModuleCore
 
 		echo '</form>';
 
-		if ( gEditorialHelper::is_dev() ) {
+		if ( gEditorialHelper::isDev() ) {
 			//@gEditorialHelper::dump( $this->module->default_options );
 			@gEditorialHelper::dump( $this->module->options );
 			//@gEditorialHelper::dump( $this->module->strings );

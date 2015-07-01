@@ -320,7 +320,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 			'labels'                => $this->module->strings['labels']['issue_tax'],
 			'public'                => TRUE,
 			'show_in_nav_menus'     => FALSE,
-			'show_ui'               => true,
+			'show_ui'               => gEditorialHelper::isDev(),
 			'show_admin_column'     => FALSE,
 			'show_tagcloud'         => FALSE,
 			'hierarchical'          => TRUE,
@@ -1123,7 +1123,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 				_e( '<span title="No Order">&mdash;</span>', GEDITORIAL_TEXTDOMAIN );
 
 		} elseif ( 'cover' == $column_name ) {
-			$cover = gEditorialHelper::get_featured_image_src( $post_id, 'issue-thumbnail', FALSE );
+			$cover = gEditorialHelper::getFeaturedImage( $post_id, 'issue-thumbnail', FALSE );
 			if ( $cover )
 				echo gEditorialHelper::html( 'img', array(
 					'src' => $cover,
