@@ -456,11 +456,12 @@ class gEditorialMeta extends gEditorialModuleCore
 			case 'geditorial-meta-author' :
 				if ( in_array( 'as', $fields ) && self::user_can( 'view', 'as' )  ) {
 					$as = $this->get_postmeta( $post->ID, 'as', '' );
-					echo '<div class="hidden geditorial-meta-as-value">'.$as.'</div>'.$as.'<br />';
+					echo '<small>'.$as.'</small>';
+					echo '<div class="hidden geditorial-meta-as-value">'.$as.'</div>';
 				}
 
 				if ( 'author' != $column_name && 'gpeople' != $column_name )
-					printf( '<a href="%s">%s</a>',
+					printf( '<small><a href="%s">%s</a></small>',
 						esc_url( add_query_arg( array(
 							'post_type' => $post->post_type,
 							'author' => get_the_author_meta( 'ID' )
