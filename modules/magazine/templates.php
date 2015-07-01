@@ -7,8 +7,8 @@ class gEditorialMagazineTemplates
 	{
 		global $gEditorial, $post;
 
-		$error = false;
-		$title_output = '';
+		$error = FALSE;
+		$output = '';
 
 		$issue_cpt = $gEditorial->get_module_constant( 'magazine', 'issue_cpt', 'issue' );
 		$issue_tax = $gEditorial->get_module_constant( 'magazine', 'issue_tax', 'issues' );
@@ -24,16 +24,16 @@ class gEditorialMagazineTemplates
 			'li_before'  => '',
 			'orderby'    => 'date',
 			'order'      => 'ASC',
-			'cb'         => false,
+			'cb'         => FALSE,
 		), $atts, $gEditorial->get_module_constant( 'magazine', 'issue_shortcode', 'issue' ) );
 
 		$key = md5( serialize( $args ) );
 		$cache = wp_cache_get( $key, $issue_cpt );
-		if ( false !== $cache )
+		if ( FALSE !== $cache )
 			return $cache;
 
 		if ( $args['cb'] && ! is_callable( $args['cb'] ) )
-			$args['cb'] = false;
+			$args['cb'] = FALSE;
 
 		if( $args['id'] ) {
 			$tax_query = array( array(
@@ -69,21 +69,18 @@ class gEditorialMagazineTemplates
 				$error = true;
 			}
 		}
+		
+		if ( $args['title'] )
+			$output .= '<'.$args['title_wrap'].' class="issue-list-title">'.$args['title'].'</'.$args['title_wrap'].'>';
 
-		if ( $args['title'] ) {
-			// Create the title if the "title" attribute exists
-			$title_output = '<'.$args['title_wrap'].' class="issue-list-title">'.$args['title'].'</'.$args['title_wrap'].'>';
-		}
-
-		if ( $args['future'] == 'on' ) {
-			// Include the future posts if the "future" attribute is set to "on"
+		if ( 'on' == $args['future'] ) {
 			$post_status = array( 'publish', 'future', 'draft' );
 		} else {
-			// Exclude the future posts if the "future" attribute is set to "off"
 			$post_status =  array( 'publish' );
 		}
 
-		if ( $error == false ) {
+		if ( ! $error ) {
+			
 			$query_args = array(
 				'tax_query'      => $tax_query,
 				'posts_per_page' => $args['limit'],
@@ -93,48 +90,41 @@ class gEditorialMagazineTemplates
 			);
 
 			$the_posts = get_posts( $query_args );
-			//$the_posts = new WP_Query( $query_args );
-			//gtheme_dump( $the_posts ); die();
-
-			/* if there's more than one post with the specified "series" taxonomy, display the list. if there's just one post with the specified taxonomy, there's no need to list the only post! */
-			//if ( count( $the_posts ) > 1 ) {
-
 
 			if ( count( $the_posts ) ) {
-				if ( function_exists( 'get_gmeta' ) && count( $the_posts ) > 1 && $args['orderby'] == 'page' ) {
+				// if ( function_exists( 'get_gmeta' ) && count( $the_posts ) > 1 && $args['orderby'] == 'page' ) {
+				if ( $args['orderby'] == 'page' && count( $the_posts ) > 1  ) {
 
 					$i = 1000;
 					$ordered_posts = array();
 
 					foreach( $the_posts as & $the_post ) {
 
-						$in_issue_page_start = get_gmeta( 'in_issue_page_start', array( 'id' => $the_post->ID, 'def' => false ) );
-						$in_issue_order = get_gmeta( 'in_issue_order', array( 'id' => $the_post->ID, 'def' => false ) );
+						// $in_issue_page_start = get_gmeta( 'in_issue_page_start', array( 'id' => $the_post->ID, 'def' => false ) );
+						$in_issue_page_start = $gEditorial->meta->get_postmeta( $the_post->ID, 'in_issue_page_start', FALSE );
+						// $in_issue_order = get_gmeta( 'in_issue_order', array( 'id' => $the_post->ID, 'def' => false ) );
+						$in_issue_order = $gEditorial->meta->get_postmeta( $the_post->ID, 'in_issue_order', FALSE );
+						
 						$order_key = ( $in_issue_page_start ? ( (int) $in_issue_page_start * 10 ) : 0 );
 						$order_key = ( $in_issue_order ? ( $order_key + (int) $in_issue_order ) : $order_key );
 						$order_key = ( $order_key ? $order_key : ( $i * 100 ) );
 						$i++;
 
-						//$the_post->menu_order = $order_key;
 						$the_post->menu_order = $in_issue_page_start;
-
 						$ordered_posts[$order_key] = $the_post;
-						/**$the_post->menu_order = get_gmeta( 'in_issue_page_start', array(
-							'id' => $the_post->ID,
-							'def' => $the_post->menu_order,
-						) );**/
 					}
 
 					// http://wordpress.mfields.org/2011/rekey-an-indexed-array-of-post-objects-by-post-id/
-					//$the_list = wp_list_pluck( $the_posts, 'menu_order' );
-					//$the_posts = array_combine( $the_list, $the_posts );
+					// $the_list = wp_list_pluck( $the_posts, 'menu_order' );
+					// $the_posts = array_combine( $the_list, $the_posts );
 
 					ksort( $ordered_posts );
 					$the_posts = $ordered_posts;
 					unset( $ordered_posts, $the_post, $i );
 				}
 
-				$output = $title_output.'<'.$args['list'].'>';
+				$output .= '<'.$args['list'].'>';
+				
 				foreach( $the_posts as $post ) {
 					setup_postdata( $post );
 					if ( $args['cb'] ) {
@@ -147,13 +137,12 @@ class gEditorialMagazineTemplates
 						}
 					}
 				}
-
-				//wp_reset_query();
-				wp_reset_postdata();
-
+				
 				$output .= '</'.$args['list'].'>';
 
+				wp_reset_postdata();
 				wp_cache_set( $key, $output, $issue_cpt );
+				
 				return $output;
 			}
 		}

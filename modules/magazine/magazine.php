@@ -7,12 +7,12 @@ class gEditorialMagazine extends gEditorialModuleCore
 	var $module_name = 'magazine';
 	var $meta_key    = '_ge_magazine';
 
-	var $post_id = false; // current post id
+	var $post_id = FALSE; // current post id
 	var $cookie  = 'geditorial-magazine';
 
 	var $_post_types_excluded = array();
 
-	var $_import      = false;
+	var $_import      = FALSE;
 	var $_term_suffix = 'gXmXaXg_';
 
 	public function __construct()
@@ -25,7 +25,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 			'extended_description' => __( 'Magazine suite for WordPress', GEDITORIAL_TEXTDOMAIN ),
 			'dashicon'             => 'book',
 			'slug'                 => 'magazine',
-			'load_frontend'        => true,
+			'load_frontend'        => TRUE,
 
 			'constants' => array(
 				'issue_cpt'       => 'issue',
@@ -38,16 +38,19 @@ class gEditorialMagazine extends gEditorialModuleCore
 			),
 
 			'default_options' => array(
-				'enabled' => 'off',
-				'post_types' => array(
-				),
-				'post_fields' => array(
-				),
-				'settings' => array(
-				),
+				'enabled'     => FALSE,
+				'post_types'  => array(),
+				'post_fields' => array(),
+				'settings'    => array(),
 			),
 			'settings' => array(
 				'_general' => array(
+					array(
+						'field'       => 'multiple_issues',
+						'title'       => __( 'Multiple Issues', GEDITORIAL_TEXTDOMAIN ),
+						'description' => __( 'Using multiple issues for posts.', GEDITORIAL_TEXTDOMAIN ),
+						'default'     => 0,
+					),
 					array(
 						'field'       => 'redirect_spans',
 						'type'        => 'text',
@@ -91,7 +94,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 						'name'                       => __( 'Issues', GEDITORIAL_TEXTDOMAIN ),
 						'singular_name'              => __( 'Issue', GEDITORIAL_TEXTDOMAIN ),
 						'search_items'               => __( 'Search Issues', GEDITORIAL_TEXTDOMAIN ),
-						'popular_items'              => null, // __( 'Popular Issues', GEDITORIAL_TEXTDOMAIN ),
+						'popular_items'              => NULL, // __( 'Popular Issues', GEDITORIAL_TEXTDOMAIN ),
 						'all_items'                  => __( 'All Issues', GEDITORIAL_TEXTDOMAIN ),
 						'parent_item'                => __( 'Parent Issue', GEDITORIAL_TEXTDOMAIN ),
 						'parent_item_colon'          => __( 'Parent Issue:', GEDITORIAL_TEXTDOMAIN ),
@@ -108,7 +111,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 						'name'                       => __( 'Spans', GEDITORIAL_TEXTDOMAIN ),
 						'singular_name'              => __( 'Span', GEDITORIAL_TEXTDOMAIN ),
 						'search_items'               => __( 'Search Spans', GEDITORIAL_TEXTDOMAIN ),
-						'popular_items'              => null, // __( 'Popular Spans', GEDITORIAL_TEXTDOMAIN ),
+						'popular_items'              => NULL, // __( 'Popular Spans', GEDITORIAL_TEXTDOMAIN ),
 						'all_items'                  => __( 'All Spans', GEDITORIAL_TEXTDOMAIN ),
 						'parent_item'                => __( 'Parent Span', GEDITORIAL_TEXTDOMAIN ),
 						'parent_item_colon'          => __( 'Parent Span:', GEDITORIAL_TEXTDOMAIN ),
@@ -132,24 +135,20 @@ class gEditorialMagazine extends gEditorialModuleCore
 			) ),
 			'settings_help_sidebar' => sprintf(
 				__( '<p><strong>For more information</strong>:</p><p><a href="%1$s">%2$s</a></p><p><a href="%3$s">gEditorial on GitHub</a></p>', GEDITORIAL_TEXTDOMAIN ),
-				'http://geminorum.ir/wordpress/geditorial/modules/magazine',
+				'https://github.com/geminorum/geditorial/wiki/Modules-Magazine',
 				__( 'Editorial Magazine Documentations', GEDITORIAL_TEXTDOMAIN ),
-				'https://github.com/geminorum/gEditorial' ),
+				'https://github.com/geminorum/geditorial' ),
 
 		);
 
 		$gEditorial->register_module( $this->module_name, $args );
 
 		add_filter( 'geditorial_module_defaults_meta', array( &$this, 'module_defaults_meta' ), 10, 2 );
-
-		// support for gPeople
 		add_filter( 'gpeople_remote_support_post_types', array( &$this, 'gpeople_remote_support_post_types' ) );
 	}
 
 	public function setup()
 	{
-		// adding support for another internal module : gEditorialMeta
-
 		add_action( 'geditorial_meta_init', array( &$this, 'meta_init' ) );
 		add_filter( 'geditorial_tweaks_strings', array( &$this, 'tweaks_strings' ) );
 
@@ -165,7 +164,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 
 			add_action( 'restrict_manage_posts', array( &$this, 'restrict_manage_posts' ) );
 			add_action( 'pre_get_posts', array( &$this, 'pre_get_posts' ) );
-			add_filter( 'parse_query', array( &$this, 'parse_query_issues' ) );
+			// add_filter( 'parse_query', array( &$this, 'parse_query_issues' ) );
 		} else {
 			add_filter( 'term_link', array( &$this, 'term_link' ), 10, 3 );
 			add_action( 'template_redirect', array( &$this, 'template_redirect' ) );
@@ -209,11 +208,17 @@ class gEditorialMagazine extends gEditorialModuleCore
 
 		add_filter( 'post_updated_messages', array( &$this, 'post_updated_messages' ) );
 
+		add_filter( 'wp_insert_post_data', array( &$this, 'wp_insert_post_data' ), 9, 2 );
 		add_action( 'save_post_'.$this->module->constants['issue_cpt'], array( &$this, 'save_post_main_cpt' ), 20, 3 );
+		add_action( 'post_updated', array( &$this, 'post_updated' ), 20, 3 );
 		add_action( 'save_post', array( &$this, 'save_post_supported_cpt' ), 20, 3 );
+		add_action( 'wp_trash_post', array( &$this, 'wp_trash_post' ) );
+		add_action( 'untrash_post', array( &$this, 'untrash_post' ) );
+		add_action( 'before_delete_post', array( &$this, 'before_delete_post' ) );
 
-		add_filter( 'pre_insert_term', array( &$this, 'pre_insert_term' ), 10, 2 );
-		add_action( 'import_start', array( &$this, 'import_start' ) );
+		// DISABLED
+		// add_filter( 'pre_insert_term', array( &$this, 'pre_insert_term' ), 10, 2 );
+		// add_action( 'import_start', array( &$this, 'import_start' ) );
 
 		add_action( 'add_meta_boxes', array( &$this, 'add_meta_boxes' ), 12, 2 );
 		add_action( 'add_meta_boxes', array( &$this, 'remove_meta_boxes' ), 20, 2 );
@@ -249,7 +254,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 	{
 		add_filter( 'geditorial_meta_strings', array( &$this, 'meta_strings' ), 6, 1 );
 
-		//add_filter( 'geditorial_meta_box_callback', array( &$this, 'meta_box_callback' ), 10, 2 );
+		// add_filter( 'geditorial_meta_box_callback', array( &$this, 'meta_box_callback' ), 10, 2 );
 		add_filter( 'geditorial_meta_dbx_callback', array( &$this, 'meta_dbx_callback' ), 10, 2 );
 		add_filter( 'geditorial_meta_sanitize_post_meta', array( &$this, 'meta_sanitize_post_meta' ), 10 , 4 );
 
@@ -276,7 +281,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 	{
 		register_post_type( $this->module->constants['issue_cpt'], array(
 			'labels'       => $this->module->strings['labels']['issue_cpt'],
-			'hierarchical' => true,
+			'hierarchical' => TRUE,
 			'supports'     => array(
 				'title',
 				'editor',
@@ -290,22 +295,22 @@ class gEditorialMagazine extends gEditorialModuleCore
 				'page-attributes'
 			),
 			'taxonomies'          => array( $this->module->constants['issue_tax'] ),
-			'public'              => true,
-			'show_ui'             => true,
-			'show_in_menu'        => true,
+			'public'              => TRUE,
+			'show_ui'             => TRUE,
+			'show_in_menu'        => TRUE,
 			'menu_position'       => 4,
 			'menu_icon'           => 'dashicons-book',
-			'show_in_nav_menus'   => true,
-			'publicly_queryable'  => true,
-			'exclude_from_search' => false,
+			'show_in_nav_menus'   => TRUE,
+			'publicly_queryable'  => TRUE,
+			'exclude_from_search' => FALSE,
 			'has_archive'         => $this->module->constants['issue_archives'],
 			'query_var'           => $this->module->constants['issue_cpt'],
-			'can_export'          => true,
+			'can_export'          => TRUE,
 			'rewrite'             => array(
 				'slug'       => $this->module->constants['issue_cpt'],
-				'with_front' => false
+				'with_front' => FALSE
 			),
-			'map_meta_cap' => true,
+			'map_meta_cap' => TRUE,
 		) );
 	}
 
@@ -313,19 +318,19 @@ class gEditorialMagazine extends gEditorialModuleCore
 	{
 		register_taxonomy( $this->module->constants['issue_tax'], $this->post_types(), array(
 			'labels'                => $this->module->strings['labels']['issue_tax'],
-			'public'                => true,
-			'show_in_nav_menus'     => false,
-			'show_ui'               => false,
-			'show_admin_column'     => false,
-			'show_tagcloud'         => false,
-			'hierarchical'          => true,
+			'public'                => TRUE,
+			'show_in_nav_menus'     => FALSE,
+			'show_ui'               => true,
+			'show_admin_column'     => FALSE,
+			'show_tagcloud'         => FALSE,
+			'hierarchical'          => TRUE,
 			'update_count_callback' => array( 'gEditorialHelper', 'update_count_callback' ),
 			'rewrite'               => array(
 				'slug'         => $this->module->constants['issue_tax'],
-				'hierarchical' => true,
-				'with_front'   => true
+				'hierarchical' => TRUE,
+				'with_front'   => TRUE
 			),
-			'query_var'    => true,
+			'query_var'    => TRUE,
 			'capabilities' => array(
 				'manage_terms' => 'edit_others_posts',
 				'edit_terms'   => 'edit_others_posts',
@@ -336,19 +341,19 @@ class gEditorialMagazine extends gEditorialModuleCore
 
 		register_taxonomy( $this->module->constants['span_tax'], array( $this->module->constants['issue_cpt'] ), array(
 			'labels'                => $this->module->strings['labels']['span_tax'],
-			'public'                => true,
-			'show_in_nav_menus'     => true,
-			'show_ui'               => true,
-			'show_admin_column'     => true,
-			'show_tagcloud'         => false,
-			'hierarchical'          => false,
+			'public'                => TRUE,
+			'show_in_nav_menus'     => TRUE,
+			'show_ui'               => TRUE,
+			'show_admin_column'     => TRUE,
+			'show_tagcloud'         => FALSE,
+			'hierarchical'          => FALSE,
 			'update_count_callback' => array( 'gEditorialHelper', 'update_count_callback' ),
 			'rewrite'               => array(
 				'slug'         => $this->module->constants['span_tax'],
-				'hierarchical' => false,
-				'with_front'   => true
+				'hierarchical' => FALSE,
+				'with_front'   => TRUE
 			),
-			'query_var'    => true,
+			'query_var'    => TRUE,
 			'capabilities' => array(
 				'manage_terms' => 'edit_others_posts',
 				'edit_terms'   => 'edit_others_posts',
@@ -366,9 +371,9 @@ class gEditorialMagazine extends gEditorialModuleCore
 
 			// working but disabled
 			//if ( function_exists( 'get_term_meta' ) )
-				//$post_id = get_term_meta( $term->term_id, $this->module->constants['issue_cpt'].'_linked', true );
+				//$post_id = get_term_meta( $term->term_id, $this->module->constants['issue_cpt'].'_linked', TRUE );
 
-			if ( false == $post_id || empty( $post_id ) )
+			if ( FALSE == $post_id || empty( $post_id ) )
 				$post_id = gEditorialHelper::getPostIDbySlug( $term->slug, $this->module->constants['issue_cpt'] );
 
 			if ( ! empty( $post_id ) )
@@ -389,10 +394,10 @@ class gEditorialMagazine extends gEditorialModuleCore
 			$post_id = '';
 
 			// working but disabled
-			//if ( function_exists( 'get_term_meta' ) )
-				//$post_id = get_term_meta( $term->term_id, $this->module->constants['issue_cpt'].'_linked', true );
+			// if ( function_exists( 'get_term_meta' ) )
+			// 	$post_id = get_term_meta( $term->term_id, $this->module->constants['issue_cpt'].'_linked', TRUE );
 
-			if ( false == $post_id || empty( $post_id ) )
+			if ( FALSE == $post_id || empty( $post_id ) )
 				$post_id = gEditorialHelper::getPostIDbySlug( $term->slug, $this->module->constants['issue_cpt'] );
 
 			if ( ! empty( $post_id ) )
@@ -400,15 +405,137 @@ class gEditorialMagazine extends gEditorialModuleCore
 
 		} else if ( $this->module->constants['span_tax'] == $term->taxonomy ) {
 
-			$redirect = $this->get_setting( 'redirect_spans', false );
+			$redirect = $this->get_setting( 'redirect_spans', FALSE );
 			if ( $redirect )
 				wp_redirect( $redirect, 301 );
 		}
 	}
 
-	public function save_post_main_cpt( $post_id, $post, $update )
+	public function post_updated( $post_ID, $post_after, $post_before )
 	{
-		if ( ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE )
+		if ( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
+			|| 'revision' == $post_after->post_type )
+				return $post_ID;
+
+		if ( $this->module->constants['issue_cpt'] != $post_after->post_type
+			|| 'trash' == $post_after->post_status )
+				return $post_ID;
+
+		if ( empty( $post_before->post_name ) )
+			$post_before->post_name = sanitize_title( $post_before->post_title );
+
+		if ( empty( $post_after->post_name ) )
+			$post_after->post_name = sanitize_title( $post_after->post_title );
+
+		$args = array(
+			'name'        => $post_after->post_title,
+			'slug'        => $post_after->post_name,
+			'description' => $post_after->post_excerpt,
+			// 'parent'      => ( isset( $parent_term_id ) ? $parent_term_id : 0 ),
+		);
+
+		$the_term = get_term_by( 'slug', $post_before->post_name, $this->module->constants['issue_tax'] );
+
+		if ( FALSE === $the_term ){
+			$the_term = get_term_by( 'slug', $post_after->post_name, $this->module->constants['issue_tax'] );
+			if ( FALSE === $the_term )
+				$term = wp_insert_term( $post_after->post_title, $this->module->constants['issue_tax'], $args );
+			else
+				$term = wp_update_term( $the_term->term_id, $this->module->constants['issue_tax'], $args );
+		} else {
+			$term = wp_update_term( $the_term->term_id, $this->module->constants['issue_tax'], $args );
+		}
+
+		if ( ! is_wp_error( $term ) ) {
+			update_post_meta( $post_ID, '_'.$this->module->constants['issue_cpt'].'_term_id', $term['term_id'] );
+
+			if ( function_exists( 'update_term_meta' ) )
+				update_term_meta( $term['term_id'], $this->module->constants['issue_cpt'].'_linked', $post_ID );
+		}
+
+		return $post_ID;
+	}
+
+	public function save_post_main_cpt( $post_ID, $post, $update )
+	{
+		// we handle updates on another action, see : post_updated()
+		if ( $update )
+			return $post_ID;
+
+		if ( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
+			|| $post->post_type == 'revision' )
+				return $post_ID;
+
+		if ( empty( $post->post_name ) )
+			$post->post_name = sanitize_title( $post->post_title );
+
+		$args = array(
+			'name'        => $post->post_title,
+			'slug'        => $post->post_name,
+			'description' => $post->post_excerpt,
+			// 'parent'      => ( isset( $parent_term_id ) ? $parent_term_id : 0 ),
+		);
+
+		$term = wp_insert_term( $post->post_title, $this->module->constants['issue_tax'], $args );
+
+		if ( ! is_wp_error( $term ) ) {
+			update_post_meta( $post_ID, '_'.$this->module->constants['issue_cpt'].'_term_id', $term['term_id'] );
+
+			if ( function_exists( 'update_term_meta' ) )
+				update_term_meta( $term['term_id'], $this->module->constants['issue_cpt'].'_linked', $post_ID );
+		}
+
+		return $post_ID;
+	}
+
+	public function wp_trash_post( $post_id )
+	{
+		if ( $term = $this->get_issue_term( $post_id ) ) {
+			wp_update_term( $term->term_id, $this->module->constants['issue_tax'], array(
+				'name' => $term->name.' - '._x( '(Trashed)', 'Suffix for term name linked to trashed post', GEDITORIAL_TEXTDOMAIN ),
+				'slug' => $term->slug.'-trashed',
+			) );
+		}
+	}
+
+	public function untrash_post( $post_id )
+	{
+		if ( $term = $this->get_issue_term( $post_id ) ) {
+			wp_update_term( $term->term_id, $this->module->constants['issue_tax'], array(
+				'name' => str_ireplace( ' - '._x( '(Trashed)', 'Suffix for term name linked to trashed post', GEDITORIAL_TEXTDOMAIN ), '', $term->name ),
+				'slug' => str_ireplace( '-trashed', '', $term->slug ),
+			) );
+		}
+	}
+
+	public function before_delete_post( $post_id )
+	{
+		if ( $term = $this->get_issue_term( $post_id ) ) {
+			wp_delete_term( $term->term_id, $this->module->constants['issue_tax'] );
+			delete_metadata( 'term', $term->term_id, $this->module->constants['issue_cpt'].'_linked' );
+		}
+	}
+
+	public function wp_insert_post_data( $data, $postarr )
+	{
+		if ( $this->module->constants['issue_cpt'] == $postarr['post_type'] && ! $data['menu_order'] )
+			$data['menu_order'] = gEditorialHelper::getLastPostOrder( $this->module->constants['issue_cpt'],
+				( isset( $postarr['ID'] ) ? $postarr['ID'] : '' ) ) + 1;
+
+		return $data;
+	}
+
+	// helper
+	public function get_issue_term( $post_id )
+	{
+		$term_id = get_post_meta( $post_id, '_'.$this->module->constants['issue_cpt'].'_term_id', TRUE );
+		return get_term_by( 'id', intval( $term_id ), $this->module->constants['issue_tax'] );
+	}
+
+	// OLD
+	public function save_post_main_cpt_OLD( $post_id, $post, $update )
+	{
+		if ( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
 			|| empty( $_POST )
 			|| $post->post_type == 'revision' )
 				return $post_id;
@@ -420,7 +547,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 		// if ( $post->post_parent ) {
 		//     $parent_post = get_post( $post->post_parent, ARRAY_A );
 		//     $parent_term = term_exists( $parent_post['post_name'], $this->_issue_tax );
-		//     if ( false == $parent_term ) {
+		//     if ( FALSE == $parent_term ) {
 		//         // TODO: update term parent
 		//     }
 		// }
@@ -431,7 +558,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 			return $post_id;
 
 		$term           = get_term_by( 'slug', $post->post_name, $this->module->constants['issue_tax'] );
-		$pre_meta_issue = get_post_meta( $post_id, '_'.$this->module->constants['issue_cpt'].'_term_id', true );
+		$pre_meta_issue = get_post_meta( $post_id, '_'.$this->module->constants['issue_cpt'].'_term_id', TRUE );
 
 		$args = array(
 			'name'        => $post->post_title,
@@ -440,7 +567,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 			'parent'      => ( isset( $parent_term_id ) ? $parent_term_id : 0 ),
 		);
 
-		if ( false === $term ) {
+		if ( FALSE === $term ) {
 			if ( $pre_meta_issue ) {
 				$new_term = wp_update_term( intval( $pre_meta_issue ), $this->module->constants['issue_tax'], $args );
 			} else {
@@ -480,11 +607,13 @@ class gEditorialMagazine extends gEditorialModuleCore
 		}
 	}
 
+	// DISABLED
 	public function import_start()
 	{
-		$this->_import = true;
+		$this->_import = TRUE;
 	}
 
+	// DISABLED
 	// note that, only admins can insert tax manually, others must create corresponding post type first.
 	public function pre_insert_term( $term, $taxonomy )
 	{
@@ -495,33 +624,41 @@ class gEditorialMagazine extends gEditorialModuleCore
 		if ( $this->_import )
 			return $term;
 
-		if ( false === strpos( $term, $this->_term_suffix ) )
+		if ( FALSE === strpos( $term, $this->_term_suffix ) )
 			return new WP_Error( 'not_authenticated', __( 'you\'re doing it wrong!', GEDITORIAL_TEXTDOMAIN ) );
 
 		return str_ireplace( $this->_term_suffix, '', $term );
 	}
 
-	public function save_post_supported_cpt( $post_id, $post, $update )
+	public function save_post_supported_cpt( $post_ID, $post, $update )
 	{
-		if ( ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE )
-			|| empty( $_POST )
+		if ( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
 			|| $post->post_type == 'revision' )
-				return $post_id;
+				return $post_ID;
 
 		if ( ! in_array( $post->post_type, $this->post_types() ) )
-			return $post_id;
+			return $post_ID;
 
-		if ( isset( $_POST['geditorial_magazine_issue_terms'] ) ) {
-			$pre_issue_terms = array();
+		// if ( isset( $_POST['geditorial_magazine_issue_terms'] ) ) {
+		if ( isset( $_POST['geditorial-magazine-issue'] ) ) {
+			$terms = array();
 
-			foreach( $_POST['geditorial_magazine_issue_terms'] as $the_issue_term_id )
-				if ( $the_issue_term_id )
-					$pre_issue_terms[] = intval( $the_issue_term_id );
+			// foreach( $_POST['geditorial_magazine_issue_terms'] as $term_id )
+			// 	if ( $term_id )
+			// 		$terms[] = intval( $term_id );
 
-			wp_set_object_terms( $post_id, ( count( $pre_issue_terms ) ? $pre_issue_terms : null ), $this->module->constants['issue_tax'], false );
+			foreach( $_POST['geditorial-magazine-issue'] as $issue ) {
+				if ( trim( $issue ) ) {
+					$term = get_term_by( 'slug', $issue, $this->module->constants['issue_tax'] );
+					if ( ! empty( $term ) && ! is_wp_error( $term ) )
+						$terms[] = intval( $term->term_id );
+				}
+			}
+
+			wp_set_object_terms( $post_ID, ( count( $terms ) ? $terms : NULL ), $this->module->constants['issue_tax'], FALSE );
 		}
 
-		return $post_id;
+		return $post_ID;
 	}
 
 	public function after_setup_theme()
@@ -607,7 +744,9 @@ class gEditorialMagazine extends gEditorialModuleCore
 
 	public function pre_get_posts( $wp_query )
 	{
-		if ( is_admin() && isset( $wp_query->query['post_type'] ) ) {
+		if ( $wp_query->is_admin
+			&& isset( $wp_query->query['post_type'] ) ) {
+
 			if ( $this->module->constants['issue_cpt'] == $wp_query->query['post_type'] ) {
 				if ( ! isset( $_GET['orderby'] ) )
 					$wp_query->set( 'orderby', 'menu_order' );
@@ -619,48 +758,38 @@ class gEditorialMagazine extends gEditorialModuleCore
 
 	public function restrict_manage_posts()
 	{
-		global $typenow;
+		if ( in_array( get_current_screen()->post_type, $this->post_types() ) ) {
 
-		if ( in_array( $typenow, $this->post_types() ) ) {
+			$issue_tax = $this->module->constants['issue_tax'];
+			$tax_obj   = get_taxonomy( $issue_tax );
 
-			//$filters = get_object_taxonomies( $typenow );
-			$tax_obj = get_taxonomy( $this->module->constants['issue_tax'] );
-
-			// TODO : check if there's no issue
-			$selected = isset( $_GET[$this->module->constants['issue_tax']] ) ? $_GET[$this->module->constants['issue_tax']] : 0;
-
-			wp_dropdown_categories( array(
-				'show_option_all' => $tax_obj->labels->all_items,
-				'taxonomy'        => $this->module->constants['issue_tax'],
-				'name'            => $tax_obj->name,
+			wp_dropdown_pages( array(
+				'post_type'        => $this->module->constants['issue_cpt'],
+				'selected'         => isset( $_GET[$issue_tax] ) ? $_GET[$issue_tax] : '',
+				'name'             => $issue_tax,
 				'class'            => 'geditorial-admin-dropbown',
-				// 'orderby'         => 'slug',
-				'order'           => 'DESC',
-				'selected'        => $selected,
-				'hierarchical'    => $tax_obj->hierarchical,
-				'show_count'      => false,
-				'hide_empty'      => true,
-			) );
+				'show_option_none' => $tax_obj->labels->all_items,
+				'sort_column'      => 'menu_order',
+				'sort_order'       => 'desc',
+				'post_status'      => 'publish,private,draft',
+				'value_field'      => 'post_name',
+				'walker'           => new gEditorial_Walker_PageDropdown(),
+			));
 		}
 	}
 
+	// NO NEED
 	public function parse_query_issues( $query )
 	{
-		global $pagenow, $typenow;
+		return;
 
-		if ( 'edit.php' == $pagenow ) {
-
-			// TODO: just add our tax!
-
-			$filters = get_object_taxonomies( $typenow );
-			foreach ( $filters as $tax_slug ) {
-				$var = &$query->query_vars[$tax_slug];
-				if ( isset( $var ) ) {
-					$term = get_term_by( 'id', $var, $tax_slug );
-					if ( ! empty( $term ) && ! is_wp_error( $term ) )
-						$var = $term->slug;
-				}
-			}
+		if ( $query->is_admin
+			&& isset( $query->query_vars[$this->module->constants['issue_tax']] )
+			&& 'edit' == get_current_screen()->base	) {
+				$issue = &$query->query_vars[$this->module->constants['issue_tax']];
+				$term = get_term_by( 'id', $issue, $this->module->constants['issue_tax'] );
+				if ( ! empty( $term ) && ! is_wp_error( $term ) )
+					$issue = $term->slug;
 		}
 	}
 
@@ -668,7 +797,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 	{
 		if ( in_array( $post_type, $this->post_types() ) ) {
 
-			$url = add_query_arg( 'post_type', $this->module->constants['issue_cpt'], get_admin_url( null, 'edit.php' ) );
+			$url = add_query_arg( 'post_type', $this->module->constants['issue_cpt'], get_admin_url( NULL, 'edit.php' ) );
 			add_meta_box( 'geditorial-magazine-issues',
 				$this->get_meta_box_title( $post_type, $url ),
 				array( &$this, 'do_meta_box_issues' ),
@@ -683,12 +812,64 @@ class gEditorialMagazine extends gEditorialModuleCore
 	public function do_meta_box_issues( $post )
 	{
 		echo '<div class="geditorial-admin-wrap-metabox magazine">';
-		$issues = gEditorialHelper::getTerms( $this->module->constants['issue_tax'], $post->ID, true );
+		$issues = gEditorialHelper::getTerms( $this->module->constants['issue_tax'], $post->ID, TRUE );
 		do_action( 'geditorial_magazine_issues_meta_box', $post, $issues );
 		echo '</div>';
 	}
 
-	public function issues_meta_box( $post, $the_issue_terms )
+	public function issues_meta_box( $post, $terms )
+	{
+		$dropdowns = $excludes = array();
+
+		foreach ( $terms as $term ) {
+
+			$dropdowns[$term->slug] = wp_dropdown_pages( array(
+				'post_type'        => $this->module->constants['issue_cpt'],
+				'selected'         => $term->slug,
+				'name'             => 'geditorial-magazine-issue[]',
+				'id'               => 'geditorial-magazine-issue-'.$term->slug,
+				'class'            => 'geditorial-admin-dropbown',
+				'show_option_none' => __( '&mdash; Select an Issue &mdash;', GEDITORIAL_TEXTDOMAIN ),
+				'sort_column'      => 'menu_order',
+				'sort_order'       => 'desc',
+				'post_status'      => 'publish,private,draft',
+				'value_field'      => 'post_name',
+				'echo'             => 0,
+				'walker'           => new gEditorial_Walker_PageDropdown(),
+			));
+
+			$excludes[] = $term->slug;
+		}
+
+		if ( ! count( $terms ) || $this->get_setting( 'multiple_issues', FALSE ) ) {
+			$dropdowns[0] = wp_dropdown_pages( array(
+				'post_type'        => $this->module->constants['issue_cpt'],
+				'selected'         => '',
+				'name'             => 'geditorial-magazine-issue[]',
+				'id'               => 'geditorial-magazine-issue-0',
+				'class'            => 'geditorial-admin-dropbown',
+				'show_option_none' => __( '&mdash; Select an Issue &mdash;', GEDITORIAL_TEXTDOMAIN ),
+				'sort_column'      => 'menu_order',
+				'sort_order'       => 'desc',
+				'post_status'      => 'publish,private,draft',
+				'value_field'      => 'post_name',
+				'exclude'          => $excludes,
+				'echo'             => 0,
+				'walker'           => new gEditorial_Walker_PageDropdown(),
+			));
+		}
+
+		foreach( $dropdowns as $term_slug => $dropdown ) {
+			if ( $dropdown ) {
+				echo '<div class="field-wrap">';
+					echo $dropdown;
+				echo '</div>';
+			}
+		}
+	}
+
+	// OLD
+	public function issues_meta_box_OLD( $post, $the_issue_terms )
 	{
 		$issues_dropdowns = $excludes = array();
 		foreach ( $the_issue_terms as $the_issue_term ) {
@@ -706,7 +887,6 @@ class gEditorialMagazine extends gEditorialModuleCore
 			$excludes[] = $the_issue_term->term_id;
 		}
 
-		// TODO : use option to disable/enable this
 		if ( ! count( $the_issue_terms ) )
 			$issues_dropdowns[0] = wp_dropdown_categories( array(
 				'taxonomy'         => $this->module->constants['issue_tax'],
@@ -740,7 +920,6 @@ class gEditorialMagazine extends gEditorialModuleCore
 		else
 			$the_issue_post_id = '0'; // TODO : get default!
 
-		// TODO : must write our own, core function does not support post statuses
 		$issues = wp_dropdown_pages( array(
 			'post_type'        => $this->module->constants['issue_cpt'],
 			'selected'         => $the_issue_post_id,
@@ -823,7 +1002,9 @@ class gEditorialMagazine extends gEditorialModuleCore
 				'name'             => 'parent_id',
 				'class'            => 'geditorial-admin-dropbown',
 				'show_option_none' => __( '(no parent)', GEDITORIAL_TEXTDOMAIN ),
-				'sort_column'      => 'menu_order, post_title',
+				'sort_column'      => 'menu_order',
+				'sort_order'       => 'desc',
+				'post_status'      => 'publish,private,draft',
 				'exclude_tree'     => $post->ID,
 				'echo'             => 0,
 			));
@@ -833,41 +1014,41 @@ class gEditorialMagazine extends gEditorialModuleCore
 				), $pages );
 		}
 
-		$term_id = get_post_meta( $post->ID, '_'.$this->module->constants['issue_cpt'].'_term_id', true );
+		$term_id = get_post_meta( $post->ID, '_'.$this->module->constants['issue_cpt'].'_term_id', TRUE );
 		echo gEditorialHelper::getTermPosts( $this->module->constants['issue_tax'], intval( $term_id ) );
 
 		echo '</div>';
 	}
 
-	public function get_issue_post( $post_ID = null )
+	public function get_issue_post( $post_ID = NULL )
 	{
-		$post_ID = ( null === $post_ID ) ? get_the_ID() : $post_ID;
+		$post_ID = ( NULL === $post_ID ) ? get_the_ID() : $post_ID;
 
-		$terms = gEditorialHelper::getTerms( $this->module->constants['issue_tax'], $post_ID, true );
+		$terms = gEditorialHelper::getTerms( $this->module->constants['issue_tax'], $post_ID, TRUE );
 		if ( ! count( $terms ) )
-			return false;
+			return FALSE;
 
-		$the_id = false;
+		$the_id = FALSE;
 		$ids = array();
 		foreach ( $terms as $term ) {
 			// working but disabled
 			//if ( function_exists( 'get_term_meta' ) )
-				//$the_id = get_term_meta( $term->term_id, $this->module->constants['issue_cpt'].'_linked', true );
+				//$the_id = get_term_meta( $term->term_id, $this->module->constants['issue_cpt'].'_linked', TRUE );
 
-			if ( false == $the_id || empty( $the_id ) )
+			if ( FALSE == $the_id || empty( $the_id ) )
 				$the_id = gEditorialHelper::getPostIDbySlug( $term->slug, $this->module->constants['issue_cpt'] );
 
-			if ( false != $the_id && ! empty( $the_id ) ) {
+			if ( FALSE != $the_id && ! empty( $the_id ) ) {
 				$status = get_post_status( $the_id );
 				if ( 'publish' == $status )
 					$ids[$the_id] = get_permalink( $the_id );
 				else
-					$ids[$the_id] = false;
+					$ids[$the_id] = FALSE;
 			}
 		}
 
 		if ( ! count( $ids ) )
-			return false;
+			return FALSE;
 		return $ids;
 	}
 
@@ -876,13 +1057,13 @@ class gEditorialMagazine extends gEditorialModuleCore
 		$new_columns = array();
 		foreach( $posts_columns as $key => $value ) {
 			if ( $key == 'title' ) {
-				$new_columns['issue_order'] = $this->get_string( 'order_column_title', null, 'misc' );
-				$new_columns['cover'] = $this->get_string( 'cover_column_title', null, 'misc' );
+				$new_columns['issue_order'] = $this->get_string( 'order_column_title', NULL, 'misc' );
+				$new_columns['cover'] = $this->get_string( 'cover_column_title', NULL, 'misc' );
 				$new_columns[$key] = $value;
 			} else if ( 'author' == $key ){
 				// $new_columns[$key] = $value;
 			} else if ( 'comments' == $key ){
-				$new_columns['issue_posts'] = $this->get_string( 'posts_column_title', null, 'misc' );
+				$new_columns['issue_posts'] = $this->get_string( 'posts_column_title', NULL, 'misc' );
 				$new_columns[$key] = $value;
 			} else {
 				$new_columns[$key] = $value;
@@ -891,9 +1072,10 @@ class gEditorialMagazine extends gEditorialModuleCore
 		return $new_columns;
 	}
 
-	public function issue_post_count( $post_id )
+	public function issue_posts( $post_id, $count = FALSE, $term_id = NULL )
 	{
-		$term_id = get_post_meta( $post_id, '_'.$this->module->constants['issue_cpt'].'_term_id', true );
+		if ( is_null( $term_id ) )
+			$term_id = get_post_meta( $post_id, '_'.$this->module->constants['issue_cpt'].'_term_id', TRUE );
 
 		$items = get_posts( array(
 			'tax_query' => array( array(
@@ -905,14 +1087,17 @@ class gEditorialMagazine extends gEditorialModuleCore
 			'numberposts' => -1,
 		) );
 
-		return count( $items );
+		if ( $count )
+			return count( $items );
+
+		return $items;
 	}
 
 	public function custom_column( $column_name, $post_id )
 	{
 		if ( 'issue_posts' == $column_name ) {
 
-			$count = $this->issue_post_count( $post_id );
+			$count = $this->issue_posts( $post_id, TRUE );
 			if ( $count )
 				echo number_format_i18n( $count );
 			else
@@ -920,7 +1105,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 
 
 		} else if ( 'XSVWSVWVWV' == $column_name ) { // disabled!
-			$issues = gEditorialHelper::getTerms( $this->module->constants['issue_tax'], $post_id, true );
+			$issues = gEditorialHelper::getTerms( $this->module->constants['issue_tax'], $post_id, TRUE );
 			if ( $issues ) {
 				$issue_terms = array();
 				foreach ( $issues as $term )
@@ -938,7 +1123,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 				_e( '<span title="No Order">&mdash;</span>', GEDITORIAL_TEXTDOMAIN );
 
 		} elseif ( 'cover' == $column_name ) {
-			$cover = gEditorialHelper::get_featured_image_src( $post_id, 'issue-thumbnail', false );
+			$cover = gEditorialHelper::get_featured_image_src( $post_id, 'issue-thumbnail', FALSE );
 			if ( $cover )
 				echo gEditorialHelper::html( 'img', array(
 					'src' => $cover,
@@ -957,15 +1142,15 @@ class gEditorialMagazine extends gEditorialModuleCore
 	{
 		return array(
 			$this->module->constants['issue_cpt'] => array (
-				'ot'                => 'off',
-				'st'                => 'on',
-				'issue_number_line' => 'on',
-				'issue_total_pages' => 'on',
+				'ot'                => FALSE,
+				'st'                => TRUE,
+				'issue_number_line' => TRUE,
+				'issue_total_pages' => TRUE,
 			 ),
 			'post' => array(
-				'in_issue_order'      => 'on',
-				'in_issue_page_start' => 'on',
-				'in_issue_pages'      => 'off',
+				'in_issue_order'      => TRUE,
+				'in_issue_page_start' => TRUE,
+				'in_issue_pages'      => FALSE,
 		) );
 	}
 
@@ -1108,7 +1293,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 				2  => __( 'Custom field updated.' ),
 				3  => __( 'Custom field deleted.' ),
 				4  => __( 'Issue updated.', GEDITORIAL_TEXTDOMAIN ),
-				5  => isset( $_GET['revision'] ) ? sprintf( __( 'Issue restored to revision from %s', GEDITORIAL_TEXTDOMAIN ), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
+				5  => isset( $_GET['revision'] ) ? sprintf( __( 'Issue restored to revision from %s', GEDITORIAL_TEXTDOMAIN ), wp_post_revision_title( (int) $_GET['revision'], FALSE ) ) : FALSE,
 				6  => sprintf( __( 'Issue published. <a href="%s">View issue</a>', GEDITORIAL_TEXTDOMAIN ), esc_url( $link ) ),
 				7  => __( 'Issue saved.', GEDITORIAL_TEXTDOMAIN ),
 				8  => sprintf( __( 'Issue submitted. <a target="_blank" href="%s">Preview issue</a>', GEDITORIAL_TEXTDOMAIN ), esc_url( add_query_arg( 'preview', 'true', $link ) ) ),
@@ -1131,10 +1316,10 @@ class gEditorialMagazine extends gEditorialModuleCore
 		if ( 'magazine' == $sub ) {
 			if ( isset( $_GET['count'] ) && $_GET['count'] )
 				$messages['created'] = gEditorialHelper::notice(
-					sprintf( __( '%s Issue Post(s) Created', GEDITORIAL_TEXTDOMAIN ), number_format_i18n( $_GET['count'] ) ), 'updated fade', false );
+					sprintf( __( '%s Issue Post(s) Created', GEDITORIAL_TEXTDOMAIN ), number_format_i18n( $_GET['count'] ) ), 'updated fade', FALSE );
 			else
 				$messages['created'] = gEditorialHelper::notice(
-					__( 'No Issue Post Created', GEDITORIAL_TEXTDOMAIN ), 'updated fade', false );
+					__( 'No Issue Post Created', GEDITORIAL_TEXTDOMAIN ), 'updated fade', FALSE );
 		}
 		return $messages;
 	}
@@ -1145,57 +1330,65 @@ class gEditorialMagazine extends gEditorialModuleCore
 			echo '<h3>'.__( 'Magazine Tools', GEDITORIAL_TEXTDOMAIN ).'</h3>';
 			echo '<table class="form-table">';
 
-			echo '<tr><th scope="row">'.__( 'Current Issues', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
+			echo '<tr><th scope="row">'.__( 'From Terms', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
 
 			if ( ! empty( $_POST ) && isset( $_POST['issue_tax_check'] ) ) {
 
-				$terms = gEditorialHelper::getTerms( $this->module->constants['issue_tax'], false, true );
+				gEditorialHelper::table( array(
+					'_cb' => 'term_id',
+					'term_id' => __( 'ID', GEDITORIAL_TEXTDOMAIN ),
+					'name' => __( 'Name', GEDITORIAL_TEXTDOMAIN ),
+					'issue' => array(
+						'title' => __( 'Issue', GEDITORIAL_TEXTDOMAIN ),
+						'callback' => function( $value, $row, $column ){
+							if ( $post_id = gEditorialHelper::getPostIDbySlug( $row->slug, $this->module->constants['issue_cpt'] ) )
+								return $post_id.' &mdash; '.get_post($post_id)->post_title;
+							return __( '&mdash;&mdash;&mdash;&mdash; No Issue', GEDITORIAL_TEXTDOMAIN );
+						},
+					),
+					'count' => array(
+						'title' => __( 'Count', GEDITORIAL_TEXTDOMAIN ),
+						'callback' => function( $value, $row, $column ){
+							if ( $post_id = gEditorialHelper::getPostIDbySlug( $row->slug, $this->module->constants['issue_cpt'] ) )
+								return number_format_i18n( $this->issue_posts( $post_id, TRUE ) );
+							return number_format_i18n( $row->count );
+						},
+					),
+					'description' => array(
+						'title'    => __( 'Description', GEDITORIAL_TEXTDOMAIN ),
+						'callback' => 'wpautop',
+						'class'    => 'description',
+					),
+				), gEditorialHelper::getTerms( $this->module->constants['issue_tax'], FALSE, TRUE ) );
 
-				foreach ( $terms as $term_id => $term ) {
-					echo $term->name;
-					$issue_post_id = gEditorialHelper::getPostIDbySlug( $term->slug, $this->module->constants['issue_cpt'] ) ;
-					if ( $issue_post_id ){
-						echo ' :: ISSUE POST ID: '.$issue_post_id;
-						echo ' :: POST COUNT: '.number_format_i18n( $this->issue_post_count( $issue_post_id ) );
-
-					} else {
-						echo ' :: NO ISSUE POST';
-						echo ' :: POST COUNT: '.number_format_i18n( $term->count );
-					}
-					if ( $term->description )
-						echo gEditorialHelper::html( 'p', array(
-							'class' => 'description',
-						), $term->description );
-					echo '<br />';
-				}
-
-			} else {
-				echo gEditorialHelper::html( 'p', array(
-					'class' => 'description',
-				), __( 'Click Check button below', GEDITORIAL_TEXTDOMAIN ) );
+				echo '<br />';
 			}
-
-			echo '</td></tr>';
-
-			echo '<tr><th scope="row">'.__( 'From Terms', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
-
-				submit_button( __( 'Check', GEDITORIAL_TEXTDOMAIN ), 'secondary', 'issue_tax_check', false, array( 'default' => 'default' ) ); echo '&nbsp;&nbsp;';
-				submit_button( __( 'Create', GEDITORIAL_TEXTDOMAIN ), 'primary', 'issue_post_create', false  ); //echo '&nbsp;&nbsp;';
+				submit_button( __( 'Check Terms', GEDITORIAL_TEXTDOMAIN ), 'secondary', 'issue_tax_check', FALSE, array( 'default' => 'default' ) ); echo '&nbsp;&nbsp;';
+				submit_button( __( 'Create Issue', GEDITORIAL_TEXTDOMAIN ), 'secondary', 'issue_post_create', FALSE  ); echo '&nbsp;&nbsp;';
+				submit_button( __( 'Store Orders', GEDITORIAL_TEXTDOMAIN ), 'secondary', 'issue_store_order', FALSE  ); //echo '&nbsp;&nbsp;';
 
 				echo gEditorialHelper::html( 'p', array(
 					'class' => 'description',
-				), __( 'Check for new Issue taxs and create the corresponding Issue Posts.', GEDITORIAL_TEXTDOMAIN ) );
+				), __( 'Check for Issue terms and Create corresponding Issue posts.', GEDITORIAL_TEXTDOMAIN ) );
 
 			echo '</td></tr>';
 			echo '</table>';
 
 			wp_referer_field();
 		echo '</form>';
+	}
 
+	public function post_row_table( $value, $row, $column )
+	{
+		$issue_post_id = gEditorialHelper::getPostIDbySlug( $row->slug, $this->module->constants['issue_cpt'] ) ;
+		gnetwork_dump( $value ); die();
+		return $value;
 	}
 
 	public function tools_load( $sub )
 	{
+		global $gEditorial;
+
 		if ( 'magazine' == $sub ) {
 			if ( ! empty( $_POST ) ) {
 
@@ -1203,12 +1396,12 @@ class gEditorialMagazine extends gEditorialModuleCore
 
 				if ( isset( $_POST['issue_post_create'] ) ) {
 
-					$terms = gEditorialHelper::getTerms( $this->module->constants['issue_tax'], false, true );
+					$terms = gEditorialHelper::getTerms( $this->module->constants['issue_tax'], FALSE, TRUE );
 					$posts = array();
 
 					foreach ( $terms as $term_id => $term ) {
 						$issue_post_id = gEditorialHelper::getPostIDbySlug( $term->slug, $this->module->constants['issue_cpt'] ) ;
-						if ( false === $issue_post_id ) {
+						if ( FALSE === $issue_post_id ) {
 							$posts[] = gEditorialHelper::newPostFromTerm( $term, $this->module->constants['issue_tax'], $this->module->constants['issue_cpt'] );
 
 							break;
@@ -1217,7 +1410,46 @@ class gEditorialMagazine extends gEditorialModuleCore
 
 					wp_redirect( add_query_arg( array(
 						'message' => 'created',
-						'count' => count( $posts ),
+						'count'   => count( $posts ),
+					), wp_get_referer() ) );
+					exit();
+
+				} else if ( isset( $_POST['_cb'] )
+					&& ( isset( $_POST['issue_store_order'] )
+						|| isset( $_POST['issue_store_start'] ) ) ) {
+
+					$meta_key = isset( $_POST['issue_store_order'] ) ? 'in_issue_order' : 'in_issue_page_start';
+					$count = 0;
+
+					foreach ( $_POST['_cb'] as $term_id ) {
+						foreach( $this->issue_posts( NULL, FALSE, $term_id ) as $post ) {
+
+							// echo $post->ID;
+							// echo '--';
+							// echo $post->menu_order;
+							// echo '--';
+							// echo $gEditorial->meta->get_postmeta( $post->ID, 'in_issue_order', 'XX' );
+							// echo '--';
+							// echo $gEditorial->meta->get_postmeta( $post->ID, 'in_issue_page_start', 'YY' );
+							// echo '<br />';
+							// continue;
+
+							if ( $post->menu_order )
+								continue;
+
+							if ( $order = $gEditorial->meta->get_postmeta( $post->ID, $meta_key, FALSE ) ) {
+								wp_update_post( array(
+									'ID'         => $post->ID,
+									'menu_order' => $order,
+								) );
+								$count++;
+							}
+						}
+					}
+
+					wp_redirect( add_query_arg( array(
+						'message' => 'ordered',
+						'count'   => $count,
 					), wp_get_referer() ) );
 					exit();
 				}
@@ -1225,14 +1457,20 @@ class gEditorialMagazine extends gEditorialModuleCore
 		}
 	}
 
-	// FIXME: finish this!
+	// NO NEED: we can use gNetwork Debug: Meta Panel
 	public function gnetwork_debugbar_panel()
 	{
 		if ( ! is_singular() )
 			return;
 
+		global $gEditorial;
 
+		$post_id = get_the_ID();
 
+		echo 'ISSUE: term_id: '.get_post_meta( $post_id, '_'.$this->module->constants['issue_cpt'].'_term_id', TRUE );
+		echo '<br />';
+		echo 'META: in_issue_order: '.$gEditorial->meta->get_postmeta( $post_id, 'in_issue_order', 'NOT DEFINDED' );
+		echo '<br />';
+		echo 'META: in_issue_page_start: '.$gEditorial->meta->get_postmeta( $post_id, 'in_issue_page_start', 'NOT DEFINDED' );
 	}
-
 }
