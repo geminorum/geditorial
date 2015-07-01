@@ -6,13 +6,13 @@ class gEditorial
 	var $options_group      = 'geditorial_';
 	var $options_group_name = 'geditorial_options';
 
-	var $_asset_styles      = false;
-	var $_asset_config      = false;
+	var $_asset_styles      = FALSE;
+	var $_asset_config      = FALSE;
 	var $_asset_args        = array();
 
 	function __construct()
 	{
-		load_plugin_textdomain( GEDITORIAL_TEXTDOMAIN, false, 'geditorial/languages' );
+		load_plugin_textdomain( GEDITORIAL_TEXTDOMAIN, FALSE, 'geditorial/languages' );
 
 		$this->modules = new stdClass();
 
@@ -84,17 +84,22 @@ class gEditorial
 			}
 		}
 
-		// Supplementary plugins can hook into this, include their own modules and add them to the object
 		do_action( 'geditorial_modules_loaded' );
 
-		// Loads options for each registered module and then initializes it if it's active
 		$this->load_module_options();
 
-		// Load all of the modules that are enabled.
-		// Modules won't have an options value if they aren't enabled
 		foreach ( $this->modules as $mod_name => $mod_data ) {
-			if ( isset( $mod_data->options->enabled ) && $mod_data->options->enabled == 'on' ) {
-				$this->$mod_name->enabled = true;
+
+			$enabled = isset( $mod_data->options->enabled ) ? $mod_data->options->enabled : FALSE;
+
+			if ( 'off' === $enabled )
+				$enabled = FALSE;
+			else if ( 'on' === $enabled )
+				$enabled = TRUE;
+
+			if ( $enabled ) {
+
+				$this->$mod_name->enabled = TRUE;
 
 				if ( method_exists( $this->$mod_name, 'setup' ) )
 					$this->$mod_name->setup();
@@ -102,10 +107,9 @@ class gEditorial
 					add_action( 'init', array( $this->$mod_name, 'init' ) );
 
 			} else {
-				$this->$mod_name->enabled = false;
+				$this->$mod_name->enabled = FALSE;
 			}
 		}
-
 	}
 
 	// register a new module with the pluign
@@ -113,23 +117,23 @@ class gEditorial
 	{
 		// A title and name is required for every module
 		if ( ! isset( $args['title'], $name ) )
-			return false;
+			return FALSE;
 
 		$defaults = array(
 			'title'                => '',
 			'short_description'    => '',
 			'extended_description' => '',
 			'slug'                 => '',
-			'img_url'              => false,
-			'dashicon'             => false, // dashicon class
+			'img_url'              => FALSE,
+			'dashicon'             => FALSE, // dashicon class
 
 			//'post_type_support' => '',
 
-			'options'                   => false,
-			'configure_pageditorial_cb' => false,
+			'options'                   => FALSE,
+			'configure_pageditorial_cb' => FALSE,
 			'configure_link_text'       => __( 'Configure', GEDITORIAL_TEXTDOMAIN ),
-			'autoload'                  => false, // autoloading a module will remove the ability to enable or disable it
-			'load_frontend'             => false, // Whether or not the module should be loaded on the frontend too
+			'autoload'                  => FALSE, // autoloading a module will remove the ability to enable or disable it
+			'load_frontend'             => FALSE, // Whether or not the module should be loaded on the frontend too
 
 			'default_options' => array(),
 			'constants'       => array(),
@@ -232,7 +236,7 @@ class gEditorial
 	// get a module by one of its descriptive values
 	public function get_module_by( $key, $value )
 	{
-		$module = false;
+		$module = FALSE;
 
 		foreach ( $this->modules as $mod_name => $mod_data ) {
 
@@ -250,7 +254,7 @@ class gEditorial
 	}
 
 	// mine
-	public function get_module_constant( $module, $key, $default = null )
+	public function get_module_constant( $module, $key, $default = NULL )
 	{
 		if ( isset( $this->modules->{$module}->constants[$key] ) )
 			return $this->modules->{$module}->constants[$key];
@@ -307,7 +311,7 @@ class gEditorial
 
 	public function enqueue_styles()
 	{
-		$this->_asset_styles = true;
+		$this->_asset_styles = TRUE;
 	}
 
 	public function wp_enqueue_scripts()
@@ -321,9 +325,9 @@ class gEditorial
 		wp_enqueue_style( 'geditorial-front-all', GEDITORIAL_URL.'assets/css/front.all.css', array(), GEDITORIAL_VERSION );
 	}
 
-	public function enqueue_asset_config( $args = array(), $module = null )
+	public function enqueue_asset_config( $args = array(), $module = NULL )
 	{
-		$this->_asset_config = true;
+		$this->_asset_config = TRUE;
 
 		if ( count( $args ) ) {
 			if ( is_null( $module ) )
