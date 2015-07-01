@@ -791,6 +791,19 @@ class gEditorialHelper
 		return $wpdb->query( $query );
 	}
 
+	public static function deleteEmptyMeta( $meta_key )
+	{
+		global $wpdb;
+
+		$query = $wpdb->prepare( "
+			DELETE FROM $wpdb->postmeta
+			WHERE meta_key = %s
+			AND meta_value = ''
+		" , $meta_key );
+
+		return $wpdb->get_results( $query );
+	}
+
 	public static function insertDefaultTerms( $taxonomy, $defaults )
 	{
 		if ( ! taxonomy_exists( $taxonomy ) )

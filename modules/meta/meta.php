@@ -569,15 +569,13 @@ class gEditorialMeta extends gEditorialModuleCore
 
 			echo '<tr><th scope="row">'.__( 'Maintenance Tasks', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
 
-				echo 'EMPTY: will delete empty meta values, solves common problems with imported posts.';
-
-
 				echo '<p class="submit">';
+					submit_button( __( 'Empty', GEDITORIAL_TEXTDOMAIN ), 'secondary', 'custom_fields_empty', false ); echo '&nbsp;&nbsp;';
 
-					submit_button( __( 'Empty', GEDITORIAL_TEXTDOMAIN ), 'secondary', 'custom_fields_empty', false ); //echo '&nbsp;&nbsp;';
-
+					echo gEditorialHelper::html( 'span', array(
+						'class' => 'description',
+					), __( 'Will delete empty meta values, solves common problems with imported posts.', GEDITORIAL_TEXTDOMAIN ) );
 				echo '</p>';
-
 
 			echo '</td></tr>';
 			echo '<tr><th scope="row">'.__( 'Import Custom Fields', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
@@ -637,8 +635,6 @@ class gEditorialMeta extends gEditorialModuleCore
 			echo '</table>';
 			wp_referer_field();
 		echo '</form>';
-
-		gEditorialHelper::dump( $_REQUEST );
 	}
 
 	public function tools_load( $sub )
@@ -646,11 +642,11 @@ class gEditorialMeta extends gEditorialModuleCore
 		if ( 'meta' == $sub ) {
 			if ( ! empty( $_POST ) ) {
 
-				//check_admin_referer( 'gnetwork_'.$sub.'-options' );
+				// check_admin_referer( 'gnetwork_'.$sub.'-options' );
 
 				if ( isset( $_POST['custom_fields_empty'] ) ) {
 
-					$result = $this->delete_empty_meta( $this->meta_key );
+					$result = gEditorialHelper::deleteEmptyMeta( $this->meta_key );
 
 					if ( $result ) {
 						wp_redirect( add_query_arg( array(
@@ -659,69 +655,72 @@ class gEditorialMeta extends gEditorialModuleCore
 						exit();
 					}
 
-
 				} else if ( isset( $_POST['custom_fields_convert'] ) ) {
 
 					if ( isset( $_POST[$this->module->options_group_name]['tools'] ) ) {
-						$post = $_POST[$this->module->options_group_name]['tools'];
-						$limit = isset( $post['custom_field_limit'] ) ? $post['custom_field_limit'] : '25';
-						$result = false;
+
+						$post   = $_POST[$this->module->options_group_name]['tools'];
+						$limit  = isset( $post['custom_field_limit'] ) ? $post['custom_field_limit'] : '25';
+						$result = FALSE;
 
 						if ( isset( $post['custom_field'] ) && isset( $post['custom_field_into'] ) )
 							$result = $this->import_from_meta( $post['custom_field'], $post['custom_field_into'], $limit );
+
 						if ( $result ) {
 							wp_redirect( add_query_arg( array(
 								'message' => 'converted',
-								'field' => $post['custom_field'],
-								'limit' => $limit,
+								'field'   => $post['custom_field'],
+								'limit'   => $limit,
 							), wp_get_referer() ) );
 							exit();
 						}
 					}
 				} else if ( isset( $_POST['custom_fields_delete'] ) ) {
 					if ( isset( $_POST[$this->module->options_group_name]['tools'] ) ) {
-						$post = $_POST[$this->module->options_group_name]['tools'];
-						$limit = isset( $post['custom_field_limit'] ) ? $post['custom_field_limit'] : '';
-						$result = false;
+
+						$post   = $_POST[$this->module->options_group_name]['tools'];
+						$limit  = isset( $post['custom_field_limit'] ) ? $post['custom_field_limit'] : '';
+						$result = FALSE;
 
 						if ( isset( $post['custom_field'] ) )
 							$result = gEditorialHelper::deleteDBPostMeta( $post['custom_field'], $limit );
 
-						//gEditorialHelper::dump( $result ); die();
-
 						if ( $result ) {
 							wp_redirect( add_query_arg( array(
 								'message' => 'deleted',
-								'field' => $post['custom_field'],
-								'limit' => $limit,
+								'field'   => $post['custom_field'],
+								'limit'   => $limit,
 							), wp_get_referer() ) );
 							exit();
 						}
 					}
-
 				}
 			}
 		}
 	}
 
-	protected function import_from_meta( $meta_key, $field, $limit = false )
+	protected function import_from_meta( $meta_key, $field, $limit = FALSE )
 	{
 		foreach ( gEditorialHelper::getDBPostMetaRows( $meta_key, $limit ) as $row ) {
 
-			$post_id = $row->post_id;
 			$meta = explode( ',', $row->meta );
-			$meta = (array) apply_filters( 'geditorial_meta_import_pre', $meta, $post_id, $meta_key, $field );
+			$meta = (array) apply_filters( 'geditorial_meta_import_pre', $meta, $row->post_id, $meta_key, $field );
 
 			switch ( $field ) {
-				case 'ct' : $this->import_to_terms( $meta, $post_id, $this->module->constants['ct_tax'] ); break;
-				default : $this->import_to_meta( $meta, $post_id, $field ); break;
+				case 'ct' :
+					$this->import_to_terms( $meta, $row->post_id, $this->module->constants['ct_tax'] );
+				break;
+
+				default :
+					$this->import_to_meta( $meta, $row->post_id, $field );
+				break;
 			}
 		}
 
-		return true;
+		return TRUE;
 	}
 
-	public function import_to_meta( $meta, $post_id, $field, $kses = true )
+	public function import_to_meta( $meta, $post_id, $field, $kses = TRUE )
 	{
 		$final = '';
 
@@ -740,7 +739,6 @@ class gEditorialMeta extends gEditorialModuleCore
 			$postmeta[$field] = $final;
 			$this->set_meta( $post_id, $postmeta );
 		}
-
 	}
 
 	protected function import_to_terms( $meta, $post_id, $taxonomy )
@@ -769,12 +767,5 @@ class gEditorialMeta extends gEditorialModuleCore
 		}
 
 		return wp_set_post_terms( $post_id, $terms, $taxonomy, true );
-	}
-
-	protected function delete_empty_meta( $meta_key )
-	{
-		global $wpdb;
-		$query = $wpdb->prepare( "DELETE FROM $wpdb->postmeta WHERE meta_key = %s AND meta_value = '' " , $meta_key );
-		return $wpdb->get_results( $query );
 	}
 }
