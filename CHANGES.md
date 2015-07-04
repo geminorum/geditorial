@@ -1,3 +1,8 @@
+### 0.2.3
+* magazine: using pages dropdown instead of terms
+* magazine: separate save post and update post
+* magazine: handle trash and delete issues
+
 ### 0.2.2
 * all: new `add_image_size()` method with post type support
 * all: moveup `set_meta()` and used as internal api. this will remove empty meta rows in db
