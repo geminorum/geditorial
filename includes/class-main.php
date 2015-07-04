@@ -99,15 +99,15 @@ class gEditorial
 
 			if ( $enabled ) {
 
-				$this->$mod_name->enabled = TRUE;
+				$this->{$mod_name}->enabled = TRUE;
 
-				if ( method_exists( $this->$mod_name, 'setup' ) )
-					$this->$mod_name->setup();
-				else if ( method_exists( $this->$mod_name, 'init' ) )
-					add_action( 'init', array( $this->$mod_name, 'init' ) );
+				if ( method_exists( $this->{$mod_name}, 'setup' ) )
+					$this->{$mod_name}->setup();
+				else if ( method_exists( $this->{$mod_name}, 'init' ) )
+					add_action( 'init', array( $this->{$mod_name}, 'init' ) );
 
 			} else {
-				$this->$mod_name->enabled = FALSE;
+				$this->{$mod_name}->enabled = FALSE;
 			}
 		}
 	}
@@ -127,8 +127,6 @@ class gEditorial
 			'img_url'              => FALSE,
 			'dashicon'             => FALSE, // dashicon class
 
-			//'post_type_support' => '',
-
 			'options'                   => FALSE,
 			'configure_pageditorial_cb' => FALSE,
 			'configure_link_text'       => __( 'Configure', GEDITORIAL_TEXTDOMAIN ),
@@ -138,22 +136,13 @@ class gEditorial
 			'default_options' => array(),
 			'constants'       => array(),
 			'strings'         => array(),
-
-			'messages' => array(
-				'settings-updated'    => __( 'Settings updated.', GEDITORIAL_TEXTDOMAIN ),
-				'form-error'          => __( 'Please correct your form errors below and try again.', GEDITORIAL_TEXTDOMAIN ),
-				'nonce-failed'        => __( 'Cheatin&#8217; uh?', GEDITORIAL_TEXTDOMAIN ),
-				'invalid-permissions' => __( 'You do not have necessary permissions to complete this action.', GEDITORIAL_TEXTDOMAIN ),
-				'missing-post'        => __( 'Post does not exist', GEDITORIAL_TEXTDOMAIN ),
-			),
 		);
 
-		if ( isset( $args['messages'] ) )
-			$args['messages'] = array_merge( (array)$args['messages'], $defaults['messages'] );
-
 		$args = array_merge( $defaults, $args );
-		$args['name'] = $name;
+
+		$args['name']               = $name;
 		$args['options_group_name'] = $this->options_group.$name.'_options';
+
 		if ( ! isset( $args['settings_slug'] ) )
 			$args['settings_slug'] = 'geditorial-settings-'.$args['slug'];
 
@@ -168,6 +157,8 @@ class gEditorial
 	// If a given option isn't yet set, then set it to the module's default (upgrades, etc.)
 	public function load_module_options()
 	{
+		$options = get_option( 'geditorial_options' );
+
 		foreach ( $this->modules as $mod_name => $mod_data ) {
 
 			// don't load modules on the frontend unless they're explictly defined as such
@@ -182,26 +173,28 @@ class gEditorial
 				$mod_data
 			);
 
-			$saved_options = get_option( $this->options_group.$mod_name.'_options' );
-			if ( $saved_options )
-				$this->modules->$mod_name->options = $saved_options;
+			if ( ! isset( $options[$mod_name] ) )
+				$options[$mod_name] = get_option( $this->options_group.$mod_name.'_options', FALSE ); // TODO: MUST DROP: in the next major version
+
+			if ( FALSE !== $options[$mod_name] )
+				$this->modules->{$mod_name}->options = $options[$mod_name];
 			else
-				$this->modules->$mod_name->options = new stdClass;
+				$this->modules->{$mod_name}->options = new stdClass;
 
 			foreach ( $mod_data->default_options as $default_key => $default_value )
-				if ( ! isset( $this->modules->$mod_name->options->$default_key ) )
-					$this->modules->$mod_name->options->$default_key = $default_value;
+				if ( ! isset( $this->modules->{$mod_name}->options->$default_key ) )
+					$this->modules->{$mod_name}->options->$default_key = $default_value;
 
 			/** must move to after init
 			// so we don't get warnings all over
-			if ( isset( $this->modules->$mod_name->options->post_types ) )
-				$this->modules->$mod_name->options->post_types = $this->helpers->clean_post_type_options( $this->modules->$mod_name->options->post_types, $mod_data->post_type_support );
+			if ( isset( $this->modules->{$mod_name}->options->post_types ) )
+				$this->modules->{$mod_name}->options->post_types = $this->helpers->clean_post_type_options( $this->modules->{$mod_name}->options->post_types, $mod_data->post_type_support );
 			**/
 
-			if ( ! isset( $this->$mod_name ) )
-				$this->$mod_name = new stdClass;
+			if ( ! isset( $this->{$mod_name} ) )
+				$this->{$mod_name} = new stdClass;
 
-			$this->$mod_name->module = $this->modules->$mod_name;
+			$this->{$mod_name}->module = $this->modules->{$mod_name};
 		}
 
 		do_action( 'geditorial_module_options_loaded' );
@@ -212,23 +205,16 @@ class gEditorial
 	public function init_late()
 	{
 		foreach ( $this->modules as $mod_name => $mod_data ) {
-			// don't load modules on the frontend unless they're explictly defined as such
+
 			if ( ! is_admin() && ! $mod_data->load_frontend )
 				continue;
 
-			if ( ! $this->$mod_name->enabled )
+			if ( ! $this->{$mod_name}->enabled )
 				continue;
 
-			if ( isset( $this->modules->$mod_name->options->post_types ) ) {
-
-				// DEPRECATED
-				//$this->modules->$mod_name->options->post_types = $this->helpers->clean_post_type_options( $this->modules->$mod_name->options->post_types, $mod_data->post_type_support );
-
-				// MINE
-				$this->modules->$mod_name->options->post_types = $this->$mod_name->sanitize_post_types( $this->modules->$mod_name->options->post_types );
-
-				$this->$mod_name->module = $this->modules->$mod_name;
-
+			if ( isset( $this->modules->{$mod_name}->options->post_types ) ) {
+				$this->modules->{$mod_name}->options->post_types = $this->{$mod_name}->sanitize_post_types( $this->modules->{$mod_name}->options->post_types );
+				$this->{$mod_name}->module = $this->modules->{$mod_name};
 			}
 		}
 	}
@@ -241,11 +227,11 @@ class gEditorial
 		foreach ( $this->modules as $mod_name => $mod_data ) {
 
 			if ( $key == 'name' && $value == $mod_name ) {
-				$module =  $this->modules->$mod_name;
+				$module = $this->modules->{$mod_name};
 			} else {
 				foreach( $mod_data as $mod_data_key => $mod_data_value ) {
 					if ( $mod_data_key == $key && $mod_data_value == $value )
-						$module = $this->modules->$mod_name;
+						$module = $this->modules->{$mod_name};
 				}
 			}
 		}
@@ -253,7 +239,6 @@ class gEditorial
 		return $module;
 	}
 
-	// mine
 	public function get_module_constant( $module, $key, $default = NULL )
 	{
 		if ( isset( $this->modules->{$module}->constants[$key] ) )
@@ -262,28 +247,34 @@ class gEditorial
 		return $default;
 	}
 
-	// update the object with new value and save to the database
 	public function update_module_option( $mod_name, $key, $value )
 	{
-		$this->modules->$mod_name->options->$key = $value;
-		$this->$mod_name->module = $this->modules->$mod_name;
+		$options = get_option( 'geditorial_options' );
 
-		return update_option( $this->options_group.$mod_name.'_options', $this->modules->$mod_name->options );
+		$this->modules->{$mod_name}->options->$key = $value;
+		$this->{$mod_name}->module = $this->modules->{$mod_name};
+		$options[$mod_name] = $this->modules->{$mod_name}->options;
+
+		// return update_option( $this->options_group.$mod_name.'_options', $this->modules->{$mod_name}->options );
+		return update_option( 'geditorial_options', $options, TRUE );
 	}
 
 	public function update_all_module_options( $mod_name, $new_options )
 	{
+		$options = get_option( 'geditorial_options' );
+
 		if ( is_array( $new_options ) )
 			$new_options = (object) $new_options;
 
-		$this->modules->$mod_name->options = $new_options;
-		$this->$mod_name->module = $this->modules->$mod_name;
+		$options[$mod_name] = $new_options;
+		return update_option( 'geditorial_options', $options, TRUE );
 
-		return update_option( $this->options_group.$mod_name.'_options', $this->modules->$mod_name->options );
+		// $this->modules->{$mod_name}->options = $new_options;
+		// $this->{$mod_name}->module = $this->modules->{$mod_name};
+		// return update_option( $this->options_group.$mod_name.'_options', $this->modules->{$mod_name}->options );
 	}
 
-	// geditorial global styles
-	// just for the sake of simplicity!
+	// global styles
 	public function admin_print_styles()
 	{
 		$screen = get_current_screen();
