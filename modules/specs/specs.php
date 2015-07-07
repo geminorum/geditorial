@@ -18,24 +18,23 @@ class gEditorialSpecs extends gEditorialModuleCore
 			'extended_description' => __( 'Adding Post Specifications Functionality to WordPress With Taxonomies', GEDITORIAL_TEXTDOMAIN ),
 			'dashicon'             => 'editor-ul',
 			'slug'                 => 'specs',
-			'load_frontend'        => true,
+			'load_frontend'        => TRUE,
 			'constants'            => array(
 				'specs_tax'                => 'specs',
 				'specs_shortcode'          => 'specs',
 				'multiple_specs_shortcode' => 'multiple_specs',
 			),
 			'default_options' => array(
-				'enabled' => 'off',
+				'enabled'    => FALSE,
+				'settings'   => array(),
 				'post_types' => array(
-					'post' => 'on',
-					'page' => 'off',
+					'post' => TRUE,
+					'page' => FALSE,
 				),
 				'post_fields' => array(
-					'spec_title' => 'on',
-					'spec_order' => 'on',
-					'spec_value' => 'on',
-				),
-				'settings' => array(
+					'spec_title' => TRUE,
+					'spec_order' => TRUE,
+					'spec_value' => TRUE,
 				),
 			),
 			'settings' => array(
@@ -83,7 +82,7 @@ class gEditorialSpecs extends gEditorialModuleCore
 						'name'                       => __( 'Specifications', GEDITORIAL_TEXTDOMAIN ),
 						'singular_name'              => __( 'Specifications', GEDITORIAL_TEXTDOMAIN ),
 						'search_items'               => __( 'Search Specifications', GEDITORIAL_TEXTDOMAIN ),
-						'popular_items'              => null, // to disable tag cloud on edit tag page // __( 'Popular Specifications', GEDITORIAL_TEXTDOMAIN ),
+						'popular_items'              => null,
 						'all_items'                  => __( 'All Specifications', GEDITORIAL_TEXTDOMAIN ),
 						'parent_item'                => __( 'Parent Specifications', GEDITORIAL_TEXTDOMAIN ),
 						'parent_item_colon'          => __( 'Parent Specifications:', GEDITORIAL_TEXTDOMAIN ),
@@ -184,18 +183,18 @@ class gEditorialSpecs extends gEditorialModuleCore
 		register_taxonomy( $this->module->constants['specs_tax'],
 			$this->post_types(), array(
 				'labels'                => $this->module->strings['labels']['specs_tax'],
-				'public'                => true,
-				'show_in_nav_menus'     => false,
-				'show_ui'               => true,
-				'show_admin_column'     => false,
-				'show_tagcloud'         => false,
-				'hierarchical'          => false,
+				'public'                => TRUE,
+				'show_in_nav_menus'     => FALSE,
+				'show_ui'               => TRUE,
+				'show_admin_column'     => FALSE,
+				'show_tagcloud'         => FALSE,
+				'hierarchical'          => FALSE,
 				'update_count_callback' => array( 'gEditorialHelper', 'update_count_callback' ),
-				'query_var'             => true,
+				'query_var'             => TRUE,
 				'rewrite'               => array(
 					'slug'         => $this->module->constants['specs_tax'],
-					'hierarchical' => false,
-					'with_front'   => false,
+					'hierarchical' => FALSE,
+					'with_front'   => FALSE,
 				),
 				'capabilities' => array(
 					'manage_terms' => 'edit_others_posts',
@@ -232,14 +231,14 @@ class gEditorialSpecs extends gEditorialModuleCore
 
 	// programatically sets specs for the post
 	// it will append new specs to the old ones
-	public function set_post_specs( $post_id, $specs, $create = false )
+	public function set_post_specs( $post_id, $specs, $create = FALSE )
 	{
 		$post = get_post( $post_id );
 		if ( ! $post )
-			return false;
+			return FALSE;
 
-		$meta = $this->get_postmeta( $post_id, false, array() );
-		$spec_terms = gEditorialHelper::getTerms( $this->module->constants['specs_tax'], false, true, 'slug' );
+		$meta = $this->get_postmeta( $post_id, FALSE, array() );
+		$spec_terms = gEditorialHelper::getTerms( $this->module->constants['specs_tax'], FALSE, true, 'slug' );
 		$terms = array();
 
 		foreach( $meta as $meta_row )
@@ -305,12 +304,12 @@ class gEditorialSpecs extends gEditorialModuleCore
 			ksort( $meta );
 
 			$this->set_meta( $post_id, $meta );
-			wp_set_object_terms( $post_id, ( count( $terms ) ? $terms : null ), $this->module->constants['specs_tax'], false );
+			wp_set_object_terms( $post_id, ( count( $terms ) ? $terms : null ), $this->module->constants['specs_tax'], FALSE );
 
 			return $post_id;
 		}
 
-		return false;
+		return FALSE;
 	}
 
 	private function sanitize_post_meta( $postmeta, $fields, $post_id, $post_type )
@@ -328,7 +327,7 @@ class gEditorialSpecs extends gEditorialModuleCore
 			if ( $term_id && '-1' != $term_id )
 				$terms[$offset] = intval( $term_id );
 
-		wp_set_object_terms( $post_id, ( count( $terms ) ? $terms : null ), $this->module->constants['specs_tax'], false );
+		wp_set_object_terms( $post_id, ( count( $terms ) ? $terms : null ), $this->module->constants['specs_tax'], FALSE );
 
 		foreach ( $terms as $offset => $term ) {
 
@@ -453,7 +452,7 @@ class gEditorialSpecs extends gEditorialModuleCore
 					'show_option_none' => $this->get_string( 'select_specs', $post->post_type, 'misc' ),
 					'name'             => 'geditorial-specs_term_id[]',
 					// 'id'               => 'geditorial-specs-terms--1',
-					'id'               => false,
+					'id'               => FALSE,
 					'class'            => 'geditorial-admin-dropbown item-dropdown item-dropdown-new',
 					'show_count'       => 0,
 					'hide_empty'       => 0,
@@ -528,18 +527,18 @@ class gEditorialSpecs extends gEditorialModuleCore
 			'li_before' => '',
 			'orderby'   => 'order',
 			'order'     => 'ASC',
-			'cb'        => false,
-			'exclude'   => true, // or array
+			'cb'        => FALSE,
+			'exclude'   => TRUE, // or array
 			'before'    => '',
 			'after'     => '',
-			'context'   => null,
+			'context'   => NULL,
 		), $atts, $this->module->constants['specs_shortcode'] );
 
-		if ( false === $args['context'] ) // bailing
-			return null;
+		if ( FALSE === $args['context'] ) // bailing
+			return NULL;
 
-		$the_terms = gEditorialHelper::getTerms( $this->module->constants['specs_tax'], $post->ID, true );
-		$metas = $this->get_postmeta( $post->ID, false, array() );
+		$the_terms = gEditorialHelper::getTerms( $this->module->constants['specs_tax'], $post->ID, TRUE );
+		$metas = $this->get_postmeta( $post->ID, FALSE, array() );
 		$html = '';
 
 		// TODO: use table helper
@@ -557,7 +556,7 @@ class gEditorialSpecs extends gEditorialModuleCore
 		return $html;
 	}
 
-	public function shortcode_multiple_specs( $atts, $content = null, $tag = '' )
+	public function shortcode_multiple_specs( $atts, $content = NULL, $tag = '' )
 	{
 		global $post;
 
@@ -571,12 +570,12 @@ class gEditorialSpecs extends gEditorialModuleCore
 			'exclude'   => true, // or array
 			'before'    => '',
 			'after'     => '',
-			'context'   => null,
+			'context'   => NULL,
 			'args'      => array(),
 		), $atts, $this->module->constants['multiple_specs_shortcode'] );
 
-		if ( false === $args['context'] )
-			return null;
+		if ( FALSE === $args['context'] )
+			return NULL;
 
 		if ( empty( $args['ids'] ) || ! count( $args['ids'] ) ) {
 			$terms = wp_get_object_terms( (int) $post->ID, $this->module->constants['specs_tax'], array(
@@ -592,7 +591,7 @@ class gEditorialSpecs extends gEditorialModuleCore
 			$output .= $this->shortcode_specs( array_merge( array(
 				'id'        => $id,
 				'title_tag' => 'h4',
-			), $args['args'] ), null, $this->module->constants['specs_shortcode'] );
+			), $args['args'] ), NULL, $this->module->constants['specs_shortcode'] );
 
 		if ( ! empty( $output ) ) {
 			if( $args['title'] )
@@ -601,6 +600,7 @@ class gEditorialSpecs extends gEditorialModuleCore
 				$output = '<div class="multiple-specs-'.sanitize_html_class( $args['context'], 'general' ).'">'.$output.'</div>';
 			return $args['before'].$output.$args['after'];
 		}
-		return null;
+		
+		return NULL;
 	}
 }

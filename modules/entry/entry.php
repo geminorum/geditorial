@@ -11,50 +11,46 @@ class gEditorialEntry extends gEditorialModuleCore
 	{
 		global $gEditorial;
 
-		$this->module_url = $this->get_module_url( __FILE__ );
 		$args = array(
-			'title' => __( 'Entry', GEDITORIAL_TEXTDOMAIN ),
-			'short_description' => __( 'Posts Entries, Wiki-like', GEDITORIAL_TEXTDOMAIN ),
+			'title'                => __( 'Entry', GEDITORIAL_TEXTDOMAIN ),
+			'short_description'    => __( 'Posts Entries, Wiki-like', GEDITORIAL_TEXTDOMAIN ),
 			'extended_description' => __( '', GEDITORIAL_TEXTDOMAIN ),
-			'module_url' => $this->module_url,
-			'dashicon' => 'media-document',
-			'slug' => 'entry',
-			'load_frontend' => true,
-			'constants' => array(
-				'entry_cpt' => 'entry',
-				'entry_archives' => 'entries',
-				'rewrite_prefix' => 'entry', // wiki
-				'section_tax' => 'section',
+			'dashicon'             => 'media-document',
+			'slug'                 => 'entry',
+			'load_frontend'        => TRUE,
+			'constants'            => array(
+				'entry_cpt'       => 'entry',
+				'entry_archives'  => 'entries',
+				'rewrite_prefix'  => 'entry', // wiki
+				'section_tax'     => 'section',
 				'entry_shortcode' => 'entry',
 			),
 			'default_options' => array(
-				'enabled' => 'off',
+				'enabled' => FALSE,
 				'post_types' => array(
-					'post' => 'on',
-					'page' => 'off',
+					'post' => TRUE,
+					'page' => FALSE,
 				),
 				'post_fields' => array(
-					'in_entry_title' => 'on',
-					'in_entry_order' => 'on',
-					'in_entry_desc' => 'off',
+					'in_entry_title' => TRUE,
+					'in_entry_order' => TRUE,
+					'in_entry_desc'  => FALSE,
 				),
-				'settings' => array(
-				),
+				'settings' => array(),
 			),
 			'settings' => array(
 				'_general' => array(
 					array(
-						'field' => 'multiple',
-						//'label_for' => '',
-						'title' => __( 'Multiple Entry', GEDITORIAL_TEXTDOMAIN ),
+						'field'       => 'multiple',
+						'title'       => __( 'Multiple Entry', GEDITORIAL_TEXTDOMAIN ),
 						'description' => __( 'Using multiple entry for each post.', GEDITORIAL_TEXTDOMAIN ),
-						'default' => 0,
+						'default'     => 0,
 					),
 					array(
-						'field' => 'editor_button',
-						'title' => _x( 'Editor Button', 'Entry Editor Button', GEDITORIAL_TEXTDOMAIN ),
+						'field'       => 'editor_button',
+						'title'       => _x( 'Editor Button', 'Entry Editor Button', GEDITORIAL_TEXTDOMAIN ),
 						'description' => __( 'Adding an Editor Button to insert shortcodes', GEDITORIAL_TEXTDOMAIN ),
-						'default' => 1,
+						'default'     => 1,
 					),
 				),
 				'post_types_option' => 'post_types_option',
@@ -65,62 +61,62 @@ class gEditorialEntry extends gEditorialModuleCore
 					'post' => array(
 						'in_entry_title' => __( 'Title', GEDITORIAL_TEXTDOMAIN ),
 						'in_entry_order' => __( 'Order', GEDITORIAL_TEXTDOMAIN ),
-						'in_entry_desc' => __( 'Description', GEDITORIAL_TEXTDOMAIN ),
+						'in_entry_desc'  => __( 'Description', GEDITORIAL_TEXTDOMAIN ),
 					),
 				),
 				'descriptions' => array(
 					'post' => array(
 						'in_entry_title' => __( 'In Entry Title', GEDITORIAL_TEXTDOMAIN ),
 						'in_entry_order' => __( 'In Entry Order', GEDITORIAL_TEXTDOMAIN ),
-						'in_entry_desc' => __( 'In Entry Description', GEDITORIAL_TEXTDOMAIN ),
+						'in_entry_desc'  => __( 'In Entry Description', GEDITORIAL_TEXTDOMAIN ),
 					),
 				),
 				'misc' => array(
 					'post' => array(
-						'box_title' => __( 'Entry', GEDITORIAL_TEXTDOMAIN ),
+						'box_title'    => __( 'Entry', GEDITORIAL_TEXTDOMAIN ),
 						'column_title' => __( 'Entry', GEDITORIAL_TEXTDOMAIN ),
 						'select_entry' => __( '&mdash; Choose a Entry &mdash;', GEDITORIAL_TEXTDOMAIN ),
 					),
 				),
 				'labels' => array(
 					'entry_cpt' => array(
-						'name' => __( 'Entries', GEDITORIAL_TEXTDOMAIN ),
-						'singular_name' => __( 'Entry', GEDITORIAL_TEXTDOMAIN ),
-						'add_new' => __( 'Add New', GEDITORIAL_TEXTDOMAIN ),
-						'add_new_item' => __( 'Add New Entry', GEDITORIAL_TEXTDOMAIN ),
-						'edit_item' => __( 'Edit Entry', GEDITORIAL_TEXTDOMAIN ),
-						'new_item' => __( 'New Entry', GEDITORIAL_TEXTDOMAIN ),
-						'view_item' => __( 'View Entry', GEDITORIAL_TEXTDOMAIN ),
-						'search_items' => __( 'Search Entries', GEDITORIAL_TEXTDOMAIN ),
-						'not_found' => __( 'No entries found', GEDITORIAL_TEXTDOMAIN ),
+						'name'               => __( 'Entries', GEDITORIAL_TEXTDOMAIN ),
+						'singular_name'      => __( 'Entry', GEDITORIAL_TEXTDOMAIN ),
+						'add_new'            => __( 'Add New', GEDITORIAL_TEXTDOMAIN ),
+						'add_new_item'       => __( 'Add New Entry', GEDITORIAL_TEXTDOMAIN ),
+						'edit_item'          => __( 'Edit Entry', GEDITORIAL_TEXTDOMAIN ),
+						'new_item'           => __( 'New Entry', GEDITORIAL_TEXTDOMAIN ),
+						'view_item'          => __( 'View Entry', GEDITORIAL_TEXTDOMAIN ),
+						'search_items'       => __( 'Search Entries', GEDITORIAL_TEXTDOMAIN ),
+						'not_found'          => __( 'No entries found', GEDITORIAL_TEXTDOMAIN ),
 						'not_found_in_trash' => __( 'No entries found in Trash', GEDITORIAL_TEXTDOMAIN ),
-						'parent_item_colon' => __( 'Parent Entry:', GEDITORIAL_TEXTDOMAIN ),
-						'menu_name' => __( 'Entries', GEDITORIAL_TEXTDOMAIN ),
+						'parent_item_colon'  => __( 'Parent Entry:', GEDITORIAL_TEXTDOMAIN ),
+						'menu_name'          => __( 'Entries', GEDITORIAL_TEXTDOMAIN ),
 					),
 
 					'section_tax' => array(
-						'name' => __( 'Sections', GEDITORIAL_TEXTDOMAIN ),
-						'singular_name' => __( 'Section', GEDITORIAL_TEXTDOMAIN ),
-						'search_items' => __( 'Search Sections', GEDITORIAL_TEXTDOMAIN ),
-						'popular_items' => null, // to disable tag cloud on edit tag page // __( 'Popular Section', GEDITORIAL_TEXTDOMAIN ),
-						'all_items' => __( 'All Sections', GEDITORIAL_TEXTDOMAIN ),
-						'parent_item' => __( 'Parent Section', GEDITORIAL_TEXTDOMAIN ),
-						'parent_item_colon' => __( 'Parent Section:', GEDITORIAL_TEXTDOMAIN ),
-						'edit_item' => __( 'Edit Section', GEDITORIAL_TEXTDOMAIN ),
-						'update_item' => __( 'Update Section', GEDITORIAL_TEXTDOMAIN ),
-						'add_new_item' => __( 'Add New Section', GEDITORIAL_TEXTDOMAIN ),
-						'new_item_name' => __( 'New Section Name', GEDITORIAL_TEXTDOMAIN ),
+						'name'                       => __( 'Sections', GEDITORIAL_TEXTDOMAIN ),
+						'singular_name'              => __( 'Section', GEDITORIAL_TEXTDOMAIN ),
+						'search_items'               => __( 'Search Sections', GEDITORIAL_TEXTDOMAIN ),
+						'popular_items'              => NULL,
+						'all_items'                  => __( 'All Sections', GEDITORIAL_TEXTDOMAIN ),
+						'parent_item'                => __( 'Parent Section', GEDITORIAL_TEXTDOMAIN ),
+						'parent_item_colon'          => __( 'Parent Section:', GEDITORIAL_TEXTDOMAIN ),
+						'edit_item'                  => __( 'Edit Section', GEDITORIAL_TEXTDOMAIN ),
+						'update_item'                => __( 'Update Section', GEDITORIAL_TEXTDOMAIN ),
+						'add_new_item'               => __( 'Add New Section', GEDITORIAL_TEXTDOMAIN ),
+						'new_item_name'              => __( 'New Section Name', GEDITORIAL_TEXTDOMAIN ),
 						'separate_items_with_commas' => __( 'Separate sections with commas', GEDITORIAL_TEXTDOMAIN ),
-						'add_or_remove_items' => __( 'Add or remove section', GEDITORIAL_TEXTDOMAIN ),
-						'choose_from_most_used' => __( 'Choose from the most used sections', GEDITORIAL_TEXTDOMAIN ),
-						'menu_name' => __( 'Sections', GEDITORIAL_TEXTDOMAIN ),
+						'add_or_remove_items'        => __( 'Add or remove section', GEDITORIAL_TEXTDOMAIN ),
+						'choose_from_most_used'      => __( 'Choose from the most used sections', GEDITORIAL_TEXTDOMAIN ),
+						'menu_name'                  => __( 'Sections', GEDITORIAL_TEXTDOMAIN ),
 					),
 				),
 			),
 			'configure_page_cb' => 'print_configure_view',
 			'settings_help_tab' => array(
-				'id' => 'geditorial-entry-overview',
-				'title' => __( 'help-tab-title', GEDITORIAL_TEXTDOMAIN ),
+				'id'      => 'geditorial-entry-overview',
+				'title'   => __( 'help-tab-title', GEDITORIAL_TEXTDOMAIN ),
 				'content' => __( '<p>help-tab-content</p>', GEDITORIAL_TEXTDOMAIN ),
 				),
 			'settings_help_sidebar' => sprintf(
@@ -184,13 +180,13 @@ class gEditorialEntry extends gEditorialModuleCore
 		wp_dropdown_categories( array(
 			//'show_option_all' => sprintf( _x( 'Show All %s', GEDITORIAL_TEXTDOMAIN ), $tax_obj->labels->all_items ),
 			'show_option_all' => $tax_obj->labels->all_items,
-			'taxonomy' => $this->module->constants['section_tax'],
-			'name' => $tax_obj->name,
-			'orderby' => 'name',
-			'selected' => @ $_GET[$this->module->constants['section_tax']],
-			'hierarchical' => $tax_obj->hierarchical,
-			'show_count' => false,
-			'hide_empty' => true
+			'taxonomy'        => $this->module->constants['section_tax'],
+			'name'            => $tax_obj->name,
+			'orderby'         => 'name',
+			'selected'        => @ $_GET[$this->module->constants['section_tax']],
+			'hierarchical'    => $tax_obj->hierarchical,
+			'show_count'      => false,
+			'hide_empty'      => true
 		) );
 	}
 
@@ -289,18 +285,18 @@ class gEditorialEntry extends gEditorialModuleCore
 				'revisions',
 				'page-attributes',
 			),
-			'taxonomies' => array( $this->module->constants['section_tax'] ),
-			'public' => true,
-			'show_ui' => true,
-			'show_in_menu' => true,
-			'menu_position' => 4,
-			'show_in_nav_menus' => true,
-			'publicly_queryable' => true,
+			'taxonomies'          => array( $this->module->constants['section_tax'] ),
+			'public'              => true,
+			'show_ui'             => true,
+			'show_in_menu'        => true,
+			'menu_position'       => 4,
+			'show_in_nav_menus'   => true,
+			'publicly_queryable'  => true,
 			'exclude_from_search' => false,
-			'has_archive' => $this->module->constants['entry_archives'],
-			'query_var' => $this->module->constants['entry_cpt'],
-			'can_export' => true,
-			'rewrite' => array(
+			'has_archive'         => $this->module->constants['entry_archives'],
+			'query_var'           => $this->module->constants['entry_cpt'],
+			'can_export'          => true,
+			'rewrite'             => array(
 				'slug' => $this->module->constants['entry_cpt'],
 				'with_front' => false
 			),
@@ -311,23 +307,23 @@ class gEditorialEntry extends gEditorialModuleCore
 	public function register_taxonomies()
 	{
 		register_taxonomy( $this->module->constants['section_tax'], array( $this->module->constants['entry_cpt'] ), array(
-			'labels' => $this->module->strings['labels']['section_tax'],
-			'public' => true,
-			'show_in_nav_menus' => true,
-			'show_ui' => true,
-			'show_admin_column' => true,
-			'show_tagcloud' => false,
-			'hierarchical' => true,
+			'labels'                => $this->module->strings['labels']['section_tax'],
+			'public'                => true,
+			'show_in_nav_menus'     => true,
+			'show_ui'               => true,
+			'show_admin_column'     => true,
+			'show_tagcloud'         => false,
+			'hierarchical'          => true,
 			'update_count_callback' => array( 'gEditorialHelper', 'update_count_callback' ),
-			'rewrite' => array(
-				'slug' => $this->module->constants['section_tax'],
+			'rewrite'               => array(
+				'slug'         => $this->module->constants['section_tax'],
 				'hierarchical' => true,
-				'with_front' => true
+				'with_front'   => true
 			),
 			'query_var' => true,
 			'capabilities' => array(
 				'manage_terms' => 'edit_others_posts',
-				'edit_terms' => 'edit_others_posts',
+				'edit_terms'   => 'edit_others_posts',
 				'delete_terms' => 'edit_others_posts',
 				'assign_terms' => 'edit_published_posts'
 			)
@@ -353,21 +349,20 @@ class gEditorialEntry extends gEditorialModuleCore
 
 		$args = shortcode_atts( array(
 			//'section' => '',
-			'slug' => '',
-			'id' => '',
-			'title' => 'def',
-			'title_wrap' => 'h3',
-			'list' => 'ul',
-			'limit' => -1,
-			'order' => 'ASC',
-			'orderby' => 'menu_order',
-			//'future' => 'on',
-			'li_before' => '',
-			'order_before' => false,
-			'order_sep' => ' - ',
+			'slug'          => '',
+			'id'            => '',
+			'title'         => 'def',
+			'title_wrap'    => 'h3',
+			'list'          => 'ul',
+			'limit'         => -1,
+			'order'         => 'ASC',
+			'orderby'       => 'menu_order',
+			// 'future'        => TRUE,
+			'li_before'     => '',
+			'order_before'  => false,
+			'order_sep'     => ' - ',
 			'order_zeroise' => false,
-
-			'context' => null,
+			'context'       => null,
 		), $atts, $this->module->constants['entry_shortcode'] );
 
 

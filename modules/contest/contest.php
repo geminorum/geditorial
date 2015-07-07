@@ -7,7 +7,7 @@ class gEditorialContest extends gEditorialModuleCore
 	var $module_name = 'contest';
 	var $pre_term    = 'gXcXoE-';
 
-	var $import      = false;
+	var $import      = FALSE;
 
 	public function __construct()
 	{
@@ -23,7 +23,7 @@ class gEditorialContest extends gEditorialModuleCore
 			'extended_description' => __( 'Set of tools to create and manage text contests and/or gather assignments', GEDITORIAL_TEXTDOMAIN ),
 			'dashicon'             => 'smiley',
 			'slug'                 => 'contest',
-			'load_frontend'        => true,
+			'load_frontend'        => TRUE,
 			'constants'            => array(
 				'contest_cpt'      => 'contest',
 				'contest_archives' => 'contests',
@@ -34,16 +34,16 @@ class gEditorialContest extends gEditorialModuleCore
 
 			),
 			'default_options' => array(
-				'enabled' => 'off',
+				'enabled' => FALSE,
 				'post_types' => array(
-					'post'  => 'off',
-					'page'  => 'off',
-					'apply' => 'on',
+					'post'  => FALSE,
+					'page'  => FALSE,
+					'apply' => TRUE,
 				),
 				'post_fields' => array(
-					'post_title'   => 'on',
-					'post_content' => 'on',
-					'post_author'  => 'on',
+					'post_title'   => TRUE,
+					'post_content' => TRUE,
+					'post_author'  => TRUE,
 				),
 				'settings' => array(
 				),
@@ -165,8 +165,8 @@ class gEditorialContest extends gEditorialModuleCore
 		if ( ! self::enabled( $this->module_name ) )
 			return $default_options;
 
-		$default_options['post_types'][$this->module->constants['contest_cpt']] = 'on';
-		$default_options['post_types'][$this->module->constants['apply_cpt']] = 'on';
+		$default_options['post_types'][$this->module->constants['contest_cpt']] = TRUE;
+		$default_options['post_types'][$this->module->constants['apply_cpt']] = TRUE;
 		$default_options[$this->module->constants['contest_cpt'].'_fields'] = $default_options['post_fields'];
 		$default_options[$this->module->constants['apply_cpt'].'_fields'] = $default_options['post_fields'];
 		return $default_options;

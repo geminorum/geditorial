@@ -18,24 +18,24 @@ class gEditorialSeries extends gEditorialModuleCore
 			'extended_description' => __( 'Adding Post Series Functionality to WordPress With Taxonomies', GEDITORIAL_TEXTDOMAIN ),
 			'dashicon'             => 'smiley',
 			'slug'                 => 'series',
-			'load_frontend'        => true,
+			'load_frontend'        => TRUE,
 			'constants'            => array(
 				'series_tax' => 'series',
 				'series_shortcode' => 'series',
 				'multiple_series_shortcode' => 'multiple_series',
 			),
 			'default_options' => array(
-				'enabled' => 'off',
+				'enabled'  => FALSE,
+				'settings' => array(),
+				
 				'post_types' => array(
-					'post' => 'on',
-					'page' => 'off',
+					'post' => TRUE,
+					'page' => FALSE,
 				),
 				'post_fields' => array(
-					'in_series_title' => 'on',
-					'in_series_order' => 'on',
-					'in_series_desc'  => 'off',
-				),
-				'settings' => array(
+					'in_series_title' => TRUE,
+					'in_series_order' => TRUE,
+					'in_series_desc'  => FALSE,
 				),
 			),
 			'settings' => array(
@@ -83,7 +83,7 @@ class gEditorialSeries extends gEditorialModuleCore
 						'name'                       => __( 'Series', GEDITORIAL_TEXTDOMAIN ),
 						'singular_name'              => __( 'Series', GEDITORIAL_TEXTDOMAIN ),
 						'search_items'               => __( 'Search Series', GEDITORIAL_TEXTDOMAIN ),
-						'popular_items'              => null, // to disable tag cloud on edit tag page // __( 'Popular Series', GEDITORIAL_TEXTDOMAIN ),
+						'popular_items'              => NULL,
 						'all_items'                  => __( 'All Series', GEDITORIAL_TEXTDOMAIN ),
 						'parent_item'                => __( 'Parent Series', GEDITORIAL_TEXTDOMAIN ),
 						'parent_item_colon'          => __( 'Parent Series:', GEDITORIAL_TEXTDOMAIN ),

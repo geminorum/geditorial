@@ -18,36 +18,34 @@ class gEditorialMeta extends gEditorialModuleCore
 		// MUST DEPRECATE: at this point, there's no way knowing if the module is active or not!
 		do_action( 'geditorial_meta_include' );
 
-		$this->module_url = $this->get_module_url( __FILE__ );
 		$args = array(
 			'title'                => __( 'Meta', GEDITORIAL_TEXTDOMAIN ),
 			'short_description'    => __( 'Metadata, magazine style.', GEDITORIAL_TEXTDOMAIN ),
 			'extended_description' => __( 'Meta extended desc', GEDITORIAL_TEXTDOMAIN ),
-			'module_url'           => $this->module_url,
 			'dashicon'             => 'tag',
 			'slug'                 => 'meta',
-			'load_frontend'        => true,
+			'load_frontend'        => TRUE,
 			'constants'            => array(
 				'ct_tax' => 'label',
 			),
 			// MUST DEPRECATE: this filter is causing much trouble!!
 			'default_options' => apply_filters( 'geditorial_meta_default_options', array(
-				'enabled' => 'off',
+				'enabled'  => FALSE,
+				'settings' => array(),
+				
 				'post_types' => array(
-					'post' => 'on',
-					'page' => 'off',
+					'post' => TRUE,
+					'page' => FALSE,
 				),
 				'post_fields' => array(
-					'ot' => 'on', // over-title
-					'st' => 'on', // sub-title
-					'as' => 'on', // author simple
-					'le' => 'off', // lead
-					'ch' => 'on', // column header
-					'ct' => 'off', // column header taxonomy
-					'es' => 'on', // external link (source)
-					'ol' => 'on', // old link
-				),
-				'settings' => array(
+					'ot' => TRUE, // over-title
+					'st' => TRUE, // sub-title
+					'as' => TRUE, // author simple
+					'le' => FALSE, // lead
+					'ch' => TRUE, // column header
+					'ct' => FALSE, // column header taxonomy
+					'es' => TRUE, // external link (source)
+					'ol' => TRUE, // old link
 				),
 			) ),
 			'settings' => array(
@@ -91,7 +89,7 @@ class gEditorialMeta extends gEditorialModuleCore
 						'name'                       => __( 'Column Headers', GEDITORIAL_TEXTDOMAIN ),
 						'singular_name'              => __( 'Column Header', GEDITORIAL_TEXTDOMAIN ),
 						'search_items'               => __( 'Search Column Headers', GEDITORIAL_TEXTDOMAIN ),
-						'popular_items'              => null, // to disable tag cloud on edit tag page // __( 'Popular Column Headers', GEDITORIAL_TEXTDOMAIN ),
+						'popular_items'              => null,
 						'all_items'                  => __( 'All Column Headers', GEDITORIAL_TEXTDOMAIN ),
 						'parent_item'                => __( 'Parent Column Header', GEDITORIAL_TEXTDOMAIN ),
 						'parent_item_colon'          => __( 'Parent Column Header:', GEDITORIAL_TEXTDOMAIN ),

@@ -5,8 +5,8 @@ class gEditorialAudit extends gEditorialModuleCore
 
 	var $module;
 	var $module_name = 'audit';
-	var $meta_key = '_ge_audit';
-	var $cookie = 'geditorial-audit';
+	var $meta_key    = '_ge_audit';
+	var $cookie      = 'geditorial-audit';
 
 	public function __construct()
 	{
@@ -22,17 +22,17 @@ class gEditorialAudit extends gEditorialModuleCore
 			'module_url'           => $this->module_url,
 			'dashicon'             => 'heart',
 			'slug'                 => 'audit',
-			'load_frontend'        => true,
+			'load_frontend'        => TRUE,
 
 			'constants' => array(
 				'audit_tax' => 'audit',
 			),
 
 			'default_options' => array(
-				'enabled' => 'off',
+				'enabled' => FALSE,
 				'post_types' => array(
-					'post' => 'on',
-					'page' => 'off',
+					'post' => TRUE,
+					'page' => FALSE,
 				),
 				'post_fields' => array(
 				),
@@ -54,7 +54,7 @@ class gEditorialAudit extends gEditorialModuleCore
 						'name'                       => __( 'Audit Attributes',                       GEDITORIAL_TEXTDOMAIN ),
 						'singular_name'              => __( 'Audit Attribute',                        GEDITORIAL_TEXTDOMAIN ),
 						'search_items'               => __( 'Search Audit Attributes',                GEDITORIAL_TEXTDOMAIN ),
-						'popular_items'              => null, // __( 'Popular Audit Attributes', GEDITORIAL_TEXTDOMAIN ),
+						'popular_items'              => NULL,
 						'all_items'                  => __( 'All Audit Attributes',                   GEDITORIAL_TEXTDOMAIN ),
 						'parent_item'                => __( 'Parent Audit Attribute',                 GEDITORIAL_TEXTDOMAIN ),
 						'parent_item_colon'          => __( 'Parent Audit Attribute:',                GEDITORIAL_TEXTDOMAIN ),

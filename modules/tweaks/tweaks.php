@@ -15,24 +15,23 @@ class gEditorialTweaks extends gEditorialModuleCore
 			'short_description'    => __( 'Admin UI Enhancement', GEDITORIAL_TEXTDOMAIN ),
 			'dashicon'             => 'heart',
 			'slug'                 => 'tweaks',
-			'load_frontend'        => true,
+			'load_frontend'        => TRUE,
 
 			'constants' => array(
 				'tweaks_tax' => 'tweaks',
 			),
 
 			'default_options' => array(
-				'enabled' => 'off',
+				'enabled' => FALSE,
 				'post_types' => array(
-					'post' => 'on',
-					'page' => 'off',
-				),
-				'settings' => array(
+					'post' => TRUE,
+					'page' => FALSE,
 				),
 				'taxonomies' => array(
-					'category' => true,
-					'post_tag' => true,
+					'category' => TRUE,
+					'post_tag' => TRUE,
 				),
+				'settings' => array(),
 			),
 
 			'settings' => array(
@@ -40,19 +39,6 @@ class gEditorialTweaks extends gEditorialModuleCore
 					array(
 						'field'       => 'group_taxonomies',
 						'title'       => __( 'Group Default Taxonomies', GEDITORIAL_TEXTDOMAIN ),
-						// 'description' => __( '', GEDITORIAL_TEXTDOMAIN ),
-						'default'     => 0,
-					),
-					array(
-						'field'       => 'disable_notes',
-						'title'       => __( 'Form Notes', GEDITORIAL_TEXTDOMAIN ),
-						'description' => __( 'Removes extra notes after comment form on frontpage.', GEDITORIAL_TEXTDOMAIN ),
-						'default'     => 1,
-					),
-					array(
-						'field'       => 'widget_args',
-						'title'       => __( 'Force Widget', GEDITORIAL_TEXTDOMAIN ),
-						'description' => __( 'Force Recent Comments Widget to show only featured and non-buried comments.', GEDITORIAL_TEXTDOMAIN ),
 						'default'     => 0,
 					),
 				),
@@ -126,7 +112,7 @@ class gEditorialTweaks extends gEditorialModuleCore
 	{
 		$new_columns = array();
 		$exc_columns = array();
-		$added       = false;
+		$added       = FALSE;
 		$post_type   = gEditorialHelper::get_current_post_type();
 
 		foreach( $this->taxonomies() as $taxonomy )
@@ -137,7 +123,7 @@ class gEditorialTweaks extends gEditorialModuleCore
 			if ( ( 'comments' == $key && ! $added )
 				|| ( 'date' == $key && ! $added ) ) {
 					$new_columns['geditorial-tweaks-group_taxes'] = $this->get_string( 'group_taxes_column_title', $post_type, 'misc' );
-					$added = true;
+					$added = TRUE;
 			}
 
 			if ( ! in_array( $key, $exc_columns ) )

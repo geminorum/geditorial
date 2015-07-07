@@ -22,15 +22,15 @@ class gEditorialSubmit extends gEditorialModuleCore
 				'submit_form_shortcode' => 'submit-form',
 			),
 			'default_options' => array(
-				'enabled' => 'off',
+				'enabled' => FALSE,
 				'post_types' => array(
-					'post' => 'on',
-					'page' => 'off',
+					'post' => TRUE,
+					'page' => FALSE,
 				),
 				'post_fields' => array(
-					'post_title' => 'on',
-					'post_content' => 'on',
-					'post_author' => 'on',
+					'post_title'   => TRUE,
+					'post_content' => TRUE,
+					'post_author'  => TRUE,
 				),
 				'settings' => array(
 				),
@@ -232,21 +232,21 @@ class gEditorialSubmit extends gEditorialModuleCore
 		), $args['title'] );
 
 		$fields_hidden = gEditorialHelper::html( 'input', array(
-			'type' => 'hidden',
-			'name' => 'stage',
+			'type'  => 'hidden',
+			'name'  => 'stage',
 			'value' => 'editorial-submit-new',
 		), FALSE );
 
 		$fields_hidden .= gEditorialHelper::html( 'input', array(
-			'type' => 'hidden',
-			'name' => 'editorial-submit',
+			'type'  => 'hidden',
+			'name'  => 'editorial-submit',
 			'value' => '1',
 		), FALSE );
 
 		$id_nonce = mt_rand();
 		$fields_hidden .= gEditorialHelper::html( 'input', array(
-			'type' => 'hidden',
-			'name' => 'editorial_submit_form_id',
+			'type'  => 'hidden',
+			'name'  => 'editorial_submit_form_id',
 			'value' => $id_nonce,
 		), FALSE );
 		$fields_hidden .= wp_nonce_field( 'editorial_submit_form_'.$id_nonce, '_editorial_submit_form', FALSE, FALSE );

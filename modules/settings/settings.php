@@ -338,7 +338,7 @@ class gEditorialSettings extends gEditorialModuleCore
 		return true;
 	}
 
-	public function admin_settings_reset( $page = null )
+	public function admin_settings_reset( $page = NULL )
 	{
 		if ( ! isset( $_POST['reset-settings'], $_POST['geditorial_module_name'] ) )
 			return;
@@ -350,14 +350,14 @@ class gEditorialSettings extends gEditorialModuleCore
 			wp_die( __( 'Cheatin&#8217; uh?' ) );
 
 		$gEditorial->update_all_module_options( $gEditorial->$module_name->module->name, array(
-			'enabled' => 'on',
+			'enabled' => TRUE,
 		) );
 
 		wp_redirect( add_query_arg( 'message', 'settings-reset', remove_query_arg( array( 'message' ), wp_get_referer() ) ) );
 		exit;
 	}
 
-	public function admin_settings_save( $page = null )
+	public function admin_settings_save( $page = NULL )
 	{
 		if ( ! isset(
 			$_POST['_wpnonce'],
@@ -367,7 +367,7 @@ class gEditorialSettings extends gEditorialModuleCore
 			$_POST['geditorial_module_name'],
 			$_POST['submit']
 		) )
-			return false;
+			return FALSE;
 
 		global $gEditorial;
 
@@ -375,7 +375,7 @@ class gEditorialSettings extends gEditorialModuleCore
 
 		if ( $_POST['action'] != 'update'
 			|| $_POST['option_page'] != $gEditorial->$module_name->module->options_group_name )
-			return false;
+			return FALSE;
 
 		//if ( ! current_user_can( 'manage_options' ) || !wp_verify_nonce( $_POST['_wpnonce'], $gEditorial->$module_name->module->options_group_name.'-options' ) )
 		if ( ! $this->admin_settings_verify( $gEditorial->$module_name->module->options_group_name ) )

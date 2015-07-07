@@ -26,10 +26,10 @@ class gEditorialAlphabets extends gEditorialModuleCore
 			),
 
 			'default_options' => array(
-				'enabled' => 'off',
+				'enabled' => FALSE,
 				'post_types' => array(
-					'post' => 'off',
-					'page' => 'off',
+					'post' => FALSE,
+					'page' => FALSE,
 				),
 				'settings' => array(
 				),

@@ -18,31 +18,23 @@ class gEditorialComments extends gEditorialModuleCore
 	{
 		global $gEditorial;
 
-		$this->module_url = $this->get_module_url( __FILE__ );
 		$args = array(
 			'title'                => __( 'Comments', GEDITORIAL_TEXTDOMAIN ),
 			'short_description'    => __( 'Comment Managment Enhancements', GEDITORIAL_TEXTDOMAIN ),
 			'extended_description' => __( 'Series of tools to help better managing the comments on a magazine.', GEDITORIAL_TEXTDOMAIN ),
-			'module_url'           => $this->module_url,
 			'dashicon'             => 'admin-comments',
 			'slug'                 => 'comments',
-			'load_frontend'        => true,
+			'load_frontend'        => TRUE,
 			'constants'            => array(
 				'comments_shortcode' => 'comments',
 			),
 			'default_options' => array(
-				'enabled'    => 'off',
+				'enabled'    => FALSE,
 				'post_types' => array(
-					'post' => 'on',
-					'page' => 'off',
+					'post' => TRUE,
+					'page' => FALSE,
 				),
-				'post_fields' => array(
-					'in_comments_title' => 'on',
-					'in_comments_order' => 'on',
-					'in_comments_desc'  => 'off',
-				),
-				'settings' => array(
-				),
+				'settings' => array(),
 			),
 			'settings' => array(
 				'_general' => array(

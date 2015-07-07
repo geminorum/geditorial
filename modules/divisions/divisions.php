@@ -13,52 +13,47 @@ class gEditorialDivisions extends gEditorialModuleCore
 	{
 		global $gEditorial;
 
-		$this->module_url = $this->get_module_url( __FILE__ );
 		$args = array(
-			'title' => __( 'Divisions', GEDITORIAL_TEXTDOMAIN ),
-			'short_description' => __( 'Post Divisions Management', GEDITORIAL_TEXTDOMAIN ),
+			'title'                => __( 'Divisions', GEDITORIAL_TEXTDOMAIN ),
+			'short_description'    => __( 'Post Divisions Management', GEDITORIAL_TEXTDOMAIN ),
 			'extended_description' => __( 'Adding Post Divisions Functionality to WordPress With Custom Post Types', GEDITORIAL_TEXTDOMAIN ),
-			'module_url' => $this->module_url,
-			'dashicon' => 'smiley',
-			'slug' => 'divisions',
-			'load_frontend' => true,
-			'constants' => array(
-				'division_cpt' => 'division',
-				'division_archives' => 'divisions',
-				'division_tax' => 'division',
-
-				'p2p_connection_name' => 'everything_to_division',
-
-				'divisions_shortcode' => 'divisions',
+			'dashicon'             => 'smiley',
+			'slug'                 => 'divisions',
+			'load_frontend'        => TRUE,
+			'constants'            => array(
+				'division_cpt'                 => 'division',
+				'division_archives'            => 'divisions',
+				'division_tax'                 => 'division',
+				'p2p_connection_name'          => 'everything_to_division',
+				'divisions_shortcode'          => 'divisions',
 				'multiple_divisions_shortcode' => 'multiple_divisions',
 			),
 			'default_options' => array(
-				'enabled' => 'off',
+				'enabled' => FALSE,
 				'post_types' => array(
-					'post' => 'on',
-					'page' => 'off',
+					'post' => TRUE,
+					'page' => FALSE,
 				),
 				'post_fields' => array(
-					'in_divisions_title' => 'on',
-					'in_divisions_order' => 'on',
-					'in_divisions_desc' => 'off',
+					'in_divisions_title' => TRUE,
+					'in_divisions_order' => TRUE,
+					'in_divisions_desc'  => FALSE,
 				),
-				'settings' => array(
-				),
+				'settings' => array(),
 			),
 			'settings' => array(
 				'_general' => array(
 					array(
-						'field' => 'multiple',
-						'title' => __( 'Multiple Divisions', GEDITORIAL_TEXTDOMAIN ),
+						'field'       => 'multiple',
+						'title'       => __( 'Multiple Divisions', GEDITORIAL_TEXTDOMAIN ),
 						'description' => __( 'Using multiple divisions for each post.', GEDITORIAL_TEXTDOMAIN ),
-						'default' => 0,
+						'default'     => 0,
 					),
 					array(
-						'field' => 'editor_button',
-						'title' => _x( 'Editor Button', 'Divisions Editor Button', GEDITORIAL_TEXTDOMAIN ),
+						'field'       => 'editor_button',
+						'title'       => _x( 'Editor Button', 'Divisions Editor Button', GEDITORIAL_TEXTDOMAIN ),
 						'description' => __( 'Adding an Editor Button to insert shortcodes', GEDITORIAL_TEXTDOMAIN ),
-						'default' => 1,
+						'default'     => 1,
 					),
 				),
 				'post_types_option' => 'post_types_option',
@@ -69,20 +64,20 @@ class gEditorialDivisions extends gEditorialModuleCore
 					'post' => array(
 						'in_divisions_title' => __( 'Title', GEDITORIAL_TEXTDOMAIN ),
 						'in_divisions_order' => __( 'Order', GEDITORIAL_TEXTDOMAIN ),
-						'in_divisions_desc' => __( 'Description', GEDITORIAL_TEXTDOMAIN ),
+						'in_divisions_desc'  => __( 'Description', GEDITORIAL_TEXTDOMAIN ),
 					),
 				),
 				'descriptions' => array(
 					'post' => array(
 						'in_divisions_title' => __( 'In Divisions Title', GEDITORIAL_TEXTDOMAIN ),
 						'in_divisions_order' => __( 'In Divisions Order', GEDITORIAL_TEXTDOMAIN ),
-						'in_divisions_desc' => __( 'In Divisions Description', GEDITORIAL_TEXTDOMAIN ),
+						'in_divisions_desc'  => __( 'In Divisions Description', GEDITORIAL_TEXTDOMAIN ),
 					),
 				),
 				'misc' => array(
 					'post' => array(
-						'box_title' => __( 'Divisions', GEDITORIAL_TEXTDOMAIN ),
-						'column_title' => __( 'Divisions', GEDITORIAL_TEXTDOMAIN ),
+						'box_title'        => __( 'Divisions', GEDITORIAL_TEXTDOMAIN ),
+						'column_title'     => __( 'Divisions', GEDITORIAL_TEXTDOMAIN ),
 						'select_divisions' => __( '&mdash; Choose a Divisions &mdash;', GEDITORIAL_TEXTDOMAIN ),
 					),
 				),
@@ -91,28 +86,28 @@ class gEditorialDivisions extends gEditorialModuleCore
 						'name' => __( 'Divisions', GEDITORIAL_TEXTDOMAIN ),
 					),
 					'division_tax' => array(
-						'name' => __( 'Divisions', GEDITORIAL_TEXTDOMAIN ),
-						'singular_name' => __( 'Division', GEDITORIAL_TEXTDOMAIN ),
-						'search_items' => __( 'Search Divisions', GEDITORIAL_TEXTDOMAIN ),
-						'popular_items' => null, // to disable tag cloud on edit tag page // __( 'Popular Divisions', GEDITORIAL_TEXTDOMAIN ),
-						'all_items' => __( 'All Divisions', GEDITORIAL_TEXTDOMAIN ),
-						'parent_item' => __( 'Parent Division', GEDITORIAL_TEXTDOMAIN ),
-						'parent_item_colon' => __( 'Parent Division:', GEDITORIAL_TEXTDOMAIN ),
-						'edit_item' => __( 'Edit Division', GEDITORIAL_TEXTDOMAIN ),
-						'update_item' => __( 'Update Division', GEDITORIAL_TEXTDOMAIN ),
-						'add_new_item' => __( 'Add New Division', GEDITORIAL_TEXTDOMAIN ),
-						'new_item_name' => __( 'New Division Name', GEDITORIAL_TEXTDOMAIN ),
+						'name'                       => __( 'Divisions', GEDITORIAL_TEXTDOMAIN ),
+						'singular_name'              => __( 'Division', GEDITORIAL_TEXTDOMAIN ),
+						'search_items'               => __( 'Search Divisions', GEDITORIAL_TEXTDOMAIN ),
+						'popular_items'              => NULL,
+						'all_items'                  => __( 'All Divisions', GEDITORIAL_TEXTDOMAIN ),
+						'parent_item'                => __( 'Parent Division', GEDITORIAL_TEXTDOMAIN ),
+						'parent_item_colon'          => __( 'Parent Division:', GEDITORIAL_TEXTDOMAIN ),
+						'edit_item'                  => __( 'Edit Division', GEDITORIAL_TEXTDOMAIN ),
+						'update_item'                => __( 'Update Division', GEDITORIAL_TEXTDOMAIN ),
+						'add_new_item'               => __( 'Add New Division', GEDITORIAL_TEXTDOMAIN ),
+						'new_item_name'              => __( 'New Division Name', GEDITORIAL_TEXTDOMAIN ),
 						'separate_items_with_commas' => __( 'Separate divisions with commas', GEDITORIAL_TEXTDOMAIN ),
-						'add_or_remove_items' => __( 'Add or remove divisions', GEDITORIAL_TEXTDOMAIN ),
-						'choose_from_most_used' => __( 'Choose from the most used divisions', GEDITORIAL_TEXTDOMAIN ),
-						'menu_name' => __( 'Divisions', GEDITORIAL_TEXTDOMAIN ),
+						'add_or_remove_items'        => __( 'Add or remove divisions', GEDITORIAL_TEXTDOMAIN ),
+						'choose_from_most_used'      => __( 'Choose from the most used divisions', GEDITORIAL_TEXTDOMAIN ),
+						'menu_name'                  => __( 'Divisions', GEDITORIAL_TEXTDOMAIN ),
 					),
 				),
 			),
 			'configure_page_cb' => 'print_configure_view',
 			'settings_help_tab' => array(
-				'id' => 'geditorial-divisions-overview',
-				'title' => __( 'help-tab-title', GEDITORIAL_TEXTDOMAIN ),
+				'id'      => 'geditorial-divisions-overview',
+				'title'   => __( 'help-tab-title', GEDITORIAL_TEXTDOMAIN ),
 				'content' => __( '<p>help-tab-content</p>', GEDITORIAL_TEXTDOMAIN ),
 				),
 			'settings_help_sidebar' => sprintf(
@@ -152,23 +147,23 @@ class gEditorialDivisions extends gEditorialModuleCore
 		$post_type_support = $this->post_types();
 
 		register_post_type( $this->module->constants['division_cpt'], array(
-			'labels' => $this->module->strings['labels']['division_cpt'],
-			'hierarchical' => true,
-			'supports' => array( 'title', 'editor', 'excerpt', 'author', 'thumbnail', 'trackbacks', 'custom-fields', 'comments', 'revisions', 'page-attributes' ),
-			'taxonomies' => array( 'category', 'post_tag', $this->module->constants['division_tax'] ),
-			'public' => true,
-			'show_ui' => true,
-			// 'show_in_menu' => ( 1 == count( $post_type_support ) ? 'edit.php?post_type='.$post_type_support[0] : 'index.php' ) ,
-			// 'menu_position' => 5,
-			'menu_icon' => 'dashicons-networking',
-			'show_in_nav_menus' => false,
-			'publicly_queryable' => true,
+			'labels'              => $this->module->strings['labels']['division_cpt'],
+			'hierarchical'        => true,
+			'supports'            => array( 'title', 'editor', 'excerpt', 'author', 'thumbnail', 'trackbacks', 'custom-fields', 'comments', 'revisions', 'page-attributes' ),
+			'taxonomies'          => array( 'category', 'post_tag', $this->module->constants['division_tax'] ),
+			'public'              => true,
+			'show_ui'             => true,
+			// 'show_in_menu'        => ( 1 == count( $post_type_support ) ? 'edit.php?post_type='.$post_type_support[0] : 'index.php' ) ,
+			// 'menu_position'       => 5,
+			'menu_icon'           => 'dashicons-networking',
+			'show_in_nav_menus'   => false,
+			'publicly_queryable'  => true,
 			'exclude_from_search' => false,
-			'has_archive' => $this->module->constants['division_archives'],
-			'query_var' => $this->module->constants['division_cpt'],
-			'can_export' => true,
-			'rewrite' =>  array(
-				'slug' => $this->module->constants['division_cpt'],
+			'has_archive'         => $this->module->constants['division_archives'],
+			'query_var'           => $this->module->constants['division_cpt'],
+			'can_export'          => true,
+			'rewrite'             => array(
+				'slug'       => $this->module->constants['division_cpt'],
 				'with_front' => false,
 			),
 			// 'capabilities' => $this->options['publication_capabilities'],
@@ -179,16 +174,16 @@ class gEditorialDivisions extends gEditorialModuleCore
 	public function register_taxonomies()
 	{
 		register_taxonomy( $this->module->constants['division_tax'], $this->post_types(), array(
-			'labels' => $this->module->strings['labels']['division_tax'],
-			'public' => true,
-			'show_in_nav_menus' => false,
-			// 'show_ui' => true, //current_user_can( 'update_plugins' ),
-			'show_ui' => false,
-			'show_admin_column' => false,
-			'show_tagcloud' => false,
-			'hierarchical' => false,
+			'labels'                => $this->module->strings['labels']['division_tax'],
+			'public'                => true,
+			'show_in_nav_menus'     => false,
+			// 'show_ui'               => true, //current_user_can( 'update_plugins' ),
+			'show_ui'               => false,
+			'show_admin_column'     => false,
+			'show_tagcloud'         => false,
+			'hierarchical'          => false,
 			'update_count_callback' => array( 'gEditorialHelper', 'update_count_callback' ),
-			'rewrite' => array(
+			'rewrite'               => array(
 				'slug' => $this->module->constants['division_tax'],
 				'hierarchical' => false,
 				'with_front' => false,
@@ -261,19 +256,16 @@ class gEditorialDivisions extends gEditorialModuleCore
 	{
 		$args = shortcode_atts( array(
 			'visibility' => 'all',
-			'compare' => 'IN',
-
-			'title' => '',
-			'title_tag' => 'h3',
-			'class' => '',
-
-			'order' => 'ASC',
-			'orderby' => 'term_order, name',
-
-			'exclude' => null,
-			'before' => '',
-			'after' => '',
-			'context' => null,
+			'compare'    => 'IN',
+			'title'      => '',
+			'title_tag'  => 'h3',
+			'class'      => '',
+			'order'      => 'ASC',
+			'orderby'    => 'term_order, name',
+			'exclude'    => null,
+			'before'     => '',
+			'after'      => '',
+			'context'    => null,
 		), $atts );
 
 
@@ -330,19 +322,16 @@ class gEditorialDivisions extends gEditorialModuleCore
 
 		$args = shortcode_atts( array(
 			'visibility' => 'all',
-			'compare' => 'IN',
-
-			'title' => '',
-			'title_tag' => 'h3',
-			'class' => '',
-
-			'order' => 'ASC',
-			'orderby' => 'term_order, name',
-
-			'exclude' => null,
-			'before' => '',
-			'after' => '',
-			'context' => null,
+			'compare'    => 'IN',
+			'title'      => '',
+			'title_tag'  => 'h3',
+			'class'      => '',
+			'order'      => 'ASC',
+			'orderby'    => 'term_order, name',
+			'exclude'    => null,
+			'before'     => '',
+			'after'      => '',
+			'context'    => null,
 		), $atts );
 
 

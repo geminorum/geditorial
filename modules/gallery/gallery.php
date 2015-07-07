@@ -18,7 +18,7 @@ class gEditorialGallery extends gEditorialModuleCore
 			'extended_description' => __( 'Adding gallery functionality to WordPress with custom posttypes and taxonomies.', GEDITORIAL_TEXTDOMAIN ),
 			'dashicon'             => 'format-gallery',
 			'slug'                 => 'gallery',
-			'load_frontend'        => true,
+			'load_frontend'        => TRUE,
 
 			'constants' => array(
 				'album_cpt'       => 'photo_album',
@@ -29,14 +29,11 @@ class gEditorialGallery extends gEditorialModuleCore
 			),
 
 			'default_options' => array(
-				'enabled' => 'off',
+				'enabled'  => FALSE,
+
 				'post_types' => array(
-					'post' => 'on',
-					'page' => 'off',
-				),
-				'post_fields' => array(
-				),
-				'settings' => array(
+					'post' => TRUE,
+					'page' => FALSE,
 				),
 			),
 			'settings' => array(
@@ -72,7 +69,7 @@ class gEditorialGallery extends gEditorialModuleCore
 				'id'       => 'geditorial-gallery-overview',
 				'title'    => __( 'help-tab-title', GEDITORIAL_TEXTDOMAIN ),
 				'content'  => __( '<p>help-tab-content</p>', GEDITORIAL_TEXTDOMAIN ),
-				'callback' => false,
+				'callback' => FALSE,
 			),
 		),
 		'settings_help_sidebar' => sprintf(
@@ -164,22 +161,22 @@ class gEditorialGallery extends gEditorialModuleCore
 				'revisions',
 				'page-attributes',
 			),
-			'hierarchical'        => true,
-			'public'              => true,
-			'show_ui'             => true,
-			'show_in_menu'        => true,
+			'hierarchical'        => TRUE,
+			'public'              => TRUE,
+			'show_ui'             => TRUE,
+			'show_in_menu'        => TRUE,
 			'menu_position'       => 4,
 			'menu_icon'           => 'dashicons-format-gallery',
-			'show_in_nav_menus'   => true,
-			'publicly_queryable'  => true,
-			'exclude_from_search' => false,
+			'show_in_nav_menus'   => TRUE,
+			'publicly_queryable'  => TRUE,
+			'exclude_from_search' => FALSE,
 			'has_archive'         => $this->module->constants['album_archives'],
 			'query_var'           => $this->module->constants['album_cpt'],
-			'can_export'          => true,
-			'map_meta_cap'        => true,
+			'can_export'          => TRUE,
+			'map_meta_cap'        => TRUE,
 			'rewrite'             => array(
 				'slug'       => $this->module->constants['album_cpt'],
-				'with_front' => false
+				'with_front' => FALSE
 			),
 		) );
 	}
@@ -190,18 +187,18 @@ class gEditorialGallery extends gEditorialModuleCore
 
 		register_taxonomy( $this->module->constants['album_cat_tax'], $this->module->constants['album_cpt'], array(
 			'labels'                => $this->module->strings['labels']['album_cat_tax'],
-			'public'                => false,
-			'show_in_nav_menus'     => false,
+			'public'                => FALSE,
+			'show_in_nav_menus'     => FALSE,
 			'show_ui'               => $editor,
 			'show_admin_column'     => $editor,
-			'show_tagcloud'         => false,
-			'hierarchical'          => true,
-			'query_var'             => true,
+			'show_tagcloud'         => FALSE,
+			'hierarchical'          => TRUE,
+			'query_var'             => TRUE,
 			'update_count_callback' => array( 'gEditorialHelper', 'update_count_callback' ),
 			'rewrite'               => array(
-				'slug' => $this->module->constants['album_cat_tax'],
-				'hierarchical' => true,
-				'with_front' => true
+				'slug'         => $this->module->constants['album_cat_tax'],
+				'hierarchical' => TRUE,
+				'with_front'   => TRUE
 			),
 			'capabilities' => array(
 				'manage_terms' => 'edit_others_posts',
@@ -213,18 +210,18 @@ class gEditorialGallery extends gEditorialModuleCore
 
 		register_taxonomy( $this->module->constants['album_tag_tax'], $this->module->constants['album_cpt'], array(
 			'labels'                => $this->module->strings['labels']['album_tag_tax'],
-			'public'                => false,
-			'show_in_nav_menus'     => false,
+			'public'                => FALSE,
+			'show_in_nav_menus'     => FALSE,
 			'show_ui'               => $editor,
 			'show_admin_column'     => $editor,
-			'show_tagcloud'         => false,
-			'hierarchical'          => false,
-			'query_var'             => true,
+			'show_tagcloud'         => FALSE,
+			'hierarchical'          => FALSE,
+			'query_var'             => TRUE,
 			'update_count_callback' => array( 'gEditorialHelper', 'update_count_callback' ),
 			'rewrite'               => array(
-				'slug' => $this->module->constants['album_tag_tax'],
-				'hierarchical' => false,
-				'with_front' => true
+				'slug'         => $this->module->constants['album_tag_tax'],
+				'hierarchical' => FALSE,
+				'with_front'   => TRUE
 			),
 			'capabilities' => array(
 				'manage_terms' => 'edit_others_posts',
@@ -236,18 +233,18 @@ class gEditorialGallery extends gEditorialModuleCore
 
 		register_taxonomy( $this->module->constants['photo_tag_tax'], 'attachments', array(
 			'labels'                => $this->module->strings['labels']['photo_tag_tax'],
-			'public'                => false,
-			'show_in_nav_menus'     => false,
+			'public'                => FALSE,
+			'show_in_nav_menus'     => FALSE,
 			'show_ui'               => $editor,
 			'show_admin_column'     => $editor,
-			'show_tagcloud'         => false,
-			'hierarchical'          => false,
-			'query_var'             => true,
+			'show_tagcloud'         => FALSE,
+			'hierarchical'          => FALSE,
+			'query_var'             => TRUE,
 			'update_count_callback' => array( 'gEditorialHelper', 'update_count_callback' ),
 			'rewrite'               => array(
-				'slug' => $this->module->constants['photo_tag_tax'],
-				'hierarchical' => false,
-				'with_front' => true
+				'slug'         => $this->module->constants['photo_tag_tax'],
+				'hierarchical' => FALSE,
+				'with_front'   => TRUE
 			),
 			'capabilities' => array(
 				'manage_terms' => 'edit_others_posts',
