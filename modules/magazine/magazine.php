@@ -52,11 +52,19 @@ class gEditorialMagazine extends gEditorialModuleCore
 						'default'     => 0,
 					),
 					array(
+						'field'       => 'redirect_archives',
+						'type'        => 'text',
+						'title'       => __( 'Redirect Archives', GEDITORIAL_TEXTDOMAIN ),
+						'description' => __( 'Redirect Issue Archives to a Page', GEDITORIAL_TEXTDOMAIN ),
+						'default'     => '',
+						'dir'         => 'ltr',
+					),
+					array(
 						'field'       => 'redirect_spans',
 						'type'        => 'text',
-						'title'       => _x( 'Redirect Spans', 'Enable Magazine for Comments', GEDITORIAL_TEXTDOMAIN ),
+						'title'       => __( 'Redirect Spans', GEDITORIAL_TEXTDOMAIN ),
 						'description' => __( 'Redirect all Span Archives to a Page', GEDITORIAL_TEXTDOMAIN ),
-						'default'     => 0,
+						'default'     => '',
 						'dir'         => 'ltr',
 					),
 				),
@@ -94,7 +102,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 						'name'                       => __( 'Issues', GEDITORIAL_TEXTDOMAIN ),
 						'singular_name'              => __( 'Issue', GEDITORIAL_TEXTDOMAIN ),
 						'search_items'               => __( 'Search Issues', GEDITORIAL_TEXTDOMAIN ),
-						'popular_items'              => NULL, // __( 'Popular Issues', GEDITORIAL_TEXTDOMAIN ),
+						'popular_items'              => NULL,
 						'all_items'                  => __( 'All Issues', GEDITORIAL_TEXTDOMAIN ),
 						'parent_item'                => __( 'Parent Issue', GEDITORIAL_TEXTDOMAIN ),
 						'parent_item_colon'          => __( 'Parent Issue:', GEDITORIAL_TEXTDOMAIN ),
@@ -111,7 +119,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 						'name'                       => __( 'Spans', GEDITORIAL_TEXTDOMAIN ),
 						'singular_name'              => __( 'Span', GEDITORIAL_TEXTDOMAIN ),
 						'search_items'               => __( 'Search Spans', GEDITORIAL_TEXTDOMAIN ),
-						'popular_items'              => NULL, // __( 'Popular Spans', GEDITORIAL_TEXTDOMAIN ),
+						'popular_items'              => NULL,
 						'all_items'                  => __( 'All Spans', GEDITORIAL_TEXTDOMAIN ),
 						'parent_item'                => __( 'Parent Span', GEDITORIAL_TEXTDOMAIN ),
 						'parent_item_colon'          => __( 'Parent Span:', GEDITORIAL_TEXTDOMAIN ),
@@ -384,6 +392,27 @@ class gEditorialMagazine extends gEditorialModuleCore
 	}
 
 	public function template_redirect()
+	{
+		if ( is_tax( $this->module->constants['issue_tax'] ) ) {
+
+			$term = get_queried_object();
+			if ( $post_id = gEditorialHelper::getPostIDbySlug( $term->slug, $this->module->constants['issue_cpt'] ) )
+				self::redirect( get_permalink( $post_id ), 301 );
+
+		} else if ( is_tax( $this->module->constants['span_tax'] ) ) {
+
+			if ( $redirect = $this->get_setting( 'redirect_spans', FALSE ) )
+				self::redirect( $redirect, 301 );
+
+		} else if ( is_post_type_archive( $this->module->constants['issue_cpt'] ) ) {
+
+			if ( $redirect = $this->get_setting( 'redirect_archives', FALSE ) )
+				self::redirect( $redirect, 301 );
+		}
+	}
+
+	//	FIXME: OLD / REMOVE
+	public function template_redirect_OLD()
 	{
 		if ( ! is_tax() )
 			return;
