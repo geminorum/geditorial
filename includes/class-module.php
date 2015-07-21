@@ -313,7 +313,7 @@ class gEditorialModuleCore
 	public function register_settings_post_types_option()
 	{
 		$section = $this->module->options_group_name.'_posttypes';
-		
+
 		add_settings_section( $section, FALSE, '__return_false', $this->module->options_group_name );
 		add_settings_field( 'post_types',
 			__( 'Enable for these post types:', GEDITORIAL_TEXTDOMAIN ),
@@ -326,7 +326,7 @@ class gEditorialModuleCore
 	public function register_settings_taxonomies_option()
 	{
 		$section = $this->module->options_group_name.'_taxonomies';
-		
+
 		add_settings_section( $section, FALSE, '__return_false', $this->module->options_group_name );
 		add_settings_field( 'taxonomies',
 			__( 'Enable for these taxonomies:', GEDITORIAL_TEXTDOMAIN ),
@@ -388,18 +388,18 @@ class gEditorialModuleCore
 		$checked = FALSE;
 		if ( isset( $this->module->options->{$args['post_type'].'_fields'}[$args['field']] ) )
 			$checked = $this->module->options->{$args['post_type'].'_fields'}[$args['field']];
-		
+
 		if ( 'off' === $checked )
 			$checked = FALSE;
-		
+
 		if ( $checked )
 			$checked = TRUE;
-		
+
 		checked( $checked );
 
 		echo ' type="checkbox" />&nbsp;'.esc_html( $args['title'] )
 			.'<p class="description">';
-			
+
 		echo $this->get_string( $args['field'], $args['post_type'], 'descriptions',
 			__( 'No description available.', GEDITORIAL_TEXTDOMAIN ) ).'</p></label>';
 	}
@@ -471,7 +471,7 @@ class gEditorialModuleCore
 		$fields = array();
 		$key = $post_type.'_fields';
 
-		if ( isset( $this->module->options->{$key} ) 
+		if ( isset( $this->module->options->{$key} )
 			&& is_array( $this->module->options->{$key} ) ) {
 				foreach( $this->module->options->{$key} as $field => $value )
 					if ( $value && 'off' !== $value )
@@ -483,13 +483,13 @@ class gEditorialModuleCore
 	public function post_type_fields_list( $post_type = 'post', $extra = array() )
 	{
 		$list = array();
-		
+
 		foreach ( $this->post_type_fields( $post_type ) as $field )
 			$list[$field] = $this->get_string( $field, $post_type );
-		
+
 		foreach ( $extra as $key => $val )
 			$list[$key] = $this->get_string( $val, $post_type );
-		
+
 		return $list;
 	}
 
@@ -562,10 +562,10 @@ class gEditorialModuleCore
 	public function intval( $text, $intval = TRUE )
 	{
 		$number = apply_filters( 'number_format_i18n_back', $text );
-		
+
 		if ( $intval )
 			return intval( $number );
-		
+
 		return $number;
 	}
 
@@ -682,7 +682,7 @@ class gEditorialModuleCore
 			$value = NULL;
 
 		switch ( $args['type'] ) {
-			
+
 			case 'enabled' :
 
 				$html = gEditorialHelper::html( 'option', array(
@@ -706,7 +706,7 @@ class gEditorialModuleCore
 
 				if ( ! $args['field_class'] )
 					$args['field_class'] = 'regular-text';
-					
+
 				echo gEditorialHelper::html( 'input', array(
 					'type'     => 'text',
 					'class'    => $args['field_class'],
@@ -719,7 +719,7 @@ class gEditorialModuleCore
 
 			break;
 			case 'checkbox' :
-				
+
 				if ( count( $args['values'] ) ) {
 					foreach( $args['values'] as $value_name => $value_title ) {
 						$html .= gEditorialHelper::html( 'input', array(
@@ -754,7 +754,7 @@ class gEditorialModuleCore
 
 			break;
 			case 'select' :
-			
+
 				if ( FALSE !== $args['values'] ) { // alow hiding
 					foreach ( $args['values'] as $value_name => $value_title )
 						$html .= gEditorialHelper::html( 'option', array(
@@ -771,10 +771,10 @@ class gEditorialModuleCore
 
 			break;
 			default :
-			
+
 				_e( 'Error: setting type undefined.', GEDITORIAL_TEXTDOMAIN );
 		}
-		
+
 		if ( $args['description'] && FALSE !== $args['values'] )
 			echo gEditorialHelper::html( 'p', array(
 				'class' => 'description',
@@ -785,10 +785,10 @@ class gEditorialModuleCore
 	{
 		if ( isset( $this->module->options->settings[$field] ) )
 			return $this->module->options->settings[$field];
-		
+
 		else if ( isset( $this->module->default_options['settings'][$field] ) )
 			return $this->module->default_options['settings'][$field];
-		
+
 		else
 			return $default;
 	}
@@ -888,5 +888,11 @@ class gEditorialModuleCore
 		}
 
 		return $title;
+	}
+
+	public static function redirect( $location, $status = 302 )
+	{
+		wp_redirect( $location, $status );
+		exit();
 	}
 }
