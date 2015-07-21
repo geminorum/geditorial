@@ -170,9 +170,11 @@ class gEditorialMagazine extends gEditorialModuleCore
 			add_action( 'admin_init', array( &$this, 'admin_init' ) );
 			add_action( 'geditorial_settings_load', array( &$this, 'register_settings' ) );
 
+			add_filter( 'disable_months_dropdown', array( &$this, 'disable_months_dropdown' ), 8, 2 );
 			add_action( 'restrict_manage_posts', array( &$this, 'restrict_manage_posts' ) );
 			add_action( 'pre_get_posts', array( &$this, 'pre_get_posts' ) );
-			// add_filter( 'parse_query', array( &$this, 'parse_query_issues' ) );
+			add_filter( 'parse_query', array( &$this, 'parse_query_issues' ) );
+
 		} else {
 			add_filter( 'term_link', array( &$this, 'term_link' ), 10, 3 );
 			add_action( 'template_redirect', array( &$this, 'template_redirect' ) );
@@ -369,6 +371,14 @@ class gEditorialMagazine extends gEditorialModuleCore
 				'assign_terms' => 'edit_published_posts'
 			)
 		) );
+	}
+
+	public function disable_months_dropdown( $false, $post_type )
+	{
+		if ( $this->module->constants['issue_cpt'] == $post_type )
+			return TRUE;
+
+		return $false;
 	}
 
 	// http://justintadlock.com/archives/2010/08/20/linking-terms-to-a-specific-post
@@ -787,7 +797,9 @@ class gEditorialMagazine extends gEditorialModuleCore
 
 	public function restrict_manage_posts()
 	{
-		if ( in_array( get_current_screen()->post_type, $this->post_types() ) ) {
+		$post_type = gEditorialHelper::get_current_post_type();
+
+		if ( in_array( $post_type, $this->post_types() ) ) {
 
 			$issue_tax = $this->module->constants['issue_tax'];
 			$tax_obj   = get_taxonomy( $issue_tax );
@@ -804,21 +816,36 @@ class gEditorialMagazine extends gEditorialModuleCore
 				'value_field'      => 'post_name',
 				'walker'           => new gEditorial_Walker_PageDropdown(),
 			));
+
+		} else if ( $this->module->constants['issue_cpt'] == $post_type ) {
+
+			$span_tax = $this->module->constants['span_tax'];
+			$tax_obj   = get_taxonomy( $span_tax );
+
+			wp_dropdown_categories( array(
+				'show_option_all' => $tax_obj->labels->all_items,
+				'taxonomy'        => $span_tax,
+				'name'            => $tax_obj->name,
+				// 'orderby'         => 'slug',
+				'order'           => 'DESC',
+				'selected'        => isset( $_GET[$span_tax] ) ? $_GET[$span_tax] : 0,
+				'hierarchical'    => $tax_obj->hierarchical,
+				'show_count'      => FALSE,
+				'hide_empty'      => TRUE,
+			) );
 		}
 	}
 
-	// NO NEED
 	public function parse_query_issues( $query )
 	{
-		return;
-
-		if ( $query->is_admin
-			&& isset( $query->query_vars[$this->module->constants['issue_tax']] )
-			&& 'edit' == get_current_screen()->base	) {
-				$issue = &$query->query_vars[$this->module->constants['issue_tax']];
-				$term = get_term_by( 'id', $issue, $this->module->constants['issue_tax'] );
-				if ( ! empty( $term ) && ! is_wp_error( $term ) )
-					$issue = $term->slug;
+		if ( $query->is_admin && 'edit' == get_current_screen()->base ) {
+			$span_tax = $this->module->constants['span_tax'];
+			if ( isset( $query->query_vars[$span_tax] ) ) {
+				$var = &$query->query_vars[$span_tax];
+				$span = get_term_by( 'id', $var, $span_tax );
+				if ( ! empty( $span ) && ! is_wp_error( $span ) )
+					$var = $span->slug;
+			}
 		}
 	}
 
