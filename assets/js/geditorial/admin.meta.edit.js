@@ -22,7 +22,7 @@ jQuery(document).ready(function($) {
 
 		if ( gEditorial.meta.hasOwnProperty('st') ) {
 			var st = $('#'+tag_id)
-				.find('div.geditorial-meta-ot-value')
+				.find('div.geditorial-meta-st-value')
 				.text();
 
 			$('.inline-edit-row')
@@ -34,7 +34,7 @@ jQuery(document).ready(function($) {
 
 		if ( gEditorial.meta.hasOwnProperty('as') ) {
 			var as = $('#'+tag_id)
-				.find('div.geditorial-meta-ot-value')
+				.find('div.geditorial-meta-as-value')
 				.text();
 
 			$('.inline-edit-row')
@@ -49,26 +49,5 @@ jQuery(document).ready(function($) {
 				.parents( 'label' )
 				.hide();
 		}
-
-
-
-		// if ( gEditorial.meta['ot'] != undefined ) {
-		// 	ot = $( 'div.geditorial-meta-ot-value', '#' + tag_id ).text();
-		// 	$('input.geditorial-meta-ot', '.inline-edit-row' ).val( ot ).parents( 'label' ).insertBefore( postTitleLabel );
-		// }
-		//
-		// if ( gEditorial.meta.st != undefined ) {
-		// 	st = $( 'div.geditorial-meta-st-value', '#' + tag_id ).text();
-		// 	$( 'input.geditorial-meta-st', '.inline-edit-row' ).val( st ).parents( 'label' ).insertAfter( postTitleLabel );
-		// }
-		// if ( gEditorial.meta.as != undefined ) {
-		// 	as = $( 'div.geditorial-meta-as-value', '#' + tag_id ).text();
-		// 	$( 'input.geditorial-meta-as', '.inline-edit-row' ).val( as ).parents( 'label' ).insertAfter( postNameLabel );
-		// }
-		//
-        // if ( gEditorial.meta.ct != undefined ) {
-        //     $( 'textarea.tax_input_'+gEditorial.meta.constants.ct, '.inline-edit-row' ).parents( 'label' ).hide();
-        // }
-
 	});
 });
