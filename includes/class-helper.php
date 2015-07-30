@@ -628,7 +628,6 @@ class gEditorialHelper
 			'post_type'    => $post_type,
 		);
 
-		$this->_import = true;
 		return wp_insert_post( $new_post );
 	}
 
