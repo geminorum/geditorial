@@ -576,7 +576,7 @@ class gEditorialModuleCore
 		else if ( ! count( $allowed ) )
 			$allowed = $this->_kses_allowed;
 
-		return apply_filters( 'geditorial_kses', wp_kses( $text, $allowed ) );
+		return apply_filters( 'geditorial_kses', wp_kses( $text, $allowed ), $allowed, $context );
 	}
 
 	public function user_can( $action = 'view', $field = '', $post_type = 'post' )
@@ -656,6 +656,7 @@ class gEditorialModuleCore
 			'values'      => array(),
 			'filter'      => FALSE, // will use via sanitize
 			'dir'         => FALSE,
+			'disabled'    => FALSE,
 			'default'     => '',
 			'description' => '',
 			'field_class' => '', // formally just class!
