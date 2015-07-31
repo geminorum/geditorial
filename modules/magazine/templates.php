@@ -1,13 +1,13 @@
 <?php defined( 'ABSPATH' ) or die( 'Restricted access' );
 
-class gEditorialMagazineTemplates
+class gEditorialMagazineTemplates extends gEditorialTemplateCore
 {
 
-	public static function issue_shortcode( $atts, $content = null, $tag = '' )
+	public static function issue_shortcode( $atts, $content = NULL, $tag = '' )
 	{
 		global $gEditorial, $post;
 
-		$error = FALSE;
+		$error  = FALSE;
 		$output = '';
 
 		$issue_cpt = $gEditorial->get_module_constant( 'magazine', 'issue_cpt', 'issue' );
@@ -48,7 +48,7 @@ class gEditorialMagazineTemplates
 				'terms'    => $args['slug'],
 			) );
 		} else if ( $post->post_type == $issue_cpt ) {
-			$args['id'] = get_post_meta( $post->ID, '_'.$issue_cpt.'_term_id', true );
+			$args['id'] = get_post_meta( $post->ID, '_'.$issue_cpt.'_term_id', TRUE );
 			$tax_query = array( array(
 				'taxonomy' => $issue_tax,
 				'field'    => 'id',
@@ -66,10 +66,10 @@ class gEditorialMagazineTemplates
 					'terms'    => $term_list
 				) );
 			} else {
-				$error = true;
+				$error = TRUE;
 			}
 		}
-		
+
 		if ( $args['title'] )
 			$output .= '<'.$args['title_wrap'].' class="issue-list-title">'.$args['title'].'</'.$args['title_wrap'].'>';
 
@@ -80,7 +80,7 @@ class gEditorialMagazineTemplates
 		}
 
 		if ( ! $error ) {
-			
+
 			$query_args = array(
 				'tax_query'      => $tax_query,
 				'posts_per_page' => $args['limit'],
@@ -104,7 +104,7 @@ class gEditorialMagazineTemplates
 						$in_issue_page_start = $gEditorial->meta->get_postmeta( $the_post->ID, 'in_issue_page_start', FALSE );
 						// $in_issue_order = get_gmeta( 'in_issue_order', array( 'id' => $the_post->ID, 'def' => false ) );
 						$in_issue_order = $gEditorial->meta->get_postmeta( $the_post->ID, 'in_issue_order', FALSE );
-						
+
 						$order_key = ( $in_issue_page_start ? ( (int) $in_issue_page_start * 10 ) : 0 );
 						$order_key = ( $in_issue_order ? ( $order_key + (int) $in_issue_order ) : $order_key );
 						$order_key = ( $order_key ? $order_key : ( $i * 100 ) );
@@ -124,7 +124,7 @@ class gEditorialMagazineTemplates
 				}
 
 				$output .= '<'.$args['list'].'>';
-				
+
 				foreach( $the_posts as $post ) {
 					setup_postdata( $post );
 					if ( $args['cb'] ) {
@@ -137,12 +137,12 @@ class gEditorialMagazineTemplates
 						}
 					}
 				}
-				
+
 				$output .= '</'.$args['list'].'>';
 
 				wp_reset_postdata();
 				wp_cache_set( $key, $output, $issue_cpt );
-				
+
 				return $output;
 			}
 		}
@@ -150,15 +150,15 @@ class gEditorialMagazineTemplates
 		return $content;
 	}
 
-	public static function span_shortcode( $atts, $content = null, $tag = '' )
+	public static function span_shortcode( $atts, $content = NULL, $tag = '' )
 	{
 		global $gEditorial, $post;
 
-		$error = false;
+		$error        = FALSE;
 		$title_output = '';
 
 		$issue_cpt = $gEditorial->get_module_constant( 'magazine', 'issue_cpt', 'issue' );
-		$span_tax = $gEditorial->get_module_constant( 'magazine', 'span_tax', 'span' );
+		$span_tax  = $gEditorial->get_module_constant( 'magazine', 'span_tax', 'span' );
 
 		$args = shortcode_atts( array(
 			'slug'        => '',
@@ -174,18 +174,18 @@ class gEditorialMagazineTemplates
 			'li_before'   => '',
 			'orderby'     => 'date',
 			'order'       => 'ASC',
-			'cb'          => false,
+			'cb'          => FALSE,
 			'link'        => 'title', //not used yet
-			'cover'       => false,
+			'cover'       => FALSE,
 		), $atts, $gEditorial->get_module_constant( 'magazine', 'span_shortcode', 'span' ) );
 
 		$key = md5( serialize( $args ) );
 		$cache = wp_cache_get( $key, $span_tax );
-		if ( false !== $cache )
+		if ( FALSE !== $cache )
 			return $cache;
 
 		if ( $args['cb'] && ! is_callable( $args['cb'] ) )
-			$args['cb'] = false;
+			$args['cb'] = FALSE;
 
 		if( $args['id'] ) {
 			$tax_query = array( array(
@@ -211,14 +211,14 @@ class gEditorialMagazineTemplates
 					'terms'    => $term_list
 				) );
 			} else {
-				$error = true;
+				$error = TRUE;
 			}
 		}
 
 		if ( $args['title'] ) {
 
 			// TODO: get span link of $args['title_link'] is_null
-			if ( false !== $args['title_link'] )
+			if ( FALSE !== $args['title_link'] )
 				$args['title'] = '<a href="'.$args['title_link'].'" title="'.$args['title_title'].'">'.$args['title'].'</a>';
 
 			$title_output = '<'.$args['title_wrap'].' class="issue-list-title">'.$args['title'].'</'.$args['title_wrap'].'>';
@@ -232,7 +232,7 @@ class gEditorialMagazineTemplates
 			$post_status =  array( 'publish' );
 		}
 
-		if ( $error == false ) {
+		if ( $error == FALSE ) {
 			$query_args = array(
 				'tax_query'      => $tax_query,
 				'posts_per_page' => $args['limit'],
@@ -250,12 +250,7 @@ class gEditorialMagazineTemplates
 					),
 				);
 
-
-			//gtheme_dump( $query_args ); die();
-
 			$the_posts = get_posts( $query_args );
-
-			//gtheme_dump( $the_posts ); die();
 
 			if ( count( $the_posts ) ) {
 				$output = $title_output.'<'.$args['list'].' class="'.$args['list_class'].'">';
@@ -284,7 +279,7 @@ class gEditorialMagazineTemplates
 	}
 
 
-	public static function the_issue( $b = '', $a = '', $f = false, $post_id = null, $args = array() )
+	public static function the_issue( $b = '', $a = '', $f = FALSE, $post_id = NULL, $args = array() )
 	{
 		global $gEditorial, $post;
 
@@ -292,14 +287,14 @@ class gEditorialMagazineTemplates
 			$post_id = $post->ID;
 
 		$the_issues = $gEditorial->magazine->get_issue_post( $post_id );
-		if ( false === $the_issues )
+		if ( FALSE === $the_issues )
 			return;
 
 		$html = '';
 		foreach ( $the_issues as $the_id => $the_link ){
 			$the_issue = get_post( $the_id );
 			if ( $the_issue ) {
-				if ( false !== $the_link )
+				if ( FALSE !== $the_link )
 					$html .= '<a href="'.$the_link.'">'.$the_issue->post_title.'</a>';
 				else
 					$html .= '<span>'.$the_issue->post_title.'</span>';
@@ -313,14 +308,14 @@ class gEditorialMagazineTemplates
 				return $html;
 		}
 		echo $html;
-		return true;
+		return TRUE;
 	}
 
-	public static function get_issue_cover( $size = 'raw', $post_id = null, $attr = '', $default = false )
+	public static function get_issue_cover( $size = 'raw', $post_id = NULL, $attr = '', $default = FALSE )
 	{
 		$post_thumbnail_id = get_post_thumbnail_id( is_null( $post_id ) ? get_the_ID() : $post_id );
 
-		if ( $post_thumbnail_id && $html = wp_get_attachment_image( $post_thumbnail_id, $size, false, $attr ) )
+		if ( $post_thumbnail_id && $html = wp_get_attachment_image( $post_thumbnail_id, $size, FALSE, $attr ) )
 			return $html;
 
 		return $default;
@@ -329,11 +324,11 @@ class gEditorialMagazineTemplates
 	public static function issue_cover_parse_arg( $args, $size = 'raw' )
 	{
 		return wp_parse_args( $args, array(
-			'id'    => null,
+			'id'    => NULL,
 			'attr'  => array( 'class' => 'issue-cover '.$size ),
-			'def'   => false,
-			'cb'    => false,
-			'echo'  => true,
+			'def'   => FALSE,
+			'cb'    => FALSE,
+			'echo'  => TRUE,
 			'title' => 'title',
 		));
 	}
@@ -348,7 +343,7 @@ class gEditorialMagazineTemplates
 			$args['id'] = self::get_random_issue();
 
 		$img = self::get_issue_cover( $size, $args['id'], $args['attr'], $args['def'] );
-		if ( false !== $link ) {
+		if ( FALSE !== $link ) {
 			$status = get_post_status( $args['id'] );
 			if ( 'publish' == $status ) {
 				if ( 'parent' == $link ) {
@@ -359,7 +354,7 @@ class gEditorialMagazineTemplates
 					$link = wp_get_attachment_url( get_post_thumbnail_id( $args['id'] ) );
 				}
 			} else {
-				$link = false;
+				$link = FALSE;
 			}
 		}
 
@@ -369,7 +364,7 @@ class gEditorialMagazineTemplates
 			$title = $args['title'] ? ' title="'.esc_attr( self::get_issue_title( $args['title'], $args['id'], '' ) ).'"' : '';
 			$result = $link ? '<a href="'.$link.'"'.$title.'>'.$img.'</a>' : $img;
 		} else {
-			$result = false;
+			$result = FALSE;
 		}
 
 		if ( $result && $args['echo'] )
@@ -377,8 +372,8 @@ class gEditorialMagazineTemplates
 		else
 			return $b.$result.$a;
 
-		if ( false ===  $args['def'] )
-			return false;
+		if ( FALSE ===  $args['def'] )
+			return FALSE;
 
 		return $b.$args['def'].$a;
 	}
@@ -390,12 +385,12 @@ class gEditorialMagazineTemplates
 		$args = self::issue_cover_parse_arg( $args, $size );
 		$the_issues = $gEditorial->magazine->get_issue_post( $args['id'] );
 
-		if ( false !== $the_issues ) {
+		if ( FALSE !== $the_issues ) {
 			$result = '';
 			foreach ( $the_issues as $the_id => $the_link )
 				$result .= self::issue_cover( '', '', $size,
-					( false !== $link ? $the_link : false ),
-					array_merge ( $args, array( 'id' => $the_id, 'echo' => false ) )
+					( FALSE !== $link ? $the_link : FALSE ),
+					array_merge ( $args, array( 'id' => $the_id, 'echo' => FALSE ) )
 				);
 		} else {
 			$result = $args['def'];
@@ -404,15 +399,15 @@ class gEditorialMagazineTemplates
 		if ( $result && $args['echo'] )
 			echo $b.$result.$a;
 		else
-			return false;
+			return FALSE;
 	}
 
-	public static function get_issue_title( $field = 'title', $id = null, $default = '' )
+	public static function get_issue_title( $field = 'title', $id = NULL, $default = '' )
 	{
 		if ( 'title' == $field )
 			return strip_tags( get_the_title( $id ) );
 		if ( $field && function_exists( 'issue_info' ) )
-			return issue_info( $field, '', '', false, $id, array( 'echo' => false, 'def' => $default ) );
+			return issue_info( $field, '', '', FALSE, $id, array( 'echo' => FALSE, 'def' => $default ) );
 		return $default;
 	}
 
@@ -422,13 +417,15 @@ class gEditorialMagazineTemplates
 		if ( ! $img )
 			return $args['def'];
 
-		$caption = self::get_issue_title( $args['title'], $args['id'], false );
+		$caption = self::get_issue_title( $args['title'], $args['id'], FALSE );
 
-		$result = $caption ? '<figure class="issue-cover-figure cap-left">'.$img.'<figcaption>'.$caption.'</figcaption></figure>' : $img;
+		$result = $caption ? '<figure class="issue-cover-figure cap-left">'
+					.$img.'<figcaption>'.$caption.'</figcaption></figure>' : $img;
+
 		return $link ? '<a class="issue-cover-link" href="'.$link.'">'.$result.'</a>' : $result;
 	}
 
-	public static function get_latest_issue( $object = false )
+	public static function get_latest_issue( $object = FALSE )
 	{
 		global $gEditorial;
 
@@ -439,16 +436,18 @@ class gEditorialMagazineTemplates
 			'post_type'   => $gEditorial->get_module_constant( 'magazine', 'issue_cpt', 'issue' ),
 			'post_status' => 'publish',
 		) );
+
 		if ( count ( $the_post ) ) {
 			if ( $object )
 				return $the_post[0];
 			else
 				return $the_post[0]->ID;
 		}
-		return false;
+
+		return FALSE;
 	}
 
-	public static function get_random_issue( $object = false )
+	public static function get_random_issue( $object = FALSE )
 	{
 		global $gEditorial;
 
@@ -461,7 +460,7 @@ class gEditorialMagazineTemplates
 			// 'meta_key'    => '_thumbnail_id', // must has cover
 			'meta_query'  => array(
 				array(
-					'key' => '_thumbnail_id',
+					'key'     => '_thumbnail_id',
 					'compare' => 'EXISTS'
 				),
 			),
@@ -473,28 +472,28 @@ class gEditorialMagazineTemplates
 			else
 				return $the_post[0]->ID;
 		}
-		return false;
+		return FALSE;
 	}
 
-	public static function issue_info( $field, $b = '', $a = '', $f = false, $post_id = null, $args = array() )
+	public static function issue_info( $field, $b = '', $a = '', $f = FALSE, $post_id = NULL, $args = array() )
 	{
 		global $gEditorial, $post;
 
 		if ( is_null( $post_id ) )
 			$post_id = $post->ID;
 
-		$meta = $gEditorial->meta->get_postmeta( $post_id, self::sanitize_field( $field ), false );
+		$meta = $gEditorial->meta->get_postmeta( $post_id, self::sanitize_field( $field ), FALSE );
 
-		if ( false !== $meta ) {
+		if ( FALSE !== $meta ) {
 			$html = $b.( $f ? $f( $meta ) : $meta ).$a;
 			if ( isset( $args['echo'] ) ) {
 				if ( ! $args['echo'] )
 					return $html;
 			}
 			echo $html;
-			return true;
+			return TRUE;
 		}
-		return isset( $args['def'] ) ? $args['def'] : false;
+		return isset( $args['def'] ) ? $args['def'] : FALSE;
 	}
 
 	public static function sanitize_field( $field )
@@ -513,11 +512,11 @@ class gEditorialMagazineTemplates
 	}
 }
 
-if ( ! function_exists( 'issue_info' ) ) : function issue_info( $field, $b = '', $a = '', $f = false, $id = null, $args = array() ){
+if ( ! function_exists( 'issue_info' ) ) : function issue_info( $field, $b = '', $a = '', $f = FALSE, $id = NULL, $args = array() ){
 	return gEditorialMagazineTemplates::issue_info( $field, $b, $a, $f, $id, $args );
 } endif;
 
-if ( ! function_exists( 'the_issue' ) ) : function the_issue( $b = '', $a = '', $f = false, $id = null, $args = array() ) {
+if ( ! function_exists( 'the_issue' ) ) : function the_issue( $b = '', $a = '', $f = FALSE, $id = NULL, $args = array() ) {
 	return gEditorialMagazineTemplates::the_issue( $b, $a, $f, $id, $args );
 } endif;
 
