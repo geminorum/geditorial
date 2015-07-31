@@ -15,14 +15,16 @@ class gEditorialTweaks extends gEditorialModuleCore
 			'short_description'    => __( 'Admin UI Enhancement', GEDITORIAL_TEXTDOMAIN ),
 			'dashicon'             => 'heart',
 			'slug'                 => 'tweaks',
-			'load_frontend'        => TRUE,
+			'load_frontend'        => FALSE,
 
 			'constants' => array(
 				'tweaks_tax' => 'tweaks',
 			),
 
 			'default_options' => array(
-				'enabled' => FALSE,
+				'enabled'  => FALSE,
+				'settings' => array(),
+
 				'post_types' => array(
 					'post' => TRUE,
 					'page' => FALSE,
@@ -31,7 +33,6 @@ class gEditorialTweaks extends gEditorialModuleCore
 					'category' => TRUE,
 					'post_tag' => TRUE,
 				),
-				'settings' => array(),
 			),
 
 			'settings' => array(
@@ -94,7 +95,6 @@ class gEditorialTweaks extends gEditorialModuleCore
 		do_action( 'geditorial_tweaks_init', $this->module );
 
 		$this->do_filters();
-		$this->register_taxonomies();
 	}
 
 	public function admin_init()
