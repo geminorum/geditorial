@@ -1,7 +1,8 @@
 <?php defined( 'ABSPATH' ) or die( 'Restricted access' );
 
-class gEditorialMetaTemplates
+class gEditorialMetaTemplates extends gEditorialTemplateCore
 {
+
 	public static function sanitize_field( $field )
 	{
 		$fields = array(
@@ -15,7 +16,7 @@ class gEditorialMetaTemplates
 		return $field;
 	}
 
-	public static function meta( $field, $b = '', $a = '', $f = FALSE, $post_id = NULL, $args = array() )
+	public static function meta( $field, $before = '', $after = '', $filter = FALSE, $post_id = NULL, $args = array() )
 	{
 		global $gEditorial, $post;
 
@@ -24,16 +25,21 @@ class gEditorialMetaTemplates
 
 		$meta = $gEditorial->meta->get_postmeta( $post_id, self::sanitize_field( $field ), FALSE );
 
-		if ( FALSE !== $meta ) {
-			$html = $b.( $f ? $f( apply_filters( 'gmeta_meta', $meta, $field ) ) : $meta ).$a;
-			if ( isset( $args['echo'] ) ) {
-				if ( ! $args['echo'] )
-					return $html;
-			}
-			echo $html;
-			return TRUE;
-		}
-		return FALSE;
+		if ( FALSE === $meta )
+			return FALSE;
+
+		$meta = apply_filters( 'gmeta_meta', $meta, $field );
+
+		if ( $filter && is_callable( $filter ) )
+			$meta = call_user_func( $filter, $meta );
+
+		$html = $before.$meta.$after;
+
+		if ( isset( $args['echo'] ) && ! $args['echo'] )
+			return $html;
+
+		echo $html;
+		return TRUE;
 	}
 
 	public static function get_meta( $field, $atts = array() )
@@ -51,41 +57,107 @@ class gEditorialMetaTemplates
 		return $gEditorial->meta->get_postmeta( $args['id'], self::sanitize_field( $field ), $args['def'] );
 	}
 
-	public static function gmeta_lead( $b = '', $a = '', $f = FALSE, $args = array() )
+	public static function gmeta_lead( $before = '', $after = '', $filter = FALSE, $args = array() )
 	{
 		$meta = self::get_meta( 'le', array_merge( array( 'id' => FALSE, 'def' => FALSE ), $args ) );
 
-		if ( FALSE !== $meta ) {
-			$html = $b.( $f ? $f( apply_filters( 'gmeta_lead', $meta ) ) : $meta ).$a;
-			if ( isset( $args['echo'] ) ) {
-				if ( ! $args['echo'] )
-					return $html;
-			}
-			echo $html;
-			return TRUE;
-		}
+		if ( FALSE === $meta )
+			return FALSE;
 
-		return FALSE;
+		$meta = apply_filters( 'gmeta_lead', do_shortcode( $meta, TRUE ) );
+
+		if ( $filter && is_callable( $filter ) )
+			$meta = call_user_func( $filter, $meta );
+
+		$html = $before.$meta.$after;
+
+		if ( isset( $args['echo'] ) && ! $args['echo'] )
+			return $html;
+
+		echo $html;
+		return TRUE;
 	}
 
-	public static function gmeta_author( $b = '', $a = '', $f = FALSE, $args = array() )
+	public static function gmeta_author( $before = '', $after = '', $filter = FALSE, $args = array() )
 	{
 		$meta = self::get_meta( 'as', array_merge( array( 'id' => FALSE, 'def' => FALSE ), $args ) );
 
-		if ( FALSE !== $meta ) {
-			$html = $b.( $f ? $f( $meta ) : $meta ).$a;
-			if ( isset( $args['echo'] ) ) {
-				if ( ! $args['echo'] )
-					return $html;
-			}
-			echo $html;
-			return TRUE;
-		}
+		if ( FALSE === $meta )
+			return FALSE;
 
-		return FALSE;
+		if ( $filter && is_callable( $filter ) )
+			$meta = call_user_func( $filter, $meta );
+
+		$html = $before.$meta.$after;
+
+		if ( isset( $args['echo'] ) && ! $args['echo'] )
+			return $html;
+
+		echo $html;
+		return TRUE;
 	}
 
-	public static function gmeta_label( $b = '', $a = '', $f = FALSE, $args = array() )
+	public static function metaLabel( $atts = array() )
+	{
+		global $gEditorial, $post;
+
+		$args = self::atts( array(
+			'id'     => $post->ID,
+			'before' => isset( $atts['b'] ) ? $atts['b'] : '',
+			'after'  => isset( $atts['a'] ) ? $atts['a'] : '',
+			'filter' => isset( $atts['f'] ) ? $atts['f'] : FALSE,
+			'echo'   => isset( $atts['e'] ) ? $atts['e'] : FALSE,
+			'def'    => FALSE,
+			'img'    => FALSE,
+			'link'   => NULL, // false to disable
+			'desc'   => NULL, // false to disable
+		), $atts );
+
+		$title    = self::get_meta( 'ch', array( 'id' => $args['id'], 'def' => FALSE ) );
+		$taxonomy = $gEditorial->get_module_constant( 'meta', 'ct_tax', 'label' );
+
+		if ( taxonomy_exists( $taxonomy ) ) {
+			$term = gEditorialHelper::theTerm( $taxonomy, $args['id'], TRUE );
+			if ( $term && ! $title )
+				$title = sanitize_term_field( 'name', $term->name, $term->term_id, $taxonomy, 'display' );
+			if ( $term && is_null( $args['link'] ) )
+				$args['link'] = get_term_link( $term, $taxonomy );
+			if ( $term && is_null( $args['desc'] ) )
+				$args['desc'] = self::termDescription( $term, FALSE );
+		} else {
+			if ( $title && is_null( $args['link'] ) )
+				$args['link'] = self::getSearchLink( $title );
+		}
+
+		if ( $args['img'] ) {
+			$html = gEditorialHelper::html( 'img', array(
+				'src' => esc_url( $args['img'] ),
+				'alt' => $title,
+			) );
+		} else {
+			$html = $title;
+		}
+
+		if ( ! $html && $args['def'] )
+			$html = $args['def'];
+
+		if ( ! $html )
+			return FALSE;
+
+		$html = $args['before'].gEditorialHelper::html( 'a', array(
+			'href'  => $link,
+			'title' => $desc,
+		), apply_filters( 'gmeta_label', $html, $args, $title, $term ) ).$args['after'];
+
+		if ( ! $args['echo'] )
+			return $html;
+
+		echo $html;
+		return TRUE;
+	}
+
+	// DEPRICATED / USE: gEditorialMetaTemplates::metaLabel()
+	public static function gmeta_label( $b = '', $a = '', $filter = FALSE, $args = array() )
 	{
 		global $gEditorial, $post;
 
@@ -100,31 +172,31 @@ class gEditorialMetaTemplates
 		if ( $term || $title ) {
 			@$value = $title ? $title : $term->name;
 
-			if ( $f )
-				$value = $f( $value );
+			if ( $filter && is_callable( $filter ) )
+				$value = call_user_func( $filter, $value );
 
 			if ( isset( $args['img'] ) && $args['img'] )
 				$value = '<img src="'.$args['img'].'" title="'.$value.'" alt="'.$value.'" />';
 
 			$html = $b.'<a href="'.$link.'" title="'.esc_attr( $desc ).'">'.$value.'</a>'.$a;
 
-			if ( isset( $args['echo'] ) ) {
-				if ( ! $args['echo'] )
-					return $html;
-			}
+			if ( isset( $args['echo'] ) && ! $args['echo'] )
+				return $html;
+
 			echo $html;
 			return TRUE;
+
 		} else if ( isset( $args['def'] ) ) {
-			if ( isset( $args['echo'] ) ) {
-				if ( ! $args['echo'] )
-					return $args['def'];
-			}
+
+			if ( isset( $args['echo'] ) && ! $args['echo'] )
+				return $html;
+
 			echo $args['def'];
 			return FALSE;
 		}
+
 		return FALSE;
 	}
-
 }
 
 if ( ! function_exists( 'gmeta' ) ) : function gmeta( $field, $b = '', $a = '', $f = FALSE, $id = NULL, $args = array() ){
