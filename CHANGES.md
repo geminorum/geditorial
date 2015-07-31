@@ -1,3 +1,6 @@
+### 0.2.5
+* reshare: new module
+
 ### 0.2.4
 * magazine: new option for redirecting issue cpt archives
 * magazine: restrict issue cpt by span on admin edit
