@@ -12,6 +12,8 @@ class gEditorialModuleCore
 	var $_kses_allowed        = array();
 	var $_settings_buttons    = array();
 
+	var $_geditorial_meta = FALSE; // META ENABLED?	
+
 	public function __construct() { }
 
 	// returns whether the module with the given name is enabled.
@@ -556,6 +558,9 @@ class gEditorialModuleCore
 
 		if ( has_filter( 'geditorial_'.$this->module_name.'_constants' ) )
 			$this->module->constants = apply_filters( 'geditorial_'.$this->module_name.'_constants', $this->module->constants );
+
+		if ( has_filter( 'geditorial_'.$this->module_name.'_supports' ) )
+			$this->module->supports = apply_filters( 'geditorial_'.$this->module_name.'_supports', $this->module->supports );
 	}
 
 	// convert the numbers in other language into english
@@ -811,9 +816,46 @@ class gEditorialModuleCore
 		return isset( $_COOKIE[$this->cookie] ) ? json_decode( wp_unslash( $_COOKIE[$this->cookie] ), TRUE ) : array();
 	}
 
-	// will extended by module
+	// DEPRECATED: use $this->register_post_type()
 	public function register_post_types() {}
+
+	// DEPRECATED: use $this->register_taxonomy()
 	public function register_taxonomies() {}
+
+	// FIXME: UNFINISHED
+	// SEE: http://generatewp.com/post-type/
+	public function register_post_type( $constant_key, $atts = array(), $taxonomies = NULL )
+	{
+		if ( is_null( $taxonomies ) )
+			$taxonomies = $this->taxonomies();
+
+		$args = array_merge( $atts, array(
+			'labels'       => $this->module->strings['labels'][$constant_key],
+			'supports'     => $this->module->supports[$constant_key],
+			'taxonomies'   => $taxonomies,
+			'hierarchical' => FALSE,
+			'public'       => TRUE,
+			'show_ui'      => TRUE,
+		) );
+
+		register_post_type( $this->module->constants[$constant_key], $args );
+	}
+
+	// FIXME: UNFINISHED
+	public function register_taxonomy( $constant_key, $atts = array(), $post_types = NULL )
+	{
+		if ( is_null( $post_types ) )
+			$post_types = $this->post_types();
+
+		$args = array_merge( $atts, array(
+			'labels'       => $this->module->strings['labels'][$constant_key],
+			'hierarchical' => FALSE,
+			'public'       => TRUE,
+			'show_ui'      => TRUE,
+		) );
+
+		register_taxonomy(  $this->module->constants[$constant_key], $post_types, $args );
+	}
 
 	// this must be wp core future!!
 	// call this late on after_setup_theme
@@ -879,7 +921,7 @@ class gEditorialModuleCore
 	{
 		$title = $this->get_string( 'meta_box_title', $post_type, 'misc', _x( 'Settings', 'MetaBox default title', GEDITORIAL_TEXTDOMAIN ) );
 
-		if ( current_user_can( 'manage_options' ) ) {
+		if ( current_user_can( 'manage_options' ) && FALSE !== $url ) {
 
 			if ( is_null( $url ) )
 				$url = add_query_arg( 'page', 'geditorial-settings-'.$this->module_name, get_admin_url( NULL, 'admin.php' ) );
