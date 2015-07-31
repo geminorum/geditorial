@@ -13,7 +13,7 @@ class gEditorialReshare extends gEditorialModuleCore
 		$args = array(
 			'title'                => __( 'Reshare', GEDITORIAL_TEXTDOMAIN ),
 			'short_description'    => __( 'Content from other sources', GEDITORIAL_TEXTDOMAIN ),
-			'dashicon'             => 'heart',
+			'dashicon'             => 'external',
 			'slug'                 => 'reshare',
 			'load_frontend'        => TRUE,
 
@@ -63,12 +63,12 @@ class gEditorialReshare extends gEditorialModuleCore
 				),
 				'labels' => array(
 					'reshare_cpt' => array(
-						'name' => __( 'Reshare', GEDITORIAL_TEXTDOMAIN ),
-						'menu_name' => __( 'Reshares', GEDITORIAL_TEXTDOMAIN ),
+						'name'      => _x( 'Reshare', 'Reshare CPT Name', GEDITORIAL_TEXTDOMAIN ),
+						'menu_name' => _x( 'Reshares', 'Reshare CPT Menu Name', GEDITORIAL_TEXTDOMAIN ),
 					),
 					'reshare_cat' => array(
-						'name'      => __( 'Reshare', GEDITORIAL_TEXTDOMAIN ),
-						'menu_name' => __( 'Reshares', GEDITORIAL_TEXTDOMAIN ),
+						'name'      => _x( 'Reshare', 'Reshare Category Name', GEDITORIAL_TEXTDOMAIN ),
+						'menu_name' => _x( 'Reshares', 'Reshare Category Menu Name', GEDITORIAL_TEXTDOMAIN ),
 					),
 				),
 			),
@@ -94,6 +94,7 @@ class gEditorialReshare extends gEditorialModuleCore
 	public function setup()
 	{
 		add_action( 'geditorial_meta_init', array( &$this, 'meta_init' ) );
+		add_filter( 'geditorial_tweaks_strings', array( &$this, 'tweaks_strings' ) );
 
 		add_action( 'init', array( &$this, 'init' ) );
 
@@ -186,6 +187,21 @@ class gEditorialReshare extends gEditorialModuleCore
 				$this->module->constants['reshare_cpt'] => array(
 					'reshare_source_title' => __( 'Source TITLE', GEDITORIAL_TEXTDOMAIN ),
 					'reshare_source_url'   => __( 'Source URL', GEDITORIAL_TEXTDOMAIN ),
+				),
+			),
+		);
+
+		return gEditorialHelper::parse_args_r( $new, $strings );
+	}
+
+	public function tweaks_strings( $strings )
+	{
+		$new = array(
+			'taxonomies' => array(
+				$this->module->constants['reshare_cat'] => array(
+					'column'     => 'taxonomy-'.$this->module->constants['reshare_cat'],
+					'dashicon'   => 'external',
+					'title_attr' => $this->get_string( 'name', 'reshare_cat', 'labels' ),
 				),
 			),
 		);
