@@ -27,7 +27,7 @@ class gEditorialSeries extends gEditorialModuleCore
 			'default_options' => array(
 				'enabled'  => FALSE,
 				'settings' => array(),
-				
+
 				'post_types' => array(
 					'post' => TRUE,
 					'page' => FALSE,
@@ -506,7 +506,7 @@ class gEditorialSeries extends gEditorialModuleCore
 						$args['title'] = sprintf( $args['title'],
 							sanitize_term_field( 'name', $the_term->name, $the_term->term_id, $the_term->taxonomy, 'display' ),
 							get_term_link( $the_term, $the_term->taxonomy ),
-							gEditorialHelper::term_description( $the_term )
+							gEditorialTemplateCore::termDescription( $the_term )
 						);
 					}
 				}

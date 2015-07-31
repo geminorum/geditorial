@@ -51,6 +51,7 @@ class gEditorial
 		}
 
 		require_once( GEDITORIAL_DIR.'includes/class-helper.php' );
+		require_once( GEDITORIAL_DIR.'includes/class-template.php' );
 		require_once( GEDITORIAL_DIR.'includes/class-module.php' );
 
 		if ( ! class_exists( 'WP_List_Table' ) )
@@ -136,6 +137,7 @@ class gEditorial
 			'default_options' => array(),
 			'constants'       => array(),
 			'strings'         => array(),
+			'supports'        => array(),
 		);
 
 		$args = array_merge( $defaults, $args );

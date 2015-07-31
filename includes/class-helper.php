@@ -156,18 +156,6 @@ class gEditorialHelper
 		return $r;
 	}
 
-	public static function term_description( $term, $echo_attr = FALSE )
-	{
-		if ( ! $term->description )
-			return;
-
-		if ( ! $echo_attr )
-			return $term->name.' :: '.strip_tags( $term->description );
-
-		// Bootstrap 3
-		echo ' title="'.esc_attr( $term->name ).'"  data-toggle="popover" data-trigger="hover" data-content="'.$term->description.'"';
-	}
-
 	public static function linkStyleSheet( $url, $version = GEDITORIAL_VERSION, $media = FALSE )
 	{
 		echo "\t".self::html( 'link', array(

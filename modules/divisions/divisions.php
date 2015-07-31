@@ -144,7 +144,7 @@ class gEditorialDivisions extends gEditorialModuleCore
 
 	public function register_post_types()
 	{
-		$post_type_support = $this->post_types();
+		// $post_type_support = $this->post_types();
 
 		register_post_type( $this->module->constants['division_cpt'], array(
 			'labels'              => $this->module->strings['labels']['division_cpt'],
