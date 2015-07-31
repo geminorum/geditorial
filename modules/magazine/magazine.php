@@ -838,6 +838,10 @@ class gEditorialMagazine extends gEditorialModuleCore
 
 	public function parse_query_issues( $query )
 	{
+		// FIXME: ?!!
+		if ( ! is_object( $query ) )
+			error_log( print_r( $query, TRUE ) );
+
 		if ( $query->is_admin && 'edit' == get_current_screen()->base ) {
 			$span_tax = $this->module->constants['span_tax'];
 			if ( isset( $query->query_vars[$span_tax] ) ) {
@@ -1207,7 +1211,8 @@ class gEditorialMagazine extends gEditorialModuleCore
 				'in_issue_order'      => TRUE,
 				'in_issue_page_start' => TRUE,
 				'in_issue_pages'      => FALSE,
-		) );
+			),
+		);
 	}
 
 	public function meta_strings( $strings )
@@ -1452,16 +1457,15 @@ class gEditorialMagazine extends gEditorialModuleCore
 
 				if ( isset( $_POST['issue_post_create'] ) ) {
 
+					// FIXME: get term_id list from table checkbox
+
 					$terms = gEditorialHelper::getTerms( $this->module->constants['issue_tax'], FALSE, TRUE );
 					$posts = array();
 
 					foreach ( $terms as $term_id => $term ) {
 						$issue_post_id = gEditorialHelper::getPostIDbySlug( $term->slug, $this->module->constants['issue_cpt'] ) ;
-						if ( FALSE === $issue_post_id ) {
+						if ( FALSE === $issue_post_id )
 							$posts[] = gEditorialHelper::newPostFromTerm( $term, $this->module->constants['issue_tax'], $this->module->constants['issue_cpt'] );
-
-							break;
-						}
 					}
 
 					wp_redirect( add_query_arg( array(
