@@ -12,7 +12,7 @@ class gEditorialModuleCore
 	var $_kses_allowed        = array();
 	var $_settings_buttons    = array();
 
-	var $_geditorial_meta = FALSE; // META ENABLED?	
+	var $_geditorial_meta = FALSE; // META ENABLED?
 
 	public function __construct() { }
 
@@ -833,6 +833,7 @@ class gEditorialModuleCore
 			'labels'       => $this->module->strings['labels'][$constant_key],
 			'supports'     => $this->module->supports[$constant_key],
 			'taxonomies'   => $taxonomies,
+			'menu_icon'    => ( $this->module->dashicon ? 'dashicons-'.$this->module->dashicon : 'dashicons-welcome-write-blog' ),
 			'hierarchical' => FALSE,
 			'public'       => TRUE,
 			'show_ui'      => TRUE,
