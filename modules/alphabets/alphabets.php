@@ -15,7 +15,7 @@ class gEditorialAlphabets extends gEditorialModuleCore
 		$args = array(
 			'title'                => __( 'Alphabets', GEDITORIAL_TEXTDOMAIN ),
 			'short_description'    => __( 'A to Z Glossaries for Post Types, Taxonomies and Users', GEDITORIAL_TEXTDOMAIN ),
-			'dashicon'             => 'format-alphabets',
+			'dashicon'             => 'editor-textcolor',
 			'slug'                 => 'alphabets',
 			'load_frontend'        => TRUE,
 
