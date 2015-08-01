@@ -12,15 +12,11 @@ class gEditorialAudit extends gEditorialModuleCore
 	{
 		global $gEditorial;
 
-		$this->module_url = $this->get_module_url( __FILE__ );
-
 		$args = array(
-
 			'title'                => __( 'Audit', GEDITORIAL_TEXTDOMAIN ),
 			'short_description'    => __( 'Content Inventory Tools', GEDITORIAL_TEXTDOMAIN ),
 			'extended_description' => __( 'Adding auditing functionality to WordPress with custom taxonomies.', GEDITORIAL_TEXTDOMAIN ),
-			'module_url'           => $this->module_url,
-			'dashicon'             => 'heart',
+			'dashicon'             => 'visibility',
 			'slug'                 => 'audit',
 			'load_frontend'        => TRUE,
 
@@ -51,7 +47,9 @@ class gEditorialAudit extends gEditorialModuleCore
 				),
 				'labels' => array(
 					'audit_tax' => array(
-						'name'                       => __( 'Audit Attributes',                       GEDITORIAL_TEXTDOMAIN ),
+						'name'      => _x( 'Audit Attributes', 'Audit Attributes Taxonomy Name', GEDITORIAL_TEXTDOMAIN ),
+						'menu_name' => _x( 'Audit Attributes', 'Audit Attributes Taxonomy Menu Name', GEDITORIAL_TEXTDOMAIN ),
+
 						'singular_name'              => __( 'Audit Attribute',                        GEDITORIAL_TEXTDOMAIN ),
 						'search_items'               => __( 'Search Audit Attributes',                GEDITORIAL_TEXTDOMAIN ),
 						'popular_items'              => NULL,
@@ -65,7 +63,6 @@ class gEditorialAudit extends gEditorialModuleCore
 						'separate_items_with_commas' => __( 'Separate audit attributes with commas',  GEDITORIAL_TEXTDOMAIN ),
 						'add_or_remove_items'        => __( 'Add or remove audit attributes',         GEDITORIAL_TEXTDOMAIN ),
 						'choose_from_most_used'      => __( 'Choose from most used audit attributes', GEDITORIAL_TEXTDOMAIN ),
-						'menu_name'                  => __( 'Audit Attributes',                       GEDITORIAL_TEXTDOMAIN ),
 					),
 				),
 				'terms' => array(
@@ -98,6 +95,8 @@ class gEditorialAudit extends gEditorialModuleCore
 
 	public function setup()
 	{
+		add_filter( 'geditorial_tweaks_strings', array( &$this, 'tweaks_strings' ) );
+
 		add_action( 'init', array( &$this, 'init' ) );
 
 		if ( is_admin() ) {
@@ -110,7 +109,8 @@ class gEditorialAudit extends gEditorialModuleCore
 		do_action( 'geditorial_audit_init', $this->module );
 
 		$this->do_filters();
-		$this->register_taxonomies();
+
+		$this->register_taxonomy( 'audit_tax', array() );
 	}
 
 	public function register_settings( $page = null )
@@ -120,6 +120,21 @@ class gEditorialAudit extends gEditorialModuleCore
 
 		parent::register_settings( $page );
 		$this->register_settings_button( 'install_def_atts', __( 'Install Default Attributes', GEDITORIAL_TEXTDOMAIN ) );
+	}
+
+	public function tweaks_strings( $strings )
+	{
+		$new = array(
+			'taxonomies' => array(
+				$this->module->constants['audit_tax'] => array(
+					'column'     => 'taxonomy-'.$this->module->constants['audit_tax'],
+					'dashicon'   => $this->module->dashicon,
+					'title_attr' => $this->get_string( 'name', 'audit_tax', 'labels' ),
+				),
+			),
+		);
+
+		return gEditorialHelper::parse_args_r( $new, $strings );
 	}
 
 	public function register_taxonomies()
