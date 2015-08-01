@@ -70,8 +70,12 @@ class gEditorialContest extends gEditorialModuleCore
 					),
 				),
 				'misc' => array(
+					'misc' => array(
+						'meta_box_title'    => __( 'Contests', GEDITORIAL_TEXTDOMAIN ),
+					),
+
+					// DEPRECATED: use get_meta_box_title()
 					'post' => array(
-						'apply_box_title'   => __( 'Contests', GEDITORIAL_TEXTDOMAIN ),
 						'contest_box_title' => __( 'The Contest', GEDITORIAL_TEXTDOMAIN ),
 						'poster_box_title'  => __( 'Contest Poster', GEDITORIAL_TEXTDOMAIN ),
 						'column_title'      => __( 'Contests', GEDITORIAL_TEXTDOMAIN ),
@@ -573,12 +577,11 @@ class gEditorialContest extends gEditorialModuleCore
 		if ( ! in_array( $post_type, $this->post_types() ) )
 			return;
 
-		$title = $this->get_string( 'apply_box_title', 'post', 'misc' );
-		if ( current_user_can( 'manage_options' ) ) {
-			$url = add_query_arg( 'page', 'geditorial-contest-settings', get_admin_url( null, 'admin.php' ) );
-			$title .= ' <span class="geditorial-admin-action-metabox"><a href="'.esc_url( $url ).'" class="edit-box open-box" >'.__( 'Configure', GEDITORIAL_TEXTDOMAIN ).'</a></span>';
-		}
-		add_meta_box( 'geditorial-contests', $title, array( &$this, 'do_meta_box_applies' ), $post_type, 'side' );
+		add_meta_box( 'geditorial-contests',
+			$this->get_meta_box_title( $post_type ),
+			array( &$this, 'do_meta_box_applies' ),
+			$post_type,
+			'side' );
 	}
 
 	public function do_meta_box_applies( $post )
