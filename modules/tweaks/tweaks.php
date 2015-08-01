@@ -39,7 +39,8 @@ class gEditorialTweaks extends gEditorialModuleCore
 				'_general' => array(
 					array(
 						'field'       => 'group_taxonomies',
-						'title'       => __( 'Group Default Taxonomies', GEDITORIAL_TEXTDOMAIN ),
+						'title'       => __( 'Group Taxonomies', GEDITORIAL_TEXTDOMAIN ),
+						'description' => __( 'Group selected taxonomies on selected post type edit pages', GEDITORIAL_TEXTDOMAIN ),
 						'default'     => 0,
 					),
 				),
