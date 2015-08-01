@@ -155,7 +155,7 @@ class gEditorialMagazineWidget_IssueCover extends WP_Widget
 
 		$html = wp_dropdown_pages( array(
 			'post_type'        => $gEditorial->get_module_constant( 'magazine', 'issue_cpt', 'issue' ),
-			'selected'         => $instance['issue'],
+			'selected'         => isset( $instance['issue'] ) ? $instance['issue'] : '0',
 			'name'             => $this->get_field_name( 'issue' ),
 			'id'               => $this->get_field_id( 'issue' ),
 			'class'            => 'geditorial-admin-dropbown',
