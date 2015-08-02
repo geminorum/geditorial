@@ -830,13 +830,20 @@ class gEditorialModuleCore
 			$taxonomies = $this->taxonomies();
 
 		$args = array_merge( $atts, array(
-			'labels'       => $this->module->strings['labels'][$constant_key],
-			'supports'     => $this->module->supports[$constant_key],
-			'taxonomies'   => $taxonomies,
-			'menu_icon'    => ( $this->module->dashicon ? 'dashicons-'.$this->module->dashicon : 'dashicons-welcome-write-blog' ),
+			'taxonomies'  => $taxonomies,
+			'labels'      => $this->module->strings['labels'][$constant_key],
+			'menu_icon'   => ( $this->module->dashicon ? 'dashicons-'.$this->module->dashicon : 'dashicons-welcome-write-blog' ),
+			'supports'    => isset( $this->module->supports[$constant_key] ) ? $this->module->supports[$constant_key] : array( 'title', 'editor' ),
+			'has_archive' => isset( $this->module->constants[$constant_key.'_archive'] ) ? $this->module->constants[$constant_key.'_archive'] : FALSE,
+			'query_var'   => $this->module->constants[$constant_key],
+			'rewrite'     => array(
+				'slug'       => isset( $this->module->constants[$constant_key.'_slug'] ) ? $this->module->constants[$constant_key.'_slug'] : $this->module->constants[$constant_key],
+				'with_front' => FALSE,
+			),
 			'hierarchical' => FALSE,
 			'public'       => TRUE,
 			'show_ui'      => TRUE,
+			'map_meta_cap' => TRUE,
 		) );
 
 		register_post_type( $this->module->constants[$constant_key], $args );
@@ -849,10 +856,13 @@ class gEditorialModuleCore
 			$post_types = $this->post_types();
 
 		$args = array_merge( $atts, array(
-			'labels'       => $this->module->strings['labels'][$constant_key],
-			'hierarchical' => FALSE,
-			'public'       => TRUE,
-			'show_ui'      => TRUE,
+			'labels'                => $this->module->strings['labels'][$constant_key],
+			'update_count_callback' => array( 'gEditorialHelper', 'update_count_callback' ),
+			'hierarchical'          => FALSE,
+			'show_tagcloud'         => FALSE,
+			'public'                => TRUE,
+			'show_ui'               => TRUE,
+			'query_var'             => TRUE,
 		) );
 
 		register_taxonomy(  $this->module->constants[$constant_key], $post_types, $args );
