@@ -77,25 +77,26 @@ class gEditorialSettings extends gEditorialModuleCore
 
 	public function admin_tools_page()
 	{
-		//$settings_uri = 'admin.php?page=geditorial-tools';
-		$settings_uri = gEditorialHelper::toolsURL( false );
+		$uri = gEditorialHelper::toolsURL( false );
 		$sub = isset( $_GET['sub'] ) ? trim( $_GET['sub'] ) : 'general';
+
 		$subs = apply_filters( 'geditorial_tools_subs', array(
 			'overview' => _x( 'Overview', 'gEditorial Tools', GEDITORIAL_TEXTDOMAIN ),
-			'general' => _x( 'General', 'gEditorial Tools', GEDITORIAL_TEXTDOMAIN ),
+			'general'  => _x( 'General', 'gEditorial Tools', GEDITORIAL_TEXTDOMAIN ),
 		) );
 
 		if ( is_super_admin() )
 			$subs['console'] = _x( 'Console', 'gEditorial Tools', GEDITORIAL_TEXTDOMAIN );
 
 		$messages = apply_filters( 'geditorial_tools_messages', array(
+
 		), $sub );
 
 		echo '<div class="wrap geditorial-admin-wrap geditorial-tools geditorial-tools-'.$sub.'">';
 
-			printf( '<h2>%s</h2>', __( 'gEditorial Tools', GEDITORIAL_TEXTDOMAIN ) );
+			printf( '<h1>%s</h1>', __( 'gEditorial Tools', GEDITORIAL_TEXTDOMAIN ) );
 
-			gEditorialHelper::header_nav( $settings_uri, $sub, $subs );
+			gEditorialHelper::headerNav( $uri, $sub, $subs );
 
 			if ( isset( $_GET['message'] ) ) {
 				if ( isset( $messages[$_GET['message']] ) )
@@ -108,11 +109,11 @@ class gEditorialSettings extends gEditorialModuleCore
 			if ( file_exists( GEDITORIAL_DIR.'admin/admin.'.$sub.'.php' ) )
 				require_once( GEDITORIAL_DIR.'admin/admin.'.$sub.'.php' );
 			else
-				do_action( 'geditorial_tools_sub_'.$sub, $settings_uri, $sub );
+				do_action( 'geditorial_tools_sub_'.$sub, $uri, $sub );
 
 			$this->print_default_signature();
 
-		?><div class="clear"></div></div> <?php
+		echo '<div class="clear"></div></div>';
 	}
 
 	public function admin_tools_load()
@@ -136,7 +137,6 @@ class gEditorialSettings extends gEditorialModuleCore
 
 				if ( ! isset( $_POST['module_action'], $_POST['module_slug'] ) )
 					wp_send_json_error( gEditorialHelper::notice( _x( 'No Action of Slug!', 'Ajax Notice', GEDITORIAL_TEXTDOMAIN ), 'error', false ) );
-
 
 				$module = $gEditorial->get_module_by( 'slug', sanitize_key( $_POST['module_slug'] ) );
 				if ( ! $module )
@@ -190,10 +190,10 @@ class gEditorialSettings extends gEditorialModuleCore
 			$title = __( 'Editorial', GEDITORIAL_TEXTDOMAIN );
 		else
 			$title = sprintf( __( 'Editorial: %s', GEDITORIAL_TEXTDOMAIN ), $current_module->title )
-				.'&nbsp;<a href="'.gEditorialHelper::settingsURL().'" class="add-new-h2">'
+				.'&nbsp;<a href="'.gEditorialHelper::settingsURL().'" class="page-title-action">'
 				.__( 'Back to Editorial', GEDITORIAL_TEXTDOMAIN ).'</a>';
 
-		echo '<div class="wrap g1editorial-admin geditorial-admin-wrap geditorial-settings"><h2>'.$title.'</h2>';
+		echo '<div class="wrap geditorial-admin-wrap geditorial-settings"><h1>'.$title.'</h1>';
 
 		if ( isset( $_REQUEST['message'] ) && isset( $current_module->messages[$_REQUEST['message']] ) )
 			gEditorialHelper::notice( $current_module->messages[$_REQUEST['message']] );
