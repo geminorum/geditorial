@@ -195,18 +195,18 @@ class gEditorialHelper
 		return NULL;
 	}
 
-	public static function header_nav( $settings_uri = '', $active = '', $sub_pages = array(), $class_prefix = 'nav-tab-', $tag = 'h3' )
+	public static function headerNav( $uri = '', $active = '', $subs = array(), $prefix = 'nav-tab-', $tag = 'h2' )
 	{
-		if ( ! count( $sub_pages ) )
+		if ( ! count( $subs ) )
 			return;
 
 		$html = '';
 
-		foreach ( $sub_pages as $page_slug => $sub_page )
+		foreach ( $subs as $slug => $page )
 			$html .= self::html( 'a', array(
-				'class' => 'nav-tab '.$class_prefix.$page_slug.( $page_slug == $active ? ' nav-tab-active' : '' ),
-				'href'  => add_query_arg( 'sub', $page_slug, $settings_uri ),
-			), esc_html( $sub_page ) );
+				'class' => 'nav-tab '.$prefix.$slug.( $slug == $active ? ' nav-tab-active' : '' ),
+				'href'  => add_query_arg( 'sub', $slug, $uri ),
+			), $page );
 
 		echo self::html( $tag, array(
 			'class' => 'nav-tab-wrapper',
