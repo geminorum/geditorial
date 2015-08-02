@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gEditorial v0.2.5\n"
+"Project-Id-Version: gEditorial v0.2.6\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2015-07-31 14:49+0430\n"
+"PO-Revision-Date: 2015-08-01 14:22+0430\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: geminorum <contact@geminorum.ir>\n"
 "Language: fa_IR\n"
@@ -100,12 +100,12 @@ msgstr "فعال"
 msgid "Error: setting type undefined."
 msgstr ""
 
-#: includes/class-module.php:922
+#: includes/class-module.php:933
 msgctxt "MetaBox default title"
 msgid "Settings"
 msgstr "تنظیمات"
 
-#: includes/class-module.php:929
+#: includes/class-module.php:940
 msgctxt "MetaBox default action"
 msgid "Configure"
 msgstr "پیکربندی"
@@ -221,33 +221,33 @@ msgstr ""
 msgid "Z"
 msgstr ""
 
-#: modules/alphabets/alphabets.php:83 modules/audit/audit.php:85
+#: modules/alphabets/alphabets.php:83 modules/audit/audit.php:82
 #: modules/comments/comments.php:108 modules/contest/contest.php:149
 #: modules/divisions/divisions.php:110 modules/entry/entry.php:119
-#: modules/gallery/gallery.php:70 modules/like/like.php:64
-#: modules/magazine/magazine.php:141 modules/reshare/reshare.php:78
+#: modules/gallery/gallery.php:75 modules/like/like.php:64
+#: modules/magazine/magazine.php:141 modules/reshare/reshare.php:79
 #: modules/series/series.php:104 modules/specs/specs.php:103
 #: modules/submit/submit.php:75 modules/tweaks/tweaks.php:69
 msgid "help-tab-title"
 msgstr ""
 
-#: modules/alphabets/alphabets.php:84 modules/audit/audit.php:86
+#: modules/alphabets/alphabets.php:84 modules/audit/audit.php:83
 #: modules/comments/comments.php:109 modules/contest/contest.php:150
 #: modules/divisions/divisions.php:111 modules/entry/entry.php:120
-#: modules/gallery/gallery.php:71 modules/like/like.php:65
+#: modules/gallery/gallery.php:76 modules/like/like.php:65
 #: modules/magazine/magazine.php:142 modules/meta/meta.php:112
-#: modules/meta/meta.php:117 modules/reshare/reshare.php:79
+#: modules/meta/meta.php:117 modules/reshare/reshare.php:80
 #: modules/series/series.php:105 modules/specs/specs.php:104
 #: modules/submit/submit.php:76 modules/tweaks/tweaks.php:70
 msgid "<p>help-tab-content</p>"
 msgstr ""
 
-#: modules/alphabets/alphabets.php:89 modules/audit/audit.php:89
+#: modules/alphabets/alphabets.php:89 modules/audit/audit.php:86
 #: modules/comments/comments.php:112 modules/contest/contest.php:153
 #: modules/divisions/divisions.php:114 modules/entry/entry.php:123
-#: modules/gallery/gallery.php:76 modules/like/like.php:68
+#: modules/gallery/gallery.php:81 modules/like/like.php:68
 #: modules/magazine/magazine.php:145 modules/meta/meta.php:121
-#: modules/reshare/reshare.php:82 modules/series/series.php:108
+#: modules/reshare/reshare.php:83 modules/series/series.php:108
 #: modules/specs/specs.php:107 modules/submit/submit.php:79
 #: modules/tweaks/tweaks.php:73
 msgid ""
@@ -271,101 +271,107 @@ msgstr ""
 msgid "&mdash; Select &mdash;"
 msgstr ""
 
-#: modules/audit/audit.php:19
+#: modules/audit/audit.php:16
 msgid "Audit"
-msgstr ""
+msgstr "بازبینی"
 
-#: modules/audit/audit.php:20
+#: modules/audit/audit.php:17
 msgid "Content Inventory Tools"
-msgstr ""
+msgstr "ابزارهایی برای انبارگردانی محتوا"
 
-#: modules/audit/audit.php:21
+#: modules/audit/audit.php:18
 msgid "Adding auditing functionality to WordPress with custom taxonomies."
 msgstr ""
 
-#: modules/audit/audit.php:54 modules/audit/audit.php:68
+#: modules/audit/audit.php:50
+msgctxt "Audit Attributes Taxonomy Name"
 msgid "Audit Attributes"
-msgstr ""
+msgstr "برچسب‌های بازبینی"
 
-#: modules/audit/audit.php:55
+#: modules/audit/audit.php:51
+msgctxt "Audit Attributes Taxonomy Menu Name"
+msgid "Audit Attributes"
+msgstr "بازبینی‌ها"
+
+#: modules/audit/audit.php:53
 msgid "Audit Attribute"
-msgstr ""
+msgstr "برچسب بازبینی"
 
-#: modules/audit/audit.php:56
+#: modules/audit/audit.php:54
 msgid "Search Audit Attributes"
 msgstr ""
 
-#: modules/audit/audit.php:58
+#: modules/audit/audit.php:56
 msgid "All Audit Attributes"
 msgstr ""
 
-#: modules/audit/audit.php:59
+#: modules/audit/audit.php:57
 msgid "Parent Audit Attribute"
 msgstr ""
 
-#: modules/audit/audit.php:60
+#: modules/audit/audit.php:58
 msgid "Parent Audit Attribute:"
 msgstr ""
 
-#: modules/audit/audit.php:61
+#: modules/audit/audit.php:59
 msgid "Edit Audit Attribute"
 msgstr ""
 
-#: modules/audit/audit.php:62
+#: modules/audit/audit.php:60
 msgid "Update Audit Attribute"
 msgstr ""
 
-#: modules/audit/audit.php:63
+#: modules/audit/audit.php:61
 msgid "Add New Audit Attribute"
 msgstr ""
 
-#: modules/audit/audit.php:64
+#: modules/audit/audit.php:62
 msgid "New Audit Attribute"
 msgstr ""
 
-#: modules/audit/audit.php:65
+#: modules/audit/audit.php:63
 msgid "Separate audit attributes with commas"
 msgstr ""
 
-#: modules/audit/audit.php:66
+#: modules/audit/audit.php:64
 msgid "Add or remove audit attributes"
 msgstr ""
 
-#: modules/audit/audit.php:67
+#: modules/audit/audit.php:65
 msgid "Choose from most used audit attributes"
 msgstr ""
 
-#: modules/audit/audit.php:73
+#: modules/audit/audit.php:70
 msgid "Audited"
-msgstr ""
+msgstr "تکمیل"
+
+#: modules/audit/audit.php:71
+msgid "Outdated"
+msgstr "منسوخ"
+
+#: modules/audit/audit.php:72
+msgid "Redundant"
+msgstr "نالازم"
+
+#: modules/audit/audit.php:73
+msgid "Review SEO"
+msgstr "سئو"
 
 #: modules/audit/audit.php:74
-msgid "Outdated"
-msgstr ""
+msgid "Review Style"
+msgstr "چینش"
 
 #: modules/audit/audit.php:75
-msgid "Redundant"
-msgstr ""
-
-#: modules/audit/audit.php:76
-msgid "Review SEO"
-msgstr ""
-
-#: modules/audit/audit.php:77
-msgid "Review Style"
-msgstr ""
-
-#: modules/audit/audit.php:78
 msgid "Trivial"
-msgstr ""
+msgstr "ناقص"
 
-#: modules/audit/audit.php:91
+#: modules/audit/audit.php:88
 msgid "Editorial Audit Documentations"
 msgstr ""
 
 #: modules/audit/audit.php:122
 msgid "Install Default Attributes"
-msgstr ""
+msgstr "نصب برچسب‌های پیش‌فرض بازبینی"
 
 #: modules/comments/comments.php:22 modules/comments/comments.php:81
 #: modules/comments/comments.php:87 modules/comments/comments.php:88
@@ -547,8 +553,7 @@ msgid "&mdash; Choose a Contest &mdash;"
 msgstr ""
 
 #: modules/contest/contest.php:85 modules/contest/contest.php:99
-#: modules/entry/entry.php:85 modules/gallery/gallery.php:47
-#: modules/magazine/magazine.php:90
+#: modules/entry/entry.php:85 modules/magazine/magazine.php:90
 msgid "Add New"
 msgstr "تازه"
 
@@ -1026,7 +1031,7 @@ msgstr "ت"
 msgid "<span title=\"No Order\">&mdash;</span>"
 msgstr "<span title=\"بدون ترتیب\">&mdash;</span>"
 
-#: modules/gallery/gallery.php:16 modules/gallery/gallery.php:56
+#: modules/gallery/gallery.php:16
 msgid "Gallery"
 msgstr ""
 
@@ -1040,51 +1045,21 @@ msgid ""
 "taxonomies."
 msgstr ""
 
-#: modules/gallery/gallery.php:45
+#: modules/gallery/gallery.php:60
+msgctxt "Gallery CPT Name"
 msgid "Photo Albums"
 msgstr ""
 
-#: modules/gallery/gallery.php:46
-msgid "Photo Album"
+#: modules/gallery/gallery.php:61
+msgctxt "Gallery CPT Menu Name"
+msgid "Gallery"
 msgstr ""
 
-#: modules/gallery/gallery.php:48
-msgid "Add New Photo Album"
-msgstr ""
-
-#: modules/gallery/gallery.php:49
-msgid "Edit Photo Album"
-msgstr ""
-
-#: modules/gallery/gallery.php:50
-msgid "New Photo Album"
-msgstr ""
-
-#: modules/gallery/gallery.php:51
-msgid "View Photo Album"
-msgstr ""
-
-#: modules/gallery/gallery.php:52
-msgid "Search Photo Albums"
-msgstr ""
-
-#: modules/gallery/gallery.php:53
-msgid "No photo albums found"
-msgstr ""
-
-#: modules/gallery/gallery.php:54
-msgid "No photo albums found in Trash"
-msgstr ""
-
-#: modules/gallery/gallery.php:55
-msgid "Parent Photo Album:"
-msgstr ""
-
-#: modules/gallery/gallery.php:78
+#: modules/gallery/gallery.php:83
 msgid "Editorial Gallery Documentations"
 msgstr ""
 
-#: modules/gallery/gallery.php:126
+#: modules/gallery/gallery.php:132
 msgid "Install Default Album Cats"
 msgstr ""
 
@@ -1623,7 +1598,7 @@ msgid "URL of the post on a previous site"
 msgstr ""
 
 #: modules/meta/meta.php:82 modules/meta/meta.php:83
-#: modules/reshare/reshare.php:62
+#: modules/reshare/reshare.php:63
 msgid "Metadata"
 msgstr "متا"
 
@@ -1753,35 +1728,35 @@ msgstr "بازنشر"
 msgid "Content from other sources"
 msgstr "متن‌های از منابع دیگر"
 
-#: modules/reshare/reshare.php:66
-msgctxt "Reshare CPT Name"
-msgid "Reshare"
-msgstr "بازنشر"
-
 #: modules/reshare/reshare.php:67
+msgctxt "Reshare CPT Name"
+msgid "Reshares"
+msgstr "بازنشرها"
+
+#: modules/reshare/reshare.php:68
 msgctxt "Reshare CPT Menu Name"
 msgid "Reshares"
 msgstr "بازنشرها"
 
-#: modules/reshare/reshare.php:70
-msgctxt "Reshare Category Name"
-msgid "Reshare"
-msgstr ""
-
 #: modules/reshare/reshare.php:71
-msgctxt "Reshare Category Menu Name"
-msgid "Reshares"
-msgstr ""
+msgctxt "Reshare Taxonomy Name"
+msgid "Reshare"
+msgstr "بازنشر"
 
-#: modules/reshare/reshare.php:84
+#: modules/reshare/reshare.php:72
+msgctxt "Reshare Taxonomy Menu Name"
+msgid "Reshares"
+msgstr "دسته‌های بازنشر"
+
+#: modules/reshare/reshare.php:85
 msgid "Editorial Reshare Documentations"
 msgstr ""
 
-#: modules/reshare/reshare.php:181 modules/reshare/reshare.php:187
+#: modules/reshare/reshare.php:183 modules/reshare/reshare.php:189
 msgid "Source TITLE"
 msgstr "عنوان منبع"
 
-#: modules/reshare/reshare.php:182 modules/reshare/reshare.php:188
+#: modules/reshare/reshare.php:184 modules/reshare/reshare.php:190
 msgid "Source URL"
 msgstr "نشانی منبع"
 
@@ -2179,7 +2154,7 @@ msgstr ""
 
 #: modules/tweaks/tweaks.php:14
 msgid "Tweaks"
-msgstr ""
+msgstr "تمیزکاری‌"
 
 #: modules/tweaks/tweaks.php:15
 msgid "Admin UI Enhancement"
@@ -2195,11 +2170,11 @@ msgstr "رده‌بندی‌ها"
 
 #: modules/tweaks/tweaks.php:57
 msgid "Categories"
-msgstr ""
+msgstr "دسته‌ها"
 
 #: modules/tweaks/tweaks.php:62
 msgid "Tags"
-msgstr ""
+msgstr "برچسب‌ها"
 
 #: modules/tweaks/tweaks.php:75
 msgid "Editorial Tweaks Documentations"
@@ -2237,6 +2212,10 @@ msgid "1 Star"
 msgid_plural "%s Stars"
 msgstr[0] ""
 msgstr[1] ""
+
+#~ msgctxt "Reshare CPT Name"
+#~ msgid "Reshare"
+#~ msgstr "بازنشر"
 
 #~ msgid "Reshares"
 #~ msgstr "بازنشرها"
