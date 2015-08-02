@@ -21,11 +21,26 @@ class gEditorialGallery extends gEditorialModuleCore
 			'load_frontend'        => TRUE,
 
 			'constants' => array(
-				'album_cpt'       => 'photo_album',
-				'album_archives'  => 'albums',
-				'album_cat_tax'   => 'photo_gallery',
-				'album_tag_tax'   => 'album_tag',
-				'photo_tag_tax'   => 'photo_tag',
+				'album_cpt'         => 'photo_album',
+				'album_cpt_slug'    => 'album',
+				'album_cpt_archive' => 'albums',
+				'album_cat_tax'     => 'photo_gallery',
+				'album_tag_tax'     => 'album_tag',
+				'photo_tag_tax'     => 'photo_tag',
+			),
+			'supports' => array(
+				'album_cpt' => array(
+					'title',
+					'editor',
+					'excerpt',
+					'author',
+					'thumbnail',
+					// 'trackbacks',
+					// 'custom-fields',
+					'comments',
+					'revisions',
+					// 'page-attributes',
+				),
 			),
 
 			'default_options' => array(
@@ -42,18 +57,8 @@ class gEditorialGallery extends gEditorialModuleCore
 			'strings' => array(
 				'labels' => array(
 					'album_cpt' => array(
-						'name'               => __( 'Photo Albums', GEDITORIAL_TEXTDOMAIN ),
-						'singular_name'      => __( 'Photo Album', GEDITORIAL_TEXTDOMAIN ),
-						'add_new'            => __( 'Add New', GEDITORIAL_TEXTDOMAIN ),
-						'add_new_item'       => __( 'Add New Photo Album', GEDITORIAL_TEXTDOMAIN ),
-						'edit_item'          => __( 'Edit Photo Album', GEDITORIAL_TEXTDOMAIN ),
-						'new_item'           => __( 'New Photo Album', GEDITORIAL_TEXTDOMAIN ),
-						'view_item'          => __( 'View Photo Album', GEDITORIAL_TEXTDOMAIN ),
-						'search_items'       => __( 'Search Photo Albums', GEDITORIAL_TEXTDOMAIN ),
-						'not_found'          => __( 'No photo albums found', GEDITORIAL_TEXTDOMAIN ),
-						'not_found_in_trash' => __( 'No photo albums found in Trash', GEDITORIAL_TEXTDOMAIN ),
-						'parent_item_colon'  => __( 'Parent Photo Album:', GEDITORIAL_TEXTDOMAIN ),
-						'menu_name'          => __( 'Gallery', GEDITORIAL_TEXTDOMAIN ),
+						'name'      => _x( 'Photo Albums', 'Gallery CPT Name', GEDITORIAL_TEXTDOMAIN ),
+						'menu_name' => _x( 'Gallery', 'Gallery CPT Menu Name', GEDITORIAL_TEXTDOMAIN ),
 					),
 					'album_cat_tax' => array(),
 					'photo_tag_tax' => array(),
@@ -88,11 +93,8 @@ class gEditorialGallery extends gEditorialModuleCore
 		add_action( 'after_setup_theme', array( &$this, 'after_setup_theme' ), 20 );
 		add_action( 'init', array( &$this, 'init' ) );
 
-
 		if ( is_admin() ) {
-			// add_action( 'admin_init', array( &$this, 'admin_init' ) );
 			add_action( 'geditorial_settings_load', array( &$this, 'register_settings' ) );
-		} else {
 		}
 
 		$this->_post_types_excluded = array( $this->module->constants['album_cpt'] );
@@ -108,13 +110,17 @@ class gEditorialGallery extends gEditorialModuleCore
 		do_action( 'geditorial_gallery_init', $this->module );
 
 		$this->do_filters();
-		$this->register_post_types();
-		$this->register_taxonomies();
-	}
 
-	public function admin_init()
-	{
+		$this->register_post_type( 'album_cpt', array(), array( 'post_tag' ) );
+		$this->register_taxonomy( 'album_cat_tax', array(), $this->module->constants['album_cpt'] );
 
+		$this->register_taxonomy( 'album_tag_tax', array(
+			'hierarchical' => FALSE,
+		), $this->module->constants['album_cpt'] );
+
+		$this->register_taxonomy( 'photo_tag_tax', array(
+			'hierarchical' => FALSE,
+		), 'attachments' );
 	}
 
 	public function register_settings( $page = NULL )
@@ -140,44 +146,13 @@ class gEditorialGallery extends gEditorialModuleCore
 		exit;
 	}
 
-
 	public function register_post_types()
 	{
 		register_post_type( $this->module->constants['album_cpt'], array(
-			'labels'              => $this->module->strings['labels']['album_cpt'],
-			'taxonomies'          => array(
-				$this->module->constants['album_cat_tax'],
-				$this->module->constants['photo_tag_tax'],
-			),
-			'supports' => array(
-				'title',
-				'editor',
-				'excerpt',
-				'author',
-				'thumbnail',
-				'trackbacks',
-				'custom-fields',
-				'comments',
-				'revisions',
-				'page-attributes',
-			),
-			'hierarchical'        => TRUE,
-			'public'              => TRUE,
-			'show_ui'             => TRUE,
 			'show_in_menu'        => TRUE,
 			'menu_position'       => 4,
-			'menu_icon'           => 'dashicons-format-gallery',
 			'show_in_nav_menus'   => TRUE,
-			'publicly_queryable'  => TRUE,
-			'exclude_from_search' => FALSE,
-			'has_archive'         => $this->module->constants['album_archives'],
-			'query_var'           => $this->module->constants['album_cpt'],
-			'can_export'          => TRUE,
 			'map_meta_cap'        => TRUE,
-			'rewrite'             => array(
-				'slug'       => $this->module->constants['album_cpt'],
-				'with_front' => FALSE
-			),
 		) );
 	}
 
