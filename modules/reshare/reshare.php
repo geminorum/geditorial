@@ -18,8 +18,9 @@ class gEditorialReshare extends gEditorialModuleCore
 			'load_frontend'        => TRUE,
 
 			'constants' => array(
-				'reshare_cpt' => 'reshare',
-				'reshare_cat' => 'reshare_cat',
+				'reshare_cpt'         => 'reshare',
+				'reshare_cpt_archive' => 'reshares',
+				'reshare_cat'         => 'reshare_cat',
 			),
 			'supports' => array(
 				'reshare_cpt' => array(
@@ -63,12 +64,12 @@ class gEditorialReshare extends gEditorialModuleCore
 				),
 				'labels' => array(
 					'reshare_cpt' => array(
-						'name'      => _x( 'Reshare', 'Reshare CPT Name', GEDITORIAL_TEXTDOMAIN ),
+						'name'      => _x( 'Reshares', 'Reshare CPT Name', GEDITORIAL_TEXTDOMAIN ),
 						'menu_name' => _x( 'Reshares', 'Reshare CPT Menu Name', GEDITORIAL_TEXTDOMAIN ),
 					),
 					'reshare_cat' => array(
-						'name'      => _x( 'Reshare', 'Reshare Category Name', GEDITORIAL_TEXTDOMAIN ),
-						'menu_name' => _x( 'Reshares', 'Reshare Category Menu Name', GEDITORIAL_TEXTDOMAIN ),
+						'name'      => _x( 'Reshare', 'Reshare Taxonomy Name', GEDITORIAL_TEXTDOMAIN ),
+						'menu_name' => _x( 'Reshares', 'Reshare Taxonomy Menu Name', GEDITORIAL_TEXTDOMAIN ),
 					),
 				),
 			),
@@ -200,7 +201,7 @@ class gEditorialReshare extends gEditorialModuleCore
 			'taxonomies' => array(
 				$this->module->constants['reshare_cat'] => array(
 					'column'     => 'taxonomy-'.$this->module->constants['reshare_cat'],
-					'dashicon'   => 'external',
+					'dashicon'   => $this->module->dashicon,
 					'title_attr' => $this->get_string( 'name', 'reshare_cat', 'labels' ),
 				),
 			),
