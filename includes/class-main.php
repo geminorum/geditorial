@@ -129,11 +129,11 @@ class gEditorial
 			'img_url'              => FALSE,
 			'dashicon'             => FALSE, // dashicon class
 
-			'options'                   => FALSE,
-			'configure_pageditorial_cb' => FALSE,
-			'configure_link_text'       => __( 'Configure', GEDITORIAL_TEXTDOMAIN ),
-			'autoload'                  => FALSE, // autoloading a module will remove the ability to enable or disable it
-			'load_frontend'             => FALSE, // Whether or not the module should be loaded on the frontend too
+			'options'             => FALSE,
+			'configure_page_cb'   => FALSE,
+			'configure_link_text' => __( 'Configure', GEDITORIAL_TEXTDOMAIN ),
+			'autoload'            => FALSE, // autoloading a module will remove the ability to enable or disable it
+			'load_frontend'       => FALSE, // Whether or not the module should be loaded on the frontend too
 
 			'default_options' => array(),
 			'constants'       => array(),
