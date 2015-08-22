@@ -44,6 +44,9 @@ class gEditorialAudit extends gEditorialModuleCore
 				'descriptions' => array(
 				),
 				'misc' => array(
+					'meta_box_title'     => _x( 'Audit Attributes', 'Audit Attributes Meta Box Title', GEDITORIAL_TEXTDOMAIN ),
+					'meta_box_action'    => __( 'Management', GEDITORIAL_TEXTDOMAIN ),
+					'table_column_title' => _x( 'Audit Attributes', 'Audit Attributes Table Column Title', GEDITORIAL_TEXTDOMAIN ),
 				),
 				'labels' => array(
 					'audit_tax' => array(
@@ -100,6 +103,7 @@ class gEditorialAudit extends gEditorialModuleCore
 		add_action( 'init', array( &$this, 'init' ) );
 
 		if ( is_admin() ) {
+			add_action( 'admin_init', array( &$this, 'admin_init' ) );
 			add_action( 'geditorial_settings_load', array( &$this, 'register_settings' ) );
 		}
 	}
@@ -110,10 +114,18 @@ class gEditorialAudit extends gEditorialModuleCore
 
 		$this->do_filters();
 
-		$this->register_taxonomy( 'audit_tax', array() );
+		if ( current_user_can( 'edit_others_posts' ) ) // TODO: add setting option to choose editing role
+			$this->register_taxonomy( 'audit_tax', array(
+				'hierarchical' => TRUE,
+			) );
 	}
 
-	public function register_settings( $page = null )
+	public function admin_init()
+	{
+		add_action( 'add_meta_boxes', array( &$this, 'add_meta_boxes' ), 20, 2 );
+	}
+
+	public function register_settings( $page = NULL )
 	{
 		if ( isset( $_POST['install_def_atts'] ) )
 			$this->install_def_atts();
@@ -137,34 +149,6 @@ class gEditorialAudit extends gEditorialModuleCore
 		return gEditorialHelper::parse_args_r( $new, $strings );
 	}
 
-	public function register_taxonomies()
-	{
-		$editor = current_user_can( 'edit_others_posts' );
-
-		register_taxonomy( $this->module->constants['audit_tax'], $this->post_types(), array(
-			'labels'                => $this->module->strings['labels']['audit_tax'],
-			'public'                => false,
-			'show_in_nav_menus'     => false,
-			'show_ui'               => $editor,
-			'show_admin_column'     => $editor,
-			'show_tagcloud'         => false,
-			'hierarchical'          => false,
-			'update_count_callback' => array( 'gEditorialHelper', 'update_count_callback' ),
-			'query_var'             => true,
-			'rewrite'               => array(
-				'slug'         => $this->module->constants['audit_tax'],
-				'hierarchical' => true,
-				'with_front'   => true
-			),
-			'capabilities' => array(
-				'manage_terms' => 'edit_others_posts',
-				'edit_terms'   => 'edit_others_posts',
-				'delete_terms' => 'edit_others_posts',
-				'assign_terms' => 'edit_published_posts'
-			)
-		) );
-	}
-
 	private function install_def_atts()
 	{
 		if ( ! wp_verify_nonce( $_POST['_wpnonce'], $this->module->options_group_name.'-options' ) )
@@ -177,5 +161,22 @@ class gEditorialAudit extends gEditorialModuleCore
 
 		wp_redirect( add_query_arg( 'message', $added ? 'added_install_def_atts' : 'error_install_def_atts' ) );
 		exit;
+	}
+
+	public function add_meta_boxes( $post_type, $post )
+	{
+		if ( in_array( $post_type, $this->post_types() ) ) {
+			remove_meta_box( $this->module->constants['audit_tax'].'div', $post_type, 'side' );
+			add_meta_box( 'geditorial-contest',
+				$this->get_meta_box_title( $post_type, $this->get_url_tax_edit( 'audit_tax' ), 'edit_others_posts' ),
+				array( $this, 'meta_box_choose_tax' ),
+				NULL,
+				'side',
+				'default',
+				array(
+					'taxonomy' => $this->module->constants['audit_tax'],
+				)
+			);
+		}
 	}
 }
