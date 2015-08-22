@@ -862,12 +862,16 @@ class gEditorialModuleCore
 			'show_tagcloud'         => FALSE,
 			'public'                => TRUE,
 			'show_ui'               => TRUE,
-			'query_var'             => TRUE,
-			'capabilities'          => array(
+			'query_var'             => $this->module->constants[$constant_key],
+			'rewrite'               => array(
+				'slug'       => isset( $this->module->constants[$constant_key.'_slug'] ) ? $this->module->constants[$constant_key.'_slug'] : $this->module->constants[$constant_key],
+				'with_front' => FALSE,
+			),
+			'capabilities' => array(
 				'manage_terms' => 'edit_others_posts', // 'manage_categories',
 				'edit_terms'   => 'edit_others_posts', // 'manage_categories',
 				'delete_terms' => 'edit_others_posts', // 'manage_categories',
-				'assign_terms' => 'edit_published_posts', // 'edit_posts',
+				'assign_terms' => 'edit_posts', // 'edit_published_posts',
 			),
 		), $atts );
 
