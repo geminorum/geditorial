@@ -985,6 +985,11 @@ class gEditorialModuleCore
 		return add_query_arg( 'taxonomy', $this->module->constants[$constant_key], get_admin_url( NULL, 'edit-tags.php' ) );
 	}
 
+	public function get_url_post_edit( $constant_key )
+	{
+		return add_query_arg( 'post_type', $this->module->constants[$constant_key], get_admin_url( NULL, 'edit.php' ) );
+	}
+
 	public static function redirect( $location, $status = 302 )
 	{
 		wp_redirect( $location, $status );
