@@ -21,6 +21,8 @@
 	right:40px;
 	top:6px;
 
+	display: none;
+
 	@include body-rtl() {
 		left:40px;
 		right:auto;
@@ -29,8 +31,13 @@
 
 	a,
 	a:hover {
-		text-decoration:none;
+		text-decoration: none;
+		box-shadow: none;
 	}
+}
+
+.postbox:hover .geditorial-admin-action-metabox {
+	display: block;
 }
 
 .geditorial-admin-wrap-metabox {
