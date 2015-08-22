@@ -1,3 +1,7 @@
+### 0.2.6
+* tweaks: simple post excerpt meta box
+* audit: using internal tax meta box api
+
 ### 0.2.5
 * reshare: new module
 
