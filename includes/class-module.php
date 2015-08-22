@@ -874,6 +874,22 @@ class gEditorialModuleCore
 		register_taxonomy( $this->module->constants[$constant_key], $post_types, $args );
 	}
 
+	// callback for meta box for choose only tax
+	public function meta_box_choose_tax( $post, $box )
+	{
+		$atts = isset( $box['args'] ) && is_array( $box['args'] ) ? $box['args'] : array();
+		$args = wp_parse_args( $atts, array( 'taxonomy' => 'category' ) );
+
+		$tax_name = esc_attr( $args['taxonomy'] );
+		$taxonomy = get_taxonomy( $args['taxonomy'] );
+
+		echo '<div id="taxonomy-'.$tax_name.'" class="geditorial-admin-wrap-metabox choose-tax">';
+		echo '<input type="hidden" name="tax_input['.$tax_name.'][]" value="0" />'; // Allows for an empty term set to be sent. 0 is an invalid Term ID and will be ignored by empty() checks.
+		echo '<div class="field-wrap-list"><ul>';
+			wp_terms_checklist( $post->ID, array( 'taxonomy' => $tax_name ) );
+		echo '</ul></div></div>';
+	}
+
 	// this must be wp core future!!
 	// call this late on after_setup_theme
 	public static function themeThumbnails( $post_types )
