@@ -941,13 +941,23 @@ class gEditorialModuleCore
 		if ( current_user_can( 'manage_options' ) && FALSE !== $url ) {
 
 			if ( is_null( $url ) )
-				$url = add_query_arg( 'page', 'geditorial-settings-'.$this->module_name, get_admin_url( NULL, 'admin.php' ) );
+				$url = $this->get_url_settings();
 
 			$action = $this->get_string( 'meta_box_action', $post_type, 'misc', _x( 'Configure', 'MetaBox default action', GEDITORIAL_TEXTDOMAIN ) );
 			$title .= ' <span class="geditorial-admin-action-metabox"><a href="'.esc_url( $url ).'" target="_blank">'.$action.'</a></span>';
 		}
 
 		return $title;
+	}
+
+	public function get_url_settings()
+	{
+		return add_query_arg( 'page', 'geditorial-settings-'.$this->module_name, get_admin_url( NULL, 'admin.php' ) );
+	}
+
+	public function get_url_tax_edit( $constant_key )
+	{
+		return add_query_arg( 'taxonomy', $this->constants[$constant_key], get_admin_url( NULL, 'edit-tags.php' ) );
 	}
 
 	public static function redirect( $location, $status = 302 )
