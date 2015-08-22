@@ -178,7 +178,7 @@ class gEditorialMeta extends gEditorialModuleCore
 
 		add_action( 'add_meta_boxes', array( &$this, 'add_meta_boxes' ), 10, 2 );
 		add_action( 'add_meta_boxes', array( &$this, 'remove_meta_boxes' ), 20, 2 );
-		add_action( 'save_post', array( &$this, 'save_post' ), 10, 2  );
+		add_action( 'save_post', array( &$this, 'save_post' ), 10, 2 );
 
 		// SEE: http://make.wordpress.org/core/2012/12/01/more-hooks-on-the-edit-screen/
 		// add_action( 'edit_form_after_title', array( $this, 'edit_form_after_title' ) );

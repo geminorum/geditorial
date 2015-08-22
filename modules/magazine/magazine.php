@@ -1080,11 +1080,12 @@ class gEditorialMagazine extends gEditorialModuleCore
 		echo '</div>';
 	}
 
-	public function get_issue_post( $post_ID = NULL )
+	public function get_issue_post( $post_id = NULL )
 	{
-		$post_ID = ( NULL === $post_ID ) ? get_the_ID() : $post_ID;
+		if ( is_null( $post_id ) )
+			$post_id = get_the_ID();
 
-		$terms = gEditorialHelper::getTerms( $this->module->constants['issue_tax'], $post_ID, TRUE );
+		$terms = gEditorialHelper::getTerms( $this->module->constants['issue_tax'], $post_id, TRUE );
 		if ( ! count( $terms ) )
 			return FALSE;
 

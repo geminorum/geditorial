@@ -921,7 +921,6 @@ class gEditorialModuleCore
 		);
 	}
 
-	// FRONT ONLY: cause will called from 'wp_footer'
 	// WARNING: every asset must have a .min copy
 	public function enqueue_asset_js( $args = array(), $name = NULL, $deps = array( 'jquery' ), $handle = NULL )
 	{
