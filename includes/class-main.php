@@ -6,9 +6,10 @@ class gEditorial
 	var $options_group      = 'geditorial_';
 	var $options_group_name = 'geditorial_options';
 
-	var $_asset_styles      = FALSE;
-	var $_asset_config      = FALSE;
-	var $_asset_args        = array();
+	var $_asset_styles   = FALSE;
+	var $_asset_config   = FALSE;
+	var $_asset_args     = array();
+	var $_editor_buttons = array();
 
 	function __construct()
 	{
@@ -202,10 +203,15 @@ class gEditorial
 		do_action( 'geditorial_module_options_loaded' );
 	}
 
-	// Load the post type options again so we give add_post_type_support() a chance to work
-	// @see http://dev.editflow.org/2011/11/17/geditorial-v0-7-alpha2-notes/#comment-232
 	public function init_late()
 	{
+		if ( 'true' == get_user_option( 'rich_editing' ) && count( $this->_editor_buttons ) ) {
+			add_filter( 'mce_external_plugins', array( &$this, 'mce_external_plugins' ) );
+			add_filter( 'mce_buttons', array( &$this, 'mce_buttons' ) );
+		}
+
+		// Load the post type options again so we give add_post_type_support() a chance to work
+		// @see http://dev.editflow.org/2011/11/17/geditorial-v0-7-alpha2-notes/#comment-232
 		foreach ( $this->modules as $mod_name => $mod_data ) {
 
 			if ( ! is_admin() && ! $mod_data->load_frontend )
@@ -219,6 +225,24 @@ class gEditorial
 				$this->{$mod_name}->module = $this->modules->{$mod_name};
 			}
 		}
+	}
+
+	public function mce_buttons( $buttons )
+	{
+		array_push( $buttons, '|' );
+
+		foreach( $this->_editor_buttons as $plugin => $filepath )
+			array_push( $buttons, $plugin );
+
+		return $buttons;
+	}
+
+	public function mce_external_plugins( $plugin_array )
+	{
+		foreach( $this->_editor_buttons as $plugin => $filepath )
+			$plugin_array[$plugin] = $filepath;
+
+		return $plugin_array;
 	}
 
 	// get a module by one of its descriptive values
@@ -337,5 +361,10 @@ class gEditorial
 			return;
 
 		gEditorialHelper::printJSConfig( $this->_asset_args );
+	}
+
+	public function register_editor_button( $button, $filepath )
+	{
+		$this->_editor_buttons[$button] = GEDITORIAL_URL.$filepath;
 	}
 }

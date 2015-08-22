@@ -950,6 +950,15 @@ class gEditorialModuleCore
 		$gEditorial->enqueue_styles();
 	}
 
+	public function register_editor_button( $settings_key = 'editor_button' )
+	{
+		if ( ! $this->get_setting( $settings_key, TRUE ) )
+			return;
+
+		global $gEditorial;
+		$gEditorial->register_editor_button( 'ge_'.$this->module_name, 'assets/js/geditorial/tinymce.'.$this->module_name.'.js' );
+	}
+
 	public function get_meta_box_title( $post_type = 'post', $url = NULL, $edit_cap = 'manage_options' )
 	{
 		$title = $this->get_string( 'meta_box_title', $post_type, 'misc', _x( 'Settings', 'MetaBox default title', GEDITORIAL_TEXTDOMAIN ) );
