@@ -68,8 +68,8 @@ class gEditorialReshare extends gEditorialModuleCore
 						'menu_name' => _x( 'Reshares', 'Reshare CPT Menu Name', GEDITORIAL_TEXTDOMAIN ),
 					),
 					'reshare_cat' => array(
-						'name'      => _x( 'Reshare', 'Reshare Taxonomy Name', GEDITORIAL_TEXTDOMAIN ),
-						'menu_name' => _x( 'Reshares', 'Reshare Taxonomy Menu Name', GEDITORIAL_TEXTDOMAIN ),
+						'name'      => _x( 'Reshare Category', 'Reshare Taxonomy Name', GEDITORIAL_TEXTDOMAIN ),
+						'menu_name' => _x( 'Reshare Categories', 'Reshare Taxonomy Menu Name', GEDITORIAL_TEXTDOMAIN ),
 					),
 				),
 			),
@@ -112,7 +112,9 @@ class gEditorialReshare extends gEditorialModuleCore
 		$this->do_filters();
 
 		$this->register_post_type( 'reshare_cpt', array(), array( 'post_tag' ) );
-		$this->register_taxonomy( 'reshare_cat', array(), $this->module->constants['reshare_cpt'] );
+		$this->register_taxonomy( 'reshare_cat', array(
+			'hierarchical' => TRUE,
+		), $this->module->constants['reshare_cpt'] );
 	}
 
 	public function admin_init()
