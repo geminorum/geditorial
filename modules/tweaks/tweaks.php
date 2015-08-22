@@ -100,6 +100,8 @@ class gEditorialTweaks extends gEditorialModuleCore
 
 	public function admin_init()
 	{
+		add_action( 'add_meta_boxes', array( &$this, 'add_meta_boxes' ), 20, 2 );
+
 		if ( $this->get_setting( 'group_taxonomies', false ) ) {
 
 			foreach( $this->post_types() as $post_type ) {
@@ -163,5 +165,25 @@ class gEditorialTweaks extends gEditorialModuleCore
 				echo '</div>';
 			break;
 		}
+	}
+
+	public function add_meta_boxes( $post_type, $post )
+	{
+		if ( post_type_supports( $post_type, 'excerpt' ) ) {
+			remove_meta_box( 'postexcerpt', $post_type, 'normal' );
+			add_meta_box( 'postexcerpt', __( 'Excerpt' ), array( $this, 'post_excerpt_meta_box' ), $post_type, 'normal' );
+		}
+	}
+
+	// display post excerpt form fields
+	public function post_excerpt_meta_box( $post )
+	{
+		echo '<label class="screen-reader-text" for="excerpt">';
+			_e( 'Excerpt' );
+		echo '</label>';
+
+		echo '<textarea rows="1" cols="40" name="excerpt" id="excerpt">';
+			echo $post->post_excerpt; // textarea_escaped
+		echo '</textarea>';
 	}
 }
