@@ -44,9 +44,9 @@ class gEditorialAudit extends gEditorialModuleCore
 				'descriptions' => array(
 				),
 				'misc' => array(
-					'meta_box_title'     => _x( 'Audit Attributes', 'Audit Attributes Meta Box Title', GEDITORIAL_TEXTDOMAIN ),
+					'meta_box_title'     => __( 'Audit', GEDITORIAL_TEXTDOMAIN ),
 					'meta_box_action'    => __( 'Management', GEDITORIAL_TEXTDOMAIN ),
-					'table_column_title' => _x( 'Audit Attributes', 'Audit Attributes Table Column Title', GEDITORIAL_TEXTDOMAIN ),
+					'table_column_title' => __( 'Audit', GEDITORIAL_TEXTDOMAIN ),
 				),
 				'labels' => array(
 					'audit_tax' => array(
