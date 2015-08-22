@@ -934,11 +934,11 @@ class gEditorialModuleCore
 		$gEditorial->enqueue_styles();
 	}
 
-	public function get_meta_box_title( $post_type = 'post', $url = NULL )
+	public function get_meta_box_title( $post_type = 'post', $url = NULL, $edit_cap = 'manage_options' )
 	{
 		$title = $this->get_string( 'meta_box_title', $post_type, 'misc', _x( 'Settings', 'MetaBox default title', GEDITORIAL_TEXTDOMAIN ) );
 
-		if ( current_user_can( 'manage_options' ) && FALSE !== $url ) {
+		if ( current_user_can( $edit_cap ) && FALSE !== $url ) {
 
 			if ( is_null( $url ) )
 				$url = $this->get_url_settings();
@@ -957,7 +957,7 @@ class gEditorialModuleCore
 
 	public function get_url_tax_edit( $constant_key )
 	{
-		return add_query_arg( 'taxonomy', $this->constants[$constant_key], get_admin_url( NULL, 'edit-tags.php' ) );
+		return add_query_arg( 'taxonomy', $this->module->constants[$constant_key], get_admin_url( NULL, 'edit-tags.php' ) );
 	}
 
 	public static function redirect( $location, $status = 302 )
