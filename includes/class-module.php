@@ -829,7 +829,7 @@ class gEditorialModuleCore
 		if ( is_null( $taxonomies ) )
 			$taxonomies = $this->taxonomies();
 
-		$args = array_merge( $atts, array(
+		$args = array_merge( array(
 			'taxonomies'  => $taxonomies,
 			'labels'      => $this->module->strings['labels'][$constant_key],
 			'menu_icon'   => ( $this->module->dashicon ? 'dashicons-'.$this->module->dashicon : 'dashicons-welcome-write-blog' ),
@@ -844,7 +844,7 @@ class gEditorialModuleCore
 			'public'       => TRUE,
 			'show_ui'      => TRUE,
 			'map_meta_cap' => TRUE,
-		) );
+		), $atts );
 
 		register_post_type( $this->module->constants[$constant_key], $args );
 	}
@@ -855,7 +855,7 @@ class gEditorialModuleCore
 		if ( is_null( $post_types ) )
 			$post_types = $this->post_types();
 
-		$args = array_merge( $atts, array(
+		$args = array_merge( array(
 			'labels'                => $this->module->strings['labels'][$constant_key],
 			'update_count_callback' => array( 'gEditorialHelper', 'update_count_callback' ),
 			'hierarchical'          => FALSE,
@@ -863,9 +863,15 @@ class gEditorialModuleCore
 			'public'                => TRUE,
 			'show_ui'               => TRUE,
 			'query_var'             => TRUE,
-		) );
+			'capabilities'          => array(
+				'manage_terms' => 'edit_others_posts', // 'manage_categories',
+				'edit_terms'   => 'edit_others_posts', // 'manage_categories',
+				'delete_terms' => 'edit_others_posts', // 'manage_categories',
+				'assign_terms' => 'edit_published_posts', // 'edit_posts',
+			),
+		), $atts );
 
-		register_taxonomy(  $this->module->constants[$constant_key], $post_types, $args );
+		register_taxonomy( $this->module->constants[$constant_key], $post_types, $args );
 	}
 
 	// this must be wp core future!!
