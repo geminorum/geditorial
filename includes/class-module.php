@@ -427,9 +427,9 @@ class gEditorialModuleCore
 		echo '</form>';
 
 		if ( gEditorialHelper::isDev() ) {
-			//@gEditorialHelper::dump( $this->module->default_options );
+			// @gEditorialHelper::dump( $this->module->default_options );
 			@gEditorialHelper::dump( $this->module->options );
-			//@gEditorialHelper::dump( $this->module->strings );
+			// @gEditorialHelper::dump( $this->module->strings );
 		}
 	}
 
@@ -961,6 +961,15 @@ class gEditorialModuleCore
 		$gEditorial->register_editor_button( 'ge_'.$this->module_name, 'assets/js/geditorial/tinymce.'.$this->module_name.'.js' );
 	}
 
+	protected function register_shortcode( $constant_key, $callback = NULL )
+	{
+		if ( is_null( $callback ) && method_exists( $this, $constant_key ) )
+			$callback = array( $this, $constant_key );
+
+		remove_shortcode( $this->module->constants[$constant_key] );
+		add_shortcode( $this->module->constants[$constant_key], $callback );
+	}
+
 	public function get_meta_box_title( $post_type = 'post', $url = NULL, $edit_cap = 'manage_options' )
 	{
 		$title = $this->get_string( 'meta_box_title', $post_type, 'misc', _x( 'Settings', 'MetaBox default title', GEDITORIAL_TEXTDOMAIN ) );
@@ -996,5 +1005,10 @@ class gEditorialModuleCore
 	{
 		wp_redirect( $location, $status );
 		exit();
+	}
+
+	protected function require_code( $filename = 'templates' )
+	{
+		require_once( GEDITORIAL_DIR.'modules'.DS.$this->module_name.DS.$filename.'.php' );
 	}
 }
