@@ -19,7 +19,6 @@ msgid "#%d (no title)"
 msgstr ""
 
 #: includes/class-main.php:133
-#: modules/contest/contest.php:579
 msgid "Configure"
 msgstr ""
 
@@ -83,12 +82,12 @@ msgstr ""
 msgid "Error: setting type undefined."
 msgstr ""
 
-#: includes/class-module.php:933
+#: includes/class-module.php:955
 msgctxt "MetaBox default title"
 msgid "Settings"
 msgstr ""
 
-#: includes/class-module.php:940
+#: includes/class-module.php:962
 msgctxt "MetaBox default action"
 msgid "Configure"
 msgstr ""
@@ -207,9 +206,9 @@ msgid "Z"
 msgstr ""
 
 #: modules/alphabets/alphabets.php:83
-#: modules/audit/audit.php:82
+#: modules/audit/audit.php:85
 #: modules/comments/comments.php:108
-#: modules/contest/contest.php:149
+#: modules/contest/contest.php:153
 #: modules/divisions/divisions.php:110
 #: modules/entry/entry.php:119
 #: modules/gallery/gallery.php:75
@@ -219,14 +218,14 @@ msgstr ""
 #: modules/series/series.php:104
 #: modules/specs/specs.php:103
 #: modules/submit/submit.php:75
-#: modules/tweaks/tweaks.php:69
+#: modules/tweaks/tweaks.php:70
 msgid "help-tab-title"
 msgstr ""
 
 #: modules/alphabets/alphabets.php:84
-#: modules/audit/audit.php:83
+#: modules/audit/audit.php:86
 #: modules/comments/comments.php:109
-#: modules/contest/contest.php:150
+#: modules/contest/contest.php:154
 #: modules/divisions/divisions.php:111
 #: modules/entry/entry.php:120
 #: modules/gallery/gallery.php:76
@@ -238,14 +237,14 @@ msgstr ""
 #: modules/series/series.php:105
 #: modules/specs/specs.php:104
 #: modules/submit/submit.php:76
-#: modules/tweaks/tweaks.php:70
+#: modules/tweaks/tweaks.php:71
 msgid "<p>help-tab-content</p>"
 msgstr ""
 
 #: modules/alphabets/alphabets.php:89
-#: modules/audit/audit.php:86
+#: modules/audit/audit.php:89
 #: modules/comments/comments.php:112
-#: modules/contest/contest.php:153
+#: modules/contest/contest.php:157
 #: modules/divisions/divisions.php:114
 #: modules/entry/entry.php:123
 #: modules/gallery/gallery.php:81
@@ -256,7 +255,7 @@ msgstr ""
 #: modules/series/series.php:108
 #: modules/specs/specs.php:107
 #: modules/submit/submit.php:79
-#: modules/tweaks/tweaks.php:73
+#: modules/tweaks/tweaks.php:74
 msgid "<p><strong>For more information</strong>:</p><p><a href=\"%1$s\">%2$s</a></p><p><a href=\"%3$s\">gEditorial on GitHub</a></p>"
 msgstr ""
 
@@ -277,6 +276,8 @@ msgid "&mdash; Select &mdash;"
 msgstr ""
 
 #: modules/audit/audit.php:16
+#: modules/audit/audit.php:47
+#: modules/audit/audit.php:49
 msgid "Audit"
 msgstr ""
 
@@ -288,93 +289,97 @@ msgstr ""
 msgid "Adding auditing functionality to WordPress with custom taxonomies."
 msgstr ""
 
-#: modules/audit/audit.php:50
+#: modules/audit/audit.php:48
+msgid "Management"
+msgstr ""
+
+#: modules/audit/audit.php:53
 msgctxt "Audit Attributes Taxonomy Name"
 msgid "Audit Attributes"
 msgstr ""
 
-#: modules/audit/audit.php:51
+#: modules/audit/audit.php:54
 msgctxt "Audit Attributes Taxonomy Menu Name"
 msgid "Audit Attributes"
 msgstr ""
 
-#: modules/audit/audit.php:53
+#: modules/audit/audit.php:56
 msgid "Audit Attribute"
 msgstr ""
 
-#: modules/audit/audit.php:54
+#: modules/audit/audit.php:57
 msgid "Search Audit Attributes"
 msgstr ""
 
-#: modules/audit/audit.php:56
+#: modules/audit/audit.php:59
 msgid "All Audit Attributes"
 msgstr ""
 
-#: modules/audit/audit.php:57
+#: modules/audit/audit.php:60
 msgid "Parent Audit Attribute"
 msgstr ""
 
-#: modules/audit/audit.php:58
+#: modules/audit/audit.php:61
 msgid "Parent Audit Attribute:"
 msgstr ""
 
-#: modules/audit/audit.php:59
+#: modules/audit/audit.php:62
 msgid "Edit Audit Attribute"
 msgstr ""
 
-#: modules/audit/audit.php:60
+#: modules/audit/audit.php:63
 msgid "Update Audit Attribute"
 msgstr ""
 
-#: modules/audit/audit.php:61
+#: modules/audit/audit.php:64
 msgid "Add New Audit Attribute"
 msgstr ""
 
-#: modules/audit/audit.php:62
+#: modules/audit/audit.php:65
 msgid "New Audit Attribute"
 msgstr ""
 
-#: modules/audit/audit.php:63
+#: modules/audit/audit.php:66
 msgid "Separate audit attributes with commas"
 msgstr ""
 
-#: modules/audit/audit.php:64
+#: modules/audit/audit.php:67
 msgid "Add or remove audit attributes"
 msgstr ""
 
-#: modules/audit/audit.php:65
+#: modules/audit/audit.php:68
 msgid "Choose from most used audit attributes"
 msgstr ""
 
-#: modules/audit/audit.php:70
+#: modules/audit/audit.php:73
 msgid "Audited"
 msgstr ""
 
-#: modules/audit/audit.php:71
+#: modules/audit/audit.php:74
 msgid "Outdated"
 msgstr ""
 
-#: modules/audit/audit.php:72
+#: modules/audit/audit.php:75
 msgid "Redundant"
 msgstr ""
 
-#: modules/audit/audit.php:73
+#: modules/audit/audit.php:76
 msgid "Review SEO"
 msgstr ""
 
-#: modules/audit/audit.php:74
+#: modules/audit/audit.php:77
 msgid "Review Style"
 msgstr ""
 
-#: modules/audit/audit.php:75
+#: modules/audit/audit.php:78
 msgid "Trivial"
 msgstr ""
 
-#: modules/audit/audit.php:88
+#: modules/audit/audit.php:91
 msgid "Editorial Audit Documentations"
 msgstr ""
 
-#: modules/audit/audit.php:122
+#: modules/audit/audit.php:134
 msgid "Install Default Attributes"
 msgstr ""
 
@@ -519,8 +524,8 @@ msgid "Buried"
 msgstr ""
 
 #: modules/contest/contest.php:21
-#: modules/contest/contest.php:84
-#: modules/contest/contest.php:112
+#: modules/contest/contest.php:88
+#: modules/contest/contest.php:116
 msgid "Contest"
 msgstr ""
 
@@ -541,212 +546,212 @@ msgid "Using multiple contests for appplies."
 msgstr ""
 
 #: modules/contest/contest.php:74
-#: modules/contest/contest.php:77
-#: modules/contest/contest.php:83
-#: modules/contest/contest.php:94
-#: modules/contest/contest.php:111
-#: modules/contest/contest.php:125
+#: modules/contest/contest.php:81
+#: modules/contest/contest.php:87
+#: modules/contest/contest.php:98
+#: modules/contest/contest.php:115
+#: modules/contest/contest.php:129
 msgid "Contests"
 msgstr ""
 
-#: modules/contest/contest.php:75
+#: modules/contest/contest.php:79
 msgid "The Contest"
 msgstr ""
 
-#: modules/contest/contest.php:76
+#: modules/contest/contest.php:80
 msgid "Contest Poster"
 msgstr ""
 
-#: modules/contest/contest.php:78
+#: modules/contest/contest.php:82
 msgid "&mdash; Choose a Contest &mdash;"
 msgstr ""
 
-#: modules/contest/contest.php:85
-#: modules/contest/contest.php:99
+#: modules/contest/contest.php:89
+#: modules/contest/contest.php:103
 #: modules/entry/entry.php:85
 #: modules/magazine/magazine.php:90
 msgid "Add New"
 msgstr ""
 
-#: modules/contest/contest.php:86
-#: modules/contest/contest.php:120
+#: modules/contest/contest.php:90
+#: modules/contest/contest.php:124
 msgid "Add New Contest"
 msgstr ""
 
-#: modules/contest/contest.php:87
-#: modules/contest/contest.php:118
+#: modules/contest/contest.php:91
+#: modules/contest/contest.php:122
 msgid "Edit Contest"
 msgstr ""
 
-#: modules/contest/contest.php:88
-#: modules/contest/contest.php:121
+#: modules/contest/contest.php:92
+#: modules/contest/contest.php:125
 msgid "New Contest"
 msgstr ""
 
-#: modules/contest/contest.php:89
+#: modules/contest/contest.php:93
 msgid "View Contest"
 msgstr ""
 
-#: modules/contest/contest.php:90
-#: modules/contest/contest.php:113
+#: modules/contest/contest.php:94
+#: modules/contest/contest.php:117
 msgid "Search Contests"
 msgstr ""
 
-#: modules/contest/contest.php:91
+#: modules/contest/contest.php:95
 msgid "No contests found"
 msgstr ""
 
-#: modules/contest/contest.php:92
+#: modules/contest/contest.php:96
 msgid "No contests found in Trash"
 msgstr ""
 
-#: modules/contest/contest.php:93
-#: modules/contest/contest.php:117
+#: modules/contest/contest.php:97
+#: modules/contest/contest.php:121
 msgid "Parent Contest:"
 msgstr ""
 
-#: modules/contest/contest.php:97
-#: modules/contest/contest.php:108
+#: modules/contest/contest.php:101
+#: modules/contest/contest.php:112
 msgid "Applies"
 msgstr ""
 
-#: modules/contest/contest.php:98
+#: modules/contest/contest.php:102
 msgid "Apply"
 msgstr ""
 
-#: modules/contest/contest.php:100
+#: modules/contest/contest.php:104
 msgid "Add New Apply"
 msgstr ""
 
-#: modules/contest/contest.php:101
+#: modules/contest/contest.php:105
 msgid "Edit Apply"
 msgstr ""
 
-#: modules/contest/contest.php:102
+#: modules/contest/contest.php:106
 msgid "New Apply"
 msgstr ""
 
-#: modules/contest/contest.php:103
+#: modules/contest/contest.php:107
 msgid "View Apply"
 msgstr ""
 
-#: modules/contest/contest.php:104
+#: modules/contest/contest.php:108
 msgid "Search Applies"
 msgstr ""
 
-#: modules/contest/contest.php:105
+#: modules/contest/contest.php:109
 msgid "No applies found"
 msgstr ""
 
-#: modules/contest/contest.php:106
+#: modules/contest/contest.php:110
 msgid "No applies found in Trash"
 msgstr ""
 
-#: modules/contest/contest.php:107
+#: modules/contest/contest.php:111
 msgid "Parent Apply:"
 msgstr ""
 
-#: modules/contest/contest.php:115
+#: modules/contest/contest.php:119
 msgid "All Contests"
 msgstr ""
 
-#: modules/contest/contest.php:116
+#: modules/contest/contest.php:120
 msgid "Parent Contest"
 msgstr ""
 
-#: modules/contest/contest.php:119
+#: modules/contest/contest.php:123
 msgid "Update Contest"
 msgstr ""
 
-#: modules/contest/contest.php:122
+#: modules/contest/contest.php:126
 msgid "Separate contests with commas"
 msgstr ""
 
-#: modules/contest/contest.php:123
+#: modules/contest/contest.php:127
 msgid "Add or remove Contests"
 msgstr ""
 
-#: modules/contest/contest.php:124
+#: modules/contest/contest.php:128
 msgid "Choose from most used Contests"
 msgstr ""
 
-#: modules/contest/contest.php:128
-#: modules/contest/contest.php:142
+#: modules/contest/contest.php:132
+#: modules/contest/contest.php:146
 msgid "Apply Statuses"
 msgstr ""
 
-#: modules/contest/contest.php:129
+#: modules/contest/contest.php:133
 msgid "Apply Status"
 msgstr ""
 
-#: modules/contest/contest.php:130
+#: modules/contest/contest.php:134
 msgid "Search Apply Statuses"
 msgstr ""
 
-#: modules/contest/contest.php:132
+#: modules/contest/contest.php:136
 msgid "All Apply Statuses"
 msgstr ""
 
-#: modules/contest/contest.php:133
+#: modules/contest/contest.php:137
 msgid "Parent Apply Status"
 msgstr ""
 
-#: modules/contest/contest.php:134
+#: modules/contest/contest.php:138
 msgid "Parent Apply Status:"
 msgstr ""
 
-#: modules/contest/contest.php:135
+#: modules/contest/contest.php:139
 msgid "Edit Apply Status"
 msgstr ""
 
-#: modules/contest/contest.php:136
+#: modules/contest/contest.php:140
 msgid "Update Apply Status"
 msgstr ""
 
-#: modules/contest/contest.php:137
+#: modules/contest/contest.php:141
 msgid "Add New Apply Status"
 msgstr ""
 
-#: modules/contest/contest.php:138
+#: modules/contest/contest.php:142
 msgid "New Apply Status"
 msgstr ""
 
-#: modules/contest/contest.php:139
+#: modules/contest/contest.php:143
 msgid "Separate apply statuses with commas"
 msgstr ""
 
-#: modules/contest/contest.php:140
+#: modules/contest/contest.php:144
 msgid "Add or remove Apply Statuses"
 msgstr ""
 
-#: modules/contest/contest.php:141
+#: modules/contest/contest.php:145
 msgid "Choose from most used Apply Statuses"
 msgstr ""
 
-#: modules/contest/contest.php:155
+#: modules/contest/contest.php:159
 msgid "Editorial Contest Documentations"
 msgstr ""
 
-#: modules/contest/contest.php:472
+#: modules/contest/contest.php:476
 #: modules/magazine/magazine.php:667
 msgid "you're doing it wrong!"
 msgstr ""
 
-#: modules/contest/contest.php:541
-#: modules/contest/contest.php:542
-#: modules/contest/contest.php:600
-#: modules/contest/contest.php:601
+#: modules/contest/contest.php:545
+#: modules/contest/contest.php:546
+#: modules/contest/contest.php:603
+#: modules/contest/contest.php:604
 #: modules/divisions/divisions.php:66
 #: modules/entry/entry.php:63
 #: modules/magazine/magazine.php:1048
 #: modules/magazine/magazine.php:1049
-#: modules/magazine/magazine.php:1227
+#: modules/magazine/magazine.php:1228
 #: modules/series/series.php:63
 #: modules/specs/specs.php:62
 msgid "Order"
 msgstr ""
 
-#: modules/contest/contest.php:557
+#: modules/contest/contest.php:561
 #: modules/magazine/magazine.php:1064
 msgid "(no parent)"
 msgstr ""
@@ -800,7 +805,7 @@ msgstr ""
 
 #: modules/divisions/divisions.php:67
 #: modules/entry/entry.php:64
-#: modules/magazine/magazine.php:1419
+#: modules/magazine/magazine.php:1420
 #: modules/series/series.php:64
 #: modules/specs/specs.php:63
 msgid "Description"
@@ -1072,7 +1077,7 @@ msgid "O"
 msgstr ""
 
 #: modules/entry/entry.php:266
-#: modules/magazine/magazine.php:1183
+#: modules/magazine/magazine.php:1184
 msgid "<span title=\"No Order\">&mdash;</span>"
 msgstr ""
 
@@ -1162,7 +1167,7 @@ msgid "Like"
 msgstr ""
 
 #: modules/magazine/magazine.php:23
-#: modules/magazine/magazine.php:1371
+#: modules/magazine/magazine.php:1372
 msgid "Magazine"
 msgstr ""
 
@@ -1219,7 +1224,7 @@ msgstr ""
 #: modules/magazine/magazine.php:89
 #: modules/magazine/magazine.php:103
 #: modules/magazine/magazine.php:730
-#: modules/magazine/magazine.php:1403
+#: modules/magazine/magazine.php:1404
 msgid "Issue"
 msgstr ""
 
@@ -1396,138 +1401,138 @@ msgstr ""
 msgid "There are no issues!"
 msgstr ""
 
-#: modules/magazine/magazine.php:1164
-#: modules/magazine/magazine.php:1175
+#: modules/magazine/magazine.php:1165
+#: modules/magazine/magazine.php:1176
 msgid "<span title=\"No Posts\">&mdash;</span>"
 msgstr ""
 
-#: modules/magazine/magazine.php:1173
+#: modules/magazine/magazine.php:1174
 msgctxt "issues column terms between"
 msgid ", "
 msgstr ""
 
-#: modules/magazine/magazine.php:1223
+#: modules/magazine/magazine.php:1224
 msgid "Number Line"
 msgstr ""
 
-#: modules/magazine/magazine.php:1224
-#: modules/magazine/magazine.php:1229
+#: modules/magazine/magazine.php:1225
+#: modules/magazine/magazine.php:1230
 msgid "Total Pages"
 msgstr ""
 
-#: modules/magazine/magazine.php:1228
+#: modules/magazine/magazine.php:1229
 msgid "Page Start"
 msgstr ""
 
-#: modules/magazine/magazine.php:1234
+#: modules/magazine/magazine.php:1235
 msgid "The issue number line"
 msgstr ""
 
-#: modules/magazine/magazine.php:1235
+#: modules/magazine/magazine.php:1236
 msgid "The issue total pages"
 msgstr ""
 
-#: modules/magazine/magazine.php:1238
+#: modules/magazine/magazine.php:1239
 msgid "Post order in issue list"
 msgstr ""
 
-#: modules/magazine/magazine.php:1239
+#: modules/magazine/magazine.php:1240
 msgid "Post start page on issue (printed)"
 msgstr ""
 
-#: modules/magazine/magazine.php:1240
+#: modules/magazine/magazine.php:1241
 msgid "Post total pages on issue (printed)"
 msgstr ""
 
-#: modules/magazine/magazine.php:1353
+#: modules/magazine/magazine.php:1354
 msgid "Issue updated. <a href=\"%s\">View issue</a>"
 msgstr ""
 
-#: modules/magazine/magazine.php:1354
+#: modules/magazine/magazine.php:1355
 msgid "Custom field updated."
 msgstr ""
 
-#: modules/magazine/magazine.php:1355
+#: modules/magazine/magazine.php:1356
 msgid "Custom field deleted."
 msgstr ""
 
-#: modules/magazine/magazine.php:1356
+#: modules/magazine/magazine.php:1357
 msgid "Issue updated."
 msgstr ""
 
-#: modules/magazine/magazine.php:1357
+#: modules/magazine/magazine.php:1358
 msgid "Issue restored to revision from %s"
 msgstr ""
 
-#: modules/magazine/magazine.php:1358
+#: modules/magazine/magazine.php:1359
 msgid "Issue published. <a href=\"%s\">View issue</a>"
 msgstr ""
 
-#: modules/magazine/magazine.php:1359
+#: modules/magazine/magazine.php:1360
 msgid "Issue saved."
 msgstr ""
 
-#: modules/magazine/magazine.php:1360
+#: modules/magazine/magazine.php:1361
 msgid "Issue submitted. <a target=\"_blank\" href=\"%s\">Preview issue</a>"
 msgstr ""
 
-#: modules/magazine/magazine.php:1361
+#: modules/magazine/magazine.php:1362
 msgid "Issue scheduled for: <strong>%1$s</strong>. <a target=\"_blank\" href=\"%2$s\">Preview issue</a>"
 msgstr ""
 
-#: modules/magazine/magazine.php:1361
+#: modules/magazine/magazine.php:1362
 msgid "M j, Y @ G:i"
 msgstr ""
 
-#: modules/magazine/magazine.php:1362
+#: modules/magazine/magazine.php:1363
 msgid "Issue draft updated. <a target=\"_blank\" href=\"%s\">Preview issue</a>"
 msgstr ""
 
-#: modules/magazine/magazine.php:1380
+#: modules/magazine/magazine.php:1381
 msgid "%s Issue Post(s) Created"
 msgstr ""
 
-#: modules/magazine/magazine.php:1383
+#: modules/magazine/magazine.php:1384
 msgid "No Issue Post Created"
 msgstr ""
 
-#: modules/magazine/magazine.php:1391
+#: modules/magazine/magazine.php:1392
 msgid "Magazine Tools"
 msgstr ""
 
-#: modules/magazine/magazine.php:1394
+#: modules/magazine/magazine.php:1395
 msgid "From Terms"
 msgstr ""
 
-#: modules/magazine/magazine.php:1400
+#: modules/magazine/magazine.php:1401
 msgid "ID"
 msgstr ""
 
-#: modules/magazine/magazine.php:1401
+#: modules/magazine/magazine.php:1402
 msgid "Name"
 msgstr ""
 
-#: modules/magazine/magazine.php:1407
+#: modules/magazine/magazine.php:1408
 msgid "&mdash;&mdash;&mdash;&mdash; No Issue"
 msgstr ""
 
-#: modules/magazine/magazine.php:1411
+#: modules/magazine/magazine.php:1412
 msgid "Count"
 msgstr ""
 
-#: modules/magazine/magazine.php:1427
+#: modules/magazine/magazine.php:1428
 msgid "Check Terms"
 msgstr ""
 
-#: modules/magazine/magazine.php:1428
+#: modules/magazine/magazine.php:1429
 msgid "Create Issue"
 msgstr ""
 
-#: modules/magazine/magazine.php:1429
+#: modules/magazine/magazine.php:1430
 msgid "Store Orders"
 msgstr ""
 
-#: modules/magazine/magazine.php:1433
+#: modules/magazine/magazine.php:1434
 msgid "Check for Issue terms and Create corresponding Issue posts."
 msgstr ""
 
@@ -1805,25 +1810,25 @@ msgstr ""
 
 #: modules/reshare/reshare.php:71
 msgctxt "Reshare Taxonomy Name"
-msgid "Reshare"
+msgid "Reshare Category"
 msgstr ""
 
 #: modules/reshare/reshare.php:72
 msgctxt "Reshare Taxonomy Menu Name"
-msgid "Reshares"
+msgid "Reshare Categories"
 msgstr ""
 
 #: modules/reshare/reshare.php:85
 msgid "Editorial Reshare Documentations"
 msgstr ""
 
-#: modules/reshare/reshare.php:183
-#: modules/reshare/reshare.php:189
+#: modules/reshare/reshare.php:185
+#: modules/reshare/reshare.php:191
 msgid "Source TITLE"
 msgstr ""
 
-#: modules/reshare/reshare.php:184
-#: modules/reshare/reshare.php:190
+#: modules/reshare/reshare.php:186
+#: modules/reshare/reshare.php:192
 msgid "Source URL"
 msgstr ""
 
@@ -1946,7 +1951,7 @@ msgid "WordPress, Magazine Style."
 msgstr ""
 
 #: modules/settings/settings.php:54
-#: modules/settings/settings.php:96
+#: modules/settings/settings.php:97
 msgid "gEditorial Tools"
 msgstr ""
 
@@ -1970,14 +1975,14 @@ msgctxt "gEditorial Tools"
 msgid "Console"
 msgstr ""
 
-#: modules/settings/settings.php:129
-#: modules/settings/settings.php:135
+#: modules/settings/settings.php:130
+#: modules/settings/settings.php:136
 #: modules/settings/settings.php:350
 #: modules/settings/settings.php:382
 msgid "Cheatin&#8217; uh?"
 msgstr ""
 
-#: modules/settings/settings.php:138
+#: modules/settings/settings.php:139
 msgctxt "Ajax Notice"
 msgid "No Action of Slug!"
 msgstr ""
@@ -2235,23 +2240,32 @@ msgid "Admin UI Enhancement"
 msgstr ""
 
 #: modules/tweaks/tweaks.php:42
-msgid "Group Default Taxonomies"
+msgid "Group Taxonomies"
 msgstr ""
 
-#: modules/tweaks/tweaks.php:51
+#: modules/tweaks/tweaks.php:43
+msgid "Group selected taxonomies on selected post type edit pages"
+msgstr ""
+
+#: modules/tweaks/tweaks.php:52
 msgid "Taxonomies"
 msgstr ""
 
-#: modules/tweaks/tweaks.php:57
+#: modules/tweaks/tweaks.php:58
 msgid "Categories"
 msgstr ""
 
-#: modules/tweaks/tweaks.php:62
+#: modules/tweaks/tweaks.php:63
 msgid "Tags"
 msgstr ""
 
-#: modules/tweaks/tweaks.php:75
+#: modules/tweaks/tweaks.php:76
 msgid "Editorial Tweaks Documentations"
+msgstr ""
+
+#: modules/tweaks/tweaks.php:174
+#: modules/tweaks/tweaks.php:182
+msgid "Excerpt"
 msgstr ""
 
 #: node_modules/grunt-wp-i18n/test/fixtures/basic-theme/exclude/file.php:3
