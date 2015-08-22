@@ -408,8 +408,7 @@ class gEditorialModuleCore
 
 	public function print_configure_view()
 	{
-		$form_action = add_query_arg( 'page', $this->module->settings_slug, get_admin_url( null, 'admin.php' ) );
-		echo '<form action="'.$form_action.'" method="post">';
+		echo '<form action="'.$this->get_url_settings().'" method="post">';
 
 			settings_fields( $this->module->options_group_name );
 			do_settings_sections( $this->module->options_group_name );
@@ -980,7 +979,7 @@ class gEditorialModuleCore
 
 	public function get_url_settings()
 	{
-		return add_query_arg( 'page', 'geditorial-settings-'.$this->module_name, get_admin_url( NULL, 'admin.php' ) );
+		return add_query_arg( 'page', $this->module->settings_slug, get_admin_url( NULL, 'admin.php' ) );
 	}
 
 	public function get_url_tax_edit( $constant_key )
