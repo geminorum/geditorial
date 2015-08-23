@@ -35,7 +35,7 @@ class gEditorialHelper
 	public static function parseTerms( $string )
 	{
 		if ( empty( $string ) || ! $string )
-			return false;
+			return FALSE;
 
 		$taxonomies = array();
 
@@ -52,53 +52,67 @@ class gEditorialHelper
 		return $taxonomies;
 	}
 
-	private static function _tag_open( $tag, $atts, $content = true )
+	private static function _tag_open( $tag, $atts, $content = TRUE )
 	{
 		$html = '<'.$tag;
-		foreach( $atts as $key => $att ) {
+		foreach ( $atts as $key => $att ) {
 
-			if ( is_array( $att ) && count( $att ) )
-				$att = implode( ' ', array_unique( $att ) );
+			if ( is_array( $att ) && count( $att ) ) {
+				if ( 'data' == $key ) {
+					foreach ( $att as $data_key => $data_val ) {
+						if ( is_array( $data_val ) )
+							$html .= ' data-'.$data_key.'=\''.json_encode( $data_val ).'\'';
+						else
+							$html .= ' data-'.$data_key.'="'.esc_attr( $data_val ).'"';
+					}
+					continue;
+
+				} else {
+					$att = implode( ' ', array_unique( $att ) );
+				}
+			}
 
 			if ( 'selected' == $key )
-				$att = ( $att ? 'selected' : false );
+				$att = ( $att ? 'selected' : FALSE );
 
 			if ( 'checked' == $key )
-				$att = ( $att ? 'checked' : false );
+				$att = ( $att ? 'checked' : FALSE );
 
 			if ( 'readonly' == $key )
-				$att = ( $att ? 'readonly' : false );
+				$att = ( $att ? 'readonly' : FALSE );
 
 			if ( 'disabled' == $key )
-				$att = ( $att ? 'disabled' : false );
+				$att = ( $att ? 'disabled' : FALSE );
 
-			if ( false === $att )
+			if ( FALSE === $att )
 				continue;
 
 			if ( 'class' == $key )
-				//$att = sanitize_html_class( $att, false );
+				// $att = sanitize_html_class( $att, FALSE );
 				$att = $att;
 			else if ( 'href' == $key && '#' != $att )
 				$att = esc_url( $att );
 			else if ( 'src' == $key )
 				$att = esc_url( $att );
-			//else if ( 'input' == $tag && 'value' == $key )
-				//$att = $att;
+			// else if ( 'input' == $tag && 'value' == $key )
+				// $att = $att;
 			else
 				$att = esc_attr( $att );
 
 			$html .= ' '.$key.'="'.$att.'"';
 		}
-		if ( false === $content )
+
+		if ( FALSE === $content )
 			return $html.' />';
+
 		return $html.'>';
 	}
 
-	public static function html( $tag, $atts = array(), $content = false, $sep = '' )
+	public static function html( $tag, $atts = array(), $content = FALSE, $sep = '' )
 	{
 		$html = self::_tag_open( $tag, $atts, $content );
 
-		if ( false === $content )
+		if ( FALSE === $content )
 			return $html.$sep;
 
 		if ( is_null( $content ) )
@@ -107,14 +121,14 @@ class gEditorialHelper
 		return $html.$content.'</'.$tag.'>'.$sep;
 	}
 
-	public static function getCurrentURL( $trailingslashit = false )
+	public static function getCurrentURL( $trailingslashit = FALSE )
 	{
 		global $wp;
 
 		if ( is_admin() )
 			$current_url = add_query_arg( $wp->query_string, '', home_url( $wp->request ) );
 		else
-			$current_url = home_url( add_query_arg( array(), ( empty( $wp->request ) ? false : $wp->request ) ) );
+			$current_url = home_url( add_query_arg( array(), ( empty( $wp->request ) ? FALSE : $wp->request ) ) );
 
 		if ( $trailingslashit )
 			return trailingslashit( $current_url );
@@ -122,7 +136,7 @@ class gEditorialHelper
 		return $current_url;
 	}
 
-	public static function getRegisterURL( $register = false )
+	public static function getRegisterURL( $register = FALSE )
 	{
 		if ( function_exists( 'buddypress' ) ) {
 			if ( bp_get_signup_allowed() )
@@ -461,7 +475,7 @@ class gEditorialHelper
 	public static function register_colorbox()
 	{
 		wp_register_style( 'jquery-colorbox', GEDITORIAL_URL.'assets/css/admin.colorbox.css', array(), '1.6.1', 'screen' );
-		wp_register_script( 'jquery-colorbox', GEDITORIAL_URL.'assets/packages/jquery-colorbox/jquery.colorbox-min.js', array( 'jquery'), '1.6.1', true );
+		wp_register_script( 'jquery-colorbox', GEDITORIAL_URL.'assets/packages/jquery-colorbox/jquery.colorbox-min.js', array( 'jquery'), '1.6.1', TRUE );
 	}
 
 	public static function enqueue_colorbox()
@@ -620,7 +634,7 @@ class gEditorialHelper
 	}
 
 	// MAYBE: add general options for gEditorial
-	public static function getEditorialUserID( $fallback = true )
+	public static function getEditorialUserID( $fallback = TRUE )
 	{
 		if ( defined( 'GNETWORK_SITE_USER_ID' ) && constant( 'GNETWORK_SITE_USER_ID' ) )
 			return GNETWORK_SITE_USER_ID;
@@ -660,7 +674,7 @@ class gEditorialHelper
 			}
 		echo '</tr></thead><tbody>';
 
-		$alt = true;
+		$alt = TRUE;
 		foreach ( $data as $index => $row ) {
 
 			echo '<tr class="helper-column-row helper-column-row-'.$index.( $alt ? ' alternate' : '' ).'">';
@@ -685,7 +699,7 @@ class gEditorialHelper
 				} else if ( is_object( $row ) && isset( $row->{$key} ) ) {
 					$value = $row->{$key};
 				} else {
-					$value = null;
+					$value = NULL;
 				}
 
 				if ( is_array( $column ) ) {
@@ -719,7 +733,7 @@ class gEditorialHelper
 	}
 
 	// from : Custom Field Taxonomies : https://github.com/scribu/wp-custom-field-taxonomies
-	public static function getDBPostMetaRows( $meta_key, $limit = false )
+	public static function getDBPostMetaRows( $meta_key, $limit = FALSE )
 	{
 		global $wpdb;
 
@@ -743,7 +757,7 @@ class gEditorialHelper
 	}
 
 	// from : Custom Field Taxonomies : https://github.com/scribu/wp-custom-field-taxonomies
-	public static function getDBPostMetaKeys( $rekey = false )
+	public static function getDBPostMetaKeys( $rekey = FALSE )
 	{
 		global $wpdb;
 
@@ -766,7 +780,7 @@ class gEditorialHelper
 	}
 
 	// SEE : delete_post_meta_by_key( 'related_posts' );
-	public static function deleteDBPostMeta( $meta_key, $limit = false )
+	public static function deleteDBPostMeta( $meta_key, $limit = FALSE )
 	{
 		global $wpdb;
 
@@ -794,60 +808,60 @@ class gEditorialHelper
 	public static function insertDefaultTerms( $taxonomy, $defaults )
 	{
 		if ( ! taxonomy_exists( $taxonomy ) )
-			return false;
+			return FALSE;
 
 		foreach ( $defaults as $term_slug => $term_name )
 			if ( ! term_exists( $term_slug, $taxonomy ) )
 				wp_insert_term( $term_name, $taxonomy, array( 'slug' => $term_slug ) );
 
-		return true;
+		return TRUE;
 	}
 
 	const SETTINGS_SLUG = 'geditorial-settings';
 	const TOOLS_SLUG    = 'geditorial-tools';
 
-	public static function settingsURL( $full = true )
+	public static function settingsURL( $full = TRUE )
 	{
 		//$relative = current_user_can( 'manage_options' ) ? 'admin.php?page='.self::SETTINGS_SLUG : 'index.php?page='.self::SETTINGS_SLUG;
 		$relative = 'admin.php?page='.self::SETTINGS_SLUG;
 
 		if ( $full )
-			return get_admin_url( null, $relative );
+			return get_admin_url( NULL, $relative );
 
 		return $relative;
 	}
 
-	public static function toolsURL( $full = true )
+	public static function toolsURL( $full = TRUE )
 	{
-		//$relative = current_user_can( 'manage_options' ) ? 'admin.php?page='.self::TOOLS_SLUG : 'index.php?page='.self::TOOLS_SLUG;
 		$relative = 'admin.php?page='.self::TOOLS_SLUG;
 
 		if ( $full )
-			return get_admin_url( null, $relative );
+			return get_admin_url( NULL, $relative );
 
 		return $relative;
 	}
 
-	public static function isSettings( $screen = null )
+	public static function isSettings( $screen = NULL )
 	{
-		if ( is_null( $screen) )
+		if ( is_null( $screen ) )
 			$screen = get_current_screen();
 
-		if ( isset( $screen->base ) && false !== strripos( $screen->base, self::SETTINGS_SLUG ) )
-			return true;
+		if ( isset( $screen->base )
+			&& FALSE !== strripos( $screen->base, self::SETTINGS_SLUG ) )
+				return TRUE;
 
-		return false;
+		return FALSE;
 	}
 
-	public static function isTools( $screen = null )
+	public static function isTools( $screen = NULL )
 	{
 		if ( is_null( $screen) )
 			$screen = get_current_screen();
 
-		if ( isset( $screen->base ) && false !== strripos( $screen->base, self::TOOLS_SLUG ) )
-			return true;
+		if ( isset( $screen->base ) && FALSE !== strripos( $screen->base, self::TOOLS_SLUG ) )
+			return TRUE;
 
-		return false;
+		return FALSE;
 	}
 
 	public static function getTinyMceStrings( $locale )
@@ -887,7 +901,6 @@ class gEditorialHelper
 		return intval( $post[0]->menu_order );
 	}
 }
-
 
 class gEditorial_Walker_PageDropdown extends Walker_PageDropdown
 {
