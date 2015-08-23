@@ -6,6 +6,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 	var $module;
 	var $module_name = 'magazine';
 	var $meta_key    = '_ge_magazine';
+	var $_root_key   = 'GEDITORIAL_MAGAZINE_ROOT_BLOG';
 
 	var $post_id = FALSE; // current post id
 	var $cookie  = 'geditorial-magazine';
@@ -160,7 +161,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 		add_action( 'geditorial_meta_init', array( &$this, 'meta_init' ) );
 		add_filter( 'geditorial_tweaks_strings', array( &$this, 'tweaks_strings' ) );
 
-		require_once( GEDITORIAL_DIR.'modules/magazine/templates.php' );
+		$this->require_code();
 
 		add_action( 'after_setup_theme', array( &$this, 'after_setup_theme' ), 20 );
 		add_action( 'widgets_init', array( &$this, 'widgets_init' ) );
@@ -243,7 +244,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 
 	public function widgets_init()
 	{
-		require_once( GEDITORIAL_DIR.'modules/magazine/widgets.php' );
+		$this->require_code( 'widgets' );
 
 		register_widget( 'gEditorialMagazineWidget_IssueCover' );
 	}
