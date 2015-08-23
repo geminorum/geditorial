@@ -1,25 +1,25 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-//---Module: Tweaks---------------------------------------------------------------
+/// Module: Tweaks -------------------------------------------------------------
 
 .geditorial-admin-wrap-column.tweaks {
 
 	@include main-wrap();
 
 	.tweaks-row {
-		margin-bottom:4px;
-		font-size:0.89em;
+		margin-bottom: 4px;
+		font-size: 0.89em;
 
 		a:focus {
-			box-shadow:none;
+			box-shadow: none;
 		}
 
 		span.dashicons {
-			color:#b4b9be;
+			color: #b4b9be;
 
-			width:     16px;
-			height:    16px;
+			width: 16px;
+			height: 16px;
 			font-size: 16px;
 
 			vertical-align: middle;
@@ -27,6 +27,6 @@
 	}
 
 	.tweaks-row:last-child {
-		margin-bottom:0px;
+		margin-bottom: 0px;
 	}
 }

@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-//---Module: Specs---------------------------------------------------------------
+/// Module: Specs --------------------------------------------------------------
 
 .geditorial-admin-wrap-metabox.specs {
 
@@ -13,16 +13,16 @@
 	ul.geditorial-specs-new {} // FOR JQUERY SELECTOR
 
 	ol {
-	    list-style:none;
-	    margin:0;
+		list-style:none;
+		margin:0;
 
 		li {
 			margin-bottom:2px;
 		}
 
 		.item-head {
-		    border:1px solid #dfdfdf;
-		    background-color:#f1f1f1;
+			border:1px solid #dfdfdf;
+			background-color:#f1f1f1;
 
 			span.item-handle {
 				margin:2px;

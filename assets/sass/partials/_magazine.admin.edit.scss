@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-//---Module: Magazine---------------------------------------------------------------
+/// Module: Magazine -----------------------------------------------------------
 
 .geditorial-admin-wrap.magazine {
 
@@ -14,24 +14,24 @@
 ////////////////////////////////////////////////////////////////////////////////
 //--MAGAZINE--------------------------------------------------------------------
 .column-taxonomy-issues {
-    width:120px;
+	width: 120px;
 }
 
 body.post-type-issue {
 
-    th#issue_order {
-        width:45px !important;
-    }
+	th#issue_order {
+		width: 45px !important;
+	}
 
-    th.column-cover {
-        width:45px !important;
-    }
+	th.column-cover {
+		width: 45px !important;
+	}
 
-    th.column-taxonomy-span {
-        width:125px !important;
-    }
+	th.column-taxonomy-span {
+		width: 125px !important;
+	}
 
-    th.column-issue_posts {
-        width:55px !important;
-    }
+	th.column-issue_posts {
+		width: 55px !important;
+	}
 }
