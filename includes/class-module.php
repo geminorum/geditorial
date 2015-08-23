@@ -13,6 +13,7 @@ class gEditorialModuleCore
 	var $_settings_buttons    = array();
 
 	var $_geditorial_meta = FALSE; // META ENABLED?
+	var $_root_key        = FALSE; // ROOT CONSTANT
 
 	public function __construct() { }
 
@@ -24,6 +25,17 @@ class gEditorialModuleCore
 		return isset( $gEditorial->$slug ) &&
 			( 'on' == $gEditorial->$slug->module->options->enabled
 				|| TRUE === $gEditorial->$slug->module->options->enabled );
+	}
+
+	// check if this module loaded as remote for another blog's editorial module
+	public function remote()
+	{
+		if ( ! $this->_root_key
+			|| ! defined( $this->_root_key )
+			|| constant( $this->_root_key ) == get_current_blog_id() )
+				return FALSE;
+
+		return TRUE;
 	}
 
 	// enabled post types for this module
