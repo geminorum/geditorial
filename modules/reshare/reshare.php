@@ -47,20 +47,11 @@ class gEditorialReshare extends gEditorialModuleCore
 				),
 			),
 
-			'settings' => array(
-				// '_general' => array(
-				// 	array(
-				// 		'field'       => 'group_taxonomies',
-				// 		'title'       => __( 'Group Default Taxonomies', GEDITORIAL_TEXTDOMAIN ),
-				// 		'default'     => 0,
-				// 	),
-				// ),
-				// 'post_types_option' => 'post_types_option',
-				// 'taxonomies_option' => 'taxonomies_option',
-			),
+			'settings' => array(),
+
 			'strings' => array(
 				'misc' => array(
-					'meta_box_title'           => __( 'Metadata', GEDITORIAL_TEXTDOMAIN ),
+					'meta_box_title' => __( 'Metadata', GEDITORIAL_TEXTDOMAIN ),
 				),
 				'labels' => array(
 					'reshare_cpt' => array(
@@ -74,17 +65,6 @@ class gEditorialReshare extends gEditorialModuleCore
 				),
 			),
 			'configure_page_cb' => 'print_configure_view',
-			'settings_help_tab' => array(
-				'id'      => 'geditorial-reshare-overview',
-				'title'   => __( 'help-tab-title', GEDITORIAL_TEXTDOMAIN ),
-				'content' => __( '<p>help-tab-content</p>', GEDITORIAL_TEXTDOMAIN ),
-				),
-			'settings_help_sidebar' => sprintf(
-				__( '<p><strong>For more information</strong>:</p><p><a href="%1$s">%2$s</a></p><p><a href="%3$s">gEditorial on GitHub</a></p>', GEDITORIAL_TEXTDOMAIN ),
-				'http://geminorum.ir/wordpress/geditorial/modules/reshare',
-				__( 'Editorial Reshare Documentations', GEDITORIAL_TEXTDOMAIN ),
-				'https://github.com/geminorum/geditorial' ),
-
 		);
 
 		$gEditorial->register_module( $this->module_name, $args );
@@ -96,6 +76,8 @@ class gEditorialReshare extends gEditorialModuleCore
 	{
 		add_action( 'geditorial_meta_init', array( &$this, 'meta_init' ) );
 		add_filter( 'geditorial_tweaks_strings', array( &$this, 'tweaks_strings' ) );
+
+		// $this->require_code();
 
 		add_action( 'init', array( &$this, 'init' ) );
 
@@ -120,14 +102,6 @@ class gEditorialReshare extends gEditorialModuleCore
 	public function admin_init()
 	{
 		add_action( 'add_meta_boxes', array( &$this, 'add_meta_boxes' ), 10, 2 );
-
-		// if ( $this->get_setting( 'group_taxonomies', false ) ) {
-		//
-			// foreach( $this->post_types() as $post_type ) {
-			// 	add_filter( "manage_{$post_type}_posts_columns", array( &$this, 'manage_posts_columns' ) );
-			// 	add_filter( "manage_{$post_type}_posts_custom_column", array( &$this, 'custom_column'), 10, 2 );
-			// }
-		// }
 	}
 
 	public function add_meta_boxes( $post_type, $post )

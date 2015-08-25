@@ -62,7 +62,7 @@ class gEditorialSettings extends gEditorialModuleCore
 		add_action( 'load-'.$hook_tools, array( &$this, 'admin_tools_load' ) );
 
 		foreach ( $gEditorial->modules as $mod_name => $mod_data ) {
-			if ( isset( $mod_data->options->enabled ) && $mod_data->options->enabled == 'on'
+			if ( isset( $mod_data->options->enabled ) && $mod_data->options->enabled == 'on' // FIXME: use a helper for enabled!
 				&& $mod_data->configure_page_cb && $mod_name != $this->module->name ) {
 					$hook_module = add_submenu_page( $this->module->settings_slug,
 						$mod_data->title, $mod_data->title,

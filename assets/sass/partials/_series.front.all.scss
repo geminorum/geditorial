@@ -5,7 +5,15 @@
 
 .geditorial-wrap.series {
 
-	// @include main-wrap();
+	@include main-wrap();
+
+	.-title {
+
+	}
+
+	.-list {
+
+	}
 
 	// body.rtl & {}
 }

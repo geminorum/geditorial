@@ -55,7 +55,7 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 				'terms'    => array( $args['id'] )
 			) );
 		} else {
-			// Use post's own issue tax if neither "id" nor "slug" exist
+			// use post's own issue tax if neither "id" nor "slug" exist
 			$terms = get_the_terms( $post->ID, $issue_tax );
 			if ( $terms && ! is_wp_error( $terms ) ) {
 				foreach ( $terms as $term )
@@ -92,7 +92,7 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 			$the_posts = get_posts( $query_args );
 
 			if ( count( $the_posts ) ) {
-				// if ( function_exists( 'get_gmeta' ) && count( $the_posts ) > 1 && $args['orderby'] == 'page' ) {
+
 				if ( $args['orderby'] == 'page' && count( $the_posts ) > 1  ) {
 
 					$i = 1000;
@@ -100,17 +100,15 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 
 					foreach( $the_posts as & $the_post ) {
 
-						// $in_issue_page_start = get_gmeta( 'in_issue_page_start', array( 'id' => $the_post->ID, 'def' => false ) );
 						$in_issue_page_start = $gEditorial->meta->get_postmeta( $the_post->ID, 'in_issue_page_start', FALSE );
-						// $in_issue_order = get_gmeta( 'in_issue_order', array( 'id' => $the_post->ID, 'def' => false ) );
-						$in_issue_order = $gEditorial->meta->get_postmeta( $the_post->ID, 'in_issue_order', FALSE );
+						$in_issue_order      = $gEditorial->meta->get_postmeta( $the_post->ID, 'in_issue_order', FALSE );
 
 						$order_key = ( $in_issue_page_start ? ( (int) $in_issue_page_start * 10 ) : 0 );
 						$order_key = ( $in_issue_order ? ( $order_key + (int) $in_issue_order ) : $order_key );
 						$order_key = ( $order_key ? $order_key : ( $i * 100 ) );
 						$i++;
 
-						$the_post->menu_order = $in_issue_page_start;
+						$the_post->menu_order      = $in_issue_page_start;
 						$ordered_posts[$order_key] = $the_post;
 					}
 
