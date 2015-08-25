@@ -666,7 +666,7 @@ class gEditorialModuleCore
 
 	public function do_settings_field( $r = array() )
 	{
-		$args = shortcode_atts( array(
+		$args = gEditorialTemplateCore::atts( array(
 			'type'        => 'enabled',
 			'field'       => FALSE,
 			'values'      => array(),
@@ -685,7 +685,7 @@ class gEditorialModuleCore
 		if ( ! $args['field'] )
 			return;
 
-		$html  = '';
+		$html = '';
 		$id   = $args['id_attr']   ? $args['id_attr']   : esc_attr( $this->module->options_group_name.'-'.$args['field'] );
 		$name = $args['name_attr'] ? $args['name_attr'] : $this->module->options_group_name.'['.esc_attr( $args['name_group'] ).']['.esc_attr( $args['field'] ).']';
 
