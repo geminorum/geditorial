@@ -1,3 +1,7 @@
+### 0.2.7
+* all: internal api for tinymce plugins
+* series: switch to template class structure
+
 ### 0.2.6
 * tweaks: simple post excerpt meta box
 * audit: using internal tax meta box api
