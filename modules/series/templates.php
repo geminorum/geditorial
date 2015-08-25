@@ -78,6 +78,7 @@ class gEditorialSeriesTemplates extends gEditorialTemplateCore
 			'hide'      => -1, // more than this will be hided
 			'future'    => TRUE,
 			'single'    => TRUE,
+			'meta'      => '<h6>%1$s</h6><div class="summary"><p>%2$s</p></div>', // use meta data after
 			'li_before' => '',
 			'orderby'   => 'order',
 			'order'     => 'ASC',
@@ -193,7 +194,7 @@ class gEditorialSeriesTemplates extends gEditorialTemplateCore
 						$i++;
 					}
 
-					if ( $args['order'] == 'DESC' )
+					if ( $args['order'] == 'ASC' )
 						ksort( $ordered_posts, SORT_NUMERIC );
 					else
 						krsort( $ordered_posts, SORT_NUMERIC );
@@ -227,11 +228,17 @@ class gEditorialSeriesTemplates extends gEditorialTemplateCore
 						}
 
 						$output .= $args['li_before'].$link;
-						if ( isset( $post->series_meta['in_series_title'] ) )
-							$output .= '<br /><span class="in-series-title">'.$post->series_meta['in_series_title'] .'</span>';
-						if ( isset( $post->series_meta['in_series_desc'] ) )
-							$output .= '<div class="in-series-desc summary">'.wpautop( $post->series_meta['in_series_desc'] ).'</div>';
-						//$output .= '<br />'.$post->menu_order;
+
+						if ( $args['meta']
+							&& ( isset( $post->series_meta['in_series_title'] )
+								|| isset( $post->series_meta['in_series_desc'] ) ) ) {
+
+							if ( TRUE ===  $args['meta'] )
+								$args['meta'] = '<h6>%1$s</h6><div class="summary"><p>%2$s</p></div>';
+
+							$output .= sprintf( $args['meta'], $post->series_meta['in_series_title'], $post->series_meta['in_series_desc'] );
+						}
+
 						$output .= '</li>';
 					}
 					$offset++;
