@@ -683,11 +683,11 @@ class gEditorialMagazine extends gEditorialModuleCore
 		if ( isset( $_POST['geditorial-magazine-issue'] ) ) {
 			$terms = array();
 
-			// foreach( $_POST['geditorial_magazine_issue_terms'] as $term_id )
+			// foreach ( $_POST['geditorial_magazine_issue_terms'] as $term_id )
 			// 	if ( $term_id )
 			// 		$terms[] = intval( $term_id );
 
-			foreach( $_POST['geditorial-magazine-issue'] as $issue ) {
+			foreach ( $_POST['geditorial-magazine-issue'] as $issue ) {
 				if ( trim( $issue ) ) {
 					$term = get_term_by( 'slug', $issue, $this->module->constants['issue_tax'] );
 					if ( ! empty( $term ) && ! is_wp_error( $term ) )
@@ -706,7 +706,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 		//add_theme_support( 'post-thumbnails', array( $this->module->constants['issue_cpt'] ) );
 		self::themeThumbnails( array( $this->module->constants['issue_cpt'] ) );
 
-		foreach( $this->get_image_sizes() as $name => $size )
+		foreach ( $this->get_image_sizes() as $name => $size )
 			self::addImageSize( $name, $size['w'], $size['h'], $size['c'], array( $this->module->constants['issue_cpt'] ) );
 	}
 
@@ -920,7 +920,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 			));
 		}
 
-		foreach( $dropdowns as $term_slug => $dropdown ) {
+		foreach ( $dropdowns as $term_slug => $dropdown ) {
 			if ( $dropdown ) {
 				echo '<div class="field-wrap">';
 					echo $dropdown;
@@ -962,7 +962,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 				'exclude'          => $excludes,
 			) );
 
-		foreach( $issues_dropdowns as $issues_term_id => $issues_dropdown ) {
+		foreach ( $issues_dropdowns as $issues_term_id => $issues_dropdown ) {
 			if ( $issues_dropdown ) {
 				echo '<div class="field-wrap">';
 				echo $issues_dropdown;
@@ -1117,7 +1117,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 	public function manage_posts_columns( $posts_columns )
 	{
 		$new_columns = array();
-		foreach( $posts_columns as $key => $value ) {
+		foreach ( $posts_columns as $key => $value ) {
 			if ( $key == 'title' ) {
 				$new_columns['issue_order'] = $this->get_string( 'order_column_title', NULL, 'misc' );
 				$new_columns['cover'] = $this->get_string( 'cover_column_title', NULL, 'misc' );
@@ -1484,7 +1484,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 					$count = 0;
 
 					foreach ( $_POST['_cb'] as $term_id ) {
-						foreach( $this->issue_posts( NULL, FALSE, $term_id ) as $post ) {
+						foreach ( $this->issue_posts( NULL, FALSE, $term_id ) as $post ) {
 
 							// echo $post->ID;
 							// echo '--';

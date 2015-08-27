@@ -594,7 +594,7 @@ class gEditorialHelper
 			sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' )
 		).'</h4><ol>';
 
-		foreach( $the_posts as $post ) {
+		foreach ( $the_posts as $post ) {
 			setup_postdata( $post );
 
 			$url = add_query_arg( array(

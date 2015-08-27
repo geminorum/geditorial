@@ -266,7 +266,7 @@ class gEditorialComments extends gEditorialModuleCore
 	{
 		$output = '';
 		$current_status = implode( ' ', $this->comment_class( array( 'geditorial-comments-row-action', 'hide-if-no-js' ) ) );
-		foreach( $this->_actions as $action )
+		foreach ( $this->_actions as $action )
 			$output .= '<a data-do="'.$action.'" data-comment_id="'.$comment_id.'" class="'.$action.' '.$current_status.'" title="'.esc_attr( $this->get_string( $action, 'comments', 'descriptions' ) ).'">'.$this->get_string( $action, 'comments' ).'</a>';
 
 		return $output;
@@ -279,7 +279,7 @@ class gEditorialComments extends gEditorialModuleCore
 		// check for cap
 
 		$current_status = implode( ' ', $this->comment_class( array( 'geditorial-comments-row-action', 'hide-if-no-js' ) ) );
-		foreach( $this->_actions as $action )
+		foreach ( $this->_actions as $action )
 			$actions[] = '<a data-do="'.$action.'" data-comment_id="'.$comment->comment_ID.'" class="'.$action.' '.$current_status.'" title="'.esc_attr( $this->get_string( $action, 'comments', 'descriptions' ) ).'">'.$this->get_string( $action, 'comments' ).'</a>';
 
 		return $actions;
@@ -321,7 +321,7 @@ class gEditorialComments extends gEditorialModuleCore
 		if ( $this->is_comment_featured( $comment_id ) )
 			$classes[] = 'featured';
 
-		if( $this->is_comment_buried( $comment_id ) )
+		if ( $this->is_comment_buried( $comment_id ) )
 			$classes [] = 'buried';
 
 		return $classes;
@@ -337,7 +337,7 @@ class gEditorialComments extends gEditorialModuleCore
 
 	public function is_comment_buried( $comment_id )
 	{
-		if( '1' == get_comment_meta( $comment_id, 'buried', true ) )
+		if ( '1' == get_comment_meta( $comment_id, 'buried', true ) )
 			return 1;
 		return 0;
 	}

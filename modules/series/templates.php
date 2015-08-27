@@ -45,7 +45,7 @@ class gEditorialSeriesTemplates extends gEditorialTemplateCore
 			), $args['args'] ), NULL, $shortcode );
 
 		if ( ! empty( $output ) ) {
-			if( $args['title'] )
+			if ( $args['title'] )
 				$output = '<'.$args['title_tag'].' class="post-series-wrap-title">'.$args['title'].'</'.$args['title_tag'].'>'.$output;
 			if ( ! is_null( $args['context'] ) )
 				$output = '<div class="multiple-series-'.sanitize_html_class( $args['context'], 'general' ).'">'.$output.'</div>';

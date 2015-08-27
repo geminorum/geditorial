@@ -104,7 +104,7 @@ class gEditorialTweaks extends gEditorialModuleCore
 
 		if ( $this->get_setting( 'group_taxonomies', false ) ) {
 
-			foreach( $this->post_types() as $post_type ) {
+			foreach ( $this->post_types() as $post_type ) {
 				add_filter( "manage_{$post_type}_posts_columns", array( &$this, 'manage_posts_columns' ) );
 				add_filter( "manage_{$post_type}_posts_custom_column", array( &$this, 'custom_column'), 10, 2 );
 			}
@@ -118,10 +118,10 @@ class gEditorialTweaks extends gEditorialModuleCore
 		$added       = FALSE;
 		$post_type   = gEditorialHelper::get_current_post_type();
 
-		foreach( $this->taxonomies() as $taxonomy )
+		foreach ( $this->taxonomies() as $taxonomy )
 			$exc_columns[] = $this->get_string( 'column', $taxonomy, 'taxonomies', 'taxonomy-'.$taxonomy );
 
-		foreach( $posts_columns as $key => $value ) {
+		foreach ( $posts_columns as $key => $value ) {
 
 			if ( ( 'comments' == $key && ! $added )
 				|| ( 'date' == $key && ! $added ) ) {
@@ -147,7 +147,7 @@ class gEditorialTweaks extends gEditorialModuleCore
 
 				$taxonomies = get_object_taxonomies( $post->post_type );
 
-				foreach( $this->taxonomies() as $taxonomy ) {
+				foreach ( $this->taxonomies() as $taxonomy ) {
 
 					if ( ! in_array( $taxonomy, $taxonomies ) )
 						continue;

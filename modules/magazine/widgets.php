@@ -130,7 +130,7 @@ class gEditorialMagazineWidget_IssueCover extends WP_Widget
 		global $gEditorial;
 
 		$images = array();
-		foreach( $gEditorial->magazine->get_image_sizes() as $name => $size )
+		foreach ( $gEditorial->magazine->get_image_sizes() as $name => $size )
 			$images[$name] = $size['n'].' ('.number_format_i18n( $size['w'] ).'&nbsp;&times;&nbsp;'.number_format_i18n( $size['h'] ).')';
 		return $images;
 	}
@@ -172,7 +172,7 @@ class gEditorialMagazineWidget_IssueCover extends WP_Widget
 		$html = '';
 		$value = isset( $instance['size'] ) ? $instance['size'] : 'issue-thumbnail';
 
-		foreach( self::get_images_sizes() as $image_size => $image_size_title )
+		foreach ( self::get_images_sizes() as $image_size => $image_size_title )
 			$html .= gEditorialHelper::html( 'option', array(
 				'value'    => $image_size,
 				'selected' => $image_size == $value,

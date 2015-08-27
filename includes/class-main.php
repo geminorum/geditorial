@@ -62,14 +62,14 @@ class gEditorial
 		$module_dirs = apply_filters( 'geditorial_modules', scandir( GEDITORIAL_DIR.'modules/' ) );
 		$class_names = array();
 
-		foreach( $module_dirs as $module_dir ) {
+		foreach ( $module_dirs as $module_dir ) {
 			if ( file_exists( GEDITORIAL_DIR."modules/{$module_dir}/$module_dir.php" ) ) {
 				include_once( GEDITORIAL_DIR."modules/{$module_dir}/$module_dir.php" );
 				// Prepare the class name because it should be standardized
 				$tmp = explode( '-', $module_dir );
 				$class_name = '';
 				$slug_name = '';
-				foreach( $tmp as $word ) {
+				foreach ( $tmp as $word ) {
 					$class_name .= ucfirst( $word ).'';
 					$slug_name .= $word.'';
 				}
@@ -80,7 +80,7 @@ class gEditorial
 		// DEPRECATED
 		//$this->helpers = new gEditorialModuleCore();
 
-		foreach( $class_names as $slug => $class_name ) {
+		foreach ( $class_names as $slug => $class_name ) {
 			if ( class_exists( $class_name ) ) {
 				$this->$slug = new $class_name();
 			}
@@ -231,7 +231,7 @@ class gEditorial
 	{
 		array_push( $buttons, '|' );
 
-		foreach( $this->_editor_buttons as $plugin => $filepath )
+		foreach ( $this->_editor_buttons as $plugin => $filepath )
 			array_push( $buttons, $plugin );
 
 		return $buttons;
@@ -239,7 +239,7 @@ class gEditorial
 
 	public function mce_external_plugins( $plugin_array )
 	{
-		foreach( $this->_editor_buttons as $plugin => $filepath )
+		foreach ( $this->_editor_buttons as $plugin => $filepath )
 			$plugin_array[$plugin] = $filepath;
 
 		return $plugin_array;
@@ -255,7 +255,7 @@ class gEditorial
 			if ( $key == 'name' && $value == $mod_name ) {
 				$module = $this->modules->{$mod_name};
 			} else {
-				foreach( $mod_data as $mod_data_key => $mod_data_value ) {
+				foreach ( $mod_data as $mod_data_key => $mod_data_value ) {
 					if ( $mod_data_key == $key && $mod_data_value == $value )
 						$module = $this->modules->{$mod_name};
 				}

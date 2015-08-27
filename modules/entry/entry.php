@@ -219,7 +219,7 @@ class gEditorialEntry extends gEditorialModuleCore
 	public function posts_columns( $posts_columns )
 	{
 		$new_columns = array();
-		foreach( $posts_columns as $key => $value ) {
+		foreach ( $posts_columns as $key => $value ) {
 			if ( $key == 'title' ) {
 				$new_columns['taxonomy-section'] = __( 'Sections', GEDITORIAL_TEXTDOMAIN );
 				$new_columns['entry_order'] = _x( 'O', 'manage_posts_columns', GEDITORIAL_TEXTDOMAIN );
@@ -501,7 +501,7 @@ class gEditorialEntry extends gEditorialModuleCore
 		$section_ancestors = get_ancestors( $section->term_id, $taxonomy );
 		krsort( $section_ancestors );
 		$permalink = '<a href="/entry/';
-		foreach( $section_ancestors as $ancestor ):
+		foreach ( $section_ancestors as $ancestor ):
 			$section_ancestor = get_term( $ancestor, $taxonomy );
 			$permalink.= $section_ancestor->slug.'/';
 		endforeach;
@@ -520,23 +520,22 @@ class gEditorialEntry extends gEditorialModuleCore
 
 		$options = get_option('highlightedtext_options');
 
-		if($options['highlightedtext_type']!=$post_type and $options['highlightedtext_type']!='both')
+		if ($options['highlightedtext_type']!=$post_type and $options['highlightedtext_type']!='both')
 		return $content;
 		//echo "<pre>";print_r($options);
-		if($options['highlightedtext_active'])
-		{
+		if ($options['highlightedtext_active']) {
 
 		//echo "here=".$text."<br />";
 		$text_name=explode(',',trim($options['highlightedtext_name']));
 		//echo "<pre>";print_r($text_name);
-		if(!empty($text_name)){
+		if (!empty($text_name)){
 		for($i=0;$i<count($text_name);$i++){
-		if(trim($text_name[$i])!=''){
+		if (trim($text_name[$i])!=''){
 
-			if(preg_match('~\b' . preg_quote($text_name[$i], '~') . '\b(?![^<]*?>)~',$content,$result))
+			if (preg_match('~\b' . preg_quote($text_name[$i], '~') . '\b(?![^<]*?>)~',$content,$result))
 			{
 				$rep_html='<label class="wh_highlighted">'.$text_name[$i].'</label>';
-				if($options['highlightedtext_case'])
+				if ($options['highlightedtext_case'])
 				{
 
 					$content = preg_replace('~\b' . preg_quote($text_name[$i], '~') . '\b(?![^<]*?>)~',$rep_html,$content);

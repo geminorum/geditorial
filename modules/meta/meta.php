@@ -183,7 +183,7 @@ class gEditorialMeta extends gEditorialModuleCore
 		// SEE: http://make.wordpress.org/core/2012/12/01/more-hooks-on-the-edit-screen/
 		// add_action( 'edit_form_after_title', array( $this, 'edit_form_after_title' ) );
 
-		foreach( $this->post_types() as $post_type ) {
+		foreach ( $this->post_types() as $post_type ) {
 			add_filter( "manage_{$post_type}_posts_columns", array( &$this, 'manage_posts_columns' ) );
 			add_filter( "manage_{$post_type}_posts_custom_column", array( &$this, 'custom_column'), 10, 2 );
 		}
@@ -218,7 +218,7 @@ class gEditorialMeta extends gEditorialModuleCore
 	{
 		$register_for = array();
 
-		foreach( $this->post_types() as $post_type )
+		foreach ( $this->post_types() as $post_type )
 			if ( in_array( 'ct', $this->post_type_fields( $post_type ) ) )
 				$register_for[] = $post_type;
 
@@ -420,7 +420,7 @@ class gEditorialMeta extends gEditorialModuleCore
 		$post_type   = gEditorialHelper::get_current_post_type();
 		$fields      = $this->post_type_fields( $post_type );
 
-		foreach( $posts_columns as $key => $value ) {
+		foreach ( $posts_columns as $key => $value ) {
 
 			if ( $key == 'author' ) {
 				if ( in_array( 'as', $fields ) && self::user_can( 'view', 'as' ) ) {

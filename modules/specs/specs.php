@@ -241,7 +241,7 @@ class gEditorialSpecs extends gEditorialModuleCore
 		$spec_terms = gEditorialHelper::getTerms( $this->module->constants['specs_tax'], FALSE, true, 'slug' );
 		$terms = array();
 
-		foreach( $meta as $meta_row )
+		foreach ( $meta as $meta_row )
 			$terms[] = intval( $meta_row['spec_term_id'] );
 
 		$counter = 1;
@@ -323,7 +323,7 @@ class gEditorialSpecs extends gEditorialModuleCore
 		$prefix = 'geditorial-specs-';
 		$postmeta = $terms = array();
 
-		foreach( $_POST['geditorial-specs_term_id'] as $offset => $term_id )
+		foreach ( $_POST['geditorial-specs_term_id'] as $offset => $term_id )
 			if ( $term_id && '-1' != $term_id )
 				$terms[$offset] = intval( $term_id );
 

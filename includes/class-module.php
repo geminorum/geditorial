@@ -46,7 +46,7 @@ class gEditorialModuleCore
 		if ( isset( $this->module->options->post_types )
 			&& is_array( $this->module->options->post_types ) ) {
 
-				foreach( $this->module->options->post_types as $post_type => $value ) {
+				foreach ( $this->module->options->post_types as $post_type => $value ) {
 
 					if ( 'off' === $value )
 						$value = FALSE;
@@ -92,7 +92,7 @@ class gEditorialModuleCore
 		if ( isset( $this->module->options->taxonomies )
 			&& is_array( $this->module->options->taxonomies ) ) {
 
-				foreach( $this->module->options->taxonomies as $taxonomy => $value ) {
+				foreach ( $this->module->options->taxonomies as $taxonomy => $value ) {
 
 					if ( 'off' === $value )
 						$value = FALSE;
@@ -130,7 +130,7 @@ class gEditorialModuleCore
 	{
 		$normalized = array();
 
-		foreach( $this->all_post_types() as $post_type => $post_type_label ) {
+		foreach ( $this->all_post_types() as $post_type => $post_type_label ) {
 			if ( isset( $module_post_types[$post_type] )
 				&& $module_post_types[$post_type]
 				&& 'off' !== $module_post_types[$post_type] )
@@ -155,7 +155,7 @@ class gEditorialModuleCore
 			'page' => __( 'Pages' ),
 		);
 
-		foreach( $this->get_supported_post_types_for_module( $module ) as $post_type => $args ) {
+		foreach ( $this->get_supported_post_types_for_module( $module ) as $post_type => $args ) {
 			$allowed[$post_type] = $args->label;
 		}
 		return $allowed;
@@ -174,7 +174,7 @@ class gEditorialModuleCore
 
 		$normalized = array();
 
-		foreach( $this->get_all_post_types() as $post_type => $post_type_label ) {
+		foreach ( $this->get_all_post_types() as $post_type => $post_type_label ) {
 			if ( isset( $module_post_types[$post_type] )
 				&& $module_post_types[$post_type] == 'on' )
 					$normalized[$post_type] = 'on';
@@ -206,7 +206,7 @@ class gEditorialModuleCore
 
 	public function settings_post_types_option( $section )
 	{
-		foreach( $this->all_post_types() as $post_type => $label ) {
+		foreach ( $this->all_post_types() as $post_type => $label ) {
 			$html = gEditorialHelper::html( 'input', array(
 				'type'    => 'checkbox',
 				'id'      => 'type-'.$post_type,
@@ -222,7 +222,7 @@ class gEditorialModuleCore
 
 	public function settings_taxonomies_option( $section )
 	{
-		foreach( $this->all_taxonomies() as $taxonomy => $label ) {
+		foreach ( $this->all_taxonomies() as $taxonomy => $label ) {
 			$html = gEditorialHelper::html( 'input', array(
 				'type'    => 'checkbox',
 				'id'      => 'tax-'.$taxonomy,
@@ -243,7 +243,7 @@ class gEditorialModuleCore
 		if ( isset( $module->options->post_types )
 			&& is_array( $module->options->post_types ) ) {
 
-				foreach( $module->options->post_types as $post_type => $value )
+				foreach ( $module->options->post_types as $post_type => $value )
 					if ( 'on' == $value )
 						$post_types[] = $post_type;
 		}
@@ -317,7 +317,7 @@ class gEditorialModuleCore
 
 		$enabled_post_types = array();
 
-		foreach( $this->get_post_types_for_module( $module ) as $post_type )
+		foreach ( $this->get_post_types_for_module( $module ) as $post_type )
 			if ( isset( $all_post_types[$post_type] ) )
 				$enabled_post_types[$post_type] = $all_post_types[$post_type];
 
@@ -354,7 +354,7 @@ class gEditorialModuleCore
 	{
 		$all = $this->all_post_types();
 
-		foreach( $this->post_types() as $post_type ) {
+		foreach ( $this->post_types() as $post_type ) {
 
 			add_settings_section( $post_type.'_fields',
 				sprintf( __( 'Fields for %s', GEDITORIAL_TEXTDOMAIN ), $all[$post_type] ),
@@ -465,7 +465,7 @@ class gEditorialModuleCore
 		}
 
 		if ( ! isset( $this->module->settings ) || isset( $this->module->settings['post_types_fields'] ) ) {
-			foreach( $this->post_types() as $post_type ) {
+			foreach ( $this->post_types() as $post_type ) {
 				foreach ( $this->post_type_all_fields( $post_type ) as $field )
 					if ( ! isset( $new_options[$post_type.'_fields'][$field] )
 						|| $new_options[$post_type.'_fields'][$field] != 'on' )
@@ -486,7 +486,7 @@ class gEditorialModuleCore
 
 		if ( isset( $this->module->options->{$key} )
 			&& is_array( $this->module->options->{$key} ) ) {
-				foreach( $this->module->options->{$key} as $field => $value )
+				foreach ( $this->module->options->{$key} as $field => $value )
 					if ( $value && 'off' !== $value )
 						$fields[] = $field;
 		}
@@ -515,7 +515,7 @@ class gEditorialModuleCore
 		$fields = array();
 
 		if ( isset( $module->options->{$key} ) && is_array( $module->options->{$key} ) ) {
-			foreach( $module->options->{$key} as $field => $value )
+			foreach ( $module->options->{$key} as $field => $value )
 				if ( $all )
 					$fields[] = $field;
 				else if ( $value && 'off' !== $value )
@@ -529,7 +529,7 @@ class gEditorialModuleCore
 		$key = $post_type.'_fields';
 		$fields = array();
 		if ( isset( $this->module->default_options[$key] ) && is_array( $this->module->default_options[$key] ) )
-			foreach( $this->module->default_options[$key] as $field => $value )
+			foreach ( $this->module->default_options[$key] as $field => $value )
 				$fields[] = $field;
 		return $fields;
 	}
@@ -540,20 +540,20 @@ class gEditorialModuleCore
 		$key = $post_type.'_fields';
 		$fields = array();
 		if ( isset( $module->default_options[$key] ) && is_array( $module->default_options[$key] ) )
-			foreach( $module->default_options[$key] as $field => $value )
+			foreach ( $module->default_options[$key] as $field => $value )
 				$fields[] = $field;
 		return $fields;
 	}
 
 	public function get_string( $string, $post_type = 'post', $group = 'titles', $fallback = FALSE )
 	{
-		if( isset( $this->module->strings[$group][$post_type][$string] ) )
+		if ( isset( $this->module->strings[$group][$post_type][$string] ) )
 			return $this->module->strings[$group][$post_type][$string];
 
-		if( isset( $this->module->strings[$group]['post'][$string] ) )
+		if ( isset( $this->module->strings[$group]['post'][$string] ) )
 			return $this->module->strings[$group]['post'][$string];
 
-		if( isset( $this->module->strings[$group][$string] ) )
+		if ( isset( $this->module->strings[$group][$string] ) )
 			return $this->module->strings[$group][$string];
 
 		if ( FALSE === $fallback )
@@ -738,7 +738,7 @@ class gEditorialModuleCore
 			case 'checkbox' :
 
 				if ( count( $args['values'] ) ) {
-					foreach( $args['values'] as $value_name => $value_title ) {
+					foreach ( $args['values'] as $value_name => $value_title ) {
 						$html .= gEditorialHelper::html( 'input', array(
 							'type'    => 'checkbox',
 							'class'   => $args['field_class'],

@@ -25,7 +25,7 @@ class gEditorialLike extends gEditorialModuleCore
 			'default_options'      => array(
 				'enabled'  => FALSE,
 				'settings' => array(),
-				
+
 				'post_types' => array(
 					'post' => TRUE,
 					'page' => FALSE,
@@ -212,7 +212,7 @@ class gEditorialLike extends gEditorialModuleCore
 		$guests = $this->get_postmeta( $post_id, false, array(), $this->meta_key.'_guests' );
 		$count  = count( $users ) + count( $guests );
 
-		if( is_user_logged_in() ) {
+		if ( is_user_logged_in() ) {
 			$key = array_search( get_current_user_id(), $users );
 			if ( false !== $key ) {
 				unset( $users[$key] );
@@ -247,7 +247,7 @@ class gEditorialLike extends gEditorialModuleCore
 		$count     = count( $users ) + count( $guests );
 		$timestamp = current_time( 'timestamp' );
 
-		if( is_user_logged_in() ) {
+		if ( is_user_logged_in() ) {
 			$user_id = get_current_user_id();
 			if ( ! array_search( $user_id, $users ) ) {
 				$users[$timestamp] = $user_id;
@@ -273,7 +273,7 @@ class gEditorialLike extends gEditorialModuleCore
 		$guests = $this->get_postmeta( $post_id, false, array(), $this->meta_key.'_guests' );
 		$count  = count( $users ) + count( $guests );
 
-		if( is_user_logged_in() ) {
+		if ( is_user_logged_in() ) {
 			return array( array_search( get_current_user_id(), $users ), $count );
 		} else {
 			$cookie = $this->get_cookie();

@@ -274,7 +274,7 @@ class gEditorialSubmit extends gEditorialModuleCore
 		// TODO: apply filter on $form_fields
 
 		$fields_html = '';
-		foreach( $form_fields as $form_field ) {
+		foreach ( $form_fields as $form_field ) {
 
 			$form_field_label = gEditorialHelper::html( 'label', array(
 				'class' => 'control-label'.( $args['horizontal'] ? ' col-'.$args['size'].'-'.$args['horizontal'] : '' ),
@@ -434,7 +434,7 @@ class gEditorialSubmit extends gEditorialModuleCore
 		if ( is_wp_error( $post_id ) )
 			return FALSE;
 
-		foreach( $post_meta as $meta_key => $meta_value )
+		foreach ( $post_meta as $meta_key => $meta_value )
 			update_post_meta( $post_id, $this->meta_key.'_'.$meta_key, $meta_value );
 
 		return $post_id;

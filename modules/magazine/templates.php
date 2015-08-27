@@ -35,7 +35,7 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 		if ( $args['cb'] && ! is_callable( $args['cb'] ) )
 			$args['cb'] = FALSE;
 
-		if( $args['id'] ) {
+		if ( $args['id'] ) {
 			$tax_query = array( array(
 				'taxonomy' => $issue_tax,
 				'field'    => 'id',
@@ -98,7 +98,7 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 					$i = 1000;
 					$ordered_posts = array();
 
-					foreach( $the_posts as & $the_post ) {
+					foreach ( $the_posts as & $the_post ) {
 
 						$in_issue_page_start = $gEditorial->meta->get_postmeta( $the_post->ID, 'in_issue_page_start', FALSE );
 						$in_issue_order      = $gEditorial->meta->get_postmeta( $the_post->ID, 'in_issue_order', FALSE );
@@ -123,12 +123,12 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 
 				$output .= '<'.$args['list'].'>';
 
-				foreach( $the_posts as $post ) {
+				foreach ( $the_posts as $post ) {
 					setup_postdata( $post );
 					if ( $args['cb'] ) {
 						$output .= call_user_func_array( $args['cb'], array( $post, $args ) );
 					} else {
-						if( $post->post_status == 'publish' ) {
+						if ( $post->post_status == 'publish' ) {
 							$output .= '<li>'.$args['li_before'].'<a href="'.get_permalink( $post->ID ).'">'.get_the_title( $post->ID ).'</a></li>';
 						} else {
 							$output .= '<li>'.$args['li_before'].get_the_title( $post->ID ).'</li>';
@@ -185,7 +185,7 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 		if ( $args['cb'] && ! is_callable( $args['cb'] ) )
 			$args['cb'] = FALSE;
 
-		if( $args['id'] ) {
+		if ( $args['id'] ) {
 			$tax_query = array( array(
 				'taxonomy' => $span_tax,
 				'field'    => 'id',
@@ -252,12 +252,12 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 
 			if ( count( $the_posts ) ) {
 				$output = $title_output.'<'.$args['list'].' class="'.$args['list_class'].'">';
-				foreach( $the_posts as $post ) {
+				foreach ( $the_posts as $post ) {
 					setup_postdata( $post );
 					if ( $args['cb'] ) {
 						$output .= call_user_func_array( $args['cb'], array( $post, $args ) );
 					} else {
-						if( $post->post_status == 'publish' ) {
+						if ( $post->post_status == 'publish' ) {
 							$output .= '<li>'.$args['li_before'].'<a href="'.get_permalink( $post->ID ).'">'.get_the_title( $post->ID ).'</a></li>';
 						} else {
 							$output .= '<li>'.$args['li_before'].get_the_title( $post->ID ).'</li>';

@@ -187,7 +187,7 @@ class gEditorialSeries extends gEditorialModuleCore
 		$prefix   = 'geditorial-series-';
 		$postmeta = $pre_terms = array();
 
-		foreach( $_POST['geditorial-series-terms'] as $offset => $term_id )
+		foreach ( $_POST['geditorial-series-terms'] as $offset => $term_id )
 			if ( $term_id && '-1' != $term_id )
 				$pre_terms[$offset] = intval( $term_id );
 
@@ -281,7 +281,7 @@ class gEditorialSeries extends gEditorialModuleCore
 
 		$map[0] = false;
 
-		foreach( $series_dropdowns as $counter => $series_dropdown ) {
+		foreach ( $series_dropdowns as $counter => $series_dropdown ) {
 			if ( $series_dropdown ) {
 				// echo '<div class="geditorial_series_term_wrap">';
 				echo '<div class="field-wrap-group">';

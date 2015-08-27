@@ -496,7 +496,7 @@ class gEditorialContest extends gEditorialModuleCore
 		if ( isset( $_POST['geditorial_contest_terms'] ) ) {
 			$pre_terms = array();
 
-			foreach( $_POST['geditorial_contest_terms'] as $term_id )
+			foreach ( $_POST['geditorial_contest_terms'] as $term_id )
 				if ( $term_id && '-1' != $term_id )
 					$pre_terms[] = intval( $term_id );
 
@@ -639,7 +639,7 @@ class gEditorialContest extends gEditorialModuleCore
 				'exclude'          => $excludes,
 			) );
 
-		foreach( $contests_dropdowns as $issues_term_id => $contests_dropdown ) {
+		foreach ( $contests_dropdowns as $issues_term_id => $contests_dropdown ) {
 			if ( $contests_dropdown ) {
 				echo '<div class="field-wrap">';
 				echo $contests_dropdown;
