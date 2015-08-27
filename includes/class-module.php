@@ -982,9 +982,10 @@ class gEditorialModuleCore
 		add_shortcode( $this->module->constants[$constant_key], $callback );
 	}
 
-	public function get_meta_box_title( $post_type = 'post', $url = NULL, $edit_cap = 'manage_options' )
+	public function get_meta_box_title( $post_type = 'post', $url = NULL, $edit_cap = 'manage_options', $title = NULL )
 	{
-		$title = $this->get_string( 'meta_box_title', $post_type, 'misc', _x( 'Settings', 'MetaBox default title', GEDITORIAL_TEXTDOMAIN ) );
+		if ( is_null( $title ) )
+			$title = $this->get_string( 'meta_box_title', $post_type, 'misc', _x( 'Settings', 'MetaBox default title', GEDITORIAL_TEXTDOMAIN ) );
 
 		if ( current_user_can( $edit_cap ) && FALSE !== $url ) {
 
