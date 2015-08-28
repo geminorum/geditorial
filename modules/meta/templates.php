@@ -49,7 +49,7 @@ class gEditorialMetaTemplates extends gEditorialTemplateCore
 		if ( isset( $atts['id'] ) && FALSE === $atts['id'] )
 			$atts['id'] = $post->ID;
 
-		$args = shortcode_atts( array(
+		$args = self::atts( array(
 			'id'  => $post->ID,
 			'def' => '',
 		), $atts );
@@ -97,20 +97,57 @@ class gEditorialMetaTemplates extends gEditorialTemplateCore
 		return TRUE;
 	}
 
+	public static function metaLink( $atts = array() )
+	{
+		global $gEditorial, $post;
+
+		$args = self::atts( array(
+			'id'            => $post->ID,
+			'before'        => isset( $atts['b'] ) ? $atts['b'] : '',
+			'after'         => isset( $atts['a'] ) ? $atts['a'] : '',
+			'filter'        => isset( $atts['f'] ) ? $atts['f'] : FALSE,
+			'echo'          => isset( $atts['e'] ) ? $atts['e'] : TRUE,
+			'default'       => isset( $atts['def'] ) ? $atts['def'] : FALSE,
+			'title_meta'    => FALSE, // meta key for title of the link
+			'title_default' => _x( 'External Source', 'Meta: metaLink default title', GEDITORIAL_TEXTDOMAIN ), // default val for title of the link
+			'url_meta'      => 'es', // meta key for URL of the link
+			'url_default'   => FALSE, // default val for URL of the link
+			'desc'          => NULL, // false to disable
+		), $atts );
+
+		$title = $args['title_meta'] ? self::get_meta( $args['title_meta'], array( 'id' => $args['id'], 'def' => $args['title_default'] ) ) : $args['title_default'];
+		$url   = $args['url_meta'] ? self::get_meta( $args['url_meta'], array( 'id' => $args['id'], 'def' => $args['url_default'] ) ) : $args['url_default'];
+
+		if ( $title ) {
+			$html = gEditorialHelper::html( ( $url ? 'a' : 'span' ), array(
+				'href'  => $url ? esc_url( $url ) : FALSE,
+				'title' => $args['title_default'], // FIXME: default title attr!
+			), $title );
+		} else {
+			$html = $args['default'];
+		}
+
+		if ( ! $args['echo'] )
+			return $html;
+
+		echo $html;
+		return TRUE;
+	}
+
 	public static function metaLabel( $atts = array() )
 	{
 		global $gEditorial, $post;
 
 		$args = self::atts( array(
-			'id'     => $post->ID,
-			'before' => isset( $atts['b'] ) ? $atts['b'] : '',
-			'after'  => isset( $atts['a'] ) ? $atts['a'] : '',
-			'filter' => isset( $atts['f'] ) ? $atts['f'] : FALSE,
-			'echo'   => isset( $atts['e'] ) ? $atts['e'] : FALSE,
-			'def'    => FALSE,
-			'img'    => FALSE,
-			'link'   => NULL, // false to disable
-			'desc'   => NULL, // false to disable
+			'id'      => $post->ID,
+			'before'  => isset( $atts['b'] ) ? $atts['b'] : '',
+			'after'   => isset( $atts['a'] ) ? $atts['a'] : '',
+			'filter'  => isset( $atts['f'] ) ? $atts['f'] : FALSE,
+			'echo'    => isset( $atts['e'] ) ? $atts['e'] : TRUE,
+			'default' => isset( $atts['def'] ) ? $atts['def'] : FALSE,
+			'img'     => FALSE,
+			'link'    => NULL, // false to disable
+			'desc'    => NULL, // false to disable
 		), $atts );
 
 		$title    = self::get_meta( 'ch', array( 'id' => $args['id'], 'def' => FALSE ) );
@@ -138,8 +175,8 @@ class gEditorialMetaTemplates extends gEditorialTemplateCore
 			$html = $title;
 		}
 
-		if ( ! $html && $args['def'] )
-			$html = $args['def'];
+		if ( ! $html && $args['default'] )
+			$html = $args['default'];
 
 		if ( ! $html )
 			return FALSE;
