@@ -145,8 +145,8 @@ class gEditorialMetaTemplates extends gEditorialTemplateCore
 			return FALSE;
 
 		$html = $args['before'].gEditorialHelper::html( 'a', array(
-			'href'  => $link,
-			'title' => $desc,
+			'href'  => $args['link'],
+			'title' => $args['desc'],
 		), apply_filters( 'gmeta_label', $html, $args, $title, $term ) ).$args['after'];
 
 		if ( ! $args['echo'] )
