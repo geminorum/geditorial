@@ -55,8 +55,9 @@ class gEditorialReshare extends gEditorialModuleCore
 				),
 				'labels' => array(
 					'reshare_cpt' => array(
-						'name'      => _x( 'Reshares', 'Reshare CPT Name', GEDITORIAL_TEXTDOMAIN ),
-						'menu_name' => _x( 'Reshares', 'Reshare CPT Menu Name', GEDITORIAL_TEXTDOMAIN ),
+						'name'        => _x( 'Reshares', 'Reshare CPT Name', GEDITORIAL_TEXTDOMAIN ),
+						'menu_name'   => _x( 'Reshares', 'Reshare CPT Menu Name', GEDITORIAL_TEXTDOMAIN ),
+						'description' => __( 'Content from other sources', GEDITORIAL_TEXTDOMAIN ),
 					),
 					'reshare_cat' => array(
 						'name'      => _x( 'Reshare Category', 'Reshare Taxonomy Name', GEDITORIAL_TEXTDOMAIN ),

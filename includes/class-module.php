@@ -843,6 +843,7 @@ class gEditorialModuleCore
 		$args = array_merge( array(
 			'taxonomies'  => $taxonomies,
 			'labels'      => $this->module->strings['labels'][$constant_key],
+			'description' => isset( $this->module->strings['labels'][$constant_key]['description'] ) ? $this->module->strings['labels'][$constant_key]['description'] : '',
 			'menu_icon'   => ( $this->module->dashicon ? 'dashicons-'.$this->module->dashicon : 'dashicons-welcome-write-blog' ),
 			'supports'    => isset( $this->module->supports[$constant_key] ) ? $this->module->supports[$constant_key] : array( 'title', 'editor' ),
 			'has_archive' => isset( $this->module->constants[$constant_key.'_archive'] ) ? $this->module->constants[$constant_key.'_archive'] : FALSE,
@@ -850,6 +851,8 @@ class gEditorialModuleCore
 			'rewrite'     => array(
 				'slug'       => isset( $this->module->constants[$constant_key.'_slug'] ) ? $this->module->constants[$constant_key.'_slug'] : $this->module->constants[$constant_key],
 				'with_front' => FALSE,
+				'feeds'      => TRUE,
+				'pages'      => TRUE,
 			),
 			'hierarchical' => FALSE,
 			'public'       => TRUE,
