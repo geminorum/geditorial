@@ -55,8 +55,8 @@ class gEditorial
 		require_once( GEDITORIAL_DIR.'includes/class-template.php' );
 		require_once( GEDITORIAL_DIR.'includes/class-module.php' );
 
-		if ( ! class_exists( 'WP_List_Table' ) )
-			require_once( ABSPATH.'wp-admin/includes/class-wp-list-table.php' );
+		// if ( ! class_exists( 'WP_List_Table' ) )
+		// 	require_once( ABSPATH.'wp-admin/includes/class-wp-list-table.php' );
 
 		// scan the modules directory and include any modules that exist there
 		$module_dirs = apply_filters( 'geditorial_modules', scandir( GEDITORIAL_DIR.'modules/' ) );
