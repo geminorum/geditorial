@@ -1081,7 +1081,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 		echo '</div>';
 	}
 
-	public function get_issue_post( $post_id = NULL )
+	public function get_issue_post( $post_id = NULL, $single = FALSE )
 	{
 		if ( is_null( $post_id ) )
 			$post_id = get_the_ID();
@@ -1101,7 +1101,12 @@ class gEditorialMagazine extends gEditorialModuleCore
 				$the_id = gEditorialHelper::getPostIDbySlug( $term->slug, $this->module->constants['issue_cpt'] );
 
 			if ( FALSE != $the_id && ! empty( $the_id ) ) {
+
+				if ( $single )
+					return $the_id;
+
 				$status = get_post_status( $the_id );
+
 				if ( 'publish' == $status )
 					$ids[$the_id] = get_permalink( $the_id );
 				else
