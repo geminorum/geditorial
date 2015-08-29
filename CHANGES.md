@@ -1,3 +1,7 @@
+### 0.2.8
+* magazine: fallback for issues with no cover
+* reshare: template helper
+
 ### 0.2.7
 * all: internal api for tinymce plugins
 * series: switch to template class structure
