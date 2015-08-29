@@ -298,6 +298,7 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 					$html .= '<span>'.$the_issue->post_title.'</span>';
 			}
 		}
+
 		if ( ! empty( $html ) )
 			$html = $b.( $f ? $f( $html ) : $html ).$a;
 
@@ -305,6 +306,7 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 			if ( ! $args['echo'] )
 				return $html;
 		}
+
 		echo $html;
 		return TRUE;
 	}
@@ -322,23 +324,30 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 	public static function issue_cover_parse_arg( $args, $size = 'raw' )
 	{
 		return wp_parse_args( $args, array(
-			'id'    => NULL,
-			'attr'  => array( 'class' => 'issue-cover '.$size ),
-			'def'   => FALSE,
-			'cb'    => FALSE,
-			'echo'  => TRUE,
-			'title' => 'title',
+			'id'       => NULL,
+			'attr'     => array(
+				'class' => 'issue-cover '.$size
+			),
+			'def'      => FALSE,
+			'cb'       => FALSE,
+			'echo'     => TRUE,
+			'title'    => 'title',
+			'fallback' => FALSE,
 		));
 	}
 
 	public static function issue_cover( $b = '', $a = '', $size = 'raw', $link = 'parent', $args = array() )
 	{
+		global $gEditorial;
+
 		$args = self::issue_cover_parse_arg( $args, $size );
 
 		if ( 'latest' == $args['id'] )
 			$args['id'] = self::get_latest_issue();
 		else if ( 'random' == $args['id'] )
 			$args['id'] = self::get_random_issue();
+		else if ( 'issue' == $args['id'] )
+			$args['id'] = $gEditorial->magazine->get_issue_post( NULL, TRUE );
 
 		$img = self::get_issue_cover( $size, $args['id'], $args['attr'], $args['def'] );
 		if ( FALSE !== $link ) {
@@ -358,9 +367,25 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 
 		if ( $args['cb'] && is_callable( $args['cb'] ) ) {
 			$result = call_user_func_array( $args['cb'], array( $img, $link, $args ) );
+
 		} else if ( $img ) {
-			$title = $args['title'] ? ' title="'.esc_attr( self::get_issue_title( $args['title'], $args['id'], '' ) ).'"' : '';
-			$result = $link ? '<a href="'.$link.'"'.$title.'>'.$img.'</a>' : $img;
+			$result = gEditorialHelper::html( ( $link ? 'a' : 'span' ), array(
+				'href'  => $link,
+				'title' => self::get_issue_title( $args['title'], $args['id'], FALSE ),
+				'data' => array(
+					'toggle' => 'tooltip',
+				),
+			), $img );
+
+		} else if ( $args['fallback'] && 'publish' == get_post_status( $args['id'] ) ) {
+			$result = gEditorialHelper::html( 'a', array(
+				'href'  => esc_url( get_permalink( $args['id'] ) ),
+				'title' => self::get_issue_title( $args['title'], $args['id'], FALSE ),
+				'data' => array(
+					'toggle' => 'tooltip',
+				),
+			), get_the_title( $args['id'] ) );
+
 		} else {
 			$result = FALSE;
 		}
