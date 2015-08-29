@@ -78,7 +78,7 @@ class gEditorialReshare extends gEditorialModuleCore
 		add_action( 'geditorial_meta_init', array( &$this, 'meta_init' ) );
 		add_filter( 'geditorial_tweaks_strings', array( &$this, 'tweaks_strings' ) );
 
-		// $this->require_code();
+		$this->require_code();
 
 		add_action( 'init', array( &$this, 'init' ) );
 
