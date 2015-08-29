@@ -118,11 +118,15 @@ class gEditorialMetaTemplates extends gEditorialTemplateCore
 		$title = $args['title_meta'] ? self::get_meta( $args['title_meta'], array( 'id' => $args['id'], 'def' => $args['title_default'] ) ) : $args['title_default'];
 		$url   = $args['url_meta'] ? self::get_meta( $args['url_meta'], array( 'id' => $args['id'], 'def' => $args['url_default'] ) ) : $args['url_default'];
 
-		if ( $title ) {
-			$html = gEditorialHelper::html( ( $url ? 'a' : 'span' ), array(
-				'href'  => $url ? esc_url( $url ) : FALSE,
-				'title' => $args['title_default'], // FIXME: default title attr!
-			), $title );
+		if ( $title && $url || ! $url && $title != $args['title_default'] ) {
+			$html = $args['before'].gEditorialHelper::html( ( $url ? 'a' : 'span' ), array(
+				'href'        => $url ? esc_url( $url ) : FALSE,
+				'title'       => $args['title_default'], // FIXME: default title attr!
+				'rel'         => 'source',
+				'data' => array(
+					'toggle' => 'tooltip',
+				),
+			), $title ).$args['after'];
 		} else {
 			$html = $args['default'];
 		}
