@@ -450,6 +450,7 @@ class gEditorialMeta extends gEditorialModuleCore
 			case 'author' :
 			case 'gpeople' :
 			case 'geditorial-meta-author' :
+
 				if ( in_array( 'as', $fields ) && self::user_can( 'view', 'as' )  ) {
 					$as = $this->get_postmeta( $post->ID, 'as', '' );
 					echo '<small>'.$as.'</small>';

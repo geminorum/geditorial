@@ -589,6 +589,7 @@ class gEditorialModuleCore
 	{
 		if ( is_null( $allowed ) )
 			$allowed = array();
+
 		else if ( ! count( $allowed ) )
 			$allowed = $this->_kses_allowed;
 
@@ -858,6 +859,7 @@ class gEditorialModuleCore
 			'public'       => TRUE,
 			'show_ui'      => TRUE,
 			'map_meta_cap' => TRUE,
+			'can_export'   => TRUE,
 		), $atts );
 
 		register_post_type( $this->module->constants[$constant_key], $args );
