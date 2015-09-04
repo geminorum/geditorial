@@ -355,9 +355,9 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 			if ( 'publish' == $status ) {
 				if ( 'parent' == $link ) {
 					$link = get_permalink( $args['id'] );
-				} elseif ( 'attachment' == $link ) {
+				} else if ( 'attachment' == $link ) {
 					@$link = get_attachment_link( get_post_thumbnail_id( $args['id'] ) );
-				} elseif ( 'url' == $link ) {
+				} else if ( 'url' == $link ) {
 					$link = wp_get_attachment_url( get_post_thumbnail_id( $args['id'] ) );
 				}
 			} else {

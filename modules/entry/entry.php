@@ -225,8 +225,8 @@ class gEditorialEntry extends gEditorialModuleCore
 				$new_columns['entry_order'] = _x( 'O', 'manage_posts_columns', GEDITORIAL_TEXTDOMAIN );
 				$new_columns[$key] = $value;
 				//$new_columns['entry_section'] = __( 'Sections', GEDITORIAL_TEXTDOMAIN );
-			//} elseif ( in_array( $key, array( 'author', 'date', 'comments' ) ) ) {
-			} elseif ( in_array( $key, array( 'author', 'taxonomy-section' ) ) ) {
+			//} else if ( in_array( $key, array( 'author', 'date', 'comments' ) ) ) {
+			} else if ( in_array( $key, array( 'author', 'taxonomy-section' ) ) ) {
 				continue; // hehe!
 			} else {
 				$new_columns[$key] = $value;

@@ -256,7 +256,7 @@ class gEditorialSettings extends gEditorialModuleCore
 				if ( 'on' === $mod_data->options->enabled
 					|| true === $mod_data->options->enabled )
 						$enabled = true;
-				elseif ( 'off' === $mod_data->options->enabled
+				else if ( 'off' === $mod_data->options->enabled
 					|| false === $mod_data->options->enabled )
 						$enabled = false;
 

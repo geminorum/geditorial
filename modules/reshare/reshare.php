@@ -242,7 +242,7 @@ class gEditorialReshare extends gEditorialModuleCore
 							&& strlen( $_POST['geditorial-meta-'.$field] ) > 0 )
 							// && $gEditorial->meta->module->strings['titles'][$field] !== $_POST['geditorial-meta-'.$field] )
 								$postmeta[$field] = strip_tags( $_POST['geditorial-meta-'.$field] );
-						elseif ( isset( $postmeta[$field] ) && isset( $_POST['geditorial-meta-'.$field] ) )
+						else if ( isset( $postmeta[$field] ) && isset( $_POST['geditorial-meta-'.$field] ) )
 							unset( $postmeta[$field] );
 				}
 			}

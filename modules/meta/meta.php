@@ -382,7 +382,7 @@ class gEditorialMeta extends gEditorialModuleCore
 							&& strlen( $_POST['geditorial-meta-'.$field] ) > 0
 							&& $this->get_string( $field, $post_type ) !== $_POST['geditorial-meta-'.$field] )
 								$postmeta[$field] = esc_url( $_POST['geditorial-meta-'.$field] );
-						elseif ( isset( $postmeta[$field] ) && isset( $_POST['geditorial-meta-'.$field] )  )
+						else if ( isset( $postmeta[$field] ) && isset( $_POST['geditorial-meta-'.$field] )  )
 							unset( $postmeta[$field] );
 					break;
 
@@ -392,7 +392,7 @@ class gEditorialMeta extends gEditorialModuleCore
 							&& $this->get_string( $field, $post_type ) !== $_POST['geditorial-meta-'.$field]
 							&& $this->get_string( $field.'_override', $post_type ) !== $_POST['geditorial-meta-'.$field] )
 								$postmeta[$field] = $this->kses( $_POST['geditorial-meta-'.$field] );
-						elseif ( isset( $postmeta[$field] ) && isset( $_POST['geditorial-meta-'.$field] )  )
+						else if ( isset( $postmeta[$field] ) && isset( $_POST['geditorial-meta-'.$field] )  )
 							unset( $postmeta[$field] );
 					break;
 
@@ -404,7 +404,7 @@ class gEditorialMeta extends gEditorialModuleCore
 							&& strlen( $_POST['geditorial-meta-'.$field] ) > 0
 							&& $this->get_string( $field, $post_type ) !== $_POST['geditorial-meta-'.$field] )
 								$postmeta[$field] = $this->kses( $_POST['geditorial-meta-'.$field] );
-						elseif ( isset( $postmeta[$field] ) && isset( $_POST['geditorial-meta-'.$field] ) )
+						else if ( isset( $postmeta[$field] ) && isset( $_POST['geditorial-meta-'.$field] ) )
 							unset( $postmeta[$field] );
 					break;
 				}

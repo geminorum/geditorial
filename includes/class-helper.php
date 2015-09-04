@@ -506,7 +506,7 @@ class gEditorialHelper
 		if ( is_array( $post_id ) )
 			return $post_id[0];
 
-		elseif ( ! empty( $post_id ) )
+		else if ( ! empty( $post_id ) )
 			return $post_id;
 
 		return FALSE;

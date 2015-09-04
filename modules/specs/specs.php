@@ -338,7 +338,7 @@ class gEditorialSpecs extends gEditorialModuleCore
 					case 'spec_order' :
 						if ( isset( $_POST[$prefix.$field][$offset] ) && '0' != $_POST[$prefix.$field][$offset] )
 							$postmeta[$offset][$field] = $this->intval( $_POST[$prefix.$field][$offset] );
-						elseif ( isset( $postmeta[$offset][$field] ) && isset( $_POST[$prefix.$field][$offset] )  )
+						else if ( isset( $postmeta[$offset][$field] ) && isset( $_POST[$prefix.$field][$offset] )  )
 							unset( $postmeta[$offset][$field] );
 					break;
 					case 'spec_title' :
@@ -347,7 +347,7 @@ class gEditorialSpecs extends gEditorialModuleCore
 							&& strlen( $_POST[$prefix.$field][$offset] ) > 0
 							&& $this->get_string( $field, $post_type ) !== $_POST[$prefix.$field][$offset] )
 								$postmeta[$offset][$field] = $this->kses( $_POST[$prefix.$field][$offset] );
-						elseif ( isset( $postmeta[$offset][$field] ) && isset( $_POST[$prefix.$field][$offset] ) )
+						else if ( isset( $postmeta[$offset][$field] ) && isset( $_POST[$prefix.$field][$offset] ) )
 							unset( $postmeta[$offset][$field] );
 					break;
 				}
@@ -367,7 +367,7 @@ class gEditorialSpecs extends gEditorialModuleCore
 		if ( ! in_array( $post_type, $this->post_types() ) )
 			return;
 
-		//if ( ! current_user_can( 'edit_published_posts' ) )
+		// if ( ! current_user_can( 'edit_published_posts' ) )
 			remove_meta_box( 'tagsdiv-'.$this->module->constants['specs_tax'], $post_type, 'side' );
 	}
 
