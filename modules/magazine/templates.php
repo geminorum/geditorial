@@ -173,7 +173,7 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 			'orderby'     => 'date',
 			'order'       => 'ASC',
 			'cb'          => FALSE,
-			'link'        => 'title', //not used yet
+			'link'        => 'title', // not used yet
 			'cover'       => FALSE,
 		), $atts, $gEditorial->get_module_constant( 'magazine', 'span_shortcode', 'span' ) );
 
@@ -186,18 +186,26 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 			$args['cb'] = FALSE;
 
 		if ( $args['id'] ) {
-			$tax_query = array( array(
-				'taxonomy' => $span_tax,
-				'field'    => 'id',
-				'terms'    => array( $args['id'] ),
-			) );
+
+			if ( 'all' == $args['id'] )
+				$tax_query = array();
+			else
+				$tax_query = array( array(
+					'taxonomy' => $span_tax,
+					'field'    => 'id',
+					'terms'    => array( $args['id'] ),
+				) );
+
 		} else if ( $args['slug'] ) {
+
 			$tax_query = array( array(
 				'taxonomy' => $span_tax,
 				'field'    => 'slug',
 				'terms'    => $args['slug'],
 			) );
+
 		} else {
+
 			// Use post's own issue tax if neither "id" nor "slug" exist
 			$terms = get_the_terms( $post->ID, $span_tax );
 			if ( $terms && ! is_wp_error( $terms ) ) {
