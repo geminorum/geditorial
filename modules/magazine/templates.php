@@ -377,7 +377,7 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 				),
 			), $img );
 
-		} else if ( $args['fallback'] && 'publish' == get_post_status( $args['id'] ) ) {
+		} else if ( $args['id'] && $args['fallback'] && 'publish' == get_post_status( $args['id'] ) ) {
 			$result = gEditorialHelper::html( 'a', array(
 				'href'  => esc_url( get_permalink( $args['id'] ) ),
 				'title' => self::get_issue_title( $args['title'], $args['id'], FALSE ),
