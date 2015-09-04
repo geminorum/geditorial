@@ -417,7 +417,7 @@ class gEditorialMeta extends gEditorialModuleCore
 	public function manage_posts_columns( $posts_columns )
 	{
 		$new_columns = array();
-		$post_type   = gEditorialHelper::get_current_post_type();
+		$post_type   = gEditorialHelper::getCurrentPostType();
 		$fields      = $this->post_type_fields( $post_type );
 
 		foreach ( $posts_columns as $key => $value ) {
@@ -482,7 +482,7 @@ class gEditorialMeta extends gEditorialModuleCore
 		if ( $column_name != 'geditorial-meta-column' )
 			return FALSE;
 
-		$post_type = gEditorialHelper::get_current_post_type();
+		$post_type = gEditorialHelper::getCurrentPostType();
 		$fields    = $this->post_type_fields( $post_type );
 
 		foreach ( array( 'ot', 'st', 'as' ) as $field ) {

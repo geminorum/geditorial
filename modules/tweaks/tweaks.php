@@ -116,7 +116,7 @@ class gEditorialTweaks extends gEditorialModuleCore
 		$new_columns = array();
 		$exc_columns = array();
 		$added       = FALSE;
-		$post_type   = gEditorialHelper::get_current_post_type();
+		$post_type   = gEditorialHelper::getCurrentPostType();
 
 		foreach ( $this->taxonomies() as $taxonomy )
 			$exc_columns[] = $this->get_string( 'column', $taxonomy, 'taxonomies', 'taxonomy-'.$taxonomy );

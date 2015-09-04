@@ -442,7 +442,8 @@ class gEditorialHelper
 	}
 
 	// checks for the current post type
-	public static function get_current_post_type()
+	// OLD: get_current_post_type()
+	public static function getCurrentPostType()
 	{
 		global $post, $typenow, $pagenow, $current_screen;
 

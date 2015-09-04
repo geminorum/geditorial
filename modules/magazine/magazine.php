@@ -798,7 +798,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 
 	public function restrict_manage_posts()
 	{
-		$post_type = gEditorialHelper::get_current_post_type();
+		$post_type = gEditorialHelper::getCurrentPostType();
 
 		if ( in_array( $post_type, $this->post_types() ) ) {
 
