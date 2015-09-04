@@ -11,6 +11,7 @@ class gEditorialModuleCore
 	var $_taxonomies_excluded = array();
 	var $_kses_allowed        = array();
 	var $_settings_buttons    = array();
+	var $_image_sizes         = array();
 
 	var $_geditorial_meta = FALSE; // META ENABLED?
 	var $_root_key        = FALSE; // ROOT CONSTANT
@@ -910,35 +911,34 @@ class gEditorialModuleCore
 		echo '</ul></div></div>';
 	}
 
-	// this must be wp core future!!
-	// call this late on after_setup_theme
-	public static function themeThumbnails( $post_types )
+	public function get_image_sizes( $post_type )
 	{
-		global $_wp_theme_features;
-		$feature = 'post-thumbnails';
-		// $post_types = (array) $post_types;
+		if ( ! isset( $this->_image_sizes[$post_type] ) ) {
 
-		if ( isset( $_wp_theme_features[$feature] )
-			&& TRUE !== $_wp_theme_features[$feature]
-			&& is_array( $_wp_theme_features[$feature][0] ) ) {
-				$_wp_theme_features[$feature][0] = array_merge( $_wp_theme_features[$feature][0], $post_types );
-		} else {
-			$_wp_theme_features[$feature] = array( $post_types );
+			$sizes = apply_filters( 'geditorial_'.$this->module_name.'_'.$post_type.'_image_sizes', array() );
+
+			if ( FALSE === $sizes ) {
+				$this->_image_sizes[$post_type] = array(); // no sizes
+
+			} else if ( count( $sizes ) ) {
+				$this->_image_sizes[$post_type] = $sizes; // custom sizes
+
+			} else {
+				foreach ( gEditorialHelper::getWPImageSizes() as $size => $args )
+					$this->_image_sizes[$post_type][$post_type.'-'.$size] = $args;
+			}
 		}
+
+		return $this->_image_sizes[$post_type];
 	}
 
-	// this must be wp core future!!
-	// core duplication with post_type : add_image_size()
-	public static function addImageSize( $name, $width = 0, $height = 0, $crop = FALSE, $post_type = array( 'post' ) )
+	// use this on 'after_setup_theme'
+	public function register_post_type_thumbnail( $constant_key )
 	{
-		global $_wp_additional_image_sizes;
+		gEditorialHelper::themeThumbnails( array( $this->module->constants[$constant_key] ) );
 
-		$_wp_additional_image_sizes[ $name ] = array(
-			'width'     => absint( $width ),
-			'height'    => absint( $height ),
-			'crop'      => $crop,
-			'post_type' => $post_type,
-		);
+		foreach ( $this->get_image_sizes( $this->module->constants[$constant_key] ) as $name => $size )
+			gEditorialHelper::addImageSize( $name, $size['w'], $size['h'], $size['c'], array( $this->module->constants[$constant_key] ) );
 	}
 
 	// WARNING: every asset must have a .min copy

@@ -901,6 +901,69 @@ class gEditorialHelper
 
 		return intval( $post[0]->menu_order );
 	}
+
+	// this must be wp core future!!
+	// call this late on after_setup_theme
+	public static function themeThumbnails( $post_types )
+	{
+		global $_wp_theme_features;
+		$feature = 'post-thumbnails';
+		// $post_types = (array) $post_types;
+
+		if ( isset( $_wp_theme_features[$feature] )
+			&& TRUE !== $_wp_theme_features[$feature]
+			&& is_array( $_wp_theme_features[$feature][0] ) ) {
+				$_wp_theme_features[$feature][0] = array_merge( $_wp_theme_features[$feature][0], $post_types );
+		} else {
+			$_wp_theme_features[$feature] = array( $post_types );
+		}
+	}
+
+	// this must be wp core future!!
+	// core duplication with post_type : add_image_size()
+	public static function addImageSize( $name, $width = 0, $height = 0, $crop = FALSE, $post_type = array( 'post' ) )
+	{
+		global $_wp_additional_image_sizes;
+
+		$_wp_additional_image_sizes[ $name ] = array(
+			'width'     => absint( $width ),
+			'height'    => absint( $height ),
+			'crop'      => $crop,
+			'post_type' => $post_type,
+		);
+	}
+
+	// WP default sizes from options
+	public static function getWPImageSizes()
+	{
+		global $gEditorial_WPImageSizes;
+
+		if ( ! empty( $gEditorial_WPImageSizes ) )
+			return $gEditorial_WPImageSizes;
+
+		$gEditorial_WPImageSizes = array(
+			'thumbnail' => array(
+				'n' => __( 'Thumbnail', GEDITORIAL_TEXTDOMAIN ),
+				'w' => get_option( 'thumbnail_size_w' ),
+				'h' => get_option( 'thumbnail_size_h' ),
+				'c' => get_option( 'thumbnail_crop' ),
+			),
+			'medium' => array(
+				'n' => __( 'Medium', GEDITORIAL_TEXTDOMAIN ),
+				'w' => get_option( 'medium_size_w' ),
+				'h' => get_option( 'medium_size_h' ),
+				'c' => 0,
+			),
+			'large' => array(
+				'n' => __( 'Large', GEDITORIAL_TEXTDOMAIN ),
+				'w' => get_option( 'large_size_w' ),
+				'h' => get_option( 'large_size_h' ),
+				'c' => 0,
+			),
+		);
+
+		return $gEditorial_WPImageSizes;
+	}
 }
 
 class gEditorial_Walker_PageDropdown extends Walker_PageDropdown
