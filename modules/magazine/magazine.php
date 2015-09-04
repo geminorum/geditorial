@@ -93,12 +93,12 @@ class gEditorialMagazine extends gEditorialModuleCore
 				'descriptions' => array(
 				),
 				'misc' => array(
-					'meta_box_title'     => __( 'Issues', GEDITORIAL_TEXTDOMAIN ),
-					'issue_box_title'    => __( 'The Issue', GEDITORIAL_TEXTDOMAIN ),
-					'cover_box_title'    => __( 'Cover', GEDITORIAL_TEXTDOMAIN ),
-					'order_column_title' => __( 'O', GEDITORIAL_TEXTDOMAIN ),
-					'cover_column_title' => __( 'Cover', GEDITORIAL_TEXTDOMAIN ),
-					'posts_column_title' => __( 'Posts', GEDITORIAL_TEXTDOMAIN ),
+					'meta_box_title'        => __( 'Issues', GEDITORIAL_TEXTDOMAIN ),
+					'issue_box_title'       => __( 'The Issue', GEDITORIAL_TEXTDOMAIN ),
+					'cover_box_title'       => __( 'Cover', GEDITORIAL_TEXTDOMAIN ),
+					'order_column_title'    => __( 'O', GEDITORIAL_TEXTDOMAIN ),
+					'cover_column_title'    => __( 'Cover', GEDITORIAL_TEXTDOMAIN ),
+					'children_column_title' => __( 'Posts', GEDITORIAL_TEXTDOMAIN ),
 				),
 				'labels' => array(
 					'issue_cpt' => array(
@@ -248,12 +248,13 @@ class gEditorialMagazine extends gEditorialModuleCore
 		), array( $this->module->constants['issue_tax'] ) );
 
 		$this->register_taxonomy( 'issue_tax', array(
-			'show_ui'      => gEditorialHelper::isDev(),
-			'hierarchical' => TRUE,
+			'show_ui'           => gEditorialHelper::isDev(),
+			'hierarchical'      => TRUE,
+			'show_admin_column' => TRUE,
 		) );
 
 		$this->register_taxonomy( 'span_tax', array(
-
+			'show_admin_column' => TRUE,
 		), $this->module->constants['issue_cpt'] );
 
 		$this->register_shortcode( 'issue_shortcode', array( 'gEditorialMagazineTemplates', 'issue_shortcode' ) );
@@ -332,6 +333,11 @@ class gEditorialMagazine extends gEditorialModuleCore
 					'column'     => 'taxonomy-'.$this->module->constants['issue_tax'],
 					'dashicon'   => 'book',
 					'title_attr' => $this->get_string( 'name', 'issue_tax', 'labels' ),
+				),
+				$this->module->constants['span_tax'] => array(
+					'column'     => 'taxonomy-'.$this->module->constants['span_tax'],
+					'dashicon'   => 'backup',
+					'title_attr' => $this->get_string( 'name', 'span_tax', 'labels' ),
 				),
 			),
 		);
@@ -855,15 +861,18 @@ class gEditorialMagazine extends gEditorialModuleCore
 	{
 		$new_columns = array();
 		foreach ( $posts_columns as $key => $value ) {
+
 			if ( $key == 'title' ) {
-				$new_columns['issue_order'] = $this->get_string( 'order_column_title', NULL, 'misc' );
+				$new_columns['order'] = $this->get_string( 'order_column_title', NULL, 'misc' );
 				$new_columns['cover'] = $this->get_string( 'cover_column_title', NULL, 'misc' );
 				$new_columns[$key] = $value;
-			} else if ( 'author' == $key ){
-				// $new_columns[$key] = $value;
+
 			} else if ( 'comments' == $key ){
-				$new_columns['issue_posts'] = $this->get_string( 'posts_column_title', NULL, 'misc' );
-				$new_columns[$key] = $value;
+				$new_columns['children'] = $this->get_string( 'children_column_title', NULL, 'misc' );
+
+			} else if ( in_array( $key, array( 'author', 'date' ) ) ) {
+				continue; // he he!
+				
 			} else {
 				$new_columns[$key] = $value;
 			}
@@ -894,10 +903,10 @@ class gEditorialMagazine extends gEditorialModuleCore
 
 	public function custom_column( $column_name, $post_id )
 	{
-		if ( 'issue_posts' == $column_name )
+		if ( 'children' == $column_name )
 			$this->column_count( $this->issue_posts( $post_id, TRUE ) );
 
-		else if ( 'issue_order' == $column_name )
+		else if ( 'order' == $column_name )
 			$this->column_count( get_post( $post_id )->menu_order );
 
 		else if ( 'cover' == $column_name )
@@ -906,7 +915,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 
 	public function sortable_columns( $columns )
 	{
-		$columns['issue_order'] = 'menu_order';
+		$columns['order'] = 'menu_order';
 		return $columns;
 	}
 
