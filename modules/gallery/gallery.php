@@ -102,7 +102,7 @@ class gEditorialGallery extends gEditorialModuleCore
 
 	public function after_setup_theme()
 	{
-		self::themeThumbnails( array( $this->module->constants['album_cpt'] ) );
+		$this->register_post_type_thumbnail( 'album_cpt' );
 	}
 
 	public function init()

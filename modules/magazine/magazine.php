@@ -195,6 +195,11 @@ class gEditorialMagazine extends gEditorialModuleCore
 		$this->_post_types_excluded = array( $this->module->constants['issue_cpt'] );
 	}
 
+	public function after_setup_theme()
+	{
+		$this->register_post_type_thumbnail( 'issue_cpt' );
+	}
+
 	public function init()
 	{
 		do_action( 'geditorial_magazine_init', $this->module );
@@ -701,15 +706,6 @@ class gEditorialMagazine extends gEditorialModuleCore
 		return $post_ID;
 	}
 
-	public function after_setup_theme()
-	{
-		//add_theme_support( 'post-thumbnails', array( $this->module->constants['issue_cpt'] ) );
-		self::themeThumbnails( array( $this->module->constants['issue_cpt'] ) );
-
-		foreach ( $this->get_image_sizes() as $name => $size )
-			self::addImageSize( $name, $size['w'], $size['h'], $size['c'], array( $this->module->constants['issue_cpt'] ) );
-	}
-
 	public function p2p_init()
 	{
 		// https://github.com/scribu/wp-posts-to-posts/wiki/Connection-information
@@ -736,30 +732,6 @@ class gEditorialMagazine extends gEditorialModuleCore
 
 		if ( $args )
 			p2p_register_connection_type( $args );
-	}
-
-	public function get_image_sizes()
-	{
-		return apply_filters( 'geditorial_magazine_issue_image_sizes', array(
-			'issue-thumbnail' => array(
-				'n' => __( 'Thumbnail', GEDITORIAL_TEXTDOMAIN ),
-				'w' => get_option( 'thumbnail_size_w' ),
-				'h' => get_option( 'thumbnail_size_h' ),
-				'c' => get_option( 'thumbnail_crop' ),
-			),
-			'issue-medium' => array(
-				'n' => __( 'Medium', GEDITORIAL_TEXTDOMAIN ),
-				'w' => get_option( 'medium_size_w' ),
-				'h' => get_option( 'medium_size_h' ),
-				'c' => 0,
-			),
-			'issue-large' => array(
-				'n' => __( 'Large', GEDITORIAL_TEXTDOMAIN ),
-				'w' => get_option( 'large_size_w' ),
-				'h' => get_option( 'large_size_h' ),
-				'c' => 0,
-			),
-		) );
 	}
 
 	public function admin_bar_menu( $wp_admin_bar )
