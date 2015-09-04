@@ -217,7 +217,7 @@ class gEditorialModuleCore
 
 			echo '<p>'.gEditorialHelper::html( 'label', array(
 				'for' => 'type-'.$post_type,
-			), $html.'&nbsp;'.esc_html( $label ) ).'</p>';
+			), $html.'&nbsp;'.esc_html( $label.' &mdash; '.$post_type ) ).'</p>';
 		}
 	}
 
@@ -232,7 +232,7 @@ class gEditorialModuleCore
 			) );
 			echo '<p>'.gEditorialHelper::html( 'label', array(
 				'for' => 'tax-'.$taxonomy,
-			), $html.'&nbsp;'.esc_html( $label ) ).'</p>';
+			), $html.'&nbsp;'.esc_html( $label.' &mdash; '.$taxonomy ) ).'</p>';
 		}
 	}
 
