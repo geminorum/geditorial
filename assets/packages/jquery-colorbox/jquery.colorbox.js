@@ -8,7 +8,7 @@
 	// Default settings object.
 	// See http://jacklmoore.com/colorbox for details.
 	defaults = {
-		// data sources
+		// data sources 
 		html: false,
 		photo: false,
 		iframe: false,
