@@ -1029,4 +1029,47 @@ class gEditorialModuleCore
 	{
 		require_once( GEDITORIAL_DIR.'modules'.DS.$this->module_name.DS.$filename.'.php' );
 	}
+
+	public function column_thumb( $post_id, $size = 'thumbnail' )
+	{
+		if ( $cover = gEditorialHelper::getFeaturedImage( $post_id, $size, FALSE ) ) {
+
+			echo gEditorialHelper::html( 'img', array(
+				'src' => $cover,
+				'style' => 'max-width:50px;max-height:60px;', // FIXME: add global style
+			) );
+		}
+	}
+
+	public function column_count( $count, $title_attr = NULL )
+	{
+		if ( is_null( $title_attr ) )
+			$title_attr = _x( 'No Count', 'No Count Title Attribute', GEDITORIAL_TEXTDOMAIN );
+
+		if ( $count )
+			echo number_format_i18n( $count );
+		else
+			printf( '<span title="%s">&mdash;</span>', $title_attr ); // FIXME: add global style
+	}
+
+	// we use this on other modules than meta too
+	public function set_postmeta_field_string( &$postmeta, $field, $prefix = 'geditorial-meta-' )
+	{
+		if ( isset( $_POST[$prefix.$field] ) && strlen( $_POST[$prefix.$field] ) > 0 )
+			// $postmeta[$field] = strip_tags( $_POST[$prefix.$field] );
+			$postmeta[$field] = $this->kses( $_POST[$prefix.$field] );
+
+		else if ( isset( $postmeta[$field] ) && isset( $_POST[$prefix.$field] ) )
+			unset( $postmeta[$field] );
+	}
+
+	public function set_postmeta_field_number( &$postmeta, $field, $prefix = 'geditorial-meta-' )
+	{
+		if ( isset( $_POST[$prefix.$field] ) && strlen( $_POST[$prefix.$field] ) > 0 )
+		// if ( isset( $_POST[$prefix.$field] ) && '0' != $_POST[$prefix.$field] )
+			$postmeta[$field] = $this->intval( $_POST[$prefix.$field] );
+
+		else if ( isset( $postmeta[$field] ) && isset( $_POST[$prefix.$field] ) )
+			unset( $postmeta[$field] );
+	}
 }
