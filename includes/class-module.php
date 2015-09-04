@@ -1072,4 +1072,21 @@ class gEditorialModuleCore
 		else if ( isset( $postmeta[$field] ) && isset( $_POST[$prefix.$field] ) )
 			unset( $postmeta[$field] );
 	}
+
+	// SEE: https://github.com/scribu/wp-posts-to-posts/wiki/Connection-information
+	public function register_p2p( $constant_key, $post_types = NULL )
+	{
+		if ( is_null( $post_types ) )
+			$post_types = $this->post_types();
+
+		$args = array_merge( array(
+			'name'  => $this->module->constants[$constant_key.'_p2p'],
+			'from'  => $post_types,
+			'to'    => $this->module->constants[$constant_key],
+		), $this->module->strings['p2p'][$constant_key] );
+
+		$args = apply_filters( 'geditorial_'.$this->module_name.'_'.$this->module->constants[$constant_key].'_p2p_args', $args, $post_types );
+		if ( $args )
+			p2p_register_connection_type( $args );
+	}
 }
