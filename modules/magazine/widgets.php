@@ -125,12 +125,12 @@ class gEditorialMagazineWidget_IssueCover extends WP_Widget
 		wp_cache_delete( $this->alt_option_name, 'widget' );
 	}
 
-	public function get_images_sizes()
+	public function get_images_sizes( $issue_cpt )
 	{
 		global $gEditorial;
 
 		$images = array();
-		foreach ( $gEditorial->magazine->get_image_sizes() as $name => $size )
+		foreach ( $gEditorial->magazine->get_image_sizes( $issue_cpt ) as $name => $size )
 			$images[$name] = $size['n'].' ('.number_format_i18n( $size['w'] ).'&nbsp;&times;&nbsp;'.number_format_i18n( $size['h'] ).')';
 		return $images;
 	}
@@ -138,6 +138,8 @@ class gEditorialMagazineWidget_IssueCover extends WP_Widget
 	public function form( $instance )
 	{
 		global $gEditorial;
+
+		$issue_cpt = $gEditorial->get_module_constant( 'magazine', 'issue_cpt', 'issue' );
 
 		echo '<div class="geditorial-admin-wrap-widgetform">';
 
@@ -154,7 +156,7 @@ class gEditorialMagazineWidget_IssueCover extends WP_Widget
 		), __( 'Title:', GEDITORIAL_TEXTDOMAIN ).$html ).'</p>';
 
 		$html = wp_dropdown_pages( array(
-			'post_type'        => $gEditorial->get_module_constant( 'magazine', 'issue_cpt', 'issue' ),
+			'post_type'        => $issue_cpt,
 			'selected'         => isset( $instance['issue'] ) ? $instance['issue'] : '0',
 			'name'             => $this->get_field_name( 'issue' ),
 			'id'               => $this->get_field_id( 'issue' ),
@@ -172,7 +174,7 @@ class gEditorialMagazineWidget_IssueCover extends WP_Widget
 		$html = '';
 		$value = isset( $instance['size'] ) ? $instance['size'] : 'issue-thumbnail';
 
-		foreach ( self::get_images_sizes() as $image_size => $image_size_title )
+		foreach ( self::get_images_sizes( $issue_cpt ) as $image_size => $image_size_title )
 			$html .= gEditorialHelper::html( 'option', array(
 				'value'    => $image_size,
 				'selected' => $image_size == $value,
