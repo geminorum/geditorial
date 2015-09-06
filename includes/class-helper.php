@@ -338,7 +338,7 @@ class gEditorialHelper
 				$atts = array(
 					'type'         => 'text',
 					'autocomplete' => 'off',
-					'class'        => 'field-text geditorial-meta-field-'.$field,
+					'class'        => 'geditorial-admin-posttitle geditorial-meta-field-'.$field,
 					'name'         => 'geditorial-meta-'.$field.( FALSE === $key ? '' : '['.$key.']' ),
 					'id'           => 'geditorial-meta-'.$field.( FALSE === $key ? '' : '-'.$key ),
 					'value'        => $gEditorial->meta->get_postmeta( $post->ID, $field ),
