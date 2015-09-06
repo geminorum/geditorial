@@ -286,7 +286,7 @@ class gEditorialMeta extends gEditorialModuleCore
 			wp_dropdown_categories( array(
 				'taxonomy'          => $this->module->constants['ct_tax'],
 				'selected'          => gEditorialHelper::theTerm( $this->module->constants['ct_tax'], $post->ID ),
-				'show_option_none'  => __( '&mdash; Select a Column Header &mdash;', GEDITORIAL_TEXTDOMAIN ),
+				'show_option_none'  => __( '&mdash; Select &mdash;', GEDITORIAL_TEXTDOMAIN ),
 				'option_none_value' => '0',
 				'name'              => 'geditorial-meta-ct',
 				'id'                => 'geditorial-meta-ct',
@@ -370,43 +370,20 @@ class gEditorialMeta extends gEditorialModuleCore
 			foreach ( $fields as $field ) {
 				switch ( $field ) {
 					case 'ct' :
-						if ( isset( $_POST['geditorial-meta-ct'] ) && '0' != $_POST['geditorial-meta-ct'] )
-							wp_set_object_terms( $post_id, intval( $_POST['geditorial-meta-ct'] ), $this->module->constants['ct_tax'], FALSE );
-						else if ( isset( $_POST['geditorial-meta-ct'] ) && '0' == $_POST['geditorial-meta-ct'] )
-							wp_set_object_terms( $post_id, NULL, $this->module->constants['ct_tax'], FALSE );
+						$this->set_postmeta_field_term( $post_id, $field, 'ct_tax' );
 					break;
 
 					case 'es' :
 					case 'ol' :
-						if ( isset( $_POST['geditorial-meta-'.$field] )
-							&& strlen( $_POST['geditorial-meta-'.$field] ) > 0
-							&& $this->get_string( $field, $post_type ) !== $_POST['geditorial-meta-'.$field] )
-								$postmeta[$field] = esc_url( $_POST['geditorial-meta-'.$field] );
-						else if ( isset( $postmeta[$field] ) && isset( $_POST['geditorial-meta-'.$field] )  )
-							unset( $postmeta[$field] );
-					break;
-
-					case 'ch' :
-						if ( isset( $_POST['geditorial-meta-'.$field] )
-							&& strlen( $_POST['geditorial-meta-'.$field] ) > 0
-							&& $this->get_string( $field, $post_type ) !== $_POST['geditorial-meta-'.$field]
-							&& $this->get_string( $field.'_override', $post_type ) !== $_POST['geditorial-meta-'.$field] )
-								$postmeta[$field] = $this->kses( $_POST['geditorial-meta-'.$field] );
-						else if ( isset( $postmeta[$field] ) && isset( $_POST['geditorial-meta-'.$field] )  )
-							unset( $postmeta[$field] );
+						$this->set_postmeta_field_url( $postmeta, $field );
 					break;
 
 					case 'ot' :
 					case 'st' :
+					case 'ch' :
 					case 'as' :
 					case 'le' :
-						if ( isset( $_POST['geditorial-meta-'.$field] )
-							&& strlen( $_POST['geditorial-meta-'.$field] ) > 0
-							&& $this->get_string( $field, $post_type ) !== $_POST['geditorial-meta-'.$field] )
-								$postmeta[$field] = $this->kses( $_POST['geditorial-meta-'.$field] );
-						else if ( isset( $postmeta[$field] ) && isset( $_POST['geditorial-meta-'.$field] ) )
-							unset( $postmeta[$field] );
-					break;
+						$this->set_postmeta_field_string( $postmeta, $field );
 				}
 			}
 		}
