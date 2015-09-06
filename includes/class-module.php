@@ -1073,6 +1073,24 @@ class gEditorialModuleCore
 			unset( $postmeta[$field] );
 	}
 
+	public function set_postmeta_field_url( &$postmeta, $field, $prefix = 'geditorial-meta-' )
+	{
+		if ( isset( $_POST[$prefix.$field] ) && strlen( $_POST[$prefix.$field] ) > 0 )
+			$postmeta[$field] = esc_url( $_POST[$prefix.$field] );
+
+		else if ( isset( $postmeta[$field] ) && isset( $_POST[$prefix.$field] ) )
+			unset( $postmeta[$field] );
+	}
+
+	public function set_postmeta_field_term( $post_id, $field, $constant_key, $prefix = 'geditorial-meta-' )
+	{
+		if ( isset( $_POST[$prefix.$field] ) && '0' != $_POST[$prefix.$field] )
+			wp_set_object_terms( $post_id, intval( $_POST[$prefix.$field] ), $this->module->constants[$constant_key], FALSE );
+
+		else if ( isset( $_POST[$prefix.$field] ) && '0' == $_POST[$prefix.$field] )
+			wp_set_object_terms( $post_id, NULL, $this->module->constants[$constant_key], FALSE );
+	}
+
 	// SEE: https://github.com/scribu/wp-posts-to-posts/wiki/Connection-information
 	public function register_p2p( $constant_key, $post_types = NULL )
 	{

@@ -260,6 +260,38 @@ class gEditorialHelper
 		}
 	}
 
+	public static function meta_admin_tax_field( $field, $fields, $post, $tax, $ltr = FALSE, $title = NULL, $key = FALSE )
+	{
+		global $gEditorial;
+
+		if ( in_array( $field, $fields )
+			// && $gEditorial->meta->user_can( 'view', $field )  ) {
+			&& $gEditorial->meta->user_can( 'edit', $field )  ) {
+
+				if ( is_null( $title ) )
+					$title = $gEditorial->meta->get_string( $field, $post->post_type );
+
+				echo '<div class="field-wrap" title="'.esc_attr( $title ).'">';
+
+				wp_dropdown_categories( array(
+					'taxonomy'          => $tax,
+					'selected'          => self::theTerm( $tax, $post->ID ),
+					'show_option_none'  => sprintf( _x( '&mdash; Select %s &mdash;', 'Meta: Dropdown Select Option None', GEDITORIAL_TEXTDOMAIN ), $title ),
+					'option_none_value' => '0',
+					'class'             => 'geditorial-admin-dropbown geditorial-meta-field-'.$field.( $ltr ? ' dropbown-ltr' : '' ),
+					'name'              => 'geditorial-meta-'.$field.( FALSE === $key ? '' : '['.$key.']' ),
+					'id'                => 'geditorial-meta-'.$field.( FALSE === $key ? '' : '-'.$key ),
+					'show_count'        => TRUE,
+					'hide_empty'        => FALSE,
+					'hide_if_empty'     => TRUE,
+					'echo'              => TRUE,
+					// 'exclude'           => $excludes,
+				) );
+
+				echo '</div>';
+		}
+	}
+
 	public static function meta_admin_textarea_field( $field, $fields, $post, $ltr = FALSE, $title = NULL, $key = FALSE )
 	{
 		global $gEditorial;
