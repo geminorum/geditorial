@@ -238,12 +238,7 @@ class gEditorialReshare extends gEditorialModuleCore
 				switch ( $field ) {
 					case 'reshare_source_title' :
 					case 'reshare_source_url' :
-						if ( isset( $_POST['geditorial-meta-'.$field] )
-							&& strlen( $_POST['geditorial-meta-'.$field] ) > 0 )
-							// && $gEditorial->meta->module->strings['titles'][$field] !== $_POST['geditorial-meta-'.$field] )
-								$postmeta[$field] = strip_tags( $_POST['geditorial-meta-'.$field] );
-						else if ( isset( $postmeta[$field] ) && isset( $_POST['geditorial-meta-'.$field] ) )
-							unset( $postmeta[$field] );
+						$this->set_postmeta_field_string( $postmeta, $field );
 				}
 			}
 		}
