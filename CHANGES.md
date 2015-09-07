@@ -1,3 +1,8 @@
+### 0.2.9
+* all: internal api for: post type thumbnail / list table column / p2p
+* book: new module
+* magazine: code refactoring
+
 ### 0.2.8
 * magazine: fallback for issues with no cover
 * reshare: template helper
