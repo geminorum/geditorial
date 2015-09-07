@@ -27,8 +27,8 @@ class gEditorialReshare extends gEditorialModuleCore
 					'title',
 					'editor',
 					'excerpt',
-					// 'author',
-					// 'thumbnail',
+					'author',
+					'thumbnail',
 					// 'trackbacks',
 					// 'custom-fields',
 					'comments',
@@ -80,12 +80,18 @@ class gEditorialReshare extends gEditorialModuleCore
 
 		$this->require_code();
 
+		add_action( 'after_setup_theme', array( &$this, 'after_setup_theme' ), 20 );
 		add_action( 'init', array( &$this, 'init' ) );
 
 		if ( is_admin() ) {
 			add_action( 'admin_init', array( &$this, 'admin_init' ) );
 			add_action( 'geditorial_settings_load', array( &$this, 'register_settings' ) );
 		}
+	}
+
+	public function after_setup_theme()
+	{
+		$this->register_post_type_thumbnail( 'reshare_cpt' );
 	}
 
 	public function init()
