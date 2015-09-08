@@ -611,6 +611,20 @@ class gEditorialModuleCore
 		return TRUE;
 	}
 
+	protected function insert_default_terms( $constant_key )
+	{
+		if ( ! wp_verify_nonce( $_POST['_wpnonce'], $this->module->options_group_name.'-options' ) )
+			return;
+
+		$added = gEditorialHelper::insertDefaultTerms(
+			$this->module->constants[$constant_key],
+			$this->module->strings['terms'][$constant_key]
+		);
+
+		wp_redirect( add_query_arg( 'message', $added ? 'added_default_terms' : 'error_default_terms' ) );
+		exit;
+	}
+
 	public function register_settings( $page = NULL )
 	{
 		if ( ! isset( $this->module->settings ) )
