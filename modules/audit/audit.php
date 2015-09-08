@@ -127,11 +127,11 @@ class gEditorialAudit extends gEditorialModuleCore
 
 	public function register_settings( $page = NULL )
 	{
-		if ( isset( $_POST['install_def_atts'] ) )
-			$this->install_def_atts();
+		if ( isset( $_POST['install_def_audit_tax'] ) )
+			$this->insert_default_terms( 'audit_tax' );
 
 		parent::register_settings( $page );
-		$this->register_settings_button( 'install_def_atts', __( 'Install Default Attributes', GEDITORIAL_TEXTDOMAIN ) );
+		$this->register_settings_button( 'install_def_audit_tax', __( 'Install Default Attributes', GEDITORIAL_TEXTDOMAIN ) );
 	}
 
 	public function tweaks_strings( $strings )
@@ -147,20 +147,6 @@ class gEditorialAudit extends gEditorialModuleCore
 		);
 
 		return gEditorialHelper::parse_args_r( $new, $strings );
-	}
-
-	private function install_def_atts()
-	{
-		if ( ! wp_verify_nonce( $_POST['_wpnonce'], $this->module->options_group_name.'-options' ) )
-			return;
-
-		$added = gEditorialHelper::insertDefaultTerms(
-			$this->module->constants['audit_tax'],
-			$this->module->strings['terms']['audit_tax']
-		);
-
-		wp_redirect( add_query_arg( 'message', $added ? 'added_install_def_atts' : 'error_install_def_atts' ) );
-		exit;
 	}
 
 	public function add_meta_boxes( $post_type, $post )

@@ -126,24 +126,10 @@ class gEditorialGallery extends gEditorialModuleCore
 	public function register_settings( $page = NULL )
 	{
 		if ( isset( $_POST['install_def_album_cats'] ) )
-			$this->insert_default_terms();
+			$this->insert_default_terms( 'album_cat_tax' );
 
 		parent::register_settings( $page );
 		$this->register_settings_button( 'install_def_album_cats', __( 'Install Default Album Cats', GEDITORIAL_TEXTDOMAIN ) );
-	}
-
-	private function insert_default_terms()
-	{
-		if ( ! wp_verify_nonce( $_POST['_wpnonce'], $this->module->options_group_name.'-options' ) )
-			return;
-
-		$added = gEditorialHelper::insertDefaultTerms(
-			$this->module->constants['album_cat_tax'],
-			$this->module->strings['terms']['album_cat_tax']
-		);
-
-		wp_redirect( add_query_arg( 'message', $added ? 'insert_default_terms' : 'error_default_terms' ) );
-		exit;
 	}
 
 	public function register_post_types()

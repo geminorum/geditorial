@@ -183,25 +183,11 @@ class gEditorialAlphabets extends gEditorialModuleCore
 
 	public function register_settings( $page = NULL )
 	{
-		if ( isset( $_POST['install_def_alphabets'] ) )
-			$this->insert_default_terms();
+		if ( isset( $_POST['install_def_alphabets_tax'] ) )
+			$this->insert_default_terms( 'alphabets_tax' );
 
 		parent::register_settings( $page );
-		$this->register_settings_button( 'install_def_alphabets', __( 'Install Default Alphabets', GEDITORIAL_TEXTDOMAIN ) );
-	}
-
-	private function insert_default_terms()
-	{
-		if ( ! wp_verify_nonce( $_POST['_wpnonce'], $this->module->options_group_name.'-options' ) )
-			return;
-
-		$added = gEditorialHelper::insertDefaultTerms(
-			$this->module->constants['alphabets_tax'],
-			$this->module->strings['terms']['alphabets_tax']
-		);
-
-		wp_redirect( add_query_arg( 'message', $added ? 'insert_default_terms' : 'error_default_terms' ) );
-		exit;
+		$this->register_settings_button( 'install_def_alphabets_tax', __( 'Install Default Alphabets', GEDITORIAL_TEXTDOMAIN ) );
 	}
 
 	public function taxonomy_bulk_actions( $actions, $taxonomy )
