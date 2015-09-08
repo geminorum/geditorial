@@ -942,10 +942,19 @@ class gEditorialHelper
 		$feature = 'post-thumbnails';
 		// $post_types = (array) $post_types;
 
-		if ( isset( $_wp_theme_features[$feature] )
-			&& TRUE !== $_wp_theme_features[$feature]
-			&& is_array( $_wp_theme_features[$feature][0] ) ) {
+		if ( isset( $_wp_theme_features[$feature] ) ) {
+
+			// registered for all types
+			if ( TRUE === $_wp_theme_features[$feature] ) {
+
+				// WORKING: but if it is true, it's true!
+				// $post_types[] = 'post';
+				// $_wp_theme_features[$feature] = array( $post_types );
+
+			} else if ( is_array( $_wp_theme_features[$feature][0] ) ){
 				$_wp_theme_features[$feature][0] = array_merge( $_wp_theme_features[$feature][0], $post_types );
+			}
+			
 		} else {
 			$_wp_theme_features[$feature] = array( $post_types );
 		}
