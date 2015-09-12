@@ -8,7 +8,7 @@ class gEditorialAlphabets extends gEditorialModuleCore
 	var $meta_key    = '_ge_alphabets';
 	var $cookie      = 'geditorial-alphabets';
 
-	function __construct()
+	public function __construct()
 	{
 		global $gEditorial;
 
@@ -27,11 +27,10 @@ class gEditorialAlphabets extends gEditorialModuleCore
 
 			'default_options' => array(
 				'enabled' => FALSE,
+				'settings' => array(),
 				'post_types' => array(
 					'post' => FALSE,
 					'page' => FALSE,
-				),
-				'settings' => array(
 				),
 			),
 			'settings' => array(
@@ -77,19 +76,6 @@ class gEditorialAlphabets extends gEditorialModuleCore
 				),
 			),
 			'configure_page_cb' => 'print_configure_view',
-			'settings_help_tabs' => array(
-				array(
-				'id'       => 'geditorial-alphabets-overview',
-				'title'    => __( 'help-tab-title', GEDITORIAL_TEXTDOMAIN ),
-				'content'  => __( '<p>help-tab-content</p>', GEDITORIAL_TEXTDOMAIN ),
-				'callback' => FALSE,
-			),
-		),
-		'settings_help_sidebar' => sprintf(
-			__( '<p><strong>For more information</strong>:</p><p><a href="%1$s">%2$s</a></p><p><a href="%3$s">gEditorial on GitHub</a></p>', GEDITORIAL_TEXTDOMAIN ),
-			'http://geminorum.ir/wordpress/geditorial/modules/alphabets',
-			__( 'Editorial Alphabets Documentations', GEDITORIAL_TEXTDOMAIN ),
-			'https://github.com/geminorum/gEditorial' ),
 		);
 
 		$gEditorial->register_module( $this->module_name, $args );

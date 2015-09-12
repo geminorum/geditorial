@@ -85,6 +85,7 @@ class gEditorialContest extends gEditorialModuleCore
 				'labels' => array(
 					'contest_cpt' => array(
 						'name'               => __( 'Contests', GEDITORIAL_TEXTDOMAIN ),
+						'menu_name'          => __( 'Contests', GEDITORIAL_TEXTDOMAIN ),
 						'singular_name'      => __( 'Contest', GEDITORIAL_TEXTDOMAIN ),
 						'add_new'            => __( 'Add New', GEDITORIAL_TEXTDOMAIN ),
 						'add_new_item'       => __( 'Add New Contest', GEDITORIAL_TEXTDOMAIN ),
@@ -95,10 +96,10 @@ class gEditorialContest extends gEditorialModuleCore
 						'not_found'          => __( 'No contests found', GEDITORIAL_TEXTDOMAIN ),
 						'not_found_in_trash' => __( 'No contests found in Trash', GEDITORIAL_TEXTDOMAIN ),
 						'parent_item_colon'  => __( 'Parent Contest:', GEDITORIAL_TEXTDOMAIN ),
-						'menu_name'          => __( 'Contests', GEDITORIAL_TEXTDOMAIN ),
 					),
 					'apply_cpt' => array(
 						'name'               => __( 'Applies', GEDITORIAL_TEXTDOMAIN ),
+						'menu_name'          => __( 'Applies', GEDITORIAL_TEXTDOMAIN ),
 						'singular_name'      => __( 'Apply', GEDITORIAL_TEXTDOMAIN ),
 						'add_new'            => __( 'Add New', GEDITORIAL_TEXTDOMAIN ),
 						'add_new_item'       => __( 'Add New Apply', GEDITORIAL_TEXTDOMAIN ),
@@ -109,13 +110,12 @@ class gEditorialContest extends gEditorialModuleCore
 						'not_found'          => __( 'No applies found', GEDITORIAL_TEXTDOMAIN ),
 						'not_found_in_trash' => __( 'No applies found in Trash', GEDITORIAL_TEXTDOMAIN ),
 						'parent_item_colon'  => __( 'Parent Apply:', GEDITORIAL_TEXTDOMAIN ),
-						'menu_name'          => __( 'Applies', GEDITORIAL_TEXTDOMAIN ),
 					),
 					'contest_tax' => array(
 						'name'                       => __( 'Contests', GEDITORIAL_TEXTDOMAIN ),
+						'menu_name'                  => __( 'Contests', GEDITORIAL_TEXTDOMAIN ),
 						'singular_name'              => __( 'Contest', GEDITORIAL_TEXTDOMAIN ),
 						'search_items'               => __( 'Search Contests', GEDITORIAL_TEXTDOMAIN ),
-						'popular_items'              => null, // __( 'Popular Contests', GEDITORIAL_TEXTDOMAIN ),
 						'all_items'                  => __( 'All Contests', GEDITORIAL_TEXTDOMAIN ),
 						'parent_item'                => __( 'Parent Contest', GEDITORIAL_TEXTDOMAIN ),
 						'parent_item_colon'          => __( 'Parent Contest:', GEDITORIAL_TEXTDOMAIN ),
@@ -126,13 +126,13 @@ class gEditorialContest extends gEditorialModuleCore
 						'separate_items_with_commas' => __( 'Separate contests with commas', GEDITORIAL_TEXTDOMAIN ),
 						'add_or_remove_items'        => __( 'Add or remove Contests', GEDITORIAL_TEXTDOMAIN ),
 						'choose_from_most_used'      => __( 'Choose from most used Contests', GEDITORIAL_TEXTDOMAIN ),
-						'menu_name'                  => __( 'Contests', GEDITORIAL_TEXTDOMAIN ),
+						'popular_items'              => NULL,
 					),
 					'apply_status_tax' => array(
 						'name'                       => __( 'Apply Statuses', GEDITORIAL_TEXTDOMAIN ),
+						'menu_name'                  => __( 'Apply Statuses', GEDITORIAL_TEXTDOMAIN ),
 						'singular_name'              => __( 'Apply Status', GEDITORIAL_TEXTDOMAIN ),
 						'search_items'               => __( 'Search Apply Statuses', GEDITORIAL_TEXTDOMAIN ),
-						'popular_items'              => null, // __( 'Popular Apply Statuses', GEDITORIAL_TEXTDOMAIN ),
 						'all_items'                  => __( 'All Apply Statuses', GEDITORIAL_TEXTDOMAIN ),
 						'parent_item'                => __( 'Parent Apply Status', GEDITORIAL_TEXTDOMAIN ),
 						'parent_item_colon'          => __( 'Parent Apply Status:', GEDITORIAL_TEXTDOMAIN ),
@@ -143,7 +143,7 @@ class gEditorialContest extends gEditorialModuleCore
 						'separate_items_with_commas' => __( 'Separate apply statuses with commas', GEDITORIAL_TEXTDOMAIN ),
 						'add_or_remove_items'        => __( 'Add or remove Apply Statuses', GEDITORIAL_TEXTDOMAIN ),
 						'choose_from_most_used'      => __( 'Choose from most used Apply Statuses', GEDITORIAL_TEXTDOMAIN ),
-						'menu_name'                  => __( 'Apply Statuses', GEDITORIAL_TEXTDOMAIN ),
+						'popular_items'              => NULL,
 					),
 				),
 			),
@@ -237,8 +237,7 @@ class gEditorialContest extends gEditorialModuleCore
 
 	public function admin_init()
 	{
-		add_action( 'add_meta_boxes', array( &$this, 'add_meta_boxes' ), 12, 2 );
-		add_action( 'add_meta_boxes', array( &$this, 'remove_meta_boxes' ), 20, 2 );
+		add_action( 'add_meta_boxes', array( &$this, 'add_meta_boxes' ), 20, 2 );
 
 		// internal actions:
 		add_action( 'geditorial_contest_meta_box', array( &$this, 'geditorial_contest_meta_box' ), 5, 2 );
@@ -412,7 +411,7 @@ class gEditorialContest extends gEditorialModuleCore
 
 	public function save_post_contest_cpt( $post_id, $post )
 	{
-		if ( ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE )
+		if ( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
 			|| empty( $_POST )
 			|| $post->post_type == 'revision' )
 				return $post_id;
@@ -424,7 +423,7 @@ class gEditorialContest extends gEditorialModuleCore
 			return $post_id;
 
 		$term = get_term_by( 'slug', $post->post_name, $this->module->constants['contest_tax'] );
-		$pre_meta_issue = get_post_meta( $post_id, '_'.$this->module->constants['contest_cpt'].'_term_id', true );
+		$pre_meta_issue = get_post_meta( $post_id, '_'.$this->module->constants['contest_cpt'].'_term_id', TRUE );
 
 		$args = array(
 			'name'        => $post->post_title,
@@ -433,7 +432,7 @@ class gEditorialContest extends gEditorialModuleCore
 			'parent'      => ( isset( $parent_term_id ) ? $parent_term_id : 0 ),
 		);
 
-		if ( false === $term ) {
+		if ( FALSE === $term ) {
 			if ( $pre_meta_issue ) {
 				$new_term = wp_update_term( intval( $pre_meta_issue ), $this->module->constants['contest_tax'], $args );
 			} else {
@@ -462,7 +461,7 @@ class gEditorialContest extends gEditorialModuleCore
 		if ( $this->import )
 			return $term;
 
-		if ( false === strpos( $term, $this->pre_term ) )
+		if ( FALSE === strpos( $term, $this->pre_term ) )
 			return new WP_Error( 'not_authenticated', __( 'you\'re doing it wrong!', GEDITORIAL_TEXTDOMAIN ) );
 
 		return str_ireplace( $this->pre_term, '', $term );
@@ -494,30 +493,6 @@ class gEditorialContest extends gEditorialModuleCore
 		}
 
 		return $post_id;
-	}
-
-	// FIXME: merge with add_meta_box
-	public function remove_meta_boxes( $post_type, $post )
-	{
-		if ( $post_type == $this->module->constants['contest_cpt'] ) {
-
-			remove_meta_box( 'pageparentdiv', $post_type, 'side' ); // remove post parent meta box
-			add_meta_box( 'geditorial-contest',
-				$this->get_string( 'contest_box_title', 'post', 'misc' ),
-				array( &$this, 'do_meta_box_contest_cpt' ), $post_type, 'side', 'high' );
-
-			remove_meta_box( 'postimagediv', $post_type, 'side' );
-			add_meta_box( 'postimagediv',
-				$this->get_string( 'poster_box_title', 'post', 'misc' ),
-				'post_thumbnail_meta_box', $post_type, 'side', 'high' );
-		}
-
-		// } else if ( ! in_array( $post_type, $this->post_types() ) ) return;
-		//
-		// remove issue tax box for contributors
-		// if ( ! current_user_can( 'edit_published_posts' ) )
-		// the tax UI disabled so no need to remove
-		// remove_meta_box( 'tagsdiv-'.$this->_constants['issue_tax'], $post_type, 'side' );
 	}
 
 	public function do_meta_box_contest_cpt( $post )
@@ -565,14 +540,26 @@ class gEditorialContest extends gEditorialModuleCore
 
 	public function add_meta_boxes( $post_type, $post )
 	{
-		if ( ! in_array( $post_type, $this->post_types() ) )
-			return;
+		if ( $post_type == $this->module->constants['contest_cpt'] ) {
 
-		add_meta_box( 'geditorial-contests',
-			$this->get_meta_box_title( $post_type ),
-			array( &$this, 'do_meta_box_applies' ),
-			$post_type,
-			'side' );
+			remove_meta_box( 'pageparentdiv', $post_type, 'side' );
+			add_meta_box( 'geditorial-contest',
+				$this->get_string( 'contest_box_title', 'post', 'misc' ),
+				array( &$this, 'do_meta_box_contest_cpt' ), $post_type, 'side', 'high' );
+
+			remove_meta_box( 'postimagediv', $post_type, 'side' );
+			add_meta_box( 'postimagediv',
+				$this->get_string( 'poster_box_title', 'post', 'misc' ),
+				'post_thumbnail_meta_box', $post_type, 'side', 'high' );
+
+		} else if ( in_array( $post_type, $this->post_types() ) ) {
+
+			add_meta_box( 'geditorial-contests',
+				$this->get_meta_box_title( $post_type ),
+				array( &$this, 'do_meta_box_applies' ),
+				$post_type,
+				'side' );
+		}
 	}
 
 	public function do_meta_box_applies( $post )

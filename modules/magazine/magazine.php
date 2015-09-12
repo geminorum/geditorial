@@ -872,7 +872,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 
 			} else if ( in_array( $key, array( 'author', 'date' ) ) ) {
 				continue; // he he!
-				
+
 			} else {
 				$new_columns[$key] = $value;
 			}

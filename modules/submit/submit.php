@@ -6,7 +6,7 @@ class gEditorialSubmit extends gEditorialModuleCore
 	var $module_name = 'submit';
 	var $meta_key    = '_ge_submit';
 
-	function __construct()
+	public function __construct()
 	{
 		global $gEditorial;
 
@@ -70,16 +70,6 @@ class gEditorialSubmit extends gEditorialModuleCore
 				),
 			),
 			'configure_page_cb' => 'print_configure_view',
-			'settings_help_tab' => array(
-				'id'      => 'geditorial-submit-overview',
-				'title'   => __( 'help-tab-title', GEDITORIAL_TEXTDOMAIN ),
-				'content' => __( '<p>help-tab-content</p>', GEDITORIAL_TEXTDOMAIN ),
-			),
-			'settings_help_sidebar' => sprintf(
-				__( '<p><strong>For more information</strong>:</p><p><a href="%1$s">%2$s</a></p><p><a href="%3$s">gEditorial on GitHub</a></p>', GEDITORIAL_TEXTDOMAIN ),
-				'http://geminorum.ir/wordpress/geditorial/modules/submit',
-				__( 'Editorial Submit Documentations', GEDITORIAL_TEXTDOMAIN ),
-				'https://github.com/geminorum/gEditorial' ),
 		);
 
 		$gEditorial->register_module( $this->module_name, $args );

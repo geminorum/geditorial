@@ -25,17 +25,20 @@ class gEditorialComments extends gEditorialModuleCore
 			'dashicon'             => 'admin-comments',
 			'slug'                 => 'comments',
 			'load_frontend'        => TRUE,
-			'constants'            => array(
+
+			'constants' => array(
 				'comments_shortcode' => 'comments',
 			),
+
 			'default_options' => array(
 				'enabled'    => FALSE,
+				'settings'   => array(),
 				'post_types' => array(
 					'post' => TRUE,
 					'page' => FALSE,
 				),
-				'settings' => array(),
 			),
+
 			'settings' => array(
 				'_general' => array(
 					array(
@@ -82,38 +85,8 @@ class gEditorialComments extends gEditorialModuleCore
 						'select_comments' => __( '&mdash; Choose a Comments &mdash;', GEDITORIAL_TEXTDOMAIN ),
 					),
 				),
-				'labels' => array(
-					'comments_tax' => array(
-						'name'                       => __( 'Comments', GEDITORIAL_TEXTDOMAIN ),
-						'singular_name'              => __( 'Comments', GEDITORIAL_TEXTDOMAIN ),
-						'search_items'               => __( 'Search Comments', GEDITORIAL_TEXTDOMAIN ),
-						'popular_items'              => null, // to disable tag cloud on edit tag page // __( 'Popular Comments', GEDITORIAL_TEXTDOMAIN ),
-						'all_items'                  => __( 'All Comments', GEDITORIAL_TEXTDOMAIN ),
-						'parent_item'                => __( 'Parent Comments', GEDITORIAL_TEXTDOMAIN ),
-						'parent_item_colon'          => __( 'Parent Comments:', GEDITORIAL_TEXTDOMAIN ),
-						'edit_item'                  => __( 'Edit Comments', GEDITORIAL_TEXTDOMAIN ),
-						'update_item'                => __( 'Update Comments', GEDITORIAL_TEXTDOMAIN ),
-						'add_new_item'               => __( 'Add New Comments', GEDITORIAL_TEXTDOMAIN ),
-						'new_item_name'              => __( 'New Comments Name', GEDITORIAL_TEXTDOMAIN ),
-						'separate_items_with_commas' => __( 'Separate comments with commas', GEDITORIAL_TEXTDOMAIN ),
-						'add_or_remove_items'        => __( 'Add or remove comments', GEDITORIAL_TEXTDOMAIN ),
-						'choose_from_most_used'      => __( 'Choose from the most used comments', GEDITORIAL_TEXTDOMAIN ),
-						'menu_name'                  => __( 'Comments', GEDITORIAL_TEXTDOMAIN ),
-					),
-				),
 			),
 			'configure_page_cb' => 'print_configure_view',
-			'settings_help_tab' => array(
-				'id'      => 'geditorial-comments-overview',
-				'title'   => __( 'help-tab-title', GEDITORIAL_TEXTDOMAIN ),
-				'content' => __( '<p>help-tab-content</p>', GEDITORIAL_TEXTDOMAIN ),
-				),
-			'settings_help_sidebar' => sprintf(
-				__( '<p><strong>For more information</strong>:</p><p><a href="%1$s">%2$s</a></p><p><a href="%3$s">gEditorial on GitHub</a></p>', GEDITORIAL_TEXTDOMAIN ),
-				'http://geminorum.ir/wordpress/geditorial/modules/comments',
-				__( 'Editorial Comments Documentations', GEDITORIAL_TEXTDOMAIN ),
-				'https://github.com/geminorum/gEditorial' ),
-
 		);
 
 		$gEditorial->register_module( $this->module_name, $args );
@@ -123,19 +96,18 @@ class gEditorialComments extends gEditorialModuleCore
 	{
 		add_action( 'init', array( &$this, 'init' ) );
 
+		$this->require_code();
+
 		if ( is_admin() ) {
+
 			add_action( 'admin_init', array( &$this, 'admin_init' ) );
 			add_action( 'geditorial_settings_load', array( &$this, 'register_settings' ) );
 
-			//add_action( 'admin_menu', array( &$this, 'add_meta_box' ) );
-			//add_action( 'edit_comment', array( &$this, 'save_meta_box_postdata' ) );
+			// add_action( 'admin_menu', array( &$this, 'add_meta_box' ) );
+			// add_action( 'edit_comment', array( &$this, 'save_meta_box_postdata' ) );
 
 			add_filter( 'comment_row_actions', array( &$this, 'comment_row_actions' ) );
 			add_action( 'wp_ajax_geditorial_comments', array( &$this, 'ajax' ) );
-
-		} else {
-
-			require_once( GEDITORIAL_DIR.'modules/meta/templates.php' );
 		}
 	}
 
@@ -148,18 +120,17 @@ class gEditorialComments extends gEditorialModuleCore
 		if ( ! is_admin() ) {
 			add_filter( 'comment_class', array( &$this, 'comment_class' ) );
 
-			if ( $this->get_setting( 'widget_args', false ) )
+			if ( $this->get_setting( 'widget_args', FALSE ) )
 				add_filter( 'widget_comments_args', array( &$this, 'widget_comments_args' ) );
 
-			if ( $this->get_setting( 'front_actions', false ) )
+			if ( $this->get_setting( 'front_actions', FALSE ) )
 				add_filter( 'comment_text', array( &$this, 'comment_text' ), 10, 3 );
 
-			if ( ! $this->get_setting( 'disable_notes', false ) )
+			if ( ! $this->get_setting( 'disable_notes', FALSE ) )
 				add_filter( 'comment_form_defaults', array( &$this, 'comment_form_defaults' ), 12 );
 
-			//add_shortcode( 'comments', array( &$this, 'shortcode_comments' ) );
-
-			//add_filter( 'gtheme_comment_actions', array( &$this, 'gtheme_comment_actions' ), 10, 4 );
+			// add_shortcode( 'comments', array( &$this, 'shortcode_comments' ) );
+			// add_filter( 'gtheme_comment_actions', array( &$this, 'gtheme_comment_actions' ), 10, 4 );
 		}
 	}
 
@@ -305,9 +276,9 @@ class gEditorialComments extends gEditorialModuleCore
 		$comment_id = $comment->comment_ID;
 		echo '<p>';
 		echo wp_nonce_field( plugin_basename( __FILE__ ), 'featured_comments_nonce' );
-		echo '<input id = "featured" type="checkbox" name="featured" value="true"' . checked( true, $this->is_comment_featured( $comment_id ), false ) . '/>';
+		echo '<input id = "featured" type="checkbox" name="featured" value="true"' . checked( TRUE, $this->is_comment_featured( $comment_id ), FALSE ) . '/>';
 		echo ' <label for="featured">' . __( "Featured", GEDITORIAL_TEXTDOMAIN ) . '</label>&nbsp;';
-		echo '<input id = "buried" type="checkbox" name="buried" value="true"' . checked( true, $this->is_comment_buried( $comment_id ), false ) . '/>';
+		echo '<input id = "buried" type="checkbox" name="buried" value="true"' . checked( TRUE, $this->is_comment_buried( $comment_id ), FALSE ) . '/>';
 		echo ' <label for="buried">' . __( "Buried", GEDITORIAL_TEXTDOMAIN ) . '</label>';
 		echo '</p>';
 	}
@@ -329,15 +300,14 @@ class gEditorialComments extends gEditorialModuleCore
 
 	public function is_comment_featured( $comment_id )
 	{
-		if ( '1' == get_comment_meta( $comment_id, 'featured', true ) )
+		if ( '1' == get_comment_meta( $comment_id, 'featured', TRUE ) )
 			return 1;
 		return 0;
 	}
 
-
 	public function is_comment_buried( $comment_id )
 	{
-		if ( '1' == get_comment_meta( $comment_id, 'buried', true ) )
+		if ( '1' == get_comment_meta( $comment_id, 'buried', TRUE ) )
 			return 1;
 		return 0;
 	}

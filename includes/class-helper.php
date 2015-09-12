@@ -954,7 +954,7 @@ class gEditorialHelper
 			} else if ( is_array( $_wp_theme_features[$feature][0] ) ){
 				$_wp_theme_features[$feature][0] = array_merge( $_wp_theme_features[$feature][0], $post_types );
 			}
-			
+
 		} else {
 			$_wp_theme_features[$feature] = array( $post_types );
 		}

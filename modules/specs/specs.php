@@ -19,11 +19,13 @@ class gEditorialSpecs extends gEditorialModuleCore
 			'dashicon'             => 'editor-ul',
 			'slug'                 => 'specs',
 			'load_frontend'        => TRUE,
-			'constants'            => array(
+
+			'constants' => array(
 				'specs_tax'                => 'specs',
 				'specs_shortcode'          => 'specs',
 				'multiple_specs_shortcode' => 'multiple_specs',
 			),
+
 			'default_options' => array(
 				'enabled'    => FALSE,
 				'settings'   => array(),
@@ -37,6 +39,7 @@ class gEditorialSpecs extends gEditorialModuleCore
 					'spec_value' => TRUE,
 				),
 			),
+
 			'settings' => array(
 				'_general' => array(
 					array(
@@ -80,9 +83,9 @@ class gEditorialSpecs extends gEditorialModuleCore
 				'labels' => array(
 					'specs_tax' => array(
 						'name'                       => __( 'Specifications', GEDITORIAL_TEXTDOMAIN ),
+						'menu_name'                  => __( 'Specifications', GEDITORIAL_TEXTDOMAIN ),
 						'singular_name'              => __( 'Specifications', GEDITORIAL_TEXTDOMAIN ),
 						'search_items'               => __( 'Search Specifications', GEDITORIAL_TEXTDOMAIN ),
-						'popular_items'              => null,
 						'all_items'                  => __( 'All Specifications', GEDITORIAL_TEXTDOMAIN ),
 						'parent_item'                => __( 'Parent Specifications', GEDITORIAL_TEXTDOMAIN ),
 						'parent_item_colon'          => __( 'Parent Specifications:', GEDITORIAL_TEXTDOMAIN ),
@@ -93,7 +96,7 @@ class gEditorialSpecs extends gEditorialModuleCore
 						'separate_items_with_commas' => __( 'Separate specs with commas', GEDITORIAL_TEXTDOMAIN ),
 						'add_or_remove_items'        => __( 'Add or remove specs', GEDITORIAL_TEXTDOMAIN ),
 						'choose_from_most_used'      => __( 'Choose from the most used specs', GEDITORIAL_TEXTDOMAIN ),
-						'menu_name'                  => __( 'Specifications', GEDITORIAL_TEXTDOMAIN ),
+						'popular_items'              => NULL,
 					),
 				),
 			),
@@ -120,7 +123,7 @@ class gEditorialSpecs extends gEditorialModuleCore
 		do_action( 'geditorial_specs_init', $this->module );
 
 		$this->do_filters();
-		$this->register_taxonomies();
+		$this->register_taxonomy( 'specs_tax' );
 
 		// add_shortcode( $this->module->constants['specs_shortcode'], array( $this, 'shortcode_specs' ) );
 		// add_shortcode( $this->module->constants['multiple_specs_shortcode'], array( $this, 'shortcode_multiple_specs' ) );
@@ -129,13 +132,11 @@ class gEditorialSpecs extends gEditorialModuleCore
 	public function admin_init()
 	{
 		add_action( 'admin_print_styles', array( &$this, 'admin_print_styles' ) );
-
-		add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ), 12, 2 );
-		add_action( 'add_meta_boxes', array( $this, 'remove_meta_boxes' ), 20, 2 );
+		add_action( 'add_meta_boxes', array( &$this, 'add_meta_boxes' ), 20, 2 );
 
 		// internal
-		add_action( 'geditorial_specs_meta_box', array( $this, 'geditorial_specs_meta_box' ), 5, 2 );
-		// add_action( 'geditorial_specs_meta_box_item', array( $this, 'geditorial_specs_meta_box_item' ), 5, 5 );
+		add_action( 'geditorial_specs_meta_box', array( &$this, 'geditorial_specs_meta_box' ), 5, 2 );
+		// add_action( 'geditorial_specs_meta_box_item', array( &$this, 'geditorial_specs_meta_box_item' ), 5, 5 );
 	}
 
 	public function admin_print_styles()
@@ -165,34 +166,6 @@ class gEditorialSpecs extends gEditorialModuleCore
 
 			$this->enqueue_asset_js( array(), 'specs.'.$screen->base, array( 'jquery-sortable' ) );
 		}
-	}
-
-	public function register_taxonomies()
-	{
-		register_taxonomy( $this->module->constants['specs_tax'],
-			$this->post_types(), array(
-				'labels'                => $this->module->strings['labels']['specs_tax'],
-				'public'                => TRUE,
-				'show_in_nav_menus'     => FALSE,
-				'show_ui'               => TRUE,
-				'show_admin_column'     => FALSE,
-				'show_tagcloud'         => FALSE,
-				'hierarchical'          => FALSE,
-				'update_count_callback' => array( 'gEditorialHelper', 'update_count_callback' ),
-				'query_var'             => TRUE,
-				'rewrite'               => array(
-					'slug'         => $this->module->constants['specs_tax'],
-					'hierarchical' => FALSE,
-					'with_front'   => FALSE,
-				),
-				'capabilities' => array(
-					'manage_terms' => 'edit_others_posts',
-					'edit_terms'   => 'edit_others_posts',
-					'delete_terms' => 'edit_others_posts',
-					'assign_terms' => 'edit_published_posts'
-				)
-			)
-		);
 	}
 
 	public function save_post( $post_id, $post )
@@ -288,8 +261,6 @@ class gEditorialSpecs extends gEditorialModuleCore
 
 		if ( count( $meta ) ) {
 
-			//$the_list = wp_list_pluck( $meta, 'spec_order' );
-			//$meta = array_combine( $the_list, $meta );
 			ksort( $meta );
 
 			$this->set_meta( $post_id, $meta );
@@ -351,26 +322,19 @@ class gEditorialSpecs extends gEditorialModuleCore
 		return $postmeta;
 	}
 
-	public function remove_meta_boxes( $post_type, $post )
-	{
-		if ( ! in_array( $post_type, $this->post_types() ) )
-			return;
-
-		// if ( ! current_user_can( 'edit_published_posts' ) )
-			remove_meta_box( 'tagsdiv-'.$this->module->constants['specs_tax'], $post_type, 'side' );
-	}
-
 	public function add_meta_boxes( $post_type, $post )
 	{
-		if ( ! in_array( $post_type, $this->post_types() ) )
-			return;
+		if ( in_array( $post_type, $this->post_types() ) ) {
 
-		add_meta_box(
-			'geditorial-specs',
-			$this->get_meta_box_title( $post_type ),
-			array( $this, 'do_meta_box' ),
-			$post_type,
-			'side' );
+			remove_meta_box( 'tagsdiv-'.$this->module->constants['specs_tax'], $post_type, 'side' );
+
+			add_meta_box(
+				'geditorial-specs',
+				$this->get_meta_box_title( $post_type ),
+				array( $this, 'do_meta_box' ),
+				$post_type,
+				'side' );
+		}
 	}
 
 	public function do_meta_box( $post )

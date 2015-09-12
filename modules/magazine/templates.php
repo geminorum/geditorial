@@ -284,6 +284,23 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 		return $content;
 	}
 
+	// FIXME: UNFINISHED
+	public static function issue( $atts = array() )
+	{
+		global $gEditorial, $post;
+
+		$args = self::atts( array(
+			'id'     => $post->ID,
+			'before' => isset( $atts['b'] ) ? $atts['b'] : '',
+			'after'  => isset( $atts['a'] ) ? $atts['a'] : '',
+			'filter' => isset( $atts['f'] ) ? $atts['f'] : FALSE,
+			'echo'   => isset( $atts['e'] ) ? $atts['e'] : FALSE,
+			'def'    => FALSE,
+			'img'    => FALSE,
+			'link'   => NULL, // false to disable
+			'desc'   => NULL, // false to disable
+		), $atts );
+	}
 
 	public static function the_issue( $b = '', $a = '', $f = FALSE, $post_id = NULL, $args = array() )
 	{

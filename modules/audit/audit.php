@@ -26,13 +26,10 @@ class gEditorialAudit extends gEditorialModuleCore
 
 			'default_options' => array(
 				'enabled' => FALSE,
+				'settings' => array(),
 				'post_types' => array(
 					'post' => TRUE,
 					'page' => FALSE,
-				),
-				'post_fields' => array(
-				),
-				'settings' => array(
 				),
 			),
 			'settings' => array(
@@ -50,12 +47,10 @@ class gEditorialAudit extends gEditorialModuleCore
 				),
 				'labels' => array(
 					'audit_tax' => array(
-						'name'      => _x( 'Audit Attributes', 'Audit Attributes Taxonomy Name', GEDITORIAL_TEXTDOMAIN ),
-						'menu_name' => _x( 'Audit Attributes', 'Audit Attributes Taxonomy Menu Name', GEDITORIAL_TEXTDOMAIN ),
-
+						'name'                       => _x( 'Audit Attributes', 'Audit Attributes Taxonomy Name', GEDITORIAL_TEXTDOMAIN ),
+						'menu_name'                  => _x( 'Audit Attributes', 'Audit Attributes Taxonomy Menu Name', GEDITORIAL_TEXTDOMAIN ),
 						'singular_name'              => __( 'Audit Attribute',                        GEDITORIAL_TEXTDOMAIN ),
 						'search_items'               => __( 'Search Audit Attributes',                GEDITORIAL_TEXTDOMAIN ),
-						'popular_items'              => NULL,
 						'all_items'                  => __( 'All Audit Attributes',                   GEDITORIAL_TEXTDOMAIN ),
 						'parent_item'                => __( 'Parent Audit Attribute',                 GEDITORIAL_TEXTDOMAIN ),
 						'parent_item_colon'          => __( 'Parent Audit Attribute:',                GEDITORIAL_TEXTDOMAIN ),
@@ -66,31 +61,21 @@ class gEditorialAudit extends gEditorialModuleCore
 						'separate_items_with_commas' => __( 'Separate audit attributes with commas',  GEDITORIAL_TEXTDOMAIN ),
 						'add_or_remove_items'        => __( 'Add or remove audit attributes',         GEDITORIAL_TEXTDOMAIN ),
 						'choose_from_most_used'      => __( 'Choose from most used audit attributes', GEDITORIAL_TEXTDOMAIN ),
+						'popular_items'              => NULL,
 					),
 				),
 				'terms' => array(
 					'audit_tax' => array(
-						'audited'      => __( 'Audited',      GEDITORIAL_TEXTDOMAIN ),
-						'outdated'     => __( 'Outdated',     GEDITORIAL_TEXTDOMAIN ),
-						'redundant'    => __( 'Redundant',    GEDITORIAL_TEXTDOMAIN ),
-						'review-seo'   => __( 'Review SEO',   GEDITORIAL_TEXTDOMAIN ),
+						'audited'      => __( 'Audited', GEDITORIAL_TEXTDOMAIN ),
+						'outdated'     => __( 'Outdated', GEDITORIAL_TEXTDOMAIN ),
+						'redundant'    => __( 'Redundant', GEDITORIAL_TEXTDOMAIN ),
+						'review-seo'   => __( 'Review SEO', GEDITORIAL_TEXTDOMAIN ),
 						'review-style' => __( 'Review Style', GEDITORIAL_TEXTDOMAIN ),
-						'trivial'      => __( 'Trivial',      GEDITORIAL_TEXTDOMAIN ),
+						'trivial'      => __( 'Trivial', GEDITORIAL_TEXTDOMAIN ),
 					),
 				),
 			),
 			'configure_page_cb' => 'print_configure_view',
-			'settings_help_tab' => array(
-				'id'      => 'geditorial-audit-overview',
-				'title'   => __( 'help-tab-title', GEDITORIAL_TEXTDOMAIN ),
-				'content' => __( '<p>help-tab-content</p>', GEDITORIAL_TEXTDOMAIN ),
-				),
-			'settings_help_sidebar' => sprintf(
-				__( '<p><strong>For more information</strong>:</p><p><a href="%1$s">%2$s</a></p><p><a href="%3$s">gEditorial on GitHub</a></p>', GEDITORIAL_TEXTDOMAIN ),
-				'http://geminorum.ir/wordpress/geditorial/modules/audit',
-				__( 'Editorial Audit Documentations', GEDITORIAL_TEXTDOMAIN ),
-				'https://github.com/geminorum/geditorial' ),
-
 		);
 
 		$gEditorial->register_module( $this->module_name, $args );

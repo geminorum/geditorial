@@ -20,9 +20,9 @@ class gEditorialSettings extends gEditorialModuleCore
 			'slug'                 => 'settings',
 			'settings_slug'        => 'geditorial-settings',
 			'configure_page_cb'    => 'print_default_settings',
-			'autoload'             => true,
+			'autoload'             => TRUE,
 			'default_options'      => array(
-				'enabled' => 'on',
+				'enabled' => TRUE,
 			),
 		);
 

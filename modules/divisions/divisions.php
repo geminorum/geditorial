@@ -9,7 +9,7 @@ class gEditorialDivisions extends gEditorialModuleCore
 
 	var $pre_term    = 'gXsXsE-';
 
-	function __construct()
+	public function __construct()
 	{
 		global $gEditorial;
 
@@ -105,17 +105,6 @@ class gEditorialDivisions extends gEditorialModuleCore
 				),
 			),
 			'configure_page_cb' => 'print_configure_view',
-			'settings_help_tab' => array(
-				'id'      => 'geditorial-divisions-overview',
-				'title'   => __( 'help-tab-title', GEDITORIAL_TEXTDOMAIN ),
-				'content' => __( '<p>help-tab-content</p>', GEDITORIAL_TEXTDOMAIN ),
-				),
-			'settings_help_sidebar' => sprintf(
-				__( '<p><strong>For more information</strong>:</p><p><a href="%1$s">%2$s</a></p><p><a href="%3$s">gEditorial on GitHub</a></p>', GEDITORIAL_TEXTDOMAIN ),
-				'http://geminorum.ir/wordpress/geditorial/modules/divisions',
-				__( 'Editorial Divisions Documentations', GEDITORIAL_TEXTDOMAIN ),
-				'https://github.com/geminorum/gEditorial' ),
-
 		);
 
 		$gEditorial->register_module( $this->module_name, $args );
@@ -198,6 +187,7 @@ class gEditorialDivisions extends gEditorialModuleCore
 		) );
 	}
 
+	// FIXME: use API: $this->register_p2p( 'issue_cpt' );
 	public function p2p_init()
 	{
 		// https://github.com/scribu/wp-posts-to-posts/wiki/Connection-information

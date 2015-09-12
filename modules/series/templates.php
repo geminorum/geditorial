@@ -237,7 +237,7 @@ class gEditorialSeriesTemplates extends gEditorialTemplateCore
 								$args['meta'] = '<h6>%1$s</h6><div class="summary"><p>%2$s</p></div>';
 
 							$output .= sprintf( $args['meta'],
-								isset( $post->series_meta['in_series_title'] ) ? $post->series_meta['in_series_title'] : '', 
+								isset( $post->series_meta['in_series_title'] ) ? $post->series_meta['in_series_title'] : '',
 								isset( $post->series_meta['in_series_desc'] ) ? $post->series_meta['in_series_desc'] : ''
 							);
 						}

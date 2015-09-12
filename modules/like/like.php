@@ -59,17 +59,6 @@ class gEditorialLike extends gEditorialModuleCore
 				'labels'       => array(),
 			),
 			'configure_page_cb' => 'print_configure_view',
-			'settings_help_tab' => array(
-				'id'      => 'geditorial-like-overview',
-				'title'   => __( 'help-tab-title', GEDITORIAL_TEXTDOMAIN ),
-				'content' => __( '<p>help-tab-content</p>', GEDITORIAL_TEXTDOMAIN ),
-				),
-			'settings_help_sidebar' => sprintf(
-				__( '<p><strong>For more information</strong>:</p><p><a href="%1$s">%2$s</a></p><p><a href="%3$s">gEditorial on GitHub</a></p>', GEDITORIAL_TEXTDOMAIN ),
-				'http://geminorum.ir/wordpress/geditorial/modules/like',
-				__( 'Editorial Like Documentations', GEDITORIAL_TEXTDOMAIN ),
-				'https://github.com/geminorum/gEditorial' ),
-
 		);
 
 		$gEditorial->register_module( $this->module_name, $args );

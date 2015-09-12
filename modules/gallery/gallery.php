@@ -8,7 +8,7 @@ class gEditorialGallery extends gEditorialModuleCore
 	var $meta_key    = '_ge_gallery';
 	var $cookie      = 'geditorial-gallery';
 
-	function __construct()
+	public function __construct()
 	{
 		global $gEditorial;
 
@@ -69,24 +69,10 @@ class gEditorialGallery extends gEditorialModuleCore
 				),
 			),
 			'configure_page_cb' => 'print_configure_view',
-			'settings_help_tabs' => array(
-				array(
-				'id'       => 'geditorial-gallery-overview',
-				'title'    => __( 'help-tab-title', GEDITORIAL_TEXTDOMAIN ),
-				'content'  => __( '<p>help-tab-content</p>', GEDITORIAL_TEXTDOMAIN ),
-				'callback' => FALSE,
-			),
-		),
-		'settings_help_sidebar' => sprintf(
-			__( '<p><strong>For more information</strong>:</p><p><a href="%1$s">%2$s</a></p><p><a href="%3$s">gEditorial on GitHub</a></p>', GEDITORIAL_TEXTDOMAIN ),
-			'http://geminorum.ir/wordpress/geditorial/modules/gallery',
-			__( 'Editorial Gallery Documentations', GEDITORIAL_TEXTDOMAIN ),
-			'https://github.com/geminorum/gEditorial' ),
 		);
 
 		$gEditorial->register_module( $this->module_name, $args );
 	}
-
 
 	public function setup()
 	{
@@ -130,89 +116,5 @@ class gEditorialGallery extends gEditorialModuleCore
 
 		parent::register_settings( $page );
 		$this->register_settings_button( 'install_def_album_cats', __( 'Install Default Album Cats', GEDITORIAL_TEXTDOMAIN ) );
-	}
-
-	public function register_post_types()
-	{
-		register_post_type( $this->module->constants['album_cpt'], array(
-			'show_in_menu'        => TRUE,
-			'menu_position'       => 4,
-			'show_in_nav_menus'   => TRUE,
-			'map_meta_cap'        => TRUE,
-		) );
-	}
-
-	public function register_taxonomies()
-	{
-		$editor = current_user_can( 'edit_others_posts' );
-
-		register_taxonomy( $this->module->constants['album_cat_tax'], $this->module->constants['album_cpt'], array(
-			'labels'                => $this->module->strings['labels']['album_cat_tax'],
-			'public'                => FALSE,
-			'show_in_nav_menus'     => FALSE,
-			'show_ui'               => $editor,
-			'show_admin_column'     => $editor,
-			'show_tagcloud'         => FALSE,
-			'hierarchical'          => TRUE,
-			'query_var'             => TRUE,
-			'update_count_callback' => array( 'gEditorialHelper', 'update_count_callback' ),
-			'rewrite'               => array(
-				'slug'         => $this->module->constants['album_cat_tax'],
-				'hierarchical' => TRUE,
-				'with_front'   => TRUE
-			),
-			'capabilities' => array(
-				'manage_terms' => 'edit_others_posts',
-				'edit_terms'   => 'edit_others_posts',
-				'delete_terms' => 'edit_others_posts',
-				'assign_terms' => 'edit_published_posts'
-			)
-		) );
-
-		register_taxonomy( $this->module->constants['album_tag_tax'], $this->module->constants['album_cpt'], array(
-			'labels'                => $this->module->strings['labels']['album_tag_tax'],
-			'public'                => FALSE,
-			'show_in_nav_menus'     => FALSE,
-			'show_ui'               => $editor,
-			'show_admin_column'     => $editor,
-			'show_tagcloud'         => FALSE,
-			'hierarchical'          => FALSE,
-			'query_var'             => TRUE,
-			'update_count_callback' => array( 'gEditorialHelper', 'update_count_callback' ),
-			'rewrite'               => array(
-				'slug'         => $this->module->constants['album_tag_tax'],
-				'hierarchical' => FALSE,
-				'with_front'   => TRUE
-			),
-			'capabilities' => array(
-				'manage_terms' => 'edit_others_posts',
-				'edit_terms'   => 'edit_others_posts',
-				'delete_terms' => 'edit_others_posts',
-				'assign_terms' => 'edit_published_posts'
-			)
-		) );
-
-		register_taxonomy( $this->module->constants['photo_tag_tax'], 'attachments', array(
-			'labels'                => $this->module->strings['labels']['photo_tag_tax'],
-			'public'                => FALSE,
-			'show_in_nav_menus'     => FALSE,
-			'show_ui'               => $editor,
-			'show_admin_column'     => $editor,
-			'show_tagcloud'         => FALSE,
-			'hierarchical'          => FALSE,
-			'query_var'             => TRUE,
-			'update_count_callback' => array( 'gEditorialHelper', 'update_count_callback' ),
-			'rewrite'               => array(
-				'slug'         => $this->module->constants['photo_tag_tax'],
-				'hierarchical' => FALSE,
-				'with_front'   => TRUE
-			),
-			'capabilities' => array(
-				'manage_terms' => 'edit_others_posts',
-				'edit_terms'   => 'edit_others_posts',
-				'delete_terms' => 'edit_others_posts',
-				'assign_terms' => 'edit_published_posts'
-			)
-		) );
 	}
 }
