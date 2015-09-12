@@ -1,3 +1,8 @@
+### 0.2.10
+* all: check if theme support thumbnail for all posttypes
+* all: default terms api
+* reshare: support for cpt thumbnail
+
 ### 0.2.9
 * all: internal api for: post type thumbnail / list table column / p2p
 * book: new module
