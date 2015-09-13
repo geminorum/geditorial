@@ -37,12 +37,11 @@ class gEditorialTemplateCore
 		echo ' title="'.$desc.'"';
 	}
 
-	// FIXME: use gNetwork constants
 	public static function getSearchLink( $query = FALSE )
 	{
-		if ( $query )
-			return get_option( 'home' ).'/?s='.urlencode( $query );
+		if ( defined( 'GNETWORK_SEARCH_REDIRECT' ) && GNETWORK_SEARCH_REDIRECT )
+			return $query ? add_query_arg( GNETWORK_SEARCH_QUERYID, $query, GNETWORK_SEARCH_URL ) : GNETWORK_SEARCH_URL;
 
-		return get_option( 'home' );
+		return $query ? add_query_arg( 's', $query, get_option( 'home' ) ) : get_option( 'home' );
 	}
 }
