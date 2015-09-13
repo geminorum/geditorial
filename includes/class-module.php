@@ -143,68 +143,6 @@ class gEditorialModuleCore
 		return $normalized;
 	}
 
-	// DEPRECATED
-	// Gets an array of allowed post types for a module
-	// @return array post-type-slug => post-type-label
-	public function get_all_post_types( $module = NULL )
-	{
-		if ( gEditorialHelper::isDev() )
-			_deprecated_function( __FUNCTION__, GEDITORIAL_VERSION, 'all_post_types' );
-
-		$allowed = array(
-			'post' => __( 'Posts' ),
-			'page' => __( 'Pages' ),
-		);
-
-		foreach ( $this->get_supported_post_types_for_module( $module ) as $post_type => $args ) {
-			$allowed[$post_type] = $args->label;
-		}
-		return $allowed;
-	}
-
-	// DEPRECATED
-	/**
-	 * Cleans up the 'on' and 'off' for post types on a given module (so we don't get warnings all over)
-	 * For every post type that doesn't explicitly have the 'on' value, turn it 'off'
-	 * If add_post_type_support() has been used anywhere (legacy support), inherit the state
-	 */
-	public function clean_post_type_options( $module_post_types = array(), $post_type_support = NULL )
-	{
-		if ( gEditorialHelper::isDev() )
-			_deprecated_function( __FUNCTION__, GEDITORIAL_VERSION, 'sanitize_post_types' );
-
-		$normalized = array();
-
-		foreach ( $this->get_all_post_types() as $post_type => $post_type_label ) {
-			if ( isset( $module_post_types[$post_type] )
-				&& $module_post_types[$post_type] == 'on' )
-					$normalized[$post_type] = 'on';
-			else
-				$normalized[$post_type] = 'off';
-		}
-		return $normalized;
-	}
-
-	// DEPRECATED
-	// get all of the possible post types that can be used with a given module
-	public function get_supported_post_types_for_module( $module = NULL )
-	{
-		if ( gEditorialHelper::isDev() )
-			_deprecated_function( __FUNCTION__, GEDITORIAL_VERSION, 'post_types' );
-
-		$args = apply_filters( 'geditorial_supported_module_post_types_args', array(
-			'_builtin' => FALSE,
-			'public'   => TRUE,
-		), $module );
-
-		$post_types = get_post_types( $args, 'objects' );
-
-		if ( count( $this->_post_types_excluded ) )
-			$post_types = array_diff_key( $post_types, array_flip( $this->_post_types_excluded ) );
-
-		return $post_types;
-	}
-
 	public function settings_post_types_option( $section )
 	{
 		foreach ( $this->all_post_types() as $post_type => $label ) {
@@ -236,43 +174,11 @@ class gEditorialModuleCore
 		}
 	}
 
-	// DEPRECATED: use $this->post_types()
-	// collect all of the active post types for a given module
-	public function get_post_types_for_module( $module )
-	{
-		$post_types = array();
-		if ( isset( $module->options->post_types )
-			&& is_array( $module->options->post_types ) ) {
-
-				foreach ( $module->options->post_types as $post_type => $value )
-					if ( 'on' == $value )
-						$post_types[] = $post_type;
-		}
-		return $post_types;
-	}
-
 	// MUST MOVE TO : helper
 	// Get the publicly accessible URL for the module based on the filename
 	public function get_module_url( $file )
 	{
 		return trailingslashit( plugins_url( '/', $file ) );
-	}
-
-	// DEPRECATED
-	public function settings_help()
-	{
-		$screen = get_current_screen();
-
-		if ( isset( $this->module->settings_help_tab['id'] ) )
-			$screen->add_help_tab( $this->module->settings_help_tab );
-		else if ( is_array( $this->module->settings_help_tab ) )
-			foreach ( $this->module->settings_help_tab as $tab )
-				$screen->add_help_tab( $tab );
-		else
-			return;
-
-		if ( isset( $this->module->settings_help_sidebar ) )
-			$screen->set_help_sidebar( $this->module->settings_help_sidebar );
 	}
 
 	// get stored post meta by the field
@@ -301,28 +207,6 @@ class gEditorialModuleCore
 			update_post_meta( $post_id, $this->meta_key.$key_suffix, $postmeta );
 		else
 			delete_post_meta( $post_id, $this->meta_key.$key_suffix );
-	}
-
-	// DEPRECATED
-	// MINE
-	// Moved here form : Meta
-	public function get_post_types( $module, $enabled = TRUE )
-	{
-		if ( gEditorialHelper::isDev() )
-			_deprecated_function( __FUNCTION__, GEDITORIAL_VERSION, 'post_types' );
-
-		$all_post_types = $this->get_all_post_types( $module );
-
-		if ( FALSE === $enabled )
-			return $all_post_types;
-
-		$enabled_post_types = array();
-
-		foreach ( $this->get_post_types_for_module( $module ) as $post_type )
-			if ( isset( $all_post_types[$post_type] ) )
-				$enabled_post_types[$post_type] = $all_post_types[$post_type];
-
-		return $enabled_post_types;
 	}
 
 	public function register_settings_post_types_option()
@@ -531,17 +415,6 @@ class gEditorialModuleCore
 		$fields = array();
 		if ( isset( $this->module->default_options[$key] ) && is_array( $this->module->default_options[$key] ) )
 			foreach ( $this->module->default_options[$key] as $field => $value )
-				$fields[] = $field;
-		return $fields;
-	}
-
-	// DEPRECATED : use post_type_all_fields()
-	public function get_post_type_supported_fields( $module, $post_type = 'post' )
-	{
-		$key = $post_type.'_fields';
-		$fields = array();
-		if ( isset( $module->default_options[$key] ) && is_array( $module->default_options[$key] ) )
-			foreach ( $module->default_options[$key] as $field => $value )
 				$fields[] = $field;
 		return $fields;
 	}
@@ -843,13 +716,7 @@ class gEditorialModuleCore
 		return isset( $_COOKIE[$this->cookie] ) ? json_decode( wp_unslash( $_COOKIE[$this->cookie] ), TRUE ) : array();
 	}
 
-	// DEPRECATED: use $this->register_post_type()
-	public function register_post_types() {}
-
-	// DEPRECATED: use $this->register_taxonomy()
-	public function register_taxonomies() {}
-
-	// FIXME: UNFINISHED
+	// FIXME: WORK IN PROGRESS
 	// SEE: http://generatewp.com/post-type/
 	public function register_post_type( $constant_key, $atts = array(), $taxonomies = NULL )
 	{
@@ -880,7 +747,7 @@ class gEditorialModuleCore
 		register_post_type( $this->module->constants[$constant_key], $args );
 	}
 
-	// FIXME: UNFINISHED
+	// FIXME: WORK IN PROGRESS
 	public function register_taxonomy( $constant_key, $atts = array(), $post_types = NULL )
 	{
 		if ( is_null( $post_types ) )
