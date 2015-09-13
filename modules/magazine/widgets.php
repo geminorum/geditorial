@@ -1,138 +1,92 @@
 <?php defined( 'ABSPATH' ) or die( 'Restricted access' );
 
-class gEditorialMagazineWidget_IssueCover extends WP_Widget
+class gEditorialMagazineWidget_IssueCover extends gEditorialWidgetCore
 {
 
-	public function __construct()
+	protected function setup()
 	{
-		parent::__construct( 'geditorialmagazine_issue_cover_widget',
-			_x( 'Issue Cover', 'Magazine: Widget: title', GEDITORIAL_TEXTDOMAIN ), array(
-				'classname'   => 'widget-geditorialmagazine-issue-cover',
-				'description' => _x( 'Displays selected issue cover', 'Magazine: Widget: description', GEDITORIAL_TEXTDOMAIN ),
-		) );
-		$this->alt_option_name = 'widget_geditorialmagazine_issue_cover';
+		return array(
+			'module' => 'magazine',
+			'name'   => 'magazine_issue_cover',
+			'class'  => 'magazine-issue-cover',
+			'title'  => __( 'Editorial Magazine: Issue Cover', GEDITORIAL_TEXTDOMAIN ),
+			'desc'   => __( 'Displays selected issue cover', GEDITORIAL_TEXTDOMAIN ),
+		);
+	}
 
-		add_action( 'save_post', array( $this, 'flush_widget_cache' ) );
-		add_action( 'deleted_post', array( $this, 'flush_widget_cache' ) );
-		add_action( 'switch_theme', array( $this, 'flush_widget_cache' ) );
+	public function widget_NEW( $args, $instance )
+	{
+		$context = empty( $instance['context'] ) ? '' : $instance['context'];
+
+		$this->before_widget( $args, $instance );
+		$this->widget_title( $args, $instance );
+			get_template_part( 'searchform', $context );
+		$this->after_widget( $args, $instance );
 	}
 
 	public function widget( $args, $instance )
 	{
+		if ( ! $instance['latest_issue'] && empty( $instance['issue'] ) && ! is_singular() )
+			return;
+
+		if ( ! empty( $instance['latest_issue'] ) ) {
+			$prefix = 'latest_issue';
+		} else if ( ! empty ( $instance['issue_id'] ) ) {
+			$prefix = 'issue_'.$instance['issue_id'];
+		} else {
+			$prefix = 'queried_'.get_queried_object_id();
+		}
+
+		$this->widget_cache( $args, $instance, '_'.$prefix );
+	}
+
+
+	public function widget_html( $args, $instance )
+	{
 		global $gEditorial;
 
-		if ( ! $instance['latest'] && empty ( $instance['issue'] ) && ! is_singular() )
-			return;
+		$issue_cpt = $gEditorial->get_module_constant( 'magazine', 'issue_cpt', 'issue' );
+		$func      = array( 'gEditorialMagazineTemplates', 'issue_cover' );
+		$id        = get_queried_object_id();
 
-		$id = false;
+		if ( ! empty( $instance['latest_issue'] ) ) {
+			$id = gEditorialHelper::getLastPostOrder( $issue_cpt, '', 'ID', 'publish' );
 
-		if ( ! isset( $args['widget_id'] ) )
-			$args['widget_id'] = $this->id;
+		} else if ( ! empty ( $instance['issue_id'] ) ) {
+			$id = $instance['issue_id'];
 
-		if ( ! empty( $instance['latest'] ) ) {
-			$key = $args['widget_id'].'_latest';
-		} else if ( ! empty ( $instance['issue'] ) ) {
-			$key = $args['widget_id'].'_issue_'.$instance['issue'];
 		} else {
-			$id = get_queried_object_id();
-			$key = $args['widget_id'].'_queried_'.$id;
-		}
-
-		$cache = wp_cache_get( $this->alt_option_name, 'widget' );
-
-		if ( ! is_array( $cache ) )
-			$cache = array();
-
-		if ( isset( $cache[$key] ) ) {
-			echo $cache[$key];
-			return;
-		}
-
-		$issue_func = array( 'gEditorialMagazineTemplates', 'issue_cover' );
-		$title = apply_filters( 'widget_title',
-			empty( $instance['title'] ) ? '' : $instance['title'],
-			$instance,
-			$this->id_base
-		);
-
-		if ( $title )
-			$title = $args['before_title'].$title.$args['after_title'];
-
-		if ( ! empty( $instance['latest'] ) ) {
-			$the_post = get_posts( array(
-				'numberposts' => 1,
-				'orderby'     => 'menu_order', //'post_date',
-				'order'       => 'DESC',
-				'post_type'   => $gEditorial->get_module_constant( 'magazine', 'issue_cpt', 'issue' ),
-				'post_status' => 'publish',
-			) );
-			if ( count ( $the_post ) )
-				$id = $the_post[0]->ID;
-		} else if ( ! empty ( $instance['issue'] ) ) {
-			$id = $instance['issue'];
-		} else {
-			$issue_cpt = $gEditorial->get_module_constant( 'magazine', 'issue_cpt', 'issue' );
 			if ( $issue_cpt != get_post_type( $id ) )
-				$issue_func = array( 'gEditorialMagazineTemplates', 'the_issue_cover' );
+				$func = array( 'gEditorialMagazineTemplates', 'the_issue_cover' );
 		}
 
-		if ( false === $id || ! is_callable( $issue_func ) )
-			return;
+		if ( FALSE === $id || ! is_callable( $func ) )
+			return FALSE;
 
-		$issue_func_args = array( '', '',
-			( empty( $instance['size'] ) ? 'issue-thumbnail' : $instance['size'] ),
-			( $instance['link'] ? 'parent' : false ), // WHATIF? : custom link?
+		// FIXME: write better callback!!
+		$func_args = array( '', '',
+			( empty( $instance['image_size'] ) ? 'issue-thumbnail' : $instance['image_size'] ),
+			( $instance['link_issue'] ? 'parent' : FALSE ), // WHATIF? : custom link?
 			array(
 				'id'    => $id,
-				'echo'  => 'false',
+				'echo'  => FALSE,
 				'cb'    => apply_filters( 'geditorial_magazine_widget_issue_cover_cb',
 					array( 'gEditorialMagazineTemplates', 'issue_cover_callback' ), $instance, $this->id_base ),
-				'title' => ( $instance['number'] ? 'number' : false ), // INFO: or false / 'title'
+				'title' => ( $instance['number_line'] ? 'number' : FALSE ), // or 'title'
 			),
 		);
 
-		$result = call_user_func_array( $issue_func, $issue_func_args );
+		$result = call_user_func_array( $func, $func_args );
 
 		if ( ! $result )
-			return;
+			return FALSE;
 
-		$result = $args['before_widget'].$title.$result.$args['after_widget'];
+		$this->before_widget( $args, $instance );
+		$this->widget_title( $args, $instance );
+			echo $result;
+		$this->after_widget( $args, $instance );
 
-		$cache[$key] = $result;
-		wp_cache_set( $this->alt_option_name, $cache, 'widget' );
-		echo $result;
-	}
-
-	public function update( $new_instance, $old_instance )
-	{
-		$instance           = $new_instance;
-		$instance['title']  = strip_tags( $new_instance['title'] );
-		$instance['latest'] = isset( $new_instance['latest'] );
-		$instance['link']   = isset( $new_instance['link'] );
-		$instance['number'] = isset( $new_instance['number'] );
-
-		$this->flush_widget_cache();
-
-		$alloptions = wp_cache_get( 'alloptions', 'options' );
-		if ( isset( $alloptions[$this->alt_option_name] ) )
-			delete_option( $this->alt_option_name );
-
-		return $instance;
-	}
-
-	public function flush_widget_cache()
-	{
-		wp_cache_delete( $this->alt_option_name, 'widget' );
-	}
-
-	public function get_images_sizes( $issue_cpt )
-	{
-		global $gEditorial;
-
-		$images = array();
-		foreach ( $gEditorial->magazine->get_image_sizes( $issue_cpt ) as $name => $size )
-			$images[$name] = $size['n'].' ('.number_format_i18n( $size['w'] ).'&nbsp;&times;&nbsp;'.number_format_i18n( $size['h'] ).')';
-		return $images;
+		return TRUE;
 	}
 
 	public function form( $instance )
@@ -143,86 +97,41 @@ class gEditorialMagazineWidget_IssueCover extends WP_Widget
 
 		echo '<div class="geditorial-admin-wrap-widgetform">';
 
-		$html = gEditorialHelper::html( 'input', array(
-			'type'  => 'text',
-			'class' => 'widefat',
-			'name'  => $this->get_field_name( 'title' ),
-			'id'    => $this->get_field_id( 'title' ),
-			'value' => isset( $instance['title'] ) ? $instance['title'] : __( 'The Latest Issue', GEDITORIAL_TEXTDOMAIN ),
-		) );
+		$this->form_title( $instance );
+		$this->form_title_link( $instance );
 
-		echo '<p>'.gEditorialHelper::html( 'label', array(
-			'for' => $this->get_field_id( 'title' ),
-		), __( 'Title:', GEDITORIAL_TEXTDOMAIN ).$html ).'</p>';
+		$this->form_post_id( $instance, '0', 'issue_id', 'posttype', $issue_cpt, _x( 'The Issue:', '[Magazine Module] Widget: Issue Cover', GEDITORIAL_TEXTDOMAIN ) );
+		$this->form_image_size( $instance, $issue_cpt.'-thumbnail', 'image_size', $issue_cpt );
 
-		$html = wp_dropdown_pages( array(
-			'post_type'        => $issue_cpt,
-			'selected'         => isset( $instance['issue'] ) ? $instance['issue'] : '0',
-			'name'             => $this->get_field_name( 'issue' ),
-			'id'               => $this->get_field_id( 'issue' ),
-			'class'            => 'geditorial-admin-dropbown',
-			'show_option_none' => __( '&mdash; Select an Issue &mdash;', GEDITORIAL_TEXTDOMAIN ),
-			// 'hierarchical'     => 0,
-			'sort_column'      => 'menu_order, post_title',
-			'echo'             => 0,
-		) );
+		$this->form_checkbox( $instance, FALSE, 'latest_issue', _x( 'Always the latest issue', '[Magazine Module] Widget: Issue Cover', GEDITORIAL_TEXTDOMAIN ) );
+		$this->form_checkbox( $instance, FALSE, 'link_issue', _x( 'Link to the issue', '[Magazine Module] Widget: Issue Cover', GEDITORIAL_TEXTDOMAIN ) );
+		$this->form_checkbox( $instance, FALSE, 'number_line', _x( 'Display the Number Meta', '[Magazine Module] Widget: Issue Cover', GEDITORIAL_TEXTDOMAIN ) );
 
-		echo '<p>'.gEditorialHelper::html( 'label', array(
-			'for' => $this->get_field_id( 'issue' ),
-		), _x( 'The Issue:', 'Magazine: Widget: Issue Cover', GEDITORIAL_TEXTDOMAIN ).$html ).'</p>';
-
-		$html = '';
-		$value = isset( $instance['size'] ) ? $instance['size'] : 'issue-thumbnail';
-
-		foreach ( self::get_images_sizes( $issue_cpt ) as $image_size => $image_size_title )
-			$html .= gEditorialHelper::html( 'option', array(
-				'value'    => $image_size,
-				'selected' => $image_size == $value,
-			), esc_html( $image_size_title ) );
-
-		$html = gEditorialHelper::html( 'select', array(
-			'class' => 'widefat',
-			'name'  => $this->get_field_name( 'size' ),
-			'id'    => $this->get_field_id( 'size' ),
-		), $html );
-
-		echo '<p>'.gEditorialHelper::html( 'label', array(
-			'for' => $this->get_field_id( 'size' ),
-		), _x( 'Image Size:', 'Magazine: Widget: Issue Cover', GEDITORIAL_TEXTDOMAIN ).$html ).'</p>';
-
-		$html = gEditorialHelper::html( 'input', array(
-			'type'    => 'checkbox',
-			'name'    => $this->get_field_name( 'latest' ),
-			'id'      => $this->get_field_id( 'latest' ),
-			'checked' => isset( $instance['latest'] ) ? $instance['latest'] : false,
-		) );
-
-		echo '<p>'.$html.'&nbsp;'.gEditorialHelper::html( 'label', array(
-			'for' => $this->get_field_id( 'latest' ),
-		), _x( 'Always the latest issue', 'Magazine: Widget: Issue Cover', GEDITORIAL_TEXTDOMAIN ) ).'</p>';
-
-		$html = gEditorialHelper::html( 'input', array(
-			'type'    => 'checkbox',
-			'name'    => $this->get_field_name( 'link' ),
-			'id'      => $this->get_field_id( 'link' ),
-			'checked' => isset( $instance['link'] ) ? $instance['link'] : true,
-		) );
-
-		echo '<p>'.$html.'&nbsp;'.gEditorialHelper::html( 'label', array(
-			'for' => $this->get_field_id( 'link' ),
-		), _x( 'Link to the issue', 'Magazine: Widget: Issue Cover', GEDITORIAL_TEXTDOMAIN ) ).'</p>';
-
-		$html = gEditorialHelper::html( 'input', array(
-			'type'    => 'checkbox',
-			'name'    => $this->get_field_name( 'number' ),
-			'id'      => $this->get_field_id( 'number' ),
-			'checked' => isset( $instance['number'] ) ? $instance['number'] : false,
-		) );
-
-		echo '<p>'.$html.'&nbsp;'.gEditorialHelper::html( 'label', array(
-			'for' => $this->get_field_id( 'number' ),
-		), _x( 'Display the number meta', 'Magazine: Widget: Issue Cover', GEDITORIAL_TEXTDOMAIN ) ).'</p>';
+		$this->form_context( $instance );
+		$this->form_class( $instance );
 
 		echo '</div>';
+	}
+
+	public function update( $new_instance, $old_instance )
+	{
+		$instance                 = $old_instance;
+		$instance['title']        = strip_tags( $new_instance['title'] );
+		$instance['title_link']   = strip_tags( $new_instance['title_link'] );
+		$instance['issue_id']     = intval( $new_instance['issue_id'] );
+		$instance['image_size']   = strip_tags( $new_instance['image_size'] );
+		$instance['latest_issue'] = isset( $new_instance['latest_issue'] );
+		$instance['link_issue']   = isset( $new_instance['link_issue'] );
+		$instance['number_line']  = isset( $new_instance['number_line'] );
+		$instance['context']      = strip_tags( $new_instance['context'] );
+		$instance['class']        = strip_tags( $new_instance['class'] );
+
+		$this->flush_widget_cache();
+
+		$alloptions = wp_cache_get( 'alloptions', 'options' );
+		if ( isset( $alloptions[$this->alt_option_name] ) )
+			delete_option( $this->alt_option_name );
+
+		return $instance;
 	}
 }
