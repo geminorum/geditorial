@@ -672,6 +672,46 @@ class gEditorialHelper
 		return $output;
 	}
 
+	public static function getPostTypes( $builtin = NULL )
+	{
+		$list = array();
+		$args = array( 'public' => TRUE );
+
+		if ( ! is_null( $builtin ) )
+			$args['_builtin'] = $builtin;
+
+		$post_types = get_post_types( $args, 'objects' );
+
+		foreach ( $post_types as $post_type => $post_type_obj )
+			$list[$post_type] = $post_type_obj->labels->name;
+
+		return $list;
+	}
+
+	public static function getTaxonomies( $with_post_type = FALSE )
+	{
+		$list = array();
+
+		$taxonomies = get_taxonomies( array(
+			// 'public'   => TRUE,
+			// '_builtin' => TRUE,
+		), 'objects' );
+
+		if ( $taxonomies ) {
+			foreach ( $taxonomies as $taxonomy ) {
+				if ( ! empty( $taxonomy->labels->menu_name )  ) {
+					if ( $with_post_type ) {
+						$list[$taxonomy->name] = $taxonomy->labels->menu_name.' ('.implode( __( ', ', GEDITORIAL_TEXTDOMAIN ), $taxonomy->object_type ).')';
+					} else {
+						$list[$taxonomy->name] = $taxonomy->labels->menu_name;
+					}
+				}
+			}
+		}
+
+		return $list;
+	}
+
 	public static function newPostFromTerm( $term, $taxonomy = 'category', $post_type = 'post' )
 	{
 		if ( ! is_object( $term ) && ! is_array( $term ) )
@@ -941,20 +981,23 @@ class gEditorialHelper
 </script> <?php
 	}
 
-	public static function getLastPostOrder( $post_type = 'post', $exclude = '' )
+	public static function getLastPostOrder( $post_type = 'post', $exclude = '', $key = 'menu_order', $status = 'publish,private,draft' )
 	{
 		$post = get_posts( array(
 			'posts_per_page' => 1,
 			'orderby'        => 'menu_order',
 			'exclude'        => $exclude,
 			'post_type'      => $post_type,
-			'post_status'    => 'publish,private,draft',
+			'post_status'    => $status,
 		) );
 
 		if ( ! count( $post ) )
 			return 0;
 
-		return intval( $post[0]->menu_order );
+		if ( 'menu_order' == $key )
+			return intval( $post[0]->menu_order );
+
+		return $post[0]->{$key};
 	}
 
 	// this must be wp core future!!
