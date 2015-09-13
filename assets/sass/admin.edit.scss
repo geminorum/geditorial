@@ -42,14 +42,9 @@
 	.column-taxonomy-issues {
 		width: 120px;
 	}
+
+	// Module: Entry
+	.column-taxonomy-section {
+		width: 16%;
+	}
 }
-
-////////////////////////////////////////////////////////////////////////////////
-/// ENTRY-----------------------------------------------------------------------
-
-th#entry_order { width:40px !important; }
-th.column-taxonomy-section { width:16%;}
-th.column-taxonomy-entry_flag { width:80px;}
-
-td.column-entry_order { text-align:right; }
-.rtl td.column-entry_order { text-align:left; }

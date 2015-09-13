@@ -8,21 +8,21 @@
 
 gEditorial is a fork in structure of [EditFlow](http://editflow.org/).
 
-## Included Modules
+### Included Modules
 See [wiki/Modules](https://github.com/geminorum/geditorial/wiki/Modules).
 
-## Included Packages
+### Included Packages
 See [assets/libs](https://github.com/geminorum/geditorial/tree/master/assets/libs).
 
-## Installation
+### Installation
 Grab the latest release from [here](https://github.com/geminorum/geditorial/releases).
 
 See [Installing Plugins](http://codex.wordpress.org/Managing_Plugins#Installing_Plugins).
 
-## Changelog
+### Changelog
 See [CHANGES.md](CHANGES.md).
 
-## Contributing
+### Contributing
 See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 Please log issues at [here](https://github.com/geminorum/geditorial/issues).

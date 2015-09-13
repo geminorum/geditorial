@@ -10,32 +10,32 @@
 .rtl {
 
 	#cboxClose {
-		right:auto;
-		left:5px;
+		right: auto;
+		left: 5px;
 	}
 
 	#cboxTitle{
-		left:auto;
-		right:0;
+		left: auto;
+		right: 0;
 	}
 }
 
 #cboxLoadedContent {
-	background:#f1f1f1; // default wp admin background color
+	background: #f1f1f1; // default wp admin background color
 }
 
 #cboxLoadingGraphic{
-	background:url(../packages/jquery-colorbox/loading.gif) no-repeat center center;
+	background: url(../packages/jquery-colorbox/loading.gif) no-repeat center center;
 }
 
 #cboxClose{
-	background:url(../packages/jquery-colorbox/controls.png) no-repeat top center;
+	background: url(../packages/jquery-colorbox/controls.png) no-repeat top center;
 }
 
 #cboxPrevious{
-	background:url(../packages/jquery-colorbox/controls.png) no-repeat top left;
+	background: url(../packages/jquery-colorbox/controls.png) no-repeat top left;
 }
 
 #cboxNext{
-	background:url(../packages/jquery-colorbox/controls.png) no-repeat top right;
+	background: url(../packages/jquery-colorbox/controls.png) no-repeat top right;
 }

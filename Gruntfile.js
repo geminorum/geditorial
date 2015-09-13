@@ -2,10 +2,10 @@ module.exports = function( grunt ) {
 
 	'use strict';
 	var banner = '/**\n * <%= pkg.homepage %>\n * Copyright (c) <%= grunt.template.today("yyyy") %>\n * This file is generated automatically. Do not edit.\n */\n';
-	// Project configuration
+
 	grunt.initConfig( {
 
-		pkg:    grunt.file.readJSON( 'package.json' ),
+		pkg: grunt.file.readJSON( 'package.json' ),
 
 		addtextdomain: {
 			options: {
@@ -49,5 +49,4 @@ module.exports = function( grunt ) {
 	//grunt.registerTask( 'readme', ['wp_readme_to_markdown']);
 
 	grunt.util.linefeed = '\n';
-
 };

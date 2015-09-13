@@ -1,25 +1,25 @@
 {
-  "name": "geditorial",
-  "private": true,
-  "dependencies": {
-    "jquery-colorbox": "~1.6.1",
-    "jquery-sortable": "~0.9.12"
-  },
-  "devDependencies": {},
-  "install" : {
-    "path" : "assets/packages",
-    "sources": {
-      "jquery-colorbox": [
-        "assets/components/jquery-colorbox/jquery.colorbox.js",
-        "assets/components/jquery-colorbox/jquery.colorbox-min.js",
-        "assets/components/jquery-colorbox/example3/colorbox.css",
-        "assets/components/jquery-colorbox/example3/images/controls.png",
-        "assets/components/jquery-colorbox/example3/images/loading.gif"
-      ],
-      "jquery-sortable": [
-        "assets/components/jquery-sortable/source/js/jquery-sortable.js",
-        "assets/components/jquery-sortable/source/js/jquery-sortable-min.js"
-      ]
-    }
-  }
+	"name": "geditorial",
+	"private": true,
+	"dependencies": {
+		"jquery-colorbox": "~1.6.1",
+		"jquery-sortable": "~0.9.12"
+	},
+	"devDependencies": {},
+	"install" : {
+		"path" : "assets/packages",
+		"sources": {
+			"jquery-colorbox": [
+				"assets/components/jquery-colorbox/jquery.colorbox.js",
+				"assets/components/jquery-colorbox/jquery.colorbox-min.js",
+				"assets/components/jquery-colorbox/example3/colorbox.css",
+				"assets/components/jquery-colorbox/example3/images/controls.png",
+				"assets/components/jquery-colorbox/example3/images/loading.gif"
+			],
+			"jquery-sortable": [
+				"assets/components/jquery-sortable/source/js/jquery-sortable.js",
+				"assets/components/jquery-sortable/source/js/jquery-sortable-min.js"
+			]
+		}
+	}
 }

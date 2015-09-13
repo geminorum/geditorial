@@ -4,33 +4,34 @@
 // USE: .geditorial-admin-wrap.module { @include main-wrap(); }
 
 .geditorial-admin-wrap {
+
 	.credits {
-		direction:ltr;
+		direction: ltr;
 
 		p {
-			font-size:0.98em;
+			font-size: 0.98em;
 		}
 	}
 
 	.signature {
 		body.rtl & {
-			direction:ltr;
+			direction: ltr;
 		}
 	}
 
 	.credits,
 	.signature {
-		color:#777;
+		color: #777;
 		a {
-			color:inherit;
-			text-decoration:none;
+			color: inherit;
+			text-decoration: none;
 		}
 		a:hover {
-			color:#333;
-			text-decoration:underline;
+			color: #333;
+			text-decoration: underline;
 		}
 		body.rtl & {
-			margin-left:25px;
+			margin-left: 25px;
 		}
 	}
 }
@@ -45,5 +46,6 @@
 
 	&.icon-ge_series:before {
 		content: "\f100";
+		// content: "\f164";
 	}
 }
