@@ -62,14 +62,19 @@ class gEditorialSettings extends gEditorialModuleCore
 		add_action( 'load-'.$hook_tools, array( &$this, 'admin_tools_load' ) );
 
 		foreach ( $gEditorial->modules as $mod_name => $mod_data ) {
-			if ( isset( $mod_data->options->enabled ) && $mod_data->options->enabled == 'on' // FIXME: use a helper for enabled!
-				&& $mod_data->configure_page_cb && $mod_name != $this->module->name ) {
+
+			if ( gEditorialHelper::moduleEnabled( $mod_data->options )
+				&& $mod_data->configure_page_cb
+				&& $mod_name != $this->module->name ) {
+
 					$hook_module = add_submenu_page( $this->module->settings_slug,
-						$mod_data->title, $mod_data->title,
+						$mod_data->title,
+						$mod_data->title,
 						'manage_options',
 						$mod_data->settings_slug,
 						array( &$this, 'admin_settings_page' )
 					);
+
 					add_action( 'load-'.$hook_module, array( &$this, 'admin_settings_load' ) );
 			}
 		}
@@ -250,15 +255,11 @@ class gEditorialSettings extends gEditorialModuleCore
 		if ( count( $gEditorial->modules ) ) {
 
 			foreach ( $gEditorial->modules as $mod_name => $mod_data ) {
+
 				if ( $mod_data->autoload )
 					continue;
 
-				if ( 'on' === $mod_data->options->enabled
-					|| true === $mod_data->options->enabled )
-						$enabled = true;
-				else if ( 'off' === $mod_data->options->enabled
-					|| false === $mod_data->options->enabled )
-						$enabled = false;
+				$enabled = gEditorialHelper::moduleEnabled( $mod_data->options );
 
 				$classes = array(
 					'module',

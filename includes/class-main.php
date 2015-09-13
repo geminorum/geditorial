@@ -92,14 +92,7 @@ class gEditorial
 
 		foreach ( $this->modules as $mod_name => $mod_data ) {
 
-			$enabled = isset( $mod_data->options->enabled ) ? $mod_data->options->enabled : FALSE;
-
-			if ( 'off' === $enabled )
-				$enabled = FALSE;
-			else if ( 'on' === $enabled )
-				$enabled = TRUE;
-
-			if ( $enabled ) {
+			if ( gEditorialHelper::moduleEnabled( $mod_data->options ) ) {
 
 				$this->{$mod_name}->enabled = TRUE;
 

@@ -12,6 +12,18 @@ class gEditorialHelper
 			.'</pre>';
 	}
 
+	public static function moduleEnabled( $options )
+	{
+		$enabled = isset( $options->enabled ) ? $options->enabled : FALSE;
+
+		if ( 'off' === $enabled )
+			$enabled = FALSE;
+		else if ( 'on' === $enabled )
+			$enabled = TRUE;
+
+		return $enabled;
+	}
+
 	// originally from P2
 	public static function excerptedTitle( $content, $word_count )
 	{
