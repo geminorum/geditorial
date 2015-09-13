@@ -114,7 +114,7 @@ class gEditorialReshare extends gEditorialModuleCore
 	public function add_meta_boxes( $post_type, $post )
 	{
 		if ( ! $this->_geditorial_meta )
-			return; // no meta
+			return;
 
 		if ( $post_type == $this->module->constants['reshare_cpt'] ) {
 			add_meta_box( 'geditorial-reshare',

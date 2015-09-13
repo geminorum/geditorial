@@ -1,6 +1,6 @@
 <?php defined( 'ABSPATH' ) or exit;
 
-// https://www.gavick.com/blog/wordpress-tinymce-custom-buttons#tc2-section1
+// https://www.gavick.com/blog/wordpress-tinymce-custom-buttons
 
 if ( ! class_exists( '_WP_Editors' ) )
 	require( ABSPATH.WPINC.'/class-wp-editor.php' );

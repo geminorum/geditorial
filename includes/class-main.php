@@ -63,8 +63,8 @@ class gEditorial
 		$class_names = array();
 
 		foreach ( $module_dirs as $module_dir ) {
-			if ( file_exists( GEDITORIAL_DIR."modules/{$module_dir}/$module_dir.php" ) ) {
-				include_once( GEDITORIAL_DIR."modules/{$module_dir}/$module_dir.php" );
+			if ( file_exists( GEDITORIAL_DIR.'modules/'.$module_dir.'/'.$module_dir.'.php' ) ) {
+				include_once( GEDITORIAL_DIR.'modules/'.$module_dir.'/'.$module_dir.'.php' );
 				// Prepare the class name because it should be standardized
 				$tmp = explode( '-', $module_dir );
 				$class_name = '';
@@ -76,9 +76,6 @@ class gEditorial
 				$class_names[$slug_name] = 'gEditorial'.$class_name;
 			}
 		}
-
-		// DEPRECATED
-		//$this->helpers = new gEditorialModuleCore();
 
 		foreach ( $class_names as $slug => $class_name ) {
 			if ( class_exists( $class_name ) ) {
@@ -161,7 +158,7 @@ class gEditorial
 			if ( ! is_admin() && ! $mod_data->load_frontend )
 				continue;
 
-			// MINE / make changes to default options before loading
+			// make changes to default options before loading
 			$mod_data->default_options = apply_filters(
 				'geditorial_module_defaults_'.$mod_name,
 				$mod_data->default_options,
@@ -180,12 +177,6 @@ class gEditorial
 			foreach ( $mod_data->default_options as $default_key => $default_value )
 				if ( ! isset( $this->modules->{$mod_name}->options->$default_key ) )
 					$this->modules->{$mod_name}->options->$default_key = $default_value;
-
-			/** must move to after init
-			// so we don't get warnings all over
-			if ( isset( $this->modules->{$mod_name}->options->post_types ) )
-				$this->modules->{$mod_name}->options->post_types = $this->helpers->clean_post_type_options( $this->modules->{$mod_name}->options->post_types, $mod_data->post_type_support );
-			**/
 
 			if ( ! isset( $this->{$mod_name} ) )
 				$this->{$mod_name} = new stdClass;

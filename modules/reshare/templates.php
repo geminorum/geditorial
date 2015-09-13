@@ -8,8 +8,8 @@ class gEditorialReshareTemplates extends gEditorialTemplateCore
 		if ( class_exists( 'gEditorialMetaTemplates' ) ) {
 
 			$args = array_merge( array(
-				'title_meta'    => 'reshare_source_title',
 				'title_default' => _x( 'External Source', 'Reshare: metaLink default title', GEDITORIAL_TEXTDOMAIN ),
+				'title_meta'    => 'reshare_source_title',
 				'url_meta'      => 'reshare_source_url',
 				'url_default'   => FALSE,
 			), $atts );

@@ -197,7 +197,7 @@ class gEditorialMetaTemplates extends gEditorialTemplateCore
 		return TRUE;
 	}
 
-	// DEPRICATED / USE: gEditorialMetaTemplates::metaLabel()
+	// FIXME: DEPRICATED / USE: gEditorialMetaTemplates::metaLabel()
 	public static function gmeta_label( $b = '', $a = '', $filter = FALSE, $args = array() )
 	{
 		global $gEditorial, $post;

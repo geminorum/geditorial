@@ -13,6 +13,7 @@ class gEditorialMeta extends gEditorialModuleCore
 		global $gEditorial;
 
 		// FIXME: MUST DEPRECATE: at this point, there's no way knowing if the module is active or not!
+		// currently used on :gPeople
 		do_action( 'geditorial_meta_include' );
 
 		$args = array(
@@ -28,6 +29,7 @@ class gEditorialMeta extends gEditorialModuleCore
 			),
 
 			// FIXME: MUST DEPRECATE: this filter is causing much trouble!!
+			// currently used on :gPeople
 			'default_options' => apply_filters( 'geditorial_meta_default_options', array(
 				'enabled'  => FALSE,
 				'settings' => array(),
@@ -83,12 +85,11 @@ class gEditorialMeta extends gEditorialModuleCore
 					'meta_column_title' => __( 'Metadata', GEDITORIAL_TEXTDOMAIN ),
 				),
 				'labels' => array(
-					// FIXME: MUST DEPRECATE: filter
-					'ct_tax' => apply_filters( 'geditorial_meta_ct_labels', array(
+					'ct_tax' => array(
 						'name'                       => __( 'Column Headers', GEDITORIAL_TEXTDOMAIN ),
+						'menu_name'                  => __( 'Column Headers', GEDITORIAL_TEXTDOMAIN ),
 						'singular_name'              => __( 'Column Header', GEDITORIAL_TEXTDOMAIN ),
 						'search_items'               => __( 'Search Column Headers', GEDITORIAL_TEXTDOMAIN ),
-						'popular_items'              => NULL,
 						'all_items'                  => __( 'All Column Headers', GEDITORIAL_TEXTDOMAIN ),
 						'parent_item'                => __( 'Parent Column Header', GEDITORIAL_TEXTDOMAIN ),
 						'parent_item_colon'          => __( 'Parent Column Header:', GEDITORIAL_TEXTDOMAIN ),
@@ -99,10 +100,9 @@ class gEditorialMeta extends gEditorialModuleCore
 						'separate_items_with_commas' => __( 'Separate column headers with commas', GEDITORIAL_TEXTDOMAIN ),
 						'add_or_remove_items'        => __( 'Add or remove column headers', GEDITORIAL_TEXTDOMAIN ),
 						'choose_from_most_used'      => __( 'Choose from the most used column headers', GEDITORIAL_TEXTDOMAIN ),
-						'menu_name'                  => __( 'Column Headers', GEDITORIAL_TEXTDOMAIN ),
-					) ),
+						'popular_items'              => NULL,
+					),
 				),
-
 			),
 			'configure_page_cb' => 'print_configure_view',
 			'settings_help_tab' => array(
@@ -176,8 +176,7 @@ class gEditorialMeta extends gEditorialModuleCore
 
 		add_action( 'admin_print_styles', array( &$this, 'admin_print_styles' ) );
 
-		add_action( 'add_meta_boxes', array( &$this, 'add_meta_boxes' ), 10, 2 );
-		add_action( 'add_meta_boxes', array( &$this, 'remove_meta_boxes' ), 20, 2 );
+		add_action( 'add_meta_boxes', array( &$this, 'add_meta_boxes' ), 20, 2 );
 		add_action( 'save_post', array( &$this, 'save_post' ), 10, 2 );
 
 		// SEE: http://make.wordpress.org/core/2012/12/01/more-hooks-on-the-edit-screen/
@@ -250,6 +249,8 @@ class gEditorialMeta extends gEditorialModuleCore
 		if ( ! in_array( $post_type, $this->post_types() ) )
 			return;
 
+		remove_meta_box( 'tagsdiv-'.$this->module->constants['ct_tax'], $post_type, 'side' );
+
 		// we use filter to override the whole functionality, no just adding the actions
 		$box_func = apply_filters( 'geditorial_meta_box_callback', array( &$this, $post_type.'_meta_box' ), $post_type );
 		if ( is_callable( $box_func ) )
@@ -260,18 +261,12 @@ class gEditorialMeta extends gEditorialModuleCore
 			add_action( 'dbx_post_sidebar', $dbx_func, 10, 1 );
 	}
 
-	public function remove_meta_boxes( $post_type, $post )
-	{
-		// no need to check if supported!
-		remove_meta_box( 'tagsdiv-'.$this->module->constants['ct_tax'], $post_type, 'side' );
-	}
-
 	public function post_meta_box()
 	{
 		global $post;
 
 		$ch_override = FALSE;
-		$fields = $this->post_type_fields( $post->post_type );
+		$fields      = $this->post_type_fields( $post->post_type );
 
 		echo '<div class="geditorial-admin-wrap-metabox">';
 
