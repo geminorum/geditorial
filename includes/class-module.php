@@ -18,16 +18,6 @@ class gEditorialModuleCore
 
 	public function __construct() { }
 
-	// returns whether the module with the given name is enabled.
-	public static function enabled( $slug )
-	{
-		global $gEditorial;
-
-		return isset( $gEditorial->$slug ) &&
-			( 'on' == $gEditorial->$slug->module->options->enabled
-				|| TRUE === $gEditorial->$slug->module->options->enabled );
-	}
-
 	// check if this module loaded as remote for another blog's editorial module
 	public function remote()
 	{

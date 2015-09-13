@@ -173,7 +173,7 @@ class gEditorialSettings extends gEditorialModuleCore
 		$configure_callback = $requested_module->configure_page_cb;
 		$requested_module_name = $requested_module->name;
 
-		if ( self::enabled( $requested_module_name ) ) {
+		if ( gEditorialHelper::moduleEnabledBySlug( $requested_module_name ) ) {
 
 			$this->print_default_header( $requested_module );
 			$gEditorial->$requested_module_name->$configure_callback();

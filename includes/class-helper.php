@@ -24,6 +24,17 @@ class gEditorialHelper
 		return $enabled;
 	}
 
+	// FIXME: MUST DEPRECATE
+	// returns whether the module with the given name is enabled.
+	public static function moduleEnabledBySlug( $slug )
+	{
+		global $gEditorial;
+
+		return isset( $gEditorial->$slug ) &&
+			( 'on' == $gEditorial->$slug->module->options->enabled
+				|| TRUE === $gEditorial->$slug->module->options->enabled );
+	}
+
 	// originally from P2
 	public static function excerptedTitle( $content, $word_count )
 	{

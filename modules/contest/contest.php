@@ -156,7 +156,7 @@ class gEditorialContest extends gEditorialModuleCore
 	// default options for meta module
 	public function module_defaults_meta( $default_options, $mod_data )
 	{
-		if ( ! self::enabled( $this->module_name ) )
+		if ( ! gEditorialHelper::moduleEnabledBySlug( $this->module_name ) )
 			return $default_options;
 
 		$default_options['post_types'][$this->module->constants['contest_cpt']] = TRUE;
@@ -169,8 +169,8 @@ class gEditorialContest extends gEditorialModuleCore
 	// setup actions and filters for meta module
 	public function meta_init( $meta_module )
 	{
-		// TODO: must first check if this module (contest) is active
-		if ( ! self::enabled( $this->module_name ) )
+		// FIXME: this is not the corrct way of using meta, use the last version like reshare module
+		if ( ! gEditorialHelper::moduleEnabledBySlug( $this->module_name ) )
 			return;
 
 		add_filter( 'geditorial_meta_strings', array( &$this, 'meta_strings' ), 6 , 1 );
