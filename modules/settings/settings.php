@@ -10,18 +10,15 @@ class gEditorialSettings extends gEditorialModuleCore
 	{
 		global $gEditorial;
 
-		$this->module_url = $this->get_module_url( __FILE__ );
-
 		$args = array(
-			'title'                => __( 'Editorial', GEDITORIAL_TEXTDOMAIN ),
-			'short_description'    => __( 'WordPress, Magazine Style.', GEDITORIAL_TEXTDOMAIN ),
-			// 'extended_description' => __( '[editorial extended desc.]', GEDITORIAL_TEXTDOMAIN ),
-			'module_url'           => $this->module_url,
-			'slug'                 => 'settings',
-			'settings_slug'        => 'geditorial-settings',
-			'configure_page_cb'    => 'print_default_settings',
-			'autoload'             => TRUE,
-			'default_options'      => array(
+			'title'             => __( 'Editorial', GEDITORIAL_TEXTDOMAIN ),
+			'short_description' => __( 'WordPress, Magazine Style.', GEDITORIAL_TEXTDOMAIN ),
+			'slug'              => 'settings',
+			'settings_slug'     => 'geditorial-settings',
+			'configure_page_cb' => 'print_default_settings',
+			'autoload'          => TRUE,
+
+			'default_options' => array(
 				'enabled' => TRUE,
 			),
 		);

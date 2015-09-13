@@ -164,13 +164,6 @@ class gEditorialModuleCore
 		}
 	}
 
-	// MUST MOVE TO : helper
-	// Get the publicly accessible URL for the module based on the filename
-	public function get_module_url( $file )
-	{
-		return trailingslashit( plugins_url( '/', $file ) );
-	}
-
 	// get stored post meta by the field
 	public function get_postmeta( $post_id, $field = FALSE, $default = '', $key = NULL )
 	{
