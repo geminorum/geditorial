@@ -26,7 +26,7 @@ class gEditorialMagazineWidget_IssueCover extends gEditorialWidgetCore
 
 	public function widget( $args, $instance )
 	{
-		if ( ! $instance['latest_issue'] && empty( $instance['issue'] ) && ! is_singular() )
+		if ( ! $instance['latest_issue'] && empty( $instance['issue_id'] ) && ! is_singular() )
 			return;
 
 		if ( ! empty( $instance['latest_issue'] ) ) {
@@ -119,7 +119,7 @@ class gEditorialMagazineWidget_IssueCover extends gEditorialWidgetCore
 		$instance['title']        = strip_tags( $new_instance['title'] );
 		$instance['title_link']   = strip_tags( $new_instance['title_link'] );
 		$instance['issue_id']     = intval( $new_instance['issue_id'] );
-		$instance['image_size']   = strip_tags( $new_instance['image_size'] );
+		$instance['image_size']   = isset( $new_instance['image_size'] ) ? strip_tags( $new_instance['image_size'] ) : 'thumbnail';
 		$instance['latest_issue'] = isset( $new_instance['latest_issue'] );
 		$instance['link_issue']   = isset( $new_instance['link_issue'] );
 		$instance['number_line']  = isset( $new_instance['number_line'] );
