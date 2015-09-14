@@ -351,7 +351,7 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 		return wp_parse_args( $args, array(
 			'id'       => NULL,
 			'attr'     => array(
-				'class' => 'issue-cover '.$size
+				'class' => 'size-'.$size
 			),
 			'def'      => FALSE,
 			'cb'       => FALSE,
@@ -365,10 +365,11 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 	{
 		global $gEditorial;
 
-		$args = self::issue_cover_parse_arg( $args, $size );
+		$issue_cpt = $gEditorial->get_module_constant( 'magazine', 'issue_cpt', 'issue' );
+		$args      = self::issue_cover_parse_arg( $args, $size );
 
 		if ( 'latest' == $args['id'] )
-			$args['id'] = self::get_latest_issue();
+			$args['id'] = gEditorialHelper::getLastPostOrder( $issue_cpt, '', 'ID', 'publish' );
 		else if ( 'random' == $args['id'] )
 			$args['id'] = self::get_random_issue();
 		else if ( 'issue' == $args['id'] )
@@ -465,34 +466,15 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 		if ( ! $img )
 			return $args['def'];
 
-		$caption = self::get_issue_title( $args['title'], $args['id'], FALSE );
+		$html = $img;
 
-		$result = $caption ? '<figure class="issue-cover-figure cap-left">'
-					.$img.'<figcaption>'.$caption.'</figcaption></figure>' : $img;
+		if ( $caption = self::get_issue_title( $args['title'], $args['id'], FALSE ) )
+			$html = '<figure>'.$html.'<figcaption>'.$caption.'</figcaption></figure>';
 
-		return $link ? '<a class="issue-cover-link" href="'.$link.'">'.$result.'</a>' : $result;
-	}
+		if ( $link )
+			$html = '<a title="'.esc_attr( self::get_issue_title( 'title', $args['id'] ) ).'" href="'.$link.'">'.$html.'</a>';
 
-	public static function get_latest_issue( $object = FALSE )
-	{
-		global $gEditorial;
-
-		$the_post = get_posts( array(
-			'numberposts' => 1,
-			'orderby'     => 'menu_order', //'post_date',
-			'order'       => 'DESC',
-			'post_type'   => $gEditorial->get_module_constant( 'magazine', 'issue_cpt', 'issue' ),
-			'post_status' => 'publish',
-		) );
-
-		if ( count ( $the_post ) ) {
-			if ( $object )
-				return $the_post[0];
-			else
-				return $the_post[0]->ID;
-		}
-
-		return FALSE;
+		return '<div class="geditorial-wrap magazine issue-cover">'.$html.'</div>';
 	}
 
 	public static function get_random_issue( $object = FALSE )
