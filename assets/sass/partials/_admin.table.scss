@@ -2,24 +2,32 @@
 table.helper-table {
 
 	td {
-		vertical-align: top !important;
+		vertical-align: top;
 	}
 
-	.helper-column {
-
+	td,
+	th {
+		padding: 8px 10px;
 	}
 
-	.helper-column-row {
+	.-cb-all {}
+	.-cb {}
+	.-column {}
 
+	.-column-id,
+	.-column-ID,
+	.-column-post_id,
+	.-column-term_id {
+		width: 60px;
 	}
 
-	.helper-column-row-cell {
-
+	.-column-count {
+		width: 40px;
 	}
 
-	.helper-column-row-cell-empty {
 
-	}
+	.-row {}
+	.-cell {}
 
 	pre {
 		margin: 0;

@@ -752,28 +752,30 @@ class gEditorialHelper
 		if ( ! count( $columns ) )
 			return FALSE;
 
-		echo '<table class="widefat helper-table" width="100%;"><thead><tr>';
+		echo '<table class="widefat fixed helper-table"><thead><tr>';
 			foreach ( $columns as $key => $column ) {
 
+				$tag   = 'th';
 				$class = '';
 
 				if ( is_array( $column ) ) {
 					$title = isset( $column['title'] ) ? $column['title'] : $key;
 				} else if ( '_cb' == $key ) {
-					$title = '<input type="checkbox" id="cb-select-all-1" class="helper-column-cb-all" />';
+					$title = '<input type="checkbox" id="cb-select-all-1" class="-cb-all" />';
 					$class = ' check-column';
+					$tag   = 'td';
 				} else {
 					$title = $column;
 				}
 
-				echo '<th class="helper-column helper-column-'.esc_attr( $key ).$class.'">'.$title.'</th>';
+				echo '<'.$tag.' class="-column -column-'.esc_attr( $key ).$class.'">'.$title.'</'.$tag.'>';
 			}
 		echo '</tr></thead><tbody>';
 
 		$alt = TRUE;
 		foreach ( $data as $index => $row ) {
 
-			echo '<tr class="helper-column-row helper-column-row-'.$index.( $alt ? ' alternate' : '' ).'">';
+			echo '<tr class="-row -row-'.$index.( $alt ? ' alternate' : '' ).'">';
 
 			foreach ( $columns as $key => $column ) {
 
@@ -787,7 +789,7 @@ class gEditorialHelper
 						$value = $row->{$column};
 					else
 						$value = '';
-					$value = '<input type="checkbox" name="_cb[]" value="'.esc_attr( $value ).'" class="helper-column-cb" />';
+					$value = '<input type="checkbox" name="_cb[]" value="'.esc_attr( $value ).'" class="-cb" />';
 					$class .= ' check-column';
 					$cell = 'th';
 				} else if ( is_array( $row ) && isset( $row[$key] ) ) {
@@ -806,7 +808,7 @@ class gEditorialHelper
 						$callback = $column['callback'];
 				}
 
-				echo '<'.$cell.' class="helper-column-row-cell helper-column-row-cell-'.$key.$class.'">';
+				echo '<'.$cell.' class="-cell -cell-'.$key.$class.'">';
 
 				if ( $callback ){
 					echo call_user_func_array( $callback, array( $value, $row, $column ) );
