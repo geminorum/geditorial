@@ -799,10 +799,12 @@ class gEditorialModuleCore
 	// use this on 'after_setup_theme'
 	public function register_post_type_thumbnail( $constant_key )
 	{
-		gEditorialHelper::themeThumbnails( array( $this->module->constants[$constant_key] ) );
+		$post_type = $this->module->constants[$constant_key];
 
-		foreach ( $this->get_image_sizes( $this->module->constants[$constant_key] ) as $name => $size )
-			gEditorialHelper::addImageSize( $name, $size['w'], $size['h'], $size['c'], array( $this->module->constants[$constant_key] ) );
+		gEditorialHelper::themeThumbnails( array( $post_type ) );
+
+		foreach ( $this->get_image_sizes( $post_type ) as $name => $size )
+			gEditorialHelper::registerImageSize( $name, array_merge( $size, array( 'p' => array( $post_type ) ) ) );
 	}
 
 	// WARNING: every asset must have a .min copy

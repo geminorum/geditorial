@@ -1027,16 +1027,25 @@ class gEditorialHelper
 	}
 
 	// this must be wp core future!!
-	// core duplication with post_type : add_image_size()
-	public static function addImageSize( $name, $width = 0, $height = 0, $crop = FALSE, $post_type = array( 'post' ) )
+	// core duplication with post_type & title : add_image_size()
+	public static function registerImageSize( $name, $atts = array() )
 	{
 		global $_wp_additional_image_sizes;
 
-		$_wp_additional_image_sizes[ $name ] = array(
-			'width'     => absint( $width ),
-			'height'    => absint( $height ),
-			'crop'      => $crop,
-			'post_type' => $post_type,
+		$args = gEditorialTemplateCore::atts( array(
+			'n' => __( 'Undefined Image Size', GEDITORIAL_TEXTDOMAIN ),
+			'w' => 0,
+			'h' => 0,
+			'c' => 0,
+			'p' => array( 'post' ),
+		), $atts );
+
+		$_wp_additional_image_sizes[$name] = array(
+			'width'     => absint( $args['w'] ),
+			'height'    => absint( $args['h'] ),
+			'crop'      => $args['c'],
+			'post_type' => $args['p'],
+			'title'     => $args['n'],
 		);
 	}
 
@@ -1070,6 +1079,21 @@ class gEditorialHelper
 		);
 
 		return $gEditorial_WPImageSizes;
+	}
+
+	public static function getRegisteredImageSizes( $post_type = 'post', $key = 'post_type' )
+	{
+		global $_wp_additional_image_sizes;
+
+		$sizes = array();
+
+		foreach ( $_wp_additional_image_sizes as $name => $size )
+			if ( isset( $size[$key] ) && in_array( $post_type, $size[$key] ) )
+				$sizes[$name] = $size;
+			else if ( 'post' == $post_type ) // fallback
+				$sizes[$name] = $size;
+
+		return $sizes;
 	}
 }
 
