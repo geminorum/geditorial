@@ -870,6 +870,11 @@ class gEditorialModuleCore
 		return $title;
 	}
 
+	public function get_column_title( $column, $constant_key )
+	{
+		$this->get_string( $column.'_column_title', $this->module->constants[$constant_key], 'misc', $column );
+	}
+
 	public function get_url_settings()
 	{
 		return add_query_arg( 'page', $this->module->settings_slug, get_admin_url( NULL, 'admin.php' ) );
@@ -893,7 +898,12 @@ class gEditorialModuleCore
 
 	protected function require_code( $filename = 'templates' )
 	{
-		require_once( GEDITORIAL_DIR.'modules'.DS.$this->module_name.DS.$filename.'.php' );
+		require_once( GEDITORIAL_DIR.'modules/'.$this->module_name.'/'.$filename.'.php' );
+	}
+
+	public function is_current_posttype( $constant_key )
+	{
+		return gEditorialHelper::getCurrentPostType() == $this->module->constants[$constant_key];
 	}
 
 	public function column_thumb( $post_id, $size = 'thumbnail' )

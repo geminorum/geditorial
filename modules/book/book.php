@@ -34,11 +34,11 @@ class gEditorialBook extends gEditorialModuleCore
 					'excerpt',
 					'author',
 					'thumbnail',
-					// 'trackbacks',
-					// 'custom-fields',
+					'trackbacks',
+					'custom-fields',
 					'comments',
 					'revisions',
-					// 'page-attributes',
+					'page-attributes',
 				),
 			),
 
@@ -56,6 +56,10 @@ class gEditorialBook extends gEditorialModuleCore
 
 			'strings' => array(
 				'misc' => array(
+					'publication_cpt' => array(
+						'cover_column_title' => _x( 'Cover', '[Book Module] Column Title', GEDITORIAL_TEXTDOMAIN ),
+					),
+
 					'meta_box_title' => __( 'Metadata', GEDITORIAL_TEXTDOMAIN ),
 				),
 				'labels' => array(
@@ -112,8 +116,8 @@ class gEditorialBook extends gEditorialModuleCore
 						'name'                       => _x( 'Publishers', 'Publication Publisher Tax Name', GEDITORIAL_TEXTDOMAIN ),
 						'menu_name'                  => _x( 'Publishers', 'Publication Publisher Tax Menu Name', GEDITORIAL_TEXTDOMAIN ),
 						'singular_name'              => _x( 'Publisher', 'Publication Publisher Tax Labels', GEDITORIAL_TEXTDOMAIN ),
-						'search_items'               => _x( 'Search Publisher', 'Publication Publisher Tax Labels', GEDITORIAL_TEXTDOMAIN ),
-						'all_items'                  => _x( 'All Publisher', 'Publication Publisher Tax Labels', GEDITORIAL_TEXTDOMAIN ),
+						'search_items'               => _x( 'Search Publishers', 'Publication Publisher Tax Labels', GEDITORIAL_TEXTDOMAIN ),
+						'all_items'                  => _x( 'All Publishers', 'Publication Publisher Tax Labels', GEDITORIAL_TEXTDOMAIN ),
 						'parent_item'                => _x( 'Parent Publisher', 'Publication Publisher Tax Labels', GEDITORIAL_TEXTDOMAIN ),
 						'parent_item_colon'          => _x( 'Parent Publisher:', 'Publication Publisher Tax Labels', GEDITORIAL_TEXTDOMAIN ),
 						'edit_item'                  => _x( 'Edit Publisher', 'Publication Publisher Tax Labels', GEDITORIAL_TEXTDOMAIN ),
@@ -479,52 +483,60 @@ class gEditorialBook extends gEditorialModuleCore
 	public function restrict_manage_posts()
 	{
 		global $wp_query;
-		$screen = get_current_screen();
 
-		if ( $screen->post_type == $this->module->constants['publication_cpt'] ) {
+		if ( $this->is_current_posttype( 'publication_cpt' ) ) {
 
 			$taxes = array(
-				'type_tax'      => _x( 'Show All Types', '[Book Module]', GBOOK_TEXTDOMAIN ),
-				'subject_tax'   => _x( 'Show All Subjects', '[Book Module]', GBOOK_TEXTDOMAIN ),
-				'library_tax'   => _x( 'Show All Libraries', '[Book Module]', GBOOK_TEXTDOMAIN ),
-				'status_tax'    => _x( 'Show All Statuses', '[Book Module]', GBOOK_TEXTDOMAIN ),
-				'publisher_tax' => _x( 'Show All Publishers', '[Book Module]', GBOOK_TEXTDOMAIN ),
+				'type_tax',
+				'subject_tax',
+				'library_tax',
+				'status_tax',
+				'publisher_tax',
 			);
 
-			foreach ( $taxes as $constant_key => $option_all ) {
+			foreach ( $taxes as $constant_key ) {
+
 				$tax = $this->module->constants[$constant_key];
-				wp_dropdown_categories( array(
-					'show_option_all' => $option_all,
-					'taxonomy'        => $tax,
-					'name'            => $tax,
-					'orderby'         => 'name',
-					'selected'        => ( isset( $wp_query->query[$tax] ) ? $wp_query->query[$tax] : '' ),
-					'hierarchical'    => TRUE,
-					'depth'           => 3,
-					'show_count'      => FALSE,
-					'hide_empty'      => TRUE,
-					'hide_if_empty'   => TRUE,
-				) );
+				if ( $obj = get_taxonomy( $tax ) ) {
+
+					wp_dropdown_categories( array(
+						'show_option_all' => $obj->labels->all_items,
+						'taxonomy'        => $tax,
+						'name'            => $obj->name,
+						'orderby'         => 'name',
+						'selected'        => ( isset( $wp_query->query[$tax] ) ? $wp_query->query[$tax] : '' ),
+						'hierarchical'    => $obj->hierarchical,
+						'depth'           => 3,
+						'show_count'      => FALSE,
+						'hide_empty'      => TRUE,
+						'hide_if_empty'   => TRUE,
+					) );
+				}
 			}
 		}
 	}
 
 	public function parse_query( $query )
 	{
-		$qv = &$query->query_vars;
+		if ( $this->is_current_posttype( 'publication_cpt' ) ) {
 
-		foreach ( array(
-			'type_tax', 'subject_tax', 'library_tax', 'status_tax', 'publisher_tax',
-		) as $constant_key ) {
+			$taxes = array(
+				'type_tax',
+				'subject_tax',
+				'library_tax',
+				'status_tax',
+				'publisher_tax',
+			);
 
-			if ( isset( $qv[$this->module->constants[$constant_key]] )
-				&& is_numeric( $qv[$this->module->constants[$constant_key]] ) ) {
+			$qv = &$query->query_vars;
 
-					$the_term = get_term_by( 'id',
-						$qv[$this->module->constants[$constant_key]],
-						$this->module->constants[$constant_key] );
-
-					$qv[$this->module->constants[$constant_key]] = $the_term->slug;
+			foreach ( $taxes as $constant_key ) {
+				$tax = $this->module->constants[$constant_key];
+				if ( isset( $qv[$tax] )	&& is_numeric( $qv[$tax] ) ) {
+					$term = get_term_by( 'id', $qv[$tax], $tax );
+					if ( ! empty( $term ) && ! is_wp_error( $term ) )
+						$qv[$tax] = $term->slug;
+				}
 			}
 		}
 	}
@@ -534,11 +546,14 @@ class gEditorialBook extends gEditorialModuleCore
 		$new_columns = array();
 
 		foreach ( $posts_columns as $key => $value ) {
+
 			if ( 'title' == $key ) {
-				$new_columns['cover'] = _x( 'Cover', '[Book Module]', GEDITORIAL_TEXTDOMAIN );
-				$new_columns[$key] = $value;
+				$new_columns['cover'] = $this->get_column_title( 'cover', 'publication_cpt' );
+				$new_columns[$key]    = $value;
+
 			} else if ( in_array( $key, array( 'author', 'date', 'comments' ) ) ) {
 				continue; // he he!
+
 			} else {
 				$new_columns[$key] = $value;
 			}

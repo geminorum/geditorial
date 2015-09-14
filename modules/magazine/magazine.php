@@ -88,17 +88,18 @@ class gEditorialMagazine extends gEditorialModuleCore
 				'post_types_option' => 'post_types_option',
 			),
 			'strings' => array(
-				'titles' => array(
-				),
-				'descriptions' => array(
-				),
+				'titles'       => array(),
+				'descriptions' => array(),
+
 				'misc' => array(
+					'issue_cpt' => array(
+						'cover_column_title'    => _x( 'Cover', '[Magazine Module] Column Title', GEDITORIAL_TEXTDOMAIN ),
+						'order_column_title'    => _x( 'O', '[Magazine Module] Column Title', GEDITORIAL_TEXTDOMAIN ),
+						'children_column_title' => _x( 'Posts', '[Magazine Module] Column Title', GEDITORIAL_TEXTDOMAIN ),
+					),
 					'meta_box_title'        => __( 'Issues', GEDITORIAL_TEXTDOMAIN ),
 					'issue_box_title'       => __( 'The Issue', GEDITORIAL_TEXTDOMAIN ),
 					'cover_box_title'       => __( 'Cover', GEDITORIAL_TEXTDOMAIN ),
-					'order_column_title'    => __( 'O', GEDITORIAL_TEXTDOMAIN ),
-					'cover_column_title'    => __( 'Cover', GEDITORIAL_TEXTDOMAIN ),
-					'children_column_title' => __( 'Posts', GEDITORIAL_TEXTDOMAIN ),
 				),
 				'labels' => array(
 					'issue_cpt' => array(
@@ -211,7 +212,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 			add_filter( 'disable_months_dropdown', array( &$this, 'disable_months_dropdown' ), 8, 2 );
 			add_action( 'restrict_manage_posts', array( &$this, 'restrict_manage_posts' ) );
 			add_action( 'pre_get_posts', array( &$this, 'pre_get_posts' ) );
-			add_filter( 'parse_query', array( &$this, 'parse_query_issues' ) );
+			add_filter( 'parse_query', array( &$this, 'parse_query' ) );
 
 		} else {
 			add_filter( 'term_link', array( &$this, 'term_link' ), 10, 3 );
@@ -287,7 +288,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 
 		add_action( 'add_meta_boxes', array( &$this, 'add_meta_boxes' ), 20, 2 );
 		add_filter( "manage_{$this->module->constants['issue_cpt']}_posts_columns", array( &$this, 'manage_posts_columns' ) );
-		add_filter( "manage_{$this->module->constants['issue_cpt']}_posts_custom_column", array( &$this, 'custom_column'), 10, 2 );
+		add_filter( "manage_{$this->module->constants['issue_cpt']}_posts_custom_column", array( &$this, 'posts_custom_column'), 10, 2 );
 		add_filter( "manage_edit-{$this->module->constants['issue_cpt']}_sortable_columns", array( &$this, 'sortable_columns' ) );
 
 		// internal actions:
@@ -663,15 +664,15 @@ class gEditorialMagazine extends gEditorialModuleCore
 		}
 	}
 
-	public function parse_query_issues( $query )
+	public function parse_query( $query )
 	{
-		if ( $query->is_admin ) {
-			$span_tax = $this->module->constants['span_tax'];
-			if ( isset( $query->query_vars[$span_tax] ) ) {
-				$var = &$query->query_vars[$span_tax];
-				$span = get_term_by( 'id', $var, $span_tax );
-				if ( ! empty( $span ) && ! is_wp_error( $span ) )
-					$var = $span->slug;
+		if ( $query->is_admin && $this->is_current_posttype( 'issue_cpt' ) ) {
+			$tax = $this->module->constants['span_tax'];
+			if ( isset( $query->query_vars[$tax] ) ) {
+				$var = &$query->query_vars[$tax];
+				$term = get_term_by( 'id', $var, $tax );
+				if ( ! empty( $term ) && ! is_wp_error( $term ) )
+					$var = $term->slug;
 			}
 		}
 	}
@@ -863,12 +864,12 @@ class gEditorialMagazine extends gEditorialModuleCore
 		foreach ( $posts_columns as $key => $value ) {
 
 			if ( $key == 'title' ) {
-				$new_columns['order'] = $this->get_string( 'order_column_title', NULL, 'misc' );
-				$new_columns['cover'] = $this->get_string( 'cover_column_title', NULL, 'misc' );
+				$new_columns['order'] = $this->get_column_title( 'order', 'issue_cpt' );
+				$new_columns['cover'] = $this->get_column_title( 'cover', 'issue_cpt' );
 				$new_columns[$key] = $value;
 
 			} else if ( 'comments' == $key ){
-				$new_columns['children'] = $this->get_string( 'children_column_title', NULL, 'misc' );
+				$new_columns['children'] = $this->get_column_title( 'children', 'issue_cpt' );
 
 			} else if ( in_array( $key, array( 'author', 'date' ) ) ) {
 				continue; // he he!
@@ -901,7 +902,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 		return $items;
 	}
 
-	public function custom_column( $column_name, $post_id )
+	public function posts_custom_column( $column_name, $post_id )
 	{
 		if ( 'children' == $column_name )
 			$this->column_count( $this->issue_posts( $post_id, TRUE ) );
