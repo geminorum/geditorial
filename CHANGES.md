@@ -1,3 +1,9 @@
+### 0.2.11
+* all: new widget api based on [gTheme 3](https://github.com/geminorum/gtheme_03) code
+* all: better handling image sizes
+* entry: code refactoring
+* magazine: semantic default callback for cover
+
 ### 0.2.10
 * all: check if theme support thumbnail for all posttypes
 * all: default terms api
