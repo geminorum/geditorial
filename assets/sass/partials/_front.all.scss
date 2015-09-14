@@ -1,0 +1,6 @@
+
+.geditorial-wrap {
+
+	// @extend %main_wrap;
+	@include main-wrap();
+}
