@@ -132,7 +132,19 @@ class gEditorialSettings extends gEditorialModuleCore
 
 				$post = isset( $_POST[$this->module->options_group_name]['tools'] ) ? $_POST[$this->module->options_group_name]['tools'] : array();
 
-				if ( isset( $_POST['custom_fields_empty'] ) ) {
+				if ( isset( $_POST['upgrade_old_options'] ) ) {
+
+					$result = $gEditorial->upgrade_old_options();
+
+					if ( count( $result ) ) {
+						wp_redirect( add_query_arg( array(
+							'message' => 'upgraded',
+							'count'   => count( $result ),
+						), wp_get_referer() ) );
+						exit();
+					}
+
+				} else if ( isset( $_POST['custom_fields_empty'] ) ) {
 
 					if ( isset( $post['empty_module'] ) && isset( $gEditorial->{$post['empty_module']}->meta_key ) ) {
 
@@ -165,10 +177,21 @@ class gEditorialSettings extends gEditorialModuleCore
 
 			$this->tools_field_referer( $sub );
 
-			echo '<h3>'.__( 'General Tools', GEDITORIAL_TEXTDOMAIN ).'</h3>';
+			echo '<h3>'.__( 'Maintenance Tasks', GEDITORIAL_TEXTDOMAIN ).'</h3>';
 			echo '<table class="form-table">';
 
-			echo '<tr><th scope="row">'.__( 'Maintenance Tasks', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
+			echo '<tr><th scope="row">'.__( 'Upgrade Old Options', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
+
+			echo '<p class="submit">';
+				submit_button( __( 'Upgrade', GEDITORIAL_TEXTDOMAIN ), 'secondary', 'upgrade_old_options', FALSE ); echo '&nbsp;&nbsp;';
+
+				echo gEditorialHelper::html( 'span', array(
+					'class' => 'description',
+				), __( 'Will check for old options and upgrade, also delete old options', GEDITORIAL_TEXTDOMAIN ) );
+			echo '</p>';
+
+			echo '</td></tr>';
+			echo '<tr><th scope="row">'.__( 'Empty Meta Fields', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
 
 				$this->do_settings_field( array(
 					'type'       => 'select',
@@ -457,7 +480,7 @@ class gEditorialSettings extends gEditorialModuleCore
 		$gEditorial->update_all_module_options( $gEditorial->$module_name->module->name, $new_options );
 
 		// Redirect back to the settings page that was submitted without any previous messages
-		$goback = add_query_arg( 'message', 'settings-updated',  remove_query_arg( array( 'message' ), wp_get_referer() ) );
+		$goback = add_query_arg( 'message', 'settings-updated', remove_query_arg( array( 'message' ), wp_get_referer() ) );
 		wp_redirect( $goback );
 		exit;
 	}

@@ -96,6 +96,7 @@ class gEditorial
 
 				if ( method_exists( $this->{$mod_name}, 'setup' ) )
 					$this->{$mod_name}->setup();
+
 				else if ( method_exists( $this->{$mod_name}, 'init' ) )
 					add_action( 'init', array( $this->{$mod_name}, 'init' ) );
 
@@ -292,17 +293,43 @@ class gEditorial
 		$options[$mod_name] = $new_options;
 		return update_option( 'geditorial_options', $options, TRUE );
 	}
-	
+
 	public function audit_options()
 	{
-		$options = array(
-			'{{GLOBAL}}' => get_option( 'geditorial_options', FALSE ),
-		);
-		
+		$options = array();
+
 		foreach ( $this->modules as $mod_name => $mod_data )
 			$options[$mod_name] = get_option( $this->options_group.$mod_name.'_options', '{{NO-OPTIONS}}' );
-		
+
+		$options['{{GLOBAL}}'] = get_option( 'geditorial_options', FALSE );
+
 		return $options;
+	}
+
+	public function upgrade_old_options()
+	{
+		$options = get_option( 'geditorial_options' );
+		$upgraded = array();
+		$update = FALSE;
+
+		foreach ( $this->modules as $mod_name => $mod_data ) {
+
+			$old = get_option( $this->options_group.$mod_name.'_options' );
+
+			if ( isset( $options[$mod_name] ) ) {
+				$upgraded[$mod_name] = delete_option( $this->options_group.$mod_name.'_options' );
+
+			} else if ( $old ) {
+				$upgraded[$mod_name] = delete_option( $this->options_group.$mod_name.'_options' );
+				$options[$mod_name] = $old;
+				$update = TRUE;
+			}
+		}
+
+		if ( $update )
+			update_option( 'geditorial_options', $options, TRUE );
+
+		return $upgraded;
 	}
 
 	// global styles
