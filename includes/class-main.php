@@ -266,7 +266,6 @@ class gEditorial
 		$this->{$mod_name}->module = $this->modules->{$mod_name};
 		$options[$mod_name] = $this->modules->{$mod_name}->options;
 
-		// return update_option( $this->options_group.$mod_name.'_options', $this->modules->{$mod_name}->options );
 		return update_option( 'geditorial_options', $options, TRUE );
 	}
 
@@ -279,10 +278,18 @@ class gEditorial
 
 		$options[$mod_name] = $new_options;
 		return update_option( 'geditorial_options', $options, TRUE );
-
-		// $this->modules->{$mod_name}->options = $new_options;
-		// $this->{$mod_name}->module = $this->modules->{$mod_name};
-		// return update_option( $this->options_group.$mod_name.'_options', $this->modules->{$mod_name}->options );
+	}
+	
+	public function audit_options()
+	{
+		$options = array(
+			'{{GLOBAL}}' => get_option( 'geditorial_options', FALSE ),
+		);
+		
+		foreach ( $this->modules as $mod_name => $mod_data )
+			$options[$mod_name] = get_option( $this->options_group.$mod_name.'_options', '{{NO-OPTIONS}}' );
+		
+		return $options;
 	}
 
 	// global styles
