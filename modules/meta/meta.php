@@ -166,13 +166,7 @@ class gEditorialMeta extends gEditorialModuleCore
 
 	public function admin_init()
 	{
-		// tools actions for settings module
-		if ( current_user_can( 'import' ) ) {
-			add_filter( 'geditorial_tools_subs', array( &$this, 'tools_subs' ) );
-			add_filter( 'geditorial_tools_messages', array( &$this, 'tools_messages' ), 10, 2 );
-			add_action( 'geditorial_tools_load', array( &$this, 'tools_load' ) );
-			add_action( 'geditorial_tools_sub_meta', array( &$this, 'tools_sub' ), 10, 2 );
-		}
+		$this->tools( 'import' );
 
 		add_action( 'admin_print_styles', array( &$this, 'admin_print_styles' ) );
 

@@ -983,4 +983,24 @@ class gEditorialModuleCore
 		if ( $args )
 			p2p_register_connection_type( $args );
 	}
+
+	// setting up tools actions for settings module
+	// WARNING: must call manually on admin_init
+	protected function tools( $capability = 'import' )
+	{
+		if ( ! current_user_can( $capability ) )
+			return;
+
+		if ( method_exists( $this, 'tools_subs' ) )
+			add_filter( 'geditorial_tools_subs', array( &$this, 'tools_subs' ) );
+
+		if ( method_exists( $this, 'tools_messages' ) )
+			add_filter( 'geditorial_tools_messages', array( &$this, 'tools_messages' ), 10, 2 );
+
+		if ( method_exists( $this, 'tools_load' ) )
+			add_action( 'geditorial_tools_load', array( &$this, 'tools_load' ) );
+
+		if ( method_exists( $this, 'tools_sub' ) )
+			add_action( 'geditorial_tools_sub_'.$this->module_name, array( &$this, 'tools_sub' ), 10, 2 );
+	}
 }
