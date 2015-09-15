@@ -477,6 +477,21 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 		return '<div class="geditorial-wrap magazine issue-cover">'.$html.'</div>';
 	}
 
+	// FIXME: DEPRECATED : for back comp
+	public static function get_latest_issue()
+	{
+		return self::getLatestIssueID();
+	}
+
+	// helper for themes
+	public static function getLatestIssueID()
+	{
+		global $gEditorial;
+
+		$issue_cpt = $gEditorial->get_module_constant( 'magazine', 'issue_cpt', 'issue' );
+		return gEditorialHelper::getLastPostOrder( $issue_cpt, '', 'ID', 'publish' );
+	}
+
 	public static function get_random_issue( $object = FALSE )
 	{
 		global $gEditorial;
