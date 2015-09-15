@@ -79,8 +79,9 @@ class gEditorialSettings extends gEditorialModuleCore
 
 	public function admin_tools_page()
 	{
-		$uri = gEditorialHelper::toolsURL( false );
-		$sub = isset( $_GET['sub'] ) ? trim( $_GET['sub'] ) : 'general';
+		$uri   = gEditorialHelper::toolsURL( FALSE );
+		$sub   = isset( $_GET['sub'] ) ? trim( $_GET['sub'] ) : 'general';
+		$count = isset( $_REQUEST['count'] ) ? $_REQUEST['count'] : 0;
 
 		$subs = apply_filters( 'geditorial_tools_subs', array(
 			'overview' => _x( 'Overview', 'gEditorial Tools', GEDITORIAL_TEXTDOMAIN ),
@@ -91,7 +92,7 @@ class gEditorialSettings extends gEditorialModuleCore
 			$subs['console'] = _x( 'Console', 'gEditorial Tools', GEDITORIAL_TEXTDOMAIN );
 
 		$messages = apply_filters( 'geditorial_tools_messages', array(
-
+			'emptied' => gEditorialHelper::notice( sprintf( __( '%s Meta rows Emptied!', GEDITORIAL_TEXTDOMAIN ), $count ), 'updated fade', FALSE ),
 		), $sub );
 
 		echo '<div class="wrap geditorial-admin-wrap geditorial-tools geditorial-tools-'.$sub.'">';
@@ -120,8 +121,74 @@ class gEditorialSettings extends gEditorialModuleCore
 
 	public function admin_tools_load()
 	{
-		$sub = isset( $_REQUEST['sub'] ) ? $_REQUEST['sub'] : null;
-		do_action( 'geditorial_tools_load', $sub );
+		global $gEditorial;
+
+		$sub = isset( $_REQUEST['sub'] ) ? $_REQUEST['sub'] : 'general';
+
+		if ( 'general' == $sub ) {
+			if ( ! empty( $_POST ) ) {
+
+				$this->tools_check_referer( $sub );
+
+				$post = isset( $_POST[$this->module->options_group_name]['tools'] ) ? $_POST[$this->module->options_group_name]['tools'] : array();
+
+				if ( isset( $_POST['custom_fields_empty'] ) ) {
+
+					if ( isset( $post['empty_module'] ) && isset( $gEditorial->{$post['empty_module']}->meta_key ) ) {
+
+						$result = gEditorialHelper::deleteEmptyMeta( $gEditorial->{$post['empty_module']}->meta_key );
+
+						if ( count( $result ) ) {
+							wp_redirect( add_query_arg( array(
+								'message' => 'emptied',
+								'count'   => count( $result ),
+							), wp_get_referer() ) );
+							exit();
+						}
+					}
+				}
+			}
+
+			add_action( 'geditorial_tools_sub_general', array( &$this, 'tools_sub' ), 10, 2 );
+		}
+
+		do_action( 'geditorial_tools_settings', $sub );
+	}
+
+	public function tools_sub( $settings_uri, $sub )
+	{
+		global $gEditorial;
+
+		$post = isset( $_POST[$this->module->options_group_name]['tools'] ) ? $_POST[$this->module->options_group_name]['tools'] : array();
+
+		echo '<form method="post" action="">';
+
+			$this->tools_field_referer( $sub );
+
+			echo '<h3>'.__( 'General Tools', GEDITORIAL_TEXTDOMAIN ).'</h3>';
+			echo '<table class="form-table">';
+
+			echo '<tr><th scope="row">'.__( 'Maintenance Tasks', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
+
+				$this->do_settings_field( array(
+					'type'       => 'select',
+					'field'      => 'empty_module',
+					'values'     => $gEditorial->get_all_modules(),
+					'default'    => ( isset( $post['empty_module'] ) ? $post['empty_module'] : 'meta' ),
+					'name_group' => 'tools',
+				) );
+
+				echo '<p class="submit">';
+					submit_button( __( 'Empty', GEDITORIAL_TEXTDOMAIN ), 'secondary', 'custom_fields_empty', FALSE ); echo '&nbsp;&nbsp;';
+
+					echo gEditorialHelper::html( 'span', array(
+						'class' => 'description',
+					), __( 'Will delete empty meta values, solves common problems with imported posts.', GEDITORIAL_TEXTDOMAIN ) );
+				echo '</p>';
+
+			echo '</td></tr>';
+			echo '</table>';
+		echo '</form>';
 	}
 
 	public function ajax_settings()
@@ -138,22 +205,22 @@ class gEditorialSettings extends gEditorialModuleCore
 					wp_die( __( 'Cheatin&#8217; uh?' ) );
 
 				if ( ! isset( $_POST['module_action'], $_POST['module_slug'] ) )
-					wp_send_json_error( gEditorialHelper::notice( _x( 'No Action of Slug!', 'Ajax Notice', GEDITORIAL_TEXTDOMAIN ), 'error', false ) );
+					wp_send_json_error( gEditorialHelper::notice( _x( 'No Action of Slug!', 'Ajax Notice', GEDITORIAL_TEXTDOMAIN ), 'error', FALSE ) );
 
 				$module = $gEditorial->get_module_by( 'slug', sanitize_key( $_POST['module_slug'] ) );
 				if ( ! $module )
-					wp_send_json_error( gEditorialHelper::notice( _x( 'Cannot find the module!', 'Ajax Notice', GEDITORIAL_TEXTDOMAIN ), 'error', false ) );
+					wp_send_json_error( gEditorialHelper::notice( _x( 'Cannot find the module!', 'Ajax Notice', GEDITORIAL_TEXTDOMAIN ), 'error', FALSE ) );
 
-				$enabled = 'enable' == sanitize_key( $_POST['module_action'] ) ? true : false;
+				$enabled = 'enable' == sanitize_key( $_POST['module_action'] ) ? TRUE : FALSE;
 				if ( $gEditorial->update_module_option( $module->name, 'enabled', $enabled ) )
-					wp_send_json_success( gEditorialHelper::notice( _x( 'Module state succesfully changed', 'Ajax Notice', GEDITORIAL_TEXTDOMAIN ), 'updated', false ) );
+					wp_send_json_success( gEditorialHelper::notice( _x( 'Module state succesfully changed', 'Ajax Notice', GEDITORIAL_TEXTDOMAIN ), 'updated', FALSE ) );
 				else
-					wp_send_json_error( gEditorialHelper::notice( _x( 'Cannot change module state', 'Ajax Notice', GEDITORIAL_TEXTDOMAIN ), 'error', false ) );
+					wp_send_json_error( gEditorialHelper::notice( _x( 'Cannot change module state', 'Ajax Notice', GEDITORIAL_TEXTDOMAIN ), 'error', FALSE ) );
 
 			break;
 
 			default :
-				wp_send_json_error( gEditorialHelper::notice( _x( 'Waht?!', 'Ajax Notice', GEDITORIAL_TEXTDOMAIN ), 'error', false ) );
+				wp_send_json_error( gEditorialHelper::notice( _x( 'Waht?!', 'Ajax Notice', GEDITORIAL_TEXTDOMAIN ), 'error', FALSE ) );
 		}
 
 		die();
@@ -236,7 +303,7 @@ class gEditorialSettings extends gEditorialModuleCore
 		}
 	}
 
-	private function print_default_signature( $current_module = null )
+	private function print_default_signature( $current_module = NULL )
 	{
 		?><div class="signature"><p><?php
 			printf( __( '<a href="%1$s" title="Editorial">gEditorial</a> is a <a href="%2$s">geminorum</a> project.'),
@@ -271,7 +338,7 @@ class gEditorialSettings extends gEditorialModuleCore
 				else if ( $mod_data->img_url )
 					echo '<img src="'.esc_url( $mod_data->img_url ).'" class="icon" />';
 
-				echo '<form method="get" action="'.get_admin_url( null, 'options.php' ).'">';
+				echo '<form method="get" action="'.get_admin_url( NULL, 'options.php' ).'">';
 
 					echo '<h3>'.esc_html( $mod_data->title ).'</h3>';
 					echo '<p>'.esc_html( $mod_data->short_description ).'</p>';
@@ -279,7 +346,7 @@ class gEditorialSettings extends gEditorialModuleCore
 					echo '<p class="actions">';
 
 						if ( $mod_data->configure_page_cb ) {
-							$configure_url = add_query_arg( 'page', $mod_data->settings_slug, get_admin_url( null, 'admin.php' ) );
+							$configure_url = add_query_arg( 'page', $mod_data->settings_slug, get_admin_url( NULL, 'admin.php' ) );
 							echo '<a href="'.$configure_url.'" class="button-configure button button-primary';
 							if ( ! $enabled )
 								echo ' hidden" style="display:none;';
@@ -298,7 +365,7 @@ class gEditorialSettings extends gEditorialModuleCore
 
 					echo '</p>';
 
-					wp_nonce_field( 'geditorial-module-nonce', 'module-nonce', false );
+					wp_nonce_field( 'geditorial-module-nonce', 'module-nonce', FALSE );
 				echo '</form></div>';
 			}
 
@@ -313,7 +380,7 @@ class gEditorialSettings extends gEditorialModuleCore
 
 	public function admin_settings_load()
 	{
-		$page = isset( $_REQUEST['page'] ) ? $_REQUEST['page'] : null;
+		$page = isset( $_REQUEST['page'] ) ? $_REQUEST['page'] : NULL;
 
 		$this->admin_settings_reset( $page );
 		$this->admin_settings_save( $page );
@@ -328,12 +395,12 @@ class gEditorialSettings extends gEditorialModuleCore
 	private function admin_settings_verify( $options_group_name )
 	{
 		if ( ! current_user_can( 'manage_options' ) )
-			return false;
+			return FALSE;
 
 		if ( ! wp_verify_nonce( $_POST['_wpnonce'], $options_group_name.'-options' ) )
-			return false;
+			return FALSE;
 
-		return true;
+		return TRUE;
 	}
 
 	public function admin_settings_reset( $page = NULL )

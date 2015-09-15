@@ -166,7 +166,8 @@ class gEditorialMeta extends gEditorialModuleCore
 
 	public function admin_init()
 	{
-		$this->tools( 'import' );
+		if ( current_user_can( 'import' ) )
+			add_action( 'geditorial_tools_settings', array( &$this, 'tools_settings' ) );
 
 		add_action( 'admin_print_styles', array( &$this, 'admin_print_styles' ) );
 
@@ -474,8 +475,8 @@ class gEditorialMeta extends gEditorialModuleCore
 	public function tools_messages( $messages, $sub )
 	{
 		if ( 'meta' == $sub ) {
-			if ( isset( $_GET['field'] ) && $_GET['field'] ) {
-				$field = $this->get_string( $_GET['field'] );
+			if ( isset( $_REQUEST['field'] ) && $_REQUEST['field'] ) {
+				$field = $this->get_string( $_REQUEST['field'] );
 				$messages['converted'] = gEditorialHelper::notice( sprintf( __( 'Field %s Converted', GEDITORIAL_TEXTDOMAIN ), $field ), 'updated fade', FALSE );
 				$messages['deleted'] = gEditorialHelper::notice( sprintf( __( 'Field %s Deleted', GEDITORIAL_TEXTDOMAIN ), $field ), 'updated fade', FALSE );
 			} else {
@@ -488,20 +489,12 @@ class gEditorialMeta extends gEditorialModuleCore
 	public function tools_sub( $settings_uri, $sub )
 	{
 		echo '<form method="post" action="">';
+
+			$this->tools_field_referer( $sub );
+
 			echo '<h3>'.__( 'Meta Tools', GEDITORIAL_TEXTDOMAIN ).'</h3>';
 			echo '<table class="form-table">';
 
-			echo '<tr><th scope="row">'.__( 'Maintenance Tasks', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
-
-				echo '<p class="submit">';
-					submit_button( __( 'Empty', GEDITORIAL_TEXTDOMAIN ), 'secondary', 'custom_fields_empty', FALSE ); echo '&nbsp;&nbsp;';
-
-					echo gEditorialHelper::html( 'span', array(
-						'class' => 'description',
-					), __( 'Will delete empty meta values, solves common problems with imported posts.', GEDITORIAL_TEXTDOMAIN ) );
-				echo '</p>';
-
-			echo '</td></tr>';
 			echo '<tr><th scope="row">'.__( 'Import Custom Fields', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
 
 			if ( ! empty( $_POST ) && isset( $_POST['custom_fields_check'] ) ) {
@@ -557,29 +550,17 @@ class gEditorialMeta extends gEditorialModuleCore
 			echo '</p>';
 			echo '</td></tr>';
 			echo '</table>';
-			wp_referer_field();
 		echo '</form>';
 	}
 
-	public function tools_load( $sub )
+	public function tools_settings( $sub )
 	{
 		if ( 'meta' == $sub ) {
 			if ( ! empty( $_POST ) ) {
 
-				// check_admin_referer( 'geditorial_'.$sub.'-options' );
+				$this->tools_check_referer( $sub );
 
-				if ( isset( $_POST['custom_fields_empty'] ) ) {
-
-					$result = gEditorialHelper::deleteEmptyMeta( $this->meta_key );
-
-					if ( $result ) {
-						wp_redirect( add_query_arg( array(
-							'message' => 'emptied',
-						), wp_get_referer() ) );
-						exit();
-					}
-
-				} else if ( isset( $_POST['custom_fields_convert'] ) ) {
+				if ( isset( $_POST['custom_fields_convert'] ) ) {
 
 					if ( isset( $_POST[$this->module->options_group_name]['tools'] ) ) {
 
@@ -590,16 +571,19 @@ class gEditorialMeta extends gEditorialModuleCore
 						if ( isset( $post['custom_field'] ) && isset( $post['custom_field_into'] ) )
 							$result = $this->import_from_meta( $post['custom_field'], $post['custom_field_into'], $limit );
 
-						if ( $result ) {
+						if ( count( $result ) ) {
 							wp_redirect( add_query_arg( array(
 								'message' => 'converted',
 								'field'   => $post['custom_field'],
 								'limit'   => $limit,
+								'count'   => count( $result ),
 							), wp_get_referer() ) );
 							exit();
 						}
 					}
+
 				} else if ( isset( $_POST['custom_fields_delete'] ) ) {
+
 					if ( isset( $_POST[$this->module->options_group_name]['tools'] ) ) {
 
 						$post   = $_POST[$this->module->options_group_name]['tools'];
@@ -609,23 +593,31 @@ class gEditorialMeta extends gEditorialModuleCore
 						if ( isset( $post['custom_field'] ) )
 							$result = gEditorialHelper::deleteDBPostMeta( $post['custom_field'], $limit );
 
-						if ( $result ) {
+						if ( count( $result ) ) {
 							wp_redirect( add_query_arg( array(
 								'message' => 'deleted',
 								'field'   => $post['custom_field'],
 								'limit'   => $limit,
+								'count'   => count( $result ),
 							), wp_get_referer() ) );
 							exit();
 						}
 					}
 				}
 			}
+
+			add_filter( 'geditorial_tools_messages', array( &$this, 'tools_messages' ), 10, 2 );
+			add_action( 'geditorial_tools_sub_meta', array( &$this, 'tools_sub' ), 10, 2 );
 		}
+
+		add_filter( 'geditorial_tools_subs', array( &$this, 'tools_subs' ) );
 	}
 
 	protected function import_from_meta( $meta_key, $field, $limit = FALSE )
 	{
-		foreach ( gEditorialHelper::getDBPostMetaRows( $meta_key, $limit ) as $row ) {
+		$rows = gEditorialHelper::getDBPostMetaRows( $meta_key, $limit );
+
+		foreach ( $rows as $row ) {
 
 			$meta = explode( ',', $row->meta );
 			$meta = (array) apply_filters( 'geditorial_meta_import_pre', $meta, $row->post_id, $meta_key, $field );
@@ -641,7 +633,7 @@ class gEditorialMeta extends gEditorialModuleCore
 			}
 		}
 
-		return TRUE;
+		return count( $rows );
 	}
 
 	public function import_to_meta( $meta, $post_id, $field, $kses = TRUE )

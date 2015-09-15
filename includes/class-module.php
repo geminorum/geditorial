@@ -322,6 +322,22 @@ class gEditorialModuleCore
 		);
 	}
 
+	protected function tools_field_referer( $sub = NULL )
+	{
+		if ( is_null( $sub ) )
+			$sub = $this->module_name;
+
+		wp_nonce_field( 'geditorial-tools-'.$sub );
+	}
+
+	protected function tools_check_referer( $sub = NULL )
+	{
+		if ( is_null( $sub ) )
+			$sub = $this->module_name;
+
+		check_admin_referer( 'geditorial-tools-'.$sub );
+	}
+
 	// Validate our user input as the settings are being saved
 	public function settings_validate( $new_options )
 	{
@@ -982,25 +998,5 @@ class gEditorialModuleCore
 		$args = apply_filters( 'geditorial_'.$this->module_name.'_'.$this->module->constants[$constant_key].'_p2p_args', $args, $post_types );
 		if ( $args )
 			p2p_register_connection_type( $args );
-	}
-
-	// setting up tools actions for settings module
-	// WARNING: must call manually on admin_init
-	protected function tools( $capability = 'import' )
-	{
-		if ( ! current_user_can( $capability ) )
-			return;
-
-		if ( method_exists( $this, 'tools_subs' ) )
-			add_filter( 'geditorial_tools_subs', array( &$this, 'tools_subs' ) );
-
-		if ( method_exists( $this, 'tools_messages' ) )
-			add_filter( 'geditorial_tools_messages', array( &$this, 'tools_messages' ), 10, 2 );
-
-		if ( method_exists( $this, 'tools_load' ) )
-			add_action( 'geditorial_tools_load', array( &$this, 'tools_load' ) );
-
-		if ( method_exists( $this, 'tools_sub' ) )
-			add_action( 'geditorial_tools_sub_'.$this->module_name, array( &$this, 'tools_sub' ), 10, 2 );
 	}
 }

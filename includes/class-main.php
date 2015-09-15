@@ -258,6 +258,19 @@ class gEditorial
 		return $default;
 	}
 
+	public function get_all_modules( $enabled = FALSE )
+	{
+		$modules = array();
+
+		foreach ( $this->modules as $mod_name => $mod_data )
+			if ( $enabled && gEditorialHelper::moduleEnabled( $mod_data->options ) )
+				$modules[$mod_name] = $mod_data->title;
+			else
+				$modules[$mod_name] = $mod_data->title;
+
+		return $modules;
+	}
+
 	public function update_module_option( $mod_name, $key, $value )
 	{
 		$options = get_option( 'geditorial_options' );

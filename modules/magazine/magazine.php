@@ -264,13 +264,8 @@ class gEditorialMagazine extends gEditorialModuleCore
 
 	public function admin_init()
 	{
-		// tools actions for settings module
-		if ( current_user_can( 'edit_others_posts' ) ) {
-			add_filter( 'geditorial_tools_subs', array( &$this, 'tools_subs' ) );
-			add_filter( 'geditorial_tools_messages', array( &$this, 'tools_messages' ), 10, 2 );
-			add_action( 'geditorial_tools_load', array( &$this, 'tools_load' ) );
-			add_action( 'geditorial_tools_sub_magazine', array( &$this, 'tools_sub' ), 10, 2 );
-		}
+		if ( current_user_can( 'edit_others_posts' ) )
+			add_action( 'geditorial_tools_settings', array( &$this, 'tools_settings' ) );
 
 		add_filter( 'post_updated_messages', array( &$this, 'post_updated_messages' ) );
 
@@ -1101,6 +1096,9 @@ class gEditorialMagazine extends gEditorialModuleCore
 	public function tools_sub( $settings_uri, $sub )
 	{
 		echo '<form method="post" action="">';
+
+			$this->tools_field_referer( $sub );
+			
 			echo '<h3>'.__( 'Magazine Tools', GEDITORIAL_TEXTDOMAIN ).'</h3>';
 			echo '<table class="form-table">';
 
@@ -1147,8 +1145,6 @@ class gEditorialMagazine extends gEditorialModuleCore
 
 			echo '</td></tr>';
 			echo '</table>';
-
-			wp_referer_field();
 		echo '</form>';
 	}
 
@@ -1159,14 +1155,14 @@ class gEditorialMagazine extends gEditorialModuleCore
 		return $value;
 	}
 
-	public function tools_load( $sub )
+	public function tools_settings( $sub )
 	{
 		global $gEditorial;
 
 		if ( 'magazine' == $sub ) {
 			if ( ! empty( $_POST ) ) {
 
-				// check_admin_referer( 'geditorial_tools_'.$sub.'-options' );
+				$this->tools_check_referer( $sub );
 
 				if ( isset( $_POST['issue_post_create'] ) ) {
 
@@ -1217,6 +1213,11 @@ class gEditorialMagazine extends gEditorialModuleCore
 					exit();
 				}
 			}
+
+			add_filter( 'geditorial_tools_messages', array( &$this, 'tools_messages' ), 10, 2 );
+			add_action( 'geditorial_tools_sub_magazine', array( &$this, 'tools_sub' ), 10, 2 );
 		}
+
+		add_filter( 'geditorial_tools_subs', array( &$this, 'tools_subs' ) );
 	}
 }
