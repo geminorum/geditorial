@@ -657,15 +657,9 @@ class gEditorialMagazine extends gEditorialModuleCore
 
 	public function parse_query( $query )
 	{
-		if ( $query->is_admin && $this->is_current_posttype( 'issue_cpt' ) ) {
-			$tax = $this->module->constants['span_tax'];
-			if ( isset( $query->query_vars[$tax] ) ) {
-				$var = &$query->query_vars[$tax];
-				$term = get_term_by( 'id', $var, $tax );
-				if ( ! empty( $term ) && ! is_wp_error( $term ) )
-					$var = $term->slug;
-			}
-		}
+		$this->do_parse_query_taxes( $query->query_vars, array(
+			'span_tax',
+		), 'issue_cpt' );
 	}
 
 	public function add_meta_boxes( $post_type, $post )

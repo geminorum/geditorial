@@ -218,15 +218,9 @@ class gEditorialEntry extends gEditorialModuleCore
 
 	public function parse_query( $query )
 	{
-		if ( $query->is_admin && $this->is_current_posttype( 'entry_cpt' ) ) {
-			$tax = $this->module->constants['section_tax'];
-			if ( isset( $query->query_vars[$tax] ) ) {
-				$var = &$query->query_vars[$tax];
-				$term = get_term_by( 'id', $var, $tax );
-				if ( ! empty( $term ) && ! is_wp_error( $term ) )
-					$var = $term->slug;
-			}
-		}
+		$this->do_parse_query_taxes( $query->query_vars, array(
+			'section_tax',
+		), 'entry_cpt' );
 	}
 
 	public function manage_posts_columns( $posts_columns )

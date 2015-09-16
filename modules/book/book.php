@@ -519,27 +519,13 @@ class gEditorialBook extends gEditorialModuleCore
 
 	public function parse_query( $query )
 	{
-		if ( $this->is_current_posttype( 'publication_cpt' ) ) {
-
-			$taxes = array(
-				'type_tax',
-				'subject_tax',
-				'library_tax',
-				'status_tax',
-				'publisher_tax',
-			);
-
-			$qv = &$query->query_vars;
-
-			foreach ( $taxes as $constant_key ) {
-				$tax = $this->module->constants[$constant_key];
-				if ( isset( $qv[$tax] )	&& is_numeric( $qv[$tax] ) ) {
-					$term = get_term_by( 'id', $qv[$tax], $tax );
-					if ( ! empty( $term ) && ! is_wp_error( $term ) )
-						$qv[$tax] = $term->slug;
-				}
-			}
-		}
+		$this->do_parse_query_taxes( $query->query_vars, array(
+			'type_tax',
+			'subject_tax',
+			'library_tax',
+			'status_tax',
+			'publisher_tax',
+		), 'publication_cpt' );
 	}
 
 	public function manage_posts_columns( $posts_columns )

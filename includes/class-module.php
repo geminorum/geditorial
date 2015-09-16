@@ -963,6 +963,20 @@ class gEditorialModuleCore
 
 		return TRUE;
 	}
+	public function do_parse_query_taxes( &$qv, $taxes, $posttype_constant_key )
+	{
+		if ( $this->is_current_posttype( $posttype_constant_key ) ) {
+			foreach ( $taxes as $constant_key ) {
+				$tax = $this->module->constants[$constant_key];
+				if ( isset( $qv[$tax] )	&& is_numeric( $qv[$tax] ) ) {
+					$term = get_term_by( 'id', $qv[$tax], $tax );
+					if ( ! empty( $term ) && ! is_wp_error( $term ) )
+						$qv[$tax] = $term->slug;
+				}
+			}
+		}
+	}
+
 	public function column_thumb( $post_id, $size = 'thumbnail' )
 	{
 		if ( $cover = gEditorialHelper::getFeaturedImage( $post_id, $size, FALSE ) ) {
