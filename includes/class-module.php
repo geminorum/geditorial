@@ -751,6 +751,8 @@ class gEditorialModuleCore
 	{
 		if ( is_null( $post_types ) )
 			$post_types = $this->post_types();
+		else if ( ! is_array( $post_types ) )
+			$post_types = array( $this->module->constants[$post_types] );
 
 		$args = array_merge( array(
 			'labels'                => $this->module->strings['labels'][$constant_key],

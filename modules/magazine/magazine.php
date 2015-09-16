@@ -256,7 +256,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 
 		$this->register_taxonomy( 'span_tax', array(
 			'show_admin_column' => TRUE,
-		), $this->module->constants['issue_cpt'] );
+		), 'issue_cpt' );
 
 		$this->register_shortcode( 'issue_shortcode', array( 'gEditorialMagazineTemplates', 'issue_shortcode' ) );
 		$this->register_shortcode( 'span_shortcode', array( 'gEditorialMagazineTemplates', 'span_shortcode' ) );

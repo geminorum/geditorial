@@ -228,16 +228,16 @@ class gEditorialBook extends gEditorialModuleCore
 		$this->do_filters();
 
 		$this->register_post_type( 'publication_cpt', array(), array( 'post_tag' ) );
-		$this->register_taxonomy( 'subject_tax', array( 'hierarchical' => TRUE, ), $this->module->constants['publication_cpt'] );
-		$this->register_taxonomy( 'library_tax', array( 'hierarchical' => TRUE, ), $this->module->constants['publication_cpt'] );
+		$this->register_taxonomy( 'subject_tax', array( 'hierarchical' => TRUE, ), 'publication_cpt' );
+		$this->register_taxonomy( 'library_tax', array( 'hierarchical' => TRUE, ), 'publication_cpt' );
 
-		$this->register_taxonomy( 'publisher_tax', array(), $this->module->constants['publication_cpt'] );
-		$this->register_taxonomy( 'type_tax', array(), $this->module->constants['publication_cpt'] );
-		$this->register_taxonomy( 'status_tax', array(), $this->module->constants['publication_cpt'] );
+		$this->register_taxonomy( 'publisher_tax', array(), 'publication_cpt' );
+		$this->register_taxonomy( 'type_tax', array(), 'publication_cpt' );
+		$this->register_taxonomy( 'status_tax', array(), 'publication_cpt' );
 
 		// FIXME: check not working!
 		// if ( $this->_geditorial_meta )
-			$this->register_taxonomy( 'size_tax', array(), $this->module->constants['publication_cpt'] );
+			$this->register_taxonomy( 'size_tax', array(), 'publication_cpt' );
 	}
 
 	public function admin_init()

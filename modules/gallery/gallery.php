@@ -98,15 +98,15 @@ class gEditorialGallery extends gEditorialModuleCore
 		$this->do_filters();
 
 		$this->register_post_type( 'album_cpt', array(), array( 'post_tag' ) );
-		$this->register_taxonomy( 'album_cat_tax', array(), $this->module->constants['album_cpt'] );
+		$this->register_taxonomy( 'album_cat_tax', array(), 'album_cpt' );
 
 		$this->register_taxonomy( 'album_tag_tax', array(
 			'hierarchical' => FALSE,
-		), $this->module->constants['album_cpt'] );
+		), 'album_cpt' );
 
 		$this->register_taxonomy( 'photo_tag_tax', array(
 			'hierarchical' => FALSE,
-		), 'attachments' );
+		), array( 'attachments' ) );
 	}
 
 	public function register_settings( $page = NULL )

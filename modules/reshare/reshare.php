@@ -103,7 +103,7 @@ class gEditorialReshare extends gEditorialModuleCore
 		$this->register_post_type( 'reshare_cpt', array(), array( 'post_tag' ) );
 		$this->register_taxonomy( 'reshare_cat', array(
 			'hierarchical' => TRUE,
-		), $this->module->constants['reshare_cpt'] );
+		), 'reshare_cpt' );
 	}
 
 	public function admin_init()
