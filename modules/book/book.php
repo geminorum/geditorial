@@ -57,10 +57,12 @@ class gEditorialBook extends gEditorialModuleCore
 			'strings' => array(
 				'misc' => array(
 					'publication_cpt' => array(
+						'meta_box_title'     => _x( 'Metadata', '[Book Module] MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
 						'cover_column_title' => _x( 'Cover', '[Book Module] Column Title', GEDITORIAL_TEXTDOMAIN ),
 					),
-
-					'meta_box_title' => __( 'Metadata', GEDITORIAL_TEXTDOMAIN ),
+					'status_tax' => array(
+						'meta_box_title' => _x( 'Status', '[Book Module] MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
+					),
 				),
 				'labels' => array(
 					'publication_cpt' => array(
@@ -259,7 +261,7 @@ class gEditorialBook extends gEditorialModuleCore
 
 			if ( $this->_geditorial_meta ) {
 				add_meta_box( 'geditorial-book',
-					$this->get_meta_box_title( $post_type, FALSE ),
+					$this->get_meta_box_title( 'publication_cpt', FALSE ),
 					array( &$this, 'do_meta_box' ),
 					$post_type,
 					'side',
@@ -269,7 +271,7 @@ class gEditorialBook extends gEditorialModuleCore
 
 			remove_meta_box( 'tagsdiv-'.$this->module->constants['status_tax'], $post_type, 'side' );
 			add_meta_box( 'geditorial-book-status',
-				$this->get_meta_box_title( $post_type, $this->get_url_tax_edit( 'status_tax' ), 'edit_others_posts', __( 'Status', GEDITORIAL_TEXTDOMAIN ) ),
+				$this->get_meta_box_title( 'status_tax', $this->get_url_tax_edit( 'status_tax' ), 'edit_others_posts' ),
 				array( $this, 'meta_box_choose_tax' ),
 				NULL,
 				'side',

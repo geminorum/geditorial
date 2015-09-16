@@ -892,17 +892,17 @@ class gEditorialModuleCore
 			), $pages );
 	}
 
-	public function get_meta_box_title( $post_type = 'post', $url = NULL, $edit_cap = 'manage_options', $title = NULL )
+	public function get_meta_box_title( $constant_key = 'post', $url = NULL, $edit_cap = 'manage_options', $title = NULL )
 	{
 		if ( is_null( $title ) )
-			$title = $this->get_string( 'meta_box_title', $post_type, 'misc', _x( 'Settings', 'MetaBox default title', GEDITORIAL_TEXTDOMAIN ) );
+			$title = $this->get_string( 'meta_box_title', $constant_key, 'misc', _x( 'Settings', 'MetaBox default title', GEDITORIAL_TEXTDOMAIN ) );
 
 		if ( current_user_can( $edit_cap ) && FALSE !== $url ) {
 
 			if ( is_null( $url ) )
 				$url = $this->get_url_settings();
 
-			$action = $this->get_string( 'meta_box_action', $post_type, 'misc', _x( 'Configure', 'MetaBox default action', GEDITORIAL_TEXTDOMAIN ) );
+			$action = $this->get_string( 'meta_box_action', $constant_key, 'misc', _x( 'Configure', 'MetaBox default action', GEDITORIAL_TEXTDOMAIN ) );
 			$title .= ' <span class="geditorial-admin-action-metabox"><a href="'.esc_url( $url ).'" target="_blank">'.$action.'</a></span>';
 		}
 
@@ -911,7 +911,7 @@ class gEditorialModuleCore
 
 	public function get_column_title( $column, $constant_key )
 	{
-		$this->get_string( $column.'_column_title', $this->module->constants[$constant_key], 'misc', $column );
+		$this->get_string( $column.'_column_title', $constant_key, 'misc', $column );
 	}
 
 	public function get_url_settings()

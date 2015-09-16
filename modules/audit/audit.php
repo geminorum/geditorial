@@ -139,7 +139,7 @@ class gEditorialAudit extends gEditorialModuleCore
 		if ( in_array( $post_type, $this->post_types() ) ) {
 			remove_meta_box( $this->module->constants['audit_tax'].'div', $post_type, 'side' );
 			add_meta_box( 'geditorial-audit',
-				$this->get_meta_box_title( $post_type, $this->get_url_tax_edit( 'audit_tax' ), 'edit_others_posts' ),
+				$this->get_meta_box_title( 'audit_tax', $this->get_url_tax_edit( 'audit_tax' ), 'edit_others_posts' ),
 				array( $this, 'meta_box_choose_tax' ),
 				NULL,
 				'side',

@@ -669,7 +669,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 			// remove post parent meta box
 			remove_meta_box( 'pageparentdiv', $post_type, 'side' );
 			add_meta_box( 'geditorial-magazine-issue',
-				$this->get_string( 'issue_box_title', $post_type, 'misc' ),
+				$this->get_string( 'issue_box_title', $post_type, 'misc' ), // FIXME: use get_meta_box_title()
 				array( &$this, 'do_meta_box_issue' ),
 				$post_type,
 				'side',
@@ -678,7 +678,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 
 			remove_meta_box( 'postimagediv', $this->module->constants['issue_cpt'], 'side' );
 			add_meta_box( 'postimagediv',
-				$this->get_string( 'cover_box_title', $post_type, 'misc' ),
+				$this->get_string( 'cover_box_title', $post_type, 'misc' ), // FIXME: use get_meta_box_title()
 				'post_thumbnail_meta_box',
 				$this->module->constants['issue_cpt'],
 				'side',
@@ -688,7 +688,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 		} else if ( in_array( $post_type, $this->post_types() ) ) {
 
 			add_meta_box( 'geditorial-magazine-issues',
-				$this->get_meta_box_title( $post_type, $this->get_url_post_edit( 'issue_cpt' ) ),
+				$this->get_meta_box_title( 'post', $this->get_url_post_edit( 'issue_cpt' ) ),
 				array( &$this, 'do_meta_box_issues' ),
 				$post_type,
 				'side'

@@ -534,18 +534,18 @@ class gEditorialContest extends gEditorialModuleCore
 
 			remove_meta_box( 'pageparentdiv', $post_type, 'side' );
 			add_meta_box( 'geditorial-contest',
-				$this->get_string( 'contest_box_title', 'post', 'misc' ),
+				$this->get_string( 'contest_box_title', 'post', 'misc' ),  // FIXME: use get_meta_box_title()
 				array( &$this, 'do_meta_box_contest_cpt' ), $post_type, 'side', 'high' );
 
 			remove_meta_box( 'postimagediv', $post_type, 'side' );
 			add_meta_box( 'postimagediv',
-				$this->get_string( 'poster_box_title', 'post', 'misc' ),
+				$this->get_string( 'poster_box_title', 'post', 'misc' ), // FIXME: use get_meta_box_title()
 				'post_thumbnail_meta_box', $post_type, 'side', 'high' );
 
 		} else if ( in_array( $post_type, $this->post_types() ) ) {
 
 			add_meta_box( 'geditorial-contests',
-				$this->get_meta_box_title( $post_type ),
+				$this->get_meta_box_title( 'apply_cpt' ),
 				array( &$this, 'do_meta_box_applies' ),
 				$post_type,
 				'side' );

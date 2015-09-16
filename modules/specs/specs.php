@@ -325,7 +325,7 @@ class gEditorialSpecs extends gEditorialModuleCore
 
 			add_meta_box(
 				'geditorial-specs',
-				$this->get_meta_box_title( $post_type ),
+				$this->get_meta_box_title( 'specs_tax' ),
 				array( $this, 'do_meta_box' ),
 				$post_type,
 				'side' );

@@ -249,7 +249,7 @@ class gEditorialMeta extends gEditorialModuleCore
 		// we use filter to override the whole functionality, no just adding the actions
 		$box_func = apply_filters( 'geditorial_meta_box_callback', array( &$this, $post_type.'_meta_box' ), $post_type );
 		if ( is_callable( $box_func ) )
-			add_meta_box( 'geditorial-meta-'.$post_type, $this->get_meta_box_title( $post_type ), $box_func, $post_type, 'side', 'high' );
+			add_meta_box( 'geditorial-meta-'.$post_type, $this->get_meta_box_title(), $box_func, $post_type, 'side', 'high' );
 
 		$dbx_func = apply_filters( 'geditorial_meta_dbx_callback', array( &$this, $post_type.'_meta_raw' ), $post_type );
 		if ( is_callable( $dbx_func ) )
