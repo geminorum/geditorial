@@ -785,25 +785,8 @@ class gEditorialMagazine extends gEditorialModuleCore
 			'class' => 'field-wrap',
 		), $html );
 
-		$post_type_object = get_post_type_object( $this->module->constants['issue_cpt'] );
-		if ( $post_type_object->hierarchical ) {
-			$pages = wp_dropdown_pages( array(
-				'post_type'        => $this->module->constants['issue_cpt'],
-				'selected'         => $post->post_parent,
-				'name'             => 'parent_id',
-				'class'            => 'geditorial-admin-dropbown',
-				'show_option_none' => __( '(no parent)', GEDITORIAL_TEXTDOMAIN ),
-				'sort_column'      => 'menu_order',
-				'sort_order'       => 'desc',
-				'post_status'      => 'publish,private,draft',
-				'exclude_tree'     => $post->ID,
-				'echo'             => 0,
-			));
-			if ( $pages )
-				echo gEditorialHelper::html( 'div', array(
-					'class' => 'field-wrap',
-				), $pages );
-		}
+		if ( get_post_type_object( $this->module->constants['issue_cpt'] )->hierarchical )
+			$this->field_post_parent( 'issue_cpt', $post );
 
 		$term_id = get_post_meta( $post->ID, '_'.$this->module->constants['issue_cpt'].'_term_id', TRUE );
 		echo gEditorialHelper::getTermPosts( $this->module->constants['issue_tax'], intval( $term_id ) );

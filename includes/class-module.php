@@ -869,6 +869,27 @@ class gEditorialModuleCore
 		add_shortcode( $this->module->constants[$constant_key], $callback );
 	}
 
+	public function field_post_parent( $constant_key, $post, $status = 'publish,private,draft' )
+	{
+		$pages = wp_dropdown_pages( array(
+			'post_type'        => $this->module->constants[$constant_key], // alows for parent of diffrent type
+			'selected'         => $post->post_parent,
+			'name'             => 'parent_id',
+			'class'            => 'geditorial-admin-dropbown',
+			'show_option_none' => __( '(no parent)', GEDITORIAL_TEXTDOMAIN ),
+			'sort_column'      => 'menu_order',
+			'sort_order'       => 'desc',
+			'post_status'      => $status,
+			'exclude_tree'     => $post->ID,
+			'echo'             => 0,
+		));
+
+		if ( $pages )
+			echo gEditorialHelper::html( 'div', array(
+				'class' => 'field-wrap',
+			), $pages );
+	}
+
 	public function get_meta_box_title( $post_type = 'post', $url = NULL, $edit_cap = 'manage_options', $title = NULL )
 	{
 		if ( is_null( $title ) )
