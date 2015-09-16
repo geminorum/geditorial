@@ -922,6 +922,26 @@ class gEditorialModuleCore
 		return gEditorialHelper::getCurrentPostType() == $this->module->constants[$constant_key];
 	}
 
+	public function is_save_post( $post, $constant_key = FALSE )
+	{
+		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
+			return FALSE;
+
+		if ( $post->post_type == 'revision' )
+			return FALSE;
+
+		// FIXME: is this necceary?
+		if ( empty( $_POST ) )
+			return FALSE;
+
+		if ( is_array( $constant_key ) && ! in_array( $post->post_type, $constant_key ) )
+			return FALSE;
+
+		if ( $constant_key && $post->post_type != $this->module->constants[$constant_key] )
+			return FALSE;
+
+		return TRUE;
+	}
 	public function column_thumb( $post_id, $size = 'thumbnail' )
 	{
 		if ( $cover = gEditorialHelper::getFeaturedImage( $post_id, $size, FALSE ) ) {

@@ -411,12 +411,7 @@ class gEditorialContest extends gEditorialModuleCore
 
 	public function save_post_contest_cpt( $post_id, $post )
 	{
-		if ( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
-			|| empty( $_POST )
-			|| $post->post_type == 'revision' )
-				return $post_id;
-
-		if ( $post->post_type != $this->module->constants['contest_cpt'] )
+		if ( ! $this->is_save_post( $post, 'contest_cpt' ) )
 			return $post_id;
 
 		if ( empty( $post->post_name ) )
@@ -474,12 +469,7 @@ class gEditorialContest extends gEditorialModuleCore
 
 	public function save_post_apply_cpt( $post_id, $post )
 	{
-		if ( ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE )
-			|| empty( $_POST )
-			|| $post->post_type == 'revision' )
-				return $post_id;
-
-		if ( ! in_array( $post->post_type, $this->post_types() ) )
+		if ( ! $this->is_save_post( $post, $this->post_types() ) )
 			return $post_id;
 
 		if ( isset( $_POST['geditorial_contest_terms'] ) ) {

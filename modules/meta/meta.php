@@ -328,12 +328,7 @@ class gEditorialMeta extends gEditorialModuleCore
 
 	public function save_post( $post_id, $post )
 	{
-		if ( ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE )
-			|| empty( $_POST )
-			|| $post->post_type == 'revision' )
-				return $post_id;
-
-		if ( ! in_array( $post->post_type, $this->post_types() ) )
+		if ( ! $this->is_save_post( $post, $this->post_types() ) )
 			return $post_id;
 
 		// NOUNCES MUST CHECKED BY FILTERS

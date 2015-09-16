@@ -390,13 +390,11 @@ class gEditorialMagazine extends gEditorialModuleCore
 
 	public function post_updated( $post_ID, $post_after, $post_before )
 	{
-		if ( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
-			|| 'revision' == $post_after->post_type )
-				return $post_ID;
+		if ( ! $this->is_save_post( $post_after, 'issue_cpt' ) )
+			return $post_ID;
 
-		if ( $this->module->constants['issue_cpt'] != $post_after->post_type
-			|| 'trash' == $post_after->post_status )
-				return $post_ID;
+		if ( 'trash' == $post_after->post_status )
+			return $post_ID;
 
 		if ( empty( $post_before->post_name ) )
 			$post_before->post_name = sanitize_title( $post_before->post_title );
@@ -439,9 +437,8 @@ class gEditorialMagazine extends gEditorialModuleCore
 		if ( $update )
 			return $post_ID;
 
-		if ( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
-			|| $post->post_type == 'revision' )
-				return $post_ID;
+		if ( ! $this->is_save_post( $post ) )
+			return $post_ID;
 
 		if ( empty( $post->post_name ) )
 			$post->post_name = sanitize_title( $post->post_title );
@@ -554,9 +551,8 @@ class gEditorialMagazine extends gEditorialModuleCore
 
 	public function save_post_supported_cpt( $post_ID, $post, $update )
 	{
-		if ( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
-			|| $post->post_type == 'revision' )
-				return $post_ID;
+		if ( ! $this->is_save_post( $post ) )
+			return $post_ID;
 
 		if ( ! in_array( $post->post_type, $this->post_types() ) )
 			return $post_ID;
