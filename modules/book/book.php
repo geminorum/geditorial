@@ -205,6 +205,7 @@ class gEditorialBook extends gEditorialModuleCore
 		add_filter( 'geditorial_tweaks_strings', array( &$this, 'tweaks_strings' ) );
 
 		// $this->require_code();
+		$this->require_code( 'query' );
 
 		add_action( 'after_setup_theme', array( &$this, 'after_setup_theme' ), 20 );
 		add_action( 'init', array( &$this, 'init' ) );
