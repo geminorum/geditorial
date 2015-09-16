@@ -873,6 +873,43 @@ class gEditorialModuleCore
 		add_shortcode( $this->module->constants[$constant_key], $callback );
 	}
 
+	public function field_post_tax( $constant_key, $post, $key = FALSE, $count = TRUE, $excludes = '', $default = '0' )
+	{
+		$tax = $this->module->constants[$constant_key];
+		if ( $obj = get_taxonomy( $tax ) ) {
+
+			if ( $default && ! is_numeric( $default ) ) {
+				if ( $default_term = get_term_by( 'slug', $default, $tax ) )
+					$default = $default_term->term_id;
+				else
+					$default = '0';
+			}
+
+			if ( ! $selected = gEditorialHelper::theTerm( $tax, $post->ID ) )
+				$selected = $default;
+
+			echo '<div class="field-wrap" title="'.esc_attr( $obj->labels->menu_name ).'">';
+
+			wp_dropdown_categories( array(
+				'taxonomy'          => $tax,
+				'selected'          => $selected,
+				'show_option_none'  => sprintf( _x( '&mdash; Select %s &mdash;', 'MetaBox Tax Dropdown: Select Option None', GEDITORIAL_TEXTDOMAIN ), $obj->labels->menu_name ),
+				'option_none_value' => '0',
+				'class'             => 'geditorial-admin-dropbown',
+				'name'              => 'geditorial-'.$this->module_name.'-'.$tax.( FALSE === $key ? '' : '['.$key.']' ),
+				'id'                => 'geditorial-'.$this->module_name.'-'.$tax.( FALSE === $key ? '' : '-'.$key ),
+				'hierarchical'      => $obj->hierarchical,
+				'orderby'           => 'name',
+				'show_count'        => $count,
+				'hide_empty'        => FALSE,
+				'hide_if_empty'     => TRUE,
+				'echo'              => TRUE,
+				'exclude'           => $excludes,
+			) );
+
+			echo '</div>';
+		}
+	}
 	public function field_post_parent( $constant_key, $post, $status = 'publish,private,draft' )
 	{
 		$pages = wp_dropdown_pages( array(
