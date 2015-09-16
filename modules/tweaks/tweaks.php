@@ -91,7 +91,7 @@ class gEditorialTweaks extends gEditorialModuleCore
 	{
 		add_action( 'add_meta_boxes', array( &$this, 'add_meta_boxes' ), 20, 2 );
 
-		if ( $this->get_setting( 'group_taxonomies', false ) ) {
+		if ( $this->get_setting( 'group_taxonomies', FALSE ) ) {
 
 			foreach ( $this->post_types() as $post_type ) {
 				add_filter( "manage_{$post_type}_posts_columns", array( &$this, 'manage_posts_columns' ) );

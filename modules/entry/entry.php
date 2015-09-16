@@ -167,7 +167,7 @@ class gEditorialEntry extends gEditorialModuleCore
 		$this->register_post_type( 'entry_cpt', array(), array( 'post_tag' ) );
 		$this->register_taxonomy( 'section_tax', array(
 			'hierarchical' => TRUE,
-		), $this->module->constants['entry_cpt'] );
+		), 'entry_cpt' );
 
 		$this->register_shortcode( 'section_shortcode' );
 	}

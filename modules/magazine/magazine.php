@@ -557,13 +557,8 @@ class gEditorialMagazine extends gEditorialModuleCore
 		if ( ! in_array( $post->post_type, $this->post_types() ) )
 			return $post_ID;
 
-		// if ( isset( $_POST['geditorial_magazine_issue_terms'] ) ) {
 		if ( isset( $_POST['geditorial-magazine-issue'] ) ) {
 			$terms = array();
-
-			// foreach ( $_POST['geditorial_magazine_issue_terms'] as $term_id )
-			// 	if ( $term_id )
-			// 		$terms[] = intval( $term_id );
 
 			foreach ( $_POST['geditorial-magazine-issue'] as $issue ) {
 				if ( trim( $issue ) ) {
@@ -1071,7 +1066,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 		echo '<form method="post" action="">';
 
 			$this->tools_field_referer( $sub );
-			
+
 			echo '<h3>'.__( 'Magazine Tools', GEDITORIAL_TEXTDOMAIN ).'</h3>';
 			echo '<table class="form-table">';
 

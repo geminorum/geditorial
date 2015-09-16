@@ -786,6 +786,8 @@ class gEditorialModuleCore
 		$tax_name = esc_attr( $args['taxonomy'] );
 		$taxonomy = get_taxonomy( $args['taxonomy'] );
 
+		// FIXME: check if no terms and print notice and link
+
 		echo '<div id="taxonomy-'.$tax_name.'" class="geditorial-admin-wrap-metabox choose-tax">';
 		echo '<input type="hidden" name="tax_input['.$tax_name.'][]" value="0" />'; // Allows for an empty term set to be sent. 0 is an invalid Term ID and will be ignored by empty() checks.
 		echo '<div class="field-wrap-list"><ul>';
@@ -878,7 +880,7 @@ class gEditorialModuleCore
 			'selected'         => $post->post_parent,
 			'name'             => 'parent_id',
 			'class'            => 'geditorial-admin-dropbown',
-			'show_option_none' => __( '(no parent)', GEDITORIAL_TEXTDOMAIN ),
+			'show_option_none' => _x( '&mdash; no parent &mdash;', 'MetaBox Parent Dropdown: Select Option None', GEDITORIAL_TEXTDOMAIN ),
 			'sort_column'      => 'menu_order',
 			'sort_order'       => 'desc',
 			'post_status'      => $status,

@@ -60,8 +60,8 @@ class gEditorialReshare extends gEditorialModuleCore
 						'description' => __( 'Content from other sources', GEDITORIAL_TEXTDOMAIN ),
 					),
 					'reshare_cat' => array(
-						'name'      => _x( 'Reshare Category', 'Reshare Taxonomy Name', GEDITORIAL_TEXTDOMAIN ),
-						'menu_name' => _x( 'Reshare Categories', 'Reshare Taxonomy Menu Name', GEDITORIAL_TEXTDOMAIN ),
+						'name'      => _x( 'Reshare Category', 'Reshare Category Taxonomy Name', GEDITORIAL_TEXTDOMAIN ),
+						'menu_name' => _x( 'Reshare Categories', 'Reshare Category Taxonomy Menu Name', GEDITORIAL_TEXTDOMAIN ),
 					),
 				),
 			),
