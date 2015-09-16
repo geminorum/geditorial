@@ -963,6 +963,34 @@ class gEditorialModuleCore
 
 		return TRUE;
 	}
+
+	public function do_restrict_manage_posts_taxes( $taxes, $posttype_constant_key )
+	{
+		global $wp_query;
+
+		if ( $this->is_current_posttype( $posttype_constant_key ) ) {
+			foreach ( $taxes as $constant_key ) {
+
+				$tax = $this->module->constants[$constant_key];
+				if ( $obj = get_taxonomy( $tax ) ) {
+
+					wp_dropdown_categories( array(
+						'show_option_all' => $obj->labels->all_items,
+						'taxonomy'        => $tax,
+						'name'            => $obj->name,
+						'orderby'         => 'name',
+						'selected'        => ( isset( $wp_query->query[$tax] ) ? $wp_query->query[$tax] : '' ),
+						'hierarchical'    => $obj->hierarchical,
+						'depth'           => 3,
+						'show_count'      => FALSE,
+						'hide_empty'      => TRUE,
+						'hide_if_empty'   => TRUE,
+					) );
+				}
+			}
+		}
+	}
+
 	public function do_parse_query_taxes( &$qv, $taxes, $posttype_constant_key )
 	{
 		if ( $this->is_current_posttype( $posttype_constant_key ) ) {

@@ -181,27 +181,9 @@ class gEditorialEntry extends gEditorialModuleCore
 
 	public function restrict_manage_posts()
 	{
-		global $wp_query;
-
-		$post_type = gEditorialHelper::getCurrentPostType();
-
-		if ( $post_type == $this->module->constants['entry_cpt'] ) {
-
-			$tax = $this->module->constants['section_tax'];
-			if ( $obj = get_taxonomy( $tax ) ) {
-
-				wp_dropdown_categories( array(
-					'show_option_all' => $obj->labels->all_items,
-					'taxonomy'        => $tax,
-					'name'            => $obj->name,
-					'orderby'         => 'name',
-					'selected'        => ( isset( $wp_query->query[$tax] ) ? $wp_query->query[$tax] : '' ),
-					'hierarchical'    => $obj->hierarchical,
-					'show_count'      => FALSE,
-					'hide_empty'      => TRUE
-				) );
-			}
-		}
+		$this->do_restrict_manage_posts_taxes( array(
+			'section_tax',
+		), 'entry_cpt' );
 	}
 
 	public function pre_get_posts( $wp_query )
