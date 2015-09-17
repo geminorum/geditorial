@@ -999,7 +999,7 @@ class gEditorialModuleCore
 		if ( is_array( $constant_key ) && ! in_array( $post->post_type, $constant_key ) )
 			return FALSE;
 
-		if ( $constant_key && $post->post_type != $this->module->constants[$constant_key] )
+		if ( $constant_key && ! is_array( $constant_key ) && $post->post_type != $this->module->constants[$constant_key] )
 			return FALSE;
 
 		return TRUE;
