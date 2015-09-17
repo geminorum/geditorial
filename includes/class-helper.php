@@ -394,7 +394,7 @@ class gEditorialHelper
 				if ( is_null( $title ) )
 					$title = $gEditorial->meta->get_string( $field, $post->post_type );
 
-				$html  = '<div id="geditorial-meta-'.$field.'-wrap" class="postbox geditorial-meta-postbox geditorial-meta-field-'.$field.'">';
+				$html  = '<div id="geditorial-meta-'.$field.'-wrap" class="postbox geditorial-admin-postbox geditorial-meta-field-'.$field.'">';
 				$html .= '<div class="handlediv" title="'.esc_attr__( 'Click to toggle' ).'"><br></div><h3 class="hndle"><span>'.$title.'</span></h3>';
 				$html .= '<div class="inside"><label class="screen-reader-text" for="geditorial-meta-'.$field.'">'.$title.'</label>';
 				$html .= self::html( 'textarea', array(
