@@ -36,7 +36,6 @@ define( 'GEDITORIAL_VERSION_DB', '0.1' );
 define( 'GEDITORIAL_FILE', __FILE__ );
 define( 'GEDITORIAL_DIR', plugin_dir_path( __FILE__ ) );
 define( 'GEDITORIAL_URL', plugin_dir_url( __FILE__ ) );
-defined( 'DS' ) or define( 'DS', DIRECTORY_SEPARATOR );
 defined( 'GEDITORIAL_TEXTDOMAIN' ) or define( 'GEDITORIAL_TEXTDOMAIN', 'geditorial' );
 
 require_once( GEDITORIAL_DIR.'includes/class-main.php' );
