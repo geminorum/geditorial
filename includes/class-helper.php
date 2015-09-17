@@ -113,12 +113,16 @@ class gEditorialHelper
 			if ( 'class' == $key )
 				// $att = sanitize_html_class( $att, FALSE );
 				$att = $att;
+
 			else if ( 'href' == $key && '#' != $att )
 				$att = esc_url( $att );
+
 			else if ( 'src' == $key )
 				$att = esc_url( $att );
+
 			// else if ( 'input' == $tag && 'value' == $key )
-				// $att = $att;
+			// 	$att = $att;
+
 			else
 				$att = esc_attr( $att );
 
@@ -133,7 +137,10 @@ class gEditorialHelper
 
 	public static function html( $tag, $atts = array(), $content = FALSE, $sep = '' )
 	{
-		$html = self::_tag_open( $tag, $atts, $content );
+		if ( is_array( $atts ) )
+			$html = self::_tag_open( $tag, $atts, $content );
+		else
+			return '<'.$tag.'>'.$atts.'</'.$tag.'>'.$sep;
 
 		if ( FALSE === $content )
 			return $html.$sep;
