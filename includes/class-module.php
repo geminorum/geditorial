@@ -777,6 +777,7 @@ class gEditorialModuleCore
 		register_taxonomy( $this->module->constants[$constant_key], $post_types, $args );
 	}
 
+	// SEE: [Use Chosen for a replacement WordPress taxonomy metabox](https://gist.github.com/helenhousandi/1573966)
 	// callback for meta box for choose only tax
 	public function meta_box_choose_tax( $post, $box )
 	{
@@ -786,7 +787,7 @@ class gEditorialModuleCore
 		$tax_name = esc_attr( $args['taxonomy'] );
 		$taxonomy = get_taxonomy( $args['taxonomy'] );
 
-		// FIXME: check if no terms and print notice and link
+		// FIXME: check if no terms and print notice / link
 
 		echo '<div id="taxonomy-'.$tax_name.'" class="geditorial-admin-wrap-metabox choose-tax">';
 		echo '<input type="hidden" name="tax_input['.$tax_name.'][]" value="0" />'; // Allows for an empty term set to be sent. 0 is an invalid Term ID and will be ignored by empty() checks.

@@ -54,11 +54,21 @@
 		}
 
 		&.field-wrap-inputtext {
+			input {
+				width: 100%;
+			}
+		}
 
+		&.field-wrap-inputtext-half {
+			input {
+				width: 49%;
+			}
 		}
 
 		&.field-wrap-textarea {
-
+			textarea {
+				width: 100%;
+			}
 		}
 
 		&.field-wrap-select {
@@ -67,15 +77,15 @@
 
 		// DEPRECATED
 		.field-text {
-			width: 100%;
+			// width: 100%;
 		}
 
 		.field-textarea {
-			width: 100%;
+			// width: 100%;
 		}
 
 		.field-inputtext {
-			width: 100%;
+			// width: 100%;
 		}
 
 		.field-order {
@@ -184,23 +194,14 @@
 	}
 }
 
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
-//---Default-Enhancements-------------------------------------------------------
-// #postexcerpt div.inside p,
-// #postcustom div.inside > p
-// { display:none; visibility:hidden; }
-//
-// input#post_name { width:99%; }
-// body.rtl #sample-permalink { margin-left:5px; }
-// body.rtl input#post_name { direction:ltr; }
+// Lead textarea Field
+.geditorial-admin-postbox {
 
-////////////////////////////////////////////////////////////////////////////////
-/**---META--------------------------------------------------**/
+	margin: 10px 0 0 0;
 
-// p.geditorial-meta-post-meta-box-p-actions {}
-// p.geditorial-meta-post-meta-box-p-actions a.button { width:100%; }
-// p.geditorial-meta-post-meta-box-p-table {}
-// .geditorial-meta-postbox { margin:10px 0 0 0; }
-// .geditorial-meta-postbox textarea { width:99%; margin:12px 0 0 0; resize:vertical; }
+	textarea {
+		width: 99%;
+		margin: 12px 0 0 0;
+		resize: vertical;
+	}
+}
