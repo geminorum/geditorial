@@ -12,6 +12,11 @@
 
 	@include main-wrap();
 
+	margin: 10px 20px 0px 2px;
+	@include body-rtl() {
+		margin: 10px 2px 0px 20px;
+	}
+
 	.explanation {
 
 		margin-bottom: 1em;
@@ -30,10 +35,7 @@
 		width: 100%;
 		overflow: hidden;
 
-
-		.module-enabled {
-
-		}
+		.module-enabled {}
 
 		.module-disabled {
 			color: opacity(0.5);
@@ -51,7 +53,7 @@
 			// background-color: #f1f1f1;
 			border-radius: 3px;
 
-			body.rtl & {
+			@include body-rtl() {
 				float: right;
 				margin: 0 0 15px 15px;
 			}
@@ -87,12 +89,11 @@
 				margin: 0 0 10px 0;
 				padding: 0 0 0 20px;
 
-				body.rtl & {
+				@include body-rtl() {
 					right: auto;
 					left: 10px;
 					padding: 0 20px 0 0;
 				}
-
 			}
 
 			.button {
@@ -102,7 +103,7 @@
 
 			.button-primary {
 				float: right;
-				body.rtl & {
+				@include body-rtl() {
 					float: left;
 				}
 			}
@@ -117,7 +118,7 @@
 				width: 25px;
 				height: 25px;
 				float: right;
-				body.rtl & {
+				@include body-rtl() {
 					float: left;
 				}
 			}
@@ -128,7 +129,6 @@
 				float: right;
 			}
 		}
-
 	}
 }
 
