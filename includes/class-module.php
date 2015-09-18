@@ -558,24 +558,28 @@ class gEditorialModuleCore
 			'type'        => 'enabled',
 			'field'       => FALSE,
 			'values'      => array(),
+			'exclude'     => '',
 			'filter'      => FALSE, // will use via sanitize
 			'dir'         => FALSE,
 			'disabled'    => FALSE,
 			'default'     => '',
 			'description' => '',
+			'before'      => '', // html to print before field
+			'after'       => '', // html to print after field
 			'field_class' => '', // formally just class!
 			'class'       => '', // now used on wrapper
 			'name_group'  => 'settings',
-			'name_attr'    => FALSE, // override
-			'id_attr'      => FALSE, // override
+			'name_attr'   => FALSE, // override
+			'id_attr'     => FALSE, // override
 		), $r );
 
 		if ( ! $args['field'] )
 			return;
 
-		$html = '';
-		$id   = $args['id_attr']   ? $args['id_attr']   : esc_attr( $this->module->options_group_name.'-'.$args['field'] );
-		$name = $args['name_attr'] ? $args['name_attr'] : $this->module->options_group_name.'['.esc_attr( $args['name_group'] ).']['.esc_attr( $args['field'] ).']';
+		$html    = '';
+		$id      = $args['id_attr'] ? $args['id_attr'] : esc_attr( $this->module->options_group_name.'-'.$args['field'] );
+		$name    = $args['name_attr'] ? $args['name_attr'] : $this->module->options_group_name.'['.esc_attr( $args['name_group'] ).']['.esc_attr( $args['field'] ).']';
+		$exclude = $args['exclude'] && ! is_array( $args['exclude'] ) ? array_filter( explode( ',', $args['exclude'] ) ) : array();
 
 		if ( isset( $this->module->options->settings[$args['field']] ) )
 			$value = $this->module->options->settings[$args['field']];
@@ -585,6 +589,9 @@ class gEditorialModuleCore
 			$value = $this->module->default_options['settings'][$args['field']];
 		else
 			$value = NULL;
+
+		if ( $args['before'] )
+			echo $args['before'].'&nbsp;';
 
 		switch ( $args['type'] ) {
 
@@ -627,6 +634,10 @@ class gEditorialModuleCore
 
 				if ( count( $args['values'] ) ) {
 					foreach ( $args['values'] as $value_name => $value_title ) {
+
+						if ( in_array( $value_name, $exclude ) )
+							continue;
+
 						$html .= gEditorialHelper::html( 'input', array(
 							'type'    => 'checkbox',
 							'class'   => $args['field_class'],
@@ -641,7 +652,9 @@ class gEditorialModuleCore
 							'for' => $id.'-'.$value_name,
 						), $html.'&nbsp;'.esc_html( $value_title ) ).'</p>';
 					}
+
 				} else {
+
 					$html = gEditorialHelper::html( 'input', array(
 						'type'    => 'checkbox',
 						'class'   => $args['field_class'],
@@ -661,11 +674,16 @@ class gEditorialModuleCore
 			case 'select' :
 
 				if ( FALSE !== $args['values'] ) { // alow hiding
-					foreach ( $args['values'] as $value_name => $value_title )
+					foreach ( $args['values'] as $value_name => $value_title ) {
+
+						if ( in_array( $value_name, $exclude ) )
+							continue;
+
 						$html .= gEditorialHelper::html( 'option', array(
 							'value'    => $value_name,
 							'selected' => $value == $value_name,
 						), esc_html( $value_title ) );
+					}
 
 					echo gEditorialHelper::html( 'select', array(
 						'class' => $args['field_class'],
@@ -675,10 +693,83 @@ class gEditorialModuleCore
 				}
 
 			break;
+			case 'textarea' :
+
+				echo gEditorialHelper::html( 'textarea', array(
+					'class' => array(
+						'large-text',
+						// 'textarea-autosize',
+						$args['field_class'],
+					),
+					'name'  => $name,
+					'id'    => $id,
+					'rows'  => 5,
+					'cols'  => 45,
+				// ), esc_textarea( $value ) );
+				), $value );
+
+			break;
+			case 'page' :
+
+				if ( ! $args['values'] )
+					$args['values'] = 'page';
+
+				wp_dropdown_pages( array(
+					'post_type'        => $args['values'],
+					'selected'         => $value,
+					'name'             => $name,
+					'id'               => $id,
+					'class'            => $args['field_class'],
+					'exclude'          => implode( ',', $exclude ),
+					'show_option_none' => __( '&mdash; Select Page &mdash;', GEDITORIAL_TEXTDOMAIN ),
+					'sort_column'      => 'menu_order',
+					'sort_order'       => 'asc',
+					'post_status'      => 'publish,private,draft',
+				));
+
+			break;
+			case 'button' :
+
+				submit_button(
+					$value,
+					( empty( $args['field_class'] ) ? 'secondary' : $args['field_class'] ),
+					$id,
+					FALSE
+				);
+
+			break;
+			case 'file' :
+
+				echo gEditorialHelper::html( 'input', array(
+					'type'  => 'file',
+					'class' => $args['field_class'],
+					'name'  => $id, // $name,
+					'id'    => $id,
+					// 'value' => $value,
+					'dir'   => $args['dir'],
+				) );
+
+			break;
+			case 'custom' :
+
+				if ( ! is_array( $args['values'] ) )
+					echo $args['values'];
+				else
+					echo $value;
+
+			break;
+			case 'debug' :
+
+				gEditorialHelper::dump( $this->module->options );
+
+			break;
 			default :
 
-				_e( 'Error: setting type undefined.', GEDITORIAL_TEXTDOMAIN );
+				_e( 'Error: settings type undefined.', GEDITORIAL_TEXTDOMAIN );
 		}
+
+		if ( $args['after'] )
+			echo '&nbsp;'.$args['after'];
 
 		if ( $args['description'] && FALSE !== $args['values'] )
 			echo gEditorialHelper::html( 'p', array(
