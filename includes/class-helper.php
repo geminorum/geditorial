@@ -84,7 +84,7 @@ class gEditorialHelper
 				if ( 'data' == $key ) {
 					foreach ( $att as $data_key => $data_val ) {
 						if ( is_array( $data_val ) )
-							$html .= ' data-'.$data_key.'=\''.json_encode( $data_val ).'\'';
+							$html .= ' data-'.$data_key.'=\''.wp_json_encode( $data_val ).'\'';
 						else
 							$html .= ' data-'.$data_key.'="'.esc_attr( $data_val ).'"';
 					}
