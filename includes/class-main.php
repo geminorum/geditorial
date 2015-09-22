@@ -168,13 +168,10 @@ class gEditorial
 				$mod_data
 			);
 
-			if ( ! isset( $options[$mod_name] ) )
-				$options[$mod_name] = get_option( $this->options_group.$mod_name.'_options', FALSE ); // TODO: MUST DROP: in the next major version
-
-			if ( FALSE !== $options[$mod_name] )
-				$this->modules->{$mod_name}->options = $options[$mod_name];
-			else
+			if ( ! isset( $options[$mod_name] ) || FALSE === $options[$mod_name] )
 				$this->modules->{$mod_name}->options = new stdClass;
+			else
+				$this->modules->{$mod_name}->options = $options[$mod_name];
 
 			foreach ( $mod_data->default_options as $default_key => $default_value )
 				if ( ! isset( $this->modules->{$mod_name}->options->$default_key ) )
