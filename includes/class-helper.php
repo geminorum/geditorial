@@ -790,7 +790,11 @@ class gEditorialHelper
 				$cell = 'td';
 
 				if ( '_cb' == $key ) {
-					if ( is_array( $row ) && isset( $row[$column] ) )
+					if ( '_index' == $column )
+						$value = $index;
+					else if ( is_array( $column ) && isset( $column['value'] ) )
+						$value = call_user_func_array( $column['value'], array( NULL, $row, $column, $index ) );
+					else if ( is_array( $row ) && isset( $row[$column] ) )
 						$value = $row[$column];
 					else if ( is_object( $row ) && isset( $row->{$column} ) )
 						$value = $row->{$column};
@@ -818,7 +822,7 @@ class gEditorialHelper
 				echo '<'.$cell.' class="-cell -cell-'.$key.$class.'">';
 
 				if ( $callback ){
-					echo call_user_func_array( $callback, array( $value, $row, $column ) );
+					echo call_user_func_array( $callback, array( $value, $row, $column, $index ) );
 
 				} else if ( $value ) {
 					echo $value;
@@ -827,6 +831,7 @@ class gEditorialHelper
 					echo '&nbsp;';
 
 				}
+
 				echo '</'.$cell.'>';
 			}
 
