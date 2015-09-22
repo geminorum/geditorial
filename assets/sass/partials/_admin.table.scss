@@ -25,6 +25,15 @@ table.helper-table {
 		width: 40px;
 	}
 
+	.-column-content {}
+	.-column-info {
+		width: 34%;
+	}
+
+	.-column-tasks {}
+	.-column-next {
+		width: 34%;
+	}
 
 	.-row {}
 	.-cell {}
