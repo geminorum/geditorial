@@ -971,9 +971,9 @@ class gEditorialMagazine extends gEditorialModuleCore
 			foreach ( $fields[$post_type] as $field => $field_enabled ) {
 				switch ( $field ) {
 					case 'in_issue_order' :
+					case 'in_issue_page_start' :
 						$this->set_postmeta_field_number( $postmeta, $field );
 					break;
-					case 'in_issue_page_start' :
 					case 'in_issue_pages' :
 						$this->set_postmeta_field_string( $postmeta, $field );
 				}
