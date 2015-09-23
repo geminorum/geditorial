@@ -243,8 +243,11 @@ class gEditorialReshare extends gEditorialModuleCore
 			foreach ( $fields[$post_type] as $field => $field_enabled ) {
 				switch ( $field ) {
 					case 'reshare_source_title' :
-					case 'reshare_source_url' :
 						$this->set_postmeta_field_string( $postmeta, $field );
+					break;
+					case 'reshare_source_url' :
+						$this->set_postmeta_field_url( $postmeta, $field );
+
 				}
 			}
 		}
