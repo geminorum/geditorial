@@ -1,3 +1,9 @@
+### 0.2.12
+* all: removed old options calls
+* all: new api for: tools page / save post / parse query / restrict manage posts / post parent field
+* settings: upgrade option tool
+* book: basic query class / see [Extending WP_Query](http://bradt.ca/blog/extending-wp_query/)
+
 ### 0.2.11
 * all: new widget api based on [gTheme 3](https://github.com/geminorum/gtheme_03) code
 * all: better handling image sizes
