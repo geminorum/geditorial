@@ -195,40 +195,51 @@ class gEditorialModuleCore
 			delete_post_meta( $post_id, $this->meta_key.$key_suffix );
 	}
 
-	public function register_settings_post_types_option()
+	public function register_settings_post_types_option( $title = NULL )
 	{
+		if ( is_null( $title ) )
+			$title = __( 'Enable for these post types', GEDITORIAL_TEXTDOMAIN );
+
 		$section = $this->module->options_group_name.'_posttypes';
 
 		add_settings_section( $section, FALSE, '__return_false', $this->module->options_group_name );
 		add_settings_field( 'post_types',
-			__( 'Enable for these post types:', GEDITORIAL_TEXTDOMAIN ),
+			$title,
 			array( $this, 'settings_post_types_option' ),
 			$this->module->options_group_name,
 			$section
 		);
 	}
 
-	public function register_settings_taxonomies_option()
+	public function register_settings_taxonomies_option( $title = NULL )
 	{
+		if ( is_null( $title ) )
+			$title = __( 'Enable for these taxonomies', GEDITORIAL_TEXTDOMAIN );
+
 		$section = $this->module->options_group_name.'_taxonomies';
 
 		add_settings_section( $section, FALSE, '__return_false', $this->module->options_group_name );
 		add_settings_field( 'taxonomies',
-			__( 'Enable for these taxonomies:', GEDITORIAL_TEXTDOMAIN ),
+			$title,
 			array( $this, 'settings_taxonomies_option' ),
 			$this->module->options_group_name,
 			$section
 		);
 	}
 
-	public function register_settings_post_types_fields()
+	public function register_settings_post_types_fields( $title = NULL )
 	{
+		if ( is_null( $title ) )
+			$title = __( 'Fields for %s', GEDITORIAL_TEXTDOMAIN );
+
 		$all = $this->all_post_types();
 
 		foreach ( $this->post_types() as $post_type ) {
 
-			add_settings_section( $post_type.'_fields',
-				sprintf( __( 'Fields for %s', GEDITORIAL_TEXTDOMAIN ), $all[$post_type] ),
+			$section = $post_type.'_fields';
+
+			add_settings_section( $section,
+				sprintf( $title, $all[$post_type] ),
 				'__return_false',
 				$this->module->options_group_name
 			);
@@ -514,8 +525,9 @@ class gEditorialModuleCore
 					$this->add_settings_field( array_merge( $field, array( 'section' => $section ) ) );
 
 			// for pre internal custom options
-			} else if ( is_callable( array( $this, 'register_settings_'.$fields ) ) ) {
-				call_user_func( array( $this, 'register_settings_'.$fields ) );
+			} else if ( is_callable( array( $this, 'register_settings_'.$section_suffix ) ) ) {
+				$title = $section_suffix == $fields ? NULL : $fields;
+				call_user_func_array( array( $this, 'register_settings_'.$section_suffix ), array( $title ) );
 			}
 		}
 
