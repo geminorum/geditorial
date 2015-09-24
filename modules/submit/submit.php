@@ -138,10 +138,8 @@ class gEditorialSubmit extends gEditorialModuleCore
 
 		if ( ! is_user_logged_in() && $args['must_logged_in'] ) {
 
-			if ( FALSE !== $args['must_logged_in'] ) {
-				wp_redirect( $args['must_logged_in'] );
-				die();
-			}
+			if ( FALSE !== $args['must_logged_in'] )
+				self::redirect( $args['must_logged_in'] );
 
 			return $content;
 		}

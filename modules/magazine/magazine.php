@@ -1145,11 +1145,10 @@ class gEditorialMagazine extends gEditorialModuleCore
 							$posts[] = gEditorialHelper::newPostFromTerm( $term, $this->module->constants['issue_tax'], $this->module->constants['issue_cpt'] );
 					}
 
-					wp_redirect( add_query_arg( array(
+					self::redirect( add_query_arg( array(
 						'message' => 'created',
 						'count'   => count( $posts ),
 					), wp_get_referer() ) );
-					exit();
 
 				} else if ( isset( $_POST['_cb'] )
 					&& ( isset( $_POST['issue_store_order'] )
@@ -1174,11 +1173,10 @@ class gEditorialMagazine extends gEditorialModuleCore
 						}
 					}
 
-					wp_redirect( add_query_arg( array(
+					self::redirect( add_query_arg( array(
 						'message' => 'ordered',
 						'count'   => $count,
 					), wp_get_referer() ) );
-					exit();
 				}
 			}
 
