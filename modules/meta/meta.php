@@ -15,6 +15,7 @@ class gEditorialMeta extends gEditorialModuleCore
 		do_action( 'geditorial_meta_include' );
 
 		$args = array(
+
 			'title'                => __( 'Meta', GEDITORIAL_TEXTDOMAIN ),
 			'short_description'    => __( 'Metadata, magazine style.', GEDITORIAL_TEXTDOMAIN ),
 
@@ -161,7 +162,11 @@ class gEditorialMeta extends gEditorialModuleCore
 		do_action( 'geditorial_meta_init', $this->module );
 
 		$this->do_filters();
+
 		$this->register_taxonomies();
+
+		// FIXME: here must add meta_fields support to build-in posttypes / other cpts take care of themselvs!
+		// all in $this->module->fields must add support, hence the do_filters() before
 	}
 
 	public function admin_init()
@@ -246,7 +251,7 @@ class gEditorialMeta extends gEditorialModuleCore
 
 		$this->remove_meta_box( 'ct_tax', $post_type, 'tag' );
 
-		// we use filter to override the whole functionality, no just adding the actions
+		// we use filter to override the whole functionality, not just adding the actions
 		$box_func = apply_filters( 'geditorial_meta_box_callback', array( &$this, $post_type.'_meta_box' ), $post_type );
 		if ( is_callable( $box_func ) )
 			add_meta_box( 'geditorial-meta-'.$post_type, $this->get_meta_box_title(), $box_func, $post_type, 'side', 'high' );

@@ -47,6 +47,20 @@ class gEditorialMagazine extends gEditorialModuleCore
 				),
 			),
 
+			'fields' => array(
+				'issue_cpt' => array(
+					'ot'                => FALSE,
+					'st'                => TRUE,
+					'issue_number_line' => TRUE,
+					'issue_total_pages' => TRUE,
+				 ),
+				'post' => array(
+					'in_issue_order'      => TRUE,
+					'in_issue_page_start' => TRUE,
+					'in_issue_pages'      => FALSE,
+				),
+			),
+
 			'default_options' => array(
 				'enabled'     => FALSE,
 				'post_types'  => array(),
@@ -800,6 +814,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 		return $columns;
 	}
 
+	// FIXME: must deprecate!
 	public function get_meta_fields()
 	{
 		return array(

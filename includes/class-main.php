@@ -131,6 +131,7 @@ class gEditorial
 			'constants'       => array(),
 			'strings'         => array(),
 			'supports'        => array(),
+			'fields'          => array(),
 		);
 
 		$args = array_merge( $defaults, $args );

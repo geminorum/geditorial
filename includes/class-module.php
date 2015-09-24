@@ -247,25 +247,41 @@ class gEditorialModuleCore
 			$all_fields = $this->post_type_all_fields( $post_type );
 
 			if ( count( $all_fields ) ) {
-				foreach ( $all_fields as $field )
-					// FIXME: use internal api
-					// $this->add_settings_field( array(
-					// 	'field'     => $field,
-					// ) );
-					add_settings_field( $post_type.'_'.$field,
-						'', // $this->get_string( $field, $post_type ),
-						array( $this, 'do_post_type_fields_option' ),
-						$this->module->options_group_name,
-						$post_type.'_fields',
-						array(
-							// 'label_for' => $post_type.'_'.$field, // NO NEED beacause we use check box and label is better to be on next to it
-							'id'        => $post_type.'_'.$field,
-							'title'     => $this->get_string( $field, $post_type ),
+
+				foreach ( $all_fields as $field => $args )
+
+					if ( is_array( $args ) ) {
+
+						// NOTE: we register each fields b/c of the desc
+						$this->add_settings_field( array_merge( array(
+							'field'      => $field,
+							'title'      => '&nbsp;',
+							'field_title'      => isset( $args['title'] ) ? $args['title'] : '&nbsp;',
 							'post_type' => $post_type,
-							'field'     => $field,
-						)
-					);
+							'section'    => $section,
+							'callback'   => array( $this, 'do_settings_field_posttype_fields' ),
+						), $args ) );
+
+					} else {
+
+						// fallback to the old method
+
+						add_settings_field( $post_type.'_'.$field,
+							'', // $this->get_string( $field, $post_type ),
+							array( $this, 'do_post_type_fields_option' ),
+							$this->module->options_group_name,
+							$section,
+							array(
+								'id'        => $post_type.'_'.$field,
+								'title'     => $this->get_string( $field, $post_type ),
+								'post_type' => $post_type,
+								'field'     => $field,
+							)
+						);
+					}
+
 			} else {
+
 				add_settings_field( $post_type.'_nofields',
 					sprintf( __( 'No fields supported for %s', GEDITORIAL_TEXTDOMAIN ), $all[$post_type] ),
 					'__return_false',
@@ -276,6 +292,42 @@ class gEditorialModuleCore
 		}
 	}
 
+	// call back for the NEW method
+	public function do_settings_field_posttype_fields( $args )
+	{
+		$name  = $this->module->options_group_name.'[fields]['.$args['post_type'].']['.$args['field'].']';
+		$id    = $this->module->options_group_name.'-fields-'.$args['post_type'].'-'.$args['field'];
+
+		if ( isset( $this->module->options->settings['fields'][$args['post_type']][$args['field']] ) )
+			$value = $this->module->options->settings['fields'][$args['post_type']][$args['field']];
+		else if ( ! empty( $args['default'] ) )
+			$value = $args['default'];
+		else if ( isset( $this->module->default_options['fields'][$args['post_type']][$args['field']] ) )
+			$value = $this->module->default_options['fields'][$args['post_type']][$args['field']];
+		else
+			$value = FALSE;
+
+		$html = gEditorialHelper::html( 'input', array(
+			'type'    => 'checkbox',
+			'name'    => $name,
+			'id'      => $id,
+			'value'   => '1',
+			'checked' => $value,
+		) );
+
+		echo '<div>'.gEditorialHelper::html( 'label', array(
+			'for' => $id,
+		), $html.'&nbsp;'.$args['field_title'] );
+
+		if ( $args['description'] )
+			echo gEditorialHelper::html( 'p', array(
+				'class' => 'description',
+			), $args['description'] );
+
+		echo '</div>';
+	}
+
+	// call back for the OLD method
 	public function do_post_type_fields_option( $args )
 	{
 		echo '<label for="'.esc_attr( $args['id'] ).'">';
@@ -352,34 +404,61 @@ class gEditorialModuleCore
 		check_admin_referer( 'geditorial-tools-'.$sub );
 	}
 
-	// Validate our user input as the settings are being saved
-	public function settings_validate( $new_options )
+	// USED by settings module
+	// validate our user input as the settings are being saved
+	public function settings_validate( $options )
 	{
-		// TODO : all modules must be compatible and then disable chacking the not settings!
-		if ( ! isset( $this->module->settings ) || isset( $this->module->settings['post_types_option'] ) ) {
-			if ( ! isset( $new_options['post_types'] ) )
-				$new_options['post_types'] = array();
-			$new_options['post_types'] = $this->sanitize_post_types( $new_options['post_types'] );
+		if ( isset( $this->module->settings['post_types_option'] ) ) {
+			if ( ! isset( $options['post_types'] ) )
+				$options['post_types'] = array();
+			$options['post_types'] = $this->sanitize_post_types( $options['post_types'] );
 		}
 
-		if ( ! isset( $this->module->settings ) || isset( $this->module->settings['post_types_fields'] ) ) {
+		// FIXME: what about taxonomies?
+
+		if ( isset( $this->module->settings['post_types_fields'] ) ) {
 			foreach ( $this->post_types() as $post_type ) {
-				foreach ( $this->post_type_all_fields( $post_type ) as $field )
-					if ( ! isset( $new_options[$post_type.'_fields'][$field] )
-						|| $new_options[$post_type.'_fields'][$field] != 'on' )
-							$new_options[$post_type.'_fields'][$field] = FALSE;
+				foreach ( $this->post_type_all_fields( $post_type ) as $field => $args ) {
+
+					if ( ! isset( $options['fields'][$post_type][$field] )
+						|| $options['fields'][$post_type][$field] != 'on' ) // NOTE: checkbox posts 'on' on checked
+							$options['fields'][$post_type][$field] = FALSE;
 					else
-						$new_options[$post_type.'_fields'][$field] = TRUE;
+						$options['fields'][$post_type][$field] = TRUE;
+
+					// fallback for the old method
+
+					if ( ! isset( $options[$post_type.'_fields'][$field] )
+						|| $options[$post_type.'_fields'][$field] != 'on' ) // NOTE: checkbox posts 'on' on checked
+							$options[$post_type.'_fields'][$field] = FALSE;
+					else
+						$options[$post_type.'_fields'][$field] = TRUE;
+				}
 			}
 		}
 
-		return $new_options;
+		return $options;
 	}
 
-	// get enabled fields for a post type
-	public function post_type_fields( $post_type = 'post' )
+	// get enabled fields for a post type / OLD method : we need arguments
+	public function post_type_fields( $post_type = 'post', $is_constant = FALSE )
 	{
+		if ( $is_constant )
+			$post_type = $this->module->constants[$post_type];
+
 		$fields = array();
+
+		if ( isset( $this->module->options->fields[$post_type] )
+			&& is_array( $this->module->options->fields[$post_type] ) ) {
+				foreach ( $this->module->options->fields[$post_type] as $field => $enabled )
+					if ( $enabled )
+						$fields[] = $field;
+
+			if ( count( $fields ) )
+				return $fields;
+		}
+
+		// fallback to the old method
 		$key = $post_type.'_fields';
 
 		if ( isset( $this->module->options->{$key} )
@@ -388,6 +467,7 @@ class gEditorialModuleCore
 					if ( $value && 'off' !== $value )
 						$fields[] = $field;
 		}
+
 		return $fields;
 	}
 
@@ -423,13 +503,37 @@ class gEditorialModuleCore
 		return $fields;
 	}
 
+	// NOTE: it's like core's but returns the actuall array!
+	public function post_type_supports( $post_type, $feature, $is_constant = FALSE )
+	{
+		if ( $is_constant )
+			$post_type = $this->module->constants[$post_type];
+
+		$all = get_all_post_type_supports( $post_type );
+
+		if ( isset( $all[$feature] )
+			&& is_array( $all[$feature] ) )
+				return $all[$feature];
+
+		return array();
+	}
+
 	public function post_type_all_fields( $post_type = 'post' )
 	{
-		$key = $post_type.'_fields';
 		$fields = array();
+
+		foreach ( $this->post_type_supports( $post_type, 'meta_fields', FALSE ) as $field => $args )
+			$fields[$field] = $args;
+
+		if ( count( $fields ) )
+			return $fields;
+
+		// fallback for the old method
+		$key = $post_type.'_fields';
+
 		if ( isset( $this->module->default_options[$key] ) && is_array( $this->module->default_options[$key] ) )
 			foreach ( $this->module->default_options[$key] as $field => $value )
-				$fields[] = $field;
+				$fields[$field] = $field;
 		return $fields;
 	}
 
@@ -450,6 +554,12 @@ class gEditorialModuleCore
 		return $fallback;
 	}
 
+	// FIXME: TEMP
+	public function get_meta_fields()
+	{
+		return $this->module->fields;
+	}
+
 	public function do_filters()
 	{
 		if ( has_filter( 'geditorial_'.$this->module_name.'_strings' ) )
@@ -460,6 +570,9 @@ class gEditorialModuleCore
 
 		if ( has_filter( 'geditorial_'.$this->module_name.'_supports' ) )
 			$this->module->supports = apply_filters( 'geditorial_'.$this->module_name.'_supports', $this->module->supports );
+
+		if ( has_filter( 'geditorial_'.$this->module_name.'_fields' ) )
+			$this->module->fields = apply_filters( 'geditorial_'.$this->module_name.'_fields', $this->module->fields );
 	}
 
 	// convert the numbers in other language into english
