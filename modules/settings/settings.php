@@ -138,13 +138,11 @@ class gEditorialSettings extends gEditorialModuleCore
 
 					$result = $gEditorial->upgrade_old_options();
 
-					if ( count( $result ) ) {
-						wp_redirect( add_query_arg( array(
+					if ( count( $result ) )
+						self::redirect( add_query_arg( array(
 							'message' => 'upgraded',
 							'count'   => count( $result ),
 						), wp_get_referer() ) );
-						exit();
-					}
 
 				} else if ( isset( $_POST['custom_fields_empty'] ) ) {
 
@@ -152,13 +150,11 @@ class gEditorialSettings extends gEditorialModuleCore
 
 						$result = gEditorialHelper::deleteEmptyMeta( $gEditorial->{$post['empty_module']}->meta_key );
 
-						if ( count( $result ) ) {
-							wp_redirect( add_query_arg( array(
+						if ( count( $result ) )
+							self::redirect( add_query_arg( array(
 								'message' => 'emptied',
 								'count'   => count( $result ),
 							), wp_get_referer() ) );
-							exit();
-						}
 					}
 				}
 			}
@@ -443,8 +439,7 @@ class gEditorialSettings extends gEditorialModuleCore
 			'enabled' => TRUE,
 		) );
 
-		wp_redirect( add_query_arg( 'message', 'settings-reset', remove_query_arg( array( 'message' ), wp_get_referer() ) ) );
-		exit;
+		self::redirect( add_query_arg( 'message', 'settings-reset', remove_query_arg( array( 'message' ), wp_get_referer() ) ) );
 	}
 
 	public function admin_settings_save( $page = NULL )
@@ -467,23 +462,20 @@ class gEditorialSettings extends gEditorialModuleCore
 			|| $_POST['option_page'] != $gEditorial->$module_name->module->options_group_name )
 			return FALSE;
 
-		//if ( ! current_user_can( 'manage_options' ) || !wp_verify_nonce( $_POST['_wpnonce'], $gEditorial->$module_name->module->options_group_name.'-options' ) )
+		// if ( ! current_user_can( 'manage_options' ) || !wp_verify_nonce( $_POST['_wpnonce'], $gEditorial->$module_name->module->options_group_name.'-options' ) )
 		if ( ! $this->admin_settings_verify( $gEditorial->$module_name->module->options_group_name ) )
 			wp_die( __( 'Cheatin&#8217; uh?' ) );
 
-		$new_options = ( isset( $_POST[$gEditorial->$module_name->module->options_group_name] ) ) ? $_POST[$gEditorial->$module_name->module->options_group_name] : array();
+		$new_options = ( isset( $_POST[$gEditorial->$module_name->module->options_group_name] ) )
+			? $_POST[$gEditorial->$module_name->module->options_group_name] : array();
 
-		// Only call the validation callback if it exists?
-		if ( method_exists( $gEditorial->$module_name, 'settings_validate' ) )
-			$new_options = $gEditorial->$module_name->settings_validate( $new_options );
+		$new_options = $gEditorial->$module_name->settings_validate( $new_options );
 
-		// Cast our object and save the data.
+		// cast our object and save the data.
 		$new_options = (object) array_merge( (array) $gEditorial->$module_name->module->options, $new_options );
 		$gEditorial->update_all_module_options( $gEditorial->$module_name->module->name, $new_options );
 
-		// Redirect back to the settings page that was submitted without any previous messages
-		$goback = add_query_arg( 'message', 'settings-updated', remove_query_arg( array( 'message' ), wp_get_referer() ) );
-		wp_redirect( $goback );
-		exit;
+		// redirect back to the settings page that was submitted without any previous messages
+		self::redirect( add_query_arg( 'message', 'settings-updated', remove_query_arg( array( 'message' ), wp_get_referer() ) ) );
 	}
 }
