@@ -142,9 +142,9 @@ class gEditorialTweaks extends gEditorialModuleCore
 						continue;
 
 					$before = '<div class="tweaks-row tweaks-'.$taxonomy.'">';
-					if ( $dashicon = $this->get_string( 'dashicon', $taxonomy, 'taxonomies' ) )
+					if ( $dashicon = $this->get_string( 'dashicon', $taxonomy, 'taxonomies', 'tag' ) )
 						$before .= '<span class="dashicons dashicons-'.$dashicon.'" title="'.esc_attr(
-							$this->get_string( 'title_attr', $taxonomy, 'taxonomies' )
+							$this->get_string( 'title_attr', $taxonomy, 'taxonomies', $taxonomy )
 						).'"></span> ';
 
 					gEditorialHelper::getTermsEditRow( $post_id,
