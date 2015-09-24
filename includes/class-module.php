@@ -278,7 +278,7 @@ class gEditorialModuleCore
 
 	public function do_post_type_fields_option( $args )
 	{
-		echo '<label class="selectit" for="'.esc_attr( $args['id'] ).'">';
+		echo '<label for="'.esc_attr( $args['id'] ).'">';
 		echo '<input id="'.esc_attr( $args['id'] ).'" name="'.$this->module->options_group_name.'['.esc_attr( $args['post_type'] ).'_fields]['.esc_attr( $args['field'] ).']"';
 
 		$checked = FALSE;
@@ -391,6 +391,7 @@ class gEditorialModuleCore
 		return $fields;
 	}
 
+	// HELPER: for importer tools
 	public function post_type_fields_list( $post_type = 'post', $extra = array() )
 	{
 		$list = array();
@@ -507,8 +508,7 @@ class gEditorialModuleCore
 			$this->module->strings['terms'][$constant_key]
 		);
 
-		wp_redirect( add_query_arg( 'message', $added ? 'added_default_terms' : 'error_default_terms' ) );
-		exit;
+		self::redirect( add_query_arg( 'message', $added ? 'added_default_terms' : 'error_default_terms' ) );
 	}
 
 	public function register_settings( $page = NULL )
@@ -552,7 +552,7 @@ class gEditorialModuleCore
 			'page'        => $this->module->options_group_name,
 			'section'     => $this->module->options_group_name.'_general',
 			'field'       => FALSE,
-			// 'label_for'   => '',
+			'label_for'   => '',
 			'title'       => '',
 			'description' => '',
 			'callback'    => array( $this, 'do_settings_field' ),
@@ -592,8 +592,8 @@ class gEditorialModuleCore
 			return;
 
 		$html    = '';
-		$id      = $args['id_attr'] ? $args['id_attr'] : esc_attr( $this->module->options_group_name.'-'.$args['field'] );
-		$name    = $args['name_attr'] ? $args['name_attr'] : $this->module->options_group_name.'['.esc_attr( $args['name_group'] ).']['.esc_attr( $args['field'] ).']';
+		$id      = $args['id_attr'] ? $args['id_attr'] : $this->module->options_group_name.'-'.$args['name_group'].'-'.$args['field'];
+		$name    = $args['name_attr'] ? $args['name_attr'] : $this->module->options_group_name.'['.$args['name_group'].']['.$args['field'].']';
 		$exclude = $args['exclude'] && ! is_array( $args['exclude'] ) ? array_filter( explode( ',', $args['exclude'] ) ) : array();
 
 		if ( isset( $this->module->options->settings[$args['field']] ) )
@@ -682,7 +682,9 @@ class gEditorialModuleCore
 
 					echo '<p>'.gEditorialHelper::html( 'label', array(
 						'for' => $id,
-					), $html.'&nbsp;'.esc_html( $value_title ) ).'</p>';
+					), $html.'&nbsp;'.$args['description'] ).'</p>';
+
+					$args['description'] = FALSE;
 				}
 
 			break;
@@ -842,11 +844,12 @@ class gEditorialModuleCore
 				'feeds'      => TRUE,
 				'pages'      => TRUE,
 			),
-			'hierarchical' => FALSE,
-			'public'       => TRUE,
-			'show_ui'      => TRUE,
-			'map_meta_cap' => TRUE,
-			'can_export'   => TRUE,
+			'hierarchical'  => FALSE,
+			'public'        => TRUE,
+			'show_ui'       => TRUE,
+			'map_meta_cap'  => TRUE,
+			'can_export'    => TRUE,
+			'menu_position' => 4,
 		), $atts );
 
 		register_post_type( $this->module->constants[$constant_key], $args );
