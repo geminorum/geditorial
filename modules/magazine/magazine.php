@@ -86,6 +86,8 @@ class gEditorialMagazine extends gEditorialModuleCore
 
 				'misc' => array(
 					'issue_cpt' => array(
+						'meta_box_title'  => __( 'Metadata', GEDITORIAL_TEXTDOMAIN ),
+
 						'cover_column_title'    => _x( 'Cover', '[Magazine Module] Column Title', GEDITORIAL_TEXTDOMAIN ),
 						'order_column_title'    => _x( 'O', '[Magazine Module] Column Title', GEDITORIAL_TEXTDOMAIN ),
 						'children_column_title' => _x( 'Posts', '[Magazine Module] Column Title', GEDITORIAL_TEXTDOMAIN ),
