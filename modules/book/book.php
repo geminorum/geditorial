@@ -67,19 +67,23 @@ class gEditorialBook extends gEditorialModuleCore
 				),
 				'labels' => array(
 					'publication_cpt' => array(
-						'name'               => _x( 'Publications', 'Publication CPT Name', GEDITORIAL_TEXTDOMAIN ),
-						'menu_name'          => _x( 'Publications', 'Publication CPT Menu Name', GEDITORIAL_TEXTDOMAIN ),
-						'description'        => _x( 'Publication List', 'Publication CPT Labels', GEDITORIAL_TEXTDOMAIN ),
-						'singular_name'      => _x( 'Publication', 'Publication CPT Labels', GEDITORIAL_TEXTDOMAIN ),
-						'add_new'            => _x( 'Add New', 'Publication CPT Labels', GEDITORIAL_TEXTDOMAIN ),
-						'add_new_item'       => _x( 'Add New Publication', 'Publication CPT Labels', GEDITORIAL_TEXTDOMAIN ),
-						'edit_item'          => _x( 'Edit Publication', 'Publication CPT Labels', GEDITORIAL_TEXTDOMAIN ),
-						'new_item'           => _x( 'New Publication', 'Publication CPT Labels', GEDITORIAL_TEXTDOMAIN ),
-						'view_item'          => _x( 'View Publication', 'Publication CPT Labels', GEDITORIAL_TEXTDOMAIN ),
-						'search_items'       => _x( 'Search Publications', 'Publication CPT Labels', GEDITORIAL_TEXTDOMAIN ),
-						'not_found'          => _x( 'No publications found', 'Publication CPT Labels', GEDITORIAL_TEXTDOMAIN ),
-						'not_found_in_trash' => _x( 'No publications found in Trash', 'Publication CPT Labels', GEDITORIAL_TEXTDOMAIN ),
-						'parent_item_colon'  => _x( 'Parent Publication:', 'Publication CPT Labels', GEDITORIAL_TEXTDOMAIN ),
+						'name'                  => _x( 'Publications', 'Publication CPT Name', GEDITORIAL_TEXTDOMAIN ),
+						'menu_name'             => _x( 'Publications', 'Publication CPT Menu Name', GEDITORIAL_TEXTDOMAIN ),
+						'description'           => _x( 'Publication List', 'Publication CPT Labels', GEDITORIAL_TEXTDOMAIN ),
+						'singular_name'         => _x( 'Publication', 'Publication CPT Labels', GEDITORIAL_TEXTDOMAIN ),
+						'add_new'               => _x( 'Add New', 'Publication CPT Labels', GEDITORIAL_TEXTDOMAIN ),
+						'add_new_item'          => _x( 'Add New Publication', 'Publication CPT Labels', GEDITORIAL_TEXTDOMAIN ),
+						'edit_item'             => _x( 'Edit Publication', 'Publication CPT Labels', GEDITORIAL_TEXTDOMAIN ),
+						'new_item'              => _x( 'New Publication', 'Publication CPT Labels', GEDITORIAL_TEXTDOMAIN ),
+						'view_item'             => _x( 'View Publication', 'Publication CPT Labels', GEDITORIAL_TEXTDOMAIN ),
+						'search_items'          => _x( 'Search Publications', 'Publication CPT Labels', GEDITORIAL_TEXTDOMAIN ),
+						'not_found'             => _x( 'No publications found', 'Publication CPT Labels', GEDITORIAL_TEXTDOMAIN ),
+						'not_found_in_trash'    => _x( 'No publications found in Trash', 'Publication CPT Labels', GEDITORIAL_TEXTDOMAIN ),
+						'parent_item_colon'     => _x( 'Parent Publication:', 'Publication CPT Labels', GEDITORIAL_TEXTDOMAIN ),
+						'featured_image'        => _x( 'Cover Image', 'Publication CPT Labels', GEDITORIAL_TEXTDOMAIN ),
+						'set_featured_image'    => _x( 'Set cover image', 'Publication CPT Labels', GEDITORIAL_TEXTDOMAIN ),
+						'remove_featured_image' => _x( 'Remove cover image', 'Publication CPT Labels', GEDITORIAL_TEXTDOMAIN ),
+						'use_featured_image'    => _x( 'Use as cover image', 'Publication CPT Labels', GEDITORIAL_TEXTDOMAIN ),
 					),
 					'subject_tax' => array(
 						'name'                       => _x( 'Subjects', 'Publication Subject Tax Name', GEDITORIAL_TEXTDOMAIN ),
@@ -252,6 +256,15 @@ class gEditorialBook extends gEditorialModuleCore
 		add_filter( 'disable_months_dropdown', array( &$this, 'disable_months_dropdown' ), 8, 2 );
 		add_action( 'restrict_manage_posts', array( &$this, 'restrict_manage_posts' ) );
 		add_action( 'parse_query', array( &$this, 'parse_query' ) );
+	}
+
+	public function register_settings( $page = NULL )
+	{
+		if ( isset( $_POST['install_def_size_tax'] ) )
+			$this->insert_default_terms( 'size_tax' );
+
+		parent::register_settings( $page );
+		$this->register_settings_button( 'install_def_size_tax', __( 'Install Default Sizes', GEDITORIAL_TEXTDOMAIN ) );
 	}
 
 	public function add_meta_boxes( $post_type, $post )
