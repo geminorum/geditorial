@@ -1017,6 +1017,26 @@ class gEditorialModuleCore
 			echo '</div>';
 		}
 	}
+
+	public function field_post_order( $constant_key, $post )
+	{
+		$html = gEditorialHelper::html( 'input', array(
+			'type'        => 'number',
+			'step'        => '1',
+			'size'        => '4',
+			'name'        => 'menu_order',
+			'id'          => 'menu_order',
+			'value'       => $post->menu_order,
+			'title'       => __( 'Order', GEDITORIAL_TEXTDOMAIN ),
+			'placeholder' => __( 'Order', GEDITORIAL_TEXTDOMAIN ),
+			'class'       => 'small-text',
+		) );
+
+		echo gEditorialHelper::html( 'div', array(
+			'class' => 'field-wrap',
+		), $html );
+	}
+
 	public function field_post_parent( $constant_key, $post, $status = 'publish,private,draft' )
 	{
 		$pages = wp_dropdown_pages( array(

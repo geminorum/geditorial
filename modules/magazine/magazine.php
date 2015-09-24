@@ -705,24 +705,10 @@ class gEditorialMagazine extends gEditorialModuleCore
 	{
 		echo '<div class="geditorial-admin-wrap-metabox">';
 
-
-		$html = gEditorialHelper::html( 'input', array(
-			'type'        => 'number',
-			'step'        => '1',
-			'size'        => '4',
-			'name'        => 'menu_order',
-			'id'          => 'menu_order',
-			'value'       => $post->menu_order,
-			'title'       => __( 'Order', GEDITORIAL_TEXTDOMAIN ),
-			'placeholder' => __( 'Order', GEDITORIAL_TEXTDOMAIN ),
-			'class'       => 'small-text',
-		) );
 		do_action( 'geditorial_magazine_issue_meta_box', $post ); // FIXME: DEPRECATED
 		do_action( 'geditorial_magazine_main_meta_box', $post );
 
-		echo gEditorialHelper::html( 'div', array(
-			'class' => 'field-wrap',
-		), $html );
+		$this->field_post_order( 'issue_cpt', $post );
 
 		if ( get_post_type_object( $this->module->constants['issue_cpt'] )->hierarchical )
 			$this->field_post_parent( 'issue_cpt', $post );
