@@ -457,7 +457,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 
 	public function wp_trash_post( $post_id )
 	{
-		if ( $term = $this->get_issue_term( $post_id ) ) {
+		if ( $term = $this->get_linked_term( $post_id, 'issue_cpt', 'issue_tax' ) ) {
 			wp_update_term( $term->term_id, $this->module->constants['issue_tax'], array(
 				'name' => $term->name.' - '._x( '(Trashed)', 'Suffix for term name linked to trashed post', GEDITORIAL_TEXTDOMAIN ),
 				'slug' => $term->slug.'-trashed',
@@ -467,7 +467,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 
 	public function untrash_post( $post_id )
 	{
-		if ( $term = $this->get_issue_term( $post_id ) ) {
+		if ( $term = $this->get_linked_term( $post_id, 'issue_cpt', 'issue_tax' ) ) {
 			wp_update_term( $term->term_id, $this->module->constants['issue_tax'], array(
 				'name' => str_ireplace( ' - '._x( '(Trashed)', 'Suffix for term name linked to trashed post', GEDITORIAL_TEXTDOMAIN ), '', $term->name ),
 				'slug' => str_ireplace( '-trashed', '', $term->slug ),
@@ -477,7 +477,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 
 	public function before_delete_post( $post_id )
 	{
-		if ( $term = $this->get_issue_term( $post_id ) ) {
+		if ( $term = $this->get_linked_term( $post_id, 'issue_cpt', 'issue_tax' ) ) {
 			wp_delete_term( $term->term_id, $this->module->constants['issue_tax'] );
 			delete_metadata( 'term', $term->term_id, $this->module->constants['issue_cpt'].'_linked' );
 		}
@@ -490,13 +490,6 @@ class gEditorialMagazine extends gEditorialModuleCore
 				( isset( $postarr['ID'] ) ? $postarr['ID'] : '' ) ) + 1;
 
 		return $data;
-	}
-
-	// helper
-	public function get_issue_term( $post_id )
-	{
-		$term_id = get_post_meta( $post_id, '_'.$this->module->constants['issue_cpt'].'_term_id', TRUE );
-		return get_term_by( 'id', intval( $term_id ), $this->module->constants['issue_tax'] );
 	}
 
 	// https://gist.github.com/boonebgorges/e873fc9589998f5b07e1
@@ -837,31 +830,10 @@ class gEditorialMagazine extends gEditorialModuleCore
 		return $new_columns;
 	}
 
-	public function issue_posts( $post_id, $count = FALSE, $term_id = NULL )
-	{
-		if ( is_null( $term_id ) )
-			$term_id = get_post_meta( $post_id, '_'.$this->module->constants['issue_cpt'].'_term_id', TRUE );
-
-		$items = get_posts( array(
-			'tax_query' => array( array(
-				'taxonomy' => $this->module->constants['issue_tax'],
-				'field'    => 'id',
-				'terms'    => array( $term_id )
-			) ),
-			'post_type'   => $this->post_types(),
-			'numberposts' => -1,
-		) );
-
-		if ( $count )
-			return count( $items );
-
-		return $items;
-	}
-
 	public function posts_custom_column( $column_name, $post_id )
 	{
 		if ( 'children' == $column_name )
-			$this->column_count( $this->issue_posts( $post_id, TRUE ) );
+			$this->column_count( $this->get_linked_posts( $post_id, 'issue_cpt', 'issue_tax', TRUE ) );
 
 		else if ( 'order' == $column_name )
 			$this->column_count( get_post( $post_id )->menu_order );
@@ -1083,7 +1055,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 						'title' => __( 'Count', GEDITORIAL_TEXTDOMAIN ),
 						'callback' => function( $value, $row, $column ){
 							if ( $post_id = gEditorialHelper::getPostIDbySlug( $row->slug, $this->module->constants['issue_cpt'] ) )
-								return number_format_i18n( $this->issue_posts( $post_id, TRUE ) );
+								return number_format_i18n( $this->get_linked_posts( $post_id, 'issue_cpt', 'issue_tax', TRUE ) );
 							return number_format_i18n( $row->count );
 						},
 					),
@@ -1151,7 +1123,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 					$count = 0;
 
 					foreach ( $_POST['_cb'] as $term_id ) {
-						foreach ( $this->issue_posts( NULL, FALSE, $term_id ) as $post ) {
+						foreach ( $this->get_linked_posts( NULL, 'issue_cpt', 'issue_tax', FALSE, $term_id ) as $post ) {
 
 							if ( $post->menu_order )
 								continue;

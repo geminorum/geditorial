@@ -1133,6 +1133,33 @@ class gEditorialModuleCore
 		return TRUE;
 	}
 
+	public function get_linked_term( $post_id, $posttype_constant_key, $tax_constant_key )
+	{
+		$term_id = get_post_meta( $post_id, '_'.$this->module->constants[$posttype_constant_key].'_term_id', TRUE );
+		return get_term_by( 'id', intval( $term_id ), $this->module->constants[$tax_constant_key] );
+	}
+
+	public function get_linked_posts( $post_id, $posttype_constant_key, $tax_constant_key, $count = FALSE, $term_id = NULL )
+	{
+		if ( is_null( $term_id ) )
+			$term_id = get_post_meta( $post_id, '_'.$this->module->constants[$posttype_constant_key].'_term_id', TRUE );
+
+		$items = get_posts( array(
+			'tax_query' => array( array(
+				'taxonomy' => $this->module->constants[$tax_constant_key],
+				'field'    => 'id',
+				'terms'    => array( $term_id )
+			) ),
+			'post_type'   => $this->post_types(),
+			'numberposts' => -1,
+		) );
+
+		if ( $count )
+			return count( $items );
+
+		return $items;
+	}
+
 	public function do_restrict_manage_posts_taxes( $taxes, $posttype_constant_key )
 	{
 		global $wp_query;
