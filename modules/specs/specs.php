@@ -323,7 +323,7 @@ class gEditorialSpecs extends gEditorialModuleCore
 	{
 		if ( in_array( $post_type, $this->post_types() ) ) {
 
-			remove_meta_box( 'tagsdiv-'.$this->module->constants['specs_tax'], $post_type, 'side' );
+			$this->remove_meta_box( 'specs_tax', $post_type, 'tag' );
 
 			add_meta_box(
 				'geditorial-specs',

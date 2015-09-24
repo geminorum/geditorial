@@ -270,7 +270,7 @@ class gEditorialBook extends gEditorialModuleCore
 				);
 			}
 
-			remove_meta_box( 'tagsdiv-'.$this->module->constants['status_tax'], $post_type, 'side' );
+			$this->remove_meta_box( 'status_tax', $post_type, 'tag' );
 			add_meta_box( 'geditorial-book-status',
 				$this->get_meta_box_title( 'status_tax', $this->get_url_tax_edit( 'status_tax' ), 'edit_others_posts' ),
 				array( $this, 'meta_box_choose_tax' ),
@@ -282,19 +282,8 @@ class gEditorialBook extends gEditorialModuleCore
 				)
 			);
 
-			// TODO : must write your own _wp_post_thumbnail_html()
-			// http://www.wpmayor.com/code/how-to-move-and-rename-the-featured-image-metabox/
-			remove_meta_box( 'postimagediv', $this->module->constants['publication_cpt'], 'side' );
-			add_meta_box( 'postimagediv',
-				__( 'Cover', GEDITORIAL_TEXTDOMAIN ),
-				'post_thumbnail_meta_box',
-				$this->module->constants['publication_cpt'],
-				'side',
-				'high'
-			);
-
 			if ( is_super_admin() || current_user_can( $post_type_object->cap->edit_others_posts ) ) {
-				remove_meta_box( 'authordiv', $this->module->constants['publication_cpt'], 'normal' );
+				$this->remove_meta_box( 'publication_cpt', $post_type, 'author' );
 				add_meta_box( 'authordiv',
 					__( 'Curator', GEDITORIAL_TEXTDOMAIN ),
 					'post_author_meta_box',
@@ -303,7 +292,7 @@ class gEditorialBook extends gEditorialModuleCore
 				);
 			}
 
-			remove_meta_box( 'postexcerpt', $this->module->constants['publication_cpt'], 'normal' );
+			$this->remove_meta_box( 'publication_cpt', $post_type, 'excerpt' );
 			add_meta_box( 'postexcerpt',
 				__( 'Summary', GEDITORIAL_TEXTDOMAIN ),
 				'post_excerpt_meta_box',

@@ -1026,6 +1026,27 @@ class gEditorialModuleCore
 			), $pages );
 	}
 
+	public function remove_meta_box( $constant_key, $post_type, $type = 'tag' )
+	{
+		if ( 'tag' == $type )
+			remove_meta_box( 'tagsdiv-'.$this->module->constants[$constant_key], $post_type, 'side' );
+
+		else if ( 'cat' == $type )
+			remove_meta_box( $this->module->constants[$constant_key].'div', $post_type, 'side' );
+
+		else if ( 'parent' == $type )
+			remove_meta_box( 'pageparentdiv', $post_type, 'side' );
+
+		else if ( 'image' == $type )
+			remove_meta_box( 'postimagediv', $this->module->constants[$constant_key], 'side' );
+
+		else if ( 'author' == $type )
+			remove_meta_box( 'authordiv', $this->module->constants[$constant_key], 'normal' );
+
+		else if ( 'excerpt' == $type )
+			remove_meta_box( 'postexcerpt', $this->module->constants[$constant_key], 'normal' );
+	}
+
 	public function get_meta_box_title( $constant_key = 'post', $url = NULL, $edit_cap = 'manage_options', $title = NULL )
 	{
 		if ( is_null( $title ) )

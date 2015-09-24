@@ -244,7 +244,7 @@ class gEditorialMeta extends gEditorialModuleCore
 		if ( ! in_array( $post_type, $this->post_types() ) )
 			return;
 
-		remove_meta_box( 'tagsdiv-'.$this->module->constants['ct_tax'], $post_type, 'side' );
+		$this->remove_meta_box( 'ct_tax', $post_type, 'tag' );
 
 		// we use filter to override the whole functionality, no just adding the actions
 		$box_func = apply_filters( 'geditorial_meta_box_callback', array( &$this, $post_type.'_meta_box' ), $post_type );

@@ -220,7 +220,8 @@ class gEditorialSeries extends gEditorialModuleCore
 		if ( ! in_array( $post_type, $this->post_types() ) )
 			return;
 
-		remove_meta_box( 'tagsdiv-'.$this->module->constants['series_tax'], $post_type, 'side' );
+		$this->remove_meta_box( 'series_tax', $post_type, 'tag' );
+
 		add_meta_box(
 			'geditorial-series',
 			$this->get_meta_box_title( 'series_tax', $this->get_url_tax_edit( 'series_tax' ), 'edit_others_posts' ),
