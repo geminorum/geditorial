@@ -3,6 +3,8 @@
 class gEditorialModuleCore
 {
 
+	var $module;
+
 	var $enabled  = FALSE;
 	var $meta_key = '_ge';
 	var $cookie   = 'geditorial';
@@ -12,6 +14,7 @@ class gEditorialModuleCore
 	var $_kses_allowed        = array();
 	var $_settings_buttons    = array();
 	var $_image_sizes         = array();
+	var $_errors              = array();
 
 	var $_geditorial_meta = FALSE; // META ENABLED?
 	var $_root_key        = FALSE; // ROOT CONSTANT

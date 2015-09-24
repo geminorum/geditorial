@@ -3,11 +3,7 @@
 class gEditorialContest extends gEditorialModuleCore
 {
 
-	var $module;
 	var $module_name = 'contest';
-	var $pre_term    = 'gXcXoE-';
-
-	var $import      = FALSE;
 
 	public function __construct()
 	{
@@ -18,17 +14,18 @@ class gEditorialContest extends gEditorialModuleCore
 		add_action( 'geditorial_meta_init', array( &$this, 'meta_init' ) );
 
 		$args = array(
+
 			'title'                => __( 'Contest', GEDITORIAL_TEXTDOMAIN ),
 			'short_description'    => __( 'Contest Management', GEDITORIAL_TEXTDOMAIN ),
 			'extended_description' => __( 'Set of tools to create and manage text contests and/or gather assignments', GEDITORIAL_TEXTDOMAIN ),
-			'dashicon'             => 'smiley',
-			'slug'                 => 'contest',
-			'load_frontend'        => TRUE,
 			'constants'            => array(
 				'contest_cpt'      => 'contest',
 				'contest_archives' => 'contests',
 				'apply_cpt'        => 'apply',
 				'apply_archives'   => 'applies',
+			'dashicon' => 'megaphone',
+			'slug'     => 'contest',
+			'frontend' => TRUE,
 				'contest_tax'      => 'contests',
 				'apply_status_tax' => 'apply_status',
 
@@ -45,9 +42,9 @@ class gEditorialContest extends gEditorialModuleCore
 					'post_content' => TRUE,
 					'post_author'  => TRUE,
 				),
-				'settings' => array(
-				),
+				'settings' => array(),
 			),
+
 			'settings' => array(
 				'_general' => array(
 					array(

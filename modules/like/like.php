@@ -3,7 +3,6 @@
 class gEditorialLike extends gEditorialModuleCore
 {
 
-	var $module;
 	var $module_name = 'like';
 	var $meta_key    = '_ge_like';
 
@@ -15,12 +14,14 @@ class gEditorialLike extends gEditorialModuleCore
 		global $gEditorial;
 
 		$args = array(
+
 			'title'                => __( 'Like', GEDITORIAL_TEXTDOMAIN ),
 			'short_description'    => __( 'Like Button for Posts and Comments', GEDITORIAL_TEXTDOMAIN ),
-			'extended_description' => __( '', GEDITORIAL_TEXTDOMAIN ),
-			'dashicon'             => 'heart',
-			'slug'                 => 'like',
-			'load_frontend'        => FALSE,
+
+			'dashicon' => 'heart',
+			'slug'     => 'like',
+			'frontend' => FALSE,
+
 			'constants'            => array(),
 			'default_options'      => array(
 				'enabled'  => FALSE,

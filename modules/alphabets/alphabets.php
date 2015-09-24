@@ -3,21 +3,21 @@
 class gEditorialAlphabets extends gEditorialModuleCore
 {
 
-	var $module;
 	var $module_name = 'alphabets';
 	var $meta_key    = '_ge_alphabets';
-	var $cookie      = 'geditorial-alphabets';
 
 	public function __construct()
 	{
 		global $gEditorial;
 
 		$args = array(
+
 			'title'                => __( 'Alphabets', GEDITORIAL_TEXTDOMAIN ),
 			'short_description'    => __( 'A to Z Glossaries for Post Types, Taxonomies and Users', GEDITORIAL_TEXTDOMAIN ),
-			'dashicon'             => 'editor-textcolor',
-			'slug'                 => 'alphabets',
-			'load_frontend'        => TRUE,
+
+			'dashicon' => 'editor-textcolor',
+			'slug'     => 'alphabets',
+			'frontend' => TRUE,
 
 			'constants' => array(
 				'alphabets_tax'            => 'alphabets_tax',

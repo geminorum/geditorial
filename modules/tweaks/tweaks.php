@@ -3,7 +3,6 @@
 class gEditorialTweaks extends gEditorialModuleCore
 {
 
-	var $module;
 	var $module_name = 'tweaks';
 
 	public function __construct()
@@ -11,11 +10,13 @@ class gEditorialTweaks extends gEditorialModuleCore
 		global $gEditorial;
 
 		$args = array(
+
 			'title'                => __( 'Tweaks', GEDITORIAL_TEXTDOMAIN ),
 			'short_description'    => __( 'Admin UI Enhancement', GEDITORIAL_TEXTDOMAIN ),
-			'dashicon'             => 'heart',
-			'slug'                 => 'tweaks',
-			'load_frontend'        => FALSE,
+
+			'dashicon' => 'heart',
+			'slug'     => 'tweaks',
+			'frontend' => FALSE,
 
 			'constants' => array(
 				'tweaks_tax' => 'tweaks',

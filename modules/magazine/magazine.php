@@ -3,30 +3,23 @@
 class gEditorialMagazine extends gEditorialModuleCore
 {
 
-	var $module;
 	var $module_name = 'magazine';
 	var $meta_key    = '_ge_magazine';
 	var $_root_key   = 'GEDITORIAL_MAGAZINE_ROOT_BLOG';
-
-	var $post_id = FALSE; // current post id
-	var $cookie  = 'geditorial-magazine';
-
-	var $_post_types_excluded = array();
-
-	var $_import      = FALSE;
-	var $_term_suffix = 'gXmXaXg_';
 
 	public function __construct()
 	{
 		global $gEditorial;
 
 		$args = array(
+
 			'title'                => __( 'Magazine', GEDITORIAL_TEXTDOMAIN ),
 			'short_description'    => __( 'Issue Management for Magazines', GEDITORIAL_TEXTDOMAIN ),
 			'extended_description' => __( 'Magazine suite for WordPress', GEDITORIAL_TEXTDOMAIN ),
-			'dashicon'             => 'book',
-			'slug'                 => 'magazine',
-			'load_frontend'        => TRUE,
+
+			'dashicon' => 'book',
+			'slug'     => 'magazine',
+			'frontend' => TRUE,
 
 			'constants' => array(
 				'issue_cpt'         => 'issue',

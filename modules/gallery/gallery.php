@@ -3,22 +3,22 @@
 class gEditorialGallery extends gEditorialModuleCore
 {
 
-	var $module;
 	var $module_name = 'gallery';
 	var $meta_key    = '_ge_gallery';
-	var $cookie      = 'geditorial-gallery';
 
 	public function __construct()
 	{
 		global $gEditorial;
 
 		$args = array(
+
 			'title'                => __( 'Gallery', GEDITORIAL_TEXTDOMAIN ),
 			'short_description'    => __( 'Photo Directory and Gallery for WordPress Editorial', GEDITORIAL_TEXTDOMAIN ),
 			'extended_description' => __( 'Adding gallery functionality to WordPress with custom posttypes and taxonomies.', GEDITORIAL_TEXTDOMAIN ),
-			'dashicon'             => 'format-gallery',
-			'slug'                 => 'gallery',
-			'load_frontend'        => TRUE,
+
+			'dashicon' => 'format-gallery',
+			'slug'     => 'gallery',
+			'frontend' => TRUE,
 
 			'constants' => array(
 				'album_cpt'         => 'photo_album',

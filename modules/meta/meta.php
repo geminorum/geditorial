@@ -3,10 +3,8 @@
 class gEditorialMeta extends gEditorialModuleCore
 {
 
-	var $module;
 	var $module_name = 'meta';
 	var $meta_key    = '_gmeta';
-	var $_errors     = array();
 
 	public function __construct()
 	{
@@ -19,10 +17,10 @@ class gEditorialMeta extends gEditorialModuleCore
 		$args = array(
 			'title'                => __( 'Meta', GEDITORIAL_TEXTDOMAIN ),
 			'short_description'    => __( 'Metadata, magazine style.', GEDITORIAL_TEXTDOMAIN ),
-			'extended_description' => __( 'Meta extended desc', GEDITORIAL_TEXTDOMAIN ),
-			'dashicon'             => 'tag',
-			'slug'                 => 'meta',
-			'load_frontend'        => TRUE,
+
+			'dashicon' => 'tag',
+			'slug'     => 'meta',
+			'frontend' => TRUE,
 
 			'constants' => array(
 				'ct_tax' => 'label',
@@ -48,11 +46,13 @@ class gEditorialMeta extends gEditorialModuleCore
 					'es' => TRUE, // external link (source)
 					'ol' => TRUE, // old link
 				),
-			) ),
+			),
+
 			'settings' => array(
 				'post_types_option' => 'post_types_option',
 				'post_types_fields' => 'post_types_fields',
 			),
+
 			'strings' => array(
 				'titles' => array(
 					'post' => array(

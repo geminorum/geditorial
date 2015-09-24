@@ -3,7 +3,6 @@
 class gEditorialSettings extends gEditorialModuleCore
 {
 
-	var $module;
 	var $module_name = 'settings';
 
 	public function __construct()
@@ -11,8 +10,10 @@ class gEditorialSettings extends gEditorialModuleCore
 		global $gEditorial;
 
 		$args = array(
+
 			'title'             => __( 'Editorial', GEDITORIAL_TEXTDOMAIN ),
 			'short_description' => __( 'WordPress, Magazine Style.', GEDITORIAL_TEXTDOMAIN ),
+
 			'slug'              => 'settings',
 			'settings_slug'     => 'geditorial-settings',
 			'configure_page_cb' => 'print_default_settings',
@@ -21,6 +22,7 @@ class gEditorialSettings extends gEditorialModuleCore
 			'default_options' => array(
 				'enabled' => TRUE,
 			),
+			'settings' => array(),
 		);
 
 		$this->module = $gEditorial->register_module( 'settings', $args );

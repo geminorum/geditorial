@@ -3,22 +3,24 @@
 class gEditorialSeries extends gEditorialModuleCore
 {
 
-	var $module;
 	var $module_name = 'series';
 	var $meta_key    = '_ge_series';
-	var $pre_term    = 'gXsXsE-';
+
+	var $pre_term    = 'gXsXsE-'; // FIXME
 
 	public function __construct()
 	{
 		global $gEditorial;
 
 		$args = array(
+
 			'title'                => __( 'Series', GEDITORIAL_TEXTDOMAIN ),
 			'short_description'    => __( 'Post Series Management', GEDITORIAL_TEXTDOMAIN ),
 			'extended_description' => __( 'Adding Post Series Functionality to WordPress With Taxonomies', GEDITORIAL_TEXTDOMAIN ),
-			'dashicon'             => 'smiley',
-			'slug'                 => 'series',
-			'load_frontend'        => TRUE,
+
+			'dashicon' => 'smiley',
+			'slug'     => 'series',
+			'frontend' => TRUE,
 
 			'constants'            => array(
 				'series_tax'                => 'series',

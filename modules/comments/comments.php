@@ -3,7 +3,6 @@
 class gEditorialComments extends gEditorialModuleCore
 {
 
-	var $module;
 	var $module_name = 'comments';
 	var $meta_key    = '_ge_comments';
 
@@ -19,12 +18,14 @@ class gEditorialComments extends gEditorialModuleCore
 		global $gEditorial;
 
 		$args = array(
+
 			'title'                => __( 'Comments', GEDITORIAL_TEXTDOMAIN ),
 			'short_description'    => __( 'Comment Managment Enhancements', GEDITORIAL_TEXTDOMAIN ),
 			'extended_description' => __( 'Series of tools to help better managing the comments on a magazine.', GEDITORIAL_TEXTDOMAIN ),
-			'dashicon'             => 'admin-comments',
-			'slug'                 => 'comments',
-			'load_frontend'        => TRUE,
+
+			'dashicon' => 'admin-comments',
+			'slug'     => 'comments',
+			'frontend' => TRUE,
 
 			'constants' => array(
 				'comments_shortcode' => 'comments',

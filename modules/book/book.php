@@ -3,7 +3,6 @@
 class gEditorialBook extends gEditorialModuleCore
 {
 
-	var $module;
 	var $module_name = 'book';
 
 	public function __construct()
@@ -11,11 +10,13 @@ class gEditorialBook extends gEditorialModuleCore
 		global $gEditorial;
 
 		$args = array(
+
 			'title'                => __( 'Book', GEDITORIAL_TEXTDOMAIN ),
 			'short_description'    => __( 'Online House of Publications', GEDITORIAL_TEXTDOMAIN ),
-			'dashicon'             => 'book-alt',
-			'slug'                 => 'book',
-			'load_frontend'        => TRUE,
+
+			'dashicon' => 'book-alt',
+			'slug'     => 'book',
+			'frontend' => TRUE,
 
 			'constants' => array(
 				'publication_cpt'         => 'publication',

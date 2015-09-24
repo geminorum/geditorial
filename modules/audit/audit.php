@@ -3,22 +3,22 @@
 class gEditorialAudit extends gEditorialModuleCore
 {
 
-	var $module;
 	var $module_name = 'audit';
 	var $meta_key    = '_ge_audit';
-	var $cookie      = 'geditorial-audit';
 
 	public function __construct()
 	{
 		global $gEditorial;
 
 		$args = array(
+
 			'title'                => __( 'Audit', GEDITORIAL_TEXTDOMAIN ),
 			'short_description'    => __( 'Content Inventory Tools', GEDITORIAL_TEXTDOMAIN ),
 			'extended_description' => __( 'Adding auditing functionality to WordPress with custom taxonomies.', GEDITORIAL_TEXTDOMAIN ),
-			'dashicon'             => 'visibility',
-			'slug'                 => 'audit',
-			'load_frontend'        => TRUE,
+
+			'dashicon' => 'visibility',
+			'slug'     => 'audit',
+			'frontend' => TRUE,
 
 			'constants' => array(
 				'audit_tax' => 'audit',

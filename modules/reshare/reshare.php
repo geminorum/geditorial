@@ -3,7 +3,6 @@
 class gEditorialReshare extends gEditorialModuleCore
 {
 
-	var $module;
 	var $module_name = 'reshare';
 
 	public function __construct()
@@ -11,11 +10,13 @@ class gEditorialReshare extends gEditorialModuleCore
 		global $gEditorial;
 
 		$args = array(
+
 			'title'                => __( 'Reshare', GEDITORIAL_TEXTDOMAIN ),
 			'short_description'    => __( 'Content from other sources', GEDITORIAL_TEXTDOMAIN ),
-			'dashicon'             => 'external',
-			'slug'                 => 'reshare',
-			'load_frontend'        => TRUE,
+
+			'dashicon' => 'external',
+			'slug'     => 'reshare',
+			'frontend' => TRUE,
 
 			'constants' => array(
 				'reshare_cpt'         => 'reshare',

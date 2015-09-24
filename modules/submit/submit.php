@@ -11,16 +11,19 @@ class gEditorialSubmit extends gEditorialModuleCore
 		global $gEditorial;
 
 		$args = array(
+
 			'title'                => __( 'Submit', GEDITORIAL_TEXTDOMAIN ),
 			'short_description'    => __( 'FrontPage Submissions', GEDITORIAL_TEXTDOMAIN ),
 			'extended_description' => __( 'Set of tools to accept post and images from frontpage', GEDITORIAL_TEXTDOMAIN ),
-			'dashicon'             => 'smiley',
-			'slug'                 => 'submit',
-			'load_frontend'        => TRUE,
+
+			'dashicon' => 'smiley',
+			'slug'     => 'submit',
+			'frontend' => TRUE,
 
 			'constants' => array(
 				'submit_form_shortcode' => 'submit-form',
 			),
+
 			'default_options' => array(
 				'enabled' => FALSE,
 				'post_types' => array(

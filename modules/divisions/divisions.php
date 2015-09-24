@@ -3,23 +3,25 @@
 class gEditorialDivisions extends gEditorialModuleCore
 {
 
-	var $module;
 	var $module_name = 'divisions';
 	var $meta_key    = '_ge_divisions';
 
-	var $pre_term    = 'gXsXsE-';
+	var $pre_term    = 'gXsXsE-'; // FIXME
 
 	public function __construct()
 	{
 		global $gEditorial;
 
 		$args = array(
+
 			'title'                => __( 'Divisions', GEDITORIAL_TEXTDOMAIN ),
 			'short_description'    => __( 'Post Divisions Management', GEDITORIAL_TEXTDOMAIN ),
 			'extended_description' => __( 'Adding Post Divisions Functionality to WordPress With Custom Post Types', GEDITORIAL_TEXTDOMAIN ),
-			'dashicon'             => 'smiley',
-			'slug'                 => 'divisions',
-			'load_frontend'        => TRUE,
+
+			'dashicon' => 'smiley',
+			'slug'     => 'divisions',
+			'frontend' => TRUE,
+
 			'constants'            => array(
 				'division_cpt'                 => 'division',
 				'division_archives'            => 'divisions',

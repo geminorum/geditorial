@@ -125,7 +125,7 @@ class gEditorial
 			'configure_page_cb'   => FALSE,
 			'configure_link_text' => __( 'Configure', GEDITORIAL_TEXTDOMAIN ),
 			'autoload'            => FALSE, // autoloading a module will remove the ability to enable or disable it
-			'load_frontend'       => FALSE, // Whether or not the module should be loaded on the frontend too
+			'frontend'            => FALSE, // Whether or not the module should be loaded on the frontend too
 
 			'default_options' => array(),
 			'constants'       => array(),
@@ -157,7 +157,7 @@ class gEditorial
 		foreach ( $this->modules as $mod_name => $mod_data ) {
 
 			// don't load modules on the frontend unless they're explictly defined as such
-			if ( ! is_admin() && ! $mod_data->load_frontend )
+			if ( ! is_admin() && ! $mod_data->frontend )
 				continue;
 
 			// make changes to default options before loading
@@ -197,7 +197,7 @@ class gEditorial
 		// @see http://dev.editflow.org/2011/11/17/geditorial-v0-7-alpha2-notes/#comment-232
 		foreach ( $this->modules as $mod_name => $mod_data ) {
 
-			if ( ! is_admin() && ! $mod_data->load_frontend )
+			if ( ! is_admin() && ! $mod_data->frontend )
 				continue;
 
 			if ( ! $this->{$mod_name}->enabled )

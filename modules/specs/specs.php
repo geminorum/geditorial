@@ -3,22 +3,24 @@
 class gEditorialSpecs extends gEditorialModuleCore
 {
 
-	var $module;
 	var $module_name = 'specs';
 	var $meta_key    = '_ge_specs';
-	var $pre_term    = 'gXsPsP-';
+
+	var $pre_term    = 'gXsPsP-'; // FIXME
 
 	public function __construct()
 	{
 		global $gEditorial;
 
 		$args = array(
+
 			'title'                => __( 'Specifications', GEDITORIAL_TEXTDOMAIN ),
 			'short_description'    => __( 'Post Specifications Management', GEDITORIAL_TEXTDOMAIN ),
 			'extended_description' => __( 'Adding Post Specifications Functionality to WordPress With Taxonomies', GEDITORIAL_TEXTDOMAIN ),
-			'dashicon'             => 'editor-ul',
-			'slug'                 => 'specs',
-			'load_frontend'        => TRUE,
+
+			'dashicon' => 'editor-ul',
+			'slug'     => 'specs',
+			'frontend' => TRUE,
 
 			'constants' => array(
 				'specs_tax'                => 'specs',

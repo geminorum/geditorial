@@ -3,7 +3,6 @@
 class gEditorialEntry extends gEditorialModuleCore
 {
 
-	var $module;
 	var $module_name = 'entry';
 	var $meta_key    = '_ge_entry';
 
@@ -12,12 +11,14 @@ class gEditorialEntry extends gEditorialModuleCore
 		global $gEditorial;
 
 		$args = array(
+
 			'title'                => __( 'Entry', GEDITORIAL_TEXTDOMAIN ),
 			'short_description'    => __( 'Posts Entries, Wiki-like', GEDITORIAL_TEXTDOMAIN ),
 			'extended_description' => __( '', GEDITORIAL_TEXTDOMAIN ),
-			'dashicon'             => 'media-document',
-			'slug'                 => 'entry',
-			'load_frontend'        => TRUE,
+
+			'dashicon' => 'media-document',
+			'slug'     => 'entry',
+			'frontend' => TRUE,
 
 			'constants' => array(
 				'entry_cpt'         => 'entry',
