@@ -342,6 +342,86 @@ class gEditorialEntry extends gEditorialModuleCore
 		return $content;
 	}
 
+	// SEE: gPluginTextHelper
+
+	// https://help.github.com/articles/github-flavored-markdown/
+	// https://daringfireball.net/projects/markdown/syntax
+	// https://michelf.ca/projects/php-markdown/extra/
+	// http://kramdown.gettalong.org/syntax.html
+
+	// first convert wiki like [[]]
+	// then use markdown
+	public static function prepare( $content )
+	{
+		// $content = '[[Page Name with many words]]';
+		$pattern = '/\[\[(.+?)\]\]/u';
+		$pattern = '/\[\[(.*?)\]\]/u';
+
+		preg_match_all( $pattern, $content, $matches );
+
+		gnetwork_dump( $matches );
+
+		$html = preg_replace_callback( $pattern, function( $match ){
+			$text = $match[1];
+			$slug = preg_replace('/\s+/', '-', $text);
+			return "<a href=\"$slug\">$text</a>";
+		}, $content );
+
+		gnetwork_dump( $html );
+
+		//gEditorialHelper::getPostIDbySlug( $slug, $this->module->constants['entry_cpt'] );
+	}
+
+	// FIXME: JUST A COPY
+	public function markdown()
+	{
+		// TODO: must use : http://parsedown.org/demo
+
+		// if ( ! class_exists( 'Markdown' ) )
+		// 	require_once( GNETWORK_DIR.'assets/libs/php-markdown/Michelf/Markdown.inc.php' );
+
+		if ( ! class_exists( 'MarkdownExtra' ) )
+			require_once( GNETWORK_DIR.'assets/libs/php-markdown/Michelf/MarkdownExtra.inc.php' );
+
+		// __gpersiandate_skip();
+
+		// $html = \Michelf\Markdown::defaultTransform( $md );
+		$html = \Michelf\MarkdownExtra::defaultTransform( $md );
+
+		// http://www.the-art-of-web.com/php/parse-links/
+		$regexp = "<a\s[^>]*href=(\"??)([^\" >]*?)\\1[^>]*>(.*)<\/a>";
+		$html = preg_replace_callback( "/$regexp/siU", array( $this, 'github_readme_link_cb' ), $html );
+
+	}
+
+	// FIXME: JUST A COPY
+	public function github_readme_link_cb( $matchs )
+	{
+		$files =  array(
+			'contributing.md',
+			'changes.md',
+			'readme.md',
+			'readme.txt',
+		);
+
+		if ( in_array( strtolower( $matchs['2'] ), $files ) )
+			return '<a href="https://github.com/'.$this->github_repo.'/blob/master/'.$matchs[2].'">'.$matchs[3].'</a>';
+
+		return $matchs[0];
+	}
+
+	// FIXME: JUST A COPY
+	// remove-double-space
+	public function the_content_extra( $content )
+	{
+		// http://stackoverflow.com/a/3226746
+		// http://plugins.svn.wordpress.org/remove-double-space/tags/0.3/remove-double-space.php
+		if ( seems_utf8( $content ) )
+			return preg_replace( '/[\p{Z}\s]{2,}/u', ' ', $content );
+		else
+			return preg_replace( '/\s\s+/', ' ', $content );
+	}
+
 	///////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////
