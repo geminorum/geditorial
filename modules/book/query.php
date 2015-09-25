@@ -1,0 +1,67 @@
+<?php defined( 'ABSPATH' ) or die( 'Restricted access' );
+
+// http://bradt.ca/blog/extending-wp_query/
+class gEditorialBookQuery extends WP_Query
+{
+
+	var $_cpt = 'publication';
+	var $_tax = 'publication_subject';
+
+	public function __construct( $args = array() )
+	{
+		global $gEditorial;
+
+		$this->_cpt = $gEditorial->get_module_constant( 'book', 'publication_cpt', 'publication' );
+		$this->_tax =$gEditorial->get_module_constant( 'book', 'subject_tax', 'publication_subject' );
+
+		// Force these args
+		$args = array_merge( $args, array(
+			'post_type' => $this->_cpt,
+			'posts_per_page' => -1,  // Turn off paging
+			'no_found_rows' => true, // Optimize query for no paging
+			'update_post_term_cache' => false,
+			'update_post_meta_cache' => false
+		) );
+
+		add_filter( 'posts_fields', array( $this, 'posts_fields' ) );
+		add_filter( 'posts_join', array( $this, 'posts_join' ) );
+		add_filter( 'posts_where', array( $this, 'posts_where' ) );
+		add_filter( 'posts_orderby', array( $this, 'posts_orderby' ) );
+
+		parent::__construct( $args );
+
+		// Make sure these filters don't affect any other queries
+		remove_filter( 'posts_fields', array( $this, 'posts_fields' ) );
+		remove_filter( 'posts_join', array( $this, 'posts_join' ) );
+		remove_filter( 'posts_where', array( $this, 'posts_where' ) );
+		remove_filter( 'posts_orderby', array( $this, 'posts_orderby' ) );
+	}
+
+	public function posts_fields( $sql )
+	{
+		global $wpdb;
+		return $sql . ", $wpdb->terms.name AS '{$this->_tax}'";
+	}
+
+	public function posts_join( $sql )
+	{
+		global $wpdb;
+		return $sql . "
+			INNER JOIN $wpdb->term_relationships ON ($wpdb->posts.ID = $wpdb->term_relationships.object_id)
+			INNER JOIN $wpdb->term_taxonomy ON ($wpdb->term_relationships.term_taxonomy_id = $wpdb->term_taxonomy.term_taxonomy_id)
+			INNER JOIN $wpdb->terms ON ($wpdb->terms.term_id = $wpdb->term_taxonomy.term_id)
+		";
+	}
+
+	public function posts_where( $sql )
+	{
+		global $wpdb;
+		return $sql . " AND $wpdb->term_taxonomy.taxonomy = '{$this->_tax}'";
+	}
+
+	public function posts_orderby( $sql )
+	{
+		global $wpdb;
+		return "$wpdb->terms.name ASC, $wpdb->posts.post_title ASC";
+	}
+}

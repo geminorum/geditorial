@@ -1,0 +1,41 @@
+@charset "UTF-8";
+
+@import "modules/all";
+@import "partials/base";
+
+// @import "partials/admin.all";
+@import "vendor/colorbox";
+
+// CUSTOM
+.rtl {
+
+	#cboxClose {
+		right: auto;
+		left: 5px;
+	}
+
+	#cboxTitle{
+		left: auto;
+		right: 0;
+	}
+}
+
+#cboxLoadedContent {
+	background: #f1f1f1; // default wp admin background color
+}
+
+#cboxLoadingGraphic{
+	background: url(../packages/jquery-colorbox/loading.gif) no-repeat center center;
+}
+
+#cboxClose{
+	background: url(../packages/jquery-colorbox/controls.png) no-repeat top center;
+}
+
+#cboxPrevious{
+	background: url(../packages/jquery-colorbox/controls.png) no-repeat top left;
+}
+
+#cboxNext{
+	background: url(../packages/jquery-colorbox/controls.png) no-repeat top right;
+}

@@ -1,0 +1,50 @@
+@charset "UTF-8";
+
+@import "modules/all";
+@import "partials/base";
+
+@import "partials/admin.all";
+// @import "partials/admin.edit";
+// @import "partials/like.admin.edit";
+// @import "partials/specs.admin.edit";
+@import "partials/magazine.admin.edit";
+@import "partials/tweaks.admin.edit";
+@import "partials/book.admin.edit";
+
+.geditorial-admin-wrap-column {
+
+}
+
+.fixed {
+
+	.column-children {
+		width: 55px;
+	}
+
+	.column-order {
+		width: 45px;
+	}
+
+	.column-cover {
+		width: 45px;
+	}
+
+	// Module: Meta
+	.column-gpeople {
+		width: 15%;
+	}
+
+	// Module: Magazine
+	.column-taxonomy-span {
+		width: 55px;
+	}
+
+	.column-taxonomy-issues {
+		width: 120px;
+	}
+
+	// Module: Entry
+	.column-taxonomy-section {
+		width: 16%;
+	}
+}

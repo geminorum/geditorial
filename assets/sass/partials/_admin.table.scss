@@ -1,0 +1,44 @@
+
+table.helper-table {
+
+	td {
+		vertical-align: top;
+	}
+
+	td,
+	th {
+		padding: 8px 10px;
+	}
+
+	.-cb-all {}
+	.-cb {}
+	.-column {}
+
+	.-column-id,
+	.-column-ID,
+	.-column-post_id,
+	.-column-term_id {
+		width: 60px;
+	}
+
+	.-column-count {
+		width: 40px;
+	}
+
+	.-column-content {}
+	.-column-info {
+		width: 34%;
+	}
+
+	.-column-tasks {}
+	.-column-next {
+		width: 34%;
+	}
+
+	.-row {}
+	.-cell {}
+
+	pre {
+		margin: 0;
+	}
+}

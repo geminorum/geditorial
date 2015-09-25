@@ -1,0 +1,52 @@
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+/// All: Admin -----------------------------------------------------------------
+
+@import "admin.table";
+
+// USE: .geditorial-admin-wrap.module { @include main-wrap(); }
+
+.geditorial-admin-wrap {
+
+	.credits {
+		direction: ltr;
+
+		p {
+			font-size: 0.98em;
+		}
+	}
+
+	.signature {
+		@include body-rtl() {
+			direction: ltr;
+		}
+	}
+
+	.credits,
+	.signature {
+		color: #777;
+		a {
+			color: inherit;
+			text-decoration: none;
+		}
+		a:hover {
+			color: #333;
+			text-decoration: underline;
+		}
+	}
+}
+
+// TINYMCE BUTTON ICONS
+.geditorial-tinymce-icon {
+
+	&:before {
+		font-family: "dashicons";
+		content: "\f159"; // DEFAULT
+	}
+
+	&.icon-ge_series:before {
+		content: "\f100";
+		// content: "\f164";
+	}
+}
