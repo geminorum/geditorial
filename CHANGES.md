@@ -1,3 +1,20 @@
+### 0.2.13
+* all: foundation for new meta fields api
+* all: remove meta box api
+* all: load frontend arg changed
+* modulecore: overriding pre options titles
+* modulecore: linked cpt & term helpers
+* meta: correctly support for all posttypes!
+* meta: tabindex zero for inputs
+* magazine: page start meta as number
+* magazine: semantic issue/issues renamed to main/supported
+* magazine: full cpt and tax labels
+* magazine: using default meta ot/st callback
+* reshare: correct escape for source url meta
+* book: default size installer
+* tweaks: fixed fallback for tax icon / attr
+* contest: code refactoring
+
 ### 0.2.12
 * all: removed old options calls
 * all: new api for: tools page / save post / parse query / restrict manage posts / post parent field
