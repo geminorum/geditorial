@@ -341,6 +341,7 @@ class gEditorialHelper
 					'title'        => $title,
 					'placeholder'  => $title,
 					'readonly'     => ! $gEditorial->meta->user_can( 'edit', $field ),
+					'tabindex'     => '0',
 				);
 
 				if ( $ltr )
@@ -375,6 +376,7 @@ class gEditorialHelper
 					'title'        => $title,
 					'placeholder'  => $title,
 					'readonly'     => ! $gEditorial->meta->user_can( 'edit', $field ),
+					'tabindex'     => '0',
 				);
 
 				if ( $ltr )
@@ -404,6 +406,7 @@ class gEditorialHelper
 					'id'       => 'geditorial-meta-'.$field.( FALSE === $key ? '' : '-'.$key ),
 					'class'    => 'textarea-autosize geditorial-meta-field-'.$field,
 					'readonly' => ! $gEditorial->meta->user_can( 'edit', $field ),
+					'tabindex' => '0',
 				), esc_textarea( $gEditorial->meta->get_postmeta( $post->ID, $field ) ) );
 				$html .= '</div></div>';
 
