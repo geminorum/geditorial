@@ -1192,7 +1192,7 @@ class gEditorialModuleCore
 			remove_meta_box( 'authordiv', $this->module->constants[$constant_key], 'normal' );
 
 		else if ( 'excerpt' == $type )
-			remove_meta_box( 'postexcerpt', $this->module->constants[$constant_key], 'normal' );
+			remove_meta_box( 'postexcerpt', $post_type, 'normal' );
 	}
 
 	public function get_meta_box_title( $constant_key = 'post', $url = NULL, $edit_cap = 'manage_options', $title = NULL )

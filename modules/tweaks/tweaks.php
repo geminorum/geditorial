@@ -160,7 +160,7 @@ class gEditorialTweaks extends gEditorialModuleCore
 	public function add_meta_boxes( $post_type, $post )
 	{
 		if ( post_type_supports( $post_type, 'excerpt' ) ) {
-			remove_meta_box( 'postexcerpt', $post_type, 'normal' );
+			$this->remove_meta_box( $post_type, $post_type, 'excerpt' );
 			add_meta_box( 'postexcerpt', __( 'Excerpt' ), array( $this, 'post_excerpt_meta_box' ), $post_type, 'normal' );
 		}
 	}
