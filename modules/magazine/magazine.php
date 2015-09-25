@@ -112,7 +112,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 					'issue_cpt' => array(
 						'name'                  => _x( 'Issues', 'Issue CPT Name', GEDITORIAL_TEXTDOMAIN ),
 						'menu_name'             => _x( 'Issues', 'Issue CPT Menu Name', GEDITORIAL_TEXTDOMAIN ),
-						'description'           => _x( 'Collection of Posts', 'Issue CPT Labels', GEDITORIAL_TEXTDOMAIN ),
+						'description'           => _x( 'Collection of Posts', 'Issue CPT Description', GEDITORIAL_TEXTDOMAIN ),
 						'singular_name'         => _x( 'Issue', 'Issue CPT Labels', GEDITORIAL_TEXTDOMAIN ),
 						'add_new'               => _x( 'Add New', 'Issue CPT Labels', GEDITORIAL_TEXTDOMAIN ),
 						'add_new_item'          => _x( 'Add New Issue', 'Issue CPT Labels', GEDITORIAL_TEXTDOMAIN ),
@@ -125,7 +125,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 						'parent_item_colon'     => _x( 'Parent Issue:', 'Issue CPT Labels', GEDITORIAL_TEXTDOMAIN ),
 						'featured_image'        => _x( 'Issue Cover Image', 'Issue CPT Labels', GEDITORIAL_TEXTDOMAIN ),
 						'set_featured_image'    => _x( 'Set issue cover image', 'Issue CPT Labels', GEDITORIAL_TEXTDOMAIN ),
-						'remove_featured_image' => _x( 'Remove idsue cover image', 'Issue CPT Labels', GEDITORIAL_TEXTDOMAIN ),
+						'remove_featured_image' => _x( 'Remove issue cover image', 'Issue CPT Labels', GEDITORIAL_TEXTDOMAIN ),
 						'use_featured_image'    => _x( 'Use as issue cover image', 'Issue CPT Labels', GEDITORIAL_TEXTDOMAIN ),
 					),
 					'issue_tax' => array(
@@ -317,8 +317,6 @@ class gEditorialMagazine extends gEditorialModuleCore
 	public function meta_init( $meta_module )
 	{
 		add_filter( 'geditorial_meta_strings', array( &$this, 'meta_strings' ), 6, 1 );
-
-		add_filter( 'geditorial_meta_dbx_callback', array( &$this, 'meta_dbx_callback' ), 10, 2 );
 		add_filter( 'geditorial_meta_sanitize_post_meta', array( &$this, 'meta_sanitize_post_meta' ), 10 , 4 );
 
 		add_action( 'geditorial_magazine_main_meta_box', array( &$this, 'meta_main_meta_box' ), 10, 1 );
@@ -860,26 +858,6 @@ class gEditorialMagazine extends gEditorialModuleCore
 		);
 
 		return gEditorialHelper::parse_args_r( $new, $strings );
-	}
-
-	public function meta_dbx_callback( $func, $post_type )
-	{
-		if ( $this->module->constants['issue_cpt'] == $post_type )
-			return array( &$this, 'raw_callback' );
-		return $func;
-	}
-
-	// meta on edit issue page
-	public function raw_callback()
-	{
-		global $gEditorial, $post;
-
-		$fields = $gEditorial->meta->post_type_fields( $post->post_type );
-
-		gEditorialHelper::meta_admin_title_field( 'ot', $fields, $post );
-		gEditorialHelper::meta_admin_title_field( 'st', $fields, $post );
-
-		wp_nonce_field( 'geditorial_meta_post_raw', '_geditorial_meta_post_raw' );
 	}
 
 	public function meta_sanitize_post_meta( $postmeta, $fields, $post_id, $post_type )
