@@ -47,7 +47,7 @@ class gEditorialMeta extends gEditorialModuleCore
 					'es' => TRUE, // external link (source)
 					'ol' => TRUE, // old link
 				),
-			),
+			) ),
 
 			'settings' => array(
 				'post_types_option' => 'post_types_option',
@@ -252,19 +252,17 @@ class gEditorialMeta extends gEditorialModuleCore
 		$this->remove_meta_box( 'ct_tax', $post_type, 'tag' );
 
 		// we use filter to override the whole functionality, not just adding the actions
-		$box_func = apply_filters( 'geditorial_meta_box_callback', array( &$this, $post_type.'_meta_box' ), $post_type );
+		$box_func = apply_filters( 'geditorial_meta_box_callback', array( &$this, 'default_meta_box' ), $post_type );
 		if ( is_callable( $box_func ) )
 			add_meta_box( 'geditorial-meta-'.$post_type, $this->get_meta_box_title(), $box_func, $post_type, 'side', 'high' );
 
-		$dbx_func = apply_filters( 'geditorial_meta_dbx_callback', array( &$this, $post_type.'_meta_raw' ), $post_type );
+		$dbx_func = apply_filters( 'geditorial_meta_dbx_callback', array( &$this, 'default_meta_raw' ), $post_type );
 		if ( is_callable( $dbx_func ) )
 			add_action( 'dbx_post_sidebar', $dbx_func, 10, 1 );
 	}
 
-	public function post_meta_box()
+	public function default_meta_box( $post, $box )
 	{
-		global $post;
-
 		$ch_override = FALSE;
 		$fields      = $this->post_type_fields( $post->post_type );
 
@@ -312,9 +310,8 @@ class gEditorialMeta extends gEditorialModuleCore
 		echo '</div>';
 	}
 
-	public function post_meta_raw()
+	public function default_meta_raw( $post )
 	{
-		global $post;
 		$fields = $this->post_type_fields( $post->post_type );
 
 		gEditorialHelper::meta_admin_title_field( 'ot', $fields, $post );
