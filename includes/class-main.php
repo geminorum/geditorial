@@ -3,14 +3,14 @@
 class gEditorial
 {
 
-	private $_group = 'geditorial_';
+	private $group = 'geditorial_';
 
-	var $_asset_styles   = FALSE;
-	var $_asset_config   = FALSE;
-	var $_asset_args     = array();
-	var $_editor_buttons = array();
+	private $_asset_styles   = FALSE;
+	private $_asset_config   = FALSE;
+	private $_asset_args     = array();
+	private $_editor_buttons = array();
 
-	function __construct()
+	public function __construct()
 	{
 		load_plugin_textdomain( GEDITORIAL_TEXTDOMAIN, FALSE, 'geditorial/languages' );
 
@@ -29,9 +29,9 @@ class gEditorial
 			do_action( 'geditorial_init' );
 		} );
 
-		add_action( 'init'      , array( &$this, 'init_late'  ), 999 );
+		add_action( 'init', array( &$this, 'init_late' ), 999 );
 		add_action( 'admin_init', array( &$this, 'admin_init' ) );
-		add_action( 'wp_footer' , array( &$this, 'footer_asset_config'  ), 999 );
+		add_action( 'wp_footer', array( &$this, 'footer_asset_config' ), 999 );
 		add_action( 'wp_enqueue_scripts', array( &$this, 'wp_enqueue_scripts' ) );
 		add_filter( 'mce_external_languages', array( &$this, 'mce_external_languages' ) );
 	}
@@ -55,10 +55,6 @@ class gEditorial
 		require_once( GEDITORIAL_DIR.'includes/class-widget.php' );
 		require_once( GEDITORIAL_DIR.'includes/class-module.php' );
 
-		// if ( ! class_exists( 'WP_List_Table' ) )
-		// 	require_once( ABSPATH.'wp-admin/includes/class-wp-list-table.php' );
-
-		// scan the modules directory and include any modules that exist there
 		$module_dirs = apply_filters( 'geditorial_modules', scandir( GEDITORIAL_DIR.'modules/' ) );
 		$class_names = array();
 
@@ -136,7 +132,7 @@ class gEditorial
 		$args = array_merge( $defaults, $args );
 
 		$args['name']  = $name;
-		$args['group'] = $this->_group.$name;
+		$args['group'] = $this->group.$name;
 
 		if ( ! isset( $args['settings_slug'] ) )
 			$args['settings_slug'] = 'geditorial-settings-'.$args['slug'];
@@ -296,7 +292,7 @@ class gEditorial
 		$options = array();
 
 		foreach ( $this->modules as $mod_name => $mod_data )
-			$options[$mod_name] = get_option( $this->options_group.$mod_name.'_options', '{{NO-OPTIONS}}' );
+			$options[$mod_name] = get_option( $this->group.$mod_name.'_options', '{{NO-OPTIONS}}' );
 
 		$options['{{GLOBAL}}'] = get_option( 'geditorial_options', FALSE );
 
@@ -311,13 +307,13 @@ class gEditorial
 
 		foreach ( $this->modules as $mod_name => $mod_data ) {
 
-			$old = get_option( $this->options_group.$mod_name.'_options' );
+			$old = get_option( $this->group.$mod_name.'_options' );
 
 			if ( isset( $options[$mod_name] ) ) {
-				$upgraded[$mod_name] = delete_option( $this->options_group.$mod_name.'_options' );
+				$upgraded[$mod_name] = delete_option( $this->group.$mod_name.'_options' );
 
 			} else if ( $old ) {
-				$upgraded[$mod_name] = delete_option( $this->options_group.$mod_name.'_options' );
+				$upgraded[$mod_name] = delete_option( $this->group.$mod_name.'_options' );
 				$options[$mod_name] = $old;
 				$update = TRUE;
 			}
@@ -383,7 +379,7 @@ class gEditorial
 		}
 	}
 
-	// front & admin
+	// NOTE: used in front & admin
 	public function footer_asset_config()
 	{
 		if ( ! $this->_asset_config )
