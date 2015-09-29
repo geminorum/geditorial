@@ -3,8 +3,7 @@
 class gEditorial
 {
 
-	var $options_group      = 'geditorial_';
-	var $options_group_name = 'geditorial_options';
+	private $_group = 'geditorial_';
 
 	var $_asset_styles   = FALSE;
 	var $_asset_config   = FALSE;
@@ -136,8 +135,8 @@ class gEditorial
 
 		$args = array_merge( $defaults, $args );
 
-		$args['name']               = $name;
-		$args['options_group_name'] = $this->options_group.$name.'_options';
+		$args['name']  = $name;
+		$args['group'] = $this->_group.$name;
 
 		if ( ! isset( $args['settings_slug'] ) )
 			$args['settings_slug'] = 'geditorial-settings-'.$args['slug'];

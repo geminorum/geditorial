@@ -495,8 +495,8 @@ class gEditorialMeta extends gEditorialModuleCore
 			echo '<tr><th scope="row">'.__( 'Import Custom Fields', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
 
 			if ( ! empty( $_POST ) && isset( $_POST['custom_fields_check'] ) ) {
-				if ( isset( $_POST[$this->module->options_group_name]['tools'] ) ) {
-					$post = $_POST[$this->module->options_group_name]['tools'];
+				if ( isset( $_POST[$this->module->group]['tools'] ) ) {
+					$post = $_POST[$this->module->group]['tools'];
 					$limit = isset( $post['custom_field_limit'] ) ? stripslashes( $post['custom_field_limit'] ) : FALSE;
 
 					if ( isset( $post['custom_field'] ) ) {
@@ -559,9 +559,9 @@ class gEditorialMeta extends gEditorialModuleCore
 
 				if ( isset( $_POST['custom_fields_convert'] ) ) {
 
-					if ( isset( $_POST[$this->module->options_group_name]['tools'] ) ) {
+					if ( isset( $_POST[$this->module->group]['tools'] ) ) {
 
-						$post   = $_POST[$this->module->options_group_name]['tools'];
+						$post   = $_POST[$this->module->group]['tools'];
 						$limit  = isset( $post['custom_field_limit'] ) ? $post['custom_field_limit'] : '25';
 						$result = FALSE;
 
@@ -579,9 +579,9 @@ class gEditorialMeta extends gEditorialModuleCore
 
 				} else if ( isset( $_POST['custom_fields_delete'] ) ) {
 
-					if ( isset( $_POST[$this->module->options_group_name]['tools'] ) ) {
+					if ( isset( $_POST[$this->module->group]['tools'] ) ) {
 
-						$post   = $_POST[$this->module->options_group_name]['tools'];
+						$post   = $_POST[$this->module->group]['tools'];
 						$limit  = isset( $post['custom_field_limit'] ) ? $post['custom_field_limit'] : '';
 						$result = FALSE;
 

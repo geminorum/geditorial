@@ -132,7 +132,7 @@ class gEditorialSettings extends gEditorialModuleCore
 
 				$this->tools_check_referer( $sub );
 
-				$post = isset( $_POST[$this->module->options_group_name]['tools'] ) ? $_POST[$this->module->options_group_name]['tools'] : array();
+				$post = isset( $_POST[$this->module->group]['tools'] ) ? $_POST[$this->module->group]['tools'] : array();
 
 				if ( isset( $_POST['upgrade_old_options'] ) ) {
 
@@ -169,7 +169,7 @@ class gEditorialSettings extends gEditorialModuleCore
 	{
 		global $gEditorial;
 
-		$post = isset( $_POST[$this->module->options_group_name]['tools'] ) ? $_POST[$this->module->options_group_name]['tools'] : array();
+		$post = isset( $_POST[$this->module->group]['tools'] ) ? $_POST[$this->module->group]['tools'] : array();
 
 		echo '<form method="post" action="">';
 
@@ -413,12 +413,12 @@ class gEditorialSettings extends gEditorialModuleCore
 		$this->enqueue_asset_js();
 	}
 
-	private function admin_settings_verify( $options_group_name )
+	private function admin_settings_verify( $group )
 	{
 		if ( ! current_user_can( 'manage_options' ) )
 			return FALSE;
 
-		if ( ! wp_verify_nonce( $_POST['_wpnonce'], $options_group_name.'-options' ) )
+		if ( ! wp_verify_nonce( $_POST['_wpnonce'], $group.'-options' ) )
 			return FALSE;
 
 		return TRUE;
@@ -432,7 +432,7 @@ class gEditorialSettings extends gEditorialModuleCore
 		global $gEditorial;
 		$module_name = sanitize_key( $_POST['geditorial_module_name'] );
 
-		if ( ! $this->admin_settings_verify( $gEditorial->$module_name->module->options_group_name ) )
+		if ( ! $this->admin_settings_verify( $gEditorial->$module_name->module->group ) )
 			wp_die( __( 'Cheatin&#8217; uh?' ) );
 
 		$gEditorial->update_all_module_options( $gEditorial->$module_name->module->name, array(
@@ -459,15 +459,15 @@ class gEditorialSettings extends gEditorialModuleCore
 		$module_name = sanitize_key( $_POST['geditorial_module_name'] );
 
 		if ( $_POST['action'] != 'update'
-			|| $_POST['option_page'] != $gEditorial->$module_name->module->options_group_name )
+			|| $_POST['option_page'] != $gEditorial->$module_name->module->group )
 			return FALSE;
 
-		// if ( ! current_user_can( 'manage_options' ) || !wp_verify_nonce( $_POST['_wpnonce'], $gEditorial->$module_name->module->options_group_name.'-options' ) )
-		if ( ! $this->admin_settings_verify( $gEditorial->$module_name->module->options_group_name ) )
+		// if ( ! current_user_can( 'manage_options' ) || !wp_verify_nonce( $_POST['_wpnonce'], $gEditorial->$module_name->module->group.'-options' ) )
+		if ( ! $this->admin_settings_verify( $gEditorial->$module_name->module->group ) )
 			wp_die( __( 'Cheatin&#8217; uh?' ) );
 
-		$new_options = ( isset( $_POST[$gEditorial->$module_name->module->options_group_name] ) )
-			? $_POST[$gEditorial->$module_name->module->options_group_name] : array();
+		$new_options = ( isset( $_POST[$gEditorial->$module_name->module->group] ) )
+			? $_POST[$gEditorial->$module_name->module->group] : array();
 
 		$new_options = $gEditorial->$module_name->settings_validate( $new_options );
 

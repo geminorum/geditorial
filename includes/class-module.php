@@ -142,7 +142,7 @@ class gEditorialModuleCore
 			$html = gEditorialHelper::html( 'input', array(
 				'type'    => 'checkbox',
 				'id'      => 'type-'.$post_type,
-				'name'    => $this->module->options_group_name.'[post_types]['.$post_type.']',
+				'name'    => $this->module->group.'[post_types]['.$post_type.']',
 				'checked' => $this->module->options->post_types[$post_type],
 			) );
 
@@ -158,7 +158,7 @@ class gEditorialModuleCore
 			$html = gEditorialHelper::html( 'input', array(
 				'type'    => 'checkbox',
 				'id'      => 'tax-'.$taxonomy,
-				'name'    => $this->module->options_group_name.'[taxonomies]['.$taxonomy.']',
+				'name'    => $this->module->group.'[taxonomies]['.$taxonomy.']',
 				'checked' => isset( $this->module->options->taxonomies[$taxonomy] ) && $this->module->options->taxonomies[$taxonomy],
 			) );
 			echo '<p>'.gEditorialHelper::html( 'label', array(
@@ -200,13 +200,13 @@ class gEditorialModuleCore
 		if ( is_null( $title ) )
 			$title = __( 'Enable for these post types', GEDITORIAL_TEXTDOMAIN );
 
-		$section = $this->module->options_group_name.'_posttypes';
+		$section = $this->module->group.'_posttypes';
 
-		add_settings_section( $section, FALSE, '__return_false', $this->module->options_group_name );
+		add_settings_section( $section, FALSE, '__return_false', $this->module->group );
 		add_settings_field( 'post_types',
 			$title,
 			array( $this, 'settings_post_types_option' ),
-			$this->module->options_group_name,
+			$this->module->group,
 			$section
 		);
 	}
@@ -216,13 +216,13 @@ class gEditorialModuleCore
 		if ( is_null( $title ) )
 			$title = __( 'Enable for these taxonomies', GEDITORIAL_TEXTDOMAIN );
 
-		$section = $this->module->options_group_name.'_taxonomies';
+		$section = $this->module->group.'_taxonomies';
 
-		add_settings_section( $section, FALSE, '__return_false', $this->module->options_group_name );
+		add_settings_section( $section, FALSE, '__return_false', $this->module->group );
 		add_settings_field( 'taxonomies',
 			$title,
 			array( $this, 'settings_taxonomies_option' ),
-			$this->module->options_group_name,
+			$this->module->group,
 			$section
 		);
 	}
@@ -241,7 +241,7 @@ class gEditorialModuleCore
 			add_settings_section( $section,
 				sprintf( $title, $all[$post_type] ),
 				'__return_false',
-				$this->module->options_group_name
+				$this->module->group
 			);
 
 			$all_fields = $this->post_type_all_fields( $post_type );
@@ -254,12 +254,12 @@ class gEditorialModuleCore
 
 						// NOTE: we register each fields b/c of the desc
 						$this->add_settings_field( array_merge( array(
-							'field'      => $field,
-							'title'      => '&nbsp;',
-							'field_title'      => isset( $args['title'] ) ? $args['title'] : '&nbsp;',
-							'post_type' => $post_type,
-							'section'    => $section,
-							'callback'   => array( $this, 'do_settings_field_posttype_fields' ),
+							'field'       => $field,
+							'title'       => '&nbsp;',
+							'field_title' => isset( $args['title'] ) ? $args['title'] : '&nbsp;',
+							'post_type'   => $post_type,
+							'section'     => $section,
+							'callback'    => array( $this, 'do_settings_field_posttype_fields' ),
 						), $args ) );
 
 					} else {
@@ -269,7 +269,7 @@ class gEditorialModuleCore
 						add_settings_field( $post_type.'_'.$field,
 							'', // $this->get_string( $field, $post_type ),
 							array( $this, 'do_post_type_fields_option' ),
-							$this->module->options_group_name,
+							$this->module->group,
 							$section,
 							array(
 								'id'        => $post_type.'_'.$field,
@@ -285,7 +285,7 @@ class gEditorialModuleCore
 				add_settings_field( $post_type.'_nofields',
 					sprintf( __( 'No fields supported for %s', GEDITORIAL_TEXTDOMAIN ), $all[$post_type] ),
 					'__return_false',
-					$this->module->options_group_name,
+					$this->module->group,
 					$post_type.'_fields'
 				);
 			}
@@ -295,8 +295,8 @@ class gEditorialModuleCore
 	// call back for the NEW method
 	public function do_settings_field_posttype_fields( $args )
 	{
-		$name  = $this->module->options_group_name.'[fields]['.$args['post_type'].']['.$args['field'].']';
-		$id    = $this->module->options_group_name.'-fields-'.$args['post_type'].'-'.$args['field'];
+		$name  = $this->module->group.'[fields]['.$args['post_type'].']['.$args['field'].']';
+		$id    = $this->module->group.'-fields-'.$args['post_type'].'-'.$args['field'];
 
 		if ( isset( $this->module->options->settings['fields'][$args['post_type']][$args['field']] ) )
 			$value = $this->module->options->settings['fields'][$args['post_type']][$args['field']];
@@ -331,7 +331,7 @@ class gEditorialModuleCore
 	public function do_post_type_fields_option( $args )
 	{
 		echo '<label for="'.esc_attr( $args['id'] ).'">';
-		echo '<input id="'.esc_attr( $args['id'] ).'" name="'.$this->module->options_group_name.'['.esc_attr( $args['post_type'] ).'_fields]['.esc_attr( $args['field'] ).']"';
+		echo '<input id="'.esc_attr( $args['id'] ).'" name="'.$this->module->group.'['.esc_attr( $args['post_type'] ).'_fields]['.esc_attr( $args['field'] ).']"';
 
 		$checked = FALSE;
 		if ( isset( $this->module->options->{$args['post_type'].'_fields'}[$args['field']] ) )
@@ -356,8 +356,8 @@ class gEditorialModuleCore
 	{
 		echo '<form action="'.$this->get_url_settings().'" method="post">';
 
-			settings_fields( $this->module->options_group_name );
-			do_settings_sections( $this->module->options_group_name );
+			settings_fields( $this->module->group );
+			do_settings_sections( $this->module->group );
 			echo '<input id="geditorial_module_name" name="geditorial_module_name" type="hidden" value="'.esc_attr( $this->module->name ).'" />';
 
 			echo '<p class="submit">';
@@ -613,7 +613,7 @@ class gEditorialModuleCore
 
 	protected function insert_default_terms( $constant_key )
 	{
-		if ( ! wp_verify_nonce( $_POST['_wpnonce'], $this->module->options_group_name.'-options' ) )
+		if ( ! wp_verify_nonce( $_POST['_wpnonce'], $this->module->group.'-options' ) )
 			return;
 
 		$added = gEditorialHelper::insertDefaultTerms(
@@ -632,8 +632,8 @@ class gEditorialModuleCore
 		foreach ( $this->module->settings as $section_suffix => $fields ) {
 			if ( is_array( $fields ) ) {
 
-				$section = $this->module->options_group_name.$section_suffix;
-				add_settings_section( $section, FALSE, '__return_false', $this->module->options_group_name );
+				$section = $this->module->group.$section_suffix;
+				add_settings_section( $section, FALSE, '__return_false', $this->module->group );
 				foreach ( $fields as $field )
 					$this->add_settings_field( array_merge( $field, array( 'section' => $section ) ) );
 
@@ -662,8 +662,8 @@ class gEditorialModuleCore
 	public function add_settings_field( $r = array() )
 	{
 		$args = array_merge( array(
-			'page'        => $this->module->options_group_name,
-			'section'     => $this->module->options_group_name.'_general',
+			'page'        => $this->module->group,
+			'section'     => $this->module->group.'_general',
 			'field'       => FALSE,
 			'label_for'   => '',
 			'title'       => '',
@@ -705,8 +705,8 @@ class gEditorialModuleCore
 			return;
 
 		$html    = '';
-		$id      = $args['id_attr'] ? $args['id_attr'] : $this->module->options_group_name.'-'.$args['name_group'].'-'.$args['field'];
-		$name    = $args['name_attr'] ? $args['name_attr'] : $this->module->options_group_name.'['.$args['name_group'].']['.$args['field'].']';
+		$id      = $args['id_attr'] ? $args['id_attr'] : $this->module->group.'-'.$args['name_group'].'-'.$args['field'];
+		$name    = $args['name_attr'] ? $args['name_attr'] : $this->module->group.'['.$args['name_group'].']['.$args['field'].']';
 		$exclude = $args['exclude'] && ! is_array( $args['exclude'] ) ? array_filter( explode( ',', $args['exclude'] ) ) : array();
 
 		if ( isset( $this->module->options->settings[$args['field']] ) )
