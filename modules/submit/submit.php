@@ -3,101 +3,78 @@
 class gEditorialSubmit extends gEditorialModuleCore
 {
 
-	var $module_name = 'submit';
-	var $meta_key    = '_ge_submit';
-
-	public function __construct()
+	public static function module()
 	{
-		global $gEditorial;
-
-		$args = array(
-
-			'title'                => __( 'Submit', GEDITORIAL_TEXTDOMAIN ),
-			'short_description'    => __( 'FrontPage Submissions', GEDITORIAL_TEXTDOMAIN ),
-			'extended_description' => __( 'Set of tools to accept post and images from frontpage', GEDITORIAL_TEXTDOMAIN ),
-
-			'dashicon' => 'smiley',
-			'slug'     => 'submit',
-			'frontend' => TRUE,
-
-			'constants' => array(
-				'submit_form_shortcode' => 'submit-form',
-			),
-
-			'default_options' => array(
-				'enabled' => FALSE,
-				'post_types' => array(
-					'post' => TRUE,
-					'page' => FALSE,
-				),
-				'post_fields' => array(
-					'post_title'   => TRUE,
-					'post_content' => TRUE,
-					'post_author'  => TRUE,
-				),
-				'settings' => array(
-				),
-			),
-			'settings' => array(
-				'_general' => array(
-					array(
-						'field'       => 'editor_button',
-						'title'       => _x( 'Editor Button', 'Series Editor Button', GEDITORIAL_TEXTDOMAIN ),
-						'description' => __( 'Adding an Editor Button to insert shortcodes', GEDITORIAL_TEXTDOMAIN ),
-						'default'     => '1',
-					),
-				),
-				'post_types_option' => 'post_types_option',
-				'post_types_fields' => 'post_types_fields',
-			),
-			'strings' => array(
-				'titles' => array(
-					'post' => array(
-						'post_title'   => __( 'Title', GEDITORIAL_TEXTDOMAIN ),
-						'post_author'  => __( 'Author', GEDITORIAL_TEXTDOMAIN ),
-						'post_email'   => __( 'Email', GEDITORIAL_TEXTDOMAIN ),
-						'post_url'     => __( 'URL', GEDITORIAL_TEXTDOMAIN ),
-						'post_content' => __( 'Content', GEDITORIAL_TEXTDOMAIN ),
-						'post_submit'  => __( 'Submit', GEDITORIAL_TEXTDOMAIN ),
-					),
-				),
-				'descriptions' => array(
-					'post' => array(
-						'post_title'   => __( 'Title of your application', GEDITORIAL_TEXTDOMAIN ),
-						'post_author'  => __( 'Author of the application', GEDITORIAL_TEXTDOMAIN ),
-						'post_email'   => __( 'Contact email', GEDITORIAL_TEXTDOMAIN ),
-						'post_url'     => __( 'URL for more information', GEDITORIAL_TEXTDOMAIN ),
-						'post_content' => __( 'Content of the application', GEDITORIAL_TEXTDOMAIN ),
-						'post_submit'  => __( 'Submit the application', GEDITORIAL_TEXTDOMAIN ),
-					),
-				),
-			),
-			'configure_page_cb' => 'print_configure_view',
+		return array(
+			'name'     => 'submit',
+			'title'    => _x( 'Submit', 'Submit Module', GEDITORIAL_TEXTDOMAIN ),
+			'desc'     => _x( 'FrontPage Submissions', 'Submit Module', GEDITORIAL_TEXTDOMAIN ),
+			'dashicon' => 'welcome-add-page',
 		);
-
-		$gEditorial->register_module( $this->module_name, $args );
 	}
 
-	public function setup()
+	protected function get_global_settings()
 	{
-		add_action( 'init', array( &$this, 'init' ) );
+		return array(
+			'_general' => array(
+				'editor_button',
+			),
+			'posttypes_option' => 'posttypes_option',
+			'fields_option'    => 'fields_option',
+		);
+	}
 
-		if ( is_admin() ) {
-			add_action( 'admin_init', array( &$this, 'admin_init' ) );
-			add_action( 'geditorial_settings_load', array( &$this, 'register_settings' ) );
+	protected function get_global_constants()
+	{
+		return array(
+			'submit_form_shortcode' => 'submit-form',
+		);
+	}
 
-		} else {
+	protected function get_global_strings()
+	{
+		return array(
+			'titles' => array(
+				'post' => array(
+					'post_title'   => _x( 'Title', 'Submit Module', GEDITORIAL_TEXTDOMAIN ),
+					'post_author'  => _x( 'Author', 'Submit Module', GEDITORIAL_TEXTDOMAIN ),
+					'post_email'   => _x( 'Email', 'Submit Module', GEDITORIAL_TEXTDOMAIN ),
+					'post_url'     => _x( 'URL', 'Submit Module', GEDITORIAL_TEXTDOMAIN ),
+					'post_content' => _x( 'Content', 'Submit Module', GEDITORIAL_TEXTDOMAIN ),
+					'post_submit'  => _x( 'Submit', 'Submit Module', GEDITORIAL_TEXTDOMAIN ),
+				),
+			),
+			'descriptions' => array(
+				'post' => array(
+					'post_title'   => _x( 'Title of the application', 'Submit Module', 'Submit Module', GEDITORIAL_TEXTDOMAIN ),
+					'post_author'  => _x( 'Author of the application', 'Submit Module', GEDITORIAL_TEXTDOMAIN ),
+					'post_email'   => _x( 'Contact email', 'Submit Module', GEDITORIAL_TEXTDOMAIN ),
+					'post_url'     => _x( 'URL for more information', 'Submit Module', GEDITORIAL_TEXTDOMAIN ),
+					'post_content' => _x( 'Content of the application', 'Submit Module', GEDITORIAL_TEXTDOMAIN ),
+					'post_submit'  => _x( 'Submit the application', 'Submit Module', GEDITORIAL_TEXTDOMAIN ),
+				),
+			),
+		);
+	}
 
-		}
+	protected function get_global_fields()
+	{
+		return array(
+			$this->constant( 'post_cpt' ) => array(
+				'post_title'   => TRUE,
+				'post_content' => TRUE,
+				'post_author'  => TRUE,
+			),
+		);
 	}
 
 	public function init()
 	{
 		do_action( 'geditorial_submit_init', $this->module );
 
-		$this->do_filters();
+		$this->do_globals();
 
-		add_shortcode( $this->module->constants['submit_form_shortcode'], array( &$this, 'shortcode_submit_form' ) );
+		add_shortcode( $this->constant( 'submit_form_shortcode' ), array( $this, 'shortcode_submit_form' ) );
 	}
 
 	public function admin_init()
@@ -120,7 +97,7 @@ class gEditorialSubmit extends gEditorialModuleCore
 			'context'            => 'default', // for filtering the atts
 			'must_logged_in'     => FALSE, // if must then URL to redirect
 			'user_must_can'      => 'read', // capability of the logged in user to submit a post
-			'user_cant_text'     => __( 'You can not post here!', GEDITORIAL_TEXTDOMAIN ),
+			'user_cant_text'     => _x( 'You can not post here!', 'Submit Module', GEDITORIAL_TEXTDOMAIN ),
 			'default_user'       => gEditorialHelper::getEditorialUserID(), // user id if not logged in
 			'default_post_type'  => 'post',
 			'default_status'     => 'pending',
@@ -129,15 +106,15 @@ class gEditorialSubmit extends gEditorialModuleCore
 			'notification_email' => FALSE, // if set then : set of recepients
 			'allow_html'         => FALSE,
 			'class'              => 'editorial-submit',
-			'title'              => __( 'Submit your Application', GEDITORIAL_TEXTDOMAIN ),
+			'title'              => _x( 'Submit Your Application', 'Submit Module', GEDITORIAL_TEXTDOMAIN ),
 			'title_wrap'         => 'h3',
 			'field_wrap'         => 'div',
 			'field_wrap_class'   => 'editorial-submit-field',
 
-			'horizontal' => 3, // false to disable, number of bootstrap col on horizontal form
+			'horizontal' => 3, // FALSE to disable, number of bootstrap col on horizontal form
 			'size'       => 'sm', // bootstrap size
 
-		), $atts, $this->module->constants['submit_form_shortcode'] );
+		), $atts, $this->constant( 'submit_form_shortcode' ) );
 
 		if ( ! is_user_logged_in() && $args['must_logged_in'] ) {
 
@@ -183,7 +160,7 @@ class gEditorialSubmit extends gEditorialModuleCore
 						if ( $post_id ) {
 							$confirm = gEditorialHelper::html( $args['title_wrap'], array(
 								'class' => 'editorial-submit-title editorial-submit-title-confirm',
-							), sprintf( __( 'Your post (%s) submitted successfully.' ), $current['post_title'] ) );
+							), sprintf( _x( 'Your post (%s) submitted successfully.', 'Submit Module', GEDITORIAL_TEXTDOMAIN ), $current['post_title'] ) );
 
 							ob_start();
 							do_action( 'editorial_submit_finished', $current, $args );
@@ -202,7 +179,7 @@ class gEditorialSubmit extends gEditorialModuleCore
 
 					$error = gEditorialHelper::html( 'p', array(
 						'class' => 'editorial-submit-error',
-					), __( 'Please try again.' ) );
+					), _x( 'Please try again.', 'Submit Module', GEDITORIAL_TEXTDOMAIN ) );
 
 					return gEditorialHelper::html( 'div', array(
 						'class' => $args['class'],
@@ -305,7 +282,7 @@ class gEditorialSubmit extends gEditorialModuleCore
 
 				$form_field_html .= gEditorialHelper::html( 'span', array(
 					'class'       => 'glyphicon glyphicon-'.( $form_field_error ? 'remove' : 'ok' ).' form-control-feedback',
-					'aria-hidden' => true,
+					'aria-hidden' => 'true',
 				), NULL );
 
 				$form_field_html .= gEditorialHelper::html( 'span', array(
@@ -327,7 +304,6 @@ class gEditorialSubmit extends gEditorialModuleCore
 			$fields_html .= gEditorialHelper::html( 'div', array(
 				'class' => 'form-group form-group-'.$args['size'].( 'default' == $current['stage'] ? '' : ( $form_field_error ? ' has-error' : ' has-success' ).' has-feedback' ),
 			), $form_field_label.$form_field_html );
-
 		}
 
 		ob_start();
@@ -337,7 +313,7 @@ class gEditorialSubmit extends gEditorialModuleCore
 		$submit = gEditorialHelper::html( 'button', array(
 			'class' => 'btn btn-primary',
 			'type'  => 'submit',
-		), $this->get_string( 'post_submit', $args['default_post_type'], 'titles', __( 'Submit', GEDITORIAL_TEXTDOMAIN ) ) );
+		), $this->get_string( 'post_submit', $args['default_post_type'], 'titles', _x( 'Submit', 'Submit Module', GEDITORIAL_TEXTDOMAIN ) ) );
 
 		if ( $args['horizontal'] )
 			$submit = '<div class="col-'.$args['size'].'-'.$args['horizontal'].'">&nbsp;</div>'
@@ -362,29 +338,29 @@ class gEditorialSubmit extends gEditorialModuleCore
 		$current['post_title'] = wp_strip_all_tags( $current['post_title'] );
 
 		if ( empty( $current['post_content'] ) )
-			$current['errors']->add( 'post_content',  __( 'Content can not be empty.', GEDITORIAL_TEXTDOMAIN ) );
+			$current['errors']->add( 'post_content',  _x( 'Content can not be empty.', 'Submit Module', GEDITORIAL_TEXTDOMAIN ) );
 
 		$current['post_content'] = wp_kses( $current['post_content'], ( $args['allow_html'] ? NULL : array() ) );
 
 		if ( empty( $current['post_content'] ) )
-			$current['errors']->add( 'post_content',  __( 'Sorry, we can not accept this.', GEDITORIAL_TEXTDOMAIN ) );
+			$current['errors']->add( 'post_content',  _x( 'Sorry, we can not accept this.', 'Submit Module', GEDITORIAL_TEXTDOMAIN ) );
 
 		if ( ! is_user_logged_in() ) {
 			if ( empty( $current['post_author'] ) )
-				$current['errors']->add( 'post_author',  __( 'Please enter your name', GEDITORIAL_TEXTDOMAIN ) );
+				$current['errors']->add( 'post_author',  _x( 'Please enter your name', 'Submit Module', GEDITORIAL_TEXTDOMAIN ) );
 
 			$current['post_author'] = wp_strip_all_tags( $current['post_author'] );
 
 			if ( empty( $current['post_author'] ) )
-				$current['errors']->add( 'post_author',  __( 'Sorry, we can not accept this.', GEDITORIAL_TEXTDOMAIN ) );
+				$current['errors']->add( 'post_author',  _x( 'Sorry, we can not accept this.', 'Submit Module', GEDITORIAL_TEXTDOMAIN ) );
 
 			$current['post_email'] = sanitize_email( $current['post_email'] );
 
 			if ( empty( $current['post_email'] ) )
-				$current['errors']->add( 'post_email',  __( 'Please enter your name', GEDITORIAL_TEXTDOMAIN ) );
+				$current['errors']->add( 'post_email',  _x( 'Please enter your name', 'Submit Module', GEDITORIAL_TEXTDOMAIN ) );
 
 			if ( is_email_address_unsafe( $current['post_email'] ) )
-				$current['errors']->add( 'user_email',  __( 'You cannot use that email address to submit posts. We are having problems with them blocking some of our email. Please use another email provider.' ) );
+				$current['errors']->add( 'user_email',  _x( 'You cannot use that email address to submit posts. We are having problems with them blocking some of our email. Please use another email provider.', 'Submit Module', GEDITORIAL_TEXTDOMAIN ) );
 
 			$current['post_url'] = esc_url( stripslashes( $current['post_url'] ) );
 		}
@@ -431,30 +407,30 @@ class gEditorialSubmit extends gEditorialModuleCore
 		return $post_id;
 	}
 
-	// printed on congiguration page
-	public function extended_description_after()
+	// printed on settings page
+	public function intro_after()
 	{
 		echo '<p>';
-			printf( __( 'Use these short codes:<br /><span dir="ltr"><code>[%1$s]</code></span> for submit for on any post.', GEDITORIAL_TEXTDOMAIN ),
-				$this->module->constants['submit_form_shortcode']
+			printf( _x( 'Use these short codes:<br /><span dir="ltr"><code>[%1$s]</code></span> for submit for on any post.', 'Submit Module', GEDITORIAL_TEXTDOMAIN ),
+				$this->constant( 'submit_form_shortcode' )
 			);
 		echo '</p>';
 	}
 
-	// DRAFT
+	// FIXME: COPY
 	// Change the upload directory based on post type and file name.
 	// https://gist.github.com/chrisguitarguy/4638936
 	function cgg_upload_dir($dir)
 	{
-		// xxx Lots of $_REQUEST usage in here, not a great idea.
+		// Lots of $_REQUEST usage in here, not a great idea.
 
 		// Are we where we want to be?
-		if (!isset($_REQUEST['action']) || 'upload-attachment' !== $_REQUEST['action']) {
+		if ( ! isset( $_REQUEST['action']) || 'upload-attachment' !== $_REQUEST['action'] ) {
 			return $dir;
 		}
 
 		// post types match up?
-		if (!isset($_REQUEST['post_id']) || 'ml_resource' !== get_post_type($_REQUEST['post_id'])) {
+		if (!isset($_REQUEST['post_id']) || 'ml_resource' !== get_post_type($_REQUEST['post_id'] ) ) {
 			return $dir;
 		}
 

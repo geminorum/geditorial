@@ -1,8 +1,40 @@
 <?php defined( 'ABSPATH' ) or die( 'Restricted access' );
 
-global $gEditorial;
 
-$geditorial_options = $gEditorial->audit_options();
+gEditorialEventHelper::icalParse();
+
+
+return;
+
+$s = gEditorial()->sitemap->create_sitemap();
+
+// gEditorialHelper::dump( $s );
+
+return;
+
+
+global $_wp_additional_image_sizes, $_wp_theme_features;
+
+gEditorialHelper::dump(  get_all_post_type_supports( 'issue' ) );
+// gEditorialHelper::dump( $_wp_theme_features['post-thumbnails'] );
+// gEditorialHelper::dump( $_wp_additional_image_sizes );
+
+
+
+return;
+
+
+
+
+return;
+gEditorialHelper::thickBoxTest();
+
+return;
+
+
+return;
+
+$geditorial_options = gEditorial()->audit_options();
 gEditorialHelper::dump( $geditorial_options );
 
 

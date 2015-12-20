@@ -1,3 +1,7 @@
+### 3.0
+* moved to [Semantic Versioning](http://semver.org/)
+* almost complete rewriting of all internal apis to reduce memory footprint
+
 ### 0.2.13
 * all: foundation for new meta fields api
 * all: remove meta box api

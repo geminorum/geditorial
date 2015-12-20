@@ -5,11 +5,11 @@ class gEditorialSeriesTemplates extends gEditorialTemplateCore
 
 	public static function shortcode_multiple_series( $atts, $content = NULL, $tag = '' )
 	{
-		global $gEditorial, $post;
+		global $post;
 
-		$shortcode  = $gEditorial->get_module_constant( 'series', 'series_shortcode', 'series' );
-		$multiple   = $gEditorial->get_module_constant( 'series', 'multiple_series_shortcode', 'multiple_series' );
-		$series_tax = $gEditorial->get_module_constant( 'series', 'series_tax', 'series' );
+		$shortcode  = gEditorial()->get_constant( 'series', 'series_shortcode', 'series' );
+		$multiple   = gEditorial()->get_constant( 'series', 'multiple_series_shortcode', 'multiple_series' );
+		$series_tax = gEditorial()->get_constant( 'series', 'series_tax', 'series' );
 
 		$args = shortcode_atts( array(
 			'ids'       => array(),
@@ -18,14 +18,14 @@ class gEditorialSeriesTemplates extends gEditorialTemplateCore
 			'class'     => '',
 			'order'     => 'ASC',
 			'orderby'   => 'term_order, name',
-			'exclude'   => true, // or array
+			'exclude'   => TRUE, // or array
 			'before'    => '',
 			'after'     => '',
 			'context'   => NULL,
 			'args'      => array(),
 		), $atts, $multiple );
 
-		if ( false === $args['context'] )
+		if ( FALSE === $args['context'] )
 			return NULL;
 
 		if ( empty( $args['ids'] ) || ! count( $args['ids'] ) ) {
@@ -61,11 +61,11 @@ class gEditorialSeriesTemplates extends gEditorialTemplateCore
 	// [series title="More WordPress Theme Lists" title_wrap="h4" limit="5" list="ol" future="off" single="off"]
 	public static function shortcode_series( $atts, $content = NULL, $tag = '' )
 	{
-		global $gEditorial, $post;
+		global $post;
 		$error = FALSE;
 
-		$shortcode  = $gEditorial->get_module_constant( 'series', 'series_shortcode', 'series' );
-		$series_tax = $gEditorial->get_module_constant( 'series', 'series_tax', 'series' );
+		$shortcode  = gEditorial()->get_constant( 'series', 'series_shortcode', 'series' );
+		$series_tax = gEditorial()->get_constant( 'series', 'series_tax', 'series' );
 
 		$args = shortcode_atts( array(
 			'slug'      => '',
@@ -156,7 +156,7 @@ class gEditorialSeriesTemplates extends gEditorialTemplateCore
 						);
 					}
 				}
-				$args['title'] = gEditorialHelper::html( $args['title_tag'], array(
+				$args['title'] = self::html( $args['title_tag'], array(
 					'class' => '-title',
 				), $args['title'] );
 			}
@@ -181,7 +181,7 @@ class gEditorialSeriesTemplates extends gEditorialTemplateCore
 
 					foreach ( $the_posts as & $the_post ) {
 
-						$the_post->series_meta = $gEditorial->series->get_postmeta( $the_post->ID, $args['id'], array() );
+						$the_post->series_meta = gEditorial()->series->get_postmeta( $the_post->ID, $args['id'], array() );
 
 						if ( isset( $the_post->series_meta['in_series_order'] )
 							&& $the_post->series_meta['in_series_order'] )
@@ -221,7 +221,7 @@ class gEditorialSeriesTemplates extends gEditorialTemplateCore
 							$output .= '<li class="in-series-hidden in-series-hidden-'.$args['id'].'">';
 							if ( ! $more ) {
 								$output .= '<li class="in-series-more" id="in-series-more-'.$args['id'].'" style="display:none;"><a href="#" title="'._x( 'More in this series', 'series hide link title', GEDITORIAL_TEXTDOMAIN ).'">'._x( 'More&hellip;', 'series hide link', GEDITORIAL_TEXTDOMAIN ).'</li>';
-								$more = true;
+								$more = TRUE;
 							}
 						} else {
 							$output .= '<li>';
@@ -252,7 +252,7 @@ class gEditorialSeriesTemplates extends gEditorialTemplateCore
 				// $the_series = get_term_by( 'id', $args['id'], $series_tax );
 				// $output .= '<br />'.$the_series->name;
 
-				$output = $args['title'].gEditorialHelper::html( $args['list'], array(
+				$output = $args['title'].self::html( $args['list'], array(
 					'class' => '-list',
 				), $output );
 
@@ -269,7 +269,7 @@ class gEditorialSeriesTemplates extends gEditorialTemplateCore
 					</script>';
 				}
 
-				$output = $args['before'].gEditorialHelper::html( 'div', array(
+				$output = $args['before'].self::html( 'div', array(
 					'class' => array(
 						'geditorial-wrap',
 						'series',

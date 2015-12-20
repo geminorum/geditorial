@@ -9,6 +9,14 @@ jQuery(document).ready(function($){
 	// 	$( 'li#toplevel_page_geditorial-settings .wp-submenu' ).show();
 	// }
 
+	$('.fields-check-all').click(function(e){
+		$(this).closest('table').find('.fields-check').prop('checked',this.checked);
+	});
+
+	$('.fields-check').click(function(e){
+		$(this).closest('table').find('.fields-check-all').prop('checked',false);
+	});
+
 	$('.button-toggle').click(function(){
 
 		if ( $(this).hasClass('button-primary') )
@@ -19,17 +27,17 @@ jQuery(document).ready(function($){
 		var slug = $(this).closest('.module').attr('id');
 		var change_module_nonce = $('#'+slug+' #module-nonce').val();
 		var data = {
-			//action: 'change_geditorial_module_state',
+			// action: 'change_geditorial_module_state',
 			action: 'geditorial_settings',
 			sub: 'module_state',
 			module_action: module_action,
 			module_nonce: change_module_nonce,
 			module_slug: slug,
-			//change_module_nonce: change_module_nonce,
-			//slug: slug,
+			// change_module_nonce: change_module_nonce,
+			// slug: slug,
 		}
 
-		//console.log(data);
+		// console.log(data);
 
 		$.post( ajaxurl, data, function(response) {
 

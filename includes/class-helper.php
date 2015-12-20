@@ -1,260 +1,44 @@
 <?php defined( 'ABSPATH' ) or die( 'Restricted access' );
 
-class gEditorialHelper
+class gEditorialHelper extends gEditorialBaseCore
 {
 
-	public static function dump( &$var, $htmlSafe = TRUE )
+	public static function moduleClass( $module, $check = TRUE, $prefix = 'gEditorial' )
 	{
-		$result = var_export( $var, TRUE );
+		$class = '';
 
-		echo '<pre dir="ltr" style="text-align:left;direction:ltr;">'
-			.( $htmlSafe ? htmlspecialchars( $result ) : $result )
-			.'</pre>';
+		foreach ( explode( '-', $module ) as $word )
+			$class .= ucfirst( $word ).'';
+
+		if ( $check && ! class_exists( $prefix.$class ) )
+			return FALSE;
+
+		return $prefix.$class;
 	}
 
+	// FIXME: MUST DEPRECATE
 	public static function moduleEnabled( $options )
 	{
 		$enabled = isset( $options->enabled ) ? $options->enabled : FALSE;
 
 		if ( 'off' === $enabled )
-			$enabled = FALSE;
-		else if ( 'on' === $enabled )
-			$enabled = TRUE;
+			return FALSE;
+
+		if ( 'on' === $enabled )
+			return TRUE;
 
 		return $enabled;
 	}
 
-	// FIXME: MUST DEPRECATE
-	// returns whether the module with the given name is enabled.
-	public static function moduleEnabledBySlug( $slug )
-	{
-		global $gEditorial;
-
-		return isset( $gEditorial->$slug ) &&
-			( 'on' == $gEditorial->$slug->module->options->enabled
-				|| TRUE === $gEditorial->$slug->module->options->enabled );
-	}
-
-	// originally from P2
-	public static function excerptedTitle( $content, $word_count )
-	{
-		$content = strip_tags( $content );
-		$words   = preg_split( '/([\s_;?!\/\(\)\[\]{}<>\r\n\t"]|\.$|(?<=\D)[:,.\-]|[:,.\-](?=\D))/', $content, $word_count + 1, PREG_SPLIT_NO_EMPTY );
-
-		if ( count( $words ) > $word_count ) {
-			array_pop( $words ); // remove remainder of words
-			$content = implode( ' ', $words );
-			$content .= '…';
-		} else {
-			$content = implode( ' ', $words );
-		}
-
-		$content = trim( strip_tags( $content ) );
-
-		return $content;
-	}
-
-	// parsing: 'category:12,11|post_tag:3|people:58'
-	public static function parseTerms( $string )
-	{
-		if ( empty( $string ) || ! $string )
-			return FALSE;
-
-		$taxonomies = array();
-
-		foreach ( explode( '|', $string ) as $taxonomy ) {
-
-			list( $tax, $terms ) = explode( ':', $taxonomy );
-
-			$terms = explode( ',', $terms );
-			$terms = array_map( 'intval', $terms );
-
-			$taxonomies[$tax] = array_unique( $terms );
-		}
-
-		return $taxonomies;
-	}
-
-	private static function _tag_open( $tag, $atts, $content = TRUE )
-	{
-		$html = '<'.$tag;
-		foreach ( $atts as $key => $att ) {
-
-			if ( is_array( $att ) && count( $att ) ) {
-				if ( 'data' == $key ) {
-					foreach ( $att as $data_key => $data_val ) {
-						if ( is_array( $data_val ) )
-							$html .= ' data-'.$data_key.'=\''.wp_json_encode( $data_val ).'\'';
-						else
-							$html .= ' data-'.$data_key.'="'.esc_attr( $data_val ).'"';
-					}
-					continue;
-
-				} else {
-					$att = implode( ' ', array_unique( $att ) );
-				}
-			}
-
-			if ( 'selected' == $key )
-				$att = ( $att ? 'selected' : FALSE );
-
-			if ( 'checked' == $key )
-				$att = ( $att ? 'checked' : FALSE );
-
-			if ( 'readonly' == $key )
-				$att = ( $att ? 'readonly' : FALSE );
-
-			if ( 'disabled' == $key )
-				$att = ( $att ? 'disabled' : FALSE );
-
-			if ( FALSE === $att )
-				continue;
-
-			if ( 'class' == $key )
-				// $att = sanitize_html_class( $att, FALSE );
-				$att = $att;
-
-			else if ( 'href' == $key && '#' != $att )
-				$att = esc_url( $att );
-
-			else if ( 'src' == $key )
-				$att = esc_url( $att );
-
-			// else if ( 'input' == $tag && 'value' == $key )
-			// 	$att = $att;
-
-			else
-				$att = esc_attr( $att );
-
-			$html .= ' '.$key.'="'.$att.'"';
-		}
-
-		if ( FALSE === $content )
-			return $html.' />';
-
-		return $html.'>';
-	}
-
-	public static function html( $tag, $atts = array(), $content = FALSE, $sep = '' )
-	{
-		if ( is_array( $atts ) )
-			$html = self::_tag_open( $tag, $atts, $content );
-		else
-			return '<'.$tag.'>'.$atts.'</'.$tag.'>'.$sep;
-
-		if ( FALSE === $content )
-			return $html.$sep;
-
-		if ( is_null( $content ) )
-			return $html.'</'.$tag.'>'.$sep;
-
-		return $html.$content.'</'.$tag.'>'.$sep;
-	}
-
-	public static function getCurrentURL( $trailingslashit = FALSE )
-	{
-		global $wp;
-
-		if ( is_admin() )
-			$current_url = add_query_arg( $wp->query_string, '', home_url( $wp->request ) );
-		else
-			$current_url = home_url( add_query_arg( array(), ( empty( $wp->request ) ? FALSE : $wp->request ) ) );
-
-		if ( $trailingslashit )
-			return trailingslashit( $current_url );
-
-		return $current_url;
-	}
-
-	public static function getRegisterURL( $register = FALSE )
-	{
-		if ( function_exists( 'buddypress' ) ) {
-			if ( bp_get_signup_allowed() )
-				return bp_get_signup_page();
-		} else if ( get_option( 'users_can_register' ) ) {
-			if ( is_multisite() )
-				return apply_filters( 'wp_signup_location', network_site_url( 'wp-signup.php' ) );
-			else
-				return site_url( 'wp-login.php?action=register', 'login' );
-		} else if ( 'site' == $register ) {
-			return  site_url( '/' );
-		}
-		return $register;
-	}
-
-	// https://gist.github.com/boonebgorges/5510970
-	public static function parse_args_r( &$a, $b )
-	{
-		$a = (array) $a;
-		$b = (array) $b;
-		$r = $b;
-
-		foreach ( $a as $k => &$v ) {
-			if ( is_array( $v ) && isset( $r[$k] ) ) {
-				$r[$k] = self::parse_args_r( $v, $r[$k] );
-			} else {
-				$r[$k] = $v;
-			}
-		}
-
-		return $r;
-	}
-
+	// override to use plugin version
 	public static function linkStyleSheet( $url, $version = GEDITORIAL_VERSION, $media = FALSE )
 	{
-		echo "\t".self::html( 'link', array(
-			'rel'   => 'stylesheet',
-			'href'  => add_query_arg( 'ver', $version, $url ),
-			'type'  => 'text/css',
-			'media' => $media,
-		) )."\n";
+		parent::linkStyleSheet( $url, $version, $media );
 	}
 
-	public static function IP()
+	public static function linkStyleSheetAdmin( $page )
 	{
-		if ( getenv( 'HTTP_CLIENT_IP' ) )
-			return getenv( 'HTTP_CLIENT_IP' );
-
-		if ( getenv( 'HTTP_X_FORWARDED_FOR' ) )
-			return getenv( 'HTTP_X_FORWARDED_FOR' );
-
-		if ( getenv( 'HTTP_X_FORWARDED' ) )
-			return getenv( 'HTTP_X_FORWARDED' );
-
-		if ( getenv( 'HTTP_FORWARDED_FOR' ) )
-			return getenv( 'HTTP_FORWARDED_FOR' );
-
-		if ( getenv( 'HTTP_FORWARDED' ) )
-			return getenv( 'HTTP_FORWARDED' );
-
-		return $_SERVER['REMOTE_ADDR'];
-	}
-
-	// http://stackoverflow.com/a/17620260
-	public static function search_array( $value, $key, $array )
-	{
-		foreach ( $array as $k => $val )
-			if ( $val[$key] == $value )
-				return $k;
-		return NULL;
-	}
-
-	public static function headerNav( $uri = '', $active = '', $subs = array(), $prefix = 'nav-tab-', $tag = 'h2' )
-	{
-		if ( ! count( $subs ) )
-			return;
-
-		$html = '';
-
-		foreach ( $subs as $slug => $page )
-			$html .= self::html( 'a', array(
-				'class' => 'nav-tab '.$prefix.$slug.( $slug == $active ? ' nav-tab-active' : '' ),
-				'href'  => add_query_arg( 'sub', $slug, $uri ),
-			), $page );
-
-		echo self::html( $tag, array(
-			'class' => 'nav-tab-wrapper',
-		), $html );
+		parent::linkStyleSheet( GEDITORIAL_URL.'assets/css/admin.'.$page.'.css', GEDITORIAL_VERSION );
 	}
 
 	public static function meta_admin_field( $field, $fields, $post, $ltr = FALSE, $title = NULL, $key = FALSE )
@@ -270,7 +54,7 @@ class gEditorialHelper
 				$atts = array(
 					'type'         => 'text',
 					'autocomplete' => 'off',
-					'class'        => 'field-text geditorial-meta-field-'.$field,
+					'class'        => 'geditorial-meta-field-'.$field,
 					'name'         => 'geditorial-meta-'.$field.( FALSE === $key ? '' : '['.$key.']' ),
 					'id'           => 'geditorial-meta-'.$field.( FALSE === $key ? '' : '-'.$key ),
 					'value'        => $gEditorial->meta->get_postmeta( $post->ID, $field ),
@@ -286,6 +70,39 @@ class gEditorialHelper
 
 				echo self::html( 'div', array(
 					'class' => 'field-wrap field-wrap-inputtext',
+				), $html );
+		}
+	}
+
+	public static function meta_admin_number_field( $field, $fields, $post, $ltr = TRUE, $title = NULL, $key = FALSE )
+	{
+		global $gEditorial;
+
+		if ( in_array( $field, $fields )
+			&& $gEditorial->meta->user_can( 'view', $field )  ) {
+
+				if ( is_null( $title ) )
+					$title = $gEditorial->meta->get_string( $field, $post->post_type );
+
+				$atts = array(
+					'type'         => 'number',
+					'autocomplete' => 'off',
+					'class'        => 'geditorial-meta-field-'.$field,
+					'name'         => 'geditorial-meta-'.$field.( FALSE === $key ? '' : '['.$key.']' ),
+					'id'           => 'geditorial-meta-'.$field.( FALSE === $key ? '' : '-'.$key ),
+					'value'        => $gEditorial->meta->get_postmeta( $post->ID, $field ),
+					'title'        => $title,
+					'placeholder'  => $title,
+					'readonly'     => ! $gEditorial->meta->user_can( 'edit', $field ),
+				);
+
+				if ( $ltr )
+					$atts['dir'] = 'ltr';
+
+				$html = self::html( 'input', $atts );
+
+				echo self::html( 'div', array(
+					'class' => 'field-wrap field-wrap-inputnumber',
 				), $html );
 		}
 	}
@@ -306,7 +123,7 @@ class gEditorialHelper
 				wp_dropdown_categories( array(
 					'taxonomy'          => $tax,
 					'selected'          => self::theTerm( $tax, $post->ID ),
-					'show_option_none'  => sprintf( _x( '&mdash; Select %s &mdash;', 'Meta: Dropdown Select Option None', GEDITORIAL_TEXTDOMAIN ), $title ),
+					'show_option_none'  => sprintf( _x( '&mdash; Select %s &mdash;', 'Meta Module: Dropdown Select Option None', GEDITORIAL_TEXTDOMAIN ), $title ),
 					'option_none_value' => '0',
 					'class'             => 'geditorial-admin-dropbown geditorial-meta-field-'.$field.( $ltr ? ' dropbown-ltr' : '' ),
 					'name'              => 'geditorial-meta-'.$field.( FALSE === $key ? '' : '['.$key.']' ),
@@ -335,7 +152,7 @@ class gEditorialHelper
 				$atts = array(
 					// 'rows'         => '5',
 					// 'cols'         => '40',
-					'class'        => 'field-textarea geditorial-meta-field-'.$field,
+					'class'        => 'geditorial-meta-field-'.$field,
 					'name'         => 'geditorial-meta-'.$field.( FALSE === $key ? '' : '['.$key.']' ),
 					'id'           => 'geditorial-meta-'.$field.( FALSE === $key ? '' : '-'.$key ),
 					'title'        => $title,
@@ -397,7 +214,7 @@ class gEditorialHelper
 					$title = $gEditorial->meta->get_string( $field, $post->post_type );
 
 				$html  = '<div id="geditorial-meta-'.$field.'-wrap" class="postbox geditorial-admin-postbox geditorial-meta-field-'.$field.'">';
-				$html .= '<div class="handlediv" title="'.esc_attr__( 'Click to toggle' ).'"><br></div><h3 class="hndle"><span>'.$title.'</span></h3>';
+				$html .= '<div class="handlediv" title="'.esc_attr( _x( 'Click to toggle', 'Module Helper', GEDITORIAL_TEXTDOMAIN ) ).'"><br /></div><h2 class="hndle"><span>'.$title.'</span></h2>';
 				$html .= '<div class="inside"><label class="screen-reader-text" for="geditorial-meta-'.$field.'">'.$title.'</label>';
 				$html .= self::html( 'textarea', array(
 					'rows'     => '1',
@@ -412,6 +229,54 @@ class gEditorialHelper
 
 				echo $html;
 		}
+	}
+
+	public static function set_postmeta_field_string( &$postmeta, $field, $prefix = 'geditorial-meta-' )
+	{
+		if ( isset( $_POST[$prefix.$field] ) && strlen( $_POST[$prefix.$field] ) > 0 )
+			$postmeta[$field] = self::kses( $_POST[$prefix.$field] );
+
+		else if ( isset( $postmeta[$field] ) && isset( $_POST[$prefix.$field] ) )
+			unset( $postmeta[$field] );
+	}
+
+	public static function set_postmeta_field_number( &$postmeta, $field, $prefix = 'geditorial-meta-' )
+	{
+		if ( isset( $_POST[$prefix.$field] ) && strlen( $_POST[$prefix.$field] ) > 0 )
+			$postmeta[$field] = self::intval( $_POST[$prefix.$field] );
+
+		else if ( isset( $postmeta[$field] ) && isset( $_POST[$prefix.$field] ) )
+			unset( $postmeta[$field] );
+	}
+
+	public static function set_postmeta_field_url( &$postmeta, $field, $prefix = 'geditorial-meta-' )
+	{
+		if ( isset( $_POST[$prefix.$field] ) && strlen( $_POST[$prefix.$field] ) > 0 )
+			$postmeta[$field] = esc_url( $_POST[$prefix.$field] );
+
+		else if ( isset( $postmeta[$field] ) && isset( $_POST[$prefix.$field] ) )
+			unset( $postmeta[$field] );
+	}
+
+	public static function set_postmeta_field_term( $post_id, $field, $taxonomy, $prefix = 'geditorial-meta-' )
+	{
+		if ( isset( $_POST[$prefix.$field] ) && '0' != $_POST[$prefix.$field] )
+			wp_set_object_terms( $post_id, intval( $_POST[$prefix.$field] ), $taxonomy, FALSE );
+
+		else if ( isset( $_POST[$prefix.$field] ) && '0' == $_POST[$prefix.$field] )
+			wp_set_object_terms( $post_id, NULL, $taxonomy, FALSE );
+	}
+
+	// converts back number chars into english
+	public static function intval( $text, $intval = TRUE )
+	{
+		$number = apply_filters( 'number_format_i18n_back', $text );
+		return $intval ? intval( $number ) : $number;
+	}
+
+	public static function kses( $text, $allowed = array(), $context = 'store' )
+	{
+		return apply_filters( 'geditorial_kses', wp_kses( $text, $allowed ), $allowed, $context );
 	}
 
 	public static function getTermsEditRow( $post_id, $post_type, $taxonomy, $before = '', $after = '' )
@@ -443,157 +308,20 @@ class gEditorialHelper
 				);
 			}
 
-			echo $before.join( __( ', ' ), $out ).$after;
+			echo $before.join( _x( ', ', 'Module Helper: Term Seperator', GEDITORIAL_TEXTDOMAIN ), $out ).$after;
 		}
 	}
 
-	public static function getFeaturedImage( $post_id, $size = 'thumbnail', $default = FALSE )
+	public static function registerColorBox()
 	{
-		$post_thumbnail_id = get_post_thumbnail_id( $post_id );
-		if ( ! $post_thumbnail_id )
-			return $default;
-
-		$post_thumbnail_img = wp_get_attachment_image_src( $post_thumbnail_id, $size );
-		return $post_thumbnail_img[0];
+		wp_register_style( 'jquery-colorbox', GEDITORIAL_URL.'assets/css/admin.colorbox.css', array(), '1.6.3', 'screen' );
+		wp_register_script( 'jquery-colorbox', GEDITORIAL_URL.'assets/packages/jquery-colorbox/jquery.colorbox-min.js', array( 'jquery'), '1.6.3', TRUE );
 	}
 
-	// http://bavotasan.com/2012/trim-characters-using-php/
-	public static function trimChars( $text, $length = 45, $append = '&hellip;' )
-	{
-		$length = (int) $length;
-		$text   = trim( strip_tags( $text ) );
-
-		if ( strlen( $text ) > $length ) {
-
-			$text  = substr( $text, 0, $length + 1 );
-			$words = preg_split( "/[\s]|&nbsp;/", $text, -1, PREG_SPLIT_NO_EMPTY );
-
-			preg_match( "/[\s]|&nbsp;/", $text, $lastchar, 0, $length );
-
-			if ( empty( $lastchar ) )
-				array_pop( $words );
-
-			$text = implode( ' ', $words ).$append;
-		}
-
-		return $text;
-	}
-
-	public static function isDev()
-	{
-		if ( defined( 'WP_STAGE' )
-			&& 'development' == constant( 'WP_STAGE' ) )
-				return TRUE;
-
-		return FALSE;
-	}
-
-	public static function isDebug()
-	{
-		if ( WP_DEBUG && WP_DEBUG_DISPLAY && ! self::isDev() )
-			return TRUE;
-
-		return FALSE;
-	}
-
-	public static function notice( $notice, $class = 'updated fade', $echo = TRUE )
-	{
-		$html = sprintf( '<div id="message" class="%s notice is-dismissible"><p>%s</p></div>', $class, $notice );
-
-		if ( ! $echo )
-			return $html;
-
-		echo $html;
-	}
-
-	// checks for the current post type
-	// OLD: get_current_post_type()
-	public static function getCurrentPostType()
-	{
-		global $post, $typenow, $pagenow, $current_screen;
-
-		if ( $post && $post->post_type )
-			return $post->post_type;
-
-		if ( $typenow )
-			return $typenow;
-
-		if ( $current_screen && isset( $current_screen->post_type ) )
-			return $current_screen->post_type;
-
-		if ( isset( $_REQUEST['post_type'] ) )
-			return sanitize_key( $_REQUEST['post_type'] );
-
-		return NULL;
-	}
-
-	public static function update_count_callback( $terms, $taxonomy )
-	{
-		global $wpdb;
-		foreach ( (array) $terms as $term ) {
-			$count = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM $wpdb->term_relationships WHERE term_taxonomy_id = %d", $term ) );
-			do_action( 'edit_term_taxonomy', $term, $taxonomy );
-			$wpdb->update( $wpdb->term_taxonomy, compact( 'count' ), array( 'term_taxonomy_id' => $term ) );
-			do_action( 'edited_term_taxonomy', $term, $taxonomy );
-		}
-	}
-
-	public static function register_colorbox()
-	{
-		wp_register_style( 'jquery-colorbox', GEDITORIAL_URL.'assets/css/admin.colorbox.css', array(), '1.6.1', 'screen' );
-		wp_register_script( 'jquery-colorbox', GEDITORIAL_URL.'assets/packages/jquery-colorbox/jquery.colorbox-min.js', array( 'jquery'), '1.6.1', TRUE );
-	}
-
-	public static function enqueue_colorbox()
+	public static function enqueueColorBox()
 	{
 		wp_enqueue_style( 'jquery-colorbox' );
 		wp_enqueue_script( 'jquery-colorbox' );
-	}
-
-	// fall back for meta_term
-	// before : get_post_id_by_slug()
-	public static function getPostIDbySlug( $slug, $post_type, $url = FALSE )
-	{
-		global $wpdb;
-
-		if ( $url ) {
-			$slug = rawurlencode( urldecode( $slug ) );
-			$slug = sanitize_title( basename( $slug ) );
-		}
-
-		$post_id = $wpdb->get_var(
-			$wpdb->prepare(
-				"SELECT ID FROM $wpdb->posts WHERE post_name = %s AND post_type = %s",
-				trim( $slug ),
-				$post_type
-			)
-		);
-
-		if ( is_array( $post_id ) )
-			return $post_id[0];
-
-		else if ( ! empty( $post_id ) )
-			return $post_id;
-
-		return FALSE;
-	}
-
-	// before: the_term()
-	public static function theTerm( $taxonomy, $post_ID, $object = FALSE )
-	{
-		$terms = get_the_terms( $post_ID, $taxonomy );
-
-		if ( $terms && ! is_wp_error( $terms ) ) {
-			foreach ( $terms as $term ) {
-				if ( $object ) {
-					return $term;
-				} else {
-					return $term->term_id;
-				}
-			}
-		}
-
-		return '0';
 	}
 
 	public static function getTerms( $taxonomy = 'category', $post_id = FALSE, $object = FALSE, $key = 'term_id' )
@@ -655,7 +383,7 @@ class gEditorialHelper
 			return FALSE;
 
 		$output = '<div class="field-wrap field-wrap-list"><h4>';
-		$output .= sprintf( __( 'Other Posts on <a href="%1$s" target="_blank">%2$s</a>:', GEDITORIAL_TEXTDOMAIN ),
+		$output .= sprintf( _x( 'Other Posts on <a href="%1$s" target="_blank">%2$s</a>', 'Module Helper', GEDITORIAL_TEXTDOMAIN ),
 			get_term_link( $term, $term->taxonomy ),
 			sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' )
 		).'</h4><ol>';
@@ -671,7 +399,7 @@ class gEditorialHelper
 			$output .= '<li><a href="'.get_permalink( $post->ID ).'">'
 					.get_the_title( $post->ID ).'</a>'
 					.'&nbsp;<span class="edit">'
-					.sprintf( __( '&ndash; <a href="%1$s" target="_blank" title="Edit this post">%2$s</a>', GEDITORIAL_TEXTDOMAIN ),
+					.sprintf( _x( '&ndash; <a href="%1$s" target="_blank" title="Edit this Post">%2$s</a>', 'Module Helper', GEDITORIAL_TEXTDOMAIN ),
 						esc_url( $url ),
 						'<span class="dashicons dashicons-welcome-write-blog"></span>'
 					).'</span></li>';
@@ -680,254 +408,6 @@ class gEditorialHelper
 		$output .= '</ol></div>';
 
 		return $output;
-	}
-
-	public static function getPostTypes( $builtin = NULL )
-	{
-		$list = array();
-		$args = array( 'public' => TRUE );
-
-		if ( ! is_null( $builtin ) )
-			$args['_builtin'] = $builtin;
-
-		$post_types = get_post_types( $args, 'objects' );
-
-		foreach ( $post_types as $post_type => $post_type_obj )
-			$list[$post_type] = $post_type_obj->labels->name;
-
-		return $list;
-	}
-
-	public static function getTaxonomies( $with_post_type = FALSE )
-	{
-		$list = array();
-
-		$taxonomies = get_taxonomies( array(
-			// 'public'   => TRUE,
-			// '_builtin' => TRUE,
-		), 'objects' );
-
-		if ( $taxonomies ) {
-			foreach ( $taxonomies as $taxonomy ) {
-				if ( ! empty( $taxonomy->labels->menu_name )  ) {
-					if ( $with_post_type ) {
-						$list[$taxonomy->name] = $taxonomy->labels->menu_name.' ('.implode( __( ', ', GEDITORIAL_TEXTDOMAIN ), $taxonomy->object_type ).')';
-					} else {
-						$list[$taxonomy->name] = $taxonomy->labels->menu_name;
-					}
-				}
-			}
-		}
-
-		return $list;
-	}
-
-	public static function newPostFromTerm( $term, $taxonomy = 'category', $post_type = 'post' )
-	{
-		if ( ! is_object( $term ) && ! is_array( $term ) )
-			$term = get_term( $term, $taxonomy );
-
-		$new_post = array(
-			'post_title'   => $term->name,
-			'post_name'    => $term->slug,
-			'post_content' => $term->description,
-			'post_status'  => 'draft',
-			'post_author'  => self::getEditorialUserID(),
-			'post_type'    => $post_type,
-		);
-
-		return wp_insert_post( $new_post );
-	}
-
-	// MAYBE: add general options for gEditorial
-	public static function getEditorialUserID( $fallback = TRUE )
-	{
-		if ( defined( 'GNETWORK_SITE_USER_ID' ) && constant( 'GNETWORK_SITE_USER_ID' ) )
-			return GNETWORK_SITE_USER_ID;
-
-		if ( function_exists( 'gtheme_get_option' ) ) {
-			$gtheme_user = gtheme_get_option( 'default_user', 0 );
-			if ( $gtheme_user )
-				return $gtheme_user;
-		}
-
-		if ( $fallback )
-			return get_current_user_id();
-
-		return 0;
-	}
-
-	public static function table( $columns, $data = array(), $actions = array() )
-	{
-		if ( ! count( $columns ) )
-			return FALSE;
-
-		echo '<table class="widefat fixed helper-table"><thead><tr>';
-			foreach ( $columns as $key => $column ) {
-
-				$tag   = 'th';
-				$class = '';
-
-				if ( is_array( $column ) ) {
-					$title = isset( $column['title'] ) ? $column['title'] : $key;
-				} else if ( '_cb' == $key ) {
-					$title = '<input type="checkbox" id="cb-select-all-1" class="-cb-all" />';
-					$class = ' check-column';
-					$tag   = 'td';
-				} else {
-					$title = $column;
-				}
-
-				echo '<'.$tag.' class="-column -column-'.esc_attr( $key ).$class.'">'.$title.'</'.$tag.'>';
-			}
-		echo '</tr></thead><tbody>';
-
-		$alt = TRUE;
-		foreach ( $data as $index => $row ) {
-
-			echo '<tr class="-row -row-'.$index.( $alt ? ' alternate' : '' ).'">';
-
-			foreach ( $columns as $key => $column ) {
-
-				$class = $callback = '';
-				$cell = 'td';
-
-				if ( '_cb' == $key ) {
-					if ( '_index' == $column )
-						$value = $index;
-					else if ( is_array( $column ) && isset( $column['value'] ) )
-						$value = call_user_func_array( $column['value'], array( NULL, $row, $column, $index ) );
-					else if ( is_array( $row ) && isset( $row[$column] ) )
-						$value = $row[$column];
-					else if ( is_object( $row ) && isset( $row->{$column} ) )
-						$value = $row->{$column};
-					else
-						$value = '';
-					$value = '<input type="checkbox" name="_cb[]" value="'.esc_attr( $value ).'" class="-cb" />';
-					$class .= ' check-column';
-					$cell = 'th';
-				} else if ( is_array( $row ) && isset( $row[$key] ) ) {
-					$value = $row[$key];
-				} else if ( is_object( $row ) && isset( $row->{$key} ) ) {
-					$value = $row->{$key};
-				} else {
-					$value = NULL;
-				}
-
-				if ( is_array( $column ) ) {
-					if ( isset( $column['class'] ) )
-						$class .= ' '.esc_attr( $column['class'] );
-
-					if ( isset( $column['callback'] ) )
-						$callback = $column['callback'];
-				}
-
-				echo '<'.$cell.' class="-cell -cell-'.$key.$class.'">';
-
-				if ( $callback ){
-					echo call_user_func_array( $callback, array( $value, $row, $column, $index ) );
-
-				} else if ( $value ) {
-					echo $value;
-
-				} else {
-					echo '&nbsp;';
-
-				}
-
-				echo '</'.$cell.'>';
-			}
-
-			$alt = ! $alt;
-
-			echo '</tr>';
-		}
-		echo '</tbody></table>';
-	}
-
-	// from : Custom Field Taxonomies : https://github.com/scribu/wp-custom-field-taxonomies
-	public static function getDBPostMetaRows( $meta_key, $limit = FALSE )
-	{
-		global $wpdb;
-
-		if ( $limit )
-			$query = $wpdb->prepare( "
-				SELECT post_id, GROUP_CONCAT( meta_value ) as meta
-				FROM $wpdb->postmeta
-				WHERE meta_key = %s
-				GROUP BY post_id
-				 LIMIT %d
-			", $meta_key, $limit );
-		else
-			$query = $wpdb->prepare( "
-				SELECT post_id, GROUP_CONCAT( meta_value ) as meta
-				FROM $wpdb->postmeta
-				WHERE meta_key = %s
-				GROUP BY post_id
-			", $meta_key );
-
-		return $wpdb->get_results( $query );
-	}
-
-	// from : Custom Field Taxonomies : https://github.com/scribu/wp-custom-field-taxonomies
-	public static function getDBPostMetaKeys( $rekey = FALSE )
-	{
-		global $wpdb;
-
-		$keys = $wpdb->get_col( "
-			SELECT meta_key
-			FROM $wpdb->postmeta
-			GROUP BY meta_key
-			HAVING meta_key NOT LIKE '\_%'
-			ORDER BY meta_key ASC
-		" );
-
-		if ( ! $rekey )
-			return $keys;
-
-		$re = array();
-		foreach ( $keys as $key )
-			$re[$key] = $key;
-
-		return $re;
-	}
-
-	// SEE : delete_post_meta_by_key( 'related_posts' );
-	public static function deleteDBPostMeta( $meta_key, $limit = FALSE )
-	{
-		global $wpdb;
-
-		if ( $limit )
-			$query = $wpdb->prepare( "DELETE FROM $wpdb->postmeta WHERE meta_key = %s LIMIT %d", $meta_key, $limit );
-		else
-			$query = $wpdb->prepare( "DELETE FROM $wpdb->postmeta WHERE meta_key = %s", $meta_key );
-
-		return $wpdb->query( $query );
-	}
-
-	public static function deleteEmptyMeta( $meta_key )
-	{
-		global $wpdb;
-
-		$query = $wpdb->prepare( "
-			DELETE FROM $wpdb->postmeta
-			WHERE meta_key = %s
-			AND meta_value = ''
-		" , $meta_key );
-
-		return $wpdb->get_results( $query );
-	}
-
-	public static function insertDefaultTerms( $taxonomy, $defaults )
-	{
-		if ( ! taxonomy_exists( $taxonomy ) )
-			return FALSE;
-
-		foreach ( $defaults as $term_slug => $term_name )
-			if ( ! term_exists( $term_slug, $taxonomy ) )
-				wp_insert_term( $term_name, $taxonomy, array( 'slug' => $term_slug ) );
-
-		return TRUE;
 	}
 
 	const SETTINGS_SLUG = 'geditorial-settings';
@@ -968,7 +448,7 @@ class gEditorialHelper
 
 	public static function isTools( $screen = NULL )
 	{
-		if ( is_null( $screen) )
+		if ( is_null( $screen ) )
 			$screen = get_current_screen();
 
 		if ( isset( $screen->base ) && FALSE !== strripos( $screen->base, self::TOOLS_SLUG ) )
@@ -986,84 +466,15 @@ class gEditorialHelper
 
 	public static function printJSConfig( $args, $object = 'gEditorial' )
 	{
-		$args['api'] = defined( 'GNETWORK_AJAX_ENDPOINT' ) && GNETWORK_AJAX_ENDPOINT ? GNETWORK_AJAX_ENDPOINT : admin_url( 'admin-ajax.php' );
+		$args['api']   = defined( 'GNETWORK_AJAX_ENDPOINT' ) && GNETWORK_AJAX_ENDPOINT ? GNETWORK_AJAX_ENDPOINT : admin_url( 'admin-ajax.php' );
+		$args['nonce'] = wp_create_nonce( 'geditorial' );
 
 	?> <script type="text/javascript">
 /* <![CDATA[ */
 	var <?php echo $object; ?> = <?php echo wp_json_encode( $args ); ?>;
-
-	<?php if ( gEditorialHelper::isDev() ) echo 'console.log('.$object.');'; ?>
-
+	<?php if ( self::isDev() ) echo 'console.log('.$object.');'; ?>
 /* ]]> */
-</script> <?php
-	}
-
-	public static function getLastPostOrder( $post_type = 'post', $exclude = '', $key = 'menu_order', $status = 'publish,private,draft' )
-	{
-		$post = get_posts( array(
-			'posts_per_page' => 1,
-			'orderby'        => 'menu_order',
-			'exclude'        => $exclude,
-			'post_type'      => $post_type,
-			'post_status'    => $status,
-		) );
-
-		if ( ! count( $post ) )
-			return 0;
-
-		if ( 'menu_order' == $key )
-			return intval( $post[0]->menu_order );
-
-		return $post[0]->{$key};
-	}
-
-	// this must be wp core future!!
-	// call this late on after_setup_theme
-	public static function themeThumbnails( $post_types )
-	{
-		global $_wp_theme_features;
-		$feature = 'post-thumbnails';
-		// $post_types = (array) $post_types;
-
-		if ( isset( $_wp_theme_features[$feature] ) ) {
-
-			// registered for all types
-			if ( TRUE === $_wp_theme_features[$feature] ) {
-
-				// WORKING: but if it is true, it's true!
-				// $post_types[] = 'post';
-				// $_wp_theme_features[$feature] = array( $post_types );
-
-			} else if ( is_array( $_wp_theme_features[$feature][0] ) ){
-				$_wp_theme_features[$feature][0] = array_merge( $_wp_theme_features[$feature][0], $post_types );
-			}
-
-		} else {
-			$_wp_theme_features[$feature] = array( $post_types );
-		}
-	}
-
-	// this must be wp core future!!
-	// core duplication with post_type & title : add_image_size()
-	public static function registerImageSize( $name, $atts = array() )
-	{
-		global $_wp_additional_image_sizes;
-
-		$args = gEditorialTemplateCore::atts( array(
-			'n' => __( 'Undefined Image Size', GEDITORIAL_TEXTDOMAIN ),
-			'w' => 0,
-			'h' => 0,
-			'c' => 0,
-			'p' => array( 'post' ),
-		), $atts );
-
-		$_wp_additional_image_sizes[$name] = array(
-			'width'     => absint( $args['w'] ),
-			'height'    => absint( $args['h'] ),
-			'crop'      => $args['c'],
-			'post_type' => $args['p'],
-			'title'     => $args['n'],
-		);
+</script><?php
 	}
 
 	// WP default sizes from options
@@ -1076,19 +487,19 @@ class gEditorialHelper
 
 		$gEditorial_WPImageSizes = array(
 			'thumbnail' => array(
-				'n' => __( 'Thumbnail', GEDITORIAL_TEXTDOMAIN ),
+				'n' => _x( 'Thumbnail', 'Module Helper', GEDITORIAL_TEXTDOMAIN ),
 				'w' => get_option( 'thumbnail_size_w' ),
 				'h' => get_option( 'thumbnail_size_h' ),
 				'c' => get_option( 'thumbnail_crop' ),
 			),
 			'medium' => array(
-				'n' => __( 'Medium', GEDITORIAL_TEXTDOMAIN ),
+				'n' => _x( 'Medium', 'Module Helper', GEDITORIAL_TEXTDOMAIN ),
 				'w' => get_option( 'medium_size_w' ),
 				'h' => get_option( 'medium_size_h' ),
 				'c' => 0,
 			),
 			'large' => array(
-				'n' => __( 'Large', GEDITORIAL_TEXTDOMAIN ),
+				'n' => _x( 'Large', 'Module Helper', GEDITORIAL_TEXTDOMAIN ),
 				'w' => get_option( 'large_size_w' ),
 				'h' => get_option( 'large_size_h' ),
 				'c' => 0,
@@ -1098,19 +509,43 @@ class gEditorialHelper
 		return $gEditorial_WPImageSizes;
 	}
 
-	public static function getRegisteredImageSizes( $post_type = 'post', $key = 'post_type' )
+	public static function settingsHelpLinks( $wiki_page = 'Modules', $wiki_title = NULL )
 	{
-		global $_wp_additional_image_sizes;
+		if ( is_null( $wiki_title ) )
+			$wiki_title = _x( 'gEditorial Documentation', 'Module Helper', GEDITORIAL_TEXTDOMAIN );
 
-		$sizes = array();
+		return sprintf(
+			_x( '<p><strong>For more information</strong>:</p><p><a href="%1$s">%2$s</a></p><p><a href="%3$s">gEditorial on GitHub</a></p>', 'Module Helper', GEDITORIAL_TEXTDOMAIN ),
+			'https://github.com/geminorum/geditorial/wiki/'.$wiki_page, $wiki_title, 'https://github.com/geminorum/geditorial' );
+	}
 
-		foreach ( $_wp_additional_image_sizes as $name => $size )
-			if ( isset( $size[$key] ) && in_array( $post_type, $size[$key] ) )
-				$sizes[$name] = $size;
-			else if ( 'post' == $post_type ) // fallback
-				$sizes[$name] = $size;
+	// WORKING DRAFT
+	// USE: https://raw.githubusercontent.com/wiki/geminorum/geditorial/Modules.md
+	// SEE: gNetworkCode
+	public static function settingsHelpContent( $module )
+	{
+		return array(
+			array(
+				'id'      => 'geditorial-'.$module->name.'-overview',
+				'title'   => sprintf( _x( '%s Overview', 'Module Helper: Help Screen Title', GEDITORIAL_TEXTDOMAIN ), $module->title ),
+				'content' => '', // TODO: get this from wikipage
+			),
+		);
+	}
 
-		return $sizes;
+	// https://codex.wordpress.org/Javascript_Reference/ThickBox
+	public static function thickBoxTest()
+	{
+		add_thickbox();
+
+		?><div id="my-content-id" style="display:none;">
+		 <p> This is my hidden content! It will appear in ThickBox when the link is clicked.</p>
+	</div>
+	<br />
+	<a href="#TB_inline?width=600&height=150&inlineId=my-content-id" class="thickbox button">View my inline content!</a>
+
+	<a href="http://localhost/wpn/wp-admin/network/plugin-install.php?tab=plugin-information&amp;plugin=buddypress&amp;TB_iframe=true&amp;width=772&amp;height=261" class="thickbox button" aria-label="More information about BuddyPress 2.3.4" data-title="BuddyPress 2.3.4">More Details</a>
+	<?php
 	}
 }
 

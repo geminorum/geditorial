@@ -3,92 +3,67 @@
 class gEditorialLike extends gEditorialModuleCore
 {
 
-	var $module_name = 'like';
-	var $meta_key    = '_ge_like';
+	public $meta_key   = '_ge_like';
+	protected $cookie  = 'geditorial-like';
+	protected $post_id = FALSE;
 
-	var $post_id = FALSE; // current post id
-	var $cookie = 'geditorial-like';
-
-	public function __construct()
+	public static function module()
 	{
-		global $gEditorial;
-
-		$args = array(
-
-			'title'                => __( 'Like', GEDITORIAL_TEXTDOMAIN ),
-			'short_description'    => __( 'Like Button for Posts and Comments', GEDITORIAL_TEXTDOMAIN ),
-
+		return array(
+			'name'     => 'like',
+			'title'    => _x( 'Like', 'Like Module', GEDITORIAL_TEXTDOMAIN ),
+			'desc'     => _x( 'Like Button for Posts and Comments', 'Like Module', GEDITORIAL_TEXTDOMAIN ),
 			'dashicon' => 'heart',
-			'slug'     => 'like',
-			'frontend' => FALSE,
-
-			'constants'            => array(),
-			'default_options'      => array(
-				'enabled'  => FALSE,
-				'settings' => array(),
-
-				'post_types' => array(
-					'post' => TRUE,
-					'page' => FALSE,
-				),
-				'post_fields' => array(),
-			),
-			'settings' => array(
-				'_general' => array(
-					array(
-						'field'       => 'comments',
-						'type'        => 'enabled',
-						'title'       => _x( 'Comments', 'Enable Like for Comments', GEDITORIAL_TEXTDOMAIN ),
-						'description' => __( 'Like button for enabled post types comments', GEDITORIAL_TEXTDOMAIN ),
-						'default'     => '0',
-					),
-					array(
-						'field'       => 'avatars',
-						'type'        => 'enabled',
-						'title'       => _x( 'Avatars', 'Enable Like for Comments', GEDITORIAL_TEXTDOMAIN ),
-						'description' => __( 'Display avatars alongside like button', GEDITORIAL_TEXTDOMAIN ),
-						'default'     => '0',
-					),
-				),
-				'post_types_option' => 'post_types_option',
-				// 'post_types_fields' => 'post_types_fields',
-			),
-			'strings' => array(
-				'titles'       => array(),
-				'descriptions' => array(),
-				'misc'         => array(),
-				'labels'       => array(),
-			),
-			'configure_page_cb' => 'print_configure_view',
 		);
-
-		$gEditorial->register_module( $this->module_name, $args );
 	}
 
-	public function setup()
+	protected function get_global_settings()
 	{
-		add_action( 'init', array( &$this, 'init' ) );
+		return array(
+			'_general' => array(
+				array(
+					'field'       => 'avatars',
+					'type'        => 'enabled',
+					'title'       => _x( 'Avatars', 'Like Module: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Display avatars next to the like button', 'Like Module: Setting Desc', GEDITORIAL_TEXTDOMAIN ),
+					'default'     => '0',
+				),
+				array(
+					'field'       => 'comments',
+					'type'        => 'enabled',
+					'title'       => _x( 'Comments', 'Like Module: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Also display button for comments of enabled post types', 'Like Module: Setting Desc', GEDITORIAL_TEXTDOMAIN ),
+					'default'     => '0',
+				),
+			),
+			'posttypes_option' => 'posttypes_option',
+		);
+	}
 
-		if ( is_admin() ) {
-			add_action( 'geditorial_settings_load', array( &$this, 'register_settings' ) );
-		} else {
-			add_action( 'template_redirect', array( &$this, 'template_redirect' ) );
+	public function setup( $partials = array() )
+	{
+		parent::setup();
 
-			add_action( 'gnetwork_debugbar_panel_geditorial_like', array( &$this, 'gnetwork_debugbar_panel' ) );
+		if ( ! is_admin() ) {
+			add_action( 'template_redirect', array( $this, 'template_redirect' ) );
+
+			add_action( 'gnetwork_debugbar_panel_geditorial_like', array( $this, 'gnetwork_debugbar_panel' ) );
 			add_filter( 'gnetwork_debugbar_panel_groups', function( $groups ){
-				$groups['geditorial_like'] = __( 'gEditorial Like', GEDITORIAL_TEXTDOMAIN );
+				$groups['geditorial_like'] = _x( 'Editorial Like', 'Like Module', GEDITORIAL_TEXTDOMAIN );
 				return $groups;
 			} );
 		}
 
-		add_action( 'wp_ajax_geditorial_like'       , array( &$this, 'ajax' ) );
-		add_action( 'wp_ajax_nopriv_geditorial_like', array( &$this, 'ajax' ) );
+		add_action( 'wp_ajax_geditorial_like', array( $this, 'ajax' ) );
+		add_action( 'wp_ajax_nopriv_geditorial_like', array( $this, 'ajax' ) );
 	}
 
 	public function init()
 	{
 		$this->cookie = 'geditorial-like-'.get_current_blog_id();
 		do_action( 'geditorial_like_init', $this->module );
+
+		$this->do_globals();
 	}
 
 	public function template_redirect()
@@ -102,7 +77,7 @@ class gEditorialLike extends gEditorialModuleCore
 			return;
 
 		$this->post_id = $post->ID;
-		$this->enqueue_asset_js();
+		$this->enqueue_asset_js( TRUE );
 		$this->enqueue_styles();
 	}
 
@@ -111,15 +86,15 @@ class gEditorialLike extends gEditorialModuleCore
 		if ( is_null( $post_id ) )
 			$post_id = $this->post_id;
 
-		$title = apply_filters( 'geditorial_like_loading', _x( 'Loading&hellip;', 'gEditorial Like', GEDITORIAL_TEXTDOMAIN ), $post_id );
-		$html  = '<div class="geditorial-wrap like" style="display:none;">';
+		$avatars = $this->get_setting( 'avatars', FALSE );
+
+		$title = apply_filters( 'geditorial_like_loading', _x( 'Loading &hellip;', 'Like Module', GEDITORIAL_TEXTDOMAIN ), $post_id );
+		$html  = '<div class="geditorial-wrap like" style="display:none;" data-avatars="'.( $avatars ? 'true' : 'false' ).'">';
 		$html .= '<div><a class="like loading" title="'.esc_attr( $title ).'" href="#" data-id="'.$post_id.'">';
 		$html .= apply_filters( 'geditorial_like_icon', '<span class="genericon genericon-heart"></span>', $post_id );
 		$html .= '</a></div><div><span class="like"></span></div>';
 
-		// maybe js error
-		//if ( $this->get_setting( 'avatars', false ) )
-			//$html .= '<div><ul class="geditorial-like"></ul></div>';
+		if ( $avatars )
 			$html .= '<div><ul class="like"></ul></div>';
 
 		$html .= '</div>';
@@ -132,13 +107,13 @@ class gEditorialLike extends gEditorialModuleCore
 		if ( ! $this->post_id )
 			return;
 
-		$users = $this->get_postmeta( $this->post_id, false, array(), $this->meta_key.'_users' );
-		$guests = $this->get_postmeta( $this->post_id, false, array(), $this->meta_key.'_guests' );
+		$users = $this->get_postmeta( $this->post_id, FALSE, array(), $this->meta_key.'_users' );
+		$guests = $this->get_postmeta( $this->post_id, FALSE, array(), $this->meta_key.'_guests' );
 		$cookie = $this->get_cookie();
 
-		echo 'Users:'; gEditorialHelper::dump( $users );
-		echo 'Guests:'; gEditorialHelper::dump( $guests );
-		echo 'Cookie:'; gEditorialHelper::dump( $cookie );
+		echo 'Users:'; self::dump( $users );
+		echo 'Guests:'; self::dump( $guests );
+		echo 'Cookie:'; self::dump( $cookie );
 	}
 
 	public function ajax()
@@ -147,64 +122,73 @@ class gEditorialLike extends gEditorialModuleCore
 		$what = isset( $post['what'] ) ? $post['what'] : 'nothing';
 
 		switch( $what ) {
+
 			default :
 			case 'check':
-				//wp_send_json_success( gEditorialHelper::notice( __( 'Success', GEDITORIAL_TEXTDOMAIN ), 'updated', false ) );
+
 				list( $check, $count ) = $this->check( $post['id'] );
+
 				wp_send_json_success( array(
 					'title'   => $this->title( $check, $post['id'] ),
-					'action'  => ( $check ? 'unlike' : 'dolike' ),
+					'action'  => $check ? 'unlike' : 'dolike',
 					'remove'  => 'loading',
-					'add'     => ( $check ? 'unlike' : 'dolike' ),
+					'add'     => $check ? 'unlike' : 'dolike',
 					'nonce'   => wp_create_nonce( 'geditorial_like_ajax-'.$post['id'] ),
 					'count'   => number_format_i18n( $count ),
-					'avatars' => $this->avatars( $post['id'] ),
+					'avatars' => $this->get_setting( 'avatars', FALSE ) ? $this->avatars( $post['id'] ) : NULL,
 				) );
+
 			break;
 			case 'dolike' :
-				check_ajax_referer( 'geditorial_like_ajax-'.$post['id'] );
+
+				check_ajax_referer( 'geditorial_like_ajax-'.$post['id'], 'nonce' );
+
 				list( $check, $count ) = $this->like( $post['id'] );
+
 				wp_send_json_success( array(
 					'title'   => $this->title( $check, $post['id'] ),
 					'action'  => 'unlike',
 					'remove'  => 'dolike',
 					'add'     => 'unlike',
 					'count'   => number_format_i18n( $count ),
-					'avatars' => $this->avatars( $post['id'] ),
+					'avatars' => $this->get_setting( 'avatars', FALSE ) ? $this->avatars( $post['id'] ) : NULL,
 				) );
 
 			break;
 			case 'unlike' :
-				check_ajax_referer( 'geditorial_like_ajax-'.$post['id'] );
+
+				check_ajax_referer( 'geditorial_like_ajax-'.$post['id'], 'nonce' );
+
 				list( $check, $count ) = $this->unlike( $post['id'] );
+
 				wp_send_json_success( array(
 					'title'   => $this->title( $check, $post['id'] ),
 					'action'  => 'dolike',
 					'remove'  => 'unlike',
 					'add'     => 'dolike',
 					'count'   => number_format_i18n( $count ),
-					'avatars' => $this->avatars( $post['id'] ),
+					'avatars' => $this->get_setting( 'avatars', FALSE ) ? $this->avatars( $post['id'] ) : NULL,
 				) );
 
-			break;
 		}
-		wp_send_json_error( gEditorialHelper::notice( _x( 'Waht?!', 'Ajax Notice', GEDITORIAL_TEXTDOMAIN ), 'error', false ) );
+
+		wp_send_json_error( self::error( _x( 'What?!', 'Like Module: Ajax Notice', GEDITORIAL_TEXTDOMAIN ) ) );
 	}
 
 	public function title( $liked, $post_id = NULL )
 	{
-		return apply_filters( 'geditorial_like_title', ( $liked ? _x( 'Unlike', 'gEditorial Like', GEDITORIAL_TEXTDOMAIN ) : _x( 'Like', 'gEditorial Like', GEDITORIAL_TEXTDOMAIN ) ), $liked, $post_id );
+		return apply_filters( 'geditorial_like_title', ( $liked ? _x( 'Unlike', 'Like Module', GEDITORIAL_TEXTDOMAIN ) : _x( 'Like', 'Like Module', GEDITORIAL_TEXTDOMAIN ) ), $liked, $post_id );
 	}
 
 	public function unlike( $post_id )
 	{
-		$users  = $this->get_postmeta( $post_id, false, array(), $this->meta_key.'_users' );
-		$guests = $this->get_postmeta( $post_id, false, array(), $this->meta_key.'_guests' );
+		$users  = $this->get_postmeta( $post_id, FALSE, array(), $this->meta_key.'_users' );
+		$guests = $this->get_postmeta( $post_id, FALSE, array(), $this->meta_key.'_guests' );
 		$count  = count( $users ) + count( $guests );
 
 		if ( is_user_logged_in() ) {
 			$key = array_search( get_current_user_id(), $users );
-			if ( false !== $key ) {
+			if ( FALSE !== $key ) {
 				unset( $users[$key] );
 				$this->set_meta( $post_id, $users, '_users' );
 				$count--;
@@ -223,7 +207,7 @@ class gEditorialLike extends gEditorialModuleCore
 			}
 
 			unset( $cookie[$post_id] );
-			$this->set_cookie( $cookie, false );
+			$this->set_cookie( $cookie, FALSE );
 
 		}
 
@@ -232,8 +216,8 @@ class gEditorialLike extends gEditorialModuleCore
 
 	public function like( $post_id )
 	{
-		$users     = $this->get_postmeta( $post_id, false, array(), $this->meta_key.'_users' );
-		$guests    = $this->get_postmeta( $post_id, false, array(), $this->meta_key.'_guests' );
+		$users     = $this->get_postmeta( $post_id, FALSE, array(), $this->meta_key.'_users' );
+		$guests    = $this->get_postmeta( $post_id, FALSE, array(), $this->meta_key.'_guests' );
 		$count     = count( $users ) + count( $guests );
 		$timestamp = current_time( 'timestamp' );
 
@@ -244,23 +228,23 @@ class gEditorialLike extends gEditorialModuleCore
 				$this->set_meta( $post_id, $users, '_users' );
 				$count++;
 			}
-			return array( true, $count );
+			return array( TRUE, $count );
 		} else {
 			$cookie = $this->get_cookie();
 			if ( ! array_key_exists( $post_id, $cookie ) ) {
-				$guests[$timestamp] = gEditorialHelper::IP();
+				$guests[$timestamp] = self::IP();
 				$this->set_meta( $post_id, $guests, '_guests' );
 				$this->set_cookie( array( $post_id => $guests[$timestamp] ) );
 				$count++;
 			}
-			return array( true, $count );
+			return array( TRUE, $count );
 		}
 	}
 
 	public function check( $post_id )
 	{
-		$users  = $this->get_postmeta( $post_id, false, array(), $this->meta_key.'_users' );
-		$guests = $this->get_postmeta( $post_id, false, array(), $this->meta_key.'_guests' );
+		$users  = $this->get_postmeta( $post_id, FALSE, array(), $this->meta_key.'_users' );
+		$guests = $this->get_postmeta( $post_id, FALSE, array(), $this->meta_key.'_guests' );
 		$count  = count( $users ) + count( $guests );
 
 		if ( is_user_logged_in() ) {
@@ -275,10 +259,10 @@ class gEditorialLike extends gEditorialModuleCore
 	{
 		$html = '';
 
-		if ( ! $this->get_setting( 'avatars', false ) )
+		if ( ! $this->get_setting( 'avatars', FALSE ) )
 			return $html;
 
-		$users = $this->get_postmeta( $post_id, false, array(), $this->meta_key.'_users' );
+		$users = $this->get_postmeta( $post_id, FALSE, array(), $this->meta_key.'_users' );
 
 		if ( count( $users ) ) {
 			$query = new WP_User_Query( array(

@@ -1,32 +1,123 @@
 <?php defined( 'ABSPATH' ) or die( 'Restricted access' );
 
-class gEditorialModuleCore
+class gEditorialModuleCore extends gEditorialBaseCore
 {
 
-	var $module;
+	public $module;
+	public $options;
 
-	var $enabled  = FALSE;
-	var $meta_key = '_ge';
-	var $cookie   = 'geditorial';
+	public $enabled  = FALSE;
+	public $meta_key = '_ge';
 
-	var $_post_types_excluded = array();
-	var $_taxonomies_excluded = array();
-	var $_kses_allowed        = array();
-	var $_settings_buttons    = array();
-	var $_image_sizes         = array();
-	var $_errors              = array();
+	protected $cookie     = 'geditorial';
+	protected $field_type = 'meta';
 
-	var $_geditorial_meta = FALSE; // META ENABLED?
-	var $_root_key        = FALSE; // ROOT CONSTANT
+	protected $priority_init = 10;
 
-	public function __construct() { }
+	protected $constants = array();
+	protected $strings   = array();
+	protected $supports  = array();
+	protected $fields    = array();
+
+	protected $post_types_excluded = array();
+	protected $taxonomies_excluded = array();
+	protected $kses_allowed        = array();
+	protected $settings_buttons    = array();
+	protected $image_sizes         = array();
+	protected $errors              = array();
+
+	protected $geditorial_meta = FALSE; // META ENABLED?
+	protected $root_key        = FALSE; // ROOT CONSTANT
+
+	public function __construct( &$module, &$options )
+	{
+		$this->module = $module;
+		$this->options = $options;
+
+		$this->setup();
+
+		// Kint::dump( $this ); die();
+	}
+
+	// DEFAULT METHOD
+	public static function module()
+	{
+		return array();
+	}
+
+	public function setup( $partials = array() )
+	{
+		if ( method_exists( $this, 'p2p_init' ) )
+			add_action( 'p2p_init', array( $this, 'p2p_init' ) );
+
+		if ( method_exists( $this, 'widgets_init' ) )
+			add_action( 'widgets_init', array( $this, 'widgets_init' ) );
+
+		if ( method_exists( $this, 'tinymce_strings' ) )
+			add_filter( 'geditorial_tinymce_strings', array( $this, 'tinymce_strings' ) );
+
+		if ( method_exists( $this, 'meta_init' ) )
+			add_action( 'geditorial_meta_init', array( $this, 'meta_init' ) );
+
+		if ( method_exists( $this, 'tweaks_strings' ) )
+			add_filter( 'geditorial_tweaks_strings', array( $this, 'tweaks_strings' ) );
+
+		if ( method_exists( $this, 'gpeople_support' ) )
+			add_filter( 'gpeople_remote_support_post_types', array( $this, 'gpeople_support' ) );
+
+		foreach ( $partials as $partial )
+			$this->require_code( $partial );
+
+		add_action( 'after_setup_theme', array( $this, 'after_setup_theme_early' ), 1 );
+
+		if ( method_exists( $this, 'after_setup_theme' ) )
+			add_action( 'after_setup_theme', array( $this, 'after_setup_theme' ), 20 );
+
+		add_action( 'init', array( $this, 'init' ), $this->priority_init );
+
+		if ( is_admin() ) {
+
+			if ( method_exists( $this, 'admin_init' ) )
+				add_action( 'admin_init', array( $this, 'admin_init' ) );
+
+			if ( method_exists( $this, 'current_screen' ) )
+				add_action( 'current_screen', array( $this, 'current_screen' ) );
+
+			add_action( 'geditorial_settings_load', array( $this, 'register_settings' ) );
+		}
+	}
+
+	public function after_setup_theme_early()
+	{
+		$this->settings  = apply_filters( 'geditorial_'.$this->module->name.'_settings', $this->get_global_settings(), $this->module );
+		$this->constants = apply_filters( 'geditorial_'.$this->module->name.'_constants', $this->get_global_constants(), $this->module );
+		$this->supports  = apply_filters( 'geditorial_'.$this->module->name.'_supports', $this->get_global_supports(), $this->module );
+		$this->fields    = apply_filters( 'geditorial_'.$this->module->name.'_fields', $this->get_global_fields(), $this->module );
+	}
+
+	protected function get_global_settings() { return array(); }
+	protected function get_global_constants() { return array(); }
+	protected function get_global_strings() { return array(); }
+	protected function get_global_supports() { return array(); }
+	protected function get_global_fields() { return array(); }
+
+	// protected function settings_help_sidebar() { return array(); }
+	protected function settings_help_tabs()
+	{
+		return gEditorialHelper::settingsHelpContent( $this->module );
+	}
+
+	protected function do_globals()
+	{
+		$this->strings = apply_filters( 'geditorial_'.$this->module->name.'_strings', $this->get_global_strings(), $this->module );
+	}
 
 	// check if this module loaded as remote for another blog's editorial module
 	public function remote()
 	{
-		if ( ! $this->_root_key
-			|| ! defined( $this->_root_key )
-			|| constant( $this->_root_key ) == get_current_blog_id() )
+		if ( ! $this->root_key
+			|| ! defined( $this->root_key )
+			|| constant( $this->root_key ) == get_current_blog_id() )
 				return FALSE;
 
 		return TRUE;
@@ -37,15 +128,15 @@ class gEditorialModuleCore
 	{
 		$post_types = array();
 
-		if ( isset( $this->module->options->post_types )
-			&& is_array( $this->module->options->post_types ) ) {
+		if ( isset( $this->options->post_types )
+			&& is_array( $this->options->post_types ) ) {
 
-				foreach ( $this->module->options->post_types as $post_type => $value ) {
+				foreach ( $this->options->post_types as $post_type => $value ) {
 
 					if ( 'off' === $value )
 						$value = FALSE;
 
-					if ( in_array( $post_type, $this->_post_types_excluded ) )
+					if ( in_array( $post_type, $this->post_types_excluded ) )
 						$value = FALSE;
 
 					if ( $value )
@@ -65,15 +156,15 @@ class gEditorialModuleCore
 		), 'objects' );
 
 		$post_types = array(
-			'post' => __( 'Posts' ),
-			'page' => __( 'Pages' ),
+			'post' => _x( 'Posts', 'Module Core', GEDITORIAL_TEXTDOMAIN ),
+			'page' => _x( 'Pages', 'Module Core', GEDITORIAL_TEXTDOMAIN ),
 		);
 
 		foreach ( $registered as $post_type => $args )
 			$post_types[$post_type] = $args->label;
 
-		if ( count( $this->_post_types_excluded ) )
-			$post_types = array_diff_key( $post_types, array_flip( $this->_post_types_excluded ) );
+		if ( count( $this->post_types_excluded ) )
+			$post_types = array_diff_key( $post_types, array_flip( $this->post_types_excluded ) );
 
 		return $post_types;
 	}
@@ -83,15 +174,15 @@ class gEditorialModuleCore
 	{
 		$taxonomies = array();
 
-		if ( isset( $this->module->options->taxonomies )
-			&& is_array( $this->module->options->taxonomies ) ) {
+		if ( isset( $this->options->taxonomies )
+			&& is_array( $this->options->taxonomies ) ) {
 
-				foreach ( $this->module->options->taxonomies as $taxonomy => $value ) {
+				foreach ( $this->options->taxonomies as $taxonomy => $value ) {
 
 					if ( 'off' === $value )
 						$value = FALSE;
 
-					if ( in_array( $taxonomy, $this->_taxonomies_excluded ) )
+					if ( in_array( $taxonomy, $this->taxonomies_excluded ) )
 						$value = FALSE;
 
 					if ( $value )
@@ -105,7 +196,7 @@ class gEditorialModuleCore
 	public function all_taxonomies()
 	{
 		$tax_list = get_taxonomies( array(
-			// 'show_ui' => true,
+			// 'show_ui' => TRUE,
 		), 'objects' );
 
 		$taxonomies = array();
@@ -113,57 +204,44 @@ class gEditorialModuleCore
 		foreach ( $tax_list as $tax => $tax_obj )
 		$taxonomies[$tax] = $tax_obj->label;
 
-		if ( count( $this->_taxonomies_excluded ) )
-			$taxonomies = array_diff_key( $taxonomies, array_flip( $this->_taxonomies_excluded ) );
+		if ( count( $this->taxonomies_excluded ) )
+			$taxonomies = array_diff_key( $taxonomies, array_flip( $this->taxonomies_excluded ) );
 
 		return $taxonomies;
 	}
 
-	// for supporting late registered custom post types
-	public function sanitize_post_types( $module_post_types = array() )
-	{
-		$normalized = array();
-
-		foreach ( $this->all_post_types() as $post_type => $post_type_label ) {
-			if ( isset( $module_post_types[$post_type] )
-				&& $module_post_types[$post_type]
-				&& 'off' !== $module_post_types[$post_type] )
-					$normalized[$post_type] = TRUE;
-			else
-				$normalized[$post_type] = FALSE;
-		}
-
-		return $normalized;
-	}
-
-	public function settings_post_types_option( $section )
+	public function settings_posttypes_option( $section )
 	{
 		foreach ( $this->all_post_types() as $post_type => $label ) {
-			$html = gEditorialHelper::html( 'input', array(
+			$html = self::html( 'input', array(
 				'type'    => 'checkbox',
+				'value'   => 'enabled',
 				'id'      => 'type-'.$post_type,
 				'name'    => $this->module->group.'[post_types]['.$post_type.']',
-				'checked' => $this->module->options->post_types[$post_type],
+				'checked' => isset( $this->options->post_types[$post_type] ) && $this->options->post_types[$post_type],
 			) );
 
-			echo '<p>'.gEditorialHelper::html( 'label', array(
+			echo '<p>'.self::html( 'label', array(
 				'for' => 'type-'.$post_type,
-			), $html.'&nbsp;'.esc_html( $label.' &mdash; '.$post_type ) ).'</p>';
+			), $html.'&nbsp;'.esc_html( $label ).' &mdash; <code>'.$post_type.'</code>' ).'</p>';
 		}
 	}
 
 	public function settings_taxonomies_option( $section )
 	{
 		foreach ( $this->all_taxonomies() as $taxonomy => $label ) {
-			$html = gEditorialHelper::html( 'input', array(
+
+			$html = self::html( 'input', array(
 				'type'    => 'checkbox',
+				'value'   => 'enabled',
 				'id'      => 'tax-'.$taxonomy,
 				'name'    => $this->module->group.'[taxonomies]['.$taxonomy.']',
-				'checked' => isset( $this->module->options->taxonomies[$taxonomy] ) && $this->module->options->taxonomies[$taxonomy],
+				'checked' => isset( $this->options->taxonomies[$taxonomy] ) && $this->options->taxonomies[$taxonomy],
 			) );
-			echo '<p>'.gEditorialHelper::html( 'label', array(
+
+			echo '<p>'.self::html( 'label', array(
 				'for' => 'tax-'.$taxonomy,
-			), $html.'&nbsp;'.esc_html( $label.' &mdash; '.$taxonomy ) ).'</p>';
+			), $html.'&nbsp;'.esc_html( $label ).' &mdash; <code>'.$taxonomy.'</code>' ).'</p>';
 		}
 	}
 
@@ -195,17 +273,17 @@ class gEditorialModuleCore
 			delete_post_meta( $post_id, $this->meta_key.$key_suffix );
 	}
 
-	public function register_settings_post_types_option( $title = NULL )
+	public function register_settings_posttypes_option( $title = NULL )
 	{
 		if ( is_null( $title ) )
-			$title = __( 'Enable for these post types', GEDITORIAL_TEXTDOMAIN );
+			$title = _x( 'Enable for Post Types', 'Module Core', GEDITORIAL_TEXTDOMAIN );
 
 		$section = $this->module->group.'_posttypes';
 
 		add_settings_section( $section, FALSE, '__return_false', $this->module->group );
 		add_settings_field( 'post_types',
 			$title,
-			array( $this, 'settings_post_types_option' ),
+			array( $this, 'settings_posttypes_option' ),
 			$this->module->group,
 			$section
 		);
@@ -214,7 +292,7 @@ class gEditorialModuleCore
 	public function register_settings_taxonomies_option( $title = NULL )
 	{
 		if ( is_null( $title ) )
-			$title = __( 'Enable for these taxonomies', GEDITORIAL_TEXTDOMAIN );
+			$title = _x( 'Enable for Taxonomies', 'Module Core', GEDITORIAL_TEXTDOMAIN );
 
 		$section = $this->module->group.'_taxonomies';
 
@@ -227,129 +305,117 @@ class gEditorialModuleCore
 		);
 	}
 
-	public function register_settings_post_types_fields( $title = NULL )
+	public function register_settings_fields_option( $title = NULL )
 	{
 		if ( is_null( $title ) )
-			$title = __( 'Fields for %s', GEDITORIAL_TEXTDOMAIN );
+			$title = _x( 'Fields for %s', 'Module Core', GEDITORIAL_TEXTDOMAIN );
 
 		$all = $this->all_post_types();
 
 		foreach ( $this->post_types() as $post_type ) {
 
+			$fields  = $this->post_type_all_fields( $post_type );
 			$section = $post_type.'_fields';
 
-			add_settings_section( $section,
-				sprintf( $title, $all[$post_type] ),
-				'__return_false',
-				$this->module->group
-			);
+			if ( count( $fields ) ) {
 
-			$all_fields = $this->post_type_all_fields( $post_type );
-
-			if ( count( $all_fields ) ) {
-
-				foreach ( $all_fields as $field => $args )
-
-					if ( is_array( $args ) ) {
-
-						// NOTE: we register each fields b/c of the desc
-						$this->add_settings_field( array_merge( array(
-							'field'       => $field,
-							'title'       => '&nbsp;',
-							'field_title' => isset( $args['title'] ) ? $args['title'] : '&nbsp;',
-							'post_type'   => $post_type,
-							'section'     => $section,
-							'callback'    => array( $this, 'do_settings_field_posttype_fields' ),
-						), $args ) );
-
-					} else {
-
-						// fallback to the old method
-
-						add_settings_field( $post_type.'_'.$field,
-							'', // $this->get_string( $field, $post_type ),
-							array( $this, 'do_post_type_fields_option' ),
-							$this->module->group,
-							$section,
-							array(
-								'id'        => $post_type.'_'.$field,
-								'title'     => $this->get_string( $field, $post_type ),
-								'post_type' => $post_type,
-								'field'     => $field,
-							)
-						);
-					}
-
-			} else {
-
-				add_settings_field( $post_type.'_nofields',
-					sprintf( __( 'No fields supported for %s', GEDITORIAL_TEXTDOMAIN ), $all[$post_type] ),
+				add_settings_section( $section,
+					sprintf( $title, $all[$post_type] ),
 					'__return_false',
-					$this->module->group,
-					$post_type.'_fields'
+					$this->module->group
+				);
+
+				$this->add_settings_field( array(
+					'field'     => $post_type.'_fields_all',
+					'post_type' => $post_type,
+					'section'   => $section,
+					'title'     => '&nbsp;',
+					'callback'  => array( $this, 'settings_fields_option_all' ),
+				) );
+
+				foreach ( $fields as $field => $atts ) {
+
+					$args = array(
+						'field'       => $field,
+						'post_type'   => $post_type,
+						'section'     => $section,
+						'field_title' => isset( $atts['title'] ) ? $atts['title'] : $this->get_string( $field, $post_type ),
+						'description' => isset( $atts['description'] ) ? $atts['description'] : $this->get_string( $field, $post_type, 'descriptions' ),
+						'callback'    => array( $this, 'settings_fields_option' ),
+					);
+
+					if ( is_array( $atts ) )
+						$args = array_merge( $args, $atts );
+
+					$args['title'] = '&nbsp;';
+
+					$this->add_settings_field( $args );
+				}
+
+			} else if ( isset( $all[$post_type] ) ) {
+
+				add_settings_section( $section,
+					sprintf( $title, $all[$post_type] ),
+					array( $this, 'settings_fields_option_none' ),
+					$this->module->group
 				);
 			}
 		}
 	}
 
-	// call back for the NEW method
-	public function do_settings_field_posttype_fields( $args )
+	public function settings_fields_option( $args )
 	{
-		$name  = $this->module->group.'[fields]['.$args['post_type'].']['.$args['field'].']';
-		$id    = $this->module->group.'-fields-'.$args['post_type'].'-'.$args['field'];
+		$name = $this->module->group.'[fields]['.$args['post_type'].']['.$args['field'].']';
+		$id   = $this->module->group.'-fields-'.$args['post_type'].'-'.$args['field'];
 
-		if ( isset( $this->module->options->settings['fields'][$args['post_type']][$args['field']] ) )
-			$value = $this->module->options->settings['fields'][$args['post_type']][$args['field']];
+		if ( isset( $this->options->fields[$args['post_type']][$args['field']] ) )
+			$value = $this->options->fields[$args['post_type']][$args['field']];
 		else if ( ! empty( $args['default'] ) )
 			$value = $args['default'];
-		else if ( isset( $this->module->default_options['fields'][$args['post_type']][$args['field']] ) )
-			$value = $this->module->default_options['fields'][$args['post_type']][$args['field']];
+		else if ( isset( $this->module->defaults['fields'][$args['post_type']][$args['field']] ) )
+			$value = $this->module->defaults['fields'][$args['post_type']][$args['field']];
 		else
 			$value = FALSE;
 
-		$html = gEditorialHelper::html( 'input', array(
+		$html = self::html( 'input', array(
 			'type'    => 'checkbox',
+			'value'   => 'enabled',
+			'class'   => 'fields-check',
 			'name'    => $name,
 			'id'      => $id,
-			'value'   => '1',
 			'checked' => $value,
 		) );
 
-		echo '<div>'.gEditorialHelper::html( 'label', array(
+		echo '<div>'.self::html( 'label', array(
 			'for' => $id,
 		), $html.'&nbsp;'.$args['field_title'] );
 
 		if ( $args['description'] )
-			echo gEditorialHelper::html( 'p', array(
+			echo self::html( 'p', array(
 				'class' => 'description',
 			), $args['description'] );
 
 		echo '</div>';
 	}
 
-	// call back for the OLD method
-	public function do_post_type_fields_option( $args )
+	public function settings_fields_option_all( $args )
 	{
-		echo '<label for="'.esc_attr( $args['id'] ).'">';
-		echo '<input id="'.esc_attr( $args['id'] ).'" name="'.$this->module->group.'['.esc_attr( $args['post_type'] ).'_fields]['.esc_attr( $args['field'] ).']"';
+		$html = self::html( 'input', array(
+			'type'  => 'checkbox',
+			'class' => 'fields-check-all',
+			'id'    => $args['post_type'].'_fields_all',
+		) );
 
-		$checked = FALSE;
-		if ( isset( $this->module->options->{$args['post_type'].'_fields'}[$args['field']] ) )
-			$checked = $this->module->options->{$args['post_type'].'_fields'}[$args['field']];
+		echo self::html( 'label', array(
+			'for' => $args['post_type'].'_fields_all',
+		), $html.'&nbsp;<span class="description">'._x( 'Select All Fields', 'Module Core', GEDITORIAL_TEXTDOMAIN ).'</span>' );
+	}
 
-		if ( 'off' === $checked )
-			$checked = FALSE;
-
-		if ( $checked )
-			$checked = TRUE;
-
-		checked( $checked );
-
-		echo ' type="checkbox" />&nbsp;'.esc_html( $args['title'] )
-			.'<p class="description">';
-
-		echo $this->get_string( $args['field'], $args['post_type'], 'descriptions',
-			__( 'No description available.', GEDITORIAL_TEXTDOMAIN ) ).'</p></label>';
+	public function settings_fields_option_none( $args )
+	{
+		echo self::html( 'p', array(
+			'class' => 'description no-fields',
+		), _x( 'No fields supported', 'Module Core', GEDITORIAL_TEXTDOMAIN ) );
 	}
 
 	public function print_configure_view()
@@ -362,79 +428,119 @@ class gEditorialModuleCore
 
 			echo '<p class="submit">';
 
-				foreach ( $this->_settings_buttons as $action => $button ) {
-					submit_button( $button['value'], $button['type'], $action, false, $button['atts'] );
+				foreach ( $this->settings_buttons as $action => $button ) {
+					submit_button( $button['value'], $button['type'], $action, FALSE, $button['atts'] );
 					echo '&nbsp;&nbsp;';
 				}
 
 			echo '<a class="button" href="'.gEditorialHelper::settingsURL().'">'
-				.__( 'Back to Editorial', GEDITORIAL_TEXTDOMAIN ).'</a></p>';
+				._x( 'Back to Editorial', 'Module Core', GEDITORIAL_TEXTDOMAIN ).'</a></p>';
 
 		echo '</form>';
 
-		if ( gEditorialHelper::isDev() ) {
-			// @gEditorialHelper::dump( $this->module->default_options );
-			@gEditorialHelper::dump( $this->module->options );
-			// @gEditorialHelper::dump( $this->module->strings );
+		if ( self::isDev() ) {
+			// @self::dump( $this->module );
+			@self::dump( $this->options );
+			// @self::dump( $this->strings );
+			// @self::dump( get_all_post_type_supports( 'reshare' ) );
+			// @self::dump( $this->post_type_supports( 'reshare', 'meta_fields', FALSE ) );
 		}
 	}
 
 	public function register_settings_button( $key, $value, $atts = array(), $type = 'secondary' )
 	{
-		$this->_settings_buttons[$key] = array(
+		$this->settings_buttons[$key] = array(
 			'value' => $value,
 			'atts'  => $atts,
 			'type'  => $type,
 		);
 	}
 
+	// DEFAULT METHOD
+	public function tools_subs( $subs )
+	{
+		$subs[$this->module->name] = $this->module->title;
+		return $subs;
+	}
+
+	// HELPER
 	protected function tools_field_referer( $sub = NULL )
 	{
 		if ( is_null( $sub ) )
-			$sub = $this->module_name;
+			$sub = $this->module->name;
 
 		wp_nonce_field( 'geditorial-tools-'.$sub );
 	}
 
+	// HELPER
 	protected function tools_check_referer( $sub = NULL )
 	{
 		if ( is_null( $sub ) )
-			$sub = $this->module_name;
+			$sub = $this->module->name;
 
 		check_admin_referer( 'geditorial-tools-'.$sub );
 	}
 
-	// USED by settings module
-	// validate our user input as the settings are being saved
+	// NOTE: used by settings module
 	public function settings_validate( $options )
 	{
-		if ( isset( $this->module->settings['post_types_option'] ) ) {
+		if ( isset( $this->settings['posttypes_option'] ) ) {
+
 			if ( ! isset( $options['post_types'] ) )
 				$options['post_types'] = array();
-			$options['post_types'] = $this->sanitize_post_types( $options['post_types'] );
+
+			foreach ( $this->all_post_types() as $post_type => $post_type_label )
+				if ( ! isset( $options['post_types'][$post_type] )
+					|| $options['post_types'][$post_type] != 'enabled' )
+						unset( $options['post_types'][$post_type] );
+				else
+					$options['post_types'][$post_type] = TRUE;
+
+			if ( ! count( $options['post_types'] ) )
+				unset( $options['post_types'] );
 		}
 
-		// FIXME: what about taxonomies?
+		if ( isset( $this->settings['taxonomies_option'] ) ) {
 
-		if ( isset( $this->module->settings['post_types_fields'] ) ) {
+			if ( ! isset( $options['taxonomies'] ) )
+				$options['taxonomies'] = array();
+
+			foreach ( $this->all_taxonomies() as $taxonomy => $label )
+				if ( ! isset( $options['taxonomies'][$taxonomy] )
+					|| $options['taxonomies'][$taxonomy] != 'enabled' )
+						unset( $options['taxonomies'][$taxonomy] );
+				else
+					$options['taxonomies'][$taxonomy] = TRUE;
+
+			if ( ! count( $options['taxonomies'] ) )
+				unset( $options['taxonomies'] );
+		}
+
+		if ( isset( $this->settings['fields_option'] ) ) {
+
+			if ( ! isset( $options['fields'] ) )
+				$options['fields'] = array();
+
 			foreach ( $this->post_types() as $post_type ) {
+
+				if ( ! isset( $options['fields'][$post_type] ) )
+					$options['fields'][$post_type] = array();
+
 				foreach ( $this->post_type_all_fields( $post_type ) as $field => $args ) {
 
 					if ( ! isset( $options['fields'][$post_type][$field] )
-						|| $options['fields'][$post_type][$field] != 'on' ) // NOTE: checkbox posts 'on' on checked
-							$options['fields'][$post_type][$field] = FALSE;
+						|| $options['fields'][$post_type][$field] != 'enabled' )
+							unset( $options['fields'][$post_type][$field] );
 					else
 						$options['fields'][$post_type][$field] = TRUE;
-
-					// fallback for the old method
-
-					if ( ! isset( $options[$post_type.'_fields'][$field] )
-						|| $options[$post_type.'_fields'][$field] != 'on' ) // NOTE: checkbox posts 'on' on checked
-							$options[$post_type.'_fields'][$field] = FALSE;
-					else
-						$options[$post_type.'_fields'][$field] = TRUE;
 				}
+
+				if ( ! count( $options['fields'][$post_type] ) )
+					unset( $options['fields'][$post_type] );
 			}
+
+			if ( ! count( $options['fields'] ) )
+				unset( $options['fields'] );
 		}
 
 		return $options;
@@ -444,29 +550,15 @@ class gEditorialModuleCore
 	public function post_type_fields( $post_type = 'post', $is_constant = FALSE )
 	{
 		if ( $is_constant )
-			$post_type = $this->module->constants[$post_type];
+			$post_type = $this->constant( $post_type );
 
 		$fields = array();
 
-		if ( isset( $this->module->options->fields[$post_type] )
-			&& is_array( $this->module->options->fields[$post_type] ) ) {
-				foreach ( $this->module->options->fields[$post_type] as $field => $enabled )
+		if ( isset( $this->options->fields[$post_type] )
+			&& is_array( $this->options->fields[$post_type] ) )
+				foreach ( $this->options->fields[$post_type] as $field => $enabled )
 					if ( $enabled )
 						$fields[] = $field;
-
-			if ( count( $fields ) )
-				return $fields;
-		}
-
-		// fallback to the old method
-		$key = $post_type.'_fields';
-
-		if ( isset( $this->module->options->{$key} )
-			&& is_array( $this->module->options->{$key} ) ) {
-				foreach ( $this->module->options->{$key} as $field => $value )
-					if ( $value && 'off' !== $value )
-						$fields[] = $field;
-		}
 
 		return $fields;
 	}
@@ -485,35 +577,31 @@ class gEditorialModuleCore
 		return $list;
 	}
 
-	// DEPRECATED: use $this->post_type_fields()
-	// get enabled fields for a post type
-	// Moved here form : Meta
-	public function get_post_type_fields( $module, $post_type = 'post', $all = false )
+	public function add_post_type_fields( $post_type, $fields = NULL, $type = 'meta', $append = TRUE )
 	{
-		$key = $post_type.'_fields';
-		$fields = array();
+		if ( is_null( $fields ) )
+			$fields = $this->fields[$post_type];
 
-		if ( isset( $module->options->{$key} ) && is_array( $module->options->{$key} ) ) {
-			foreach ( $module->options->{$key} as $field => $value )
-				if ( $all )
-					$fields[] = $field;
-				else if ( $value && 'off' !== $value )
-					$fields[] = $field;
-		}
-		return $fields;
+		if ( ! count( $fields ) )
+			return;
+
+		if ( $append )
+			$fields = array_merge( $this->post_type_supports( $post_type, $type.'_fields', FALSE ), $fields );
+
+		add_post_type_support( $post_type, array( $type.'_fields' ), $fields );
 	}
 
-	// NOTE: it's like core's but returns the actuall array!
+	// NOTE: like WP core but returns the actual array!
 	public function post_type_supports( $post_type, $feature, $is_constant = FALSE )
 	{
 		if ( $is_constant )
-			$post_type = $this->module->constants[$post_type];
+			$post_type = $this->constant( $post_type );
 
 		$all = get_all_post_type_supports( $post_type );
 
-		if ( isset( $all[$feature] )
-			&& is_array( $all[$feature] ) )
-				return $all[$feature];
+		if ( isset( $all[$feature][0] )
+			&& is_array( $all[$feature][0] ) )
+				return $all[$feature][0];
 
 		return array();
 	}
@@ -522,31 +610,22 @@ class gEditorialModuleCore
 	{
 		$fields = array();
 
-		foreach ( $this->post_type_supports( $post_type, 'meta_fields', FALSE ) as $field => $args )
+		foreach ( $this->post_type_supports( $post_type, $this->field_type.'_fields', FALSE ) as $field => $args )
 			$fields[$field] = $args;
 
-		if ( count( $fields ) )
-			return $fields;
-
-		// fallback for the old method
-		$key = $post_type.'_fields';
-
-		if ( isset( $this->module->default_options[$key] ) && is_array( $this->module->default_options[$key] ) )
-			foreach ( $this->module->default_options[$key] as $field => $value )
-				$fields[$field] = $field;
 		return $fields;
 	}
 
 	public function get_string( $string, $post_type = 'post', $group = 'titles', $fallback = FALSE )
 	{
-		if ( isset( $this->module->strings[$group][$post_type][$string] ) )
-			return $this->module->strings[$group][$post_type][$string];
+		if ( isset( $this->strings[$group][$post_type][$string] ) )
+			return $this->strings[$group][$post_type][$string];
 
-		if ( isset( $this->module->strings[$group]['post'][$string] ) )
-			return $this->module->strings[$group]['post'][$string];
+		if ( isset( $this->strings[$group]['post'][$string] ) )
+			return $this->strings[$group]['post'][$string];
 
-		if ( isset( $this->module->strings[$group][$string] ) )
-			return $this->module->strings[$group][$string];
+		if ( isset( $this->strings[$group][$string] ) )
+			return $this->strings[$group][$string];
 
 		if ( FALSE === $fallback )
 			return $string;
@@ -554,30 +633,25 @@ class gEditorialModuleCore
 		return $fallback;
 	}
 
-	// FIXME: TEMP
-	public function get_meta_fields()
+	public function constant( $key, $default = FALSE )
 	{
-		return $this->module->fields;
+		if ( isset( $this->constants[$key] ) )
+			return $this->constants[$key];
+
+		if ( 'post_cpt' == $key )
+			return 'post';
+
+		if ( 'page_cpt' == $key )
+			return 'page';
+
+		return $default;
 	}
 
-	public function do_filters()
-	{
-		if ( has_filter( 'geditorial_'.$this->module_name.'_strings' ) )
-			$this->module->strings = apply_filters( 'geditorial_'.$this->module_name.'_strings', $this->module->strings );
-
-		if ( has_filter( 'geditorial_'.$this->module_name.'_constants' ) )
-			$this->module->constants = apply_filters( 'geditorial_'.$this->module_name.'_constants', $this->module->constants );
-
-		if ( has_filter( 'geditorial_'.$this->module_name.'_supports' ) )
-			$this->module->supports = apply_filters( 'geditorial_'.$this->module_name.'_supports', $this->module->supports );
-
-		if ( has_filter( 'geditorial_'.$this->module_name.'_fields' ) )
-			$this->module->fields = apply_filters( 'geditorial_'.$this->module_name.'_fields', $this->module->fields );
-	}
-
-	// convert the numbers in other language into english
+	// NOTE: convert backs numbers into english
 	public function intval( $text, $intval = TRUE )
 	{
+		self::__dep();
+
 		$number = apply_filters( 'number_format_i18n_back', $text );
 
 		if ( $intval )
@@ -588,11 +662,13 @@ class gEditorialModuleCore
 
 	public function kses( $text, $allowed = array(), $context = 'display' )
 	{
+		self::__dep();
+
 		if ( is_null( $allowed ) )
 			$allowed = array();
 
 		else if ( ! count( $allowed ) )
-			$allowed = $this->_kses_allowed;
+			$allowed = $this->kses_allowed;
 
 		return apply_filters( 'geditorial_kses', wp_kses( $text, $allowed ), $allowed, $context );
 	}
@@ -602,11 +678,11 @@ class gEditorialModuleCore
 		global $geditorial_modules_caps;
 
 		if ( empty( $geditorial_modules_caps )
-			&& isset( $geditorial_modules_caps[$this->module_name] ) )
-				$geditorial_modules_caps[$this->module_name] = apply_filters( 'geditorial_'.$this->module_name.'_caps', array() );
+			&& isset( $geditorial_modules_caps[$this->module->name] ) )
+				$geditorial_modules_caps[$this->module->name] = apply_filters( 'geditorial_'.$this->module->name.'_caps', array() );
 
-		if ( isset( $geditorial_modules_caps[$this->module_name][$action][$post_type][$field] ) )
-			return current_user_can( $geditorial_modules_caps[$this->module_name][$action][$post_type][$field] );
+		if ( isset( $geditorial_modules_caps[$this->module->name][$action][$post_type][$field] ) )
+			return current_user_can( $geditorial_modules_caps[$this->module->name][$action][$post_type][$field] );
 
 		return TRUE;
 	}
@@ -616,47 +692,119 @@ class gEditorialModuleCore
 		if ( ! wp_verify_nonce( $_POST['_wpnonce'], $this->module->group.'-options' ) )
 			return;
 
-		$added = gEditorialHelper::insertDefaultTerms(
-			$this->module->constants[$constant_key],
-			$this->module->strings['terms'][$constant_key]
+		$added = self::insertDefaultTerms(
+			$this->constant( $constant_key ),
+			$this->strings['terms'][$constant_key]
 		);
 
 		self::redirect( add_query_arg( 'message', $added ? 'added_default_terms' : 'error_default_terms' ) );
 	}
 
+	public function get_settings_editor_button( $section )
+	{
+		return array(
+			'field'       => 'editor_button',
+			'title'       => _x( 'Editor Button', 'Module Core', GEDITORIAL_TEXTDOMAIN ),
+			'description' => _x( 'Adding an editor button to insert the shortcodes', 'Module Core', GEDITORIAL_TEXTDOMAIN ),
+			'default'     => '1',
+			'section'     => $section,
+		);
+	}
+
+	public function get_settings_multiple_instances( $section )
+	{
+		return array(
+			'field'   => 'multiple_instances',
+			'title'   => _x( 'Multiple Instances', 'Module Core', GEDITORIAL_TEXTDOMAIN ),
+			'default' => '0',
+			'section' => $section,
+		);
+	}
+
+	public function get_settings_redirect_archives( $section )
+	{
+		return array(
+			'field'       => 'redirect_archives',
+			'type'        => 'text',
+			'title'       => _x( 'Redirect Archives', 'Module Core', GEDITORIAL_TEXTDOMAIN ),
+			'description' => _x( 'Redirect Post Type Archives to a URL', 'Module Core', GEDITORIAL_TEXTDOMAIN ),
+			'default'     => '',
+			'dir'         => 'ltr',
+			'placeholder' => 'http://example.com/archives/',
+			'section'     => $section,
+		);
+	}
+
+	public function get_settings_insert_content( $section )
+	{
+		return array(
+			'field'       => 'insert_content',
+			'type'        => 'select',
+			'title'       => _x( 'Insert in Content', 'Module Core', GEDITORIAL_TEXTDOMAIN ),
+			'description' => _x( 'Put html automatically on the content', 'Module Core', GEDITORIAL_TEXTDOMAIN ),
+			'default'     => 'none',
+			'section'     => $section,
+			'values'      => array(
+				'none'    => _x( 'No', 'Module Core: Insert in Content Option', GEDITORIAL_TEXTDOMAIN ),
+				'before' => _x( 'Before', 'Module Core: Insert in Content Option', GEDITORIAL_TEXTDOMAIN ),
+				'after'  => _x( 'After', 'Module Core: Insert in Content Option', GEDITORIAL_TEXTDOMAIN ),
+			),
+		);
+	}
+
+	// HELPER
+	public function is_register_settings( $page )
+	{
+		if ( isset( $this->settings ) && $page == $this->module->settings )
+			return TRUE;
+
+		return FALSE;
+	}
+
 	public function register_settings( $page = NULL )
 	{
-		if ( ! isset( $this->module->settings ) )
+		if ( ! $this->is_register_settings( $page ) )
 			return;
 
-		foreach ( $this->module->settings as $section_suffix => $fields ) {
+		foreach ( $this->settings as $section_suffix => $fields ) {
 			if ( is_array( $fields ) ) {
 
 				$section = $this->module->group.$section_suffix;
 				add_settings_section( $section, FALSE, '__return_false', $this->module->group );
-				foreach ( $fields as $field )
-					$this->add_settings_field( array_merge( $field, array( 'section' => $section ) ) );
+
+				foreach ( $fields as $field ) {
+
+					if ( is_array( $field ) )
+						$args = array_merge( $field, array( 'section' => $section ) );
+
+					else if ( method_exists( $this, 'get_settings_'.$field ) )
+						$args = call_user_func_array( array( $this, 'get_settings_'.$field ), array( $section ) );
+
+					else
+						continue;
+
+					$this->add_settings_field( $args );
+				}
 
 			// for pre internal custom options
-			} else if ( is_callable( array( $this, 'register_settings_'.$section_suffix ) ) ) {
+			// } else if ( is_callable( array( $this, 'register_settings_'.$section_suffix ) ) ) {
+			} else if ( method_exists( $this, 'register_settings_'.$section_suffix ) ) {
 				$title = $section_suffix == $fields ? NULL : $fields;
 				call_user_func_array( array( $this, 'register_settings_'.$section_suffix ), array( $title ) );
 			}
 		}
 
-		$this->register_settings_button( 'submit', __( 'Save Changes', GEDITORIAL_TEXTDOMAIN ), array( 'default' => 'default' ), 'primary' );
-		$this->register_settings_button( 'reset-settings', __( 'Reset Settings', GEDITORIAL_TEXTDOMAIN ), sprintf( 'onclick="return confirm( \'%s\' )"', __( 'Are you sure? This operation can not be undone.', GEDITORIAL_TEXTDOMAIN ) ) );
+		$this->register_settings_button( 'submit', _x( 'Save Changes', 'Module Core', GEDITORIAL_TEXTDOMAIN ), array( 'default' => 'default' ), 'primary' );
+		$this->register_settings_button( 'reset-settings', _x( 'Reset Settings', 'Module Core', GEDITORIAL_TEXTDOMAIN ), sprintf( 'onclick="return confirm( \'%s\' )"', _x( 'Are you sure? This operation can not be undone.', 'Module Core', GEDITORIAL_TEXTDOMAIN ) ) );
 
 		$screen = get_current_screen();
 
-		if ( isset( $this->module->settings_help_tabs )
-			&& count( $this->module->settings_help_tabs ) ) {
-				foreach ( $this->module->settings_help_tabs as $tab )
-					$screen->add_help_tab( $tab );
-		}
+		if ( method_exists( $this, 'settings_help_tabs' ) )
+			foreach ( $this->settings_help_tabs() as $tab )
+				$screen->add_help_tab( $tab );
 
-		if ( isset( $this->module->settings_help_sidebar ) )
-			$screen->set_help_sidebar( $this->module->settings_help_sidebar );
+		if ( method_exists( $this, 'settings_help_sidebar' ) )
+			$screen->set_help_sidebar( $this->settings_help_sidebar() );
 	}
 
 	public function add_settings_field( $r = array() )
@@ -682,7 +830,7 @@ class gEditorialModuleCore
 
 	public function do_settings_field( $r = array() )
 	{
-		$args = gEditorialTemplateCore::atts( array(
+		$args = self::atts( array(
 			'type'        => 'enabled',
 			'field'       => FALSE,
 			'values'      => array(),
@@ -699,6 +847,7 @@ class gEditorialModuleCore
 			'name_group'  => 'settings',
 			'name_attr'   => FALSE, // override
 			'id_attr'     => FALSE, // override
+			'placeholder' => FALSE,
 		), $r );
 
 		if ( ! $args['field'] )
@@ -709,12 +858,12 @@ class gEditorialModuleCore
 		$name    = $args['name_attr'] ? $args['name_attr'] : $this->module->group.'['.$args['name_group'].']['.$args['field'].']';
 		$exclude = $args['exclude'] && ! is_array( $args['exclude'] ) ? array_filter( explode( ',', $args['exclude'] ) ) : array();
 
-		if ( isset( $this->module->options->settings[$args['field']] ) )
-			$value = $this->module->options->settings[$args['field']];
+		if ( isset( $this->options->settings[$args['field']] ) )
+			$value = $this->options->settings[$args['field']];
 		else if ( ! empty( $args['default'] ) )
 			$value = $args['default'];
-		else if ( isset( $this->module->default_options['settings'][$args['field']] ) )
-			$value = $this->module->default_options['settings'][$args['field']];
+		else if ( isset( $this->module->defaults['settings'][$args['field']] ) )
+			$value = $this->module->defaults['settings'][$args['field']];
 		else
 			$value = NULL;
 
@@ -725,17 +874,17 @@ class gEditorialModuleCore
 
 			case 'enabled' :
 
-				$html = gEditorialHelper::html( 'option', array(
+				$html = self::html( 'option', array(
 					'value'    => '0',
 					'selected' => '0' == $value,
-				), ( isset( $args['values'][0] ) ? $args['values'][0] : esc_html__( 'Disabled', GEDITORIAL_TEXTDOMAIN ) ) );
+				), ( isset( $args['values'][0] ) ? $args['values'][0] : _x( 'Disabled', 'Module Core: Settings Field Option', GEDITORIAL_TEXTDOMAIN ) ) );
 
-				$html .= gEditorialHelper::html( 'option', array(
+				$html .= self::html( 'option', array(
 					'value'    => '1',
 					'selected' => '1' == $value,
-				), ( isset( $args['values'][1] ) ? $args['values'][1] : esc_html__( 'Enabled', GEDITORIAL_TEXTDOMAIN ) ) );
+				), ( isset( $args['values'][1] ) ? $args['values'][1] : _x( 'Enabled', 'Module Core: Settings Field Option', GEDITORIAL_TEXTDOMAIN ) ) );
 
-				echo gEditorialHelper::html( 'select', array(
+				echo self::html( 'select', array(
 					'class' => $args['field_class'],
 					'name'  => $name,
 					'id'    => $id,
@@ -747,14 +896,37 @@ class gEditorialModuleCore
 				if ( ! $args['field_class'] )
 					$args['field_class'] = 'regular-text';
 
-				echo gEditorialHelper::html( 'input', array(
-					'type'     => 'text',
-					'class'    => $args['field_class'],
-					'name'     => $name,
-					'id'       => $id,
-					'value'    => $value,
-					'dir'      => $args['dir'],
-					'disabled' => $args['disabled'],
+				echo self::html( 'input', array(
+					'type'        => 'text',
+					'class'       => $args['field_class'],
+					'name'        => $name,
+					'id'          => $id,
+					'value'       => $value,
+					'dir'         => $args['dir'],
+					'disabled'    => $args['disabled'],
+					'placeholder' => $args['placeholder'],
+				) );
+
+			break;
+			case 'number' :
+
+				if ( ! $args['field_class'] )
+					$args['field_class'] = 'small-text';
+
+				if ( ! $args['dir'] )
+					$args['dir'] = 'ltr';
+
+				echo self::html( 'input', array(
+					'type'        => 'number',
+					'class'       => $args['field_class'],
+					'name'        => $name,
+					'id'          => $id,
+					'value'       => $value,
+					'step'        => '1', // FIXME: get from args
+					'min'         => '0', // FIXME: get from args
+					'dir'         => $args['dir'],
+					'disabled'    => $args['disabled'],
+					'placeholder' => $args['placeholder'],
 				) );
 
 			break;
@@ -766,7 +938,7 @@ class gEditorialModuleCore
 						if ( in_array( $value_name, $exclude ) )
 							continue;
 
-						$html .= gEditorialHelper::html( 'input', array(
+						$html .= self::html( 'input', array(
 							'type'    => 'checkbox',
 							'class'   => $args['field_class'],
 							'name'    => $name.'['.$value_name.']',
@@ -776,14 +948,14 @@ class gEditorialModuleCore
 							'dir'     => $args['dir'],
 						) );
 
-						echo '<p>'.gEditorialHelper::html( 'label', array(
+						echo '<p>'.self::html( 'label', array(
 							'for' => $id.'-'.$value_name,
 						), $html.'&nbsp;'.esc_html( $value_title ) ).'</p>';
 					}
 
 				} else {
 
-					$html = gEditorialHelper::html( 'input', array(
+					$html = self::html( 'input', array(
 						'type'    => 'checkbox',
 						'class'   => $args['field_class'],
 						'name'    => $name,
@@ -793,7 +965,7 @@ class gEditorialModuleCore
 						'dir'     => $args['dir'],
 					) );
 
-					echo '<p>'.gEditorialHelper::html( 'label', array(
+					echo '<p>'.self::html( 'label', array(
 						'for' => $id,
 					), $html.'&nbsp;'.$args['description'] ).'</p>';
 
@@ -809,13 +981,13 @@ class gEditorialModuleCore
 						if ( in_array( $value_name, $exclude ) )
 							continue;
 
-						$html .= gEditorialHelper::html( 'option', array(
+						$html .= self::html( 'option', array(
 							'value'    => $value_name,
 							'selected' => $value == $value_name,
 						), esc_html( $value_title ) );
 					}
 
-					echo gEditorialHelper::html( 'select', array(
+					echo self::html( 'select', array(
 						'class' => $args['field_class'],
 						'name'  => $name,
 						'id'    => $id,
@@ -825,7 +997,7 @@ class gEditorialModuleCore
 			break;
 			case 'textarea' :
 
-				echo gEditorialHelper::html( 'textarea', array(
+				echo self::html( 'textarea', array(
 					'class' => array(
 						'large-text',
 						// 'textarea-autosize',
@@ -851,7 +1023,7 @@ class gEditorialModuleCore
 					'id'               => $id,
 					'class'            => $args['field_class'],
 					'exclude'          => implode( ',', $exclude ),
-					'show_option_none' => __( '&mdash; Select Page &mdash;', GEDITORIAL_TEXTDOMAIN ),
+					'show_option_none' => _x( '&mdash; Select Page &mdash;', 'Module Core: WP Dropdown Pages Option None', GEDITORIAL_TEXTDOMAIN ),
 					'sort_column'      => 'menu_order',
 					'sort_order'       => 'asc',
 					'post_status'      => 'publish,private,draft',
@@ -870,7 +1042,7 @@ class gEditorialModuleCore
 			break;
 			case 'file' :
 
-				echo gEditorialHelper::html( 'input', array(
+				echo self::html( 'input', array(
 					'type'  => 'file',
 					'class' => $args['field_class'],
 					'name'  => $id, // $name,
@@ -890,30 +1062,30 @@ class gEditorialModuleCore
 			break;
 			case 'debug' :
 
-				gEditorialHelper::dump( $this->module->options );
+				self::dump( $this->options );
 
 			break;
 			default :
 
-				_e( 'Error: settings type undefined.', GEDITORIAL_TEXTDOMAIN );
+				_ex( 'Error: settings type undefined.', 'Module Core', GEDITORIAL_TEXTDOMAIN );
 		}
 
 		if ( $args['after'] )
 			echo '&nbsp;'.$args['after'];
 
 		if ( $args['description'] && FALSE !== $args['values'] )
-			echo gEditorialHelper::html( 'p', array(
+			echo self::html( 'p', array(
 				'class' => 'description',
 			), $args['description'] );
 	}
 
 	public function get_setting( $field, $default = NULL )
 	{
-		if ( isset( $this->module->options->settings[$field] ) )
-			return $this->module->options->settings[$field];
+		if ( isset( $this->options->settings[$field] ) )
+			return $this->options->settings[$field];
 
-		else if ( isset( $this->module->default_options['settings'][$field] ) )
-			return $this->module->default_options['settings'][$field];
+		else if ( isset( $this->module->defaults['settings'][$field] ) )
+			return $this->module->defaults['settings'][$field];
 
 		else
 			return $default;
@@ -923,7 +1095,7 @@ class gEditorialModuleCore
 	{
 		if ( $append ) {
 			$old = isset( $_COOKIE[$this->cookie] ) ? json_decode( wp_unslash( $_COOKIE[$this->cookie] ) ) : array();
-			$new = wp_json_encode( gEditorialHelper::parse_args_r( $array, $old ) );
+			$new = wp_json_encode( self::parse_args_r( $array, $old ) );
 		} else {
 			$new = wp_json_encode( $array );
 		}
@@ -936,23 +1108,23 @@ class gEditorialModuleCore
 		return isset( $_COOKIE[$this->cookie] ) ? json_decode( wp_unslash( $_COOKIE[$this->cookie] ), TRUE ) : array();
 	}
 
-	// FIXME: WORK IN PROGRESS
-	// SEE: http://generatewp.com/post-type/
 	public function register_post_type( $constant_key, $atts = array(), $taxonomies = NULL )
 	{
 		if ( is_null( $taxonomies ) )
 			$taxonomies = $this->taxonomies();
 
+		$post_type = $this->constant( $constant_key );
+
 		$args = array_merge( array(
 			'taxonomies'  => $taxonomies,
-			'labels'      => $this->module->strings['labels'][$constant_key],
-			'description' => isset( $this->module->strings['labels'][$constant_key]['description'] ) ? $this->module->strings['labels'][$constant_key]['description'] : '',
-			'menu_icon'   => ( $this->module->dashicon ? 'dashicons-'.$this->module->dashicon : 'dashicons-welcome-write-blog' ),
-			'supports'    => isset( $this->module->supports[$constant_key] ) ? $this->module->supports[$constant_key] : array( 'title', 'editor' ),
-			'has_archive' => isset( $this->module->constants[$constant_key.'_archive'] ) ? $this->module->constants[$constant_key.'_archive'] : FALSE,
-			'query_var'   => $this->module->constants[$constant_key],
+			'labels'      => $this->strings['labels'][$constant_key],
+			'description' => isset( $this->strings['labels'][$constant_key]['description'] ) ? $this->strings['labels'][$constant_key]['description'] : '',
+			'menu_icon'   => $this->module->dashicon ? 'dashicons-'.$this->module->dashicon : 'dashicons-welcome-write-blog',
+			'supports'    => isset( $this->supports[$constant_key] ) ? $this->supports[$constant_key] : array( 'title', 'editor' ),
+			'has_archive' => $this->constant( $constant_key.'_archive', FALSE ),
+			'query_var'   => $post_type,
 			'rewrite'     => array(
-				'slug'       => isset( $this->module->constants[$constant_key.'_slug'] ) ? $this->module->constants[$constant_key.'_slug'] : $this->module->constants[$constant_key],
+				'slug'       => $this->constant( $constant_key.'_slug', $post_type ),
 				'with_front' => FALSE,
 				'feeds'      => TRUE,
 				'pages'      => TRUE,
@@ -963,29 +1135,36 @@ class gEditorialModuleCore
 			'map_meta_cap'  => TRUE,
 			'can_export'    => TRUE,
 			'menu_position' => 4,
+
+			// SEE: https://github.com/torounit/custom-post-type-permalinks
+			'cptp_permalink_structure' => $this->constant( $constant_key.'_permalink', '/%post_id%' ),
+			// Only `%post_id%` and `%postname%` | SEE: https://github.com/torounit/simple-post-type-permalinks
+			'sptp_permalink_structure' => $this->constant( $constant_key.'_permalink', '/%post_id%' ),
 		), $atts );
 
-		register_post_type( $this->module->constants[$constant_key], $args );
+		register_post_type( $post_type, $args );
 	}
 
-	// FIXME: WORK IN PROGRESS
 	public function register_taxonomy( $constant_key, $atts = array(), $post_types = NULL )
 	{
 		if ( is_null( $post_types ) )
 			$post_types = $this->post_types();
 		else if ( ! is_array( $post_types ) )
-			$post_types = array( $this->module->constants[$post_types] );
+			$post_types = array( $this->constant( $post_types ) );
+
+		$taxonomy = $this->constant( $constant_key );
 
 		$args = array_merge( array(
-			'labels'                => $this->module->strings['labels'][$constant_key],
+			'labels'                => $this->strings['labels'][$constant_key],
 			'update_count_callback' => array( 'gEditorialHelper', 'update_count_callback' ),
 			'hierarchical'          => FALSE,
 			'show_tagcloud'         => FALSE,
 			'public'                => TRUE,
 			'show_ui'               => TRUE,
-			'query_var'             => $this->module->constants[$constant_key],
+			'show_in_quick_edit'    => FALSE, // FIXME: check this for all taxes
+			'query_var'             => $taxonomy,
 			'rewrite'               => array(
-				'slug'       => isset( $this->module->constants[$constant_key.'_slug'] ) ? $this->module->constants[$constant_key.'_slug'] : $this->module->constants[$constant_key],
+				'slug'       => $this->constant( $constant_key.'_slug', $taxonomy ),
 				'with_front' => FALSE,
 			),
 			'capabilities' => array(
@@ -996,7 +1175,66 @@ class gEditorialModuleCore
 			),
 		), $atts );
 
-		register_taxonomy( $this->module->constants[$constant_key], $post_types, $args );
+		register_taxonomy( $taxonomy, $post_types, $args );
+	}
+
+	protected function get_post_updated_messages( $constant_key )
+	{
+		global $post, $post_ID;
+
+		$singular_name = isset( $this->strings['labels'][$constant_key]['singular_name'] )
+			? $this->strings['labels'][$constant_key]['singular_name']
+			: $this->constant( $constant_key );
+
+		$singular_lower = function_exists( 'mb_strtolower' ) ? mb_strtolower( $singular_name, 'UTF-8' ) : strtolower( $singular_name );
+		$link = get_permalink( $post_ID );
+
+		return array(
+			0  => '', // Unused. Messages start at index 1.
+
+			1  => vsprintf( _x( '%1$s updated. <a href="%3$s">View %2$s</a>', 'Module Core: Post Updated Messages', GEDITORIAL_TEXTDOMAIN ), array(
+				$singular_name,
+				$singular_lower,
+				esc_url( $link ),
+			) ),
+
+			2  => _x( 'Custom field updated.', 'Module Core: Post Updated Messages', GEDITORIAL_TEXTDOMAIN ),
+			3  => _x( 'Custom field deleted.', 'Module Core: Post Updated Messages', GEDITORIAL_TEXTDOMAIN ),
+
+			4  => sprintf( _x( '%s updated.', 'Module Core: Post Updated Messages', GEDITORIAL_TEXTDOMAIN ), $singular_name ),
+
+			5  => isset( $_GET['revision'] ) ? vsprintf( _x( '%1$s restored to revision from %2$s', 'Module Core: Post Updated Messages', GEDITORIAL_TEXTDOMAIN ), array(
+				$singular_name,
+				wp_post_revision_title( (int) $_GET['revision'], FALSE )
+			) ) : FALSE,
+
+			6  => vsprintf( _x( '%1$s published. <a href="%3$s">View %2$s</a>', 'Module Core: Post Updated Messages', GEDITORIAL_TEXTDOMAIN ), array(
+				$singular_name,
+				$singular_lower,
+				esc_url( $link ),
+			) ),
+
+			7  => sprintf( _x( '%s saved.', 'Module Core: Post Updated Messages', GEDITORIAL_TEXTDOMAIN ), $singular_name ),
+
+			8  => vsprintf( _x( '%1$s submitted. <a target="_blank" href="%3$s">Preview %2$s</a>', 'Module Core: Post Updated Messages', GEDITORIAL_TEXTDOMAIN ), array(
+				$singular_name,
+				$singular_lower,
+				esc_url( add_query_arg( 'preview', 'true', $link ) ),
+			) ),
+
+			9  => vsprintf( _x( '%1$s scheduled for: <strong>%4$s</strong>. <a target="_blank" href="%3$s">Preview %2$s</a>', 'Module Core: Post Updated Messages', GEDITORIAL_TEXTDOMAIN ), array(
+				$singular_name,
+				$singular_lower,
+				esc_url( $link ),
+				date_i18n( __( 'M j, Y @ G:i' ), strtotime( $post->post_date ) ),
+			) ),
+
+			10 => vsprintf( _x( '%1$s draft updated. <a target="_blank" href="%3$s">Preview %2$s</a>', 'Module Core: Post Updated Messages', GEDITORIAL_TEXTDOMAIN ), array(
+				$singular_name,
+				$singular_lower,
+				esc_url( add_query_arg( 'preview', 'true', $link ) ),
+			) ),
+		);
 	}
 
 	// SEE: [Use Chosen for a replacement WordPress taxonomy metabox](https://gist.github.com/helenhousandi/1573966)
@@ -1004,78 +1242,101 @@ class gEditorialModuleCore
 	public function meta_box_choose_tax( $post, $box )
 	{
 		$atts = isset( $box['args'] ) && is_array( $box['args'] ) ? $box['args'] : array();
-		$args = wp_parse_args( $atts, array( 'taxonomy' => 'category' ) );
+		$args = wp_parse_args( $atts, array(
+			'taxonomy' => 'category',
+			'edit_url' => FALSE,
+		) );
 
 		$tax_name = esc_attr( $args['taxonomy'] );
 		$taxonomy = get_taxonomy( $args['taxonomy'] );
 
-		// FIXME: check if no terms and print notice / link
+		$html = wp_terms_checklist( $post->ID, array(
+			'taxonomy' => $tax_name,
+			'echo'     => FALSE,
+		) );
 
-		echo '<div id="taxonomy-'.$tax_name.'" class="geditorial-admin-wrap-metabox choose-tax">';
-		echo '<input type="hidden" name="tax_input['.$tax_name.'][]" value="0" />'; // Allows for an empty term set to be sent. 0 is an invalid Term ID and will be ignored by empty() checks.
-		echo '<div class="field-wrap-list"><ul>';
-			wp_terms_checklist( $post->ID, array( 'taxonomy' => $tax_name ) );
-		echo '</ul></div></div>';
+		if ( $html ) {
+
+			echo '<div id="taxonomy-'.$tax_name.'" class="geditorial-admin-wrap-metabox choose-tax">';
+
+			// allows for an empty term set to be sent. 0 is an invalid Term ID and will be ignored by empty() checks.
+			echo '<input type="hidden" name="tax_input['.$tax_name.'][]" value="0" />';
+
+			echo '<div class="field-wrap-list"><ul>'.$html.'</ul></div></div>';
+
+		} else if ( $args['edit_url']
+			&& current_user_can( $taxonomy->cap->manage_terms ) ) {
+
+				echo self::html( 'a', array(
+					'href'   => $args['edit_url'],
+					'title'  => $taxonomy->labels->menu_name,
+					'class'  => 'add-new-item',
+					'target' => '_blank',
+				), $taxonomy->labels->add_new_item );
+		}
 	}
 
 	public function get_image_sizes( $post_type )
 	{
-		if ( ! isset( $this->_image_sizes[$post_type] ) ) {
+		if ( ! isset( $this->image_sizes[$post_type] ) ) {
 
-			$sizes = apply_filters( 'geditorial_'.$this->module_name.'_'.$post_type.'_image_sizes', array() );
+			$sizes = apply_filters( 'geditorial_'.$this->module->name.'_'.$post_type.'_image_sizes', array() );
 
 			if ( FALSE === $sizes ) {
-				$this->_image_sizes[$post_type] = array(); // no sizes
+				$this->image_sizes[$post_type] = array(); // no sizes
 
 			} else if ( count( $sizes ) ) {
-				$this->_image_sizes[$post_type] = $sizes; // custom sizes
+				$this->image_sizes[$post_type] = $sizes; // custom sizes
 
 			} else {
 				foreach ( gEditorialHelper::getWPImageSizes() as $size => $args )
-					$this->_image_sizes[$post_type][$post_type.'-'.$size] = $args;
+					$this->image_sizes[$post_type][$post_type.'-'.$size] = $args;
 			}
 		}
 
-		return $this->_image_sizes[$post_type];
+		return $this->image_sizes[$post_type];
 	}
 
 	// use this on 'after_setup_theme'
 	public function register_post_type_thumbnail( $constant_key )
 	{
-		$post_type = $this->module->constants[$constant_key];
+		$post_type = $this->constant( $constant_key );
 
-		gEditorialHelper::themeThumbnails( array( $post_type ) );
+		self::themeThumbnails( array( $post_type ) );
 
 		foreach ( $this->get_image_sizes( $post_type ) as $name => $size )
-			gEditorialHelper::registerImageSize( $name, array_merge( $size, array( 'p' => array( $post_type ) ) ) );
+			self::registerImageSize( $name, array_merge( $size, array( 'p' => array( $post_type ) ) ) );
 	}
 
 	// WARNING: every asset must have a .min copy
 	public function enqueue_asset_js( $args = array(), $name = NULL, $deps = array( 'jquery' ), $handle = NULL )
 	{
-		global $gEditorial;
-
 		if ( is_null( $name ) )
-			$name = $this->module_name;
+			$name = $this->module->name;
 
 		$prefix = is_admin() ? 'admin.' : 'front.';
-		$suffix = ( ( ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) || gEditorialHelper::isDev() ) ? '' : '.min' );
+		$suffix = ( ( ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) || self::isDev() ) ? '' : '.min' );
 
 		wp_enqueue_script(
 			( $handle ? $handle : 'geditorial-'.$name ),
 			GEDITORIAL_URL.'assets/js/geditorial/'.$prefix.$name.$suffix.'.js',
 			$deps,
-			GEDITORIAL_VERSION );
+			GEDITORIAL_VERSION, TRUE );
 
-		$gEditorial->enqueue_asset_config( $args, $this->module_name );
+		if ( is_array( $args ) && ! count( $args ) )
+			return;
+
+		if ( TRUE === $args )
+			$args = array();
+
+		gEditorial()->enqueue_asset_config( $args, $this->module->name );
 	}
 
-	// FRONT ONLY: combined global styles
+	// NOTE: FRONT ONLY: combined global styles
 	// TODO: also we need api for module specified css
 	public function enqueue_styles()
 	{
-		global $gEditorial;
-		$gEditorial->enqueue_styles();
+		gEditorial()->enqueue_styles();
 	}
 
 	public function register_editor_button( $settings_key = 'editor_button' )
@@ -1083,8 +1344,7 @@ class gEditorialModuleCore
 		if ( ! $this->get_setting( $settings_key, TRUE ) )
 			return;
 
-		global $gEditorial;
-		$gEditorial->register_editor_button( 'ge_'.$this->module_name, 'assets/js/geditorial/tinymce.'.$this->module_name.'.js' );
+		gEditorial()->register_editor_button( 'ge_'.$this->module->name, 'assets/js/geditorial/tinymce.'.$this->module->name.'.js' );
 	}
 
 	protected function register_shortcode( $constant_key, $callback = NULL )
@@ -1092,13 +1352,13 @@ class gEditorialModuleCore
 		if ( is_null( $callback ) && method_exists( $this, $constant_key ) )
 			$callback = array( $this, $constant_key );
 
-		remove_shortcode( $this->module->constants[$constant_key] );
-		add_shortcode( $this->module->constants[$constant_key], $callback );
+		remove_shortcode( $this->constant( $constant_key ) );
+		add_shortcode( $this->constant( $constant_key ), $callback );
 	}
 
 	public function field_post_tax( $constant_key, $post, $key = FALSE, $count = TRUE, $excludes = '', $default = '0' )
 	{
-		$tax = $this->module->constants[$constant_key];
+		$tax = $this->constant( $constant_key );
 		if ( $obj = get_taxonomy( $tax ) ) {
 
 			if ( $default && ! is_numeric( $default ) ) {
@@ -1116,11 +1376,11 @@ class gEditorialModuleCore
 			wp_dropdown_categories( array(
 				'taxonomy'          => $tax,
 				'selected'          => $selected,
-				'show_option_none'  => sprintf( _x( '&mdash; Select %s &mdash;', 'MetaBox Tax Dropdown: Select Option None', GEDITORIAL_TEXTDOMAIN ), $obj->labels->menu_name ),
+				'show_option_none'  => sprintf( _x( '&mdash; Select %s &mdash;', 'Module Core: MetaBox Tax Dropdown: Select Option None', GEDITORIAL_TEXTDOMAIN ), $obj->labels->menu_name ),
 				'option_none_value' => '0',
 				'class'             => 'geditorial-admin-dropbown',
-				'name'              => 'geditorial-'.$this->module_name.'-'.$tax.( FALSE === $key ? '' : '['.$key.']' ),
-				'id'                => 'geditorial-'.$this->module_name.'-'.$tax.( FALSE === $key ? '' : '-'.$key ),
+				'name'              => 'geditorial-'.$this->module->name.'-'.$tax.( FALSE === $key ? '' : '['.$key.']' ),
+				'id'                => 'geditorial-'.$this->module->name.'-'.$tax.( FALSE === $key ? '' : '-'.$key ),
 				'hierarchical'      => $obj->hierarchical,
 				'orderby'           => 'name',
 				'show_count'        => $count,
@@ -1136,31 +1396,34 @@ class gEditorialModuleCore
 
 	public function field_post_order( $constant_key, $post )
 	{
-		$html = gEditorialHelper::html( 'input', array(
+		$html = self::html( 'input', array(
 			'type'        => 'number',
 			'step'        => '1',
 			'size'        => '4',
 			'name'        => 'menu_order',
 			'id'          => 'menu_order',
 			'value'       => $post->menu_order,
-			'title'       => __( 'Order', GEDITORIAL_TEXTDOMAIN ),
-			'placeholder' => __( 'Order', GEDITORIAL_TEXTDOMAIN ),
+			'title'       => _x( 'Order', 'Module Core: Title Attr', GEDITORIAL_TEXTDOMAIN ),
+			'placeholder' => _x( 'Order', 'Module Core: Placeholder', GEDITORIAL_TEXTDOMAIN ),
 			'class'       => 'small-text',
 		) );
 
-		echo gEditorialHelper::html( 'div', array(
-			'class' => 'field-wrap',
+		echo self::html( 'div', array(
+			'class' => array(
+				'field-wrap',
+				'field-wrap-inputnumber',
+			),
 		), $html );
 	}
 
 	public function field_post_parent( $constant_key, $post, $status = 'publish,private,draft' )
 	{
 		$pages = wp_dropdown_pages( array(
-			'post_type'        => $this->module->constants[$constant_key], // alows for parent of diffrent type
+			'post_type'        => $this->constant( $constant_key ), // alows for parent of diffrent type
 			'selected'         => $post->post_parent,
 			'name'             => 'parent_id',
 			'class'            => 'geditorial-admin-dropbown',
-			'show_option_none' => _x( '&mdash; no parent &mdash;', 'MetaBox Parent Dropdown: Select Option None', GEDITORIAL_TEXTDOMAIN ),
+			'show_option_none' => _x( '&mdash; no parent &mdash;', 'Module Core: MetaBox Parent Dropdown: Select Option None', GEDITORIAL_TEXTDOMAIN ),
 			'sort_column'      => 'menu_order',
 			'sort_order'       => 'desc',
 			'post_status'      => $status,
@@ -1169,27 +1432,49 @@ class gEditorialModuleCore
 		));
 
 		if ( $pages )
-			echo gEditorialHelper::html( 'div', array(
+			echo self::html( 'div', array(
 				'class' => 'field-wrap',
 			), $pages );
+	}
+
+	// NOTE: this must be cat (hierarchical)
+	// TODO: supporting tag (non-hierarchical)
+	public function add_meta_box_choose_tax( $constant_key, $post_type, $type = 'cat' )
+	{
+		$tax = $this->constant( $constant_key );
+		$edit_url = $this->get_url_tax_edit( $constant_key );
+
+		$this->remove_meta_box( $constant_key, $post_type, $type );
+
+		add_meta_box( 'geditorial-'.$this->module->name.'-'.$tax,
+			$this->get_meta_box_title( $constant_key, $edit_url, 'edit_others_posts' ),
+			array( $this, 'meta_box_choose_tax' ),
+			NULL,
+			'side',
+			'default',
+			array(
+				'taxonomy' => $tax,
+				'edit_url' => $edit_url,
+			)
+		);
 	}
 
 	public function remove_meta_box( $constant_key, $post_type, $type = 'tag' )
 	{
 		if ( 'tag' == $type )
-			remove_meta_box( 'tagsdiv-'.$this->module->constants[$constant_key], $post_type, 'side' );
+			remove_meta_box( 'tagsdiv-'.$this->constant( $constant_key ), $post_type, 'side' );
 
 		else if ( 'cat' == $type )
-			remove_meta_box( $this->module->constants[$constant_key].'div', $post_type, 'side' );
+			remove_meta_box( $this->constant( $constant_key ).'div', $post_type, 'side' );
 
 		else if ( 'parent' == $type )
 			remove_meta_box( 'pageparentdiv', $post_type, 'side' );
 
 		else if ( 'image' == $type )
-			remove_meta_box( 'postimagediv', $this->module->constants[$constant_key], 'side' );
+			remove_meta_box( 'postimagediv', $this->constant( $constant_key ), 'side' );
 
 		else if ( 'author' == $type )
-			remove_meta_box( 'authordiv', $this->module->constants[$constant_key], 'normal' );
+			remove_meta_box( 'authordiv', $this->constant( $constant_key ), 'normal' );
 
 		else if ( 'excerpt' == $type )
 			remove_meta_box( 'postexcerpt', $post_type, 'normal' );
@@ -1198,14 +1483,14 @@ class gEditorialModuleCore
 	public function get_meta_box_title( $constant_key = 'post', $url = NULL, $edit_cap = 'manage_options', $title = NULL )
 	{
 		if ( is_null( $title ) )
-			$title = $this->get_string( 'meta_box_title', $constant_key, 'misc', _x( 'Settings', 'MetaBox default title', GEDITORIAL_TEXTDOMAIN ) );
+			$title = $this->get_string( 'meta_box_title', $constant_key, 'misc', _x( 'Settings', 'Module Core: MetaBox default title', GEDITORIAL_TEXTDOMAIN ) );
 
 		if ( current_user_can( $edit_cap ) && FALSE !== $url ) {
 
 			if ( is_null( $url ) )
 				$url = $this->get_url_settings();
 
-			$action = $this->get_string( 'meta_box_action', $constant_key, 'misc', _x( 'Configure', 'MetaBox default action', GEDITORIAL_TEXTDOMAIN ) );
+			$action = $this->get_string( 'meta_box_action', $constant_key, 'misc', _x( 'Configure', 'Module Core: MetaBox default action', GEDITORIAL_TEXTDOMAIN ) );
 			$title .= ' <span class="geditorial-admin-action-metabox"><a href="'.esc_url( $url ).'" target="_blank">'.$action.'</a></span>';
 		}
 
@@ -1214,22 +1499,22 @@ class gEditorialModuleCore
 
 	public function get_column_title( $column, $constant_key )
 	{
-		$this->get_string( $column.'_column_title', $constant_key, 'misc', $column );
+		return $this->get_string( $column.'_column_title', $constant_key, 'misc', $column );
 	}
 
 	public function get_url_settings()
 	{
-		return add_query_arg( 'page', $this->module->settings_slug, get_admin_url( NULL, 'admin.php' ) );
+		return add_query_arg( 'page', $this->module->settings, get_admin_url( NULL, 'admin.php' ) );
 	}
 
 	public function get_url_tax_edit( $constant_key )
 	{
-		return add_query_arg( 'taxonomy', $this->module->constants[$constant_key], get_admin_url( NULL, 'edit-tags.php' ) );
+		return add_query_arg( 'taxonomy', $this->constant( $constant_key ), get_admin_url( NULL, 'edit-tags.php' ) );
 	}
 
 	public function get_url_post_edit( $constant_key )
 	{
-		return add_query_arg( 'post_type', $this->module->constants[$constant_key], get_admin_url( NULL, 'edit.php' ) );
+		return add_query_arg( 'post_type', $this->constant( $constant_key ), get_admin_url( NULL, 'edit.php' ) );
 	}
 
 	public static function redirect( $location, $status = 302 )
@@ -1240,30 +1525,34 @@ class gEditorialModuleCore
 
 	protected function require_code( $filename = 'templates' )
 	{
-		require_once( GEDITORIAL_DIR.'modules/'.$this->module_name.'/'.$filename.'.php' );
+		require_once( GEDITORIAL_DIR.'modules/'.$this->module->name.'/'.$filename.'.php' );
 	}
 
 	public function is_current_posttype( $constant_key )
 	{
-		return gEditorialHelper::getCurrentPostType() == $this->module->constants[$constant_key];
+		return self::getCurrentPostType() == $this->constant( $constant_key );
 	}
 
+	// @SEE: http://tommcfarlin.com/save-custom-post-meta/
+	// @SEE: https://gist.github.com/tommcfarlin/4468321
 	public function is_save_post( $post, $constant_key = FALSE )
 	{
-		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
+		// if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
+		if ( wp_is_post_autosave( $post ) )
 			return FALSE;
 
-		if ( $post->post_type == 'revision' )
+		// if ( $post->post_type == 'revision' )
+		if ( wp_is_post_revision( $post ) )
 			return FALSE;
 
-		// FIXME: is this necceary?
+		// FIXME: is this necessary?
 		if ( empty( $_POST ) )
 			return FALSE;
 
 		if ( is_array( $constant_key ) && ! in_array( $post->post_type, $constant_key ) )
 			return FALSE;
 
-		if ( $constant_key && ! is_array( $constant_key ) && $post->post_type != $this->module->constants[$constant_key] )
+		if ( $constant_key && ! is_array( $constant_key ) && $post->post_type != $this->constant( $constant_key ) )
 			return FALSE;
 
 		return TRUE;
@@ -1271,18 +1560,18 @@ class gEditorialModuleCore
 
 	public function get_linked_term( $post_id, $posttype_constant_key, $tax_constant_key )
 	{
-		$term_id = get_post_meta( $post_id, '_'.$this->module->constants[$posttype_constant_key].'_term_id', TRUE );
-		return get_term_by( 'id', intval( $term_id ), $this->module->constants[$tax_constant_key] );
+		$term_id = get_post_meta( $post_id, '_'.$this->constant( $posttype_constant_key ).'_term_id', TRUE );
+		return get_term_by( 'id', intval( $term_id ), $this->constant( $tax_constant_key ) );
 	}
 
 	public function get_linked_posts( $post_id, $posttype_constant_key, $tax_constant_key, $count = FALSE, $term_id = NULL )
 	{
 		if ( is_null( $term_id ) )
-			$term_id = get_post_meta( $post_id, '_'.$this->module->constants[$posttype_constant_key].'_term_id', TRUE );
+			$term_id = get_post_meta( $post_id, '_'.$this->constant( $posttype_constant_key ).'_term_id', TRUE );
 
 		$items = get_posts( array(
 			'tax_query' => array( array(
-				'taxonomy' => $this->module->constants[$tax_constant_key],
+				'taxonomy' => $this->constant( $tax_constant_key ),
 				'field'    => 'id',
 				'terms'    => array( $term_id )
 			) ),
@@ -1303,7 +1592,7 @@ class gEditorialModuleCore
 		if ( $this->is_current_posttype( $posttype_constant_key ) ) {
 			foreach ( $taxes as $constant_key ) {
 
-				$tax = $this->module->constants[$constant_key];
+				$tax = $this->constant( $constant_key );
 				if ( $obj = get_taxonomy( $tax ) ) {
 
 					wp_dropdown_categories( array(
@@ -1327,7 +1616,7 @@ class gEditorialModuleCore
 	{
 		if ( $this->is_current_posttype( $posttype_constant_key ) ) {
 			foreach ( $taxes as $constant_key ) {
-				$tax = $this->module->constants[$constant_key];
+				$tax = $this->constant( $constant_key );
 				if ( isset( $qv[$tax] )	&& is_numeric( $qv[$tax] ) ) {
 					$term = get_term_by( 'id', $qv[$tax], $tax );
 					if ( ! empty( $term ) && ! is_wp_error( $term ) )
@@ -1339,11 +1628,11 @@ class gEditorialModuleCore
 
 	public function column_thumb( $post_id, $size = 'thumbnail' )
 	{
-		if ( $cover = gEditorialHelper::getFeaturedImage( $post_id, $size, FALSE ) ) {
+		if ( $cover = self::getFeaturedImage( $post_id, $size, FALSE ) ) {
 
-			echo gEditorialHelper::html( 'img', array(
+			echo self::html( 'img', array(
 				'src' => $cover,
-				'style' => 'max-width:50px;max-height:60px;', // FIXME: add global style
+				'class' => 'column-cover-img',
 			) );
 		}
 	}
@@ -1351,19 +1640,47 @@ class gEditorialModuleCore
 	public function column_count( $count, $title_attr = NULL )
 	{
 		if ( is_null( $title_attr ) )
-			$title_attr = _x( 'No Count', 'No Count Title Attribute', GEDITORIAL_TEXTDOMAIN );
+			$title_attr = _x( 'No Count', 'Module Core: No Count Title Attribute', GEDITORIAL_TEXTDOMAIN );
 
 		if ( $count )
 			echo number_format_i18n( $count );
 		else
-			printf( '<span title="%s">&mdash;</span>', $title_attr ); // FIXME: add global style
+			printf( '<span title="%s" class="column-count-empty">&mdash;</span>', $title_attr );
 	}
 
-	// we use this on other modules than meta too
+	public function column_term( $object_id, $tax_constant_key, $title_attr = NULL, $single = TRUE )
+	{
+		$the_terms = wp_get_object_terms( $object_id, $this->constant( $tax_constant_key ) );
+
+		if ( ! is_wp_error( $the_terms ) && count( $the_terms ) ) {
+
+			if ( $single ) {
+				echo $the_terms[0]->name;
+
+			} else {
+
+				$terms = array();
+
+				foreach ( $the_terms as $the_term )
+					$terms[] = $the_term->name;
+
+				echo join( _x( ', ', 'Module Core: Term Seperator', GEDITORIAL_TEXTDOMAIN ), $terms );
+			}
+
+		} else {
+
+			if ( is_null( $title_attr ) )
+				$title_attr = _x( 'No Term', 'Module Core: No Count Term Attribute', GEDITORIAL_TEXTDOMAIN );
+
+			printf( '<span title="%s" class="column-term-empty">&mdash;</span>', $title_attr );
+		}
+	}
+
 	public function set_postmeta_field_string( &$postmeta, $field, $prefix = 'geditorial-meta-' )
 	{
+		self::__dep();
+
 		if ( isset( $_POST[$prefix.$field] ) && strlen( $_POST[$prefix.$field] ) > 0 )
-			// $postmeta[$field] = strip_tags( $_POST[$prefix.$field] );
 			$postmeta[$field] = $this->kses( $_POST[$prefix.$field] );
 
 		else if ( isset( $postmeta[$field] ) && isset( $_POST[$prefix.$field] ) )
@@ -1372,8 +1689,9 @@ class gEditorialModuleCore
 
 	public function set_postmeta_field_number( &$postmeta, $field, $prefix = 'geditorial-meta-' )
 	{
+		self::__dep();
+
 		if ( isset( $_POST[$prefix.$field] ) && strlen( $_POST[$prefix.$field] ) > 0 )
-		// if ( isset( $_POST[$prefix.$field] ) && '0' != $_POST[$prefix.$field] )
 			$postmeta[$field] = $this->intval( $_POST[$prefix.$field] );
 
 		else if ( isset( $postmeta[$field] ) && isset( $_POST[$prefix.$field] ) )
@@ -1382,6 +1700,8 @@ class gEditorialModuleCore
 
 	public function set_postmeta_field_url( &$postmeta, $field, $prefix = 'geditorial-meta-' )
 	{
+		self::__dep();
+
 		if ( isset( $_POST[$prefix.$field] ) && strlen( $_POST[$prefix.$field] ) > 0 )
 			$postmeta[$field] = esc_url( $_POST[$prefix.$field] );
 
@@ -1391,26 +1711,28 @@ class gEditorialModuleCore
 
 	public function set_postmeta_field_term( $post_id, $field, $constant_key, $prefix = 'geditorial-meta-' )
 	{
+		self::__dep();
+
 		if ( isset( $_POST[$prefix.$field] ) && '0' != $_POST[$prefix.$field] )
-			wp_set_object_terms( $post_id, intval( $_POST[$prefix.$field] ), $this->module->constants[$constant_key], FALSE );
+			wp_set_object_terms( $post_id, intval( $_POST[$prefix.$field] ), $this->constant( $constant_key ), FALSE );
 
 		else if ( isset( $_POST[$prefix.$field] ) && '0' == $_POST[$prefix.$field] )
-			wp_set_object_terms( $post_id, NULL, $this->module->constants[$constant_key], FALSE );
+			wp_set_object_terms( $post_id, NULL, $this->constant( $constant_key ), FALSE );
 	}
 
-	// SEE: https://github.com/scribu/wp-posts-to-posts/wiki/Connection-information
+	// @SEE: https://github.com/scribu/wp-posts-to-posts/wiki/Connection-information
 	public function register_p2p( $constant_key, $post_types = NULL )
 	{
 		if ( is_null( $post_types ) )
 			$post_types = $this->post_types();
 
 		$args = array_merge( array(
-			'name'  => $this->module->constants[$constant_key.'_p2p'],
+			'name'  => $this->constant( $constant_key.'_p2p' ),
 			'from'  => $post_types,
-			'to'    => $this->module->constants[$constant_key],
-		), $this->module->strings['p2p'][$constant_key] );
+			'to'    => $this->constant( $constant_key ),
+		), $this->strings['p2p'][$constant_key] );
 
-		$args = apply_filters( 'geditorial_'.$this->module_name.'_'.$this->module->constants[$constant_key].'_p2p_args', $args, $post_types );
+		$args = apply_filters( 'geditorial_'.$this->module->name.'_'.$this->constant( $constant_key ).'_p2p_args', $args, $post_types );
 		if ( $args )
 			p2p_register_connection_type( $args );
 	}

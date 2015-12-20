@@ -2,190 +2,174 @@
 
 class gEditorialDivisions extends gEditorialModuleCore
 {
+/*
+	// FIXME:
 
-	var $module_name = 'divisions';
-	var $meta_key    = '_ge_divisions';
+	- register division cpt / division type tax
 
-	var $pre_term    = 'gXsXsE-'; // FIXME
+	- add support: posttypes
 
-	public function __construct()
+	- foreach division :
+		- store parent as post_parent
+		- store order in menu_order
+
+	- add shortcode
+		- get all divisions on display
+		- seperate them by <!--nextpage-->
+			[division]
+			<!--nextpage-->
+			[division]
+			<!--nextpage-->
+			[division]
+			<!--nextpage-->
+
+	- keep divitions simple
+	- like attachments for supported posttypes
+
+	- must get in on 'the_posts' filter
+		- change post_content into [division] / <!--nextpage-->
+
+*/
+	public static function module()
 	{
-		global $gEditorial;
-
-		$args = array(
-
-			'title'                => __( 'Divisions', GEDITORIAL_TEXTDOMAIN ),
-			'short_description'    => __( 'Post Divisions Management', GEDITORIAL_TEXTDOMAIN ),
-			'extended_description' => __( 'Adding Post Divisions Functionality to WordPress With Custom Post Types', GEDITORIAL_TEXTDOMAIN ),
-
-			'dashicon' => 'smiley',
-			'slug'     => 'divisions',
-			'frontend' => TRUE,
-
-			'constants'            => array(
-				'division_cpt'                 => 'division',
-				'division_archives'            => 'divisions',
-				'division_tax'                 => 'division',
-				'p2p_connection_name'          => 'everything_to_division',
-				'divisions_shortcode'          => 'divisions',
-				'multiple_divisions_shortcode' => 'multiple_divisions',
-			),
-			'default_options' => array(
-				'enabled' => FALSE,
-				'post_types' => array(
-					'post' => TRUE,
-					'page' => FALSE,
-				),
-				'post_fields' => array(
-					'in_divisions_title' => TRUE,
-					'in_divisions_order' => TRUE,
-					'in_divisions_desc'  => FALSE,
-				),
-				'settings' => array(),
-			),
-			'settings' => array(
-				'_general' => array(
-					array(
-						'field'       => 'multiple',
-						'title'       => __( 'Multiple Divisions', GEDITORIAL_TEXTDOMAIN ),
-						'description' => __( 'Using multiple divisions for each post.', GEDITORIAL_TEXTDOMAIN ),
-						'default'     => 0,
-					),
-					array(
-						'field'       => 'editor_button',
-						'title'       => _x( 'Editor Button', 'Divisions Editor Button', GEDITORIAL_TEXTDOMAIN ),
-						'description' => __( 'Adding an Editor Button to insert shortcodes', GEDITORIAL_TEXTDOMAIN ),
-						'default'     => 1,
-					),
-				),
-				'post_types_option' => 'post_types_option',
-				'post_types_fields' => 'post_types_fields',
-			),
-			'strings' => array(
-				'titles' => array(
-					'post' => array(
-						'in_divisions_title' => __( 'Title', GEDITORIAL_TEXTDOMAIN ),
-						'in_divisions_order' => __( 'Order', GEDITORIAL_TEXTDOMAIN ),
-						'in_divisions_desc'  => __( 'Description', GEDITORIAL_TEXTDOMAIN ),
-					),
-				),
-				'descriptions' => array(
-					'post' => array(
-						'in_divisions_title' => __( 'In Divisions Title', GEDITORIAL_TEXTDOMAIN ),
-						'in_divisions_order' => __( 'In Divisions Order', GEDITORIAL_TEXTDOMAIN ),
-						'in_divisions_desc'  => __( 'In Divisions Description', GEDITORIAL_TEXTDOMAIN ),
-					),
-				),
-				'misc' => array(
-					'post' => array(
-						'box_title'        => __( 'Divisions', GEDITORIAL_TEXTDOMAIN ),
-						'column_title'     => __( 'Divisions', GEDITORIAL_TEXTDOMAIN ),
-						'select_divisions' => __( '&mdash; Choose a Divisions &mdash;', GEDITORIAL_TEXTDOMAIN ),
-					),
-				),
-				'labels' => array(
-					'division_cpt' => array(
-						'name' => __( 'Divisions', GEDITORIAL_TEXTDOMAIN ),
-					),
-					'division_tax' => array(
-						'name'                       => __( 'Divisions', GEDITORIAL_TEXTDOMAIN ),
-						'singular_name'              => __( 'Division', GEDITORIAL_TEXTDOMAIN ),
-						'search_items'               => __( 'Search Divisions', GEDITORIAL_TEXTDOMAIN ),
-						'popular_items'              => NULL,
-						'all_items'                  => __( 'All Divisions', GEDITORIAL_TEXTDOMAIN ),
-						'parent_item'                => __( 'Parent Division', GEDITORIAL_TEXTDOMAIN ),
-						'parent_item_colon'          => __( 'Parent Division:', GEDITORIAL_TEXTDOMAIN ),
-						'edit_item'                  => __( 'Edit Division', GEDITORIAL_TEXTDOMAIN ),
-						'update_item'                => __( 'Update Division', GEDITORIAL_TEXTDOMAIN ),
-						'add_new_item'               => __( 'Add New Division', GEDITORIAL_TEXTDOMAIN ),
-						'new_item_name'              => __( 'New Division Name', GEDITORIAL_TEXTDOMAIN ),
-						'separate_items_with_commas' => __( 'Separate divisions with commas', GEDITORIAL_TEXTDOMAIN ),
-						'add_or_remove_items'        => __( 'Add or remove divisions', GEDITORIAL_TEXTDOMAIN ),
-						'choose_from_most_used'      => __( 'Choose from the most used divisions', GEDITORIAL_TEXTDOMAIN ),
-						'menu_name'                  => __( 'Divisions', GEDITORIAL_TEXTDOMAIN ),
-					),
-				),
-			),
-			'configure_page_cb' => 'print_configure_view',
+		return array(
+			'name'     => 'divisions',
+			'title'    => _x( 'Divisions', 'Divisions Module', GEDITORIAL_TEXTDOMAIN ),
+			'desc'     => _x( 'Post Divisions Management', 'Divisions Module', GEDITORIAL_TEXTDOMAIN ),
+			'dashicon' => 'layout',
 		);
-
-		$gEditorial->register_module( $this->module_name, $args );
 	}
 
-	public function setup()
+	protected function get_global_settings()
 	{
-		add_action( 'init', array( &$this, 'init' ) );
-		add_action( 'p2p_init', array( &$this, 'p2p_init' ) );
+		return array(
+			'_general' => array(
+				'editor_button',
+			),
+			'posttypes_option' => 'posttypes_option',
+			'fields_option'    => 'fields_option',
+		);
+	}
 
-		if ( is_admin() ) {
-			add_action( 'geditorial_settings_load', array( &$this, 'register_settings' ) );
-		} else {
+	protected function get_global_constants()
+	{
+		return array(
+			'division_cpt'                 => 'division',
+			'division_cpt_archive'         => 'divisions',
+			'division_type'                => 'division_type',
+			'p2p_connection_name'          => 'everything_to_division',
+			'divisions_shortcode'          => 'divisions',
+			'multiple_divisions_shortcode' => 'multiple_divisions',
+		);
+	}
 
-		}
+	protected function get_global_strings()
+	{
+		return array(
+			'titles' => array(
+				'post' => array(
+					'in_divisions_title' => __( 'Title', GEDITORIAL_TEXTDOMAIN ),
+					'in_divisions_order' => __( 'Order', GEDITORIAL_TEXTDOMAIN ),
+					'in_divisions_desc'  => __( 'Description', GEDITORIAL_TEXTDOMAIN ),
+				),
+			),
+			'descriptions' => array(
+				'post' => array(
+					'in_divisions_title' => __( 'In Divisions Title', GEDITORIAL_TEXTDOMAIN ),
+					'in_divisions_order' => __( 'In Divisions Order', GEDITORIAL_TEXTDOMAIN ),
+					'in_divisions_desc'  => __( 'In Divisions Description', GEDITORIAL_TEXTDOMAIN ),
+				),
+			),
+			'misc' => array(
+				'post' => array(
+					'box_title'        => __( 'Divisions', GEDITORIAL_TEXTDOMAIN ),
+					'column_title'     => __( 'Divisions', GEDITORIAL_TEXTDOMAIN ),
+					'select_divisions' => __( '&mdash; Choose a Divisions &mdash;', GEDITORIAL_TEXTDOMAIN ),
+				),
+			),
+			'labels' => array(
+				'division_cpt' => array(
+					'name'                  => _x( 'Divisions', 'Divisions Module: Division CPT Labels: Name', GEDITORIAL_TEXTDOMAIN ),
+					'menu_name'             => _x( 'Divisions', 'Divisions Module: Division CPT Labels: Menu Name', GEDITORIAL_TEXTDOMAIN ),
+					'singular_name'         => _x( 'Division', 'Divisions Module: Division CPT Labels: Singular Name', GEDITORIAL_TEXTDOMAIN ),
+					'description'           => _x( 'Division Post Type', 'Divisions Module: Division CPT Labels: Description', GEDITORIAL_TEXTDOMAIN ),
+					'add_new'               => _x( 'Add New', 'Divisions Module: Division CPT Labels', GEDITORIAL_TEXTDOMAIN ),
+					'add_new_item'          => _x( 'Add New Division', 'Divisions Module: Division CPT Labels', GEDITORIAL_TEXTDOMAIN ),
+					'edit_item'             => _x( 'Edit Division', 'Divisions Module: Division CPT Labels', GEDITORIAL_TEXTDOMAIN ),
+					'new_item'              => _x( 'New Division', 'Divisions Module: Division CPT Labels', GEDITORIAL_TEXTDOMAIN ),
+					'view_item'             => _x( 'View Division', 'Divisions Module: Division CPT Labels', GEDITORIAL_TEXTDOMAIN ),
+					'search_items'          => _x( 'Search Divisions', 'Divisions Module: Division CPT Labels', GEDITORIAL_TEXTDOMAIN ),
+					'not_found'             => _x( 'No divisions found.', 'Divisions Module: Division CPT Labels', GEDITORIAL_TEXTDOMAIN ),
+					'not_found_in_trash'    => _x( 'No divisions found in Trash.', 'Divisions Module: Division CPT Labels', GEDITORIAL_TEXTDOMAIN ),
+					'all_items'             => _x( 'All Divisions', 'Divisions Module: Division CPT Labels', GEDITORIAL_TEXTDOMAIN ),
+					'archives'              => _x( 'Division Archives', 'Divisions Module: Division CPT', GEDITORIAL_TEXTDOMAIN ),
+					'insert_into_item'      => _x( 'Insert into division', 'Divisions Module: Division CPT Labels', GEDITORIAL_TEXTDOMAIN ),
+					'uploaded_to_this_item' => _x( 'Uploaded to this division', 'Divisions Module: Division CPT Labels', GEDITORIAL_TEXTDOMAIN ),
+					'filter_items_list'     => _x( 'Filter divisions list', 'Divisions Module: Division CPT Labels', GEDITORIAL_TEXTDOMAIN ),
+					'items_list_navigation' => _x( 'Divisions list navigation', 'Divisions Module: Division CPT Labels', GEDITORIAL_TEXTDOMAIN ),
+					'items_list'            => _x( 'Divisions list', 'Divisions Module: Division CPT Labels', GEDITORIAL_TEXTDOMAIN ),
+				),
+				'division_type' => array(
+                    'name'                  => _x( 'Division Types', 'Entry Module: Division Type Tax Labels: Name', GEDITORIAL_TEXTDOMAIN ),
+                    'menu_name'             => _x( 'Division Types', 'Entry Module: Division Type Tax Labels: Menu Name', GEDITORIAL_TEXTDOMAIN ),
+                    'singular_name'         => _x( 'Division Type', 'Entry Module: Division Type Tax Labels: Singular Name', GEDITORIAL_TEXTDOMAIN ),
+                    'search_items'          => _x( 'Search Division Types', 'Entry Module: Division Type Tax Labels', GEDITORIAL_TEXTDOMAIN ),
+                    'all_items'             => _x( 'All Division Types', 'Entry Module: Division Type Tax Labels', GEDITORIAL_TEXTDOMAIN ),
+                    'parent_item'           => _x( 'Parent Division Type', 'Entry Module: Division Type Tax Labels', GEDITORIAL_TEXTDOMAIN ),
+                    'parent_item_colon'     => _x( 'Parent Division Type:', 'Entry Module: Division Type Tax Labels', GEDITORIAL_TEXTDOMAIN ),
+                    'edit_item'             => _x( 'Edit Division Type', 'Entry Module: Division Type Tax Labels', GEDITORIAL_TEXTDOMAIN ),
+                    'view_item'             => _x( 'View Division Type', 'Entry Module: Division Type Tax Labels', GEDITORIAL_TEXTDOMAIN ),
+                    'update_item'           => _x( 'Update Division Type', 'Entry Module: Division Type Tax Labels', GEDITORIAL_TEXTDOMAIN ),
+                    'add_new_item'          => _x( 'Add New Division Type', 'Entry Module: Division Type Tax Labels', GEDITORIAL_TEXTDOMAIN ),
+                    'new_item_name'         => _x( 'New Division Type Name', 'Entry Module: Division Type Tax Labels', GEDITORIAL_TEXTDOMAIN ),
+                    'not_found'             => _x( 'No division types found.', 'Entry Module: Division Type Tax Labels', GEDITORIAL_TEXTDOMAIN ),
+                    'no_terms'              => _x( 'No division types', 'Entry Module: Division Type Tax Labels', GEDITORIAL_TEXTDOMAIN ),
+                    'items_list_navigation' => _x( 'Division Types list navigation', 'Entry Module: Division Type Tax Labels', GEDITORIAL_TEXTDOMAIN ),
+                    'items_list'            => _x( 'Division Types list', 'Entry Module: Division Type Tax Labels', GEDITORIAL_TEXTDOMAIN ),
+				),
+			),
+		);
+	}
+
+	protected function get_global_supports()
+	{
+		return array(
+			'division_cpt' => array(
+				'title',
+				'editor',
+				'excerpt',
+				'author',
+				'thumbnail',
+				'trackbacks',
+				'custom-fields',
+				'comments',
+				'revisions',
+				'page-attributes',
+			),
+		);
+	}
+
+
+	protected function get_global_fields()
+	{
+		return array(
+			$this->constant( 'post_cpt' ) => array(
+				'in_divisions_title' => TRUE,
+				'in_divisions_order' => TRUE,
+				'in_divisions_desc'  => FALSE,
+			),
+		);
 	}
 
 	public function init()
 	{
 		do_action( 'geditorial_divisions_init', $this->module );
 
-		$this->do_filters();
-		$this->register_post_types();
-		$this->register_taxonomies();
-	}
+		$this->do_globals();
 
-	public function register_post_types()
-	{
-		// $post_type_support = $this->post_types();
-
-		register_post_type( $this->module->constants['division_cpt'], array(
-			'labels'              => $this->module->strings['labels']['division_cpt'],
-			'hierarchical'        => true,
-			'supports'            => array( 'title', 'editor', 'excerpt', 'author', 'thumbnail', 'trackbacks', 'custom-fields', 'comments', 'revisions', 'page-attributes' ),
-			'taxonomies'          => array( 'category', 'post_tag', $this->module->constants['division_tax'] ),
-			'public'              => true,
-			'show_ui'             => true,
-			// 'show_in_menu'        => ( 1 == count( $post_type_support ) ? 'edit.php?post_type='.$post_type_support[0] : 'index.php' ) ,
-			// 'menu_position'       => 5,
-			'menu_icon'           => 'dashicons-networking',
-			'show_in_nav_menus'   => false,
-			'publicly_queryable'  => true,
-			'exclude_from_search' => false,
-			'has_archive'         => $this->module->constants['division_archives'],
-			'query_var'           => $this->module->constants['division_cpt'],
-			'can_export'          => true,
-			'rewrite'             => array(
-				'slug'       => $this->module->constants['division_cpt'],
-				'with_front' => false,
-			),
-			// 'capabilities' => $this->options['publication_capabilities'],
-			'map_meta_cap' => true,
-		) );
-	}
-
-	public function register_taxonomies()
-	{
-		register_taxonomy( $this->module->constants['division_tax'], $this->post_types(), array(
-			'labels'                => $this->module->strings['labels']['division_tax'],
-			'public'                => true,
-			'show_in_nav_menus'     => false,
-			// 'show_ui'               => true, //current_user_can( 'update_plugins' ),
-			'show_ui'               => false,
-			'show_admin_column'     => false,
-			'show_tagcloud'         => false,
-			'hierarchical'          => false,
-			'update_count_callback' => array( 'gEditorialHelper', 'update_count_callback' ),
-			'rewrite'               => array(
-				'slug' => $this->module->constants['division_tax'],
-				'hierarchical' => false,
-				'with_front' => false,
-			),
-			'query_var' => true,
-			'capabilities' => array(
-				'manage_terms' => 'edit_others_posts',
-				'edit_terms' => 'edit_others_posts',
-				'delete_terms' => 'edit_others_posts',
-				'assign_terms' => 'edit_published_posts'
-			)
+		$this->register_post_type( 'division_cpt', array(), array( 'post_tag' ) );
+		$this->register_taxonomy( 'division_type', array(
+			'hierarchical' => TRUE,
 		) );
 	}
 
@@ -194,38 +178,38 @@ class gEditorialDivisions extends gEditorialModuleCore
 	{
 		// https://github.com/scribu/wp-posts-to-posts/wiki/Connection-information
 		p2p_register_connection_type( array(
-			'name' => $this->module->constants['p2p_connection_name'],
+			'name' => $this->constant( 'p2p_connection_name' ),
 			'from' => $this->post_types(),
-			'to' => $this->module->constants['division_cpt'],
+			'to' => $this->constant( 'division_cpt' ),
 
 			'sortable' => 'any',
 			// 'admin_dropdown' => 'any', // temporarly
 
 			'title' => array(
 				'from' => __( 'Connected Divisions', GEDITORIAL_TEXTDOMAIN ),
-				'to' => __( 'Connected Posts', GEDITORIAL_TEXTDOMAIN ),
+				'to'   => __( 'Connected Posts', GEDITORIAL_TEXTDOMAIN ),
 			),
 			'from_labels' => array(
 				'singular_name' => __( 'Post', GEDITORIAL_TEXTDOMAIN ),
-				'search_items' => __( 'Search posts', GEDITORIAL_TEXTDOMAIN ),
-				'not_found' => __( 'No posts found.', GEDITORIAL_TEXTDOMAIN ),
-				'create' => __( 'Create Posts', GEDITORIAL_TEXTDOMAIN ),
+				'search_items'  => __( 'Search posts', GEDITORIAL_TEXTDOMAIN ),
+				'not_found'     => __( 'No posts found.', GEDITORIAL_TEXTDOMAIN ),
+				'create'        => __( 'Create Posts', GEDITORIAL_TEXTDOMAIN ),
 			),
 			'to_labels' => array(
 				'singular_name' => __( 'Division', GEDITORIAL_TEXTDOMAIN ),
-				'search_items' => __( 'Search divisions', GEDITORIAL_TEXTDOMAIN ),
-				'not_found' => __( 'No divisions found.', GEDITORIAL_TEXTDOMAIN ),
-				'create' => __( 'Create Divisions', GEDITORIAL_TEXTDOMAIN ),
+				'search_items'  => __( 'Search divisions', GEDITORIAL_TEXTDOMAIN ),
+				'not_found'     => __( 'No divisions found.', GEDITORIAL_TEXTDOMAIN ),
+				'create'        => __( 'Create Divisions', GEDITORIAL_TEXTDOMAIN ),
 			),
 			'fields' => array(
 				'visibility' => array(
-					'title' => __( 'Visibility', GEDITORIAL_TEXTDOMAIN ),
-					'type' => 'select',
-					'values' => apply_filters( 'gidea_ring_values_labels', array(
-						'public' => __( 'Public', GEDITORIAL_TEXTDOMAIN ),
-						'read' => __( 'Logged in', GEDITORIAL_TEXTDOMAIN ),
+					'title'  => __( 'Visibility', GEDITORIAL_TEXTDOMAIN ),
+					'type'   => 'select',
+					'values' => array(
+						'public'            => __( 'Public', GEDITORIAL_TEXTDOMAIN ),
+						'read'              => __( 'Logged in', GEDITORIAL_TEXTDOMAIN ),
 						'edit_others_posts' => __( 'Editors', GEDITORIAL_TEXTDOMAIN ),
-					) ),
+					),
 					'default' => 'public',
 
 				),
@@ -254,10 +238,10 @@ class gEditorialDivisions extends gEditorialModuleCore
 			'class'      => '',
 			'order'      => 'ASC',
 			'orderby'    => 'term_order, name',
-			'exclude'    => null,
+			'exclude'    => NULL,
 			'before'     => '',
 			'after'      => '',
-			'context'    => null,
+			'context'    => NULL,
 		), $atts );
 
 
@@ -272,14 +256,14 @@ class gEditorialDivisions extends gEditorialModuleCore
 		}
 
 		$connected = new WP_Query( array(
-			'connected_type' => $this->module->constants['p2p_connection_name'],
+			'connected_type'  => $this->constant( 'p2p_connection_name' ),
 			'connected_items' => get_queried_object(),
-			'nopaging' => true,
+			'nopaging'        => TRUE,
 
 			// TODO : drop meta query if all visible
 			'connected_meta' => array( array(
-				'key' => 'visibility',
-				'value' => $args['visibility'],
+				'key'     => 'visibility',
+				'value'   => $args['visibility'],
 				'compare' => $args['compare'],
 			) ),
 		) );
@@ -292,7 +276,7 @@ class gEditorialDivisions extends gEditorialModuleCore
 				$connected->the_post();
 				$division = array();
 				ob_start();
-				$division['title'] = p2p_get_meta( $post->p2p_id, 'title', true );
+				$division['title'] = p2p_get_meta( $post->p2p_id, 'title', TRUE );
 				if ( ! $division['title'] )
 					$division['title'] = get_the_title();
 				get_template_part( 'content', $args['context'] );
@@ -305,7 +289,7 @@ class gEditorialDivisions extends gEditorialModuleCore
 		if ( count( $divisions ) )
 			return $divisions;
 
-		return false;
+		return FALSE;
 	}
 
 	// temporarly
@@ -320,10 +304,10 @@ class gEditorialDivisions extends gEditorialModuleCore
 			'class'      => '',
 			'order'      => 'ASC',
 			'orderby'    => 'term_order, name',
-			'exclude'    => null,
+			'exclude'    => NULL,
 			'before'     => '',
 			'after'      => '',
-			'context'    => null,
+			'context'    => NULL,
 		), $atts );
 
 
@@ -338,10 +322,10 @@ class gEditorialDivisions extends gEditorialModuleCore
 		}
 
 		$connected = new WP_Query( array(
-			'connected_type' => $this->module->constants['p2p_connection_name'],
+			'connected_type'  => $this->constant( 'p2p_connection_name' ),
 			'connected_items' => get_queried_object(),
-			'nopaging' => true,
-			//'connected_meta' => array( 'visibility' => 'strong' )
+			'nopaging'        => TRUE,
+			// 'connected_meta'  => array( 'visibility' => 'strong' )
 
 			// TODO : drop meta query if all visible
 			'connected_meta' => array( array(
@@ -357,7 +341,7 @@ class gEditorialDivisions extends gEditorialModuleCore
 			while ( $connected->have_posts() ) {
 				$connected->the_post();
 
-				$title = p2p_get_meta( $post->p2p_id, 'title', true );
+				$title = p2p_get_meta( $post->p2p_id, 'title', TRUE );
 				if ( $title )
 					echo '>> '.$title;
 

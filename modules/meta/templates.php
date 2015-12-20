@@ -18,12 +18,12 @@ class gEditorialMetaTemplates extends gEditorialTemplateCore
 
 	public static function meta( $field, $before = '', $after = '', $filter = FALSE, $post_id = NULL, $args = array() )
 	{
-		global $gEditorial, $post;
+		global $post;
 
 		if ( is_null( $post_id ) )
 			$post_id = $post->ID;
 
-		$meta = $gEditorial->meta->get_postmeta( $post_id, self::sanitize_field( $field ), FALSE );
+		$meta = gEditorial()->meta->get_postmeta( $post_id, self::sanitize_field( $field ), FALSE );
 
 		if ( FALSE === $meta )
 			return FALSE;
@@ -44,7 +44,7 @@ class gEditorialMetaTemplates extends gEditorialTemplateCore
 
 	public static function get_meta( $field, $atts = array() )
 	{
-		global $gEditorial, $post;
+		global $post;
 
 		if ( isset( $atts['id'] ) && FALSE === $atts['id'] )
 			$atts['id'] = $post->ID;
@@ -54,7 +54,7 @@ class gEditorialMetaTemplates extends gEditorialTemplateCore
 			'def' => '',
 		), $atts );
 
-		return $gEditorial->meta->get_postmeta( $args['id'], self::sanitize_field( $field ), $args['def'] );
+		return gEditorial()->meta->get_postmeta( $args['id'], self::sanitize_field( $field ), $args['def'] );
 	}
 
 	public static function gmeta_lead( $before = '', $after = '', $filter = FALSE, $args = array() )
@@ -99,7 +99,7 @@ class gEditorialMetaTemplates extends gEditorialTemplateCore
 
 	public static function metaLink( $atts = array() )
 	{
-		global $gEditorial, $post;
+		global $post;
 
 		$args = self::atts( array(
 			'id'            => $post->ID,
@@ -112,7 +112,7 @@ class gEditorialMetaTemplates extends gEditorialTemplateCore
 			'title_default' => _x( 'External Source', 'Meta: metaLink default title', GEDITORIAL_TEXTDOMAIN ), // default val for title of the link
 			'url_meta'      => 'es', // meta key for URL of the link
 			'url_default'   => FALSE, // default val for URL of the link
-			'desc'          => NULL, // false to disable
+			'desc'          => NULL, // FALSE to disable
 		), $atts );
 
 		$title = $args['title_meta'] ? self::get_meta( $args['title_meta'], array( 'id' => $args['id'], 'def' => $args['title_default'] ) ) : $args['title_default'];
@@ -140,7 +140,7 @@ class gEditorialMetaTemplates extends gEditorialTemplateCore
 
 	public static function metaLabel( $atts = array() )
 	{
-		global $gEditorial, $post;
+		global $post;
 
 		$args = self::atts( array(
 			'id'      => $post->ID,
@@ -150,12 +150,12 @@ class gEditorialMetaTemplates extends gEditorialTemplateCore
 			'echo'    => isset( $atts['e'] ) ? $atts['e'] : TRUE,
 			'default' => isset( $atts['def'] ) ? $atts['def'] : FALSE,
 			'img'     => FALSE,
-			'link'    => NULL, // false to disable
-			'desc'    => NULL, // false to disable
+			'link'    => NULL, // FALSE to disable
+			'desc'    => NULL, // FALSE to disable
 		), $atts );
 
 		$title    = self::get_meta( 'ch', array( 'id' => $args['id'], 'def' => FALSE ) );
-		$taxonomy = $gEditorial->get_module_constant( 'meta', 'ct_tax', 'label' );
+		$taxonomy = gEditorial()->get_constant( 'meta', 'ct_tax', 'label' );
 
 		if ( taxonomy_exists( $taxonomy ) ) {
 			$term = gEditorialHelper::theTerm( $taxonomy, $args['id'], TRUE );
@@ -200,10 +200,10 @@ class gEditorialMetaTemplates extends gEditorialTemplateCore
 	// FIXME: DEPRICATED / USE: gEditorialMetaTemplates::metaLabel()
 	public static function gmeta_label( $b = '', $a = '', $filter = FALSE, $args = array() )
 	{
-		global $gEditorial, $post;
+		global $post;
 
 		$id     = isset( $args['id'] ) ? $args['id'] : $post->ID;
-		$ct_tax = $gEditorial->get_module_constant( 'meta', 'ct_tax', 'label' );
+		$ct_tax = gEditorial()->get_constant( 'meta', 'ct_tax', 'label' );
 
 		$term  = gEditorialHelper::theTerm( $ct_tax, $id, TRUE );
 		$title = self::get_meta( 'ch', array( 'id' => $id, 'def' => FALSE ) );

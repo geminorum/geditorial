@@ -1,4 +1,5 @@
-jQuery(document).ready(function($) {
+(function ($) {
+	"use strict";
 
 	$( '#the-list' ).on( 'click', '.editinline', function(){
 
@@ -18,7 +19,7 @@ jQuery(document).ready(function($) {
 				.val( ot )
 				.parents('label')
 				.insertBefore( postTitleLabel );
-		}
+		};
 
 		if ( gEditorial.meta.hasOwnProperty('st') ) {
 			var st = $('#'+tag_id)
@@ -30,7 +31,7 @@ jQuery(document).ready(function($) {
 				.val( st )
 				.parents('label')
 				.insertAfter( postTitleLabel );
-		}
+		};
 
 		if ( gEditorial.meta.hasOwnProperty('as') ) {
 			var as = $('#'+tag_id)
@@ -42,12 +43,6 @@ jQuery(document).ready(function($) {
 				.val( as )
 				.parents('label')
 				.insertAfter( postNameLabel );
-		}
-
-		if ( gEditorial.meta.hasOwnProperty('ct') ) {
-			$('textarea.tax_input_'+gEditorial.meta.constants.ct, '.inline-edit-row' )
-				.parents( 'label' )
-				.hide();
-		}
+		};
 	});
-});
+}(jQuery));

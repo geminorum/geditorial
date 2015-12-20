@@ -9,8 +9,8 @@ class gEditorialMagazineWidget_IssueCover extends gEditorialWidgetCore
 			'module' => 'magazine',
 			'name'   => 'magazine_issue_cover',
 			'class'  => 'magazine-issue-cover',
-			'title'  => __( 'Editorial Magazine: Issue Cover', GEDITORIAL_TEXTDOMAIN ),
-			'desc'   => __( 'Displays selected issue cover', GEDITORIAL_TEXTDOMAIN ),
+			'title'  => _x( 'Editorial Magazine: Issue Cover', 'Magazine Module', GEDITORIAL_TEXTDOMAIN ),
+			'desc'   => _x( 'Displays selected issue cover', 'Magazine Module', GEDITORIAL_TEXTDOMAIN ),
 		);
 	}
 
@@ -43,9 +43,7 @@ class gEditorialMagazineWidget_IssueCover extends gEditorialWidgetCore
 
 	public function widget_html( $args, $instance )
 	{
-		global $gEditorial;
-
-		$issue_cpt = $gEditorial->get_module_constant( 'magazine', 'issue_cpt', 'issue' );
+		$issue_cpt = gEditorial()->get_constant( 'magazine', 'issue_cpt', 'issue' );
 		$func      = array( 'gEditorialMagazineTemplates', 'issue_cover' );
 		$id        = get_queried_object_id();
 
@@ -91,21 +89,19 @@ class gEditorialMagazineWidget_IssueCover extends gEditorialWidgetCore
 
 	public function form( $instance )
 	{
-		global $gEditorial;
-
-		$issue_cpt = $gEditorial->get_module_constant( 'magazine', 'issue_cpt', 'issue' );
+		$issue_cpt = gEditorial()->get_constant( 'magazine', 'issue_cpt', 'issue' );
 
 		echo '<div class="geditorial-admin-wrap-widgetform">';
 
 		$this->form_title( $instance );
 		$this->form_title_link( $instance );
 
-		$this->form_post_id( $instance, '0', 'issue_id', 'posttype', $issue_cpt, _x( 'The Issue:', '[Magazine Module] Widget: Issue Cover', GEDITORIAL_TEXTDOMAIN ) );
+		$this->form_post_id( $instance, '0', 'issue_id', 'posttype', $issue_cpt, _x( 'The Issue:', 'Magazine Module: Widget: Issue Cover', GEDITORIAL_TEXTDOMAIN ) );
 		$this->form_image_size( $instance, $issue_cpt.'-thumbnail', 'image_size', $issue_cpt );
 
-		$this->form_checkbox( $instance, FALSE, 'latest_issue', _x( 'Always the latest issue', '[Magazine Module] Widget: Issue Cover', GEDITORIAL_TEXTDOMAIN ) );
-		$this->form_checkbox( $instance, FALSE, 'link_issue', _x( 'Link to the issue', '[Magazine Module] Widget: Issue Cover', GEDITORIAL_TEXTDOMAIN ) );
-		$this->form_checkbox( $instance, FALSE, 'number_line', _x( 'Display the Number Meta', '[Magazine Module] Widget: Issue Cover', GEDITORIAL_TEXTDOMAIN ) );
+		$this->form_checkbox( $instance, FALSE, 'latest_issue', _x( 'Always the latest issue', 'Magazine Module: Widget: Issue Cover', GEDITORIAL_TEXTDOMAIN ) );
+		$this->form_checkbox( $instance, FALSE, 'link_issue', _x( 'Link to the issue', 'Magazine Module: Widget: Issue Cover', GEDITORIAL_TEXTDOMAIN ) );
+		$this->form_checkbox( $instance, FALSE, 'number_line', _x( 'Display the Number Meta', 'Magazine Module: Widget: Issue Cover', GEDITORIAL_TEXTDOMAIN ) );
 
 		$this->form_context( $instance );
 		$this->form_class( $instance );
@@ -115,7 +111,8 @@ class gEditorialMagazineWidget_IssueCover extends gEditorialWidgetCore
 
 	public function update( $new_instance, $old_instance )
 	{
-		$instance                 = $old_instance;
+		$instance = $old_instance;
+
 		$instance['title']        = strip_tags( $new_instance['title'] );
 		$instance['title_link']   = strip_tags( $new_instance['title_link'] );
 		$instance['issue_id']     = intval( $new_instance['issue_id'] );
@@ -129,6 +126,7 @@ class gEditorialMagazineWidget_IssueCover extends gEditorialWidgetCore
 		$this->flush_widget_cache();
 
 		$alloptions = wp_cache_get( 'alloptions', 'options' );
+
 		if ( isset( $alloptions[$this->alt_option_name] ) )
 			delete_option( $this->alt_option_name );
 

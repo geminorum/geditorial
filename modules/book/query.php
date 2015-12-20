@@ -4,43 +4,44 @@
 class gEditorialBookQuery extends WP_Query
 {
 
-	var $_cpt = 'publication';
-	var $_tax = 'publication_subject';
+	private $cpt = 'publication';
+	private $tax = 'publication_subject';
 
 	public function __construct( $args = array() )
 	{
-		global $gEditorial;
-
-		$this->_cpt = $gEditorial->get_module_constant( 'book', 'publication_cpt', 'publication' );
-		$this->_tax =$gEditorial->get_module_constant( 'book', 'subject_tax', 'publication_subject' );
+		$this->cpt = gEditorial()->get_constant( 'book', 'publication_cpt', 'publication' );
+		$this->tax = gEditorial()->get_constant( 'book', 'subject_tax', 'publication_subject' );
 
 		// Force these args
 		$args = array_merge( $args, array(
-			'post_type' => $this->_cpt,
-			'posts_per_page' => -1,  // Turn off paging
-			'no_found_rows' => true, // Optimize query for no paging
-			'update_post_term_cache' => false,
-			'update_post_meta_cache' => false
+			'post_type'              => $this->cpt,
+			'posts_per_page'         => -1,  // turn off paging
+			'no_found_rows'          => TRUE, // optimize query for no paging
+			'update_post_term_cache' => FALSE,
+			'update_post_meta_cache' => FALSE
 		) );
 
-		add_filter( 'posts_fields', array( $this, 'posts_fields' ) );
-		add_filter( 'posts_join', array( $this, 'posts_join' ) );
-		add_filter( 'posts_where', array( $this, 'posts_where' ) );
-		add_filter( 'posts_orderby', array( $this, 'posts_orderby' ) );
+		$filters = array(
+			'posts_fields',
+			'posts_join',
+			'posts_where',
+			'posts_orderby',
+		);
+
+		foreach ( $filters as $filter )
+			add_filter( $filter, array( $this, $filter ) );
 
 		parent::__construct( $args );
 
-		// Make sure these filters don't affect any other queries
-		remove_filter( 'posts_fields', array( $this, 'posts_fields' ) );
-		remove_filter( 'posts_join', array( $this, 'posts_join' ) );
-		remove_filter( 'posts_where', array( $this, 'posts_where' ) );
-		remove_filter( 'posts_orderby', array( $this, 'posts_orderby' ) );
+		// make sure these filters don't affect any other queries
+		foreach ( $filters as $filter )
+			remove_filter( $filter, array( $this, $filter ) );
 	}
 
 	public function posts_fields( $sql )
 	{
 		global $wpdb;
-		return $sql . ", $wpdb->terms.name AS '{$this->_tax}'";
+		return $sql . ", $wpdb->terms.name AS '{$this->tax}'";
 	}
 
 	public function posts_join( $sql )
@@ -56,7 +57,7 @@ class gEditorialBookQuery extends WP_Query
 	public function posts_where( $sql )
 	{
 		global $wpdb;
-		return $sql . " AND $wpdb->term_taxonomy.taxonomy = '{$this->_tax}'";
+		return $sql . " AND $wpdb->term_taxonomy.taxonomy = '{$this->tax}'";
 	}
 
 	public function posts_orderby( $sql )

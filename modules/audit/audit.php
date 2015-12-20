@@ -3,151 +3,125 @@
 class gEditorialAudit extends gEditorialModuleCore
 {
 
-	var $module_name = 'audit';
-	var $meta_key    = '_ge_audit';
-
-	public function __construct()
+	public static function module()
 	{
-		global $gEditorial;
-
-		$args = array(
-
-			'title'                => __( 'Audit', GEDITORIAL_TEXTDOMAIN ),
-			'short_description'    => __( 'Content Inventory Tools', GEDITORIAL_TEXTDOMAIN ),
-			'extended_description' => __( 'Adding auditing functionality to WordPress with custom taxonomies.', GEDITORIAL_TEXTDOMAIN ),
-
+		return array(
+			'name'     => 'audit',
+			'title'    => _x( 'Audit', 'Audit Module', GEDITORIAL_TEXTDOMAIN ),
+			'desc'     => _x( 'Content Inventory Tools', 'Audit Module', GEDITORIAL_TEXTDOMAIN ),
 			'dashicon' => 'visibility',
-			'slug'     => 'audit',
-			'frontend' => TRUE,
-
-			'constants' => array(
-				'audit_tax' => 'audit',
-			),
-
-			'default_options' => array(
-				'enabled' => FALSE,
-				'settings' => array(),
-				'post_types' => array(
-					'post' => TRUE,
-					'page' => FALSE,
-				),
-			),
-			'settings' => array(
-				'post_types_option' => 'post_types_option',
-			),
-			'strings' => array(
-				'titles' => array(
-				),
-				'descriptions' => array(
-				),
-				'misc' => array(
-					'meta_box_title'     => __( 'Audit', GEDITORIAL_TEXTDOMAIN ),
-					'meta_box_action'    => __( 'Management', GEDITORIAL_TEXTDOMAIN ),
-					'table_column_title' => __( 'Audit', GEDITORIAL_TEXTDOMAIN ),
-				),
-				'labels' => array(
-					'audit_tax' => array(
-						'name'                       => _x( 'Audit Attributes', 'Audit Attributes Taxonomy Name', GEDITORIAL_TEXTDOMAIN ),
-						'menu_name'                  => _x( 'Audit Attributes', 'Audit Attributes Taxonomy Menu Name', GEDITORIAL_TEXTDOMAIN ),
-						'singular_name'              => __( 'Audit Attribute',                        GEDITORIAL_TEXTDOMAIN ),
-						'search_items'               => __( 'Search Audit Attributes',                GEDITORIAL_TEXTDOMAIN ),
-						'all_items'                  => __( 'All Audit Attributes',                   GEDITORIAL_TEXTDOMAIN ),
-						'parent_item'                => __( 'Parent Audit Attribute',                 GEDITORIAL_TEXTDOMAIN ),
-						'parent_item_colon'          => __( 'Parent Audit Attribute:',                GEDITORIAL_TEXTDOMAIN ),
-						'edit_item'                  => __( 'Edit Audit Attribute',                   GEDITORIAL_TEXTDOMAIN ),
-						'update_item'                => __( 'Update Audit Attribute',                 GEDITORIAL_TEXTDOMAIN ),
-						'add_new_item'               => __( 'Add New Audit Attribute',                GEDITORIAL_TEXTDOMAIN ),
-						'new_item_name'              => __( 'New Audit Attribute',                    GEDITORIAL_TEXTDOMAIN ),
-						'separate_items_with_commas' => __( 'Separate audit attributes with commas',  GEDITORIAL_TEXTDOMAIN ),
-						'add_or_remove_items'        => __( 'Add or remove audit attributes',         GEDITORIAL_TEXTDOMAIN ),
-						'choose_from_most_used'      => __( 'Choose from most used audit attributes', GEDITORIAL_TEXTDOMAIN ),
-						'popular_items'              => NULL,
-					),
-				),
-				'terms' => array(
-					'audit_tax' => array(
-						'audited'      => __( 'Audited', GEDITORIAL_TEXTDOMAIN ),
-						'outdated'     => __( 'Outdated', GEDITORIAL_TEXTDOMAIN ),
-						'redundant'    => __( 'Redundant', GEDITORIAL_TEXTDOMAIN ),
-						'review-seo'   => __( 'Review SEO', GEDITORIAL_TEXTDOMAIN ),
-						'review-style' => __( 'Review Style', GEDITORIAL_TEXTDOMAIN ),
-						'trivial'      => __( 'Trivial', GEDITORIAL_TEXTDOMAIN ),
-					),
-				),
-			),
-			'configure_page_cb' => 'print_configure_view',
 		);
-
-		$gEditorial->register_module( $this->module_name, $args );
 	}
 
-	public function setup()
+	protected function settings_help_sidebar()
 	{
-		add_filter( 'geditorial_tweaks_strings', array( &$this, 'tweaks_strings' ) );
+		return gEditorialHelper::settingsHelpLinks( 'Modules-Audit', _x( 'Editorial Audit Documentation', 'Audit Module', GEDITORIAL_TEXTDOMAIN ) );
+	}
 
-		add_action( 'init', array( &$this, 'init' ) );
+	protected function get_global_settings()
+	{
+		return array(
+			'posttypes_option' => 'posttypes_option',
+		);
+	}
 
-		if ( is_admin() ) {
-			add_action( 'admin_init', array( &$this, 'admin_init' ) );
-			add_action( 'geditorial_settings_load', array( &$this, 'register_settings' ) );
-		}
+	protected function get_global_constants()
+	{
+		return array(
+			'audit_tax' => 'audit',
+		);
+	}
+
+	protected function get_global_strings()
+	{
+		return array(
+			'misc' => array(
+				'meta_box_title'     => __( 'Audit', GEDITORIAL_TEXTDOMAIN ),
+				'meta_box_action'    => __( 'Management', GEDITORIAL_TEXTDOMAIN ),
+				'table_column_title' => __( 'Audit', GEDITORIAL_TEXTDOMAIN ),
+			),
+			'labels' => array(
+				'audit_tax' => array(
+                    'name'                  => _x( 'Audit Attributes', 'Audit Module: Audit Attribute Tax: Name', GEDITORIAL_TEXTDOMAIN ),
+                    'menu_name'             => _x( 'Audit Attributes', 'Audit Module: Audit Attribute Tax: Menu Name', GEDITORIAL_TEXTDOMAIN ),
+                    'singular_name'         => _x( 'Audit Attribute', 'Audit Module: Audit Attribute Tax: Singular Name', GEDITORIAL_TEXTDOMAIN ),
+                    'search_items'          => _x( 'Search Audit Attributes', 'Audit Module: Audit Attribute Tax', GEDITORIAL_TEXTDOMAIN ),
+                    'all_items'             => _x( 'All Audit Attributes', 'Audit Module: Audit Attribute Tax', GEDITORIAL_TEXTDOMAIN ),
+                    'parent_item'           => _x( 'Parent Audit Attribute', 'Audit Module: Audit Attribute Tax', GEDITORIAL_TEXTDOMAIN ),
+                    'parent_item_colon'     => _x( 'Parent Audit Attribute:', 'Audit Module: Audit Attribute Tax', GEDITORIAL_TEXTDOMAIN ),
+                    'edit_item'             => _x( 'Edit Audit Attribute', 'Audit Module: Audit Attribute Tax', GEDITORIAL_TEXTDOMAIN ),
+                    'view_item'             => _x( 'View Audit Attribute', 'Audit Module: Audit Attribute Tax', GEDITORIAL_TEXTDOMAIN ),
+                    'update_item'           => _x( 'Update Audit Attribute', 'Audit Module: Audit Attribute Tax', GEDITORIAL_TEXTDOMAIN ),
+                    'add_new_item'          => _x( 'Add New Audit Attribute', 'Audit Module: Audit Attribute Tax', GEDITORIAL_TEXTDOMAIN ),
+                    'new_item_name'         => _x( 'New Audit Attribute Name', 'Audit Module: Audit Attribute Tax', GEDITORIAL_TEXTDOMAIN ),
+                    'not_found'             => _x( 'No audit attributes found.', 'Audit Module: Audit Attribute Tax', GEDITORIAL_TEXTDOMAIN ),
+                    'no_terms'              => _x( 'No audit attributes', 'Audit Module: Audit Attribute Tax', GEDITORIAL_TEXTDOMAIN ),
+                    'items_list_navigation' => _x( 'Audit Attributes list navigation', 'Audit Module: Audit Attribute Tax', GEDITORIAL_TEXTDOMAIN ),
+                    'items_list'            => _x( 'Audit Attributes list', 'Audit Module: Audit Attribute Tax', GEDITORIAL_TEXTDOMAIN ),
+				),
+			),
+			'terms' => array(
+				'audit_tax' => array(
+					'audited'      => _x( 'Audited', 'Audit Module: Audit Attributes Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
+					'outdated'     => _x( 'Outdated', 'Audit Module: Audit Attributes Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
+					'redundant'    => _x( 'Redundant', 'Audit Module: Audit Attributes Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
+					'review-seo'   => _x( 'Review SEO', 'Audit Module: Audit Attributes Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
+					'review-style' => _x( 'Review Style', 'Audit Module: Audit Attributes Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
+					'trivial'      => _x( 'Trivial', 'Audit Module: Audit Attributes Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
+				),
+			),
+		);
 	}
 
 	public function init()
 	{
 		do_action( 'geditorial_audit_init', $this->module );
 
-		$this->do_filters();
+		$this->do_globals();
 
-		if ( current_user_can( 'edit_others_posts' ) ) // TODO: add setting option to choose editing role
+		// TODO: add setting option to choose editing role
+		if ( current_user_can( 'edit_others_posts' ) )
 			$this->register_taxonomy( 'audit_tax', array(
 				'hierarchical' => TRUE,
 			) );
 	}
 
-	public function admin_init()
+	public function current_screen( $screen )
 	{
-		add_action( 'add_meta_boxes', array( &$this, 'add_meta_boxes' ), 20, 2 );
+		if ( 'post' == $screen->base
+			&& in_array( $screen->post_type, $this->post_types() ) )
+				add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ), 20, 2 );
 	}
 
 	public function register_settings( $page = NULL )
 	{
+		if ( ! $this->is_register_settings( $page ) )
+			return;
+
 		if ( isset( $_POST['install_def_audit_tax'] ) )
 			$this->insert_default_terms( 'audit_tax' );
 
 		parent::register_settings( $page );
-		$this->register_settings_button( 'install_def_audit_tax', __( 'Install Default Attributes', GEDITORIAL_TEXTDOMAIN ) );
+		$this->register_settings_button( 'install_def_audit_tax', _x( 'Install Default Attributes', 'Audit Module', GEDITORIAL_TEXTDOMAIN ) );
 	}
 
 	public function tweaks_strings( $strings )
 	{
 		$new = array(
 			'taxonomies' => array(
-				$this->module->constants['audit_tax'] => array(
-					'column'     => 'taxonomy-'.$this->module->constants['audit_tax'],
+				$this->constant( 'audit_tax' ) => array(
+					'column'     => 'taxonomy-'.$this->constant( 'audit_tax' ),
 					'dashicon'   => $this->module->dashicon,
 					'title_attr' => $this->get_string( 'name', 'audit_tax', 'labels' ),
 				),
 			),
 		);
 
-		return gEditorialHelper::parse_args_r( $new, $strings );
+		return self::parse_args_r( $new, $strings );
 	}
 
 	public function add_meta_boxes( $post_type, $post )
 	{
-		if ( in_array( $post_type, $this->post_types() ) ) {
-			$this->remove_meta_box( 'audit_tax', $post_type, 'cat' );
-			add_meta_box( 'geditorial-audit',
-				$this->get_meta_box_title( 'audit_tax', $this->get_url_tax_edit( 'audit_tax' ), 'edit_others_posts' ),
-				array( $this, 'meta_box_choose_tax' ),
-				NULL,
-				'side',
-				'default',
-				array(
-					'taxonomy' => $this->module->constants['audit_tax'],
-				)
-			);
-		}
+		$this->add_meta_box_choose_tax( 'audit_tax', $post_type );
 	}
 }

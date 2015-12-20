@@ -3,7 +3,6 @@
 @import "modules/all";
 @import "partials/base";
 
-// @import "partials/admin.all";
 @import "vendor/colorbox";
 
 // CUSTOM
@@ -21,7 +20,7 @@
 }
 
 #cboxLoadedContent {
-	background: #f1f1f1; // default wp admin background color
+	background: #F1F1F1; // default wp admin background color
 }
 
 #cboxLoadingGraphic{

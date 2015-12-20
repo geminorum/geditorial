@@ -2,12 +2,15 @@
 	"name": "geditorial",
 	"private": true,
 	"dependencies": {
-		"jquery-colorbox": "~1.6.1",
-		"jquery-sortable": "~0.9.12"
+		"jquery-colorbox": "latest",
+		"jquery-sortable": "latest",
+		"jcarousel": "latest",
+		"lity": "latest"
 	},
 	"devDependencies": {},
 	"install" : {
 		"path" : "assets/packages",
+		"ignore": ["jquery"],
 		"sources": {
 			"jquery-colorbox": [
 				"assets/components/jquery-colorbox/jquery.colorbox.js",
