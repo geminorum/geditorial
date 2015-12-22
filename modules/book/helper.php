@@ -10,7 +10,7 @@ class gEditorialBookHelper extends gEditorialHelper
 		if ( self::findISBN( $string ) )
 			return trim( str_ireplace( array( 'isbn', '-', ':', ' ' ), '', $string ) );
 
-		return $input; // NOTE: returns the original
+		return $input; // CAUTION: returns the original
 	}
 
 	// Finding ISBNs

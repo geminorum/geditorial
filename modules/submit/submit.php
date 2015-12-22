@@ -325,7 +325,7 @@ class gEditorialSubmit extends gEditorialModuleCore
 			'id'     => 'editorial_submit_form',
 			'method' => 'post',
 			'class'  => $args['horizontal'] ? 'form-horizontal' : FALSE,
-			'action' => '', // TODO : get current url
+			'action' => '', // TODO: get current url
 		), $fields_hidden.$fields_html.$fields_extra.$submit );
 
 		return gEditorialHelper::html( 'div', array(
@@ -416,36 +416,4 @@ class gEditorialSubmit extends gEditorialModuleCore
 			);
 		echo '</p>';
 	}
-
-	// FIXME: COPY
-	// Change the upload directory based on post type and file name.
-	// https://gist.github.com/chrisguitarguy/4638936
-	function cgg_upload_dir($dir)
-	{
-		// Lots of $_REQUEST usage in here, not a great idea.
-
-		// Are we where we want to be?
-		if ( ! isset( $_REQUEST['action']) || 'upload-attachment' !== $_REQUEST['action'] ) {
-			return $dir;
-		}
-
-		// post types match up?
-		if (!isset($_REQUEST['post_id']) || 'ml_resource' !== get_post_type($_REQUEST['post_id'] ) ) {
-			return $dir;
-		}
-
-		$exts = apply_filters('ml_resource_whitelist_ext', array('jpe?g', 'png', 'gif', 'bmp'));
-
-		// let images to do their own thing
-		if (!isset($_REQUEST['name']) || preg_match('/(' . implode('|', $exts) .')$/ui', $_REQUEST['name'])) {
-			return $dir;
-		}
-
-		// modify the path and url for other files.
-		$resources = apply_filters('ml_resource_directory', 'resources');
-		$dir['path'] = path_join($dir['basedir'], $resources);
-		$dir['url'] = path_join($dir['baseurl'], $resources);
-
-		return $dir;
-	}	// add_filter('upload_dir', 'cgg_upload_dir');
 }

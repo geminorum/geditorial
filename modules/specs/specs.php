@@ -481,7 +481,7 @@ class gEditorialSpecs extends gEditorialModuleCore
 			$html .= '<tr><td>';
 				$html .= ( isset( $meta['spec_title'] ) && $meta['spec_title'] ) ? $meta['spec_title'] : ( isset( $meta['spec_term_id'] ) && $meta['spec_term_id'] ? $the_terms[$meta['spec_term_id']]->name : _x( 'Unknown Field', 'Specs Module',  GEDITORIAL_TEXTDOMAIN ) );
 			$html .= '</td><td>';
-				// TODO : add filter for each spec
+				// TODO: add filter for each spec
 				$html .= isset( $meta['spec_value'] ) ? gEditorialHelper::kses( $meta['spec_value'] ) : '';
 			$html .= '</td></tr>';
 		}

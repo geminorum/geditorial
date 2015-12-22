@@ -243,7 +243,7 @@ class gEditorialSeries extends gEditorialModuleCore
 		echo '</div>';
 	}
 
-	// TODO : list other post in this series by the order and link to their edit pages
+	// TODO: list other post in this series by the order and link to their edit pages
 	public function geditorial_series_meta_box( $post, $the_terms )
 	{
 		$fields           = $this->post_type_fields( $post->post_type );

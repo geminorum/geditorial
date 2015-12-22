@@ -150,7 +150,7 @@ class gEditorialMeta extends gEditorialModuleCore
 
 		$post_cpt = $this->constant( 'post_cpt' );
 
-		// NOTE: default fields for custom post types
+		// default fields for custom post types
 		foreach ( apply_filters( 'geditorial_meta_support_post_types', array( $post_cpt ) ) as $post_type )
 			$this->add_post_type_fields( $post_type, $this->fields[$post_cpt] );
 

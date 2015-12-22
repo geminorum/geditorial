@@ -35,19 +35,6 @@ class gEditorial
 		$this->options = new stdClass();
 
 		add_action( 'plugins_loaded', array( $this, 'plugins_loaded' ), 20 );
-		// add_action( 'plugins_loaded', function(){
-		// 	// allow dependent plugins and core actions to attach themselves in a safe way
-		// 	do_action( 'geditorial_loaded' );
-		// }, 20 );
-
-		// load all of our modules. 'geditorial_loaded' happens after 'plugins_loaded' so other plugins can hook into the action we have at the end
-		// add_action( 'geditorial_loaded', array( $this, 'geditorial_loaded' ) );
-
-		// Load the module options later on, and offer a function to happen way after init
-		// add_action( 'init', function(){
-		// 	do_action( 'geditorial_init' );
-		// } );
-
 		add_action( 'init', array( $this, 'init_late' ), 999 );
 		add_action( 'admin_init', array( $this, 'admin_init' ) );
 		add_action( 'wp_footer', array( $this, 'footer_asset_config' ), 999 );
@@ -99,55 +86,6 @@ class gEditorial
 		}
 	}
 
-	// FIXME: DEPRICATED: DROP THIS
-	// include the common resources to Edit Flow and dynamically load the modules
-	public function geditorial_loaded()
-	{
-		require_once( GEDITORIAL_DIR.'includes/class-base.php' );
-		require_once( GEDITORIAL_DIR.'includes/class-helper.php' );
-		require_once( GEDITORIAL_DIR.'includes/class-template.php' );
-		require_once( GEDITORIAL_DIR.'includes/class-widget.php' );
-		require_once( GEDITORIAL_DIR.'includes/class-module.php' );
-
-		$modules = apply_filters( 'geditorial_modules', scandir( GEDITORIAL_DIR.'modules/' ) );
-		$classes = array();
-
-		foreach ( $modules as $module ) {
-
-			if ( file_exists( GEDITORIAL_DIR.'modules/'.$module.'/'.$module.'.php' ) ) {
-				include_once( GEDITORIAL_DIR.'modules/'.$module.'/'.$module.'.php' );
-
-				$class = $slug = '';
-
-				foreach ( explode( '-', $module ) as $word ) {
-					$class .= ucfirst( $word ).'';
-					$slug  .= $word.'';
-				}
-
-				$classes[$slug] = 'gEditorial'.$class;
-			}
-		}
-
-		foreach ( $classes as $slug => $class )
-			if ( class_exists( $class ) )
-				$this->{$slug} = new $class();
-
-		$this->load_module_options();
-
-		foreach ( $this->modules as $mod_name => $false ) {
-
-			if ( gEditorialHelper::moduleEnabled( $this->{$mod_name}->options ) ) {
-
-				$this->{$mod_name}->enabled = TRUE;
-				$this->modules->{$mod_name} = TRUE;
-				$this->{$mod_name}->setup();
-
-			} else {
-				$this->{$mod_name}->enabled = FALSE; // OVERRIDE FALSE
-			}
-		}
-	}
-
 	public function register_module( $args = array() )
 	{
 		if ( ! isset( $args['name'], $args['title'] ) )
@@ -190,31 +128,11 @@ class gEditorial
 		}
 	}
 
-	// FIXME: DEPRICATED: DROP THIS
-	private function load_module_options_OLD()
-	{
-		$options = get_option( 'geditorial_options' );
-
-		foreach ( $this->modules as $mod_name => $false ) {
-
-			// don't load modules on the frontend unless they're explictly defined as such
-			if ( ! is_admin() && ! $this->{$mod_name}->module->frontend )
-				continue;
-
-			if ( ! isset( $options[$mod_name] ) || FALSE === $options[$mod_name] )
-				$this->{$mod_name}->options = new stdClass;
-			else
-				$this->{$mod_name}->options = $options[$mod_name];
-
-			foreach ( $this->{$mod_name}->module->defaults as $key => $value )
-				if ( ! isset( $this->{$mod_name}->options->{$key} ) )
-					$this->{$mod_name}->options->{$key} = $value;
-		}
-	}
-
 	public function init_late()
 	{
-		if ( count( $this->editor_buttons ) && 'true' == get_user_option( 'rich_editing' ) ) {
+		if ( count( $this->editor_buttons )
+			&& 'true' == get_user_option( 'rich_editing' ) ) {
+
 			add_filter( 'mce_external_plugins', array( $this, 'mce_external_plugins' ) );
 			add_filter( 'mce_buttons', array( $this, 'mce_buttons' ) );
 		}
@@ -388,7 +306,7 @@ class gEditorial
 		}
 	}
 
-	// NOTE: used in front & admin
+	// used in front & admin
 	public function footer_asset_config()
 	{
 		if ( ! $this->asset_config )

@@ -147,7 +147,7 @@ class gEditorialComments extends gEditorialModuleCore
 		if ( ! isset( $_POST['do'] ) )
 			die;
 
-		// TODO : check nounce
+		// TODO: check nounce
 
 		$action = $_POST['do'];
 		if ( in_array( $action, $this->actions ) ) {

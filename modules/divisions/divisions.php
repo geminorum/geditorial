@@ -260,7 +260,7 @@ class gEditorialDivisions extends gEditorialModuleCore
 			'connected_items' => get_queried_object(),
 			'nopaging'        => TRUE,
 
-			// TODO : drop meta query if all visible
+			// TODO: drop meta query if all visible
 			'connected_meta' => array( array(
 				'key'     => 'visibility',
 				'value'   => $args['visibility'],
@@ -327,7 +327,7 @@ class gEditorialDivisions extends gEditorialModuleCore
 			'nopaging'        => TRUE,
 			// 'connected_meta'  => array( 'visibility' => 'strong' )
 
-			// TODO : drop meta query if all visible
+			// TODO: drop meta query if all visible
 			'connected_meta' => array( array(
 				'key' => 'visibility',
 				'value' => $args['visibility'],

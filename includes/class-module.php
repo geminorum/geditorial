@@ -481,7 +481,6 @@ class gEditorialModuleCore extends gEditorialBaseCore
 		check_admin_referer( 'geditorial-tools-'.$sub );
 	}
 
-	// NOTE: used by settings module
 	public function settings_validate( $options )
 	{
 		if ( isset( $this->settings['posttypes_option'] ) ) {
@@ -591,7 +590,7 @@ class gEditorialModuleCore extends gEditorialBaseCore
 		add_post_type_support( $post_type, array( $type.'_fields' ), $fields );
 	}
 
-	// NOTE: like WP core but returns the actual array!
+	// like WP core but returns the actual array!
 	public function post_type_supports( $post_type, $feature, $is_constant = FALSE )
 	{
 		if ( $is_constant )
@@ -647,7 +646,7 @@ class gEditorialModuleCore extends gEditorialBaseCore
 		return $default;
 	}
 
-	// NOTE: convert backs numbers into english
+	// converts back numbers into english
 	public function intval( $text, $intval = TRUE )
 	{
 		self::__dep();
@@ -1332,7 +1331,8 @@ class gEditorialModuleCore extends gEditorialBaseCore
 		gEditorial()->enqueue_asset_config( $args, $this->module->name );
 	}
 
-	// NOTE: FRONT ONLY: combined global styles
+	// combined global styles
+	// CAUTION: front only
 	// TODO: also we need api for module specified css
 	public function enqueue_styles()
 	{
@@ -1437,7 +1437,7 @@ class gEditorialModuleCore extends gEditorialBaseCore
 			), $pages );
 	}
 
-	// NOTE: this must be cat (hierarchical)
+	// CAUTION: tax must be cat (hierarchical)
 	// TODO: supporting tag (non-hierarchical)
 	public function add_meta_box_choose_tax( $constant_key, $post_type, $type = 'cat' )
 	{

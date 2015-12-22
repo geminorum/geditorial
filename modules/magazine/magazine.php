@@ -650,7 +650,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 				'side'
 			);
 
-			// TODO : add a box to list the posts with this issue taxonomy
+			// TODO: add a thick-box to list the posts with this issue taxonomy
 		}
 	}
 
@@ -961,14 +961,6 @@ class gEditorialMagazine extends gEditorialModuleCore
 			echo '</td></tr>';
 			echo '</table>';
 		echo '</form>';
-	}
-
-	// FIXME: ?!
-	public function post_row_table( $value, $row, $column )
-	{
-		$issue_post_id = gEditorialHelper::getPostIDbySlug( $row->slug, $this->constant( 'issue_cpt' ) ) ;
-		gnetwork_dump( $value ); die();
-		return $value;
 	}
 
 	public function tools_settings( $sub )

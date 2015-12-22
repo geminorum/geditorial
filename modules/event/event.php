@@ -354,7 +354,7 @@ class gEditorialEvent extends gEditorialModuleCore
 		if ( ! $this->is_save_post( $post, 'event_cpt' ) )
 			return $post_ID;
 
-			// FIXME: !!
+		// FIXME: save the data!
 
 		return $post_ID;
 	}
@@ -409,7 +409,7 @@ class gEditorialEvent extends gEditorialModuleCore
 		$event_meta = get_post_custom( $post_id );
 
 		if ( 'event_dates' == $column ) {
-			// TODO : Localize
+			// TODO: Localize
 			//@$startdate = date( "F j, Y", $event_meta[$this->constant( 'event_startdate' )][0] );
 			//@$enddate = date( "F j, Y", $event_meta[$this->constant( 'event_enddate' )][0] );
 			//echo $startdate . '<br /><em>' . $enddate . '</em>';
@@ -417,7 +417,7 @@ class gEditorialEvent extends gEditorialModuleCore
 				.'<br /><em>'.date_i18n( _x( 'F j, Y', 'Event Module', GEDITORIAL_TEXTDOMAIN ), strtotime( $event_meta[$this->constant( 'event_enddate' )][0] ) );
 
 		} else if ( 'event_times' == $column ) {
-			// TODO : Localize
+			// TODO: Localize
 			$time_format = get_option( 'time_format', 'g:i a' );
 			@$starttime = date( $time_format, strtotime( $event_meta[$this->constant( 'event_startdate' )][0] ) );
 			@$endtime = date( $time_format,  strtotime( $event_meta[$this->constant( 'event_enddate' )][0] ) );
