@@ -41,6 +41,7 @@ class gEditorialDrafts extends gEditorialModuleCore
 
 				add_action( 'admin_bar_menu', array( $this, 'admin_bar_menu' ), 65 );
 				$this->enqueue_asset_js( TRUE );
+				$this->enqueue_styles();
 		}
 
 		add_action( 'wp_ajax_geditorial_drafts', array( $this, 'ajax' ) );

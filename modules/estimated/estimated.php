@@ -56,8 +56,13 @@ class gEditorialEstimated extends gEditorialModuleCore
 		do_action( 'geditorial_estimated_init', $this->module );
 		$this->do_globals();
 
-		if ( 'none' != $this->get_setting( 'insert_content', 'none' ) )
-			add_filter( 'the_content', array( $this, 'the_content' ), 22 );
+		if ( ! is_admin() ) {
+
+			if ( 'none' != $this->get_setting( 'insert_content', 'none' ) )
+				add_filter( 'the_content', array( $this, 'the_content' ), 22 );
+
+			$this->enqueue_styles();
+		}
 
 		// TODO: add shortcode
 	}
