@@ -5,6 +5,9 @@ class gEditorialBook extends gEditorialModuleCore
 
 	public static function module()
 	{
+		if ( ! self::isDev() )
+			return FALSE;
+
 		return array(
 			'name'      => 'book',
 			'title'     => _x( 'Book', 'Book Module', GEDITORIAL_TEXTDOMAIN ),

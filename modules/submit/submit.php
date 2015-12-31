@@ -5,6 +5,9 @@ class gEditorialSubmit extends gEditorialModuleCore
 
 	public static function module()
 	{
+		if ( ! self::isDev() )
+			return FALSE;
+
 		return array(
 			'name'     => 'submit',
 			'title'    => _x( 'Submit', 'Submit Module', GEDITORIAL_TEXTDOMAIN ),

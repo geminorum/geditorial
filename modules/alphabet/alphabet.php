@@ -5,6 +5,9 @@ class gEditorialAlphabet extends gEditorialModuleCore
 
 	public static function module()
 	{
+		if ( ! self::isDev() )
+			return FALSE;
+
 		return array(
 			'name'     => 'alphabet',
 			'title'    => _x( 'Alphabet', 'Alphabet Module', GEDITORIAL_TEXTDOMAIN ),

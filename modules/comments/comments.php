@@ -12,6 +12,9 @@ class gEditorialComments extends gEditorialModuleCore
 
 	public static function module()
 	{
+		if ( ! self::isDev() )
+			return FALSE;
+
 		return array(
 			'name'     => 'comments',
 			'title'    => _x( 'Comments', 'Comments Module', GEDITORIAL_TEXTDOMAIN ),

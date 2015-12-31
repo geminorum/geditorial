@@ -5,6 +5,9 @@ class gEditorialGallery extends gEditorialModuleCore
 
 	public static function module()
 	{
+		if ( ! self::isDev() )
+			return FALSE;
+
 		return array(
 			'name'     => 'gallery',
 			'title'    => _x( 'Gallery', 'Gallery Module', GEDITORIAL_TEXTDOMAIN ),

@@ -7,7 +7,8 @@ class gEditorialSitemap extends gEditorialModuleCore
 
 	public static function module()
 	{
-		return array(); // FIXME
+		if ( ! self::isDev() )
+			return FALSE;
 
 		return array(
 			'name'     => 'sitemap',

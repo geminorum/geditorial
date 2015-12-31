@@ -3,7 +3,7 @@
 class gEditorialWidgets extends gEditorialModuleCore
 {
 /*
-	// FIXME:
+	// TODO
 
 	- check for settings for each widget
 		and then enable them
@@ -26,7 +26,8 @@ class gEditorialWidgets extends gEditorialModuleCore
 */
 	public static function module()
 	{
-		return array(); // FIXME
+		if ( ! self::isDev() )
+			return FALSE;
 
 		return array(
 			'name'     => 'widgets',

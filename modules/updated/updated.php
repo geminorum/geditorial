@@ -3,7 +3,7 @@
 class gEditorialUpdated extends gEditorialModuleCore
 {
 /*
-	// FIXME:
+	// TODO
 
 	- keeps last updated timestamp of the site contents
 
@@ -18,7 +18,8 @@ class gEditorialUpdated extends gEditorialModuleCore
 */
 	public static function module()
 	{
-		return array(); // FIXME
+		if ( ! self::isDev() )
+			return FALSE;
 
 		return array(
 			'name'     => 'updated',
