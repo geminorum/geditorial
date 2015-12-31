@@ -4,9 +4,7 @@
 @import "partials/base";
 
 @import "partials/admin.all";
-// @import "partials/admin.post";
-// @import "partials/like.admin.post";
-// @import "partials/specs.admin.post";
+@import "partials/admin.table";
 
 .geditorial-admin-wrap.geditorial-tools {
 	@include main-wrap();

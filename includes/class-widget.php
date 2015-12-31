@@ -127,10 +127,8 @@ class gEditorialWidgetCore extends WP_Widget
 
 	public function get_images_sizes( $post_type )
 	{
-		global $gEditorial;
-
-		$sizes  = $gEditorial->{$this->parent_module}->get_image_sizes( $post_type );
 		$images = array();
+		$sizes  = gEditorial()->{$this->parent_module}->get_image_sizes( $post_type );
 
 		if ( count( $sizes ) ) {
 			foreach ( $sizes as $name => $size ) {
@@ -169,7 +167,7 @@ class gEditorialWidgetCore extends WP_Widget
 
 		echo '<p>'. gEditorialHelper::html( 'label', array(
 			'for' => $this->get_field_id( $field ),
-		), __( 'Number of posts to show:', GEDITORIAL_TEXTDOMAIN ).' '.$html ).'</p>';
+		), _x( 'Number of posts to show:', 'Widget Core', GEDITORIAL_TEXTDOMAIN ).' '.$html ).'</p>';
 	}
 
 	public function form_context( $instance, $default = '', $field = 'context' )
@@ -185,7 +183,7 @@ class gEditorialWidgetCore extends WP_Widget
 
 		echo '<p>'. gEditorialHelper::html( 'label', array(
 			'for' => $this->get_field_id( $field ),
-		), __( 'Context:', GEDITORIAL_TEXTDOMAIN ).$html ).'</p>';
+		), _x( 'Context:', 'Widget Core', GEDITORIAL_TEXTDOMAIN ).$html ).'</p>';
 	}
 
 	public function form_class( $instance, $default = '', $field = 'class' )
@@ -201,7 +199,7 @@ class gEditorialWidgetCore extends WP_Widget
 
 		echo '<p>'. gEditorialHelper::html( 'label', array(
 			'for' => $this->get_field_id( $field ),
-		), __( 'Class:', GEDITORIAL_TEXTDOMAIN ).$html ).'</p>';
+		), _x( 'Class:', 'Widget Core', GEDITORIAL_TEXTDOMAIN ).$html ).'</p>';
 	}
 
 	public function form_post_type( $instance, $default = 'post', $field = 'post_type' )
@@ -223,7 +221,7 @@ class gEditorialWidgetCore extends WP_Widget
 
 		echo '<p>'. gEditorialHelper::html( 'label', array(
 			'for' => $this->get_field_id( $field ),
-		), __( 'PostType:', GEDITORIAL_TEXTDOMAIN ).$html ).'</p>';
+		), _x( 'PostType:', 'Widget Core', GEDITORIAL_TEXTDOMAIN ).$html ).'</p>';
 	}
 
 	public function form_taxonomy( $instance, $default = 'post_tag', $field = 'taxonomy' )
@@ -245,7 +243,7 @@ class gEditorialWidgetCore extends WP_Widget
 
 		echo '<p>'. gEditorialHelper::html( 'label', array(
 			'for' => $this->get_field_id( $field ),
-		), __( 'Taxonomy:', GEDITORIAL_TEXTDOMAIN ).$html ).'</p>';
+		), _x( 'Taxonomy:', 'Widget Core', GEDITORIAL_TEXTDOMAIN ).$html ).'</p>';
 	}
 
 	public function form_title( $instance, $default = '', $field = 'title' )
@@ -260,7 +258,7 @@ class gEditorialWidgetCore extends WP_Widget
 
 		echo '<p>'. gEditorialHelper::html( 'label', array(
 			'for' => $this->get_field_id( $field ),
-		), __( 'Title:', GEDITORIAL_TEXTDOMAIN ).$html ).'</p>';
+		), _x( 'Title:', 'Widget Core', GEDITORIAL_TEXTDOMAIN ).$html ).'</p>';
 	}
 
 	public function form_title_link( $instance, $default = '', $field = 'title_link' )
@@ -276,7 +274,7 @@ class gEditorialWidgetCore extends WP_Widget
 
 		echo '<p>'. gEditorialHelper::html( 'label', array(
 			'for' => $this->get_field_id( $field ),
-		), __( 'Title Link:', GEDITORIAL_TEXTDOMAIN ).$html ).'</p>';
+		), _x( 'Title Link:', 'Widget Core', GEDITORIAL_TEXTDOMAIN ).$html ).'</p>';
 	}
 
 	public function form_avatar_size( $instance, $default = '32', $field = 'avatar_size' )
@@ -291,7 +289,7 @@ class gEditorialWidgetCore extends WP_Widget
 
 		echo '<p>'. gEditorialHelper::html( 'label', array(
 			'for' => $this->get_field_id( $field ),
-		), __( 'Avatar Size:', GEDITORIAL_TEXTDOMAIN ).$html ).'</p>';
+		), _x( 'Avatar Size:', 'Widget Core', GEDITORIAL_TEXTDOMAIN ).$html ).'</p>';
 	}
 
 	public function form_image_size( $instance, $default = 'thumbnail', $field = 'image_size', $post_type = 'post' )
@@ -317,17 +315,17 @@ class gEditorialWidgetCore extends WP_Widget
 
 			echo '<p>'. gEditorialHelper::html( 'label', array(
 				'for' => $this->get_field_id( $field ),
-			), __( 'Image Size:', GEDITORIAL_TEXTDOMAIN ).$html ).'</p>';
+			), _x( 'Image Size:', 'Widget Core', GEDITORIAL_TEXTDOMAIN ).$html ).'</p>';
 
 		} else {
-			echo '<p>'.__( 'No Image Size Available!', GEDITORIAL_TEXTDOMAIN ).'</p>';
+			echo '<p>'._x( 'No Image Size Available!', 'Widget Core', GEDITORIAL_TEXTDOMAIN ).'</p>';
 		}
 	}
 
 	public function form_checkbox( $instance, $default = FALSE, $field = 'checked', $label = NULL )
 	{
 		if ( is_null( $label ) )
-			$label = __( 'Checked:', GEDITORIAL_TEXTDOMAIN );
+			$label = _x( 'Checked:', 'Widget Core', GEDITORIAL_TEXTDOMAIN );
 
 		$html = gEditorialHelper::html( 'input', array(
 			'type'    => 'checkbox',
@@ -347,7 +345,7 @@ class gEditorialWidgetCore extends WP_Widget
 		$post_id  = isset( $instance[$field] ) ? $instance[$field] : $default;
 
 		if ( is_null( $label ) )
-			$label = __( 'Page:', GEDITORIAL_TEXTDOMAIN );
+			$label = _x( 'Page:', 'Widget Core', GEDITORIAL_TEXTDOMAIN );
 
 		$html = wp_dropdown_pages( array(
 			'post_type'        => $post_type,
@@ -355,7 +353,7 @@ class gEditorialWidgetCore extends WP_Widget
 			'name'             => $this->get_field_name( $field ),
 			'id'               => $this->get_field_id( $field ),
 			'class'            => 'widefat',
-			'show_option_none' => __( '&mdash; Select &mdash;', GEDITORIAL_TEXTDOMAIN ),
+			'show_option_none' => _x( '&mdash; Select &mdash;', 'Widget Core', GEDITORIAL_TEXTDOMAIN ),
 			'sort_column'      => 'menu_order, post_title',
 			'echo'             => FALSE,
 		) );
@@ -373,7 +371,7 @@ class gEditorialWidgetCore extends WP_Widget
 		$html = gEditorialHelper::html( 'option', array(
 			'value'    => '0',
 			'selected' => $term_id == '0',
-		), __( '&mdash; Select &mdash;', GEDITORIAL_TEXTDOMAIN ) );
+		), _x( '&mdash; Select &mdash;', 'Widget Core', GEDITORIAL_TEXTDOMAIN ) );
 
 		foreach ( get_terms( $taxonomy ) as $term )
 			$html .= gEditorialHelper::html( 'option', array(
@@ -389,6 +387,6 @@ class gEditorialWidgetCore extends WP_Widget
 
 		echo '<p>'. gEditorialHelper::html( 'label', array(
 			'for' => $this->get_field_id( $field ),
-		), __( 'Term:', GEDITORIAL_TEXTDOMAIN ).$html ).'</p>';
+		), _x( 'Term:', 'Widget Core', GEDITORIAL_TEXTDOMAIN ).$html ).'</p>';
 	}
 }

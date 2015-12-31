@@ -1,9 +1,12 @@
+.idea
+.gulp
+.imdone
 .sass-cache
 
 /assets/components
-/assets/packages/jquery
 /assets/vendor
 /assets/bin
 /node_modules
 
 composer.lock
+npm-debug.log

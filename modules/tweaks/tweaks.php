@@ -3,125 +3,120 @@
 class gEditorialTweaks extends gEditorialModuleCore
 {
 
-	var $module_name = 'tweaks';
+	protected $priority_init = 14;
 
-	public function __construct()
+	public static function module()
 	{
-		global $gEditorial;
-
-		$args = array(
-
-			'title'                => __( 'Tweaks', GEDITORIAL_TEXTDOMAIN ),
-			'short_description'    => __( 'Admin UI Enhancement', GEDITORIAL_TEXTDOMAIN ),
-
-			'dashicon' => 'heart',
-			'slug'     => 'tweaks',
-			'frontend' => FALSE,
-
-			'constants' => array(
-				'tweaks_tax' => 'tweaks',
-			),
-
-			'default_options' => array(
-				'enabled'  => FALSE,
-				'settings' => array(),
-
-				'post_types' => array(
-					'post' => TRUE,
-					'page' => FALSE,
-				),
-				'taxonomies' => array(
-					'category' => TRUE,
-					'post_tag' => TRUE,
-				),
-			),
-
-			'settings' => array(
-				'_general' => array(
-					array(
-						'field'       => 'group_taxonomies',
-						'title'       => __( 'Group Taxonomies', GEDITORIAL_TEXTDOMAIN ),
-						'description' => __( 'Group selected taxonomies on selected post type edit pages', GEDITORIAL_TEXTDOMAIN ),
-						'default'     => 0,
-					),
-				),
-				'post_types_option' => 'post_types_option',
-				'taxonomies_option' => 'taxonomies_option',
-			),
-			'strings' => array(
-				'misc' => array(
-					'group_taxes_column_title' => __( 'Taxonomies', GEDITORIAL_TEXTDOMAIN ),
-				),
-				'taxonomies' => array(
-					'category' => array(
-						'column'     => 'categories',
-						'dashicon'   => 'category',
-						'title_attr' => __( 'Categories', GEDITORIAL_TEXTDOMAIN ),
-					),
-					'post_tag' => array(
-						'column'     => 'tags',
-						'dashicon'   => 'tag',
-						'title_attr' => __( 'Tags', GEDITORIAL_TEXTDOMAIN ),
-					),
-				),
-			),
-			'configure_page_cb' => 'print_configure_view',
+		return array(
+			'name'     => 'tweaks',
+			'title'    => _x( 'Tweaks', 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ),
+			'desc'     => _x( 'Admin UI Enhancement', 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ),
+			'dashicon' => 'admin-settings',
 		);
-
-		$gEditorial->register_module( $this->module_name, $args );
 	}
 
-	public function setup()
+	protected function settings_help_sidebar()
 	{
-		add_action( 'init', array( &$this, 'init' ) );
+		return gEditorialHelper::settingsHelpLinks( 'Modules-Tweaks', _x( 'Editorial Tweaks Documentation', 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ) );
+	}
 
-		if ( is_admin() ) {
-			add_action( 'admin_init', array( &$this, 'admin_init' ) );
-			add_action( 'geditorial_settings_load', array( &$this, 'register_settings' ) );
-		}
+	protected function get_global_settings()
+	{
+		return array(
+			'_general' => array(
+				array(
+					'field'       => 'group_taxonomies',
+					'title'       => _x( 'Group Taxonomies', 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Group selected taxonomies on selected post type edit pages', 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ),
+					'default'     => '0',
+				),
+			),
+			'posttypes_option'  => 'posttypes_option',
+			'taxonomies_option' => 'taxonomies_option',
+		);
+	}
+
+	protected function get_global_strings()
+	{
+		return array(
+			'misc' => array(
+				'group_taxes_column_title' => _x( 'Taxonomies', 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ),
+			),
+			'taxonomies' => array(
+				'category' => array(
+					'column'     => 'categories',
+					'dashicon'   => 'category',
+					'title_attr' => _x( 'Categories', 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ),
+				),
+				'post_tag' => array(
+					'column'     => 'tags',
+					'dashicon'   => 'tag',
+					'title_attr' => _x( 'Tags', 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ),
+				),
+			),
+		);
 	}
 
 	public function init()
 	{
 		do_action( 'geditorial_tweaks_init', $this->module );
 
-		$this->do_filters();
+		$this->do_globals();
+
+		$this->taxonomies_excluded = array(
+			'nav_menu',
+			'post_format',
+			'bp_member_type',
+			'people',
+			'rel_people',
+			'rel_post',
+		);
 	}
 
 	public function admin_init()
 	{
-		add_action( 'add_meta_boxes', array( &$this, 'add_meta_boxes' ), 20, 2 );
+		add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ), 20, 2 );
 
 		if ( $this->get_setting( 'group_taxonomies', FALSE ) ) {
 
-			foreach ( $this->post_types() as $post_type ) {
-				add_filter( "manage_{$post_type}_posts_columns", array( &$this, 'manage_posts_columns' ) );
-				add_filter( "manage_{$post_type}_posts_custom_column", array( &$this, 'custom_column'), 10, 2 );
+			$post_type = self::getCurrentPostType( 'post' );
+
+			if ( in_array( $post_type, $this->post_types() ) ) {
+				add_filter( 'manage_'.$post_type.'_posts_columns', array( $this, 'manage_posts_columns' ) );
+				add_filter( 'manage_'.$post_type.'_posts_custom_column', array( $this, 'custom_column'), 10, 2 );
 			}
 		}
 	}
 
+	// TODO: check filter: "manage_taxonomies_for_{$post_type}_columns"
+	// @SEE: https://make.wordpress.org/core/2012/12/11/wordpress-3-5-admin-columns-for-custom-taxonomies/
 	public function manage_posts_columns( $posts_columns )
 	{
-		$new_columns = array();
-		$exc_columns = array();
-		$added       = FALSE;
-		$post_type   = gEditorialHelper::getCurrentPostType();
+		$added        = FALSE;
+		$new_columns  = $exc_columns = array();
+		$post_type    = self::getCurrentPostType( 'post' );
+		$column_title = $this->get_string( 'group_taxes_column_title', $post_type, 'misc' );
 
 		foreach ( $this->taxonomies() as $taxonomy )
 			$exc_columns[] = $this->get_string( 'column', $taxonomy, 'taxonomies', 'taxonomy-'.$taxonomy );
+
+		if ( ! count( $exc_columns ) )
+			return $posts_columns;
 
 		foreach ( $posts_columns as $key => $value ) {
 
 			if ( ( 'comments' == $key && ! $added )
 				|| ( 'date' == $key && ! $added ) ) {
-					$new_columns['geditorial-tweaks-group_taxes'] = $this->get_string( 'group_taxes_column_title', $post_type, 'misc' );
+					$new_columns['geditorial-tweaks-group_taxes'] = $column_title;
 					$added = TRUE;
 			}
 
 			if ( ! in_array( $key, $exc_columns ) )
 				$new_columns[$key] = $value;
 		}
+
+		if ( ! $added )
+			$new_columns['geditorial-tweaks-group_taxes'] = $column_title;
 
 		return $new_columns;
 	}
@@ -161,7 +156,7 @@ class gEditorialTweaks extends gEditorialModuleCore
 	{
 		if ( post_type_supports( $post_type, 'excerpt' ) ) {
 			$this->remove_meta_box( $post_type, $post_type, 'excerpt' );
-			add_meta_box( 'postexcerpt', __( 'Excerpt' ), array( $this, 'post_excerpt_meta_box' ), $post_type, 'normal' );
+			add_meta_box( 'postexcerpt', _x( 'Excerpt', 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ), array( $this, 'post_excerpt_meta_box' ), $post_type, 'normal' );
 		}
 	}
 

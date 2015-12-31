@@ -3,112 +3,97 @@
 class gEditorialComments extends gEditorialModuleCore
 {
 
-	var $module_name = 'comments';
-	var $meta_key    = '_ge_comments';
-
-	var $_actions = array(
+	protected $actions = array(
 		'unfeature',
 		'feature',
 		'unbury',
 		'bury',
 	);
 
-	public function __construct()
+	public static function module()
 	{
-		global $gEditorial;
+		if ( ! self::isDev() )
+			return FALSE;
 
-		$args = array(
-
-			'title'                => __( 'Comments', GEDITORIAL_TEXTDOMAIN ),
-			'short_description'    => __( 'Comment Managment Enhancements', GEDITORIAL_TEXTDOMAIN ),
-			'extended_description' => __( 'Series of tools to help better managing the comments on a magazine.', GEDITORIAL_TEXTDOMAIN ),
-
+		return array(
+			'name'     => 'comments',
+			'title'    => _x( 'Comments', 'Comments Module', GEDITORIAL_TEXTDOMAIN ),
+			'desc'     => _x( 'Comment Managment Enhancements', 'Comments Module', GEDITORIAL_TEXTDOMAIN ),
 			'dashicon' => 'admin-comments',
-			'slug'     => 'comments',
-			'frontend' => TRUE,
-
-			'constants' => array(
-				'comments_shortcode' => 'comments',
-			),
-
-			'default_options' => array(
-				'enabled'    => FALSE,
-				'settings'   => array(),
-				'post_types' => array(
-					'post' => TRUE,
-					'page' => FALSE,
-				),
-			),
-
-			'settings' => array(
-				'_general' => array(
-					array(
-						'field'       => 'front_actions',
-						'title'       => __( 'Frontpage Actions', GEDITORIAL_TEXTDOMAIN ),
-						'description' => __( 'Appends the actions to the comment text on frontpage.', GEDITORIAL_TEXTDOMAIN ),
-						'default'     => 0,
-					),
-					array(
-						'field'       => 'disable_notes',
-						'title'       => __( 'Form Notes', GEDITORIAL_TEXTDOMAIN ),
-						'description' => __( 'Removes extra notes after comment form on frontpage.', GEDITORIAL_TEXTDOMAIN ),
-						'default'     => 1,
-					),
-					array(
-						'field'       => 'widget_args',
-						'title'       => __( 'Force Widget', GEDITORIAL_TEXTDOMAIN ),
-						'description' => __( 'Force Recent Comments Widget to show only featured and non-buried comments.', GEDITORIAL_TEXTDOMAIN ),
-						'default'     => 0,
-					),
-				),
-			),
-			'strings' => array(
-				'titles' => array(
-					'comments' => array(
-						'feature'   => __( 'Feature', GEDITORIAL_TEXTDOMAIN ),
-						'unfeature' => __( 'Unfeature', GEDITORIAL_TEXTDOMAIN ),
-						'bury'      => __( 'Bury', GEDITORIAL_TEXTDOMAIN ),
-						'unbury'    => __( 'Unbury', GEDITORIAL_TEXTDOMAIN ),
-					),
-				),
-				'descriptions' => array(
-					'comments' => array(
-						'feature'   => __( 'Feature this comment', GEDITORIAL_TEXTDOMAIN ),
-						'unfeature' => __( 'Unfeature this comment', GEDITORIAL_TEXTDOMAIN ),
-						'bury'      => __( 'Bury this comment', GEDITORIAL_TEXTDOMAIN ),
-						'unbury'    => __( 'Unbury this comment', GEDITORIAL_TEXTDOMAIN ),
-					),
-				),
-				'misc' => array(
-					'comments' => array(
-						'box_title'       => __( 'Featured Comments', GEDITORIAL_TEXTDOMAIN ),
-						'column_title'    => __( 'Comments', GEDITORIAL_TEXTDOMAIN ),
-						'select_comments' => __( '&mdash; Choose a Comments &mdash;', GEDITORIAL_TEXTDOMAIN ),
-					),
-				),
-			),
-			'configure_page_cb' => 'print_configure_view',
 		);
-
-		$gEditorial->register_module( $this->module_name, $args );
 	}
 
-	public function setup()
+	protected function settings_help_sidebar()
 	{
-		add_action( 'init', array( &$this, 'init' ) );
+		return gEditorialHelper::settingsHelpLinks( 'Modules-Comments', _x( 'Editorial Comments Documentation', 'Comments Module', GEDITORIAL_TEXTDOMAIN ) );
+	}
 
-		$this->require_code();
+	protected function get_global_settings()
+	{
+		return array(
+			'_general' => array(
+				array(
+					'field'       => 'front_actions',
+					'title'       => __( 'Frontpage Actions', GEDITORIAL_TEXTDOMAIN ),
+					'description' => __( 'Appends the actions to the comment text on frontpage.', GEDITORIAL_TEXTDOMAIN ),
+					'default'     => 0,
+				),
+				array(
+					'field'       => 'widget_args',
+					'title'       => __( 'Force Widget', GEDITORIAL_TEXTDOMAIN ),
+					'description' => __( 'Force Recent Comments Widget to show only featured and non-buried comments.', GEDITORIAL_TEXTDOMAIN ),
+					'default'     => 0,
+				),
+			),
+		);
+	}
+
+	protected function get_global_constants()
+	{
+		return array(
+			'comments_shortcode' => 'comments',
+		);
+	}
+
+	protected function get_global_strings()
+	{
+		return array(
+			'titles' => array(
+				'comments' => array(
+					'feature'   => _x( 'Feature', 'Comments Module', GEDITORIAL_TEXTDOMAIN ),
+					'unfeature' => _x( 'Unfeature', 'Comments Module', GEDITORIAL_TEXTDOMAIN ),
+					'bury'      => _x( 'Bury', 'Comments Module', GEDITORIAL_TEXTDOMAIN ),
+					'unbury'    => _x( 'Unbury', 'Comments Module', GEDITORIAL_TEXTDOMAIN ),
+				),
+			),
+			'descriptions' => array(
+				'comments' => array(
+					'feature'   => _x( 'Feature this comment', 'Comments Module', GEDITORIAL_TEXTDOMAIN ),
+					'unfeature' => _x( 'Unfeature this comment', 'Comments Module', GEDITORIAL_TEXTDOMAIN ),
+					'bury'      => _x( 'Bury this comment', 'Comments Module', GEDITORIAL_TEXTDOMAIN ),
+					'unbury'    => _x( 'Unbury this comment', 'Comments Module', GEDITORIAL_TEXTDOMAIN ),
+				),
+			),
+			'misc' => array(
+				'comments' => array(
+					'box_title'       => _x( 'Featured Comments', 'Comments Module: Box Title', GEDITORIAL_TEXTDOMAIN ),
+					'column_title'    => _x( 'Comments', 'Comments Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				),
+			),
+		);
+	}
+
+	public function setup( $partials = array() )
+	{
+		parent::setup();
 
 		if ( is_admin() ) {
 
-			add_action( 'admin_init', array( &$this, 'admin_init' ) );
-			add_action( 'geditorial_settings_load', array( &$this, 'register_settings' ) );
+			// add_action( 'admin_menu', array( $this, 'add_meta_box' ) );
+			// add_action( 'edit_comment', array( $this, 'save_meta_box_postdata' ) );
 
-			// add_action( 'admin_menu', array( &$this, 'add_meta_box' ) );
-			// add_action( 'edit_comment', array( &$this, 'save_meta_box_postdata' ) );
-
-			add_filter( 'comment_row_actions', array( &$this, 'comment_row_actions' ) );
-			add_action( 'wp_ajax_geditorial_comments', array( &$this, 'ajax' ) );
+			add_filter( 'comment_row_actions', array( $this, 'comment_row_actions' ) );
+			add_action( 'wp_ajax_geditorial_comments', array( $this, 'ajax' ) );
 		}
 	}
 
@@ -116,34 +101,25 @@ class gEditorialComments extends gEditorialModuleCore
 	{
 		do_action( 'geditorial_comments_init', $this->module );
 
-		$this->do_filters();
+		$this->do_globals();
 
 		if ( ! is_admin() ) {
-			add_filter( 'comment_class', array( &$this, 'comment_class' ) );
+			add_filter( 'comment_class', array( $this, 'comment_class' ) );
 
 			if ( $this->get_setting( 'widget_args', FALSE ) )
-				add_filter( 'widget_comments_args', array( &$this, 'widget_comments_args' ) );
+				add_filter( 'widget_comments_args', array( $this, 'widget_comments_args' ) );
 
 			if ( $this->get_setting( 'front_actions', FALSE ) )
-				add_filter( 'comment_text', array( &$this, 'comment_text' ), 10, 3 );
+				add_filter( 'comment_text', array( $this, 'comment_text' ), 10, 3 );
 
-			if ( ! $this->get_setting( 'disable_notes', FALSE ) )
-				add_filter( 'comment_form_defaults', array( &$this, 'comment_form_defaults' ), 12 );
-
-			// add_shortcode( 'comments', array( &$this, 'shortcode_comments' ) );
-			// add_filter( 'gtheme_comment_actions', array( &$this, 'gtheme_comment_actions' ), 10, 4 );
+			// add_shortcode( 'comments', array( $this, 'shortcode_comments' ) );
+			// add_filter( 'gtheme_comment_actions', array( $this, 'gtheme_comment_actions' ), 10, 4 );
 		}
 	}
 
 	public function admin_init()
 	{
-		add_action( 'admin_print_styles', array( &$this, 'admin_print_styles' ) );
-	}
-
-	public function comment_form_defaults( $defaults )
-	{
-		$defaults['comment_notes_after'] = '';
-		return $defaults;
+		add_action( 'admin_print_styles', array( $this, 'admin_print_styles' ) );
 	}
 
 	public function admin_print_styles()
@@ -154,8 +130,8 @@ class gEditorialComments extends gEditorialModuleCore
 		$screen = get_current_screen();
 
 		if ( 'edit-comments' == $screen->base ) {
-			gEditorialHelper::linkStyleSheet( GEDITORIAL_URL.'assets/css/admin.comments.css' );
-			$this->enqueue_asset_js();
+			gEditorialHelper::linkStyleSheetAdmin( 'comments' );
+			$this->enqueue_asset_js(); // FIXME: the js not using the internal api!
 		}
 	}
 
@@ -163,7 +139,7 @@ class gEditorialComments extends gEditorialModuleCore
 	{
 		add_meta_box( 'comment_meta_box',
 			$this->get_string( 'box_title', 'comments', 'misc' ),
-			array( &$this, 'comment_meta_box' ),
+			array( $this, 'comment_meta_box' ),
 			'comment',
 			'normal'
 		);
@@ -174,10 +150,10 @@ class gEditorialComments extends gEditorialModuleCore
 		if ( ! isset( $_POST['do'] ) )
 			die;
 
-		// TODO : check nounce
+		// TODO: check nounce
 
 		$action = $_POST['do'];
-		if ( in_array( $action, $this->_actions ) ) {
+		if ( in_array( $action, $this->actions ) ) {
 			$comment_id = absint( $_POST['comment_id'] );
 			if ( ! $comment = get_comment( $comment_id )
 				|| ! current_user_can( 'edit_post', $comment->comment_post_ID ) )
@@ -238,7 +214,7 @@ class gEditorialComments extends gEditorialModuleCore
 	{
 		$output = '';
 		$current_status = implode( ' ', $this->comment_class( array( 'geditorial-comments-row-action', 'hide-if-no-js' ) ) );
-		foreach ( $this->_actions as $action )
+		foreach ( $this->actions as $action )
 			$output .= '<a data-do="'.$action.'" data-comment_id="'.$comment_id.'" class="'.$action.' '.$current_status.'" title="'.esc_attr( $this->get_string( $action, 'comments', 'descriptions' ) ).'">'.$this->get_string( $action, 'comments' ).'</a>';
 
 		return $output;
@@ -251,7 +227,7 @@ class gEditorialComments extends gEditorialModuleCore
 		// check for cap
 
 		$current_status = implode( ' ', $this->comment_class( array( 'geditorial-comments-row-action', 'hide-if-no-js' ) ) );
-		foreach ( $this->_actions as $action )
+		foreach ( $this->actions as $action )
 			$actions[] = '<a data-do="'.$action.'" data-comment_id="'.$comment->comment_ID.'" class="'.$action.' '.$current_status.'" title="'.esc_attr( $this->get_string( $action, 'comments', 'descriptions' ) ).'">'.$this->get_string( $action, 'comments' ).'</a>';
 
 		return $actions;

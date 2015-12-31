@@ -4,8 +4,7 @@
 @import "partials/base";
 
 @import "partials/admin.all";
-// @import "partials/admin.post";
-// @import "partials/like.admin.post";
+@import "partials/admin.table";
 @import "partials/specs.admin.post";
 @import "partials/series.admin.post";
 @import "partials/magazine.admin.post";
@@ -59,6 +58,13 @@
 			}
 		}
 
+		&.field-wrap-inputnumber {
+			input {
+				width: 32%;
+				direction: ltr;
+			}
+		}
+
 		&.field-wrap-inputtext-half {
 			input {
 				width: 49%;
@@ -80,10 +86,12 @@
 			// width: 100%;
 		}
 
+		// DEPRECATED
 		.field-textarea {
 			// width: 100%;
 		}
 
+		// DEPRECATED
 		.field-inputtext {
 			// width: 100%;
 		}

@@ -1,0 +1,39 @@
+{
+	"name": "geminorum/geditorial",
+	"description": "Our Editorial",
+	"type": "wordpress-plugin",
+	"keywords": [
+		"editorial",
+		"meta"
+	],
+	"homepage": "http://geminorum.ir/wordpress/geditorial",
+	"license": "GPL-2.0+",
+	"authors": [
+		{
+			"name": "Nasser Rafie",
+			"email": "contact@geminorum.ir",
+			"homepage": "http://geminorum.ir/",
+			"role": "Developer"
+		}
+	],
+	"support": {
+		"issues": "http://geminorum.ir/wordpress/geditorial/issues",
+		"wiki": "http://geminorum.ir/wordpress/geditorial/wiki",
+		"source": "http://geminorum.ir/wordpress/geditorial"
+	},
+	"require": {
+		"php": ">=5.3"
+	},
+	"require-dev": {
+		"erusev/parsedown-extra": "^0.7.0",
+		"mustache/mustache": "^2.5",
+		"evert/sitemap-php": "^1.2",
+		"eluceo/ical": "*",
+		"johngrogg/ics-parser": "*",
+		"sabre/vobject": "~3.4"
+	},
+	"config": {
+		"vendor-dir": "assets/vendor",
+		"vendor/bin": "assets/bin"
+	}
+}

@@ -3,15 +3,15 @@
 class gEditorialMagazineTemplates extends gEditorialTemplateCore
 {
 
-	public static function issue_shortcode( $atts, $content = NULL, $tag = '' )
+	public static function issue_shortcode( $atts = array(), $content = NULL, $tag = '' )
 	{
-		global $gEditorial, $post;
+		global $post;
 
 		$error  = FALSE;
 		$output = '';
 
-		$issue_cpt = $gEditorial->get_module_constant( 'magazine', 'issue_cpt', 'issue' );
-		$issue_tax = $gEditorial->get_module_constant( 'magazine', 'issue_tax', 'issues' );
+		$issue_cpt = gEditorial()->get_constant( 'magazine', 'issue_cpt', 'issue' );
+		$issue_tax = gEditorial()->get_constant( 'magazine', 'issue_tax', 'issues' );
 
 		$args = shortcode_atts( array(
 			'slug'       => '',
@@ -25,7 +25,7 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 			'orderby'    => 'date',
 			'order'      => 'ASC',
 			'cb'         => FALSE,
-		), $atts, $gEditorial->get_module_constant( 'magazine', 'issue_shortcode', 'issue' ) );
+		), $atts, gEditorial()->get_constant( 'magazine', 'issue_shortcode', 'issue' ) );
 
 		$key = md5( serialize( $args ) );
 		$cache = wp_cache_get( $key, $issue_cpt );
@@ -100,8 +100,8 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 
 					foreach ( $the_posts as & $the_post ) {
 
-						$in_issue_page_start = $gEditorial->meta->get_postmeta( $the_post->ID, 'in_issue_page_start', FALSE );
-						$in_issue_order      = $gEditorial->meta->get_postmeta( $the_post->ID, 'in_issue_order', FALSE );
+						$in_issue_page_start = gEditorial()->meta->get_postmeta( $the_post->ID, 'in_issue_page_start', FALSE );
+						$in_issue_order      = gEditorial()->meta->get_postmeta( $the_post->ID, 'in_issue_order', FALSE );
 
 						$order_key = ( $in_issue_page_start ? ( (int) $in_issue_page_start * 10 ) : 0 );
 						$order_key = ( $in_issue_order ? ( $order_key + (int) $in_issue_order ) : $order_key );
@@ -150,13 +150,13 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 
 	public static function span_shortcode( $atts, $content = NULL, $tag = '' )
 	{
-		global $gEditorial, $post;
+		global $post;
 
 		$error        = FALSE;
 		$title_output = '';
 
-		$issue_cpt = $gEditorial->get_module_constant( 'magazine', 'issue_cpt', 'issue' );
-		$span_tax  = $gEditorial->get_module_constant( 'magazine', 'span_tax', 'span' );
+		$issue_cpt = gEditorial()->get_constant( 'magazine', 'issue_cpt', 'issue' );
+		$span_tax  = gEditorial()->get_constant( 'magazine', 'span_tax', 'span' );
 
 		$args = shortcode_atts( array(
 			'slug'        => '',
@@ -175,7 +175,7 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 			'cb'          => FALSE,
 			'link'        => 'title', // not used yet
 			'cover'       => FALSE,
-		), $atts, $gEditorial->get_module_constant( 'magazine', 'span_shortcode', 'span' ) );
+		), $atts, gEditorial()->get_constant( 'magazine', 'span_shortcode', 'span' ) );
 
 		$key = md5( serialize( $args ) );
 		$cache = wp_cache_get( $key, $span_tax );
@@ -287,7 +287,7 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 	// FIXME: UNFINISHED
 	public static function issue( $atts = array() )
 	{
-		global $gEditorial, $post;
+		global $post;
 
 		$args = self::atts( array(
 			'id'     => $post->ID,
@@ -304,12 +304,12 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 
 	public static function the_issue( $b = '', $a = '', $f = FALSE, $post_id = NULL, $args = array() )
 	{
-		global $gEditorial, $post;
+		global $post;
 
 		if ( is_null( $post_id ) )
 			$post_id = $post->ID;
 
-		$the_issues = $gEditorial->magazine->get_issue_post( $post_id );
+		$the_issues = gEditorial()->magazine->get_issue_post( $post_id );
 		if ( FALSE === $the_issues )
 			return;
 
@@ -363,9 +363,7 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 
 	public static function issue_cover( $b = '', $a = '', $size = 'raw', $link = 'parent', $args = array() )
 	{
-		global $gEditorial;
-
-		$issue_cpt = $gEditorial->get_module_constant( 'magazine', 'issue_cpt', 'issue' );
+		$issue_cpt = gEditorial()->get_constant( 'magazine', 'issue_cpt', 'issue' );
 		$args      = self::issue_cover_parse_arg( $args, $size );
 
 		if ( 'latest' == $args['id'] )
@@ -373,7 +371,7 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 		else if ( 'random' == $args['id'] )
 			$args['id'] = self::get_random_issue();
 		else if ( 'issue' == $args['id'] )
-			$args['id'] = $gEditorial->magazine->get_issue_post( NULL, TRUE );
+			$args['id'] = gEditorial()->magazine->get_issue_post( NULL, TRUE );
 
 		$img = self::get_issue_cover( $size, $args['id'], $args['attr'], $args['def'] );
 		if ( FALSE !== $link ) {
@@ -429,10 +427,8 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 
 	public static function the_issue_cover( $b = '', $a = '', $size = 'raw', $link = 'parent', $args = array() )
 	{
-		global $gEditorial;
-
 		$args = self::issue_cover_parse_arg( $args, $size );
-		$the_issues = $gEditorial->magazine->get_issue_post( $args['id'] );
+		$the_issues = gEditorial()->magazine->get_issue_post( $args['id'] );
 
 		if ( FALSE !== $the_issues ) {
 			$result = '';
@@ -486,21 +482,17 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 	// helper for themes
 	public static function getLatestIssueID()
 	{
-		global $gEditorial;
-
-		$issue_cpt = $gEditorial->get_module_constant( 'magazine', 'issue_cpt', 'issue' );
+		$issue_cpt = gEditorial()->get_constant( 'magazine', 'issue_cpt', 'issue' );
 		return gEditorialHelper::getLastPostOrder( $issue_cpt, '', 'ID', 'publish' );
 	}
 
 	public static function get_random_issue( $object = FALSE )
 	{
-		global $gEditorial;
-
 		$the_post = get_posts( array(
 			'numberposts' => 1,
 			'orderby'     => 'rand', //'post_date',
 			// 'order'       => 'DESC',
-			'post_type'   => $gEditorial->get_module_constant( 'magazine', 'issue_cpt', 'issue' ),
+			'post_type'   => gEditorial()->get_constant( 'magazine', 'issue_cpt', 'issue' ),
 			'post_status' => 'publish',
 			// 'meta_key'    => '_thumbnail_id', // must has cover
 			'meta_query'  => array(
@@ -522,12 +514,12 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 
 	public static function issue_info( $field, $b = '', $a = '', $f = FALSE, $post_id = NULL, $args = array() )
 	{
-		global $gEditorial, $post;
+		global $post;
 
 		if ( is_null( $post_id ) )
 			$post_id = $post->ID;
 
-		$meta = $gEditorial->meta->get_postmeta( $post_id, self::sanitize_field( $field ), FALSE );
+		$meta = gEditorial()->meta->get_postmeta( $post_id, self::sanitize_field( $field ), FALSE );
 
 		if ( FALSE !== $meta ) {
 			$html = $b.( $f ? $f( $meta ) : $meta ).$a;

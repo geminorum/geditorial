@@ -1,10 +1,10 @@
 
-// From Example 3 v1.6.1
+// From Example 3 v1.6.3
 // https://github.com/jackmoore/colorbox
 
 
-// Colorbox Core Style:
-// The following CSS is consistent between example themes and should not be altered.
+	// Colorbox Core Style:
+	// The following CSS is consistent between example themes and should not be altered.
 
 #colorbox, #cboxOverlay, #cboxWrapper{position:absolute; top:0; left:0; z-index:9999; overflow:hidden;}
 #cboxWrapper {max-width:none;}
@@ -34,10 +34,10 @@
 		#cboxCurrent{position:absolute; top:-20px; right:0px; color:#ccc;}
 		#cboxLoadingGraphic{background:url(images/loading.gif) no-repeat center center;}
 
-		/* these elements are buttons, and may need to have additional styles reset to avoid unwanted base styles */
+		// these elements are buttons, and may need to have additional styles reset to avoid unwanted base styles
 		#cboxPrevious, #cboxNext, #cboxSlideshow, #cboxClose {border:0; padding:0; margin:0; overflow:visible; width:auto; background:none; }
 
-		/* avoid outlines on :active (mouseclick), but preserve outlines on :focus (tabbed navigating) */
+		// avoid outlines on :active (mouseclick), but preserve outlines on :focus (tabbed navigating)
 		#cboxPrevious:active, #cboxNext:active, #cboxSlideshow:active, #cboxClose:active {outline:0;}
 
 		#cboxSlideshow{position:absolute; top:-20px; right:90px; color:#fff;}

@@ -1,6 +1,6 @@
 jQuery(document).ready(function($) {
 
-    $('ul.geditorial-specs-new select.item-dropdown-new').change(function(){
+	$('ul.geditorial-specs-new select.item-dropdown-new').change(function(){
 		if ($(this).parents('ol.geditorial-specs-list').length) { return false; }
 
 		var selectedVal = $(this).find(":selected").val();
@@ -41,11 +41,11 @@ jQuery(document).ready(function($) {
 		// disable: true,
 		group: 'geditorial-specs',
 		handle: '.item-handle',
-        stop: function () {
+		stop: function () {
 			gEditorialSpecsReOrder();
 		}
-    // }).disableSelection();
-    });
+	// }).disableSelection();
+	});
 
 	// http://stackoverflow.com/a/14736775
 	var gEditorialSpecsReOrder = function(){

@@ -4,9 +4,7 @@
 @import "partials/base";
 
 @import "partials/admin.all";
-// @import "partials/admin.post";
-// @import "partials/like.admin.post";
-// @import "partials/specs.admin.post";
+@import "partials/admin.table";
 
 .geditorial-admin-wrap.geditorial-settings {
 
@@ -26,6 +24,22 @@
 
 			font-size: 16px;
 			line-height: 22px;
+		}
+	}
+
+	form {
+
+		h3 {
+			margin-top: 40px;
+		}
+
+
+		h3 + table.form-table {
+			margin-top: -50px;
+		}
+
+		.d2escription.no-fields {
+			margin-top: 40px;
 		}
 	}
 

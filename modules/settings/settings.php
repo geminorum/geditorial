@@ -3,38 +3,25 @@
 class gEditorialSettings extends gEditorialModuleCore
 {
 
-	var $module_name = 'settings';
-
-	public function __construct()
+	public static function module()
 	{
-		global $gEditorial;
-
-		$args = array(
-
-			'title'             => __( 'Editorial', GEDITORIAL_TEXTDOMAIN ),
-			'short_description' => __( 'WordPress, Magazine Style.', GEDITORIAL_TEXTDOMAIN ),
-
-			'slug'              => 'settings',
-			'settings_slug'     => 'geditorial-settings',
-			'configure_page_cb' => 'print_default_settings',
-			'autoload'          => TRUE,
-
-			'default_options' => array(
-				'enabled' => TRUE,
-			),
-			'settings' => array(),
+		return array(
+            'name'      => 'settings',
+            'title'     => _x( 'Editorial', 'Settings Module', GEDITORIAL_TEXTDOMAIN ),
+            'desc'      => _x( 'WordPress, Magazine Style.', 'Settings Module', GEDITORIAL_TEXTDOMAIN ),
+            'settings'  => 'geditorial-settings',
+            'configure' => 'print_default_settings',
+            'autoload'  => TRUE,
 		);
-
-		$this->module = $gEditorial->register_module( 'settings', $args );
 	}
 
-	public function setup()
+	public function setup( $partials = array() )
 	{
 		if ( ! is_admin() )
 			return;
 
-		add_action( 'admin_menu', array( &$this, 'admin_menu' ) );
-		add_action( 'wp_ajax_geditorial_settings', array( &$this, 'ajax_settings' ) );
+		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
+		add_action( 'wp_ajax_geditorial_settings', array( $this, 'ajax_settings' ) );
 	}
 
 	public function admin_menu()
@@ -44,70 +31,67 @@ class gEditorialSettings extends gEditorialModuleCore
 		$hook_settings = add_menu_page( $this->module->title,
 			$this->module->title,
 			'manage_options',
-			$this->module->settings_slug,
-			array( &$this, 'admin_settings_page' ),
+			$this->module->settings,
+			array( $this, 'admin_settings_page' ),
 			'dashicons-screenoptions'
 		);
 
-		$hook_tools = add_submenu_page( $this->module->settings_slug,
-			__( 'gEditorial Tools', GEDITORIAL_TEXTDOMAIN ),
-			_x( 'Tools', 'Admin Tools Menu Title', GEDITORIAL_TEXTDOMAIN ),
+		$hook_tools = add_submenu_page( $this->module->settings,
+			_x( 'gEditorial Tools', 'Settings Module', GEDITORIAL_TEXTDOMAIN ),
+			_x( 'Tools', 'Settings Module: Admin Tools Menu Title', GEDITORIAL_TEXTDOMAIN ),
 			'manage_options',
 			'geditorial-tools',
-			array( &$this, 'admin_tools_page' )
+			array( $this, 'admin_tools_page' )
 		);
 
-		add_action( 'load-'.$hook_settings, array( &$this, 'admin_settings_load' ) );
-		add_action( 'load-'.$hook_tools, array( &$this, 'admin_tools_load' ) );
+		add_action( 'load-'.$hook_settings, array( $this, 'admin_settings_load' ) );
+		add_action( 'load-'.$hook_tools, array( $this, 'admin_tools_load' ) );
 
-		foreach ( $gEditorial->modules as $mod_name => $mod_data ) {
+		foreach ( $gEditorial->modules as $name => &$module ) {
 
-			if ( gEditorialHelper::moduleEnabled( $mod_data->options )
-				&& $mod_data->configure_page_cb
-				&& $mod_name != $this->module->name ) {
+			if ( isset( $gEditorial->{$name} )
+				&& $module->configure
+				&& $name != $this->module->name ) {
 
-					$hook_module = add_submenu_page( $this->module->settings_slug,
-						$mod_data->title,
-						$mod_data->title,
+					if ( $hook_module = add_submenu_page( $this->module->settings,
+						$module->title,
+						$module->title,
 						'manage_options',
-						$mod_data->settings_slug,
-						array( &$this, 'admin_settings_page' )
-					);
-
-					add_action( 'load-'.$hook_module, array( &$this, 'admin_settings_load' ) );
+						$module->settings,
+						array( $this, 'admin_settings_page' )
+					) ) add_action( 'load-'.$hook_module, array( $this, 'admin_settings_load' ) );
 			}
 		}
 	}
 
 	public function admin_tools_page()
 	{
-		$uri   = gEditorialHelper::toolsURL( FALSE );
-		$sub   = isset( $_GET['sub'] ) ? trim( $_GET['sub'] ) : 'general';
-		$count = isset( $_REQUEST['count'] ) ? $_REQUEST['count'] : 0;
+        $uri = gEditorialHelper::toolsURL( FALSE );
+        $sub = isset( $_GET['sub'] ) ? trim( $_GET['sub'] ) : 'general';
 
 		$subs = apply_filters( 'geditorial_tools_subs', array(
-			'overview' => _x( 'Overview', 'gEditorial Tools', GEDITORIAL_TEXTDOMAIN ),
-			'general'  => _x( 'General', 'gEditorial Tools', GEDITORIAL_TEXTDOMAIN ),
+			'overview' => _x( 'Overview', 'Settings Module: Tools Sub', GEDITORIAL_TEXTDOMAIN ),
+			'general'  => _x( 'General', 'Settings Module: Tools Sub', GEDITORIAL_TEXTDOMAIN ),
 		) );
 
 		if ( is_super_admin() )
-			$subs['console'] = _x( 'Console', 'gEditorial Tools', GEDITORIAL_TEXTDOMAIN );
+			$subs['console'] = _x( 'Console', 'Settings Module: Tools Sub', GEDITORIAL_TEXTDOMAIN );
 
 		$messages = apply_filters( 'geditorial_tools_messages', array(
-			'emptied' => gEditorialHelper::notice( sprintf( __( '%s Meta rows Emptied!', GEDITORIAL_TEXTDOMAIN ), $count ), 'updated fade', FALSE ),
+			'emptied' => self::counted( _x( '%s Meta rows Emptied!', 'Settings Module', GEDITORIAL_TEXTDOMAIN ) ),
 		), $sub );
 
 		echo '<div class="wrap geditorial-admin-wrap geditorial-tools geditorial-tools-'.$sub.'">';
 
-			printf( '<h1>%s</h1>', __( 'gEditorial Tools', GEDITORIAL_TEXTDOMAIN ) );
+			printf( '<h1>%s</h1>', _x( 'gEditorial Tools', 'Settings Module: Page Title', GEDITORIAL_TEXTDOMAIN ) );
 
-			gEditorialHelper::headerNav( $uri, $sub, $subs );
+			self::headerNav( $uri, $sub, $subs );
 
 			if ( isset( $_GET['message'] ) ) {
 				if ( isset( $messages[$_GET['message']] ) )
 					echo $messages[$_GET['message']];
 				else
-					gEditorialHelper::notice( $_GET['message'] );
+					self::notice( $_GET['message'] );
 				$_SERVER['REQUEST_URI'] = remove_query_arg( array( 'message' ), $_SERVER['REQUEST_URI'] );
 			}
 
@@ -148,7 +132,7 @@ class gEditorialSettings extends gEditorialModuleCore
 
 					if ( isset( $post['empty_module'] ) && isset( $gEditorial->{$post['empty_module']}->meta_key ) ) {
 
-						$result = gEditorialHelper::deleteEmptyMeta( $gEditorial->{$post['empty_module']}->meta_key );
+						$result = self::deleteEmptyMeta( $gEditorial->{$post['empty_module']}->meta_key );
 
 						if ( count( $result ) )
 							self::redirect( add_query_arg( array(
@@ -159,7 +143,7 @@ class gEditorialSettings extends gEditorialModuleCore
 				}
 			}
 
-			add_action( 'geditorial_tools_sub_general', array( &$this, 'tools_sub' ), 10, 2 );
+			add_action( 'geditorial_tools_sub_general', array( $this, 'tools_sub' ), 10, 2 );
 		}
 
 		do_action( 'geditorial_tools_settings', $sub );
@@ -175,21 +159,23 @@ class gEditorialSettings extends gEditorialModuleCore
 
 			$this->tools_field_referer( $sub );
 
-			echo '<h3>'.__( 'Maintenance Tasks', GEDITORIAL_TEXTDOMAIN ).'</h3>';
+			echo '<h3>'._x( 'Maintenance Tasks', 'Settings Module', GEDITORIAL_TEXTDOMAIN ).'</h3>';
 			echo '<table class="form-table">';
 
-			echo '<tr><th scope="row">'.__( 'Upgrade Old Options', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
+			// TODO: tool for installing default terms for each module
+
+			echo '<tr><th scope="row">'._x( 'Upgrade Old Options', 'Settings Module', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
 
 			echo '<p class="submit">';
-				submit_button( __( 'Upgrade', GEDITORIAL_TEXTDOMAIN ), 'secondary', 'upgrade_old_options', FALSE ); echo '&nbsp;&nbsp;';
+				submit_button( _x( 'Upgrade', 'Settings Module', GEDITORIAL_TEXTDOMAIN ), 'secondary', 'upgrade_old_options', FALSE ); echo '&nbsp;&nbsp;';
 
-				echo gEditorialHelper::html( 'span', array(
+				echo self::html( 'span', array(
 					'class' => 'description',
-				), __( 'Will check for old options and upgrade, also delete old options', GEDITORIAL_TEXTDOMAIN ) );
+				), _x( 'Will check for old options and upgrade, also delete old options', 'Settings Module', GEDITORIAL_TEXTDOMAIN ) );
 			echo '</p>';
 
 			echo '</td></tr>';
-			echo '<tr><th scope="row">'.__( 'Empty Meta Fields', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
+			echo '<tr><th scope="row">'._x( 'Empty Meta Fields', 'Settings Module', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
 
 				$this->do_settings_field( array(
 					'type'       => 'select',
@@ -200,11 +186,11 @@ class gEditorialSettings extends gEditorialModuleCore
 				) );
 
 				echo '<p class="submit">';
-					submit_button( __( 'Empty', GEDITORIAL_TEXTDOMAIN ), 'secondary', 'custom_fields_empty', FALSE ); echo '&nbsp;&nbsp;';
+					submit_button( _x( 'Empty', 'Settings Module', GEDITORIAL_TEXTDOMAIN ), 'secondary', 'custom_fields_empty', FALSE ); echo '&nbsp;&nbsp;';
 
-					echo gEditorialHelper::html( 'span', array(
+					echo self::html( 'span', array(
 						'class' => 'description',
-					), __( 'Will delete empty meta values, solves common problems with imported posts.', GEDITORIAL_TEXTDOMAIN ) );
+					), _x( 'Will delete empty meta values, solves common problems with imported posts.', 'Settings Module', GEDITORIAL_TEXTDOMAIN ) );
 				echo '</p>';
 
 			echo '</td></tr>';
@@ -217,31 +203,33 @@ class gEditorialSettings extends gEditorialModuleCore
 		global $gEditorial;
 
 		if ( ! current_user_can( 'manage_options' ) )
-			wp_die( __( 'Cheatin&#8217; uh?' ) );
+			wp_die( __( 'Cheatin&#8217; uh?', GEDITORIAL_TEXTDOMAIN ) );
 
 		$sub = isset( $_POST['sub'] ) ? trim( $_POST['sub'] ) : 'default';
 		switch ( $sub ) {
 			case 'module_state' :
 				if ( ! wp_verify_nonce( $_POST['module_nonce'], 'geditorial-module-nonce' ) )
-					wp_die( __( 'Cheatin&#8217; uh?' ) );
+					wp_die( __( 'Cheatin&#8217; uh?', GEDITORIAL_TEXTDOMAIN ) );
 
 				if ( ! isset( $_POST['module_action'], $_POST['module_slug'] ) )
-					wp_send_json_error( gEditorialHelper::notice( _x( 'No Action of Slug!', 'Ajax Notice', GEDITORIAL_TEXTDOMAIN ), 'error', FALSE ) );
+					wp_send_json_error( self::error( _x( 'No Action of Slug!', 'Settings Module: Ajax Notice', GEDITORIAL_TEXTDOMAIN ) ) );
 
-				$module = $gEditorial->get_module_by( 'slug', sanitize_key( $_POST['module_slug'] ) );
+				$module = $gEditorial->get_module_by( 'settings', sanitize_key( $_POST['module_slug'] ) );
+
 				if ( ! $module )
-					wp_send_json_error( gEditorialHelper::notice( _x( 'Cannot find the module!', 'Ajax Notice', GEDITORIAL_TEXTDOMAIN ), 'error', FALSE ) );
+					wp_send_json_error( self::error( _x( 'Cannot find the module!', 'Settings Module: Ajax Notice', GEDITORIAL_TEXTDOMAIN ) ) );
 
 				$enabled = 'enable' == sanitize_key( $_POST['module_action'] ) ? TRUE : FALSE;
+
 				if ( $gEditorial->update_module_option( $module->name, 'enabled', $enabled ) )
-					wp_send_json_success( gEditorialHelper::notice( _x( 'Module state succesfully changed', 'Ajax Notice', GEDITORIAL_TEXTDOMAIN ), 'updated', FALSE ) );
+					wp_send_json_success( self::updated( _x( 'Module state succesfully changed', 'Settings Module: Ajax Notice', GEDITORIAL_TEXTDOMAIN ) ) );
 				else
-					wp_send_json_error( gEditorialHelper::notice( _x( 'Cannot change module state', 'Ajax Notice', GEDITORIAL_TEXTDOMAIN ), 'error', FALSE ) );
+					wp_send_json_error( self::error( _x( 'Cannot change module state', 'Settings Module: Ajax Notice', GEDITORIAL_TEXTDOMAIN ) ) );
 
 			break;
 
 			default :
-				wp_send_json_error( gEditorialHelper::notice( _x( 'Waht?!', 'Ajax Notice', GEDITORIAL_TEXTDOMAIN ), 'error', FALSE ) );
+				wp_send_json_error( self::error( _x( 'What?!', 'Settings Module: Ajax Notice', GEDITORIAL_TEXTDOMAIN ) ) );
 		}
 
 		die();
@@ -251,24 +239,22 @@ class gEditorialSettings extends gEditorialModuleCore
 	{
 		global $gEditorial;
 
-		$requested_module = $gEditorial->get_module_by( 'settings_slug', $_GET['page'] );
-		if ( ! $requested_module )
+		if ( ! $module = $gEditorial->get_module_by( 'settings', $_GET['page'] ) )
 			wp_die( __( 'Not a registered Editorial module', GEDITORIAL_TEXTDOMAIN ) );
 
-		$configure_callback = $requested_module->configure_page_cb;
-		$requested_module_name = $requested_module->name;
+		if ( isset( $gEditorial->{$module->name} ) ) {
 
-		if ( gEditorialHelper::moduleEnabledBySlug( $requested_module_name ) ) {
-
-			$this->print_default_header( $requested_module );
-			$gEditorial->$requested_module_name->$configure_callback();
-			$this->print_default_footer( $requested_module );
-			$this->print_default_signature( $requested_module );
+			$this->print_default_header( $module );
+			$gEditorial->{$module->name}->{$module->configure}();
+			$this->print_default_footer( $module );
+			$this->print_default_signature( $module );
 
 		} else {
 
-			gEditorialHelper::notice( sprintf( __( 'Module not enabled. Please enable it from the <a href="%1$s">Editorial settings page</a>.', GEDITORIAL_TEXTDOMAIN ), gEditorialHelper::settingsURL() ) );
-
+			self::notice( sprintf(
+				_x( 'Module not enabled. Please enable it from the <a href="%1$s">Editorial settings page</a>.', 'Settings Module', GEDITORIAL_TEXTDOMAIN ),
+				gEditorialHelper::settingsURL()
+			) );
 		}
 	}
 
@@ -277,60 +263,61 @@ class gEditorialSettings extends gEditorialModuleCore
 		global $gEditorial;
 
 		if ( 'settings' == $current_module->name )
-			$title = __( 'Editorial', GEDITORIAL_TEXTDOMAIN );
+			$title = _x( 'Editorial', 'Settings Module', GEDITORIAL_TEXTDOMAIN );
 		else
-			$title = sprintf( __( 'Editorial: %s', GEDITORIAL_TEXTDOMAIN ), $current_module->title )
+			$title = sprintf( _x( 'Editorial: %s', 'Settings Module', GEDITORIAL_TEXTDOMAIN ), $current_module->title )
 				.'&nbsp;<a href="'.gEditorialHelper::settingsURL().'" class="page-title-action">'
-				.__( 'Back to Editorial', GEDITORIAL_TEXTDOMAIN ).'</a>';
+				._x( 'Back to Editorial', 'Settings Module', GEDITORIAL_TEXTDOMAIN ).'</a>';
 
 		echo '<div class="wrap geditorial-admin-wrap geditorial-settings"><h1>'.$title.'</h1>';
 
 		if ( isset( $_REQUEST['message'] ) && isset( $current_module->messages[$_REQUEST['message']] ) )
-			gEditorialHelper::notice( $current_module->messages[$_REQUEST['message']] );
+			self::notice( $current_module->messages[$_REQUEST['message']] );
 
 		if ( isset( $_REQUEST['error'] ) && isset( $current_module->messages[$_REQUEST['error']] ) )
-			gEditorialHelper::notice( $current_module->messages[$_REQUEST['error']], 'error' );
+			self::notice( $current_module->messages[$_REQUEST['error']], 'error' );
 
 		echo '<div class="explanation">';
 
-		if ( $current_module->short_description )
-			echo '<h4>'.$current_module->short_description.'</h4>';
+		if ( isset( $current_module->desc ) && $current_module->desc )
+			echo '<h4>'.$current_module->desc.'</h4>';
 
-		if ( $current_module->extended_description )
-			echo wpautop( $current_module->extended_description );
+		if ( isset( $current_module->intro ) && $current_module->intro )
+			echo wpautop( $current_module->intro );
 
-		if ( method_exists( $gEditorial->{$current_module->name}, 'extended_description_after' ) )
-			$gEditorial->{$current_module->name}->extended_description_after();
+		if ( method_exists( $gEditorial->{$current_module->name}, 'intro_after' ) )
+			$gEditorial->{$current_module->name}->intro_after();
 
 		echo '<div class="clear"></div></div>';
 	}
 
 	private function print_default_settings()
 	{
-		?><div class="modules"><?php
+		echo '<div class="modules">';
 			$this->print_modules();
-		?></div> <?php
+		echo '</div>';
 	}
 
-	private function print_default_footer( $current_module )
+	private function print_default_footer( $module )
 	{
-		if ( 'settings' == $current_module->slug ) {
-			?><div class="credits">
-				<p>You're using gEditorial v<?php echo GEDITORIAL_VERSION; ?>
-				<br /><a href="https://github.com/geminorum/geditorial/issues">feedback, ideas, bug reports</a>
-				<br />gEditorial is a fork in structure of <a href="http://editflow.org/">EditFlow</a>
-				</p>
-			</div> <?php
+		if ( 'settings' == $module->name ) {
+			?><div class="credits"><p>
+				You're using gEditorial v<?php echo GEDITORIAL_VERSION; ?><br />
+				<a href="https://github.com/geminorum/geditorial/issues">feedback, ideas and bug reports</a><br />
+				gEditorial is a fork in structure of <a href="http://editflow.org/">EditFlow</a>
+			</p></div><?php
 		}
 	}
 
-	private function print_default_signature( $current_module = NULL )
+	private function print_default_signature( $module = NULL )
 	{
-		?><div class="signature"><p><?php
-			printf( __( '<a href="%1$s" title="Editorial">gEditorial</a> is a <a href="%2$s">geminorum</a> project.'),
+		echo '<div class="signature"><p>';
+
+			printf( __( '<a href="%1$s" title="Editorial">gEditorial</a> is a <a href="%2$s">geminorum</a> project.', GEDITORIAL_TEXTDOMAIN ),
 				'http://github.com/geminorum/geditorial',
 				'http://geminorum.ir/' );
-		?></p></div><div class="clear"></div></div> <?php
+
+		echo '</p></div><div class="clear"></div></div>';
 	}
 
 	private function print_modules()
@@ -339,50 +326,46 @@ class gEditorialSettings extends gEditorialModuleCore
 
 		if ( count( $gEditorial->modules ) ) {
 
-			foreach ( $gEditorial->modules as $mod_name => $mod_data ) {
+			foreach ( $gEditorial->modules as $name => &$module ) {
 
-				if ( $mod_data->autoload )
+				if ( $module->autoload )
 					continue;
-
-				$enabled = gEditorialHelper::moduleEnabled( $mod_data->options );
 
 				$classes = array(
 					'module',
-					( $enabled ? 'module-enabled' : 'module-disabled' ),
-					( $mod_data->configure_page_cb ? 'has-configure-link' : 'no-configure-link' ),
+					( isset( $gEditorial->{$name} ) ? 'module-enabled' : 'module-disabled' ),
+					( $module->configure ? 'has-configure-link' : 'no-configure-link' ),
 				);
 
-				echo '<div class="'.implode( ' ', $classes ).'" id="'.$mod_data->slug.'">';
+				echo '<div class="'.implode( ' ', $classes ).'" id="'.$module->settings.'">';
 
-				if ( $mod_data->dashicon )
-					echo '<div class="dashicons dashicons-'.$mod_data->dashicon.'"></div>';
-				else if ( $mod_data->img_url )
-					echo '<img src="'.esc_url( $mod_data->img_url ).'" class="icon" />';
+				if ( $module->dashicon )
+					echo '<div class="dashicons dashicons-'.$module->dashicon.'"></div>';
 
 				echo '<form method="get" action="'.get_admin_url( NULL, 'options.php' ).'">';
 
-					echo '<h3>'.esc_html( $mod_data->title ).'</h3>';
-					echo '<p>'.esc_html( $mod_data->short_description ).'</p>';
+					echo self::html( 'h3', $module->title );
+					echo self::html( 'p', $module->desc );
 
 					echo '<p class="actions">';
 
-						if ( $mod_data->configure_page_cb ) {
-							$configure_url = add_query_arg( 'page', $mod_data->settings_slug, get_admin_url( NULL, 'admin.php' ) );
+						if ( $module->configure ) {
+							$configure_url = add_query_arg( 'page', $module->settings, get_admin_url( NULL, 'admin.php' ) );
 							echo '<a href="'.$configure_url.'" class="button-configure button button-primary';
-							if ( ! $enabled )
+							if ( ! isset( $gEditorial->{$name} ) )
 								echo ' hidden" style="display:none;';
-							echo '">'.$mod_data->configure_link_text.'</a>';
+							echo '">'._x( 'Configure', 'Settings Module', GEDITORIAL_TEXTDOMAIN ).'</a>';
 						}
 
 						echo '<input type="submit" class="button button-primary button-toggle"';
-							if ( $enabled )
+							if ( isset( $gEditorial->{$name} ) )
 								echo ' style="display:none;"';
-							echo ' value="'.__( 'Enable', GEDITORIAL_TEXTDOMAIN ).'" />';
+							echo ' value="'._x( 'Enable', 'Settings Module', GEDITORIAL_TEXTDOMAIN ).'" />';
 
 						echo '<input type="submit" class="button button-secondary button-toggle button-remove"';
-							if ( ! $enabled )
+							if ( ! isset( $gEditorial->{$name} ) )
 								echo ' style="display:none;"';
-							echo ' value="'.__( 'Disable', GEDITORIAL_TEXTDOMAIN ).'" />';
+							echo ' value="'._x( 'Disable', 'Settings Module', GEDITORIAL_TEXTDOMAIN ).'" />';
 
 					echo '</p>';
 
@@ -394,8 +377,7 @@ class gEditorialSettings extends gEditorialModuleCore
 
 		} else {
 
-			gEditorialHelper::notice( __( 'There are no Editorial modules registered', GEDITORIAL_TEXTDOMAIN ), 'error' );
-
+			self::notice( _x( 'There are no editorial modules registered', 'Settings Module', GEDITORIAL_TEXTDOMAIN ), 'error' );
 		}
 	}
 
@@ -405,12 +387,10 @@ class gEditorialSettings extends gEditorialModuleCore
 
 		$this->admin_settings_reset( $page );
 		$this->admin_settings_save( $page );
+
 		do_action( 'geditorial_settings_load', $page );
 
-		// DEPRECATED: use 'geditorial_settings_load'
-		do_action( 'geditorial_settings_register_settings' );
-
-		$this->enqueue_asset_js();
+		$this->enqueue_asset_js();  // FIXME: the js not using the internal api!
 	}
 
 	private function admin_settings_verify( $group )
@@ -430,16 +410,17 @@ class gEditorialSettings extends gEditorialModuleCore
 			return;
 
 		global $gEditorial;
-		$module_name = sanitize_key( $_POST['geditorial_module_name'] );
+		$name = sanitize_key( $_POST['geditorial_module_name'] );
 
-		if ( ! $this->admin_settings_verify( $gEditorial->$module_name->module->group ) )
-			wp_die( __( 'Cheatin&#8217; uh?' ) );
+		if ( ! $this->admin_settings_verify( $gEditorial->{$name}->module->group ) )
+			wp_die( __( 'Cheatin&#8217; uh?', GEDITORIAL_TEXTDOMAIN ) );
 
-		$gEditorial->update_all_module_options( $gEditorial->$module_name->module->name, array(
+		$gEditorial->update_all_module_options( $gEditorial->{$name}->module->name, array(
 			'enabled' => TRUE,
 		) );
 
-		self::redirect( add_query_arg( 'message', 'settings-reset', remove_query_arg( array( 'message' ), wp_get_referer() ) ) );
+		// self::redirect( add_query_arg( 'message', 'settings-reset', remove_query_arg( array( 'message' ), wp_get_referer() ) ) );
+		self::redirect( add_query_arg( 'message', 'settings-reset', wp_get_referer() ) );
 	}
 
 	public function admin_settings_save( $page = NULL )
@@ -456,24 +437,22 @@ class gEditorialSettings extends gEditorialModuleCore
 
 		global $gEditorial;
 
-		$module_name = sanitize_key( $_POST['geditorial_module_name'] );
+		$name  = sanitize_key( $_POST['geditorial_module_name'] );
+		$group = $gEditorial->{$name}->module->group;
 
 		if ( $_POST['action'] != 'update'
-			|| $_POST['option_page'] != $gEditorial->$module_name->module->group )
-			return FALSE;
+			|| $_POST['option_page'] != $group )
+				return FALSE;
 
-		// if ( ! current_user_can( 'manage_options' ) || !wp_verify_nonce( $_POST['_wpnonce'], $gEditorial->$module_name->module->group.'-options' ) )
-		if ( ! $this->admin_settings_verify( $gEditorial->$module_name->module->group ) )
-			wp_die( __( 'Cheatin&#8217; uh?' ) );
+		// if ( ! current_user_can( 'manage_options' ) || !wp_verify_nonce( $_POST['_wpnonce'], $group.'-options' ) )
+		if ( ! $this->admin_settings_verify( $group ) )
+			wp_die( __( 'Cheatin&#8217; uh?', GEDITORIAL_TEXTDOMAIN ) );
 
-		$new_options = ( isset( $_POST[$gEditorial->$module_name->module->group] ) )
-			? $_POST[$gEditorial->$module_name->module->group] : array();
-
-		$new_options = $gEditorial->$module_name->settings_validate( $new_options );
+		$options = $gEditorial->{$name}->settings_validate( ( isset( $_POST[$group] ) ? $_POST[$group] : array() ) );
 
 		// cast our object and save the data.
-		$new_options = (object) array_merge( (array) $gEditorial->$module_name->module->options, $new_options );
-		$gEditorial->update_all_module_options( $gEditorial->$module_name->module->name, $new_options );
+		$options = (object) array_merge( (array) $gEditorial->{$name}->options, $options );
+		$gEditorial->update_all_module_options( $gEditorial->{$name}->module->name, $options );
 
 		// redirect back to the settings page that was submitted without any previous messages
 		self::redirect( add_query_arg( 'message', 'settings-updated', remove_query_arg( array( 'message' ), wp_get_referer() ) ) );

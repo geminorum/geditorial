@@ -4,9 +4,7 @@
 @import "partials/base";
 
 @import "partials/admin.all";
-// @import "partials/admin.edit";
-// @import "partials/like.admin.edit";
-// @import "partials/specs.admin.edit";
+@import "partials/admin.table";
 @import "partials/magazine.admin.edit";
 @import "partials/tweaks.admin.edit";
 @import "partials/book.admin.edit";
@@ -22,11 +20,22 @@
 	}
 
 	.column-order {
-		width: 45px;
+		width: 50px;
 	}
 
 	.column-cover {
 		width: 45px;
+		padding: 2px;
+	}
+
+	.column-cover-img {
+		max-width: 50px;
+		max-height: 60px;
+	}
+
+	.column-term-empty,
+	.column-count-empty {
+		color: #F1F1F1;
 	}
 
 	// Module: Meta

@@ -4,11 +4,7 @@
 @import "partials/base";
 
 @import "partials/admin.all";
-// @import "partials/admin.widgets";
-// @import "partials/like.admin.widgets";
-// @import "partials/specs.admin.widgets";
-// @import "partials/magazine.admin.widgets";
-// @import "partials/tweaks.admin.widgets";
+@import "partials/admin.table";
 
 .geditorial-admin-wrap-widgetform {
 	@include main-wrap();

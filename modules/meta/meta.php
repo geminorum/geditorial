@@ -3,192 +3,180 @@
 class gEditorialMeta extends gEditorialModuleCore
 {
 
-	var $module_name = 'meta';
-	var $meta_key    = '_gmeta';
+	public $meta_key = '_gmeta';
+	protected $priority_init = 12;
 
-	public function __construct()
+	public static function module()
 	{
-		global $gEditorial;
-
-		// FIXME: MUST DEPRECATE: at this point, there's no way knowing if the module is active or not!
-		// currently used on :gPeople
-		do_action( 'geditorial_meta_include' );
-
-		$args = array(
-
-			'title'                => __( 'Meta', GEDITORIAL_TEXTDOMAIN ),
-			'short_description'    => __( 'Metadata, magazine style.', GEDITORIAL_TEXTDOMAIN ),
-
+		return array(
+			'name'     => 'meta',
+			'title'    => _x( 'Meta', 'Meta Module', GEDITORIAL_TEXTDOMAIN ),
+			'desc'     => _x( 'Metadata, magazine style.', 'Meta Module', GEDITORIAL_TEXTDOMAIN ),
 			'dashicon' => 'tag',
-			'slug'     => 'meta',
-			'frontend' => TRUE,
-
-			'constants' => array(
-				'ct_tax' => 'label',
-			),
-
-			// FIXME: MUST DEPRECATE: this filter is causing much trouble!!
-			// currently used on :gPeople
-			'default_options' => apply_filters( 'geditorial_meta_default_options', array(
-				'enabled'  => FALSE,
-				'settings' => array(),
-
-				'post_types' => array(
-					'post' => TRUE,
-					'page' => FALSE,
-				),
-				'post_fields' => array(
-					'ot' => TRUE, // over-title
-					'st' => TRUE, // sub-title
-					'as' => TRUE, // author simple
-					'le' => FALSE, // lead
-					'ch' => TRUE, // column header
-					'ct' => FALSE, // column header taxonomy
-					'es' => TRUE, // external link (source)
-					'ol' => TRUE, // old link
-				),
-			) ),
-
-			'settings' => array(
-				'post_types_option' => 'post_types_option',
-				'post_types_fields' => 'post_types_fields',
-			),
-
-			'strings' => array(
-				'titles' => array(
-					'post' => array(
-						'ot'          => __( 'OverTitle', GEDITORIAL_TEXTDOMAIN ),
-						'st'          => __( 'SubTitle', GEDITORIAL_TEXTDOMAIN ),
-						'as'          => __( 'Author', GEDITORIAL_TEXTDOMAIN ),
-						'le'          => __( 'Lead', GEDITORIAL_TEXTDOMAIN ),
-						'ch'          => __( 'Column Header', GEDITORIAL_TEXTDOMAIN ),
-						'ct'          => __( 'Column Header Taxonomy', GEDITORIAL_TEXTDOMAIN ),
-						'ch_override' => __( 'Column Header Override', GEDITORIAL_TEXTDOMAIN ),
-						'es'          => __( 'External Link', GEDITORIAL_TEXTDOMAIN ),
-						'ol'          => __( 'Old Link', GEDITORIAL_TEXTDOMAIN ),
-					),
-				),
-				'descriptions' => array(
-					'post' => array(
-						'ot'          => __( 'String to place over the post title', GEDITORIAL_TEXTDOMAIN ),
-						'st'          => __( 'String to place under the post title', GEDITORIAL_TEXTDOMAIN ),
-						'as'          => __( 'String to override the post author', GEDITORIAL_TEXTDOMAIN ),
-						'le'          => __( 'Editorial paragraph presented before post content', GEDITORIAL_TEXTDOMAIN ),
-						'ch'          => __( 'String to reperesent that the post is on a column or section', GEDITORIAL_TEXTDOMAIN ),
-						'ct'          => __( 'Taxonomy for better categorizing columns', GEDITORIAL_TEXTDOMAIN ),
-						'ch_override' => __( 'Column Header Override', GEDITORIAL_TEXTDOMAIN ),
-						'es'          => __( 'URL of the external source of the post', GEDITORIAL_TEXTDOMAIN ),
-						'ol'          => __( 'URL of the post on a previous site', GEDITORIAL_TEXTDOMAIN ),
-					),
-				),
-				'misc' => array(
-					'meta_box_title'    => __( 'Metadata', GEDITORIAL_TEXTDOMAIN ),
-					'meta_column_title' => __( 'Metadata', GEDITORIAL_TEXTDOMAIN ),
-				),
-				'labels' => array(
-					'ct_tax' => array(
-						'name'                       => __( 'Column Headers', GEDITORIAL_TEXTDOMAIN ),
-						'menu_name'                  => __( 'Column Headers', GEDITORIAL_TEXTDOMAIN ),
-						'singular_name'              => __( 'Column Header', GEDITORIAL_TEXTDOMAIN ),
-						'search_items'               => __( 'Search Column Headers', GEDITORIAL_TEXTDOMAIN ),
-						'all_items'                  => __( 'All Column Headers', GEDITORIAL_TEXTDOMAIN ),
-						'parent_item'                => __( 'Parent Column Header', GEDITORIAL_TEXTDOMAIN ),
-						'parent_item_colon'          => __( 'Parent Column Header:', GEDITORIAL_TEXTDOMAIN ),
-						'edit_item'                  => __( 'Edit Column Header', GEDITORIAL_TEXTDOMAIN ),
-						'update_item'                => __( 'Update Column Header', GEDITORIAL_TEXTDOMAIN ),
-						'add_new_item'               => __( 'Add New Column Header', GEDITORIAL_TEXTDOMAIN ),
-						'new_item_name'              => __( 'New Column Header Name', GEDITORIAL_TEXTDOMAIN ),
-						'separate_items_with_commas' => __( 'Separate column headers with commas', GEDITORIAL_TEXTDOMAIN ),
-						'add_or_remove_items'        => __( 'Add or remove column headers', GEDITORIAL_TEXTDOMAIN ),
-						'choose_from_most_used'      => __( 'Choose from the most used column headers', GEDITORIAL_TEXTDOMAIN ),
-						'popular_items'              => NULL,
-					),
-				),
-			),
-			'configure_page_cb' => 'print_configure_view',
-			'settings_help_tab' => array(
-				array(
-					'id'      => 'geditorial-meta-overview',
-					'title'   => __( 'Overview', GEDITORIAL_TEXTDOMAIN ),
-					'content' => __( '<p>help-tab-content</p>', GEDITORIAL_TEXTDOMAIN ),
-				),
-				array(
-					'id'      => 'geditorial-meta-troubleshooting',
-					'title'   => __( 'Troubleshooting', GEDITORIAL_TEXTDOMAIN ),
-					'content' => __( '<p>help-tab-content</p>', GEDITORIAL_TEXTDOMAIN ),
-				),
-			),
-			'settings_help_sidebar' => sprintf(
-				__( '<p><strong>For more information</strong>:</p><p><a href="%1$s">%2$s</a></p><p><a href="%3$s">gEditorial on GitHub</a></p>', GEDITORIAL_TEXTDOMAIN ),
-				'https://github.com/geminorum/geditorial/wiki/Modules-Meta',
-				__( 'Editorial Meta Documentations', GEDITORIAL_TEXTDOMAIN ),
-				'https://github.com/geminorum/geditorial' ),
 		);
-
-		$gEditorial->register_module( $this->module_name, $args );
 	}
 
-	public function setup()
+	protected function get_global_settings()
 	{
-		add_filter( 'geditorial_tweaks_strings', array( &$this, 'tweaks_strings' ) );
+		return array(
+			'posttypes_option' => 'posttypes_option',
+			'fields_option'    => 'fields_option',
+		);
+	}
 
-		add_action( 'init', array( &$this, 'init' ) );
+	protected function get_global_constants()
+	{
+		return array(
+			'ct_tax' => 'label',
+		);
+	}
 
-		if ( is_admin() ) {
-			add_action( 'admin_init', array( &$this, 'admin_init' ) );
-			add_action( 'geditorial_settings_load', array( &$this, 'register_settings' ) );
-		} else {
-			require_once( GEDITORIAL_DIR.'modules/meta/templates.php' );
-		}
+	protected function get_global_strings()
+	{
+		return array(
+			'titles' => array(
+				'post' => array(
+					'ot'          => __( 'OverTitle', GEDITORIAL_TEXTDOMAIN ),
+					'st'          => __( 'SubTitle', GEDITORIAL_TEXTDOMAIN ),
+					'as'          => __( 'Author', GEDITORIAL_TEXTDOMAIN ),
+					'le'          => __( 'Lead', GEDITORIAL_TEXTDOMAIN ),
+					'ch'          => __( 'Column Header', GEDITORIAL_TEXTDOMAIN ),
+					'ct'          => __( 'Column Header Taxonomy', GEDITORIAL_TEXTDOMAIN ),
+					'ch_override' => __( 'Column Header Override', GEDITORIAL_TEXTDOMAIN ),
+					'es'          => __( 'External Link', GEDITORIAL_TEXTDOMAIN ),
+					'ol'          => __( 'Old Link', GEDITORIAL_TEXTDOMAIN ),
+				),
+			),
+			'descriptions' => array(
+				'post' => array(
+					'ot'          => __( 'String to place over the post title', GEDITORIAL_TEXTDOMAIN ),
+					'st'          => __( 'String to place under the post title', GEDITORIAL_TEXTDOMAIN ),
+					'as'          => __( 'String to override the post author', GEDITORIAL_TEXTDOMAIN ),
+					'le'          => __( 'Editorial paragraph presented before post content', GEDITORIAL_TEXTDOMAIN ),
+					'ch'          => __( 'String to reperesent that the post is on a column or section', GEDITORIAL_TEXTDOMAIN ),
+					'ct'          => __( 'Taxonomy for better categorizing columns', GEDITORIAL_TEXTDOMAIN ),
+					'ch_override' => __( 'Column Header Override', GEDITORIAL_TEXTDOMAIN ),
+					'es'          => __( 'URL of the external source of the post', GEDITORIAL_TEXTDOMAIN ),
+					'ol'          => __( 'URL of the post on a previous site', GEDITORIAL_TEXTDOMAIN ),
+				),
+			),
+			'misc' => array(
+				'meta_column_title'   => _x( 'Metadata', 'Meta Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'author_column_title' => _x( 'Author', 'Meta Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'meta_box_title'      => _x( 'Metadata', 'Meta Module: Meta Box Title', GEDITORIAL_TEXTDOMAIN ),
+				'meta_box_action'     => _x( 'Configure', 'Meta Module: Meta Box Action Title', GEDITORIAL_TEXTDOMAIN ),
+			),
+			'labels' => array(
+				'ct_tax' => array(
+                    'name'                       => _x( 'Column Headers', 'Meta Module: Column Header Tax Labels: Name', GEDITORIAL_TEXTDOMAIN ),
+                    'menu_name'                  => _x( 'Column Headers', 'Meta Module: Column Header Tax Labels: Menu Name', GEDITORIAL_TEXTDOMAIN ),
+                    'singular_name'              => _x( 'Column Header', 'Meta Module: Column Header Tax Labels: Singular Name', GEDITORIAL_TEXTDOMAIN ),
+                    'search_items'               => _x( 'Search Column Headers', 'Meta Module: Column Header Tax Labels', GEDITORIAL_TEXTDOMAIN ),
+                    'popular_items'              => NULL, // _x( 'Popular Column Headers', 'Meta Module: Column Header Tax Labels', GEDITORIAL_TEXTDOMAIN ),
+                    'all_items'                  => _x( 'All Column Headers', 'Meta Module: Column Header Tax Labels', GEDITORIAL_TEXTDOMAIN ),
+                    'edit_item'                  => _x( 'Edit Column Header', 'Meta Module: Column Header Tax Labels', GEDITORIAL_TEXTDOMAIN ),
+                    'view_item'                  => _x( 'View Column Header', 'Meta Module: Column Header Tax Labels', GEDITORIAL_TEXTDOMAIN ),
+                    'update_item'                => _x( 'Update Column Header', 'Meta Module: Column Header Tax Labels', GEDITORIAL_TEXTDOMAIN ),
+                    'add_new_item'               => _x( 'Add New Column Header', 'Meta Module: Column Header Tax Labels', GEDITORIAL_TEXTDOMAIN ),
+                    'new_item_name'              => _x( 'New Column Header Name', 'Meta Module: Column Header Tax Labels', GEDITORIAL_TEXTDOMAIN ),
+                    'separate_items_with_commas' => _x( 'Separate column headers with commas', 'Meta Module: Column Header Tax Labels', GEDITORIAL_TEXTDOMAIN ),
+                    'add_or_remove_items'        => _x( 'Add or remove column headers', 'Meta Module: Column Header Tax Labels', GEDITORIAL_TEXTDOMAIN ),
+                    'choose_from_most_used'      => _x( 'Choose from the most used column headers', 'Meta Module: Column Header Tax Labels', GEDITORIAL_TEXTDOMAIN ),
+                    'not_found'                  => _x( 'No column headers found.', 'Meta Module: Column Header Tax Labels', GEDITORIAL_TEXTDOMAIN ),
+                    'no_terms'                   => _x( 'No column headers', 'Meta Module: Column Header Tax Labels', GEDITORIAL_TEXTDOMAIN ),
+                    'items_list_navigation'      => _x( 'Column Headers list navigation', 'Meta Module: Column Header Tax Labels', GEDITORIAL_TEXTDOMAIN ),
+                    'items_list'                 => _x( 'Column Headers list', 'Meta Module: Column Header Tax Labels', GEDITORIAL_TEXTDOMAIN ),
+				),
+			),
+		);
+	}
+
+	protected function get_global_fields()
+	{
+		return array(
+			$this->constant( 'post_cpt' ) => array(
+				'ot' => FALSE,
+				'st' => FALSE,
+				'as' => FALSE,
+				'le' => FALSE,
+				'ch' => FALSE,
+				'ct' => FALSE,
+				'es' => FALSE,
+				'ol' => FALSE,
+			),
+			$this->constant( 'page_cpt' ) => array(
+				'ot' => FALSE,
+				'st' => FALSE,
+			),
+		);
+	}
+
+	public function setup( $partials = array() )
+	{
+		parent::setup( array(
+			'templates',
+		) );
 	}
 
 	public function tweaks_strings( $strings )
 	{
 		$new = array(
 			'taxonomies' => array(
-				$this->module->constants['ct_tax'] => array(
-					'column'     => 'taxonomy-'.$this->module->constants['ct_tax'],
+				$this->constant( 'ct_tax' ) => array(
+					'column'     => 'taxonomy-'.$this->constant( 'ct_tax' ),
 					'dashicon'   => 'admin-post',
 					'title_attr' => $this->get_string( 'name', 'ct_tax', 'labels' ),
 				),
 			),
 		);
 
-		return gEditorialHelper::parse_args_r( $new, $strings );
+		return self::parse_args_r( $new, $strings );
 	}
 
 	public function init()
 	{
 		do_action( 'geditorial_meta_init', $this->module );
 
-		$this->do_filters();
+		$this->do_globals();
 
-		$this->register_taxonomies();
+		$ct_tax_posttypes = array();
 
-		// FIXME: here must add meta_fields support to build-in posttypes / other cpts take care of themselvs!
-		// all in $this->module->fields must add support, hence the do_filters() before
+		foreach ( $this->post_types() as $post_type )
+			if ( in_array( 'ct', $this->post_type_fields( $post_type ) ) )
+				$ct_tax_posttypes[] = $post_type;
+
+		if ( count( $ct_tax_posttypes ) )
+			$this->register_taxonomy( 'ct_tax', array(), $ct_tax_posttypes );
+
+		$post_cpt = $this->constant( 'post_cpt' );
+
+		// default fields for custom post types
+		foreach ( apply_filters( 'geditorial_meta_support_post_types', array( $post_cpt ) ) as $post_type )
+			$this->add_post_type_fields( $post_type, $this->fields[$post_cpt] );
+
+		$this->add_post_type_fields( $this->constant( 'page_cpt' ) );
 	}
 
 	public function admin_init()
 	{
 		if ( current_user_can( 'import' ) )
-			add_action( 'geditorial_tools_settings', array( &$this, 'tools_settings' ) );
+			add_action( 'geditorial_tools_settings', array( $this, 'tools_settings' ) );
 
-		add_action( 'admin_print_styles', array( &$this, 'admin_print_styles' ) );
+		add_action( 'admin_print_styles', array( $this, 'admin_print_styles' ) );
 
-		add_action( 'add_meta_boxes', array( &$this, 'add_meta_boxes' ), 20, 2 );
-		add_action( 'save_post', array( &$this, 'save_post' ), 10, 2 );
+		add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ), 20, 2 );
+		add_action( 'save_post', array( $this, 'save_post' ), 10, 2 );
 
 		// SEE: http://make.wordpress.org/core/2012/12/01/more-hooks-on-the-edit-screen/
 		// add_action( 'edit_form_after_title', array( $this, 'edit_form_after_title' ) );
 
 		foreach ( $this->post_types() as $post_type ) {
-			add_filter( "manage_{$post_type}_posts_columns", array( &$this, 'manage_posts_columns' ) );
-			add_filter( "manage_{$post_type}_posts_custom_column", array( &$this, 'custom_column'), 10, 2 );
+			add_filter( "manage_{$post_type}_posts_columns", array( $this, 'manage_posts_columns' ) );
+			add_filter( "manage_{$post_type}_posts_custom_column", array( $this, 'custom_column'), 10, 2 );
 		}
 
-		add_action( 'quick_edit_custom_box', array( &$this, 'quick_edit_custom_box' ), 10, 2 );
-		// add_action( 'bulk_edit_custom_box', array( &$this, 'bulk_edit_custom_box' ) );
+		add_action( 'quick_edit_custom_box', array( $this, 'quick_edit_custom_box' ), 10, 2 );
+		// add_action( 'bulk_edit_custom_box', array( $this, 'bulk_edit_custom_box' ) );
 	}
 
 	public function admin_print_styles()
@@ -203,7 +191,7 @@ class gEditorialMeta extends gEditorialModuleCore
 
 		$localize = array(
 			'constants' => array(
-				'ct' => $this->module->constants['ct_tax'],
+				'ct' => $this->constant( 'ct_tax' ),
 			),
 		);
 
@@ -211,37 +199,6 @@ class gEditorialMeta extends gEditorialModuleCore
 			$localize[$field] = $this->get_string( $field, $screen->post_type );
 
 		$this->enqueue_asset_js( $localize, 'meta.'.$screen->base );
-	}
-
-	public function register_taxonomies()
-	{
-		$register_for = array();
-
-		foreach ( $this->post_types() as $post_type )
-			if ( in_array( 'ct', $this->post_type_fields( $post_type ) ) )
-				$register_for[] = $post_type;
-
-		if ( count( $register_for ) ) {
-			register_taxonomy( $this->module->constants['ct_tax'], $register_for, array(
-				'labels'                => $this->module->strings['labels']['ct_tax'],
-				'public'                => TRUE,
-				'show_in_nav_menus'     => TRUE,
-				'show_ui'               => TRUE,
-				'show_tagcloud'         => TRUE,
-				'hierarchical'          => FALSE,
-				'update_count_callback' => array( 'gEditorialHelper', 'update_count_callback' ),
-				'query_var'             => TRUE,
-				'rewrite'               => array(
-					'slug' => $this->module->constants['ct_tax'],
-				),
-				'capabilities' => array(
-					'manage_terms' => 'manage_categories',
-					'edit_terms'   => 'manage_categories',
-					'delete_terms' => 'manage_categories',
-					'assign_terms' => 'edit_posts'
-				)
-			) );
-		}
 	}
 
 	public function add_meta_boxes( $post_type, $post )
@@ -252,11 +209,11 @@ class gEditorialMeta extends gEditorialModuleCore
 		$this->remove_meta_box( 'ct_tax', $post_type, 'tag' );
 
 		// we use filter to override the whole functionality, not just adding the actions
-		$box_func = apply_filters( 'geditorial_meta_box_callback', array( &$this, 'default_meta_box' ), $post_type );
+		$box_func = apply_filters( 'geditorial_meta_box_callback', array( $this, 'default_meta_box' ), $post_type );
 		if ( is_callable( $box_func ) )
 			add_meta_box( 'geditorial-meta-'.$post_type, $this->get_meta_box_title(), $box_func, $post_type, 'side', 'high' );
 
-		$dbx_func = apply_filters( 'geditorial_meta_dbx_callback', array( &$this, 'default_meta_raw' ), $post_type );
+		$dbx_func = apply_filters( 'geditorial_meta_dbx_callback', array( $this, 'default_meta_raw' ), $post_type );
 		if ( is_callable( $dbx_func ) )
 			add_action( 'dbx_post_sidebar', $dbx_func, 10, 1 );
 	}
@@ -277,8 +234,8 @@ class gEditorialMeta extends gEditorialModuleCore
 		if ( in_array( 'ct', $fields ) && self::user_can( 'view', 'ct' )  ) {
 			echo '<div class="field-wrap">';
 			wp_dropdown_categories( array(
-				'taxonomy'          => $this->module->constants['ct_tax'],
-				'selected'          => gEditorialHelper::theTerm( $this->module->constants['ct_tax'], $post->ID ),
+				'taxonomy'          => $this->constant( 'ct_tax' ),
+				'selected'          => gEditorialHelper::theTerm( $this->constant( 'ct_tax' ), $post->ID ),
 				'show_option_none'  => __( '&mdash; Select &mdash;', GEDITORIAL_TEXTDOMAIN ),
 				'option_none_value' => '0',
 				'name'              => 'geditorial-meta-ct',
@@ -356,21 +313,24 @@ class gEditorialMeta extends gEditorialModuleCore
 
 			foreach ( $fields as $field ) {
 				switch ( $field ) {
-					case 'ct' :
-						$this->set_postmeta_field_term( $post_id, $field, 'ct_tax' );
-					break;
+					case 'ct':
 
-					case 'es' :
-					case 'ol' :
-						$this->set_postmeta_field_url( $postmeta, $field );
-					break;
+						gEditorialHelper::set_postmeta_field_term( $post_id, $field, $this->constant( 'ct_tax' ) );
 
-					case 'ot' :
-					case 'st' :
-					case 'ch' :
-					case 'as' :
-					case 'le' :
-						$this->set_postmeta_field_string( $postmeta, $field );
+					break;
+					case 'es':
+					case 'ol':
+
+						gEditorialHelper::set_postmeta_field_url( $postmeta, $field );
+
+					break;
+					case 'ot':
+					case 'st':
+					case 'ch':
+					case 'as':
+					case 'le':
+
+						gEditorialHelper::set_postmeta_field_string( $postmeta, $field );
 				}
 			}
 		}
@@ -388,7 +348,7 @@ class gEditorialMeta extends gEditorialModuleCore
 
 			if ( $key == 'author' ) {
 				if ( in_array( 'as', $fields ) && self::user_can( 'view', 'as' ) ) {
-					$new_columns['geditorial-meta-author'] = $this->get_string( 'as', $post_type );
+					$new_columns['geditorial-meta-author'] = $this->get_column_title( 'author', $post_type );
 				} else {
 					$new_columns[$key] = $value;
 				}
@@ -397,7 +357,9 @@ class gEditorialMeta extends gEditorialModuleCore
 			}
 
 			if ( $key == 'title' )
-				$new_columns['geditorial-meta-column'] = $this->get_string( 'meta_column_title', $post_type, 'misc' );
+				if ( ( in_array( 'ot', $fields ) && self::user_can( 'view', 'ot' ) )
+					|| ( in_array( 'st', $fields ) && self::user_can( 'view', 'st' ) ) )
+						$new_columns['geditorial-meta-column'] = $this->get_column_title( 'meta', $post_type );
 		}
 
 		return $new_columns;
@@ -421,7 +383,8 @@ class gEditorialMeta extends gEditorialModuleCore
 					echo '<div class="hidden geditorial-meta-as-value">'.$as.'</div>';
 				}
 
-				if ( 'author' != $column_name && 'gpeople' != $column_name )
+				if ( 'author' != $column_name && 'gpeople' != $column_name ) {
+					if ( isset( $as ) ) echo ' &mdash; ';
 					printf( '<small><a href="%s">%s</a></small>',
 						esc_url( add_query_arg( array(
 							'post_type' => $post->post_type,
@@ -429,16 +392,21 @@ class gEditorialMeta extends gEditorialModuleCore
 						), 'edit.php' ) ),
 						get_the_author()
 					);
+				}
 
 			break;
 			case 'geditorial-meta-column' :
 
-				echo $ot = $this->get_postmeta( $post->ID, 'ot', '' );
-				echo '<br />';
-				echo $st = $this->get_postmeta( $post->ID, 'st', '' );
-				echo '<div class="hidden geditorial-meta-ot-value">'.$ot.'</div>';
-				echo '<div class="hidden geditorial-meta-st-value">'.$st.'</div>';
-			break;
+				if ( in_array( 'ot', $fields ) && self::user_can( 'view', 'ot' ) ) {
+					echo $ot = $this->get_postmeta( $post->ID, 'ot', '' );
+					echo '<div class="hidden geditorial-meta-ot-value">'.$ot.'</div>';
+				}
+
+				if ( in_array( 'st', $fields ) && self::user_can( 'view', 'st' ) )  {
+					if ( isset( $ot ) ) echo '<br />';
+					echo $st = $this->get_postmeta( $post->ID, 'st', '' );
+					echo '<div class="hidden geditorial-meta-st-value">'.$st.'</div>';
+				}
 		}
 	}
 
@@ -463,27 +431,24 @@ class gEditorialMeta extends gEditorialModuleCore
 		wp_nonce_field( 'geditorial_meta_post_raw', '_geditorial_meta_post_raw' );
 	}
 
-	public function tools_subs( $subs )
-	{
-		$subs['meta'] = _x( 'Meta', 'Meta: tools tab title', GEDITORIAL_TEXTDOMAIN );
-		return $subs;
-	}
-
 	public function tools_messages( $messages, $sub )
 	{
-		if ( 'meta' == $sub ) {
+		if ( $this->module->name == $sub ) {
+
 			if ( isset( $_REQUEST['field'] ) && $_REQUEST['field'] ) {
 				$field = $this->get_string( $_REQUEST['field'] );
-				$messages['converted'] = gEditorialHelper::notice( sprintf( __( 'Field %s Converted', GEDITORIAL_TEXTDOMAIN ), $field ), 'updated fade', FALSE );
-				$messages['deleted'] = gEditorialHelper::notice( sprintf( __( 'Field %s Deleted', GEDITORIAL_TEXTDOMAIN ), $field ), 'updated fade', FALSE );
+				$messages['converted'] = self::updated( sprintf( __( 'Field %s Converted', GEDITORIAL_TEXTDOMAIN ), $field ) );
+				$messages['deleted'] = self::updated( sprintf( __( 'Field %s Deleted', GEDITORIAL_TEXTDOMAIN ), $field ) );
+
 			} else {
-				$messages['converted'] = $messages['deleted'] = gEditorialHelper::notice( __( 'No Field', GEDITORIAL_TEXTDOMAIN ), 'error', FALSE );
+				$messages['converted'] = $messages['deleted'] = self::error( __( 'No Field', GEDITORIAL_TEXTDOMAIN ) );
 			}
 		}
+
 		return $messages;
 	}
 
-	public function tools_sub( $settings_uri, $sub )
+	public function tools_sub( $uri, $sub )
 	{
 		echo '<form method="post" action="">';
 
@@ -500,7 +465,7 @@ class gEditorialMeta extends gEditorialModuleCore
 					$limit = isset( $post['custom_field_limit'] ) ? stripslashes( $post['custom_field_limit'] ) : FALSE;
 
 					if ( isset( $post['custom_field'] ) ) {
-						gEditorialHelper::table( array(
+						gEditorialHelper::tableList( array(
 							'post_id' => 'Post ID',
 							'meta' => 'Meta :'.$post['custom_field'],
 						), gEditorialHelper::getDBPostMetaRows( stripslashes( $post['custom_field'] ), $limit ) );
@@ -552,7 +517,7 @@ class gEditorialMeta extends gEditorialModuleCore
 
 	public function tools_settings( $sub )
 	{
-		if ( 'meta' == $sub ) {
+		if ( $this->module->name == $sub ) {
 			if ( ! empty( $_POST ) ) {
 
 				$this->tools_check_referer( $sub );
@@ -599,11 +564,11 @@ class gEditorialMeta extends gEditorialModuleCore
 				}
 			}
 
-			add_filter( 'geditorial_tools_messages', array( &$this, 'tools_messages' ), 10, 2 );
-			add_action( 'geditorial_tools_sub_meta', array( &$this, 'tools_sub' ), 10, 2 );
+			add_filter( 'geditorial_tools_messages', array( $this, 'tools_messages' ), 10, 2 );
+			add_action( 'geditorial_tools_sub_'.$this->module->name, array( $this, 'tools_sub' ), 10, 2 );
 		}
 
-		add_filter( 'geditorial_tools_subs', array( &$this, 'tools_subs' ) );
+		add_filter( 'geditorial_tools_subs', array( $this, 'tools_subs' ) );
 	}
 
 	protected function import_from_meta( $meta_key, $field, $limit = FALSE )
@@ -617,7 +582,7 @@ class gEditorialMeta extends gEditorialModuleCore
 
 			switch ( $field ) {
 				case 'ct' :
-					$this->import_to_terms( $meta, $row->post_id, $this->module->constants['ct_tax'] );
+					$this->import_to_terms( $meta, $row->post_id, $this->constant( 'ct_tax' ) );
 				break;
 
 				default :
@@ -640,7 +605,7 @@ class gEditorialMeta extends gEditorialModuleCore
 				continue;
 
 			$formatted = apply_filters( 'string_format_i18n', $val );
-			$final .= $kses ? $this->kses( $formatted ) : $formatted;
+			$final .= $kses ? gEditorialHelper::kses( $formatted ) : $formatted;
 		}
 
 		if ( $final ) {
@@ -667,7 +632,7 @@ class gEditorialMeta extends gEditorialModuleCore
 				$term = wp_insert_term( $formatted, $taxonomy );
 
 				if ( is_wp_error( $term ) ) {
-					$this->_errors[$term_name] = $term->get_error_message();
+					$this->errors[$term_name] = $term->get_error_message();
 					continue;
 				}
 			}
