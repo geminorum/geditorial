@@ -8,7 +8,7 @@ class gEditorialDrafts extends gEditorialModuleCore
 		return array(
 			'name'     => 'drafts',
 			'title'    => _x( 'Drafts', 'Drafts Module', GEDITORIAL_TEXTDOMAIN ),
-			'desc'     => _x( 'Adds a Drafts tab to the admin bar so that you can quickly access your draft blog posts. ', 'Drafts Module', GEDITORIAL_TEXTDOMAIN ),
+			'desc'     => _x( 'Adds a dropdown to the admin bar so that you can quickly access your draft blog posts.', 'Drafts Module', GEDITORIAL_TEXTDOMAIN ),
 			'dashicon' => 'filter',
 		);
 	}
