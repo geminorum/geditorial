@@ -48,7 +48,7 @@ gulp.task('default', function(){
 
 gulp.task('tinypng', function () {
 	gulp.src('./assets/images/raw/*.png')
-		.pipe(tinypng(''))
+		.pipe(tinyPNG(''))
 		.pipe(gulp.dest('./assets/images'));
 });
 
