@@ -1,21 +1,21 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gEditorial 3.1\n"
-"POT-Creation-Date: 2015-12-31 08:42+0330\n"
-"PO-Revision-Date: 2015-12-31 08:42+0330\n"
+"Project-Id-Version: gEditorial 3.2\n"
+"POT-Creation-Date: 2016-03-05 11:34+0330\n"
+"PO-Revision-Date: 2016-03-06 09:14+0330\n"
 "Last-Translator: \n"
 "Language-Team: geminorum <contact@geminorum.ir>\n"
 "Language: fa\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.6\n"
-"X-Poedit-Basepath: ..\n"
+"X-Generator: Poedit 1.8.7\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;"
 "_n_noop:1,2;_c;_nc:4c,1,2;_x:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;_ex:1,2c;"
 "esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
+"X-Poedit-Basepath: ..\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: .git\n"
 "X-Poedit-SearchPathExcluded-1: .imdone\n"
@@ -1002,17 +1002,17 @@ msgstr "همهٔ منشورات"
 #: modules/book/book.php:89
 msgctxt "Book Module: Publication CPT"
 msgid "Publication Archives"
-msgstr ""
+msgstr "بایگانی منشورات"
 
 #: modules/book/book.php:90
 msgctxt "Book Module: Publication CPT"
 msgid "Insert into publication"
-msgstr ""
+msgstr "جایگذاری در نشر"
 
 #: modules/book/book.php:91
 msgctxt "Book Module: Publication CPT"
 msgid "Uploaded to this publication"
-msgstr ""
+msgstr "بارگذاری‌شده برای این نشر"
 
 #: modules/book/book.php:92
 msgctxt "Book Module: Publication CPT"
@@ -1042,7 +1042,7 @@ msgstr ""
 #: modules/book/book.php:97
 msgctxt "Book Module: Publication CPT"
 msgid "Publications list navigation"
-msgstr ""
+msgstr "ناوبری فهرست منشورات"
 
 #: modules/book/book.php:98
 msgctxt "Book Module: Publication CPT"
@@ -1788,12 +1788,12 @@ msgstr "بایگانی فراخوان‌ها"
 #: modules/contest/contest.php:75
 msgctxt "Contest Module: Contest CPT"
 msgid "Insert into contest"
-msgstr ""
+msgstr "جایگذاری در فراخوان"
 
 #: modules/contest/contest.php:76
 msgctxt "Contest Module: Contest CPT"
 msgid "Uploaded to this contest"
-msgstr ""
+msgstr "بارگذاری‌شده برای این فراخوان"
 
 #: modules/contest/contest.php:77
 msgctxt "Contest Module: Contest CPT"
@@ -3043,12 +3043,12 @@ msgstr ""
 #: modules/event/event.php:94
 msgctxt "Event Module: Event CPT Labels"
 msgid "Insert into event"
-msgstr ""
+msgstr "جایگذاری در رویداد"
 
 #: modules/event/event.php:95
 msgctxt "Event Module: Event CPT Labels"
 msgid "Uploaded to this event"
-msgstr ""
+msgstr "بارگذاری‌شده برای این رویداد"
 
 #: modules/event/event.php:96
 msgctxt "Event Module: Event CPT Labels"
@@ -3393,17 +3393,17 @@ msgstr ""
 #: modules/gallery/gallery.php:43
 msgctxt "Gallery Module: Photo Album CPT Labels: Name"
 msgid "Photo Albums"
-msgstr ""
+msgstr "آلبوم‌های عکس"
 
 #: modules/gallery/gallery.php:44
 msgctxt "Gallery Module: Photo Album CPT Labels: Menu Name"
 msgid "Gallery"
-msgstr ""
+msgstr "گالری"
 
 #: modules/gallery/gallery.php:45
 msgctxt "Gallery Module: Photo Album CPT Labels: Singular Name"
 msgid "Photo Album"
-msgstr ""
+msgstr "آلبوم عکس"
 
 #: modules/gallery/gallery.php:46
 msgctxt "Gallery Module: Photo Album CPT Labels: Description"
@@ -3413,62 +3413,62 @@ msgstr ""
 #: modules/gallery/gallery.php:47
 msgctxt "Gallery Module: Photo Album CPT Labels"
 msgid "Add New"
-msgstr ""
+msgstr "افزودن آلبوم"
 
 #: modules/gallery/gallery.php:48
 msgctxt "Gallery Module: Photo Album CPT Labels"
 msgid "Add New Photo Album"
-msgstr ""
+msgstr "افزودن آلبوم تازه"
 
 #: modules/gallery/gallery.php:49
 msgctxt "Gallery Module: Photo Album CPT Labels"
 msgid "Edit Photo Album"
-msgstr ""
+msgstr "ویرایش آلبوم"
 
 #: modules/gallery/gallery.php:50
 msgctxt "Gallery Module: Photo Album CPT Labels"
 msgid "New Photo Album"
-msgstr ""
+msgstr "آلبوم تازه"
 
 #: modules/gallery/gallery.php:51
 msgctxt "Gallery Module: Photo Album CPT Labels"
 msgid "View Photo Album"
-msgstr ""
+msgstr "نمایش آلبوم"
 
 #: modules/gallery/gallery.php:52
 msgctxt "Gallery Module: Photo Album CPT Labels"
 msgid "Search Photo Albums"
-msgstr ""
+msgstr "جست‌وجوی آلبوم‌ها"
 
 #: modules/gallery/gallery.php:53
 msgctxt "Gallery Module: Photo Album CPT Labels"
 msgid "No photo albums found."
-msgstr ""
+msgstr "آلبوم عکس پیدا نشد."
 
 #: modules/gallery/gallery.php:54
 msgctxt "Gallery Module: Photo Album CPT Labels"
 msgid "No photo albums found in Trash."
-msgstr ""
+msgstr "آلبوم عکسی در زباله‌دان پیدا نشد."
 
 #: modules/gallery/gallery.php:55
 msgctxt "Gallery Module: Photo Album CPT Labels"
 msgid "All Photo Albums"
-msgstr ""
+msgstr "همهٔ آلبوم‌ها"
 
 #: modules/gallery/gallery.php:56
 msgctxt "Gallery Module: Photo Album CPT Labels"
 msgid "Photo Album Archives"
-msgstr ""
+msgstr "بایگانی آلبوم‌های عکس"
 
 #: modules/gallery/gallery.php:57
 msgctxt "Gallery Module: Photo Album CPT Labels"
 msgid "Insert into photo album"
-msgstr ""
+msgstr "جایگذاری در آلبوم"
 
 #: modules/gallery/gallery.php:58
 msgctxt "Gallery Module: Photo Album CPT Labels"
 msgid "Uploaded to this photo album"
-msgstr ""
+msgstr "بارگذاری‌شده برای این آلبوم"
 
 #: modules/gallery/gallery.php:59
 msgctxt "Gallery Module: Photo Album CPT Labels"
@@ -3508,27 +3508,27 @@ msgstr ""
 #: modules/gallery/gallery.php:68
 msgctxt "Gallery Module: Album Category Tax Labels: Name"
 msgid "Album Categories"
-msgstr ""
+msgstr "دسته‌های آلبوم"
 
 #: modules/gallery/gallery.php:69
 msgctxt "Gallery Module: Album Category Tax Labels: Menu Name"
 msgid "Album Categories"
-msgstr ""
+msgstr "دسته‌های آلبوم"
 
 #: modules/gallery/gallery.php:70
 msgctxt "Gallery Module: Album Category Tax Labels: Singular Name"
 msgid "Album Category"
-msgstr ""
+msgstr "دسته آلبوم"
 
 #: modules/gallery/gallery.php:71
 msgctxt "Gallery Module: Album Category Tax Labels"
 msgid "Search Album Categories"
-msgstr ""
+msgstr "جست‌وجوی دسته‌های آلبوم"
 
 #: modules/gallery/gallery.php:72
 msgctxt "Gallery Module: Album Category Tax Labels"
 msgid "All Album Categories"
-msgstr ""
+msgstr "همه دسته‌های آلبوم"
 
 #: modules/gallery/gallery.php:73
 msgctxt "Gallery Module: Album Category Tax Labels"
@@ -3558,7 +3558,7 @@ msgstr ""
 #: modules/gallery/gallery.php:78
 msgctxt "Gallery Module: Album Category Tax Labels"
 msgid "Add New Album Category"
-msgstr ""
+msgstr "افزودن دسته آلبوم تازه"
 
 #: modules/gallery/gallery.php:79
 msgctxt "Gallery Module: Album Category Tax Labels"
@@ -3688,32 +3688,32 @@ msgstr ""
 #: modules/gallery/gallery.php:109
 msgctxt "Gallery Module: Album Tag Tax Labels"
 msgid "Search Album Tags"
-msgstr ""
+msgstr "جست‌وجوی برچسب‌های آلبوم"
 
 #: modules/gallery/gallery.php:111
 msgctxt "Gallery Module: Album Tag Tax Labels"
 msgid "All Album Tags"
-msgstr ""
+msgstr "همه برچسب‌های آلبوم"
 
 #: modules/gallery/gallery.php:112
 msgctxt "Gallery Module: Album Tag Tax Labels"
 msgid "Edit Album Tag"
-msgstr ""
+msgstr "ویرایش برچسب آلبوم"
 
 #: modules/gallery/gallery.php:113
 msgctxt "Gallery Module: Album Tag Tax Labels"
 msgid "View Album Tag"
-msgstr ""
+msgstr "نمایش برچسب آلبوم"
 
 #: modules/gallery/gallery.php:114
 msgctxt "Gallery Module: Album Tag Tax Labels"
 msgid "Update Album Tag"
-msgstr ""
+msgstr "به‌روزرسانی برچسب آلبوم"
 
 #: modules/gallery/gallery.php:115
 msgctxt "Gallery Module: Album Tag Tax Labels"
 msgid "Add New Album Tag"
-msgstr ""
+msgstr "افزودن برچسب آلبوم تازه"
 
 #: modules/gallery/gallery.php:116
 msgctxt "Gallery Module: Album Tag Tax Labels"
@@ -3755,9 +3755,14 @@ msgctxt "Gallery Module: Album Tag Tax Labels"
 msgid "Album Tags list"
 msgstr ""
 
-#: modules/gallery/gallery.php:195
+#: modules/gallery/gallery.php:204
 msgctxt "Gallery Module"
 msgid "Install Default Album Cats"
+msgstr ""
+
+#: modules/gallery/gallery.php:210
+msgctxt "Gallery Module"
+msgid "Order"
 msgstr ""
 
 #: modules/like/like.php:14 modules/like/like.php:180
@@ -3809,6 +3814,16 @@ msgstr "ها؟!"
 msgctxt "Like Module"
 msgid "Unlike"
 msgstr "ناپسند"
+
+#: modules/location/location.php:20
+msgctxt "Location Module"
+msgid "Location"
+msgstr ""
+
+#: modules/location/location.php:21
+msgctxt "Location Module"
+msgid "Set of carefully customizable widgets"
+msgstr ""
 
 #: modules/magazine/magazine.php:13
 msgctxt "Magazine Module"
@@ -3978,12 +3993,12 @@ msgstr ""
 #: modules/magazine/magazine.php:108
 msgctxt "Magazine Module: Issue CPT"
 msgid "Insert into issue"
-msgstr ""
+msgstr "جایگذاری در شماره"
 
 #: modules/magazine/magazine.php:109
 msgctxt "Magazine Module: Issue CPT"
 msgid "Uploaded to this issue"
-msgstr ""
+msgstr "بارگذاری‌شده برای این پرونده"
 
 #: modules/magazine/magazine.php:110
 msgctxt "Magazine Module: Issue CPT"
@@ -4441,42 +4456,42 @@ msgstr "پیکربندی"
 #: modules/meta/meta.php:71
 msgctxt "Meta Module: Column Header Tax Labels: Name"
 msgid "Column Headers"
-msgstr ""
+msgstr "سرستون‌ها"
 
 #: modules/meta/meta.php:72
 msgctxt "Meta Module: Column Header Tax Labels: Menu Name"
 msgid "Column Headers"
-msgstr ""
+msgstr "سرستون‌ها"
 
 #: modules/meta/meta.php:73
 msgctxt "Meta Module: Column Header Tax Labels: Singular Name"
 msgid "Column Header"
-msgstr ""
+msgstr "سرستون"
 
 #: modules/meta/meta.php:74
 msgctxt "Meta Module: Column Header Tax Labels"
 msgid "Search Column Headers"
-msgstr ""
+msgstr "جست‌وجوی سرستون‌ها"
 
 #: modules/meta/meta.php:76
 msgctxt "Meta Module: Column Header Tax Labels"
 msgid "All Column Headers"
-msgstr ""
+msgstr "همهٔ سرستون‌ها"
 
 #: modules/meta/meta.php:77
 msgctxt "Meta Module: Column Header Tax Labels"
 msgid "Edit Column Header"
-msgstr ""
+msgstr "ویرایش سرستون"
 
 #: modules/meta/meta.php:78
 msgctxt "Meta Module: Column Header Tax Labels"
 msgid "View Column Header"
-msgstr ""
+msgstr "نمایش سرستون"
 
 #: modules/meta/meta.php:79
 msgctxt "Meta Module: Column Header Tax Labels"
 msgid "Update Column Header"
-msgstr ""
+msgstr "به‌روزرسانی سرستون"
 
 #: modules/meta/meta.php:80
 msgctxt "Meta Module: Column Header Tax Labels"
@@ -4516,12 +4531,12 @@ msgstr ""
 #: modules/meta/meta.php:87
 msgctxt "Meta Module: Column Header Tax Labels"
 msgid "Column Headers list navigation"
-msgstr ""
+msgstr "ناوبری فهرست سرستون‌ها"
 
 #: modules/meta/meta.php:88
 msgctxt "Meta Module: Column Header Tax Labels"
 msgid "Column Headers list"
-msgstr ""
+msgstr "فهرست سرستون‌ها"
 
 #: modules/meta/meta.php:239
 msgid "&mdash; Select &mdash;"
@@ -4673,12 +4688,12 @@ msgstr ""
 #: modules/reshare/reshare.php:61
 msgctxt "Reshare Module: Reshare CPT"
 msgid "Insert into reshare"
-msgstr ""
+msgstr "جایگذاری در بازنشر"
 
 #: modules/reshare/reshare.php:62
 msgctxt "Reshare Module: Reshare CPT"
 msgid "Uploaded to this reshare"
-msgstr ""
+msgstr "بارگذاری‌شده برای این بازنشر"
 
 #: modules/reshare/reshare.php:63
 msgctxt "Reshare Module: Reshare CPT"
@@ -5088,6 +5103,16 @@ msgctxt "Settings Module"
 msgid "There are no editorial modules registered"
 msgstr "ماژول تحریریه‌ای پیدا نشد."
 
+#: modules/sharing/sharing.php:18
+msgctxt "Sharing Module"
+msgid "Shareing"
+msgstr ""
+
+#: modules/sharing/sharing.php:19
+msgctxt "Sharing Module"
+msgid "Set of carefully customizable widgets"
+msgstr ""
+
 #: modules/sitemap/sitemap.php:15
 msgctxt "Sitemap Module"
 msgid "Sitemap"
@@ -5243,6 +5268,16 @@ msgstr "حذف کن!"
 msgctxt "Specs Module"
 msgid "Unknown Field"
 msgstr "فیلد ناشناخته"
+
+#: modules/spread/spread.php:22
+msgctxt "Spread Module"
+msgid "Spread"
+msgstr ""
+
+#: modules/spread/spread.php:23
+msgctxt "Spread Module"
+msgid "Pushing contents to services"
+msgstr ""
 
 #: modules/submit/submit.php:13 modules/submit/submit.php:47
 #: modules/submit/submit.php:319
