@@ -147,13 +147,6 @@ class gEditorialGallery extends gEditorialModuleCore
 		);
 	}
 
-	public function setup( $partials = array() )
-	{
-		parent::setup();
-
-		$this->post_types_excluded = array( $this->constant( 'album_cpt' ) );
-	}
-
 	public function after_setup_theme()
 	{
 		$this->register_post_type_thumbnail( 'album_cpt' );
@@ -164,6 +157,8 @@ class gEditorialGallery extends gEditorialModuleCore
 		do_action( 'geditorial_gallery_init', $this->module );
 
 		$this->do_globals();
+
+		$this->post_types_excluded = array( $this->constant( 'album_cpt' ) );
 
 		$this->register_post_type( 'album_cpt', array(), array( 'post_tag' ) );
 		$this->register_taxonomy( 'album_cat_tax', array(), 'album_cpt' );
