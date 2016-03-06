@@ -1,3 +1,7 @@
+### 3.2
+* main: helping if module enabled
+* gallery: exclude after global filters
+
 ### 3.1
 * enqueue front styles for drafts & estimated modules
 * skip registering alpha modules on production
