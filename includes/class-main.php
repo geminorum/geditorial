@@ -173,6 +173,12 @@ class gEditorial
 	}
 
 	// HELPER
+	public function enabled( $module )
+	{
+		return isset( $this->{$module} );
+	}
+
+	// HELPER
 	public function get_constant( $module, $key, $default = NULL )
 	{
 		return $this->{$module}->constant( $key, $default );
