@@ -310,12 +310,33 @@ class gEditorialBaseCore
 
 	public static function getFeaturedImage( $post_id, $size = 'thumbnail', $default = FALSE )
 	{
-		$post_thumbnail_id = get_post_thumbnail_id( $post_id );
-		if ( ! $post_thumbnail_id )
+		if ( ! $post_thumbnail_id = get_post_thumbnail_id( $post_id ) )
 			return $default;
 
 		$post_thumbnail_img = wp_get_attachment_image_src( $post_thumbnail_id, $size );
 		return $post_thumbnail_img[0];
+	}
+
+	public static function getFeaturedImageHTML( $post_id, $size = 'thumbnail', $link = TRUE )
+	{
+		if ( ! $post_thumbnail_id = get_post_thumbnail_id( $post_id ) )
+			return '';
+
+		$post_thumbnail_img = wp_get_attachment_image_src( $post_thumbnail_id, $size );
+
+		$image = self::html( 'img', array(
+			'src'   => $post_thumbnail_img[0],
+			'class' => 'column-cover-img',
+		) );
+
+		if ( ! $link )
+			return $image;
+
+		return self::html( 'a', array(
+			'href'   => wp_get_attachment_url( $post_thumbnail_id ),
+			'class'  => 'column-cover-link',
+			'target' => '_blank',
+		), $image );
 	}
 
 	// http://bavotasan.com/2012/trim-characters-using-php/
