@@ -1626,15 +1626,9 @@ class gEditorialModuleCore extends gEditorialBaseCore
 		}
 	}
 
-	public function column_thumb( $post_id, $size = 'thumbnail' )
+	public function column_thumb( $post_id, $size = array( 45, 72 ) )
 	{
-		if ( $cover = self::getFeaturedImage( $post_id, $size, FALSE ) ) {
-
-			echo self::html( 'img', array(
-				'src' => $cover,
-				'class' => 'column-cover-img',
-			) );
-		}
+		echo self::getFeaturedImageHTML( $post_id, $size );
 	}
 
 	public function column_count( $count, $title_attr = NULL )
