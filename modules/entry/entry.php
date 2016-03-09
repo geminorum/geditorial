@@ -30,8 +30,9 @@ class gEditorialEntry extends gEditorialModuleCore
 			'entry_cpt'         => 'entry',
 			'entry_cpt_archive' => 'entries',
 			'rewrite_prefix'    => 'entry', // wiki
-			'section_tax'       => 'section',
-			'section_shortcode' => 'section',
+			'section_tax'       => 'entry_section',
+			'section_tax_slug'  => 'entry-section',
+			'section_shortcode' => 'entry-section',
 		);
 	}
 
@@ -250,7 +251,7 @@ class gEditorialEntry extends gEditorialModuleCore
 		$error = $the_term = FALSE;
 
 		$args = shortcode_atts( array(
-			//'section' => '',
+			// 'section' => '',
 			'slug'          => '',
 			'id'            => '',
 			'title'         => 'def',
@@ -269,32 +270,42 @@ class gEditorialEntry extends gEditorialModuleCore
 
 
 		if ( $args['id'] ) {
+
 			$the_term = get_term_by( 'id', $args['id'], $this->constant( 'section_tax' ) );
 			$tax_query = array( array(
 				'taxonomy' => $this->constant( 'section_tax' ),
-				'field' => 'id',
-				'terms' => array( $args['id'] ),
+				'field'    => 'id',
+				'terms'    => array( $args['id'] ),
 			) );
+
 		} else if ( $args['slug'] ) {
+
 			$the_term = get_term_by( 'slug', $args['slug'], $this->constant( 'section_tax' ) );
 			$tax_query = array( array(
 				'taxonomy' => $this->constant( 'section_tax' ),
-				'field' => 'slug',
-				'terms' => array( $args['slug'] ),
+				'field'    => 'slug',
+				'terms'    => array( $args['slug'] ),
 			) );
+
 		} else if ( $post->post_type == $this->constant( 'entry_cpt' ) ) {
+
 			$terms = get_the_terms( $post->ID, $this->constant( 'section_tax' ) );
+
 			if ( $terms && ! is_wp_error( $terms ) ) {
+
 				foreach ( $terms as $term )
 					$term_list[] = $term->slug;
+
 				$tax_query = array( array(
 					'taxonomy' => $this->constant( 'section_tax' ),
-					'field' => 'slug',
-					'terms' => $term_list,
+					'field'    => 'slug',
+					'terms'    => $term_list,
 				) );
+
 			} else {
 				$error = TRUE;
 			}
+
 		} else {
 			$error = TRUE;
 		}
@@ -303,35 +314,44 @@ class gEditorialEntry extends gEditorialModuleCore
 			return $content;
 
 		$html = '<div>';
+
 		if ( $args['title'] && 'def' == $args['title'] ) {
 			if ( $the_term )
 				$args['title'] = $the_term->name;
 			else
 				$args['title'] = FALSE;
 		}
+
 		if ( $args['title'] )
-			$html .= '<'.$args['title_wrap'].'>'.esc_html( $args['title'] ).'</'.$args['title_wrap'].'>';
+			$html .= self::html( $args['title_wrap'], $args['title'] );
+
 		$html .= '<ul>';
 
 		$entry_query_args = array(
-			'tax_query' => $tax_query,
+			'tax_query'      => $tax_query,
 			'posts_per_page' => $args['limit'],
-			'orderby' => $args['orderby'],
-			'order' => $args['order'],
-			//'post_status' => $post_status
+			'orderby'        => $args['orderby'],
+			'order'          => $args['order'],
+			// 'post_status'    => $post_status
 		);
+
 		$entry_query = new WP_Query( $entry_query_args );
 
 		if ( $entry_query->have_posts() ) {
 			while ( $entry_query->have_posts() ) {
 				$entry_query->the_post();
+
 				$order_before = ( $args['order_before'] ? number_format_i18n( $args['order_zeroise'] ? zeroise( $post->menu_order, $args['order_zeroise'] ) : $post->menu_order ).$args['order_sep'] : '' );
 				$html .= '<li>'.$args['li_before'].'<a href="'.get_permalink().'">'.$order_before.get_the_title().'</a></li>';
 			}
+
 			$html .= '</ul></div>';
+
 			wp_reset_postdata();
+
 			return $html;
 		}
+
 		return $content;
 	}
 
