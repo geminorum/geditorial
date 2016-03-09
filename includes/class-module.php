@@ -124,9 +124,13 @@ class gEditorialModuleCore extends gEditorialBaseCore
 	}
 
 	// enabled post types for this module
-	public function post_types()
+	public function post_types( $post_types = NULL )
 	{
-		$post_types = array();
+		if ( is_null( $post_types ) )
+			$post_types = array();
+
+		else if ( ! is_array( $post_types ) )
+			$post_types = array( $this->constant( $post_types ) );
 
 		if ( isset( $this->options->post_types )
 			&& is_array( $this->options->post_types ) ) {
