@@ -48,9 +48,10 @@ class gEditorialMagazine extends gEditorialModuleCore
 			'issue_cpt_permalink' => '/%postname%',
 			'issue_cpt_p2p'       => 'related_issues',
 			'issue_tax'           => 'issues',
-			'span_tax'            => 'span',
+			'span_tax'            => 'issue_span',
+			'span_tax_slug'       => 'issue-span',
 			'issue_shortcode'     => 'issue',
-			'span_shortcode'      => 'span',
+			'span_shortcode'      => 'issue-span',
 		);
 	}
 
