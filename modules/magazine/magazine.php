@@ -26,6 +26,12 @@ class gEditorialMagazine extends gEditorialModuleCore
 		return array(
 			'_general' => array(
 				'multiple_instances',
+				array(
+					'field'       => 'issue_sections',
+					'title'       => _x( 'Issue Sections', 'Magazine Module', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Section taxonomy for issue and supported post types', 'Magazine Module', GEDITORIAL_TEXTDOMAIN ),
+					'default'     => '0',
+				),
 				'redirect_archives',
 				array(
 					'field'       => 'redirect_spans',
@@ -50,6 +56,8 @@ class gEditorialMagazine extends gEditorialModuleCore
 			'issue_tax'           => 'issues',
 			'span_tax'            => 'issue_span',
 			'span_tax_slug'       => 'issue-span',
+			'section_tax'         => 'issue_section',
+			'section_tax_slug'    => 'issue-section',
 			'issue_shortcode'     => 'issue',
 			'span_shortcode'      => 'issue-span',
 		);
@@ -153,6 +161,24 @@ class gEditorialMagazine extends gEditorialModuleCore
                     'no_terms'                   => _x( 'No spans', 'Magazine Module: Span Tax', GEDITORIAL_TEXTDOMAIN ),
                     'items_list_navigation'      => _x( 'Spans list navigation', 'Magazine Module: Span Tax', GEDITORIAL_TEXTDOMAIN ),
                     'items_list'                 => _x( 'Spans list', 'Magazine Module: Span Tax', GEDITORIAL_TEXTDOMAIN ),
+				),
+				'section_tax' => array(
+					'name'                  => _x( 'Sections', 'Magazine Module: Section Tax Labels: Name', GEDITORIAL_TEXTDOMAIN ),
+					'menu_name'             => _x( 'Sections', 'Magazine Module: Section Tax Labels: Menu Name', GEDITORIAL_TEXTDOMAIN ),
+					'singular_name'         => _x( 'Section', 'Magazine Module: Section Tax Labels: Singular Name', GEDITORIAL_TEXTDOMAIN ),
+					'search_items'          => _x( 'Search Sections', 'Magazine Module: Section Tax Labels', GEDITORIAL_TEXTDOMAIN ),
+					'all_items'             => _x( 'All Sections', 'Magazine Module: Section Tax Labels', GEDITORIAL_TEXTDOMAIN ),
+					'parent_item'           => _x( 'Parent Section', 'Magazine Module: Section Tax Labels', GEDITORIAL_TEXTDOMAIN ),
+					'parent_item_colon'     => _x( 'Parent Section:', 'Magazine Module: Section Tax Labels', GEDITORIAL_TEXTDOMAIN ),
+					'edit_item'             => _x( 'Edit Section', 'Magazine Module: Section Tax Labels', GEDITORIAL_TEXTDOMAIN ),
+					'view_item'             => _x( 'View Section', 'Magazine Module: Section Tax Labels', GEDITORIAL_TEXTDOMAIN ),
+					'update_item'           => _x( 'Update Section', 'Magazine Module: Section Tax Labels', GEDITORIAL_TEXTDOMAIN ),
+					'add_new_item'          => _x( 'Add New Section', 'Magazine Module: Section Tax Labels', GEDITORIAL_TEXTDOMAIN ),
+					'new_item_name'         => _x( 'New Section Name', 'Magazine Module: Section Tax Labels', GEDITORIAL_TEXTDOMAIN ),
+					'not_found'             => _x( 'No sections found.', 'Magazine Module: Section Tax Labels', GEDITORIAL_TEXTDOMAIN ),
+					'no_terms'              => _x( 'No sections', 'Magazine Module: Section Tax Labels', GEDITORIAL_TEXTDOMAIN ),
+					'items_list_navigation' => _x( 'Sections list navigation', 'Magazine Module: Section Tax Labels', GEDITORIAL_TEXTDOMAIN ),
+					'items_list'            => _x( 'Sections list', 'Magazine Module: Section Tax Labels', GEDITORIAL_TEXTDOMAIN ),
 				),
 			),
 			'p2p' => array(
@@ -267,6 +293,11 @@ class gEditorialMagazine extends gEditorialModuleCore
 		$this->register_taxonomy( 'span_tax', array(
 			'show_admin_column' => TRUE,
 		), 'issue_cpt' );
+
+		if ( $this->get_setting( 'issue_sections', FALSE ) )
+			$this->register_taxonomy( 'section_tax', array(
+				'hierarchical' => TRUE,
+			), $this->post_types( 'issue_cpt' ) );
 
 		$this->register_shortcode( 'issue_shortcode', array( 'gEditorialMagazineTemplates', 'issue_shortcode' ) );
 		$this->register_shortcode( 'span_shortcode', array( 'gEditorialMagazineTemplates', 'span_shortcode' ) );
