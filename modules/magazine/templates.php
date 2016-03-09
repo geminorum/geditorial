@@ -152,8 +152,8 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 	{
 		global $post;
 
-		$error        = FALSE;
-		$title_output = '';
+		$error = FALSE;
+		$title = '';
 
 		$issue_cpt = gEditorial()->get_constant( 'magazine', 'issue_cpt', 'issue' );
 		$span_tax  = gEditorial()->get_constant( 'magazine', 'span_tax', 'span' );
@@ -164,7 +164,7 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 			'title'       => '',
 			'title_wrap'  => 'h3',
 			'title_link'  => FALSE,
-			'title_title' => __( 'Permanent link to this span', GEDITORIAL_TEXTDOMAIN ), // if title_link
+			'title_title' => _x( 'Permanent link to this span', , 'Magazine Module: Span Shortcode: title attr', GEDITORIAL_TEXTDOMAIN ), // if title_link
 			'list'        => 'ul',
 			'list_class'  => 'issue-list',
 			'limit'       => -1,
@@ -223,11 +223,17 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 
 		if ( $args['title'] ) {
 
-			// TODO: get span link of $args['title_link'] is_null
-			if ( FALSE !== $args['title_link'] )
-				$args['title'] = '<a href="'.$args['title_link'].'" title="'.$args['title_title'].'">'.$args['title'].'</a>';
+			// TODO: if is_null: get span link / also check for module archive settings!
 
-			$title_output = '<'.$args['title_wrap'].' class="issue-list-title">'.$args['title'].'</'.$args['title_wrap'].'>';
+			if ( FALSE !== $args['title_link'] )
+				$args['title'] = self::html( 'a', array(
+					'href'  => $args['title_link'],
+					'title' => $args['title_title'],
+				), $args['title'] );
+
+			$title = self::html( $args['title_wrap'], array(
+				'class' => 'issue-list-title',
+			), $args['title'] );
 		}
 
 		if ( $args['future'] == 'on' ) {
@@ -451,8 +457,10 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 	{
 		if ( 'title' == $field )
 			return strip_tags( get_the_title( $id ) );
+
 		if ( $field && function_exists( 'issue_info' ) )
 			return issue_info( $field, '', '', FALSE, $id, array( 'echo' => FALSE, 'def' => $default ) );
+
 		return $default;
 	}
 

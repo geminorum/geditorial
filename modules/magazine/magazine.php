@@ -255,7 +255,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 		$this->post_types_excluded = array( $this->constant( 'issue_cpt' ) );
 
 		$this->register_post_type( 'issue_cpt', array(
-			'hierarchical'  => TRUE,
+			'hierarchical' => TRUE,
 		), array( 'post_tag' ) );
 
 		$this->register_taxonomy( 'issue_tax', array(
