@@ -156,7 +156,7 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 		$title = '';
 
 		$issue_cpt = gEditorial()->get_constant( 'magazine', 'issue_cpt', 'issue' );
-		$span_tax  = gEditorial()->get_constant( 'magazine', 'span_tax', 'span' );
+		$span_tax  = gEditorial()->get_constant( 'magazine', 'span_tax', 'issue_span' );
 
 		$args = shortcode_atts( array(
 			'slug'        => '',
@@ -164,7 +164,7 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 			'title'       => '',
 			'title_wrap'  => 'h3',
 			'title_link'  => FALSE,
-			'title_title' => _x( 'Permanent link to this span', , 'Magazine Module: Span Shortcode: title attr', GEDITORIAL_TEXTDOMAIN ), // if title_link
+			'title_title' => _x( 'Permanent link to this span', 'Magazine Module: Span Shortcode: title attr', GEDITORIAL_TEXTDOMAIN ),
 			'list'        => 'ul',
 			'list_class'  => 'issue-list',
 			'limit'       => -1,
