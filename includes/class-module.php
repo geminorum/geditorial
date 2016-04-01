@@ -1508,17 +1508,17 @@ class gEditorialModuleCore extends gEditorialBaseCore
 
 	public function get_url_settings()
 	{
-		return add_query_arg( 'page', $this->module->settings, get_admin_url( NULL, 'admin.php' ) );
+		return add_query_arg( 'page', $this->module->settings, admin_url( 'admin.php' ) );
 	}
 
 	public function get_url_tax_edit( $constant_key )
 	{
-		return add_query_arg( 'taxonomy', $this->constant( $constant_key ), get_admin_url( NULL, 'edit-tags.php' ) );
+		return self::getEditTaxLink( $this->constant( $constant_key ) );
 	}
 
 	public function get_url_post_edit( $constant_key )
 	{
-		return add_query_arg( 'post_type', $this->constant( $constant_key ), get_admin_url( NULL, 'edit.php' ) );
+		return add_query_arg( 'post_type', $this->constant( $constant_key ), admin_url( 'edit.php' ) );
 	}
 
 	public static function redirect( $location, $status = 302 )

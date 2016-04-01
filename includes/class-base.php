@@ -78,12 +78,21 @@ class gEditorialBaseCore
 		echo ' title="'.$desc.'"';
 	}
 
+	// @SEE: get_search_link()
 	public static function getSearchLink( $query = FALSE )
 	{
 		if ( defined( 'GNETWORK_SEARCH_REDIRECT' ) && GNETWORK_SEARCH_REDIRECT )
 			return $query ? add_query_arg( GNETWORK_SEARCH_QUERYID, urlencode( $query ), GNETWORK_SEARCH_URL ) : GNETWORK_SEARCH_URL;
 
 		return $query ? add_query_arg( 's', urlencode( $query ), get_option( 'home' ) ) : get_option( 'home' );
+	}
+
+	// @SEE: get_edit_term_link()
+	public static function getEditTaxLink( $taxonomy )
+	{
+		return add_query_arg( array(
+			'taxonomy' => $taxonomy,
+		), admin_url( 'edit-tags.php' ) );
 	}
 
 	// originally from P2

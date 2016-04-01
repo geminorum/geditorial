@@ -139,7 +139,7 @@ class gEditorialAlphabet extends gEditorialModuleCore
 
 	public function current_screen( $screen )
 	{
-		if ( 'edit-tags' == $screen->base
+		if ( ( 'edit-tags' == $screen->base || 'term' == $screen->base )
 			&& in_array( $screen->taxonomy, $this->taxonomies() ) ) {
 
 			// add_action( $screen->taxonomy.'_pre_add_form', array( $this, 'tax_pre_add_form' ) );
@@ -178,8 +178,9 @@ class gEditorialAlphabet extends gEditorialModuleCore
 
 		if ( ! empty( $_GET['taxonomy'] )
 			&& $_GET['taxonomy'] == $this->constant( 'alphabet_tax' )
-			&& $pagenow == 'edit-tags.php' )
-				$parent_file = 'options-general.php';
+			&& ( $pagenow == 'edit-tags.php'
+				|| $pagenow == 'term.php' ) )
+					$parent_file = 'options-general.php';
 
 		return $parent_file;
 	}
