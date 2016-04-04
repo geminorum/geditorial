@@ -24,18 +24,24 @@
 	}
 
 	.column-cover {
-		width: 45px;
+		width: 50px;
 		padding: 2px;
 	}
 
+	.column-cover-link {
+		&:focus {
+			box-shadow: none !important;
+		}
+	}
+
 	.column-cover-img {
-		max-width: 50px;
-		max-height: 60px;
+		max-width: 45px;
+		max-height: 72px;
 	}
 
 	.column-term-empty,
 	.column-count-empty {
-		color: #F1F1F1;
+		color: #f1f1fa;
 	}
 
 	// Module: Meta
