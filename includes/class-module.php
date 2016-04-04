@@ -718,7 +718,7 @@ class gEditorialModuleCore extends gEditorialBaseCore
 	{
 		return array(
 			'field'   => 'multiple_instances',
-			'title'   => _x( 'Multiple Instances', 'Module Core', GEDITORIAL_TEXTDOMAIN ),
+			'title'   => _x( 'Multiple Instances', 'Module Core: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 			'default' => '0',
 			'section' => $section,
 		);
@@ -729,8 +729,8 @@ class gEditorialModuleCore extends gEditorialBaseCore
 		return array(
 			'field'       => 'redirect_archives',
 			'type'        => 'text',
-			'title'       => _x( 'Redirect Archives', 'Module Core', GEDITORIAL_TEXTDOMAIN ),
-			'description' => _x( 'Redirect Post Type Archives to a URL', 'Module Core', GEDITORIAL_TEXTDOMAIN ),
+			'title'       => _x( 'Redirect Archives', 'Module Core: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+			'description' => _x( 'Redirect Post Type Archives to a URL', 'Module Core: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 			'default'     => '',
 			'dir'         => 'ltr',
 			'placeholder' => 'http://example.com/archives/',
@@ -743,8 +743,8 @@ class gEditorialModuleCore extends gEditorialBaseCore
 		return array(
 			'field'       => 'insert_content',
 			'type'        => 'select',
-			'title'       => _x( 'Insert in Content', 'Module Core', GEDITORIAL_TEXTDOMAIN ),
-			'description' => _x( 'Put html automatically on the content', 'Module Core', GEDITORIAL_TEXTDOMAIN ),
+			'title'       => _x( 'Insert in Content', 'Module Core: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+			'description' => _x( 'Put html automatically on the content', 'Module Core: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 			'default'     => 'none',
 			'section'     => $section,
 			'values'      => array(
@@ -752,6 +752,28 @@ class gEditorialModuleCore extends gEditorialBaseCore
 				'before' => _x( 'Before', 'Module Core: Insert in Content Option', GEDITORIAL_TEXTDOMAIN ),
 				'after'  => _x( 'After', 'Module Core: Insert in Content Option', GEDITORIAL_TEXTDOMAIN ),
 			),
+		);
+	}
+
+	public function get_settings_posttype_feeds( $section )
+	{
+		return array(
+			'field'       => 'posttype_feeds',
+			'title'       => _x( 'Feeds', 'Module Core: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+			'description' => _x( 'Supporting feeds on the posttype', 'Module Core: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+			'default'     => '0',
+			'section'     => $section,
+		);
+	}
+
+	public function get_settings_posttype_pages( $section )
+	{
+		return array(
+			'field'       => 'posttype_pages',
+			'title'       => _x( 'Pages', 'Module Core: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+			'description' => _x( 'Supporting pagination on the posttype', 'Module Core: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+			'default'     => '0',
+			'section'     => $section,
 		);
 	}
 
