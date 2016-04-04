@@ -374,7 +374,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 			),
 		);
 
-		return self::parse_args_r( $new, $strings );
+		return self::recursiveParseArgs( $new, $strings );
 	}
 
 	public function disable_months_dropdown( $false, $post_type )

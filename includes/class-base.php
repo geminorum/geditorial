@@ -242,9 +242,11 @@ class gEditorialBaseCore
 		return $register;
 	}
 
-	// https://gist.github.com/boonebgorges/5510970
+	// FIXME: DEPRICATED: use self::recursiveParseArgs()
 	public static function parse_args_r( &$a, $b )
 	{
+		self::__dep( 'self::recursiveParseArgs()' );
+
 		$a = (array) $a;
 		$b = (array) $b;
 		$r = $b;
@@ -260,34 +262,74 @@ class gEditorialBaseCore
 		return $r;
 	}
 
-	public static function linkStyleSheet( $url, $version = NULL, $media = FALSE )
+	// recursive argument parsing
+	// @REF: https://gist.github.com/boonebgorges/5510970
+	/**
+	* Values from $a override those from $b; keys in $b that don't exist
+	* in $a are passed through.
+	*
+	* This is different from array_merge_recursive(), both because of the
+	* order of preference ($a overrides $b) and because of the fact that
+	* array_merge_recursive() combines arrays deep in the tree, rather
+	* than overwriting the b array with the a array.
+	*/
+	public static function recursiveParseArgs( &$a, $b )
 	{
+		$a = (array) $a;
+		$b = (array) $b;
+		$r = $b;
+
+		foreach ( $a as $k => &$v )
+			if ( is_array( $v ) && isset( $r[$k] ) )
+				$r[$k] = self::recursiveParseArgs( $v, $r[$k] );
+			else
+				$r[$k] = $v;
+
+		return $r;
+	}
+
+	public static function linkStyleSheet( $url, $version = NULL, $media = 'all' )
+	{
+		if ( is_array( $version ) )
+			$url = add_query_arg( $version, $url );
+
+		else if ( $version )
+			$url = add_query_arg( 'ver', $version, $url );
+
 		echo "\t".self::html( 'link', array(
 			'rel'   => 'stylesheet',
-			'href'  => is_null( $version ) ? $url : add_query_arg( 'ver', $version, $url ),
+			'href'  => $url,
 			'type'  => 'text/css',
 			'media' => $media,
 		) )."\n";
 	}
 
-	public static function IP()
+	public static function IP( $pad = FALSE )
 	{
+		$ip = '';
+
 		if ( getenv( 'HTTP_CLIENT_IP' ) )
-			return getenv( 'HTTP_CLIENT_IP' );
+			$ip = getenv( 'HTTP_CLIENT_IP' );
 
-		if ( getenv( 'HTTP_X_FORWARDED_FOR' ) )
-			return getenv( 'HTTP_X_FORWARDED_FOR' );
+		else if ( getenv( 'HTTP_X_FORWARDED_FOR' ) )
+			$ip = getenv( 'HTTP_X_FORWARDED_FOR' );
 
-		if ( getenv( 'HTTP_X_FORWARDED' ) )
-			return getenv( 'HTTP_X_FORWARDED' );
+		else if ( getenv( 'HTTP_X_FORWARDED' ) )
+			$ip = getenv( 'HTTP_X_FORWARDED' );
 
-		if ( getenv( 'HTTP_FORWARDED_FOR' ) )
-			return getenv( 'HTTP_FORWARDED_FOR' );
+		else if ( getenv( 'HTTP_FORWARDED_FOR' ) )
+			$ip = getenv( 'HTTP_FORWARDED_FOR' );
 
-		if ( getenv( 'HTTP_FORWARDED' ) )
-			return getenv( 'HTTP_FORWARDED' );
+		else if ( getenv( 'HTTP_FORWARDED' ) )
+			$ip = getenv( 'HTTP_FORWARDED' );
 
-		return $_SERVER['REMOTE_ADDR'];
+		else
+			$ip = getenv( 'REMOTE_ADDR' );
+
+		if ( $pad )
+			return str_pad( $ip, 15, ' ', STR_PAD_LEFT );
+
+		return $ip;
 	}
 
 	// http://stackoverflow.com/a/17620260

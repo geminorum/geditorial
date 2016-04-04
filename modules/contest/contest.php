@@ -365,7 +365,7 @@ class gEditorialContest extends gEditorialModuleCore
 			),
 		);
 
-		return self::parse_args_r( $new, $strings );
+		return self::recursiveParseArgs( $new, $strings );
 	}
 
 	public function term_link( $link, $term, $taxonomy )

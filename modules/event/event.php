@@ -267,7 +267,7 @@ class gEditorialEvent extends gEditorialModuleCore
 			),
 		);
 
-		return self::parse_args_r( $new, $strings );
+		return self::recursiveParseArgs( $new, $strings );
 	}
 
 	public function add_meta_boxes( $post_type, $post )

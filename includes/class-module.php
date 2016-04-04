@@ -1098,7 +1098,7 @@ class gEditorialModuleCore extends gEditorialBaseCore
 	{
 		if ( $append ) {
 			$old = isset( $_COOKIE[$this->cookie] ) ? json_decode( wp_unslash( $_COOKIE[$this->cookie] ) ) : array();
-			$new = wp_json_encode( self::parse_args_r( $array, $old ) );
+			$new = wp_json_encode( self::recursiveParseArgs( $array, $old ) );
 		} else {
 			$new = wp_json_encode( $array );
 		}
@@ -1118,7 +1118,7 @@ class gEditorialModuleCore extends gEditorialBaseCore
 
 		$post_type = $this->constant( $constant_key );
 
-		$args = array_merge( array(
+		$args = self::recursiveParseArgs( $atts, array(
 			'taxonomies'  => $taxonomies,
 			'labels'      => $this->strings['labels'][$constant_key],
 			'description' => isset( $this->strings['labels'][$constant_key]['description'] ) ? $this->strings['labels'][$constant_key]['description'] : '',
@@ -1143,7 +1143,7 @@ class gEditorialModuleCore extends gEditorialBaseCore
 			'cptp_permalink_structure' => $this->constant( $constant_key.'_permalink', '/%post_id%' ),
 			// Only `%post_id%` and `%postname%` | SEE: https://github.com/torounit/simple-post-type-permalinks
 			'sptp_permalink_structure' => $this->constant( $constant_key.'_permalink', '/%post_id%' ),
-		), $atts );
+		) );
 
 		register_post_type( $post_type, $args );
 	}
@@ -1157,7 +1157,7 @@ class gEditorialModuleCore extends gEditorialBaseCore
 
 		$taxonomy = $this->constant( $constant_key );
 
-		$args = array_merge( array(
+		$args = self::recursiveParseArgs( $atts, array(
 			'labels'                => $this->strings['labels'][$constant_key],
 			'update_count_callback' => array( 'gEditorialHelper', 'update_count_callback' ),
 			'hierarchical'          => FALSE,
@@ -1176,7 +1176,7 @@ class gEditorialModuleCore extends gEditorialBaseCore
 				'delete_terms' => 'edit_others_posts', // 'manage_categories',
 				'assign_terms' => 'edit_posts', // 'edit_published_posts',
 			),
-		), $atts );
+		) );
 
 		register_taxonomy( $taxonomy, $post_types, $args );
 	}

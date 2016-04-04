@@ -398,7 +398,7 @@ class gEditorialBook extends gEditorialModuleCore
 			),
 		);
 
-		return self::parse_args_r( $new, $strings );
+		return self::recursiveParseArgs( $new, $strings );
 	}
 
 	public function do_meta_box( $post )

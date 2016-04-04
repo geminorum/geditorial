@@ -156,7 +156,7 @@ class gEditorialSeries extends gEditorialModuleCore
 			),
 		);
 
-		return self::parse_args_r( $new, $strings );
+		return self::recursiveParseArgs( $new, $strings );
 	}
 
 	public function save_post( $post_id, $post )
