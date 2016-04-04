@@ -1,6 +1,7 @@
 {
   "name": "gEditorial",
   "version": "0.3.2",
+  "description": "Our Editorial in WordPress",
   "homepage": "https://github.com/geminorum/geditorial",
   "author": {
     "name": "Nasser Rafie",
