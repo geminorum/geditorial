@@ -32,10 +32,10 @@ class gEditorialWidgetCore extends WP_Widget
 	protected function setup()
 	{
 		return array(
-			'name' => '',
+			'name'  => '',
 			'class' => '',
 			'title' => '',
-			'desc' => '',
+			'desc'  => '',
 			'flush' => array(
 				'save_post',
 				'deleted_post',
@@ -106,7 +106,7 @@ class gEditorialWidgetCore extends WP_Widget
 
 		if ( $title && isset( $instance['title_link'] ) && $instance['title_link'] )
 			$title = gEditorialHelper::html( 'a', array(
-				'href' => esc_url( $instance['title_link'] ),
+				'href' => $instance['title_link'],
 			), $title );
 
 		if ( ! $title )
