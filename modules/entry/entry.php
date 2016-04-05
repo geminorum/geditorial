@@ -142,7 +142,9 @@ class gEditorialEntry extends gEditorialModuleCore
 
 	public function setup( $partials = array() )
 	{
-		parent::setup();
+		parent::setup( array(
+			'templates',
+		) );
 
 		add_action( 'generate_rewrite_rules', array( $this, 'generate_rewrite_rules' ) );
 
@@ -164,7 +166,7 @@ class gEditorialEntry extends gEditorialModuleCore
 			'hierarchical' => TRUE,
 		), 'entry_cpt' );
 
-		$this->register_shortcode( 'section_shortcode' );
+		$this->register_shortcode( 'section_shortcode', array( 'gEditorialEntryTemplates', 'section_shortcode' ) );
 	}
 
 	public function admin_init()
@@ -207,11 +209,14 @@ class gEditorialEntry extends gEditorialModuleCore
 		foreach ( $posts_columns as $key => $value ) {
 
 			if ( $key == 'title' ) {
-				$new_columns['taxonomy-section'] = $this->get_column_title( 'section', 'entry_cpt' );
+
+				$section = $this->constant( 'section_tax' );
+
+				$new_columns['taxonomy-'.$section] = $this->get_column_title( 'section', 'entry_cpt' );
 				$new_columns['order']            = $this->get_column_title( 'order', 'entry_cpt' );
 				$new_columns[$key]               = $value;
 
-			} else if ( in_array( $key, array( 'author', 'taxonomy-section' ) ) ) {
+			} else if ( in_array( $key, array( 'author', 'taxonomy-'.$section ) ) ) {
 				continue; // he he!
 
 			} else {
@@ -243,116 +248,6 @@ class gEditorialEntry extends gEditorialModuleCore
 		);
 
 		$wp_rewrite->rules = $new_rules + $wp_rewrite->rules;
-	}
-
-	public function section_shortcode( $atts, $content = NULL, $tag = '' )
-	{
-		global $post;
-		$error = $the_term = FALSE;
-
-		$args = shortcode_atts( array(
-			// 'section' => '',
-			'slug'          => '',
-			'id'            => '',
-			'title'         => 'def',
-			'title_wrap'    => 'h3',
-			'list'          => 'ul',
-			'limit'         => -1,
-			'order'         => 'ASC',
-			'orderby'       => 'menu_order',
-			// 'future'        => TRUE,
-			'li_before'     => '',
-			'order_before'  => FALSE,
-			'order_sep'     => ' - ',
-			'order_zeroise' => FALSE,
-			'context'       => NULL,
-		), $atts, $this->constant( 'section_shortcode' ) );
-
-
-		if ( $args['id'] ) {
-
-			$the_term = get_term_by( 'id', $args['id'], $this->constant( 'section_tax' ) );
-			$tax_query = array( array(
-				'taxonomy' => $this->constant( 'section_tax' ),
-				'field'    => 'id',
-				'terms'    => array( $args['id'] ),
-			) );
-
-		} else if ( $args['slug'] ) {
-
-			$the_term = get_term_by( 'slug', $args['slug'], $this->constant( 'section_tax' ) );
-			$tax_query = array( array(
-				'taxonomy' => $this->constant( 'section_tax' ),
-				'field'    => 'slug',
-				'terms'    => array( $args['slug'] ),
-			) );
-
-		} else if ( $post->post_type == $this->constant( 'entry_cpt' ) ) {
-
-			$terms = get_the_terms( $post->ID, $this->constant( 'section_tax' ) );
-
-			if ( $terms && ! is_wp_error( $terms ) ) {
-
-				foreach ( $terms as $term )
-					$term_list[] = $term->slug;
-
-				$tax_query = array( array(
-					'taxonomy' => $this->constant( 'section_tax' ),
-					'field'    => 'slug',
-					'terms'    => $term_list,
-				) );
-
-			} else {
-				$error = TRUE;
-			}
-
-		} else {
-			$error = TRUE;
-		}
-
-		if ( $error )
-			return $content;
-
-		$html = '<div>';
-
-		if ( $args['title'] && 'def' == $args['title'] ) {
-			if ( $the_term )
-				$args['title'] = $the_term->name;
-			else
-				$args['title'] = FALSE;
-		}
-
-		if ( $args['title'] )
-			$html .= self::html( $args['title_wrap'], $args['title'] );
-
-		$html .= '<ul>';
-
-		$entry_query_args = array(
-			'tax_query'      => $tax_query,
-			'posts_per_page' => $args['limit'],
-			'orderby'        => $args['orderby'],
-			'order'          => $args['order'],
-			// 'post_status'    => $post_status
-		);
-
-		$entry_query = new WP_Query( $entry_query_args );
-
-		if ( $entry_query->have_posts() ) {
-			while ( $entry_query->have_posts() ) {
-				$entry_query->the_post();
-
-				$order_before = ( $args['order_before'] ? number_format_i18n( $args['order_zeroise'] ? zeroise( $post->menu_order, $args['order_zeroise'] ) : $post->menu_order ).$args['order_sep'] : '' );
-				$html .= '<li>'.$args['li_before'].'<a href="'.get_permalink().'">'.$order_before.get_the_title().'</a></li>';
-			}
-
-			$html .= '</ul></div>';
-
-			wp_reset_postdata();
-
-			return $html;
-		}
-
-		return $content;
 	}
 
 	// SEE: gPluginTextHelper
