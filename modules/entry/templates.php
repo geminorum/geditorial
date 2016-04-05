@@ -17,15 +17,15 @@ class gEditorialEntryTemplates extends gEditorialTemplateCore
 			'title'         => NULL, // FALSE to disable
 			'title_link'    => NULL, // FALSE to disable
 			'title_title'   => '',
-			'title_wrap'    => 'h3',
+			'title_tag'    => 'h3',
+			'title_anchor'  => 'section-',
 			'list'          => 'ul',
-			'anchor_tax'    => 'section-',
-			'anchor_cpt'    => 'entry-',
 			'limit'         => -1,
 			'future'        => 'on',
 			'li_link'       => TRUE,
 			'li_before'     => '',
 			'li_title'      => '', // use %s for post title
+			'li_anchor'     => 'entry-',
 			'order_before'  => FALSE,
 			'order_sep'     => ' - ',
 			'order_zeroise' => FALSE,
@@ -39,9 +39,8 @@ class gEditorialEntryTemplates extends gEditorialTemplateCore
 		if ( FALSE === $args['context'] )
 			return NULL;
 
-		$error = FALSE;
-		$term  = FALSE;
-		$html  = '';
+		$error = $term = FALSE;
+		$html = $tax_query = '';
 
 		$key = md5( serialize( $args ) );
 		$cache = wp_cache_get( $key, $cpt );
@@ -98,28 +97,7 @@ class gEditorialEntryTemplates extends gEditorialTemplateCore
 		if ( $error )
 			return $content;
 
-		if ( is_null( $args['title'] ) )
-			$args['title'] = $term ? sanitize_term_field( 'name', $term->name, $term->term_id, $tax, 'display' ) : FALSE;
-
-		if ( $args['title'] ) {
-			if ( is_null( $args['title_link'] ) )
-				$args['title'] = self::html( 'a', array(
-					'href'  => get_term_link( $term, $tax ),
-					'title' => $args['title_title'],
-				), $args['title'] );
-
-			else if ( $args['title_link'] )
-				$args['title'] = self::html( 'a', array(
-					'href'  => $args['title_link'],
-					'title' => $args['title_title'],
-				), $args['title'] );
-		}
-
-		if ( $args['title'] && $args['title_wrap'] )
-			$args['title'] = self::html( $args['title_wrap'], array(
-				'id'    => $term ? $args['anchor_tax'].$term->term_id : FALSE,
-				'class' => '-title',
-			), $args['title'] );
+		$args['title'] = self::shortcodeTermTitle( $args, $term );
 
 		if ( 'on' == $args['future'] )
 			$post_status = array( 'publish', 'future', 'draft' );
@@ -172,7 +150,7 @@ class gEditorialEntryTemplates extends gEditorialTemplateCore
 				}
 
 				$html .= self::html( 'li', array(
-					'id'    => $args['anchor_cpt'].$post->ID,
+					'id'    => $args['li_anchor'].$post->ID,
 					'class' => '-item',
 				), $list );
 			}

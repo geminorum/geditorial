@@ -876,22 +876,6 @@ class gEditorialBaseCore
 		return $sizes;
 	}
 
-	public static function shortcodeWrap( $html, $suffix = FALSE, $args = array(), $block = TRUE )
-	{
-		if ( isset( $args['wrap'] ) && ! $args['wrap'] )
-			return $html;
-
-		$classes = array( 'gnetwork-wrap-shortcode' );
-
-		if ( $suffix )
-			$classes[] = 'shortcode-'.$suffix;
-
-		if ( isset( $args['context'] ) && $args['context'] )
-			$classes[] = 'context-'.$args['context'];
-
-		return self::html( $block ? 'div' : 'span', array( 'class' => $classes ), $html );
-	}
-
 	// http://php.net/manual/en/function.str-word-count.php#107363
 	/***
 	* This simple utf-8 word count function (it only counts)
