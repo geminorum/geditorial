@@ -3,7 +3,7 @@
 class gEditorialEntryTemplates extends gEditorialTemplateCore
 {
 
-	public function section_shortcode( $atts, $content = NULL, $tag = '' )
+	public static function section_shortcode( $atts, $content = NULL, $tag = '' )
 	{
 		global $post;
 
