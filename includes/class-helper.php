@@ -509,14 +509,19 @@ class gEditorialHelper extends gEditorialBaseCore
 		return $gEditorial_WPImageSizes;
 	}
 
-	public static function settingsHelpLinks( $wiki_page = 'Modules', $wiki_title = NULL )
+	public static function settingsHelpLinks( $wiki_page = 'Modules', $wiki_title = NULL, $template = NULL )
 	{
 		if ( is_null( $wiki_title ) )
 			$wiki_title = _x( 'gEditorial Documentation', 'Module Helper', GEDITORIAL_TEXTDOMAIN );
 
-		return sprintf(
-			_x( '<p><strong>For more information</strong>:</p><p><a href="%1$s">%2$s</a></p><p><a href="%3$s">gEditorial on GitHub</a></p>', 'Module Helper', GEDITORIAL_TEXTDOMAIN ),
-			'https://github.com/geminorum/geditorial/wiki/'.$wiki_page, $wiki_title, 'https://github.com/geminorum/geditorial' );
+		if ( is_null( $template ) )
+			$template = '<div class="-links"><p><strong>For more information</strong>:</p><p><a href="%1$s">%2$s</a></p><p><a href="%3$s">gEditorial on GitHub</a></p></div>';
+
+		return vsprintf( $template, array(
+			'https://github.com/geminorum/geditorial/wiki/'.$wiki_page,
+			$wiki_title,
+			'https://github.com/geminorum/geditorial',
+		) );
 	}
 
 	// WORKING DRAFT
