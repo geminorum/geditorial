@@ -20,6 +20,21 @@ class gEditorialTweaks extends gEditorialModuleCore
 		return gEditorialHelper::settingsHelpLinks( 'Modules-Tweaks', _x( 'Editorial Tweaks Documentation', 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ) );
 	}
 
+	protected function settings_help_tabs()
+	{
+		return array(
+			array(
+				'id'       => 'geditorial-tweaks-checklist_tree',
+				'title'    => _x( 'Checklist Tree', 'Tweaks Module', GNETWORK_TEXTDOMAIN ),
+				'content'  => '<div class="-info"><p>If you’ve ever used categories extensively, you will have noticed that after you save a post, the checked categories appear on top of all the other ones. This can be useful if you have a lot of categories, since you don’t have to scroll.</p>
+<p>Unfortunately, this behaviour has a serious side-effect: it breaks the hierarchy. If you have deeply nested categories that don’t make sense out of context, this will completely screw you over.</p>
+<p>It preserves the category tree at all times. Just activate it and you’re good.</p>
+<p class="-from">Adopted from: <a href="https://wordpress.org/plugins/category-checklist-tree/" target="_blank">Category Checklist Tree</a> by <a href="http://scribu.net/wordpress/category-checklist-tree" target="_blank">scribu</a></p></div>',
+				'callback' => FALSE,
+			),
+		);
+	}
+
 	protected function get_global_settings()
 	{
 		return array(
@@ -28,6 +43,12 @@ class gEditorialTweaks extends gEditorialModuleCore
 					'field'       => 'group_taxonomies',
 					'title'       => _x( 'Group Taxonomies', 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Group selected taxonomies on selected post type edit pages', 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ),
+					'default'     => '0',
+				),
+				array(
+					'field'       => 'checklist_tree',
+					'title'       => _x( 'Checklist Tree', 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Preserves the category hierarchy on the post editing screen', 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ),
 					'default'     => '0',
 				),
 			),
@@ -86,6 +107,9 @@ class gEditorialTweaks extends gEditorialModuleCore
 				add_filter( 'manage_'.$post_type.'_posts_custom_column', array( $this, 'custom_column'), 10, 2 );
 			}
 		}
+
+		if ( $this->get_setting( 'checklist_tree', FALSE ) )
+			add_filter( 'wp_terms_checklist_args', array( $this, 'wp_terms_checklist_args' ) );
 	}
 
 	// TODO: check filter: "manage_taxonomies_for_{$post_type}_columns"
@@ -170,5 +194,36 @@ class gEditorialTweaks extends gEditorialModuleCore
 		echo '<textarea rows="1" cols="40" name="excerpt" id="excerpt">';
 			echo $post->post_excerpt; // textarea_escaped
 		echo '</textarea>';
+	}
+
+	// Originally based on: Category Checklist Tree v1.3.2 - 20160411
+	// by scribu: http://scribu.net/wordpress/category-checklist-tree
+	// https://wordpress.org/plugins/category-checklist-tree/
+	public function wp_terms_checklist_args( $args )
+	{
+		add_action( 'admin_footer', array( $this, 'admin_footer_checklist_tree' ) );
+		return array_merge( $args, array( 'checked_ontop' => FALSE ) );
+	}
+
+	// Scrolls to first checked category
+	public function admin_footer_checklist_tree()
+	{
+?><script type="text/javascript">
+	jQuery(function(){
+		jQuery('[id$="-all"] > ul.categorychecklist').each(function() {
+			var $list = jQuery(this);
+			var $firstChecked = $list.find(':checkbox:checked').first();
+
+			if ( !$firstChecked.length )
+				return;
+
+			var pos_first = $list.find(':checkbox').position().top;
+			var pos_checked = $firstChecked.position().top;
+
+			$list.closest('.tabs-panel').scrollTop(pos_checked - pos_first + 5);
+		});
+	});
+</script>
+<?php
 	}
 }
