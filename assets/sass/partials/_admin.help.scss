@@ -1,0 +1,31 @@
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+/// gEditorial Partials: Admin Help -------------------------------------------
+
+#contextual-help-wrap {
+
+	.contextual-help-tabs {}
+	
+	.contextual-help-tabs-wrap {
+
+		.-info,
+		.-info p {
+			direction: ltr;
+		}
+
+		.-from {
+			margin-top: 1em;
+			border-top: solid 1px #eee;
+			padding-top: 1em;
+		}
+	}
+
+	.contextual-help-sidebar {
+
+		.-links,
+		.-links p {
+			direction: ltr;
+		}
+	}
+}
