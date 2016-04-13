@@ -4,6 +4,7 @@ class gEditorialTweaks extends gEditorialModuleCore
 {
 
 	protected $priority_init = 14;
+	private $enqueued_post = FALSE;
 
 	public static function module()
 	{
@@ -25,11 +26,18 @@ class gEditorialTweaks extends gEditorialModuleCore
 		return array(
 			array(
 				'id'       => 'geditorial-tweaks-checklist_tree',
-				'title'    => _x( 'Checklist Tree', 'Tweaks Module', GNETWORK_TEXTDOMAIN ),
+				'title'    => _x( 'Checklist Tree', 'Tweaks Module: Help Tab Title', GEDITORIAL_TEXTDOMAIN ),
 				'content'  => '<div class="-info"><p>If you’ve ever used categories extensively, you will have noticed that after you save a post, the checked categories appear on top of all the other ones. This can be useful if you have a lot of categories, since you don’t have to scroll.</p>
 <p>Unfortunately, this behaviour has a serious side-effect: it breaks the hierarchy. If you have deeply nested categories that don’t make sense out of context, this will completely screw you over.</p>
 <p>It preserves the category tree at all times. Just activate it and you’re good.</p>
 <p class="-from">Adopted from: <a href="https://wordpress.org/plugins/category-checklist-tree/" target="_blank">Category Checklist Tree</a> by <a href="http://scribu.net/wordpress/category-checklist-tree" target="_blank">scribu</a></p></div>',
+				'callback' => FALSE,
+			),
+			array(
+				'id'       => 'geditorial-tweaks-category_search',
+				'title'    => _x( 'Category Search', 'Tweaks Module: Help Tab Title', GEDITORIAL_TEXTDOMAIN ),
+				'content'  => '<div class="-info"><p>Makes it quick and easy for writers to select categories related to what they are writing. As they type in the search box, categories will be shown and hidden in real time, allowing them to easily select what is relevant to their content without having to scroll through possibly hundreds of categories.</p>
+<p class="-from">Adopted from: <a href="https://wordpress.org/plugins/searchable-categories/" target="_blank">Searchable Categories</a> by <a href="http://ididntbreak.it" target="_blank">Jason Corradino</a></p></div>',
 				'callback' => FALSE,
 			),
 		);
@@ -51,6 +59,12 @@ class gEditorialTweaks extends gEditorialModuleCore
 					'description' => _x( 'Preserves the category hierarchy on the post editing screen', 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ),
 					'default'     => '0',
 				),
+				array(
+					'field'       => 'category_search',
+					'title'       => _x( 'Category Search', 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Replaces the category selector to include searching categories', 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ),
+					'default'     => '0',
+				),
 			),
 			'posttypes_option'  => 'posttypes_option',
 			'taxonomies_option' => 'taxonomies_option',
@@ -61,7 +75,9 @@ class gEditorialTweaks extends gEditorialModuleCore
 	{
 		return array(
 			'misc' => array(
-				'group_taxes_column_title' => _x( 'Taxonomies', 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ),
+				'group_taxes_column_title'    => _x( 'Taxonomies', 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ),
+				'meta_box_search_title'       => _x( 'Type to filter by', 'Tweaks Module: Meta Box Search Title', GEDITORIAL_TEXTDOMAIN ),
+				'meta_box_search_placeholder' => _x( 'Search &hellip;', 'Tweaks Module: Meta Box Search Placeholder', GEDITORIAL_TEXTDOMAIN ),
 			),
 			'taxonomies' => array(
 				'category' => array(
@@ -108,8 +124,9 @@ class gEditorialTweaks extends gEditorialModuleCore
 			}
 		}
 
-		if ( $this->get_setting( 'checklist_tree', FALSE ) )
-			add_filter( 'wp_terms_checklist_args', array( $this, 'wp_terms_checklist_args' ) );
+		if ( $this->get_setting( 'checklist_tree', FALSE )
+			|| $this->get_setting( 'category_search', FALSE ) )
+				add_filter( 'wp_terms_checklist_args', array( $this, 'wp_terms_checklist_args' ) );
 	}
 
 	// TODO: check filter: "manage_taxonomies_for_{$post_type}_columns"
@@ -196,34 +213,17 @@ class gEditorialTweaks extends gEditorialModuleCore
 		echo '</textarea>';
 	}
 
-	// Originally based on: Category Checklist Tree v1.3.2 - 20160411
-	// by scribu: http://scribu.net/wordpress/category-checklist-tree
-	// https://wordpress.org/plugins/category-checklist-tree/
 	public function wp_terms_checklist_args( $args )
 	{
-		add_action( 'admin_footer', array( $this, 'admin_footer_checklist_tree' ) );
+		if ( ! $this->enqueued_post )
+			$this->enqueued_post = $this->enqueue_asset_js( array(
+				'settings' => $this->options->settings,
+				'strings'  => array(
+					'search_title'       => $this->get_string( 'meta_box_search_title', 'post', 'misc' ),
+					'search_placeholder' => $this->get_string( 'meta_box_search_placeholder', 'post', 'misc' ),
+				),
+			), 'tweaks.post' );
+
 		return array_merge( $args, array( 'checked_ontop' => FALSE ) );
-	}
-
-	// Scrolls to first checked category
-	public function admin_footer_checklist_tree()
-	{
-?><script type="text/javascript">
-	jQuery(function(){
-		jQuery('[id$="-all"] > ul.categorychecklist').each(function() {
-			var $list = jQuery(this);
-			var $firstChecked = $list.find(':checkbox:checked').first();
-
-			if ( !$firstChecked.length )
-				return;
-
-			var pos_first = $list.find(':checkbox').position().top;
-			var pos_checked = $firstChecked.position().top;
-
-			$list.closest('.tabs-panel').scrollTop(pos_checked - pos_first + 5);
-		});
-	});
-</script>
-<?php
 	}
 }
