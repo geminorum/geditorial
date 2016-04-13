@@ -561,7 +561,7 @@ class gEditorialBaseCore
 		return $list;
 	}
 
-	public static function getTaxonomies( $with_post_type = FALSE )
+	public static function getTaxonomies( $with = FALSE )
 	{
 		$list = array();
 
@@ -573,11 +573,15 @@ class gEditorialBaseCore
 		if ( $taxonomies ) {
 			foreach ( $taxonomies as $taxonomy ) {
 				if ( ! empty( $taxonomy->labels->menu_name )  ) {
-					if ( $with_post_type ) {
+
+					if ( 'type' == $with )
 						$list[$taxonomy->name] = $taxonomy->labels->menu_name.' ('.implode( _x( ', ', 'Module Helper: Post Type Seperator', GEDITORIAL_TEXTDOMAIN ), $taxonomy->object_type ).')';
-					} else {
+
+					else if ( 'name' == $with )
+						$list[$taxonomy->name] = $taxonomy->labels->menu_name.' ('.$taxonomy->name.')';
+
+					else
 						$list[$taxonomy->name] = $taxonomy->labels->menu_name;
-					}
 				}
 			}
 		}

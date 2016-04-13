@@ -229,7 +229,7 @@ class gEditorialWidgetCore extends WP_Widget
 		$html = '';
 		$tax = isset( $instance[$field] ) ? $instance[$field] : $default;
 
-		foreach ( gEditorialHelper::getTaxonomies( TRUE ) as $name => $title )
+		foreach ( gEditorialHelper::getTaxonomies( 'type' ) as $name => $title )
 			$html .= gEditorialHelper::html( 'option', array(
 				'value'    => $name,
 				'selected' => $tax == $name,
