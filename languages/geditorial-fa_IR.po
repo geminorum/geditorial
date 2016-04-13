@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gEditorial 3.2\n"
-"POT-Creation-Date: 2016-03-05 11:34+0330\n"
-"PO-Revision-Date: 2016-03-06 09:14+0330\n"
+"Project-Id-Version: gEditorial 3.3\n"
+"POT-Creation-Date: 2016-04-13 06:48+0430\n"
+"PO-Revision-Date: 2016-04-13 07:11+0430\n"
 "Last-Translator: \n"
 "Language-Team: geminorum <contact@geminorum.ir>\n"
 "Language: fa\n"
@@ -23,18 +23,18 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-3: assets\n"
 "X-Poedit-SearchPathExcluded-4: node_modules\n"
 
-#: includes/class-base.php:383
+#: includes/class-base.php:455
 #, php-format
 msgctxt "Module Core"
 msgid "%s Counted!"
 msgstr "%s شمرده شد!"
 
-#: includes/class-base.php:498
+#: includes/class-base.php:570
 msgctxt "Module Helper: Post Type Seperator"
 msgid ", "
 msgstr "، "
 
-#: includes/class-base.php:776
+#: includes/class-base.php:848
 msgctxt "Module Helper"
 msgid "Undefined Image Size"
 msgstr "اندازه نامشخص"
@@ -89,198 +89,210 @@ msgctxt "Module Helper"
 msgid "gEditorial Documentation"
 msgstr "مستندات تحریریه"
 
-#: includes/class-helper.php:518
-#, php-format
-msgctxt "Module Helper"
-msgid ""
-"<p><strong>For more information</strong>:</p><p><a href=\"%1$s\">%2$s</a></"
-"p><p><a href=\"%3$s\">gEditorial on GitHub</a></p>"
-msgstr ""
-
-#: includes/class-helper.php:530
+#: includes/class-helper.php:535
 #, php-format
 msgctxt "Module Helper: Help Screen Title"
 msgid "%s Overview"
 msgstr "%s در یک نگاه"
 
-#: includes/class-helper.php:569
+#: includes/class-helper.php:574
 #, php-format
 msgid "#%d (no title)"
 msgstr ""
 
-#: includes/class-module.php:159
+#: includes/class-module.php:163
 msgctxt "Module Core"
 msgid "Posts"
 msgstr "نوشته‌ها"
 
-#: includes/class-module.php:160
+#: includes/class-module.php:164
 msgctxt "Module Core"
 msgid "Pages"
 msgstr "برگه‌ها"
 
-#: includes/class-module.php:279
+#: includes/class-module.php:283
 msgctxt "Module Core"
 msgid "Enable for Post Types"
 msgstr "فعال برای این نوع نوشته‌ها"
 
-#: includes/class-module.php:295
+#: includes/class-module.php:299
 msgctxt "Module Core"
 msgid "Enable for Taxonomies"
 msgstr "فعال برای این رده‌بندی‌ها"
 
-#: includes/class-module.php:311
+#: includes/class-module.php:315
 #, php-format
 msgctxt "Module Core"
 msgid "Fields for %s"
 msgstr "فیلد‌ها برای %s"
 
-#: includes/class-module.php:411
+#: includes/class-module.php:415
 msgctxt "Module Core"
 msgid "Select All Fields"
 msgstr "انتخاب همهٔ فیلدها"
 
-#: includes/class-module.php:418
+#: includes/class-module.php:422
 msgctxt "Module Core"
 msgid "No fields supported"
 msgstr "فیلدی پیدا نشد."
 
-#: includes/class-module.php:437
+#: includes/class-module.php:441
 msgctxt "Module Core"
 msgid "Back to Editorial"
 msgstr "بازگشت به تحریریه"
 
-#: includes/class-module.php:706
+#: includes/class-module.php:710
 msgctxt "Module Core"
 msgid "Editor Button"
 msgstr "دکمه ویرایشگر"
 
-#: includes/class-module.php:707
+#: includes/class-module.php:711
 msgctxt "Module Core"
 msgid "Adding an editor button to insert the shortcodes"
 msgstr "اضافه کردن یک دکمه ویرایشگر برای وارد کردن شورت‌کدها"
 
-#: includes/class-module.php:717
-msgctxt "Module Core"
+#: includes/class-module.php:721
+msgctxt "Module Core: Setting Title"
 msgid "Multiple Instances"
-msgstr "اجازه انتخاب چندگانه"
+msgstr ""
 
-#: includes/class-module.php:728
-msgctxt "Module Core"
+#: includes/class-module.php:732
+msgctxt "Module Core: Setting Title"
 msgid "Redirect Archives"
-msgstr "تغییر نشانی بایگانی"
+msgstr ""
 
-#: includes/class-module.php:729
-msgctxt "Module Core"
+#: includes/class-module.php:733
+msgctxt "Module Core: Setting Description"
 msgid "Redirect Post Type Archives to a URL"
-msgstr "تغییر مسیر بایگانی نوشته به نشانی جدید"
+msgstr ""
 
-#: includes/class-module.php:742
-msgctxt "Module Core"
+#: includes/class-module.php:746
+msgctxt "Module Core: Setting Title"
 msgid "Insert in Content"
-msgstr "گذاشتن در متن"
-
-#: includes/class-module.php:743
-msgctxt "Module Core"
-msgid "Put html automatically on the content"
-msgstr "جاسازی خودکار در متن نوشته"
+msgstr ""
 
 #: includes/class-module.php:747
+msgctxt "Module Core: Setting Description"
+msgid "Put html automatically on the content"
+msgstr ""
+
+#: includes/class-module.php:751
 msgctxt "Module Core: Insert in Content Option"
 msgid "No"
 msgstr "نه"
 
-#: includes/class-module.php:748
+#: includes/class-module.php:752
 msgctxt "Module Core: Insert in Content Option"
 msgid "Before"
 msgstr "پیش"
 
-#: includes/class-module.php:749
+#: includes/class-module.php:753
 msgctxt "Module Core: Insert in Content Option"
 msgid "After"
 msgstr "پس"
 
-#: includes/class-module.php:796
+#: includes/class-module.php:762
+msgctxt "Module Core: Setting Title"
+msgid "Feeds"
+msgstr ""
+
+#: includes/class-module.php:763
+msgctxt "Module Core: Setting Description"
+msgid "Supporting feeds on the posttype"
+msgstr ""
+
+#: includes/class-module.php:773
+msgctxt "Module Core: Setting Title"
+msgid "Pages"
+msgstr ""
+
+#: includes/class-module.php:774
+msgctxt "Module Core: Setting Description"
+msgid "Supporting pagination on the posttype"
+msgstr ""
+
+#: includes/class-module.php:822
 msgctxt "Module Core"
 msgid "Save Changes"
 msgstr "ذخیره تغییرات"
 
-#: includes/class-module.php:797
+#: includes/class-module.php:823
 msgctxt "Module Core"
 msgid "Reset Settings"
 msgstr "بازنشانی تنظیمات اولیه"
 
-#: includes/class-module.php:797
+#: includes/class-module.php:823
 msgctxt "Module Core"
 msgid "Are you sure? This operation can not be undone."
 msgstr "مطمئنید؟ این دستور قابل بازگشت نیست."
 
-#: includes/class-module.php:879
+#: includes/class-module.php:905
 msgctxt "Module Core: Settings Field Option"
 msgid "Disabled"
 msgstr "غیرفعال"
 
-#: includes/class-module.php:884
+#: includes/class-module.php:910
 msgctxt "Module Core: Settings Field Option"
 msgid "Enabled"
 msgstr "فعال"
 
-#: includes/class-module.php:1025
+#: includes/class-module.php:1051
 msgctxt "Module Core: WP Dropdown Pages Option None"
 msgid "&mdash; Select Page &mdash;"
 msgstr "&mdash; انتخاب برگه &mdash;"
 
-#: includes/class-module.php:1069
+#: includes/class-module.php:1095
 msgctxt "Module Core"
 msgid "Error: settings type undefined."
 msgstr "خطا: این نوع تعریف نشده است."
 
-#: includes/class-module.php:1194
+#: includes/class-module.php:1220
 #, php-format
 msgctxt "Module Core: Post Updated Messages"
 msgid "%1$s updated. <a href=\"%3$s\">View %2$s</a>"
 msgstr "%1$s به‌روز شد. <a href=\"%3$s\">دیدن %2$s</a>"
 
-#: includes/class-module.php:1200
+#: includes/class-module.php:1226
 msgctxt "Module Core: Post Updated Messages"
 msgid "Custom field updated."
 msgstr "زمینه‌های دل‌خواه به‌روز شد."
 
-#: includes/class-module.php:1201
+#: includes/class-module.php:1227
 msgctxt "Module Core: Post Updated Messages"
 msgid "Custom field deleted."
 msgstr "زمینه‌های دل‌خواه حذف شد."
 
-#: includes/class-module.php:1203
+#: includes/class-module.php:1229
 #, php-format
 msgctxt "Module Core: Post Updated Messages"
 msgid "%s updated."
 msgstr "%s به‌روز شد."
 
-#: includes/class-module.php:1205
+#: includes/class-module.php:1231
 #, php-format
 msgctxt "Module Core: Post Updated Messages"
 msgid "%1$s restored to revision from %2$s"
 msgstr ""
 
-#: includes/class-module.php:1210
+#: includes/class-module.php:1236
 #, php-format
 msgctxt "Module Core: Post Updated Messages"
 msgid "%1$s published. <a href=\"%3$s\">View %2$s</a>"
 msgstr "%1$s منتشر شد. <a href=\"%3$s\">دیدن %2$s</a>"
 
-#: includes/class-module.php:1216
+#: includes/class-module.php:1242
 #, php-format
 msgctxt "Module Core: Post Updated Messages"
 msgid "%s saved."
 msgstr "%s ذخیره شد."
 
-#: includes/class-module.php:1218
+#: includes/class-module.php:1244
 #, php-format
 msgctxt "Module Core: Post Updated Messages"
 msgid "%1$s submitted. <a target=\"_blank\" href=\"%3$s\">Preview %2$s</a>"
 msgstr "%1$s ارسال شد. <a target=\"_blank\" href=\"%3$s\">پیش‌نمایش %2$s</a>"
 
-#: includes/class-module.php:1224
+#: includes/class-module.php:1250
 #, php-format
 msgctxt "Module Core: Post Updated Messages"
 msgid ""
@@ -288,59 +300,59 @@ msgid ""
 "\">Preview %2$s</a>"
 msgstr ""
 
-#: includes/class-module.php:1228
+#: includes/class-module.php:1254
 msgid "M j, Y @ G:i"
 msgstr ""
 
-#: includes/class-module.php:1231
+#: includes/class-module.php:1257
 #, php-format
 msgctxt "Module Core: Post Updated Messages"
 msgid "%1$s draft updated. <a target=\"_blank\" href=\"%3$s\">Preview %2$s</a>"
 msgstr ""
 "%1$s پیش‌نویس به‌روز شد. <a target=\"_blank\" href=\"%3$s\">پیش‌نمایش %2$s</a>"
 
-#: includes/class-module.php:1379
+#: includes/class-module.php:1405
 #, php-format
 msgctxt "Module Core: MetaBox Tax Dropdown: Select Option None"
 msgid "&mdash; Select %s &mdash;"
 msgstr "&mdash; انتخاب %s &mdash;"
 
-#: includes/class-module.php:1406
+#: includes/class-module.php:1432
 msgctxt "Module Core: Title Attr"
 msgid "Order"
 msgstr "ترتیب"
 
-#: includes/class-module.php:1407
+#: includes/class-module.php:1433
 msgctxt "Module Core: Placeholder"
 msgid "Order"
 msgstr "ترتیب"
 
-#: includes/class-module.php:1426
+#: includes/class-module.php:1452
 msgctxt "Module Core: MetaBox Parent Dropdown: Select Option None"
 msgid "&mdash; no parent &mdash;"
 msgstr "&mdash; بدون مادر &mdash;"
 
-#: includes/class-module.php:1486
+#: includes/class-module.php:1512
 msgctxt "Module Core: MetaBox default title"
 msgid "Settings"
 msgstr "تنظیمات"
 
-#: includes/class-module.php:1493
+#: includes/class-module.php:1519
 msgctxt "Module Core: MetaBox default action"
 msgid "Configure"
 msgstr "پیکربندی"
 
-#: includes/class-module.php:1643
+#: includes/class-module.php:1663
 msgctxt "Module Core: No Count Title Attribute"
 msgid "No Count"
 msgstr "بدون شمارش"
 
-#: includes/class-module.php:1667
+#: includes/class-module.php:1687
 msgctxt "Module Core: Term Seperator"
 msgid ", "
 msgstr ""
 
-#: includes/class-module.php:1673
+#: includes/class-module.php:1693
 msgctxt "Module Core: No Count Term Attribute"
 msgid "No Term"
 msgstr "بدون رده‌بندی"
@@ -423,7 +435,7 @@ msgstr "الفبا"
 #: modules/alphabet/alphabet.php:14
 msgctxt "Alphabet Module"
 msgid "A to Z Glossaries for Post Types, Taxonomies and Users"
-msgstr ""
+msgstr "فهرست الفبایی برای نوشته‌ها، رده‌بندی‌ها و کاربران"
 
 #: modules/alphabet/alphabet.php:42
 msgctxt "Alphabet Module"
@@ -443,7 +455,7 @@ msgstr ""
 #: modules/alphabet/alphabet.php:45
 msgctxt "Alphabet Module"
 msgid "&mdash; Choose an Alphabet &mdash;"
-msgstr ""
+msgstr "&mdash; انتخاب کنید &mdash;"
 
 #: modules/alphabet/alphabet.php:50
 msgctxt "Alphabet Module: Alphabet Tax Labels: Name"
@@ -498,7 +510,7 @@ msgstr ""
 #: modules/alphabet/alphabet.php:61
 msgctxt "Alphabet Module: Alphabet Tax Labels"
 msgid "Separate alphabets with commas"
-msgstr ""
+msgstr "با کامای لاتین جدا کنید"
 
 #: modules/alphabet/alphabet.php:62
 msgctxt "Alphabet Module: Alphabet Tax Labels"
@@ -508,12 +520,12 @@ msgstr ""
 #: modules/alphabet/alphabet.php:63
 msgctxt "Alphabet Module: Alphabet Tax Labels"
 msgid "Choose from the most used alphabets"
-msgstr ""
+msgstr "انتخاب از میان بیشتر استفاده‌شده‌ها"
 
 #: modules/alphabet/alphabet.php:64
 msgctxt "Alphabet Module: Alphabet Tax Labels"
 msgid "No alphabets found."
-msgstr ""
+msgstr "چیزی پیدا نشد."
 
 #: modules/alphabet/alphabet.php:65
 msgctxt "Alphabet Module: Alphabet Tax Labels"
@@ -626,52 +638,52 @@ msgstr ""
 msgid "Z"
 msgstr ""
 
-#: modules/alphabet/alphabet.php:196
+#: modules/alphabet/alphabet.php:197
 msgctxt "Alphabet Module"
 msgid "Install Default Alphabet"
 msgstr ""
 
-#: modules/alphabet/alphabet.php:316
+#: modules/alphabet/alphabet.php:317
 msgctxt "Alphabet Module"
 msgid "Add to Glossary"
 msgstr ""
 
-#: modules/alphabet/alphabet.php:359
+#: modules/alphabet/alphabet.php:360
 msgctxt "Alphabet Module"
 msgid "&mdash; Select &mdash;"
-msgstr ""
+msgstr "&mdash; انتخاب کنید &mdash;"
 
-#: modules/alphabet/alphabet.php:435
+#: modules/alphabet/alphabet.php:436
 msgctxt "Alphabet Module"
 msgid "Alphabet Tools"
 msgstr "ابزارهای الفبا"
 
-#: modules/alphabet/alphabet.php:438
+#: modules/alphabet/alphabet.php:439
 msgctxt "Alphabet Module"
 msgid "Current Filtered Alphabet"
 msgstr ""
 
-#: modules/alphabet/alphabet.php:442 modules/alphabet/alphabet.php:460
+#: modules/alphabet/alphabet.php:443 modules/alphabet/alphabet.php:461
 msgctxt "Alphabet Module"
 msgid "Name"
 msgstr ""
 
-#: modules/alphabet/alphabet.php:448 modules/alphabet/alphabet.php:461
+#: modules/alphabet/alphabet.php:449 modules/alphabet/alphabet.php:462
 msgctxt "Alphabet Module"
 msgid "Slug"
 msgstr ""
 
-#: modules/alphabet/alphabet.php:456
+#: modules/alphabet/alphabet.php:457
 msgctxt "Alphabet Module"
 msgid "Current Installed Alphabet"
 msgstr ""
 
-#: modules/alphabet/alphabet.php:459
+#: modules/alphabet/alphabet.php:460
 msgctxt "Alphabet Module"
 msgid "ID"
 msgstr ""
 
-#: modules/alphabet/alphabet.php:462
+#: modules/alphabet/alphabet.php:463
 msgctxt "Alphabet Module"
 msgid "Description"
 msgstr ""
@@ -707,7 +719,7 @@ msgstr "برچسب‌های بازبینی"
 #: modules/audit/audit.php:46
 msgctxt "Audit Module: Audit Attribute Tax: Menu Name"
 msgid "Audit Attributes"
-msgstr "برچسب‌های بازبینی"
+msgstr "بازبینی"
 
 #: modules/audit/audit.php:47
 msgctxt "Audit Module: Audit Attribute Tax: Singular Name"
@@ -762,7 +774,7 @@ msgstr "عنوان برچسب بازبینی تازه"
 #: modules/audit/audit.php:57
 msgctxt "Audit Module: Audit Attribute Tax"
 msgid "No audit attributes found."
-msgstr "برچسب بازبینی پیدا نشد."
+msgstr "چیزی پیدا نشد."
 
 #: modules/audit/audit.php:58
 msgctxt "Audit Module: Audit Attribute Tax"
@@ -957,7 +969,7 @@ msgstr "فهرستی از منشورات"
 #: modules/book/book.php:80
 msgctxt "Book Module: Publication CPT"
 msgid "Add New"
-msgstr "افزودن نشر"
+msgstr "افزودن"
 
 #: modules/book/book.php:81
 msgctxt "Book Module: Publication CPT"
@@ -982,17 +994,17 @@ msgstr "نمایش نشر"
 #: modules/book/book.php:85
 msgctxt "Book Module: Publication CPT"
 msgid "Search Publications"
-msgstr "جست‌وجوی منشورات"
+msgstr "جست‌وجو"
 
 #: modules/book/book.php:86
 msgctxt "Book Module: Publication CPT"
 msgid "No publications found."
-msgstr "نشری پیدا نشد."
+msgstr "چیزی پیدا نشد."
 
 #: modules/book/book.php:87
 msgctxt "Book Module: Publication CPT"
 msgid "No publications found in Trash."
-msgstr ""
+msgstr "چیزی در زباله‌دان پیدا نشد."
 
 #: modules/book/book.php:88
 msgctxt "Book Module: Publication CPT"
@@ -1067,7 +1079,7 @@ msgstr ""
 #: modules/book/book.php:104
 msgctxt "Book Module: Subject Tax Labels"
 msgid "Search Subjects"
-msgstr ""
+msgstr "جست‌وجو"
 
 #: modules/book/book.php:105
 msgctxt "Book Module: Subject Tax Labels"
@@ -1112,7 +1124,7 @@ msgstr ""
 #: modules/book/book.php:113
 msgctxt "Book Module: Subject Tax Labels"
 msgid "No subjects found."
-msgstr ""
+msgstr "چیزی پیدا نشد."
 
 #: modules/book/book.php:114
 msgctxt "Book Module: Subject Tax Labels"
@@ -1147,7 +1159,7 @@ msgstr ""
 #: modules/book/book.php:122
 msgctxt "Book Module: Library Tax Labels"
 msgid "Search Libraries"
-msgstr ""
+msgstr "جست‌وجو"
 
 #: modules/book/book.php:123
 msgctxt "Book Module: Library Tax Labels"
@@ -1192,7 +1204,7 @@ msgstr ""
 #: modules/book/book.php:131
 msgctxt "Book Module: Library Tax Labels"
 msgid "No libraries found."
-msgstr ""
+msgstr "چیزی پیدا نشد."
 
 #: modules/book/book.php:132
 msgctxt "Book Module: Library Tax Labels"
@@ -1227,7 +1239,7 @@ msgstr ""
 #: modules/book/book.php:140
 msgctxt "Book Module: Publisher Tax Labels"
 msgid "Search Publishers"
-msgstr ""
+msgstr "جست‌وجو"
 
 #: modules/book/book.php:142
 msgctxt "Book Module: Publisher Tax Labels"
@@ -1262,7 +1274,7 @@ msgstr ""
 #: modules/book/book.php:148
 msgctxt "Book Module: Publisher Tax Labels"
 msgid "Separate publishers with commas"
-msgstr ""
+msgstr "با کامای لاتین جدا کنید"
 
 #: modules/book/book.php:149
 msgctxt "Book Module: Publisher Tax Labels"
@@ -1272,12 +1284,12 @@ msgstr ""
 #: modules/book/book.php:150
 msgctxt "Book Module: Publisher Tax Labels"
 msgid "Choose from the most used publishers"
-msgstr ""
+msgstr "انتخاب از میان بیشتر استفاده‌شده‌ها"
 
 #: modules/book/book.php:151
 msgctxt "Book Module: Publisher Tax Labels"
 msgid "No publishers found."
-msgstr ""
+msgstr "چیزی پیدا نشد."
 
 #: modules/book/book.php:152
 msgctxt "Book Module: Publisher Tax Labels"
@@ -1312,7 +1324,7 @@ msgstr ""
 #: modules/book/book.php:160
 msgctxt "Book Module: Publication Type Tax Labels"
 msgid "Search Publication Types"
-msgstr ""
+msgstr "جست‌وجو"
 
 #: modules/book/book.php:161
 msgctxt "Book Module: Publication Type Tax Labels"
@@ -1357,7 +1369,7 @@ msgstr ""
 #: modules/book/book.php:169
 msgctxt "Book Module: Publication Type Tax Labels"
 msgid "No publication types found."
-msgstr ""
+msgstr "چیزی پیدا نشد."
 
 #: modules/book/book.php:170
 msgctxt "Book Module: Publication Type Tax Labels"
@@ -1392,7 +1404,7 @@ msgstr ""
 #: modules/book/book.php:178
 msgctxt "Book Module: Publication Status Tax Labels"
 msgid "Search Publication Statuses"
-msgstr ""
+msgstr "جست‌وجو"
 
 #: modules/book/book.php:179
 msgctxt "Book Module: Publication Status Tax Labels"
@@ -1437,7 +1449,7 @@ msgstr ""
 #: modules/book/book.php:187
 msgctxt "Book Module: Publication Status Tax Labels"
 msgid "No publication statuses found."
-msgstr ""
+msgstr "چیزی پیدا نشد."
 
 #: modules/book/book.php:188
 msgctxt "Book Module: Publication Status Tax Labels"
@@ -1472,7 +1484,7 @@ msgstr ""
 #: modules/book/book.php:196
 msgctxt "Book Module: Publication Size Tax Labels"
 msgid "Search Publication Sizes"
-msgstr ""
+msgstr "جست‌وجو"
 
 #: modules/book/book.php:198
 msgctxt "Book Module: Publication Size Tax Labels"
@@ -1507,7 +1519,7 @@ msgstr ""
 #: modules/book/book.php:204
 msgctxt "Book Module: Publication Size Tax Labels"
 msgid "Separate publication sizes with commas"
-msgstr ""
+msgstr "با کامای لاتین جدا کنید"
 
 #: modules/book/book.php:205
 msgctxt "Book Module: Publication Size Tax Labels"
@@ -1517,12 +1529,12 @@ msgstr ""
 #: modules/book/book.php:206
 msgctxt "Book Module: Publication Size Tax Labels"
 msgid "Choose from the most used publication sizes"
-msgstr ""
+msgstr "انتخاب از میان بیشتر استفاده‌شده‌ها"
 
 #: modules/book/book.php:207
 msgctxt "Book Module: Publication Size Tax Labels"
 msgid "No publication sizes found."
-msgstr ""
+msgstr "چیزی پیدا نشد."
 
 #: modules/book/book.php:208
 msgctxt "Book Module: Publication Size Tax Labels"
@@ -1675,8 +1687,8 @@ msgctxt "Contest Module"
 msgid "Contest Management"
 msgstr ""
 
-#: modules/contest/contest.php:46 modules/magazine/magazine.php:84
-#: modules/reshare/reshare.php:43
+#: modules/contest/contest.php:46 modules/magazine/magazine.php:95
+#: modules/reshare/reshare.php:43 modules/today/today.php:99
 msgid "Metadata"
 msgstr ""
 
@@ -1758,17 +1770,17 @@ msgstr "نمایش فراخوان"
 #: modules/contest/contest.php:69
 msgctxt "Contest Module: Contest CPT"
 msgid "Search Contests"
-msgstr "جست‌وجوی فراخوان‌ها"
+msgstr "جست‌وجو"
 
 #: modules/contest/contest.php:70
 msgctxt "Contest Module: Contest CPT"
 msgid "No contests found."
-msgstr ""
+msgstr "چیزی پیدا نشد."
 
 #: modules/contest/contest.php:71
 msgctxt "Contest Module: Contest CPT"
 msgid "No contests found in Trash."
-msgstr ""
+msgstr "چیزی در زباله‌دان پیدا نشد."
 
 #: modules/contest/contest.php:72
 msgctxt "Contest Module: Contest CPT"
@@ -1878,17 +1890,17 @@ msgstr ""
 #: modules/contest/contest.php:95
 msgctxt "Contest Module: Apply CPT"
 msgid "Search Applies"
-msgstr ""
+msgstr "جست‌وجو"
 
 #: modules/contest/contest.php:96
 msgctxt "Contest Module: Apply CPT"
 msgid "No applies found."
-msgstr ""
+msgstr "چیزی پیدا نشد."
 
 #: modules/contest/contest.php:97
 msgctxt "Contest Module: Apply CPT"
 msgid "No applies found in Trash."
-msgstr ""
+msgstr "چیزی در زباله‌دان پیدا نشد."
 
 #: modules/contest/contest.php:98
 msgctxt "Contest Module: Apply CPT"
@@ -1963,7 +1975,7 @@ msgstr "دسته‌ فراخوان"
 #: modules/contest/contest.php:114
 msgctxt "Contest Module: Contest Category Tax"
 msgid "Search Contest Categories"
-msgstr ""
+msgstr "جست‌وجو"
 
 #: modules/contest/contest.php:115
 msgctxt "Contest Module: Contest Category Tax"
@@ -2008,7 +2020,7 @@ msgstr ""
 #: modules/contest/contest.php:123
 msgctxt "Contest Module: Contest Category Tax"
 msgid "No contest categories found."
-msgstr ""
+msgstr "چیزی پیدا نشد."
 
 #: modules/contest/contest.php:124
 msgctxt "Contest Module: Contest Category Tax"
@@ -2043,7 +2055,7 @@ msgstr "فراخوان"
 #: modules/contest/contest.php:132
 msgctxt "Contest Module: Contest Tax"
 msgid "Search Contests"
-msgstr "جست‌وجوی فراخوان‌ها"
+msgstr "جست‌وجو"
 
 #: modules/contest/contest.php:133
 msgctxt "Contest Module: Contest Tax"
@@ -2088,7 +2100,7 @@ msgstr ""
 #: modules/contest/contest.php:141
 msgctxt "Contest Module: Contest Tax"
 msgid "No contests found."
-msgstr ""
+msgstr "چیزی پیدا نشد."
 
 #: modules/contest/contest.php:142
 msgctxt "Contest Module: Contest Tax"
@@ -2123,7 +2135,7 @@ msgstr ""
 #: modules/contest/contest.php:150
 msgctxt "Contest Module: Apply Category Tax"
 msgid "Search Apply Categories"
-msgstr ""
+msgstr "جست‌وجو"
 
 #: modules/contest/contest.php:151
 msgctxt "Contest Module: Apply Category Tax"
@@ -2168,7 +2180,7 @@ msgstr ""
 #: modules/contest/contest.php:159
 msgctxt "Contest Module: Apply Category Tax"
 msgid "No apply categories found."
-msgstr ""
+msgstr "چیزی پیدا نشد."
 
 #: modules/contest/contest.php:160
 msgctxt "Contest Module: Apply Category Tax"
@@ -2203,7 +2215,7 @@ msgstr ""
 #: modules/contest/contest.php:168
 msgctxt "Contest Module: Apply Status Tax"
 msgid "Search Apply Statuses"
-msgstr ""
+msgstr "جست‌وجو"
 
 #: modules/contest/contest.php:169
 msgctxt "Contest Module: Apply Status Tax"
@@ -2248,7 +2260,7 @@ msgstr ""
 #: modules/contest/contest.php:177
 msgctxt "Contest Module: Apply Status Tax"
 msgid "No apply statuses found."
-msgstr ""
+msgstr "چیزی پیدا نشد."
 
 #: modules/contest/contest.php:178
 msgctxt "Contest Module: Apply Status Tax"
@@ -2286,7 +2298,8 @@ msgid "&mdash; Select a contest &mdash;"
 msgstr "&mdash; انتخاب فراخوان &mdash;"
 
 #: modules/contest/contest.php:653 modules/contest/contest.php:663
-#: modules/magazine/magazine.php:473 modules/magazine/magazine.php:483
+#: modules/magazine/magazine.php:511 modules/magazine/magazine.php:521
+#: modules/today/today.php:485 modules/today/today.php:495
 msgctxt "Suffix for term name linked to trashed post"
 msgid "(Trashed)"
 msgstr "(حذف شده)"
@@ -2302,15 +2315,15 @@ msgid "Post Divisions Management"
 msgstr ""
 
 #: modules/divisions/divisions.php:71 modules/divisions/divisions.php:218
-#: modules/entry/entry.php:43
+#: modules/entry/entry.php:44
 msgid "Title"
 msgstr "عنوان"
 
-#: modules/divisions/divisions.php:72 modules/entry/entry.php:44
+#: modules/divisions/divisions.php:72 modules/entry/entry.php:45
 msgid "Order"
 msgstr "ترتیب"
 
-#: modules/divisions/divisions.php:73 modules/entry/entry.php:45
+#: modules/divisions/divisions.php:73 modules/entry/entry.php:46
 msgid "Description"
 msgstr ""
 
@@ -2332,7 +2345,7 @@ msgstr ""
 
 #: modules/divisions/divisions.php:87
 msgid "&mdash; Choose a Divisions &mdash;"
-msgstr ""
+msgstr "&mdash; انتخاب کنید &mdash;"
 
 #: modules/divisions/divisions.php:92
 msgctxt "Divisions Module: Division CPT Labels: Name"
@@ -2382,17 +2395,17 @@ msgstr ""
 #: modules/divisions/divisions.php:101
 msgctxt "Divisions Module: Division CPT Labels"
 msgid "Search Divisions"
-msgstr ""
+msgstr "جست‌وجو"
 
 #: modules/divisions/divisions.php:102
 msgctxt "Divisions Module: Division CPT Labels"
 msgid "No divisions found."
-msgstr ""
+msgstr "چیزی پیدا نشد."
 
 #: modules/divisions/divisions.php:103
 msgctxt "Divisions Module: Division CPT Labels"
 msgid "No divisions found in Trash."
-msgstr ""
+msgstr "چیزی در زباله‌دان پیدا نشد."
 
 #: modules/divisions/divisions.php:104
 msgctxt "Divisions Module: Division CPT Labels"
@@ -2447,7 +2460,7 @@ msgstr ""
 #: modules/divisions/divisions.php:116
 msgctxt "Entry Module: Division Type Tax Labels"
 msgid "Search Division Types"
-msgstr ""
+msgstr "جست‌وجو"
 
 #: modules/divisions/divisions.php:117
 msgctxt "Entry Module: Division Type Tax Labels"
@@ -2492,7 +2505,7 @@ msgstr ""
 #: modules/divisions/divisions.php:125
 msgctxt "Entry Module: Division Type Tax Labels"
 msgid "No division types found."
-msgstr ""
+msgstr "چیزی پیدا نشد."
 
 #: modules/divisions/divisions.php:126
 msgctxt "Entry Module: Division Type Tax Labels"
@@ -2527,7 +2540,7 @@ msgstr ""
 
 #: modules/divisions/divisions.php:195
 msgid "No posts found."
-msgstr ""
+msgstr "چیزی پیدا نشد."
 
 #: modules/divisions/divisions.php:196
 msgid "Create Posts"
@@ -2543,7 +2556,7 @@ msgstr ""
 
 #: modules/divisions/divisions.php:201
 msgid "No divisions found."
-msgstr ""
+msgstr "چیزی پیدا نشد."
 
 #: modules/divisions/divisions.php:202
 msgid "Create Divisions"
@@ -2618,211 +2631,211 @@ msgctxt "Entry Module"
 msgid "Wiki-like Posts Entries"
 msgstr "مطلب‌هایی به سبک ویکی"
 
-#: modules/entry/entry.php:50
+#: modules/entry/entry.php:51
 msgid "In Entry Title"
 msgstr ""
 
-#: modules/entry/entry.php:51
+#: modules/entry/entry.php:52
 msgid "In Entry Order"
 msgstr ""
 
-#: modules/entry/entry.php:52
+#: modules/entry/entry.php:53
 msgid "In Entry Description"
 msgstr ""
 
-#: modules/entry/entry.php:57
+#: modules/entry/entry.php:58
 msgctxt "Entry Module: Column Title"
 msgid "Section"
 msgstr "بخش"
 
-#: modules/entry/entry.php:58
+#: modules/entry/entry.php:59
 msgctxt "Entry Module: Column Title"
 msgid "O"
 msgstr "ت"
 
-#: modules/entry/entry.php:61 modules/entry/entry.php:64
-#: modules/entry/entry.php:65
+#: modules/entry/entry.php:62 modules/entry/entry.php:65
+#: modules/entry/entry.php:66
 msgid "Entry"
 msgstr "ورودیه"
 
-#: modules/entry/entry.php:66
+#: modules/entry/entry.php:67
 msgid "&mdash; Choose a Entry &mdash;"
-msgstr ""
-
-#: modules/entry/entry.php:71
-msgctxt "Entry Module: Entry CPT Labels: Name"
-msgid "Entries"
-msgstr ""
+msgstr "&mdash; انتخاب کنید &mdash;"
 
 #: modules/entry/entry.php:72
-msgctxt "Entry Module: Entry CPT Labels: Menu Name"
+msgctxt "Entry Module: Entry CPT Labels: Name"
 msgid "Entries"
-msgstr ""
+msgstr "ورودیه‌ها"
 
 #: modules/entry/entry.php:73
-msgctxt "Entry Module: Entry CPT Labels: Singular Name"
-msgid "Entry"
-msgstr ""
+msgctxt "Entry Module: Entry CPT Labels: Menu Name"
+msgid "Entries"
+msgstr "ورودیه‌ها"
 
 #: modules/entry/entry.php:74
+msgctxt "Entry Module: Entry CPT Labels: Singular Name"
+msgid "Entry"
+msgstr "ورودیه"
+
+#: modules/entry/entry.php:75
 msgctxt "Entry Module: Entry CPT Labels: Description"
 msgid "Entry Post Type"
 msgstr ""
 
-#: modules/entry/entry.php:75
-msgctxt "Entry Module: Entry CPT Labels"
-msgid "Add New"
-msgstr ""
-
 #: modules/entry/entry.php:76
 msgctxt "Entry Module: Entry CPT Labels"
-msgid "Add New Entry"
-msgstr ""
+msgid "Add New"
+msgstr "افزودن ورودیه"
 
 #: modules/entry/entry.php:77
 msgctxt "Entry Module: Entry CPT Labels"
-msgid "Edit Entry"
-msgstr ""
+msgid "Add New Entry"
+msgstr "افزودن ورودیه تازه"
 
 #: modules/entry/entry.php:78
 msgctxt "Entry Module: Entry CPT Labels"
-msgid "New Entry"
-msgstr ""
+msgid "Edit Entry"
+msgstr "ویرایش ورودیه"
 
 #: modules/entry/entry.php:79
 msgctxt "Entry Module: Entry CPT Labels"
-msgid "View Entry"
-msgstr ""
+msgid "New Entry"
+msgstr "ورودیه تازه"
 
 #: modules/entry/entry.php:80
 msgctxt "Entry Module: Entry CPT Labels"
-msgid "Search Entries"
-msgstr ""
+msgid "View Entry"
+msgstr "نمایش ورودیه"
 
 #: modules/entry/entry.php:81
 msgctxt "Entry Module: Entry CPT Labels"
-msgid "No entries found."
-msgstr ""
+msgid "Search Entries"
+msgstr "جست‌وجو"
 
 #: modules/entry/entry.php:82
 msgctxt "Entry Module: Entry CPT Labels"
-msgid "No entries found in Trash."
-msgstr ""
+msgid "No entries found."
+msgstr "چیزی پیدا نشد."
 
 #: modules/entry/entry.php:83
 msgctxt "Entry Module: Entry CPT Labels"
-msgid "All Entries"
-msgstr ""
+msgid "No entries found in Trash."
+msgstr "چیزی در زباله‌دان پیدا نشد."
 
 #: modules/entry/entry.php:84
 msgctxt "Entry Module: Entry CPT Labels"
-msgid "Entry Archives"
-msgstr ""
+msgid "All Entries"
+msgstr "همهٔ ورودیه‌ها"
 
 #: modules/entry/entry.php:85
+msgctxt "Entry Module: Entry CPT Labels"
+msgid "Entry Archives"
+msgstr "بایگانی ورودیه‌ها"
+
+#: modules/entry/entry.php:86
 msgctxt "Entry Module: Entry CPT Labels"
 msgid "Insert into entry"
 msgstr ""
 
-#: modules/entry/entry.php:86
+#: modules/entry/entry.php:87
 msgctxt "Entry Module: Entry CPT Labels"
 msgid "Uploaded to this entry"
-msgstr ""
+msgstr "بارگذاری شده در این ورودیه"
 
-#: modules/entry/entry.php:87
+#: modules/entry/entry.php:88
 msgctxt "Entry Module: Entry CPT Labels"
 msgid "Filter entries list"
 msgstr ""
 
-#: modules/entry/entry.php:88
-msgctxt "Entry Module: Entry CPT Labels"
-msgid "Entries list navigation"
-msgstr ""
-
 #: modules/entry/entry.php:89
 msgctxt "Entry Module: Entry CPT Labels"
-msgid "Entries list"
-msgstr ""
+msgid "Entries list navigation"
+msgstr "ناوبری فهرست ورودیه‌ها"
 
-#: modules/entry/entry.php:92
-msgctxt "Entry Module: Section Tax Labels: Name"
-msgid "Sections"
-msgstr ""
+#: modules/entry/entry.php:90
+msgctxt "Entry Module: Entry CPT Labels"
+msgid "Entries list"
+msgstr "فهرست ورودیه‌ها"
 
 #: modules/entry/entry.php:93
-msgctxt "Entry Module: Section Tax Labels: Menu Name"
+msgctxt "Entry Module: Section Tax Labels: Name"
 msgid "Sections"
-msgstr ""
+msgstr "بخش‌ها"
 
 #: modules/entry/entry.php:94
-msgctxt "Entry Module: Section Tax Labels: Singular Name"
-msgid "Section"
-msgstr ""
+msgctxt "Entry Module: Section Tax Labels: Menu Name"
+msgid "Sections"
+msgstr "بخش‌ها"
 
 #: modules/entry/entry.php:95
-msgctxt "Entry Module: Section Tax Labels"
-msgid "Search Sections"
-msgstr ""
+msgctxt "Entry Module: Section Tax Labels: Singular Name"
+msgid "Section"
+msgstr "بخش"
 
 #: modules/entry/entry.php:96
 msgctxt "Entry Module: Section Tax Labels"
-msgid "All Sections"
-msgstr ""
+msgid "Search Sections"
+msgstr "جست‌وجو"
 
 #: modules/entry/entry.php:97
 msgctxt "Entry Module: Section Tax Labels"
-msgid "Parent Section"
-msgstr ""
+msgid "All Sections"
+msgstr "همهٔ بخش‌ها"
 
 #: modules/entry/entry.php:98
 msgctxt "Entry Module: Section Tax Labels"
-msgid "Parent Section:"
-msgstr ""
+msgid "Parent Section"
+msgstr "بخش مادر"
 
 #: modules/entry/entry.php:99
 msgctxt "Entry Module: Section Tax Labels"
-msgid "Edit Section"
-msgstr ""
+msgid "Parent Section:"
+msgstr "بخش مادر:"
 
 #: modules/entry/entry.php:100
 msgctxt "Entry Module: Section Tax Labels"
-msgid "View Section"
-msgstr ""
+msgid "Edit Section"
+msgstr "ویرایش بخش"
 
 #: modules/entry/entry.php:101
 msgctxt "Entry Module: Section Tax Labels"
-msgid "Update Section"
-msgstr ""
+msgid "View Section"
+msgstr "نمایش بخش"
 
 #: modules/entry/entry.php:102
 msgctxt "Entry Module: Section Tax Labels"
-msgid "Add New Section"
-msgstr ""
+msgid "Update Section"
+msgstr "به‌روزرسانی بخش"
 
 #: modules/entry/entry.php:103
 msgctxt "Entry Module: Section Tax Labels"
-msgid "New Section Name"
-msgstr ""
+msgid "Add New Section"
+msgstr "افزودن بخش تازه"
 
 #: modules/entry/entry.php:104
 msgctxt "Entry Module: Section Tax Labels"
-msgid "No sections found."
-msgstr ""
+msgid "New Section Name"
+msgstr "عنوان بخش تازه"
 
 #: modules/entry/entry.php:105
+msgctxt "Entry Module: Section Tax Labels"
+msgid "No sections found."
+msgstr "چیزی پیدا نشد."
+
+#: modules/entry/entry.php:106
 msgctxt "Entry Module: Section Tax Labels"
 msgid "No sections"
 msgstr ""
 
-#: modules/entry/entry.php:106
-msgctxt "Entry Module: Section Tax Labels"
-msgid "Sections list navigation"
-msgstr ""
-
 #: modules/entry/entry.php:107
 msgctxt "Entry Module: Section Tax Labels"
+msgid "Sections list navigation"
+msgstr "ناوبری فهرست بخش‌ها"
+
+#: modules/entry/entry.php:108
+msgctxt "Entry Module: Section Tax Labels"
 msgid "Sections list"
-msgstr ""
+msgstr "فهرست بخش‌ها"
 
 #: modules/estimated/estimated.php:13
 msgctxt "Estimated Module"
@@ -3013,17 +3026,17 @@ msgstr ""
 #: modules/event/event.php:88
 msgctxt "Event Module: Event CPT Labels"
 msgid "Search Events"
-msgstr ""
+msgstr "جست‌وجو"
 
 #: modules/event/event.php:89
 msgctxt "Event Module: Event CPT Labels"
 msgid "No events found."
-msgstr ""
+msgstr "چیزی پیدا نشد."
 
 #: modules/event/event.php:90
 msgctxt "Event Module: Event CPT Labels"
 msgid "No events found in Trash."
-msgstr ""
+msgstr "چیزی در زباله‌دان پیدا نشد."
 
 #: modules/event/event.php:91
 msgctxt "Event Module: Event CPT Labels"
@@ -3103,7 +3116,7 @@ msgstr ""
 #: modules/event/event.php:108
 msgctxt "Event Module: Event Category Tax Labels"
 msgid "Search Event Categories"
-msgstr ""
+msgstr "جست‌وجو"
 
 #: modules/event/event.php:109
 msgctxt "Event Module: Event Category Tax Labels"
@@ -3148,7 +3161,7 @@ msgstr ""
 #: modules/event/event.php:117
 msgctxt "Event Module: Event Category Tax Labels"
 msgid "No event categories found."
-msgstr ""
+msgstr "چیزی پیدا نشد."
 
 #: modules/event/event.php:118
 msgctxt "Event Module: Event Category Tax Labels"
@@ -3193,7 +3206,7 @@ msgstr ""
 #: modules/event/event.php:130
 msgctxt "Event Module: Calendar Tax Labels"
 msgid "Search Calendars"
-msgstr ""
+msgstr "جست‌وجو"
 
 #: modules/event/event.php:131
 msgctxt "Event Module: Calendar Tax Labels"
@@ -3238,7 +3251,7 @@ msgstr ""
 #: modules/event/event.php:139
 msgctxt "Event Module: Calendar Tax Labels"
 msgid "No calendars found."
-msgstr ""
+msgstr "چیزی پیدا نشد."
 
 #: modules/event/event.php:140
 msgctxt "Event Module: Calendar Tax Labels"
@@ -3273,7 +3286,7 @@ msgstr ""
 #: modules/event/event.php:148
 msgctxt "Event Module: Venue Tax Labels"
 msgid "Search Venues"
-msgstr ""
+msgstr "جست‌وجو"
 
 #: modules/event/event.php:149
 msgctxt "Event Module: Venue Tax Labels"
@@ -3318,7 +3331,7 @@ msgstr ""
 #: modules/event/event.php:157
 msgctxt "Event Module: Venue Tax Labels"
 msgid "No venues found."
-msgstr ""
+msgstr "چیزی پیدا نشد."
 
 #: modules/event/event.php:158
 msgctxt "Event Module: Venue Tax Labels"
@@ -3380,6 +3393,16 @@ msgctxt "Event Module"
 msgid "F j, Y"
 msgstr ""
 
+#: modules/find/find.php:13
+msgctxt "Find Module"
+msgid "Find"
+msgstr "بگرد"
+
+#: modules/find/find.php:14
+msgctxt "Find Module"
+msgid "Custom Search Interface"
+msgstr "بهینه‌سازی رابط جست‌وجو"
+
 #: modules/gallery/gallery.php:13
 msgctxt "Gallery Module"
 msgid "Gallery"
@@ -3438,17 +3461,17 @@ msgstr "نمایش آلبوم"
 #: modules/gallery/gallery.php:52
 msgctxt "Gallery Module: Photo Album CPT Labels"
 msgid "Search Photo Albums"
-msgstr "جست‌وجوی آلبوم‌ها"
+msgstr "جست‌وجو"
 
 #: modules/gallery/gallery.php:53
 msgctxt "Gallery Module: Photo Album CPT Labels"
 msgid "No photo albums found."
-msgstr "آلبوم عکس پیدا نشد."
+msgstr "چیزی پیدا نشد."
 
 #: modules/gallery/gallery.php:54
 msgctxt "Gallery Module: Photo Album CPT Labels"
 msgid "No photo albums found in Trash."
-msgstr "آلبوم عکسی در زباله‌دان پیدا نشد."
+msgstr "چیزی در زباله‌دان پیدا نشد."
 
 #: modules/gallery/gallery.php:55
 msgctxt "Gallery Module: Photo Album CPT Labels"
@@ -3523,7 +3546,7 @@ msgstr "دسته آلبوم"
 #: modules/gallery/gallery.php:71
 msgctxt "Gallery Module: Album Category Tax Labels"
 msgid "Search Album Categories"
-msgstr "جست‌وجوی دسته‌های آلبوم"
+msgstr "جست‌وجو"
 
 #: modules/gallery/gallery.php:72
 msgctxt "Gallery Module: Album Category Tax Labels"
@@ -3568,7 +3591,7 @@ msgstr ""
 #: modules/gallery/gallery.php:80
 msgctxt "Gallery Module: Album Category Tax Labels"
 msgid "No album categories found."
-msgstr ""
+msgstr "چیزی پیدا نشد."
 
 #: modules/gallery/gallery.php:81
 msgctxt "Gallery Module: Album Category Tax Labels"
@@ -3603,7 +3626,7 @@ msgstr ""
 #: modules/gallery/gallery.php:89
 msgctxt "Gallery Module: Photo Tag Tax Labels"
 msgid "Search Photo Tags"
-msgstr ""
+msgstr "جست‌وجو"
 
 #: modules/gallery/gallery.php:91
 msgctxt "Gallery Module: Photo Tag Tax Labels"
@@ -3638,7 +3661,7 @@ msgstr ""
 #: modules/gallery/gallery.php:97
 msgctxt "Gallery Module: Photo Tag Tax Labels"
 msgid "Separate photo tags with commas"
-msgstr ""
+msgstr "با کامای لاتین جدا کنید"
 
 #: modules/gallery/gallery.php:98
 msgctxt "Gallery Module: Photo Tag Tax Labels"
@@ -3648,12 +3671,12 @@ msgstr ""
 #: modules/gallery/gallery.php:99
 msgctxt "Gallery Module: Photo Tag Tax Labels"
 msgid "Choose from the most used photo tags"
-msgstr ""
+msgstr "انتخاب از میان بیشتر استفاده‌شده‌ها"
 
 #: modules/gallery/gallery.php:100
 msgctxt "Gallery Module: Photo Tag Tax Labels"
 msgid "No photo tags found."
-msgstr ""
+msgstr "چیزی پیدا نشد."
 
 #: modules/gallery/gallery.php:101
 msgctxt "Gallery Module: Photo Tag Tax Labels"
@@ -3688,7 +3711,7 @@ msgstr ""
 #: modules/gallery/gallery.php:109
 msgctxt "Gallery Module: Album Tag Tax Labels"
 msgid "Search Album Tags"
-msgstr "جست‌وجوی برچسب‌های آلبوم"
+msgstr "جست‌وجو"
 
 #: modules/gallery/gallery.php:111
 msgctxt "Gallery Module: Album Tag Tax Labels"
@@ -3723,7 +3746,7 @@ msgstr ""
 #: modules/gallery/gallery.php:117
 msgctxt "Gallery Module: Album Tag Tax Labels"
 msgid "Separate album tags with commas"
-msgstr ""
+msgstr "با کامای لاتین جدا کنید"
 
 #: modules/gallery/gallery.php:118
 msgctxt "Gallery Module: Album Tag Tax Labels"
@@ -3733,12 +3756,12 @@ msgstr ""
 #: modules/gallery/gallery.php:119
 msgctxt "Gallery Module: Album Tag Tax Labels"
 msgid "Choose from the most used album tags"
-msgstr ""
+msgstr "انتخاب از میان بیشتر استفاده‌شده‌ها"
 
 #: modules/gallery/gallery.php:120
 msgctxt "Gallery Module: Album Tag Tax Labels"
 msgid "No album tags found."
-msgstr ""
+msgstr "چیزی پیدا نشد."
 
 #: modules/gallery/gallery.php:121
 msgctxt "Gallery Module: Album Tag Tax Labels"
@@ -3840,490 +3863,581 @@ msgctxt "Magazine Module"
 msgid "Editorial Magazine Documentation"
 msgstr ""
 
-#: modules/magazine/magazine.php:33
+#: modules/magazine/magazine.php:31
+msgctxt "Magazine Module"
+msgid "Issue Sections"
+msgstr ""
+
+#: modules/magazine/magazine.php:32
+msgctxt "Magazine Module"
+msgid "Section taxonomy for issue and supported post types"
+msgstr ""
+
+#: modules/magazine/magazine.php:41
 msgctxt "Magazine Module"
 msgid "Redirect Spans"
 msgstr "تغییر مسیر دوره‌ها"
 
-#: modules/magazine/magazine.php:34
+#: modules/magazine/magazine.php:42
 msgctxt "Magazine Module"
 msgid "Redirect all Span Archives to a URL"
 msgstr "تغییر مسیر بایگانی دوره‌ها به نشانی جدید"
 
-#: modules/magazine/magazine.php:62
+#: modules/magazine/magazine.php:73
 msgctxt "Magazine Module"
 msgid "Number Line"
 msgstr "خط شماره"
 
-#: modules/magazine/magazine.php:63 modules/magazine/magazine.php:68
+#: modules/magazine/magazine.php:74 modules/magazine/magazine.php:79
 msgctxt "Magazine Module"
 msgid "Total Pages"
 msgstr "مجموع صفحات"
 
-#: modules/magazine/magazine.php:66
+#: modules/magazine/magazine.php:77
 msgctxt "Magazine Module"
 msgid "Order"
 msgstr "ترتیب"
 
-#: modules/magazine/magazine.php:67
+#: modules/magazine/magazine.php:78
 msgctxt "Magazine Module"
 msgid "Page Start"
 msgstr "صفحه شروع"
 
-#: modules/magazine/magazine.php:73
+#: modules/magazine/magazine.php:84
 msgctxt "Magazine Module"
 msgid "The issue number line"
 msgstr "شماره مسلسل پرونده"
 
-#: modules/magazine/magazine.php:74
+#: modules/magazine/magazine.php:85
 msgctxt "Magazine Module"
 msgid "The issue total pages"
 msgstr "مجموع صفحات پرونده"
 
-#: modules/magazine/magazine.php:77
+#: modules/magazine/magazine.php:88
 msgctxt "Magazine Module"
 msgid "Post order in issue list"
 msgstr ""
 
-#: modules/magazine/magazine.php:78
+#: modules/magazine/magazine.php:89
 msgctxt "Magazine Module"
 msgid "Post start page on issue (printed)"
 msgstr ""
 
-#: modules/magazine/magazine.php:79
+#: modules/magazine/magazine.php:90
 msgctxt "Magazine Module"
 msgid "Post total pages on issue (printed)"
 msgstr ""
 
-#: modules/magazine/magazine.php:85
+#: modules/magazine/magazine.php:96
 msgctxt "Magazine Module: Column Title"
 msgid "Cover"
 msgstr "جلد"
 
-#: modules/magazine/magazine.php:86
+#: modules/magazine/magazine.php:97
 msgctxt "Magazine Module: Column Title"
 msgid "O"
 msgstr "ت"
 
-#: modules/magazine/magazine.php:87
+#: modules/magazine/magazine.php:98
 msgctxt "Magazine Module: Column Title"
 msgid "Posts"
 msgstr "نوشته‌ها"
 
-#: modules/magazine/magazine.php:89 modules/magazine/magazine.php:558
+#: modules/magazine/magazine.php:100 modules/magazine/magazine.php:596
 msgctxt "Magazine Module"
 msgid "Issues"
 msgstr "پرونده‌ها"
 
-#: modules/magazine/magazine.php:93
+#: modules/magazine/magazine.php:104
 msgctxt "Magazine Module: Issue CPT: Name"
 msgid "Issues"
 msgstr "پرونده‌ها"
 
-#: modules/magazine/magazine.php:94
+#: modules/magazine/magazine.php:105
 msgctxt "Magazine Module: Issue CPT: Menu Name"
 msgid "Issues"
 msgstr "پرونده‌ها"
 
-#: modules/magazine/magazine.php:95
+#: modules/magazine/magazine.php:106
 msgctxt "Magazine Module: Issue CPT: Singular Name"
 msgid "Issue"
 msgstr "پرونده"
 
-#: modules/magazine/magazine.php:96
+#: modules/magazine/magazine.php:107
 msgctxt "Magazine Module: Issue CPT: Description"
 msgid "Issue Post Type"
 msgstr ""
 
-#: modules/magazine/magazine.php:97
+#: modules/magazine/magazine.php:108
 msgctxt "Magazine Module: Issue CPT"
 msgid "Add New"
 msgstr "افزودن پرونده"
 
-#: modules/magazine/magazine.php:98
+#: modules/magazine/magazine.php:109
 msgctxt "Magazine Module: Issue CPT"
 msgid "Add New Issue"
 msgstr "افزودن پرونده تازه"
 
-#: modules/magazine/magazine.php:99
+#: modules/magazine/magazine.php:110
 msgctxt "Magazine Module: Issue CPT"
 msgid "Edit Issue"
 msgstr "ویرایش پرونده"
 
-#: modules/magazine/magazine.php:100
+#: modules/magazine/magazine.php:111
 msgctxt "Magazine Module: Issue CPT"
 msgid "New Issue"
 msgstr "پرونده تازه"
 
-#: modules/magazine/magazine.php:101
+#: modules/magazine/magazine.php:112
 msgctxt "Magazine Module: Issue CPT"
 msgid "View Issue"
 msgstr "نمایش پرونده"
 
-#: modules/magazine/magazine.php:102
+#: modules/magazine/magazine.php:113
 msgctxt "Magazine Module: Issue CPT"
 msgid "Search Issues"
-msgstr "جست‌وجوی پرونده‌ها"
+msgstr "جست‌وجو"
 
-#: modules/magazine/magazine.php:103
+#: modules/magazine/magazine.php:114
 msgctxt "Magazine Module: Issue CPT"
 msgid "No issues found."
-msgstr "پرونده‌ای وجود ندارد."
+msgstr "چیزی پیدا نشد."
 
-#: modules/magazine/magazine.php:104
+#: modules/magazine/magazine.php:115
 msgctxt "Magazine Module: Issue CPT"
 msgid "No issues found in Trash."
-msgstr ""
+msgstr "چیزی در زباله‌دان پیدا نشد."
 
-#: modules/magazine/magazine.php:105
+#: modules/magazine/magazine.php:116
 msgctxt "Magazine Module: Issue CPT"
 msgid "Parent Issue:"
 msgstr ""
 
-#: modules/magazine/magazine.php:106
+#: modules/magazine/magazine.php:117
 msgctxt "Magazine Module: Issue CPT"
 msgid "All Issues"
 msgstr "همهٔ پرونده‌ها"
 
-#: modules/magazine/magazine.php:107
+#: modules/magazine/magazine.php:118
 msgctxt "Magazine Module: Issue CPT"
 msgid "Issue Archives"
 msgstr ""
 
-#: modules/magazine/magazine.php:108
+#: modules/magazine/magazine.php:119
 msgctxt "Magazine Module: Issue CPT"
 msgid "Insert into issue"
 msgstr "جایگذاری در شماره"
 
-#: modules/magazine/magazine.php:109
+#: modules/magazine/magazine.php:120
 msgctxt "Magazine Module: Issue CPT"
 msgid "Uploaded to this issue"
 msgstr "بارگذاری‌شده برای این پرونده"
 
-#: modules/magazine/magazine.php:110
+#: modules/magazine/magazine.php:121
 msgctxt "Magazine Module: Issue CPT"
 msgid "Cover Image"
 msgstr "طرح پرونده"
 
-#: modules/magazine/magazine.php:111
+#: modules/magazine/magazine.php:122
 msgctxt "Magazine Module: Issue CPT"
 msgid "Set cover image"
 msgstr "انتخاب طرح پرونده"
 
-#: modules/magazine/magazine.php:112
+#: modules/magazine/magazine.php:123
 msgctxt "Magazine Module: Issue CPT"
 msgid "Remove cover image"
 msgstr "حذف طرح پرونده"
 
-#: modules/magazine/magazine.php:113
+#: modules/magazine/magazine.php:124
 msgctxt "Magazine Module: Issue CPT"
 msgid "Use as cover image"
 msgstr "استفاده به عنوان طرح پرونده"
 
-#: modules/magazine/magazine.php:114
+#: modules/magazine/magazine.php:125
 msgctxt "Magazine Module: Issue CPT"
 msgid "Filter issues list"
 msgstr ""
 
-#: modules/magazine/magazine.php:115
+#: modules/magazine/magazine.php:126
 msgctxt "Magazine Module: Issue CPT"
 msgid "Issues list navigation"
 msgstr "ناوبری فهرست پرونده‌ها"
 
-#: modules/magazine/magazine.php:116
+#: modules/magazine/magazine.php:127
 msgctxt "Magazine Module: Issue CPT"
 msgid "Issues list"
 msgstr "فهرست پرونده‌ها"
 
-#: modules/magazine/magazine.php:119
+#: modules/magazine/magazine.php:130
 msgctxt "Magazine Module: Issue Tax: Name"
 msgid "Issues"
 msgstr "پرونده‌ها"
 
-#: modules/magazine/magazine.php:120
+#: modules/magazine/magazine.php:131
 msgctxt "Magazine Module: Issue Tax: Menu Name"
 msgid "Issues"
 msgstr "پرونده‌ها"
 
-#: modules/magazine/magazine.php:121
+#: modules/magazine/magazine.php:132
 msgctxt "Magazine Module: Issue Tax: Singular Name"
 msgid "Issue"
 msgstr "پرونده"
 
-#: modules/magazine/magazine.php:122
+#: modules/magazine/magazine.php:133
 msgctxt "Magazine Module: Issue Tax"
 msgid "Search Issues"
-msgstr "جست‌وجوی پرونده‌ها"
+msgstr "جست‌وجو"
 
-#: modules/magazine/magazine.php:123
+#: modules/magazine/magazine.php:134
 msgctxt "Magazine Module: Issue Tax"
 msgid "All Issues"
 msgstr "همهٔ پرونده‌ها"
 
-#: modules/magazine/magazine.php:124
+#: modules/magazine/magazine.php:135
 msgctxt "Magazine Module: Issue Tax"
 msgid "Parent Issue"
 msgstr "پرونده مادر"
 
-#: modules/magazine/magazine.php:125
+#: modules/magazine/magazine.php:136
 msgctxt "Magazine Module: Issue Tax"
 msgid "Parent Issue:"
 msgstr "پرونده مادر:"
 
-#: modules/magazine/magazine.php:126
+#: modules/magazine/magazine.php:137
 msgctxt "Magazine Module: Issue Tax"
 msgid "Edit Issue"
 msgstr "ویرایش پرونده"
 
-#: modules/magazine/magazine.php:127
+#: modules/magazine/magazine.php:138
 msgctxt "Magazine Module: Issue Tax"
 msgid "View Issue"
 msgstr "نمایش پرونده"
 
-#: modules/magazine/magazine.php:128
+#: modules/magazine/magazine.php:139
 msgctxt "Magazine Module: Issue Tax"
 msgid "Update Issue"
 msgstr "به‌روزرسانی پرونده"
 
-#: modules/magazine/magazine.php:129
+#: modules/magazine/magazine.php:140
 msgctxt "Magazine Module: Issue Tax"
 msgid "Add New Issue"
 msgstr "افزودن پرونده تازه"
 
-#: modules/magazine/magazine.php:130
+#: modules/magazine/magazine.php:141
 msgctxt "Magazine Module: Issue Tax"
 msgid "New Issue Name"
 msgstr "افزودن پرونده تازه"
 
-#: modules/magazine/magazine.php:131
+#: modules/magazine/magazine.php:142
 msgctxt "Magazine Module: Issue Tax"
 msgid "No issues found."
-msgstr "پرونده‌ای وجود ندارد."
+msgstr "چیزی پیدا نشد."
 
-#: modules/magazine/magazine.php:132
+#: modules/magazine/magazine.php:143
 msgctxt "Magazine Module: Issue Tax"
 msgid "No issues"
 msgstr "بدون پرونده"
 
-#: modules/magazine/magazine.php:133
+#: modules/magazine/magazine.php:144
 msgctxt "Magazine Module: Issue Tax"
 msgid "Issues list navigation"
 msgstr "ناوبری فهرست پرونده‌ها"
 
-#: modules/magazine/magazine.php:134
+#: modules/magazine/magazine.php:145
 msgctxt "Magazine Module: Issue Tax"
 msgid "Issues list"
 msgstr "فهرست پرونده‌ها"
 
-#: modules/magazine/magazine.php:137
+#: modules/magazine/magazine.php:148
 msgctxt "Magazine Module: Span Tax: Name"
 msgid "Spans"
 msgstr "دوره‌ها"
 
-#: modules/magazine/magazine.php:138
+#: modules/magazine/magazine.php:149
 msgctxt "Magazine Module: Span Tax: Menu Name"
 msgid "Spans"
 msgstr "دوره‌ها"
 
-#: modules/magazine/magazine.php:139
+#: modules/magazine/magazine.php:150
 msgctxt "Magazine Module: Span Tax: Singular Name"
 msgid "Span"
 msgstr "دوره"
 
-#: modules/magazine/magazine.php:140
+#: modules/magazine/magazine.php:151
 msgctxt "Magazine Module: Span Tax"
 msgid "Search Spans"
-msgstr "جست‌جوی دوره‌ها"
+msgstr "جست‌وجو"
 
-#: modules/magazine/magazine.php:142
+#: modules/magazine/magazine.php:153
 msgctxt "Magazine Module: Span Tax"
 msgid "All Spans"
 msgstr "همهٔ دوره‌ها"
 
-#: modules/magazine/magazine.php:143
+#: modules/magazine/magazine.php:154
 msgctxt "Magazine Module: Span Tax"
 msgid "Edit Span"
 msgstr "ویرایش دوره"
 
-#: modules/magazine/magazine.php:144
+#: modules/magazine/magazine.php:155
 msgctxt "Magazine Module: Span Tax"
 msgid "View Span"
 msgstr "نمایش دوره"
 
-#: modules/magazine/magazine.php:145
+#: modules/magazine/magazine.php:156
 msgctxt "Magazine Module: Span Tax"
 msgid "Update Span"
 msgstr "به‌روزرسانی دوره"
 
-#: modules/magazine/magazine.php:146
+#: modules/magazine/magazine.php:157
 msgctxt "Magazine Module: Span Tax"
 msgid "Add New Span"
 msgstr "افزودن دوره تازه"
 
-#: modules/magazine/magazine.php:147
+#: modules/magazine/magazine.php:158
 msgctxt "Magazine Module: Span Tax"
 msgid "New Span Name"
 msgstr "نام دوره تازه"
 
-#: modules/magazine/magazine.php:148
+#: modules/magazine/magazine.php:159
 msgctxt "Magazine Module: Span Tax"
 msgid "Separate spans with commas"
-msgstr ""
+msgstr "با کامای لاتین جدا کنید"
 
-#: modules/magazine/magazine.php:149
+#: modules/magazine/magazine.php:160
 msgctxt "Magazine Module: Span Tax"
 msgid "Add or remove spans"
 msgstr ""
 
-#: modules/magazine/magazine.php:150
+#: modules/magazine/magazine.php:161
 msgctxt "Magazine Module: Span Tax"
 msgid "Choose from the most used spans"
-msgstr ""
+msgstr "انتخاب از میان بیشتر استفاده‌شده‌ها"
 
-#: modules/magazine/magazine.php:151
+#: modules/magazine/magazine.php:162
 msgctxt "Magazine Module: Span Tax"
 msgid "No spans found."
-msgstr "دوره‌ای پیدا نشد."
+msgstr "چیزی پیدا نشد."
 
-#: modules/magazine/magazine.php:152
+#: modules/magazine/magazine.php:163
 msgctxt "Magazine Module: Span Tax"
 msgid "No spans"
 msgstr "بدون دوره"
 
-#: modules/magazine/magazine.php:153
+#: modules/magazine/magazine.php:164
 msgctxt "Magazine Module: Span Tax"
 msgid "Spans list navigation"
 msgstr "ناوبری فهرست دوره‌ها"
 
-#: modules/magazine/magazine.php:154
+#: modules/magazine/magazine.php:165
 msgctxt "Magazine Module: Span Tax"
 msgid "Spans list"
 msgstr "فهرست دوره‌ها"
 
-#: modules/magazine/magazine.php:160
+#: modules/magazine/magazine.php:168
+msgctxt "Magazine Module: Section Tax Labels: Name"
+msgid "Sections"
+msgstr "بخش‌ها"
+
+#: modules/magazine/magazine.php:169
+msgctxt "Magazine Module: Section Tax Labels: Menu Name"
+msgid "Sections"
+msgstr "بخش‌ها"
+
+#: modules/magazine/magazine.php:170
+msgctxt "Magazine Module: Section Tax Labels: Singular Name"
+msgid "Section"
+msgstr "بخش"
+
+#: modules/magazine/magazine.php:171
+msgctxt "Magazine Module: Section Tax Labels"
+msgid "Search Sections"
+msgstr "جست‌وجو"
+
+#: modules/magazine/magazine.php:172
+msgctxt "Magazine Module: Section Tax Labels"
+msgid "All Sections"
+msgstr "همهٔ بخش‌ها"
+
+#: modules/magazine/magazine.php:173
+msgctxt "Magazine Module: Section Tax Labels"
+msgid "Parent Section"
+msgstr "بخش مادر"
+
+#: modules/magazine/magazine.php:174
+msgctxt "Magazine Module: Section Tax Labels"
+msgid "Parent Section:"
+msgstr "بخش مادر:"
+
+#: modules/magazine/magazine.php:175
+msgctxt "Magazine Module: Section Tax Labels"
+msgid "Edit Section"
+msgstr "ویرایش بخش"
+
+#: modules/magazine/magazine.php:176
+msgctxt "Magazine Module: Section Tax Labels"
+msgid "View Section"
+msgstr "نمایش بخش"
+
+#: modules/magazine/magazine.php:177
+msgctxt "Magazine Module: Section Tax Labels"
+msgid "Update Section"
+msgstr "به‌روزرسانی بخش"
+
+#: modules/magazine/magazine.php:178
+msgctxt "Magazine Module: Section Tax Labels"
+msgid "Add New Section"
+msgstr "افزودن بخش تازه"
+
+#: modules/magazine/magazine.php:179
+msgctxt "Magazine Module: Section Tax Labels"
+msgid "New Section Name"
+msgstr "عنوان بخش تازه"
+
+#: modules/magazine/magazine.php:180
+msgctxt "Magazine Module: Section Tax Labels"
+msgid "No sections found."
+msgstr "چیزی پیدا نشد."
+
+#: modules/magazine/magazine.php:181
+msgctxt "Magazine Module: Section Tax Labels"
+msgid "No sections"
+msgstr ""
+
+#: modules/magazine/magazine.php:182
+msgctxt "Magazine Module: Section Tax Labels"
+msgid "Sections list navigation"
+msgstr "ناوبری فهرست بخش‌ها"
+
+#: modules/magazine/magazine.php:183
+msgctxt "Magazine Module: Section Tax Labels"
+msgid "Sections list"
+msgstr "فهرست بخش‌ها"
+
+#: modules/magazine/magazine.php:189
 msgctxt "Magazine Module: P2P"
 msgid "Connected Issues"
 msgstr ""
 
-#: modules/magazine/magazine.php:161
+#: modules/magazine/magazine.php:190
 msgctxt "Magazine Module: P2P"
 msgid "Connected Posts"
 msgstr ""
 
-#: modules/magazine/magazine.php:164
+#: modules/magazine/magazine.php:193
 msgctxt "Magazine Module: P2P"
 msgid "Post"
 msgstr ""
 
-#: modules/magazine/magazine.php:165
+#: modules/magazine/magazine.php:194
 msgctxt "Magazine Module: P2P"
 msgid "Search posts"
-msgstr ""
+msgstr "جست‌وجو"
 
-#: modules/magazine/magazine.php:166
+#: modules/magazine/magazine.php:195
 msgctxt "Magazine Module: P2P"
 msgid "No posts found."
-msgstr ""
+msgstr "چیزی پیدا نشد."
 
-#: modules/magazine/magazine.php:167
+#: modules/magazine/magazine.php:196
 msgctxt "Magazine Module: P2P"
 msgid "Connect to a post"
 msgstr ""
 
-#: modules/magazine/magazine.php:170
+#: modules/magazine/magazine.php:199
 msgctxt "Magazine Module: P2P"
 msgid "Issue"
 msgstr ""
 
-#: modules/magazine/magazine.php:171
+#: modules/magazine/magazine.php:200
 msgctxt "Magazine Module: P2P"
 msgid "Search issues"
-msgstr ""
+msgstr "جست‌وجو"
 
-#: modules/magazine/magazine.php:172
+#: modules/magazine/magazine.php:201
 msgctxt "Magazine Module: P2P"
 msgid "No issues found."
-msgstr ""
+msgstr "چیزی پیدا نشد."
 
-#: modules/magazine/magazine.php:173
+#: modules/magazine/magazine.php:202
 msgctxt "Magazine Module: P2P"
 msgid "Connect to an issue"
 msgstr ""
 
-#: modules/magazine/magazine.php:680 modules/magazine/magazine.php:699
+#: modules/magazine/magazine.php:718 modules/magazine/magazine.php:737
 msgctxt "Magazine Module"
 msgid "&mdash; Select an Issue &mdash;"
 msgstr "&mdash; انتخاب پرونده &mdash;"
 
-#: modules/magazine/magazine.php:907
+#: modules/magazine/magazine.php:945
 #, php-format
 msgctxt "Magazine Module"
 msgid "%s Issue Post(s) Created."
 msgstr ""
 
-#: modules/magazine/magazine.php:917
+#: modules/magazine/magazine.php:955
 msgctxt "Magazine Module"
 msgid "Magazine Tools"
 msgstr ""
 
-#: modules/magazine/magazine.php:920
+#: modules/magazine/magazine.php:958
 msgctxt "Magazine Module"
 msgid "From Terms"
 msgstr ""
 
-#: modules/magazine/magazine.php:926
+#: modules/magazine/magazine.php:964
 msgctxt "Magazine Module"
 msgid "ID"
 msgstr ""
 
-#: modules/magazine/magazine.php:927
+#: modules/magazine/magazine.php:965
 msgctxt "Magazine Module"
 msgid "Name"
 msgstr "نام"
 
-#: modules/magazine/magazine.php:929
+#: modules/magazine/magazine.php:967
 msgctxt "Magazine Module"
 msgid "Issue"
 msgstr "پرونده"
 
-#: modules/magazine/magazine.php:933
+#: modules/magazine/magazine.php:971
 msgctxt "Magazine Module"
 msgid "&mdash;&mdash;&mdash;&mdash; No Issue"
 msgstr ""
 
-#: modules/magazine/magazine.php:937
+#: modules/magazine/magazine.php:975
 msgctxt "Magazine Module"
 msgid "Count"
 msgstr ""
 
-#: modules/magazine/magazine.php:945
+#: modules/magazine/magazine.php:983
 msgctxt "Magazine Module"
 msgid "Description"
 msgstr ""
 
-#: modules/magazine/magazine.php:953
+#: modules/magazine/magazine.php:991
 msgctxt "Magazine Module"
 msgid "Check Terms"
 msgstr ""
 
-#: modules/magazine/magazine.php:954
+#: modules/magazine/magazine.php:992
 msgctxt "Magazine Module"
 msgid "Create Issue"
 msgstr ""
 
-#: modules/magazine/magazine.php:955
+#: modules/magazine/magazine.php:993
 msgctxt "Magazine Module"
 msgid "Store Orders"
 msgstr ""
 
-#: modules/magazine/magazine.php:959
+#: modules/magazine/magazine.php:997
 msgctxt "Magazine Module"
 msgid "Check for issue terms and create corresponding issue posts."
 msgstr ""
 
 #: modules/magazine/templates.php:167
+msgctxt "Magazine Module: Span Shortcode: title attr"
 msgid "Permanent link to this span"
-msgstr ""
+msgstr "پیوند پایدار به این دوره"
 
 #: modules/magazine/widgets.php:12
 msgctxt "Magazine Module"
@@ -4471,7 +4585,7 @@ msgstr "سرستون"
 #: modules/meta/meta.php:74
 msgctxt "Meta Module: Column Header Tax Labels"
 msgid "Search Column Headers"
-msgstr "جست‌وجوی سرستون‌ها"
+msgstr "جست‌وجو"
 
 #: modules/meta/meta.php:76
 msgctxt "Meta Module: Column Header Tax Labels"
@@ -4506,7 +4620,7 @@ msgstr ""
 #: modules/meta/meta.php:82
 msgctxt "Meta Module: Column Header Tax Labels"
 msgid "Separate column headers with commas"
-msgstr ""
+msgstr "با کامای لاتین جدا کنید"
 
 #: modules/meta/meta.php:83
 msgctxt "Meta Module: Column Header Tax Labels"
@@ -4516,12 +4630,12 @@ msgstr ""
 #: modules/meta/meta.php:84
 msgctxt "Meta Module: Column Header Tax Labels"
 msgid "Choose from the most used column headers"
-msgstr ""
+msgstr "انتخاب از میان بیشتر استفاده‌شده‌ها"
 
 #: modules/meta/meta.php:85
 msgctxt "Meta Module: Column Header Tax Labels"
 msgid "No column headers found."
-msgstr ""
+msgstr "چیزی پیدا نشد."
 
 #: modules/meta/meta.php:86
 msgctxt "Meta Module: Column Header Tax Labels"
@@ -4663,17 +4777,17 @@ msgstr "نمایش بازنشر"
 #: modules/reshare/reshare.php:56
 msgctxt "Reshare Module: Reshare CPT"
 msgid "Search Reshares"
-msgstr "جست‌وجوی بازنشرها"
+msgstr "جست‌وجو"
 
 #: modules/reshare/reshare.php:57
 msgctxt "Reshare Module: Reshare CPT"
 msgid "No reshares found."
-msgstr "بازنشری پیدا نشد."
+msgstr "چیزی پیدا نشد."
 
 #: modules/reshare/reshare.php:58
 msgctxt "Reshare Module: Reshare CPT"
 msgid "No reshares found in Trash."
-msgstr "بازنشری در زباله‌دان پیدا نشد."
+msgstr "چیزی در زباله‌دان پیدا نشد."
 
 #: modules/reshare/reshare.php:59
 msgctxt "Reshare Module: Reshare CPT"
@@ -4728,7 +4842,7 @@ msgstr "دسته بازنشرها"
 #: modules/reshare/reshare.php:71
 msgctxt "Reshare Module: Reshare Category Tax"
 msgid "Search Reshare Categories"
-msgstr "جست‌وجوی دسته‌های بازنشر"
+msgstr "جست‌وجو"
 
 #: modules/reshare/reshare.php:72
 msgctxt "Reshare Module: Reshare Category Tax"
@@ -4773,7 +4887,7 @@ msgstr "عنوان دسته بازنشر تازه"
 #: modules/reshare/reshare.php:80
 msgctxt "Reshare Module: Reshare Category Tax"
 msgid "No reshare categories found."
-msgstr "دسته بازنشری پیدا نشد."
+msgstr "چیزی پیدا نشد."
 
 #: modules/reshare/reshare.php:81
 msgctxt "Reshare Module: Reshare Category Tax"
@@ -4844,7 +4958,7 @@ msgstr "مدیریت"
 #: modules/series/series.php:62
 msgctxt "Series Module"
 msgid "&mdash; Choose a Series &mdash;"
-msgstr "&mdash; انتخاب یک مجموعه &mdash;"
+msgstr "&mdash; انتخاب کنید &mdash;"
 
 #: modules/series/series.php:67
 msgctxt "Series Module: Series Tax: Name"
@@ -4864,7 +4978,7 @@ msgstr "مجموعه"
 #: modules/series/series.php:70
 msgctxt "Series Module: Series Tax"
 msgid "Search Series"
-msgstr "جست‌وجوی مجموعه‌ها"
+msgstr "جست‌وجو"
 
 #: modules/series/series.php:72
 msgctxt "Series Module: Series Tax"
@@ -4899,7 +5013,7 @@ msgstr "عنوان مجموعهٔ تازه"
 #: modules/series/series.php:78
 msgctxt "Series Module: Series Tax"
 msgid "Separate series with commas"
-msgstr "با ویرگول لاتین جدا کنید"
+msgstr "با کامای لاتین جدا کنید"
 
 #: modules/series/series.php:79
 msgctxt "Series Module: Series Tax"
@@ -4909,12 +5023,12 @@ msgstr ""
 #: modules/series/series.php:80
 msgctxt "Series Module: Series Tax"
 msgid "Choose from the most used series"
-msgstr ""
+msgstr "انتخاب از میان بیشتر استفاده‌شده‌ها"
 
 #: modules/series/series.php:81
 msgctxt "Series Module: Series Tax"
 msgid "No series found."
-msgstr ""
+msgstr "چیزی پیدا نشد."
 
 #: modules/series/series.php:82
 msgctxt "Series Module: Series Tax"
@@ -5103,12 +5217,12 @@ msgctxt "Settings Module"
 msgid "There are no editorial modules registered"
 msgstr "ماژول تحریریه‌ای پیدا نشد."
 
-#: modules/sharing/sharing.php:18
+#: modules/sharing/sharing.php:22
 msgctxt "Sharing Module"
 msgid "Shareing"
 msgstr ""
 
-#: modules/sharing/sharing.php:19
+#: modules/sharing/sharing.php:23
 msgctxt "Sharing Module"
 msgid "Set of carefully customizable widgets"
 msgstr ""
@@ -5121,7 +5235,7 @@ msgstr "نقشه سایت"
 #: modules/sitemap/sitemap.php:16
 msgctxt "Sitemap Module"
 msgid "XML Sitemap for Search Engines"
-msgstr ""
+msgstr "نقشه سایت برای موتورهای جست‌وجو"
 
 #: modules/specs/specs.php:12 modules/specs/specs.php:57
 #: modules/specs/specs.php:58
@@ -5132,67 +5246,67 @@ msgstr "مشخصات"
 #: modules/specs/specs.php:13
 msgctxt "Specs Module"
 msgid "Post Specifications Management"
-msgstr ""
+msgstr "مدیریت مشخصات محتوا"
 
 #: modules/specs/specs.php:43
 msgctxt "Specs Module"
 msgid "Title"
-msgstr ""
+msgstr "عنوان"
 
 #: modules/specs/specs.php:44
 msgctxt "Specs Module"
 msgid "Order"
-msgstr ""
+msgstr "ترتیب"
 
 #: modules/specs/specs.php:45
 msgctxt "Specs Module"
 msgid "Description"
-msgstr ""
+msgstr "توضیحات"
 
 #: modules/specs/specs.php:50
 msgctxt "Specs Module"
 msgid "In Specifications Title"
-msgstr ""
+msgstr "عنوان در مشخصات"
 
 #: modules/specs/specs.php:51
 msgctxt "Specs Module"
 msgid "In Specifications Order"
-msgstr ""
+msgstr "ترتیب در مشخصات"
 
 #: modules/specs/specs.php:52
 msgctxt "Specs Module"
 msgid "In Specifications Description"
-msgstr ""
+msgstr "توضیحات در مشخصات"
 
 #: modules/specs/specs.php:59
 msgctxt "Specs Module"
 msgid "&mdash; Choose a Specification &mdash;"
-msgstr ""
+msgstr "&mdash; انتخاب کنید &mdash;"
 
 #: modules/specs/specs.php:64
 msgctxt "Specs Module: Specification Tax Labels: Name"
 msgid "Specifications"
-msgstr ""
+msgstr "مشخصات"
 
 #: modules/specs/specs.php:65
 msgctxt "Specs Module: Specification Tax Labels: Menu Name"
 msgid "Specifications"
-msgstr ""
+msgstr "مشخصات"
 
 #: modules/specs/specs.php:66
 msgctxt "Specs Module: Specification Tax Labels: Singular Name"
 msgid "Specification"
-msgstr ""
+msgstr "مشخصات"
 
 #: modules/specs/specs.php:67
 msgctxt "Specs Module: Specification Tax Labels"
 msgid "Search Specifications"
-msgstr ""
+msgstr "جست‌وجو"
 
 #: modules/specs/specs.php:69
 msgctxt "Specs Module: Specification Tax Labels"
 msgid "All Specifications"
-msgstr ""
+msgstr "همهٔ مشخصات"
 
 #: modules/specs/specs.php:70
 msgctxt "Specs Module: Specification Tax Labels"
@@ -5222,7 +5336,7 @@ msgstr ""
 #: modules/specs/specs.php:75
 msgctxt "Specs Module: Specification Tax Labels"
 msgid "Separate specifications with commas"
-msgstr ""
+msgstr "با کامای لاتین جدا کنید"
 
 #: modules/specs/specs.php:76
 msgctxt "Specs Module: Specification Tax Labels"
@@ -5232,12 +5346,12 @@ msgstr ""
 #: modules/specs/specs.php:77
 msgctxt "Specs Module: Specification Tax Labels"
 msgid "Choose from the most used specifications"
-msgstr ""
+msgstr "انتخاب از میان بیشتر استفاده‌شده‌ها"
 
 #: modules/specs/specs.php:78
 msgctxt "Specs Module: Specification Tax Labels"
 msgid "No specifications found."
-msgstr ""
+msgstr "چیزی پیدا نشد."
 
 #: modules/specs/specs.php:79
 msgctxt "Specs Module: Specification Tax Labels"
@@ -5272,12 +5386,12 @@ msgstr "فیلد ناشناخته"
 #: modules/spread/spread.php:22
 msgctxt "Spread Module"
 msgid "Spread"
-msgstr ""
+msgstr "گستردن"
 
 #: modules/spread/spread.php:23
 msgctxt "Spread Module"
 msgid "Pushing contents to services"
-msgstr ""
+msgstr "ارسال محتوا به خدمات‌دهنده‌ها"
 
 #: modules/submit/submit.php:13 modules/submit/submit.php:47
 #: modules/submit/submit.php:319
@@ -5396,52 +5510,614 @@ msgid ""
 "submit for on any post."
 msgstr ""
 
-#: modules/tweaks/tweaks.php:12
+#: modules/today/today.php:15
+msgctxt "Today Module"
+msgid "Today"
+msgstr ""
+
+#: modules/today/today.php:16
+msgctxt "Today Module"
+msgid "The day in History"
+msgstr ""
+
+#: modules/today/today.php:23
+msgctxt "Today Module"
+msgid "Editorial Today Documentation"
+msgstr ""
+
+#: modules/today/today.php:34
+msgctxt "Today Module"
+msgid "Default Calendar Type"
+msgstr ""
+
+#: modules/today/today.php:35
+msgctxt "Today Module"
+msgid ""
+"For All events the default calendar type. User can change it, if displayed."
+msgstr ""
+
+#: modules/today/today.php:39
+msgctxt "Today Module: Calendar Type Select Option"
+msgid "Gregorian"
+msgstr ""
+
+#: modules/today/today.php:40
+msgctxt "Today Module: Calendar Type Select Option"
+msgid "Persian"
+msgstr ""
+
+#: modules/today/today.php:41
+msgctxt "Today Module: Calendar Type Select Option"
+msgid "Islamic"
+msgstr ""
+
+#: modules/today/today.php:48
+msgctxt "Today Module"
+msgid "Redirect Years"
+msgstr ""
+
+#: modules/today/today.php:49
+msgctxt "Today Module"
+msgid "Redirect all Year Archives to a URL"
+msgstr ""
+
+#: modules/today/today.php:77
+msgctxt "Today Module"
+msgid "Number Line"
+msgstr ""
+
+#: modules/today/today.php:78 modules/today/today.php:83
+msgctxt "Today Module"
+msgid "Total Pages"
+msgstr ""
+
+#: modules/today/today.php:81
+msgctxt "Today Module"
+msgid "Order"
+msgstr ""
+
+#: modules/today/today.php:82
+msgctxt "Today Module"
+msgid "Page Start"
+msgstr ""
+
+#: modules/today/today.php:88
+msgctxt "Today Module"
+msgid "The day number line"
+msgstr ""
+
+#: modules/today/today.php:89
+msgctxt "Today Module"
+msgid "The day total pages"
+msgstr ""
+
+#: modules/today/today.php:92
+msgctxt "Today Module"
+msgid "Post order in day list"
+msgstr ""
+
+#: modules/today/today.php:93
+msgctxt "Today Module"
+msgid "Post start page on day (printed)"
+msgstr ""
+
+#: modules/today/today.php:94
+msgctxt "Today Module"
+msgid "Post total pages on day (printed)"
+msgstr ""
+
+#: modules/today/today.php:100
+msgctxt "Today Module: Column Title"
+msgid "Cover"
+msgstr ""
+
+#: modules/today/today.php:101
+msgctxt "Today Module: Column Title"
+msgid "O"
+msgstr ""
+
+#: modules/today/today.php:102
+msgctxt "Today Module: Column Title"
+msgid "Posts"
+msgstr ""
+
+#: modules/today/today.php:104 modules/today/today.php:570
+msgctxt "Today Module"
+msgid "Days"
+msgstr ""
+
+#: modules/today/today.php:108
+msgctxt "Today Module: Day CPT: Name"
+msgid "Days"
+msgstr ""
+
+#: modules/today/today.php:109
+msgctxt "Today Module: Day CPT: Menu Name"
+msgid "Days"
+msgstr ""
+
+#: modules/today/today.php:110
+msgctxt "Today Module: Day CPT: Singular Name"
+msgid "Day"
+msgstr ""
+
+#: modules/today/today.php:111
+msgctxt "Today Module: Day CPT: Description"
+msgid "Day Post Type"
+msgstr ""
+
+#: modules/today/today.php:112
+msgctxt "Today Module: Day CPT"
+msgid "Add New"
+msgstr ""
+
+#: modules/today/today.php:113
+msgctxt "Today Module: Day CPT"
+msgid "Add New Day"
+msgstr ""
+
+#: modules/today/today.php:114
+msgctxt "Today Module: Day CPT"
+msgid "Edit Day"
+msgstr ""
+
+#: modules/today/today.php:115
+msgctxt "Today Module: Day CPT"
+msgid "New Day"
+msgstr ""
+
+#: modules/today/today.php:116
+msgctxt "Today Module: Day CPT"
+msgid "View Day"
+msgstr ""
+
+#: modules/today/today.php:117
+msgctxt "Today Module: Day CPT"
+msgid "Search Days"
+msgstr "جست‌وجو"
+
+#: modules/today/today.php:118
+msgctxt "Today Module: Day CPT"
+msgid "No days found."
+msgstr ""
+
+#: modules/today/today.php:119
+msgctxt "Today Module: Day CPT"
+msgid "No days found in Trash."
+msgstr ""
+
+#: modules/today/today.php:120
+msgctxt "Today Module: Day CPT"
+msgid "Parent Day:"
+msgstr ""
+
+#: modules/today/today.php:121
+msgctxt "Today Module: Day CPT"
+msgid "All Days"
+msgstr ""
+
+#: modules/today/today.php:122
+msgctxt "Today Module: Day CPT"
+msgid "Day Archives"
+msgstr ""
+
+#: modules/today/today.php:123
+msgctxt "Today Module: Day CPT"
+msgid "Insert into day"
+msgstr ""
+
+#: modules/today/today.php:124
+msgctxt "Today Module: Day CPT"
+msgid "Uploaded to this day"
+msgstr ""
+
+#: modules/today/today.php:125
+msgctxt "Today Module: Day CPT"
+msgid "Cover Image"
+msgstr ""
+
+#: modules/today/today.php:126
+msgctxt "Today Module: Day CPT"
+msgid "Set cover image"
+msgstr ""
+
+#: modules/today/today.php:127
+msgctxt "Today Module: Day CPT"
+msgid "Remove cover image"
+msgstr ""
+
+#: modules/today/today.php:128
+msgctxt "Today Module: Day CPT"
+msgid "Use as cover image"
+msgstr ""
+
+#: modules/today/today.php:129
+msgctxt "Today Module: Day CPT"
+msgid "Filter days list"
+msgstr ""
+
+#: modules/today/today.php:130
+msgctxt "Today Module: Day CPT"
+msgid "Days list navigation"
+msgstr ""
+
+#: modules/today/today.php:131
+msgctxt "Today Module: Day CPT"
+msgid "Days list"
+msgstr ""
+
+#: modules/today/today.php:134
+msgctxt "Today Module: Day Tax: Name"
+msgid "Days"
+msgstr ""
+
+#: modules/today/today.php:135
+msgctxt "Today Module: Day Tax: Menu Name"
+msgid "Days"
+msgstr ""
+
+#: modules/today/today.php:136
+msgctxt "Today Module: Day Tax: Singular Name"
+msgid "Day"
+msgstr ""
+
+#: modules/today/today.php:137
+msgctxt "Today Module: Day Tax"
+msgid "Search Days"
+msgstr "جست‌وجو"
+
+#: modules/today/today.php:138
+msgctxt "Today Module: Day Tax"
+msgid "All Days"
+msgstr ""
+
+#: modules/today/today.php:139
+msgctxt "Today Module: Day Tax"
+msgid "Parent Day"
+msgstr ""
+
+#: modules/today/today.php:140
+msgctxt "Today Module: Day Tax"
+msgid "Parent Day:"
+msgstr ""
+
+#: modules/today/today.php:141
+msgctxt "Today Module: Day Tax"
+msgid "Edit Day"
+msgstr ""
+
+#: modules/today/today.php:142
+msgctxt "Today Module: Day Tax"
+msgid "View Day"
+msgstr ""
+
+#: modules/today/today.php:143
+msgctxt "Today Module: Day Tax"
+msgid "Update Day"
+msgstr ""
+
+#: modules/today/today.php:144
+msgctxt "Today Module: Day Tax"
+msgid "Add New Day"
+msgstr ""
+
+#: modules/today/today.php:145
+msgctxt "Today Module: Day Tax"
+msgid "New Day Name"
+msgstr ""
+
+#: modules/today/today.php:146
+msgctxt "Today Module: Day Tax"
+msgid "No days found."
+msgstr ""
+
+#: modules/today/today.php:147
+msgctxt "Today Module: Day Tax"
+msgid "No days"
+msgstr ""
+
+#: modules/today/today.php:148
+msgctxt "Today Module: Day Tax"
+msgid "Days list navigation"
+msgstr ""
+
+#: modules/today/today.php:149
+msgctxt "Today Module: Day Tax"
+msgid "Days list"
+msgstr ""
+
+#: modules/today/today.php:152
+msgctxt "Today Module: Year Tax: Name"
+msgid "Years"
+msgstr ""
+
+#: modules/today/today.php:153
+msgctxt "Today Module: Year Tax: Menu Name"
+msgid "Years"
+msgstr ""
+
+#: modules/today/today.php:154
+msgctxt "Today Module: Year Tax: Singular Name"
+msgid "Year"
+msgstr ""
+
+#: modules/today/today.php:155
+msgctxt "Today Module: Year Tax"
+msgid "Search Years"
+msgstr "جست‌وجو"
+
+#: modules/today/today.php:157
+msgctxt "Today Module: Year Tax"
+msgid "All Years"
+msgstr ""
+
+#: modules/today/today.php:158
+msgctxt "Today Module: Year Tax"
+msgid "Edit Year"
+msgstr ""
+
+#: modules/today/today.php:159
+msgctxt "Today Module: Year Tax"
+msgid "View Year"
+msgstr ""
+
+#: modules/today/today.php:160
+msgctxt "Today Module: Year Tax"
+msgid "Update Year"
+msgstr ""
+
+#: modules/today/today.php:161
+msgctxt "Today Module: Year Tax"
+msgid "Add New Year"
+msgstr ""
+
+#: modules/today/today.php:162
+msgctxt "Today Module: Year Tax"
+msgid "New Year Name"
+msgstr ""
+
+#: modules/today/today.php:163
+msgctxt "Today Module: Year Tax"
+msgid "Separate years with commas"
+msgstr ""
+
+#: modules/today/today.php:164
+msgctxt "Today Module: Year Tax"
+msgid "Add or remove years"
+msgstr ""
+
+#: modules/today/today.php:165
+msgctxt "Today Module: Year Tax"
+msgid "Choose from the most used years"
+msgstr ""
+
+#: modules/today/today.php:166
+msgctxt "Today Module: Year Tax"
+msgid "No years found."
+msgstr ""
+
+#: modules/today/today.php:167
+msgctxt "Today Module: Year Tax"
+msgid "No years"
+msgstr ""
+
+#: modules/today/today.php:168
+msgctxt "Today Module: Year Tax"
+msgid "Years list navigation"
+msgstr ""
+
+#: modules/today/today.php:169
+msgctxt "Today Module: Year Tax"
+msgid "Years list"
+msgstr ""
+
+#: modules/today/today.php:175
+msgctxt "Today Module: P2P"
+msgid "Connected Days"
+msgstr ""
+
+#: modules/today/today.php:176
+msgctxt "Today Module: P2P"
+msgid "Connected Posts"
+msgstr ""
+
+#: modules/today/today.php:179
+msgctxt "Today Module: P2P"
+msgid "Post"
+msgstr ""
+
+#: modules/today/today.php:180
+msgctxt "Today Module: P2P"
+msgid "Search posts"
+msgstr "جست‌وجو"
+
+#: modules/today/today.php:181
+msgctxt "Today Module: P2P"
+msgid "No posts found."
+msgstr ""
+
+#: modules/today/today.php:182
+msgctxt "Today Module: P2P"
+msgid "Connect to a post"
+msgstr ""
+
+#: modules/today/today.php:185
+msgctxt "Today Module: P2P"
+msgid "Day"
+msgstr ""
+
+#: modules/today/today.php:186
+msgctxt "Today Module: P2P"
+msgid "Search days"
+msgstr "جست‌وجو"
+
+#: modules/today/today.php:187
+msgctxt "Today Module: P2P"
+msgid "No days found."
+msgstr ""
+
+#: modules/today/today.php:188
+msgctxt "Today Module: P2P"
+msgid "Connect to an day"
+msgstr ""
+
+#: modules/today/today.php:692 modules/today/today.php:711
+msgctxt "Today Module"
+msgid "&mdash; Select an Day &mdash;"
+msgstr ""
+
+#: modules/today/today.php:919
+#, php-format
+msgctxt "Today Module"
+msgid "%s Day Post(s) Created."
+msgstr ""
+
+#: modules/today/today.php:929
+msgctxt "Today Module"
+msgid "Today Tools"
+msgstr ""
+
+#: modules/today/today.php:932
+msgctxt "Today Module"
+msgid "From Terms"
+msgstr ""
+
+#: modules/today/today.php:938
+msgctxt "Today Module"
+msgid "ID"
+msgstr ""
+
+#: modules/today/today.php:939
+msgctxt "Today Module"
+msgid "Name"
+msgstr ""
+
+#: modules/today/today.php:941
+msgctxt "Today Module"
+msgid "Day"
+msgstr ""
+
+#: modules/today/today.php:945
+msgctxt "Today Module"
+msgid "&mdash;&mdash;&mdash;&mdash; No Day"
+msgstr ""
+
+#: modules/today/today.php:949
+msgctxt "Today Module"
+msgid "Count"
+msgstr ""
+
+#: modules/today/today.php:957
+msgctxt "Today Module"
+msgid "Description"
+msgstr ""
+
+#: modules/today/today.php:965
+msgctxt "Today Module"
+msgid "Check Terms"
+msgstr ""
+
+#: modules/today/today.php:966
+msgctxt "Today Module"
+msgid "Create Day"
+msgstr ""
+
+#: modules/today/today.php:967
+msgctxt "Today Module"
+msgid "Store Orders"
+msgstr ""
+
+#: modules/today/today.php:971
+msgctxt "Today Module"
+msgid "Check for day terms and create corresponding day posts."
+msgstr ""
+
+#: modules/tweaks/tweaks.php:13
 msgctxt "Tweaks Module"
 msgid "Tweaks"
 msgstr "ظرافت‌ها"
 
-#: modules/tweaks/tweaks.php:13
+#: modules/tweaks/tweaks.php:14
 msgctxt "Tweaks Module"
 msgid "Admin UI Enhancement"
 msgstr ""
 
-#: modules/tweaks/tweaks.php:20
+#: modules/tweaks/tweaks.php:21
 msgctxt "Tweaks Module"
 msgid "Editorial Tweaks Documentation"
 msgstr ""
 
 #: modules/tweaks/tweaks.php:29
+msgctxt "Tweaks Module: Help Tab Title"
+msgid "Checklist Tree"
+msgstr "سیاهه درختی"
+
+#: modules/tweaks/tweaks.php:38
+msgctxt "Tweaks Module: Help Tab Title"
+msgid "Category Search"
+msgstr "جست‌وجو"
+
+#: modules/tweaks/tweaks.php:52
 msgctxt "Tweaks Module"
 msgid "Group Taxonomies"
 msgstr ""
 
-#: modules/tweaks/tweaks.php:30
+#: modules/tweaks/tweaks.php:53
 msgctxt "Tweaks Module"
 msgid "Group selected taxonomies on selected post type edit pages"
 msgstr ""
 
-#: modules/tweaks/tweaks.php:43
+#: modules/tweaks/tweaks.php:58
+msgctxt "Tweaks Module"
+msgid "Checklist Tree"
+msgstr ""
+
+#: modules/tweaks/tweaks.php:59
+msgctxt "Tweaks Module"
+msgid "Preserves the category hierarchy on the post editing screen"
+msgstr ""
+
+#: modules/tweaks/tweaks.php:64
+msgctxt "Tweaks Module"
+msgid "Category Search"
+msgstr "جست‌وجو"
+
+#: modules/tweaks/tweaks.php:65
+msgctxt "Tweaks Module"
+msgid "Replaces the category selector to include searching categories"
+msgstr ""
+
+#: modules/tweaks/tweaks.php:78
 msgctxt "Tweaks Module"
 msgid "Taxonomies"
 msgstr "رده‌بندی‌ها"
 
-#: modules/tweaks/tweaks.php:49
+#: modules/tweaks/tweaks.php:79
+msgctxt "Tweaks Module: Meta Box Search Title"
+msgid "Type to filter by"
+msgstr "برای پالایش تایپ کنید"
+
+#: modules/tweaks/tweaks.php:80
+msgctxt "Tweaks Module: Meta Box Search Placeholder"
+msgid "Search &hellip;"
+msgstr "جست‌وجو &hellip;"
+
+#: modules/tweaks/tweaks.php:86
 msgctxt "Tweaks Module"
 msgid "Categories"
 msgstr "دسته‌ها"
 
-#: modules/tweaks/tweaks.php:54
+#: modules/tweaks/tweaks.php:91
 msgctxt "Tweaks Module"
 msgid "Tags"
 msgstr "برچسب‌ها"
 
-#: modules/tweaks/tweaks.php:159
+#: modules/tweaks/tweaks.php:200
 msgctxt "Tweaks Module"
 msgid "Excerpt"
 msgstr "چکیده"
 
-#: modules/tweaks/tweaks.php:167
+#: modules/tweaks/tweaks.php:208
 msgid "Excerpt"
 msgstr "چکیده"
 
@@ -5464,6 +6140,26 @@ msgstr "ابزارک‌ها"
 msgctxt "Widgets Module"
 msgid "Set of carefully customizable widgets"
 msgstr ""
+
+#~ msgctxt "Module Core"
+#~ msgid "Multiple Instances"
+#~ msgstr "اجازه انتخاب چندگانه"
+
+#~ msgctxt "Module Core"
+#~ msgid "Redirect Archives"
+#~ msgstr "تغییر نشانی بایگانی"
+
+#~ msgctxt "Module Core"
+#~ msgid "Redirect Post Type Archives to a URL"
+#~ msgstr "تغییر مسیر بایگانی نوشته به نشانی جدید"
+
+#~ msgctxt "Module Core"
+#~ msgid "Insert in Content"
+#~ msgstr "گذاشتن در متن"
+
+#~ msgctxt "Module Core"
+#~ msgid "Put html automatically on the content"
+#~ msgstr "جاسازی خودکار در متن نوشته"
 
 #~ msgctxt "Publication Status Tax Labels"
 #~ msgid "Status"
