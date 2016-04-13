@@ -1340,7 +1340,7 @@ class gEditorialModuleCore extends gEditorialBaseCore
 			$name = $this->module->name;
 
 		$prefix = is_admin() ? 'admin.' : 'front.';
-		$suffix = ( ( ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) || self::isDev() ) ? '' : '.min' );
+		$suffix = SCRIPT_DEBUG ? '' : '.min';
 
 		wp_enqueue_script(
 			( $handle ? $handle : 'geditorial-'.$name ),
