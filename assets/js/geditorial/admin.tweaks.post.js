@@ -26,13 +26,15 @@ jQuery(document).ready(function($) {
 
 			$row.prependTo(this)
 				.bind('keyup', function(e) {
-					var $val = $(this).val(),
-						$list = $(this).parent().find('ul.categorychecklist'),
-						$labels = $list.find("label:contains('" + $val + "')");
 
-					$list.find('li').hide();
-					$labels.closest('li').find('li').addBack().show();
-					$list.show();
+					var val = $(this).val(),
+			            li = $(this).parent().find('ul.categorychecklist li'),
+			            list = $(this).parent().find('ul.categorychecklist');
+
+			        li.hide();
+			        var containingLabels = list.find("label:contains('" + val + "')");
+			        containingLabels.closest('li').find('li').addBack().show();
+			        containingLabels.parents('ul.categorychecklist li').show();
 				})
 				.show();
 		});
