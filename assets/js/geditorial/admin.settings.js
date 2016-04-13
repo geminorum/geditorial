@@ -1,4 +1,4 @@
-jQuery(document).ready(function($){
+jQuery(document).ready(function($) {
 
 	// Restore the Edit Flow submenu if there are no modules enabled
 	// We need it down below for dynamically rebuilding the link list when on the settings page
@@ -9,52 +9,52 @@ jQuery(document).ready(function($){
 	// 	$( 'li#toplevel_page_geditorial-settings .wp-submenu' ).show();
 	// }
 
-	$('.fields-check-all').click(function(e){
-		$(this).closest('table').find('.fields-check').prop('checked',this.checked);
+	$('.fields-check-all').click(function(e) {
+		$(this).closest('table').find('.fields-check').prop('checked', this.checked);
 	});
 
-	$('.fields-check').click(function(e){
-		$(this).closest('table').find('.fields-check-all').prop('checked',false);
+	$('.fields-check').click(function(e) {
+		$(this).closest('table').find('.fields-check-all').prop('checked', false);
 	});
 
-	$('.button-toggle').click(function(){
+	$('.button-toggle').click(function() {
 
-		if ( $(this).hasClass('button-primary') )
+		if ($(this).hasClass('button-primary'))
 			var module_action = 'enable';
-		else if ( $(this).hasClass('button-remove') )
+		else if ($(this).hasClass('button-remove'))
 			var module_action = 'disable';
 
 		var slug = $(this).closest('.module').attr('id');
-		var change_module_nonce = $('#'+slug+' #module-nonce').val();
+		var change_module_nonce = $('#' + slug + ' #module-nonce').val();
 		var data = {
 			// action: 'change_geditorial_module_state',
 			action: 'geditorial_settings',
 			sub: 'module_state',
 			module_action: module_action,
 			module_nonce: change_module_nonce,
-			module_slug: slug,
-			// change_module_nonce: change_module_nonce,
-			// slug: slug,
+			module_slug: slug
+				// change_module_nonce: change_module_nonce,
+				// slug: slug,
 		}
 
 		// console.log(data);
 
-		$.post( ajaxurl, data, function(response) {
+		$.post(ajaxurl, data, function(response) {
 
 			if (response.success) {
-				$('#'+slug+' .button-toggle').hide();
+				$('#' + slug + ' .button-toggle').hide();
 
-				if ( 'disable' == module_action ) {
+				if ('disable' == module_action) {
 
-					$('#'+slug).addClass('module-disabled').removeClass('module-enabled');
-					$('#'+slug+' .button-toggle.button-primary').show();
-					$('#'+slug+' .button-configure').hide().addClass('hidden');
+					$('#' + slug).addClass('module-disabled').removeClass('module-enabled');
+					$('#' + slug + ' .button-toggle.button-primary').show();
+					$('#' + slug + ' .button-configure').hide().addClass('hidden');
 
-				} else if ( 'enable' == module_action ) {
+				} else if ('enable' == module_action) {
 
-					$('#'+slug).addClass('module-enabled').removeClass('module-disabled');
-					$('#'+slug+' .button-toggle.button-remove').show();
-					$('#'+slug+' .button-configure').show().removeClass('hidden');
+					$('#' + slug).addClass('module-enabled').removeClass('module-disabled');
+					$('#' + slug + ' .button-toggle.button-remove').show();
+					$('#' + slug + ' .button-configure').show().removeClass('hidden');
 
 				}
 

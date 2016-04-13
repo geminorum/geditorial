@@ -8,7 +8,7 @@ jQuery(document).ready(function($) {
 		// slide up
 		var wrap = $('#editorial-drafts');
 
-		if ( wrap.size() && wrap.is( ':visible' ) ) {
+		if (wrap.size() && wrap.is(':visible')) {
 			wrap.slideUp(function() {
 				$(this).remove();
 			});
@@ -19,11 +19,13 @@ jQuery(document).ready(function($) {
 		$('body').append('<div id="editorial-drafts" class="geditorial-wrap drafts"><div class="-content"></div></div>');
 
 		// show spinner
-		var wrap = $('#editorial-drafts');
-		wrap.css({'height': '100%'}).slideDown().addClass('-loading');
+		// var wrap = $('#editorial-drafts');
+		wrap.css({
+			'height': '100%'
+		}).slideDown().addClass('-loading');
 
 		// load drafts
-		$.post( gEditorial.api, {
+		$.post(gEditorial.api, {
 				action: 'geditorial_drafts',
 				what: 'list',
 				nonce: gEditorial.nonce,
@@ -34,10 +36,12 @@ jQuery(document).ready(function($) {
 				console.log(content);
 				content.html(response.data.html);
 				wrap.removeClass('-loading');
-				content.hide().css({ 'visibility': 'visible' }).fadeIn();
+				content.hide().css({
+					'visibility': 'visible'
+				}).fadeIn();
 			},
 			'json'
 		);
 	});
-//}(jQuery));
+	//}(jQuery));
 });
