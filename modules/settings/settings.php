@@ -107,7 +107,7 @@ class gEditorialSettings extends gEditorialModuleCore
 
 	public function admin_tools_load()
 	{
-		global $gEditorial;
+		global $gEditorial, $wpdb;
 
 		$sub = isset( $_REQUEST['sub'] ) ? $_REQUEST['sub'] : 'general';
 
@@ -137,6 +137,22 @@ class gEditorialSettings extends gEditorialModuleCore
 						if ( count( $result ) )
 							self::redirect( add_query_arg( array(
 								'message' => 'emptied',
+								'count'   => count( $result ),
+							), wp_get_referer() ) );
+					}
+
+				} else if ( isset( $_POST['orphaned_terms'] ) ) {
+
+					if ( ! empty( $post['dead_tax'] )
+						&& ! empty( $post['live_tax'] ) ) {
+
+						$result = $wpdb->query( $wpdb->prepare( "
+							UPDATE $wpdb->term_taxonomy SET taxonomy = %s WHERE taxonomy = '%s'
+						", trim( $post['live_tax'] ), trim( $post['dead_tax'] ) ) );
+
+						if ( count( $result ) )
+							self::redirect( add_query_arg( array(
+								'message' => 'converted',
 								'count'   => count( $result ),
 							), wp_get_referer() ) );
 					}
@@ -191,6 +207,36 @@ class gEditorialSettings extends gEditorialModuleCore
 					echo self::html( 'span', array(
 						'class' => 'description',
 					), _x( 'Will delete empty meta values, solves common problems with imported posts.', 'Settings Module', GEDITORIAL_TEXTDOMAIN ) );
+				echo '</p>';
+
+			echo '</td></tr>';
+			echo '<tr><th scope="row">'._x( 'Orphaned Terms', 'Settings Module', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
+
+				$all_tax  = gEditorialHelper::getDBTermTaxonomies( TRUE );
+				$live_tax = gEditorialHelper::getTaxonomies( 'name' );
+
+				$this->do_settings_field( array(
+					'type'       => 'select',
+					'field'      => 'dead_tax',
+					'values'     => array_diff_key( $all_tax, $live_tax ),
+					'default'    => ( isset( $post['dead_tax'] ) ? $post['dead_tax'] : 'post_tag' ),
+					'name_group' => 'tools',
+				) );
+
+				$this->do_settings_field( array(
+					'type'       => 'select',
+					'field'      => 'live_tax',
+					'values'     => $live_tax,
+					'default'    => ( isset( $post['live_tax'] ) ? $post['live_tax'] : 'post_tag' ),
+					'name_group' => 'tools',
+				) );
+
+				echo '<p class="submit">';
+					submit_button( _x( 'Convert', 'Settings Module', GEDITORIAL_TEXTDOMAIN ), 'secondary', 'orphaned_terms', FALSE ); echo '&nbsp;&nbsp;';
+
+					echo self::html( 'span', array(
+						'class' => 'description',
+					), _x( 'Converts orphaned terms into currently registered taxonomies', 'Settings Module', GEDITORIAL_TEXTDOMAIN ) );
 				echo '</p>';
 
 			echo '</td></tr>';
