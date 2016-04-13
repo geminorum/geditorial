@@ -175,8 +175,22 @@ class gEditorialGallery extends gEditorialModuleCore
 		// http://www.johanbrook.com/writings/adding-custom-url-endpoints-in-wordpress/
 		// add_rewrite_endpoint('photos', EP_PERMALINK);
 		// add_filter( 'single_template', 'project_attachments_template' );
-		// add_filter( 'query_vars', 'add_query_vars');
+		// add_filter( 'query_vars', 'add_query_vars' );
+
+		// NO NEED!!
+		// add_filter( 'attachment_fields_to_edit', array( $this, 'attachment_fields_to_edit' ), 7, 2 );
+		// add_filter( 'attachment_fields_to_save', array( $this, 'attachment_fields_to_save' ), 7, 2 );
+
 	}
+
+	public function current_screen( $screen )
+	{
+		// if ( 'post' == $screen->base
+		// 	&& in_array( $screen->post_type, $this->post_types() ) )
+		// 		add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ), 20, 2 );
+
+	}
+
 
 	public function register_settings( $page = NULL )
 	{
@@ -188,6 +202,26 @@ class gEditorialGallery extends gEditorialModuleCore
 
 		parent::register_settings( $page );
 		$this->register_settings_button( 'install_def_album_cats', _x( 'Install Default Album Cats', 'Gallery Module', GEDITORIAL_TEXTDOMAIN ) );
+	}
+
+	public function attachment_fields_to_edit( $form_fields, $post )
+	{
+		$form_fields['geditorial_gallery_order'] = array(
+            'label' => _x( 'Order', 'Gallery Module', GEDITORIAL_TEXTDOMAIN ),
+            'value' => isset( $post->menu_order ) ? $post->menu_order : '0',
+		);
+
+		return $form_fields;
+	}
+
+	public function attachment_fields_to_save( $post, $attachment )
+	{
+		// error_log( print_r( compact( 'attachment' ), TRUE ) );
+
+		if ( isset( $attachment['geditorial_gallery_order'] ) )
+			$post['menu_order'] = $attachment['geditorial-gallery-order'];
+
+		return $post;
 	}
 
 ////////////////////////////////////////////////////////////////////////////////

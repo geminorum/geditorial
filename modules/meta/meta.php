@@ -483,11 +483,11 @@ class gEditorialMeta extends gEditorialModuleCore
 			) );
 
 			$this->do_settings_field( array(
-				'type'       => 'text',
-				'field'      => 'custom_field_limit',
-				'default'    => ( isset( $post['custom_field_limit'] ) ? $post['custom_field_limit'] : '' ),
-				'name_group' => 'tools',
-				'class'      => 'small-text',
+				'type'        => 'text',
+				'field'       => 'custom_field_limit',
+				'default'     => ( isset( $post['custom_field_limit'] ) ? $post['custom_field_limit'] : '' ),
+				'name_group'  => 'tools',
+				'field_class' => 'small-text',
 			) );
 
 			$this->do_settings_field( array(

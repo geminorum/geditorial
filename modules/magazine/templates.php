@@ -76,7 +76,7 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 		if ( 'on' == $args['future'] ) {
 			$post_status = array( 'publish', 'future', 'draft' );
 		} else {
-			$post_status =  array( 'publish' );
+			$post_status = array( 'publish' );
 		}
 
 		if ( ! $error ) {
