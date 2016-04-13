@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gEditorial 3.3\n"
-"POT-Creation-Date: 2016-04-13 06:48+0430\n"
-"PO-Revision-Date: 2016-04-13 07:11+0430\n"
+"Project-Id-Version: gEditorial 3.4\n"
+"POT-Creation-Date: 2016-04-13 09:43+0430\n"
+"PO-Revision-Date: 2016-04-13 09:44+0430\n"
 "Last-Translator: \n"
 "Language-Team: geminorum <contact@geminorum.ir>\n"
 "Language: fa\n"
@@ -23,18 +23,18 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-3: assets\n"
 "X-Poedit-SearchPathExcluded-4: node_modules\n"
 
-#: includes/class-base.php:455
+#: includes/class-base.php:495
 #, php-format
 msgctxt "Module Core"
 msgid "%s Counted!"
 msgstr "%s شمرده شد!"
 
-#: includes/class-base.php:570
+#: includes/class-base.php:611
 msgctxt "Module Helper: Post Type Seperator"
 msgid ", "
 msgstr "، "
 
-#: includes/class-base.php:848
+#: includes/class-base.php:899
 msgctxt "Module Helper"
 msgid "Undefined Image Size"
 msgstr "اندازه نامشخص"
@@ -2605,9 +2605,9 @@ msgctxt "Drafts Module: Admin Bar Title"
 msgid "Drafts"
 msgstr "پیش‌نویس‌ها"
 
-#: modules/drafts/drafts.php:64 modules/settings/settings.php:206
-#: modules/settings/settings.php:212 modules/settings/settings.php:416
-#: modules/settings/settings.php:449
+#: modules/drafts/drafts.php:64 modules/settings/settings.php:252
+#: modules/settings/settings.php:258 modules/settings/settings.php:462
+#: modules/settings/settings.php:495
 msgid "Cheatin&#8217; uh?"
 msgstr ""
 
@@ -5060,7 +5060,7 @@ msgctxt "series hide link"
 msgid "More&hellip;"
 msgstr "بیشتر &hellip;"
 
-#: modules/settings/settings.php:10 modules/settings/settings.php:266
+#: modules/settings/settings.php:10 modules/settings/settings.php:312
 msgctxt "Settings Module"
 msgid "Editorial"
 msgstr "تحریریه"
@@ -5104,74 +5104,89 @@ msgstr ""
 #: modules/settings/settings.php:86
 msgctxt "Settings Module: Page Title"
 msgid "gEditorial Tools"
-msgstr ""
+msgstr "ابزارهای تحریریه"
 
-#: modules/settings/settings.php:162
+#: modules/settings/settings.php:178
 msgctxt "Settings Module"
 msgid "Maintenance Tasks"
-msgstr ""
+msgstr "ابزارهای نگه‌داری"
 
-#: modules/settings/settings.php:167
+#: modules/settings/settings.php:183
 msgctxt "Settings Module"
 msgid "Upgrade Old Options"
-msgstr ""
+msgstr "ارتقاء تنظیمات قدیمی"
 
-#: modules/settings/settings.php:170
+#: modules/settings/settings.php:186
 msgctxt "Settings Module"
 msgid "Upgrade"
-msgstr ""
+msgstr "ارتقاء"
 
-#: modules/settings/settings.php:174
+#: modules/settings/settings.php:190
 msgctxt "Settings Module"
 msgid "Will check for old options and upgrade, also delete old options"
 msgstr ""
 
-#: modules/settings/settings.php:178
+#: modules/settings/settings.php:194
 msgctxt "Settings Module"
 msgid "Empty Meta Fields"
-msgstr ""
+msgstr "خالی کردن متا"
 
-#: modules/settings/settings.php:189
+#: modules/settings/settings.php:205
 msgctxt "Settings Module"
 msgid "Empty"
-msgstr ""
+msgstr "خالی کردن"
 
-#: modules/settings/settings.php:193
+#: modules/settings/settings.php:209
 msgctxt "Settings Module"
 msgid ""
 "Will delete empty meta values, solves common problems with imported posts."
 msgstr ""
 
-#: modules/settings/settings.php:215
+#: modules/settings/settings.php:213
+msgctxt "Settings Module"
+msgid "Orphaned Terms"
+msgstr "رده‌های بدون رده‌بندی"
+
+#: modules/settings/settings.php:235
+msgctxt "Settings Module"
+msgid "Convert"
+msgstr "تبدیل"
+
+#: modules/settings/settings.php:239
+msgctxt "Settings Module"
+msgid "Converts orphaned terms into currently registered taxonomies"
+msgstr ""
+
+#: modules/settings/settings.php:261
 msgctxt "Settings Module: Ajax Notice"
 msgid "No Action of Slug!"
 msgstr ""
 
-#: modules/settings/settings.php:220
+#: modules/settings/settings.php:266
 msgctxt "Settings Module: Ajax Notice"
 msgid "Cannot find the module!"
 msgstr ""
 
-#: modules/settings/settings.php:225
+#: modules/settings/settings.php:271
 msgctxt "Settings Module: Ajax Notice"
 msgid "Module state succesfully changed"
 msgstr ""
 
-#: modules/settings/settings.php:227
+#: modules/settings/settings.php:273
 msgctxt "Settings Module: Ajax Notice"
 msgid "Cannot change module state"
 msgstr ""
 
-#: modules/settings/settings.php:232
+#: modules/settings/settings.php:278
 msgctxt "Settings Module: Ajax Notice"
 msgid "What?!"
 msgstr "هان؟!"
 
-#: modules/settings/settings.php:243
+#: modules/settings/settings.php:289
 msgid "Not a registered Editorial module"
 msgstr ""
 
-#: modules/settings/settings.php:255
+#: modules/settings/settings.php:301
 #, php-format
 msgctxt "Settings Module"
 msgid ""
@@ -5179,40 +5194,40 @@ msgid ""
 "settings page</a>."
 msgstr ""
 
-#: modules/settings/settings.php:268
+#: modules/settings/settings.php:314
 #, php-format
 msgctxt "Settings Module"
 msgid "Editorial: %s"
 msgstr "تحریریه: %s"
 
-#: modules/settings/settings.php:270
+#: modules/settings/settings.php:316
 msgctxt "Settings Module"
 msgid "Back to Editorial"
 msgstr "بازگشت به تحریریه"
 
-#: modules/settings/settings.php:316
+#: modules/settings/settings.php:362
 #, php-format
 msgid ""
 "<a href=\"%1$s\" title=\"Editorial\">gEditorial</a> is a <a href=\"%2$s"
 "\">geminorum</a> project."
 msgstr ""
 
-#: modules/settings/settings.php:357
+#: modules/settings/settings.php:403
 msgctxt "Settings Module"
 msgid "Configure"
 msgstr "پیکربندی"
 
-#: modules/settings/settings.php:363
+#: modules/settings/settings.php:409
 msgctxt "Settings Module"
 msgid "Enable"
 msgstr "فعال شود"
 
-#: modules/settings/settings.php:368
+#: modules/settings/settings.php:414
 msgctxt "Settings Module"
 msgid "Disable"
 msgstr "غیرفعال شود"
 
-#: modules/settings/settings.php:380
+#: modules/settings/settings.php:426
 msgctxt "Settings Module"
 msgid "There are no editorial modules registered"
 msgstr "ماژول تحریریه‌ای پیدا نشد."
@@ -6040,7 +6055,7 @@ msgstr "ظرافت‌ها"
 #: modules/tweaks/tweaks.php:14
 msgctxt "Tweaks Module"
 msgid "Admin UI Enhancement"
-msgstr ""
+msgstr "بهینه‌سازی رابط کاربری در بخش مدیریت"
 
 #: modules/tweaks/tweaks.php:21
 msgctxt "Tweaks Module"
@@ -6055,12 +6070,12 @@ msgstr "سیاهه درختی"
 #: modules/tweaks/tweaks.php:38
 msgctxt "Tweaks Module: Help Tab Title"
 msgid "Category Search"
-msgstr "جست‌وجو"
+msgstr "جست‌وجوی رده‌ها"
 
 #: modules/tweaks/tweaks.php:52
 msgctxt "Tweaks Module"
 msgid "Group Taxonomies"
-msgstr ""
+msgstr "گروه‌بندی رده‌ها"
 
 #: modules/tweaks/tweaks.php:53
 msgctxt "Tweaks Module"
@@ -6070,7 +6085,7 @@ msgstr ""
 #: modules/tweaks/tweaks.php:58
 msgctxt "Tweaks Module"
 msgid "Checklist Tree"
-msgstr ""
+msgstr "سیاهه درختی"
 
 #: modules/tweaks/tweaks.php:59
 msgctxt "Tweaks Module"
@@ -6080,7 +6095,7 @@ msgstr ""
 #: modules/tweaks/tweaks.php:64
 msgctxt "Tweaks Module"
 msgid "Category Search"
-msgstr "جست‌وجو"
+msgstr "جست‌وجو رده‌ها"
 
 #: modules/tweaks/tweaks.php:65
 msgctxt "Tweaks Module"
