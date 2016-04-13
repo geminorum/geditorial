@@ -249,6 +249,39 @@ class gEditorialBaseCore
 		return $register;
 	}
 
+	public static function getKeys( $options, $if = TRUE )
+	{
+		$keys = array();
+
+		foreach ( (array) $options as $key => $value )
+			if ( $value == $if )
+				$keys[] = $key;
+
+		return $keys;
+	}
+
+	// http://wordpress.mfields.org/2011/rekey-an-indexed-array-of-post-objects-by-post-id/
+	public static function reKey( $list, $key )
+	{
+		if ( ! empty( $list ) ) {
+			$ids = wp_list_pluck( $list, $key );
+			$list = array_combine( $ids, $list );
+		}
+
+		return $list;
+	}
+
+	public static function sameKey( $old )
+	{
+		$same = array();
+
+		foreach ( $old as $key => $value )
+			if ( FALSE !== $value && NULL !== $value )
+				$same[$value] = $value;
+
+		return $same;
+	}
+
 	// FIXME: DEPRICATED: use self::recursiveParseArgs()
 	public static function parse_args_r( &$a, $b )
 	{
@@ -717,6 +750,20 @@ class gEditorialBaseCore
 		echo '<div class="clear"></div>';
 	}
 
+	public static function getDBTermTaxonomies( $same_key = FALSE )
+	{
+		global $wpdb;
+
+		$taxonomies = $wpdb->get_col( "
+			SELECT taxonomy
+			FROM $wpdb->term_taxonomy
+			GROUP BY taxonomy
+			ORDER BY taxonomy ASC
+		" );
+
+		return $same_key ? self::sameKey( $taxonomies ) : $taxonomies;
+	}
+
 	// from : Custom Field Taxonomies : https://github.com/scribu/wp-custom-field-taxonomies
 	public static function getDBPostMetaRows( $meta_key, $limit = FALSE )
 	{
@@ -728,7 +775,7 @@ class gEditorialBaseCore
 				FROM $wpdb->postmeta
 				WHERE meta_key = %s
 				GROUP BY post_id
-				 LIMIT %d
+				LIMIT %d
 			", $meta_key, $limit );
 		else
 			$query = $wpdb->prepare( "
@@ -742,11 +789,11 @@ class gEditorialBaseCore
 	}
 
 	// from : Custom Field Taxonomies : https://github.com/scribu/wp-custom-field-taxonomies
-	public static function getDBPostMetaKeys( $rekey = FALSE )
+	public static function getDBPostMetaKeys( $same_key = FALSE )
 	{
 		global $wpdb;
 
-		$keys = $wpdb->get_col( "
+		$meta_keys = $wpdb->get_col( "
 			SELECT meta_key
 			FROM $wpdb->postmeta
 			GROUP BY meta_key
@@ -754,14 +801,7 @@ class gEditorialBaseCore
 			ORDER BY meta_key ASC
 		" );
 
-		if ( ! $rekey )
-			return $keys;
-
-		$re = array();
-		foreach ( $keys as $key )
-			$re[$key] = $key;
-
-		return $re;
+		return $same_key ? self::sameKey( $meta_keys ) : $meta_keys;
 	}
 
 	// SEE : delete_post_meta_by_key( 'related_posts' );
