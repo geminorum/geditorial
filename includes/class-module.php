@@ -1349,12 +1349,12 @@ class gEditorialModuleCore extends gEditorialBaseCore
 			GEDITORIAL_VERSION, TRUE );
 
 		if ( is_array( $args ) && ! count( $args ) )
-			return;
+			return TRUE;
 
 		if ( TRUE === $args )
 			$args = array();
 
-		gEditorial()->enqueue_asset_config( $args, $this->module->name );
+		return gEditorial()->enqueue_asset_config( $args, $this->module->name );
 	}
 
 	// combined global styles

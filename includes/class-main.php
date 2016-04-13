@@ -310,6 +310,8 @@ class gEditorial
 			else
 				$this->asset_args = array_merge( $this->asset_args, array( $module => $args ) );
 		}
+
+		return $this->asset_config;
 	}
 
 	// used in front & admin
