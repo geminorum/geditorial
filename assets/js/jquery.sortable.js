@@ -1,5 +1,5 @@
 /* ===================================================
- *  jquery-sortable.js v0.9.11
+ *  jquery-sortable.js v0.9.13
  *  http://johnny.github.com/jquery-sortable/
  * ===================================================
  *  Copyright (c) 2012 Jonas von Andrian
@@ -28,10 +28,8 @@
  * ========================================================== */
 
 
-!function ( $, window, undefined){
-  var eventNames,
-  pluginName = 'sortable',
-  containerDefaults = {
+!function ( $, window, pluginName, undefined){
+  var containerDefaults = {
     // If true, items can be dragged from this container
     drag: true,
     // If true, items can be droped onto this container
@@ -39,14 +37,19 @@
     // Exclude items from being draggable, if the
     // selector matches the item
     exclude: "",
-    // If true, search for nested containers within an item
+    // If true, search for nested containers within an item.If you nest containers,
+    // either the original selector with which you call the plugin must only match the top containers,
+    // or you need to specify a group (see the bootstrap nav example)
     nested: true,
     // If true, the items are assumed to be arranged vertically
     vertical: true
   }, // end container defaults
   groupDefaults = {
     // This is executed after the placeholder has been moved.
-    afterMove: function ($placeholder, container) {
+    // $closestItemOrContainer contains the closest item, the placeholder
+    // has been put at or the closest empty Container, the placeholder has
+    // been appended to.
+    afterMove: function ($placeholder, container, $closestItemOrContainer) {
     },
     // The exact css path between the container and its items, e.g. "> tbody"
     containerPath: "",
@@ -54,12 +57,21 @@
     containerSelector: "ol, ul",
     // Distance the mouse has to travel to start dragging
     distance: 0,
+    // Time in milliseconds after mousedown until dragging should start.
+    // This option can be used to prevent unwanted drags when clicking on an element.
+    delay: 0,
     // The css selector of the drag handle
     handle: "",
-    // The exact css path between the item and its subcontainers
+    // The exact css path between the item and its subcontainers.
+    // It should only match the immediate items of a container.
+    // No item of a subcontainer should be matched. E.g. for ol>div>li the itemPath is "> div"
     itemPath: "",
     // The css selector of the items
     itemSelector: "li",
+    // The class given to "body" while an item is being dragged
+    bodyClass: "dragging",
+    // The class giving to an item while being dragged
+    draggedClass: "dragged",
     // Check if the dragged item may be inside the container.
     // Use with care, since the search for a valid container entails a depth first search
     // and may be quite expensive.
@@ -68,55 +80,60 @@
     },
     // Executed before onDrop if placeholder is detached.
     // This happens if pullPlaceholder is set to false and the drop occurs outside a container.
-    onCancel: function ($item, container, _super) {
+    onCancel: function ($item, container, _super, event) {
     },
     // Executed at the beginning of a mouse move event.
     // The Placeholder has not been moved yet.
-    onDrag: function ($item, position, _super) {
+    onDrag: function ($item, position, _super, event) {
       $item.css(position)
     },
     // Called after the drag has been started,
-    // that is the mouse button is beeing held down and
+    // that is the mouse button is being held down and
     // the mouse is moving.
     // The container is the closest initialized container.
     // Therefore it might not be the container, that actually contains the item.
-    onDragStart: function ($item, container, _super) {
+    onDragStart: function ($item, container, _super, event) {
       $item.css({
-        height: $item.height(),
-        width: $item.width()
+        height: $item.outerHeight(),
+        width: $item.outerWidth()
       })
-      $item.addClass("dragged")
-      $("body").addClass("dragging")
+      $item.addClass(container.group.options.draggedClass)
+      $("body").addClass(container.group.options.bodyClass)
     },
-    // Called when the mouse button is beeing released
-    onDrop: function ($item, container, _super) {
-      $item.removeClass("dragged").removeAttr("style")
-      $("body").removeClass("dragging")
+    // Called when the mouse button is being released
+    onDrop: function ($item, container, _super, event) {
+      $item.removeClass(container.group.options.draggedClass).removeAttr("style")
+      $("body").removeClass(container.group.options.bodyClass)
     },
-    // Called on mousedown.
-    onMousedown: function($item, event, _super) {
-      event.preventDefault()
+    // Called on mousedown. If falsy value is returned, the dragging will not start.
+    // Ignore if element clicked is input, select or textarea
+    onMousedown: function ($item, _super, event) {
+      if (!event.target.nodeName.match(/^(input|select|textarea)$/i)) {
+        event.preventDefault()
+        return true
+      }
     },
+    // The class of the placeholder (must match placeholder option markup)
+    placeholderClass: "placeholder",
     // Template for the placeholder. Can be any valid jQuery input
     // e.g. a string, a DOM element.
     // The placeholder must have the class "placeholder"
-    placeholder: '<li class="placeholder"/>',
+    placeholder: '<li class="placeholder"></li>',
     // If true, the position of the placeholder is calculated on every mousemove.
     // If false, it is only calculated when the mouse is above a container.
     pullPlaceholder: true,
     // Specifies serialization of the container group.
     // The pair $parent/$children is either container/items or item/subcontainers.
-    // Note that this default method only works, if every item only has one subcontainer
     serialize: function ($parent, $children, parentIsContainer) {
       var result = $.extend({}, $parent.data())
-      
+
       if(parentIsContainer)
-        return $children
+        return [$children]
       else if ($children[0]){
         result.children = $children
-        delete result.subContainer
       }
 
+      delete result.subContainers
       delete result.sortable
 
       return result
@@ -132,13 +149,14 @@
     top: 0,
     bottom: 0,
     right:0
-  }
+  },
   eventNames = {
     start: "touchstart.sortable mousedown.sortable",
     drop: "touchend.sortable touchcancel.sortable mouseup.sortable",
     drag: "touchmove.sortable mousemove.sortable",
     scroll: "scroll.sortable"
-  }
+  },
+  subContainerKey = "subContainers"
 
   /*
    * a is Array [left, right, top, bottom]
@@ -201,23 +219,26 @@
   function ContainerGroup(options) {
     this.options = $.extend({}, groupDefaults, options)
     this.containers = []
-    this.scrollProxy = $.proxy(this.scroll, this)
-    this.dragProxy = $.proxy(this.drag, this)
-    this.dropProxy = $.proxy(this.drop, this)
 
-    if(!this.options.parentContainer){
+    if(!this.options.rootGroup){
+      this.scrollProxy = $.proxy(this.scroll, this)
+      this.dragProxy = $.proxy(this.drag, this)
+      this.dropProxy = $.proxy(this.drop, this)
       this.placeholder = $(this.options.placeholder)
+
       if(!options.isValidTarget)
         this.options.isValidTarget = undefined
     }
   }
 
   ContainerGroup.get = function  (options) {
-    if( !containerGroups[options.group]) {
-      if(!options.group)
+    if(!containerGroups[options.group]) {
+      if(options.group === undefined)
         options.group = groupCounter ++
+
       containerGroups[options.group] = new ContainerGroup(options)
     }
+
     return containerGroups[options.group]
   }
 
@@ -225,28 +246,28 @@
     dragInit: function  (e, itemContainer) {
       this.$document = $(itemContainer.el[0].ownerDocument)
 
-      if(itemContainer.enabled()){
-        this.toggleListeners('on')
-
-        // get item to drag
-        this.item = $(e.target).closest(this.options.itemSelector)
-        this.itemContainer = itemContainer
-
-        this.setPointer(e)
-
-        this.options.onMousedown(this.item, e, groupDefaults.onMousedown)
-      } else {
-        this.toggleListeners('on', ['drop'])
+      // get item to drag
+      var closestItem = $(e.target).closest(this.options.itemSelector);
+      // using the length of this item, prevents the plugin from being started if there is no handle being clicked on.
+      // this may also be helpful in instantiating multidrag.
+      if (closestItem.length) {
+        this.item = closestItem;
+        this.itemContainer = itemContainer;
+        if (this.item.is(this.options.exclude) || !this.options.onMousedown(this.item, groupDefaults.onMousedown, e)) {
+            return;
+        }
+        this.setPointer(e);
+        this.toggleListeners('on');
+        this.setupDelayTimer();
+        this.dragInitDone = true;
       }
-
-      this.dragInitDone = true
     },
     drag: function  (e) {
       if(!this.dragging){
-        if(!this.distanceMet(e))
+        if(!this.distanceMet(e) || !this.delayMet)
           return
 
-        this.options.onDragStart(this.item, this.itemContainer, groupDefaults.onDragStart)
+        this.options.onDragStart(this.item, this.itemContainer, groupDefaults.onDragStart, e)
         this.item.before(this.placeholder)
         this.dragging = true
       }
@@ -255,16 +276,18 @@
       // place item under the cursor
       this.options.onDrag(this.item,
                           getRelativePosition(this.pointer, this.item.offsetParent()),
-                          groupDefaults.onDrag)
+                          groupDefaults.onDrag,
+                          e)
 
-      var x = e.pageX,
-      y = e.pageY,
+      var p = this.getPointer(e),
       box = this.sameResultBox,
       t = this.options.tolerance
 
-      if(!box || box.top - t > y || box.bottom + t < y || box.left - t > x || box.right + t < x)
-        if(!this.searchValidTarget())
+      if(!box || box.top - t > p.top || box.bottom + t < p.top || box.left - t > p.left || box.right + t < p.left)
+        if(!this.searchValidTarget()){
           this.placeholder.detach()
+          this.lastAppendedItem = undefined
+        }
     },
     drop: function  (e) {
       this.toggleListeners('off')
@@ -273,12 +296,12 @@
 
       if(this.dragging){
         // processing Drop, check if placeholder is detached
-        if(this.placeholder.closest("html")[0])
+        if(this.placeholder.closest("html")[0]){
           this.placeholder.before(this.item).detach()
-        else
-          this.options.onCancel(this.item, this.itemContainer, groupDefaults.onCancel)
-
-        this.options.onDrop(this.item, this.getContainer(this.item), groupDefaults.onDrop)
+        } else {
+          this.options.onCancel(this.item, this.itemContainer, groupDefaults.onCancel, e)
+        }
+        this.options.onDrop(this.item, this.getContainer(this.item), groupDefaults.onDrop, e)
 
         // cleanup
         this.clearDimensions()
@@ -326,7 +349,7 @@
       item[method](this.placeholder)
       this.lastAppendedItem = item
       this.sameResultBox = sameResultBox
-      this.options.afterMove(this.placeholder, container)
+      this.options.afterMove(this.placeholder, container, item)
     },
     getContainerDimensions: function  () {
       if(!this.containerDimensions)
@@ -341,7 +364,7 @@
         var i = this.containers.length - 1,
         offsetParent = this.containers[i].getItemOffsetParent()
 
-        if(!this.options.parentContainer){
+        if(!this.options.rootGroup){
           while(i--){
             if(offsetParent[0] != this.containers[i].getItemOffsetParent()[0]){
               // If every container has the same offset parent,
@@ -353,16 +376,13 @@
             }
           }
         }
-        
+
         this.offsetParent = offsetParent
       }
       return this.offsetParent
     },
     setPointer: function (e) {
-      var pointer = {
-        left: e.pageX,
-        top: e.pageY
-      }
+      var pointer = this.getPointer(e)
 
       if(this.$getOffsetParent()){
         var relativePointer = getRelativePosition(pointer, this.$getOffsetParent())
@@ -374,18 +394,38 @@
       this.pointer = pointer
     },
     distanceMet: function (e) {
+      var currentPointer = this.getPointer(e)
       return (Math.max(
- 				Math.abs(this.pointer.left - e.pageX),
-				Math.abs(this.pointer.top - e.pageY)
-			) >= this.options.distance)
+        Math.abs(this.pointer.left - currentPointer.left),
+        Math.abs(this.pointer.top - currentPointer.top)
+      ) >= this.options.distance)
+    },
+    getPointer: function(e) {
+      var o = e.originalEvent || e.originalEvent.touches && e.originalEvent.touches[0]
+      return {
+        left: e.pageX || o.pageX,
+        top: e.pageY || o.pageY
+      }
+    },
+    setupDelayTimer: function () {
+      var that = this
+      this.delayMet = !this.options.delay
+
+      // init delay timer if needed
+      if (!this.delayMet) {
+        clearTimeout(this._mouseDelayTimer);
+        this._mouseDelayTimer = setTimeout(function() {
+          that.delayMet = true
+        }, this.options.delay)
+      }
     },
     scroll: function  (e) {
       this.clearDimensions()
-      this.clearOffsetParent()
+      this.clearOffsetParent() // TODO is this needed?
     },
-    toggleListeners: function (method, events) {
-      var that = this
-      events = events || ['drag','drop','scroll']
+    toggleListeners: function (method) {
+      var that = this,
+      events = ['drag','drop','scroll']
 
       $.each(events,function  (i,event) {
         that.$document[method](eventNames[event], that[event + 'Proxy'])
@@ -396,11 +436,22 @@
     },
     // Recursively clear container and item dimensions
     clearDimensions: function  () {
-      this.containerDimensions = undefined
+      this.traverse(function(object){
+        object._clearDimensions()
+      })
+    },
+    traverse: function(callback) {
+      callback(this)
       var i = this.containers.length
       while(i--){
-        this.containers[i].clearDimensions()
+        this.containers[i].traverse(callback)
       }
+    },
+    _clearDimensions: function(){
+      this.containerDimensions = undefined
+    },
+    _destroy: function () {
+      containerGroups[this.options.group] = undefined
     }
   }
 
@@ -409,11 +460,13 @@
     this.options = $.extend( {}, containerDefaults, options)
 
     this.group = ContainerGroup.get(this.options)
-    this.rootGroup = this.options.rootGroup = this.options.rootGroup || this.group
-    this.parentContainer = this.options.parentContainer
+    this.rootGroup = this.options.rootGroup || this.group
     this.handle = this.rootGroup.options.handle || this.rootGroup.options.itemSelector
 
-    this.el.on(eventNames.start, this.handle, $.proxy(this.dragInit, this))
+    var itemPath = this.rootGroup.options.itemPath
+    this.target = itemPath ? this.el.find(itemPath) : this.el
+
+    this.target.on(eventNames.start, this.handle, $.proxy(this.dragInit, this))
 
     if(this.options.drop)
       this.group.containers.push(this)
@@ -423,11 +476,16 @@
     dragInit: function  (e) {
       var rootGroup = this.rootGroup
 
-      if( !rootGroup.dragInitDone &&
-          e.which === 1 &&
+      if( !this.disabled &&
+          !rootGroup.dragInitDone &&
           this.options.drag &&
-          !$(e.target).is(this.options.exclude))
+          this.isValidDrag(e)) {
         rootGroup.dragInit(e, this)
+      }
+    },
+    isValidDrag: function(e) {
+      return e.which == 1 ||
+        e.type == "touchstart" && e.originalEvent.touches.length == 1
     },
     searchValidTarget: function  (pointer, lastPointer) {
       var distances = sortByDistanceDesc(this.getItemDimensions(),
@@ -439,7 +497,7 @@
         rootGroup.options.isValidTarget(rootGroup.item, this)
 
       if(!i && validTarget){
-        rootGroup.movePlaceholder(this, this.el, "append")
+        rootGroup.movePlaceholder(this, this.target, "append")
         return true
       } else
         while(i--){
@@ -492,7 +550,9 @@
     },
     getItemDimensions: function  () {
       if(!this.itemDimensions){
-        this.items = this.$getChildren(this.el, "item").filter(":not(.placeholder, .dragged)").get()
+        this.items = this.$getChildren(this.el, "item").filter(
+          ":not(." + this.group.options.placeholderClass + ", ." + this.group.options.draggedClass + ")"
+        ).get()
         setDimensions(this.items, this.itemDimensions = [], this.options.tolerance)
       }
       return this.itemDimensions
@@ -512,24 +572,21 @@
       return this.options.nested && this.getContainerGroup(index)
     },
     getContainerGroup: function  (index) {
-      var childGroup = $.data(this.items[index], "subContainer")
+      var childGroup = $.data(this.items[index], subContainerKey)
       if( childGroup === undefined){
         var childContainers = this.$getChildren(this.items[index], "container")
         childGroup = false
 
         if(childContainers[0]){
           var options = $.extend({}, this.options, {
-            parentContainer: this,
+            rootGroup: this.rootGroup,
             group: groupCounter ++
           })
           childGroup = childContainers[pluginName](options).data(pluginName).group
         }
-        $.data(this.items[index], "subContainer", childGroup)
+        $.data(this.items[index], subContainerKey, childGroup)
       }
       return childGroup
-    },
-    enabled: function () {
-      return !this.disabled && (!this.parentContainer || this.parentContainer.enabled())
     },
     $getChildren: function (parent, type) {
       var options = this.rootGroup.options,
@@ -545,40 +602,70 @@
     _serialize: function (parent, isContainer) {
       var that = this,
       childType = isContainer ? "item" : "container",
-      
+
       children = this.$getChildren(parent, childType).not(this.options.exclude).map(function () {
         return that._serialize($(this), !isContainer)
       }).get()
-      
+
       return this.rootGroup.options.serialize(parent, children, isContainer)
     },
-    clearDimensions: function  () {
+    traverse: function(callback) {
+      $.each(this.items || [], function(item){
+        var group = $.data(this, subContainerKey)
+        if(group)
+          group.traverse(callback)
+      });
+
+      callback(this)
+    },
+    _clearDimensions: function  () {
       this.itemDimensions = undefined
-      if(this.items && this.items[0]){
-        var i = this.items.length
-        while(i--){
-          var group = $.data(this.items[i], "subContainer")
-          if(group)
-            group.clearDimensions()
-        }
-      }
+    },
+    _destroy: function() {
+      var that = this;
+
+      this.target.off(eventNames.start, this.handle);
+      this.el.removeData(pluginName)
+
+      if(this.options.drop)
+        this.group.containers = $.grep(this.group.containers, function(val){
+          return val != that
+        })
+
+      $.each(this.items || [], function(){
+        $.removeData(this, subContainerKey)
+      })
     }
   }
 
   var API = {
-    enable: function  (ignoreChildren) {
-      this.disabled = false
+    enable: function() {
+      this.traverse(function(object){
+        object.disabled = false
+      })
     },
-    disable: function  (ignoreChildren) {
-      this.disabled = true
+    disable: function (){
+      this.traverse(function(object){
+        object.disabled = true
+      })
     },
     serialize: function () {
       return this._serialize(this.el, true)
+    },
+    refresh: function() {
+      this.traverse(function(object){
+        object._clearDimensions()
+      })
+    },
+    destroy: function () {
+      this.traverse(function(object){
+        object._destroy();
+      })
     }
   }
 
   $.extend(Container.prototype, API)
-  
+
   /**
    * jQuery API
    *
@@ -603,5 +690,4 @@
     });
   };
 
-}(jQuery, window)
-;
+}(jQuery, window, 'sortable');
