@@ -83,7 +83,11 @@ class gEditorialSettings extends gEditorialModuleCore
 
 		echo '<div class="wrap geditorial-admin-wrap geditorial-tools geditorial-tools-'.$sub.'">';
 
-			printf( '<h1>%s</h1>', _x( 'gEditorial Tools', 'Settings Module: Page Title', GEDITORIAL_TEXTDOMAIN ) );
+			vprintf( '<h1>%s <a href="%s" class="page-title-action">%s</a></h1>', array(
+				_x( 'gEditorial Tools', 'Settings Module: Page Title', GEDITORIAL_TEXTDOMAIN ),
+				gEditorialHelper::settingsURL(),
+				_x( 'Back to Editorial', 'Settings Module', GEDITORIAL_TEXTDOMAIN ),
+			) );
 
 			self::headerNav( $uri, $sub, $subs );
 
