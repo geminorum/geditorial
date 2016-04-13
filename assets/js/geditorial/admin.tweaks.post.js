@@ -18,7 +18,7 @@ jQuery(document).ready(function($) {
 
 	if (gEditorial.tweaks.settings.category_search) {
 
-		var $input = $('<input class="category-search" type="text" value="" placeholder="' + gEditorial.tweaks.strings.search_placeholder + '" title="' + gEditorial.tweaks.strings.search_title + '" />');
+		var $input = $('<input class="category-search" type="search" value="" placeholder="' + gEditorial.tweaks.strings.search_placeholder + '" title="' + gEditorial.tweaks.strings.search_title + '" />');
 
 		$('.inside > div.categorydiv').each(function() {
 			var $tax = $(this),
