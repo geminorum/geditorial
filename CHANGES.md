@@ -1,3 +1,6 @@
+### 3.4
+* tools: orphaned term converter
+
 ### 3.3
 * all: changes in edit-tags screen on WP4.5, [see](https://make.wordpress.org/core/2016/03/07/changes-to-the-term-edit-page-in-wordpress-4-5/)
 * modulecore: using edit tags link helper
