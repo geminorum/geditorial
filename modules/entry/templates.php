@@ -3,6 +3,7 @@
 class gEditorialEntryTemplates extends gEditorialTemplateCore
 {
 
+	// EDITED: 4/5/2016, 4:08:00 PM
 	public static function section_shortcode( $atts, $content = NULL, $tag = '' )
 	{
 		global $post;
@@ -17,7 +18,7 @@ class gEditorialEntryTemplates extends gEditorialTemplateCore
 			'title'         => NULL, // FALSE to disable
 			'title_link'    => NULL, // FALSE to disable
 			'title_title'   => '',
-			'title_tag'    => 'h3',
+			'title_tag'     => 'h3',
 			'title_anchor'  => 'section-',
 			'list'          => 'ul',
 			'limit'         => -1,
