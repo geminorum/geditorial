@@ -265,7 +265,7 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 			$the_posts = get_posts( $query_args );
 
 			if ( count( $the_posts ) ) {
-				$output = $title_output.'<'.$args['list'].' class="'.$args['list_class'].'">';
+				$output = $title.'<'.$args['list'].' class="'.$args['list_class'].'">';
 				foreach ( $the_posts as $post ) {
 					setup_postdata( $post );
 					if ( $args['cb'] ) {
