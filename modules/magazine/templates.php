@@ -175,7 +175,7 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 			'cb'          => FALSE,
 			'link'        => 'title', // not used yet
 			'cover'       => FALSE,
-		), $atts, gEditorial()->get_constant( 'magazine', 'span_shortcode', 'span' ) );
+		), $atts, gEditorial()->get_constant( 'magazine', 'span_shortcode', 'issue-span' ) );
 
 		$key = md5( serialize( $args ) );
 		$cache = wp_cache_get( $key, $span_tax );
