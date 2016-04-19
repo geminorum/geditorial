@@ -1416,6 +1416,9 @@ class gEditorialModuleCore extends gEditorialBaseCore
 
 	protected function register_shortcode( $constant_key, $callback = NULL )
 	{
+		if ( ! $this->get_setting( 'shortcode_support', TRUE ) )
+			return;
+
 		if ( is_null( $callback ) && method_exists( $this, $constant_key ) )
 			$callback = array( $this, $constant_key );
 
