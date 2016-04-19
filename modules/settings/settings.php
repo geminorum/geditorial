@@ -438,6 +438,11 @@ class gEditorialSettings extends gEditorialModuleCore
 		$this->admin_settings_reset( $page );
 		$this->admin_settings_save( $page );
 
+		$screen = get_current_screen();
+
+		foreach ( gEditorialHelper::settingsHelpContent() as $tab )
+			$screen->add_help_tab( $tab );
+
 		do_action( 'geditorial_settings_load', $page );
 
 		$this->enqueue_asset_js();  // FIXME: the js not using the internal api!

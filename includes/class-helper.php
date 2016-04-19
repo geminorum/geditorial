@@ -710,18 +710,39 @@ class gEditorialHelper extends gEditorialBaseCore
 		) );
 	}
 
-	// WORKING DRAFT
-	// USE: https://raw.githubusercontent.com/wiki/geminorum/geditorial/Modules.md
-	// SEE: gNetworkCode
-	public static function settingsHelpContent( $module )
+	public static function settingsHelpContent( $module = FALSE )
 	{
-		return array(
-			array(
-				'id'      => 'geditorial-'.$module->name.'-overview',
-				'title'   => sprintf( _x( '%s Overview', 'Module Helper: Help Screen Title', GEDITORIAL_TEXTDOMAIN ), $module->title ),
-				'content' => '', // TODO: get this from wikipage
-			),
-		);
+		$tabs = array();
+
+		if ( function_exists( 'gnetwork_github' ) ) {
+
+			if ( $module )
+				$tabs[] = array(
+					'id'      => 'geditorial-'.$module->name.'-overview',
+					'title'   => sprintf( '%s Overview', ucwords( $module->name ) ),
+					'content' => gnetwork_github( array(
+						'repo'    => 'geminorum/geditorial',
+						'type'    => 'wiki',
+						'page'    => 'Modules-'.ucwords( $module->name ),
+						'context' => 'help_tab',
+					) ),
+				);
+
+			else
+				$tabs[] = array(
+					'id'      => 'geditorial-overview',
+					'title'   => 'Editorial Overview',
+					'content' => gnetwork_github( array(
+						'repo'    => 'geminorum/geditorial',
+						'type'    => 'wiki',
+						'page'    => 'Modules',
+						'context' => 'help_tab',
+					) ),
+				);
+
+		}
+
+		return $tabs;
 	}
 
 	// https://codex.wordpress.org/Javascript_Reference/ThickBox
