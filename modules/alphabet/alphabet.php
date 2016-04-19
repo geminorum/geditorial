@@ -19,6 +19,10 @@ class gEditorialAlphabet extends gEditorialModuleCore
 	protected function get_global_settings()
 	{
 		return array(
+			'_general' => array(
+				'shortcode_support',
+				'editor_button',
+			),
 			'posttypes_option'  => 'posttypes_option',
 			'taxonomies_option' => 'taxonomies_option',
 		);
@@ -39,60 +43,46 @@ class gEditorialAlphabet extends gEditorialModuleCore
 			'misc' => array(
 				'alphabet_tax' => array(
 					'tax_form_label'   => _x( 'Alphabet', 'Alphabet Module', GEDITORIAL_TEXTDOMAIN ),
-					'tax_form_desc'    => _x( 'This term is in the seleted alphabet', 'Alphabet Module', GEDITORIAL_TEXTDOMAIN ),
+					'tax_form_desc'    => _x( 'This term is in the selected alphabet', 'Alphabet Module', GEDITORIAL_TEXTDOMAIN ),
 					'tax_column_title' => _x( 'A', 'Alphabet Module: Tax Column Title', GEDITORIAL_TEXTDOMAIN ),
 					'tax_column_empty' => _x( 'No Alphabet Assigned', 'Alphabet Module: Tax Column Empty', GEDITORIAL_TEXTDOMAIN ),
 					'show_option_none' => _x( '&mdash; Choose an Alphabet &mdash;', 'Alphabet Module', GEDITORIAL_TEXTDOMAIN ),
 				),
 			),
 			'labels' => array(
-				'alphabet_tax' => array(
-                    'name'                       => _x( 'Alphabets', 'Alphabet Module: Alphabet Tax Labels: Name', GEDITORIAL_TEXTDOMAIN ),
-                    'menu_name'                  => _x( 'Glossary', 'Alphabet Module: Alphabet Tax Labels: Menu Name', GEDITORIAL_TEXTDOMAIN ),
-                    'singular_name'              => _x( 'Alphabet', 'Alphabet Module: Alphabet Tax Labels: Singular Name', GEDITORIAL_TEXTDOMAIN ),
-                    'search_items'               => _x( 'Search Alphabets', 'Alphabet Module: Alphabet Tax Labels', GEDITORIAL_TEXTDOMAIN ),
-                    'popular_items'              => NULL, // _x( 'Popular Alphabets', 'Alphabet Module: Alphabet Tax Labels', GEDITORIAL_TEXTDOMAIN ),
-                    'all_items'                  => _x( 'All Alphabets', 'Alphabet Module: Alphabet Tax Labels', GEDITORIAL_TEXTDOMAIN ),
-                    'edit_item'                  => _x( 'Edit Alphabet', 'Alphabet Module: Alphabet Tax Labels', GEDITORIAL_TEXTDOMAIN ),
-                    'view_item'                  => _x( 'View Alphabet', 'Alphabet Module: Alphabet Tax Labels', GEDITORIAL_TEXTDOMAIN ),
-                    'update_item'                => _x( 'Update Alphabet', 'Alphabet Module: Alphabet Tax Labels', GEDITORIAL_TEXTDOMAIN ),
-                    'add_new_item'               => _x( 'Add New Alphabet', 'Alphabet Module: Alphabet Tax Labels', GEDITORIAL_TEXTDOMAIN ),
-                    'new_item_name'              => _x( 'New Alphabet Name', 'Alphabet Module: Alphabet Tax Labels', GEDITORIAL_TEXTDOMAIN ),
-                    'separate_items_with_commas' => _x( 'Separate alphabets with commas', 'Alphabet Module: Alphabet Tax Labels', GEDITORIAL_TEXTDOMAIN ),
-                    'add_or_remove_items'        => _x( 'Add or remove alphabets', 'Alphabet Module: Alphabet Tax Labels', GEDITORIAL_TEXTDOMAIN ),
-                    'choose_from_most_used'      => _x( 'Choose from the most used alphabets', 'Alphabet Module: Alphabet Tax Labels', GEDITORIAL_TEXTDOMAIN ),
-                    'not_found'                  => _x( 'No alphabets found.', 'Alphabet Module: Alphabet Tax Labels', GEDITORIAL_TEXTDOMAIN ),
-                    'no_terms'                   => _x( 'No alphabets', 'Alphabet Module: Alphabet Tax Labels', GEDITORIAL_TEXTDOMAIN ),
-                    'items_list_navigation'      => _x( 'Alphabets list navigation', 'Alphabet Module: Alphabet Tax Labels', GEDITORIAL_TEXTDOMAIN ),
-                    'items_list'                 => _x( 'Alphabets list', 'Alphabet Module: Alphabet Tax Labels', GEDITORIAL_TEXTDOMAIN ),
+				'alphabet_tax' => gEditorialHelper::generateTaxonomyLabels(
+					_nx_noop( 'Alphabet', 'Alphabets', 'Alphabet Module: Alphabet Tax Labels: Name', GEDITORIAL_TEXTDOMAIN ),
+					array(
+						'menu_name' => _x( 'Glossary', 'Alphabet Module: Alphabet Tax Labels: Menu Name', GEDITORIAL_TEXTDOMAIN ),
+					)
 				),
 			),
 			'terms' => array(
 				'alphabet_tax' => array(
-					'alphabet_a' => __( 'A', GEDITORIAL_TEXTDOMAIN ),
-					'alphabet_b' => __( 'B', GEDITORIAL_TEXTDOMAIN ),
-					'alphabet_c' => __( 'C', GEDITORIAL_TEXTDOMAIN ),
-					'alphabet_d' => __( 'D', GEDITORIAL_TEXTDOMAIN ),
-					'alphabet_e' => __( 'E', GEDITORIAL_TEXTDOMAIN ),
-					'alphabet_f' => __( 'F', GEDITORIAL_TEXTDOMAIN ),
-					'alphabet_g' => __( 'G', GEDITORIAL_TEXTDOMAIN ),
-					'alphabet_h' => __( 'H', GEDITORIAL_TEXTDOMAIN ),
-					'alphabet_i' => __( 'I', GEDITORIAL_TEXTDOMAIN ),
-					'alphabet_j' => __( 'J', GEDITORIAL_TEXTDOMAIN ),
-					'alphabet_k' => __( 'K', GEDITORIAL_TEXTDOMAIN ),
-					'alphabet_l' => __( 'L', GEDITORIAL_TEXTDOMAIN ),
-					'alphabet_m' => __( 'M', GEDITORIAL_TEXTDOMAIN ),
-					'alphabet_n' => __( 'N', GEDITORIAL_TEXTDOMAIN ),
-					'alphabet_o' => __( 'O', GEDITORIAL_TEXTDOMAIN ),
-					'alphabet_p' => __( 'P', GEDITORIAL_TEXTDOMAIN ),
-					'alphabet_q' => __( 'Q', GEDITORIAL_TEXTDOMAIN ),
-					'alphabet_r' => __( 'R', GEDITORIAL_TEXTDOMAIN ),
-					'alphabet_s' => __( 'S', GEDITORIAL_TEXTDOMAIN ),
-					'alphabet_t' => __( 'T', GEDITORIAL_TEXTDOMAIN ),
-					'alphabet_u' => __( 'U', GEDITORIAL_TEXTDOMAIN ),
-					'alphabet_x' => __( 'X', GEDITORIAL_TEXTDOMAIN ),
-					'alphabet_y' => __( 'Y', GEDITORIAL_TEXTDOMAIN ),
-					'alphabet_z' => __( 'Z', GEDITORIAL_TEXTDOMAIN ),
+					'alphabet_a' => 'A',
+					'alphabet_b' => 'B',
+					'alphabet_c' => 'C',
+					'alphabet_d' => 'D',
+					'alphabet_e' => 'E',
+					'alphabet_f' => 'F',
+					'alphabet_g' => 'G',
+					'alphabet_h' => 'H',
+					'alphabet_i' => 'I',
+					'alphabet_j' => 'J',
+					'alphabet_k' => 'K',
+					'alphabet_l' => 'L',
+					'alphabet_m' => 'M',
+					'alphabet_n' => 'N',
+					'alphabet_o' => 'O',
+					'alphabet_p' => 'P',
+					'alphabet_q' => 'Q',
+					'alphabet_r' => 'R',
+					'alphabet_s' => 'S',
+					'alphabet_t' => 'T',
+					'alphabet_u' => 'U',
+					'alphabet_x' => 'X',
+					'alphabet_y' => 'Y',
+					'alphabet_z' => 'Z',
 				),
 			),
 		);
@@ -122,25 +112,15 @@ class gEditorialAlphabet extends gEditorialModuleCore
 			'show_admin_column' => $editor,
 		), array_merge( $this->post_types(), $this->taxonomies() ) );
 
-		add_shortcode( $this->constant( 'tax_alphabet_shortcode' ), array( $this, 'shortcode_tax_alphabet' ) );
-		add_shortcode( $this->constant( 'post_alphabet_shortcode' ), array( $this, 'shortcode_post_alphabet' ) );
-	}
-
-	public function admin_init()
-	{
-		if ( current_user_can( 'edit_others_posts' ) )
-			add_action( 'geditorial_tools_settings', array( $this, 'tools_settings' ) );
-
-		// SUPPORTED tax bulk actions with gNetworkTaxonomy
-		add_filter( 'gnetwork_taxonomy_bulk_actions', array( $this, 'taxonomy_bulk_actions' ), 12, 2 );
-		add_filter( 'gnetwork_taxonomy_bulk_callback', array( $this, 'taxonomy_bulk_callback' ), 12, 3 );
-		add_filter( 'gnetwork_taxonomy_bulk_input', array( $this, 'taxonomy_bulk_input' ), 12, 3 );
+		$this->register_shortcode( 'tax_alphabet_shortcode' );
+		$this->register_shortcode( 'post_alphabet_shortcode' );
 	}
 
 	public function current_screen( $screen )
 	{
-		if ( ( 'edit-tags' == $screen->base || 'term' == $screen->base )
-			&& in_array( $screen->taxonomy, $this->taxonomies() ) ) {
+		if ( ( 'edit-tags' == $screen->base
+			|| 'term' == $screen->base )
+				&& in_array( $screen->taxonomy, $this->taxonomies() ) ) {
 
 			// add_action( $screen->taxonomy.'_pre_add_form', array( $this, 'tax_pre_add_form' ) );
 			add_action( $screen->taxonomy.'_add_form_fields', array( $this, 'tax_add_form_fields' ), 8, 1 );
@@ -154,16 +134,26 @@ class gEditorialAlphabet extends gEditorialModuleCore
 			// add_filter( $screen->taxonomy.'_row_actions', array( $this, 'tax_row_actions' ), 12, 2 );
 			// add_action( 'after-'.$screen->taxonomy.'-table', array( $this, 'tax_after_table' ) );
 
+			// SUPPORTED tax bulk actions with gNetworkTaxonomy
+			add_filter( 'gnetwork_taxonomy_bulk_actions', array( $this, 'taxonomy_bulk_actions' ), 12, 2 );
+			add_filter( 'gnetwork_taxonomy_bulk_callback', array( $this, 'taxonomy_bulk_callback' ), 12, 3 );
+			add_filter( 'gnetwork_taxonomy_bulk_input', array( $this, 'taxonomy_bulk_input' ), 12, 3 );
+
 		} else if ( 'edit' == $screen->base
 			&& in_array( $screen->post_type, $this->post_types() ) ) {
 
-			// FIXME
+
+		} else if ( gEditorialHelper::isSettings( $screen ) ) {
+
+			if ( current_user_can( 'edit_others_posts' ) )
+				add_action( 'geditorial_tools_settings', array( $this, 'tools_settings' ) );
 		}
 	}
 
 	public function admin_menu()
 	{
 		$alphabet_tax = get_taxonomy( $this->constant( 'alphabet_tax' ) );
+
 		add_options_page(
 			esc_attr( $alphabet_tax->labels->menu_name ),
 			esc_attr( $alphabet_tax->labels->menu_name ),
@@ -313,24 +303,26 @@ class gEditorialAlphabet extends gEditorialModuleCore
 
 	public function taxonomy_bulk_actions( $actions, $taxonomy )
 	{
-		if ( in_array( $taxonomy, $this->taxonomies() ) ) {
+		if ( in_array( $taxonomy, $this->taxonomies() ) )
 			$actions['add_to_glossary'] = _x( 'Add to Glossary', 'Alphabet Module', GEDITORIAL_TEXTDOMAIN );
-		}
+
 		return $actions;
 	}
 
 	public function taxonomy_bulk_callback( $callback, $action, $taxonomy )
 	{
-		if ( 'add_to_glossary' == $action && in_array( $taxonomy, $this->taxonomies() ) )
-			return array( $this, 'bulk_add_to_glossary' );
+		if ( 'add_to_glossary' == $action
+			&& in_array( $taxonomy, $this->taxonomies() ) )
+				return array( $this, 'bulk_add_to_glossary' );
 
 		return $callback;
 	}
 
 	public function taxonomy_bulk_input( $callback, $key, $taxonomy )
 	{
-		if ( 'add_to_glossary' == $key && in_array( $taxonomy, $this->taxonomies() ) )
-			return array( $this, 'bulk_input_glossary' );
+		if ( 'add_to_glossary' == $key
+			&& in_array( $taxonomy, $this->taxonomies() ) )
+				return array( $this, 'bulk_input_glossary' );
 
 		return $callback;
 	}
@@ -364,7 +356,7 @@ class gEditorialAlphabet extends gEditorialModuleCore
 	}
 
 	// FIXME: DRAFT!
-	public function shortcode_tax_alphabet( $atts, $content = NULL, $tag = '' )
+	public function tax_alphabet_shortcode( $atts, $content = NULL, $tag = '' )
 	{
 		global $post;
 
@@ -399,7 +391,7 @@ class gEditorialAlphabet extends gEditorialModuleCore
 	}
 
 	// FIXME: UNFINISHED!
-	public function shortcode_post_alphabet( $atts, $content = NULL, $tag = '' )
+	public function post_alphabet_shortcode( $atts, $content = NULL, $tag = '' )
 	{
 		return $content;
 	}
