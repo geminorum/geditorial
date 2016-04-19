@@ -706,11 +706,30 @@ class gEditorialModuleCore extends gEditorialBaseCore
 	public function get_settings_editor_button( $section )
 	{
 		return array(
-			'field'       => 'editor_button',
-			'title'       => _x( 'Editor Button', 'Module Core', GEDITORIAL_TEXTDOMAIN ),
-			'description' => _x( 'Adding an editor button to insert the shortcodes', 'Module Core', GEDITORIAL_TEXTDOMAIN ),
-			'default'     => '1',
-			'section'     => $section,
+			'field'   => 'editor_button',
+			'title'   => _x( 'Editor Button', 'Module Core: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+			'default' => '1',
+			'section' => $section,
+		);
+	}
+
+	public function get_settings_shortcode_support( $section )
+	{
+		return array(
+			'field'   => 'shortcode_support',
+			'title'   => _x( 'Default Shortcodes', 'Module Core: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+			'default' => '1',
+			'section' => $section,
+		);
+	}
+
+	public function get_settings_markdown_support( $section )
+	{
+		return array(
+			'field'   => 'markdown_support',
+			'title'   => _x( 'Markdown Support', 'Module Core: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+			'default' => '0',
+			'section' => $section,
 		);
 	}
 
@@ -748,10 +767,32 @@ class gEditorialModuleCore extends gEditorialBaseCore
 			'default'     => 'none',
 			'section'     => $section,
 			'values'      => array(
-				'none'    => _x( 'No', 'Module Core: Insert in Content Option', GEDITORIAL_TEXTDOMAIN ),
+				'none'   => _x( 'No', 'Module Core: Insert in Content Option', GEDITORIAL_TEXTDOMAIN ),
 				'before' => _x( 'Before', 'Module Core: Insert in Content Option', GEDITORIAL_TEXTDOMAIN ),
 				'after'  => _x( 'After', 'Module Core: Insert in Content Option', GEDITORIAL_TEXTDOMAIN ),
 			),
+		);
+	}
+
+	public function get_settings_before_content( $section )
+	{
+		return array(
+			'field'       => 'before_content',
+			'type'        => 'textarea',
+			'title'       => _x( 'Before Content', 'Module Core: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+			'description' => _x( 'Adds <code>HTML</code> content to the start of all the supported posttypes', 'Module Core: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+			'section'     => $section,
+		);
+	}
+
+	public function get_settings_after_content( $section )
+	{
+		return array(
+			'field'       => 'after_content',
+			'type'        => 'textarea',
+			'title'       => _x( 'After Content', 'Module Core: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+			'description' => _x( 'Adds <code>HTML</code> content to the end of all the supported posttypes', 'Module Core: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+			'section'     => $section,
 		);
 	}
 
