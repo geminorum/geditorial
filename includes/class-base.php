@@ -3,7 +3,32 @@
 class gEditorialBaseCore
 {
 
-	public static function dump( &$var, $htmlSafe = TRUE )
+	public static function req( $key, $default = '' )
+	{
+		return empty( $_REQUEST[$key] ) ? $default : $_REQUEST[$key];
+	}
+
+	public static function limit( $default = 25, $key = 'limit' )
+	{
+		return intval( self::req( $key, $default ) );
+	}
+
+	public static function paged( $default = 1, $key = 'paged' )
+	{
+		return intval( self::req( $key, $default ) );
+	}
+
+	public static function orderby( $default = 'title', $key = 'orderby' )
+	{
+		return self::req( $key, $default );
+	}
+
+	public static function order( $default = 'desc', $key = 'order' )
+	{
+		return self::req( $key, $default );
+	}
+
+	public static function dump( $var, $htmlSafe = TRUE )
 	{
 		$result = var_export( $var, TRUE );
 
@@ -12,36 +37,55 @@ class gEditorialBaseCore
 			.'</pre>';
 	}
 
+	public static function kill( $var = FALSE )
+	{
+		if ( $var )
+			self::dump( $var );
+
+		// FIXME: add query/memory/time info
+
+		die();
+	}
+
 	// INTERNAL: used on anything deprecated
-	protected static function __dep( $note = '' )
+	protected static function __dep( $note = '', $prefix = 'DEP: ', $offset = 1 )
 	{
 		if ( defined( 'WP_DEBUG_LOG' ) && ! WP_DEBUG_LOG )
 			return;
 
 		$trace = debug_backtrace();
 
-		$log = 'DEP: ';
+		$log = $prefix;
 
-		if ( isset( $trace[1]['object'] ) )
-			$log .= get_class( $trace[1]['object'] ).'::';
-		else if ( isset( $trace[1]['class'] ) )
-			$log .= $trace[1]['class'].'::';
+		if ( isset( $trace[$offset]['object'] ) )
+			$log .= get_class( $trace[$offset]['object'] ).'::';
+		else if ( isset( $trace[$offset]['class'] ) )
+			$log .= $trace[$offset]['class'].'::';
 
-		$log .= $trace[1]['function'].'()';
+		$log .= $trace[$offset]['function'].'()';
 
-		if ( isset( $trace[2]['function'] ) ) {
+		$offset++;
+
+		if ( isset( $trace[$offset]['function'] ) ) {
 			$log .= '|FROM: ';
-			if ( isset( $trace[2]['object'] ) )
-				$log .= get_class( $trace[2]['object'] ).'::';
-			else if ( isset( $trace[2]['class'] ) )
-				$log .= $trace[2]['class'].'::';
-			$log .= $trace[2]['function'].'()';
+			if ( isset( $trace[$offset]['object'] ) )
+				$log .= get_class( $trace[$offset]['object'] ).'::';
+			else if ( isset( $trace[$offset]['class'] ) )
+				$log .= $trace[$offset]['class'].'::';
+			$log .= $trace[$offset]['function'].'()';
 		}
 
 		if ( $note )
 			$log .= '|'.$note;
 
 		error_log( $log );
+	}
+
+	// INTERNAL: used on anything deprecated : only on dev mode
+	protected static function __dev_dep( $note = '', $prefix = 'DEP: ', $offset = 2 )
+	{
+		if ( self::isDev() )
+			self::__dep( $note, $prefix, $offset );
 	}
 
 	public static function atts( $pairs, $atts )
@@ -142,24 +186,63 @@ class gEditorialBaseCore
 		return $taxonomies;
 	}
 
+	// like WP core but without filter and fallback
+	// ANCESTOR: sanitize_html_class()
+	public static function sanitizeHTMLClass( $class )
+	{
+		// strip out any % encoded octets
+		$sanitized = preg_replace( '|%[a-fA-F0-9][a-fA-F0-9]|', '', $class );
+
+		// limit to A-Z,a-z,0-9,_,-
+		$sanitized = preg_replace( '/[^A-Za-z0-9_-]/', '', $sanitized );
+
+		return $sanitized;
+	}
+
+	// like WP core but without filter
+	// ANCESTOR: tag_escape()
+	public static function sanitizeHTMLTag( $tag )
+	{
+		return strtolower( preg_replace('/[^a-zA-Z0-9_:]/', '', $tag ) );
+	}
+
 	private static function _tag_open( $tag, $atts, $content = TRUE )
 	{
 		$html = '<'.$tag;
+
 		foreach ( $atts as $key => $att ) {
 
-			if ( is_array( $att ) && count( $att ) ) {
+			$sanitized = FALSE;
+
+			if ( is_array( $att ) ) {
+
+				if ( ! count( $att ) )
+					continue;
+
 				if ( 'data' == $key ) {
+
 					foreach ( $att as $data_key => $data_val ) {
+
 						if ( is_array( $data_val ) )
 							$html .= ' data-'.$data_key.'=\''.wp_json_encode( $data_val ).'\'';
+
+						else if ( FALSE === $data_val )
+							continue;
+
 						else
 							$html .= ' data-'.$data_key.'="'.esc_attr( $data_val ).'"';
 					}
+
 					continue;
 
+				} else if ( 'class' == $key ) {
+					$att = implode( ' ', array_unique( array_filter( $att, array( __CLASS__, 'sanitizeHTMLClass' ) ) ) );
+
 				} else {
-					$att = implode( ' ', array_unique( $att ) );
+					$att = implode( ' ', array_unique( array_filter( $att, 'trim' ) ) );
 				}
+
+				$sanitized = TRUE;
 			}
 
 			if ( 'selected' == $key )
@@ -177,23 +260,22 @@ class gEditorialBaseCore
 			if ( FALSE === $att )
 				continue;
 
-			if ( 'class' == $key )
-				// $att = sanitize_html_class( $att, FALSE );
+			if ( 'class' == $key && ! $sanitized )
+				$att = implode( ' ', array_unique( array_filter( explode( ' ', $att ), array( __CLASS__, 'sanitizeHTMLClass' ) ) ) );
+
+			else if ( 'class' == $key )
 				$att = $att;
 
 			else if ( 'href' == $key && '#' != $att )
 				$att = esc_url( $att );
 
-			else if ( 'src' == $key )
+			else if ( 'src' == $key && FALSE === strpos( $att, 'data:image' ) )
 				$att = esc_url( $att );
-
-			// else if ( 'input' == $tag && 'value' == $key )
-			// 	$att = $att;
 
 			else
 				$att = esc_attr( $att );
 
-			$html .= ' '.$key.'="'.$att.'"';
+			$html .= ' '.$key.'="'.trim( $att ).'"';
 		}
 
 		if ( FALSE === $content )
@@ -204,6 +286,8 @@ class gEditorialBaseCore
 
 	public static function html( $tag, $atts = array(), $content = FALSE, $sep = '' )
 	{
+		$tag = self::sanitizeHTMLTag( $tag );
+
 		if ( is_array( $atts ) )
 			$html = self::_tag_open( $tag, $atts, $content );
 		else
@@ -218,34 +302,38 @@ class gEditorialBaseCore
 		return $html.$content.'</'.$tag.'>'.$sep;
 	}
 
-	public static function getCurrentURL( $trailingslashit = FALSE )
+	public static function getCurrentURL( $trailingslashit = FALSE, $forwarded_host = FALSE )
 	{
-		global $wp;
+	    $ssl      = ( ! empty( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] == 'on' );
+	    $sp       = strtolower( $_SERVER['SERVER_PROTOCOL'] );
+	    $protocol = substr( $sp, 0, strpos( $sp, '/' ) ) . ( ( $ssl ) ? 's' : '' );
+	    $port     = $_SERVER['SERVER_PORT'];
+	    $port     = ( ( ! $ssl && $port=='80' ) || ( $ssl && $port=='443' ) ) ? '' : ':'.$port;
+	    $host     = ( $forwarded_host && isset( $_SERVER['HTTP_X_FORWARDED_HOST'] ) ) ? $_SERVER['HTTP_X_FORWARDED_HOST'] : ( isset( $_SERVER['HTTP_HOST'] ) ? $_SERVER['HTTP_HOST'] : NULL );
+	    $host     = isset( $host ) ? $host : $_SERVER['SERVER_NAME'].$port;
 
-		// if ( is_admin() )
-		// 	$current_url = add_query_arg( $wp->query_string, '', home_url( $wp->request ) );
-		// else
-			$current_url = home_url( add_query_arg( array(), ( empty( $wp->request ) ? FALSE : $wp->request ) ) );
-
-		if ( $trailingslashit )
-			return trailingslashit( $current_url );
-
-		return $current_url;
+		return $protocol.'://'.$host.$_SERVER['REQUEST_URI'];
 	}
 
 	public static function getRegisterURL( $register = FALSE )
 	{
 		if ( function_exists( 'buddypress' ) ) {
+
 			if ( bp_get_signup_allowed() )
 				return bp_get_signup_page();
+
 		} else if ( get_option( 'users_can_register' ) ) {
+
 			if ( is_multisite() )
 				return apply_filters( 'wp_signup_location', network_site_url( 'wp-signup.php' ) );
+
 			else
 				return site_url( 'wp-login.php?action=register', 'login' );
+
 		} else if ( 'site' == $register ) {
 			return  site_url( '/' );
 		}
+
 		return $register;
 	}
 
@@ -260,15 +348,15 @@ class gEditorialBaseCore
 		return $keys;
 	}
 
-	// http://wordpress.mfields.org/2011/rekey-an-indexed-array-of-post-objects-by-post-id/
+	// @SOURCE: http://wordpress.mfields.org/2011/rekey-an-indexed-array-of-post-objects-by-post-id/
 	public static function reKey( $list, $key )
 	{
-		if ( ! empty( $list ) ) {
-			$ids = wp_list_pluck( $list, $key );
-			$list = array_combine( $ids, $list );
-		}
+		if ( empty( $list ) )
+			return $list;
 
-		return $list;
+		$ids = wp_list_pluck( $list, $key );
+
+		return array_combine( $ids, $list );
 	}
 
 	public static function sameKey( $old )
@@ -282,7 +370,7 @@ class gEditorialBaseCore
 		return $same;
 	}
 
-	// FIXME: DEPRICATED: use self::recursiveParseArgs()
+	// FIXME: DEPRICATED: use `self::recursiveParseArgs()`
 	public static function parse_args_r( &$a, $b )
 	{
 		self::__dep( 'self::recursiveParseArgs()' );
@@ -302,9 +390,11 @@ class gEditorialBaseCore
 		return $r;
 	}
 
-	// recursive argument parsing
-	// @REF: https://gist.github.com/boonebgorges/5510970
 	/**
+	* @source https://gist.github.com/boonebgorges/5510970
+	*
+	* recursive argument parsing
+	*
 	* Values from $a override those from $b; keys in $b that don't exist
 	* in $a are passed through.
 	*
@@ -372,7 +462,7 @@ class gEditorialBaseCore
 		return $ip;
 	}
 
-	// http://stackoverflow.com/a/17620260
+	// @SOURCE: http://stackoverflow.com/a/17620260
 	public static function search_array( $value, $key, $array )
 	{
 		foreach ( $array as $k => $val )
@@ -430,7 +520,7 @@ class gEditorialBaseCore
 		), $image );
 	}
 
-	// http://bavotasan.com/2012/trim-characters-using-php/
+	// @SOURCE: http://bavotasan.com/2012/trim-characters-using-php/
 	public static function trimChars( $text, $length = 45, $append = '&hellip;' )
 	{
 		$length = (int) $length;
@@ -469,9 +559,10 @@ class gEditorialBaseCore
 		return FALSE;
 	}
 
-	public static function notice( $notice, $class = 'updated fade', $echo = TRUE )
+	// @REF: https://codex.wordpress.org/Plugin_API/Action_Reference/admin_notices
+	public static function notice( $notice, $class = 'notice-success fade', $echo = TRUE )
 	{
-		$html = sprintf( '<div id="message" class="%s notice is-dismissible"><p>%s</p></div>', $class, $notice );
+		$html = sprintf( '<div class="notice %s is-dismissible"><p>%s</p></div>', $class, $notice );
 
 		if ( ! $echo )
 			return $html;
@@ -479,14 +570,32 @@ class gEditorialBaseCore
 		echo $html;
 	}
 
-	public static function error( $message )
+	public static function error( $message, $echo = FALSE )
 	{
-		return self::notice( $message, 'error fade', FALSE );
+		return self::notice( $message, 'notice-error fade', $echo );
 	}
 
-	public static function updated( $message )
+	// FIXME: DEPRICATED: use `self::success()`
+	public static function updated( $message, $echo = FALSE )
 	{
-		return self::notice( $message, 'updated fade', FALSE );
+		self::__dev_dep( 'self::success()' );
+
+		return self::notice( $message, 'notice-success fade', $echo );
+	}
+
+	public static function success( $message, $echo = FALSE )
+	{
+		return self::notice( $message, 'notice-success fade', $echo );
+	}
+
+	public static function warning( $message, $echo = FALSE )
+	{
+		return self::notice( $message, 'notice-warning fade', $echo );
+	}
+
+	public static function info( $message, $echo = FALSE )
+	{
+		return self::notice( $message, 'notice-info fade', $echo );
 	}
 
 	public static function counted( $message = NULL, $count = NULL, $class = 'updated' )
@@ -500,8 +609,6 @@ class gEditorialBaseCore
 		return self::notice( sprintf( $message, number_format_i18n( $count ) ), $class.' fade', FALSE );
 	}
 
-	// checks for the current post type
-	// OLD: get_current_post_type()
 	public static function getCurrentPostType( $default = NULL )
 	{
 		global $post, $typenow, $pagenow, $current_screen;
@@ -524,16 +631,19 @@ class gEditorialBaseCore
 	public static function update_count_callback( $terms, $taxonomy )
 	{
 		global $wpdb;
+
 		foreach ( (array) $terms as $term ) {
+
 			$count = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM $wpdb->term_relationships WHERE term_taxonomy_id = %d", $term ) );
+
 			do_action( 'edit_term_taxonomy', $term, $taxonomy );
+
 			$wpdb->update( $wpdb->term_taxonomy, compact( 'count' ), array( 'term_taxonomy_id' => $term ) );
+
 			do_action( 'edited_term_taxonomy', $term, $taxonomy );
 		}
 	}
 
-	// fall back for meta_term
-	// before : get_post_id_by_slug()
 	public static function getPostIDbySlug( $slug, $post_type, $url = FALSE )
 	{
 		global $wpdb;
@@ -560,7 +670,6 @@ class gEditorialBaseCore
 		return FALSE;
 	}
 
-	// before: the_term()
 	public static function theTerm( $taxonomy, $post_ID, $object = FALSE )
 	{
 		$terms = get_the_terms( $post_ID, $taxonomy );
@@ -578,7 +687,8 @@ class gEditorialBaseCore
 		return '0';
 	}
 
-	public static function getPostTypes( $builtin = NULL )
+	// EDITED: 4/15/2016, 10:20:25 AM
+	public static function getPostTypes( $singular = FALSE, $builtin = NULL )
 	{
 		$list = array();
 		$args = array( 'public' => TRUE );
@@ -589,7 +699,18 @@ class gEditorialBaseCore
 		$post_types = get_post_types( $args, 'objects' );
 
 		foreach ( $post_types as $post_type => $post_type_obj )
-			$list[$post_type] = $post_type_obj->labels->name;
+
+			if ( TRUE === $singular )
+				$list[$post_type] = $post_type_obj->labels->singular_name;
+
+			else if ( $singular )
+				$list[$post_type] =
+					empty ( $post_type_obj->labels->{$singular} )
+						? $post_type_obj->labels->name
+						: $post_type_obj->labels->{$singular};
+
+			else
+				$list[$post_type] = $post_type_obj->labels->name;
 
 		return $list;
 	}
@@ -639,7 +760,7 @@ class gEditorialBaseCore
 		return wp_insert_post( $new_post );
 	}
 
-	// MAYBE: add general options for gEditorial
+	// FIXME: add general options for gEditorial
 	public static function getEditorialUserID( $fallback = TRUE )
 	{
 		if ( defined( 'GNETWORK_SITE_USER_ID' ) && constant( 'GNETWORK_SITE_USER_ID' ) )
@@ -657,12 +778,36 @@ class gEditorialBaseCore
 		return 0;
 	}
 
-	public static function tableList( $columns, $data = array(), $actions = array() )
+	public static function tableList( $columns, $data = array(), $args = array() )
 	{
 		if ( ! count( $columns ) )
 			return FALSE;
 
-		echo '<table class="widefat fixed helper-table"><thead><tr>';
+		if ( ! $data || ! count( $data ) ) {
+			if ( isset( $args['empty'] ) && $args['empty'] )
+				echo '<div class="base-table-empty description">'.$args['empty'].'</div>';
+			return FALSE;
+		}
+
+		if ( isset( $args['title'] ) && $args['title'] )
+			echo '<div class="base-table-title">'.$args['title'].'</div>';
+
+		$pagination = isset( $args['pagination'] ) ? $args['pagination'] : array();
+
+		if ( isset( $args['before'] )
+			|| ( isset( $args['navigation'] ) && 'before' == $args['navigation'] )
+			|| ( isset( $args['search'] ) && 'before' == $args['search'] ) )
+				echo '<div class="base-table-actions base-table-list-before">';
+		else
+			echo '<div>';
+
+		if ( isset( $args['navigation'] ) && 'before' == $args['navigation'] )
+			self::tableNavigation( $pagination );
+
+		if ( isset( $args['before'] ) && is_callable( $args['before'] ) )
+			call_user_func_array( $args['before'], array( $columns, $data, $args ) );
+
+		echo '</div><table class="widefat fixed base-table-list"><thead><tr>';
 			foreach ( $columns as $key => $column ) {
 
 				$tag   = 'th';
@@ -670,6 +815,10 @@ class gEditorialBaseCore
 
 				if ( is_array( $column ) ) {
 					$title = isset( $column['title'] ) ? $column['title'] : $key;
+
+					if ( isset( $column['class'] ) )
+						$class = esc_attr( $column['class'] );
+
 				} else if ( '_cb' == $key ) {
 					$title = '<input type="checkbox" id="cb-select-all-1" class="-cb-all" />';
 					$class = ' check-column';
@@ -735,7 +884,6 @@ class gEditorialBaseCore
 
 				} else {
 					echo '&nbsp;';
-
 				}
 
 				echo '</'.$cell.'>';
@@ -748,6 +896,71 @@ class gEditorialBaseCore
 
 		echo '</tbody></table>';
 		echo '<div class="clear"></div>';
+
+		if ( isset( $args['after'] )
+			|| ( isset( $args['navigation'] ) && 'after' == $args['navigation'] )
+			|| ( isset( $args['search'] ) && 'after' == $args['search'] ) )
+				echo '<div class="base-table-actions base-table-list-after">';
+		else
+			echo '<div>';
+
+		if ( isset( $args['navigation'] ) && 'after' == $args['navigation'] )
+			self::tableNavigation( $pagination );
+
+		// FIXME: add search box
+
+		if ( isset( $args['after'] ) && is_callable( $args['after'] ) )
+			call_user_func_array( $args['after'], array( $columns, $data, $args ) );
+
+		echo '</div>';
+
+		return TRUE;
+	}
+
+	public static function tableNavigation( $pagination = array() )
+	{
+		$args = self::atts( array(
+			'total'    => 0,
+			'pages'    => 0,
+			'limit'    => self::limit(),
+			'paged'    => self::paged(),
+			'all'      => FALSE,
+			'next'     => FALSE,
+			'previous' => FALSE,
+		), $pagination );
+
+		$icons = array(
+			'next'     => '<span class="dashicons dashicons-redo"></span>', // &rsaquo;
+			'previous' => '<span class="dashicons dashicons-undo"></span>', // &lsaquo;
+			'refresh'  => '<span class="dashicons dashicons-image-rotate"></span>',
+		);
+
+		echo '<div class="base-table-navigation">';
+
+			echo '<input type="number" class="small-text -paged" name="paged" value="'.$args['paged'].'" />';
+			echo '<input type="number" class="small-text -limit" name="limit" value="'.$args['limit'].'" />';
+
+			vprintf( '<span class="-total-pages">%s / %s</span>', array(
+				number_format_i18n( $args['total'] ),
+				number_format_i18n( $args['pages'] ),
+			) );
+
+			vprintf( '<span class="-next-previous">%s %s %s</span>', array(
+				( FALSE === $args['previous'] ? '<span class="-previous -span" aria-hidden="true">'.$icons['previous'].'</span>' : self::html( 'a', array(
+					'href'  => add_query_arg( 'paged', $args['previous'] ),
+					'class' => '-previous -link',
+				), $icons['previous'] ) ),
+				self::html( 'a', array(
+					'href'  => self::getCurrentURL(),
+					'class' => '-refresh -link',
+				), $icons['refresh'] ),
+				( FALSE === $args['next'] ? '<span class="-next -span" aria-hidden="true">'.$icons['next'].'</span>' : self::html( 'a', array(
+					'href'  => add_query_arg( 'paged', $args['next'] ),
+					'class' => '-next -link',
+				), $icons['next'] ) ),
+			) );
+
+		echo '</div>';
 	}
 
 	public static function getDBTermTaxonomies( $same_key = FALSE )
@@ -764,7 +977,7 @@ class gEditorialBaseCore
 		return $same_key ? self::sameKey( $taxonomies ) : $taxonomies;
 	}
 
-	// from : Custom Field Taxonomies : https://github.com/scribu/wp-custom-field-taxonomies
+	// @SOURCE: [Custom Field Taxonomies](https://github.com/scribu/wp-custom-field-taxonomies)
 	public static function getDBPostMetaRows( $meta_key, $limit = FALSE )
 	{
 		global $wpdb;
@@ -788,7 +1001,7 @@ class gEditorialBaseCore
 		return $wpdb->get_results( $query );
 	}
 
-	// from : Custom Field Taxonomies : https://github.com/scribu/wp-custom-field-taxonomies
+	// @SOURCE: [Custom Field Taxonomies](https://github.com/scribu/wp-custom-field-taxonomies)
 	public static function getDBPostMetaKeys( $same_key = FALSE )
 	{
 		global $wpdb;
@@ -804,7 +1017,7 @@ class gEditorialBaseCore
 		return $same_key ? self::sameKey( $meta_keys ) : $meta_keys;
 	}
 
-	// SEE : delete_post_meta_by_key( 'related_posts' );
+	// @SEE: delete_post_meta_by_key( 'related_posts' );
 	public static function deleteDBPostMeta( $meta_key, $limit = FALSE )
 	{
 		global $wpdb;
@@ -863,8 +1076,8 @@ class gEditorialBaseCore
 		return $post[0]->{$key};
 	}
 
-	// this must be wp core future!!
-	// call this late on after_setup_theme
+	// this must be core's
+	// call this late on 'after_setup_theme' hook
 	public static function themeThumbnails( $post_types )
 	{
 		global $_wp_theme_features;
@@ -889,7 +1102,7 @@ class gEditorialBaseCore
 		}
 	}
 
-	// this must be wp core future!!
+	// this must be core's
 	// core duplication with post_type & title : add_image_size()
 	public static function registerImageSize( $name, $atts = array() )
 	{
@@ -927,55 +1140,22 @@ class gEditorialBaseCore
 		return $sizes;
 	}
 
-	// http://php.net/manual/en/function.str-word-count.php#107363
-	/***
-	* This simple utf-8 word count function (it only counts)
-	* is a bit faster then the one with preg_match_all
-	* about 10x slower then the built-in str_word_count
-	*
-	* If you need the hyphen or other code points as word-characters
-	* just put them into the [brackets] like [^\p{L}\p{N}\'\-]
-	* If the pattern contains utf-8, utf8_encode() the pattern,
-	* as it is expected to be valid utf-8 (using the u modifier).
-	**/
-	public static function wordCountUTF8( $str )
+	// @SEE: `mb_convert_case()`
+	public static function strToLower( $string )
 	{
-		return count( preg_split( '~[^\p{L}\p{N}\']+~u', $str ) );
+		return function_exists( 'mb_strtolower' ) ? mb_strtolower( $string, 'UTF-8' ) : strtolower( $string );
 	}
 
-	// http://php.net/manual/en/function.str-word-count.php#85579
-	public static function wordCountUTF8alt( $str )
+	// @SOURCE: http://php.net/manual/en/function.str-word-count.php#85579
+	public static function wordCountUTF8( $html, $strip_tags = TRUE )
 	{
-		return preg_match_all( "/\\p{L}[\\p{L}\\p{Mn}\\p{Pd}'\\x{2019}]*/u", $str, $matches );
-	}
+		if ( $strip_tags )
+			$html = strip_tags( preg_replace( array(
+				'@<script[^>]*?>.*?</script>@si',
+				'@<style[^>]*?>.*?</style>@siU',
+				'@<![\s\S]*?--[ \t\n\r]*>@'
+			), '', $html ) );
 
-	// FIXME: not working! probably on utf8
-	// http://php.net/manual/en/function.str-word-count.php#79699
-	public static function wordCount( $html )
-	{
-		# strip all html tags
-		$wc = strip_tags( preg_replace( array(
-			'@<script[^>]*?>.*?</script>@si',
-			'@<style[^>]*?>.*?</style>@siU',
-			'@<![\s\S]*?--[ \t\n\r]*>@'
-		), '', $html ) );
-
-		# remove 'words' that don't consist of alphanumerical characters or punctuation
-		$wc = trim( preg_replace( "#[^(\w|\d|\'|\"|\.|\!|\?|;|,|\\|\/|\-|:|\&|@)]+#", ' ', $wc ) );
-
-		# remove one-letter 'words' that consist only of punctuation
-		$wc = trim( preg_replace( "#\s*[(\'|\"|\.|\!|\?|;|,|\\|\/|\-|:|\&|@)]\s*#", ' ', $wc ) );
-
-		# remove superfluous whitespace
-		$wc = preg_replace( "/\s\s+/", ' ', $wc );
-
-		# split string into an array of words
-		$wc = explode( ' ', $wc );
-
-		# remove empty elements
-		$wc = array_filter( $wc );
-
-		# return the number of words
-		return count( $wc );
+		return preg_match_all( "/\\p{L}[\\p{L}\\p{Mn}\\p{Pd}'\\x{2019}]*/u", $html, $matches );
 	}
 }
