@@ -46,6 +46,13 @@ class gEditorialEstimated extends gEditorialModuleCore
 					),
 				),
 				'insert_content',
+				array(
+					'field'       => 'min_words',
+					'type'        => 'number',
+					'title'       => _x( 'Minimum Words', 'Estimated Module: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'And above this number of words will show the notice', 'Estimated Module: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'default'     => 250,
+				),
 			),
 			'posttypes_option' => 'posttypes_option',
 		);
@@ -98,6 +105,11 @@ class gEditorialEstimated extends gEditorialModuleCore
 		if ( ! $wordcount = get_post_meta( $post->ID, $this->meta_key, TRUE ) )
 			$wordcount = $this->get_post_wordcount( $post->ID, TRUE );
 
+		if ( $this->get_setting( 'min_words', 250 ) > $wordcount ) {
+			$this->added = TRUE;
+			return $content;
+		}
+
 		$place = $this->get_setting( 'insert_content', 'none' );
 		$pref  = $this->get_setting( 'prefix', _x( 'Estimated read time:', 'Estimated Module', GEDITORIAL_TEXTDOMAIN ) );
 		$html  = '<div class="geditorial-wrap estimated -'.$place.'">'.( $pref ? $pref.' ' : '' ).$this->get_time_estimated( $wordcount, TRUE ).'</div>';
@@ -124,10 +136,7 @@ class gEditorialEstimated extends gEditorialModuleCore
 				}
 		}
 
-		// $wordcount = self::wordCount( $content );
-		// $wordcount = str_word_count( strip_tags( $content ) );
-		// $wordcount = self::wordCountUTF8( strip_tags( $content ) );
-		$wordcount = self::wordCountUTF8alt( strip_tags( $content ) );
+		$wordcount = self::wordCountUTF8( $content );
 
 		if ( $update )
 			update_post_meta( $post_id, $this->meta_key, $wordcount );
