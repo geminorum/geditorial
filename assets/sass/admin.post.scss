@@ -40,7 +40,10 @@
 	display: block;
 }
 
+.geditorial-admin-wrap-nobox,
+.geditorial-admin-wrap-textbox,
 .geditorial-admin-wrap-metabox {
+
 	@include main-wrap();
 
 	margin-top: 12px;
@@ -72,6 +75,12 @@
 			}
 		}
 
+		&.field-wrap-inputtext-date {
+			input {
+				width: 32%;
+			}
+		}
+
 		&.field-wrap-textarea {
 			textarea {
 				width: 100%;
@@ -79,7 +88,29 @@
 		}
 
 		&.field-wrap-select {
+			select {
+				width: 100%;
+			}
+		}
 
+		&.field-wrap-buttons {
+
+			.button {
+				margin: 0 5px 4px 0;
+				padding: 0 10px 4px 4px;
+
+				@include body-rtl() {
+					margin: 0 0 4px 5px;
+					padding: 0 4px 4px 10px;
+				}
+
+				.dashicons {
+					width: 20px;
+					height: 20px;
+					vertical-align: text-top;
+					margin: 0 2px;
+				}
+			}
 		}
 
 		// DEPRECATED
