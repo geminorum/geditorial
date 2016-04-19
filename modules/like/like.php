@@ -23,17 +23,13 @@ class gEditorialLike extends gEditorialModuleCore
 			'_general' => array(
 				array(
 					'field'       => 'avatars',
-					'type'        => 'enabled',
 					'title'       => _x( 'Avatars', 'Like Module: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Display avatars next to the like button', 'Like Module: Setting Desc', GEDITORIAL_TEXTDOMAIN ),
-					'default'     => '0',
+					'description' => _x( 'Display avatars next to the like button', 'Like Module: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 				),
 				array(
 					'field'       => 'comments',
-					'type'        => 'enabled',
 					'title'       => _x( 'Comments', 'Like Module: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Also display button for comments of enabled post types', 'Like Module: Setting Desc', GEDITORIAL_TEXTDOMAIN ),
-					'default'     => '0',
+					'description' => _x( 'Also display button for comments of enabled post types', 'Like Module: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 				),
 			),
 			'posttypes_option' => 'posttypes_option',

@@ -20,8 +20,8 @@ class gEditorialDrafts extends gEditorialModuleCore
 				array(
 					'field'       => 'max_posts',
 					'type'        => 'number',
-					'title'       => _x( 'Max Posts', 'Drafts Module', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Display maximum posts for each post type', 'Drafts Module', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Max Posts', 'Drafts Module: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Display maximum posts for each post type', 'Drafts Module: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 					'default'     => 100,
 				),
 			),

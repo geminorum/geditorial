@@ -34,15 +34,13 @@ class gEditorialComments extends gEditorialModuleCore
 			'_general' => array(
 				array(
 					'field'       => 'front_actions',
-					'title'       => __( 'Frontpage Actions', GEDITORIAL_TEXTDOMAIN ),
-					'description' => __( 'Appends the actions to the comment text on frontpage.', GEDITORIAL_TEXTDOMAIN ),
-					'default'     => 0,
+					'title'       => _x( 'Frontpage Actions', 'Comments Module: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Appends the actions to the comment text on frontpage.', 'Comments Module: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 				),
 				array(
 					'field'       => 'widget_args',
-					'title'       => __( 'Force Widget', GEDITORIAL_TEXTDOMAIN ),
-					'description' => __( 'Force Recent Comments Widget to show only featured and non-buried comments.', GEDITORIAL_TEXTDOMAIN ),
-					'default'     => 0,
+					'title'       => _x( 'Force Widget', 'Comments Module: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Force Recent Comments Widget to show only featured and non-buried comments.', 'Comments Module: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 				),
 			),
 		);
@@ -76,8 +74,8 @@ class gEditorialComments extends gEditorialModuleCore
 			),
 			'misc' => array(
 				'comments' => array(
-					'box_title'       => _x( 'Featured Comments', 'Comments Module: Box Title', GEDITORIAL_TEXTDOMAIN ),
-					'column_title'    => _x( 'Comments', 'Comments Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
+					'box_title'    => _x( 'Featured Comments', 'Comments Module: Box Title', GEDITORIAL_TEXTDOMAIN ),
+					'column_title' => _x( 'Comments', 'Comments Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
 				),
 			),
 		);

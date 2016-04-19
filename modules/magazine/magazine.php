@@ -28,8 +28,8 @@ class gEditorialMagazine extends gEditorialModuleCore
 				'multiple_instances',
 				array(
 					'field'       => 'issue_sections',
-					'title'       => _x( 'Issue Sections', 'Magazine Module', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Section taxonomy for issue and supported post types', 'Magazine Module', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Issue Sections', 'Magazine Module: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Section taxonomy for issue and supported post types', 'Magazine Module: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 					'default'     => '0',
 				),
 				'posttype_feeds',
@@ -38,8 +38,8 @@ class gEditorialMagazine extends gEditorialModuleCore
 				array(
 					'field'       => 'redirect_spans',
 					'type'        => 'text',
-					'title'       => _x( 'Redirect Spans', 'Magazine Module', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Redirect all Span Archives to a URL', 'Magazine Module', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Redirect Spans', 'Magazine Module: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Redirect all Span Archives to a URL', 'Magazine Module: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 					'default'     => '',
 					'dir'         => 'ltr',
 				),

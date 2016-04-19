@@ -50,20 +50,26 @@ class gEditorialTweaks extends gEditorialModuleCore
 			'_general' => array(
 				array(
 					'field'       => 'group_taxonomies',
-					'title'       => _x( 'Group Taxonomies', 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Group selected taxonomies on selected post type edit pages', 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Group Taxonomies', 'Tweaks Module: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Group selected taxonomies on selected post type edit pages', 'Tweaks Module: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 					'default'     => '0',
 				),
 				array(
 					'field'       => 'checklist_tree',
-					'title'       => _x( 'Checklist Tree', 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Preserves the category hierarchy on the post editing screen', 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Checklist Tree', 'Tweaks Module: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Preserves the category hierarchy on the post editing screen', 'Tweaks Module: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 					'default'     => '0',
 				),
 				array(
 					'field'       => 'category_search',
-					'title'       => _x( 'Category Search', 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Replaces the category selector to include searching categories', 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Category Search', 'Tweaks Module: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Replaces the category selector to include searching categories', 'Tweaks Module: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'default'     => '0',
+				),
+				array(
+					'field'       => 'excerpt_count',
+					'title'       => _x( 'Excerpt Count', 'Tweaks Module: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Display word count for excerpt textare', 'Tweaks Module: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 					'default'     => '0',
 				),
 			),
