@@ -1211,7 +1211,7 @@ class gEditorialModuleCore extends gEditorialBaseCore
 			? $this->strings['labels'][$constant_key]['singular_name']
 			: $this->constant( $constant_key );
 
-		$singular_lower = function_exists( 'mb_strtolower' ) ? mb_strtolower( $singular_name, 'UTF-8' ) : strtolower( $singular_name );
+		$singular_lower = self::strToLower( $singular_name );
 		$link = get_permalink( $post_ID );
 
 		return array(
