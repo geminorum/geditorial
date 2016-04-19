@@ -1,8 +1,10 @@
 jQuery(document).ready(function($) {
 	'use strict';
 
-	if (gEditorial.tweaks.settings.checklist_tree) {
+	if ('1' == gEditorial.tweaks.settings.checklist_tree) {
+
 		$('[id$="-all"] > ul.categorychecklist').each(function() {
+
 			var $list = $(this);
 			var $firstChecked = $list.find(':checkbox:checked').first();
 
@@ -16,11 +18,12 @@ jQuery(document).ready(function($) {
 		});
 	}
 
-	if (gEditorial.tweaks.settings.category_search) {
+	if ('1' == gEditorial.tweaks.settings.category_search) {
 
 		var $input = $('<input class="category-search" type="search" value="" placeholder="' + gEditorial.tweaks.strings.search_placeholder + '" title="' + gEditorial.tweaks.strings.search_title + '" />');
 
 		$('.inside > div.categorydiv').each(function() {
+			
 			var $tax = $(this),
 				$row = $input.clone(true);
 
@@ -28,15 +31,73 @@ jQuery(document).ready(function($) {
 				.bind('keyup', function(e) {
 
 					var val = $(this).val(),
-			            li = $(this).parent().find('ul.categorychecklist li'),
-			            list = $(this).parent().find('ul.categorychecklist');
+						li = $(this).parent().find('ul.categorychecklist li'),
+						list = $(this).parent().find('ul.categorychecklist');
 
-			        li.hide();
-			        var containingLabels = list.find("label:contains('" + val + "')");
-			        containingLabels.closest('li').find('li').addBack().show();
-			        containingLabels.parents('ul.categorychecklist li').show();
+					li.hide();
+					var containingLabels = list.find("label:contains('" + val + "')");
+					containingLabels.closest('li').find('li').addBack().show();
+					containingLabels.parents('ul.categorychecklist li').show();
 				})
 				.show();
 		});
+	}
+
+	if ('1' == gEditorial.tweaks.settings.excerpt_count) {
+
+		if (wp.utils) {
+
+			var counter = new wp.utils.WordCounter();
+
+			$('div.geditorial-wordcount-wrap').each(function() {
+
+				var $content = $(this).find('textarea'),
+					$count = $(this).find('.geditorial-wordcount .-words'),
+					prevCount = 0,
+					contentEditor;
+
+				$content.bind('keyup', function(e) {
+					var text = $(this).val(),
+						count = counter.count(text);
+
+					if (count !== prevCount) {
+						$count.text(count);
+					}
+
+					prevCount = count;
+				});
+
+				$(this).find('.geditorial-wordcount').show();
+
+				// FIXME: check for max/min
+
+				// FIXME: use debounce
+
+				// function update() {
+				// 	var text = $content.val(),
+				// 		count = counter.count( text );
+				//
+				// 	if ( count !== prevCount ) {
+				// 		$count.text( count );
+				// 	}
+				//
+				// 	prevCount = count;
+				// }
+				//
+				// $( document ).on( 'tinymce-editor-init', function( event, editor ) {
+				// 	if ( editor.id !== 'content' ) {
+				// 		return;
+				// 	}
+				//
+				// 	contentEditor = editor;
+				//
+				// 	editor.on( 'nodechange keyup', _.debounce( update, 1000 ) );
+				// } );
+				//
+				// $content.on( 'input keyup', _.debounce( update, 1000 ) );
+				//
+				// update();
+			});
+		}
 	}
 });

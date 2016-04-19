@@ -219,7 +219,8 @@ class gEditorialHelper extends gEditorialBaseCore
 
 				$html  = '<div id="geditorial-meta-'.$field.'-wrap" class="postbox geditorial-admin-postbox geditorial-meta-field-'.$field.'">';
 				$html .= '<div class="handlediv" title="'.esc_attr( _x( 'Click to toggle', 'Module Helper', GEDITORIAL_TEXTDOMAIN ) ).'"><br /></div><h2 class="hndle"><span>'.$title.'</span></h2>';
-				$html .= '<div class="inside"><label class="screen-reader-text" for="geditorial-meta-'.$field.'">'.$title.'</label>';
+				$html .= '<div class="inside geditorial-wordcount-wrap"><label class="screen-reader-text" for="geditorial-meta-'.$field.'">'.$title.'</label>';
+
 				$html .= self::html( 'textarea', array(
 					'rows'     => '1',
 					'cols'     => '40',
@@ -229,6 +230,9 @@ class gEditorialHelper extends gEditorialBaseCore
 					'readonly' => ! $gEditorial->meta->user_can( 'edit', $field ),
 					'tabindex' => '0',
 				), esc_textarea( $gEditorial->meta->get_postmeta( $post->ID, $field ) ) );
+
+				$html .= self::htmlWordCount( ( 'geditorial-meta-'.$field.( FALSE === $key ? '' : '-'.$key ) ), $post->post_type );
+
 				$html .= '</div></div>';
 
 				echo $html;
@@ -509,6 +513,20 @@ class gEditorialHelper extends gEditorialBaseCore
 		);
 
 		return $gEditorial_WPImageSizes;
+	}
+
+	// CAUTION: must wrap in `.geditorial-wordcount-wrap` along with the textarea
+	public static function htmlWordCount( $for = 'excerpt', $posttype = 'post', $data = array() )
+	{
+		$defaults = array(
+			'min' => '0',
+			'max' => '0',
+		);
+
+		return self::html( 'div', array(
+			'class' => array( 'geditorial-wordcount', 'hide-if-no-js' ),
+			'data'  => apply_filters( 'geditorial_helper_wordcount_data', array_merge( $data, $defaults ), $for, $posttype ),
+		), sprintf( _x( 'Word count: %s', 'Module Helper', GEDITORIAL_TEXTDOMAIN ), '<span class="-words">0</span>' ) );
 	}
 
 	public static function getDefualtCalendars()

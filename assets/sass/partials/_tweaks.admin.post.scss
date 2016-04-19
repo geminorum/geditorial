@@ -10,3 +10,18 @@
 		margin-top: 6px;
 	}
 }
+
+.geditorial-wordcount-wrap {
+
+	.geditorial-wordcount {
+
+		display: none; // will show with js
+
+		font-size: 0.8em;
+		margin-top: 0.1em;
+		margin-bottom: -0.4em;
+
+		.-words {}
+		.-chars {}
+	}
+}
