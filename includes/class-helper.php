@@ -3,6 +3,10 @@
 class gEditorialHelper extends gEditorialBaseCore
 {
 
+	const MODULE   = FALSE;
+	const SETTINGS = 'geditorial-settings';
+	const TOOLS    = 'geditorial-tools';
+
 	public static function moduleClass( $module, $check = TRUE, $prefix = 'gEditorial' )
 	{
 		$class = '';
@@ -410,13 +414,10 @@ class gEditorialHelper extends gEditorialBaseCore
 		return $output;
 	}
 
-	const SETTINGS_SLUG = 'geditorial-settings';
-	const TOOLS_SLUG    = 'geditorial-tools';
-
 	public static function settingsURL( $full = TRUE )
 	{
-		//$relative = current_user_can( 'manage_options' ) ? 'admin.php?page='.self::SETTINGS_SLUG : 'index.php?page='.self::SETTINGS_SLUG;
-		$relative = 'admin.php?page='.self::SETTINGS_SLUG;
+		//$relative = current_user_can( 'manage_options' ) ? 'admin.php?page='.self::SETTINGS : 'index.php?page='.self::SETTINGS;
+		$relative = 'admin.php?page='.self::SETTINGS;
 
 		if ( $full )
 			return get_admin_url( NULL, $relative );
@@ -426,7 +427,7 @@ class gEditorialHelper extends gEditorialBaseCore
 
 	public static function toolsURL( $full = TRUE )
 	{
-		$relative = 'admin.php?page='.self::TOOLS_SLUG;
+		$relative = 'admin.php?page='.self::TOOLS;
 
 		if ( $full )
 			return get_admin_url( NULL, $relative );
@@ -440,7 +441,7 @@ class gEditorialHelper extends gEditorialBaseCore
 			$screen = get_current_screen();
 
 		if ( isset( $screen->base )
-			&& FALSE !== strripos( $screen->base, self::SETTINGS_SLUG ) )
+			&& FALSE !== strripos( $screen->base, self::SETTINGS ) )
 				return TRUE;
 
 		return FALSE;
@@ -451,8 +452,9 @@ class gEditorialHelper extends gEditorialBaseCore
 		if ( is_null( $screen ) )
 			$screen = get_current_screen();
 
-		if ( isset( $screen->base ) && FALSE !== strripos( $screen->base, self::TOOLS_SLUG ) )
-			return TRUE;
+		if ( isset( $screen->base )
+			&& FALSE !== strripos( $screen->base, self::TOOLS ) )
+				return TRUE;
 
 		return FALSE;
 	}
