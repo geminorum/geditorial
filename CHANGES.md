@@ -1,7 +1,7 @@
-### 3.4
+### 3.4.0
 * tools: orphaned term converter
 
-### 3.3
+### 3.3.0
 * all: changes in edit-tags screen on WP4.5, [see](https://make.wordpress.org/core/2016/03/07/changes-to-the-term-edit-page-in-wordpress-4-5/)
 * modulecore: using edit tags link helper
 * modulecore: column cover image small size & link to original
@@ -14,15 +14,15 @@
 * tweaks: checklist tree, adopted from [Category Checklist Tree](https://wordpress.org/plugins/category-checklist-tree/) by [scribu](http://scribu.net/wordpress/category-checklist-tree)
 * tweaks: search box for cat taxes, adopted from [Searchable Categories](https://wordpress.org/plugins/searchable-categories/) by [Jason Corradino](http://ididntbreak.it)
 
-### 3.2
+### 3.2.0
 * main: helping if module enabled
 * gallery: exclude after global filters
 
-### 3.1
+### 3.1.0
 * enqueue front styles for drafts & estimated modules
 * skip registering alpha modules on production
 
-### 3.0
+### 3.0.0
 * moved to [Semantic Versioning](http://semver.org/)
 * almost complete rewriting of all internal apis to reduce memory footprint
 
