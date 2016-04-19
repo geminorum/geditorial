@@ -1,72 +1,95 @@
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
-/// gEditorial: GulpFile.js
-////////////////////////////////////////////////////////////////////////////////
+(function() {
+	'use strict';
 
-// FIXME: add sass watch
-// FIXME: add build gulp task to generate the package
-// FIXME: add gulp task to minify again each js
+	var
+		gulp = require('gulp'),
+		sass = require('gulp-sass'), // https://github.com/dlmanning/gulp-sass
+		changed = require('gulp-changed'),
+		tinypng = require('gulp-tinypng'), // https://github.com/creativeaura/gulp-tinypng
+		nano = require('gulp-cssnano'), // https://github.com/ben-eb/gulp-cssnano
+		sourcemaps = require('gulp-sourcemaps'),
+		smushit = require('gulp-smushit'), // https://github.com/heldr/gulp-smushit
+		pngquant = require('imagemin-pngquant'), // https://github.com/imagemin/imagemin-pngquant
+		excludeGitignore = require('gulp-exclude-gitignore'), // https://github.com/sboudrias/gulp-exclude-gitignore
+		wpPot = require('gulp-wp-pot'), // https://github.com/rasmusbe/gulp-wp-pot
+		sort = require('gulp-sort'),
+		fs = require('fs');
 
-// TODO: [Using Gulp for WordPress Theme Development - Matt Banks](http://mattbanks.me/gulp-wordpress-development/)
+	var
+		json = JSON.parse(fs.readFileSync('./package.json'));
 
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
+	gulp.task('tinypng', function() {
 
-'use strict';
+		return gulp.src('./assets/images/raw/*.png')
 
-var
-	gulp       = require('gulp'),
+		.pipe(tinypng(''))
 
-	compass    = require('gulp-compass'),
-	plumber    = require('gulp-plumber'),
-	notify     = require('gulp-notify'),
-	tinyPNG    = require('gulp-tinypng'), // https://github.com/creativeaura/gulp-tinypng
-	minifyCSS  = require('gulp-minify-css'),
-	sourcemaps = require('gulp-sourcemaps'),
-
-	wpPot      = require('gulp-wp-pot'), // https://github.com/rasmusbe/gulp-wp-pot
-	sort       = require('gulp-sort'),
-
-	plumberErrorHandler = {
-		errorHandler: notify.onError({
-			title: 'Gulp',
-			message: 'Error: <%= error.message %>'
-		})
-	};
-
-function getRelativePath(absPath) {
-	absPath = absPath.replace(/\\/g, '/');
-	var curDir = __dirname.replace(/\\/g, '/');
-	return absPath.replace(curDir, '');
-}
-
-gulp.task('default', function(){
-	console.log( 'Hi, I\'m Gulp!' );
-});
-
-gulp.task('tinypng', function () {
-	gulp.src('./assets/images/raw/*.png')
-		.pipe(tinyPNG(''))
 		.pipe(gulp.dest('./assets/images'));
-});
+	});
 
-gulp.task('makepot', function () {
-	gulp.src('./**/*.php')
+	gulp.task('pngquant', function() {
 
-		.pipe(plumber(plumberErrorHandler))
+		return gulp.src('./assets/images/raw/*.png')
+
+		.pipe(pngquant({
+			quality: '65-80',
+			speed: 4
+		}))
+
+		.pipe(gulp.dest('./assets/images'));
+	});
+
+	gulp.task('smushit', function() {
+
+		return gulp.src('./assets/images/raw/**/*.{jpg,png}')
+
+		.pipe(smushit())
+
+		.pipe(gulp.dest('./assets/images'));
+	});
+
+	gulp.task('pot', function() {
+
+		return gulp.src(['./**/*.php', '!./assets/libs/**'])
+
+		.pipe(excludeGitignore())
 
 		.pipe(sort())
 
-		.pipe(wpPot( {
-			domain: 'geditorial',
-			destFile:'languages/geditorial.pot',
-			package: 'geditorial',
-			bugReport: 'https://github.com/geminorum/geditorial/issues',
-			lastTranslator: 'Nasser Rafie <contact@geminorum.ir>',
-			team: 'geminorum <contact@geminorum.ir>'
-		} ))
+		.pipe(wpPot(json._pot))
 
-		.pipe(gulp.dest('dist'));
-});
+		.pipe(gulp.dest('./languages'));
+	});
+
+	gulp.task('sass', function() {
+
+		return gulp.src('./assets/sass/**/*.scss')
+
+		.pipe(sourcemaps.init())
+
+		.pipe(sass().on('error', sass.logError))
+
+		.pipe(nano({
+			discardComments: {
+				removeAll: true
+			}
+		}))
+
+		.pipe(sourcemaps.write('./maps'))
+
+		.pipe(gulp.dest('./assets/css'));
+	});
+
+	gulp.task('watch', function() {
+
+		gulp.watch('./assets/sass/**/*.scss', [
+			'sass'
+		]);
+	});
+
+	gulp.task('default', function() {
+
+		console.log('Hi, I\'m Gulp!');
+	});
+
+}());
