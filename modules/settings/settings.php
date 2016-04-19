@@ -28,7 +28,8 @@ class gEditorialSettings extends gEditorialModuleCore
 	{
 		global $gEditorial;
 
-		$hook_settings = add_menu_page( $this->module->title,
+		$hook_settings = add_menu_page(
+			$this->module->title,
 			$this->module->title,
 			'manage_options',
 			$this->module->settings,
@@ -36,7 +37,8 @@ class gEditorialSettings extends gEditorialModuleCore
 			'dashicons-screenoptions'
 		);
 
-		$hook_tools = add_submenu_page( $this->module->settings,
+		$hook_tools = add_submenu_page(
+			$this->module->settings,
 			_x( 'gEditorial Tools', 'Settings Module', GEDITORIAL_TEXTDOMAIN ),
 			_x( 'Tools', 'Settings Module: Admin Tools Menu Title', GEDITORIAL_TEXTDOMAIN ),
 			'manage_options',
@@ -351,11 +353,11 @@ class gEditorialSettings extends gEditorialModuleCore
 	private function print_default_footer( $module )
 	{
 		if ( 'settings' == $module->name ) {
-			?><div class="credits"><p>
-				You're using gEditorial v<?php echo GEDITORIAL_VERSION; ?><br />
-				<a href="https://github.com/geminorum/geditorial/issues">feedback, ideas and bug reports</a><br />
-				gEditorial is a fork in structure of <a href="http://editflow.org/">EditFlow</a>
-			</p></div><?php
+			echo '<div class="credits"><p>';
+				echo 'You\'re using gEditorial v'.GEDITORIAL_VERSION.'<br />';
+				echo 'This is a fork in structure of <a href="http://editflow.org/">EditFlow</a><br />';
+				echo '<a href="https://github.com/geminorum/geditorial/issues">Feedback, Ideas and Bug Reports</a> are welcomed';
+			echo '</p></div>';
 		}
 	}
 
