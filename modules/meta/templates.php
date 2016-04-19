@@ -46,6 +46,8 @@ class gEditorialMetaTemplates extends gEditorialTemplateCore
 	{
 		global $post;
 
+		// FIXME: check if $field is an array then use as fallback 
+		
 		if ( isset( $atts['id'] ) && FALSE === $atts['id'] )
 			$atts['id'] = $post->ID;
 

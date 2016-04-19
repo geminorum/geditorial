@@ -41,6 +41,8 @@ class gEditorialWidgetCore extends WP_Widget
 				'deleted_post',
 				'switch_theme',
 			),
+
+			// FIXME: help tab data for the admin widget screen
 		);
 	}
 

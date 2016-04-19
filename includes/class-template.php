@@ -3,6 +3,7 @@
 class gEditorialTemplateCore extends gEditorialBaseCore
 {
 
+	// FIXME: move to gEditorialShortCodeCore
 	public static function shortcodeWrap( $html, $suffix = FALSE, $args = array(), $block = TRUE )
 	{
 		if ( isset( $args['wrap'] ) && ! $args['wrap'] )
@@ -19,6 +20,7 @@ class gEditorialTemplateCore extends gEditorialBaseCore
 		return self::html( $block ? 'div' : 'span', array( 'class' => $classes ), $html );
 	}
 
+	// FIXME: move to gEditorialShortCodeCore
 	public static function shortcodeTermTitle( $atts, $term = FALSE )
 	{
 		$args = self::atts( array(

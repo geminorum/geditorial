@@ -72,7 +72,6 @@ class gEditorialMeta extends gEditorialModuleCore
                     'menu_name'                  => _x( 'Column Headers', 'Meta Module: Column Header Tax Labels: Menu Name', GEDITORIAL_TEXTDOMAIN ),
                     'singular_name'              => _x( 'Column Header', 'Meta Module: Column Header Tax Labels: Singular Name', GEDITORIAL_TEXTDOMAIN ),
                     'search_items'               => _x( 'Search Column Headers', 'Meta Module: Column Header Tax Labels', GEDITORIAL_TEXTDOMAIN ),
-                    'popular_items'              => NULL, // _x( 'Popular Column Headers', 'Meta Module: Column Header Tax Labels', GEDITORIAL_TEXTDOMAIN ),
                     'all_items'                  => _x( 'All Column Headers', 'Meta Module: Column Header Tax Labels', GEDITORIAL_TEXTDOMAIN ),
                     'edit_item'                  => _x( 'Edit Column Header', 'Meta Module: Column Header Tax Labels', GEDITORIAL_TEXTDOMAIN ),
                     'view_item'                  => _x( 'View Column Header', 'Meta Module: Column Header Tax Labels', GEDITORIAL_TEXTDOMAIN ),
@@ -86,6 +85,7 @@ class gEditorialMeta extends gEditorialModuleCore
                     'no_terms'                   => _x( 'No column headers', 'Meta Module: Column Header Tax Labels', GEDITORIAL_TEXTDOMAIN ),
                     'items_list_navigation'      => _x( 'Column Headers list navigation', 'Meta Module: Column Header Tax Labels', GEDITORIAL_TEXTDOMAIN ),
                     'items_list'                 => _x( 'Column Headers list', 'Meta Module: Column Header Tax Labels', GEDITORIAL_TEXTDOMAIN ),
+					'popular_items'              => NULL,
 				),
 			),
 		);
@@ -467,7 +467,7 @@ class gEditorialMeta extends gEditorialModuleCore
 					if ( isset( $post['custom_field'] ) ) {
 						gEditorialHelper::tableList( array(
 							'post_id' => 'Post ID',
-							'meta' => 'Meta :'.$post['custom_field'],
+							'meta'    => 'Meta :'.$post['custom_field'],
 						), gEditorialHelper::getDBPostMetaRows( stripslashes( $post['custom_field'] ), $limit ) );
 						echo '<br />';
 					}

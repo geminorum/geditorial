@@ -23,6 +23,9 @@ class gEditorialWidgets extends gEditorialModuleCore
 		- login form: like old one on gMember
 
 
+		- [Image Widget — WordPress Plugins](https://wordpress.org/plugins/image-widget/)
+		- [eddiemoya/Yet-Another-Image-Widget: Yet Another Image Widget](https://github.com/eddiemoya/Yet-Another-Image-Widget)
+		
 */
 	public static function module()
 	{

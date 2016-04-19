@@ -1,6 +1,7 @@
 <?php defined( 'ABSPATH' ) or die( 'Restricted access' );
 
-// http://bradt.ca/blog/extending-wp_query/
+// @SOURCE: http://bradt.ca/blog/extending-wp_query/
+// @SEE: https://make.wordpress.org/core/2014/08/29/a-more-powerful-order-by-in-wordpress-4-0/
 class gEditorialBookQuery extends WP_Query
 {
 

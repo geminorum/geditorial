@@ -56,6 +56,8 @@ class gEditorial
 			'template',
 			'widget',
 			'module',
+			// 'listtable',
+			// 'shortcode',
 		);
 
 		foreach ( $includes as $include )
