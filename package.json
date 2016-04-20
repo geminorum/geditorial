@@ -33,13 +33,10 @@
   },
   "readme": "ERROR: No README data found!",
   "private": true,
-
   "_pot": {
     "domain": "GEDITORIAL_TEXTDOMAIN",
     "destFile": "geditorial.pot",
     "package": "gEditorial",
-    "bugReport": "http://geminorum.ir/wordpress/geditorial/issues",
-    "lastTranslator": "Nasser Rafie <contact@geminorum.ir>",
-    "team": "geminorum <contact@gminorum.ir>"
+    "headers": false
   }
 }
