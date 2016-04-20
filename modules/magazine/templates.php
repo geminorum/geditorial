@@ -3,6 +3,21 @@
 class gEditorialMagazineTemplates extends gEditorialTemplateCore
 {
 
+	public static function sanitize_field( $field )
+	{
+		$fields = array(
+			'over-title' => array( 'ot', 'over-title' ),
+			'sub-title'  => array( 'st', 'sub-title' ),
+			'number'     => array( 'issue_number_line' ),
+			'pages'      => array( 'issue_total_pages' ),
+		);
+
+		if ( isset( $fields[$field] ) )
+			return $fields[$field];
+
+		return array( $field );
+	}
+
 	public static function issue_shortcode( $atts = array(), $content = NULL, $tag = '' )
 	{
 		global $post;
@@ -520,40 +535,31 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 		return FALSE;
 	}
 
-	public static function issue_info( $field, $b = '', $a = '', $f = FALSE, $post_id = NULL, $args = array() )
+	public static function issue_info( $field, $before = '', $after = '', $filter = FALSE, $post_id = NULL, $args = array() )
 	{
 		global $post;
 
 		if ( is_null( $post_id ) )
 			$post_id = $post->ID;
 
-		$meta = gEditorial()->meta->get_postmeta( $post_id, self::sanitize_field( $field ), FALSE );
+		foreach ( self::sanitize_field( $field ) as $field ) {
 
-		if ( FALSE !== $meta ) {
-			$html = $b.( $f ? $f( $meta ) : $meta ).$a;
-			if ( isset( $args['echo'] ) ) {
-				if ( ! $args['echo'] )
-					return $html;
-			}
+			if ( FALSE === ( $meta = gEditorial()->meta->get_postmeta( $post_id, $field, FALSE ) ) )
+				continue;
+
+			if ( $filter && is_callable( $filter ) )
+				$meta = call_user_func( $filter, $meta );
+
+			$html = $before.$meta.$after;
+
+			if ( isset( $args['echo'] ) && ! $args['echo'] )
+				return $html;
+
 			echo $html;
 			return TRUE;
 		}
+
 		return isset( $args['def'] ) ? $args['def'] : FALSE;
-	}
-
-	public static function sanitize_field( $field )
-	{
-		$fields = array(
-			'over-title' => 'ot',
-			'sub-title'  => 'st',
-			'number'     => 'issue_number_line',
-			'pages'      => 'issue_total_pages',
-		);
-
-		if ( isset( $fields[$field] ) )
-			return $fields[$field];
-
-		return $field;
 	}
 }
 

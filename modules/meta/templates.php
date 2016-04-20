@@ -6,48 +6,51 @@ class gEditorialMetaTemplates extends gEditorialTemplateCore
 	public static function sanitize_field( $field )
 	{
 		$fields = array(
-			'over-title' => 'ot',
-			'sub-title'  => 'st',
+			'over-title' => array( 'ot', 'over-title' ),
+			'sub-title'  => array( 'st', 'sub-title' ),
 		);
 
 		if ( isset( $fields[$field] ) )
 			return $fields[$field];
 
-		return $field;
+		return array( $field );
 	}
 
-	public static function meta( $field, $before = '', $after = '', $filter = FALSE, $post_id = NULL, $args = array() )
+	public static function meta( $fields, $before = '', $after = '', $filter = FALSE, $post_id = NULL, $args = array() )
 	{
 		global $post;
 
 		if ( is_null( $post_id ) )
 			$post_id = $post->ID;
 
-		$meta = gEditorial()->meta->get_postmeta( $post_id, self::sanitize_field( $field ), FALSE );
+		foreach ( self::sanitize_field( $field ) as $field ) {
 
-		if ( FALSE === $meta )
-			return FALSE;
+			$meta = gEditorial()->meta->get_postmeta( $post_id, $field, FALSE );
 
-		$meta = apply_filters( 'gmeta_meta', $meta, $field );
+			if ( FALSE === $meta )
+				continue; // return FALSE;
 
-		if ( $filter && is_callable( $filter ) )
-			$meta = call_user_func( $filter, $meta );
+			$meta = apply_filters( 'gmeta_meta', $meta, $field );
 
-		$html = $before.$meta.$after;
+			if ( $filter && is_callable( $filter ) )
+				$meta = call_user_func( $filter, $meta );
 
-		if ( isset( $args['echo'] ) && ! $args['echo'] )
-			return $html;
+			$html = $before.$meta.$after;
 
-		echo $html;
-		return TRUE;
+			if ( isset( $args['echo'] ) && ! $args['echo'] )
+				return $html;
+
+			echo $html;
+			return TRUE;
+		}
+
+		return FALSE;
 	}
 
 	public static function get_meta( $field, $atts = array() )
 	{
 		global $post;
 
-		// FIXME: check if $field is an array then use as fallback 
-		
 		if ( isset( $atts['id'] ) && FALSE === $atts['id'] )
 			$atts['id'] = $post->ID;
 
@@ -56,7 +59,11 @@ class gEditorialMetaTemplates extends gEditorialTemplateCore
 			'def' => '',
 		), $atts );
 
-		return gEditorial()->meta->get_postmeta( $args['id'], self::sanitize_field( $field ), $args['def'] );
+		foreach ( self::sanitize_field( $field ) as $field )
+			if ( FALSE !== ( $meta = gEditorial()->meta->get_postmeta( $args['id'], $field, FALSE ) ) )
+				return $meta;
+
+		return $args['def'];
 	}
 
 	public static function gmeta_lead( $before = '', $after = '', $filter = FALSE, $args = array() )
