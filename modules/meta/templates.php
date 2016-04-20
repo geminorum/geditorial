@@ -23,7 +23,7 @@ class gEditorialMetaTemplates extends gEditorialTemplateCore
 		if ( is_null( $post_id ) )
 			$post_id = $post->ID;
 
-		foreach ( self::sanitize_field( $field ) as $field ) {
+		foreach ( self::sanitize_field( $fields ) as $field ) {
 
 			$meta = gEditorial()->meta->get_postmeta( $post_id, $field, FALSE );
 
@@ -47,7 +47,7 @@ class gEditorialMetaTemplates extends gEditorialTemplateCore
 		return FALSE;
 	}
 
-	public static function get_meta( $field, $atts = array() )
+	public static function get_meta( $fields, $atts = array() )
 	{
 		global $post;
 
@@ -59,7 +59,7 @@ class gEditorialMetaTemplates extends gEditorialTemplateCore
 			'def' => '',
 		), $atts );
 
-		foreach ( self::sanitize_field( $field ) as $field )
+		foreach ( self::sanitize_field( $fields ) as $field )
 			if ( FALSE !== ( $meta = gEditorial()->meta->get_postmeta( $args['id'], $field, FALSE ) ) )
 				return $meta;
 
