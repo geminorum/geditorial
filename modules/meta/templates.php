@@ -217,7 +217,7 @@ class gEditorialMetaTemplates extends gEditorialTemplateCore
 		$term  = gEditorialHelper::theTerm( $ct_tax, $id, TRUE );
 		$title = self::get_meta( 'ch', array( 'id' => $id, 'def' => FALSE ) );
 		$link  = $term ? get_term_link( $term, $ct_tax ) : ( $title ? get_option( 'home' ).'/?s='.urlencode( $title ) : FALSE );
-		$desc  = $term ? $term->name.( $term->description ? strip_tags( ' :: '.$term->description ) : '' ) : sprintf( apply_filters( 'gmeta_search_link_title_attr', _x( 'Search %1$s for %2$s', GEDITORIAL_TEXTDOMAIN ) ), get_bloginfo( 'name' ), $title );
+		$desc  = $term ? $term->name.( $term->description ? strip_tags( ' :: '.$term->description ) : '' ) : sprintf( apply_filters( 'gmeta_search_link_title_attr', _x( 'Search %1$s for %2$s', 'Meta Module', GEDITORIAL_TEXTDOMAIN ) ), get_bloginfo( 'name' ), $title );
 
 		if ( $term || $title ) {
 			@$value = $title ? $title : $term->name;
