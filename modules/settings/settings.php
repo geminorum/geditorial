@@ -254,8 +254,11 @@ class gEditorialSettings extends gEditorialModuleCore
 			self::cheatin();
 
 		$sub = isset( $_POST['sub'] ) ? trim( $_POST['sub'] ) : 'default';
+
 		switch ( $sub ) {
+
 			case 'module_state' :
+
 				if ( ! wp_verify_nonce( $_POST['module_nonce'], 'geditorial-module-nonce' ) )
 					self::cheatin();
 
@@ -288,7 +291,7 @@ class gEditorialSettings extends gEditorialModuleCore
 		global $gEditorial;
 
 		if ( ! $module = $gEditorial->get_module_by( 'settings', $_GET['page'] ) )
-			wp_die( __( 'Not a registered Editorial module', GEDITORIAL_TEXTDOMAIN ) );
+			wp_die( _x( 'Not a registered Editorial module', 'Settings Module', GEDITORIAL_TEXTDOMAIN ) );
 
 		if ( isset( $gEditorial->{$module->name} ) ) {
 
