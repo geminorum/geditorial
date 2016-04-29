@@ -46,13 +46,6 @@ class gEditorialComments extends gEditorialModuleCore
 		);
 	}
 
-	protected function get_global_constants()
-	{
-		return array(
-			'comments_shortcode' => 'comments',
-		);
-	}
-
 	protected function get_global_strings()
 	{
 		return array(
@@ -110,7 +103,6 @@ class gEditorialComments extends gEditorialModuleCore
 			if ( $this->get_setting( 'front_actions', FALSE ) )
 				add_filter( 'comment_text', array( $this, 'comment_text' ), 10, 3 );
 
-			// add_shortcode( 'comments', array( $this, 'shortcode_comments' ) );
 			// add_filter( 'gtheme_comment_actions', array( $this, 'gtheme_comment_actions' ), 10, 4 );
 		}
 	}
@@ -145,12 +137,13 @@ class gEditorialComments extends gEditorialModuleCore
 
 	public function ajax()
 	{
-		if ( ! isset( $_POST['do'] ) )
+		if ( empty( $_POST['do'] ) )
 			die;
 
 		// TODO: check nounce
 
 		$action = $_POST['do'];
+
 		if ( in_array( $action, $this->actions ) ) {
 			$comment_id = absint( $_POST['comment_id'] );
 			if ( ! $comment = get_comment( $comment_id )
@@ -158,12 +151,13 @@ class gEditorialComments extends gEditorialModuleCore
 					die;
 
 			switch ( $action ) {
-				case 'feature'  : add_comment_meta(    $comment_id, 'featured', '1' ); break;
-				case 'unfeature': delete_comment_meta( $comment_id, 'featured'      ); break;
-				case 'bury'     : add_comment_meta(    $comment_id, 'buried',   '1' ); break;
-				case 'unbury'   : delete_comment_meta( $comment_id, 'buried'        ); break;
+				case 'feature' : add_comment_meta( $comment_id, 'featured', '1' ); break;
+				case 'unfeature' : delete_comment_meta( $comment_id, 'featured' ); break;
+				case 'bury' : add_comment_meta( $comment_id, 'buried', '1' ); break;
+				case 'unbury' : delete_comment_meta( $comment_id, 'buried' ); break;
 			}
 		}
+		
 		die;
 	}
 
