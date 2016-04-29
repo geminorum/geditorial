@@ -21,7 +21,7 @@ class gEditorialSettings extends gEditorialModuleCore
 			return;
 
 		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
-		add_action( 'wp_ajax_geditorial_settings', array( $this, 'ajax_settings' ) );
+		add_action( 'wp_ajax_geditorial_settings', array( $this, 'ajax' ) );
 	}
 
 	public function admin_menu()
@@ -246,7 +246,7 @@ class gEditorialSettings extends gEditorialModuleCore
 		echo '</form>';
 	}
 
-	public function ajax_settings()
+	public function ajax()
 	{
 		global $gEditorial;
 
