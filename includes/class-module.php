@@ -818,7 +818,18 @@ class gEditorialModuleCore extends gEditorialBaseCore
 		);
 	}
 
-	// HELPER
+	public function get_settings_calendar_type( $section )
+	{
+		return array(
+			'field'   => 'calendar_type',
+			'title'   => _x( 'Default Calendar', 'Module Core: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+			'type'    => 'select',
+			'default' => 'gregorian',
+			'values'  => gEditorialHelper::getDefualtCalendars(),
+			'section' => $section,
+		);
+	}
+
 	public function is_register_settings( $page )
 	{
 		if ( isset( $this->settings ) && $page == $this->module->settings )
