@@ -61,7 +61,7 @@ class gEditorialDrafts extends gEditorialModuleCore
 		check_ajax_referer( 'geditorial', 'nonce' );
 
 		if ( ! current_user_can( 'edit_posts' ) )
-			wp_send_json_error( self::error( __( 'Cheatin&#8217; uh?', GEDITORIAL_TEXTDOMAIN ) ) );
+			self::cheatin();
 
 		// $post = wp_unslash( $_POST );
 		$what = isset( $post['what'] ) ? $post['what'] : 'nothing';

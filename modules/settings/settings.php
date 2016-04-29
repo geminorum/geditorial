@@ -255,13 +255,13 @@ class gEditorialSettings extends gEditorialModuleCore
 		global $gEditorial;
 
 		if ( ! current_user_can( 'manage_options' ) )
-			wp_die( __( 'Cheatin&#8217; uh?', GEDITORIAL_TEXTDOMAIN ) );
+			self::cheatin();
 
 		$sub = isset( $_POST['sub'] ) ? trim( $_POST['sub'] ) : 'default';
 		switch ( $sub ) {
 			case 'module_state' :
 				if ( ! wp_verify_nonce( $_POST['module_nonce'], 'geditorial-module-nonce' ) )
-					wp_die( __( 'Cheatin&#8217; uh?', GEDITORIAL_TEXTDOMAIN ) );
+					self::cheatin();
 
 				if ( ! isset( $_POST['module_action'], $_POST['module_slug'] ) )
 					wp_send_json_error( self::error( _x( 'No Action of Slug!', 'Settings Module: Ajax Notice', GEDITORIAL_TEXTDOMAIN ) ) );
@@ -470,7 +470,7 @@ class gEditorialSettings extends gEditorialModuleCore
 		$name = sanitize_key( $_POST['geditorial_module_name'] );
 
 		if ( ! $this->admin_settings_verify( $gEditorial->{$name}->module->group ) )
-			wp_die( __( 'Cheatin&#8217; uh?', GEDITORIAL_TEXTDOMAIN ) );
+			self::cheatin();
 
 		$gEditorial->update_all_module_options( $gEditorial->{$name}->module->name, array(
 			'enabled' => TRUE,
@@ -503,7 +503,7 @@ class gEditorialSettings extends gEditorialModuleCore
 
 		// if ( ! current_user_can( 'manage_options' ) || !wp_verify_nonce( $_POST['_wpnonce'], $group.'-options' ) )
 		if ( ! $this->admin_settings_verify( $group ) )
-			wp_die( __( 'Cheatin&#8217; uh?', GEDITORIAL_TEXTDOMAIN ) );
+			self::cheatin();
 
 		$options = $gEditorial->{$name}->settings_validate( ( isset( $_POST[$group] ) ? $_POST[$group] : array() ) );
 

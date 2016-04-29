@@ -47,6 +47,14 @@ class gEditorialBaseCore
 		die();
 	}
 
+	public static function cheatin( $message = NULL )
+	{
+		if ( is_null( $message ) )
+			$message = __( 'Cheatin&#8217; uh?' );
+
+		wp_die( $message, 403 );
+	}
+
 	// INTERNAL: used on anything deprecated
 	protected static function __dep( $note = '', $prefix = 'DEP: ', $offset = 1 )
 	{
