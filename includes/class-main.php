@@ -273,6 +273,9 @@ class gEditorial
 		if ( in_array( $screen->base, array( 'post', 'edit', 'widgets', 'edit-tags' ) ) )
 			gEditorialHelper::linkStyleSheetAdmin( $screen->base );
 
+		else if ( gEditorialHelper::isDashboard( $screen ) )
+			gEditorialHelper::linkStyleSheetAdmin( 'dashboard' );
+
 		else if ( gEditorialHelper::isSettings( $screen ) )
 			gEditorialHelper::linkStyleSheetAdmin( 'settings' );
 

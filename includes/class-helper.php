@@ -463,6 +463,18 @@ class gEditorialHelper extends gEditorialBaseCore
 		return FALSE;
 	}
 
+	public static function isDashboard( $screen = NULL )
+	{
+		if ( is_null( $screen ) )
+			$screen = get_current_screen();
+
+		if ( isset( $screen->base )
+			&& FALSE !== strripos( $screen->base, 'dashboard' ) )
+				return TRUE;
+
+		return FALSE;
+	}
+
 	public static function getTinyMceStrings( $locale )
 	{
 		$strings = apply_filters( 'geditorial_tinymce_strings', array() );
