@@ -884,6 +884,18 @@ class gEditorialModuleCore extends gEditorialBaseCore
 			$screen->set_help_sidebar( $this->settings_help_sidebar() );
 	}
 
+	protected function settings_footer( $module )
+	{
+		if ( 'settings' == $module->name )
+			gEditorialHelper::settingsCredits();
+	}
+
+	protected function settings_signature( $module = NULL )
+	{
+		gEditorialHelper::settingsSignature();
+		// echo '<div class="clear"></div></div>';
+	}
+
 	public function add_settings_field( $r = array() )
 	{
 		$args = array_merge( array(

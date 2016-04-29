@@ -733,6 +733,42 @@ class gEditorialHelper extends gEditorialBaseCore
 		return $the_day;
 	}
 
+	public static function settingsTitle( $title = NULL, $back = NULL, $to = NULL )
+	{
+		if ( is_null( $title ) )
+			$title = _x( 'Editorial', 'Module Helper', GEDITORIAL_TEXTDOMAIN );
+
+		if ( is_null( $back )
+			&& current_user_can( 'manage_options' ) )
+				$back = self::settingsURL();
+
+		if ( is_null( $to ) )
+			$to = _x( 'Back to Editorial', 'Module Helper', GEDITORIAL_TEXTDOMAIN );
+
+		if ( $back )
+			printf( '<h1 class="settings-title">%s <a href="%s" class="-action page-title-action">%s</a></h1>', $title, $back, $to );
+		else
+			printf( '<h1 class="settings-title">%s</h1>', $title );
+	}
+
+	public static function settingsCredits()
+	{
+		echo '<div class="credits"><p>';
+			echo 'You\'re using gEditorial v'.GEDITORIAL_VERSION.'<br />';
+			echo 'This is a fork in structure of <a href="http://editflow.org/">EditFlow</a><br />';
+			echo '<a href="https://github.com/geminorum/geditorial/issues">Feedback, Ideas and Bug Reports</a> are welcomed';
+		echo '</p></div>';
+	}
+
+	public static function settingsSignature()
+	{
+		echo '<div class="signature"><p>';
+			printf( __( '<a href="%1$s" title="Editorial">gEditorial</a> is a <a href="%2$s">geminorum</a> project.', GEDITORIAL_TEXTDOMAIN ),
+				'http://github.com/geminorum/geditorial',
+				'http://geminorum.ir/' );
+		echo '</p></div>';
+	}
+
 	public static function settingsHelpLinks( $wiki_page = 'Modules', $wiki_title = NULL, $template = NULL )
 	{
 		if ( is_null( $wiki_title ) )

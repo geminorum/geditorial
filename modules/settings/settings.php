@@ -85,11 +85,7 @@ class gEditorialSettings extends gEditorialModuleCore
 
 		echo '<div class="wrap geditorial-admin-wrap geditorial-tools geditorial-tools-'.$sub.'">';
 
-			vprintf( '<h1>%s <a href="%s" class="page-title-action">%s</a></h1>', array(
-				_x( 'gEditorial Tools', 'Settings Module: Page Title', GEDITORIAL_TEXTDOMAIN ),
-				gEditorialHelper::settingsURL(),
-				_x( 'Back to Editorial', 'Settings Module', GEDITORIAL_TEXTDOMAIN ),
-			) );
+			gEditorialHelper::settingsTitle( _x( 'gEditorial Tools', 'Settings Module: Page Title', GEDITORIAL_TEXTDOMAIN ), gEditorialHelper::settingsURL() );
 
 			self::headerNav( $uri, $sub, $subs );
 
@@ -106,7 +102,7 @@ class gEditorialSettings extends gEditorialModuleCore
 			else
 				do_action( 'geditorial_tools_sub_'.$sub, $uri, $sub );
 
-			$this->print_default_signature();
+			$this->settings_signature();
 
 		echo '<div class="clear"></div></div>';
 	}
@@ -298,8 +294,8 @@ class gEditorialSettings extends gEditorialModuleCore
 
 			$this->print_default_header( $module );
 			$gEditorial->{$module->name}->{$module->configure}();
-			$this->print_default_footer( $module );
-			$this->print_default_signature( $module );
+			$this->settings_footer( $module );
+			$this->settings_signature( $module );
 
 		} else {
 
@@ -314,14 +310,17 @@ class gEditorialSettings extends gEditorialModuleCore
 	{
 		global $gEditorial;
 
-		if ( 'settings' == $current_module->name )
+		if ( 'settings' == $current_module->name ) {
 			$title = _x( 'Editorial', 'Settings Module', GEDITORIAL_TEXTDOMAIN );
-		else
-			$title = sprintf( _x( 'Editorial: %s', 'Settings Module', GEDITORIAL_TEXTDOMAIN ), $current_module->title )
-				.'&nbsp;<a href="'.gEditorialHelper::settingsURL().'" class="page-title-action">'
-				._x( 'Back to Editorial', 'Settings Module', GEDITORIAL_TEXTDOMAIN ).'</a>';
+			$back = FALSE;
+		} else {
+			$title = sprintf( _x( 'Editorial: %s', 'Settings Module', GEDITORIAL_TEXTDOMAIN ), $current_module->title );
+			$back = gEditorialHelper::settingsURL();
+		}
 
-		echo '<div class="wrap geditorial-admin-wrap geditorial-settings"><h1>'.$title.'</h1>';
+		echo '<div class="wrap geditorial-admin-wrap geditorial-settings">';
+
+			gEditorialHelper::settingsTitle( $title, $back );
 
 		if ( isset( $_REQUEST['message'] ) && isset( $current_module->messages[$_REQUEST['message']] ) )
 			self::notice( $current_module->messages[$_REQUEST['message']] );
@@ -348,28 +347,6 @@ class gEditorialSettings extends gEditorialModuleCore
 		echo '<div class="modules">';
 			$this->print_modules();
 		echo '</div>';
-	}
-
-	private function print_default_footer( $module )
-	{
-		if ( 'settings' == $module->name ) {
-			echo '<div class="credits"><p>';
-				echo 'You\'re using gEditorial v'.GEDITORIAL_VERSION.'<br />';
-				echo 'This is a fork in structure of <a href="http://editflow.org/">EditFlow</a><br />';
-				echo '<a href="https://github.com/geminorum/geditorial/issues">Feedback, Ideas and Bug Reports</a> are welcomed';
-			echo '</p></div>';
-		}
-	}
-
-	private function print_default_signature( $module = NULL )
-	{
-		echo '<div class="signature"><p>';
-
-			printf( __( '<a href="%1$s" title="Editorial">gEditorial</a> is a <a href="%2$s">geminorum</a> project.', GEDITORIAL_TEXTDOMAIN ),
-				'http://github.com/geminorum/geditorial',
-				'http://geminorum.ir/' );
-
-		echo '</p></div><div class="clear"></div></div>';
 	}
 
 	private function print_modules()
