@@ -67,6 +67,8 @@ class gEditorialEstimated extends gEditorialModuleCore
 
 			if ( 'none' != $this->get_setting( 'insert_content', 'none' ) )
 				add_filter( 'the_content', array( $this, 'the_content' ), 22 );
+			else
+				add_action( 'gnetwork_themes_content_before', array( $this, 'content_before' ), 60 );
 
 			$this->enqueue_styles();
 		}
@@ -87,6 +89,29 @@ class gEditorialEstimated extends gEditorialModuleCore
 		$this->get_post_wordcount( $post_ID, TRUE );
 
 		return $post_ID;
+	}
+
+	public function content_before( $content )
+	{
+		if ( ! is_singular() )
+			return;
+
+		$post = get_post();
+
+		if ( ! in_array( $post->post_type, $this->post_types() ) )
+			return;
+
+		if ( ! $wordcount = get_post_meta( $post->ID, $this->meta_key, TRUE ) )
+			$wordcount = $this->get_post_wordcount( $post->ID, TRUE );
+
+		if ( $this->get_setting( 'min_words', 250 ) > $wordcount )
+			return;
+
+		$pref = $this->get_setting( 'prefix', _x( 'Estimated read time:', 'Estimated Module', GEDITORIAL_TEXTDOMAIN ) );
+
+		echo '<div class="geditorial-wrap estimated -before">';
+			echo ( $pref ? $pref.' ' : '' ).$this->get_time_estimated( $wordcount, TRUE );
+		echo '</div>';
 	}
 
 	public function the_content( $content )
