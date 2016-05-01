@@ -122,7 +122,7 @@ class gEditorialEstimated extends gEditorialModuleCore
 		if ( $this->added )
 			return $content;
 
-		global $post;
+		$post = get_post();
 
 		if ( ! in_array( $post->post_type, $this->post_types() ) )
 			return $content;
