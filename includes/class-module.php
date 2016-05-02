@@ -1250,6 +1250,8 @@ class gEditorialModuleCore extends gEditorialBaseCore
 		$args = self::recursiveParseArgs( $atts, array(
 			'labels'                => $this->strings['labels'][$constant_key],
 			'update_count_callback' => array( 'gEditorialHelper', 'update_count_callback' ),
+			// FIXME: meta_box_cb default must be FALSE / check every module before!
+			'meta_box_cb'           => method_exists( $this, 'meta_box_cb_'.$constant_key ) ? array( $this, 'meta_box_cb_'.$constant_key ) : NULL,
 			'hierarchical'          => FALSE,
 			'show_tagcloud'         => FALSE,
 			'public'                => TRUE,

@@ -81,13 +81,6 @@ class gEditorialAudit extends gEditorialModuleCore
 			) );
 	}
 
-	public function current_screen( $screen )
-	{
-		if ( 'post' == $screen->base
-			&& in_array( $screen->post_type, $this->post_types() ) )
-				add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ), 20, 2 );
-	}
-
 	public function register_settings( $page = NULL )
 	{
 		if ( ! $this->is_register_settings( $page ) )
@@ -115,8 +108,8 @@ class gEditorialAudit extends gEditorialModuleCore
 		return self::recursiveParseArgs( $new, $strings );
 	}
 
-	public function add_meta_boxes( $post_type, $post )
+	public function meta_box_cb_audit_tax( $post, $box )
 	{
-		$this->add_meta_box_choose_tax( 'audit_tax', $post_type );
+		$this->meta_box_choose_tax( $post, $box );
 	}
 }
