@@ -23,11 +23,6 @@ class gEditorialComments extends gEditorialModuleCore
 		);
 	}
 
-	protected function settings_help_sidebar()
-	{
-		return gEditorialHelper::settingsHelpLinks( 'Modules-Comments', _x( 'Editorial Comments Documentation', 'Comments Module', GEDITORIAL_TEXTDOMAIN ) );
-	}
-
 	protected function get_global_settings()
 	{
 		return array(
@@ -157,7 +152,7 @@ class gEditorialComments extends gEditorialModuleCore
 				case 'unbury' : delete_comment_meta( $comment_id, 'buried' ); break;
 			}
 		}
-		
+
 		die;
 	}
 

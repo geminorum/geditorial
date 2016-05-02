@@ -13,11 +13,6 @@ class gEditorialAudit extends gEditorialModuleCore
 		);
 	}
 
-	protected function settings_help_sidebar()
-	{
-		return gEditorialHelper::settingsHelpLinks( 'Modules-Audit', _x( 'Editorial Audit Documentation', 'Audit Module', GEDITORIAL_TEXTDOMAIN ) );
-	}
-
 	protected function get_global_settings()
 	{
 		return array(

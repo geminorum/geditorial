@@ -101,10 +101,14 @@ class gEditorialModuleCore extends gEditorialBaseCore
 	protected function get_global_supports() { return array(); }
 	protected function get_global_fields() { return array(); }
 
-	// protected function settings_help_sidebar() { return array(); }
 	protected function settings_help_tabs()
 	{
 		return gEditorialHelper::settingsHelpContent( $this->module );
+	}
+
+	protected function settings_help_sidebar()
+	{
+		return gEditorialHelper::settingsHelpLinks( $this->module );
 	}
 
 	protected function do_globals()
@@ -880,8 +884,8 @@ class gEditorialModuleCore extends gEditorialBaseCore
 			foreach ( $this->settings_help_tabs() as $tab )
 				$screen->add_help_tab( $tab );
 
-		if ( method_exists( $this, 'settings_help_sidebar' ) )
-			$screen->set_help_sidebar( $this->settings_help_sidebar() );
+		if ( $sidebar = $this->settings_help_sidebar() )
+			$screen->set_help_sidebar( $sidebar );
 	}
 
 	protected function settings_footer( $module )

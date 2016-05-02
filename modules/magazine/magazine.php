@@ -16,11 +16,6 @@ class gEditorialMagazine extends gEditorialModuleCore
 		);
 	}
 
-	protected function settings_help_sidebar()
-	{
-		return gEditorialHelper::settingsHelpLinks( 'Modules-Magazine', _x( 'Editorial Magazine Documentation', 'Magazine Module', GEDITORIAL_TEXTDOMAIN ) );
-	}
-
 	protected function get_global_settings()
 	{
 		return array(

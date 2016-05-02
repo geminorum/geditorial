@@ -16,11 +16,6 @@ class gEditorialTweaks extends gEditorialModuleCore
 		);
 	}
 
-	protected function settings_help_sidebar()
-	{
-		return gEditorialHelper::settingsHelpLinks( 'Modules-Tweaks', _x( 'Editorial Tweaks Documentation', 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ) );
-	}
-
 	protected function settings_help_tabs()
 	{
 		$tabs = gEditorialHelper::settingsHelpContent( $this->module );
