@@ -3,14 +3,16 @@
 class gEditorialEntryTemplates extends gEditorialTemplateCore
 {
 
-	// EDITED: 4/5/2016, 4:08:00 PM
+	const MODULE = 'entry';
+
+	// EDITED: 5/2/2016, 2:30:17 PM
 	public static function section_shortcode( $atts, $content = NULL, $tag = '' )
 	{
 		global $post;
 
-		$cpt = gEditorial()->get_constant( 'entry', 'entry_cpt', 'entry' );
-		$tax = gEditorial()->get_constant( 'entry', 'section_tax', 'entry_section' );
-		$tag = gEditorial()->get_constant( 'entry', 'section_shortcode', $tag );
+		$cpt = gEditorial()->get_constant( self::MODULE, 'entry_cpt', 'entry' );
+		$tax = gEditorial()->get_constant( self::MODULE, 'section_tax', 'entry_section' );
+		$tag = gEditorial()->get_constant( self::MODULE, 'section_shortcode', $tag );
 
 		$args = shortcode_atts( array(
 			'slug'          => '',
@@ -19,14 +21,14 @@ class gEditorialEntryTemplates extends gEditorialTemplateCore
 			'title_link'    => NULL, // FALSE to disable
 			'title_title'   => '',
 			'title_tag'     => 'h3',
-			'title_anchor'  => 'section-',
+			'title_anchor'  => 'section-%2$s',
 			'list'          => 'ul',
 			'limit'         => -1,
 			'future'        => 'on',
 			'li_link'       => TRUE,
 			'li_before'     => '',
 			'li_title'      => '', // use %s for post title
-			'li_anchor'     => 'entry-',
+			'li_anchor'     => 'entry-%2$s',
 			'order_before'  => FALSE,
 			'order_sep'     => ' - ',
 			'order_zeroise' => FALSE,
@@ -122,11 +124,10 @@ class gEditorialEntryTemplates extends gEditorialTemplateCore
 		if ( count( $posts ) ) {
 			foreach ( $posts as $post ) {
 
-				$list  = '';
 				setup_postdata( $post );
 
 				if ( $args['cb'] ) {
-					$list = call_user_func_array( $args['cb'], array( $post, $args ) );
+					$item = call_user_func_array( $args['cb'], array( $post, $args ) );
 
 				} else {
 
@@ -134,16 +135,16 @@ class gEditorialEntryTemplates extends gEditorialTemplateCore
 					$order = $args['order_before'] ? number_format_i18n( $args['order_zeroise'] ? zeroise( $post->menu_order, $args['order_zeroise'] ) : $post->menu_order ).$args['order_sep'] : '';
 
 					if ( 'publish' == $post->post_status && $args['li_link'] )
-						$list = $args['li_before'].self::html( 'a', array(
+						$item = $args['li_before'].self::html( 'a', array(
 							'href'  => get_permalink( $post->ID ),
 							'title' => $args['li_title'] ? sprintf( $args['li_title'], $title ) : FALSE,
 							'class' => '-link',
 						), $order.$title );
 
 					else
-						$list = $args['li_before'].self::html( 'span', array(
+						$item = $args['li_before'].self::html( 'span', array(
 							'title' => $args['li_title'] ? sprintf( $args['li_title'], $title ) : FALSE,
-							'class' => $args['li_link'] ? '-future' : FALSE,
+							'class' => $args['li_link'] ? '-no-link -future' : FALSE,
 						), $order.$title );
 
 					// TODO: add excerpt/content of the entry
@@ -151,9 +152,9 @@ class gEditorialEntryTemplates extends gEditorialTemplateCore
 				}
 
 				$html .= self::html( 'li', array(
-					'id'    => $args['li_anchor'].$post->ID,
+					'id'    => sprintf( $args['li_anchor'], $post->ID, $post->post_name ),
 					'class' => '-item',
-				), $list );
+				), $item );
 			}
 
 			$html = self::html( $args['list'], array( 'class' => '-list' ), $html );

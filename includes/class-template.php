@@ -3,6 +3,8 @@
 class gEditorialTemplateCore extends gEditorialBaseCore
 {
 
+	const MODULE = FALSE;
+
 	// FIXME: move to gEditorialShortCodeCore
 	public static function shortcodeWrap( $html, $suffix = FALSE, $args = array(), $block = TRUE )
 	{
@@ -21,6 +23,7 @@ class gEditorialTemplateCore extends gEditorialBaseCore
 	}
 
 	// FIXME: move to gEditorialShortCodeCore
+	// EDITED: 5/2/2016, 2:30:43 PM
 	public static function shortcodeTermTitle( $atts, $term = FALSE )
 	{
 		$args = self::atts( array(
@@ -28,7 +31,7 @@ class gEditorialTemplateCore extends gEditorialBaseCore
 			'title_link'   => NULL, // FALSE to disable
 			'title_title'  => '',
 			'title_tag'    => 'h3',
-			'title_anchor' => 'term-',
+			'title_anchor' => 'term-%2$s',
 		), $atts );
 
 		if ( is_null( $args['title'] ) )
@@ -50,7 +53,7 @@ class gEditorialTemplateCore extends gEditorialBaseCore
 
 		if ( $args['title'] && $args['title_tag'] )
 			$args['title'] = self::html( $args['title_tag'], array(
-				'id'    => $term ? $args['title_anchor'].$term->term_id : FALSE,
+				'id'    => $term ? sprintf( $args['title_anchor'], $term->term_id, $term->slug ) : FALSE,
 				'class' => '-title',
 			), $args['title'] );
 
