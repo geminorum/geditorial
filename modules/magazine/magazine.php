@@ -811,9 +811,10 @@ class gEditorialMagazine extends gEditorialModuleCore
 		$new_columns = array();
 		foreach ( $posts_columns as $key => $value ) {
 
-			if ( $key == 'title' ) {
+			if ( 'title' == $key || 'geditorial-tweaks-title' == $key ) {
 				$new_columns['order'] = $this->get_column_title( 'order', 'issue_cpt' );
 				$new_columns['cover'] = $this->get_column_title( 'cover', 'issue_cpt' );
+
 				$new_columns[$key] = $value;
 
 			} else if ( 'date' == $key ){
