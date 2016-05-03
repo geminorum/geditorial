@@ -143,7 +143,7 @@ class gEditorialAlphabet extends gEditorialModuleCore
 			&& in_array( $screen->post_type, $this->post_types() ) ) {
 
 
-		} else if ( gEditorialHelper::isSettings( $screen ) ) {
+		} else if ( gEditorialHelper::isTools( $screen ) ) {
 
 			if ( current_user_can( 'edit_others_posts' ) )
 				add_action( 'geditorial_tools_settings', array( $this, 'tools_settings' ) );
