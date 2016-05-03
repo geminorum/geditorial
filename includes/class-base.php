@@ -1051,18 +1051,60 @@ class gEditorialBaseCore
 		return $wpdb->get_results( $query );
 	}
 
-	public static function insertDefaultTerms( $taxonomy, $defaults )
+	// EDITED: 5/2/2016, 9:31:13 AM
+	public static function insertDefaultTerms( $taxonomy, $terms )
 	{
 		if ( ! taxonomy_exists( $taxonomy ) )
 			return FALSE;
 
-		foreach ( $defaults as $term_slug => $term_name )
-			if ( $term = term_exists( $term_slug, $taxonomy ) )
-				wp_update_term( $term['term_id'], $taxonomy, array( 'name' => $term_name ) );
-			else
-				wp_insert_term( $term_name, $taxonomy, array( 'slug' => $term_slug ) );
+		$count = 0;
 
-		return TRUE;
+		foreach ( $terms as $slug => $term ) {
+
+			$name = $term;
+			$args = array( 'slug' => $slug, 'name' => $term );
+			$meta = array();
+
+			if ( is_array( $term ) ) {
+
+				if ( ! empty( $term['name'] ) )
+					$name = $args['name'] = $term['name'];
+				else
+					$name = $slug;
+
+				if ( ! empty( $term['description'] ) )
+					$args['description'] = $term['description'];
+
+				if ( ! empty( $term['slug'] ) )
+					$args['slug'] = $term['slug'];
+
+				if ( ! empty( $term['parent'] ) ) {
+					if ( is_numeric( $term['parent'] ) )
+						$args['parent'] = $term['parent'];
+					else if ( $parent = term_exists( $term['parent'], $taxonomy ) )
+						$args['parent'] = $parent['term_id'];
+				}
+
+				if ( ! empty( $term['meta'] ) && is_array( $term['meta'] ) )
+					foreach ( $term['meta'] as $term_meta_key => $term_meta_value )
+						$meta[$term_meta_key] = $term_meta_value;
+			}
+
+			if ( $existed = term_exists( $slug, $taxonomy ) )
+				wp_update_term( $existed['term_id'], $taxonomy, $args );
+			else
+				$existed = wp_insert_term( $name, $taxonomy, $args );
+
+			if ( ! is_wp_error( $existed ) ) {
+
+				foreach ( $meta as $meta_key => $meta_value )
+					add_term_meta( $existed['term_id'], $meta_key, $meta_value, TRUE ); // will bail if an entry with the same key is found
+
+				$count++;
+			}
+		}
+
+		return $count;
 	}
 
 	public static function getLastPostOrder( $post_type = 'post', $exclude = '', $key = 'menu_order', $status = 'publish,private,draft' )
