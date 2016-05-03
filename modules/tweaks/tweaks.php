@@ -77,6 +77,7 @@ class gEditorialTweaks extends gEditorialModuleCore
 	{
 		return array(
 			'misc' => array(
+				'title_column_title'          => _x( 'Title', 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ),
 				'group_taxes_column_title'    => _x( 'Taxonomies', 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ),
 				'meta_box_search_title'       => _x( 'Type to filter by', 'Tweaks Module: Meta Box Search Title', GEDITORIAL_TEXTDOMAIN ),
 				'meta_box_search_placeholder' => _x( 'Search &hellip;', 'Tweaks Module: Meta Box Search Placeholder', GEDITORIAL_TEXTDOMAIN ),
@@ -145,51 +146,70 @@ class gEditorialTweaks extends gEditorialModuleCore
 
 				if ( $this->get_setting( 'group_taxonomies', FALSE ) ) {
 
-					add_filter( 'manage_'.$screen->post_type.'_posts_columns', array( $this, 'manage_posts_columns' ) );
+					add_filter( 'manage_taxonomies_for_'.$screen->post_type.'_columns', array( $this, 'manage_taxonomies_columns'), 10, 2 );
+					add_filter( 'manage_'.$screen->post_type.'_posts_columns', array( $this, 'manage_posts_columns' ), 1 );
 					add_filter( 'manage_'.$screen->post_type.'_posts_custom_column', array( $this, 'custom_column'), 10, 2 );
 				}
 			}
 		}
 	}
 
-	// TODO: check filter: "manage_taxonomies_for_{$post_type}_columns"
-	// @SEE: https://make.wordpress.org/core/2012/12/11/wordpress-3-5-admin-columns-for-custom-taxonomies/
+	public function manage_taxonomies_columns( $taxonomies, $post_type )
+	{
+		foreach ( $this->taxonomies() as $taxonomy )
+			unset( $taxonomies[$taxonomy] );
+
+		return $taxonomies;
+	}
+
 	public function manage_posts_columns( $posts_columns )
 	{
-		$added        = FALSE;
-		$new_columns  = $exc_columns = array();
-		$post_type    = self::getCurrentPostType( 'post' );
-		$column_title = $this->get_string( 'group_taxes_column_title', $post_type, 'misc' );
-
-		foreach ( $this->taxonomies() as $taxonomy )
-			$exc_columns[] = $this->get_string( 'column', $taxonomy, 'taxonomies', 'taxonomy-'.$taxonomy );
-
-		if ( ! count( $exc_columns ) )
+		if ( ! count( $this->taxonomies() ) )
 			return $posts_columns;
+
+		$new   = array();
+		$type  = self::getCurrentPostType( 'post' );
+		$title = $this->get_string( 'group_taxes_column_title', $type, 'misc' );
+		$added = FALSE;
 
 		foreach ( $posts_columns as $key => $value ) {
 
 			if ( ( 'comments' == $key && ! $added )
 				|| ( 'date' == $key && ! $added ) ) {
-					$new_columns['geditorial-tweaks-group_taxes'] = $column_title;
+					$new['geditorial-tweaks-group_taxes'] = $title;
 					$added = TRUE;
 			}
 
-			if ( ! in_array( $key, $exc_columns ) )
-				$new_columns[$key] = $value;
+			// FIXME: working but messing up others!
+			// FIXME: must add to sortable too
+			// if ( 'title' == $key )
+			// 	$new['geditorial-tweaks-title'] = $this->get_string( 'title_column_title', $type, 'misc' );
+			// else
+				$new[$key] = $value;
 		}
 
 		if ( ! $added )
-			$new_columns['geditorial-tweaks-group_taxes'] = $column_title;
+			$new['geditorial-tweaks-group_taxes'] = $title;
 
-		return $new_columns;
+		return $new;
 	}
 
 	public function custom_column( $column_name, $post_id )
 	{
-		global $post;
+		global $post, $wp_list_table;
 
 		switch ( $column_name ) {
+
+			// FIXME: wont work beacuse of page-title css class
+			case 'geditorial-tweaks-title' :
+
+				// TODO: add before action
+				echo $wp_list_table->column_title( $post );
+				// TODO: add after action
+				// TODO: must hook to 'the_excerpt' for before excerpt
+				echo $wp_list_table->handle_row_actions( $post, 'title', $wp_list_table->get_primary_column_name() );
+
+			break;
 			case 'geditorial-tweaks-group_taxes' :
 
 				echo '<div class="geditorial-admin-wrap-column tweaks">';
