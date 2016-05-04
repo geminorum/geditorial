@@ -27,6 +27,7 @@ class gEditorialEntryTemplates extends gEditorialTemplateCore
 			'future'        => 'on',
 			'li_link'       => TRUE,
 			'li_before'     => '',
+			'li_after'      => '',
 			'li_title'      => '', // use %s for post title
 			'li_anchor'     => 'entry-%2$s',
 			'order_before'  => FALSE,
@@ -131,21 +132,9 @@ class gEditorialEntryTemplates extends gEditorialTemplateCore
 
 				} else {
 
-					$title = get_the_title( $post->ID );
 					$order = $args['order_before'] ? number_format_i18n( $args['order_zeroise'] ? zeroise( $post->menu_order, $args['order_zeroise'] ) : $post->menu_order ).$args['order_sep'] : '';
 
-					if ( 'publish' == $post->post_status && $args['li_link'] )
-						$item = $args['li_before'].self::html( 'a', array(
-							'href'  => get_permalink( $post->ID ),
-							'title' => $args['li_title'] ? sprintf( $args['li_title'], $title ) : FALSE,
-							'class' => '-link',
-						), $order.$title );
-
-					else
-						$item = $args['li_before'].self::html( 'span', array(
-							'title' => $args['li_title'] ? sprintf( $args['li_title'], $title ) : FALSE,
-							'class' => $args['li_link'] ? '-no-link -future' : FALSE,
-						), $order.$title );
+					$item = self::shortcodePostLink( $args, $post, $order );
 
 					// TODO: add excerpt/content of the entry
 					// TODO: add show/more js like series
