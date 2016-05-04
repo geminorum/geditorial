@@ -747,6 +747,20 @@ class gEditorialModuleCore extends gEditorialBaseCore
 		);
 	}
 
+	public function get_settings_rewrite_prefix( $section )
+	{
+		return array(
+			'field'       => 'rewrite_prefix',
+			'type'        => 'text',
+			'title'       => _x( 'URL Base Prefix', 'Module Core: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+			'description' => _x( 'String before the permalink structure', 'Module Core: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+			'default'     => '',
+			'dir'         => 'ltr',
+			'placeholder' => 'wiki',
+			'section'     => $section,
+		);
+	}
+
 	public function get_settings_redirect_archives( $section )
 	{
 		return array(
