@@ -1226,6 +1226,8 @@ class gEditorialModuleCore extends gEditorialBaseCore
 			'taxonomies'  => $taxonomies,
 			'labels'      => $this->strings['labels'][$constant_key],
 			'description' => isset( $this->strings['labels'][$constant_key]['description'] ) ? $this->strings['labels'][$constant_key]['description'] : '',
+			// FIXME: check every module
+			'register_meta_box_cb'  => method_exists( $this, 'add_meta_box_cb_'.$constant_key ) ? array( $this, 'add_meta_box_cb_'.$constant_key ) : NULL,
 			'menu_icon'   => $this->module->dashicon ? 'dashicons-'.$this->module->dashicon : 'dashicons-welcome-write-blog',
 			'supports'    => isset( $this->supports[$constant_key] ) ? $this->supports[$constant_key] : array( 'title', 'editor' ),
 			'has_archive' => $this->constant( $constant_key.'_archive', FALSE ),
