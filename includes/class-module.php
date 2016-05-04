@@ -1845,4 +1845,38 @@ class gEditorialModuleCore extends gEditorialBaseCore
 		if ( $args )
 			p2p_register_connection_type( $args );
 	}
+
+	public function content_before( $content, $posttypes = NULL )
+	{
+		if ( ! is_singular() )
+			return;
+
+		$post = get_post();
+
+		if ( is_null( $posttypes ) )
+			$posttypes = $this->post_types();
+
+		if ( ! in_array( $post->post_type, $posttypes ) )
+			return;
+
+		if ( $before = $this->get_setting( 'before_content', FALSE ) )
+			echo '<div class="geditorial-wrap '.$this->module->name.' -before">'.$before.'</div>';
+	}
+
+	public function content_after( $content, $posttypes = NULL )
+	{
+		if ( ! is_singular() )
+			return;
+
+		$post = get_post();
+
+		if ( is_null( $posttypes ) )
+			$posttypes = $this->post_types();
+
+		if ( ! in_array( $post->post_type, $posttypes ) )
+			return;
+
+		if ( $after = $this->get_setting( 'after_content', FALSE ) )
+			echo '<div class="geditorial-wrap '.$this->module->name.' -after">'.$after.'</div>';
+	}
 }
