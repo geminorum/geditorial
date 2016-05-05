@@ -5,6 +5,22 @@ class gEditorialTemplateCore extends gEditorialBaseCore
 
 	const MODULE = FALSE;
 
+	protected static function constant( $key, $default = FALSE )
+	{
+		if ( self::MODULE && gEditorial()->enabled( self::MODULE ) )
+			return gEditorial()->{self::MODULE}->constant( $key, $default );
+
+		return $default;
+	}
+
+	protected static function post_types( $post_types = NULL )
+	{
+		if ( self::MODULE && gEditorial()->enabled( self::MODULE ) )
+			return gEditorial()->{self::MODULE}->post_types( $post_types );
+
+		return array();
+	}
+
 	// FIXME: DRAFT
 	public static function parseMarkDown( $content )
 	{
