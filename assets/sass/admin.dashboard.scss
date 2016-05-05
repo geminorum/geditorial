@@ -6,12 +6,6 @@
 @import "partials/admin.all";
 @import "partials/admin.help";
 @import "partials/admin.table";
+@import "partials/admin.caltable";
 
-.geditorial-admin-wrap.geditorial-tools {
-	@include main-wrap();
-
-	margin: 10px 20px 0px 2px;
-	@include body-rtl() {
-		margin: 10px 2px 0px 20px;
-	}
-}
+@import "partials/calendar.admin.dashboard";
