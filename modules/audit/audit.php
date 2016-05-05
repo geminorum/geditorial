@@ -74,7 +74,7 @@ class gEditorialAudit extends gEditorialModuleCore
 
 		$this->do_globals();
 
-		// TODO: add setting option to choose editing role
+		// FIXME: add setting option to choose editing role
 		if ( current_user_can( 'edit_others_posts' ) )
 			$this->register_taxonomy( 'audit_tax', array(
 				'hierarchical' => TRUE,

@@ -48,7 +48,7 @@ defined( 'GEDITORIAL_TEXTDOMAIN' ) or define( 'GEDITORIAL_TEXTDOMAIN', 'geditori
 		return gEditorial::instance();
 	}
 
-	// back comp
+	// FIXME: back comp
 	global $gEditorial;
 
 	$gEditorial = gEditorial();
