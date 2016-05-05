@@ -91,7 +91,7 @@ class gEditorialEstimated extends gEditorialModuleCore
 		return $post_ID;
 	}
 
-	public function content_before( $content )
+	public function content_before( $content, $posttypes = NULL )
 	{
 		if ( ! is_singular() )
 			return;
