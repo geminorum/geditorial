@@ -1,3 +1,14 @@
+### 3.5.0
+* modulecore: fast forward registering tax meta boxes
+* modulecore: using filter for shortcodes
+* modulecore: help side bar for all modules
+* estimated: support for [gNetwork](http://geminorum.ir/wordpress/gnetwork) [Themes](https://github.com/geminorum/gnetwork/wiki/Modules-Themes) content actions
+* estimated: minimum words setting
+* tweaks: word count for excerpt & meta lead
+* tweaks: filtering taxonomies before columns
+* meta: now field can be an array
+* entry: revised, now focused on just be section/entry
+
 ### 3.4.0
 * tools: orphaned term converter
 
