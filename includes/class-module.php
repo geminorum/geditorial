@@ -1467,8 +1467,12 @@ class gEditorialModuleCore extends gEditorialBaseCore
 		if ( is_null( $callback ) && method_exists( $this, $constant_key ) )
 			$callback = array( $this, $constant_key );
 
-		remove_shortcode( $this->constant( $constant_key ) );
-		add_shortcode( $this->constant( $constant_key ), $callback );
+		$shortcode = $this->constant( $constant_key );
+
+		remove_shortcode( $shortcode );
+		add_shortcode( $shortcode, $callback );
+
+		add_filter( 'geditorial_shortcode_'.$shortcode, $callback, 10, 3 );
 	}
 
 	public function field_post_tax( $constant_key, $post, $key = FALSE, $count = TRUE, $excludes = '', $default = '0' )
