@@ -544,7 +544,7 @@ class gEditorialHelper extends gEditorialBaseCore
 	// @REF: [Calendar Classes - ICU User Guide](http://userguide.icu-project.org/datetime/calendar)
 	public static function getDefualtCalendars()
 	{
-		return array(
+		return apply_filters( 'geditorial_default_calendars', array(
 			'gregorian'     => _x( 'Gregorian', 'Module Helper: Default Calendar Type', GEDITORIAL_TEXTDOMAIN ),
 			'japanese'      => _x( 'Japanese', 'Module Helper: Default Calendar Type', GEDITORIAL_TEXTDOMAIN ),
 			'buddhist'      => _x( 'Buddhist', 'Module Helper: Default Calendar Type', GEDITORIAL_TEXTDOMAIN ),
@@ -555,7 +555,7 @@ class gEditorialHelper extends gEditorialBaseCore
 			'islamic-civil' => _x( 'Islamic-Civil', 'Module Helper: Default Calendar Type', GEDITORIAL_TEXTDOMAIN ),
 			'coptic'        => _x( 'Coptic', 'Module Helper: Default Calendar Type', GEDITORIAL_TEXTDOMAIN ),
 			'ethiopic'      => _x( 'Ethiopic', 'Module Helper: Default Calendar Type', GEDITORIAL_TEXTDOMAIN ),
-		);
+		) );
 	}
 
 	// EDITED: 4/18/2016, 6:31:46 PM
