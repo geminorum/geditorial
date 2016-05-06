@@ -1,3 +1,9 @@
+### 3.6.0
+* entry: support for [gPeople](http://geminorum.ir/wordpress/gpeople)
+* estimated: fixed strict notice
+* event: new module
+* today: new module
+
 ### 3.5.0
 * modulecore: fast forward registering tax meta boxes
 * modulecore: using filter for shortcodes
