@@ -843,7 +843,7 @@ class gEditorialModuleCore extends gEditorialBaseCore
 			'title'   => _x( 'Default Calendar', 'Module Core: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 			'type'    => 'select',
 			'default' => 'gregorian',
-			'values'  => gEditorialHelper::getDefualtCalendars(),
+			'values'  => gEditorialHelper::getDefualtCalendars( TRUE ),
 			'section' => $section,
 		);
 	}
