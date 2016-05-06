@@ -93,6 +93,11 @@ class gEditorialEntry extends gEditorialModuleCore
 		return array_merge( $post_types, array( $this->constant( 'entry_cpt' ) ) );
 	}
 
+	public function gpeople_support( $post_types )
+	{
+		return array_merge( $post_types, array( $this->constant( 'entry_cpt' ) ) );
+	}
+
 	public function init()
 	{
 		do_action( 'geditorial_entry_init', $this->module );
