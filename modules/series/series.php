@@ -116,7 +116,6 @@ class gEditorialSeries extends gEditorialModuleCore
 		$this->do_globals();
 
 		$this->register_taxonomy( 'series_tax' );
-		$this->register_editor_button();
 
 		foreach ( $this->post_types() as $post_type )
 			$this->add_post_type_fields( $post_type, $this->fields[$this->constant( 'post_cpt' )], 'series' );
@@ -132,16 +131,6 @@ class gEditorialSeries extends gEditorialModuleCore
 		// internal actions:
 		add_action( 'geditorial_series_meta_box', array( $this, 'geditorial_series_meta_box' ), 5, 2 );
 		add_action( 'geditorial_series_meta_box_item', array( $this, 'geditorial_series_meta_box_item' ), 5, 4 );
-	}
-
-	// TODO: use internal strings / editor button api
-	public function tinymce_strings( $strings )
-	{
-		$new = array(
-			'ge_series-title' => _x( 'Add Series Shortcode', 'Series Module: Editor Button Title', GEDITORIAL_TEXTDOMAIN ),
-		);
-
-		return array_merge( $strings, $new );
 	}
 
 	public function tweaks_strings( $strings )
