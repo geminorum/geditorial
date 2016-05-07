@@ -43,44 +43,11 @@ class gEditorialReshare extends gEditorialModuleCore
 				'meta_box_title' => __( 'Metadata', GEDITORIAL_TEXTDOMAIN ),
 			),
 			'labels' => array(
-				'reshare_cpt' => array(
-					'name'                  => _x( 'Reshares', 'Reshare Module: Reshare CPT: Name', GEDITORIAL_TEXTDOMAIN ),
-					'menu_name'             => _x( 'Reshares', 'Reshare Module: Reshare CPT: Menu Name', GEDITORIAL_TEXTDOMAIN ),
-					'singular_name'         => _x( 'Reshare', 'Reshare Module: Reshare CPT: Singular Name', GEDITORIAL_TEXTDOMAIN ),
-					'description'           => _x( 'Contents from other sources', 'Reshare Module: Reshare CPT: Description', GEDITORIAL_TEXTDOMAIN ),
-					'add_new'               => _x( 'Add New', 'Reshare Module: Reshare CPT', GEDITORIAL_TEXTDOMAIN ),
-					'add_new_item'          => _x( 'Add New Reshare', 'Reshare Module: Reshare CPT', GEDITORIAL_TEXTDOMAIN ),
-					'edit_item'             => _x( 'Edit Reshare', 'Reshare Module: Reshare CPT', GEDITORIAL_TEXTDOMAIN ),
-					'new_item'              => _x( 'New Reshare', 'Reshare Module: Reshare CPT', GEDITORIAL_TEXTDOMAIN ),
-					'view_item'             => _x( 'View Reshare', 'Reshare Module: Reshare CPT', GEDITORIAL_TEXTDOMAIN ),
-					'search_items'          => _x( 'Search Reshares', 'Reshare Module: Reshare CPT', GEDITORIAL_TEXTDOMAIN ),
-					'not_found'             => _x( 'No reshares found.', 'Reshare Module: Reshare CPT', GEDITORIAL_TEXTDOMAIN ),
-					'not_found_in_trash'    => _x( 'No reshares found in Trash.', 'Reshare Module: Reshare CPT', GEDITORIAL_TEXTDOMAIN ),
-					'all_items'             => _x( 'All Reshares', 'Reshare Module: Reshare CPT', GEDITORIAL_TEXTDOMAIN ),
-					'archives'              => _x( 'Reshare Archives', 'Reshare Module: Reshare CPT', GEDITORIAL_TEXTDOMAIN ),
-					'insert_into_item'      => _x( 'Insert into reshare', 'Reshare Module: Reshare CPT', GEDITORIAL_TEXTDOMAIN ),
-					'uploaded_to_this_item' => _x( 'Uploaded to this reshare', 'Reshare Module: Reshare CPT', GEDITORIAL_TEXTDOMAIN ),
-					'filter_items_list'     => _x( 'Filter reshares list', 'Reshare Module: Reshare CPT', GEDITORIAL_TEXTDOMAIN ),
-					'items_list_navigation' => _x( 'Reshares list navigation', 'Reshare Module: Reshare CPT', GEDITORIAL_TEXTDOMAIN ),
-					'items_list'            => _x( 'Reshares list', 'Reshare Module: Reshare CPT', GEDITORIAL_TEXTDOMAIN ),
+				'reshare_cpt' => gEditorialHelper::generatePostTypeLabels(
+					_nx_noop( 'Reshare', 'Reshares', 'Reshare Module: Reshare CPT Labels: Name', GEDITORIAL_TEXTDOMAIN )
 				),
-				'reshare_cat' => array(
-                    'name'                  => _x( 'Reshare Categories', 'Reshare Module: Reshare Category Tax: Name', GEDITORIAL_TEXTDOMAIN ),
-                    'menu_name'             => _x( 'Reshare Categories', 'Reshare Module: Reshare Category Tax: Menu Name', GEDITORIAL_TEXTDOMAIN ),
-                    'singular_name'         => _x( 'Reshare Category', 'Reshare Module: Reshare Category Tax: Singular Name', GEDITORIAL_TEXTDOMAIN ),
-                    'search_items'          => _x( 'Search Reshare Categories', 'Reshare Module: Reshare Category Tax', GEDITORIAL_TEXTDOMAIN ),
-                    'all_items'             => _x( 'All Reshare Categories', 'Reshare Module: Reshare Category Tax', GEDITORIAL_TEXTDOMAIN ),
-                    'parent_item'           => _x( 'Parent Reshare Category', 'Reshare Module: Reshare Category Tax', GEDITORIAL_TEXTDOMAIN ),
-                    'parent_item_colon'     => _x( 'Parent Reshare Category:', 'Reshare Module: Reshare Category Tax', GEDITORIAL_TEXTDOMAIN ),
-                    'edit_item'             => _x( 'Edit Reshare Category', 'Reshare Module: Reshare Category Tax', GEDITORIAL_TEXTDOMAIN ),
-                    'view_item'             => _x( 'View Reshare Category', 'Reshare Module: Reshare Category Tax', GEDITORIAL_TEXTDOMAIN ),
-                    'update_item'           => _x( 'Update Reshare Category', 'Reshare Module: Reshare Category Tax', GEDITORIAL_TEXTDOMAIN ),
-                    'add_new_item'          => _x( 'Add New Reshare Category', 'Reshare Module: Reshare Category Tax', GEDITORIAL_TEXTDOMAIN ),
-                    'new_item_name'         => _x( 'New Reshare Category Name', 'Reshare Module: Reshare Category Tax', GEDITORIAL_TEXTDOMAIN ),
-                    'not_found'             => _x( 'No reshare categories found.', 'Reshare Module: Reshare Category Tax', GEDITORIAL_TEXTDOMAIN ),
-                    'no_terms'              => _x( 'No reshare categories', 'Reshare Module: Reshare Category Tax', GEDITORIAL_TEXTDOMAIN ),
-                    'items_list_navigation' => _x( 'Reshare Categories list navigation', 'Reshare Module: Reshare Category Tax', GEDITORIAL_TEXTDOMAIN ),
-                    'items_list'            => _x( 'Reshare Categories list', 'Reshare Module: Reshare Category Tax', GEDITORIAL_TEXTDOMAIN ),
+				'reshare_cat' => gEditorialHelper::generateTaxonomyLabels(
+					_nx_noop( 'Reshare Category', 'Reshare Categories', 'Reshare Module: Reshare Category Tax Labels: Name', GEDITORIAL_TEXTDOMAIN )
 				),
 			),
 		);
