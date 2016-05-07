@@ -200,7 +200,9 @@ class gEditorialEvent extends gEditorialModuleCore
 		parent::register_settings( $page );
 
 		$this->register_settings_button( 'install_def_event_tag', _x( 'Install Default Event Types', 'Event Module', GEDITORIAL_TEXTDOMAIN ) );
-		$this->register_settings_button( 'install_def_type_tax', _x( 'Install Default Calendar Types', 'Event Module', GEDITORIAL_TEXTDOMAIN ) );
+
+		if ( $this->get_setting( 'startend_support', TRUE ) )
+			$this->register_settings_button( 'install_def_type_tax', _x( 'Install Default Calendar Types', 'Event Module', GEDITORIAL_TEXTDOMAIN ) );
 	}
 
 	public function gpeople_support( $post_types )
