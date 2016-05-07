@@ -80,7 +80,7 @@ class gEditorialEvent extends gEditorialModuleCore
 					_nx_noop( 'Event Category', 'Event Categories', 'Event Module: Event Category Tax Labels: Name', GEDITORIAL_TEXTDOMAIN )
 				),
 				'cal_tax' => gEditorialHelper::generateTaxonomyLabels(
-					_nx_noop( 'Calendar', 'Calendars', 'Event Module: Calendar Tax Labels: Name', GEDITORIAL_TEXTDOMAIN )
+					_nx_noop( 'Event Calendar', 'Event Calendars', 'Event Module: Calendar Tax Labels: Name', GEDITORIAL_TEXTDOMAIN )
 				),
 				'type_tax' => array(
 					'name' => _x( 'Calendar Types', 'Event Module: Calendar Type Tax Labels: Name', GEDITORIAL_TEXTDOMAIN ),
