@@ -63,25 +63,8 @@ class gEditorialSeries extends gEditorialModuleCore
 				),
 			),
 			'labels' => array(
-				'series_tax' => array(
-                    'name'                       => _x( 'Series', 'Series Module: Series Tax: Name', GEDITORIAL_TEXTDOMAIN ),
-                    'menu_name'                  => _x( 'Series', 'Series Module: Series Tax: Menu Name', GEDITORIAL_TEXTDOMAIN ),
-                    'singular_name'              => _x( 'Series', 'Series Module: Series Tax: Singular Name', GEDITORIAL_TEXTDOMAIN ),
-                    'search_items'               => _x( 'Search Series', 'Series Module: Series Tax', GEDITORIAL_TEXTDOMAIN ),
-                    'popular_items'              => NULL, // _x( 'Popular Series', 'Series Module: Series Tax', GEDITORIAL_TEXTDOMAIN ),
-                    'all_items'                  => _x( 'All Series', 'Series Module: Series Tax', GEDITORIAL_TEXTDOMAIN ),
-                    'edit_item'                  => _x( 'Edit Series', 'Series Module: Series Tax', GEDITORIAL_TEXTDOMAIN ),
-                    'view_item'                  => _x( 'View Series', 'Series Module: Series Tax', GEDITORIAL_TEXTDOMAIN ),
-                    'update_item'                => _x( 'Update Series', 'Series Module: Series Tax', GEDITORIAL_TEXTDOMAIN ),
-                    'add_new_item'               => _x( 'Add New Series', 'Series Module: Series Tax', GEDITORIAL_TEXTDOMAIN ),
-                    'new_item_name'              => _x( 'New Series Name', 'Series Module: Series Tax', GEDITORIAL_TEXTDOMAIN ),
-                    'separate_items_with_commas' => _x( 'Separate series with commas', 'Series Module: Series Tax', GEDITORIAL_TEXTDOMAIN ),
-                    'add_or_remove_items'        => _x( 'Add or remove series', 'Series Module: Series Tax', GEDITORIAL_TEXTDOMAIN ),
-                    'choose_from_most_used'      => _x( 'Choose from the most used series', 'Series Module: Series Tax', GEDITORIAL_TEXTDOMAIN ),
-                    'not_found'                  => _x( 'No series found.', 'Series Module: Series Tax', GEDITORIAL_TEXTDOMAIN ),
-                    'no_terms'                   => _x( 'No series', 'Series Module: Series Tax', GEDITORIAL_TEXTDOMAIN ),
-                    'items_list_navigation'      => _x( 'Series list navigation', 'Series Module: Series Tax', GEDITORIAL_TEXTDOMAIN ),
-                    'items_list'                 => _x( 'Series list', 'Series Module: Series Tax', GEDITORIAL_TEXTDOMAIN ),
+				'series_tax' => gEditorialHelper::generateTaxonomyLabels(
+					_nx_noop( 'Series', 'Series', 'Series Module: Series Tax Labels: Name', GEDITORIAL_TEXTDOMAIN )
 				),
 			),
 		);

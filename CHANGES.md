@@ -1,3 +1,7 @@
+### 3.6.2
+* series: removed useless editor button
+* series: using label generators
+
 ### 3.6.1
 * all: Persian translation updated
 * today: fixed template fatal!
