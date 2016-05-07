@@ -79,7 +79,7 @@ class gEditorialToday extends gEditorialModuleCore
 	public function setup( $partials = array() )
 	{
 		parent::setup( array(
-			'templates',
+			// 'templates',
 			'helper',
 		) );
 
