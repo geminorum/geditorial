@@ -1,3 +1,9 @@
+### 3.6.1
+* all: Persian translation updated
+* today: fixed template fatal!
+* entry: fixed admin edit notice
+* reshare: using label generators
+
 ### 3.6.0
 * entry: support for [gPeople](http://geminorum.ir/wordpress/gpeople)
 * estimated: fixed strict notice
