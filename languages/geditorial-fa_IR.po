@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gEditorial 3.6.0\n"
+"Project-Id-Version: gEditorial 3.6.1\n"
 "Report-Msgid-Bugs-To: http://geminorum.ir/wordpress/geditorial/issues\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2016-05-06 21:59+0430\n"
+"PO-Revision-Date: 2016-05-07 19:45+0430\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: geminorum <contact@geminorum.ir>\n"
 "Language: fa\n"
@@ -90,17 +90,17 @@ msgstr "میلادی"
 #: includes/class-helper.php:549
 msgctxt "Module Helper: Default Calendar Type"
 msgid "Japanese"
-msgstr ""
+msgstr "ژاپنی"
 
 #: includes/class-helper.php:550
 msgctxt "Module Helper: Default Calendar Type"
 msgid "Buddhist"
-msgstr ""
+msgstr "بودایی"
 
 #: includes/class-helper.php:551
 msgctxt "Module Helper: Default Calendar Type"
 msgid "Chinese"
-msgstr ""
+msgstr "چینی"
 
 #: includes/class-helper.php:552
 msgctxt "Module Helper: Default Calendar Type"
@@ -110,7 +110,7 @@ msgstr "شمسی"
 #: includes/class-helper.php:553
 msgctxt "Module Helper: Default Calendar Type"
 msgid "Indian"
-msgstr ""
+msgstr "هندی"
 
 #: includes/class-helper.php:554
 msgctxt "Module Helper: Default Calendar Type"
@@ -130,7 +130,7 @@ msgstr ""
 #: includes/class-helper.php:557
 msgctxt "Module Helper: Default Calendar Type"
 msgid "Ethiopic"
-msgstr ""
+msgstr "اتوپیایی"
 
 #: includes/class-helper.php:591
 msgctxt "Module Helper: CPT Generator: Name"
@@ -180,7 +180,7 @@ msgstr "نمایش %2$s"
 #: includes/class-helper.php:600
 msgctxt "Module Helper: CPT Generator"
 msgid "Search %1$s"
-msgstr "جست‌وجوی %1$s"
+msgstr "جست‌وجو در %1$s"
 
 #: includes/class-helper.php:601
 msgctxt "Module Helper: CPT Generator"
@@ -195,7 +195,7 @@ msgstr "%3$s در زباله‌دان پیدا نشد."
 #: includes/class-helper.php:603
 msgctxt "Module Helper: CPT Generator"
 msgid "Parent %2$s:"
-msgstr ""
+msgstr "%2$s مادر:"
 
 #: includes/class-helper.php:604
 msgctxt "Module Helper: CPT Generator"
@@ -205,7 +205,7 @@ msgstr "همه‌ی %1$s"
 #: includes/class-helper.php:605
 msgctxt "Module Helper: CPT Generator"
 msgid "%2$s Archives"
-msgstr ""
+msgstr "بایگانی %1$s"
 
 #: includes/class-helper.php:606
 msgctxt "Module Helper: CPT Generator"
@@ -270,47 +270,47 @@ msgstr ""
 #: includes/class-helper.php:663
 msgctxt "Module Helper: Tax Generator"
 msgid "Search %1$s"
-msgstr ""
+msgstr "جست‌وجو در %1$s"
 
 #: includes/class-helper.php:664
 msgctxt "Module Helper: Tax Generator"
 msgid "Popular %1$s"
-msgstr ""
+msgstr "%1$s محبوب"
 
 #: includes/class-helper.php:665
 msgctxt "Module Helper: Tax Generator"
 msgid "All %1$s"
-msgstr ""
+msgstr "همه‌ی %1$s"
 
 #: includes/class-helper.php:666
 msgctxt "Module Helper: Tax Generator"
 msgid "Parent %2$s"
-msgstr ""
+msgstr "%2$s مادر"
 
 #: includes/class-helper.php:667
 msgctxt "Module Helper: Tax Generator"
 msgid "Parent %2$s:"
-msgstr ""
+msgstr "%2$s مادر:"
 
 #: includes/class-helper.php:668
 msgctxt "Module Helper: Tax Generator"
 msgid "Edit %2$s"
-msgstr ""
+msgstr "ویرایش %2$s"
 
 #: includes/class-helper.php:669
 msgctxt "Module Helper: Tax Generator"
 msgid "View %2$s"
-msgstr ""
+msgstr "نمایش %2$s"
 
 #: includes/class-helper.php:670
 msgctxt "Module Helper: Tax Generator"
 msgid "Update %2$s"
-msgstr ""
+msgstr "به‌روزرسانی %2$s"
 
 #: includes/class-helper.php:671
 msgctxt "Module Helper: Tax Generator"
 msgid "Add New %2$s"
-msgstr ""
+msgstr "افزودن %2$s تازه"
 
 #: includes/class-helper.php:672
 msgctxt "Module Helper: Tax Generator"
@@ -335,22 +335,22 @@ msgstr ""
 #: includes/class-helper.php:676
 msgctxt "Module Helper: Tax Generator"
 msgid "No %3$s found."
-msgstr ""
+msgstr "چیزی پیدا نشد."
 
 #: includes/class-helper.php:677
 msgctxt "Module Helper: Tax Generator"
 msgid "No %3$s"
-msgstr ""
+msgstr "بدون %3$s"
 
 #: includes/class-helper.php:678
 msgctxt "Module Helper: Tax Generator"
 msgid "%1$s list navigation"
-msgstr ""
+msgstr "ناوبری فهرست %1$s"
 
 #: includes/class-helper.php:679
 msgctxt "Module Helper: Tax Generator"
 msgid "%1$s list"
-msgstr ""
+msgstr "فهرست %1$s"
 
 #: includes/class-helper.php:741
 msgctxt "Module Helper"
@@ -2821,7 +2821,7 @@ msgstr[1] "ورودیه‌ها"
 #: modules/entry/entry.php:54
 msgctxt "Event Module: Event CPT Labels: Featured"
 msgid "Cover Image"
-msgstr ""
+msgstr "تصویر کاور"
 
 #: modules/entry/entry.php:57
 msgctxt "Entry Module: Section Tax Labels: Name"
@@ -2952,27 +2952,27 @@ msgstr ""
 #: modules/event/event.php:60
 msgctxt "Event Module: Meta Box Title"
 msgid "Date & Times"
-msgstr ""
+msgstr "تاریخ‌ها و زمان‌ها"
 
 #: modules/event/event.php:61
 msgctxt "Event Module: Column Title"
 msgid "Dates"
-msgstr ""
+msgstr "تاریخ"
 
 #: modules/event/event.php:62
 msgctxt "Event Module: Column Title"
 msgid "Times"
-msgstr ""
+msgstr "ساعت"
 
 #: modules/event/event.php:65
 msgctxt "Event Module: Meta Box Title"
 msgid "Event Types"
-msgstr ""
+msgstr "انواع رویداد"
 
 #: modules/event/event.php:68
 msgctxt "Event Module: Meta Box Title"
 msgid "Calendars"
-msgstr ""
+msgstr "تقویم رویدادها"
 
 #: modules/event/event.php:73
 msgctxt "Event Module: Event CPT Labels: Name"
@@ -3002,15 +3002,15 @@ msgstr[1] "دسته‌های رویداد"
 
 #: modules/event/event.php:83
 msgctxt "Event Module: Calendar Tax Labels: Name"
-msgid "Calendar"
-msgid_plural "Calendars"
-msgstr[0] ""
-msgstr[1] ""
+msgid "Event Calendar"
+msgid_plural "Event Calendars"
+msgstr[0] "تقویم رویداد"
+msgstr[1] "تقویم رویدادها"
 
 #: modules/event/event.php:86
 msgctxt "Event Module: Calendar Type Tax Labels: Name"
 msgid "Calendar Types"
-msgstr ""
+msgstr "نوع تقویم"
 
 #: modules/event/event.php:91
 msgctxt "Event Module: Event Tax Defaults"
@@ -3042,52 +3042,52 @@ msgctxt "Event Module"
 msgid "Install Default Event Types"
 msgstr ""
 
-#: modules/event/event.php:203
+#: modules/event/event.php:205
 msgctxt "Event Module"
 msgid "Install Default Calendar Types"
 msgstr ""
 
-#: modules/event/event.php:311, modules/event/event.php:312
+#: modules/event/event.php:313, modules/event/event.php:314
 msgctxt "Event Module"
 msgid "F j, Y"
-msgstr ""
+msgstr "j M Y"
 
-#: modules/event/event.php:387
+#: modules/event/event.php:389
 msgctxt "Event Module: Meta Box Input"
+msgid "Date Start"
+msgstr "تاریخ شروع"
+
+#: modules/event/event.php:390
+msgctxt "Event Module: Meta Box Input Placeholder"
 msgid "Date Start"
 msgstr ""
 
-#: modules/event/event.php:388
-msgctxt "Event Module: Meta Box Input Placeholder"
-msgid "Date Start"
-msgstr ""
-
-#: modules/event/event.php:397
+#: modules/event/event.php:399
 msgctxt "Event Module: Meta Box Input"
 msgid "Time Start"
-msgstr ""
+msgstr "زمان شروع"
 
-#: modules/event/event.php:398
+#: modules/event/event.php:400
 msgctxt "Event Module: Meta Box Input Placeholder"
 msgid "Time Start"
 msgstr ""
 
-#: modules/event/event.php:411
+#: modules/event/event.php:413
 msgctxt "Event Module: Meta Box Input"
 msgid "Date End"
-msgstr ""
+msgstr "تاریخ پایان"
 
-#: modules/event/event.php:412
+#: modules/event/event.php:414
 msgctxt "Event Module: Meta Box Input Placeholder"
 msgid "Date End"
 msgstr ""
 
-#: modules/event/event.php:421
+#: modules/event/event.php:423
 msgctxt "Event Module: Meta Box Input"
 msgid "Time End"
-msgstr ""
+msgstr "زمان پایان"
 
-#: modules/event/event.php:422
+#: modules/event/event.php:424
 msgctxt "Event Module: Meta Box Input Placeholder"
 msgid "Time End"
 msgstr ""
@@ -4430,19 +4430,19 @@ msgstr ""
 #: modules/reference/reference.php:40
 msgctxt "Reference Module"
 msgid "Reference"
-msgstr ""
+msgstr "ارجاع"
 
 #: modules/reference/reference.php:41
 msgctxt "Reference Module"
-msgid "Set of carefully customizable widgets"
+msgid "The In-Post Reference Management"
 msgstr ""
 
 #: modules/reference/reference.php:58
 msgctxt "Reference Module: Location CPT Labels: Name"
 msgid "Location"
 msgid_plural "Locations"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "مکان"
+msgstr[1] "مکان‌ها"
 
 #: modules/reshare/reshare.php:10
 msgctxt "Reshare Module"
@@ -4475,179 +4475,18 @@ msgid "Full URL to the source of the content"
 msgstr "نشانی کامل به منبع بازنشر"
 
 #: modules/reshare/reshare.php:47
-msgctxt "Reshare Module: Reshare CPT: Name"
-msgid "Reshares"
-msgstr "بازنشرها"
-
-#: modules/reshare/reshare.php:48
-msgctxt "Reshare Module: Reshare CPT: Menu Name"
-msgid "Reshares"
-msgstr "بازنشرها"
-
-#: modules/reshare/reshare.php:49
-msgctxt "Reshare Module: Reshare CPT: Singular Name"
+msgctxt "Reshare Module: Reshare CPT Labels: Name"
 msgid "Reshare"
-msgstr "بازنشر"
+msgid_plural "Reshares"
+msgstr[0] "بازنشر"
+msgstr[1] "بازنشرها"
 
 #: modules/reshare/reshare.php:50
-msgctxt "Reshare Module: Reshare CPT: Description"
-msgid "Contents from other sources"
-msgstr ""
-
-#: modules/reshare/reshare.php:51
-msgctxt "Reshare Module: Reshare CPT"
-msgid "Add New"
-msgstr "افزودن بازنشر"
-
-#: modules/reshare/reshare.php:52
-msgctxt "Reshare Module: Reshare CPT"
-msgid "Add New Reshare"
-msgstr "افزودن بازنشر تازه"
-
-#: modules/reshare/reshare.php:53
-msgctxt "Reshare Module: Reshare CPT"
-msgid "Edit Reshare"
-msgstr "ویرایش بازنشر"
-
-#: modules/reshare/reshare.php:54
-msgctxt "Reshare Module: Reshare CPT"
-msgid "New Reshare"
-msgstr "بازنشر تازه"
-
-#: modules/reshare/reshare.php:55
-msgctxt "Reshare Module: Reshare CPT"
-msgid "View Reshare"
-msgstr "نمایش بازنشر"
-
-#: modules/reshare/reshare.php:56
-msgctxt "Reshare Module: Reshare CPT"
-msgid "Search Reshares"
-msgstr "جست‌وجو"
-
-#: modules/reshare/reshare.php:57
-msgctxt "Reshare Module: Reshare CPT"
-msgid "No reshares found."
-msgstr "چیزی پیدا نشد."
-
-#: modules/reshare/reshare.php:58
-msgctxt "Reshare Module: Reshare CPT"
-msgid "No reshares found in Trash."
-msgstr "چیزی در زباله‌دان پیدا نشد."
-
-#: modules/reshare/reshare.php:59
-msgctxt "Reshare Module: Reshare CPT"
-msgid "All Reshares"
-msgstr "همهٔ بازنشرها"
-
-#: modules/reshare/reshare.php:60
-msgctxt "Reshare Module: Reshare CPT"
-msgid "Reshare Archives"
-msgstr ""
-
-#: modules/reshare/reshare.php:61
-msgctxt "Reshare Module: Reshare CPT"
-msgid "Insert into reshare"
-msgstr "جایگذاری در بازنشر"
-
-#: modules/reshare/reshare.php:62
-msgctxt "Reshare Module: Reshare CPT"
-msgid "Uploaded to this reshare"
-msgstr "بارگذاری‌شده برای این بازنشر"
-
-#: modules/reshare/reshare.php:63
-msgctxt "Reshare Module: Reshare CPT"
-msgid "Filter reshares list"
-msgstr ""
-
-#: modules/reshare/reshare.php:64
-msgctxt "Reshare Module: Reshare CPT"
-msgid "Reshares list navigation"
-msgstr ""
-
-#: modules/reshare/reshare.php:65
-msgctxt "Reshare Module: Reshare CPT"
-msgid "Reshares list"
-msgstr ""
-
-#: modules/reshare/reshare.php:68
-msgctxt "Reshare Module: Reshare Category Tax: Name"
-msgid "Reshare Categories"
-msgstr "دسته‌های بازنشر"
-
-#: modules/reshare/reshare.php:69
-msgctxt "Reshare Module: Reshare Category Tax: Menu Name"
-msgid "Reshare Categories"
-msgstr "دسته‌های بازنشر"
-
-#: modules/reshare/reshare.php:70
-msgctxt "Reshare Module: Reshare Category Tax: Singular Name"
+msgctxt "Reshare Module: Reshare Category Tax Labels: Name"
 msgid "Reshare Category"
-msgstr "دسته بازنشرها"
-
-#: modules/reshare/reshare.php:71
-msgctxt "Reshare Module: Reshare Category Tax"
-msgid "Search Reshare Categories"
-msgstr "جست‌وجو"
-
-#: modules/reshare/reshare.php:72
-msgctxt "Reshare Module: Reshare Category Tax"
-msgid "All Reshare Categories"
-msgstr "همهٔ دسته‌های بازنشر"
-
-#: modules/reshare/reshare.php:73
-msgctxt "Reshare Module: Reshare Category Tax"
-msgid "Parent Reshare Category"
-msgstr "دسته بازنشر مادر"
-
-#: modules/reshare/reshare.php:74
-msgctxt "Reshare Module: Reshare Category Tax"
-msgid "Parent Reshare Category:"
-msgstr "دسته بازنشر مادر:"
-
-#: modules/reshare/reshare.php:75
-msgctxt "Reshare Module: Reshare Category Tax"
-msgid "Edit Reshare Category"
-msgstr "ویرایش دسته بازنشر"
-
-#: modules/reshare/reshare.php:76
-msgctxt "Reshare Module: Reshare Category Tax"
-msgid "View Reshare Category"
-msgstr "نمایش دسته بازنشر"
-
-#: modules/reshare/reshare.php:77
-msgctxt "Reshare Module: Reshare Category Tax"
-msgid "Update Reshare Category"
-msgstr "به‌روزرسانی دسته بازنشر"
-
-#: modules/reshare/reshare.php:78
-msgctxt "Reshare Module: Reshare Category Tax"
-msgid "Add New Reshare Category"
-msgstr "افزودن دسته بازنشر تازه"
-
-#: modules/reshare/reshare.php:79
-msgctxt "Reshare Module: Reshare Category Tax"
-msgid "New Reshare Category Name"
-msgstr "عنوان دسته بازنشر تازه"
-
-#: modules/reshare/reshare.php:80
-msgctxt "Reshare Module: Reshare Category Tax"
-msgid "No reshare categories found."
-msgstr "چیزی پیدا نشد."
-
-#: modules/reshare/reshare.php:81
-msgctxt "Reshare Module: Reshare Category Tax"
-msgid "No reshare categories"
-msgstr "بدون دسته بازنشر"
-
-#: modules/reshare/reshare.php:82
-msgctxt "Reshare Module: Reshare Category Tax"
-msgid "Reshare Categories list navigation"
-msgstr "ناوبری فهرست دسته‌های بازنشر"
-
-#: modules/reshare/reshare.php:83
-msgctxt "Reshare Module: Reshare Category Tax"
-msgid "Reshare Categories list"
-msgstr "فهرست دسته‌های بازنشر"
+msgid_plural "Reshare Categories"
+msgstr[0] "دسته بازنشرها"
+msgstr[1] "دسته‌های بازنشر"
 
 #: modules/reshare/templates.php:11
 msgctxt "Reshare: metaLink default title"
@@ -5527,6 +5366,126 @@ msgstr "ابزارک‌ها"
 msgctxt "Widgets Module"
 msgid "Set of carefully customizable widgets"
 msgstr ""
+
+#~ msgctxt "Reshare Module: Reshare CPT: Name"
+#~ msgid "Reshares"
+#~ msgstr "بازنشرها"
+
+#~ msgctxt "Reshare Module: Reshare CPT: Menu Name"
+#~ msgid "Reshares"
+#~ msgstr "بازنشرها"
+
+#~ msgctxt "Reshare Module: Reshare CPT: Singular Name"
+#~ msgid "Reshare"
+#~ msgstr "بازنشر"
+
+#~ msgctxt "Reshare Module: Reshare CPT"
+#~ msgid "Add New"
+#~ msgstr "افزودن بازنشر"
+
+#~ msgctxt "Reshare Module: Reshare CPT"
+#~ msgid "Add New Reshare"
+#~ msgstr "افزودن بازنشر تازه"
+
+#~ msgctxt "Reshare Module: Reshare CPT"
+#~ msgid "Edit Reshare"
+#~ msgstr "ویرایش بازنشر"
+
+#~ msgctxt "Reshare Module: Reshare CPT"
+#~ msgid "New Reshare"
+#~ msgstr "بازنشر تازه"
+
+#~ msgctxt "Reshare Module: Reshare CPT"
+#~ msgid "View Reshare"
+#~ msgstr "نمایش بازنشر"
+
+#~ msgctxt "Reshare Module: Reshare CPT"
+#~ msgid "Search Reshares"
+#~ msgstr "جست‌وجو"
+
+#~ msgctxt "Reshare Module: Reshare CPT"
+#~ msgid "No reshares found."
+#~ msgstr "چیزی پیدا نشد."
+
+#~ msgctxt "Reshare Module: Reshare CPT"
+#~ msgid "No reshares found in Trash."
+#~ msgstr "چیزی در زباله‌دان پیدا نشد."
+
+#~ msgctxt "Reshare Module: Reshare CPT"
+#~ msgid "All Reshares"
+#~ msgstr "همهٔ بازنشرها"
+
+#~ msgctxt "Reshare Module: Reshare CPT"
+#~ msgid "Insert into reshare"
+#~ msgstr "جایگذاری در بازنشر"
+
+#~ msgctxt "Reshare Module: Reshare CPT"
+#~ msgid "Uploaded to this reshare"
+#~ msgstr "بارگذاری‌شده برای این بازنشر"
+
+#~ msgctxt "Reshare Module: Reshare Category Tax: Name"
+#~ msgid "Reshare Categories"
+#~ msgstr "دسته‌های بازنشر"
+
+#~ msgctxt "Reshare Module: Reshare Category Tax: Menu Name"
+#~ msgid "Reshare Categories"
+#~ msgstr "دسته‌های بازنشر"
+
+#~ msgctxt "Reshare Module: Reshare Category Tax: Singular Name"
+#~ msgid "Reshare Category"
+#~ msgstr "دسته بازنشرها"
+
+#~ msgctxt "Reshare Module: Reshare Category Tax"
+#~ msgid "Search Reshare Categories"
+#~ msgstr "جست‌وجو"
+
+#~ msgctxt "Reshare Module: Reshare Category Tax"
+#~ msgid "All Reshare Categories"
+#~ msgstr "همهٔ دسته‌های بازنشر"
+
+#~ msgctxt "Reshare Module: Reshare Category Tax"
+#~ msgid "Parent Reshare Category"
+#~ msgstr "دسته بازنشر مادر"
+
+#~ msgctxt "Reshare Module: Reshare Category Tax"
+#~ msgid "Parent Reshare Category:"
+#~ msgstr "دسته بازنشر مادر:"
+
+#~ msgctxt "Reshare Module: Reshare Category Tax"
+#~ msgid "Edit Reshare Category"
+#~ msgstr "ویرایش دسته بازنشر"
+
+#~ msgctxt "Reshare Module: Reshare Category Tax"
+#~ msgid "View Reshare Category"
+#~ msgstr "نمایش دسته بازنشر"
+
+#~ msgctxt "Reshare Module: Reshare Category Tax"
+#~ msgid "Update Reshare Category"
+#~ msgstr "به‌روزرسانی دسته بازنشر"
+
+#~ msgctxt "Reshare Module: Reshare Category Tax"
+#~ msgid "Add New Reshare Category"
+#~ msgstr "افزودن دسته بازنشر تازه"
+
+#~ msgctxt "Reshare Module: Reshare Category Tax"
+#~ msgid "New Reshare Category Name"
+#~ msgstr "عنوان دسته بازنشر تازه"
+
+#~ msgctxt "Reshare Module: Reshare Category Tax"
+#~ msgid "No reshare categories found."
+#~ msgstr "چیزی پیدا نشد."
+
+#~ msgctxt "Reshare Module: Reshare Category Tax"
+#~ msgid "No reshare categories"
+#~ msgstr "بدون دسته بازنشر"
+
+#~ msgctxt "Reshare Module: Reshare Category Tax"
+#~ msgid "Reshare Categories list navigation"
+#~ msgstr "ناوبری فهرست دسته‌های بازنشر"
+
+#~ msgctxt "Reshare Module: Reshare Category Tax"
+#~ msgid "Reshare Categories list"
+#~ msgstr "فهرست دسته‌های بازنشر"
 
 #~ msgctxt "Today Module"
 #~ msgid "Total Pages"

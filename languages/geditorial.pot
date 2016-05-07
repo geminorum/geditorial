@@ -2980,8 +2980,8 @@ msgstr[1] ""
 
 #: modules/event/event.php:83
 msgctxt "Event Module: Calendar Tax Labels: Name"
-msgid "Calendar"
-msgid_plural "Calendars"
+msgid "Event Calendar"
+msgid_plural "Event Calendars"
 msgstr[0] ""
 msgstr[1] ""
 
@@ -3020,52 +3020,52 @@ msgctxt "Event Module"
 msgid "Install Default Event Types"
 msgstr ""
 
-#: modules/event/event.php:203
+#: modules/event/event.php:205
 msgctxt "Event Module"
 msgid "Install Default Calendar Types"
 msgstr ""
 
-#: modules/event/event.php:311, modules/event/event.php:312
+#: modules/event/event.php:313, modules/event/event.php:314
 msgctxt "Event Module"
 msgid "F j, Y"
 msgstr ""
 
-#: modules/event/event.php:387
+#: modules/event/event.php:389
 msgctxt "Event Module: Meta Box Input"
 msgid "Date Start"
 msgstr ""
 
-#: modules/event/event.php:388
+#: modules/event/event.php:390
 msgctxt "Event Module: Meta Box Input Placeholder"
 msgid "Date Start"
 msgstr ""
 
-#: modules/event/event.php:397
+#: modules/event/event.php:399
 msgctxt "Event Module: Meta Box Input"
 msgid "Time Start"
 msgstr ""
 
-#: modules/event/event.php:398
+#: modules/event/event.php:400
 msgctxt "Event Module: Meta Box Input Placeholder"
 msgid "Time Start"
 msgstr ""
 
-#: modules/event/event.php:411
+#: modules/event/event.php:413
 msgctxt "Event Module: Meta Box Input"
 msgid "Date End"
 msgstr ""
 
-#: modules/event/event.php:412
+#: modules/event/event.php:414
 msgctxt "Event Module: Meta Box Input Placeholder"
 msgid "Date End"
 msgstr ""
 
-#: modules/event/event.php:421
+#: modules/event/event.php:423
 msgctxt "Event Module: Meta Box Input"
 msgid "Time End"
 msgstr ""
 
-#: modules/event/event.php:422
+#: modules/event/event.php:424
 msgctxt "Event Module: Meta Box Input Placeholder"
 msgid "Time End"
 msgstr ""
@@ -4412,7 +4412,7 @@ msgstr ""
 
 #: modules/reference/reference.php:41
 msgctxt "Reference Module"
-msgid "Set of carefully customizable widgets"
+msgid "The In-Post Reference Management"
 msgstr ""
 
 #: modules/reference/reference.php:58
@@ -4453,179 +4453,18 @@ msgid "Full URL to the source of the content"
 msgstr ""
 
 #: modules/reshare/reshare.php:47
-msgctxt "Reshare Module: Reshare CPT: Name"
-msgid "Reshares"
-msgstr ""
-
-#: modules/reshare/reshare.php:48
-msgctxt "Reshare Module: Reshare CPT: Menu Name"
-msgid "Reshares"
-msgstr ""
-
-#: modules/reshare/reshare.php:49
-msgctxt "Reshare Module: Reshare CPT: Singular Name"
+msgctxt "Reshare Module: Reshare CPT Labels: Name"
 msgid "Reshare"
-msgstr ""
+msgid_plural "Reshares"
+msgstr[0] ""
+msgstr[1] ""
 
 #: modules/reshare/reshare.php:50
-msgctxt "Reshare Module: Reshare CPT: Description"
-msgid "Contents from other sources"
-msgstr ""
-
-#: modules/reshare/reshare.php:51
-msgctxt "Reshare Module: Reshare CPT"
-msgid "Add New"
-msgstr ""
-
-#: modules/reshare/reshare.php:52
-msgctxt "Reshare Module: Reshare CPT"
-msgid "Add New Reshare"
-msgstr ""
-
-#: modules/reshare/reshare.php:53
-msgctxt "Reshare Module: Reshare CPT"
-msgid "Edit Reshare"
-msgstr ""
-
-#: modules/reshare/reshare.php:54
-msgctxt "Reshare Module: Reshare CPT"
-msgid "New Reshare"
-msgstr ""
-
-#: modules/reshare/reshare.php:55
-msgctxt "Reshare Module: Reshare CPT"
-msgid "View Reshare"
-msgstr ""
-
-#: modules/reshare/reshare.php:56
-msgctxt "Reshare Module: Reshare CPT"
-msgid "Search Reshares"
-msgstr ""
-
-#: modules/reshare/reshare.php:57
-msgctxt "Reshare Module: Reshare CPT"
-msgid "No reshares found."
-msgstr ""
-
-#: modules/reshare/reshare.php:58
-msgctxt "Reshare Module: Reshare CPT"
-msgid "No reshares found in Trash."
-msgstr ""
-
-#: modules/reshare/reshare.php:59
-msgctxt "Reshare Module: Reshare CPT"
-msgid "All Reshares"
-msgstr ""
-
-#: modules/reshare/reshare.php:60
-msgctxt "Reshare Module: Reshare CPT"
-msgid "Reshare Archives"
-msgstr ""
-
-#: modules/reshare/reshare.php:61
-msgctxt "Reshare Module: Reshare CPT"
-msgid "Insert into reshare"
-msgstr ""
-
-#: modules/reshare/reshare.php:62
-msgctxt "Reshare Module: Reshare CPT"
-msgid "Uploaded to this reshare"
-msgstr ""
-
-#: modules/reshare/reshare.php:63
-msgctxt "Reshare Module: Reshare CPT"
-msgid "Filter reshares list"
-msgstr ""
-
-#: modules/reshare/reshare.php:64
-msgctxt "Reshare Module: Reshare CPT"
-msgid "Reshares list navigation"
-msgstr ""
-
-#: modules/reshare/reshare.php:65
-msgctxt "Reshare Module: Reshare CPT"
-msgid "Reshares list"
-msgstr ""
-
-#: modules/reshare/reshare.php:68
-msgctxt "Reshare Module: Reshare Category Tax: Name"
-msgid "Reshare Categories"
-msgstr ""
-
-#: modules/reshare/reshare.php:69
-msgctxt "Reshare Module: Reshare Category Tax: Menu Name"
-msgid "Reshare Categories"
-msgstr ""
-
-#: modules/reshare/reshare.php:70
-msgctxt "Reshare Module: Reshare Category Tax: Singular Name"
+msgctxt "Reshare Module: Reshare Category Tax Labels: Name"
 msgid "Reshare Category"
-msgstr ""
-
-#: modules/reshare/reshare.php:71
-msgctxt "Reshare Module: Reshare Category Tax"
-msgid "Search Reshare Categories"
-msgstr ""
-
-#: modules/reshare/reshare.php:72
-msgctxt "Reshare Module: Reshare Category Tax"
-msgid "All Reshare Categories"
-msgstr ""
-
-#: modules/reshare/reshare.php:73
-msgctxt "Reshare Module: Reshare Category Tax"
-msgid "Parent Reshare Category"
-msgstr ""
-
-#: modules/reshare/reshare.php:74
-msgctxt "Reshare Module: Reshare Category Tax"
-msgid "Parent Reshare Category:"
-msgstr ""
-
-#: modules/reshare/reshare.php:75
-msgctxt "Reshare Module: Reshare Category Tax"
-msgid "Edit Reshare Category"
-msgstr ""
-
-#: modules/reshare/reshare.php:76
-msgctxt "Reshare Module: Reshare Category Tax"
-msgid "View Reshare Category"
-msgstr ""
-
-#: modules/reshare/reshare.php:77
-msgctxt "Reshare Module: Reshare Category Tax"
-msgid "Update Reshare Category"
-msgstr ""
-
-#: modules/reshare/reshare.php:78
-msgctxt "Reshare Module: Reshare Category Tax"
-msgid "Add New Reshare Category"
-msgstr ""
-
-#: modules/reshare/reshare.php:79
-msgctxt "Reshare Module: Reshare Category Tax"
-msgid "New Reshare Category Name"
-msgstr ""
-
-#: modules/reshare/reshare.php:80
-msgctxt "Reshare Module: Reshare Category Tax"
-msgid "No reshare categories found."
-msgstr ""
-
-#: modules/reshare/reshare.php:81
-msgctxt "Reshare Module: Reshare Category Tax"
-msgid "No reshare categories"
-msgstr ""
-
-#: modules/reshare/reshare.php:82
-msgctxt "Reshare Module: Reshare Category Tax"
-msgid "Reshare Categories list navigation"
-msgstr ""
-
-#: modules/reshare/reshare.php:83
-msgctxt "Reshare Module: Reshare Category Tax"
-msgid "Reshare Categories list"
-msgstr ""
+msgid_plural "Reshare Categories"
+msgstr[0] ""
+msgstr[1] ""
 
 #: modules/reshare/templates.php:11
 msgctxt "Reshare: metaLink default title"
