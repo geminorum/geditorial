@@ -70,6 +70,8 @@
 		.pipe(sass().on('error', sass.logError))
 
 		.pipe(nano({
+			// http://cssnano.co/optimisations/
+			zindex: false,
 			discardComments: {
 				removeAll: true
 			}
