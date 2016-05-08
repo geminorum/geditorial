@@ -4,6 +4,7 @@ class gEditorialSpecs extends gEditorialModuleCore
 {
 
 	public $meta_key = '_ge_specs';
+	protected $field_type = 'specs';
 
 	public static function module()
 	{
@@ -18,9 +19,6 @@ class gEditorialSpecs extends gEditorialModuleCore
 	protected function get_global_settings()
 	{
 		return array(
-			'_general' => array(
-				'editor_button',
-			),
 			'posttypes_option' => 'posttypes_option',
 			'fields_option'    => 'fields_option',
 		);
@@ -59,26 +57,12 @@ class gEditorialSpecs extends gEditorialModuleCore
 					'select_specs'   => _x( '&mdash; Choose a Specification &mdash;', 'Specs Module', GEDITORIAL_TEXTDOMAIN ),
 				),
 			),
+			'noops' => array(
+				'specs_tax' => _nx_noop( 'Specification', 'Specifications', 'Specs Module: Noop', GEDITORIAL_TEXTDOMAIN ),
+			),
 			'labels' => array(
-				'specs_tax' => array(
-                    'name'                       => _x( 'Specifications', 'Specs Module: Specification Tax Labels: Name', GEDITORIAL_TEXTDOMAIN ),
-                    'menu_name'                  => _x( 'Specifications', 'Specs Module: Specification Tax Labels: Menu Name', GEDITORIAL_TEXTDOMAIN ),
-                    'singular_name'              => _x( 'Specification', 'Specs Module: Specification Tax Labels: Singular Name', GEDITORIAL_TEXTDOMAIN ),
-                    'search_items'               => _x( 'Search Specifications', 'Specs Module: Specification Tax Labels', GEDITORIAL_TEXTDOMAIN ),
-                    'popular_items'              => NULL, // _x( 'Popular Specifications', 'Specs Module: Specification Tax Labels', GEDITORIAL_TEXTDOMAIN ),
-                    'all_items'                  => _x( 'All Specifications', 'Specs Module: Specification Tax Labels', GEDITORIAL_TEXTDOMAIN ),
-                    'edit_item'                  => _x( 'Edit Specification', 'Specs Module: Specification Tax Labels', GEDITORIAL_TEXTDOMAIN ),
-                    'view_item'                  => _x( 'View Specification', 'Specs Module: Specification Tax Labels', GEDITORIAL_TEXTDOMAIN ),
-                    'update_item'                => _x( 'Update Specification', 'Specs Module: Specification Tax Labels', GEDITORIAL_TEXTDOMAIN ),
-                    'add_new_item'               => _x( 'Add New Specification', 'Specs Module: Specification Tax Labels', GEDITORIAL_TEXTDOMAIN ),
-                    'new_item_name'              => _x( 'New Specification Name', 'Specs Module: Specification Tax Labels', GEDITORIAL_TEXTDOMAIN ),
-                    'separate_items_with_commas' => _x( 'Separate specifications with commas', 'Specs Module: Specification Tax Labels', GEDITORIAL_TEXTDOMAIN ),
-                    'add_or_remove_items'        => _x( 'Add or remove specifications', 'Specs Module: Specification Tax Labels', GEDITORIAL_TEXTDOMAIN ),
-                    'choose_from_most_used'      => _x( 'Choose from the most used specifications', 'Specs Module: Specification Tax Labels', GEDITORIAL_TEXTDOMAIN ),
-                    'not_found'                  => _x( 'No specifications found.', 'Specs Module: Specification Tax Labels', GEDITORIAL_TEXTDOMAIN ),
-                    'no_terms'                   => _x( 'No specifications', 'Specs Module: Specification Tax Labels', GEDITORIAL_TEXTDOMAIN ),
-                    'items_list_navigation'      => _x( 'Specifications list navigation', 'Specs Module: Specification Tax Labels', GEDITORIAL_TEXTDOMAIN ),
-                    'items_list'                 => _x( 'Specifications list', 'Specs Module: Specification Tax Labels', GEDITORIAL_TEXTDOMAIN ),
+				'specs_tax' => gEditorialHelper::generateTaxonomyLabels(
+					_nx_noop( 'Specification', 'Specifications', 'Specs Module: Specs Tax Labels: Name', GEDITORIAL_TEXTDOMAIN )
 				),
 			),
 		);
@@ -109,40 +93,30 @@ class gEditorialSpecs extends gEditorialModuleCore
 		do_action( 'geditorial_specs_init', $this->module );
 
 		$this->do_globals();
-		$this->register_taxonomy( 'specs_tax' );
+		$this->register_taxonomy( 'specs_tax', array(
+			'meta_box_cb' => FALSE, // FIXME: drop this after defaults changes
+		) );
+
+		foreach ( $this->post_types() as $post_type )
+			$this->add_post_type_fields( $post_type, $this->fields[$this->constant( 'post_cpt' )], 'specs' );
 
 		// add_shortcode( $this->constant( 'specs_shortcode' ), array( $this, 'shortcode_specs' ) );
 		// add_shortcode( $this->constant( 'multiple_specs_shortcode' ), array( $this, 'shortcode_multiple_specs' ) );
 	}
 
-	public function admin_init()
+	public function current_screen( $screen )
 	{
-		add_action( 'admin_print_styles', array( $this, 'admin_print_styles' ) );
-		add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ), 20, 2 );
+		if ( 'post' == $screen->base
+			&& in_array( $screen->post_type, $this->post_types() ) ) {
 
-		// internal
-		add_action( 'geditorial_specs_meta_box', array( $this, 'geditorial_specs_meta_box' ), 5, 2 );
-		// add_action( 'geditorial_specs_meta_box_item', array( $this, 'geditorial_specs_meta_box_item' ), 5, 5 );
-	}
-
-	public function admin_print_styles()
-	{
-		$screen = get_current_screen();
-
-		if ( ! in_array( $screen->post_type, $this->post_types() ) )
-			return;
-
-		if ( 'edit' == $screen->base ) {
-
-			add_action( 'admin_head-edit.php', function(){
-				?><script type="text/javascript">jQuery(document).ready(function($){
-					$('textarea.tax_input_specs').each(function(i){
-						$(this).parent().remove();
-					});
-				});</script> <?php
-			} );
-
-		} else if ( 'post' == $screen->base  ) {
+			add_meta_box(
+				'geditorial-specs',
+				$this->get_meta_box_title( 'specs_tax' ),
+				array( $this, 'do_meta_box' ),
+				$screen,
+				'side',
+				'high'
+			);
 
 			wp_register_script( 'jquery-sortable',
 				GEDITORIAL_URL.'assets/packages/jquery-sortable/jquery-sortable-min.js',
@@ -151,6 +125,10 @@ class gEditorialSpecs extends gEditorialModuleCore
 				TRUE );
 
 			$this->enqueue_asset_js( array(), 'specs.'.$screen->base, array( 'jquery-sortable' ) );
+
+			// internal
+			add_action( 'geditorial_specs_meta_box', array( $this, 'geditorial_specs_meta_box' ), 5, 2 );
+			// add_action( 'geditorial_specs_meta_box_item', array( $this, 'geditorial_specs_meta_box_item' ), 5, 5 );
 		}
 	}
 
@@ -301,21 +279,6 @@ class gEditorialSpecs extends gEditorialModuleCore
 
 		$postmeta = apply_filters( 'geditorial_specs_sanitize_post_meta', $postmeta, $fields, $post_id, $post_type );
 		return $postmeta;
-	}
-
-	public function add_meta_boxes( $post_type, $post )
-	{
-		if ( in_array( $post_type, $this->post_types() ) ) {
-
-			$this->remove_meta_box( 'specs_tax', $post_type, 'tag' );
-
-			add_meta_box(
-				'geditorial-specs',
-				$this->get_meta_box_title( 'specs_tax' ),
-				array( $this, 'do_meta_box' ),
-				$post_type,
-				'side' );
-		}
 	}
 
 	public function do_meta_box( $post )
