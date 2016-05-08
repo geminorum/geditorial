@@ -640,6 +640,37 @@ class gEditorialModuleCore extends gEditorialBaseCore
 		return $fallback;
 	}
 
+	public function get_noop( $constant_key )
+	{
+		if ( ! empty( $this->strings['noops'][$constant_key] ) )
+			return $this->strings['noops'][$constant_key];
+
+		$noop = array(
+			'plural'   => $constant_key,
+			'singular' => $constant_key,
+			// 'context'  => ucwords( $module->name ).' Module: Noop', // no need
+			'domain'   => GEDITORIAL_TEXTDOMAIN,
+		);
+
+		if ( ! empty( $this->strings['labels'][$constant_key]['name'] ) )
+			$noop['plural'] = $this->strings['labels'][$constant_key]['name'];
+
+		if ( ! empty( $this->strings['labels'][$constant_key]['singular_name'] ) )
+			$noop['singular'] = $this->strings['labels'][$constant_key]['singular_name'];
+
+		return $noop;
+	}
+
+	public function nooped( $constant_key, $count, $domain = GEDITORIAL_TEXTDOMAIN )
+	{
+		$nooped = $this->get_noop( $constant_key );
+
+		if ( $nooped['context'] )
+			return _nx( $nooped['singular'], $nooped['plural'], $count, $nooped['context'], $domain );
+		else
+			return _n( $nooped['singular'], $nooped['plural'], $count, $domain );
+	}
+
 	public function constant( $key, $default = FALSE )
 	{
 		if ( isset( $this->constants[$key] ) )

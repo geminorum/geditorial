@@ -94,6 +94,9 @@ class gEditorialMagazine extends gEditorialModuleCore
 				),
 				'meta_box_title' => _x( 'Issues', 'Magazine Module', GEDITORIAL_TEXTDOMAIN ),
 			),
+			'noops' => array(
+				'issue_cpt' => _nx_noop( 'Issue', 'Issues', 'Magazine Module: Noop', GEDITORIAL_TEXTDOMAIN ),
+			),
 			'labels' => array(
 				'issue_cpt' => gEditorialHelper::generatePostTypeLabels(
 					_nx_noop( 'Issue', 'Issues', 'Magazine Module: Issue CPT Labels: Name', GEDITORIAL_TEXTDOMAIN ),
