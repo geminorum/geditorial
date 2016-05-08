@@ -312,6 +312,12 @@ class gEditorialMagazine extends gEditorialModuleCore
 		return self::recursiveParseArgs( $new, $strings );
 	}
 
+	public function dashboard_glance_items( $items )
+	{
+		$items[] = $this->dashboard_glance_post( 'issue_cpt' );
+		return $items;
+	}
+
 	public function disable_months_dropdown( $false, $post_type )
 	{
 		if ( $this->constant( 'issue_cpt' ) == $post_type )

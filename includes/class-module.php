@@ -80,6 +80,9 @@ class gEditorialModuleCore extends gEditorialBaseCore
 			if ( method_exists( $this, 'admin_init' ) )
 				add_action( 'admin_init', array( $this, 'admin_init' ) );
 
+			if ( method_exists( $this, 'dashboard_glance_items' ) )
+				add_filter( 'dashboard_glance_items', array( $this, 'dashboard_glance_items' ) );
+
 			if ( method_exists( $this, 'current_screen' ) )
 				add_action( 'current_screen', array( $this, 'current_screen' ) );
 
@@ -1776,6 +1779,19 @@ class gEditorialModuleCore extends gEditorialBaseCore
 				}
 			}
 		}
+	}
+
+	protected function dashboard_glance_post( $posttype_constant_key, $edit_cap = 'edit_posts' )
+	{
+		$posttype = $this->constant( $posttype_constant_key );
+		$template = current_user_can( $edit_cap ) ? '<a class="geditorial-glance-item -post -posttype-'.$posttype.'" href="edit.php?post_type=%3$s">%1$s %2$s</a>' : '%1$s %2$s';
+		$posts    = wp_count_posts( $posttype );
+		$singular = $this->nooped( $posttype_constant_key, 1 );
+		$nooped   = $this->nooped( $posttype_constant_key, $posts->publish );
+
+		$text = sprintf( _x( '%1$s', 'Module Core: At a Glance: Nooped String', GEDITORIAL_TEXTDOMAIN ), $nooped, $singular );
+
+		return sprintf( $template, number_format_i18n( $posts->publish ), $text, $posttype );
 	}
 
 	public function column_thumb( $post_id, $size = array( 45, 72 ) )
