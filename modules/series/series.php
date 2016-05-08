@@ -21,7 +21,6 @@ class gEditorialSeries extends gEditorialModuleCore
 		return array(
 			'_general' => array(
 				'multiple_instances',
-				'editor_button',
 			),
 			'posttypes_option' => 'posttypes_option',
 			'fields_option'    => 'fields_option',
