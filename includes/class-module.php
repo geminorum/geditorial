@@ -1248,6 +1248,18 @@ class gEditorialModuleCore extends gEditorialBaseCore
 	{
 		return isset( $_COOKIE[$this->cookie] ) ? json_decode( wp_unslash( $_COOKIE[$this->cookie] ), TRUE ) : array();
 	}
+	
+	public function get_post_type_labels( $constant_key )
+	{
+		if ( ! empty( $this->strings['labels'][$constant_key] ) )
+			return $this->strings['labels'][$constant_key];
+		
+		if ( ! empty( $this->strings['noops'][$constant_key] ) )
+			return gEditorialHelper::generatePostTypeLabels( $this->strings['noops'][$constant_key],
+				$this->get_string( 'featured', $constant_key, 'misc', FALSE ) );
+
+		return array();
+	}
 
 	public function register_post_type( $constant_key, $atts = array(), $taxonomies = NULL )
 	{
@@ -1258,7 +1270,7 @@ class gEditorialModuleCore extends gEditorialBaseCore
 
 		$args = self::recursiveParseArgs( $atts, array(
 			'taxonomies'  => $taxonomies,
-			'labels'      => $this->strings['labels'][$constant_key],
+			'labels'      => $this->get_post_type_labels( $constant_key ),
 			'description' => isset( $this->strings['labels'][$constant_key]['description'] ) ? $this->strings['labels'][$constant_key]['description'] : '',
 			// FIXME: check every module
 			'register_meta_box_cb'  => method_exists( $this, 'add_meta_box_cb_'.$constant_key ) ? array( $this, 'add_meta_box_cb_'.$constant_key ) : NULL,
@@ -1289,6 +1301,17 @@ class gEditorialModuleCore extends gEditorialBaseCore
 
 		register_post_type( $post_type, $args );
 	}
+	
+	public function get_taxonomy_labels( $constant_key )
+	{
+		if ( ! empty( $this->strings['labels'][$constant_key] ) )
+			return $this->strings['labels'][$constant_key];
+		
+		if ( ! empty( $this->strings['noops'][$constant_key] ) )
+			return gEditorialHelper::generateTaxonomyLabels( $this->strings['noops'][$constant_key] );
+
+		return array();
+	}
 
 	public function register_taxonomy( $constant_key, $atts = array(), $post_types = NULL )
 	{
@@ -1300,7 +1323,7 @@ class gEditorialModuleCore extends gEditorialBaseCore
 		$taxonomy = $this->constant( $constant_key );
 
 		$args = self::recursiveParseArgs( $atts, array(
-			'labels'                => $this->strings['labels'][$constant_key],
+			'labels'                => $this->get_taxonomy_labels( $constant_key ),
 			'update_count_callback' => array( 'gEditorialHelper', 'update_count_callback' ),
 			// FIXME: meta_box_cb default must be FALSE / check every module before!
 			'meta_box_cb'           => method_exists( $this, 'meta_box_cb_'.$constant_key ) ? array( $this, 'meta_box_cb_'.$constant_key ) : NULL,
