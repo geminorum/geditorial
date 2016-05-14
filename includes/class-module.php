@@ -31,18 +31,26 @@ class gEditorialModuleCore extends gEditorialBaseCore
 
 	public function __construct( &$module, &$options )
 	{
-		$this->module = $module;
+		$this->module  = $module;
 		$this->options = $options;
 
-		$this->setup();
+		if ( $this->remote() )
+			$this->setup_remote();
 
-		// Kint::dump( $this ); die();
+		else
+			$this->setup();
 	}
 
 	// DEFAULT METHOD
 	public static function module()
 	{
 		return array();
+	}
+
+	public function setup_remote( $partials = array() )
+	{
+		foreach ( $partials as $partial )
+			$this->require_code( $partial );
 	}
 
 	public function setup( $partials = array() )
@@ -122,10 +130,14 @@ class gEditorialModuleCore extends gEditorialBaseCore
 	// check if this module loaded as remote for another blog's editorial module
 	public function remote()
 	{
-		if ( ! $this->root_key
-			|| ! defined( $this->root_key )
-			|| constant( $this->root_key ) == get_current_blog_id() )
-				return FALSE;
+		if ( ! $this->root_key )
+			return FALSE;
+
+		if ( ! defined( $this->root_key ) )
+			return FALSE;
+
+		if ( constant( $this->root_key ) == get_current_blog_id() )
+			return FALSE;
 
 		return TRUE;
 	}
@@ -1248,12 +1260,12 @@ class gEditorialModuleCore extends gEditorialBaseCore
 	{
 		return isset( $_COOKIE[$this->cookie] ) ? json_decode( wp_unslash( $_COOKIE[$this->cookie] ), TRUE ) : array();
 	}
-	
+
 	public function get_post_type_labels( $constant_key )
 	{
 		if ( ! empty( $this->strings['labels'][$constant_key] ) )
 			return $this->strings['labels'][$constant_key];
-		
+
 		if ( ! empty( $this->strings['noops'][$constant_key] ) )
 			return gEditorialHelper::generatePostTypeLabels( $this->strings['noops'][$constant_key],
 				$this->get_string( 'featured', $constant_key, 'misc', FALSE ) );
@@ -1301,12 +1313,12 @@ class gEditorialModuleCore extends gEditorialBaseCore
 
 		register_post_type( $post_type, $args );
 	}
-	
+
 	public function get_taxonomy_labels( $constant_key )
 	{
 		if ( ! empty( $this->strings['labels'][$constant_key] ) )
 			return $this->strings['labels'][$constant_key];
-		
+
 		if ( ! empty( $this->strings['noops'][$constant_key] ) )
 			return gEditorialHelper::generateTaxonomyLabels( $this->strings['noops'][$constant_key] );
 
