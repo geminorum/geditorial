@@ -66,27 +66,8 @@ class gEditorialMeta extends gEditorialModuleCore
 				'meta_box_title'      => _x( 'Metadata', 'Meta Module: Meta Box Title', GEDITORIAL_TEXTDOMAIN ),
 				'meta_box_action'     => _x( 'Configure', 'Meta Module: Meta Box Action Title', GEDITORIAL_TEXTDOMAIN ),
 			),
-			'labels' => array(
-				'ct_tax' => array(
-                    'name'                       => _x( 'Column Headers', 'Meta Module: Column Header Tax Labels: Name', GEDITORIAL_TEXTDOMAIN ),
-                    'menu_name'                  => _x( 'Column Headers', 'Meta Module: Column Header Tax Labels: Menu Name', GEDITORIAL_TEXTDOMAIN ),
-                    'singular_name'              => _x( 'Column Header', 'Meta Module: Column Header Tax Labels: Singular Name', GEDITORIAL_TEXTDOMAIN ),
-                    'search_items'               => _x( 'Search Column Headers', 'Meta Module: Column Header Tax Labels', GEDITORIAL_TEXTDOMAIN ),
-                    'all_items'                  => _x( 'All Column Headers', 'Meta Module: Column Header Tax Labels', GEDITORIAL_TEXTDOMAIN ),
-                    'edit_item'                  => _x( 'Edit Column Header', 'Meta Module: Column Header Tax Labels', GEDITORIAL_TEXTDOMAIN ),
-                    'view_item'                  => _x( 'View Column Header', 'Meta Module: Column Header Tax Labels', GEDITORIAL_TEXTDOMAIN ),
-                    'update_item'                => _x( 'Update Column Header', 'Meta Module: Column Header Tax Labels', GEDITORIAL_TEXTDOMAIN ),
-                    'add_new_item'               => _x( 'Add New Column Header', 'Meta Module: Column Header Tax Labels', GEDITORIAL_TEXTDOMAIN ),
-                    'new_item_name'              => _x( 'New Column Header Name', 'Meta Module: Column Header Tax Labels', GEDITORIAL_TEXTDOMAIN ),
-                    'separate_items_with_commas' => _x( 'Separate column headers with commas', 'Meta Module: Column Header Tax Labels', GEDITORIAL_TEXTDOMAIN ),
-                    'add_or_remove_items'        => _x( 'Add or remove column headers', 'Meta Module: Column Header Tax Labels', GEDITORIAL_TEXTDOMAIN ),
-                    'choose_from_most_used'      => _x( 'Choose from the most used column headers', 'Meta Module: Column Header Tax Labels', GEDITORIAL_TEXTDOMAIN ),
-                    'not_found'                  => _x( 'No column headers found.', 'Meta Module: Column Header Tax Labels', GEDITORIAL_TEXTDOMAIN ),
-                    'no_terms'                   => _x( 'No column headers', 'Meta Module: Column Header Tax Labels', GEDITORIAL_TEXTDOMAIN ),
-                    'items_list_navigation'      => _x( 'Column Headers list navigation', 'Meta Module: Column Header Tax Labels', GEDITORIAL_TEXTDOMAIN ),
-                    'items_list'                 => _x( 'Column Headers list', 'Meta Module: Column Header Tax Labels', GEDITORIAL_TEXTDOMAIN ),
-					'popular_items'              => NULL,
-				),
+			'noops' => array(
+				'ct_tax' => _nx_noop( 'Column Header', 'Column Headers', 'Meta Module: Noop', GEDITORIAL_TEXTDOMAIN ),
 			),
 		);
 	}
