@@ -9,7 +9,6 @@
 		nano = require('gulp-cssnano'), // https://github.com/ben-eb/gulp-cssnano
 		sourcemaps = require('gulp-sourcemaps'),
 		smushit = require('gulp-smushit'), // https://github.com/heldr/gulp-smushit
-		// pngquant = require('imagemin-pngquant'), // https://github.com/imagemin/imagemin-pngquant
 		excludeGitignore = require('gulp-exclude-gitignore'), // https://github.com/sboudrias/gulp-exclude-gitignore
 		wpPot = require('gulp-wp-pot'), // https://github.com/rasmusbe/gulp-wp-pot
 		sort = require('gulp-sort'),
@@ -23,18 +22,6 @@
 		return gulp.src('./assets/images/raw/*.png')
 
 		.pipe(tinypng(''))
-
-		.pipe(gulp.dest('./assets/images'));
-	});
-
-	gulp.task('pngquant', function() {
-
-		return gulp.src('./assets/images/raw/*.png')
-
-		.pipe(pngquant({
-			quality: '65-80',
-			speed: 4
-		}))
 
 		.pipe(gulp.dest('./assets/images'));
 	});
