@@ -75,19 +75,22 @@ class gEditorialMeta extends gEditorialModuleCore
 	protected function get_global_fields()
 	{
 		return array(
-			$this->constant( 'post_cpt' ) => array(
-				'ot' => FALSE,
-				'st' => FALSE,
-				'as' => FALSE,
-				'le' => FALSE,
-				'ch' => FALSE,
-				'ct' => FALSE,
-				'es' => FALSE,
-				'ol' => FALSE,
+			'post' => array(
+				'ot' => array( 'type' => 'title_before' ),
+				'st' => array( 'type' => 'title_after' ),
+				'le' => array( 'type' => 'box' ),
+				'as' => array( 'type' => 'text' ),
+				'ct' => array(
+					'type' => 'term',
+					'tax'  => $this->constant( 'ct_tax' ),
+				),
+				'ch' => array( 'type' => 'text' ),
+				'es' => array( 'type' => 'link' ),
+				'ol' => array( 'type' => 'link' ),
 			),
-			$this->constant( 'page_cpt' ) => array(
-				'ot' => FALSE,
-				'st' => FALSE,
+			'page' => array(
+				'ot' => array( 'type' => 'title_before' ),
+				'st' => array( 'type' => 'title_after' ),
 			),
 		);
 	}
@@ -97,6 +100,20 @@ class gEditorialMeta extends gEditorialModuleCore
 		parent::setup( array(
 			'templates',
 		) );
+	}
+
+	public function setup_ajax( $request )
+	{
+		if ( ( $post_type = empty( $request['post_type'] ) ? FALSE : $request['post_type'] ) ) {
+
+			if ( in_array( $post_type, $this->post_types() ) ) {
+
+				add_filter( 'manage_'.$post_type.'_posts_columns', array( $this, 'manage_posts_columns' ) );
+				add_filter( 'manage_'.$post_type.'_posts_custom_column', array( $this, 'custom_column'), 10, 2 );
+
+				add_action( 'save_post', array( $this, 'save_post' ), 10, 2 );
+			}
+		}
 	}
 
 	public function tweaks_strings( $strings )
@@ -127,7 +144,9 @@ class gEditorialMeta extends gEditorialModuleCore
 				$ct_tax_posttypes[] = $post_type;
 
 		if ( count( $ct_tax_posttypes ) )
-			$this->register_taxonomy( 'ct_tax', array(), $ct_tax_posttypes );
+			$this->register_taxonomy( 'ct_tax', array(
+				'meta_box_cb' => FALSE,
+			), $ct_tax_posttypes );
 
 		$post_cpt = $this->constant( 'post_cpt' );
 
@@ -138,65 +157,180 @@ class gEditorialMeta extends gEditorialModuleCore
 		$this->add_post_type_fields( $this->constant( 'page_cpt' ) );
 	}
 
-	public function admin_init()
+	public function current_screen( $screen )
 	{
-		add_action( 'admin_print_styles', array( $this, 'admin_print_styles' ) );
+		if ( in_array( $screen->post_type, $this->post_types() ) ) {
 
-		add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ), 20, 2 );
-		add_action( 'save_post', array( $this, 'save_post' ), 10, 2 );
+			if ( 'post' == $screen->base ) {
 
-		// SEE: http://make.wordpress.org/core/2012/12/01/more-hooks-on-the-edit-screen/
-		// add_action( 'edit_form_after_title', array( $this, 'edit_form_after_title' ) );
+				// we use this to override the whole functionality, not just adding the actions
+				$box_func = apply_filters( 'geditorial_meta_box_callback', array( $this, 'default_meta_box_old' ), $screen->post_type );
 
-		foreach ( $this->post_types() as $post_type ) {
-			add_filter( "manage_{$post_type}_posts_columns", array( $this, 'manage_posts_columns' ) );
-			add_filter( "manage_{$post_type}_posts_custom_column", array( $this, 'custom_column'), 10, 2 );
+				if ( TRUE === $box_func )
+					$box_func = array( $this, 'default_meta_box' );
+
+				if ( is_callable( $box_func ) )
+					add_meta_box( 'geditorial-meta-'.$screen->post_type, $this->get_meta_box_title(), $box_func, $screen->post_type, 'side', 'high' );
+
+				$dbx_func = apply_filters( 'geditorial_meta_dbx_callback', array( $this, 'default_meta_raw_old' ), $screen->post_type );
+
+				if ( TRUE === $dbx_func )
+					$dbx_func = array( $this, 'default_meta_raw' );
+
+				if ( is_callable( $dbx_func ) )
+					add_action( 'dbx_post_sidebar', $dbx_func, 10, 1 );
+
+				add_filter( 'geditorial_meta_sanitize_post_meta', array( $this, 'sanitize_post_meta' ), 10 , 4 );
+
+			} else if ( 'edit' == $screen->base ) {
+
+				add_filter( 'manage_'.$screen->post_type.'_posts_columns', array( $this, 'manage_posts_columns' ) );
+				add_filter( 'manage_'.$screen->post_type.'_posts_custom_column', array( $this, 'custom_column'), 10, 2 );
+
+				add_action( 'quick_edit_custom_box', array( $this, 'quick_edit_custom_box' ), 10, 2 );
+			}
+
+			if ( 'post' == $screen->base
+				|| 'edit' == $screen->base ) {
+
+				add_action( 'save_post', array( $this, 'save_post' ), 10, 2 );
+
+				$localize = array(
+					'constants' => array(
+						'ct' => $this->constant( 'ct_tax' ),
+					),
+				);
+
+				foreach ( $this->post_type_fields( $screen->post_type ) as $field )
+					$localize[$field] = $this->get_string( $field, $screen->post_type );
+
+				$this->enqueue_asset_js( $localize, 'meta.'.$screen->base );
+			}
 		}
-
-		add_action( 'quick_edit_custom_box', array( $this, 'quick_edit_custom_box' ), 10, 2 );
-		// add_action( 'bulk_edit_custom_box', array( $this, 'bulk_edit_custom_box' ) );
-	}
-
-	public function admin_print_styles()
-	{
-		$screen = get_current_screen();
-
-		if ( 'post' != $screen->base && 'edit' != $screen->base )
-			return;
-
-		if ( ! in_array( $screen->post_type, $this->post_types() ) )
-			return;
-
-		$localize = array(
-			'constants' => array(
-				'ct' => $this->constant( 'ct_tax' ),
-			),
-		);
-
-		foreach ( $this->post_type_fields( $screen->post_type ) as $field )
-			$localize[$field] = $this->get_string( $field, $screen->post_type );
-
-		$this->enqueue_asset_js( $localize, 'meta.'.$screen->base );
-	}
-
-	public function add_meta_boxes( $post_type, $post )
-	{
-		if ( ! in_array( $post_type, $this->post_types() ) )
-			return;
-
-		$this->remove_meta_box( 'ct_tax', $post_type, 'tag' );
-
-		// we use filter to override the whole functionality, not just adding the actions
-		$box_func = apply_filters( 'geditorial_meta_box_callback', array( $this, 'default_meta_box' ), $post_type );
-		if ( is_callable( $box_func ) )
-			add_meta_box( 'geditorial-meta-'.$post_type, $this->get_meta_box_title(), $box_func, $post_type, 'side', 'high' );
-
-		$dbx_func = apply_filters( 'geditorial_meta_dbx_callback', array( $this, 'default_meta_raw' ), $post_type );
-		if ( is_callable( $dbx_func ) )
-			add_action( 'dbx_post_sidebar', $dbx_func, 10, 1 );
 	}
 
 	public function default_meta_box( $post, $box )
+	{
+		$fields = $this->post_type_field_types( $post->post_type, TRUE );
+
+		echo '<div class="geditorial-admin-wrap-metabox">';
+
+		do_action( 'geditorial_meta_box_before', $this->module, $post, $fields );
+
+		if ( count( $fields ) ) {
+
+			foreach ( $fields as $field => $args ) {
+
+				switch ( $args['type'] ) {
+
+					case 'text':
+						gEditorialHelper::meta_admin_field( $field, array( $field ), $post, $args['ltr'], $args['title'] );
+					break;
+
+					case 'link':
+						gEditorialHelper::meta_admin_field( $field, array( $field ), $post, TRUE, $args['title'] );
+					break;
+
+					case 'number':
+						gEditorialHelper::meta_admin_number_field( $field, array( $field ), $post, TRUE, $args['title'] );
+					break;
+
+					case 'textarea':
+						gEditorialHelper::meta_admin_textarea_field( $field, array( $field ), $post, $args['ltr'], $args['title'] );
+					break;
+
+					case 'term':
+						if ( $args['tax'] )
+							gEditorialHelper::meta_admin_tax_field( $field, array( $field ), $post, $args['tax'], $args['ltr'], $args['title'] );
+						else
+							gEditorialHelper::meta_admin_field( $field, array( $field ), $post, $args['ltr'], $args['title'] );
+					break;
+				}
+			}
+
+		} else {
+
+			echo '<div class="field-wrap field-wrap-empty">';
+				_ex( 'No Meta Fields', 'Meta Module', GEDITORIAL_TEXTDOMAIN );
+			echo '</div>';
+		}
+
+		do_action( 'geditorial_meta_box_after', $this->module, $post, $fields );
+
+		wp_nonce_field( 'geditorial_meta_post_main', '_geditorial_meta_post_main' );
+
+		echo '</div>';
+	}
+
+	public function default_meta_raw( $post )
+	{
+		$fields = $this->post_type_field_types( $post->post_type, TRUE );
+
+		if ( count( $fields ) ) {
+
+			foreach ( $fields as $field => $args ) {
+
+				switch ( $args['type'] ) {
+
+					case 'title_before':
+					case 'title_after':
+						gEditorialHelper::meta_admin_title_field( $field, array( $field ), $post, $args['ltr'], $args['title'] );
+					break;
+
+					case 'box':
+						gEditorialHelper::meta_admin_text_field( $field, array( $field ), $post, $args['ltr'], $args['title'] );
+					break;
+				}
+			}
+		}
+
+		do_action( 'geditorial_meta_box_raw', $this->module, $post, $fields );
+
+		wp_nonce_field( 'geditorial_meta_post_raw', '_geditorial_meta_post_raw' );
+	}
+
+	public function sanitize_post_meta( $postmeta, $fields, $post_id, $post_type )
+	{
+		if ( wp_verify_nonce( @$_REQUEST['_geditorial_meta_post_main'], 'geditorial_meta_post_main' )
+			|| wp_verify_nonce( @$_REQUEST['_geditorial_meta_post_raw'], 'geditorial_meta_post_raw' ) ) {
+
+			$fields = $this->post_type_field_types( $post_type );
+
+			if ( count( $fields ) ) {
+
+				foreach ( $fields as $field => $args ) {
+
+					switch ( $args['type'] ) {
+
+						case 'term':
+							gEditorialHelper::set_postmeta_field_term( $post_id, $field, $args['tax'] );
+						break;
+
+						case 'link':
+							gEditorialHelper::set_postmeta_field_url( $postmeta, $field );
+						break;
+
+						case 'number':
+							gEditorialHelper::set_postmeta_field_number( $postmeta, $field );
+						break;
+
+						case 'text':
+						case 'title_before':
+						case 'title_after':
+
+						case 'textarea':
+						case 'box':
+							gEditorialHelper::set_postmeta_field_string( $postmeta, $field );
+						break;
+					}
+				}
+			}
+		}
+
+		return $postmeta;
+	}
+
+	public function default_meta_box_old( $post, $box )
 	{
 		$ch_override = FALSE;
 		$fields      = $this->post_type_fields( $post->post_type );
@@ -240,12 +374,12 @@ class gEditorialMeta extends gEditorialModuleCore
 
 		do_action( 'geditorial_meta_box_after', $this->module, $post, $fields );
 
-		wp_nonce_field( 'geditorial_meta_post_main', '_geditorial_meta_post_main' );
+		wp_nonce_field( 'geditorial_meta_post_main_old', '_geditorial_meta_post_main_old' );
 
 		echo '</div>';
 	}
 
-	public function default_meta_raw( $post )
+	public function default_meta_raw_old( $post )
 	{
 		$fields = $this->post_type_fields( $post->post_type );
 
@@ -255,12 +389,7 @@ class gEditorialMeta extends gEditorialModuleCore
 
 		do_action( 'geditorial_meta_box_raw', $this->module, $post, $fields );
 
-		wp_nonce_field( 'geditorial_meta_post_raw', '_geditorial_meta_post_raw' );
-	}
-
-	public function edit_form_after_title()
-	{
-		echo 'edit_form_after_title';
+		wp_nonce_field( 'geditorial_meta_post_raw_old', '_geditorial_meta_post_raw_old' );
 	}
 
 	public function save_post( $post_id, $post )
@@ -271,7 +400,7 @@ class gEditorialMeta extends gEditorialModuleCore
 		// NOUNCES MUST CHECKED BY FILTERS
 		// CAPABILITIES MUST CHECKED BY FILTERS : if (current_user_can($post->cap->edit_post, $post_id))
 
-		$postmeta = $this->sanitize_post_meta(
+		$postmeta = $this->sanitize_post_meta_old(
 			$this->get_postmeta( $post_id ),
 			$this->post_type_fields( $post->post_type ),
 			$post_id,
@@ -284,10 +413,10 @@ class gEditorialMeta extends gEditorialModuleCore
 		return $post_id;
 	}
 
-	private function sanitize_post_meta( $postmeta, $fields, $post_id, $post_type )
+	private function sanitize_post_meta_old( $postmeta, $fields, $post_id, $post_type )
 	{
-		if ( wp_verify_nonce( @$_REQUEST['_geditorial_meta_post_main'], 'geditorial_meta_post_main' )
-			|| wp_verify_nonce( @$_REQUEST['_geditorial_meta_post_raw'], 'geditorial_meta_post_raw' ) ) {
+		if ( wp_verify_nonce( @$_REQUEST['_geditorial_meta_post_main_old'], 'geditorial_meta_post_main_old' )
+			|| wp_verify_nonce( @$_REQUEST['_geditorial_meta_post_raw_old'], 'geditorial_meta_post_raw_old' ) ) {
 
 			foreach ( $fields as $field ) {
 				switch ( $field ) {
@@ -406,7 +535,7 @@ class gEditorialMeta extends gEditorialModuleCore
 			}
 		}
 
-		wp_nonce_field( 'geditorial_meta_post_raw', '_geditorial_meta_post_raw' );
+		wp_nonce_field( 'geditorial_meta_post_raw_old', '_geditorial_meta_post_raw_old' );
 	}
 
 	public function tools_messages( $messages, $sub )
