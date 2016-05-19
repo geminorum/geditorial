@@ -25,7 +25,7 @@ jQuery(document).ready(function($) {
 		return false;
 	});
 
-	/* Set classes on Edit Comments */
+	// Set classes on Edit Comments
 	$('.geditorial-comments-row-action.feature').each(function() {
 		$this = $(this);
 		$tr = $(this).parents('tr');

@@ -13,7 +13,8 @@ jQuery(document).ready(function($) {
 		$("ol.geditorial-specs-list .item-body").slideUp();
 		var row = $('ul.geditorial-specs-new li').clone(true);
 		var selectedTitle = $(this).find(":selected").text();
-		$(this).find(":selected").remove();
+		// $(this).find(":selected").remove();
+		$(this).find(":selected").attr("disabled", "disabled");
 
 		row.find('select.item-dropdown-new').removeClass('item-dropdown-new');
 		row.find('span.item-excerpt').html(selectedTitle);
@@ -27,6 +28,7 @@ jQuery(document).ready(function($) {
 
 	$('body').on('click', 'ol.geditorial-specs-list .item-delete', function(e) {
 		e.preventDefault();
+		// FIXME: must remove disable from ul selector
 		$(this).closest('li').slideUp('normal', function() {
 			$(this).remove();
 		});

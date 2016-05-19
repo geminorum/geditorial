@@ -23,7 +23,7 @@ jQuery(document).ready(function($) {
 		var $input = $('<input class="category-search" type="search" value="" placeholder="' + gEditorial.tweaks.strings.search_placeholder + '" title="' + gEditorial.tweaks.strings.search_title + '" />');
 
 		$('.inside > div.categorydiv').each(function() {
-			
+
 			var $tax = $(this),
 				$row = $input.clone(true);
 
