@@ -207,6 +207,7 @@ class gEditorialHelper extends gEditorialBaseCore
 		}
 	}
 
+	// FIXME: must be box field
 	public static function meta_admin_text_field( $field, $fields, $post, $ltr = FALSE, $title = NULL, $key = FALSE )
 	{
 		global $gEditorial;
@@ -823,25 +824,9 @@ class gEditorialHelper extends gEditorialBaseCore
 						'context' => 'help_tab',
 					) ),
 				);
-
 		}
 
 		return $tabs;
-	}
-
-	// https://codex.wordpress.org/Javascript_Reference/ThickBox
-	public static function thickBoxTest()
-	{
-		add_thickbox();
-
-		?><div id="my-content-id" style="display:none;">
-		 <p> This is my hidden content! It will appear in ThickBox when the link is clicked.</p>
-	</div>
-	<br />
-	<a href="#TB_inline?width=600&height=150&inlineId=my-content-id" class="thickbox button">View my inline content!</a>
-
-	<a href="http://localhost/wpn/wp-admin/network/plugin-install.php?tab=plugin-information&amp;plugin=buddypress&amp;TB_iframe=true&amp;width=772&amp;height=261" class="thickbox button" aria-label="More information about BuddyPress 2.3.4" data-title="BuddyPress 2.3.4">More Details</a>
-	<?php
 	}
 }
 
