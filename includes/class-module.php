@@ -1727,27 +1727,25 @@ class gEditorialModuleCore extends gEditorialBaseCore
 		return self::getCurrentPostType() == $this->constant( $constant_key );
 	}
 
-	// @SEE: http://tommcfarlin.com/save-custom-post-meta/
-	// @SEE: https://gist.github.com/tommcfarlin/4468321
 	public function is_save_post( $post, $constant_key = FALSE )
 	{
-		// if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
 		if ( wp_is_post_autosave( $post ) )
 			return FALSE;
 
-		// if ( $post->post_type == 'revision' )
 		if ( wp_is_post_revision( $post ) )
 			return FALSE;
 
-		// FIXME: is this necessary?
 		if ( empty( $_POST ) )
 			return FALSE;
 
-		if ( is_array( $constant_key ) && ! in_array( $post->post_type, $constant_key ) )
-			return FALSE;
+		if ( is_array( $constant_key )
+			&& ! in_array( $post->post_type, $constant_key ) )
+				return FALSE;
 
-		if ( $constant_key && ! is_array( $constant_key ) && $post->post_type != $this->constant( $constant_key ) )
-			return FALSE;
+		if ( $constant_key
+			&& ! is_array( $constant_key )
+			&& $post->post_type != $this->constant( $constant_key ) )
+				return FALSE;
 
 		return TRUE;
 	}
