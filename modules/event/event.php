@@ -57,7 +57,9 @@ class gEditorialEvent extends gEditorialModuleCore
 		return array(
 			'misc' => array(
 				'event_cpt' => array(
-					'meta_box_title'           => _x( 'Date & Times', 'Event Module: Meta Box Title', GEDITORIAL_TEXTDOMAIN ),
+					'featured'       => _x( 'Poster Image', 'Event Module: Event CPT: Featured', GEDITORIAL_TEXTDOMAIN ),
+					'meta_box_title' => _x( 'Date & Times', 'Event Module: Event CPT: Meta Box Title', GEDITORIAL_TEXTDOMAIN ),
+					
 					'event_dates_column_title' => _x( 'Dates', 'Event Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
 					'event_times_column_title' => _x( 'Times', 'Event Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
 				),
@@ -68,20 +70,13 @@ class gEditorialEvent extends gEditorialModuleCore
 					'meta_box_title' => _x( 'Calendars', 'Event Module: Meta Box Title', GEDITORIAL_TEXTDOMAIN ),
 				),
 			),
+			'noops' => array(
+				'event_cpt' => _nx_noop( 'Event',          'Events',           'Event Module: Noop', GEDITORIAL_TEXTDOMAIN ),
+				'event_tag' => _nx_noop( 'Event Type',     'Event Types',      'Event Module: Noop', GEDITORIAL_TEXTDOMAIN ),
+				'event_cat' => _nx_noop( 'Event Category', 'Event Categories', 'Event Module: Noop', GEDITORIAL_TEXTDOMAIN ),
+				'cal_tax'   => _nx_noop( 'Event Calendar', 'Event Calendars',  'Event Module: Noop', GEDITORIAL_TEXTDOMAIN ),
+			),
 			'labels' => array(
-				'event_cpt' => gEditorialHelper::generatePostTypeLabels(
-					_nx_noop( 'Event', 'Events', 'Event Module: Event CPT Labels: Name', GEDITORIAL_TEXTDOMAIN ),
-					_x( 'Poster Image', 'Event Module: Event CPT Labels: Featured', GEDITORIAL_TEXTDOMAIN )
-				),
-				'event_tag' => gEditorialHelper::generateTaxonomyLabels(
-					_nx_noop( 'Event Type', 'Event Types', 'Event Module: Event Type Tax Labels: Name', GEDITORIAL_TEXTDOMAIN )
-				),
-				'event_cat' => gEditorialHelper::generateTaxonomyLabels(
-					_nx_noop( 'Event Category', 'Event Categories', 'Event Module: Event Category Tax Labels: Name', GEDITORIAL_TEXTDOMAIN )
-				),
-				'cal_tax' => gEditorialHelper::generateTaxonomyLabels(
-					_nx_noop( 'Event Calendar', 'Event Calendars', 'Event Module: Calendar Tax Labels: Name', GEDITORIAL_TEXTDOMAIN )
-				),
 				'type_tax' => array(
 					'name' => _x( 'Calendar Types', 'Event Module: Calendar Type Tax Labels: Name', GEDITORIAL_TEXTDOMAIN ),
 				),
@@ -238,6 +233,12 @@ class gEditorialEvent extends gEditorialModuleCore
 		);
 
 		return self::recursiveParseArgs( $new, $strings );
+	}
+	
+	public function dashboard_glance_items( $items )
+	{
+		$items[] = $this->dashboard_glance_post( 'event_cpt' );
+		return $items;
 	}
 
 	public function save_post_main_cpt( $post_ID, $post, $update )
