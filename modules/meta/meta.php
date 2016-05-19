@@ -159,9 +159,6 @@ class gEditorialMeta extends gEditorialModuleCore
 
 	public function admin_init()
 	{
-		if ( current_user_can( 'import' ) )
-			add_action( 'geditorial_tools_settings', array( $this, 'tools_settings' ) );
-
 		add_action( 'admin_print_styles', array( $this, 'admin_print_styles' ) );
 
 		add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ), 20, 2 );

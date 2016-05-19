@@ -11,6 +11,7 @@ class gEditorialModuleCore extends gEditorialBaseCore
 
 	protected $cookie     = 'geditorial';
 	protected $field_type = 'meta';
+	protected $tools_cap  = 'import';
 
 	protected $priority_init = 10;
 
@@ -95,6 +96,9 @@ class gEditorialModuleCore extends gEditorialBaseCore
 				add_action( 'current_screen', array( $this, 'current_screen' ) );
 
 			add_action( 'geditorial_settings_load', array( $this, 'register_settings' ) );
+
+			if ( method_exists( $this, 'tools_settings' ) && current_user_can( $this->tools_cap ) )
+				add_action( 'geditorial_tools_settings', array( $this, 'tools_settings' ) );
 		}
 	}
 

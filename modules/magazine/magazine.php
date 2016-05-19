@@ -3,8 +3,9 @@
 class gEditorialMagazine extends gEditorialModuleCore
 {
 
-	public $meta_key    = '_ge_magazine';
-	protected $root_key = 'GEDITORIAL_MAGAZINE_ROOT_BLOG';
+	public $meta_key     = '_ge_magazine';
+	protected $root_key  = 'GEDITORIAL_MAGAZINE_ROOT_BLOG';
+	protected $tools_cap = 'edit_others_posts';
 
 	public static function module()
 	{
@@ -241,9 +242,6 @@ class gEditorialMagazine extends gEditorialModuleCore
 	public function admin_init()
 	{
 		$issue_cpt = $this->constant( 'issue_cpt' );
-
-		if ( current_user_can( 'edit_others_posts' ) )
-			add_action( 'geditorial_tools_settings', array( $this, 'tools_settings' ) );
 
 		add_filter( 'post_updated_messages', array( $this, 'post_updated_messages' ) );
 
