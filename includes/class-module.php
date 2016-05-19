@@ -40,6 +40,9 @@ class gEditorialModuleCore extends gEditorialBaseCore
 
 		else
 			$this->setup();
+
+		if ( self::isAJAX() && method_exists( $this, 'setup_ajax' ) )
+			$this->setup_ajax( $_REQUEST );
 	}
 
 	// DEFAULT METHOD
