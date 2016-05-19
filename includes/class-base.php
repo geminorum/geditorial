@@ -550,6 +550,14 @@ class gEditorialBaseCore
 		return $text;
 	}
 
+	public static function isDebug()
+	{
+		if ( WP_DEBUG && WP_DEBUG_DISPLAY && ! self::isDev() )
+			return TRUE;
+
+		return FALSE;
+	}
+
 	public static function isDev()
 	{
 		if ( defined( 'WP_STAGE' )
@@ -559,12 +567,27 @@ class gEditorialBaseCore
 		return FALSE;
 	}
 
-	public static function isDebug()
+	public static function isFlush()
 	{
-		if ( WP_DEBUG && WP_DEBUG_DISPLAY && ! self::isDev() )
-			return TRUE;
+		if ( isset( $_GET['flush'] ) )
+			return did_action( 'init' ) && current_user_can( 'publish_posts' );
 
 		return FALSE;
+	}
+
+	public static function isAJAX()
+	{
+		return defined( 'DOING_AJAX' ) && DOING_AJAX;
+	}
+
+	public static function isCRON()
+	{
+		return defined( 'DOING_CRON' ) && DOING_CRON;
+	}
+
+	public static function isCLI()
+	{
+		return defined( 'WP_CLI' ) && WP_CLI;
 	}
 
 	// @REF: https://codex.wordpress.org/Plugin_API/Action_Reference/admin_notices
