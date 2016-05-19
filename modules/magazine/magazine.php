@@ -88,7 +88,9 @@ class gEditorialMagazine extends gEditorialModuleCore
 			),
 			'misc' => array(
 				'issue_cpt' => array(
-					'meta_box_title'        => __( 'Metadata', GEDITORIAL_TEXTDOMAIN ),
+					'featured'       => _x( 'Cover Image', 'Magazine Module: Issue CPT: Featured', GEDITORIAL_TEXTDOMAIN ),
+					'meta_box_title' => _x( 'Metadata',    'Magazine Module: Issue CPT: Meta Box Title', GEDITORIAL_TEXTDOMAIN ),
+
 					'cover_column_title'    => _x( 'Cover', 'Magazine Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
 					'order_column_title'    => _x( 'O', 'Magazine Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
 					'children_column_title' => _x( 'Posts', 'Magazine Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
@@ -96,22 +98,10 @@ class gEditorialMagazine extends gEditorialModuleCore
 				'meta_box_title' => _x( 'Issues', 'Magazine Module', GEDITORIAL_TEXTDOMAIN ),
 			),
 			'noops' => array(
-				'issue_cpt' => _nx_noop( 'Issue', 'Issues', 'Magazine Module: Noop', GEDITORIAL_TEXTDOMAIN ),
-			),
-			'labels' => array(
-				'issue_cpt' => gEditorialHelper::generatePostTypeLabels(
-					_nx_noop( 'Issue', 'Issues', 'Magazine Module: Issue CPT Labels: Name', GEDITORIAL_TEXTDOMAIN ),
-					_x( 'Cover Image', 'Magazine Module: Issue CPT Labels: Featured', GEDITORIAL_TEXTDOMAIN )
-				),
-				'issue_tax' => gEditorialHelper::generateTaxonomyLabels(
-					_nx_noop( 'Issue', 'Issues', 'Magazine Module: Issue Tax Labels: Name', GEDITORIAL_TEXTDOMAIN )
-				),
-				'span_tax' => gEditorialHelper::generateTaxonomyLabels(
-					_nx_noop( 'Span', 'Spans', 'Magazine Module: Span Tax Labels: Name', GEDITORIAL_TEXTDOMAIN )
-				),
-				'section_tax' => gEditorialHelper::generateTaxonomyLabels(
-					_nx_noop( 'Section', 'Sections', 'Magazine Module: Section Tax Labels: Name', GEDITORIAL_TEXTDOMAIN )
-				),
+				'issue_cpt'   => _nx_noop( 'Issue',   'Issues',   'Magazine Module: Noop', GEDITORIAL_TEXTDOMAIN ),
+				'issue_tax'   => _nx_noop( 'Issue',   'Issues',   'Magazine Module: Noop', GEDITORIAL_TEXTDOMAIN ),
+				'span_tax'    => _nx_noop( 'Span',    'Spans',    'Magazine Module: Noop', GEDITORIAL_TEXTDOMAIN ),
+				'section_tax' => _nx_noop( 'Section', 'Sections', 'Magazine Module: Noop', GEDITORIAL_TEXTDOMAIN ),
 			),
 			'p2p' => array(
 				'issue_cpt' => array(
@@ -922,13 +912,14 @@ class gEditorialMagazine extends gEditorialModuleCore
 
 				echo '<br />';
 			}
-				submit_button( _x( 'Check Terms', 'Magazine Module', GEDITORIAL_TEXTDOMAIN ), 'secondary', 'issue_tax_check', FALSE, array( 'default' => 'default' ) ); echo '&nbsp;&nbsp;';
-				submit_button( _x( 'Create Issue', 'Magazine Module', GEDITORIAL_TEXTDOMAIN ), 'secondary', 'issue_post_create', FALSE  ); echo '&nbsp;&nbsp;';
-				submit_button( _x( 'Store Orders', 'Magazine Module', GEDITORIAL_TEXTDOMAIN ), 'secondary', 'issue_store_order', FALSE  ); //echo '&nbsp;&nbsp;';
 
-				echo self::html( 'p', array(
-					'class' => 'description',
-				), _x( 'Check for issue terms and create corresponding issue posts.', 'Magazine Module', GEDITORIAL_TEXTDOMAIN ) );
+			submit_button( _x( 'Check Terms', 'Magazine Module', GEDITORIAL_TEXTDOMAIN ), 'secondary', 'issue_tax_check', FALSE, array( 'default' => 'default' ) ); echo '&nbsp;&nbsp;';
+			submit_button( _x( 'Create Issue', 'Magazine Module', GEDITORIAL_TEXTDOMAIN ), 'secondary', 'issue_post_create', FALSE  ); echo '&nbsp;&nbsp;';
+			submit_button( _x( 'Store Orders', 'Magazine Module', GEDITORIAL_TEXTDOMAIN ), 'secondary', 'issue_store_order', FALSE  ); //echo '&nbsp;&nbsp;';
+
+			echo self::html( 'p', array(
+				'class' => 'description',
+			), _x( 'Check for issue terms and create corresponding issue posts.', 'Magazine Module', GEDITORIAL_TEXTDOMAIN ) );
 
 			echo '</td></tr>';
 			echo '</table>';
