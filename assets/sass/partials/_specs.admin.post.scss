@@ -63,23 +63,22 @@
 			.field-wrap-group {
 				margin: 3px 3px 2px 3px;
 
-				.field-wrap {
-
-				}
+				.field-wrap {}
 
 				.field-wrap-textarea {
-					margin-bottom: 0px;
+					margin-bottom: 0;
 				}
 			}
 		}
 	}
 
 	ul {
+		margin-bottom: 0;
+
 		.dashicons,
 		.dashicons-before:before,
 		.field-wrap-textarea,
-		.field-wrap-inputtext
-		{
+		.field-wrap-inputtext {
 			display: none;
 		}
 	}
@@ -95,6 +94,7 @@ body.dragging * {
 	top: 0;
 	opacity: .7;
 	z-index: 2000;
+	
 	@include body-rtl() {
 		right: 0;
 	}
