@@ -65,6 +65,7 @@ class gEditorialHelper extends gEditorialBaseCore
 					'title'        => $title,
 					'placeholder'  => $title,
 					'readonly'     => ! $gEditorial->meta->user_can( 'edit', $field ),
+					'data'         => array( 'virastar' => 'text' ),
 				);
 
 				if ( $ltr )
@@ -154,15 +155,16 @@ class gEditorialHelper extends gEditorialBaseCore
 					$title = $gEditorial->meta->get_string( $field, $post->post_type );
 
 				$atts = array(
-					// 'rows'         => '5',
+					// 'rows'         => '1',
 					// 'cols'         => '40',
-					'class'        => 'geditorial-meta-field-'.$field,
-					'name'         => 'geditorial-meta-'.$field.( FALSE === $key ? '' : '['.$key.']' ),
-					'id'           => 'geditorial-meta-'.$field.( FALSE === $key ? '' : '-'.$key ),
-					'title'        => $title,
-					'placeholder'  => $title,
-					'readonly'     => ! $gEditorial->meta->user_can( 'edit', $field ),
-					'tabindex'     => '0',
+					'class'       => 'geditorial-meta-field-'.$field,
+					'name'        => 'geditorial-meta-'.$field.( FALSE === $key ? '' : '['.$key.']' ),
+					'id'          => 'geditorial-meta-'.$field.( FALSE === $key ? '' : '-'.$key ),
+					'title'       => $title,
+					'placeholder' => $title,
+					'readonly'    => ! $gEditorial->meta->user_can( 'edit', $field ),
+					'tabindex'    => '0',
+					'data'        => array( 'virastar' => 'html' ),
 				);
 
 				if ( $ltr )
@@ -198,6 +200,7 @@ class gEditorialHelper extends gEditorialBaseCore
 					'placeholder'  => $title,
 					'readonly'     => ! $gEditorial->meta->user_can( 'edit', $field ),
 					'tabindex'     => '0',
+					'data'         => array( 'virastar' => 'text' ),
 				);
 
 				if ( $ltr )
@@ -207,8 +210,8 @@ class gEditorialHelper extends gEditorialBaseCore
 		}
 	}
 
-	// FIXME: must be box field
-	public static function meta_admin_text_field( $field, $fields, $post, $ltr = FALSE, $title = NULL, $key = FALSE )
+	// OLD: meta_admin_text_field()
+	public static function meta_admin_box_field( $field, $fields, $post, $ltr = FALSE, $title = NULL, $key = FALSE )
 	{
 		global $gEditorial;
 
@@ -219,8 +222,15 @@ class gEditorialHelper extends gEditorialBaseCore
 					$title = $gEditorial->meta->get_string( $field, $post->post_type );
 
 				$html  = '<div id="geditorial-meta-'.$field.'-wrap" class="postbox geditorial-admin-postbox geditorial-meta-field-'.$field.'">';
-				$html .= '<div class="handlediv" title="'.esc_attr( _x( 'Click to toggle', 'Module Helper', GEDITORIAL_TEXTDOMAIN ) ).'"><br /></div><h2 class="hndle"><span>'.$title.'</span></h2>';
-				$html .= '<div class="inside geditorial-wordcount-wrap"><label class="screen-reader-text" for="geditorial-meta-'.$field.'">'.$title.'</label>';
+				$html .= '<button type="button" class="handlediv button-link" aria-expanded="true">';
+				$html .= '<span class="screen-reader-text">'.esc_attr_x( 'Click to toggle', 'Module Helper', GEDITORIAL_TEXTDOMAIN ).'</span>';
+				$html .= '<span class="toggle-indicator" aria-hidden="true"></span></button>';
+				$html .= '<h2 class="hndle ui-sortable-handle"><span>'.$title.'</span></h2>';
+				$html .= '<div class="inside">';
+
+				$html .= '<div class="geditorial-admin-wrap-textbox geditorial-wordcount-wrap">';
+				$html .= '<label class="screen-reader-text" for="geditorial-meta-'.$field.'">'.$title.'</label>';
+				$html .= '<div class="field-wrap field-wrap-textarea">';
 
 				$html .= self::html( 'textarea', array(
 					'rows'     => '1',
@@ -230,11 +240,12 @@ class gEditorialHelper extends gEditorialBaseCore
 					'class'    => 'textarea-autosize geditorial-meta-field-'.$field,
 					'readonly' => ! $gEditorial->meta->user_can( 'edit', $field ),
 					'tabindex' => '0',
+					'data'     => array( 'virastar' => 'html' ),
 				), esc_textarea( $gEditorial->meta->get_postmeta( $post->ID, $field ) ) );
 
 				$html .= self::htmlWordCount( ( 'geditorial-meta-'.$field.( FALSE === $key ? '' : '-'.$key ) ), $post->post_type );
 
-				$html .= '</div></div>';
+				$html .= '</div></div></div>';
 
 				echo $html;
 		}

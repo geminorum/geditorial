@@ -278,7 +278,7 @@ class gEditorialMeta extends gEditorialModuleCore
 					break;
 
 					case 'box':
-						gEditorialHelper::meta_admin_text_field( $field, array( $field ), $post, $args['ltr'], $args['title'] );
+						gEditorialHelper::meta_admin_box_field( $field, array( $field ), $post, $args['ltr'], $args['title'] );
 					break;
 				}
 			}
@@ -385,7 +385,7 @@ class gEditorialMeta extends gEditorialModuleCore
 
 		gEditorialHelper::meta_admin_title_field( 'ot', $fields, $post );
 		gEditorialHelper::meta_admin_title_field( 'st', $fields, $post );
-		gEditorialHelper::meta_admin_text_field( 'le', $fields, $post );
+		gEditorialHelper::meta_admin_box_field( 'le', $fields, $post );
 
 		do_action( 'geditorial_meta_box_raw', $this->module, $post, $fields );
 
