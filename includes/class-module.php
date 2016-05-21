@@ -100,7 +100,7 @@ class gEditorialModuleCore extends gEditorialBaseCore
 
 			add_action( 'geditorial_settings_load', array( $this, 'register_settings' ) );
 
-			if ( method_exists( $this, 'tools_settings' ) && current_user_can( $this->tools_cap ) )
+			if ( method_exists( $this, 'tools_settings' ) )
 				add_action( 'geditorial_tools_settings', array( $this, 'tools_settings' ) );
 		}
 	}

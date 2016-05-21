@@ -624,6 +624,9 @@ class gEditorialMeta extends gEditorialModuleCore
 
 	public function tools_settings( $sub )
 	{
+		if ( ! current_user_can( $this->tools_cap ) )
+			return;
+
 		if ( $this->module->name == $sub ) {
 			if ( ! empty( $_POST ) ) {
 
