@@ -45,6 +45,9 @@ class gEditorialMeta extends gEditorialModuleCore
 					'ch_override' => __( 'Column Header Override', GEDITORIAL_TEXTDOMAIN ),
 					'es'          => __( 'External Link', GEDITORIAL_TEXTDOMAIN ),
 					'ol'          => __( 'Old Link', GEDITORIAL_TEXTDOMAIN ),
+
+					'source_title' => _x( 'Source Title', 'Meta Module: Titles', GEDITORIAL_TEXTDOMAIN ),
+					'source_url'   => _x( 'Source URL', 'Meta Module: Titles', GEDITORIAL_TEXTDOMAIN ),
 				),
 			),
 			'descriptions' => array(
@@ -58,6 +61,9 @@ class gEditorialMeta extends gEditorialModuleCore
 					'ch_override' => __( 'Column Header Override', GEDITORIAL_TEXTDOMAIN ),
 					'es'          => __( 'URL of the external source of the post', GEDITORIAL_TEXTDOMAIN ),
 					'ol'          => __( 'URL of the post on a previous site', GEDITORIAL_TEXTDOMAIN ),
+
+					'source_title' => _x( 'Original Title of Source Content', 'Meta Module: Descriptions', GEDITORIAL_TEXTDOMAIN ),
+					'source_url'   => _x( 'Full URL to the Source of the Content', 'Meta Module: Descriptions', GEDITORIAL_TEXTDOMAIN ),
 				),
 			),
 			'misc' => array(
@@ -85,8 +91,11 @@ class gEditorialMeta extends gEditorialModuleCore
 					'tax'  => $this->constant( 'ct_tax' ),
 				),
 				'ch' => array( 'type' => 'text' ),
-				'es' => array( 'type' => 'link' ),
-				'ol' => array( 'type' => 'link' ),
+				'es' => array( 'type' => 'link' ), // FIXME: DEPRICATED
+				'ol' => array( 'type' => 'link' ), // FIXME: DEPRICATED
+
+				'source_title' => array( 'type' => 'text' ),
+				'source_url'   => array( 'type' => 'link' ),
 			),
 			'page' => array(
 				'ot' => array( 'type' => 'title_before' ),
