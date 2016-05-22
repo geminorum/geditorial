@@ -392,6 +392,34 @@ class gEditorialMeta extends gEditorialModuleCore
 		wp_nonce_field( 'geditorial_meta_post_raw_old', '_geditorial_meta_post_raw_old' );
 	}
 
+	public function sanitize_meta_field( $field )
+	{
+		if ( is_array( $field ) )
+			return $field;
+
+		$fields = array(
+			'ot'                   => array( 'over_title', 'ot' ),
+			'st'                   => array( 'sub_title', 'st' ),
+			'over_title'           => array( 'over_title', 'ot' ),
+			'sub_title'            => array( 'sub_title', 'st' ),
+			'issue_number_line'    => array( 'number_line', 'issue_number_line' ),
+			'issue_total_pages'    => array( 'total_pages', 'issue_total_pages' ),
+			'number_line'          => array( 'number_line', 'issue_number_line' ),
+			'total_pages'          => array( 'total_pages', 'issue_total_pages' ),
+			'reshare_source_title' => array( 'source_title', 'reshare_source_title' ),
+			'reshare_source_url'   => array( 'source_url', 'reshare_source_url' ),
+			'source_title'         => array( 'source_title', 'reshare_source_title' ),
+			'source_url'           => array( 'source_url', 'reshare_source_url', 'es', 'ol' ),
+			'es'                   => array( 'source_url', 'es' ),
+			'ol'                   => array( 'source_url', 'ol' ),
+		);
+
+		if ( isset( $fields[$field] ) )
+			return $fields[$field];
+
+		return array( $field );
+	}
+
 	public function save_post( $post_id, $post )
 	{
 		if ( ! $this->is_save_post( $post, $this->post_types() ) )

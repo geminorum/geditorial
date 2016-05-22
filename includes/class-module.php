@@ -292,10 +292,16 @@ class gEditorialModuleCore extends gEditorialBaseCore
 		if ( FALSE === $field )
 			return $postmeta;
 
-		if ( isset( $postmeta[$field] ) )
-			return $postmeta[$field];
+		foreach ( $this->sanitize_meta_field( $field ) as $field_key )
+			if ( isset( $postmeta[$field_key] ) )
+				return $postmeta[$field_key];
 
 		return $default;
+	}
+
+	public function sanitize_meta_field( $field )
+	{
+		return (array) $field;
 	}
 
 	public function set_meta( $post_id, $postmeta, $key_suffix = '' )
