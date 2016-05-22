@@ -131,8 +131,8 @@ class gEditorialTweaks extends gEditorialModuleCore
 						$this->enqueue_asset_js( array(
 							'settings' => $this->options->settings,
 							'strings'  => array(
-								'search_title'       => $this->get_string( 'meta_box_search_title', 'post', 'misc' ),
-								'search_placeholder' => $this->get_string( 'meta_box_search_placeholder', 'post', 'misc' ),
+								'search_title'       => $this->get_string( 'meta_box_search_title', $screen->post_type, 'misc' ),
+								'search_placeholder' => $this->get_string( 'meta_box_search_placeholder', $screen->post_type, 'misc' ),
 							),
 						), 'tweaks.post' );
 
