@@ -610,7 +610,6 @@ class gEditorialBaseCore
 	public static function updated( $message, $echo = FALSE )
 	{
 		self::__dev_dep( 'self::success()' );
-
 		return self::notice( $message, 'notice-success fade', $echo );
 	}
 

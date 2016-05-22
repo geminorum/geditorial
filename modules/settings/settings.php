@@ -273,7 +273,7 @@ class gEditorialSettings extends gEditorialModuleCore
 				$enabled = 'enable' == sanitize_key( $_POST['module_action'] ) ? TRUE : FALSE;
 
 				if ( $gEditorial->update_module_option( $module->name, 'enabled', $enabled ) )
-					wp_send_json_success( self::updated( _x( 'Module state succesfully changed', 'Settings Module: Ajax Notice', GEDITORIAL_TEXTDOMAIN ) ) );
+					wp_send_json_success( self::success( _x( 'Module state succesfully changed', 'Settings Module: Ajax Notice', GEDITORIAL_TEXTDOMAIN ) ) );
 				else
 					wp_send_json_error( self::error( _x( 'Cannot change module state', 'Settings Module: Ajax Notice', GEDITORIAL_TEXTDOMAIN ) ) );
 

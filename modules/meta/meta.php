@@ -544,8 +544,9 @@ class gEditorialMeta extends gEditorialModuleCore
 
 			if ( isset( $_REQUEST['field'] ) && $_REQUEST['field'] ) {
 				$field = $this->get_string( $_REQUEST['field'] );
-				$messages['converted'] = self::updated( sprintf( __( 'Field %s Converted', GEDITORIAL_TEXTDOMAIN ), $field ) );
-				$messages['deleted'] = self::updated( sprintf( __( 'Field %s Deleted', GEDITORIAL_TEXTDOMAIN ), $field ) );
+
+				$messages['converted'] = self::success( sprintf( __( 'Field %s Converted', GEDITORIAL_TEXTDOMAIN ), $field ) );
+				$messages['deleted']   = self::success( sprintf( __( 'Field %s Deleted', GEDITORIAL_TEXTDOMAIN ), $field ) );
 
 			} else {
 				$messages['converted'] = $messages['deleted'] = self::error( __( 'No Field', GEDITORIAL_TEXTDOMAIN ) );
