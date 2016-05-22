@@ -1,28 +1,34 @@
 {
-	"name": "geditorial",
-	"private": true,
-	"dependencies": {
-		"jquery-colorbox": "latest",
-		"jquery-sortable": "latest",
-		"jcarousel": "latest",
-		"lity": "latest"
-	},
-	"devDependencies": {},
-	"install" : {
-		"path" : "assets/packages",
-		"ignore": ["jquery"],
-		"sources": {
-			"jquery-colorbox": [
-				"assets/components/jquery-colorbox/jquery.colorbox.js",
-				"assets/components/jquery-colorbox/jquery.colorbox-min.js",
-				"assets/components/jquery-colorbox/example3/colorbox.css",
-				"assets/components/jquery-colorbox/example3/images/controls.png",
-				"assets/components/jquery-colorbox/example3/images/loading.gif"
-			],
-			"jquery-sortable": [
-				"assets/components/jquery-sortable/source/js/jquery-sortable.js",
-				"assets/components/jquery-sortable/source/js/jquery-sortable-min.js"
-			]
-		}
-	}
+  "name": "geditorial",
+  "private": true,
+  "dependencies": {
+    "jquery-colorbox": "latest",
+    "jquery-sortable": "latest",
+    "jcarousel": "latest",
+    "lity": "latest",
+    "virastar": "https://github.com/juvee/virastar.git"
+  },
+  "devDependencies": {},
+  "install": {
+    "path": "assets/packages",
+    "ignore": [
+      "jquery"
+    ],
+    "sources": {
+      "virastar": [
+        "assets/components/virastar/lib/virastar.js"
+      ],
+      "jquery-colorbox": [
+        "assets/components/jquery-colorbox/jquery.colorbox.js",
+        "assets/components/jquery-colorbox/jquery.colorbox-min.js",
+        "assets/components/jquery-colorbox/example3/colorbox.css",
+        "assets/components/jquery-colorbox/example3/images/controls.png",
+        "assets/components/jquery-colorbox/example3/images/loading.gif"
+      ],
+      "jquery-sortable": [
+        "assets/components/jquery-sortable/source/js/jquery-sortable.js",
+        "assets/components/jquery-sortable/source/js/jquery-sortable-min.js"
+      ]
+    }
+  }
 }

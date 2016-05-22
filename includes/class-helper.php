@@ -334,8 +334,8 @@ class gEditorialHelper extends gEditorialBaseCore
 
 	public static function registerColorBox()
 	{
-		wp_register_style( 'jquery-colorbox', GEDITORIAL_URL.'assets/css/admin.colorbox.css', array(), '1.6.3', 'screen' );
-		wp_register_script( 'jquery-colorbox', GEDITORIAL_URL.'assets/packages/jquery-colorbox/jquery.colorbox-min.js', array( 'jquery'), '1.6.3', TRUE );
+		wp_register_style( 'jquery-colorbox', GEDITORIAL_URL.'assets/css/admin.colorbox.css', array(), '1.6.4', 'screen' );
+		wp_register_script( 'jquery-colorbox', GEDITORIAL_URL.'assets/packages/jquery-colorbox/jquery.colorbox-min.js', array( 'jquery' ), '1.6.4', TRUE );
 	}
 
 	public static function enqueueColorBox()
