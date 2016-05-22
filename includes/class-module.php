@@ -609,28 +609,17 @@ class gEditorialModuleCore extends gEditorialBaseCore
 		$all = $this->post_type_all_fields( $post_type );
 		$enabled = $this->post_type_fields( $post_type );
 
-		foreach ( $enabled as $i => $field ) {
-			$row = array();
-
-			if ( ! empty( $all[$field]['title'] ) )
-				$row['title'] = $all[$field]['title'];
-			else
-				$row['title'] = $this->get_string( $field, $post_type, 'titles', $field );
-
-			if ( ! empty( $all[$field]['description'] ) )
-				$row['description'] = $all[$field]['description'];
-			else
-				$row['description'] = $this->get_string( $field, $post_type, 'descriptions' );
-
-			$row['type'] = empty( $all[$field]['type'] ) ? 'text' : $all[$field]['type'];
-			$row['ltr']  = empty( $all[$field]['ltr'] ) ? FALSE : $all[$field]['ltr'];
-			$row['tax']  = empty( $all[$field]['tax'] ) ? FALSE : $all[$field]['tax'];
-
-			$row['group'] = empty( $all[$field]['group'] ) ? 10 : $all[$field]['group'];
-			$row['order'] = empty( $all[$field]['order'] ) ? 10+$i : $all[$field]['order'];
-
-			$fields[$field] = $row;
-		}
+		foreach ( $enabled as $i => $field )
+			$fields[$field] = self::atts( array(
+				'title'       => $this->get_string( $field, $post_type, 'titles', $field ),
+				'description' => $this->get_string( $field, $post_type, 'descriptions' ),
+				'type'        => 'text',
+				'repeat'      => FALSE,
+				'ltr'         => FALSE,
+				'tax'         => FALSE,
+				'group'       => 10,
+				'order'       => 10+$i,
+			), ( isset( $all[$field] ) && is_array( $all[$field] ) ? $all[$field] : array() ) );
 
 		// @REF: http://stackoverflow.com/a/4582659
 		if ( $sort && count( $fields ) ) {
