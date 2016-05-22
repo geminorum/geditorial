@@ -223,8 +223,6 @@ class gEditorialContest extends gEditorialModuleCore
 	{
 		parent::setup();
 
-		add_filter( 'geditorial_meta_support_post_types', array( $this, 'meta_support_post_types' ) );
-
 		if ( is_admin() ) {
 
 			add_action( 'pre_get_posts', array( $this, 'pre_get_posts' ) );
@@ -322,7 +320,7 @@ class gEditorialContest extends gEditorialModuleCore
 		// add_action( 'geditorial_contest_supported_meta_box', array( $this, 'meta_supported_meta_box' ), 10, 2 );
 	}
 
-	public function meta_support_post_types( $post_types )
+	public function meta_post_types( $post_types )
 	{
 		return array_merge( $post_types, array(
 			$this->constant( 'contest_cpt' ),

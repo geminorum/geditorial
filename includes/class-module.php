@@ -74,6 +74,9 @@ class gEditorialModuleCore extends gEditorialBaseCore
 		if ( method_exists( $this, 'tweaks_strings' ) )
 			add_filter( 'geditorial_tweaks_strings', array( $this, 'tweaks_strings' ) );
 
+		if ( method_exists( $this, 'meta_post_types' ) )
+			add_filter( 'geditorial_meta_support_post_types', array( $this, 'meta_post_types' ) );
+
 		if ( method_exists( $this, 'gpeople_support' ) )
 			add_filter( 'gpeople_remote_support_post_types', array( $this, 'gpeople_support' ) );
 

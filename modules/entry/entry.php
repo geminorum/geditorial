@@ -84,11 +84,9 @@ class gEditorialEntry extends gEditorialModuleCore
 			'templates',
 			'helper',
 		) );
-
-		add_filter( 'geditorial_meta_support_post_types', array( $this, 'meta_support_post_types' ) );
 	}
 
-	public function meta_support_post_types( $post_types )
+	public function meta_post_types( $post_types )
 	{
 		return array_merge( $post_types, array( $this->constant( 'entry_cpt' ) ) );
 	}
