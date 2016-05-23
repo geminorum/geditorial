@@ -1729,7 +1729,7 @@ class gEditorialModuleCore extends gEditorialBaseCore
 		if ( is_null( $title ) )
 			$title = $this->get_string( 'meta_box_title', $constant_key, 'misc', _x( 'Settings', 'Module Core: MetaBox default title', GEDITORIAL_TEXTDOMAIN ) );
 
-		if ( current_user_can( $edit_cap ) && FALSE !== $url ) {
+		if ( FALSE !== $url && current_user_can( $edit_cap ) ) {
 
 			if ( is_null( $url ) )
 				$url = $this->get_url_settings();
