@@ -1682,12 +1682,13 @@ class gEditorialModuleCore extends gEditorialBaseCore
 
 	// CAUTION: tax must be cat (hierarchical)
 	// TODO: supporting tag (non-hierarchical)
-	public function add_meta_box_choose_tax( $constant_key, $post_type, $type = 'cat' )
+	public function add_meta_box_choose_tax( $constant_key, $post_type, $type = 'cat', $remove = TRUE )
 	{
 		$tax = $this->constant( $constant_key );
 		$edit_url = $this->get_url_tax_edit( $constant_key );
 
-		$this->remove_meta_box( $constant_key, $post_type, $type );
+		if ( $remove )
+			$this->remove_meta_box( $constant_key, $post_type, $type );
 
 		add_meta_box( 'geditorial-'.$this->module->name.'-'.$tax,
 			$this->get_meta_box_title( $constant_key, $edit_url, 'edit_others_posts' ),
