@@ -45,7 +45,7 @@ class gEditorialHelper extends gEditorialBaseCore
 		parent::linkStyleSheet( GEDITORIAL_URL.'assets/css/admin.'.$page.'.css', GEDITORIAL_VERSION );
 	}
 
-	public static function meta_admin_field( $field, $fields, $post, $ltr = FALSE, $title = NULL, $key = FALSE )
+	public static function meta_admin_field( $field, $fields, $post, $ltr = FALSE, $title = NULL, $key = FALSE, $type = 'text' )
 	{
 		global $gEditorial;
 
@@ -55,21 +55,32 @@ class gEditorialHelper extends gEditorialBaseCore
 				if ( is_null( $title ) )
 					$title = $gEditorial->meta->get_string( $field, $post->post_type );
 
+				$edit = $gEditorial->meta->user_can( 'edit', $field );
+
 				$atts = array(
 					'type'         => 'text',
 					'autocomplete' => 'off',
-					'class'        => 'geditorial-meta-field-'.$field,
 					'name'         => 'geditorial-meta-'.$field.( FALSE === $key ? '' : '['.$key.']' ),
 					'id'           => 'geditorial-meta-'.$field.( FALSE === $key ? '' : '-'.$key ),
 					'value'        => $gEditorial->meta->get_postmeta( $post->ID, $field ),
-					'title'        => $title,
+					'title'        => $gEditorial->meta->get_string( $field, $post->post_type, 'descriptions', $title ), // FIXME: get from fields args
 					'placeholder'  => $title,
-					'readonly'     => ! $gEditorial->meta->user_can( 'edit', $field ),
-					'data'         => array( 'virastar' => 'text' ),
+					'readonly'     => ! $edit,
+					'class'        => array(
+						'geditorial-meta-field-'.$field,
+						'geditorial-meta-type-'.$type,
+					),
+					'data' => array(
+						'meta-field' => $field,
+						'meta-type'  => $type,
+					),
 				);
 
 				if ( $ltr )
 					$atts['dir'] = 'ltr';
+
+				else if ( $edit && 'text' == $field )
+					$atts['data']['ortho'] = 'text';
 
 				$html = self::html( 'input', $atts );
 
@@ -79,7 +90,7 @@ class gEditorialHelper extends gEditorialBaseCore
 		}
 	}
 
-	public static function meta_admin_number_field( $field, $fields, $post, $ltr = TRUE, $title = NULL, $key = FALSE )
+	public static function meta_admin_number_field( $field, $fields, $post, $ltr = TRUE, $title = NULL, $key = FALSE, $type = 'number' )
 	{
 		global $gEditorial;
 
@@ -89,20 +100,32 @@ class gEditorialHelper extends gEditorialBaseCore
 				if ( is_null( $title ) )
 					$title = $gEditorial->meta->get_string( $field, $post->post_type );
 
+				$edit = $gEditorial->meta->user_can( 'edit', $field );
+
 				$atts = array(
 					'type'         => 'number',
 					'autocomplete' => 'off',
-					'class'        => 'geditorial-meta-field-'.$field,
 					'name'         => 'geditorial-meta-'.$field.( FALSE === $key ? '' : '['.$key.']' ),
 					'id'           => 'geditorial-meta-'.$field.( FALSE === $key ? '' : '-'.$key ),
 					'value'        => $gEditorial->meta->get_postmeta( $post->ID, $field ),
-					'title'        => $title,
+					'title'        => $gEditorial->meta->get_string( $field, $post->post_type, 'descriptions', $title ), // FIXME: get from fields args
 					'placeholder'  => $title,
-					'readonly'     => ! $gEditorial->meta->user_can( 'edit', $field ),
+					'readonly'     => ! $edit,
+					'class'        => array(
+						'geditorial-meta-field-'.$field,
+						'geditorial-meta-type-'.$type,
+					),
+					'data' => array(
+						'meta-field' => $field,
+						'meta-type'  => $type,
+					),
 				);
 
 				if ( $ltr )
 					$atts['dir'] = 'ltr';
+
+				if ( $edit )
+					$atts['data']['ortho'] = 'number';
 
 				$html = self::html( 'input', $atts );
 
@@ -112,19 +135,21 @@ class gEditorialHelper extends gEditorialBaseCore
 		}
 	}
 
-	public static function meta_admin_tax_field( $field, $fields, $post, $tax, $ltr = FALSE, $title = NULL, $key = FALSE )
+	public static function meta_admin_tax_field( $field, $fields, $post, $tax, $ltr = FALSE, $title = NULL, $key = FALSE, $type = 'term' )
 	{
 		global $gEditorial;
 
 		if ( in_array( $field, $fields )
-			// && $gEditorial->meta->user_can( 'view', $field )  ) {
 			&& $gEditorial->meta->user_can( 'edit', $field )  ) {
 
 				if ( is_null( $title ) )
 					$title = $gEditorial->meta->get_string( $field, $post->post_type );
 
-				echo '<div class="field-wrap" title="'.esc_attr( $title ).'">';
+				$desc = $gEditorial->meta->get_string( $field, $post->post_type, 'descriptions', $title ); // FIXME: get from fields args
 
+				echo '<div class="field-wrap" title="'.esc_attr( $desc ).'">';
+
+				// FIXME: core dropdown does not support: data attr
 				wp_dropdown_categories( array(
 					'taxonomy'          => $tax,
 					'selected'          => self::theTerm( $tax, $post->ID ),
@@ -137,14 +162,13 @@ class gEditorialHelper extends gEditorialBaseCore
 					'hide_empty'        => FALSE,
 					'hide_if_empty'     => TRUE,
 					'echo'              => TRUE,
-					// 'exclude'           => $excludes,
 				) );
 
 				echo '</div>';
 		}
 	}
 
-	public static function meta_admin_textarea_field( $field, $fields, $post, $ltr = FALSE, $title = NULL, $key = FALSE )
+	public static function meta_admin_textarea_field( $field, $fields, $post, $ltr = FALSE, $title = NULL, $key = FALSE, $type = 'textarea' )
 	{
 		global $gEditorial;
 
@@ -154,21 +178,32 @@ class gEditorialHelper extends gEditorialBaseCore
 				if ( is_null( $title ) )
 					$title = $gEditorial->meta->get_string( $field, $post->post_type );
 
+				$edit = $gEditorial->meta->user_can( 'edit', $field );
+
 				$atts = array(
-					// 'rows'         => '1',
-					// 'cols'         => '40',
-					'class'       => 'geditorial-meta-field-'.$field,
+					'rows'        => '1',
+					// 'cols'        => '40',
 					'name'        => 'geditorial-meta-'.$field.( FALSE === $key ? '' : '['.$key.']' ),
 					'id'          => 'geditorial-meta-'.$field.( FALSE === $key ? '' : '-'.$key ),
-					'title'       => $title,
+					'title'       => $gEditorial->meta->get_string( $field, $post->post_type, 'descriptions', $title ), // FIXME: get from fields args
 					'placeholder' => $title,
-					'readonly'    => ! $gEditorial->meta->user_can( 'edit', $field ),
+					'readonly'    => ! $edit,
 					'tabindex'    => '0',
-					'data'        => array( 'virastar' => 'html' ),
+					'class'       => array(
+						'geditorial-meta-field-'.$field,
+						'geditorial-meta-type-'.$type,
+					),
+					'data' => array(
+						'meta-field' => $field,
+						'meta-type'  => $type,
+					),
 				);
 
 				if ( $ltr )
 					$atts['dir'] = 'ltr';
+
+				else if ( $edit )
+					$atts['data']['ortho'] = 'html';
 
 				$html = self::html( 'textarea', $atts, esc_textarea( $gEditorial->meta->get_postmeta( $post->ID, $field ) ) );
 
@@ -179,7 +214,7 @@ class gEditorialHelper extends gEditorialBaseCore
 	}
 
 	// for meta fields before and after post title
-	public static function meta_admin_title_field( $field, $fields, $post, $ltr = FALSE, $title = NULL, $key = FALSE )
+	public static function meta_admin_title_field( $field, $fields, $post, $ltr = FALSE, $title = NULL, $key = FALSE, $type = 'title_after' )
 	{
 		global $gEditorial;
 
@@ -189,29 +224,41 @@ class gEditorialHelper extends gEditorialBaseCore
 				if ( is_null( $title ) )
 					$title = $gEditorial->meta->get_string( $field, $post->post_type );
 
+				$edit = $gEditorial->meta->user_can( 'edit', $field );
+
 				$atts = array(
 					'type'         => 'text',
 					'autocomplete' => 'off',
-					'class'        => 'geditorial-admin-posttitle geditorial-meta-field-'.$field,
 					'name'         => 'geditorial-meta-'.$field.( FALSE === $key ? '' : '['.$key.']' ),
 					'id'           => 'geditorial-meta-'.$field.( FALSE === $key ? '' : '-'.$key ),
 					'value'        => $gEditorial->meta->get_postmeta( $post->ID, $field ),
-					'title'        => $title,
+					'title'        => $gEditorial->meta->get_string( $field, $post->post_type, 'descriptions', $title ), // FIXME: get from fields args
 					'placeholder'  => $title,
-					'readonly'     => ! $gEditorial->meta->user_can( 'edit', $field ),
+					'readonly'     => ! $edit,
 					'tabindex'     => '0',
-					'data'         => array( 'virastar' => 'text' ),
+					'class'        => array(
+						'geditorial-admin-posttitle',
+						'geditorial-meta-field-'.$field,
+						'geditorial-meta-type-'.$type,
+					),
+					'data' => array(
+						'meta-field' => $field,
+						'meta-type'  => $type,
+					),
 				);
 
 				if ( $ltr )
 					$atts['dir'] = 'ltr';
+
+				else if ( $edit )
+					$atts['data']['ortho'] = 'text';
 
 				echo self::html( 'input', $atts );
 		}
 	}
 
 	// OLD: meta_admin_text_field()
-	public static function meta_admin_box_field( $field, $fields, $post, $ltr = FALSE, $title = NULL, $key = FALSE )
+	public static function meta_admin_box_field( $field, $fields, $post, $ltr = FALSE, $title = NULL, $key = FALSE, $type = 'box' )
 	{
 		global $gEditorial;
 
@@ -220,6 +267,8 @@ class gEditorialHelper extends gEditorialBaseCore
 
 				if ( is_null( $title ) )
 					$title = $gEditorial->meta->get_string( $field, $post->post_type );
+
+				$edit = $gEditorial->meta->user_can( 'edit', $field );
 
 				$html  = '<div id="geditorial-meta-'.$field.'-wrap" class="postbox geditorial-admin-postbox geditorial-meta-field-'.$field.'">';
 				$html .= '<button type="button" class="handlediv button-link" aria-expanded="true">';
@@ -232,17 +281,33 @@ class gEditorialHelper extends gEditorialBaseCore
 				$html .= '<label class="screen-reader-text" for="geditorial-meta-'.$field.'">'.$title.'</label>';
 				$html .= '<div class="field-wrap field-wrap-textarea">';
 
-				$html .= self::html( 'textarea', array(
+				$atts = array(
 					'rows'     => '1',
-					'cols'     => '40',
+					// 'cols'     => '40',
 					'name'     => 'geditorial-meta-'.$field.( FALSE === $key ? '' : '['.$key.']' ),
 					'id'       => 'geditorial-meta-'.$field.( FALSE === $key ? '' : '-'.$key ),
-					'class'    => 'textarea-autosize geditorial-meta-field-'.$field,
-					'readonly' => ! $gEditorial->meta->user_can( 'edit', $field ),
+					'title'    => $gEditorial->meta->get_string( $field, $post->post_type, 'descriptions', $title ), // FIXME: get from fields args
+					'readonly' => ! $edit,
 					'tabindex' => '0',
-					'data'     => array( 'virastar' => 'html' ),
-				), esc_textarea( $gEditorial->meta->get_postmeta( $post->ID, $field ) ) );
+					'class'    => array(
+						'geditorial-meta-field-'.$field,
+						'geditorial-meta-type-'.$type,
+						'textarea-autosize',
+					),
+					'data' => array(
+						'meta-field' => $field,
+						'meta-type'  => $type,
+					),
 
+				);
+
+				if ( $ltr )
+					$atts['dir'] = 'ltr';
+
+				else if ( $edit )
+					$atts['data']['ortho'] = 'html';
+
+				$html .= self::html( 'textarea', $atts, esc_textarea( $gEditorial->meta->get_postmeta( $post->ID, $field ) ) );
 				$html .= self::htmlWordCount( ( 'geditorial-meta-'.$field.( FALSE === $key ? '' : '-'.$key ) ), $post->post_type );
 
 				$html .= '</div></div></div>';

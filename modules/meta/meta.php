@@ -233,26 +233,26 @@ class gEditorialMeta extends gEditorialModuleCore
 				switch ( $args['type'] ) {
 
 					case 'text':
-						gEditorialHelper::meta_admin_field( $field, array( $field ), $post, $args['ltr'], $args['title'] );
+						gEditorialHelper::meta_admin_field( $field, array( $field ), $post, $args['ltr'], $args['title'], FALSE, $args['type'] );
 					break;
 
 					case 'link':
-						gEditorialHelper::meta_admin_field( $field, array( $field ), $post, TRUE, $args['title'] );
+						gEditorialHelper::meta_admin_field( $field, array( $field ), $post, TRUE, $args['title'], FALSE, $args['type'] );
 					break;
 
 					case 'number':
-						gEditorialHelper::meta_admin_number_field( $field, array( $field ), $post, TRUE, $args['title'] );
+						gEditorialHelper::meta_admin_number_field( $field, array( $field ), $post, TRUE, $args['title'], FALSE, $args['type'] );
 					break;
 
 					case 'textarea':
-						gEditorialHelper::meta_admin_textarea_field( $field, array( $field ), $post, $args['ltr'], $args['title'] );
+						gEditorialHelper::meta_admin_textarea_field( $field, array( $field ), $post, $args['ltr'], $args['title'], FALSE, $args['type'] );
 					break;
 
 					case 'term':
 						if ( $args['tax'] )
 							gEditorialHelper::meta_admin_tax_field( $field, array( $field ), $post, $args['tax'], $args['ltr'], $args['title'] );
 						else
-							gEditorialHelper::meta_admin_field( $field, array( $field ), $post, $args['ltr'], $args['title'] );
+							gEditorialHelper::meta_admin_field( $field, array( $field ), $post, $args['ltr'], $args['title'], FALSE, $args['type'] );
 					break;
 				}
 			}
@@ -283,7 +283,7 @@ class gEditorialMeta extends gEditorialModuleCore
 
 					case 'title_before':
 					case 'title_after':
-						gEditorialHelper::meta_admin_title_field( $field, array( $field ), $post, $args['ltr'], $args['title'] );
+						gEditorialHelper::meta_admin_title_field( $field, array( $field ), $post, $args['ltr'], $args['title'], FALSE, $args['type'] );
 					break;
 
 					case 'box':
@@ -378,8 +378,8 @@ class gEditorialMeta extends gEditorialModuleCore
 		if ( $ch_wrap ) echo '</div>';
 
 		gEditorialHelper::meta_admin_field( 'as', $fields, $post );
-		gEditorialHelper::meta_admin_field( 'es', $fields, $post, TRUE );
-		gEditorialHelper::meta_admin_field( 'ol', $fields, $post, TRUE );
+		gEditorialHelper::meta_admin_field( 'es', $fields, $post, TRUE, NULL, FALSE, 'link' );
+		gEditorialHelper::meta_admin_field( 'ol', $fields, $post, TRUE, NULL, FALSE, 'link' );
 
 		do_action( 'geditorial_meta_box_after', $this->module, $post, $fields );
 
@@ -392,8 +392,8 @@ class gEditorialMeta extends gEditorialModuleCore
 	{
 		$fields = $this->post_type_fields( $post->post_type );
 
-		gEditorialHelper::meta_admin_title_field( 'ot', $fields, $post );
-		gEditorialHelper::meta_admin_title_field( 'st', $fields, $post );
+		gEditorialHelper::meta_admin_title_field( 'ot', $fields, $post, FALSE, NULL, FALSE, 'title_before' );
+		gEditorialHelper::meta_admin_title_field( 'st', $fields, $post, FALSE, NULL, FALSE, 'title_after' );
 		gEditorialHelper::meta_admin_box_field( 'le', $fields, $post );
 
 		do_action( 'geditorial_meta_box_raw', $this->module, $post, $fields );
