@@ -1469,15 +1469,18 @@ class gEditorialModuleCore extends gEditorialBaseCore
 		);
 	}
 
-	// SEE: [Use Chosen for a replacement WordPress taxonomy metabox](https://gist.github.com/helenhousandi/1573966)
+	// SEE: [Use Chosen for a replacement WordPress taxonomy metabox](https://gist.github.com/helen/1573966)
 	// callback for meta box for choose only tax
 	public function meta_box_choose_tax( $post, $box )
 	{
 		$atts = isset( $box['args'] ) && is_array( $box['args'] ) ? $box['args'] : array();
 		$args = wp_parse_args( $atts, array(
 			'taxonomy' => 'category',
-			'edit_url' => FALSE,
+			'edit_url' => NULL,
 		) );
+
+		if ( is_null( $args['edit_url'] ) )
+			$args['edit_url'] = self::getEditTaxLink( $args['taxonomy'] );
 
 		$tax_name = esc_attr( $args['taxonomy'] );
 		$taxonomy = get_taxonomy( $args['taxonomy'] );
