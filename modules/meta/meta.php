@@ -189,7 +189,7 @@ class gEditorialMeta extends gEditorialModuleCore
 				if ( is_callable( $dbx_func ) )
 					add_action( 'dbx_post_sidebar', $dbx_func, 10, 1 );
 
-				add_filter( 'geditorial_meta_sanitize_post_meta', array( $this, 'sanitize_post_meta' ), 10 , 4 );
+				add_filter( 'geditorial_meta_sanitize_post_meta', array( $this, 'sanitize_post_meta' ), 10, 4 );
 
 			} else if ( 'edit' == $screen->base ) {
 

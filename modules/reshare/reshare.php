@@ -89,7 +89,7 @@ class gEditorialReshare extends gEditorialModuleCore
 
 	public function meta_init()
 	{
-		add_filter( 'geditorial_meta_box_callback', array( $this, 'meta_box_callback' ), 10 , 2 );
+		add_filter( 'geditorial_meta_box_callback', array( $this, 'meta_box_callback' ), 10, 2 );
 	}
 
 	// FIXME: default will be true / DROP THIS

@@ -313,7 +313,7 @@ class gEditorialContest extends gEditorialModuleCore
 	public function meta_init_DIS( $meta_module )
 	{
 		// NO NEED: unless we have our own meta fields
-		// add_filter( 'geditorial_meta_sanitize_post_meta', array( $this, 'meta_sanitize_post_meta' ), 10 , 4 );
+		// add_filter( 'geditorial_meta_sanitize_post_meta', array( $this, 'meta_sanitize_post_meta' ), 10, 4 );
 
 		// NO NEED: unless we want to integrate meta fields on our own box
 		// add_action( 'geditorial_contest_main_meta_box', array( $this, 'meta_main_meta_box' ), 10, 1 );

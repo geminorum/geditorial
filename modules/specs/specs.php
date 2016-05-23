@@ -120,7 +120,7 @@ class gEditorialSpecs extends gEditorialModuleCore
 
 			wp_register_script( 'jquery-sortable',
 				GEDITORIAL_URL.'assets/packages/jquery-sortable/jquery-sortable-min.js',
-				array( 'jquery'),
+				array( 'jquery' ),
 				'0.9.13',
 				TRUE );
 

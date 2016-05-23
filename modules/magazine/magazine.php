@@ -265,8 +265,8 @@ class gEditorialMagazine extends gEditorialModuleCore
 		$this->add_post_type_fields( $this->constant( 'post_cpt' ) );
 
 		add_filter( 'geditorial_meta_strings', array( $this, 'meta_strings' ), 6, 1 );
-		add_filter( 'geditorial_meta_sanitize_post_meta', array( $this, 'meta_sanitize_post_meta' ), 10 , 4 );
-		add_filter( 'geditorial_meta_box_callback', array( $this, 'meta_box_callback' ), 10 , 2 );
+		add_filter( 'geditorial_meta_sanitize_post_meta', array( $this, 'meta_sanitize_post_meta' ), 10, 4 );
+		add_filter( 'geditorial_meta_box_callback', array( $this, 'meta_box_callback' ), 10, 2 );
 
 		add_action( 'geditorial_magazine_main_meta_box', array( $this, 'meta_main_meta_box' ), 10, 1 );
 		add_action( 'geditorial_magazine_supported_meta_box', array( $this, 'meta_supported_meta_box' ), 10, 2 );
@@ -930,7 +930,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 	{
 		if ( ! current_user_can( $this->tools_cap ) )
 			return;
-		
+
 		if ( $this->module->name == $sub ) {
 			if ( ! empty( $_POST ) ) {
 
