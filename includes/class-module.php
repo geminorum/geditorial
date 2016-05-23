@@ -1881,6 +1881,19 @@ class gEditorialModuleCore extends gEditorialBaseCore
 		return sprintf( $template, number_format_i18n( $posts->publish ), $text, $posttype );
 	}
 
+	protected function dashboard_glance_tax( $tax_constant_key, $edit_cap = 'manage_categories' )
+	{
+		$taxonomy = $this->constant( $tax_constant_key );
+		$template = current_user_can( $edit_cap ) ? '<a class="geditorial-glance-item -tax -taxonomy-'.$taxonomy.'" href="edit-tags.php?taxonomy=%3$s">%1$s %2$s</a>' : '%1$s %2$s';
+		$terms    = wp_count_terms( $taxonomy );
+		$singular = $this->nooped( $tax_constant_key, 1 );
+		$nooped   = $this->nooped( $tax_constant_key, $terms );
+
+		$text = sprintf( _x( '%1$s', 'Module Core: At a Glance: Nooped String', GEDITORIAL_TEXTDOMAIN ), $nooped, $singular );
+
+		return sprintf( $template, number_format_i18n( $terms ), $text, $taxonomy );
+	}
+
 	public function column_thumb( $post_id, $size = array( 45, 72 ) )
 	{
 		echo self::getFeaturedImageHTML( $post_id, $size );
