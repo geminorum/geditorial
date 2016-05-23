@@ -343,6 +343,15 @@ class gEditorialHelper extends gEditorialBaseCore
 			unset( $postmeta[$field] );
 	}
 
+	public static function set_postmeta_field_code( &$postmeta, $field, $prefix = 'geditorial-meta-' )
+	{
+		if ( isset( $_POST[$prefix.$field] ) && strlen( $_POST[$prefix.$field] ) > 0 )
+			$postmeta[$field] = trim( $_POST[$prefix.$field] );
+
+		else if ( isset( $postmeta[$field] ) && isset( $_POST[$prefix.$field] ) )
+			unset( $postmeta[$field] );
+	}
+
 	public static function set_postmeta_field_term( $post_id, $field, $taxonomy, $prefix = 'geditorial-meta-' )
 	{
 		if ( isset( $_POST[$prefix.$field] ) && '0' != $_POST[$prefix.$field] )

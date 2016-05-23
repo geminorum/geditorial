@@ -237,6 +237,7 @@ class gEditorialMeta extends gEditorialModuleCore
 						gEditorialHelper::meta_admin_field( $field, array( $field ), $post, $args['ltr'], $args['title'], FALSE, $args['type'] );
 					break;
 
+					case 'code':
 					case 'link':
 						gEditorialHelper::meta_admin_field( $field, array( $field ), $post, TRUE, $args['title'], FALSE, $args['type'] );
 					break;
@@ -318,6 +319,10 @@ class gEditorialMeta extends gEditorialModuleCore
 
 						case 'link':
 							gEditorialHelper::set_postmeta_field_url( $postmeta, $field );
+						break;
+
+						case 'code':
+							gEditorialHelper::set_postmeta_field_code( $postmeta, $field );
 						break;
 
 						case 'number':
