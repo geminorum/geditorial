@@ -161,7 +161,7 @@ class gEditorialToday extends gEditorialModuleCore
 
 			if ( $screen->post_type == $this->constant( 'day_cpt' ) ) {
 
-				add_filter( 'disable_months_dropdown', array( $this, 'disable_months_dropdown' ), 8, 2 );
+				add_filter( 'disable_months_dropdown', '__return_true', 12 );
 				add_filter( 'manage_'.$screen->post_type.'_posts_columns', array( $this, 'manage_posts_columns' ) );
 				add_filter( 'manage_'.$screen->post_type.'_posts_custom_column', array( $this, 'posts_custom_column'), 10, 2 );
 				add_filter( 'manage_edit-'.$screen->post_type.'_sortable_columns', array( $this, 'sortable_columns' ) );
@@ -200,14 +200,6 @@ class gEditorialToday extends gEditorialModuleCore
 	public function gpeople_support( $post_types )
 	{
 		return array_merge( $post_types, array( $this->constant( 'day_cpt' ) ) );
-	}
-
-	public function disable_months_dropdown( $false, $post_type )
-	{
-		if ( $this->constant( 'day_cpt' ) == $post_type )
-			return TRUE;
-
-		return $false;
 	}
 
 	public function manage_posts_columns_supported( $posts_columns )
@@ -277,9 +269,7 @@ class gEditorialToday extends gEditorialModuleCore
 
 	public function post_updated_messages( $messages )
 	{
-		if ( $this->is_current_posttype( 'day_cpt' ) )
-			$messages[$this->constant( 'day_cpt' )] = $this->get_post_updated_messages( 'day_cpt' );
-
+		$messages[$this->constant( 'day_cpt' )] = $this->get_post_updated_messages( 'day_cpt' );
 		return $messages;
 	}
 

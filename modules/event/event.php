@@ -59,7 +59,7 @@ class gEditorialEvent extends gEditorialModuleCore
 				'event_cpt' => array(
 					'featured'       => _x( 'Poster Image', 'Event Module: Event CPT: Featured', GEDITORIAL_TEXTDOMAIN ),
 					'meta_box_title' => _x( 'Date & Times', 'Event Module: Event CPT: Meta Box Title', GEDITORIAL_TEXTDOMAIN ),
-					
+
 					'event_dates_column_title' => _x( 'Dates', 'Event Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
 					'event_times_column_title' => _x( 'Times', 'Event Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
 				),
@@ -164,10 +164,10 @@ class gEditorialEvent extends gEditorialModuleCore
 
 			} else if ( 'edit' == $screen->base ) {
 
+				add_filter( 'disable_months_dropdown', '__return_true', 12 );
 				add_filter( 'manage_'.$screen->post_type.'_posts_columns', array( $this, 'manage_posts_columns' ) );
-				add_action( 'manage_'.$screen->post_type.'_posts_custom_column', array( $this, 'posts_custom_column' ), 10, 2 );
 				add_filter( 'manage_edit-'.$screen->post_type.'_sortable_columns', array( $this, 'sortable_columns' ) );
-				add_filter( 'disable_months_dropdown', array( $this, 'disable_months_dropdown' ), 8, 2 );
+				add_action( 'manage_'.$screen->post_type.'_posts_custom_column', array( $this, 'posts_custom_column' ), 10, 2 );
 
 				if ( $startend ) {
 
@@ -234,7 +234,7 @@ class gEditorialEvent extends gEditorialModuleCore
 
 		return self::recursiveParseArgs( $new, $strings );
 	}
-	
+
 	public function dashboard_glance_items( $items )
 	{
 		$items[] = $this->dashboard_glance_post( 'event_cpt' );
@@ -249,14 +249,6 @@ class gEditorialEvent extends gEditorialModuleCore
 		// FIXME: save the data!
 
 		return $post_ID;
-	}
-
-	public function disable_months_dropdown( $false, $post_type )
-	{
-		if ( $this->constant( 'event_cpt' ) == $post_type )
-			return TRUE;
-
-		return $false;
 	}
 
 	public function restrict_manage_posts()
@@ -353,9 +345,7 @@ class gEditorialEvent extends gEditorialModuleCore
 
 	public function post_updated_messages( $messages )
 	{
-		if ( $this->is_current_posttype( 'event_cpt' ) )
-			$messages[$this->constant( 'event_cpt' )] = $this->get_post_updated_messages( 'event_cpt' );
-
+		$messages[$this->constant( 'event_cpt' )] = $this->get_post_updated_messages( 'event_cpt' );
 		return $messages;
 	}
 
