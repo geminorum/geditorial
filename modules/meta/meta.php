@@ -121,6 +121,7 @@ class gEditorialMeta extends gEditorialModuleCore
 				add_filter( 'manage_'.$post_type.'_posts_custom_column', array( $this, 'custom_column'), 10, 2 );
 
 				add_action( 'save_post', array( $this, 'save_post' ), 10, 2 );
+				add_filter( 'geditorial_meta_sanitize_post_meta', array( $this, 'sanitize_post_meta' ), 10, 4 );
 			}
 		}
 	}
