@@ -1987,13 +1987,18 @@ class gEditorialModuleCore extends gEditorialBaseCore
 			$post_types = $this->post_types();
 
 		$args = array_merge( array(
-			'name'  => $this->constant( $constant_key.'_p2p' ),
-			'from'  => $post_types,
-			'to'    => $this->constant( $constant_key ),
+			'name'      => $this->constant( $constant_key.'_p2p' ),
+			'from'      => $post_types,
+			'to'        => $this->constant( $constant_key ),
+			'admin_box' => array(
+			    'show'    => 'from',
+			    'context' => 'advanced',
+			),
 		), $this->strings['p2p'][$constant_key] );
 
-		$args = apply_filters( 'geditorial_'.$this->module->name.'_'.$this->constant( $constant_key ).'_p2p_args', $args, $post_types );
-		if ( $args )
+		$hook = 'geditorial_'.$this->module->name.'_'.$this->constant( $constant_key ).'_p2p_args';
+
+		if ( $args = apply_filters( $hook, $args, $post_types ) )
 			p2p_register_connection_type( $args );
 	}
 
