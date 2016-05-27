@@ -1,0 +1,22 @@
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+/// Module: Meta: Admin Post ---------------------------------------------------
+
+
+// Overtitle & Subtitle Fields
+.geditorial-admin-posttitle {
+
+	@extend %box-reset;
+	width: 100%;
+	padding: 3px 8px;
+	font-size: 1.3em;
+
+	&.geditorial-meta-field-ot {
+		margin: 0 0 5px 0;
+	}
+
+	&.geditorial-meta-field-st {
+		margin: 3px 0 15px 0;
+	}
+}

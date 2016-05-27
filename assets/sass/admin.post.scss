@@ -8,11 +8,16 @@
 @import "partials/admin.table";
 @import "partials/admin.editor";
 
+@import "partials/meta.admin.post";
 @import "partials/specs.admin.post";
 @import "partials/series.admin.post";
 @import "partials/magazine.admin.post";
 @import "partials/tweaks.admin.post";
+@import "partials/ortho.admin.post";
 
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
 .geditorial-admin-wrap {
 	// @include main-wrap();
@@ -96,6 +101,7 @@
 		&.field-wrap-textarea {
 			textarea {
 				width: 100%;
+				resize: vertical;
 			}
 		}
 
@@ -219,6 +225,10 @@
 	}
 }
 
+.geditorial-admin-wrap-textbox {
+	margin-bottom: -6px;
+}
+
 .geditorial-admin-dropbown {
 
 	@extend %box-reset;
@@ -226,34 +236,5 @@
 
 	&.dropbown-ltr {
 		direction: ltr;
-	}
-}
-
-// Overtitle & Subtitle Fields
-.geditorial-admin-posttitle {
-
-	@extend %box-reset;
-	width: 100%;
-	padding: 3px 8px;
-	font-size: 1.3em;
-
-	&.geditorial-meta-field-ot {
-		margin: 0 0 5px 0;
-	}
-
-	&.geditorial-meta-field-st {
-		margin: 4px 0 15px 0;
-	}
-}
-
-// Lead textarea Field
-.geditorial-admin-postbox {
-
-	margin: 10px 0 0 0;
-
-	textarea {
-		width: 99%;
-		margin: 12px 0 0 0;
-		resize: vertical;
 	}
 }

@@ -1,0 +1,45 @@
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+/// Module: Ortho: Admin Post --------------------------------------------------
+
+.ortho-input-wrap {
+
+	position: relative;
+
+	.do-ortho {
+
+		position: absolute;
+		left: 4px;
+		top: 5px;
+
+		color: #82878c;
+		opacity: 0.8;
+
+		text-decoration: none;
+		
+		&:hover {
+			text-decoration: none;
+			color: #666;
+		}
+
+		&:focus {
+			box-shadow: none;
+			color: #666;
+		}
+
+		.dashicons {
+			width: 18px;
+    		height: 18px;
+    		font-size: 18px;
+		}
+	}
+
+	.do-ortho-text {
+
+	}
+
+	.do-ortho-html {
+
+	}
+}
