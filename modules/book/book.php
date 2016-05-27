@@ -13,11 +13,19 @@ class gEditorialBook extends gEditorialModuleCore
 		);
 	}
 
+	protected function get_global_settings()
+	{
+		return array(
+			'posttypes_option' => 'posttypes_option',
+		);
+	}
+
 	protected function get_global_constants()
 	{
 		return array(
 			'publication_cpt'         => 'publication',
 			'publication_cpt_archive' => 'publications',
+			'publication_cpt_p2p'     => 'publications_to_posts',
 			'subject_tax'             => 'publication_subject',
 			'library_tax'             => 'publication_library',
 			'publisher_tax'           => 'publication_publisher',
@@ -78,6 +86,33 @@ class gEditorialBook extends gEditorialModuleCore
 					'folio'  => _x( 'Folio', 'Book Module: Publication Size: Default Term', GEDITORIAL_TEXTDOMAIN ), // soltani
 					'medium' => _x( 'Medium Octavo', 'Book Module: Publication Size: Default Term', GEDITORIAL_TEXTDOMAIN ), //roghee
 					'quatro' => _x( 'Quatro', 'Book Module: Publication Size: Default Term', GEDITORIAL_TEXTDOMAIN ), //rahli
+				),
+			),
+			'p2p' => array(
+				'publication_cpt' => array(
+					'title' => array(
+						'from' => _x( 'Connected Publications', 'Book Module: P2P', GEDITORIAL_TEXTDOMAIN ),
+						'to'   => _x( 'Connected Posts', 'Book Module: P2P', GEDITORIAL_TEXTDOMAIN )
+					),
+					'from_labels' => array(
+						'singular_name' => _x( 'Post', 'Book Module: P2P', GEDITORIAL_TEXTDOMAIN ),
+						'search_items'  => _x( 'Search Posts', 'Book Module: P2P', GEDITORIAL_TEXTDOMAIN ),
+						'not_found'     => _x( 'No posts found.', 'Book Module: P2P', GEDITORIAL_TEXTDOMAIN ),
+						'create'        => _x( 'Connect to a post', 'Book Module: P2P', GEDITORIAL_TEXTDOMAIN ),
+					),
+					'to_labels' => array(
+						'singular_name' => _x( 'Publications', 'Book Module: P2P', GEDITORIAL_TEXTDOMAIN ),
+						'search_items'  => _x( 'Search Publication', 'Book Module: P2P', GEDITORIAL_TEXTDOMAIN ),
+						'not_found'     => _x( 'No publications found.', 'Book Module: P2P', GEDITORIAL_TEXTDOMAIN ),
+						'create'        => _x( 'Connect to an publication', 'Book Module: P2P', GEDITORIAL_TEXTDOMAIN ),
+					),
+					'fields' => array(
+						'title' => array(
+							'title' => _x( 'Pages', 'Book Module: P2P', GEDITORIAL_TEXTDOMAIN ),
+							'type' => 'text',
+							'value' => '%s',
+						),
+					),
 				),
 			),
 		);
@@ -163,6 +198,11 @@ class gEditorialBook extends gEditorialModuleCore
 	public function after_setup_theme()
 	{
 		$this->register_post_type_thumbnail( 'publication_cpt' );
+	}
+
+	public function p2p_init()
+	{
+		$this->register_p2p( 'publication_cpt' );
 	}
 
 	public function init()
