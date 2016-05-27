@@ -127,8 +127,13 @@ class gEditorialEntry extends gEditorialModuleCore
 
 	public function current_screen( $screen )
 	{
-		if ( 'edit' == $screen->base ) {
-			if ( $screen->post_type == $this->constant( 'entry_cpt' ) ) {
+		if ( $screen->post_type == $this->constant( 'entry_cpt' ) ) {
+
+			if ( 'post' == $screen->base ) {
+
+				add_filter( 'get_default_comment_status', array( $this, 'get_default_comment_status' ), 10, 3 );
+
+			} else if ( 'edit' == $screen->base ) {
 
 				add_action( 'restrict_manage_posts', array( $this, 'restrict_manage_posts' ) );
 				add_filter( 'pre_get_posts', array( $this, 'pre_get_posts' ) );
@@ -139,6 +144,11 @@ class gEditorialEntry extends gEditorialModuleCore
 				add_action( 'manage_'.$screen->post_type.'_posts_custom_column', array( $this, 'posts_custom_column'), 10, 2 );
 			}
 		}
+	}
+
+	public function get_default_comment_status( $status, $post_type, $comment_type )
+	{
+		return $this->get_setting( 'comment_status', $status ); // FIXME: add default setting
 	}
 
 	public function restrict_manage_posts()
