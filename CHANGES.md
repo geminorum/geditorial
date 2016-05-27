@@ -1,3 +1,7 @@
+### 3.7.1
+* book: p2p support
+* today: setting for draft is in today
+
 ### 3.7.0
 * all: internal api for at a glance dashboard widget
 * book: new module
