@@ -1414,11 +1414,9 @@ class gEditorialModuleCore extends gEditorialBaseCore
 	{
 		global $post, $post_ID;
 
-		$singular_name = isset( $this->strings['labels'][$constant_key]['singular_name'] )
-			? $this->strings['labels'][$constant_key]['singular_name']
-			: $this->constant( $constant_key );
-
+		$singular_name  = $this->nooped( $constant_key, 1 );
 		$singular_lower = self::strToLower( $singular_name );
+
 		$link = get_permalink( $post_ID );
 
 		return array(
