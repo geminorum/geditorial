@@ -44,16 +44,11 @@ class gEditorialToday extends gEditorialModuleCore
 	{
 		return array(
 			'misc' => array(
-				'meta_box_title'        => _x( 'The Day', 'Today Module: Meta Box Title', GEDITORIAL_TEXTDOMAIN ),
-				'theday_column_title'   => _x( 'The Day', 'Today Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				'cover_column_title'    => _x( 'Cover', 'Today Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				'children_column_title' => _x( 'Posts', 'Today Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'meta_box_title'      => _x( 'The Day', 'Today Module: Meta Box Title', GEDITORIAL_TEXTDOMAIN ),
+				'theday_column_title' => _x( 'The Day', 'Today Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
 			),
-			'labels' => array(
-				'day_cpt' => gEditorialHelper::generatePostTypeLabels(
-					_nx_noop( 'Day', 'Days', 'Today Module: Event CPT Labels: Name', GEDITORIAL_TEXTDOMAIN ),
-					_x( 'Cover Image', 'Today Module: Event CPT Labels: Featured', GEDITORIAL_TEXTDOMAIN )
-				),
+			'noops' => array(
+				'day_cpt' => _nx_noop( 'Day', 'Days', 'Today Module: Today CPT Labels: Name', GEDITORIAL_TEXTDOMAIN ),
 			),
 		);
 	}
@@ -63,15 +58,7 @@ class gEditorialToday extends gEditorialModuleCore
 		return array(
 			'day_cpt' => array(
 				'title',
-				// 'editor',
 				'excerpt',
-				// 'author',
-				// 'thumbnail',
-				// 'trackbacks',
-				// 'custom-fields',
-				// 'comments',
-				// 'revisions',
-				// 'page-attributes',
 			),
 		);
 	}
@@ -79,7 +66,6 @@ class gEditorialToday extends gEditorialModuleCore
 	public function setup( $partials = array() )
 	{
 		parent::setup( array(
-			// 'templates',
 			'helper',
 		) );
 
