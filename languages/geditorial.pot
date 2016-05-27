@@ -963,241 +963,296 @@ msgctxt "Book Module"
 msgid "Online House of Publications"
 msgstr ""
 
-#: modules/book/book.php:35
+#: modules/book/book.php:43
 msgctxt "Book Module: Publication CPT: Featured"
 msgid "Cover Image"
 msgstr ""
 
-#: modules/book/book.php:36
+#: modules/book/book.php:44
 msgctxt "Book Module: MetaBox Title"
 msgid "Metadata"
 msgstr ""
 
-#: modules/book/book.php:37
+#: modules/book/book.php:45
 msgctxt "Book Module: Column Title"
 msgid "Cover"
 msgstr ""
 
-#: modules/book/book.php:40
+#: modules/book/book.php:48
 msgctxt "Book Module: MetaBox Title"
 msgid "Subject"
 msgstr ""
 
-#: modules/book/book.php:41
+#: modules/book/book.php:49
 msgctxt "Book Module: Column Title"
 msgid "Publication Subject"
 msgstr ""
 
-#: modules/book/book.php:44
+#: modules/book/book.php:52
 msgctxt "Book Module: MetaBox Title"
 msgid "Library"
 msgstr ""
 
-#: modules/book/book.php:45
+#: modules/book/book.php:53
 msgctxt "Book Module: Column Title"
 msgid "Publication Library"
 msgstr ""
 
-#: modules/book/book.php:48
+#: modules/book/book.php:56
 msgctxt "Book Module: MetaBox Title"
 msgid "Publisher"
 msgstr ""
 
-#: modules/book/book.php:49
+#: modules/book/book.php:57
 msgctxt "Book Module: Column Title"
 msgid "Publication Publisher"
 msgstr ""
 
-#: modules/book/book.php:52
+#: modules/book/book.php:60
 msgctxt "Book Module: MetaBox Title"
 msgid "Status"
 msgstr ""
 
-#: modules/book/book.php:53
+#: modules/book/book.php:61
 msgctxt "Book Module: Column Title"
 msgid "Publication Status"
 msgstr ""
 
-#: modules/book/book.php:56
+#: modules/book/book.php:64
 msgctxt "Book Module: MetaBox Title"
 msgid "Type"
 msgstr ""
 
-#: modules/book/book.php:57
+#: modules/book/book.php:65
 msgctxt "Book Module: Column Title"
 msgid "Publication Type"
 msgstr ""
 
-#: modules/book/book.php:60
+#: modules/book/book.php:68
 msgctxt "Book Module: MetaBox Title"
 msgid "Curator"
 msgstr ""
 
-#: modules/book/book.php:63
+#: modules/book/book.php:71
 msgctxt "Book Module: MetaBox Title"
 msgid "Summary"
 msgstr ""
 
-#: modules/book/book.php:67
+#: modules/book/book.php:75
 msgctxt "Book Module: Noop"
 msgid "Publication"
 msgid_plural "Publications"
 msgstr[0] ""
 msgstr[1] ""
 
-#: modules/book/book.php:68
+#: modules/book/book.php:76
 msgctxt "Book Module: Noop"
 msgid "Subject"
 msgid_plural "Subjects"
 msgstr[0] ""
 msgstr[1] ""
 
-#: modules/book/book.php:69
+#: modules/book/book.php:77
 msgctxt "Book Module: Noop"
 msgid "Library"
 msgid_plural "Libraries"
 msgstr[0] ""
 msgstr[1] ""
 
-#: modules/book/book.php:70
+#: modules/book/book.php:78
 msgctxt "Book Module: Noop"
 msgid "Publisher"
 msgid_plural "Publishers"
 msgstr[0] ""
 msgstr[1] ""
 
-#: modules/book/book.php:71
+#: modules/book/book.php:79
 msgctxt "Book Module: Noop"
 msgid "Publication Type"
 msgid_plural "Publication Types"
 msgstr[0] ""
 msgstr[1] ""
 
-#: modules/book/book.php:72
+#: modules/book/book.php:80
 msgctxt "Book Module: Noop"
 msgid "Publication Status"
 msgid_plural "Publication Statuses"
 msgstr[0] ""
 msgstr[1] ""
 
-#: modules/book/book.php:73
+#: modules/book/book.php:81
 msgctxt "Book Module: Noop"
 msgid "Publication Size"
 msgid_plural "Publication Sizes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: modules/book/book.php:77
+#: modules/book/book.php:85
 msgctxt "Book Module: Publication Size: Default Term"
 msgid "Octavo"
 msgstr ""
 
-#: modules/book/book.php:78
+#: modules/book/book.php:86
 msgctxt "Book Module: Publication Size: Default Term"
 msgid "Folio"
 msgstr ""
 
-#: modules/book/book.php:79
+#: modules/book/book.php:87
 msgctxt "Book Module: Publication Size: Default Term"
 msgid "Medium Octavo"
 msgstr ""
 
-#: modules/book/book.php:80
+#: modules/book/book.php:88
 msgctxt "Book Module: Publication Size: Default Term"
 msgid "Quatro"
 msgstr ""
 
-#: modules/book/book.php:109
+#: modules/book/book.php:94
+msgctxt "Book Module: P2P"
+msgid "Connected Publications"
+msgstr ""
+
+#: modules/book/book.php:95
+msgctxt "Book Module: P2P"
+msgid "Connected Posts"
+msgstr ""
+
+#: modules/book/book.php:98
+msgctxt "Book Module: P2P"
+msgid "Post"
+msgstr ""
+
+#: modules/book/book.php:99
+msgctxt "Book Module: P2P"
+msgid "Search Posts"
+msgstr ""
+
+#: modules/book/book.php:100
+msgctxt "Book Module: P2P"
+msgid "No posts found."
+msgstr ""
+
+#: modules/book/book.php:101
+msgctxt "Book Module: P2P"
+msgid "Connect to a post"
+msgstr ""
+
+#: modules/book/book.php:104
+msgctxt "Book Module: P2P"
+msgid "Publications"
+msgstr ""
+
+#: modules/book/book.php:105
+msgctxt "Book Module: P2P"
+msgid "Search Publication"
+msgstr ""
+
+#: modules/book/book.php:106
+msgctxt "Book Module: P2P"
+msgid "No publications found."
+msgstr ""
+
+#: modules/book/book.php:107
+msgctxt "Book Module: P2P"
+msgid "Connect to an publication"
+msgstr ""
+
+#: modules/book/book.php:111
+msgctxt "Book Module: P2P"
+msgid "Pages"
+msgstr ""
+
+#: modules/book/book.php:144
 msgctxt "Book Module: Field Title"
 msgid "Collection Title"
 msgstr ""
 
-#: modules/book/book.php:110
+#: modules/book/book.php:145
 msgctxt "Book Module: Field Description"
 msgid "This Publication Is Part of a Collection"
 msgstr ""
 
-#: modules/book/book.php:114
+#: modules/book/book.php:149
 msgctxt "Book Module: Field Title"
 msgid "Subtitle"
 msgstr ""
 
-#: modules/book/book.php:115
+#: modules/book/book.php:150
 msgctxt "Book Module: Field Description"
 msgid "Subtitle of the Publication"
 msgstr ""
 
-#: modules/book/book.php:119
+#: modules/book/book.php:154
 msgctxt "Book Module: Field Title"
 msgid "Alternative Title"
 msgstr ""
 
-#: modules/book/book.php:120
+#: modules/book/book.php:155
 msgctxt "Book Module: Field Description"
 msgid "The Original Title or Title in Another Language"
 msgstr ""
 
-#: modules/book/book.php:123
+#: modules/book/book.php:158
 msgctxt "Book Module: Field Title"
 msgid "ISBN"
 msgstr ""
 
-#: modules/book/book.php:124
+#: modules/book/book.php:159
 msgctxt "Book Module: Field Description"
 msgid "International Standard Book Number"
 msgstr ""
 
-#: modules/book/book.php:128
+#: modules/book/book.php:163
 msgctxt "Book Module: Field Title"
 msgid "Size"
 msgstr ""
 
-#: modules/book/book.php:129
+#: modules/book/book.php:164
 msgctxt "Book Module: Field Description"
 msgid "The Size of the Publication, Mainly Books"
 msgstr ""
 
-#: modules/book/book.php:134
+#: modules/book/book.php:169
 msgctxt "Book Module: Field Title"
 msgid "Publication Date"
 msgstr ""
 
-#: modules/book/book.php:135
+#: modules/book/book.php:170
 msgctxt "Book Module: Field Description"
 msgid "Date Published"
 msgstr ""
 
-#: modules/book/book.php:138
+#: modules/book/book.php:173
 msgctxt "Book Module: Field Title"
 msgid "Edition"
 msgstr ""
 
-#: modules/book/book.php:139
+#: modules/book/book.php:174
 msgctxt "Book Module: Field Description"
 msgid "Edition of the Publication"
 msgstr ""
 
-#: modules/book/book.php:142
+#: modules/book/book.php:177
 msgctxt "Book Module: Field Title"
 msgid "Print"
 msgstr ""
 
-#: modules/book/book.php:143
+#: modules/book/book.php:178
 msgctxt "Book Module: Field Description"
 msgid "Specefic Print of the Publication"
 msgstr ""
 
-#: modules/book/book.php:146
+#: modules/book/book.php:181
 msgctxt "Book Module: Field Title"
 msgid "Pages"
 msgstr ""
 
-#: modules/book/book.php:147
+#: modules/book/book.php:182
 msgctxt "Book Module: Field Description"
 msgid "Total Pages of the Publication"
 msgstr ""
 
-#: modules/book/book.php:255
+#: modules/book/book.php:295
 msgid "Install Default Sizes"
 msgstr ""
 
