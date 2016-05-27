@@ -1,6 +1,17 @@
-### 3.6.2
+### 3.7.0
+* all: internal api for at a glance dashboard widget
+* book: new module
+* meta: another step on migrating to the new meta fields api
+* meta: moving to current screen hook
+* meta: source title/source url default meta fields
+* meta: columns on ajax callbacks
+* magazine: using label generators
+* reshare: fields moved to meta module
 * series: removed useless editor button
 * series: using label generators
+* specs: using fields api
+* specs: using label generators
+* tweaks: passing current post type to string helper
 
 ### 3.6.1
 * all: Persian translation updated
