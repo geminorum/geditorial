@@ -169,7 +169,8 @@ class gEditorialToday extends gEditorialModuleCore
 
 			$default_type = $this->get_setting( 'calendar_type', 'gregorian' );
 
-			if ( 'auto-draft' == $post->post_status )
+			if ( 'auto-draft' == $post->post_status
+				&& $this->get_setting( 'today_in_draft', FALSE ) ) // FIXME: add setting
 				$the_day = gEditorialTodayHelper::getTheDayFromToday( NULL, $default_type );
 
 			else if ( self::req( 'post' ) )
