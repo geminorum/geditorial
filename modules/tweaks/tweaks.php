@@ -222,10 +222,14 @@ class gEditorialTweaks extends gEditorialModuleCore
 						continue;
 
 					$before = '<div class="tweaks-row tweaks-'.$taxonomy.'">';
+
 					if ( $dashicon = $this->get_string( 'dashicon', $taxonomy, 'taxonomies', 'tag' ) )
-						$before .= '<span class="dashicons dashicons-'.$dashicon.'" title="'.esc_attr(
-							$this->get_string( 'title_attr', $taxonomy, 'taxonomies', $taxonomy )
-						).'"></span> ';
+						$before .= self::html( 'a', array(
+							'href'   => self::getEditTaxLink( $taxonomy ),
+							'title'  => $this->get_string( 'title_attr', $taxonomy, 'taxonomies', $taxonomy ),
+							'class'  => '-edit',
+							'target' => '_blank',
+						), '<span class="dashicons dashicons-'.$dashicon.'"></span>' );
 
 					gEditorialHelper::getTermsEditRow( $post_id,
 						$post->post_type, $taxonomy, $before, '</div>' );
