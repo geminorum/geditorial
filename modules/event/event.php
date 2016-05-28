@@ -64,10 +64,12 @@ class gEditorialEvent extends gEditorialModuleCore
 					'event_times_column_title' => _x( 'Times', 'Event Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
 				),
 				'event_tag' => array(
-					'meta_box_title' => _x( 'Event Types', 'Event Module: Meta Box Title', GEDITORIAL_TEXTDOMAIN ),
+					'meta_box_title'      => _x( 'Event Types', 'Event Module: Meta Box Title', GEDITORIAL_TEXTDOMAIN ),
+					'tweaks_column_title' => _x( 'Event Types', 'Event Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
 				),
 				'cal_tax' => array(
-					'meta_box_title' => _x( 'Calendars', 'Event Module: Meta Box Title', GEDITORIAL_TEXTDOMAIN ),
+					'meta_box_title'      => _x( 'Event Calendars', 'Event Module: Meta Box Title', GEDITORIAL_TEXTDOMAIN ),
+					'tweaks_column_title' => _x( 'Event Calendars', 'Event Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
 				),
 			),
 			'noops' => array(
@@ -212,22 +214,22 @@ class gEditorialEvent extends gEditorialModuleCore
 				$this->constant( 'event_tag' ) => array(
 					'column'     => 'taxonomy-'.$this->constant( 'event_tag' ),
 					'dashicon'   => 'tag',
-					'title_attr' => $this->get_string( 'name', 'event_tag', 'labels' ),
+					'title_attr' => $this->get_column_title( 'tweaks', 'event_tag' ),
 				),
 				$this->constant( 'event_cat' ) => array(
 					'column'     => 'taxonomy-'.$this->constant( 'event_cat' ),
 					'dashicon'   => 'category',
-					'title_attr' => $this->get_string( 'name', 'event_cat', 'labels' ),
+					'title_attr' => $this->get_column_title( 'tweaks', 'event_cat' ),
 				),
 				$this->constant( 'cal_tax' ) => array(
 					'column'     => 'taxonomy-'.$this->constant( 'cal_tax' ),
 					'dashicon'   => 'calendar',
-					'title_attr' => $this->get_string( 'name', 'cal_tax', 'labels' ),
+					'title_attr' => $this->get_column_title( 'tweaks', 'cal_tax' ),
 				),
 				$this->constant( 'venue_tax' ) => array(
 					'column'     => 'taxonomy-'.$this->constant( 'venue_tax' ),
 					'dashicon'   => 'location',
-					'title_attr' => $this->get_string( 'name', 'venue_tax', 'labels' ),
+					'title_attr' => $this->get_column_title( 'tweaks', 'venue_tax' ),
 				),
 			),
 		);

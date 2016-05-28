@@ -89,13 +89,22 @@ class gEditorialMagazine extends gEditorialModuleCore
 			'misc' => array(
 				'issue_cpt' => array(
 					'featured'       => _x( 'Cover Image', 'Magazine Module: Issue CPT: Featured', GEDITORIAL_TEXTDOMAIN ),
-					'meta_box_title' => _x( 'Metadata',    'Magazine Module: Issue CPT: Meta Box Title', GEDITORIAL_TEXTDOMAIN ),
+					'meta_box_title' => _x( 'Metadata', 'Magazine Module: Issue CPT: Meta Box Title', GEDITORIAL_TEXTDOMAIN ),
 
 					'cover_column_title'    => _x( 'Cover', 'Magazine Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
 					'order_column_title'    => _x( 'O', 'Magazine Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
 					'children_column_title' => _x( 'Posts', 'Magazine Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
 				),
-				'meta_box_title' => _x( 'Issues', 'Magazine Module', GEDITORIAL_TEXTDOMAIN ),
+				'span_tax' => array(
+					'meta_box_title'      => _x( 'Spans', 'Magazine Module: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
+					'tweaks_column_title' => _x( 'Issue Spans', 'Magazine Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				),
+				'section_tax' => array(
+					'meta_box_title'      => _x( 'Sections', 'Magazine Module: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
+					'tweaks_column_title' => _x( 'Issue Sections', 'Magazine Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				),
+				'meta_box_title'      => _x( 'Issues', 'Magazine Module: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
+				'tweaks_column_title' => _x( 'Issues', 'Magazine Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
 			),
 			'noops' => array(
 				'issue_cpt'   => _nx_noop( 'Issue',   'Issues',   'Magazine Module: Noop', GEDITORIAL_TEXTDOMAIN ),
@@ -288,11 +297,17 @@ class gEditorialMagazine extends gEditorialModuleCore
 					'column'     => 'taxonomy-'.$this->constant( 'issue_tax' ),
 					'dashicon'   => 'book',
 					'title_attr' => $this->get_string( 'name', 'issue_tax', 'labels' ),
+					'title_attr' => $this->get_column_title( 'tweaks', 'issue_tax' ),
 				),
 				$this->constant( 'span_tax' ) => array(
 					'column'     => 'taxonomy-'.$this->constant( 'span_tax' ),
 					'dashicon'   => 'backup',
-					'title_attr' => $this->get_string( 'name', 'span_tax', 'labels' ),
+					'title_attr' => $this->get_column_title( 'tweaks', 'span_tax' ),
+				),
+				$this->constant( 'section_tax' ) => array(
+					'column'     => 'taxonomy-'.$this->constant( 'section_tax' ),
+					'dashicon'   => 'category',
+					'title_attr' => $this->get_column_title( 'tweaks', 'section_tax' ),
 				),
 			),
 		);
