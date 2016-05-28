@@ -191,14 +191,23 @@ class gEditorialSettings extends gEditorialModuleCore
 
 			echo '<tr><th scope="row">'._x( 'Options', 'Settings Module', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
 
-				submit_button( _x( 'Upgrade Old Options', 'Settings Module', GEDITORIAL_TEXTDOMAIN ), 'secondary', 'upgrade_old_options', FALSE ); echo '&nbsp;&nbsp;';
+				echo '<p>';
+					submit_button( _x( 'Upgrade Old Options', 'Settings Module', GEDITORIAL_TEXTDOMAIN ), 'secondary', 'upgrade_old_options', FALSE ); echo '&nbsp;&nbsp;';
 
-				if ( self::isDev() || is_super_admin() )
-					submit_button( _x( 'Delete All Options', 'Settings Module', GEDITORIAL_TEXTDOMAIN ), 'secondary', 'delete_all_options', FALSE ); echo '&nbsp;&nbsp;';
+					echo self::html( 'span', array(
+						'class' => 'description',
+					), _x( 'Will check for old options and upgrade, also delete old options', 'Settings Module', GEDITORIAL_TEXTDOMAIN ) );
+				echo '</p>';
 
-				echo self::html( 'p', array(
-					'class' => 'description',
-				), _x( 'Will check for old options and upgrade, also delete old options', 'Settings Module', GEDITORIAL_TEXTDOMAIN ) );
+				if ( self::isDev() || is_super_admin() ) {
+					echo '<br /><p>';
+						submit_button( _x( 'Delete All Options', 'Settings Module', GEDITORIAL_TEXTDOMAIN ), 'secondary', 'delete_all_options', FALSE ); echo '&nbsp;&nbsp;';
+
+						echo self::html( 'span', array(
+							'class' => 'description',
+						), _x( 'Will all editorial options on current site', 'Settings Module', GEDITORIAL_TEXTDOMAIN ) );
+					echo '</p>';
+				}
 
 			echo '</td></tr>';
 			echo '<tr><th scope="row">'._x( 'Empty Meta Fields', 'Settings Module', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
