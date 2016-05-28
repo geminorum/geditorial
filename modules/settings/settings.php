@@ -130,6 +130,13 @@ class gEditorialSettings extends gEditorialModuleCore
 							'count'   => count( $result ),
 						), wp_get_referer() ) );
 
+				} else if ( isset( $_POST['delete_all_options'] ) ) {
+
+					if ( delete_option( 'geditorial_options' ) )
+						self::redirect( add_query_arg( array(
+							'message' => 'deleted',
+						), wp_get_referer() ) );
+
 				} else if ( isset( $_POST['custom_fields_empty'] ) ) {
 
 					if ( isset( $post['empty_module'] ) && isset( $gEditorial->{$post['empty_module']}->meta_key ) ) {
@@ -182,15 +189,16 @@ class gEditorialSettings extends gEditorialModuleCore
 
 			// TODO: tool for installing default terms for each module
 
-			echo '<tr><th scope="row">'._x( 'Upgrade Old Options', 'Settings Module', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
+			echo '<tr><th scope="row">'._x( 'Options', 'Settings Module', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
 
-			echo '<p class="submit">';
-				submit_button( _x( 'Upgrade', 'Settings Module', GEDITORIAL_TEXTDOMAIN ), 'secondary', 'upgrade_old_options', FALSE ); echo '&nbsp;&nbsp;';
+				submit_button( _x( 'Upgrade Old Options', 'Settings Module', GEDITORIAL_TEXTDOMAIN ), 'secondary', 'upgrade_old_options', FALSE ); echo '&nbsp;&nbsp;';
 
-				echo self::html( 'span', array(
+				if ( self::isDev() || is_super_admin() )
+					submit_button( _x( 'Delete All Options', 'Settings Module', GEDITORIAL_TEXTDOMAIN ), 'secondary', 'delete_all_options', FALSE ); echo '&nbsp;&nbsp;';
+
+				echo self::html( 'p', array(
 					'class' => 'description',
 				), _x( 'Will check for old options and upgrade, also delete old options', 'Settings Module', GEDITORIAL_TEXTDOMAIN ) );
-			echo '</p>';
 
 			echo '</td></tr>';
 			echo '<tr><th scope="row">'._x( 'Empty Meta Fields', 'Settings Module', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
