@@ -130,11 +130,11 @@ class gEditorialBook extends gEditorialModuleCore
 				'excerpt',
 				'author',
 				'thumbnail',
-				'trackbacks',
-				'custom-fields',
+				// 'trackbacks',
+				// 'custom-fields',
 				'comments',
 				'revisions',
-				'page-attributes',
+				// 'page-attributes',
 			),
 		);
 	}
