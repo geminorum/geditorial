@@ -1500,8 +1500,9 @@ class gEditorialModuleCore extends gEditorialBaseCore
 		$taxonomy = get_taxonomy( $args['taxonomy'] );
 
 		$html = wp_terms_checklist( $post->ID, array(
-			'taxonomy' => $tax_name,
-			'echo'     => FALSE,
+			'taxonomy'      => $tax_name,
+			'checked_ontop' => FALSE,
+			'echo'          => FALSE,
 		) );
 
 		if ( $html ) {
