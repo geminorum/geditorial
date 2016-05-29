@@ -30,6 +30,7 @@ class gEditorialEvent extends gEditorialModuleCore
 					'default'     => '1',
 				),
 				'calendar_type',
+				'comment_status',
 			),
 		);
 	}
@@ -147,6 +148,8 @@ class gEditorialEvent extends gEditorialModuleCore
 			if ( 'post' == $screen->base ) {
 
 				add_filter( 'post_updated_messages', array( $this, 'post_updated_messages' ) );
+				add_filter( 'get_default_comment_status', array( $this, 'get_default_comment_status' ), 10, 3 );
+
 				add_action( 'save_post_'.$screen->post_type, array( $this, 'save_post_main_cpt' ), 20, 3 );
 
 				if ( $startend ) {

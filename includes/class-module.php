@@ -871,6 +871,22 @@ class gEditorialModuleCore extends gEditorialBaseCore
 		);
 	}
 
+	public function get_settings_comment_status( $section )
+	{
+		return array(
+			'field'       => 'comment_status',
+			'type'        => 'select',
+			'title'       => _x( 'Comment Status', 'Module Core: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+			'description' => _x( 'Default Comment Status of the Posttype', 'Module Core: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+			'default'     => 'closed',
+			'section'     => $section,
+			'values'      => array(
+				'open'   => _x( 'Open', 'Module Core: Setting Option', GEDITORIAL_TEXTDOMAIN ),
+				'closed' => _x( 'Closed', 'Module Core: Setting Option', GEDITORIAL_TEXTDOMAIN ),
+			),
+		);
+	}
+
 	public function get_settings_insert_content( $section )
 	{
 		return array(
@@ -2034,5 +2050,11 @@ class gEditorialModuleCore extends gEditorialBaseCore
 
 		if ( $after = $this->get_setting( 'after_content', FALSE ) )
 			echo '<div class="geditorial-wrap '.$this->module->name.' -after">'.$after.'</div>';
+	}
+
+	// DEFAULT FILTER
+	public function get_default_comment_status( $status, $post_type, $comment_type )
+	{
+		return $this->get_setting( 'comment_status', $status );
 	}
 }

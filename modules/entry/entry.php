@@ -19,7 +19,8 @@ class gEditorialEntry extends gEditorialModuleCore
 			'_general' => array(
 				'shortcode_support',
 				'editor_button',
-				// 'rewrite_prefix', working ut needs prem link rewrites
+				'comment_status',
+				// 'rewrite_prefix', // FIXME: working but needs prem link rewrites
 				'before_content',
 				'after_content',
 			),
@@ -144,11 +145,6 @@ class gEditorialEntry extends gEditorialModuleCore
 				add_action( 'manage_'.$screen->post_type.'_posts_custom_column', array( $this, 'posts_custom_column'), 10, 2 );
 			}
 		}
-	}
-
-	public function get_default_comment_status( $status, $post_type, $comment_type )
-	{
-		return $this->get_setting( 'comment_status', $status ); // FIXME: add default setting
 	}
 
 	public function restrict_manage_posts()

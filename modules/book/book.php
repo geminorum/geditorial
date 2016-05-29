@@ -16,6 +16,9 @@ class gEditorialBook extends gEditorialModuleCore
 	protected function get_global_settings()
 	{
 		return array(
+			'_general' => array(
+				'comment_status',
+			),
 			'posttypes_option' => 'posttypes_option',
 		);
 	}
@@ -247,6 +250,7 @@ class gEditorialBook extends gEditorialModuleCore
 			if ( 'post' == $screen->base ) {
 
 				add_filter( 'post_updated_messages', array( $this, 'post_updated_messages' ) );
+				add_filter( 'get_default_comment_status', array( $this, 'get_default_comment_status' ), 10, 3 );
 
 				add_filter( 'geditorial_meta_box_callback', '__return_true', 12 );
 				add_filter( 'geditorial_meta_dbx_callback', '__return_true', 12 );
