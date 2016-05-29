@@ -11,8 +11,11 @@
 		margin-bottom: 4px;
 		font-size: 0.89em;
 
-		a:focus {
-			box-shadow: none;
+		.-edit {
+			margin: 0 4px 0 0;
+			@include body-rtl() {
+				margin: 0 0 0 4px;
+			}
 		}
 
 		span.dashicons {
@@ -21,6 +24,10 @@
 			height: 16px;
 			font-size: 16px;
 			vertical-align: middle;
+		}
+
+		a:focus {
+			box-shadow: none;
 		}
 	}
 
