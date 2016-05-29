@@ -110,8 +110,8 @@ class gEditorialBook extends gEditorialModuleCore
 						'create'        => _x( 'Connect to an publication', 'Book Module: P2P', GEDITORIAL_TEXTDOMAIN ),
 					),
 					'fields' => array(
-						'title' => array(
-							'title' => _x( 'Pages', 'Book Module: P2P', GEDITORIAL_TEXTDOMAIN ),
+						'ref' => array(
+							'title' => _x( 'Reference', 'Book Module: P2P', GEDITORIAL_TEXTDOMAIN ),
 							'type' => 'text',
 							'value' => '%s',
 						),
