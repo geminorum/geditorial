@@ -1,3 +1,14 @@
+### 3.7.2
+* tweaks: link on tax icon
+* settings: delete all options via general tools
+* entry: default comment status setting
+* event: default comment status setting
+* book: default comment status setting
+* book: p2p meta renamed
+* audit: tax renamed
+* audit: admin box no checked on top
+* meta: hide before/after input if no js
+
 ### 3.7.1
 * book: p2p support
 * today: setting for draft is in today
