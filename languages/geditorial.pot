@@ -34,327 +34,327 @@ msgctxt "Meta Module: Dropdown Select Option None"
 msgid "&mdash; Select %s &mdash;"
 msgstr ""
 
-#: includes/class-helper.php:275
+#: includes/class-helper.php:277
 msgctxt "Module Helper"
 msgid "Click to toggle"
 msgstr ""
 
-#: includes/class-helper.php:405
+#: includes/class-helper.php:407
 msgctxt "Module Helper: Term Seperator"
 msgid ", "
 msgstr ""
 
-#: includes/class-helper.php:480
+#: includes/class-helper.php:482
 msgctxt "Module Helper"
 msgid "Other Posts on <a href=\"%1$s\" target=\"_blank\">%2$s</a>"
 msgstr ""
 
-#: includes/class-helper.php:496
+#: includes/class-helper.php:498
 msgctxt "Module Helper"
 msgid "&ndash; <a href=\"%1$s\" target=\"_blank\" title=\"Edit this Post\">%2$s</a>"
 msgstr ""
 
-#: includes/class-helper.php:594
+#: includes/class-helper.php:596
 msgctxt "Module Helper"
 msgid "Thumbnail"
 msgstr ""
 
-#: includes/class-helper.php:600
+#: includes/class-helper.php:602
 msgctxt "Module Helper"
 msgid "Medium"
 msgstr ""
 
-#: includes/class-helper.php:606
+#: includes/class-helper.php:608
 msgctxt "Module Helper"
 msgid "Large"
 msgstr ""
 
-#: includes/class-helper.php:627
+#: includes/class-helper.php:629
 msgctxt "Module Helper"
 msgid "Word count: %s"
 msgstr ""
 
-#: includes/class-helper.php:634
+#: includes/class-helper.php:636
 msgctxt "Module Helper: Default Calendar Type"
 msgid "Gregorian"
 msgstr ""
 
-#: includes/class-helper.php:635
+#: includes/class-helper.php:637
 msgctxt "Module Helper: Default Calendar Type"
 msgid "Japanese"
 msgstr ""
 
-#: includes/class-helper.php:636
+#: includes/class-helper.php:638
 msgctxt "Module Helper: Default Calendar Type"
 msgid "Buddhist"
 msgstr ""
 
-#: includes/class-helper.php:637
+#: includes/class-helper.php:639
 msgctxt "Module Helper: Default Calendar Type"
 msgid "Chinese"
 msgstr ""
 
-#: includes/class-helper.php:638
+#: includes/class-helper.php:640
 msgctxt "Module Helper: Default Calendar Type"
 msgid "Persian"
 msgstr ""
 
-#: includes/class-helper.php:639
+#: includes/class-helper.php:641
 msgctxt "Module Helper: Default Calendar Type"
 msgid "Indian"
 msgstr ""
 
-#: includes/class-helper.php:640
+#: includes/class-helper.php:642
 msgctxt "Module Helper: Default Calendar Type"
 msgid "Islamic"
 msgstr ""
 
-#: includes/class-helper.php:641
+#: includes/class-helper.php:643
 msgctxt "Module Helper: Default Calendar Type"
 msgid "Islamic-Civil"
 msgstr ""
 
-#: includes/class-helper.php:642
+#: includes/class-helper.php:644
 msgctxt "Module Helper: Default Calendar Type"
 msgid "Coptic"
 msgstr ""
 
-#: includes/class-helper.php:643
+#: includes/class-helper.php:645
 msgctxt "Module Helper: Default Calendar Type"
 msgid "Ethiopic"
 msgstr ""
 
-#: includes/class-helper.php:677
+#: includes/class-helper.php:679
 msgctxt "Module Helper: CPT Generator: Name"
 msgid "%1$s"
 msgstr ""
 
-#: includes/class-helper.php:678
+#: includes/class-helper.php:680
 msgctxt "Module Helper: CPT Generator: Menu Name"
 msgid "%1$s"
 msgstr ""
 
-#: includes/class-helper.php:679
+#: includes/class-helper.php:681
 msgctxt "Module Helper: CPT Generator: Description"
 msgid "%1$s"
 msgstr ""
 
-#: includes/class-helper.php:680
+#: includes/class-helper.php:682
 msgctxt "Module Helper: CPT Generator: Singular Name"
 msgid "%2$s"
 msgstr ""
 
-#: includes/class-helper.php:681
+#: includes/class-helper.php:683
 msgctxt "Module Helper: CPT Generator"
 msgid "Add New"
 msgstr ""
 
-#: includes/class-helper.php:682
-msgctxt "Module Helper: CPT Generator"
-msgid "Add New %2$s"
-msgstr ""
-
-#: includes/class-helper.php:683
-msgctxt "Module Helper: CPT Generator"
-msgid "Edit %2$s"
-msgstr ""
-
 #: includes/class-helper.php:684
 msgctxt "Module Helper: CPT Generator"
-msgid "New %2$s"
+msgid "Add New %2$s"
 msgstr ""
 
 #: includes/class-helper.php:685
 msgctxt "Module Helper: CPT Generator"
-msgid "View %2$s"
+msgid "Edit %2$s"
 msgstr ""
 
 #: includes/class-helper.php:686
 msgctxt "Module Helper: CPT Generator"
-msgid "Search %1$s"
+msgid "New %2$s"
 msgstr ""
 
 #: includes/class-helper.php:687
 msgctxt "Module Helper: CPT Generator"
-msgid "No %3$s found."
+msgid "View %2$s"
 msgstr ""
 
 #: includes/class-helper.php:688
 msgctxt "Module Helper: CPT Generator"
-msgid "No %3$s found in Trash."
+msgid "Search %1$s"
 msgstr ""
 
 #: includes/class-helper.php:689
 msgctxt "Module Helper: CPT Generator"
-msgid "Parent %2$s:"
+msgid "No %3$s found."
 msgstr ""
 
 #: includes/class-helper.php:690
 msgctxt "Module Helper: CPT Generator"
-msgid "All %1$s"
+msgid "No %3$s found in Trash."
 msgstr ""
 
 #: includes/class-helper.php:691
 msgctxt "Module Helper: CPT Generator"
-msgid "%2$s Archives"
+msgid "Parent %2$s:"
 msgstr ""
 
 #: includes/class-helper.php:692
 msgctxt "Module Helper: CPT Generator"
-msgid "Insert into %4$s"
+msgid "All %1$s"
 msgstr ""
 
 #: includes/class-helper.php:693
 msgctxt "Module Helper: CPT Generator"
-msgid "Uploaded to this %4$s"
+msgid "%2$s Archives"
 msgstr ""
 
 #: includes/class-helper.php:694
 msgctxt "Module Helper: CPT Generator"
-msgid "Filter %3$s list"
+msgid "Insert into %4$s"
 msgstr ""
 
 #: includes/class-helper.php:695
 msgctxt "Module Helper: CPT Generator"
-msgid "%1$s list navigation"
+msgid "Uploaded to this %4$s"
 msgstr ""
 
 #: includes/class-helper.php:696
 msgctxt "Module Helper: CPT Generator"
+msgid "Filter %3$s list"
+msgstr ""
+
+#: includes/class-helper.php:697
+msgctxt "Module Helper: CPT Generator"
+msgid "%1$s list navigation"
+msgstr ""
+
+#: includes/class-helper.php:698
+msgctxt "Module Helper: CPT Generator"
 msgid "%1$s list"
-msgstr ""
-
-#: includes/class-helper.php:700
-msgctxt "Module Helper: CPT Generator: Featured"
-msgid "%1$s"
-msgstr ""
-
-#: includes/class-helper.php:701
-msgctxt "Module Helper: CPT Generator: Featured"
-msgid "Set %2$s"
 msgstr ""
 
 #: includes/class-helper.php:702
 msgctxt "Module Helper: CPT Generator: Featured"
-msgid "Remove %2$s"
+msgid "%1$s"
 msgstr ""
 
 #: includes/class-helper.php:703
 msgctxt "Module Helper: CPT Generator: Featured"
+msgid "Set %2$s"
+msgstr ""
+
+#: includes/class-helper.php:704
+msgctxt "Module Helper: CPT Generator: Featured"
+msgid "Remove %2$s"
+msgstr ""
+
+#: includes/class-helper.php:705
+msgctxt "Module Helper: CPT Generator: Featured"
 msgid "Use as %2$s"
 msgstr ""
 
-#: includes/class-helper.php:746
+#: includes/class-helper.php:748
 msgctxt "Module Helper: Tax Generator: Name"
 msgid "%1$s"
 msgstr ""
 
-#: includes/class-helper.php:747
+#: includes/class-helper.php:749
 msgctxt "Module Helper: Tax Generator: Menu Name"
 msgid "%1$s"
 msgstr ""
 
-#: includes/class-helper.php:748
+#: includes/class-helper.php:750
 msgctxt "Module Helper: Tax Generator: Singular Name"
 msgid "%2$s"
 msgstr ""
 
-#: includes/class-helper.php:749
+#: includes/class-helper.php:751
 msgctxt "Module Helper: Tax Generator"
 msgid "Search %1$s"
 msgstr ""
 
-#: includes/class-helper.php:750
+#: includes/class-helper.php:752
 msgctxt "Module Helper: Tax Generator"
 msgid "Popular %1$s"
 msgstr ""
 
-#: includes/class-helper.php:751
+#: includes/class-helper.php:753
 msgctxt "Module Helper: Tax Generator"
 msgid "All %1$s"
 msgstr ""
 
-#: includes/class-helper.php:752
+#: includes/class-helper.php:754
 msgctxt "Module Helper: Tax Generator"
 msgid "Parent %2$s"
 msgstr ""
 
-#: includes/class-helper.php:753
+#: includes/class-helper.php:755
 msgctxt "Module Helper: Tax Generator"
 msgid "Parent %2$s:"
 msgstr ""
 
-#: includes/class-helper.php:754
+#: includes/class-helper.php:756
 msgctxt "Module Helper: Tax Generator"
 msgid "Edit %2$s"
 msgstr ""
 
-#: includes/class-helper.php:755
+#: includes/class-helper.php:757
 msgctxt "Module Helper: Tax Generator"
 msgid "View %2$s"
 msgstr ""
 
-#: includes/class-helper.php:756
+#: includes/class-helper.php:758
 msgctxt "Module Helper: Tax Generator"
 msgid "Update %2$s"
 msgstr ""
 
-#: includes/class-helper.php:757
+#: includes/class-helper.php:759
 msgctxt "Module Helper: Tax Generator"
 msgid "Add New %2$s"
 msgstr ""
 
-#: includes/class-helper.php:758
+#: includes/class-helper.php:760
 msgctxt "Module Helper: Tax Generator"
 msgid "New %2$s Name"
 msgstr ""
 
-#: includes/class-helper.php:759
+#: includes/class-helper.php:761
 msgctxt "Module Helper: Tax Generator"
 msgid "Separate %3$s with commas"
 msgstr ""
 
-#: includes/class-helper.php:760
+#: includes/class-helper.php:762
 msgctxt "Module Helper: Tax Generator"
 msgid "Add or remove %3$s"
 msgstr ""
 
-#: includes/class-helper.php:761
+#: includes/class-helper.php:763
 msgctxt "Module Helper: Tax Generator"
 msgid "Choose from the most used %3$s"
 msgstr ""
 
-#: includes/class-helper.php:762
+#: includes/class-helper.php:764
 msgctxt "Module Helper: Tax Generator"
 msgid "No %3$s found."
 msgstr ""
 
-#: includes/class-helper.php:763
+#: includes/class-helper.php:765
 msgctxt "Module Helper: Tax Generator"
 msgid "No %3$s"
 msgstr ""
 
-#: includes/class-helper.php:764
+#: includes/class-helper.php:766
 msgctxt "Module Helper: Tax Generator"
 msgid "%1$s list navigation"
 msgstr ""
 
-#: includes/class-helper.php:765
+#: includes/class-helper.php:767
 msgctxt "Module Helper: Tax Generator"
 msgid "%1$s list"
 msgstr ""
 
-#: includes/class-helper.php:827
+#: includes/class-helper.php:829
 msgctxt "Module Helper"
 msgid "Editorial"
 msgstr ""
 
-#: includes/class-helper.php:834
+#: includes/class-helper.php:836
 msgctxt "Module Helper"
 msgid "Back to Editorial"
 msgstr ""
 
-#: includes/class-helper.php:854
+#: includes/class-helper.php:856
 msgid "<a href=\"%1$s\" title=\"Editorial\">gEditorial</a> is a <a href=\"%2$s\">geminorum</a> project."
 msgstr ""
 
@@ -440,205 +440,225 @@ msgstr ""
 
 #: includes/class-module.php:879
 msgctxt "Module Core: Setting Title"
-msgid "Insert in Content"
+msgid "Comment Status"
 msgstr ""
 
 #: includes/class-module.php:880
 msgctxt "Module Core: Setting Description"
-msgid "Put html automatically on the content"
+msgid "Default Comment Status of the Posttype"
 msgstr ""
 
 #: includes/class-module.php:884
+msgctxt "Module Core: Setting Option"
+msgid "Open"
+msgstr ""
+
+#: includes/class-module.php:885
+msgctxt "Module Core: Setting Option"
+msgid "Closed"
+msgstr ""
+
+#: includes/class-module.php:895
+msgctxt "Module Core: Setting Title"
+msgid "Insert in Content"
+msgstr ""
+
+#: includes/class-module.php:896
+msgctxt "Module Core: Setting Description"
+msgid "Put html automatically on the content"
+msgstr ""
+
+#: includes/class-module.php:900
 msgctxt "Module Core: Insert in Content Option"
 msgid "No"
 msgstr ""
 
-#: includes/class-module.php:885
+#: includes/class-module.php:901
 msgctxt "Module Core: Insert in Content Option"
 msgid "Before"
 msgstr ""
 
-#: includes/class-module.php:886
+#: includes/class-module.php:902
 msgctxt "Module Core: Insert in Content Option"
 msgid "After"
 msgstr ""
 
-#: includes/class-module.php:896
+#: includes/class-module.php:912
 msgctxt "Module Core: Setting Title"
 msgid "Before Content"
 msgstr ""
 
-#: includes/class-module.php:897
+#: includes/class-module.php:913
 msgctxt "Module Core: Setting Description"
 msgid "Adds <code>HTML</code> content to the start of all the supported posttypes"
 msgstr ""
 
-#: includes/class-module.php:907
+#: includes/class-module.php:923
 msgctxt "Module Core: Setting Title"
 msgid "After Content"
 msgstr ""
 
-#: includes/class-module.php:908
+#: includes/class-module.php:924
 msgctxt "Module Core: Setting Description"
 msgid "Adds <code>HTML</code> content to the end of all the supported posttypes"
 msgstr ""
 
-#: includes/class-module.php:917
+#: includes/class-module.php:933
 msgctxt "Module Core: Setting Title"
 msgid "Feeds"
 msgstr ""
 
-#: includes/class-module.php:918
+#: includes/class-module.php:934
 msgctxt "Module Core: Setting Description"
 msgid "Supporting feeds on the posttype"
 msgstr ""
 
-#: includes/class-module.php:928
+#: includes/class-module.php:944
 msgctxt "Module Core: Setting Title"
 msgid "Pages"
 msgstr ""
 
-#: includes/class-module.php:929
+#: includes/class-module.php:945
 msgctxt "Module Core: Setting Description"
 msgid "Supporting pagination on the posttype"
 msgstr ""
 
-#: includes/class-module.php:939
+#: includes/class-module.php:955
 msgctxt "Module Core: Setting Title"
 msgid "Default Calendar"
 msgstr ""
 
-#: includes/class-module.php:988
+#: includes/class-module.php:1004
 msgctxt "Module Core"
 msgid "Save Changes"
 msgstr ""
 
-#: includes/class-module.php:989
+#: includes/class-module.php:1005
 msgctxt "Module Core"
 msgid "Reset Settings"
 msgstr ""
 
-#: includes/class-module.php:989
+#: includes/class-module.php:1005
 msgctxt "Module Core"
 msgid "Are you sure? This operation can not be undone."
 msgstr ""
 
-#: includes/class-module.php:1083
+#: includes/class-module.php:1099
 msgctxt "Module Core: Settings Field Option"
 msgid "Disabled"
 msgstr ""
 
-#: includes/class-module.php:1088
+#: includes/class-module.php:1104
 msgctxt "Module Core: Settings Field Option"
 msgid "Enabled"
 msgstr ""
 
-#: includes/class-module.php:1229
+#: includes/class-module.php:1245
 msgctxt "Module Core: WP Dropdown Pages Option None"
 msgid "&mdash; Select Page &mdash;"
 msgstr ""
 
-#: includes/class-module.php:1273
+#: includes/class-module.php:1289
 msgctxt "Module Core"
 msgid "Error: settings type undefined."
 msgstr ""
 
-#: includes/class-module.php:1425
+#: includes/class-module.php:1441
 msgctxt "Module Core: Post Updated Messages"
 msgid "%1$s updated. <a href=\"%3$s\">View %2$s</a>"
 msgstr ""
 
-#: includes/class-module.php:1431
+#: includes/class-module.php:1447
 msgctxt "Module Core: Post Updated Messages"
 msgid "Custom field updated."
 msgstr ""
 
-#: includes/class-module.php:1432
+#: includes/class-module.php:1448
 msgctxt "Module Core: Post Updated Messages"
 msgid "Custom field deleted."
 msgstr ""
 
-#: includes/class-module.php:1434
+#: includes/class-module.php:1450
 msgctxt "Module Core: Post Updated Messages"
 msgid "%s updated."
 msgstr ""
 
-#: includes/class-module.php:1436
+#: includes/class-module.php:1452
 msgctxt "Module Core: Post Updated Messages"
 msgid "%1$s restored to revision from %2$s"
 msgstr ""
 
-#: includes/class-module.php:1441
+#: includes/class-module.php:1457
 msgctxt "Module Core: Post Updated Messages"
 msgid "%1$s published. <a href=\"%3$s\">View %2$s</a>"
 msgstr ""
 
-#: includes/class-module.php:1447
+#: includes/class-module.php:1463
 msgctxt "Module Core: Post Updated Messages"
 msgid "%s saved."
 msgstr ""
 
-#: includes/class-module.php:1449
+#: includes/class-module.php:1465
 msgctxt "Module Core: Post Updated Messages"
 msgid "%1$s submitted. <a target=\"_blank\" href=\"%3$s\">Preview %2$s</a>"
 msgstr ""
 
-#: includes/class-module.php:1455
+#: includes/class-module.php:1471
 msgctxt "Module Core: Post Updated Messages"
 msgid "%1$s scheduled for: <strong>%4$s</strong>. <a target=\"_blank\" href=\"%3$s\">Preview %2$s</a>"
 msgstr ""
 
-#: includes/class-module.php:1462
+#: includes/class-module.php:1478
 msgctxt "Module Core: Post Updated Messages"
 msgid "%1$s draft updated. <a target=\"_blank\" href=\"%3$s\">Preview %2$s</a>"
 msgstr ""
 
-#: includes/class-module.php:1620
+#: includes/class-module.php:1637
 msgctxt "Module Core: MetaBox Tax Dropdown: Select Option None"
 msgid "&mdash; Select %s &mdash;"
 msgstr ""
 
-#: includes/class-module.php:1647
+#: includes/class-module.php:1664
 msgctxt "Module Core: Title Attr"
 msgid "Order"
 msgstr ""
 
-#: includes/class-module.php:1648
+#: includes/class-module.php:1665
 msgctxt "Module Core: Placeholder"
 msgid "Order"
 msgstr ""
 
-#: includes/class-module.php:1667
+#: includes/class-module.php:1684
 msgctxt "Module Core: MetaBox Parent Dropdown: Select Option None"
 msgid "&mdash; no parent &mdash;"
 msgstr ""
 
-#: includes/class-module.php:1728
+#: includes/class-module.php:1745
 msgctxt "Module Core: MetaBox default title"
 msgid "Settings"
 msgstr ""
 
-#: includes/class-module.php:1735
+#: includes/class-module.php:1752
 msgctxt "Module Core: MetaBox default action"
 msgid "Configure"
 msgstr ""
 
-#: includes/class-module.php:1877, includes/class-module.php:1890
+#: includes/class-module.php:1894, includes/class-module.php:1907
 msgctxt "Module Core: At a Glance: Nooped String"
 msgid "%1$s"
 msgstr ""
 
-#: includes/class-module.php:1903
+#: includes/class-module.php:1920
 msgctxt "Module Core: No Count Title Attribute"
 msgid "No Count"
 msgstr ""
 
-#: includes/class-module.php:1927
+#: includes/class-module.php:1944
 msgctxt "Module Core: Term Seperator"
 msgid ", "
 msgstr ""
 
-#: includes/class-module.php:1933
+#: includes/class-module.php:1950
 msgctxt "Module Core: No Count Term Attribute"
 msgid "No Term"
 msgstr ""
@@ -830,125 +850,49 @@ msgctxt "Audit Module"
 msgid "Content Inventory Tools"
 msgstr ""
 
-#: modules/audit/audit.php:34, modules/audit/audit.php:36
-msgid "Audit"
-msgstr ""
-
-#: modules/audit/audit.php:35
-msgid "Management"
-msgstr ""
-
-#: modules/audit/audit.php:40
-msgctxt "Audit Module: Audit Attribute Tax: Name"
+#: modules/audit/audit.php:34
+msgctxt "Audit Module: Column Title"
 msgid "Audit Attributes"
 msgstr ""
+
+#: modules/audit/audit.php:37
+msgctxt "Audit Module: Noop"
+msgid "Audit Attribute"
+msgid_plural "Audit Attributes"
+msgstr[0] ""
+msgstr[1] ""
 
 #: modules/audit/audit.php:41
-msgctxt "Audit Module: Audit Attribute Tax: Menu Name"
-msgid "Audit Attributes"
-msgstr ""
-
-#: modules/audit/audit.php:42
-msgctxt "Audit Module: Audit Attribute Tax: Singular Name"
-msgid "Audit Attribute"
-msgstr ""
-
-#: modules/audit/audit.php:43
-msgctxt "Audit Module: Audit Attribute Tax"
-msgid "Search Audit Attributes"
-msgstr ""
-
-#: modules/audit/audit.php:44
-msgctxt "Audit Module: Audit Attribute Tax"
-msgid "All Audit Attributes"
-msgstr ""
-
-#: modules/audit/audit.php:45
-msgctxt "Audit Module: Audit Attribute Tax"
-msgid "Parent Audit Attribute"
-msgstr ""
-
-#: modules/audit/audit.php:46
-msgctxt "Audit Module: Audit Attribute Tax"
-msgid "Parent Audit Attribute:"
-msgstr ""
-
-#: modules/audit/audit.php:47
-msgctxt "Audit Module: Audit Attribute Tax"
-msgid "Edit Audit Attribute"
-msgstr ""
-
-#: modules/audit/audit.php:48
-msgctxt "Audit Module: Audit Attribute Tax"
-msgid "View Audit Attribute"
-msgstr ""
-
-#: modules/audit/audit.php:49
-msgctxt "Audit Module: Audit Attribute Tax"
-msgid "Update Audit Attribute"
-msgstr ""
-
-#: modules/audit/audit.php:50
-msgctxt "Audit Module: Audit Attribute Tax"
-msgid "Add New Audit Attribute"
-msgstr ""
-
-#: modules/audit/audit.php:51
-msgctxt "Audit Module: Audit Attribute Tax"
-msgid "New Audit Attribute Name"
-msgstr ""
-
-#: modules/audit/audit.php:52
-msgctxt "Audit Module: Audit Attribute Tax"
-msgid "No audit attributes found."
-msgstr ""
-
-#: modules/audit/audit.php:53
-msgctxt "Audit Module: Audit Attribute Tax"
-msgid "No audit attributes"
-msgstr ""
-
-#: modules/audit/audit.php:54
-msgctxt "Audit Module: Audit Attribute Tax"
-msgid "Audit Attributes list navigation"
-msgstr ""
-
-#: modules/audit/audit.php:55
-msgctxt "Audit Module: Audit Attribute Tax"
-msgid "Audit Attributes list"
-msgstr ""
-
-#: modules/audit/audit.php:60
 msgctxt "Audit Module: Audit Attributes Tax Defaults"
 msgid "Audited"
 msgstr ""
 
-#: modules/audit/audit.php:61
+#: modules/audit/audit.php:42
 msgctxt "Audit Module: Audit Attributes Tax Defaults"
 msgid "Outdated"
 msgstr ""
 
-#: modules/audit/audit.php:62
+#: modules/audit/audit.php:43
 msgctxt "Audit Module: Audit Attributes Tax Defaults"
 msgid "Redundant"
 msgstr ""
 
-#: modules/audit/audit.php:63
+#: modules/audit/audit.php:44
 msgctxt "Audit Module: Audit Attributes Tax Defaults"
 msgid "Review SEO"
 msgstr ""
 
-#: modules/audit/audit.php:64
+#: modules/audit/audit.php:45
 msgctxt "Audit Module: Audit Attributes Tax Defaults"
 msgid "Review Style"
 msgstr ""
 
-#: modules/audit/audit.php:65
+#: modules/audit/audit.php:46
 msgctxt "Audit Module: Audit Attributes Tax Defaults"
 msgid "Trivial"
 msgstr ""
 
-#: modules/audit/audit.php:93
+#: modules/audit/audit.php:74
 msgctxt "Audit Module"
 msgid "Install Default Attributes"
 msgstr ""
@@ -963,296 +907,296 @@ msgctxt "Book Module"
 msgid "Online House of Publications"
 msgstr ""
 
-#: modules/book/book.php:43
+#: modules/book/book.php:46
 msgctxt "Book Module: Publication CPT: Featured"
 msgid "Cover Image"
 msgstr ""
 
-#: modules/book/book.php:44
+#: modules/book/book.php:47
 msgctxt "Book Module: MetaBox Title"
 msgid "Metadata"
 msgstr ""
 
-#: modules/book/book.php:45
+#: modules/book/book.php:48
 msgctxt "Book Module: Column Title"
 msgid "Cover"
 msgstr ""
 
-#: modules/book/book.php:48
+#: modules/book/book.php:51
 msgctxt "Book Module: MetaBox Title"
 msgid "Subject"
 msgstr ""
 
-#: modules/book/book.php:49
+#: modules/book/book.php:52
 msgctxt "Book Module: Column Title"
 msgid "Publication Subject"
 msgstr ""
 
-#: modules/book/book.php:52
+#: modules/book/book.php:55
 msgctxt "Book Module: MetaBox Title"
 msgid "Library"
 msgstr ""
 
-#: modules/book/book.php:53
+#: modules/book/book.php:56
 msgctxt "Book Module: Column Title"
 msgid "Publication Library"
 msgstr ""
 
-#: modules/book/book.php:56
+#: modules/book/book.php:59
 msgctxt "Book Module: MetaBox Title"
 msgid "Publisher"
 msgstr ""
 
-#: modules/book/book.php:57
+#: modules/book/book.php:60
 msgctxt "Book Module: Column Title"
 msgid "Publication Publisher"
 msgstr ""
 
-#: modules/book/book.php:60
+#: modules/book/book.php:63
 msgctxt "Book Module: MetaBox Title"
 msgid "Status"
 msgstr ""
 
-#: modules/book/book.php:61
+#: modules/book/book.php:64
 msgctxt "Book Module: Column Title"
 msgid "Publication Status"
 msgstr ""
 
-#: modules/book/book.php:64
+#: modules/book/book.php:67
 msgctxt "Book Module: MetaBox Title"
 msgid "Type"
 msgstr ""
 
-#: modules/book/book.php:65
+#: modules/book/book.php:68
 msgctxt "Book Module: Column Title"
 msgid "Publication Type"
 msgstr ""
 
-#: modules/book/book.php:68
+#: modules/book/book.php:71
 msgctxt "Book Module: MetaBox Title"
 msgid "Curator"
 msgstr ""
 
-#: modules/book/book.php:71
+#: modules/book/book.php:74
 msgctxt "Book Module: MetaBox Title"
 msgid "Summary"
 msgstr ""
 
-#: modules/book/book.php:75
+#: modules/book/book.php:78
 msgctxt "Book Module: Noop"
 msgid "Publication"
 msgid_plural "Publications"
 msgstr[0] ""
 msgstr[1] ""
 
-#: modules/book/book.php:76
+#: modules/book/book.php:79
 msgctxt "Book Module: Noop"
 msgid "Subject"
 msgid_plural "Subjects"
 msgstr[0] ""
 msgstr[1] ""
 
-#: modules/book/book.php:77
+#: modules/book/book.php:80
 msgctxt "Book Module: Noop"
 msgid "Library"
 msgid_plural "Libraries"
 msgstr[0] ""
 msgstr[1] ""
 
-#: modules/book/book.php:78
+#: modules/book/book.php:81
 msgctxt "Book Module: Noop"
 msgid "Publisher"
 msgid_plural "Publishers"
 msgstr[0] ""
 msgstr[1] ""
 
-#: modules/book/book.php:79
+#: modules/book/book.php:82
 msgctxt "Book Module: Noop"
 msgid "Publication Type"
 msgid_plural "Publication Types"
 msgstr[0] ""
 msgstr[1] ""
 
-#: modules/book/book.php:80
+#: modules/book/book.php:83
 msgctxt "Book Module: Noop"
 msgid "Publication Status"
 msgid_plural "Publication Statuses"
 msgstr[0] ""
 msgstr[1] ""
 
-#: modules/book/book.php:81
+#: modules/book/book.php:84
 msgctxt "Book Module: Noop"
 msgid "Publication Size"
 msgid_plural "Publication Sizes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: modules/book/book.php:85
+#: modules/book/book.php:88
 msgctxt "Book Module: Publication Size: Default Term"
 msgid "Octavo"
 msgstr ""
 
-#: modules/book/book.php:86
+#: modules/book/book.php:89
 msgctxt "Book Module: Publication Size: Default Term"
 msgid "Folio"
 msgstr ""
 
-#: modules/book/book.php:87
+#: modules/book/book.php:90
 msgctxt "Book Module: Publication Size: Default Term"
 msgid "Medium Octavo"
 msgstr ""
 
-#: modules/book/book.php:88
+#: modules/book/book.php:91
 msgctxt "Book Module: Publication Size: Default Term"
 msgid "Quatro"
 msgstr ""
 
-#: modules/book/book.php:94
+#: modules/book/book.php:97
 msgctxt "Book Module: P2P"
 msgid "Connected Publications"
 msgstr ""
 
-#: modules/book/book.php:95
+#: modules/book/book.php:98
 msgctxt "Book Module: P2P"
 msgid "Connected Posts"
 msgstr ""
 
-#: modules/book/book.php:98
+#: modules/book/book.php:101
 msgctxt "Book Module: P2P"
 msgid "Post"
 msgstr ""
 
-#: modules/book/book.php:99
+#: modules/book/book.php:102
 msgctxt "Book Module: P2P"
 msgid "Search Posts"
 msgstr ""
 
-#: modules/book/book.php:100
+#: modules/book/book.php:103
 msgctxt "Book Module: P2P"
 msgid "No posts found."
 msgstr ""
 
-#: modules/book/book.php:101
+#: modules/book/book.php:104
 msgctxt "Book Module: P2P"
 msgid "Connect to a post"
 msgstr ""
 
-#: modules/book/book.php:104
+#: modules/book/book.php:107
 msgctxt "Book Module: P2P"
 msgid "Publications"
 msgstr ""
 
-#: modules/book/book.php:105
+#: modules/book/book.php:108
 msgctxt "Book Module: P2P"
 msgid "Search Publication"
 msgstr ""
 
-#: modules/book/book.php:106
+#: modules/book/book.php:109
 msgctxt "Book Module: P2P"
 msgid "No publications found."
 msgstr ""
 
-#: modules/book/book.php:107
+#: modules/book/book.php:110
 msgctxt "Book Module: P2P"
 msgid "Connect to an publication"
 msgstr ""
 
-#: modules/book/book.php:111
+#: modules/book/book.php:114
 msgctxt "Book Module: P2P"
-msgid "Pages"
+msgid "Reference"
 msgstr ""
 
-#: modules/book/book.php:144
+#: modules/book/book.php:147
 msgctxt "Book Module: Field Title"
 msgid "Collection Title"
 msgstr ""
 
-#: modules/book/book.php:145
+#: modules/book/book.php:148
 msgctxt "Book Module: Field Description"
 msgid "This Publication Is Part of a Collection"
 msgstr ""
 
-#: modules/book/book.php:149
+#: modules/book/book.php:152
 msgctxt "Book Module: Field Title"
 msgid "Subtitle"
 msgstr ""
 
-#: modules/book/book.php:150
+#: modules/book/book.php:153
 msgctxt "Book Module: Field Description"
 msgid "Subtitle of the Publication"
 msgstr ""
 
-#: modules/book/book.php:154
+#: modules/book/book.php:157
 msgctxt "Book Module: Field Title"
 msgid "Alternative Title"
 msgstr ""
 
-#: modules/book/book.php:155
+#: modules/book/book.php:158
 msgctxt "Book Module: Field Description"
 msgid "The Original Title or Title in Another Language"
 msgstr ""
 
-#: modules/book/book.php:158
+#: modules/book/book.php:161
 msgctxt "Book Module: Field Title"
 msgid "ISBN"
 msgstr ""
 
-#: modules/book/book.php:159
+#: modules/book/book.php:162
 msgctxt "Book Module: Field Description"
 msgid "International Standard Book Number"
 msgstr ""
 
-#: modules/book/book.php:163
+#: modules/book/book.php:166
 msgctxt "Book Module: Field Title"
 msgid "Size"
 msgstr ""
 
-#: modules/book/book.php:164
+#: modules/book/book.php:167
 msgctxt "Book Module: Field Description"
 msgid "The Size of the Publication, Mainly Books"
 msgstr ""
 
-#: modules/book/book.php:169
+#: modules/book/book.php:172
 msgctxt "Book Module: Field Title"
 msgid "Publication Date"
 msgstr ""
 
-#: modules/book/book.php:170
+#: modules/book/book.php:173
 msgctxt "Book Module: Field Description"
 msgid "Date Published"
 msgstr ""
 
-#: modules/book/book.php:173
+#: modules/book/book.php:176
 msgctxt "Book Module: Field Title"
 msgid "Edition"
 msgstr ""
 
-#: modules/book/book.php:174
+#: modules/book/book.php:177
 msgctxt "Book Module: Field Description"
 msgid "Edition of the Publication"
 msgstr ""
 
-#: modules/book/book.php:177
+#: modules/book/book.php:180
 msgctxt "Book Module: Field Title"
 msgid "Print"
 msgstr ""
 
-#: modules/book/book.php:178
+#: modules/book/book.php:181
 msgctxt "Book Module: Field Description"
 msgid "Specefic Print of the Publication"
 msgstr ""
 
-#: modules/book/book.php:181
+#: modules/book/book.php:184
 msgctxt "Book Module: Field Title"
 msgid "Pages"
 msgstr ""
 
-#: modules/book/book.php:182
+#: modules/book/book.php:185
 msgctxt "Book Module: Field Description"
 msgid "Total Pages of the Publication"
 msgstr ""
 
-#: modules/book/book.php:295
+#: modules/book/book.php:301
 msgid "Install Default Sizes"
 msgstr ""
 
@@ -1999,7 +1943,7 @@ msgctxt "Contest Module"
 msgid "&mdash; Select a contest &mdash;"
 msgstr ""
 
-#: modules/contest/contest.php:651, modules/contest/contest.php:661, modules/magazine/magazine.php:449, modules/magazine/magazine.php:459
+#: modules/contest/contest.php:651, modules/contest/contest.php:661, modules/magazine/magazine.php:464, modules/magazine/magazine.php:474
 msgctxt "Suffix for term name linked to trashed post"
 msgid "(Trashed)"
 msgstr ""
@@ -2312,7 +2256,7 @@ msgctxt "Drafts Module"
 msgid "(none)"
 msgstr ""
 
-#: modules/entry/entry.php:10, modules/entry/entry.php:47
+#: modules/entry/entry.php:10
 msgctxt "Entry Module"
 msgid "Entry"
 msgstr ""
@@ -2323,29 +2267,34 @@ msgid "Wiki-like Posts Entries"
 msgstr ""
 
 #: modules/entry/entry.php:48
+msgctxt "Entry Module: Entry CPT: Featured"
+msgid "Cover Image"
+msgstr ""
+
+#: modules/entry/entry.php:49
+msgctxt "Entry Module: Meta Box Title"
+msgid "Entry"
+msgstr ""
+
+#: modules/entry/entry.php:50
 msgctxt "Entry Module: Column Title"
 msgid "Section"
 msgstr ""
 
-#: modules/entry/entry.php:49
+#: modules/entry/entry.php:51
 msgctxt "Entry Module: Column Title"
 msgid "O"
 msgstr ""
 
-#: modules/entry/entry.php:53
-msgctxt "Entry Module: Entry CPT Labels: Name"
+#: modules/entry/entry.php:54
+msgctxt "Entry Module: Noop"
 msgid "Entry"
 msgid_plural "Entries"
 msgstr[0] ""
 msgstr[1] ""
 
-#: modules/entry/entry.php:54
-msgctxt "Event Module: Event CPT Labels: Featured"
-msgid "Cover Image"
-msgstr ""
-
-#: modules/entry/entry.php:57
-msgctxt "Entry Module: Section Tax Labels: Name"
+#: modules/entry/entry.php:55
+msgctxt "Entry Module: Noop"
 msgid "Section"
 msgid_plural "Sections"
 msgstr[0] ""
@@ -2468,145 +2417,155 @@ msgctxt "Event Module: Setting Description"
 msgid "For each event you can select the calendar type. Or else select default below."
 msgstr ""
 
-#: modules/event/event.php:60
+#: modules/event/event.php:61
 msgctxt "Event Module: Event CPT: Featured"
 msgid "Poster Image"
 msgstr ""
 
-#: modules/event/event.php:61
+#: modules/event/event.php:62
 msgctxt "Event Module: Event CPT: Meta Box Title"
 msgid "Date & Times"
 msgstr ""
 
-#: modules/event/event.php:63
+#: modules/event/event.php:64
 msgctxt "Event Module: Column Title"
 msgid "Dates"
 msgstr ""
 
-#: modules/event/event.php:64
+#: modules/event/event.php:65
 msgctxt "Event Module: Column Title"
 msgid "Times"
 msgstr ""
 
-#: modules/event/event.php:67
+#: modules/event/event.php:68
 msgctxt "Event Module: Meta Box Title"
 msgid "Event Types"
 msgstr ""
 
-#: modules/event/event.php:70
-msgctxt "Event Module: Meta Box Title"
-msgid "Calendars"
+#: modules/event/event.php:69
+msgctxt "Event Module: Column Title"
+msgid "Event Types"
 msgstr ""
 
-#: modules/event/event.php:74
+#: modules/event/event.php:72
+msgctxt "Event Module: Meta Box Title"
+msgid "Event Calendars"
+msgstr ""
+
+#: modules/event/event.php:73
+msgctxt "Event Module: Column Title"
+msgid "Event Calendars"
+msgstr ""
+
+#: modules/event/event.php:77
 msgctxt "Event Module: Noop"
 msgid "Event"
 msgid_plural "Events"
 msgstr[0] ""
 msgstr[1] ""
 
-#: modules/event/event.php:75
+#: modules/event/event.php:78
 msgctxt "Event Module: Noop"
 msgid "Event Type"
 msgid_plural "Event Types"
 msgstr[0] ""
 msgstr[1] ""
 
-#: modules/event/event.php:76
+#: modules/event/event.php:79
 msgctxt "Event Module: Noop"
 msgid "Event Category"
 msgid_plural "Event Categories"
 msgstr[0] ""
 msgstr[1] ""
 
-#: modules/event/event.php:77
+#: modules/event/event.php:80
 msgctxt "Event Module: Noop"
 msgid "Event Calendar"
 msgid_plural "Event Calendars"
 msgstr[0] ""
 msgstr[1] ""
 
-#: modules/event/event.php:81
+#: modules/event/event.php:84
 msgctxt "Event Module: Calendar Type Tax Labels: Name"
 msgid "Calendar Types"
 msgstr ""
 
-#: modules/event/event.php:86
+#: modules/event/event.php:89
 msgctxt "Event Module: Event Tax Defaults"
 msgid "Holiday"
 msgstr ""
 
-#: modules/event/event.php:87
+#: modules/event/event.php:90
 msgctxt "Event Module: Event Tax Defaults"
 msgid "Birth"
 msgstr ""
 
-#: modules/event/event.php:88
+#: modules/event/event.php:91
 msgctxt "Event Module: Event Tax Defaults"
 msgid "Death"
 msgstr ""
 
-#: modules/event/event.php:89
+#: modules/event/event.php:92
 msgctxt "Event Module: Event Tax Defaults"
 msgid "Start"
 msgstr ""
 
-#: modules/event/event.php:90
+#: modules/event/event.php:93
 msgctxt "Event Module: Event Tax Defaults"
 msgid "End"
 msgstr ""
 
-#: modules/event/event.php:197
+#: modules/event/event.php:202
 msgctxt "Event Module"
 msgid "Install Default Event Types"
 msgstr ""
 
-#: modules/event/event.php:200
+#: modules/event/event.php:205
 msgctxt "Event Module"
 msgid "Install Default Calendar Types"
 msgstr ""
 
-#: modules/event/event.php:306, modules/event/event.php:307
+#: modules/event/event.php:311, modules/event/event.php:312
 msgctxt "Event Module"
 msgid "F j, Y"
 msgstr ""
 
-#: modules/event/event.php:380
+#: modules/event/event.php:385
 msgctxt "Event Module: Meta Box Input"
 msgid "Date Start"
 msgstr ""
 
-#: modules/event/event.php:381
+#: modules/event/event.php:386
 msgctxt "Event Module: Meta Box Input Placeholder"
 msgid "Date Start"
 msgstr ""
 
-#: modules/event/event.php:390
+#: modules/event/event.php:395
 msgctxt "Event Module: Meta Box Input"
 msgid "Time Start"
 msgstr ""
 
-#: modules/event/event.php:391
+#: modules/event/event.php:396
 msgctxt "Event Module: Meta Box Input Placeholder"
 msgid "Time Start"
 msgstr ""
 
-#: modules/event/event.php:404
+#: modules/event/event.php:409
 msgctxt "Event Module: Meta Box Input"
 msgid "Date End"
 msgstr ""
 
-#: modules/event/event.php:405
+#: modules/event/event.php:410
 msgctxt "Event Module: Meta Box Input Placeholder"
 msgid "Date End"
 msgstr ""
 
-#: modules/event/event.php:414
+#: modules/event/event.php:419
 msgctxt "Event Module: Meta Box Input"
 msgid "Time End"
 msgstr ""
 
-#: modules/event/event.php:415
+#: modules/event/event.php:420
 msgctxt "Event Module: Meta Box Input Placeholder"
 msgid "Time End"
 msgstr ""
@@ -3176,148 +3135,178 @@ msgctxt "Magazine Module: Column Title"
 msgid "Posts"
 msgstr ""
 
-#: modules/magazine/magazine.php:98, modules/magazine/magazine.php:534
-msgctxt "Magazine Module"
+#: modules/magazine/magazine.php:99
+msgctxt "Magazine Module: MetaBox Title"
+msgid "Spans"
+msgstr ""
+
+#: modules/magazine/magazine.php:100
+msgctxt "Magazine Module: Column Title"
+msgid "Issue Spans"
+msgstr ""
+
+#: modules/magazine/magazine.php:103
+msgctxt "Magazine Module: MetaBox Title"
+msgid "Sections"
+msgstr ""
+
+#: modules/magazine/magazine.php:104
+msgctxt "Magazine Module: Column Title"
+msgid "Issue Sections"
+msgstr ""
+
+#: modules/magazine/magazine.php:106
+msgctxt "Magazine Module: MetaBox Title"
 msgid "Issues"
 msgstr ""
 
-#: modules/magazine/magazine.php:101, modules/magazine/magazine.php:102
+#: modules/magazine/magazine.php:107
+msgctxt "Magazine Module: Column Title"
+msgid "Issues"
+msgstr ""
+
+#: modules/magazine/magazine.php:110, modules/magazine/magazine.php:111
 msgctxt "Magazine Module: Noop"
 msgid "Issue"
 msgid_plural "Issues"
 msgstr[0] ""
 msgstr[1] ""
 
-#: modules/magazine/magazine.php:103
+#: modules/magazine/magazine.php:112
 msgctxt "Magazine Module: Noop"
 msgid "Span"
 msgid_plural "Spans"
 msgstr[0] ""
 msgstr[1] ""
 
-#: modules/magazine/magazine.php:104
+#: modules/magazine/magazine.php:113
 msgctxt "Magazine Module: Noop"
 msgid "Section"
 msgid_plural "Sections"
 msgstr[0] ""
 msgstr[1] ""
 
-#: modules/magazine/magazine.php:109
+#: modules/magazine/magazine.php:118
 msgctxt "Magazine Module: P2P"
 msgid "Connected Issues"
 msgstr ""
 
-#: modules/magazine/magazine.php:110
+#: modules/magazine/magazine.php:119
 msgctxt "Magazine Module: P2P"
 msgid "Connected Posts"
 msgstr ""
 
-#: modules/magazine/magazine.php:113
+#: modules/magazine/magazine.php:122
 msgctxt "Magazine Module: P2P"
 msgid "Post"
 msgstr ""
 
-#: modules/magazine/magazine.php:114
+#: modules/magazine/magazine.php:123
 msgctxt "Magazine Module: P2P"
 msgid "Search posts"
 msgstr ""
 
-#: modules/magazine/magazine.php:115
+#: modules/magazine/magazine.php:124
 msgctxt "Magazine Module: P2P"
 msgid "No posts found."
 msgstr ""
 
-#: modules/magazine/magazine.php:116
+#: modules/magazine/magazine.php:125
 msgctxt "Magazine Module: P2P"
 msgid "Connect to a post"
 msgstr ""
 
-#: modules/magazine/magazine.php:119
+#: modules/magazine/magazine.php:128
 msgctxt "Magazine Module: P2P"
 msgid "Issue"
 msgstr ""
 
-#: modules/magazine/magazine.php:120
+#: modules/magazine/magazine.php:129
 msgctxt "Magazine Module: P2P"
 msgid "Search issues"
 msgstr ""
 
-#: modules/magazine/magazine.php:121
+#: modules/magazine/magazine.php:130
 msgctxt "Magazine Module: P2P"
 msgid "No issues found."
 msgstr ""
 
-#: modules/magazine/magazine.php:122
+#: modules/magazine/magazine.php:131
 msgctxt "Magazine Module: P2P"
 msgid "Connect to an issue"
 msgstr ""
 
-#: modules/magazine/magazine.php:656, modules/magazine/magazine.php:675
+#: modules/magazine/magazine.php:549
+msgctxt "Magazine Module"
+msgid "Issues"
+msgstr ""
+
+#: modules/magazine/magazine.php:671, modules/magazine/magazine.php:690
 msgctxt "Magazine Module"
 msgid "&mdash; Select an Issue &mdash;"
 msgstr ""
 
-#: modules/magazine/magazine.php:884
+#: modules/magazine/magazine.php:899
 msgctxt "Magazine Module"
 msgid "%s Issue Post(s) Created."
 msgstr ""
 
-#: modules/magazine/magazine.php:894
+#: modules/magazine/magazine.php:909
 msgctxt "Magazine Module"
 msgid "Magazine Tools"
 msgstr ""
 
-#: modules/magazine/magazine.php:897
+#: modules/magazine/magazine.php:912
 msgctxt "Magazine Module"
 msgid "From Terms"
 msgstr ""
 
-#: modules/magazine/magazine.php:903
+#: modules/magazine/magazine.php:918
 msgctxt "Magazine Module"
 msgid "ID"
 msgstr ""
 
-#: modules/magazine/magazine.php:904
+#: modules/magazine/magazine.php:919
 msgctxt "Magazine Module"
 msgid "Name"
 msgstr ""
 
-#: modules/magazine/magazine.php:906
+#: modules/magazine/magazine.php:921
 msgctxt "Magazine Module"
 msgid "Issue"
 msgstr ""
 
-#: modules/magazine/magazine.php:910
+#: modules/magazine/magazine.php:925
 msgctxt "Magazine Module"
 msgid "&mdash;&mdash;&mdash;&mdash; No Issue"
 msgstr ""
 
-#: modules/magazine/magazine.php:914
+#: modules/magazine/magazine.php:929
 msgctxt "Magazine Module"
 msgid "Count"
 msgstr ""
 
-#: modules/magazine/magazine.php:922
+#: modules/magazine/magazine.php:937
 msgctxt "Magazine Module"
 msgid "Description"
 msgstr ""
 
-#: modules/magazine/magazine.php:931
+#: modules/magazine/magazine.php:946
 msgctxt "Magazine Module"
 msgid "Check Terms"
 msgstr ""
 
-#: modules/magazine/magazine.php:932
+#: modules/magazine/magazine.php:947
 msgctxt "Magazine Module"
 msgid "Create Issue"
 msgstr ""
 
-#: modules/magazine/magazine.php:933
+#: modules/magazine/magazine.php:948
 msgctxt "Magazine Module"
 msgid "Store Orders"
 msgstr ""
 
-#: modules/magazine/magazine.php:937
+#: modules/magazine/magazine.php:952
 msgctxt "Magazine Module"
 msgid "Check for issue terms and create corresponding issue posts."
 msgstr ""
@@ -3682,7 +3671,7 @@ msgctxt "series hide link"
 msgid "More&hellip;"
 msgstr ""
 
-#: modules/settings/settings.php:10, modules/settings/settings.php:317
+#: modules/settings/settings.php:10, modules/settings/settings.php:334
 msgctxt "Settings Module"
 msgid "Editorial"
 msgstr ""
@@ -3727,112 +3716,122 @@ msgctxt "Settings Module: Page Title"
 msgid "gEditorial Tools"
 msgstr ""
 
-#: modules/settings/settings.php:180
+#: modules/settings/settings.php:187
 msgctxt "Settings Module"
 msgid "Maintenance Tasks"
 msgstr ""
 
-#: modules/settings/settings.php:185
+#: modules/settings/settings.php:192
+msgctxt "Settings Module"
+msgid "Options"
+msgstr ""
+
+#: modules/settings/settings.php:195
 msgctxt "Settings Module"
 msgid "Upgrade Old Options"
 msgstr ""
 
-#: modules/settings/settings.php:188
-msgctxt "Settings Module"
-msgid "Upgrade"
-msgstr ""
-
-#: modules/settings/settings.php:192
+#: modules/settings/settings.php:199
 msgctxt "Settings Module"
 msgid "Will check for old options and upgrade, also delete old options"
 msgstr ""
 
-#: modules/settings/settings.php:196
+#: modules/settings/settings.php:204
+msgctxt "Settings Module"
+msgid "Delete All Options"
+msgstr ""
+
+#: modules/settings/settings.php:208
+msgctxt "Settings Module"
+msgid "Will all editorial options on current site"
+msgstr ""
+
+#: modules/settings/settings.php:213
 msgctxt "Settings Module"
 msgid "Empty Meta Fields"
 msgstr ""
 
-#: modules/settings/settings.php:207
+#: modules/settings/settings.php:224
 msgctxt "Settings Module"
 msgid "Empty"
 msgstr ""
 
-#: modules/settings/settings.php:211
+#: modules/settings/settings.php:228
 msgctxt "Settings Module"
 msgid "Will delete empty meta values, solves common problems with imported posts."
 msgstr ""
 
-#: modules/settings/settings.php:215
+#: modules/settings/settings.php:232
 msgctxt "Settings Module"
 msgid "Orphaned Terms"
 msgstr ""
 
-#: modules/settings/settings.php:237
+#: modules/settings/settings.php:254
 msgctxt "Settings Module"
 msgid "Convert"
 msgstr ""
 
-#: modules/settings/settings.php:241
+#: modules/settings/settings.php:258
 msgctxt "Settings Module"
 msgid "Converts orphaned terms into currently registered taxonomies"
 msgstr ""
 
-#: modules/settings/settings.php:266
+#: modules/settings/settings.php:283
 msgctxt "Settings Module: Ajax Notice"
 msgid "No Action of Slug!"
 msgstr ""
 
-#: modules/settings/settings.php:271
+#: modules/settings/settings.php:288
 msgctxt "Settings Module: Ajax Notice"
 msgid "Cannot find the module!"
 msgstr ""
 
-#: modules/settings/settings.php:276
+#: modules/settings/settings.php:293
 msgctxt "Settings Module: Ajax Notice"
 msgid "Module state succesfully changed"
 msgstr ""
 
-#: modules/settings/settings.php:278
+#: modules/settings/settings.php:295
 msgctxt "Settings Module: Ajax Notice"
 msgid "Cannot change module state"
 msgstr ""
 
-#: modules/settings/settings.php:283
+#: modules/settings/settings.php:300
 msgctxt "Settings Module: Ajax Notice"
 msgid "What?!"
 msgstr ""
 
-#: modules/settings/settings.php:294
+#: modules/settings/settings.php:311
 msgctxt "Settings Module"
 msgid "Not a registered Editorial module"
 msgstr ""
 
-#: modules/settings/settings.php:306
+#: modules/settings/settings.php:323
 msgctxt "Settings Module"
 msgid "Module not enabled. Please enable it from the <a href=\"%1$s\">Editorial settings page</a>."
 msgstr ""
 
-#: modules/settings/settings.php:320
+#: modules/settings/settings.php:337
 msgctxt "Settings Module"
 msgid "Editorial: %s"
 msgstr ""
 
-#: modules/settings/settings.php:389
+#: modules/settings/settings.php:406
 msgctxt "Settings Module"
 msgid "Configure"
 msgstr ""
 
-#: modules/settings/settings.php:395
+#: modules/settings/settings.php:412
 msgctxt "Settings Module"
 msgid "Enable"
 msgstr ""
 
-#: modules/settings/settings.php:400
+#: modules/settings/settings.php:417
 msgctxt "Settings Module"
 msgid "Disable"
 msgstr ""
 
-#: modules/settings/settings.php:412
+#: modules/settings/settings.php:429
 msgctxt "Settings Module"
 msgid "There are no editorial modules registered"
 msgstr ""
@@ -4138,22 +4137,22 @@ msgid_plural "Days"
 msgstr[0] ""
 msgstr[1] ""
 
-#: modules/today/today.php:312
+#: modules/today/today.php:313
 msgctxt "Today Module"
 msgid "Type"
 msgstr ""
 
-#: modules/today/today.php:322
+#: modules/today/today.php:323
 msgctxt "Today Module"
 msgid "Post"
 msgstr ""
 
-#: modules/today/today.php:344
+#: modules/today/today.php:345
 msgctxt "Today Module"
 msgid "No Posts!"
 msgstr ""
 
-#: modules/today/today.php:468
+#: modules/today/today.php:469
 msgctxt "Today Module"
 msgid "Nothing happened!"
 msgstr ""
