@@ -1406,11 +1406,12 @@ class gEditorialModuleCore extends gEditorialBaseCore
 			// FIXME: meta_box_cb default must be FALSE / check every module before!
 			'meta_box_cb'           => method_exists( $this, 'meta_box_cb_'.$constant_key ) ? array( $this, 'meta_box_cb_'.$constant_key ) : NULL,
 			'hierarchical'          => FALSE,
-			'show_tagcloud'         => FALSE,
 			'public'                => TRUE,
 			'show_ui'               => TRUE,
 			'show_in_quick_edit'    => FALSE, // FIXME: check this for all taxes
-			'query_var'             => $taxonomy,
+			'show_in_nav_menus'     => FALSE,
+			'show_tagcloud'         => FALSE,
+			'query_var'             => $this->constant( $constant_key.'_query', $taxonomy ),
 			'rewrite'               => array(
 				'slug'       => $this->constant( $constant_key.'_slug', $taxonomy ),
 				'with_front' => FALSE,
