@@ -236,10 +236,12 @@ class gEditorialHelper extends gEditorialBaseCore
 					'placeholder'  => $title,
 					'readonly'     => ! $edit,
 					'tabindex'     => '0',
+					'style'        => 'display:none;',
 					'class'        => array(
 						'geditorial-admin-posttitle',
 						'geditorial-meta-field-'.$field,
 						'geditorial-meta-type-'.$type,
+						'hide-if-no-js',
 					),
 					'data' => array(
 						'meta-field' => $field,
