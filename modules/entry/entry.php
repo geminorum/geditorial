@@ -45,18 +45,14 @@ class gEditorialEntry extends gEditorialModuleCore
 	{
 		return array(
 			'misc' => array(
-				'meta_box_title'       => _x( 'Entry', 'Entry Module', GEDITORIAL_TEXTDOMAIN ),
+				'featured'             => _x( 'Cover Image', 'Entry Module: Entry CPT: Featured', GEDITORIAL_TEXTDOMAIN ),
+				'meta_box_title'       => _x( 'Entry', 'Entry Module: Meta Box Title', GEDITORIAL_TEXTDOMAIN ),
 				'section_column_title' => _x( 'Section', 'Entry Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
 				'order_column_title'   => _x( 'O', 'Entry Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
 			),
-			'labels' => array(
-				'entry_cpt' => gEditorialHelper::generatePostTypeLabels(
-					_nx_noop( 'Entry', 'Entries', 'Entry Module: Entry CPT Labels: Name', GEDITORIAL_TEXTDOMAIN ),
-					_x( 'Cover Image', 'Event Module: Event CPT Labels: Featured', GEDITORIAL_TEXTDOMAIN )
-				),
-				'section_tax' => gEditorialHelper::generateTaxonomyLabels(
-					_nx_noop( 'Section', 'Sections', 'Entry Module: Section Tax Labels: Name', GEDITORIAL_TEXTDOMAIN )
-				),
+			'noops' => array(
+				'entry_cpt'   => _nx_noop( 'Entry', 'Entries', 'Entry Module: Noop', GEDITORIAL_TEXTDOMAIN ),
+				'section_tax' => _nx_noop( 'Section', 'Sections', 'Entry Module: Noop', GEDITORIAL_TEXTDOMAIN ),
 			),
 		);
 	}
@@ -128,6 +124,7 @@ class gEditorialEntry extends gEditorialModuleCore
 
 	public function current_screen( $screen )
 	{
+
 		if ( $screen->post_type == $this->constant( 'entry_cpt' ) ) {
 
 			if ( 'post' == $screen->base ) {

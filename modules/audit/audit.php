@@ -31,29 +31,10 @@ class gEditorialAudit extends gEditorialModuleCore
 	{
 		return array(
 			'misc' => array(
-				'meta_box_title'     => __( 'Audit', GEDITORIAL_TEXTDOMAIN ),
-				'meta_box_action'    => __( 'Management', GEDITORIAL_TEXTDOMAIN ),
-				'table_column_title' => __( 'Audit', GEDITORIAL_TEXTDOMAIN ),
+				'tweaks_column_title' => _x( 'Audit Attributes', 'Audit Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
 			),
-			'labels' => array(
-				'audit_tax' => array(
-                    'name'                  => _x( 'Audit Attributes', 'Audit Module: Audit Attribute Tax: Name', GEDITORIAL_TEXTDOMAIN ),
-                    'menu_name'             => _x( 'Audit Attributes', 'Audit Module: Audit Attribute Tax: Menu Name', GEDITORIAL_TEXTDOMAIN ),
-                    'singular_name'         => _x( 'Audit Attribute', 'Audit Module: Audit Attribute Tax: Singular Name', GEDITORIAL_TEXTDOMAIN ),
-                    'search_items'          => _x( 'Search Audit Attributes', 'Audit Module: Audit Attribute Tax', GEDITORIAL_TEXTDOMAIN ),
-                    'all_items'             => _x( 'All Audit Attributes', 'Audit Module: Audit Attribute Tax', GEDITORIAL_TEXTDOMAIN ),
-                    'parent_item'           => _x( 'Parent Audit Attribute', 'Audit Module: Audit Attribute Tax', GEDITORIAL_TEXTDOMAIN ),
-                    'parent_item_colon'     => _x( 'Parent Audit Attribute:', 'Audit Module: Audit Attribute Tax', GEDITORIAL_TEXTDOMAIN ),
-                    'edit_item'             => _x( 'Edit Audit Attribute', 'Audit Module: Audit Attribute Tax', GEDITORIAL_TEXTDOMAIN ),
-                    'view_item'             => _x( 'View Audit Attribute', 'Audit Module: Audit Attribute Tax', GEDITORIAL_TEXTDOMAIN ),
-                    'update_item'           => _x( 'Update Audit Attribute', 'Audit Module: Audit Attribute Tax', GEDITORIAL_TEXTDOMAIN ),
-                    'add_new_item'          => _x( 'Add New Audit Attribute', 'Audit Module: Audit Attribute Tax', GEDITORIAL_TEXTDOMAIN ),
-                    'new_item_name'         => _x( 'New Audit Attribute Name', 'Audit Module: Audit Attribute Tax', GEDITORIAL_TEXTDOMAIN ),
-                    'not_found'             => _x( 'No audit attributes found.', 'Audit Module: Audit Attribute Tax', GEDITORIAL_TEXTDOMAIN ),
-                    'no_terms'              => _x( 'No audit attributes', 'Audit Module: Audit Attribute Tax', GEDITORIAL_TEXTDOMAIN ),
-                    'items_list_navigation' => _x( 'Audit Attributes list navigation', 'Audit Module: Audit Attribute Tax', GEDITORIAL_TEXTDOMAIN ),
-                    'items_list'            => _x( 'Audit Attributes list', 'Audit Module: Audit Attribute Tax', GEDITORIAL_TEXTDOMAIN ),
-				),
+			'noops' => array(
+				'audit_tax' => _nx_noop( 'Audit Attribute', 'Audit Attributes', 'Audit Module: Noop', GEDITORIAL_TEXTDOMAIN ),
 			),
 			'terms' => array(
 				'audit_tax' => array(
@@ -100,7 +81,7 @@ class gEditorialAudit extends gEditorialModuleCore
 				$this->constant( 'audit_tax' ) => array(
 					'column'     => 'taxonomy-'.$this->constant( 'audit_tax' ),
 					'dashicon'   => $this->module->dashicon,
-					'title_attr' => $this->get_string( 'name', 'audit_tax', 'labels' ),
+					'title_attr' => $this->get_column_title( 'tweaks', 'audit_tax' ),
 				),
 			),
 		);
