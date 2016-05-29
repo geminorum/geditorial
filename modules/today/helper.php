@@ -49,7 +49,13 @@ class gEditorialTodayHelper extends gEditorialHelper
 	public static function displayTheDayFromPost( $post, $default_type = 'gregorian', $constants = NULL )
 	{
 		$calendars = self::getDefualtCalendars();
-		$the_day   = self::getTheDayFromPost( $post, $default_type, $constants );
+
+		$the_day = self::atts( array(
+			'cal'   => $default_type,
+			'day'   => '',
+			'month' => '',
+			'year'  => '',
+		), self::getTheDayFromPost( $post, $default_type, $constants ) );
 
 		echo $the_day['day'].'/'.$the_day['month'];
 		echo '<br />';
