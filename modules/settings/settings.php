@@ -205,7 +205,7 @@ class gEditorialSettings extends gEditorialModuleCore
 
 						echo self::html( 'span', array(
 							'class' => 'description',
-						), _x( 'Will all editorial options on current site', 'Settings Module', GEDITORIAL_TEXTDOMAIN ) );
+						), _x( 'Deletes all editorial options on current site', 'Settings Module', GEDITORIAL_TEXTDOMAIN ) );
 					echo '</p>';
 				}
 
