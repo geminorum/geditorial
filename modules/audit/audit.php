@@ -23,7 +23,7 @@ class gEditorialAudit extends gEditorialModuleCore
 	protected function get_global_constants()
 	{
 		return array(
-			'audit_tax' => 'audit',
+			'audit_tax' => 'audit_attribute',
 		);
 	}
 
