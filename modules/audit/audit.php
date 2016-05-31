@@ -60,9 +60,6 @@ class gEditorialAudit extends gEditorialModuleCore
 			$this->register_taxonomy( 'audit_tax', array(
 				'hierarchical' => TRUE,
 			) );
-
-		if ( is_admin() )
-			add_filter( 'geditorial_tweaks_strings', array( $this, 'tweaks_strings' ) );
 	}
 
 	public function register_settings( $page = NULL )

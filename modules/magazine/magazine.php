@@ -246,10 +246,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 	{
 		$issue_cpt = $this->constant( 'issue_cpt' );
 
-		add_filter( 'geditorial_tweaks_strings', array( $this, 'tweaks_strings' ) );
-
 		add_filter( 'post_updated_messages', array( $this, 'post_updated_messages' ) );
-
 		add_filter( 'wp_insert_post_data', array( $this, 'wp_insert_post_data' ), 9, 2 );
 		add_action( 'save_post_'.$issue_cpt, array( $this, 'save_post_main_cpt' ), 20, 3 );
 		add_action( 'post_updated', array( $this, 'post_updated' ), 20, 3 );

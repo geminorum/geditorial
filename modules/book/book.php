@@ -67,6 +67,10 @@ class gEditorialBook extends gEditorialModuleCore
 					'meta_box_title'      => _x( 'Type', 'Book Module: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
 					'tweaks_column_title' => _x( 'Publication Type', 'Book Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
 				),
+				'size_tax' => array(
+					'meta_box_title'      => _x( 'Size', 'Book Module: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
+					'tweaks_column_title' => _x( 'Publication Size', 'Book Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				),
 				'author' => array(
 					'meta_box_title' => _x( 'Curator', 'Book Module: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
 				),
@@ -279,8 +283,6 @@ class gEditorialBook extends gEditorialModuleCore
 				);
 
 			} else if ( 'edit' == $screen->base ) {
-
-				add_filter( 'geditorial_tweaks_strings', array( $this, 'tweaks_strings' ) );
 
 				add_filter( 'disable_months_dropdown', '__return_true', 12 );
 				add_filter( 'manage_'.$screen->post_type.'_posts_columns', array( $this, 'manage_posts_columns' ) );

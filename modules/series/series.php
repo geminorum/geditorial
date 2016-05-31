@@ -108,8 +108,6 @@ class gEditorialSeries extends gEditorialModuleCore
 
 	public function admin_init()
 	{
-		add_filter( 'geditorial_tweaks_strings', array( $this, 'tweaks_strings' ) );
-
 		add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ), 20, 2 );
 
 		// internal actions:

@@ -194,8 +194,6 @@ class gEditorialMeta extends gEditorialModuleCore
 
 			} else if ( 'edit' == $screen->base ) {
 
-				add_filter( 'geditorial_tweaks_strings', array( $this, 'tweaks_strings' ) );
-
 				add_filter( 'manage_'.$screen->post_type.'_posts_columns', array( $this, 'manage_posts_columns' ) );
 				add_filter( 'manage_'.$screen->post_type.'_posts_custom_column', array( $this, 'custom_column'), 10, 2 );
 
