@@ -563,102 +563,102 @@ msgctxt "Module Core"
 msgid "Error: settings type undefined."
 msgstr ""
 
-#: includes/class-module.php:1441
+#: includes/class-module.php:1442
 msgctxt "Module Core: Post Updated Messages"
 msgid "%1$s updated. <a href=\"%3$s\">View %2$s</a>"
 msgstr ""
 
-#: includes/class-module.php:1447
+#: includes/class-module.php:1448
 msgctxt "Module Core: Post Updated Messages"
 msgid "Custom field updated."
 msgstr ""
 
-#: includes/class-module.php:1448
+#: includes/class-module.php:1449
 msgctxt "Module Core: Post Updated Messages"
 msgid "Custom field deleted."
 msgstr ""
 
-#: includes/class-module.php:1450
+#: includes/class-module.php:1451
 msgctxt "Module Core: Post Updated Messages"
 msgid "%s updated."
 msgstr ""
 
-#: includes/class-module.php:1452
+#: includes/class-module.php:1453
 msgctxt "Module Core: Post Updated Messages"
 msgid "%1$s restored to revision from %2$s"
 msgstr ""
 
-#: includes/class-module.php:1457
+#: includes/class-module.php:1458
 msgctxt "Module Core: Post Updated Messages"
 msgid "%1$s published. <a href=\"%3$s\">View %2$s</a>"
 msgstr ""
 
-#: includes/class-module.php:1463
+#: includes/class-module.php:1464
 msgctxt "Module Core: Post Updated Messages"
 msgid "%s saved."
 msgstr ""
 
-#: includes/class-module.php:1465
+#: includes/class-module.php:1466
 msgctxt "Module Core: Post Updated Messages"
 msgid "%1$s submitted. <a target=\"_blank\" href=\"%3$s\">Preview %2$s</a>"
 msgstr ""
 
-#: includes/class-module.php:1471
+#: includes/class-module.php:1472
 msgctxt "Module Core: Post Updated Messages"
 msgid "%1$s scheduled for: <strong>%4$s</strong>. <a target=\"_blank\" href=\"%3$s\">Preview %2$s</a>"
 msgstr ""
 
-#: includes/class-module.php:1478
+#: includes/class-module.php:1479
 msgctxt "Module Core: Post Updated Messages"
 msgid "%1$s draft updated. <a target=\"_blank\" href=\"%3$s\">Preview %2$s</a>"
 msgstr ""
 
-#: includes/class-module.php:1637
+#: includes/class-module.php:1638
 msgctxt "Module Core: MetaBox Tax Dropdown: Select Option None"
 msgid "&mdash; Select %s &mdash;"
 msgstr ""
 
-#: includes/class-module.php:1664
+#: includes/class-module.php:1665
 msgctxt "Module Core: Title Attr"
 msgid "Order"
 msgstr ""
 
-#: includes/class-module.php:1665
+#: includes/class-module.php:1666
 msgctxt "Module Core: Placeholder"
 msgid "Order"
 msgstr ""
 
-#: includes/class-module.php:1684
+#: includes/class-module.php:1685
 msgctxt "Module Core: MetaBox Parent Dropdown: Select Option None"
 msgid "&mdash; no parent &mdash;"
 msgstr ""
 
-#: includes/class-module.php:1745
+#: includes/class-module.php:1746
 msgctxt "Module Core: MetaBox default title"
 msgid "Settings"
 msgstr ""
 
-#: includes/class-module.php:1752
+#: includes/class-module.php:1753
 msgctxt "Module Core: MetaBox default action"
 msgid "Configure"
 msgstr ""
 
-#: includes/class-module.php:1894, includes/class-module.php:1907
+#: includes/class-module.php:1895, includes/class-module.php:1908
 msgctxt "Module Core: At a Glance: Nooped String"
 msgid "%1$s"
 msgstr ""
 
-#: includes/class-module.php:1920
+#: includes/class-module.php:1921
 msgctxt "Module Core: No Count Title Attribute"
 msgid "No Count"
 msgstr ""
 
-#: includes/class-module.php:1944
+#: includes/class-module.php:1945
 msgctxt "Module Core: Term Seperator"
 msgid ", "
 msgstr ""
 
-#: includes/class-module.php:1950
+#: includes/class-module.php:1951
 msgctxt "Module Core: No Count Term Attribute"
 msgid "No Term"
 msgstr ""
@@ -1943,7 +1943,7 @@ msgctxt "Contest Module"
 msgid "&mdash; Select a contest &mdash;"
 msgstr ""
 
-#: modules/contest/contest.php:651, modules/contest/contest.php:661, modules/magazine/magazine.php:464, modules/magazine/magazine.php:474
+#: modules/contest/contest.php:651, modules/contest/contest.php:661, modules/magazine/magazine.php:465, modules/magazine/magazine.php:475
 msgctxt "Suffix for term name linked to trashed post"
 msgid "(Trashed)"
 msgstr ""
@@ -3236,77 +3236,77 @@ msgctxt "Magazine Module: P2P"
 msgid "Connect to an issue"
 msgstr ""
 
-#: modules/magazine/magazine.php:549
+#: modules/magazine/magazine.php:550
 msgctxt "Magazine Module"
 msgid "Issues"
 msgstr ""
 
-#: modules/magazine/magazine.php:671, modules/magazine/magazine.php:690
+#: modules/magazine/magazine.php:672, modules/magazine/magazine.php:691
 msgctxt "Magazine Module"
 msgid "&mdash; Select an Issue &mdash;"
 msgstr ""
 
-#: modules/magazine/magazine.php:899
+#: modules/magazine/magazine.php:900
 msgctxt "Magazine Module"
 msgid "%s Issue Post(s) Created."
 msgstr ""
 
-#: modules/magazine/magazine.php:909
+#: modules/magazine/magazine.php:910
 msgctxt "Magazine Module"
 msgid "Magazine Tools"
 msgstr ""
 
-#: modules/magazine/magazine.php:912
+#: modules/magazine/magazine.php:913
 msgctxt "Magazine Module"
 msgid "From Terms"
 msgstr ""
 
-#: modules/magazine/magazine.php:918
+#: modules/magazine/magazine.php:919
 msgctxt "Magazine Module"
 msgid "ID"
 msgstr ""
 
-#: modules/magazine/magazine.php:919
+#: modules/magazine/magazine.php:920
 msgctxt "Magazine Module"
 msgid "Name"
 msgstr ""
 
-#: modules/magazine/magazine.php:921
+#: modules/magazine/magazine.php:922
 msgctxt "Magazine Module"
 msgid "Issue"
 msgstr ""
 
-#: modules/magazine/magazine.php:925
+#: modules/magazine/magazine.php:926
 msgctxt "Magazine Module"
 msgid "&mdash;&mdash;&mdash;&mdash; No Issue"
 msgstr ""
 
-#: modules/magazine/magazine.php:929
+#: modules/magazine/magazine.php:930
 msgctxt "Magazine Module"
 msgid "Count"
 msgstr ""
 
-#: modules/magazine/magazine.php:937
+#: modules/magazine/magazine.php:938
 msgctxt "Magazine Module"
 msgid "Description"
 msgstr ""
 
-#: modules/magazine/magazine.php:946
+#: modules/magazine/magazine.php:947
 msgctxt "Magazine Module"
 msgid "Check Terms"
 msgstr ""
 
-#: modules/magazine/magazine.php:947
+#: modules/magazine/magazine.php:948
 msgctxt "Magazine Module"
 msgid "Create Issue"
 msgstr ""
 
-#: modules/magazine/magazine.php:948
+#: modules/magazine/magazine.php:949
 msgctxt "Magazine Module"
 msgid "Store Orders"
 msgstr ""
 
-#: modules/magazine/magazine.php:952
+#: modules/magazine/magazine.php:953
 msgctxt "Magazine Module"
 msgid "Check for issue terms and create corresponding issue posts."
 msgstr ""
@@ -3743,7 +3743,7 @@ msgstr ""
 
 #: modules/settings/settings.php:208
 msgctxt "Settings Module"
-msgid "Will all editorial options on current site"
+msgid "Deletes all editorial options on current site"
 msgstr ""
 
 #: modules/settings/settings.php:213
@@ -4060,52 +4060,52 @@ msgctxt "Table Module"
 msgid "Custom Search Interface"
 msgstr ""
 
-#: modules/today/helper.php:234
+#: modules/today/helper.php:240
 msgctxt "Today Module: Meta Box Input"
 msgid "Day"
 msgstr ""
 
-#: modules/today/helper.php:235
+#: modules/today/helper.php:241
 msgctxt "Today Module: Meta Box Input Placeholder"
 msgid "Day"
 msgstr ""
 
-#: modules/today/helper.php:247
+#: modules/today/helper.php:253
 msgctxt "Today Module: Meta Box Input"
 msgid "Month"
 msgstr ""
 
-#: modules/today/helper.php:248
+#: modules/today/helper.php:254
 msgctxt "Today Module: Meta Box Input Placeholder"
 msgid "Month"
 msgstr ""
 
-#: modules/today/helper.php:258
+#: modules/today/helper.php:264
 msgctxt "Today Module: Meta Box Input"
 msgid "Year"
 msgstr ""
 
-#: modules/today/helper.php:259
+#: modules/today/helper.php:265
 msgctxt "Today Module: Meta Box Input Placeholder"
 msgid "Year"
 msgstr ""
 
-#: modules/today/helper.php:278
+#: modules/today/helper.php:284
 msgctxt "Today Module: Meta Box Input"
 msgid "Calendar"
 msgstr ""
 
-#: modules/today/helper.php:279
+#: modules/today/helper.php:285
 msgctxt "Today Module: Meta Box Input Placeholder"
 msgid "Calendar"
 msgstr ""
 
-#: modules/today/helper.php:323
+#: modules/today/helper.php:329
 msgctxt "Today Module"
 msgid "New Day!"
 msgstr ""
 
-#: modules/today/helper.php:350
+#: modules/today/helper.php:356
 msgctxt "Today Module"
 msgid "New %s connected to this day"
 msgstr ""
@@ -4262,12 +4262,12 @@ msgctxt "Tweaks Module"
 msgid "Excerpt"
 msgstr ""
 
-#: modules/updated/updated.php:26
+#: modules/updated/updated.php:13
 msgctxt "Updated Module"
 msgid "Updated"
 msgstr ""
 
-#: modules/updated/updated.php:27
+#: modules/updated/updated.php:14
 msgctxt "Updated Module"
 msgid "Keeps last updated timestamp of the site contents"
 msgstr ""
