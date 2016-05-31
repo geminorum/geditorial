@@ -132,6 +132,10 @@ class gEditorialEntry extends gEditorialModuleCore
 
 				add_filter( 'get_default_comment_status', array( $this, 'get_default_comment_status' ), 10, 3 );
 
+				// FIXME: default will be true / DROP THIS
+				add_filter( 'geditorial_meta_box_callback', '__return_true', 12 );
+				add_filter( 'geditorial_meta_dbx_callback', '__return_true', 12 );
+
 			} else if ( 'edit' == $screen->base ) {
 
 				add_action( 'restrict_manage_posts', array( $this, 'restrict_manage_posts' ) );
