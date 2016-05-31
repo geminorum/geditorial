@@ -2016,10 +2016,11 @@ class gEditorialModuleCore extends gEditorialBaseCore
 			$post_types = $this->post_types();
 
 		$args = array_merge( array(
-			'name'      => $this->constant( $constant_key.'_p2p' ),
-			'from'      => $post_types,
-			'to'        => $this->constant( $constant_key ),
-			'admin_box' => array(
+			'name'         => $this->constant( $constant_key.'_p2p' ),
+			'from'         => $post_types,
+			'to'           => $this->constant( $constant_key ),
+			'admin_column' => 'from',
+			'admin_box'    => array(
 			    'show'    => 'from',
 			    'context' => 'advanced',
 			),
