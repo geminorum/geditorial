@@ -22,7 +22,6 @@ class gEditorialTodayHelper extends gEditorialHelper
 
 			$convertor = array( 'gPersianDateDateTime', 'toJalali' );
 			$the_day['cal'] = 'persian';
-
 		}
 
 		if ( class_exists( 'gPersianDateDateTime' )
@@ -217,7 +216,6 @@ class gEditorialTodayHelper extends gEditorialHelper
 		return array( $posts, $pagination );
 	}
 
-
 	public static function theDaySelect( $atts = array(), $year = TRUE, $default_type = 'gregorian' )
 	{
 		$args = self::atts( array(
@@ -230,7 +228,7 @@ class gEditorialTodayHelper extends gEditorialHelper
 		$html = '';
 
 		$html .= self::html( 'input', array(
-			'type'        => 'number',
+			'type'        => 'text',
 			'dir'         => 'ltr',
 			'min'         => '1',
 			'max'         => '31',
@@ -241,9 +239,8 @@ class gEditorialTodayHelper extends gEditorialHelper
 			'placeholder' => _x( 'Day', 'Today Module: Meta Box Input Placeholder', GEDITORIAL_TEXTDOMAIN ),
 		) );
 
-
 		$html .= self::html( 'input', array(
-			'type'        => 'number',
+			'type'        => 'text',
 			'dir'         => 'ltr',
 			'min'         => '1',
 			'max'         => '12',
@@ -256,7 +253,7 @@ class gEditorialTodayHelper extends gEditorialHelper
 
 		if ( $year )
 		$html .= self::html( 'input', array(
-			'type'        => 'number',
+			'type'        => 'text',
 			'dir'         => 'ltr',
 			'name'        => 'geditorial-today-date-year',
 			'id'          => 'geditorial-today-date-year',
@@ -288,7 +285,6 @@ class gEditorialTodayHelper extends gEditorialHelper
 		echo self::html( 'div', array(
 			'class' => 'field-wrap field-wrap-select',
 		), $html );
-
 
 		// TODO: insert conversion buttons
 	}
