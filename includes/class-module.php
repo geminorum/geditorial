@@ -1372,9 +1372,9 @@ class gEditorialModuleCore extends gEditorialBaseCore
 			'menu_position'   => 4,
 
 			// SEE: https://github.com/torounit/custom-post-type-permalinks
-			'cptp_permalink_structure' => $this->constant( $constant_key.'_permalink', '/%post_id%' ),
+			// 'cptp_permalink_structure' => $this->constant( $constant_key.'_permalink', '/%post_id%' ),
 			// Only `%post_id%` and `%postname%` | SEE: https://github.com/torounit/simple-post-type-permalinks
-			'sptp_permalink_structure' => $this->constant( $constant_key.'_permalink', '/%post_id%' ),
+			// 'sptp_permalink_structure' => $this->constant( $constant_key.'_permalink', '/%post_id%' ),
 		) );
 
 		register_post_type( $post_type, $args );
