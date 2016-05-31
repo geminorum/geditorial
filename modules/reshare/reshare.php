@@ -85,6 +85,9 @@ class gEditorialReshare extends gEditorialModuleCore
 			'hierarchical' => TRUE,
 			'meta_box_cb'  => NULL,
 		), 'reshare_cpt' );
+
+		if ( is_admin() )
+			add_filter( 'geditorial_tweaks_strings', array( $this, 'tweaks_strings' ) );
 	}
 
 	public function meta_init()

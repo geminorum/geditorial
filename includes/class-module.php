@@ -71,9 +71,6 @@ class gEditorialModuleCore extends gEditorialBaseCore
 		if ( method_exists( $this, 'meta_init' ) )
 			add_action( 'geditorial_meta_init', array( $this, 'meta_init' ) );
 
-		if ( method_exists( $this, 'tweaks_strings' ) )
-			add_filter( 'geditorial_tweaks_strings', array( $this, 'tweaks_strings' ) );
-
 		if ( method_exists( $this, 'meta_post_types' ) )
 			add_filter( 'geditorial_meta_support_post_types', array( $this, 'meta_post_types' ) );
 

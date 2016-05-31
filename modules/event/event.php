@@ -169,6 +169,8 @@ class gEditorialEvent extends gEditorialModuleCore
 
 			} else if ( 'edit' == $screen->base ) {
 
+				add_filter( 'geditorial_tweaks_strings', array( $this, 'tweaks_strings' ) );
+
 				add_filter( 'disable_months_dropdown', '__return_true', 12 );
 				add_filter( 'manage_'.$screen->post_type.'_posts_columns', array( $this, 'manage_posts_columns' ) );
 				add_filter( 'manage_edit-'.$screen->post_type.'_sortable_columns', array( $this, 'sortable_columns' ) );
