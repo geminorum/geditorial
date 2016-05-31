@@ -321,8 +321,33 @@ class gEditorialBook extends gEditorialModuleCore
 			'taxonomies' => array(
 				$this->constant( 'subject_tax' ) => array(
 					'column'     => 'taxonomy-'.$this->constant( 'subject_tax' ),
-					'dashicon'   => $this->module->dashicon,
+					'dashicon'   => 'tag',
 					'title_attr' => $this->get_column_title( 'tweaks', 'subject_tax' ),
+				),
+				$this->constant( 'library_tax' ) => array(
+					'column'     => 'taxonomy-'.$this->constant( 'library_tax' ),
+					'dashicon'   => 'book-alt',
+					'title_attr' => $this->get_column_title( 'tweaks', 'library_tax' ),
+				),
+				$this->constant( 'publisher_tax' ) => array(
+					'column'     => 'taxonomy-'.$this->constant( 'publisher_tax' ),
+					'dashicon'   => 'book',
+					'title_attr' => $this->get_column_title( 'tweaks', 'publisher_tax' ),
+				),
+				$this->constant( 'type_tax' ) => array(
+					'column'     => 'taxonomy-'.$this->constant( 'type_tax' ),
+					'dashicon'   => 'admin-media',
+					'title_attr' => $this->get_column_title( 'tweaks', 'type_tax' ),
+				),
+				$this->constant( 'status_tax' ) => array(
+					'column'     => 'taxonomy-'.$this->constant( 'status_tax' ),
+					'dashicon'   => 'post-status',
+					'title_attr' => $this->get_column_title( 'tweaks', 'status_tax' ),
+				),
+				$this->constant( 'size_tax' ) => array(
+					'column'     => 'taxonomy-'.$this->constant( 'size_tax' ),
+					'dashicon'   => 'image-crop',
+					'title_attr' => $this->get_column_title( 'tweaks', 'size_tax' ),
 				),
 			),
 		);
