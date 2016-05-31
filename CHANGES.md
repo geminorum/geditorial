@@ -1,3 +1,11 @@
+### 3.7.3
+* module: check tax query var from constants
+* module: disable tax tagcloud
+* module: disable auto custom cpt permalink args
+* today: fixed notice on edit page column
+* entry: quick edit box for section tax
+* magazine: quick edit box for section tax
+
 ### 3.7.2
 * tweaks: link on tax icon
 * settings: delete all options via general tools
