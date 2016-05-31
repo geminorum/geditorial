@@ -130,6 +130,7 @@ class gEditorialEntry extends gEditorialModuleCore
 
 			if ( 'post' == $screen->base ) {
 
+				add_filter( 'post_updated_messages', array( $this, 'post_updated_messages' ) );
 				add_filter( 'get_default_comment_status', array( $this, 'get_default_comment_status' ), 10, 3 );
 
 				// FIXME: default will be true / DROP THIS
@@ -213,6 +214,12 @@ class gEditorialEntry extends gEditorialModuleCore
 	{
 		if ( 'order' == $column_name )
 			$this->column_count( get_post( $post_id )->menu_order );
+	}
+
+	public function post_updated_messages( $messages )
+	{
+		$messages[$this->constant( 'entry_cpt' )] = $this->get_post_updated_messages( 'entry_cpt' );
+		return $messages;
 	}
 
 	public function generate_rewrite_rules( $wp_rewrite )
