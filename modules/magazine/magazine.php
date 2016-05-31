@@ -22,6 +22,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 		return array(
 			'_general' => array(
 				'multiple_instances',
+				'admin_ordering',
 				array(
 					'field'       => 'issue_sections',
 					'title'       => _x( 'Issue Sections', 'Magazine Module: Setting Title', GEDITORIAL_TEXTDOMAIN ),
@@ -180,8 +181,10 @@ class gEditorialMagazine extends gEditorialModuleCore
 
 			add_filter( 'disable_months_dropdown', array( $this, 'disable_months_dropdown' ), 8, 2 );
 			add_action( 'restrict_manage_posts', array( $this, 'restrict_manage_posts' ) );
-			add_action( 'pre_get_posts', array( $this, 'pre_get_posts' ) );
 			add_filter( 'parse_query', array( $this, 'parse_query' ) );
+
+			if ( $this->get_setting( 'admin_ordering', TRUE ) )
+				add_action( 'pre_get_posts', array( $this, 'pre_get_posts' ) );
 
 		} else {
 			add_filter( 'term_link', array( $this, 'term_link' ), 10, 3 );

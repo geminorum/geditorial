@@ -18,6 +18,7 @@ class gEditorialEntry extends gEditorialModuleCore
 		return array(
 			'_general' => array(
 				'shortcode_support',
+				'admin_ordering',
 				'editor_button',
 				'comment_status',
 				// 'rewrite_prefix', // FIXME: working but needs prem link rewrites
@@ -134,8 +135,10 @@ class gEditorialEntry extends gEditorialModuleCore
 			} else if ( 'edit' == $screen->base ) {
 
 				add_action( 'restrict_manage_posts', array( $this, 'restrict_manage_posts' ) );
-				add_filter( 'pre_get_posts', array( $this, 'pre_get_posts' ) );
 				add_filter( 'parse_query', array( $this, 'parse_query' ) );
+
+				if ( $this->get_setting( 'admin_ordering', TRUE ) )
+					add_action( 'pre_get_posts', array( $this, 'pre_get_posts' ) );
 
 				add_filter( 'manage_'.$screen->post_type.'_posts_columns', array( $this, 'manage_posts_columns' ) );
 				add_filter( 'manage_edit-'.$screen->post_type.'_sortable_columns', array( $this, 'sortable_columns' ) );
@@ -153,7 +156,9 @@ class gEditorialEntry extends gEditorialModuleCore
 
 	public function pre_get_posts( $wp_query )
 	{
-		if ( is_admin() && isset( $wp_query->query['post_type'] ) ) {
+		if ( $wp_query->is_admin
+			&& isset( $wp_query->query['post_type'] ) ) {
+
 			if ( $this->constant( 'entry_cpt' ) == $wp_query->query['post_type'] ) {
 				if ( ! isset( $_GET['orderby'] ) )
 					$wp_query->set( 'orderby', 'menu_order' );

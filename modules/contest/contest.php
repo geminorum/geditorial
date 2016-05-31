@@ -18,6 +18,7 @@ class gEditorialContest extends gEditorialModuleCore
 		return array(
 			'_general' => array(
 				'multiple_instances',
+				'admin_ordering',
 				'redirect_archives',
 			),
 			'posttypes_option' => 'posttypes_option',
@@ -225,7 +226,8 @@ class gEditorialContest extends gEditorialModuleCore
 
 		if ( is_admin() ) {
 
-			add_action( 'pre_get_posts', array( $this, 'pre_get_posts' ) );
+			if ( $this->get_setting( 'admin_ordering', TRUE ) )
+				add_action( 'pre_get_posts', array( $this, 'pre_get_posts' ) );
 
 		} else {
 			add_filter( 'term_link', array( $this, 'term_link' ), 10, 3 );
