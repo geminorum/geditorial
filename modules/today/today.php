@@ -550,6 +550,7 @@ class gEditorialToday extends gEditorialModuleCore
 
 	    // Set date query based on custom vars
 	    $query->set('date_query', array(
+			array(
 	            'year'  => date('Y', $timestamp),
 	            'month' => date('m', $timestamp),
 	            'day'   => date('d', $timestamp)
@@ -559,7 +560,7 @@ class gEditorialToday extends gEditorialModuleCore
 	            'compare' => 'IN'
 	        ),
 	        'relation' => 'AND'
-	    ]);
+	    ));
 	}
 
 	public function post_type_link( $post_link, $post, $leavename, $sample )
