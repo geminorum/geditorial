@@ -73,8 +73,8 @@ class gEditorialToday extends gEditorialModuleCore
 
 			// FIXME: add setting to disable this
 			add_filter( 'query_vars', array( $this, 'query_vars' ) );
-			add_action( 'pre_get_posts', array( $this, 'pre_get_posts' ) );
 			add_filter( 'template_include', array( $this, 'template_include' ) );
+			add_action( 'pre_get_posts', array( $this, 'pre_get_posts' ) );
 		}
 
 		add_filter( 'rewrite_rules_array', array( $this, 'rewrite_rules_array' ) );
@@ -520,12 +520,12 @@ class gEditorialToday extends gEditorialModuleCore
 	          return;
 
 	    // A map from the timespan string to actual hours array
-	    $hours = [
+	    $hours = array(
 	        'morning'   => range(6, 11),
 	        'afternoon' => range(12, 17),
 	        'evening'   => range(18, 23),
 	        'night'     => range(0, 5)
-	    ];
+	    );
 
 	    // Get the custom vars, if available
 	    $customdate = $query->get('customdate');
@@ -549,16 +549,15 @@ class gEditorialToday extends gEditorialModuleCore
 	    $query->init();
 
 	    // Set date query based on custom vars
-	    $query->set('date_query', [
-	        [
+	    $query->set('date_query', array(
 	            'year'  => date('Y', $timestamp),
 	            'month' => date('m', $timestamp),
 	            'day'   => date('d', $timestamp)
-	        ],
-	        [
+	        ),
+	        array(
 	            'hour'    => $hours[$timespan],
 	            'compare' => 'IN'
-	        ],
+	        ),
 	        'relation' => 'AND'
 	    ]);
 	}
