@@ -1,3 +1,12 @@
+### 3.7.4
+* module: setting for admin edit page ordering
+* module: p2p admin column
+* module: tweaks strings moved to current screen hook
+* book: tweaks strings
+* entry: support for new meta fields
+* entry: custom post updated messages
+* today: temporarily using text type for inputs
+
 ### 3.7.3
 * module: check tax query var from constants
 * module: disable tax tagcloud
