@@ -1,3 +1,6 @@
+### 3.7.5
+* today: fixed fatal
+
 ### 3.7.4
 * module: setting for admin edit page ordering
 * module: p2p admin column
