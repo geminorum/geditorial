@@ -231,7 +231,8 @@ class gEditorialMagazine extends gEditorialModuleCore
 
 		if ( $this->get_setting( 'issue_sections', FALSE ) )
 			$this->register_taxonomy( 'section_tax', array(
-				'hierarchical' => TRUE,
+				'hierarchical'       => TRUE,
+				'show_in_quick_edit' => TRUE,
 			), $this->post_types( 'issue_cpt' ) );
 
 		$this->register_shortcode( 'issue_shortcode', array( 'gEditorialMagazineTemplates', 'issue_shortcode' ) );

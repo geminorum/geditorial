@@ -103,7 +103,8 @@ class gEditorialEntry extends gEditorialModuleCore
 
 		$this->register_post_type( 'entry_cpt', array(), array( 'post_tag' ) );
 		$this->register_taxonomy( 'section_tax', array(
-			'hierarchical' => TRUE,
+			'hierarchical'       => TRUE,
+			'show_in_quick_edit' => TRUE,
 		), 'entry_cpt' );
 
 		// add_action( 'generate_rewrite_rules', array( $this, 'generate_rewrite_rules' ) );
@@ -124,7 +125,6 @@ class gEditorialEntry extends gEditorialModuleCore
 
 	public function current_screen( $screen )
 	{
-
 		if ( $screen->post_type == $this->constant( 'entry_cpt' ) ) {
 
 			if ( 'post' == $screen->base ) {
