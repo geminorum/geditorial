@@ -320,7 +320,9 @@ class gEditorialMagazine extends gEditorialModuleCore
 
 	public function dashboard_glance_items( $items )
 	{
-		$items[] = $this->dashboard_glance_post( 'issue_cpt' );
+		if ( $glance = $this->dashboard_glance_post( 'issue_cpt' ) )
+			$items[] = $glance;
+
 		return $items;
 	}
 

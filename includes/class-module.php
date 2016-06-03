@@ -1898,8 +1898,12 @@ class gEditorialModuleCore extends gEditorialBaseCore
 	protected function dashboard_glance_post( $posttype_constant_key, $edit_cap = 'edit_posts' )
 	{
 		$posttype = $this->constant( $posttype_constant_key );
-		$template = current_user_can( $edit_cap ) ? '<a class="geditorial-glance-item -post -posttype-'.$posttype.'" href="edit.php?post_type=%3$s">%1$s %2$s</a>' : '%1$s %2$s';
 		$posts    = wp_count_posts( $posttype );
+
+		if ( ! $posts->publish )
+			return FALSE;
+
+		$template = current_user_can( $edit_cap ) ? '<a class="geditorial-glance-item -post -posttype-'.$posttype.'" href="edit.php?post_type=%3$s">%1$s %2$s</a>' : '%1$s %2$s';
 		$singular = $this->nooped( $posttype_constant_key, 1 );
 		$nooped   = $this->nooped( $posttype_constant_key, $posts->publish );
 
@@ -1911,8 +1915,12 @@ class gEditorialModuleCore extends gEditorialBaseCore
 	protected function dashboard_glance_tax( $tax_constant_key, $edit_cap = 'manage_categories' )
 	{
 		$taxonomy = $this->constant( $tax_constant_key );
-		$template = current_user_can( $edit_cap ) ? '<a class="geditorial-glance-item -tax -taxonomy-'.$taxonomy.'" href="edit-tags.php?taxonomy=%3$s">%1$s %2$s</a>' : '%1$s %2$s';
 		$terms    = wp_count_terms( $taxonomy );
+
+		if ( ! $terms )
+			return FALSE;
+
+		$template = current_user_can( $edit_cap ) ? '<a class="geditorial-glance-item -tax -taxonomy-'.$taxonomy.'" href="edit-tags.php?taxonomy=%3$s">%1$s %2$s</a>' : '%1$s %2$s';
 		$singular = $this->nooped( $tax_constant_key, 1 );
 		$nooped   = $this->nooped( $tax_constant_key, $terms );
 

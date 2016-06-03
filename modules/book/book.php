@@ -361,7 +361,9 @@ class gEditorialBook extends gEditorialModuleCore
 
 	public function dashboard_glance_items( $items )
 	{
-		$items[] = $this->dashboard_glance_post( 'publication_cpt' );
+		if ( $glance = $this->dashboard_glance_post( 'publication_cpt' ) )
+			$items[] = $glance;
+
 		return $items;
 	}
 

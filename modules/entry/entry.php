@@ -216,6 +216,14 @@ class gEditorialEntry extends gEditorialModuleCore
 			$this->column_count( get_post( $post_id )->menu_order );
 	}
 
+	public function dashboard_glance_items( $items )
+	{
+		if ( $glance = $this->dashboard_glance_post( 'entry_cpt' ) )
+			$items[] = $glance;
+
+		return $items;
+	}
+
 	public function post_updated_messages( $messages )
 	{
 		$messages[$this->constant( 'entry_cpt' )] = $this->get_post_updated_messages( 'entry_cpt' );
