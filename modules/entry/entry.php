@@ -106,6 +106,7 @@ class gEditorialEntry extends gEditorialModuleCore
 		$this->register_taxonomy( 'section_tax', array(
 			'hierarchical'       => TRUE,
 			'show_in_quick_edit' => TRUE,
+			'show_in_nav_menus'  => TRUE,
 		), 'entry_cpt' );
 
 		// add_action( 'generate_rewrite_rules', array( $this, 'generate_rewrite_rules' ) );
