@@ -18,6 +18,7 @@ class gEditorialBook extends gEditorialModuleCore
 		return array(
 			'_general' => array(
 				'comment_status',
+				'insert_content',
 			),
 			'posttypes_option' => 'posttypes_option',
 		);
@@ -210,6 +211,16 @@ class gEditorialBook extends gEditorialModuleCore
 	public function p2p_init()
 	{
 		$this->register_p2p( 'publication_cpt' );
+
+		if ( is_admin() )
+			return;
+
+		$setting = $this->get_setting( 'insert_content', 'none' );
+
+		if ( 'before' == $setting )
+			add_action( 'gnetwork_themes_content_before', array( $this, 'insert_content' ), 100 );
+		else if ( 'after' == $setting )
+			add_action( 'gnetwork_themes_content_after', array( $this, 'insert_content' ), 100 );
 	}
 
 	public function init()
@@ -420,5 +431,42 @@ class gEditorialBook extends gEditorialModuleCore
 	{
 		$messages[$this->constant( 'publication_cpt' )] = $this->get_post_updated_messages( 'publication_cpt' );
 		return $messages;
+	}
+
+	public function insert_content( $content, $posttypes = NULL )
+	{
+		if ( ! is_singular() )
+			return;
+
+		$post = get_post();
+
+		if ( ! in_array( $post->post_type, $this->post_types() ) )
+			return;
+
+		$connected = new WP_Query( array(
+		    'connected_type'  => $this->constant( 'publication_cpt_p2p' ),
+		    'connected_items' => $post,
+		) );
+
+		if ( $connected->have_posts() ) {
+			echo '<div class="geditorial-wrap book -p2p -'.$this->get_setting( 'insert_content', 'none' ).'"><ul>';
+
+			while ( $connected->have_posts() ) {
+				$connected->the_post();
+				echo '<li>';
+
+					echo self::html( 'a', array(
+						'href' => get_permalink(),
+					), get_the_title() );
+
+					if ( $ref = p2p_get_meta( get_post()->p2p_id, 'ref', TRUE ) )
+						echo ' &ndash; '.$ref;
+
+				echo '</li>';
+			}
+
+			echo '</ul></div>';
+			wp_reset_postdata();
+		}
 	}
 }
