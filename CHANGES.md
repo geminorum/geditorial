@@ -1,3 +1,8 @@
+### 3.7.6
+* module: skip empty items on dashboard glance
+* module: revert back to tweaks strings on setup
+* book: hook p2p connected to content actions
+
 ### 3.7.5
 * today: fixed fatal
 
