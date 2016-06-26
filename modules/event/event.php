@@ -31,6 +31,7 @@ class gEditorialEvent extends gEditorialModuleCore
 				),
 				'calendar_type',
 				'comment_status',
+				'admin_ordering',
 			),
 		);
 	}
@@ -169,11 +170,6 @@ class gEditorialEvent extends gEditorialModuleCore
 
 			} else if ( 'edit' == $screen->base ) {
 
-				add_filter( 'disable_months_dropdown', '__return_true', 12 );
-				add_filter( 'manage_'.$screen->post_type.'_posts_columns', array( $this, 'manage_posts_columns' ) );
-				add_filter( 'manage_edit-'.$screen->post_type.'_sortable_columns', array( $this, 'sortable_columns' ) );
-				add_action( 'manage_'.$screen->post_type.'_posts_custom_column', array( $this, 'posts_custom_column' ), 10, 2 );
-
 				if ( $startend ) {
 
 					add_action( 'restrict_manage_posts', array( $this, 'restrict_manage_posts' ) );
@@ -181,7 +177,16 @@ class gEditorialEvent extends gEditorialModuleCore
 
 					// add_action( 'load-edit.php', array( $this, 'load_edit_php' ) );
 					add_filter( 'request', array( $this, 'load_edit_php_request' ) );
+
+				} else if ( $this->get_setting( 'admin_ordering', TRUE ) )
+
+					add_action( 'pre_get_posts', array( $this, 'pre_get_posts_admin' ) );
 				}
+
+				add_filter( 'disable_months_dropdown', '__return_true', 12 );
+				add_filter( 'manage_'.$screen->post_type.'_posts_columns', array( $this, 'manage_posts_columns' ) );
+				add_filter( 'manage_edit-'.$screen->post_type.'_sortable_columns', array( $this, 'sortable_columns' ) );
+				add_action( 'manage_'.$screen->post_type.'_posts_custom_column', array( $this, 'posts_custom_column' ), 10, 2 );
 			}
 		}
 	}
@@ -263,6 +268,20 @@ class gEditorialEvent extends gEditorialModuleCore
 		$this->do_restrict_manage_posts_taxes( array(
 			'event_cat',
 		), 'event_cpt' );
+	}
+
+	public function pre_get_posts_admin( $wp_query )
+	{
+		if ( $wp_query->is_admin
+			&& isset( $wp_query->query['post_type'] ) ) {
+
+			if ( $this->constant( 'event_cpt' ) == $wp_query->query['post_type'] ) {
+				if ( ! isset( $_GET['orderby'] ) )
+					$wp_query->set( 'orderby', 'date' );
+				if ( ! isset( $_GET['order'] ) )
+					$wp_query->set( 'order', 'DESC' );
+			}
+		}
 	}
 
 	public function parse_query( $query )
