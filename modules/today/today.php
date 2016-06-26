@@ -379,7 +379,8 @@ class gEditorialToday extends gEditorialModuleCore
 		//
 		// 	return get_single_template();
 
-		if ( is_front_page() ) {
+		// if ( is_front_page() ) {
+		if ( is_home() ) {
 
 			// FIXME: add setting for this
 
