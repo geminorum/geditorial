@@ -223,9 +223,8 @@ class gEditorialMagazine extends gEditorialModuleCore
 		), array( 'post_tag' ) );
 
 		$this->register_taxonomy( 'issue_tax', array(
-			'show_ui'           => FALSE, // self::isDev(),
-			'hierarchical'      => TRUE,
-			'show_admin_column' => TRUE,
+			'show_ui'      => FALSE,
+			'hierarchical' => TRUE,
 		) );
 
 		$this->register_taxonomy( 'span_tax', array(
