@@ -178,7 +178,7 @@ class gEditorialEvent extends gEditorialModuleCore
 					// add_action( 'load-edit.php', array( $this, 'load_edit_php' ) );
 					add_filter( 'request', array( $this, 'load_edit_php_request' ) );
 
-				} else if ( $this->get_setting( 'admin_ordering', TRUE ) )
+				} else if ( $this->get_setting( 'admin_ordering', TRUE ) ) {
 
 					add_action( 'pre_get_posts', array( $this, 'pre_get_posts_admin' ) );
 				}
