@@ -140,18 +140,18 @@ class gEditorialBaseCore
 	}
 
 	// @SEE: get_edit_term_link()
-	public static function getEditTaxLink( $taxonomy, $term_id = FALSE )
+	public static function getEditTaxLink( $taxonomy, $term_id = FALSE, $extra = array() )
 	{
 		if ( $term_id )
-			return add_query_arg( array(
+			return add_query_arg( array_merge( array(
 				'taxonomy' => $taxonomy,
 				'tag_ID'   => $term_id,
-			), admin_url( 'term.php' ) );
+			), $extra ), admin_url( 'term.php' ) );
 
 		else
-			return add_query_arg( array(
+			return add_query_arg( array_merge( array(
 				'taxonomy' => $taxonomy,
-			), admin_url( 'edit-tags.php' ) );
+			), $extra ), admin_url( 'edit-tags.php' ) );
 	}
 
 	// originally from P2

@@ -1773,19 +1773,23 @@ class gEditorialModuleCore extends gEditorialBaseCore
 		return $this->get_string( $column.'_column_title', $constant_key, 'misc', $column );
 	}
 
-	public function get_url_settings()
+	public function get_url_settings( $extra = array() )
 	{
-		return add_query_arg( 'page', $this->module->settings, admin_url( 'admin.php' ) );
+		return add_query_arg( array_merge( array(
+			'page' => $this->module->settings,
+		), $extra ), admin_url( 'admin.php' ) );
 	}
 
-	public function get_url_tax_edit( $constant_key )
+	public function get_url_tax_edit( $constant_key, $term_id = FALSE, $extra = array() )
 	{
-		return self::getEditTaxLink( $this->constant( $constant_key ) );
+		return self::getEditTaxLink( $this->constant( $constant_key ), $term_id, $extra );
 	}
 
-	public function get_url_post_edit( $constant_key )
+	public function get_url_post_edit( $constant_key, $extra = array() )
 	{
-		return add_query_arg( 'post_type', $this->constant( $constant_key ), admin_url( 'edit.php' ) );
+		return add_query_arg( array_merge( array(
+			'post_type' => $this->constant( $constant_key ),
+		), $extra ), admin_url( 'edit.php' ) );
 	}
 
 	public static function redirect( $location, $status = 302 )
