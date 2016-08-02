@@ -1800,6 +1800,13 @@ class gEditorialModuleCore extends gEditorialBaseCore
 		), $extra ), admin_url( 'edit.php' ) );
 	}
 
+	public function get_url_post_new( $constant_key, $extra = array() )
+	{
+		return add_query_arg( array_merge( array(
+			'post_type' => $this->constant( $constant_key ),
+		), $extra ), admin_url( 'post-new.php' ) );
+	}
+
 	public static function redirect( $location, $status = 302 )
 	{
 		wp_redirect( $location, $status );
