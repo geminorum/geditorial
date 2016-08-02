@@ -1338,6 +1338,11 @@ class gEditorialModuleCore extends gEditorialBaseCore
 		return isset( $_COOKIE[$this->cookie] ) ? json_decode( wp_unslash( $_COOKIE[$this->cookie] ), TRUE ) : array();
 	}
 
+	public function delete_cookie()
+	{
+		setcookie( $this->cookie, '', time() - 3600, COOKIEPATH, COOKIE_DOMAIN, FALSE );
+	}
+
 	public function get_post_type_labels( $constant_key )
 	{
 		if ( ! empty( $this->strings['labels'][$constant_key] ) )
