@@ -77,10 +77,10 @@ class gEditorialModuleCore extends gEditorialBaseCore
 		if ( method_exists( $this, 'gpeople_support' ) )
 			add_filter( 'gpeople_remote_support_post_types', array( $this, 'gpeople_support' ) );
 
-		foreach ( $partials as $partial )
+		foreach ( (array) $partials as $partial )
 			$this->require_code( $partial );
 
-		add_action( 'after_setup_theme', array( $this, 'after_setup_theme_early' ), 1 );
+		add_action( 'after_setup_theme', array( $this, '_after_setup_theme' ), 1 );
 
 		if ( method_exists( $this, 'after_setup_theme' ) )
 			add_action( 'after_setup_theme', array( $this, 'after_setup_theme' ), 20 );
@@ -108,19 +108,19 @@ class gEditorialModuleCore extends gEditorialBaseCore
 		}
 	}
 
-	public function after_setup_theme_early()
+	public function _after_setup_theme()
 	{
-		$this->settings  = apply_filters( 'geditorial_'.$this->module->name.'_settings', $this->get_global_settings(), $this->module );
+		$this->settings  = apply_filters( 'geditorial_'.$this->module->name.'_settings',  $this->get_global_settings(),  $this->module );
 		$this->constants = apply_filters( 'geditorial_'.$this->module->name.'_constants', $this->get_global_constants(), $this->module );
-		$this->supports  = apply_filters( 'geditorial_'.$this->module->name.'_supports', $this->get_global_supports(), $this->module );
-		$this->fields    = apply_filters( 'geditorial_'.$this->module->name.'_fields', $this->get_global_fields(), $this->module );
+		$this->supports  = apply_filters( 'geditorial_'.$this->module->name.'_supports',  $this->get_global_supports(),  $this->module );
+		$this->fields    = apply_filters( 'geditorial_'.$this->module->name.'_fields',    $this->get_global_fields(),    $this->module );
 	}
 
-	protected function get_global_settings() { return array(); }
+	protected function get_global_settings()  { return array(); }
 	protected function get_global_constants() { return array(); }
-	protected function get_global_strings() { return array(); }
-	protected function get_global_supports() { return array(); }
-	protected function get_global_fields() { return array(); }
+	protected function get_global_strings()   { return array(); }
+	protected function get_global_supports()  { return array(); }
+	protected function get_global_fields()    { return array(); }
 
 	protected function settings_help_tabs()
 	{
