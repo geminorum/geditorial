@@ -127,7 +127,11 @@ class gEditorialEntry extends gEditorialModuleCore
 
 	public function current_screen( $screen )
 	{
-		if ( $screen->post_type == $this->constant( 'entry_cpt' ) ) {
+		if ( 'dashboard' == $screen->base ) {
+
+			add_filter( 'dashboard_recent_drafts_query_args', array( $this, 'dashboard_recent_drafts_query_args' ) );
+
+		} else if ( $screen->post_type == $this->constant( 'entry_cpt' ) ) {
 
 			if ( 'post' == $screen->base ) {
 
@@ -151,6 +155,17 @@ class gEditorialEntry extends gEditorialModuleCore
 				add_action( 'manage_'.$screen->post_type.'_posts_custom_column', array( $this, 'posts_custom_column'), 10, 2 );
 			}
 		}
+	}
+
+	public function dashboard_recent_drafts_query_args( $query_args )
+	{
+		if ( 'post' == $query_args['post_type'] )
+			$query_args['post_type'] = array( 'post', $this->constant( 'entry_cpt' ) );
+
+		else if ( is_array( $query_args['post_type'] ) )
+			$query_args['post_type'][] = $this->constant( 'entry_cpt' );
+
+		return $query_args;
 	}
 
 	public function restrict_manage_posts()
