@@ -181,8 +181,7 @@ class gEditorialModuleCore extends gEditorialBaseCore
 		return $post_types;
 	}
 
-	// applicable post types for this module
-	public function all_post_types()
+	public function all_post_types( $exclude = TRUE )
 	{
 		$registered = get_post_types( array(
 			'_builtin' => FALSE,
@@ -197,7 +196,7 @@ class gEditorialModuleCore extends gEditorialBaseCore
 		foreach ( $registered as $post_type => $args )
 			$post_types[$post_type] = $args->label;
 
-		if ( count( $this->post_types_excluded ) )
+		if ( $exclude && count( $this->post_types_excluded ) )
 			$post_types = array_diff_key( $post_types, array_flip( $this->post_types_excluded ) );
 
 		return $post_types;
