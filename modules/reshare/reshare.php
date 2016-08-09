@@ -103,6 +103,8 @@ class gEditorialReshare extends gEditorialModuleCore
 
 	public function tweaks_strings( $strings )
 	{
+		$this->tweaks = TRUE;
+
 		$new = array(
 			'taxonomies' => array(
 				$this->constant( 'reshare_cat' ) => array(

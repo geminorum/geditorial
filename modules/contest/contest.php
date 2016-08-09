@@ -340,6 +340,8 @@ class gEditorialContest extends gEditorialModuleCore
 
 	public function tweaks_strings( $strings )
 	{
+		$this->tweaks = TRUE;
+
 		$new = array(
 			'taxonomies' => array(
 				$this->constant( 'contest_cat' ) => array(

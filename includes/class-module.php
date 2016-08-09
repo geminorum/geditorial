@@ -29,6 +29,7 @@ class gEditorialModuleCore extends gEditorialBaseCore
 
 	protected $geditorial_meta = FALSE; // META ENABLED?
 	protected $root_key        = FALSE; // ROOT CONSTANT
+	protected $tweaks          = FALSE; // TWEAKS ENABLED
 
 	public function __construct( &$module, &$options )
 	{
