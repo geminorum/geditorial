@@ -1900,9 +1900,11 @@ class gEditorialModuleCore extends gEditorialBaseCore
 		}
 	}
 
-	public function do_parse_query_taxes( &$qv, $taxes, $posttype_constant_key )
+	public function do_parse_query_taxes( &$qv, $taxes, $posttype_constant_key = TRUE )
 	{
-		if ( $this->is_current_posttype( $posttype_constant_key ) ) {
+		if ( TRUE === $posttype_constant_key ||
+			$this->is_current_posttype( $posttype_constant_key ) ) {
+
 			foreach ( $taxes as $constant_key ) {
 				$tax = $this->constant( $constant_key );
 				if ( isset( $qv[$tax] )	&& is_numeric( $qv[$tax] ) ) {
