@@ -648,33 +648,37 @@ class gEditorialHelper extends gEditorialBaseCore
 		return $filtered ? apply_filters( 'geditorial_default_calendars', $calendars ) : $calendars;
 	}
 
-	// EDITED: 4/18/2016, 6:31:46 PM
-	/**
-	 *	%1$s => Camel Case / Plural
-	 *	%2$s => Camel Case / Singular
-	 *	%3$s => Lower Case / Plural
-	 *	%4$s => Lower Case / Singular
-	 *
-	 *	@REF: `_nx_noop()`, `translate_nooped_plural()`
-	 */
-	public static function generatePostTypeLabels( $name, $featured = FALSE, $pre = array() )
+	private static function getStringsFromName( $name )
 	{
-		if ( is_array( $name ) )
-			$strings = array(
-				_nx( $name['singular'], $name['plural'], 2, $name['context'], $name['domain'] ),
-				_nx( $name['singular'], $name['plural'], 1, $name['context'], $name['domain'] ),
-				self::strToLower( _nx( $name['singular'], $name['plural'], 2, $name['context'], $name['domain'] ) ),
-				self::strToLower( _nx( $name['singular'], $name['plural'], 1, $name['context'], $name['domain'] ) ),
-			);
-
-		else
-			$strings = array(
+		if ( ! is_array( $name ) )
+			return array(
 				$name.'s',
 				$name,
 				self::strToLower( $name.'s' ),
 				self::strToLower( $name ),
 			);
 
+		$strings = array(
+			_nx( $name['singular'], $name['plural'], 2, $name['context'], $name['domain'] ),
+			_nx( $name['singular'], $name['plural'], 1, $name['context'], $name['domain'] ),
+		);
+
+		$strings[2] = self::strToLower( $strings[0] );
+		$strings[3] = self::strToLower( $strings[1] );
+
+		return $strings;
+	}
+
+	/**
+	 *	%1$s => Camel Case / Plural
+	 *	%2$s => Camel Case / Singular
+	 *	%3$s => Lower Case / Plural
+	 *	%4$s => Lower Case / Singular
+	 *
+	 *	@REF: '_get_custom_object_labels()', `_nx_noop()`, `translate_nooped_plural()`
+	 */
+	public static function generatePostTypeLabels( $name, $featured = FALSE, $pre = array() )
+	{
 		$name_templates = array(
 			'name'                  => _x( '%1$s', 'Module Helper: CPT Generator: Name', GEDITORIAL_TEXTDOMAIN ),
 			// 'menu_name'             => _x( '%1$s', 'Module Helper: CPT Generator: Menu Name', GEDITORIAL_TEXTDOMAIN ),
@@ -705,15 +709,20 @@ class gEditorialHelper extends gEditorialBaseCore
 			'use_featured_image'    => _x( 'Use as %2$s', 'Module Helper: CPT Generator: Featured', GEDITORIAL_TEXTDOMAIN ),
 		);
 
+		$strings = self::getStringsFromName( $name );
+
 		foreach ( $name_templates as $key => $template )
 			$pre[$key] = vsprintf( $template, $strings );
 
 		if ( ! isset( $pre['menu_name'] ) )
 			$pre['menu_name'] = $strings[0];
 
+		if ( ! isset( $pre['name_admin_bar'] ) )
+			$pre['name_admin_bar'] = $strings[1];
+
 		if ( $featured )
 			foreach ( $featured_templates as $key => $template )
-				$pre[$key] = vsprintf( $template, array( $featured, strtolower( $featured ) ) );
+				$pre[$key] = vsprintf( $template, array( $featured, self::strToLower( $featured ) ) );
 
 		return $pre;
 	}
@@ -728,22 +737,6 @@ class gEditorialHelper extends gEditorialBaseCore
 	 */
 	public static function generateTaxonomyLabels( $name, $pre = array() )
 	{
-		if ( is_array( $name ) )
-			$strings = array(
-				_nx( $name['singular'], $name['plural'], 2, $name['context'], $name['domain'] ),
-				_nx( $name['singular'], $name['plural'], 1, $name['context'], $name['domain'] ),
-				self::strToLower( _nx( $name['singular'], $name['plural'], 2, $name['context'], $name['domain'] ) ),
-				self::strToLower( _nx( $name['singular'], $name['plural'], 1, $name['context'], $name['domain'] ) ),
-			);
-
-		else
-			$strings = array(
-				$name.'s',
-				$name,
-				self::strToLower( $name.'s' ),
-				self::strToLower( $name ),
-			);
-
 		$name_templates = array(
 			'name'                       => _x( '%1$s', 'Module Helper: Tax Generator: Name', GEDITORIAL_TEXTDOMAIN ),
 			// 'menu_name'                  => _x( '%1$s', 'Module Helper: Tax Generator: Menu Name', GEDITORIAL_TEXTDOMAIN ),
@@ -766,6 +759,8 @@ class gEditorialHelper extends gEditorialBaseCore
 			'items_list_navigation'      => _x( '%1$s list navigation', 'Module Helper: Tax Generator', GEDITORIAL_TEXTDOMAIN ),
 			'items_list'                 => _x( '%1$s list', 'Module Helper: Tax Generator', GEDITORIAL_TEXTDOMAIN ),
 		);
+
+		$strings = self::getStringsFromName( $name );
 
 		foreach ( $name_templates as $key => $template )
 			$pre[$key] = vsprintf( $template, $strings );
