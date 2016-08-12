@@ -111,7 +111,7 @@ class gEditorialSeries extends gEditorialModuleCore
 		add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ), 20, 2 );
 
 		// internal actions:
-		add_action( 'geditorial_series_meta_box', array( $this, 'geditorial_series_meta_box' ), 5, 2 );
+		add_action( 'geditorial_series_meta_box', array( $this, 'geditorial_series_meta_box' ), 5, 3 );
 		add_action( 'geditorial_series_meta_box_item', array( $this, 'geditorial_series_meta_box_item' ), 5, 4 );
 	}
 
@@ -208,23 +208,29 @@ class gEditorialSeries extends gEditorialModuleCore
 			'side' );
 	}
 
-	public function do_meta_box( $post )
+	public function do_meta_box( $post, $box )
 	{
 		echo '<div class="geditorial-admin-wrap-metabox series">';
+
 		$series = gEditorialHelper::getTerms( $this->constant( 'series_tax' ), $post->ID, TRUE );
-		do_action( 'geditorial_series_meta_box', $post, $series );
+
+		do_action( 'geditorial_series_meta_box', $post, $box, $series );
+
 		echo '</div>';
 	}
 
-	// TODO: list other post in this series by the order and link to their edit pages
-	public function geditorial_series_meta_box( $post, $the_terms )
+	public function geditorial_series_meta_box( $post, $box, $series )
 	{
-		$fields           = $this->post_type_fields( $post->post_type );
-		$series_dropdowns = $series_posts = $map = array();
-		$i                = 1;
+		// bail if no series
+		if ( ! count( $series ) )
+			return gEditorialMetaBox::fieldEmptyTaxonomy( $this->constant( 'series_tax' ) );
 
-		foreach ( $the_terms as $the_term ) {
-			$series_dropdowns[$i] = wp_dropdown_categories( array(
+		$dropdowns = $posts = $map = array();
+		$fields    = $this->post_type_fields( $post->post_type );
+		$i         = 1;
+
+		foreach ( $series as $the_term ) {
+			$dropdowns[$i] = wp_dropdown_categories( array(
 				'taxonomy'         => $this->constant( 'series_tax' ),
 				'selected'         => $the_term->term_id,
 				'show_option_none' => $this->get_string( 'select_series', 'post', 'misc' ),
@@ -236,13 +242,13 @@ class gEditorialSeries extends gEditorialModuleCore
 				'echo'             => 0,
 			) );
 
-			$series_posts[$i] = gEditorialHelper::getTermPosts( $this->constant( 'series_tax' ), $the_term, array( $post->ID ) );
-			$map[$i]          = $the_term->term_id;
+			$posts[$i] = gEditorialHelper::getTermPosts( $this->constant( 'series_tax' ), $the_term, array( $post->ID ) );
+			$map[$i]   = $the_term->term_id;
 			$i++;
 		}
 
-		if ( $this->get_setting( 'multiple_instances', FALSE ) || ! count( $the_terms ) )
-			$series_dropdowns[0] = wp_dropdown_categories( array(
+		if ( $this->get_setting( 'multiple_instances', FALSE ) || ! count( $series ) )
+			$dropdowns[0] = wp_dropdown_categories( array(
 				'taxonomy'         => $this->constant( 'series_tax' ),
 				'selected'         => 0,
 				'show_option_none' => $this->get_string( 'select_series', 'post', 'misc' ),
@@ -257,21 +263,25 @@ class gEditorialSeries extends gEditorialModuleCore
 
 		$map[0] = FALSE;
 
-		foreach ( $series_dropdowns as $counter => $series_dropdown ) {
-			if ( $series_dropdown ) {
-				// echo '<div class="geditorial_series_term_wrap">';
-				echo '<div class="field-wrap-group">';
-				echo '<div class="field-wrap field-wrap-select">';
-				echo $series_dropdown;
-				echo '</div>';
-				do_action( 'geditorial_series_meta_box_item', $counter, $map[$counter], $fields, $post );
+		foreach ( $dropdowns as $counter => $dropdown ) {
+			if ( $dropdown ) {
 
-				if ( $counter && $series_posts[$counter] )
-					echo $series_posts[$counter];
+				echo '<div class="field-wrap-group">';
+
+					echo '<div class="field-wrap field-wrap-select">';
+						echo $dropdown;
+					echo '</div>';
+
+					do_action( 'geditorial_series_meta_box_item', $counter, $map[$counter], $fields, $post );
+
+					if ( $counter && $posts[$counter] )
+						echo $posts[$counter];
 
 				echo '</div>';
 			}
 		}
+
+		// TODO: list other post in this series by the order and link to their edit pages
 
 		do_action( 'geditorial_series_box_after', $this->module, $post, $fields );
 		wp_nonce_field( 'geditorial_series_post_main', '_geditorial_series_post_main' );
