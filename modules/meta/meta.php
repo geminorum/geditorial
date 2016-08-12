@@ -194,6 +194,8 @@ class gEditorialMeta extends gEditorialModuleCore
 
 				add_filter( 'geditorial_meta_sanitize_post_meta', array( $this, 'sanitize_post_meta' ), 10, 4 );
 
+				add_action( 'geditorial_meta_do_meta_box', array( $this, 'do_meta_box' ), 10, 4 );
+
 			} else if ( 'edit' == $screen->base ) {
 
 				add_filter( 'manage_'.$screen->post_type.'_posts_columns', array( $this, 'manage_posts_columns' ) );
@@ -221,6 +223,47 @@ class gEditorialMeta extends gEditorialModuleCore
 		}
 	}
 
+	public function do_meta_box( $post, $box, $fields = NULL, $context = 'box' )
+	{
+		if ( is_null( $fields ) )
+			$fields = $this->post_type_field_types( $post->post_type, TRUE );
+
+		foreach ( $fields as $field => $args ) {
+
+			if ( $context != $args['context'] )
+				continue;
+
+			switch ( $args['type'] ) {
+
+				case 'text':
+					gEditorialHelper::meta_admin_field( $field, array( $field ), $post, $args['ltr'], $args['title'], FALSE, $args['type'] );
+				break;
+
+				case 'code':
+				case 'link':
+					gEditorialHelper::meta_admin_field( $field, array( $field ), $post, TRUE, $args['title'], FALSE, $args['type'] );
+				break;
+
+				case 'number':
+					gEditorialHelper::meta_admin_number_field( $field, array( $field ), $post, TRUE, $args['title'], FALSE, $args['type'] );
+				break;
+
+				case 'textarea':
+					gEditorialHelper::meta_admin_textarea_field( $field, array( $field ), $post, $args['ltr'], $args['title'], FALSE, $args['type'] );
+				break;
+
+				case 'term':
+					if ( $args['tax'] )
+						gEditorialHelper::meta_admin_tax_field( $field, array( $field ), $post, $args['tax'], $args['ltr'], $args['title'] );
+					else
+						gEditorialHelper::meta_admin_field( $field, array( $field ), $post, $args['ltr'], $args['title'], FALSE, $args['type'] );
+				break;
+			}
+		}
+
+		wp_nonce_field( 'geditorial_meta_post_main', '_geditorial_meta_post_main' );
+	}
+
 	public function default_meta_box( $post, $box )
 	{
 		$fields = $this->post_type_field_types( $post->post_type, TRUE );
@@ -231,35 +274,7 @@ class gEditorialMeta extends gEditorialModuleCore
 
 		if ( count( $fields ) ) {
 
-			foreach ( $fields as $field => $args ) {
-
-				switch ( $args['type'] ) {
-
-					case 'text':
-						gEditorialHelper::meta_admin_field( $field, array( $field ), $post, $args['ltr'], $args['title'], FALSE, $args['type'] );
-					break;
-
-					case 'code':
-					case 'link':
-						gEditorialHelper::meta_admin_field( $field, array( $field ), $post, TRUE, $args['title'], FALSE, $args['type'] );
-					break;
-
-					case 'number':
-						gEditorialHelper::meta_admin_number_field( $field, array( $field ), $post, TRUE, $args['title'], FALSE, $args['type'] );
-					break;
-
-					case 'textarea':
-						gEditorialHelper::meta_admin_textarea_field( $field, array( $field ), $post, $args['ltr'], $args['title'], FALSE, $args['type'] );
-					break;
-
-					case 'term':
-						if ( $args['tax'] )
-							gEditorialHelper::meta_admin_tax_field( $field, array( $field ), $post, $args['tax'], $args['ltr'], $args['title'] );
-						else
-							gEditorialHelper::meta_admin_field( $field, array( $field ), $post, $args['ltr'], $args['title'], FALSE, $args['type'] );
-					break;
-				}
-			}
+			do_action( 'geditorial_meta_do_meta_box', $post, $box, $fields, 'box' );
 
 		} else {
 
@@ -269,8 +284,6 @@ class gEditorialMeta extends gEditorialModuleCore
 		}
 
 		do_action( 'geditorial_meta_box_after', $this->module, $post, $fields );
-
-		wp_nonce_field( 'geditorial_meta_post_main', '_geditorial_meta_post_main' );
 
 		echo '</div>';
 	}

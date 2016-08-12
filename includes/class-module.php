@@ -603,6 +603,7 @@ class gEditorialModuleCore extends gEditorialBaseCore
 				'title'       => $this->get_string( $field, $post_type, 'titles', $field ),
 				'description' => $this->get_string( $field, $post_type, 'descriptions' ),
 				'type'        => 'text',
+				'context'     => 'box',
 				'repeat'      => FALSE,
 				'ltr'         => FALSE,
 				'tax'         => FALSE,
