@@ -1390,13 +1390,14 @@ class gEditorialModuleCore extends gEditorialBaseCore
 				'pages'      => TRUE,
 				'ep_mask'    => EP_PERMALINK, // https://make.wordpress.org/plugins?p=29
 			),
-			'capability_type' => 'post',
-			'hierarchical'    => FALSE,
-			'public'          => TRUE,
-			'show_ui'         => TRUE,
-			'map_meta_cap'    => TRUE,
-			'can_export'      => TRUE,
-			'menu_position'   => 4,
+			'capability_type'  => 'post',
+			'hierarchical'     => FALSE,
+			'public'           => TRUE,
+			'show_ui'          => TRUE,
+			'map_meta_cap'     => TRUE,
+			'can_export'       => TRUE,
+			'delete_with_user' => FALSE,
+			'menu_position'    => 4,
 
 			// SEE: https://github.com/torounit/custom-post-type-permalinks
 			// 'cptp_permalink_structure' => $this->constant( $constant_key.'_permalink', '/%post_id%' ),
