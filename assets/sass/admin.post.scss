@@ -23,29 +23,22 @@
 	// @include main-wrap();
 }
 
-.geditorial-admin-action-metabox {
-	position: absolute;
-	padding: 0;
-	right: 40px;
-	top: 6px;
+.hndle {
 
-	display: none;
-
-	@include body-rtl() {
-		left: 40px;
-		right: auto;
-		font-family: tahoma;
+	.geditorial-postbox-title-action {
+		opacity: 0;
+		float: right;
+		line-height: 1.2;
+		@include body-rtl() {
+			float: left;
+		}
 	}
 
-	a,
-	a:hover {
-		text-decoration: none;
-		box-shadow: none;
+	&:hover {
+		.geditorial-postbox-title-action {
+			opacity: 1;
+		}
 	}
-}
-
-.postbox:hover .geditorial-admin-action-metabox {
-	display: block;
 }
 
 .geditorial-admin-wrap-nobox,
@@ -71,6 +64,10 @@
 			background: #ebebeb;
 			border: 1px solid #e5e5e5;
 			border-radius: 2px;
+
+			a {
+
+			}
 		}
 
 		&.field-wrap-inputtext {

@@ -10,14 +10,15 @@
 	.do-ortho {
 
 		position: absolute;
-		left: 4px;
-		top: 5px;
+		left: 5px;
+		// top: 5px;
+		top: 2px;
 
 		color: #82878c;
 		opacity: 0.8;
 
 		text-decoration: none;
-		
+
 		&:hover {
 			text-decoration: none;
 			color: #666;
@@ -29,9 +30,9 @@
 		}
 
 		.dashicons {
-			width: 18px;
-    		height: 18px;
-    		font-size: 18px;
+			// width: 20px;
+    		// height: 20px;
+    		// font-size: 20px;
 		}
 	}
 
