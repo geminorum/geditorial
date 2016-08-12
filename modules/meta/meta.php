@@ -43,8 +43,6 @@ class gEditorialMeta extends gEditorialModuleCore
 					'ch'          => __( 'Column Header', GEDITORIAL_TEXTDOMAIN ),
 					'ct'          => __( 'Column Header Taxonomy', GEDITORIAL_TEXTDOMAIN ),
 					'ch_override' => __( 'Column Header Override', GEDITORIAL_TEXTDOMAIN ),
-					'es'          => __( 'External Link', GEDITORIAL_TEXTDOMAIN ),
-					'ol'          => __( 'Old Link', GEDITORIAL_TEXTDOMAIN ),
 
 					'source_title' => _x( 'Source Title', 'Meta Module: Titles', GEDITORIAL_TEXTDOMAIN ),
 					'source_url'   => _x( 'Source URL', 'Meta Module: Titles', GEDITORIAL_TEXTDOMAIN ),
@@ -59,8 +57,6 @@ class gEditorialMeta extends gEditorialModuleCore
 					'ch'          => __( 'String to reperesent that the post is on a column or section', GEDITORIAL_TEXTDOMAIN ),
 					'ct'          => __( 'Taxonomy for better categorizing columns', GEDITORIAL_TEXTDOMAIN ),
 					'ch_override' => __( 'Column Header Override', GEDITORIAL_TEXTDOMAIN ),
-					'es'          => __( 'URL of the external source of the post', GEDITORIAL_TEXTDOMAIN ),
-					'ol'          => __( 'URL of the post on a previous site', GEDITORIAL_TEXTDOMAIN ),
 
 					'source_title' => _x( 'Original Title of Source Content', 'Meta Module: Descriptions', GEDITORIAL_TEXTDOMAIN ),
 					'source_url'   => _x( 'Full URL to the Source of the Content', 'Meta Module: Descriptions', GEDITORIAL_TEXTDOMAIN ),
@@ -91,8 +87,6 @@ class gEditorialMeta extends gEditorialModuleCore
 					'tax'  => $this->constant( 'ct_tax' ),
 				),
 				'ch' => array( 'type' => 'text' ),
-				'es' => array( 'type' => 'link' ), // FIXME: DEPRICATED
-				'ol' => array( 'type' => 'link' ), // FIXME: DEPRICATED
 
 				'source_title' => array( 'type' => 'text' ),
 				'source_url'   => array( 'type' => 'link' ),
@@ -405,8 +399,8 @@ class gEditorialMeta extends gEditorialModuleCore
 		if ( $ch_wrap ) echo '</div>';
 
 		gEditorialHelper::meta_admin_field( 'as', $fields, $post );
-		gEditorialHelper::meta_admin_field( 'es', $fields, $post, TRUE, NULL, FALSE, 'link' );
-		gEditorialHelper::meta_admin_field( 'ol', $fields, $post, TRUE, NULL, FALSE, 'link' );
+		// gEditorialHelper::meta_admin_field( 'es', $fields, $post, TRUE, NULL, FALSE, 'link' );
+		// gEditorialHelper::meta_admin_field( 'ol', $fields, $post, TRUE, NULL, FALSE, 'link' );
 
 		do_action( 'geditorial_meta_box_after', $this->module, $post, $fields );
 
