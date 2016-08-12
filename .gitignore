@@ -4,11 +4,12 @@
 .imdone
 .temp
 
+/assets/bin
 /assets/components
+/assets/css/maps
 /assets/views/cache
 /assets/packages/jquery
 /assets/vendor
-/assets/bin
 /node_modules
 
 /x-local-*
