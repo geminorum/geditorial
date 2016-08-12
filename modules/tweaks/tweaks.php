@@ -245,13 +245,14 @@ class gEditorialTweaks extends gEditorialModuleCore
 				 	&& wp_revisions_enabled( $post ) ) {
 
 					$revisions = wp_get_post_revisions( $post_id, array( 'check_enabled' => FALSE ) );
-					$count = count( $revisions );
+					$count     = count( $revisions );
+					$edit      = current_user_can( 'edit_post', $post_id );
 
 					echo '<div class="tweaks-row tweaks-revision-count">';
 						echo '<span class="dashicons dashicons-backup"></span> ';
-						echo self::html( 'a', array(
-							'href'  => add_query_arg( array( 'revision' => key( $revisions ) ), admin_url( 'revision.php' ) ),
-							'title' => _x( 'View the last revision', 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ),
+						echo self::html( ( $edit ? 'a' : 'span' ), array(
+							'href'  => $edit ? add_query_arg( array( 'revision' => key( $revisions ) ), admin_url( 'revision.php' ) ) : FALSE,
+							'title' => $edit ? _x( 'View the last revision', 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ) : FALSE,
 						), sprintf( _nx( '%s Revision', '%s Revisions', $count, 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ), number_format_i18n( $count ) ) );
 					echo '</div>';
 				}
