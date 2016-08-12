@@ -717,7 +717,8 @@ class gEditorialBaseCore
 		return '0';
 	}
 
-	// EDITED: 4/15/2016, 10:20:25 AM
+	// FIXME: MUST DEP
+	// EDITED: 8/11/2016, 6:40:18 AM
 	public static function getPostTypes( $singular = FALSE, $builtin = NULL )
 	{
 		$list = array();
@@ -733,11 +734,8 @@ class gEditorialBaseCore
 			if ( TRUE === $singular )
 				$list[$post_type] = $post_type_obj->labels->singular_name;
 
-			else if ( $singular )
-				$list[$post_type] =
-					empty ( $post_type_obj->labels->{$singular} )
-						? $post_type_obj->labels->name
-						: $post_type_obj->labels->{$singular};
+			else if ( $singular && ! empty( $post_type_obj->labels->{$singular} ) )
+				$list[$post_type] = $post_type_obj->labels->{$singular};
 
 			else
 				$list[$post_type] = $post_type_obj->labels->name;
