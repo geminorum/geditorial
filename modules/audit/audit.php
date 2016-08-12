@@ -123,6 +123,9 @@ class gEditorialAudit extends gEditorialModuleCore
 		echo '</h3><ul>';
 
 		foreach ( $counts as $term => $posts ) {
+
+			$name = sanitize_term_field( 'name', $terms[$term]->name, $terms[$term]->term_id, $tax, 'display' );
+
 			foreach ( $posts as $type => $count ) {
 
 				if ( ! $count )
@@ -142,7 +145,7 @@ class gEditorialAudit extends gEditorialModuleCore
 					$tax,
 					$term,
 					number_format_i18n( $count ),
-					$terms[$term]->name,
+					$name,
 				) );
 			}
 		}
