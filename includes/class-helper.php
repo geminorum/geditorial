@@ -420,16 +420,16 @@ class gEditorialHelper extends gEditorialBaseCore
 		wp_enqueue_script( 'jquery-colorbox' );
 	}
 
-	public static function getTerms( $taxonomy = 'category', $post_id = FALSE, $object = FALSE, $key = 'term_id' )
+	public static function getTerms( $taxonomy = 'category', $post_id = FALSE, $object = FALSE, $key = 'term_id', $extra = array() )
 	{
 		$the_terms = array();
 
 		if ( FALSE === $post_id ) {
-			$terms = get_terms( $taxonomy, array(
+			$terms = get_terms( $taxonomy, array_merge( array(
 				'hide_empty' => FALSE,
 				'orderby'    => 'name',
 				'order'      => 'ASC'
-			) );
+			), $extra ) );
 		} else {
 			$terms = get_the_terms( $post_id, $taxonomy );
 		}
