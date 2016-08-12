@@ -926,6 +926,28 @@ class gEditorialModuleCore extends gEditorialBaseCore
 		);
 	}
 
+	public function get_settings_admin_restrict( $section )
+	{
+		return array(
+			'field'       => 'admin_restrict',
+			'title'       => _x( 'Restrictions', 'Module Core: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+			'description' => _x( 'Enhance admin edit page restrictions', 'Module Core: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+			'default'     => '0',
+			'section'     => $section,
+		);
+	}
+
+	public function get_settings_dashboard_widgets( $section )
+	{
+		return array(
+			'field'       => 'dashboard_widgets',
+			'title'       => _x( 'Dashboard Widgets', 'Module Core: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+			'description' => _x( 'Enhance admin dashboard with customized widgets', 'Module Core: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+			'default'     => '0',
+			'section'     => $section,
+		);
+	}
+
 	public function get_settings_posttype_feeds( $section )
 	{
 		return array(
