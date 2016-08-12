@@ -176,7 +176,8 @@ class gEditorialMeta extends gEditorialModuleCore
 			if ( 'post' == $screen->base ) {
 
 				// we use this to override the whole functionality, not just adding the actions
-				$box_func = apply_filters( 'geditorial_meta_box_callback', array( $this, 'default_meta_box_old' ), $screen->post_type );
+				// $box_func = apply_filters( 'geditorial_meta_box_callback', array( $this, 'default_meta_box_old' ), $screen->post_type );
+				$box_func = apply_filters( 'geditorial_meta_box_callback', TRUE, $screen->post_type );
 
 				if ( TRUE === $box_func )
 					$box_func = array( $this, 'default_meta_box' );
@@ -184,7 +185,8 @@ class gEditorialMeta extends gEditorialModuleCore
 				if ( is_callable( $box_func ) )
 					add_meta_box( 'geditorial-meta-'.$screen->post_type, $this->get_meta_box_title(), $box_func, $screen->post_type, 'side', 'high' );
 
-				$dbx_func = apply_filters( 'geditorial_meta_dbx_callback', array( $this, 'default_meta_raw_old' ), $screen->post_type );
+				// $dbx_func = apply_filters( 'geditorial_meta_dbx_callback', array( $this, 'default_meta_raw_old' ), $screen->post_type );
+				$dbx_func = apply_filters( 'geditorial_meta_dbx_callback', TRUE, $screen->post_type );
 
 				if ( TRUE === $dbx_func )
 					$dbx_func = array( $this, 'default_meta_raw' );
@@ -317,6 +319,9 @@ class gEditorialMeta extends gEditorialModuleCore
 
 	public function sanitize_post_meta( $postmeta, $fields, $post_id, $post_type )
 	{
+		if ( ! current_user_can( $post->cap->edit_post, $post_id ) )
+			return $postmeta;
+
 		if ( wp_verify_nonce( @$_REQUEST['_geditorial_meta_post_main'], 'geditorial_meta_post_main' )
 			|| wp_verify_nonce( @$_REQUEST['_geditorial_meta_post_raw'], 'geditorial_meta_post_raw' ) ) {
 
@@ -360,6 +365,7 @@ class gEditorialMeta extends gEditorialModuleCore
 		return $postmeta;
 	}
 
+	// FIXME: DEPRECATED
 	public function default_meta_box_old( $post, $box )
 	{
 		$ch_override = FALSE;
@@ -409,6 +415,7 @@ class gEditorialMeta extends gEditorialModuleCore
 		echo '</div>';
 	}
 
+	// FIXME: DEPRECATED
 	public function default_meta_raw_old( $post )
 	{
 		$fields = $this->post_type_fields( $post->post_type );
@@ -458,19 +465,22 @@ class gEditorialMeta extends gEditorialModuleCore
 		// NOUNCES MUST CHECKED BY FILTERS
 		// CAPABILITIES MUST CHECKED BY FILTERS : if (current_user_can($post->cap->edit_post, $post_id))
 
+		$fields = $this->post_type_fields( $post->post_type );
+
 		$postmeta = $this->sanitize_post_meta_old(
 			$this->get_postmeta( $post_id ),
-			$this->post_type_fields( $post->post_type ),
+			$fields,
 			$post_id,
 			$post->post_type
 		);
 
-		$this->set_meta( $post_id, $postmeta );
+		$this->set_meta( $post_id, apply_filters( 'geditorial_meta_sanitize_post_meta', $postmeta, $fields, $post_id, $post->post_type ) );
 		wp_cache_flush();
 
 		return $post_id;
 	}
 
+	// FIXME: DEPRECATED
 	private function sanitize_post_meta_old( $postmeta, $fields, $post_id, $post_type )
 	{
 		if ( wp_verify_nonce( @$_REQUEST['_geditorial_meta_post_main_old'], 'geditorial_meta_post_main_old' )
@@ -500,7 +510,7 @@ class gEditorialMeta extends gEditorialModuleCore
 			}
 		}
 
-		return apply_filters( 'geditorial_meta_sanitize_post_meta', $postmeta, $fields, $post_id, $post_type );
+		return $postmeta;
 	}
 
 	public function manage_posts_columns( $posts_columns )
