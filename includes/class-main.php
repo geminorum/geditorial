@@ -56,6 +56,7 @@ class gEditorial
 
 		$includes = array(
 			'helper',
+			'metabox',
 			'template',
 			'widget',
 			'module',
