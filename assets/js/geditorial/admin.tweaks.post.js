@@ -1,7 +1,15 @@
 jQuery(document).ready(function($) {
 	'use strict';
 
-	if ('1' == gEditorial.tweaks.settings.checklist_tree) {
+	var settings = $.extend({
+		checklist_tree: '0',
+		category_search: '0',
+		excerpt_count: '0',
+	}, gEditorial.tweaks.settings);
+
+	// console.log(settings);
+
+	if ('0' != settings.checklist_tree) {
 
 		$('[id$="-all"] > ul.categorychecklist').each(function() {
 
@@ -18,7 +26,7 @@ jQuery(document).ready(function($) {
 		});
 	}
 
-	if ('1' == gEditorial.tweaks.settings.category_search) {
+	if ('0' != settings.category_search) {
 
 		var $input = $('<input class="category-search" type="search" value="" placeholder="' + gEditorial.tweaks.strings.search_placeholder + '" title="' + gEditorial.tweaks.strings.search_title + '" />');
 
@@ -43,7 +51,7 @@ jQuery(document).ready(function($) {
 		});
 	}
 
-	if ('1' == gEditorial.tweaks.settings.excerpt_count) {
+	if ('0' != settings.excerpt_count) {
 
 		if (wp.utils) {
 
