@@ -87,20 +87,6 @@ class gEditorialReshare extends gEditorialModuleCore
 		), 'reshare_cpt' );
 	}
 
-	public function meta_init()
-	{
-		add_filter( 'geditorial_meta_box_callback', array( $this, 'meta_box_callback' ), 10, 2 );
-	}
-
-	// FIXME: default will be true / DROP THIS
-	public function meta_box_callback( $callback, $post_type )
-	{
-		if ( $post_type == $this->constant( 'reshare_cpt' ) )
-			return TRUE;
-
-		return $callback;
-	}
-
 	public function tweaks_strings( $strings )
 	{
 		$this->tweaks = TRUE;
