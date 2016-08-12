@@ -50,8 +50,11 @@ class gEditorial
 
 	public function plugins_loaded()
 	{
+		// FIXME: temporary
+		require_once( GEDITORIAL_DIR.'includes/core/base.php' );
+		require_once( GEDITORIAL_DIR.'includes/core/wordpress.php' );
+
 		$includes = array(
-			'base',
 			'helper',
 			'template',
 			'widget',
