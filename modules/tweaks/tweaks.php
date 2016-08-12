@@ -52,6 +52,12 @@ class gEditorialTweaks extends gEditorialModuleCore
 					'default'     => '0',
 				),
 				array(
+					'field'       => 'revision_count',
+					'title'       => _x( 'Revision Count', 'Tweaks Module: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Displays revision summary. Needs Group Taxonomies enabled.', 'Tweaks Module: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'default'     => '0',
+				),
+				array(
 					'field'       => 'category_search',
 					'title'       => _x( 'Category Search', 'Tweaks Module: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Replaces the category selector to include searching categories', 'Tweaks Module: Setting Description', GEDITORIAL_TEXTDOMAIN ),
@@ -233,6 +239,21 @@ class gEditorialTweaks extends gEditorialModuleCore
 
 					gEditorialHelper::getTermsEditRow( $post_id,
 						$post->post_type, $taxonomy, $before, '</div>' );
+				}
+
+				if ( $this->get_setting( 'revision_count', FALSE )
+				 	&& wp_revisions_enabled( $post ) ) {
+
+					$revisions = wp_get_post_revisions( $post_id, array( 'check_enabled' => FALSE ) );
+					$count = count( $revisions );
+
+					echo '<div class="tweaks-row tweaks-revision-count">';
+						echo '<span class="dashicons dashicons-backup"></span> ';
+						echo self::html( 'a', array(
+							'href'  => add_query_arg( array( 'revision' => key( $revisions ) ), admin_url( 'revision.php' ) ),
+							'title' => _x( 'View the last revision', 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ),
+						), sprintf( _nx( '%s Revision', '%s Revisions', $count, 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ), number_format_i18n( $count ) ) );
+					echo '</div>';
 				}
 
 				echo '</div>';
