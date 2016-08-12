@@ -183,18 +183,7 @@ class gEditorialModuleCore extends gEditorialBaseCore
 
 	public function all_post_types( $exclude = TRUE )
 	{
-		$registered = get_post_types( array(
-			'_builtin' => FALSE,
-			'public'   => TRUE,
-		), 'objects' );
-
-		$post_types = array(
-			'post' => _x( 'Posts', 'Module Core', GEDITORIAL_TEXTDOMAIN ),
-			'page' => _x( 'Pages', 'Module Core', GEDITORIAL_TEXTDOMAIN ),
-		);
-
-		foreach ( $registered as $post_type => $args )
-			$post_types[$post_type] = $args->label;
+		$post_types = gEditorialWordPress::getPostTypes();
 
 		if ( $exclude && count( $this->post_types_excluded ) )
 			$post_types = array_diff_key( $post_types, array_flip( $this->post_types_excluded ) );
