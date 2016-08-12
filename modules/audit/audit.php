@@ -16,6 +16,21 @@ class gEditorialAudit extends gEditorialModuleCore
 	protected function get_global_settings()
 	{
 		return array(
+			'_general' => array(
+				'dashboard_widgets',
+				array(
+					'field'       => 'summary_scope',
+					'type'        => 'select',
+					'title'       => _x( 'Summary Scope', 'Audit Module: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Dashboard Widget Summary User Scope', 'Audit Module: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'default'     => 'all',
+					'values'      => array(
+						'all'     => _x( 'All Users', 'Audit Module: Setting Option', GEDITORIAL_TEXTDOMAIN ),
+						'current' => _x( 'Current User', 'Audit Module: Setting Option', GEDITORIAL_TEXTDOMAIN ),
+					),
+				),
+				'admin_restrict',
+			),
 			'posttypes_option' => 'posttypes_option',
 		);
 	}
@@ -63,6 +78,78 @@ class gEditorialAudit extends gEditorialModuleCore
 			) );
 	}
 
+	public function current_screen( $screen )
+	{
+		if ( 'dashboard' == $screen->base ) {
+
+			if ( $this->get_setting( 'dashboard_widgets', FALSE ) )
+				add_action( 'activity_box_end', array( $this, 'activity_box_end' ), 9 );
+
+		} else if ( in_array( $screen->post_type, $this->post_types() ) ) {
+
+			if ( 'edit' == $screen->base ) {
+
+				if ( $this->get_setting( 'admin_restrict', FALSE ) ) {
+					add_action( 'restrict_manage_posts', array( $this, 'restrict_manage_posts' ) );
+					add_filter( 'parse_query', array( $this, 'parse_query' ) );
+				}
+			}
+		}
+	}
+
+	public function activity_box_end()
+	{
+		$terms = gEditorialHelper::getTerms( $tax = $this->constant( 'audit_tax' ), FALSE, TRUE, 'slug', array( 'hide_empty' => TRUE ) );
+
+		if ( ! count( $terms ) )
+			return;
+
+		$user_id = 'all' == $this->get_setting( 'summary_scope', 'all' ) ? 0 : get_current_user_id();
+		$counts  = gEditorialWordPress::countPostsByTaxonomy( $terms, $this->post_types(), $user_id );
+
+		if ( ! count( $counts ) )
+			return;
+
+		$objects = array();
+		$all     = gEditorialWordPress::getPostTypes( 3 );
+
+		echo '<div class="geditorial-admin-wrap -audit"><h3>';
+
+			if ( $user_id )
+				_ex( 'Your Audit Summary', 'Audit Module', GEDITORIAL_TEXTDOMAIN );
+			else
+				_ex( 'Editorial Audit Summary', 'Audit Module', GEDITORIAL_TEXTDOMAIN );
+
+		echo '</h3><ul>';
+
+		foreach ( $counts as $term => $posts ) {
+			foreach ( $posts as $type => $count ) {
+
+				if ( ! $count )
+					continue;
+
+				if ( empty( $objects[$type] ) )
+					$objects[$type] = get_post_type_object( $type );
+
+				if ( $objects[$type] && current_user_can( $objects[$type]->cap->edit_posts ) )
+					$template = '<li class="%4$s-%1$s-count"><a href="edit.php?post_type=%1$s&%3$s=%4$s"><span>%5$s</span> %2$s</a> (%6$s)</li>';
+				else
+					$template = '<li class="%4$s-%1$s-count"><span>%5$s</span> %2$s</a> (%6$s)</li>';
+
+				vprintf( $template, array(
+					$type,
+					translate_nooped_plural( $all[$type], $count ),
+					$tax,
+					$term,
+					number_format_i18n( $count ),
+					$terms[$term]->name,
+				) );
+			}
+		}
+
+		echo '</ul></div>';
+	}
+
 	public function register_settings( $page = NULL )
 	{
 		if ( ! $this->is_register_settings( $page ) )
@@ -90,6 +177,28 @@ class gEditorialAudit extends gEditorialModuleCore
 		);
 
 		return self::recursiveParseArgs( $new, $strings );
+	}
+
+	public function restrict_manage_posts()
+	{
+		$tax = get_taxonomy( $audit = $this->constant( 'audit_tax' ) );
+
+		wp_dropdown_categories( array(
+			'taxonomy'        => $audit,
+			'show_option_all' => $tax->labels->all_items,
+			'name'            => $tax->name,
+			'order'           => 'DESC',
+			'selected'        => isset( $_GET[$audit] ) ? $_GET[$audit] : 0,
+			'hierarchical'    => $tax->hierarchical,
+			'show_count'      => FALSE,
+			'hide_empty'      => TRUE,
+			'hide_if_empty'   => TRUE,
+		) );
+	}
+
+	public function parse_query( $query )
+	{
+		$this->do_parse_query_taxes( $query->query_vars, array( 'audit_tax' ) );
 	}
 
 	public function meta_box_cb_audit_tax( $post, $box )
