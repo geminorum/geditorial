@@ -169,7 +169,7 @@ class gEditorialTodayHelper extends gEditorialHelper
 
 		$query_args['meta_query'] = array();
 
-		foreach( $constants as $field => $constant ) {
+		foreach ( $constants as $field => $constant ) {
 			if ( ! empty( $args['the_day'][$field] ) ) {
 				$query_args['orderby'][$field.'_clause'] = 'ASC'; // https://make.wordpress.org/core/2015/03/30/query-improvements-in-wp-4-2-orderby-and-meta_query/
 		        $query_args['meta_query'][$field.'_clause'] = array(

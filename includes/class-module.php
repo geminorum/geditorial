@@ -27,7 +27,7 @@ class gEditorialModuleCore extends gEditorialBaseCore
 	protected $image_sizes         = array();
 	protected $errors              = array();
 
-	protected $geditorial_meta = FALSE; // META ENABLED?
+	protected $geditorial_meta = FALSE; // META ENABLED
 	protected $root_key        = FALSE; // ROOT CONSTANT
 	protected $tweaks          = FALSE; // TWEAKS ENABLED
 

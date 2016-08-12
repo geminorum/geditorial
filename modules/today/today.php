@@ -361,7 +361,7 @@ class gEditorialToday extends gEditorialModuleCore
 		if ( $this->is_save_post( $post )
 			|| $this->is_save_post( $post, $this->post_types() ) ) {
 
-			foreach( $this->get_the_day_constants() as $field => $constant )
+			foreach ( $this->get_the_day_constants() as $field => $constant )
 				if ( isset( $_POST['geditorial-today-date-'.$field] ) )
 					$this->set_meta( $post_ID, trim( $_POST['geditorial-today-date-'.$field] ), $constant );
 		}
@@ -502,7 +502,7 @@ class gEditorialToday extends gEditorialModuleCore
 
 		$meta_query = array();
 
-		foreach( $this->get_the_day_constants() as $field => $constant )
+		foreach ( $this->get_the_day_constants() as $field => $constant )
 			if ( $var = $wp_query->get( 'day_'.$field ) )
 		        $meta_query[] = array(
 		            'key'     => $constant,
@@ -584,7 +584,7 @@ class gEditorialToday extends gEditorialModuleCore
 		$day_cpt   = $this->constant( 'day_cpt' );
 		$pattern = '([^/]+)';
 
-		foreach( gEditorialHelper::getDefualtCalendars( TRUE ) as $cal => $title ) {
+		foreach ( gEditorialHelper::getDefualtCalendars( TRUE ) as $cal => $title ) {
 
 			// /cal/month/day/year/posttype
 
