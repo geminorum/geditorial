@@ -125,12 +125,12 @@ class gEditorialModuleCore extends gEditorialBaseCore
 
 	protected function settings_help_tabs()
 	{
-		return gEditorialHelper::settingsHelpContent( $this->module );
+		return gEditorialSettingsCore::settingsHelpContent( $this->module );
 	}
 
 	protected function settings_help_sidebar()
 	{
-		return gEditorialHelper::settingsHelpLinks( $this->module );
+		return gEditorialSettingsCore::settingsHelpLinks( $this->module );
 	}
 
 	protected function do_globals()
@@ -793,196 +793,6 @@ class gEditorialModuleCore extends gEditorialBaseCore
 		self::redirect( add_query_arg( 'message', $added ? 'added_default_terms' : 'error_default_terms' ) );
 	}
 
-	public function get_settings_editor_button( $section )
-	{
-		return array(
-			'field'   => 'editor_button',
-			'title'   => _x( 'Editor Button', 'Module Core: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'default' => '1',
-			'section' => $section,
-		);
-	}
-
-	public function get_settings_shortcode_support( $section )
-	{
-		return array(
-			'field'   => 'shortcode_support',
-			'title'   => _x( 'Default Shortcodes', 'Module Core: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'default' => '1',
-			'section' => $section,
-		);
-	}
-
-	public function get_settings_markdown_support( $section )
-	{
-		return array(
-			'field'   => 'markdown_support',
-			'title'   => _x( 'Markdown Support', 'Module Core: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'default' => '0',
-			'section' => $section,
-		);
-	}
-
-	public function get_settings_multiple_instances( $section )
-	{
-		return array(
-			'field'   => 'multiple_instances',
-			'title'   => _x( 'Multiple Instances', 'Module Core: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'default' => '0',
-			'section' => $section,
-		);
-	}
-
-	public function get_settings_rewrite_prefix( $section )
-	{
-		return array(
-			'field'       => 'rewrite_prefix',
-			'type'        => 'text',
-			'title'       => _x( 'URL Base Prefix', 'Module Core: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'description' => _x( 'String before the permalink structure', 'Module Core: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-			'default'     => '',
-			'dir'         => 'ltr',
-			'placeholder' => 'wiki',
-			'section'     => $section,
-		);
-	}
-
-	public function get_settings_redirect_archives( $section )
-	{
-		return array(
-			'field'       => 'redirect_archives',
-			'type'        => 'text',
-			'title'       => _x( 'Redirect Archives', 'Module Core: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'description' => _x( 'Redirect Post Type Archives to a URL', 'Module Core: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-			'default'     => '',
-			'dir'         => 'ltr',
-			'placeholder' => 'http://example.com/archives/',
-			'section'     => $section,
-		);
-	}
-
-	public function get_settings_comment_status( $section )
-	{
-		return array(
-			'field'       => 'comment_status',
-			'type'        => 'select',
-			'title'       => _x( 'Comment Status', 'Module Core: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'description' => _x( 'Default Comment Status of the Posttype', 'Module Core: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-			'default'     => 'closed',
-			'section'     => $section,
-			'values'      => array(
-				'open'   => _x( 'Open', 'Module Core: Setting Option', GEDITORIAL_TEXTDOMAIN ),
-				'closed' => _x( 'Closed', 'Module Core: Setting Option', GEDITORIAL_TEXTDOMAIN ),
-			),
-		);
-	}
-
-	public function get_settings_insert_content( $section )
-	{
-		return array(
-			'field'       => 'insert_content',
-			'type'        => 'select',
-			'title'       => _x( 'Insert in Content', 'Module Core: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'description' => _x( 'Put html automatically on the content', 'Module Core: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-			'default'     => 'none',
-			'section'     => $section,
-			'values'      => array(
-				'none'   => _x( 'No', 'Module Core: Insert in Content Option', GEDITORIAL_TEXTDOMAIN ),
-				'before' => _x( 'Before', 'Module Core: Insert in Content Option', GEDITORIAL_TEXTDOMAIN ),
-				'after'  => _x( 'After', 'Module Core: Insert in Content Option', GEDITORIAL_TEXTDOMAIN ),
-			),
-		);
-	}
-
-	public function get_settings_before_content( $section )
-	{
-		return array(
-			'field'       => 'before_content',
-			'type'        => 'textarea',
-			'title'       => _x( 'Before Content', 'Module Core: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'description' => _x( 'Adds <code>HTML</code> content to the start of all the supported posttypes', 'Module Core: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-			'section'     => $section,
-		);
-	}
-
-	public function get_settings_after_content( $section )
-	{
-		return array(
-			'field'       => 'after_content',
-			'type'        => 'textarea',
-			'title'       => _x( 'After Content', 'Module Core: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'description' => _x( 'Adds <code>HTML</code> content to the end of all the supported posttypes', 'Module Core: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-			'section'     => $section,
-		);
-	}
-
-	public function get_settings_admin_ordering( $section )
-	{
-		return array(
-			'field'       => 'admin_ordering',
-			'title'       => _x( 'Ordering', 'Module Core: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'description' => _x( 'Enhance admin edit page ordering', 'Module Core: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-			'default'     => '1',
-			'section'     => $section,
-		);
-	}
-
-	public function get_settings_admin_restrict( $section )
-	{
-		return array(
-			'field'       => 'admin_restrict',
-			'title'       => _x( 'Restrictions', 'Module Core: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'description' => _x( 'Enhance admin edit page restrictions', 'Module Core: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-			'default'     => '0',
-			'section'     => $section,
-		);
-	}
-
-	public function get_settings_dashboard_widgets( $section )
-	{
-		return array(
-			'field'       => 'dashboard_widgets',
-			'title'       => _x( 'Dashboard Widgets', 'Module Core: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'description' => _x( 'Enhance admin dashboard with customized widgets', 'Module Core: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-			'default'     => '0',
-			'section'     => $section,
-		);
-	}
-
-	public function get_settings_posttype_feeds( $section )
-	{
-		return array(
-			'field'       => 'posttype_feeds',
-			'title'       => _x( 'Feeds', 'Module Core: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'description' => _x( 'Supporting feeds on the posttype', 'Module Core: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-			'default'     => '0',
-			'section'     => $section,
-		);
-	}
-
-	public function get_settings_posttype_pages( $section )
-	{
-		return array(
-			'field'       => 'posttype_pages',
-			'title'       => _x( 'Pages', 'Module Core: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'description' => _x( 'Supporting pagination on the posttype', 'Module Core: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-			'default'     => '0',
-			'section'     => $section,
-		);
-	}
-
-	public function get_settings_calendar_type( $section )
-	{
-		return array(
-			'field'   => 'calendar_type',
-			'title'   => _x( 'Default Calendar', 'Module Core: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'type'    => 'select',
-			'default' => 'gregorian',
-			'values'  => gEditorialHelper::getDefualtCalendars( TRUE ),
-			'section' => $section,
-		);
-	}
-
 	public function is_register_settings( $page )
 	{
 		if ( isset( $this->settings ) && $page == $this->module->settings )
@@ -1007,8 +817,8 @@ class gEditorialModuleCore extends gEditorialBaseCore
 					if ( is_array( $field ) )
 						$args = array_merge( $field, array( 'section' => $section ) );
 
-					else if ( method_exists( $this, 'get_settings_'.$field ) )
-						$args = call_user_func_array( array( $this, 'get_settings_'.$field ), array( $section ) );
+					else if ( method_exists( 'gEditorialSettingsCore', 'getSetting_'.$field ) )
+						$args = call_user_func_array( array( 'gEditorialSettingsCore', 'getSetting_'.$field ), array( $section ) );
 
 					else
 						continue;
@@ -1040,13 +850,12 @@ class gEditorialModuleCore extends gEditorialBaseCore
 	protected function settings_footer( $module )
 	{
 		if ( 'settings' == $module->name )
-			gEditorialHelper::settingsCredits();
+			gEditorialSettingsCore::settingsCredits();
 	}
 
 	protected function settings_signature( $module = NULL )
 	{
-		gEditorialHelper::settingsSignature();
-		// echo '<div class="clear"></div></div>';
+		gEditorialSettingsCore::settingsSignature();
 	}
 
 	public function add_settings_field( $r = array() )

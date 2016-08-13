@@ -85,7 +85,7 @@ class gEditorialSettings extends gEditorialModuleCore
 
 		echo '<div class="wrap geditorial-admin-wrap geditorial-tools geditorial-tools-'.$sub.'">';
 
-			gEditorialHelper::settingsTitle( _x( 'gEditorial Tools', 'Settings Module: Page Title', GEDITORIAL_TEXTDOMAIN ), gEditorialHelper::settingsURL() );
+			gEditorialSettingsCore::settingsTitle( _x( 'gEditorial Tools', 'Settings Module: Page Title', GEDITORIAL_TEXTDOMAIN ), gEditorialHelper::settingsURL() );
 
 			self::headerNav( $uri, $sub, $subs );
 
@@ -332,15 +332,15 @@ class gEditorialSettings extends gEditorialModuleCore
 
 		if ( 'settings' == $current_module->name ) {
 			$title = _x( 'Editorial', 'Settings Module', GEDITORIAL_TEXTDOMAIN );
-			$back = FALSE;
+			$back  = FALSE;
 		} else {
 			$title = sprintf( _x( 'Editorial: %s', 'Settings Module', GEDITORIAL_TEXTDOMAIN ), $current_module->title );
-			$back = gEditorialHelper::settingsURL();
+			$back  = gEditorialHelper::settingsURL();
 		}
 
 		echo '<div class="wrap geditorial-admin-wrap geditorial-settings">';
 
-			gEditorialHelper::settingsTitle( $title, $back );
+			gEditorialSettingsCore::settingsTitle( $title, $back );
 
 		if ( isset( $_REQUEST['message'] ) && isset( $current_module->messages[$_REQUEST['message']] ) )
 			self::notice( $current_module->messages[$_REQUEST['message']] );
@@ -439,7 +439,7 @@ class gEditorialSettings extends gEditorialModuleCore
 
 		$screen = get_current_screen();
 
-		foreach ( gEditorialHelper::settingsHelpContent() as $tab )
+		foreach ( gEditorialSettingsCore::settingsHelpContent() as $tab )
 			$screen->add_help_tab( $tab );
 
 		do_action( 'geditorial_settings_load', $page );

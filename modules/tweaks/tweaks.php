@@ -18,7 +18,7 @@ class gEditorialTweaks extends gEditorialModuleCore
 
 	protected function settings_help_tabs()
 	{
-		$tabs = gEditorialHelper::settingsHelpContent( $this->module );
+		$tabs = gEditorialSettingsCore::settingsHelpContent( $this->module );
 
 		$tabs[] = array(
 			'id'       => 'geditorial-tweaks-category_search',
