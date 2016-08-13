@@ -19,6 +19,7 @@ class gEditorialEntry extends gEditorialModuleCore
 			'_general' => array(
 				'shortcode_support',
 				'admin_ordering',
+				'admin_restrict',
 				'editor_button',
 				'comment_status',
 				// 'rewrite_prefix', // FIXME: working but needs prem link rewrites
@@ -144,8 +145,10 @@ class gEditorialEntry extends gEditorialModuleCore
 
 			} else if ( 'edit' == $screen->base ) {
 
-				add_action( 'restrict_manage_posts', array( $this, 'restrict_manage_posts' ) );
-				add_filter( 'parse_query', array( $this, 'parse_query' ) );
+				if ( $this->get_setting( 'admin_restrict', FALSE ) ) {
+					add_action( 'restrict_manage_posts', array( $this, 'restrict_manage_posts' ) );
+					add_filter( 'parse_query', array( $this, 'parse_query' ) );
+				}
 
 				if ( $this->get_setting( 'admin_ordering', TRUE ) )
 					add_action( 'pre_get_posts', array( $this, 'pre_get_posts' ) );
