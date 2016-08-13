@@ -112,8 +112,8 @@ class gEditorialMeta extends gEditorialModuleCore
 
 			if ( in_array( $post_type, $this->post_types() ) ) {
 
-				add_filter( 'manage_'.$post_type.'_posts_columns', array( $this, 'manage_posts_columns' ) );
-				add_filter( 'manage_'.$post_type.'_posts_custom_column', array( $this, 'custom_column'), 10, 2 );
+				add_filter( 'manage_posts_columns', array( $this, 'manage_posts_columns' ), 10, 2 );
+				add_action( 'manage_'.$post_type.'_posts_custom_column', array( $this, 'posts_custom_column'), 10, 2 );
 
 				add_action( 'save_post', array( $this, 'save_post' ), 10, 2 );
 				add_filter( 'geditorial_meta_sanitize_post_meta', array( $this, 'sanitize_post_meta' ), 10, 4 );
@@ -195,8 +195,8 @@ class gEditorialMeta extends gEditorialModuleCore
 
 			} else if ( 'edit' == $screen->base ) {
 
-				add_filter( 'manage_'.$screen->post_type.'_posts_columns', array( $this, 'manage_posts_columns' ) );
-				add_filter( 'manage_'.$screen->post_type.'_posts_custom_column', array( $this, 'custom_column'), 10, 2 );
+				add_filter( 'manage_posts_columns', array( $this, 'manage_posts_columns' ), 10, 2 );
+				add_action( 'manage_'.$screen->post_type.'_posts_custom_column', array( $this, 'posts_custom_column'), 10, 2 );
 
 				add_action( 'quick_edit_custom_box', array( $this, 'quick_edit_custom_box' ), 10, 2 );
 			}
@@ -315,7 +315,7 @@ class gEditorialMeta extends gEditorialModuleCore
 	public function sanitize_post_meta( $postmeta, $fields, $post_id, $post_type )
 	{
 		global $post;
-		
+
 		if ( ! current_user_can( $post->cap->edit_post, $post_id ) )
 			return $postmeta;
 
@@ -510,85 +510,69 @@ class gEditorialMeta extends gEditorialModuleCore
 		return $postmeta;
 	}
 
-	public function manage_posts_columns( $posts_columns )
+	public function manage_posts_columns( $posts_columns, $post_type )
 	{
-		$new_columns = array();
-		$post_type   = gEditorialHelper::getCurrentPostType();
-		$fields      = $this->post_type_fields( $post_type );
+		$fields = $this->post_type_fields( $post_type );
+
+		if ( ! in_array( 'ot', $fields )
+			&& ! in_array( 'st', $fields )
+			&& ! in_array( 'as', $fields ) )
+				return $posts_columns;
+
+		$new = array();
 
 		foreach ( $posts_columns as $key => $value ) {
 
-			if ( $key == 'author' ) {
-				if ( in_array( 'as', $fields ) && self::user_can( 'view', 'as' ) ) {
-					$new_columns['geditorial-meta-author'] = $this->get_column_title( 'author', $post_type );
-				} else {
-					$new_columns[$key] = $value;
-				}
-			} else {
-				$new_columns[$key] = $value;
-			}
+			$new[$key] = $value;
 
 			if ( $key == 'title' )
-				if ( ( in_array( 'ot', $fields ) && self::user_can( 'view', 'ot' ) )
-					|| ( in_array( 'st', $fields ) && self::user_can( 'view', 'st' ) ) )
-						$new_columns['geditorial-meta-column'] = $this->get_column_title( 'meta', $post_type );
+				$new['geditorial-meta'] = $this->get_column_title( 'meta', $post_type );
 		}
 
-		return $new_columns;
+		return $new;
 	}
 
-	public function custom_column( $column_name, $post_id )
+	public function posts_custom_column( $column_name, $post_id )
 	{
+		if ( 'geditorial-meta' != $column_name )
+			return;
+
 		global $post;
 
 		$fields = $this->post_type_fields( $post->post_type );
 
-		switch ( $column_name ) {
+		$rows = array(
+			'ot' => 'arrow-up-alt2',
+			'st' => 'arrow-down-alt2',
+			'as' => 'admin-users',
+		);
 
-			case 'author' :
-			case 'gpeople' :
-			case 'geditorial-meta-author' :
+		echo '<div class="geditorial-admin-wrap-column -meta">';
 
-				if ( in_array( 'as', $fields ) && self::user_can( 'view', 'as' )  ) {
-					$as = $this->get_postmeta( $post->ID, 'as', '' );
-					echo '<small>'.$as.'</small>';
-					echo '<div class="hidden geditorial-meta-as-value">'.$as.'</div>';
-				}
+		foreach ( $rows as $field => $icon ) {
 
-				if ( 'author' != $column_name && 'gpeople' != $column_name ) {
-					if ( isset( $as ) ) echo ' &mdash; ';
-					printf( '<small><a href="%s">%s</a></small>',
-						esc_url( add_query_arg( array(
-							'post_type' => $post->post_type,
-							'author' => get_the_author_meta( 'ID' )
-						), 'edit.php' ) ),
-						get_the_author()
-					);
-				}
+			if ( in_array( $field, $fields )
+				&& self::user_can( 'view', $field ) ) {
 
-			break;
-			case 'geditorial-meta-column' :
+				if ( $value = $this->get_postmeta( $post_id, $field, '' ) )
+					echo '<div class="-row meta-'.$field.'" title="'.
+						esc_attr( $this->get_string( $field, $post->post_type, 'titles', $field ) )
+						.'"><span class="-icon"><span class="dashicons dashicons-'.$icon.'"></span></span>'
+						.$value.'</div>';
 
-				if ( in_array( 'ot', $fields ) && self::user_can( 'view', 'ot' ) ) {
-					echo $ot = $this->get_postmeta( $post->ID, 'ot', '' );
-					echo '<div class="hidden geditorial-meta-ot-value">'.$ot.'</div>';
-				}
-
-				if ( in_array( 'st', $fields ) && self::user_can( 'view', 'st' ) )  {
-					if ( isset( $ot ) ) echo '<br />';
-					echo $st = $this->get_postmeta( $post->ID, 'st', '' );
-					echo '<div class="hidden geditorial-meta-st-value">'.$st.'</div>';
-				}
+				echo '<div class="hidden geditorial-meta-'.$field.'-value">'.$value.'</div>';
+			}
 		}
+
+		echo '</div>';
 	}
 
-	public function quick_edit_custom_box( $column_name, $screen )
+	public function quick_edit_custom_box( $column_name, $post_type )
 	{
-		if ( $column_name != 'geditorial-meta-column' )
+		if ( 'geditorial-meta' != $column_name )
 			return FALSE;
 
-		$post_type = gEditorialHelper::getCurrentPostType();
-		$fields    = $this->post_type_fields( $post_type );
+		$fields = $this->post_type_fields( $post_type );
 
 		foreach ( array( 'ot', 'st', 'as' ) as $field ) {
 			if ( in_array( $field, $fields ) && self::user_can( 'edit', $field )  ) {
@@ -600,7 +584,7 @@ class gEditorialMeta extends gEditorialModuleCore
 			}
 		}
 
-		wp_nonce_field( 'geditorial_meta_post_raw_old', '_geditorial_meta_post_raw_old' );
+		wp_nonce_field( 'geditorial_meta_post_raw', '_geditorial_meta_post_raw' );
 	}
 
 	public function tools_messages( $messages, $sub )
