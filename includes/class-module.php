@@ -826,8 +826,6 @@ class gEditorialModuleCore extends gEditorialBaseCore
 					$this->add_settings_field( $args );
 				}
 
-			// for pre internal custom options
-			// } else if ( is_callable( array( $this, 'register_settings_'.$section_suffix ) ) ) {
 			} else if ( method_exists( $this, 'register_settings_'.$section_suffix ) ) {
 				$title = $section_suffix == $fields ? NULL : $fields;
 				call_user_func_array( array( $this, 'register_settings_'.$section_suffix ), array( $title ) );
@@ -1814,50 +1812,6 @@ class gEditorialModuleCore extends gEditorialBaseCore
 
 			printf( '<span title="%s" class="column-term-empty">&mdash;</span>', $title_attr );
 		}
-	}
-
-	public function set_postmeta_field_string( &$postmeta, $field, $prefix = 'geditorial-meta-' )
-	{
-		self::__dep();
-
-		if ( isset( $_POST[$prefix.$field] ) && strlen( $_POST[$prefix.$field] ) > 0 )
-			$postmeta[$field] = $this->kses( $_POST[$prefix.$field] );
-
-		else if ( isset( $postmeta[$field] ) && isset( $_POST[$prefix.$field] ) )
-			unset( $postmeta[$field] );
-	}
-
-	public function set_postmeta_field_number( &$postmeta, $field, $prefix = 'geditorial-meta-' )
-	{
-		self::__dep();
-
-		if ( isset( $_POST[$prefix.$field] ) && strlen( $_POST[$prefix.$field] ) > 0 )
-			$postmeta[$field] = $this->intval( $_POST[$prefix.$field] );
-
-		else if ( isset( $postmeta[$field] ) && isset( $_POST[$prefix.$field] ) )
-			unset( $postmeta[$field] );
-	}
-
-	public function set_postmeta_field_url( &$postmeta, $field, $prefix = 'geditorial-meta-' )
-	{
-		self::__dep();
-
-		if ( isset( $_POST[$prefix.$field] ) && strlen( $_POST[$prefix.$field] ) > 0 )
-			$postmeta[$field] = esc_url( $_POST[$prefix.$field] );
-
-		else if ( isset( $postmeta[$field] ) && isset( $_POST[$prefix.$field] ) )
-			unset( $postmeta[$field] );
-	}
-
-	public function set_postmeta_field_term( $post_id, $field, $constant_key, $prefix = 'geditorial-meta-' )
-	{
-		self::__dep();
-
-		if ( isset( $_POST[$prefix.$field] ) && '0' != $_POST[$prefix.$field] )
-			wp_set_object_terms( $post_id, intval( $_POST[$prefix.$field] ), $this->constant( $constant_key ), FALSE );
-
-		else if ( isset( $_POST[$prefix.$field] ) && '0' == $_POST[$prefix.$field] )
-			wp_set_object_terms( $post_id, NULL, $this->constant( $constant_key ), FALSE );
 	}
 
 	// @SEE: https://github.com/scribu/wp-posts-to-posts/wiki/Connection-information
