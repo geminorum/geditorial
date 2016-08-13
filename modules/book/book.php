@@ -313,7 +313,7 @@ class gEditorialBook extends gEditorialModuleCore
 			$this->insert_default_terms( 'size_tax' );
 
 		parent::register_settings( $page );
-		$this->register_settings_button( 'install_def_size_tax', __( 'Install Default Sizes', GEDITORIAL_TEXTDOMAIN ) );
+		$this->register_settings_button( 'install_def_size_tax', _x( 'Install Default Sizes', 'Book Module', GEDITORIAL_TEXTDOMAIN ) );
 	}
 
 	public function gpeople_support( $post_types )
@@ -442,8 +442,9 @@ class gEditorialBook extends gEditorialModuleCore
 
 		$post = get_post();
 
-		if ( ! in_array( $post->post_type, $this->post_types() ) )
-			return;
+		if ( $post->post_type != $this->constant( 'publication_cpt' )
+			&& ! in_array( $post->post_type, $this->post_types() ) )
+				return;
 
 		$connected = new WP_Query( array(
 		    'connected_type'  => $this->constant( 'publication_cpt_p2p' ),
@@ -451,7 +452,7 @@ class gEditorialBook extends gEditorialModuleCore
 		) );
 
 		if ( $connected->have_posts() ) {
-			echo '<div class="geditorial-wrap book -p2p -'.$this->get_setting( 'insert_content', 'none' ).'"><ul>';
+			echo '<div class="geditorial-wrap -book -p2p -'.$this->get_setting( 'insert_content', 'none' ).'"><ul>';
 
 			while ( $connected->have_posts() ) {
 				$connected->the_post();
