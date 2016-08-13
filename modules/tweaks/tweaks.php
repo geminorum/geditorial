@@ -153,8 +153,12 @@ class gEditorialTweaks extends gEditorialModuleCore
 				if ( $this->get_setting( 'group_taxonomies', FALSE ) ) {
 
 					add_filter( 'manage_taxonomies_for_'.$screen->post_type.'_columns', array( $this, 'manage_taxonomies_columns'), 10, 2 );
-					add_filter( 'manage_'.$screen->post_type.'_posts_columns', array( $this, 'manage_posts_columns' ), 1 );
-					add_filter( 'manage_'.$screen->post_type.'_posts_custom_column', array( $this, 'custom_column'), 10, 2 );
+
+					add_filter( 'manage_'.$screen->post_type.'_posts_columns', array( $this, 'manage_posts_columns' ), 1, 1 );
+					add_action( 'manage_'.$screen->post_type.'_posts_custom_column', array( $this, 'posts_custom_column'), 10, 2 );
+
+					// add_filter( 'manage_'.$screen->post_type.'_posts_columns', array( $this, 'manage_posts_columns_late' ), 999, 1 );
+					// add_filter( 'list_table_primary_column', array( $this, 'list_table_primary_column' ), 10, 2 );
 				}
 			}
 		}
@@ -186,12 +190,7 @@ class gEditorialTweaks extends gEditorialModuleCore
 					$added = TRUE;
 			}
 
-			// FIXME: working but messing up others!
-			// FIXME: must add to sortable too
-			// if ( 'title' == $key )
-			// 	$new['geditorial-tweaks-title'] = $this->get_string( 'title_column_title', $type, 'misc' );
-			// else
-				$new[$key] = $value;
+			$new[$key] = $value;
 		}
 
 		if ( ! $added )
@@ -200,7 +199,28 @@ class gEditorialTweaks extends gEditorialModuleCore
 		return $new;
 	}
 
-	public function custom_column( $column_name, $post_id )
+	// FIXME: must add to sortable too
+	public function manage_posts_columns_late( $posts_columns )
+	{
+		$new = array();
+
+		foreach ( $posts_columns as $key => $value )
+
+			if ( 'title' == $key )
+				$new['geditorial-tweaks-title'] = $this->get_string( 'title_column_title', self::getCurrentPostType( 'post' ), 'misc' );
+
+			else
+				$new[$key] = $value;
+
+		return $new;
+	}
+
+	public function list_table_primary_column( $default, $screen_id )
+	{
+		return 'geditorial-tweaks-title';
+	}
+
+	public function posts_custom_column( $column_name, $post_id )
 	{
 		global $post, $wp_list_table;
 
@@ -210,15 +230,15 @@ class gEditorialTweaks extends gEditorialModuleCore
 			case 'geditorial-tweaks-title' :
 
 				// TODO: add before action
-				echo $wp_list_table->column_title( $post );
+				$wp_list_table->column_title( $post );
 				// TODO: add after action
 				// TODO: must hook to 'the_excerpt' for before excerpt
-				echo $wp_list_table->handle_row_actions( $post, 'title', $wp_list_table->get_primary_column_name() );
+				// echo $wp_list_table->handle_row_actions( $post, 'title', $wp_list_table->get_primary_column_name() );
 
 			break;
 			case 'geditorial-tweaks-group_taxes' :
 
-				echo '<div class="geditorial-admin-wrap-column tweaks">';
+				echo '<div class="geditorial-admin-wrap-column -tweaks">';
 
 				$taxonomies = get_object_taxonomies( $post->post_type );
 
@@ -227,13 +247,13 @@ class gEditorialTweaks extends gEditorialModuleCore
 					if ( ! in_array( $taxonomy, $taxonomies ) )
 						continue;
 
-					$before = '<div class="tweaks-row tweaks-'.$taxonomy.'">';
+					$before = '<div class="-row tweaks-'.$taxonomy.'">';
 
 					if ( $dashicon = $this->get_string( 'dashicon', $taxonomy, 'taxonomies', 'tag' ) )
 						$before .= self::html( 'a', array(
 							'href'   => self::getEditTaxLink( $taxonomy ),
 							'title'  => $this->get_string( 'title_attr', $taxonomy, 'taxonomies', $taxonomy ),
-							'class'  => '-edit',
+							'class'  => array( '-icon', '-link' ),
 							'target' => '_blank',
 						), '<span class="dashicons dashicons-'.$dashicon.'"></span>' );
 
@@ -251,8 +271,8 @@ class gEditorialTweaks extends gEditorialModuleCore
 
 						$edit = current_user_can( 'edit_post', $post_id );
 
-						echo '<div class="tweaks-row tweaks-revision-count">';
-							echo '<span class="dashicons dashicons-backup"></span> ';
+						echo '<div class="-row tweaks-revision-count">';
+							echo '<span class="-icon"><span class="dashicons dashicons-backup"></span></span>';
 							echo self::html( ( $edit ? 'a' : 'span' ), array(
 								'href'  => $edit ? add_query_arg( array( 'revision' => key( $revisions ) ), admin_url( 'revision.php' ) ) : FALSE,
 								'title' => $edit ? _x( 'View the last revision', 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ) : FALSE,
