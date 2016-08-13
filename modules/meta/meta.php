@@ -314,6 +314,8 @@ class gEditorialMeta extends gEditorialModuleCore
 
 	public function sanitize_post_meta( $postmeta, $fields, $post_id, $post_type )
 	{
+		global $post;
+		
 		if ( ! current_user_can( $post->cap->edit_post, $post_id ) )
 			return $postmeta;
 
