@@ -274,7 +274,7 @@ class gEditorialTweaks extends gEditorialModuleCore
 						echo '<div class="-row tweaks-revision-count">';
 							echo '<span class="-icon"><span class="dashicons dashicons-backup"></span></span>';
 							echo self::html( ( $edit ? 'a' : 'span' ), array(
-								'href'  => $edit ? add_query_arg( array( 'revision' => key( $revisions ) ), admin_url( 'revision.php' ) ) : FALSE,
+								'href'  => $edit ? get_edit_post_link( key( $revisions ) ) : FALSE,
 								'title' => $edit ? _x( 'View the last revision', 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ) : FALSE,
 							), sprintf( _nx( '%s Revision', '%s Revisions', $count, 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ), number_format_i18n( $count ) ) );
 						echo '</div>';
