@@ -269,7 +269,7 @@ class gEditorialTweaks extends gEditorialModuleCore
 
 					if ( $count ) {
 
-						$edit = current_user_can( 'edit_post', $post_id );
+						$edit = current_user_can( 'edit_post', key( $revisions ) );
 
 						echo '<div class="-row tweaks-revision-count">';
 							echo '<span class="-icon"><span class="dashicons dashicons-backup"></span></span>';
