@@ -55,10 +55,10 @@ class gEditorialSeries extends gEditorialModuleCore
 			),
 			'misc' => array(
 				'post' => array(
-					'meta_box_title'  => _x( 'Series', 'Series Module', GEDITORIAL_TEXTDOMAIN ),
-					'meta_box_action' => _x( 'Management', 'Series Module', GEDITORIAL_TEXTDOMAIN ),
-					'column_title'    => _x( 'Series', 'Series Module', GEDITORIAL_TEXTDOMAIN ),
-					'select_series'   => _x( '&mdash; Choose a Series &mdash;', 'Series Module', GEDITORIAL_TEXTDOMAIN ),
+					'meta_box_title'   => _x( 'Series', 'Series Module', GEDITORIAL_TEXTDOMAIN ),
+					'meta_box_action'  => _x( 'Management', 'Series Module', GEDITORIAL_TEXTDOMAIN ),
+					'column_title'     => _x( 'Series', 'Series Module', GEDITORIAL_TEXTDOMAIN ),
+					'show_option_none' => _x( '&mdash; Choose a Series &mdash;', 'Series Module', GEDITORIAL_TEXTDOMAIN ),
 				),
 			),
 			'labels' => array(
@@ -233,7 +233,7 @@ class gEditorialSeries extends gEditorialModuleCore
 			$dropdowns[$i] = wp_dropdown_categories( array(
 				'taxonomy'         => $this->constant( 'series_tax' ),
 				'selected'         => $the_term->term_id,
-				'show_option_none' => $this->get_string( 'select_series', 'post', 'misc' ),
+				'show_option_none' => $this->get_string( 'show_option_none', 'post', 'misc' ),
 				'name'             => 'geditorial-series-terms['.$i.']',
 				'id'               => 'geditorial_series_terms-'.$i,
 				'class'            => 'geditorial-admin-dropbown',
@@ -251,7 +251,7 @@ class gEditorialSeries extends gEditorialModuleCore
 			$dropdowns[0] = wp_dropdown_categories( array(
 				'taxonomy'         => $this->constant( 'series_tax' ),
 				'selected'         => 0,
-				'show_option_none' => $this->get_string( 'select_series', 'post', 'misc' ),
+				'show_option_none' => $this->get_string( 'show_option_none', 'post', 'misc' ),
 				'name'             => 'geditorial-series-terms[0]',
 				'id'               => 'geditorial_series_terms-0',
 				'class'            => 'geditorial-admin-dropbown',

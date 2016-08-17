@@ -355,7 +355,7 @@ class gEditorialWidgetCore extends WP_Widget
 			'name'             => $this->get_field_name( $field ),
 			'id'               => $this->get_field_id( $field ),
 			'class'            => 'widefat',
-			'show_option_none' => _x( '&mdash; Select &mdash;', 'Widget Core', GEDITORIAL_TEXTDOMAIN ),
+			'show_option_none' => gEditorialSettingsCore::showOptionNone(),
 			'sort_column'      => 'menu_order, post_title',
 			'echo'             => FALSE,
 		) );

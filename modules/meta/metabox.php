@@ -156,7 +156,7 @@ class gEditorialMetaMetaBox extends gEditorialMetaBox
 			wp_dropdown_categories( array(
 				'taxonomy'          => $tax,
 				'selected'          => self::theTerm( $tax, $post->ID ),
-				'show_option_none'  => sprintf( _x( '&mdash; Select %s &mdash;', 'Meta Module: Dropdown Select Option None', GEDITORIAL_TEXTDOMAIN ), $title ),
+				'show_option_none'  => gEditorialSettingsCore::showOptionNone( $title ),
 				'option_none_value' => '0',
 				'class'             => 'geditorial-admin-dropbown geditorial-meta-field-'.$field.( $ltr ? ' dropbown-ltr' : '' ),
 				'name'              => 'geditorial-meta-'.$field.( FALSE === $key ? '' : '['.$key.']' ),

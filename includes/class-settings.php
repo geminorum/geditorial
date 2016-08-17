@@ -3,6 +3,14 @@
 class gEditorialSettingsCore extends gEditorialBaseCore
 {
 
+	public static function showOptionNone( $string = NULL )
+	{
+		if ( $string )
+			return sprintf( _x( '&mdash; Select %s &mdash;', 'Settings: Dropdown Select Option None', GEDITORIAL_TEXTDOMAIN ), $string );
+
+		return _x( '&mdash; Select &mdash;', 'Settings: Dropdown Select Option None', GEDITORIAL_TEXTDOMAIN );
+	}
+
 	public static function getSetting_editor_button( $section )
 	{
 		return array(

@@ -1072,7 +1072,7 @@ class gEditorialModuleCore extends gEditorialBaseCore
 					'id'               => $id,
 					'class'            => $args['field_class'],
 					'exclude'          => implode( ',', $exclude ),
-					'show_option_none' => _x( '&mdash; Select Page &mdash;', 'Module Core: WP Dropdown Pages Option None', GEDITORIAL_TEXTDOMAIN ),
+					'show_option_none' => gEditorialSettingsCore::showOptionNone(),
 					'sort_column'      => 'menu_order',
 					'sort_order'       => 'asc',
 					'post_status'      => 'publish,private,draft',
@@ -1471,7 +1471,7 @@ class gEditorialModuleCore extends gEditorialBaseCore
 			wp_dropdown_categories( array(
 				'taxonomy'          => $tax,
 				'selected'          => $selected,
-				'show_option_none'  => sprintf( _x( '&mdash; Select %s &mdash;', 'Module Core: MetaBox Tax Dropdown: Select Option None', GEDITORIAL_TEXTDOMAIN ), $obj->labels->menu_name ),
+				'show_option_none'  => gEditorialSettingsCore::showOptionNone( $obj->labels->menu_name ),
 				'option_none_value' => '0',
 				'class'             => 'geditorial-admin-dropbown',
 				'name'              => 'geditorial-'.$this->module->name.'-'.$tax.( FALSE === $key ? '' : '['.$key.']' ),

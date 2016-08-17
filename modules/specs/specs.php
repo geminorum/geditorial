@@ -52,9 +52,9 @@ class gEditorialSpecs extends gEditorialModuleCore
 			),
 			'misc' => array(
 				'post' => array(
-					'meta_box_title' => _x( 'Specifications', 'Specs Module', GEDITORIAL_TEXTDOMAIN ),
-					'column_title'   => _x( 'Specifications', 'Specs Module', GEDITORIAL_TEXTDOMAIN ),
-					'select_specs'   => _x( '&mdash; Choose a Specification &mdash;', 'Specs Module', GEDITORIAL_TEXTDOMAIN ),
+					'meta_box_title'   => _x( 'Specifications', 'Specs Module', GEDITORIAL_TEXTDOMAIN ),
+					'column_title'     => _x( 'Specifications', 'Specs Module', GEDITORIAL_TEXTDOMAIN ),
+					'show_option_none' => _x( '&mdash; Choose a Specification &mdash;', 'Specs Module', GEDITORIAL_TEXTDOMAIN ),
 				),
 			),
 			'noops' => array(
@@ -317,7 +317,7 @@ class gEditorialSpecs extends gEditorialModuleCore
 			wp_dropdown_categories( array(
 				'taxonomy'         => $this->constant( 'specs_tax' ),
 				'selected'         => ( isset( $meta['spec_term_id'] ) ? $the_terms[$meta['spec_term_id']]->term_id : 0 ),
-				'show_option_none' => $this->get_string( 'select_specs', $post->post_type, 'misc' ),
+				'show_option_none' => $this->get_string( 'show_option_none', $post->post_type, 'misc' ),
 				'name'             => 'geditorial-specs_term_id[]',
 				// 'id'               => 'geditorial-specs-terms-'.$order,
 				'class'            => 'geditorial-admin-dropbown item-dropdown',
@@ -346,7 +346,7 @@ class gEditorialSpecs extends gEditorialModuleCore
 				wp_dropdown_categories( array(
 					'taxonomy'         => $this->constant( 'specs_tax' ),
 					'selected'         => 0,
-					'show_option_none' => $this->get_string( 'select_specs', $post->post_type, 'misc' ),
+					'show_option_none' => $this->get_string( 'show_option_none', $post->post_type, 'misc' ),
 					'name'             => 'geditorial-specs_term_id[]',
 					// 'id'               => 'geditorial-specs-terms--1',
 					'id'               => FALSE,
