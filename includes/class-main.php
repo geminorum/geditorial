@@ -99,14 +99,14 @@ class gEditorial
 			return FALSE;
 
 		$defaults = array(
-            'class'     => gEditorialHelper::moduleClass( $args['name'], FALSE ),
-            'group'     => $this->group.$args['name'],
-            'settings'  => 'geditorial-settings-'.$args['name'],
-            'dashicon'  => 'smiley', // dashicon class
+			'class'     => gEditorialHelper::moduleClass( $args['name'], FALSE ),
+			'group'     => $this->group.$args['name'],
+			'settings'  => 'geditorial-settings-'.$args['name'],
+			'dashicon'  => 'smiley', // dashicon class
 			'configure' => 'print_configure_view',
 			'defaults'  => array(),
 			'frontend'  => TRUE, // whether or not the module should be loaded on the frontend too
-            'autoload'  => FALSE, // autoloading a module will remove the ability to enable or disable it
+			'autoload'  => FALSE, // autoloading a module will remove the ability to enable or disable it
 		);
 
 		$this->modules->{$args['name']} = (object) array_merge( $defaults, $args );
@@ -258,8 +258,8 @@ class gEditorial
 				$upgraded[$mod_name] = delete_option( $key );
 
 			} else if ( $old ) {
-                $upgraded[$mod_name] = delete_option( $key );
-                $options[$mod_name]  = $old;
+				$upgraded[$mod_name] = delete_option( $key );
+				$options[$mod_name]  = $old;
 
 				$update = TRUE;
 			}

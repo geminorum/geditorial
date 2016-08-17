@@ -6,12 +6,12 @@ class gEditorialSettings extends gEditorialModuleCore
 	public static function module()
 	{
 		return array(
-            'name'      => 'settings',
-            'title'     => _x( 'Editorial', 'Settings Module', GEDITORIAL_TEXTDOMAIN ),
-            'desc'      => _x( 'WordPress, Magazine Style.', 'Settings Module', GEDITORIAL_TEXTDOMAIN ),
-            'settings'  => 'geditorial-settings',
-            'configure' => 'print_default_settings',
-            'autoload'  => TRUE,
+			'name'      => 'settings',
+			'title'     => _x( 'Editorial', 'Settings Module', GEDITORIAL_TEXTDOMAIN ),
+			'desc'      => _x( 'WordPress, Magazine Style.', 'Settings Module', GEDITORIAL_TEXTDOMAIN ),
+			'settings'  => 'geditorial-settings',
+			'configure' => 'print_default_settings',
+			'autoload'  => TRUE,
 		);
 	}
 
@@ -68,8 +68,8 @@ class gEditorialSettings extends gEditorialModuleCore
 
 	public function admin_tools_page()
 	{
-        $uri = gEditorialHelper::toolsURL( FALSE );
-        $sub = isset( $_GET['sub'] ) ? trim( $_GET['sub'] ) : 'general';
+		$uri = gEditorialHelper::toolsURL( FALSE );
+		$sub = isset( $_GET['sub'] ) ? trim( $_GET['sub'] ) : 'general';
 
 		$subs = apply_filters( 'geditorial_tools_subs', array(
 			'overview' => _x( 'Overview', 'Settings Module: Tools Sub', GEDITORIAL_TEXTDOMAIN ),

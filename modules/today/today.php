@@ -516,52 +516,52 @@ class gEditorialToday extends gEditorialModuleCore
 
 	public function pre_get_posts_temp( &$query )
 	{
-	    // We want to act only on frontend and only main query
-	    if ( is_admin() || ! $query->is_main_query() )
-	          return;
+		// We want to act only on frontend and only main query
+		if ( is_admin() || ! $query->is_main_query() )
+			return;
 
-	    // A map from the timespan string to actual hours array
-	    $hours = array(
-	        'morning'   => range(6, 11),
-	        'afternoon' => range(12, 17),
-	        'evening'   => range(18, 23),
-	        'night'     => range(0, 5)
-	    );
+		// A map from the timespan string to actual hours array
+		$hours = array(
+			'morning'   => range(6, 11),
+			'afternoon' => range(12, 17),
+			'evening'   => range(18, 23),
+			'night'     => range(0, 5)
+		);
 
-	    // Get the custom vars, if available
-	    $customdate = $query->get('customdate');
-	    $timespan = $query->get('timespan');
+		// Get the custom vars, if available
+		$customdate = $query->get('customdate');
+		$timespan = $query->get('timespan');
 
-	    // If the vars are not set, this is not a query we're interested in
-	    if (!$customdate || !$timespan) {
-	        return;
-	    }
+		// If the vars are not set, this is not a query we're interested in
+		if (!$customdate || !$timespan) {
+			return;
+		}
 
-	    // Get UNIX timestamp from the query var
-	    $timestamp = strtotime($customdate);
+		// Get UNIX timestamp from the query var
+		$timestamp = strtotime($customdate);
 
-	    // Do nothing if have the wrong values
-	    if (!$timestamp || !isset($hours[$timespan])) {
-	        return;
-	    }
+		// Do nothing if have the wrong values
+		if (!$timestamp || !isset($hours[$timespan])) {
+			return;
+		}
 
-	    // Reset query variables, because `WP_Query` does nothing with
-	    // 'customdate' or 'timespan', so it's better remove them
-	    $query->init();
+		// Reset query variables, because `WP_Query` does nothing with
+		// 'customdate' or 'timespan', so it's better remove them
+		$query->init();
 
-	    // Set date query based on custom vars
-	    $query->set('date_query', array(
+		// Set date query based on custom vars
+		$query->set('date_query', array(
 			array(
-	            'year'  => date('Y', $timestamp),
-	            'month' => date('m', $timestamp),
-	            'day'   => date('d', $timestamp)
-	        ),
-	        array(
-	            'hour'    => $hours[$timespan],
-	            'compare' => 'IN'
-	        ),
-	        'relation' => 'AND'
-	    ));
+				'year'  => date('Y', $timestamp),
+				'month' => date('m', $timestamp),
+				'day'   => date('d', $timestamp)
+			),
+			array(
+				'hour'    => $hours[$timespan],
+				'compare' => 'IN'
+			),
+				'relation' => 'AND'
+			) );
 	}
 
 	public function post_type_link( $post_link, $post, $leavename, $sample )
@@ -572,7 +572,7 @@ class gEditorialToday extends gEditorialModuleCore
 				$this->get_setting( 'calendar_type', 'gregorian' ),
 				$this->get_the_day_constants() );
 
-        	return home_url( implode( '/', $the_day ).'/' );
+			return home_url( implode( '/', $the_day ).'/' );
 		}
 
 		return $post_link;

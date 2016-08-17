@@ -280,6 +280,3 @@ class gEditorialLike extends gEditorialModuleCore
 		return $html;
 	}
 }
-
-// https://wordpress.org/plugins/wp-ulike/
-// https://github.com/tommcfarlin/ajax-notification/

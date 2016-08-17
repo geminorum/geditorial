@@ -17,12 +17,11 @@ class gEditorialBookTemplates extends gEditorialTemplateCore
 			'paged'          => $paged,
 			'posts_per_page' => '10',
 
-		    'tax_query' => array(
-		        array(
-		            'taxonomy' => 'resource_types',
-		            'field'    => 'slug',
-		            'terms'    => get_queried_object()->name,
-		    ) ),
+			'tax_query' => array( array(
+				'taxonomy' => 'resource_types',
+				'field'    => 'slug',
+				'terms'    => get_queried_object()->name,
+			) ),
 
 			'meta_query' => array(
 				'relation' => 'OR',

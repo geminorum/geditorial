@@ -62,7 +62,7 @@ class gEditorialWordPress extends gEditorialBaseCore
 		$totals = array_fill_keys( $post_types, 0 );
 
 		$post_types_in = implode( ',', array_map( function( $v ){
-		    return "'".esc_sql( $v )."'";
+			return "'".esc_sql( $v )."'";
 		}, $post_types ) );
 
 		$author = $user_id ? $wpdb->prepare( "AND posts.post_author = %d", $user_id ) : '';

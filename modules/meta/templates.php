@@ -7,7 +7,7 @@ class gEditorialMetaTemplates extends gEditorialTemplateCore
 	{
 		if ( is_array( $field ) )
 			return $field;
-			
+
 		$fields = array(
 			'over-title' => array( 'ot', 'over-title' ),
 			'sub-title'  => array( 'st', 'sub-title' ),
