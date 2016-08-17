@@ -44,7 +44,7 @@ class gEditorialContest extends gEditorialModuleCore
 		return array(
 			'misc' => array(
 				'contest_cpt' => array(
-					'meta_box_title'  => __( 'Metadata', GEDITORIAL_TEXTDOMAIN ),
+					'meta_box_title'  => _x( 'Metadata', 'Contest Module', GEDITORIAL_TEXTDOMAIN ),
 					'cover_box_title' => _x( 'Poster', 'Contest Module', GEDITORIAL_TEXTDOMAIN ),
 
 					'cover_column_title'    => _x( 'Poster', 'Contest Module: Column Title', GEDITORIAL_TEXTDOMAIN ),

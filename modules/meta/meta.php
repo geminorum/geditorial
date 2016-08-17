@@ -36,13 +36,13 @@ class gEditorialMeta extends gEditorialModuleCore
 		return array(
 			'titles' => array(
 				'post' => array(
-					'ot'          => __( 'OverTitle', GEDITORIAL_TEXTDOMAIN ),
-					'st'          => __( 'SubTitle', GEDITORIAL_TEXTDOMAIN ),
-					'as'          => __( 'Author', GEDITORIAL_TEXTDOMAIN ),
-					'le'          => __( 'Lead', GEDITORIAL_TEXTDOMAIN ),
-					'ch'          => __( 'Column Header', GEDITORIAL_TEXTDOMAIN ),
-					'ct'          => __( 'Column Header Taxonomy', GEDITORIAL_TEXTDOMAIN ),
-					'ch_override' => __( 'Column Header Override', GEDITORIAL_TEXTDOMAIN ),
+					'ot'          => _x( 'OverTitle', 'Meta Module: Titles', GEDITORIAL_TEXTDOMAIN ),
+					'st'          => _x( 'SubTitle', 'Meta Module: Titles', GEDITORIAL_TEXTDOMAIN ),
+					'as'          => _x( 'Author', 'Meta Module: Titles', GEDITORIAL_TEXTDOMAIN ),
+					'le'          => _x( 'Lead', 'Meta Module: Titles', GEDITORIAL_TEXTDOMAIN ),
+					'ch'          => _x( 'Column Header', 'Meta Module: Titles', GEDITORIAL_TEXTDOMAIN ),
+					'ct'          => _x( 'Column Header Taxonomy', 'Meta Module: Titles', GEDITORIAL_TEXTDOMAIN ),
+					'ch_override' => _x( 'Column Header Override', 'Meta Module: Titles', GEDITORIAL_TEXTDOMAIN ),
 
 					'source_title' => _x( 'Source Title', 'Meta Module: Titles', GEDITORIAL_TEXTDOMAIN ),
 					'source_url'   => _x( 'Source URL', 'Meta Module: Titles', GEDITORIAL_TEXTDOMAIN ),
@@ -50,13 +50,13 @@ class gEditorialMeta extends gEditorialModuleCore
 			),
 			'descriptions' => array(
 				'post' => array(
-					'ot'          => __( 'String to place over the post title', GEDITORIAL_TEXTDOMAIN ),
-					'st'          => __( 'String to place under the post title', GEDITORIAL_TEXTDOMAIN ),
-					'as'          => __( 'String to override the post author', GEDITORIAL_TEXTDOMAIN ),
-					'le'          => __( 'Editorial paragraph presented before post content', GEDITORIAL_TEXTDOMAIN ),
-					'ch'          => __( 'String to reperesent that the post is on a column or section', GEDITORIAL_TEXTDOMAIN ),
-					'ct'          => __( 'Taxonomy for better categorizing columns', GEDITORIAL_TEXTDOMAIN ),
-					'ch_override' => __( 'Column Header Override', GEDITORIAL_TEXTDOMAIN ),
+					'ot'          => _x( 'String to place over the post title', 'Meta Module: Descriptions', GEDITORIAL_TEXTDOMAIN ),
+					'st'          => _x( 'String to place under the post title', 'Meta Module: Descriptions', GEDITORIAL_TEXTDOMAIN ),
+					'as'          => _x( 'String to override the post author', 'Meta Module: Descriptions', GEDITORIAL_TEXTDOMAIN ),
+					'le'          => _x( 'Editorial paragraph presented before post content', 'Meta Module: Descriptions', GEDITORIAL_TEXTDOMAIN ),
+					'ch'          => _x( 'String to reperesent that the post is on a column or section', 'Meta Module: Descriptions', GEDITORIAL_TEXTDOMAIN ),
+					'ct'          => _x( 'Taxonomy for better categorizing columns', 'Meta Module: Descriptions', GEDITORIAL_TEXTDOMAIN ),
+					'ch_override' => _x( 'Column Header Override', 'Meta Module: Descriptions', GEDITORIAL_TEXTDOMAIN ),
 
 					'source_title' => _x( 'Original Title of Source Content', 'Meta Module: Descriptions', GEDITORIAL_TEXTDOMAIN ),
 					'source_url'   => _x( 'Full URL to the Source of the Content', 'Meta Module: Descriptions', GEDITORIAL_TEXTDOMAIN ),
@@ -594,11 +594,11 @@ class gEditorialMeta extends gEditorialModuleCore
 			if ( isset( $_REQUEST['field'] ) && $_REQUEST['field'] ) {
 				$field = $this->get_string( $_REQUEST['field'] );
 
-				$messages['converted'] = self::success( sprintf( __( 'Field %s Converted', GEDITORIAL_TEXTDOMAIN ), $field ) );
-				$messages['deleted']   = self::success( sprintf( __( 'Field %s Deleted', GEDITORIAL_TEXTDOMAIN ), $field ) );
+				$messages['converted'] = self::success( sprintf( _x( 'Field %s Converted', 'Meta Module: Tools Message', GEDITORIAL_TEXTDOMAIN ), $field ) );
+				$messages['deleted']   = self::success( sprintf( _x( 'Field %s Deleted', 'Meta Module: Tools Message', GEDITORIAL_TEXTDOMAIN ), $field ) );
 
 			} else {
-				$messages['converted'] = $messages['deleted'] = self::error( __( 'No Field', GEDITORIAL_TEXTDOMAIN ) );
+				$messages['converted'] = $messages['deleted'] = self::error( _x( 'No Field', 'Meta Module: Tools Message', GEDITORIAL_TEXTDOMAIN ) );
 			}
 		}
 
@@ -611,10 +611,10 @@ class gEditorialMeta extends gEditorialModuleCore
 
 			$this->tools_field_referer( $sub );
 
-			echo '<h3>'.__( 'Meta Tools', GEDITORIAL_TEXTDOMAIN ).'</h3>';
+			echo '<h3>'._x( 'Meta Tools', 'Meta Module', GEDITORIAL_TEXTDOMAIN ).'</h3>';
 			echo '<table class="form-table">';
 
-			echo '<tr><th scope="row">'.__( 'Import Custom Fields', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
+			echo '<tr><th scope="row">'._x( 'Import Custom Fields', 'Meta Module', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
 
 			if ( ! empty( $_POST ) && isset( $_POST['custom_fields_check'] ) ) {
 				if ( isset( $_POST[$this->module->group]['tools'] ) ) {
@@ -658,13 +658,13 @@ class gEditorialMeta extends gEditorialModuleCore
 
 			echo gEditorialHelper::html( 'p', array(
 				'class' => 'description',
-			), __( 'Check for Custom Fields and import them into Meta', GEDITORIAL_TEXTDOMAIN ) );
+			), _x( 'Check for Custom Fields and import them into Meta', 'Meta Module', GEDITORIAL_TEXTDOMAIN ) );
 
 			echo '<p class="submit">';
 
-				submit_button( __( 'Check', GEDITORIAL_TEXTDOMAIN ), 'secondary', 'custom_fields_check', FALSE, array( 'default' => 'default' ) ); echo '&nbsp;&nbsp;';
-				submit_button( __( 'Covert', GEDITORIAL_TEXTDOMAIN ), 'primary', 'custom_fields_convert', FALSE ); echo '&nbsp;&nbsp;';
-				submit_button( __( 'Delete', GEDITORIAL_TEXTDOMAIN ), 'secondary', 'custom_fields_delete', FALSE ); //echo '&nbsp;&nbsp;';
+				submit_button( _x( 'Check', 'Meta Module: Tools Button', GEDITORIAL_TEXTDOMAIN ), 'secondary', 'custom_fields_check', FALSE, array( 'default' => 'default' ) ); echo '&nbsp;&nbsp;';
+				submit_button( _x( 'Covert', 'Meta Module: Tools Button', GEDITORIAL_TEXTDOMAIN ), 'primary', 'custom_fields_convert', FALSE ); echo '&nbsp;&nbsp;';
+				submit_button( _x( 'Delete', 'Meta Module: Tools Button', GEDITORIAL_TEXTDOMAIN ), 'secondary', 'custom_fields_delete', FALSE ); //echo '&nbsp;&nbsp;';
 
 			echo '</p>';
 			echo '</td></tr>';
