@@ -162,6 +162,9 @@ class gEditorialMeta extends gEditorialModuleCore
 			$this->add_post_type_fields( $post_type, $this->fields[$post_cpt] );
 
 		$this->add_post_type_fields( $this->constant( 'page_cpt' ) );
+
+		if ( ! is_admin() )
+			add_action( 'gnetwork_themes_content_before', array( $this, 'content_before' ), 90 );
 	}
 
 	public function current_screen( $screen )
@@ -585,6 +588,19 @@ class gEditorialMeta extends gEditorialModuleCore
 		}
 
 		wp_nonce_field( 'geditorial_meta_post_raw', '_geditorial_meta_post_raw' );
+	}
+
+	public function content_before( $content, $posttypes = NULL )
+	{
+		if ( ! is_singular() )
+			return;
+
+		$post = get_post();
+
+		if ( ! in_array( $post->post_type, $this->post_types() ) )
+			return;
+
+		gEditorialMetaTemplates::gmeta_lead( '<div class="geditorial-wrap -meta -before entry-lead">', '</div>', 'wpautop' );
 	}
 
 	public function tools_messages( $messages, $sub )
