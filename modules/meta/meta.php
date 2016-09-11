@@ -592,15 +592,11 @@ class gEditorialMeta extends gEditorialModuleCore
 
 	public function content_before( $content, $posttypes = NULL )
 	{
-		if ( ! is_singular() )
-			return;
-
-		$post = get_post();
-
-		if ( ! in_array( $post->post_type, $this->post_types() ) )
-			return;
-
-		gEditorialMetaTemplates::gmeta_lead( '<div class="geditorial-wrap -meta -before entry-lead">', '</div>', 'wpautop' );
+		if ( is_singular( $this->post_types() )
+			&& in_the_loop() && is_main_query() )
+				gEditorialMetaTemplates::gmeta_lead(
+					'<div class="geditorial-wrap -meta -before entry-lead">',
+					'</div>', 'wpautop' );
 	}
 
 	public function tools_messages( $messages, $sub )

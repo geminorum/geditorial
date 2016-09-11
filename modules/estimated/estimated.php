@@ -93,13 +93,13 @@ class gEditorialEstimated extends gEditorialModuleCore
 
 	public function content_before( $content, $posttypes = NULL )
 	{
-		if ( ! is_singular() )
+		if ( ! is_singular( $this->post_types() ) )
+			return;
+
+		if ( ! in_the_loop() || ! is_main_query() )
 			return;
 
 		$post = get_post();
-
-		if ( ! in_array( $post->post_type, $this->post_types() ) )
-			return;
 
 		if ( ! $wordcount = get_post_meta( $post->ID, $this->meta_key, TRUE ) )
 			$wordcount = $this->get_post_wordcount( $post->ID, TRUE );
@@ -116,16 +116,16 @@ class gEditorialEstimated extends gEditorialModuleCore
 
 	public function the_content( $content )
 	{
-		if ( ! is_singular() )
-			return $content;
-
 		if ( $this->added )
 			return $content;
 
-		$post = get_post();
-
-		if ( ! in_array( $post->post_type, $this->post_types() ) )
+		if ( ! is_singular( $this->post_types() ) )
 			return $content;
+
+		if ( ! in_the_loop() || ! is_main_query() )
+			return $content;
+
+		$post = get_post();
 
 		if ( ! $wordcount = get_post_meta( $post->ID, $this->meta_key, TRUE ) )
 			$wordcount = $this->get_post_wordcount( $post->ID, TRUE );

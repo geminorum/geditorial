@@ -1849,13 +1849,13 @@ class gEditorialModuleCore extends gEditorialBaseCore
 	{
 		if ( FALSE !== $posttypes ) {
 
-			if ( ! is_singular() )
+			if ( ! in_the_loop() || ! is_main_query() )
 				return;
 
 			if ( is_null( $posttypes ) )
 				$posttypes = $this->post_types();
 
-			if ( ! in_array( gEditorialWordPress::currentPostType(), $posttypes ) )
+			if ( ! is_singular( $posttypes ) )
 				return;
 		}
 
@@ -1867,13 +1867,13 @@ class gEditorialModuleCore extends gEditorialBaseCore
 	{
 		if ( FALSE !== $posttypes ) {
 
-			if ( ! is_singular() )
+			if ( ! in_the_loop() || ! is_main_query() )
 				return;
 
 			if ( is_null( $posttypes ) )
 				$posttypes = $this->post_types();
 
-			if ( ! in_array( gEditorialWordPress::currentPostType(), $posttypes ) )
+			if ( ! is_singular( $posttypes ) )
 				return;
 		}
 
