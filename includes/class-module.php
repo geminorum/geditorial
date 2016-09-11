@@ -1238,7 +1238,7 @@ class gEditorialModuleCore extends gEditorialBaseCore
 
 		$args = self::recursiveParseArgs( $atts, array(
 			'labels'                => $this->get_taxonomy_labels( $constant_key ),
-			'update_count_callback' => array( 'gEditorialHelper', 'update_count_callback' ),
+			'update_count_callback' => array( 'gEditorialWordPress', 'updateCountCallback' ),
 			// FIXME: meta_box_cb default must be FALSE / check every module before!
 			'meta_box_cb'           => method_exists( $this, 'meta_box_cb_'.$constant_key ) ? array( $this, 'meta_box_cb_'.$constant_key ) : NULL,
 			'hierarchical'          => FALSE,
@@ -1640,7 +1640,7 @@ class gEditorialModuleCore extends gEditorialBaseCore
 
 	public function is_current_posttype( $constant_key )
 	{
-		return self::getCurrentPostType() == $this->constant( $constant_key );
+		return gEditorialWordPress::currentPostType() == $this->constant( $constant_key );
 	}
 
 	public function is_save_post( $post, $constant_key = FALSE )
@@ -1839,16 +1839,17 @@ class gEditorialModuleCore extends gEditorialBaseCore
 
 	public function content_before( $content, $posttypes = NULL )
 	{
-		if ( ! is_singular() )
-			return;
+		if ( FALSE !== $posttypes ) {
 
-		$post = get_post();
+			if ( ! is_singular() )
+				return;
 
-		if ( is_null( $posttypes ) )
-			$posttypes = $this->post_types();
+			if ( is_null( $posttypes ) )
+				$posttypes = $this->post_types();
 
-		if ( ! in_array( $post->post_type, $posttypes ) )
-			return;
+			if ( ! in_array( gEditorialWordPress::currentPostType(), $posttypes ) )
+				return;
+		}
 
 		if ( $before = $this->get_setting( 'before_content', FALSE ) )
 			echo '<div class="geditorial-wrap '.$this->module->name.' -before">'.$before.'</div>';
@@ -1861,12 +1862,10 @@ class gEditorialModuleCore extends gEditorialBaseCore
 			if ( ! is_singular() )
 				return;
 
-			$post = get_post();
-
 			if ( is_null( $posttypes ) )
 				$posttypes = $this->post_types();
 
-			if ( ! in_array( $post->post_type, $posttypes ) )
+			if ( ! in_array( gEditorialWordPress::currentPostType(), $posttypes ) )
 				return;
 		}
 

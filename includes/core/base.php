@@ -639,41 +639,6 @@ class gEditorialBaseCore
 		return self::notice( sprintf( $message, number_format_i18n( $count ) ), $class.' fade', FALSE );
 	}
 
-	public static function getCurrentPostType( $default = NULL )
-	{
-		global $post, $typenow, $pagenow, $current_screen;
-
-		if ( $post && $post->post_type )
-			return $post->post_type;
-
-		if ( $typenow )
-			return $typenow;
-
-		if ( $current_screen && isset( $current_screen->post_type ) )
-			return $current_screen->post_type;
-
-		if ( isset( $_REQUEST['post_type'] ) )
-			return sanitize_key( $_REQUEST['post_type'] );
-
-		return $default;
-	}
-
-	public static function update_count_callback( $terms, $taxonomy )
-	{
-		global $wpdb;
-
-		foreach ( (array) $terms as $term ) {
-
-			$count = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM $wpdb->term_relationships WHERE term_taxonomy_id = %d", $term ) );
-
-			do_action( 'edit_term_taxonomy', $term, $taxonomy );
-
-			$wpdb->update( $wpdb->term_taxonomy, compact( 'count' ), array( 'term_taxonomy_id' => $term ) );
-
-			do_action( 'edited_term_taxonomy', $term, $taxonomy );
-		}
-	}
-
 	public static function getPostIDbySlug( $slug, $post_type, $url = FALSE )
 	{
 		global $wpdb;

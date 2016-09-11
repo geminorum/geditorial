@@ -178,7 +178,7 @@ class gEditorialTweaks extends gEditorialModuleCore
 			return $posts_columns;
 
 		$new   = array();
-		$type  = self::getCurrentPostType( 'post' );
+		$type  = gEditorialWordPress::currentPostType( 'post' );
 		$title = $this->get_string( 'group_taxes_column_title', $type, 'misc' );
 		$added = FALSE;
 
@@ -207,7 +207,7 @@ class gEditorialTweaks extends gEditorialModuleCore
 		foreach ( $posts_columns as $key => $value )
 
 			if ( 'title' == $key )
-				$new['geditorial-tweaks-title'] = $this->get_string( 'title_column_title', self::getCurrentPostType( 'post' ), 'misc' );
+				$new['geditorial-tweaks-title'] = $this->get_string( 'title_column_title', gEditorialWordPress::currentPostType( 'post' ), 'misc' );
 
 			else
 				$new[$key] = $value;
