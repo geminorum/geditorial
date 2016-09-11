@@ -1856,16 +1856,19 @@ class gEditorialModuleCore extends gEditorialBaseCore
 
 	public function content_after( $content, $posttypes = NULL )
 	{
-		if ( ! is_singular() )
-			return;
+		if ( FALSE !== $posttypes ) {
 
-		$post = get_post();
+			if ( ! is_singular() )
+				return;
 
-		if ( is_null( $posttypes ) )
-			$posttypes = $this->post_types();
+			$post = get_post();
 
-		if ( ! in_array( $post->post_type, $posttypes ) )
-			return;
+			if ( is_null( $posttypes ) )
+				$posttypes = $this->post_types();
+
+			if ( ! in_array( $post->post_type, $posttypes ) )
+				return;
+		}
 
 		if ( $after = $this->get_setting( 'after_content', FALSE ) )
 			echo '<div class="geditorial-wrap '.$this->module->name.' -after">'.$after.'</div>';
