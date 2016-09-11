@@ -2,6 +2,7 @@
 
 class gEditorialEntry extends gEditorialModuleCore
 {
+	private $terms = NULL;
 
 	public static function module()
 	{
@@ -22,6 +23,7 @@ class gEditorialEntry extends gEditorialModuleCore
 				'admin_restrict',
 				'editor_button',
 				'comment_status',
+				'autolink_terms',
 				// 'rewrite_prefix', // FIXME: working but needs prem link rewrites
 				'before_content',
 				'after_content',
@@ -121,6 +123,9 @@ class gEditorialEntry extends gEditorialModuleCore
 
 			if ( $this->get_setting( 'after_content', FALSE ) )
 				add_action( 'gnetwork_themes_content_after', array( $this, 'content_after' ), 1 );
+
+			if ( $this->get_setting( 'autolink_terms', FALSE ) )
+				add_filter( 'the_content', array( $this, 'the_content' ), 9 );
 		}
 
 		$this->register_shortcode( 'section_shortcode', array( 'gEditorialEntryTemplates', 'section_shortcode' ) );
@@ -278,5 +283,24 @@ class gEditorialEntry extends gEditorialModuleCore
 		if ( is_singular( $this->constant( 'entry_cpt' )
 			&& in_the_loop() && is_main_query() )
 				parent::content_after( $content, FALSE );
+	}
+
+	public function the_content( $content )
+	{
+		if ( is_singular( $this->constant( 'entry_cpt' ) )
+			&& in_the_loop()
+			&& is_main_query() ) {
+
+			if ( is_null( $this->terms ) )
+				$this->terms = gEditorialWordPress::prepareTerms( $this->constant( 'section_tax' ) );
+
+			foreach ( $this->terms as $term )
+				$content = preg_replace(
+					"|(?!<[^<>]*?)(?<![?./&])\b($term->name)\b(?!:)(?![^<>]*?>)|imsU",
+					"<a href=\"$term->link\" class=\"-entry-section\">$1</a>",
+				$content );
+		}
+
+		return $content;
 	}
 }
