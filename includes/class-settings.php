@@ -51,6 +51,17 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 		);
 	}
 
+	public static function getSetting_autolink_terms( $section )
+	{
+		return array(
+			'field'       => 'autolink_terms',
+			'title'       => _x( 'Autolink Terms', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+			'description' => _x( 'Trying to link the terms titles in the content.', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+			'default'     => '0',
+			'section'     => $section,
+		);
+	}
+
 	public static function getSetting_rewrite_prefix( $section )
 	{
 		return array(
