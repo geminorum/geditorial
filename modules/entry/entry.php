@@ -230,8 +230,7 @@ class gEditorialEntry extends gEditorialModuleCore
 
 	public function sortable_columns( $columns )
 	{
-		$columns['order'] = 'menu_order';
-		return $columns;
+		return array_merge( $columns, array( 'order' => 'menu_order' ) );
 	}
 
 	public function posts_custom_column( $column_name, $post_id )
@@ -250,8 +249,9 @@ class gEditorialEntry extends gEditorialModuleCore
 
 	public function post_updated_messages( $messages )
 	{
-		$messages[$this->constant( 'entry_cpt' )] = $this->get_post_updated_messages( 'entry_cpt' );
-		return $messages;
+		return array_merge( $messages, array(
+			$this->constant( 'entry_cpt' ) => $this->get_post_updated_messages( 'entry_cpt' ),
+		) );
 	}
 
 	public function generate_rewrite_rules( $wp_rewrite )
@@ -273,15 +273,15 @@ class gEditorialEntry extends gEditorialModuleCore
 
 	public function content_before( $content, $posttypes = NULL )
 	{
-		if ( is_singular( $this->constant( 'entry_cpt' )
-			&& in_the_loop() && is_main_query() ) )
+		if ( is_singular( $this->constant( 'entry_cpt' ) )
+			&& in_the_loop() && is_main_query() )
 				parent::content_before( $content, FALSE );
 	}
 
 	public function content_after( $content, $posttypes = NULL )
 	{
-		if ( is_singular( $this->constant( 'entry_cpt' )
-			&& in_the_loop() && is_main_query() ) )
+		if ( is_singular( $this->constant( 'entry_cpt' ) )
+			&& in_the_loop() && is_main_query() )
 				parent::content_after( $content, FALSE );
 	}
 
