@@ -1,5 +1,4 @@
 (function() {
-	'use strict';
 
 	var
 		gulp = require('gulp'),
@@ -52,7 +51,7 @@
 
 		return gulp.src('./assets/sass/**/*.scss')
 
-		.pipe(sourcemaps.init())
+		// .pipe(sourcemaps.init())
 
 		.pipe(sass().on('error', sass.logError))
 
@@ -64,7 +63,7 @@
 			}
 		}))
 
-		.pipe(sourcemaps.write('./maps'))
+		// .pipe(sourcemaps.write('./maps'))
 
 		.pipe(gulp.dest('./assets/css'));
 	});

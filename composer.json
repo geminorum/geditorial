@@ -1,13 +1,13 @@
 {
   "name": "geminorum/geditorial",
   "description": "Our Editorial in WordPress",
+  "license": "GPL-3+",
   "type": "wordpress-plugin",
   "keywords": [
     "editorial",
     "meta"
   ],
   "homepage": "http://geminorum.ir/wordpress/geditorial",
-  "license": "GPL-3+",
   "authors": [{
     "name": "Nasser Rafie",
     "email": "contact@geminorum.ir",
@@ -20,10 +20,11 @@
     "source": "http://geminorum.ir/wordpress/geditorial"
   },
   "require": {
-    "php": ">=5.3"
+    "php": ">=5.3",
+    "composer/installers": "^1.2"
   },
   "require-dev": {
-		"erusev/parsedown-extra": "^0.7.0",
+    "erusev/parsedown-extra": "^0.7.0",
     "mustache/mustache": "^2.5",
     "evert/sitemap-php": "^1.2",
     "eluceo/ical": "*",

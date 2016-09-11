@@ -504,11 +504,11 @@ class gEditorialToday extends gEditorialModuleCore
 
 		foreach ( $this->get_the_day_constants() as $field => $constant )
 			if ( $var = $wp_query->get( 'day_'.$field ) )
-		        $meta_query[] = array(
-		            'key'     => $constant,
-		            'value'   => $var,
-		            'compare' => '=',
-		        );
+				$meta_query[] = array(
+					'key'     => $constant,
+					'value'   => $var,
+					'compare' => '=',
+				);
 
 		if ( count( $meta_query ) )
 			$wp_query->set( 'meta_query', $meta_query );

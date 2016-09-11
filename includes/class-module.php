@@ -1834,8 +1834,8 @@ class gEditorialModuleCore extends gEditorialBaseCore
 			'to'           => $this->constant( $constant_key ),
 			'admin_column' => 'from',
 			'admin_box'    => array(
-			    'show'    => 'from',
-			    'context' => 'advanced',
+				'show'    => 'from',
+				'context' => 'advanced',
 			),
 		), $this->strings['p2p'][$constant_key] );
 
