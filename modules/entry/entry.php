@@ -274,14 +274,14 @@ class gEditorialEntry extends gEditorialModuleCore
 	public function content_before( $content, $posttypes = NULL )
 	{
 		if ( is_singular( $this->constant( 'entry_cpt' )
-			&& in_the_loop() && is_main_query() )
+			&& in_the_loop() && is_main_query() ) )
 				parent::content_before( $content, FALSE );
 	}
 
 	public function content_after( $content, $posttypes = NULL )
 	{
 		if ( is_singular( $this->constant( 'entry_cpt' )
-			&& in_the_loop() && is_main_query() )
+			&& in_the_loop() && is_main_query() ) )
 				parent::content_after( $content, FALSE );
 	}
 
