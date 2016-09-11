@@ -1167,11 +1167,19 @@ class gEditorialModuleCore extends gEditorialBaseCore
 		if ( ! empty( $this->strings['labels'][$constant_key] ) )
 			return $this->strings['labels'][$constant_key];
 
-		if ( ! empty( $this->strings['noops'][$constant_key] ) )
-			return gEditorialHelper::generatePostTypeLabels( $this->strings['noops'][$constant_key],
-				$this->get_string( 'featured', $constant_key, 'misc', FALSE ) );
+		$labels = array();
 
-		return array();
+		if ( $menu_name = $this->get_string( 'menu_name', $constant_key, 'misc', NULL ) )
+			$labels['menu_name'] = $menu_name;
+
+		if ( ! empty( $this->strings['noops'][$constant_key] ) )
+			return gEditorialHelper::generatePostTypeLabels(
+				$this->strings['noops'][$constant_key],
+				$this->get_string( 'featured', $constant_key, 'misc', NULL ),
+				$labels
+			);
+
+		return $labels;
 	}
 
 	public function register_post_type( $constant_key, $atts = array(), $taxonomies = NULL )
