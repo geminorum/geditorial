@@ -64,15 +64,11 @@ class gEditorialLike extends gEditorialModuleCore
 
 	public function template_redirect()
 	{
-		if ( ! is_singular() )
+		if ( ! is_singular( $this->post_types() ) )
 			return;
 
-		$post = get_queried_object();
+		$this->post_id = get_queried_object_id();
 
-		if ( ! in_array( $post->post_type, $this->post_types() ) )
-			return;
-
-		$this->post_id = $post->ID;
 		$this->enqueue_asset_js( TRUE );
 		$this->enqueue_styles();
 	}

@@ -437,18 +437,12 @@ class gEditorialBook extends gEditorialModuleCore
 
 	public function insert_content( $content, $posttypes = NULL )
 	{
-		if ( ! is_singular() )
+		if ( ! is_singular( $this->post_types( 'publication_cpt' ) ) )
 			return;
-
-		$post = get_post();
-
-		if ( $post->post_type != $this->constant( 'publication_cpt' )
-			&& ! in_array( $post->post_type, $this->post_types() ) )
-				return;
 
 		$connected = new WP_Query( array(
 			'connected_type'  => $this->constant( 'publication_cpt_p2p' ),
-			'connected_items' => $post,
+			'connected_items' => get_post(),
 		) );
 
 		if ( $connected->have_posts() ) {
