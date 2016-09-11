@@ -1,3 +1,4 @@
+.build
 .idea
 .sass-cache
 .gulp
@@ -5,8 +6,8 @@
 .temp
 
 /assets/bin
-/assets/components
 /assets/css/maps
+/assets/components
 /assets/views/cache
 /assets/packages/jquery
 /assets/vendor
@@ -16,5 +17,5 @@
 
 composer.lock
 npm-debug.log
-.ftpconfig
-.env
+
+environment.yml
