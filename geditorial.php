@@ -4,7 +4,7 @@ Plugin Name: gEditorial
 Plugin URI: http://geminorum.ir/wordpress/geditorial
 Description: Our Editorial in WordPress
 Version: 3.7.6
-License: GNU/GPL 2
+License: GPLv3+
 Author: geminorum
 Author URI: http://geminorum.ir/
 TextDomain: geditorial
