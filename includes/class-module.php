@@ -1860,7 +1860,8 @@ class gEditorialModuleCore extends gEditorialBaseCore
 		}
 
 		if ( $before = $this->get_setting( 'before_content', FALSE ) )
-			echo '<div class="geditorial-wrap '.$this->module->name.' -before">'.$before.'</div>';
+			echo '<div class="geditorial-wrap -'.$this->module->name.' -content-before">'
+				.do_shortcode( $before ).'</div>';
 	}
 
 	public function content_after( $content, $posttypes = NULL )
@@ -1878,7 +1879,8 @@ class gEditorialModuleCore extends gEditorialBaseCore
 		}
 
 		if ( $after = $this->get_setting( 'after_content', FALSE ) )
-			echo '<div class="geditorial-wrap '.$this->module->name.' -after">'.$after.'</div>';
+			echo '<div class="geditorial-wrap -'.$this->module->name.' -content-after">'
+				.do_shortcode( $after ).'</div>';
 	}
 
 	// DEFAULT FILTER
