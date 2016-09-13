@@ -123,6 +123,26 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 		);
 	}
 
+	public static function getSetting_insert_content_before( $section )
+	{
+		$args = self::getSetting_insert_content( $section );
+
+		$args['field'] = 'insert_content_before';
+		unset( $args['values'], $args['type'], $args['default'] );
+
+		return $args;
+	}
+
+	public static function getSetting_insert_content_after( $section )
+	{
+		$args = self::getSetting_insert_content( $section );
+
+		$args['field'] = 'insert_content_after';
+		unset( $args['values'], $args['type'], $args['default'] );
+
+		return $args;
+	}
+
 	public static function getSetting_before_content( $section )
 	{
 		return array(
