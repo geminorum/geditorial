@@ -511,19 +511,16 @@ class gEditorialBaseCore
 		if ( ! $post_thumbnail_id = get_post_thumbnail_id( $post_id ) )
 			return '';
 
-		$post_thumbnail_img = wp_get_attachment_image_src( $post_thumbnail_id, $size );
+		if ( ! $post_thumbnail_img = wp_get_attachment_image_src( $post_thumbnail_id, $size ) )
+			return '';
 
-		$image = self::html( 'img', array(
-			'src'   => $post_thumbnail_img[0],
-			'class' => 'column-cover-img',
-		) );
+		$image = self::html( 'img', array( 'src' => $post_thumbnail_img[0] ) );
 
 		if ( ! $link )
 			return $image;
 
 		return self::html( 'a', array(
 			'href'   => wp_get_attachment_url( $post_thumbnail_id ),
-			'class'  => 'column-cover-link',
 			'target' => '_blank',
 		), $image );
 	}

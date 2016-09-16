@@ -238,7 +238,7 @@ class gEditorialToday extends gEditorialModuleCore
 			$this->column_theday( $post_id );
 
 		else if ( 'cover' == $column_name )
-			$this->column_thumb( $post_id );
+			$this->column_thumb( $post_id, $this->get_image_size_key( 'day_cpt' ) );
 	}
 
 	public function sortable_columns( $columns )

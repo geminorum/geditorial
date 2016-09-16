@@ -1392,6 +1392,19 @@ class gEditorialModuleCore extends gEditorialBaseCore
 		return $this->image_sizes[$post_type];
 	}
 
+	public function get_image_size_key( $constant_key, $size = 'thumbnail' )
+	{
+		$post_type = $this->constant( $constant_key );
+
+		if ( isset( $this->image_sizes[$post_type][$post_type.'-'.$size] ) )
+			return $post_type.'-'.$size;
+
+		if ( isset( $this->image_sizes[$post_type]['post-'.$size] ) )
+			return 'post-'.$size;
+
+		return $size;
+	}
+
 	// use this on 'after_setup_theme'
 	public function register_post_type_thumbnail( $constant_key )
 	{

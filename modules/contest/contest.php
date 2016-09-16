@@ -605,7 +605,7 @@ class gEditorialContest extends gEditorialModuleCore
 			$this->column_count( get_post( $post_id )->menu_order );
 
 		else if ( 'cover' == $column_name )
-			$this->column_thumb( $post_id );
+			$this->column_thumb( $post_id, $this->get_image_size_key( 'contest_cpt' ) );
 	}
 
 	public function sortable_columns( $columns )

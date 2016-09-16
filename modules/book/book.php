@@ -426,7 +426,7 @@ class gEditorialBook extends gEditorialModuleCore
 	public function posts_custom_column( $column_name, $post_id )
 	{
 		if ( 'cover' == $column_name )
-			$this->column_thumb( $post_id );
+			$this->column_thumb( $post_id, $this->get_image_size_key( 'publication_cpt' ) );
 	}
 
 	public function post_updated_messages( $messages )
