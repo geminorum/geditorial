@@ -11,7 +11,7 @@ class gEditorialHelper extends gEditorialBaseCore
 	{
 		$class = '';
 
-		foreach ( explode( '-', $module ) as $word )
+		foreach ( explode( '-', str_replace( '_', '-', $module ) ) as $word )
 			$class .= ucfirst( $word ).'';
 
 		if ( $check && ! class_exists( $prefix.$class ) )
