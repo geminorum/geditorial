@@ -570,6 +570,23 @@ class gEditorialModuleCore extends gEditorialBaseCore
 				unset( $options['fields'] );
 		}
 
+		if ( isset( $options['settings'] ) ) {
+
+			foreach ( (array) $options['settings'] as $setting => $option ) {
+
+				// multiple checkboxes
+				if ( is_array( $option ) )
+					$options['settings'][$setting] = array_keys( $option );
+
+				// other options
+				else
+					$options['settings'][$setting] = trim( stripslashes( $option ) );
+			}
+
+			if ( ! count( $options['settings'] ) )
+				unset( $options['settings'] );
+		}
+
 		return $options;
 	}
 
@@ -987,7 +1004,7 @@ class gEditorialModuleCore extends gEditorialBaseCore
 						if ( in_array( $value_name, $exclude ) )
 							continue;
 
-						$html .= self::html( 'input', array(
+						$html = self::html( 'input', array(
 							'type'    => 'checkbox',
 							'class'   => $args['field_class'],
 							'name'    => $name.'['.$value_name.']',
