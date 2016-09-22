@@ -4,6 +4,7 @@ class gEditorialHelper extends gEditorialBaseCore
 {
 
 	const MODULE   = FALSE;
+	const REPORTS  = 'geditorial-reports';
 	const SETTINGS = 'geditorial-settings';
 	const TOOLS    = 'geditorial-tools';
 
@@ -192,6 +193,16 @@ class gEditorialHelper extends gEditorialBaseCore
 		return $output;
 	}
 
+	public static function reportsURL( $full = TRUE )
+	{
+		$relative = 'index.php?page='.self::REPORTS;
+
+		if ( $full )
+			return get_admin_url( NULL, $relative );
+
+		return $relative;
+	}
+
 	public static function settingsURL( $full = TRUE )
 	{
 		// $relative = current_user_can( 'manage_options' ) ? 'admin.php?page='.self::SETTINGS : 'index.php?page='.self::SETTINGS;
@@ -211,6 +222,18 @@ class gEditorialHelper extends gEditorialBaseCore
 			return get_admin_url( NULL, $relative );
 
 		return $relative;
+	}
+
+	public static function isReports( $screen = NULL )
+	{
+		if ( is_null( $screen ) )
+			$screen = get_current_screen();
+
+		if ( isset( $screen->base )
+			&& FALSE !== strripos( $screen->base, self::REPORTS ) )
+				return TRUE;
+
+		return FALSE;
 	}
 
 	public static function isSettings( $screen = NULL )

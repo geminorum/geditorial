@@ -104,6 +104,9 @@ class gEditorialModuleCore extends gEditorialBaseCore
 			if ( method_exists( $this, 'tweaks_strings' ) )
 				add_filter( 'geditorial_tweaks_strings', array( $this, 'tweaks_strings' ) );
 
+			if ( method_exists( $this, 'reports_settings' ) )
+				add_action( 'geditorial_reports_settings', array( $this, 'reports_settings' ) );
+
 			if ( method_exists( $this, 'tools_settings' ) )
 				add_action( 'geditorial_tools_settings', array( $this, 'tools_settings' ) );
 		}

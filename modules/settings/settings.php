@@ -28,6 +28,15 @@ class gEditorialSettings extends gEditorialModuleCore
 	{
 		global $gEditorial;
 
+		$hook_reports = add_submenu_page(
+			'index.php',
+			_x( 'gEditorial Reports', 'Settings Module', GEDITORIAL_TEXTDOMAIN ),
+			_x( 'Reports', 'Settings Module: Admin Reports Menu Title', GEDITORIAL_TEXTDOMAIN ),
+			'edit_others_posts',
+			'geditorial-reports',
+			array( $this, 'admin_reports_page' )
+		);
+
 		$hook_settings = add_menu_page(
 			$this->module->title,
 			$this->module->title,
@@ -46,6 +55,7 @@ class gEditorialSettings extends gEditorialModuleCore
 			array( $this, 'admin_tools_page' )
 		);
 
+		add_action( 'load-'.$hook_reports, array( $this, 'admin_reports_load' ) );
 		add_action( 'load-'.$hook_settings, array( $this, 'admin_settings_load' ) );
 		add_action( 'load-'.$hook_tools, array( $this, 'admin_tools_load' ) );
 
@@ -64,6 +74,37 @@ class gEditorialSettings extends gEditorialModuleCore
 					) ) add_action( 'load-'.$hook_module, array( $this, 'admin_settings_load' ) );
 			}
 		}
+	}
+
+	public function admin_reports_page()
+	{
+		$uri = gEditorialHelper::reportsURL( FALSE );
+		$sub = gEditorialSettingsCore::sub();
+
+		$subs = apply_filters( 'geditorial_reports_subs', array(
+			'overview' => _x( 'Overview', 'Settings Module: Reports Sub', GEDITORIAL_TEXTDOMAIN ),
+			'general'  => _x( 'General', 'Settings Module: Reports Sub', GEDITORIAL_TEXTDOMAIN ),
+		), 'reports' );
+
+		if ( is_super_admin() )
+			$subs['console'] = _x( 'Console', 'Settings Module: Reports Sub', GEDITORIAL_TEXTDOMAIN );
+
+		$messages = apply_filters( 'geditorial_reports_messages', gEditorialSettingsCore::messages(), $sub );
+
+		echo '<div class="wrap geditorial-admin-wrap geditorial-reports geditorial-reports-'.$sub.'">';
+
+			gEditorialSettingsCore::headerTitle( _x( 'gEditorial Reports', 'Settings Module: Page Title', GEDITORIAL_TEXTDOMAIN ) );
+			gEditorialSettingsCore::headerNav( $uri, $sub, $subs );
+			gEditorialSettingsCore::message( $messages );
+
+			if ( file_exists( GEDITORIAL_DIR.'includes/settings/reports.'.$sub.'.php' ) )
+				require_once( GEDITORIAL_DIR.'includes/settings/reports.'.$sub.'.php' );
+			else
+				do_action( 'geditorial_reports_sub_'.$sub, $uri, $sub );
+
+			$this->settings_signature( NULL, 'reports' );
+
+		echo '<div class="clear"></div></div>';
 	}
 
 	public function admin_tools_page()
@@ -95,6 +136,19 @@ class gEditorialSettings extends gEditorialModuleCore
 			$this->settings_signature( NULL, 'tools' );
 
 		echo '<div class="clear"></div></div>';
+	}
+
+	public function admin_reports_load()
+	{
+		global $gEditorial, $wpdb;
+
+		$sub = gEditorialSettingsCore::sub();
+
+		if ( 'general' == $sub ) {
+			add_action( 'geditorial_reports_sub_general', array( $this, 'reports_sub' ), 10, 2 );
+		}
+
+		do_action( 'geditorial_reports_settings', $sub );
 	}
 
 	public function admin_tools_load()
@@ -162,6 +216,11 @@ class gEditorialSettings extends gEditorialModuleCore
 		}
 
 		do_action( 'geditorial_tools_settings', $sub );
+	}
+
+	public function reports_sub( $settings_uri, $sub )
+	{
+		echo 'Comming Soon!';
 	}
 
 	public function tools_sub( $settings_uri, $sub )

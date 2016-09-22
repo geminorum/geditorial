@@ -282,6 +282,9 @@ class gEditorial
 		else if ( gEditorialHelper::isDashboard( $screen ) )
 			gEditorialHelper::linkStyleSheetAdmin( 'dashboard' );
 
+		else if ( gEditorialHelper::isReports( $screen ) )
+			gEditorialHelper::linkStyleSheetAdmin( 'reports' );
+
 		else if ( gEditorialHelper::isSettings( $screen ) )
 			gEditorialHelper::linkStyleSheetAdmin( 'settings' );
 
