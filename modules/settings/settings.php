@@ -79,9 +79,7 @@ class gEditorialSettings extends gEditorialModuleCore
 		if ( is_super_admin() )
 			$subs['console'] = _x( 'Console', 'Settings Module: Tools Sub', GEDITORIAL_TEXTDOMAIN );
 
-		$messages = apply_filters( 'geditorial_tools_messages', array(
-			'emptied' => self::counted( _x( '%s Meta rows Emptied!', 'Settings Module', GEDITORIAL_TEXTDOMAIN ) ),
-		), $sub );
+		$messages = apply_filters( 'geditorial_tools_messages', gEditorialSettingsCore::messages(), $sub );
 
 		echo '<div class="wrap geditorial-admin-wrap geditorial-tools geditorial-tools-'.$sub.'">';
 

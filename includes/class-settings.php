@@ -284,6 +284,52 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 		}
 	}
 
+	public static function messages()
+	{
+		return array(
+			'resetting' => gEditorialHTML::success( _x( 'Settings reset.', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
+			'optimized' => gEditorialHTML::success( _x( 'Tables optimized.', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
+			'updated'   => gEditorialHTML::success( _x( 'Settings updated.', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
+			'created'   => gEditorialHTML::success( _x( 'File/Folder created.', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
+			'purged'    => gEditorialHTML::success( _x( 'Data purged.', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
+			'nochange'  => gEditorialHTML::error( _x( 'No Item Changed', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
+			'error'     => gEditorialHTML::error( _x( 'Error while settings save.', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
+			'wrong'     => gEditorialHTML::error( _x( 'Something\'s wrong!', 'Settings', GEDITORIAL_TEXTDOMAIN ) ),
+			'deleted'   => self::counted( _x( '%s Items(s) Deleted!', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
+			'cleaned'   => self::counted( _x( '%s Items(s) Cleaned!', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
+			'changed'   => self::counted( _x( '%s Items(s) Changed!', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
+			'emptied'   => self::counted( _x( '%s Items(s) Emptied!', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
+			'huh'       => gEditorialHTML::error( self::huh( empty( $_REQUEST['huh'] ) ? NULL : $_REQUEST['huh'] ) ),
+		);
+	}
+
+	public static function counted( $message = NULL, $count = NULL, $class = 'notice-success' )
+	{
+		if ( is_null( $message ) )
+			$message = _x( '%s Counted!', 'Settings: Message', GEDITORIAL_TEXTDOMAIN );
+
+		if ( is_null( $count ) )
+			$count = isset( $_REQUEST['count'] ) ? $_REQUEST['count'] : 0;
+
+		return gEditorialHTML::notice( sprintf( $message, number_format_i18n( $count ) ), $class.' fade', FALSE );
+	}
+
+	public static function cheatin( $message = NULL )
+	{
+		if ( is_null( $message ) )
+			$message = _x( 'Cheatin&#8217; uh?', 'Settings: Message', GEDITORIAL_TEXTDOMAIN );
+
+		gEditorialHTML::error( $message, TRUE );
+	}
+
+	public static function huh( $message = NULL )
+	{
+		if ( $message )
+			return sprintf ( _x( 'huh? %s', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ), $message );
+
+		return _x( 'huh?', 'Settings: Message', GEDITORIAL_TEXTDOMAIN );
+	}
+
 	public static function headerNav( $uri = '', $active = '', $subs = array(), $prefix = 'nav-tab-', $tag = 'h3' )
 	{
 		gEditorialHTML::headerNav( $uri, $active, $subs, $prefix, $tag );
