@@ -83,7 +83,7 @@ class gEditorialSettings extends gEditorialModuleCore
 
 		echo '<div class="wrap geditorial-admin-wrap geditorial-tools geditorial-tools-'.$sub.'">';
 
-			gEditorialSettingsCore::headerTitle( _x( 'gEditorial Tools', 'Settings Module: Page Title', GEDITORIAL_TEXTDOMAIN ), gEditorialHelper::settingsURL() );
+			gEditorialSettingsCore::headerTitle( _x( 'gEditorial Tools', 'Settings Module: Page Title', GEDITORIAL_TEXTDOMAIN ) );
 			gEditorialSettingsCore::headerNav( $uri, $sub, $subs );
 			gEditorialSettingsCore::message( $messages );
 
