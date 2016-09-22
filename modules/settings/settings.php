@@ -85,8 +85,8 @@ class gEditorialSettings extends gEditorialModuleCore
 
 		echo '<div class="wrap geditorial-admin-wrap geditorial-tools geditorial-tools-'.$sub.'">';
 
-			gEditorialSettingsCore::settingsTitle( _x( 'gEditorial Tools', 'Settings Module: Page Title', GEDITORIAL_TEXTDOMAIN ), gEditorialHelper::settingsURL() );
-			gEditorialSettingsCore::nav( $uri, $sub, $subs );
+			gEditorialSettingsCore::headerTitle( _x( 'gEditorial Tools', 'Settings Module: Page Title', GEDITORIAL_TEXTDOMAIN ), gEditorialHelper::settingsURL() );
+			gEditorialSettingsCore::headerNav( $uri, $sub, $subs );
 			gEditorialSettingsCore::message( $messages );
 
 			if ( file_exists( GEDITORIAL_DIR.'admin/admin.'.$sub.'.php' ) )
@@ -332,7 +332,7 @@ class gEditorialSettings extends gEditorialModuleCore
 
 		echo '<div class="wrap geditorial-admin-wrap geditorial-settings">';
 
-			gEditorialSettingsCore::settingsTitle( $title, $back );
+			gEditorialSettingsCore::headerTitle( $title, $back );
 
 		if ( isset( $_REQUEST['message'] ) && isset( $current_module->messages[$_REQUEST['message']] ) )
 			self::notice( $current_module->messages[$_REQUEST['message']] );

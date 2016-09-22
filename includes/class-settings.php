@@ -248,7 +248,7 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 		);
 	}
 
-	public static function settingsTitle( $title = NULL, $back = NULL, $to = NULL )
+	public static function headerTitle( $title = NULL, $back = NULL, $to = NULL )
 	{
 		if ( is_null( $title ) )
 			$title = _x( 'Editorial', 'Settings', GEDITORIAL_TEXTDOMAIN );
@@ -279,7 +279,7 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 		}
 	}
 
-	public static function nav( $uri = '', $active = '', $subs = array(), $prefix = 'nav-tab-', $tag = 'h3' )
+	public static function headerNav( $uri = '', $active = '', $subs = array(), $prefix = 'nav-tab-', $tag = 'h3' )
 	{
 		gEditorialHTML::headerNav( $uri, $active, $subs, $prefix, $tag );
 	}
