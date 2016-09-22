@@ -159,6 +159,24 @@ class gEditorialHTML extends gEditorialBaseCore
 		) )."\n";
 	}
 
+	public static function headerNav( $uri = '', $active = '', $subs = array(), $prefix = 'nav-tab-', $tag = 'h3' )
+	{
+		if ( ! count( $subs ) )
+			return;
+
+		$html = '';
+
+		foreach ( $subs as $slug => $page )
+			$html .= self::tag( 'a', array(
+				'class' => 'nav-tab '.$prefix.$slug.( $slug == $active ? ' nav-tab-active' : '' ),
+				'href'  => add_query_arg( 'sub', $slug, $uri ),
+			), $page );
+
+		echo self::tag( $tag, array(
+			'class' => 'nav-tab-wrapper',
+		), $html );
+	}
+
 	// @REF: https://codex.wordpress.org/Plugin_API/Action_Reference/admin_notices
 	// CLASSES: notice-error, notice-warning, notice-success, notice-info, is-dismissible
 	public static function notice( $notice, $class = 'notice-success fade', $echo = TRUE )

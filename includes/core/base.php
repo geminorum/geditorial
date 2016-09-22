@@ -479,24 +479,6 @@ class gEditorialBaseCore
 		return NULL;
 	}
 
-	public static function headerNav( $uri = '', $active = '', $subs = array(), $prefix = 'nav-tab-', $tag = 'h3' )
-	{
-		if ( ! count( $subs ) )
-			return;
-
-		$html = '';
-
-		foreach ( $subs as $slug => $page )
-			$html .= self::html( 'a', array(
-				'class' => 'nav-tab '.$prefix.$slug.( $slug == $active ? ' nav-tab-active' : '' ),
-				'href'  => add_query_arg( 'sub', $slug, $uri ),
-			), $page );
-
-		echo self::html( $tag, array(
-			'class' => 'nav-tab-wrapper',
-		), $html );
-	}
-
 	public static function getFeaturedImage( $post_id, $size = 'thumbnail', $default = FALSE )
 	{
 		if ( ! $post_thumbnail_id = get_post_thumbnail_id( $post_id ) )
