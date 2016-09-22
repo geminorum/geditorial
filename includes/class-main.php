@@ -52,6 +52,7 @@ class gEditorial
 	{
 		// FIXME: temporary
 		require_once( GEDITORIAL_DIR.'includes/core/base.php' );
+		require_once( GEDITORIAL_DIR.'includes/core/html.php' );
 		require_once( GEDITORIAL_DIR.'includes/core/wordpress.php' );
 
 		$includes = array(
