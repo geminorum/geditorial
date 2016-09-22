@@ -122,9 +122,9 @@ class gEditorialSeries extends gEditorialModuleCore
 		$new = array(
 			'taxonomies' => array(
 				$this->constant( 'series_tax' ) => array(
-					'column'     => 'taxonomy-'.$this->constant( 'series_tax' ),
-					'icon'       => $this->module->icon,
-					'title_attr' => $this->get_string( 'name', 'series_tax', 'labels' ),
+					'column' => 'taxonomy-'.$this->constant( 'series_tax' ),
+					'icon'   => $this->module->icon,
+					'title'  => $this->get_string( 'name', 'series_tax', 'labels' ),
 				),
 			),
 		);

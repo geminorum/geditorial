@@ -228,24 +228,24 @@ class gEditorialContest extends gEditorialModuleCore
 		$new = array(
 			'taxonomies' => array(
 				$this->constant( 'contest_cat' ) => array(
-					'column'     => 'taxonomy-'.$this->constant( 'contest_cat' ),
-					'icon'       => 'category',
-					'title_attr' => $this->get_string( 'name', 'contest_cat', 'labels' ),
+					'column' => 'taxonomy-'.$this->constant( 'contest_cat' ),
+					'icon'   => 'category',
+					'title'  => $this->get_string( 'name', 'contest_cat', 'labels' ),
 				),
 				$this->constant( 'contest_tax' ) => array(
-					'column'     => 'taxonomy-'.$this->constant( 'contest_tax' ),
-					'icon'       => 'megaphone',
-					'title_attr' => $this->get_string( 'name', 'contest_tax', 'labels' ),
+					'column' => 'taxonomy-'.$this->constant( 'contest_tax' ),
+					'icon'   => 'megaphone',
+					'title'  => $this->get_string( 'name', 'contest_tax', 'labels' ),
 				),
 				$this->constant( 'apply_cat' ) => array(
-					'column'     => 'taxonomy-'.$this->constant( 'apply_cat' ),
-					'icon'       => 'category',
-					'title_attr' => $this->get_string( 'name', 'apply_cat', 'labels' ),
+					'column' => 'taxonomy-'.$this->constant( 'apply_cat' ),
+					'icon'   => 'category',
+					'title'  => $this->get_string( 'name', 'apply_cat', 'labels' ),
 				),
 				$this->constant( 'apply_status_tax' ) => array(
-					'column'     => 'taxonomy-'.$this->constant( 'apply_status_tax' ),
-					'icon'       => 'portfolio',
-					'title_attr' => $this->get_string( 'name', 'apply_status_tax', 'labels' ),
+					'column' => 'taxonomy-'.$this->constant( 'apply_status_tax' ),
+					'icon'   => 'portfolio',
+					'title'  => $this->get_string( 'name', 'apply_status_tax', 'labels' ),
 				),
 			),
 		);

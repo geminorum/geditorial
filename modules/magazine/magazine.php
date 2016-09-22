@@ -332,20 +332,19 @@ class gEditorialMagazine extends gEditorialModuleCore
 		$new = array(
 			'taxonomies' => array(
 				$this->constant( 'issue_tax' ) => array(
-					'column'     => 'taxonomy-'.$this->constant( 'issue_tax' ),
-					'icon'       => 'book',
-					'title_attr' => $this->get_string( 'name', 'issue_tax', 'labels' ),
-					'title_attr' => $this->get_column_title( 'tweaks', 'issue_tax' ),
+					'column' => 'taxonomy-'.$this->constant( 'issue_tax' ),
+					'icon'   => 'book',
+					'title'  => $this->get_column_title( 'tweaks', 'issue_tax' ),
 				),
 				$this->constant( 'span_tax' ) => array(
-					'column'     => 'taxonomy-'.$this->constant( 'span_tax' ),
-					'icon'       => 'backup',
-					'title_attr' => $this->get_column_title( 'tweaks', 'span_tax' ),
+					'column' => 'taxonomy-'.$this->constant( 'span_tax' ),
+					'icon'   => 'backup',
+					'title'  => $this->get_column_title( 'tweaks', 'span_tax' ),
 				),
 				$this->constant( 'section_tax' ) => array(
-					'column'     => 'taxonomy-'.$this->constant( 'section_tax' ),
-					'icon'       => 'category',
-					'title_attr' => $this->get_column_title( 'tweaks', 'section_tax' ),
+					'column' => 'taxonomy-'.$this->constant( 'section_tax' ),
+					'icon'   => 'category',
+					'title'  => $this->get_column_title( 'tweaks', 'section_tax' ),
 				),
 			),
 		);

@@ -162,9 +162,9 @@ class gEditorialAudit extends gEditorialModuleCore
 		$new = array(
 			'taxonomies' => array(
 				$this->constant( 'audit_tax' ) => array(
-					'column'     => 'taxonomy-'.$this->constant( 'audit_tax' ),
-					'icon'       => $this->module->icon,
-					'title_attr' => $this->get_column_title( 'tweaks', 'audit_tax' ),
+					'column' => 'taxonomy-'.$this->constant( 'audit_tax' ),
+					'icon'   => $this->module->icon,
+					'title'  => $this->get_column_title( 'tweaks', 'audit_tax' ),
 				),
 			),
 		);

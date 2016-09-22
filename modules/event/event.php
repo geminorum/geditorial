@@ -222,24 +222,24 @@ class gEditorialEvent extends gEditorialModuleCore
 		$new = array(
 			'taxonomies' => array(
 				$this->constant( 'event_tag' ) => array(
-					'column'     => 'taxonomy-'.$this->constant( 'event_tag' ),
-					'icon'       => 'tag',
-					'title_attr' => $this->get_column_title( 'tweaks', 'event_tag' ),
+					'column' => 'taxonomy-'.$this->constant( 'event_tag' ),
+					'icon'   => 'tag',
+					'title'  => $this->get_column_title( 'tweaks', 'event_tag' ),
 				),
 				$this->constant( 'event_cat' ) => array(
-					'column'     => 'taxonomy-'.$this->constant( 'event_cat' ),
-					'icon'       => 'category',
-					'title_attr' => $this->get_column_title( 'tweaks', 'event_cat' ),
+					'column' => 'taxonomy-'.$this->constant( 'event_cat' ),
+					'icon'   => 'category',
+					'title'  => $this->get_column_title( 'tweaks', 'event_cat' ),
 				),
 				$this->constant( 'cal_tax' ) => array(
-					'column'     => 'taxonomy-'.$this->constant( 'cal_tax' ),
-					'icon'       => 'calendar',
-					'title_attr' => $this->get_column_title( 'tweaks', 'cal_tax' ),
+					'column' => 'taxonomy-'.$this->constant( 'cal_tax' ),
+					'icon'   => 'calendar',
+					'title'  => $this->get_column_title( 'tweaks', 'cal_tax' ),
 				),
 				$this->constant( 'venue_tax' ) => array(
-					'column'     => 'taxonomy-'.$this->constant( 'venue_tax' ),
-					'icon'       => 'location',
-					'title_attr' => $this->get_column_title( 'tweaks', 'venue_tax' ),
+					'column' => 'taxonomy-'.$this->constant( 'venue_tax' ),
+					'icon'   => 'location',
+					'title'  => $this->get_column_title( 'tweaks', 'venue_tax' ),
 				),
 			),
 		);

@@ -337,34 +337,34 @@ class gEditorialBook extends gEditorialModuleCore
 		$new = array(
 			'taxonomies' => array(
 				$this->constant( 'subject_tax' ) => array(
-					'column'     => 'taxonomy-'.$this->constant( 'subject_tax' ),
-					'icon'       => 'tag',
-					'title_attr' => $this->get_column_title( 'tweaks', 'subject_tax' ),
+					'column' => 'taxonomy-'.$this->constant( 'subject_tax' ),
+					'icon'   => 'tag',
+					'title'  => $this->get_column_title( 'tweaks', 'subject_tax' ),
 				),
 				$this->constant( 'library_tax' ) => array(
-					'column'     => 'taxonomy-'.$this->constant( 'library_tax' ),
-					'icon'       => 'book-alt',
-					'title_attr' => $this->get_column_title( 'tweaks', 'library_tax' ),
+					'column' => 'taxonomy-'.$this->constant( 'library_tax' ),
+					'icon'   => 'book-alt',
+					'title'  => $this->get_column_title( 'tweaks', 'library_tax' ),
 				),
 				$this->constant( 'publisher_tax' ) => array(
-					'column'     => 'taxonomy-'.$this->constant( 'publisher_tax' ),
-					'icon'       => 'book',
-					'title_attr' => $this->get_column_title( 'tweaks', 'publisher_tax' ),
+					'column' => 'taxonomy-'.$this->constant( 'publisher_tax' ),
+					'icon'   => 'book',
+					'title'  => $this->get_column_title( 'tweaks', 'publisher_tax' ),
 				),
 				$this->constant( 'type_tax' ) => array(
-					'column'     => 'taxonomy-'.$this->constant( 'type_tax' ),
-					'icon'       => 'admin-media',
-					'title_attr' => $this->get_column_title( 'tweaks', 'type_tax' ),
+					'column' => 'taxonomy-'.$this->constant( 'type_tax' ),
+					'icon'   => 'admin-media',
+					'title'  => $this->get_column_title( 'tweaks', 'type_tax' ),
 				),
 				$this->constant( 'status_tax' ) => array(
-					'column'     => 'taxonomy-'.$this->constant( 'status_tax' ),
-					'icon'       => 'post-status',
-					'title_attr' => $this->get_column_title( 'tweaks', 'status_tax' ),
+					'column' => 'taxonomy-'.$this->constant( 'status_tax' ),
+					'icon'   => 'post-status',
+					'title'  => $this->get_column_title( 'tweaks', 'status_tax' ),
 				),
 				$this->constant( 'size_tax' ) => array(
-					'column'     => 'taxonomy-'.$this->constant( 'size_tax' ),
-					'icon'       => 'image-crop',
-					'title_attr' => $this->get_column_title( 'tweaks', 'size_tax' ),
+					'column' => 'taxonomy-'.$this->constant( 'size_tax' ),
+					'icon'   => 'image-crop',
+					'title'  => $this->get_column_title( 'tweaks', 'size_tax' ),
 				),
 			),
 		);

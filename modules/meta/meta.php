@@ -132,9 +132,9 @@ class gEditorialMeta extends gEditorialModuleCore
 		$new = array(
 			'taxonomies' => array(
 				$this->constant( 'ct_tax' ) => array(
-					'column'     => 'taxonomy-'.$this->constant( 'ct_tax' ),
-					'icon'       => 'admin-post',
-					'title_attr' => $this->get_string( 'name', 'ct_tax', 'labels' ),
+					'column' => 'taxonomy-'.$this->constant( 'ct_tax' ),
+					'icon'   => 'admin-post',
+					'title'  => $this->get_string( 'name', 'ct_tax', 'labels' ),
 				),
 			),
 		);

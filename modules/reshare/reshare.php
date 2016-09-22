@@ -94,9 +94,9 @@ class gEditorialReshare extends gEditorialModuleCore
 		$new = array(
 			'taxonomies' => array(
 				$this->constant( 'reshare_cat' ) => array(
-					'column'     => 'taxonomy-'.$this->constant( 'reshare_cat' ),
-					'icon'       => $this->module->icon,
-					'title_attr' => $this->get_column_title( 'tweaks', 'reshare_cat' ),
+					'column' => 'taxonomy-'.$this->constant( 'reshare_cat' ),
+					'icon'   => $this->module->icon,
+					'title'  => $this->get_column_title( 'tweaks', 'reshare_cat' ),
 				),
 			),
 		);

@@ -90,14 +90,14 @@ class gEditorialTweaks extends gEditorialModuleCore
 			),
 			'taxonomies' => array(
 				'category' => array(
-					'column'     => 'categories',
-					'icon'       => 'category',
-					'title_attr' => _x( 'Categories', 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ),
+					'column' => 'categories',
+					'icon'   => 'category',
+					'title'  => _x( 'Categories', 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ),
 				),
 				'post_tag' => array(
-					'column'     => 'tags',
-					'icon'       => 'tag',
-					'title_attr' => _x( 'Tags', 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ),
+					'column' => 'tags',
+					'icon'   => 'tag',
+					'title'  => _x( 'Tags', 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ),
 				),
 			),
 		);
@@ -252,7 +252,7 @@ class gEditorialTweaks extends gEditorialModuleCore
 					if ( $icon = $this->get_string( 'icon', $taxonomy, 'taxonomies', 'tag' ) )
 						$before .= self::html( 'a', array(
 							'href'   => self::getEditTaxLink( $taxonomy ),
-							'title'  => $this->get_string( 'title_attr', $taxonomy, 'taxonomies', $taxonomy ),
+							'title'  => $this->get_string( 'title', $taxonomy, 'taxonomies', $taxonomy ),
 							'class'  => array( '-icon', '-link' ),
 							'target' => '_blank',
 						), '<span class="dashicons dashicons-'.$icon.'"></span>' );
