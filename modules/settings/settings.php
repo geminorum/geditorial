@@ -86,16 +86,8 @@ class gEditorialSettings extends gEditorialModuleCore
 		echo '<div class="wrap geditorial-admin-wrap geditorial-tools geditorial-tools-'.$sub.'">';
 
 			gEditorialSettingsCore::settingsTitle( _x( 'gEditorial Tools', 'Settings Module: Page Title', GEDITORIAL_TEXTDOMAIN ), gEditorialHelper::settingsURL() );
-
-			self::headerNav( $uri, $sub, $subs );
-
-			if ( isset( $_GET['message'] ) ) {
-				if ( isset( $messages[$_GET['message']] ) )
-					echo $messages[$_GET['message']];
-				else
-					self::notice( $_GET['message'] );
-				$_SERVER['REQUEST_URI'] = remove_query_arg( array( 'message' ), $_SERVER['REQUEST_URI'] );
-			}
+			gEditorialSettingsCore::nav( $uri, $sub, $subs );
+			gEditorialSettingsCore::message( $messages );
 
 			if ( file_exists( GEDITORIAL_DIR.'admin/admin.'.$sub.'.php' ) )
 				require_once( GEDITORIAL_DIR.'admin/admin.'.$sub.'.php' );

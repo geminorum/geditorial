@@ -266,6 +266,24 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 			printf( '<h1 class="settings-title">%s</h1>', $title );
 	}
 
+	public static function message( $messages = array() )
+	{
+		if ( isset( $_GET['message'] ) ) {
+
+			if ( isset( $messages[$_GET['message']] ) )
+				echo $messages[$_GET['message']];
+			else
+				gEditorialHTML::warning( $_GET['message'], TRUE );
+
+			$_SERVER['REQUEST_URI'] = remove_query_arg( 'message', $_SERVER['REQUEST_URI'] );
+		}
+	}
+
+	public static function nav( $uri = '', $active = '', $subs = array(), $prefix = 'nav-tab-', $tag = 'h3' )
+	{
+		gEditorialHTML::headerNav( $uri, $active, $subs, $prefix, $tag );
+	}
+
 	public static function settingsCredits()
 	{
 		echo '<div class="credits"><p>';
