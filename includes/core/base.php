@@ -607,6 +607,8 @@ class gEditorialBaseCore
 		return self::notice( $message, 'notice-info fade', $echo );
 	}
 
+	// FIXME: DEPRECATED
+	// USE: gEditorialSettingsCore::counted()
 	public static function counted( $message = NULL, $count = NULL, $class = 'updated' )
 	{
 		if ( is_null( $message ) )

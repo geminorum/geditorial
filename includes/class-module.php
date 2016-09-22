@@ -481,13 +481,8 @@ class gEditorialModuleCore extends gEditorialBaseCore
 
 		echo '</form>';
 
-		if ( self::isDev() ) {
-			// @self::dump( $this->module );
-			@self::dump( $this->options );
-			// @self::dump( $this->strings );
-			// @self::dump( get_all_post_type_supports( 'reshare' ) );
-			// @self::dump( $this->post_type_supports( 'reshare', 'meta_fields', FALSE ) );
-		}
+		if ( self::isDev() )
+			self::dump( $this->options );
 	}
 
 	public function register_settings_button( $key, $value, $atts = array(), $type = 'secondary' )
