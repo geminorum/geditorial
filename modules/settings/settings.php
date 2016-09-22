@@ -69,7 +69,7 @@ class gEditorialSettings extends gEditorialModuleCore
 	public function admin_tools_page()
 	{
 		$uri = gEditorialHelper::toolsURL( FALSE );
-		$sub = isset( $_GET['sub'] ) ? trim( $_GET['sub'] ) : 'general';
+		$sub = gEditorialSettingsCore::sub();
 
 		$subs = apply_filters( 'geditorial_tools_subs', array(
 			'overview' => _x( 'Overview', 'Settings Module: Tools Sub', GEDITORIAL_TEXTDOMAIN ),

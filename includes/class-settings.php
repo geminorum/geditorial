@@ -248,6 +248,11 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 		);
 	}
 
+	public static function sub( $default = 'general' )
+	{
+		return isset( $_REQUEST['sub'] ) ? trim( $_REQUEST['sub'] ) : $default;
+	}
+
 	public static function headerTitle( $title = NULL, $back = NULL, $to = NULL )
 	{
 		if ( is_null( $title ) )
