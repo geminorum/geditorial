@@ -237,6 +237,9 @@ class gEditorialModuleCore extends gEditorialBaseCore
 
 	public function settings_posttypes_option( $section )
 	{
+		if ( $before = $this->get_string( 'post_types_before', 'post', 'settings', NULL ) )
+			echo '<p class="description">'.$before.'</p>';
+
 		foreach ( $this->all_post_types() as $post_type => $label ) {
 			$html = self::html( 'input', array(
 				'type'    => 'checkbox',
@@ -250,10 +253,16 @@ class gEditorialModuleCore extends gEditorialBaseCore
 				'for' => 'type-'.$post_type,
 			), $html.'&nbsp;'.esc_html( $label ).' &mdash; <code>'.$post_type.'</code>' ).'</p>';
 		}
+
+		if ( $after = $this->get_string( 'post_types_after', 'post', 'settings', NULL ) )
+			echo '<p class="description">'.$after.'</p>';
 	}
 
 	public function settings_taxonomies_option( $section )
 	{
+		if ( $before = $this->get_string( 'taxonomies_before', 'post', 'settings', NULL ) )
+			echo '<p class="description">'.$before.'</p>';
+
 		foreach ( $this->all_taxonomies() as $taxonomy => $label ) {
 
 			$html = self::html( 'input', array(
@@ -268,6 +277,9 @@ class gEditorialModuleCore extends gEditorialBaseCore
 				'for' => 'tax-'.$taxonomy,
 			), $html.'&nbsp;'.esc_html( $label ).' &mdash; <code>'.$taxonomy.'</code>' ).'</p>';
 		}
+
+		if ( $after = $this->get_string( 'taxonomies_after', 'post', 'settings', NULL ) )
+			echo '<p class="description">'.$after.'</p>';
 	}
 
 	// get stored post meta by the field
