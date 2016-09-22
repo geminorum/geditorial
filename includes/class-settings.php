@@ -116,9 +116,9 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 			'default'     => 'none',
 			'section'     => $section,
 			'values'      => array(
-				'none'   => _x( 'No', 'Module Core: Insert in Content Option', GEDITORIAL_TEXTDOMAIN ),
-				'before' => _x( 'Before', 'Module Core: Insert in Content Option', GEDITORIAL_TEXTDOMAIN ),
-				'after'  => _x( 'After', 'Module Core: Insert in Content Option', GEDITORIAL_TEXTDOMAIN ),
+				'none'   => _x( 'No', 'Settings: Setting Option', GEDITORIAL_TEXTDOMAIN ),
+				'before' => _x( 'Before', 'Settings: Setting Option', GEDITORIAL_TEXTDOMAIN ),
+				'after'  => _x( 'After', 'Settings: Setting Option', GEDITORIAL_TEXTDOMAIN ),
 			),
 		);
 	}
