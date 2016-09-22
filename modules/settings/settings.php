@@ -101,7 +101,7 @@ class gEditorialSettings extends gEditorialModuleCore
 	{
 		global $gEditorial, $wpdb;
 
-		$sub = isset( $_REQUEST['sub'] ) ? $_REQUEST['sub'] : 'general';
+		$sub = gEditorialSettingsCore::sub();
 
 		if ( 'general' == $sub ) {
 			if ( ! empty( $_POST ) ) {
