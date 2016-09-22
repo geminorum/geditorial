@@ -198,6 +198,22 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 		);
 	}
 
+	public static function getSetting_summary_scope( $section )
+	{
+		return array(
+			'field'       => 'summary_scope',
+			'type'        => 'select',
+			'title'       => _x( 'Summary Scope', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+			'description' => _x( 'Dashboard Widget Summary User Scope', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+			'default'     => 'all',
+			'section'     => $section,
+			'values'      => array(
+				'all'     => _x( 'All Users', 'Settings: Setting Option', GEDITORIAL_TEXTDOMAIN ),
+				'current' => _x( 'Current User', 'Settings: Setting Option', GEDITORIAL_TEXTDOMAIN ),
+			),
+		);
+	}
+
 	public static function getSetting_posttype_feeds( $section )
 	{
 		return array(

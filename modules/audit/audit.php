@@ -18,17 +18,7 @@ class gEditorialAudit extends gEditorialModuleCore
 		return array(
 			'_general' => array(
 				'dashboard_widgets',
-				array(
-					'field'       => 'summary_scope',
-					'type'        => 'select',
-					'title'       => _x( 'Summary Scope', 'Audit Module: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Dashboard Widget Summary User Scope', 'Audit Module: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-					'default'     => 'all',
-					'values'      => array(
-						'all'     => _x( 'All Users', 'Audit Module: Setting Option', GEDITORIAL_TEXTDOMAIN ),
-						'current' => _x( 'Current User', 'Audit Module: Setting Option', GEDITORIAL_TEXTDOMAIN ),
-					),
-				),
+				'summary_scope',
 				'admin_restrict',
 			),
 			'posttypes_option' => 'posttypes_option',
