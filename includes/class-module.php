@@ -11,7 +11,6 @@ class gEditorialModuleCore extends gEditorialBaseCore
 
 	protected $cookie     = 'geditorial';
 	protected $field_type = 'meta';
-	protected $tools_cap  = 'import';
 
 	protected $priority_init = 10;
 
@@ -26,6 +25,7 @@ class gEditorialModuleCore extends gEditorialBaseCore
 	protected $settings_buttons    = array();
 	protected $image_sizes         = array();
 	protected $errors              = array();
+	protected $caps                = array();
 
 	protected $geditorial_meta = FALSE; // META ENABLED
 	protected $root_key        = FALSE; // ROOT CONSTANT
@@ -485,9 +485,24 @@ class gEditorialModuleCore extends gEditorialBaseCore
 	}
 
 	// DEFAULT METHOD
-	public function append_sub( $subs )
+	public function append_sub( $subs, $page = 'settings' )
 	{
-		return array_merge( $subs, array( $this->module->name => $this->module->title ) );
+		if ( ! empty( $this->caps[$page] )
+			&& current_user_can( $this->caps[$page] ) )
+				return array_merge( $subs, array( $this->module->name => $this->module->title ) );
+
+		return $subs;
+	}
+
+	public function cuc( $page = 'settings', $fallback = '' )
+	{
+		if ( ! empty( $this->caps[$page] ) )
+			return current_user_can( $this->caps[$page] );
+
+		else if ( $fallback )
+			return current_user_can( $fallback );
+
+		return FALSE;
 	}
 
 	// HELPER

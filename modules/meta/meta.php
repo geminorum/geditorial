@@ -6,6 +6,10 @@ class gEditorialMeta extends gEditorialModuleCore
 	public $meta_key = '_gmeta';
 	protected $priority_init = 12;
 
+	protected $caps = array(
+		'tools' => 'import',
+	);
+
 	public static function module()
 	{
 		return array(
@@ -686,7 +690,7 @@ class gEditorialMeta extends gEditorialModuleCore
 
 	public function tools_settings( $sub )
 	{
-		if ( ! current_user_can( $this->tools_cap ) )
+		if ( ! $this->cuc( 'tools' ) )
 			return;
 
 		if ( $this->module->name == $sub ) {
@@ -740,7 +744,7 @@ class gEditorialMeta extends gEditorialModuleCore
 			add_action( 'geditorial_tools_sub_'.$this->module->name, array( $this, 'tools_sub' ), 10, 2 );
 		}
 
-		add_filter( 'geditorial_tools_subs', array( $this, 'append_sub' ) );
+		add_filter( 'geditorial_tools_subs', array( $this, 'append_sub' ), 10, 2 );
 	}
 
 	protected function import_from_meta( $meta_key, $field, $limit = FALSE )

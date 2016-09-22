@@ -74,7 +74,7 @@ class gEditorialSettings extends gEditorialModuleCore
 		$subs = apply_filters( 'geditorial_tools_subs', array(
 			'overview' => _x( 'Overview', 'Settings Module: Tools Sub', GEDITORIAL_TEXTDOMAIN ),
 			'general'  => _x( 'General', 'Settings Module: Tools Sub', GEDITORIAL_TEXTDOMAIN ),
-		) );
+		), 'tools' );
 
 		if ( is_super_admin() )
 			$subs['console'] = _x( 'Console', 'Settings Module: Tools Sub', GEDITORIAL_TEXTDOMAIN );
