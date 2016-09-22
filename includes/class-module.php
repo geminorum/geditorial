@@ -882,7 +882,7 @@ class gEditorialModuleCore extends gEditorialBaseCore
 			gEditorialSettingsCore::settingsCredits();
 	}
 
-	protected function settings_signature( $module = NULL )
+	protected function settings_signature( $module = NULL, $page = 'settings' )
 	{
 		gEditorialSettingsCore::settingsSignature();
 	}

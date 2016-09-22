@@ -94,7 +94,7 @@ class gEditorialSettings extends gEditorialModuleCore
 			else
 				do_action( 'geditorial_tools_sub_'.$sub, $uri, $sub );
 
-			$this->settings_signature();
+			$this->settings_signature( NULL, 'tools' );
 
 		echo '<div class="clear"></div></div>';
 	}
