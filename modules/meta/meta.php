@@ -623,7 +623,7 @@ class gEditorialMeta extends gEditorialModuleCore
 
 	public function tools_sub( $uri, $sub )
 	{
-		echo '<form method="post" action="">';
+		echo '<form class="settings-form" method="post" action="">';
 
 			$this->tools_field_referer( $sub );
 

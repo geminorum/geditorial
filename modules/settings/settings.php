@@ -170,7 +170,7 @@ class gEditorialSettings extends gEditorialModuleCore
 
 		$post = isset( $_POST[$this->module->group]['tools'] ) ? $_POST[$this->module->group]['tools'] : array();
 
-		echo '<form method="post" action="">';
+		echo '<form class="settings-form" method="post" action="">';
 
 			$this->tools_field_referer( $sub );
 
