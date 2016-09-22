@@ -740,7 +740,7 @@ class gEditorialMeta extends gEditorialModuleCore
 			add_action( 'geditorial_tools_sub_'.$this->module->name, array( $this, 'tools_sub' ), 10, 2 );
 		}
 
-		add_filter( 'geditorial_tools_subs', array( $this, 'tools_subs' ) );
+		add_filter( 'geditorial_tools_subs', array( $this, 'append_sub' ) );
 	}
 
 	protected function import_from_meta( $meta_key, $field, $limit = FALSE )

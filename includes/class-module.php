@@ -485,10 +485,9 @@ class gEditorialModuleCore extends gEditorialBaseCore
 	}
 
 	// DEFAULT METHOD
-	public function tools_subs( $subs )
+	public function append_sub( $subs )
 	{
-		$subs[$this->module->name] = $this->module->title;
-		return $subs;
+		return array_merge( $subs, array( $this->module->name => $this->module->title ) );
 	}
 
 	// HELPER
