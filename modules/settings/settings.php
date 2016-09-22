@@ -89,8 +89,8 @@ class gEditorialSettings extends gEditorialModuleCore
 			gEditorialSettingsCore::headerNav( $uri, $sub, $subs );
 			gEditorialSettingsCore::message( $messages );
 
-			if ( file_exists( GEDITORIAL_DIR.'admin/admin.'.$sub.'.php' ) )
-				require_once( GEDITORIAL_DIR.'admin/admin.'.$sub.'.php' );
+			if ( file_exists( GEDITORIAL_DIR.'includes/settings/tools.'.$sub.'.php' ) )
+				require_once( GEDITORIAL_DIR.'includes/settings/tools.'.$sub.'.php' );
 			else
 				do_action( 'geditorial_tools_sub_'.$sub, $uri, $sub );
 
