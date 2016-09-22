@@ -103,7 +103,7 @@ class gEditorial
 			'class'     => gEditorialHelper::moduleClass( $args['name'], FALSE ),
 			'group'     => $this->group.$args['name'],
 			'settings'  => 'geditorial-settings-'.$args['name'],
-			'dashicon'  => 'smiley', // dashicon class
+			'icon'      => 'smiley', // dashicon class
 			'configure' => 'print_configure_view',
 			'defaults'  => array(),
 			'frontend'  => TRUE, // whether or not the module should be loaded on the frontend too

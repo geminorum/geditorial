@@ -6,10 +6,10 @@ class gEditorialBook extends gEditorialModuleCore
 	public static function module()
 	{
 		return array(
-			'name'      => 'book',
-			'title'     => _x( 'Book', 'Book Module', GEDITORIAL_TEXTDOMAIN ),
-			'desc'      => _x( 'Online House of Publications', 'Book Module', GEDITORIAL_TEXTDOMAIN ),
-			'dashicon'  => 'book-alt',
+			'name'  => 'book',
+			'title' => _x( 'Book', 'Book Module', GEDITORIAL_TEXTDOMAIN ),
+			'desc'  => _x( 'Online House of Publications', 'Book Module', GEDITORIAL_TEXTDOMAIN ),
+			'icon'  => 'book-alt',
 		);
 	}
 
@@ -338,32 +338,32 @@ class gEditorialBook extends gEditorialModuleCore
 			'taxonomies' => array(
 				$this->constant( 'subject_tax' ) => array(
 					'column'     => 'taxonomy-'.$this->constant( 'subject_tax' ),
-					'dashicon'   => 'tag',
+					'icon'       => 'tag',
 					'title_attr' => $this->get_column_title( 'tweaks', 'subject_tax' ),
 				),
 				$this->constant( 'library_tax' ) => array(
 					'column'     => 'taxonomy-'.$this->constant( 'library_tax' ),
-					'dashicon'   => 'book-alt',
+					'icon'       => 'book-alt',
 					'title_attr' => $this->get_column_title( 'tweaks', 'library_tax' ),
 				),
 				$this->constant( 'publisher_tax' ) => array(
 					'column'     => 'taxonomy-'.$this->constant( 'publisher_tax' ),
-					'dashicon'   => 'book',
+					'icon'       => 'book',
 					'title_attr' => $this->get_column_title( 'tweaks', 'publisher_tax' ),
 				),
 				$this->constant( 'type_tax' ) => array(
 					'column'     => 'taxonomy-'.$this->constant( 'type_tax' ),
-					'dashicon'   => 'admin-media',
+					'icon'       => 'admin-media',
 					'title_attr' => $this->get_column_title( 'tweaks', 'type_tax' ),
 				),
 				$this->constant( 'status_tax' ) => array(
 					'column'     => 'taxonomy-'.$this->constant( 'status_tax' ),
-					'dashicon'   => 'post-status',
+					'icon'       => 'post-status',
 					'title_attr' => $this->get_column_title( 'tweaks', 'status_tax' ),
 				),
 				$this->constant( 'size_tax' ) => array(
 					'column'     => 'taxonomy-'.$this->constant( 'size_tax' ),
-					'dashicon'   => 'image-crop',
+					'icon'       => 'image-crop',
 					'title_attr' => $this->get_column_title( 'tweaks', 'size_tax' ),
 				),
 			),

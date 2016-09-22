@@ -6,10 +6,10 @@ class gEditorialToday extends gEditorialModuleCore
 	public static function module()
 	{
 		return array(
-			'name'     => 'today',
-			'title'    => _x( 'Today', 'Today Module', GEDITORIAL_TEXTDOMAIN ),
-			'desc'     => _x( 'The day in History', 'Today Module', GEDITORIAL_TEXTDOMAIN ),
-			'dashicon' => 'calendar-alt',
+			'name'  => 'today',
+			'title' => _x( 'Today', 'Today Module', GEDITORIAL_TEXTDOMAIN ),
+			'desc'  => _x( 'The day in History', 'Today Module', GEDITORIAL_TEXTDOMAIN ),
+			'icon'  => 'calendar-alt',
 		);
 	}
 

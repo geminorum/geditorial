@@ -10,10 +10,10 @@ class gEditorialLike extends gEditorialModuleCore
 	public static function module()
 	{
 		return array(
-			'name'     => 'like',
-			'title'    => _x( 'Like', 'Like Module', GEDITORIAL_TEXTDOMAIN ),
-			'desc'     => _x( 'Like Button for Posts and Comments', 'Like Module', GEDITORIAL_TEXTDOMAIN ),
-			'dashicon' => 'heart',
+			'name'  => 'like',
+			'title' => _x( 'Like', 'Like Module', GEDITORIAL_TEXTDOMAIN ),
+			'desc'  => _x( 'Like Button for Posts and Comments', 'Like Module', GEDITORIAL_TEXTDOMAIN ),
+			'icon'  => 'heart',
 		);
 	}
 

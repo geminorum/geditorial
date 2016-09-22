@@ -9,7 +9,7 @@ class gEditorialReshare extends gEditorialModuleCore
 			'name'      => 'reshare',
 			'title'     => _x( 'Reshare', 'Reshare Module', GEDITORIAL_TEXTDOMAIN ),
 			'desc'      => _x( 'Contents from Other Sources', 'Reshare Module', GEDITORIAL_TEXTDOMAIN ),
-			'dashicon'  => 'external',
+			'icon'      => 'external',
 			'configure' => FALSE,
 		);
 	}
@@ -95,7 +95,7 @@ class gEditorialReshare extends gEditorialModuleCore
 			'taxonomies' => array(
 				$this->constant( 'reshare_cat' ) => array(
 					'column'     => 'taxonomy-'.$this->constant( 'reshare_cat' ),
-					'dashicon'   => $this->module->dashicon,
+					'icon'       => $this->module->icon,
 					'title_attr' => $this->get_column_title( 'tweaks', 'reshare_cat' ),
 				),
 			),

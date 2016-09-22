@@ -13,10 +13,10 @@ class gEditorialMagazine extends gEditorialModuleCore
 	public static function module()
 	{
 		return array(
-			'name'      => 'magazine',
-			'title'     => _x( 'Magazine', 'Magazine Module', GEDITORIAL_TEXTDOMAIN ),
-			'desc'      => _x( 'Issue Management for Magazines', 'Magazine Module', GEDITORIAL_TEXTDOMAIN ),
-			'dashicon'  => 'book',
+			'name'  => 'magazine',
+			'title' => _x( 'Magazine', 'Magazine Module', GEDITORIAL_TEXTDOMAIN ),
+			'desc'  => _x( 'Issue Management for Magazines', 'Magazine Module', GEDITORIAL_TEXTDOMAIN ),
+			'icon'  => 'book',
 		);
 	}
 
@@ -333,18 +333,18 @@ class gEditorialMagazine extends gEditorialModuleCore
 			'taxonomies' => array(
 				$this->constant( 'issue_tax' ) => array(
 					'column'     => 'taxonomy-'.$this->constant( 'issue_tax' ),
-					'dashicon'   => 'book',
+					'icon'       => 'book',
 					'title_attr' => $this->get_string( 'name', 'issue_tax', 'labels' ),
 					'title_attr' => $this->get_column_title( 'tweaks', 'issue_tax' ),
 				),
 				$this->constant( 'span_tax' ) => array(
 					'column'     => 'taxonomy-'.$this->constant( 'span_tax' ),
-					'dashicon'   => 'backup',
+					'icon'       => 'backup',
 					'title_attr' => $this->get_column_title( 'tweaks', 'span_tax' ),
 				),
 				$this->constant( 'section_tax' ) => array(
 					'column'     => 'taxonomy-'.$this->constant( 'section_tax' ),
-					'dashicon'   => 'category',
+					'icon'       => 'category',
 					'title_attr' => $this->get_column_title( 'tweaks', 'section_tax' ),
 				),
 			),

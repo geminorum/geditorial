@@ -7,10 +7,10 @@ class gEditorialEntry extends gEditorialModuleCore
 	public static function module()
 	{
 		return array(
-			'name'     => 'entry',
-			'title'    => _x( 'Entry', 'Entry Module', GEDITORIAL_TEXTDOMAIN ),
-			'desc'     => _x( 'Wiki-like Posts Entries', 'Entry Module', GEDITORIAL_TEXTDOMAIN ),
-			'dashicon' => 'media-document',
+			'name'  => 'entry',
+			'title' => _x( 'Entry', 'Entry Module', GEDITORIAL_TEXTDOMAIN ),
+			'desc'  => _x( 'Wiki-like Posts Entries', 'Entry Module', GEDITORIAL_TEXTDOMAIN ),
+			'icon'  => 'media-document',
 		);
 	}
 

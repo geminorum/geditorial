@@ -6,10 +6,10 @@ class gEditorialContest extends gEditorialModuleCore
 	public static function module()
 	{
 		return array(
-			'name'     => 'contest',
-			'title'    => _x( 'Contest', 'Contest Module', GEDITORIAL_TEXTDOMAIN ),
-			'desc'     => _x( 'Contest Management', 'Contest Module', GEDITORIAL_TEXTDOMAIN ),
-			'dashicon' => 'megaphone',
+			'name'  => 'contest',
+			'title' => _x( 'Contest', 'Contest Module', GEDITORIAL_TEXTDOMAIN ),
+			'desc'  => _x( 'Contest Management', 'Contest Module', GEDITORIAL_TEXTDOMAIN ),
+			'icon'  => 'megaphone',
 		);
 	}
 
@@ -229,22 +229,22 @@ class gEditorialContest extends gEditorialModuleCore
 			'taxonomies' => array(
 				$this->constant( 'contest_cat' ) => array(
 					'column'     => 'taxonomy-'.$this->constant( 'contest_cat' ),
-					'dashicon'   => 'category',
+					'icon'       => 'category',
 					'title_attr' => $this->get_string( 'name', 'contest_cat', 'labels' ),
 				),
 				$this->constant( 'contest_tax' ) => array(
 					'column'     => 'taxonomy-'.$this->constant( 'contest_tax' ),
-					'dashicon'   => 'megaphone',
+					'icon'       => 'megaphone',
 					'title_attr' => $this->get_string( 'name', 'contest_tax', 'labels' ),
 				),
 				$this->constant( 'apply_cat' ) => array(
 					'column'     => 'taxonomy-'.$this->constant( 'apply_cat' ),
-					'dashicon'   => 'category',
+					'icon'       => 'category',
 					'title_attr' => $this->get_string( 'name', 'apply_cat', 'labels' ),
 				),
 				$this->constant( 'apply_status_tax' ) => array(
 					'column'     => 'taxonomy-'.$this->constant( 'apply_status_tax' ),
-					'dashicon'   => 'portfolio',
+					'icon'       => 'portfolio',
 					'title_attr' => $this->get_string( 'name', 'apply_status_tax', 'labels' ),
 				),
 			),

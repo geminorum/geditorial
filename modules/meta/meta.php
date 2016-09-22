@@ -13,10 +13,10 @@ class gEditorialMeta extends gEditorialModuleCore
 	public static function module()
 	{
 		return array(
-			'name'     => 'meta',
-			'title'    => _x( 'Meta', 'Meta Module', GEDITORIAL_TEXTDOMAIN ),
-			'desc'     => _x( 'Metadata, magazine style.', 'Meta Module', GEDITORIAL_TEXTDOMAIN ),
-			'dashicon' => 'tag',
+			'name'  => 'meta',
+			'title' => _x( 'Meta', 'Meta Module', GEDITORIAL_TEXTDOMAIN ),
+			'desc'  => _x( 'Metadata, magazine style.', 'Meta Module', GEDITORIAL_TEXTDOMAIN ),
+			'icon'  => 'tag',
 		);
 	}
 
@@ -133,7 +133,7 @@ class gEditorialMeta extends gEditorialModuleCore
 			'taxonomies' => array(
 				$this->constant( 'ct_tax' ) => array(
 					'column'     => 'taxonomy-'.$this->constant( 'ct_tax' ),
-					'dashicon'   => 'admin-post',
+					'icon'       => 'admin-post',
 					'title_attr' => $this->get_string( 'name', 'ct_tax', 'labels' ),
 				),
 			),

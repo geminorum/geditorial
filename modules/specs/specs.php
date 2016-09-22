@@ -9,10 +9,10 @@ class gEditorialSpecs extends gEditorialModuleCore
 	public static function module()
 	{
 		return array(
-			'name'     => 'specs',
-			'title'    => _x( 'Specifications', 'Specs Module', GEDITORIAL_TEXTDOMAIN ),
-			'desc'     => _x( 'Post Specifications Management', 'Specs Module', GEDITORIAL_TEXTDOMAIN ),
-			'dashicon' => 'editor-ul',
+			'name'  => 'specs',
+			'title' => _x( 'Specifications', 'Specs Module', GEDITORIAL_TEXTDOMAIN ),
+			'desc'  => _x( 'Post Specifications Management', 'Specs Module', GEDITORIAL_TEXTDOMAIN ),
+			'icon'  => 'editor-ul',
 		);
 	}
 

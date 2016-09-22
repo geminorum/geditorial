@@ -437,8 +437,8 @@ class gEditorialSettings extends gEditorialModuleCore
 
 				echo '<div class="'.implode( ' ', $classes ).'" id="'.$module->settings.'">';
 
-				if ( $module->dashicon )
-					echo '<div class="dashicons dashicons-'.$module->dashicon.'"></div>';
+				if ( $module->icon )
+					echo '<div class="dashicons dashicons-'.$module->icon.'"></div>';
 
 				echo '<form method="get" action="'.get_admin_url( NULL, 'options.php' ).'">';
 

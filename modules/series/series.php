@@ -9,10 +9,10 @@ class gEditorialSeries extends gEditorialModuleCore
 	public static function module()
 	{
 		return array(
-			'name'     => 'series',
-			'title'    => _x( 'Series', 'Series Module', GEDITORIAL_TEXTDOMAIN ),
-			'desc'     => _x( 'Post Series Management', 'Series Module', GEDITORIAL_TEXTDOMAIN ),
-			'dashicon' => 'editor-ol',
+			'name'  => 'series',
+			'title' => _x( 'Series', 'Series Module', GEDITORIAL_TEXTDOMAIN ),
+			'desc'  => _x( 'Post Series Management', 'Series Module', GEDITORIAL_TEXTDOMAIN ),
+			'icon'  => 'editor-ol',
 		);
 	}
 
@@ -123,7 +123,7 @@ class gEditorialSeries extends gEditorialModuleCore
 			'taxonomies' => array(
 				$this->constant( 'series_tax' ) => array(
 					'column'     => 'taxonomy-'.$this->constant( 'series_tax' ),
-					'dashicon'   => 'editor-ol',
+					'icon'       => $this->module->icon,
 					'title_attr' => $this->get_string( 'name', 'series_tax', 'labels' ),
 				),
 			),

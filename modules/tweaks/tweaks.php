@@ -9,10 +9,10 @@ class gEditorialTweaks extends gEditorialModuleCore
 	public static function module()
 	{
 		return array(
-			'name'     => 'tweaks',
-			'title'    => _x( 'Tweaks', 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ),
-			'desc'     => _x( 'Admin UI Enhancement', 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ),
-			'dashicon' => 'admin-settings',
+			'name'  => 'tweaks',
+			'title' => _x( 'Tweaks', 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ),
+			'desc'  => _x( 'Admin UI Enhancement', 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ),
+			'icon'  => 'admin-settings',
 		);
 	}
 
@@ -91,12 +91,12 @@ class gEditorialTweaks extends gEditorialModuleCore
 			'taxonomies' => array(
 				'category' => array(
 					'column'     => 'categories',
-					'dashicon'   => 'category',
+					'icon'       => 'category',
 					'title_attr' => _x( 'Categories', 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ),
 				),
 				'post_tag' => array(
 					'column'     => 'tags',
-					'dashicon'   => 'tag',
+					'icon'       => 'tag',
 					'title_attr' => _x( 'Tags', 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ),
 				),
 			),
@@ -249,13 +249,13 @@ class gEditorialTweaks extends gEditorialModuleCore
 
 					$before = '<div class="-row tweaks-'.$taxonomy.'">';
 
-					if ( $dashicon = $this->get_string( 'dashicon', $taxonomy, 'taxonomies', 'tag' ) )
+					if ( $icon = $this->get_string( 'icon', $taxonomy, 'taxonomies', 'tag' ) )
 						$before .= self::html( 'a', array(
 							'href'   => self::getEditTaxLink( $taxonomy ),
 							'title'  => $this->get_string( 'title_attr', $taxonomy, 'taxonomies', $taxonomy ),
 							'class'  => array( '-icon', '-link' ),
 							'target' => '_blank',
-						), '<span class="dashicons dashicons-'.$dashicon.'"></span>' );
+						), '<span class="dashicons dashicons-'.$icon.'"></span>' );
 
 					gEditorialHelper::getTermsEditRow( $post_id,
 						$post->post_type, $taxonomy, $before, '</div>' );

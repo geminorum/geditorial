@@ -6,10 +6,10 @@ class gEditorialDrafts extends gEditorialModuleCore
 	public static function module()
 	{
 		return array(
-			'name'     => 'drafts',
-			'title'    => _x( 'Drafts', 'Drafts Module', GEDITORIAL_TEXTDOMAIN ),
-			'desc'     => _x( 'Adds a dropdown to the admin bar so that you can quickly access your draft blog posts.', 'Drafts Module', GEDITORIAL_TEXTDOMAIN ),
-			'dashicon' => 'filter',
+			'name'  => 'drafts',
+			'title' => _x( 'Drafts', 'Drafts Module', GEDITORIAL_TEXTDOMAIN ),
+			'desc'  => _x( 'Adds a dropdown to the admin bar so that you can quickly access your draft blog posts.', 'Drafts Module', GEDITORIAL_TEXTDOMAIN ),
+			'icon'  => 'filter',
 		);
 	}
 

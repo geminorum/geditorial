@@ -6,10 +6,10 @@ class gEditorialEvent extends gEditorialModuleCore
 	public static function module()
 	{
 		return array(
-			'name'     => 'event',
-			'title'    => _x( 'Event', 'Event Module', GEDITORIAL_TEXTDOMAIN ),
-			'desc'     => _x( 'Events Integrated', 'Event Module', GEDITORIAL_TEXTDOMAIN ),
-			'dashicon' => 'calendar-alt',
+			'name'  => 'event',
+			'title' => _x( 'Event', 'Event Module', GEDITORIAL_TEXTDOMAIN ),
+			'desc'  => _x( 'Events Integrated', 'Event Module', GEDITORIAL_TEXTDOMAIN ),
+			'icon'  => 'calendar-alt',
 		);
 	}
 
@@ -223,22 +223,22 @@ class gEditorialEvent extends gEditorialModuleCore
 			'taxonomies' => array(
 				$this->constant( 'event_tag' ) => array(
 					'column'     => 'taxonomy-'.$this->constant( 'event_tag' ),
-					'dashicon'   => 'tag',
+					'icon'       => 'tag',
 					'title_attr' => $this->get_column_title( 'tweaks', 'event_tag' ),
 				),
 				$this->constant( 'event_cat' ) => array(
 					'column'     => 'taxonomy-'.$this->constant( 'event_cat' ),
-					'dashicon'   => 'category',
+					'icon'       => 'category',
 					'title_attr' => $this->get_column_title( 'tweaks', 'event_cat' ),
 				),
 				$this->constant( 'cal_tax' ) => array(
 					'column'     => 'taxonomy-'.$this->constant( 'cal_tax' ),
-					'dashicon'   => 'calendar',
+					'icon'       => 'calendar',
 					'title_attr' => $this->get_column_title( 'tweaks', 'cal_tax' ),
 				),
 				$this->constant( 'venue_tax' ) => array(
 					'column'     => 'taxonomy-'.$this->constant( 'venue_tax' ),
-					'dashicon'   => 'location',
+					'icon'       => 'location',
 					'title_attr' => $this->get_column_title( 'tweaks', 'venue_tax' ),
 				),
 			),

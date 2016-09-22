@@ -6,10 +6,10 @@ class gEditorialAudit extends gEditorialModuleCore
 	public static function module()
 	{
 		return array(
-			'name'     => 'audit',
-			'title'    => _x( 'Audit', 'Audit Module', GEDITORIAL_TEXTDOMAIN ),
-			'desc'     => _x( 'Content Inventory Tools', 'Audit Module', GEDITORIAL_TEXTDOMAIN ),
-			'dashicon' => 'visibility',
+			'name'  => 'audit',
+			'title' => _x( 'Audit', 'Audit Module', GEDITORIAL_TEXTDOMAIN ),
+			'desc'  => _x( 'Content Inventory Tools', 'Audit Module', GEDITORIAL_TEXTDOMAIN ),
+			'icon'  => 'visibility',
 		);
 	}
 
@@ -163,7 +163,7 @@ class gEditorialAudit extends gEditorialModuleCore
 			'taxonomies' => array(
 				$this->constant( 'audit_tax' ) => array(
 					'column'     => 'taxonomy-'.$this->constant( 'audit_tax' ),
-					'dashicon'   => $this->module->dashicon,
+					'icon'       => $this->module->icon,
 					'title_attr' => $this->get_column_title( 'tweaks', 'audit_tax' ),
 				),
 			),

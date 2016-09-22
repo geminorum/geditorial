@@ -9,10 +9,10 @@ class gEditorialEstimated extends gEditorialModuleCore
 	public static function module()
 	{
 		return array(
-			'name'     => 'estimated',
-			'title'    => _x( 'Estimated', 'Estimated Module', GEDITORIAL_TEXTDOMAIN ),
-			'desc'     => _x( 'Calculates an average required time to complete reading a post.', 'Estimated Module', GEDITORIAL_TEXTDOMAIN ),
-			'dashicon' => 'clock',
+			'name'  => 'estimated',
+			'title' => _x( 'Estimated', 'Estimated Module', GEDITORIAL_TEXTDOMAIN ),
+			'desc'  => _x( 'Calculates an average required time to complete reading a post.', 'Estimated Module', GEDITORIAL_TEXTDOMAIN ),
+			'icon'  => 'clock',
 		);
 	}
 

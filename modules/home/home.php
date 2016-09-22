@@ -6,10 +6,10 @@ class gEditorialHome extends gEditorialModuleCore
 	public static function module()
 	{
 		return array(
-			'name'     => 'home',
-			'title'    => _x( 'Home', 'Home Module', GEDITORIAL_TEXTDOMAIN ),
-			'desc'     => _x( 'Home Page Customized', 'Home Module', GEDITORIAL_TEXTDOMAIN ),
-			'dashicon' => 'admin-home',
+			'name'  => 'home',
+			'title' => _x( 'Home', 'Home Module', GEDITORIAL_TEXTDOMAIN ),
+			'desc'  => _x( 'Home Page Customized', 'Home Module', GEDITORIAL_TEXTDOMAIN ),
+			'icon'  => 'admin-home',
 		);
 	}
 
