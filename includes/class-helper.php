@@ -61,35 +61,35 @@ class gEditorialHelper extends gEditorialBaseCore
 
 	public static function getTermsEditRow( $post_id, $post_type, $taxonomy, $before = '', $after = '' )
 	{
+		if ( ! $terms = get_the_terms( $post_id, $taxonomy ) )
+			return;
+
+		$list = array();
 		$taxonomy_object = get_taxonomy( $taxonomy );
 
-		if ( $terms = get_the_terms( $post_id, $taxonomy ) ) {
+		foreach ( $terms as $term ) {
 
-			$out = array();
+			$query = array();
 
-			foreach ( $terms as $t ) {
+			if ( 'post' != $post_type )
+				$query['post_type'] = $post_type;
 
-				$query = array();
+			if ( $taxonomy_object->query_var ) {
+				$query[$taxonomy_object->query_var] = $term->slug;
 
-				if ( 'post' != $post_type )
-					$query['post_type'] = $post_type;
-
-				if ( $taxonomy_object->query_var ) {
-					$query[$taxonomy_object->query_var] = $t->slug;
-
-				} else {
-					$query['taxonomy'] = $taxonomy;
-					$query['term']     = $t->slug;
-				}
-
-				$out[] = sprintf( '<a href="%s">%s</a>',
-					esc_url( add_query_arg( $query, 'edit.php' ) ),
-					esc_html( sanitize_term_field( 'name', $t->name, $t->term_id, $taxonomy, 'display' ) )
-				);
+			} else {
+				$query['taxonomy'] = $taxonomy;
+				$query['term']     = $term->slug;
 			}
 
-			echo $before.join( _x( ', ', 'Module Helper: Term Seperator', GEDITORIAL_TEXTDOMAIN ), $out ).$after;
+			$list[] = self::html( 'a', array(
+				'href'  => add_query_arg( $query, 'edit.php' ),
+				'title' => $term->slug,
+				'class' => '-term',
+			), esc_html( sanitize_term_field( 'name', $term->name, $term->term_id, $taxonomy, 'display' ) ) );
 		}
+
+		echo $before.join( _x( ', ', 'Module Helper: Term Seperator', GEDITORIAL_TEXTDOMAIN ), $list ).$after;
 	}
 
 	public static function getAuthorsEditRow( $authors, $post_type = 'post', $before = '', $after = '' )
