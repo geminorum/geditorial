@@ -494,6 +494,18 @@ class gEditorialModuleCore extends gEditorialBaseCore
 		);
 	}
 
+	protected function submit_button( $name = '', $primary = FALSE, $text = NULL, $atts = array() )
+	{
+		if ( $name && is_null( $text ) )
+			$text = $this->get_string( $name, 'buttons', 'settings' );
+
+		if ( $primary )
+			$atts['default'] = 'default';
+
+		echo get_submit_button( $text, ( $primary ? 'primary' : 'secondary' ), $name, FALSE, $atts );
+		echo '&nbsp;&nbsp;';
+	}
+
 	// DEFAULT METHOD
 	public function append_sub( $subs, $page = 'settings' )
 	{
