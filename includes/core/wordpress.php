@@ -153,14 +153,98 @@ class gEditorialWordPress extends gEditorialBaseCore
 		return $counts;
 	}
 
-	public static function count_posts_by_author()
+	// ADOPTED FROM: wp_count_posts()
+	// EDITED: 9/23/2016, 4:58:11 AM
+	public static function countPostsByPosttype( $posttype = 'post', $user_id = 0, $period = array() )
 	{
+		$key = md5( $posttype.'_'.$user_id );
+		$counts = wp_cache_get( $key, 'counts' );
 
+		if ( FALSE !== $counts )
+			return $counts;
+
+		global $wpdb;
+
+		$counts = array_fill_keys( get_post_stati(), 0 );
+		$author = $user_id ? $wpdb->prepare( "AND post_author = %d", $user_id ) : '';
+		$date   = '';
+
+		if ( ! empty( $period[0] ) )
+			$date .= " AND post_date >='$period[0]'";
+
+		if ( ! empty( $period[1] ) )
+			$date .= " AND post_date <='$period[1]'";
+
+		$query = $wpdb->prepare("
+			SELECT post_status, COUNT( * ) AS total
+			FROM {$wpdb->posts}
+			WHERE post_type = %s
+			{$author}
+			{$date}
+			GROUP BY post_status
+		", $posttype );
+
+		foreach ( (array) $wpdb->get_results( $query, ARRAY_A ) as $row )
+			$counts[$row['post_status']] = $row['total'];
+
+		wp_cache_set( $key, $counts, 'counts' );
+
+		return $counts;
 	}
 
-	public static function count_posts_by_date()
+	public static function getPosttypeMonths( $post_type = 'post', $args = array(), $user_id = 0 )
 	{
+		global $wpdb, $wp_locale;
 
+		$author = $user_id ? $wpdb->prepare( "AND post_author = %d", $user_id ) : '';
+
+		$extra_checks = "AND post_status != 'auto-draft'";
+
+		if ( ! isset( $args['post_status'] )
+			|| 'trash' !== $args['post_status'] )
+				$extra_checks .= " AND post_status != 'trash'";
+
+		else if ( isset( $args['post_status'] ) )
+			$extra_checks = $wpdb->prepare( ' AND post_status = %s', $args['post_status'] );
+
+		$query = $wpdb->prepare( "
+			SELECT DISTINCT YEAR( post_date ) AS year, MONTH( post_date ) AS month
+			FROM $wpdb->posts
+			WHERE post_type = %s
+			{$author}
+			{$extra_checks}
+			ORDER BY post_date DESC
+		", $post_type );
+
+		$key = md5( $query );
+		$cache = wp_cache_get( 'wp_get_archives' , 'general' );
+
+		if ( ! isset( $cache[$key] ) ) {
+			$months = $wpdb->get_results( $query );
+			$cache[$key] = $months;
+			wp_cache_set( 'wp_get_archives', $cache, 'general' );
+		} else {
+			$months = $cache[$key];
+		}
+
+		$count = count( $months );
+		if ( ! $count || ( 1 == $count && 0 == $months[0]->month ) )
+			return FALSE;
+
+		$list = array();
+
+		foreach ( $months as $row ) {
+
+			if ( 0 == $row->year )
+				continue;
+
+			$year  = $row->year;
+			$month = zeroise( $row->month, 2 );
+
+			$list[$year.$month] = sprintf( '%1$s %2$s', $wp_locale->get_month( $month ), $year );
+		}
+
+		return $list;
 	}
 
 	public static function currentPostType( $default = NULL )

@@ -519,6 +519,28 @@ class gEditorialHelper extends gEditorialBaseCore
 		return $pre;
 	}
 
+	public static function getPosttypeMonths( $calendar_type, $post_type = 'post', $args = array(), $user_id = 0 )
+	{
+		$callback = array( 'gEditorialWordPress', 'getPosttypeMonths' );
+
+		if ( 'persian' == $calendar_type
+			&& is_callable( array( 'gPersianDateDate', 'getPosttypeMonths' ) ) )
+				$callback = array( 'gPersianDateDate', 'getPosttypeMonths' );
+
+		return call_user_func_array( $callback, array( $post_type, $args, $user_id ) );
+	}
+
+	public static function monthFirstAndLast( $calendar_type, $year, $month, $format = 'Y-m-d H:i:s' )
+	{
+		$callback = array( 'gEditorialDate', 'monthFirstAndLast' );
+
+		if ( 'persian' == $calendar_type
+			&& is_callable( array( 'gPersianDateDate', 'monthFirstAndLast' ) ) )
+				$callback = array( 'gPersianDateDate', 'monthFirstAndLast' );
+
+		return call_user_func_array( $callback, array( $year, $month, $format ) );
+	}
+
 	// NOT USED
 	// returns array of post date in given cal
 	public static function getTheDayByPost( $post, $default_type = 'gregorian' )
