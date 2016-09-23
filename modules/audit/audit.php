@@ -38,6 +38,9 @@ class gEditorialAudit extends gEditorialModuleCore
 			'misc' => array(
 				'tweaks_column_title' => _x( 'Audit Attributes', 'Audit Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
 			),
+			'settings' => array(
+				'install_def_audit_tax' => _x( 'Install Default Attributes', 'Audit Module: Setting Button', GEDITORIAL_TEXTDOMAIN ),
+			),
 			'noops' => array(
 				'audit_tax' => _nx_noop( 'Audit Attribute', 'Audit Attributes', 'Audit Module: Noop', GEDITORIAL_TEXTDOMAIN ),
 			),
@@ -152,7 +155,7 @@ class gEditorialAudit extends gEditorialModuleCore
 			$this->insert_default_terms( 'audit_tax' );
 
 		parent::register_settings( $page );
-		$this->register_settings_button( 'install_def_audit_tax', _x( 'Install Default Attributes', 'Audit Module', GEDITORIAL_TEXTDOMAIN ) );
+		$this->register_settings_button( 'install_def_audit_tax' );
 	}
 
 	public function tweaks_strings( $strings )

@@ -501,8 +501,11 @@ class gEditorialModuleCore extends gEditorialBaseCore
 			self::dump( $this->options );
 	}
 
-	public function register_settings_button( $key, $value, $atts = array(), $type = 'secondary' )
+	public function register_settings_button( $key, $value = NULL, $atts = array(), $type = 'secondary' )
 	{
+		if ( is_null( $value ) )
+			$value = $this->get_string( $key, 'buttons', 'settings' );
+
 		$this->settings_buttons[$key] = array(
 			'value' => $value,
 			'atts'  => $atts,

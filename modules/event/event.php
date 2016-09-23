@@ -74,6 +74,10 @@ class gEditorialEvent extends gEditorialModuleCore
 					'tweaks_column_title' => _x( 'Event Calendars', 'Event Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
 				),
 			),
+			'settings' => array(
+				'install_def_event_tag' => _x( 'Install Default Event Types', 'Event Module: Setting Button', GEDITORIAL_TEXTDOMAIN ),
+				'install_def_type_tax'  => _x( 'Install Default Calendar Types', 'Event Module: Setting Button', GEDITORIAL_TEXTDOMAIN ),
+			),
 			'noops' => array(
 				'event_cpt' => _nx_noop( 'Event',          'Events',           'Event Module: Noop', GEDITORIAL_TEXTDOMAIN ),
 				'event_tag' => _nx_noop( 'Event Type',     'Event Types',      'Event Module: Noop', GEDITORIAL_TEXTDOMAIN ),
@@ -204,10 +208,10 @@ class gEditorialEvent extends gEditorialModuleCore
 
 		parent::register_settings( $page );
 
-		$this->register_settings_button( 'install_def_event_tag', _x( 'Install Default Event Types', 'Event Module', GEDITORIAL_TEXTDOMAIN ) );
+		$this->register_settings_button( 'install_def_event_tag' );
 
 		if ( $this->get_setting( 'startend_support', TRUE ) )
-			$this->register_settings_button( 'install_def_type_tax', _x( 'Install Default Calendar Types', 'Event Module', GEDITORIAL_TEXTDOMAIN ) );
+			$this->register_settings_button( 'install_def_type_tax' );
 	}
 
 	public function gpeople_support( $post_types )

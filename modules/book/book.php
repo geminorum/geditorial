@@ -79,6 +79,9 @@ class gEditorialBook extends gEditorialModuleCore
 					'meta_box_title' => _x( 'Summary', 'Book Module: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
 				),
 			),
+			'settings' => array(
+				'install_def_size_tax' => _x( 'Install Default Sizes', 'Book Module: Setting Button', GEDITORIAL_TEXTDOMAIN ),
+			),
 			'noops' => array(
 				'publication_cpt' => _nx_noop( 'Publication',        'Publications',         'Book Module: Noop', GEDITORIAL_TEXTDOMAIN ),
 				'subject_tax'     => _nx_noop( 'Subject',            'Subjects',             'Book Module: Noop', GEDITORIAL_TEXTDOMAIN ),
@@ -313,7 +316,7 @@ class gEditorialBook extends gEditorialModuleCore
 			$this->insert_default_terms( 'size_tax' );
 
 		parent::register_settings( $page );
-		$this->register_settings_button( 'install_def_size_tax', _x( 'Install Default Sizes', 'Book Module', GEDITORIAL_TEXTDOMAIN ) );
+		$this->register_settings_button( 'install_def_size_tax' );
 	}
 
 	public function gpeople_support( $post_types )

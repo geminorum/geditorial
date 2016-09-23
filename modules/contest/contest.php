@@ -56,6 +56,9 @@ class gEditorialContest extends gEditorialModuleCore
 				),
 				'meta_box_title' => _x( 'Contests', 'Contest Module', GEDITORIAL_TEXTDOMAIN ),
 			),
+			'settings' => array(
+				'install_def_apply_status_tax' => _x( 'Install Default Apply Statuses', 'Contest Module: Setting Button', GEDITORIAL_TEXTDOMAIN ),
+			),
 			'noops' => array(
 				'contest_cpt'      => _nx_noop( 'Contest', 'Contests', 'Contest Module: Noop', GEDITORIAL_TEXTDOMAIN ),
 				'contest_tax'      => _nx_noop( 'Contest', 'Contests', 'Contest Module: Noop', GEDITORIAL_TEXTDOMAIN ),
@@ -191,7 +194,7 @@ class gEditorialContest extends gEditorialModuleCore
 			$this->insert_default_terms( 'apply_status_tax' );
 
 		parent::register_settings( $page );
-		$this->register_settings_button( 'install_def_apply_status_tax', _x( 'Install Default Apply Statuses', 'Contest Module', GEDITORIAL_TEXTDOMAIN ) );
+		$this->register_settings_button( 'install_def_apply_status_tax' );
 	}
 
 	// DISABLED
