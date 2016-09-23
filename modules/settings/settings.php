@@ -160,7 +160,7 @@ class gEditorialSettings extends gEditorialModuleCore
 		if ( 'general' == $sub ) {
 			if ( ! empty( $_POST ) ) {
 
-				$this->tools_check_referer( $sub );
+				$this->settings_check_referer( $sub, 'tools' );
 
 				$post = isset( $_POST[$this->module->group]['tools'] ) ? $_POST[$this->module->group]['tools'] : array();
 
@@ -231,7 +231,7 @@ class gEditorialSettings extends gEditorialModuleCore
 
 		echo '<form class="settings-form" method="post" action="">';
 
-			$this->tools_field_referer( $sub );
+			$this->settings_field_referer( $sub, 'tools' );
 
 			echo '<h3>'._x( 'Maintenance Tasks', 'Settings Module', GEDITORIAL_TEXTDOMAIN ).'</h3>';
 			echo '<table class="form-table">';

@@ -515,22 +515,20 @@ class gEditorialModuleCore extends gEditorialBaseCore
 		return FALSE;
 	}
 
-	// HELPER
-	protected function tools_field_referer( $sub = NULL )
+	protected function settings_field_referer( $sub = NULL, $page = 'settings' )
 	{
 		if ( is_null( $sub ) )
 			$sub = $this->module->name;
 
-		wp_nonce_field( 'geditorial-tools-'.$sub );
+		wp_nonce_field( 'geditorial-'.$page.'-'.$sub );
 	}
 
-	// HELPER
-	protected function tools_check_referer( $sub = NULL )
+	protected function settings_check_referer( $sub = NULL, $page = 'settings' )
 	{
 		if ( is_null( $sub ) )
 			$sub = $this->module->name;
 
-		check_admin_referer( 'geditorial-tools-'.$sub );
+		check_admin_referer( 'geditorial-'.$page.'-'.$sub );
 	}
 
 	public function settings_validate( $options )

@@ -790,7 +790,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 	{
 		echo '<form class="settings-form" method="post" action="">';
 
-			$this->tools_field_referer( $sub );
+			$this->settings_field_referer( $sub, 'tools' );
 
 			echo '<h3>'._x( 'Magazine Tools', 'Magazine Module', GEDITORIAL_TEXTDOMAIN ).'</h3>';
 			echo '<table class="form-table">';
@@ -850,7 +850,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 		if ( $this->module->name == $sub ) {
 			if ( ! empty( $_POST ) ) {
 
-				$this->tools_check_referer( $sub );
+				$this->settings_check_referer( $sub, 'tools' );
 
 				if ( isset( $_POST['issue_post_create'] ) ) {
 
