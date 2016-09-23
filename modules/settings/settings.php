@@ -30,7 +30,7 @@ class gEditorialSettings extends gEditorialModuleCore
 
 		$hook_reports = add_submenu_page(
 			'index.php',
-			_x( 'gEditorial Reports', 'Settings Module', GEDITORIAL_TEXTDOMAIN ),
+			_x( 'Editorial Reports', 'Settings Module', GEDITORIAL_TEXTDOMAIN ),
 			_x( 'Reports', 'Settings Module: Admin Reports Menu Title', GEDITORIAL_TEXTDOMAIN ),
 			'edit_others_posts',
 			'geditorial-reports',
@@ -48,7 +48,7 @@ class gEditorialSettings extends gEditorialModuleCore
 
 		$hook_tools = add_submenu_page(
 			$this->module->settings,
-			_x( 'gEditorial Tools', 'Settings Module', GEDITORIAL_TEXTDOMAIN ),
+			_x( 'Editorial Tools', 'Settings Module', GEDITORIAL_TEXTDOMAIN ),
 			_x( 'Tools', 'Settings Module: Admin Tools Menu Title', GEDITORIAL_TEXTDOMAIN ),
 			'manage_options',
 			'geditorial-tools',
@@ -93,7 +93,7 @@ class gEditorialSettings extends gEditorialModuleCore
 
 		echo '<div class="wrap geditorial-admin-wrap geditorial-reports geditorial-reports-'.$sub.'">';
 
-			gEditorialSettingsCore::headerTitle( _x( 'gEditorial Reports', 'Settings Module: Page Title', GEDITORIAL_TEXTDOMAIN ) );
+			gEditorialSettingsCore::headerTitle( _x( 'Editorial Reports', 'Settings Module: Page Title', GEDITORIAL_TEXTDOMAIN ) );
 			gEditorialSettingsCore::headerNav( $uri, $sub, $subs );
 			gEditorialSettingsCore::message( $messages );
 
@@ -124,7 +124,7 @@ class gEditorialSettings extends gEditorialModuleCore
 
 		echo '<div class="wrap geditorial-admin-wrap geditorial-tools geditorial-tools-'.$sub.'">';
 
-			gEditorialSettingsCore::headerTitle( _x( 'gEditorial Tools', 'Settings Module: Page Title', GEDITORIAL_TEXTDOMAIN ) );
+			gEditorialSettingsCore::headerTitle( _x( 'Editorial Tools', 'Settings Module: Page Title', GEDITORIAL_TEXTDOMAIN ) );
 			gEditorialSettingsCore::headerNav( $uri, $sub, $subs );
 			gEditorialSettingsCore::message( $messages );
 
