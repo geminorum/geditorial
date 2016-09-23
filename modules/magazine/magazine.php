@@ -862,7 +862,12 @@ class gEditorialMagazine extends gEditorialModuleCore
 					foreach ( $terms as $term_id => $term ) {
 						$issue_post_id = self::getPostIDbySlug( $term->slug, $this->constant( 'issue_cpt' ) ) ;
 						if ( FALSE === $issue_post_id )
-							$posts[] = self::newPostFromTerm( $term, $this->constant( 'issue_tax' ), $this->constant( 'issue_cpt' ) );
+							$posts[] = gEditorialWordPress::newPostFromTerm(
+								$term,
+								$this->constant( 'issue_tax' ),
+								$this->constant( 'issue_cpt' ),
+								gEditorialHelper::getEditorialUserID()
+							);
 					}
 
 					self::redirect( add_query_arg( array(

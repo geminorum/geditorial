@@ -313,6 +313,24 @@ class gEditorialHelper extends gEditorialBaseCore
 </script><?php
 	}
 
+	// TODO: add as general option
+	public static function getEditorialUserID( $fallback = TRUE )
+	{
+		if ( defined( 'GNETWORK_SITE_USER_ID' ) && constant( 'GNETWORK_SITE_USER_ID' ) )
+			return GNETWORK_SITE_USER_ID;
+
+		if ( function_exists( 'gtheme_get_option' ) ) {
+			$gtheme_user = gtheme_get_option( 'default_user', 0 );
+			if ( $gtheme_user )
+				return $gtheme_user;
+		}
+
+		if ( $fallback )
+			return get_current_user_id();
+
+		return 0;
+	}
+
 	// WP default sizes from options
 	public static function getWPImageSizes()
 	{

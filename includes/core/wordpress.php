@@ -41,6 +41,23 @@ class gEditorialWordPress extends gEditorialBaseCore
 		return $list;
 	}
 
+	public static function newPostFromTerm( $term, $taxonomy = 'category', $post_type = 'post', $user_id = 0 )
+	{
+		if ( ! is_object( $term ) && ! is_array( $term ) )
+			$term = get_term( $term, $taxonomy );
+
+		$new_post = array(
+			'post_title'   => $term->name,
+			'post_name'    => $term->slug,
+			'post_content' => $term->description,
+			'post_status'  => 'draft',
+			'post_author'  => $user_id ? $user_id : get_current_user_id(),
+			'post_type'    => $post_type,
+		);
+
+		return wp_insert_post( $new_post );
+	}
+
 	public static function prepareTerms( $taxonomy, $extra = array(), $terms = NULL, $key = 'term_id', $object = TRUE )
 	{
 		$new_terms = array();
