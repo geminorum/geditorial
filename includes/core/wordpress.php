@@ -3,6 +3,17 @@
 class gEditorialWordPress extends gEditorialBaseCore
 {
 
+	public static function getUsers( $all_fields = FALSE, $network = FALSE, $extra = array() )
+	{
+		$users = get_users( array_merge( array(
+			'blog_id' => ( $network ? '' : $GLOBALS['blog_id'] ),
+			'orderby' => 'display_name',
+			'fields'  => ( $all_fields ? 'all_with_meta' : 'all' ),
+		), $extra ) );
+
+		return self::reKey( $users, 'ID' );
+	}
+
 	// EDITED: 8/12/2016, 8:53:06 AM
 	public static function getPostTypes( $mod = 0, $args = array( 'public' => TRUE ) )
 	{

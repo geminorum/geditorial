@@ -923,6 +923,8 @@ class gEditorialModuleCore extends gEditorialBaseCore
 			'field'       => FALSE,
 			'values'      => array(),
 			'exclude'     => '',
+			'none_title'   => NULL, // select option none title
+			'none_value'   => NULL, // select option none value
 			'filter'      => FALSE, // will use via sanitize
 			'dir'         => FALSE,
 			'disabled'    => FALSE,
@@ -1116,6 +1118,34 @@ class gEditorialModuleCore extends gEditorialBaseCore
 					'sort_order'       => 'asc',
 					'post_status'      => 'publish,private,draft',
 				));
+
+			break;
+			case 'users' :
+
+				if ( ! is_null( $args['none_title'] ) ) {
+
+					$html .= self::html( 'option', array(
+						'value'    => is_null( $args['none_value'] ) ? FALSE : $args['none_value'],
+						'selected' => $value == $args['none_value'],
+					), esc_html( $args['none_title'] ) );
+				}
+
+				foreach ( gEditorialWordPress::getUsers() as $user_id => $user_object ) {
+
+					if ( in_array( $user_id, $exclude ) )
+						continue;
+
+					$html .= self::html( 'option', array(
+						'value'    => $user_id,
+						'selected' => $value == $user_id,
+					), esc_html( $user_object->display_name ) );
+				}
+
+				echo self::html( 'select', array(
+					'class' => $args['field_class'],
+					'name'  => $name,
+					'id'    => $id,
+				), $html );
 
 			break;
 			case 'button' :
