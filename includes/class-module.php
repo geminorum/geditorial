@@ -184,6 +184,22 @@ class gEditorialModuleCore extends gEditorialBaseCore
 		return $post_types;
 	}
 
+	public function list_post_types( $pre = NULL, $post_types = NULL )
+	{
+		if ( is_null( $pre ) )
+			$pre = array();
+
+		else if ( TRUE === $pre )
+			$pre = array( 'all' => _x( 'All PostTypes', 'Module Core', GEDITORIAL_TEXTDOMAIN ) );
+
+		$all = gEditorialWordPress::getPostTypes();
+
+		foreach ( $this->post_types( $post_types ) as $post_type )
+			$pre[$post_type] = empty( $all[$post_type] ) ? $post_type : $all[$post_type];
+
+		return $pre;
+	}
+
 	public function all_post_types( $exclude = TRUE )
 	{
 		$post_types = gEditorialWordPress::getPostTypes();
