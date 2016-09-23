@@ -1169,7 +1169,7 @@ class gEditorialModuleCore extends gEditorialBaseCore
 					$html .= self::html( 'option', array(
 						'value'    => $user_id,
 						'selected' => $value == $user_id,
-					), esc_html( $user_object->display_name ) );
+					), esc_html( sprintf( '%1$s (%2$s)', $user_object->display_name, $user_object->user_login ) ) );
 				}
 
 				echo self::html( 'select', array(
