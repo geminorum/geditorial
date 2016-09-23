@@ -31,7 +31,19 @@ class gEditorialHome extends gEditorialModuleCore
 
 	public function pre_get_posts( &$query )
 	{
-		if ( is_home() && $query->is_main_query() )
+		if ( ! $query->is_main_query() )
+			return;
+
+		if ( is_home() )
+			$query->set( 'post_type', $this->post_types() );
+
+		else if ( is_search() && empty( $query->query_vars['post_type'] ) )
+			$query->set( 'post_type', $this->post_types() );
+
+		else if ( is_archive() && empty( $query->query_vars['post_type'] ) )
+			$query->set( 'post_type', $this->post_types() );
+
+		else if ( is_feed() && empty( $query->query_vars['post_type'] ) )
 			$query->set( 'post_type', $this->post_types() );
 	}
 }
