@@ -92,6 +92,27 @@ class gEditorialHelper extends gEditorialBaseCore
 		}
 	}
 
+	public static function getAuthorsEditRow( $authors, $post_type = 'post', $before = '', $after = '' )
+	{
+		if ( ! count( $authors ) )
+			return;
+
+		$list = array();
+
+		foreach ( $authors as $author )
+			if ( $author_data = get_user_by( 'id', $author ) )
+				$list[] = self::html( 'a', array(
+					'href' => add_query_arg( array(
+						'post_type' => $post_type,
+						'author'    => $author,
+					), 'edit.php' ),
+					'title' => $author_data->user_login,
+					'class' => '-author',
+				), esc_html( $author_data->display_name ) );
+
+		echo $before.join( _x( ', ', 'Module Helper: Author Seperator', GEDITORIAL_TEXTDOMAIN ), $list ).$after;
+	}
+
 	public static function registerColorBox()
 	{
 		wp_register_style( 'jquery-colorbox', GEDITORIAL_URL.'assets/css/admin.colorbox.css', array(), '1.6.4', 'screen' );

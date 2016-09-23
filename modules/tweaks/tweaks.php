@@ -266,17 +266,25 @@ class gEditorialTweaks extends gEditorialModuleCore
 
 					$revisions = wp_get_post_revisions( $post_id, array( 'check_enabled' => FALSE ) );
 					$count     = count( $revisions );
+					$authors   = array_unique( array_map( function( $r ){
+						return $r->post_author;
+					}, $revisions ) );
 
 					if ( $count ) {
 
 						$edit = current_user_can( 'edit_post', key( $revisions ) );
 
 						echo '<div class="-row tweaks-revision-count">';
+
 							echo '<span class="-icon"><span class="dashicons dashicons-backup"></span></span>';
+
 							echo self::html( ( $edit ? 'a' : 'span' ), array(
 								'href'  => $edit ? get_edit_post_link( key( $revisions ) ) : FALSE,
 								'title' => $edit ? _x( 'View the last revision', 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ) : FALSE,
 							), sprintf( _nx( '%s Revision', '%s Revisions', $count, 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ), number_format_i18n( $count ) ) );
+
+							gEditorialHelper::getAuthorsEditRow( $authors, $post->post_type, ' <span class="-authors">(', ')</span>' );
+
 						echo '</div>';
 					}
 				}
