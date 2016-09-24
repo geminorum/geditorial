@@ -303,12 +303,13 @@ class gEditorialHelper extends gEditorialBaseCore
 	public static function printJSConfig( $args, $object = 'gEditorial' )
 	{
 		$args['api']   = defined( 'GNETWORK_AJAX_ENDPOINT' ) && GNETWORK_AJAX_ENDPOINT ? GNETWORK_AJAX_ENDPOINT : admin_url( 'admin-ajax.php' );
+		$args['dev']   = gEditorialWordPress::isDev();
 		$args['nonce'] = wp_create_nonce( 'geditorial' );
 
 	?> <script type="text/javascript">
 /* <![CDATA[ */
 	var <?php echo $object; ?> = <?php echo wp_json_encode( $args ); ?>;
-	<?php if ( self::isDev() ) echo 'console.log('.$object.');'; ?>
+	<?php if ( $args['dev'] ) echo 'console.log('.$object.');'; ?>
 /* ]]> */
 </script><?php
 	}
