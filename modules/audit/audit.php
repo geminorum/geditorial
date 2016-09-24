@@ -92,7 +92,7 @@ class gEditorialAudit extends gEditorialModuleCore
 
 	public function activity_box_end()
 	{
-		$terms = gEditorialHelper::getTerms( $tax = $this->constant( 'audit_tax' ), FALSE, TRUE, 'slug', array( 'hide_empty' => TRUE ) );
+		$terms = gEditorialHelper::getTerms( $this->constant( 'audit_tax' ), FALSE, TRUE, 'slug', array( 'hide_empty' => TRUE ) );
 
 		if ( ! count( $terms ) )
 			return;
@@ -115,9 +115,10 @@ class gEditorialAudit extends gEditorialModuleCore
 	private function get_summary( $counts, $terms, $user_id = 0, $wrap = 'ul', $list = 'li' )
 	{
 		$html = '';
-		$objects = array();
+		$tax  = $this->constant( 'audit_tax' );
+		$all  = gEditorialWordPress::getPostTypes( 3 );
 
-		$all = gEditorialWordPress::getPostTypes( 3 );
+		$objects = array();
 
 		foreach ( $counts as $term => $posts ) {
 
