@@ -1879,13 +1879,10 @@ class gEditorialModuleCore extends gEditorialBaseCore
 		if ( ! $terms )
 			return FALSE;
 
-		$template = current_user_can( $edit_cap ) ? '<a class="geditorial-glance-item -tax -taxonomy-'.$taxonomy.'" href="edit-tags.php?taxonomy=%3$s">%1$s %2$s</a>' : '%1$s %2$s';
-		$singular = $this->nooped( $tax_constant_key, 1 );
-		$nooped   = $this->nooped( $tax_constant_key, $terms );
+		$format = current_user_can( $edit_cap ) ? '<a class="geditorial-glance-item -tax -taxonomy-'.$taxonomy.'" href="edit-tags.php?taxonomy=%3$s">%1$s %2$s</a>' : '%1$s %2$s';
+		$text   = gEditorialHelper::getNooped( $terms, $this->nooped( $tax_constant_key, $terms ), $this->nooped( $tax_constant_key, 1 ) );
 
-		$text = sprintf( _x( '%1$s', 'Module Core: At a Glance: Nooped String', GEDITORIAL_TEXTDOMAIN ), $nooped, $singular );
-
-		return sprintf( $template, number_format_i18n( $terms ), $text, $taxonomy );
+		return sprintf( $format, number_format_i18n( $terms ), $text, $taxonomy );
 	}
 
 	public function column_thumb( $post_id, $size = array( 45, 72 ) )
