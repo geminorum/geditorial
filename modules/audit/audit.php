@@ -100,24 +100,28 @@ class gEditorialAudit extends gEditorialModuleCore
 		$user_id = 'all' == $this->get_setting( 'summary_scope', 'all' ) ? 0 : get_current_user_id();
 		$counts  = gEditorialWordPress::countPostsByTaxonomy( $terms, $this->post_types(), $user_id );
 
-		if ( ! count( $counts ) )
-			return;
-
-		$objects = array();
-		$all     = gEditorialWordPress::getPostTypes( 3 );
-
-		echo '<div class="geditorial-admin-wrap -audit"><h3>';
+		if ( $html = $this->get_summary( $counts, $terms, $user_id ) ) {
+			echo '<div class="geditorial-admin-wrap -audit"><h3>';
 
 			if ( $user_id )
 				_ex( 'Your Audit Summary', 'Audit Module', GEDITORIAL_TEXTDOMAIN );
 			else
 				_ex( 'Editorial Audit Summary', 'Audit Module', GEDITORIAL_TEXTDOMAIN );
 
-		echo '</h3><ul>';
+			echo '</h3>'.$html.'</div>';
+		}
+	}
+
+	private function get_summary( $counts, $terms, $user_id = 0, $wrap = 'ul', $list = 'li' )
+	{
+		$html = '';
+		$objects = array();
+
+		$all = gEditorialWordPress::getPostTypes( 3 );
 
 		foreach ( $counts as $term => $posts ) {
 
-			$name = sanitize_term_field( 'name', $terms[$term]->name, $terms[$term]->term_id, $tax, 'display' );
+			$name = sanitize_term_field( 'name', $terms[$term]->name, $terms[$term]->term_id, $terms[$term]->taxonomy, 'display' );
 
 			foreach ( $posts as $type => $count ) {
 
@@ -128,11 +132,11 @@ class gEditorialAudit extends gEditorialModuleCore
 					$objects[$type] = get_post_type_object( $type );
 
 				if ( $objects[$type] && current_user_can( $objects[$type]->cap->edit_posts ) )
-					$template = '<li class="%4$s-%1$s-count"><a href="edit.php?post_type=%1$s&%3$s=%4$s"><span>%5$s</span> %2$s</a> (%6$s)</li>';
+					$format = '<'.$list.' class="%4$s-%1$s-count"><a href="edit.php?post_type=%1$s&%3$s=%4$s"><span>%5$s</span> %2$s</a> (%6$s)</'.$list.'>';
 				else
-					$template = '<li class="%4$s-%1$s-count"><span>%5$s</span> %2$s</a> (%6$s)</li>';
+					$format = '<'.$list.' class="%4$s-%1$s-count"><span>%5$s</span> %2$s</a> (%6$s)</'.$list.'>';
 
-				vprintf( $template, array(
+				$html .= vsprintf( $format, array(
 					$type,
 					gEditorialHelper::getNooped( $count, $all[$type] ),
 					$tax,
@@ -143,7 +147,10 @@ class gEditorialAudit extends gEditorialModuleCore
 			}
 		}
 
-		echo '</ul></div>';
+		if ( $html )
+			return '<'.$wrap.'>'.$html.'</'.$wrap.'>';
+
+		return FALSE;
 	}
 
 	public function register_settings( $page = NULL )
