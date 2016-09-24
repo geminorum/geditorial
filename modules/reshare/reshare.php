@@ -10,7 +10,6 @@ class gEditorialReshare extends gEditorialModuleCore
 			'title'     => _x( 'Reshare', 'Reshare Module', GEDITORIAL_TEXTDOMAIN ),
 			'desc'      => _x( 'Contents from Other Sources', 'Reshare Module', GEDITORIAL_TEXTDOMAIN ),
 			'icon'      => 'external',
-			'configure' => FALSE,
 		);
 	}
 
@@ -21,6 +20,22 @@ class gEditorialReshare extends gEditorialModuleCore
 			'reshare_cpt_archive' => 'reshares',
 			'reshare_cat'         => 'reshare_cat',
 			'reshare_cat_slug'    => 'reshare-category',
+		);
+	}
+
+	protected function get_global_settings()
+	{
+		return array(
+			'_general' => array(
+				'insert_content',
+				array(
+					'field'       => 'before_source',
+					'type'        => 'text',
+					'title'       => _x( 'Before Source', 'Reshare Module: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Default text before the source link', 'Reshare Module: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'default'     => _x( 'Source:', 'Reshare Module: Setting Default', GEDITORIAL_TEXTDOMAIN ),
+				),
+			),
 		);
 	}
 
@@ -85,6 +100,17 @@ class gEditorialReshare extends gEditorialModuleCore
 			'hierarchical' => TRUE,
 			'meta_box_cb'  => NULL,
 		), 'reshare_cpt' );
+
+		if ( ! is_admin() ) {
+
+			$setting = $this->get_setting( 'insert_content', 'none' );
+
+			if ( 'before' == $setting )
+				add_action( 'gnetwork_themes_content_before', array( $this, 'insert_content' ), 50 );
+
+			else if ( 'after' == $setting )
+				add_action( 'gnetwork_themes_content_after', array( $this, 'insert_content' ), 50 );
+		}
 	}
 
 	public function tweaks_strings( $strings )
@@ -102,5 +128,17 @@ class gEditorialReshare extends gEditorialModuleCore
 		);
 
 		return self::recursiveParseArgs( $new, $strings );
+	}
+
+	public function insert_content( $content, $posttypes = NULL )
+	{
+		if ( is_singular( $this->constant( 'reshare_cpt' ) )
+			&& in_the_loop() && is_main_query() )
+				gEditorialReshareTemplates::source( array(
+					'before' => '<div class="geditorial-wrap -reshare -'
+						.$this->get_setting( 'insert_content', 'none' ).' entry-source">'
+						.$this->get_setting( 'before_source', '' ).' ',
+					'after' => '</div>',
+				) );
 	}
 }
