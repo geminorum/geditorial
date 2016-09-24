@@ -1,3 +1,11 @@
+### 3.8.1
+* main/helper: nooped strings for count format
+* main/settings: revising strings
+* module/audit: preventing empty reports
+* module/settings: module icon before settings title
+* module/reshare: source meta before/after content
+* module/book: p2p info on settings
+
 ### 3.8.0
 * core/base: moved to core folder
 * core/wordpress: new class
