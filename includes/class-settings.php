@@ -117,7 +117,7 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 			'field'       => 'insert_content',
 			'type'        => 'select',
 			'title'       => _x( 'Insert in Content', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'description' => _x( 'Put html automatically on the content', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+			'description' => _x( 'Puts automatically in the content', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 			'default'     => 'none',
 			'section'     => $section,
 			'values'      => array(
@@ -154,7 +154,7 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 			'field'       => 'before_content',
 			'type'        => 'textarea',
 			'title'       => _x( 'Before Content', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'description' => _x( 'Adds <code>HTML</code> content to the start of all the supported posttypes', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+			'description' => _x( 'Adds <code>HTML</code> to the start of all the supported posttypes', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 			'section'     => $section,
 		);
 	}
@@ -165,7 +165,7 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 			'field'       => 'after_content',
 			'type'        => 'textarea',
 			'title'       => _x( 'After Content', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'description' => _x( 'Adds <code>HTML</code> content to the end of all the supported posttypes', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+			'description' => _x( 'Adds <code>HTML</code> to the end of all the supported posttypes', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 			'section'     => $section,
 		);
 	}
