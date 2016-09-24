@@ -11,6 +11,11 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 		return _x( '&mdash; Select &mdash;', 'Settings: Dropdown Select Option None', GEDITORIAL_TEXTDOMAIN );
 	}
 
+	public static function infoP2P()
+	{
+		return _x( 'Connected via <code>P2P</code>', 'Settings: Setting Info', GEDITORIAL_TEXTDOMAIN );
+	}
+
 	public static function getSetting_editor_button( $section )
 	{
 		return array(
