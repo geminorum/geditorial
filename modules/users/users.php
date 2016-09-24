@@ -35,7 +35,7 @@ class gEditorialUsers extends gEditorialModuleCore
 				'show_option_all' => _x( 'All authors', 'Users Module: Show Option All', GEDITORIAL_TEXTDOMAIN ),
 			),
 			'settings' => array(
-				'posttype_stats' => _x( 'Query Stats', 'Users Module: Setting Info', GEDITORIAL_TEXTDOMAIN ),
+				'posttype_stats' => _x( 'Query Stats', 'Users Module: Setting Button', GEDITORIAL_TEXTDOMAIN ),
 			),
 		);
 	}

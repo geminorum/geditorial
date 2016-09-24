@@ -242,7 +242,7 @@ class gEditorialSettings extends gEditorialModuleCore
 			echo '<tr><th scope="row">'._x( 'Options', 'Settings Module', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
 
 				echo '<p>';
-					submit_button( _x( 'Upgrade Old Options', 'Settings Module', GEDITORIAL_TEXTDOMAIN ), 'secondary', 'upgrade_old_options', FALSE ); echo '&nbsp;&nbsp;';
+					$this->submit_button( 'upgrade_old_options', FALSE, _x( 'Upgrade Old Options', 'Settings Module: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
 
 					echo self::html( 'span', array(
 						'class' => 'description',
@@ -251,7 +251,7 @@ class gEditorialSettings extends gEditorialModuleCore
 
 				if ( self::isDev() || is_super_admin() ) {
 					echo '<br /><p>';
-						submit_button( _x( 'Delete All Options', 'Settings Module', GEDITORIAL_TEXTDOMAIN ), 'secondary', 'delete_all_options', FALSE ); echo '&nbsp;&nbsp;';
+						$this->submit_button( 'delete_all_options', FALSE, _x( 'Delete All Options', 'Settings Module: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
 
 						echo self::html( 'span', array(
 							'class' => 'description',
@@ -271,7 +271,7 @@ class gEditorialSettings extends gEditorialModuleCore
 				) );
 
 				echo '<p class="submit">';
-					submit_button( _x( 'Empty', 'Settings Module', GEDITORIAL_TEXTDOMAIN ), 'secondary', 'custom_fields_empty', FALSE ); echo '&nbsp;&nbsp;';
+					$this->submit_button( 'custom_fields_empty', FALSE, _x( 'Empty', 'Settings Module: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
 
 					echo self::html( 'span', array(
 						'class' => 'description',
@@ -301,7 +301,7 @@ class gEditorialSettings extends gEditorialModuleCore
 				) );
 
 				echo '<p class="submit">';
-					submit_button( _x( 'Convert', 'Settings Module', GEDITORIAL_TEXTDOMAIN ), 'secondary', 'orphaned_terms', FALSE ); echo '&nbsp;&nbsp;';
+					$this->submit_button( 'orphaned_terms', FALSE, _x( 'Convert', 'Settings Module: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
 
 					echo self::html( 'span', array(
 						'class' => 'description',

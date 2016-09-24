@@ -72,6 +72,11 @@ class gEditorialMeta extends gEditorialModuleCore
 				'meta_box_title'      => _x( 'Metadata', 'Meta Module: Meta Box Title', GEDITORIAL_TEXTDOMAIN ),
 				'meta_box_action'     => _x( 'Configure', 'Meta Module: Meta Box Action Title', GEDITORIAL_TEXTDOMAIN ),
 			),
+			'settings' => array(
+				'custom_fields_check'   => _x( 'Check', 'Meta Module: Setting Button', GEDITORIAL_TEXTDOMAIN ),
+				'custom_fields_convert' => _x( 'Covert', 'Meta Module: Setting Button', GEDITORIAL_TEXTDOMAIN ),
+				'custom_fields_delete'  => _x( 'Delete', 'Meta Module: Setting Button', GEDITORIAL_TEXTDOMAIN ),
+			),
 			'noops' => array(
 				'ct_tax' => _nx_noop( 'Column Header', 'Column Headers', 'Meta Module: Noop', GEDITORIAL_TEXTDOMAIN ),
 			),
@@ -625,8 +630,6 @@ class gEditorialMeta extends gEditorialModuleCore
 	{
 		echo '<form class="settings-form" method="post" action="">';
 
-			$this->settings_field_referer( $sub, 'tools' );
-
 			echo '<h3>'._x( 'Meta Tools', 'Meta Module', GEDITORIAL_TEXTDOMAIN ).'</h3>';
 			echo '<table class="form-table">';
 
@@ -678,13 +681,15 @@ class gEditorialMeta extends gEditorialModuleCore
 
 			echo '<p class="submit">';
 
-				submit_button( _x( 'Check', 'Meta Module: Tools Button', GEDITORIAL_TEXTDOMAIN ), 'secondary', 'custom_fields_check', FALSE, array( 'default' => 'default' ) ); echo '&nbsp;&nbsp;';
-				submit_button( _x( 'Covert', 'Meta Module: Tools Button', GEDITORIAL_TEXTDOMAIN ), 'primary', 'custom_fields_convert', FALSE ); echo '&nbsp;&nbsp;';
-				submit_button( _x( 'Delete', 'Meta Module: Tools Button', GEDITORIAL_TEXTDOMAIN ), 'secondary', 'custom_fields_delete', FALSE ); //echo '&nbsp;&nbsp;';
+				$this->submit_button( 'custom_fields_check', TRUE );
+				$this->submit_button( 'custom_fields_convert' );
+				$this->submit_button( 'custom_fields_delete' );
 
 			echo '</p>';
 			echo '</td></tr>';
 			echo '</table>';
+
+			$this->settings_field_referer( $sub, 'tools' );
 		echo '</form>';
 	}
 

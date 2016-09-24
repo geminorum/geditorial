@@ -90,6 +90,11 @@ class gEditorialMagazine extends gEditorialModuleCore
 				'meta_box_title'      => _x( 'The Issue', 'Magazine Module: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
 				'tweaks_column_title' => _x( 'Issues', 'Magazine Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
 			),
+			'settings' => array(
+				'issue_tax_check'   => _x( 'Check Terms', 'Magazine Module: Setting Button', GEDITORIAL_TEXTDOMAIN ),
+				'issue_post_create' => _x( 'Create Issue', 'Magazine Module: Setting Button', GEDITORIAL_TEXTDOMAIN ),
+				'issue_store_order' => _x( 'Store Orders', 'Magazine Module: Setting Button', GEDITORIAL_TEXTDOMAIN ),
+			),
 			'noops' => array(
 				'issue_cpt'   => _nx_noop( 'Issue',   'Issues',   'Magazine Module: Noop', GEDITORIAL_TEXTDOMAIN ),
 				'issue_tax'   => _nx_noop( 'Issue',   'Issues',   'Magazine Module: Noop', GEDITORIAL_TEXTDOMAIN ),
@@ -790,8 +795,6 @@ class gEditorialMagazine extends gEditorialModuleCore
 	{
 		echo '<form class="settings-form" method="post" action="">';
 
-			$this->settings_field_referer( $sub, 'tools' );
-
 			echo '<h3>'._x( 'Magazine Tools', 'Magazine Module', GEDITORIAL_TEXTDOMAIN ).'</h3>';
 			echo '<table class="form-table">';
 
@@ -829,9 +832,9 @@ class gEditorialMagazine extends gEditorialModuleCore
 				echo '<br />';
 			}
 
-			submit_button( _x( 'Check Terms', 'Magazine Module', GEDITORIAL_TEXTDOMAIN ), 'secondary', 'issue_tax_check', FALSE, array( 'default' => 'default' ) ); echo '&nbsp;&nbsp;';
-			submit_button( _x( 'Create Issue', 'Magazine Module', GEDITORIAL_TEXTDOMAIN ), 'secondary', 'issue_post_create', FALSE  ); echo '&nbsp;&nbsp;';
-			submit_button( _x( 'Store Orders', 'Magazine Module', GEDITORIAL_TEXTDOMAIN ), 'secondary', 'issue_store_order', FALSE  ); //echo '&nbsp;&nbsp;';
+			$this->submit_button( 'issue_tax_check', TRUE );
+			$this->submit_button( 'issue_post_create' );
+			$this->submit_button( 'issue_store_order' );
 
 			echo self::html( 'p', array(
 				'class' => 'description',
@@ -839,6 +842,9 @@ class gEditorialMagazine extends gEditorialModuleCore
 
 			echo '</td></tr>';
 			echo '</table>';
+
+			$this->settings_field_referer( $sub, 'tools' );
+
 		echo '</form>';
 	}
 
