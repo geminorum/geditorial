@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gEditorial v3.8.0\n"
+"Project-Id-Version: gEditorial v3.8.1\n"
 "Report-Msgid-Bugs-To: http://geminorum.ir/wordpress/geditorial/issues\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2016-09-24 06:07+0330\n"
+"PO-Revision-Date: 2016-09-24 23:57+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: geminorum <contact@geminorum.ir>\n"
 "Language: fa\n"
@@ -112,222 +112,227 @@ msgctxt "Module Helper: Default Calendar Type"
 msgid "Ethiopic"
 msgstr "اتوپیایی"
 
-#: includes/class-helper.php:432
+#: includes/class-helper.php:402
+msgctxt "Module Helper: Nooped String"
+msgid "%1$s"
+msgstr "%2$s"
+
+#: includes/class-helper.php:442
 msgctxt "Module Helper: CPT Generator: Name"
 msgid "%1$s"
 msgstr ""
 
-#: includes/class-helper.php:433
+#: includes/class-helper.php:443
 msgctxt "Module Helper: CPT Generator: Menu Name"
 msgid "%1$s"
 msgstr ""
 
-#: includes/class-helper.php:434
+#: includes/class-helper.php:444
 msgctxt "Module Helper: CPT Generator: Description"
 msgid "%1$s"
 msgstr ""
 
-#: includes/class-helper.php:435
+#: includes/class-helper.php:445
 msgctxt "Module Helper: CPT Generator: Singular Name"
 msgid "%2$s"
 msgstr ""
 
-#: includes/class-helper.php:436
+#: includes/class-helper.php:446
 msgctxt "Module Helper: CPT Generator"
 msgid "Add New"
 msgstr "افزودن %2$s"
 
-#: includes/class-helper.php:437
+#: includes/class-helper.php:447
 msgctxt "Module Helper: CPT Generator"
 msgid "Add New %2$s"
 msgstr "افزودن %2$s تازه"
 
-#: includes/class-helper.php:438
+#: includes/class-helper.php:448
 msgctxt "Module Helper: CPT Generator"
 msgid "Edit %2$s"
 msgstr "ویرایش %2$s"
 
-#: includes/class-helper.php:439
+#: includes/class-helper.php:449
 msgctxt "Module Helper: CPT Generator"
 msgid "New %2$s"
 msgstr "%2$s تازه"
 
-#: includes/class-helper.php:440
+#: includes/class-helper.php:450
 msgctxt "Module Helper: CPT Generator"
 msgid "View %2$s"
 msgstr "نمایش %2$s"
 
-#: includes/class-helper.php:441
+#: includes/class-helper.php:451
 msgctxt "Module Helper: CPT Generator"
 msgid "Search %1$s"
 msgstr "جست‌وجو در %1$s"
 
-#: includes/class-helper.php:442
+#: includes/class-helper.php:452
 msgctxt "Module Helper: CPT Generator"
 msgid "No %3$s found."
 msgstr "چیزی پیدا نشد."
 
-#: includes/class-helper.php:443
+#: includes/class-helper.php:453
 msgctxt "Module Helper: CPT Generator"
 msgid "No %3$s found in Trash."
 msgstr "چیزی در زباله‌دان پیدا نشد."
 
-#: includes/class-helper.php:444
+#: includes/class-helper.php:454
 msgctxt "Module Helper: CPT Generator"
 msgid "Parent %2$s:"
 msgstr "%2$s مادر:"
 
-#: includes/class-helper.php:445
+#: includes/class-helper.php:455
 msgctxt "Module Helper: CPT Generator"
 msgid "All %1$s"
 msgstr "همه‌ی %1$s"
 
-#: includes/class-helper.php:446
+#: includes/class-helper.php:456
 msgctxt "Module Helper: CPT Generator"
 msgid "%2$s Archives"
 msgstr "بایگانی %1$s"
 
-#: includes/class-helper.php:447
+#: includes/class-helper.php:457
 msgctxt "Module Helper: CPT Generator"
 msgid "Insert into %4$s"
 msgstr "جایگذاری در %4$s"
 
-#: includes/class-helper.php:448
+#: includes/class-helper.php:458
 msgctxt "Module Helper: CPT Generator"
 msgid "Uploaded to this %4$s"
 msgstr "بارگذاری شده برای این %4$s"
 
-#: includes/class-helper.php:449
+#: includes/class-helper.php:459
 msgctxt "Module Helper: CPT Generator"
 msgid "Filter %3$s list"
 msgstr "پالایه فهرست %3$s"
 
-#: includes/class-helper.php:450
+#: includes/class-helper.php:460
 msgctxt "Module Helper: CPT Generator"
 msgid "%1$s list navigation"
 msgstr ""
 
-#: includes/class-helper.php:451
+#: includes/class-helper.php:461
 msgctxt "Module Helper: CPT Generator"
 msgid "%1$s list"
 msgstr ""
 
-#: includes/class-helper.php:455
+#: includes/class-helper.php:465
 msgctxt "Module Helper: CPT Generator: Featured"
 msgid "%1$s"
 msgstr ""
 
-#: includes/class-helper.php:456
+#: includes/class-helper.php:466
 msgctxt "Module Helper: CPT Generator: Featured"
 msgid "Set %2$s"
 msgstr "تنظیم %2$s"
 
-#: includes/class-helper.php:457
+#: includes/class-helper.php:467
 msgctxt "Module Helper: CPT Generator: Featured"
 msgid "Remove %2$s"
 msgstr "حذف %2$s"
 
-#: includes/class-helper.php:458
+#: includes/class-helper.php:468
 msgctxt "Module Helper: CPT Generator: Featured"
 msgid "Use as %2$s"
 msgstr "استفاده به عنوان %2$s"
 
-#: includes/class-helper.php:490
+#: includes/class-helper.php:500
 msgctxt "Module Helper: Tax Generator: Name"
 msgid "%1$s"
 msgstr ""
 
-#: includes/class-helper.php:491
+#: includes/class-helper.php:501
 msgctxt "Module Helper: Tax Generator: Menu Name"
 msgid "%1$s"
 msgstr ""
 
-#: includes/class-helper.php:492
+#: includes/class-helper.php:502
 msgctxt "Module Helper: Tax Generator: Singular Name"
 msgid "%2$s"
 msgstr ""
 
-#: includes/class-helper.php:493
+#: includes/class-helper.php:503
 msgctxt "Module Helper: Tax Generator"
 msgid "Search %1$s"
 msgstr "جست‌وجو در %1$s"
 
-#: includes/class-helper.php:494
+#: includes/class-helper.php:504
 msgctxt "Module Helper: Tax Generator"
 msgid "Popular %1$s"
 msgstr "%1$s محبوب"
 
-#: includes/class-helper.php:495
+#: includes/class-helper.php:505
 msgctxt "Module Helper: Tax Generator"
 msgid "All %1$s"
 msgstr "همه‌ی %1$s"
 
-#: includes/class-helper.php:496
+#: includes/class-helper.php:506
 msgctxt "Module Helper: Tax Generator"
 msgid "Parent %2$s"
 msgstr "%2$s مادر"
 
-#: includes/class-helper.php:497
+#: includes/class-helper.php:507
 msgctxt "Module Helper: Tax Generator"
 msgid "Parent %2$s:"
 msgstr "%2$s مادر:"
 
-#: includes/class-helper.php:498
+#: includes/class-helper.php:508
 msgctxt "Module Helper: Tax Generator"
 msgid "Edit %2$s"
 msgstr "ویرایش %2$s"
 
-#: includes/class-helper.php:499
+#: includes/class-helper.php:509
 msgctxt "Module Helper: Tax Generator"
 msgid "View %2$s"
 msgstr "نمایش %2$s"
 
-#: includes/class-helper.php:500
+#: includes/class-helper.php:510
 msgctxt "Module Helper: Tax Generator"
 msgid "Update %2$s"
 msgstr "به‌روزرسانی %2$s"
 
-#: includes/class-helper.php:501
+#: includes/class-helper.php:511
 msgctxt "Module Helper: Tax Generator"
 msgid "Add New %2$s"
 msgstr "افزودن %2$s تازه"
 
-#: includes/class-helper.php:502
+#: includes/class-helper.php:512
 msgctxt "Module Helper: Tax Generator"
 msgid "New %2$s Name"
 msgstr "عنوان %2$s تازه"
 
-#: includes/class-helper.php:503
+#: includes/class-helper.php:513
 msgctxt "Module Helper: Tax Generator"
 msgid "Separate %3$s with commas"
 msgstr "با کامای لاتین جدا کنید"
 
-#: includes/class-helper.php:504
+#: includes/class-helper.php:514
 msgctxt "Module Helper: Tax Generator"
 msgid "Add or remove %3$s"
 msgstr "افزودن یا پاک‌کردن %3$s"
 
-#: includes/class-helper.php:505
+#: includes/class-helper.php:515
 msgctxt "Module Helper: Tax Generator"
 msgid "Choose from the most used %3$s"
 msgstr "انتخاب از میان %3$s بیشتر استفاده شده"
 
-#: includes/class-helper.php:506
+#: includes/class-helper.php:516
 msgctxt "Module Helper: Tax Generator"
 msgid "No %3$s found."
 msgstr "چیزی پیدا نشد."
 
-#: includes/class-helper.php:507
+#: includes/class-helper.php:517
 msgctxt "Module Helper: Tax Generator"
 msgid "No %3$s"
 msgstr "بدون %3$s"
 
-#: includes/class-helper.php:508
+#: includes/class-helper.php:518
 msgctxt "Module Helper: Tax Generator"
 msgid "%1$s list navigation"
 msgstr "ناوبری فهرست %1$s"
 
-#: includes/class-helper.php:509
+#: includes/class-helper.php:519
 msgctxt "Module Helper: Tax Generator"
 msgid "%1$s list"
 msgstr "فهرست %1$s"
@@ -475,22 +480,17 @@ msgctxt "Module Core: MetaBox default action"
 msgid "Configure"
 msgstr "پیکربندی"
 
-#: includes/class-module.php:1875, includes/class-module.php:1892
-msgctxt "Module Core: At a Glance: Nooped String"
-msgid "%1$s"
-msgstr "%2$s"
-
-#: includes/class-module.php:1905
+#: includes/class-module.php:1899
 msgctxt "Module Core: No Count Title Attribute"
 msgid "No Count"
 msgstr "بدون شمارش"
 
-#: includes/class-module.php:1929
+#: includes/class-module.php:1923
 msgctxt "Module Core: Term Seperator"
 msgid ", "
 msgstr ""
 
-#: includes/class-module.php:1935
+#: includes/class-module.php:1929
 msgctxt "Module Core: No Count Term Attribute"
 msgid "No Term"
 msgstr "بدون رده‌بندی"
@@ -505,288 +505,292 @@ msgctxt "Settings: Dropdown Select Option None"
 msgid "&mdash; Select &mdash;"
 msgstr "&mdash; انتخاب کنید &mdash;"
 
-#: includes/class-settings.php:18
+#: includes/class-settings.php:16
+msgctxt "Settings: Setting Info"
+msgid "Connected via <code>P2P</code>"
+msgstr ""
+
+#: includes/class-settings.php:23
 msgctxt "Settings: Setting Title"
 msgid "Editor Button"
 msgstr "دکمه ویرایشگر"
 
-#: includes/class-settings.php:28
+#: includes/class-settings.php:33
 msgctxt "Settings: Setting Title"
 msgid "Default Shortcodes"
 msgstr "شورت‌کد‌های پیش‌فرض"
 
-#: includes/class-settings.php:38
+#: includes/class-settings.php:43
 msgctxt "Settings: Setting Title"
 msgid "Markdown Support"
 msgstr "پشتیبانی از مارک‌داون"
 
-#: includes/class-settings.php:48
+#: includes/class-settings.php:53
 msgctxt "Settings: Setting Title"
 msgid "Multiple Instances"
 msgstr "انتخاب چندگانه"
 
-#: includes/class-settings.php:58
+#: includes/class-settings.php:63
 msgctxt "Settings: Setting Title"
 msgid "Autolink Terms"
 msgstr ""
 
-#: includes/class-settings.php:59
+#: includes/class-settings.php:64
 msgctxt "Settings: Setting Description"
 msgid "Trying to link the terms titles in the content."
 msgstr ""
 
-#: includes/class-settings.php:70
+#: includes/class-settings.php:75
 msgctxt "Settings: Setting Title"
 msgid "URL Base Prefix"
 msgstr ""
 
-#: includes/class-settings.php:71
+#: includes/class-settings.php:76
 msgctxt "Settings: Setting Description"
 msgid "String before the permalink structure"
 msgstr ""
 
-#: includes/class-settings.php:84
+#: includes/class-settings.php:89
 msgctxt "Settings: Setting Title"
 msgid "Redirect Archives"
 msgstr "تغییر مسیر بایگانی"
 
-#: includes/class-settings.php:85
+#: includes/class-settings.php:90
 msgctxt "Settings: Setting Description"
 msgid "Redirect Post Type Archives to a URL"
 msgstr "تغییر مسیر بایگانی نوشته‌ها به نشانی جدید"
 
-#: includes/class-settings.php:98
+#: includes/class-settings.php:103
 msgctxt "Settings: Setting Title"
 msgid "Comment Status"
 msgstr "وضعیت دیدگاه‌ها"
 
-#: includes/class-settings.php:99
+#: includes/class-settings.php:104
 msgctxt "Settings: Setting Description"
 msgid "Default Comment Status of the Posttype"
 msgstr ""
 
-#: includes/class-settings.php:103
+#: includes/class-settings.php:108
 msgctxt "Settings: Setting Option"
 msgid "Open"
 msgstr "باز"
 
-#: includes/class-settings.php:104
+#: includes/class-settings.php:109
 msgctxt "Settings: Setting Option"
 msgid "Closed"
 msgstr "بسته"
 
-#: includes/class-settings.php:114
+#: includes/class-settings.php:119
 msgctxt "Settings: Setting Title"
 msgid "Insert in Content"
 msgstr "گذاشتن در متن"
 
-#: includes/class-settings.php:115
+#: includes/class-settings.php:120
 msgctxt "Settings: Setting Description"
-msgid "Put html automatically on the content"
+msgid "Puts automatically in the content"
 msgstr ""
 
-#: includes/class-settings.php:119
+#: includes/class-settings.php:124
 msgctxt "Settings: Setting Option"
 msgid "No"
-msgstr ""
+msgstr "خیر"
 
-#: includes/class-settings.php:120
+#: includes/class-settings.php:125
 msgctxt "Settings: Setting Option"
 msgid "Before"
 msgstr "قبل از متن"
 
-#: includes/class-settings.php:121
+#: includes/class-settings.php:126
 msgctxt "Settings: Setting Option"
 msgid "After"
 msgstr "بعد از متن"
 
-#: includes/class-settings.php:151
+#: includes/class-settings.php:156
 msgctxt "Settings: Setting Title"
 msgid "Before Content"
 msgstr "قبل از متن"
 
-#: includes/class-settings.php:152
+#: includes/class-settings.php:157
 msgctxt "Settings: Setting Description"
-msgid ""
-"Adds <code>HTML</code> content to the start of all the supported posttypes"
+msgid "Adds <code>HTML</code> to the start of all the supported posttypes"
 msgstr ""
 
-#: includes/class-settings.php:162
+#: includes/class-settings.php:167
 msgctxt "Settings: Setting Title"
 msgid "After Content"
 msgstr "بعد از متن"
 
-#: includes/class-settings.php:163
+#: includes/class-settings.php:168
 msgctxt "Settings: Setting Description"
-msgid "Adds <code>HTML</code> content to the end of all the supported posttypes"
+msgid "Adds <code>HTML</code> to the end of all the supported posttypes"
 msgstr ""
 
-#: includes/class-settings.php:172
+#: includes/class-settings.php:177
 msgctxt "Settings: Setting Title"
 msgid "Ordering"
 msgstr "مرتب‌سازی"
 
-#: includes/class-settings.php:173
+#: includes/class-settings.php:178
 msgctxt "Settings: Setting Description"
 msgid "Enhance admin edit page ordering"
 msgstr ""
 
-#: includes/class-settings.php:183
+#: includes/class-settings.php:188
 msgctxt "Settings: Setting Title"
 msgid "Restrictions"
 msgstr "محدودیت"
 
-#: includes/class-settings.php:184
+#: includes/class-settings.php:189
 msgctxt "Settings: Setting Description"
 msgid "Enhance admin edit page restrictions"
 msgstr ""
 
-#: includes/class-settings.php:194
+#: includes/class-settings.php:199
 msgctxt "Settings: Setting Title"
 msgid "Dashboard Widgets"
 msgstr "ابزارک‌های پیشخوان"
 
-#: includes/class-settings.php:195
+#: includes/class-settings.php:200
 msgctxt "Settings: Setting Description"
 msgid "Enhance admin dashboard with customized widgets"
 msgstr ""
 
-#: includes/class-settings.php:206
+#: includes/class-settings.php:211
 msgctxt "Settings: Setting Title"
 msgid "Summary Scope"
 msgstr "محدوده گزارش"
 
-#: includes/class-settings.php:207
+#: includes/class-settings.php:212
 msgctxt "Settings: Setting Description"
 msgid "Dashboard Widget Summary User Scope"
 msgstr ""
 
-#: includes/class-settings.php:211
+#: includes/class-settings.php:216
 msgctxt "Settings: Setting Option"
 msgid "All Users"
 msgstr "همهٔ کاربران"
 
-#: includes/class-settings.php:212
+#: includes/class-settings.php:217
 msgctxt "Settings: Setting Option"
 msgid "Current User"
 msgstr "کاربر فعلی"
 
-#: includes/class-settings.php:221
+#: includes/class-settings.php:226
 msgctxt "Settings: Setting Title"
 msgid "Feeds"
 msgstr "خوراک‌ها"
 
-#: includes/class-settings.php:222
+#: includes/class-settings.php:227
 msgctxt "Settings: Setting Description"
 msgid "Supporting feeds on the posttype"
 msgstr ""
 
-#: includes/class-settings.php:232
+#: includes/class-settings.php:237
 msgctxt "Settings: Setting Title"
 msgid "Pages"
 msgstr "صفحه‌بندی"
 
-#: includes/class-settings.php:233
+#: includes/class-settings.php:238
 msgctxt "Settings: Setting Description"
 msgid "Supporting pagination on the posttype"
 msgstr ""
 
-#: includes/class-settings.php:243
+#: includes/class-settings.php:248
 msgctxt "Settings: Setting Title"
 msgid "Default Calendar"
 msgstr "تقویم پیش‌فرض"
 
-#: includes/class-settings.php:259
+#: includes/class-settings.php:264
 msgctxt "Settings"
 msgid "Editorial"
 msgstr "تحریریه"
 
-#: includes/class-settings.php:266
+#: includes/class-settings.php:271
 msgctxt "Settings"
 msgid "Back to Editorial"
 msgstr "بازگشت به تحریریه"
 
-#: includes/class-settings.php:290
+#: includes/class-settings.php:298
 msgctxt "Settings: Message"
 msgid "Settings reset."
 msgstr "تنظیمات بازنشانی شد."
 
-#: includes/class-settings.php:291
+#: includes/class-settings.php:299
 msgctxt "Settings: Message"
 msgid "Tables optimized."
 msgstr "جدول داده‌ها، بهینه‌سازی شد."
 
-#: includes/class-settings.php:292
+#: includes/class-settings.php:300
 msgctxt "Settings: Message"
 msgid "Settings updated."
 msgstr "تنظیمات به‌روز شد."
 
-#: includes/class-settings.php:293
+#: includes/class-settings.php:301
 msgctxt "Settings: Message"
 msgid "File/Folder created."
-msgstr ""
+msgstr "فایل/پوشه ایجاد شد."
 
-#: includes/class-settings.php:294
+#: includes/class-settings.php:302
 msgctxt "Settings: Message"
 msgid "Data purged."
-msgstr ""
+msgstr "داده‌ها دور ریخته شد."
 
-#: includes/class-settings.php:295
+#: includes/class-settings.php:303
 msgctxt "Settings: Message"
 msgid "No Item Changed"
 msgstr "چیزی تغییر نکرد."
 
-#: includes/class-settings.php:296
+#: includes/class-settings.php:304
 msgctxt "Settings: Message"
 msgid "Error while settings save."
-msgstr ""
+msgstr "خطایی در هنگام ذخیره تغییرات اتفاق افتاده است."
 
-#: includes/class-settings.php:297
+#: includes/class-settings.php:305
 msgctxt "Settings"
 msgid "Something's wrong!"
-msgstr ""
+msgstr "انگار چیزی اشتباه است."
 
-#: includes/class-settings.php:298
+#: includes/class-settings.php:306
 msgctxt "Settings: Message"
 msgid "%s Items(s) Deleted!"
-msgstr ""
+msgstr "%s مورد حذف شد!"
 
-#: includes/class-settings.php:299
+#: includes/class-settings.php:307
 msgctxt "Settings: Message"
 msgid "%s Items(s) Cleaned!"
-msgstr ""
+msgstr "%s مورد پاک شد!"
 
-#: includes/class-settings.php:300
+#: includes/class-settings.php:308
 msgctxt "Settings: Message"
 msgid "%s Items(s) Changed!"
-msgstr ""
-
-#: includes/class-settings.php:301
-msgctxt "Settings: Message"
-msgid "%s Items(s) Emptied!"
-msgstr ""
+msgstr "%s مورد تغییر کرد!"
 
 #: includes/class-settings.php:309
+msgctxt "Settings: Message"
+msgid "%s Items(s) Emptied!"
+msgstr "%s مورد خالی شد!"
+
+#: includes/class-settings.php:317
 msgctxt "Settings: Message"
 msgid "%s Counted!"
 msgstr "%s شمرده شد!"
 
-#: includes/class-settings.php:320
+#: includes/class-settings.php:328
 msgctxt "Settings: Message"
 msgid "Cheatin&#8217; uh?"
 msgstr "کلک میزنی؟!"
 
-#: includes/class-settings.php:328
+#: includes/class-settings.php:336
 msgctxt "Settings: Message"
 msgid "huh? %s"
 msgstr "ها؟ %s"
 
-#: includes/class-settings.php:330
+#: includes/class-settings.php:338
 msgctxt "Settings: Message"
 msgid "huh?"
 msgstr "ها؟"
 
-#: includes/class-settings.php:350
+#: includes/class-settings.php:358
 msgctxt "Settings"
 msgid ""
 "<a href=\"%1$s\" title=\"Editorial\">gEditorial</a> is a <a href=\"%2$s"
@@ -881,7 +885,7 @@ msgstr "اندازه نامشخص"
 #: modules/admin-comments/admin-comments.php:10
 msgctxt "Admin Comments Module"
 msgid "Admin Comments"
-msgstr ""
+msgstr "دیدگاه‌های تحریریه"
 
 #: modules/admin-comments/admin-comments.php:11
 msgctxt "Admin Comments Module"
@@ -896,7 +900,7 @@ msgstr ""
 #: modules/admin-comments/admin-comments.php:40
 msgctxt "Admin Comments Module: Column Title"
 msgid "Comments"
-msgstr ""
+msgstr "دیدگاه‌ها"
 
 #: modules/admin-comments/admin-comments.php:98
 msgctxt "Admin Comments Module"
@@ -1059,12 +1063,12 @@ msgctxt "Audit Module: Audit Attributes Tax Defaults"
 msgid "Trivial"
 msgstr "ناقص"
 
-#: modules/audit/audit.php:112
+#: modules/audit/audit.php:107
 msgctxt "Audit Module"
 msgid "Your Audit Summary"
 msgstr "گزارش بازبینی شما"
 
-#: modules/audit/audit.php:114
+#: modules/audit/audit.php:109
 msgctxt "Audit Module"
 msgid "Editorial Audit Summary"
 msgstr "گزارش بازبینی تحریریه"
@@ -1164,221 +1168,221 @@ msgctxt "Book Module: MetaBox Title"
 msgid "Summary"
 msgstr "خلاصه"
 
-#: modules/book/book.php:83
+#: modules/book/book.php:84
 msgctxt "Book Module: Setting Button"
 msgid "Install Default Sizes"
 msgstr ""
 
-#: modules/book/book.php:86
+#: modules/book/book.php:87
 msgctxt "Book Module: Noop"
 msgid "Publication"
 msgid_plural "Publications"
 msgstr[0] "نشر"
 msgstr[1] "منشورات"
 
-#: modules/book/book.php:87
+#: modules/book/book.php:88
 msgctxt "Book Module: Noop"
 msgid "Subject"
 msgid_plural "Subjects"
 msgstr[0] "موضوع"
 msgstr[1] "موضوعات"
 
-#: modules/book/book.php:88
+#: modules/book/book.php:89
 msgctxt "Book Module: Noop"
 msgid "Library"
 msgid_plural "Libraries"
 msgstr[0] "کتاب‌خانه"
 msgstr[1] "کتاب‌خانه‌ها"
 
-#: modules/book/book.php:89
+#: modules/book/book.php:90
 msgctxt "Book Module: Noop"
 msgid "Publisher"
 msgid_plural "Publishers"
 msgstr[0] "ناشر"
 msgstr[1] "ناشرین"
 
-#: modules/book/book.php:90
+#: modules/book/book.php:91
 msgctxt "Book Module: Noop"
 msgid "Publication Type"
 msgid_plural "Publication Types"
 msgstr[0] "نوع نشر"
 msgstr[1] "انواع نشر"
 
-#: modules/book/book.php:91
+#: modules/book/book.php:92
 msgctxt "Book Module: Noop"
 msgid "Publication Status"
 msgid_plural "Publication Statuses"
 msgstr[0] "وضعیت نشر"
 msgstr[1] "وضعیت‌های نشر"
 
-#: modules/book/book.php:92
+#: modules/book/book.php:93
 msgctxt "Book Module: Noop"
 msgid "Publication Size"
 msgid_plural "Publication Sizes"
 msgstr[0] "قطع"
 msgstr[1] "قطع‌ها"
 
-#: modules/book/book.php:96
+#: modules/book/book.php:97
 msgctxt "Book Module: Publication Size: Default Term"
 msgid "Octavo"
 msgstr "وزیری"
 
-#: modules/book/book.php:97
+#: modules/book/book.php:98
 msgctxt "Book Module: Publication Size: Default Term"
 msgid "Folio"
 msgstr "سلطانی"
 
-#: modules/book/book.php:98
+#: modules/book/book.php:99
 msgctxt "Book Module: Publication Size: Default Term"
 msgid "Medium Octavo"
 msgstr "رقعی"
 
-#: modules/book/book.php:99
+#: modules/book/book.php:100
 msgctxt "Book Module: Publication Size: Default Term"
 msgid "Quatro"
 msgstr "رحلی"
 
-#: modules/book/book.php:105
+#: modules/book/book.php:106
 msgctxt "Book Module: P2P"
 msgid "Connected Publications"
 msgstr "منشورات مرتبط"
 
-#: modules/book/book.php:106
+#: modules/book/book.php:107
 msgctxt "Book Module: P2P"
 msgid "Connected Posts"
 msgstr "نوشته‌های مرتبط"
 
-#: modules/book/book.php:109
+#: modules/book/book.php:110
 msgctxt "Book Module: P2P"
 msgid "Post"
 msgstr "نوشته"
 
-#: modules/book/book.php:110
+#: modules/book/book.php:111
 msgctxt "Book Module: P2P"
 msgid "Search Posts"
 msgstr "جست‌وجوی نوشته‌ها"
 
-#: modules/book/book.php:111
+#: modules/book/book.php:112
 msgctxt "Book Module: P2P"
 msgid "No posts found."
 msgstr "پیدا نشد."
 
-#: modules/book/book.php:112
+#: modules/book/book.php:113
 msgctxt "Book Module: P2P"
 msgid "Connect to a post"
 msgstr "ارتباط با یک نوشته"
 
-#: modules/book/book.php:115
+#: modules/book/book.php:116
 msgctxt "Book Module: P2P"
 msgid "Publications"
 msgstr "منشورات"
 
-#: modules/book/book.php:116
+#: modules/book/book.php:117
 msgctxt "Book Module: P2P"
 msgid "Search Publication"
 msgstr "جست‌وجوی منشورات"
 
-#: modules/book/book.php:117
+#: modules/book/book.php:118
 msgctxt "Book Module: P2P"
 msgid "No publications found."
 msgstr "پیدا نشد."
 
-#: modules/book/book.php:118
+#: modules/book/book.php:119
 msgctxt "Book Module: P2P"
 msgid "Connect to an publication"
 msgstr "ارتباط با یک نشر"
 
-#: modules/book/book.php:122
+#: modules/book/book.php:123
 msgctxt "Book Module: P2P"
 msgid "Reference"
 msgstr "ارجاع"
 
-#: modules/book/book.php:155
+#: modules/book/book.php:156
 msgctxt "Book Module: Field Title"
 msgid "Collection Title"
 msgstr "عنوان مجموعه"
 
-#: modules/book/book.php:156
+#: modules/book/book.php:157
 msgctxt "Book Module: Field Description"
 msgid "This Publication Is Part of a Collection"
 msgstr ""
 
-#: modules/book/book.php:160
+#: modules/book/book.php:161
 msgctxt "Book Module: Field Title"
 msgid "Subtitle"
 msgstr "عنوان فرعی"
 
-#: modules/book/book.php:161
+#: modules/book/book.php:162
 msgctxt "Book Module: Field Description"
 msgid "Subtitle of the Publication"
 msgstr ""
 
-#: modules/book/book.php:165
+#: modules/book/book.php:166
 msgctxt "Book Module: Field Title"
 msgid "Alternative Title"
 msgstr "عنوان دیگر"
 
-#: modules/book/book.php:166
+#: modules/book/book.php:167
 msgctxt "Book Module: Field Description"
 msgid "The Original Title or Title in Another Language"
 msgstr ""
 
-#: modules/book/book.php:169
+#: modules/book/book.php:170
 msgctxt "Book Module: Field Title"
 msgid "ISBN"
 msgstr "شابک"
 
-#: modules/book/book.php:170
+#: modules/book/book.php:171
 msgctxt "Book Module: Field Description"
 msgid "International Standard Book Number"
 msgstr "شمارهٔ استاندارد بین‌المللی کتاب"
 
-#: modules/book/book.php:174
+#: modules/book/book.php:175
 msgctxt "Book Module: Field Title"
 msgid "Size"
 msgstr "قطع"
 
-#: modules/book/book.php:175
+#: modules/book/book.php:176
 msgctxt "Book Module: Field Description"
 msgid "The Size of the Publication, Mainly Books"
 msgstr ""
 
-#: modules/book/book.php:180
+#: modules/book/book.php:181
 msgctxt "Book Module: Field Title"
 msgid "Publication Date"
 msgstr "تاریخ انتشار"
 
-#: modules/book/book.php:181
+#: modules/book/book.php:182
 msgctxt "Book Module: Field Description"
 msgid "Date Published"
 msgstr "تاریخ انتشار"
 
-#: modules/book/book.php:184
+#: modules/book/book.php:185
 msgctxt "Book Module: Field Title"
 msgid "Edition"
 msgstr "ویراست"
 
-#: modules/book/book.php:185
+#: modules/book/book.php:186
 msgctxt "Book Module: Field Description"
 msgid "Edition of the Publication"
 msgstr "ویراست نشر"
 
-#: modules/book/book.php:188
+#: modules/book/book.php:189
 msgctxt "Book Module: Field Title"
 msgid "Print"
 msgstr "چاپ"
 
-#: modules/book/book.php:189
+#: modules/book/book.php:190
 msgctxt "Book Module: Field Description"
 msgid "Specefic Print of the Publication"
 msgstr ""
 
-#: modules/book/book.php:192
+#: modules/book/book.php:193
 msgctxt "Book Module: Field Title"
 msgid "Pages"
 msgstr "مجموع صفحات"
 
-#: modules/book/book.php:193
+#: modules/book/book.php:194
 msgctxt "Book Module: Field Description"
 msgid "Total Pages of the Publication"
 msgstr ""
@@ -1693,46 +1697,41 @@ msgctxt "Entry Module"
 msgid "Wiki-like Posts Entries"
 msgstr "مطلب‌هایی به سبک ویکی"
 
-#: modules/entry/entry.php:52
+#: modules/entry/entry.php:50
 msgctxt "Entry Module: Entry CPT: Featured"
 msgid "Cover Image"
 msgstr "تصویر کاور"
 
-#: modules/entry/entry.php:53
+#: modules/entry/entry.php:51
 msgctxt "Entry Module: Meta Box Title"
 msgid "Entry"
 msgstr "ورودیه"
 
-#: modules/entry/entry.php:54
+#: modules/entry/entry.php:52
 msgctxt "Entry Module: Column Title"
 msgid "Section"
 msgstr "بخش"
 
-#: modules/entry/entry.php:55
+#: modules/entry/entry.php:53
 msgctxt "Entry Module: Column Title"
 msgid "O"
 msgstr "ت"
 
-#: modules/entry/entry.php:58
-msgctxt "Entry Module: Setting Info"
-msgid "P2P Connections"
-msgstr ""
-
-#: modules/entry/entry.php:61
+#: modules/entry/entry.php:56
 msgctxt "Entry Module: Noop"
 msgid "Entry"
 msgid_plural "Entries"
 msgstr[0] "ورودیه"
 msgstr[1] "ورودیه‌ها"
 
-#: modules/entry/entry.php:62
+#: modules/entry/entry.php:57
 msgctxt "Entry Module: Noop"
 msgid "Section"
 msgid_plural "Sections"
 msgstr[0] "بخش"
 msgstr[1] "بخش‌ها"
 
-#: modules/entry/entry.php:141
+#: modules/entry/entry.php:133
 msgid "Shortcake With No Attributes"
 msgstr ""
 
@@ -2973,7 +2972,7 @@ msgstr "تبدیل پانویس‌های مایکروسافت ورد به ورد
 #: modules/print/print.php:13
 msgctxt "Print Module"
 msgid "Print"
-msgstr ""
+msgstr "چاپ"
 
 #: modules/print/print.php:14
 msgctxt "Print Module"
@@ -2994,7 +2993,7 @@ msgstr ""
 msgctxt "Reference Module: Reference Tax Labels: Name"
 msgid "Reference"
 msgid_plural "References"
-msgstr[0] ""
+msgstr[0] "ارجاع"
 msgstr[1] ""
 
 #: modules/reshare/reshare.php:10
@@ -3007,19 +3006,34 @@ msgctxt "Reshare Module"
 msgid "Contents from Other Sources"
 msgstr "محتوا از منابع دیگر"
 
-#: modules/reshare/reshare.php:31
+#: modules/reshare/reshare.php:34
+msgctxt "Reshare Module: Setting Title"
+msgid "Before Source"
+msgstr "قبل از منبع"
+
+#: modules/reshare/reshare.php:35
+msgctxt "Reshare Module: Setting Description"
+msgid "Default text before the source link"
+msgstr "متن پیش‌فرض برای قبل از پیوند منبع"
+
+#: modules/reshare/reshare.php:36
+msgctxt "Reshare Module: Setting Default"
+msgid "Source:"
+msgstr "منبع:"
+
+#: modules/reshare/reshare.php:46
 msgctxt "Reshare Module: Column Title"
 msgid "Reshare Categories"
 msgstr "دسته‌های بازنشر"
 
-#: modules/reshare/reshare.php:34
+#: modules/reshare/reshare.php:49
 msgctxt "Reshare Module: Noop"
 msgid "Reshare"
 msgid_plural "Reshares"
 msgstr[0] "بازنشر"
 msgstr[1] "بازنشرها"
 
-#: modules/reshare/reshare.php:35
+#: modules/reshare/reshare.php:50
 msgctxt "Reshare Module: Noop"
 msgid "Reshare Category"
 msgid_plural "Reshare Categories"
@@ -3099,7 +3113,7 @@ msgctxt "series hide link"
 msgid "More&hellip;"
 msgstr "بیشتر &hellip;"
 
-#: modules/settings/settings.php:10, modules/settings/settings.php:383
+#: modules/settings/settings.php:10, modules/settings/settings.php:384
 msgctxt "Settings Module"
 msgid "Editorial"
 msgstr "تحریریه"
@@ -3109,185 +3123,185 @@ msgctxt "Settings Module"
 msgid "WordPress, Magazine Style."
 msgstr "وردپرس، برای تحریریه شما"
 
-#: modules/settings/settings.php:33
+#: modules/settings/settings.php:34
 msgctxt "Settings Module"
 msgid "Editorial Reports"
 msgstr "گزارشات تحریریه"
 
-#: modules/settings/settings.php:34
+#: modules/settings/settings.php:35
 msgctxt "Settings Module: Admin Reports Menu Title"
 msgid "Reports"
 msgstr "گزارش‌ها"
 
-#: modules/settings/settings.php:51
+#: modules/settings/settings.php:52
 msgctxt "Settings Module"
 msgid "Editorial Tools"
 msgstr "ابزارهای تحریریه"
 
-#: modules/settings/settings.php:52
+#: modules/settings/settings.php:53
 msgctxt "Settings Module: Admin Tools Menu Title"
 msgid "Tools"
 msgstr "ابزارها"
 
-#: modules/settings/settings.php:85
+#: modules/settings/settings.php:86
 msgctxt "Settings Module: Reports Sub"
 msgid "Overview"
 msgstr "در یک نگاه"
 
-#: modules/settings/settings.php:86
+#: modules/settings/settings.php:87
 msgctxt "Settings Module: Reports Sub"
 msgid "General"
 msgstr "همگانی"
 
-#: modules/settings/settings.php:90
+#: modules/settings/settings.php:91
 msgctxt "Settings Module: Reports Sub"
 msgid "Console"
 msgstr "پیشانه"
 
-#: modules/settings/settings.php:96
+#: modules/settings/settings.php:97
 msgctxt "Settings Module: Page Title"
 msgid "Editorial Reports"
 msgstr "گزارشات تحریریه"
 
-#: modules/settings/settings.php:116
+#: modules/settings/settings.php:117
 msgctxt "Settings Module: Tools Sub"
 msgid "Overview"
 msgstr "در یک نگاه"
 
-#: modules/settings/settings.php:117
+#: modules/settings/settings.php:118
 msgctxt "Settings Module: Tools Sub"
 msgid "General"
 msgstr "همگانی"
 
-#: modules/settings/settings.php:121
+#: modules/settings/settings.php:122
 msgctxt "Settings Module: Tools Sub"
 msgid "Console"
 msgstr "پیشانه"
 
-#: modules/settings/settings.php:127
+#: modules/settings/settings.php:128
 msgctxt "Settings Module: Page Title"
 msgid "Editorial Tools"
 msgstr "ابزارهای تحریریه"
 
-#: modules/settings/settings.php:236
+#: modules/settings/settings.php:237
 msgctxt "Settings Module"
 msgid "Maintenance Tasks"
 msgstr "ابزارهای نگه‌داری"
 
-#: modules/settings/settings.php:241
+#: modules/settings/settings.php:242
 msgctxt "Settings Module"
 msgid "Options"
 msgstr "تنظیمات"
 
-#: modules/settings/settings.php:244
+#: modules/settings/settings.php:245
 msgctxt "Settings Module"
 msgid "Upgrade Old Options"
 msgstr "ارتقاء تنظیمات قدیمی"
 
-#: modules/settings/settings.php:248
+#: modules/settings/settings.php:249
 msgctxt "Settings Module"
 msgid "Will check for old options and upgrade, also delete old options"
 msgstr "بررسی، ارتقاء و حذف تنظیمات قدیمی"
 
-#: modules/settings/settings.php:253
+#: modules/settings/settings.php:254
 msgctxt "Settings Module"
 msgid "Delete All Options"
 msgstr "پاک‌کردن همهٔ تنظیمات"
 
-#: modules/settings/settings.php:257
+#: modules/settings/settings.php:258
 msgctxt "Settings Module"
 msgid "Deletes all editorial options on current site"
 msgstr "حذف تمامی تنظیمات مربوط به تحریریه"
 
-#: modules/settings/settings.php:262
+#: modules/settings/settings.php:263
 msgctxt "Settings Module"
 msgid "Empty Meta Fields"
 msgstr "خالی کردن متا"
 
-#: modules/settings/settings.php:273
+#: modules/settings/settings.php:274
 msgctxt "Settings Module"
 msgid "Empty"
 msgstr "خالی کردن"
 
-#: modules/settings/settings.php:277
+#: modules/settings/settings.php:278
 msgctxt "Settings Module"
 msgid ""
 "Will delete empty meta values, solves common problems with imported posts."
 msgstr ""
 
-#: modules/settings/settings.php:281
+#: modules/settings/settings.php:282
 msgctxt "Settings Module"
 msgid "Orphaned Terms"
 msgstr "رده‌های بدون رده‌بندی"
 
-#: modules/settings/settings.php:303
+#: modules/settings/settings.php:304
 msgctxt "Settings Module"
 msgid "Convert"
 msgstr "تبدیل"
 
-#: modules/settings/settings.php:307
+#: modules/settings/settings.php:308
 msgctxt "Settings Module"
 msgid "Converts orphaned terms into currently registered taxonomies"
 msgstr ""
 
-#: modules/settings/settings.php:332
+#: modules/settings/settings.php:333
 msgctxt "Settings Module: Ajax Notice"
 msgid "No Action of Slug!"
 msgstr ""
 
-#: modules/settings/settings.php:337
+#: modules/settings/settings.php:338
 msgctxt "Settings Module: Ajax Notice"
 msgid "Cannot find the module!"
 msgstr ""
 
-#: modules/settings/settings.php:342
+#: modules/settings/settings.php:343
 msgctxt "Settings Module: Ajax Notice"
 msgid "Module state succesfully changed"
 msgstr ""
 
-#: modules/settings/settings.php:344
+#: modules/settings/settings.php:345
 msgctxt "Settings Module: Ajax Notice"
 msgid "Cannot change module state"
 msgstr ""
 
-#: modules/settings/settings.php:349
+#: modules/settings/settings.php:350
 msgctxt "Settings Module: Ajax Notice"
 msgid "What?!"
 msgstr "هان؟!"
 
-#: modules/settings/settings.php:360
+#: modules/settings/settings.php:361
 msgctxt "Settings Module"
 msgid "Not a registered Editorial module"
-msgstr ""
+msgstr "ماژول تحریریه‌ای پیدا نشد."
 
-#: modules/settings/settings.php:372
+#: modules/settings/settings.php:373
 msgctxt "Settings Module"
 msgid ""
 "Module not enabled. Please enable it from the <a href=\"%1$s\">Editorial "
 "settings page</a>."
 msgstr ""
 
-#: modules/settings/settings.php:386
+#: modules/settings/settings.php:387
 msgctxt "Settings Module"
 msgid "Editorial: %s"
 msgstr "تحریریه: %s"
 
-#: modules/settings/settings.php:455
+#: modules/settings/settings.php:456
 msgctxt "Settings Module"
 msgid "Configure"
 msgstr "پیکربندی"
 
-#: modules/settings/settings.php:461
+#: modules/settings/settings.php:462
 msgctxt "Settings Module"
 msgid "Enable"
 msgstr "فعال شود"
 
-#: modules/settings/settings.php:466
+#: modules/settings/settings.php:467
 msgctxt "Settings Module"
 msgid "Disable"
 msgstr "غیرفعال شود"
 
-#: modules/settings/settings.php:478
+#: modules/settings/settings.php:479
 msgctxt "Settings Module"
 msgid "There are no editorial modules registered"
 msgstr "ماژول تحریریه‌ای پیدا نشد."
@@ -3827,6 +3841,10 @@ msgstr "ابزارک‌ها"
 msgctxt "Widgets Module"
 msgid "Set of carefully customizable widgets"
 msgstr ""
+
+#~ msgctxt "Module Core: At a Glance: Nooped String"
+#~ msgid "%1$s"
+#~ msgstr "%2$s"
 
 #~ msgctxt "Book Module"
 #~ msgid "Install Default Sizes"
