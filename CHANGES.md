@@ -1,3 +1,44 @@
+### 3.8.0
+* core/base: moved to core folder
+* core/wordpress: new class
+* core/html: new class
+* core/date: new class
+* main/modulecore: users setting type
+* main/modulecore: fixed multiple checkboxs setting
+* main/modulecore: submit button wrapper
+* main/modulecore: settings button valuse from strings
+* main/modulecore: list supported posttypes helper
+* main/modulecore: `delete_with_user` default to FALSE on cpt registrations
+* main/modulecore: default action css class for metabox
+* main/helper: `name_admin_bar` on cpt labels
+* main/helper: passing dev to the global js object
+* main/metabox: new helper class
+* main/settings: new helper class
+* module/audit: dashboard summary by all/user
+* module/audit: restrict edit posts
+* module/book: also display p2p on the main cpt
+* module/event: ordering events by post date
+* module/entry: drafts on quickpress widget
+* module/entry: autolink terms in the content
+* module/entry: do shortcode on before/after custom html
+* module/meta: fields via actions
+* module/meta: defaults to the new fields api
+* module/meta: old es/ol fields removed
+* module/meta: refining admin edit column
+* module/meta: lead on gNetwork content actions
+* module/magazine: new meta fields api
+* module/magazine: using current screen hook
+* module/magazine: the issue posts list box
+* module/magazine: drop admin column arg for the tax
+* module/series: hide when no series found
+* module/settings: reports api
+* module/today: check for home instead of front page
+* module/tweaks: revision count/authors
+* module/home: new module
+* module/users: new module
+* module/headings: new module
+* module/ortho: new module
+
 ### 3.7.6
 * module: skip empty items on dashboard glance
 * module: revert back to tweaks strings on setup
