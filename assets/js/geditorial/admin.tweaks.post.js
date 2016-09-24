@@ -1,13 +1,11 @@
 jQuery(document).ready(function($) {
 	'use strict';
 
-	var settings = $.extend({
+	var settings = $.extend({}, {
 		checklist_tree: '0',
 		category_search: '0',
 		excerpt_count: '0',
 	}, gEditorial.tweaks.settings);
-
-	// console.log(settings);
 
 	if ('0' != settings.checklist_tree) {
 
