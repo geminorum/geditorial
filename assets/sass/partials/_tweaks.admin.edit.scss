@@ -2,36 +2,4 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 /// Module: Tweaks: Admin Edit -------------------------------------------------
-
-.geditorial-admin-wrap-column.tweaks {
-
-	@include main-wrap();
-
-	.tweaks-row {
-		margin-bottom: 4px;
-		font-size: 0.89em;
-
-		.-edit {
-			margin: 0 4px 0 0;
-			@include body-rtl() {
-				margin: 0 0 0 4px;
-			}
-		}
-
-		span.dashicons {
-			color: #b4b9be;
-			width: 16px;
-			height: 16px;
-			font-size: 16px;
-			vertical-align: middle;
-		}
-
-		a:focus {
-			box-shadow: none;
-		}
-	}
-
-	.tweaks-row:last-child {
-		margin-bottom: 0px;
-	}
-}
+.geditorial-admin-wrap-column.-tweaks {}

@@ -1,8 +1,10 @@
-
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+/// MODULE: UTILITIES ----------------------------------------------------------
 %dir_rtl {
 	direction: rtl !important;
 }
-
 @mixin clearfix() {
 	&:after {
 		content: "";
@@ -10,7 +12,6 @@
 		clear: both;
 	}
 }
-
 // DEPRICATED: use @include clearfix()
 %clearfix {
 	&:after {
@@ -19,16 +20,16 @@
 		clear: both;
 	}
 }
-
 @mixin mainwrap() {
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
+
 	& *,
-	&:after,
 	& *:after,
-	&:before,
-	& *:before {
+	& *:before,
+	&:after,
+	&:before {
 		-webkit-box-sizing: border-box;
 		-moz-box-sizing: border-box;
 		box-sizing: border-box;
@@ -37,63 +38,56 @@
 	margin: 0;
 	border: 0;
 }
-
 @mixin box-reset() {
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
 }
-
 // DEPRICATED: use @include box-reset()
 %box-reset {
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
 }
-
 // DEPRICATED: use @include mainwrap()
 %main_wrap {
 	@extend %box-reset;
+
 	& *,
-	&:after,
 	& *:after,
-	&:before,
-	& *:before {
+	& *:before,
+	&:after,
+	&:before {
 		@extend %box-reset;
 	}
 	padding: 0;
 	margin: 0;
 	border: 0;
 }
-
-// prefer this!
+// MUST DEPRICATED: use @include mainwrap()
 @mixin main-wrap() {
-	@extend %box-reset;
+	 @extend %box-reset;
+
 	& *,
-	&:after,
 	& *:after,
-	&:before,
-	& *:before {
+	& *:before,
+	&:after,
+	&:before {
 		@extend %box-reset;
 	}
 	padding: 0;
 	margin: 0;
 	border: 0;
 }
-
 @mixin body-rtl() {
 	body.rtl & {
 		@content;
 	}
 }
-
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
 // http://www.stefanwienert.de/blog/2012/05/18/easy-css-vendor-prefix-mixin-for-sass/
 // Easy css vendor prefix mixin for SASS
 // May 18, 2012
-// p { @include vendor-prefix(hyphens, auto)}
+//p { @include vendor-prefix(hyphens, auto)}
 @mixin vendor-prefix($name, $argument) {
 	-webkit-#{$name}: #{$argument};
 	-ms-#{$name}: #{$argument};

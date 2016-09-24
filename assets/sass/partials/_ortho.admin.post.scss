@@ -4,43 +4,52 @@
 /// Module: Ortho: Admin Post --------------------------------------------------
 
 .ortho-input-wrap {
+  position: relative;
 
-	position: relative;
+  .do-ortho {
+    position: absolute;
+    left: 4px;
+    top: 0;
+    color: #82878c;
+    opacity: 0.8;
+    text-decoration: none;
 
-	.do-ortho {
+    &:hover {
+      text-decoration: none;
+      color: #666;
+    }
 
-		position: absolute;
-		left: 5px;
-		// top: 5px;
-		top: 2px;
+    &:focus {
+      box-shadow: none;
+      color: #666;
+    }
 
-		color: #82878c;
-		opacity: 0.8;
+    .dashicons {
+      // width: 20px;
+      // height: 20px;
+      // font-size: 20px;
+    }
+  }
 
-		text-decoration: none;
+  .do-ortho-text {}
 
-		&:hover {
-			text-decoration: none;
-			color: #666;
-		}
+  .do-ortho-html {
+    top: -10px;
+  }
 
-		&:focus {
-			box-shadow: none;
-			color: #666;
-		}
+  input.geditorial-meta-field-ot + a.do-ortho {
+    top: -3px;
+  }
 
-		.dashicons {
-			// width: 20px;
-    		// height: 20px;
-    		// font-size: 20px;
-		}
-	}
+  input.geditorial-meta-field-st + a.do-ortho {
+    top: -7px;
+  }
 
-	.do-ortho-text {
-
-	}
-
-	.do-ortho-html {
-
-	}
+  input#title + a.do-ortho {
+    top: -2px;
+  }
+  
+  textarea#excerpt + a.do-ortho {
+    top: -22px;
+  }
 }

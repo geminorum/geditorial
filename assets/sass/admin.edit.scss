@@ -1,75 +1,93 @@
 @charset "UTF-8";
-
 @import "modules/all";
 @import "partials/base";
-
 @import "partials/admin.all";
 @import "partials/admin.help";
 @import "partials/admin.table";
-
 @import "partials/magazine.admin.edit";
 @import "partials/tweaks.admin.edit";
 @import "partials/book.admin.edit";
-
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
 .geditorial-admin-wrap-column {
+  @include main-wrap();
 
+  .-row {
+    margin-bottom: 4px;
+    font-size: 0.89em;
+
+    .-icon {
+      margin: 0 4px 0 0;
+      @include body-rtl() {
+        margin: 0 0 0 4px;
+      }
+    }
+
+    span.dashicons {
+      color: #b4b9be;
+      width: 16px;
+      height: 16px;
+      font-size: 16px;
+      vertical-align: middle;
+    }
+
+    a:focus {
+      box-shadow: none;
+    }
+  }
+
+  .-row:last-child {
+    margin-bottom: 0;
+  }
 }
 
 .fixed {
+  .column-children {
+    width: 55px;
+  }
 
-	.column-children {
-		width: 55px;
-	}
+  .column-order {
+    width: 50px;
+  }
 
-	.column-order {
-		width: 50px;
-	}
+  .column-theday {
+    width: 120px;
+  }
 
-	.column-theday {
-		width: 120px;
-	}
+  .column-cover {
+    width: 50px;
+    padding: 2px;
 
-	.column-cover {
-		width: 50px;
-		padding: 2px;
-	}
+    a:focus {
+      box-shadow: none !important;
+    }
 
-	.column-cover-link {
-		&:focus {
-			box-shadow: none !important;
-		}
-	}
+    img {
+      max-width: 45px;
+      max-height: 72px;
+    }
+  }
 
-	.column-cover-img {
-		max-width: 45px;
-		max-height: 72px;
-	}
+  .column-count-empty,
+  .column-term-empty {
+    color: #f1f1fa;
+  }
+  // Module: Meta
+  .column-gpeople {
+    width: 15%;
+  }
+  // Module: Magazine
+  .column-taxonomy-issue_span {
+    width: 55px;
+  }
 
-	.column-term-empty,
-	.column-count-empty {
-		color: #f1f1fa;
-	}
-
-	// Module: Meta
-	.column-gpeople {
-		width: 15%;
-	}
-
-	// Module: Magazine
-	.column-taxonomy-issue_span {
-		width: 55px;
-	}
-
-	.column-taxonomy-issues {
-		width: 120px;
-	}
-
-	// Module: Entry
-	.column-taxonomy-entry_section {
-		width: 16%;
-	}
+  .column-taxonomy-issues {
+    width: 120px;
+  }
+  // Module: Entry
+  .column-taxonomy-entry_section {
+    width: 16%;
+  }
 }

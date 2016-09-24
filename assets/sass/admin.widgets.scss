@@ -1,24 +1,20 @@
 @charset "UTF-8";
-
 @import "modules/all";
 @import "partials/base";
-
 @import "partials/admin.all";
 @import "partials/admin.help";
 @import "partials/admin.table";
-
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
 .geditorial-admin-wrap-widgetform {
-	@include main-wrap();
+  @include main-wrap();
+  margin-bottom: 2em;
 
-	margin-bottom: 2em;
-
-	p {
-		select {
-			width: 100%;
-		}
-	}
+  p {
+    select {
+      width: 100%;
+    }
+  }
 }

@@ -1,55 +1,49 @@
 @charset "UTF-8";
-
 @import "modules/all";
 @import "partials/base";
-
 @import "partials/admin.all";
 @import "partials/admin.help";
 @import "partials/admin.table";
-
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
 body.edit-comments-php {
+  .geditorial-comments-row-action {
+    cursor: pointer;
 
-	.geditorial-comments-row-action {
-		cursor:pointer;
-		&:after {
-			content: " | ";
-			padding: 0 2px 0 2px;
-			color: #555;
-		}
+    &:after {
+      content: " | ";
+      padding: 0 2px;
+      color: #555;
+    }
 
-		&:last-child:after {
-			content: "";
-		}
+    &:last-child:after {
+      content: "";
+    }
 
-		&.unfeature,
-		&.unbury,
-		&.featured.feature,
-		&.buried.bury
-		{
-			display: none;
-		}
+    &.buried.bury,
+    &.featured.feature,
+    &.unbury,
+    &.unfeature {
+      display: none;
+    }
 
-		&.featured.unfeature,
-		&.buried.unbury
-		{
-			display: inline;
-		}
-	}
-
+    &.buried.unbury,
+    &.featured.unfeature {
+      display: inline;
+    }
+  }
 }
 
 #the-comment-list {
-	tr {
-		&.featured {
-			background-color: #dfd;
-		}
+  tr {
+    &.featured {
+      background-color: #dfd;
+    }
 
-		&.buried {
-			opacity: 0.5;
-		}
-	}
+    &.buried {
+      opacity: 0.5;
+    }
+  }
 }

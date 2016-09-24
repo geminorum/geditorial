@@ -1,44 +1,39 @@
 @charset "UTF-8";
-
 @import "modules/all";
 @import "partials/base";
-
 @import "vendor/colorbox";
-
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-
 // CUSTOM
 .rtl {
+  #cboxClose {
+    right: auto;
+    left: 5px;
+  }
 
-	#cboxClose {
-		right: auto;
-		left: 5px;
-	}
-
-	#cboxTitle{
-		left: auto;
-		right: 0;
-	}
+  #cboxTitle {
+    left: auto;
+    right: 0;
+  }
 }
 
 #cboxLoadedContent {
-	background: #F1F1F1; // default wp admin background color
+  background: #F1F1F1; // default wp admin background color
 }
 
-#cboxLoadingGraphic{
-	background: url(../packages/jquery-colorbox/loading.gif) no-repeat center center;
+#cboxLoadingGraphic {
+  background: url("../packages/jquery-colorbox/loading.gif") no-repeat center center;
 }
 
-#cboxClose{
-	background: url(../packages/jquery-colorbox/controls.png) no-repeat top center;
+#cboxClose {
+  background: url("../packages/jquery-colorbox/controls.png") no-repeat top center;
 }
 
-#cboxPrevious{
-	background: url(../packages/jquery-colorbox/controls.png) no-repeat top left;
+#cboxPrevious {
+  background: url("../packages/jquery-colorbox/controls.png") no-repeat top left;
 }
 
-#cboxNext{
-	background: url(../packages/jquery-colorbox/controls.png) no-repeat top right;
+#cboxNext {
+  background: url("../packages/jquery-colorbox/controls.png") no-repeat top right;
 }

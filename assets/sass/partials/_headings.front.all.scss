@@ -1,0 +1,90 @@
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+/// Module: Headings ----------------------------------------------------------
+
+.geditorial-wrap.-headings {
+  &.-toc-box {
+    background: $gray-lighter;
+    float: right;
+    font-size: 0.8em;
+    width: 40%;
+    padding: 1em 2em;
+    margin: 0 0 0.5em 0.5em;
+    @include body-rtl() {
+      float: left;
+      margin: 0 0.5em 0.5em 0;
+    }
+
+    ol,
+    ul {
+      margin-bottom: 0;
+      list-style: none;
+
+      li {
+        margin: 0 0 0.25em;
+
+        a {
+          text-decoration: none;
+
+          &:active,
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+
+    .-toc-title {
+      margin: 0;
+      font-size: small;
+    }
+
+    .-title {}
+
+    .-list {}
+  }
+}
+
+.anchor-title {
+  clear: none;
+
+  &:target {
+    animation: highlight 1s ease;
+  }
+}
+// show IDs for anchors
+
+h1[id]:hover a.anchorlink:before,
+h2[id]:hover a.anchorlink:before,
+h3[id]:hover a.anchorlink:before,
+h4[id]:hover a.anchorlink:before,
+h5[id]:hover a.anchorlink:before,
+h6[id]:hover a.anchorlink:before {
+  content: "\f103"; //dashicons-admin-links
+  color: #888;
+  font-size: smaller;
+  text-decoration: none;
+  box-shadow: none !important;
+  vertical-align: baseline;
+}
+
+a.anchorlink {
+  box-shadow: none !important;
+  text-decoration: none;
+  font-size: smaller;
+  margin-left: 0.5em;
+  @include body-rtl() {
+    margin-left: 0;
+    margin-right: 0.5em;
+  }
+}
+@keyframes highlight {
+  from {
+    background: $brand-warning;
+  }
+
+  to {
+    background: transparent;
+  }
+}

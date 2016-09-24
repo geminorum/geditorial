@@ -1,39 +1,32 @@
 @charset "UTF-8";
-
 @import "modules/all";
 @import "partials/base";
-
 @import "partials/admin.all";
 @import "partials/admin.help";
 @import "partials/admin.table";
-
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-.geditorial-admin-wrap-column {
-
-}
+.geditorial-admin-wrap-column {}
 
 .fixed {
+  .column-cover {
+    width: 45px;
+    padding: 2px;
 
-	.column-cover {
-		width: 45px;
-		padding: 2px;
-	}
+    img {
+      max-width: 50px;
+      max-height: 60px;
+    }
+  }
 
-	.column-cover-img {
-		max-width: 50px;
-		max-height: 60px;
-	}
-
-	.column-term-empty,
-	.column-count-empty {
-		color: #F1F1F1;
-	}
-
-	// Module: Alphabets
-	.column-alphabet {
-		width: 35px;
-	}
+  .column-count-empty,
+  .column-term-empty {
+    color: #F1F1F1;
+  }
+  // Module: Alphabets
+  .column-alphabet {
+    width: 35px;
+  }
 }
