@@ -397,6 +397,16 @@ class gEditorialHelper extends gEditorialBaseCore
 		return $filtered ? apply_filters( 'geditorial_default_calendars', $calendars ) : $calendars;
 	}
 
+	public static function getNooped( $count, $nooped, $singular = NULL )
+	{
+		$rule = _x( '%1$s', 'Module Helper: Nooped String', GEDITORIAL_TEXTDOMAIN );
+
+		if ( is_array( $nooped ) )
+			return sprintf( $rule, ( 1 == $count ? $nooped['singular'] : $nooped['plural'] ), $nooped['singular'] );
+		else
+			return sprintf( $rule, ( 1 == $count ? $singular : $nooped ), $singular );
+	}
+
 	private static function getStringsFromName( $name )
 	{
 		if ( ! is_array( $name ) )

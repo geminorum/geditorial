@@ -134,7 +134,7 @@ class gEditorialAudit extends gEditorialModuleCore
 
 				vprintf( $template, array(
 					$type,
-					translate_nooped_plural( $all[$type], $count ),
+					gEditorialHelper::getNooped( $count, $all[$type] ),
 					$tax,
 					$term,
 					number_format_i18n( $count ),

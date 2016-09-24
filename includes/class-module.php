@@ -1865,13 +1865,10 @@ class gEditorialModuleCore extends gEditorialBaseCore
 		if ( ! $posts->publish )
 			return FALSE;
 
-		$template = current_user_can( $edit_cap ) ? '<a class="geditorial-glance-item -post -posttype-'.$posttype.'" href="edit.php?post_type=%3$s">%1$s %2$s</a>' : '%1$s %2$s';
-		$singular = $this->nooped( $posttype_constant_key, 1 );
-		$nooped   = $this->nooped( $posttype_constant_key, $posts->publish );
+		$format = current_user_can( $edit_cap ) ? '<a class="geditorial-glance-item -post -posttype-'.$posttype.'" href="edit.php?post_type=%3$s">%1$s %2$s</a>' : '%1$s %2$s';
+		$text   = gEditorialHelper::getNooped( $posts->publish, $this->nooped( $posttype_constant_key, $posts->publish ), $this->nooped( $posttype_constant_key, 1 ) );
 
-		$text = sprintf( _x( '%1$s', 'Module Core: At a Glance: Nooped String', GEDITORIAL_TEXTDOMAIN ), $nooped, $singular );
-
-		return sprintf( $template, number_format_i18n( $posts->publish ), $text, $posttype );
+		return sprintf( $format, number_format_i18n( $posts->publish ), $text, $posttype );
 	}
 
 	protected function dashboard_glance_tax( $tax_constant_key, $edit_cap = 'manage_categories' )
