@@ -51,7 +51,7 @@ class gEditorialEstimated extends gEditorialModuleCore
 					'type'        => 'number',
 					'title'       => _x( 'Minimum Words', 'Estimated Module: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'And above this number of words will show the notice', 'Estimated Module: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-					'default'     => 250,
+					'default'     => 1000,
 				),
 			),
 			'posttypes_option' => 'posttypes_option',
