@@ -80,6 +80,7 @@ class gEditorialBook extends gEditorialModuleCore
 				),
 			),
 			'settings' => array(
+				'post_types_after'     => gEditorialSettingsCore::infoP2P(),
 				'install_def_size_tax' => _x( 'Install Default Sizes', 'Book Module: Setting Button', GEDITORIAL_TEXTDOMAIN ),
 			),
 			'noops' => array(
