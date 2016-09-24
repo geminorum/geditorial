@@ -2,46 +2,55 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 /// gEditorial Partials: Admin All ---------------------------------------------
-
 // USAGE: .geditorial-admin-wrap.module { @include main-wrap(); }
-
 .geditorial-admin-wrap {
+  .settings-title {
 
-	.settings-title {
+    &.dashicons-before:before {
+      padding: 5px;
+      width: auto;
+      height: auto;
+      font-size: inherit;
+      @include body-rtl() {
+        padding: 2px 5px;
+      }
+    }
 
-		.-extra {
-			color: #999;
-		}
+    .-extra {
+      color: $gray-light;
+    }
 
-		.-action {}
-	}
+    .-action {}
+  }
 
-	.settings-form {}
+  .settings-form {}
 
-	.credits {
-		direction: ltr;
+  .credits {
+    direction: ltr;
 
-		p {
-			font-size: 0.98em;
-		}
-	}
+    p {
+      font-size: 0.98em;
+    }
+  }
 
-	.signature {
-		@include body-rtl() {
-			direction: ltr;
-		}
-	}
+  .signature {
+    @include body-rtl() {
+      direction: ltr;
+    }
+  }
 
-	.credits,
-	.signature {
-		color: #777;
-		a {
-			color: inherit;
-			text-decoration: none;
-		}
-		a:hover {
-			color: #333;
-			text-decoration: underline;
-		}
-	}
+  .credits,
+  .signature {
+    color: #777;
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: #333;
+      text-decoration: underline;
+    }
+  }
 }
