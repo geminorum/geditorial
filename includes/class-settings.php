@@ -253,7 +253,7 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 		return isset( $_REQUEST['sub'] ) ? trim( $_REQUEST['sub'] ) : $default;
 	}
 
-	public static function headerTitle( $title = NULL, $back = NULL, $to = NULL )
+	public static function headerTitle( $title = NULL, $back = NULL, $to = NULL, $icon = '' )
 	{
 		if ( is_null( $title ) )
 			$title = _x( 'Editorial', 'Settings', GEDITORIAL_TEXTDOMAIN );
@@ -265,10 +265,13 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 		if ( is_null( $to ) )
 			$to = _x( 'Back to Editorial', 'Settings', GEDITORIAL_TEXTDOMAIN );
 
+		if ( $icon )
+			$icon = ' dashicons-before dashicons-'.$icon;
+
 		if ( $back )
-			printf( '<h1 class="settings-title">%s <a href="%s" class="-action page-title-action">%s</a></h1>', $title, $back, $to );
+			printf( '<h1 class="settings-title'.$icon.'">%s <a href="%s" class="-action page-title-action">%s</a></h1>', $title, $back, $to );
 		else
-			printf( '<h1 class="settings-title">%s</h1>', $title );
+			printf( '<h1 class="settings-title'.$icon.'">%s</h1>', $title );
 	}
 
 	public static function message( $messages = array() )

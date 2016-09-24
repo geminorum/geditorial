@@ -9,6 +9,7 @@ class gEditorialSettings extends gEditorialModuleCore
 			'name'      => 'settings',
 			'title'     => _x( 'Editorial', 'Settings Module', GEDITORIAL_TEXTDOMAIN ),
 			'desc'      => _x( 'WordPress, Magazine Style.', 'Settings Module', GEDITORIAL_TEXTDOMAIN ),
+			'icon'      => 'screenoptions',
 			'settings'  => 'geditorial-settings',
 			'configure' => 'print_default_settings',
 			'autoload'  => TRUE,
@@ -43,7 +44,7 @@ class gEditorialSettings extends gEditorialModuleCore
 			'manage_options',
 			$this->module->settings,
 			array( $this, 'admin_settings_page' ),
-			'dashicons-screenoptions'
+			'dashicons-'.$this->module->icon
 		);
 
 		$hook_tools = add_submenu_page(
@@ -389,7 +390,7 @@ class gEditorialSettings extends gEditorialModuleCore
 
 		echo '<div class="wrap geditorial-admin-wrap geditorial-settings">';
 
-			gEditorialSettingsCore::headerTitle( $title, $back );
+			gEditorialSettingsCore::headerTitle( $title, $back, NULL, $current_module->icon );
 
 		if ( isset( $_REQUEST['message'] ) && isset( $current_module->messages[$_REQUEST['message']] ) )
 			self::notice( $current_module->messages[$_REQUEST['message']] );
