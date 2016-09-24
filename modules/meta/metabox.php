@@ -82,7 +82,7 @@ class gEditorialMetaMetaBox extends gEditorialMetaBox
 			if ( $ltr )
 				$atts['dir'] = 'ltr';
 
-			else if ( $edit && 'text' == $field )
+			else if ( $edit && 'text' == $type )
 				$atts['data']['ortho'] = 'text';
 
 			$html = self::html( 'input', $atts );
