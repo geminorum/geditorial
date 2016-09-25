@@ -63,8 +63,8 @@ class gEditorialDrafts extends gEditorialModuleCore
 		if ( ! current_user_can( 'edit_posts' ) )
 			self::cheatin();
 
-		// $post = wp_unslash( $_POST );
-		$what = isset( $post['what'] ) ? $post['what'] : 'nothing';
+		$post = wp_unslash( $_POST );
+		$what = empty( $post['what'] ) ? 'nothing': trim( $post['what'] );
 
 		switch( $what ) {
 			default:
