@@ -326,13 +326,14 @@ class gEditorialMeta extends gEditorialModuleCore
 
 	public function sanitize_post_meta( $postmeta, $fields, $post_id, $post_type )
 	{
-		global $post;
-
-		if ( ! current_user_can( $post->cap->edit_post, $post_id ) )
-			return $postmeta;
-
 		if ( wp_verify_nonce( @$_REQUEST['_geditorial_meta_post_main'], 'geditorial_meta_post_main' )
 			|| wp_verify_nonce( @$_REQUEST['_geditorial_meta_post_raw'], 'geditorial_meta_post_raw' ) ) {
+
+			$post = get_post( $post_id );
+			$cap  = empty( $post->cap->edit_post ) ? 'edit_post' : $post->cap->edit_post;
+
+			if ( ! current_user_can( $cap, $post_id ) )
+				return $postmeta;
 
 			$fields = $this->post_type_field_types( $post_type );
 
