@@ -361,8 +361,11 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 			printf( '<h1 class="settings-title'.$icon.'">%s</h1>', $title );
 	}
 
-	public static function message( $messages = array() )
+	public static function message( $messages = NULL )
 	{
+		if ( is_null( $messages ) )
+			$messages = self::messages();
+
 		if ( isset( $_GET['message'] ) ) {
 
 			if ( isset( $messages[$_GET['message']] ) )
