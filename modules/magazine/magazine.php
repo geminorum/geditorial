@@ -784,13 +784,6 @@ class gEditorialMagazine extends gEditorialModuleCore
 		return $messages;
 	}
 
-	public function tools_messages( $messages, $sub )
-	{
-		if ( $this->module->name == $sub )
-			$messages['created'] = self::counted( _x( '%s Issue Post(s) Created.', 'Magazine Module', GEDITORIAL_TEXTDOMAIN ) );
-		return $messages;
-	}
-
 	public function tools_sub( $uri, $sub )
 	{
 		echo '<form class="settings-form" method="post" action="">';
@@ -911,7 +904,6 @@ class gEditorialMagazine extends gEditorialModuleCore
 				}
 			}
 
-			add_filter( 'geditorial_tools_messages', array( $this, 'tools_messages' ), 10, 2 );
 			add_action( 'geditorial_tools_sub_'.$this->module->name, array( $this, 'tools_sub' ), 10, 2 );
 		}
 
