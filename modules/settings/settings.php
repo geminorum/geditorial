@@ -417,25 +417,21 @@ class gEditorialSettings extends gEditorialModuleCore
 		echo '<div class="wrap geditorial-admin-wrap geditorial-settings">';
 
 			gEditorialSettingsCore::headerTitle( $title, $back, NULL, $current_module->icon );
+			gEditorialSettingsCore::message();
 
-		if ( isset( $_REQUEST['message'] ) && isset( $current_module->messages[$_REQUEST['message']] ) )
-			self::notice( $current_module->messages[$_REQUEST['message']] );
+			echo '<div class="-header">';
 
-		if ( isset( $_REQUEST['error'] ) && isset( $current_module->messages[$_REQUEST['error']] ) )
-			self::notice( $current_module->messages[$_REQUEST['error']], 'error' );
+			if ( isset( $current_module->desc ) && $current_module->desc )
+				echo '<h4>'.$current_module->desc.'</h4>';
 
-		echo '<div class="explanation">';
+			if ( isset( $current_module->intro ) && $current_module->intro )
+				echo wpautop( $current_module->intro );
 
-		if ( isset( $current_module->desc ) && $current_module->desc )
-			echo '<h4>'.$current_module->desc.'</h4>';
+			if ( method_exists( $gEditorial->{$current_module->name}, 'intro_after' ) )
+				$gEditorial->{$current_module->name}->intro_after();
 
-		if ( isset( $current_module->intro ) && $current_module->intro )
-			echo wpautop( $current_module->intro );
-
-		if ( method_exists( $gEditorial->{$current_module->name}, 'intro_after' ) )
-			$gEditorial->{$current_module->name}->intro_after();
-
-		echo '<div class="clear"></div></div>';
+			echo '<div class="clear"></div>';
+		echo '</div>';
 	}
 
 	private function print_default_settings()
