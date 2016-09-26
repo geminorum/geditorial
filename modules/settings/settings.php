@@ -24,10 +24,12 @@ class gEditorialSettings extends gEditorialModuleCore
 
 	public function setup( $partials = array() )
 	{
-		if ( ! is_admin() )
-			return;
+		if ( is_admin() )
+			add_action( 'admin_menu', array( $this, 'admin_menu' ) );
+	}
 
-		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
+	public function setup_ajax( $request )
+	{
 		add_action( 'wp_ajax_geditorial_settings', array( $this, 'ajax' ) );
 	}
 

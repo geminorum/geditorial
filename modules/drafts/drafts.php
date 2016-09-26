@@ -29,6 +29,11 @@ class gEditorialDrafts extends gEditorialModuleCore
 		);
 	}
 
+	public function setup_ajax( $request )
+	{
+		add_action( 'wp_ajax_geditorial_drafts', array( $this, 'ajax' ) );
+	}
+
 	public function init()
 	{
 		do_action( 'geditorial_drafts_init', $this->module );
@@ -43,8 +48,6 @@ class gEditorialDrafts extends gEditorialModuleCore
 				$this->enqueue_asset_js( TRUE );
 				$this->enqueue_styles();
 		}
-
-		add_action( 'wp_ajax_geditorial_drafts', array( $this, 'ajax' ) );
 	}
 
 	public function admin_bar_menu( $wp_admin_bar )

@@ -49,7 +49,10 @@ class gEditorialLike extends gEditorialModuleCore
 				return $groups;
 			} );
 		}
+	}
 
+	public function setup_ajax( $request )
+	{
 		add_action( 'wp_ajax_geditorial_like', array( $this, 'ajax' ) );
 		add_action( 'wp_ajax_nopriv_geditorial_like', array( $this, 'ajax' ) );
 	}
