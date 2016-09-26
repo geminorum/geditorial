@@ -17,18 +17,8 @@
     margin: 10px 2px 0 20px;
   }
 
-  // on each module settings
-  .-header {
+  .explanation {
     margin-bottom: 1em;
-
-    h4 {
-      font-size: 17px;
-      font-style: normal;
-      font-weight: normal;
-      line-height: 1.1;
-      margin: 2px 0 0;
-      padding: 0;
-    }
 
     p {
       font-size: 16px;
@@ -37,7 +27,6 @@
     }
   }
 
-  // on main settings
   .modules {
     margin-top: 20px;
     overflow: hidden;
