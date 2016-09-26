@@ -251,7 +251,7 @@ class gEditorialTweaks extends gEditorialModuleCore
 
 					if ( $icon = $this->get_string( 'icon', $taxonomy, 'taxonomies', 'tag' ) )
 						$before .= gEditorialHTML::tag( 'a', array(
-							'href'   => self::getEditTaxLink( $taxonomy ),
+							'href'   => gEditorialWordPress::getEditTaxLink( $taxonomy ),
 							'title'  => $this->get_string( 'title', $taxonomy, 'taxonomies', $taxonomy ),
 							'class'  => array( '-icon', '-link' ),
 							'target' => '_blank',

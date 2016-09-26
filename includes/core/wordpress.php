@@ -305,4 +305,43 @@ class gEditorialWordPress extends gEditorialBaseCore
 	{
 		self::redirect( wp_login_url( $location, TRUE ), $status );
 	}
+
+	// @SEE: get_search_link()
+	public static function getSearchLink( $query = FALSE )
+	{
+		if ( defined( 'GNETWORK_SEARCH_REDIRECT' ) && GNETWORK_SEARCH_REDIRECT )
+			return $query ? add_query_arg( GNETWORK_SEARCH_QUERYID, urlencode( $query ), GNETWORK_SEARCH_URL ) : GNETWORK_SEARCH_URL;
+
+		return $query ? add_query_arg( 's', urlencode( $query ), get_option( 'home' ) ) : get_option( 'home' );
+	}
+
+	// @SEE: get_edit_term_link()
+	public static function getEditTaxLink( $taxonomy, $term_id = FALSE, $extra = array() )
+	{
+		if ( $term_id )
+			return add_query_arg( array_merge( array(
+				'taxonomy' => $taxonomy,
+				'tag_ID'   => $term_id,
+			), $extra ), admin_url( 'term.php' ) );
+
+		else
+			return add_query_arg( array_merge( array(
+				'taxonomy' => $taxonomy,
+			), $extra ), admin_url( 'edit-tags.php' ) );
+	}
+
+	public function getPostTypeEditLink( $post_type, $user_id = 0, $extra = array() )
+	{
+		$query = array( 'post_type' => $post_type );
+
+		if ( $user_id )
+			$query['author'] = $user_id;
+
+		return add_query_arg( array_merge( $query, $extra ), admin_url( 'edit.php' ) );
+	}
+
+	public function getPostEditLink( $post_id, $extra = array() )
+	{
+		return add_query_arg( array_merge( array( 'post' => $post_id, 'action' => 'edit' ), $extra ), admin_url( 'post.php' ) );
+	}
 }

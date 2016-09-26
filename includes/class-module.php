@@ -1442,7 +1442,7 @@ class gEditorialModuleCore extends gEditorialBaseCore
 		) );
 
 		if ( is_null( $args['edit_url'] ) )
-			$args['edit_url'] = self::getEditTaxLink( $args['taxonomy'] );
+			$args['edit_url'] = gEditorialWordPress::getEditTaxLink( $args['taxonomy'] );
 
 		$tax_name = esc_attr( $args['taxonomy'] );
 		$taxonomy = get_taxonomy( $args['taxonomy'] );
@@ -1734,7 +1734,7 @@ class gEditorialModuleCore extends gEditorialBaseCore
 
 	public function get_url_tax_edit( $constant_key, $term_id = FALSE, $extra = array() )
 	{
-		return self::getEditTaxLink( $this->constant( $constant_key ), $term_id, $extra );
+		return gEditorialWordPress::getEditTaxLink( $this->constant( $constant_key ), $term_id, $extra );
 	}
 
 	public function get_url_post_edit( $constant_key, $extra = array() )

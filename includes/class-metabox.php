@@ -9,7 +9,7 @@ class gEditorialMetaBox extends gEditorialBaseCore
 
 		echo '<div class="field-wrap field-wrap-empty">';
 			echo gEditorialHTML::tag( 'a', array(
-				'href'   => self::getEditTaxLink( $taxonomy ),
+				'href'   => gEditorialWordPress::getEditTaxLink( $taxonomy ),
 				'title'  => $object->labels->add_new_item,
 				'target' => '_blank',
 			), $object->labels->not_found );
