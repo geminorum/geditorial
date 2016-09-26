@@ -21,6 +21,13 @@ class gEditorialHelper extends gEditorialBaseCore
 		return $prefix.$class;
 	}
 
+	public static function moduleSlug( $module, $link = TRUE )
+	{
+		return $link
+			? ucwords( str_replace( array( '_', ' ' ), '-', $module ), '-' )
+			: ucwords( str_replace( array( '_', '-' ), ' ', $module ) );
+	}
+
 	// FIXME: MUST DEPRECATE
 	public static function moduleEnabled( $options )
 	{

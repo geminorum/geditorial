@@ -343,6 +343,83 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 		gEditorialHTML::headerNav( $uri, $active, $subs, $prefix, $tag );
 	}
 
+	public static function moduleButtons( $module, $enabled = FALSE )
+	{
+		echo gEditorialHTML::tag( 'input', array(
+			'type'  => 'submit',
+			'value' => _x( 'Enable', 'Settings: Button', GEDITORIAL_TEXTDOMAIN ),
+			'style' => $enabled ? 'display:none' : FALSE,
+			'class' => array( 'hide-if-no-js', 'button', 'button-primary', 'button-toggle' ),
+			'data'  => array(
+				'module' => $module->name,
+				'do'     => 'enable',
+			),
+		) );
+
+		echo gEditorialHTML::tag( 'input', array(
+			'type'  => 'submit',
+			'value' => _x( 'Disable', 'Settings: Button', GEDITORIAL_TEXTDOMAIN ),
+			'style' => $enabled ? FALSE : 'display:none',
+			'class' => array( 'hide-if-no-js', 'button', 'button-secondary', 'button-toggle', 'button-remove' ),
+			'data'  => array(
+				'module' => $module->name,
+				'do'     => 'disable',
+			),
+		) );
+
+		// echo gEditorialHTML::tag( 'span', array(
+		// 	'class' => array( 'button', 'hide-if-js' ),
+		// ), _x( 'You have to enable Javascript!', 'Settings: Notice', GEDITORIAL_TEXTDOMAIN ) );
+	}
+
+	public static function moduleConfigure( $module, $enabled = FALSE )
+	{
+		if ( $module->configure )
+			echo gEditorialHTML::tag( 'a', array(
+				'href'  => add_query_arg( 'page', $module->settings, get_admin_url( NULL, 'admin.php' ) ),
+				'style' => $enabled ? FALSE : 'display:none',
+				'class' => array( 'button', 'button-primary', 'button-configure' ),
+				'data'  => array(
+					'module' => $module->name,
+					'do'     => 'configure',
+				),
+			), _x( 'Configure', 'Settings: Button', GEDITORIAL_TEXTDOMAIN ) );
+	}
+
+	public static function moduleInfo( $module, $tag = 'h3' )
+	{
+		$links = self::getModuleWiki( $module );
+
+		$link = gEditorialHTML::tag( 'a', array(
+			'href'   => $links[0],
+			'title'  => $links[1],
+			'target' => '_blank',
+		), $module->title );
+
+		echo gEditorialHTML::html( $tag, $link );
+		echo gEditorialHTML::html( 'p', $module->desc );
+	}
+
+	public static function getModuleWiki( $module = FALSE )
+	{
+		if ( $module ) {
+
+			return array(
+				'https://github.com/geminorum/geditorial/wiki/Modules-'.gEditorialHelper::moduleSlug( $module->name ),
+				sprintf( 'Editorial %s Documentation', gEditorialHelper::moduleSlug( $module->name, FALSE ) ),
+				'https://github.com/geminorum/geditorial',
+			);
+
+		} else {
+
+			return array(
+				'https://github.com/geminorum/geditorial/wiki',
+				'Editorial Documentation',
+				'https://github.com/geminorum/geditorial',
+			);
+		}
+	}
+
 	public static function settingsCredits()
 	{
 		echo '<div class="credits"><p>';
@@ -366,22 +443,7 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 		if ( is_null( $template ) )
 			$template = '<div class="-links"><p><strong>For more information</strong>:</p><p><a href="%1$s">%2$s</a></p><p><a href="%3$s">gEditorial on GitHub</a></p></div>';
 
-		if ( $module ) {
-
-			return vsprintf( $template, array(
-				'https://github.com/geminorum/geditorial/wiki/Modules-'.ucwords( $module->name ),
-				sprintf( 'Editorial %s Documentation', ucwords( $module->name ) ),
-				'https://github.com/geminorum/geditorial',
-			) );
-
-		} else {
-
-			return vsprintf( $template, array(
-				'https://github.com/geminorum/geditorial/wiki',
-				'Editorial Documentation',
-				'https://github.com/geminorum/geditorial',
-			) );
-		}
+		return vsprintf( $template, self::getModuleWiki( $module ) );
 	}
 
 	public static function settingsHelpContent( $module = FALSE )

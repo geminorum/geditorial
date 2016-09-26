@@ -320,29 +320,27 @@ class gEditorialSettings extends gEditorialModuleCore
 		if ( ! current_user_can( 'manage_options' ) )
 			self::cheatin();
 
-		$sub = isset( $_POST['sub'] ) ? trim( $_POST['sub'] ) : 'default';
+		$post = wp_unslash( $_POST );
+		$what = empty( $post['what'] ) ? 'nothing': trim( $post['what'] );
 
-		switch ( $sub ) {
+		switch ( $what ) {
 
-			case 'module_state' :
+			case 'state' :
 
-				if ( ! wp_verify_nonce( $_POST['module_nonce'], 'geditorial-module-nonce' ) )
-					self::cheatin();
+				gEditorialHelper::checkAjaxReferer();
 
-				if ( ! isset( $_POST['module_action'], $_POST['module_slug'] ) )
-					wp_send_json_error( self::error( _x( 'No Action of Slug!', 'Settings Module: Ajax Notice', GEDITORIAL_TEXTDOMAIN ) ) );
+				if ( ! isset( $_POST['doing'], $_POST['name'] ) )
+					wp_send_json_error( self::error( _x( 'No action or name!', 'Settings Module: Ajax Notice', GEDITORIAL_TEXTDOMAIN ) ) );
 
-				$module = $gEditorial->get_module_by( 'settings', sanitize_key( $_POST['module_slug'] ) );
-
-				if ( ! $module )
+				if ( ! $module = $gEditorial->get_module_by( 'name', sanitize_key( $_POST['name'] ) ) )
 					wp_send_json_error( self::error( _x( 'Cannot find the module!', 'Settings Module: Ajax Notice', GEDITORIAL_TEXTDOMAIN ) ) );
 
-				$enabled = 'enable' == sanitize_key( $_POST['module_action'] ) ? TRUE : FALSE;
+				$enabled = 'enable' == sanitize_key( $_POST['doing'] ) ? TRUE : FALSE;
 
 				if ( $gEditorial->update_module_option( $module->name, 'enabled', $enabled ) )
-					wp_send_json_success( self::success( _x( 'Module state succesfully changed', 'Settings Module: Ajax Notice', GEDITORIAL_TEXTDOMAIN ) ) );
+					wp_send_json_success( self::success( _x( 'Module state succesfully changed.', 'Settings Module: Ajax Notice', GEDITORIAL_TEXTDOMAIN ) ) );
 				else
-					wp_send_json_error( self::error( _x( 'Cannot change module state', 'Settings Module: Ajax Notice', GEDITORIAL_TEXTDOMAIN ) ) );
+					wp_send_json_error( self::error( _x( 'Cannot change module state!', 'Settings Module: Ajax Notice', GEDITORIAL_TEXTDOMAIN ) ) );
 
 			break;
 
@@ -430,45 +428,26 @@ class gEditorialSettings extends gEditorialModuleCore
 				if ( $module->autoload )
 					continue;
 
-				$classes = array(
-					'module',
-					( isset( $gEditorial->{$name} ) ? 'module-enabled' : 'module-disabled' ),
-					( $module->configure ? 'has-configure-link' : 'no-configure-link' ),
-				);
+				$enabled = isset( $gEditorial->{$name} );
 
-				echo '<div class="'.implode( ' ', $classes ).'" id="'.$module->settings.'">';
+				echo '<div class="module '.( $enabled ? 'module-enabled' : 'module-disabled' )
+					.'" id="'.$module->settings.'" data-module="'.$module->name.'">';
 
 				if ( $module->icon )
 					echo '<div class="dashicons dashicons-'.$module->icon.'"></div>';
 
-				echo '<form method="get" action="'.get_admin_url( NULL, 'options.php' ).'">';
+				echo '<span class="spinner"></span>';
 
-					echo self::html( 'h3', $module->title );
-					echo self::html( 'p', $module->desc );
+				echo '<form action="">';
+
+					gEditorialSettingsCore::moduleInfo( $module );
 
 					echo '<p class="actions">';
 
-						if ( $module->configure ) {
-							$configure_url = add_query_arg( 'page', $module->settings, get_admin_url( NULL, 'admin.php' ) );
-							echo '<a href="'.$configure_url.'" class="button-configure button button-primary';
-							if ( ! isset( $gEditorial->{$name} ) )
-								echo ' hidden" style="display:none;';
-							echo '">'._x( 'Configure', 'Settings Module', GEDITORIAL_TEXTDOMAIN ).'</a>';
-						}
-
-						echo '<input type="submit" class="button button-primary button-toggle"';
-							if ( isset( $gEditorial->{$name} ) )
-								echo ' style="display:none;"';
-							echo ' value="'._x( 'Enable', 'Settings Module', GEDITORIAL_TEXTDOMAIN ).'" />';
-
-						echo '<input type="submit" class="button button-secondary button-toggle button-remove"';
-							if ( ! isset( $gEditorial->{$name} ) )
-								echo ' style="display:none;"';
-							echo ' value="'._x( 'Disable', 'Settings Module', GEDITORIAL_TEXTDOMAIN ).'" />';
+						gEditorialSettingsCore::moduleConfigure( $module, $enabled );
+						gEditorialSettingsCore::moduleButtons( $module, $enabled );
 
 					echo '</p>';
-
-					wp_nonce_field( 'geditorial-module-nonce', 'module-nonce', FALSE );
 				echo '</form></div>';
 			}
 
@@ -494,7 +473,7 @@ class gEditorialSettings extends gEditorialModuleCore
 
 		do_action( 'geditorial_settings_load', $page );
 
-		$this->enqueue_asset_js();  // FIXME: the js not using the internal api!
+		$this->enqueue_asset_js( TRUE );
 	}
 
 	private function admin_settings_verify( $group )
