@@ -28,8 +28,6 @@ class gEditorialEntry extends gEditorialModuleCore
 				'before_content',
 				'after_content',
 			),
-			'posttypes_option' => 'posttypes_option',
-			'fields_option'    => 'fields_option',
 		);
 	}
 
@@ -70,11 +68,8 @@ class gEditorialEntry extends gEditorialModuleCore
 				'excerpt',
 				'author',
 				'thumbnail',
-				// 'trackbacks',
-				// 'custom-fields',
 				'comments',
 				'revisions',
-				// 'page-attributes',
 			),
 		);
 	}
