@@ -4,7 +4,7 @@ class gEditorialHeadings extends gEditorialModuleCore
 {
 
 	private $anchors  = array();
-	private $headings = array();
+	private $toc      = array();
 
 	public static function module()
 	{
