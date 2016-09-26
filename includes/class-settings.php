@@ -7,7 +7,7 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 	const SETTINGS = 'geditorial-settings';
 	const TOOLS    = 'geditorial-tools';
 
-	public static function reportsURL( $full = TRUE )
+	public static function reportsURL( $full = TRUE, $dashboard = FALSE )
 	{
 		$relative = 'index.php?page='.self::REPORTS;
 

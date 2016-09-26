@@ -35,10 +35,13 @@ class gEditorialSettings extends gEditorialModuleCore
 	{
 		global $gEditorial;
 
+		$can  = current_user_can( $this->caps['settings'] );
+		$page = 'index.php';
+
 		$hook_reports = add_submenu_page(
-			'index.php',
-			_x( 'Editorial Reports', 'Settings Module', GEDITORIAL_TEXTDOMAIN ),
-			_x( 'Reports', 'Settings Module: Admin Reports Menu Title', GEDITORIAL_TEXTDOMAIN ),
+			$page,
+			_x( 'Editorial Reports', 'Settings Module: Menu Title', GEDITORIAL_TEXTDOMAIN ),
+			_x( 'Editorial Reports', 'Settings Module: Menu Title', GEDITORIAL_TEXTDOMAIN ),
 			$this->caps['reports'],
 			'geditorial-reports',
 			array( $this, 'admin_reports_page' )
@@ -54,9 +57,12 @@ class gEditorialSettings extends gEditorialModuleCore
 		);
 
 		$hook_tools = add_submenu_page(
-			( current_user_can( $this->caps['settings'] ) ? $this->module->settings : 'index.php' ),
-			_x( 'Editorial Tools', 'Settings Module', GEDITORIAL_TEXTDOMAIN ),
-			_x( 'Tools', 'Settings Module: Admin Tools Menu Title', GEDITORIAL_TEXTDOMAIN ),
+			( $can ? $this->module->settings : $page ),
+			_x( 'Editorial Tools', 'Settings Module: Menu Title', GEDITORIAL_TEXTDOMAIN ),
+			( $can
+				? _x( 'Tools', 'Settings Module: Menu Title', GEDITORIAL_TEXTDOMAIN )
+				: _x( 'Editorial Tools', 'Settings Module: Menu Title', GEDITORIAL_TEXTDOMAIN )
+			),
 			$this->caps['tools'],
 			'geditorial-tools',
 			array( $this, 'admin_tools_page' )
@@ -85,13 +91,16 @@ class gEditorialSettings extends gEditorialModuleCore
 
 	public function admin_reports_page()
 	{
-		$uri = gEditorialSettingsCore::reportsURL( FALSE, $this->caps['reports'] );
+		$can = current_user_can( $this->caps['reports'] );
+		$uri = gEditorialSettingsCore::reportsURL( FALSE, ! $can );
 		$sub = gEditorialSettingsCore::sub();
 
-		$subs = apply_filters( 'geditorial_reports_subs', array(
-			'overview' => _x( 'Overview', 'Settings Module: Reports Sub', GEDITORIAL_TEXTDOMAIN ),
-			'general'  => _x( 'General', 'Settings Module: Reports Sub', GEDITORIAL_TEXTDOMAIN ),
-		), 'reports' );
+		$subs = array( 'overview' => _x( 'Overview', 'Settings Module: Reports Sub', GEDITORIAL_TEXTDOMAIN ) );
+
+		if ( $can )
+			$subs['general'] = _x( 'General', 'Settings Module: Reports Sub', GEDITORIAL_TEXTDOMAIN );
+
+		$subs = apply_filters( 'geditorial_reports_subs', $subs, 'reports' );
 
 		if ( is_super_admin() )
 			$subs['console'] = _x( 'Console', 'Settings Module: Reports Sub', GEDITORIAL_TEXTDOMAIN );
