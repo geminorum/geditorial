@@ -132,24 +132,30 @@ class gEditorialAudit extends gEditorialModuleCore
 				if ( empty( $objects[$type] ) )
 					$objects[$type] = get_post_type_object( $type );
 
-				if ( $objects[$type] && current_user_can( $objects[$type]->cap->edit_posts ) )
-					$format = '<'.$list.' class="%4$s-%1$s-count"><a href="edit.php?post_type=%1$s&%3$s=%4$s"><span>%5$s</span> %2$s</a> (%6$s)</'.$list.'>';
-				else
-					$format = '<'.$list.' class="%4$s-%1$s-count"><span>%5$s</span> %2$s</a> (%6$s)</'.$list.'>';
+				$query = array( 'post_type' => $type, $tax => $term );
 
-				$html .= vsprintf( $format, array(
-					$type,
+				if ( $user_id )
+					$query['author'] = $user_id;
+
+				$text = vsprintf( '<span>%3$s</span> %1$s (%2$s)', array(
 					gEditorialHelper::getNooped( $count, $all[$type] ),
-					$tax,
-					$term,
-					number_format_i18n( $count ),
 					$name,
+					number_format_i18n( $count ),
 				) );
+
+				if ( $objects[$type] && current_user_can( $objects[$type]->cap->edit_posts ) )
+					$text = gEditorialHTML::tag( 'a', array(
+						'href' => add_query_arg( $query, admin_url( 'edit.php' ) ),
+					), $text );
+
+				$html .= gEditorialHTML::tag( $list, array(
+					'class' => $term.'-'.$type.'-count',
+				), $text );
 			}
 		}
 
 		if ( $html )
-			return '<'.$wrap.'>'.$html.'</'.$wrap.'>';
+			return gEditorialHTML::tag( $wrap, $html );
 
 		return FALSE;
 	}
