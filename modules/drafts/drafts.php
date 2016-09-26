@@ -58,7 +58,7 @@ class gEditorialDrafts extends gEditorialModuleCore
 
 	public function ajax()
 	{
-		check_ajax_referer( 'geditorial', 'nonce' );
+		gEditorialHelper::checkAjaxReferer();
 
 		if ( ! current_user_can( 'edit_posts' ) )
 			self::cheatin();

@@ -133,7 +133,7 @@ class gEditorialLike extends gEditorialModuleCore
 			break;
 			case 'dolike' :
 
-				check_ajax_referer( 'geditorial_like_ajax-'.$post['id'], 'nonce' );
+				gEditorialHelper::checkAjaxReferer( 'geditorial_like_ajax-'.$post['id'] );
 
 				list( $check, $count ) = $this->like( $post['id'] );
 
@@ -149,7 +149,7 @@ class gEditorialLike extends gEditorialModuleCore
 			break;
 			case 'unlike' :
 
-				check_ajax_referer( 'geditorial_like_ajax-'.$post['id'], 'nonce' );
+				gEditorialHelper::checkAjaxReferer( 'geditorial_like_ajax-'.$post['id'] );
 
 				list( $check, $count ) = $this->unlike( $post['id'] );
 

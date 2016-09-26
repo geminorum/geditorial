@@ -314,6 +314,11 @@ class gEditorialHelper extends gEditorialBaseCore
 </script><?php
 	}
 
+	public static function checkAjaxReferer( $action = 'geditorial', $key = 'nonce' )
+	{
+		check_ajax_referer( $action, $key );
+	}
+
 	// TODO: add as general option
 	public static function getEditorialUserID( $fallback = TRUE )
 	{
