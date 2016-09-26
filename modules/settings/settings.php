@@ -358,22 +358,22 @@ class gEditorialSettings extends gEditorialModuleCore
 				gEditorialHelper::checkAjaxReferer();
 
 				if ( ! isset( $_POST['doing'], $_POST['name'] ) )
-					wp_send_json_error( self::error( _x( 'No action or name!', 'Settings Module: Ajax Notice', GEDITORIAL_TEXTDOMAIN ) ) );
+					wp_send_json_error( gEditorialHTML::error( _x( 'No action or name!', 'Settings Module: Ajax Notice', GEDITORIAL_TEXTDOMAIN ) ) );
 
 				if ( ! $module = $gEditorial->get_module_by( 'name', sanitize_key( $_POST['name'] ) ) )
-					wp_send_json_error( self::error( _x( 'Cannot find the module!', 'Settings Module: Ajax Notice', GEDITORIAL_TEXTDOMAIN ) ) );
+					wp_send_json_error( gEditorialHTML::error( _x( 'Cannot find the module!', 'Settings Module: Ajax Notice', GEDITORIAL_TEXTDOMAIN ) ) );
 
 				$enabled = 'enable' == sanitize_key( $_POST['doing'] ) ? TRUE : FALSE;
 
 				if ( $gEditorial->update_module_option( $module->name, 'enabled', $enabled ) )
-					wp_send_json_success( self::success( _x( 'Module state succesfully changed.', 'Settings Module: Ajax Notice', GEDITORIAL_TEXTDOMAIN ) ) );
+					wp_send_json_success( gEditorialHTML::success( _x( 'Module state succesfully changed.', 'Settings Module: Ajax Notice', GEDITORIAL_TEXTDOMAIN ) ) );
 				else
-					wp_send_json_error( self::error( _x( 'Cannot change module state!', 'Settings Module: Ajax Notice', GEDITORIAL_TEXTDOMAIN ) ) );
+					wp_send_json_error( gEditorialHTML::error( _x( 'Cannot change module state!', 'Settings Module: Ajax Notice', GEDITORIAL_TEXTDOMAIN ) ) );
 
 			break;
 
 			default :
-				wp_send_json_error( self::error( _x( 'What?!', 'Settings Module: Ajax Notice', GEDITORIAL_TEXTDOMAIN ) ) );
+				wp_send_json_error( gEditorialHTML::error( _x( 'What?!', 'Settings Module: Ajax Notice', GEDITORIAL_TEXTDOMAIN ) ) );
 		}
 
 		die();
@@ -384,7 +384,7 @@ class gEditorialSettings extends gEditorialModuleCore
 		global $gEditorial;
 
 		if ( ! $module = $gEditorial->get_module_by( 'settings', $_GET['page'] ) )
-			wp_die( _x( 'Not a registered Editorial module', 'Settings Module', GEDITORIAL_TEXTDOMAIN ) );
+			wp_die( _x( 'Not a registered Editorial module', 'Settings Module: Page Notice', GEDITORIAL_TEXTDOMAIN ) );
 
 		if ( isset( $gEditorial->{$module->name} ) ) {
 
@@ -395,10 +395,7 @@ class gEditorialSettings extends gEditorialModuleCore
 
 		} else {
 
-			self::notice( sprintf(
-				_x( 'Module not enabled. Please enable it from the <a href="%1$s">Editorial settings page</a>.', 'Settings Module', GEDITORIAL_TEXTDOMAIN ),
-				gEditorialSettingsCore::settingsURL()
-			) );
+			gEditorialHTML::warning( _x( 'Module not enabled. Please enable it from the Editorial settings page.', 'Settings Module: Page Notice', GEDITORIAL_TEXTDOMAIN ), TRUE );
 		}
 	}
 
@@ -479,7 +476,7 @@ class gEditorialSettings extends gEditorialModuleCore
 
 		} else {
 
-			self::notice( _x( 'There are no editorial modules registered', 'Settings Module', GEDITORIAL_TEXTDOMAIN ), 'error' );
+			gEditorialHTML::warning( _x( 'There are no editorial modules registered!', 'Settings Module: Page Notice', GEDITORIAL_TEXTDOMAIN ), TRUE );
 		}
 	}
 

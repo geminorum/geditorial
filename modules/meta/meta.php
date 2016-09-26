@@ -616,11 +616,11 @@ class gEditorialMeta extends gEditorialModuleCore
 			if ( isset( $_REQUEST['field'] ) && $_REQUEST['field'] ) {
 				$field = $this->get_string( $_REQUEST['field'] );
 
-				$messages['converted'] = self::success( sprintf( _x( 'Field %s Converted', 'Meta Module: Tools Message', GEDITORIAL_TEXTDOMAIN ), $field ) );
-				$messages['deleted']   = self::success( sprintf( _x( 'Field %s Deleted', 'Meta Module: Tools Message', GEDITORIAL_TEXTDOMAIN ), $field ) );
+				$messages['converted'] = gEditorialHTML::success( sprintf( _x( 'Field %s Converted', 'Meta Module: Tools Message', GEDITORIAL_TEXTDOMAIN ), $field ) );
+				$messages['deleted']   = gEditorialHTML::success( sprintf( _x( 'Field %s Deleted', 'Meta Module: Tools Message', GEDITORIAL_TEXTDOMAIN ), $field ) );
 
 			} else {
-				$messages['converted'] = $messages['deleted'] = self::error( _x( 'No Field', 'Meta Module: Tools Message', GEDITORIAL_TEXTDOMAIN ) );
+				$messages['converted'] = $messages['deleted'] = gEditorialHTML::error( _x( 'No Field', 'Meta Module: Tools Message', GEDITORIAL_TEXTDOMAIN ) );
 			}
 		}
 

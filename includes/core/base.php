@@ -465,57 +465,6 @@ class gEditorialBaseCore
 		return defined( 'WP_CLI' ) && WP_CLI;
 	}
 
-	// @REF: https://codex.wordpress.org/Plugin_API/Action_Reference/admin_notices
-	public static function notice( $notice, $class = 'notice-success fade', $echo = TRUE )
-	{
-		$html = sprintf( '<div class="notice %s is-dismissible"><p>%s</p></div>', $class, $notice );
-
-		if ( ! $echo )
-			return $html;
-
-		echo $html;
-	}
-
-	public static function error( $message, $echo = FALSE )
-	{
-		return self::notice( $message, 'notice-error fade', $echo );
-	}
-
-	// FIXME: DEPRICATED: use `self::success()`
-	public static function updated( $message, $echo = FALSE )
-	{
-		self::__dev_dep( 'self::success()' );
-		return self::notice( $message, 'notice-success fade', $echo );
-	}
-
-	public static function success( $message, $echo = FALSE )
-	{
-		return self::notice( $message, 'notice-success fade', $echo );
-	}
-
-	public static function warning( $message, $echo = FALSE )
-	{
-		return self::notice( $message, 'notice-warning fade', $echo );
-	}
-
-	public static function info( $message, $echo = FALSE )
-	{
-		return self::notice( $message, 'notice-info fade', $echo );
-	}
-
-	// FIXME: DEPRECATED
-	// USE: gEditorialSettingsCore::counted()
-	public static function counted( $message = NULL, $count = NULL, $class = 'updated' )
-	{
-		if ( is_null( $message ) )
-			$message = _x( '%s Counted!', 'Module Core', GEDITORIAL_TEXTDOMAIN );
-
-		if ( is_null( $count ) )
-			$count = isset( $_REQUEST['count'] ) ? $_REQUEST['count'] : 0;
-
-		return self::notice( sprintf( $message, number_format_i18n( $count ) ), $class.' fade', FALSE );
-	}
-
 	public static function getPostIDbySlug( $slug, $post_type, $url = FALSE )
 	{
 		global $wpdb;

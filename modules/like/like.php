@@ -164,7 +164,7 @@ class gEditorialLike extends gEditorialModuleCore
 
 		}
 
-		wp_send_json_error( self::error( _x( 'What?!', 'Like Module: Ajax Notice', GEDITORIAL_TEXTDOMAIN ) ) );
+		wp_send_json_error( gEditorialHTML::error( _x( 'What?!', 'Like Module: Ajax Notice', GEDITORIAL_TEXTDOMAIN ) ) );
 	}
 
 	public function title( $liked, $post_id = NULL )

@@ -342,7 +342,7 @@ class gEditorialToday extends gEditorialModuleCore
 				),
 
 			), $posts, array(
-				'empty' => self::warning( _x( 'No Posts!', 'Today Module', GEDITORIAL_TEXTDOMAIN ) ),
+				'empty' => gEditorialHTML::warning( _x( 'No Posts!', 'Today Module: Table Notice', GEDITORIAL_TEXTDOMAIN ) ),
 			) );
 
 		echo '</div>';
