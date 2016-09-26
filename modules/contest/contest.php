@@ -281,13 +281,13 @@ class gEditorialContest extends gEditorialModuleCore
 
 			$term = get_queried_object();
 			if ( $post_id = self::getPostIDbySlug( $term->slug, $this->constant( 'contest_cpt' ) ) )
-				self::redirect( get_permalink( $post_id ), 301 );
+				gEditorialWordPress::redirect( get_permalink( $post_id ), 301 );
 
 		} else if ( is_post_type_archive( $this->constant( 'contest_cpt' ) )
 			|| is_post_type_archive( $this->constant( 'apply_cpt' ) ) ) {
 
 			if ( $redirect = $this->get_setting( 'redirect_archives', FALSE ) )
-				self::redirect( $redirect, 301 );
+				gEditorialWordPress::redirect( $redirect, 301 );
 		}
 	}
 

@@ -390,17 +390,17 @@ class gEditorialMagazine extends gEditorialModuleCore
 
 			$term = get_queried_object();
 			if ( $post_id = self::getPostIDbySlug( $term->slug, $this->constant( 'issue_cpt' ) ) )
-				self::redirect( get_permalink( $post_id ), 301 );
+				gEditorialWordPress::redirect( get_permalink( $post_id ), 301 );
 
 		} else if ( is_tax( $this->constant( 'span_tax' ) ) ) {
 
 			if ( $redirect = $this->get_setting( 'redirect_spans', FALSE ) )
-				self::redirect( $redirect, 301 );
+				gEditorialWordPress::redirect( $redirect, 301 );
 
 		} else if ( is_post_type_archive( $this->constant( 'issue_cpt' ) ) ) {
 
 			if ( $redirect = $this->get_setting( 'redirect_archives', FALSE ) )
-				self::redirect( $redirect, 301 );
+				gEditorialWordPress::redirect( $redirect, 301 );
 		}
 	}
 
@@ -869,10 +869,10 @@ class gEditorialMagazine extends gEditorialModuleCore
 							);
 					}
 
-					self::redirect( add_query_arg( array(
+					gEditorialWordPress::redirectReferer( array(
 						'message' => 'created',
 						'count'   => count( $posts ),
-					), wp_get_referer() ) );
+					) );
 
 				} else if ( isset( $_POST['_cb'] )
 					&& ( isset( $_POST['issue_store_order'] )
@@ -897,10 +897,10 @@ class gEditorialMagazine extends gEditorialModuleCore
 						}
 					}
 
-					self::redirect( add_query_arg( array(
+					gEditorialWordPress::redirectReferer( array(
 						'message' => 'ordered',
 						'count'   => $count,
-					), wp_get_referer() ) );
+					) );
 				}
 			}
 

@@ -860,7 +860,10 @@ class gEditorialModuleCore extends gEditorialBaseCore
 			$this->strings['terms'][$constant_key]
 		);
 
-		self::redirect( add_query_arg( 'message', $added ? 'added_default_terms' : 'error_default_terms' ) );
+		gEditorialWordPress::redirectReferer( ( FALSE === $added ? 'wrong' : array(
+			'message' => 'created',
+			'count'   => $added,
+		) ) );
 	}
 
 	public function is_register_settings( $page )
@@ -1746,12 +1749,6 @@ class gEditorialModuleCore extends gEditorialBaseCore
 		return add_query_arg( array_merge( array(
 			'post_type' => $this->constant( $constant_key ),
 		), $extra ), admin_url( 'post-new.php' ) );
-	}
-
-	public static function redirect( $location, $status = 302 )
-	{
-		wp_redirect( $location, $status );
-		exit();
 	}
 
 	protected function require_code( $filename = 'templates' )

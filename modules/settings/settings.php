@@ -188,17 +188,15 @@ class gEditorialSettings extends gEditorialModuleCore
 					$result = $gEditorial->upgrade_old_options();
 
 					if ( count( $result ) )
-						self::redirect( add_query_arg( array(
+						gEditorialWordPress::redirectReferer( array(
 							'message' => 'upgraded',
 							'count'   => count( $result ),
-						), wp_get_referer() ) );
+						) );
 
 				} else if ( isset( $_POST['delete_all_options'] ) ) {
 
 					if ( delete_option( 'geditorial_options' ) )
-						self::redirect( add_query_arg( array(
-							'message' => 'deleted',
-						), wp_get_referer() ) );
+						gEditorialWordPress::redirectReferer( 'purged' );
 
 				} else if ( isset( $_POST['custom_fields_empty'] ) ) {
 
@@ -207,10 +205,10 @@ class gEditorialSettings extends gEditorialModuleCore
 						$result = self::deleteEmptyMeta( $gEditorial->{$post['empty_module']}->meta_key );
 
 						if ( count( $result ) )
-							self::redirect( add_query_arg( array(
+							gEditorialWordPress::redirectReferer( array(
 								'message' => 'emptied',
 								'count'   => count( $result ),
-							), wp_get_referer() ) );
+							) );
 					}
 
 				} else if ( isset( $_POST['orphaned_terms'] ) ) {
@@ -223,10 +221,10 @@ class gEditorialSettings extends gEditorialModuleCore
 						", trim( $post['live_tax'] ), trim( $post['dead_tax'] ) ) );
 
 						if ( count( $result ) )
-							self::redirect( add_query_arg( array(
-								'message' => 'converted',
+							gEditorialWordPress::redirectReferer( array(
+								'message' => 'changed',
 								'count'   => count( $result ),
-							), wp_get_referer() ) );
+							) );
 					}
 				}
 			}
@@ -532,7 +530,7 @@ class gEditorialSettings extends gEditorialModuleCore
 			'enabled' => TRUE,
 		) );
 
-		self::redirect( add_query_arg( 'message', 'settings-reset', wp_get_referer() ) );
+		gEditorialWordPress::redirectReferer( 'resetting' );
 	}
 
 	public function admin_settings_save( $page = NULL )
@@ -561,11 +559,9 @@ class gEditorialSettings extends gEditorialModuleCore
 
 		$options = $gEditorial->{$name}->settings_validate( ( isset( $_POST[$group] ) ? $_POST[$group] : array() ) );
 
-		// cast our object and save the data.
 		$options = (object) array_merge( (array) $gEditorial->{$name}->options, $options );
 		$gEditorial->update_all_module_options( $gEditorial->{$name}->module->name, $options );
 
-		// redirect back to the settings page that was submitted without any previous messages
-		self::redirect( add_query_arg( 'message', 'settings-updated', remove_query_arg( array( 'message' ), wp_get_referer() ) ) );
+		gEditorialWordPress::redirectReferer();
 	}
 }

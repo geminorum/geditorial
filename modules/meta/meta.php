@@ -716,12 +716,12 @@ class gEditorialMeta extends gEditorialModuleCore
 							$result = $this->import_from_meta( $post['custom_field'], $post['custom_field_into'], $limit );
 
 						if ( count( $result ) )
-							self::redirect( add_query_arg( array(
+							gEditorialWordPress::redirectReferer( array(
 								'message' => 'converted',
 								'field'   => $post['custom_field'],
 								'limit'   => $limit,
 								'count'   => count( $result ),
-							), wp_get_referer() ) );
+							) );
 					}
 
 				} else if ( isset( $_POST['custom_fields_delete'] ) ) {
@@ -736,12 +736,12 @@ class gEditorialMeta extends gEditorialModuleCore
 							$result = gEditorialHelper::deleteDBPostMeta( $post['custom_field'], $limit );
 
 						if ( count( $result ) )
-							self::redirect( add_query_arg( array(
+							gEditorialWordPress::redirectReferer( array(
 								'message' => 'deleted',
 								'field'   => $post['custom_field'],
 								'limit'   => $limit,
 								'count'   => count( $result ),
-							), wp_get_referer() ) );
+							) );
 					}
 				}
 			}
