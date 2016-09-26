@@ -676,7 +676,7 @@ class gEditorialMeta extends gEditorialModuleCore
 				'name_group' => 'tools',
 			) );
 
-			echo gEditorialHelper::html( 'p', array(
+			echo gEditorialHTML::tag( 'p', array(
 				'class' => 'description',
 			), _x( 'Check for Custom Fields and import them into Meta', 'Meta Module', GEDITORIAL_TEXTDOMAIN ) );
 

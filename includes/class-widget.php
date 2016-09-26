@@ -107,7 +107,7 @@ class gEditorialWidgetCore extends WP_Widget
 		);
 
 		if ( $title && isset( $instance['title_link'] ) && $instance['title_link'] )
-			$title = gEditorialHelper::html( 'a', array(
+			$title = gEditorialHTML::tag( 'a', array(
 				'href' => $instance['title_link'],
 			), $title );
 
@@ -159,7 +159,7 @@ class gEditorialWidgetCore extends WP_Widget
 
 	public function form_number( $instance, $default = '10', $field = 'number' )
 	{
-		$html = gEditorialHelper::html( 'input', array(
+		$html = gEditorialHTML::tag( 'input', array(
 			'type'  => 'text',
 			'size'  => 3,
 			'name'  => $this->get_field_name( $field ),
@@ -167,14 +167,14 @@ class gEditorialWidgetCore extends WP_Widget
 			'value' => isset( $instance[$field] ) ? $instance[$field] : $default,
 		) );
 
-		echo '<p>'. gEditorialHelper::html( 'label', array(
+		echo '<p>'. gEditorialHTML::tag( 'label', array(
 			'for' => $this->get_field_id( $field ),
 		), _x( 'Number of posts to show:', 'Widget Core', GEDITORIAL_TEXTDOMAIN ).' '.$html ).'</p>';
 	}
 
 	public function form_context( $instance, $default = '', $field = 'context' )
 	{
-		$html = gEditorialHelper::html( 'input', array(
+		$html = gEditorialHTML::tag( 'input', array(
 			'type'  => 'text',
 			'class' => 'widefat',
 			'name'  => $this->get_field_name( $field ),
@@ -183,14 +183,14 @@ class gEditorialWidgetCore extends WP_Widget
 			'dir'   => 'ltr',
 		) );
 
-		echo '<p>'. gEditorialHelper::html( 'label', array(
+		echo '<p>'. gEditorialHTML::tag( 'label', array(
 			'for' => $this->get_field_id( $field ),
 		), _x( 'Context:', 'Widget Core', GEDITORIAL_TEXTDOMAIN ).$html ).'</p>';
 	}
 
 	public function form_class( $instance, $default = '', $field = 'class' )
 	{
-		$html = gEditorialHelper::html( 'input', array(
+		$html = gEditorialHTML::tag( 'input', array(
 			'type'  => 'text',
 			'class' => 'widefat',
 			'name'  => $this->get_field_name( $field ),
@@ -199,7 +199,7 @@ class gEditorialWidgetCore extends WP_Widget
 			'dir'   => 'ltr',
 		) );
 
-		echo '<p>'. gEditorialHelper::html( 'label', array(
+		echo '<p>'. gEditorialHTML::tag( 'label', array(
 			'for' => $this->get_field_id( $field ),
 		), _x( 'Class:', 'Widget Core', GEDITORIAL_TEXTDOMAIN ).$html ).'</p>';
 	}
@@ -210,18 +210,18 @@ class gEditorialWidgetCore extends WP_Widget
 		$type = isset( $instance[$field] ) ? $instance[$field] : $default;
 
 		foreach ( gEditorialHelper::getPostTypes() as $name => $title )
-			$html .= gEditorialHelper::html( 'option', array(
+			$html .= gEditorialHTML::tag( 'option', array(
 				'value'    => $name,
 				'selected' => $type == $name,
 			), $title );
 
-		$html = gEditorialHelper::html( 'select', array(
+		$html = gEditorialHTML::tag( 'select', array(
 			'class' => 'widefat',
 			'name'  => $this->get_field_name( $field ),
 			'id'    => $this->get_field_id( $field ),
 		), $html );
 
-		echo '<p>'. gEditorialHelper::html( 'label', array(
+		echo '<p>'. gEditorialHTML::tag( 'label', array(
 			'for' => $this->get_field_id( $field ),
 		), _x( 'PostType:', 'Widget Core', GEDITORIAL_TEXTDOMAIN ).$html ).'</p>';
 	}
@@ -232,25 +232,25 @@ class gEditorialWidgetCore extends WP_Widget
 		$tax = isset( $instance[$field] ) ? $instance[$field] : $default;
 
 		foreach ( gEditorialHelper::getTaxonomies( 'type' ) as $name => $title )
-			$html .= gEditorialHelper::html( 'option', array(
+			$html .= gEditorialHTML::tag( 'option', array(
 				'value'    => $name,
 				'selected' => $tax == $name,
 			), $title );
 
-		$html = gEditorialHelper::html( 'select', array(
+		$html = gEditorialHTML::tag( 'select', array(
 			'class' => 'widefat',
 			'name'  => $this->get_field_name( $field ),
 			'id'    => $this->get_field_id( $field ),
 		), $html );
 
-		echo '<p>'. gEditorialHelper::html( 'label', array(
+		echo '<p>'. gEditorialHTML::tag( 'label', array(
 			'for' => $this->get_field_id( $field ),
 		), _x( 'Taxonomy:', 'Widget Core', GEDITORIAL_TEXTDOMAIN ).$html ).'</p>';
 	}
 
 	public function form_title( $instance, $default = '', $field = 'title' )
 	{
-		$html = gEditorialHelper::html( 'input', array(
+		$html = gEditorialHTML::tag( 'input', array(
 			'type'  => 'text',
 			'class' => 'widefat',
 			'name'  => $this->get_field_name( $field ),
@@ -258,14 +258,14 @@ class gEditorialWidgetCore extends WP_Widget
 			'value' => isset( $instance[$field] ) ? $instance[$field] : $default,
 		) );
 
-		echo '<p>'. gEditorialHelper::html( 'label', array(
+		echo '<p>'. gEditorialHTML::tag( 'label', array(
 			'for' => $this->get_field_id( $field ),
 		), _x( 'Title:', 'Widget Core', GEDITORIAL_TEXTDOMAIN ).$html ).'</p>';
 	}
 
 	public function form_title_link( $instance, $default = '', $field = 'title_link' )
 	{
-		$html = gEditorialHelper::html( 'input', array(
+		$html = gEditorialHTML::tag( 'input', array(
 			'type'  => 'text',
 			'class' => 'widefat',
 			'name'  => $this->get_field_name( $field ),
@@ -274,14 +274,14 @@ class gEditorialWidgetCore extends WP_Widget
 			'dir'   => 'ltr',
 		) );
 
-		echo '<p>'. gEditorialHelper::html( 'label', array(
+		echo '<p>'. gEditorialHTML::tag( 'label', array(
 			'for' => $this->get_field_id( $field ),
 		), _x( 'Title Link:', 'Widget Core', GEDITORIAL_TEXTDOMAIN ).$html ).'</p>';
 	}
 
 	public function form_avatar_size( $instance, $default = '32', $field = 'avatar_size' )
 	{
-		$html = gEditorialHelper::html( 'input', array(
+		$html = gEditorialHTML::tag( 'input', array(
 			'type'  => 'text',
 			'size'  => 3,
 			'name'  => $this->get_field_name( $field ),
@@ -289,7 +289,7 @@ class gEditorialWidgetCore extends WP_Widget
 			'value' => isset( $instance[$field] ) ? $instance[$field] : $default,
 		) );
 
-		echo '<p>'. gEditorialHelper::html( 'label', array(
+		echo '<p>'. gEditorialHTML::tag( 'label', array(
 			'for' => $this->get_field_id( $field ),
 		), _x( 'Avatar Size:', 'Widget Core', GEDITORIAL_TEXTDOMAIN ).$html ).'</p>';
 	}
@@ -304,18 +304,18 @@ class gEditorialWidgetCore extends WP_Widget
 			$html     = '';
 
 			foreach ( $sizes as $size => $title )
-				$html .= gEditorialHelper::html( 'option', array(
+				$html .= gEditorialHTML::tag( 'option', array(
 					'value'    => $size,
 					'selected' => $selected == $size,
 				), $title );
 
-			$html = gEditorialHelper::html( 'select', array(
+			$html = gEditorialHTML::tag( 'select', array(
 				'class' => 'widefat',
 				'name'  => $this->get_field_name( $field ),
 				'id'    => $this->get_field_id( $field ),
 			), $html );
 
-			echo '<p>'. gEditorialHelper::html( 'label', array(
+			echo '<p>'. gEditorialHTML::tag( 'label', array(
 				'for' => $this->get_field_id( $field ),
 			), _x( 'Image Size:', 'Widget Core', GEDITORIAL_TEXTDOMAIN ).$html ).'</p>';
 
@@ -329,14 +329,14 @@ class gEditorialWidgetCore extends WP_Widget
 		if ( is_null( $label ) )
 			$label = _x( 'Checked:', 'Widget Core', GEDITORIAL_TEXTDOMAIN );
 
-		$html = gEditorialHelper::html( 'input', array(
+		$html = gEditorialHTML::tag( 'input', array(
 			'type'    => 'checkbox',
 			'name'  => $this->get_field_name( $field ),
 			'id'    => $this->get_field_id( $field ),
 			'checked' => isset( $instance[$field] ) ? $instance[$field] : $default,
 		) );
 
-		echo '<p>'.$html.'&nbsp;'.gEditorialHelper::html( 'label', array(
+		echo '<p>'.$html.'&nbsp;'.gEditorialHTML::tag( 'label', array(
 			'for' => $this->get_field_id( $field ),
 		), $label ).'</p>';
 	}
@@ -360,7 +360,7 @@ class gEditorialWidgetCore extends WP_Widget
 			'echo'             => FALSE,
 		) );
 
-		echo '<p>'. gEditorialHelper::html( 'label', array(
+		echo '<p>'. gEditorialHTML::tag( 'label', array(
 			'for' => $this->get_field_id( $field ),
 		), $label.$html ).'</p>';
 	}
@@ -370,24 +370,24 @@ class gEditorialWidgetCore extends WP_Widget
 		$taxonomy = isset( $instance[$taxonomy_field] ) ? $instance[$taxonomy_field] : $taxonomy_default;
 		$term_id  = isset( $instance[$field] ) ? $instance[$field] : $default;
 
-		$html = gEditorialHelper::html( 'option', array(
+		$html = gEditorialHTML::tag( 'option', array(
 			'value'    => '0',
 			'selected' => $term_id == '0',
 		), _x( '&mdash; Select &mdash;', 'Widget Core', GEDITORIAL_TEXTDOMAIN ) );
 
 		foreach ( get_terms( $taxonomy ) as $term )
-			$html .= gEditorialHelper::html( 'option', array(
+			$html .= gEditorialHTML::tag( 'option', array(
 				'value'    => $term->term_id,
 				'selected' => $term_id == $term->term_id,
 			), $term->name );
 
-		$html = gEditorialHelper::html( 'select', array(
+		$html = gEditorialHTML::tag( 'select', array(
 			'class' => 'widefat',
 			'name'  => $this->get_field_name( $field ),
 			'id'    => $this->get_field_id( $field ),
 		), $html );
 
-		echo '<p>'. gEditorialHelper::html( 'label', array(
+		echo '<p>'. gEditorialHTML::tag( 'label', array(
 			'for' => $this->get_field_id( $field ),
 		), _x( 'Term:', 'Widget Core', GEDITORIAL_TEXTDOMAIN ).$html ).'</p>';
 	}

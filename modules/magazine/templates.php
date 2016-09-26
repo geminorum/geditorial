@@ -414,7 +414,7 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 			$result = call_user_func_array( $args['cb'], array( $img, $link, $args ) );
 
 		} else if ( $img ) {
-			$result = gEditorialHelper::html( ( $link ? 'a' : 'span' ), array(
+			$result = gEditorialHTML::tag( ( $link ? 'a' : 'span' ), array(
 				'href'  => $link,
 				'title' => self::get_issue_title( $args['title'], $args['id'], FALSE ),
 				'data' => array(
@@ -423,7 +423,7 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 			), $img );
 
 		} else if ( $args['id'] && $args['fallback'] && 'publish' == get_post_status( $args['id'] ) ) {
-			$result = gEditorialHelper::html( 'a', array(
+			$result = gEditorialHTML::tag( 'a', array(
 				'href'  => esc_url( get_permalink( $args['id'] ) ),
 				'title' => self::get_issue_title( $args['title'], $args['id'], FALSE ),
 				'data' => array(

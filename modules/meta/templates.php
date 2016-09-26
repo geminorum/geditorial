@@ -131,7 +131,7 @@ class gEditorialMetaTemplates extends gEditorialTemplateCore
 		$url   = $args['url_meta'] ? self::get_meta( $args['url_meta'], array( 'id' => $args['id'], 'def' => $args['url_default'] ) ) : $args['url_default'];
 
 		if ( $title && $url || ! $url && $title != $args['title_default'] ) {
-			$html = $args['before'].gEditorialHelper::html( ( $url ? 'a' : 'span' ), array(
+			$html = $args['before'].gEditorialHTML::tag( ( $url ? 'a' : 'span' ), array(
 				'href'        => $url ? esc_url( $url ) : FALSE,
 				'title'       => $args['title_default'], // FIXME: default title attr!
 				'rel'         => 'source',
@@ -183,7 +183,7 @@ class gEditorialMetaTemplates extends gEditorialTemplateCore
 		}
 
 		if ( $args['img'] ) {
-			$html = gEditorialHelper::html( 'img', array(
+			$html = gEditorialHTML::tag( 'img', array(
 				'src' => esc_url( $args['img'] ),
 				'alt' => $title,
 			) );
@@ -197,7 +197,7 @@ class gEditorialMetaTemplates extends gEditorialTemplateCore
 		if ( ! $html )
 			return FALSE;
 
-		$html = $args['before'].gEditorialHelper::html( 'a', array(
+		$html = $args['before'].gEditorialHTML::tag( 'a', array(
 			'href'  => $args['link'],
 			'title' => $args['desc'],
 		), apply_filters( 'gmeta_label', $html, $args, $title, $term ) ).$args['after'];
