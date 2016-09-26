@@ -1,3 +1,15 @@
+### 3.8.2
+* core/base: internal log method
+* core/html: moved to HTML class for tag generations
+* main/modulecore: using submit button helper
+* main/helper: check ajax referer
+* module/audit: fixed broken link form missed tax var
+* module/estimated: default min words to one thousand
+* module/entry: removed unused settings
+* module/drafts: fixed ajax notice
+* module/meta: fixed cap notice upon sanitizing
+* module/settings: revamped!
+
 ### 3.8.1
 * main/helper: nooped strings for count format
 * main/settings: revising strings
