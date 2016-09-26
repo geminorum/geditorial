@@ -3,6 +3,12 @@
 class gEditorialSettings extends gEditorialModuleCore
 {
 
+	protected $caps = array(
+		'reports'  => 'edit_others_posts',
+		'settings' => 'manage_options',
+		'tools'    => 'edit_others_posts',
+	);
+
 	public static function module()
 	{
 		return array(
@@ -33,7 +39,7 @@ class gEditorialSettings extends gEditorialModuleCore
 			'index.php',
 			_x( 'Editorial Reports', 'Settings Module', GEDITORIAL_TEXTDOMAIN ),
 			_x( 'Reports', 'Settings Module: Admin Reports Menu Title', GEDITORIAL_TEXTDOMAIN ),
-			'edit_others_posts',
+			$this->caps['reports'],
 			'geditorial-reports',
 			array( $this, 'admin_reports_page' )
 		);
@@ -41,17 +47,17 @@ class gEditorialSettings extends gEditorialModuleCore
 		$hook_settings = add_menu_page(
 			$this->module->title,
 			$this->module->title,
-			'manage_options',
+			$this->caps['settings'],
 			$this->module->settings,
 			array( $this, 'admin_settings_page' ),
 			'dashicons-'.$this->module->icon
 		);
 
 		$hook_tools = add_submenu_page(
-			$this->module->settings,
+			( current_user_can( $this->caps['settings'] ) ? $this->module->settings : 'index.php' ),
 			_x( 'Editorial Tools', 'Settings Module', GEDITORIAL_TEXTDOMAIN ),
 			_x( 'Tools', 'Settings Module: Admin Tools Menu Title', GEDITORIAL_TEXTDOMAIN ),
-			'manage_options',
+			$this->caps['tools'],
 			'geditorial-tools',
 			array( $this, 'admin_tools_page' )
 		);
@@ -69,7 +75,7 @@ class gEditorialSettings extends gEditorialModuleCore
 					if ( $hook_module = add_submenu_page( $this->module->settings,
 						$module->title,
 						$module->title,
-						'manage_options',
+						$this->caps['settings'], // FIXME: get from module
 						$module->settings,
 						array( $this, 'admin_settings_page' )
 					) ) add_action( 'load-'.$hook_module, array( $this, 'admin_settings_load' ) );
@@ -79,7 +85,7 @@ class gEditorialSettings extends gEditorialModuleCore
 
 	public function admin_reports_page()
 	{
-		$uri = gEditorialHelper::reportsURL( FALSE );
+		$uri = gEditorialSettingsCore::reportsURL( FALSE, $this->caps['reports'] );
 		$sub = gEditorialSettingsCore::sub();
 
 		$subs = apply_filters( 'geditorial_reports_subs', array(
@@ -110,13 +116,16 @@ class gEditorialSettings extends gEditorialModuleCore
 
 	public function admin_tools_page()
 	{
-		$uri = gEditorialHelper::toolsURL( FALSE );
-		$sub = gEditorialSettingsCore::sub();
+		$can = current_user_can( $this->caps['settings'] );
+		$uri = gEditorialSettingsCore::toolsURL( FALSE, ! $can );
+		$sub = gEditorialSettingsCore::sub( ( $can ? 'general' : 'overview' ) );
 
-		$subs = apply_filters( 'geditorial_tools_subs', array(
-			'overview' => _x( 'Overview', 'Settings Module: Tools Sub', GEDITORIAL_TEXTDOMAIN ),
-			'general'  => _x( 'General', 'Settings Module: Tools Sub', GEDITORIAL_TEXTDOMAIN ),
-		), 'tools' );
+		$subs = array( 'overview' => _x( 'Overview', 'Settings Module: Tools Sub', GEDITORIAL_TEXTDOMAIN ) );
+
+		if ( $can )
+			$subs['general'] = _x( 'General', 'Settings Module: Tools Sub', GEDITORIAL_TEXTDOMAIN );
+
+		$subs = apply_filters( 'geditorial_tools_subs', $subs, 'tools' );
 
 		if ( is_super_admin() )
 			$subs['console'] = _x( 'Console', 'Settings Module: Tools Sub', GEDITORIAL_TEXTDOMAIN );
@@ -221,11 +230,23 @@ class gEditorialSettings extends gEditorialModuleCore
 
 	public function reports_sub( $settings_uri, $sub )
 	{
+		if ( 'general' != $sub )
+			return;
+
+		if ( ! current_user_can( $this->caps['reports'] ) )
+			self::cheatin();
+
 		echo 'Comming Soon!';
 	}
 
 	public function tools_sub( $settings_uri, $sub )
 	{
+		if ( 'general' != $sub )
+			return;
+
+		if ( ! current_user_can( $this->caps['settings'] ) )
+			self::cheatin();
+
 		global $gEditorial;
 
 		$post = isset( $_POST[$this->module->group]['tools'] ) ? $_POST[$this->module->group]['tools'] : array();
@@ -317,7 +338,7 @@ class gEditorialSettings extends gEditorialModuleCore
 	{
 		global $gEditorial;
 
-		if ( ! current_user_can( 'manage_options' ) )
+		if ( ! current_user_can( $this->caps['settings'] ) )
 			self::cheatin();
 
 		$post = wp_unslash( $_POST );
@@ -369,7 +390,7 @@ class gEditorialSettings extends gEditorialModuleCore
 
 			self::notice( sprintf(
 				_x( 'Module not enabled. Please enable it from the <a href="%1$s">Editorial settings page</a>.', 'Settings Module', GEDITORIAL_TEXTDOMAIN ),
-				gEditorialHelper::settingsURL()
+				gEditorialSettingsCore::settingsURL()
 			) );
 		}
 	}
@@ -383,7 +404,7 @@ class gEditorialSettings extends gEditorialModuleCore
 			$back  = FALSE;
 		} else {
 			$title = sprintf( _x( 'Editorial: %s', 'Settings Module', GEDITORIAL_TEXTDOMAIN ), $current_module->title );
-			$back  = gEditorialHelper::settingsURL();
+			$back  = gEditorialSettingsCore::settingsURL();
 		}
 
 		echo '<div class="wrap geditorial-admin-wrap geditorial-settings">';

@@ -3,6 +3,89 @@
 class gEditorialSettingsCore extends gEditorialBaseCore
 {
 
+	const REPORTS  = 'geditorial-reports';
+	const SETTINGS = 'geditorial-settings';
+	const TOOLS    = 'geditorial-tools';
+
+	public static function reportsURL( $full = TRUE )
+	{
+		$relative = 'index.php?page='.self::REPORTS;
+
+		if ( $full )
+			return get_admin_url( NULL, $relative );
+
+		return $relative;
+	}
+
+	public static function settingsURL( $full = TRUE )
+	{
+		// $relative = current_user_can( 'manage_options' ) ? 'admin.php?page='.self::SETTINGS : 'index.php?page='.self::SETTINGS;
+		$relative = 'admin.php?page='.self::SETTINGS;
+
+		if ( $full )
+			return get_admin_url( NULL, $relative );
+
+		return $relative;
+	}
+
+	public static function toolsURL( $full = TRUE, $dashboard = FALSE )
+	{
+		$relative = $dashboard ? 'index.php?page='.self::TOOLS : 'admin.php?page='.self::TOOLS;
+
+		if ( $full )
+			return get_admin_url( NULL, $relative );
+
+		return $relative;
+	}
+
+	public static function isReports( $screen = NULL )
+	{
+		if ( is_null( $screen ) )
+			$screen = get_current_screen();
+
+		if ( isset( $screen->base )
+			&& FALSE !== strripos( $screen->base, self::REPORTS ) )
+				return TRUE;
+
+		return FALSE;
+	}
+
+	public static function isSettings( $screen = NULL )
+	{
+		if ( is_null( $screen ) )
+			$screen = get_current_screen();
+
+		if ( isset( $screen->base )
+			&& FALSE !== strripos( $screen->base, self::SETTINGS ) )
+				return TRUE;
+
+		return FALSE;
+	}
+
+	public static function isTools( $screen = NULL )
+	{
+		if ( is_null( $screen ) )
+			$screen = get_current_screen();
+
+		if ( isset( $screen->base )
+			&& FALSE !== strripos( $screen->base, self::TOOLS ) )
+				return TRUE;
+
+		return FALSE;
+	}
+
+	public static function isDashboard( $screen = NULL )
+	{
+		if ( is_null( $screen ) )
+			$screen = get_current_screen();
+
+		if ( isset( $screen->base )
+			&& FALSE !== strripos( $screen->base, 'dashboard' ) )
+				return TRUE;
+
+		return FALSE;
+	}
+
 	public static function showOptionNone( $string = NULL )
 	{
 		if ( $string )
@@ -265,7 +348,7 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 
 		if ( is_null( $back )
 			&& current_user_can( 'manage_options' ) )
-				$back = gEditorialHelper::settingsURL();
+				$back = self::settingsURL();
 
 		if ( is_null( $to ) )
 			$to = _x( 'Back to Editorial', 'Settings', GEDITORIAL_TEXTDOMAIN );

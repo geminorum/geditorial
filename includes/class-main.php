@@ -280,16 +280,16 @@ class gEditorial
 		if ( in_array( $screen->base, array( 'post', 'edit', 'widgets', 'edit-tags' ) ) )
 			gEditorialHelper::linkStyleSheetAdmin( $screen->base );
 
-		else if ( gEditorialHelper::isDashboard( $screen ) )
+		else if ( gEditorialSettingsCore::isDashboard( $screen ) )
 			gEditorialHelper::linkStyleSheetAdmin( 'dashboard' );
 
-		else if ( gEditorialHelper::isReports( $screen ) )
+		else if ( gEditorialSettingsCore::isReports( $screen ) )
 			gEditorialHelper::linkStyleSheetAdmin( 'reports' );
 
-		else if ( gEditorialHelper::isSettings( $screen ) )
+		else if ( gEditorialSettingsCore::isSettings( $screen ) )
 			gEditorialHelper::linkStyleSheetAdmin( 'settings' );
 
-		else if ( gEditorialHelper::isTools( $screen ) )
+		else if ( gEditorialSettingsCore::isTools( $screen ) )
 			gEditorialHelper::linkStyleSheetAdmin( 'tools' );
 	}
 

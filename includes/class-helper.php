@@ -4,9 +4,6 @@ class gEditorialHelper extends gEditorialBaseCore
 {
 
 	const MODULE   = FALSE;
-	const REPORTS  = 'geditorial-reports';
-	const SETTINGS = 'geditorial-settings';
-	const TOOLS    = 'geditorial-tools';
 
 	public static function moduleClass( $module, $check = TRUE, $prefix = 'gEditorial' )
 	{
@@ -219,85 +216,6 @@ class gEditorialHelper extends gEditorialBaseCore
 		$output .= '</ol></div>';
 
 		return $output;
-	}
-
-	public static function reportsURL( $full = TRUE )
-	{
-		$relative = 'index.php?page='.self::REPORTS;
-
-		if ( $full )
-			return get_admin_url( NULL, $relative );
-
-		return $relative;
-	}
-
-	public static function settingsURL( $full = TRUE )
-	{
-		// $relative = current_user_can( 'manage_options' ) ? 'admin.php?page='.self::SETTINGS : 'index.php?page='.self::SETTINGS;
-		$relative = 'admin.php?page='.self::SETTINGS;
-
-		if ( $full )
-			return get_admin_url( NULL, $relative );
-
-		return $relative;
-	}
-
-	public static function toolsURL( $full = TRUE )
-	{
-		$relative = 'admin.php?page='.self::TOOLS;
-
-		if ( $full )
-			return get_admin_url( NULL, $relative );
-
-		return $relative;
-	}
-
-	public static function isReports( $screen = NULL )
-	{
-		if ( is_null( $screen ) )
-			$screen = get_current_screen();
-
-		if ( isset( $screen->base )
-			&& FALSE !== strripos( $screen->base, self::REPORTS ) )
-				return TRUE;
-
-		return FALSE;
-	}
-
-	public static function isSettings( $screen = NULL )
-	{
-		if ( is_null( $screen ) )
-			$screen = get_current_screen();
-
-		if ( isset( $screen->base )
-			&& FALSE !== strripos( $screen->base, self::SETTINGS ) )
-				return TRUE;
-
-		return FALSE;
-	}
-
-	public static function isTools( $screen = NULL )
-	{
-		if ( is_null( $screen ) )
-			$screen = get_current_screen();
-
-		if ( isset( $screen->base )
-			&& FALSE !== strripos( $screen->base, self::TOOLS ) )
-				return TRUE;
-
-		return FALSE;
-	}
-
-	public static function isDashboard( $screen = NULL )
-	{
-		if ( is_null( $screen ) )
-			$screen = get_current_screen();
-
-		if ( isset( $screen->base )
-			&& FALSE !== strripos( $screen->base, 'dashboard' ) )
-				return TRUE;
-
-		return FALSE;
 	}
 
 	public static function getTinyMceStrings( $locale )
