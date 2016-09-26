@@ -499,7 +499,7 @@ class gEditorialSettings extends gEditorialModuleCore
 
 	private function admin_settings_verify( $group )
 	{
-		if ( ! current_user_can( 'manage_options' ) )
+		if ( ! current_user_can( $this->caps['settings'] ) )
 			return FALSE;
 
 		if ( ! wp_verify_nonce( $_POST['_wpnonce'], $group.'-options' ) )
@@ -523,7 +523,6 @@ class gEditorialSettings extends gEditorialModuleCore
 			'enabled' => TRUE,
 		) );
 
-		// self::redirect( add_query_arg( 'message', 'settings-reset', remove_query_arg( array( 'message' ), wp_get_referer() ) ) );
 		self::redirect( add_query_arg( 'message', 'settings-reset', wp_get_referer() ) );
 	}
 
@@ -548,7 +547,6 @@ class gEditorialSettings extends gEditorialModuleCore
 			|| $_POST['option_page'] != $group )
 				return FALSE;
 
-		// if ( ! current_user_can( 'manage_options' ) || !wp_verify_nonce( $_POST['_wpnonce'], $group.'-options' ) )
 		if ( ! $this->admin_settings_verify( $group ) )
 			self::cheatin();
 

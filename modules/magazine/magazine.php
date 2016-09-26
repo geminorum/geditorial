@@ -258,7 +258,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 				);
 
 				add_meta_box( 'geditorial-magazine-list',
-					$this->get_meta_box_title( 'issue_tax', $this->get_url_post_edit( 'post_cpt' ), TRUE ),
+					$this->get_meta_box_title( 'issue_tax', $this->get_url_post_edit( 'post_cpt' ), 'edit_others_posts' ),
 					array( $this, 'do_meta_box_list' ),
 					$screen->post_type,
 					'advanced',
@@ -294,7 +294,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 			if ( 'post' == $screen->base ) {
 
 				add_meta_box( 'geditorial-magazine-supported',
-					$this->get_meta_box_title( $screen->post_type, $this->get_url_post_edit( 'issue_cpt' ) ),
+					$this->get_meta_box_title( $screen->post_type, $this->get_url_post_edit( 'issue_cpt' ), 'edit_others_posts' ),
 					array( $this, 'do_meta_box_supported' ),
 					$screen->post_type,
 					'side'

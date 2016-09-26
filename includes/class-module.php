@@ -492,7 +492,7 @@ class gEditorialModuleCore extends gEditorialBaseCore
 					echo '&nbsp;&nbsp;';
 				}
 
-			echo '<a class="button" href="'.gEditorialHelper::settingsURL().'">'
+			echo '<a class="button" href="'.gEditorialSettingsCore::settingsURL().'">'
 				._x( 'Back to Editorial', 'Module Core', GEDITORIAL_TEXTDOMAIN ).'</a></p>';
 
 		echo '</form>';

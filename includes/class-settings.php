@@ -19,7 +19,6 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 
 	public static function settingsURL( $full = TRUE )
 	{
-		// $relative = current_user_can( 'manage_options' ) ? 'admin.php?page='.self::SETTINGS : 'index.php?page='.self::SETTINGS;
 		$relative = 'admin.php?page='.self::SETTINGS;
 
 		if ( $full )
@@ -347,7 +346,7 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 			$title = _x( 'Editorial', 'Settings', GEDITORIAL_TEXTDOMAIN );
 
 		if ( is_null( $back )
-			&& current_user_can( 'manage_options' ) )
+			&& current_user_can( 'manage_options' ) ) // FIXME: get cap from settings module
 				$back = self::settingsURL();
 
 		if ( is_null( $to ) )

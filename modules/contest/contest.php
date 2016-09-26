@@ -325,7 +325,7 @@ class gEditorialContest extends gEditorialModuleCore
 
 			$this->remove_meta_box( $post_type, $post_type, 'parent' );
 			add_meta_box( 'geditorial-contest-supported',
-				$this->get_meta_box_title( 'post', $this->get_url_post_edit( 'contest_cpt' ) ),
+				$this->get_meta_box_title( 'post', $this->get_url_post_edit( 'contest_cpt' ), 'edit_others_posts' ),
 				array( $this, 'do_meta_box_supported' ),
 				$post_type,
 				'side'
