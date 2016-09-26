@@ -257,7 +257,7 @@ class gEditorialModuleCore extends gEditorialBaseCore
 			echo '<p class="description">'.$before.'</p>';
 
 		foreach ( $this->all_post_types() as $post_type => $label ) {
-			$html = self::html( 'input', array(
+			$html = gEditorialHTML::tag( 'input', array(
 				'type'    => 'checkbox',
 				'value'   => 'enabled',
 				'id'      => 'type-'.$post_type,
@@ -265,7 +265,7 @@ class gEditorialModuleCore extends gEditorialBaseCore
 				'checked' => isset( $this->options->post_types[$post_type] ) && $this->options->post_types[$post_type],
 			) );
 
-			echo '<p>'.self::html( 'label', array(
+			echo '<p>'.gEditorialHTML::tag( 'label', array(
 				'for' => 'type-'.$post_type,
 			), $html.'&nbsp;'.esc_html( $label ).' &mdash; <code>'.$post_type.'</code>' ).'</p>';
 		}
@@ -281,7 +281,7 @@ class gEditorialModuleCore extends gEditorialBaseCore
 
 		foreach ( $this->all_taxonomies() as $taxonomy => $label ) {
 
-			$html = self::html( 'input', array(
+			$html = gEditorialHTML::tag( 'input', array(
 				'type'    => 'checkbox',
 				'value'   => 'enabled',
 				'id'      => 'tax-'.$taxonomy,
@@ -289,7 +289,7 @@ class gEditorialModuleCore extends gEditorialBaseCore
 				'checked' => isset( $this->options->taxonomies[$taxonomy] ) && $this->options->taxonomies[$taxonomy],
 			) );
 
-			echo '<p>'.self::html( 'label', array(
+			echo '<p>'.gEditorialHTML::tag( 'label', array(
 				'for' => 'tax-'.$taxonomy,
 			), $html.'&nbsp;'.esc_html( $label ).' &mdash; <code>'.$taxonomy.'</code>' ).'</p>';
 		}
@@ -436,7 +436,7 @@ class gEditorialModuleCore extends gEditorialBaseCore
 		else
 			$value = FALSE;
 
-		$html = self::html( 'input', array(
+		$html = gEditorialHTML::tag( 'input', array(
 			'type'    => 'checkbox',
 			'value'   => 'enabled',
 			'class'   => 'fields-check',
@@ -445,12 +445,12 @@ class gEditorialModuleCore extends gEditorialBaseCore
 			'checked' => $value,
 		) );
 
-		echo '<div>'.self::html( 'label', array(
+		echo '<div>'.gEditorialHTML::tag( 'label', array(
 			'for' => $id,
 		), $html.'&nbsp;'.$args['field_title'] );
 
 		if ( $args['description'] )
-			echo self::html( 'p', array(
+			echo gEditorialHTML::tag( 'p', array(
 				'class' => 'description',
 			), $args['description'] );
 
@@ -459,20 +459,20 @@ class gEditorialModuleCore extends gEditorialBaseCore
 
 	public function settings_fields_option_all( $args )
 	{
-		$html = self::html( 'input', array(
+		$html = gEditorialHTML::tag( 'input', array(
 			'type'  => 'checkbox',
 			'class' => 'fields-check-all',
 			'id'    => $args['post_type'].'_fields_all',
 		) );
 
-		echo self::html( 'label', array(
+		echo gEditorialHTML::tag( 'label', array(
 			'for' => $args['post_type'].'_fields_all',
 		), $html.'&nbsp;<span class="description">'._x( 'Select All Fields', 'Module Core', GEDITORIAL_TEXTDOMAIN ).'</span>' );
 	}
 
 	public function settings_fields_option_none( $args )
 	{
-		echo self::html( 'p', array(
+		echo gEditorialHTML::tag( 'p', array(
 			'class' => 'description no-fields',
 		), _x( 'No fields supported', 'Module Core', GEDITORIAL_TEXTDOMAIN ) );
 	}
@@ -995,17 +995,17 @@ class gEditorialModuleCore extends gEditorialBaseCore
 
 			case 'enabled' :
 
-				$html = self::html( 'option', array(
+				$html = gEditorialHTML::tag( 'option', array(
 					'value'    => '0',
 					'selected' => '0' == $value,
 				), ( isset( $args['values'][0] ) ? $args['values'][0] : _x( 'Disabled', 'Module Core: Settings Field Option', GEDITORIAL_TEXTDOMAIN ) ) );
 
-				$html .= self::html( 'option', array(
+				$html .= gEditorialHTML::tag( 'option', array(
 					'value'    => '1',
 					'selected' => '1' == $value,
 				), ( isset( $args['values'][1] ) ? $args['values'][1] : _x( 'Enabled', 'Module Core: Settings Field Option', GEDITORIAL_TEXTDOMAIN ) ) );
 
-				echo self::html( 'select', array(
+				echo gEditorialHTML::tag( 'select', array(
 					'class' => $args['field_class'],
 					'name'  => $name,
 					'id'    => $id,
@@ -1017,7 +1017,7 @@ class gEditorialModuleCore extends gEditorialBaseCore
 				if ( ! $args['field_class'] )
 					$args['field_class'] = 'regular-text';
 
-				echo self::html( 'input', array(
+				echo gEditorialHTML::tag( 'input', array(
 					'type'        => 'text',
 					'class'       => $args['field_class'],
 					'name'        => $name,
@@ -1037,7 +1037,7 @@ class gEditorialModuleCore extends gEditorialBaseCore
 				if ( ! $args['dir'] )
 					$args['dir'] = 'ltr';
 
-				echo self::html( 'input', array(
+				echo gEditorialHTML::tag( 'input', array(
 					'type'        => 'number',
 					'class'       => $args['field_class'],
 					'name'        => $name,
@@ -1059,7 +1059,7 @@ class gEditorialModuleCore extends gEditorialBaseCore
 						if ( in_array( $value_name, $exclude ) )
 							continue;
 
-						$html = self::html( 'input', array(
+						$html = gEditorialHTML::tag( 'input', array(
 							'type'    => 'checkbox',
 							'class'   => $args['field_class'],
 							'name'    => $name.'['.$value_name.']',
@@ -1069,14 +1069,14 @@ class gEditorialModuleCore extends gEditorialBaseCore
 							'dir'     => $args['dir'],
 						) );
 
-						echo '<p>'.self::html( 'label', array(
+						echo '<p>'.gEditorialHTML::tag( 'label', array(
 							'for' => $id.'-'.$value_name,
 						), $html.'&nbsp;'.$value_title ).'</p>';
 					}
 
 				} else {
 
-					$html = self::html( 'input', array(
+					$html = gEditorialHTML::tag( 'input', array(
 						'type'    => 'checkbox',
 						'class'   => $args['field_class'],
 						'name'    => $name,
@@ -1086,7 +1086,7 @@ class gEditorialModuleCore extends gEditorialBaseCore
 						'dir'     => $args['dir'],
 					) );
 
-					echo '<p>'.self::html( 'label', array(
+					echo '<p>'.gEditorialHTML::tag( 'label', array(
 						'for' => $id,
 					), $html.'&nbsp;'.$args['description'] ).'</p>';
 
@@ -1102,13 +1102,13 @@ class gEditorialModuleCore extends gEditorialBaseCore
 						if ( in_array( $value_name, $exclude ) )
 							continue;
 
-						$html .= self::html( 'option', array(
+						$html .= gEditorialHTML::tag( 'option', array(
 							'value'    => $value_name,
 							'selected' => $value == $value_name,
 						), esc_html( $value_title ) );
 					}
 
-					echo self::html( 'select', array(
+					echo gEditorialHTML::tag( 'select', array(
 						'class' => $args['field_class'],
 						'name'  => $name,
 						'id'    => $id,
@@ -1118,7 +1118,7 @@ class gEditorialModuleCore extends gEditorialBaseCore
 			break;
 			case 'textarea' :
 
-				echo self::html( 'textarea', array(
+				echo gEditorialHTML::tag( 'textarea', array(
 					'class' => array(
 						'large-text',
 						// 'textarea-autosize',
@@ -1155,7 +1155,7 @@ class gEditorialModuleCore extends gEditorialBaseCore
 
 				if ( ! is_null( $args['none_title'] ) ) {
 
-					$html .= self::html( 'option', array(
+					$html .= gEditorialHTML::tag( 'option', array(
 						'value'    => is_null( $args['none_value'] ) ? FALSE : $args['none_value'],
 						'selected' => $value == $args['none_value'],
 					), esc_html( $args['none_title'] ) );
@@ -1166,13 +1166,13 @@ class gEditorialModuleCore extends gEditorialBaseCore
 					if ( in_array( $user_id, $exclude ) )
 						continue;
 
-					$html .= self::html( 'option', array(
+					$html .= gEditorialHTML::tag( 'option', array(
 						'value'    => $user_id,
 						'selected' => $value == $user_id,
 					), esc_html( sprintf( '%1$s (%2$s)', $user_object->display_name, $user_object->user_login ) ) );
 				}
 
-				echo self::html( 'select', array(
+				echo gEditorialHTML::tag( 'select', array(
 					'class' => $args['field_class'],
 					'name'  => $name,
 					'id'    => $id,
@@ -1191,7 +1191,7 @@ class gEditorialModuleCore extends gEditorialBaseCore
 			break;
 			case 'file' :
 
-				echo self::html( 'input', array(
+				echo gEditorialHTML::tag( 'input', array(
 					'type'  => 'file',
 					'class' => $args['field_class'],
 					'name'  => $id, // $name,
@@ -1223,7 +1223,7 @@ class gEditorialModuleCore extends gEditorialBaseCore
 			echo '&nbsp;'.$args['after'];
 
 		if ( $args['description'] && FALSE !== $args['values'] )
-			echo self::html( 'p', array(
+			echo gEditorialHTML::tag( 'p', array(
 				'class' => 'description',
 			), $args['description'] );
 	}
@@ -1462,7 +1462,7 @@ class gEditorialModuleCore extends gEditorialBaseCore
 		} else if ( $args['edit_url']
 			&& current_user_can( $taxonomy->cap->manage_terms ) ) {
 
-				echo self::html( 'a', array(
+				echo gEditorialHTML::tag( 'a', array(
 					'href'   => $args['edit_url'],
 					'title'  => $taxonomy->labels->menu_name,
 					'class'  => 'add-new-item',
@@ -1612,7 +1612,7 @@ class gEditorialModuleCore extends gEditorialBaseCore
 
 	public function field_post_order( $constant_key, $post )
 	{
-		$html = self::html( 'input', array(
+		$html = gEditorialHTML::tag( 'input', array(
 			'type'        => 'number',
 			'step'        => '1',
 			'size'        => '4',
@@ -1624,7 +1624,7 @@ class gEditorialModuleCore extends gEditorialBaseCore
 			'class'       => 'small-text',
 		) );
 
-		echo self::html( 'div', array(
+		echo gEditorialHTML::tag( 'div', array(
 			'class' => array(
 				'field-wrap',
 				'field-wrap-inputnumber',
@@ -1648,7 +1648,7 @@ class gEditorialModuleCore extends gEditorialBaseCore
 		));
 
 		if ( $pages )
-			echo self::html( 'div', array(
+			echo gEditorialHTML::tag( 'div', array(
 				'class' => 'field-wrap',
 			), $pages );
 	}

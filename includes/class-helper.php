@@ -89,7 +89,7 @@ class gEditorialHelper extends gEditorialBaseCore
 				$query['term']     = $term->slug;
 			}
 
-			$list[] = self::html( 'a', array(
+			$list[] = gEditorialHTML::tag( 'a', array(
 				'href'  => add_query_arg( $query, 'edit.php' ),
 				'title' => $term->slug,
 				'class' => '-term',
@@ -108,7 +108,7 @@ class gEditorialHelper extends gEditorialBaseCore
 
 		foreach ( $authors as $author )
 			if ( $author_data = get_user_by( 'id', $author ) )
-				$list[] = self::html( 'a', array(
+				$list[] = gEditorialHTML::tag( 'a', array(
 					'href' => add_query_arg( array(
 						'post_type' => $post_type,
 						'author'    => $author,
@@ -384,7 +384,7 @@ class gEditorialHelper extends gEditorialBaseCore
 			'max' => '0',
 		);
 
-		return self::html( 'div', array(
+		return gEditorialHTML::tag( 'div', array(
 			'class' => array( 'geditorial-wordcount', 'hide-if-no-js' ),
 			'data'  => apply_filters( 'geditorial_helper_wordcount_data', array_merge( $data, $defaults ), $for, $posttype ),
 		), sprintf( _x( 'Word count: %s', 'Module Helper', GEDITORIAL_TEXTDOMAIN ), '<span class="-words">0</span>' ) );

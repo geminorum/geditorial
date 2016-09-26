@@ -85,9 +85,9 @@ class gEditorialMetaMetaBox extends gEditorialMetaBox
 			else if ( $edit && 'text' == $type )
 				$atts['data']['ortho'] = 'text';
 
-			$html = self::html( 'input', $atts );
+			$html = gEditorialHTML::tag( 'input', $atts );
 
-			echo self::html( 'div', array(
+			echo gEditorialHTML::tag( 'div', array(
 				'class' => 'field-wrap field-wrap-inputtext',
 			), $html );
 		}
@@ -130,9 +130,9 @@ class gEditorialMetaMetaBox extends gEditorialMetaBox
 			if ( $edit )
 				$atts['data']['ortho'] = 'number';
 
-			$html = self::html( 'input', $atts );
+			$html = gEditorialHTML::tag( 'input', $atts );
 
-			echo self::html( 'div', array(
+			echo gEditorialHTML::tag( 'div', array(
 				'class' => 'field-wrap field-wrap-inputnumber',
 			), $html );
 		}
@@ -208,9 +208,9 @@ class gEditorialMetaMetaBox extends gEditorialMetaBox
 			else if ( $edit )
 				$atts['data']['ortho'] = 'html';
 
-			$html = self::html( 'textarea', $atts, esc_textarea( $gEditorial->meta->get_postmeta( $post->ID, $field ) ) );
+			$html = gEditorialHTML::tag( 'textarea', $atts, esc_textarea( $gEditorial->meta->get_postmeta( $post->ID, $field ) ) );
 
-			echo self::html( 'div', array(
+			echo gEditorialHTML::tag( 'div', array(
 				'class' => 'field-wrap field-wrap-textarea',
 			), $html );
 		}
@@ -258,7 +258,7 @@ class gEditorialMetaMetaBox extends gEditorialMetaBox
 			else if ( $edit )
 				$atts['data']['ortho'] = 'text';
 
-			echo self::html( 'input', $atts );
+			echo gEditorialHTML::tag( 'input', $atts );
 		}
 	}
 
@@ -311,7 +311,7 @@ class gEditorialMetaMetaBox extends gEditorialMetaBox
 			else if ( $edit )
 				$atts['data']['ortho'] = 'html';
 
-			$html .= self::html( 'textarea', $atts, esc_textarea( $gEditorial->meta->get_postmeta( $post->ID, $field ) ) );
+			$html .= gEditorialHTML::tag( 'textarea', $atts, esc_textarea( $gEditorial->meta->get_postmeta( $post->ID, $field ) ) );
 			$html .= gEditorialHelper::htmlWordCount( ( 'geditorial-meta-'.$field.( FALSE === $key ? '' : '-'.$key ) ), $post->post_type );
 
 			$html .= '</div></div></div>';

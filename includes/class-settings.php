@@ -396,8 +396,8 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 			'target' => '_blank',
 		), $module->title );
 
-		echo gEditorialHTML::html( $tag, $link );
-		echo gEditorialHTML::html( 'p', $module->desc );
+		echo gEditorialHTML::tag( $tag, $link );
+		echo gEditorialHTML::tag( 'p', $module->desc );
 	}
 
 	public static function getModuleWiki( $module = FALSE )

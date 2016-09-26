@@ -296,7 +296,7 @@ class gEditorialSeries extends gEditorialModuleCore
 			&& self::user_can( 'view', $field ) ) {
 
 			$title = $this->get_string( $field, $post->post_type );
-			$html = self::html( 'input', array(
+			$html = gEditorialHTML::tag( 'input', array(
 				'type'         => 'text',
 				'class'        => 'field-inputtext',
 				'name'         => 'geditorial-series-'.$field.'['.$counter.']',
@@ -308,7 +308,7 @@ class gEditorialSeries extends gEditorialModuleCore
 				'autocomplete' => 'off',
 			) );
 
-			echo self::html( 'div', array(
+			echo gEditorialHTML::tag( 'div', array(
 				'class' => 'field-wrap field-wrap-inputtext',
 			), $html );
 		}
@@ -318,7 +318,7 @@ class gEditorialSeries extends gEditorialModuleCore
 			&& self::user_can( 'view', $field ) ) {
 
 			$title = $this->get_string( $field, $post->post_type );
-			$html = self::html( 'input', array(
+			$html = gEditorialHTML::tag( 'input', array(
 				'type'         => 'text',
 				'class'        => 'field-inputtext',
 				'name'         => 'geditorial-series-'.$field.'['.$counter.']',
@@ -330,7 +330,7 @@ class gEditorialSeries extends gEditorialModuleCore
 				'autocomplete' => 'off',
 			) );
 
-			echo self::html( 'div', array(
+			echo gEditorialHTML::tag( 'div', array(
 				'class' => 'field-wrap field-wrap-inputtext',
 			), $html );
 		}
@@ -340,7 +340,7 @@ class gEditorialSeries extends gEditorialModuleCore
 			&& self::user_can( 'view', $field ) ) {
 
 			$title = $this->get_string( $field, $post->post_type );
-			$html = self::html( 'textarea', array(
+			$html = gEditorialHTML::tag( 'textarea', array(
 				'class'        => 'field-textarea textarea-autosize',
 				'name'         => 'geditorial-series-'.$field.'['.$counter.']',
 				'id'           => 'geditorial-series-'.$field.'-'.$counter,
@@ -349,7 +349,7 @@ class gEditorialSeries extends gEditorialModuleCore
 				'readonly'     => ! $this->user_can( 'edit', $field ),
 			), isset( $meta[$field] ) ? esc_textarea( $meta[$field] ) : '' );
 
-			echo self::html( 'div', array(
+			echo gEditorialHTML::tag( 'div', array(
 				'class' => 'field-wrap field-wrap-textarea',
 			), $html );
 		}

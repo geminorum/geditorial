@@ -403,7 +403,7 @@ class gEditorialEvent extends gEditorialModuleCore
 			'time-end'   => self::req( 'time-end' ),
 		), $atts );
 
-		$html = self::html( 'input', array(
+		$html = gEditorialHTML::tag( 'input', array(
 			'type'        => 'text',
 			'dir'         => 'ltr',
 			'name'        => 'geditorial-event-date-start',
@@ -413,7 +413,7 @@ class gEditorialEvent extends gEditorialModuleCore
 			'placeholder' => _x( 'Date Start', 'Event Module: Meta Box Input Placeholder', GEDITORIAL_TEXTDOMAIN ),
 		) );
 
-		$html .= self::html( 'input', array(
+		$html .= gEditorialHTML::tag( 'input', array(
 			'type'        => 'text',
 			'dir'         => 'ltr',
 			'name'        => 'geditorial-event-time-start',
@@ -423,11 +423,11 @@ class gEditorialEvent extends gEditorialModuleCore
 			'placeholder' => _x( 'Time Start', 'Event Module: Meta Box Input Placeholder', GEDITORIAL_TEXTDOMAIN ),
 		) );
 
-		echo self::html( 'div', array(
+		echo gEditorialHTML::tag( 'div', array(
 			'class' => 'field-wrap field-wrap-inputtext-half ltr',
 		), $html );
 
-		$html = self::html( 'input', array(
+		$html = gEditorialHTML::tag( 'input', array(
 			'type'        => 'text',
 			'dir'         => 'ltr',
 			'name'        => 'geditorial-event-date-end',
@@ -437,7 +437,7 @@ class gEditorialEvent extends gEditorialModuleCore
 			'placeholder' => _x( 'Date End', 'Event Module: Meta Box Input Placeholder', GEDITORIAL_TEXTDOMAIN ),
 		) );
 
-		$html .= self::html( 'input', array(
+		$html .= gEditorialHTML::tag( 'input', array(
 			'type'        => 'text',
 			'dir'         => 'ltr',
 			'name'        => 'geditorial-event-time-end',
@@ -447,7 +447,7 @@ class gEditorialEvent extends gEditorialModuleCore
 			'placeholder' => _x( 'Time End', 'Event Module: Meta Box Input Placeholder', GEDITORIAL_TEXTDOMAIN ),
 		) );
 
-		echo self::html( 'div', array(
+		echo gEditorialHTML::tag( 'div', array(
 			'class' => 'field-wrap field-wrap-inputtext-half ltr',
 		), $html );
 

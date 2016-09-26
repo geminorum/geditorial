@@ -156,7 +156,7 @@ class gEditorialSeriesTemplates extends gEditorialTemplateCore
 						);
 					}
 				}
-				$args['title'] = self::html( $args['title_tag'], array(
+				$args['title'] = gEditorialHTML::tag( $args['title_tag'], array(
 					'class' => '-title',
 				), $args['title'] );
 			}
@@ -252,7 +252,7 @@ class gEditorialSeriesTemplates extends gEditorialTemplateCore
 				// $the_series = get_term_by( 'id', $args['id'], $series_tax );
 				// $output .= '<br />'.$the_series->name;
 
-				$output = $args['title'].self::html( $args['list'], array(
+				$output = $args['title'].gEditorialHTML::tag( $args['list'], array(
 					'class' => '-list',
 				), $output );
 
@@ -269,7 +269,7 @@ class gEditorialSeriesTemplates extends gEditorialTemplateCore
 					</script>';
 				}
 
-				$output = $args['before'].self::html( 'div', array(
+				$output = $args['before'].gEditorialHTML::tag( 'div', array(
 					'class' => array(
 						'geditorial-wrap',
 						'series',

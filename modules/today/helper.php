@@ -227,7 +227,7 @@ class gEditorialTodayHelper extends gEditorialHelper
 
 		$html = '';
 
-		$html .= self::html( 'input', array(
+		$html .= gEditorialHTML::tag( 'input', array(
 			'type'        => 'text',
 			'dir'         => 'ltr',
 			'min'         => '1',
@@ -239,7 +239,7 @@ class gEditorialTodayHelper extends gEditorialHelper
 			'placeholder' => _x( 'Day', 'Today Module: Meta Box Input Placeholder', GEDITORIAL_TEXTDOMAIN ),
 		) );
 
-		$html .= self::html( 'input', array(
+		$html .= gEditorialHTML::tag( 'input', array(
 			'type'        => 'text',
 			'dir'         => 'ltr',
 			'min'         => '1',
@@ -252,7 +252,7 @@ class gEditorialTodayHelper extends gEditorialHelper
 		) );
 
 		if ( $year )
-		$html .= self::html( 'input', array(
+		$html .= gEditorialHTML::tag( 'input', array(
 			'type'        => 'text',
 			'dir'         => 'ltr',
 			'name'        => 'geditorial-today-date-year',
@@ -263,26 +263,26 @@ class gEditorialTodayHelper extends gEditorialHelper
 			'disabled'    => ! $year,
 		) );
 
-		echo self::html( 'div', array(
+		echo gEditorialHTML::tag( 'div', array(
 			'class' => 'field-wrap '.( $year ? 'field-wrap-inputtext-date' : 'field-wrap-inputtext-half' ),
 		), $html );
 
 		$html = '';
 
 		foreach ( self::getDefualtCalendars( TRUE ) as $name => $title )
-			$html .= self::html( 'option', array(
+			$html .= gEditorialHTML::tag( 'option', array(
 				'value'    => $name,
 				'selected' => $args['cal'] == $name,
 			), $title );
 
-		$html = self::html( 'select', array(
+		$html = gEditorialHTML::tag( 'select', array(
 			'name'        => 'geditorial-today-date-cal',
 			'id'          => 'geditorial-today-date-cal',
 			'title'       => _x( 'Calendar', 'Today Module: Meta Box Input', GEDITORIAL_TEXTDOMAIN ),
 			'placeholder' => _x( 'Calendar', 'Today Module: Meta Box Input Placeholder', GEDITORIAL_TEXTDOMAIN ),
 		), $html );
 
-		echo self::html( 'div', array(
+		echo gEditorialHTML::tag( 'div', array(
 			'class' => 'field-wrap field-wrap-select',
 		), $html );
 
@@ -317,7 +317,7 @@ class gEditorialTodayHelper extends gEditorialHelper
 
 				unset( $noyear['year'] );
 
-				$html .= self::html( 'a', array(
+				$html .= gEditorialHTML::tag( 'a', array(
 					'href'          => add_query_arg( array_merge( $noyear, array( 'post_type' => $posttype ) ), $new ),
 					'class'         => 'button -add-posttype -add-posttype-'.$posttype,
 					'target'        => '_blank',
@@ -344,7 +344,7 @@ class gEditorialTodayHelper extends gEditorialHelper
 				$button_title = '<span class="dashicons dashicons-admin-post"></span> '
 					.$posttype_object->labels->add_new_item;
 
-			$html .= self::html( 'a', array(
+			$html .= gEditorialHTML::tag( 'a', array(
 				'href'          => add_query_arg( array_merge( $the_day, array( 'post_type' => $posttype ) ), $new ),
 				'class'         => 'button -add-posttype -add-posttype-'.$posttype,
 				'target'        => '_blank',
@@ -353,7 +353,7 @@ class gEditorialTodayHelper extends gEditorialHelper
 			), $button_title );
 		}
 
-		echo self::html( 'div', array(
+		echo gEditorialHTML::tag( 'div', array(
 			'class' => 'field-wrap field-wrap-buttons',
 		), $html );
 	}

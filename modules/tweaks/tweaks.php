@@ -250,7 +250,7 @@ class gEditorialTweaks extends gEditorialModuleCore
 					$before = '<div class="-row tweaks-'.$taxonomy.'">';
 
 					if ( $icon = $this->get_string( 'icon', $taxonomy, 'taxonomies', 'tag' ) )
-						$before .= self::html( 'a', array(
+						$before .= gEditorialHTML::tag( 'a', array(
 							'href'   => self::getEditTaxLink( $taxonomy ),
 							'title'  => $this->get_string( 'title', $taxonomy, 'taxonomies', $taxonomy ),
 							'class'  => array( '-icon', '-link' ),
@@ -278,7 +278,7 @@ class gEditorialTweaks extends gEditorialModuleCore
 
 							echo '<span class="-icon"><span class="dashicons dashicons-backup"></span></span>';
 
-							echo self::html( ( $edit ? 'a' : 'span' ), array(
+							echo gEditorialHTML::tag( ( $edit ? 'a' : 'span' ), array(
 								'href'  => $edit ? get_edit_post_link( key( $revisions ) ) : FALSE,
 								'title' => $edit ? _x( 'View the last revision', 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ) : FALSE,
 							), sprintf( _nx( '%s Revision', '%s Revisions', $count, 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ), number_format_i18n( $count ) ) );

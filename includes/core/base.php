@@ -206,122 +206,6 @@ class gEditorialBaseCore
 		return $taxonomies;
 	}
 
-	// like WP core but without filter and fallback
-	// ANCESTOR: sanitize_html_class()
-	public static function sanitizeHTMLClass( $class )
-	{
-		// strip out any % encoded octets
-		$sanitized = preg_replace( '|%[a-fA-F0-9][a-fA-F0-9]|', '', $class );
-
-		// limit to A-Z,a-z,0-9,_,-
-		$sanitized = preg_replace( '/[^A-Za-z0-9_-]/', '', $sanitized );
-
-		return $sanitized;
-	}
-
-	// like WP core but without filter
-	// ANCESTOR: tag_escape()
-	public static function sanitizeHTMLTag( $tag )
-	{
-		return strtolower( preg_replace('/[^a-zA-Z0-9_:]/', '', $tag ) );
-	}
-
-	private static function _tag_open( $tag, $atts, $content = TRUE )
-	{
-		$html = '<'.$tag;
-
-		foreach ( $atts as $key => $att ) {
-
-			$sanitized = FALSE;
-
-			if ( is_array( $att ) ) {
-
-				if ( ! count( $att ) )
-					continue;
-
-				if ( 'data' == $key ) {
-
-					foreach ( $att as $data_key => $data_val ) {
-
-						if ( is_array( $data_val ) )
-							$html .= ' data-'.$data_key.'=\''.wp_json_encode( $data_val ).'\'';
-
-						else if ( FALSE === $data_val )
-							continue;
-
-						else
-							$html .= ' data-'.$data_key.'="'.esc_attr( $data_val ).'"';
-					}
-
-					continue;
-
-				} else if ( 'class' == $key ) {
-					$att = implode( ' ', array_unique( array_filter( $att, array( __CLASS__, 'sanitizeHTMLClass' ) ) ) );
-
-				} else {
-					$att = implode( ' ', array_unique( array_filter( $att, 'trim' ) ) );
-				}
-
-				$sanitized = TRUE;
-			}
-
-			if ( 'selected' == $key )
-				$att = ( $att ? 'selected' : FALSE );
-
-			if ( 'checked' == $key )
-				$att = ( $att ? 'checked' : FALSE );
-
-			if ( 'readonly' == $key )
-				$att = ( $att ? 'readonly' : FALSE );
-
-			if ( 'disabled' == $key )
-				$att = ( $att ? 'disabled' : FALSE );
-
-			if ( FALSE === $att )
-				continue;
-
-			if ( 'class' == $key && ! $sanitized )
-				$att = implode( ' ', array_unique( array_filter( explode( ' ', $att ), array( __CLASS__, 'sanitizeHTMLClass' ) ) ) );
-
-			else if ( 'class' == $key )
-				$att = $att;
-
-			else if ( 'href' == $key && '#' != $att )
-				$att = esc_url( $att );
-
-			else if ( 'src' == $key && FALSE === strpos( $att, 'data:image' ) )
-				$att = esc_url( $att );
-
-			else
-				$att = esc_attr( $att );
-
-			$html .= ' '.$key.'="'.trim( $att ).'"';
-		}
-
-		if ( FALSE === $content )
-			return $html.' />';
-
-		return $html.'>';
-	}
-
-	public static function html( $tag, $atts = array(), $content = FALSE, $sep = '' )
-	{
-		$tag = self::sanitizeHTMLTag( $tag );
-
-		if ( is_array( $atts ) )
-			$html = self::_tag_open( $tag, $atts, $content );
-		else
-			return '<'.$tag.'>'.$atts.'</'.$tag.'>'.$sep;
-
-		if ( FALSE === $content )
-			return $html.$sep;
-
-		if ( is_null( $content ) )
-			return $html.'</'.$tag.'>'.$sep;
-
-		return $html.$content.'</'.$tag.'>'.$sep;
-	}
-
 	public static function getCurrentURL( $trailingslashit = FALSE, $forwarded_host = FALSE )
 	{
 		$ssl  = ( ! empty( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] == 'on' );
@@ -446,7 +330,7 @@ class gEditorialBaseCore
 		else if ( $version )
 			$url = add_query_arg( 'ver', $version, $url );
 
-		echo "\t".self::html( 'link', array(
+		echo "\t".gEditorialHTML::tag( 'link', array(
 			'rel'   => 'stylesheet',
 			'href'  => $url,
 			'type'  => 'text/css',
@@ -508,12 +392,12 @@ class gEditorialBaseCore
 		if ( ! $post_thumbnail_img = wp_get_attachment_image_src( $post_thumbnail_id, $size ) )
 			return '';
 
-		$image = self::html( 'img', array( 'src' => $post_thumbnail_img[0] ) );
+		$image = gEditorialHTML::tag( 'img', array( 'src' => $post_thumbnail_img[0] ) );
 
 		if ( ! $link )
 			return $image;
 
-		return self::html( 'a', array(
+		return gEditorialHTML::tag( 'a', array(
 			'href'   => wp_get_attachment_url( $post_thumbnail_id ),
 			'target' => '_blank',
 		), $image );
@@ -897,15 +781,15 @@ class gEditorialBaseCore
 			) );
 
 			vprintf( '<span class="-next-previous">%s %s %s</span>', array(
-				( FALSE === $args['previous'] ? '<span class="-previous -span" aria-hidden="true">'.$icons['previous'].'</span>' : self::html( 'a', array(
+				( FALSE === $args['previous'] ? '<span class="-previous -span" aria-hidden="true">'.$icons['previous'].'</span>' : gEditorialHTML::tag( 'a', array(
 					'href'  => add_query_arg( 'paged', $args['previous'] ),
 					'class' => '-previous -link',
 				), $icons['previous'] ) ),
-				self::html( 'a', array(
+				gEditorialHTML::tag( 'a', array(
 					'href'  => self::getCurrentURL(),
 					'class' => '-refresh -link',
 				), $icons['refresh'] ),
-				( FALSE === $args['next'] ? '<span class="-next -span" aria-hidden="true">'.$icons['next'].'</span>' : self::html( 'a', array(
+				( FALSE === $args['next'] ? '<span class="-next -span" aria-hidden="true">'.$icons['next'].'</span>' : gEditorialHTML::tag( 'a', array(
 					'href'  => add_query_arg( 'paged', $args['next'] ),
 					'class' => '-next -link',
 				), $icons['next'] ) ),

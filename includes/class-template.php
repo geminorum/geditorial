@@ -45,7 +45,7 @@ class gEditorialTemplateCore extends gEditorialBaseCore
 		if ( isset( $args['context'] ) && $args['context'] )
 			$classes[] = 'context-'.$args['context'];
 
-		return "\n".self::html( $block ? 'div' : 'span', array( 'class' => $classes ), $html )."\n";
+		return "\n".gEditorialHTML::tag( $block ? 'div' : 'span', array( 'class' => $classes ), $html )."\n";
 	}
 
 	// EDITED: 5/5/2016, 12:05:15 AM
@@ -64,20 +64,20 @@ class gEditorialTemplateCore extends gEditorialBaseCore
 
 		if ( $args['title'] ) {
 			if ( is_null( $args['title_link'] ) && $term )
-				$args['title'] = self::html( 'a', array(
+				$args['title'] = gEditorialHTML::tag( 'a', array(
 					'href'  => get_term_link( $term, $term->taxonomy ),
 					'title' => $args['title_title'],
 				), $args['title'] );
 
 			else if ( $args['title_link'] )
-				$args['title'] = self::html( 'a', array(
+				$args['title'] = gEditorialHTML::tag( 'a', array(
 					'href'  => $args['title_link'],
 					'title' => $args['title_title'],
 				), $args['title'] );
 		}
 
 		if ( $args['title'] && $args['title_tag'] )
-			$args['title'] = self::html( $args['title_tag'], array(
+			$args['title'] = gEditorialHTML::tag( $args['title_tag'], array(
 				'id'    => $term ? sprintf( $args['title_anchor'], $term->term_id, $term->slug ) : FALSE,
 				'class' => '-title',
 			), $args['title'] )."\n";
@@ -99,14 +99,14 @@ class gEditorialTemplateCore extends gEditorialBaseCore
 		$title = sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' );
 
 		if ( $term->count && $args['li_link'] )
-			return $args['li_before'].self::html( 'a', array(
+			return $args['li_before'].gEditorialHTML::tag( 'a', array(
 				'href'  => get_term_link( $term ),
 				'title' => $args['li_title'] ? sprintf( $args['li_title'], $title ) : FALSE,
 				'class' => '-link -tax-'.$term->taxonomy,
 			), $before.$title.$after ).$args['li_after']."\n";
 
 		else
-			return $args['li_before'].self::html( 'span', array(
+			return $args['li_before'].gEditorialHTML::tag( 'span', array(
 				'title' => $args['li_title'] ? sprintf( $args['li_title'], $title ) : FALSE,
 				'class' => $args['li_link'] ? '-no-link -empty -tax-'.$term->taxonomy : FALSE,
 			), $before.$title.$after ).$args['li_after']."\n";
@@ -126,14 +126,14 @@ class gEditorialTemplateCore extends gEditorialBaseCore
 		$title = get_the_title( $post->ID );
 
 		if ( 'publish' == $post->post_status && $args['li_link'] )
-			return $args['li_before'].self::html( 'a', array(
+			return $args['li_before'].gEditorialHTML::tag( 'a', array(
 				'href'  => get_permalink( $post->ID ),
 				'title' => $args['li_title'] ? sprintf( $args['li_title'], $title ) : FALSE,
 				'class' => '-link -posttype-'.$post->post_type,
 			), $before.$title.$after ).$args['li_after']."\n";
 
 		else
-			return $args['li_before'].self::html( 'span', array(
+			return $args['li_before'].gEditorialHTML::tag( 'span', array(
 				'title' => $args['li_title'] ? sprintf( $args['li_title'], $title ) : FALSE,
 				'class' => $args['li_link'] ? '-no-link -future -posttype-'.$post->post_type : FALSE,
 			), $before.$title.$after ).$args['li_after']."\n";

@@ -456,7 +456,7 @@ class gEditorialBook extends gEditorialModuleCore
 				$connected->the_post();
 				echo '<li>';
 
-					echo self::html( 'a', array(
+					echo gEditorialHTML::tag( 'a', array(
 						'href' => get_permalink(),
 					), get_the_title() );
 

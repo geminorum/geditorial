@@ -836,7 +836,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 			$this->submit_button( 'issue_post_create' );
 			$this->submit_button( 'issue_store_order' );
 
-			echo self::html( 'p', array(
+			echo gEditorialHTML::tag( 'p', array(
 				'class' => 'description',
 			), _x( 'Check for issue terms and create corresponding issue posts.', 'Magazine Module', GEDITORIAL_TEXTDOMAIN ) );
 

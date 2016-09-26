@@ -140,13 +140,13 @@ class gEditorialEntryTemplates extends gEditorialTemplateCore
 					// TODO: add show/more js like series
 				}
 
-				$html .= self::html( 'li', array(
+				$html .= gEditorialHTML::tag( 'li', array(
 					'id'    => sprintf( $args['li_anchor'], $post->ID, $post->post_name ),
 					'class' => '-item',
 				), $item );
 			}
 
-			$html = self::html( $args['list'], array( 'class' => '-list' ), $html );
+			$html = gEditorialHTML::tag( $args['list'], array( 'class' => '-list' ), $html );
 
 			if ( $args['title'] )
 				$html = $args['title'].$html;

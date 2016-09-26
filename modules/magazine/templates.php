@@ -241,12 +241,12 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 			// TODO: if is_null: get span link / also check for module archive settings!
 
 			if ( FALSE !== $args['title_link'] )
-				$args['title'] = self::html( 'a', array(
+				$args['title'] = gEditorialHTML::tag( 'a', array(
 					'href'  => $args['title_link'],
 					'title' => $args['title_title'],
 				), $args['title'] );
 
-			$title = self::html( $args['title_wrap'], array(
+			$title = gEditorialHTML::tag( $args['title_wrap'], array(
 				'class' => 'issue-list-title',
 			), $args['title'] );
 		}
