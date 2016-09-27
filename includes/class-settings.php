@@ -291,7 +291,7 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 			'field'       => 'summary_scope',
 			'type'        => 'select',
 			'title'       => _x( 'Summary Scope', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'description' => _x( 'Dashboard Widget Summary User Scope', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+			'description' => _x( 'User scope for the content summary', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 			'default'     => 'all',
 			'section'     => $section,
 			'values'      => array(
