@@ -26,7 +26,7 @@ class gEditorial
 
 	private function setup()
 	{
-		if ( is_network_admin() )
+		if ( is_network_admin() || is_user_admin() )
 			return;
 
 		load_plugin_textdomain( GEDITORIAL_TEXTDOMAIN, FALSE, 'geditorial/languages' );
