@@ -1324,7 +1324,7 @@ class gEditorialModuleCore extends gEditorialBaseCore
 			// 'sptp_permalink_structure' => $this->constant( $constant_key.'_permalink', '/%post_id%' ),
 		) );
 
-		register_post_type( $post_type, $args );
+		return register_post_type( $post_type, $args );
 	}
 
 	public function get_taxonomy_labels( $constant_key )
@@ -1371,7 +1371,7 @@ class gEditorialModuleCore extends gEditorialBaseCore
 			),
 		) );
 
-		register_taxonomy( $taxonomy, $post_types, $args );
+		return register_taxonomy( $taxonomy, $post_types, $args );
 	}
 
 	protected function get_post_updated_messages( $constant_key )
