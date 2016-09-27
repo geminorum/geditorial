@@ -1332,10 +1332,15 @@ class gEditorialModuleCore extends gEditorialBaseCore
 		if ( ! empty( $this->strings['labels'][$constant_key] ) )
 			return $this->strings['labels'][$constant_key];
 
-		if ( ! empty( $this->strings['noops'][$constant_key] ) )
-			return gEditorialHelper::generateTaxonomyLabels( $this->strings['noops'][$constant_key] );
+		$labels = array();
 
-		return array();
+		if ( $menu_name = $this->get_string( 'menu_name', $constant_key, 'misc', NULL ) )
+			$labels['menu_name'] = $menu_name;
+
+		if ( ! empty( $this->strings['noops'][$constant_key] ) )
+			return gEditorialHelper::generateTaxonomyLabels( $this->strings['noops'][$constant_key], $labels );
+
+		return $labels;
 	}
 
 	public function register_taxonomy( $constant_key, $atts = array(), $post_types = NULL )
