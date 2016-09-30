@@ -590,7 +590,7 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 					'content' => gnetwork_github( array(
 						'repo'    => 'geminorum/geditorial',
 						'type'    => 'wiki',
-						'page'    => 'Modules-'.ucwords( $module->name ),
+						'page'    => 'Modules-'.gEditorialHelper::moduleSlug( $module->name ),
 						'context' => 'help_tab',
 					) ),
 				);
