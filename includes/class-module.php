@@ -1183,6 +1183,27 @@ class gEditorialModuleCore extends gEditorialBaseCore
 				), $html );
 
 			break;
+			case 'priority' :
+
+				foreach ( gEditorialSettingsCore::priorityOptions()
+					as $value_name => $value_title ) {
+
+					if ( in_array( $value_name, $exclude ) )
+						continue;
+
+					$html .= gEditorialHTML::tag( 'option', array(
+						'value'    => $value_name,
+						'selected' => $value == $value_name,
+					), esc_html( $value_title ) );
+				}
+
+				echo gEditorialHTML::tag( 'select', array(
+					'class' => gEditorialHTML::class( $args['field_class'], '-setting-priority' ),
+					'name'  => $name,
+					'id'    => $id,
+				), $html );
+
+			break;
 			case 'button' :
 
 				submit_button(
