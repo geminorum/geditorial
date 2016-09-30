@@ -60,13 +60,15 @@ class gEditorialModuleCore extends gEditorialBaseCore
 
 	public function setup( $partials = array() )
 	{
+		$ajax = gEditorialWordPress::isAJAX();
+
 		if ( method_exists( $this, 'p2p_init' ) )
 			add_action( 'p2p_init', array( $this, 'p2p_init' ) );
 
 		if ( method_exists( $this, 'widgets_init' ) )
 			add_action( 'widgets_init', array( $this, 'widgets_init' ) );
 
-		if ( method_exists( $this, 'tinymce_strings' ) )
+		if ( ! $ajax && method_exists( $this, 'tinymce_strings' ) )
 			add_filter( 'geditorial_tinymce_strings', array( $this, 'tinymce_strings' ) );
 
 		if ( method_exists( $this, 'meta_init' ) )
@@ -93,21 +95,22 @@ class gEditorialModuleCore extends gEditorialBaseCore
 			if ( method_exists( $this, 'admin_init' ) )
 				add_action( 'admin_init', array( $this, 'admin_init' ) );
 
-			if ( method_exists( $this, 'dashboard_glance_items' ) )
+			if ( ! $ajax && method_exists( $this, 'dashboard_glance_items' ) )
 				add_filter( 'dashboard_glance_items', array( $this, 'dashboard_glance_items' ) );
 
-			if ( method_exists( $this, 'current_screen' ) )
+			if ( ! $ajax && method_exists( $this, 'current_screen' ) )
 				add_action( 'current_screen', array( $this, 'current_screen' ) );
 
-			add_action( 'geditorial_settings_load', array( $this, 'register_settings' ) );
+			if ( ! $ajax )
+				add_action( 'geditorial_settings_load', array( $this, 'register_settings' ) );
 
 			if ( method_exists( $this, 'tweaks_strings' ) )
 				add_filter( 'geditorial_tweaks_strings', array( $this, 'tweaks_strings' ) );
 
-			if ( method_exists( $this, 'reports_settings' ) )
+			if ( ! $ajax && method_exists( $this, 'reports_settings' ) )
 				add_action( 'geditorial_reports_settings', array( $this, 'reports_settings' ) );
 
-			if ( method_exists( $this, 'tools_settings' ) )
+			if ( ! $ajax && method_exists( $this, 'tools_settings' ) )
 				add_action( 'geditorial_tools_settings', array( $this, 'tools_settings' ) );
 		}
 	}
