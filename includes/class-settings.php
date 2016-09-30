@@ -586,7 +586,7 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 			if ( $module )
 				$tabs[] = array(
 					'id'      => 'geditorial-'.$module->name.'-overview',
-					'title'   => sprintf( '%s Overview', ucwords( $module->name ) ),
+					'title'   => sprintf( _x( '%s Overview', 'Settings: Help Content Title', GEDITORIAL_TEXTDOMAIN ), $module->title ),
 					'content' => gnetwork_github( array(
 						'repo'    => 'geminorum/geditorial',
 						'type'    => 'wiki',
@@ -598,7 +598,7 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 			else
 				$tabs[] = array(
 					'id'      => 'geditorial-overview',
-					'title'   => 'Editorial Overview',
+					'title'   => _x( 'Editorial Overview', 'Settings: Help Content Title', GEDITORIAL_TEXTDOMAIN ),
 					'content' => gnetwork_github( array(
 						'repo'    => 'geminorum/geditorial',
 						'type'    => 'wiki',
