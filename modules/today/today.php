@@ -48,7 +48,7 @@ class gEditorialToday extends gEditorialModuleCore
 				'theday_column_title' => _x( 'The Day', 'Today Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
 			),
 			'noops' => array(
-				'day_cpt' => _nx_noop( 'Day', 'Days', 'Today Module: Today CPT Labels: Name', GEDITORIAL_TEXTDOMAIN ),
+				'day_cpt' => _nx_noop( 'Day', 'Days', 'Today Module: Noop', GEDITORIAL_TEXTDOMAIN ),
 			),
 		);
 	}

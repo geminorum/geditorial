@@ -79,10 +79,10 @@ class gEditorialEvent extends gEditorialModuleCore
 				'install_def_type_tax'  => _x( 'Install Default Calendar Types', 'Event Module: Setting Button', GEDITORIAL_TEXTDOMAIN ),
 			),
 			'noops' => array(
-				'event_cpt' => _nx_noop( 'Event',          'Events',           'Event Module: Noop', GEDITORIAL_TEXTDOMAIN ),
-				'event_tag' => _nx_noop( 'Event Type',     'Event Types',      'Event Module: Noop', GEDITORIAL_TEXTDOMAIN ),
+				'event_cpt' => _nx_noop( 'Event', 'Events', 'Event Module: Noop', GEDITORIAL_TEXTDOMAIN ),
+				'event_tag' => _nx_noop( 'Event Type', 'Event Types', 'Event Module: Noop', GEDITORIAL_TEXTDOMAIN ),
 				'event_cat' => _nx_noop( 'Event Category', 'Event Categories', 'Event Module: Noop', GEDITORIAL_TEXTDOMAIN ),
-				'cal_tax'   => _nx_noop( 'Event Calendar', 'Event Calendars',  'Event Module: Noop', GEDITORIAL_TEXTDOMAIN ),
+				'cal_tax'   => _nx_noop( 'Event Calendar', 'Event Calendars', 'Event Module: Noop', GEDITORIAL_TEXTDOMAIN ),
 			),
 			'labels' => array(
 				'type_tax' => array(

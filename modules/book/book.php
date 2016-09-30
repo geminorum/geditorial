@@ -84,13 +84,13 @@ class gEditorialBook extends gEditorialModuleCore
 				'install_def_size_tax' => _x( 'Install Default Sizes', 'Book Module: Setting Button', GEDITORIAL_TEXTDOMAIN ),
 			),
 			'noops' => array(
-				'publication_cpt' => _nx_noop( 'Publication',        'Publications',         'Book Module: Noop', GEDITORIAL_TEXTDOMAIN ),
-				'subject_tax'     => _nx_noop( 'Subject',            'Subjects',             'Book Module: Noop', GEDITORIAL_TEXTDOMAIN ),
-				'library_tax'     => _nx_noop( 'Library',            'Libraries',            'Book Module: Noop', GEDITORIAL_TEXTDOMAIN ),
-				'publisher_tax'   => _nx_noop( 'Publisher',          'Publishers',           'Book Module: Noop', GEDITORIAL_TEXTDOMAIN ),
-				'type_tax'        => _nx_noop( 'Publication Type',   'Publication Types',    'Book Module: Noop', GEDITORIAL_TEXTDOMAIN ),
+				'publication_cpt' => _nx_noop( 'Publication', 'Publications', 'Book Module: Noop', GEDITORIAL_TEXTDOMAIN ),
+				'subject_tax'     => _nx_noop( 'Subject', 'Subjects', 'Book Module: Noop', GEDITORIAL_TEXTDOMAIN ),
+				'library_tax'     => _nx_noop( 'Library', 'Libraries', 'Book Module: Noop', GEDITORIAL_TEXTDOMAIN ),
+				'publisher_tax'   => _nx_noop( 'Publisher', 'Publishers', 'Book Module: Noop', GEDITORIAL_TEXTDOMAIN ),
+				'type_tax'        => _nx_noop( 'Publication Type', 'Publication Types', 'Book Module: Noop', GEDITORIAL_TEXTDOMAIN ),
 				'status_tax'      => _nx_noop( 'Publication Status', 'Publication Statuses', 'Book Module: Noop', GEDITORIAL_TEXTDOMAIN ),
-				'size_tax'        => _nx_noop( 'Publication Size',   'Publication Sizes',    'Book Module: Noop', GEDITORIAL_TEXTDOMAIN ),
+				'size_tax'        => _nx_noop( 'Publication Size', 'Publication Sizes', 'Book Module: Noop', GEDITORIAL_TEXTDOMAIN ),
 			),
 			'terms' => array(
 				'size_tax' => array(

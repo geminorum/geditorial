@@ -96,9 +96,9 @@ class gEditorialMagazine extends gEditorialModuleCore
 				'issue_store_order' => _x( 'Store Orders', 'Magazine Module: Setting Button', GEDITORIAL_TEXTDOMAIN ),
 			),
 			'noops' => array(
-				'issue_cpt'   => _nx_noop( 'Issue',   'Issues',   'Magazine Module: Noop', GEDITORIAL_TEXTDOMAIN ),
-				'issue_tax'   => _nx_noop( 'Issue',   'Issues',   'Magazine Module: Noop', GEDITORIAL_TEXTDOMAIN ),
-				'span_tax'    => _nx_noop( 'Span',    'Spans',    'Magazine Module: Noop', GEDITORIAL_TEXTDOMAIN ),
+				'issue_cpt'   => _nx_noop( 'Issue', 'Issues', 'Magazine Module: Noop', GEDITORIAL_TEXTDOMAIN ),
+				'issue_tax'   => _nx_noop( 'Issue', 'Issues', 'Magazine Module: Noop', GEDITORIAL_TEXTDOMAIN ),
+				'span_tax'    => _nx_noop( 'Span', 'Spans', 'Magazine Module: Noop', GEDITORIAL_TEXTDOMAIN ),
 				'section_tax' => _nx_noop( 'Section', 'Sections', 'Magazine Module: Noop', GEDITORIAL_TEXTDOMAIN ),
 			),
 			'p2p' => array(
