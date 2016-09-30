@@ -58,6 +58,15 @@ class gEditorialEstimated extends gEditorialModuleCore
 		);
 	}
 
+	protected function get_global_strings()
+	{
+		return array(
+			'noops' => array(
+				'word_count' => _nx_noop( '%s Word', '%s Words', 'Estimated Module: Noop', GEDITORIAL_TEXTDOMAIN ),
+			),
+		);
+	}
+
 	public function init()
 	{
 		do_action( 'geditorial_estimated_init', $this->module );
@@ -76,9 +85,42 @@ class gEditorialEstimated extends gEditorialModuleCore
 		// TODO: add shortcode
 	}
 
-	public function admin_init()
+	public function current_screen( $screen )
 	{
-		add_action( 'save_post', array( $this, 'save_post_supported_cpt' ), 20, 3 );
+		if ( in_array( $screen->post_type, $this->post_types() ) ) {
+
+			if ( 'post' == $screen->base ) {
+
+				add_action( 'save_post', array( $this, 'save_post_supported_cpt' ), 20, 3 );
+
+			} else if ( 'edit' == $screen->base ) {
+
+				add_action( 'geditorial_tweaks_column_row', array( $this, 'column_row_wordcount' ), -50 );
+			}
+		}
+	}
+
+	public function column_row_wordcount( $post )
+	{
+		if ( $wordcount = get_post_meta( $post->ID, $this->meta_key, TRUE ) ) {
+
+			echo '<div class="-row estimated-wordcount">';
+
+				echo '<span class="-icon" title="'
+					.esc_attr_x( 'Estimated Time', 'Estimated Module: Row Icon Title', GEDITORIAL_TEXTDOMAIN )
+					.'"><span class="dashicons dashicons-'.$this->module->icon.'"></span></span>';
+
+					echo '<span class="-wordcount" title="'
+						.esc_attr_x( 'Word Count', 'Estimated Module: Row Title', GEDITORIAL_TEXTDOMAIN ).'">'
+						.sprintf( gEditorialHelper::noopedCount( $wordcount, $this->get_noop( 'word_count' ) ), number_format_i18n( $wordcount ) )
+						.'</span>';
+
+					echo ' <span class="-estimated-time">('
+						.$this->get_time_estimated( $wordcount )
+						.')</span>';
+
+			echo '</div>';
+		}
 	}
 
 	public function save_post_supported_cpt( $post_ID, $post, $update )
