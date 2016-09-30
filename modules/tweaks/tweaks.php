@@ -43,22 +43,16 @@ class gEditorialTweaks extends gEditorialModuleCore
 	{
 		return array(
 			'posttypes_option'  => 'posttypes_option',
-			'taxonomies_option' => 'taxonomies_option',
 			'_general' => array(
-				array(
-					'field'       => 'group_taxonomies',
-					'title'       => _x( 'Group Taxonomies', 'Tweaks Module: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Group selected taxonomies on selected post type edit pages', 'Tweaks Module: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-				),
 				array(
 					'field'       => 'revision_count',
 					'title'       => _x( 'Revision Count', 'Tweaks Module: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Displays revision summary of the post. Needs Group Taxonomies enabled.', 'Tweaks Module: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Displays revision summary of the post.', 'Tweaks Module: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 				),
 				array(
 					'field'       => 'page_template',
 					'title'       => _x( 'Page Template', 'Tweaks Module: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Displays the template used for the post. Needs Group Taxonomies enabled.', 'Tweaks Module: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Displays the template used for the post.', 'Tweaks Module: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 				),
 				array(
 					'field'       => 'category_search',
@@ -75,7 +69,13 @@ class gEditorialTweaks extends gEditorialModuleCore
 					'title'       => _x( 'Excerpt Count', 'Tweaks Module: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Display word count for excerpt textareas', 'Tweaks Module: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 				),
+				array(
+					'field'       => 'group_taxonomies',
+					'title'       => _x( 'Group Taxonomies', 'Tweaks Module: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Group selected taxonomies on selected post type edit pages', 'Tweaks Module: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+				),
 			),
+			'taxonomies_option' => 'taxonomies_option',
 		);
 	}
 
@@ -83,8 +83,8 @@ class gEditorialTweaks extends gEditorialModuleCore
 	{
 		return array(
 			'misc' => array(
-				'title_column_title'          => _x( 'Title', 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ),
-				'group_taxes_column_title'    => _x( 'Taxonomies', 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ),
+				'title_column_title'          => _x( 'Title', 'Tweaks Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'rows_column_title'           => _x( 'Extra', 'Tweaks Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
 				'meta_box_search_title'       => _x( 'Type to filter by', 'Tweaks Module: Meta Box Search Title', GEDITORIAL_TEXTDOMAIN ),
 				'meta_box_search_placeholder' => _x( 'Search &hellip;', 'Tweaks Module: Meta Box Search Placeholder', GEDITORIAL_TEXTDOMAIN ),
 			),
@@ -150,16 +150,23 @@ class gEditorialTweaks extends gEditorialModuleCore
 
 			} else if ( 'edit' == $screen->base ) {
 
-				if ( $this->get_setting( 'group_taxonomies', FALSE ) ) {
+				add_filter( 'manage_taxonomies_for_'.$screen->post_type.'_columns', array( $this, 'manage_taxonomies_columns'), 10, 2 );
 
-					add_filter( 'manage_taxonomies_for_'.$screen->post_type.'_columns', array( $this, 'manage_taxonomies_columns'), 10, 2 );
+				add_filter( 'manage_'.$screen->post_type.'_posts_columns', array( $this, 'manage_posts_columns' ), 1, 1 );
+				add_action( 'manage_'.$screen->post_type.'_posts_custom_column', array( $this, 'posts_custom_column'), 10, 2 );
 
-					add_filter( 'manage_'.$screen->post_type.'_posts_columns', array( $this, 'manage_posts_columns' ), 1, 1 );
-					add_action( 'manage_'.$screen->post_type.'_posts_custom_column', array( $this, 'posts_custom_column'), 10, 2 );
+				// add_filter( 'manage_'.$screen->post_type.'_posts_columns', array( $this, 'manage_posts_columns_late' ), 999, 1 );
+				// add_filter( 'list_table_primary_column', array( $this, 'list_table_primary_column' ), 10, 2 );
 
-					// add_filter( 'manage_'.$screen->post_type.'_posts_columns', array( $this, 'manage_posts_columns_late' ), 999, 1 );
-					// add_filter( 'list_table_primary_column', array( $this, 'list_table_primary_column' ), 10, 2 );
-				}
+				// INTERNAL HOOKS
+				if ( $this->get_setting( 'group_taxonomies', FALSE ) )
+					add_action( 'geditorial_tweaks_column_row', array( $this, 'column_row_taxonomies' ) );
+
+				if ( $this->get_setting( 'page_template', FALSE ) )
+					add_action( 'geditorial_tweaks_column_row', array( $this, 'column_row_page_template' ), 50 );
+
+				if ( $this->get_setting( 'revision_count', FALSE ) )
+					add_action( 'geditorial_tweaks_column_row', array( $this, 'column_row_revisions' ), 100 );
 			}
 		}
 	}
@@ -177,16 +184,19 @@ class gEditorialTweaks extends gEditorialModuleCore
 		if ( ! count( $this->taxonomies() ) )
 			return $posts_columns;
 
+		if ( ! has_action( 'geditorial_tweaks_column_row' ) )
+			return $posts_columns;
+
 		$new   = array();
 		$type  = gEditorialWordPress::currentPostType( 'post' );
-		$title = $this->get_string( 'group_taxes_column_title', $type, 'misc' );
+		$title = $this->get_column_title( 'rows', $type );
 		$added = FALSE;
 
 		foreach ( $posts_columns as $key => $value ) {
 
 			if ( ( 'comments' == $key && ! $added )
 				|| ( 'date' == $key && ! $added ) ) {
-					$new['geditorial-tweaks-group_taxes'] = $title;
+					$new['geditorial-tweaks-rows'] = $title;
 					$added = TRUE;
 			}
 
@@ -194,7 +204,7 @@ class gEditorialTweaks extends gEditorialModuleCore
 		}
 
 		if ( ! $added )
-			$new['geditorial-tweaks-group_taxes'] = $title;
+			$new['geditorial-tweaks-rows'] = $title;
 
 		return $new;
 	}
@@ -207,7 +217,7 @@ class gEditorialTweaks extends gEditorialModuleCore
 		foreach ( $posts_columns as $key => $value )
 
 			if ( 'title' == $key )
-				$new['geditorial-tweaks-title'] = $this->get_string( 'title_column_title', gEditorialWordPress::currentPostType( 'post' ), 'misc' );
+				$new['geditorial-tweaks-title'] = $this->get_column_title( 'title', gEditorialWordPress::currentPostType( 'post' ) );
 
 			else
 				$new[$key] = $value;
@@ -236,85 +246,93 @@ class gEditorialTweaks extends gEditorialModuleCore
 				// echo $wp_list_table->handle_row_actions( $post, 'title', $wp_list_table->get_primary_column_name() );
 
 			break;
-			case 'geditorial-tweaks-group_taxes' :
+			case 'geditorial-tweaks-rows' :
 
 				echo '<div class="geditorial-admin-wrap-column -tweaks">';
+					do_action( 'geditorial_tweaks_column_row', $post );
+				echo '</div>';
 
-				$taxonomies = get_object_taxonomies( $post->post_type );
+			break;
+		}
+	}
 
-				foreach ( $this->taxonomies() as $taxonomy ) {
+	public function column_row_taxonomies( $post )
+	{
+		$taxonomies = get_object_taxonomies( $post->post_type );
 
-					if ( ! in_array( $taxonomy, $taxonomies ) )
-						continue;
+		foreach ( $this->taxonomies() as $taxonomy ) {
 
-					$before = '<div class="-row tweaks-'.$taxonomy.'">';
+			if ( ! in_array( $taxonomy, $taxonomies ) )
+				continue;
 
-					if ( $icon = $this->get_string( 'icon', $taxonomy, 'taxonomies', 'tag' ) )
-						$before .= gEditorialHTML::tag( 'a', array(
-							'href'   => gEditorialWordPress::getEditTaxLink( $taxonomy ),
-							'title'  => $this->get_string( 'title', $taxonomy, 'taxonomies', $taxonomy ),
-							'class'  => array( '-icon', '-link' ),
-							'target' => '_blank',
-						), '<span class="dashicons dashicons-'.$icon.'"></span>' );
+			$before = '<div class="-row tweaks-'.$taxonomy.'">';
 
-					gEditorialHelper::getTermsEditRow( $post_id,
-						$post->post_type, $taxonomy, $before, '</div>' );
-				}
+			if ( $icon = $this->get_string( 'icon', $taxonomy, 'taxonomies', 'tag' ) )
+				$before .= gEditorialHTML::tag( 'a', array(
+					'href'   => gEditorialWordPress::getEditTaxLink( $taxonomy ),
+					'title'  => $this->get_string( 'title', $taxonomy, 'taxonomies', $taxonomy ),
+					'class'  => array( '-icon', '-link' ),
+					'target' => '_blank',
+				), '<span class="dashicons dashicons-'.$icon.'"></span>' );
 
-				if ( $this->get_setting( 'page_template', FALSE )
-					&& ! empty( $post->page_template )
-					&& 'default' != $post->page_template ) {
+			gEditorialHelper::getTermsEditRow( $post->ID,
+				$post->post_type, $taxonomy, $before, '</div>' );
+		}
+	}
 
-					if ( ! isset( $this->page_templates ) )
-						$this->page_templates = array_flip( get_page_templates( $post ) );
+	public function column_row_page_template( $post )
+	{
+		if ( ! empty( $post->page_template )
+			&& 'default' != $post->page_template ) {
 
-					echo '<div class="-row tweaks-page-template">';
+			if ( ! isset( $this->page_templates ) )
+				$this->page_templates = array_flip( get_page_templates( $post ) );
 
-						echo '<span class="-icon" title="'
-							.esc_attr_x( 'Page Template', 'Tweaks Module: Row Icon Title', GEDITORIAL_TEXTDOMAIN )
-							.'"><span class="dashicons dashicons-admin-page"></span></span>';
+			echo '<div class="-row tweaks-page-template">';
 
-						if ( ! empty( $this->page_templates[$post->page_template] ) )
-							echo '<span title="'.esc_attr( $post->page_template ).'">'
-								.esc_html( $this->page_templates[$post->page_template] ).'</span>';
-						else
-							echo '<span>'.esc_html( $post->page_template ).'</span>';
+				echo '<span class="-icon" title="'
+					.esc_attr_x( 'Page Template', 'Tweaks Module: Row Icon Title', GEDITORIAL_TEXTDOMAIN )
+					.'"><span class="dashicons dashicons-admin-page"></span></span>';
 
-					echo '</div>';
-				}
+				if ( ! empty( $this->page_templates[$post->page_template] ) )
+					echo '<span title="'.esc_attr( $post->page_template ).'">'
+						.esc_html( $this->page_templates[$post->page_template] ).'</span>';
+				else
+					echo '<span>'.esc_html( $post->page_template ).'</span>';
 
-				if ( $this->get_setting( 'revision_count', FALSE )
-				 	&& wp_revisions_enabled( $post ) ) {
+			echo '</div>';
+		}
+	}
 
-					$revisions = wp_get_post_revisions( $post_id, array( 'check_enabled' => FALSE ) );
-					$count     = count( $revisions );
-					$authors   = array_unique( array_map( function( $r ){
-						return $r->post_author;
-					}, $revisions ) );
+	public function column_row_revisions( $post )
+	{
+		if ( wp_revisions_enabled( $post ) ) {
 
-					if ( $count ) {
+			$revisions = wp_get_post_revisions( $post->ID, array( 'check_enabled' => FALSE ) );
+			$count     = count( $revisions );
+			$authors   = array_unique( array_map( function( $r ){
+				return $r->post_author;
+			}, $revisions ) );
 
-						$edit = current_user_can( 'edit_post', key( $revisions ) );
+			if ( $count ) {
 
-						echo '<div class="-row tweaks-revision-count">';
+				$edit = current_user_can( 'edit_post', key( $revisions ) );
 
-							echo '<span class="-icon" title="'
-								.esc_attr_x( 'Revisions', 'Tweaks Module: Row Icon Title', GEDITORIAL_TEXTDOMAIN )
-								.'"><span class="dashicons dashicons-backup"></span></span>';
+				echo '<div class="-row tweaks-revision-count">';
 
-							echo gEditorialHTML::tag( ( $edit ? 'a' : 'span' ), array(
-								'href'  => $edit ? get_edit_post_link( key( $revisions ) ) : FALSE,
-								'title' => $edit ? _x( 'View the last revision', 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ) : FALSE,
-							), sprintf( _nx( '%s Revision', '%s Revisions', $count, 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ), number_format_i18n( $count ) ) );
+					echo '<span class="-icon" title="'
+						.esc_attr_x( 'Revisions', 'Tweaks Module: Row Icon Title', GEDITORIAL_TEXTDOMAIN )
+						.'"><span class="dashicons dashicons-backup"></span></span>';
 
-							gEditorialHelper::getAuthorsEditRow( $authors, $post->post_type, ' <span class="-authors">(', ')</span>' );
+					echo gEditorialHTML::tag( ( $edit ? 'a' : 'span' ), array(
+						'href'  => $edit ? get_edit_post_link( key( $revisions ) ) : FALSE,
+						'title' => $edit ? _x( 'View the last revision', 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ) : FALSE,
+					), sprintf( _nx( '%s Revision', '%s Revisions', $count, 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ), number_format_i18n( $count ) ) );
 
-						echo '</div>';
-					}
-				}
+					gEditorialHelper::getAuthorsEditRow( $authors, $post->post_type, ' <span class="-authors">(', ')</span>' );
 
 				echo '</div>';
-			break;
+			}
 		}
 	}
 
