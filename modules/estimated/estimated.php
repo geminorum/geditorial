@@ -46,6 +46,7 @@ class gEditorialEstimated extends gEditorialModuleCore
 					),
 				),
 				'insert_content',
+				'insert_priority',
 				array(
 					'field'       => 'min_words',
 					'type'        => 'number',
@@ -75,9 +76,11 @@ class gEditorialEstimated extends gEditorialModuleCore
 		if ( ! is_admin() ) {
 
 			if ( 'none' != $this->get_setting( 'insert_content', 'none' ) )
-				add_filter( 'the_content', array( $this, 'the_content' ), 22 );
+				add_filter( 'the_content', array( $this, 'the_content' ),
+					$this->get_setting( 'insert_priority', 22 ) );
 			else
-				add_action( 'gnetwork_themes_content_before', array( $this, 'content_before' ), 60 );
+				add_action( 'gnetwork_themes_content_before', array( $this, 'content_before' ),
+					$this->get_setting( 'insert_priority', 60 ) );
 
 			$this->enqueue_styles();
 		}
