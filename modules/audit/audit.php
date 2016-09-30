@@ -138,7 +138,7 @@ class gEditorialAudit extends gEditorialModuleCore
 					$query['author'] = $user_id;
 
 				$text = vsprintf( '<span>%3$s</span> %1$s (%2$s)', array(
-					gEditorialHelper::getNooped( $count, $all[$type] ),
+					gEditorialHelper::noopedCount( $count, $all[$type] ),
 					$name,
 					number_format_i18n( $count ),
 				) );

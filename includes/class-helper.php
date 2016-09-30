@@ -327,14 +327,25 @@ class gEditorialHelper extends gEditorialBaseCore
 		return $filtered ? apply_filters( 'geditorial_default_calendars', $calendars ) : $calendars;
 	}
 
-	public static function getNooped( $count, $nooped, $singular = NULL )
+	public function nooped( $count, $nooped )
 	{
-		$rule = _x( '%1$s', 'Module Helper: Nooped String', GEDITORIAL_TEXTDOMAIN );
+		if ( ! empty( $nooped['domain'] ) )
+			$nooped['domain'] = GEDITORIAL_TEXTDOMAIN;
 
-		if ( is_array( $nooped ) )
-			return sprintf( $rule, ( 1 == $count ? $nooped['singular'] : $nooped['plural'] ), $nooped['singular'] );
+		if ( empty( $nooped['context'] ) )
+			return _n( $nooped['singular'], $nooped['plural'], $count, $nooped['domain'] );
 		else
-			return sprintf( $rule, ( 1 == $count ? $singular : $nooped ), $singular );
+			return _nx( $nooped['singular'], $nooped['plural'], $count, $nooped['context'], $nooped['domain'] );
+	}
+
+	public static function noopedCount( $count, $nooped )
+	{
+		$rule = _x( '%2$s', 'Module Helper: Nooped Count', GEDITORIAL_TEXTDOMAIN );
+
+		$singular = self::nooped( 1, $nooped );
+		$plural   = self::nooped( $count, $nooped );
+
+		return sprintf( $rule, $singular, $plural );
 	}
 
 	private static function getStringsFromName( $name )

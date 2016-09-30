@@ -786,14 +786,9 @@ class gEditorialModuleCore extends gEditorialBaseCore
 		return $noop;
 	}
 
-	public function nooped( $constant_key, $count, $domain = GEDITORIAL_TEXTDOMAIN )
+	public function nooped( $constant_key, $count )
 	{
-		$nooped = $this->get_noop( $constant_key );
-
-		if ( $nooped['context'] )
-			return _nx( $nooped['singular'], $nooped['plural'], $count, $nooped['context'], $domain );
-		else
-			return _n( $nooped['singular'], $nooped['plural'], $count, $domain );
+		return gEditorialHelper::nooped( $count, $this->get_noop( $constant_key ) );
 	}
 
 	public function constant( $key, $default = FALSE )
@@ -1868,7 +1863,7 @@ class gEditorialModuleCore extends gEditorialBaseCore
 			return FALSE;
 
 		$format = current_user_can( $edit_cap ) ? '<a class="geditorial-glance-item -post -posttype-'.$posttype.'" href="edit.php?post_type=%3$s">%1$s %2$s</a>' : '%1$s %2$s';
-		$text   = gEditorialHelper::getNooped( $posts->publish, $this->nooped( $posttype_constant_key, $posts->publish ), $this->nooped( $posttype_constant_key, 1 ) );
+		$text   = gEditorialHelper::noopedCount( $posts->publish, $this->get_noop( $posttype_constant_key ) );
 
 		return sprintf( $format, number_format_i18n( $posts->publish ), $text, $posttype );
 	}
@@ -1882,7 +1877,7 @@ class gEditorialModuleCore extends gEditorialBaseCore
 			return FALSE;
 
 		$format = current_user_can( $edit_cap ) ? '<a class="geditorial-glance-item -tax -taxonomy-'.$taxonomy.'" href="edit-tags.php?taxonomy=%3$s">%1$s %2$s</a>' : '%1$s %2$s';
-		$text   = gEditorialHelper::getNooped( $terms, $this->nooped( $tax_constant_key, $terms ), $this->nooped( $tax_constant_key, 1 ) );
+		$text   = gEditorialHelper::noopedCount( $terms, $this->get_noop( $tax_constant_key ) );
 
 		return sprintf( $format, number_format_i18n( $terms ), $text, $taxonomy );
 	}
