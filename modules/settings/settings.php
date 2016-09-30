@@ -426,8 +426,8 @@ class gEditorialSettings extends gEditorialModuleCore
 			if ( isset( $current_module->intro ) && $current_module->intro )
 				echo wpautop( $current_module->intro );
 
-			if ( method_exists( $gEditorial->{$current_module->name}, 'intro_after' ) )
-				$gEditorial->{$current_module->name}->intro_after();
+			if ( method_exists( $gEditorial->{$current_module->name}, 'settings_intro_after' ) )
+				$gEditorial->{$current_module->name}->settings_intro_after( $current_module );
 
 			echo '<div class="clear"></div>';
 		echo '</div>';
