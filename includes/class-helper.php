@@ -327,7 +327,7 @@ class gEditorialHelper extends gEditorialBaseCore
 		return $filtered ? apply_filters( 'geditorial_default_calendars', $calendars ) : $calendars;
 	}
 
-	public function nooped( $count, $nooped )
+	public static function nooped( $count, $nooped )
 	{
 		if ( ! empty( $nooped['domain'] ) )
 			$nooped['domain'] = GEDITORIAL_TEXTDOMAIN;
