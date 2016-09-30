@@ -114,17 +114,16 @@ class gEditorialModuleCore extends gEditorialBaseCore
 
 	public function _after_setup_theme()
 	{
-		$this->settings  = apply_filters( 'geditorial_'.$this->module->name.'_settings',  $this->get_global_settings(),  $this->module );
 		$this->constants = apply_filters( 'geditorial_'.$this->module->name.'_constants', $this->get_global_constants(), $this->module );
-		$this->supports  = apply_filters( 'geditorial_'.$this->module->name.'_supports',  $this->get_global_supports(),  $this->module );
-		$this->fields    = apply_filters( 'geditorial_'.$this->module->name.'_fields',    $this->get_global_fields(),    $this->module );
+		$this->supports  = apply_filters( 'geditorial_'.$this->module->name.'_supports', $this->get_global_supports(), $this->module );
+		$this->fields    = apply_filters( 'geditorial_'.$this->module->name.'_fields', $this->get_global_fields(), $this->module );
 	}
 
-	protected function get_global_settings()  { return array(); }
+	protected function get_global_settings() { return array(); }
 	protected function get_global_constants() { return array(); }
-	protected function get_global_strings()   { return array(); }
-	protected function get_global_supports()  { return array(); }
-	protected function get_global_fields()    { return array(); }
+	protected function get_global_strings() { return array(); }
+	protected function get_global_supports() { return array(); }
+	protected function get_global_fields() { return array(); }
 
 	protected function settings_help_tabs()
 	{
@@ -865,16 +864,16 @@ class gEditorialModuleCore extends gEditorialBaseCore
 
 	public function is_register_settings( $page )
 	{
-		if ( isset( $this->settings ) && $page == $this->module->settings )
-			return TRUE;
-
-		return FALSE;
+		return $page == $this->module->settings;
 	}
 
 	public function register_settings( $page = NULL )
 	{
 		if ( ! $this->is_register_settings( $page ) )
 			return;
+
+		// here to skip the unnecessaries!
+		$this->settings = apply_filters( 'geditorial_'.$this->module->name.'_settings', $this->get_global_settings(), $this->module );
 
 		foreach ( $this->settings as $section_suffix => $fields ) {
 			if ( is_array( $fields ) ) {
