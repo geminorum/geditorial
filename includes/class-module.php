@@ -878,7 +878,13 @@ class gEditorialModuleCore extends gEditorialBaseCore
 			if ( is_array( $fields ) ) {
 
 				$section = $this->module->group.$section_suffix;
-				add_settings_section( $section, FALSE, '__return_false', $this->module->group );
+
+				if ( method_exists( $this, 'settings_section'.$section_suffix ) )
+					$callback = array( $this, 'settings_section'.$section_suffix );
+				else
+					$callback = '__return_false';
+
+				add_settings_section( $section, FALSE, $callback, $this->module->group );
 
 				foreach ( $fields as $field ) {
 
