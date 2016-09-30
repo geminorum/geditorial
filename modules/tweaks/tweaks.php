@@ -49,31 +49,31 @@ class gEditorialTweaks extends gEditorialModuleCore
 					'field'       => 'group_taxonomies',
 					'title'       => _x( 'Group Taxonomies', 'Tweaks Module: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Group selected taxonomies on selected post type edit pages', 'Tweaks Module: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-					'default'     => '0',
 				),
 				array(
 					'field'       => 'revision_count',
 					'title'       => _x( 'Revision Count', 'Tweaks Module: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Displays revision summary. Needs Group Taxonomies enabled.', 'Tweaks Module: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-					'default'     => '0',
+					'description' => _x( 'Displays revision summary of the post. Needs Group Taxonomies enabled.', 'Tweaks Module: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+				),
+				array(
+					'field'       => 'page_template',
+					'title'       => _x( 'Page Template', 'Tweaks Module: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Displays the template used for the post. Needs Group Taxonomies enabled.', 'Tweaks Module: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 				),
 				array(
 					'field'       => 'category_search',
 					'title'       => _x( 'Category Search', 'Tweaks Module: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Replaces the category selector to include searching categories', 'Tweaks Module: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-					'default'     => '0',
 				),
 				array(
 					'field'       => 'checklist_tree',
 					'title'       => _x( 'Checklist Tree', 'Tweaks Module: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Preserves the category hierarchy on the post editing screen', 'Tweaks Module: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-					'default'     => '0',
 				),
 				array(
 					'field'       => 'excerpt_count',
 					'title'       => _x( 'Excerpt Count', 'Tweaks Module: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Display word count for excerpt textareas', 'Tweaks Module: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-					'default'     => '0',
 				),
 			),
 		);
@@ -259,6 +259,28 @@ class gEditorialTweaks extends gEditorialModuleCore
 
 					gEditorialHelper::getTermsEditRow( $post_id,
 						$post->post_type, $taxonomy, $before, '</div>' );
+				}
+
+				if ( $this->get_setting( 'page_template', FALSE )
+					&& ! empty( $post->page_template )
+					&& 'default' != $post->page_template ) {
+
+					if ( ! isset( $this->page_templates ) )
+						$this->page_templates = array_flip( get_page_templates( $post ) );
+
+					echo '<div class="-row tweaks-page-template">';
+
+						echo '<span class="-icon" title="'
+							.esc_attr_x( 'Page Template', 'Tweaks Module: Row Icon Title', GEDITORIAL_TEXTDOMAIN )
+							.'"><span class="dashicons dashicons-admin-page"></span></span>';
+
+						if ( ! empty( $this->page_templates[$post->page_template] ) )
+							echo '<span title="'.esc_attr( $post->page_template ).'">'
+								.esc_html( $this->page_templates[$post->page_template] ).'</span>';
+						else
+							echo '<span>'.esc_html( $post->page_template ).'</span>';
+
+					echo '</div>';
 				}
 
 				if ( $this->get_setting( 'revision_count', FALSE )
