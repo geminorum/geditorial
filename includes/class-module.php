@@ -335,7 +335,8 @@ class gEditorialModuleCore extends gEditorialBaseCore
 	public function register_settings_posttypes_option( $title = NULL )
 	{
 		if ( is_null( $title ) )
-			$title = _x( 'Enable for Post Types', 'Module Core', GEDITORIAL_TEXTDOMAIN );
+			$title = $this->get_string( 'post_types_title', 'post', 'settings',
+				_x( 'Enable for Post Types', 'Module Core', GEDITORIAL_TEXTDOMAIN ) );
 
 		$section = $this->module->group.'_posttypes';
 
@@ -351,7 +352,8 @@ class gEditorialModuleCore extends gEditorialBaseCore
 	public function register_settings_taxonomies_option( $title = NULL )
 	{
 		if ( is_null( $title ) )
-			$title = _x( 'Enable for Taxonomies', 'Module Core', GEDITORIAL_TEXTDOMAIN );
+			$title = $this->get_string( 'taxonomies_title', 'post', 'settings',
+				_x( 'Enable for Taxonomies', 'Module Core', GEDITORIAL_TEXTDOMAIN ) );
 
 		$section = $this->module->group.'_taxonomies';
 
