@@ -138,6 +138,11 @@ class gEditorialEstimated extends gEditorialModuleCore
 
 	public function content_before( $content, $posttypes = NULL )
 	{
+		global $page;
+
+		if ( 1 != $page )
+			return;
+
 		if ( ! is_singular( $this->post_types() ) )
 			return;
 
@@ -161,6 +166,11 @@ class gEditorialEstimated extends gEditorialModuleCore
 
 	public function the_content( $content )
 	{
+		global $page;
+
+		if ( 1 != $page )
+			return $content;
+
 		if ( $this->added )
 			return $content;
 
