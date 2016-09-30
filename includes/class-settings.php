@@ -85,12 +85,45 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 		return FALSE;
 	}
 
+	public static function priorityOptions( $format = TRUE )
+	{
+		return
+			array_reverse( self::range( -100, -1000, 100, $format ), TRUE ) +
+			array_reverse( self::range( -10, -100, 10, $format ), TRUE ) +
+			self::range( 0, 100, 10, $format ) +
+			self::range( 100, 1000, 100, $format );
+	}
+
+	public static function minutesOptions()
+	{
+		return array(
+			'5'    => _x( '5 Minutes', 'Settings: Option: Time in Minutes', GEDITORIAL_TEXTDOMAIN ),
+			'10'   => _x( '10 Minutes', 'Settings: Option: Time in Minutes', GEDITORIAL_TEXTDOMAIN ),
+			'15'   => _x( '15 Minutes', 'Settings: Option: Time in Minutes', GEDITORIAL_TEXTDOMAIN ),
+			'30'   => _x( '30 Minutes', 'Settings: Option: Time in Minutes', GEDITORIAL_TEXTDOMAIN ),
+			'60'   => _x( '60 Minutes', 'Settings: Option: Time in Minutes', GEDITORIAL_TEXTDOMAIN ),
+			'120'  => _x( '2 Hours', 'Settings: Option: Time in Minutes', GEDITORIAL_TEXTDOMAIN ),
+			'180'  => _x( '3 Hours', 'Settings: Option: Time in Minutes', GEDITORIAL_TEXTDOMAIN ),
+			'240'  => _x( '4 Hours', 'Settings: Option: Time in Minutes', GEDITORIAL_TEXTDOMAIN ),
+			'480'  => _x( '8 Hours', 'Settings: Option: Time in Minutes', GEDITORIAL_TEXTDOMAIN ),
+			'1440' => _x( '24 Hours', 'Settings: Option: Time in Minutes', GEDITORIAL_TEXTDOMAIN ),
+		);
+	}
+
 	public static function showOptionNone( $string = NULL )
 	{
 		if ( $string )
 			return sprintf( _x( '&mdash; Select %s &mdash;', 'Settings: Dropdown Select Option None', GEDITORIAL_TEXTDOMAIN ), $string );
 
 		return _x( '&mdash; Select &mdash;', 'Settings: Dropdown Select Option None', GEDITORIAL_TEXTDOMAIN );
+	}
+
+	public static function fieldSection( $title, $description = FALSE )
+	{
+		echo '<h3>'.$title.'</h3>';
+
+		if ( $description )
+			echo '<p class="description">'.$description.'</p>';
 	}
 
 	public static function infoP2P()
@@ -228,6 +261,18 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 		unset( $args['values'], $args['type'], $args['default'] );
 
 		return $args;
+	}
+
+	public static function getSetting_insert_priority( $section )
+	{
+		return array(
+			'field'       => 'insert_priority',
+			'type'        => 'priority',
+			'title'       => _x( 'Insert Priority', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+			'description' => _x( 'Priority of inserting buttons on the content.', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+			'default'     => 10,
+			'section'     => $section,
+		);
 	}
 
 	public static function getSetting_before_content( $section )

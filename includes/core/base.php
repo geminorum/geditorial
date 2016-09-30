@@ -978,4 +978,14 @@ class gEditorialBaseCore
 
 		return preg_match_all( "/\\p{L}[\\p{L}\\p{Mn}\\p{Pd}'\\x{2019}]*/u", $html, $matches );
 	}
+
+	public static function range( $start, $end, $step = 1, $format = TRUE )
+	{
+		$array = array();
+
+		foreach ( range( $start, $end, $step ) as $number )
+			$array[$number] = $format ? number_format_i18n( $number ) : $number;
+
+		return $array;
+	}
 }

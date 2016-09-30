@@ -1238,6 +1238,12 @@ class gEditorialModuleCore extends gEditorialBaseCore
 			return $default;
 	}
 
+	public function update_option( $key, $value )
+	{
+		global $gEditorial;
+		return $gEditorial->update_module_option( $this->module->name, $key, $value );
+	}
+
 	public function set_cookie( $array, $append = TRUE, $expire = '+ 365 day' )
 	{
 		if ( $append ) {
