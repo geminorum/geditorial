@@ -42,6 +42,7 @@ class gEditorialHeadings extends gEditorialModuleCore
 					'default'     => '2',
 				),
 				'insert_content_before',
+				'insert_priority',
 			),
 			'posttypes_option' => 'posttypes_option',
 		);
@@ -57,7 +58,8 @@ class gEditorialHeadings extends gEditorialModuleCore
 			add_filter( 'the_content', array( $this, 'the_content' ) );
 
 			if ( $this->get_setting( 'insert_content_before', FALSE ) )
-				add_action( 'gnetwork_themes_content_before', array( $this, 'content_before' ), -25 );
+				add_action( 'gnetwork_themes_content_before', array( $this, 'content_before' ),
+					$this->get_setting( 'insert_priority', -25 ) );
 
 			$this->enqueue_styles();
 		}
