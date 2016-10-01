@@ -159,7 +159,7 @@ class gEditorialEstimated extends gEditorialModuleCore
 
 		$pref = $this->get_setting( 'prefix', _x( 'Estimated read time:', 'Estimated Module', GEDITORIAL_TEXTDOMAIN ) );
 
-		echo '<div class="geditorial-wrap estimated -before">';
+		echo '<div class="geditorial-wrap -estimated -before">';
 			echo ( $pref ? $pref.' ' : '' ).$this->get_time_estimated( $wordcount, TRUE );
 		echo '</div>';
 	}
@@ -192,7 +192,7 @@ class gEditorialEstimated extends gEditorialModuleCore
 
 		$place = $this->get_setting( 'insert_content', 'none' );
 		$pref  = $this->get_setting( 'prefix', _x( 'Estimated read time:', 'Estimated Module', GEDITORIAL_TEXTDOMAIN ) );
-		$html  = '<div class="geditorial-wrap estimated -'.$place.'">'.( $pref ? $pref.' ' : '' ).$this->get_time_estimated( $wordcount, TRUE ).'</div>';
+		$html  = '<div class="geditorial-wrap -estimated -'.$place.'">'.( $pref ? $pref.' ' : '' ).$this->get_time_estimated( $wordcount, TRUE ).'</div>';
 
 		$this->added = TRUE;
 
