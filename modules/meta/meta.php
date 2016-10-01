@@ -173,7 +173,7 @@ class gEditorialMeta extends gEditorialModuleCore
 		$this->add_post_type_fields( $this->constant( 'page_cpt' ) );
 
 		if ( ! is_admin() )
-			add_action( 'gnetwork_themes_content_before', array( $this, 'content_before' ), 90 );
+			add_action( 'gnetwork_themes_content_before', array( $this, 'content_before' ), 50 );
 	}
 
 	public function current_screen( $screen )
@@ -602,7 +602,10 @@ class gEditorialMeta extends gEditorialModuleCore
 
 	public function content_before( $content, $posttypes = NULL )
 	{
-		if ( is_singular( $this->post_types() )
+		global $page;
+
+		if ( 1 == $page
+			&& is_singular( $this->post_types() )
 			&& in_the_loop() && is_main_query() )
 				gEditorialMetaTemplates::gmeta_lead(
 					'<div class="geditorial-wrap -meta -before entry-lead">',
