@@ -132,12 +132,10 @@ class gEditorialMetaTemplates extends gEditorialTemplateCore
 
 		if ( $title && $url || ! $url && $title != $args['title_default'] ) {
 			$html = $args['before'].gEditorialHTML::tag( ( $url ? 'a' : 'span' ), array(
-				'href'        => $url ? esc_url( $url ) : FALSE,
-				'title'       => $args['title_default'], // FIXME: default title attr!
-				'rel'         => 'source',
-				'data' => array(
-					'toggle' => 'tooltip',
-				),
+				'href'  => $url ? esc_url( $url ) : FALSE,
+				'title' => $args['title_default'], // FIXME: default title attr!
+				'rel'   => $url ? 'nofollow' : 'source', // https://support.google.com/webmasters/answer/96569?hl=en
+				'data'  => array( 'toggle' => 'tooltip' ),
 			), $title ).$args['after'];
 		} else {
 			$html = $args['default'];
