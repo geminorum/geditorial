@@ -330,7 +330,7 @@ class gEditorialWordPress extends gEditorialBaseCore
 			), $extra ), admin_url( 'edit-tags.php' ) );
 	}
 
-	public function getPostTypeEditLink( $post_type, $user_id = 0, $extra = array() )
+	public static function getPostTypeEditLink( $post_type, $user_id = 0, $extra = array() )
 	{
 		$query = array( 'post_type' => $post_type );
 
@@ -340,7 +340,7 @@ class gEditorialWordPress extends gEditorialBaseCore
 		return add_query_arg( array_merge( $query, $extra ), admin_url( 'edit.php' ) );
 	}
 
-	public function getPostEditLink( $post_id, $extra = array() )
+	public static function getPostEditLink( $post_id, $extra = array() )
 	{
 		return add_query_arg( array_merge( array( 'post' => $post_id, 'action' => 'edit' ), $extra ), admin_url( 'post.php' ) );
 	}
