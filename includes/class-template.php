@@ -31,11 +31,14 @@ class gEditorialTemplateCore extends gEditorialBaseCore
 		return $parsedown->text( $content );
 	}
 
-	// EDITED: 5/5/2016, 12:04:55 AM
+	// EDITED: 10/1/2016, 5:32:32 PM
 	public static function shortcodeWrap( $html, $suffix = FALSE, $args = array(), $block = TRUE )
 	{
-		if ( isset( $args['wrap'] ) && ! $args['wrap'] )
-			return $html;
+		$before = empty( $args['before'] ) ? '' : $args['before'];
+		$after  = empty( $args['after'] ) ? '' : $args['after'];
+
+		if ( empty( $args['wrap'] ) )
+			return $before.$html.$after;
 
 		$classes = array( 'geditorial-wrap-shortcode' );
 
@@ -45,7 +48,10 @@ class gEditorialTemplateCore extends gEditorialBaseCore
 		if ( isset( $args['context'] ) && $args['context'] )
 			$classes[] = 'context-'.$args['context'];
 
-		return "\n".gEditorialHTML::tag( $block ? 'div' : 'span', array( 'class' => $classes ), $html )."\n";
+		if ( $after )
+			return $before.gEditorialHTML::tag( $block ? 'div' : 'span', array( 'class' => $classes ), $html ).$after;
+
+		return gEditorialHTML::tag( $block ? 'div' : 'span', array( 'class' => $classes ), $before.$html );
 	}
 
 	// EDITED: 5/5/2016, 12:05:15 AM
