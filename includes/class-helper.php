@@ -308,6 +308,35 @@ class gEditorialHelper extends gEditorialBaseCore
 		), sprintf( _x( 'Word count: %s', 'Module Helper', GEDITORIAL_TEXTDOMAIN ), '<span class="-words">0</span>' ) );
 	}
 
+	public static function postModified( $post = NULL, $attr = FALSE )
+	{
+		$time   = get_post_modified_time( 'U', FALSE, $post, FALSE );
+		$format = _x( 'l, F j, Y', 'Module Helper: Post Modified', GEDITORIAL_TEXTDOMAIN );
+		$title  = _x( 'Last Modified on %s', 'Module Helper: Post Modified', GEDITORIAL_TEXTDOMAIN );
+
+		return $attr
+			? sprintf( $title, date_i18n( $format, $time ) )
+			: gEditorialDate::htmlDateTime( $time, $format, self::humanTimeDiff( $time, FALSE ) );
+	}
+
+	public static function humanTimeDiff( $time, $round = TRUE, $format = NULL )
+	{
+		$ago = _x( '%s ago', 'Module Helper: Human Time Diff', GEDITORIAL_TEXTDOMAIN );
+
+		if ( ! $round )
+			return sprintf( $ago, human_time_diff( $time ) );
+
+		$time_diff = time() - $time;
+
+		if ( $time_diff > 0 && $time_diff < DAY_IN_SECONDS )
+			return sprintf( $ago, human_time_diff( $time ) );
+
+		if ( is_null( $format ) )
+			$format = _x( 'Y/m/d', 'Module Helper: Human Time Diff', GEDITORIAL_TEXTDOMAIN );
+
+		return date_i18n( $format, $time );
+	}
+
 	// @REF: [Calendar Classes - ICU User Guide](http://userguide.icu-project.org/datetime/calendar)
 	public static function getDefualtCalendars( $filtered = FALSE )
 	{

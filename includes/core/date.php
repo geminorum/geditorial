@@ -13,4 +13,12 @@ class gEditorialDate extends gEditorialBaseCore
 			$end->format( $format ),
 		);
 	}
+
+	public static function htmlDateTime( $time, $format = 'l, F j, Y', $title = FALSE )
+	{
+		return gEditorialHTML::tag( 'time', array(
+			'datetime' => date( 'c', $time ),
+			'title'    => $title,
+		), date_i18n( $format, $time ) );
+	}
 }
