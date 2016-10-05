@@ -104,15 +104,8 @@ class gEditorialHelper extends gEditorialBaseCore
 		$list = array();
 
 		foreach ( $authors as $author )
-			if ( $author_data = get_user_by( 'id', $author ) )
-				$list[] = gEditorialHTML::tag( 'a', array(
-					'href' => add_query_arg( array(
-						'post_type' => $post_type,
-						'author'    => $author,
-					), 'edit.php' ),
-					'title' => $author_data->user_login,
-					'class' => '-author',
-				), esc_html( $author_data->display_name ) );
+			if ( $html = gEditorialWordPress::getAuthorEditHTML( $post_type, $author ) )
+				$list[] = $html;
 
 		echo $before.join( _x( ', ', 'Module Helper: Author Seperator', GEDITORIAL_TEXTDOMAIN ), $list ).$after;
 	}

@@ -344,4 +344,19 @@ class gEditorialWordPress extends gEditorialBaseCore
 	{
 		return add_query_arg( array_merge( array( 'post' => $post_id, 'action' => 'edit' ), $extra ), admin_url( 'post.php' ) );
 	}
+
+	public static function getAuthorEditHTML( $post_type, $author, $extra = array() )
+	{
+		if ( $author_data = get_user_by( 'id', $author ) )
+			return gEditorialHTML::tag( 'a', array(
+				'href' => add_query_arg( array_merge( array(
+					'post_type' => $post_type,
+					'author'    => $author,
+				), $extra ), admin_url( 'edit.php' ) ),
+				'title' => $author_data->user_login,
+				'class' => '-author',
+			), esc_html( $author_data->display_name ) );
+
+		return FALSE;
+	}
 }
