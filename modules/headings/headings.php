@@ -70,12 +70,19 @@ class gEditorialHeadings extends gEditorialModuleCore
 		if ( ! is_singular( $this->post_types() ) || '' == $content )
 			return $content;
 
+		// FIXME: temp: skip on paginated posts
+		global $pages;
+		if ( 1 != count( $pages ) )
+			return $content;
+
 		$pattern = "/<h([0-9])(.*?)>(.*?)<\/h([0-9])>/imu";
 		return preg_replace_callback( $pattern, array( $this, 'toc_callback' ), $content );
 	}
 
 	public function toc_callback( $match )
 	{
+		global $page;
+
 		$title = trim( $match[3] );
 
 		if ( ! $title )
@@ -101,6 +108,7 @@ class gEditorialHeadings extends gEditorialModuleCore
 			'slug'  => $slug,
 			'title' => $title,
 			'niche' => $match[1],
+			'page'  => $page,
 		);
 
 		$html = gEditorialHTML::tag( 'a', array(
@@ -129,6 +137,8 @@ class gEditorialHeadings extends gEditorialModuleCore
 
 	public function render_headings( $title = NULL, $class = '' )
 	{
+		global $page;
+
 		if ( count( $this->toc ) < $this->get_setting( 'min_headings', '2' ) )
 			return;
 
@@ -139,6 +149,9 @@ class gEditorialHeadings extends gEditorialModuleCore
 		$last = FALSE;
 
 		foreach ( $this->toc as $heading ) {
+
+			if ( $page == $heading['page'] || 1 == $heading['page'] )
+				$heading['page'] = FALSE;
 
 			if ( ! $last || $heading['niche'] <= $last['niche'] ) {
 				$tree[] = $heading;
@@ -157,7 +170,11 @@ class gEditorialHeadings extends gEditorialModuleCore
 			if ( $title )
 				echo gEditorialHTML::tag( 'h3', array( 'class' => '-toc-title' ), $title );
 
-			gEditorialHTML::menu( $tree );
+			gEditorialHTML::menu( $tree, function(){
+				if ( FALSE === $item['page'] )
+					return gEditorialHTML::tag( 'a', array( 'href' => '#'.$item['slug'] ), $item['title'] );
+				return rtrim( _wp_link_page( $item['page'] ), '">').'#'.$item['slug'].'">'.$item['title'].'</a>';
+			} );
 
 		echo '</div>';
 	}
