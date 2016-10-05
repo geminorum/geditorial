@@ -1827,6 +1827,29 @@ class gEditorialModuleCore extends gEditorialBaseCore
 		return TRUE;
 	}
 
+	// for ajax calls on quick edit
+	public function is_inline_save( $request, $constant_key = FALSE )
+	{
+		if ( empty( $request['action'] )
+			|| 'inline-save' != $request['action'] )
+				return FALSE;
+
+		if ( empty( $request['screen'] )
+			|| empty( $request['post_type'] ) )
+				return FALSE;
+
+		if ( is_array( $constant_key )
+			&& ! in_array( $request['post_type'], $constant_key ) )
+				return FALSE;
+
+		if ( $constant_key
+			&& ! is_array( $constant_key )
+			&& $request['post_type'] != $this->constant( $constant_key ) )
+				return FALSE;
+
+		return TRUE;
+	}
+
 	public function get_linked_term( $post_id, $posttype_constant_key, $tax_constant_key )
 	{
 		$term_id = get_post_meta( $post_id, '_'.$this->constant( $posttype_constant_key ).'_term_id', TRUE );
