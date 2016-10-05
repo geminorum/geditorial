@@ -213,7 +213,7 @@ class gEditorialEntry extends gEditorialModuleCore
 
 		foreach ( $posts_columns as $key => $value ) {
 
-			if ( 'title' == $key || 'geditorial-tweaks-title' == $key ) {
+			if ( 'title' == $key ) {
 
 				$new_columns['taxonomy-'.$section] = $this->get_column_title( 'section', 'entry_cpt' );
 				$new_columns['order'] = $this->get_column_title( 'order', 'entry_cpt' );

@@ -219,7 +219,7 @@ class gEditorialMeta extends gEditorialModuleCore
 
 	private function _edit_screen( $post_type )
 	{
-		add_filter( 'manage_posts_columns', array( $this, 'manage_posts_columns' ), 10, 2 );
+		add_filter( 'manage_posts_columns', array( $this, 'manage_posts_columns' ), 5, 2 );
 		add_action( 'manage_'.$post_type.'_posts_custom_column', array( $this, 'posts_custom_column'), 10, 2 );
 
 		add_action( 'quick_edit_custom_box', array( $this, 'quick_edit_custom_box' ), 10, 2 );
@@ -529,9 +529,10 @@ class gEditorialMeta extends gEditorialModuleCore
 
 		foreach ( $posts_columns as $key => $value ) {
 
-			$new[$key] = $value;
+			if ( 'author' != $key )
+				$new[$key] = $value;
 
-			if ( $key == 'title' )
+			if ( 'title' == $key )
 				$new['geditorial-meta'] = $this->get_column_title( 'meta', $post_type );
 		}
 
@@ -545,6 +546,7 @@ class gEditorialMeta extends gEditorialModuleCore
 
 		global $post;
 
+		$author = gEditorialWordPress::getAuthorEditHTML( $post->post_type, $post->post_author );
 		$fields = $this->post_type_fields( $post->post_type );
 
 		$rows = array(
@@ -560,15 +562,30 @@ class gEditorialMeta extends gEditorialModuleCore
 			if ( in_array( $field, $fields )
 				&& self::user_can( 'view', $field ) ) {
 
-				if ( $value = $this->get_postmeta( $post_id, $field, '' ) )
-					echo '<div class="-row meta-'.$field.'" title="'.
-						esc_attr( $this->get_string( $field, $post->post_type, 'titles', $field ) )
-						.'"><span class="-icon"><span class="dashicons dashicons-'.$icon.'"></span></span>'
-						.$value.'</div>';
+				if ( $value = $this->get_postmeta( $post_id, $field, '' ) ) {
+					echo '<div class="-row meta-'.$field.'" title="'
+						.esc_attr( $this->get_string( $field, $post->post_type, 'titles', $field ) ).'">';
+
+						echo '<span class="-icon"><span class="dashicons dashicons-'.$icon.'"></span></span>';
+						echo esc_html( $value );
+
+						if ( 'as' == $field && $author ) {
+							echo ' <small>('.$author.')</small>';
+							$author = FALSE;
+						}
+
+					echo '</div>';
+				}
 
 				echo '<div class="hidden geditorial-meta-'.$field.'-value">'.$value.'</div>';
 			}
 		}
+
+		if ( $author )
+			echo '<div class="-row meta-author" title="'
+				.esc_attr( $this->get_string( 'author', $post->post_type, 'titles', 'author' ) )
+				.'"><span class="-icon"><span class="dashicons dashicons-'.$rows['as'].'"></span></span>'
+				.$author.'</div>';
 
 		echo '</div>';
 	}
