@@ -293,11 +293,11 @@ class gEditorialSettings extends gEditorialModuleCore
 			echo '<tr><th scope="row">'._x( 'Empty Meta Fields', 'Settings Module', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
 
 				$this->do_settings_field( array(
-					'type'       => 'select',
-					'field'      => 'empty_module',
-					'values'     => $gEditorial->get_all_modules(),
-					'default'    => ( isset( $post['empty_module'] ) ? $post['empty_module'] : 'meta' ),
-					'name_group' => 'tools',
+					'type'         => 'select',
+					'field'        => 'empty_module',
+					'values'       => $gEditorial->get_all_modules(),
+					'default'      => ( isset( $post['empty_module'] ) ? $post['empty_module'] : 'meta' ),
+					'option_group' => 'tools',
 				) );
 
 				echo '<p class="submit">';
@@ -315,19 +315,19 @@ class gEditorialSettings extends gEditorialModuleCore
 				$live_tax = gEditorialHelper::getTaxonomies( 'name' );
 
 				$this->do_settings_field( array(
-					'type'       => 'select',
-					'field'      => 'dead_tax',
-					'values'     => array_diff_key( $all_tax, $live_tax ),
-					'default'    => ( isset( $post['dead_tax'] ) ? $post['dead_tax'] : 'post_tag' ),
-					'name_group' => 'tools',
+					'type'         => 'select',
+					'field'        => 'dead_tax',
+					'values'       => array_diff_key( $all_tax, $live_tax ),
+					'default'      => ( isset( $post['dead_tax'] ) ? $post['dead_tax'] : 'post_tag' ),
+					'option_group' => 'tools',
 				) );
 
 				$this->do_settings_field( array(
-					'type'       => 'select',
-					'field'      => 'live_tax',
-					'values'     => $live_tax,
-					'default'    => ( isset( $post['live_tax'] ) ? $post['live_tax'] : 'post_tag' ),
-					'name_group' => 'tools',
+					'type'         => 'select',
+					'field'        => 'live_tax',
+					'values'       => $live_tax,
+					'default'      => ( isset( $post['live_tax'] ) ? $post['live_tax'] : 'post_tag' ),
+					'option_group' => 'tools',
 				) );
 
 				echo '<p class="submit">';

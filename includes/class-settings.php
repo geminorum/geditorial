@@ -610,4 +610,646 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 
 		return $tabs;
 	}
+
+	public static function fieldType( $atts = array(), &$scripts )
+	{
+		$args = self::atts( array(
+			'title'        => '',
+			'label_for'    => '',
+			'type'         => 'enabled',
+			'field'        => FALSE,
+			'values'       => array(),
+			'exclude'      => '',
+			'none_title'   => NULL, // select option none title
+			'none_value'   => NULL, // select option none value
+			'filter'       => FALSE, // will use via sanitize
+			'callback'     => FALSE, // callable for `callback` type
+			'dir'          => FALSE,
+			'disabled'     => FALSE,
+			'readonly'     => FALSE,
+			'default'      => '',
+			'defaults'     => array(), // default value to ignore && override the saved
+			'description'  => isset( $atts['desc'] ) ? $atts['desc'] : '',
+			'before'       => '', // html to print before field
+			'after'        => '', // html to print after field
+			'field_class'  => '', // formally just class!
+			'class'        => '', // now used on wrapper
+			'option_group' => 'settings',
+			'option_base'  => 'geditorial',
+			'options'      => array(), // saved options
+			'id_attr'      => FALSE, // override
+			'name_attr'    => FALSE, // override
+			'step_attr'    => '1', // for number type
+			'min_attr'     => '0', // for number type
+			'rows_attr'    => '5', // for textarea type
+			'cols_attr'    => '45', // for textarea type
+			'placeholder'  => FALSE,
+			'constant'     => FALSE, // override value if constant defined & disabling
+			'data'         => array(), // data attr
+			'extra'        => array(), // extra args to pass to deeper generator
+			'wrap'         => FALSE,
+			'cap'          => NULL,
+
+			'string_disabled' => _x( 'Disabled', 'Settings', GEDITORIAL_TEXTDOMAIN ),
+			'string_enabled'  => _x( 'Enabled', 'Settings', GEDITORIAL_TEXTDOMAIN ),
+			'string_select'   => self::showOptionNone(),
+			'string_noaccess' => _x( 'You do not have access to change this option.', 'Settings', GEDITORIAL_TEXTDOMAIN ),
+		), $atts );
+
+		if ( $args['wrap'] ) {
+			if ( ! empty( $args['label_for'] ) )
+				echo '<tr class="'.$args['class'].'"><th scope="row"><label for="'.esc_attr( $args['label_for'] ).'">'.$args['title'].'</label></th><td>';
+			else
+				echo '<tr class="'.$args['class'].'"><th scope="row">'.$args['title'].'</th><td>';
+		}
+
+		if ( ! $args['field'] )
+			return;
+
+		$html    = '';
+		$value   = $args['default'];
+		$id      = $args['id_attr'] ? $args['id_attr'] : $args['option_base'].'-'.$args['option_group'].'-'.$args['field'];
+		$name    = $args['name_attr'] ? $args['name_attr'] : $args['option_base'].'['.$args['option_group'].']['.$args['field'].']';
+		$exclude = $args['exclude'] && ! is_array( $args['exclude'] ) ? array_filter( explode( ',', $args['exclude'] ) ) : array();
+
+		if ( isset( $args['options'][$args['field']] ) ) {
+			$value = $args['options'][$args['field']];
+
+			// override: using settings default instead of module's option
+			if ( isset( $args['defaults'][$args['field']] )
+				&& $value === $args['defaults'][$args['field']] )
+					$value = $args['default'];
+		}
+
+		if ( $args['constant'] && defined( $args['constant'] ) ) {
+			$value = constant( $args['constant'] );
+
+			$args['disabled'] = TRUE;
+			$args['after'] = '<code>'.$args['constant'].'</code>';
+		}
+
+		if ( is_null( $args['cap'] ) ) {
+
+			if ( in_array( $args['type'], array( 'role', 'cap', 'user' ) ) )
+				$args['cap'] = 'promote_users';
+			else
+				$args['cap'] = 'manage_options';
+		}
+
+		if ( ! current_user_can( $args['cap'] ) )
+			$args['type'] = 'noaccess';
+
+		if ( $args['before'] )
+			echo $args['before'].'&nbsp;';
+
+		switch ( $args['type'] ) {
+
+			case 'hidden' :
+
+				echo gEditorialHTML::tag( 'input', array(
+					'type'  => 'hidden',
+					'id'    => $id,
+					'name'  => $name,
+					'value' => $value,
+					'data'  => $args['data'],
+				) );
+
+				$args['description'] = FALSE;
+
+			break;
+			case 'enabled' :
+
+				$html = gEditorialHTML::tag( 'option', array(
+					'value'    => '0',
+					'selected' => '0' == $value,
+				), esc_html( empty( $args['values'][0] ) ? $args['string_disabled'] : $args['values'][0] ) );
+
+				$html .= gEditorialHTML::tag( 'option', array(
+					'value'    => '1',
+					'selected' => '1' == $value,
+				), esc_html( empty( $args['values'][1] ) ? $args['string_enabled'] : $args['values'][1] ) );
+
+				echo gEditorialHTML::tag( 'select', array(
+					'id'       => $id,
+					'name'     => $name,
+					'class'    => gEditorialHTML::class( $args['field_class'], '-type-enabled' ),
+					'disabled' => $args['disabled'],
+					'readonly' => $args['readonly'],
+					'dir'      => $args['dir'],
+					'data'     => $args['data'],
+				), $html );
+
+			break;
+			case 'text' :
+
+				if ( ! $args['field_class'] )
+					$args['field_class'] = 'regular-text';
+
+				if ( ! count( $args['dir'] ) )
+					$args['data'] = array( 'accept' => 'text' );
+
+				echo gEditorialHTML::tag( 'input', array(
+					'type'        => 'text',
+					'id'          => $id,
+					'name'        => $name,
+					'value'       => $value,
+					'class'       => $args['field_class'],
+					'placeholder' => $args['placeholder'],
+					'disabled'    => $args['disabled'],
+					'readonly'    => $args['readonly'],
+					'dir'         => $args['dir'],
+					'data'        => $args['data'],
+				) );
+
+			break;
+			case 'number' :
+
+				if ( ! $args['field_class'] )
+					$args['field_class'] = 'small-text';
+
+				if ( ! $args['dir'] )
+					$args['dir'] = 'ltr';
+
+				if ( ! count( $args['dir'] ) )
+					$args['data'] = array( 'accept' => 'number' );
+
+				echo gEditorialHTML::tag( 'input', array(
+					'type'        => 'number',
+					'id'          => $id,
+					'name'        => $name,
+					'value'       => $value,
+					'step'        => $args['step_attr'],
+					'min'         => $args['min_attr'],
+					'class'       => gEditorialHTML::class( $args['field_class'], '-type-number' ),
+					'placeholder' => $args['placeholder'],
+					'disabled'    => $args['disabled'],
+					'readonly'    => $args['readonly'],
+					'dir'         => $args['dir'],
+					'data'        => $args['data'],
+				) );
+
+			break;
+			case 'url' :
+
+				if ( ! $args['field_class'] )
+					$args['field_class'] = array( 'large-text', 'url-text' );
+
+				if ( ! $args['dir'] )
+					$args['dir'] = 'ltr';
+
+				if ( ! count( $args['dir'] ) )
+					$args['data'] = array( 'accept' => 'url' );
+
+				echo gEditorialHTML::tag( 'input', array(
+					'type'        => 'url',
+					'id'          => $id,
+					'name'        => $name,
+					'value'       => $value,
+					'class'       => $args['field_class'],
+					'placeholder' => $args['placeholder'],
+					'disabled'    => $args['disabled'],
+					'readonly'    => $args['readonly'],
+					'dir'         => $args['dir'],
+					'data'        => $args['data'],
+				) );
+
+			break;
+			case 'checkbox' :
+
+				if ( count( $args['values'] ) ) {
+
+					if ( ! is_null( $args['none_title'] ) ) {
+
+						$html = gEditorialHTML::tag( 'input', array(
+							'type'     => 'checkbox',
+							'id'       => $id.( is_null( $args['none_value'] ) ? '' : '-'.$args['none_value'] ),
+							'name'     => $name.( is_null( $args['none_value'] ) ? '' : '-'.$args['none_value'] ),
+							'value'    => is_null( $args['none_value'] ) ? '1' : $args['none_value'],
+							'checked'  => in_array( $args['none_value'], ( array ) $value ),
+							'class'    => gEditorialHTML::class( $args['field_class'], '-type-checkbox', '-option-none' ),
+							'disabled' => $args['disabled'],
+							'readonly' => $args['readonly'],
+							'dir'      => $args['dir'],
+						) );
+
+						echo '<p>'.gEditorialHTML::tag( 'label', array(
+							'for' => $id.( is_null( $args['none_value'] ) ? '' : '-'.$args['none_value'] ),
+						), $html.'&nbsp;'.esc_html( $args['none_title'] ) ).'</p>';
+					}
+
+					foreach ( $args['values'] as $value_name => $value_title ) {
+
+						if ( in_array( $value_name, $exclude ) )
+							continue;
+
+						$html = gEditorialHTML::tag( 'input', array(
+							'type'     => 'checkbox',
+							'id'       => $id.'-'.$value_name,
+							'name'     => $name.'['.$value_name.']',
+							'value'    => '1',
+							'checked'  => in_array( $value_name, ( array ) $value ),
+							'class'    => $args['field_class'],
+							'disabled' => $args['disabled'],
+							'readonly' => $args['readonly'],
+							'dir'      => $args['dir'],
+						) );
+
+						echo '<p>'.gEditorialHTML::tag( 'label', array(
+							'for' => $id.'-'.$value_name,
+						), $html.'&nbsp;'.$value_title ).'</p>';
+					}
+
+				} else {
+
+					$html = gEditorialHTML::tag( 'input', array(
+						'type'     => 'checkbox',
+						'id'       => $id,
+						'name'     => $name,
+						'value'    => '1',
+						'checked'  => $value,
+						'class'    => $args['field_class'],
+						'disabled' => $args['disabled'],
+						'readonly' => $args['readonly'],
+						'dir'      => $args['dir'],
+						'data'     => $args['data'],
+					) );
+
+					echo '<p>'.gEditorialHTML::tag( 'label', array(
+						'for' => $id,
+					), $html.'&nbsp;'.$args['description'] ).'</p>';
+
+					$args['description'] = FALSE;
+				}
+
+			break;
+			case 'radio' :
+
+				if ( count( $args['values'] ) ) {
+
+					if ( ! is_null( $args['none_title'] ) ) {
+
+						$html = gEditorialHTML::tag( 'input', array(
+							'type'     => 'radio',
+							'id'       => $id.( is_null( $args['none_value'] ) ? '' : '-'.$args['none_value'] ),
+							'name'     => $name,
+							'value'    => is_null( $args['none_value'] ) ? FALSE : $args['none_value'],
+							'checked'  => in_array( $args['none_value'], ( array ) $value ),
+							'class'    => gEditorialHTML::class( $args['field_class'], '-type-radio', '-option-none' ),
+							'disabled' => $args['disabled'],
+							'readonly' => $args['readonly'],
+							'dir'      => $args['dir'],
+						) );
+
+						echo '<p>'.gEditorialHTML::tag( 'label', array(
+							'for' => $id.( is_null( $args['none_value'] ) ? '' : '-'.$args['none_value'] ),
+						), $html.'&nbsp;'.esc_html( $args['none_title'] ) ).'</p>';
+					}
+
+					foreach ( $args['values'] as $value_name => $value_title ) {
+
+						if ( in_array( $value_name, $exclude ) )
+							continue;
+
+						$html = gEditorialHTML::tag( 'input', array(
+							'type'     => 'radio',
+							'id'       => $id.'-'.$value_name,
+							'name'     => $name,
+							'value'    => $value_name,
+							'checked'  => in_array( $value_name, ( array ) $value ),
+							'class'    => gEditorialHTML::class( $args['field_class'], '-type-radio' ),
+							'disabled' => $args['disabled'],
+							'readonly' => $args['readonly'],
+							'dir'      => $args['dir'],
+						) );
+
+						echo '<p>'.gEditorialHTML::tag( 'label', array(
+							'for' => $id.'-'.$value_name,
+						), $html.'&nbsp;'.$value_title ).'</p>';
+					}
+				}
+
+			break;
+			case 'select' :
+
+				if ( FALSE !== $args['values'] ) {
+
+					if ( ! is_null( $args['none_title'] ) ) {
+
+						if ( is_null( $args['none_value'] ) )
+							$args['none_value'] = '0';
+
+						$html .= gEditorialHTML::tag( 'option', array(
+							'value'    => $args['none_value'],
+							'selected' => $value == $args['none_value'],
+						), esc_html( $args['none_title'] ) );
+					}
+
+					foreach ( $args['values'] as $value_name => $value_title ) {
+
+						if ( in_array( $value_name, $exclude ) )
+							continue;
+
+						$html .= gEditorialHTML::tag( 'option', array(
+							'value'    => $value_name,
+							'selected' => $value == $value_name,
+						), esc_html( $value_title ) );
+					}
+
+					echo gEditorialHTML::tag( 'select', array(
+						'id'       => $id,
+						'name'     => $name,
+						'class'    => gEditorialHTML::class( $args['field_class'], '-type-select' ),
+						'disabled' => $args['disabled'],
+						'readonly' => $args['readonly'],
+						'dir'      => $args['dir'],
+						'data'     => $args['data'],
+					), $html );
+				}
+
+			break;
+			case 'textarea' :
+			case 'textarea-quicktags' :
+
+				if ( ! $args['field_class'] )
+					$args['field_class'] = 'large-text';
+
+				if ( 'textarea-quicktags' == $args['type'] ) {
+
+					$args['field_class'] = gEditorialHTML::class( $args['field_class'], 'textarea-quicktags', 'code' );
+
+					if ( ! $args['values'] )
+						$args['values'] = array(
+							'link',
+							'em',
+							'strong',
+						);
+
+					$scripts[] = 'quicktags({id:"'.$id.'",buttons:"'.implode( ',', $args['values'] ).'"});';
+
+					wp_enqueue_script( 'quicktags' );
+				}
+
+				echo gEditorialHTML::tag( 'textarea', array(
+					'id'          => $id,
+					'name'        => $name,
+					'rows'        => $args['rows_attr'],
+					'cols'        => $args['cols_attr'],
+					'class'       => gEditorialHTML::class( $args['field_class'], '-type'.$args['type'] ),
+					'placeholder' => $args['placeholder'],
+					'disabled'    => $args['disabled'],
+					'readonly'    => $args['readonly'],
+					'dir'         => $args['dir'],
+					'data'        => $args['data'],
+				), $value );
+
+			break;
+			case 'page' :
+
+				if ( ! $args['values'] )
+					$args['values'] = 'page';
+
+				if ( is_null( $args['none_title'] ) )
+					$args['none_title'] = $args['string_select'];
+
+				if ( is_null( $args['none_value'] ) )
+					$args['none_value'] = '0';
+
+				$query = array_merge( array(
+					'post_type'   => $args['values'],
+					'selected'    => $value,
+					'exclude'     => implode( ',', $exclude ),
+					'sort_column' => 'menu_order',
+					'sort_order'  => 'asc',
+					'post_status' => 'publish,private,draft',
+				), $args['extra'] );
+
+				$pages = get_pages( $query );
+
+				if ( ! empty( $pages ) ) {
+
+					$html .= gEditorialHTML::tag( 'option', array(
+						'value' => $args['none_value'],
+					), esc_html( $args['none_title'] ) );
+
+					$html .= walk_page_dropdown_tree( $pages, ( isset( $query['depth'] ) ? $query['depth'] : 0 ), $query );
+
+					echo gEditorialHTML::tag( 'select', array(
+						'id'       => $id,
+						'name'     => $name,
+						'class'    => gEditorialHTML::class( $args['field_class'], '-type-page', '-posttype-'.$args['values'] ),
+						'disabled' => $args['disabled'],
+						'readonly' => $args['readonly'],
+						'dir'      => $args['dir'],
+						'data'     => $args['data'],
+					), $html );
+
+				} else {
+					$args['description'] = FALSE;
+				}
+
+			break;
+			case 'role' :
+
+				if ( ! $args['values'] )
+					$args['values'] = array_reverse( get_editable_roles() );
+
+				if ( is_null( $args['none_title'] ) )
+					$args['none_title'] = $args['string_select'];
+
+				if ( is_null( $args['none_value'] ) )
+					$args['none_value'] = '0';
+
+				$html .= gEditorialHTML::tag( 'option', array(
+					'value' => $args['none_value'],
+				), esc_html( $args['none_title'] ) );
+
+				foreach ( $args['values'] as $value_name => $value_title ) {
+
+					if ( in_array( $value_name, $exclude ) )
+						continue;
+
+					$html .= gEditorialHTML::tag( 'option', array(
+						'value'    => $value_name,
+						'selected' => $value == $value_name,
+					), esc_html( translate_user_role( $value_title['name'] ) ) );
+				}
+
+				echo gEditorialHTML::tag( 'select', array(
+					'id'       => $id,
+					'name'     => $name,
+					'class'    => gEditorialHTML::class( $args['field_class'], '-type-role' ),
+					'disabled' => $args['disabled'],
+					'readonly' => $args['readonly'],
+					'dir'      => $args['dir'],
+					'data'     => $args['data'],
+				), $html );
+
+			break;
+			case 'user' :
+
+				if ( ! $args['values'] )
+					$args['values'] = gEditorialWordPress::getUsers( FALSE, FALSE, $args['extra'] );
+
+				if ( ! is_null( $args['none_title'] ) ) {
+
+					$html .= gEditorialHTML::tag( 'option', array(
+						'value'    => is_null( $args['none_value'] ) ? FALSE : $args['none_value'],
+						'selected' => $value == $args['none_value'],
+					), esc_html( $args['none_title'] ) );
+				}
+
+				foreach ( $args['values'] as $value_name => $value_title ) {
+
+					if ( in_array( $value_name, $exclude ) )
+						continue;
+
+					$html .= gEditorialHTML::tag( 'option', array(
+						'value'    => $value_name,
+						'selected' => $value == $value_name,
+					), esc_html( sprintf( '%1$s (%2$s)', $value_title->display_name, $value_title->user_login ) ) );
+				}
+
+				echo gEditorialHTML::tag( 'select', array(
+					'id'       => $id,
+					'name'     => $name,
+					'class'    => gEditorialHTML::class( $args['field_class'], '-type-user' ),
+					'disabled' => $args['disabled'],
+					'readonly' => $args['readonly'],
+					'dir'      => $args['dir'],
+					'data'     => $args['data'],
+				), $html );
+
+			break;
+			case 'priority' :
+
+				if ( ! $args['values'] )
+					$args['values'] = self::priorityOptions( FALSE );
+
+				if ( ! $args['dir'] )
+					$args['dir'] = 'ltr';
+
+				foreach ( $args['values'] as $value_name => $value_title ) {
+
+					if ( in_array( $value_name, $exclude ) )
+						continue;
+
+					$html .= gEditorialHTML::tag( 'option', array(
+						'value'    => $value_name,
+						'selected' => $value == $value_name,
+					), esc_html( $value_title ) );
+				}
+
+				echo gEditorialHTML::tag( 'select', array(
+					'id'       => $id,
+					'name'     => $name,
+					'class'    => gEditorialHTML::class( $args['field_class'], '-type-priority' ),
+					'disabled' => $args['disabled'],
+					'readonly' => $args['readonly'],
+					'dir'      => $args['dir'],
+					'data'     => $args['data'],
+				), $html );
+
+			break;
+			case 'button' :
+
+				echo get_submit_button(
+					$value,
+					( empty( $args['field_class'] ) ? 'secondary' : $args['field_class'] ),
+					$args['field'], // $id,
+					FALSE,
+					$args['values']
+				);
+
+			break;
+			case 'file' :
+
+				echo gEditorialHTML::tag( 'input', array(
+					'type'     => 'file',
+					'id'       => $id,
+					'name'     => $id,
+					'class'    => $args['field_class'],
+					'disabled' => $args['disabled'],
+					'dir'      => $args['dir'],
+					'data'     => $args['data'],
+				) );
+
+			break;
+			case 'posttypes' :
+
+				if ( ! $args['values'] )
+					$args['values'] = gEditorialWordPress::getPostTypes( 0,
+						array_merge( array( 'public' => TRUE ), $args['extra'] ) );
+
+				foreach ( $args['values'] as $value_name => $value_title ) {
+
+					if ( in_array( $value_name, $exclude ) )
+						continue;
+
+					$html = gEditorialHTML::tag( 'input', array(
+						'type'     => 'checkbox',
+						'id'       => $id.'-'.$value_name,
+						'name'     => $name.'['.$value_name.']',
+						'value'    => '1',
+						'checked'  => in_array( $value_name, ( array ) $value ),
+						'class'    => gEditorialHTML::class( $args['field_class'], '-type-posttypes' ),
+						'disabled' => $args['disabled'],
+						'readonly' => $args['readonly'],
+						'dir'      => $args['dir'],
+					) );
+
+					echo '<p>'.gEditorialHTML::tag( 'label', array(
+						'for' => $id.'-'.$value_name,
+					), $html.'&nbsp;'.esc_html( $value_title ) ).'</p>';
+				}
+
+			break;
+			case 'callback' :
+
+				if ( is_callable( $args['callback'] ) ) {
+
+					call_user_func_array( $args['callback'], array( &$args,
+						compact( 'html', 'value', 'name', 'id', 'exclude' ) ) );
+
+				} else if ( gEditorialWordPress::isDev() ) {
+
+					echo 'Error: Setting Is Not Callable!';
+				}
+
+			break;
+			case 'noaccess' :
+
+				echo gEditorialHTML::tag( 'span', array(
+					'class' => '-type-noaccess',
+				), $args['string_noaccess'] );
+
+			break;
+			case 'custom' :
+
+				if ( ! is_array( $args['values'] ) )
+					echo $args['values'];
+				else
+					echo $value;
+
+			break;
+			case 'debug' :
+
+				self::dump( $args['options'] );
+
+			break;
+			default :
+
+				echo 'Error: setting type not defind!';
+		}
+
+		if ( $args['after'] )
+			echo '&nbsp;'.$args['after'];
+
+		if ( $args['description'] && FALSE !== $args['values'] )
+			echo gEditorialHTML::tag( 'p', array(
+				'class' => 'description',
+			), $args['description'] );
+
+		if ( $args['wrap'] )
+			echo '</td></tr>';
+	}
 }

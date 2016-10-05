@@ -27,6 +27,7 @@ class gEditorialModuleCore extends gEditorialBaseCore
 	protected $taxonomies_excluded = array();
 	protected $kses_allowed        = array();
 	protected $settings_buttons    = array();
+	protected $settings_scripts    = array();
 	protected $image_sizes         = array();
 	protected $errors              = array();
 	protected $caps                = array();
@@ -34,6 +35,8 @@ class gEditorialModuleCore extends gEditorialBaseCore
 	protected $geditorial_meta = FALSE; // META ENABLED
 	protected $root_key        = FALSE; // ROOT CONSTANT
 	protected $tweaks          = FALSE; // TWEAKS ENABLED
+
+	protected $scripts_printed = FALSE;
 
 	public function __construct( &$module, &$options )
 	{
@@ -438,10 +441,10 @@ class gEditorialModuleCore extends gEditorialBaseCore
 
 		if ( isset( $this->options->fields[$args['post_type']][$args['field']] ) )
 			$value = $this->options->fields[$args['post_type']][$args['field']];
+
 		else if ( ! empty( $args['default'] ) )
 			$value = $args['default'];
-		else if ( isset( $this->module->defaults['fields'][$args['post_type']][$args['field']] ) )
-			$value = $this->module->defaults['fields'][$args['post_type']][$args['field']];
+
 		else
 			$value = FALSE;
 
@@ -926,6 +929,9 @@ class gEditorialModuleCore extends gEditorialBaseCore
 
 		if ( $sidebar = $this->settings_help_sidebar() )
 			$screen->set_help_sidebar( $sidebar );
+
+		// register settings on the settings page only
+		add_action( 'admin_print_footer_scripts', array( $this, 'settings_print_scripts' ), 99 );
 	}
 
 	protected function settings_footer( $module )
@@ -960,306 +966,29 @@ class gEditorialModuleCore extends gEditorialBaseCore
 		add_settings_field( $args['field'], $args['title'], $args['callback'], $args['page'], $args['section'], $args );
 	}
 
-	public function do_settings_field( $r = array() )
+	public function do_settings_field( $atts = array() )
 	{
-		$args = self::atts( array(
-			'type'        => 'enabled',
-			'field'       => FALSE,
-			'values'      => array(),
-			'exclude'     => '',
-			'none_title'   => NULL, // select option none title
-			'none_value'   => NULL, // select option none value
-			'filter'      => FALSE, // will use via sanitize
-			'dir'         => FALSE,
-			'disabled'    => FALSE,
-			'default'     => '',
-			'description' => '',
-			'before'      => '', // html to print before field
-			'after'       => '', // html to print after field
-			'field_class' => '', // formally just class!
-			'class'       => '', // now used on wrapper
-			'name_group'  => 'settings',
-			'name_attr'   => FALSE, // override
-			'id_attr'     => FALSE, // override
-			'placeholder' => FALSE,
-		), $r );
+		$args = array_merge( array(
+			'options'      => isset( $this->options->settings ) ? $this->options->settings : array(),
+			'option_base'  => $this->module->group,
+			'option_group' => 'settings',
+		), $atts );
 
-		if ( ! $args['field'] )
+		if ( empty( $args['cap'] ) )
+			$args['cap'] = empty( $this->caps[$args['option_group']] ) ? NULL : $this->caps[$args['option_group']];
+
+		gEditorialSettingsCore::fieldType( $args, $this->settings_scripts );
+	}
+
+	public function settings_print_scripts()
+	{
+		if ( $this->scripts_printed )
 			return;
 
-		$html    = '';
-		$id      = $args['id_attr'] ? $args['id_attr'] : $this->module->group.'-'.$args['name_group'].'-'.$args['field'];
-		$name    = $args['name_attr'] ? $args['name_attr'] : $this->module->group.'['.$args['name_group'].']['.$args['field'].']';
-		$exclude = $args['exclude'] && ! is_array( $args['exclude'] ) ? array_filter( explode( ',', $args['exclude'] ) ) : array();
+		if ( count( $this->settings_scripts ) )
+			gEditorialHTML::wrapJS( implode( "\n", $this->settings_scripts ) );
 
-		if ( isset( $this->options->settings[$args['field']] ) )
-			$value = $this->options->settings[$args['field']];
-		else if ( ! empty( $args['default'] ) )
-			$value = $args['default'];
-		else if ( isset( $this->module->defaults['settings'][$args['field']] ) )
-			$value = $this->module->defaults['settings'][$args['field']];
-		else
-			$value = NULL;
-
-		if ( $args['before'] )
-			echo $args['before'].'&nbsp;';
-
-		switch ( $args['type'] ) {
-
-			case 'enabled' :
-
-				$html = gEditorialHTML::tag( 'option', array(
-					'value'    => '0',
-					'selected' => '0' == $value,
-				), ( isset( $args['values'][0] ) ? $args['values'][0] : _x( 'Disabled', 'Module Core: Settings Field Option', GEDITORIAL_TEXTDOMAIN ) ) );
-
-				$html .= gEditorialHTML::tag( 'option', array(
-					'value'    => '1',
-					'selected' => '1' == $value,
-				), ( isset( $args['values'][1] ) ? $args['values'][1] : _x( 'Enabled', 'Module Core: Settings Field Option', GEDITORIAL_TEXTDOMAIN ) ) );
-
-				echo gEditorialHTML::tag( 'select', array(
-					'class' => $args['field_class'],
-					'name'  => $name,
-					'id'    => $id,
-				), $html );
-
-			break;
-			case 'text' :
-
-				if ( ! $args['field_class'] )
-					$args['field_class'] = 'regular-text';
-
-				echo gEditorialHTML::tag( 'input', array(
-					'type'        => 'text',
-					'class'       => $args['field_class'],
-					'name'        => $name,
-					'id'          => $id,
-					'value'       => $value,
-					'dir'         => $args['dir'],
-					'disabled'    => $args['disabled'],
-					'placeholder' => $args['placeholder'],
-				) );
-
-			break;
-			case 'number' :
-
-				if ( ! $args['field_class'] )
-					$args['field_class'] = 'small-text';
-
-				if ( ! $args['dir'] )
-					$args['dir'] = 'ltr';
-
-				echo gEditorialHTML::tag( 'input', array(
-					'type'        => 'number',
-					'class'       => $args['field_class'],
-					'name'        => $name,
-					'id'          => $id,
-					'value'       => $value,
-					'step'        => '1', // FIXME: get from args
-					'min'         => '0', // FIXME: get from args
-					'dir'         => $args['dir'],
-					'disabled'    => $args['disabled'],
-					'placeholder' => $args['placeholder'],
-				) );
-
-			break;
-			case 'checkbox' :
-
-				if ( count( $args['values'] ) ) {
-					foreach ( $args['values'] as $value_name => $value_title ) {
-
-						if ( in_array( $value_name, $exclude ) )
-							continue;
-
-						$html = gEditorialHTML::tag( 'input', array(
-							'type'    => 'checkbox',
-							'class'   => $args['field_class'],
-							'name'    => $name.'['.$value_name.']',
-							'id'      => $id.'-'.$value_name,
-							'value'   => '1',
-							'checked' => in_array( $value_name, ( array ) $value ),
-							'dir'     => $args['dir'],
-						) );
-
-						echo '<p>'.gEditorialHTML::tag( 'label', array(
-							'for' => $id.'-'.$value_name,
-						), $html.'&nbsp;'.$value_title ).'</p>';
-					}
-
-				} else {
-
-					$html = gEditorialHTML::tag( 'input', array(
-						'type'    => 'checkbox',
-						'class'   => $args['field_class'],
-						'name'    => $name,
-						'id'      => $id,
-						'value'   => '1',
-						'checked' => $value,
-						'dir'     => $args['dir'],
-					) );
-
-					echo '<p>'.gEditorialHTML::tag( 'label', array(
-						'for' => $id,
-					), $html.'&nbsp;'.$args['description'] ).'</p>';
-
-					$args['description'] = FALSE;
-				}
-
-			break;
-			case 'select' :
-
-				if ( FALSE !== $args['values'] ) { // alow hiding
-					foreach ( $args['values'] as $value_name => $value_title ) {
-
-						if ( in_array( $value_name, $exclude ) )
-							continue;
-
-						$html .= gEditorialHTML::tag( 'option', array(
-							'value'    => $value_name,
-							'selected' => $value == $value_name,
-						), esc_html( $value_title ) );
-					}
-
-					echo gEditorialHTML::tag( 'select', array(
-						'class' => $args['field_class'],
-						'name'  => $name,
-						'id'    => $id,
-					), $html );
-				}
-
-			break;
-			case 'textarea' :
-
-				echo gEditorialHTML::tag( 'textarea', array(
-					'class' => array(
-						'large-text',
-						// 'textarea-autosize',
-						$args['field_class'],
-					),
-					'name'  => $name,
-					'id'    => $id,
-					'rows'  => 5,
-					'cols'  => 45,
-				// ), esc_textarea( $value ) );
-				), $value );
-
-			break;
-			case 'page' :
-
-				if ( ! $args['values'] )
-					$args['values'] = 'page';
-
-				wp_dropdown_pages( array(
-					'post_type'        => $args['values'],
-					'selected'         => $value,
-					'name'             => $name,
-					'id'               => $id,
-					'class'            => $args['field_class'],
-					'exclude'          => implode( ',', $exclude ),
-					'show_option_none' => gEditorialSettingsCore::showOptionNone(),
-					'sort_column'      => 'menu_order',
-					'sort_order'       => 'asc',
-					'post_status'      => 'publish,private,draft',
-				));
-
-			break;
-			case 'users' :
-
-				if ( ! is_null( $args['none_title'] ) ) {
-
-					$html .= gEditorialHTML::tag( 'option', array(
-						'value'    => is_null( $args['none_value'] ) ? FALSE : $args['none_value'],
-						'selected' => $value == $args['none_value'],
-					), esc_html( $args['none_title'] ) );
-				}
-
-				foreach ( gEditorialWordPress::getUsers() as $user_id => $user_object ) {
-
-					if ( in_array( $user_id, $exclude ) )
-						continue;
-
-					$html .= gEditorialHTML::tag( 'option', array(
-						'value'    => $user_id,
-						'selected' => $value == $user_id,
-					), esc_html( sprintf( '%1$s (%2$s)', $user_object->display_name, $user_object->user_login ) ) );
-				}
-
-				echo gEditorialHTML::tag( 'select', array(
-					'class' => $args['field_class'],
-					'name'  => $name,
-					'id'    => $id,
-				), $html );
-
-			break;
-			case 'priority' :
-
-				foreach ( gEditorialSettingsCore::priorityOptions()
-					as $value_name => $value_title ) {
-
-					if ( in_array( $value_name, $exclude ) )
-						continue;
-
-					$html .= gEditorialHTML::tag( 'option', array(
-						'value'    => $value_name,
-						'selected' => $value == $value_name,
-					), esc_html( $value_title ) );
-				}
-
-				echo gEditorialHTML::tag( 'select', array(
-					'class' => gEditorialHTML::class( $args['field_class'], '-setting-priority' ),
-					'name'  => $name,
-					'id'    => $id,
-				), $html );
-
-			break;
-			case 'button' :
-
-				submit_button(
-					$value,
-					( empty( $args['field_class'] ) ? 'secondary' : $args['field_class'] ),
-					$id,
-					FALSE
-				);
-
-			break;
-			case 'file' :
-
-				echo gEditorialHTML::tag( 'input', array(
-					'type'  => 'file',
-					'class' => $args['field_class'],
-					'name'  => $id, // $name,
-					'id'    => $id,
-					// 'value' => $value,
-					'dir'   => $args['dir'],
-				) );
-
-			break;
-			case 'custom' :
-
-				if ( ! is_array( $args['values'] ) )
-					echo $args['values'];
-				else
-					echo $value;
-
-			break;
-			case 'debug' :
-
-				self::dump( $this->options );
-
-			break;
-			default :
-
-				_ex( 'Error: settings type undefined.', 'Module Core', GEDITORIAL_TEXTDOMAIN );
-		}
-
-		if ( $args['after'] )
-			echo '&nbsp;'.$args['after'];
-
-		if ( $args['description'] && FALSE !== $args['values'] )
-			echo gEditorialHTML::tag( 'p', array(
-				'class' => 'description',
-			), $args['description'] );
+		$this->scripts_printed = TRUE;
 	}
 
 	public function get_setting( $field, $default = NULL )
@@ -1267,11 +996,7 @@ class gEditorialModuleCore extends gEditorialBaseCore
 		if ( isset( $this->options->settings[$field] ) )
 			return $this->options->settings[$field];
 
-		else if ( isset( $this->module->defaults['settings'][$field] ) )
-			return $this->module->defaults['settings'][$field];
-
-		else
-			return $default;
+		return $default;
 	}
 
 	public function update_option( $key, $value )

@@ -665,28 +665,28 @@ class gEditorialMeta extends gEditorialModuleCore
 			}
 
 			$this->do_settings_field( array(
-				'type'       => 'select',
-				'field'      => 'custom_field',
-				'values'     => gEditorialHelper::getDBPostMetaKeys( TRUE ),
-				'default'    => ( isset( $post['custom_field'] ) ? $post['custom_field'] : '' ),
-				'name_group' => 'tools',
+				'type'         => 'select',
+				'field'        => 'custom_field',
+				'values'       => gEditorialHelper::getDBPostMetaKeys( TRUE ),
+				'default'      => ( isset( $post['custom_field'] ) ? $post['custom_field'] : '' ),
+				'option_group' => 'tools',
 			) );
 
 			$this->do_settings_field( array(
-				'type'        => 'text',
-				'field'       => 'custom_field_limit',
-				'default'     => ( isset( $post['custom_field_limit'] ) ? $post['custom_field_limit'] : '' ),
-				'name_group'  => 'tools',
-				'field_class' => 'small-text',
+				'type'         => 'text',
+				'field'        => 'custom_field_limit',
+				'default'      => ( isset( $post['custom_field_limit'] ) ? $post['custom_field_limit'] : '' ),
+				'option_group' => 'tools',
+				'field_class'  => 'small-text',
 			) );
 
 			$this->do_settings_field( array(
-				'type'       => 'select',
-				'field'      => 'custom_field_into',
-				// 'values'     => $this->post_type_fields_list( 'post', array( 'ct' => $this->get_string( 'ct', 'post' ) ) ),
-				'values'     => $this->post_type_fields_list(),
-				'default'    => ( isset( $post['custom_field_into'] ) ? $post['custom_field_into'] : '' ),
-				'name_group' => 'tools',
+				'type'         => 'select',
+				'field'        => 'custom_field_into',
+				// 'values'       => $this->post_type_fields_list( 'post', array( 'ct' => $this->get_string( 'ct', 'post' ) ) ),
+				'values'       => $this->post_type_fields_list(),
+				'default'      => ( isset( $post['custom_field_into'] ) ? $post['custom_field_into'] : '' ),
+				'option_group' => 'tools',
 			) );
 
 			echo gEditorialHTML::tag( 'p', array(

@@ -31,7 +31,7 @@ class gEditorialHTML extends gEditorialBaseCore
 				$classes += $arg;
 
 			else if ( $arg )
-				$classes[] = $arg;
+				$classes += explode( ' ', $arg );
 
 		return array_unique( array_filter( $classes, 'trim' ) );
 	}
@@ -269,5 +269,25 @@ class gEditorialHTML extends gEditorialBaseCore
 	public static function menuCallback( $item )
 	{
 		return self::tag( 'a', array( 'href' => '#'.$item['slug'] ), $item['title'] );
+	}
+
+	public static function wrapJS( $script = '', $echo = TRUE )
+	{
+		if ( $script ) {
+			$data = '<script type="text/javascript">'."\n"
+				.'/* <![CDATA[ */'."\n"
+				.'jQuery(document).ready(function($) {'."\n"
+					.$script
+				.'});'."\n"
+				.'/* ]]> */'."\n"
+				.'</script>';
+
+			if ( ! $echo )
+				return $data;
+
+			echo $data;
+		}
+
+		return '';
 	}
 }

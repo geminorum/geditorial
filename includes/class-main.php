@@ -106,7 +106,6 @@ class gEditorial
 			'settings'  => 'geditorial-settings-'.$args['name'],
 			'icon'      => 'smiley', // dashicon class
 			'configure' => 'print_configure_view',
-			'defaults'  => array(),
 			'frontend'  => TRUE, // whether or not the module should be loaded on the frontend too
 			'autoload'  => FALSE, // autoloading a module will remove the ability to enable or disable it
 		);
@@ -130,10 +129,6 @@ class gEditorial
 				$this->options->{$mod_name} = new stdClass;
 			else
 				$this->options->{$mod_name} = $options[$mod_name];
-
-			foreach ( $module->defaults as $key => $value )
-				if ( ! isset( $this->options->{$mod_name}->{$key} ) )
-					$this->options->{$mod_name}->{$key} = $value;
 		}
 	}
 
