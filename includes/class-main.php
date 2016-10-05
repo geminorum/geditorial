@@ -37,7 +37,7 @@ class gEditorial
 		add_action( 'plugins_loaded', array( $this, 'plugins_loaded' ), 20 );
 		add_action( 'init', array( $this, 'init_late' ), 999 );
 		add_action( 'admin_init', array( $this, 'admin_init' ) );
-		add_action( 'wp_footer', array( $this, 'footer_asset_config' ), 999 );
+		add_action( 'wp_footer', array( $this, 'footer_asset_config' ), 1 );
 		add_action( 'wp_enqueue_scripts', array( $this, 'wp_enqueue_scripts' ) );
 		add_filter( 'mce_external_languages', array( $this, 'mce_external_languages' ) );
 	}
