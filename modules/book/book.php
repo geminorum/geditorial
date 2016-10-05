@@ -3,6 +3,8 @@
 class gEditorialBook extends gEditorialModuleCore
 {
 
+	protected $partials = array( 'templates', 'helper', 'query' );
+
 	public static function module()
 	{
 		return array(
@@ -196,15 +198,6 @@ class gEditorialBook extends gEditorialModuleCore
 				),
 			),
 		);
-	}
-
-	public function setup( $partials = array() )
-	{
-		parent::setup( array(
-			'templates',
-			'helper',
-			'query',
-		) );
 	}
 
 	public function after_setup_theme()

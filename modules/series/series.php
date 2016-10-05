@@ -6,6 +6,8 @@ class gEditorialSeries extends gEditorialModuleCore
 	public $meta_key      = '_ge_series';
 	protected $field_type = 'series';
 
+	protected $partials = array( 'templates' );
+
 	public static function module()
 	{
 		return array(
@@ -80,17 +82,6 @@ class gEditorialSeries extends gEditorialModuleCore
 		);
 	}
 
-	public function setup( $partials = array() )
-	{
-		parent::setup( array(
-			'templates',
-		) );
-
-		if ( is_admin() ) {
-			add_action( 'save_post', array( $this, 'save_post' ), 20, 2 );
-		}
-	}
-
 	public function init()
 	{
 		do_action( 'geditorial_series_init', $this->module );
@@ -101,6 +92,9 @@ class gEditorialSeries extends gEditorialModuleCore
 
 		foreach ( $this->post_types() as $post_type )
 			$this->add_post_type_fields( $post_type, $this->fields[$this->constant( 'post_cpt' )], 'series' );
+
+		if ( is_admin() )
+			add_action( 'save_post', array( $this, 'save_post' ), 20, 2 );
 
 		$this->register_shortcode( 'series_shortcode', array( 'gEditorialSeriesTemplates', 'shortcode_series' ) );
 		$this->register_shortcode( 'multiple_series_shortcode', array( 'gEditorialSeriesTemplates', 'shortcode_multiple_series' ) );

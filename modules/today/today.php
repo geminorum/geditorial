@@ -3,6 +3,8 @@
 class gEditorialToday extends gEditorialModuleCore
 {
 
+	protected $partials = array( 'helper' );
+
 	public static function module()
 	{
 		return array(
@@ -63,11 +65,9 @@ class gEditorialToday extends gEditorialModuleCore
 		);
 	}
 
-	public function setup( $partials = array() )
+	public function setup()
 	{
-		parent::setup( array(
-			'helper',
-		) );
+		parent::setup();
 
 		if ( ! is_admin() ) {
 

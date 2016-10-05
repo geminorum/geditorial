@@ -106,7 +106,7 @@ class gEditorialContest extends gEditorialModuleCore
 		);
 	}
 
-	public function setup( $partials = array() )
+	public function setup()
 	{
 		parent::setup();
 

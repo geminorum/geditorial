@@ -6,6 +6,8 @@ class gEditorialMeta extends gEditorialModuleCore
 	public $meta_key = '_gmeta';
 	protected $priority_init = 12;
 
+	protected $partials = array( 'metabox', 'templates' );
+
 	protected $caps = array(
 		'tools' => 'import',
 	);
@@ -105,14 +107,6 @@ class gEditorialMeta extends gEditorialModuleCore
 				'st' => array( 'type' => 'title_after' ),
 			),
 		);
-	}
-
-	public function setup( $partials = array() )
-	{
-		parent::setup( array(
-			'metabox',
-			'templates',
-		) );
 	}
 
 	public function tweaks_strings( $strings )

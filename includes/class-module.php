@@ -20,6 +20,9 @@ class gEditorialModuleCore extends gEditorialBaseCore
 	protected $supports  = array();
 	protected $fields    = array();
 
+	protected $partials        = array();
+	protected $partials_remote = array();
+
 	protected $post_types_excluded = array();
 	protected $taxonomies_excluded = array();
 	protected $kses_allowed        = array();
@@ -53,14 +56,15 @@ class gEditorialModuleCore extends gEditorialBaseCore
 		return array();
 	}
 
-	public function setup_remote( $partials = array() )
+	public function setup_remote()
 	{
-		foreach ( $partials as $partial )
-			$this->require_code( $partial );
+		$this->require_code( $this->partials_remote );
 	}
 
-	public function setup( $partials = array() )
+	public function setup()
 	{
+		$this->require_code( $this->partials );
+
 		$ajax = gEditorialWordPress::isAJAX();
 
 		if ( method_exists( $this, 'p2p_init' ) )
@@ -80,9 +84,6 @@ class gEditorialModuleCore extends gEditorialBaseCore
 
 		if ( method_exists( $this, 'gpeople_support' ) )
 			add_filter( 'gpeople_remote_support_post_types', array( $this, 'gpeople_support' ) );
-
-		foreach ( (array) $partials as $partial )
-			$this->require_code( $partial );
 
 		add_action( 'after_setup_theme', array( $this, '_after_setup_theme' ), 1 );
 
@@ -1792,9 +1793,10 @@ class gEditorialModuleCore extends gEditorialBaseCore
 		), $extra ), admin_url( 'post-new.php' ) );
 	}
 
-	protected function require_code( $filename = 'templates' )
+	protected function require_code( $filenames = 'templates' )
 	{
-		require_once( GEDITORIAL_DIR.'modules/'.$this->module->name.'/'.$filename.'.php' );
+		foreach ( (array) $filenames as $filename )
+			require_once( GEDITORIAL_DIR.'modules/'.$this->module->name.'/'.$filename.'.php' );
 	}
 
 	public function is_current_posttype( $constant_key )

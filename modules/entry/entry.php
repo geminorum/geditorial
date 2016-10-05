@@ -2,6 +2,9 @@
 
 class gEditorialEntry extends gEditorialModuleCore
 {
+
+	protected $partials = array( 'templates', 'helper' );
+
 	private $terms = NULL;
 
 	public static function module()
@@ -72,14 +75,6 @@ class gEditorialEntry extends gEditorialModuleCore
 				'revisions',
 			),
 		);
-	}
-
-	public function setup( $partials = array() )
-	{
-		parent::setup( array(
-			'templates',
-			'helper',
-		) );
 	}
 
 	public function meta_post_types( $post_types )

@@ -6,6 +6,8 @@ class gEditorialMagazine extends gEditorialModuleCore
 	public $meta_key     = '_ge_magazine';
 	protected $root_key  = 'GEDITORIAL_MAGAZINE_ROOT_BLOG';
 
+	protected $partials = array( 'templates' );
+
 	protected $caps = array(
 		'tools' => 'edit_others_posts',
 	);
@@ -178,11 +180,6 @@ class gEditorialMagazine extends gEditorialModuleCore
 				),
 			),
 		);
-	}
-
-	public function setup( $partials = array() )
-	{
-		parent::setup( 'templates' );
 	}
 
 	public function after_setup_theme()

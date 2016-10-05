@@ -3,6 +3,8 @@
 class gEditorialReshare extends gEditorialModuleCore
 {
 
+	protected $partials = array( 'templates' );
+
 	public static function module()
 	{
 		return array(
@@ -65,13 +67,6 @@ class gEditorialReshare extends gEditorialModuleCore
 				'revisions',
 			),
 		);
-	}
-
-	public function setup( $partials = array() )
-	{
-		parent::setup( array(
-			'templates',
-		) );
 	}
 
 	public function meta_post_types( $post_types )
