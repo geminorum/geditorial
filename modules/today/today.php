@@ -99,6 +99,15 @@ class gEditorialToday extends gEditorialModuleCore
 		$this->register_shortcode( 'year_shortcode', array( 'gEditorialTodayTemplates', 'year_shortcode' ) );
 	}
 
+	public function init_ajax()
+	{
+		if ( $this->is_inline_save( $_REQUEST, 'day_cpt' ) )
+			$this->_edit_screen( $_REQUEST['post_type'] );
+
+		else if ( $this->is_inline_save( $_REQUEST, $this->post_types() ) )
+			$this->_edit_screen_supported( $_REQUEST['post_type'] );
+	}
+
 	public function current_screen( $screen )
 	{
 		if ( 'post' == $screen->base ) {
@@ -148,17 +157,28 @@ class gEditorialToday extends gEditorialModuleCore
 			if ( $screen->post_type == $this->constant( 'day_cpt' ) ) {
 
 				add_filter( 'disable_months_dropdown', '__return_true', 12 );
-				add_filter( 'manage_'.$screen->post_type.'_posts_columns', array( $this, 'manage_posts_columns' ) );
-				add_filter( 'manage_'.$screen->post_type.'_posts_custom_column', array( $this, 'posts_custom_column'), 10, 2 );
+
+				$this->_edit_screen( $screen->post_type );
 				add_filter( 'manage_edit-'.$screen->post_type.'_sortable_columns', array( $this, 'sortable_columns' ) );
 
 			} else if ( in_array( $screen->post_type, $this->post_types() ) ) {
 
-				add_filter( 'manage_'.$screen->post_type.'_posts_columns', array( $this, 'manage_posts_columns_supported' ), 12 );
-				add_filter( 'manage_'.$screen->post_type.'_posts_custom_column', array( $this, 'posts_custom_column'), 10, 2 );
+				$this->_edit_screen_supported( $screen->post_type );
 				add_filter( 'manage_edit-'.$screen->post_type.'_sortable_columns', array( $this, 'sortable_columns' ) );
 			}
 		}
+	}
+
+	private function _edit_screen( $post_type )
+	{
+		add_filter( 'manage_'.$post_type.'_posts_columns', array( $this, 'manage_posts_columns' ) );
+		add_filter( 'manage_'.$post_type.'_posts_custom_column', array( $this, 'posts_custom_column'), 10, 2 );
+	}
+
+	private function _edit_screen_supported( $post_type )
+	{
+		add_filter( 'manage_'.$post_type.'_posts_columns', array( $this, 'manage_posts_columns_supported' ), 12 );
+		add_filter( 'manage_'.$post_type.'_posts_custom_column', array( $this, 'posts_custom_column'), 10, 2 );
 	}
 
 	public function do_meta_boxes( $post, $box )

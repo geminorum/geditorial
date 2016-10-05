@@ -255,6 +255,12 @@ class gEditorialBook extends gEditorialModuleCore
 		), 'publication_cpt' );
 	}
 
+	public function init_ajax()
+	{
+		if ( $this->is_inline_save( $_REQUEST, 'publication_cpt' ) )
+			$this->_edit_screen( $_REQUEST['post_type'] );
+	}
+
 	public function current_screen( $screen )
 	{
 		if ( $screen->post_type == $this->constant( 'publication_cpt' ) ) {
@@ -293,12 +299,18 @@ class gEditorialBook extends gEditorialModuleCore
 			} else if ( 'edit' == $screen->base ) {
 
 				add_filter( 'disable_months_dropdown', '__return_true', 12 );
-				add_filter( 'manage_'.$screen->post_type.'_posts_columns', array( $this, 'manage_posts_columns' ) );
-				add_action( 'manage_'.$screen->post_type.'_posts_custom_column', array( $this, 'posts_custom_column' ), 10, 2 );
 				add_action( 'restrict_manage_posts', array( $this, 'restrict_manage_posts' ) );
 				add_action( 'parse_query', array( $this, 'parse_query' ) );
+
+				$this->_edit_screen( $screen->post_type );
 			}
 		}
+	}
+
+	private function _edit_screen( $post_type )
+	{
+		add_filter( 'manage_'.$post_type.'_posts_columns', array( $this, 'manage_posts_columns' ) );
+		add_action( 'manage_'.$post_type.'_posts_custom_column', array( $this, 'posts_custom_column' ), 10, 2 );
 	}
 
 	public function register_settings( $page = NULL )

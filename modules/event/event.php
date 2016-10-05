@@ -144,6 +144,12 @@ class gEditorialEvent extends gEditorialModuleCore
 		}
 	}
 
+	public function init_ajax()
+	{
+		if ( $this->is_inline_save( $_REQUEST, 'event_cpt' ) )
+			$this->_edit_screen( $_REQUEST['post_type'] );
+	}
+
 	public function current_screen( $screen )
 	{
 		$startend = $this->get_setting( 'startend_support', TRUE );
@@ -188,11 +194,17 @@ class gEditorialEvent extends gEditorialModuleCore
 				}
 
 				add_filter( 'disable_months_dropdown', '__return_true', 12 );
-				add_filter( 'manage_'.$screen->post_type.'_posts_columns', array( $this, 'manage_posts_columns' ) );
+
+				$this->_edit_screen( $screen->post_type );
 				add_filter( 'manage_edit-'.$screen->post_type.'_sortable_columns', array( $this, 'sortable_columns' ) );
-				add_action( 'manage_'.$screen->post_type.'_posts_custom_column', array( $this, 'posts_custom_column' ), 10, 2 );
 			}
 		}
+	}
+
+	private function _edit_screen( $post_type )
+	{
+		add_filter( 'manage_'.$post_type.'_posts_columns', array( $this, 'manage_posts_columns' ) );
+		add_action( 'manage_'.$post_type.'_posts_custom_column', array( $this, 'posts_custom_column' ), 10, 2 );
 	}
 
 	public function register_settings( $page = NULL )
