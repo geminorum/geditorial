@@ -121,7 +121,7 @@ class gEditorial
 
 		foreach ( $this->modules as $mod_name => &$module ) {
 
-			// don't load modules on the frontend unless they're explictly defined as such
+			// skip on the frontend?
 			if ( ! is_admin() && ! $module->frontend )
 				continue;
 
