@@ -1,47 +1,67 @@
-// (function ($) {
-jQuery(document).ready(function($) {
-	"use strict";
+var gEditorialDrafts = {};
 
-	$('#wp-admin-bar-editorial-drafts a.ab-item').click(function(e) {
-		e.preventDefault();
+(function($, p, m) {
+	'use strict';
 
-		// slide up
-		var wrap = $('#editorial-drafts');
+	m.empty   = true;
+	m.added   = false;
+	m.action  = 'geditorial_drafts';
+	m.box     = '#editorial-drafts';
+	m.button  = '#wp-admin-bar-editorial-drafts a.ab-item';
+	m.spinner = '.geditorial-spinner-adminbar';
+	m.wrapper = '<div id="editorial-drafts" class="geditorial-wrap -drafts" style="display:none;"><div class="-content"></div></div>';
 
-		if (wrap.size() && wrap.is(':visible')) {
-			wrap.slideUp(function() {
-				$(this).remove();
+	m.toggle = function(){
+		if($(this.box).is(':visible')) {
+			$(this.box).slideUp(function() {
+				$(this).hide();
 			});
+		} else {
+			$(this.box).css({
+				height:'auto',
+			}).slideDown();
+		};
+	};
+
+	m.populate = function(){
+
+		if ( ! this.empty ){
+			this.toggle();
 			return;
 		}
 
-		// slide down
-		$('body').append('<div id="editorial-drafts" class="geditorial-wrap drafts"><div class="-content"></div></div>');
+		$('body').append(this.wrapper);
 
-		// show spinner
-		// var wrap = $('#editorial-drafts');
-		wrap.css({
-			'height': '100%'
-		}).slideDown().addClass('-loading');
+		var spinner = $(this.button).find(this.spinner);
 
-		// load drafts
-		$.post(gEditorial.api, {
-				action: 'geditorial_drafts',
+		$.ajax({
+			url: p.api,
+			method: 'POST',
+			data: {
+				action: m.action,
 				what: 'list',
-				nonce: gEditorial.nonce,
+				nonce: p.nonce
 			},
-			function(response) {
-				// console.log(response.data);
-				var content = wrap.find('.-content');
-				console.log(content);
-				content.html(response.data.html);
-				wrap.removeClass('-loading');
-				content.hide().css({
-					'visibility': 'visible'
-				}).fadeIn();
+			beforeSend: function(xhr) {
+				spinner.addClass('is-active');
 			},
-			'json'
-		);
+			success: function(response, textStatus, xhr) {
+				spinner.removeClass('is-active');
+
+				if (response.success) {
+					$(m.box).find('.-content').html(response.data.html);
+					m.empty = false;
+					m.toggle();
+				}
+			}
+		});
+	};
+
+	$( document ).ready( function () {
+		$(m.button).click(function(e) {
+			e.preventDefault();
+			m.populate();
+		});
 	});
-	//}(jQuery));
-});
+
+}(jQuery, gEditorial, gEditorialDrafts));
