@@ -115,21 +115,6 @@ class gEditorialMeta extends gEditorialModuleCore
 		) );
 	}
 
-	public function setup_ajax( $request )
-	{
-		if ( ( $post_type = empty( $request['post_type'] ) ? FALSE : $request['post_type'] ) ) {
-
-			if ( in_array( $post_type, $this->post_types() ) ) {
-
-				add_filter( 'manage_posts_columns', array( $this, 'manage_posts_columns' ), 10, 2 );
-				add_action( 'manage_'.$post_type.'_posts_custom_column', array( $this, 'posts_custom_column'), 10, 2 );
-
-				add_action( 'save_post', array( $this, 'save_post' ), 10, 2 );
-				add_filter( 'geditorial_meta_sanitize_post_meta', array( $this, 'sanitize_post_meta' ), 10, 4 );
-			}
-		}
-	}
-
 	public function tweaks_strings( $strings )
 	{
 		$this->tweaks = TRUE;
@@ -176,6 +161,16 @@ class gEditorialMeta extends gEditorialModuleCore
 			add_action( 'gnetwork_themes_content_before', array( $this, 'content_before' ), 50 );
 	}
 
+	public function init_ajax()
+	{
+		if ( $this->is_inline_save( $_REQUEST, $this->post_types() ) ) {
+			$this->_edit_screen( $_REQUEST['post_type'] );
+
+			add_action( 'save_post', array( $this, 'save_post' ), 10, 2 );
+			add_filter( 'geditorial_meta_sanitize_post_meta', array( $this, 'sanitize_post_meta' ), 10, 4 );
+		}
+	}
+
 	public function current_screen( $screen )
 	{
 		if ( in_array( $screen->post_type, $this->post_types() ) ) {
@@ -206,11 +201,7 @@ class gEditorialMeta extends gEditorialModuleCore
 				add_action( 'geditorial_meta_do_meta_box', array( $this, 'do_meta_box' ), 10, 4 );
 
 			} else if ( 'edit' == $screen->base ) {
-
-				add_filter( 'manage_posts_columns', array( $this, 'manage_posts_columns' ), 10, 2 );
-				add_action( 'manage_'.$screen->post_type.'_posts_custom_column', array( $this, 'posts_custom_column'), 10, 2 );
-
-				add_action( 'quick_edit_custom_box', array( $this, 'quick_edit_custom_box' ), 10, 2 );
+				$this->_edit_screen( $screen->post_type );
 			}
 
 			if ( 'post' == $screen->base
@@ -230,6 +221,14 @@ class gEditorialMeta extends gEditorialModuleCore
 				$this->enqueue_asset_js( $localize, 'meta.'.$screen->base );
 			}
 		}
+	}
+
+	private function _edit_screen( $post_type )
+	{
+		add_filter( 'manage_posts_columns', array( $this, 'manage_posts_columns' ), 10, 2 );
+		add_action( 'manage_'.$post_type.'_posts_custom_column', array( $this, 'posts_custom_column'), 10, 2 );
+
+		add_action( 'quick_edit_custom_box', array( $this, 'quick_edit_custom_box' ), 10, 2 );
 	}
 
 	public function do_meta_box( $post, $box, $fields = NULL, $context = 'box' )

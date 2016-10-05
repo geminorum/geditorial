@@ -12,7 +12,8 @@ class gEditorialModuleCore extends gEditorialBaseCore
 	protected $cookie     = 'geditorial';
 	protected $field_type = 'meta';
 
-	protected $priority_init = 10;
+	protected $priority_init      = 10;
+	protected $priority_init_ajax = 10;
 
 	protected $constants = array();
 	protected $strings   = array();
@@ -87,6 +88,9 @@ class gEditorialModuleCore extends gEditorialBaseCore
 
 		if ( method_exists( $this, 'after_setup_theme' ) )
 			add_action( 'after_setup_theme', array( $this, 'after_setup_theme' ), 20 );
+
+		if ( self::isAJAX() && method_exists( $this, 'init_ajax' ) )
+			add_action( 'init', array( $this, 'init_ajax' ), $this->priority_init_ajax );
 
 		add_action( 'init', array( $this, 'init' ), $this->priority_init );
 

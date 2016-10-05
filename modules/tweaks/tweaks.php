@@ -119,6 +119,12 @@ class gEditorialTweaks extends gEditorialModuleCore
 		);
 	}
 
+	public function init_ajax()
+	{
+		if ( $this->is_inline_save( $_REQUEST, $this->post_types() ) )
+			$this->_edit_screen( $_REQUEST['post_type'] );
+	}
+
 	public function current_screen( $screen )
 	{
 		if ( in_array( $screen->post_type, $this->post_types() ) ) {
@@ -149,26 +155,30 @@ class gEditorialTweaks extends gEditorialModuleCore
 				}
 
 			} else if ( 'edit' == $screen->base ) {
-
-				add_filter( 'manage_taxonomies_for_'.$screen->post_type.'_columns', array( $this, 'manage_taxonomies_columns'), 10, 2 );
-
-				add_filter( 'manage_'.$screen->post_type.'_posts_columns', array( $this, 'manage_posts_columns' ), 1, 1 );
-				add_action( 'manage_'.$screen->post_type.'_posts_custom_column', array( $this, 'posts_custom_column'), 10, 2 );
-
-				// add_filter( 'manage_'.$screen->post_type.'_posts_columns', array( $this, 'manage_posts_columns_late' ), 999, 1 );
-				// add_filter( 'list_table_primary_column', array( $this, 'list_table_primary_column' ), 10, 2 );
-
-				// INTERNAL HOOKS
-				if ( $this->get_setting( 'group_taxonomies', FALSE ) )
-					add_action( 'geditorial_tweaks_column_row', array( $this, 'column_row_taxonomies' ) );
-
-				if ( $this->get_setting( 'page_template', FALSE ) )
-					add_action( 'geditorial_tweaks_column_row', array( $this, 'column_row_page_template' ), 50 );
-
-				if ( $this->get_setting( 'revision_count', FALSE ) )
-					add_action( 'geditorial_tweaks_column_row', array( $this, 'column_row_revisions' ), 100 );
+				$this->_edit_screen( $screen->post_type );
 			}
 		}
+	}
+
+	private function _edit_screen( $post_type )
+	{
+		add_filter( 'manage_taxonomies_for_'.$post_type.'_columns', array( $this, 'manage_taxonomies_columns'), 10, 2 );
+
+		add_filter( 'manage_'.$post_type.'_posts_columns', array( $this, 'manage_posts_columns' ), 1, 1 );
+		add_action( 'manage_'.$post_type.'_posts_custom_column', array( $this, 'posts_custom_column'), 10, 2 );
+
+		// add_filter( 'manage_'.$post_type.'_posts_columns', array( $this, 'manage_posts_columns_late' ), 999, 1 );
+		// add_filter( 'list_table_primary_column', array( $this, 'list_table_primary_column' ), 10, 2 );
+
+		// INTERNAL HOOKS
+		if ( $this->get_setting( 'group_taxonomies', FALSE ) )
+			add_action( 'geditorial_tweaks_column_row', array( $this, 'column_row_taxonomies' ) );
+
+		if ( $this->get_setting( 'page_template', FALSE ) )
+			add_action( 'geditorial_tweaks_column_row', array( $this, 'column_row_page_template' ), 50 );
+
+		if ( $this->get_setting( 'revision_count', FALSE ) )
+			add_action( 'geditorial_tweaks_column_row', array( $this, 'column_row_revisions' ), 100 );
 	}
 
 	public function manage_taxonomies_columns( $taxonomies, $post_type )
