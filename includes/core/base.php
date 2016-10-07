@@ -297,22 +297,6 @@ class gEditorialBaseCore
 		return $r;
 	}
 
-	public static function linkStyleSheet( $url, $version = NULL, $media = 'all' )
-	{
-		if ( is_array( $version ) )
-			$url = add_query_arg( $version, $url );
-
-		else if ( $version )
-			$url = add_query_arg( 'ver', $version, $url );
-
-		echo "\t".gEditorialHTML::tag( 'link', array(
-			'rel'   => 'stylesheet',
-			'href'  => $url,
-			'type'  => 'text/css',
-			'media' => $media,
-		) )."\n";
-	}
-
 	public static function IP( $pad = FALSE )
 	{
 		$ip = '';

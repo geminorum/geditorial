@@ -42,12 +42,12 @@ class gEditorialHelper extends gEditorialBaseCore
 	// override to use plugin version
 	public static function linkStyleSheet( $url, $version = GEDITORIAL_VERSION, $media = FALSE )
 	{
-		parent::linkStyleSheet( $url, $version, $media );
+		gEditorialHTML::linkStyleSheet( $url, $version, $media );
 	}
 
 	public static function linkStyleSheetAdmin( $page )
 	{
-		parent::linkStyleSheet( GEDITORIAL_URL.'assets/css/admin.'.$page.'.css', GEDITORIAL_VERSION );
+		gEditorialHTML::linkStyleSheet( GEDITORIAL_URL.'assets/css/admin.'.$page.'.css', GEDITORIAL_VERSION );
 	}
 
 	public static function intval( $text, $intval = TRUE )
