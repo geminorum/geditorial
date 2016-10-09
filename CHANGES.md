@@ -1,3 +1,6 @@
+### 3.9.1
+* core/html: method renamed, fixed fatal on PHP5.6
+
 ### 3.9.0
 * core/html: moved for notice generations
 * core/wordpress: redirect helpers
