@@ -732,7 +732,7 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 				echo gEditorialHTML::tag( 'select', array(
 					'id'       => $id,
 					'name'     => $name,
-					'class'    => gEditorialHTML::class( $args['field_class'], '-type-enabled' ),
+					'class'    => gEditorialHTML::cssClass( $args['field_class'], '-type-enabled' ),
 					'disabled' => $args['disabled'],
 					'readonly' => $args['readonly'],
 					'dir'      => $args['dir'],
@@ -780,7 +780,7 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 					'value'       => $value,
 					'step'        => $args['step_attr'],
 					'min'         => $args['min_attr'],
-					'class'       => gEditorialHTML::class( $args['field_class'], '-type-number' ),
+					'class'       => gEditorialHTML::cssClass( $args['field_class'], '-type-number' ),
 					'placeholder' => $args['placeholder'],
 					'disabled'    => $args['disabled'],
 					'readonly'    => $args['readonly'],
@@ -826,7 +826,7 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 							'name'     => $name.( is_null( $args['none_value'] ) ? '' : '-'.$args['none_value'] ),
 							'value'    => is_null( $args['none_value'] ) ? '1' : $args['none_value'],
 							'checked'  => in_array( $args['none_value'], ( array ) $value ),
-							'class'    => gEditorialHTML::class( $args['field_class'], '-type-checkbox', '-option-none' ),
+							'class'    => gEditorialHTML::cssClass( $args['field_class'], '-type-checkbox', '-option-none' ),
 							'disabled' => $args['disabled'],
 							'readonly' => $args['readonly'],
 							'dir'      => $args['dir'],
@@ -894,7 +894,7 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 							'name'     => $name,
 							'value'    => is_null( $args['none_value'] ) ? FALSE : $args['none_value'],
 							'checked'  => in_array( $args['none_value'], ( array ) $value ),
-							'class'    => gEditorialHTML::class( $args['field_class'], '-type-radio', '-option-none' ),
+							'class'    => gEditorialHTML::cssClass( $args['field_class'], '-type-radio', '-option-none' ),
 							'disabled' => $args['disabled'],
 							'readonly' => $args['readonly'],
 							'dir'      => $args['dir'],
@@ -916,7 +916,7 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 							'name'     => $name,
 							'value'    => $value_name,
 							'checked'  => in_array( $value_name, ( array ) $value ),
-							'class'    => gEditorialHTML::class( $args['field_class'], '-type-radio' ),
+							'class'    => gEditorialHTML::cssClass( $args['field_class'], '-type-radio' ),
 							'disabled' => $args['disabled'],
 							'readonly' => $args['readonly'],
 							'dir'      => $args['dir'],
@@ -958,7 +958,7 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 					echo gEditorialHTML::tag( 'select', array(
 						'id'       => $id,
 						'name'     => $name,
-						'class'    => gEditorialHTML::class( $args['field_class'], '-type-select' ),
+						'class'    => gEditorialHTML::cssClass( $args['field_class'], '-type-select' ),
 						'disabled' => $args['disabled'],
 						'readonly' => $args['readonly'],
 						'dir'      => $args['dir'],
@@ -975,7 +975,7 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 
 				if ( 'textarea-quicktags' == $args['type'] ) {
 
-					$args['field_class'] = gEditorialHTML::class( $args['field_class'], 'textarea-quicktags', 'code' );
+					$args['field_class'] = gEditorialHTML::cssClass( $args['field_class'], 'textarea-quicktags', 'code' );
 
 					if ( ! $args['values'] )
 						$args['values'] = array(
@@ -994,7 +994,7 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 					'name'        => $name,
 					'rows'        => $args['rows_attr'],
 					'cols'        => $args['cols_attr'],
-					'class'       => gEditorialHTML::class( $args['field_class'], '-type'.$args['type'] ),
+					'class'       => gEditorialHTML::cssClass( $args['field_class'], '-type'.$args['type'] ),
 					'placeholder' => $args['placeholder'],
 					'disabled'    => $args['disabled'],
 					'readonly'    => $args['readonly'],
@@ -1036,7 +1036,7 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 					echo gEditorialHTML::tag( 'select', array(
 						'id'       => $id,
 						'name'     => $name,
-						'class'    => gEditorialHTML::class( $args['field_class'], '-type-page', '-posttype-'.$args['values'] ),
+						'class'    => gEditorialHTML::cssClass( $args['field_class'], '-type-page', '-posttype-'.$args['values'] ),
 						'disabled' => $args['disabled'],
 						'readonly' => $args['readonly'],
 						'dir'      => $args['dir'],
@@ -1077,7 +1077,7 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 				echo gEditorialHTML::tag( 'select', array(
 					'id'       => $id,
 					'name'     => $name,
-					'class'    => gEditorialHTML::class( $args['field_class'], '-type-role' ),
+					'class'    => gEditorialHTML::cssClass( $args['field_class'], '-type-role' ),
 					'disabled' => $args['disabled'],
 					'readonly' => $args['readonly'],
 					'dir'      => $args['dir'],
@@ -1112,7 +1112,7 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 				echo gEditorialHTML::tag( 'select', array(
 					'id'       => $id,
 					'name'     => $name,
-					'class'    => gEditorialHTML::class( $args['field_class'], '-type-user' ),
+					'class'    => gEditorialHTML::cssClass( $args['field_class'], '-type-user' ),
 					'disabled' => $args['disabled'],
 					'readonly' => $args['readonly'],
 					'dir'      => $args['dir'],
@@ -1142,7 +1142,7 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 				echo gEditorialHTML::tag( 'select', array(
 					'id'       => $id,
 					'name'     => $name,
-					'class'    => gEditorialHTML::class( $args['field_class'], '-type-priority' ),
+					'class'    => gEditorialHTML::cssClass( $args['field_class'], '-type-priority' ),
 					'disabled' => $args['disabled'],
 					'readonly' => $args['readonly'],
 					'dir'      => $args['dir'],
@@ -1191,7 +1191,7 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 						'name'     => $name.'['.$value_name.']',
 						'value'    => '1',
 						'checked'  => in_array( $value_name, ( array ) $value ),
-						'class'    => gEditorialHTML::class( $args['field_class'], '-type-posttypes' ),
+						'class'    => gEditorialHTML::cssClass( $args['field_class'], '-type-posttypes' ),
 						'disabled' => $args['disabled'],
 						'readonly' => $args['readonly'],
 						'dir'      => $args['dir'],

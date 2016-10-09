@@ -21,7 +21,7 @@ class gEditorialHTML extends gEditorialBaseCore
 		return $html.$content.'</'.$tag.'>'.$sep;
 	}
 
-	public static function class()
+	public static function cssClass()
 	{
 		$classes = array();
 
