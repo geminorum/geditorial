@@ -63,13 +63,14 @@ class gEditorialHelper extends gEditorialBaseCore
 		return apply_filters( 'geditorial_kses', wp_kses( $text, $allowed ), $allowed, $context );
 	}
 
-	public static function getTermsEditRow( $post_id, $post_type, $taxonomy, $before = '', $after = '' )
+	public static function getTermsEditRow( $post, $post_type, $taxonomy, $before = '', $after = '' )
 	{
-		if ( ! $terms = get_the_terms( $post_id, $taxonomy ) )
+		$object = is_object( $taxonomy ) ? $taxonomy : get_taxonomy( $taxonomy );
+
+		if ( ! $terms = get_the_terms( $post, $object->name ) )
 			return;
 
 		$list = array();
-		$taxonomy_object = get_taxonomy( $taxonomy );
 
 		foreach ( $terms as $term ) {
 
@@ -78,11 +79,11 @@ class gEditorialHelper extends gEditorialBaseCore
 			if ( 'post' != $post_type )
 				$query['post_type'] = $post_type;
 
-			if ( $taxonomy_object->query_var ) {
-				$query[$taxonomy_object->query_var] = $term->slug;
+			if ( $object->query_var ) {
+				$query[$object->query_var] = $term->slug;
 
 			} else {
-				$query['taxonomy'] = $taxonomy;
+				$query['taxonomy'] = $object->name;
 				$query['term']     = $term->slug;
 			}
 
@@ -90,7 +91,7 @@ class gEditorialHelper extends gEditorialBaseCore
 				'href'  => add_query_arg( $query, 'edit.php' ),
 				'title' => $term->slug,
 				'class' => '-term',
-			), esc_html( sanitize_term_field( 'name', $term->name, $term->term_id, $taxonomy, 'display' ) ) );
+			), esc_html( sanitize_term_field( 'name', $term->name, $term->term_id, $object->name, 'display' ) ) );
 		}
 
 		echo $before.join( _x( ', ', 'Module Helper: Term Seperator', GEDITORIAL_TEXTDOMAIN ), $list ).$after;

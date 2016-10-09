@@ -275,18 +275,21 @@ class gEditorialTweaks extends gEditorialModuleCore
 			if ( ! in_array( $taxonomy, $taxonomies ) )
 				continue;
 
+			$object = get_taxonomy( $taxonomy );
+			$manage = current_user_can( $object->cap->manage_terms );
+
 			$before = '<div class="-row tweaks-'.$taxonomy.'">';
 
 			if ( $icon = $this->get_string( 'icon', $taxonomy, 'taxonomies', 'tag' ) )
-				$before .= gEditorialHTML::tag( 'a', array(
-					'href'   => gEditorialWordPress::getEditTaxLink( $taxonomy ),
+				$before .= gEditorialHTML::tag( ( $manage ? 'a' : 'span' ), array(
+					'href'   => $manage ? gEditorialWordPress::getEditTaxLink( $taxonomy ) : FALSE,
 					'title'  => $this->get_string( 'title', $taxonomy, 'taxonomies', $taxonomy ),
-					'class'  => array( '-icon', '-link' ),
-					'target' => '_blank',
+					'class'  => array( '-icon', ( $manage ? '-link' : '-info' ) ),
+					'target' => $manage ? '_blank' : FALSE,
 				), '<span class="dashicons dashicons-'.$icon.'"></span>' );
 
-			gEditorialHelper::getTermsEditRow( $post->ID,
-				$post->post_type, $taxonomy, $before, '</div>' );
+			gEditorialHelper::getTermsEditRow( $post,
+				$post->post_type, $object, $before, '</div>' );
 		}
 	}
 
