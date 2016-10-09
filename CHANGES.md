@@ -1,3 +1,49 @@
+### 3.9.0
+* core/html: moved for notice generations
+* core/wordpress: redirect helpers
+* core/wordpress: moved post/tax edit link generators
+* main/main: skip loading on user admin
+* main/helper: hopefully end of nooped strings count fiasco!
+* main/helper: post modified/date diff helpers
+* main/modulecore: using setup ajax method
+* main/modulecore: returning register cpt/tax errors to caller
+* main/modulecore: tax menu label from misc strings
+* main/modulecore: check for cb method on sections
+* main/modulecore: :new: inline save checker
+* main/modulecore: :new: setting type: priority
+* main/modulecore: :new: hook on init ajax
+* main/modulecore: posttype/tax setting titles from module strings
+* main/modulecore: :pray: settings args only on settings pages
+* main/modulecore: :pray: skip hooking on ajax
+* main/modulecore: auto including partials via class vars
+* main/settings: field generator separated from module api
+* main/settings: rethinking messages
+* main/settings: translating help screen titles
+* main/settings: module slug helper for wiki links
+* main/template: before/after args on shortcode wrap helper
+* module/audit: widget links with author query
+* module/drafts: complete js overhaul
+* module/estimated: :new: word count row on tweaks column
+* module/estimated: insert priority option
+* module/estimated: skip on paginated posts
+* module/home: :new: featured content api for themes
+* module/headings: :warning: fixed notice!
+* module/headings: skip on paginated posts
+* module/headings: insert priority option
+* module/meta: skip lead insertion on paginated posts
+* module/meta: display author info on meta column
+* module/meta: rel nofollow for source links
+* module/ortho: support attachment alt/caption
+* module/settings: tools page for non admins
+* module/settings: message handling on settings header
+* module/settings: intro after method renamed
+* module/spec: jquery migrate: using prop
+* module/tweaks: row as an action hook
+* module/tweaks: :new: page template row
+* module/tweaks: row icon title for revisions
+* module/today: correct translation context
+* module/users: :new: user groups
+
 ### 3.8.2
 * core/base: internal log method
 * core/html: moved to HTML class for tag generations
