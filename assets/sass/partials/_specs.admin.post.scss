@@ -4,8 +4,7 @@
 /// Module: Specs --------------------------------------------------------------
 
 .geditorial-admin-wrap-metabox.specs {
-
-	@include main-wrap();
+	@include mainwrap();
 
 	margin-top: 11px;
 
@@ -94,7 +93,7 @@ body.dragging * {
 	top: 0;
 	opacity: .7;
 	z-index: 2000;
-	
+
 	@include body-rtl() {
 		right: 0;
 	}

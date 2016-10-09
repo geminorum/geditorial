@@ -1,21 +1,21 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-/// gEditorial Partials: Estimated Front ALL ----------------------------------------
+/// gEditorial Partials: Estimated Front ALL -----------------------------------
 
-.geditorial-wrap.estimated {
+.geditorial-wrap.-estimated {
+  color: $gray;
+  cursor: help;
+  font-size: 0.8em;
+  line-height: inherit;
 
-	color: #aaa;
+  &.-before {
+    margin-bottom: 1em;
+  }
 
-	&.-before {
-		margin-bottom: 1em;
-	}
+  &.-after {
+    margin-top: 1em;
+  }
 
-	&.-after {
-		margin-top: 1em;
-	}
-
-	span {
-
-	}
+  span {}
 }

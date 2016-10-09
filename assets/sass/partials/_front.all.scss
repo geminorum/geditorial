@@ -2,6 +2,35 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 /// gEditorial Partials: Front All ---------------------------------------------
+
 .geditorial-wrap {
-	@include main-wrap();
+  @include mainwrap();
+}
+
+.geditorial-icon.-iconsvg {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  stroke-width: 0;
+  stroke: currentColor;
+  fill: currentColor;
+}
+
+.geditorial-spinner-adminbar {
+  background: url('../images/spinner-adminbar.gif') no-repeat;
+  -webkit-background-size: 20px 20px;
+  background-size: 20px 20px;
+  display: inline-block;
+  visibility: hidden;
+  vertical-align: middle;
+  opacity: 0.9;
+  filter: alpha(opacity=90);
+  width: 20px !important;
+  height: 20px !important;
+  margin: 4px 4px 0 !important;
+  padding: 0;
+
+  &.is-active {
+    visibility: visible;
+  }
 }

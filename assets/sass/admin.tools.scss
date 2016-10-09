@@ -9,7 +9,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 .geditorial-admin-wrap.geditorial-tools {
-  @include main-wrap();
+  @include mainwrap();
   margin: 10px 20px 0 2px;
   @include body-rtl() {
     margin: 10px 2px 0 20px;

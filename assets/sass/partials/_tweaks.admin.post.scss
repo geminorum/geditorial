@@ -4,24 +4,20 @@
 /// Module: Tweaks: Admin Post -------------------------------------------------
 
 .inside > div.categorydiv {
-
-	input.category-search {
-		width: 99%;
-		margin-top: 6px;
-	}
+  input.category-search {
+    margin-top: 6px;
+    width: 99%;
+  }
 }
 
 .geditorial-wordcount-wrap {
+  .geditorial-wordcount {
+    display: none; // will show with js
+    font-size: 0.8em;
+    margin-bottom: -0.4em;
+    margin-top: 0.1em;
 
-	.geditorial-wordcount {
-
-		display: none; // will show with js
-
-		font-size: 0.8em;
-		margin-top: 0.1em;
-		margin-bottom: -0.4em;
-
-		.-words {}
-		.-chars {}
-	}
+    .-words {}
+    .-chars {}
+  }
 }

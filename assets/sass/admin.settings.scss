@@ -10,15 +10,23 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 .geditorial-admin-wrap.geditorial-settings {
-  @include main-wrap();
+  @include mainwrap();
 
   margin: 10px 20px 0 2px;
   @include body-rtl() {
     margin: 10px 2px 0 20px;
   }
 
-  .explanation {
+  // on each module settings
+  .-header {
     margin-bottom: 1em;
+
+    h4 {
+      font-size: 1.2em;
+      line-height: 1.1;
+      margin: 1em 1em 0;
+      padding: 0;
+    }
 
     p {
       font-size: 16px;
@@ -27,6 +35,7 @@
     }
   }
 
+  // on main settings
   .modules {
     margin-top: 20px;
     overflow: hidden;

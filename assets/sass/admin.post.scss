@@ -16,7 +16,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 .geditorial-admin-wrap {
-	// @include main-wrap();
+	// @include mainwrap();
 }
 
 .hndle {
@@ -39,7 +39,7 @@
 .geditorial-admin-wrap-metabox,
 .geditorial-admin-wrap-nobox,
 .geditorial-admin-wrap-textbox {
-	@include main-wrap();
+	@include mainwrap();
 	margin-top: 12px;
 
 	.field-wrap {
