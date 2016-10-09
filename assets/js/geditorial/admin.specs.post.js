@@ -14,7 +14,8 @@ jQuery(document).ready(function($) {
 		var row = $('ul.geditorial-specs-new li').clone(true);
 		var selectedTitle = $(this).find(":selected").text();
 		// $(this).find(":selected").remove();
-		$(this).find(":selected").attr("disabled", "disabled");
+		// $(this).find(":selected").attr("disabled", "disabled");
+		$(this).find(":selected").prop( "disabled", true );
 
 		row.find('select.item-dropdown-new').removeClass('item-dropdown-new');
 		row.find('span.item-excerpt').html(selectedTitle);
