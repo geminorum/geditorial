@@ -52,6 +52,7 @@ jQuery(document).ready(function($) {
 		$.extend({}, virastar_options, {
 			fix_dashes: false,
 			cleanup_spacing: false,
+			cleanup_begin_and_end: false,
 			skip_markdown_ordered_lists_numbers_conversion: false,
 			preserve_HTML: false,
 		})
@@ -89,7 +90,7 @@ jQuery(document).ready(function($) {
 	}
 
 	// http://www.jankoatwarpspeed.com/make-image-buttons-a-part-of-input-fields/
-	$("#titlewrap input, [data-ortho='text']").each(function() {
+	$("#titlewrap input, input#attachment_alt, [data-ortho='text']").each(function() {
 		$(this)
 			.addClass('target-ortho-text')
 			.add($('<a href="#" class="do-ortho do-ortho-text" title="' + strings.button_virastar_title + '" tabindex="-1"><span class="dashicons dashicons-admin-site"></span></a>'))
@@ -130,7 +131,7 @@ jQuery(document).ready(function($) {
 		}, 100);
 	});
 
-	$("#excerpt, [data-ortho='html']").each(function() {
+	$("textarea#excerpt, textarea#attachment_caption, [data-ortho='html']").each(function() {
 		$(this)
 			.addClass('target-ortho-html')
 			.add($('<a href="#" class="do-ortho do-ortho-html" title="' + strings.button_virastar_title + '" tabindex="-1"><span class="dashicons dashicons-admin-site"></span></a>'))
