@@ -50,6 +50,11 @@ class gEditorialTweaks extends gEditorialModuleCore
 					'description' => _x( 'Displays revision summary of the post.', 'Tweaks Module: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 				),
 				array(
+					'field'       => 'attachment_count',
+					'title'       => _x( 'Attachment Count', 'Tweaks Module: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Displays attachment summary of the post.', 'Tweaks Module: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+				),
+				array(
 					'field'       => 'page_template',
 					'title'       => _x( 'Page Template', 'Tweaks Module: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Displays the template used for the post.', 'Tweaks Module: Setting Description', GEDITORIAL_TEXTDOMAIN ),
@@ -173,6 +178,9 @@ class gEditorialTweaks extends gEditorialModuleCore
 		// INTERNAL HOOKS
 		if ( $this->get_setting( 'group_taxonomies', FALSE ) )
 			add_action( 'geditorial_tweaks_column_row', array( $this, 'column_row_taxonomies' ) );
+
+		if ( $this->get_setting( 'attachment_count', FALSE ) )
+			add_action( 'geditorial_tweaks_column_row', array( $this, 'column_row_attachments' ), 20 );
 
 		if ( $this->get_setting( 'page_template', FALSE ) )
 			add_action( 'geditorial_tweaks_column_row', array( $this, 'column_row_page_template' ), 50 );
@@ -338,14 +346,45 @@ class gEditorialTweaks extends gEditorialModuleCore
 						.'"><span class="dashicons dashicons-backup"></span></span>';
 
 					echo gEditorialHTML::tag( ( $edit ? 'a' : 'span' ), array(
-						'href'  => $edit ? get_edit_post_link( key( $revisions ) ) : FALSE,
-						'title' => $edit ? _x( 'View the last revision', 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ) : FALSE,
+						'href'   => $edit ? get_edit_post_link( key( $revisions ) ) : FALSE,
+						'title'  => $edit ? _x( 'View the last revision', 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ) : FALSE,
+						'target' => $edit ? '_blank' : FALSE,
 					), sprintf( _nx( '%s Revision', '%s Revisions', $count, 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ), number_format_i18n( $count ) ) );
 
 					gEditorialHelper::getAuthorsEditRow( $authors, $post->post_type, ' <span class="-authors">(', ')</span>' );
 
 				echo '</div>';
 			}
+		}
+	}
+
+	public function column_row_attachments( $post )
+	{
+		$attachments = gEditorialWordPress::getAttachments( $post->ID, '' );
+		$count       = count( $attachments );
+		$mime_types  = array_unique( array_map( function( $r ){
+			return $r->post_mime_type;
+		}, $attachments ) );
+
+		if ( $count ) {
+
+			$view = current_user_can( 'upload_files' );
+
+			echo '<div class="-row tweaks-attachment-count">';
+
+				echo '<span class="-icon" title="'
+					.esc_attr_x( 'Attachments', 'Tweaks Module: Row Icon Title', GEDITORIAL_TEXTDOMAIN )
+					.'"><span class="dashicons dashicons-images-alt2"></span></span>';
+
+				echo gEditorialHTML::tag( ( $view ? 'a' : 'span' ), array(
+					'href'   => $view ? gEditorialWordPress::getPostAttachmentsLink( $post->ID ) : FALSE,
+					'title'  => $view ? _x( 'View the list of attachments', 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ) : FALSE,
+					'target' => $view ? '_blank' : FALSE,
+				), sprintf( _nx( '%s Attachment', '%s Attachments', $count, 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ), number_format_i18n( $count ) ) );
+
+				gEditorialHelper::getMimeTypeEditRow( $mime_types, $post->ID, ' <span class="-mime-types">(', ')</span>' );
+
+			echo '</div>';
 		}
 	}
 

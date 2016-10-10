@@ -14,6 +14,17 @@ class gEditorialWordPress extends gEditorialBaseCore
 		return self::reKey( $users, 'ID' );
 	}
 
+	public static function getAttachments( $post_id, $mime_type = 'image' )
+	{
+		return get_children( array(
+			'post_mime_type' => $mime_type,
+			'post_parent'    => $post_id,
+			'post_type'      => 'attachment',
+			'post_status'    => 'inherit',
+			'numberposts'    => -1,
+		) );
+	}
+
 	// EDITED: 8/12/2016, 8:53:06 AM
 	public static function getPostTypes( $mod = 0, $args = array( 'public' => TRUE ) )
 	{
@@ -343,6 +354,11 @@ class gEditorialWordPress extends gEditorialBaseCore
 	public static function getPostEditLink( $post_id, $extra = array() )
 	{
 		return add_query_arg( array_merge( array( 'post' => $post_id, 'action' => 'edit' ), $extra ), admin_url( 'post.php' ) );
+	}
+
+	public static function getPostAttachmentsLink( $post_id, $extra = array() )
+	{
+		return add_query_arg( array_merge( array( 'post_parent' => $post_id ), $extra ), admin_url( 'upload.php' ) );
 	}
 
 	public static function getAuthorEditHTML( $post_type, $author, $extra = array() )

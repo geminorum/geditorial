@@ -94,7 +94,8 @@ class gEditorialHelper extends gEditorialBaseCore
 			), esc_html( sanitize_term_field( 'name', $term->name, $term->term_id, $object->name, 'display' ) ) );
 		}
 
-		echo $before.join( _x( ', ', 'Module Helper: Term Seperator', GEDITORIAL_TEXTDOMAIN ), $list ).$after;
+		if ( count( $list ) )
+			echo $before.join( _x( ', ', 'Module Helper: Term Seperator', GEDITORIAL_TEXTDOMAIN ), $list ).$after;
 	}
 
 	public static function getAuthorsEditRow( $authors, $post_type = 'post', $before = '', $after = '' )
@@ -108,7 +109,29 @@ class gEditorialHelper extends gEditorialBaseCore
 			if ( $html = gEditorialWordPress::getAuthorEditHTML( $post_type, $author ) )
 				$list[] = $html;
 
-		echo $before.join( _x( ', ', 'Module Helper: Author Seperator', GEDITORIAL_TEXTDOMAIN ), $list ).$after;
+		if ( count( $list ) )
+			echo $before.join( _x( ', ', 'Module Helper: Author Seperator', GEDITORIAL_TEXTDOMAIN ), $list ).$after;
+	}
+
+	public static function getMimeTypeEditRow( $mime_types, $post_parent, $before = '', $after = '' )
+	{
+		if ( ! count( $mime_types ) )
+			return;
+
+		$list = array();
+		$extensions = wp_get_mime_types();
+
+		foreach ( $mime_types as $mime_type ) {
+
+			if ( FALSE === ( $key = array_search( $mime_type, $extensions ) ) )
+				continue;
+
+			$extension = explode( '|', $key );
+			$list[] = strtoupper( $extension[0] );
+		}
+
+		if ( count( $list ) )
+			echo $before.join( _x( ', ', 'Module Helper: Mime Type Seperator', GEDITORIAL_TEXTDOMAIN ), $list ).$after;
 	}
 
 	public static function registerColorBox()
