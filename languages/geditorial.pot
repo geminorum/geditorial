@@ -14,337 +14,342 @@ msgctxt "Calendar Module"
 msgid " for %1$s through %2$s"
 msgstr ""
 
-#: includes/class-helper.php:96
+#: includes/class-helper.php:98
 msgctxt "Module Helper: Term Seperator"
 msgid ", "
 msgstr ""
 
-#: includes/class-helper.php:110
+#: includes/class-helper.php:113
 msgctxt "Module Helper: Author Seperator"
 msgid ", "
 msgstr ""
 
-#: includes/class-helper.php:187
+#: includes/class-helper.php:134
+msgctxt "Module Helper: Mime Type Seperator"
+msgid ", "
+msgstr ""
+
+#: includes/class-helper.php:211
 msgctxt "Module Helper"
 msgid "Other Posts on <a href=\"%1$s\" target=\"_blank\">%2$s</a>"
 msgstr ""
 
-#: includes/class-helper.php:203
+#: includes/class-helper.php:227
 msgctxt "Module Helper"
 msgid "&ndash; <a href=\"%1$s\" target=\"_blank\" title=\"Edit this Post\">%2$s</a>"
 msgstr ""
 
-#: includes/class-helper.php:268
+#: includes/class-helper.php:292
 msgctxt "Module Helper"
 msgid "Thumbnail"
 msgstr ""
 
-#: includes/class-helper.php:274
+#: includes/class-helper.php:298
 msgctxt "Module Helper"
 msgid "Medium"
 msgstr ""
 
-#: includes/class-helper.php:280
+#: includes/class-helper.php:304
 msgctxt "Module Helper"
 msgid "Large"
 msgstr ""
 
-#: includes/class-helper.php:301
+#: includes/class-helper.php:325
 msgctxt "Module Helper"
 msgid "Word count: %s"
 msgstr ""
 
-#: includes/class-helper.php:307
+#: includes/class-helper.php:331
 msgctxt "Module Helper: Post Modified"
 msgid "l, F j, Y"
 msgstr ""
 
-#: includes/class-helper.php:308
+#: includes/class-helper.php:332
 msgctxt "Module Helper: Post Modified"
 msgid "Last Modified on %s"
 msgstr ""
 
-#: includes/class-helper.php:317
+#: includes/class-helper.php:341
 msgctxt "Module Helper: Human Time Diff"
 msgid "%s ago"
 msgstr ""
 
-#: includes/class-helper.php:328
+#: includes/class-helper.php:352
 msgctxt "Module Helper: Human Time Diff"
 msgid "Y/m/d"
 msgstr ""
 
-#: includes/class-helper.php:337
+#: includes/class-helper.php:361
 msgctxt "Module Helper: Default Calendar Type"
 msgid "Gregorian"
 msgstr ""
 
-#: includes/class-helper.php:338
+#: includes/class-helper.php:362
 msgctxt "Module Helper: Default Calendar Type"
 msgid "Japanese"
 msgstr ""
 
-#: includes/class-helper.php:339
+#: includes/class-helper.php:363
 msgctxt "Module Helper: Default Calendar Type"
 msgid "Buddhist"
 msgstr ""
 
-#: includes/class-helper.php:340
+#: includes/class-helper.php:364
 msgctxt "Module Helper: Default Calendar Type"
 msgid "Chinese"
 msgstr ""
 
-#: includes/class-helper.php:341
+#: includes/class-helper.php:365
 msgctxt "Module Helper: Default Calendar Type"
 msgid "Persian"
 msgstr ""
 
-#: includes/class-helper.php:342
+#: includes/class-helper.php:366
 msgctxt "Module Helper: Default Calendar Type"
 msgid "Indian"
 msgstr ""
 
-#: includes/class-helper.php:343
+#: includes/class-helper.php:367
 msgctxt "Module Helper: Default Calendar Type"
 msgid "Islamic"
 msgstr ""
 
-#: includes/class-helper.php:344
+#: includes/class-helper.php:368
 msgctxt "Module Helper: Default Calendar Type"
 msgid "Islamic-Civil"
 msgstr ""
 
-#: includes/class-helper.php:345
+#: includes/class-helper.php:369
 msgctxt "Module Helper: Default Calendar Type"
 msgid "Coptic"
 msgstr ""
 
-#: includes/class-helper.php:346
+#: includes/class-helper.php:370
 msgctxt "Module Helper: Default Calendar Type"
 msgid "Ethiopic"
 msgstr ""
 
-#: includes/class-helper.php:365
+#: includes/class-helper.php:389
 msgctxt "Module Helper: Nooped Count"
 msgid "%2$s"
 msgstr ""
 
-#: includes/class-helper.php:405
+#: includes/class-helper.php:429
 msgctxt "Module Helper: CPT Generator: Name"
 msgid "%1$s"
 msgstr ""
 
-#: includes/class-helper.php:406
+#: includes/class-helper.php:430
 msgctxt "Module Helper: CPT Generator: Menu Name"
 msgid "%1$s"
 msgstr ""
 
-#: includes/class-helper.php:407
+#: includes/class-helper.php:431
 msgctxt "Module Helper: CPT Generator: Description"
 msgid "%1$s"
 msgstr ""
 
-#: includes/class-helper.php:408
+#: includes/class-helper.php:432
 msgctxt "Module Helper: CPT Generator: Singular Name"
 msgid "%2$s"
 msgstr ""
 
-#: includes/class-helper.php:409
+#: includes/class-helper.php:433
 msgctxt "Module Helper: CPT Generator"
 msgid "Add New"
 msgstr ""
 
-#: includes/class-helper.php:410
+#: includes/class-helper.php:434
 msgctxt "Module Helper: CPT Generator"
 msgid "Add New %2$s"
 msgstr ""
 
-#: includes/class-helper.php:411
+#: includes/class-helper.php:435
 msgctxt "Module Helper: CPT Generator"
 msgid "Edit %2$s"
 msgstr ""
 
-#: includes/class-helper.php:412
+#: includes/class-helper.php:436
 msgctxt "Module Helper: CPT Generator"
 msgid "New %2$s"
 msgstr ""
 
-#: includes/class-helper.php:413
+#: includes/class-helper.php:437
 msgctxt "Module Helper: CPT Generator"
 msgid "View %2$s"
 msgstr ""
 
-#: includes/class-helper.php:414
+#: includes/class-helper.php:438
 msgctxt "Module Helper: CPT Generator"
 msgid "Search %1$s"
 msgstr ""
 
-#: includes/class-helper.php:415
+#: includes/class-helper.php:439
 msgctxt "Module Helper: CPT Generator"
 msgid "No %3$s found."
 msgstr ""
 
-#: includes/class-helper.php:416
+#: includes/class-helper.php:440
 msgctxt "Module Helper: CPT Generator"
 msgid "No %3$s found in Trash."
 msgstr ""
 
-#: includes/class-helper.php:417
+#: includes/class-helper.php:441
 msgctxt "Module Helper: CPT Generator"
 msgid "Parent %2$s:"
 msgstr ""
 
-#: includes/class-helper.php:418
+#: includes/class-helper.php:442
 msgctxt "Module Helper: CPT Generator"
 msgid "All %1$s"
 msgstr ""
 
-#: includes/class-helper.php:419
+#: includes/class-helper.php:443
 msgctxt "Module Helper: CPT Generator"
 msgid "%2$s Archives"
 msgstr ""
 
-#: includes/class-helper.php:420
+#: includes/class-helper.php:444
 msgctxt "Module Helper: CPT Generator"
 msgid "Insert into %4$s"
 msgstr ""
 
-#: includes/class-helper.php:421
+#: includes/class-helper.php:445
 msgctxt "Module Helper: CPT Generator"
 msgid "Uploaded to this %4$s"
 msgstr ""
 
-#: includes/class-helper.php:422
+#: includes/class-helper.php:446
 msgctxt "Module Helper: CPT Generator"
 msgid "Filter %3$s list"
 msgstr ""
 
-#: includes/class-helper.php:423
+#: includes/class-helper.php:447
 msgctxt "Module Helper: CPT Generator"
 msgid "%1$s list navigation"
 msgstr ""
 
-#: includes/class-helper.php:424
+#: includes/class-helper.php:448
 msgctxt "Module Helper: CPT Generator"
 msgid "%1$s list"
 msgstr ""
 
-#: includes/class-helper.php:428
+#: includes/class-helper.php:452
 msgctxt "Module Helper: CPT Generator: Featured"
 msgid "%1$s"
 msgstr ""
 
-#: includes/class-helper.php:429
+#: includes/class-helper.php:453
 msgctxt "Module Helper: CPT Generator: Featured"
 msgid "Set %2$s"
 msgstr ""
 
-#: includes/class-helper.php:430
+#: includes/class-helper.php:454
 msgctxt "Module Helper: CPT Generator: Featured"
 msgid "Remove %2$s"
 msgstr ""
 
-#: includes/class-helper.php:431
+#: includes/class-helper.php:455
 msgctxt "Module Helper: CPT Generator: Featured"
 msgid "Use as %2$s"
 msgstr ""
 
-#: includes/class-helper.php:463
+#: includes/class-helper.php:487
 msgctxt "Module Helper: Tax Generator: Name"
 msgid "%1$s"
 msgstr ""
 
-#: includes/class-helper.php:464
+#: includes/class-helper.php:488
 msgctxt "Module Helper: Tax Generator: Menu Name"
 msgid "%1$s"
 msgstr ""
 
-#: includes/class-helper.php:465
+#: includes/class-helper.php:489
 msgctxt "Module Helper: Tax Generator: Singular Name"
 msgid "%2$s"
 msgstr ""
 
-#: includes/class-helper.php:466
+#: includes/class-helper.php:490
 msgctxt "Module Helper: Tax Generator"
 msgid "Search %1$s"
 msgstr ""
 
-#: includes/class-helper.php:467
+#: includes/class-helper.php:491
 msgctxt "Module Helper: Tax Generator"
 msgid "Popular %1$s"
 msgstr ""
 
-#: includes/class-helper.php:468
+#: includes/class-helper.php:492
 msgctxt "Module Helper: Tax Generator"
 msgid "All %1$s"
 msgstr ""
 
-#: includes/class-helper.php:469
+#: includes/class-helper.php:493
 msgctxt "Module Helper: Tax Generator"
 msgid "Parent %2$s"
 msgstr ""
 
-#: includes/class-helper.php:470
+#: includes/class-helper.php:494
 msgctxt "Module Helper: Tax Generator"
 msgid "Parent %2$s:"
 msgstr ""
 
-#: includes/class-helper.php:471
+#: includes/class-helper.php:495
 msgctxt "Module Helper: Tax Generator"
 msgid "Edit %2$s"
 msgstr ""
 
-#: includes/class-helper.php:472
+#: includes/class-helper.php:496
 msgctxt "Module Helper: Tax Generator"
 msgid "View %2$s"
 msgstr ""
 
-#: includes/class-helper.php:473
+#: includes/class-helper.php:497
 msgctxt "Module Helper: Tax Generator"
 msgid "Update %2$s"
 msgstr ""
 
-#: includes/class-helper.php:474
+#: includes/class-helper.php:498
 msgctxt "Module Helper: Tax Generator"
 msgid "Add New %2$s"
 msgstr ""
 
-#: includes/class-helper.php:475
+#: includes/class-helper.php:499
 msgctxt "Module Helper: Tax Generator"
 msgid "New %2$s Name"
 msgstr ""
 
-#: includes/class-helper.php:476
+#: includes/class-helper.php:500
 msgctxt "Module Helper: Tax Generator"
 msgid "Separate %3$s with commas"
 msgstr ""
 
-#: includes/class-helper.php:477
+#: includes/class-helper.php:501
 msgctxt "Module Helper: Tax Generator"
 msgid "Add or remove %3$s"
 msgstr ""
 
-#: includes/class-helper.php:478
+#: includes/class-helper.php:502
 msgctxt "Module Helper: Tax Generator"
 msgid "Choose from the most used %3$s"
 msgstr ""
 
-#: includes/class-helper.php:479
+#: includes/class-helper.php:503
 msgctxt "Module Helper: Tax Generator"
 msgid "No %3$s found."
 msgstr ""
 
-#: includes/class-helper.php:480
+#: includes/class-helper.php:504
 msgctxt "Module Helper: Tax Generator"
 msgid "No %3$s"
 msgstr ""
 
-#: includes/class-helper.php:481
+#: includes/class-helper.php:505
 msgctxt "Module Helper: Tax Generator"
 msgid "%1$s list navigation"
 msgstr ""
 
-#: includes/class-helper.php:482
+#: includes/class-helper.php:506
 msgctxt "Module Helper: Tax Generator"
 msgid "%1$s list"
 msgstr ""
@@ -2819,7 +2824,7 @@ msgctxt "Meta Module: Titles"
 msgid "SubTitle"
 msgstr ""
 
-#: modules/meta/meta.php:47
+#: modules/meta/meta.php:47, modules/meta/meta.php:56
 msgctxt "Meta Module: Titles"
 msgid "Author"
 msgstr ""
@@ -2854,124 +2859,124 @@ msgctxt "Meta Module: Titles"
 msgid "Source URL"
 msgstr ""
 
-#: modules/meta/meta.php:59
+#: modules/meta/meta.php:60
 msgctxt "Meta Module: Descriptions"
 msgid "String to place over the post title"
 msgstr ""
 
-#: modules/meta/meta.php:60
+#: modules/meta/meta.php:61
 msgctxt "Meta Module: Descriptions"
 msgid "String to place under the post title"
 msgstr ""
 
-#: modules/meta/meta.php:61
+#: modules/meta/meta.php:62
 msgctxt "Meta Module: Descriptions"
 msgid "String to override the post author"
 msgstr ""
 
-#: modules/meta/meta.php:62
+#: modules/meta/meta.php:63
 msgctxt "Meta Module: Descriptions"
 msgid "Editorial paragraph presented before post content"
 msgstr ""
 
-#: modules/meta/meta.php:63
+#: modules/meta/meta.php:64
 msgctxt "Meta Module: Descriptions"
 msgid "String to reperesent that the post is on a column or section"
 msgstr ""
 
-#: modules/meta/meta.php:64
+#: modules/meta/meta.php:65
 msgctxt "Meta Module: Descriptions"
 msgid "Taxonomy for better categorizing columns"
 msgstr ""
 
-#: modules/meta/meta.php:65
+#: modules/meta/meta.php:66
 msgctxt "Meta Module: Descriptions"
 msgid "Column Header Override"
 msgstr ""
 
-#: modules/meta/meta.php:67
+#: modules/meta/meta.php:68
 msgctxt "Meta Module: Descriptions"
 msgid "Original Title of Source Content"
 msgstr ""
 
-#: modules/meta/meta.php:68
+#: modules/meta/meta.php:69
 msgctxt "Meta Module: Descriptions"
 msgid "Full URL to the Source of the Content"
 msgstr ""
 
-#: modules/meta/meta.php:72
+#: modules/meta/meta.php:73
 msgctxt "Meta Module: Column Title"
 msgid "Metadata"
 msgstr ""
 
-#: modules/meta/meta.php:73
+#: modules/meta/meta.php:74
 msgctxt "Meta Module: Column Title"
 msgid "Author"
 msgstr ""
 
-#: modules/meta/meta.php:74
+#: modules/meta/meta.php:75
 msgctxt "Meta Module: Meta Box Title"
 msgid "Metadata"
 msgstr ""
 
-#: modules/meta/meta.php:75
+#: modules/meta/meta.php:76
 msgctxt "Meta Module: Meta Box Action Title"
 msgid "Configure"
 msgstr ""
 
-#: modules/meta/meta.php:78
+#: modules/meta/meta.php:79
 msgctxt "Meta Module: Setting Button"
 msgid "Check"
 msgstr ""
 
-#: modules/meta/meta.php:79
+#: modules/meta/meta.php:80
 msgctxt "Meta Module: Setting Button"
 msgid "Covert"
 msgstr ""
 
-#: modules/meta/meta.php:80
+#: modules/meta/meta.php:81
 msgctxt "Meta Module: Setting Button"
 msgid "Delete"
 msgstr ""
 
-#: modules/meta/meta.php:83
+#: modules/meta/meta.php:84
 msgctxt "Meta Module: Noop"
 msgid "Column Header"
 msgid_plural "Column Headers"
 msgstr[0] ""
 msgstr[1] ""
 
-#: modules/meta/meta.php:284
+#: modules/meta/meta.php:285
 msgctxt "Meta Module"
 msgid "No Meta Fields"
 msgstr ""
 
-#: modules/meta/meta.php:632
+#: modules/meta/meta.php:633
 msgctxt "Meta Module: Tools Message"
 msgid "Field %s Converted"
 msgstr ""
 
-#: modules/meta/meta.php:633
+#: modules/meta/meta.php:634
 msgctxt "Meta Module: Tools Message"
 msgid "Field %s Deleted"
 msgstr ""
 
-#: modules/meta/meta.php:636
+#: modules/meta/meta.php:637
 msgctxt "Meta Module: Tools Message"
 msgid "No Field"
 msgstr ""
 
-#: modules/meta/meta.php:647
+#: modules/meta/meta.php:648
 msgctxt "Meta Module"
 msgid "Meta Tools"
 msgstr ""
 
-#: modules/meta/meta.php:650
+#: modules/meta/meta.php:651
 msgctxt "Meta Module"
 msgid "Import Custom Fields"
 msgstr ""
 
-#: modules/meta/meta.php:694
+#: modules/meta/meta.php:695
 msgctxt "Meta Module"
 msgid "Check for Custom Fields and import them into Meta"
 msgstr ""
@@ -3942,110 +3947,137 @@ msgstr ""
 
 #: modules/tweaks/tweaks.php:54
 msgctxt "Tweaks Module: Setting Title"
-msgid "Page Template"
+msgid "Attachment Count"
 msgstr ""
 
 #: modules/tweaks/tweaks.php:55
 msgctxt "Tweaks Module: Setting Description"
-msgid "Displays the template used for the post."
+msgid "Displays attachment summary of the post."
 msgstr ""
 
 #: modules/tweaks/tweaks.php:59
 msgctxt "Tweaks Module: Setting Title"
-msgid "Category Search"
+msgid "Page Template"
 msgstr ""
 
 #: modules/tweaks/tweaks.php:60
 msgctxt "Tweaks Module: Setting Description"
-msgid "Replaces the category selector to include searching categories"
+msgid "Displays the template used for the post."
 msgstr ""
 
 #: modules/tweaks/tweaks.php:64
 msgctxt "Tweaks Module: Setting Title"
-msgid "Checklist Tree"
+msgid "Category Search"
 msgstr ""
 
 #: modules/tweaks/tweaks.php:65
 msgctxt "Tweaks Module: Setting Description"
-msgid "Preserves the category hierarchy on the post editing screen"
+msgid "Replaces the category selector to include searching categories"
 msgstr ""
 
 #: modules/tweaks/tweaks.php:69
 msgctxt "Tweaks Module: Setting Title"
-msgid "Excerpt Count"
+msgid "Checklist Tree"
 msgstr ""
 
 #: modules/tweaks/tweaks.php:70
 msgctxt "Tweaks Module: Setting Description"
-msgid "Display word count for excerpt textareas"
+msgid "Preserves the category hierarchy on the post editing screen"
 msgstr ""
 
 #: modules/tweaks/tweaks.php:74
 msgctxt "Tweaks Module: Setting Title"
-msgid "Group Taxonomies"
+msgid "Excerpt Count"
 msgstr ""
 
 #: modules/tweaks/tweaks.php:75
 msgctxt "Tweaks Module: Setting Description"
+msgid "Display word count for excerpt textareas"
+msgstr ""
+
+#: modules/tweaks/tweaks.php:79
+msgctxt "Tweaks Module: Setting Title"
+msgid "Group Taxonomies"
+msgstr ""
+
+#: modules/tweaks/tweaks.php:80
+msgctxt "Tweaks Module: Setting Description"
 msgid "Group selected taxonomies on selected post type edit pages"
 msgstr ""
 
-#: modules/tweaks/tweaks.php:86
+#: modules/tweaks/tweaks.php:91
 msgctxt "Tweaks Module: Column Title"
 msgid "Title"
 msgstr ""
 
-#: modules/tweaks/tweaks.php:87
+#: modules/tweaks/tweaks.php:92
 msgctxt "Tweaks Module: Column Title"
 msgid "Extra"
 msgstr ""
 
-#: modules/tweaks/tweaks.php:88
+#: modules/tweaks/tweaks.php:93
 msgctxt "Tweaks Module: Meta Box Search Title"
 msgid "Type to filter by"
 msgstr ""
 
-#: modules/tweaks/tweaks.php:89
+#: modules/tweaks/tweaks.php:94
 msgctxt "Tweaks Module: Meta Box Search Placeholder"
 msgid "Search &hellip;"
 msgstr ""
 
-#: modules/tweaks/tweaks.php:95
+#: modules/tweaks/tweaks.php:100
 msgctxt "Tweaks Module"
 msgid "Categories"
 msgstr ""
 
-#: modules/tweaks/tweaks.php:100
+#: modules/tweaks/tweaks.php:105
 msgctxt "Tweaks Module"
 msgid "Tags"
 msgstr ""
 
-#: modules/tweaks/tweaks.php:136
+#: modules/tweaks/tweaks.php:141
 msgctxt "Tweaks Module"
 msgid "Excerpt"
 msgstr ""
 
-#: modules/tweaks/tweaks.php:304
+#: modules/tweaks/tweaks.php:315
 msgctxt "Tweaks Module: Row Icon Title"
 msgid "Page Template"
 msgstr ""
 
-#: modules/tweaks/tweaks.php:334
+#: modules/tweaks/tweaks.php:346
 msgctxt "Tweaks Module: Row Icon Title"
 msgid "Revisions"
 msgstr ""
 
-#: modules/tweaks/tweaks.php:339
-msgctxt "Tweaks Module"
-msgid "View the last revision"
-msgstr ""
-
-#: modules/tweaks/tweaks.php:340
+#: modules/tweaks/tweaks.php:349
 msgctxt "Tweaks Module"
 msgid "%s Revision"
 msgid_plural "%s Revisions"
 msgstr[0] ""
 msgstr[1] ""
+
+#: modules/tweaks/tweaks.php:354
+msgctxt "Tweaks Module"
+msgid "View the last revision"
+msgstr ""
+
+#: modules/tweaks/tweaks.php:381
+msgctxt "Tweaks Module: Row Icon Title"
+msgid "Attachments"
+msgstr ""
+
+#: modules/tweaks/tweaks.php:384
+msgctxt "Tweaks Module"
+msgid "%s Attachment"
+msgid_plural "%s Attachments"
+msgstr[0] ""
+msgstr[1] ""
+
+#: modules/tweaks/tweaks.php:389
+msgctxt "Tweaks Module"
+msgid "View the list of attachments"
+msgstr ""
 
 #: modules/users/users.php:14
 msgctxt "Users Module"
