@@ -334,7 +334,7 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 		if ( is_null( $post_id ) )
 			$post_id = $post->ID;
 
-		$the_issues = gEditorial()->magazine->get_issue_post( $post_id );
+		$the_issues = gEditorial()->magazine->get_assoc_post( $post_id );
 		if ( FALSE === $the_issues )
 			return;
 
@@ -395,7 +395,7 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 		else if ( 'random' == $args['id'] )
 			$args['id'] = self::get_random_issue();
 		else if ( 'issue' == $args['id'] )
-			$args['id'] = gEditorial()->magazine->get_issue_post( NULL, TRUE );
+			$args['id'] = gEditorial()->magazine->get_assoc_post( NULL, TRUE );
 
 		$img = self::get_issue_cover( $size, $args['id'], $args['attr'], $args['def'] );
 		if ( FALSE !== $link ) {
@@ -452,7 +452,7 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 	public static function the_issue_cover( $b = '', $a = '', $size = 'raw', $link = 'parent', $args = array() )
 	{
 		$args = self::issue_cover_parse_arg( $args, $size );
-		$the_issues = gEditorial()->magazine->get_issue_post( $args['id'] );
+		$the_issues = gEditorial()->magazine->get_assoc_post( $args['id'] );
 
 		if ( FALSE !== $the_issues ) {
 			$result = '';

@@ -1601,6 +1601,13 @@ class gEditorialModuleCore extends gEditorialBaseCore
 		return $items;
 	}
 
+	// DEFAULT METHOD
+	// used for issue/book/etc.
+	public function get_assoc_post( $post_id = NULL, $single = FALSE )
+	{
+		return FALSE;
+	}
+
 	public function do_restrict_manage_posts_taxes( $taxes, $posttype_constant_key )
 	{
 		global $wp_query;

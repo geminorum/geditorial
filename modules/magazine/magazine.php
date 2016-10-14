@@ -705,7 +705,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 		echo '</div>';
 	}
 
-	public function get_issue_post( $post_id = NULL, $single = FALSE )
+	public function get_assoc_post( $post_id = NULL, $single = FALSE )
 	{
 		if ( is_null( $post_id ) )
 			$post_id = get_the_ID();
