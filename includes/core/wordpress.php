@@ -25,6 +25,25 @@ class gEditorialWordPress extends gEditorialBaseCore
 		) );
 	}
 
+	public static function getLastPostOrder( $post_type = 'post', $exclude = '', $key = 'menu_order', $status = 'publish,private,draft' )
+	{
+		$post = get_posts( array(
+			'posts_per_page' => 1,
+			'orderby'        => 'menu_order',
+			'exclude'        => $exclude,
+			'post_type'      => $post_type,
+			'post_status'    => $status,
+		) );
+
+		if ( ! count( $post ) )
+			return 0;
+
+		if ( 'menu_order' == $key )
+			return intval( $post[0]->menu_order );
+
+		return $post[0]->{$key};
+	}
+
 	// EDITED: 8/12/2016, 8:53:06 AM
 	public static function getPostTypes( $mod = 0, $args = array( 'public' => TRUE ) )
 	{

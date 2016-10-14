@@ -391,7 +391,7 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 		$args = self::issue_cover_parse_arg( $args, $size );
 
 		if ( 'latest' == $args['id'] )
-			$args['id'] = gEditorialHelper::getLastPostOrder( self::constant( 'issue_cpt', 'issue' ), '', 'ID', 'publish' );
+			$args['id'] = gEditorialWordPress::getLastPostOrder( self::constant( 'issue_cpt', 'issue' ), '', 'ID', 'publish' );
 		else if ( 'random' == $args['id'] )
 			$args['id'] = self::get_random_issue();
 		else if ( 'issue' == $args['id'] )
@@ -508,7 +508,7 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 	// helper for themes
 	public static function getLatestIssueID()
 	{
-		return gEditorialHelper::getLastPostOrder( self::constant( 'issue_cpt', 'issue' ), '', 'ID', 'publish' );
+		return gEditorialWordPress::getLastPostOrder( self::constant( 'issue_cpt', 'issue' ), '', 'ID', 'publish' );
 	}
 
 	public static function get_random_issue( $object = FALSE )

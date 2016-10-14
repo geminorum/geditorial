@@ -517,7 +517,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 	public function wp_insert_post_data( $data, $postarr )
 	{
 		if ( $this->constant( 'issue_cpt' ) == $postarr['post_type'] && ! $data['menu_order'] )
-			$data['menu_order'] = self::getLastPostOrder( $this->constant( 'issue_cpt' ),
+			$data['menu_order'] = gEditorialWordPress::getLastPostOrder( $this->constant( 'issue_cpt' ),
 				( isset( $postarr['ID'] ) ? $postarr['ID'] : '' ) ) + 1;
 
 		return $data;

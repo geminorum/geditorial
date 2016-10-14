@@ -50,7 +50,7 @@ class gEditorialMagazineWidget_IssueCover extends gEditorialWidgetCore
 		$id   = get_queried_object_id();
 
 		if ( ! empty( $instance['latest_issue'] ) ) {
-			$id = gEditorialHelper::getLastPostOrder( $cpt, '', 'ID', 'publish' );
+			$id = gEditorialWordPress::getLastPostOrder( $cpt, '', 'ID', 'publish' );
 
 		} else if ( ! empty ( $instance['issue_id'] ) ) {
 			$id = $instance['issue_id'];

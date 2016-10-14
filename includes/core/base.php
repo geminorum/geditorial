@@ -842,25 +842,6 @@ class gEditorialBaseCore
 		return $count;
 	}
 
-	public static function getLastPostOrder( $post_type = 'post', $exclude = '', $key = 'menu_order', $status = 'publish,private,draft' )
-	{
-		$post = get_posts( array(
-			'posts_per_page' => 1,
-			'orderby'        => 'menu_order',
-			'exclude'        => $exclude,
-			'post_type'      => $post_type,
-			'post_status'    => $status,
-		) );
-
-		if ( ! count( $post ) )
-			return 0;
-
-		if ( 'menu_order' == $key )
-			return intval( $post[0]->menu_order );
-
-		return $post[0]->{$key};
-	}
-
 	// this must be core's
 	// call this late on 'after_setup_theme' hook
 	public static function themeThumbnails( $post_types )
