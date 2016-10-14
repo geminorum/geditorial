@@ -72,6 +72,9 @@ class gEditorial
 
 		foreach ( scandir( GEDITORIAL_DIR.'modules/' ) as $module ) {
 
+			if ( in_array( $module, array( '.', '..' ) ) )
+				continue;
+
 			if ( file_exists( GEDITORIAL_DIR.'modules/'.$module.'/'.$module.'.php' ) ) {
 				include_once( GEDITORIAL_DIR.'modules/'.$module.'/'.$module.'.php' );
 
