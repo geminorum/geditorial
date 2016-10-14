@@ -3,6 +3,16 @@
 class gEditorialWidgetCore extends WP_Widget
 {
 
+	const MODULE = FALSE;
+
+	protected static function constant( $key, $default = FALSE )
+	{
+		if ( self::MODULE && gEditorial()->enabled( self::MODULE ) )
+			return gEditorial()->get_constant( self::MODULE, $key, $default );
+
+		return $default;
+	}
+
 	public function __construct()
 	{
 		$args = gEditorialTemplateCore::atts( array(

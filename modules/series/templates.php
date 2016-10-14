@@ -3,14 +3,10 @@
 class gEditorialSeriesTemplates extends gEditorialTemplateCore
 {
 
+	const MODULE = 'series';
+
 	public static function shortcode_multiple_series( $atts, $content = NULL, $tag = '' )
 	{
-		global $post;
-
-		$shortcode  = gEditorial()->get_constant( 'series', 'series_shortcode', 'series' );
-		$multiple   = gEditorial()->get_constant( 'series', 'multiple_series_shortcode', 'multiple_series' );
-		$series_tax = gEditorial()->get_constant( 'series', 'series_tax', 'series' );
-
 		$args = shortcode_atts( array(
 			'ids'       => array(),
 			'title'     => '',
@@ -23,13 +19,13 @@ class gEditorialSeriesTemplates extends gEditorialTemplateCore
 			'after'     => '',
 			'context'   => NULL,
 			'args'      => array(),
-		), $atts, $multiple );
+		), $atts, self::constant( 'multiple_series_shortcode', 'multiple_series' ) );
 
 		if ( FALSE === $args['context'] )
 			return NULL;
 
 		if ( empty( $args['ids'] ) || ! count( $args['ids'] ) ) {
-			$terms = wp_get_object_terms( (int) $post->ID, $series_tax, array(
+			$terms = wp_get_object_terms( get_the_ID(), self::constant( 'series_tax', 'series' ), array(
 				'order'   => $args['order'],
 				'orderby' => $args['orderby'],
 				'fields'  => 'ids',
@@ -42,7 +38,7 @@ class gEditorialSeriesTemplates extends gEditorialTemplateCore
 			$output .= self::shortcode_series( array_merge( array(
 				'id' => $id,
 				'title_tag' => 'h4',
-			), $args['args'] ), NULL, $shortcode );
+			), $args['args'] ), NULL, self::constant( 'series_shortcode', 'series' ) );
 
 		if ( ! empty( $output ) ) {
 			if ( $args['title'] )
@@ -61,11 +57,10 @@ class gEditorialSeriesTemplates extends gEditorialTemplateCore
 	// [series title="More WordPress Theme Lists" title_wrap="h4" limit="5" list="ol" future="off" single="off"]
 	public static function shortcode_series( $atts, $content = NULL, $tag = '' )
 	{
-		global $post;
 		$error = FALSE;
 
-		$shortcode  = gEditorial()->get_constant( 'series', 'series_shortcode', 'series' );
-		$series_tax = gEditorial()->get_constant( 'series', 'series_tax', 'series' );
+		$shortcode  = self::constant( 'series_shortcode', 'series' );
+		$series_tax = self::constant( 'series_tax', 'series' );
 
 		$args = shortcode_atts( array(
 			'slug'      => '',
@@ -101,7 +96,7 @@ class gEditorialSeriesTemplates extends gEditorialTemplateCore
 			$args['cb'] = FALSE;
 
 		if ( TRUE === $args['exclude'] )
-			$args['exclude'] = array( $post->ID );
+			$args['exclude'] = array( get_the_ID() );
 		else if ( FALSE === $args['exclude'] )
 			$args['exclude'] = array();
 
@@ -130,7 +125,7 @@ class gEditorialSeriesTemplates extends gEditorialTemplateCore
 		} else {
 
 			// use post's own series tax if neither "id" nor "slug" exist
-			$terms = wp_get_object_terms( (int) $post->ID, $series_tax, array( 'fields' => 'ids' ) );
+			$terms = wp_get_object_terms( get_the_ID(), $series_tax, array( 'fields' => 'ids' ) );
 			if ( $terms && ! is_wp_error( $terms ) ) {
 				$args['id'] = $terms[0];
 				$tax_query = array( array(

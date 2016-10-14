@@ -3,6 +3,8 @@
 class gEditorialMetaTemplates extends gEditorialTemplateCore
 {
 
+	const MODULE = 'meta';
+
 	public static function sanitize_field( $field )
 	{
 		if ( is_array( $field ) )
@@ -164,15 +166,15 @@ class gEditorialMetaTemplates extends gEditorialTemplateCore
 			'desc'    => NULL, // FALSE to disable
 		), $atts );
 
-		$title    = self::get_meta( 'ch', array( 'id' => $args['id'], 'def' => FALSE ) );
-		$taxonomy = gEditorial()->get_constant( 'meta', 'ct_tax', 'label' );
+		$tax   = self::constant( 'ct_tax', 'label' );
+		$title = self::get_meta( 'ch', array( 'id' => $args['id'], 'def' => FALSE ) );
 
-		if ( taxonomy_exists( $taxonomy ) ) {
-			$term = gEditorialHelper::theTerm( $taxonomy, $args['id'], TRUE );
+		if ( taxonomy_exists( $tax ) ) {
+			$term = gEditorialHelper::theTerm( $tax, $args['id'], TRUE );
 			if ( $term && ! $title )
-				$title = sanitize_term_field( 'name', $term->name, $term->term_id, $taxonomy, 'display' );
+				$title = sanitize_term_field( 'name', $term->name, $term->term_id, $tax, 'display' );
 			if ( $term && is_null( $args['link'] ) )
-				$args['link'] = get_term_link( $term, $taxonomy );
+				$args['link'] = get_term_link( $term, $tax );
 			if ( $term && is_null( $args['desc'] ) )
 				$args['desc'] = self::termDescription( $term, FALSE );
 		} else {
@@ -212,12 +214,12 @@ class gEditorialMetaTemplates extends gEditorialTemplateCore
 	{
 		global $post;
 
-		$id     = isset( $args['id'] ) ? $args['id'] : $post->ID;
-		$ct_tax = gEditorial()->get_constant( 'meta', 'ct_tax', 'label' );
+		$tax = self::constant( 'ct_tax', 'label' );
+		$id  = isset( $args['id'] ) ? $args['id'] : $post->ID;
 
-		$term  = gEditorialHelper::theTerm( $ct_tax, $id, TRUE );
+		$term  = gEditorialHelper::theTerm( $tax, $id, TRUE );
 		$title = self::get_meta( 'ch', array( 'id' => $id, 'def' => FALSE ) );
-		$link  = $term ? get_term_link( $term, $ct_tax ) : ( $title ? get_option( 'home' ).'/?s='.urlencode( $title ) : FALSE );
+		$link  = $term ? get_term_link( $term, $tax ) : ( $title ? get_option( 'home' ).'/?s='.urlencode( $title ) : FALSE );
 		$desc  = $term ? $term->name.( $term->description ? strip_tags( ' :: '.$term->description ) : '' ) : sprintf( apply_filters( 'gmeta_search_link_title_attr', _x( 'Search %1$s for %2$s', 'Meta Module', GEDITORIAL_TEXTDOMAIN ) ), get_bloginfo( 'name' ), $title );
 
 		if ( $term || $title ) {

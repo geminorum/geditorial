@@ -3,6 +3,8 @@
 class gEditorialMagazineWidget_IssueCover extends gEditorialWidgetCore
 {
 
+	const MODULE = 'magazine';
+
 	protected function setup()
 	{
 		return array(
@@ -43,18 +45,18 @@ class gEditorialMagazineWidget_IssueCover extends gEditorialWidgetCore
 
 	public function widget_html( $args, $instance )
 	{
-		$issue_cpt = gEditorial()->get_constant( 'magazine', 'issue_cpt', 'issue' );
-		$func      = array( 'gEditorialMagazineTemplates', 'issue_cover' );
-		$id        = get_queried_object_id();
+		$func = array( 'gEditorialMagazineTemplates', 'issue_cover' );
+		$cpt  = self::constant( 'issue_cpt', 'issue' );
+		$id   = get_queried_object_id();
 
 		if ( ! empty( $instance['latest_issue'] ) ) {
-			$id = gEditorialHelper::getLastPostOrder( $issue_cpt, '', 'ID', 'publish' );
+			$id = gEditorialHelper::getLastPostOrder( $cpt, '', 'ID', 'publish' );
 
 		} else if ( ! empty ( $instance['issue_id'] ) ) {
 			$id = $instance['issue_id'];
 
 		} else {
-			if ( $issue_cpt != get_post_type( $id ) )
+			if ( $cpt != get_post_type( $id ) )
 				$func = array( 'gEditorialMagazineTemplates', 'the_issue_cover' );
 		}
 
@@ -89,15 +91,15 @@ class gEditorialMagazineWidget_IssueCover extends gEditorialWidgetCore
 
 	public function form( $instance )
 	{
-		$issue_cpt = gEditorial()->get_constant( 'magazine', 'issue_cpt', 'issue' );
+		$cpt = self::constant( 'issue_cpt', 'issue' );
 
 		echo '<div class="geditorial-admin-wrap-widgetform">';
 
 		$this->form_title( $instance );
 		$this->form_title_link( $instance );
 
-		$this->form_post_id( $instance, '0', 'issue_id', 'posttype', $issue_cpt, _x( 'The Issue:', 'Magazine Module: Widget: Issue Cover', GEDITORIAL_TEXTDOMAIN ) );
-		$this->form_image_size( $instance, $issue_cpt.'-thumbnail', 'image_size', $issue_cpt );
+		$this->form_post_id( $instance, '0', 'issue_id', 'posttype', $cpt, _x( 'The Issue:', 'Magazine Module: Widget: Issue Cover', GEDITORIAL_TEXTDOMAIN ) );
+		$this->form_image_size( $instance, $cpt.'-thumbnail', 'image_size', $cpt );
 
 		$this->form_checkbox( $instance, FALSE, 'latest_issue', _x( 'Always the latest issue', 'Magazine Module: Widget: Issue Cover', GEDITORIAL_TEXTDOMAIN ) );
 		$this->form_checkbox( $instance, FALSE, 'link_issue', _x( 'Link to the issue', 'Magazine Module: Widget: Issue Cover', GEDITORIAL_TEXTDOMAIN ) );

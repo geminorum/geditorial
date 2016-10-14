@@ -8,7 +8,7 @@ class gEditorialTemplateCore extends gEditorialBaseCore
 	protected static function constant( $key, $default = FALSE )
 	{
 		if ( self::MODULE && gEditorial()->enabled( self::MODULE ) )
-			return gEditorial()->{self::MODULE}->constant( $key, $default );
+			return gEditorial()->get_constant( self::MODULE, $key, $default );
 
 		return $default;
 	}

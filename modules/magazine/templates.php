@@ -3,8 +3,13 @@
 class gEditorialMagazineTemplates extends gEditorialTemplateCore
 {
 
+	const MODULE = 'magazine';
+
 	public static function sanitize_field( $field )
 	{
+		if ( is_array( $field ) )
+			return $field;
+
 		$fields = array(
 			'over-title' => array( 'ot', 'over-title' ),
 			'sub-title'  => array( 'st', 'sub-title' ),
@@ -25,8 +30,8 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 		$error  = FALSE;
 		$output = '';
 
-		$issue_cpt = gEditorial()->get_constant( 'magazine', 'issue_cpt', 'issue' );
-		$issue_tax = gEditorial()->get_constant( 'magazine', 'issue_tax', 'issues' );
+		$issue_cpt = self::constant( 'issue_cpt', 'issue' );
+		$issue_tax = self::constant( 'issue_tax', 'issues' );
 
 		$args = shortcode_atts( array(
 			'slug'       => '',
@@ -40,7 +45,7 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 			'orderby'    => 'date',
 			'order'      => 'ASC',
 			'cb'         => FALSE,
-		), $atts, gEditorial()->get_constant( 'magazine', 'issue_shortcode', 'issue' ) );
+		), $atts, self::constant( 'issue_shortcode', 'issue' ) );
 
 		$key = md5( serialize( $args ) );
 		$cache = wp_cache_get( $key, $issue_cpt );
@@ -170,8 +175,7 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 		$error = FALSE;
 		$title = '';
 
-		$issue_cpt = gEditorial()->get_constant( 'magazine', 'issue_cpt', 'issue' );
-		$span_tax  = gEditorial()->get_constant( 'magazine', 'span_tax', 'issue_span' );
+		$span_tax = self::constant( 'span_tax', 'issue_span' );
 
 		$args = shortcode_atts( array(
 			'slug'        => '',
@@ -190,7 +194,7 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 			'cb'          => FALSE,
 			'link'        => 'title', // not used yet
 			'cover'       => FALSE,
-		), $atts, gEditorial()->get_constant( 'magazine', 'span_shortcode', 'issue-span' ) );
+		), $atts, self::constant( 'span_shortcode', 'issue-span' ) );
 
 		$key = md5( serialize( $args ) );
 		$cache = wp_cache_get( $key, $span_tax );
@@ -266,7 +270,7 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 				'orderby'        => ( $args['orderby'] == 'page' ? 'date' : $args['orderby'] ),
 				'order'          => $args['order'],
 				'post_status'    => $post_status,
-				'post_type'      => $issue_cpt,
+				'post_type'      => self::constant( 'issue_cpt', 'issue' ),
 			);
 
 			if ( $args['cover'] )
@@ -384,11 +388,10 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 
 	public static function issue_cover( $b = '', $a = '', $size = 'raw', $link = 'parent', $args = array() )
 	{
-		$issue_cpt = gEditorial()->get_constant( 'magazine', 'issue_cpt', 'issue' );
-		$args      = self::issue_cover_parse_arg( $args, $size );
+		$args = self::issue_cover_parse_arg( $args, $size );
 
 		if ( 'latest' == $args['id'] )
-			$args['id'] = gEditorialHelper::getLastPostOrder( $issue_cpt, '', 'ID', 'publish' );
+			$args['id'] = gEditorialHelper::getLastPostOrder( self::constant( 'issue_cpt', 'issue' ), '', 'ID', 'publish' );
 		else if ( 'random' == $args['id'] )
 			$args['id'] = self::get_random_issue();
 		else if ( 'issue' == $args['id'] )
@@ -505,8 +508,7 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 	// helper for themes
 	public static function getLatestIssueID()
 	{
-		$issue_cpt = gEditorial()->get_constant( 'magazine', 'issue_cpt', 'issue' );
-		return gEditorialHelper::getLastPostOrder( $issue_cpt, '', 'ID', 'publish' );
+		return gEditorialHelper::getLastPostOrder( self::constant( 'issue_cpt', 'issue' ), '', 'ID', 'publish' );
 	}
 
 	public static function get_random_issue( $object = FALSE )
@@ -515,7 +517,7 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 			'numberposts' => 1,
 			'orderby'     => 'rand', //'post_date',
 			// 'order'       => 'DESC',
-			'post_type'   => gEditorial()->get_constant( 'magazine', 'issue_cpt', 'issue' ),
+			'post_type'   => self::constant( 'issue_cpt', 'issue' ),
 			'post_status' => 'publish',
 			// 'meta_key'    => '_thumbnail_id', // must has cover
 			'meta_query'  => array(

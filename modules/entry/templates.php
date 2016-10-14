@@ -10,9 +10,8 @@ class gEditorialEntryTemplates extends gEditorialTemplateCore
 	{
 		global $post;
 
-		$cpt = gEditorial()->get_constant( self::MODULE, 'entry_cpt', 'entry' );
-		$tax = gEditorial()->get_constant( self::MODULE, 'section_tax', 'entry_section' );
-		$tag = gEditorial()->get_constant( self::MODULE, 'section_shortcode', $tag );
+		$cpt = self::constant( 'entry_cpt', 'entry' );
+		$tax = self::constant( 'section_tax', 'entry_section' );
 
 		$args = shortcode_atts( array(
 			'slug'          => '',
@@ -38,7 +37,7 @@ class gEditorialEntryTemplates extends gEditorialTemplateCore
 			'cb'            => FALSE,
 			'context'       => NULL,
 			'wrap'          => TRUE,
-		), $atts, $tag );
+		), $atts, self::constant( 'section_shortcode', 'entry-section' ) );
 
 		if ( FALSE === $args['context'] )
 			return NULL;

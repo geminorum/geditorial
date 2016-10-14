@@ -129,10 +129,10 @@ class gEditorialTodayHelper extends gEditorialHelper
 	public static function getTheDayConstants()
 	{
 		return array(
-			'cal'   => gEditorial()->get_constant( self::MODULE, 'meta_cal', '_theday_cal' ),
-			'day'   => gEditorial()->get_constant( self::MODULE, 'meta_day', '_theday_day' ),
-			'month' => gEditorial()->get_constant( self::MODULE, 'meta_month', '_theday_month' ),
-			'year'  => gEditorial()->get_constant( self::MODULE, 'meta_year', '_theday_year' ),
+			'cal'   => self::constant( 'meta_cal', '_theday_cal' ),
+			'day'   => self::constant( 'meta_day', '_theday_day' ),
+			'month' => self::constant( 'meta_month', '_theday_month' ),
+			'year'  => self::constant( 'meta_year', '_theday_year' ),
 		);
 	}
 
