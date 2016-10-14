@@ -27,6 +27,14 @@ class gEditorialMeta extends gEditorialModuleCore
 		return array(
 			'posttypes_option' => 'posttypes_option',
 			'fields_option'    => 'fields_option',
+			'_general' => array(
+				array(
+					'field'       => 'overwrite_author',
+					'title'       => _x( 'Overwrite Author', 'Meta Module: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Replace author display name with author meta data.', 'Meta Module: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+				),
+				'insert_content_before',
+			),
 		);
 	}
 
@@ -152,8 +160,14 @@ class gEditorialMeta extends gEditorialModuleCore
 
 		$this->add_post_type_fields( $this->constant( 'page_cpt' ) );
 
-		if ( ! is_admin() )
-			add_action( 'gnetwork_themes_content_before', array( $this, 'content_before' ), 50 );
+		if ( ! is_admin() ) {
+
+			if ( $this->get_setting( 'insert_content_before', FALSE ) )
+				add_action( 'gnetwork_themes_content_before', array( $this, 'content_before' ), 50 );
+
+			if ( $this->get_setting( 'overwrite_author', FALSE ) )
+				add_action( 'the_author', array( $this, 'the_author' ), 9 );
+		}
 	}
 
 	public function init_ajax()
@@ -621,6 +635,25 @@ class gEditorialMeta extends gEditorialModuleCore
 				gEditorialMetaTemplates::gmeta_lead(
 					'<div class="geditorial-wrap -meta -before entry-lead">',
 					'</div>', 'wpautop' );
+	}
+
+	public function the_author( $display_name )
+	{
+		if ( ! $post = get_post() )
+			return $display_name;
+
+		if ( ! in_array( $post->post_type, $this->post_types() ) )
+			return $display_name;
+
+		$fields = $this->post_type_fields( $post->post_type );
+
+		if ( ! in_array( 'as', $fields ) )
+			return $display_name;
+
+		if ( $value = $this->get_postmeta( $post->ID, 'as', '' ) )
+			$display_name = $value;
+
+		return $display_name;
 	}
 
 	public function tools_messages( $messages, $sub )
