@@ -53,6 +53,7 @@ class gEditorialMeta extends gEditorialModuleCore
 					'source_title' => _x( 'Source Title', 'Meta Module: Titles', GEDITORIAL_TEXTDOMAIN ),
 					'source_url'   => _x( 'Source URL', 'Meta Module: Titles', GEDITORIAL_TEXTDOMAIN ),
 				),
+				'author' => _x( 'Author', 'Meta Module: Titles', GEDITORIAL_TEXTDOMAIN ),
 			),
 			'descriptions' => array(
 				'post' => array(
