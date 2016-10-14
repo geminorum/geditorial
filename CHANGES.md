@@ -1,3 +1,10 @@
+### 3.9.2
+* main/main: skip checking for folders!
+* module/meta: missed string for column row
+* module/series: correct check for series count
+* module/tweaks: attachment summery for each post
+* module/tweaks: check for manage terms cap before linking on taxes
+
 ### 3.9.1
 * core/html: method renamed, fixed fatal on PHP5.6
 
