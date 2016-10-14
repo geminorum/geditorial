@@ -325,6 +325,7 @@ class gEditorialTweaks extends gEditorialModuleCore
 		}
 	}
 
+	// FIXME: move this to revisions module
 	public function column_row_revisions( $post )
 	{
 		if ( wp_revisions_enabled( $post ) ) {
@@ -345,11 +346,16 @@ class gEditorialTweaks extends gEditorialModuleCore
 						.esc_attr_x( 'Revisions', 'Tweaks Module: Row Icon Title', GEDITORIAL_TEXTDOMAIN )
 						.'"><span class="dashicons dashicons-backup"></span></span>';
 
-					echo gEditorialHTML::tag( ( $edit ? 'a' : 'span' ), array(
-						'href'   => $edit ? get_edit_post_link( key( $revisions ) ) : FALSE,
-						'title'  => $edit ? _x( 'View the last revision', 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ) : FALSE,
-						'target' => $edit ? '_blank' : FALSE,
-					), sprintf( _nx( '%s Revision', '%s Revisions', $count, 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ), number_format_i18n( $count ) ) );
+					$title = sprintf( _nx( '%s Revision', '%s Revisions', $count, 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ), number_format_i18n( $count ) );
+
+					if ( current_user_can( 'edit_post', key( $revisions ) ) )
+						echo gEditorialHTML::tag( 'a', array(
+							'href'   => get_edit_post_link( key( $revisions ) ),
+							'title'  => _x( 'View the last revision', 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ),
+							'target' => '_blank',
+						), $title );
+					else
+						echo $title;
 
 					gEditorialHelper::getAuthorsEditRow( $authors, $post->post_type, ' <span class="-authors">(', ')</span>' );
 
@@ -358,6 +364,7 @@ class gEditorialTweaks extends gEditorialModuleCore
 		}
 	}
 
+	// FIXME: move this to attachments module
 	public function column_row_attachments( $post )
 	{
 		$attachments = gEditorialWordPress::getAttachments( $post->ID, '' );
@@ -368,19 +375,22 @@ class gEditorialTweaks extends gEditorialModuleCore
 
 		if ( $count ) {
 
-			$view = current_user_can( 'upload_files' );
-
 			echo '<div class="-row tweaks-attachment-count">';
 
 				echo '<span class="-icon" title="'
 					.esc_attr_x( 'Attachments', 'Tweaks Module: Row Icon Title', GEDITORIAL_TEXTDOMAIN )
 					.'"><span class="dashicons dashicons-images-alt2"></span></span>';
 
-				echo gEditorialHTML::tag( ( $view ? 'a' : 'span' ), array(
-					'href'   => $view ? gEditorialWordPress::getPostAttachmentsLink( $post->ID ) : FALSE,
-					'title'  => $view ? _x( 'View the list of attachments', 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ) : FALSE,
-					'target' => $view ? '_blank' : FALSE,
-				), sprintf( _nx( '%s Attachment', '%s Attachments', $count, 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ), number_format_i18n( $count ) ) );
+				$title = sprintf( _nx( '%s Attachment', '%s Attachments', $count, 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ), number_format_i18n( $count ) );
+
+				if ( current_user_can( 'upload_files' ) )
+					echo gEditorialHTML::tag( 'a', array(
+						'href'   => gEditorialWordPress::getPostAttachmentsLink( $post->ID ),
+						'title'  => _x( 'View the list of attachments', 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ),
+						'target' => '_blank',
+					), $title );
+				else
+					echo title;
 
 				gEditorialHelper::getMimeTypeEditRow( $mime_types, $post->ID, ' <span class="-mime-types">(', ')</span>' );
 
