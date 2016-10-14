@@ -215,9 +215,11 @@ class gEditorialSeries extends gEditorialModuleCore
 
 	public function geditorial_series_meta_box( $post, $box, $series )
 	{
+		$tax = $this->constant( 'series_tax' );
+
 		// bail if no series
-		if ( ! count( $series ) )
-			return gEditorialMetaBox::fieldEmptyTaxonomy( $this->constant( 'series_tax' ) );
+		if ( ! count( gEditorialHelper::getTerms( $tax ) ) )
+			return gEditorialMetaBox::fieldEmptyTaxonomy( $tax );
 
 		$dropdowns = $posts = $map = array();
 		$fields    = $this->post_type_fields( $post->post_type );
@@ -225,7 +227,7 @@ class gEditorialSeries extends gEditorialModuleCore
 
 		foreach ( $series as $the_term ) {
 			$dropdowns[$i] = wp_dropdown_categories( array(
-				'taxonomy'         => $this->constant( 'series_tax' ),
+				'taxonomy'         => $tax,
 				'selected'         => $the_term->term_id,
 				'show_option_none' => $this->get_string( 'show_option_none', 'post', 'misc' ),
 				'name'             => 'geditorial-series-terms['.$i.']',
@@ -236,14 +238,14 @@ class gEditorialSeries extends gEditorialModuleCore
 				'echo'             => 0,
 			) );
 
-			$posts[$i] = gEditorialHelper::getTermPosts( $this->constant( 'series_tax' ), $the_term, array( $post->ID ) );
+			$posts[$i] = gEditorialHelper::getTermPosts( $tax, $the_term, array( $post->ID ) );
 			$map[$i]   = $the_term->term_id;
 			$i++;
 		}
 
 		if ( $this->get_setting( 'multiple_instances', FALSE ) || ! count( $series ) )
 			$dropdowns[0] = wp_dropdown_categories( array(
-				'taxonomy'         => $this->constant( 'series_tax' ),
+				'taxonomy'         => $tax,
 				'selected'         => 0,
 				'show_option_none' => $this->get_string( 'show_option_none', 'post', 'misc' ),
 				'name'             => 'geditorial-series-terms[0]',
