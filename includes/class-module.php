@@ -923,9 +923,8 @@ class gEditorialModuleCore extends gEditorialBaseCore
 
 		$screen = get_current_screen();
 
-		if ( method_exists( $this, 'settings_help_tabs' ) )
-			foreach ( $this->settings_help_tabs() as $tab )
-				$screen->add_help_tab( $tab );
+		foreach ( $this->settings_help_tabs() as $tab )
+			$screen->add_help_tab( $tab );
 
 		if ( $sidebar = $this->settings_help_sidebar() )
 			$screen->set_help_sidebar( $sidebar );
