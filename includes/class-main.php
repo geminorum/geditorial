@@ -179,13 +179,20 @@ class gEditorial
 		return FALSE;
 	}
 
-	// HELPER
 	public function enabled( $module )
 	{
 		return isset( $this->{$module} );
 	}
 
-	// HELPER
+	public function constant( $module, $key, $default = NULL )
+	{
+		if ( $module && self::enabled( $module ) )
+			return $this->{$module}->constant( $key, $default );
+
+		return $default;
+	}
+
+	// FIXME: DEPRECATED
 	public function get_constant( $module, $key, $default = NULL )
 	{
 		return $this->{$module}->constant( $key, $default );

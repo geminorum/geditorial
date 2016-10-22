@@ -7,10 +7,7 @@ class gEditorialHelper extends gEditorialBaseCore
 
 	protected static function constant( $key, $default = FALSE )
 	{
-		if ( self::MODULE && gEditorial()->enabled( self::MODULE ) )
-			return gEditorial()->get_constant( self::MODULE, $key, $default );
-
-		return $default;
+		return gEditorial()->constant( self::MODULE, $key, $default );
 	}
 
 	public static function moduleClass( $module, $check = TRUE, $prefix = 'gEditorial' )
