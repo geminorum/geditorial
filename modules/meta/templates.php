@@ -170,7 +170,7 @@ class gEditorialMetaTemplates extends gEditorialTemplateCore
 		$title = self::get_meta( 'ch', array( 'id' => $args['id'], 'def' => FALSE ) );
 
 		if ( taxonomy_exists( $tax ) ) {
-			$term = gEditorialHelper::theTerm( $tax, $args['id'], TRUE );
+			$term = gEditorialWordPress::theTerm( $tax, $args['id'], TRUE );
 			if ( $term && ! $title )
 				$title = sanitize_term_field( 'name', $term->name, $term->term_id, $tax, 'display' );
 			if ( $term && is_null( $args['link'] ) )
@@ -217,7 +217,7 @@ class gEditorialMetaTemplates extends gEditorialTemplateCore
 		$tax = self::constant( 'ct_tax', 'label' );
 		$id  = isset( $args['id'] ) ? $args['id'] : $post->ID;
 
-		$term  = gEditorialHelper::theTerm( $tax, $id, TRUE );
+		$term  = gEditorialWordPress::theTerm( $tax, $id, TRUE );
 		$title = self::get_meta( 'ch', array( 'id' => $id, 'def' => FALSE ) );
 		$link  = $term ? get_term_link( $term, $tax ) : ( $title ? get_option( 'home' ).'/?s='.urlencode( $title ) : FALSE );
 		$desc  = $term ? $term->name.( $term->description ? strip_tags( ' :: '.$term->description ) : '' ) : sprintf( apply_filters( 'gmeta_search_link_title_attr', _x( 'Search %1$s for %2$s', 'Meta Module', GEDITORIAL_TEXTDOMAIN ) ), get_bloginfo( 'name' ), $title );

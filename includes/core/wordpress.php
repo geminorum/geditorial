@@ -99,6 +99,17 @@ class gEditorialWordPress extends gEditorialBaseCore
 		return wp_insert_post( $new_post );
 	}
 
+	public static function theTerm( $taxonomy, $post_id, $object = FALSE )
+	{
+		$terms = get_the_terms( $post_id, $taxonomy );
+
+		if ( $terms && ! is_wp_error( $terms ) )
+			foreach ( $terms as $term )
+				return $object ? $term : $term->term_id;
+
+		return '0';
+	}
+
 	public static function prepareTerms( $taxonomy, $extra = array(), $terms = NULL, $key = 'term_id', $object = TRUE )
 	{
 		$new_terms = array();

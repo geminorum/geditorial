@@ -1353,7 +1353,7 @@ class gEditorialModuleCore extends gEditorialBaseCore
 					$default = '0';
 			}
 
-			if ( ! $selected = gEditorialHelper::theTerm( $tax, $post->ID ) )
+			if ( ! $selected = gEditorialWordPress::theTerm( $tax, $post->ID ) )
 				$selected = $default;
 
 			echo '<div class="field-wrap" title="'.esc_attr( $obj->labels->menu_name ).'">';

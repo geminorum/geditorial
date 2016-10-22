@@ -450,23 +450,6 @@ class gEditorialBaseCore
 		return FALSE;
 	}
 
-	public static function theTerm( $taxonomy, $post_ID, $object = FALSE )
-	{
-		$terms = get_the_terms( $post_ID, $taxonomy );
-
-		if ( $terms && ! is_wp_error( $terms ) ) {
-			foreach ( $terms as $term ) {
-				if ( $object ) {
-					return $term;
-				} else {
-					return $term->term_id;
-				}
-			}
-		}
-
-		return '0';
-	}
-
 	// FIXME: MUST DEP
 	// EDITED: 8/11/2016, 6:40:18 AM
 	public static function getPostTypes( $singular = FALSE, $builtin = NULL )
