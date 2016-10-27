@@ -332,26 +332,29 @@ class gEditorialHelper extends gEditorialBaseCore
 
 	public static function postModified( $post = NULL, $attr = FALSE )
 	{
-		$time   = get_post_modified_time( 'U', FALSE, $post, FALSE );
+		$gmt   = get_post_modified_time( 'U', TRUE,  $args['id'], FALSE );
+		$local = get_post_modified_time( 'U', FALSE, $args['id'], FALSE );
+
 		$format = _x( 'l, F j, Y', 'Module Helper: Post Modified', GEDITORIAL_TEXTDOMAIN );
 		$title  = _x( 'Last Modified on %s', 'Module Helper: Post Modified', GEDITORIAL_TEXTDOMAIN );
 
 		return $attr
-			? sprintf( $title, date_i18n( $format, $time ) )
-			: gEditorialDate::htmlDateTime( $time, $format, self::humanTimeDiff( $time, FALSE ) );
+			? sprintf( $title, date_i18n( $format, $local ) )
+			: gEditorialDate::htmlDateTime( $local, $gmt, $format, self::humanTimeDiff( $local, FALSE ) );
 	}
 
-	public static function humanTimeDiff( $time, $round = TRUE, $format = NULL )
+	public static function humanTimeDiff( $time, $round = TRUE, $format = NULL, $now = NULL )
 	{
 		$ago = _x( '%s ago', 'Module Helper: Human Time Diff', GEDITORIAL_TEXTDOMAIN );
+		$now = is_null( $now ) ? current_time( 'timestamp' ) : '';
 
 		if ( ! $round )
-			return sprintf( $ago, human_time_diff( $time ) );
+			return sprintf( $ago, human_time_diff( $time, $now ) );
 
 		$time_diff = time() - $time;
 
 		if ( $time_diff > 0 && $time_diff < DAY_IN_SECONDS )
-			return sprintf( $ago, human_time_diff( $time ) );
+			return sprintf( $ago, human_time_diff( $time, $now ) );
 
 		if ( is_null( $format ) )
 			$format = _x( 'Y/m/d', 'Module Helper: Human Time Diff', GEDITORIAL_TEXTDOMAIN );

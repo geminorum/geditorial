@@ -14,11 +14,12 @@ class gEditorialDate extends gEditorialBaseCore
 		);
 	}
 
-	public static function htmlDateTime( $time, $format = 'l, F j, Y', $title = FALSE )
+	public static function htmlDateTime( $time, $gmt = NULL, $format = 'l, F j, Y', $title = FALSE )
 	{
 		return gEditorialHTML::tag( 'time', array(
-			'datetime' => date( 'c', $time ),
+			'datetime' => date( 'c', ( $gmt ? $gmt : $time ) ),
 			'title'    => $title,
 		), date_i18n( $format, $time ) );
 	}
+
 }
