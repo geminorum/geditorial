@@ -21,7 +21,7 @@ class gEditorialHTML extends gEditorialBaseCore
 		return $html.$content.'</'.$tag.'>'.$sep;
 	}
 
-	public static function cssClass()
+	public static function attrClass()
 	{
 		$classes = array();
 
@@ -226,6 +226,9 @@ class gEditorialHTML extends gEditorialBaseCore
 
 	public static function tableCode( $array, $reverse = FALSE, $caption = FALSE )
 	{
+		if ( ! $array )
+			return;
+
 		if ( $reverse )
 			$row = '<tr><td class="-val"><code>%1$s</code></td><td class="-var">%2$s</td></tr>';
 		else
