@@ -54,6 +54,7 @@ class gEditorial
 		require_once( GEDITORIAL_DIR.'includes/core/base.php' );
 		require_once( GEDITORIAL_DIR.'includes/core/html.php' );
 		require_once( GEDITORIAL_DIR.'includes/core/date.php' );
+		require_once( GEDITORIAL_DIR.'includes/core/cache.php' );
 		require_once( GEDITORIAL_DIR.'includes/core/wordpress.php' );
 
 		$includes = array(

@@ -1681,7 +1681,7 @@ class gEditorialModuleCore extends gEditorialBaseCore
 
 	public function column_thumb( $post_id, $size = array( 45, 72 ) )
 	{
-		echo self::getFeaturedImageHTML( $post_id, $size );
+		echo gEditorialWordPress::getFeaturedImageHTML( $post_id, $size );
 	}
 
 	public function column_count( $count, $title_attr = NULL )

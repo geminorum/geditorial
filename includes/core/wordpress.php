@@ -25,6 +25,7 @@ class gEditorialWordPress extends gEditorialBaseCore
 		) );
 	}
 
+	// TODO: use db query
 	public static function getLastPostOrder( $post_type = 'post', $exclude = '', $key = 'menu_order', $status = 'publish,private,draft' )
 	{
 		$post = get_posts( array(
@@ -42,6 +43,80 @@ class gEditorialWordPress extends gEditorialBaseCore
 			return intval( $post[0]->menu_order );
 
 		return $post[0]->{$key};
+	}
+
+	// TODO: use db query
+	public static function getRandomPostID( $post_type, $has_thumbnail = FALSE, $object = FALSE, $status = 'publish' )
+	{
+		$args = array(
+			'post_type'              => $post_type,
+			'post_status'            => $status,
+			'posts_per_page'         => 1,
+			'orderby'                => 'rand',
+			'ignore_sticky_posts'    => TRUE,
+			'no_found_rows'          => TRUE,
+			'update_post_meta_cache' => FALSE,
+			'update_post_term_cache' => FALSE,
+		);
+
+		if ( ! $object )
+			$args['fields'] = 'ids';
+
+		if ( $has_thumbnail )
+			$args['meta_query'] = array( array(
+				'key'     => '_thumbnail_id',
+				'compare' => 'EXISTS'
+			) );
+
+		$query = new WP_Query;
+		$posts = $query->query( $args );
+
+		if ( ! count( $posts ) )
+			return FALSE;
+
+		return $posts[0];
+	}
+
+	public static function getParentPostID( $post_id = NULL, $object = FALSE )
+	{
+		if ( ! $post = get_post( $post_id ) )
+			return FALSE;
+
+		if ( empty( $post->post_parent ) )
+			return FALSE;
+
+		if ( $object )
+			return get_post( $post->post_parent );
+
+		return intval( $post->post_parent );
+	}
+
+	public static function getFeaturedImage( $post_id, $size = 'thumbnail', $default = FALSE )
+	{
+		if ( ! $post_thumbnail_id = get_post_thumbnail_id( $post_id ) )
+			return $default;
+
+		$post_thumbnail_img = wp_get_attachment_image_src( $post_thumbnail_id, $size );
+		return $post_thumbnail_img[0];
+	}
+
+	public static function getFeaturedImageHTML( $post_id, $size = 'thumbnail', $link = TRUE )
+	{
+		if ( ! $post_thumbnail_id = get_post_thumbnail_id( $post_id ) )
+			return '';
+
+		if ( ! $post_thumbnail_img = wp_get_attachment_image_src( $post_thumbnail_id, $size ) )
+			return '';
+
+		$image = gEditorialHTML::tag( 'img', array( 'src' => $post_thumbnail_img[0] ) );
+
+		if ( ! $link )
+			return $image;
+
+		return gEditorialHTML::tag( 'a', array(
+			'href'   => wp_get_attachment_url( $post_thumbnail_id ),
+			'target' => '_blank',
+		), $image );
 	}
 
 	// EDITED: 8/12/2016, 8:53:06 AM
@@ -194,9 +269,44 @@ class gEditorialWordPress extends gEditorialBaseCore
 		return $counts;
 	}
 
+	// EDITED: 10/28/2016, 10:06:17 AM
 	// ADOPTED FROM: wp_count_posts()
-	// EDITED: 9/23/2016, 4:58:11 AM
 	public static function countPostsByPosttype( $posttype = 'post', $user_id = 0, $period = array() )
+	{
+		global $wpdb;
+
+		$author = $from = $to = '';
+		$counts = array_fill_keys( get_post_stati(), 0 );
+
+		if ( $user_id )
+			$author = $wpdb->prepare( "AND post_author = %d", $user_id );
+
+		if ( ! empty( $period[0] ) )
+			$from = $wpdb->prepare( "AND post_date >= '%s'", $period[0] );
+
+		if ( ! empty( $period[1] ) )
+			$to = $wpdb->prepare( "AND post_date <= '%s'", $period[1] );
+
+		$query = $wpdb->prepare( "
+			SELECT post_status, COUNT( * ) AS total
+			FROM {$wpdb->posts}
+			WHERE post_type = %s
+			{$author}
+			{$from}
+			{$to}
+			GROUP BY post_status
+		", $posttype );
+
+		$results = gEditorialCache::getResultsDB( $query, ARRAY_A, 'counts' );
+
+		foreach ( (array) $results as $row )
+			$counts[$row['post_status']] = $row['total'];
+
+		return $counts;
+	}
+
+	// FIXME: DROP THIS
+	public static function countPostsByPosttype_OLD( $posttype = 'post', $user_id = 0, $period = array() )
 	{
 		$key = md5( $posttype.'_'.$user_id );
 		$counts = wp_cache_get( $key, 'counts' );

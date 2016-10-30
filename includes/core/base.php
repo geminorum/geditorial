@@ -28,23 +28,41 @@ class gEditorialBaseCore
 		return self::req( $key, $default );
 	}
 
-	public static function dump( $var, $htmlSafe = TRUE )
+	public static function dump( $var, $safe = TRUE, $echo = TRUE )
 	{
-		$result = var_export( $var, TRUE );
-
-		echo '<pre dir="ltr" style="text-align:left;direction:ltr;">'
-			.( $htmlSafe ? htmlspecialchars( $result ) : $result )
-			.'</pre>';
+		$export = var_export( $var, TRUE );
+		if ( $safe ) $export = htmlspecialchars( $export );
+		$export = '<pre dir="ltr" style="text-align:left;direction:ltr;">'.$export.'</pre>';
+		if ( ! $echo ) return $export;
+		echo $export;
 	}
 
 	public static function kill( $var = FALSE )
 	{
-		if ( $var )
-			self::dump( $var );
-
-		// FIXME: add query/memory/time info
-
+		if ( $var ) self::dump( $var );
+		echo self::stat();
 		die();
+	}
+
+	public static function stat( $format = NULL )
+	{
+		if ( is_null( $format ) )
+			$format = '%d queries in %.3f seconds, using %.2fMB memory.';
+
+		return sprintf( $format,
+			@$GLOBALS['wpdb']->num_queries,
+			self::timerStop( FALSE, 3 ),
+			memory_get_peak_usage() / 1024 / 1024
+		);
+	}
+
+	// WP core function without number_format_i18n
+	public static function timerStop( $echo = FALSE, $precision = 3 )
+	{
+		global $timestart;
+		$total = number_format( ( microtime( TRUE ) - $timestart ), $precision );
+		if ( $echo ) echo $total;
+		return $total;
 	}
 
 	public static function cheatin( $message = NULL )
@@ -121,25 +139,6 @@ class gEditorialBaseCore
 		}
 
 		return $out;
-	}
-
-	// BEFORE: term_description()
-	public static function termDescription( $term, $echo_attr = FALSE )
-	{
-		if ( ! $term )
-			return;
-
-		if ( ! $term->description )
-			return;
-
-		// Bootstrap 3
-		$desc = esc_attr( $term->name ).'"  data-toggle="popover" data-trigger="hover" data-content="'.$term->description;
-
-		if ( ! $echo_attr )
-			// return $term->name.' :: '.strip_tags( $term->description );
-			return $desc;
-
-		echo ' title="'.$desc.'"';
 	}
 
 	// originally from P2
@@ -334,34 +333,6 @@ class gEditorialBaseCore
 		return NULL;
 	}
 
-	public static function getFeaturedImage( $post_id, $size = 'thumbnail', $default = FALSE )
-	{
-		if ( ! $post_thumbnail_id = get_post_thumbnail_id( $post_id ) )
-			return $default;
-
-		$post_thumbnail_img = wp_get_attachment_image_src( $post_thumbnail_id, $size );
-		return $post_thumbnail_img[0];
-	}
-
-	public static function getFeaturedImageHTML( $post_id, $size = 'thumbnail', $link = TRUE )
-	{
-		if ( ! $post_thumbnail_id = get_post_thumbnail_id( $post_id ) )
-			return '';
-
-		if ( ! $post_thumbnail_img = wp_get_attachment_image_src( $post_thumbnail_id, $size ) )
-			return '';
-
-		$image = gEditorialHTML::tag( 'img', array( 'src' => $post_thumbnail_img[0] ) );
-
-		if ( ! $link )
-			return $image;
-
-		return gEditorialHTML::tag( 'a', array(
-			'href'   => wp_get_attachment_url( $post_thumbnail_id ),
-			'target' => '_blank',
-		), $image );
-	}
-
 	// @SOURCE: http://bavotasan.com/2012/trim-characters-using-php/
 	public static function trimChars( $text, $length = 45, $append = '&hellip;' )
 	{
@@ -422,6 +393,11 @@ class gEditorialBaseCore
 	public static function isCLI()
 	{
 		return defined( 'WP_CLI' ) && WP_CLI;
+	}
+
+	public static function doNotCache()
+	{
+		defined( 'DONOTCACHEPAGE' ) or define( 'DONOTCACHEPAGE', TRUE );
 	}
 
 	public static function getPostIDbySlug( $slug, $post_type, $url = FALSE )

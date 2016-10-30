@@ -179,7 +179,7 @@ class gEditorialMetaTemplates extends gEditorialTemplateCore
 				$args['desc'] = self::termDescription( $term, FALSE );
 		} else {
 			if ( $title && is_null( $args['link'] ) )
-				$args['link'] = self::getSearchLink( $title );
+				$args['link'] = gEditorialWordPress::getSearchLink( $title );
 		}
 
 		if ( $args['img'] ) {
