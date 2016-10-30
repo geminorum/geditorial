@@ -5,6 +5,11 @@ class gEditorialBookTemplates extends gEditorialTemplateCore
 
 	const MODULE = 'book';
 
+	public static function cover( $atts = array() )
+	{
+		return parent::postImage( $atts, self::MODULE );
+	}
+
 	// FIXME: DRAFT
 	// @SOURCE: http://wordpress.stackexchange.com/a/126928
 	function get_by_order()

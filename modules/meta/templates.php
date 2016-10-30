@@ -5,6 +5,46 @@ class gEditorialMetaTemplates extends gEditorialTemplateCore
 
 	const MODULE = 'meta';
 
+	public static function metaField( $field, $atts = array() )
+	{
+		if ( ! isset( $atts['echo'] ) )
+			$atts['echo'] = TRUE;
+
+		$meta = self::getMetaField( $field, $atts );
+
+		if ( ! $atts['echo'] )
+			return $meta;
+
+		echo $meta;
+		return TRUE;
+	}
+
+	public static function metaAuthor( $atts = array() )
+	{
+		return self::metaField( 'author', $atts );
+	}
+
+	public static function metaLead( $atts = array() )
+	{
+		if ( empty( $atts['filter'] ) )
+			$atts['filter'] = array( __CLASS__, 'meta_lead_filter' );
+
+		return self::metaField( 'lead', $atts );
+	}
+
+	public static function meta_lead_filter( $meta )
+	{
+		if ( ! $meta )
+			return $meta;
+
+		$meta = do_shortcode( $meta, TRUE );
+		$meta = apply_filters( 'gnetwork_typography', $meta );
+
+		return wpautop( $meta );
+	}
+
+	// FIXME: DEPRECATED
+	// USE: self::sanitizeField()
 	public static function sanitize_field( $field )
 	{
 		if ( is_array( $field ) )
@@ -13,6 +53,7 @@ class gEditorialMetaTemplates extends gEditorialTemplateCore
 		$fields = array(
 			'over-title' => array( 'ot', 'over-title' ),
 			'sub-title'  => array( 'st', 'sub-title' ),
+			'author'     => array( 'as', 'author' ),
 		);
 
 		if ( isset( $fields[$field] ) )
@@ -21,8 +62,12 @@ class gEditorialMetaTemplates extends gEditorialTemplateCore
 		return array( $field );
 	}
 
+	// FIXME: DEPRECATED
+	// USE: self::metaField()
 	public static function meta( $fields, $before = '', $after = '', $filter = FALSE, $post_id = NULL, $args = array() )
 	{
+		self::__dev_dep( 'gEditorialMetaTemplates::metaField()' );
+
 		global $post;
 
 		if ( is_null( $post_id ) )
@@ -52,8 +97,12 @@ class gEditorialMetaTemplates extends gEditorialTemplateCore
 		return FALSE;
 	}
 
+	// FIXME: DEPRECATED
+	// USE: self::getMetaField()
 	public static function get_meta( $fields, $atts = array() )
 	{
+		self::__dev_dep( 'gEditorialMetaTemplates::getMetaField()' );
+
 		global $post;
 
 		if ( isset( $atts['id'] ) && FALSE === $atts['id'] )
@@ -71,8 +120,12 @@ class gEditorialMetaTemplates extends gEditorialTemplateCore
 		return $args['def'];
 	}
 
+	// FIXME: DEPRICATED
+	// USE: self::metaLead()
 	public static function gmeta_lead( $before = '', $after = '', $filter = FALSE, $args = array() )
 	{
+		self::__dev_dep( 'gEditorialMetaTemplates::metaLead()' );
+
 		$meta = self::get_meta( 'le', array_merge( array( 'id' => FALSE, 'def' => FALSE ), $args ) );
 
 		if ( FALSE === $meta )
@@ -92,8 +145,12 @@ class gEditorialMetaTemplates extends gEditorialTemplateCore
 		return TRUE;
 	}
 
+	// FIXME: DEPRICATED
+	// USE: self::metaAuthor()
 	public static function gmeta_author( $before = '', $after = '', $filter = FALSE, $args = array() )
 	{
+		self::__dev_dep( 'gEditorialMetaTemplates::metaAuthor()' );
+
 		$meta = self::get_meta( 'as', array_merge( array( 'id' => FALSE, 'def' => FALSE ), $args ) );
 
 		if ( FALSE === $meta )
@@ -111,8 +168,12 @@ class gEditorialMetaTemplates extends gEditorialTemplateCore
 		return TRUE;
 	}
 
-	public static function metaLink( $atts = array() )
+	// FIXME: DROP THIS
+	public static function metaLink_OLD( $atts = array(), $module = NULL )
 	{
+		if ( is_null( $module ) && self::MODULE )
+			$module = self::MODULE;
+
 		global $post;
 
 		$args = self::atts( array(
@@ -150,9 +211,13 @@ class gEditorialMetaTemplates extends gEditorialTemplateCore
 		return TRUE;
 	}
 
-	public static function metaLabel( $atts = array() )
+	// FIXME: DROP THIS
+	public static function metaLabel_OLD( $atts = array(), $module = NULL )
 	{
 		global $post;
+
+		if ( is_null( $module ) && self::MODULE )
+			$module = self::MODULE;
 
 		$args = self::atts( array(
 			'id'      => $post->ID,
@@ -212,6 +277,8 @@ class gEditorialMetaTemplates extends gEditorialTemplateCore
 	// FIXME: DEPRICATED / USE: gEditorialMetaTemplates::metaLabel()
 	public static function gmeta_label( $b = '', $a = '', $filter = FALSE, $args = array() )
 	{
+		self::__dev_dep( 'gEditorialMetaTemplates::metaLabel()' );
+
 		global $post;
 
 		$tax = self::constant( 'ct_tax', 'label' );

@@ -3,8 +3,12 @@
 class gEditorialReshareTemplates extends gEditorialTemplateCore
 {
 
+	// FIXME: DEPRECATED
+	// USE: gEditorialMetaTemplates::metaLink()
 	public static function source( $atts = array() )
 	{
+		self::__dev_dep( 'gEditorialMetaTemplates::metaLink()' );
+
 		if ( class_exists( 'gEditorialMetaTemplates' ) ) {
 
 			$args = array_merge( array(
