@@ -7,10 +7,21 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-.geditorial-admin-wrap.geditorial-tools {
-  @include mainwrap();
-  margin: 10px 20px 0 2px;
-  @include body-rtl() {
-    margin: 10px 2px 0 20px;
+.geditorial-admin-wrap-column {}
+
+.fixed {
+
+  th.column-counts {
+    width: 220px;
+  }
+
+  .column-counts {
+    table td {
+      padding: 0 0 2px;
+
+      code {
+        cursor: pointer;
+      }
+    }
   }
 }

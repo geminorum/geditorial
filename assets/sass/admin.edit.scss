@@ -1,4 +1,3 @@
-@charset "UTF-8";
 @import "modules/all";
 @import "partials/base";
 @import "partials/admin.all";
@@ -71,14 +70,11 @@
     }
   }
 
-  .column-count-empty,
-  .column-term-empty {
-    color: #f1f1fa;
-  }
   // Module: Meta
   .column-gpeople {
     width: 15%;
   }
+
   // Module: Magazine
   .column-taxonomy-issue_span {
     width: 55px;
@@ -87,6 +83,7 @@
   .column-taxonomy-issues {
     width: 120px;
   }
+
   // Module: Entry
   .column-taxonomy-entry_section {
     width: 16%;

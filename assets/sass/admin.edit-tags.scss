@@ -1,4 +1,3 @@
-@charset "UTF-8";
 @import "modules/all";
 @import "partials/base";
 @import "partials/admin.all";
@@ -11,6 +10,7 @@
 .geditorial-admin-wrap-column {}
 
 .fixed {
+
   .column-cover {
     width: 45px;
     padding: 2px;
@@ -21,10 +21,6 @@
     }
   }
 
-  .column-count-empty,
-  .column-term-empty {
-    color: #F1F1F1;
-  }
   // Module: Alphabets
   .column-alphabet {
     width: 35px;

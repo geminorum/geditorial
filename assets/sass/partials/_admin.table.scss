@@ -3,61 +3,73 @@
 ////////////////////////////////////////////////////////////////////////////////
 /// gEditorial Partials: Admin Table -------------------------------------------
 
+.fixed {
+  .column-count-empty,
+  .column-term-empty {
+    color: $gray-light;
+    cursor: help;
+  }
+}
+
 table.helper-table {
+  thead {
+    .check-column {
+      width: 2.2em;
+    }
 
-	thead {
-		.check-column {
-			width: 2.2em;
-		}
+    .-column-slug {
+      width: 25%;
+    }
+  }
 
-		.-column-slug {
-			width: 25%;
-		}
-	}
+  td {
+    vertical-align: top;
+  }
 
-	td {
-		vertical-align: top;
-	}
+  td,
+  th {
+    padding: 8px 10px;
+  }
 
-	td,
-	th {
-		padding: 8px 10px;
-	}
+  .-cb-all {}
 
-	.-cb-all {}
-	.-cb {}
-	.-column {}
+  .-cb {}
 
-	.-column-id,
-	.-column-ID,
-	.-column-post_id,
-	.-column-term_id {
-		width: 60px;
-	}
+  .-column {}
 
-	.-column-count {
-		width: 40px;
-	}
+  .-column-ID,
+  .-column-id,
+  .-column-post_id,
+  .-column-term_id {
+    width: 60px;
+  }
 
-	.-column-content {}
-	.-column-info {
-		width: 34%;
-	}
+  .-column-count {
+    width: 40px;
+  }
 
-	.-column-tasks {}
-	.-column-next {
-		width: 34%;
-	}
+  .-column-content {}
 
-	.-column-debug {
-		padding: 0;
-	}
+  .-column-info {
+    width: 34%;
+  }
 
-	.-row {}
-	.-cell {}
+  .-column-tasks {}
 
-	pre {
-		margin: 0;
-		padding: 0;
-	}
+  .-column-next {
+    width: 34%;
+  }
+
+  .-column-debug {
+    padding: 0;
+  }
+
+  .-row {}
+
+  .-cell {}
+
+  pre {
+    margin: 0;
+    padding: 0;
+  }
 }

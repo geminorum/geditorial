@@ -1,18 +1,17 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-/// gEditorial Partials: Admin Widgets -----------------------------------------
+/// gEditorial Partials: Admin Dashboard ---------------------------------------
 
 a.geditorial-glance-item {
 
-	&.-post::before {
-		content: "\f105" !important;
+  &.-post::before {
+    content: "\f105" !important;
+  }
 
-	}
+  &.-term::before {}
 
-	&.-term::before {}
-
-	&.-posttype-issue::before {
-		content: "\f330" !important;
-	}
+  &.-posttype-issue::before {
+    content: "\f330" !important;
+  }
 }
