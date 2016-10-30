@@ -10,8 +10,8 @@ class gEditorialBookQuery extends WP_Query
 
 	public function __construct( $args = array() )
 	{
-		$this->cpt = gEditorial()->get_constant( 'book', 'publication_cpt', 'publication' );
-		$this->tax = gEditorial()->get_constant( 'book', 'subject_tax', 'publication_subject' );
+		$this->cpt = gEditorial()->constant( 'book', 'publication_cpt', 'publication' );
+		$this->tax = gEditorial()->constant( 'book', 'subject_tax', 'publication_subject' );
 
 		// Force these args
 		$args = array_merge( $args, array(
