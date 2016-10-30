@@ -20,7 +20,9 @@ class gEditorialBook extends gEditorialModuleCore
 		return array(
 			'_general' => array(
 				'comment_status',
-				'insert_content',
+				'insert_content', // p2p // FIXME
+				'insert_content_before', // cover // FIXME
+				'insert_priority',
 			),
 			'posttypes_option' => 'posttypes_option',
 		);
@@ -253,6 +255,13 @@ class gEditorialBook extends gEditorialModuleCore
 			'hierarchical' => TRUE,
 			'meta_box_cb'  => FALSE,
 		), 'publication_cpt' );
+
+		if ( ! is_admin()
+			&& $this->get_setting( 'insert_content_before', FALSE ) )
+				add_action( 'gnetwork_themes_content_before',
+					array( $this, 'content_before' ),
+					$this->get_setting( 'insert_priority', -50 )
+				);
 	}
 
 	public function init_ajax()
@@ -449,6 +458,9 @@ class gEditorialBook extends gEditorialModuleCore
 		if ( ! is_singular( $this->post_types( 'publication_cpt' ) ) )
 			return;
 
+		if ( ! in_the_loop() || ! is_main_query() )
+			return;
+
 		$connected = new WP_Query( array(
 			'connected_type'  => $this->constant( 'publication_cpt_p2p' ),
 			'connected_items' => get_post(),
@@ -474,5 +486,18 @@ class gEditorialBook extends gEditorialModuleCore
 			echo '</ul></div>';
 			wp_reset_postdata();
 		}
+	}
+
+	public function content_before( $content, $posttypes = NULL )
+	{
+		global $page;
+
+		if ( 1 == $page
+			&& is_singular( $this->constant( 'publication_cpt' ) )
+			&& in_the_loop() && is_main_query() )
+				gEditorialBookTemplates::postImage( array(
+					'size' => $this->get_image_size_key( 'publication_cpt', 'medium' ),
+					'link' => 'attachment',
+				) );
 	}
 }
