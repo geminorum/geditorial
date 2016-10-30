@@ -204,7 +204,7 @@ class gEditorialUsers extends gEditorialModuleCore
 		if ( 'counts' != $column_name )
 			return $output;
 
-		if ( ! $this->all_posttypes )
+		if ( empty( $this->all_posttypes ) )
 			$this->all_posttypes = gEditorialWordPress::getPostTypes( 1 );
 
 		$counts = gEditorialWordPress::countPostsByUser( $user_id );
