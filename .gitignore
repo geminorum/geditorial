@@ -19,3 +19,4 @@ composer.lock
 npm-debug.log
 
 environment.yml
+.ftpconfig
