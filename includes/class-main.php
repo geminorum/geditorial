@@ -283,7 +283,7 @@ class gEditorial
 	{
 		$screen = get_current_screen();
 
-		if ( in_array( $screen->base, array( 'post', 'edit', 'widgets', 'edit-tags' ) ) )
+		if ( in_array( $screen->base, array( 'post', 'edit', 'widgets', 'edit-tags', 'users' ) ) )
 			gEditorialHelper::linkStyleSheetAdmin( $screen->base );
 
 		else if ( gEditorialSettingsCore::isDashboard( $screen ) )
