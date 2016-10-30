@@ -343,6 +343,49 @@ class gEditorialWordPress extends gEditorialBaseCore
 		return $counts;
 	}
 
+	public static function countPostsByUser( $user_id = NULL, $args = array(), $period = array() )
+	{
+		global $wpdb;
+
+		$counts = array();
+		$from   = $to = '';
+
+		if ( is_null( $user_id ) )
+			$user_id = get_current_user_id();
+
+		$extra_checks = "AND post_status != 'auto-draft'";
+
+		if ( ! isset( $args['post_status'] )
+			|| 'trash' !== $args['post_status'] )
+				$extra_checks .= " AND post_status != 'trash'";
+
+		else if ( isset( $args['post_status'] ) )
+			$extra_checks = $wpdb->prepare( 'AND post_status = %s', $args['post_status'] );
+
+		if ( ! empty( $period[0] ) )
+			$from = $wpdb->prepare( "AND post_date >= '%s'", $period[0] );
+
+		if ( ! empty( $period[1] ) )
+			$to = $wpdb->prepare( "AND post_date <= '%s'", $period[1] );
+
+		$query = $wpdb->prepare( "
+			SELECT post_type, COUNT( * ) AS total
+			FROM {$wpdb->posts}
+			WHERE post_author = %d
+			{$extra_checks}
+			{$from}
+			{$to}
+			GROUP BY post_type
+		", $user_id );
+
+		$results = gEditorialCache::getResultsDB( $query, ARRAY_A, 'counts' );
+
+		foreach ( (array) $results as $row )
+			$counts[$row['post_type']] = $row['total'];
+
+		return $counts;
+	}
+
 	public static function getPosttypeMonths( $post_type = 'post', $args = array(), $user_id = 0 )
 	{
 		global $wpdb, $wp_locale;
@@ -356,7 +399,7 @@ class gEditorialWordPress extends gEditorialBaseCore
 				$extra_checks .= " AND post_status != 'trash'";
 
 		else if ( isset( $args['post_status'] ) )
-			$extra_checks = $wpdb->prepare( ' AND post_status = %s', $args['post_status'] );
+			$extra_checks = $wpdb->prepare( 'AND post_status = %s', $args['post_status'] );
 
 		$query = $wpdb->prepare( "
 			SELECT DISTINCT YEAR( post_date ) AS year, MONTH( post_date ) AS month
