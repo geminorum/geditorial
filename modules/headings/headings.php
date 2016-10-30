@@ -75,6 +75,9 @@ class gEditorialHeadings extends gEditorialModuleCore
 		if ( 1 != count( $pages ) )
 			return $content;
 
+		// @SOURCE: [Add IDs to Header Tags](https://wordpress.org/plugins/add-ids-to-header-tags/)
+		// $pattern = '#(?P<full_tag><(?P<tag_name>h\d)(?P<tag_extra>[^>]*)>(?P<tag_contents>[^<]*)</h\d>)#';
+
 		$pattern = "/<h([0-9])(.*?)>(.*?)<\/h([0-9])>/imu";
 		return preg_replace_callback( $pattern, array( $this, 'toc_callback' ), $content );
 	}

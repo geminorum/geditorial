@@ -21,5 +21,4 @@ class gEditorialDate extends gEditorialBaseCore
 			'title'    => $title,
 		), date_i18n( $format, $time ) );
 	}
-
 }

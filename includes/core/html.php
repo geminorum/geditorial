@@ -25,7 +25,7 @@ class gEditorialHTML extends gEditorialBaseCore
 	{
 		$classes = array();
 
-		foreach( func_get_args() as $arg )
+		foreach ( func_get_args() as $arg )
 
 			if ( is_array( $arg ) )
 				$classes += $arg;
