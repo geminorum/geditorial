@@ -22,6 +22,10 @@ class gEditorialUsers extends gEditorialModuleCore
 		return array(
 			'_general' => array(
 				array(
+					'field' => 'posttype_counts',
+					'title' => _x( 'Posttype Counts', 'Users Module: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+				),
+				array(
 					'field' => 'user_groups',
 					'title' => _x( 'User Groups', 'Users Module: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 				),
@@ -60,7 +64,8 @@ class gEditorialUsers extends gEditorialModuleCore
 					'users_column_title' => _x( 'Users', 'Users Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
 					'menu_name'          => _x( 'Types', 'Users Module: User Type Tax Labels: Menu Name', GEDITORIAL_TEXTDOMAIN ),
 				),
-				'show_option_all' => _x( 'All authors', 'Users Module: Show Option All', GEDITORIAL_TEXTDOMAIN ),
+				'show_option_all'     => _x( 'All authors', 'Users Module: Show Option All', GEDITORIAL_TEXTDOMAIN ),
+				'counts_column_title' => _x( 'Summary', 'Users Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
 			),
 			'settings' => array(
 				'posttype_stats' => _x( 'Query Stats', 'Users Module: Setting Button', GEDITORIAL_TEXTDOMAIN ),
@@ -132,7 +137,12 @@ class gEditorialUsers extends gEditorialModuleCore
 			if ( $this->get_setting( 'admin_restrict', FALSE ) )
 				add_action( 'restrict_manage_posts', array( $this, 'restrict_manage_posts' ) );
 
-		// } else if ( $groups && 'users' == $screen->base ) {
+		} else if ( 'users' == $screen->base ) {
+
+			if ( $this->get_setting( 'posttype_counts', FALSE ) ) {
+				add_filter( 'manage_users_columns', array( $this, 'manage_users_columns' ) );
+				add_filter( 'manage_users_custom_column', array( $this, 'manage_users_custom_column' ), 10, 3 );
+			}
 
 		} else if ( $groups && ( 'profile' == $screen->base
 			|| 'user-edit' == $screen->base ) ) {
@@ -174,6 +184,47 @@ class gEditorialUsers extends gEditorialModuleCore
 			'option_none_value'       => 0,
 			'hide_if_only_one_author' => TRUE,
 		) );
+	}
+
+	public function manage_users_columns( $columns )
+	{
+		$new = array();
+
+		foreach ( $columns as $column => $title )
+			if ( 'posts' == $column )
+				$new['counts'] = $this->get_column_title( 'counts', 'users' );
+			else
+				$new[$column] = $title;
+
+		return $new;
+	}
+
+	public function manage_users_custom_column( $output, $column_name, $user_id )
+	{
+		if ( 'counts' != $column_name )
+			return $output;
+
+		if ( ! $this->all_posttypes )
+			$this->all_posttypes = gEditorialWordPress::getPostTypes( 1 );
+
+		$counts = gEditorialWordPress::countPostsByUser( $user_id );
+		$list   = array();
+
+		foreach ( $this->all_posttypes as $posttype => $label )
+			if ( ! empty( $counts[$posttype] ) )
+				$list[$label] = gEditorialHTML::tag( 'a', array(
+					'href'   => gEditorialWordPress::getPostTypeEditLink( $posttype, $user_id ),
+					'target' => '_blank',
+				), number_format_i18n( $counts[$posttype] ) );
+
+		ob_start();
+
+		if ( count( $list ) )
+			gEditorialHTML::tableCode( $list );
+		else
+			$this->column_count( 0 );
+
+		return ob_get_clean();
 	}
 
 	public function manage_columns( $columns )
