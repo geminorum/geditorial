@@ -1486,9 +1486,9 @@ class gEditorialModuleCore extends gEditorialBaseCore
 		return $title;
 	}
 
-	public function get_column_title( $column, $constant_key )
+	public function get_column_title( $column, $constant_key, $fallback = NULL )
 	{
-		return $this->get_string( $column.'_column_title', $constant_key, 'misc', $column );
+		return $this->get_string( $column.'_column_title', $constant_key, 'misc', ( is_null( $fallback ) ? $column : $fallback ) );
 	}
 
 	public function get_url_settings( $extra = array() )
