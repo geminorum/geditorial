@@ -111,11 +111,9 @@ class gEditorialEvent extends gEditorialModuleCore
 				'excerpt',
 				'author',
 				'thumbnail',
-				// 'trackbacks',
-				// 'custom-fields',
 				'comments',
 				'revisions',
-				// 'page-attributes',
+				'date-picker', // gPersianDate
 			),
 		);
 	}

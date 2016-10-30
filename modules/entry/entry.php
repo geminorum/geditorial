@@ -73,6 +73,7 @@ class gEditorialEntry extends gEditorialModuleCore
 				'thumbnail',
 				'comments',
 				'revisions',
+				'date-picker', // gPersianDate
 			),
 		);
 	}

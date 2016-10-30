@@ -85,11 +85,10 @@ class gEditorialContest extends gEditorialModuleCore
 				'excerpt',
 				'author',
 				'thumbnail',
-				// 'trackbacks',
-				// 'custom-fields',
 				'comments',
 				'revisions',
 				'page-attributes',
+				'date-picker', // gPersianDate
 			),
 			'apply_cpt' => array(
 				'title',
@@ -97,11 +96,10 @@ class gEditorialContest extends gEditorialModuleCore
 				'excerpt',
 				'author',
 				'thumbnail',
-				// 'trackbacks',
-				// 'custom-fields',
 				'comments',
 				'revisions',
 				'page-attributes',
+				'date-picker', // gPersianDate
 			),
 		);
 	}

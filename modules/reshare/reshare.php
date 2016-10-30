@@ -65,6 +65,7 @@ class gEditorialReshare extends gEditorialModuleCore
 				'thumbnail',
 				'comments',
 				'revisions',
+				'date-picker', // gPersianDate
 			),
 		);
 	}
