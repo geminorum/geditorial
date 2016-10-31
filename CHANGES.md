@@ -1,3 +1,18 @@
+### 3.9.3
+* all: using constant helper method
+* core/html: check for empty array before table code
+* main/main: style for admin users page
+* main/helper: correct gmt timestamp and human time diff
+* main/modulecore: support for date-picker via [gPersianDate](https://github.com/geminorum/gpersiandate)
+* main/modulecore: column title fallback
+* main/templates: moving up meta template helpers
+* main/settings: html attr class helper renamed
+* module/book: publication cover in content actions
+* module/debug: missed printing the actual line!
+* module/meta: option to overwrite author meta
+* module/meta: option to disable lead insertion
+* module/users: post count summary in users list table
+
 ### 3.9.2
 * main/main: skip checking for folders!
 * module/meta: missed string for column row
