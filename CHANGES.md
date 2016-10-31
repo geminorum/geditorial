@@ -8,7 +8,6 @@
 * main/templates: moving up meta template helpers
 * main/settings: html attr class helper renamed
 * module/book: publication cover in content actions
-* module/debug: missed printing the actual line!
 * module/meta: option to overwrite author meta
 * module/meta: option to disable lead insertion
 * module/users: post count summary in users list table
