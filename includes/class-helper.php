@@ -429,7 +429,11 @@ class gEditorialHelper extends gEditorialBaseCore
 	 *	%3$s => Lower Case / Plural
 	 *	%4$s => Lower Case / Singular
 	 *
-	 *	@REF: '_get_custom_object_labels()', `_nx_noop()`, `translate_nooped_plural()`
+	 *	@REF:
+	 *		`get_post_type_labels()`
+	 *		`_get_custom_object_labels()`
+	 *		`_nx_noop()`
+	 *		`translate_nooped_plural()`
 	 */
 	public static function generatePostTypeLabels( $name, $featured = FALSE, $pre = array() )
 	{
@@ -443,12 +447,14 @@ class gEditorialHelper extends gEditorialBaseCore
 			'edit_item'             => _x( 'Edit %2$s', 'Module Helper: CPT Generator', GEDITORIAL_TEXTDOMAIN ),
 			'new_item'              => _x( 'New %2$s', 'Module Helper: CPT Generator', GEDITORIAL_TEXTDOMAIN ),
 			'view_item'             => _x( 'View %2$s', 'Module Helper: CPT Generator', GEDITORIAL_TEXTDOMAIN ),
+			'view_items'            => _x( 'View %1$s', 'Module Helper: CPT Generator', GEDITORIAL_TEXTDOMAIN ),
 			'search_items'          => _x( 'Search %1$s', 'Module Helper: CPT Generator', GEDITORIAL_TEXTDOMAIN ),
 			'not_found'             => _x( 'No %3$s found.', 'Module Helper: CPT Generator', GEDITORIAL_TEXTDOMAIN ),
 			'not_found_in_trash'    => _x( 'No %3$s found in Trash.', 'Module Helper: CPT Generator', GEDITORIAL_TEXTDOMAIN ),
 			'parent_item_colon'     => _x( 'Parent %2$s:', 'Module Helper: CPT Generator', GEDITORIAL_TEXTDOMAIN ),
 			'all_items'             => _x( 'All %1$s', 'Module Helper: CPT Generator', GEDITORIAL_TEXTDOMAIN ),
 			'archives'              => _x( '%2$s Archives', 'Module Helper: CPT Generator', GEDITORIAL_TEXTDOMAIN ),
+			'attributes'            => _x( '%2$s Attributes', 'Module Helper: CPT Generator', GEDITORIAL_TEXTDOMAIN ),
 			'insert_into_item'      => _x( 'Insert into %4$s', 'Module Helper: CPT Generator', GEDITORIAL_TEXTDOMAIN ),
 			'uploaded_to_this_item' => _x( 'Uploaded to this %4$s', 'Module Helper: CPT Generator', GEDITORIAL_TEXTDOMAIN ),
 			'filter_items_list'     => _x( 'Filter %3$s list', 'Module Helper: CPT Generator', GEDITORIAL_TEXTDOMAIN ),
