@@ -206,7 +206,7 @@ class gEditorialSeries extends gEditorialModuleCore
 	{
 		echo '<div class="geditorial-admin-wrap-metabox series">';
 
-		$series = gEditorialHelper::getTerms( $this->constant( 'series_tax' ), $post->ID, TRUE );
+		$series = gEditorialWPTaxonomy::getTerms( $this->constant( 'series_tax' ), $post->ID, TRUE );
 
 		do_action( 'geditorial_series_meta_box', $post, $box, $series );
 
@@ -218,7 +218,7 @@ class gEditorialSeries extends gEditorialModuleCore
 		$tax = $this->constant( 'series_tax' );
 
 		// bail if no series
-		if ( ! count( gEditorialHelper::getTerms( $tax ) ) )
+		if ( ! gEditorialWPTaxonomy::hasTerms( $tax ) )
 			return gEditorialMetaBox::fieldEmptyTaxonomy( $tax );
 
 		$dropdowns = $posts = $map = array();

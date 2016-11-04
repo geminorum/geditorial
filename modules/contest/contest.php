@@ -337,7 +337,7 @@ class gEditorialContest extends gEditorialModuleCore
 	{
 		echo '<div class="geditorial-admin-wrap-metabox contest">';
 
-		$terms = gEditorialHelper::getTerms( $this->constant( 'contest_tax' ), $post->ID, TRUE );
+		$terms = gEditorialWPTaxonomy::getTerms( $this->constant( 'contest_tax' ), $post->ID, TRUE );
 
 		do_action( 'geditorial_contest_supported_meta_box', $post, $terms ); // OLD ACTION: 'geditorial_contest_meta_box'
 

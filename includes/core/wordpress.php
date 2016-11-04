@@ -174,50 +174,6 @@ class gEditorialWordPress extends gEditorialBaseCore
 		return wp_insert_post( $new_post );
 	}
 
-	public static function theTerm( $taxonomy, $post_id, $object = FALSE )
-	{
-		$terms = get_the_terms( $post_id, $taxonomy );
-
-		if ( $terms && ! is_wp_error( $terms ) )
-			foreach ( $terms as $term )
-				return $object ? $term : $term->term_id;
-
-		return '0';
-	}
-
-	public static function prepareTerms( $taxonomy, $extra = array(), $terms = NULL, $key = 'term_id', $object = TRUE )
-	{
-		$new_terms = array();
-
-		if ( is_null( $terms ) ) {
-			$terms = get_terms( $taxonomy, array_merge( array(
-				'hide_empty' => FALSE,
-				'orderby'    => 'name',
-				'order'      => 'ASC'
-			), $extra ) );
-		}
-
-		if ( is_wp_error( $terms ) || FALSE === $terms )
-			return $new_terms;
-
-		foreach ( $terms as $term ) {
-
-			$new = array(
-				'name'        => $term->name,
-				'description' => $term->description,
-				'link'        => get_term_link( $term, $taxonomy ),
-				'count'       => $term->count,
-				'parent'      => $term->parent,
-				'slug'        => $term->slug,
-				'id'          => $term->term_id,
-			);
-
-			$new_terms[$term->{$key}] = $object ? (object) $new : $new;
-		}
-
-		return $new_terms;
-	}
-
 	// ADOPTED FROM: wp_count_posts()
 	// EDITED: 8/12/2016, 8:53:18 AM
 	public static function countPostsByTaxonomy( $taxonomy, $post_types = array( 'post' ), $user_id = 0 )

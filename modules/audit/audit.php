@@ -92,7 +92,7 @@ class gEditorialAudit extends gEditorialModuleCore
 
 	public function activity_box_end()
 	{
-		$terms = gEditorialHelper::getTerms( $this->constant( 'audit_tax' ), FALSE, TRUE, 'slug', array( 'hide_empty' => TRUE ) );
+		$terms = gEditorialWPTaxonomy::getTerms( $this->constant( 'audit_tax' ), FALSE, TRUE, 'slug', array( 'hide_empty' => TRUE ) );
 
 		if ( ! count( $terms ) )
 			return;

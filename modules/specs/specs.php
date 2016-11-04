@@ -159,7 +159,7 @@ class gEditorialSpecs extends gEditorialModuleCore
 			return FALSE;
 
 		$meta = $this->get_postmeta( $post_id, FALSE, array() );
-		$spec_terms = gEditorialHelper::getTerms( $this->constant( 'specs_tax' ), FALSE, TRUE, 'slug' );
+		$spec_terms = gEditorialWPTaxonomy::getTerms( $this->constant( 'specs_tax' ), FALSE, TRUE, 'slug' );
 		$terms = array();
 
 		foreach ( $meta as $meta_row )
@@ -284,7 +284,7 @@ class gEditorialSpecs extends gEditorialModuleCore
 	public function do_meta_box( $post )
 	{
 		echo '<div class="geditorial-admin-wrap-metabox specs">';
-		$specs = gEditorialHelper::getTerms( $this->constant( 'specs_tax' ), $post->ID, TRUE );
+		$specs = gEditorialWPTaxonomy::getTerms( $this->constant( 'specs_tax' ), $post->ID, TRUE );
 		do_action( 'geditorial_specs_meta_box', $post, $specs );
 		echo '</div>';
 	}
@@ -434,7 +434,7 @@ class gEditorialSpecs extends gEditorialModuleCore
 		if ( FALSE === $args['context'] ) // bailing
 			return NULL;
 
-		$the_terms = gEditorialHelper::getTerms( $this->constant( 'specs_tax' ), $post->ID, TRUE );
+		$the_terms = gEditorialWPTaxonomy::getTerms( $this->constant( 'specs_tax' ), $post->ID, TRUE );
 		$metas = $this->get_postmeta( $post->ID, FALSE, array() );
 		$html = '';
 

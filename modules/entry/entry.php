@@ -294,7 +294,7 @@ class gEditorialEntry extends gEditorialModuleCore
 			&& is_main_query() ) {
 
 			if ( is_null( $this->terms ) )
-				$this->terms = gEditorialWordPress::prepareTerms( $this->constant( 'section_tax' ) );
+				$this->terms = gEditorialWPTaxonomy::prepTerms( $this->constant( 'section_tax' ) );
 
 			foreach ( $this->terms as $term )
 				$content = preg_replace(

@@ -608,7 +608,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 	{
 		echo '<div class="geditorial-admin-wrap-metabox magazine">';
 
-		$terms = gEditorialHelper::getTerms( $this->constant( 'issue_tax' ), $post->ID, TRUE );
+		$terms = gEditorialWPTaxonomy::getTerms( $this->constant( 'issue_tax' ), $post->ID, TRUE );
 
 		do_action( 'geditorial_magazine_supported_meta_box', $post, $box, $terms );
 
@@ -709,7 +709,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 		if ( is_null( $post_id ) )
 			$post_id = get_the_ID();
 
-		$terms = gEditorialHelper::getTerms( $this->constant( 'issue_tax' ), $post_id, TRUE );
+		$terms = gEditorialWPTaxonomy::getTerms( $this->constant( 'issue_tax' ), $post_id, TRUE );
 		if ( ! count( $terms ) )
 			return FALSE;
 
@@ -827,7 +827,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 						'callback' => 'wpautop',
 						'class'    => 'description',
 					),
-				), gEditorialHelper::getTerms( $this->constant( 'issue_tax' ), FALSE, TRUE ) );
+				), gEditorialWPTaxonomy::getTerms( $this->constant( 'issue_tax' ), FALSE, TRUE ) );
 
 				echo '<br />';
 			}
@@ -862,7 +862,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 
 					// FIXME: get term_id list from table checkbox
 
-					$terms = gEditorialHelper::getTerms( $this->constant( 'issue_tax' ), FALSE, TRUE );
+					$terms = gEditorialWPTaxonomy::getTerms( $this->constant( 'issue_tax' ), FALSE, TRUE );
 					$posts = array();
 
 					foreach ( $terms as $term_id => $term ) {

@@ -155,7 +155,7 @@ class gEditorialMetaMetaBox extends gEditorialMetaBox
 			// FIXME: core dropdown does not support: data attr
 			wp_dropdown_categories( array(
 				'taxonomy'          => $tax,
-				'selected'          => gEditorialWordPress::theTerm( $tax, $post->ID ),
+				'selected'          => gEditorialWPTaxonomy::theTerm( $tax, $post->ID ),
 				'show_option_none'  => gEditorialSettingsCore::showOptionNone( $title ),
 				'option_none_value' => '0',
 				'class'             => 'geditorial-admin-dropbown geditorial-meta-field-'.$field.( $ltr ? ' dropbown-ltr' : '' ),

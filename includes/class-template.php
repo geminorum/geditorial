@@ -401,7 +401,7 @@ class gEditorialTemplateCore extends gEditorialBaseCore
 			'filter' => $args['filter'],
 		), FALSE );
 
-		if ( $term = gEditorialWordPress::theTerm( $args['taxonomy'], $post->ID, TRUE ) ) {
+		if ( $term = gEditorialWPTaxonomy::theTerm( $args['taxonomy'], $post->ID, TRUE ) ) {
 
 			if ( ! $meta )
 				$meta = sanitize_term_field( 'name', $term->name, $term->term_id, $args['taxonomy'], 'display' );
