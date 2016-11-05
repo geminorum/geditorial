@@ -213,6 +213,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 		) );
 
 		$this->register_taxonomy( 'span_tax', array(
+			'hierarchical'       => TRUE,
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
 		), 'issue_cpt' );
