@@ -213,12 +213,14 @@ class gEditorialMagazine extends gEditorialModuleCore
 		) );
 
 		$this->register_taxonomy( 'span_tax', array(
-			'show_admin_column' => TRUE,
+			'show_admin_column'  => TRUE,
+			'show_in_quick_edit' => TRUE,
 		), 'issue_cpt' );
 
 		if ( $this->get_setting( 'issue_sections', FALSE ) )
 			$this->register_taxonomy( 'section_tax', array(
 				'hierarchical'       => TRUE,
+				'show_admin_column'  => TRUE,
 				'show_in_quick_edit' => TRUE,
 				'show_in_nav_menus'  => TRUE,
 			), $this->post_types( 'issue_cpt' ) );
@@ -602,6 +604,16 @@ class gEditorialMagazine extends gEditorialModuleCore
 	public function parse_query( $query )
 	{
 		$this->do_parse_query_taxes( $query->query_vars, array( 'span_tax' ) );
+	}
+
+	public function meta_box_cb_span_tax( $post, $box )
+	{
+		$this->meta_box_choose_tax( $post, $box );
+	}
+
+	public function meta_box_cb_section_tax( $post, $box )
+	{
+		$this->meta_box_choose_tax( $post, $box );
 	}
 
 	public function do_meta_box_supported( $post, $box )

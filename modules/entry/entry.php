@@ -99,8 +99,10 @@ class gEditorialEntry extends gEditorialModuleCore
 		$this->register_post_type( 'entry_cpt', array(), array( 'post_tag' ) );
 		$this->register_taxonomy( 'section_tax', array(
 			'hierarchical'       => TRUE,
+			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
 			'show_in_nav_menus'  => TRUE,
+			'meta_box_cb'        => NULL, // default meta box
 		), 'entry_cpt' );
 
 		// add_action( 'generate_rewrite_rules', array( $this, 'generate_rewrite_rules' ) );

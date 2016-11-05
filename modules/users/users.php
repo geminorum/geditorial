@@ -86,7 +86,9 @@ class gEditorialUsers extends gEditorialModuleCore
 			return;
 
 		$this->register_taxonomy( 'group_tax', array(
-			'capabilities' => array(
+			'show_admin_column'  => TRUE,
+			'show_in_quick_edit' => TRUE,
+			'capabilities'       => array(
 				'manage_terms' => 'list_users',
 				'edit_terms'   => 'list_users',
 				'delete_terms' => 'list_users',

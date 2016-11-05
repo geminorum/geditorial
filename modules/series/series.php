@@ -88,7 +88,10 @@ class gEditorialSeries extends gEditorialModuleCore
 
 		$this->do_globals();
 
-		$this->register_taxonomy( 'series_tax' );
+		$this->register_taxonomy( 'series_tax', array(
+			'meta_box_cb'       => NULL, // default meta box
+			'show_admin_column' => TRUE,
+		) );
 
 		foreach ( $this->post_types() as $post_type )
 			$this->add_post_type_fields( $post_type, $this->fields[$this->constant( 'post_cpt' )], 'series' );

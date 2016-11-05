@@ -234,26 +234,25 @@ class gEditorialBook extends gEditorialModuleCore
 
 		$this->register_taxonomy( 'subject_tax', array(
 			'hierarchical' => TRUE,
-			'meta_box_cb'  => NULL,
+			'meta_box_cb'  => NULL, // default meta box
 		), 'publication_cpt' );
 
 		$this->register_taxonomy( 'library_tax', array(
 			'hierarchical' => TRUE,
-			'meta_box_cb'  => NULL,
+			'meta_box_cb'  => NULL, // default meta box
 		), 'publication_cpt' );
 
 		$this->register_taxonomy( 'publisher_tax', array(
-			'meta_box_cb' => NULL,
+			'meta_box_cb' => NULL, // default meta box
 		), 'publication_cpt' );
 
 		$this->register_taxonomy( 'type_tax', array(
 			'hierarchical' => TRUE,
-			'meta_box_cb'  => FALSE,
 		), 'publication_cpt' );
 
 		$this->register_taxonomy( 'status_tax', array(
-			'hierarchical' => TRUE,
-			'meta_box_cb'  => FALSE,
+			'hierarchical'       => TRUE,
+			'show_in_quick_edit' => TRUE,
 		), 'publication_cpt' );
 
 		if ( ! is_admin()

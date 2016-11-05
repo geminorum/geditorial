@@ -148,9 +148,7 @@ class gEditorialMeta extends gEditorialModuleCore
 				$ct_tax_posttypes[] = $post_type;
 
 		if ( count( $ct_tax_posttypes ) )
-			$this->register_taxonomy( 'ct_tax', array(
-				'meta_box_cb' => FALSE,
-			), $ct_tax_posttypes );
+			$this->register_taxonomy( 'ct_tax', array(), $ct_tax_posttypes );
 
 		$post_cpt = $this->constant( 'post_cpt' );
 

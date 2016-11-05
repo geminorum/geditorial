@@ -143,24 +143,32 @@ class gEditorialContest extends gEditorialModuleCore
 		), array( 'post_tag' ) );
 
 		$this->register_taxonomy( 'contest_cat', array(
-			'show_admin_column' => TRUE,
-			'hierarchical'      => TRUE,
+			'hierarchical'       => TRUE,
+			'meta_box_cb'        => NULL, // default meta box
+			'show_admin_column'  => TRUE,
+			'show_in_quick_edit' => TRUE,
 		), 'contest_cpt' );
 
 		$this->register_taxonomy( 'contest_tax', array(
-			'show_ui'           => self::isDev(),
-			'hierarchical'      => TRUE,
-			'show_admin_column' => TRUE,
+			'show_ui'            => self::isDev(),
+			'hierarchical'       => TRUE,
+			'meta_box_cb'        => NULL, // default meta box
+			'show_admin_column'  => TRUE,
+			'show_in_quick_edit' => TRUE,
 		) );
 
 		$this->register_taxonomy( 'apply_cat', array(
-			'show_admin_column' => TRUE,
-			'hierarchical'      => TRUE,
+			'hierarchical'       => TRUE,
+			'meta_box_cb'        => NULL, // default meta box
+			'show_admin_column'  => TRUE,
+			'show_in_quick_edit' => TRUE,
 		), 'apply_cpt' );
 
 		$this->register_taxonomy( 'apply_status_tax', array(
-			'show_admin_column' => TRUE,
-			'hierarchical'      => TRUE,
+			'hierarchical'       => TRUE,
+			'meta_box_cb'        => NULL, // default meta box
+			'show_admin_column'  => TRUE,
+			'show_in_quick_edit' => TRUE,
 		), 'apply_cpt' );
 	}
 

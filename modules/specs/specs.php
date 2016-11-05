@@ -93,9 +93,7 @@ class gEditorialSpecs extends gEditorialModuleCore
 		do_action( 'geditorial_specs_init', $this->module );
 
 		$this->do_globals();
-		$this->register_taxonomy( 'specs_tax', array(
-			'meta_box_cb' => FALSE, // FIXME: drop this after defaults changes
-		) );
+		$this->register_taxonomy( 'specs_tax' );
 
 		foreach ( $this->post_types() as $post_type )
 			$this->add_post_type_fields( $post_type, $this->fields[$this->constant( 'post_cpt' )], 'specs' );

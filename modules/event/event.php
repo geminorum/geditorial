@@ -124,13 +124,34 @@ class gEditorialEvent extends gEditorialModuleCore
 
 		$this->do_globals();
 
-		$this->register_post_type( 'event_cpt', array( 'hierarchical' => TRUE, ), array( 'post_tag' ) );
-		$this->register_taxonomy( 'event_cat', array( 'hierarchical' => TRUE, ), 'event_cpt' );
-		$this->register_taxonomy( 'event_tag', array( 'hierarchical' => TRUE, ), 'event_cpt' );
-		$this->register_taxonomy( 'cal_tax', array( 'hierarchical' => TRUE, ), 'event_cpt' );
+		$this->register_post_type( 'event_cpt', array(
+			'hierarchical' => TRUE,
+			'meta_box_cb'  => NULL, // default meta box
+		), array( 'post_tag' ) );
+
+		$this->register_taxonomy( 'event_cat', array(
+			'hierarchical'       => TRUE,
+			'meta_box_cb'        => NULL, // default meta box
+			'show_admin_column'  => TRUE,
+			'show_in_quick_edit' => TRUE,
+		), 'event_cpt' );
+
+		$this->register_taxonomy( 'event_tag', array(
+			'hierarchical'       => TRUE,
+			'meta_box_cb'        => NULL, // default meta box
+			'show_admin_column'  => TRUE,
+			'show_in_quick_edit' => TRUE,
+		), 'event_cpt' );
+
+		$this->register_taxonomy( 'cal_tax', array(
+			'hierarchical' => TRUE,
+			'meta_box_cb'  => NULL, // default meta box
+		), 'event_cpt' );
 
 		if ( $this->get_setting( 'startend_support', TRUE ) )
-			$this->register_taxonomy( 'type_tax', array( 'show_ui' => FALSE, ), 'event_cpt' );
+			$this->register_taxonomy( 'type_tax', array(
+				'show_ui' => FALSE,
+			), 'event_cpt' );
 
 		add_rewrite_endpoint( $this->constant( 'ical_endpoint' ), EP_PAGES, 'ical' );
 

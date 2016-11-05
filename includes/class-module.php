@@ -1106,22 +1106,23 @@ class gEditorialModuleCore extends gEditorialBaseCore
 
 	public function register_taxonomy( $constant_key, $atts = array(), $post_types = NULL )
 	{
+		$taxonomy = $this->constant( $constant_key );
+
 		if ( is_null( $post_types ) )
 			$post_types = $this->post_types();
+
 		else if ( ! is_array( $post_types ) )
 			$post_types = array( $this->constant( $post_types ) );
-
-		$taxonomy = $this->constant( $constant_key );
 
 		$args = self::recursiveParseArgs( $atts, array(
 			'labels'                => $this->get_taxonomy_labels( $constant_key ),
 			'update_count_callback' => array( 'gEditorialWordPress', 'updateCountCallback' ),
-			// FIXME: meta_box_cb default must be FALSE / check every module before!
-			'meta_box_cb'           => method_exists( $this, 'meta_box_cb_'.$constant_key ) ? array( $this, 'meta_box_cb_'.$constant_key ) : NULL,
+			'meta_box_cb'           => method_exists( $this, 'meta_box_cb_'.$constant_key ) ? array( $this, 'meta_box_cb_'.$constant_key ) : FALSE,
 			'hierarchical'          => FALSE,
 			'public'                => TRUE,
 			'show_ui'               => TRUE,
-			'show_in_quick_edit'    => FALSE, // FIXME: check this for all taxes
+			'show_admin_column'     => FALSE,
+			'show_in_quick_edit'    => FALSE,
 			'show_in_nav_menus'     => FALSE,
 			'show_tagcloud'         => FALSE,
 			'query_var'             => $this->constant( $constant_key.'_query', $taxonomy ),
