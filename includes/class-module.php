@@ -1054,23 +1054,22 @@ class gEditorialModuleCore extends gEditorialBaseCore
 		$post_type = $this->constant( $constant_key );
 
 		$args = self::recursiveParseArgs( $atts, array(
-			'taxonomies'  => $taxonomies,
-			'labels'      => $this->get_post_type_labels( $constant_key ),
-			'description' => isset( $this->strings['labels'][$constant_key]['description'] ) ? $this->strings['labels'][$constant_key]['description'] : '',
-			// FIXME: check every module
-			'register_meta_box_cb'  => method_exists( $this, 'add_meta_box_cb_'.$constant_key ) ? array( $this, 'add_meta_box_cb_'.$constant_key ) : NULL,
-			'menu_icon'   => $this->module->icon ? 'dashicons-'.$this->module->icon : 'dashicons-welcome-write-blog',
-			'supports'    => isset( $this->supports[$constant_key] ) ? $this->supports[$constant_key] : array( 'title', 'editor' ),
-			'has_archive' => $this->constant( $constant_key.'_archive', FALSE ),
-			'query_var'   => $post_type,
-			'rewrite'     => array(
+			'taxonomies'           => $taxonomies,
+			'labels'               => $this->get_post_type_labels( $constant_key ),
+			'supports'             => isset( $this->supports[$constant_key] ) ? $this->supports[$constant_key] : array( 'title', 'editor' ),
+			'description'          => isset( $this->strings['labels'][$constant_key]['description'] ) ? $this->strings['labels'][$constant_key]['description'] : '',
+			'register_meta_box_cb' => method_exists( $this, 'add_meta_box_cb_'.$constant_key ) ? array( $this, 'add_meta_box_cb_'.$constant_key ) : NULL,
+			'menu_icon'            => $this->module->icon ? 'dashicons-'.$this->module->icon : 'dashicons-welcome-write-blog',
+			'has_archive'          => $this->constant( $constant_key.'_archive', FALSE ),
+			'query_var'            => $this->constant( $constant_key.'_query_var', $post_type ),
+			'capability_type'      => $this->constant( $constant_key.'_cap_type', 'post' ),
+			'rewrite'              => array(
 				'slug'       => $this->constant( $constant_key.'_slug', $post_type ),
 				'with_front' => FALSE,
 				'feeds'      => TRUE,
 				'pages'      => TRUE,
 				'ep_mask'    => EP_PERMALINK, // https://make.wordpress.org/plugins?p=29
 			),
-			'capability_type'  => 'post',
 			'hierarchical'     => FALSE,
 			'public'           => TRUE,
 			'show_ui'          => TRUE,
