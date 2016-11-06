@@ -1439,6 +1439,41 @@ class gEditorialModuleCore extends gEditorialBaseCore
 		);
 	}
 
+	public function add_meta_box_author( $constant_key, $callback = 'post_author_meta_box' )
+	{
+		$post_type = $this->constant( $constant_key );
+		$object    = get_post_type_object( $post_type );
+
+		if ( is_super_admin()
+			|| current_user_can( $object->cap->edit_others_posts ) ) {
+
+			remove_meta_box( 'authordiv', $post_type, 'normal' );
+
+			add_meta_box( 'authordiv',
+				$this->get_string( 'author_box_title', $constant_key, 'misc', __( 'Author' ) ),
+				$callback,
+				NULL,
+				'normal',
+				'core'
+			);
+		}
+	}
+
+	public function add_meta_box_excerpt( $constant_key, $callback = 'post_excerpt_meta_box' )
+	{
+		$post_type = $this->constant( $constant_key );
+
+		remove_meta_box( 'postexcerpt', $post_type, 'normal' );
+
+		add_meta_box( 'postexcerpt',
+			$this->get_string( 'excerpt_box_title', $constant_key, 'misc', __( 'Excerpt' ) ),
+			$callback,
+			$post_type,
+			'normal',
+			'high'
+		);
+	}
+
 	public function remove_meta_box( $constant_key, $post_type, $type = 'tag' )
 	{
 		if ( 'tag' == $type )

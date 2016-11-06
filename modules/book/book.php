@@ -50,6 +50,8 @@ class gEditorialBook extends gEditorialModuleCore
 				'publication_cpt' => array(
 					'featured'           => _x( 'Cover Image', 'Book Module: Publication CPT: Featured', GEDITORIAL_TEXTDOMAIN ),
 					'meta_box_title'     => _x( 'Metadata', 'Book Module: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
+					'author_box_title'   => _x( 'Curator', 'Book Module: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
+					'excerpt_box_title'  => _x( 'Summary', 'Book Module: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
 					'cover_column_title' => _x( 'Cover', 'Book Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
 				),
 				'subject_tax' => array(
@@ -75,12 +77,6 @@ class gEditorialBook extends gEditorialModuleCore
 				'size_tax' => array(
 					'meta_box_title'      => _x( 'Size', 'Book Module: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
 					'tweaks_column_title' => _x( 'Publication Size', 'Book Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				),
-				'author' => array(
-					'meta_box_title' => _x( 'Curator', 'Book Module: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
-				),
-				'excerpt' => array(
-					'meta_box_title' => _x( 'Summary', 'Book Module: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
 				),
 			),
 			'settings' => array(
@@ -143,11 +139,8 @@ class gEditorialBook extends gEditorialModuleCore
 				'excerpt',
 				'author',
 				'thumbnail',
-				// 'trackbacks',
-				// 'custom-fields',
 				'comments',
 				'revisions',
-				// 'page-attributes',
 			),
 		);
 	}
@@ -281,29 +274,6 @@ class gEditorialBook extends gEditorialModuleCore
 				add_filter( 'geditorial_meta_box_callback', '__return_true', 12 );
 				add_filter( 'geditorial_meta_dbx_callback', '__return_true', 12 );
 
-				$this->add_meta_box_choose_tax( 'status_tax', $screen->post_type );
-				$this->add_meta_box_choose_tax( 'type_tax', $screen->post_type );
-
-				$post_type_object = get_post_type_object( $screen->post_type );
-				if ( is_super_admin() || current_user_can( $post_type_object->cap->edit_others_posts ) ) {
-					$this->remove_meta_box( 'publication_cpt', $screen->post_type, 'author' );
-					add_meta_box( 'authordiv',
-						$this->get_string( 'meta_box_title', 'author', 'misc' ),
-						'post_author_meta_box',
-						$screen->post_type,
-						'side'
-					);
-				}
-
-				$this->remove_meta_box( 'publication_cpt', $screen->post_type, 'excerpt' );
-				add_meta_box( 'postexcerpt',
-					$this->get_string( 'meta_box_title', 'excerpt', 'misc' ),
-					'post_excerpt_meta_box',
-					$screen->post_type,
-					'normal',
-					'high'
-				);
-
 			} else if ( 'edit' == $screen->base ) {
 
 				add_filter( 'disable_months_dropdown', '__return_true', 12 );
@@ -319,6 +289,17 @@ class gEditorialBook extends gEditorialModuleCore
 	{
 		add_filter( 'manage_'.$post_type.'_posts_columns', array( $this, 'manage_posts_columns' ) );
 		add_action( 'manage_'.$post_type.'_posts_custom_column', array( $this, 'posts_custom_column' ), 10, 2 );
+	}
+
+	public function add_meta_box_cb_publication_cpt( $post )
+	{
+		$post_type = $this->constant( 'publication_cpt' );
+
+		$this->add_meta_box_author( 'publication_cpt' );
+		$this->add_meta_box_excerpt( 'publication_cpt' );
+
+		$this->add_meta_box_choose_tax( 'status_tax', $post_type );
+		$this->add_meta_box_choose_tax( 'type_tax', $post_type );
 	}
 
 	public function register_settings( $page = NULL )
