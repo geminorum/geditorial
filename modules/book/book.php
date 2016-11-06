@@ -281,8 +281,8 @@ class gEditorialBook extends gEditorialModuleCore
 				add_filter( 'geditorial_meta_box_callback', '__return_true', 12 );
 				add_filter( 'geditorial_meta_dbx_callback', '__return_true', 12 );
 
-				$this->add_meta_box_choose_tax( 'status_tax', $screen->post_type, 'cat', FALSE );
-				$this->add_meta_box_choose_tax( 'type_tax', $screen->post_type, 'cat', FALSE );
+				$this->add_meta_box_choose_tax( 'status_tax', $screen->post_type );
+				$this->add_meta_box_choose_tax( 'type_tax', $screen->post_type );
 
 				$post_type_object = get_post_type_object( $screen->post_type );
 				if ( is_super_admin() || current_user_can( $post_type_object->cap->edit_others_posts ) ) {

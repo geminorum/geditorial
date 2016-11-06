@@ -166,7 +166,6 @@ class gEditorialContest extends gEditorialModuleCore
 
 		$this->register_taxonomy( 'apply_status_tax', array(
 			'hierarchical'       => TRUE,
-			'meta_box_cb'        => NULL, // default meta box
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
 		), 'apply_cpt' );

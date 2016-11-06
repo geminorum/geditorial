@@ -1202,14 +1202,10 @@ class gEditorialModuleCore extends gEditorialBaseCore
 	// callback for meta box for choose only tax
 	public function meta_box_choose_tax( $post, $box )
 	{
-		$atts = isset( $box['args'] ) && is_array( $box['args'] ) ? $box['args'] : array();
-		$args = wp_parse_args( $atts, array(
+		$args = self::atts( array(
 			'taxonomy' => 'category',
 			'edit_url' => NULL,
-		) );
-
-		if ( is_null( $args['edit_url'] ) )
-			$args['edit_url'] = gEditorialWordPress::getEditTaxLink( $args['taxonomy'] );
+		), empty( $box['args'] ) ? array() : $box['args'] );
 
 		$tax_name = esc_attr( $args['taxonomy'] );
 		$taxonomy = get_taxonomy( $args['taxonomy'] );
@@ -1220,25 +1216,20 @@ class gEditorialModuleCore extends gEditorialBaseCore
 			'echo'          => FALSE,
 		) );
 
-		if ( $html ) {
+		echo '<div id="taxonomy-'.$tax_name.'" class="geditorial-admin-wrap-metabox choose-tax">';
 
-			echo '<div id="taxonomy-'.$tax_name.'" class="geditorial-admin-wrap-metabox choose-tax">';
+			if ( $html ) {
 
-			// allows for an empty term set to be sent. 0 is an invalid Term ID and will be ignored by empty() checks.
-			echo '<input type="hidden" name="tax_input['.$tax_name.'][]" value="0" />';
+				echo '<div class="field-wrap-list"><ul>'.$html.'</ul></div>';
 
-			echo '<div class="field-wrap-list"><ul>'.$html.'</ul></div></div>';
+				// allows for an empty term set to be sent. 0 is an invalid Term ID and will be ignored by empty() checks.
+				echo '<input type="hidden" name="tax_input['.$tax_name.'][]" value="0" />';
 
-		} else if ( $args['edit_url']
-			&& current_user_can( $taxonomy->cap->manage_terms ) ) {
+			} else {
+				gEditorialMetaBox::fieldEmptyTaxonomy( $taxonomy, $args['edit_url'] );
+			}
 
-				echo gEditorialHTML::tag( 'a', array(
-					'href'   => $args['edit_url'],
-					'title'  => $taxonomy->labels->menu_name,
-					'class'  => 'add-new-item',
-					'target' => '_blank',
-				), $taxonomy->labels->add_new_item );
-		}
+		echo '</div>';
 	}
 
 	public function get_image_sizes( $post_type )
@@ -1425,22 +1416,24 @@ class gEditorialModuleCore extends gEditorialBaseCore
 
 	// CAUTION: tax must be cat (hierarchical)
 	// TODO: supporting tag (non-hierarchical)
-	public function add_meta_box_choose_tax( $constant_key, $post_type, $type = 'cat', $remove = TRUE )
+	public function add_meta_box_choose_tax( $constant_key, $post_type, $type = FALSE )
 	{
-		$tax = $this->constant( $constant_key );
-		$edit_url = $this->get_url_tax_edit( $constant_key );
+		$taxonomy = $this->constant( $constant_key );
+		$object   = get_taxonomy( $taxonomy );
+		$manage   = current_user_can( $object->cap->manage_terms );
+		$edit_url = $manage ? gEditorialWordPress::getEditTaxLink( $taxonomy ) : FALSE;
 
-		if ( $remove )
+		if ( $type )
 			$this->remove_meta_box( $constant_key, $post_type, $type );
 
-		add_meta_box( 'geditorial-'.$this->module->name.'-'.$tax,
-			$this->get_meta_box_title( $constant_key, $edit_url, 'edit_others_posts' ),
+		add_meta_box( 'geditorial-'.$this->module->name.'-'.$taxonomy,
+			$this->get_meta_box_title( $constant_key, $edit_url, TRUE ),
 			array( $this, 'meta_box_choose_tax' ),
 			NULL,
 			'side',
 			'default',
 			array(
-				'taxonomy' => $tax,
+				'taxonomy' => $taxonomy,
 				'edit_url' => $edit_url,
 			)
 		);

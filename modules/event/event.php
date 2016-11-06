@@ -138,14 +138,12 @@ class gEditorialEvent extends gEditorialModuleCore
 
 		$this->register_taxonomy( 'event_tag', array(
 			'hierarchical'       => TRUE,
-			'meta_box_cb'        => NULL, // default meta box
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
 		), 'event_cpt' );
 
 		$this->register_taxonomy( 'cal_tax', array(
 			'hierarchical' => TRUE,
-			'meta_box_cb'  => NULL, // default meta box
 		), 'event_cpt' );
 
 		if ( $this->get_setting( 'startend_support', TRUE ) )
