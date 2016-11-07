@@ -1154,7 +1154,7 @@ class gEditorialModuleCore extends gEditorialBaseCore
 		global $post, $post_ID;
 
 		$singular_name  = $this->nooped( $constant_key, 1 );
-		$singular_lower = self::strToLower( $singular_name );
+		$singular_lower = gEditorialCoreText::strToLower( $singular_name );
 
 		$link = get_permalink( $post_ID );
 

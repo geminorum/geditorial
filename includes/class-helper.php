@@ -379,8 +379,8 @@ class gEditorialHelper extends gEditorialBaseCore
 			return array(
 				$name.'s',
 				$name,
-				self::strToLower( $name.'s' ),
-				self::strToLower( $name ),
+				gEditorialCoreText::strToLower( $name.'s' ),
+				gEditorialCoreText::strToLower( $name ),
 			);
 
 		$strings = array(
@@ -388,8 +388,8 @@ class gEditorialHelper extends gEditorialBaseCore
 			_nx( $name['singular'], $name['plural'], 1, $name['context'], $name['domain'] ),
 		);
 
-		$strings[2] = self::strToLower( $strings[0] );
-		$strings[3] = self::strToLower( $strings[1] );
+		$strings[2] = gEditorialCoreText::strToLower( $strings[0] );
+		$strings[3] = gEditorialCoreText::strToLower( $strings[1] );
 
 		return $strings;
 	}
@@ -453,7 +453,7 @@ class gEditorialHelper extends gEditorialBaseCore
 
 		if ( $featured )
 			foreach ( $featured_templates as $key => $template )
-				$pre[$key] = vsprintf( $template, array( $featured, self::strToLower( $featured ) ) );
+				$pre[$key] = vsprintf( $template, array( $featured, gEditorialCoreText::strToLower( $featured ) ) );
 
 		return $pre;
 	}

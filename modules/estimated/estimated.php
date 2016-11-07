@@ -208,7 +208,7 @@ class gEditorialEstimated extends gEditorialModuleCore
 		$content = get_post_field( 'post_content', $post_id, 'raw' );
 
 		if ( 'ignore' == $this->get_setting( 'teaser', 'include' )
-			|| strpos( $content, '<!--noteaser-->' ) ) {
+			|| FALSE !== strpos( $content, '<!--noteaser-->' ) ) {
 
 				if ( preg_match( '/<!--more(.*?)?-->/', $content, $matches ) ) {
 					$content = explode( $matches[0], $content, 2 );
@@ -216,7 +216,7 @@ class gEditorialEstimated extends gEditorialModuleCore
 				}
 		}
 
-		$wordcount = self::wordCountUTF8( $content );
+		$wordcount = gEditorialCoreText::wordCountUTF8( $content );
 
 		if ( $update )
 			update_post_meta( $post_id, $this->meta_key, $wordcount );
