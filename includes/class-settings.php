@@ -637,6 +637,7 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 			'option_group' => 'settings',
 			'option_base'  => 'geditorial',
 			'options'      => array(), // saved options
+			'id_name_cb'   => FALSE, // id/name generator callback
 			'id_attr'      => FALSE, // override
 			'name_attr'    => FALSE, // override
 			'step_attr'    => '1', // for number type
@@ -668,9 +669,14 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 
 		$html    = '';
 		$value   = $args['default'];
-		$id      = $args['id_attr'] ? $args['id_attr'] : $args['option_base'].'-'.$args['option_group'].'-'.$args['field'];
-		$name    = $args['name_attr'] ? $args['name_attr'] : $args['option_base'].'['.$args['option_group'].']['.$args['field'].']';
 		$exclude = $args['exclude'] && ! is_array( $args['exclude'] ) ? array_filter( explode( ',', $args['exclude'] ) ) : array();
+
+		if ( $args['id_name_cb'] ) {
+			list( $id, $name ) = call_user_func( $args['id_name_cb'], $args );
+		} else {
+			$id   = $args['id_attr'] ? $args['id_attr'] : ( $args['option_base'] ? $args['option_base'].'-' : '' ).$args['option_group'].'-'.esc_attr( $args['field'] );
+			$name = $args['name_attr'] ? $args['name_attr'] : ( $args['option_base'] ? $args['option_base'].'_' : '' ).$args['option_group'].'['.esc_attr( $args['field'] ).']';
+		}
 
 		if ( isset( $args['options'][$args['field']] ) ) {
 			$value = $args['options'][$args['field']];

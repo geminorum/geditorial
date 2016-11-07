@@ -965,12 +965,21 @@ class gEditorialModuleCore extends gEditorialBaseCore
 		add_settings_field( $args['field'], $args['title'], $args['callback'], $args['page'], $args['section'], $args );
 	}
 
+	public function settings_id_name_cb( $args )
+	{
+		return array(
+			( $args['id_attr'] ? $args['id_attr'] : $args['option_base'].'-'.$args['option_group'].'-'.$args['field'] ),
+			( $args['name_attr'] ? $args['name_attr'] : $args['option_base'].'['.$args['option_group'].']['.$args['field'].']' ),
+		);
+	}
+
 	public function do_settings_field( $atts = array() )
 	{
 		$args = array_merge( array(
 			'options'      => isset( $this->options->settings ) ? $this->options->settings : array(),
 			'option_base'  => $this->module->group,
 			'option_group' => 'settings',
+			'id_name_cb'   => array( $this, 'settings_id_name_cb' ),
 		), $atts );
 
 		if ( empty( $args['cap'] ) )
