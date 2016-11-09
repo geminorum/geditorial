@@ -301,13 +301,15 @@ class gEditorialTweaks extends gEditorialModuleCore
 		}
 	}
 
+	// @SEE: [Post Type Templates in 4.7](https://make.wordpress.org/core/?p=20437)
+	// @SEE: [#18375 (Post type templates)](https://core.trac.wordpress.org/ticket/18375)
 	public function column_row_page_template( $post )
 	{
 		if ( ! empty( $post->page_template )
 			&& 'default' != $post->page_template ) {
 
-			if ( ! isset( $this->page_templates ) )
-				$this->page_templates = array_flip( get_page_templates( $post ) );
+			if ( ! isset( $this->page_templates[$post->post_type] ) )
+				$this->page_templates[$post->post_type] = array_flip( get_page_templates( $post, $post->post_type ) );
 
 			echo '<div class="-row tweaks-page-template">';
 
@@ -315,9 +317,9 @@ class gEditorialTweaks extends gEditorialModuleCore
 					.esc_attr_x( 'Page Template', 'Tweaks Module: Row Icon Title', GEDITORIAL_TEXTDOMAIN )
 					.'"><span class="dashicons dashicons-admin-page"></span></span>';
 
-				if ( ! empty( $this->page_templates[$post->page_template] ) )
+				if ( ! empty( $this->page_templates[$post->post_type][$post->page_template] ) )
 					echo '<span title="'.esc_attr( $post->page_template ).'">'
-						.esc_html( $this->page_templates[$post->page_template] ).'</span>';
+						.esc_html( $this->page_templates[$post->post_type][$post->page_template] ).'</span>';
 				else
 					echo '<span>'.esc_html( $post->page_template ).'</span>';
 
