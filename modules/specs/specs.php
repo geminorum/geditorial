@@ -109,7 +109,7 @@ class gEditorialSpecs extends gEditorialModuleCore
 
 			add_meta_box(
 				'geditorial-specs',
-				$this->get_meta_box_title( 'specs_tax' ),
+				$this->get_meta_box_title( 'specs_tax', $this->get_url_tax_edit( 'specs_tax' ), 'edit_others_posts' ),
 				array( $this, 'do_meta_box' ),
 				$screen,
 				'side',
@@ -152,8 +152,7 @@ class gEditorialSpecs extends gEditorialModuleCore
 	// it will append new specs to the old ones
 	public function set_post_specs( $post_id, $specs, $create = FALSE )
 	{
-		$post = get_post( $post_id );
-		if ( ! $post )
+		if ( ! $post = get_post( $post_id ) )
 			return FALSE;
 
 		$meta = $this->get_postmeta( $post_id, FALSE, array() );
@@ -309,7 +308,7 @@ class gEditorialSpecs extends gEditorialModuleCore
 				echo $handle.'<span class="item-excerpt">';
 					$title = ( isset( $meta['spec_title'] ) && $meta['spec_title'] ) ? $meta['spec_title'] : ( isset( $meta['spec_term_id'] ) && $meta['spec_term_id'] ? $the_terms[$meta['spec_term_id']]->name : _x( 'Unknown Field', 'Specs Module',  GEDITORIAL_TEXTDOMAIN ) );
 					$title .= ( isset( $meta['spec_value'] ) && $meta['spec_value'] ? ': '.$meta['spec_value'] : '' );
-					echo mb_substr( $title, 0, 28, 'UTF-8' );
+					echo gEditorialCoreText::subStr( $title, 0, 28 );
 				echo '</span>'.$delete;
 
 			echo '</div><div class="item-body"><div class="field-wrap-group">';
