@@ -287,8 +287,14 @@ class gEditorialSpecs extends gEditorialModuleCore
 		echo '</div>';
 	}
 
+	// FIXME: convert into api and move up to MetaBox class
 	public function geditorial_specs_meta_box( $post, $the_terms )
 	{
+		$tax = $this->constant( 'specs_tax' );
+
+		if ( ! gEditorialWPTaxonomy::hasTerms( $tax ) )
+			return gEditorialMetaBox::fieldEmptyTaxonomy( $tax );
+
 		$fields = $this->post_type_fields( $post->post_type );
 		$metas  = $this->get_postmeta( $post->ID, FALSE, array() );
 
@@ -313,7 +319,7 @@ class gEditorialSpecs extends gEditorialModuleCore
 			echo '<div class="field-wrap field-wrap-select">';
 
 			wp_dropdown_categories( array(
-				'taxonomy'         => $this->constant( 'specs_tax' ),
+				'taxonomy'         => $tax,
 				'selected'         => ( isset( $meta['spec_term_id'] ) ? $the_terms[$meta['spec_term_id']]->term_id : 0 ),
 				'show_option_none' => $this->get_string( 'show_option_none', $post->post_type, 'misc' ),
 				'name'             => 'geditorial-specs_term_id[]',
@@ -342,7 +348,7 @@ class gEditorialSpecs extends gEditorialModuleCore
 
 				echo '<div class="field-wrap field-wrap-select">';
 				wp_dropdown_categories( array(
-					'taxonomy'         => $this->constant( 'specs_tax' ),
+					'taxonomy'         => $tax,
 					'selected'         => 0,
 					'show_option_none' => $this->get_string( 'show_option_none', $post->post_type, 'misc' ),
 					'name'             => 'geditorial-specs_term_id[]',
