@@ -89,7 +89,6 @@ class gEditorialSeries extends gEditorialModuleCore
 		$this->do_globals();
 
 		$this->register_taxonomy( 'series_tax', array(
-			'meta_box_cb'       => NULL, // default meta box
 			'show_admin_column' => TRUE,
 		) );
 
@@ -103,13 +102,21 @@ class gEditorialSeries extends gEditorialModuleCore
 		$this->register_shortcode( 'multiple_series_shortcode', array( 'gEditorialSeriesTemplates', 'shortcode_multiple_series' ) );
 	}
 
-	public function admin_init()
+	public function current_screen( $screen )
 	{
-		add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ), 20, 2 );
+		if ( 'post' == $screen->base
+			&& in_array( $screen->post_type, $this->post_types() ) ) {
 
-		// internal actions:
-		add_action( 'geditorial_series_meta_box', array( $this, 'geditorial_series_meta_box' ), 5, 3 );
-		add_action( 'geditorial_series_meta_box_item', array( $this, 'geditorial_series_meta_box_item' ), 5, 4 );
+			add_meta_box( 'geditorial-series',
+				$this->get_meta_box_title( 'series_tax', $this->get_url_tax_edit( 'series_tax' ), 'edit_others_posts' ),
+				array( $this, 'do_meta_box' ),
+				$screen->post_type,
+				'side' );
+
+			// internal actions:
+			add_action( 'geditorial_series_meta_box', array( $this, 'geditorial_series_meta_box' ), 5, 3 );
+			add_action( 'geditorial_series_meta_box_item', array( $this, 'geditorial_series_meta_box_item' ), 5, 4 );
+		}
 	}
 
 	public function tweaks_strings( $strings )
@@ -190,21 +197,6 @@ class gEditorialSeries extends gEditorialModuleCore
 		return $postmeta;
 	}
 
-	public function add_meta_boxes( $post_type, $post )
-	{
-		if ( ! in_array( $post_type, $this->post_types() ) )
-			return;
-
-		$this->remove_meta_box( 'series_tax', $post_type, 'tag' );
-
-		add_meta_box(
-			'geditorial-series',
-			$this->get_meta_box_title( 'series_tax', $this->get_url_tax_edit( 'series_tax' ), 'edit_others_posts' ),
-			array( $this, 'do_meta_box' ),
-			$post_type,
-			'side' );
-	}
-
 	public function do_meta_box( $post, $box )
 	{
 		echo '<div class="geditorial-admin-wrap-metabox series">';
@@ -220,7 +212,6 @@ class gEditorialSeries extends gEditorialModuleCore
 	{
 		$tax = $this->constant( 'series_tax' );
 
-		// bail if no series
 		if ( ! gEditorialWPTaxonomy::hasTerms( $tax ) )
 			return gEditorialMetaBox::fieldEmptyTaxonomy( $tax );
 
