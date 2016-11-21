@@ -91,4 +91,18 @@ class gEditorialWPTaxonomy extends gEditorialBaseCore
 
 		return '0';
 	}
+
+	public static function getDBTaxonomies( $same_key = FALSE )
+	{
+		global $wpdb;
+
+		$taxonomies = $wpdb->get_col( "
+			SELECT taxonomy
+			FROM $wpdb->term_taxonomy
+			GROUP BY taxonomy
+			ORDER BY taxonomy ASC
+		" );
+
+		return $same_key ? self::sameKey( $taxonomies ) : $taxonomies;
+	}
 }

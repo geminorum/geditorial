@@ -665,20 +665,6 @@ class gEditorialBaseCore
 		echo '</div>';
 	}
 
-	public static function getDBTermTaxonomies( $same_key = FALSE )
-	{
-		global $wpdb;
-
-		$taxonomies = $wpdb->get_col( "
-			SELECT taxonomy
-			FROM $wpdb->term_taxonomy
-			GROUP BY taxonomy
-			ORDER BY taxonomy ASC
-		" );
-
-		return $same_key ? self::sameKey( $taxonomies ) : $taxonomies;
-	}
-
 	// @SOURCE: [Custom Field Taxonomies](https://github.com/scribu/wp-custom-field-taxonomies)
 	public static function getDBPostMetaRows( $meta_key, $limit = FALSE )
 	{

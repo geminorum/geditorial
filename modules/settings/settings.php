@@ -309,36 +309,42 @@ class gEditorialSettings extends gEditorialModuleCore
 				echo '</p>';
 
 			echo '</td></tr>';
-			echo '<tr><th scope="row">'._x( 'Orphaned Terms', 'Settings Module', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
 
-				$all_tax  = gEditorialHelper::getDBTermTaxonomies( TRUE );
-				$live_tax = gEditorialHelper::getTaxonomies( 'name' );
+			$db_taxes   = gEditorialWPTaxonomy::getDBTaxonomies( TRUE );
+			$live_taxes = gEditorialHelper::getTaxonomies( 'name' );
+			$dead_taxes = array_diff_key( $db_taxes, $live_taxes );
 
-				$this->do_settings_field( array(
-					'type'         => 'select',
-					'field'        => 'dead_tax',
-					'values'       => array_diff_key( $all_tax, $live_tax ),
-					'default'      => ( isset( $post['dead_tax'] ) ? $post['dead_tax'] : 'post_tag' ),
-					'option_group' => 'tools',
-				) );
+			if ( count( $dead_taxes ) ) {
 
-				$this->do_settings_field( array(
-					'type'         => 'select',
-					'field'        => 'live_tax',
-					'values'       => $live_tax,
-					'default'      => ( isset( $post['live_tax'] ) ? $post['live_tax'] : 'post_tag' ),
-					'option_group' => 'tools',
-				) );
+				echo '<tr><th scope="row">'._x( 'Orphaned Terms', 'Settings Module', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
 
-				echo '<p class="submit">';
-					$this->submit_button( 'orphaned_terms', FALSE, _x( 'Convert', 'Settings Module: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
+					$this->do_settings_field( array(
+						'type'         => 'select',
+						'field'        => 'dead_tax',
+						'values'       => $dead_taxes,
+						'default'      => ( isset( $post['dead_tax'] ) ? $post['dead_tax'] : 'post_tag' ),
+						'option_group' => 'tools',
+					) );
 
-					echo gEditorialHTML::tag( 'span', array(
-						'class' => 'description',
-					), _x( 'Converts orphaned terms into currently registered taxonomies', 'Settings Module', GEDITORIAL_TEXTDOMAIN ) );
-				echo '</p>';
+					$this->do_settings_field( array(
+						'type'         => 'select',
+						'field'        => 'live_tax',
+						'values'       => $live_taxes,
+						'default'      => ( isset( $post['live_tax'] ) ? $post['live_tax'] : 'post_tag' ),
+						'option_group' => 'tools',
+					) );
 
-			echo '</td></tr>';
+					echo '<p class="submit">';
+						$this->submit_button( 'orphaned_terms', FALSE, _x( 'Convert', 'Settings Module: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
+
+						echo gEditorialHTML::tag( 'span', array(
+							'class' => 'description',
+						), _x( 'Converts orphaned terms into currently registered taxonomies', 'Settings Module', GEDITORIAL_TEXTDOMAIN ) );
+					echo '</p>';
+
+				echo '</td></tr>';
+			}
+
 			echo '</table>';
 		echo '</form>';
 	}
