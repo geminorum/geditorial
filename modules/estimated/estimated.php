@@ -73,7 +73,7 @@ class gEditorialEstimated extends gEditorialModuleCore
 		do_action( 'geditorial_estimated_init', $this->module );
 		$this->do_globals();
 
-		if ( ! is_admin() ) {
+		if ( ! is_admin() && count( $this->post_types() ) ) {
 
 			if ( 'none' != $this->get_setting( 'insert_content', 'none' ) )
 				add_filter( 'the_content', array( $this, 'the_content' ),
