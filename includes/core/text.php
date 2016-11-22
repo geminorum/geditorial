@@ -296,12 +296,31 @@ class gEditorialCoreText extends gEditorialBaseCore
 
 			$html = strip_tags( $html );
 
+			// FIXME: convert back html entities
+
+			$html = str_replace( array(
+				"&nbsp;",
+				"&mdash;",
+				"&ndash;",
+			), ' ', $html );
+
+			$html = str_replace( array(
+				"&zwnj;",
+				"\xE2\x80\x8C", // Zero Width Non-Joiner U+200C
+				"\xE2\x80\x8F", // Right-To-Left Mark U+200F
+				"\xE2\x80\x8E", // Right-To-Left Mark U+200E
+				"\xEF\xBB\xBF", // UTF8 Bom
+			), '', $html );
+
 			$html = self::noLineBreak( $html );
 			$html = self::stripPunctuation( $html );
 			$html = self::normalizeWhitespace( $html );
 
 			$html = trim( $html );
 		}
+
+		if ( ! $html )
+			return 0;
 
 		// http://php.net/manual/en/function.str-word-count.php#85579
 		// return preg_match_all( "/\\p{L}[\\p{L}\\p{Mn}\\p{Pd}'\\x{2019}]*/u", $html, $matches );
