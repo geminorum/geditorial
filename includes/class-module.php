@@ -1721,15 +1721,10 @@ class gEditorialModuleCore extends gEditorialBaseCore
 		echo gEditorialWordPress::getFeaturedImageHTML( $post_id, $size );
 	}
 
+	// TODO: override $title_attr based on passed constant key
 	public function column_count( $count, $title_attr = NULL )
 	{
-		if ( is_null( $title_attr ) )
-			$title_attr = _x( 'No Count', 'Module Core: No Count Title Attribute', GEDITORIAL_TEXTDOMAIN );
-
-		if ( $count )
-			echo number_format_i18n( $count );
-		else
-			printf( '<span title="%s" class="column-count-empty">&mdash;</span>', $title_attr );
+		echo gEditorialHelper::htmlCount( $count, $title_attr );
 	}
 
 	public function column_term( $object_id, $tax_constant_key, $title_attr = NULL, $single = TRUE )

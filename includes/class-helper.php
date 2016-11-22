@@ -301,6 +301,19 @@ class gEditorialHelper extends gEditorialBaseCore
 		), sprintf( _x( 'Word count: %s', 'Module Helper', GEDITORIAL_TEXTDOMAIN ), '<span class="-words">0</span>' ) );
 	}
 
+	public static function htmlCount( $count, $title_attr = NULL )
+	{
+		if ( is_null( $title_attr ) )
+			$title_attr = _x( 'No Count', 'Module Helper: No Count Title Attribute', GEDITORIAL_TEXTDOMAIN );
+
+		if ( $count )
+			$html = number_format_i18n( $count );
+		else
+			$html = sprintf( '<span title="%s" class="column-count-empty">&mdash;</span>', $title_attr );
+
+		return $html;
+	}
+
 	public static function postModified( $post = NULL, $attr = FALSE )
 	{
 		$gmt   = get_post_modified_time( 'U', TRUE,  $args['id'], FALSE );
