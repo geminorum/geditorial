@@ -492,12 +492,17 @@ class gEditorialWordPress extends gEditorialBaseCore
 
 	public static function getPostEditLink( $post_id, $extra = array() )
 	{
-		return add_query_arg( array_merge( array( 'post' => $post_id, 'action' => 'edit' ), $extra ), admin_url( 'post.php' ) );
+		return add_query_arg( array_merge( array(
+			'action' => 'edit',
+			'post'   => $post_id,
+		), $extra ), admin_url( 'post.php' ) );
 	}
 
 	public static function getPostAttachmentsLink( $post_id, $extra = array() )
 	{
-		return add_query_arg( array_merge( array( 'post_parent' => $post_id ), $extra ), admin_url( 'upload.php' ) );
+		return add_query_arg( array_merge( array(
+			'post_parent' => $post_id,
+		), $extra ), admin_url( 'upload.php' ) );
 	}
 
 	public static function getAuthorEditHTML( $post_type, $author, $extra = array() )

@@ -131,7 +131,7 @@ class gEditorialEntryHelper extends gEditorialHelper
 	function apply_word_highligher( $content )
 	{
 
-		 global $post;
+		global $post;
 
 		$post_type=get_post_type($post->ID);
 
@@ -146,7 +146,7 @@ class gEditorialEntryHelper extends gEditorialHelper
 		$text_name=explode(',',trim($options['highlightedtext_name']));
 		//echo "<pre>";print_r($text_name);
 		if (!empty($text_name)){
-		for($i=0;$i<count($text_name);$i++){
+		for ($i=0;$i<count($text_name);$i++){
 		if (trim($text_name[$i])!=''){
 
 			if (preg_match('~\b' . preg_quote($text_name[$i], '~') . '\b(?![^<]*?>)~',$content,$result))

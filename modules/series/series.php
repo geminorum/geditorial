@@ -199,7 +199,7 @@ class gEditorialSeries extends gEditorialModuleCore
 
 	public function do_meta_box( $post, $box )
 	{
-		echo '<div class="geditorial-admin-wrap-metabox series">';
+		echo '<div class="geditorial-admin-wrap-metabox -series">';
 
 		$series = gEditorialWPTaxonomy::getTerms( $this->constant( 'series_tax' ), $post->ID, TRUE );
 

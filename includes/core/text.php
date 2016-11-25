@@ -283,6 +283,9 @@ class gEditorialCoreText extends gEditorialBaseCore
 
 	public static function wordCountUTF8( $html, $normalize = TRUE )
 	{
+		if ( ! $html )
+			return 0;
+
 		if ( $normalize ) {
 
 			$html = preg_replace( array(
@@ -356,7 +359,7 @@ class gEditorialCoreText extends gEditorialBaseCore
 		return preg_replace_callback('#\%[a-zA-Z0-9]{2}#', function( $hex ){
 			$hex = substr( $hex[0], 1 );
 			$str = '';
-			for( $i=0; $i < strlen( $hex ); $i += 2 )
+			for ( $i=0; $i < strlen( $hex ); $i += 2 )
 				$str .= chr( hexdec( substr( $hex, $i, 2 ) ) );
 			return $str;
 		}, (string) $string );

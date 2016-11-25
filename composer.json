@@ -24,12 +24,12 @@
     "composer/installers": "^1.2"
   },
   "require-dev": {
-    "erusev/parsedown-extra": "^0.7.0",
-    "mustache/mustache": "^2.5",
+    "erusev/parsedown-extra": "^0.7.1",
+    "mustache/mustache": "^2.11",
     "evert/sitemap-php": "^1.2",
-    "eluceo/ical": "*",
-    "johngrogg/ics-parser": "*",
-    "sabre/vobject": "~3.4",
+    "eluceo/ical": "^0.11.0",
+    "johngrogg/ics-parser": "^2.0",
+    "sabre/vobject": "^4.1",
     "farhadi/intl-datetime": "dev-master",
     "lawondyss/moment-php": "dev-master",
     "amirhabibzadeh/intl-carbon": "dev-master",

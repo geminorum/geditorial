@@ -280,9 +280,12 @@ class gEditorialSpecs extends gEditorialModuleCore
 
 	public function do_meta_box( $post )
 	{
-		echo '<div class="geditorial-admin-wrap-metabox specs">';
+		echo '<div class="geditorial-admin-wrap-metabox -specs">';
+
 		$specs = gEditorialWPTaxonomy::getTerms( $this->constant( 'specs_tax' ), $post->ID, TRUE );
+
 		do_action( 'geditorial_specs_meta_box', $post, $specs );
+
 		echo '</div>';
 	}
 

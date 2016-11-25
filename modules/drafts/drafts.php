@@ -71,9 +71,11 @@ class gEditorialDrafts extends gEditorialModuleCore
 		$post = wp_unslash( $_POST );
 		$what = empty( $post['what'] ) ? 'nothing': trim( $post['what'] );
 
-		switch( $what ) {
+		switch ( $what ) {
+
 			default:
 			case 'list':
+
 				wp_send_json_success( array(
 					'html' => $this->drafts_list(),
 				) );

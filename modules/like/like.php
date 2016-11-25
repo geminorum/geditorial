@@ -116,9 +116,9 @@ class gEditorialLike extends gEditorialModuleCore
 		$post = wp_unslash( $_POST );
 		$what = isset( $post['what'] ) ? $post['what'] : 'nothing';
 
-		switch( $what ) {
+		switch ( $what ) {
 
-			default :
+			default:
 			case 'check':
 
 				list( $check, $count ) = $this->check( $post['id'] );
@@ -134,7 +134,7 @@ class gEditorialLike extends gEditorialModuleCore
 				) );
 
 			break;
-			case 'dolike' :
+			case 'dolike':
 
 				gEditorialHelper::checkAjaxReferer( 'geditorial_like_ajax-'.$post['id'] );
 
@@ -150,7 +150,7 @@ class gEditorialLike extends gEditorialModuleCore
 				) );
 
 			break;
-			case 'unlike' :
+			case 'unlike':
 
 				gEditorialHelper::checkAjaxReferer( 'geditorial_like_ajax-'.$post['id'] );
 
@@ -164,7 +164,6 @@ class gEditorialLike extends gEditorialModuleCore
 					'count'   => number_format_i18n( $count ),
 					'avatars' => $this->get_setting( 'avatars', FALSE ) ? $this->avatars( $post['id'] ) : NULL,
 				) );
-
 		}
 
 		wp_send_json_error( gEditorialHTML::error( _x( 'What?!', 'Like Module: Ajax Notice', GEDITORIAL_TEXTDOMAIN ) ) );

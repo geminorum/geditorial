@@ -389,9 +389,9 @@ class gEditorialUsers extends gEditorialModuleCore
 					echo get_avatar( get_the_author_meta( 'email', $user_id ), '96' );
 
 					echo '<h2 class="user-title">'.gEditorialHTML::tag( 'a', array(
-						'href' => get_author_posts_url( $user_id ),
+						'href'  => get_author_posts_url( $user_id ),
 						'title' => '',
-					), get_the_author_meta( 'display_name', $user_id ) ).'<h2>';
+					), get_the_author_meta( 'display_name', $user_id ) ).'</h2>';
 
 					echo '<div class="description">'.wpautop( get_the_author_meta( 'description', $user_id ) ).'</div>';
 
