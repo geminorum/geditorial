@@ -45,6 +45,11 @@ class gEditorialTweaks extends gEditorialModuleCore
 			'posttypes_option'  => 'posttypes_option',
 			'_general' => array(
 				array(
+					'field'       => 'column_id',
+					'title'       => _x( 'ID Column', 'Tweaks Module: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Displays ID Column on the post list table.', 'Tweaks Module: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+				),
+				array(
 					'field'       => 'revision_count',
 					'title'       => _x( 'Revision Count', 'Tweaks Module: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Displays revision summary of the post.', 'Tweaks Module: Setting Description', GEDITORIAL_TEXTDOMAIN ),
@@ -90,6 +95,7 @@ class gEditorialTweaks extends gEditorialModuleCore
 			'misc' => array(
 				'title_column_title'          => _x( 'Title', 'Tweaks Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
 				'rows_column_title'           => _x( 'Extra', 'Tweaks Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'id_column_title'             => _x( 'ID', 'Tweaks Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
 				'meta_box_search_title'       => _x( 'Type to filter by', 'Tweaks Module: Meta Box Search Title', GEDITORIAL_TEXTDOMAIN ),
 				'meta_box_search_placeholder' => _x( 'Search &hellip;', 'Tweaks Module: Meta Box Search Placeholder', GEDITORIAL_TEXTDOMAIN ),
 			),
@@ -162,6 +168,8 @@ class gEditorialTweaks extends gEditorialModuleCore
 			} else if ( 'edit' == $screen->base ) {
 				$this->_edit_screen( $screen->post_type );
 			}
+
+			// TODO: add support for taxonomy list table
 		}
 	}
 
@@ -169,8 +177,8 @@ class gEditorialTweaks extends gEditorialModuleCore
 	{
 		add_filter( 'manage_taxonomies_for_'.$post_type.'_columns', array( $this, 'manage_taxonomies_columns'), 10, 2 );
 
-		add_filter( 'manage_'.$post_type.'_posts_columns', array( $this, 'manage_posts_columns' ), 1, 1 );
-		add_action( 'manage_'.$post_type.'_posts_custom_column', array( $this, 'posts_custom_column'), 10, 2 );
+		add_filter( 'manage_posts_columns', array( $this, 'manage_posts_columns' ), 1, 2 );
+		add_action( 'manage_posts_custom_column', array( $this, 'posts_custom_column'), 10, 2 );
 
 		// add_filter( 'manage_'.$post_type.'_posts_columns', array( $this, 'manage_posts_columns_late' ), 999, 1 );
 		// add_filter( 'list_table_primary_column', array( $this, 'list_table_primary_column' ), 10, 2 );
@@ -197,34 +205,36 @@ class gEditorialTweaks extends gEditorialModuleCore
 		return $taxonomies;
 	}
 
-	public function manage_posts_columns( $posts_columns )
+	public function manage_posts_columns( $posts_columns, $post_type )
 	{
-		if ( ! count( $this->taxonomies() ) )
-			return $posts_columns;
+		if ( count( $this->taxonomies() )
+			&& has_action( 'geditorial_tweaks_column_row' ) ) {
 
-		if ( ! has_action( 'geditorial_tweaks_column_row' ) )
-			return $posts_columns;
+			$new   = array();
+			$added = FALSE;
+			$title = $this->get_column_title( 'rows', $post_type );
 
-		$new   = array();
-		$type  = gEditorialWordPress::currentPostType( 'post' );
-		$title = $this->get_column_title( 'rows', $type );
-		$added = FALSE;
+			foreach ( $posts_columns as $key => $value ) {
 
-		foreach ( $posts_columns as $key => $value ) {
+				if ( ( 'comments' == $key && ! $added )
+					|| ( 'date' == $key && ! $added ) ) {
+						$new['geditorial-tweaks-rows'] = $title;
+						$added = TRUE;
+				}
 
-			if ( ( 'comments' == $key && ! $added )
-				|| ( 'date' == $key && ! $added ) ) {
-					$new['geditorial-tweaks-rows'] = $title;
-					$added = TRUE;
+				$new[$key] = $value;
 			}
 
-			$new[$key] = $value;
+			if ( ! $added )
+				$new['geditorial-tweaks-rows'] = $title;
+
+			$posts_columns = $new;
 		}
 
-		if ( ! $added )
-			$new['geditorial-tweaks-rows'] = $title;
+		if ( $this->get_setting( 'column_id', FALSE ) )
+			$posts_columns['geditorial-tweaks-id'] = $this->get_column_title( 'id', $post_type );
 
-		return $new;
+		return $posts_columns;
 	}
 
 	// FIXME: must add to sortable too
@@ -266,8 +276,15 @@ class gEditorialTweaks extends gEditorialModuleCore
 			break;
 			case 'geditorial-tweaks-rows' :
 
-				echo '<div class="geditorial-admin-wrap-column -tweaks">';
+				echo '<div class="geditorial-admin-wrap-column -tweaks -rows">';
 					do_action( 'geditorial_tweaks_column_row', $post );
+				echo '</div>';
+
+			break;
+			case 'geditorial-tweaks-id' :
+
+				echo '<div class="geditorial-admin-wrap-column -tweaks -id">';
+					echo esc_html( $post_id );
 				echo '</div>';
 
 			break;
