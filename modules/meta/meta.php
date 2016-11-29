@@ -368,10 +368,12 @@ class gEditorialMeta extends gEditorialModuleCore
 						case 'text':
 						case 'title_before':
 						case 'title_after':
+							gEditorialMetaMetaBox::setPostMetaField_String( $postmeta, $field );
+						break;
 
 						case 'textarea':
 						case 'box':
-							gEditorialMetaMetaBox::setPostMetaField_String( $postmeta, $field );
+							gEditorialMetaMetaBox::setPostMetaField_Text( $postmeta, $field );
 						break;
 					}
 				}

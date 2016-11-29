@@ -6,7 +6,25 @@ class gEditorialMetaMetaBox extends gEditorialMetaBox
 	public static function setPostMetaField_String( &$postmeta, $field, $prefix = 'geditorial-meta-' )
 	{
 		if ( isset( $_POST[$prefix.$field] ) && strlen( $_POST[$prefix.$field] ) > 0 )
-			$postmeta[$field] = gEditorialHelper::kses( $_POST[$prefix.$field] );
+			$postmeta[$field] = trim( gEditorialHelper::kses( $_POST[$prefix.$field] ) );
+
+		else if ( isset( $postmeta[$field] ) && isset( $_POST[$prefix.$field] ) )
+			unset( $postmeta[$field] );
+	}
+
+	public static function setPostMetaField_Text( &$postmeta, $field, $prefix = 'geditorial-meta-' )
+	{
+		if ( isset( $_POST[$prefix.$field] ) && strlen( $_POST[$prefix.$field] ) > 0 )
+			$postmeta[$field] = trim( gEditorialHelper::kses( $_POST[$prefix.$field], 'text' ) );
+
+		else if ( isset( $postmeta[$field] ) && isset( $_POST[$prefix.$field] ) )
+			unset( $postmeta[$field] );
+	}
+
+	public static function setPostMetaField_HTML( &$postmeta, $field, $prefix = 'geditorial-meta-' )
+	{
+		if ( isset( $_POST[$prefix.$field] ) && strlen( $_POST[$prefix.$field] ) > 0 )
+			$postmeta[$field] = trim( gEditorialHelper::kses( $_POST[$prefix.$field], 'html' ) );
 
 		else if ( isset( $postmeta[$field] ) && isset( $_POST[$prefix.$field] ) )
 			unset( $postmeta[$field] );
@@ -15,7 +33,7 @@ class gEditorialMetaMetaBox extends gEditorialMetaBox
 	public static function setPostMetaField_Number( &$postmeta, $field, $prefix = 'geditorial-meta-' )
 	{
 		if ( isset( $_POST[$prefix.$field] ) && strlen( $_POST[$prefix.$field] ) > 0 )
-			$postmeta[$field] = gEditorialHelper::intval( $_POST[$prefix.$field] );
+			$postmeta[$field] = gEditorialHelper::intval( trim( $_POST[$prefix.$field] ) );
 
 		else if ( isset( $postmeta[$field] ) && isset( $_POST[$prefix.$field] ) )
 			unset( $postmeta[$field] );

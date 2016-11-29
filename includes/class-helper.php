@@ -63,8 +63,28 @@ class gEditorialHelper extends gEditorialBaseCore
 		return $intval ? intval( $number ) : $number;
 	}
 
-	public static function kses( $text, $allowed = array(), $context = 'store' )
+	public static function kses( $text, $context = 'none', $allowed = NULL )
 	{
+		if ( is_null( $allowed ) ) {
+
+			if ( 'text' == $context )
+				$allowed = array(
+					'br'     => array(),
+					'em'     => array(),
+					'strong' => array(),
+					'a'      => array(
+						'href'  => array(),
+						'title' => array()
+					),
+				);
+
+			else if ( 'html' == $context )
+				$allowed = wp_kses_allowed_html();
+
+			else if ( 'none' == $context )
+				$allowed = array();
+		}
+
 		return apply_filters( 'geditorial_kses', wp_kses( $text, $allowed ), $allowed, $context );
 	}
 
