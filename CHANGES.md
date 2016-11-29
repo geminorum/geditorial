@@ -1,3 +1,26 @@
+### 3.9.4
+* core/text: :new: core class
+* wordpress/module: :new: new helper class
+* wordpress/taxonomy: :new: new helper class
+* main/modulecore: default tax arg set to no meta box
+* main/modulecore: core meta box override helpers
+* main/modulecore: prevent empty tax meta boxes
+* main/modulecore: cap type/query var from constants
+* main/modulecore: replace dot in script handles
+* main/settings: id/name generator callback
+* main/helper: new [posttype labels](https://make.wordpress.org/core/?p=20405) in WP4.7
+* main/helper: html count as internal api
+* module/drafts: using internal for caps
+* module/estimated: check for posttype count
+* module/magazine: span tax is now hierarchical
+* module/meta: skip striping html on lead
+* module/specs: check for terms before meta box
+* module/specs: correct configure link for metabox
+* module/series: using current screen for meta box
+* module/settings: hiding conversion tool when no orphaned taxes
+* module/tweaks: :new: id column
+* module/tweaks: support posttype template, [see](https://make.wordpress.org/core/?p=20437)
+
 ### 3.9.3
 * all: using constant helper method
 * core/html: check for empty array before table code
