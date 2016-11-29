@@ -1271,14 +1271,19 @@ class gEditorialModuleCore extends gEditorialWPModule
 		if ( is_null( $name ) )
 			$name = $this->module->name;
 
+		if ( is_null( $handle ) )
+			$handle = strtolower( $this->base.'-'.str_replace( '.', '-', $name ) );
+
 		$prefix = is_admin() ? 'admin.' : 'front.';
-		$suffix = SCRIPT_DEBUG ? '' : '.min';
+		$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
 
 		wp_enqueue_script(
-			( $handle ? $handle : 'geditorial-'.$name ),
-			GEDITORIAL_URL.'assets/js/geditorial/'.$prefix.$name.$suffix.'.js',
+			$handle,
+			GEDITORIAL_URL.'assets/js/'.$this->base.'/'.$prefix.$name.$suffix.'.js',
 			$deps,
-			GEDITORIAL_VERSION, TRUE );
+			GEDITORIAL_VERSION,
+			TRUE
+		);
 
 		if ( is_array( $args ) && ! count( $args ) )
 			return TRUE;
