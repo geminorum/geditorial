@@ -1,6 +1,6 @@
 <?php defined( 'ABSPATH' ) or die( 'Restricted access' );
 
-class gEditorialModuleCore extends gEditorialBaseCore
+class gEditorialModuleCore extends gEditorialWPModule
 {
 
 	public $module;
@@ -40,6 +40,9 @@ class gEditorialModuleCore extends gEditorialBaseCore
 
 	public function __construct( &$module, &$options )
 	{
+		$this->base = 'geditorial';
+		$this->key  = $module->name;
+
 		$this->module  = $module;
 		$this->options = $options;
 
@@ -53,18 +56,12 @@ class gEditorialModuleCore extends gEditorialBaseCore
 			$this->setup_ajax( $_REQUEST );
 	}
 
-	// DEFAULT METHOD
-	public static function module()
-	{
-		return array();
-	}
-
-	public function setup_remote()
+	protected function setup_remote( $args = array() )
 	{
 		$this->require_code( $this->partials_remote );
 	}
 
-	public function setup()
+	protected function setup( $args = array() )
 	{
 		$this->require_code( $this->partials );
 
@@ -547,31 +544,14 @@ class gEditorialModuleCore extends gEditorialBaseCore
 		return $subs;
 	}
 
-	public function cuc( $page = 'settings', $fallback = '' )
-	{
-		if ( ! empty( $this->caps[$page] ) )
-			return current_user_can( $this->caps[$page] );
-
-		else if ( $fallback )
-			return current_user_can( $fallback );
-
-		return FALSE;
-	}
-
 	protected function settings_field_referer( $sub = NULL, $page = 'settings' )
 	{
-		if ( is_null( $sub ) )
-			$sub = $this->module->name;
-
-		wp_nonce_field( 'geditorial-'.$page.'-'.$sub );
+		$this->nonce_field( $page, $sub );
 	}
 
 	protected function settings_check_referer( $sub = NULL, $page = 'settings' )
 	{
-		if ( is_null( $sub ) )
-			$sub = $this->module->name;
-
-		check_admin_referer( 'geditorial-'.$page.'-'.$sub );
+		$this->nonce_check( $page, $sub );
 	}
 
 	public function settings_validate( $options )

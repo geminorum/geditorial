@@ -36,7 +36,7 @@ class gEditorialLike extends gEditorialModuleCore
 		);
 	}
 
-	public function setup()
+	public function setup( $args = array() )
 	{
 		parent::setup();
 

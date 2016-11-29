@@ -65,7 +65,7 @@ class gEditorialToday extends gEditorialModuleCore
 		);
 	}
 
-	public function setup()
+	public function setup( $args = array() )
 	{
 		parent::setup();
 
