@@ -3,6 +3,10 @@
 class gEditorialDrafts extends gEditorialModuleCore
 {
 
+	protected $caps = array(
+		'ajax' => 'edit_posts',
+	);
+
 	public static function module()
 	{
 		return array(
@@ -65,7 +69,7 @@ class gEditorialDrafts extends gEditorialModuleCore
 	{
 		gEditorialHelper::checkAjaxReferer();
 
-		if ( ! current_user_can( 'edit_posts' ) )
+		if ( ! $this->cuc( 'ajax' ) )
 			self::cheatin();
 
 		$post = wp_unslash( $_POST );
