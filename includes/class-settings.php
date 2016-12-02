@@ -382,7 +382,7 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 
 	public static function sub( $default = 'general' )
 	{
-		return isset( $_REQUEST['sub'] ) ? trim( $_REQUEST['sub'] ) : $default;
+		return trim( self::req( 'sub', $default ) );
 	}
 
 	public static function headerTitle( $title = NULL, $back = NULL, $to = NULL, $icon = '' )
@@ -438,7 +438,7 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 			'changed'   => self::counted( _x( '%s items(s) changed!', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
 			'emptied'   => self::counted( _x( '%s items(s) emptied!', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
 			'ordered'   => self::counted( _x( '%s items(s) re-ordered!', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
-			'huh'       => gEditorialHTML::error( self::huh( empty( $_REQUEST['huh'] ) ? NULL : $_REQUEST['huh'] ) ),
+			'huh'       => gEditorialHTML::error( self::huh( self::req( 'huh', NULL ) ) ),
 		);
 	}
 
@@ -448,7 +448,7 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 			$message = _x( '%s Counted!', 'Settings: Message', GEDITORIAL_TEXTDOMAIN );
 
 		if ( is_null( $count ) )
-			$count = isset( $_REQUEST['count'] ) ? $_REQUEST['count'] : 0;
+			$count = self::req( 'count', 0 );
 
 		return gEditorialHTML::notice( sprintf( $message, number_format_i18n( $count ) ), $class.' fade', FALSE );
 	}

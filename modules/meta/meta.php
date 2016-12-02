@@ -660,7 +660,7 @@ class gEditorialMeta extends gEditorialModuleCore
 	{
 		if ( $this->module->name == $sub ) {
 
-			if ( isset( $_REQUEST['field'] ) && $_REQUEST['field'] ) {
+			if ( ! empty( $_REQUEST['field'] ) ) {
 				$field = $this->get_string( $_REQUEST['field'] );
 
 				$messages['converted'] = gEditorialHTML::success( sprintf( _x( 'Field %s Converted', 'Meta Module: Tools Message', GEDITORIAL_TEXTDOMAIN ), $field ) );

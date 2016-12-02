@@ -5,7 +5,7 @@ class gEditorialBaseCore
 
 	public static function req( $key, $default = '' )
 	{
-		return empty( $_REQUEST[$key] ) ? $default : $_REQUEST[$key];
+		return isset( $_REQUEST[$key] ) ? $_REQUEST[$key] : $default;
 	}
 
 	public static function limit( $default = 25, $key = 'limit' )
