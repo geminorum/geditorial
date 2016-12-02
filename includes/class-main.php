@@ -289,17 +289,17 @@ class gEditorial
 		if ( in_array( $screen->base, array( 'post', 'edit', 'widgets', 'edit-tags', 'users' ) ) )
 			gEditorialHelper::linkStyleSheetAdmin( $screen->base );
 
-		else if ( gEditorialSettingsCore::isDashboard( $screen ) )
-			gEditorialHelper::linkStyleSheetAdmin( 'dashboard' );
-
 		else if ( gEditorialSettingsCore::isReports( $screen ) )
 			gEditorialHelper::linkStyleSheetAdmin( 'reports' );
+
+		else if ( gEditorialSettingsCore::isTools( $screen ) )
+			gEditorialHelper::linkStyleSheetAdmin( 'tools' );
 
 		else if ( gEditorialSettingsCore::isSettings( $screen ) )
 			gEditorialHelper::linkStyleSheetAdmin( 'settings' );
 
-		else if ( gEditorialSettingsCore::isTools( $screen ) )
-			gEditorialHelper::linkStyleSheetAdmin( 'tools' );
+		else if ( gEditorialSettingsCore::isDashboard( $screen ) )
+			gEditorialHelper::linkStyleSheetAdmin( 'dashboard' );
 	}
 
 	public function mce_external_languages( $languages )
