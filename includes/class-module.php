@@ -1290,7 +1290,9 @@ class gEditorialModuleCore extends gEditorialWPModule
 		if ( TRUE === $args )
 			$args = array();
 
-		return gEditorial()->enqueue_asset_config( $args, $this->module->name );
+		gEditorial()->enqueue_asset_config( $args, $this->module->name );
+
+		return $handle;
 	}
 
 	// combined global styles
