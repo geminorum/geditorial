@@ -64,6 +64,9 @@ class gEditorialWPModule extends gEditorialBaseCore
 		if ( ! empty( $this->caps[$context] ) )
 			return current_user_can( $this->caps[$context] );
 
+		if ( ! empty( $this->caps['default'] ) )
+			return current_user_can( $this->caps['default'] );
+
 		else if ( $fallback )
 			return current_user_can( $fallback );
 

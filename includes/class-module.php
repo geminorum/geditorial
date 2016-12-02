@@ -537,9 +537,8 @@ class gEditorialModuleCore extends gEditorialWPModule
 	// DEFAULT METHOD
 	public function append_sub( $subs, $page = 'settings' )
 	{
-		if ( ! empty( $this->caps[$page] )
-			&& current_user_can( $this->caps[$page] ) )
-				return array_merge( $subs, array( $this->module->name => $this->module->title ) );
+		if ( $this->cuc( $page ) )
+			return array_merge( $subs, array( $this->module->name => $this->module->title ) );
 
 		return $subs;
 	}

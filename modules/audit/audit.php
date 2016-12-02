@@ -3,6 +3,11 @@
 class gEditorialAudit extends gEditorialModuleCore
 {
 
+	protected $caps = array(
+		'default' => 'edit_others_posts',
+		'tools'   => 'edit_others_posts',
+	);
+
 	public static function module()
 	{
 		return array(
@@ -64,7 +69,7 @@ class gEditorialAudit extends gEditorialModuleCore
 		$this->do_globals();
 
 		// FIXME: add setting option to choose editing role
-		if ( current_user_can( 'edit_others_posts' ) )
+		if ( $this->cuc( 'default' ) )
 			$this->register_taxonomy( 'audit_tax', array(
 				'hierarchical'       => TRUE,
 				'show_in_quick_edit' => TRUE,

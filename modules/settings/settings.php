@@ -37,7 +37,7 @@ class gEditorialSettings extends gEditorialModuleCore
 	{
 		global $gEditorial;
 
-		$can  = current_user_can( $this->caps['settings'] );
+		$can  = $this->cuc( 'settings' );
 		$page = 'index.php';
 
 		$hook_reports = add_submenu_page(
@@ -93,7 +93,7 @@ class gEditorialSettings extends gEditorialModuleCore
 
 	public function admin_reports_page()
 	{
-		$can = current_user_can( $this->caps['reports'] );
+		$can = $this->cuc( 'reports' );
 		$uri = gEditorialSettingsCore::reportsURL( FALSE, ! $can );
 		$sub = gEditorialSettingsCore::sub();
 
@@ -127,7 +127,7 @@ class gEditorialSettings extends gEditorialModuleCore
 
 	public function admin_tools_page()
 	{
-		$can = current_user_can( $this->caps['settings'] );
+		$can = $this->cuc( 'settings' );
 		$uri = gEditorialSettingsCore::toolsURL( FALSE, ! $can );
 		$sub = gEditorialSettingsCore::sub( ( $can ? 'general' : 'overview' ) );
 
@@ -242,7 +242,7 @@ class gEditorialSettings extends gEditorialModuleCore
 		if ( 'general' != $sub )
 			return;
 
-		if ( ! current_user_can( $this->caps['reports'] ) )
+		if ( ! $this->cuc( 'reports' ) )
 			self::cheatin();
 
 		echo 'Comming Soon!';
@@ -253,7 +253,7 @@ class gEditorialSettings extends gEditorialModuleCore
 		if ( 'general' != $sub )
 			return;
 
-		if ( ! current_user_can( $this->caps['settings'] ) )
+		if ( ! $this->cuc( 'tools' ) )
 			self::cheatin();
 
 		global $gEditorial;
@@ -353,7 +353,7 @@ class gEditorialSettings extends gEditorialModuleCore
 	{
 		global $gEditorial;
 
-		if ( ! current_user_can( $this->caps['settings'] ) )
+		if ( ! $this->cuc( 'settings' ) )
 			self::cheatin();
 
 		$post = wp_unslash( $_POST );
@@ -490,7 +490,7 @@ class gEditorialSettings extends gEditorialModuleCore
 
 	public function admin_settings_load()
 	{
-		$page = isset( $_REQUEST['page'] ) ? $_REQUEST['page'] : NULL;
+		$page = self::req( 'page', NULL );
 
 		$this->admin_settings_reset( $page );
 		$this->admin_settings_save( $page );
@@ -507,7 +507,7 @@ class gEditorialSettings extends gEditorialModuleCore
 
 	private function admin_settings_verify( $group )
 	{
-		if ( ! current_user_can( $this->caps['settings'] ) )
+		if ( ! $this->cuc( 'settings' ) )
 			return FALSE;
 
 		if ( ! wp_verify_nonce( $_POST['_wpnonce'], $group.'-options' ) )
