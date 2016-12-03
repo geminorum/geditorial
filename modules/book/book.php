@@ -130,6 +130,7 @@ class gEditorialBook extends gEditorialModuleCore
 							'value' => '%s',
 						),
 					),
+					'admin_column' => FALSE, // adding through tweaks module
 				),
 			),
 		);
@@ -285,8 +286,16 @@ class gEditorialBook extends gEditorialModuleCore
 				add_action( 'restrict_manage_posts', array( $this, 'restrict_manage_posts' ) );
 				add_action( 'parse_query', array( $this, 'parse_query' ) );
 
+				if ( $this->p2p )
+					add_action( 'geditorial_tweaks_column_row', array( $this, 'column_row_p2p_to' ), -25 );
+
 				$this->_edit_screen( $screen->post_type );
 			}
+
+		} else if ( $this->p2p && 'edit' == $screen->base
+			&& in_array( $screen->post_type, $this->post_types() ) ) {
+
+			add_action( 'geditorial_tweaks_column_row', array( $this, 'column_row_p2p_from' ), -25 );
 		}
 	}
 
@@ -305,6 +314,88 @@ class gEditorialBook extends gEditorialModuleCore
 
 		$this->add_meta_box_choose_tax( 'status_tax', $post_type );
 		$this->add_meta_box_choose_tax( 'type_tax', $post_type );
+	}
+
+	public function column_row_p2p_to( $post )
+	{
+		$extra = array( 'p2p:per_page' => -1, 'p2p:context' => 'admin_column' );
+		$type  = $this->constant( 'publication_cpt_p2p' );
+		$p2p   = p2p_type( $type )->get_connected( $post, $extra, 'abstract' );
+		$count = count( $p2p->items );
+
+		if ( ! $count )
+			return;
+
+		if ( empty( $this->column_icon ) )
+			$this->column_icon = $this->get_column_icon( FALSE,
+				NULL, $this->strings['p2p']['publication_cpt']['title']['to'] );
+
+		if ( empty( $this->all_post_types ) )
+			$this->all_post_types = gEditorialWordPress::getPostTypes( 2 );
+
+		$post_types = array_unique( array_map( function( $r ){
+			return $r->post_type;
+		}, $p2p->items ) );
+
+		echo '<li class="-row -book -p2p -connected">';
+
+			echo $this->column_icon;
+
+			echo '<span class="-counted">'.sprintf( _x( '%s Connected', 'Book Module', GEDITORIAL_TEXTDOMAIN ), number_format_i18n( $count ) ).'</span>';
+
+			$list = array();
+
+			foreach ( $post_types as $post_type )
+				$list[] = gEditorialHTML::tag( 'a', array(
+					'href'   => gEditorialWordPress::getPostTypeEditLink( $post_type ),
+					'title'  => _x( 'View the connected list', 'Book Module', GEDITORIAL_TEXTDOMAIN ),
+					'target' => '_blank',
+				), $this->all_post_types[$post_type] );
+
+			echo gEditorialHelper::getJoined( $list, ' <span class="-posttypes">(', ')</span>' );
+
+		echo '</li>';
+	}
+
+	public function column_row_p2p_from( $post )
+	{
+		if ( empty( $this->column_icon ) )
+			$this->column_icon = $this->get_column_icon( FALSE,
+				NULL, $this->strings['p2p']['publication_cpt']['title']['from'] );
+
+		$extra = array( 'p2p:per_page' => -1, 'p2p:context' => 'admin_column' );
+		$type  = $this->constant( 'publication_cpt_p2p' );
+		$p2p   = p2p_type( $type )->get_connected( $post, $extra, 'abstract' );
+
+		foreach ( $p2p->items as $item ) {
+			echo '<li class="-row -book -p2p -connected">';
+
+				if ( current_user_can( 'edit_post', $item->get_id() ) )
+					echo $this->get_column_icon( get_edit_post_link( $item->get_id() ),
+						NULL, $this->strings['p2p']['publication_cpt']['title']['from'] );
+				else
+					echo $this->column_icon;
+
+				$args = array(
+					'connected_direction' => 'to',
+					'connected_type'      => $type,
+					'connected_items'     => $item->get_id(),
+				);
+
+				echo gEditorialHTML::tag( 'a', array(
+					'href'   => gEditorialWordPress::getPostTypeEditLink( $post->post_type, 0, $args ),
+					'title'  => _x( 'View all connected', 'Book Module', GEDITORIAL_TEXTDOMAIN ),
+					'target' => '_blank',
+				), $item->get_title() );
+
+				echo $this->p2p_get_meta( $item->p2p_id, 'ref', ' &ndash; ', '',
+			 		$this->strings['p2p']['publication_cpt']['fields']['ref']['title'] );
+
+				echo $this->p2p_get_meta( $item->p2p_id, 'desc', ' &ndash; ', '',
+			 		$this->strings['p2p']['publication_cpt']['fields']['desc']['title'] );
+
+			echo '</li>';
+		}
 	}
 
 	public function register_settings( $page = NULL )
