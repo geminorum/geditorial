@@ -556,6 +556,8 @@ class gEditorialModuleCore extends gEditorialWPModule
 
 	public function settings_validate( $options )
 	{
+		$this->init_settings();
+
 		if ( isset( $this->settings['posttypes_option'] ) ) {
 
 			if ( ! isset( $options['post_types'] ) )
@@ -858,13 +860,18 @@ class gEditorialModuleCore extends gEditorialWPModule
 		return $page == $this->module->settings;
 	}
 
+	public function init_settings()
+	{
+		if ( ! isset( $this->settings ) )
+			$this->settings = apply_filters( 'geditorial_'.$this->module->name.'_settings', $this->get_global_settings(), $this->module );
+	}
+
 	public function register_settings( $page = NULL )
 	{
 		if ( ! $this->is_register_settings( $page ) )
 			return;
 
-		// here to skip the unnecessaries!
-		$this->settings = apply_filters( 'geditorial_'.$this->module->name.'_settings', $this->get_global_settings(), $this->module );
+		$this->init_settings();
 
 		foreach ( $this->settings as $section_suffix => $fields ) {
 			if ( is_array( $fields ) ) {
