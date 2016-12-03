@@ -1729,7 +1729,7 @@ class gEditorialModuleCore extends gEditorialWPModule
 				foreach ( $the_terms as $the_term )
 					$terms[] = $the_term->name;
 
-				echo join( _x( ', ', 'Module Core: Term Seperator', GEDITORIAL_TEXTDOMAIN ), $terms );
+				echo gEditorialHelper::getJoined( $terms );
 			}
 
 		} else {

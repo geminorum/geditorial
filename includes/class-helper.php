@@ -88,6 +88,14 @@ class gEditorialHelper extends gEditorialBaseCore
 		return apply_filters( 'geditorial_kses', wp_kses( $text, $allowed ), $allowed, $context );
 	}
 
+	public static function getJoined( $items, $before = '', $after = '' )
+	{
+		if ( count( $items ) )
+			return $before.join( _x( ', ', 'Module Helper: Item Seperator', GEDITORIAL_TEXTDOMAIN ), $items ).$after;
+
+		return '';
+	}
+
 	public static function getTermsEditRow( $post, $post_type, $taxonomy, $before = '', $after = '' )
 	{
 		$object = is_object( $taxonomy ) ? $taxonomy : get_taxonomy( $taxonomy );
@@ -119,8 +127,7 @@ class gEditorialHelper extends gEditorialBaseCore
 			), esc_html( sanitize_term_field( 'name', $term->name, $term->term_id, $object->name, 'display' ) ) );
 		}
 
-		if ( count( $list ) )
-			echo $before.join( _x( ', ', 'Module Helper: Term Seperator', GEDITORIAL_TEXTDOMAIN ), $list ).$after;
+		echo self::getJoined( $list, $before, $after );
 	}
 
 	public static function getAuthorsEditRow( $authors, $post_type = 'post', $before = '', $after = '' )
@@ -134,8 +141,7 @@ class gEditorialHelper extends gEditorialBaseCore
 			if ( $html = gEditorialWordPress::getAuthorEditHTML( $post_type, $author ) )
 				$list[] = $html;
 
-		if ( count( $list ) )
-			echo $before.join( _x( ', ', 'Module Helper: Author Seperator', GEDITORIAL_TEXTDOMAIN ), $list ).$after;
+		echo self::getJoined( $list, $before, $after );
 	}
 
 	public static function getMimeTypeEditRow( $mime_types, $post_parent, $before = '', $after = '' )
@@ -155,8 +161,7 @@ class gEditorialHelper extends gEditorialBaseCore
 			$list[] = strtoupper( $extension[0] );
 		}
 
-		if ( count( $list ) )
-			echo $before.join( _x( ', ', 'Module Helper: Mime Type Seperator', GEDITORIAL_TEXTDOMAIN ), $list ).$after;
+		echo self::getJoined( $list, $before, $after );
 	}
 
 	public static function registerColorBox()
