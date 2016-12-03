@@ -569,7 +569,9 @@ class gEditorialSettings extends gEditorialModuleCore
 
 		$options = $gEditorial->{$name}->settings_validate( ( isset( $_POST[$group] ) ? $_POST[$group] : array() ) );
 
-		$options = (object) array_merge( (array) $gEditorial->{$name}->options, $options );
+		// $options = (object) array_merge( (array) $gEditorial->{$name}->options, $options );
+		$options['enabled'] = TRUE;
+
 		$gEditorial->update_all_module_options( $gEditorial->{$name}->module->name, $options );
 
 		gEditorialWordPress::redirectReferer();
