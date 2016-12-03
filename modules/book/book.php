@@ -124,6 +124,11 @@ class gEditorialBook extends gEditorialModuleCore
 							'type' => 'text',
 							'value' => '%s',
 						),
+						'desc' => array(
+							'title' => _x( 'Description', 'Book Module: P2P', GEDITORIAL_TEXTDOMAIN ),
+							'type' => 'text',
+							'value' => '%s',
+						),
 					),
 				),
 			),
@@ -441,13 +446,21 @@ class gEditorialBook extends gEditorialModuleCore
 		if ( ! in_the_loop() || ! is_main_query() )
 			return;
 
+		$this->list_p2p( NULL, '-'.$this->get_setting( 'insert_content', 'none' ) );
+	}
+
+	public function list_p2p( $post = NULL, $class = '' )
+	{
+		if ( is_null( $post ) )
+			$post = get_post();
+
 		$connected = new WP_Query( array(
 			'connected_type'  => $this->constant( 'publication_cpt_p2p' ),
-			'connected_items' => get_post(),
+			'connected_items' => $post,
 		) );
 
 		if ( $connected->have_posts() ) {
-			echo '<div class="geditorial-wrap -book -p2p -'.$this->get_setting( 'insert_content', 'none' ).'"><ul>';
+			echo '<div class="geditorial-wrap -book -p2p '.$class.'"><ul>';
 
 			while ( $connected->have_posts() ) {
 				$connected->the_post();
@@ -457,8 +470,8 @@ class gEditorialBook extends gEditorialModuleCore
 						'href' => get_permalink(),
 					), get_the_title() );
 
-					if ( $ref = p2p_get_meta( get_post()->p2p_id, 'ref', TRUE ) )
-						echo ' &ndash; '.$ref;
+					echo $this->p2p_get_meta( $post->p2p_id, 'ref', ' &ndash; ' );
+					echo $this->p2p_get_meta( $post->p2p_id, 'desc', ' &ndash; ' );
 
 				echo '</li>';
 			}
