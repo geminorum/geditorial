@@ -109,18 +109,16 @@ class gEditorialEstimated extends gEditorialModuleCore
 
 			echo '<li class="-row estimated-wordcount">';
 
-				echo '<span class="-icon" title="'
-					.esc_attr_x( 'Estimated Time', 'Estimated Module: Row Icon Title', GEDITORIAL_TEXTDOMAIN )
-					.'"><span class="dashicons dashicons-'.$this->module->icon.'"></span></span>';
+				echo $this->get_column_icon( FALSE, NULL, _x( 'Estimated Time', 'Estimated Module: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
 
-					echo '<span class="-wordcount" title="'
-						.esc_attr_x( 'Word Count', 'Estimated Module: Row Title', GEDITORIAL_TEXTDOMAIN ).'">'
-						.sprintf( gEditorialHelper::noopedCount( $wordcount, $this->get_noop( 'word_count' ) ), number_format_i18n( $wordcount ) )
-						.'</span>';
+				echo '<span class="-wordcount" title="'
+					.esc_attr_x( 'Word Count', 'Estimated Module: Row Title', GEDITORIAL_TEXTDOMAIN ).'">'
+					.sprintf( gEditorialHelper::noopedCount( $wordcount, $this->get_noop( 'word_count' ) ), number_format_i18n( $wordcount ) )
+					.'</span>';
 
-					echo ' <span class="-estimated-time">('
-						.$this->get_time_estimated( $wordcount )
-						.')</span>';
+				echo ' <span class="-estimated-time">('
+					.$this->get_time_estimated( $wordcount )
+					.')</span>';
 
 			echo '</li>';
 		}

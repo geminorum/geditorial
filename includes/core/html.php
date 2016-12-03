@@ -293,4 +293,15 @@ class gEditorialHTML extends gEditorialBaseCore
 
 		return '';
 	}
+
+	// @REF: https://developer.wordpress.org/resource/dashicons/
+	public static function getDashicon( $icon = 'wordpress-alt', $tag = 'span' )
+	{
+		return self::tag( $tag, array(
+			'class' => array(
+				'dashicons',
+				'dashicons-'.$icon,
+			),
+		), NULL );
+	}
 }

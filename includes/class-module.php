@@ -1703,6 +1703,22 @@ class gEditorialModuleCore extends gEditorialWPModule
 		return sprintf( $format, number_format_i18n( $terms ), $text, $taxonomy );
 	}
 
+	public function get_column_icon( $link = FALSE, $icon = NULL, $title = NULL )
+	{
+		if ( is_null( $icon ) )
+			$icon = $this->module->icon;
+
+		if ( is_null( $title ) )
+			$title = $this->get_string( 'column_icon_title', $icon, 'misc', '' );
+
+		return gEditorialHTML::tag( ( $link ? 'a' : 'span' ), array(
+			'href'   => $link ? $link : FALSE,
+			'title' => $title ? $title : FALSE,
+			'class'  => array( '-icon', ( $link ? '-link' : '-info' ) ),
+			'target' => $link ? '_blank' : FALSE,
+		), gEditorialHTML::getDashicon( $icon ) );
+	}
+
 	public function column_thumb( $post_id, $size = array( 45, 72 ) )
 	{
 		echo gEditorialWordPress::getFeaturedImageHTML( $post_id, $size );

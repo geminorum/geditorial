@@ -317,12 +317,10 @@ class gEditorialTweaks extends gEditorialModuleCore
 			$before = '<li class="-row tweaks-tax-'.$taxonomy.'">';
 
 			if ( $icon = $this->get_string( 'icon', $taxonomy, 'taxonomies', 'tag' ) )
-				$before .= gEditorialHTML::tag( ( $manage ? 'a' : 'span' ), array(
-					'href'   => $manage ? gEditorialWordPress::getEditTaxLink( $taxonomy ) : FALSE,
-					'title'  => $this->get_string( 'title', $taxonomy, 'taxonomies', $taxonomy ),
-					'class'  => array( '-icon', ( $manage ? '-link' : '-info' ) ),
-					'target' => $manage ? '_blank' : FALSE,
-				), '<span class="dashicons dashicons-'.$icon.'"></span>' );
+				$before .= $this->get_column_icon(
+					$manage ? gEditorialWordPress::getEditTaxLink( $taxonomy ) : FALSE,
+					$icon, $this->get_string( 'title', $taxonomy, 'taxonomies', $taxonomy )
+				);
 
 			gEditorialHelper::getTermsEditRow( $post,
 				$post->post_type, $object, $before, '</li>' );
@@ -341,9 +339,7 @@ class gEditorialTweaks extends gEditorialModuleCore
 
 			echo '<li class="-row tweaks-page-template">';
 
-				echo '<span class="-icon" title="'
-					.esc_attr_x( 'Page Template', 'Tweaks Module: Row Icon Title', GEDITORIAL_TEXTDOMAIN )
-					.'"><span class="dashicons dashicons-admin-page"></span></span>';
+				echo $this->get_column_icon( FALSE, 'admin-page', _x( 'Page Template', 'Tweaks Module: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
 
 				if ( ! empty( $this->page_templates[$post->post_type][$post->page_template] ) )
 					echo '<span title="'.esc_attr( $post->page_template ).'">'
@@ -372,9 +368,7 @@ class gEditorialTweaks extends gEditorialModuleCore
 
 				echo '<li class="-row tweaks-revision-count">';
 
-					echo '<span class="-icon" title="'
-						.esc_attr_x( 'Revisions', 'Tweaks Module: Row Icon Title', GEDITORIAL_TEXTDOMAIN )
-						.'"><span class="dashicons dashicons-backup"></span></span>';
+					echo $this->get_column_icon( FALSE, 'backup', _x( 'Revisions', 'Tweaks Module: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
 
 					$title = sprintf( _nx( '%s Revision', '%s Revisions', $count, 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ), number_format_i18n( $count ) );
 
@@ -407,9 +401,7 @@ class gEditorialTweaks extends gEditorialModuleCore
 
 			echo '<li class="-row tweaks-attachment-count">';
 
-				echo '<span class="-icon" title="'
-					.esc_attr_x( 'Attachments', 'Tweaks Module: Row Icon Title', GEDITORIAL_TEXTDOMAIN )
-					.'"><span class="dashicons dashicons-images-alt2"></span></span>';
+				echo $this->get_column_icon( FALSE, 'images-alt2', _x( 'Attachments', 'Tweaks Module: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
 
 				$title = sprintf( _nx( '%s Attachment', '%s Attachments', $count, 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ), number_format_i18n( $count ) );
 
