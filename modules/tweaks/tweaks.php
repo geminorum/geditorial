@@ -42,7 +42,7 @@ class gEditorialTweaks extends gEditorialModuleCore
 	protected function get_global_settings()
 	{
 		return array(
-			'posttypes_option'  => 'posttypes_option',
+			'posttypes_option' => 'posttypes_option',
 			'_general' => array(
 				array(
 					'field'       => 'column_id',
@@ -123,10 +123,15 @@ class gEditorialTweaks extends gEditorialModuleCore
 		$this->taxonomies_excluded = array(
 			'nav_menu',
 			'post_format',
+			'link_category',
 			'bp_member_type',
+			'bp_group_type',
+			'bp-email-type',
 			'people',
 			'rel_people',
 			'rel_post',
+			'alphabet_tax',
+			'entry_section',
 		);
 	}
 
