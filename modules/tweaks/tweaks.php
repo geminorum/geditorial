@@ -276,9 +276,9 @@ class gEditorialTweaks extends gEditorialModuleCore
 			break;
 			case 'geditorial-tweaks-rows' :
 
-				echo '<div class="geditorial-admin-wrap-column -tweaks -rows">';
+				echo '<div class="geditorial-admin-wrap-column -tweaks -rows"><ul>';
 					do_action( 'geditorial_tweaks_column_row', $post );
-				echo '</div>';
+				echo '</ul></div>';
 
 			break;
 			case 'geditorial-tweaks-id' :
@@ -303,7 +303,7 @@ class gEditorialTweaks extends gEditorialModuleCore
 			$object = get_taxonomy( $taxonomy );
 			$manage = current_user_can( $object->cap->manage_terms );
 
-			$before = '<div class="-row tweaks-'.$taxonomy.'">';
+			$before = '<li class="-row tweaks-tax-'.$taxonomy.'">';
 
 			if ( $icon = $this->get_string( 'icon', $taxonomy, 'taxonomies', 'tag' ) )
 				$before .= gEditorialHTML::tag( ( $manage ? 'a' : 'span' ), array(
@@ -314,7 +314,7 @@ class gEditorialTweaks extends gEditorialModuleCore
 				), '<span class="dashicons dashicons-'.$icon.'"></span>' );
 
 			gEditorialHelper::getTermsEditRow( $post,
-				$post->post_type, $object, $before, '</div>' );
+				$post->post_type, $object, $before, '</li>' );
 		}
 	}
 
@@ -328,7 +328,7 @@ class gEditorialTweaks extends gEditorialModuleCore
 			if ( ! isset( $this->page_templates[$post->post_type] ) )
 				$this->page_templates[$post->post_type] = array_flip( get_page_templates( $post, $post->post_type ) );
 
-			echo '<div class="-row tweaks-page-template">';
+			echo '<li class="-row tweaks-page-template">';
 
 				echo '<span class="-icon" title="'
 					.esc_attr_x( 'Page Template', 'Tweaks Module: Row Icon Title', GEDITORIAL_TEXTDOMAIN )
@@ -340,7 +340,7 @@ class gEditorialTweaks extends gEditorialModuleCore
 				else
 					echo '<span>'.esc_html( $post->page_template ).'</span>';
 
-			echo '</div>';
+			echo '</li>';
 		}
 	}
 
@@ -359,7 +359,7 @@ class gEditorialTweaks extends gEditorialModuleCore
 
 				$edit = current_user_can( 'edit_post', key( $revisions ) );
 
-				echo '<div class="-row tweaks-revision-count">';
+				echo '<li class="-row tweaks-revision-count">';
 
 					echo '<span class="-icon" title="'
 						.esc_attr_x( 'Revisions', 'Tweaks Module: Row Icon Title', GEDITORIAL_TEXTDOMAIN )
@@ -378,7 +378,7 @@ class gEditorialTweaks extends gEditorialModuleCore
 
 					gEditorialHelper::getAuthorsEditRow( $authors, $post->post_type, ' <span class="-authors">(', ')</span>' );
 
-				echo '</div>';
+				echo '</li>';
 			}
 		}
 	}
@@ -394,7 +394,7 @@ class gEditorialTweaks extends gEditorialModuleCore
 
 		if ( $count ) {
 
-			echo '<div class="-row tweaks-attachment-count">';
+			echo '<li class="-row tweaks-attachment-count">';
 
 				echo '<span class="-icon" title="'
 					.esc_attr_x( 'Attachments', 'Tweaks Module: Row Icon Title', GEDITORIAL_TEXTDOMAIN )
@@ -413,7 +413,7 @@ class gEditorialTweaks extends gEditorialModuleCore
 
 				gEditorialHelper::getMimeTypeEditRow( $mime_types, $post->ID, ' <span class="-mime-types">(', ')</span>' );
 
-			echo '</div>';
+			echo '</li>';
 		}
 	}
 

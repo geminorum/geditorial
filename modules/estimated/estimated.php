@@ -107,7 +107,7 @@ class gEditorialEstimated extends gEditorialModuleCore
 	{
 		if ( $wordcount = get_post_meta( $post->ID, $this->meta_key, TRUE ) ) {
 
-			echo '<div class="-row estimated-wordcount">';
+			echo '<li class="-row estimated-wordcount">';
 
 				echo '<span class="-icon" title="'
 					.esc_attr_x( 'Estimated Time', 'Estimated Module: Row Icon Title', GEDITORIAL_TEXTDOMAIN )
@@ -122,7 +122,7 @@ class gEditorialEstimated extends gEditorialModuleCore
 						.$this->get_time_estimated( $wordcount )
 						.')</span>';
 
-			echo '</div>';
+			echo '</li>';
 		}
 	}
 
