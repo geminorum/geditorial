@@ -656,6 +656,7 @@ class gEditorialMeta extends gEditorialModuleCore
 		return $display_name;
 	}
 
+	// FIXME: move this to `gEditorialSettingsCore::messages()`
 	public function tools_messages( $messages, $sub )
 	{
 		if ( $this->module->name == $sub ) {

@@ -5,6 +5,9 @@ class gEditorialWPTaxonomy extends gEditorialBaseCore
 
 	// TODO: our version of `wp_dropdown_categories()`
 	// - https://developer.wordpress.org/reference/functions/wp_dropdown_categories/#comment-1823
+	// SEE: do_restrict_manage_posts_taxes()
+	// ALSO: trim term titles
+	// MUST USE: custom walker
 
 	public static function hasTerms( $taxonomy = 'category', $empty = TRUE )
 	{
