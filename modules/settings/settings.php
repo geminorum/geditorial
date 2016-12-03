@@ -18,6 +18,7 @@ class gEditorialSettings extends gEditorialModuleCore
 			'icon'      => 'screenoptions',
 			'settings'  => 'geditorial-settings',
 			'configure' => 'print_default_settings',
+			'frontend'  => FALSE,
 			'autoload'  => TRUE,
 		);
 	}
@@ -250,13 +251,21 @@ class gEditorialSettings extends gEditorialModuleCore
 
 	public function tools_sub( $settings_uri, $sub )
 	{
-		if ( 'general' != $sub )
-			return;
+		if ( 'general' == $sub )
+			return $this->tools_sub_general( $settings_uri, $sub );
 
-		if ( ! $this->cuc( 'tools' ) )
-			self::cheatin();
+		// TODO: sub for installing default terms for each module
+		// @SEE: https://make.wordpress.org/core/?p=20650
+		// if ( 'defaults' == $sub )
+		// 	return $this->tools_sub_defaults( $settings_uri, $sub );
+	}
 
+	private function tools_sub_general( $settings_uri, $sub )
+	{
 		global $gEditorial;
+
+		if ( ! $this->cuc( 'settings' ) )
+			self::cheatin();
 
 		$post = isset( $_POST[$this->module->group]['tools'] ) ? $_POST[$this->module->group]['tools'] : array();
 
@@ -266,8 +275,6 @@ class gEditorialSettings extends gEditorialModuleCore
 
 			echo '<h3>'._x( 'Maintenance Tasks', 'Settings Module', GEDITORIAL_TEXTDOMAIN ).'</h3>';
 			echo '<table class="form-table">';
-
-			// TODO: tool for installing default terms for each module
 
 			echo '<tr><th scope="row">'._x( 'Options', 'Settings Module', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
 
@@ -502,7 +509,9 @@ class gEditorialSettings extends gEditorialModuleCore
 
 		do_action( 'geditorial_settings_load', $page );
 
-		$this->enqueue_asset_js( TRUE );
+		// need the all fields check
+		// if ( gEditorialSettingsCore::SETTINGS == $page )
+			$this->enqueue_asset_js( TRUE );
 	}
 
 	private function admin_settings_verify( $group )
