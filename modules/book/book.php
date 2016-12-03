@@ -202,7 +202,7 @@ class gEditorialBook extends gEditorialModuleCore
 
 	public function p2p_init()
 	{
-		$this->register_p2p( 'publication_cpt' );
+		$this->p2p_register( 'publication_cpt' );
 
 		if ( is_admin() )
 			return;

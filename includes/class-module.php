@@ -32,9 +32,10 @@ class gEditorialModuleCore extends gEditorialWPModule
 	protected $errors              = array();
 	protected $caps                = array();
 
-	protected $geditorial_meta = FALSE; // META ENABLED
-	protected $root_key        = FALSE; // ROOT CONSTANT
-	protected $tweaks          = FALSE; // TWEAKS ENABLED
+	protected $root_key = FALSE; // ROOT CONSTANT
+	protected $p2p      = FALSE; // P2P ENABLED/Connection Type
+	protected $meta     = FALSE; // META ENABLED
+	protected $tweaks   = FALSE; // TWEAKS ENABLED
 
 	protected $scripts_printed = FALSE;
 
@@ -1741,27 +1742,44 @@ class gEditorialModuleCore extends gEditorialWPModule
 		}
 	}
 
-	// @SEE: https://github.com/scribu/wp-posts-to-posts/wiki/Connection-information
-	public function register_p2p( $constant_key, $post_types = NULL )
+	// @REF: https://github.com/scribu/wp-posts-to-posts/wiki/Connection-information
+	public function p2p_register( $constant_key, $post_types = NULL )
 	{
 		if ( is_null( $post_types ) )
 			$post_types = $this->post_types();
 
+		$to  = $this->constant( $constant_key );
+		$p2p = $this->constant( $constant_key.'_p2p' );
+
 		$args = array_merge( array(
-			'name'         => $this->constant( $constant_key.'_p2p' ),
+			'name'         => $p2p,
 			'from'         => $post_types,
-			'to'           => $this->constant( $constant_key ),
-			'admin_column' => 'from',
+			'to'           => $to,
+			'admin_column' => 'from', // 'any', 'from', 'to', FALSE
 			'admin_box'    => array(
 				'show'    => 'from',
 				'context' => 'advanced',
 			),
 		), $this->strings['p2p'][$constant_key] );
 
-		$hook = 'geditorial_'.$this->module->name.'_'.$this->constant( $constant_key ).'_p2p_args';
+		$hook = 'geditorial_'.$this->module->name.'_'.$to.'_p2p_args';
 
 		if ( $args = apply_filters( $hook, $args, $post_types ) )
-			p2p_register_connection_type( $args );
+			if ( p2p_register_connection_type( $args ) )
+				$this->p2p = $p2p;
+	}
+
+	public function p2p_get_meta( $p2p_id, $meta_key, $before = '', $after = '', $title = FALSE )
+	{
+		if ( $meta = p2p_get_meta( $p2p_id, $meta_key, TRUE ) ) {
+
+			$html = apply_filters( 'string_format_i18n', $meta );
+
+			if ( $title )
+				$html = '<span title="'.esc_attr( $title ).'">'.$html.'</span>';
+
+			return $before.$html.$after;
+		}
 	}
 
 	public function content_before( $content, $posttypes = NULL )

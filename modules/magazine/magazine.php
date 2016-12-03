@@ -188,7 +188,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 
 	public function p2p_init()
 	{
-		$this->register_p2p( 'issue_cpt' );
+		$this->p2p_register( 'issue_cpt' );
 	}
 
 	public function init()
