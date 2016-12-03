@@ -46,7 +46,7 @@ class gEditorialDrafts extends gEditorialModuleCore
 
 		if ( ! is_admin()
 			&& is_admin_bar_showing()
-			&& current_user_can( 'edit_posts' )
+			&& $this->cuc( 'ajax' )
 			&& count( $this->post_types() ) ) {
 
 				add_action( 'admin_bar_menu', array( $this, 'admin_bar_menu' ), 265 );
