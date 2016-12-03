@@ -183,7 +183,8 @@ class gEditorialTweaks extends gEditorialModuleCore
 		add_filter( 'manage_taxonomies_for_'.$post_type.'_columns', array( $this, 'manage_taxonomies_columns'), 10, 2 );
 
 		add_filter( 'manage_posts_columns', array( $this, 'manage_posts_columns' ), 1, 2 );
-		add_action( 'manage_posts_custom_column', array( $this, 'posts_custom_column'), 10, 2 );
+		add_filter( 'manage_pages_columns', array( $this, 'manage_pages_columns' ), 1, 1 );
+		add_action( 'manage_'.$post_type.'_posts_custom_column', array( $this, 'posts_custom_column'), 10, 2 );
 
 		// add_filter( 'manage_'.$post_type.'_posts_columns', array( $this, 'manage_posts_columns_late' ), 999, 1 );
 		// add_filter( 'list_table_primary_column', array( $this, 'list_table_primary_column' ), 10, 2 );
@@ -208,6 +209,11 @@ class gEditorialTweaks extends gEditorialModuleCore
 			unset( $taxonomies[$taxonomy] );
 
 		return $taxonomies;
+	}
+
+	public function manage_pages_columns( $posts_columns )
+	{
+		return $this->manage_posts_columns( $posts_columns, 'page' );
 	}
 
 	public function manage_posts_columns( $posts_columns, $post_type )
