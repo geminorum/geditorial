@@ -341,8 +341,10 @@ class gEditorialHelper extends gEditorialBaseCore
 
 	public static function postModified( $post = NULL, $attr = FALSE )
 	{
-		$gmt   = get_post_modified_time( 'U', TRUE,  $args['id'], FALSE );
-		$local = get_post_modified_time( 'U', FALSE, $args['id'], FALSE );
+		$post = get_post( $post );
+
+		$gmt   = get_post_modified_time( 'U', TRUE, $post->ID, FALSE );
+		$local = get_post_modified_time( 'U', FALSE, $post->ID, FALSE );
 
 		$format = _x( 'l, F j, Y', 'Module Helper: Post Modified', GEDITORIAL_TEXTDOMAIN );
 		$title  = _x( 'Last Modified on %s', 'Module Helper: Post Modified', GEDITORIAL_TEXTDOMAIN );
