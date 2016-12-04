@@ -150,7 +150,7 @@ class gEditorialEntry extends gEditorialModuleCore
 			} else if ( 'edit' == $screen->base ) {
 
 				if ( $this->get_setting( 'admin_restrict', FALSE ) ) {
-					add_action( 'restrict_manage_posts', array( $this, 'restrict_manage_posts' ) );
+					add_action( 'restrict_manage_posts', array( $this, 'restrict_manage_posts' ), 12, 2 );
 					add_filter( 'parse_query', array( $this, 'parse_query' ) );
 				}
 
@@ -180,7 +180,7 @@ class gEditorialEntry extends gEditorialModuleCore
 		return $query_args;
 	}
 
-	public function restrict_manage_posts()
+	public function restrict_manage_posts( $post_type, $which )
 	{
 		$this->do_restrict_manage_posts_taxes( array(
 			'section_tax',

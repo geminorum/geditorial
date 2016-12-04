@@ -283,7 +283,7 @@ class gEditorialBook extends gEditorialModuleCore
 			} else if ( 'edit' == $screen->base ) {
 
 				add_filter( 'disable_months_dropdown', '__return_true', 12 );
-				add_action( 'restrict_manage_posts', array( $this, 'restrict_manage_posts' ) );
+				add_action( 'restrict_manage_posts', array( $this, 'restrict_manage_posts' ), 12, 2 );
 				add_action( 'parse_query', array( $this, 'parse_query' ) );
 
 				if ( $this->p2p )
@@ -474,7 +474,7 @@ class gEditorialBook extends gEditorialModuleCore
 		return $items;
 	}
 
-	public function restrict_manage_posts()
+	public function restrict_manage_posts( $post_type, $which )
 	{
 		$this->do_restrict_manage_posts_taxes( array(
 			'type_tax',

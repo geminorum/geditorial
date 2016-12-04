@@ -88,7 +88,7 @@ class gEditorialAudit extends gEditorialModuleCore
 			if ( 'edit' == $screen->base ) {
 
 				if ( $this->get_setting( 'admin_restrict', FALSE ) ) {
-					add_action( 'restrict_manage_posts', array( $this, 'restrict_manage_posts' ) );
+					add_action( 'restrict_manage_posts', array( $this, 'restrict_manage_posts' ), 20 ,2 );
 					add_filter( 'parse_query', array( $this, 'parse_query' ) );
 				}
 			}
@@ -194,7 +194,7 @@ class gEditorialAudit extends gEditorialModuleCore
 		return self::recursiveParseArgs( $new, $strings );
 	}
 
-	public function restrict_manage_posts()
+	public function restrict_manage_posts( $post_type, $which )
 	{
 		$tax = get_taxonomy( $audit = $this->constant( 'audit_tax' ) );
 

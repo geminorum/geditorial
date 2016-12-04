@@ -199,7 +199,7 @@ class gEditorialEvent extends gEditorialModuleCore
 
 				if ( $startend ) {
 
-					add_action( 'restrict_manage_posts', array( $this, 'restrict_manage_posts' ) );
+					add_action( 'restrict_manage_posts', array( $this, 'restrict_manage_posts' ), 12, 2 );
 					add_action( 'parse_query', array( $this, 'parse_query' ) );
 
 					// add_action( 'load-edit.php', array( $this, 'load_edit_php' ) );
@@ -298,7 +298,7 @@ class gEditorialEvent extends gEditorialModuleCore
 		return $post_ID;
 	}
 
-	public function restrict_manage_posts()
+	public function restrict_manage_posts( $post_type, $which )
 	{
 		$this->do_restrict_manage_posts_taxes( array(
 			'event_cat',

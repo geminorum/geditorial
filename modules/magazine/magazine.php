@@ -275,7 +275,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 				add_filter( 'disable_months_dropdown', '__return_true', 12 );
 
 				if ( $this->get_setting( 'admin_restrict', FALSE ) ) {
-					add_action( 'restrict_manage_posts', array( $this, 'restrict_manage_posts_main_cpt' ) );
+					add_action( 'restrict_manage_posts', array( $this, 'restrict_manage_posts_main_cpt' ), 12, 2 );
 					add_filter( 'parse_query', array( $this, 'parse_query' ) );
 				}
 
@@ -312,7 +312,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 			} else if ( 'edit' == $screen->base ) {
 
 				if ( $this->get_setting( 'admin_restrict', FALSE ) )
-					add_action( 'restrict_manage_posts', array( $this, 'restrict_manage_posts_supported_cpt' ) );
+					add_action( 'restrict_manage_posts', array( $this, 'restrict_manage_posts_supported_cpt' ), 12, 2 );
 			}
 
 			add_action( 'save_post', array( $this, 'save_post_supported_cpt' ), 20, 3 );
@@ -566,7 +566,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 		}
 	}
 
-	public function restrict_manage_posts_main_cpt()
+	public function restrict_manage_posts_main_cpt( $post_type, $which )
 	{
 		$tax = get_taxonomy( $span = $this->constant( 'span_tax' ) );
 
@@ -583,7 +583,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 		) );
 	}
 
-	public function restrict_manage_posts_supported_cpt()
+	public function restrict_manage_posts_supported_cpt( $post_type, $which )
 	{
 		$issue_tax = $this->constant( 'issue_tax' );
 		$tax_obj   = get_taxonomy( $issue_tax );

@@ -137,7 +137,7 @@ class gEditorialUsers extends gEditorialModuleCore
 			&& in_array( $screen->post_type, $this->post_types() ) ) {
 
 			if ( $this->get_setting( 'admin_restrict', FALSE ) )
-				add_action( 'restrict_manage_posts', array( $this, 'restrict_manage_posts' ) );
+				add_action( 'restrict_manage_posts', array( $this, 'restrict_manage_posts' ), 12, 2 );
 
 		} else if ( 'users' == $screen->base ) {
 
@@ -174,7 +174,7 @@ class gEditorialUsers extends gEditorialModuleCore
 		return $username;
 	}
 
-	public function restrict_manage_posts()
+	public function restrict_manage_posts( $post_type, $which )
 	{
 		global $wp_query;
 
