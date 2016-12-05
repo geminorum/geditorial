@@ -578,10 +578,9 @@ class gEditorialMeta extends gEditorialModuleCore
 				&& self::user_can( 'view', $field ) ) {
 
 				if ( $value = $this->get_postmeta( $post_id, $field, '' ) ) {
-					echo '<div class="-row meta-'.$field.'" title="'
-						.esc_attr( $this->get_string( $field, $post->post_type, 'titles', $field ) ).'">';
 
-						echo '<span class="-icon"><span class="dashicons dashicons-'.$icon.'"></span></span>';
+					echo '<div class="-row meta-'.$field.'">';
+						echo $this->get_column_icon( FALSE, $icon, $this->get_string( $field, $post->post_type, 'titles', $field ) );
 						echo esc_html( $value );
 
 						if ( 'as' == $field && $author ) {
@@ -596,11 +595,12 @@ class gEditorialMeta extends gEditorialModuleCore
 			}
 		}
 
-		if ( $author )
-			echo '<div class="-row meta-author" title="'
-				.esc_attr( $this->get_string( 'author', $post->post_type, 'titles', 'author' ) )
-				.'"><span class="-icon"><span class="dashicons dashicons-'.$rows['as'].'"></span></span>'
-				.$author.'</div>';
+		if ( $author ) {
+			echo '<div class="-row meta-author">';
+				echo $this->get_column_icon( FALSE, $rows['as'], $this->get_string( 'author', $post->post_type, 'titles', 'author' ) );
+				echo $author;
+			echo '</div>';
+		}
 
 		echo '</div>';
 	}
