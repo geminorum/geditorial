@@ -470,7 +470,7 @@ class gEditorialSettings extends gEditorialModuleCore
 					.'" id="'.$module->settings.'" data-module="'.$module->name.'">';
 
 				if ( $module->icon )
-					echo '<div class="dashicons dashicons-'.$module->icon.'"></div>';
+					echo gEditorialHTML::getDashicon( $module->icon );
 
 				echo '<span class="spinner"></span>';
 

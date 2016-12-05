@@ -205,7 +205,6 @@ class gEditorialHelper extends gEditorialBaseCore
 		if ( ! count( $the_posts ) )
 			return FALSE;
 
-
 		// FIXME: following must move to MetaBox class
 
 		$output = '<div class="field-wrap field-wrap-list"><h4>';
@@ -217,18 +216,13 @@ class gEditorialHelper extends gEditorialBaseCore
 		foreach ( $the_posts as $post ) {
 			setup_postdata( $post );
 
-			$url = add_query_arg( array(
-				'action' => 'edit',
-				'post'   => $post->ID,
-			), get_admin_url( NULL, 'post.php' ) );
-
 			$output .= '<li><a href="'.get_permalink( $post->ID ).'">'
-					.get_the_title( $post->ID ).'</a>'
-					.'&nbsp;<span class="edit">'
-					.sprintf( _x( '&ndash; <a href="%1$s" target="_blank" title="Edit this Post">%2$s</a>', 'Module Helper', GEDITORIAL_TEXTDOMAIN ),
-						esc_url( $url ),
-						'<span class="dashicons dashicons-welcome-write-blog"></span>'
-					).'</span></li>';
+				.get_the_title( $post->ID ).'</a>'
+				.'&nbsp;<span class="edit">'
+				.sprintf( _x( '&ndash; <a href="%1$s" target="_blank" title="Edit this Post">%2$s</a>', 'Module Helper', GEDITORIAL_TEXTDOMAIN ),
+					esc_url( gEditorialWordPress::getPostEditLink( $post->ID ) ),
+					gEditorialHTML::getDashicon( 'welcome-write-blog' )
+				).'</span></li>';
 		}
 		wp_reset_query();
 		$output .= '</ol></div>';

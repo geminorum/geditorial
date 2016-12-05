@@ -305,14 +305,7 @@ class gEditorialTodayHelper extends gEditorialHelper
 
 				// FIXME: get edit item url
 
-				if ( $posttype_object->menu_icon )
-					$button_title = '<span class="dashicons '
-						.$posttype_object->menu_icon.'"></span> '
-						.$posttype_object->labels->edit_item;
-				else
-					$button_title = '<span class="dashicons dashicons-admin-post"></span> '
-						.$posttype_object->labels->edit_item;
-
+				$icon   = gEditorialHTML::getDashicon( $posttype_object->menu_icon ? $posttype_object->menu_icon : 'admin-post' );
 				$noyear = $the_day;
 
 				unset( $noyear['year'] );
@@ -323,7 +316,7 @@ class gEditorialTodayHelper extends gEditorialHelper
 					'target'        => '_blank',
 					'data-posttype' => $posttype,
 					'title'         => _x( 'New Day!', 'Today Module', GEDITORIAL_TEXTDOMAIN ),
-				), $button_title );
+				), $icon.' '.$posttype_object->labels->edit_item );
 			}
 
 			unset( $posttype_object, $posttype, $noyear );
@@ -336,13 +329,7 @@ class gEditorialTodayHelper extends gEditorialHelper
 			if ( ! current_user_can( $posttype_object->cap->create_posts ) )
 				continue;
 
-			if ( $posttype_object->menu_icon )
-				$button_title = '<span class="dashicons '
-					.$posttype_object->menu_icon.'"></span> '
-					.$posttype_object->labels->add_new_item;
-			else
-				$button_title = '<span class="dashicons dashicons-admin-post"></span> '
-					.$posttype_object->labels->add_new_item;
+			$icon = gEditorialHTML::getDashicon( $posttype_object->menu_icon ? $posttype_object->menu_icon : 'admin-post' );
 
 			$html .= gEditorialHTML::tag( 'a', array(
 				'href'          => add_query_arg( array_merge( $the_day, array( 'post_type' => $posttype ) ), $new ),
@@ -350,7 +337,7 @@ class gEditorialTodayHelper extends gEditorialHelper
 				'target'        => '_blank',
 				'data-posttype' => $posttype,
 				'title'         => sprintf( _x( 'New %s connected to this day', 'Today Module', GEDITORIAL_TEXTDOMAIN ), $posttype_object->labels->singular_name ),
-			), $button_title );
+			), $icon.' '.$posttype_object->labels->add_new_item );
 		}
 
 		echo gEditorialHTML::tag( 'div', array(
