@@ -25,6 +25,11 @@ class gEditorialWPModule extends gEditorialBaseCore
 		return $this->base.'_'.$this->key.( is_null( $suffix ) ? '' : '_'.$suffix );
 	}
 
+	protected function class( $suffix = NULL )
+	{
+		return $this->base.'-'.$this->key.( is_null( $suffix ) ? '' : '-'.$suffix );
+	}
+
 	protected function action( $hook, $args = 1, $priority = 10, $method = FALSE )
 	{
 		add_action( $hook, array( $this, ( $method ? $method : $hook ) ), $priority, $args );

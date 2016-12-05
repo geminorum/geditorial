@@ -1765,6 +1765,17 @@ class gEditorialModuleCore extends gEditorialWPModule
 		}
 	}
 
+	// adds the module enabled class to body in admin
+	public function _admin_enabled()
+	{
+		add_action( 'admin_body_class', array( $this, 'admin_body_class_enabled' ) );
+	}
+
+	public function admin_body_class_enabled( $classes )
+	{
+		return $this->class( 'enabled' ).$classes;
+	}
+
 	// @REF: https://github.com/scribu/wp-posts-to-posts/wiki/Connection-information
 	public function p2p_register( $constant_key, $post_types = NULL )
 	{
