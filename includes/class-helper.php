@@ -256,6 +256,11 @@ class gEditorialHelper extends gEditorialBaseCore
 		check_ajax_referer( $action, $key );
 	}
 
+	public static function errorAjaxWhat()
+	{
+		wp_send_json_error( gEditorialHTML::error( _x( 'What?!', 'Module Helper: Ajax Notice', GEDITORIAL_TEXTDOMAIN ) ) );
+	}
+
 	// TODO: add as general option
 	public static function getEditorialUserID( $fallback = TRUE )
 	{

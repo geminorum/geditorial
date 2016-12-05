@@ -166,7 +166,7 @@ class gEditorialLike extends gEditorialModuleCore
 				) );
 		}
 
-		wp_send_json_error( gEditorialHTML::error( _x( 'What?!', 'Like Module: Ajax Notice', GEDITORIAL_TEXTDOMAIN ) ) );
+		gEditorialHelper::errorAjaxWhat();
 	}
 
 	public function title( $liked, $post_id = NULL )
