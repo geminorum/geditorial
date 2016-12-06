@@ -30,7 +30,12 @@ class gEditorialModuleCore extends gEditorialWPModule
 	protected $settings_scripts    = array();
 	protected $image_sizes         = array();
 	protected $errors              = array();
-	protected $caps                = array();
+
+	protected $caps = array(
+		'reports'  => 'edit_others_posts',
+		'settings' => 'manage_options',
+		'tools'    => 'edit_others_posts',
+	);
 
 	protected $root_key = FALSE; // ROOT CONSTANT
 	protected $p2p      = FALSE; // P2P ENABLED/Connection Type
