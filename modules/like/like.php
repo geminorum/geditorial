@@ -136,7 +136,7 @@ class gEditorialLike extends gEditorialModuleCore
 			break;
 			case 'dolike':
 
-				gEditorialHelper::checkAjaxReferer( 'geditorial_like_ajax-'.$post['id'] );
+				gEditorialAjax::checkReferer( 'geditorial_like_ajax-'.$post['id'] );
 
 				list( $check, $count ) = $this->like( $post['id'] );
 
@@ -152,7 +152,7 @@ class gEditorialLike extends gEditorialModuleCore
 			break;
 			case 'unlike':
 
-				gEditorialHelper::checkAjaxReferer( 'geditorial_like_ajax-'.$post['id'] );
+				gEditorialAjax::checkReferer( 'geditorial_like_ajax-'.$post['id'] );
 
 				list( $check, $count ) = $this->unlike( $post['id'] );
 
@@ -166,7 +166,7 @@ class gEditorialLike extends gEditorialModuleCore
 				) );
 		}
 
-		gEditorialHelper::errorAjaxWhat();
+		gEditorialAjax::errorWhat();
 	}
 
 	public function title( $liked, $post_id = NULL )

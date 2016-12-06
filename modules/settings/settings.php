@@ -369,7 +369,7 @@ class gEditorialSettings extends gEditorialModuleCore
 
 			case 'state':
 
-				gEditorialHelper::checkAjaxReferer();
+				gEditorialAjax::checkReferer();
 
 				if ( ! isset( $_POST['doing'], $_POST['name'] ) )
 					wp_send_json_error( gEditorialHTML::error( _x( 'No action or name!', 'Settings Module: Ajax Notice', GEDITORIAL_TEXTDOMAIN ) ) );
@@ -385,7 +385,7 @@ class gEditorialSettings extends gEditorialModuleCore
 					wp_send_json_error( gEditorialHTML::error( _x( 'Cannot change module state!', 'Settings Module: Ajax Notice', GEDITORIAL_TEXTDOMAIN ) ) );
 		}
 
-		gEditorialHelper::errorAjaxWhat();
+		gEditorialAjax::errorWhat();
 	}
 
 	public function admin_settings_page()

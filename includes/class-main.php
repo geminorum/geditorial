@@ -62,6 +62,7 @@ class gEditorial
 		require_once( GEDITORIAL_DIR.'includes/wordpress/user.php' );
 
 		$includes = array(
+			'ajax',
 			'helper',
 			'metabox',
 			'settings',
@@ -345,7 +346,7 @@ class gEditorial
 		if ( ! $this->asset_config )
 			return;
 
-		gEditorialHelper::printJSConfig( $this->asset_args );
+		gEditorialAjax::printJSConfig( $this->asset_args );
 	}
 
 	public function register_editor_button( $button, $filepath )

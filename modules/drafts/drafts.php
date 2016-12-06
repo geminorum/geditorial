@@ -67,7 +67,7 @@ class gEditorialDrafts extends gEditorialModuleCore
 
 	public function ajax()
 	{
-		gEditorialHelper::checkAjaxReferer();
+		gEditorialAjax::checkReferer();
 
 		if ( ! $this->cuc( 'ajax' ) )
 			self::cheatin();
