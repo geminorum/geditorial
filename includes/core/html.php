@@ -224,6 +224,43 @@ class gEditorialHTML extends gEditorialBaseCore
 		return self::notice( $message, 'notice-info fade', $echo );
 	}
 
+	public static function tableSide( $array, $type = TRUE )
+	{
+		echo '<table class="base-table-side">';
+
+		if ( count( $array ) ) {
+
+			foreach ( $array as $key => $val ) {
+
+				echo '<tr class="-row">';
+
+				if ( is_string( $key ) ) {
+					echo '<td class="-key" style=""><strong>'.$key.'</strong>';
+						if ( $type ) echo '<br /><small>'.gettype( $val ).'</small>';
+					echo '</td>';
+				}
+
+				if ( is_array( $val ) || is_object( $val ) ) {
+					echo '<td class="-val -table">';
+					self::tableSide( $val, $type );
+				} else if ( is_bool( $val ) ){
+					echo '<td class="-val -not-table"><code>'.( $val ? 'TRUE' : 'FALSE' ).'</code>';
+				} else if ( ! empty( $val ) ){
+					echo '<td class="-val -not-table"><code>'.$val.'</code>';
+				} else {
+					echo '<td class="-val -not-table"><small class="-empty">empty</small>';
+				}
+
+				echo '</td></tr>';
+			}
+
+		} else {
+			echo '<tr class="-row"><td class="-val -not-table"><small class="-empty">empty</small></td></tr>';
+		}
+
+		echo '</table>';
+	}
+
 	public static function tableCode( $array, $reverse = FALSE, $caption = FALSE )
 	{
 		if ( ! $array )
@@ -242,7 +279,7 @@ class gEditorialHTML extends gEditorialBaseCore
 		echo '<tbody>';
 
 		foreach ( (array) $array as $key => $val )
-			printf( $row, $key, $val );
+			@printf( $row, $key, ( is_bool( $val ) ? ( $val ? 'TRUE' : 'FALSE' ) : $val ) );
 
 		echo '</tbody></table>';
 	}

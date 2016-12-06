@@ -456,6 +456,13 @@ class gEditorialWordPress extends gEditorialBaseCore
 		self::redirect( wp_login_url( $location, TRUE ), $status );
 	}
 
+	public static function getAdminPostLink( $action, $extra = array() )
+	{
+		return add_query_arg( array_merge( array(
+			'action' => $action,
+		), $extra ), admin_url( 'admin-post.php' ) );
+	}
+
 	// @SEE: get_search_link()
 	public static function getSearchLink( $query = FALSE )
 	{

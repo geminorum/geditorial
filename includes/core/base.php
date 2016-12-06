@@ -37,9 +37,10 @@ class gEditorialBaseCore
 		echo $export;
 	}
 
-	public static function kill( $var = FALSE )
+	public static function kill()
 	{
-		if ( $var ) self::dump( $var );
+		foreach ( func_get_args() as $arg )
+			self::dump( $arg );
 		echo self::stat();
 		die();
 	}
