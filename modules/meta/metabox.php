@@ -179,6 +179,7 @@ class gEditorialMetaMetaBox extends gEditorialMetaBox
 				'class'             => 'geditorial-admin-dropbown geditorial-meta-field-'.$field.( $ltr ? ' dropbown-ltr' : '' ),
 				'name'              => 'geditorial-meta-'.$field.( FALSE === $key ? '' : '['.$key.']' ),
 				'id'                => 'geditorial-meta-'.$field.( FALSE === $key ? '' : '-'.$key ),
+				'orderby'           => 'name',
 				'show_count'        => TRUE,
 				'hide_empty'        => FALSE,
 				'hide_if_empty'     => TRUE,
