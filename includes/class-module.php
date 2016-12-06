@@ -23,7 +23,7 @@ class gEditorialModuleCore extends gEditorialWPModule
 	protected $partials        = array();
 	protected $partials_remote = array();
 
-	protected $post_types_excluded = array();
+	protected $post_types_excluded = array( 'attachment' );
 	protected $taxonomies_excluded = array();
 	protected $kses_allowed        = array();
 	protected $settings_buttons    = array();
