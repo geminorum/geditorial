@@ -756,28 +756,30 @@ class gEditorialMagazine extends gEditorialModuleCore
 		return $ids;
 	}
 
-	public function manage_posts_columns( $posts_columns )
+	public function manage_posts_columns( $columns )
 	{
-		$new_columns = array();
-		foreach ( $posts_columns as $key => $value ) {
+		$new = array();
+
+		foreach ( $columns as $key => $value ) {
 
 			if ( 'title' == $key ) {
-				$new_columns['order'] = $this->get_column_title( 'order', 'issue_cpt' );
-				$new_columns['cover'] = $this->get_column_title( 'cover', 'issue_cpt' );
+				$new['order'] = $this->get_column_title( 'order', 'issue_cpt' );
+				$new['cover'] = $this->get_column_title( 'cover', 'issue_cpt' );
 
-				$new_columns[$key] = $value;
+				$new[$key] = $value;
 
-			} else if ( 'date' == $key ){
-				$new_columns['children'] = $this->get_column_title( 'children', 'issue_cpt' );
+			} else if ( 'date' == $key ) {
+				$new['children'] = $this->get_column_title( 'children', 'issue_cpt' );
 
 			} else if ( in_array( $key, array( 'author', 'comments' ) ) ) {
 				continue; // he he!
 
 			} else {
-				$new_columns[$key] = $value;
+				$new[$key] = $value;
 			}
 		}
-		return $new_columns;
+
+		return $new;
 	}
 
 	public function posts_custom_column( $column_name, $post_id )

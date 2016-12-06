@@ -237,30 +237,6 @@ class gEditorialHelper extends gEditorialBaseCore
 		return count( $strings ) ? 'tinyMCE.addI18n("'.$locale.'.geditorial", '.wp_json_encode( $strings ).');'."\n" : '';
 	}
 
-	public static function printJSConfig( $args, $object = 'gEditorial' )
-	{
-		$args['api']   = defined( 'GNETWORK_AJAX_ENDPOINT' ) && GNETWORK_AJAX_ENDPOINT ? GNETWORK_AJAX_ENDPOINT : admin_url( 'admin-ajax.php' );
-		$args['dev']   = gEditorialWordPress::isDev();
-		$args['nonce'] = wp_create_nonce( 'geditorial' );
-
-	?><script type="text/javascript">
-/* <![CDATA[ */
-	var <?php echo $object; ?> = <?php echo wp_json_encode( $args ); ?>;
-	<?php if ( $args['dev'] ) echo 'console.log('.$object.');'; ?>
-/* ]]> */
-</script><?php
-	}
-
-	public static function checkAjaxReferer( $action = 'geditorial', $key = 'nonce' )
-	{
-		check_ajax_referer( $action, $key );
-	}
-
-	public static function errorAjaxWhat()
-	{
-		wp_send_json_error( gEditorialHTML::error( _x( 'What?!', 'Module Helper: Ajax Notice', GEDITORIAL_TEXTDOMAIN ) ) );
-	}
-
 	// TODO: add as general option
 	public static function getEditorialUserID( $fallback = TRUE )
 	{

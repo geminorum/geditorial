@@ -81,13 +81,16 @@ class gEditorialSettings extends gEditorialModuleCore
 				&& $module->configure
 				&& $name != $this->module->name ) {
 
-					if ( $hook_module = add_submenu_page( $this->module->settings,
-						$module->title,
-						$module->title,
-						$this->caps['settings'], // FIXME: get from module
-						$module->settings,
-						array( $this, 'admin_settings_page' )
-					) ) add_action( 'load-'.$hook_module, array( $this, 'admin_settings_load' ) );
+				$hook_module = add_submenu_page( $this->module->settings,
+					$module->title,
+					$module->title,
+					$this->caps['settings'], // FIXME: get from module
+					$module->settings,
+					array( $this, 'admin_settings_page' )
+				);
+
+				if ( $hook_module )
+					add_action( 'load-'.$hook_module, array( $this, 'admin_settings_load' ) );
 			}
 		}
 	}
@@ -248,18 +251,18 @@ class gEditorialSettings extends gEditorialModuleCore
 		echo 'Comming Soon!';
 	}
 
-	public function tools_sub( $settings_uri, $sub )
+	public function tools_sub( $uri, $sub )
 	{
 		if ( 'general' == $sub )
-			return $this->tools_sub_general( $settings_uri, $sub );
+			return $this->tools_sub_general( $uri, $sub );
 
 		// TODO: sub for installing default terms for each module
 		// @SEE: https://make.wordpress.org/core/?p=20650
 		// if ( 'defaults' == $sub )
-		// 	return $this->tools_sub_defaults( $settings_uri, $sub );
+		// 	return $this->tools_sub_defaults( $uri, $sub );
 	}
 
-	private function tools_sub_general( $settings_uri, $sub )
+	private function tools_sub_general( $uri, $sub )
 	{
 		global $gEditorial;
 
