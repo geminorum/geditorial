@@ -105,9 +105,6 @@ class gEditorialSettings extends gEditorialModuleCore
 
 		$subs = apply_filters( 'geditorial_reports_subs', $subs, 'reports' );
 
-		if ( is_super_admin() )
-			$subs['console'] = _x( 'Console', 'Settings Module: Reports Sub', GEDITORIAL_TEXTDOMAIN );
-
 		$messages = apply_filters( 'geditorial_reports_messages', gEditorialSettingsCore::messages(), $sub );
 
 		echo '<div class="wrap geditorial-admin-wrap geditorial-reports geditorial-reports-'.$sub.'">';
@@ -139,8 +136,10 @@ class gEditorialSettings extends gEditorialModuleCore
 
 		$subs = apply_filters( 'geditorial_tools_subs', $subs, 'tools' );
 
-		if ( is_super_admin() )
+		if ( is_super_admin() ) {
+			$subs['options'] = _x( 'Options', 'Settings Module: Tools Sub', GEDITORIAL_TEXTDOMAIN );
 			$subs['console'] = _x( 'Console', 'Settings Module: Tools Sub', GEDITORIAL_TEXTDOMAIN );
+		}
 
 		$messages = apply_filters( 'geditorial_tools_messages', gEditorialSettingsCore::messages(), $sub );
 
