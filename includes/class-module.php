@@ -1278,6 +1278,14 @@ class gEditorialModuleCore extends gEditorialWPModule
 		if ( is_null( $name ) )
 			$name = $this->module->name;
 
+		if ( TRUE === $args ) {
+			$args = array();
+
+		} else if ( ! is_array( $args ) ) {
+			$name .= '.'.$args;
+			$args = array();
+		}
+
 		if ( is_null( $handle ) )
 			$handle = strtolower( $this->base.'-'.str_replace( '.', '-', $name ) );
 
@@ -1292,13 +1300,8 @@ class gEditorialModuleCore extends gEditorialWPModule
 			TRUE
 		);
 
-		if ( is_array( $args ) && ! count( $args ) )
-			return TRUE;
-
-		if ( TRUE === $args )
-			$args = array();
-
-		gEditorial()->enqueue_asset_config( $args, $this->module->name );
+		if ( count( $args ) )
+			gEditorial()->enqueue_asset_config( $args, $this->module->name );
 
 		return $handle;
 	}
