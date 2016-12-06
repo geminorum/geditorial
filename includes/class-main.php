@@ -59,6 +59,7 @@ class gEditorial
 		require_once( GEDITORIAL_DIR.'includes/core/wordpress.php' );
 		require_once( GEDITORIAL_DIR.'includes/wordpress/module.php' );
 		require_once( GEDITORIAL_DIR.'includes/wordpress/taxonomy.php' );
+		require_once( GEDITORIAL_DIR.'includes/wordpress/user.php' );
 
 		$includes = array(
 			'helper',
