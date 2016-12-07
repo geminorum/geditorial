@@ -385,6 +385,16 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 		return trim( self::req( 'sub', $default ) );
 	}
 
+	public static function wrapOpen( $sub = 'general', $base = 'geditorial', $page = 'settings' )
+	{
+		echo '<div class="wrap '.$base.'-admin-wrap '.$base.'-'.$page.' '.$base.'-'.$page.'-'.$sub.' sub-'.$sub.'">';
+	}
+
+	public static function wrapClose()
+	{
+		echo '<div class="clear"></div></div>';
+	}
+
 	public static function headerTitle( $title = NULL, $back = NULL, $to = NULL, $icon = '' )
 	{
 		if ( is_null( $title ) )

@@ -110,7 +110,7 @@ class gEditorialSettings extends gEditorialModuleCore
 
 		$messages = apply_filters( 'geditorial_reports_messages', gEditorialSettingsCore::messages(), $sub );
 
-		echo '<div class="wrap geditorial-admin-wrap geditorial-reports geditorial-reports-'.$sub.'">';
+		gEditorialSettingsCore::wrapOpen( $sub, $this->base, 'reports' );
 
 			gEditorialSettingsCore::headerTitle( _x( 'Editorial Reports', 'Settings Module: Page Title', GEDITORIAL_TEXTDOMAIN ) );
 			gEditorialSettingsCore::headerNav( $uri, $sub, $subs );
@@ -123,7 +123,7 @@ class gEditorialSettings extends gEditorialModuleCore
 
 			$this->settings_signature( NULL, 'reports' );
 
-		echo '<div class="clear"></div></div>';
+		gEditorialSettingsCore::wrapClose();
 	}
 
 	public function admin_tools_page()
@@ -146,7 +146,7 @@ class gEditorialSettings extends gEditorialModuleCore
 
 		$messages = apply_filters( 'geditorial_tools_messages', gEditorialSettingsCore::messages(), $sub );
 
-		echo '<div class="wrap geditorial-admin-wrap geditorial-tools geditorial-tools-'.$sub.'">';
+		gEditorialSettingsCore::wrapOpen( $sub, $this->base, 'tools' );
 
 			gEditorialSettingsCore::headerTitle( _x( 'Editorial Tools', 'Settings Module: Page Title', GEDITORIAL_TEXTDOMAIN ) );
 			gEditorialSettingsCore::headerNav( $uri, $sub, $subs );
@@ -159,7 +159,7 @@ class gEditorialSettings extends gEditorialModuleCore
 
 			$this->settings_signature( NULL, 'tools' );
 
-		echo '<div class="clear"></div></div>';
+		gEditorialSettingsCore::wrapClose();
 	}
 
 	public function admin_reports_load()
@@ -423,7 +423,7 @@ class gEditorialSettings extends gEditorialModuleCore
 			$back  = gEditorialSettingsCore::settingsURL();
 		}
 
-		echo '<div class="wrap geditorial-admin-wrap geditorial-settings">';
+		gEditorialSettingsCore::wrapOpen( $current_module->name, $this->base, 'settings' );
 
 			gEditorialSettingsCore::headerTitle( $title, $back, NULL, $current_module->icon );
 			gEditorialSettingsCore::message();
@@ -439,8 +439,7 @@ class gEditorialSettings extends gEditorialModuleCore
 			if ( method_exists( $gEditorial->{$current_module->name}, 'settings_intro_after' ) )
 				$gEditorial->{$current_module->name}->settings_intro_after( $current_module );
 
-			echo '<div class="clear"></div>';
-		echo '</div>';
+		gEditorialSettingsCore::wrapClose();
 	}
 
 	private function print_default_settings()
