@@ -796,6 +796,7 @@ class gEditorialModuleCore extends gEditorialWPModule
 		return $noop;
 	}
 
+	// NOT USED
 	public function nooped( $constant_key, $count )
 	{
 		return gEditorialHelper::nooped( $count, $this->get_noop( $constant_key ) );
@@ -1158,59 +1159,7 @@ class gEditorialModuleCore extends gEditorialWPModule
 
 	protected function get_post_updated_messages( $constant_key )
 	{
-		global $post, $post_ID;
-
-		$singular_name  = $this->nooped( $constant_key, 1 );
-		$singular_lower = gEditorialCoreText::strToLower( $singular_name );
-
-		$link = get_permalink( $post_ID );
-
-		return array(
-			0  => '', // Unused. Messages start at index 1.
-
-			1  => vsprintf( _x( '%1$s updated. <a href="%3$s">View %2$s</a>', 'Module Core: Post Updated Messages', GEDITORIAL_TEXTDOMAIN ), array(
-				$singular_name,
-				$singular_lower,
-				esc_url( $link ),
-			) ),
-
-			2  => _x( 'Custom field updated.', 'Module Core: Post Updated Messages', GEDITORIAL_TEXTDOMAIN ),
-			3  => _x( 'Custom field deleted.', 'Module Core: Post Updated Messages', GEDITORIAL_TEXTDOMAIN ),
-
-			4  => sprintf( _x( '%s updated.', 'Module Core: Post Updated Messages', GEDITORIAL_TEXTDOMAIN ), $singular_name ),
-
-			5  => isset( $_GET['revision'] ) ? vsprintf( _x( '%1$s restored to revision from %2$s', 'Module Core: Post Updated Messages', GEDITORIAL_TEXTDOMAIN ), array(
-				$singular_name,
-				wp_post_revision_title( (int) $_GET['revision'], FALSE )
-			) ) : FALSE,
-
-			6  => vsprintf( _x( '%1$s published. <a href="%3$s">View %2$s</a>', 'Module Core: Post Updated Messages', GEDITORIAL_TEXTDOMAIN ), array(
-				$singular_name,
-				$singular_lower,
-				esc_url( $link ),
-			) ),
-
-			7  => sprintf( _x( '%s saved.', 'Module Core: Post Updated Messages', GEDITORIAL_TEXTDOMAIN ), $singular_name ),
-
-			8  => vsprintf( _x( '%1$s submitted. <a target="_blank" href="%3$s">Preview %2$s</a>', 'Module Core: Post Updated Messages', GEDITORIAL_TEXTDOMAIN ), array(
-				$singular_name,
-				$singular_lower,
-				esc_url( add_query_arg( 'preview', 'true', $link ) ),
-			) ),
-
-			9  => vsprintf( _x( '%1$s scheduled for: <strong>%4$s</strong>. <a target="_blank" href="%3$s">Preview %2$s</a>', 'Module Core: Post Updated Messages', GEDITORIAL_TEXTDOMAIN ), array(
-				$singular_name,
-				$singular_lower,
-				esc_url( $link ),
-				date_i18n( __( 'M j, Y @ G:i' ), strtotime( $post->post_date ) ),
-			) ),
-
-			10 => vsprintf( _x( '%1$s draft updated. <a target="_blank" href="%3$s">Preview %2$s</a>', 'Module Core: Post Updated Messages', GEDITORIAL_TEXTDOMAIN ), array(
-				$singular_name,
-				$singular_lower,
-				esc_url( add_query_arg( 'preview', 'true', $link ) ),
-			) ),
-		);
+		return gEditorialHelper::generatePostTypeMessages( $this->get_noop( $constant_key ) );
 	}
 
 	// SEE: [Use Chosen for a replacement WordPress taxonomy metabox](https://gist.github.com/helen/1573966)

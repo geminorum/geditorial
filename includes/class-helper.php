@@ -406,6 +406,8 @@ class gEditorialHelper extends gEditorialBaseCore
 		$strings[2] = gEditorialCoreText::strToLower( $strings[0] );
 		$strings[3] = gEditorialCoreText::strToLower( $strings[1] );
 
+		$strings[5] = '%s';
+
 		return $strings;
 	}
 
@@ -414,6 +416,7 @@ class gEditorialHelper extends gEditorialBaseCore
 	 *	%2$s => Camel Case / Singular
 	 *	%3$s => Lower Case / Plural
 	 *	%4$s => Lower Case / Singular
+	 *	%5$s => %s
 	 *
 	 *	@REF:
 	 *		`get_post_type_labels()`
@@ -474,10 +477,11 @@ class gEditorialHelper extends gEditorialBaseCore
 	}
 
 	/**
-	 *	%1$s => Camel Case / Plural
-	 *	%2$s => Camel Case / Singular
-	 *	%3$s => Lower Case / Plural
-	 *	%4$s => Lower Case / Singular
+	 *	%1$s => Camel Case / Plural   : Posts
+	 *	%2$s => Camel Case / Singular : Post
+	 *	%3$s => Lower Case / Plural   : posts
+	 *	%4$s => Lower Case / Singular : post
+	 *	%5$s => %s
 	 *
 	 *	@REF: `_nx_noop()`, `translate_nooped_plural()`
 	 */
@@ -515,6 +519,64 @@ class gEditorialHelper extends gEditorialBaseCore
 			$pre['menu_name'] = $strings[0];
 
 		return $pre;
+	}
+
+	/**
+	 *	%1$s => Camel Case / Plural
+	 *	%2$s => Camel Case / Singular
+	 *	%3$s => Lower Case / Plural
+	 *	%4$s => Lower Case / Singular
+	 *	%5$s => %s
+	 */
+	public static function generatePostTypeMessages( $name )
+	{
+		global $post_type_object, $post, $post_ID;
+
+		$name_templates = array(
+			'view_post'                      => _x( 'View %4$s', 'Module Helper: PostType Message Generator', GEDITORIAL_TEXTDOMAIN ),
+			'preview_post'                   => _x( 'Preview %4$s', 'Module Helper: PostType Message Generator', GEDITORIAL_TEXTDOMAIN ),
+			'post_updated'                   => _x( '%2$s updated.', 'Module Helper: PostType Message Generator', GEDITORIAL_TEXTDOMAIN ),
+			'custom_field_updated'           => _x( 'Custom field updated.', 'Module Helper: PostType Message Generator', GEDITORIAL_TEXTDOMAIN ),
+			'custom_field_deleted'           => _x( 'Custom field deleted.', 'Module Helper: PostType Message Generator', GEDITORIAL_TEXTDOMAIN ),
+			'post_restored_to_revision_from' => _x( '%2$s restored to revision from %5$s.', 'Module Helper: PostType Message Generator', GEDITORIAL_TEXTDOMAIN ),
+			'post_published'                 => _x( '%2$s published.', 'Module Helper: PostType Message Generator', GEDITORIAL_TEXTDOMAIN ),
+			'post_saved'                     => _x( '%2$s saved.' , 'Module Helper: PostType Message Generator', GEDITORIAL_TEXTDOMAIN ),
+			'post_submitted'                 => _x( '%2$s submitted.', 'Module Helper: PostType Message Generator', GEDITORIAL_TEXTDOMAIN ),
+			'post_scheduled_for'             => _x( '%2$s scheduled for: %5$s.', 'Module Helper: PostType Message Generator', GEDITORIAL_TEXTDOMAIN ),
+			'post_draft_updated'             => _x( '%2$s draft updated.', 'Module Helper: PostType Message Generator', GEDITORIAL_TEXTDOMAIN ),
+		);
+
+		$messages = array();
+		$strings  = self::getStringsFromName( $name );
+
+		foreach ( $name_templates as $key => $template )
+			$messages[$key] = vsprintf( $template, $strings );
+
+		if ( ! $permalink = get_permalink( $post_ID ) )
+			$permalink = '';
+
+		$preview = $scheduled = $view = '';
+		$scheduled_date = date_i18n( __( 'M j, Y @ H:i' ), strtotime( $post->post_date ) );
+
+		if ( is_post_type_viewable( $post_type_object ) ) {
+			$view      = ' '.gEditorialHTML::link( $messages['view_post'], $permalink );
+			$preview   = ' '.gEditorialHTML::link( $messages['preview_post'], get_preview_post_link( $post ), TRUE );
+			$scheduled = ' '.gEditorialHTML::link( $messages['preview_post'], $permalink, TRUE );
+		}
+
+		return array(
+			0  => '', // Unused. Messages start at index 1.
+			1  => $messages['post_updated'].$view,
+			2  => $messages['custom_field_updated'],
+			3  => $messages['custom_field_deleted'],
+			4  => $messages['post_updated'],
+			5  => isset( $_GET['revision'] ) ? sprintf( $messages['post_restored_to_revision_from'], wp_post_revision_title( (int) $_GET['revision'], FALSE ) ) : FALSE,
+			6  => $messages['post_published'].$view,
+			7  => $messages['post_saved'],
+			8  => $messages['post_submitted'].$preview,
+			9  => sprintf( $messages['post_scheduled_for'], '<strong>'.$scheduled_date.'</strong>' ).$scheduled,
+			10 => $messages['post_draft_updated'].$preview,
+		);
 	}
 
 	public static function getPosttypeMonths( $calendar_type, $post_type = 'post', $args = array(), $user_id = 0 )
