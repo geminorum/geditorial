@@ -463,6 +463,13 @@ class gEditorialWordPress extends gEditorialBaseCore
 		), $extra ), admin_url( 'admin-post.php' ) );
 	}
 
+	public static function getAdminPageLink( $page, $extra = array(), $base = 'admin.php' )
+	{
+		return add_query_arg( array_merge( array(
+			'page' => $page,
+		), $extra ), admin_url( $base ) );
+	}
+
 	// @SEE: get_search_link()
 	public static function getSearchLink( $query = FALSE )
 	{
@@ -503,6 +510,13 @@ class gEditorialWordPress extends gEditorialBaseCore
 			'action' => 'edit',
 			'post'   => $post_id,
 		), $extra ), admin_url( 'post.php' ) );
+	}
+
+	public static function getPostNewLink( $post_type, $extra = array() )
+	{
+		return add_query_arg( array_merge( array(
+			'post_type' => $post_type,
+		), $extra ), admin_url( 'post-new.php' ) );
 	}
 
 	public static function getPostAttachmentsLink( $post_id, $extra = array() )

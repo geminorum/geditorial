@@ -1547,9 +1547,7 @@ class gEditorialModuleCore extends gEditorialWPModule
 
 	public function get_url_settings( $extra = array() )
 	{
-		return add_query_arg( array_merge( array(
-			'page' => $this->module->settings,
-		), $extra ), admin_url( 'admin.php' ) );
+		return gEditorialWordPress::getAdminPageLink( $this->module->settings, $extra );
 	}
 
 	public function get_url_tax_edit( $constant_key, $term_id = FALSE, $extra = array() )
@@ -1557,18 +1555,14 @@ class gEditorialModuleCore extends gEditorialWPModule
 		return gEditorialWordPress::getEditTaxLink( $this->constant( $constant_key ), $term_id, $extra );
 	}
 
-	public function get_url_post_edit( $constant_key, $extra = array() )
+	public function get_url_post_edit( $constant_key, $extra = array(), $author_id = 0 )
 	{
-		return add_query_arg( array_merge( array(
-			'post_type' => $this->constant( $constant_key ),
-		), $extra ), admin_url( 'edit.php' ) );
+		return gEditorialWordPress::getPostTypeEditLink( $this->constant( $constant_key ), $author_id, $extra );
 	}
 
 	public function get_url_post_new( $constant_key, $extra = array() )
 	{
-		return add_query_arg( array_merge( array(
-			'post_type' => $this->constant( $constant_key ),
-		), $extra ), admin_url( 'post-new.php' ) );
+		return gEditorialWordPress::getPostNewLink( $this->constant( $constant_key ), $extra );
 	}
 
 	protected function require_code( $filenames = 'templates' )
