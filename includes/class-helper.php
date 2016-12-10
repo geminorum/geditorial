@@ -316,10 +316,11 @@ class gEditorialHelper extends gEditorialBaseCore
 
 	public static function postModified( $post = NULL, $attr = FALSE )
 	{
-		$post = get_post( $post );
+		if ( ! $post = get_post( $post ) )
+			return FALSE;
 
-		$gmt   = get_post_modified_time( 'U', TRUE, $post->ID, FALSE );
-		$local = get_post_modified_time( 'U', FALSE, $post->ID, FALSE );
+		$gmt   = strtotime( $post->post_modified_gmt );
+		$local = strtotime( $post->post_modified );
 
 		$format = _x( 'l, F j, Y', 'Module Helper: Post Modified', GEDITORIAL_TEXTDOMAIN );
 		$title  = _x( 'Last Modified on %s', 'Module Helper: Post Modified', GEDITORIAL_TEXTDOMAIN );
