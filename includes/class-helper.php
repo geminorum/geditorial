@@ -330,23 +330,23 @@ class gEditorialHelper extends gEditorialBaseCore
 			: gEditorialDate::htmlDateTime( $local, $gmt, $format, self::humanTimeDiff( $local, FALSE ) );
 	}
 
-	public static function humanTimeDiff( $time, $round = TRUE, $format = NULL, $now = NULL )
+	public static function humanTimeDiff( $local, $round = DAY_IN_SECONDS, $format = NULL, $now = NULL )
 	{
 		$ago = _x( '%s ago', 'Module Helper: Human Time Diff', GEDITORIAL_TEXTDOMAIN );
-		$now = is_null( $now ) ? current_time( 'timestamp' ) : '';
+		$now = is_null( $now ) ? current_time( 'timestamp', FALSE ) : '';
 
-		if ( ! $round )
-			return sprintf( $ago, human_time_diff( $time, $now ) );
+		if ( FALSE === $round )
+			return sprintf( $ago, human_time_diff( $local, $now ) );
 
-		$time_diff = time() - $time;
+		$diff = $now - $local;
 
-		if ( $time_diff > 0 && $time_diff < DAY_IN_SECONDS )
-			return sprintf( $ago, human_time_diff( $time, $now ) );
+		if ( $diff > 0 && $diff < $round )
+			return sprintf( $ago, human_time_diff( $local, $now ) );
 
 		if ( is_null( $format ) )
 			$format = _x( 'Y/m/d', 'Module Helper: Human Time Diff', GEDITORIAL_TEXTDOMAIN );
 
-		return date_i18n( $format, $time );
+		return date_i18n( $format, $local, FALSE );
 	}
 
 	// @REF: [Calendar Classes - ICU User Guide](http://userguide.icu-project.org/datetime/calendar)
