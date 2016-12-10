@@ -1417,8 +1417,7 @@ class gEditorialModuleCore extends gEditorialWPModule
 		$post_type = $this->constant( $constant_key );
 		$object    = get_post_type_object( $post_type );
 
-		if ( is_super_admin()
-			|| current_user_can( $object->cap->edit_others_posts ) ) {
+		if ( current_user_can( $object->cap->edit_others_posts ) ) {
 
 			remove_meta_box( 'authordiv', $post_type, 'normal' );
 
