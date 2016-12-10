@@ -484,6 +484,53 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 		gEditorialHTML::headerNav( $uri, $active, $subs, $prefix, $tag );
 	}
 
+	// @SOURCE: `add_settings_section()`
+	public static function addModuleSection( $page, $atts = array() )
+	{
+		global $wp_settings_sections;
+
+		$args = self::atts( array(
+			'id'            => FALSE,
+			'title'         => FALSE,
+			'callback'      => '__return_false',
+			'section_class' => '',
+		), $atts );
+
+		if ( ! $args['id'] )
+			return FALSE;
+
+		return $wp_settings_sections[$page][$args['id']] = $args;
+	}
+
+	// @SOURCE: `do_settings_sections()`
+	public static function moduleSections( $page )
+	{
+		global $wp_settings_sections, $wp_settings_fields;
+
+		if ( ! isset( $wp_settings_sections[$page] ) )
+			return;
+
+		foreach ( (array) $wp_settings_sections[$page] as $section ) {
+
+			if ( $section['title'] )
+				echo gEditorialHTML::tag( 'h2', array(
+					'class' => gEditorialHTML::attrClass( '-section-title', $section['section_class'] ),
+				), $section['title'] );
+
+			if ( $section['callback'] )
+				call_user_func( $section['callback'], $section );
+
+			if ( ! isset( $wp_settings_fields )
+				|| ! isset( $wp_settings_fields[$page] )
+				|| ! isset( $wp_settings_fields[$page][$section['id']] ) )
+					continue;
+
+			echo '<table class="form-table">';
+				do_settings_fields( $page, $section['id'] );
+			echo '</table>';
+		}
+	}
+
 	public static function moduleButtons( $module, $enabled = FALSE )
 	{
 		echo gEditorialHTML::tag( 'input', array(

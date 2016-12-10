@@ -353,7 +353,11 @@ class gEditorialModuleCore extends gEditorialWPModule
 
 		$section = $this->module->group.'_posttypes';
 
-		add_settings_section( $section, FALSE, '__return_false', $this->module->group );
+		gEditorialSettingsCore::addModuleSection( $this->module->group, array(
+			'id'            => $section,
+			'section_class' => 'posttypes_option_section',
+		) );
+
 		add_settings_field( 'post_types',
 			$title,
 			array( $this, 'settings_posttypes_option' ),
@@ -370,7 +374,11 @@ class gEditorialModuleCore extends gEditorialWPModule
 
 		$section = $this->module->group.'_taxonomies';
 
-		add_settings_section( $section, FALSE, '__return_false', $this->module->group );
+		gEditorialSettingsCore::addModuleSection( $this->module->group, array(
+			'id'            => $section,
+			'section_class' => 'taxonomies_option_section',
+		) );
+
 		add_settings_field( 'taxonomies',
 			$title,
 			array( $this, 'settings_taxonomies_option' ),
@@ -393,11 +401,11 @@ class gEditorialModuleCore extends gEditorialWPModule
 
 			if ( count( $fields ) ) {
 
-				add_settings_section( $section,
-					sprintf( $title, $all[$post_type] ),
-					'__return_false',
-					$this->module->group
-				);
+				gEditorialSettingsCore::addModuleSection( $this->module->group, array(
+					'id'            => $section,
+					'title'         => sprintf( $title, $all[$post_type] ),
+					'section_class' => 'fields_option_section fields_option-'.$post_type,
+				) );
 
 				$this->add_settings_field( array(
 					'field'     => $post_type.'_fields_all',
@@ -428,11 +436,12 @@ class gEditorialModuleCore extends gEditorialWPModule
 
 			} else if ( isset( $all[$post_type] ) ) {
 
-				add_settings_section( $section,
-					sprintf( $title, $all[$post_type] ),
-					array( $this, 'settings_fields_option_none' ),
-					$this->module->group
-				);
+				gEditorialSettingsCore::addModuleSection( $this->module->group, array(
+					'id'            => $section,
+					'title'         => sprintf( $title, $all[$post_type] ),
+					'callback'      => array( $this, 'settings_fields_option_none' ),
+					'section_class' => 'fields_option_section fields_option_none',
+				) );
 			}
 		}
 	}
@@ -497,7 +506,9 @@ class gEditorialModuleCore extends gEditorialWPModule
 		echo '<form action="'.$this->get_url_settings().'" method="post">';
 
 			settings_fields( $this->module->group );
-			do_settings_sections( $this->module->group );
+
+			gEditorialSettingsCore::moduleSections( $this->module->group );
+
 			echo '<input id="geditorial_module_name" name="geditorial_module_name" type="hidden" value="'.esc_attr( $this->module->name ).'" />';
 
 			echo '<p class="submit">';
@@ -888,7 +899,11 @@ class gEditorialModuleCore extends gEditorialWPModule
 				else
 					$callback = '__return_false';
 
-				add_settings_section( $section, FALSE, $callback, $this->module->group );
+				gEditorialSettingsCore::addModuleSection( $this->module->group, array(
+					'id'            => $section,
+					'callback'      => $callback,
+					'section_class' => 'settings_section',
+				) );
 
 				foreach ( $fields as $field ) {
 
