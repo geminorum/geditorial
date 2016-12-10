@@ -27,7 +27,18 @@ class gEditorial
 	private function setup()
 	{
 		if ( is_network_admin() || is_user_admin() )
-			return;
+			return FALSE;
+
+		if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
+
+			$referer = wp_get_raw_referer();
+
+			if ( FALSE !== strpos( $referer, '/wp-admin/network/' ) )
+				return FALSE;
+
+			if ( FALSE !== strpos( $referer, '/wp-admin/user/' ) )
+				return FALSE;
+		}
 
 		load_plugin_textdomain( GEDITORIAL_TEXTDOMAIN, FALSE, 'geditorial/languages' );
 
