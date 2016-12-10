@@ -1292,7 +1292,7 @@ class gEditorialModuleCore extends gEditorialWPModule
 			self::registerImageSize( $name, array_merge( $size, array( 'p' => array( $post_type ) ) ) );
 	}
 
-	// WARNING: every asset must have a .min copy
+	// WARNING: every script must have a .min copy
 	public function enqueue_asset_js( $args = array(), $name = NULL, $deps = array( 'jquery' ), $handle = NULL )
 	{
 		if ( is_null( $name ) )
@@ -1320,8 +1320,7 @@ class gEditorialModuleCore extends gEditorialWPModule
 			TRUE
 		);
 
-		if ( count( $args ) )
-			gEditorial()->enqueue_asset_config( $args, $this->module->name );
+		gEditorial()->enqueue_asset_config( $args, $this->module->name );
 
 		return $handle;
 	}
