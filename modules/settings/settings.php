@@ -139,7 +139,7 @@ class gEditorialSettings extends gEditorialModuleCore
 
 		$subs = apply_filters( 'geditorial_tools_subs', $subs, 'tools' );
 
-		if ( is_super_admin() ) {
+		if ( gEditorialWPUser::isSuperAdmin() ) {
 			$subs['options'] = _x( 'Options', 'Settings Module: Tools Sub', GEDITORIAL_TEXTDOMAIN );
 			$subs['console'] = _x( 'Console', 'Settings Module: Tools Sub', GEDITORIAL_TEXTDOMAIN );
 		}
@@ -288,7 +288,7 @@ class gEditorialSettings extends gEditorialModuleCore
 					), _x( 'Will check for old options and upgrade, also delete old options', 'Settings Module', GEDITORIAL_TEXTDOMAIN ) );
 				echo '</p>';
 
-				if ( self::isDev() || is_super_admin() ) {
+				if ( gEditorialWPUser::isSuperAdmin() || self::isDev() ) {
 					echo '<br /><p>';
 						$this->submit_button( 'delete_all_options', FALSE, _x( 'Delete All Options', 'Settings Module: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
 
