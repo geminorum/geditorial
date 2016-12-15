@@ -192,8 +192,8 @@ class gEditorialEvent extends gEditorialModuleCore
 				}
 
 				$this->remove_meta_box( $screen->post_type, $screen->post_type, 'parent' );
-				$this->add_meta_box_choose_tax( 'event_tag', $screen->post_type );
-				$this->add_meta_box_choose_tax( 'cal_tax', $screen->post_type );
+				$this->add_meta_box_checklist_terms( 'event_tag', $screen->post_type );
+				$this->add_meta_box_checklist_terms( 'cal_tax', $screen->post_type );
 
 			} else if ( 'edit' == $screen->base ) {
 
