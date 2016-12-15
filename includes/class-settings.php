@@ -442,6 +442,7 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 			'error'     => gEditorialHTML::error( _x( 'Error occurred!', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
 			'wrong'     => gEditorialHTML::error( _x( 'Something\'s wrong!', 'Settings', GEDITORIAL_TEXTDOMAIN ) ),
 			'nochange'  => gEditorialHTML::error( _x( 'No item changed!', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
+			'noaccess'  => gEditorialHTML::error( _x( 'You do not have the access!', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
 			'created'   => self::counted( _x( '%s items(s) created!', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
 			'deleted'   => self::counted( _x( '%s items(s) deleted!', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
 			'cleaned'   => self::counted( _x( '%s items(s) cleaned!', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),

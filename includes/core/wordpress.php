@@ -261,44 +261,6 @@ class gEditorialWordPress extends gEditorialBaseCore
 		return $counts;
 	}
 
-	// FIXME: DROP THIS
-	public static function countPostsByPosttype_OLD( $posttype = 'post', $user_id = 0, $period = array() )
-	{
-		$key = md5( $posttype.'_'.$user_id );
-		$counts = wp_cache_get( $key, 'counts' );
-
-		if ( FALSE !== $counts )
-			return $counts;
-
-		global $wpdb;
-
-		$counts = array_fill_keys( get_post_stati(), 0 );
-		$author = $user_id ? $wpdb->prepare( "AND post_author = %d", $user_id ) : '';
-		$date   = '';
-
-		if ( ! empty( $period[0] ) )
-			$date .= " AND post_date >='$period[0]'";
-
-		if ( ! empty( $period[1] ) )
-			$date .= " AND post_date <='$period[1]'";
-
-		$query = $wpdb->prepare("
-			SELECT post_status, COUNT( * ) AS total
-			FROM {$wpdb->posts}
-			WHERE post_type = %s
-			{$author}
-			{$date}
-			GROUP BY post_status
-		", $posttype );
-
-		foreach ( (array) $wpdb->get_results( $query, ARRAY_A ) as $row )
-			$counts[$row['post_status']] = $row['total'];
-
-		wp_cache_set( $key, $counts, 'counts' );
-
-		return $counts;
-	}
-
 	public static function countPostsByUser( $user_id = NULL, $args = array(), $period = array() )
 	{
 		global $wpdb;

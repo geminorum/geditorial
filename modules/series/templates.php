@@ -87,8 +87,9 @@ class gEditorialSeriesTemplates extends gEditorialTemplateCore
 		if ( FALSE === $args['context'] ) // bailing
 			return NULL;
 
-		$key = md5( serialize( $args ) );
+		$key   = md5( serialize( $args ) );
 		$cache = wp_cache_get( $key, $shortcode );
+
 		if ( FALSE !== $cache )
 			return $cache;
 

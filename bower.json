@@ -16,7 +16,8 @@
     ],
     "sources": {
       "virastar": [
-        "assets/components/virastar/lib/virastar.js"
+        "assets/components/virastar/lib/virastar.js",
+        "assets/components/virastar/lib/virastar.min.js"
       ],
       "jquery-colorbox": [
         "assets/components/jquery-colorbox/jquery.colorbox.js",

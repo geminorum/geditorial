@@ -425,11 +425,11 @@ class gEditorialContest extends gEditorialModuleCore
 
 	public function post_updated_messages( $messages )
 	{
-		if ( $this->is_current_posttype( 'contest_cpt' ) ) {
+		if ( $this->is_current_posttype( 'contest_cpt' ) )
 			$messages[$this->constant( 'contest_cpt' )] = $this->get_post_updated_messages( 'contest_cpt' );
-		} else if ( $this->is_current_posttype( 'apply_cpt' ) ) {
+
+		else if ( $this->is_current_posttype( 'apply_cpt' ) )
 			$messages[$this->constant( 'apply_cpt' )] = $this->get_post_updated_messages( 'apply_cpt' );
-		}
 
 		return $messages;
 	}

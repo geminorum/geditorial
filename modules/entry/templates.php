@@ -45,8 +45,9 @@ class gEditorialEntryTemplates extends gEditorialTemplateCore
 		$error = $term = FALSE;
 		$html = $tax_query = '';
 
-		$key = md5( serialize( $args ) );
+		$key   = md5( serialize( $args ) );
 		$cache = wp_cache_get( $key, $cpt );
+
 		if ( FALSE !== $cache )
 			return $cache;
 

@@ -45,7 +45,7 @@ class gEditorialLike extends gEditorialModuleCore
 
 			add_action( 'gnetwork_debugbar_panel_geditorial_like', array( $this, 'gnetwork_debugbar_panel' ) );
 			add_filter( 'gnetwork_debugbar_panel_groups', function( $groups ){
-				$groups['geditorial_like'] = _x( 'Editorial Like', 'Like Module', GEDITORIAL_TEXTDOMAIN );
+				$groups['geditorial_like'] = _x( 'Editorial Like', 'Like Module: Debug Bar Panel Title', GEDITORIAL_TEXTDOMAIN );
 				return $groups;
 			} );
 		}
@@ -84,9 +84,12 @@ class gEditorialLike extends gEditorialModuleCore
 		$avatars = $this->get_setting( 'avatars', FALSE );
 
 		$title = apply_filters( 'geditorial_like_loading', _x( 'Loading &hellip;', 'Like Module', GEDITORIAL_TEXTDOMAIN ), $post_id );
+
 		$html  = '<div class="geditorial-wrap like" style="display:none;" data-avatars="'.( $avatars ? 'true' : 'false' ).'">';
 		$html .= '<div><a class="like loading" title="'.esc_attr( $title ).'" href="#" data-id="'.$post_id.'">';
+
 		$html .= apply_filters( 'geditorial_like_icon', '<span class="genericon genericon-heart"></span>', $post_id );
+
 		$html .= '</a></div><div><span class="like"></span></div>';
 
 		if ( $avatars )

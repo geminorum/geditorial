@@ -68,8 +68,9 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 			'cb'         => FALSE,
 		), $atts, self::constant( 'issue_shortcode', 'issue' ) );
 
-		$key = md5( serialize( $args ) );
+		$key   = md5( serialize( $args ) );
 		$cache = wp_cache_get( $key, $issue_cpt );
+
 		if ( FALSE !== $cache )
 			return $cache;
 
@@ -217,8 +218,9 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 			'cover'       => FALSE,
 		), $atts, self::constant( 'span_shortcode', 'issue-span' ) );
 
-		$key = md5( serialize( $args ) );
+		$key   = md5( serialize( $args ) );
 		$cache = wp_cache_get( $key, $span_tax );
+
 		if ( FALSE !== $cache )
 			return $cache;
 

@@ -3,6 +3,11 @@
 class gEditorialHTML extends gEditorialBaseCore
 {
 
+	public static function link( $html, $link = '#', $target_blank = FALSE )
+	{
+		return self::tag( 'a', array( 'href' => $link, 'target' => ( $target_blank ? '_blank' : FALSE ) ), $html );
+	}
+
 	public static function tag( $tag, $atts = array(), $content = FALSE, $sep = '' )
 	{
 		$tag = self::sanitizeTag( $tag );
@@ -28,10 +33,10 @@ class gEditorialHTML extends gEditorialBaseCore
 		foreach ( func_get_args() as $arg )
 
 			if ( is_array( $arg ) )
-				$classes += $arg;
+				$classes = array_merge( $classes, $arg );
 
 			else if ( $arg )
-				$classes += explode( ' ', $arg );
+				$classes = array_merge( $classes, explode( ' ', $arg ) );
 
 		return array_unique( array_filter( $classes, 'trim' ) );
 	}

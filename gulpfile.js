@@ -9,7 +9,6 @@
 		smushit = require('gulp-smushit'), // https://github.com/heldr/gulp-smushit
 		excludeGitignore = require('gulp-exclude-gitignore'), // https://github.com/sboudrias/gulp-exclude-gitignore
 		wpPot = require('gulp-wp-pot'), // https://github.com/rasmusbe/gulp-wp-pot
-		sort = require('gulp-sort'),
 		fs = require('fs');
 
 	var
@@ -30,11 +29,9 @@
 
 		.pipe(excludeGitignore())
 
-		.pipe(sort())
-
 		.pipe(wpPot(pkg._pot))
 
-		.pipe(gulp.dest('./languages'));
+		.pipe(gulp.dest('./languages/'+pkg.name+'.pot'));
 	});
 
 	gulp.task('sass', function() {
