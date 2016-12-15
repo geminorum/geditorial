@@ -1162,40 +1162,6 @@ class gEditorialModuleCore extends gEditorialWPModule
 		return gEditorialHelper::generatePostTypeMessages( $this->get_noop( $constant_key ) );
 	}
 
-	// SEE: [Use Chosen for a replacement WordPress taxonomy metabox](https://gist.github.com/helen/1573966)
-	// callback for meta box for choose only tax
-	public function meta_box_choose_tax( $post, $box )
-	{
-		$args = self::atts( array(
-			'taxonomy' => 'category',
-			'edit_url' => NULL,
-		), empty( $box['args'] ) ? array() : $box['args'] );
-
-		$tax_name = esc_attr( $args['taxonomy'] );
-		$taxonomy = get_taxonomy( $args['taxonomy'] );
-
-		$html = wp_terms_checklist( $post->ID, array(
-			'taxonomy'      => $tax_name,
-			'checked_ontop' => FALSE,
-			'echo'          => FALSE,
-		) );
-
-		echo '<div id="taxonomy-'.$tax_name.'" class="geditorial-admin-wrap-metabox choose-tax">';
-
-			if ( $html ) {
-
-				echo '<div class="field-wrap-list"><ul>'.$html.'</ul></div>';
-
-				// allows for an empty term set to be sent. 0 is an invalid Term ID and will be ignored by empty() checks.
-				echo '<input type="hidden" name="tax_input['.$tax_name.'][]" value="0" />';
-
-			} else {
-				gEditorialMetaBox::fieldEmptyTaxonomy( $taxonomy, $args['edit_url'] );
-			}
-
-		echo '</div>';
-	}
-
 	public function get_image_sizes( $post_type )
 	{
 		if ( ! isset( $this->image_sizes[$post_type] ) ) {
@@ -1389,7 +1355,7 @@ class gEditorialModuleCore extends gEditorialWPModule
 
 	// CAUTION: tax must be cat (hierarchical)
 	// TODO: supporting tag (non-hierarchical)
-	public function add_meta_box_choose_tax( $constant_key, $post_type, $type = FALSE )
+	public function add_meta_box_checklist_terms( $constant_key, $post_type, $type = FALSE )
 	{
 		$taxonomy = $this->constant( $constant_key );
 		$object   = get_taxonomy( $taxonomy );
@@ -1401,7 +1367,7 @@ class gEditorialModuleCore extends gEditorialWPModule
 
 		add_meta_box( 'geditorial-'.$this->module->name.'-'.$taxonomy,
 			$this->get_meta_box_title( $constant_key, $edit_url, TRUE ),
-			array( $this, 'meta_box_choose_tax' ),
+			array( 'gEditorialMetaBox', 'checklistTerms' ),
 			NULL,
 			'side',
 			'default',

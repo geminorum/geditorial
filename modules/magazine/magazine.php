@@ -609,12 +609,12 @@ class gEditorialMagazine extends gEditorialModuleCore
 
 	public function meta_box_cb_span_tax( $post, $box )
 	{
-		$this->meta_box_choose_tax( $post, $box );
+		gEditorialMetaBox::checklistTerms( $post, $box );
 	}
 
 	public function meta_box_cb_section_tax( $post, $box )
 	{
-		$this->meta_box_choose_tax( $post, $box );
+		gEditorialMetaBox::checklistTerms( $post, $box );
 	}
 
 	public function do_meta_box_supported( $post, $box )

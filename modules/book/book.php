@@ -312,8 +312,8 @@ class gEditorialBook extends gEditorialModuleCore
 		$this->add_meta_box_author( 'publication_cpt' );
 		$this->add_meta_box_excerpt( 'publication_cpt' );
 
-		$this->add_meta_box_choose_tax( 'status_tax', $post_type );
-		$this->add_meta_box_choose_tax( 'type_tax', $post_type );
+		$this->add_meta_box_checklist_terms( 'status_tax', $post_type );
+		$this->add_meta_box_checklist_terms( 'type_tax', $post_type );
 	}
 
 	public function column_row_p2p_to( $post )

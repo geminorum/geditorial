@@ -336,7 +336,7 @@ class gEditorialContest extends gEditorialModuleCore
 				'side'
 			);
 
-			$this->add_meta_box_choose_tax( 'apply_status_tax', $post_type );
+			$this->add_meta_box_checklist_terms( 'apply_status_tax', $post_type );
 		}
 	}
 

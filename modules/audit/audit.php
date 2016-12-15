@@ -219,6 +219,6 @@ class gEditorialAudit extends gEditorialModuleCore
 
 	public function meta_box_cb_audit_tax( $post, $box )
 	{
-		$this->meta_box_choose_tax( $post, $box );
+		gEditorialMetaBox::checklistTerms( $post, $box );
 	}
 }
