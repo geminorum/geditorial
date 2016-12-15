@@ -8,9 +8,36 @@ class gEditorialAjax extends gEditorialBaseCore
 		check_ajax_referer( $action, $key );
 	}
 
+	public static function successHTML( $html )
+	{
+		wp_send_json_success( array( 'html' => $html ) );
+	}
+
+	public static function successMessage( $message = NULL )
+	{
+		if ( is_null( $message ) )
+			$message = _x( 'Succesful!', 'Ajax Helper: Ajax Notice', GEDITORIAL_TEXTDOMAIN );
+
+		if ( $message )
+			wp_send_json_success( gEditorialHTML::success( $message ) );
+		else
+			wp_send_json_success();
+	}
+
+	public static function errorMessage( $message = NULL )
+	{
+		if ( is_null( $message ) )
+			$message = _x( 'Error!', 'Ajax Helper: Ajax Notice', GEDITORIAL_TEXTDOMAIN );
+
+		if ( $message )
+			wp_send_json_error( gEditorialHTML::error( $message ) );
+		else
+			wp_send_json_error();
+	}
+
 	public static function errorWhat()
 	{
-		wp_send_json_error( gEditorialHTML::error( _x( 'What?!', 'Ajax Helper: Ajax Notice', GEDITORIAL_TEXTDOMAIN ) ) );
+		self::errorMessage( _x( 'What?!', 'Ajax Helper: Ajax Notice', GEDITORIAL_TEXTDOMAIN ) );
 	}
 
 	public static function printJSConfig( $args, $object = 'gEditorial' )

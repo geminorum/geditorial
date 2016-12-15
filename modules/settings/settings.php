@@ -375,17 +375,17 @@ class gEditorialSettings extends gEditorialModuleCore
 				gEditorialAjax::checkReferer();
 
 				if ( ! isset( $_POST['doing'], $_POST['name'] ) )
-					wp_send_json_error( gEditorialHTML::error( _x( 'No action or name!', 'Settings Module: Ajax Notice', GEDITORIAL_TEXTDOMAIN ) ) );
+					gEditorialAjax::errorMessage( _x( 'No action or name!', 'Settings Module: Ajax Notice', GEDITORIAL_TEXTDOMAIN ) );
 
 				if ( ! $module = $gEditorial->get_module_by( 'name', sanitize_key( $_POST['name'] ) ) )
-					wp_send_json_error( gEditorialHTML::error( _x( 'Cannot find the module!', 'Settings Module: Ajax Notice', GEDITORIAL_TEXTDOMAIN ) ) );
+					gEditorialAjax::errorMessage( _x( 'Cannot find the module!', 'Settings Module: Ajax Notice', GEDITORIAL_TEXTDOMAIN ) );
 
 				$enabled = 'enable' == sanitize_key( $_POST['doing'] ) ? TRUE : FALSE;
 
 				if ( $gEditorial->update_module_option( $module->name, 'enabled', $enabled ) )
-					wp_send_json_success( gEditorialHTML::success( _x( 'Module state succesfully changed.', 'Settings Module: Ajax Notice', GEDITORIAL_TEXTDOMAIN ) ) );
+					gEditorialAjax::successMessage( _x( 'Module state succesfully changed.', 'Settings Module: Ajax Notice', GEDITORIAL_TEXTDOMAIN ) );
 				else
-					wp_send_json_error( gEditorialHTML::error( _x( 'Cannot change module state!', 'Settings Module: Ajax Notice', GEDITORIAL_TEXTDOMAIN ) ) );
+					gEditorialAjax::errorMessage( _x( 'Cannot change module state!', 'Settings Module: Ajax Notice', GEDITORIAL_TEXTDOMAIN ) );
 		}
 
 		gEditorialAjax::errorWhat();

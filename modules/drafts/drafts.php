@@ -77,13 +77,10 @@ class gEditorialDrafts extends gEditorialModuleCore
 
 		switch ( $what ) {
 
-			default:
-			case 'list':
-
-				wp_send_json_success( array(
-					'html' => $this->drafts_list(),
-				) );
+			case 'list': gEditorialAjax::successHTML( $this->drafts_list() );
 		}
+
+		gEditorialAjax::errorWhat();
 	}
 
 	private function drafts_list()
