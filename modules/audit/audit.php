@@ -142,9 +142,10 @@ class gEditorialAudit extends gEditorialModuleCore
 				if ( $user_id )
 					$query['author'] = $user_id;
 
-				$text = vsprintf( '<span>%3$s</span> %1$s (%2$s)', array(
+				$text = vsprintf( '<span>%4$s</span> %1$s <span title="%3$s">(%2$s)</span>', array(
 					gEditorialHelper::noopedCount( $count, $all[$type] ),
-					$name,
+					gEditorialCoreText::trimChars( $name, 35 ),
+					esc_attr( $name ),
 					number_format_i18n( $count ),
 				) );
 

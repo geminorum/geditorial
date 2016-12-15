@@ -117,6 +117,28 @@ class gEditorialCoreText extends gEditorialBaseCore
 		return $return;
 	}
 
+	// @SOURCE: http://bavotasan.com/2012/trim-characters-using-php/
+	public static function trimChars( $text, $length = 45, $append = '&hellip;' )
+	{
+		$length = (int) $length;
+		$text   = trim( strip_tags( $text ) );
+
+		if ( strlen( $text ) > $length ) {
+
+			$text  = substr( $text, 0, $length + 1 );
+			$words = preg_split( "/[\s]|&nbsp;/", $text, -1, PREG_SPLIT_NO_EMPTY );
+
+			preg_match( "/[\s]|&nbsp;/", $text, $lastchar, 0, $length );
+
+			if ( empty( $lastchar ) )
+				array_pop( $words );
+
+			$text = implode( ' ', $words ).$append;
+		}
+
+		return $text;
+	}
+
 	/*
 		@REF: https://gist.github.com/geminorum/fe2a9ba25db5cf2e5ad6718423d00f8a
 
@@ -259,7 +281,6 @@ class gEditorialCoreText extends gEditorialBaseCore
 			' ',
 			$text );
 	}
-
 
 	public static function utf8StripBOM( $string )
 	{
