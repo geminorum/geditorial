@@ -347,7 +347,7 @@ class gEditorialDate extends gEditorialBaseCore
 
 	// FIXME: get i18n
 	// `date_i18n()` translates the numbers
-	public static function list( $i18n = FALSE, $gmt = FALSE )
+	public static function parts( $i18n = FALSE, $gmt = FALSE )
 	{
 		$now   = array();
 		$parts = array( 'year', 'month', 'day', 'hour', 'minute', 'second' );
