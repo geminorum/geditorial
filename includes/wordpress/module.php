@@ -20,14 +20,44 @@ class gEditorialWPModule extends gEditorialBaseCore
 		return $this->base.'_'.$this->key;
 	}
 
-	protected function hook( $suffix = NULL )
+	protected function hook()
 	{
-		return $this->base.'_'.$this->key.( is_null( $suffix ) ? '' : '_'.$suffix );
+		$suffix = '';
+
+		foreach ( func_get_args() as $arg )
+			$suffix .= '_'.$arg;
+
+		return $this->base.'_'.$this->key.$suffix;
 	}
 
-	protected function class( $suffix = NULL )
+	protected function classs()
 	{
-		return $this->base.'-'.$this->key.( is_null( $suffix ) ? '' : '-'.$suffix );
+		$suffix = '';
+
+		foreach ( func_get_args() as $arg )
+			$suffix .= '-'.$arg;
+
+		return $this->base.'-'.$this->key.$suffix;
+	}
+
+	protected function hash()
+	{
+		$suffix = '';
+
+		foreach ( func_get_args() as $arg )
+			$suffix .= maybe_serialize( $arg );
+
+		return md5( $this->base.$this->key.$suffix );
+	}
+
+	protected function hashwithsalt()
+	{
+		$suffix = '';
+
+		foreach ( func_get_args() as $arg )
+			$suffix .= maybe_serialize( $arg );
+
+		return wp_hash( $this->base.$this->key.$suffix );
 	}
 
 	protected function action( $hook, $args = 1, $priority = 10, $method = FALSE )
