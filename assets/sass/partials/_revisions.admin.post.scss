@@ -1,0 +1,102 @@
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+/// Module: Revisions: Admin Post ----------------------------------------------
+
+body.geditorial-revisions-enabled {
+  .misc-pub-section.misc-pub-revisions {
+    display: none;
+    visibility: hidden;
+  }
+}
+
+.geditorial-admin-wrap.-revisions {
+  padding: 10px;
+  // text-align: left;
+  .-purge {
+    color: #a00;
+
+    &:hover {
+      color: red;
+    }
+  }
+
+  span.-loading {
+    margin: 2px 5px 0;
+    float: none;
+    // visibility: none;
+    display: none;
+  }
+  span.-loading.is-active {
+    display: inline-block;
+  }
+
+  span.dashicons {
+    margin: 2px 5px 0;
+  }
+
+  .-browse {
+    float: right;
+    @include body-rtl() {
+      float: left;
+    };
+  }
+}
+
+.geditorial-admin-wrap-inline.-revisions {
+  span.-wordcount {
+    cursor: help;
+  }
+
+  img.avatar {}
+
+  span.-loading.is-active {
+    margin: 0;
+    float: none;
+  }
+
+  a,
+  a:hover {
+    // text-decoration: none;
+  }
+
+  a:focus {
+    // box-shadow: none;
+  }
+
+  a.button {
+    .dashicons {
+      width: 18px;
+      height: 18px;
+      font-size: 18px;
+      margin: 2px 2px 0 -4px;
+      vertical-align: top;
+      @include body-rtl() {
+        margin: 2px -4px 0 0;
+      }
+    }
+  }
+
+  a.-delete {
+    color: #a00;
+
+    &:hover {
+      color: red;
+    }
+  }
+}
+
+ul.post-revisions,
+.geditorial-admin-wrap.-revisions {
+  span.dashicons {
+    vertical-align: text-top;
+
+    &.-error {
+      color: #a00;
+    }
+
+    &.-success {
+      color: #7ad03a;
+    }
+  }
+}

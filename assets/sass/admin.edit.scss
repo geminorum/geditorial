@@ -13,7 +13,14 @@
 .geditorial-admin-wrap-column {
   @include mainwrap();
 
-  .-row {
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .-row,
+  .-attr {
     margin-bottom: 4px;
     font-size: 0.89em;
 
@@ -44,6 +51,7 @@
 }
 
 .fixed {
+
   .column-children {
     width: 55px;
   }
@@ -87,5 +95,14 @@
   // Module: Entry
   .column-taxonomy-entry_section {
     width: 16%;
+  }
+
+  // Module: Tweaks
+  .column-geditorial-tweaks-id {
+    width: 4%;
+    text-align: right;
+    @include body-rtl() {
+      text-align: left;
+    }
   }
 }

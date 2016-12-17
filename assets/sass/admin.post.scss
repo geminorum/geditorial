@@ -10,214 +10,225 @@
 @import "partials/magazine.admin.post";
 @import "partials/tweaks.admin.post";
 @import "partials/ortho.admin.post";
+@import "partials/revisions.admin.post";
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-.geditorial-admin-wrap {
-	// @include mainwrap();
+.geditorial-admin-wrap,
+.geditorial-admin-wrap-inline {
+  // @include mainwrap();
 }
 
 .hndle {
-	.geditorial-postbox-title-action {
-		opacity: 0;
-		float: right;
-		line-height: 1.2;
-		@include body-rtl() {
-			float: left;
-		}
-	}
+  .geditorial-postbox-title-action {
+    opacity: 0;
+    float: right;
+    line-height: 1.2;
+    @include body-rtl() {
+      float: left;
+    }
+  }
 
-	&:hover {
-		.geditorial-postbox-title-action {
-			opacity: 1;
-		}
-	}
+  &:hover {
+    .geditorial-postbox-title-action {
+      opacity: 1;
+    }
+  }
 }
 
 .geditorial-admin-wrap-metabox,
 .geditorial-admin-wrap-nobox,
 .geditorial-admin-wrap-textbox {
-	@include mainwrap();
-	margin-top: 12px;
+  @include mainwrap();
+  margin-top: 12px;
 
-	.field-wrap {
-		margin-bottom: 2px;
-		// wp_dropdown_pages() does not suport css class
-		#parent_id {
-			width: 100%;
-		}
+  .field-wrap {
+    margin-bottom: 2px;
 
-		&.field-wrap-empty {
-			padding: 4px 6px;
-			font-size: 0.9em;
-			color: #555;
-			background: #ebebeb;
-			border: 1px solid #e5e5e5;
-			border-radius: 2px;
+    // wp_dropdown_pages() does not suport css class
+    #parent_id {
+      width: 100%;
+    }
 
-			a {}
-		}
+    &.field-wrap-empty {
 
-		&.field-wrap-inputtext {
-			input {
-				width: 100%;
-			}
-		}
+      margin-bottom: 0;
+      padding: 4px 6px;
+      font-size: 0.9em;
+      color: #555;
+      background: #f7f7f7;
+      border: 1px solid #e5e5e5;
+      // border-radius: 1px;
 
-		&.field-wrap-inputnumber {
-			input {
-				width: 32%;
-				direction: ltr;
-			}
-		}
+      a {
+        text-decoration: none;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
 
-		&.field-wrap-inputtext-half {
-			input {
-				width: 49%;
-			}
-		}
+      span {}
+    }
 
-		&.field-wrap-inputtext-date {
-			input {
-				width: 32%;
-			}
-		}
+    &.field-wrap-inputtext {
+      input {
+        width: 100%;
+      }
+    }
 
-		&.field-wrap-textarea {
-			textarea {
-				width: 100%;
-				resize: vertical;
-			}
-		}
+    &.field-wrap-inputnumber {
+      input {
+        width: 32%;
+        direction: ltr;
+      }
+    }
 
-		&.field-wrap-select {
-			select {
-				width: 100%;
-			}
-		}
+    &.field-wrap-inputtext-half {
+      input {
+        width: 49%;
+      }
+    }
 
-		&.field-wrap-buttons {
-			.button {
-				margin: 0 5px 4px 0;
-				padding: 0 10px 4px 4px;
-				@include body-rtl() {
-					margin: 0 0 4px 5px;
-					padding: 0 4px 4px 10px;
-				}
+    &.field-wrap-inputtext-date {
+      input {
+        width: 32%;
+      }
+    }
 
-				.dashicons {
-					width: 20px;
-					height: 20px;
-					vertical-align: text-top;
-					margin: 0 2px;
-				}
-			}
-		}
-		// DEPRECATED
-		.field-text {
-			// width: 100%;
-		}
-		// DEPRECATED
-		.field-textarea {
-			// width: 100%;
-		}
-		// DEPRECATED
-		.field-inputtext {
-			// width: 100%;
-		}
+    &.field-wrap-textarea {
+      textarea {
+        width: 100%;
+        resize: vertical;
+      }
+    }
 
-		.field-order {
-			width: auto;
-		}
-	}
+    &.field-wrap-select {
+      select {
+        width: 100%;
+      }
+    }
 
-	.field-wrap-wrap {
-		margin-bottom: 2px;
+    &.field-wrap-buttons {
+      .button {
+        margin: 0 5px 4px 0;
+        padding: 0 10px 4px 4px;
+        @include body-rtl() {
+          margin: 0 0 4px 5px;
+          padding: 0 4px 4px 10px;
+        }
 
-		.field-wrap {
-			margin-bottom: 0;
-		}
-	}
+        .dashicons {
+          width: 20px;
+          height: 20px;
+          vertical-align: text-top;
+          margin: 0 2px;
+        }
+      }
+    }
+    // DEPRECATED
+    .field-text {
+      // width: 100%;
+    }
+    // DEPRECATED
+    .field-textarea {
+      // width: 100%;
+    }
+    // DEPRECATED
+    .field-inputtext {
+      // width: 100%;
+    }
 
-	.field-wrap-group {
-		margin-bottom: 12px;
-	}
+    .field-order {
+      width: auto;
+    }
+  }
 
-	.field-wrap-group:last-of-type {
-		margin-bottom: 0;
-	}
+  .field-wrap-wrap {
+    margin-bottom: 2px;
 
-	.field-wrap-list {
-		background: #f7f7f7;
-		border: 1px solid #e5e5e5;
-		border-radius: 1px;
-		padding: 4px 4px 0;
+    .field-wrap {
+      margin-bottom: 0;
+    }
+  }
 
-		a {
-			text-decoration: none;
-		}
+  .field-wrap-group {
+    margin-bottom: 12px;
+  }
 
-		a:hover {
-			text-decoration: underline;
+  .field-wrap-group:last-of-type {
+    margin-bottom: 0;
+  }
 
-			.dashicons {
-				text-decoration: none;
-				color: inherit;
-			}
-		}
+  .field-wrap-list {
+    background-color: #fdfdfd;
+    border: solid 1px #ddd;
+    padding: 4px 4px 0;
 
-		a:focus {
-			box-shadow: none;
-		}
+    a {
+      text-decoration: none;
+    }
 
-		h4 {
-			font-size: 0.89em;
-			margin: 0 4px;
-			padding: 0;
-			font-weight: normal;
-			font-family: inherit;
-		}
+    a:hover {
+      text-decoration: underline;
 
-		ol,
-		ul {
-			margin: 0 2px;
-			padding: 2px 4px;
-			list-style-position: inside;
+      .dashicons {
+        text-decoration: none;
+        color: inherit;
+      }
+    }
 
-			li {
-				span.edit {
-					font-size: 0.8em;
-				}
-			}
-		}
+    a:focus {
+      box-shadow: none;
+    }
 
-		ol {
-			body.locale-fa-ir & {
-				list-style-type: -moz-persian;
-				list-style-type: persian;
-			}
-		}
+    h4 {
+      font-size: 0.89em;
+      margin: 0 4px;
+      padding: 0;
+      font-weight: normal;
+      font-family: inherit;
+    }
 
-		.dashicons {
-			width: 14px;
-			height: 14px;
-			font-size: 14px;
-			vertical-align: middle;
-			color: #555;
-		}
-	}
+    ol,
+    ul {
+      margin: 0 2px;
+      padding: 2px 4px;
+      list-style-position: inside;
+
+      li {
+        span.edit {
+          font-size: 0.8em;
+        }
+      }
+    }
+
+    ol {
+      body.locale-fa-ir & {
+        list-style-type: -moz-persian;
+        list-style-type: persian;
+      }
+    }
+
+    .dashicons {
+      width: 14px;
+      height: 14px;
+      font-size: 14px;
+      vertical-align: middle;
+      color: #555;
+    }
+  }
 }
 
 .geditorial-admin-wrap-textbox {
-	margin-bottom: -6px;
+  margin-bottom: -6px;
 }
 
 .geditorial-admin-dropbown {
-	@extend %box-reset;
-	width: 100%;
+  @extend %box-reset;
+  width: 100%;
 
-	&.dropbown-ltr {
-		direction: ltr;
-	}
+  &.dropbown-ltr {
+    direction: ltr;
+  }
 }

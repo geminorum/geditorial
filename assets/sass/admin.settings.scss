@@ -33,6 +33,16 @@
     }
   }
 
+  // settings sections
+  .-section-title {
+    &.fields_option_section {
+      font-size: inherit !important;
+      font-family: inherit !important;
+      // font-weight: inherit !important;
+      margin-bottom: -3em;
+    }
+  }
+
   // on main settings
   .modules {
     margin-top: 20px;

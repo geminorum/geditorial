@@ -1,0 +1,64 @@
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+/// Module: Switcher: Admin: Tools ---------------------------------------------
+
+.geditorial-admin-wrap.geditorial-tools-switcher {
+
+  div.categorychecklistbox {
+    width: 20%;
+    float: left;
+    margin-right: 1em;
+    @include body-rtl() {
+      float: right;
+      margin: 0 0 0 1em;
+    }
+  }
+
+  ul.cat-checklist {
+    // height: auto !important;
+    // max-height: 12em !important;
+    // font-size: 13px;
+    // line-height: 1.5em;
+  }
+
+
+    // ul.categorychecklist {
+  // ul.c1at-checklist {
+  //   height: 15em;
+  //   width: 20em;
+  //   overflow-y: scroll;
+  //   border: 1px solid #dfdfdf;
+  //   padding: 0 1em;
+  //   background: #fff;
+  //   border-radius: 4px;
+  // }
+  //
+  // // ul.categorychecklist ul.children {
+  // ul.c1at-checklist ul.children {
+  //   margin-left: 1em;
+  // }
+
+  p.taginput {
+    float: left;
+    margin: 1em 1em 1em 0;
+    width: 22em;
+  }
+
+  p.taginput input {
+    width: 100%;
+  }
+
+  p.filters select {
+    width: 24em;
+    margin: 1em 1em 1em 0;
+  }
+
+  p.submit {
+    clear: both;
+  }
+
+  p.msg {
+    margin-left: 1em;
+  }
+}

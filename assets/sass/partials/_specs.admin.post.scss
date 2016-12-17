@@ -1,100 +1,95 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-/// Module: Specs --------------------------------------------------------------
+/// Module: Specs: Admin Post --------------------------------------------------
 
-.geditorial-admin-wrap-metabox.specs {
-	@include mainwrap();
+.geditorial-admin-wrap-metabox.-specs {
 
-	margin-top: 11px;
+  @include mainwrap();
+  margin-top: 11px;
 
-	ol.geditorial-specs-list {} // FOR JQUERY SELECTOR
-	ul.geditorial-specs-new {} // FOR JQUERY SELECTOR
+  ol.geditorial-specs-list {} // FOR JQUERY SELECTOR
+  ul.geditorial-specs-new {} // FOR JQUERY SELECTOR
 
-	ol {
-		list-style: none;
-		margin: 0;
+  ol {
+    list-style: none;
+    margin: 0;
 
-		li {
-			margin-bottom: 2px;
-		}
+    li {
+      margin-bottom: 2px;
+    }
 
-		.item-head {
-			border: 1px solid #dfdfdf;
-			background-color: #f1f1f1;
+    .item-head {
+      border: 1px solid #dfdfdf;
+      background-color: #f1f1f1;
 
-			span.item-handle {
-				margin: 2px;
-				cursor: pointer;
-			}
+      span.item-handle {
+        margin: 2px;
+        cursor: pointer;
+      }
 
-			span.item-excerpt {
-				font-size: 0.89em;
-				vertical-align: top;
-				padding: 3px 5px 0;
-				line-height: 16px;
-				display: inline-block;
-				cursor: pointer;
-			}
+      span.item-excerpt {
+        font-size: 0.89em;
+        vertical-align: top;
+        padding: 3px 5px 0;
+        line-height: 16px;
+        display: inline-block;
+        cursor: pointer;
+      }
 
-			span.item-delete {
+      span.item-delete {
+        float: right;
+        margin: 2px;
+        cursor: pointer;
+        @include body-rtl() {
+          float: left;
+        }
+      }
+    }
 
-				float: right;
-				margin: 2px;
-				cursor: pointer;
+    .item-body {
+      padding: 5px 0;
+      display: none;
+      border: 1px solid #dfdfdf;
+      background-color: #f9f9f9;
+      padding: 2px;
+      border-top: none;
 
-				@include body-rtl() {
-					float: left;
-				}
-			}
-		}
+      .field-wrap-group {
+        margin: 3px 3px 2px;
 
-		.item-body {
+        .field-wrap {}
 
-			padding: 5px 0;
-			display: none;
+        .field-wrap-textarea {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
 
-			border: 1px solid #dfdfdf;
-			background-color: #f9f9f9;
-			padding: 2px;
-			border-top: none;
+  ul {
+    margin-bottom: 0;
 
-			.field-wrap-group {
-				margin: 3px 3px 2px 3px;
-
-				.field-wrap {}
-
-				.field-wrap-textarea {
-					margin-bottom: 0;
-				}
-			}
-		}
-	}
-
-	ul {
-		margin-bottom: 0;
-
-		.dashicons,
-		.dashicons-before:before,
-		.field-wrap-textarea,
-		.field-wrap-inputtext {
-			display: none;
-		}
-	}
+    .dashicons,
+    .dashicons-before:before,
+    .field-wrap-inputtext,
+    .field-wrap-textarea {
+      display: none;
+    }
+  }
 }
 
 body.dragging,
 body.dragging * {
-	cursor: move !important;
+  cursor: move !important;
 }
 
 .dragged {
-	position: absolute;
-	top: 0;
-	opacity: .7;
-	z-index: 2000;
-
-	@include body-rtl() {
-		right: 0;
-	}
+  position: absolute;
+  top: 0;
+  opacity: 0.7;
+  z-index: 2000;
+  @include body-rtl() {
+    right: 0;
+  }
 }

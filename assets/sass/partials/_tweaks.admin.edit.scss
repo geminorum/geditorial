@@ -2,4 +2,20 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 /// Module: Tweaks: Admin Edit -------------------------------------------------
+
+body.geditorial-tweaks-enabled {
+  .fixed {
+    .column-comments {
+      width: 3.5em;
+    }
+
+    .column-geditorial-tweaks-rows {
+      width: 25%;
+    }
+    .column-geditorial-tweaks-atts {
+      width: 15%;
+    }
+  }
+}
+
 .geditorial-admin-wrap-column.-tweaks {}
