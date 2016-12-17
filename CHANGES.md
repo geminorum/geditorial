@@ -1,3 +1,53 @@
+### 3.9.5
+* core/number: :new: new core class
+* core/html: table side generator
+* wordpress/user: :new: new core wp class
+* main/ajax: :new: new helper class
+* main/main: skip loading on network/user admin ajax
+* main/main: reorder checking for style enqueue
+* main/modulecore: internal for checking caps
+* main/modulecore: returning handle after script enqueue
+* main/modulecore: passing base as script filename prefix
+* main/modulecore: p2p helpers
+* main/modulecore: column icon helper
+* main/modulecore: admin class internal
+* main/modulecore: exclude attachment posttype by default
+* main/modulecore: default caps
+* main/modulecore: wordpress helper methods for admin links
+* main/modulecore: enqueue scripts if no args
+* main/modulecore: skip checking super admin for author box
+* main/modulecore: :warning: init settings before validate
+* main/metabox: default callback for checklist terms
+* main/helper: joiner method
+* main/helper: using dashicon helper
+* main/helper: :warning: getting correct post for modified time
+* main/helper: ajax helper for unknown action
+* main/helper: posttype edit message generator
+* main/helper: simplify post modified
+* main/helper: check time diff with local time
+* main/helper: trim chars method with full text as title attr
+* main/helper: :new: date helper wrappers
+* main/settings: using internal for request keys
+* main/settings: html wrap open/close helper
+* main/settings: override core setting section
+* module/all: passing args into restrict manage posts filter
+* module/audit: trim long term title on dashboard widget
+* module/book: :new: description meta for p2p connections
+* module/book: :new: p2p connected info on tweaks extra column
+* module/estimated: word count moved to attributes column
+* module/meta: order terms dropdown by name
+* module/meta: using column icon helper
+* module/ortho: complete script overhaul
+* module/ortho: :up: [virastar](https://github.com/juvee/virastar/) updated to 0.10.0
+* module/revisions: :new: new module
+* module/settings: skip loading on frontend
+* module/settings: :warning: not merging updated options
+* module/settings: :new: tools tab: plugin option overview for super admins only
+* module/tweaks: :new: new attributes column with status/published/modified dates
+* module/tweaks: unordered list tag for column rows
+* module/tweaks: more tax exceptions
+* module/tweaks: :warning: fixed page extra column
+
 ### 3.9.4
 * core/text: :new: core class
 * wordpress/module: :new: new helper class
