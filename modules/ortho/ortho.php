@@ -89,9 +89,9 @@ class gEditorialOrtho extends gEditorialModuleCore
 			if ( 'post' == $screen->base ) {
 
 				wp_register_script( 'geditorial-virastar',
-					GEDITORIAL_URL.'assets/packages/virastar/virastar.js',
+					GEDITORIAL_URL.'assets/packages/virastar/virastar.min.js',
 					array(),
-					'0.9.1',
+					'0.10.0',
 					TRUE );
 
 				$this->enqueue_asset_js( array(

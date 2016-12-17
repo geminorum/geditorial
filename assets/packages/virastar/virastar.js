@@ -1,3 +1,9 @@
+/*!
+* Virastar - v0.10.0 - 2016-12-13
+* https://github.com/juvee/virastar
+* Licensed: MIT
+*/
+
 (function(name, global, definition) {
 	if (typeof module != 'undefined') module.exports = definition();
 	else if (typeof define == 'function' && typeof define.amd == 'object') define(definition);
@@ -153,31 +159,38 @@
 		var bad_chars = ",;كي%";
 		var good_chars = "،؛کی٪";
 
-		if (opts.fix_english_numbers)
-			text = charBatchReplace(text, english_numbers, persian_numbers);
-
 		if (opts.fix_arabic_numbers)
 			text = charBatchReplace(text, arabic_numbers, persian_numbers);
 
-		if (opts.fix_misc_non_persian_chars)
-			text = charBatchReplace(text, bad_chars, good_chars);
 
-		if (opts.fix_question_mark)
-			text = text.replace(/(\?)/g, '\u061F'); //\u061F = ؟
+		// word tokenizer
+		text = text.replace(/(^|\s+)(\S+)(?=($|\s+))/g,
+			function(matchText, leadings, word, trailings) {
 
-		// should not replace Persian chars in english phrases
-		text = text.replace(new RegExp("([a-zA-Z\\-_]{2,})([۰-۹]+|[" + good_chars + "]+|\u061F+)|(\\2)(\\1)", 'g'), function(match) {
-			var matchText = charBatchReplace(match, persian_numbers, english_numbers);
-			matchText = matchText.replace(/\u061F/g, "?");
-			return charBatchReplace(matchText, good_chars, bad_chars);
-		});
+				// should not replace to Persian chars in english phrases
+				if (word.match(/[a-zA-Z\-_]{2,}/g))
+					return matchText;
 
-		// preserve markdown ordered lists numbers
-		if (!opts.skip_markdown_ordered_lists_numbers_conversion) {
-			text = text.replace(/(^|(?:\r?\n)|(?:\r\n?))([۰-۹]+)(\.\s)/g, function(match, p1, matched_numbers, p3) {
-				return p1 + charBatchReplace(matched_numbers, persian_numbers, english_numbers) + p3;
-			});
-		}
+				// should not replace to Persian numbers in html entities
+				if (word.match(/&#\d+;/g))
+					return matchText;
+
+				// preserve markdown ordered lists numbers
+				if (opts.skip_markdown_ordered_lists_numbers_conversion && (matchText+trailings).match(/(?:(?:\r?\n)|(?:\r\n?)|(?:^|\n))\d+\.\s/))
+					return matchText;
+
+				if (opts.fix_english_numbers)
+					matchText = charBatchReplace(matchText, english_numbers, persian_numbers);
+
+				if (opts.fix_misc_non_persian_chars)
+					matchText = charBatchReplace(matchText, bad_chars, good_chars);
+
+				if (opts.fix_question_mark)
+					matchText = matchText.replace(/(\?)/g, '\u061F'); //\u061F = ؟
+
+				return matchText
+			}
+		);
 
 		// put zwnj between word and prefix (mi* nemi*)
 		// there's a possible bug here: می and نمی could be separate nouns and not prefix
@@ -235,8 +248,9 @@
 		}
 
 		// remove spaces, tabs, and new lines from the beginning and enf of file
+		// http://stackoverflow.com/a/38490203
 		if (opts.cleanup_begin_and_end)
-			text = text.trim();
+			text = text.replace(/^[\s\u200c]+|[\s\u200c]+$/g, '');
 
 		// bringing back URIs
 		if (opts.preserve_URIs) {
