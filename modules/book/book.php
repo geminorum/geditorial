@@ -386,7 +386,7 @@ class gEditorialBook extends gEditorialModuleCore
 					'href'   => gEditorialWordPress::getPostTypeEditLink( $post->post_type, 0, $args ),
 					'title'  => _x( 'View all connected', 'Book Module', GEDITORIAL_TEXTDOMAIN ),
 					'target' => '_blank',
-				), $item->get_title() );
+				), gEditorialHelper::trimChars( $item->get_title() ) );
 
 				echo $this->p2p_get_meta( $item->p2p_id, 'ref', ' &ndash; ', '',
 			 		$this->strings['p2p']['publication_cpt']['fields']['ref']['title'] );
