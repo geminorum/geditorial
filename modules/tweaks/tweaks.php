@@ -127,11 +127,16 @@ class gEditorialTweaks extends gEditorialModuleCore
 			'bp_member_type',
 			'bp_group_type',
 			'bp-email-type',
+			'ef_editorial_meta',
+			'following_users',
+			'ef_usergroup',
+			'post_status',
 			'people',
 			'rel_people',
 			'rel_post',
 			'alphabet_tax',
 			'entry_section',
+			'specs',
 		);
 	}
 
