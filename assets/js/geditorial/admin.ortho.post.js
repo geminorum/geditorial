@@ -1,154 +1,112 @@
-jQuery(document).ready(function($) {
-	'use strict';
+(function($, p, c, m) {
+  'use strict';
 
-	var parseFootnotes = function(content) {
-		var footnotes = {};
-		content = content.replace(/\<a[^h]*(?=href\=\"[^\"]*\#_ftnref([0-9]+)\")[^>]*\>\[([0-9]+)\]\<\/a\>(.*)/g,
-			function(match, p1, p2, p3) {
-				footnotes[p1] = p3.trim().replace(/^./, "").trim();
-				return '';
-			});
+  var o = {};
 
-		// remove all the original footnotes when done
-		// return content.replace(/\<a[^h]*(?=href\=\"[^\"]*\#_ftn([0-9]+)\")[^>]*\>(?:\<(?:strong|sup)\>)+\[([0-9]+)\](?:\<\/(?:strong|sup)\>)+\<\/a\>/g,
-		return content.replace(/\<a[^h]*(?=href\=\"[^\"]*\#_ftn([0-9]+)\")[^>]*\>(?:\<\w+\>)*\[([0-9]+)\](?:\<\/\w+\>)*\<\/a\>/g,
-			function(match, p1, p2, p3, p4) {
-				return '[ref]' + footnotes[p1].replace(/\r\n|\r|\n/g, "") + '[/ref]';
-			});
-	}
+  o.t = {
+    text: '#titlewrap input, input#attachment_alt, [data-' + m + '=\'text\']',
+    markdown: '[data-' + m + '=\'markdown\']',
+    html: 'textarea#excerpt, textarea#attachment_caption, [data-' + m + '=\'html\']'
+  };
 
-	// http://stackoverflow.com/a/4215753
-	// var toParams = function(arr) {
-	// 	var rv = {};
-	// 	for (var i = 0; i < arr.length; ++i)
-	// 		rv[arr[i]] = true; // rv[i] = arr[i];
-	// 	return rv;
-	// }
+  o.s = $.extend({}, {
+    button_virastar: '<span class="dashicons dashicons-admin-site">',
+    button_virastar_title: 'Apply Virastar!',
+    qtag_virastar: 'V!',
+    qtag_virastar_title: 'Apply Virastar!',
+    qtag_swapquotes: 'Swap Quotes',
+    qtag_swapquotes_title: 'Swap Not-Correct Quotes',
+    qtag_mswordnotes: 'Word Footnotes',
+    qtag_mswordnotes_title: 'MS Word Footnotes to WordPress [ref]'
+  }, p[m].strings);
 
-	// var settings = $.extend({}, {
-	// 	virastar_options: {},
-	// }, gEditorial.ortho.settings);
+  o.b = '<a href="#" class="do-' + m + '" title="' + o.s['button_virastar_title'] + '" tabindex="-1">' + o.s['button_virastar'] + '</span></a>';
+  o.w = '<span class="' + m + '-input-wrap"></span>';
 
-	var strings = $.extend({}, {
-		button_virastar_title: 'Apply Virastar!',
-		qtag_virastar: 'V!',
-		qtag_virastar_title: 'Apply Virastar!',
-		qtag_swap_quotes: 'Swap Quotes',
-		qtag_swap_quotes_title: 'Swap Not-Correct Quotes',
-		qtag_word_footnotes: 'Word Footnotes',
-		qtag_word_footnotes_title: 'MS Word Footnotes to WordPress [ref]',
-	}, gEditorial.ortho.strings);
+  o.o = p[m].virastar || {};
 
-	var virastar_options = gEditorial.ortho.virastar || {};
+  o.v = {
+    text: new Virastar($.extend({}, o.o, {
+      preserve_HTML: false,
+      preserve_URIs: false
+    })),
+    markdown: new Virastar($.extend({}, o.o, {
+      fix_dashes: false,
+      cleanup_spacing: false,
+      cleanup_begin_and_end: false,
+      skip_markdown_ordered_lists_numbers_conversion: false,
+      preserve_HTML: false
+    })),
+    html: new Virastar($.extend({}, o.o, {cleanup_spacing: false}))
+  };
 
-	var virastarText = new Virastar(
-		$.extend({}, virastar_options, {
-			preserve_HTML: false,
-			preserve_URIs: false,
-		})
-	);
+  o.u = {
+    pF: function(c) {
+      var fn = {};
+      c = c.replace(/\<a[^h]*(?=href\=\"[^\"]*\#_ftnref([0-9]+)\")[^>]*\>\[([0-9]+)\]\<\/a\>(.*)/g, function(m, p1, p2, p3) {
+        fn[p1] = p3.trim().replace(/^./, "").trim();
+        return '';
+      });
 
-	var virastarMarkdown = new Virastar(
-		$.extend({}, virastar_options, {
-			fix_dashes: false,
-			cleanup_spacing: false,
-			cleanup_begin_and_end: false,
-			skip_markdown_ordered_lists_numbers_conversion: false,
-			preserve_HTML: false,
-		})
-	);
+      return c.replace(/\<a[^h]*(?=href\=\"[^\"]*\#_ftn([0-9]+)\")[^>]*\>(?:\<\w+\>)*\[([0-9]+)\](?:\<\/\w+\>)*\<\/a\>/g, function(m, p1, p2, p3, p4) {
+        return '[ref]' + fn[p1].replace(/\r\n|\r|\n/g, "") + '[/ref]';
+      });
+    },
+    sQ: function(c) {
+      return c.replace(/(»)(.+?)(«)/g, '«$2»').replace(/(”)(.+?)(“)/g, '“$2”');
+    }
+  };
 
-	var virastarHTML = new Virastar(
-		$.extend({}, virastar_options, {
-			cleanup_spacing: false,
-		})
-	);
+  o.q = {
+    virastar: function(e, c, ed) {
+      var s = c.value.substring(c.selectionStart, c.selectionEnd);
+      if (s !== '') {
+        QTags.insertContent(o.v['html'].cleanup(s));
+      } else {
+        $(c).val(o.v['html'].cleanup($(c).val()));
+      }
+    },
+    swapquotes: function(e, c, ed) {
+      $(c).val(o.u.sQ($(c).val()));
+    },
+    mswordnotes: function(e, c, ed) {
+      $(c).val(o.u.pF($(c).val()));
+    }
+  };
 
-	if (typeof(QTags) !== 'undefined') {
+  $(document).ready(function() {
 
-		QTags.addButton('virastar', strings.qtag_virastar, function(e, c, ed) {
+    for (var t in o.t) {
 
-			var selected = c.value.substring(c.selectionStart, c.selectionEnd);
-			if (selected !== '') {
-				QTags.insertContent(virastarHTML.cleanup(selected));
-			} else {
-				$(c).val(virastarHTML.cleanup($(c).val()));
-			}
-		}, '', '', strings.qtag_virastar_title);
+      $(o.t[t]).each(function() {
+        $(this).data(m, t).addClass('target-' + m).add($(o.b)).wrapAll(o.w);
+      });
 
-		QTags.addButton('swapquotes', strings.qtag_swap_quotes, function(e, c, ed) {
-			var content = $(c).val();
-			content = content.replace(/(»)(.+?)(«)/g, '«$2»');
-			content = content.replace(/(”)(.+?)(“)/g, '“$2”');
-			$(c).val(content);
-		}, '', '', strings.qtag_swap_quotes_title);
+      $('a.do-' + m).on('click', function(e) {
+        e.preventDefault();
+        var t = $(this).closest('.' + m + '-input-wrap').find('.target-' + m);
+        t.val(o.v[t.data(m)].cleanup(t.val()));
+      });
 
-		QTags.addButton('parsemswordfootnotes', strings.qtag_word_footnotes, function(e, c, ed) {
-			var content = $(c).val();
-			$(c).val(parseFootnotes(content));
-		}, '', '', strings.qtag_word_footnotes_title);
-	}
+      $('.target-' + m).on('paste', function() {
+        var e = this;
+        setTimeout(function() {
+          var t = $(e);
+          t.val(o.v[t.data(m)].cleanup(t.val()));
+        }, 100);
+      });
+    }
 
-	// http://www.jankoatwarpspeed.com/make-image-buttons-a-part-of-input-fields/
-	$("#titlewrap input, input#attachment_alt, [data-ortho='text']").each(function() {
-		$(this)
-			.addClass('target-ortho-text')
-			.add($('<a href="#" class="do-ortho do-ortho-text" title="' + strings.button_virastar_title + '" tabindex="-1"><span class="dashicons dashicons-admin-site"></span></a>'))
-			.wrapAll('<span class="ortho-input-wrap"></span>');
-	});
+    if (typeof(QTags) !== 'undefined') {
+      for (var b in o.q) {
+        QTags.addButton(b, o.s['qtag_' + b], o.q[b], '', '', o.s['qtag_' + b + '_title']);
+      }
+    }
+  });
 
-	$('a.do-ortho-text').click(function(e) {
-		e.preventDefault();
-		var target = $(this).closest('.ortho-input-wrap').find('.target-ortho-text');
-		target.val(virastarText.cleanup(target.val()));
-	});
+  c[m] = o;
 
-	// http://stackoverflow.com/a/1503425/4864081
-	$('.target-ortho-text').on('paste', function() {
-		var element = this;
-		setTimeout(function() {
-			$(element).val(virastarText.cleanup($(element).val()));
-		}, 100);
-	});
+  if (p._dev)
+    console.log(c);
 
-	$("[data-ortho='markdown']").each(function() {
-		$(this)
-			.addClass('target-ortho-markdown')
-			.add($('<a href="#" class="do-ortho do-ortho-markdown" title="' + strings.button_virastar_title + '" tabindex="-1"><span class="dashicons dashicons-admin-site"></span></a>'))
-			.wrapAll('<span class="ortho-input-wrap"></span>');
-	});
-
-	$('a.do-ortho-markdown').click(function(e) {
-		e.preventDefault();
-		var target = $(this).closest('.ortho-input-wrap').find('.target-ortho-markdown');
-		target.val(virastarMarkdown.cleanup(target.val()));
-	});
-
-	$('.target-ortho-markdown').on('paste', function() {
-		var element = this;
-		setTimeout(function() {
-			$(element).val(virastarMarkdown.cleanup($(element).val()));
-		}, 100);
-	});
-
-	$("textarea#excerpt, textarea#attachment_caption, [data-ortho='html']").each(function() {
-		$(this)
-			.addClass('target-ortho-html')
-			.add($('<a href="#" class="do-ortho do-ortho-html" title="' + strings.button_virastar_title + '" tabindex="-1"><span class="dashicons dashicons-admin-site"></span></a>'))
-			.wrapAll('<span class="ortho-input-wrap"></span>');
-	});
-
-	$('a.do-ortho-html').click(function(e) {
-		e.preventDefault();
-		var target = $(this).closest('.ortho-input-wrap').find('.target-ortho-html');
-		target.val(virastarHTML.cleanup(target.val()));
-	});
-
-	// http://stackoverflow.com/a/1503425/4864081
-	$('.target-ortho-html').on('paste', function() {
-		var element = this;
-		setTimeout(function() {
-			$(element).val(virastarHTML.cleanup($(element).val()));
-		}, 100);
-	});
-});
+}(jQuery, gEditorial, gEditorialModules, 'ortho'));

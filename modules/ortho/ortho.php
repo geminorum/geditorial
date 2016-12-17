@@ -64,13 +64,14 @@ class gEditorialOrtho extends gEditorialModuleCore
 	{
 		return array(
 			'js' => array(
-				'button_virastar_title'     => _x( 'Apply Virastar!', 'Ortho Module: Javascript String', GEDITORIAL_TEXTDOMAIN ),
-				'qtag_virastar'             => _x( 'Virastar!', 'Ortho Module: Javascript String', GEDITORIAL_TEXTDOMAIN ),
-				'qtag_virastar_title'       => _x( 'Apply Virastar!', 'Ortho Module: Javascript String', GEDITORIAL_TEXTDOMAIN ),
-				'qtag_swap_quotes'          => _x( 'Swap Quotes', 'Ortho Module: Javascript String', GEDITORIAL_TEXTDOMAIN ),
-				'qtag_swap_quotes_title'    => _x( 'Swap Not-Correct Quotes', 'Ortho Module: Javascript String', GEDITORIAL_TEXTDOMAIN ),
-				'qtag_word_footnotes'       => _x( 'Word Footnotes', 'Ortho Module: Javascript String', GEDITORIAL_TEXTDOMAIN ),
-				'qtag_word_footnotes_title' => _x( 'MS Word Footnotes to WordPress [ref]', 'Ortho Module: Javascript String', GEDITORIAL_TEXTDOMAIN ),
+				// 'button_virastar'        => gEditorialHTML::getDashicon( 'admin-site' ),
+				'button_virastar_title'  => _x( 'Apply Virastar!', 'Ortho Module: Javascript String', GEDITORIAL_TEXTDOMAIN ),
+				'qtag_virastar'          => _x( 'Virastar!', 'Ortho Module: Javascript String', GEDITORIAL_TEXTDOMAIN ),
+				'qtag_virastar_title'    => _x( 'Apply Virastar!', 'Ortho Module: Javascript String', GEDITORIAL_TEXTDOMAIN ),
+				'qtag_swapquotes'        => _x( 'Swap Quotes', 'Ortho Module: Javascript String', GEDITORIAL_TEXTDOMAIN ),
+				'qtag_swapquotes_title'  => _x( 'Swap Not-Correct Quotes', 'Ortho Module: Javascript String', GEDITORIAL_TEXTDOMAIN ),
+				'qtag_mswordnotes'       => _x( 'Word Footnotes', 'Ortho Module: Javascript String', GEDITORIAL_TEXTDOMAIN ),
+				'qtag_mswordnotes_title' => _x( 'MS Word Footnotes to WordPress [ref]', 'Ortho Module: Javascript String', GEDITORIAL_TEXTDOMAIN ),
 			),
 		);
 	}
