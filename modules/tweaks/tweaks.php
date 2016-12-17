@@ -176,6 +176,7 @@ class gEditorialTweaks extends gEditorialModuleCore
 				}
 
 			} else if ( 'edit' == $screen->base ) {
+				$this->_admin_enabled();
 				$this->_edit_screen( $screen->post_type );
 			}
 
