@@ -98,16 +98,16 @@ class gEditorialEstimated extends gEditorialModuleCore
 
 			} else if ( 'edit' == $screen->base ) {
 
-				add_action( 'geditorial_tweaks_column_row', array( $this, 'column_row_wordcount' ), -50 );
+				add_action( 'geditorial_tweaks_column_attr', array( $this, 'column_attr' ), 12 );
 			}
 		}
 	}
 
-	public function column_row_wordcount( $post )
+	public function column_attr( $post )
 	{
 		if ( $wordcount = get_post_meta( $post->ID, $this->meta_key, TRUE ) ) {
 
-			echo '<li class="-row estimated-wordcount">';
+			echo '<li class="-attr -estimated -wordcount">';
 
 				echo $this->get_column_icon( FALSE, NULL, _x( 'Estimated Time', 'Estimated Module: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
 
