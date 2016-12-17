@@ -1,3 +1,7 @@
+### 3.9.6
+* core/date: :warinig: fixed fatal
+* wordpress/module: :warinig: fixed fatal
+
 ### 3.9.5
 * core/number: :new: new core class
 * core/html: table side generator
