@@ -321,6 +321,20 @@ class gEditorialHelper extends gEditorialBaseCore
 		return $html;
 	}
 
+	public static function getDateEditRow( $mysql_time, $wrap_class = FALSE )
+	{
+		$html = '';
+
+		$date = _x( 'm/d/Y', 'Module Helper: Date Edit Row', GEDITORIAL_TEXTDOMAIN );
+		$time = _x( 'H:i', 'Module Helper: Date Edit Row', GEDITORIAL_TEXTDOMAIN );
+		$full = _x( 'l, M j, Y @ H:i', 'Module Helper: Date Edit Row', GEDITORIAL_TEXTDOMAIN );
+
+		$html .= '<span class="-date-date" title="'.esc_attr( mysql2date( $time, $mysql_time ) ).'">'.mysql2date( $date, $mysql_time ).'</span>';
+		$html .= '&nbsp;(<span class="-date-diff" title="'.esc_attr( mysql2date( $full, $mysql_time ) ).'">'.self::humanTimeDiff( $mysql_time ).'</span>)';
+
+		return $wrap_class ? '<span class="'.$wrap_class.'">'.$html.'</span>' : $html;
+	}
+
 	public static function postModified( $post = NULL, $attr = FALSE )
 	{
 		if ( ! $post = get_post( $post ) )
@@ -334,12 +348,12 @@ class gEditorialHelper extends gEditorialBaseCore
 
 		return $attr
 			? sprintf( $title, date_i18n( $format, $local ) )
-			: gEditorialDate::htmlDateTime( $local, $gmt, $format, self::humanTimeDiff( $local, FALSE ) );
+			: gEditorialDate::htmlDateTime( $local, $gmt, $format, self::humanTimeDiffRound( $local, FALSE ) );
 	}
 
-	public static function humanTimeDiff( $local, $round = DAY_IN_SECONDS, $format = NULL, $now = NULL )
+	public static function humanTimeDiffRound( $local, $round = DAY_IN_SECONDS, $format = NULL, $now = NULL )
 	{
-		$ago = _x( '%s ago', 'Module Helper: Human Time Diff', GEDITORIAL_TEXTDOMAIN );
+		$ago = _x( '%s ago', 'Module Helper: Human Time Diff Round', GEDITORIAL_TEXTDOMAIN );
 		$now = is_null( $now ) ? current_time( 'timestamp', FALSE ) : '';
 
 		if ( FALSE === $round )
@@ -351,9 +365,69 @@ class gEditorialHelper extends gEditorialBaseCore
 			return sprintf( $ago, human_time_diff( $local, $now ) );
 
 		if ( is_null( $format ) )
-			$format = _x( 'Y/m/d', 'Module Helper: Human Time Diff', GEDITORIAL_TEXTDOMAIN );
+			$format = _x( 'Y/m/d', 'Module Helper: Human Time Diff Round', GEDITORIAL_TEXTDOMAIN );
 
 		return date_i18n( $format, $local, FALSE );
+	}
+
+	public static function humanTimeDiff( $timestamp, $now = '' )
+	{
+		static $strings = NULL;
+
+		if ( is_null( $strings ) )
+			$strings = array(
+				'now'    => _x( 'Now', 'Module Helper: Human Time Diff', GEDITORIAL_TEXTDOMAIN ),
+				'_s_ago' => _x( '%s ago', 'Module Helper: Human Time Diff', GEDITORIAL_TEXTDOMAIN ),
+				'in__s'  => _x( 'in %s', 'Module Helper: Human Time Diff', GEDITORIAL_TEXTDOMAIN ),
+
+				'noop_minutes' => _nx_noop( '%s min', '%s mins', 'Module Helper: Human Time Diff: Noop', GEDITORIAL_TEXTDOMAIN ),
+				'noop_hours'   => _nx_noop( '%s hour', '%s hours', 'Module Helper: Human Time Diff: Noop', GEDITORIAL_TEXTDOMAIN ),
+				'noop_days'    => _nx_noop( '%s day', '%s days', 'Module Helper: Human Time Diff: Noop', GEDITORIAL_TEXTDOMAIN ),
+				'noop_weeks'   => _nx_noop( '%s week', '%s weeks', 'Module Helper: Human Time Diff: Noop', GEDITORIAL_TEXTDOMAIN ),
+				'noop_months'  => _nx_noop( '%s month', '%s months', 'Module Helper: Human Time Diff: Noop', GEDITORIAL_TEXTDOMAIN ),
+				'noop_years'   => _nx_noop( '%s year', '%s years', 'Module Helper: Human Time Diff: Noop', GEDITORIAL_TEXTDOMAIN ),
+			);
+
+		if ( empty( $now ) )
+			$now = current_time( 'timestamp', FALSE );
+
+		return gEditorialDate::humanTimeDiff( $timestamp, $now, $strings );
+	}
+
+	// not used yet!
+	public static function moment( $timestamp, $now = '' )
+	{
+		static $strings = NULL;
+
+		if ( is_null( $strings ) )
+			$strings = array(
+				'now'            => _x( 'Now', 'Module Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
+				'just_now'       => _x( 'Just now', 'Module Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
+				'one_minute_ago' => _x( 'One minute ago', 'Module Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
+				'_s_minutes_ago' => _x( '%s minutes ago', 'Module Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
+				'one_hour_ago'   => _x( 'One hour ago', 'Module Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
+				'_s_hours_ago'   => _x( '%s hours ago', 'Module Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
+				'yesterday'      => _x( 'Yesterday', 'Module Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
+				'_s_days_ago'    => _x( '%s days ago', 'Module Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
+				'_s_weeks_ago'   => _x( '%s weeks ago', 'Module Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
+				'last_month'     => _x( 'Last month', 'Module Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
+				'last_year'      => _x( 'Last year', 'Module Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
+				'in_a_minute'    => _x( 'in a minute', 'Module Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
+				'in__s_minutes'  => _x( 'in %s minutes', 'Module Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
+				'in_an_hour'     => _x( 'in an hour', 'Module Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
+				'in__s_hours'    => _x( 'in %s hours', 'Module Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
+				'tomorrow'       => _x( 'Tomorrow', 'Module Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
+				'next_week'      => _x( 'next week', 'Module Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
+				'in__s_weeks'    => _x( 'in %s weeks', 'Module Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
+				'next_month'     => _x( 'next month', 'Module Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
+				'format_l'       => _x( 'l', 'Module Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
+				'format_f_y'     => _x( 'F Y', 'Module Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
+			);
+
+		if ( empty( $now ) )
+			$now = current_time( 'timestamp', FALSE );
+
+		return gEditorialDate::moment( $timestamp, $now, $strings );
 	}
 
 	// @REF: [Calendar Classes - ICU User Guide](http://userguide.icu-project.org/datetime/calendar)
