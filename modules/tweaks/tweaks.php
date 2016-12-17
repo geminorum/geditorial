@@ -45,14 +45,14 @@ class gEditorialTweaks extends gEditorialModuleCore
 			'posttypes_option' => 'posttypes_option',
 			'_general' => array(
 				array(
+					'field'       => 'group_attributes',
+					'title'       => _x( 'Group Attributes', 'Tweaks Module: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Group post attributes on selected post type edit pages', 'Tweaks Module: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+				),
+				array(
 					'field'       => 'column_id',
 					'title'       => _x( 'ID Column', 'Tweaks Module: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Displays ID Column on the post list table.', 'Tweaks Module: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-				),
-				array(
-					'field'       => 'revision_count',
-					'title'       => _x( 'Revision Count', 'Tweaks Module: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Displays revision summary of the post.', 'Tweaks Module: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 				),
 				array(
 					'field'       => 'attachment_count',
@@ -95,6 +95,7 @@ class gEditorialTweaks extends gEditorialModuleCore
 			'misc' => array(
 				'title_column_title'          => _x( 'Title', 'Tweaks Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
 				'rows_column_title'           => _x( 'Extra', 'Tweaks Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'atts_column_title'           => _x( 'Attributes', 'Tweaks Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
 				'id_column_title'             => _x( 'ID', 'Tweaks Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
 				'meta_box_search_title'       => _x( 'Type to filter by', 'Tweaks Module: Meta Box Search Title', GEDITORIAL_TEXTDOMAIN ),
 				'meta_box_search_placeholder' => _x( 'Search &hellip;', 'Tweaks Module: Meta Box Search Placeholder', GEDITORIAL_TEXTDOMAIN ),
@@ -197,16 +198,16 @@ class gEditorialTweaks extends gEditorialModuleCore
 
 		// INTERNAL HOOKS
 		if ( $this->get_setting( 'group_taxonomies', FALSE ) )
-			add_action( 'geditorial_tweaks_column_row', array( $this, 'column_row_taxonomies' ) );
+			add_action( $this->hook( 'column_row' ), array( $this, 'column_row_taxonomies' ) );
+
+		if ( $this->get_setting( 'group_attributes', FALSE ) )
+			add_action( $this->hook( 'column_attr' ), array( $this, 'column_attr_default' ), 1 );
 
 		if ( $this->get_setting( 'attachment_count', FALSE ) )
-			add_action( 'geditorial_tweaks_column_row', array( $this, 'column_row_attachments' ), 20 );
+			add_action( $this->hook( 'column_attr' ), array( $this, 'column_attr_attachments' ), 20 );
 
 		if ( $this->get_setting( 'page_template', FALSE ) )
-			add_action( 'geditorial_tweaks_column_row', array( $this, 'column_row_page_template' ), 50 );
-
-		if ( $this->get_setting( 'revision_count', FALSE ) )
-			add_action( 'geditorial_tweaks_column_row', array( $this, 'column_row_revisions' ), 100 );
+			add_action( $this->hook( 'column_attr' ), array( $this, 'column_attr_page_template' ), 50 );
 	}
 
 	public function manage_taxonomies_columns( $taxonomies, $post_type )
@@ -217,49 +218,61 @@ class gEditorialTweaks extends gEditorialModuleCore
 		return $taxonomies;
 	}
 
-	public function manage_pages_columns( $posts_columns )
+	public function manage_pages_columns( $columns )
 	{
-		return $this->manage_posts_columns( $posts_columns, 'page' );
+		return $this->manage_posts_columns( $columns, 'page' );
 	}
 
-	public function manage_posts_columns( $posts_columns, $post_type )
+	// FIXME: add thumbnail column if posttype supports
+	public function manage_posts_columns( $columns, $post_type )
 	{
-		if ( count( $this->taxonomies() )
-			&& has_action( 'geditorial_tweaks_column_row' ) ) {
+		$new   = array();
+		$added = FALSE;
 
-			$new   = array();
-			$added = FALSE;
-			$title = $this->get_column_title( 'rows', $post_type );
+		$rows  = has_action( $this->hook( 'column_row' ) ) ? $this->get_column_title( 'rows', $post_type ) : FALSE;
+		$atts  = has_action( $this->hook( 'column_attr' ) ) ? $this->get_column_title( 'atts', $post_type ) : FALSE;
 
-			foreach ( $posts_columns as $key => $value ) {
+		foreach ( $columns as $key => $value ) {
 
-				if ( ( 'comments' == $key && ! $added )
-					|| ( 'date' == $key && ! $added ) ) {
-						$new['geditorial-tweaks-rows'] = $title;
-						$added = TRUE;
-				}
+			if ( ( 'comments' == $key && ! $added )
+				|| ( 'date' == $key && ! $added ) ) {
 
-				$new[$key] = $value;
+					if ( $rows )
+						$new['geditorial-tweaks-rows'] = $rows;
+
+					if ( $atts )
+						$new['geditorial-tweaks-atts'] = $atts;
+
+					$added = TRUE;
 			}
 
-			if ( ! $added )
-				$new['geditorial-tweaks-rows'] = $title;
+			$new[$key] = $value;
+		}
 
-			$posts_columns = $new;
+		if ( $this->get_setting( 'group_attributes', FALSE ) )
+			unset( $new['date'] );
+
+		if ( ! $added ) {
+
+			if ( $rows )
+				$new['geditorial-tweaks-rows'] = $rows;
+
+			if ( $atts )
+				$new['geditorial-tweaks-atts'] = $atts;
 		}
 
 		if ( $this->get_setting( 'column_id', FALSE ) )
-			$posts_columns['geditorial-tweaks-id'] = $this->get_column_title( 'id', $post_type );
+			$new['geditorial-tweaks-id'] = $this->get_column_title( 'id', $post_type );
 
-		return $posts_columns;
+		return $new;
 	}
 
 	// FIXME: must add to sortable too
-	public function manage_posts_columns_late( $posts_columns )
+	public function manage_posts_columns_late( $columns )
 	{
 		$new = array();
 
-		foreach ( $posts_columns as $key => $value )
+		foreach ( $columns as $key => $value )
 
 			if ( 'title' == $key )
 				$new['geditorial-tweaks-title'] = $this->get_column_title( 'title', gEditorialWordPress::currentPostType( 'post' ) );
@@ -294,7 +307,14 @@ class gEditorialTweaks extends gEditorialModuleCore
 			case 'geditorial-tweaks-rows' :
 
 				echo '<div class="geditorial-admin-wrap-column -tweaks -rows"><ul>';
-					do_action( 'geditorial_tweaks_column_row', $post );
+					do_action( $this->hook( 'column_row' ), $post );
+				echo '</ul></div>';
+
+			break;
+			case 'geditorial-tweaks-atts' :
+
+				echo '<div class="geditorial-admin-wrap-column -tweaks -atts"><ul>';
+					do_action( $this->hook( 'column_attr' ), $post );
 				echo '</ul></div>';
 
 			break;
@@ -335,7 +355,7 @@ class gEditorialTweaks extends gEditorialModuleCore
 
 	// @SEE: [Post Type Templates in 4.7](https://make.wordpress.org/core/?p=20437)
 	// @SEE: [#18375 (Post type templates)](https://core.trac.wordpress.org/ticket/18375)
-	public function column_row_page_template( $post )
+	public function column_attr_page_template( $post )
 	{
 		if ( ! empty( $post->page_template )
 			&& 'default' != $post->page_template ) {
@@ -357,45 +377,8 @@ class gEditorialTweaks extends gEditorialModuleCore
 		}
 	}
 
-	// FIXME: move this to revisions module
-	public function column_row_revisions( $post )
-	{
-		if ( wp_revisions_enabled( $post ) ) {
-
-			$revisions = wp_get_post_revisions( $post->ID, array( 'check_enabled' => FALSE ) );
-			$count     = count( $revisions );
-			$authors   = array_unique( array_map( function( $r ){
-				return $r->post_author;
-			}, $revisions ) );
-
-			if ( $count ) {
-
-				$edit = current_user_can( 'edit_post', key( $revisions ) );
-
-				echo '<li class="-row tweaks-revision-count">';
-
-					echo $this->get_column_icon( FALSE, 'backup', _x( 'Revisions', 'Tweaks Module: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
-
-					$title = sprintf( _nx( '%s Revision', '%s Revisions', $count, 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ), number_format_i18n( $count ) );
-
-					if ( current_user_can( 'edit_post', key( $revisions ) ) )
-						echo gEditorialHTML::tag( 'a', array(
-							'href'   => get_edit_post_link( key( $revisions ) ),
-							'title'  => _x( 'View the last revision', 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ),
-							'target' => '_blank',
-						), $title );
-					else
-						echo $title;
-
-					gEditorialHelper::getAuthorsEditRow( $authors, $post->post_type, ' <span class="-authors">(', ')</span>' );
-
-				echo '</li>';
-			}
-		}
-	}
-
 	// FIXME: move this to attachments module
-	public function column_row_attachments( $post )
+	public function column_attr_attachments( $post )
 	{
 		$attachments = gEditorialWordPress::getAttachments( $post->ID, '' );
 		$count       = count( $attachments );
@@ -422,6 +405,45 @@ class gEditorialTweaks extends gEditorialModuleCore
 
 				gEditorialHelper::getMimeTypeEditRow( $mime_types, $post->ID, ' <span class="-mime-types">(', ')</span>' );
 
+			echo '</li>';
+		}
+	}
+
+	public function column_attr_default( $post )
+	{
+		$status = $date = '';
+
+		if ( 'publish' === $post->post_status ) {
+			$status = _x( 'Published', 'Tweaks Module: Attr: Status', GEDITORIAL_TEXTDOMAIN );
+
+		} else if ( 'future' === $post->post_status ) {
+
+			$time_diff = time() - get_post_time( 'G', TRUE, $post );
+
+			if ( $time_diff > 0 )
+				$status = '<strong class="error-message">'._x( 'Missed schedule', 'Tweaks Module: Attr: Status', GEDITORIAL_TEXTDOMAIN ).'</strong>';
+
+			else
+				$status = _x( 'Scheduled', 'Tweaks Module: Attr: Status', GEDITORIAL_TEXTDOMAIN );
+
+		} else {
+			$status = _x( 'Drafted', 'Tweaks Module: Attr: Status', GEDITORIAL_TEXTDOMAIN );
+		}
+
+		echo '<li class="-attr tweaks-default-atts -post-status -post-status-'.$post->post_status.'">';
+			echo $this->get_column_icon( FALSE, 'post-status', _x( 'Status', 'Tweaks Module: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
+			echo '<span class="-status" title="'.$post->post_status.'">'.$status.'</span>';
+		echo '</li>';
+
+		echo '<li class="-attr tweaks-default-atts -post-date">';
+			echo $this->get_column_icon( FALSE, 'calendar-alt', _x( 'Publish Date', 'Tweaks Module: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
+			echo gEditorialHelper::getDateEditRow( $post->post_date, '-date' );
+		echo '</li>';
+
+		if ( $post->post_modified != $post->post_date ) {
+			echo '<li class="-attr tweaks-default-atts -post-modified">';
+				echo $this->get_column_icon( FALSE, 'edit', _x( 'Last Edit', 'Tweaks Module: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
+				echo gEditorialHelper::getDateEditRow( $post->post_modified, '-edit' );
 			echo '</li>';
 		}
 	}
