@@ -337,6 +337,12 @@ class gEditorialBook extends gEditorialModuleCore
 			return $r->post_type;
 		}, $p2p->items ) );
 
+		$args = array(
+			'connected_direction' => 'to',
+			'connected_type'      => $type,
+			'connected_items'     => $post->ID,
+		);
+
 		echo '<li class="-row -book -p2p -connected">';
 
 			echo $this->column_icon;
@@ -347,7 +353,7 @@ class gEditorialBook extends gEditorialModuleCore
 
 			foreach ( $post_types as $post_type )
 				$list[] = gEditorialHTML::tag( 'a', array(
-					'href'   => gEditorialWordPress::getPostTypeEditLink( $post_type ),
+					'href'   => gEditorialWordPress::getPostTypeEditLink( $post_type, 0, $args ),
 					'title'  => _x( 'View the connected list', 'Book Module', GEDITORIAL_TEXTDOMAIN ),
 					'target' => '_blank',
 				), $this->all_post_types[$post_type] );
