@@ -632,9 +632,10 @@ class gEditorialMeta extends gEditorialModuleCore
 		if ( 1 == $page
 			&& is_singular( $this->post_types() )
 			&& in_the_loop() && is_main_query() )
-				gEditorialMetaTemplates::gmeta_lead(
-					'<div class="geditorial-wrap -meta -before entry-lead">',
-					'</div>', 'wpautop' );
+				gEditorialMetaTemplates::metaLead( array(
+					'before' => '<div class="geditorial-wrap -meta -before entry-lead">',
+					'after'  => '</div>',
+				) );
 	}
 
 	public function the_author( $display_name )
