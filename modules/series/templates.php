@@ -143,8 +143,11 @@ class gEditorialSeriesTemplates extends gEditorialTemplateCore
 		if ( ! $error ) {
 
 			if ( $args['title'] ) {
+
 				if ( FALSE !== strpos( $args['title'], '%' ) ) {
+
 					if ( $the_term = get_term_by( 'id', $args['id'], $series_tax ) ) {
+
 						$args['title'] = sprintf( $args['title'],
 							sanitize_term_field( 'name', $the_term->name, $the_term->term_id, $the_term->taxonomy, 'display' ),
 							get_term_link( $the_term, $the_term->taxonomy ),
@@ -152,6 +155,7 @@ class gEditorialSeriesTemplates extends gEditorialTemplateCore
 						);
 					}
 				}
+
 				$args['title'] = gEditorialHTML::tag( $args['title_tag'], array(
 					'class' => '-title',
 				), $args['title'] );
@@ -197,6 +201,9 @@ class gEditorialSeriesTemplates extends gEditorialTemplateCore
 
 					$the_posts = $ordered_posts;
 					unset( $ordered_posts, $the_post, $i );
+
+				} else if ( 1 == $count ) {
+					$the_posts[0]->series_meta = gEditorial()->series->get_postmeta( $the_posts[0]->ID, $args['id'], array() );
 				}
 
 				$offset = 1;
