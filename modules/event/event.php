@@ -269,11 +269,6 @@ class gEditorialEvent extends gEditorialModuleCore
 					'icon'   => 'calendar',
 					'title'  => $this->get_column_title( 'tweaks', 'cal_tax' ),
 				),
-				$this->constant( 'venue_tax' ) => array(
-					'column' => 'taxonomy-'.$this->constant( 'venue_tax' ),
-					'icon'   => 'location',
-					'title'  => $this->get_column_title( 'tweaks', 'venue_tax' ),
-				),
 			),
 		);
 
@@ -527,8 +522,7 @@ class gEditorialEvent extends gEditorialModuleCore
 	public function template_include( $template )
 	{
 		if ( is_tax( $this->constant( 'event_cat' ) )
-			|| is_tax( $this->constant( 'cal_tax' ) )
-			|| is_tax( $this->constant( 'venue_tax' ) ) )
+			|| is_tax( $this->constant( 'cal_tax' ) ) )
 				$template = get_query_template( 'archive-'.$this->constant( 'event_cpt' ) );
 
 		return $template;
