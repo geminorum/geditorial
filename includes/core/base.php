@@ -127,6 +127,15 @@ class gEditorialBaseCore
 			self::__dep( $note, $prefix, $offset );
 	}
 
+	// INTERNAL: used on functions deprecated
+	public static function __dev_func( $function, $version, $replacement = NULL )
+	{
+		if ( is_null( $replacement ) )
+			self::__log( sprintf( 'DEP: \'%1$s\' function, since %2$s with no alternative', $function, $version ) );
+		else
+			self::__log( sprintf( 'DEP: \'%1$s\' function, since %2$s, Use \'%3$s\'', $function, $version, $replacement ) );
+	}
+
 	public static function atts( $pairs, $atts )
 	{
 		$atts = (array) $atts;
