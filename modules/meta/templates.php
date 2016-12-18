@@ -241,7 +241,7 @@ class gEditorialMetaTemplates extends gEditorialTemplateCore
 			if ( $term && is_null( $args['link'] ) )
 				$args['link'] = get_term_link( $term, $tax );
 			if ( $term && is_null( $args['desc'] ) )
-				$args['desc'] = self::termDescription( $term, FALSE );
+				$args['desc'] = esc_attr( trim( strip_tags( $term->description ) ) );
 		} else {
 			if ( $title && is_null( $args['link'] ) )
 				$args['link'] = gEditorialWordPress::getSearchLink( $title );

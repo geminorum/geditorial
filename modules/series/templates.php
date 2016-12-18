@@ -148,7 +148,7 @@ class gEditorialSeriesTemplates extends gEditorialTemplateCore
 						$args['title'] = sprintf( $args['title'],
 							sanitize_term_field( 'name', $the_term->name, $the_term->term_id, $the_term->taxonomy, 'display' ),
 							get_term_link( $the_term, $the_term->taxonomy ),
-							self::termDescription( $the_term )
+							esc_attr( trim( strip_tags( $the_term->description ) ) )
 						);
 					}
 				}
