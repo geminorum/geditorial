@@ -63,10 +63,8 @@ class gEditorialSeries extends gEditorialModuleCore
 					'show_option_none' => _x( '&mdash; Choose a Series &mdash;', 'Series Module', GEDITORIAL_TEXTDOMAIN ),
 				),
 			),
-			'labels' => array(
-				'series_tax' => gEditorialHelper::generateTaxonomyLabels(
-					_nx_noop( 'Series', 'Series', 'Series Module: Series Tax Labels: Name', GEDITORIAL_TEXTDOMAIN )
-				),
+			'noops' => array(
+				'series_tax' => _nx_noop( 'Series', 'Series', 'Series Module: Noop', GEDITORIAL_TEXTDOMAIN ),
 			),
 		);
 	}

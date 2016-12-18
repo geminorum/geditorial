@@ -60,11 +60,6 @@ class gEditorialSpecs extends gEditorialModuleCore
 			'noops' => array(
 				'specs_tax' => _nx_noop( 'Specification', 'Specifications', 'Specs Module: Noop', GEDITORIAL_TEXTDOMAIN ),
 			),
-			'labels' => array(
-				'specs_tax' => gEditorialHelper::generateTaxonomyLabels(
-					_nx_noop( 'Specification', 'Specifications', 'Specs Module: Specs Tax Labels: Name', GEDITORIAL_TEXTDOMAIN )
-				),
-			),
 		);
 	}
 
