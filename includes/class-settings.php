@@ -118,13 +118,14 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 		return _x( '&mdash; Select &mdash;', 'Settings: Dropdown Select Option None', GEDITORIAL_TEXTDOMAIN );
 	}
 
-	public static function fieldSection( $title, $description = FALSE )
+	public static function fieldSection( $title, $description = FALSE, $tag = 'h3' )
 	{
-		echo '<h3>'.$title.'</h3>';
+		echo gEditorialHTML::tag( $tag, $title );
 
 		if ( $description )
 			echo '<p class="description">'.$description.'</p>';
 	}
+
 
 	public static function infoP2P()
 	{
@@ -513,23 +514,35 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 
 		foreach ( (array) $wp_settings_sections[$page] as $section ) {
 
-			if ( $section['title'] )
-				echo gEditorialHTML::tag( 'h2', array(
-					'class' => gEditorialHTML::attrClass( '-section-title', $section['section_class'] ),
-				), $section['title'] );
+			echo '<div class="-section-wrap '.$section['section_class'].'">';
 
-			if ( $section['callback'] )
-				call_user_func( $section['callback'], $section );
+				if ( $section['title'] )
+					echo gEditorialHTML::tag( 'h2', array( 'class' => '-section-title' ), $section['title'] );
 
-			if ( ! isset( $wp_settings_fields )
-				|| ! isset( $wp_settings_fields[$page] )
-				|| ! isset( $wp_settings_fields[$page][$section['id']] ) )
+				if ( $section['callback'] )
+					call_user_func( $section['callback'], $section );
+
+				if ( ! isset( $wp_settings_fields )
+					|| ! isset( $wp_settings_fields[$page] )
+					|| ! isset( $wp_settings_fields[$page][$section['id']] ) ) {
+
+					echo '</div>';
 					continue;
+				}
 
-			echo '<table class="form-table">';
-				do_settings_fields( $page, $section['id'] );
-			echo '</table>';
+				echo '<table class="form-table -section-table">';
+					do_settings_fields( $page, $section['id'] );
+				echo '</table>';
+
+			echo '</div>';
 		}
+	}
+
+	public static function moduleSectionEmpty( $description )
+	{
+		echo gEditorialHTML::tag( 'p', array(
+			'class' => 'description -section-description -section-empty',
+		), $description );
 	}
 
 	public static function moduleButtons( $module, $enabled = FALSE )

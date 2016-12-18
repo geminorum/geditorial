@@ -496,9 +496,7 @@ class gEditorialModuleCore extends gEditorialWPModule
 
 	public function settings_fields_option_none( $args )
 	{
-		echo gEditorialHTML::tag( 'p', array(
-			'class' => 'description no-fields',
-		), _x( 'No fields supported', 'Module Core', GEDITORIAL_TEXTDOMAIN ) );
+		gEditorialSettingsCore::moduleSectionEmpty( _x( 'No fields supported', 'Module Core', GEDITORIAL_TEXTDOMAIN ) );
 	}
 
 	public function print_configure_view()
