@@ -485,9 +485,9 @@ class gEditorialTemplateCore extends gEditorialBaseCore
 		if ( $title && $url || ! $url && $title != $args['title_default'] ) {
 			$html = $args['before'].gEditorialHTML::tag( ( $url ? 'a' : 'span' ), array(
 				'href'  => $url,
-				'title' => $args['title_attr'],
+				'title' => $url ? $args['title_attr'] : FALSE,
 				'rel'   => $url ? 'nofollow' : 'source', // https://support.google.com/webmasters/answer/96569?hl=en
-				'data'  => array( 'toggle' => 'tooltip' ),
+				'data'  => $url ? array( 'toggle' => 'tooltip' ) : FALSE,
 			), $title ).$args['after'];
 		} else {
 			$html = $args['default'];
