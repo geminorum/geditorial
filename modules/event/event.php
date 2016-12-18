@@ -66,10 +66,12 @@ class gEditorialEvent extends gEditorialModuleCore
 					'event_times_column_title' => _x( 'Times', 'Event Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
 				),
 				'event_tag' => array(
+					'menu_name'           => _x( 'Types', 'Event Module: Event Types Tax Labels: Menu Name', GEDITORIAL_TEXTDOMAIN ),
 					'meta_box_title'      => _x( 'Event Types', 'Event Module: Meta Box Title', GEDITORIAL_TEXTDOMAIN ),
 					'tweaks_column_title' => _x( 'Event Types', 'Event Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
 				),
 				'cal_tax' => array(
+					'menu_name'           => _x( 'Calendars', 'Event Module: Event Calendars Tax Labels: Menu Name', GEDITORIAL_TEXTDOMAIN ),
 					'meta_box_title'      => _x( 'Event Calendars', 'Event Module: Meta Box Title', GEDITORIAL_TEXTDOMAIN ),
 					'tweaks_column_title' => _x( 'Event Calendars', 'Event Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
 				),
