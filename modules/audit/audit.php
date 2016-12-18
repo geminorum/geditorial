@@ -41,6 +41,7 @@ class gEditorialAudit extends gEditorialModuleCore
 	{
 		return array(
 			'misc' => array(
+				'menu_name'           => _x( 'Audit', 'Audit Module: Audit Attributes Tax Labels: Menu Name', GEDITORIAL_TEXTDOMAIN ),
 				'tweaks_column_title' => _x( 'Audit Attributes', 'Audit Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
 			),
 			'settings' => array(
