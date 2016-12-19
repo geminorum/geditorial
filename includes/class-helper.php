@@ -88,6 +88,17 @@ class gEditorialHelper extends gEditorialBaseCore
 		return apply_filters( 'geditorial_kses', wp_kses( $text, $allowed ), $allowed, $context );
 	}
 
+	public static function prepDescription( $text )
+	{
+		if ( ! $text )
+			return $text;
+
+		$text = do_shortcode( $text, TRUE );
+		$text = apply_filters( 'gnetwork_typography', $text );
+
+		return wpautop( $text );
+	}
+
 	public static function trimChars( $text, $length = 45, $append = '&hellip;' )
 	{
 		$append = '<span title="'.esc_attr( $text ).'">'.$append.'</span>';

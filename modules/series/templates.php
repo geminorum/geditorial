@@ -170,7 +170,7 @@ class gEditorialSeriesTemplates extends gEditorialTemplateCore
 						$args['title_after'] = sprintf( $args['title_after'],
 							sanitize_term_field( 'name', $the_term->name, $the_term->term_id, $the_term->taxonomy, 'display' ),
 							get_term_link( $the_term, $the_term->taxonomy ),
-							wpautop( $the_term->description, FALSE )
+							gEditorialHelper::prepDescription( $the_term->description )
 						);
 					}
 				}

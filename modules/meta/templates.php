@@ -27,20 +27,9 @@ class gEditorialMetaTemplates extends gEditorialTemplateCore
 	public static function metaLead( $atts = array() )
 	{
 		if ( empty( $atts['filter'] ) )
-			$atts['filter'] = array( __CLASS__, 'meta_lead_filter' );
+			$atts['filter'] = array( 'gEditorialHelper', 'prepDescription' );
 
 		return self::metaField( 'lead', $atts );
-	}
-
-	public static function meta_lead_filter( $meta )
-	{
-		if ( ! $meta )
-			return $meta;
-
-		$meta = do_shortcode( $meta, TRUE );
-		$meta = apply_filters( 'gnetwork_typography', $meta );
-
-		return wpautop( $meta );
 	}
 
 	// FIXME: DEPRECATED
