@@ -78,6 +78,9 @@ class gEditorialMeta extends gEditorialModuleCore
 				),
 			),
 			'misc' => array(
+				'ct_tax' => array(
+					'tweaks_column_title' => _x( 'Column Headers', 'Meta Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				),
 				'meta_column_title'   => _x( 'Metadata', 'Meta Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
 				'author_column_title' => _x( 'Author', 'Meta Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
 				'meta_box_title'      => _x( 'Metadata', 'Meta Module: Meta Box Title', GEDITORIAL_TEXTDOMAIN ),
@@ -127,7 +130,7 @@ class gEditorialMeta extends gEditorialModuleCore
 				$this->constant( 'ct_tax' ) => array(
 					'column' => 'taxonomy-'.$this->constant( 'ct_tax' ),
 					'icon'   => 'admin-post',
-					'title'  => $this->get_string( 'name', 'ct_tax', 'labels' ),
+					'title'  => $this->get_column_title( 'tweaks', 'ct_tax' ),
 				),
 			),
 		);

@@ -44,17 +44,24 @@ class gEditorialContest extends gEditorialModuleCore
 		return array(
 			'misc' => array(
 				'contest_cpt' => array(
-					'meta_box_title'  => _x( 'Metadata', 'Contest Module', GEDITORIAL_TEXTDOMAIN ),
-					'cover_box_title' => _x( 'Poster', 'Contest Module', GEDITORIAL_TEXTDOMAIN ),
-
+					'meta_box_title'        => _x( 'Metadata', 'Contest Module: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
+					'cover_box_title'       => _x( 'Poster', 'Contest Module: CoverBox Title', GEDITORIAL_TEXTDOMAIN ),
 					'cover_column_title'    => _x( 'Poster', 'Contest Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
 					'order_column_title'    => _x( 'O', 'Contest Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
 					'children_column_title' => _x( 'Applies', 'Contest Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
 				),
-				'apply_status_tax' => array(
-					'meta_box_title' => _x( 'Apply Statuses', 'Contest Module', GEDITORIAL_TEXTDOMAIN ),
+				'contest_cat' => array(
+					'tweaks_column_title' => _x( 'Contest Categories', 'Contest Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
 				),
-				'meta_box_title' => _x( 'Contests', 'Contest Module', GEDITORIAL_TEXTDOMAIN ),
+				'apply_cat' => array(
+					'tweaks_column_title' => _x( 'Apply Categories', 'Contest Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				),
+				'apply_status_tax' => array(
+					'meta_box_title'      => _x( 'Apply Statuses', 'Contest Module: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
+					'tweaks_column_title' => _x( 'Apply Statuses', 'Contest Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				),
+				'meta_box_title'      => _x( 'Contests', 'Contest Module: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
+				'tweaks_column_title' => _x( 'Contests', 'Contest Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
 			),
 			'settings' => array(
 				'install_def_apply_status_tax' => _x( 'Install Default Apply Statuses', 'Contest Module: Setting Button', GEDITORIAL_TEXTDOMAIN ),
@@ -238,22 +245,22 @@ class gEditorialContest extends gEditorialModuleCore
 				$this->constant( 'contest_cat' ) => array(
 					'column' => 'taxonomy-'.$this->constant( 'contest_cat' ),
 					'icon'   => 'category',
-					'title'  => $this->get_string( 'name', 'contest_cat', 'labels' ),
+					'title'  => $this->get_column_title( 'tweaks', 'contest_cat' ),
 				),
 				$this->constant( 'contest_tax' ) => array(
 					'column' => 'taxonomy-'.$this->constant( 'contest_tax' ),
 					'icon'   => 'megaphone',
-					'title'  => $this->get_string( 'name', 'contest_tax', 'labels' ),
+					'title'  => $this->get_column_title( 'tweaks', 'contest_tax' ),
 				),
 				$this->constant( 'apply_cat' ) => array(
 					'column' => 'taxonomy-'.$this->constant( 'apply_cat' ),
 					'icon'   => 'category',
-					'title'  => $this->get_string( 'name', 'apply_cat', 'labels' ),
+					'title'  => $this->get_column_title( 'tweaks', 'apply_cat' ),
 				),
 				$this->constant( 'apply_status_tax' ) => array(
 					'column' => 'taxonomy-'.$this->constant( 'apply_status_tax' ),
 					'icon'   => 'portfolio',
-					'title'  => $this->get_string( 'name', 'apply_status_tax', 'labels' ),
+					'title'  => $this->get_column_title( 'tweaks', 'apply_status_tax' ),
 				),
 			),
 		);

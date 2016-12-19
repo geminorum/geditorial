@@ -56,12 +56,11 @@ class gEditorialSeries extends gEditorialModuleCore
 				),
 			),
 			'misc' => array(
-				'post' => array(
-					'meta_box_title'   => _x( 'Series', 'Series Module', GEDITORIAL_TEXTDOMAIN ),
-					'meta_box_action'  => _x( 'Management', 'Series Module', GEDITORIAL_TEXTDOMAIN ),
-					'column_title'     => _x( 'Series', 'Series Module', GEDITORIAL_TEXTDOMAIN ),
-					'show_option_none' => _x( '&mdash; Choose a Series &mdash;', 'Series Module', GEDITORIAL_TEXTDOMAIN ),
-				),
+				'meta_box_title'      => _x( 'Series', 'Series Module: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
+				'meta_box_action'     => _x( 'Management', 'Series Module: MetaBox Action', GEDITORIAL_TEXTDOMAIN ),
+				'column_title'        => _x( 'Series', 'Series Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'tweaks_column_title' => _x( 'Series', 'Series Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'show_option_none'    => _x( '&mdash; Choose a Series &mdash;', 'Series Module', GEDITORIAL_TEXTDOMAIN ),
 			),
 			'noops' => array(
 				'series_tax' => _nx_noop( 'Series', 'Series', 'Series Module: Noop', GEDITORIAL_TEXTDOMAIN ),
@@ -126,7 +125,7 @@ class gEditorialSeries extends gEditorialModuleCore
 				$this->constant( 'series_tax' ) => array(
 					'column' => 'taxonomy-'.$this->constant( 'series_tax' ),
 					'icon'   => $this->module->icon,
-					'title'  => $this->get_string( 'name', 'series_tax', 'labels' ),
+					'title'  => $this->get_column_title( 'tweaks', 'series_tax' ),
 				),
 			),
 		);
