@@ -63,25 +63,26 @@ class gEditorialSeriesTemplates extends gEditorialTemplateCore
 		$series_tax = self::constant( 'series_tax', 'series' );
 
 		$args = shortcode_atts( array(
-			'slug'      => '',
-			'id'        => '',
-			'class'     => '', // css class to the wrapper
-			'title'     => '<a href="%2$s" title="%3$s">%1$s</a>',
-			'title_tag' => 'h3',
-			'list'      => 'ul',
-			'limit'     => -1,
-			'hide'      => -1, // more than this will be hided
-			'future'    => TRUE,
-			'single'    => TRUE,
-			'meta'      => '<h6>%1$s</h6><div class="summary"><p>%2$s</p></div>', // use meta data after
-			'li_before' => '',
-			'orderby'   => 'order',
-			'order'     => 'ASC',
-			'cb'        => FALSE,
-			'exclude'   => FALSE, // or array
-			'before'    => '',
-			'after'     => '',
-			'context'   => NULL,
+			'slug'        => '',
+			'id'          => '',
+			'class'       => '', // css class to the wrapper
+			'title'       => '<a href="%2$s">%1$s</a>',
+			'title_tag'   => 'h3',
+			'title_after' => '<div class="-desc">%3$s</div>',
+			'list'        => 'ul',
+			'limit'       => -1,
+			'hide'        => -1, // more than this will be hided
+			'future'      => TRUE,
+			'single'      => TRUE,
+			'meta'        => '<h6>%1$s</h6><div class="summary"><p>%2$s</p></div>', // use meta data after
+			'li_before'   => '',
+			'orderby'     => 'order',
+			'order'       => 'ASC',
+			'cb'          => FALSE,
+			'exclude'     => FALSE, // or array
+			'before'      => '',
+			'after'       => '',
+			'context'     => NULL,
 		), $atts, $shortcode );
 
 		if ( FALSE === $args['context'] ) // bailing
@@ -161,6 +162,23 @@ class gEditorialSeriesTemplates extends gEditorialTemplateCore
 				), $args['title'] );
 			}
 
+			if ( $args['title_after'] ) {
+
+				if ( FALSE !== strpos( $args['title_after'], '%' ) ) {
+					if ( $the_term = get_term_by( 'id', $args['id'], $series_tax ) ) {
+
+						$args['title_after'] = sprintf( $args['title_after'],
+							sanitize_term_field( 'name', $the_term->name, $the_term->term_id, $the_term->taxonomy, 'display' ),
+							get_term_link( $the_term, $the_term->taxonomy ),
+							wpautop( $the_term->description, FALSE )
+						);
+					}
+				}
+
+			} else {
+				$args['title_after'] = '';
+			}
+
 			$query_args = array(
 				'tax_query'      => $tax_query,
 				'order'          => $args['order'],
@@ -236,7 +254,7 @@ class gEditorialSeriesTemplates extends gEditorialTemplateCore
 							&& ( isset( $post->series_meta['in_series_title'] )
 								|| isset( $post->series_meta['in_series_desc'] ) ) ) {
 
-							if ( TRUE ===  $args['meta'] )
+							if ( TRUE === $args['meta'] )
 								$args['meta'] = '<h6>%1$s</h6><div class="summary"><p>%2$s</p></div>';
 
 							$output .= sprintf( $args['meta'],
@@ -255,7 +273,7 @@ class gEditorialSeriesTemplates extends gEditorialTemplateCore
 				// $the_series = get_term_by( 'id', $args['id'], $series_tax );
 				// $output .= '<br />'.$the_series->name;
 
-				$output = $args['title'].gEditorialHTML::tag( $args['list'], array(
+				$output = $args['title'].$args['title_after'].gEditorialHTML::tag( $args['list'], array(
 					'class' => '-list',
 				), $output );
 
