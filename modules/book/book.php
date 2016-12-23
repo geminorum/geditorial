@@ -277,9 +277,6 @@ class gEditorialBook extends gEditorialModuleCore
 				add_filter( 'post_updated_messages', array( $this, 'post_updated_messages' ) );
 				add_filter( 'get_default_comment_status', array( $this, 'get_default_comment_status' ), 10, 3 );
 
-				add_filter( 'geditorial_meta_box_callback', '__return_true', 12 );
-				add_filter( 'geditorial_meta_dbx_callback', '__return_true', 12 );
-
 			} else if ( 'edit' == $screen->base ) {
 
 				add_filter( 'disable_months_dropdown', '__return_true', 12 );
