@@ -93,9 +93,10 @@ class gEditorialMagazine extends gEditorialModuleCore
 				'tweaks_column_title' => _x( 'Issues', 'Magazine Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
 			),
 			'settings' => array(
-				'issue_tax_check'   => _x( 'Check Terms', 'Magazine Module: Setting Button', GEDITORIAL_TEXTDOMAIN ),
-				'issue_post_create' => _x( 'Create Issue', 'Magazine Module: Setting Button', GEDITORIAL_TEXTDOMAIN ),
-				'issue_store_order' => _x( 'Store Orders', 'Magazine Module: Setting Button', GEDITORIAL_TEXTDOMAIN ),
+				'issue_tax_check'    => _x( 'Check Terms', 'Magazine Module: Setting Button', GEDITORIAL_TEXTDOMAIN ),
+				'issue_post_create'  => _x( 'Create Issue', 'Magazine Module: Setting Button', GEDITORIAL_TEXTDOMAIN ),
+				'issue_post_connect' => _x( 'Re-Connect Posts', 'Magazine Module: Setting Button', GEDITORIAL_TEXTDOMAIN ),
+				'issue_store_order'  => _x( 'Store Orders', 'Magazine Module: Setting Button', GEDITORIAL_TEXTDOMAIN ),
 			),
 			'noops' => array(
 				'issue_cpt'   => _nx_noop( 'Issue', 'Issues', 'Magazine Module: Noop', GEDITORIAL_TEXTDOMAIN ),
@@ -825,6 +826,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 
 			$this->submit_button( 'issue_tax_check', TRUE );
 			$this->submit_button( 'issue_post_create' );
+			$this->submit_button( 'issue_post_connect' );
 			$this->submit_button( 'issue_store_order' );
 
 			echo gEditorialHTML::tag( 'p', array(
@@ -897,6 +899,31 @@ class gEditorialMagazine extends gEditorialModuleCore
 
 					gEditorialWordPress::redirectReferer( array(
 						'message' => 'ordered',
+						'count'   => $count,
+					) );
+
+				} else if ( isset( $_POST['_cb'] )
+					&& isset( $_POST['issue_post_connect'] ) ) {
+
+					$terms = gEditorialWPTaxonomy::getTerms( $this->constant( 'issue_tax' ), FALSE, TRUE );
+					$count = 0;
+
+					foreach ( $_POST['_cb'] as $term_id ) {
+
+						if ( ! isset( $terms[$term_id] ) )
+							continue;
+
+						$post_id = gEditorialWPPostType::getIDbySlug( $terms[$term_id]->slug, $this->constant( 'issue_cpt' ) ) ;
+
+						if ( FALSE === $post_id )
+							continue;
+
+						if ( $this->set_linked_term( $post_id, $terms[$term_id], 'issue_cpt', 'issue_tax' ) )
+							$count++;
+					}
+
+					gEditorialWordPress::redirectReferer( array(
+						'message' => 'updated',
 						'count'   => $count,
 					) );
 				}
