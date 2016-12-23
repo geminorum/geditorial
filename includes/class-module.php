@@ -823,6 +823,11 @@ class gEditorialModuleCore extends gEditorialWPModule
 		return gEditorialHelper::nooped( $count, $this->get_noop( $constant_key ) );
 	}
 
+	public function nooped_count( $constant_key, $count )
+	{
+		return sprintf( gEditorialHelper::noopedCount( $count, $this->get_noop( $constant_key ) ), gEditorialNumber::format( $count ) );
+	}
+
 	public function constant( $key, $default = FALSE )
 	{
 		if ( isset( $this->constants[$key] ) )
