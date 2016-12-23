@@ -17,12 +17,12 @@
 
   // on each module settings
   .-header {
-    margin-bottom: 1em;
+    margin: 1em 0;
 
     h4 {
       font-size: 1.2em;
       line-height: 1.1;
-      margin: 1em 1em 0;
+      margin: 1em 0;
       padding: 0;
     }
 
@@ -34,13 +34,23 @@
   }
 
   // settings sections
-  .-section-title {
-    &.fields_option_section {
-      font-size: inherit !important;
-      font-family: inherit !important;
-      // font-weight: inherit !important;
-      margin-bottom: -3em;
-    }
+  .-section-wrap {}
+  .-section-table {}
+  .-section-title {}
+  .-section-description {}
+  .-section-empty {
+    margin-bottom: 3em;
+  }
+
+  .fields_option_section .-section-title {
+    font-size: inherit !important;
+    font-family: inherit !important;
+    // font-weight: inherit !important;
+    margin-bottom: -3em;
+  }
+
+  .fields_option_section.fields_option_none .-section-title {
+    margin-bottom: 1em;
   }
 
   // on main settings
