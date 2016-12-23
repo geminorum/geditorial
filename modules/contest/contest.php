@@ -206,7 +206,7 @@ class gEditorialContest extends gEditorialModuleCore
 			$this->insert_default_terms( 'apply_status_tax' );
 
 		parent::register_settings( $page );
-		$this->register_settings_button( 'install_def_apply_status_tax' );
+		$this->register_button( 'install_def_apply_status_tax' );
 	}
 
 	// DISABLED

@@ -239,10 +239,10 @@ class gEditorialEvent extends gEditorialModuleCore
 
 		parent::register_settings( $page );
 
-		$this->register_settings_button( 'install_def_event_tag' );
+		$this->register_button( 'install_def_event_tag' );
 
 		if ( $this->get_setting( 'startend_support', TRUE ) )
-			$this->register_settings_button( 'install_def_type_tax' );
+			$this->register_button( 'install_def_type_tax' );
 	}
 
 	public function gpeople_support( $post_types )

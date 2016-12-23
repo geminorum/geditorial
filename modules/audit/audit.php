@@ -175,7 +175,7 @@ class gEditorialAudit extends gEditorialModuleCore
 			$this->insert_default_terms( 'audit_tax' );
 
 		parent::register_settings( $page );
-		$this->register_settings_button( 'install_def_audit_tax' );
+		$this->register_button( 'install_def_audit_tax' );
 	}
 
 	public function tweaks_strings( $strings )

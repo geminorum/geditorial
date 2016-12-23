@@ -413,7 +413,7 @@ class gEditorialBook extends gEditorialModuleCore
 			$this->insert_default_terms( 'size_tax' );
 
 		parent::register_settings( $page );
-		$this->register_settings_button( 'install_def_size_tax' );
+		$this->register_button( 'install_def_size_tax' );
 	}
 
 	public function gpeople_support( $post_types )

@@ -25,11 +25,13 @@ class gEditorialModuleCore extends gEditorialWPModule
 
 	protected $post_types_excluded = array( 'attachment' );
 	protected $taxonomies_excluded = array();
-	protected $kses_allowed        = array();
-	protected $settings_buttons    = array();
-	protected $settings_scripts    = array();
-	protected $image_sizes         = array();
-	protected $errors              = array();
+
+	protected $image_sizes  = array();
+	protected $kses_allowed = array();
+
+	protected $scripts = array();
+	protected $buttons = array();
+	protected $errors  = array();
 
 	protected $caps = array(
 		'reports'  => 'edit_others_posts',
@@ -509,15 +511,7 @@ class gEditorialModuleCore extends gEditorialWPModule
 
 			echo '<input id="geditorial_module_name" name="geditorial_module_name" type="hidden" value="'.esc_attr( $this->module->name ).'" />';
 
-			echo '<p class="submit">';
-
-				foreach ( $this->settings_buttons as $action => $button ) {
-					submit_button( $button['value'], $button['type'], $action, FALSE, $button['atts'] );
-					echo '&nbsp;&nbsp;';
-				}
-
-			echo '<a class="button" href="'.gEditorialSettingsCore::settingsURL().'">'
-				._x( 'Back to Editorial', 'Module Core', GEDITORIAL_TEXTDOMAIN ).'</a></p>';
+			$this->settings_buttons();
 
 		echo '</form>';
 
@@ -525,16 +519,36 @@ class gEditorialModuleCore extends gEditorialWPModule
 			self::dump( $this->options );
 	}
 
-	public function register_settings_button( $key, $value = NULL, $atts = array(), $type = 'secondary' )
+	public function default_buttons( $page = NULL )
+	{
+		$this->register_button( 'submit', _x( 'Save Changes', 'Module Core', GEDITORIAL_TEXTDOMAIN ), array( 'default' => 'default' ), 'primary' );
+		$this->register_button( 'reset-settings', _x( 'Reset Settings', 'Module Core', GEDITORIAL_TEXTDOMAIN ), sprintf( 'onclick="return confirm( \'%s\' )"', _x( 'Are you sure? This operation can not be undone.', 'Module Core', GEDITORIAL_TEXTDOMAIN ) ) );
+	}
+
+	public function register_button( $key, $value = NULL, $atts = array(), $type = 'secondary' )
 	{
 		if ( is_null( $value ) )
 			$value = $this->get_string( $key, 'buttons', 'settings' );
 
-		$this->settings_buttons[$key] = array(
-			'value' => $value,
+		$this->buttons[$key] = array(
+			'value' => is_null( $value ) ? $key : $value,
 			'atts'  => $atts,
 			'type'  => $type,
 		);
+	}
+
+	protected function settings_buttons( $page = NULL, $wrap = '' )
+	{
+		if ( FALSE !== $wrap )
+			echo '<p class="submit '.$this->base.'-wrap-buttons '.$wrap.'">';
+
+		foreach ( $this->buttons as $action => $button ) {
+			echo get_submit_button( $button['value'], $button['type'], $action, FALSE, $button['atts'] );
+			echo '&nbsp;&nbsp;';
+		}
+
+		if ( FALSE !== $wrap )
+			echo '</p>';
 	}
 
 	protected function submit_button( $name = '', $primary = FALSE, $text = NULL, $atts = array() )
@@ -924,8 +938,7 @@ class gEditorialModuleCore extends gEditorialWPModule
 			}
 		}
 
-		$this->register_settings_button( 'submit', _x( 'Save Changes', 'Module Core', GEDITORIAL_TEXTDOMAIN ), array( 'default' => 'default' ), 'primary' );
-		$this->register_settings_button( 'reset-settings', _x( 'Reset Settings', 'Module Core', GEDITORIAL_TEXTDOMAIN ), sprintf( 'onclick="return confirm( \'%s\' )"', _x( 'Are you sure? This operation can not be undone.', 'Module Core', GEDITORIAL_TEXTDOMAIN ) ) );
+		$this->default_buttons( $page );
 
 		$screen = get_current_screen();
 
@@ -991,7 +1004,7 @@ class gEditorialModuleCore extends gEditorialWPModule
 		if ( empty( $args['cap'] ) )
 			$args['cap'] = empty( $this->caps[$args['option_group']] ) ? NULL : $this->caps[$args['option_group']];
 
-		gEditorialSettingsCore::fieldType( $args, $this->settings_scripts );
+		gEditorialSettingsCore::fieldType( $args, $this->scripts );
 	}
 
 	public function settings_print_scripts()
@@ -999,8 +1012,8 @@ class gEditorialModuleCore extends gEditorialWPModule
 		if ( $this->scripts_printed )
 			return;
 
-		if ( count( $this->settings_scripts ) )
-			gEditorialHTML::wrapJS( implode( "\n", $this->settings_scripts ) );
+		if ( count( $this->scripts ) )
+			gEditorialHTML::wrapJS( implode( "\n", $this->scripts ) );
 
 		$this->scripts_printed = TRUE;
 	}
