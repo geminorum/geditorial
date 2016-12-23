@@ -1,3 +1,36 @@
+### 3.9.7
+* core/base: dep func helper
+* main/helper: removed direct use of gen tax labels
+* main/helper: prep desc helper
+* main/modulecore: internal api for connecting posts to terms
+* main/modulecore: buttons/scripts internal api
+* main/modulecore: custom option all string for restricted dropdowns
+* main/modulecore: lighter query for linked posts count
+* main/modulecore: default nooped strings
+* main/modulecore: printf nooped helper
+* main/settings: wrapping sections
+* main/template: replace deprecated helper
+* main/template: disable title attr if no link on meta link gen
+* module/audit: custom menu name
+* module/book: correct link back to connected items in publication edit page
+* module/contest: contests/applies on dashboard glance
+* module/contest: using current screen for meta box
+* module/contest: tools adopted from magazine module
+* module/event: custom menu name for taxes
+* module/event: remove old venue tax remains
+* module/magazine: bulk tool to reconnect posts to terms
+* module/magazine: post from term using selected ids
+* module/magazine: tweaks attr row for connected items
+* module/meta: adding dep func to old meta helpers
+* module/meta: using new method for meta lead on content actions
+* module/meta: default terms for column headers
+* module/meta: dropping the old code
+* module/ortho: more keyword for ms word footnotes
+* module/series: getting meta info if one post is in the series
+* module/series: title after arg for the shortcode
+* module/tweaks: more tax exceptions
+* module/tweaks: using column title helper
+
 ### 3.9.6
 * core/date: :warning: fixed fatal
 * wordpress/module: :warning: fixed fatal
