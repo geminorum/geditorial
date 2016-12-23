@@ -285,6 +285,8 @@ class gEditorialMagazine extends gEditorialModuleCore
 
 				$this->_edit_screen( $screen->post_type );
 				add_filter( 'manage_edit-'.$screen->post_type.'_sortable_columns', array( $this, 'sortable_columns' ) );
+
+				add_action( 'geditorial_tweaks_column_attr', array( $this, 'main_column_attr' ) );
 			}
 
 			add_action( 'save_post', array( $this, 'save_post_main_cpt' ), 20, 3 );
@@ -775,6 +777,45 @@ class gEditorialMagazine extends gEditorialModuleCore
 	{
 		$columns['order'] = 'menu_order';
 		return $columns;
+	}
+
+	public function main_column_attr( $post )
+	{
+		$posts = $this->get_linked_posts( $post->ID, 'issue_cpt', 'issue_tax' );
+		$count = count( $posts );
+
+		if ( ! $count )
+			return;
+
+		echo '<li class="-attr -magazine -children">';
+
+			echo $this->get_column_icon( FALSE, NULL, $this->get_column_title( 'children', 'issue_cpt' ) );
+
+			$post_types = array_unique( array_map( function( $r ){
+				return $r->post_type;
+			}, $posts ) );
+
+			$args = array(
+				$this->constant( 'issue_tax' ) => $post->post_name,
+			);
+
+			if ( empty( $this->all_post_types ) )
+				$this->all_post_types = gEditorialWordPress::getPostTypes( 2 );
+
+			echo '<span class="-counted">'.$this->nooped_count( 'connected', $count ).'</span>';
+
+			$list = array();
+
+			foreach ( $post_types as $post_type )
+				$list[] = gEditorialHTML::tag( 'a', array(
+					'href'   => gEditorialWordPress::getPostTypeEditLink( $post_type, 0, $args ),
+					'title'  => _x( 'View the connected list', 'Magazine Module', GEDITORIAL_TEXTDOMAIN ),
+					'target' => '_blank',
+				), $this->all_post_types[$post_type] );
+
+			echo gEditorialHelper::getJoined( $list, ' <span class="-posttypes">(', ')</span>' );
+
+		echo '</li>';
 	}
 
 	public function post_updated_messages( $messages )
