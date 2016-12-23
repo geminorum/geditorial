@@ -377,19 +377,11 @@ class gEditorialMagazine extends gEditorialModuleCore
 
 	public function term_link( $link, $term, $taxonomy )
 	{
-		if ( $this->constant( 'issue_tax' ) == $taxonomy ) {
-			$post_id = '';
+		if ( $this->constant( 'issue_tax' ) != $taxonomy )
+			return $link;
 
-			// FIXME: working but disabled
-			// if ( function_exists( 'get_term_meta' ) )
-			// 	$post_id = get_term_meta( $term->term_id, $this->constant( 'issue_cpt' ).'_linked', TRUE );
-
-			if ( FALSE == $post_id || empty( $post_id ) )
-				$post_id = self::getPostIDbySlug( $term->slug, $this->constant( 'issue_cpt' ) );
-
-			if ( ! empty( $post_id ) )
-				return get_permalink( $post_id );
-		}
+		if ( $post_id = $this->get_linked_post_id( $term, 'issue_cpt', 'issue_tax' ) )
+			return get_permalink( $post_id );
 
 		return $link;
 	}
@@ -399,7 +391,8 @@ class gEditorialMagazine extends gEditorialModuleCore
 		if ( is_tax( $this->constant( 'issue_tax' ) ) ) {
 
 			$term = get_queried_object();
-			if ( $post_id = self::getPostIDbySlug( $term->slug, $this->constant( 'issue_cpt' ) ) )
+
+			if ( $post_id = $this->get_linked_post_id( $term, 'issue_cpt', 'issue_tax' ) )
 				gEditorialWordPress::redirect( get_permalink( $post_id ), 301 );
 
 		} else if ( is_tax( $this->constant( 'span_tax' ) ) ) {
@@ -447,12 +440,8 @@ class gEditorialMagazine extends gEditorialModuleCore
 			$term = wp_update_term( $the_term->term_id, $this->constant( 'issue_tax' ), $args );
 		}
 
-		if ( ! is_wp_error( $term ) ) {
-			update_post_meta( $post_ID, '_'.$this->constant( 'issue_cpt' ).'_term_id', $term['term_id'] );
-
-			if ( function_exists( 'update_term_meta' ) )
-				update_term_meta( $term['term_id'], $this->constant( 'issue_cpt' ).'_linked', $post_ID );
-		}
+		if ( ! is_wp_error( $term ) )
+			$this->set_linked_term( $post_ID, $term['term_id'], 'issue_cpt', 'issue_tax' );
 
 		return $post_ID;
 	}
@@ -478,12 +467,8 @@ class gEditorialMagazine extends gEditorialModuleCore
 
 		$term = wp_insert_term( $post->post_title, $this->constant( 'issue_tax' ), $args );
 
-		if ( ! is_wp_error( $term ) ) {
-			update_post_meta( $post_ID, '_'.$this->constant( 'issue_cpt' ).'_term_id', $term['term_id'] );
-
-			if ( function_exists( 'update_term_meta' ) )
-				update_term_meta( $term['term_id'], $this->constant( 'issue_cpt' ).'_linked', $post_ID );
-		}
+		if ( ! is_wp_error( $term ) )
+			$this->set_linked_term( $post_ID, $term['term_id'], 'issue_cpt', 'issue_tax' );
 
 		return $post_ID;
 	}
@@ -723,37 +708,28 @@ class gEditorialMagazine extends gEditorialModuleCore
 			$post_id = get_the_ID();
 
 		$terms = gEditorialWPTaxonomy::getTerms( $this->constant( 'issue_tax' ), $post_id, TRUE );
+
 		if ( ! count( $terms ) )
 			return FALSE;
 
 		$id  = FALSE;
 		$ids = array();
+
 		foreach ( $terms as $term ) {
 
-			// FIXME: working but disabled
-			// if ( function_exists( 'get_term_meta' ) )
-			// 	$id = get_term_meta( $term->term_id, $this->constant( 'issue_cpt'].'_linked', TRUE );
-
-			if ( FALSE == $id || empty( $id ) )
-				$id = self::getPostIDbySlug( $term->slug, $this->constant( 'issue_cpt' ) );
-
-			if ( FALSE != $id && ! empty( $id ) ) {
+			if ( $id = $this->get_linked_post_id( $term, 'issue_cpt', 'issue_tax' ) ) {
 
 				if ( $single )
 					return $id;
 
-				$status = get_post_status( $id );
-
-				if ( 'publish' == $status )
-					$ids[$id] = get_permalink( $id );
-				else
-					$ids[$id] = FALSE;
+				$ids[$id] = 'publish' == get_post_status( $id ) ? get_permalink( $id ) : FALSE;
 			}
 		}
 
-		if ( ! count( $ids ) )
-			return FALSE;
-		return $ids;
+		if ( count( $ids ) )
+			return $ids;
+
+		return FALSE;
 	}
 
 	public function manage_posts_columns( $columns )
@@ -823,16 +799,16 @@ class gEditorialMagazine extends gEditorialModuleCore
 					'name'    => _x( 'Name', 'Magazine Module', GEDITORIAL_TEXTDOMAIN ),
 					'issue'   => array(
 						'title' => _x( 'Issue', 'Magazine Module', GEDITORIAL_TEXTDOMAIN ),
-						'callback' => function( $value, $row, $column ){
-							if ( $post_id = self::getPostIDbySlug( $row->slug, $this->constant( 'issue_cpt' ) ) )
+						'callback' => function( $value, $row, $column, $index ){
+							if ( $post_id = gEditorialWPPostType::getIDbySlug( $row->slug, $this->constant( 'issue_cpt' ) ) )
 								return $post_id.' &mdash; '.get_post($post_id)->post_title;
 							return _x( '&mdash;&mdash;&mdash;&mdash; No Issue', 'Magazine Module', GEDITORIAL_TEXTDOMAIN );
 						},
 					),
 					'count' => array(
 						'title'    => _x( 'Count', 'Magazine Module', GEDITORIAL_TEXTDOMAIN ),
-						'callback' => function( $value, $row, $column ){
-							if ( $post_id = self::getPostIDbySlug( $row->slug, $this->constant( 'issue_cpt' ) ) )
+						'callback' => function( $value, $row, $column, $index ){
+							if ( $post_id = gEditorialWPPostType::getIDbySlug( $row->slug, $this->constant( 'issue_cpt' ) ) )
 								return number_format_i18n( $this->get_linked_posts( $post_id, 'issue_cpt', 'issue_tax', TRUE ) );
 							return number_format_i18n( $row->count );
 						},

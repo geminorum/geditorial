@@ -1552,6 +1552,35 @@ class gEditorialModuleCore extends gEditorialWPModule
 		return get_term_by( 'id', intval( $term_id ), $this->constant( $tax_constant_key ) );
 	}
 
+	public function set_linked_term( $post_id, $term_or_id, $posttype_constant_key, $tax_constant_key )
+	{
+		if ( ! $term = gEditorialWPTaxonomy::getTerm( $term_or_id, $this->constant( $tax_constant_key ) ) )
+			return FALSE;
+
+		update_post_meta( $post_id, '_'.$this->constant( $posttype_constant_key ).'_term_id', $term->term_id );
+
+		if ( function_exists( 'update_term_meta' ) )
+			update_term_meta( $term->term_id, $this->constant( $posttype_constant_key ).'_linked', $post_id );
+
+		return TRUE;
+	}
+
+	public function get_linked_post_id( $term_or_id, $posttype_constant_key, $tax_constant_key )
+	{
+		if ( ! $term = gEditorialWPTaxonomy::getTerm( $term_or_id, $this->constant( $tax_constant_key ) ) )
+			return FALSE;
+
+		$post_id = FALSE;
+
+		if ( function_exists( 'get_term_meta' ) )
+			$post_id = get_term_meta( $term->term_id, $this->constant( $posttype_constant_key ).'_linked', TRUE );
+
+		if ( ! $post_id )
+			$post_id = gEditorialWPPostType::getIDbySlug( $term->slug, $this->constant( $posttype_constant_key ) );
+
+		return $post_id;
+	}
+
 	public function get_linked_posts( $post_id, $posttype_constant_key, $tax_constant_key, $count = FALSE, $term_id = NULL )
 	{
 		if ( is_null( $term_id ) )

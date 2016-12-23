@@ -270,19 +270,11 @@ class gEditorialContest extends gEditorialModuleCore
 
 	public function term_link( $link, $term, $taxonomy )
 	{
-		if ( $this->constant( 'contest_tax' ) == $taxonomy ) {
-			$post_id = '';
+		if ( $this->constant( 'contest_tax' ) != $taxonomy )
+			return $link;
 
-			// FIXME: working but disabled
-			// if ( function_exists( 'get_term_meta' ) )
-			// 	$post_id = get_term_meta( $term->term_id, $this->constant( 'contest_cpt' ).'_linked', TRUE );
-
-			if ( FALSE == $post_id || empty( $post_id ) )
-				$post_id = self::getPostIDbySlug( $term->slug, $this->constant( 'contest_cpt' ) );
-
-			if ( ! empty( $post_id ) )
-				return get_permalink( $post_id );
-		}
+		if ( $post_id = $this->get_linked_post_id( $term, 'contest_cpt', 'contest_tax' ) )
+			return get_permalink( $post_id );
 
 		return $link;
 	}
@@ -292,7 +284,8 @@ class gEditorialContest extends gEditorialModuleCore
 		if ( is_tax( $this->constant( 'contest_tax' ) ) ) {
 
 			$term = get_queried_object();
-			if ( $post_id = self::getPostIDbySlug( $term->slug, $this->constant( 'contest_cpt' ) ) )
+
+			if ( $post_id = $this->get_linked_post_id( $term, 'contest_cpt', 'contest_tax' ) )
 				gEditorialWordPress::redirect( get_permalink( $post_id ), 301 );
 
 		} else if ( is_post_type_archive( $this->constant( 'contest_cpt' ) )
@@ -483,12 +476,8 @@ class gEditorialContest extends gEditorialModuleCore
 			$term = wp_update_term( $the_term->term_id, $this->constant( 'contest_tax' ), $args );
 		}
 
-		if ( ! is_wp_error( $term ) ) {
-			update_post_meta( $post_ID, '_'.$this->constant( 'contest_tax' ).'_term_id', $term['term_id'] );
-
-			if ( function_exists( 'update_term_meta' ) )
-				update_term_meta( $term['term_id'], $this->constant( 'contest_tax' ).'_linked', $post_ID );
-		}
+		if ( ! is_wp_error( $term ) )
+			$this->set_linked_term( $post_ID, $term['term_id'], 'contest_cpt', 'contest_tax' );
 
 		return $post_ID;
 	}
@@ -514,12 +503,8 @@ class gEditorialContest extends gEditorialModuleCore
 
 		$term = wp_insert_term( $post->post_title, $this->constant( 'contest_tax' ), $args );
 
-		if ( ! is_wp_error( $term ) ) {
-			update_post_meta( $post_ID, '_'.$this->constant( 'contest_cpt' ).'_term_id', $term['term_id'] );
-
-			if ( function_exists( 'update_term_meta' ) )
-				update_term_meta( $term['term_id'], $this->constant( 'contest_cpt' ).'_linked', $post_ID );
-		}
+		if ( ! is_wp_error( $term ) )
+			$this->set_linked_term( $post_ID, $term['term_id'], 'contest_cpt', 'contest_tax' );
 
 		return $post_ID;
 	}

@@ -196,14 +196,7 @@ class gEditorialHelper extends gEditorialBaseCore
 
 	public static function getTermPosts( $taxonomy, $term_or_id, $exclude = array() )
 	{
-		if ( is_object( $term_or_id ) )
-			$term = $term_or_id;
-		else if ( is_numeric( $term_or_id ) )
-			$term = get_term_by( 'id', $term_or_id, $taxonomy );
-		else
-			$term = get_term_by( 'slug', $term_or_id, $taxonomy );
-
-		if ( ! $term )
+		if ( ! $term = gEditorialWPTaxonomy::getTerm( $term_or_id, $taxonomy ) )
 			return '';
 
 		$query_args = array(
