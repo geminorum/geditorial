@@ -66,6 +66,9 @@ class gEditorialContest extends gEditorialModuleCore
 			),
 			'settings' => array(
 				'install_def_apply_status_tax' => _x( 'Install Default Apply Statuses', 'Contest Module: Setting Button', GEDITORIAL_TEXTDOMAIN ),
+				'contest_tax_check'            => _x( 'Check Terms', 'Contest Module: Setting Button', GEDITORIAL_TEXTDOMAIN ),
+				'contest_post_create'          => _x( 'Create Contest Posts', 'Contest Module: Setting Button', GEDITORIAL_TEXTDOMAIN ),
+				'contest_post_connect'         => _x( 'Re-Connect Posts', 'Contest Module: Setting Button', GEDITORIAL_TEXTDOMAIN ),
 			),
 			'noops' => array(
 				'contest_cpt'      => _nx_noop( 'Contest', 'Contests', 'Contest Module: Noop', GEDITORIAL_TEXTDOMAIN ),
@@ -697,5 +700,134 @@ class gEditorialContest extends gEditorialModuleCore
 			echo gEditorialHelper::getJoined( $list, ' <span class="-posttypes">(', ')</span>' );
 
 		echo '</li>';
+	}
+
+	public function tools_sub( $uri, $sub )
+	{
+		echo '<form class="settings-form" method="post" action="">';
+
+			echo '<h3>'._x( 'Contest Tools', 'Contest Module', GEDITORIAL_TEXTDOMAIN ).'</h3>';
+			echo '<table class="form-table">';
+
+			echo '<tr><th scope="row">'._x( 'From Terms', 'Contest Module', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
+
+			if ( ! empty( $_POST ) && isset( $_POST['contest_tax_check'] ) ) {
+
+				gEditorialHTML::tableList( array(
+					'_cb'     => 'term_id',
+					'term_id' => _x( 'ID', 'Contest Module', GEDITORIAL_TEXTDOMAIN ),
+					'name'    => _x( 'Name', 'Contest Module', GEDITORIAL_TEXTDOMAIN ),
+					'issue'   => array(
+						'title' => _x( 'Contest', 'Contest Module', GEDITORIAL_TEXTDOMAIN ),
+						'callback' => function( $value, $row, $column, $index ){
+							if ( $post_id = gEditorialWPPostType::getIDbySlug( $row->slug, $this->constant( 'contest_cpt' ) ) )
+								return $post_id.' &mdash; '.get_post($post_id)->post_title;
+							return _x( '&mdash;&mdash;&mdash;&mdash; No Contest', 'Contest Module', GEDITORIAL_TEXTDOMAIN );
+						},
+					),
+					'count' => array(
+						'title'    => _x( 'Count', 'Contest Module', GEDITORIAL_TEXTDOMAIN ),
+						'callback' => function( $value, $row, $column, $index ){
+							if ( $post_id = gEditorialWPPostType::getIDbySlug( $row->slug, $this->constant( 'contest_cpt' ) ) )
+								return number_format_i18n( $this->get_linked_posts( $post_id, 'contest_cpt', 'contest_tax', TRUE ) );
+							return number_format_i18n( $row->count );
+						},
+					),
+					'description' => array(
+						'title'    => _x( 'Description', 'Contest Module', GEDITORIAL_TEXTDOMAIN ),
+						'callback' => 'wpautop',
+						'class'    => 'description',
+					),
+				), gEditorialWPTaxonomy::getTerms( $this->constant( 'contest_tax' ), FALSE, TRUE ) );
+
+				echo '<br />';
+			}
+
+			$this->submit_button( 'contest_tax_check', TRUE );
+			$this->submit_button( 'contest_post_create' );
+			$this->submit_button( 'contest_post_connect' );
+
+			echo gEditorialHTML::tag( 'p', array(
+				'class' => 'description',
+			), _x( 'Check for contest terms and create corresponding contest posts.', 'Contest Module', GEDITORIAL_TEXTDOMAIN ) );
+
+			echo '</td></tr>';
+			echo '</table>';
+
+			$this->settings_field_referer( $sub, 'tools' );
+
+		echo '</form>';
+	}
+
+	public function tools_settings( $sub )
+	{
+		if ( ! $this->cuc( 'tools' ) )
+			return;
+
+		if ( $this->module->name == $sub ) {
+			if ( ! empty( $_POST ) ) {
+
+				$this->settings_check_referer( $sub, 'tools' );
+
+				if ( isset( $_POST['_cb'] )
+					&& isset( $_POST['contest_post_create'] ) ) {
+
+					$terms = gEditorialWPTaxonomy::getTerms( $this->constant( 'contest_tax' ), FALSE, TRUE );
+					$posts = array();
+
+					foreach ( $_POST['_cb'] as $term_id ) {
+
+						if ( ! isset( $terms[$term_id] ) )
+							continue;
+
+						$post_id = gEditorialWPPostType::getIDbySlug( $terms[$term_id]->slug, $this->constant( 'contest_cpt' ) ) ;
+
+						if ( FALSE !== $post_id )
+							continue;
+
+						$posts[] = gEditorialWordPress::newPostFromTerm(
+							$terms[$term_id],
+							$this->constant( 'contest_tax' ),
+							$this->constant( 'contest_cpt' ),
+							gEditorialHelper::getEditorialUserID()
+						);
+					}
+
+					gEditorialWordPress::redirectReferer( array(
+						'message' => 'created',
+						'count'   => count( $posts ),
+					) );
+
+				} else if ( isset( $_POST['_cb'] )
+					&& isset( $_POST['contest_post_connect'] ) ) {
+
+					$terms = gEditorialWPTaxonomy::getTerms( $this->constant( 'contest_tax' ), FALSE, TRUE );
+					$count = 0;
+
+					foreach ( $_POST['_cb'] as $term_id ) {
+
+						if ( ! isset( $terms[$term_id] ) )
+							continue;
+
+						$post_id = gEditorialWPPostType::getIDbySlug( $terms[$term_id]->slug, $this->constant( 'contest_cpt' ) ) ;
+
+						if ( FALSE === $post_id )
+							continue;
+
+						if ( $this->set_linked_term( $post_id, $terms[$term_id], 'contest_cpt', 'contest_tax' ) )
+							$count++;
+					}
+
+					gEditorialWordPress::redirectReferer( array(
+						'message' => 'updated',
+						'count'   => $count,
+					) );
+				}
+			}
+
+			add_action( 'geditorial_tools_sub_'.$this->module->name, array( $this, 'tools_sub' ), 10, 2 );
+		}
+
+		add_filter( 'geditorial_tools_subs', array( $this, 'append_sub' ), 10, 2 );
 	}
 }
