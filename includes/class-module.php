@@ -1586,7 +1586,7 @@ class gEditorialModuleCore extends gEditorialWPModule
 		if ( is_null( $term_id ) )
 			$term_id = get_post_meta( $post_id, '_'.$this->constant( $posttype_constant_key ).'_term_id', TRUE );
 
-		$items = get_posts( array(
+		$args = array(
 			'tax_query' => array( array(
 				'taxonomy' => $this->constant( $tax_constant_key ),
 				'field'    => 'id',
@@ -1594,7 +1594,16 @@ class gEditorialModuleCore extends gEditorialWPModule
 			) ),
 			'post_type'   => $this->post_types(),
 			'numberposts' => -1,
-		) );
+		);
+
+		if ( $count ) {
+			$args['fields'] = 'ids';
+			$args['update_post_meta_cache'] = FALSE;
+			$args['update_post_term_cache'] = FALSE;
+			$args['lazy_load_term_meta'] = FALSE;
+		}
+
+		$items = get_posts( $args );
 
 		if ( $count )
 			return count( $items );
