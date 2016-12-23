@@ -792,6 +792,15 @@ class gEditorialModuleCore extends gEditorialWPModule
 		if ( ! empty( $this->strings['noops'][$constant_key] ) )
 			return $this->strings['noops'][$constant_key];
 
+		if ( 'post' == $constant_key )
+			return _nx_noop( '%s Post', '%s Posts', 'Module Core: Noop', GEDITORIAL_TEXTDOMAIN );
+
+		if ( 'connected' == $constant_key )
+			return _nx_noop( '%s Item Connected', '%s Items Connected', 'Module Core: Noop', GEDITORIAL_TEXTDOMAIN );
+
+		if ( 'word' == $constant_key )
+			return _nx_noop( '%s Word', '%s Words', 'Module Core: Noop', GEDITORIAL_TEXTDOMAIN );
+
 		$noop = array(
 			'plural'   => $constant_key,
 			'singular' => $constant_key,
