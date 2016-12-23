@@ -204,6 +204,7 @@ class gEditorialMeta extends gEditorialModuleCore
 				add_action( 'geditorial_meta_do_meta_box', array( $this, 'do_meta_box' ), 10, 4 );
 
 			} else if ( 'edit' == $screen->base ) {
+				$this->_admin_enabled();
 				$this->_edit_screen( $screen->post_type );
 			}
 
