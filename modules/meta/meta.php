@@ -90,9 +90,18 @@ class gEditorialMeta extends gEditorialModuleCore
 				'custom_fields_check'   => _x( 'Check', 'Meta Module: Setting Button', GEDITORIAL_TEXTDOMAIN ),
 				'custom_fields_convert' => _x( 'Covert', 'Meta Module: Setting Button', GEDITORIAL_TEXTDOMAIN ),
 				'custom_fields_delete'  => _x( 'Delete', 'Meta Module: Setting Button', GEDITORIAL_TEXTDOMAIN ),
+				'install_def_ct_tax'    => _x( 'Install Default Column Headers', 'Meta Module: Setting Button', GEDITORIAL_TEXTDOMAIN ),
 			),
 			'noops' => array(
 				'ct_tax' => _nx_noop( 'Column Header', 'Column Headers', 'Meta Module: Noop', GEDITORIAL_TEXTDOMAIN ),
+			),
+			'terms' => array(
+				'ct_tax' => array(
+					'introduction' => _x( 'Introduction', 'Meta Module: Column Headers Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
+					'interview'    => _x( 'Interview', 'Meta Module: Column Headers Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
+					'review'       => _x( 'Review', 'Meta Module: Column Headers Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
+					'report'       => _x( 'Report', 'Meta Module: Column Headers Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
+				),
 			),
 		);
 	}
@@ -119,6 +128,18 @@ class gEditorialMeta extends gEditorialModuleCore
 				'st' => array( 'type' => 'title_after' ),
 			),
 		);
+	}
+
+	public function register_settings( $page = NULL )
+	{
+		if ( ! $this->is_register_settings( $page ) )
+			return;
+
+		if ( isset( $_POST['install_def_ct_tax'] ) )
+			$this->insert_default_terms( 'ct_tax' );
+
+		parent::register_settings( $page );
+		$this->register_button( 'install_def_ct_tax' );
 	}
 
 	public function tweaks_strings( $strings )
