@@ -102,6 +102,9 @@
         QTags.addButton(b, o.s['qtag_' + b], o.q[b], '', '', o.s['qtag_' + b + '_title']);
       }
     }
+
+    // giving back focus to title input
+    try{document.post.title.focus();}catch(e){}
   });
 
   c[m] = o;
