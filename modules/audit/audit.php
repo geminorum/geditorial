@@ -43,6 +43,7 @@ class gEditorialAudit extends gEditorialModuleCore
 			'misc' => array(
 				'menu_name'           => _x( 'Audit', 'Audit Module: Audit Attributes Tax Labels: Menu Name', GEDITORIAL_TEXTDOMAIN ),
 				'tweaks_column_title' => _x( 'Audit Attributes', 'Audit Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'show_option_all'     => _x( 'Audit', 'Audit Module: Show Option All', GEDITORIAL_TEXTDOMAIN ),
 			),
 			'settings' => array(
 				'install_def_audit_tax' => _x( 'Install Default Attributes', 'Audit Module: Setting Button', GEDITORIAL_TEXTDOMAIN ),
@@ -201,7 +202,7 @@ class gEditorialAudit extends gEditorialModuleCore
 
 		wp_dropdown_categories( array(
 			'taxonomy'        => $audit,
-			'show_option_all' => $tax->labels->all_items,
+			'show_option_all' => $this->get_string( 'show_option_all', 'audit_tax', 'misc', $tax->labels->all_items ),
 			'name'            => $tax->name,
 			'order'           => 'DESC',
 			'selected'        => isset( $_GET[$audit] ) ? $_GET[$audit] : 0,

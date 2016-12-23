@@ -1591,7 +1591,7 @@ class gEditorialModuleCore extends gEditorialWPModule
 				if ( $obj = get_taxonomy( $tax ) ) {
 
 					wp_dropdown_categories( array(
-						'show_option_all' => $obj->labels->all_items,
+						'show_option_all' => $this->get_string( 'show_option_all', $constant_key, 'misc', $obj->labels->all_items ),
 						'taxonomy'        => $tax,
 						'name'            => $obj->name,
 						'orderby'         => 'name',
