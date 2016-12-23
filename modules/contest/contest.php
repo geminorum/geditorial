@@ -268,6 +268,17 @@ class gEditorialContest extends gEditorialModuleCore
 		return self::recursiveParseArgs( $new, $strings );
 	}
 
+	public function dashboard_glance_items( $items )
+	{
+		if ( $contests = $this->dashboard_glance_post( 'contest_cpt' ) )
+			$items[] = $contests;
+
+		if ( $applies = $this->dashboard_glance_post( 'apply_cpt' ) )
+			$items[] = $applies;
+
+		return $items;
+	}
+
 	public function term_link( $link, $term, $taxonomy )
 	{
 		if ( $this->constant( 'contest_tax' ) != $taxonomy )
