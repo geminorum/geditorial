@@ -1,3 +1,6 @@
+### 3.9.8
+* module/ortho: giving back focus to title input
+
 ### 3.9.7
 * core/base: dep func helper
 * main/helper: removed direct use of gen tax labels
