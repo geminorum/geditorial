@@ -43,13 +43,13 @@
   o.u = {
     pF: function(c) {
       var fn = {};
-      c = c.replace(/\<a[^h]*(?=href\=\"[^\"]*\#_ftnref([0-9]+)\")[^>]*\>\[([0-9]+)\]\<\/a\>(.*)/g, function(m, p1, p2, p3) {
-        fn[p1] = p3.trim().replace(/^./, "").trim();
+      c = c.replace(/\<a[^h]*(?=href\=\"[^\"]*\#_(?:ftn|edn|etc)ref([0-9]+)\")[^>]*\>\[([0-9]+)\]\<\/a\>(.*)/g, function(m, p1, p2, p3) {
+        fn[p1] = p3.replace(/^\s*./, "").trim();
         return '';
       });
 
-      return c.replace(/\<a[^h]*(?=href\=\"[^\"]*\#_ftn([0-9]+)\")[^>]*\>(?:\<\w+\>)*\[([0-9]+)\](?:\<\/\w+\>)*\<\/a\>/g, function(m, p1, p2, p3, p4) {
-        return '[ref]' + fn[p1].replace(/\r\n|\r|\n/g, "") + '[/ref]';
+      return c.replace(/\<a[^h]*(?=href\=\"[^\"]*\#_(?:ftn|edn|etc)([0-9]+)\")[^>]*\>(?:\<\w+\>)*\[([0-9]+)\](?:\<\/\w+\>)*\<\/a\>/g, function(m, p1, p2, p3, p4) {
+        return '[ref]' + fn[p1].replace(/\r\n|\r|\n/g, " ").trim() + '[/ref]';
       });
     },
     sQ: function(c) {
