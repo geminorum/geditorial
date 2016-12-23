@@ -817,7 +817,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 
 			if ( ! empty( $_POST ) && isset( $_POST['issue_tax_check'] ) ) {
 
-				self::tableList( array(
+				gEditorialHTML::tableList( array(
 					'_cb'     => 'term_id',
 					'term_id' => _x( 'ID', 'Magazine Module', GEDITORIAL_TEXTDOMAIN ),
 					'name'    => _x( 'Name', 'Magazine Module', GEDITORIAL_TEXTDOMAIN ),

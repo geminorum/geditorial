@@ -229,6 +229,191 @@ class gEditorialHTML extends gEditorialBaseCore
 		return self::notice( $message, 'notice-info fade', $echo );
 	}
 
+	public static function tableList( $columns, $data = array(), $args = array() )
+	{
+		if ( ! count( $columns ) )
+			return FALSE;
+
+		if ( ! $data || ! count( $data ) ) {
+			if ( isset( $args['empty'] ) && $args['empty'] )
+				echo '<div class="base-table-empty description">'.$args['empty'].'</div>';
+			return FALSE;
+		}
+
+		if ( isset( $args['title'] ) && $args['title'] )
+			echo '<div class="base-table-title">'.$args['title'].'</div>';
+
+		$pagination = isset( $args['pagination'] ) ? $args['pagination'] : array();
+
+		if ( isset( $args['before'] )
+			|| ( isset( $args['navigation'] ) && 'before' == $args['navigation'] )
+			|| ( isset( $args['search'] ) && 'before' == $args['search'] ) )
+				echo '<div class="base-table-actions base-table-list-before">';
+		else
+			echo '<div>';
+
+		if ( isset( $args['navigation'] ) && 'before' == $args['navigation'] )
+			self::tableNavigation( $pagination );
+
+		if ( isset( $args['before'] ) && is_callable( $args['before'] ) )
+			call_user_func_array( $args['before'], array( $columns, $data, $args ) );
+
+		echo '</div><table class="widefat fixed base-table-list"><thead><tr>';
+			foreach ( $columns as $key => $column ) {
+
+				$tag   = 'th';
+				$class = '';
+
+				if ( is_array( $column ) ) {
+					$title = isset( $column['title'] ) ? $column['title'] : $key;
+
+					if ( isset( $column['class'] ) )
+						$class = esc_attr( $column['class'] );
+
+				} else if ( '_cb' == $key ) {
+					$title = '<input type="checkbox" id="cb-select-all-1" class="-cb-all" />';
+					$class = ' check-column';
+					$tag   = 'td';
+				} else {
+					$title = $column;
+				}
+
+				echo '<'.$tag.' class="-column -column-'.esc_attr( $key ).$class.'">'.$title.'</'.$tag.'>';
+			}
+		echo '</tr></thead><tbody>';
+
+		$alt = TRUE;
+		foreach ( $data as $index => $row ) {
+
+			echo '<tr class="-row -row-'.$index.( $alt ? ' alternate' : '' ).'">';
+
+			foreach ( $columns as $key => $column ) {
+
+				$class = $callback = '';
+				$cell = 'td';
+
+				if ( '_cb' == $key ) {
+					if ( '_index' == $column )
+						$value = $index;
+					else if ( is_array( $column ) && isset( $column['value'] ) )
+						$value = call_user_func_array( $column['value'], array( NULL, $row, $column, $index ) );
+					else if ( is_array( $row ) && isset( $row[$column] ) )
+						$value = $row[$column];
+					else if ( is_object( $row ) && isset( $row->{$column} ) )
+						$value = $row->{$column};
+					else
+						$value = '';
+					$value = '<input type="checkbox" name="_cb[]" value="'.esc_attr( $value ).'" class="-cb" />';
+					$class .= ' check-column';
+					$cell = 'th';
+
+				} else if ( is_array( $row ) && isset( $row[$key] ) ) {
+					$value = $row[$key];
+
+				} else if ( is_object( $row ) && isset( $row->{$key} ) ) {
+					$value = $row->{$key};
+
+				} else {
+					$value = NULL;
+				}
+
+				if ( is_array( $column ) ) {
+					if ( isset( $column['class'] ) )
+						$class .= ' '.esc_attr( $column['class'] );
+
+					if ( isset( $column['callback'] ) )
+						$callback = $column['callback'];
+				}
+
+				echo '<'.$cell.' class="-cell -cell-'.$key.$class.'">';
+
+				if ( $callback ){
+					echo call_user_func_array( $callback, array( $value, $row, $column, $index ) );
+
+				} else if ( $value ) {
+					echo $value;
+
+				} else {
+					echo '&nbsp;';
+				}
+
+				echo '</'.$cell.'>';
+			}
+
+			$alt = ! $alt;
+
+			echo '</tr>';
+		}
+
+		echo '</tbody></table>';
+		echo '<div class="clear"></div>';
+
+		if ( isset( $args['after'] )
+			|| ( isset( $args['navigation'] ) && 'after' == $args['navigation'] )
+			|| ( isset( $args['search'] ) && 'after' == $args['search'] ) )
+				echo '<div class="base-table-actions base-table-list-after">';
+		else
+			echo '<div>';
+
+		if ( isset( $args['navigation'] ) && 'after' == $args['navigation'] )
+			self::tableNavigation( $pagination );
+
+		// FIXME: add search box
+
+		if ( isset( $args['after'] ) && is_callable( $args['after'] ) )
+			call_user_func_array( $args['after'], array( $columns, $data, $args ) );
+
+		echo '</div>';
+
+		return TRUE;
+	}
+
+	public static function tableNavigation( $pagination = array() )
+	{
+		$args = self::atts( array(
+			'total'    => 0,
+			'pages'    => 0,
+			'limit'    => self::limit(),
+			'paged'    => self::paged(),
+			'all'      => FALSE,
+			'next'     => FALSE,
+			'previous' => FALSE,
+		), $pagination );
+
+		$icons = array(
+			'next'     => self::getDashicon( 'redo' ), // &rsaquo;
+			'previous' => self::getDashicon( 'undo' ), // &lsaquo;
+			'refresh'  => self::getDashicon( 'image' ),
+		);
+
+		echo '<div class="base-table-navigation">';
+
+			echo '<input type="number" class="small-text -paged" name="paged" value="'.$args['paged'].'" />';
+			echo '<input type="number" class="small-text -limit" name="limit" value="'.$args['limit'].'" />';
+
+			vprintf( '<span class="-total-pages">%s / %s</span>', array(
+				gEditorialNumber::format( $args['total'] ),
+				gEditorialNumber::format( $args['pages'] ),
+			) );
+
+			vprintf( '<span class="-next-previous">%s %s %s</span>', array(
+				( FALSE === $args['previous'] ? '<span class="-previous -span" aria-hidden="true">'.$icons['previous'].'</span>' : self::tag( 'a', array(
+					'href'  => add_query_arg( 'paged', $args['previous'] ),
+					'class' => '-previous -link',
+				), $icons['previous'] ) ),
+				self::tag( 'a', array(
+					'href'  => gEditorialHTTP::currentURL(),
+					'class' => '-refresh -link',
+				), $icons['refresh'] ),
+				( FALSE === $args['next'] ? '<span class="-next -span" aria-hidden="true">'.$icons['next'].'</span>' : self::tag( 'a', array(
+					'href'  => add_query_arg( 'paged', $args['next'] ),
+					'class' => '-next -link',
+				), $icons['next'] ) ),
+			) );
+
+		echo '</div>';
+	}
+
 	public static function tableSide( $array, $type = TRUE )
 	{
 		echo '<table class="base-table-side">';

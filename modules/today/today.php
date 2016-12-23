@@ -327,7 +327,7 @@ class gEditorialToday extends gEditorialModuleCore
 			gEditorialTodayHelper::theDayNewConnected( $posttypes, $the_day,
 				( $this->check_the_day_posttype( $the_day ) ? FALSE : $this->constant( 'day_cpt' ) ) );
 
-			self::tableList( array(
+			gEditorialHTML::tableList( array(
 
 				'type' => array(
 					'title' => _x( 'Type', 'Today Module', GEDITORIAL_TEXTDOMAIN ),

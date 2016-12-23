@@ -229,7 +229,7 @@ class gEditorialLike extends gEditorialModuleCore
 		} else {
 			$cookie = $this->get_cookie();
 			if ( ! array_key_exists( $post_id, $cookie ) ) {
-				$guests[$timestamp] = self::IP();
+				$guests[$timestamp] = gEditorialHTTP::IP();
 				$this->set_meta( $post_id, $guests, '_guests' );
 				$this->set_cookie( array( $post_id => $guests[$timestamp] ) );
 				$count++;

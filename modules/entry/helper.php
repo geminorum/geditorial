@@ -32,7 +32,7 @@ class gEditorialEntryHelper extends gEditorialHelper
 
 		gnetwork_dump( $html );
 
-		// self::getPostIDbySlug( $slug, $this->constant( 'entry_cpt' ) );
+		// gEditorialWPPostType::getIDbySlug( $slug, $this->constant( 'entry_cpt' ) );
 
 		// https://developer.wordpress.org/reference/classes/_wp_editors/wp_link_query/
 		// SEE: wp_ajax_wp_link_ajax()

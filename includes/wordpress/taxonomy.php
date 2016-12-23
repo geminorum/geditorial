@@ -21,6 +21,23 @@ class gEditorialWPTaxonomy extends gEditorialBaseCore
 		return (bool) count( $terms );
 	}
 
+	public static function getTerm( $term_or_id, $taxonomy = 'category' )
+	{
+		if ( is_object( $term_or_id ) )
+			$term = $term_or_id;
+
+		else if ( is_numeric( $term_or_id ) )
+			$term = get_term_by( 'id', $term_or_id, $taxonomy );
+
+		else
+			$term = get_term_by( 'slug', $term_or_id, $taxonomy );
+
+		if ( ! $term || is_wp_error( $term ) )
+			return FALSE;
+
+		return $term;
+	}
+
 	public static function getTerms( $taxonomy = 'category', $post_id = FALSE, $object = FALSE, $key = 'term_id', $extra = array() )
 	{
 		$the_terms = array();
