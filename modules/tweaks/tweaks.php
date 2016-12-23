@@ -232,8 +232,8 @@ class gEditorialTweaks extends gEditorialModuleCore
 		$new   = array();
 		$added = FALSE;
 
-		$rows  = has_action( $this->hook( 'column_row' ) ) ? $this->get_column_title( 'rows', $post_type ) : FALSE;
-		$atts  = has_action( $this->hook( 'column_attr' ) ) ? $this->get_column_title( 'atts', $post_type ) : FALSE;
+		$rows = has_action( $this->hook( 'column_row' ) ) ? $this->get_column_title( 'rows', $post_type ) : FALSE;
+		$atts = has_action( $this->hook( 'column_attr' ) ) ? $this->get_column_title( 'atts', $post_type ) : FALSE;
 
 		foreach ( $columns as $key => $value ) {
 

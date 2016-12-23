@@ -94,7 +94,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 			),
 			'settings' => array(
 				'issue_tax_check'    => _x( 'Check Terms', 'Magazine Module: Setting Button', GEDITORIAL_TEXTDOMAIN ),
-				'issue_post_create'  => _x( 'Create Issue', 'Magazine Module: Setting Button', GEDITORIAL_TEXTDOMAIN ),
+				'issue_post_create'  => _x( 'Create Issue Posts', 'Magazine Module: Setting Button', GEDITORIAL_TEXTDOMAIN ),
 				'issue_post_connect' => _x( 'Re-Connect Posts', 'Magazine Module: Setting Button', GEDITORIAL_TEXTDOMAIN ),
 				'issue_store_order'  => _x( 'Store Orders', 'Magazine Module: Setting Button', GEDITORIAL_TEXTDOMAIN ),
 			),
@@ -546,8 +546,10 @@ class gEditorialMagazine extends gEditorialModuleCore
 			&& isset( $wp_query->query['post_type'] ) ) {
 
 			if ( $this->constant( 'issue_cpt' ) == $wp_query->query['post_type'] ) {
+
 				if ( ! isset( $_GET['orderby'] ) )
 					$wp_query->set( 'orderby', 'menu_order' );
+
 				if ( ! isset( $_GET['order'] ) )
 					$wp_query->set( 'order', 'DESC' );
 			}
@@ -607,7 +609,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 
 	public function do_meta_box_supported( $post, $box )
 	{
-		echo '<div class="geditorial-admin-wrap-metabox magazine">';
+		echo '<div class="geditorial-admin-wrap-metabox -magazine">';
 
 		$terms = gEditorialWPTaxonomy::getTerms( $this->constant( 'issue_tax' ), $post->ID, TRUE );
 
@@ -678,7 +680,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 
 	public function do_meta_box_main( $post, $box )
 	{
-		echo '<div class="geditorial-admin-wrap-metabox magazine">';
+		echo '<div class="geditorial-admin-wrap-metabox -magazine">';
 
 		do_action( 'geditorial_magazine_main_meta_box', $post, $box );
 
@@ -694,7 +696,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 
 	public function do_meta_box_list( $post, $box )
 	{
-		echo '<div class="geditorial-admin-wrap-metabox magazine">';
+		echo '<div class="geditorial-admin-wrap-metabox -magazine">';
 
 		do_action( 'geditorial_magazine_list_meta_box', $post, $box );
 

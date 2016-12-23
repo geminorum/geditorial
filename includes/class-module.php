@@ -1120,6 +1120,11 @@ class gEditorialModuleCore extends gEditorialWPModule
 			'delete_with_user' => FALSE,
 			'menu_position'    => 4,
 
+			// @SEE: https://core.trac.wordpress.org/ticket/39023
+			'show_in_rest' => TRUE,
+			'rest_base'    => $this->constant( $constant_key.'_rest', $post_type ),
+			// 'rest_controller_class' => 'WP_REST_Posts_Controller',
+
 			// SEE: https://github.com/torounit/custom-post-type-permalinks
 			// 'cptp_permalink_structure' => $this->constant( $constant_key.'_permalink', '/%post_id%' ),
 			// Only `%post_id%` and `%postname%` | SEE: https://github.com/torounit/simple-post-type-permalinks
@@ -1177,6 +1182,11 @@ class gEditorialModuleCore extends gEditorialWPModule
 				'delete_terms' => 'edit_others_posts', // 'manage_categories',
 				'assign_terms' => 'edit_posts', // 'edit_published_posts',
 			),
+
+			// @SEE: https://core.trac.wordpress.org/ticket/39023
+			'show_in_rest' => TRUE,
+			'rest_base'    => $this->constant( $constant_key.'_rest', $taxonomy ),
+			// 'rest_controller_class' => 'WP_REST_Terms_Controller',
 		) );
 
 		return register_taxonomy( $taxonomy, $post_types, $args );
@@ -1686,7 +1696,7 @@ class gEditorialModuleCore extends gEditorialWPModule
 		$format = current_user_can( $edit_cap ) ? '<a class="geditorial-glance-item -post -posttype-'.$posttype.'" href="edit.php?post_type=%3$s">%1$s %2$s</a>' : '%1$s %2$s';
 		$text   = gEditorialHelper::noopedCount( $posts->publish, $this->get_noop( $posttype_constant_key ) );
 
-		return sprintf( $format, number_format_i18n( $posts->publish ), $text, $posttype );
+		return sprintf( $format, gEditorialNumber::format( $posts->publish ), $text, $posttype );
 	}
 
 	protected function dashboard_glance_tax( $tax_constant_key, $edit_cap = 'manage_categories' )
@@ -1700,7 +1710,7 @@ class gEditorialModuleCore extends gEditorialWPModule
 		$format = current_user_can( $edit_cap ) ? '<a class="geditorial-glance-item -tax -taxonomy-'.$taxonomy.'" href="edit-tags.php?taxonomy=%3$s">%1$s %2$s</a>' : '%1$s %2$s';
 		$text   = gEditorialHelper::noopedCount( $terms, $this->get_noop( $tax_constant_key ) );
 
-		return sprintf( $format, number_format_i18n( $terms ), $text, $taxonomy );
+		return sprintf( $format, gEditorialNumber::format( $terms ), $text, $taxonomy );
 	}
 
 	public function get_column_icon( $link = FALSE, $icon = NULL, $title = NULL )

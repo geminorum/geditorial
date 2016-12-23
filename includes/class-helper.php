@@ -453,6 +453,7 @@ class gEditorialHelper extends gEditorialBaseCore
 		return $filtered ? apply_filters( 'geditorial_default_calendars', $calendars ) : $calendars;
 	}
 
+	// @SOURCE: `translate_nooped_plural()`
 	public static function nooped( $count, $nooped )
 	{
 		if ( ! empty( $nooped['domain'] ) )

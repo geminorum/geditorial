@@ -147,7 +147,7 @@ class gEditorialAudit extends gEditorialModuleCore
 				$text = vsprintf( '<span>%3$s</span> %1$s (%2$s)', array(
 					gEditorialHelper::noopedCount( $count, $all[$type] ),
 					gEditorialHelper::trimChars( $name, 35 ),
-					number_format_i18n( $count ),
+					gEditorialNumber::format( $count ),
 				) );
 
 				if ( $objects[$type] && current_user_can( $objects[$type]->cap->edit_posts ) )
