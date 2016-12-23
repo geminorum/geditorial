@@ -347,7 +347,7 @@ class gEditorialBook extends gEditorialModuleCore
 
 			echo $this->column_icon;
 
-			echo '<span class="-counted">'.sprintf( _x( '%s Connected', 'Book Module', GEDITORIAL_TEXTDOMAIN ), number_format_i18n( $count ) ).'</span>';
+			echo '<span class="-counted">'.$this->nooped_count( 'connected', $count ).'</span>';
 
 			$list = array();
 

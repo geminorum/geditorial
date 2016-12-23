@@ -59,15 +59,6 @@ class gEditorialEstimated extends gEditorialModuleCore
 		);
 	}
 
-	protected function get_global_strings()
-	{
-		return array(
-			'noops' => array(
-				'word_count' => _nx_noop( '%s Word', '%s Words', 'Estimated Module: Noop', GEDITORIAL_TEXTDOMAIN ),
-			),
-		);
-	}
-
 	public function init()
 	{
 		do_action( 'geditorial_estimated_init', $this->module );
@@ -113,7 +104,7 @@ class gEditorialEstimated extends gEditorialModuleCore
 
 				echo '<span class="-wordcount" title="'
 					.esc_attr_x( 'Word Count', 'Estimated Module: Row Title', GEDITORIAL_TEXTDOMAIN ).'">'
-					.sprintf( gEditorialHelper::noopedCount( $wordcount, $this->get_noop( 'word_count' ) ), number_format_i18n( $wordcount ) )
+					.$this->nooped_count( 'word', $wordcount )
 					.'</span>';
 
 				echo ' <span class="-estimated-time">('
