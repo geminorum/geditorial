@@ -851,22 +851,28 @@ class gEditorialMagazine extends gEditorialModuleCore
 
 				$this->settings_check_referer( $sub, 'tools' );
 
-				if ( isset( $_POST['issue_post_create'] ) ) {
-
-					// FIXME: get term_id list from table checkbox
+				if ( isset( $_POST['_cb'] )
+					&& isset( $_POST['issue_post_create'] ) ) {
 
 					$terms = gEditorialWPTaxonomy::getTerms( $this->constant( 'issue_tax' ), FALSE, TRUE );
 					$posts = array();
 
-					foreach ( $terms as $term_id => $term ) {
-						$issue_post_id = self::getPostIDbySlug( $term->slug, $this->constant( 'issue_cpt' ) ) ;
-						if ( FALSE === $issue_post_id )
-							$posts[] = gEditorialWordPress::newPostFromTerm(
-								$term,
-								$this->constant( 'issue_tax' ),
-								$this->constant( 'issue_cpt' ),
-								gEditorialHelper::getEditorialUserID()
-							);
+					foreach ( $_POST['_cb'] as $term_id ) {
+
+						if ( ! isset( $terms[$term_id] ) )
+							continue;
+
+						$post_id = gEditorialWPPostType::getIDbySlug( $terms[$term_id]->slug, $this->constant( 'issue_cpt' ) ) ;
+
+						if ( FALSE !== $post_id )
+							continue;
+
+						$posts[] = gEditorialWordPress::newPostFromTerm(
+							$terms[$term_id],
+							$this->constant( 'issue_tax' ),
+							$this->constant( 'issue_cpt' ),
+							gEditorialHelper::getEditorialUserID()
+						);
 					}
 
 					gEditorialWordPress::redirectReferer( array(
