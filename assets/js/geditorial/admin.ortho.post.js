@@ -9,6 +9,11 @@
     html: 'textarea#excerpt, textarea#attachment_caption, [data-' + m + '=\'html\']'
   };
 
+  o.i = {
+    number: '[data-' + m + '=\'number\']',
+    // currency: '[data-' + m + '=\'currency\']',
+  };
+
   o.s = $.extend({}, {
     button_virastar: '<span class="dashicons dashicons-admin-site">',
     button_virastar_title: 'Apply Virastar!',
@@ -40,6 +45,18 @@
     html: new Virastar($.extend({}, o.o, {cleanup_spacing: false}))
   };
 
+  o.n = {
+    number: function() {
+      var $i=$(this);
+      console.log($i);
+      try{$i.prop('type','text');}catch(e){}
+      $i.change(function() {
+        $i.val(o.u.tE($i.val()).replace(/[^\d.-]/g,'').trim());
+      });
+    },
+    // currency: function(){}, // @SEE: https://github.com/habibpour/rial.js
+  };
+
   o.u = {
     pF: function(c) {
       var fn = {};
@@ -54,6 +71,21 @@
     },
     sQ: function(c) {
       return c.replace(/(»)(.+?)(«)/g, '«$2»').replace(/(”)(.+?)(“)/g, '“$2”');
+    },
+    tP: function(n) {
+      var p = '۰'.charCodeAt(0);
+      return n.toString().replace(/\d+/g,function (m) {
+          return m.split('').map(function (n) {
+              return String.fromCharCode(p+parseInt(n))
+          }).join('');
+      });
+    },
+    tE: function(n) {
+        return n.toString().replace(/[۱۲۳۴۵۶۷۸۹۰]+/g,function (m) {
+          return m.split('').map(function (n) {
+            return n.charCodeAt(0)%1776;
+          }).join('');
+      });
     }
   };
 
@@ -94,6 +126,12 @@
           var t = $(e);
           t.val(o.v[t.data(m)].cleanup(t.val()));
         }, 100);
+      });
+    }
+
+    for (var i in o.i) {
+      $(o.i[i]).each(function() {
+        o.n[i].call(this);
       });
     }
 

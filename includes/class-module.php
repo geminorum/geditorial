@@ -1350,6 +1350,9 @@ class gEditorialModuleCore extends gEditorialWPModule
 			'title'       => _x( 'Order', 'Module Core: Title Attr', GEDITORIAL_TEXTDOMAIN ),
 			'placeholder' => _x( 'Order', 'Module Core: Placeholder', GEDITORIAL_TEXTDOMAIN ),
 			'class'       => 'small-text',
+			'data'        => array(
+				'ortho' => 'number',
+			),
 		) );
 
 		echo gEditorialHTML::tag( 'div', array(
