@@ -99,7 +99,7 @@ class gEditorialHelper extends gEditorialBaseCore
 		return wpautop( $text );
 	}
 
-	public static function trimChars( $text, $length = 45, $append = '&hellip;' )
+	public static function trimChars( $text, $length = 45, $append = '&nbsp;&hellip;' )
 	{
 		$append = '<span title="'.esc_attr( $text ).'">'.$append.'</span>';
 
