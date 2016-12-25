@@ -207,7 +207,7 @@ class gEditorialSettings extends gEditorialModuleCore
 
 					if ( isset( $post['empty_module'] ) && isset( $gEditorial->{$post['empty_module']}->meta_key ) ) {
 
-						$result = self::deleteEmptyMeta( $gEditorial->{$post['empty_module']}->meta_key );
+						$result = gEditorialWPDatabase::deleteEmptyMeta( $gEditorial->{$post['empty_module']}->meta_key );
 
 						if ( count( $result ) )
 							gEditorialWordPress::redirectReferer( array(
@@ -319,8 +319,8 @@ class gEditorialSettings extends gEditorialModuleCore
 
 			echo '</td></tr>';
 
-			$db_taxes   = gEditorialWPTaxonomy::getDBTaxonomies( TRUE );
-			$live_taxes = gEditorialHelper::getTaxonomies( 'name' );
+			$db_taxes   = gEditorialWPDatabase::getTaxonomies( TRUE );
+			$live_taxes = gEditorialWPTaxonomy::get( 6 );
 			$dead_taxes = array_diff_key( $db_taxes, $live_taxes );
 
 			if ( count( $dead_taxes ) ) {

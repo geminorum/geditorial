@@ -328,7 +328,7 @@ class gEditorialBook extends gEditorialModuleCore
 				NULL, $this->strings['p2p']['publication_cpt']['title']['to'] );
 
 		if ( empty( $this->all_post_types ) )
-			$this->all_post_types = gEditorialWordPress::getPostTypes( 2 );
+			$this->all_post_types = gEditorialWPPostType::get( 2 );
 
 		$post_types = array_unique( array_map( function( $r ){
 			return $r->post_type;

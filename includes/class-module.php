@@ -207,7 +207,7 @@ class gEditorialModuleCore extends gEditorialWPModule
 		else if ( TRUE === $pre )
 			$pre = array( 'all' => _x( 'All PostTypes', 'Module Core', GEDITORIAL_TEXTDOMAIN ) );
 
-		$all = gEditorialWordPress::getPostTypes();
+		$all = gEditorialWPPostType::get();
 
 		foreach ( $this->post_types( $post_types ) as $post_type )
 			$pre[$post_type] = empty( $all[$post_type] ) ? $post_type : $all[$post_type];
@@ -217,7 +217,7 @@ class gEditorialModuleCore extends gEditorialWPModule
 
 	public function all_post_types( $exclude = TRUE )
 	{
-		$post_types = gEditorialWordPress::getPostTypes();
+		$post_types = gEditorialWPPostType::get();
 
 		if ( $exclude && count( $this->post_types_excluded ) )
 			$post_types = array_diff_key( $post_types, array_flip( $this->post_types_excluded ) );
@@ -251,14 +251,7 @@ class gEditorialModuleCore extends gEditorialWPModule
 
 	public function all_taxonomies()
 	{
-		$tax_list = get_taxonomies( array(
-			// 'show_ui' => TRUE,
-		), 'objects' );
-
-		$taxonomies = array();
-
-		foreach ( $tax_list as $tax => $tax_obj )
-		$taxonomies[$tax] = $tax_obj->label;
+		$taxonomies = gEditorialWPTaxonomy::get();
 
 		if ( count( $this->taxonomies_excluded ) )
 			$taxonomies = array_diff_key( $taxonomies, array_flip( $this->taxonomies_excluded ) );
@@ -887,7 +880,7 @@ class gEditorialModuleCore extends gEditorialWPModule
 		if ( ! wp_verify_nonce( $_POST['_wpnonce'], $this->module->group.'-options' ) )
 			return;
 
-		$added = self::insertDefaultTerms(
+		$added = gEditorialWPTaxonomy::insertDefaultTerms(
 			$this->constant( $constant_key ),
 			$this->strings['terms'][$constant_key]
 		);
@@ -1027,7 +1020,7 @@ class gEditorialModuleCore extends gEditorialWPModule
 			return;
 
 		if ( count( $this->scripts ) )
-			gEditorialHTML::wrapJS( implode( "\n", $this->scripts ) );
+			gEditorialHTML::wrapjQueryReady( implode( "\n", $this->scripts ) );
 
 		$this->scripts_printed = TRUE;
 	}
@@ -1162,7 +1155,7 @@ class gEditorialModuleCore extends gEditorialWPModule
 
 		$args = self::recursiveParseArgs( $atts, array(
 			'labels'                => $this->get_taxonomy_labels( $constant_key ),
-			'update_count_callback' => array( 'gEditorialWordPress', 'updateCountCallback' ),
+			'update_count_callback' => array( 'gEditorialWPDatabase', 'updateCountCallback' ),
 			'meta_box_cb'           => method_exists( $this, 'meta_box_cb_'.$constant_key ) ? array( $this, 'meta_box_cb_'.$constant_key ) : FALSE,
 			'hierarchical'          => FALSE,
 			'public'                => TRUE,

@@ -99,6 +99,25 @@ class gEditorialHelper extends gEditorialBaseCore
 		return wpautop( $text );
 	}
 
+	// @SOURCE: P2
+	public static function excerptedTitle( $content, $word_count )
+	{
+		$content = strip_tags( $content );
+		$words   = preg_split( '/([\s_;?!\/\(\)\[\]{}<>\r\n\t"]|\.$|(?<=\D)[:,.\-]|[:,.\-](?=\D))/', $content, $word_count + 1, PREG_SPLIT_NO_EMPTY );
+
+		if ( count( $words ) > $word_count ) {
+			array_pop( $words ); // remove remainder of words
+			$content = implode( ' ', $words );
+			$content .= '…';
+		} else {
+			$content = implode( ' ', $words );
+		}
+
+		$content = trim( strip_tags( $content ) );
+
+		return $content;
+	}
+
 	public static function trimChars( $text, $length = 45, $append = '&nbsp;&hellip;' )
 	{
 		$append = '<span title="'.esc_attr( $text ).'">'.$append.'</span>';
@@ -668,7 +687,7 @@ class gEditorialHelper extends gEditorialBaseCore
 
 	public static function getPosttypeMonths( $calendar_type, $post_type = 'post', $args = array(), $user_id = 0 )
 	{
-		$callback = array( 'gEditorialWordPress', 'getPosttypeMonths' );
+		$callback = array( 'gEditorialWPDatabase', 'getPosttypeMonths' );
 
 		if ( 'persian' == $calendar_type
 			&& is_callable( array( 'gPersianDateDate', 'getPosttypeMonths' ) ) )

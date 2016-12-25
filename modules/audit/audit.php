@@ -105,7 +105,7 @@ class gEditorialAudit extends gEditorialModuleCore
 			return;
 
 		$user_id = 'all' == $this->get_setting( 'summary_scope', 'all' ) ? 0 : get_current_user_id();
-		$counts  = gEditorialWordPress::countPostsByTaxonomy( $terms, $this->post_types(), $user_id );
+		$counts  = gEditorialWPDatabase::countPostsByTaxonomy( $terms, $this->post_types(), $user_id );
 
 		if ( $html = $this->get_summary( $counts, $terms, $user_id ) ) {
 			echo '<div class="geditorial-admin-wrap -audit"><h3>';
@@ -123,7 +123,7 @@ class gEditorialAudit extends gEditorialModuleCore
 	{
 		$html = '';
 		$tax  = $this->constant( 'audit_tax' );
-		$all  = gEditorialWordPress::getPostTypes( 3 );
+		$all  = gEditorialWPPostType::get( 3 );
 
 		$objects = array();
 

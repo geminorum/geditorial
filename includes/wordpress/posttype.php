@@ -3,6 +3,44 @@
 class gEditorialWPPostType extends gEditorialBaseCore
 {
 
+	// EDITED: 12/25/2016, 1:27:21 PM
+	public static function get( $mod = 0, $args = array( 'public' => TRUE ) )
+	{
+		$list = array();
+
+		foreach ( get_post_types( $args, 'objects' ) as $post_type => $post_type_obj ) {
+
+			// label
+			if ( 0 === $mod )
+				$list[$post_type] = $post_type_obj->label ? $post_type_obj->label : $post_type_obj->name;
+
+			// plural
+			else if ( 1 === $mod )
+				$list[$post_type] = $post_type_obj->labels->name;
+
+			// singular
+			else if ( 2 === $mod )
+				$list[$post_type] = $post_type_obj->labels->singular_name;
+
+			// nooped
+			else if ( 3 === $mod )
+				$list[$post_type] = array(
+					0          => $post_type_obj->labels->singular_name,
+					1          => $post_type_obj->labels->name,
+					'singular' => $post_type_obj->labels->singular_name,
+					'plural'   => $post_type_obj->labels->name,
+					'context'  => NULL,
+					'domain'   => NULL,
+				);
+
+			// object
+			else if ( 4 === $mod )
+				$list[$post_type] = $post_type_obj;
+		}
+
+		return $list;
+	}
+
 	public static function getIDbySlug( $slug, $post_type, $url = FALSE )
 	{
 		static $strings = array();

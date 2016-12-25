@@ -216,7 +216,7 @@ class gEditorialWidgetCore extends WP_Widget
 		$html = '';
 		$type = isset( $instance[$field] ) ? $instance[$field] : $default;
 
-		foreach ( gEditorialHelper::getPostTypes() as $name => $title )
+		foreach ( gEditorialWPPostType::get() as $name => $title )
 			$html .= gEditorialHTML::tag( 'option', array(
 				'value'    => $name,
 				'selected' => $type == $name,
@@ -238,7 +238,7 @@ class gEditorialWidgetCore extends WP_Widget
 		$html = '';
 		$tax = isset( $instance[$field] ) ? $instance[$field] : $default;
 
-		foreach ( gEditorialHelper::getTaxonomies( 'type' ) as $name => $title )
+		foreach ( gEditorialWPTaxonomy::get( 5 ) as $name => $title )
 			$html .= gEditorialHTML::tag( 'option', array(
 				'value'    => $name,
 				'selected' => $tax == $name,

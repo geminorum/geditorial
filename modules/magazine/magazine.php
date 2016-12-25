@@ -802,7 +802,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 			);
 
 			if ( empty( $this->all_post_types ) )
-				$this->all_post_types = gEditorialWordPress::getPostTypes( 2 );
+				$this->all_post_types = gEditorialWPPostType::get( 2 );
 
 			echo '<span class="-counted">'.$this->nooped_count( 'connected', $count ).'</span>';
 

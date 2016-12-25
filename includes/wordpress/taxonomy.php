@@ -9,6 +9,52 @@ class gEditorialWPTaxonomy extends gEditorialBaseCore
 	// ALSO: trim term titles
 	// MUST USE: custom walker
 
+	// EDITED:
+	public static function get( $mod = 0, $args = array() )
+	{
+		$list = array();
+
+		foreach ( get_taxonomies( $args, 'objects' ) as $taxonomy => $taxonomy_obj ) {
+
+			// label
+			if ( 0 === $mod )
+				$list[$taxonomy] = $taxonomy_obj->label ? $taxonomy_obj->label : $taxonomy->name;
+
+			// plural
+			else if ( 1 === $mod )
+				$list[$taxonomy] = $taxonomy_obj->labels->name;
+
+			// singular
+			else if ( 2 === $mod )
+				$list[$taxonomy] = $taxonomy_obj->labels->singular_name;
+
+			// nooped
+			else if ( 3 === $mod )
+				$list[$taxonomy] = array(
+					0          => $taxonomy_obj->labels->singular_name,
+					1          => $taxonomy_obj->labels->name,
+					'singular' => $taxonomy_obj->labels->singular_name,
+					'plural'   => $taxonomy_obj->labels->name,
+					'context'  => NULL,
+					'domain'   => NULL,
+				);
+
+			// object
+			else if ( 4 === $mod )
+				$list[$taxonomy] = $taxonomy_obj;
+
+			// with object_type
+			else if ( 5 === $mod )
+				$list[$taxonomy] = $taxonomy_obj->labels->name.gEditorialHTML::joined( $taxonomy_obj->object_type, ' (', ')' );
+
+			// with name
+			else if ( 6 === $mod )
+				$list[$taxonomy] = $taxonomy_obj->labels->menu_name.' ('.$taxonomy_obj->name.')';
+		}
+
+		return $list;
+	}
+
 	public static function hasTerms( $taxonomy = 'category', $empty = TRUE )
 	{
 		$terms = get_terms( array(
@@ -104,6 +150,27 @@ class gEditorialWPTaxonomy extends gEditorialBaseCore
 		return $new_terms;
 	}
 
+	// EXPERIMENTAL: parsing: 'category:12,11|post_tag:3|people:58'
+	public static function parseTerms( $string )
+	{
+		if ( empty( $string ) || ! $string )
+			return FALSE;
+
+		$taxonomies = array();
+
+		foreach ( explode( '|', $string ) as $taxonomy ) {
+
+			list( $tax, $terms ) = explode( ':', $taxonomy );
+
+			$terms = explode( ',', $terms );
+			$terms = array_map( 'intval', $terms );
+
+			$taxonomies[$tax] = array_unique( $terms );
+		}
+
+		return $taxonomies;
+	}
+
 	public static function theTerm( $taxonomy, $post_id, $object = FALSE )
 	{
 		$terms = get_the_terms( $post_id, $taxonomy );
@@ -115,17 +182,59 @@ class gEditorialWPTaxonomy extends gEditorialBaseCore
 		return '0';
 	}
 
-	public static function getDBTaxonomies( $same_key = FALSE )
+	// EDITED: 5/2/2016, 9:31:13 AM
+	public static function insertDefaultTerms( $taxonomy, $terms )
 	{
-		global $wpdb;
+		if ( ! taxonomy_exists( $taxonomy ) )
+			return FALSE;
 
-		$taxonomies = $wpdb->get_col( "
-			SELECT taxonomy
-			FROM $wpdb->term_taxonomy
-			GROUP BY taxonomy
-			ORDER BY taxonomy ASC
-		" );
+		$count = 0;
 
-		return $same_key ? self::sameKey( $taxonomies ) : $taxonomies;
+		foreach ( $terms as $slug => $term ) {
+
+			$name = $term;
+			$args = array( 'slug' => $slug, 'name' => $term );
+			$meta = array();
+
+			if ( is_array( $term ) ) {
+
+				if ( ! empty( $term['name'] ) )
+					$name = $args['name'] = $term['name'];
+				else
+					$name = $slug;
+
+				if ( ! empty( $term['description'] ) )
+					$args['description'] = $term['description'];
+
+				if ( ! empty( $term['slug'] ) )
+					$args['slug'] = $term['slug'];
+
+				if ( ! empty( $term['parent'] ) ) {
+					if ( is_numeric( $term['parent'] ) )
+						$args['parent'] = $term['parent'];
+					else if ( $parent = term_exists( $term['parent'], $taxonomy ) )
+						$args['parent'] = $parent['term_id'];
+				}
+
+				if ( ! empty( $term['meta'] ) && is_array( $term['meta'] ) )
+					foreach ( $term['meta'] as $term_meta_key => $term_meta_value )
+						$meta[$term_meta_key] = $term_meta_value;
+			}
+
+			if ( $existed = term_exists( $slug, $taxonomy ) )
+				wp_update_term( $existed['term_id'], $taxonomy, $args );
+			else
+				$existed = wp_insert_term( $name, $taxonomy, $args );
+
+			if ( ! is_wp_error( $existed ) ) {
+
+				foreach ( $meta as $meta_key => $meta_value )
+					add_term_meta( $existed['term_id'], $meta_key, $meta_value, TRUE ); // will bail if an entry with the same key is found
+
+				$count++;
+			}
+		}
+
+		return $count;
 	}
 }

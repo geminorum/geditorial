@@ -68,12 +68,13 @@ class gEditorial
 		require_once( GEDITORIAL_DIR.'includes/core/l18n.php' );
 		require_once( GEDITORIAL_DIR.'includes/core/date.php' );
 		require_once( GEDITORIAL_DIR.'includes/core/text.php' );
-		require_once( GEDITORIAL_DIR.'includes/core/cache.php' );
 		require_once( GEDITORIAL_DIR.'includes/core/number.php' );
+		require_once( GEDITORIAL_DIR.'includes/core/arraay.php' );
 		require_once( GEDITORIAL_DIR.'includes/core/wordpress.php' );
 		require_once( GEDITORIAL_DIR.'includes/wordpress/module.php' );
 		require_once( GEDITORIAL_DIR.'includes/wordpress/posttype.php' );
 		require_once( GEDITORIAL_DIR.'includes/wordpress/taxonomy.php' );
+		require_once( GEDITORIAL_DIR.'includes/wordpress/database.php' );
 		require_once( GEDITORIAL_DIR.'includes/wordpress/user.php' );
 
 		$includes = array(

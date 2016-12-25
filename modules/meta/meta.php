@@ -612,7 +612,7 @@ class gEditorialMeta extends gEditorialModuleCore
 						gEditorialHelper::tableList( array(
 							'post_id' => 'Post ID',
 							'meta'    => 'Meta :'.$post['custom_field'],
-						), gEditorialHelper::getDBPostMetaRows( stripslashes( $post['custom_field'] ), $limit ) );
+						), gEditorialWPDatabase::getPostMetaRows( stripslashes( $post['custom_field'] ), $limit ) );
 						echo '<br />';
 					}
 				}
@@ -621,7 +621,7 @@ class gEditorialMeta extends gEditorialModuleCore
 			$this->do_settings_field( array(
 				'type'         => 'select',
 				'field'        => 'custom_field',
-				'values'       => gEditorialHelper::getDBPostMetaKeys( TRUE ),
+				'values'       => gEditorialWPDatabase::getPostMetaKeys( TRUE ),
 				'default'      => ( isset( $post['custom_field'] ) ? $post['custom_field'] : '' ),
 				'option_group' => 'tools',
 			) );
@@ -700,7 +700,7 @@ class gEditorialMeta extends gEditorialModuleCore
 						$result = FALSE;
 
 						if ( isset( $post['custom_field'] ) )
-							$result = gEditorialHelper::deleteDBPostMeta( $post['custom_field'], $limit );
+							$result = gEditorialWPDatabase::deletePostMeta( $post['custom_field'], $limit );
 
 						if ( count( $result ) )
 							gEditorialWordPress::redirectReferer( array(
@@ -722,7 +722,7 @@ class gEditorialMeta extends gEditorialModuleCore
 
 	protected function import_from_meta( $meta_key, $field, $limit = FALSE )
 	{
-		$rows = gEditorialHelper::getDBPostMetaRows( $meta_key, $limit );
+		$rows = gEditorialWPDatabase::getPostMetaRows( $meta_key, $limit );
 
 		foreach ( $rows as $row ) {
 

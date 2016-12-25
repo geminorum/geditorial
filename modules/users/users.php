@@ -207,9 +207,9 @@ class gEditorialUsers extends gEditorialModuleCore
 			return $output;
 
 		if ( empty( $this->all_posttypes ) )
-			$this->all_posttypes = gEditorialWordPress::getPostTypes( 1 );
+			$this->all_posttypes = gEditorialWPPostType::get( 1 );
 
-		$counts = gEditorialWordPress::countPostsByUser( $user_id );
+		$counts = gEditorialWPDatabase::countPostsByUser( $user_id );
 		$list   = array();
 
 		foreach ( $this->all_posttypes as $posttype => $label )
@@ -336,7 +336,7 @@ class gEditorialUsers extends gEditorialModuleCore
 			$this->do_settings_field( array(
 				'type'         => 'select',
 				'field'        => 'post_type',
-				'values'       => gEditorialWordPress::getPostTypes(),
+				'values'       => gEditorialWPPostType::get(),
 				'default'      => $post_type,
 				'option_group' => 'reports',
 			) );
@@ -363,7 +363,7 @@ class gEditorialUsers extends gEditorialModuleCore
 			if ( ! empty( $_POST ) && isset( $_POST['posttype_stats'] ) ) {
 
 				$period = $year_month ? gEditorialHelper::monthFirstAndLast( $calendar_type, substr( $year_month, 0, 4 ), substr( $year_month, 4, 2 ) ) : array();
-				$posts  = gEditorialWordPress::countPostsByPosttype( $post_type, $user_id, $period );
+				$posts  = gEditorialWPDatabase::countPostsByPosttype( $post_type, $user_id, $period );
 
 				gEditorialHTML::tableCode( $posts );
 			}

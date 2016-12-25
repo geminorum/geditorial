@@ -332,7 +332,7 @@ class gEditorialToday extends gEditorialModuleCore
 				'type' => array(
 					'title' => _x( 'Type', 'Today Module', GEDITORIAL_TEXTDOMAIN ),
 					'args'  => array(
-						'post_types' => self::getPostTypes( TRUE ),
+						'post_types' => gEditorialWPPostType::get( 2 ),
 					),
 					'callback' => function( $value, $row, $column, $index ){
 						return isset( $column['args']['post_types'][$row->post_type] ) ? $column['args']['post_types'][$row->post_type] : $row->post_type;

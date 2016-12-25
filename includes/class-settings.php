@@ -88,10 +88,10 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 	public static function priorityOptions( $format = TRUE )
 	{
 		return
-			array_reverse( self::range( -100, -1000, 100, $format ), TRUE ) +
-			array_reverse( self::range( -10, -100, 10, $format ), TRUE ) +
-			self::range( 0, 100, 10, $format ) +
-			self::range( 100, 1000, 100, $format );
+			array_reverse( gEditorialArraay::range( -100, -1000, 100, $format ), TRUE ) +
+			array_reverse( gEditorialArraay::range( -10, -100, 10, $format ), TRUE ) +
+			gEditorialArraay::range( 0, 100, 10, $format ) +
+			gEditorialArraay::range( 100, 1000, 100, $format );
 	}
 
 	public static function minutesOptions()
@@ -1254,7 +1254,7 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 			case 'posttypes' :
 
 				if ( ! $args['values'] )
-					$args['values'] = gEditorialWordPress::getPostTypes( 0,
+					$args['values'] = gEditorialWPPostType::get( 0,
 						array_merge( array( 'public' => TRUE ), $args['extra'] ) );
 
 				foreach ( $args['values'] as $value_name => $value_title ) {

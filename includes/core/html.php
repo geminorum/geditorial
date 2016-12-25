@@ -8,6 +8,11 @@ class gEditorialHTML extends gEditorialBaseCore
 		return self::tag( 'a', array( 'href' => $link, 'target' => ( $target_blank ? '_blank' : FALSE ) ), $html );
 	}
 
+	public static function joined( $items, $before = '', $after = '', $sep = '|' )
+	{
+		return count( $items ) ? ( $before.join( $sep, $items ).$after ) : '';
+	}
+
 	public static function tag( $tag, $atts = array(), $content = FALSE, $sep = '' )
 	{
 		$tag = self::sanitizeTag( $tag );
@@ -485,7 +490,7 @@ class gEditorialHTML extends gEditorialBaseCore
 			if ( is_callable( $callback ) )
 				echo call_user_func_array( $callback, array( $item ) );
 			else
-				echo self::menuCallback( $item );
+				echo self::link( $item['title'], '#'.$item['slug'] );
 
 			if ( ! empty( $item[$children] ) )
 				self::menu( $item[$children], $callback, $list, $children );
@@ -496,29 +501,24 @@ class gEditorialHTML extends gEditorialBaseCore
 		echo '</'.$list.'>';
 	}
 
-	public static function menuCallback( $item )
+	public static function wrapScript( $script )
 	{
-		return self::tag( 'a', array( 'href' => '#'.$item['slug'] ), $item['title'] );
+		if ( ! $script )
+			return;
+
+		echo '<script type="text/javascript">'."\n".'/* <![CDATA[ */'."\n";
+			echo $script;
+		echo "\n".'/* ]]> */'."\n".'</script>';
 	}
 
-	public static function wrapJS( $script = '', $echo = TRUE )
+	public static function wrapjQueryReady( $script )
 	{
-		if ( $script ) {
-			$data = '<script type="text/javascript">'."\n"
-				.'/* <![CDATA[ */'."\n"
-				.'jQuery(document).ready(function($) {'."\n"
-					.$script
-				.'});'."\n"
-				.'/* ]]> */'."\n"
-				.'</script>';
+		if ( ! $script )
+			return;
 
-			if ( ! $echo )
-				return $data;
-
-			echo $data;
-		}
-
-		return '';
+		echo '<script type="text/javascript">'."\n".'/* <![CDATA[ */'."\n";
+			echo 'jQuery(document).ready(function($) {'."\n".$script.'});'."\n";
+		echo '/* ]]> */'."\n".'</script>'."\n";
 	}
 
 	// @REF: https://developer.wordpress.org/resource/dashicons/
