@@ -60,6 +60,11 @@ class gEditorialTweaks extends gEditorialModuleCore
 					'description' => _x( 'Displays attachment summary of the post.', 'Tweaks Module: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 				),
 				array(
+					'field'       => 'author_attribute',
+					'title'       => _x( 'Author Attribute', 'Tweaks Module: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Displays author name as post type attribute', 'Tweaks Module: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+				),
+				array(
 					'field'       => 'page_template',
 					'title'       => _x( 'Page Template', 'Tweaks Module: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Displays the template used for the post.', 'Tweaks Module: Setting Description', GEDITORIAL_TEXTDOMAIN ),
@@ -422,6 +427,22 @@ class gEditorialTweaks extends gEditorialModuleCore
 
 	public function column_attr_default( $post )
 	{
+		if ( $this->get_setting( 'author_attribute', TRUE ) ) {
+
+			if ( ! isset( $this->site_user_id ) )
+				$this->site_user_id = gEditorialHelper::getEditorialUserID( FALSE );
+
+			if ( $post->post_author != $this->site_user_id ) {
+
+				$author = gEditorialWordPress::getAuthorEditHTML( $post->post_type, $post->post_author );
+
+				echo '<li class="-attr tweaks-default-atts -post-author -post-author-'.$post->post_status.'">';
+					echo $this->get_column_icon( FALSE, 'admin-users', _x( 'Author', 'Tweaks Module: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
+					echo '<span class="-author">'.$author.'</span>';
+				echo '</li>';
+			}
+		}
+
 		$status = $date = '';
 
 		if ( 'publish' === $post->post_status ) {
