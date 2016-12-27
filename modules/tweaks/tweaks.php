@@ -195,6 +195,7 @@ class gEditorialTweaks extends gEditorialModuleCore
 		add_filter( 'manage_posts_columns', array( $this, 'manage_posts_columns' ), 1, 2 );
 		add_filter( 'manage_pages_columns', array( $this, 'manage_pages_columns' ), 1, 1 );
 		add_action( 'manage_'.$post_type.'_posts_custom_column', array( $this, 'posts_custom_column'), 10, 2 );
+		add_filter( 'manage_edit-'.$post_type.'_sortable_columns', array( $this, 'sortable_columns' ) );
 
 		// add_filter( 'manage_'.$post_type.'_posts_columns', array( $this, 'manage_posts_columns_late' ), 999, 1 );
 		// add_filter( 'list_table_primary_column', array( $this, 'list_table_primary_column' ), 10, 2 );
@@ -270,7 +271,6 @@ class gEditorialTweaks extends gEditorialModuleCore
 		return $new;
 	}
 
-	// FIXME: must add to sortable too
 	public function manage_posts_columns_late( $columns )
 	{
 		$new = array();
@@ -329,6 +329,14 @@ class gEditorialTweaks extends gEditorialModuleCore
 
 			break;
 		}
+	}
+
+	public function sortable_columns( $columns )
+	{
+		return array_merge( $columns, array(
+			'geditorial-tweaks-atts' => array( 'date', TRUE ),
+			// 'geditorial-tweaks-id'   => array( 'ID', TRUE ),
+		) );
 	}
 
 	public function column_row_taxonomies( $post )

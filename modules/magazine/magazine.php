@@ -777,8 +777,14 @@ class gEditorialMagazine extends gEditorialModuleCore
 
 	public function sortable_columns( $columns )
 	{
-		$columns['order'] = 'menu_order';
-		return $columns;
+		$span    = $this->constant( 'span_tax' );
+		$section = $this->constant( 'section_tax' );
+
+		return array_merge( $columns, array(
+			'order'              => 'menu_order',
+			'taxonomy-'.$span    => 'taxonomy-'.$span,
+			'taxonomy-'.$section => 'taxonomy-'.$section,
+		) );
 	}
 
 	public function main_column_attr( $post )

@@ -379,8 +379,7 @@ class gEditorialEvent extends gEditorialModuleCore
 
 	public function sortable_columns( $columns )
 	{
-		$columns['event_dates'] = 'event_dates';
-		return $columns;
+		return array_merge( $columns, array( 'event_dates' => 'event_dates' ) );
 	}
 
 	// http://justintadlock.com/archives/2011/06/27/custom-columns-for-custom-post-types

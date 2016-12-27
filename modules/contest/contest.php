@@ -659,8 +659,7 @@ class gEditorialContest extends gEditorialModuleCore
 
 	public function sortable_columns( $columns )
 	{
-		$columns['order'] = 'menu_order';
-		return $columns;
+		return array_merge( $columns, array( 'order' => 'menu_order' ) );
 	}
 
 	public function main_column_attr( $post )

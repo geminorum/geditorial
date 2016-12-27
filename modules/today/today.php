@@ -263,8 +263,7 @@ class gEditorialToday extends gEditorialModuleCore
 
 	public function sortable_columns( $columns )
 	{
-		$columns['theday'] = 'theday'; // FIXME: add var query
-		return $columns;
+		return array_merge( $columns, array( 'theday' => 'theday' ) ); // FIXME: add var query
 	}
 
 	public function column_theday( $post_id )

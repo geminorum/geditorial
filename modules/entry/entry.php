@@ -99,7 +99,6 @@ class gEditorialEntry extends gEditorialModuleCore
 		$this->register_post_type( 'entry_cpt', array(), array( 'post_tag' ) );
 		$this->register_taxonomy( 'section_tax', array(
 			'hierarchical'       => TRUE,
-			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
 			'show_in_nav_menus'  => TRUE,
 			'meta_box_cb'        => NULL, // default meta box
@@ -153,6 +152,8 @@ class gEditorialEntry extends gEditorialModuleCore
 				if ( $this->get_setting( 'admin_ordering', TRUE ) )
 					add_action( 'pre_get_posts', array( $this, 'pre_get_posts' ) );
 
+				$this->filter( 'posts_clauses', 2 );
+
 				$this->_edit_screen( $screen->post_type );
 				add_filter( 'manage_edit-'.$screen->post_type.'_sortable_columns', array( $this, 'sortable_columns' ) );
 			}
@@ -204,6 +205,11 @@ class gEditorialEntry extends gEditorialModuleCore
 		), 'entry_cpt' );
 	}
 
+	public function posts_clauses( $pieces, $wp_query )
+	{
+		return $this->do_posts_clauses_taxes( $pieces, $wp_query, array( 'section_tax' ) );
+	}
+
 	public function manage_posts_columns( $posts_columns )
 	{
 		$new_columns = array();
@@ -218,7 +224,7 @@ class gEditorialEntry extends gEditorialModuleCore
 				$new_columns['order'] = $this->get_column_title( 'order', 'entry_cpt' );
 				$new_columns[$key] = $value;
 
-			} else if ( in_array( $key, array( 'author', 'taxonomy-'.$section ) ) ) {
+			} else if ( in_array( $key, array( 'author', 'comments' ) ) ) {
 				continue; // he he!
 
 			} else {
@@ -230,7 +236,12 @@ class gEditorialEntry extends gEditorialModuleCore
 
 	public function sortable_columns( $columns )
 	{
-		return array_merge( $columns, array( 'order' => 'menu_order' ) );
+		$tax = $this->constant( 'section_tax' );
+
+		return array_merge( $columns, array(
+			'order'          => 'menu_order',
+			'taxonomy-'.$tax => 'taxonomy-'.$tax,
+		) );
 	}
 
 	public function posts_custom_column( $column_name, $post_id )

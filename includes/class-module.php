@@ -1638,7 +1638,7 @@ class gEditorialModuleCore extends gEditorialWPModule
 		return FALSE;
 	}
 
-	public function do_restrict_manage_posts_taxes( $taxes, $posttype_constant_key )
+	protected function do_restrict_manage_posts_taxes( $taxes, $posttype_constant_key )
 	{
 		global $wp_query;
 
@@ -1665,7 +1665,7 @@ class gEditorialModuleCore extends gEditorialWPModule
 		}
 	}
 
-	public function do_parse_query_taxes( &$qv, $taxes, $posttype_constant_key = TRUE )
+	protected function do_parse_query_taxes( &$qv, $taxes, $posttype_constant_key = TRUE )
 	{
 		if ( TRUE === $posttype_constant_key ||
 			$this->is_current_posttype( $posttype_constant_key ) ) {
@@ -1679,6 +1679,39 @@ class gEditorialModuleCore extends gEditorialWPModule
 				}
 			}
 		}
+	}
+
+	// @SOURCE: http://scribu.net/wordpress/sortable-taxonomy-columns.html
+	protected function do_posts_clauses_taxes( $pieces, &$wp_query, $taxes, $posttype_constant_key = TRUE )
+	{
+		if ( TRUE === $posttype_constant_key ||
+			$this->is_current_posttype( $posttype_constant_key ) ) {
+
+			global $wpdb;
+
+			foreach ( $taxes as $constant_key ) {
+				$tax = $this->constant( $constant_key );
+
+				if ( isset( $wp_query->query['orderby'] )
+					&& 'taxonomy-'.$tax == $wp_query->query['orderby'] ) {
+
+						$pieces['join'] .= <<<SQL
+LEFT OUTER JOIN {$wpdb->term_relationships} ON {$wpdb->posts}.ID={$wpdb->term_relationships}.object_id
+LEFT OUTER JOIN {$wpdb->term_taxonomy} USING (term_taxonomy_id)
+LEFT OUTER JOIN {$wpdb->terms} USING (term_id)
+SQL;
+
+					$pieces['where']   .= $wpdb->prepare( " AND (taxonomy = '%s' OR taxonomy IS NULL)", $tax );
+					$pieces['groupby']  = "object_id";
+					$pieces['orderby']  = "GROUP_CONCAT({$wpdb->terms}.name ORDER BY name ASC) ";
+					$pieces['orderby'] .= ( 'ASC' == strtoupper( $wp_query->get('order') ) ) ? 'ASC' : 'DESC';
+
+					break;
+				}
+			}
+		}
+
+		return $pieces;
 	}
 
 	protected function dashboard_glance_post( $posttype_constant_key, $edit_cap = 'edit_posts' )
