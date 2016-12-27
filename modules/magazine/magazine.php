@@ -198,7 +198,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 
 		$this->do_globals();
 
-		$this->post_types_excluded = array( $this->constant( 'issue_cpt' ) );
+		$this->post_types_excluded = array( 'attachment', $this->constant( 'issue_cpt' ) );
 
 		$this->register_post_type( 'issue_cpt', array(
 			'hierarchical' => TRUE,

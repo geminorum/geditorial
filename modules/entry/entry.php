@@ -94,7 +94,7 @@ class gEditorialEntry extends gEditorialModuleCore
 
 		$this->do_globals();
 
-		$this->post_types_excluded = array( $this->constant( 'entry_cpt' ) );
+		$this->post_types_excluded = array( 'attachment', $this->constant( 'entry_cpt' ) );
 
 		$this->register_post_type( 'entry_cpt', array(), array( 'post_tag' ) );
 		$this->register_taxonomy( 'section_tax', array(

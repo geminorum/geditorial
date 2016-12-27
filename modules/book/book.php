@@ -227,7 +227,7 @@ class gEditorialBook extends gEditorialModuleCore
 
 		$this->do_globals();
 
-		$this->post_types_excluded = array( $this->constant( 'publication_cpt' ) );
+		$this->post_types_excluded = array( 'attachment', $this->constant( 'publication_cpt' ) );
 
 		$this->register_post_type( 'publication_cpt', array(), array( 'post_tag' ) );
 

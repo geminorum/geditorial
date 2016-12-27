@@ -126,7 +126,7 @@ class gEditorialContest extends gEditorialModuleCore
 
 		$this->do_globals();
 
-		$this->post_types_excluded = array( $this->constant( 'contest_cpt' ) );
+		$this->post_types_excluded = array( 'attachment', $this->constant( 'contest_cpt' ) );
 
 		$this->register_post_type( 'contest_cpt', array(
 			'hierarchical'  => TRUE,

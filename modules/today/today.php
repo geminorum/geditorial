@@ -92,7 +92,7 @@ class gEditorialToday extends gEditorialModuleCore
 
 		$this->do_globals();
 
-		$this->post_types_excluded = array( $this->constant( 'day_cpt' ) );
+		$this->post_types_excluded = array( 'attachment', $this->constant( 'day_cpt' ) );
 		$this->register_post_type( 'day_cpt', array(), array( 'post_tag' ) );
 
 		$this->register_shortcode( 'day_shortcode', array( 'gEditorialTodayTemplates', 'day_shortcode' ) );
