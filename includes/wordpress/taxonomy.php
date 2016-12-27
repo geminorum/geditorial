@@ -9,7 +9,7 @@ class gEditorialWPTaxonomy extends gEditorialBaseCore
 	// ALSO: trim term titles
 	// MUST USE: custom walker
 
-	// EDITED:
+	// EDITED: 12/27/2016, 6:36:20 AM
 	public static function get( $mod = 0, $args = array() )
 	{
 		$list = array();
@@ -18,7 +18,7 @@ class gEditorialWPTaxonomy extends gEditorialBaseCore
 
 			// label
 			if ( 0 === $mod )
-				$list[$taxonomy] = $taxonomy_obj->label ? $taxonomy_obj->label : $taxonomy->name;
+				$list[$taxonomy] = $taxonomy_obj->label ? $taxonomy_obj->label : $taxonomy_obj->name;
 
 			// plural
 			else if ( 1 === $mod )
