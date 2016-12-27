@@ -1280,6 +1280,34 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 				}
 
 			break;
+			case 'taxonomies' :
+
+				if ( ! $args['values'] )
+					$args['values'] = gEditorialWPTaxonomy::get( 0, $args['extra'] );
+
+				foreach ( $args['values'] as $value_name => $value_title ) {
+
+					if ( in_array( $value_name, $exclude ) )
+						continue;
+
+					$html = gEditorialHTML::tag( 'input', array(
+						'type'     => 'checkbox',
+						'id'       => $id.'-'.$value_name,
+						'name'     => $name.'['.$value_name.']',
+						'value'    => '1',
+						'checked'  => in_array( $value_name, ( array ) $value ),
+						'class'    => gEditorialHTML::attrClass( $args['field_class'], '-type-taxonomies' ),
+						'disabled' => $args['disabled'],
+						'readonly' => $args['readonly'],
+						'dir'      => $args['dir'],
+					) );
+
+					echo '<p>'.gEditorialHTML::tag( 'label', array(
+						'for' => $id.'-'.$value_name,
+					), $html.'&nbsp;'.esc_html( $value_title ) ).'</p>';
+				}
+
+			break;
 			case 'callback' :
 
 				if ( is_callable( $args['callback'] ) ) {
