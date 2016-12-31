@@ -60,6 +60,7 @@ class gEditorialMeta extends gEditorialModuleCore
 
 					'source_title' => _x( 'Source Title', 'Meta Module: Titles', GEDITORIAL_TEXTDOMAIN ),
 					'source_url'   => _x( 'Source URL', 'Meta Module: Titles', GEDITORIAL_TEXTDOMAIN ),
+					'highlight'    => _x( 'Highlight', 'Meta Module: Titles', GEDITORIAL_TEXTDOMAIN ),
 				),
 				'author' => _x( 'Author', 'Meta Module: Titles', GEDITORIAL_TEXTDOMAIN ),
 			),
@@ -75,6 +76,7 @@ class gEditorialMeta extends gEditorialModuleCore
 
 					'source_title' => _x( 'Original Title of Source Content', 'Meta Module: Descriptions', GEDITORIAL_TEXTDOMAIN ),
 					'source_url'   => _x( 'Full URL to the Source of the Content', 'Meta Module: Descriptions', GEDITORIAL_TEXTDOMAIN ),
+					'highlight'    => _x( 'A Short Note Highlighted About the Post', 'Meta Module: Descriptions', GEDITORIAL_TEXTDOMAIN ),
 				),
 			),
 			'misc' => array(
@@ -122,6 +124,7 @@ class gEditorialMeta extends gEditorialModuleCore
 
 				'source_title' => array( 'type' => 'text' ),
 				'source_url'   => array( 'type' => 'link' ),
+				'highlight'    => array( 'type' => 'note' ),
 			),
 			'page' => array(
 				'ot' => array( 'type' => 'title_before' ),
@@ -272,6 +275,10 @@ class gEditorialMeta extends gEditorialModuleCore
 					gEditorialMetaMetaBox::fieldString( $field, array( $field ), $post, $args['ltr'], $args['title'], FALSE, $args['type'] );
 				break;
 
+				case 'note':
+					gEditorialMetaMetaBox::fieldTextarea( $field, array( $field ), $post, $args['ltr'], $args['title'], FALSE, $args['type'] );
+				break;
+
 				case 'code':
 				case 'link':
 					gEditorialMetaMetaBox::fieldString( $field, array( $field ), $post, TRUE, $args['title'], FALSE, $args['type'] );
@@ -390,6 +397,7 @@ class gEditorialMeta extends gEditorialModuleCore
 						break;
 
 						case 'textarea':
+						case 'note':
 						case 'box':
 							gEditorialMetaMetaBox::setPostMetaField_Text( $postmeta, $field );
 						break;
