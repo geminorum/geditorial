@@ -302,13 +302,13 @@ class gEditorialEntry extends gEditorialModuleCore
 			&& in_the_loop()
 			&& is_main_query() ) {
 
-			if ( is_null( $this->terms ) )
-				$this->terms = gEditorialWPTaxonomy::prepTerms( $this->constant( 'section_tax' ) );
+			if ( is_null( $this->sections ) )
+				$this->sections = gEditorialWPTaxonomy::prepTerms( $this->constant( 'section_tax' ) );
 
-			foreach ( $this->terms as $term )
+			foreach ( $this->sections as $section )
 				$content = preg_replace(
-					"|(?!<[^<>]*?)(?<![?./&])\b($term->name)\b(?!:)(?![^<>]*?>)|imsU",
-					"<a href=\"$term->link\" class=\"-entry-section\">$1</a>",
+					"|(?!<[^<>]*?)(?<![?./&])\b($section->name)\b(?!:)(?![^<>]*?>)|imsU",
+					"<a href=\"$section->link\" class=\"-entry-section\">$1</a>",
 				$content );
 		}
 
