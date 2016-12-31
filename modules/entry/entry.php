@@ -190,8 +190,10 @@ class gEditorialEntry extends gEditorialModuleCore
 			&& isset( $wp_query->query['post_type'] ) ) {
 
 			if ( $this->constant( 'entry_cpt' ) == $wp_query->query['post_type'] ) {
+
 				if ( ! isset( $_GET['orderby'] ) )
 					$wp_query->set( 'orderby', 'menu_order' );
+
 				if ( ! isset( $_GET['order'] ) )
 					$wp_query->set( 'order', 'DESC' );
 			}

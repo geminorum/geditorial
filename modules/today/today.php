@@ -391,6 +391,7 @@ class gEditorialToday extends gEditorialModuleCore
 		return $post_ID;
 	}
 
+	// @SEE: `bp_theme_compat_reset_post()`
 	// https://wphierarchy.com/
 	public function template_include( $template )
 	{
@@ -399,7 +400,9 @@ class gEditorialToday extends gEditorialModuleCore
 		// 	add_filter( 'the_title', array( $this, 'the_title' ) );
 		// 	add_filter( 'the_content', array( $this, 'the_content' ) );
 		//
+		// 	return $template;
 		// 	return get_single_template();
+		// }
 
 		// if ( is_front_page() ) {
 		if ( is_home() ) {
@@ -456,6 +459,8 @@ class gEditorialToday extends gEditorialModuleCore
 
 	public function the_content( $content )
 	{
+		global $post;
+
 		$costants = $this->get_the_day_constants();
 
 		list( $posts, $pagination ) = gEditorialTodayHelper::getPostsConnected( array(

@@ -571,10 +571,10 @@ class gEditorialModuleCore extends gEditorialWPModule
 	// DEFAULT METHOD
 	public function append_sub( $subs, $page = 'settings' )
 	{
-		if ( $this->cuc( $page ) )
-			return array_merge( $subs, array( $this->module->name => $this->module->title ) );
+		if ( ! $this->cuc( $page ) )
+			return $subs;
 
-		return $subs;
+		return array_merge( $subs, array( $this->module->name => $this->module->title ) );
 	}
 
 	// FIXME: DEPRICATED
@@ -1695,6 +1695,7 @@ class gEditorialModuleCore extends gEditorialWPModule
 		}
 	}
 
+	// @SEE: https://core.trac.wordpress.org/ticket/23421
 	// @SOURCE: http://scribu.net/wordpress/sortable-taxonomy-columns.html
 	protected function do_posts_clauses_taxes( $pieces, &$wp_query, $taxes, $posttype_constant_key = TRUE )
 	{
@@ -1766,7 +1767,7 @@ SQL;
 
 		return gEditorialHTML::tag( ( $link ? 'a' : 'span' ), array(
 			'href'   => $link ? $link : FALSE,
-			'title' => $title ? $title : FALSE,
+			'title'  => $title ? $title : FALSE,
 			'class'  => array( '-icon', ( $link ? '-link' : '-info' ) ),
 			'target' => $link ? '_blank' : FALSE,
 		), gEditorialHTML::getDashicon( $icon ) );

@@ -238,9 +238,10 @@ class gEditorialMeta extends gEditorialModuleCore
 				add_action( 'save_post', array( $this, 'save_post' ), 10, 2 );
 
 				$localize = array(
-					'constants' => array(
-						'ct' => $this->constant( 'ct_tax' ),
-					),
+					// not used yet!
+					// 'constants' => array(
+					// 	'ct' => $this->constant( 'ct_tax' ),
+					// ),
 				);
 
 				foreach ( $this->post_type_fields( $screen->post_type ) as $field )
