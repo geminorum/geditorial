@@ -181,6 +181,74 @@ class gEditorialHelper extends gEditorialBaseCore
 		echo self::getJoined( $list, $before, $after );
 	}
 
+	public static function getPostTitleRow( $post, $link = 'edit' )
+	{
+		$title = apply_filters( 'the_title', $post->post_title, $post->ID );
+
+		if ( empty( $title ) )
+			$title = _x( '(no title)', 'Module Helper: Post Title', GEDITORIAL_TEXTDOMAIN );
+
+		if ( ! $link )
+			return esc_html( $title );
+
+		if ( 'edit' == $link && ! current_user_can( 'edit_post', $post->ID ) )
+			$link = 'view';
+
+		if ( 'edit' == $link )
+			return gEditorialHTML::tag( 'a', array(
+				'href'   => gEditorialWordPress::getPostEditLink( $post->ID ),
+				'class'  => '-link -row-link -row-link-edit',
+				'target' => '_blank',
+				'title'  => _x( 'Edit', 'Module Helper: Row Action', GEDITORIAL_TEXTDOMAIN ),
+			), esc_html( $title ) );
+
+		if ( 'view' == $link )
+			return gEditorialHTML::tag( 'a', array(
+				'href'   => gEditorialWordPress::getPostShortLink( $post->ID ),
+				'class'  => '-link -row-link -row-link-view',
+				'target' => '_blank',
+				'title'  => _x( 'View', 'Module Helper: Row Action', GEDITORIAL_TEXTDOMAIN ),
+			), esc_html( $title ) );
+
+		return gEditorialHTML::tag( 'a', array(
+			'href'   => $link,
+			'class'  => '-link -row-link -row-link-custom',
+			'target' => '_blank',
+		), esc_html( $title ) );
+	}
+
+	public static function getPostRowActions( $post_id, $actions = array( 'edit', 'view' ) )
+	{
+		$list = array();
+
+		foreach ( $actions as $action ) {
+
+			switch ( $action ) {
+
+				case 'edit':
+
+					$list['edit'] = gEditorialHTML::tag( 'a', array(
+						'href'   => gEditorialWordPress::getPostEditLink( $post_id ),
+						'class'  => '-link -row-link -row-link-edit',
+						'target' => '_blank',
+					), _x( 'Edit', 'Module Helper: Row Action', GEDITORIAL_TEXTDOMAIN ) );
+
+				break;
+				case 'view':
+
+					$list['view'] = gEditorialHTML::tag( 'a', array(
+						'href'   => gEditorialWordPress::getPostShortLink( $post_id ),
+						'class'  => '-link -row-link -row-link-view',
+						'target' => '_blank',
+					), _x( 'View', 'Module Helper: Row Action', GEDITORIAL_TEXTDOMAIN ) );
+
+				break;
+			}
+		}
+
+		return $list;
+	}
+
 	public static function getMimeTypeEditRow( $mime_types, $post_parent, $before = '', $after = '' )
 	{
 		if ( ! count( $mime_types ) )
