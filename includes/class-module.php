@@ -498,6 +498,7 @@ class gEditorialModuleCore extends gEditorialWPModule
 	{
 		echo '<form action="'.$this->get_url_settings().'" method="post">';
 
+			// FIXME: USE: `$this->settings_fields()`
 			settings_fields( $this->module->group );
 
 			gEditorialSettingsCore::moduleSections( $this->module->group );
@@ -556,6 +557,17 @@ class gEditorialModuleCore extends gEditorialWPModule
 		echo '&nbsp;&nbsp;';
 	}
 
+	protected function settings_fields( $sub, $action = 'update', $context = 'settings' )
+	{
+		gEditorialHTML::inputHidden( 'base', $this->base );
+		gEditorialHTML::inputHidden( 'key', $this->key );
+		gEditorialHTML::inputHidden( 'context', $context );
+		gEditorialHTML::inputHidden( 'sub', $sub );
+		gEditorialHTML::inputHidden( 'action', $action );
+
+		$this->nonce_field( $context, $sub );
+	}
+
 	// DEFAULT METHOD
 	public function append_sub( $subs, $page = 'settings' )
 	{
@@ -565,6 +577,8 @@ class gEditorialModuleCore extends gEditorialWPModule
 		return $subs;
 	}
 
+	// FIXME: DEPRICATED
+	// USE: `$this->settings_fields()`
 	protected function settings_field_referer( $sub = NULL, $page = 'settings' )
 	{
 		$this->nonce_field( $page, $sub );
