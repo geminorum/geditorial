@@ -222,7 +222,7 @@ class gEditorialHelper extends gEditorialBaseCore
 			'posts_per_page' => -1,
 			'orderby'        => array( 'menu_order', 'date' ),
 			'order'          => 'ASC',
-			'post_status'    => array( 'publish', 'pending', 'draft' ),
+			'post_status'    => array( 'publish', 'future', 'pending', 'draft' ),
 			'post__not_in'   => $exclude,
 			'tax_query'      => array( array(
 				'taxonomy' => $taxonomy,
