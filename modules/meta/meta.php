@@ -609,7 +609,7 @@ class gEditorialMeta extends gEditorialModuleCore
 					$limit = isset( $post['custom_field_limit'] ) ? stripslashes( $post['custom_field_limit'] ) : FALSE;
 
 					if ( isset( $post['custom_field'] ) ) {
-						gEditorialHelper::tableList( array(
+						gEditorialHTML::tableList( array(
 							'post_id' => 'Post ID',
 							'meta'    => 'Meta :'.$post['custom_field'],
 						), gEditorialWPDatabase::getPostMetaRows( stripslashes( $post['custom_field'] ), $limit ) );
