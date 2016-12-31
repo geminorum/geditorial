@@ -364,8 +364,7 @@ class gEditorialTweaks extends gEditorialModuleCore
 					$icon, $this->get_string( 'title', $taxonomy, 'taxonomies', $taxonomy )
 				);
 
-			gEditorialHelper::getTermsEditRow( $post,
-				$post->post_type, $object, $before, '</li>' );
+			gEditorialHelper::getTermsEditRow( $post, $object, $before, '</li>' );
 		}
 	}
 

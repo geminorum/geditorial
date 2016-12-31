@@ -133,7 +133,7 @@ class gEditorialHelper extends gEditorialBaseCore
 		return '';
 	}
 
-	public static function getTermsEditRow( $post, $post_type, $taxonomy, $before = '', $after = '' )
+	public static function getTermsEditRow( $post, $taxonomy, $before = '', $after = '' )
 	{
 		$object = is_object( $taxonomy ) ? $taxonomy : get_taxonomy( $taxonomy );
 
@@ -146,8 +146,8 @@ class gEditorialHelper extends gEditorialBaseCore
 
 			$query = array();
 
-			if ( 'post' != $post_type )
-				$query['post_type'] = $post_type;
+			if ( 'post' != $post->post_type )
+				$query['post_type'] = $post->post_type;
 
 			if ( $object->query_var ) {
 				$query[$object->query_var] = $term->slug;
