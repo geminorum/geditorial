@@ -220,6 +220,23 @@
   }
 }
 
+.geditorial-admin-wrap-metabox {
+
+  .field-wrap {
+
+    &.field-wrap-textarea {
+      padding-left: 1px;
+      margin-right: -1px;
+      @include body-rtl() {
+        padding-left: 0px;
+        padding-right: 1px;
+        margin-right: 0px;
+        margin-left: -1px;
+      }
+    }
+  }
+}
+
 .geditorial-admin-wrap-textbox {
   margin-bottom: -6px;
 }
