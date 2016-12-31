@@ -8,6 +8,11 @@ class gEditorialHTML extends gEditorialBaseCore
 		return self::tag( 'a', array( 'href' => $link, 'target' => ( $target_blank ? '_blank' : FALSE ) ), $html );
 	}
 
+	public static function inputHidden( $name, $value = '' )
+	{
+		echo '<input type="hidden" name="'.self::escapeAttr( $name ).'" value="'.self::escapeAttr( $value ).'" />';
+	}
+
 	public static function joined( $items, $before = '', $after = '', $sep = '|' )
 	{
 		return count( $items ) ? ( $before.join( $sep, $items ).$after ) : '';
@@ -70,7 +75,7 @@ class gEditorialHTML extends gEditorialBaseCore
 							continue;
 
 						else
-							$html .= ' data-'.$data_key.'="'.esc_attr( $data_val ).'"';
+							$html .= ' data-'.$data_key.'="'.self::escapeAttr( $data_val ).'"';
 					}
 
 					continue;
@@ -85,17 +90,8 @@ class gEditorialHTML extends gEditorialBaseCore
 				$sanitized = TRUE;
 			}
 
-			if ( 'selected' == $key )
-				$att = ( $att ? 'selected' : FALSE );
-
-			if ( 'checked' == $key )
-				$att = ( $att ? 'checked' : FALSE );
-
-			if ( 'readonly' == $key )
-				$att = ( $att ? 'readonly' : FALSE );
-
-			if ( 'disabled' == $key )
-				$att = ( $att ? 'disabled' : FALSE );
+			if ( in_array( $key, array( 'selected', 'checked', 'readonly', 'disabled' ) ) )
+				$att = $att ? $key : FALSE;
 
 			if ( FALSE === $att )
 				continue;
@@ -113,7 +109,7 @@ class gEditorialHTML extends gEditorialBaseCore
 				$att = self::escapeURL( $att );
 
 			else
-				$att = esc_attr( $att );
+				$att = self::escapeAttr( $att );
 
 			$html .= ' '.$key.'="'.trim( $att ).'"';
 		}
@@ -122,6 +118,16 @@ class gEditorialHTML extends gEditorialBaseCore
 			return $html.' />';
 
 		return $html.'>';
+	}
+
+	// like WP core but without filter and fallback
+	// @SOURCE: `esc_attr()`
+	public static function escapeAttr( $text )
+	{
+		$safe_text = wp_check_invalid_utf8( $text );
+		$safe_text = _wp_specialchars( $safe_text, ENT_QUOTES );
+
+		return $safe_text;
 	}
 
 	public static function escapeURL( $url )
@@ -245,6 +251,8 @@ class gEditorialHTML extends gEditorialBaseCore
 			return FALSE;
 		}
 
+		echo '<div class="base-table-wrap">';
+
 		if ( isset( $args['title'] ) && $args['title'] )
 			echo '<div class="base-table-title">'.$args['title'].'</div>';
 
@@ -273,7 +281,7 @@ class gEditorialHTML extends gEditorialBaseCore
 					$title = isset( $column['title'] ) ? $column['title'] : $key;
 
 					if ( isset( $column['class'] ) )
-						$class = esc_attr( $column['class'] );
+						$class = self::escapeAttr( $column['class'] );
 
 				} else if ( '_cb' == $key ) {
 					$title = '<input type="checkbox" id="cb-select-all-1" class="-cb-all" />';
@@ -283,7 +291,7 @@ class gEditorialHTML extends gEditorialBaseCore
 					$title = $column;
 				}
 
-				echo '<'.$tag.' class="-column -column-'.esc_attr( $key ).$class.'">'.$title.'</'.$tag.'>';
+				echo '<'.$tag.' class="-column -column-'.self::escapeAttr( $key ).$class.'">'.$title.'</'.$tag.'>';
 			}
 		echo '</tr></thead><tbody>';
 
@@ -294,7 +302,7 @@ class gEditorialHTML extends gEditorialBaseCore
 
 			foreach ( $columns as $key => $column ) {
 
-				$class = $callback = '';
+				$class = $callback = $actions = '';
 				$cell = 'td';
 
 				if ( '_cb' == $key ) {
@@ -308,7 +316,7 @@ class gEditorialHTML extends gEditorialBaseCore
 						$value = $row->{$column};
 					else
 						$value = '';
-					$value = '<input type="checkbox" name="_cb[]" value="'.esc_attr( $value ).'" class="-cb" />';
+					$value = '<input type="checkbox" name="_cb[]" value="'.self::escapeAttr( $value ).'" class="-cb" />';
 					$class .= ' check-column';
 					$cell = 'th';
 
@@ -324,16 +332,22 @@ class gEditorialHTML extends gEditorialBaseCore
 
 				if ( is_array( $column ) ) {
 					if ( isset( $column['class'] ) )
-						$class .= ' '.esc_attr( $column['class'] );
+						$class .= ' '.self::escapeAttr( $column['class'] );
 
 					if ( isset( $column['callback'] ) )
 						$callback = $column['callback'];
+
+					if ( isset( $column['actions'] ) ) {
+						$actions = $column['actions'];
+						$class .= ' has-row-actions';
+					}
 				}
 
 				echo '<'.$cell.' class="-cell -cell-'.$key.$class.'">';
 
 				if ( $callback ){
-					echo call_user_func_array( $callback, array( $value, $row, $column, $index ) );
+					echo call_user_func_array( $callback,
+						array( $value, $row, $column, $index ) );
 
 				} else if ( $value ) {
 					echo $value;
@@ -341,6 +355,10 @@ class gEditorialHTML extends gEditorialBaseCore
 				} else {
 					echo '&nbsp;';
 				}
+
+				if ( $actions )
+					self::tableActions( call_user_func_array( $actions,
+						array( $value, $row, $column, $index ) ) );
 
 				echo '</'.$cell.'>';
 			}
@@ -368,9 +386,29 @@ class gEditorialHTML extends gEditorialBaseCore
 		if ( isset( $args['after'] ) && is_callable( $args['after'] ) )
 			call_user_func_array( $args['after'], array( $columns, $data, $args ) );
 
-		echo '</div>';
+		echo '</div></div>';
 
 		return TRUE;
+	}
+
+	public static function tableActions( $actions )
+	{
+		$count = count( $actions );
+
+		if ( ! $actions )
+			return;
+
+		$i = 0;
+
+		echo '<div class="base-table-actions row-actions">';
+
+			foreach ( $actions as $action => $html ) {
+				++$i;
+				$sep = $i == $count ? '' : ' | ';
+				echo '<span class="-action-'.$action.'">'.$html.$sep.'</span>';
+			}
+
+		echo '</div>';
 	}
 
 	public static function tableNavigation( $pagination = array() )

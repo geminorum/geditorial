@@ -235,6 +235,13 @@ class gEditorialWordPress extends gEditorialBaseCore
 		), $extra ), admin_url( 'post.php' ) );
 	}
 
+	public static function getPostShortLink( $post_id, $extra = array() )
+	{
+		return add_query_arg( array_merge( array(
+			'p' => $post_id,
+		), $extra ), get_bloginfo( 'url' ) );
+	}
+
 	public static function getPostNewLink( $post_type, $extra = array() )
 	{
 		return add_query_arg( array_merge( array(

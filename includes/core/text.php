@@ -21,6 +21,18 @@ class gEditorialCoreText extends gEditorialBaseCore
 		return preg_replace( '/(width|height)="\d*"\s/', '', $string );
 	}
 
+	public static function has( $haystack, $needles )
+	{
+		if ( ! is_array( $needles ) )
+			return FALSE !== stripos( $haystack, $needles );
+
+		foreach ( $needles as $needle )
+			if ( FALSE !== stripos( $haystack, $needle ) )
+				return TRUE;
+
+		return FALSE;
+	}
+
 	// @SEE: `mb_convert_case()`
 	public static function strToLower( $string, $encoding = 'UTF-8' )
 	{

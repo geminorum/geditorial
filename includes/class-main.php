@@ -65,7 +65,7 @@ class gEditorial
 		require_once( GEDITORIAL_DIR.'includes/core/base.php' );
 		require_once( GEDITORIAL_DIR.'includes/core/html.php' );
 		require_once( GEDITORIAL_DIR.'includes/core/http.php' );
-		require_once( GEDITORIAL_DIR.'includes/core/l18n.php' );
+		require_once( GEDITORIAL_DIR.'includes/core/l10n.php' );
 		require_once( GEDITORIAL_DIR.'includes/core/date.php' );
 		require_once( GEDITORIAL_DIR.'includes/core/text.php' );
 		require_once( GEDITORIAL_DIR.'includes/core/number.php' );
