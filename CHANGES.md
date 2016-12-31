@@ -1,3 +1,19 @@
+### 3.9.9
+* main/helper: nbsp before hellip on trim chars
+* main/helper: future status for term posts
+* main/modulecore: api for sortable tax column, [see](http://scribu.net/wordpress/sortable-taxonomy-columns.html)
+* main/modulecore: exclude attachment posttype for customized modules
+* main/modulecore: internal settings fields handler
+* main/settings: new taxonomies field type
+* module/entry: renamed in class cache key to sections
+* module/meta: :new: new highlight meta field
+* module/modified: :new: new module
+* module/ortho: :new: sanitizing number fields
+* module/terms: :new: new module
+* module/today: missing column strings
+* module/tweaks: author in attr column
+* module/tweaks: no need for posttype arg
+
 ### 3.9.8
 * module/ortho: giving back focus to title input
 
