@@ -1,3 +1,8 @@
+### 3.9.10
+* module/modified: check for cap before linking authors in dashboard
+* module/today: styling admin edit date stamp
+* module/tweaks: sortable id column
+
 ### 3.9.9
 * main/helper: nbsp before hellip on trim chars
 * main/helper: future status for term posts
