@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gEditorial v3.9.9\n"
+"Project-Id-Version: gEditorial v3.9.10\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2017-01-01 00:09+0330\n"
+"PO-Revision-Date: 2017-01-01 13:54+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: geminorum <contact@geminorum.ir>\n"
 "Language: fa\n"
@@ -2294,13 +2294,13 @@ msgstr "تاریخ و زمان"
 
 #: modules/event/event.php:65
 msgctxt "Event Module: Column Title"
-msgid "Dates"
-msgstr "تاریخ"
+msgid "Starts"
+msgstr "شروع"
 
 #: modules/event/event.php:66
 msgctxt "Event Module: Column Title"
-msgid "Times"
-msgstr "ساعت"
+msgid "Ends"
+msgstr "پایان"
 
 #: modules/event/event.php:69
 msgctxt "Event Module: Event Types Tax Labels: Menu Name"
@@ -2400,47 +2400,42 @@ msgctxt "Event Module: Event Tax Defaults"
 msgid "End"
 msgstr "پایان"
 
-#: modules/event/event.php:362, modules/event/event.php:363
-msgctxt "Event Module"
-msgid "F j, Y"
-msgstr "j M Y"
-
-#: modules/event/event.php:436
+#: modules/event/event.php:444
 msgctxt "Event Module: Meta Box Input"
 msgid "Date Start"
 msgstr "تاریخ شروع"
 
-#: modules/event/event.php:437
+#: modules/event/event.php:445
 msgctxt "Event Module: Meta Box Input Placeholder"
 msgid "Date Start"
 msgstr "تاریخ شروع"
 
-#: modules/event/event.php:446
+#: modules/event/event.php:454
 msgctxt "Event Module: Meta Box Input"
 msgid "Time Start"
 msgstr "زمان شروع"
 
-#: modules/event/event.php:447
+#: modules/event/event.php:455
 msgctxt "Event Module: Meta Box Input Placeholder"
 msgid "Time Start"
 msgstr "زمان شروع"
 
-#: modules/event/event.php:460
+#: modules/event/event.php:468
 msgctxt "Event Module: Meta Box Input"
 msgid "Date End"
 msgstr "تاریخ پایان"
 
-#: modules/event/event.php:461
+#: modules/event/event.php:469
 msgctxt "Event Module: Meta Box Input Placeholder"
 msgid "Date End"
 msgstr "تاریخ پایان"
 
-#: modules/event/event.php:470
+#: modules/event/event.php:478
 msgctxt "Event Module: Meta Box Input"
 msgid "Time End"
 msgstr "زمان پایان"
 
-#: modules/event/event.php:471
+#: modules/event/event.php:479
 msgctxt "Event Module: Meta Box Input Placeholder"
 msgid "Time End"
 msgstr "زمان پایان"
@@ -2779,6 +2774,16 @@ msgctxt "Home Module: Setting Info"
 msgid "Will include in front-end main query."
 msgstr ""
 
+#: modules/json/json.php:28
+msgctxt "JSON Module"
+msgid "JSON"
+msgstr ""
+
+#: modules/json/json.php:29
+msgctxt "JSON Module"
+msgid "JSON Endpoint all data"
+msgstr ""
+
 #: modules/like/like.php:14, modules/like/like.php:177
 msgctxt "Like Module"
 msgid "Like"
@@ -2823,16 +2828,6 @@ msgstr "بارگذاری &hellip;"
 msgctxt "Like Module"
 msgid "Unlike"
 msgstr "ناپسند"
-
-#: modules/json/json.php:28
-msgctxt "JSON Module"
-msgid "JSON"
-msgstr ""
-
-#: modules/json/json.php:29
-msgctxt "JSON Module"
-msgid "JSON Endpoint all data"
-msgstr ""
 
 #: modules/magazine/magazine.php:19
 msgctxt "Magazine Module"
@@ -3449,12 +3444,12 @@ msgctxt "Modules: Modified"
 msgid "Author"
 msgstr ""
 
-#: modules/modified/modified.php:138
+#: modules/modified/modified.php:145
 msgctxt "Modules: Modified"
 msgid "Title"
 msgstr "عنوان"
 
-#: modules/modified/modified.php:145
+#: modules/modified/modified.php:152
 msgctxt "Modules: Modified"
 msgid "No Posts?!"
 msgstr "چیزی پیدا نشد!"
@@ -4403,52 +4398,52 @@ msgctxt "Modules: Terms"
 msgid "No Posts!"
 msgstr "چیزی پیدا نشد!"
 
-#: modules/today/helper.php:238
+#: modules/today/helper.php:275
 msgctxt "Today Module: Meta Box Input"
 msgid "Day"
 msgstr "روز"
 
-#: modules/today/helper.php:239
+#: modules/today/helper.php:276
 msgctxt "Today Module: Meta Box Input Placeholder"
 msgid "Day"
 msgstr "روز"
 
-#: modules/today/helper.php:250
+#: modules/today/helper.php:287
 msgctxt "Today Module: Meta Box Input"
 msgid "Month"
 msgstr "ماه"
 
-#: modules/today/helper.php:251
+#: modules/today/helper.php:288
 msgctxt "Today Module: Meta Box Input Placeholder"
 msgid "Month"
 msgstr "ماه"
 
-#: modules/today/helper.php:261
+#: modules/today/helper.php:298
 msgctxt "Today Module: Meta Box Input"
 msgid "Year"
 msgstr "سال"
 
-#: modules/today/helper.php:262
+#: modules/today/helper.php:299
 msgctxt "Today Module: Meta Box Input Placeholder"
 msgid "Year"
 msgstr "سال"
-
-#: modules/today/helper.php:281
-msgctxt "Today Module: Meta Box Input"
-msgid "Calendar"
-msgstr "تقویم"
-
-#: modules/today/helper.php:282
-msgctxt "Today Module: Meta Box Input Placeholder"
-msgid "Calendar"
-msgstr "تقویم"
 
 #: modules/today/helper.php:318
+msgctxt "Today Module: Meta Box Input"
+msgid "Calendar"
+msgstr "تقویم"
+
+#: modules/today/helper.php:319
+msgctxt "Today Module: Meta Box Input Placeholder"
+msgid "Calendar"
+msgstr "تقویم"
+
+#: modules/today/helper.php:355
 msgctxt "Today Module"
 msgid "New Day!"
 msgstr "روز تازه!"
 
-#: modules/today/helper.php:339
+#: modules/today/helper.php:376
 msgctxt "Today Module"
 msgid "New %s connected to this day"
 msgstr "افزودن %s تازه برای این روز"
@@ -4495,22 +4490,22 @@ msgid_plural "Days"
 msgstr[0] "روز"
 msgstr[1] "روزها"
 
-#: modules/today/today.php:335
+#: modules/today/today.php:339
 msgctxt "Today Module"
 msgid "Type"
 msgstr "نوع"
 
-#: modules/today/today.php:345
+#: modules/today/today.php:349
 msgctxt "Today Module"
 msgid "Post"
 msgstr "نوشته"
 
-#: modules/today/today.php:367
+#: modules/today/today.php:371
 msgctxt "Today Module: Table Notice"
 msgid "No Posts!"
 msgstr "چیزی پیدا نشد!"
 
-#: modules/today/today.php:497
+#: modules/today/today.php:501
 msgctxt "Today Module"
 msgid "Nothing happened!"
 msgstr "هیچ اتفاقی نیفتاده است!"
@@ -4902,6 +4897,18 @@ msgstr "نوشتن"
 msgctxt "Writing Module"
 msgid "Editor Enhancements"
 msgstr "بهینه‌سازی ویرایشگر"
+
+#~ msgctxt "Event Module: Column Title"
+#~ msgid "Dates"
+#~ msgstr "تاریخ"
+
+#~ msgctxt "Event Module: Column Title"
+#~ msgid "Times"
+#~ msgstr "ساعت"
+
+#~ msgctxt "Event Module"
+#~ msgid "F j, Y"
+#~ msgstr "j M Y"
 
 #~ msgctxt "Assortment Module"
 #~ msgid "Assortment"

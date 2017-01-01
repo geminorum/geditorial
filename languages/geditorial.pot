@@ -1,4 +1,4 @@
-# Copyright (C) 2016 gEditorial
+# Copyright (C) 2017 gEditorial
 # This file is distributed under the same license as the gEditorial package.
 msgid ""
 msgstr ""
@@ -2277,12 +2277,12 @@ msgstr ""
 
 #: modules/event/event.php:65
 msgctxt "Event Module: Column Title"
-msgid "Dates"
+msgid "Starts"
 msgstr ""
 
 #: modules/event/event.php:66
 msgctxt "Event Module: Column Title"
-msgid "Times"
+msgid "Ends"
 msgstr ""
 
 #: modules/event/event.php:69
@@ -2383,47 +2383,42 @@ msgctxt "Event Module: Event Tax Defaults"
 msgid "End"
 msgstr ""
 
-#: modules/event/event.php:362, modules/event/event.php:363
-msgctxt "Event Module"
-msgid "F j, Y"
-msgstr ""
-
-#: modules/event/event.php:436
+#: modules/event/event.php:444
 msgctxt "Event Module: Meta Box Input"
 msgid "Date Start"
 msgstr ""
 
-#: modules/event/event.php:437
+#: modules/event/event.php:445
 msgctxt "Event Module: Meta Box Input Placeholder"
 msgid "Date Start"
 msgstr ""
 
-#: modules/event/event.php:446
+#: modules/event/event.php:454
 msgctxt "Event Module: Meta Box Input"
 msgid "Time Start"
 msgstr ""
 
-#: modules/event/event.php:447
+#: modules/event/event.php:455
 msgctxt "Event Module: Meta Box Input Placeholder"
 msgid "Time Start"
 msgstr ""
 
-#: modules/event/event.php:460
+#: modules/event/event.php:468
 msgctxt "Event Module: Meta Box Input"
 msgid "Date End"
 msgstr ""
 
-#: modules/event/event.php:461
+#: modules/event/event.php:469
 msgctxt "Event Module: Meta Box Input Placeholder"
 msgid "Date End"
 msgstr ""
 
-#: modules/event/event.php:470
+#: modules/event/event.php:478
 msgctxt "Event Module: Meta Box Input"
 msgid "Time End"
 msgstr ""
 
-#: modules/event/event.php:471
+#: modules/event/event.php:479
 msgctxt "Event Module: Meta Box Input Placeholder"
 msgid "Time End"
 msgstr ""
@@ -2761,6 +2756,16 @@ msgctxt "Home Module: Setting Info"
 msgid "Will include in front-end main query."
 msgstr ""
 
+#: modules/json/json.php:28
+msgctxt "JSON Module"
+msgid "JSON"
+msgstr ""
+
+#: modules/json/json.php:29
+msgctxt "JSON Module"
+msgid "JSON Endpoint all data"
+msgstr ""
+
 #: modules/like/like.php:14, modules/like/like.php:177
 msgctxt "Like Module"
 msgid "Like"
@@ -2804,16 +2809,6 @@ msgstr ""
 #: modules/like/like.php:177
 msgctxt "Like Module"
 msgid "Unlike"
-msgstr ""
-
-#: modules/json/json.php:28
-msgctxt "JSON Module"
-msgid "JSON"
-msgstr ""
-
-#: modules/json/json.php:29
-msgctxt "JSON Module"
-msgid "JSON Endpoint all data"
 msgstr ""
 
 #: modules/magazine/magazine.php:19
@@ -3431,12 +3426,12 @@ msgctxt "Modules: Modified"
 msgid "Author"
 msgstr ""
 
-#: modules/modified/modified.php:138
+#: modules/modified/modified.php:145
 msgctxt "Modules: Modified"
 msgid "Title"
 msgstr ""
 
-#: modules/modified/modified.php:145
+#: modules/modified/modified.php:152
 msgctxt "Modules: Modified"
 msgid "No Posts?!"
 msgstr ""
@@ -4367,52 +4362,52 @@ msgctxt "Modules: Terms"
 msgid "No Posts!"
 msgstr ""
 
-#: modules/today/helper.php:238
+#: modules/today/helper.php:275
 msgctxt "Today Module: Meta Box Input"
 msgid "Day"
 msgstr ""
 
-#: modules/today/helper.php:239
+#: modules/today/helper.php:276
 msgctxt "Today Module: Meta Box Input Placeholder"
 msgid "Day"
 msgstr ""
 
-#: modules/today/helper.php:250
+#: modules/today/helper.php:287
 msgctxt "Today Module: Meta Box Input"
 msgid "Month"
 msgstr ""
 
-#: modules/today/helper.php:251
+#: modules/today/helper.php:288
 msgctxt "Today Module: Meta Box Input Placeholder"
 msgid "Month"
 msgstr ""
 
-#: modules/today/helper.php:261
+#: modules/today/helper.php:298
 msgctxt "Today Module: Meta Box Input"
 msgid "Year"
 msgstr ""
 
-#: modules/today/helper.php:262
+#: modules/today/helper.php:299
 msgctxt "Today Module: Meta Box Input Placeholder"
 msgid "Year"
-msgstr ""
-
-#: modules/today/helper.php:281
-msgctxt "Today Module: Meta Box Input"
-msgid "Calendar"
-msgstr ""
-
-#: modules/today/helper.php:282
-msgctxt "Today Module: Meta Box Input Placeholder"
-msgid "Calendar"
 msgstr ""
 
 #: modules/today/helper.php:318
+msgctxt "Today Module: Meta Box Input"
+msgid "Calendar"
+msgstr ""
+
+#: modules/today/helper.php:319
+msgctxt "Today Module: Meta Box Input Placeholder"
+msgid "Calendar"
+msgstr ""
+
+#: modules/today/helper.php:355
 msgctxt "Today Module"
 msgid "New Day!"
 msgstr ""
 
-#: modules/today/helper.php:339
+#: modules/today/helper.php:376
 msgctxt "Today Module"
 msgid "New %s connected to this day"
 msgstr ""
@@ -4459,22 +4454,22 @@ msgid_plural "Days"
 msgstr[0] ""
 msgstr[1] ""
 
-#: modules/today/today.php:335
+#: modules/today/today.php:339
 msgctxt "Today Module"
 msgid "Type"
 msgstr ""
 
-#: modules/today/today.php:345
+#: modules/today/today.php:349
 msgctxt "Today Module"
 msgid "Post"
 msgstr ""
 
-#: modules/today/today.php:367
+#: modules/today/today.php:371
 msgctxt "Today Module: Table Notice"
 msgid "No Posts!"
 msgstr ""
 
-#: modules/today/today.php:497
+#: modules/today/today.php:501
 msgctxt "Today Module"
 msgid "Nothing happened!"
 msgstr ""
