@@ -159,12 +159,16 @@ class gEditorialToday extends gEditorialModuleCore
 
 			if ( $screen->post_type == $this->constant( 'day_cpt' ) ) {
 
+				$this->_admin_enabled();
+
 				add_filter( 'disable_months_dropdown', '__return_true', 12 );
 
 				$this->_edit_screen( $screen->post_type );
 				add_filter( 'manage_edit-'.$screen->post_type.'_sortable_columns', array( $this, 'sortable_columns' ) );
 
 			} else if ( in_array( $screen->post_type, $this->post_types() ) ) {
+
+				$this->_admin_enabled();
 
 				$this->_edit_screen_supported( $screen->post_type );
 				add_filter( 'manage_edit-'.$screen->post_type.'_sortable_columns', array( $this, 'sortable_columns' ) );

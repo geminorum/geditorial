@@ -775,6 +775,31 @@ class gEditorialHelper extends gEditorialBaseCore
 		return call_user_func_array( $callback, array( $year, $month, $format ) );
 	}
 
+	// FIXME: find a better way!
+	public static function getMonths( $calendar_type = 'gregorian' )
+	{
+		if ( is_callable( array( 'gPersianDateStrings', 'month' ) ) ) {
+
+			$map = array(
+				'gregorian' => 'Gregorian',
+				'persian'   => 'Jalali',
+				'islamic'   => 'Hijri',
+			);
+
+			if ( ! isset( $map[$calendar_type] ) )
+				return array();
+
+			return gPersianDateStrings::month( NULL, TRUE, $map[$calendar_type] );
+		}
+
+		global $wp_locale;
+
+		if ( 'gregorian' )
+			return $wp_locale->month;
+
+		return array();
+	}
+
 	// NOT USED
 	// returns array of post date in given cal
 	public static function getTheDayByPost( $post, $default_type = 'gregorian' )

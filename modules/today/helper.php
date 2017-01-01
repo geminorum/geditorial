@@ -45,9 +45,10 @@ class gEditorialTodayHelper extends gEditorialHelper
 		return $the_day;
 	}
 
+	// TODO: link each part to front summary page
 	public static function displayTheDayFromPost( $post, $default_type = 'gregorian', $constants = NULL )
 	{
-		$calendars = self::getDefualtCalendars();
+		static $calendars, $months;
 
 		$the_day = self::atts( array(
 			'cal'   => $default_type,
@@ -56,9 +57,45 @@ class gEditorialTodayHelper extends gEditorialHelper
 			'year'  => '',
 		), self::getTheDayFromPost( $post, $default_type, $constants ) );
 
-		echo $the_day['day'].'/'.$the_day['month'];
-		echo '<br />';
-		echo $the_day['year'].'&mdash;'.( empty( $calendars[$the_day['cal']] ) ? $the_day['cal'] : $calendars[$the_day['cal']] );
+		if ( ! $the_day['day'] && ! $the_day['month'] && ! $the_day['year'] ) {
+
+			echo '<div class="-date-icon-empty">';
+				echo '&mdash;';
+			echo '</div>';
+
+		} else {
+
+			if ( empty( $calendars ) )
+				$calendars = gEditorialHelper::getDefualtCalendars();
+
+			if ( ! isset( $months[$the_day['cal']] ) )
+				$months[$the_day['cal']] = gEditorialHelper::getMonths( $the_day['cal'] );
+
+			echo '<div class="-date-icon">';
+
+				if ( $the_day['day'] )
+					echo '<span class="-day">'.gEditorialNumber::format( $the_day['day'] ).'</span>';
+
+				if ( $the_day['month'] ) {
+
+					$key = zeroise( $the_day['month'], 2 );
+
+					if ( isset( $months[$the_day['cal']][$key] ) )
+						$the_day['month'] = $months[$the_day['cal']][$key];
+
+					echo '<span class="-month">'.$the_day['month'].'</span>';
+				}
+
+				if ( $the_day['year'] )
+					echo '<span class="-year">'.gEditorialNumber::format( $the_day['year'] ).'</span>';
+
+				if ( $the_day['cal'] )
+					echo '<span class="-cal">'.
+						( empty( $calendars[$the_day['cal']] ) ? $the_day['cal'] : $calendars[$the_day['cal']] )
+					.'</span>';
+
+			echo '</div>';
+		}
 	}
 
 	public static function getTheDayFromPost( $post, $default_type = 'gregorian', $constants = NULL )
