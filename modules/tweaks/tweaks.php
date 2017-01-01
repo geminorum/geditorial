@@ -340,7 +340,7 @@ class gEditorialTweaks extends gEditorialModuleCore
 	{
 		return array_merge( $columns, array(
 			'geditorial-tweaks-atts' => array( 'date', TRUE ),
-			// 'geditorial-tweaks-id'   => array( 'ID', TRUE ),
+			'geditorial-tweaks-id'   => array( 'ID', TRUE ),
 		) );
 	}
 
