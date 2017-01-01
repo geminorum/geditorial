@@ -1820,7 +1820,7 @@ SQL;
 
 	public function admin_body_class_enabled( $classes )
 	{
-		return $this->classs( 'enabled' ).$classes;
+		return ' '.$this->classs( 'enabled' ).$classes;
 	}
 
 	// @REF: https://github.com/scribu/wp-posts-to-posts/wiki/Connection-information
