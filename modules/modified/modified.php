@@ -130,7 +130,14 @@ class gEditorialModified extends gEditorialModuleCore
 			$columns['author'] = array(
 				'title'    => _x( 'Author', 'Modules: Modified', GEDITORIAL_TEXTDOMAIN ),
 				'callback' => function( $value, $row, $column, $index ){
-					return gEditorialWordPress::getAuthorEditHTML( $row->post_type, $row->post_author );
+
+					if ( current_user_can( 'edit_post', $row->ID ) )
+						return gEditorialWordPress::getAuthorEditHTML( $row->post_type, $row->post_author );
+
+					if ( $author_data = get_user_by( 'id', $row->post_author ) )
+						return esc_html( $author_data->display_name );
+
+					return '<span class="-empty">&mdash;</span>';
 				},
 			);
 
