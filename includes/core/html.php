@@ -120,7 +120,7 @@ class gEditorialHTML extends gEditorialBaseCore
 		return $html.'>';
 	}
 
-	// like WP core but without filter and fallback
+	// like WP core but without filter
 	// @SOURCE: `esc_attr()`
 	public static function escapeAttr( $text )
 	{
