@@ -1,11 +1,17 @@
 @import "modules/all";
 @import "partials/base";
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 @import "partials/admin.all";
 @import "partials/admin.help";
 @import "partials/admin.table";
-@import "partials/magazine.admin.edit";
-@import "partials/tweaks.admin.edit";
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 @import "partials/book.admin.edit";
+@import "partials/event.admin.edit";
+@import "partials/magazine.admin.edit";
+@import "partials/today.admin.edit";
+@import "partials/tweaks.admin.edit";
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
@@ -60,10 +66,6 @@
     width: 50px;
   }
 
-  .column-theday {
-    width: 120px;
-  }
-
   .column-cover {
     width: 50px;
     padding: 2px;
@@ -76,6 +78,17 @@
       max-width: 45px;
       max-height: 72px;
     }
+  }
+
+  // Module: Event
+  .column-event_starts {
+    width: 12%;
+    color: $gray-light;
+  }
+
+  .column-event_ends {
+    width: 12%;
+    color: $gray-light;
   }
 
   // Module: Meta
@@ -95,14 +108,5 @@
   // Module: Entry
   .column-taxonomy-entry_section {
     width: 16%;
-  }
-
-  // Module: Tweaks
-  .column-geditorial-tweaks-id {
-    width: 4%;
-    text-align: right;
-    @include body-rtl() {
-      text-align: left;
-    }
   }
 }
