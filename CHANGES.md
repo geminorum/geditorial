@@ -1,3 +1,18 @@
+### 3.9.11
+* assets/js: console logging the module
+* main/modulecore: handling dashes in module names
+* main/modulecore: :warning: space before new admin body class
+* module/book: more chars for titles on p2p connected
+* module/meta: workaround for weird css bug on no-js
+* module/meta: edit pages columns hook
+* module/meta: missing closing div on box template
+* module/revisions: check for cap before bulk actions
+* module/revisions: do not load on front-end
+* module/terms: do not load on front-end
+* module/terms: fewer calls for tax list
+* module/terms: hide id column
+* module/tweaks: do not load on front-end
+
 ### 3.9.10
 * module/modified: check for cap before linking authors in dashboard
 * module/today: styling admin edit date stamp
