@@ -104,6 +104,6 @@
   c[m] = o;
 
   if (p._dev)
-    console.log(c);
+    console.log(o);
 
 }(jQuery, gEditorial, gEditorialModules, 'revisions'));

@@ -48,7 +48,6 @@
   o.n = {
     number: function() {
       var $i=$(this);
-      console.log($i);
       try{$i.prop('type','text');}catch(e){}
       $i.change(function() {
         $i.val(o.u.tE($i.val()).replace(/[^\d.-]/g,'').trim());
@@ -148,6 +147,6 @@
   c[m] = o;
 
   if (p._dev)
-    console.log(c);
+    console.log(o);
 
 }(jQuery, gEditorial, gEditorialModules, 'ortho'));
