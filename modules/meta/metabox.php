@@ -297,11 +297,8 @@ class gEditorialMetaMetaBox extends gEditorialMetaBox
 			$html .= '<button type="button" class="handlediv button-link" aria-expanded="true">';
 			$html .= '<span class="screen-reader-text">'.esc_attr_x( 'Click to toggle', 'Module Helper', GEDITORIAL_TEXTDOMAIN ).'</span>';
 			$html .= '<span class="toggle-indicator" aria-hidden="true"></span></button>';
-			$html .= '<h2 class="hndle ui-sortable-handle"><span>'.$title.'</span></h2>';
-			$html .= '<div class="inside">';
-
+			$html .= '<h2 class="hndle"><span>'.$title.'</span></h2><div class="inside">';
 			$html .= '<div class="geditorial-admin-wrap-textbox geditorial-wordcount-wrap">';
-			$html .= '<label class="screen-reader-text" for="geditorial-meta-'.$field.'">'.$title.'</label>';
 			$html .= '<div class="field-wrap field-wrap-textarea">';
 
 			$atts = array(
@@ -321,7 +318,6 @@ class gEditorialMetaMetaBox extends gEditorialMetaBox
 					'meta-field' => $field,
 					'meta-type'  => $type,
 				),
-
 			);
 
 			if ( $ltr )
@@ -333,7 +329,7 @@ class gEditorialMetaMetaBox extends gEditorialMetaBox
 			$html .= gEditorialHTML::tag( 'textarea', $atts, esc_textarea( $gEditorial->meta->get_postmeta( $post->ID, $field ) ) );
 			$html .= gEditorialHelper::htmlWordCount( ( 'geditorial-meta-'.$field.( FALSE === $key ? '' : '-'.$key ) ), $post->post_type );
 
-			$html .= '</div></div></div>';
+			$html .= '</div></div></div></div>';
 
 			echo $html;
 		}
