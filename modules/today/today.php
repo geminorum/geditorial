@@ -218,24 +218,15 @@ class gEditorialToday extends gEditorialModuleCore
 
 	public function manage_posts_columns_supported( $posts_columns )
 	{
-		$new_columns = array();
-
-		foreach ( $posts_columns as $key => $value ) {
-
-			if ( $key == 'title' ) {
-				$new_columns['theday'] = $this->get_column_title( 'theday', 'day_cpt' );
-				$new_columns[$key] = $value;
-			} else {
-				$new_columns[$key] = $value;
-			}
-		}
-
-		return $new_columns;
+		return gEditorialArraay::insert( $posts_columns, array(
+			'theday' => $this->get_column_title( 'theday', 'day_cpt' ),
+		), 'title', 'before' );
 	}
 
 	public function manage_posts_columns( $posts_columns )
 	{
 		$new_columns = array();
+
 		foreach ( $posts_columns as $key => $value ) {
 
 			if ( $key == 'title' ) {
@@ -253,6 +244,7 @@ class gEditorialToday extends gEditorialModuleCore
 				$new_columns[$key] = $value;
 			}
 		}
+
 		return $new_columns;
 	}
 

@@ -19,7 +19,8 @@ class gEditorialBookQuery extends WP_Query
 			'posts_per_page'         => -1,  // turn off paging
 			'no_found_rows'          => TRUE, // optimize query for no paging
 			'update_post_term_cache' => FALSE,
-			'update_post_meta_cache' => FALSE
+			'update_post_meta_cache' => FALSE,
+			'lazy_load_term_meta'    => FALSE,
 		) );
 
 		$filters = array(

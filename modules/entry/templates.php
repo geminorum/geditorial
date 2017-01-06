@@ -132,7 +132,7 @@ class gEditorialEntryTemplates extends gEditorialTemplateCore
 
 				} else {
 
-					$order = $args['order_before'] ? number_format_i18n( $args['order_zeroise'] ? zeroise( $post->menu_order, $args['order_zeroise'] ) : $post->menu_order ).$args['order_sep'] : '';
+					$order = $args['order_before'] ? number_format_i18n( $args['order_zeroise'] ? gEditorialNumber::zeroise( $post->menu_order, $args['order_zeroise'] ) : $post->menu_order ).$args['order_sep'] : '';
 
 					$item = self::shortcodePostLink( $args, $post, $order );
 
