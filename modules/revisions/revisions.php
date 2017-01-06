@@ -89,7 +89,7 @@ class gEditorialRevisions extends gEditorialModuleCore
 
 	public function bulk_actions( $actions )
 	{
-		return array_merge( $actions, array( 'purgerevisions' => _x( 'Purge Revisions', 'Revisions Module', GEDITORIAL_TEXTDOMAIN ) ) );
+		return array_merge( $actions, array( 'purgerevisions' => _x( 'Purge Revisions', 'Revisions Module: Bulk Action', GEDITORIAL_TEXTDOMAIN ) ) );
 	}
 
 	public function handle_bulk_actions( $redirect_to, $doaction, $post_ids )
