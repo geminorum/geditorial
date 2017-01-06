@@ -97,9 +97,10 @@ class gEditorialTerms extends gEditorialModuleCore
 
 			'terms' => array(
 				'title'    => _x( 'Terms', 'Modules: Terms', GEDITORIAL_TEXTDOMAIN ),
+				'args'     => array( 'taxonomies' => get_taxonomies( array(), 'objects' ) ),
 				'callback' => function( $value, $row, $column, $index ){
 					$html = '';
-					foreach( get_object_taxonomies( $row, 'objects' ) as $taxonomy => $object )
+					foreach( $column['args']['taxonomies'] as $taxonomy => $object )
 						$html .= gEditorialHelper::getTermsEditRow( $row, $object, '<div>'.$object->label.': ', '</div>' );
 					return $html;
 				},
