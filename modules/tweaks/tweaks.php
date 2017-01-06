@@ -9,10 +9,11 @@ class gEditorialTweaks extends gEditorialModuleCore
 	public static function module()
 	{
 		return array(
-			'name'  => 'tweaks',
-			'title' => _x( 'Tweaks', 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ),
-			'desc'  => _x( 'Admin UI Enhancement', 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ),
-			'icon'  => 'admin-settings',
+			'name'     => 'tweaks',
+			'title'    => _x( 'Tweaks', 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ),
+			'desc'     => _x( 'Admin UI Enhancement', 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ),
+			'icon'     => 'admin-settings',
+			'frontend' => FALSE,
 		);
 	}
 
