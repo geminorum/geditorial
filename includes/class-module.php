@@ -1263,6 +1263,8 @@ class gEditorialModuleCore extends gEditorialWPModule
 			$args = array();
 		}
 
+		$name = str_replace( '_', '-', $name );
+
 		if ( is_null( $handle ) )
 			$handle = strtolower( $this->base.'-'.str_replace( '.', '-', $name ) );
 
@@ -1525,8 +1527,10 @@ class gEditorialModuleCore extends gEditorialWPModule
 
 	protected function require_code( $filenames = 'templates' )
 	{
+		$module = str_replace( '_', '-', $this->module->name );
+
 		foreach ( (array) $filenames as $filename )
-			require_once( GEDITORIAL_DIR.'modules/'.$this->module->name.'/'.$filename.'.php' );
+			require_once( GEDITORIAL_DIR.'modules/'.$module.'/'.$filename.'.php' );
 	}
 
 	public function is_current_posttype( $constant_key )
