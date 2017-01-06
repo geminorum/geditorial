@@ -13,10 +13,11 @@ class gEditorialRevisions extends gEditorialModuleCore
 	public static function module()
 	{
 		return array(
-			'name'  => 'revisions',
-			'title' => _x( 'Revisions', 'Revisions Module', GEDITORIAL_TEXTDOMAIN ),
-			'desc'  => _x( 'Revision Management', 'Revisions Module', GEDITORIAL_TEXTDOMAIN ),
-			'icon'  => 'backup',
+			'name'     => 'revisions',
+			'title'    => _x( 'Revisions', 'Revisions Module', GEDITORIAL_TEXTDOMAIN ),
+			'desc'     => _x( 'Revision Management', 'Revisions Module', GEDITORIAL_TEXTDOMAIN ),
+			'icon'     => 'backup',
+			'frontend' => FALSE,
 		);
 	}
 
