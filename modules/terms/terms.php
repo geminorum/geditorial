@@ -11,6 +11,7 @@ class gEditorialTerms extends gEditorialModuleCore
 			'desc'      => _x( 'Taxonomy & Term Tools', 'Modules: Terms', GEDITORIAL_TEXTDOMAIN ),
 			'icon'      => 'image-filter',
 			'configure' => FALSE,
+			'frontend'  => FALSE,
 		);
 	}
 
