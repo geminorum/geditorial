@@ -7,6 +7,7 @@ class gEditorialRevisions extends gEditorialModuleCore
 		'ajax'   => 'edit_posts',
 		'purge'  => 'delete_post',
 		'delete' => 'delete_post',
+		'edit'   => 'edit_others_posts',
 	);
 
 	public static function module()
@@ -73,9 +74,11 @@ class gEditorialRevisions extends gEditorialModuleCore
 
 			} else if ( 'edit' == $screen->base ) {
 
-				$this->filter( 'bulk_actions-'.$screen->id, 1, 10, 'bulk_actions' );
-				$this->filter( 'handle_bulk_actions-'.$screen->id, 3, 10, 'handle_bulk_actions' );
-				$this->action( 'admin_notices' );
+				if ( $this->cuc( 'edit' ) ) {
+					$this->filter( 'bulk_actions-'.$screen->id, 1, 10, 'bulk_actions' );
+					$this->filter( 'handle_bulk_actions-'.$screen->id, 3, 10, 'handle_bulk_actions' );
+					$this->action( 'admin_notices' );
+				}
 
 				if ( $this->get_setting( 'revision_summary', FALSE ) )
 					add_action( 'geditorial_tweaks_column_attr', array( $this, 'column_attr' ), 100 );
@@ -91,6 +94,9 @@ class gEditorialRevisions extends gEditorialModuleCore
 	public function handle_bulk_actions( $redirect_to, $doaction, $post_ids )
 	{
 		if ( 'purgerevisions' != $doaction )
+			return $redirect_to;
+
+		if ( ! $this->cuc( 'edit' ) )
 			return $redirect_to;
 
 		$purged = 0;
