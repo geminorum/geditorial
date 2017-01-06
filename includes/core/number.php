@@ -8,4 +8,10 @@ class gEditorialNumber extends gEditorialBaseCore
 	{
 		return apply_filters( 'number_format_i18n', $number );
 	}
+
+	// @SOURCE: WP's `zeroise()`
+	public static function zeroise( $number, $threshold, $locale = NULL )
+	{
+		return sprintf( '%0'.$threshold.'s', $number );
+	}
 }

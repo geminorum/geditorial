@@ -107,6 +107,32 @@ class gEditorialArraay extends gEditorialBaseCore
 		return $atts;
 	}
 
+	// insert an array into another array before/after a certain key
+	// @SOURCE: https://gist.github.com/scribu/588429
+	public static function insert( $array, $pairs, $key, $position = 'after', $anyways = TRUE )
+	{
+		$key_pos = array_search( $key, array_keys( $array ) );
+
+		if ( 'after' == $position )
+			$key_pos++;
+
+		if ( FALSE !== $key_pos ) {
+
+			$result = array_slice( $array, 0, $key_pos );
+			$result = array_merge( $result, $pairs );
+			$result = array_merge( $result, array_slice( $array, $key_pos ) );
+
+		} else if ( $anyways ) {
+
+			$result = 'after' == $position ? array_merge( $array, $pairs ) : array_merge( $pairs, $array );
+
+		} else {
+
+			$result = $array;
+		}
+
+		return $result;
+	}
 
 	// @REF: http://php.net/manual/en/function.array-splice.php#92651
 	public static function keyMoveUp( $input, $index )
@@ -126,7 +152,7 @@ class gEditorialArraay extends gEditorialBaseCore
 	{
 		$new = $input;
 
-		if ( count( $new) > $index ) {
+		if ( count( $new ) > $index ) {
 			array_splice( $new, $index + 2, 0, $input[$index] );
 			array_splice( $new, $index, 1 );
 		}

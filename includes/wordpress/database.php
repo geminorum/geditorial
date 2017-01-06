@@ -278,7 +278,7 @@ class gEditorialWPDatabase extends gEditorialBaseCore
 				continue;
 
 			$year  = $row->year;
-			$month = zeroise( $row->month, 2 );
+			$month = gEditorialNumber::zeroise( $row->month, 2 );
 
 			$list[$year.$month] = sprintf( '%1$s %2$s', $wp_locale->get_month( $month ), $year );
 		}

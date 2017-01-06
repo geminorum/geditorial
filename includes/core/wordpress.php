@@ -57,6 +57,7 @@ class gEditorialWordPress extends gEditorialBaseCore
 			'no_found_rows'          => TRUE,
 			'update_post_meta_cache' => FALSE,
 			'update_post_term_cache' => FALSE,
+			'lazy_load_term_meta'    => FALSE,
 		);
 
 		if ( ! $object )
