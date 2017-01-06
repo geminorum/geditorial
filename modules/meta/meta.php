@@ -335,6 +335,8 @@ class gEditorialMeta extends gEditorialModuleCore
 
 		if ( count( $fields ) ) {
 
+			echo '&nbsp;'; // workaround for weird css bug on no-js!
+
 			foreach ( $fields as $field => $args ) {
 
 				switch ( $args['type'] ) {
