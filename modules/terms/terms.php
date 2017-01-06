@@ -18,6 +18,7 @@ class gEditorialTerms extends gEditorialModuleCore
 	public function init()
 	{
 		do_action( 'geditorial_terms_init', $this->module );
+
 		$this->do_globals();
 	}
 
@@ -67,7 +68,7 @@ class gEditorialTerms extends gEditorialModuleCore
 		list( $posts, $pagination ) = self::getPostArray();
 
 		return gEditorialHTML::tableList( array(
-			'_cb' => 'ID',
+			// '_cb' => 'ID',
 			'ID'  => _x( 'ID', 'Modules: Terms', GEDITORIAL_TEXTDOMAIN ),
 
 			'date' => array(
