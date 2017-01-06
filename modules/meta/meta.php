@@ -255,6 +255,7 @@ class gEditorialMeta extends gEditorialModuleCore
 	private function _edit_screen( $post_type )
 	{
 		add_filter( 'manage_posts_columns', array( $this, 'manage_posts_columns' ), 5, 2 );
+		add_filter( 'manage_pages_columns', array( $this, 'manage_pages_columns' ), 5, 1 );
 		add_action( 'manage_'.$post_type.'_posts_custom_column', array( $this, 'posts_custom_column'), 10, 2 );
 
 		add_action( 'quick_edit_custom_box', array( $this, 'quick_edit_custom_box' ), 10, 2 );
@@ -458,6 +459,11 @@ class gEditorialMeta extends gEditorialModuleCore
 		);
 
 		return $post_id;
+	}
+
+	public function manage_pages_columns( $columns )
+	{
+		return $this->manage_posts_columns( $columns, 'page' );
 	}
 
 	public function manage_posts_columns( $posts_columns, $post_type )
