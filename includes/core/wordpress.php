@@ -3,6 +3,22 @@
 class gEditorialWordPress extends gEditorialBaseCore
 {
 
+	public static function mustRegisterUI( $check_admin = TRUE )
+	{
+		if ( self::isAJAX()
+			|| self::isCLI()
+			|| self::isCRON()
+			|| self::isXMLRPC()
+			|| self::isREST()
+			|| self::isIFrame() )
+				return FALSE;
+
+		if ( $check_admin && ! is_admin() )
+			return FALSE;
+
+		return TRUE;
+	}
+
 	public static function getUsers( $all_fields = FALSE, $network = FALSE, $extra = array() )
 	{
 		$users = get_users( array_merge( array(

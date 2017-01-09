@@ -449,7 +449,7 @@ class gEditorialHTML extends gEditorialBaseCore
 				$next = self::tag( 'a', array(
 					'href'  => add_query_arg( 'paged', $args['next'] ),
 					'class' => '-next -link button',
-				), $icons['previous'] );
+				), $icons['next'] );
 			}
 
 			$refresh = self::tag( 'a', array(
