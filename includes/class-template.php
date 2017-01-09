@@ -421,7 +421,7 @@ class gEditorialTemplateCore extends gEditorialBaseCore
 		}
 
 		$html = $args['image'] ? gEditorialHTML::tag( 'img', array(
-			'src'   => esc_url( $args['image'] ),
+			'src'   => $args['image'],
 			'alt'   => $meta,
 			'class' => '-label-image',
 		) ) : $meta;
@@ -432,12 +432,23 @@ class gEditorialTemplateCore extends gEditorialBaseCore
 		if ( ! $html )
 			return FALSE;
 
-		$html = $args['before'].gEditorialHTML::tag( 'a', array(
-			'href'  => $args['link'],
-			'title' => $args['description'] ? $args['description'] : FALSE,
-			'class' => '-label-link',
-			'data'  => array( 'toggle' => 'tooltip' ),
-		), $html ).$args['after'];
+		if ( $args['link'] ) {
+
+			$html = $args['before'].gEditorialHTML::tag( 'a', array(
+				'href'  => $args['link'],
+				'title' => $args['description'] ? $args['description'] : FALSE,
+				'class' => '-label-link',
+				'data'  => $args['description'] ? array( 'toggle' => 'tooltip' ) : FALSE,
+			), $html ).$args['after'];
+
+		} else {
+
+			$html = $args['before'].gEditorialHTML::tag( 'span', array(
+				'title' => $args['description'] ? $args['description'] : FALSE,
+				'class' => '-label-span',
+				'data'  => $args['description'] ? array( 'toggle' => 'tooltip' ) : FALSE,
+			), $html ).$args['after'];
+		}
 
 		if ( ! $args['echo'] )
 			return $html;
