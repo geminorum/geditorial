@@ -74,6 +74,7 @@ class gEditorialModuleCore extends gEditorialWPModule
 		$this->require_code( $this->partials );
 
 		$ajax = gEditorialWordPress::isAJAX();
+		$ui   = gEditorialWordPress::mustRegisterUI( FALSE );
 
 		if ( method_exists( $this, 'p2p_init' ) )
 			add_action( 'p2p_init', array( $this, 'p2p_init' ) );
@@ -98,7 +99,7 @@ class gEditorialModuleCore extends gEditorialWPModule
 		if ( method_exists( $this, 'after_setup_theme' ) )
 			add_action( 'after_setup_theme', array( $this, 'after_setup_theme' ), 20 );
 
-		if ( self::isAJAX() && method_exists( $this, 'init_ajax' ) )
+		if ( $ajax && method_exists( $this, 'init_ajax' ) )
 			add_action( 'init', array( $this, 'init_ajax' ), $this->priority_init_ajax );
 
 		add_action( 'init', array( $this, 'init' ), $this->priority_init );
@@ -108,22 +109,22 @@ class gEditorialModuleCore extends gEditorialWPModule
 			if ( method_exists( $this, 'admin_init' ) )
 				add_action( 'admin_init', array( $this, 'admin_init' ) );
 
-			if ( ! $ajax && method_exists( $this, 'dashboard_glance_items' ) )
+			if ( $ui && method_exists( $this, 'dashboard_glance_items' ) )
 				add_filter( 'dashboard_glance_items', array( $this, 'dashboard_glance_items' ) );
 
-			if ( ! $ajax && method_exists( $this, 'current_screen' ) )
+			if ( $ui && method_exists( $this, 'current_screen' ) )
 				add_action( 'current_screen', array( $this, 'current_screen' ) );
 
-			if ( ! $ajax )
+			if ( $ui )
 				add_action( 'geditorial_settings_load', array( $this, 'register_settings' ) );
 
 			if ( method_exists( $this, 'tweaks_strings' ) )
 				add_filter( 'geditorial_tweaks_strings', array( $this, 'tweaks_strings' ) );
 
-			if ( ! $ajax && method_exists( $this, 'reports_settings' ) )
+			if ( $ui && method_exists( $this, 'reports_settings' ) )
 				add_action( 'geditorial_reports_settings', array( $this, 'reports_settings' ) );
 
-			if ( ! $ajax && method_exists( $this, 'tools_settings' ) )
+			if ( $ui && method_exists( $this, 'tools_settings' ) )
 				add_action( 'geditorial_tools_settings', array( $this, 'tools_settings' ) );
 		}
 	}
