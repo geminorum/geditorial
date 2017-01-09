@@ -505,7 +505,7 @@ class gEditorialMeta extends gEditorialModuleCore
 			'as' => 'admin-users',
 		);
 
-		echo '<div class="geditorial-admin-wrap-column -meta">';
+		echo '<ul class="geditorial-admin-wrap-column -meta -rows">';
 
 		foreach ( $rows as $field => $icon ) {
 
@@ -514,7 +514,7 @@ class gEditorialMeta extends gEditorialModuleCore
 
 				if ( $value = $this->get_postmeta( $post_id, $field, '' ) ) {
 
-					echo '<div class="-row meta-'.$field.'">';
+					echo '<li class="-row meta-'.$field.'">';
 						echo $this->get_column_icon( FALSE, $icon, $this->get_string( $field, $post->post_type, 'titles', $field ) );
 						echo esc_html( $value );
 
@@ -523,7 +523,7 @@ class gEditorialMeta extends gEditorialModuleCore
 							$author = FALSE;
 						}
 
-					echo '</div>';
+					echo '</li>';
 				}
 
 				echo '<div class="hidden geditorial-meta-'.$field.'-value">'.$value.'</div>';
@@ -531,13 +531,13 @@ class gEditorialMeta extends gEditorialModuleCore
 		}
 
 		if ( $author ) {
-			echo '<div class="-row meta-author">';
+			echo '<li class="-row meta-author">';
 				echo $this->get_column_icon( FALSE, $rows['as'], $this->get_string( 'author', $post->post_type, 'titles', 'author' ) );
 				echo $author;
-			echo '</div>';
+			echo '</li>';
 		}
 
-		echo '</div>';
+		echo '</ul>';
 	}
 
 	public function quick_edit_custom_box( $column_name, $post_type )
