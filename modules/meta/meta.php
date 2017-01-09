@@ -537,6 +537,8 @@ class gEditorialMeta extends gEditorialModuleCore
 			echo '</li>';
 		}
 
+		do_action( $this->hook( 'column_row' ), get_post( $post_id ) );
+
 		echo '</ul>';
 	}
 
