@@ -29,6 +29,11 @@ class gEditorialMeta extends gEditorialModuleCore
 			'fields_option'    => 'fields_option',
 			'_general' => array(
 				array(
+					'field'       => 'author_row',
+					'title'       => _x( 'Author Meta Row', 'Meta Module: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Displays author display name as meta row', 'Meta Module: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+				),
+				array(
 					'field'       => 'overwrite_author',
 					'title'       => _x( 'Overwrite Author', 'Meta Module: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Replace author display name with author meta data.', 'Meta Module: Setting Description', GEDITORIAL_TEXTDOMAIN ),
@@ -496,8 +501,10 @@ class gEditorialMeta extends gEditorialModuleCore
 
 		global $post;
 
-		$author = gEditorialWordPress::getAuthorEditHTML( $post->post_type, $post->post_author );
 		$fields = $this->post_type_fields( $post->post_type );
+		$author = $this->get_setting( 'author_row', FALSE )
+			? gEditorialWordPress::getAuthorEditHTML( $post->post_type, $post->post_author )
+			: FALSE;
 
 		$rows = array(
 			'ot' => 'arrow-up-alt2',
