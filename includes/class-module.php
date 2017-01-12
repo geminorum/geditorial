@@ -711,18 +711,10 @@ class gEditorialModuleCore extends gEditorialWPModule
 				'order'       => 10+$i,
 			), ( isset( $all[$field] ) && is_array( $all[$field] ) ? $all[$field] : array() ) );
 
-		// @REF: http://stackoverflow.com/a/4582659
-		if ( $sort && count( $fields ) ) {
-
-			foreach ( $fields as $field => $args ) {
-				$group[$field] = $args['group'];
-				$order[$field] = $args['order'];
-			}
-
-			array_multisort( $group, SORT_ASC, $order, SORT_ASC, $fields );
-		}
-
-		return $fields;
+		return gEditorialArraay::multiSort( $fields, array(
+			'group' => SORT_ASC,
+			'order' => SORT_ASC,
+		) );
 	}
 
 	// HELPER: for importer tools
