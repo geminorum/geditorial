@@ -3,15 +3,44 @@
 ////////////////////////////////////////////////////////////////////////////////
 /// gEditorial Partials: Admin Dashboard ---------------------------------------
 
-a.geditorial-glance-item {
+.geditorial-glance-item {
 
-  &.-post::before {
+  &.-posttype::before {
     content: "\f105" !important;
   }
 
-  &.-term::before {}
+  &.-tax::before {}
+
+  &.-term::before {
+    content: "\f323" !important; // tag
+  }
+
+  &.-not-in::before {
+    content: "\f534" !important; // warning
+    // content: "\f223" !important; // question
+  }
 
   &.-posttype-issue::before {
     content: "\f330" !important;
+  }
+
+  &.-posttype-publication::before {
+    content: "\f331" !important;
+  }
+
+  &.-posttype-entry::before {
+    content: "\f497" !important;
+  }
+
+  &.-posttype-event::before {
+    content: "\f508" !important;
+  }
+
+  &.-posttype-contest::before {
+    content: "\f488" !important;
+  }
+
+  &.-posttype-apply::before {
+    content: "\f322" !important;
   }
 }
