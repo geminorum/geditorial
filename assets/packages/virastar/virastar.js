@@ -1,5 +1,5 @@
 /*!
-* Virastar - v0.10.0 - 2016-12-13
+* Virastar - v0.11.0 - 2017-1-12
 * https://github.com/juvee/virastar
 * Licensed: MIT
 */
@@ -49,6 +49,7 @@
 			fix_perfix_spacing: true,
 			fix_suffix_spacing: true,
 			aggresive: true,
+			kashidas_as_parenthetic: true,
 			cleanup_kashidas: true,
 			cleanup_extra_marks: true,
 			cleanup_spacing: true,
@@ -210,10 +211,14 @@
 				text = text.replace(/(!){2,}/g, '$1');
 				text = text.replace(/(\u061F){2,}/g, '$1'); //\u061F = ؟
 			}
-
-			// should remove all kashida
+			// replace kashidas to ndash in parenthetic
+			if (opts.kashidas_as_parenthetic) {
+			  text = text.replace(/(\s)\u0640+/g, "$1–");
+			  text = text.replace(/\u0640+(\s)/g, "–$1");
+			}
+			// should remove all kashida between non-whitespace characters
 			if (opts.cleanup_kashidas)
-				text = text.replace(/ـ+/g, "");
+				text = text.replace(/(\S)\u0640+(\S)/g, "$1$2");
 		}
 		// -------------------------------------------------------------------------
 

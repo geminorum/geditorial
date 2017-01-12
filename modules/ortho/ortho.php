@@ -32,6 +32,7 @@ class gEditorialOrtho extends gEditorialModuleCore
 			'fix_question_mark'                              => _x( 'replace question marks with its Persian equivalent', 'Ortho Module: Setting Option', GEDITORIAL_TEXTDOMAIN ),
 			'fix_perfix_spacing'                             => _x( 'put zwnj between word and prefix (mi* nemi*)', 'Ortho Module: Setting Option', GEDITORIAL_TEXTDOMAIN ),
 			'fix_suffix_spacing'                             => _x( 'put zwnj between word and suffix (*tar *tarin *ha *haye)', 'Ortho Module: Setting Option', GEDITORIAL_TEXTDOMAIN ),
+			'kashidas_as_parenthetic'                        => _x( 'replace kashidas to ndash in parenthetic', 'Ortho Module: Setting Option', GEDITORIAL_TEXTDOMAIN ),
 			'cleanup_kashidas'                               => _x( 'remove all kashidas', 'Ortho Module: Setting Option', GEDITORIAL_TEXTDOMAIN ),
 			'cleanup_extra_marks'                            => _x( 'replace more than one <code>!</code> or <code>?</code> mark with just one', 'Ortho Module: Setting Option', GEDITORIAL_TEXTDOMAIN ),
 			// 'cleanup_spacing'                                => _x( 'replace more than one space with just a single one', 'Ortho Module: Setting Option', GEDITORIAL_TEXTDOMAIN ),
@@ -92,7 +93,7 @@ class gEditorialOrtho extends gEditorialModuleCore
 				wp_register_script( 'geditorial-virastar',
 					GEDITORIAL_URL.'assets/packages/virastar/virastar.min.js',
 					array(),
-					'0.10.0',
+					'0.11.0',
 					TRUE );
 
 				$this->enqueue_asset_js( array(
