@@ -657,13 +657,26 @@ class gEditorialModuleCore extends gEditorialWPModule
 
 			foreach ( (array) $options['settings'] as $setting => $option ) {
 
-				// multiple checkboxes
-				if ( is_array( $option ) )
-					$options['settings'][$setting] = array_keys( $option );
+				$args = $this->get_settings_field( $setting );
 
-				// other options
-				else
+				// disabled select
+				if ( isset( $args['values'] ) && FALSE === $args['values'] )
+					continue;
+
+				if ( ! isset( $args['type'] )
+					|| 'enabled' == $args['type'] ) {
+
+					$options['settings'][$setting] = (bool) $option;
+
+				// multiple checkboxes
+				} else if ( 'checkbox' == $args['type'] ) {
+
+					if ( is_array( $option ) )
+						$options['settings'][$setting] = array_keys( $option );
+
+				} else {
 					$options['settings'][$setting] = trim( stripslashes( $option ) );
+				}
 			}
 
 			if ( ! count( $options['settings'] ) )
@@ -671,6 +684,27 @@ class gEditorialModuleCore extends gEditorialWPModule
 		}
 
 		return $options;
+	}
+
+	protected function get_settings_field( $setting )
+	{
+		foreach ( $this->settings as $section )
+			if ( is_array( $section ) )
+				foreach ( $section as $field )
+					if ( is_array( $field ) ) {
+
+						if ( isset( $field['field'] ) && $setting == $field['field'] )
+							return $field;
+
+					} else if ( $setting == $field ) {
+
+						if ( method_exists( 'gEditorialSettingsCore', 'getSetting_'.$field ) )
+							return call_user_func_array( array( 'gEditorialSettingsCore', 'getSetting_'.$field ), array( NULL ) );
+
+						return array();
+					}
+
+		return array();
 	}
 
 	// enabled fields for a post type
