@@ -558,43 +558,17 @@ class gEditorialMagazine extends gEditorialModuleCore
 
 	public function restrict_manage_posts_main_cpt( $post_type, $which )
 	{
-		$tax = get_taxonomy( $span = $this->constant( 'span_tax' ) );
-
-		wp_dropdown_categories( array(
-			'taxonomy'        => $span,
-			'show_option_all' => $tax->labels->all_items,
-			'name'            => $tax->name,
-			'order'           => 'DESC',
-			'selected'        => isset( $_GET[$span] ) ? $_GET[$span] : 0,
-			'hierarchical'    => $tax->hierarchical,
-			'show_count'      => FALSE,
-			'hide_empty'      => TRUE,
-			'hide_if_empty'   => TRUE,
-		) );
+		$this->do_restrict_manage_posts_taxes( 'span_tax' );
 	}
 
 	public function restrict_manage_posts_supported_cpt( $post_type, $which )
 	{
-		$issue_tax = $this->constant( 'issue_tax' );
-		$tax_obj   = get_taxonomy( $issue_tax );
-
-		wp_dropdown_pages( array(
-			'post_type'        => $this->constant( 'issue_cpt' ),
-			'selected'         => isset( $_GET[$issue_tax] ) ? $_GET[$issue_tax] : '',
-			'name'             => $issue_tax,
-			'class'            => 'geditorial-admin-dropbown',
-			'show_option_none' => $tax_obj->labels->all_items,
-			'sort_column'      => 'menu_order',
-			'sort_order'       => 'desc',
-			'post_status'      => 'publish,private,draft',
-			'value_field'      => 'post_name',
-			'walker'           => new gEditorial_Walker_PageDropdown(),
-		));
+		$this->do_restrict_manage_posts_posts( 'issue_tax', 'issue_cpt' );
 	}
 
 	public function parse_query( $query )
 	{
-		$this->do_parse_query_taxes( $query->query_vars, array( 'span_tax' ) );
+		$this->do_parse_query_taxes( $query, 'span_tax' );
 	}
 
 	public function meta_box_cb_span_tax( $post, $box )

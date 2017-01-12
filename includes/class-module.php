@@ -1657,44 +1657,94 @@ class gEditorialModuleCore extends gEditorialWPModule
 		return FALSE;
 	}
 
-	protected function do_restrict_manage_posts_taxes( $taxes, $posttype_constant_key )
+	protected function do_restrict_manage_posts_taxes( $taxes, $posttype_constant_key = TRUE )
 	{
 		global $wp_query;
 
-		if ( $this->is_current_posttype( $posttype_constant_key ) ) {
-			foreach ( $taxes as $constant_key ) {
+		if ( TRUE === $posttype_constant_key ||
+			$this->is_current_posttype( $posttype_constant_key ) ) {
+
+			foreach ( (array) $taxes as $constant_key ) {
 
 				$tax = $this->constant( $constant_key );
 				if ( $obj = get_taxonomy( $tax ) ) {
 
+					$selected = isset( $wp_query->query[$tax] ) ? $wp_query->query[$tax] : '';
+
+					// if selected is term_id instead of term slug
+					if ( $selected && '-1' != $selected && is_numeric( $selected ) ) {
+
+						if ( $term = get_term_by( 'id', $selected, $tax ) )
+							$selected = $term->slug;
+
+						else
+							$selected = '';
+					}
+
 					wp_dropdown_categories( array(
-						'show_option_all' => $this->get_string( 'show_option_all', $constant_key, 'misc', $obj->labels->all_items ),
-						'taxonomy'        => $tax,
-						'name'            => $obj->name,
-						'orderby'         => 'name',
-						'selected'        => ( isset( $wp_query->query[$tax] ) ? $wp_query->query[$tax] : '' ),
-						'hierarchical'    => $obj->hierarchical,
-						'depth'           => 3,
-						'show_count'      => FALSE,
-						'hide_empty'      => TRUE,
-						'hide_if_empty'   => TRUE,
+						'show_option_all'  => $this->get_string( 'show_option_all', $constant_key, 'misc', $obj->labels->all_items ),
+						'show_option_none' => $this->get_string( 'show_option_none', $constant_key, 'misc', '('.$obj->labels->no_terms.')' ),
+						'taxonomy'         => $tax,
+						'name'             => $obj->name,
+						'orderby'          => 'name',
+						'value_field'      => 'slug',
+						'selected'         => $selected,
+						'hierarchical'     => $obj->hierarchical,
+						'depth'            => 3,
+						'show_count'       => FALSE,
+						'hide_empty'       => TRUE,
+						'hide_if_empty'    => TRUE,
 					) );
 				}
 			}
 		}
 	}
 
-	protected function do_parse_query_taxes( &$qv, $taxes, $posttype_constant_key = TRUE )
+	protected function do_restrict_manage_posts_posts( $tax_constant_key, $posttype_constant_key )
+	{
+		$tax_obj = get_taxonomy( $tax = $this->constant( $tax_constant_key ) );
+
+		wp_dropdown_pages( array(
+			'post_type'        => $this->constant( $posttype_constant_key ),
+			'selected'         => isset( $_GET[$tax] ) ? $_GET[$tax] : '',
+			'name'             => $tax,
+			'class'            => 'geditorial-admin-dropbown',
+			'show_option_none' => $tax_obj->labels->all_items,
+			'sort_column'      => 'menu_order',
+			'sort_order'       => 'desc',
+			'post_status'      => 'publish,private,draft',
+			'value_field'      => 'post_name',
+			'walker'           => new gEditorial_Walker_PageDropdown(),
+		));
+	}
+
+	protected function do_parse_query_taxes( &$query, $taxes, $posttype_constant_key = TRUE )
 	{
 		if ( TRUE === $posttype_constant_key ||
 			$this->is_current_posttype( $posttype_constant_key ) ) {
 
-			foreach ( $taxes as $constant_key ) {
+			foreach ( (array) $taxes as $constant_key ) {
+
 				$tax = $this->constant( $constant_key );
-				if ( isset( $qv[$tax] )	&& is_numeric( $qv[$tax] ) ) {
-					$term = get_term_by( 'id', $qv[$tax], $tax );
-					if ( ! empty( $term ) && ! is_wp_error( $term ) )
-						$qv[$tax] = $term->slug;
+
+				if ( isset( $query->query_vars[$tax] ) ) {
+
+					if ( '-1' == $query->query_vars[$tax] ) {
+
+						$query->query_vars['tax_query'] = array( array(
+							'taxonomy' => $tax,
+							'operator' => 'NOT EXISTS',
+						) );
+
+						unset( $query->query_vars[$tax] );
+
+					} else if ( is_numeric( $query->query_vars[$tax] ) ) {
+
+						$term = get_term_by( 'id', $query->query_vars[$tax], $tax );
+
+						if ( ! empty( $term ) && ! is_wp_error( $term ) )
+							$query->query_vars[$tax] = $term->slug;
+					}
 				}
 			}
 		}

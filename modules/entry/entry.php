@@ -179,9 +179,7 @@ class gEditorialEntry extends gEditorialModuleCore
 
 	public function restrict_manage_posts( $post_type, $which )
 	{
-		$this->do_restrict_manage_posts_taxes( array(
-			'section_tax',
-		), 'entry_cpt' );
+		$this->do_restrict_manage_posts_taxes( 'section_tax' );
 	}
 
 	public function pre_get_posts( $wp_query )
@@ -202,9 +200,7 @@ class gEditorialEntry extends gEditorialModuleCore
 
 	public function parse_query( $query )
 	{
-		$this->do_parse_query_taxes( $query->query_vars, array(
-			'section_tax',
-		), 'entry_cpt' );
+		$this->do_parse_query_taxes( $query, 'section_tax' );
 	}
 
 	public function posts_clauses( $pieces, $wp_query )

@@ -297,9 +297,7 @@ class gEditorialEvent extends gEditorialModuleCore
 
 	public function restrict_manage_posts( $post_type, $which )
 	{
-		$this->do_restrict_manage_posts_taxes( array(
-			'event_cat',
-		), 'event_cpt' );
+		$this->do_restrict_manage_posts_taxes( 'event_cat' );
 	}
 
 	public function pre_get_posts_admin( $wp_query )
@@ -318,9 +316,7 @@ class gEditorialEvent extends gEditorialModuleCore
 
 	public function parse_query( $query )
 	{
-		$this->do_parse_query_taxes( $query->query_vars, array(
-			'event_cat',
-		), 'event_cpt' );
+		$this->do_parse_query_taxes( $query, 'event_cat' );
 	}
 
 	public function manage_posts_columns( $posts_columns )

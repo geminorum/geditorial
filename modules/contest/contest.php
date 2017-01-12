@@ -589,21 +589,7 @@ class gEditorialContest extends gEditorialModuleCore
 
 	public function restrict_manage_posts_supported_cpt( $post_type, $which )
 	{
-		$contest_tax = $this->constant( 'contest_tax' );
-		$tax_obj   = get_taxonomy( $contest_tax );
-
-		wp_dropdown_pages( array(
-			'post_type'        => $this->constant( 'contest_cpt' ),
-			'selected'         => isset( $_GET[$contest_tax] ) ? $_GET[$contest_tax] : '',
-			'name'             => $contest_tax,
-			'class'            => 'geditorial-admin-dropbown',
-			'show_option_none' => $tax_obj->labels->all_items,
-			'sort_column'      => 'menu_order',
-			'sort_order'       => 'desc',
-			'post_status'      => 'publish,private,draft',
-			'value_field'      => 'post_name',
-			'walker'           => new gEditorial_Walker_PageDropdown(),
-		));
+		$this->do_restrict_manage_posts_posts( 'contest_tax', 'contest_cpt' );
 	}
 
 	public function pre_get_posts( $wp_query )

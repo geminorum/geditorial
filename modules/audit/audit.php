@@ -44,6 +44,7 @@ class gEditorialAudit extends gEditorialModuleCore
 				'menu_name'           => _x( 'Audit', 'Audit Module: Audit Attributes Tax Labels: Menu Name', GEDITORIAL_TEXTDOMAIN ),
 				'tweaks_column_title' => _x( 'Audit Attributes', 'Audit Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
 				'show_option_all'     => _x( 'Audit', 'Audit Module: Show Option All', GEDITORIAL_TEXTDOMAIN ),
+				'show_option_none'    => _x( '(Not audited)', 'Audit Module: Show Option All', GEDITORIAL_TEXTDOMAIN ),
 			),
 			'settings' => array(
 				'install_def_audit_tax' => _x( 'Install Default Attributes', 'Audit Module: Setting Button', GEDITORIAL_TEXTDOMAIN ),
@@ -198,24 +199,12 @@ class gEditorialAudit extends gEditorialModuleCore
 
 	public function restrict_manage_posts( $post_type, $which )
 	{
-		$tax = get_taxonomy( $audit = $this->constant( 'audit_tax' ) );
-
-		wp_dropdown_categories( array(
-			'taxonomy'        => $audit,
-			'show_option_all' => $this->get_string( 'show_option_all', 'audit_tax', 'misc', $tax->labels->all_items ),
-			'name'            => $tax->name,
-			'order'           => 'DESC',
-			'selected'        => isset( $_GET[$audit] ) ? $_GET[$audit] : 0,
-			'hierarchical'    => $tax->hierarchical,
-			'show_count'      => FALSE,
-			'hide_empty'      => TRUE,
-			'hide_if_empty'   => TRUE,
-		) );
+		$this->do_restrict_manage_posts_taxes( 'audit_tax' );
 	}
 
 	public function parse_query( $query )
 	{
-		$this->do_parse_query_taxes( $query->query_vars, array( 'audit_tax' ) );
+		$this->do_parse_query_taxes( $query, 'audit_tax' );
 	}
 
 	public function meta_box_cb_audit_tax( $post, $box )

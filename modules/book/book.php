@@ -485,18 +485,18 @@ class gEditorialBook extends gEditorialModuleCore
 			'library_tax',
 			'status_tax',
 			'publisher_tax',
-		), 'publication_cpt' );
+		) );
 	}
 
 	public function parse_query( $query )
 	{
-		$this->do_parse_query_taxes( $query->query_vars, array(
+		$this->do_parse_query_taxes( $query, array(
 			'type_tax',
 			'subject_tax',
 			'library_tax',
 			'status_tax',
 			'publisher_tax',
-		), 'publication_cpt' );
+		) );
 	}
 
 	public function manage_posts_columns( $posts_columns )
