@@ -106,9 +106,8 @@ class gEditorialAudit extends gEditorialModuleCore
 			return;
 
 		$user_id = 'all' == $this->get_setting( 'summary_scope', 'all' ) ? 0 : get_current_user_id();
-		$counts  = gEditorialWPDatabase::countPostsByTaxonomy( $terms, $this->post_types(), $user_id );
 
-		if ( $html = $this->get_summary( $counts, $terms, $user_id ) ) {
+		if ( $html = $this->get_summary( $this->post_types(), $terms, $user_id ) ) {
 			echo '<div class="geditorial-admin-wrap -audit"><h3>';
 
 			if ( $user_id )
@@ -120,11 +119,13 @@ class gEditorialAudit extends gEditorialModuleCore
 		}
 	}
 
-	private function get_summary( $counts, $terms, $user_id = 0, $wrap = 'ul', $list = 'li' )
+	private function get_summary( $posttypes, $terms, $user_id = 0, $wrap = 'ul', $list = 'li' )
 	{
-		$html = '';
-		$tax  = $this->constant( 'audit_tax' );
-		$all  = gEditorialWPPostType::get( 3 );
+		$html   = '';
+		$tax    = $this->constant( 'audit_tax' );
+		$all    = gEditorialWPPostType::get( 3 );
+		$not    = gEditorialWPDatabase::countPostsByNotTaxonomy( $tax, $posttypes, $user_id );
+		$counts = gEditorialWPDatabase::countPostsByTaxonomy( $terms, $posttypes, $user_id );
 
 		$objects = array();
 
@@ -137,29 +138,48 @@ class gEditorialAudit extends gEditorialModuleCore
 				if ( ! $count )
 					continue;
 
-				if ( empty( $objects[$type] ) )
-					$objects[$type] = get_post_type_object( $type );
-
-				$query = array( 'post_type' => $type, $tax => $term );
-
-				if ( $user_id )
-					$query['author'] = $user_id;
-
 				$text = vsprintf( '<span>%3$s</span> %1$s (%2$s)', array(
 					gEditorialHelper::noopedCount( $count, $all[$type] ),
 					gEditorialHelper::trimChars( $name, 35 ),
 					gEditorialNumber::format( $count ),
 				) );
 
+				if ( empty( $objects[$type] ) )
+					$objects[$type] = get_post_type_object( $type );
+
 				if ( $objects[$type] && current_user_can( $objects[$type]->cap->edit_posts ) )
 					$text = gEditorialHTML::tag( 'a', array(
-						'href' => add_query_arg( $query, admin_url( 'edit.php' ) ),
+						'href' => gEditorialWordPress::getPostTypeEditLink( $type, $user_id, array( $tax => $term ) ),
 					), $text );
 
 				$html .= gEditorialHTML::tag( $list, array(
 					'class' => $term.'-'.$type.'-count',
 				), $text );
 			}
+		}
+
+		foreach ( $not as $type => $count ) {
+
+			if ( ! $count )
+				continue;
+
+			$text = vsprintf( '<span>%3$s</span> %1$s %2$s', array(
+				gEditorialHelper::noopedCount( $count, $all[$type] ),
+				$this->get_string( 'show_option_none', 'audit_tax', 'misc' ),
+				gEditorialNumber::format( $count ),
+			) );
+
+			if ( empty( $objects[$type] ) )
+				$objects[$type] = get_post_type_object( $type );
+
+			if ( $objects[$type] && current_user_can( $objects[$type]->cap->edit_posts ) )
+				$text = gEditorialHTML::tag( 'a', array(
+					'href' => gEditorialWordPress::getPostTypeEditLink( $type, $user_id, array( $tax => '-1' ) ),
+				), $text );
+
+			$html .= gEditorialHTML::tag( $list, array(
+				'class' => 'not-in-'.$type.'-count',
+			), $text );
 		}
 
 		if ( $html )

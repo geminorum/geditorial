@@ -101,6 +101,47 @@ class gEditorialWPDatabase extends gEditorialBaseCore
 		return $wpdb->get_results( $query );
 	}
 
+	// @REF: https://core.trac.wordpress.org/ticket/29181
+	public static function countPostsByNotTaxonomy( $taxonomy, $post_types = array( 'post' ), $user_id = 0 )
+	{
+		$key = md5( 'not_'.$taxonomy.'_'.serialize( $post_types ).'_'.$user_id );
+		$counts = wp_cache_get( $key, 'counts' );
+
+		if ( FALSE !== $counts )
+			return $counts;
+
+		global $wpdb;
+
+		$counts = array_fill_keys( $post_types, 0 );
+
+		$post_types_in = implode( ',', array_map( function( $v ){
+			return "'".esc_sql( $v )."'";
+		}, $post_types ) );
+
+		$author = $user_id ? $wpdb->prepare( "AND posts.post_author = %d", $user_id ) : '';
+
+		$query = $wpdb->prepare( "SELECT posts.post_type, COUNT( * ) AS total
+			FROM {$wpdb->posts} AS posts
+			WHERE posts.post_type IN ( {$post_types_in} )
+			{$author}
+			AND NOT EXISTS ( SELECT 1
+				FROM {$wpdb->term_relationships}
+				INNER JOIN {$wpdb->term_taxonomy}
+				ON {$wpdb->term_taxonomy}.term_taxonomy_id = {$wpdb->term_relationships}.term_taxonomy_id
+				WHERE {$wpdb->term_taxonomy}.taxonomy = %s
+				AND {$wpdb->term_relationships}.object_id = posts.ID
+			)
+			GROUP BY posts.post_type
+		", $taxonomy );
+
+		foreach ( (array) $wpdb->get_results( $query, ARRAY_A ) as $row )
+			$counts[$row['post_type']] = $row['total'];
+
+		wp_cache_set( $key, $counts, 'counts' );
+
+		return $counts;
+	}
+
 	// ADOPTED FROM: wp_count_posts()
 	// EDITED: 8/12/2016, 8:53:18 AM
 	public static function countPostsByTaxonomy( $taxonomy, $post_types = array( 'post' ), $user_id = 0 )
