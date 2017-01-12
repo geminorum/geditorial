@@ -876,6 +876,11 @@ class gEditorialModuleCore extends gEditorialWPModule
 		return $default;
 	}
 
+	public function slug()
+	{
+		return str_replace( '_', '-', $this->module->name );
+	}
+
 	// converts back numbers into english
 	public function intval( $text, $intval = TRUE )
 	{
@@ -1554,7 +1559,7 @@ class gEditorialModuleCore extends gEditorialWPModule
 
 	protected function require_code( $filenames = 'templates' )
 	{
-		$module = str_replace( '_', '-', $this->module->name );
+		$module = $this->slug();
 
 		foreach ( (array) $filenames as $filename )
 			require_once( GEDITORIAL_DIR.'modules/'.$module.'/'.$filename.'.php' );
