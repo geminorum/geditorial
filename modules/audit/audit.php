@@ -138,7 +138,7 @@ class gEditorialAudit extends gEditorialModuleCore
 				if ( ! $count )
 					continue;
 
-				$text = vsprintf( '<span>%3$s</span> %1$s (%2$s)', array(
+				$text = vsprintf( '%3$s %1$s (%2$s)', array(
 					gEditorialHelper::noopedCount( $count, $all[$type] ),
 					gEditorialHelper::trimChars( $name, 35 ),
 					gEditorialNumber::format( $count ),
@@ -147,14 +147,20 @@ class gEditorialAudit extends gEditorialModuleCore
 				if ( empty( $objects[$type] ) )
 					$objects[$type] = get_post_type_object( $type );
 
+				$class = 'geditorial-glance-item -audit -term -taxonomy-'.$tax.' -term-'.$term.'-'.$type.'-count';
+
 				if ( $objects[$type] && current_user_can( $objects[$type]->cap->edit_posts ) )
 					$text = gEditorialHTML::tag( 'a', array(
-						'href' => gEditorialWordPress::getPostTypeEditLink( $type, $user_id, array( $tax => $term ) ),
+						'href'  => gEditorialWordPress::getPostTypeEditLink( $type, $user_id, array( $tax => $term ) ),
+						'class' => $class,
 					), $text );
 
-				$html .= gEditorialHTML::tag( $list, array(
-					'class' => $term.'-'.$type.'-count',
-				), $text );
+				else
+					$text = gEditorialHTML::tag( 'div', array(
+						'class' => $class,
+					), $text );
+
+				$html .= gEditorialHTML::tag( $list, array(), $text );
 			}
 		}
 
@@ -163,7 +169,7 @@ class gEditorialAudit extends gEditorialModuleCore
 			if ( ! $count )
 				continue;
 
-			$text = vsprintf( '<span>%3$s</span> %1$s %2$s', array(
+			$text = vsprintf( '%3$s %1$s %2$s', array(
 				gEditorialHelper::noopedCount( $count, $all[$type] ),
 				$this->get_string( 'show_option_none', 'audit_tax', 'misc' ),
 				gEditorialNumber::format( $count ),
@@ -172,14 +178,20 @@ class gEditorialAudit extends gEditorialModuleCore
 			if ( empty( $objects[$type] ) )
 				$objects[$type] = get_post_type_object( $type );
 
+			$class = 'geditorial-glance-item -audit -not-in -taxonomy-'.$tax.' -not-in-'.$type.'-count';
+
 			if ( $objects[$type] && current_user_can( $objects[$type]->cap->edit_posts ) )
 				$text = gEditorialHTML::tag( 'a', array(
-					'href' => gEditorialWordPress::getPostTypeEditLink( $type, $user_id, array( $tax => '-1' ) ),
+					'href'  => gEditorialWordPress::getPostTypeEditLink( $type, $user_id, array( $tax => '-1' ) ),
+					'class' => $class,
 				), $text );
 
-			$html .= gEditorialHTML::tag( $list, array(
-				'class' => 'not-in-'.$type.'-count',
-			), $text );
+			else
+				$text = gEditorialHTML::tag( 'div', array(
+					'class' => $class,
+				), $text );
+
+			$html .= gEditorialHTML::tag( $list, array(), $text );
 		}
 
 		if ( $html )

@@ -1823,7 +1823,8 @@ SQL;
 		if ( ! $posts->publish )
 			return FALSE;
 
-		$format = current_user_can( $edit_cap ) ? '<a class="geditorial-glance-item -post -posttype-'.$posttype.'" href="edit.php?post_type=%3$s">%1$s %2$s</a>' : '%1$s %2$s';
+		$class  = 'geditorial-glance-item -'.$this->slug().' -posttype -posttype-'.$posttype;
+		$format = current_user_can( $edit_cap ) ? '<a class="'.$class.'" href="edit.php?post_type=%3$s">%1$s %2$s</a>' : '<div class="'.$class.'">%1$s %2$s</div>';
 		$text   = gEditorialHelper::noopedCount( $posts->publish, $this->get_noop( $posttype_constant_key ) );
 
 		return sprintf( $format, gEditorialNumber::format( $posts->publish ), $text, $posttype );
@@ -1837,7 +1838,8 @@ SQL;
 		if ( ! $terms )
 			return FALSE;
 
-		$format = current_user_can( $edit_cap ) ? '<a class="geditorial-glance-item -tax -taxonomy-'.$taxonomy.'" href="edit-tags.php?taxonomy=%3$s">%1$s %2$s</a>' : '%1$s %2$s';
+		$class  = 'geditorial-glance-item -'.$this->slug().' -tax -taxonomy-'.$taxonomy;
+		$format = current_user_can( $edit_cap ) ? '<a class="'.$class.'" href="edit-tags.php?taxonomy=%3$s">%1$s %2$s</a>' : '<div class="'.$class.'">%1$s %2$s</div>';
 		$text   = gEditorialHelper::noopedCount( $terms, $this->get_noop( $tax_constant_key ) );
 
 		return sprintf( $format, gEditorialNumber::format( $terms ), $text, $taxonomy );
