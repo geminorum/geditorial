@@ -210,8 +210,11 @@ class gEditorialTweaks extends gEditorialModuleCore
 		if ( $this->get_setting( 'group_taxonomies', FALSE ) )
 			add_action( $this->hook( 'column_row' ), array( $this, 'column_row_taxonomies' ) );
 
+		if ( $this->get_setting( 'author_attribute', TRUE ) && post_type_supports( $post_type, 'author' ) )
+			add_action( $this->hook( 'column_attr' ), array( $this, 'column_attr_author' ), 1 );
+
 		if ( $this->get_setting( 'group_attributes', FALSE ) )
-			add_action( $this->hook( 'column_attr' ), array( $this, 'column_attr_default' ), 1 );
+			add_action( $this->hook( 'column_attr' ), array( $this, 'column_attr_default' ), 2 );
 
 		if ( $this->get_setting( 'attachment_count', FALSE ) )
 			add_action( $this->hook( 'column_attr' ), array( $this, 'column_attr_attachments' ), 20 );
@@ -425,24 +428,22 @@ class gEditorialTweaks extends gEditorialModuleCore
 		}
 	}
 
+	public function column_attr_author( $post )
+	{
+		if ( ! isset( $this->site_user_id ) )
+			$this->site_user_id = gEditorialHelper::getEditorialUserID( FALSE );
+
+		if ( $post->post_author == $this->site_user_id )
+			return;
+
+		echo '<li class="-attr tweaks-default-atts -post-author -post-author-'.$post->post_status.'">';
+			echo $this->get_column_icon( FALSE, 'admin-users', _x( 'Author', 'Tweaks Module: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
+			echo '<span class="-author">'.gEditorialWordPress::getAuthorEditHTML( $post->post_type, $post->post_author ).'</span>';
+		echo '</li>';
+	}
+
 	public function column_attr_default( $post )
 	{
-		if ( $this->get_setting( 'author_attribute', TRUE ) ) {
-
-			if ( ! isset( $this->site_user_id ) )
-				$this->site_user_id = gEditorialHelper::getEditorialUserID( FALSE );
-
-			if ( $post->post_author != $this->site_user_id ) {
-
-				$author = gEditorialWordPress::getAuthorEditHTML( $post->post_type, $post->post_author );
-
-				echo '<li class="-attr tweaks-default-atts -post-author -post-author-'.$post->post_status.'">';
-					echo $this->get_column_icon( FALSE, 'admin-users', _x( 'Author', 'Tweaks Module: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
-					echo '<span class="-author">'.$author.'</span>';
-				echo '</li>';
-			}
-		}
-
 		$status = $date = '';
 
 		if ( 'publish' === $post->post_status ) {
