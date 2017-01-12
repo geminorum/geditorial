@@ -1,3 +1,18 @@
+### 3.9.12
+* main/modulecore: try not to register ui when it's possible
+* main/modulecore: rethinking strict manage posts
+* main/modulecore: using core helper for multi sort
+* main/modulecore: try to store selected type settings as boolean
+* main/modulecore: unifying dashboard glance style classes
+* main/modulecore: module slug helper
+* ‌main/template: check for linking on label generator
+* module/audit: :new: count not audited by posttype/author
+* module/meta: switch to ul on edit column rows
+* module/meta: action hook on edit column rows
+* module/meta: option to disable post author on meta column
+* module/ortho: :up: [virastar](https://github.com/juvee/virastar/) updated to v0.11.0
+* module/tweaks: check if posttype support author for attr column
+
 ### 3.9.11
 * assets/js: console logging the module
 * main/modulecore: handling dashes in module names
