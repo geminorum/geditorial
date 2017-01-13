@@ -40,8 +40,41 @@ class gEditorialTerms extends gEditorialModuleCore
 		if ( ! $this->cuc( 'reports' ) )
 			return;
 
-		if ( 'uncategorized' == $sub )
+		if ( 'uncategorized' == $sub ) {
+
+			if ( ! empty( $_POST ) ) {
+
+				$this->settings_check_referer( $sub, 'reports' );
+
+				if ( isset( $_POST['cleanup_terms'] )
+					&& isset( $_POST['_cb'] )
+					&& count( $_POST['_cb'] ) ) {
+
+					$all   = gEditorialWPTaxonomy::get();
+					$count = 0;
+
+					foreach ( $_POST['_cb'] as $post_id ) {
+
+						$taxes = get_object_taxonomies( get_post( $post_id ) );
+						$diff  = array_diff_key( $all, array_flip( $taxes ) );
+
+						foreach ( $diff as $tax => $title )
+							wp_set_object_terms( $post_id, NULL, $tax );
+
+						$count++;
+					}
+
+					gEditorialWordPress::redirectReferer( array(
+						'message' => 'cleaned',
+						'count'   => $count,
+					) );
+				}
+			}
+
 			add_action( 'geditorial_reports_sub_uncategorized', array( $this, 'reports_sub' ), 10, 2 );
+
+			$this->register_button( 'cleanup_terms', _x( 'Cleanup Terms', 'Modules: Terms: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
+		}
 
 		add_filter( 'geditorial_reports_subs', array( $this, 'append_sub' ), 10, 2 );
 	}
@@ -58,7 +91,8 @@ class gEditorialTerms extends gEditorialModuleCore
 
 			$this->settings_fields( $sub, 'bulk', 'reports' );
 
-			self::tableUncategorized();
+			if ( self::tableUncategorized() )
+				$this->settings_buttons();
 
 		echo '</form>';
 	}
@@ -68,7 +102,7 @@ class gEditorialTerms extends gEditorialModuleCore
 		list( $posts, $pagination ) = self::getPostArray();
 
 		return gEditorialHTML::tableList( array(
-			// '_cb' => 'ID',
+			'_cb' => 'ID',
 			'ID'  => _x( 'ID', 'Modules: Terms', GEDITORIAL_TEXTDOMAIN ),
 
 			'date' => array(
@@ -98,7 +132,7 @@ class gEditorialTerms extends gEditorialModuleCore
 
 			'terms' => array(
 				'title'    => _x( 'Terms', 'Modules: Terms', GEDITORIAL_TEXTDOMAIN ),
-				'args'     => array( 'taxonomies' => get_taxonomies( array(), 'objects' ) ),
+				'args'     => array( 'taxonomies' => gEditorialWPTaxonomy::get( 4 ) ),
 				'callback' => function( $value, $row, $column, $index ){
 					$html = '';
 					foreach( $column['args']['taxonomies'] as $taxonomy => $object )
