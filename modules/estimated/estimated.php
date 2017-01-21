@@ -221,10 +221,10 @@ class gEditorialEstimated extends gEditorialModuleCore
 		if ( $minutes < 1 )
 			$estimated = _x( 'less than 1 minute', 'Estimated Module', GEDITORIAL_TEXTDOMAIN );
 		else
-			$estimated = sprintf( _nx( '%s minute', '%s minutes', $minutes, 'Estimated Module', GEDITORIAL_TEXTDOMAIN ), number_format_i18n( $minutes ) );
+			$estimated = sprintf( _nx( '%s minute', '%s minutes', $minutes, 'Estimated Module', GEDITORIAL_TEXTDOMAIN ), gEditorialNumber::format( $minutes ) );
 
 		if ( $info )
-			return '<span title="'.esc_attr( sprintf( _x( 'If you try to read %s words per minute', 'Estimated Module', GEDITORIAL_TEXTDOMAIN ), number_format_i18n( $avgtime ) ) ).'">'.$estimated.'</span>';
+			return '<span title="'.esc_attr( sprintf( _x( 'If you try to read %s words per minute', 'Estimated Module', GEDITORIAL_TEXTDOMAIN ), gEditorialNumber::format( $avgtime ) ) ).'">'.$estimated.'</span>';
 
 		return $estimated;
 	}

@@ -833,8 +833,8 @@ class gEditorialMagazine extends gEditorialModuleCore
 						'title'    => _x( 'Count', 'Magazine Module', GEDITORIAL_TEXTDOMAIN ),
 						'callback' => function( $value, $row, $column, $index ){
 							if ( $post_id = gEditorialWPPostType::getIDbySlug( $row->slug, $this->constant( 'issue_cpt' ) ) )
-								return number_format_i18n( $this->get_linked_posts( $post_id, 'issue_cpt', 'issue_tax', TRUE ) );
-							return number_format_i18n( $row->count );
+								return gEditorialNumber::format( $this->get_linked_posts( $post_id, 'issue_cpt', 'issue_tax', TRUE ) );
+							return gEditorialNumber::format( $row->count );
 						},
 					),
 					'description' => array(

@@ -141,7 +141,7 @@ class gEditorialWidgetCore extends WP_Widget
 
 		if ( count( $sizes ) ) {
 			foreach ( $sizes as $name => $size ) {
-				$images[$name] = $size['n'].' ('.number_format_i18n( $size['w'] ).'&nbsp;&times;&nbsp;'.number_format_i18n( $size['h'] ).')';
+				$images[$name] = $size['n'].' ('.gEditorialNumber::format( $size['w'] ).'&nbsp;&times;&nbsp;'.gEditorialNumber::format( $size['h'] ).')';
 			}
 		} else {
 
@@ -150,13 +150,13 @@ class gEditorialWidgetCore extends WP_Widget
 			if ( count( $sizes ) ) {
 				foreach ( $sizes as $name => $size )
 					$images[$name] = ( isset( $size['title'] ) ? $size['title'] : $name )
-						.' ('.number_format_i18n( $size['width'] )
+						.' ('.gEditorialNumber::format( $size['width'] )
 						.'&nbsp;&times;&nbsp;'
-						.number_format_i18n( $size['height'] ).')';
+						.gEditorialNumber::format( $size['height'] ).')';
 
 			} else {
 				// foreach ( gEditorialHelper::getWPImageSizes() as $name => $size ) {
-				// 	$images[$post_type.'-'.$name] = $size['n'].' ('.number_format_i18n( $size['w'] ).'&nbsp;&times;&nbsp;'.number_format_i18n( $size['h'] ).')';
+				// 	$images[$post_type.'-'.$name] = $size['n'].' ('.gEditorialNumber::format( $size['w'] ).'&nbsp;&times;&nbsp;'.gEditorialNumber::format( $size['h'] ).')';
 				// }
 			}
 		}

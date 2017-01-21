@@ -217,7 +217,7 @@ class gEditorialUsers extends gEditorialModuleCore
 				$list[$label] = gEditorialHTML::tag( 'a', array(
 					'href'   => gEditorialWordPress::getPostTypeEditLink( $posttype, $user_id ),
 					'target' => '_blank',
-				), number_format_i18n( $counts[$posttype] ) );
+				), gEditorialNumber::format( $counts[$posttype] ) );
 
 		ob_start();
 

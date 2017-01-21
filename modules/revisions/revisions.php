@@ -115,7 +115,7 @@ class gEditorialRevisions extends gEditorialModuleCore
 			return;
 
 		$message = _x( '%s items(s) revisions purged!', 'Revisions Module: Message', GEDITORIAL_TEXTDOMAIN );
-		gEditorialHTML::success( sprintf( $message, number_format_i18n( $purged ) ), TRUE );
+		gEditorialHTML::success( sprintf( $message, gEditorialNumber::format( $purged ) ), TRUE );
 	}
 
 	public function column_attr( $post )
@@ -139,7 +139,7 @@ class gEditorialRevisions extends gEditorialModuleCore
 
 					echo $this->get_column_icon( FALSE, 'backup', _x( 'Revisions', 'Revisions Module: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
 
-					$title = sprintf( _nx( '%s Revision', '%s Revisions', $count, 'Revisions Module', GEDITORIAL_TEXTDOMAIN ), number_format_i18n( $count ) );
+					$title = sprintf( _nx( '%s Revision', '%s Revisions', $count, 'Revisions Module', GEDITORIAL_TEXTDOMAIN ), gEditorialNumber::format( $count ) );
 
 					if ( current_user_can( 'edit_post', $last ) )
 						echo gEditorialHTML::tag( 'a', array(
@@ -255,7 +255,7 @@ class gEditorialRevisions extends gEditorialModuleCore
 				'title' => _x( 'Browse all revisions', 'Revisions Module', GEDITORIAL_TEXTDOMAIN ),
 				'href'  => get_edit_post_link( $last ),
 			), sprintf( _x( 'Browse %s Revisions', 'Revisions Module', GEDITORIAL_TEXTDOMAIN ),
-				'<b>'.number_format_i18n( $count ).'</b>' ) );
+				'<b>'.gEditorialNumber::format( $count ).'</b>' ) );
 
 		echo '</div>';
 	}

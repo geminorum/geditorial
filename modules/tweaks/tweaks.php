@@ -411,7 +411,7 @@ class gEditorialTweaks extends gEditorialModuleCore
 
 				echo $this->get_column_icon( FALSE, 'images-alt2', _x( 'Attachments', 'Tweaks Module: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
 
-				$title = sprintf( _nx( '%s Attachment', '%s Attachments', $count, 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ), number_format_i18n( $count ) );
+				$title = sprintf( _nx( '%s Attachment', '%s Attachments', $count, 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ), gEditorialNumber::format( $count ) );
 
 				if ( current_user_can( 'upload_files' ) )
 					echo gEditorialHTML::tag( 'a', array(

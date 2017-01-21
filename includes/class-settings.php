@@ -462,7 +462,7 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 		if ( is_null( $count ) )
 			$count = self::req( 'count', 0 );
 
-		return gEditorialHTML::notice( sprintf( $message, number_format_i18n( $count ) ), $class.' fade', FALSE );
+		return gEditorialHTML::notice( sprintf( $message, gEditorialNumber::format( $count ) ), $class.' fade', FALSE );
 	}
 
 	public static function cheatin( $message = NULL )

@@ -132,7 +132,7 @@ class gEditorialLike extends gEditorialModuleCore
 					'remove'  => 'loading',
 					'add'     => $check ? 'unlike' : 'dolike',
 					'nonce'   => wp_create_nonce( 'geditorial_like_ajax-'.$post['id'] ),
-					'count'   => number_format_i18n( $count ),
+					'count'   => gEditorialNumber::format( $count ),
 					'avatars' => $this->get_setting( 'avatars', FALSE ) ? $this->avatars( $post['id'] ) : NULL,
 				) );
 
@@ -148,7 +148,7 @@ class gEditorialLike extends gEditorialModuleCore
 					'action'  => 'unlike',
 					'remove'  => 'dolike',
 					'add'     => 'unlike',
-					'count'   => number_format_i18n( $count ),
+					'count'   => gEditorialNumber::format( $count ),
 					'avatars' => $this->get_setting( 'avatars', FALSE ) ? $this->avatars( $post['id'] ) : NULL,
 				) );
 
@@ -164,7 +164,7 @@ class gEditorialLike extends gEditorialModuleCore
 					'action'  => 'dolike',
 					'remove'  => 'unlike',
 					'add'     => 'dolike',
-					'count'   => number_format_i18n( $count ),
+					'count'   => gEditorialNumber::format( $count ),
 					'avatars' => $this->get_setting( 'avatars', FALSE ) ? $this->avatars( $post['id'] ) : NULL,
 				) );
 		}

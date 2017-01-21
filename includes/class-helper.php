@@ -405,7 +405,7 @@ class gEditorialHelper extends gEditorialBaseCore
 			$title_attr = _x( 'No Count', 'Module Helper: No Count Title Attribute', GEDITORIAL_TEXTDOMAIN );
 
 		if ( $count )
-			$html = number_format_i18n( $count );
+			$html = gEditorialNumber::format( $count );
 		else
 			$html = sprintf( '<span title="%s" class="column-count-empty">&mdash;</span>', $title_attr );
 

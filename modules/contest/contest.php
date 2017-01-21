@@ -714,8 +714,8 @@ class gEditorialContest extends gEditorialModuleCore
 						'title'    => _x( 'Count', 'Contest Module', GEDITORIAL_TEXTDOMAIN ),
 						'callback' => function( $value, $row, $column, $index ){
 							if ( $post_id = gEditorialWPPostType::getIDbySlug( $row->slug, $this->constant( 'contest_cpt' ) ) )
-								return number_format_i18n( $this->get_linked_posts( $post_id, 'contest_cpt', 'contest_tax', TRUE ) );
-							return number_format_i18n( $row->count );
+								return gEditorialNumber::format( $this->get_linked_posts( $post_id, 'contest_cpt', 'contest_tax', TRUE ) );
+							return gEditorialNumber::format( $row->count );
 						},
 					),
 					'description' => array(
