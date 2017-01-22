@@ -6,7 +6,7 @@
   o.t = {
     text: '#titlewrap input, input#attachment_alt, input#tag-name, #edittag input#name, [data-' + m + '=\'text\']',
     markdown: '[data-' + m + '=\'markdown\']',
-    html: 'textarea#excerpt, textarea#attachment_caption, [data-' + m + '=\'html\']'
+    html: 'textarea#excerpt, textarea#attachment_caption, textarea#tag-description, #edittag textarea#description, [data-' + m + '=\'html\']'
   };
 
   o.i = {
