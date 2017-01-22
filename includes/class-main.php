@@ -304,7 +304,7 @@ class gEditorial
 	{
 		$screen = get_current_screen();
 
-		if ( in_array( $screen->base, array( 'post', 'edit', 'widgets', 'edit-tags', 'users' ) ) )
+		if ( in_array( $screen->base, array( 'post', 'edit', 'widgets', 'term', 'edit-tags', 'users' ) ) )
 			gEditorialHelper::linkStyleSheetAdmin( $screen->base );
 
 		else if ( gEditorialSettingsCore::isReports( $screen ) )
