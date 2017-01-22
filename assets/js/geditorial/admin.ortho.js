@@ -15,7 +15,7 @@
   };
 
   o.s = $.extend({}, {
-    button_virastar: '<span class="dashicons dashicons-admin-site">',
+    button_virastar: '<span class="dashicons dashicons-filter">',
     button_virastar_title: 'Apply Virastar!',
     qtag_virastar: 'V!',
     qtag_virastar_title: 'Apply Virastar!',
@@ -110,7 +110,10 @@
     for (var t in o.t) {
 
       $(o.t[t]).each(function() {
-        $(this).data(m, t).addClass('target-' + m).add($(o.b)).wrapAll(o.w);
+        $(this).data(m, t)
+          .addClass('target-' + m)
+          .add($(o.b))
+        .wrapAll('<span class="' + m + '-input-wrap ' + m + '-input-' + t + '-wrap"></span>');
       });
 
       $('a.do-' + m).on('click', function(e) {

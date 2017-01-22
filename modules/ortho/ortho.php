@@ -12,7 +12,7 @@ class gEditorialOrtho extends gEditorialModuleCore
 			'name'     => 'ortho',
 			'title'    => _x( 'Ortho', 'Ortho Module', GEDITORIAL_TEXTDOMAIN ),
 			'desc'     => _x( 'Orthography Tools', 'Ortho Module', GEDITORIAL_TEXTDOMAIN ),
-			'icon'     => 'welcome-widgets-menus',
+			'icon'     => 'filter',
 			'frontend' => FALSE,
 		);
 	}
@@ -68,7 +68,7 @@ class gEditorialOrtho extends gEditorialModuleCore
 	{
 		return array(
 			'js' => array(
-				// 'button_virastar'        => gEditorialHTML::getDashicon( 'admin-site' ),
+				// 'button_virastar'        => gEditorialHTML::getDashicon( 'filter' ),
 				'button_virastar_title'  => _x( 'Apply Virastar!', 'Ortho Module: Javascript String', GEDITORIAL_TEXTDOMAIN ),
 				'qtag_virastar'          => _x( 'Virastar!', 'Ortho Module: Javascript String', GEDITORIAL_TEXTDOMAIN ),
 				'qtag_virastar_title'    => _x( 'Apply Virastar!', 'Ortho Module: Javascript String', GEDITORIAL_TEXTDOMAIN ),
