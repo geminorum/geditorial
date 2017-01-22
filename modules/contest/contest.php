@@ -561,30 +561,17 @@ class gEditorialContest extends gEditorialModuleCore
 
 	public function wp_trash_post( $post_id )
 	{
-		if ( $term = $this->get_linked_term( $post_id, 'contest_cpt', 'contest_tax' ) ) {
-			wp_update_term( $term->term_id, $this->constant( 'contest_tax' ), array(
-				'name' => $term->name.' - '._x( '(Trashed)', 'Suffix for term name linked to trashed post', GEDITORIAL_TEXTDOMAIN ),
-				'slug' => $term->slug.'-trashed',
-			) );
-		}
+		$this->do_trash_post( $post_id, 'contest_cpt', 'contest_tax' );
 	}
 
 	public function untrash_post( $post_id )
 	{
-		if ( $term = $this->get_linked_term( $post_id, 'contest_cpt', 'contest_tax' ) ) {
-			wp_update_term( $term->term_id, $this->constant( 'contest_tax' ), array(
-				'name' => str_ireplace( ' - '._x( '(Trashed)', 'Suffix for term name linked to trashed post', GEDITORIAL_TEXTDOMAIN ), '', $term->name ),
-				'slug' => str_ireplace( '-trashed', '', $term->slug ),
-			) );
-		}
+		$this->do_untrash_post( $post_id, 'contest_cpt', 'contest_tax' );
 	}
 
 	public function before_delete_post( $post_id )
 	{
-		if ( $term = $this->get_linked_term( $post_id, 'contest_cpt', 'contest_tax' ) ) {
-			wp_delete_term( $term->term_id, $this->constant( 'contest_tax' ) );
-			delete_metadata( 'term', $term->term_id, $this->constant( 'contest_cpt' ).'_linked' );
-		}
+		$this->do_before_delete_post( $post_id, 'contest_cpt', 'contest_tax' );
 	}
 
 	public function restrict_manage_posts_supported_cpt( $post_type, $which )

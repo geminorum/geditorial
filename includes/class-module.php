@@ -1688,6 +1688,34 @@ class gEditorialModuleCore extends gEditorialWPModule
 		return FALSE;
 	}
 
+	protected function do_trash_post( $post_id, $posttype_constant_key, $taxonomy_constant_key )
+	{
+		if ( $term = $this->get_linked_term( $post_id, $posttype_constant_key, $taxonomy_constant_key ) ) {
+			wp_update_term( $term->term_id, $this->constant( $taxonomy_constant_key ), array(
+				'name' => $term->name.'___TRASHED',
+				'slug' => $term->slug.'-trashed',
+			) );
+		}
+	}
+
+	protected function do_untrash_post( $post_id, $posttype_constant_key, $taxonomy_constant_key )
+	{
+		if ( $term = $this->get_linked_term( $post_id, $posttype_constant_key, $taxonomy_constant_key ) ) {
+			wp_update_term( $term->term_id, $this->constant( $taxonomy_constant_key ), array(
+				'name' => str_ireplace( '___TRASHED', '', $term->name ),
+				'slug' => str_ireplace( '-trashed', '', $term->slug ),
+			) );
+		}
+	}
+
+	protected function do_before_delete_post( $post_id, $posttype_constant_key, $taxonomy_constant_key )
+	{
+		if ( $term = $this->get_linked_term( $post_id, $posttype_constant_key, $taxonomy_constant_key ) ) {
+			wp_delete_term( $term->term_id, $this->constant( $taxonomy_constant_key ) );
+			delete_metadata( 'term', $term->term_id, $this->constant( $posttype_constant_key ).'_linked' );
+		}
+	}
+
 	protected function do_restrict_manage_posts_taxes( $taxes, $posttype_constant_key = TRUE )
 	{
 		global $wp_query;
