@@ -17,7 +17,7 @@
   o.s = $.extend({}, {
     button_virastar: '<span class="dashicons dashicons-filter">',
     button_virastar_title: 'Apply Virastar!',
-    qtag_virastar: 'V!',
+    qtag_virastar: 'Virastar!',
     qtag_virastar_title: 'Apply Virastar!',
     qtag_swapquotes: 'Swap Quotes',
     qtag_swapquotes_title: 'Swap Not-Correct Quotes',
@@ -33,16 +33,19 @@
   o.v = {
     text: new Virastar($.extend({}, o.o, {
       preserve_HTML: false,
-      preserve_URIs: false
+      preserve_URIs: false,
+      preserve_brackets: false,
+      preserve_braces: false
     })),
     markdown: new Virastar($.extend({}, o.o, {
       fix_dashes: false,
       cleanup_spacing: false,
       cleanup_begin_and_end: false,
-      skip_markdown_ordered_lists_numbers_conversion: false,
-      preserve_HTML: false
+      skip_markdown_ordered_lists_numbers_conversion: false
     })),
-    html: new Virastar($.extend({}, o.o, {cleanup_spacing: false}))
+    html: new Virastar($.extend({}, o.o, {
+      cleanup_spacing: false
+    }))
   };
 
   o.n = {

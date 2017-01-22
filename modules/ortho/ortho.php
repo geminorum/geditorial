@@ -3,7 +3,7 @@
 class gEditorialOrtho extends gEditorialModuleCore
 {
 
-	private $virastar_version  = '0.11.0';
+	private $virastar_version  = '0.12.0';
 	private $virastar_enqueued = FALSE;
 
 	public static function module()
@@ -42,6 +42,8 @@ class gEditorialOrtho extends gEditorialModuleCore
 			// 'cleanup_begin_and_end'                          => _x( 'remove spaces, tabs, and new lines from the beginning and end of text', 'Ortho Module: Setting Option', GEDITORIAL_TEXTDOMAIN ),
 			// 'preserve_HTML'                                  => _x( 'preserve all HTML tags', 'Ortho Module: Setting Option', GEDITORIAL_TEXTDOMAIN ),
 			// 'preserve_URIs'                                  => _x( 'preserve all URI links in the text', 'Ortho Module: Setting Option', GEDITORIAL_TEXTDOMAIN ),
+			// 'preserve_brackets'                              => _x( 'preserve strings inside square brackets (<code>[]</code>)', 'Ortho Module: Setting Option', GEDITORIAL_TEXTDOMAIN ),
+			// 'preserve_braces'                                => _x( 'preserve strings inside curly braces (<code>{}</code>)', 'Ortho Module: Setting Option', GEDITORIAL_TEXTDOMAIN ),
 		);
 	}
 
