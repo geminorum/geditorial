@@ -3,6 +3,9 @@
 class gEditorialOrtho extends gEditorialModuleCore
 {
 
+	private $virastar_version  = '0.11.0';
+	private $virastar_enqueued = FALSE;
+
 	public static function module()
 	{
 		return array(
@@ -48,7 +51,7 @@ class gEditorialOrtho extends gEditorialModuleCore
 
 		return array(
 			'posttypes_option'  => 'posttypes_option',
-			// 'taxonomies_option' => 'taxonomies_option',
+			'taxonomies_option' => 'taxonomies_option',
 			'_general' => array(
 				array(
 					'field'   => 'virastar_options',
@@ -82,27 +85,54 @@ class gEditorialOrtho extends gEditorialModuleCore
 		do_action( 'geditorial_ortho_init', $this->module );
 
 		$this->do_globals();
+
+		$this->taxonomies_excluded = array(
+			'nav_menu',
+			'post_format',
+			'link_category',
+			'bp_member_type',
+			'bp_group_type',
+			'bp-email-type',
+			'ef_editorial_meta',
+			'following_users',
+			'ef_usergroup',
+			'post_status',
+			'flamingo_contact_tag',
+			'flamingo_inbound_channel',
+		);
 	}
 
 	public function current_screen( $screen )
 	{
-		if ( in_array( $screen->post_type, $this->post_types() ) ) {
+		if ( 'post' == $screen->base ) {
 
-			if ( 'post' == $screen->base ) {
+			if ( in_array( $screen->post_type, $this->post_types() ) )
+				$this->enqueueVirastar();
 
-				wp_register_script( 'geditorial-virastar',
-					GEDITORIAL_URL.'assets/packages/virastar/virastar.min.js',
-					array(),
-					'0.11.0',
-					TRUE );
+		} else if ( 'edit-tags' == $screen->base || 'term' == $screen->base ) {
 
-				$this->enqueue_asset_js( array(
-					// 'settings' => $this->options->settings,
-					'strings'  => $this->strings['js'],
-					'virastar' => $this->negate_virastar_options(),
-				), 'ortho.post', array( 'geditorial-virastar' ) );
-			}
+			if ( in_array( $screen->taxonomy, $this->taxonomies() ) )
+				$this->enqueueVirastar();
 		}
+	}
+
+	private function enqueueVirastar()
+	{
+		if ( $this->virastar_enqueued )
+			return;
+
+		wp_register_script( 'geditorial-virastar',
+			GEDITORIAL_URL.'assets/packages/virastar/virastar.min.js',
+			array(),
+			$this->virastar_version,
+			TRUE );
+
+		$this->enqueue_asset_js( array(
+			'strings'  => $this->strings['js'],
+			'virastar' => $this->negate_virastar_options(),
+		), NULL, array( 'jquery', 'geditorial-virastar' ) );
+
+		$this->virastar_enqueued = TRUE;
 	}
 
 	private function negate_virastar_options()

@@ -4,7 +4,7 @@
   var o = {};
 
   o.t = {
-    text: '#titlewrap input, input#attachment_alt, [data-' + m + '=\'text\']',
+    text: '#titlewrap input, input#attachment_alt, input#tag-name, #edittag input#name, [data-' + m + '=\'text\']',
     markdown: '[data-' + m + '=\'markdown\']',
     html: 'textarea#excerpt, textarea#attachment_caption, [data-' + m + '=\'html\']'
   };
