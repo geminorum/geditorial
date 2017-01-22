@@ -745,6 +745,9 @@ class gEditorialModuleCore extends gEditorialWPModule
 				'order'       => 10+$i,
 			), ( isset( $all[$field] ) && is_array( $all[$field] ) ? $all[$field] : array() ) );
 
+		if ( ! $sort )
+			return $fields;
+
 		return gEditorialArraay::multiSort( $fields, array(
 			'group' => SORT_ASC,
 			'order' => SORT_ASC,
@@ -1771,7 +1774,7 @@ class gEditorialModuleCore extends gEditorialWPModule
 			'show_option_none' => $tax_obj->labels->all_items,
 			'sort_column'      => 'menu_order',
 			'sort_order'       => 'desc',
-			'post_status'      => 'publish,private,draft',
+			'post_status'      => array( 'publish', 'future', 'draft', 'pending' ),
 			'value_field'      => 'post_name',
 			'walker'           => new gEditorial_Walker_PageDropdown(),
 		));
