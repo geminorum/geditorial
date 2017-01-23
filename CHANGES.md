@@ -1,3 +1,15 @@
+### 3.9.13
+* main/helper: revising text/number filters
+* main/main: styles for edit comments/term base
+* main/modulecore: api for trashed linked post/tax
+* module/meta: reorder tab indexes if subtitle field exists
+* module/ortho: :new: support taxonomies
+* module/ortho: changing icon
+* module/ortho: :up: [virastar](https://github.com/juvee/virastar/) updated to v0.12.0
+* module/pitches: :new: new module
+* module/terms: :new: cleanup terms action for uncategorized table
+* module/tweaks: :new: user column on edit comments screen
+
 ### 3.9.12
 * main/modulecore: try not to register ui when it's possible
 * main/modulecore: rethinking strict manage posts
