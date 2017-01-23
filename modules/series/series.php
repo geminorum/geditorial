@@ -173,7 +173,7 @@ class gEditorialSeries extends gEditorialModuleCore
 				switch ( $field ) {
 					case 'in_series_order' :
 						if ( isset( $_POST[$prefix.$field][$offset] ) && '0' != $_POST[$prefix.$field][$offset] )
-							$postmeta[$pre_term][$field] = gEditorialHelper::intval( $_POST[$prefix.$field][$offset] );
+							$postmeta[$pre_term][$field] = gEditorialNumber::intval( $_POST[$prefix.$field][$offset] );
 						else if ( isset( $postmeta[$pre_term][$field] ) && isset( $_POST[$prefix.$field][$offset] )  )
 							unset( $postmeta[$pre_term][$field] );
 					break;
@@ -182,7 +182,7 @@ class gEditorialSeries extends gEditorialModuleCore
 						if ( isset( $_POST[$prefix.$field][$offset] )
 							&& strlen( $_POST[$prefix.$field][$offset] ) > 0
 							&& $this->get_string( $field, $post_type ) !== $_POST[$prefix.$field][$offset] )
-								$postmeta[$pre_term][$field] = gEditorialHelper::kses( $_POST[$prefix.$field][$offset] );
+								$postmeta[$pre_term][$field] = gEditorialHelper::kses( $_POST[$prefix.$field][$offset], 'text' );
 						else if ( isset( $postmeta[$pre_term][$field] ) && isset( $_POST[$prefix.$field][$offset] ) )
 							unset( $postmeta[$pre_term][$field] );
 					break;

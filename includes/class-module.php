@@ -884,32 +884,6 @@ class gEditorialModuleCore extends gEditorialWPModule
 		return str_replace( '_', '-', $this->module->name );
 	}
 
-	// converts back numbers into english
-	public function intval( $text, $intval = TRUE )
-	{
-		self::__dep();
-
-		$number = apply_filters( 'number_format_i18n_back', $text );
-
-		if ( $intval )
-			return intval( $number );
-
-		return $number;
-	}
-
-	public function kses( $text, $allowed = array(), $context = 'display' )
-	{
-		self::__dep();
-
-		if ( is_null( $allowed ) )
-			$allowed = array();
-
-		else if ( ! count( $allowed ) )
-			$allowed = $this->kses_allowed;
-
-		return apply_filters( 'geditorial_kses', wp_kses( $text, $allowed ), $allowed, $context );
-	}
-
 	public function user_can( $action = 'view', $field = '', $post_type = 'post' )
 	{
 		global $geditorial_modules_caps;

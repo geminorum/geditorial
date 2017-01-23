@@ -33,7 +33,7 @@ class gEditorialMetaMetaBox extends gEditorialMetaBox
 	public static function setPostMetaField_Number( &$postmeta, $field, $prefix = 'geditorial-meta-' )
 	{
 		if ( isset( $_POST[$prefix.$field] ) && strlen( $_POST[$prefix.$field] ) > 0 )
-			$postmeta[$field] = gEditorialHelper::intval( trim( $_POST[$prefix.$field] ) );
+			$postmeta[$field] = gEditorialNumber::intval( trim( $_POST[$prefix.$field] ) );
 
 		else if ( isset( $postmeta[$field] ) && isset( $_POST[$prefix.$field] ) )
 			unset( $postmeta[$field] );

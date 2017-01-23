@@ -55,27 +55,22 @@ class gEditorialHelper extends gEditorialBaseCore
 		gEditorialHTML::linkStyleSheet( GEDITORIAL_URL.'assets/css/admin.'.$page.'.css', GEDITORIAL_VERSION );
 	}
 
-	public static function intval( $text, $intval = TRUE )
-	{
-		// converts back number chars into english
-		$number = apply_filters( 'number_format_i18n_back', $text );
-
-		return $intval ? intval( $number ) : $number;
-	}
-
 	public static function kses( $text, $context = 'none', $allowed = NULL )
 	{
 		if ( is_null( $allowed ) ) {
 
 			if ( 'text' == $context )
 				$allowed = array(
-					'br'     => array(),
-					'em'     => array(),
-					'strong' => array(),
-					'a'      => array(
-						'href'  => array(),
-						'title' => array()
-					),
+					'a'       => array( 'class' => TRUE, 'title' => TRUE, 'href' => TRUE ),
+					'abbr'    => array( 'class' => TRUE, 'title' => TRUE ),
+					'acronym' => array( 'class' => TRUE, 'title' => TRUE ),
+					'code'    => array( 'class' => TRUE ),
+					'em'      => array( 'class' => TRUE ),
+					'strong'  => array( 'class' => TRUE ),
+					'i'       => array( 'class' => TRUE ),
+					'b'       => array( 'class' => TRUE ),
+					'span'    => array( 'class' => TRUE ),
+					'br'      => array(),
 				);
 
 			else if ( 'html' == $context )

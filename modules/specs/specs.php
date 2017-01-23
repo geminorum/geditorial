@@ -188,14 +188,12 @@ class gEditorialSpecs extends gEditorialModuleCore
 			}
 
 			if ( isset( $spec['val'] ) && ! empty( $spec['val'] ) )
-				//$row['spec_value'] = gEditorialHelper::kses( $spec['val'] );
-				$row['spec_value'] = $spec['val'];
+				$row['spec_value'] = gEditorialHelper::kses( $spec['val'], 'text' );
 
 			if ( isset( $spec['order'] ) && ! empty( $spec['order'] ) )
-				$row['spec_order'] = gEditorialHelper::intval( $spec['order'] )+100;
+				$row['spec_order'] = gEditorialNumber::intval( $spec['order'] ) + 100;
 			else
-				$row['spec_order'] = $counter+100;
-
+				$row['spec_order'] = $counter + 100;
 
 			if ( isset( $row['spec_term_id'] ) ) {
 				foreach ( $meta as $meta_row_key => $meta_row ) {
@@ -248,7 +246,7 @@ class gEditorialSpecs extends gEditorialModuleCore
 				switch ( $field ) {
 					case 'spec_order' :
 						if ( isset( $_POST[$prefix.$field][$offset] ) && '0' != $_POST[$prefix.$field][$offset] )
-							$postmeta[$offset][$field] = gEditorialHelper::intval( $_POST[$prefix.$field][$offset] );
+							$postmeta[$offset][$field] = gEditorialNumber::intval( $_POST[$prefix.$field][$offset] );
 						else if ( isset( $postmeta[$offset][$field] ) && isset( $_POST[$prefix.$field][$offset] )  )
 							unset( $postmeta[$offset][$field] );
 					break;
@@ -257,7 +255,7 @@ class gEditorialSpecs extends gEditorialModuleCore
 						if ( isset( $_POST[$prefix.$field][$offset] )
 							&& strlen( $_POST[$prefix.$field][$offset] ) > 0
 							&& $this->get_string( $field, $post_type ) !== $_POST[$prefix.$field][$offset] )
-								$postmeta[$offset][$field] = gEditorialHelper::kses( $_POST[$prefix.$field][$offset] );
+								$postmeta[$offset][$field] = gEditorialHelper::kses( $_POST[$prefix.$field][$offset], 'text' );
 						else if ( isset( $postmeta[$offset][$field] ) && isset( $_POST[$prefix.$field][$offset] ) )
 							unset( $postmeta[$offset][$field] );
 					break;
@@ -439,14 +437,14 @@ class gEditorialSpecs extends gEditorialModuleCore
 		$metas = $this->get_postmeta( $post->ID, FALSE, array() );
 		$html = '';
 
-		// TODO: use table helper
+		// FIXME: use table helper
 		$html .= '<table class="table table-striped geditorial-specs">';
 		foreach ( $metas as $order => $meta ) {
 			$html .= '<tr><td>';
 				$html .= ( isset( $meta['spec_title'] ) && $meta['spec_title'] ) ? $meta['spec_title'] : ( isset( $meta['spec_term_id'] ) && $meta['spec_term_id'] ? $the_terms[$meta['spec_term_id']]->name : _x( 'Unknown Field', 'Specs Module',  GEDITORIAL_TEXTDOMAIN ) );
 			$html .= '</td><td>';
-				// TODO: add filter for each spec
-				$html .= isset( $meta['spec_value'] ) ? gEditorialHelper::kses( $meta['spec_value'] ) : '';
+				// FIXME: add filter for each spec
+				$html .= isset( $meta['spec_value'] ) ? $meta['spec_value'] : '';
 			$html .= '</td></tr>';
 		}
 		$html .= '</table>';
