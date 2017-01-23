@@ -244,6 +244,7 @@ class gEditorialWordPress extends gEditorialBaseCore
 		return add_query_arg( array_merge( $query, $extra ), admin_url( 'edit.php' ) );
 	}
 
+	// @SEE: `get_edit_post_link()`
 	public static function getPostEditLink( $post_id, $extra = array() )
 	{
 		return add_query_arg( array_merge( array(

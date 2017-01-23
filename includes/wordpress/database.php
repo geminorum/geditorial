@@ -155,7 +155,7 @@ class gEditorialWPDatabase extends gEditorialBaseCore
 		$terms = is_array( $taxonomy ) ? $taxonomy : get_terms( $taxonomy );
 
 		if ( ! count( $terms ) )
-		 	return array();
+			return array();
 
 		global $wpdb;
 

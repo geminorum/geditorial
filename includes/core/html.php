@@ -8,6 +8,16 @@ class gEditorialHTML extends gEditorialBaseCore
 		return self::tag( 'a', array( 'href' => $link, 'target' => ( $target_blank ? '_blank' : FALSE ) ), $html );
 	}
 
+	public static function h2( $html, $class = FALSE )
+	{
+		echo self::tag( 'h2', array( 'class' => $class ), $html );
+	}
+
+	public static function h3( $html, $class = FALSE )
+	{
+		echo self::tag( 'h3', array( 'class' => $class ), $html );
+	}
+
 	public static function inputHidden( $name, $value = '' )
 	{
 		echo '<input type="hidden" name="'.self::escapeAttr( $name ).'" value="'.self::escapeAttr( $value ).'" />';
@@ -453,7 +463,7 @@ class gEditorialHTML extends gEditorialBaseCore
 			}
 
 			$refresh = self::tag( 'a', array(
-				'href'  => gEditorialHTTP::currentURL(),
+				'href'  => gEditorialURL::current(),
 				'class' => '-refresh -link button',
 			), $icons['refresh'] );
 
@@ -523,8 +533,19 @@ class gEditorialHTML extends gEditorialBaseCore
 
 		echo '<tbody>';
 
-		foreach ( (array) $array as $key => $val )
-			@printf( $row, $key, ( is_bool( $val ) ? ( $val ? 'TRUE' : 'FALSE' ) : $val ) );
+		foreach ( (array) $array as $key => $val ) {
+
+			if ( is_null( $val ) )
+				$val = 'NULL';
+
+			else if ( is_bool( $val ) )
+				$val = $val ? 'TRUE' : 'FALSE';
+
+			else if ( is_array( $val ) || is_object( $val ) )
+				$val = json_encode( $val );
+
+			printf( $row, $key, $val );
+		}
 
 		echo '</tbody></table>';
 	}
