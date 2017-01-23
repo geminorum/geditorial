@@ -86,6 +86,11 @@ class gEditorialTweaks extends gEditorialModuleCore
 					'description' => _x( 'Display word count for excerpt textareas', 'Tweaks Module: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 				),
 				array(
+					'field'       => 'comments_user',
+					'title'       => _x( 'Comments User Column', 'Tweaks Module: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Displays a logged-in comment author\'s site display name on the comments admin', 'Tweaks Module: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+				),
+				array(
 					'field'       => 'group_taxonomies',
 					'title'       => _x( 'Group Taxonomies', 'Tweaks Module: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Group selected taxonomies on selected post type edit pages', 'Tweaks Module: Setting Description', GEDITORIAL_TEXTDOMAIN ),
@@ -103,6 +108,7 @@ class gEditorialTweaks extends gEditorialModuleCore
 				'rows_column_title'           => _x( 'Extra', 'Tweaks Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
 				'atts_column_title'           => _x( 'Attributes', 'Tweaks Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
 				'id_column_title'             => _x( 'ID', 'Tweaks Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'user_column_title'           => _x( 'User', 'Tweaks Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
 				'meta_box_search_title'       => _x( 'Type to filter by', 'Tweaks Module: Meta Box Search Title', GEDITORIAL_TEXTDOMAIN ),
 				'meta_box_search_placeholder' => _x( 'Search &hellip;', 'Tweaks Module: Meta Box Search Placeholder', GEDITORIAL_TEXTDOMAIN ),
 			),
@@ -190,7 +196,21 @@ class gEditorialTweaks extends gEditorialModuleCore
 				$this->_edit_screen( $screen->post_type );
 			}
 
+		} else if ( 'edit-tags' == $screen->base ) {
+
 			// TODO: add support for taxonomy list table
+
+		} else if ( 'edit-comments' == $screen->base ) {
+
+			if ( $this->get_setting( 'comments_user', FALSE ) ) {
+
+				$this->_admin_enabled();
+
+				add_filter( 'manage_edit-comments_columns', array( $this, 'manage_comments_columns' ) );
+				add_action( 'manage_comments_custom_column', array( $this, 'comments_custom_column' ), 10, 2 );
+
+				// TODO: add sortable for comments
+			}
 		}
 	}
 
@@ -346,6 +366,40 @@ class gEditorialTweaks extends gEditorialModuleCore
 			'geditorial-tweaks-atts' => array( 'date', TRUE ),
 			'geditorial-tweaks-id'   => array( 'ID', TRUE ),
 		) );
+	}
+
+	public function manage_comments_columns( $columns )
+	{
+		$columns['user'] = $this->get_column_title( 'user', 'comments' );
+
+		// move core WP response column to the end.
+		if ( isset( $columns['response'] ) ) {
+			$response = $columns['response'];
+			unset( $columns['response'] );
+			$columns['response'] = $response;
+		}
+
+		return $columns;
+	}
+
+	public function comments_custom_column( $column_name, $comment_id )
+	{
+		if ( 'user' !== $column_name )
+			return;
+
+		$comment = get_comment( $comment_id );
+
+
+		if ( $comment->user_id
+			&& $user = get_userdata( $comment->user_id ) ) {
+
+			// FIXME: make core helper
+			printf( '<a href="%s">%s</a>',
+				esc_url( add_query_arg( 'user_id', $comment->user_id,
+					admin_url( 'edit-comments.php' ) ) ),
+				esc_html( $user->display_name )
+			);
+		}
 	}
 
 	public function column_row_taxonomies( $post )
