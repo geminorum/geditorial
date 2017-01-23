@@ -624,7 +624,8 @@ class gEditorialMeta extends gEditorialModuleCore
 	{
 		echo '<form class="settings-form" method="post" action="">';
 
-			echo '<h3>'._x( 'Meta Tools', 'Meta Module', GEDITORIAL_TEXTDOMAIN ).'</h3>';
+			gEditorialHTML::h3( _x( 'Meta Tools', 'Meta Module', GEDITORIAL_TEXTDOMAIN ) );
+
 			echo '<table class="form-table">';
 
 			echo '<tr><th scope="row">'._x( 'Import Custom Fields', 'Meta Module', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
@@ -780,7 +781,7 @@ class gEditorialMeta extends gEditorialModuleCore
 				continue;
 
 			$formatted = apply_filters( 'string_format_i18n', $val );
-			$final .= $kses ? gEditorialHelper::kses( $formatted ) : $formatted;
+			$final .= ', '.( $kses ? gEditorialHelper::kses( $formatted, 'text' ) : $formatted );
 		}
 
 		if ( $final ) {

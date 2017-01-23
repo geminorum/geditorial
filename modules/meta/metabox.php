@@ -214,6 +214,7 @@ class gEditorialMetaMetaBox extends gEditorialMetaBox
 				'class'       => array(
 					'geditorial-meta-field-'.$field,
 					'geditorial-meta-type-'.$type,
+					'textarea-autosize',
 				),
 				'data' => array(
 					'meta-field' => $field,

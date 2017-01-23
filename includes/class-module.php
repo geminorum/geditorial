@@ -736,12 +736,13 @@ class gEditorialModuleCore extends gEditorialWPModule
 			$fields[$field] = self::atts( array(
 				'title'       => $this->get_string( $field, $post_type, 'titles', $field ),
 				'description' => $this->get_string( $field, $post_type, 'descriptions' ),
+				'icon'        => 'smiley',
 				'type'        => 'text',
 				'context'     => 'box',
 				'repeat'      => FALSE,
 				'ltr'         => FALSE,
 				'tax'         => FALSE,
-				'group'       => 10,
+				'group'       => 'general',
 				'order'       => 10+$i,
 			), ( isset( $all[$field] ) && is_array( $all[$field] ) ? $all[$field] : array() ) );
 

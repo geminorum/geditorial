@@ -5,51 +5,6 @@ class gEditorialEntryHelper extends gEditorialHelper
 
 	const MODULE = 'entry';
 
-	// SEE: gPluginTextHelper
-
-	// https://help.github.com/articles/github-flavored-markdown/
-	// https://daringfireball.net/projects/markdown/syntax
-	// https://michelf.ca/projects/php-markdown/extra/
-	// http://kramdown.gettalong.org/syntax.html
-
-	// first convert wiki like [[]]
-	// then use markdown
-	public static function prepare( $content )
-	{
-		// $content = '[[Page Name with many words]]';
-		$pattern = '/\[\[(.+?)\]\]/u';
-		$pattern = '/\[\[(.*?)\]\]/u';
-
-		preg_match_all( $pattern, $content, $matches );
-
-		gnetwork_dump( $matches );
-
-		$html = preg_replace_callback( $pattern, function( $match ){
-			$text = $match[1];
-			$slug = preg_replace('/\s+/', '-', $text);
-			return "<a href=\"$slug\">$text</a>";
-		}, $content );
-
-		gnetwork_dump( $html );
-
-		// gEditorialWPPostType::getIDbySlug( $slug, $this->constant( 'entry_cpt' ) );
-
-		// https://developer.wordpress.org/reference/classes/_wp_editors/wp_link_query/
-		// SEE: wp_ajax_wp_link_ajax()
-	}
-
-	// FIXME: JUST A COPY
-	// remove-double-space
-	public function the_content_extra( $content )
-	{
-		// http://stackoverflow.com/a/3226746
-		// http://plugins.svn.wordpress.org/remove-double-space/tags/0.3/remove-double-space.php
-		if ( seems_utf8( $content ) )
-			return preg_replace( '/[\p{Z}\s]{2,}/u', ' ', $content );
-		else
-			return preg_replace( '/\s\s+/', ' ', $content );
-	}
-
 	///////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////

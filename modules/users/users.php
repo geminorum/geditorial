@@ -3,10 +3,6 @@
 class gEditorialUsers extends gEditorialModuleCore
 {
 
-	protected $caps = array(
-		'reports' => 'edit_others_posts',
-	);
-
 	public static function module()
 	{
 		return array(
@@ -250,7 +246,7 @@ class gEditorialUsers extends gEditorialModuleCore
 
 		$terms = get_terms( $this->constant( 'group_tax' ), array( 'hide_empty' => FALSE ) );
 
-		echo gEditorialHTML::tag( 'h2', _x( 'Group', 'Users Module', GEDITORIAL_TEXTDOMAIN ) );
+		gEditorialHTML::h2( _x( 'Group', 'Users Module', GEDITORIAL_TEXTDOMAIN ) );
 
 		echo '<table class="form-table">';
 			echo '<tr><th scope="row">'._x( 'Select Group', 'Users Module', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
@@ -328,7 +324,8 @@ class gEditorialUsers extends gEditorialModuleCore
 
 			$this->settings_field_referer( $sub, 'reports' );
 
-			echo '<h3>'._x( 'User Reports', 'Users Module', GEDITORIAL_TEXTDOMAIN ).'</h3>';
+			gEditorialHTML::h3( _x( 'User Reports', 'Users Module', GEDITORIAL_TEXTDOMAIN ) );
+
 			echo '<table class="form-table">';
 
 			echo '<tr><th scope="row">'._x( 'By PostType', 'Users Module', GEDITORIAL_TEXTDOMAIN ).'</th><td>';

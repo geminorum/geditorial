@@ -517,7 +517,7 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 			echo '<div class="-section-wrap '.$section['section_class'].'">';
 
 				if ( $section['title'] )
-					echo gEditorialHTML::tag( 'h2', array( 'class' => '-section-title' ), $section['title'] );
+					gEditorialHTML::h2( $section['title'], '-section-title' );
 
 				if ( $section['callback'] )
 					call_user_func( $section['callback'], $section );

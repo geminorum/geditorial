@@ -71,7 +71,7 @@ class gEditorialTerms extends gEditorialModuleCore
 				}
 			}
 
-			add_action( 'geditorial_reports_sub_uncategorized', array( $this, 'reports_sub' ), 10, 2 );
+			add_action( 'geditorial_reports_sub_'.$sub, array( $this, 'reports_sub' ), 10, 2 );
 
 			$this->register_button( 'cleanup_terms', _x( 'Cleanup Terms', 'Modules: Terms: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
 		}

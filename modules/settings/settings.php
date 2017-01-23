@@ -275,7 +275,8 @@ class gEditorialSettings extends gEditorialModuleCore
 
 			$this->settings_field_referer( $sub, 'tools' );
 
-			echo '<h3>'._x( 'Maintenance Tasks', 'Settings Module', GEDITORIAL_TEXTDOMAIN ).'</h3>';
+			gEditorialHTML::h3( _x( 'Maintenance Tasks', 'Settings Module', GEDITORIAL_TEXTDOMAIN ) );
+
 			echo '<table class="form-table">';
 
 			echo '<tr><th scope="row">'._x( 'Options', 'Settings Module', GEDITORIAL_TEXTDOMAIN ).'</th><td>';

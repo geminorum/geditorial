@@ -442,6 +442,7 @@ class gEditorialTweaks extends gEditorialModuleCore
 		echo '</li>';
 	}
 
+	// @SEE: `_post_states()`
 	public function column_attr_default( $post )
 	{
 		$status = $date = '';

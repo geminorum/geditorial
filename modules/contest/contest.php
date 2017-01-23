@@ -643,7 +643,7 @@ class gEditorialContest extends gEditorialModuleCore
 		if ( ! $count )
 			return;
 
-		echo '<li class="-attr -magazine -children">';
+		echo '<li class="-attr -contest -children">';
 
 			echo $this->get_column_icon( FALSE, NULL, $this->get_column_title( 'children', 'contest_cpt' ) );
 
@@ -678,7 +678,8 @@ class gEditorialContest extends gEditorialModuleCore
 	{
 		echo '<form class="settings-form" method="post" action="">';
 
-			echo '<h3>'._x( 'Contest Tools', 'Contest Module', GEDITORIAL_TEXTDOMAIN ).'</h3>';
+			gEditorialHTML::h3( _x( 'Contest Tools', 'Contest Module', GEDITORIAL_TEXTDOMAIN ) );
+
 			echo '<table class="form-table">';
 
 			echo '<tr><th scope="row">'._x( 'From Terms', 'Contest Module', GEDITORIAL_TEXTDOMAIN ).'</th><td>';

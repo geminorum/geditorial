@@ -324,6 +324,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 		// $size = apply_filters( 'admin_post_thumbnail_size', $size, $thumbnail_id, $post );
 	}
 
+	// FIXME: make this api
 	private function _edit_screen( $post_type )
 	{
 		add_filter( 'manage_'.$post_type.'_posts_columns', array( $this, 'manage_posts_columns' ) );
@@ -491,6 +492,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 		$this->do_before_delete_post( $post_id, 'issue_cpt', 'issue_tax' );
 	}
 
+	// FIXME: make this api
 	public function wp_insert_post_data( $data, $postarr )
 	{
 		if ( $this->constant( 'issue_cpt' ) == $postarr['post_type'] && ! $data['menu_order'] )
@@ -797,7 +799,8 @@ class gEditorialMagazine extends gEditorialModuleCore
 	{
 		echo '<form class="settings-form" method="post" action="">';
 
-			echo '<h3>'._x( 'Magazine Tools', 'Magazine Module', GEDITORIAL_TEXTDOMAIN ).'</h3>';
+			gEditorialHTML::h3( _x( 'Magazine Tools', 'Magazine Module', GEDITORIAL_TEXTDOMAIN ) );
+
 			echo '<table class="form-table">';
 
 			echo '<tr><th scope="row">'._x( 'From Terms', 'Magazine Module', GEDITORIAL_TEXTDOMAIN ).'</th><td>';

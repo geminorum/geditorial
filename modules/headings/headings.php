@@ -171,7 +171,7 @@ class gEditorialHeadings extends gEditorialModuleCore
 		echo '<div class="geditorial-wrap -headings -toc-box '.$class.'">';
 
 			if ( $title )
-				echo gEditorialHTML::tag( 'h3', array( 'class' => '-toc-title' ), $title );
+				gEditorialHTML::h3( $title, '-toc-title' );
 
 			gEditorialHTML::menu( $tree, function(){
 				if ( FALSE === $item['page'] )

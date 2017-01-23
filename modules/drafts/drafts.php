@@ -13,7 +13,7 @@ class gEditorialDrafts extends gEditorialModuleCore
 			'name'  => 'drafts',
 			'title' => _x( 'Drafts', 'Drafts Module', GEDITORIAL_TEXTDOMAIN ),
 			'desc'  => _x( 'Tools to work with drafts', 'Drafts Module', GEDITORIAL_TEXTDOMAIN ),
-			'icon'  => 'filter',
+			'icon'  => 'admin-post',
 		);
 	}
 

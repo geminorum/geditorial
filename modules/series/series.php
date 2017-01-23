@@ -292,6 +292,9 @@ class gEditorialSeries extends gEditorialModuleCore
 				'placeholder'  => $title,
 				'readonly'     => ! $this->user_can( 'edit', $field ),
 				'autocomplete' => 'off',
+				'data'         => array(
+					'ortho' => 'text',
+				),
 			) );
 
 			echo gEditorialHTML::tag( 'div', array(
@@ -327,12 +330,16 @@ class gEditorialSeries extends gEditorialModuleCore
 
 			$title = $this->get_string( $field, $post->post_type );
 			$html = gEditorialHTML::tag( 'textarea', array(
-				'class'        => 'field-textarea textarea-autosize',
-				'name'         => 'geditorial-series-'.$field.'['.$counter.']',
-				'id'           => 'geditorial-series-'.$field.'-'.$counter,
-				'title'        => $title,
-				'placeholder'  => $title,
-				'readonly'     => ! $this->user_can( 'edit', $field ),
+				'rows'        => '1',
+				'class'       => 'field-textarea textarea-autosize',
+				'name'        => 'geditorial-series-'.$field.'['.$counter.']',
+				'id'          => 'geditorial-series-'.$field.'-'.$counter,
+				'title'       => $title,
+				'placeholder' => $title,
+				'readonly'    => ! $this->user_can( 'edit', $field ),
+				'data'        => array(
+					'ortho' => 'html',
+				),
 			), isset( $meta[$field] ) ? esc_textarea( $meta[$field] ) : '' );
 
 			echo gEditorialHTML::tag( 'div', array(
