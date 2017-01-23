@@ -117,6 +117,7 @@ class gEditorialWordPress extends gEditorialBaseCore
 		return $post_thumbnail_img[0];
 	}
 
+	// must add `add_thickbox()` for thickbox
 	public static function getFeaturedImageHTML( $post_id, $size = 'thumbnail', $link = TRUE )
 	{
 		if ( ! $post_thumbnail_id = get_post_thumbnail_id( $post_id ) )
@@ -132,6 +133,8 @@ class gEditorialWordPress extends gEditorialBaseCore
 
 		return gEditorialHTML::tag( 'a', array(
 			'href'   => wp_get_attachment_url( $post_thumbnail_id ),
+			'title'  => get_the_title( $post_thumbnail_id ),
+			'class'  => 'thickbox',
 			'target' => '_blank',
 		), $image );
 	}

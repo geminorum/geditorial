@@ -287,6 +287,7 @@ class gEditorialBook extends gEditorialModuleCore
 					add_action( 'geditorial_tweaks_column_row', array( $this, 'column_row_p2p_to' ), -25 );
 
 				$this->_edit_screen( $screen->post_type );
+				add_thickbox();
 			}
 
 		} else if ( $this->p2p && 'edit' == $screen->base

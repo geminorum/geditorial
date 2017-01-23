@@ -165,6 +165,7 @@ class gEditorialToday extends gEditorialModuleCore
 
 				$this->_edit_screen( $screen->post_type );
 				add_filter( 'manage_edit-'.$screen->post_type.'_sortable_columns', array( $this, 'sortable_columns' ) );
+				add_thickbox();
 
 			} else if ( in_array( $screen->post_type, $this->post_types() ) ) {
 
@@ -172,6 +173,7 @@ class gEditorialToday extends gEditorialModuleCore
 
 				$this->_edit_screen_supported( $screen->post_type );
 				add_filter( 'manage_edit-'.$screen->post_type.'_sortable_columns', array( $this, 'sortable_columns' ) );
+				add_thickbox();
 			}
 		}
 	}

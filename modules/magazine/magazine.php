@@ -285,6 +285,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 
 				$this->_edit_screen( $screen->post_type );
 				add_filter( 'manage_edit-'.$screen->post_type.'_sortable_columns', array( $this, 'sortable_columns' ) );
+				add_thickbox();
 
 				add_action( 'geditorial_tweaks_column_attr', array( $this, 'main_column_attr' ) );
 			}
