@@ -24,6 +24,7 @@ class gEditorialAudit extends gEditorialModuleCore
 			'_general' => array(
 				'dashboard_widgets',
 				'summary_scope',
+				'count_not',
 				'admin_restrict',
 			),
 			'posttypes_option' => 'posttypes_option',
@@ -124,7 +125,6 @@ class gEditorialAudit extends gEditorialModuleCore
 		$html   = '';
 		$tax    = $this->constant( 'audit_tax' );
 		$all    = gEditorialWPPostType::get( 3 );
-		$not    = gEditorialWPDatabase::countPostsByNotTaxonomy( $tax, $posttypes, $user_id );
 		$counts = gEditorialWPDatabase::countPostsByTaxonomy( $terms, $posttypes, $user_id );
 
 		$objects = array();
@@ -164,34 +164,39 @@ class gEditorialAudit extends gEditorialModuleCore
 			}
 		}
 
-		foreach ( $not as $type => $count ) {
+		if ( $this->get_setting( 'count_not', FALSE ) ) {
 
-			if ( ! $count )
-				continue;
+			$not = gEditorialWPDatabase::countPostsByNotTaxonomy( $tax, $posttypes, $user_id );
 
-			$text = vsprintf( '%3$s %1$s %2$s', array(
-				gEditorialHelper::noopedCount( $count, $all[$type] ),
-				$this->get_string( 'show_option_none', 'audit_tax', 'misc' ),
-				gEditorialNumber::format( $count ),
-			) );
+			foreach ( $not as $type => $count ) {
 
-			if ( empty( $objects[$type] ) )
-				$objects[$type] = get_post_type_object( $type );
+				if ( ! $count )
+					continue;
 
-			$class = 'geditorial-glance-item -audit -not-in -taxonomy-'.$tax.' -not-in-'.$type.'-count';
+				$text = vsprintf( '%3$s %1$s %2$s', array(
+					gEditorialHelper::noopedCount( $count, $all[$type] ),
+					$this->get_string( 'show_option_none', 'audit_tax', 'misc' ),
+					gEditorialNumber::format( $count ),
+				) );
 
-			if ( $objects[$type] && current_user_can( $objects[$type]->cap->edit_posts ) )
-				$text = gEditorialHTML::tag( 'a', array(
-					'href'  => gEditorialWordPress::getPostTypeEditLink( $type, $user_id, array( $tax => '-1' ) ),
-					'class' => $class,
-				), $text );
+				if ( empty( $objects[$type] ) )
+					$objects[$type] = get_post_type_object( $type );
 
-			else
-				$text = gEditorialHTML::tag( 'div', array(
-					'class' => $class,
-				), $text );
+				$class = 'geditorial-glance-item -audit -not-in -taxonomy-'.$tax.' -not-in-'.$type.'-count';
 
-			$html .= gEditorialHTML::tag( $list, array(), $text );
+				if ( $objects[$type] && current_user_can( $objects[$type]->cap->edit_posts ) )
+					$text = gEditorialHTML::tag( 'a', array(
+						'href'  => gEditorialWordPress::getPostTypeEditLink( $type, $user_id, array( $tax => '-1' ) ),
+						'class' => $class,
+					), $text );
+
+				else
+					$text = gEditorialHTML::tag( 'div', array(
+						'class' => $class,
+					), $text );
+
+				$html .= gEditorialHTML::tag( $list, array(), $text );
+			}
 		}
 
 		if ( $html )

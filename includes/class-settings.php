@@ -347,6 +347,16 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 		);
 	}
 
+	public static function getSetting_count_not( $section )
+	{
+		return array(
+			'field'       => 'count_not',
+			'title'       => _x( 'Count Not', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+			'description' => _x( 'Count not affacted items in content summary', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+			'section'     => $section,
+		);
+	}
+
 	public static function getSetting_posttype_feeds( $section )
 	{
 		return array(
