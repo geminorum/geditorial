@@ -437,18 +437,31 @@ class gEditorialHelper extends gEditorialBaseCore
 			: gEditorialDate::htmlDateTime( $local, $gmt, $format, self::humanTimeDiffRound( $local, FALSE ) );
 	}
 
+	public static function htmlHumanTime( $timestamp )
+	{
+		$time = strtotime( $timestamp );
+		return '<span class="-time" title="'
+			.self::humanTimeAgo( $time, current_time( 'timestamp', FALSE ) ).'">'
+			.self::humanTimeDiffRound( $time )
+		.'</span>';
+	}
+
+	public static function humanTimeAgo( $from, $to = '' )
+	{
+		return sprintf( _x( '%s ago', 'Utilities: Human Time Ago', GNETWORK_TEXTDOMAIN ), human_time_diff( $from, $to ) );
+	}
+
 	public static function humanTimeDiffRound( $local, $round = DAY_IN_SECONDS, $format = NULL, $now = NULL )
 	{
-		$ago = _x( '%s ago', 'Module Helper: Human Time Diff Round', GEDITORIAL_TEXTDOMAIN );
 		$now = is_null( $now ) ? current_time( 'timestamp', FALSE ) : '';
 
 		if ( FALSE === $round )
-			return sprintf( $ago, human_time_diff( $local, $now ) );
+			return self::humanTimeAgo( $local, $now );
 
 		$diff = $now - $local;
 
 		if ( $diff > 0 && $diff < $round )
-			return sprintf( $ago, human_time_diff( $local, $now ) );
+			return self::humanTimeAgo( $local, $now );
 
 		if ( is_null( $format ) )
 			$format = _x( 'Y/m/d', 'Module Helper: Human Time Diff Round', GEDITORIAL_TEXTDOMAIN );
