@@ -164,7 +164,6 @@ class gEditorialTerms extends gEditorialModuleCore
 			'post_type'        => 'any', // $this->post_types()
 			'post_status'      => array( 'publish', 'future', 'draft', 'pending' ),
 			'suppress_filters' => TRUE,
-			'no_found_rows'    => TRUE,
 			'tax_query'        => array( array(
 				'taxonomy' => 'category',
 				'field'    => 'term_id',
@@ -185,8 +184,8 @@ class gEditorialTerms extends gEditorialModuleCore
 		$posts = $query->query( $args );
 
 		$pagination = array(
-			'total'    => $query->found_posts,
-			'pages'    => $query->max_num_pages,
+			'total'    => intval( $query->found_posts ),
+			'pages'    => intval( $query->max_num_pages ),
 			'limit'    => $limit,
 			'paged'    => $paged,
 			'all'      => FALSE,
