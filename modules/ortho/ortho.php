@@ -17,6 +17,13 @@ class gEditorialOrtho extends gEditorialModuleCore
 		);
 	}
 
+	public function settings_intro_after( $module )
+	{
+		gEditorialHTML::desc( sprintf( _x( 'Current installed Virastar version is: <code>%s</code>', 'Ortho Module: Settings Intro', GEDITORIAL_TEXTDOMAIN ), $this->virastar_version ) );
+		gEditorialHTML::desc( sprintf( _x( 'For more information, Please see Virastar <a href="%s" target="_blank">home page</a> or <a href="%s" target="_blank">live demo</a>.', 'Ortho Module: Settings Intro', GEDITORIAL_TEXTDOMAIN ),
+			'https://github.com/juvee/virastar', 'http://juvee.github.io/virastar/' ) );
+	}
+
 	private function virastar_options()
 	{
 		return array(
