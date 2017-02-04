@@ -12,8 +12,8 @@ class gEditorialAudit extends gEditorialModuleCore
 	{
 		return array(
 			'name'  => 'audit',
-			'title' => _x( 'Audit', 'Audit Module', GEDITORIAL_TEXTDOMAIN ),
-			'desc'  => _x( 'Content Inventory Tools', 'Audit Module', GEDITORIAL_TEXTDOMAIN ),
+			'title' => _x( 'Audit', 'Modules: Audit', GEDITORIAL_TEXTDOMAIN ),
+			'desc'  => _x( 'Content Inventory Tools', 'Modules: Audit', GEDITORIAL_TEXTDOMAIN ),
 			'icon'  => 'visibility',
 		);
 	}
@@ -41,25 +41,25 @@ class gEditorialAudit extends gEditorialModuleCore
 	{
 		return array(
 			'misc' => array(
-				'menu_name'           => _x( 'Audit', 'Audit Module: Audit Attributes Tax Labels: Menu Name', GEDITORIAL_TEXTDOMAIN ),
-				'tweaks_column_title' => _x( 'Audit Attributes', 'Audit Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				'show_option_all'     => _x( 'Audit', 'Audit Module: Show Option All', GEDITORIAL_TEXTDOMAIN ),
-				'show_option_none'    => _x( '(Not audited)', 'Audit Module: Show Option All', GEDITORIAL_TEXTDOMAIN ),
+				'menu_name'           => _x( 'Audit', 'Modules: Audit: Audit Attributes Tax Labels: Menu Name', GEDITORIAL_TEXTDOMAIN ),
+				'tweaks_column_title' => _x( 'Audit Attributes', 'Modules: Audit: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'show_option_all'     => _x( 'Audit', 'Modules: Audit: Show Option All', GEDITORIAL_TEXTDOMAIN ),
+				'show_option_none'    => _x( '(Not audited)', 'Modules: Audit: Show Option All', GEDITORIAL_TEXTDOMAIN ),
 			),
 			'settings' => array(
-				'install_def_audit_tax' => _x( 'Install Default Attributes', 'Audit Module: Setting Button', GEDITORIAL_TEXTDOMAIN ),
+				'install_def_audit_tax' => _x( 'Install Default Attributes', 'Modules: Audit: Setting Button', GEDITORIAL_TEXTDOMAIN ),
 			),
 			'noops' => array(
-				'audit_tax' => _nx_noop( 'Audit Attribute', 'Audit Attributes', 'Audit Module: Noop', GEDITORIAL_TEXTDOMAIN ),
+				'audit_tax' => _nx_noop( 'Audit Attribute', 'Audit Attributes', 'Modules: Audit: Noop', GEDITORIAL_TEXTDOMAIN ),
 			),
 			'terms' => array(
 				'audit_tax' => array(
-					'audited'      => _x( 'Audited', 'Audit Module: Audit Attributes Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
-					'outdated'     => _x( 'Outdated', 'Audit Module: Audit Attributes Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
-					'redundant'    => _x( 'Redundant', 'Audit Module: Audit Attributes Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
-					'review-seo'   => _x( 'Review SEO', 'Audit Module: Audit Attributes Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
-					'review-style' => _x( 'Review Style', 'Audit Module: Audit Attributes Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
-					'trivial'      => _x( 'Trivial', 'Audit Module: Audit Attributes Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
+					'audited'      => _x( 'Audited', 'Modules: Audit: Audit Attributes Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
+					'outdated'     => _x( 'Outdated', 'Modules: Audit: Audit Attributes Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
+					'redundant'    => _x( 'Redundant', 'Modules: Audit: Audit Attributes Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
+					'review-seo'   => _x( 'Review SEO', 'Modules: Audit: Audit Attributes Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
+					'review-style' => _x( 'Review Style', 'Modules: Audit: Audit Attributes Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
+					'trivial'      => _x( 'Trivial', 'Modules: Audit: Audit Attributes Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
 				),
 			),
 		);
