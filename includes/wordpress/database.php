@@ -21,6 +21,20 @@ class gEditorialWPDatabase extends gEditorialBaseCore
 		return $cache[$sub];
 	}
 
+	public static function getExcludeStatuses( $statuses = NULL )
+	{
+		if ( is_null( $statuses ) )
+			return array(
+				'draft',
+				'private',
+				'trash',
+				'auto-draft',
+				'inherit',
+			);
+
+		return (array) $statuses;
+	}
+
 	public static function getTaxonomies( $same_key = FALSE )
 	{
 		global $wpdb;
@@ -102,7 +116,8 @@ class gEditorialWPDatabase extends gEditorialBaseCore
 	}
 
 	// @REF: https://core.trac.wordpress.org/ticket/29181
-	public static function countPostsByNotTaxonomy( $taxonomy, $post_types = array( 'post' ), $user_id = 0 )
+	// EDITED: 2/5/2017, 12:24:01 AM
+	public static function countPostsByNotTaxonomy( $taxonomy, $post_types = array( 'post' ), $user_id = 0, $exclude_statuses = NULL )
 	{
 		$key = md5( 'not_'.$taxonomy.'_'.serialize( $post_types ).'_'.$user_id );
 		$counts = wp_cache_get( $key, 'counts' );
@@ -114,15 +129,13 @@ class gEditorialWPDatabase extends gEditorialBaseCore
 
 		$counts = array_fill_keys( $post_types, 0 );
 
-		$post_types_in = implode( ',', array_map( function( $v ){
-			return "'".esc_sql( $v )."'";
-		}, $post_types ) );
-
 		$author = $user_id ? $wpdb->prepare( "AND posts.post_author = %d", $user_id ) : '';
 
-		$query = $wpdb->prepare( "SELECT posts.post_type, COUNT( * ) AS total
+		$query = $wpdb->prepare( "
+			SELECT posts.post_type, COUNT( * ) AS total
 			FROM {$wpdb->posts} AS posts
-			WHERE posts.post_type IN ( {$post_types_in} )
+			WHERE posts.post_type IN ( '".join( "', '", esc_sql( $post_types ) )."' )
+			AND posts.post_status NOT IN ( '".join( "', '", esc_sql( self::getExcludeStatuses( $exclude_statuses ) ) )."' )
 			{$author}
 			AND NOT EXISTS ( SELECT 1
 				FROM {$wpdb->term_relationships}
@@ -142,9 +155,9 @@ class gEditorialWPDatabase extends gEditorialBaseCore
 		return $counts;
 	}
 
-	// ADOPTED FROM: wp_count_posts()
-	// EDITED: 8/12/2016, 8:53:18 AM
-	public static function countPostsByTaxonomy( $taxonomy, $post_types = array( 'post' ), $user_id = 0 )
+	// ADOPTED FROM: `wp_count_posts()`
+	// EDITED: 2/5/2017, 12:23:40 AM
+	public static function countPostsByTaxonomy( $taxonomy, $post_types = array( 'post' ), $user_id = 0, $exclude_statuses = NULL )
 	{
 		$key = md5( serialize( $taxonomy ).'_'.serialize( $post_types ).'_'.$user_id );
 		$counts = wp_cache_get( $key, 'counts' );
@@ -162,10 +175,6 @@ class gEditorialWPDatabase extends gEditorialBaseCore
 		$counts = array();
 		$totals = array_fill_keys( $post_types, 0 );
 
-		$post_types_in = implode( ',', array_map( function( $v ){
-			return "'".esc_sql( $v )."'";
-		}, $post_types ) );
-
 		$author = $user_id ? $wpdb->prepare( "AND posts.post_author = %d", $user_id ) : '';
 
 		foreach ( $terms as $term ) {
@@ -179,7 +188,8 @@ class gEditorialWPDatabase extends gEditorialBaseCore
 				INNER JOIN {$wpdb->term_relationships} AS tr ON tr.term_taxonomy_id = tt.term_taxonomy_id
 				WHERE t.term_id = %d
 				AND tr.object_id = posts.ID
-				AND posts.post_type IN ( {$post_types_in} )
+				AND posts.post_type IN ( '".join( "', '", esc_sql( $post_types ) )."' )
+				AND posts.post_status NOT IN ( '".join( "', '", esc_sql( self::getExcludeStatuses( $exclude_statuses ) ) )."' )
 				{$author}
 				GROUP BY posts.post_type
 			", $term->term_id );
