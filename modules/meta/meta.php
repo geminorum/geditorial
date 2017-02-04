@@ -785,7 +785,7 @@ class gEditorialMeta extends gEditorialModuleCore
 		}
 
 		if ( $final ) {
-			$postmeta = $this->get_postmeta( $post_id );
+			$postmeta = (array) $this->get_postmeta( $post_id );
 			$postmeta[$field] = $final;
 			$this->set_meta( $post_id, $postmeta );
 		}
