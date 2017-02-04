@@ -14,7 +14,7 @@ class gEditorialBookTemplates extends gEditorialTemplateCore
 	// @SOURCE: http://wordpress.stackexchange.com/a/126928
 	function get_by_order()
 	{
-		$wp_query = new WP_Query( array(
+		$wp_query = new \WP_Query( array(
 			'post_type'      => 'resource',
 			'meta_key'       => 'publication_date',
 			'orderby'        => 'meta_value title',

@@ -85,7 +85,7 @@ class gEditorialWordPress extends gEditorialBaseCore
 				'compare' => 'EXISTS'
 			) );
 
-		$query = new WP_Query;
+		$query = new \WP_Query;
 		$posts = $query->query( $args );
 
 		if ( ! count( $posts ) )

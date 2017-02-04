@@ -549,7 +549,7 @@ class gEditorialBook extends gEditorialModuleCore
 		if ( is_null( $post ) )
 			$post = get_post();
 
-		$connected = new WP_Query( array(
+		$connected = new \WP_Query( array(
 			'connected_type'  => $this->constant( 'publication_cpt_p2p' ),
 			'connected_items' => $post,
 		) );

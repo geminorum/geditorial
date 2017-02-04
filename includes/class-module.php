@@ -263,7 +263,7 @@ class gEditorialModuleCore extends gEditorialWPModule
 	public function settings_posttypes_option( $section )
 	{
 		if ( $before = $this->get_string( 'post_types_before', 'post', 'settings', NULL ) )
-			echo '<p class="description">'.$before.'</p>';
+			gEditorialHTML::desc( $before );
 
 		foreach ( $this->all_post_types() as $post_type => $label ) {
 			$html = gEditorialHTML::tag( 'input', array(
@@ -280,13 +280,13 @@ class gEditorialModuleCore extends gEditorialWPModule
 		}
 
 		if ( $after = $this->get_string( 'post_types_after', 'post', 'settings', NULL ) )
-			echo '<p class="description">'.$after.'</p>';
+			gEditorialHTML::desc( $after );
 	}
 
 	public function settings_taxonomies_option( $section )
 	{
 		if ( $before = $this->get_string( 'taxonomies_before', 'post', 'settings', NULL ) )
-			echo '<p class="description">'.$before.'</p>';
+			gEditorialHTML::desc( $before );
 
 		foreach ( $this->all_taxonomies() as $taxonomy => $label ) {
 
@@ -304,7 +304,7 @@ class gEditorialModuleCore extends gEditorialWPModule
 		}
 
 		if ( $after = $this->get_string( 'taxonomies_after', 'post', 'settings', NULL ) )
-			echo '<p class="description">'.$after.'</p>';
+			gEditorialHTML::desc( $after );
 	}
 
 	// get stored post meta by the field

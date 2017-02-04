@@ -119,7 +119,7 @@ class gEditorialEntryTemplates extends gEditorialTemplateCore
 			'no_found_rows'    => TRUE,
 		);
 
-		$query = new WP_Query;
+		$query = new \WP_Query;
 		$posts = $query->query( $query_args );
 
 		if ( count( $posts ) ) {

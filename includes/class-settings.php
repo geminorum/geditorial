@@ -122,10 +122,8 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 	{
 		echo gEditorialHTML::tag( $tag, $title );
 
-		if ( $description )
-			echo '<p class="description">'.$description.'</p>';
+		gEditorialHTML::desc( $description );
 	}
-
 
 	public static function infoP2P()
 	{
@@ -271,7 +269,7 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 			'type'        => 'priority',
 			'title'       => _x( 'Insert Priority', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 			'description' => _x( 'Priority of inserting buttons on the content.', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-			'default'     => 10,
+			'default'     => '10',
 			'section'     => $section,
 		);
 	}
@@ -315,7 +313,6 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 			'field'       => 'admin_restrict',
 			'title'       => _x( 'Restrictions', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 			'description' => _x( 'Enhance admin edit page restrictions', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-			'default'     => '0',
 			'section'     => $section,
 		);
 	}
@@ -326,7 +323,6 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 			'field'       => 'dashboard_widgets',
 			'title'       => _x( 'Dashboard Widgets', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 			'description' => _x( 'Enhance admin dashboard with customized widgets', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-			'default'     => '0',
 			'section'     => $section,
 		);
 	}
@@ -363,7 +359,6 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 			'field'       => 'posttype_feeds',
 			'title'       => _x( 'Feeds', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 			'description' => _x( 'Supporting feeds on the posttype', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-			'default'     => '0',
 			'section'     => $section,
 		);
 	}
@@ -374,7 +369,6 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 			'field'       => 'posttype_pages',
 			'title'       => _x( 'Pages', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 			'description' => _x( 'Supporting pagination on the posttype', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-			'default'     => '0',
 			'section'     => $section,
 		);
 	}
