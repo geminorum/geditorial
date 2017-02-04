@@ -101,23 +101,45 @@ class gEditorialAudit extends gEditorialModuleCore
 
 	public function activity_box_end()
 	{
-		$terms = gEditorialWPTaxonomy::getTerms( $this->constant( 'audit_tax' ), FALSE, TRUE, 'slug', array( 'hide_empty' => TRUE ) );
-
-		if ( ! count( $terms ) )
-			return;
-
 		$user_id = 'all' == $this->get_setting( 'summary_scope', 'all' ) ? 0 : get_current_user_id();
 
-		if ( $html = $this->get_summary( $this->post_types(), $terms, $user_id ) ) {
-			echo '<div class="geditorial-admin-wrap -audit"><h3>';
+		$key = $this->hash( 'activityboxend', $user_id );
 
-			if ( $user_id )
-				_ex( 'Your Audit Summary', 'Audit Module', GEDITORIAL_TEXTDOMAIN );
-			else
-				_ex( 'Editorial Audit Summary', 'Audit Module', GEDITORIAL_TEXTDOMAIN );
+		if ( gEditorialWordPress::isFlush() )
+			delete_transient( $key );
 
-			echo '</h3>'.$html.'</div>';
+		if ( FALSE === ( $html = get_transient( $key ) ) ) {
+
+			$html  = '';
+			$terms = gEditorialWPTaxonomy::getTerms( $this->constant( 'audit_tax' ), FALSE, TRUE, 'slug', array( 'hide_empty' => TRUE ) );
+
+			if ( count( $terms ) ) {
+
+				if ( $summary = $this->get_summary( $this->post_types(), $terms, $user_id ) ) {
+
+					$html .= '<div class="geditorial-admin-wrap -audit"><h3>';
+
+					if ( $user_id )
+						$html .= _x( 'Your Audit Summary', 'Modules: Audit: Activity Box End', GEDITORIAL_TEXTDOMAIN );
+					else
+						$html .= _x( 'Editorial Audit Summary', 'Modules: Audit: Activity Box End', GEDITORIAL_TEXTDOMAIN );
+
+					$html .= ' '.gEditorialHTML::tag( 'a', array(
+						'href'  => add_query_arg( 'flush', '' ),
+						'title' => _x( 'Click to refresh the summary', 'Modules: Audit: Activity Box End', GEDITORIAL_TEXTDOMAIN ),
+						'class' => '-action -flush page-title-action',
+					), _x( 'Refresh', 'Modules: Audit: Activity Box End', GEDITORIAL_TEXTDOMAIN ) );
+
+					$html .= '</h3>'.$summary.'</div>';
+
+					$html = gEditorialCoreText::minifyHTML( $html );
+
+					set_transient( $key, $html, 12 * HOUR_IN_SECONDS );
+				}
+			}
 		}
+
+		echo $html;
 	}
 
 	private function get_summary( $posttypes, $terms, $user_id = 0, $wrap = 'ul', $list = 'li' )
