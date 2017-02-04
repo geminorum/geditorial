@@ -448,7 +448,7 @@ class gEditorialHelper extends gEditorialBaseCore
 
 	public static function humanTimeAgo( $from, $to = '' )
 	{
-		return sprintf( _x( '%s ago', 'Utilities: Human Time Ago', GNETWORK_TEXTDOMAIN ), human_time_diff( $from, $to ) );
+		return sprintf( _x( '%s ago', 'Module Helper: Human Time Ago', GEDITORIAL_TEXTDOMAIN ), human_time_diff( $from, $to ) );
 	}
 
 	public static function humanTimeDiffRound( $local, $round = DAY_IN_SECONDS, $format = NULL, $now = NULL )
