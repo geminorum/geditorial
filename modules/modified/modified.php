@@ -209,33 +209,29 @@ class gEditorialModified extends gEditorialModuleCore
 		// This website was last updated:
 	}
 
-	public function get_site_modified( $format = NULL, $posttypes = NULL )
+	public function get_site_modified( $format = NULL, $post_types = NULL )
 	{
 		global $wpdb;
 
 		if ( is_null( $format ) )
 			$format = get_option( 'date_format' );
 
-		if ( is_null( $posttypes ) )
-			$posttypes = $this->post_types();
+		if ( is_null( $post_types ) )
+			$post_types = $this->post_types();
 
-		else if ( FALSE === $posttypes )
-			$posttypes = array();
+		else if ( FALSE === $post_types )
+			$post_types = array();
 
-		else if ( ! is_array( $posttypes ) )
-			$posttypes = array( $posttypes );
+		else if ( ! is_array( $post_types ) )
+			$post_types = array( $post_types );
 
-		if ( count( $posttypes ) ) {
-
-			$post_types_in = implode( ',', array_map( function( $v ){
-				return "'".esc_sql( $v )."'";
-			}, $posttypes ) );
+		if ( count( $post_types ) ) {
 
 			$query = "
 				SELECT post_modified
 				FROM {$wpdb->posts}
 				WHERE post_status = 'publish'
-				AND post_type IN ( {$post_types_in} )
+				AND post_type IN ( '".join( "', '", esc_sql( $post_types ) )."' )
 				ORDER BY post_modified DESC
 			";
 
