@@ -1,3 +1,15 @@
+### 3.9.14
+* wordpress/database: exclude default statues from taxonomy count/not
+* main/helper: more time diff helpers
+* main/modulecore: thickbox for thumb column images
+* module/audit: consistent l10n contexts
+* module/audit: option to not count not audited
+* module/audit: caching dashboard summary
+* module/meta: force empty meta to array on import
+* module/modified: consistent use of var names
+* module/ortho: lib version/repo/demo links
+* module/terms: :warning: fixed not counting all posts
+
 ### 3.9.13
 * main/helper: revising text/number filters
 * main/main: styles for edit comments/term base
