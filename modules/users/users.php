@@ -342,7 +342,6 @@ class gEditorialUsers extends gEditorialModuleCore
 				'type'         => 'user',
 				'field'        => 'user_id',
 				'none_title'   => _x( 'All Users', 'Users Module', GEDITORIAL_TEXTDOMAIN ),
-				'none_value'   => 0,
 				'default'      => $user_id,
 				'option_group' => 'reports',
 			) );
@@ -350,6 +349,7 @@ class gEditorialUsers extends gEditorialModuleCore
 			$this->do_settings_field( array(
 				'type'         => 'select',
 				'field'        => 'year_month',
+				'none_title'   => _x( 'All Months', 'Users Module', GEDITORIAL_TEXTDOMAIN ),
 				'values'       => gEditorialHelper::getPosttypeMonths( $calendar_type, $post_type, array(), $user_id ),
 				'default'      => $year_month,
 				'option_group' => 'reports',
