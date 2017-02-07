@@ -127,8 +127,8 @@
       else if ( $('#name').length && $('#name').val() )
         filename = $('#name').val().trim();
       else if ( $('#post_ID').length )
-        filename = 'Post-'+$('#post_ID').val();
-      o.u.downloadText(filename+'.md', $(c).val());
+        filename = 'Untitled-'+$('#post_ID').val();
+      o.u.downloadText(filename+'.md', '## '+filename+"\n\n"+$(c).val());
     }
   };
 
