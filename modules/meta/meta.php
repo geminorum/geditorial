@@ -50,6 +50,15 @@ class gEditorialMeta extends gEditorialModuleCore
 		);
 	}
 
+	protected function get_module_icons()
+	{
+		return array(
+			'taxonomies' => array(
+				'ct_tax' => 'admin-post',
+			),
+		);
+	}
+
 	protected function get_global_strings()
 	{
 		return array(
@@ -150,23 +159,6 @@ class gEditorialMeta extends gEditorialModuleCore
 		$this->register_button( 'install_def_ct_tax' );
 	}
 
-	public function tweaks_strings( $strings )
-	{
-		$this->tweaks = TRUE;
-
-		$new = array(
-			'taxonomies' => array(
-				$this->constant( 'ct_tax' ) => array(
-					'column' => 'taxonomy-'.$this->constant( 'ct_tax' ),
-					'icon'   => 'admin-post',
-					'title'  => $this->get_column_title( 'tweaks', 'ct_tax' ),
-				),
-			),
-		);
-
-		return self::recursiveParseArgs( $new, $strings );
-	}
-
 	public function init()
 	{
 		do_action( 'geditorial_meta_init', $this->module );
@@ -233,8 +225,11 @@ class gEditorialMeta extends gEditorialModuleCore
 				add_action( 'geditorial_meta_do_meta_box', array( $this, 'do_meta_box' ), 10, 4 );
 
 			} else if ( 'edit' == $screen->base ) {
+
 				$this->_admin_enabled();
 				$this->_edit_screen( $screen->post_type );
+
+				$this->_tweaks_taxonomy();
 			}
 
 			if ( 'post' == $screen->base

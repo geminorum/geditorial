@@ -41,8 +41,6 @@ class gEditorialModuleCore extends gEditorialWPModule
 
 	protected $root_key = FALSE; // ROOT CONSTANT
 	protected $p2p      = FALSE; // P2P ENABLED/Connection Type
-	protected $meta     = FALSE; // META ENABLED
-	protected $tweaks   = FALSE; // TWEAKS ENABLED
 
 	protected $scripts_printed = FALSE;
 
@@ -118,9 +116,6 @@ class gEditorialModuleCore extends gEditorialWPModule
 			if ( $ui )
 				add_action( 'geditorial_settings_load', array( $this, 'register_settings' ) );
 
-			if ( method_exists( $this, 'tweaks_strings' ) )
-				add_filter( 'geditorial_tweaks_strings', array( $this, 'tweaks_strings' ) );
-
 			if ( $ui && method_exists( $this, 'reports_settings' ) )
 				add_action( 'geditorial_reports_settings', array( $this, 'reports_settings' ) );
 
@@ -141,6 +136,8 @@ class gEditorialModuleCore extends gEditorialWPModule
 	protected function get_global_strings() { return array(); }
 	protected function get_global_supports() { return array(); }
 	protected function get_global_fields() { return array(); }
+
+	protected function get_module_icons() { return array(); }
 
 	protected function settings_help_tabs()
 	{
@@ -1999,5 +1996,29 @@ SQL;
 	public function get_default_comment_status( $status, $post_type, $comment_type )
 	{
 		return $this->get_setting( 'comment_status', $status );
+	}
+
+	protected function _tweaks_taxonomy()
+	{
+		add_filter( 'geditorial_tweaks_taxonomy_info', array( $this, 'tweaks_taxonomy_info' ), 10, 2 );
+	}
+
+	// DEFAULT FILTER
+	public function tweaks_taxonomy_info( $info, $object )
+	{
+		$icons = $this->get_module_icons();
+
+		if ( empty( $icons['taxonomies'] ) )
+			return $info;
+
+		foreach ( $icons['taxonomies'] as $tax => $icon )
+			if ( $object->name == $this->constant( $tax ) )
+				return array(
+					'icon'  => is_null( $icon ) ? $this->module->icon : $icon,
+					'title' => $this->get_column_title( 'tweaks', $tax ),
+					'edit'  => NULL,
+				);
+
+		return $info;
 	}
 }

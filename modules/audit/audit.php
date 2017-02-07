@@ -38,6 +38,15 @@ class gEditorialAudit extends gEditorialModuleCore
 		);
 	}
 
+	protected function get_module_icons()
+	{
+		return array(
+			'taxonomies' => array(
+				'audit_tax' => NULL,
+			),
+		);
+	}
+
 	protected function get_global_strings()
 	{
 		return array(
@@ -95,6 +104,8 @@ class gEditorialAudit extends gEditorialModuleCore
 					add_action( 'restrict_manage_posts', array( $this, 'restrict_manage_posts' ), 20 ,2 );
 					add_filter( 'parse_query', array( $this, 'parse_query' ) );
 				}
+
+				$this->_tweaks_taxonomy();
 			}
 		}
 	}
@@ -237,23 +248,6 @@ class gEditorialAudit extends gEditorialModuleCore
 
 		parent::register_settings( $page );
 		$this->register_button( 'install_def_audit_tax' );
-	}
-
-	public function tweaks_strings( $strings )
-	{
-		$this->tweaks = TRUE;
-
-		$new = array(
-			'taxonomies' => array(
-				$this->constant( 'audit_tax' ) => array(
-					'column' => 'taxonomy-'.$this->constant( 'audit_tax' ),
-					'icon'   => $this->module->icon,
-					'title'  => $this->get_column_title( 'tweaks', 'audit_tax' ),
-				),
-			),
-		);
-
-		return self::recursiveParseArgs( $new, $strings );
 	}
 
 	public function restrict_manage_posts( $post_type, $which )

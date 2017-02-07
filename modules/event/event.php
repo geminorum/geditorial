@@ -54,6 +54,17 @@ class gEditorialEvent extends gEditorialModuleCore
 		);
 	}
 
+	protected function get_module_icons()
+	{
+		return array(
+			'taxonomies' => array(
+				'event_cat' => 'category',
+				'event_tag' => 'tag',
+				'cal_tax'   => 'calendar',
+			),
+		);
+	}
+
 	protected function get_global_strings()
 	{
 		return array(
@@ -216,6 +227,8 @@ class gEditorialEvent extends gEditorialModuleCore
 
 				$this->_edit_screen( $screen->post_type );
 				add_filter( 'manage_edit-'.$screen->post_type.'_sortable_columns', array( $this, 'sortable_columns' ) );
+
+				$this->_tweaks_taxonomy();
 			}
 		}
 	}
@@ -248,33 +261,6 @@ class gEditorialEvent extends gEditorialModuleCore
 	public function gpeople_support( $post_types )
 	{
 		return array_merge( $post_types, array( $this->constant( 'event_cpt' ) ) );
-	}
-
-	public function tweaks_strings( $strings )
-	{
-		$this->tweaks = TRUE;
-
-		$new = array(
-			'taxonomies' => array(
-				$this->constant( 'event_tag' ) => array(
-					'column' => 'taxonomy-'.$this->constant( 'event_tag' ),
-					'icon'   => 'tag',
-					'title'  => $this->get_column_title( 'tweaks', 'event_tag' ),
-				),
-				$this->constant( 'event_cat' ) => array(
-					'column' => 'taxonomy-'.$this->constant( 'event_cat' ),
-					'icon'   => 'category',
-					'title'  => $this->get_column_title( 'tweaks', 'event_cat' ),
-				),
-				$this->constant( 'cal_tax' ) => array(
-					'column' => 'taxonomy-'.$this->constant( 'cal_tax' ),
-					'icon'   => 'calendar',
-					'title'  => $this->get_column_title( 'tweaks', 'cal_tax' ),
-				),
-			),
-		);
-
-		return self::recursiveParseArgs( $new, $strings );
 	}
 
 	public function dashboard_glance_items( $items )

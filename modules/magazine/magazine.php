@@ -68,6 +68,17 @@ class gEditorialMagazine extends gEditorialModuleCore
 		);
 	}
 
+	protected function get_module_icons()
+	{
+		return array(
+			'taxonomies' => array(
+				'issue_tax'   => 'book',
+				'span_tax'    => 'backup',
+				'section_tax' => 'category',
+			),
+		);
+	}
+
 	protected function get_global_strings()
 	{
 		return array(
@@ -287,6 +298,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 				add_filter( 'manage_edit-'.$screen->post_type.'_sortable_columns', array( $this, 'sortable_columns' ) );
 				add_thickbox();
 
+				$this->_tweaks_taxonomy();
 				add_action( 'geditorial_tweaks_column_attr', array( $this, 'main_column_attr' ) );
 			}
 
@@ -317,6 +329,8 @@ class gEditorialMagazine extends gEditorialModuleCore
 
 				if ( $this->get_setting( 'admin_restrict', FALSE ) )
 					add_action( 'restrict_manage_posts', array( $this, 'restrict_manage_posts_supported_cpt' ), 12, 2 );
+
+				$this->_tweaks_taxonomy();
 			}
 
 			add_action( 'save_post', array( $this, 'save_post_supported_cpt' ), 20, 3 );
@@ -343,33 +357,6 @@ class gEditorialMagazine extends gEditorialModuleCore
 	{
 		$this->add_post_type_fields( $this->constant( 'issue_cpt' ) );
 		$this->add_post_type_fields( $this->constant( 'post_cpt' ) );
-	}
-
-	public function tweaks_strings( $strings )
-	{
-		$this->tweaks = TRUE;
-
-		$new = array(
-			'taxonomies' => array(
-				$this->constant( 'issue_tax' ) => array(
-					'column' => 'taxonomy-'.$this->constant( 'issue_tax' ),
-					'icon'   => 'book',
-					'title'  => $this->get_column_title( 'tweaks', 'issue_tax' ),
-				),
-				$this->constant( 'span_tax' ) => array(
-					'column' => 'taxonomy-'.$this->constant( 'span_tax' ),
-					'icon'   => 'backup',
-					'title'  => $this->get_column_title( 'tweaks', 'span_tax' ),
-				),
-				$this->constant( 'section_tax' ) => array(
-					'column' => 'taxonomy-'.$this->constant( 'section_tax' ),
-					'icon'   => 'category',
-					'title'  => $this->get_column_title( 'tweaks', 'section_tax' ),
-				),
-			),
-		);
-
-		return self::recursiveParseArgs( $new, $strings );
 	}
 
 	public function dashboard_glance_items( $items )

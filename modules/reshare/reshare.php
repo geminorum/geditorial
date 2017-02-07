@@ -25,6 +25,15 @@ class gEditorialReshare extends gEditorialModuleCore
 		);
 	}
 
+	protected function get_module_icons()
+	{
+		return array(
+			'taxonomies' => array(
+				'reshare_cat' => NULL,
+			),
+		);
+	}
+
 	protected function get_global_settings()
 	{
 		return array(
@@ -112,21 +121,15 @@ class gEditorialReshare extends gEditorialModuleCore
 		}
 	}
 
-	public function tweaks_strings( $strings )
+	public function current_screen( $screen )
 	{
-		$this->tweaks = TRUE;
+		if ( $screen->post_type == $this->constant( 'reshare_cpt' ) ) {
 
-		$new = array(
-			'taxonomies' => array(
-				$this->constant( 'reshare_cat' ) => array(
-					'column' => 'taxonomy-'.$this->constant( 'reshare_cat' ),
-					'icon'   => $this->module->icon,
-					'title'  => $this->get_column_title( 'tweaks', 'reshare_cat' ),
-				),
-			),
-		);
+			if ( 'edit' == $screen->base ) {
 
-		return self::recursiveParseArgs( $new, $strings );
+				$this->_tweaks_taxonomy();
+			}
+		}
 	}
 
 	public function insert_content( $content, $posttypes = NULL )

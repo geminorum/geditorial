@@ -40,6 +40,18 @@ class gEditorialContest extends gEditorialModuleCore
 		);
 	}
 
+	protected function get_module_icons()
+	{
+		return array(
+			'taxonomies' => array(
+				'contest_cat'      => 'category',
+				'contest_tax'      => 'megaphone',
+				'apply_cat'        => 'category',
+				'apply_status_tax' => 'post-status', // 'portfolio',
+			),
+		);
+	}
+
 	protected function get_global_strings()
 	{
 		return array(
@@ -213,6 +225,7 @@ class gEditorialContest extends gEditorialModuleCore
 				add_filter( 'manage_edit-'.$screen->post_type.'_sortable_columns', array( $this, 'sortable_columns' ) );
 				add_thickbox();
 
+				$this->_tweaks_taxonomy();
 				add_action( 'geditorial_tweaks_column_attr', array( $this, 'main_column_attr' ) );
 			}
 
@@ -244,6 +257,8 @@ class gEditorialContest extends gEditorialModuleCore
 
 				if ( $this->get_setting( 'admin_restrict', FALSE ) )
 					add_action( 'restrict_manage_posts', array( $this, 'restrict_manage_posts_supported_cpt' ), 12, 2 );
+
+				$this->_tweaks_taxonomy();
 			}
 
 			add_action( 'save_post', array( $this, 'save_post_supported_cpt' ), 20, 3 );
@@ -279,38 +294,6 @@ class gEditorialContest extends gEditorialModuleCore
 			$this->constant( 'contest_cpt' ),
 			$this->constant( 'apply_cpt' ),
 		) );
-	}
-
-	public function tweaks_strings( $strings )
-	{
-		$this->tweaks = TRUE;
-
-		$new = array(
-			'taxonomies' => array(
-				$this->constant( 'contest_cat' ) => array(
-					'column' => 'taxonomy-'.$this->constant( 'contest_cat' ),
-					'icon'   => 'category',
-					'title'  => $this->get_column_title( 'tweaks', 'contest_cat' ),
-				),
-				$this->constant( 'contest_tax' ) => array(
-					'column' => 'taxonomy-'.$this->constant( 'contest_tax' ),
-					'icon'   => 'megaphone',
-					'title'  => $this->get_column_title( 'tweaks', 'contest_tax' ),
-				),
-				$this->constant( 'apply_cat' ) => array(
-					'column' => 'taxonomy-'.$this->constant( 'apply_cat' ),
-					'icon'   => 'category',
-					'title'  => $this->get_column_title( 'tweaks', 'apply_cat' ),
-				),
-				$this->constant( 'apply_status_tax' ) => array(
-					'column' => 'taxonomy-'.$this->constant( 'apply_status_tax' ),
-					'icon'   => 'portfolio',
-					'title'  => $this->get_column_title( 'tweaks', 'apply_status_tax' ),
-				),
-			),
-		);
-
-		return self::recursiveParseArgs( $new, $strings );
 	}
 
 	public function dashboard_glance_items( $items )

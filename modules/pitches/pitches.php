@@ -25,6 +25,15 @@ class gEditorialPitches extends gEditorialModuleCore
 		);
 	}
 
+	protected function get_module_icons()
+	{
+		return array(
+			'taxonomies' => array(
+				'idea_cat' => NULL,
+			),
+		);
+	}
+
 	protected function get_global_strings()
 	{
 		return array(
@@ -66,21 +75,15 @@ class gEditorialPitches extends gEditorialModuleCore
 		), 'idea_cpt' );
 	}
 
-	public function tweaks_strings( $strings )
+	public function current_screen( $screen )
 	{
-		$this->tweaks = TRUE;
+		if ( $screen->post_type == $this->constant( 'idea_cpt' ) ) {
 
-		$new = array(
-			'taxonomies' => array(
-				$this->constant( 'idea_cat' ) => array(
-					'column' => 'taxonomy-'.$this->constant( 'idea_cat' ),
-					'icon'   => $this->module->icon,
-					'title'  => $this->get_column_title( 'tweaks', 'idea_cat' ),
-				),
-			),
-		);
+			if ( 'edit' == $screen->base ) {
 
-		return self::recursiveParseArgs( $new, $strings );
+				$this->_tweaks_taxonomy();
+			}
+		}
 	}
 
 	public function meta_box_cb_idea_cat( $post, $box )

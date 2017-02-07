@@ -38,6 +38,15 @@ class gEditorialSeries extends gEditorialModuleCore
 		);
 	}
 
+	protected function get_module_icons()
+	{
+		return array(
+			'taxonomies' => array(
+				'series_tax' => NULL,
+			),
+		);
+	}
+
 	protected function get_global_strings()
 	{
 		return array(
@@ -101,36 +110,27 @@ class gEditorialSeries extends gEditorialModuleCore
 
 	public function current_screen( $screen )
 	{
-		if ( 'post' == $screen->base
-			&& in_array( $screen->post_type, $this->post_types() ) ) {
+		if ( in_array( $screen->post_type, $this->post_types() ) ) {
 
-			add_meta_box( 'geditorial-series',
-				$this->get_meta_box_title( 'series_tax', $this->get_url_tax_edit( 'series_tax' ), 'edit_others_posts' ),
-				array( $this, 'do_meta_box' ),
-				$screen->post_type,
-				'side' );
+			if ( 'post' == $screen->base ) {
 
-			// internal actions:
-			add_action( 'geditorial_series_meta_box', array( $this, 'geditorial_series_meta_box' ), 5, 3 );
-			add_action( 'geditorial_series_meta_box_item', array( $this, 'geditorial_series_meta_box_item' ), 5, 4 );
+				add_meta_box( 'geditorial-series',
+					$this->get_meta_box_title( 'series_tax', $this->get_url_tax_edit( 'series_tax' ), 'edit_others_posts' ),
+					array( $this, 'do_meta_box' ),
+					$screen->post_type,
+					'side' );
+
+				// internal actions:
+				add_action( 'geditorial_series_meta_box', array( $this, 'geditorial_series_meta_box' ), 5, 3 );
+				add_action( 'geditorial_series_meta_box_item', array( $this, 'geditorial_series_meta_box_item' ), 5, 4 );
+
+			} else if ( 'edit' == $screen->base ) {
+
+				$this->_admin_enabled();
+
+				$this->_tweaks_taxonomy();
+			}
 		}
-	}
-
-	public function tweaks_strings( $strings )
-	{
-		$this->tweaks = TRUE;
-
-		$new = array(
-			'taxonomies' => array(
-				$this->constant( 'series_tax' ) => array(
-					'column' => 'taxonomy-'.$this->constant( 'series_tax' ),
-					'icon'   => $this->module->icon,
-					'title'  => $this->get_column_title( 'tweaks', 'series_tax' ),
-				),
-			),
-		);
-
-		return self::recursiveParseArgs( $new, $strings );
 	}
 
 	public function save_post( $post_id, $post )

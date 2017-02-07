@@ -43,6 +43,20 @@ class gEditorialBook extends gEditorialModuleCore
 		);
 	}
 
+	protected function get_module_icons()
+	{
+		return array(
+			'taxonomies' => array(
+				'subject_tax'   => 'tag',
+				'library_tax'   => 'book-alt',
+				'publisher_tax' => 'book',
+				'type_tax'      => 'admin-media',
+				'status_tax'    => 'post-status',
+				'size_tax'      => 'image-crop',
+			),
+		);
+	}
+
 	protected function get_global_strings()
 	{
 		return array(
@@ -286,6 +300,8 @@ class gEditorialBook extends gEditorialModuleCore
 				if ( $this->p2p )
 					add_action( 'geditorial_tweaks_column_row', array( $this, 'column_row_p2p_to' ), -25 );
 
+				$this->_tweaks_taxonomy();
+
 				$this->_edit_screen( $screen->post_type );
 				add_thickbox();
 			}
@@ -426,48 +442,6 @@ class gEditorialBook extends gEditorialModuleCore
 		), 'publication_cpt' );
 
 		$this->add_post_type_fields( $this->constant( 'publication_cpt' ) );
-	}
-
-	public function tweaks_strings( $strings )
-	{
-		$this->tweaks = TRUE;
-
-		$new = array(
-			'taxonomies' => array(
-				$this->constant( 'subject_tax' ) => array(
-					'column' => 'taxonomy-'.$this->constant( 'subject_tax' ),
-					'icon'   => 'tag',
-					'title'  => $this->get_column_title( 'tweaks', 'subject_tax' ),
-				),
-				$this->constant( 'library_tax' ) => array(
-					'column' => 'taxonomy-'.$this->constant( 'library_tax' ),
-					'icon'   => 'book-alt',
-					'title'  => $this->get_column_title( 'tweaks', 'library_tax' ),
-				),
-				$this->constant( 'publisher_tax' ) => array(
-					'column' => 'taxonomy-'.$this->constant( 'publisher_tax' ),
-					'icon'   => 'book',
-					'title'  => $this->get_column_title( 'tweaks', 'publisher_tax' ),
-				),
-				$this->constant( 'type_tax' ) => array(
-					'column' => 'taxonomy-'.$this->constant( 'type_tax' ),
-					'icon'   => 'admin-media',
-					'title'  => $this->get_column_title( 'tweaks', 'type_tax' ),
-				),
-				$this->constant( 'status_tax' ) => array(
-					'column' => 'taxonomy-'.$this->constant( 'status_tax' ),
-					'icon'   => 'post-status',
-					'title'  => $this->get_column_title( 'tweaks', 'status_tax' ),
-				),
-				$this->constant( 'size_tax' ) => array(
-					'column' => 'taxonomy-'.$this->constant( 'size_tax' ),
-					'icon'   => 'image-crop',
-					'title'  => $this->get_column_title( 'tweaks', 'size_tax' ),
-				),
-			),
-		);
-
-		return self::recursiveParseArgs( $new, $strings );
 	}
 
 	public function dashboard_glance_items( $items )

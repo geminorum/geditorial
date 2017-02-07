@@ -112,18 +112,6 @@ class gEditorialTweaks extends gEditorialModuleCore
 				'meta_box_search_title'       => _x( 'Type to filter by', 'Tweaks Module: Meta Box Search Title', GEDITORIAL_TEXTDOMAIN ),
 				'meta_box_search_placeholder' => _x( 'Search &hellip;', 'Tweaks Module: Meta Box Search Placeholder', GEDITORIAL_TEXTDOMAIN ),
 			),
-			'taxonomies' => array(
-				'category' => array(
-					'column' => 'categories',
-					'icon'   => 'category',
-					'title'  => _x( 'Categories', 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ),
-				),
-				'post_tag' => array(
-					'column' => 'tags',
-					'icon'   => 'tag',
-					'title'  => _x( 'Tags', 'Tweaks Module', GEDITORIAL_TEXTDOMAIN ),
-				),
-			),
 		);
 	}
 
@@ -406,21 +394,28 @@ class gEditorialTweaks extends gEditorialModuleCore
 	{
 		$taxonomies = get_object_taxonomies( $post->post_type );
 
+		$cat = array( 'icon' => 'category', 'title' => __( 'Categories' ), 'edit'  => NULL );
+		$tag = array( 'icon' => 'tag', 'title' => __( 'Tags' ), 'edit'  => NULL );
+
 		foreach ( $this->taxonomies() as $taxonomy ) {
 
 			if ( ! in_array( $taxonomy, $taxonomies ) )
 				continue;
 
 			$object = get_taxonomy( $taxonomy );
-			$manage = current_user_can( $object->cap->manage_terms );
 
-			$before = '<li class="-row tweaks-tax-'.$taxonomy.'">';
+			$info = $this->filters( 'taxonomy_info', ( $object->hierarchical ? $cat : $tag ), $object );
 
-			if ( $icon = $this->get_string( 'icon', $taxonomy, 'taxonomies', 'tag' ) )
-				$before .= $this->get_column_icon(
-					$manage ? gEditorialWordPress::getEditTaxLink( $taxonomy ) : FALSE,
-					$icon, $this->get_string( 'title', $taxonomy, 'taxonomies', $taxonomy )
-				);
+			if ( FALSE === $info )
+				continue;
+
+			if ( is_null( $info['edit'] ) )
+				$info['edit'] = current_user_can( $object->cap->manage_terms )
+					? gEditorialWordPress::getEditTaxLink( $object->name )
+					: FALSE;
+
+			$before  = '<li class="-row tweaks-tax-'.$taxonomy.'">';
+			$before .= $this->get_column_icon( $info['edit'], $info['icon'], $info['title'] );
 
 			gEditorialHelper::getTermsEditRow( $post, $object, $before, '</li>' );
 		}
