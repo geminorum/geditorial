@@ -22,7 +22,9 @@
     qtag_swapquotes: 'Swap Quotes',
     qtag_swapquotes_title: 'Swap Not-Correct Quotes',
     qtag_mswordnotes: 'Word Footnotes',
-    qtag_mswordnotes_title: 'MS Word Footnotes to WordPress [ref]'
+    qtag_mswordnotes_title: 'MS Word Footnotes to WordPress [ref]',
+    qtag_download: 'Download',
+    qtag_download_title: 'Download text as markdown',
   }, p[m].strings);
 
   o.b = '<a href="#" class="do-' + m + '" title="' + o.s['button_virastar_title'] + '" tabindex="-1">' + o.s['button_virastar'] + '</span></a>';
@@ -88,6 +90,16 @@
             return n.charCodeAt(0)%1776;
           }).join('');
       });
+    },
+    // @REF: http://codepen.io/geminorum/pen/Ndzdqw
+    downloadText: function(filename, text) {
+      var element = document.createElement('a');
+      element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+      element.setAttribute('download', filename);
+      element.style.display = 'none';
+      document.body.appendChild(element);
+      element.click();
+      document.body.removeChild(element);
     }
   };
 
@@ -105,6 +117,18 @@
     },
     mswordnotes: function(e, c, ed) {
       $(c).val(o.u.pF($(c).val()));
+    },
+    download: function(e, c, ed) {
+      var filename = 'Untitled';
+      if ( $('#title').length && $('#title').val() )
+        filename = $('#title').val().trim();
+      else if ( $('#tag-name').length && $('#tag-name').val() )
+        filename = $('#tag-name').val().trim();
+      else if ( $('#name').length && $('#name').val() )
+        filename = $('#name').val().trim();
+      else if ( $('#post_ID').length )
+        filename = 'Post-'+$('#post_ID').val();
+      o.u.downloadText(filename+'.md', $(c).val());
     }
   };
 

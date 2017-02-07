@@ -85,6 +85,8 @@ class gEditorialOrtho extends gEditorialModuleCore
 				'qtag_swapquotes_title'  => _x( 'Swap Not-Correct Quotes', 'Ortho Module: Javascript String', GEDITORIAL_TEXTDOMAIN ),
 				'qtag_mswordnotes'       => _x( 'Word Footnotes', 'Ortho Module: Javascript String', GEDITORIAL_TEXTDOMAIN ),
 				'qtag_mswordnotes_title' => _x( 'MS Word Footnotes to WordPress [ref]', 'Ortho Module: Javascript String', GEDITORIAL_TEXTDOMAIN ),
+				'qtag_download'          => _x( 'Download', 'Ortho Module: Javascript String', GEDITORIAL_TEXTDOMAIN ),
+				'qtag_download_title'    => _x( 'Download text as markdown', 'Ortho Module: Javascript String', GEDITORIAL_TEXTDOMAIN ),
 			),
 		);
 	}
