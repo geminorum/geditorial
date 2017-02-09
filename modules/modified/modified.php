@@ -153,11 +153,16 @@ class gEditorialModified extends gEditorialModuleCore
 
 	public function insert_content( $content )
 	{
-		if ( is_singular() && in_the_loop() && is_main_query() ){
+		if ( is_singular() && in_the_loop() && is_main_query() ) {
 
-			if ( $modified = $this->get_post_modified() )
-				echo '<div class="geditorial-wrap -modified -content-'
-					.$this->get_setting( 'insert_content', 'none' ).'"><small>'.$modified.'</small></div>';
+			if ( $modified = $this->get_post_modified() ) {
+
+				gEditorialHelper::enqueueTimeAgo();
+
+				echo '<div class="geditorial-wrap -modified -content-';
+				echo $this->get_setting( 'insert_content', 'none' );
+				echo '"><small>'.$modified.'</small></div>';
+			}
 		}
 	}
 

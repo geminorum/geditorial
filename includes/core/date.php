@@ -26,7 +26,6 @@ class gEditorialDate extends gEditorialBaseCore
 
 	// @SOURCE: `bp_core_get_iso8601_date()`
 	// EXAMPLE: `2005-08-15T15:52:01+0000`
-	// USE WITH: https://github.com/rmm5t/jquery-timeago
 	// timezone should be UTC before using this
 	public static function getISO8601( $timestamp = '' )
 	{
@@ -47,8 +46,9 @@ class gEditorialDate extends gEditorialBaseCore
 	public static function htmlDateTime( $time, $gmt = NULL, $format = 'l, F j, Y', $title = FALSE )
 	{
 		return gEditorialHTML::tag( 'time', array(
-			'datetime' => date( 'c', ( $gmt ? $gmt : $time ) ), // SEE: `self::getISO8601()`
+			'datetime' => date( 'c', ( $gmt ? $gmt : $time ) ),
 			'title'    => $title,
+			'class'    => 'do-timeago',
 		), date_i18n( $format, $time ) );
 	}
 

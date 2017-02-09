@@ -276,6 +276,16 @@ class gEditorialHelper extends gEditorialBaseCore
 		wp_enqueue_script( 'jquery-colorbox' );
 	}
 
+	public static function enqueueTimeAgo()
+	{
+		$callback = array( 'gPersianDateTimeAgo', 'enqueue' );
+
+		if ( ! is_callable( $callback ) )
+			return FALSE;
+
+		return call_user_func( $callback );
+	}
+
 	public static function getTermPosts( $taxonomy, $term_or_id, $exclude = array() )
 	{
 		if ( ! $term = gEditorialWPTaxonomy::getTerm( $term_or_id, $taxonomy ) )
