@@ -312,10 +312,13 @@ class gEditorialUsers extends gEditorialModuleCore
 
 	public function reports_sub( $uri, $sub )
 	{
-		$post       = empty( $_POST[$this->module->group]['reports'] ) ? array() : $_POST[$this->module->group]['reports'];
-		$user_id    = empty( $post['user_id'] ) ? gEditorialHelper::getEditorialUserID() : $post['user_id'];
-		$post_type  = empty( $post['post_type'] ) ? 'post' : $post['post_type'];
-		$year_month = empty( $post['year_month'] ) ? '' : $post['year_month'];
+		$args = self::atts( array(
+			'post_type'  => 'post',
+			'user_id'    => '0',
+			'year_month' => '',
+		), empty( $_POST[$this->module->group]['reports'] )
+			? array()
+			: $_POST[$this->module->group]['reports'] );
 
 		$calendar_type = $this->get_setting( 'calendar_type', 'gregorian' );
 
@@ -333,7 +336,7 @@ class gEditorialUsers extends gEditorialModuleCore
 				'type'         => 'select',
 				'field'        => 'post_type',
 				'values'       => gEditorialWPPostType::get(),
-				'default'      => $post_type,
+				'default'      => $args['post_type'],
 				'option_group' => 'reports',
 			) );
 
@@ -341,7 +344,7 @@ class gEditorialUsers extends gEditorialModuleCore
 				'type'         => 'user',
 				'field'        => 'user_id',
 				'none_title'   => _x( 'All Users', 'Users Module', GEDITORIAL_TEXTDOMAIN ),
-				'default'      => $user_id,
+				'default'      => $args['user_id'],
 				'option_group' => 'reports',
 			) );
 
@@ -349,8 +352,8 @@ class gEditorialUsers extends gEditorialModuleCore
 				'type'         => 'select',
 				'field'        => 'year_month',
 				'none_title'   => _x( 'All Months', 'Users Module', GEDITORIAL_TEXTDOMAIN ),
-				'values'       => gEditorialHelper::getPosttypeMonths( $calendar_type, $post_type, array(), $user_id ),
-				'default'      => $year_month,
+				'values'       => gEditorialHelper::getPosttypeMonths( $calendar_type, $args['post_type'], array(), $args['user_id'] ),
+				'default'      => $args['year_month'],
 				'option_group' => 'reports',
 			) );
 
@@ -358,10 +361,9 @@ class gEditorialUsers extends gEditorialModuleCore
 
 			if ( ! empty( $_POST ) && isset( $_POST['posttype_stats'] ) ) {
 
-				$period = $year_month ? gEditorialHelper::monthFirstAndLast( $calendar_type, substr( $year_month, 0, 4 ), substr( $year_month, 4, 2 ) ) : array();
-				$posts  = gEditorialWPDatabase::countPostsByPosttype( $post_type, $user_id, $period );
+				$period = $args['year_month'] ? gEditorialHelper::monthFirstAndLast( $calendar_type, substr( $args['year_month'], 0, 4 ), substr( $args['year_month'], 4, 2 ) ) : array();
 
-				gEditorialHTML::tableCode( $posts );
+				gEditorialHTML::tableCode( gEditorialWPDatabase::countPostsByPosttype( $args['post_type'], $args['user_id'], $period ) );
 			}
 
 			echo '</td></tr>';
