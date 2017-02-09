@@ -85,9 +85,8 @@ class gEditorialSpecs extends gEditorialModuleCore
 
 	public function init()
 	{
-		do_action( 'geditorial_specs_init', $this->module );
+		parent::init();
 
-		$this->do_globals();
 		$this->register_taxonomy( 'specs_tax' );
 
 		foreach ( $this->post_types() as $post_type )

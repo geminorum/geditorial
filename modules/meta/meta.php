@@ -161,9 +161,7 @@ class gEditorialMeta extends gEditorialModuleCore
 
 	public function init()
 	{
-		do_action( 'geditorial_meta_init', $this->module );
-
-		$this->do_globals();
+		parent::init();
 
 		$ct_tax_posttypes = array();
 

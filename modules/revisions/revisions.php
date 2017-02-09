@@ -48,13 +48,12 @@ class gEditorialRevisions extends gEditorialModuleCore
 
 	public function setup_ajax( $request )
 	{
-		add_action( 'wp_ajax_geditorial_revisions', array( $this, 'ajax' ) );
+		$this->_hook_ajax();
 	}
 
 	public function init()
 	{
-		$this->actions( 'init', $this->module );
-		$this->do_globals();
+		parent::init();
 
 		if ( is_admin() )
 			add_action( 'admin_post_'.$this->hook( 'purge' ), array( $this, 'admin_post' ) );

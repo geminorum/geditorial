@@ -237,9 +237,7 @@ class gEditorialBook extends gEditorialModuleCore
 
 	public function init()
 	{
-		do_action( 'geditorial_book_init', $this->module );
-
-		$this->do_globals();
+		parent::init();
 
 		$this->post_types_excluded = array( 'attachment', $this->constant( 'publication_cpt' ) );
 

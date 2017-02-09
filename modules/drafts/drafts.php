@@ -36,13 +36,12 @@ class gEditorialDrafts extends gEditorialModuleCore
 
 	public function setup_ajax( $request )
 	{
-		add_action( 'wp_ajax_geditorial_drafts', array( $this, 'ajax' ) );
+		$this->_hook_ajax();
 	}
 
 	public function init()
 	{
-		do_action( 'geditorial_drafts_init', $this->module );
-		$this->do_globals();
+		parent::init();
 
 		if ( ! is_admin()
 			&& is_admin_bar_showing()

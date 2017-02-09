@@ -75,8 +75,7 @@ class gEditorialUsers extends gEditorialModuleCore
 
 	public function init()
 	{
-		do_action( 'geditorial_users_init', $this->module );
-		$this->do_globals();
+		parent::init();
 
 		if ( ! $this->get_setting( 'user_groups', FALSE ) )
 			return;

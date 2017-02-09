@@ -15,13 +15,6 @@ class gEditorialTerms extends gEditorialModuleCore
 		);
 	}
 
-	public function init()
-	{
-		do_action( 'geditorial_terms_init', $this->module );
-
-		$this->do_globals();
-	}
-
 	public function append_sub( $subs, $page = 'settings' )
 	{
 		if ( ! $this->cuc( $page ) )

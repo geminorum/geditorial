@@ -90,9 +90,7 @@ class gEditorialSeries extends gEditorialModuleCore
 
 	public function init()
 	{
-		do_action( 'geditorial_series_init', $this->module );
-
-		$this->do_globals();
+		parent::init();
 
 		$this->register_taxonomy( 'series_tax', array(
 			'show_admin_column' => TRUE,

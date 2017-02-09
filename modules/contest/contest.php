@@ -134,9 +134,7 @@ class gEditorialContest extends gEditorialModuleCore
 
 	public function init()
 	{
-		do_action( 'geditorial_contest_init', $this->module );
-
-		$this->do_globals();
+		parent::init();
 
 		$this->post_types_excluded = array( 'attachment', $this->constant( 'contest_cpt' ) );
 

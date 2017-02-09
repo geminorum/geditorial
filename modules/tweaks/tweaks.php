@@ -117,9 +117,7 @@ class gEditorialTweaks extends gEditorialModuleCore
 
 	public function init()
 	{
-		do_action( 'geditorial_tweaks_init', $this->module );
-
-		$this->do_globals();
+		parent::init();
 
 		$this->taxonomies_excluded = array(
 			'nav_menu',

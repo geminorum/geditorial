@@ -205,9 +205,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 
 	public function init()
 	{
-		do_action( 'geditorial_magazine_init', $this->module );
-
-		$this->do_globals();
+		parent::init();
 
 		$this->post_types_excluded = array( 'attachment', $this->constant( 'issue_cpt' ) );
 

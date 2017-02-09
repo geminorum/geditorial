@@ -61,8 +61,7 @@ class gEditorialEstimated extends gEditorialModuleCore
 
 	public function init()
 	{
-		do_action( 'geditorial_estimated_init', $this->module );
-		$this->do_globals();
+		parent::init();
 
 		if ( ! is_admin() && count( $this->post_types() ) ) {
 

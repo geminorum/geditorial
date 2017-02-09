@@ -31,7 +31,7 @@ class gEditorialSettings extends gEditorialModuleCore
 
 	public function setup_ajax( $request )
 	{
-		add_action( 'wp_ajax_geditorial_settings', array( $this, 'ajax' ) );
+		$this->_hook_ajax();
 	}
 
 	public function admin_menu()

@@ -133,9 +133,7 @@ class gEditorialEvent extends gEditorialModuleCore
 
 	public function init()
 	{
-		do_action( 'geditorial_event_init', $this->module );
-
-		$this->do_globals();
+		parent::init();
 
 		$this->register_post_type( 'event_cpt', array(
 			'hierarchical' => TRUE,

@@ -96,9 +96,7 @@ class gEditorialReshare extends gEditorialModuleCore
 
 	public function init()
 	{
-		do_action( 'geditorial_reshare_init', $this->module );
-
-		$this->do_globals();
+		parent::init();
 
 		$this->register_post_type( 'reshare_cpt', array(), array( 'post_tag' ) );
 

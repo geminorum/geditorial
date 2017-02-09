@@ -90,9 +90,7 @@ class gEditorialEntry extends gEditorialModuleCore
 
 	public function init()
 	{
-		do_action( 'geditorial_entry_init', $this->module );
-
-		$this->do_globals();
+		parent::init();
 
 		$this->post_types_excluded = array( 'attachment', $this->constant( 'entry_cpt' ) );
 

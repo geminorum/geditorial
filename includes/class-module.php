@@ -126,9 +126,16 @@ class gEditorialModuleCore extends gEditorialWPModule
 
 	public function _after_setup_theme()
 	{
-		$this->constants = apply_filters( 'geditorial_'.$this->module->name.'_constants', $this->get_global_constants(), $this->module );
-		$this->supports  = apply_filters( 'geditorial_'.$this->module->name.'_supports', $this->get_global_supports(), $this->module );
-		$this->fields    = apply_filters( 'geditorial_'.$this->module->name.'_fields', $this->get_global_fields(), $this->module );
+		$this->constants = apply_filters( $this->hook( 'constants' ), $this->get_global_constants(), $this->module );
+		$this->supports  = apply_filters( $this->hook( 'supports' ), $this->get_global_supports(), $this->module );
+		$this->fields    = apply_filters( $this->hook( 'fields' ), $this->get_global_fields(), $this->module );
+	}
+
+	// DEFAULT FILTER
+	public function init()
+	{
+		do_action( $this->hook( 'init' ), $this->module );
+		$this->do_globals();
 	}
 
 	protected function get_global_settings() { return array(); }
@@ -1996,6 +2003,20 @@ SQL;
 	public function get_default_comment_status( $status, $post_type, $comment_type )
 	{
 		return $this->get_setting( 'comment_status', $status );
+	}
+
+	protected function _hook_ajax( $nopriv = FALSE )
+	{
+		add_action( 'wp_ajax_'.$this->hook(), array( $this, 'ajax' ) );
+
+		if ( $nopriv )
+			add_action( 'wp_ajax_nopriv_'.$this->hook(), array( $this, 'ajax' ) );
+	}
+
+	// DEFAULT FILTER
+	public function ajax()
+	{
+		gEditorialAjax::errorWhat();
 	}
 
 	protected function _tweaks_taxonomy()

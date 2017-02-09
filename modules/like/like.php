@@ -53,16 +53,14 @@ class gEditorialLike extends gEditorialModuleCore
 
 	public function setup_ajax( $request )
 	{
-		add_action( 'wp_ajax_geditorial_like', array( $this, 'ajax' ) );
-		add_action( 'wp_ajax_nopriv_geditorial_like', array( $this, 'ajax' ) );
+		$this->_hook_ajax( TRUE );
 	}
 
 	public function init()
 	{
-		$this->cookie = 'geditorial-like-'.get_current_blog_id();
-		do_action( 'geditorial_like_init', $this->module );
+		parent::init();
 
-		$this->do_globals();
+		$this->cookie = 'geditorial-like-'.get_current_blog_id();
 	}
 
 	public function template_redirect()

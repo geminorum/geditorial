@@ -91,11 +91,10 @@ class gEditorialToday extends gEditorialModuleCore
 
 	public function init()
 	{
-		do_action( 'geditorial_today_init', $this->module );
-
-		$this->do_globals();
+		parent::init();
 
 		$this->post_types_excluded = array( 'attachment', $this->constant( 'day_cpt' ) );
+
 		$this->register_post_type( 'day_cpt', array(), array( 'post_tag' ) );
 
 		$this->register_shortcode( 'day_shortcode', array( 'gEditorialTodayTemplates', 'day_shortcode' ) );

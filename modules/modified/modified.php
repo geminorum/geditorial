@@ -64,9 +64,7 @@ class gEditorialModified extends gEditorialModuleCore
 
 	public function init()
 	{
-		do_action( 'geditorial_modified_init', $this->module );
-
-		$this->do_globals();
+		parent::init();
 
 		if ( is_blog_admin() && $this->get_setting( 'dashboard_widgets', FALSE ) )
 			$this->action( 'wp_dashboard_setup' );

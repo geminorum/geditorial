@@ -62,9 +62,7 @@ class gEditorialPitches extends gEditorialModuleCore
 
 	public function init()
 	{
-		do_action( 'geditorial_pitches_init', $this->module );
-
-		$this->do_globals();
+		parent::init();
 
 		$this->register_post_type( 'idea_cpt', array(), array( 'post_tag' ) );
 

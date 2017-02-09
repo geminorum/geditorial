@@ -77,9 +77,7 @@ class gEditorialAudit extends gEditorialModuleCore
 
 	public function init()
 	{
-		do_action( 'geditorial_audit_init', $this->module );
-
-		$this->do_globals();
+		parent::init();
 
 		// FIXME: add setting option to choose editing role
 		if ( $this->cuc( 'default' ) )
