@@ -96,7 +96,8 @@ class gEditorialUsers extends gEditorialModuleCore
 			add_filter( 'parent_file', array( $this, 'parent_file' ) );
 		}
 
-		add_filter( 'sanitize_user', array( $this, 'sanitize_user' ) );
+		// no need, we use slash in slug
+		// add_filter( 'sanitize_user', array( $this, 'sanitize_user' ) );
 	}
 
 	public function admin_menu()
@@ -164,6 +165,9 @@ class gEditorialUsers extends gEditorialModuleCore
 	public function sanitize_user( $username )
 	{
 		if ( $username == $this->constant( 'group_tax_slug' ) )
+			$username = '';
+
+		else if ( $username == $this->constant( 'type_tax_slug' ) )
 			$username = '';
 
 		return $username;
