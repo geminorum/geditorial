@@ -404,7 +404,7 @@ class gEditorialTweaks extends gEditorialModuleCore
 
 			$object = get_taxonomy( $taxonomy );
 
-			$info = $this->filters( 'taxonomy_info', ( $object->hierarchical ? $cat : $tag ), $object );
+			$info = $this->filters( 'taxonomy_info', ( $object->hierarchical ? $cat : $tag ), $object, $post->post_type );
 
 			if ( FALSE === $info )
 				continue;

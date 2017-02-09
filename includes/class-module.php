@@ -2000,11 +2000,11 @@ SQL;
 
 	protected function _tweaks_taxonomy()
 	{
-		add_filter( 'geditorial_tweaks_taxonomy_info', array( $this, 'tweaks_taxonomy_info' ), 10, 2 );
+		add_filter( 'geditorial_tweaks_taxonomy_info', array( $this, 'tweaks_taxonomy_info' ), 10, 3 );
 	}
 
 	// DEFAULT FILTER
-	public function tweaks_taxonomy_info( $info, $object )
+	public function tweaks_taxonomy_info( $info, $object, $post_type )
 	{
 		$icons = $this->get_module_icons();
 
