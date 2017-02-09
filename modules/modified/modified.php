@@ -31,7 +31,6 @@ class gEditorialModified extends gEditorialModuleCore
 					'type'        => 'number',
 					'default'     => 10,
 				),
-
 			),
 			'_content' => array(
 				'insert_content',
@@ -114,7 +113,7 @@ class gEditorialModified extends gEditorialModuleCore
 
 		$columns = array(
 			'modified'   => array(
-				'title' => _x( 'On', 'Modules: Modified', GEDITORIAL_TEXTDOMAIN ),
+				'title'    => _x( 'On', 'Modules: Modified', GEDITORIAL_TEXTDOMAIN ),
 				'callback' => function( $value, $row, $column, $index ){
 					return '<small class="-date-diff" title="'
 						.esc_attr( mysql2date( 'l, M j, Y @ H:i', $row->post_modified ) ).'">'

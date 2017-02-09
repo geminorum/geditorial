@@ -679,6 +679,9 @@ class gEditorialContest extends gEditorialModuleCore
 								return $post_id.' &mdash; '.get_post($post_id)->post_title;
 							return _x( '&mdash;&mdash;&mdash;&mdash; No Contest', 'Contest Module', GEDITORIAL_TEXTDOMAIN );
 						},
+						'actions' => function( $value, $row, $column, $index ){
+							return gEditorialHelper::getPostRowActions( 0 ); // FIXME!
+						},
 					),
 					'count' => array(
 						'title'    => _x( 'Count', 'Contest Module', GEDITORIAL_TEXTDOMAIN ),
@@ -720,6 +723,7 @@ class gEditorialContest extends gEditorialModuleCore
 			return;
 
 		if ( $this->module->name == $sub ) {
+
 			if ( ! empty( $_POST ) ) {
 
 				$this->settings_check_referer( $sub, 'tools' );
@@ -780,7 +784,7 @@ class gEditorialContest extends gEditorialModuleCore
 				}
 			}
 
-			add_action( 'geditorial_tools_sub_'.$this->module->name, array( $this, 'tools_sub' ), 10, 2 );
+			add_action( 'geditorial_tools_sub_'.$sub, array( $this, 'tools_sub' ), 10, 2 );
 		}
 
 		add_filter( 'geditorial_tools_subs', array( $this, 'append_sub' ), 10, 2 );

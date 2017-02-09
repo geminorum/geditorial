@@ -240,7 +240,7 @@ class gEditorialSettings extends gEditorialModuleCore
 		do_action( 'geditorial_tools_settings', $sub );
 	}
 
-	public function reports_sub( $settings_uri, $sub )
+	public function reports_sub( $uri, $sub )
 	{
 		if ( 'general' != $sub )
 			return;
@@ -248,7 +248,8 @@ class gEditorialSettings extends gEditorialModuleCore
 		if ( ! $this->cuc( 'reports' ) )
 			self::cheatin();
 
-		echo 'Comming Soon!';
+		// FIXME
+		gEditorialHTML::desc( 'Comming Soon!' );
 	}
 
 	public function tools_sub( $uri, $sub )

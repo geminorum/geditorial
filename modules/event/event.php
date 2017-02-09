@@ -290,8 +290,10 @@ class gEditorialEvent extends gEditorialModuleCore
 			&& isset( $wp_query->query['post_type'] ) ) {
 
 			if ( $this->constant( 'event_cpt' ) == $wp_query->query['post_type'] ) {
+
 				if ( ! isset( $_GET['orderby'] ) )
 					$wp_query->set( 'orderby', 'date' );
+
 				if ( ! isset( $_GET['order'] ) )
 					$wp_query->set( 'order', 'DESC' );
 			}
@@ -382,8 +384,7 @@ class gEditorialEvent extends gEditorialModuleCore
 
 	public function post_updated_messages( $messages )
 	{
-		$messages[$this->constant( 'event_cpt' )] = $this->get_post_updated_messages( 'event_cpt' );
-		return $messages;
+		return array_merge( $messages, array( $this->constant( 'event_cpt' ) => $this->get_post_updated_messages( 'event_cpt' ) ) );
 	}
 
 	public function do_meta_boxes( $post, $box )

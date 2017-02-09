@@ -311,7 +311,7 @@ class gEditorialUsers extends gEditorialModuleCore
 			// }
 
 			// add_filter( 'geditorial_reports_messages', array( $this, 'reports_messages' ), 10, 2 );
-			add_action( 'geditorial_reports_sub_'.$this->module->name, array( $this, 'reports_sub' ), 10, 2 );
+			add_action( 'geditorial_reports_sub_'.$sub, array( $this, 'reports_sub' ), 10, 2 );
 		}
 
 		add_filter( 'geditorial_reports_subs', array( $this, 'append_sub' ), 10, 2 );

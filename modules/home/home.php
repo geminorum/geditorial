@@ -104,8 +104,7 @@ add_theme_support( \'featured-content\', array(
 
 	public function init()
 	{
-		do_action( 'geditorial_home_init', $this->module );
-		$this->do_globals();
+		parent::init();
 
 		$post_types   = $this->post_types();
 		$featured_tax = $this->constant( 'featured_tax' );

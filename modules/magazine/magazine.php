@@ -846,6 +846,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 			return;
 
 		if ( $this->module->name == $sub ) {
+
 			if ( ! empty( $_POST ) ) {
 
 				$this->settings_check_referer( $sub, 'tools' );
@@ -934,7 +935,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 				}
 			}
 
-			add_action( 'geditorial_tools_sub_'.$this->module->name, array( $this, 'tools_sub' ), 10, 2 );
+			add_action( 'geditorial_tools_sub_'.$sub, array( $this, 'tools_sub' ), 10, 2 );
 		}
 
 		add_filter( 'geditorial_tools_subs', array( $this, 'append_sub' ), 10, 2 );

@@ -226,7 +226,7 @@ class gEditorialAudit extends gEditorialModuleCore
 						'class' => $class,
 					), $text );
 
-				$html .= gEditorialHTML::tag( $list, array(), $text );
+				$html .= gEditorialHTML::tag( $list, $text );
 			}
 		}
 
