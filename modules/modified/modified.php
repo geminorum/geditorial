@@ -26,8 +26,8 @@ class gEditorialModified extends gEditorialModuleCore
 				),
 				array(
 					'field'       => 'dashboard_count',
-					'title'       => _x( 'Dashboard Authors', 'Modules: Modified: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Displays authors column on dashboard widget', 'Modules: Modified: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Dashboard Count', 'Modules: Modified: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Total rows of posts on dashboard widget', 'Modules: Modified: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 					'type'        => 'number',
 					'default'     => 10,
 				),
