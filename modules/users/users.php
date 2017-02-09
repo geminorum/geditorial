@@ -18,16 +18,19 @@ class gEditorialUsers extends gEditorialModuleCore
 		return array(
 			'_general' => array(
 				array(
-					'field' => 'posttype_counts',
-					'title' => _x( 'Posttype Counts', 'Users Module: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'field'       => 'posttype_counts',
+					'title'       => _x( 'Posttype Counts', 'Users Module: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Displays posttype count for each user', 'Users Module: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 				),
 				array(
-					'field' => 'user_groups',
-					'title' => _x( 'User Groups', 'Users Module: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'field'       => 'user_groups',
+					'title'       => _x( 'User Groups', 'Users Module: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Taxonomy for organizing users in groups', 'Users Module: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 				),
 				// array(
-				// 	'field' => 'user_types',
-				// 	'title' => _x( 'User Types', 'Users Module: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+				// 	'field'       => 'user_types',
+				// 	'title'       => _x( 'User Types', 'Users Module: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+				// 	'description' => _x( 'Taxonomy for organizing users in types', 'Users Module: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 				// ),
 				'calendar_type',
 				'admin_restrict',
