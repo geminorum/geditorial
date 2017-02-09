@@ -87,6 +87,8 @@ class gEditorialOrtho extends gEditorialModuleCore
 				'qtag_mswordnotes_title' => _x( 'MS Word Footnotes to WordPress [ref]', 'Ortho Module: Javascript String', GEDITORIAL_TEXTDOMAIN ),
 				'qtag_download'          => _x( 'Download', 'Ortho Module: Javascript String', GEDITORIAL_TEXTDOMAIN ),
 				'qtag_download_title'    => _x( 'Download text as markdown', 'Ortho Module: Javascript String', GEDITORIAL_TEXTDOMAIN ),
+				'qtag_nbsp'              => _x( 'nbsp', 'Ortho Module: Javascript String', GEDITORIAL_TEXTDOMAIN ),
+				'qtag_nbsp_title'        => _x( 'Non-Breaking SPace', 'Ortho Module: Javascript String', GEDITORIAL_TEXTDOMAIN ),
 			),
 		);
 	}

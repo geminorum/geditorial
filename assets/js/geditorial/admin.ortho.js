@@ -25,6 +25,8 @@
     qtag_mswordnotes_title: 'MS Word Footnotes to WordPress [ref]',
     qtag_download: 'Download',
     qtag_download_title: 'Download text as markdown',
+    qtag_nbsp: 'nbsp',
+    qtag_nbsp_title: 'Non-Breaking SPace',
   }, p[m].strings);
 
   o.b = '<a href="#" class="do-' + m + '" title="' + o.s['button_virastar_title'] + '" tabindex="-1">' + o.s['button_virastar'] + '</span></a>';
@@ -104,6 +106,9 @@
   };
 
   o.q = {
+    nbsp: function(e, c, ed) {
+      QTags.insertContent("\n\n"+'&nbsp;'+"\n\n");
+    },
     virastar: function(e, c, ed) {
       var s = c.value.substring(c.selectionStart, c.selectionEnd);
       if (s !== '') {
@@ -129,7 +134,7 @@
       else if ( $('#post_ID').length )
         filename = 'Untitled-'+$('#post_ID').val();
       o.u.downloadText(filename+'.md', '## '+filename+"\n\n"+$(c).val());
-    }
+    },
   };
 
   $(document).ready(function() {
