@@ -282,7 +282,7 @@ class gEditorialWPDatabase extends gEditorialBaseCore
 		return $counts;
 	}
 
-	public static function getPosttypeMonths( $post_type = 'post', $args = array(), $user_id = 0 )
+	public static function getPostTypeMonths( $post_type = 'post', $args = array(), $user_id = 0 )
 	{
 		global $wpdb, $wp_locale;
 

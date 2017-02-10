@@ -359,7 +359,7 @@ class gEditorialUsers extends gEditorialModuleCore
 				'type'         => 'select',
 				'field'        => 'year_month',
 				'none_title'   => _x( 'All Months', 'Users Module', GEDITORIAL_TEXTDOMAIN ),
-				'values'       => gEditorialHelper::getPosttypeMonths( $calendar_type, $args['post_type'], array(), $args['user_id'] ),
+				'values'       => gEditorialHelper::getPostTypeMonths( $calendar_type, $args['post_type'], array(), $args['user_id'] ),
 				'default'      => $args['year_month'],
 				'option_group' => 'reports',
 			) );

@@ -771,13 +771,13 @@ class gEditorialHelper extends gEditorialBaseCore
 		);
 	}
 
-	public static function getPosttypeMonths( $calendar_type, $post_type = 'post', $args = array(), $user_id = 0 )
+	public static function getPostTypeMonths( $calendar_type, $post_type = 'post', $args = array(), $user_id = 0 )
 	{
-		$callback = array( 'gEditorialWPDatabase', 'getPosttypeMonths' );
+		$callback = array( 'gEditorialWPDatabase', 'getPostTypeMonths' );
 
 		if ( 'persian' == $calendar_type
-			&& is_callable( array( 'gPersianDateDate', 'getPosttypeMonths' ) ) )
-				$callback = array( 'gPersianDateDate', 'getPosttypeMonths' );
+			&& is_callable( array( 'gPersianDateWordPress', 'getPostTypeMonths' ) ) )
+				$callback = array( 'gPersianDateWordPress', 'getPostTypeMonths' );
 
 		return call_user_func_array( $callback, array( $post_type, $args, $user_id ) );
 	}
