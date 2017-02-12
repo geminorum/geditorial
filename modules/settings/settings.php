@@ -272,9 +272,7 @@ class gEditorialSettings extends gEditorialModuleCore
 
 		$post = isset( $_POST[$this->module->group]['tools'] ) ? $_POST[$this->module->group]['tools'] : array();
 
-		echo '<form class="settings-form" method="post" action="">';
-
-			$this->settings_field_referer( $sub, 'tools' );
+		$this->settings_form_before( $uri, $sub, 'bulk', 'tools', FALSE, FALSE );
 
 			gEditorialHTML::h3( _x( 'Maintenance Tasks', 'Settings Module', GEDITORIAL_TEXTDOMAIN ) );
 
@@ -357,7 +355,7 @@ class gEditorialSettings extends gEditorialModuleCore
 			}
 
 			echo '</table>';
-		echo '</form>';
+		$this->settings_form_after( $uri, $sub );
 	}
 
 	public function ajax()

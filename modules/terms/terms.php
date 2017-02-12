@@ -80,14 +80,12 @@ class gEditorialTerms extends gEditorialModuleCore
 
 	public function reports_sub_uncategorized( $uri, $sub )
 	{
-		echo '<form class="settings-form" method="post" action="">';
-
-			$this->settings_fields( $sub, 'bulk', 'reports' );
+		$this->settings_form_before( $uri, $sub, 'bulk', 'reports', FALSE, FALSE );
 
 			if ( self::tableUncategorized() )
 				$this->settings_buttons();
 
-		echo '</form>';
+		$this->settings_form_after( $uri, $sub );
 	}
 
 	private static function tableUncategorized()

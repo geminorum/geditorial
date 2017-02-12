@@ -329,9 +329,7 @@ class gEditorialUsers extends gEditorialModuleCore
 
 		$calendar_type = $this->get_setting( 'calendar_type', 'gregorian' );
 
-		echo '<form class="settings-form" method="post" action="">';
-
-			$this->settings_field_referer( $sub, 'reports' );
+		$this->settings_form_before( $uri, $sub, 'bulk', 'reports', FALSE, FALSE );
 
 			gEditorialHTML::h3( _x( 'User Reports', 'Users Module', GEDITORIAL_TEXTDOMAIN ) );
 
@@ -375,7 +373,7 @@ class gEditorialUsers extends gEditorialModuleCore
 
 			echo '</td></tr>';
 			echo '</table>';
-		echo '</form>';
+		$this->settings_form_after( $uri, $sub );
 	}
 
 	// FIXME: DRAFT : need styling / register the shortcode!!

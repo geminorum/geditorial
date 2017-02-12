@@ -658,7 +658,7 @@ class gEditorialContest extends gEditorialModuleCore
 
 	public function tools_sub( $uri, $sub )
 	{
-		echo '<form class="settings-form" method="post" action="">';
+		$this->settings_form_before( $uri, $sub, 'bulk', 'tools', FALSE, FALSE );
 
 			gEditorialHTML::h3( _x( 'Contest Tools', 'Contest Module', GEDITORIAL_TEXTDOMAIN ) );
 
@@ -712,9 +712,7 @@ class gEditorialContest extends gEditorialModuleCore
 			echo '</td></tr>';
 			echo '</table>';
 
-			$this->settings_field_referer( $sub, 'tools' );
-
-		echo '</form>';
+		$this->settings_form_after( $uri, $sub );
 	}
 
 	public function tools_settings( $sub )

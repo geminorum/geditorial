@@ -562,6 +562,32 @@ class gEditorialModuleCore extends gEditorialWPModule
 		echo '&nbsp;&nbsp;';
 	}
 
+	protected function settings_form_before( $uri, $sub = NULL, $action = 'update', $context = 'settings', $check = TRUE )
+	{
+		if ( is_null( $sub ) )
+			$sub = $this->module->name;
+
+		$class = $this->base.'-form -'.$this->module->name.' -sub-'.$sub;
+
+		if ( $check && $sidebox = method_exists( $this, 'settings_sidebox' ) )
+			$class .= ' has-sidebox';
+
+		echo '<form class="'.$class.'" method="post" action="">';
+
+			$this->settings_fields( $sub, $action, $context );
+
+			if ( $check && $sidebox ) {
+				echo '<div class="settings-sidebox -'.$this->module->name.' settings-sidebox-'.$sub.'">';
+					$this->settings_sidebox( $sub, $uri, $context );
+				echo '</div>';
+			}
+	}
+
+	protected function settings_form_after( $uri, $sub = NULL, $action = 'update', $context = 'settings', $check = TRUE )
+	{
+		echo '</form>';
+	}
+
 	protected function settings_fields( $sub, $action = 'update', $context = 'settings' )
 	{
 		gEditorialHTML::inputHidden( 'base', $this->base );
