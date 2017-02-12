@@ -670,9 +670,9 @@ class gEditorialContest extends gEditorialModuleCore
 
 				gEditorialHTML::tableList( array(
 					'_cb'     => 'term_id',
-					'term_id' => _x( 'ID', 'Contest Module', GEDITORIAL_TEXTDOMAIN ),
-					'name'    => _x( 'Name', 'Contest Module', GEDITORIAL_TEXTDOMAIN ),
-					'issue'   => array(
+					'term_id' => gEditorialHelper::tableColumnTermID(),
+					'name'    => gEditorialHelper::tableColumnTermName(),
+					'contest' => array(
 						'title' => _x( 'Contest', 'Contest Module', GEDITORIAL_TEXTDOMAIN ),
 						'callback' => function( $value, $row, $column, $index ){
 							if ( $post_id = gEditorialWPPostType::getIDbySlug( $row->slug, $this->constant( 'contest_cpt' ) ) )
@@ -691,11 +691,7 @@ class gEditorialContest extends gEditorialModuleCore
 							return gEditorialNumber::format( $row->count );
 						},
 					),
-					'description' => array(
-						'title'    => _x( 'Description', 'Contest Module', GEDITORIAL_TEXTDOMAIN ),
-						'callback' => 'wpautop',
-						'class'    => 'description',
-					),
+					'description' => gEditorialHelper::tableColumnTermDesc(),
 				), gEditorialWPTaxonomy::getTerms( $this->constant( 'contest_tax' ), FALSE, TRUE ) );
 
 				echo '<br />';

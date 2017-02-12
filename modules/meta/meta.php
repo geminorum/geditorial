@@ -630,7 +630,7 @@ class gEditorialMeta extends gEditorialModuleCore
 
 					if ( isset( $post['custom_field'] ) ) {
 						gEditorialHTML::tableList( array(
-							'post_id' => 'Post ID',
+							'post_id' => gEditorialHelper::tableColumnPostID(),
 							'meta'    => 'Meta :'.$post['custom_field'],
 						), gEditorialWPDatabase::getPostMetaRows( stripslashes( $post['custom_field'] ), $limit ) );
 						echo '<br />';

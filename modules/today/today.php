@@ -327,39 +327,9 @@ class gEditorialToday extends gEditorialModuleCore
 				( $this->check_the_day_posttype( $the_day ) ? FALSE : $this->constant( 'day_cpt' ) ) );
 
 			gEditorialHTML::tableList( array(
-
-				'type' => array(
-					'title' => _x( 'Type', 'Today Module', GEDITORIAL_TEXTDOMAIN ),
-					'args'  => array(
-						'post_types' => gEditorialWPPostType::get( 2 ),
-					),
-					'callback' => function( $value, $row, $column, $index ){
-						return isset( $column['args']['post_types'][$row->post_type] ) ? $column['args']['post_types'][$row->post_type] : $row->post_type;
-					},
-				),
-
-				'post' => array(
-					'title' => _x( 'Post', 'Today Module', GEDITORIAL_TEXTDOMAIN ),
-					'args'  => array(
-						'url'   => get_bloginfo( 'url' ),
-						'admin' => admin_url( 'post.php' ),
-					),
-					'callback' => function( $value, $row, $column, $index ){
-
-						$edit = add_query_arg( array(
-							'action' => 'edit',
-							'post'   => $row->ID,
-						), $column['args']['admin'] );
-
-						$view = add_query_arg( array(
-							'p' => $row->ID,
-						), $column['args']['url'] );
-
-						$terms = get_the_term_list( $row->ID, 'post_tag', '<br />', ', ', '' );
-						return $row->post_title.' <small>( <a href="'.$edit.'" target="_blank">Edit</a> | <a href="'.$view.'" target="_blank">View</a> )</small><br /><small>'.$terms.'</small>';
-					},
-				),
-
+				'type'  => gEditorialHelper::tableColumnPostType(),
+				'title' => gEditorialHelper::tableColumnPostTitle(),
+				'terms' => gEditorialHelper::tableColumnPostTerms(),
 			), $posts, array(
 				'empty' => gEditorialHTML::warning( _x( 'No Posts!', 'Today Module: Table Notice', GEDITORIAL_TEXTDOMAIN ) ),
 			) );

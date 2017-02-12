@@ -93,45 +93,12 @@ class gEditorialTerms extends gEditorialModuleCore
 		list( $posts, $pagination ) = self::getPostArray();
 
 		return gEditorialHTML::tableList( array(
-			'_cb' => 'ID',
-			'ID'  => _x( 'ID', 'Modules: Terms', GEDITORIAL_TEXTDOMAIN ),
-
-			'date' => array(
-				'title'    => _x( 'Date', 'Modules: Terms', GEDITORIAL_TEXTDOMAIN ),
-				'callback' => function( $value, $row, $column, $index ){
-					return gEditorialHelper::humanTimeDiffRound( strtotime( $row->post_date ) );
-				},
-			),
-
-			'type' => array(
-				'title'    => _x( 'Type', 'Modules: Terms', GEDITORIAL_TEXTDOMAIN ),
-				'args'     => array( 'post_types' => gEditorialWPPostType::get( 2 ) ),
-				'callback' => function( $value, $row, $column, $index ){
-					return isset( $column['args']['post_types'][$row->post_type] ) ? $column['args']['post_types'][$row->post_type] : $row->post_type;
-				},
-			),
-
-			'title' => array(
-				'title'    => _x( 'Title', 'Modules: Terms', GEDITORIAL_TEXTDOMAIN ),
-				'callback' => function( $value, $row, $column, $index ){
-					return apply_filters( 'the_title', $row->post_title, $row->ID );
-				},
-				'actions' => function( $value, $row, $column, $index ){
-					return gEditorialHelper::getPostRowActions( $row->ID );
-				},
-			),
-
-			'terms' => array(
-				'title'    => _x( 'Terms', 'Modules: Terms', GEDITORIAL_TEXTDOMAIN ),
-				'args'     => array( 'taxonomies' => gEditorialWPTaxonomy::get( 4 ) ),
-				'callback' => function( $value, $row, $column, $index ){
-					$html = '';
-					foreach( $column['args']['taxonomies'] as $taxonomy => $object )
-						$html .= gEditorialHelper::getTermsEditRow( $row, $object, '<div>'.$object->label.': ', '</div>' );
-					return $html;
-				},
-			),
-
+			'_cb'   => 'ID',
+			'ID'    => gEditorialHelper::tableColumnPostID(),
+			'date'  => gEditorialHelper::tableColumnPostDate(),
+			'type'  => gEditorialHelper::tableColumnPostType(),
+			'title' => gEditorialHelper::tableColumnPostTitle(),
+			'terms' => gEditorialHelper::tableColumnPostTerms(),
 		), $posts, array(
 			'navigation' => 'before',
 			'search'     => 'before',

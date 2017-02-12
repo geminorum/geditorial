@@ -795,8 +795,8 @@ class gEditorialMagazine extends gEditorialModuleCore
 
 				gEditorialHTML::tableList( array(
 					'_cb'     => 'term_id',
-					'term_id' => _x( 'ID', 'Magazine Module', GEDITORIAL_TEXTDOMAIN ),
-					'name'    => _x( 'Name', 'Magazine Module', GEDITORIAL_TEXTDOMAIN ),
+					'term_id' => gEditorialHelper::tableColumnTermID(),
+					'name'    => gEditorialHelper::tableColumnTermName(),
 					'issue'   => array(
 						'title' => _x( 'Issue', 'Magazine Module', GEDITORIAL_TEXTDOMAIN ),
 						'callback' => function( $value, $row, $column, $index ){
@@ -813,11 +813,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 							return gEditorialNumber::format( $row->count );
 						},
 					),
-					'description' => array(
-						'title'    => _x( 'Description', 'Magazine Module', GEDITORIAL_TEXTDOMAIN ),
-						'callback' => 'wpautop',
-						'class'    => 'description',
-					),
+					'description' => gEditorialHelper::tableColumnTermDesc(),
 				), gEditorialWPTaxonomy::getTerms( $this->constant( 'issue_tax' ), FALSE, TRUE ) );
 
 				echo '<br />';

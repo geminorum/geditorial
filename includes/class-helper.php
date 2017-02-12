@@ -403,6 +403,83 @@ class gEditorialHelper extends gEditorialBaseCore
 		return $gEditorial_WPImageSizes;
 	}
 
+	public static function tableColumnPostID()
+	{
+		return _x( 'ID', 'Module Helper: Table Column: Post ID', GEDITORIAL_TEXTDOMAIN );
+	}
+
+	public static function tableColumnPostDate()
+	{
+		return array(
+			'title'    => _x( 'Date', 'Module Helper: Table Column: Post Date', GEDITORIAL_TEXTDOMAIN ),
+			'callback' => function( $value, $row, $column, $index ){
+				return gEditorialHelper::humanTimeDiffRound( strtotime( $row->post_date ) );
+			},
+		);
+	}
+
+	public static function tableColumnPostType()
+	{
+		return array(
+			'title'    => _x( 'Type', 'Module Helper: Table Column: Post Type', GEDITORIAL_TEXTDOMAIN ),
+			'args'     => array( 'post_types' => gEditorialWPPostType::get( 2 ) ),
+			'callback' => function( $value, $row, $column, $index ){
+				return isset( $column['args']['post_types'][$row->post_type] ) ? $column['args']['post_types'][$row->post_type] : $row->post_type;
+			},
+		);
+	}
+
+	public static function tableColumnPostTitle()
+	{
+		return array(
+			'title'    => _x( 'Title', 'Module Helper: Table Column: Post Title', GEDITORIAL_TEXTDOMAIN ),
+			'callback' => function( $value, $row, $column, $index ){
+				return gEditorialHelper::getPostTitle( $row );
+			},
+			'actions' => function( $value, $row, $column, $index ){
+				return gEditorialHelper::getPostRowActions( $row->ID );
+			},
+		);
+	}
+
+	public static function tableColumnPostTerms()
+	{
+		return array(
+			'title'    => _x( 'Terms', 'Module Helper: Table Column: Post Terms', GEDITORIAL_TEXTDOMAIN ),
+			'args'     => array( 'taxonomies' => gEditorialWPTaxonomy::get( 4 ) ),
+			'callback' => function( $value, $row, $column, $index ){
+				$html = '';
+				foreach( $column['args']['taxonomies'] as $taxonomy => $object )
+					$html .= gEditorialHelper::getTermsEditRow( $row, $object, '<div>'.$object->label.': ', '</div>' );
+				return $html;
+			},
+		);
+	}
+
+	public static function tableColumnTermID()
+	{
+		return _x( 'ID', 'Module Helper: Table Column: Term ID', GEDITORIAL_TEXTDOMAIN );
+	}
+
+	public static function tableColumnTermName()
+	{
+		return _x( 'Name', 'Module Helper: Table Column: Term Name', GEDITORIAL_TEXTDOMAIN );
+	}
+
+	public static function tableColumnTermSlug()
+	{
+		return _x( 'Slug', 'Module Helper: Table Column: Term Slug', GEDITORIAL_TEXTDOMAIN );
+	}
+
+	public static function tableColumnTermDesc()
+	{
+		return array(
+			'title'    => _x( 'Description', 'Module Helper: Table Column: Term Desc', GEDITORIAL_TEXTDOMAIN ),
+			'callback' => 'wpautop',
+			'class'    => 'description',
+		);
+	}
+
 	// CAUTION: must wrap in `.geditorial-wordcount-wrap` along with the textarea
 	public static function htmlWordCount( $for = 'excerpt', $posttype = 'post', $data = array() )
 	{
