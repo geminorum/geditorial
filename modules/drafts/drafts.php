@@ -86,7 +86,6 @@ class gEditorialDrafts extends gEditorialModuleCore
 	{
 		$html  = '';
 		$all   = _x( 'View all %s drafts', 'Drafts Module', GEDITORIAL_TEXTDOMAIN );
-		$empty = _x( '(untitled)', 'Drafts Module', GEDITORIAL_TEXTDOMAIN );
 		$user  = 'all' == $this->get_setting( 'summary_scope', 'all' ) ? 0 : get_current_user_id();
 
 		foreach ( $this->post_types() as $post_type ) {
@@ -97,8 +96,7 @@ class gEditorialDrafts extends gEditorialModuleCore
 				$block .= '<li>'.gEditorialHTML::tag( 'a', array(
 					'href'  => gEditorialWordPress::getPostEditLink( $draft->ID ),
 					'title' => gEditorialHelper::postModified( $draft, TRUE ),
-				), ( empty( $draft->post_title ) ? $empty : esc_html(
-					apply_filters( 'the_title', $draft->post_title, $draft->ID ) ) ) ).'</li>';
+				), gEditorialHelper::getPostTitle( $draft ) ).'</li>';
 
 			if ( ! $block )
 				continue;

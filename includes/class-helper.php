@@ -176,12 +176,25 @@ class gEditorialHelper extends gEditorialBaseCore
 		echo self::getJoined( $list, $before, $after );
 	}
 
-	public static function getPostTitleRow( $post, $link = 'edit' )
+	public static function getPostTitle( $post, $fallback = NULL )
 	{
 		$title = apply_filters( 'the_title', $post->post_title, $post->ID );
 
-		if ( empty( $title ) )
-			$title = _x( '(no title)', 'Module Helper: Post Title', GEDITORIAL_TEXTDOMAIN );
+		if ( ! empty( $title ) )
+			return $title;
+
+		if ( FALSE === $fallback )
+			return '';
+
+		if ( is_null( $fallback ) )
+			return _x( '(untitled)', 'Module Helper: Post Title', GEDITORIAL_TEXTDOMAIN );
+
+		return $fallback;
+	}
+
+	public static function getPostTitleRow( $post, $link = 'edit' )
+	{
+		$title = self::getPostTitle( $post );
 
 		if ( ! $link )
 			return esc_html( $title );
