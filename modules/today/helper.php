@@ -218,38 +218,13 @@ class gEditorialTodayHelper extends gEditorialHelper
 			}
 		}
 
-		// if ( ! empty( $_REQUEST['id'] ) )
-		// 	$query_args['post__in'] = explode( ',', maybe_unserialize( $_REQUEST['id'] ) );
-
-		// if ( ! empty( $_REQUEST['type'] ) )
-		// 	$query_args['post_type'] = $_REQUEST['type'];
-		//
-		// if ( 'attachment' == $query_args['post_type'] )
-		// 	$query_args['post_status'][] = 'inherit';
-
 		$query = new \WP_Query;
 		$posts = $query->query( $query_args );
 
 		if ( $args['count'] )
 			return count( $posts );
 
-		$pagination = array(
-			'total'    => $query->found_posts,
-			'pages'    => $query->max_num_pages,
-			'limit'    => $args['limit'],
-			'paged'    => $args['paged'],
-			'all'      => $args['all'],
-			'next'     => FALSE,
-			'previous' => FALSE,
-		);
-
-		if ( $pagination['pages'] > 1 ) {
-			if ( $args['paged'] != 1 )
-				$pagination['previous'] = $args['paged'] - 1;
-
-			if ( $args['paged'] != $pagination['pages'] )
-				$pagination['next'] = $args['paged'] + 1;
-		}
+		$pagination = gEditorialHTML::tablePagination( $query->found_posts, $query->max_num_pages, $args['limit'], $args['paged'], $args['all'] );
 
 		return array( $posts, $pagination );
 	}

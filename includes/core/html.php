@@ -494,6 +494,29 @@ class gEditorialHTML extends gEditorialBaseCore
 		echo '</div>';
 	}
 
+	public static function tablePagination( $found, $max, $limit, $paged, $all = FALSE )
+	{
+		$pagination = array(
+			'total'    => intval( $found ),
+			'pages'    => intval( $max ),
+			'limit'    => intval( $limit ),
+			'paged'    => intval( $paged ),
+			'all'      => $all,
+			'next'     => FALSE,
+			'previous' => FALSE,
+		);
+
+		if ( $pagination['pages'] > 1 ) {
+			if ( $pagination['paged'] != 1 )
+				$pagination['previous'] = $pagination['paged'] - 1;
+
+			if ( $pagination['paged'] != $pagination['pages'] )
+				$pagination['next'] = $pagination['paged'] + 1;
+		}
+
+		return $pagination;
+	}
+
 	public static function tableSide( $array, $type = TRUE )
 	{
 		echo '<table class="base-table-side">';
