@@ -78,6 +78,7 @@ class gEditorialTodayHelper extends gEditorialHelper
 
 				if ( $the_day['month'] ) {
 
+					$key = gEditorialNumber::intval( $key, FALSE );
 					$key = gEditorialNumber::zeroise( $the_day['month'], 2 );
 
 					if ( isset( $months[$the_day['cal']][$key] ) )

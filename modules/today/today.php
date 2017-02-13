@@ -350,9 +350,17 @@ class gEditorialToday extends gEditorialModuleCore
 		if ( $this->is_save_post( $post )
 			|| $this->is_save_post( $post, $this->post_types() ) ) {
 
-			foreach ( $this->get_the_day_constants() as $field => $constant )
-				if ( isset( $_POST['geditorial-today-date-'.$field] ) )
-					$this->set_meta( $post_ID, trim( $_POST['geditorial-today-date-'.$field] ), $constant );
+			foreach ( $this->get_the_day_constants() as $field => $constant ) {
+				if ( isset( $_POST['geditorial-today-date-'.$field] ) ) {
+
+					$value = trim( $_POST['geditorial-today-date-'.$field] );
+
+					if ( 'cal' != $field )
+						$value = gEditorialNumber::intval( $value, FALSE );
+
+					$this->set_meta( $post_ID, $value, $constant );
+				}
+			}
 		}
 
 		return $post_ID;
