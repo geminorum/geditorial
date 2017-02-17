@@ -235,6 +235,9 @@ class gEditorialHelper extends gEditorialBaseCore
 
 				case 'edit':
 
+					if ( ! current_user_can( 'edit_post', $post_id ) )
+						continue;
+
 					$list['edit'] = gEditorialHTML::tag( 'a', array(
 						'href'   => gEditorialWordPress::getPostEditLink( $post_id ),
 						'class'  => '-link -row-link -row-link-edit',
