@@ -41,6 +41,18 @@ class gEditorialWPPostType extends gEditorialBaseCore
 		return $list;
 	}
 
+	public static function getStatuses()
+	{
+		global $wp_post_statuses;
+
+		$statuses = array();
+
+		foreach ( $wp_post_statuses as $status )
+			$statuses[$status->name] = $status->label;
+
+		return $statuses;
+	}
+
 	public static function getIDbySlug( $slug, $post_type, $url = FALSE )
 	{
 		static $strings = array();

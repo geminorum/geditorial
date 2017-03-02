@@ -77,16 +77,26 @@ class gEditorialCoreText extends gEditorialBaseCore
 		return preg_replace( '/(width|height)="\d*"\s/', '', $string );
 	}
 
-	public static function has( $haystack, $needles )
+	public static function has( $haystack, $needles, $operator = 'OR' )
 	{
 		if ( ! is_array( $needles ) )
 			return FALSE !== stripos( $haystack, $needles );
 
+		if ( 'OR' == $operator ) {
+			foreach ( $needles as $needle )
+				if ( FALSE !== stripos( $haystack, $needle ) )
+					return TRUE;
+
+			return FALSE;
+		}
+
+		$has = FALSE;
+
 		foreach ( $needles as $needle )
 			if ( FALSE !== stripos( $haystack, $needle ) )
-				return TRUE;
+				$has = TRUE;
 
-		return FALSE;
+		return $has;
 	}
 
 	// @SEE: `mb_convert_case()`
@@ -200,6 +210,19 @@ class gEditorialCoreText extends gEditorialBaseCore
 
 			$text = implode( ' ', $words ).$append;
 		}
+
+		return $text;
+	}
+
+	public static function firstSentence( $text )
+	{
+		// looks for three punctuation characters: . (period), ! (exclamation), or ? (question mark), followed by a space
+		$strings = preg_split( '/(\.|!|\?)\s/', strip_tags( $text ), 2, PREG_SPLIT_DELIM_CAPTURE );
+
+		// [0] is the first sentence and [1] is the punctuation character at the end
+		if ( ! empty( $strings[0] )
+			&& ! empty( $strings[1] ) )
+				$text = $strings[0] . $strings[1];
 
 		return $text;
 	}

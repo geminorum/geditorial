@@ -443,6 +443,7 @@ class gEditorialHTML extends gEditorialBaseCore
 			'pages'    => 0,
 			'limit'    => self::limit(),
 			'paged'    => self::paged(),
+			'order'    => self::order( 'asc' ),
 			'all'      => FALSE,
 			'next'     => FALSE,
 			'previous' => FALSE,
@@ -452,6 +453,7 @@ class gEditorialHTML extends gEditorialBaseCore
 			'next'     => self::getDashicon( 'controls-forward' ), // &rsaquo;
 			'previous' => self::getDashicon( 'controls-back' ), // &lsaquo;
 			'refresh'  => self::getDashicon( 'controls-repeat' ),
+			'order'    => self::getDashicon( 'sort' ),
 		);
 
 		echo '<div class="base-table-navigation">';
@@ -490,6 +492,11 @@ class gEditorialHTML extends gEditorialBaseCore
 				gEditorialNumber::format( $args['total'] ),
 				gEditorialNumber::format( $args['pages'] ),
 			) );
+
+			echo self::tag( 'a', array(
+				'href'  => add_query_arg( 'order', ( 'asc' == $args['order'] ? 'desc' : 'asc' ) ),
+				'class' => '-order -link button',
+			), $icons['order'] );
 
 		echo '</div>';
 	}

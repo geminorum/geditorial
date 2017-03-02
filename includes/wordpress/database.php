@@ -21,6 +21,19 @@ class gEditorialWPDatabase extends gEditorialBaseCore
 		return $cache[$sub];
 	}
 
+	public static function hasPosts( $post_types = array( 'post' ), $exclude_statuses = NULL )
+	{
+		global $wpdb;
+
+		return $wpdb->get_var( "
+			SELECT 1 as test
+			FROM {$wpdb->posts}
+			WHERE post_type IN ( '".join( "', '", esc_sql( (array) $post_types ) )."' )
+			AND post_status NOT IN ( '".join( "', '", esc_sql( self::getExcludeStatuses( $exclude_statuses ) ) )."' )
+			LIMIT 1
+		" );
+	}
+
 	public static function getExcludeStatuses( $statuses = NULL )
 	{
 		if ( is_null( $statuses ) )
