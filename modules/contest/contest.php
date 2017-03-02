@@ -682,19 +682,28 @@ class gEditorialContest extends gEditorialModuleCore
 					'_cb'     => 'term_id',
 					'term_id' => gEditorialHelper::tableColumnTermID(),
 					'name'    => gEditorialHelper::tableColumnTermName(),
-					'contest' => array(
-						'title' => _x( 'Contest', 'Contest Module', GEDITORIAL_TEXTDOMAIN ),
+					'linked'   => array(
+						'title' => _x( 'Linked Contest Post', 'Contest Module: Table Column', GEDITORIAL_TEXTDOMAIN ),
 						'callback' => function( $value, $row, $column, $index ){
-							if ( $post_id = gEditorialWPPostType::getIDbySlug( $row->slug, $this->constant( 'contest_cpt' ) ) )
-								return $post_id.' &mdash; '.get_post($post_id)->post_title;
-							return _x( '&mdash;&mdash;&mdash;&mdash; No Contest', 'Contest Module', GEDITORIAL_TEXTDOMAIN );
+
+							if ( $post_id = $this->get_linked_post_id( $row, 'contest_cpt', 'contest_tax', FALSE ) )
+								return gEditorialHelper::getPostTitle( $post_id ).' &ndash; '.$post_id;
+
+							return '&mdash;';
 						},
-						'actions' => function( $value, $row, $column, $index ){
-							return gEditorialHelper::getPostRowActions( 0 ); // FIXME!
+					),
+					'slugged'   => array(
+						'title' => _x( 'Same Slug Contest Post', 'Contest Module: Table Column', GEDITORIAL_TEXTDOMAIN ),
+						'callback' => function( $value, $row, $column, $index ){
+
+							if ( $post_id = gEditorialWPPostType::getIDbySlug( $row->slug, $this->constant( 'contest_cpt' ) ) )
+								return gEditorialHelper::getPostTitle( $post_id ).' &ndash; '.$post_id;
+
+							return '&mdash;';
 						},
 					),
 					'count' => array(
-						'title'    => _x( 'Count', 'Contest Module', GEDITORIAL_TEXTDOMAIN ),
+						'title'    => _x( 'Count', 'Contest Module: Table Column', GEDITORIAL_TEXTDOMAIN ),
 						'callback' => function( $value, $row, $column, $index ){
 							if ( $post_id = gEditorialWPPostType::getIDbySlug( $row->slug, $this->constant( 'contest_cpt' ) ) )
 								return gEditorialNumber::format( $this->get_linked_posts( $post_id, 'contest_cpt', 'contest_tax', TRUE ) );

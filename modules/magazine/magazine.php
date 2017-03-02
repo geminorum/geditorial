@@ -808,16 +808,28 @@ class gEditorialMagazine extends gEditorialModuleCore
 					'_cb'     => 'term_id',
 					'term_id' => gEditorialHelper::tableColumnTermID(),
 					'name'    => gEditorialHelper::tableColumnTermName(),
-					'issue'   => array(
-						'title' => _x( 'Issue', 'Magazine Module', GEDITORIAL_TEXTDOMAIN ),
+					'linked'   => array(
+						'title' => _x( 'Linked Issue Post', 'Magazine Module: Table Column', GEDITORIAL_TEXTDOMAIN ),
 						'callback' => function( $value, $row, $column, $index ){
+
+							if ( $post_id = $this->get_linked_post_id( $row, 'issue_cpt', 'issue_tax', FALSE ) )
+								return gEditorialHelper::getPostTitle( $post_id ).' &ndash; '.$post_id;
+
+							return '&mdash;';
+						},
+					),
+					'slugged'   => array(
+						'title' => _x( 'Same Slug Issue Post', 'Magazine Module: Table Column', GEDITORIAL_TEXTDOMAIN ),
+						'callback' => function( $value, $row, $column, $index ){
+
 							if ( $post_id = gEditorialWPPostType::getIDbySlug( $row->slug, $this->constant( 'issue_cpt' ) ) )
-								return $post_id.' &mdash; '.get_post($post_id)->post_title;
-							return _x( '&mdash;&mdash;&mdash;&mdash; No Issue', 'Magazine Module', GEDITORIAL_TEXTDOMAIN );
+								return gEditorialHelper::getPostTitle( $post_id ).' &ndash; '.$post_id;
+
+							return '&mdash;';
 						},
 					),
 					'count' => array(
-						'title'    => _x( 'Count', 'Magazine Module', GEDITORIAL_TEXTDOMAIN ),
+						'title'    => _x( 'Count', 'Magazine Module: Table Column', GEDITORIAL_TEXTDOMAIN ),
 						'callback' => function( $value, $row, $column, $index ){
 							if ( $post_id = gEditorialWPPostType::getIDbySlug( $row->slug, $this->constant( 'issue_cpt' ) ) )
 								return gEditorialNumber::format( $this->get_linked_posts( $post_id, 'issue_cpt', 'issue_tax', TRUE ) );
