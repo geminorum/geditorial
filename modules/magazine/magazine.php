@@ -248,8 +248,12 @@ class gEditorialMagazine extends gEditorialModuleCore
 
 	public function init_ajax()
 	{
-		if ( $this->is_inline_save( $_REQUEST, 'issue_cpt' ) )
+		if ( $this->is_inline_save( $_REQUEST, 'issue_cpt' ) ) {
+
 			$this->_edit_screen( $_REQUEST['post_type'] );
+
+			$this->_sync_linked( $_REQUEST['post_type'] );
+		}
 	}
 
 	public function current_screen( $screen )
@@ -280,6 +284,8 @@ class gEditorialMagazine extends gEditorialModuleCore
 					'low'
 				);
 
+				$this->_sync_linked( $screen->post_type );
+
 			} else if ( 'edit' == $screen->base ) {
 
 				add_filter( 'disable_months_dropdown', '__return_true', 12 );
@@ -292,6 +298,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 				if ( $this->get_setting( 'admin_ordering', TRUE ) )
 					add_action( 'pre_get_posts', array( $this, 'pre_get_posts' ) );
 
+				$this->_sync_linked( $screen->post_type );
 				$this->_edit_screen( $screen->post_type );
 				add_filter( 'manage_edit-'.$screen->post_type.'_sortable_columns', array( $this, 'sortable_columns' ) );
 				add_thickbox();
@@ -299,13 +306,6 @@ class gEditorialMagazine extends gEditorialModuleCore
 				$this->_tweaks_taxonomy();
 				add_action( 'geditorial_tweaks_column_attr', array( $this, 'main_column_attr' ) );
 			}
-
-			add_action( 'save_post', array( $this, 'save_post_main_cpt' ), 20, 3 );
-			add_action( 'post_updated', array( $this, 'post_updated' ), 20, 3 );
-
-			add_action( 'wp_trash_post', array( $this, 'wp_trash_post' ) );
-			add_action( 'untrash_post', array( $this, 'untrash_post' ) );
-			add_action( 'before_delete_post', array( $this, 'before_delete_post' ) );
 
 		} else if ( in_array( $screen->post_type, $this->post_types() ) ) {
 
@@ -342,6 +342,17 @@ class gEditorialMagazine extends gEditorialModuleCore
 	{
 		add_filter( 'manage_'.$post_type.'_posts_columns', array( $this, 'manage_posts_columns' ) );
 		add_filter( 'manage_'.$post_type.'_posts_custom_column', array( $this, 'posts_custom_column'), 10, 2 );
+	}
+
+	// FIXME: make this api
+	private function _sync_linked( $post_type )
+	{
+		add_action( 'save_post', array( $this, 'save_post_main_cpt' ), 20, 3 );
+		add_action( 'post_updated', array( $this, 'post_updated' ), 20, 3 );
+
+		add_action( 'wp_trash_post', array( $this, 'wp_trash_post' ) );
+		add_action( 'untrash_post', array( $this, 'untrash_post' ) );
+		add_action( 'before_delete_post', array( $this, 'before_delete_post' ) );
 	}
 
 	public function widgets_init()
