@@ -444,6 +444,7 @@ class gEditorialTweaks extends gEditorialModuleCore
 	}
 
 	// FIXME: move this to attachments module
+	// FIXME: maybe use: `wp_count_attachments()`
 	public function column_attr_attachments( $post )
 	{
 		$attachments = gEditorialWordPress::getAttachments( $post->ID, '' );
@@ -467,7 +468,7 @@ class gEditorialTweaks extends gEditorialModuleCore
 						'target' => '_blank',
 					), $title );
 				else
-					echo title;
+					echo $title;
 
 				gEditorialHelper::getMimeTypeEditRow( $mime_types, $post->ID, ' <span class="-mime-types">(', ')</span>' );
 
