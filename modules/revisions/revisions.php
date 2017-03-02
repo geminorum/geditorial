@@ -51,12 +51,9 @@ class gEditorialRevisions extends gEditorialModuleCore
 		$this->_hook_ajax();
 	}
 
-	public function init()
+	public function admin_init()
 	{
-		parent::init();
-
-		if ( is_admin() )
-			add_action( 'admin_post_'.$this->hook( 'purge' ), array( $this, 'admin_post' ) );
+		add_action( 'admin_post_'.$this->hook( 'purge' ), array( $this, 'admin_post' ) );
 	}
 
 	public function current_screen( $screen )
