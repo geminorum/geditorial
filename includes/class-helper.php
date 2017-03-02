@@ -425,9 +425,11 @@ class gEditorialHelper extends gEditorialBaseCore
 	{
 		return array(
 			'title'    => _x( 'Type', 'Module Helper: Table Column: Post Type', GEDITORIAL_TEXTDOMAIN ),
-			'args'     => array( 'post_types' => gEditorialWPPostType::get( 2 ) ),
+			'args'     => array( 'types' => gEditorialWPPostType::get( 2 ) ),
 			'callback' => function( $value, $row, $column, $index ){
-				return isset( $column['args']['post_types'][$row->post_type] ) ? $column['args']['post_types'][$row->post_type] : $row->post_type;
+				return isset( $column['args']['types'][$row->post_type] )
+					? $column['args']['types'][$row->post_type]
+					: $row->post_type;
 			},
 		);
 	}
@@ -436,8 +438,17 @@ class gEditorialHelper extends gEditorialBaseCore
 	{
 		return array(
 			'title'    => _x( 'Title', 'Module Helper: Table Column: Post Title', GEDITORIAL_TEXTDOMAIN ),
+			'args'     => array( 'statuses' => gEditorialWPPostType::getStatuses( 2 ) ),
 			'callback' => function( $value, $row, $column, $index ){
-				return gEditorialHelper::getPostTitle( $row );
+
+				$status = 'publish' != $row->post_status
+					? ( isset( $column['args']['statuses'][$row->post_status] )
+						? $column['args']['statuses'][$row->post_status]
+						: $row->post_status )
+					: '';
+
+				return gEditorialHelper::getPostTitle( $row )
+					.( $status ? ' <small class="-status">('.$status.')</small>' : '' );
 			},
 			'actions' => function( $value, $row, $column, $index ){
 				return gEditorialHelper::getPostRowActions( $row->ID );
