@@ -165,7 +165,7 @@ class gEditorialRevisions extends gEditorialModuleCore
 		);
 	}
 
-	protected function wordcount( $revision )
+	public static function wordCount( $revision )
 	{
 		$title   = gEditorialCoreText::wordCountUTF8( $revision->post_title );
 		$content = gEditorialCoreText::wordCountUTF8( $revision->post_content );
@@ -192,7 +192,7 @@ class gEditorialRevisions extends gEditorialModuleCore
 		$parts['datetime'] = '('.date_i18n( _x( 'M j, Y @ H:i', 'Revisions Module', GEDITORIAL_TEXTDOMAIN ), $time ).')';
 
 		if ( $this->get_setting( 'revision_wordcount', FALSE ) )
-			$parts['wordcount'] = $this->wordcount( $revision );
+			$parts['wordcount'] = self::wordCount( $revision );
 
 		if ( ! wp_is_post_revision( $revision ) ) {
 			$parts['current'] = _x( '[Current]', 'Revisions Module', GEDITORIAL_TEXTDOMAIN );
