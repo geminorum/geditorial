@@ -4,10 +4,11 @@ class gEditorialRevisions extends gEditorialModuleCore
 {
 
 	protected $caps = array(
-		'ajax'   => 'edit_posts',
-		'purge'  => 'delete_post',
-		'delete' => 'delete_post',
-		'edit'   => 'edit_others_posts',
+		'ajax'    => 'edit_posts',
+		'purge'   => 'delete_post',
+		'delete'  => 'delete_post',
+		'edit'    => 'edit_others_posts',
+		'reports' => 'edit_others_posts',
 	);
 
 	public static function module()
@@ -325,5 +326,132 @@ class gEditorialRevisions extends gEditorialModuleCore
 		}
 
 		gEditorialAjax::errorWhat();
+	}
+
+	public function reports_settings( $sub )
+	{
+		if ( ! $this->cuc( 'reports' ) )
+			return;
+
+		if ( $this->module->name == $sub ) {
+
+			if ( ! empty( $_POST ) ) {
+
+				$this->settings_check_referer( $sub, 'reports' );
+
+				if ( isset( $_POST['cleanup_revisions'] )
+					&& isset( $_POST['_cb'] )
+					&& count( $_POST['_cb'] ) ) {
+
+					$count = 0;
+
+					foreach ( $_POST['_cb'] as $post_id ) {
+
+						if ( wp_is_post_revision( $post_id )
+							&& wp_delete_post_revision( $post_id ) )
+								$count++;
+						else
+							$count += $this->purge( $post_id );
+					}
+
+					gEditorialWordPress::redirectReferer( array(
+						'message' => 'cleaned',
+						'count'   => $count,
+					) );
+				}
+			}
+
+			add_action( 'geditorial_reports_sub_'.$sub, array( $this, 'reports_sub' ), 10, 2 );
+
+			$this->register_button( 'cleanup_revisions', _x( 'Cleanup Revisions', 'Modules: Revisions: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
+		}
+
+		add_filter( 'geditorial_reports_subs', array( $this, 'append_sub' ), 10, 2 );
+	}
+
+	public function reports_sub( $uri, $sub )
+	{
+		$this->settings_form_before( $uri, $sub, 'bulk', 'reports', FALSE, FALSE );
+
+			if ( $this->tableSummary() )
+				$this->settings_buttons();
+
+		$this->settings_form_after( $uri, $sub );
+	}
+
+	private function tableSummary()
+	{
+		list( $posts, $pagination ) = $this->getPostArray();
+
+		return gEditorialHTML::tableList( array(
+			'_cb'   => 'ID',
+			'ID'    => gEditorialHelper::tableColumnPostID(),
+			'date'  => gEditorialHelper::tableColumnPostDate(),
+			'type'  => gEditorialHelper::tableColumnPostType(),
+			'title' => gEditorialHelper::tableColumnPostTitle(),
+			'revisons' => array(
+				'title'    => _x( 'Revisions', 'Modules: Revisions: Table Column', GEDITORIAL_TEXTDOMAIN ),
+				'callback' => function( $value, $row, $column, $index ){
+
+					$html = '';
+
+					if ( ! $revisions = wp_get_post_revisions( $row->ID ) )
+						return '&mdash;';
+
+					foreach ( $revisions as $revision ) {
+
+						$block = '<input type="checkbox" name="_cb[]" value="'.$revision->ID.'" title="'.$revision->ID.'" />';
+
+						$block .= ' '.self::wordCount( $revision );
+						$block .= ' &ndash; '.gEditorialHelper::humanTimeDiffRound( strtotime( $revision->post_modified ), FALSE );
+						$block .= ' &ndash; '.get_the_author_meta( 'display_name', $revision->post_author );
+
+						$html .= '<div>'.$block.'</div>';
+					}
+
+					return $html;
+				},
+			),
+			'terms' => gEditorialHelper::tableColumnPostTerms(),
+		), $posts, array(
+			'navigation' => 'before',
+			'search'     => 'before',
+			'title'      => gEditorialHTML::tag( 'h3', _x( 'Overview of Post Revisions', 'Modules: Revisions', GEDITORIAL_TEXTDOMAIN ) ),
+			'empty'      => gEditorialHTML::warning( _x( 'No Posts!', 'Modules: Revisions', GEDITORIAL_TEXTDOMAIN ) ),
+			'pagination' => $pagination,
+		) );
+	}
+
+	protected function getPostArray()
+	{
+		$limit  = self::limit();
+		$paged  = self::paged();
+		$offset = ( $paged - 1 ) * $limit;
+
+		$args = array(
+			'posts_per_page'   => $limit,
+			'offset'           => $offset,
+			'orderby'          => self::orderby( 'ID' ),
+			'order'            => self::order( 'asc' ),
+			'post_type'        => $this->post_types(), // 'any', 'revision',
+			'post_status'      => 'any', // array( 'publish', 'future', 'draft', 'pending' ),
+			'suppress_filters' => TRUE,
+		);
+
+		if ( ! empty( $_REQUEST['id'] ) )
+			$args['post__in'] = explode( ',', maybe_unserialize( $_REQUEST['id'] ) );
+
+		if ( ! empty( $_REQUEST['type'] ) )
+			$args['post_type'] = $_REQUEST['type'];
+
+		if ( 'attachment' == $args['post_type'] )
+			$args['post_status'][] = 'inherit';
+
+		$query = new \WP_Query;
+		$posts = $query->query( $args );
+
+		$pagination = gEditorialHTML::tablePagination( $query->found_posts, $query->max_num_pages, $limit, $paged );
+
+		return array( $posts, $pagination );
 	}
 }
