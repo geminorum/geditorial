@@ -66,7 +66,7 @@ class gEditorialMeta extends gEditorialModuleCore
 				'post' => array(
 					'ot'          => _x( 'OverTitle', 'Meta Module: Titles', GEDITORIAL_TEXTDOMAIN ),
 					'st'          => _x( 'SubTitle', 'Meta Module: Titles', GEDITORIAL_TEXTDOMAIN ),
-					'as'          => _x( 'Author', 'Meta Module: Titles', GEDITORIAL_TEXTDOMAIN ),
+					'as'          => _x( 'Byline', 'Meta Module: Titles', GEDITORIAL_TEXTDOMAIN ),
 					'le'          => _x( 'Lead', 'Meta Module: Titles', GEDITORIAL_TEXTDOMAIN ),
 					'ch'          => _x( 'Column Header', 'Meta Module: Titles', GEDITORIAL_TEXTDOMAIN ),
 					'ct'          => _x( 'Column Header Taxonomy', 'Meta Module: Titles', GEDITORIAL_TEXTDOMAIN ),
