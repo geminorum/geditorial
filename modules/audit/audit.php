@@ -139,7 +139,7 @@ class gEditorialAudit extends gEditorialModuleCore
 						'class' => '-action -flush page-title-action',
 					), _x( 'Refresh', 'Modules: Audit: Activity Box End', GEDITORIAL_TEXTDOMAIN ) );
 
-					$html .= '</h3>'.$summary.'</div>';
+					$html .= '</h3><ul>'.$summary.'</ul></div>';
 
 					$html = gEditorialCoreText::minifyHTML( $html );
 
@@ -151,7 +151,7 @@ class gEditorialAudit extends gEditorialModuleCore
 		echo $html;
 	}
 
-	private function get_summary( $posttypes, $terms, $user_id = 0, $wrap = 'ul', $list = 'li' )
+	private function get_summary( $posttypes, $terms, $user_id = 0, $list = 'li' )
 	{
 		$html   = '';
 		$tax    = $this->constant( 'audit_tax' );
@@ -230,10 +230,7 @@ class gEditorialAudit extends gEditorialModuleCore
 			}
 		}
 
-		if ( $html )
-			return gEditorialHTML::tag( $wrap, $html );
-
-		return FALSE;
+		return $html;
 	}
 
 	public function register_settings( $page = NULL )
