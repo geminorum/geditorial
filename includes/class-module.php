@@ -1643,7 +1643,24 @@ class gEditorialModuleCore extends gEditorialWPModule
 		return TRUE;
 	}
 
-	public function get_linked_post_id( $term_or_id, $posttype_constant_key, $tax_constant_key )
+	public function rev_linked_term( $post_id, $term_or_id, $posttype_constant_key, $tax_constant_key )
+	{
+		if ( ! $term = gEditorialWPTaxonomy::getTerm( $term_or_id, $this->constant( $tax_constant_key ) ) )
+			return FALSE;
+
+		if ( ! $post_id )
+			$post_id = $this->get_linked_post_id( $term, 'issue_cpt', 'issue_tax' );
+
+		if ( $post_id )
+			delete_post_meta( $post_id, '_'.$this->constant( $posttype_constant_key ).'_term_id' );
+
+		if ( function_exists( 'delete_term_meta' ) )
+			delete_term_meta( $term->term_id, $this->constant( $posttype_constant_key ).'_linked' );
+
+		return TRUE;
+	}
+
+	public function get_linked_post_id( $term_or_id, $posttype_constant_key, $tax_constant_key, $check_slug = TRUE )
 	{
 		if ( ! $term = gEditorialWPTaxonomy::getTerm( $term_or_id, $this->constant( $tax_constant_key ) ) )
 			return FALSE;
@@ -1653,7 +1670,7 @@ class gEditorialModuleCore extends gEditorialWPModule
 		if ( function_exists( 'get_term_meta' ) )
 			$post_id = get_term_meta( $term->term_id, $this->constant( $posttype_constant_key ).'_linked', TRUE );
 
-		if ( ! $post_id )
+		if ( ! $post_id && $check_slug )
 			$post_id = gEditorialWPPostType::getIDbySlug( $term->slug, $this->constant( $posttype_constant_key ) );
 
 		return $post_id;
