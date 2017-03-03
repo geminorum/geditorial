@@ -6,6 +6,7 @@ class gEditorialAudit extends gEditorialModuleCore
 	protected $caps = array(
 		'default' => 'edit_others_posts',
 		'tools'   => 'edit_others_posts',
+		'reports' => 'edit_others_posts',
 	);
 
 	public static function module()
@@ -58,6 +59,7 @@ class gEditorialAudit extends gEditorialModuleCore
 			),
 			'settings' => array(
 				'install_def_audit_tax' => _x( 'Install Default Attributes', 'Modules: Audit: Setting Button', GEDITORIAL_TEXTDOMAIN ),
+				'user_stats'            => _x( 'Apply Filter', 'Modules: Audit: Setting Button', GEDITORIAL_TEXTDOMAIN ),
 			),
 			'noops' => array(
 				'audit_tax' => _nx_noop( 'Audit Attribute', 'Audit Attributes', 'Modules: Audit: Noop', GEDITORIAL_TEXTDOMAIN ),
@@ -258,5 +260,58 @@ class gEditorialAudit extends gEditorialModuleCore
 	public function meta_box_cb_audit_tax( $post, $box )
 	{
 		gEditorialMetaBox::checklistTerms( $post, $box );
+	}
+
+	public function reports_settings( $sub )
+	{
+		if ( ! $this->cuc( 'reports' ) )
+			return;
+
+		if ( $this->module->name == $sub )
+			add_action( 'geditorial_reports_sub_'.$sub, array( $this, 'reports_sub' ), 10, 2 );
+
+		add_filter( 'geditorial_reports_subs', array( $this, 'append_sub' ), 10, 2 );
+	}
+
+	public function reports_sub( $uri, $sub )
+	{
+		$terms = gEditorialWPTaxonomy::getTerms( $this->constant( 'audit_tax' ), FALSE, TRUE, 'slug', array( 'hide_empty' => TRUE ) );
+
+		if ( ! count( $terms ) )
+			return gEditorialHTML::warning( _x( 'No Audit Terms', 'Modules: Audit', GEDITORIAL_TEXTDOMAIN ), TRUE );
+
+		$args = self::atts( array(
+			'user_id' => '0',
+		), empty( $_POST[$this->module->group]['reports'] )
+			? array()
+			: $_POST[$this->module->group]['reports'] );
+
+		$this->settings_form_before( $uri, $sub, 'bulk', 'reports', FALSE );
+
+			gEditorialHTML::h3( _x( 'Audit Reports', 'Modules: Audit', GEDITORIAL_TEXTDOMAIN ) );
+
+			echo '<table class="form-table">';
+
+			echo '<tr><th scope="row">'._x( 'By User', 'Modules: Audit', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
+
+			$this->do_settings_field( array(
+				'type'         => 'user',
+				'field'        => 'user_id',
+				'none_title'   => _x( 'All Users', 'Users Module', GEDITORIAL_TEXTDOMAIN ),
+				'default'      => $args['user_id'],
+				'option_group' => 'reports',
+			) );
+
+			echo '&nbsp;';
+
+			$this->submit_button( 'user_stats' );
+
+			// FIXME: style this!
+			if ( $summary = $this->get_summary( $this->post_types(), $terms, $args['user_id'] ) )
+				echo '<div><ul>'.$summary.'</ul></div>';
+
+			echo '</td></tr>';
+			echo '</table>';
+		$this->settings_form_after( $uri, $sub );
 	}
 }
