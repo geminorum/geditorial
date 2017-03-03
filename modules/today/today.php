@@ -103,11 +103,18 @@ class gEditorialToday extends gEditorialModuleCore
 
 	public function init_ajax()
 	{
-		if ( $this->is_inline_save( $_REQUEST, 'day_cpt' ) )
+		if ( $this->is_inline_save( $_REQUEST, 'day_cpt' ) ) {
+
 			$this->_edit_screen( $_REQUEST['post_type'] );
 
-		else if ( $this->is_inline_save( $_REQUEST, $this->post_types() ) )
+			$this->_save_meta_supported( $_REQUEST['post_type'] );
+
+		} else if ( $this->is_inline_save( $_REQUEST, $this->post_types() ) ) {
+
 			$this->_edit_screen_supported( $_REQUEST['post_type'] );
+
+			$this->_save_meta_supported( $_REQUEST['post_type'] );
+		}
 	}
 
 	public function current_screen( $screen )
@@ -129,8 +136,9 @@ class gEditorialToday extends gEditorialModuleCore
 				//     echo '<h2>This is submitpost_box!</h2>';
 				// } );
 
+				$this->_save_meta_supported( $screen->post_type );
+
 				add_filter( 'post_updated_messages', array( $this, 'post_updated_messages' ) );
-				add_action( 'save_post', array( $this, 'save_post_supported' ), 20, 3 );
 				add_action( 'edit_form_advanced', array( $this, 'edit_form_advanced' ), 10, 1 );
 
 				add_meta_box( 'geditorial-today',
@@ -143,7 +151,7 @@ class gEditorialToday extends gEditorialModuleCore
 
 			} else if ( in_array( $screen->post_type, $this->post_types() ) ) {
 
-				add_action( 'save_post', array( $this, 'save_post_supported' ), 20, 3 );
+				$this->_save_meta_supported( $screen->post_type );
 
 				add_meta_box( 'geditorial-today-supported',
 					$this->get_meta_box_title(),
@@ -158,6 +166,7 @@ class gEditorialToday extends gEditorialModuleCore
 
 			if ( $screen->post_type == $this->constant( 'day_cpt' ) ) {
 
+				$this->_save_meta_supported( $screen->post_type );
 				$this->_admin_enabled();
 
 				add_filter( 'disable_months_dropdown', '__return_true', 12 );
@@ -166,13 +175,18 @@ class gEditorialToday extends gEditorialModuleCore
 				add_filter( 'manage_edit-'.$screen->post_type.'_sortable_columns', array( $this, 'sortable_columns' ) );
 				add_thickbox();
 
+				$this->enqueue_asset_js( $screen->base );
+
 			} else if ( in_array( $screen->post_type, $this->post_types() ) ) {
 
+				$this->_save_meta_supported( $screen->post_type );
 				$this->_admin_enabled();
 
 				$this->_edit_screen_supported( $screen->post_type );
 				add_filter( 'manage_edit-'.$screen->post_type.'_sortable_columns', array( $this, 'sortable_columns' ) );
 				add_thickbox();
+
+				$this->enqueue_asset_js( $screen->base );
 			}
 		}
 	}
@@ -181,12 +195,21 @@ class gEditorialToday extends gEditorialModuleCore
 	{
 		add_filter( 'manage_'.$post_type.'_posts_columns', array( $this, 'manage_posts_columns' ) );
 		add_filter( 'manage_'.$post_type.'_posts_custom_column', array( $this, 'posts_custom_column'), 10, 2 );
+
+		add_action( 'quick_edit_custom_box', array( $this, 'quick_edit_custom_box' ), 10, 2 );
 	}
 
 	private function _edit_screen_supported( $post_type )
 	{
 		add_filter( 'manage_'.$post_type.'_posts_columns', array( $this, 'manage_posts_columns_supported' ), 12 );
-		add_filter( 'manage_'.$post_type.'_posts_custom_column', array( $this, 'posts_custom_column'), 10, 2 );
+		add_filter( 'manage_'.$post_type.'_posts_custom_column', array( $this, 'posts_custom_column_supported'), 10, 2 );
+
+		add_action( 'quick_edit_custom_box', array( $this, 'quick_edit_custom_box' ), 10, 2 );
+	}
+
+	private function _save_meta_supported( $post_type )
+	{
+		add_action( 'save_post', array( $this, 'save_post_supported' ), 20, 3 );
 	}
 
 	public function do_meta_boxes( $post, $box )
@@ -210,6 +233,8 @@ class gEditorialToday extends gEditorialModuleCore
 			gEditorialTodayHelper::theDaySelect( $the_day, ( $post->post_type != $this->constant( 'day_cpt' ) ), $default_type );
 
 		echo '</div>';
+
+		wp_nonce_field( 'geditorial_today_post_main', '_geditorial_today_post_main' );
 	}
 
 	public function gpeople_support( $post_types )
@@ -259,6 +284,27 @@ class gEditorialToday extends gEditorialModuleCore
 
 		else if ( 'cover' == $column_name )
 			$this->column_thumb( $post_id, $this->get_image_size_key( 'day_cpt' ) );
+	}
+
+	public function posts_custom_column_supported( $column_name, $post_id )
+	{
+		if ( 'theday' == $column_name )
+			$this->column_theday( $post_id );
+	}
+
+	public function quick_edit_custom_box( $column_name, $post_type )
+	{
+		if ( 'theday' != $column_name )
+			return FALSE;
+
+		echo '<div class="inline-edit-col geditorial-admin-wrap-quickedit -today">';
+			echo '<span class="title inline-edit-categories-label">';
+				echo $this->get_string( 'meta_box_title', $post_type, 'misc' );
+			echo '</span>';
+			gEditorialTodayHelper::theDaySelect( array(), TRUE, '' );
+		echo '</div>';
+
+		wp_nonce_field( 'geditorial_today_post_raw', '_geditorial_today_post_raw' );
 	}
 
 	public function sortable_columns( $columns )
@@ -345,25 +391,29 @@ class gEditorialToday extends gEditorialModuleCore
 			delete_post_meta( $post_id, $key_suffix );
 	}
 
-	public function save_post_supported( $post_ID, $post, $update )
+	public function save_post_supported( $post_id, $post, $update )
 	{
 		if ( $this->is_save_post( $post )
 			|| $this->is_save_post( $post, $this->post_types() ) ) {
 
-			foreach ( $this->get_the_day_constants() as $field => $constant ) {
-				if ( isset( $_POST['geditorial-today-date-'.$field] ) ) {
+			if ( wp_verify_nonce( @$_REQUEST['_geditorial_today_post_main'], 'geditorial_today_post_main' )
+				|| wp_verify_nonce( @$_REQUEST['_geditorial_today_post_raw'], 'geditorial_today_post_raw' ) ) {
 
-					$value = trim( $_POST['geditorial-today-date-'.$field] );
+				foreach ( $this->get_the_day_constants() as $field => $constant ) {
+					if ( isset( $_POST['geditorial-today-date-'.$field] ) ) {
 
-					if ( 'cal' != $field )
-						$value = gEditorialNumber::intval( $value, FALSE );
+						$value = trim( $_POST['geditorial-today-date-'.$field] );
 
-					$this->set_meta( $post_ID, $value, $constant );
+						if ( 'cal' != $field )
+							$value = gEditorialNumber::intval( $value, FALSE );
+
+						$this->set_meta( $post_id, $value, $constant );
+					}
 				}
 			}
 		}
 
-		return $post_ID;
+		return $post_id;
 	}
 
 	// @SEE: `bp_theme_compat_reset_post()`

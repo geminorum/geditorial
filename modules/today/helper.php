@@ -74,24 +74,25 @@ class gEditorialTodayHelper extends gEditorialHelper
 			echo '<div class="-date-icon">';
 
 				if ( $the_day['day'] )
-					echo '<span class="-day">'.gEditorialNumber::format( $the_day['day'] ).'</span>';
+					echo '<span class="-day" data-day="'.esc_attr( $the_day['day'] )
+						.'">'.gEditorialNumber::format( $the_day['day'] ).'</span>';
 
 				if ( $the_day['month'] ) {
 
-					$key = gEditorialNumber::intval( $key, FALSE );
-					$key = gEditorialNumber::zeroise( $the_day['month'], 2 );
+					$month = gEditorialNumber::intval( $the_day['month'], FALSE );
+					$key = gEditorialNumber::zeroise( $month, 2 );
 
 					if ( isset( $months[$the_day['cal']][$key] ) )
 						$the_day['month'] = $months[$the_day['cal']][$key];
 
-					echo '<span class="-month">'.$the_day['month'].'</span>';
+					echo '<span class="-month" data-month="'.esc_attr( $month ).'">'.$the_day['month'].'</span>';
 				}
 
 				if ( $the_day['year'] )
-					echo '<span class="-year">'.gEditorialNumber::format( $the_day['year'] ).'</span>';
+					echo '<span class="-year" data-year="'.esc_attr( $the_day['year'] ).'">'.gEditorialNumber::format( $the_day['year'] ).'</span>';
 
 				if ( $the_day['cal'] )
-					echo '<span class="-cal">'.
+					echo '<span class="-cal" data-cal="'.esc_attr( $the_day['cal'] ).'">'.
 						( empty( $calendars[$the_day['cal']] ) ? $the_day['cal'] : $calendars[$the_day['cal']] )
 					.'</span>';
 
@@ -241,46 +242,54 @@ class gEditorialTodayHelper extends gEditorialHelper
 		$html = '';
 
 		$html .= gEditorialHTML::tag( 'input', array(
-			'type'        => 'text',
-			'dir'         => 'ltr',
-			'min'         => '1',
-			'max'         => '31',
-			'name'        => 'geditorial-today-date-day',
-			'id'          => 'geditorial-today-date-day',
-			'value'       => $args['day'],
-			'title'       => _x( 'Day', 'Today Module: Meta Box Input', GEDITORIAL_TEXTDOMAIN ),
-			'placeholder' => _x( 'Day', 'Today Module: Meta Box Input Placeholder', GEDITORIAL_TEXTDOMAIN ),
+			'type'         => 'text',
+			'autocomplete' => 'off',
+			'dir'          => 'ltr',
+			'min'          => '1',
+			'max'          => '31',
+			'name'         => 'geditorial-today-date-day',
+			'id'           => 'geditorial-today-date-day',
+			'value'        => $args['day'],
+			'title'        => _x( 'Day', 'Today Module: Meta Box Input', GEDITORIAL_TEXTDOMAIN ),
+			'placeholder'  => _x( 'Day', 'Today Module: Meta Box Input Placeholder', GEDITORIAL_TEXTDOMAIN ),
+			'data'         => array( 'ortho' => 'number' ),
 		) );
 
 		$html .= gEditorialHTML::tag( 'input', array(
-			'type'        => 'text',
-			'dir'         => 'ltr',
-			'min'         => '1',
-			'max'         => '12',
-			'name'        => 'geditorial-today-date-month',
-			'id'          => 'geditorial-today-date-month',
-			'value'       => $args['month'],
-			'title'       => _x( 'Month', 'Today Module: Meta Box Input', GEDITORIAL_TEXTDOMAIN ),
-			'placeholder' => _x( 'Month', 'Today Module: Meta Box Input Placeholder', GEDITORIAL_TEXTDOMAIN ),
+			'type'         => 'text',
+			'autocomplete' => 'off',
+			'dir'          => 'ltr',
+			'min'          => '1',
+			'max'          => '12',
+			'name'         => 'geditorial-today-date-month',
+			'id'           => 'geditorial-today-date-month',
+			'value'        => $args['month'],
+			'title'        => _x( 'Month', 'Today Module: Meta Box Input', GEDITORIAL_TEXTDOMAIN ),
+			'placeholder'  => _x( 'Month', 'Today Module: Meta Box Input Placeholder', GEDITORIAL_TEXTDOMAIN ),
+			'data'         => array( 'ortho' => 'number' ),
 		) );
 
 		if ( $year )
 		$html .= gEditorialHTML::tag( 'input', array(
-			'type'        => 'text',
-			'dir'         => 'ltr',
-			'name'        => 'geditorial-today-date-year',
-			'id'          => 'geditorial-today-date-year',
-			'value'       => $year ? $args['year'] : '',
-			'title'       => _x( 'Year', 'Today Module: Meta Box Input', GEDITORIAL_TEXTDOMAIN ),
-			'placeholder' => _x( 'Year', 'Today Module: Meta Box Input Placeholder', GEDITORIAL_TEXTDOMAIN ),
-			'disabled'    => ! $year,
+			'type'         => 'text',
+			'autocomplete' => 'off',
+			'dir'          => 'ltr',
+			'name'         => 'geditorial-today-date-year',
+			'id'           => 'geditorial-today-date-year',
+			'value'        => $year ? $args['year'] : '',
+			'title'        => _x( 'Year', 'Today Module: Meta Box Input', GEDITORIAL_TEXTDOMAIN ),
+			'placeholder'  => _x( 'Year', 'Today Module: Meta Box Input Placeholder', GEDITORIAL_TEXTDOMAIN ),
+			'disabled'     => ! $year,
+			'data'         => array( 'ortho' => 'number' ),
 		) );
 
 		echo gEditorialHTML::tag( 'div', array(
 			'class' => 'field-wrap '.( $year ? 'field-wrap-inputtext-date' : 'field-wrap-inputtext-half' ),
 		), $html );
 
-		$html = '';
+		$html = gEditorialHTML::tag( 'option', array(
+			'value' => '',
+		), _x( '&mdash; Select Calendar &mdash;', 'Today Module: Meta Box Input Option None', GEDITORIAL_TEXTDOMAIN ) );
 
 		foreach ( self::getDefualtCalendars( TRUE ) as $name => $title )
 			$html .= gEditorialHTML::tag( 'option', array(
