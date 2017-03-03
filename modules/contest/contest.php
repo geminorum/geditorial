@@ -81,6 +81,7 @@ class gEditorialContest extends gEditorialModuleCore
 				'contest_tax_check'            => _x( 'Check Terms', 'Contest Module: Setting Button', GEDITORIAL_TEXTDOMAIN ),
 				'contest_post_create'          => _x( 'Create Contest Posts', 'Contest Module: Setting Button', GEDITORIAL_TEXTDOMAIN ),
 				'contest_post_connect'         => _x( 'Re-Connect Posts', 'Contest Module: Setting Button', GEDITORIAL_TEXTDOMAIN ),
+				'contest_tax_delete'           => _x( 'Delete Terms', 'Contest Module: Setting Button', GEDITORIAL_TEXTDOMAIN ),
 			),
 			'noops' => array(
 				'contest_cpt'      => _nx_noop( 'Contest', 'Contests', 'Contest Module: Noop', GEDITORIAL_TEXTDOMAIN ),
@@ -719,6 +720,7 @@ class gEditorialContest extends gEditorialModuleCore
 			$this->submit_button( 'contest_tax_check', TRUE );
 			$this->submit_button( 'contest_post_create' );
 			$this->submit_button( 'contest_post_connect' );
+			$this->submit_button( 'contest_tax_delete', FALSE, NULL, gEditorialSettingsCore::getButtonConfirm() );
 
 			echo gEditorialHTML::tag( 'p', array(
 				'class' => 'description',
@@ -792,6 +794,27 @@ class gEditorialContest extends gEditorialModuleCore
 
 					gEditorialWordPress::redirectReferer( array(
 						'message' => 'updated',
+						'count'   => $count,
+					) );
+
+				} else if ( isset( $_POST['_cb'] )
+					&& isset( $_POST['contest_tax_delete'] ) ) {
+
+					$count = 0;
+
+					foreach ( $_POST['_cb'] as $term_id ) {
+
+						if ( $this->rev_linked_term( NULL, $term_id, 'contest_cpt', 'contest_tax' ) ) {
+
+							$deleted = wp_delete_term( $term_id, $this->constant( 'contest_tax' ) );
+
+							if ( $deleted && ! is_wp_error( $deleted ) )
+								$count++;
+						}
+					}
+
+					gEditorialWordPress::redirectReferer( array(
+						'message' => 'deleted',
 						'count'   => $count,
 					) );
 				}

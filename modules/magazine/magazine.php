@@ -108,6 +108,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 				'issue_post_create'  => _x( 'Create Issue Posts', 'Magazine Module: Setting Button', GEDITORIAL_TEXTDOMAIN ),
 				'issue_post_connect' => _x( 'Re-Connect Posts', 'Magazine Module: Setting Button', GEDITORIAL_TEXTDOMAIN ),
 				'issue_store_order'  => _x( 'Store Orders', 'Magazine Module: Setting Button', GEDITORIAL_TEXTDOMAIN ),
+				'issue_tax_delete'   => _x( 'Delete Terms', 'Magazine Module: Setting Button', GEDITORIAL_TEXTDOMAIN ),
 			),
 			'noops' => array(
 				'issue_cpt'   => _nx_noop( 'Issue', 'Issues', 'Magazine Module: Noop', GEDITORIAL_TEXTDOMAIN ),
@@ -846,6 +847,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 			$this->submit_button( 'issue_post_create' );
 			$this->submit_button( 'issue_post_connect' );
 			$this->submit_button( 'issue_store_order' );
+			$this->submit_button( 'issue_tax_delete', FALSE, NULL, gEditorialSettingsCore::getButtonConfirm() );
 
 			echo gEditorialHTML::tag( 'p', array(
 				'class' => 'description',
@@ -947,6 +949,27 @@ class gEditorialMagazine extends gEditorialModuleCore
 
 					gEditorialWordPress::redirectReferer( array(
 						'message' => 'updated',
+						'count'   => $count,
+					) );
+
+				} else if ( isset( $_POST['_cb'] )
+					&& isset( $_POST['issue_tax_delete'] ) ) {
+
+					$count = 0;
+
+					foreach ( $_POST['_cb'] as $term_id ) {
+
+						if ( $this->rev_linked_term( NULL, $term_id, 'issue_cpt', 'issue_tax' ) ) {
+
+							$deleted = wp_delete_term( $term_id, $this->constant( 'issue_tax' ) );
+
+							if ( $deleted && ! is_wp_error( $deleted ) )
+								$count++;
+						}
+					}
+
+					gEditorialWordPress::redirectReferer( array(
+						'message' => 'deleted',
 						'count'   => $count,
 					) );
 				}
