@@ -178,6 +178,9 @@ class gEditorialHelper extends gEditorialBaseCore
 
 	public static function getPostTitle( $post, $fallback = NULL )
 	{
+		if ( ! $post = get_post( $post ) )
+			return '';
+
 		$title = apply_filters( 'the_title', $post->post_title, $post->ID );
 
 		if ( ! empty( $title ) )
