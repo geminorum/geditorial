@@ -1,3 +1,33 @@
+### 3.9.15
+* main/modulecore: simplifying init/ajax hooks
+* main/modulecore: settings form before/after helpers
+* main/modulecore: revert linked term method
+* main/helper: correct camelcase and class name for post type dates
+* main/helper: post title helper
+* main/helper: unifying table columns args
+* main/helper: readable status names
+* main/settings: button confirm as method
+* module/audit: :new: reports by user
+* module/contest: :new: delete terms on tools table
+* module/contest: two column for linked and same slug posts on terms table
+* module/content: :warning: sync linked posts on ajax
+* module/home: support calendar posttypes
+* module/ortho: :new: download button for quick tags
+* module/ortho: :new: nbsp button for quick tags
+* module/magazine: :new: delete terms on tools table
+* module/magazine: two column for linked and same slug posts on terms table
+* module/magazine: :warning: sync linked posts on ajax
+* module/meta: author field renamed to byline
+* module/modified: localized jquery timeago for the timestamp
+* module/revisions: :new: overview and cleanup post revisions
+* module/today: :new: quick edit support
+* module/today: convert back localized numbers
+* module/tweaks: simple filter hook for tax info
+* module/tweaks: :warning: dropped $ sign!
+* module/users: another try on user reports
+* module/users: disable username sanitizing
+* module/users: adding settings descriptions
+
 ### 3.9.14
 * wordpress/database: exclude default statues from taxonomy count/not
 * main/helper: more time diff helpers
