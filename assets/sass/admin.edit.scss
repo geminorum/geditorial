@@ -19,6 +19,32 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
+.geditorial-admin-wrap-quickedit {
+  @include mainwrap();
+  padding-top: 0.2em;
+
+  .field-wrap {
+
+    &.field-wrap-select {
+      select {
+        width: 100%;
+      }
+    }
+
+    &.field-wrap-inputtext-half {
+      input {
+        width: 49%;
+      }
+    }
+
+    &.field-wrap-inputtext-date {
+      input {
+        width: 32.5%;
+      }
+    }
+  }
+}
+
 .geditorial-admin-wrap-column {
   @include mainwrap();
 
