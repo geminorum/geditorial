@@ -521,7 +521,7 @@ class gEditorialModuleCore extends gEditorialWPModule
 	public function default_buttons( $page = NULL )
 	{
 		$this->register_button( 'submit', _x( 'Save Changes', 'Module Core', GEDITORIAL_TEXTDOMAIN ), array( 'default' => 'default' ), 'primary' );
-		$this->register_button( 'reset-settings', _x( 'Reset Settings', 'Module Core', GEDITORIAL_TEXTDOMAIN ), sprintf( 'onclick="return confirm( \'%s\' )"', _x( 'Are you sure? This operation can not be undone.', 'Module Core', GEDITORIAL_TEXTDOMAIN ) ) );
+		$this->register_button( 'reset-settings', _x( 'Reset Settings', 'Module Core', GEDITORIAL_TEXTDOMAIN ), gEditorialSettingsCore::getButtonConfirm() );
 	}
 
 	public function register_button( $key, $value = NULL, $atts = array(), $type = 'secondary' )

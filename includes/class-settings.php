@@ -458,6 +458,16 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 		);
 	}
 
+	public static function getButtonConfirm( $message = NULL )
+	{
+		if ( is_null( $message ) )
+			$message = _x( 'Are you sure? This operation can not be undone.', 'Settings: Confirm', GEDITORIAL_TEXTDOMAIN );
+
+		return array(
+			'onclick' => sprintf( 'return confirm(\'%s\')', esc_attr( $message ) ),
+		);
+	}
+
 	public static function counted( $message = NULL, $count = NULL, $class = 'notice-success' )
 	{
 		if ( is_null( $message ) )
