@@ -473,10 +473,7 @@ class gEditorialModuleCore extends gEditorialWPModule
 			'for' => $id,
 		), $html.'&nbsp;'.$args['field_title'] );
 
-		if ( $args['description'] )
-			echo gEditorialHTML::tag( 'p', array(
-				'class' => 'description',
-			), $args['description'] );
+		gEditorialHTML::desc( $args['description'] );
 
 		echo '</div>';
 	}
@@ -541,10 +538,8 @@ class gEditorialModuleCore extends gEditorialWPModule
 		if ( FALSE !== $wrap )
 			echo '<p class="submit '.$this->base.'-wrap-buttons '.$wrap.'">';
 
-		foreach ( $this->buttons as $action => $button ) {
-			echo get_submit_button( $button['value'], $button['type'], $action, FALSE, $button['atts'] );
-			echo '&nbsp;&nbsp;';
-		}
+		foreach ( $this->buttons as $action => $button )
+			gEditorialSettingsCore::submitButton( $action, $button['value'], $button['type'], $button['atts'] );
 
 		if ( FALSE !== $wrap )
 			echo '</p>';
@@ -555,11 +550,7 @@ class gEditorialModuleCore extends gEditorialWPModule
 		if ( $name && is_null( $text ) )
 			$text = $this->get_string( $name, 'buttons', 'settings' );
 
-		if ( $primary )
-			$atts['default'] = 'default';
-
-		echo get_submit_button( $text, ( $primary ? 'primary' : 'secondary' ), $name, FALSE, $atts );
-		echo '&nbsp;&nbsp;';
+		gEditorialSettingsCore::submitButton( $name, $text, $primary, $atts );
 	}
 
 	protected function settings_form_before( $uri, $sub = NULL, $action = 'update', $context = 'settings', $check = TRUE )

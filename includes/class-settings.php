@@ -468,6 +468,34 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 		);
 	}
 
+	public static function submitButton( $name = 'submit', $text = NULL, $primary = FALSE, $atts = array() )
+	{
+		$classes = array( '-button', 'button' );
+
+		if ( TRUE === $atts )
+			$atts = self::getButtonConfirm();
+
+		if ( 'primary' == $primary )
+			$primary = TRUE;
+
+		if ( TRUE === $primary )
+			$classes[] = 'button-primary';
+
+		else if ( $primary )
+			$classes[] = 'button-'.$primary;
+
+		echo gEditorialHTML::tag( 'input', array_merge( $atts, array(
+			'type'    => 'submit',
+			'name'    => $name,
+			'id'      => $name,
+			'value'   => is_null( $text ) ? _x( 'Save Changes', 'Settings: Button', GEDITORIAL_TEXTDOMAIN ) : $text,
+			'class'   => $classes,
+			'default' => TRUE === $primary,
+		) ) );
+
+		echo '&nbsp;&nbsp;';
+	}
+
 	public static function counted( $message = NULL, $count = NULL, $class = 'notice-success' )
 	{
 		if ( is_null( $message ) )
@@ -1243,11 +1271,10 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 			break;
 			case 'button' :
 
-				echo get_submit_button(
+				self::submitButton(
+					$args['field'],
 					$value,
 					( empty( $args['field_class'] ) ? 'secondary' : $args['field_class'] ),
-					$args['field'], // $id,
-					FALSE,
 					$args['values']
 				);
 
@@ -1363,10 +1390,8 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 		if ( $args['after'] )
 			echo '&nbsp;'.$args['after'];
 
-		if ( $args['description'] && FALSE !== $args['values'] )
-			echo gEditorialHTML::tag( 'p', array(
-				'class' => 'description',
-			), $args['description'] );
+		if ( FALSE !== $args['values'] )
+			gEditorialHTML::desc( $args['description'] );
 
 		if ( $args['wrap'] )
 			echo '</td></tr>';

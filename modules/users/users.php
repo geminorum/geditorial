@@ -66,9 +66,6 @@ class gEditorialUsers extends gEditorialModuleCore
 				'show_option_all'     => _x( 'All authors', 'Users Module: Show Option All', GEDITORIAL_TEXTDOMAIN ),
 				'counts_column_title' => _x( 'Summary', 'Users Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
 			),
-			'settings' => array(
-				'posttype_stats' => _x( 'Query Stats', 'Users Module: Setting Button', GEDITORIAL_TEXTDOMAIN ),
-			),
 			'noops' => array(
 				'group_tax' => _nx_noop( 'User Group', 'User Groups', 'Users Module: Noop', GEDITORIAL_TEXTDOMAIN ),
 				'type_tax'  => _nx_noop( 'User Type', 'User Types', 'Users Module: Noop', GEDITORIAL_TEXTDOMAIN ),
@@ -362,7 +359,8 @@ class gEditorialUsers extends gEditorialModuleCore
 				'option_group' => 'reports',
 			) );
 
-			$this->submit_button( 'posttype_stats' );
+			gEditorialSettingsCore::submitButton( 'posttype_stats',
+				_x( 'Query Stats', 'Users Module: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
 
 			if ( ! empty( $_POST ) && isset( $_POST['posttype_stats'] ) ) {
 

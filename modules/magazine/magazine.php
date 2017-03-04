@@ -103,13 +103,6 @@ class gEditorialMagazine extends gEditorialModuleCore
 				'meta_box_title'      => _x( 'The Issue', 'Magazine Module: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
 				'tweaks_column_title' => _x( 'Issues', 'Magazine Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
 			),
-			'settings' => array(
-				'issue_tax_check'    => _x( 'Check Terms', 'Magazine Module: Setting Button', GEDITORIAL_TEXTDOMAIN ),
-				'issue_post_create'  => _x( 'Create Issue Posts', 'Magazine Module: Setting Button', GEDITORIAL_TEXTDOMAIN ),
-				'issue_post_connect' => _x( 'Re-Connect Posts', 'Magazine Module: Setting Button', GEDITORIAL_TEXTDOMAIN ),
-				'issue_store_order'  => _x( 'Store Orders', 'Magazine Module: Setting Button', GEDITORIAL_TEXTDOMAIN ),
-				'issue_tax_delete'   => _x( 'Delete Terms', 'Magazine Module: Setting Button', GEDITORIAL_TEXTDOMAIN ),
-			),
 			'noops' => array(
 				'issue_cpt'   => _nx_noop( 'Issue', 'Issues', 'Magazine Module: Noop', GEDITORIAL_TEXTDOMAIN ),
 				'issue_tax'   => _nx_noop( 'Issue', 'Issues', 'Magazine Module: Noop', GEDITORIAL_TEXTDOMAIN ),
@@ -843,15 +836,22 @@ class gEditorialMagazine extends gEditorialModuleCore
 				echo '<br />';
 			}
 
-			$this->submit_button( 'issue_tax_check', TRUE );
-			$this->submit_button( 'issue_post_create' );
-			$this->submit_button( 'issue_post_connect' );
-			$this->submit_button( 'issue_store_order' );
-			$this->submit_button( 'issue_tax_delete', FALSE, NULL, gEditorialSettingsCore::getButtonConfirm() );
+			gEditorialSettingsCore::submitButton( 'issue_tax_check',
+				_x( 'Check Terms', 'Magazine Module: Setting Button', GEDITORIAL_TEXTDOMAIN ), TRUE );
 
-			echo gEditorialHTML::tag( 'p', array(
-				'class' => 'description',
-			), _x( 'Check for issue terms and create corresponding issue posts.', 'Magazine Module', GEDITORIAL_TEXTDOMAIN ) );
+			gEditorialSettingsCore::submitButton( 'issue_post_create',
+				_x( 'Create Issue Posts', 'Magazine Module: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
+
+			gEditorialSettingsCore::submitButton( 'issue_post_connect',
+				_x( 'Re-Connect Posts', 'Magazine Module: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
+
+			gEditorialSettingsCore::submitButton( 'issue_store_order',
+				_x( 'Store Orders', 'Magazine Module: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
+
+			gEditorialSettingsCore::submitButton( 'issue_tax_delete',
+				_x( 'Delete Terms', 'Magazine Module: Setting Button', GEDITORIAL_TEXTDOMAIN ), 'delete', TRUE );
+
+			gEditorialHTML::desc( _x( 'Check for issue terms and create corresponding issue posts.', 'Magazine Module', GEDITORIAL_TEXTDOMAIN ) );
 
 			echo '</td></tr>';
 			echo '</table>';

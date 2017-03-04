@@ -59,7 +59,6 @@ class gEditorialAudit extends gEditorialModuleCore
 			),
 			'settings' => array(
 				'install_def_audit_tax' => _x( 'Install Default Attributes', 'Modules: Audit: Setting Button', GEDITORIAL_TEXTDOMAIN ),
-				'user_stats'            => _x( 'Apply Filter', 'Modules: Audit: Setting Button', GEDITORIAL_TEXTDOMAIN ),
 			),
 			'noops' => array(
 				'audit_tax' => _nx_noop( 'Audit Attribute', 'Audit Attributes', 'Modules: Audit: Noop', GEDITORIAL_TEXTDOMAIN ),
@@ -304,7 +303,8 @@ class gEditorialAudit extends gEditorialModuleCore
 
 			echo '&nbsp;';
 
-			$this->submit_button( 'user_stats' );
+			gEditorialSettingsCore::submitButton( 'user_stats',
+				_x( 'Apply Filter', 'Modules: Audit: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
 
 			// FIXME: style this!
 			if ( $summary = $this->get_summary( $this->post_types(), $terms, $args['user_id'] ) )

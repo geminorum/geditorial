@@ -78,10 +78,6 @@ class gEditorialContest extends gEditorialModuleCore
 			),
 			'settings' => array(
 				'install_def_apply_status_tax' => _x( 'Install Default Apply Statuses', 'Contest Module: Setting Button', GEDITORIAL_TEXTDOMAIN ),
-				'contest_tax_check'            => _x( 'Check Terms', 'Contest Module: Setting Button', GEDITORIAL_TEXTDOMAIN ),
-				'contest_post_create'          => _x( 'Create Contest Posts', 'Contest Module: Setting Button', GEDITORIAL_TEXTDOMAIN ),
-				'contest_post_connect'         => _x( 'Re-Connect Posts', 'Contest Module: Setting Button', GEDITORIAL_TEXTDOMAIN ),
-				'contest_tax_delete'           => _x( 'Delete Terms', 'Contest Module: Setting Button', GEDITORIAL_TEXTDOMAIN ),
 			),
 			'noops' => array(
 				'contest_cpt'      => _nx_noop( 'Contest', 'Contests', 'Contest Module: Noop', GEDITORIAL_TEXTDOMAIN ),
@@ -717,14 +713,19 @@ class gEditorialContest extends gEditorialModuleCore
 				echo '<br />';
 			}
 
-			$this->submit_button( 'contest_tax_check', TRUE );
-			$this->submit_button( 'contest_post_create' );
-			$this->submit_button( 'contest_post_connect' );
-			$this->submit_button( 'contest_tax_delete', FALSE, NULL, gEditorialSettingsCore::getButtonConfirm() );
+			gEditorialSettingsCore::submitButton( 'contest_tax_check',
+				_x( 'Check Terms', 'Contest Module: Setting Button', GEDITORIAL_TEXTDOMAIN ), TRUE );
 
-			echo gEditorialHTML::tag( 'p', array(
-				'class' => 'description',
-			), _x( 'Check for contest terms and create corresponding contest posts.', 'Contest Module', GEDITORIAL_TEXTDOMAIN ) );
+			gEditorialSettingsCore::submitButton( 'contest_post_create',
+				_x( 'Create Contest Posts', 'Contest Module: Setting Button', GEDITORIAL_TEXTDOMAIN ));
+
+			gEditorialSettingsCore::submitButton( 'contest_post_connect',
+				_x( 'Re-Connect Posts', 'Contest Module: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
+
+			gEditorialSettingsCore::submitButton( 'contest_tax_delete',
+				_x( 'Delete Terms', 'Contest Module: Setting Button', GEDITORIAL_TEXTDOMAIN ), 'delete', TRUE );
+
+			gEditorialHTML::desc( _x( 'Check for contest terms and create corresponding contest posts.', 'Contest Module', GEDITORIAL_TEXTDOMAIN ) );
 
 			echo '</td></tr>';
 			echo '</table>';

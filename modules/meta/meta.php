@@ -103,10 +103,7 @@ class gEditorialMeta extends gEditorialModuleCore
 				'meta_box_action'     => _x( 'Configure', 'Meta Module: Meta Box Action Title', GEDITORIAL_TEXTDOMAIN ),
 			),
 			'settings' => array(
-				'custom_fields_check'   => _x( 'Check', 'Meta Module: Setting Button', GEDITORIAL_TEXTDOMAIN ),
-				'custom_fields_convert' => _x( 'Covert', 'Meta Module: Setting Button', GEDITORIAL_TEXTDOMAIN ),
-				'custom_fields_delete'  => _x( 'Delete', 'Meta Module: Setting Button', GEDITORIAL_TEXTDOMAIN ),
-				'install_def_ct_tax'    => _x( 'Install Default Column Headers', 'Meta Module: Setting Button', GEDITORIAL_TEXTDOMAIN ),
+				'install_def_ct_tax' => _x( 'Install Default Column Headers', 'Meta Module: Setting Button', GEDITORIAL_TEXTDOMAIN ),
 			),
 			'noops' => array(
 				'ct_tax' => _nx_noop( 'Column Header', 'Column Headers', 'Meta Module: Noop', GEDITORIAL_TEXTDOMAIN ),
@@ -663,17 +660,19 @@ class gEditorialMeta extends gEditorialModuleCore
 				'option_group' => 'tools',
 			) );
 
-			echo gEditorialHTML::tag( 'p', array(
-				'class' => 'description',
-			), _x( 'Check for Custom Fields and import them into Meta', 'Meta Module', GEDITORIAL_TEXTDOMAIN ) );
+			echo '&nbsp;&nbsp;';
 
-			echo '<p class="submit">';
+			gEditorialSettingsCore::submitButton( 'custom_fields_check',
+				_x( 'Check', 'Meta Module: Setting Button', GEDITORIAL_TEXTDOMAIN ), TRUE );
 
-				$this->submit_button( 'custom_fields_check', TRUE );
-				$this->submit_button( 'custom_fields_convert' );
-				$this->submit_button( 'custom_fields_delete' );
+			gEditorialSettingsCore::submitButton( 'custom_fields_convert',
+				_x( 'Covert', 'Meta Module: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
 
-			echo '</p>';
+			gEditorialSettingsCore::submitButton( 'custom_fields_delete',
+				_x( 'Delete', 'Meta Module: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
+
+			gEditorialHTML::desc( _x( 'Check for Custom Fields and import them into Meta', 'Meta Module', GEDITORIAL_TEXTDOMAIN ) );
+
 			echo '</td></tr>';
 			echo '</table>';
 

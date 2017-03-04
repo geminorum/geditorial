@@ -249,7 +249,7 @@ class gEditorialSettings extends gEditorialModuleCore
 			self::cheatin();
 
 		// FIXME
-		gEditorialHTML::desc( 'Comming Soon!' );
+		gEditorialHTML::warning( 'Comming Soon!', TRUE );
 	}
 
 	public function tools_sub( $uri, $sub )
@@ -281,20 +281,18 @@ class gEditorialSettings extends gEditorialModuleCore
 			echo '<tr><th scope="row">'._x( 'Options', 'Settings Module', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
 
 				echo '<p>';
-					$this->submit_button( 'upgrade_old_options', FALSE, _x( 'Upgrade Old Options', 'Settings Module: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
+					gEditorialSettingsCore::submitButton( 'upgrade_old_options',
+						_x( 'Upgrade Old Options', 'Settings Module: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
 
-					echo gEditorialHTML::tag( 'span', array(
-						'class' => 'description',
-					), _x( 'Will check for old options and upgrade, also delete old options', 'Settings Module', GEDITORIAL_TEXTDOMAIN ) );
+					gEditorialHTML::desc( _x( 'Will check for old options and upgrade, also delete old options', 'Settings Module', GEDITORIAL_TEXTDOMAIN ), FALSE );
 				echo '</p>';
 
 				if ( gEditorialWPUser::isSuperAdmin() || self::isDev() ) {
 					echo '<br /><p>';
-						$this->submit_button( 'delete_all_options', FALSE, _x( 'Delete All Options', 'Settings Module: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
+						gEditorialSettingsCore::submitButton( 'delete_all_options',
+							_x( 'Delete All Options', 'Settings Module: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
 
-						echo gEditorialHTML::tag( 'span', array(
-							'class' => 'description',
-						), _x( 'Deletes all editorial options on current site', 'Settings Module', GEDITORIAL_TEXTDOMAIN ) );
+						gEditorialHTML::desc( _x( 'Deletes all editorial options on current site', 'Settings Module', GEDITORIAL_TEXTDOMAIN ), FALSE );
 					echo '</p>';
 				}
 
@@ -310,11 +308,10 @@ class gEditorialSettings extends gEditorialModuleCore
 				) );
 
 				echo '<p class="submit">';
-					$this->submit_button( 'custom_fields_empty', FALSE, _x( 'Empty', 'Settings Module: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
+					gEditorialSettingsCore::submitButton( 'custom_fields_empty',
+						_x( 'Empty', 'Settings Module: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
 
-					echo gEditorialHTML::tag( 'span', array(
-						'class' => 'description',
-					), _x( 'Will delete empty meta values, solves common problems with imported posts.', 'Settings Module', GEDITORIAL_TEXTDOMAIN ) );
+					gEditorialHTML::desc( _x( 'Will delete empty meta values, solves common problems with imported posts.', 'Settings Module', GEDITORIAL_TEXTDOMAIN ), FALSE );
 				echo '</p>';
 
 			echo '</td></tr>';
@@ -344,11 +341,10 @@ class gEditorialSettings extends gEditorialModuleCore
 					) );
 
 					echo '<p class="submit">';
-						$this->submit_button( 'orphaned_terms', FALSE, _x( 'Convert', 'Settings Module: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
+						gEditorialSettingsCore::submitButton( 'orphaned_terms',
+							_x( 'Convert', 'Settings Module: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
 
-						echo gEditorialHTML::tag( 'span', array(
-							'class' => 'description',
-						), _x( 'Converts orphaned terms into currently registered taxonomies', 'Settings Module', GEDITORIAL_TEXTDOMAIN ) );
+						gEditorialHTML::desc( _x( 'Converts orphaned terms into currently registered taxonomies', 'Settings Module', GEDITORIAL_TEXTDOMAIN ), FALSE );
 					echo '</p>';
 
 				echo '</td></tr>';
