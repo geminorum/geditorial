@@ -307,12 +307,12 @@ class gEditorialSettings extends gEditorialModuleCore
 					'option_group' => 'tools',
 				) );
 
-				echo '<p class="submit">';
-					gEditorialSettingsCore::submitButton( 'custom_fields_empty',
-						_x( 'Empty', 'Settings Module: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
+				echo '&nbsp;&nbsp;';
 
-					gEditorialHTML::desc( _x( 'Will delete empty meta values, solves common problems with imported posts.', 'Settings Module', GEDITORIAL_TEXTDOMAIN ), FALSE );
-				echo '</p>';
+				gEditorialSettingsCore::submitButton( 'custom_fields_empty',
+					_x( 'Empty', 'Settings Module: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
+
+				gEditorialHTML::desc( _x( 'Will delete empty meta values, solves common problems with imported posts.', 'Settings Module', GEDITORIAL_TEXTDOMAIN ) );
 
 			echo '</td></tr>';
 
@@ -340,12 +340,12 @@ class gEditorialSettings extends gEditorialModuleCore
 						'option_group' => 'tools',
 					) );
 
-					echo '<p class="submit">';
-						gEditorialSettingsCore::submitButton( 'orphaned_terms',
-							_x( 'Convert', 'Settings Module: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
+					echo '&nbsp;&nbsp;';
 
-						gEditorialHTML::desc( _x( 'Converts orphaned terms into currently registered taxonomies', 'Settings Module', GEDITORIAL_TEXTDOMAIN ), FALSE );
-					echo '</p>';
+					gEditorialSettingsCore::submitButton( 'orphaned_terms',
+						_x( 'Convert', 'Settings Module: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
+
+					gEditorialHTML::desc( _x( 'Converts orphaned terms into currently registered taxonomies', 'Settings Module', GEDITORIAL_TEXTDOMAIN ) );
 
 				echo '</td></tr>';
 			}
