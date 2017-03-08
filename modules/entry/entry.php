@@ -280,23 +280,17 @@ class gEditorialEntry extends gEditorialModuleCore
 
 	public function content_before( $content, $posttypes = NULL )
 	{
-		if ( is_singular( $this->constant( 'entry_cpt' ) )
-			&& in_the_loop() && is_main_query() )
-				parent::content_before( $content, FALSE );
+		parent::content_before( $content, 'entry_cpt' );
 	}
 
 	public function content_after( $content, $posttypes = NULL )
 	{
-		if ( is_singular( $this->constant( 'entry_cpt' ) )
-			&& in_the_loop() && is_main_query() )
-				parent::content_after( $content, FALSE );
+		parent::content_after( $content, 'entry_cpt' );
 	}
 
 	public function the_content( $content )
 	{
-		if ( is_singular( $this->constant( 'entry_cpt' ) )
-			&& in_the_loop()
-			&& is_main_query() ) {
+		if ( $this->is_content_insert( 'entry_cpt' ) ) {
 
 			if ( is_null( $this->sections ) )
 				$this->sections = gEditorialWPTaxonomy::prepTerms( $this->constant( 'section_tax' ) );

@@ -507,10 +507,7 @@ class gEditorialBook extends gEditorialModuleCore
 
 	public function insert_content( $content, $posttypes = NULL )
 	{
-		if ( ! is_singular( $this->post_types( 'publication_cpt' ) ) )
-			return;
-
-		if ( ! in_the_loop() || ! is_main_query() )
+		if ( ! $this->is_content_insert( $this->post_types( 'publication_cpt' ) ) )
 			return;
 
 		$this->list_p2p( NULL, '-'.$this->get_setting( 'insert_content', 'none' ) );
@@ -550,14 +547,12 @@ class gEditorialBook extends gEditorialModuleCore
 
 	public function content_before( $content, $posttypes = NULL )
 	{
-		global $page;
+		if ( ! $this->is_content_insert( $this->post_types( 'publication_cpt' ) ) )
+			return;
 
-		if ( 1 == $page
-			&& is_singular( $this->constant( 'publication_cpt' ) )
-			&& in_the_loop() && is_main_query() )
-				gEditorialBookTemplates::postImage( array(
-					'size' => $this->get_image_size_key( 'publication_cpt', 'medium' ),
-					'link' => 'attachment',
-				) );
+		gEditorialBookTemplates::postImage( array(
+			'size' => $this->get_image_size_key( 'publication_cpt', 'medium' ),
+			'link' => 'attachment',
+		) );
 	}
 }

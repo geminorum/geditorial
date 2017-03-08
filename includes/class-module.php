@@ -1995,19 +1995,35 @@ SQL;
 		}
 	}
 
+	// should we insert content?
+	public function is_content_insert( $posttypes = '', $first_page = TRUE )
+	{
+		if ( ! is_main_query() )
+			return FALSE;
+
+		if ( ! in_the_loop() )
+			return FALSE;
+
+		if ( is_null( $posttypes ) )
+			$posttypes = $this->post_types();
+
+		else if ( $posttypes && ! is_array( $posttypes ) )
+			$posttypes = $this->constant( $posttypes );
+
+		if ( ! is_singular( $posttypes ) )
+			return FALSE;
+
+		if ( $first_page && 1 != $GLOBALS['page'] )
+			return FALSE;
+
+		return TRUE;
+	}
+
 	public function content_before( $content, $posttypes = NULL )
 	{
-		if ( FALSE !== $posttypes ) {
-
-			if ( ! in_the_loop() || ! is_main_query() )
+		if ( FALSE !== $posttypes
+			&& ! $this->is_content_insert( $posttypes ) )
 				return;
-
-			if ( is_null( $posttypes ) )
-				$posttypes = $this->post_types();
-
-			if ( ! is_singular( $posttypes ) )
-				return;
-		}
 
 		if ( $before = $this->get_setting( 'before_content', FALSE ) )
 			echo '<div class="geditorial-wrap -'.$this->module->name.' -content-before">'
@@ -2016,17 +2032,9 @@ SQL;
 
 	public function content_after( $content, $posttypes = NULL )
 	{
-		if ( FALSE !== $posttypes ) {
-
-			if ( ! in_the_loop() || ! is_main_query() )
+		if ( FALSE !== $posttypes
+			&& ! $this->is_content_insert( $posttypes ) )
 				return;
-
-			if ( is_null( $posttypes ) )
-				$posttypes = $this->post_types();
-
-			if ( ! is_singular( $posttypes ) )
-				return;
-		}
 
 		if ( $after = $this->get_setting( 'after_content', FALSE ) )
 			echo '<div class="geditorial-wrap -'.$this->module->name.' -content-after">'

@@ -132,9 +132,10 @@ class gEditorialHeadings extends gEditorialModuleCore
 		if ( ! count( $this->toc ) )
 			return;
 
-		if ( is_singular( $this->post_types() )
-			&& in_the_loop() && is_main_query() )
-				$this->render_headings( NULL, '-content-before' );
+		if ( ! $this->is_content_insert( NULL ) )
+			return;
+
+		$this->render_headings( NULL, '-content-before' );
 	}
 
 	public function render_headings( $title = NULL, $class = '' )
