@@ -12,6 +12,7 @@ class gEditorialReshare extends gEditorialModuleCore
 			'title'     => _x( 'Reshare', 'Reshare Module', GEDITORIAL_TEXTDOMAIN ),
 			'desc'      => _x( 'Contents from Other Sources', 'Reshare Module', GEDITORIAL_TEXTDOMAIN ),
 			'icon'      => 'external',
+			'configure' => FALSE,
 		);
 	}
 
@@ -30,22 +31,6 @@ class gEditorialReshare extends gEditorialModuleCore
 		return array(
 			'taxonomies' => array(
 				'reshare_cat' => NULL,
-			),
-		);
-	}
-
-	protected function get_global_settings()
-	{
-		return array(
-			'_general' => array(
-				'insert_content',
-				array(
-					'field'       => 'before_source',
-					'type'        => 'text',
-					'title'       => _x( 'Before Source', 'Reshare Module: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Default text before the source link', 'Reshare Module: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-					'default'     => _x( 'Source:', 'Reshare Module: Setting Default', GEDITORIAL_TEXTDOMAIN ),
-				),
 			),
 		);
 	}
@@ -106,17 +91,6 @@ class gEditorialReshare extends gEditorialModuleCore
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
 		), 'reshare_cpt' );
-
-		if ( ! is_admin() ) {
-
-			$setting = $this->get_setting( 'insert_content', 'none' );
-
-			if ( 'before' == $setting )
-				add_action( 'gnetwork_themes_content_before', array( $this, 'insert_content' ), 50 );
-
-			else if ( 'after' == $setting )
-				add_action( 'gnetwork_themes_content_after', array( $this, 'insert_content' ), 50 );
-		}
 	}
 
 	public function current_screen( $screen )
@@ -128,17 +102,5 @@ class gEditorialReshare extends gEditorialModuleCore
 				$this->_tweaks_taxonomy();
 			}
 		}
-	}
-
-	public function insert_content( $content, $posttypes = NULL )
-	{
-		if ( is_singular( $this->constant( 'reshare_cpt' ) )
-			&& in_the_loop() && is_main_query() )
-				gEditorialReshareTemplates::source( array(
-					'before' => '<div class="geditorial-wrap -reshare -'
-						.$this->get_setting( 'insert_content', 'none' ).' entry-source">'
-						.$this->get_setting( 'before_source', '' ).' ',
-					'after' => '</div>',
-				) );
 	}
 }

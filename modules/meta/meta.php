@@ -38,7 +38,13 @@ class gEditorialMeta extends gEditorialModuleCore
 					'title'       => _x( 'Overwrite Author', 'Meta Module: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Replace author display name with author meta data.', 'Meta Module: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 				),
-				'insert_content_before',
+				array(
+					'field'       => 'before_source',
+					'type'        => 'text',
+					'title'       => _x( 'Before Source', 'Meta Module: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Default text before the source link', 'Meta Module: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'default'     => _x( 'Source:', 'Meta Module: Setting Default', GEDITORIAL_TEXTDOMAIN ),
+				),
 			),
 		);
 	}
@@ -179,8 +185,8 @@ class gEditorialMeta extends gEditorialModuleCore
 
 		if ( ! is_admin() ) {
 
-			if ( $this->get_setting( 'insert_content_before', FALSE ) )
-				add_action( 'gnetwork_themes_content_before', array( $this, 'content_before' ), 50 );
+			add_action( 'gnetwork_themes_content_before', array( $this, 'content_before' ), 50 );
+			add_action( 'gnetwork_themes_content_after', array( $this, 'content_after' ), 50 );
 
 			if ( $this->get_setting( 'overwrite_author', FALSE ) )
 				add_action( 'the_author', array( $this, 'the_author' ), 9 );
@@ -561,15 +567,25 @@ class gEditorialMeta extends gEditorialModuleCore
 
 	public function content_before( $content, $posttypes = NULL )
 	{
-		global $page;
+		if ( ! $this->is_content_insert( NULL ) )
+			return;
 
-		if ( 1 == $page
-			&& is_singular( $this->post_types() )
-			&& in_the_loop() && is_main_query() )
-				gEditorialMetaTemplates::metaLead( array(
-					'before' => '<div class="geditorial-wrap -meta -before entry-lead">',
-					'after'  => '</div>',
-				) );
+		gEditorialMetaTemplates::metaLead( array(
+			'before' => '<div class="geditorial-wrap -meta -before entry-lead">',
+			'after'  => '</div>',
+		) );
+	}
+
+	public function content_after( $content, $posttypes = NULL )
+	{
+		if ( ! $this->is_content_insert( NULL, FALSE ) )
+			return;
+
+		gEditorialMetaTemplates::metaLink( array(
+			'before' => '<div class="geditorial-wrap -meta -after entry-source">'
+				.$this->get_setting( 'before_source', '' ).' ',
+			'after'  => '</div>',
+		) );
 	}
 
 	public function the_author( $display_name )
