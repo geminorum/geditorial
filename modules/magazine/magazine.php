@@ -807,7 +807,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 						'callback' => function( $value, $row, $column, $index ){
 
 							if ( $post_id = $this->get_linked_post_id( $row, 'issue_cpt', 'issue_tax', FALSE ) )
-								return gEditorialHelper::getPostTitle( $post_id ).' &ndash; '.$post_id;
+								return gEditorialHelper::getPostTitleRow( $post_id ).' &ndash; <small>'.$post_id.'</small>';
 
 							return '&mdash;';
 						},
@@ -817,7 +817,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 						'callback' => function( $value, $row, $column, $index ){
 
 							if ( $post_id = gEditorialWPPostType::getIDbySlug( $row->slug, $this->constant( 'issue_cpt' ) ) )
-								return gEditorialHelper::getPostTitle( $post_id ).' &ndash; '.$post_id;
+								return gEditorialHelper::getPostTitleRow( $post_id ).' &ndash; <small>'.$post_id.'</small>';
 
 							return '&mdash;';
 						},

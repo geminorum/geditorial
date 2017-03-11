@@ -684,7 +684,7 @@ class gEditorialContest extends gEditorialModuleCore
 						'callback' => function( $value, $row, $column, $index ){
 
 							if ( $post_id = $this->get_linked_post_id( $row, 'contest_cpt', 'contest_tax', FALSE ) )
-								return gEditorialHelper::getPostTitle( $post_id ).' &ndash; '.$post_id;
+								return gEditorialHelper::getPostTitleRow( $post_id ).' &ndash; <small>'.$post_id.'</small>';
 
 							return '&mdash;';
 						},
@@ -694,7 +694,7 @@ class gEditorialContest extends gEditorialModuleCore
 						'callback' => function( $value, $row, $column, $index ){
 
 							if ( $post_id = gEditorialWPPostType::getIDbySlug( $row->slug, $this->constant( 'contest_cpt' ) ) )
-								return gEditorialHelper::getPostTitle( $post_id ).' &ndash; '.$post_id;
+								return gEditorialHelper::getPostTitleRow( $post_id ).' &ndash; <small>'.$post_id.'</small>';
 
 							return '&mdash;';
 						},

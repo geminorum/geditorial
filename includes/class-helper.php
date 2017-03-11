@@ -154,7 +154,7 @@ class gEditorialHelper extends gEditorialBaseCore
 
 			$list[] = gEditorialHTML::tag( 'a', array(
 				'href'  => add_query_arg( $query, 'edit.php' ),
-				'title' => $term->slug,
+				'title' => urldecode( $term->slug ),
 				'class' => '-term',
 			), esc_html( sanitize_term_field( 'name', $term->name, $term->term_id, $object->name, 'display' ) ) );
 		}
@@ -179,7 +179,7 @@ class gEditorialHelper extends gEditorialBaseCore
 	public static function getPostTitle( $post, $fallback = NULL )
 	{
 		if ( ! $post = get_post( $post ) )
-			return '';
+			return __( 'N/A', GEDITORIAL_TEXTDOMAIN );
 
 		$title = apply_filters( 'the_title', $post->post_title, $post->ID );
 
@@ -197,6 +197,9 @@ class gEditorialHelper extends gEditorialBaseCore
 
 	public static function getPostTitleRow( $post, $link = 'edit' )
 	{
+		if ( ! $post = get_post( $post ) )
+			return __( 'N/A', GEDITORIAL_TEXTDOMAIN );
+
 		$title = self::getPostTitle( $post );
 
 		if ( ! $link )
@@ -261,6 +264,44 @@ class gEditorialHelper extends gEditorialBaseCore
 		}
 
 		return $list;
+	}
+
+	public static function getTermTitleRow( $term, $link = 'edit' )
+	{
+		$term = get_term( $term );
+
+		if ( ! $term || is_wp_error( $term ) )
+			return __( 'N/A', GEDITORIAL_TEXTDOMAIN );
+
+		$title = sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' );
+
+		if ( ! $link )
+			return esc_html( $title );
+
+		if ( 'edit' == $link && ! current_user_can( 'edit_term', $term->term_id ) )
+			$link = 'view';
+
+		if ( 'edit' == $link )
+			return gEditorialHTML::tag( 'a', array(
+				'href'   => gEditorialWordPress::getEditTaxLink( $term->taxonomy, $term->term_id ),
+				'title'  => urldecode( $term->slug ),
+				'class'  => '-link -row-link -row-link-edit',
+				'target' => '_blank',
+			), esc_html( $title ) );
+
+		if ( 'view' == $link )
+			return gEditorialHTML::tag( 'a', array(
+				'href'   => get_term_link( $term->term_id, $term->taxonomy ),
+				'class'  => '-link -row-link -row-link-view',
+				'target' => '_blank',
+				'title'  => _x( 'View', 'Module Helper: Row Action', GEDITORIAL_TEXTDOMAIN ),
+			), esc_html( $title ) );
+
+		return gEditorialHTML::tag( 'a', array(
+			'href'   => $link,
+			'class'  => '-link -row-link -row-link-custom',
+			'target' => '_blank',
+		), esc_html( $title ) );
 	}
 
 	public static function getMimeTypeEditRow( $mime_types, $post_parent, $before = '', $after = '' )
@@ -480,7 +521,12 @@ class gEditorialHelper extends gEditorialBaseCore
 
 	public static function tableColumnTermName()
 	{
-		return _x( 'Name', 'Module Helper: Table Column: Term Name', GEDITORIAL_TEXTDOMAIN );
+		return array(
+			'title'    => _x( 'Name', 'Module Helper: Table Column: Term Name', GEDITORIAL_TEXTDOMAIN ),
+			'callback' => function( $value, $row, $column, $index ){
+				return gEditorialHelper::getTermTitleRow( $row );
+			},
+		);
 	}
 
 	public static function tableColumnTermSlug()
