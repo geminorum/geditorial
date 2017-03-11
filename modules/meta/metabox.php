@@ -94,6 +94,7 @@ class gEditorialMetaMetaBox extends gEditorialMetaBox
 				'data' => array(
 					'meta-field' => $field,
 					'meta-type'  => $type,
+					'meta-title' => $title,
 				),
 			);
 
@@ -139,6 +140,7 @@ class gEditorialMetaMetaBox extends gEditorialMetaBox
 				'data' => array(
 					'meta-field' => $field,
 					'meta-type'  => $type,
+					'meta-title' => $title,
 				),
 			);
 
@@ -219,6 +221,7 @@ class gEditorialMetaMetaBox extends gEditorialMetaBox
 				'data' => array(
 					'meta-field' => $field,
 					'meta-type'  => $type,
+					'meta-title' => $title,
 				),
 			);
 
@@ -269,6 +272,7 @@ class gEditorialMetaMetaBox extends gEditorialMetaBox
 				'data' => array(
 					'meta-field' => $field,
 					'meta-type'  => $type,
+					'meta-title' => $title,
 				),
 			);
 
@@ -318,6 +322,7 @@ class gEditorialMetaMetaBox extends gEditorialMetaBox
 				'data' => array(
 					'meta-field' => $field,
 					'meta-type'  => $type,
+					'meta-title' => $title,
 				),
 			);
 

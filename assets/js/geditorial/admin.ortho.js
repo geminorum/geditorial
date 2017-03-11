@@ -125,6 +125,8 @@
     },
     download: function(e, c, ed) {
       var filename = 'Untitled';
+      var metadata = '';
+
       if ( $('#title').length && $('#title').val() )
         filename = $('#title').val().trim();
       else if ( $('#tag-name').length && $('#tag-name').val() )
@@ -133,7 +135,17 @@
         filename = $('#name').val().trim();
       else if ( $('#post_ID').length )
         filename = 'Untitled-'+$('#post_ID').val();
-      o.u.downloadText(filename+'.md', '## '+filename+"\n\n"+$(c).val());
+
+      $('input[data-meta-title]').each(function(i) {
+        var text = $(this).val();
+        if ( text )
+          metadata = metadata+$(this).data('meta-title')+': '+text+"\n";
+      });
+
+      if ( metadata ) // Front Matter
+        metadata = '---'+"\n"+metadata+'---'+"\n\n";
+
+      o.u.downloadText(filename+'.md', metadata+'## '+filename+"\n"+$(c).val());
     },
   };
 
