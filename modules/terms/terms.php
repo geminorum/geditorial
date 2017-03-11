@@ -28,6 +28,88 @@ class gEditorialTerms extends gEditorialModuleCore
 			return array_merge( $subs, array( $this->module->name => $this->module->title ) );
 	}
 
+	public function tools_settings( $sub )
+	{
+		if ( ! $this->cuc( 'tools' ) )
+			return;
+
+		if ( $this->module->name == $sub ) {
+
+			if ( ! empty( $_POST ) ) {
+
+				$this->settings_check_referer( $sub, 'tools' );
+
+				if ( isset( $_POST['orphaned_terms'] ) ) {
+
+					if ( ! empty( $post['dead_tax'] )
+						&& ! empty( $post['live_tax'] ) ) {
+
+						$result = $wpdb->query( $wpdb->prepare( "
+							UPDATE $wpdb->term_taxonomy SET taxonomy = %s WHERE taxonomy = '%s'
+						", trim( $post['live_tax'] ), trim( $post['dead_tax'] ) ) );
+
+						if ( count( $result ) )
+							gEditorialWordPress::redirectReferer( array(
+								'message' => 'changed',
+								'count'   => count( $result ),
+							) );
+					}
+				}
+			}
+
+			add_action( 'geditorial_tools_sub_'.$sub, array( $this, 'tools_sub' ), 10, 2 );
+		}
+
+		add_filter( 'geditorial_tools_subs', array( $this, 'append_sub' ), 10, 2 );
+	}
+
+	public function tools_sub( $uri, $sub )
+	{
+		$this->settings_form_before( $uri, $sub, 'bulk', 'tools', FALSE, FALSE );
+
+			gEditorialHTML::h3( _x( 'Term Tools', 'Modules: Terms', GEDITORIAL_TEXTDOMAIN ) );
+
+			echo '<table class="form-table">';
+
+			$db_taxes   = gEditorialWPDatabase::getTaxonomies( TRUE );
+			$live_taxes = gEditorialWPTaxonomy::get( 6 );
+			$dead_taxes = array_diff_key( $db_taxes, $live_taxes );
+
+			if ( count( $dead_taxes ) ) {
+
+				echo '<tr><th scope="row">'._x( 'Orphaned Terms', 'Modules: Terms', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
+
+					$this->do_settings_field( array(
+						'type'         => 'select',
+						'field'        => 'dead_tax',
+						'values'       => $dead_taxes,
+						'default'      => ( isset( $post['dead_tax'] ) ? $post['dead_tax'] : 'post_tag' ),
+						'option_group' => 'tools',
+					) );
+
+					$this->do_settings_field( array(
+						'type'         => 'select',
+						'field'        => 'live_tax',
+						'values'       => $live_taxes,
+						'default'      => ( isset( $post['live_tax'] ) ? $post['live_tax'] : 'post_tag' ),
+						'option_group' => 'tools',
+					) );
+
+					echo '&nbsp;&nbsp;';
+
+					gEditorialSettingsCore::submitButton( 'orphaned_terms',
+						_x( 'Convert', 'Modules: Terms: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
+
+					gEditorialHTML::desc( _x( 'Converts orphaned terms into currently registered taxonomies', 'Modules: Terms', GEDITORIAL_TEXTDOMAIN ) );
+
+				echo '</td></tr>';
+			}
+
+			echo '</table>';
+
+		$this->settings_form_after( $uri, $sub );
+	}
+
 	public function reports_settings( $sub )
 	{
 		if ( ! $this->cuc( 'reports' ) )

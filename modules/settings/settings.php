@@ -215,22 +215,6 @@ class gEditorialSettings extends gEditorialModuleCore
 								'count'   => count( $result ),
 							) );
 					}
-
-				} else if ( isset( $_POST['orphaned_terms'] ) ) {
-
-					if ( ! empty( $post['dead_tax'] )
-						&& ! empty( $post['live_tax'] ) ) {
-
-						$result = $wpdb->query( $wpdb->prepare( "
-							UPDATE $wpdb->term_taxonomy SET taxonomy = %s WHERE taxonomy = '%s'
-						", trim( $post['live_tax'] ), trim( $post['dead_tax'] ) ) );
-
-						if ( count( $result ) )
-							gEditorialWordPress::redirectReferer( array(
-								'message' => 'changed',
-								'count'   => count( $result ),
-							) );
-					}
 				}
 			}
 
@@ -315,42 +299,8 @@ class gEditorialSettings extends gEditorialModuleCore
 				gEditorialHTML::desc( _x( 'Will delete empty meta values, solves common problems with imported posts.', 'Settings Module', GEDITORIAL_TEXTDOMAIN ) );
 
 			echo '</td></tr>';
-
-			$db_taxes   = gEditorialWPDatabase::getTaxonomies( TRUE );
-			$live_taxes = gEditorialWPTaxonomy::get( 6 );
-			$dead_taxes = array_diff_key( $db_taxes, $live_taxes );
-
-			if ( count( $dead_taxes ) ) {
-
-				echo '<tr><th scope="row">'._x( 'Orphaned Terms', 'Settings Module', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
-
-					$this->do_settings_field( array(
-						'type'         => 'select',
-						'field'        => 'dead_tax',
-						'values'       => $dead_taxes,
-						'default'      => ( isset( $post['dead_tax'] ) ? $post['dead_tax'] : 'post_tag' ),
-						'option_group' => 'tools',
-					) );
-
-					$this->do_settings_field( array(
-						'type'         => 'select',
-						'field'        => 'live_tax',
-						'values'       => $live_taxes,
-						'default'      => ( isset( $post['live_tax'] ) ? $post['live_tax'] : 'post_tag' ),
-						'option_group' => 'tools',
-					) );
-
-					echo '&nbsp;&nbsp;';
-
-					gEditorialSettingsCore::submitButton( 'orphaned_terms',
-						_x( 'Convert', 'Settings Module: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
-
-					gEditorialHTML::desc( _x( 'Converts orphaned terms into currently registered taxonomies', 'Settings Module', GEDITORIAL_TEXTDOMAIN ) );
-
-				echo '</td></tr>';
-			}
-
 			echo '</table>';
+
 		$this->settings_form_after( $uri, $sub );
 	}
 
