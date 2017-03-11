@@ -557,7 +557,7 @@ class gEditorialMeta extends gEditorialModuleCore
 				$selector = 'geditorial-meta-'.$field;
 				echo '<label class="'.$selector.'">';
 					echo '<span class="title">'.$this->get_string( $field, $post_type ).'</span>';
-					echo '<span class="input-text-wrap"><input type="text" name="'.$selector.'" class="ptitle '.$selector.'" value=""></span>';
+					echo '<span class="input-text-wrap"><input type="text" name="'.$selector.'" class="'.$selector.'" value=""></span>';
 				echo '</label>';
 			}
 		}
