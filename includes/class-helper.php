@@ -924,6 +924,42 @@ class gEditorialHelper extends gEditorialBaseCore
 		);
 	}
 
+	/**
+	 *	%1$s => Camel Case / Plural
+	 *	%2$s => Camel Case / Singular
+	 *	%3$s => Lower Case / Plural
+	 *	%4$s => Lower Case / Singular
+	 *	%5$s => %s
+	 */
+	public static function generateBulkPostTypeMessages( $name, $counts )
+	{
+		$templates = [
+			'updated'   => _nx_noop( '%5$s %4$s updated.', '%5$s %3$s updated.', 'Module Helper: Bulk PostType Message Generator', GEDITORIAL_TEXTDOMAIN ),
+			'locked'    => _nx_noop( '%5$s %4$s not updated, somebody is editing it.', '%5$s %3$s not updated, somebody is editing them.', 'Module Helper: Bulk PostType Message Generator', GEDITORIAL_TEXTDOMAIN ),
+			'deleted'   => _nx_noop( '%5$s %4$s permanently deleted.', '%5$s %3$s permanently deleted.', 'Module Helper: Bulk PostType Message Generator', GEDITORIAL_TEXTDOMAIN ),
+			'trashed'   => _nx_noop( '%5$s %4$s moved to the Trash.', '%5$s %3$s moved to the Trash.', 'Module Helper: Bulk PostType Message Generator', GEDITORIAL_TEXTDOMAIN ),
+			'untrashed' => _nx_noop( '%5$s %4$s restored from the Trash.', '%5$s %3$s restored from the Trash.', 'Module Helper: Bulk PostType Message Generator', GEDITORIAL_TEXTDOMAIN ),
+		];
+
+		$messages = [];
+		$strings  = self::getStringsFromName( $name );
+
+		foreach ( $templates as $key => $template ) {
+
+			$nooped = [
+				'singular' => vsprintf( $template['singular'], $strings ),
+				'plural'   => vsprintf( $template['plural'], $strings ),
+				'context'  => $template['context'],
+				'domain'   => $template['domain'],
+			];
+
+			// needs to apply the role so we use noopedCount()
+			$messages[$key] = self::noopedCount( $counts[$key], $nooped );
+		}
+
+		return $messages;
+	}
+
 	public static function getPostTypeMonths( $calendar_type, $post_type = 'post', $args = array(), $user_id = 0 )
 	{
 		$callback = array( 'gEditorialWPDatabase', 'getPostTypeMonths' );

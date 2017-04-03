@@ -291,6 +291,8 @@ class gEditorialBook extends gEditorialModuleCore
 
 			} else if ( 'edit' == $screen->base ) {
 
+				$this->filter( 'bulk_post_updated_messages', 2 );
+
 				add_filter( 'disable_months_dropdown', '__return_true', 12 );
 				add_action( 'restrict_manage_posts', array( $this, 'restrict_manage_posts' ), 12, 2 );
 				add_action( 'parse_query', array( $this, 'parse_query' ) );
@@ -502,6 +504,11 @@ class gEditorialBook extends gEditorialModuleCore
 	public function post_updated_messages( $messages )
 	{
 		return array_merge( $messages, array( $this->constant( 'publication_cpt' ) => $this->get_post_updated_messages( 'publication_cpt' ) ) );
+	}
+
+	public function bulk_post_updated_messages( $messages, $counts )
+	{
+		return array_merge( $messages, array( $this->constant( 'publication_cpt' ) => $this->get_bulk_post_updated_messages( 'publication_cpt', $counts ) ) );
 	}
 
 	public function insert_content( $content, $posttypes = NULL )

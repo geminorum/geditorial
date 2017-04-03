@@ -166,6 +166,8 @@ class gEditorialToday extends gEditorialModuleCore
 
 			if ( $screen->post_type == $this->constant( 'day_cpt' ) ) {
 
+				$this->filter( 'bulk_post_updated_messages', 2 );
+
 				$this->_save_meta_supported( $screen->post_type );
 				$this->_admin_enabled();
 
@@ -322,6 +324,11 @@ class gEditorialToday extends gEditorialModuleCore
 	public function post_updated_messages( $messages )
 	{
 		return array_merge( $messages, array( $this->constant( 'day_cpt' ) => $this->get_post_updated_messages( 'day_cpt' ) ) );
+	}
+
+	public function bulk_post_updated_messages( $messages, $counts )
+	{
+		return array_merge( $messages, array( $this->constant( 'day_cpt' ) => $this->get_bulk_post_updated_messages( 'day_cpt', $counts ) ) );
 	}
 
 	// CAUTION: the ordering is crucial

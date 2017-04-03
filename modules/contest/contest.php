@@ -219,6 +219,8 @@ class gEditorialContest extends gEditorialModuleCore
 
 			} else if ( 'edit' == $screen->base ) {
 
+				$this->filter( 'bulk_post_updated_messages', 2 );
+
 				if ( $this->get_setting( 'admin_ordering', TRUE ) )
 					add_action( 'pre_get_posts', array( $this, 'pre_get_posts' ) );
 
@@ -252,6 +254,9 @@ class gEditorialContest extends gEditorialModuleCore
 				// TODO: add a thick-box to list the posts with this issue taxonomy
 
 			} else if ( 'edit' == $screen->base ) {
+
+				if ( $screen->post_type == $this->constant( 'apply_cpt' ) )
+					add_filter( 'bulk_post_updated_messages', array( $this, 'bulk_post_updated_messages_supported' ), 10, 2 );
 
 				if ( $this->get_setting( 'admin_restrict', FALSE ) )
 					add_action( 'restrict_manage_posts', array( $this, 'restrict_manage_posts_supported_cpt' ), 12, 2 );
@@ -448,10 +453,21 @@ class gEditorialContest extends gEditorialModuleCore
 		return array_merge( $messages, array( $this->constant( 'contest_cpt' ) => $this->get_post_updated_messages( 'contest_cpt' ) ) );
 	}
 
+	public function bulk_post_updated_messages( $messages, $counts )
+	{
+		return array_merge( $messages, array( $this->constant( 'contest_cpt' ) => $this->get_bulk_post_updated_messages( 'contest_cpt', $counts ) ) );
+	}
+
 	public function post_updated_messages_supported( $messages )
 	{
 		return array_merge( $messages, array( $this->constant( 'apply_cpt' ) => $this->get_post_updated_messages( 'apply_cpt' ) ) );
 	}
+
+	public function bulk_post_updated_messages_supported( $messages, $counts )
+	{
+		return array_merge( $messages, array( $this->constant( 'apply_cpt' ) => $this->get_bulk_post_updated_messages( 'apply_cpt', $counts ) ) );
+	}
+
 
 	public function wp_insert_post_data( $data, $postarr )
 	{

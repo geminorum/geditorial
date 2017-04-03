@@ -282,6 +282,8 @@ class gEditorialMagazine extends gEditorialModuleCore
 
 			} else if ( 'edit' == $screen->base ) {
 
+				$this->filter( 'bulk_post_updated_messages', 2 );
+
 				add_filter( 'disable_months_dropdown', '__return_true', 12 );
 
 				if ( $this->get_setting( 'admin_restrict', FALSE ) ) {
@@ -783,6 +785,11 @@ class gEditorialMagazine extends gEditorialModuleCore
 	public function post_updated_messages( $messages )
 	{
 		return array_merge( $messages, array( $this->constant( 'issue_cpt' ) => $this->get_post_updated_messages( 'issue_cpt' ) ) );
+	}
+
+	public function bulk_post_updated_messages( $messages, $counts )
+	{
+		return array_merge( $messages, array( $this->constant( 'issue_cpt' ) => $this->get_bulk_post_updated_messages( 'issue_cpt', $counts ) ) );
 	}
 
 	public function tools_sub( $uri, $sub )

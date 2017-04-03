@@ -208,6 +208,8 @@ class gEditorialEvent extends gEditorialModuleCore
 
 			} else if ( 'edit' == $screen->base ) {
 
+				$this->filter( 'bulk_post_updated_messages', 2 );
+
 				if ( $startend ) {
 
 					add_action( 'restrict_manage_posts', array( $this, 'restrict_manage_posts' ), 12, 2 );
@@ -385,6 +387,11 @@ class gEditorialEvent extends gEditorialModuleCore
 	public function post_updated_messages( $messages )
 	{
 		return array_merge( $messages, array( $this->constant( 'event_cpt' ) => $this->get_post_updated_messages( 'event_cpt' ) ) );
+	}
+
+	public function bulk_post_updated_messages( $messages, $counts )
+	{
+		return array_merge( $messages, array( $this->constant( 'event_cpt' ) => $this->get_bulk_post_updated_messages( 'event_cpt', $counts ) ) );
 	}
 
 	public function do_meta_boxes( $post, $box )

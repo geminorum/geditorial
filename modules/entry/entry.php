@@ -142,6 +142,8 @@ class gEditorialEntry extends gEditorialModuleCore
 
 			} else if ( 'edit' == $screen->base ) {
 
+				$this->filter( 'bulk_post_updated_messages', 2 );
+
 				if ( $this->get_setting( 'admin_restrict', FALSE ) ) {
 					add_action( 'restrict_manage_posts', array( $this, 'restrict_manage_posts' ), 12, 2 );
 					add_filter( 'parse_query', array( $this, 'parse_query' ) );
@@ -257,6 +259,11 @@ class gEditorialEntry extends gEditorialModuleCore
 	public function post_updated_messages( $messages )
 	{
 		return array_merge( $messages, array( $this->constant( 'entry_cpt' ) => $this->get_post_updated_messages( 'entry_cpt' ) ) );
+	}
+
+	public function bulk_post_updated_messages( $messages, $counts )
+	{
+		return array_merge( $messages, array( $this->constant( 'entry_cpt' ) => $this->get_bulk_post_updated_messages( 'entry_cpt', $counts ) ) );
 	}
 
 	public function generate_rewrite_rules( $wp_rewrite )

@@ -1235,6 +1235,11 @@ class gEditorialModuleCore extends gEditorialWPModule
 		return gEditorialHelper::generatePostTypeMessages( $this->get_noop( $constant_key ) );
 	}
 
+	protected function get_bulk_post_updated_messages( $constant_key, $bulk_counts )
+	{
+		return gEditorialHelper::generateBulkPostTypeMessages( $this->get_noop( $constant_key ), $bulk_counts );
+	}
+
 	public function get_image_sizes( $post_type )
 	{
 		if ( ! isset( $this->image_sizes[$post_type] ) ) {
