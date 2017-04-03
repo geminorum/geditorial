@@ -179,7 +179,7 @@ class gEditorialHelper extends gEditorialBaseCore
 	public static function getPostTitle( $post, $fallback = NULL )
 	{
 		if ( ! $post = get_post( $post ) )
-			return __( 'N/A', GEDITORIAL_TEXTDOMAIN );
+			return gEditorial::na( FALSE );
 
 		$title = apply_filters( 'the_title', $post->post_title, $post->ID );
 
@@ -198,7 +198,7 @@ class gEditorialHelper extends gEditorialBaseCore
 	public static function getPostTitleRow( $post, $link = 'edit' )
 	{
 		if ( ! $post = get_post( $post ) )
-			return __( 'N/A', GEDITORIAL_TEXTDOMAIN );
+			return gEditorial::na( FALSE );
 
 		$title = self::getPostTitle( $post );
 
@@ -271,7 +271,7 @@ class gEditorialHelper extends gEditorialBaseCore
 		$term = get_term( $term );
 
 		if ( ! $term || is_wp_error( $term ) )
-			return __( 'N/A', GEDITORIAL_TEXTDOMAIN );
+			return gEditorial::na( FALSE );
 
 		$title = sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' );
 

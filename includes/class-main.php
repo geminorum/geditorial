@@ -378,4 +378,10 @@ class gEditorial
 	{
 		$this->editor_buttons[$button] = GEDITORIAL_URL.$filepath;
 	}
+
+	public static function na( $wrap = 'code' )
+	{
+		$na = __( 'N/A', GEDITORIAL_TEXTDOMAIN );
+		return $wrap ? gEditorialHTML::tag( $wrap, array( 'title' => __( 'Not Available', GEDITORIAL_TEXTDOMAIN ) ), $na ) : $na;
+	}
 }
