@@ -256,9 +256,7 @@ class gEditorialEntry extends gEditorialModuleCore
 
 	public function post_updated_messages( $messages )
 	{
-		return array_merge( $messages, array(
-			$this->constant( 'entry_cpt' ) => $this->get_post_updated_messages( 'entry_cpt' ),
-		) );
+		return array_merge( $messages, array( $this->constant( 'entry_cpt' ) => $this->get_post_updated_messages( 'entry_cpt' ) ) );
 	}
 
 	public function generate_rewrite_rules( $wp_rewrite )

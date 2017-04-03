@@ -235,6 +235,9 @@ class gEditorialContest extends gEditorialModuleCore
 
 			if ( 'post' == $screen->base ) {
 
+				if ( $screen->post_type == $this->constant( 'apply_cpt' ) )
+					add_filter( 'post_updated_messages', array( $this, 'post_updated_messages_supported' ) );
+
 				$this->remove_meta_box( $screen->post_type, $screen->post_type, 'parent' );
 				add_meta_box( 'geditorial-contest-supported',
 					$this->get_meta_box_title( $screen->post_type, $this->get_url_post_edit( 'contest_cpt' ), 'edit_others_posts' ),
@@ -442,13 +445,12 @@ class gEditorialContest extends gEditorialModuleCore
 
 	public function post_updated_messages( $messages )
 	{
-		if ( $this->is_current_posttype( 'contest_cpt' ) )
-			$messages[$this->constant( 'contest_cpt' )] = $this->get_post_updated_messages( 'contest_cpt' );
+		return array_merge( $messages, array( $this->constant( 'contest_cpt' ) => $this->get_post_updated_messages( 'contest_cpt' ) ) );
+	}
 
-		else if ( $this->is_current_posttype( 'apply_cpt' ) )
-			$messages[$this->constant( 'apply_cpt' )] = $this->get_post_updated_messages( 'apply_cpt' );
-
-		return $messages;
+	public function post_updated_messages_supported( $messages )
+	{
+		return array_merge( $messages, array( $this->constant( 'apply_cpt' ) => $this->get_post_updated_messages( 'apply_cpt' ) ) );
 	}
 
 	public function wp_insert_post_data( $data, $postarr )

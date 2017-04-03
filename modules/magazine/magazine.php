@@ -782,8 +782,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 
 	public function post_updated_messages( $messages )
 	{
-		$messages[$this->constant( 'issue_cpt' )] = $this->get_post_updated_messages( 'issue_cpt' );
-		return $messages;
+		return array_merge( $messages, array( $this->constant( 'issue_cpt' ) => $this->get_post_updated_messages( 'issue_cpt' ) ) );
 	}
 
 	public function tools_sub( $uri, $sub )

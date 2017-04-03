@@ -501,8 +501,7 @@ class gEditorialBook extends gEditorialModuleCore
 
 	public function post_updated_messages( $messages )
 	{
-		$messages[$this->constant( 'publication_cpt' )] = $this->get_post_updated_messages( 'publication_cpt' );
-		return $messages;
+		return array_merge( $messages, array( $this->constant( 'publication_cpt' ) => $this->get_post_updated_messages( 'publication_cpt' ) ) );
 	}
 
 	public function insert_content( $content, $posttypes = NULL )
