@@ -11,8 +11,8 @@ class gEditorialLike extends gEditorialModuleCore
 	{
 		return array(
 			'name'  => 'like',
-			'title' => _x( 'Like', 'Like Module', GEDITORIAL_TEXTDOMAIN ),
-			'desc'  => _x( 'Like Button for Posts and Comments', 'Like Module', GEDITORIAL_TEXTDOMAIN ),
+			'title' => _x( 'Like', 'Modules: Like', GEDITORIAL_TEXTDOMAIN ),
+			'desc'  => _x( 'Like Button for Posts and Comments', 'Modules: Like', GEDITORIAL_TEXTDOMAIN ),
 			'icon'  => 'heart',
 		);
 	}
@@ -23,13 +23,13 @@ class gEditorialLike extends gEditorialModuleCore
 			'_general' => array(
 				array(
 					'field'       => 'avatars',
-					'title'       => _x( 'Avatars', 'Like Module: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Display avatars next to the like button', 'Like Module: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Avatars', 'Modules: Like: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Display avatars next to the like button', 'Modules: Like: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 				),
 				array(
 					'field'       => 'comments',
-					'title'       => _x( 'Comments', 'Like Module: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Also display button for comments of enabled post types', 'Like Module: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Comments', 'Modules: Like: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Also display button for comments of enabled post types', 'Modules: Like: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 				),
 			),
 			'posttypes_option' => 'posttypes_option',
@@ -45,7 +45,7 @@ class gEditorialLike extends gEditorialModuleCore
 
 			add_action( 'gnetwork_debugbar_panel_geditorial_like', array( $this, 'gnetwork_debugbar_panel' ) );
 			add_filter( 'gnetwork_debugbar_panel_groups', function( $groups ){
-				$groups['geditorial_like'] = _x( 'Editorial Like', 'Like Module: Debug Bar Panel Title', GEDITORIAL_TEXTDOMAIN );
+				$groups['geditorial_like'] = _x( 'Editorial Like', 'Modules: Like: Debug Bar Panel Title', GEDITORIAL_TEXTDOMAIN );
 				return $groups;
 			} );
 		}
@@ -81,7 +81,7 @@ class gEditorialLike extends gEditorialModuleCore
 
 		$avatars = $this->get_setting( 'avatars', FALSE );
 
-		$title = apply_filters( 'geditorial_like_loading', _x( 'Loading &hellip;', 'Like Module', GEDITORIAL_TEXTDOMAIN ), $post_id );
+		$title = apply_filters( 'geditorial_like_loading', _x( 'Loading &hellip;', 'Modules: Like', GEDITORIAL_TEXTDOMAIN ), $post_id );
 
 		$html  = '<div class="geditorial-wrap like" style="display:none;" data-avatars="'.( $avatars ? 'true' : 'false' ).'">';
 		$html .= '<div><a class="like loading" title="'.esc_attr( $title ).'" href="#" data-id="'.$post_id.'">';
@@ -172,7 +172,7 @@ class gEditorialLike extends gEditorialModuleCore
 
 	public function title( $liked, $post_id = NULL )
 	{
-		return apply_filters( 'geditorial_like_title', ( $liked ? _x( 'Unlike', 'Like Module', GEDITORIAL_TEXTDOMAIN ) : _x( 'Like', 'Like Module', GEDITORIAL_TEXTDOMAIN ) ), $liked, $post_id );
+		return apply_filters( 'geditorial_like_title', ( $liked ? _x( 'Unlike', 'Modules: Like', GEDITORIAL_TEXTDOMAIN ) : _x( 'Like', 'Modules: Like', GEDITORIAL_TEXTDOMAIN ) ), $liked, $post_id );
 	}
 
 	public function unlike( $post_id )

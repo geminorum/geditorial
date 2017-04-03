@@ -10,8 +10,8 @@ class gEditorialSpecs extends gEditorialModuleCore
 	{
 		return array(
 			'name'  => 'specs',
-			'title' => _x( 'Specifications', 'Specs Module', GEDITORIAL_TEXTDOMAIN ),
-			'desc'  => _x( 'Post Specifications Management', 'Specs Module', GEDITORIAL_TEXTDOMAIN ),
+			'title' => _x( 'Specifications', 'Modules: Specs', GEDITORIAL_TEXTDOMAIN ),
+			'desc'  => _x( 'Post Specifications Management', 'Modules: Specs', GEDITORIAL_TEXTDOMAIN ),
 			'icon'  => 'editor-ul',
 		);
 	}
@@ -38,27 +38,27 @@ class gEditorialSpecs extends gEditorialModuleCore
 		return array(
 			'titles' => array(
 				'post' => array(
-					'spec_title' => _x( 'Title', 'Specs Module', GEDITORIAL_TEXTDOMAIN ),
-					'spec_order' => _x( 'Order', 'Specs Module', GEDITORIAL_TEXTDOMAIN ),
-					'spec_value' => _x( 'Description', 'Specs Module', GEDITORIAL_TEXTDOMAIN ),
+					'spec_title' => _x( 'Title', 'Modules: Specs', GEDITORIAL_TEXTDOMAIN ),
+					'spec_order' => _x( 'Order', 'Modules: Specs', GEDITORIAL_TEXTDOMAIN ),
+					'spec_value' => _x( 'Description', 'Modules: Specs', GEDITORIAL_TEXTDOMAIN ),
 				),
 			),
 			'descriptions' => array(
 				'post' => array(
-					'spec_title' => _x( 'In Specifications Title', 'Specs Module', GEDITORIAL_TEXTDOMAIN ),
-					'spec_order' => _x( 'In Specifications Order', 'Specs Module', GEDITORIAL_TEXTDOMAIN ),
-					'spec_value' => _x( 'In Specifications Description', 'Specs Module', GEDITORIAL_TEXTDOMAIN ),
+					'spec_title' => _x( 'In Specifications Title', 'Modules: Specs', GEDITORIAL_TEXTDOMAIN ),
+					'spec_order' => _x( 'In Specifications Order', 'Modules: Specs', GEDITORIAL_TEXTDOMAIN ),
+					'spec_value' => _x( 'In Specifications Description', 'Modules: Specs', GEDITORIAL_TEXTDOMAIN ),
 				),
 			),
 			'misc' => array(
 				'post' => array(
-					'meta_box_title'   => _x( 'Specifications', 'Specs Module', GEDITORIAL_TEXTDOMAIN ),
-					'column_title'     => _x( 'Specifications', 'Specs Module', GEDITORIAL_TEXTDOMAIN ),
-					'show_option_none' => _x( '&mdash; Choose a Specification &mdash;', 'Specs Module', GEDITORIAL_TEXTDOMAIN ),
+					'meta_box_title'   => _x( 'Specifications', 'Modules: Specs', GEDITORIAL_TEXTDOMAIN ),
+					'column_title'     => _x( 'Specifications', 'Modules: Specs', GEDITORIAL_TEXTDOMAIN ),
+					'show_option_none' => _x( '&mdash; Choose a Specification &mdash;', 'Modules: Specs', GEDITORIAL_TEXTDOMAIN ),
 				),
 			),
 			'noops' => array(
-				'specs_tax' => _nx_noop( 'Specification', 'Specifications', 'Specs Module: Noop', GEDITORIAL_TEXTDOMAIN ),
+				'specs_tax' => _nx_noop( 'Specification', 'Specifications', 'Modules: Specs: Noop', GEDITORIAL_TEXTDOMAIN ),
 			),
 		);
 	}
@@ -292,8 +292,8 @@ class gEditorialSpecs extends gEditorialModuleCore
 		$fields = $this->post_type_fields( $post->post_type );
 		$metas  = $this->get_postmeta( $post->ID, FALSE, array() );
 
-		$handle = '<span class="item-handle dashicons dashicons-editor-expand" title="'._x( 'Sort Me!', 'Specs Module: Sortable handler title attr', GEDITORIAL_TEXTDOMAIN ).'"></span>';
-		$delete = '<span class="item-delete dashicons dashicons-trash" title="'._x( 'Trash Me!', 'Specs Module: Sortable trash title attr', GEDITORIAL_TEXTDOMAIN ).'"></span>';
+		$handle = '<span class="item-handle dashicons dashicons-editor-expand" title="'._x( 'Sort Me!', 'Modules: Specs: Sortable handler title attr', GEDITORIAL_TEXTDOMAIN ).'"></span>';
+		$delete = '<span class="item-delete dashicons dashicons-trash" title="'._x( 'Trash Me!', 'Modules: Specs: Sortable trash title attr', GEDITORIAL_TEXTDOMAIN ).'"></span>';
 
 		echo '<ol class="geditorial-specs-list">';
 		foreach ( $metas as $order => $meta ) {
@@ -301,7 +301,7 @@ class gEditorialSpecs extends gEditorialModuleCore
 			echo '<li><div class="item-head">';
 
 				echo $handle.'<span class="item-excerpt">';
-					$title = ( isset( $meta['spec_title'] ) && $meta['spec_title'] ) ? $meta['spec_title'] : ( isset( $meta['spec_term_id'] ) && $meta['spec_term_id'] ? $the_terms[$meta['spec_term_id']]->name : _x( 'Unknown Field', 'Specs Module',  GEDITORIAL_TEXTDOMAIN ) );
+					$title = ( isset( $meta['spec_title'] ) && $meta['spec_title'] ) ? $meta['spec_title'] : ( isset( $meta['spec_term_id'] ) && $meta['spec_term_id'] ? $the_terms[$meta['spec_term_id']]->name : _x( 'Unknown Field', 'Modules: Specs',  GEDITORIAL_TEXTDOMAIN ) );
 					$title .= ( isset( $meta['spec_value'] ) && $meta['spec_value'] ? ': '.$meta['spec_value'] : '' );
 					echo gEditorialCoreText::subStr( $title, 0, 28 );
 				echo '</span>'.$delete;
@@ -440,7 +440,7 @@ class gEditorialSpecs extends gEditorialModuleCore
 		$html .= '<table class="table table-striped geditorial-specs">';
 		foreach ( $metas as $order => $meta ) {
 			$html .= '<tr><td>';
-				$html .= ( isset( $meta['spec_title'] ) && $meta['spec_title'] ) ? $meta['spec_title'] : ( isset( $meta['spec_term_id'] ) && $meta['spec_term_id'] ? $the_terms[$meta['spec_term_id']]->name : _x( 'Unknown Field', 'Specs Module',  GEDITORIAL_TEXTDOMAIN ) );
+				$html .= ( isset( $meta['spec_title'] ) && $meta['spec_title'] ) ? $meta['spec_title'] : ( isset( $meta['spec_term_id'] ) && $meta['spec_term_id'] ? $the_terms[$meta['spec_term_id']]->name : _x( 'Unknown Field', 'Modules: Specs',  GEDITORIAL_TEXTDOMAIN ) );
 			$html .= '</td><td>';
 				// FIXME: add filter for each spec
 				$html .= isset( $meta['spec_value'] ) ? $meta['spec_value'] : '';

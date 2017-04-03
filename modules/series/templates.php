@@ -241,7 +241,7 @@ class gEditorialSeriesTemplates extends gEditorialTemplateCore
 						if ( $args['hide'] > 1 && $offset > $args['hide'] ) {
 							$output .= '<li class="in-series-hidden in-series-hidden-'.$args['id'].'">';
 							if ( ! $more ) {
-								$output .= '<li class="in-series-more" id="in-series-more-'.$args['id'].'" style="display:none;"><a href="#" title="'._x( 'More in this series', 'series hide link title', GEDITORIAL_TEXTDOMAIN ).'">'._x( 'More&hellip;', 'series hide link', GEDITORIAL_TEXTDOMAIN ).'</li>';
+								$output .= '<li class="in-series-more" id="in-series-more-'.$args['id'].'" style="display:none;"><a href="#" title="'._x( 'More in this series', 'Modules: Series: Hide Link Title', GEDITORIAL_TEXTDOMAIN ).'">'._x( 'More&hellip;', 'Modules: Series: Hide Link', GEDITORIAL_TEXTDOMAIN ).'</li>';
 								$more = TRUE;
 							}
 						} else {

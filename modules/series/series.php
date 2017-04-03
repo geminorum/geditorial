@@ -12,8 +12,8 @@ class gEditorialSeries extends gEditorialModuleCore
 	{
 		return array(
 			'name'  => 'series',
-			'title' => _x( 'Series', 'Series Module', GEDITORIAL_TEXTDOMAIN ),
-			'desc'  => _x( 'Post Series Management', 'Series Module', GEDITORIAL_TEXTDOMAIN ),
+			'title' => _x( 'Series', 'Modules: Series', GEDITORIAL_TEXTDOMAIN ),
+			'desc'  => _x( 'Post Series Management', 'Modules: Series', GEDITORIAL_TEXTDOMAIN ),
 			'icon'  => 'editor-ol',
 		);
 	}
@@ -52,27 +52,27 @@ class gEditorialSeries extends gEditorialModuleCore
 		return array(
 			'titles' => array(
 				'post' => array(
-					'in_series_title' => _x( 'Title', 'Series Module', GEDITORIAL_TEXTDOMAIN ),
-					'in_series_order' => _x( 'Order', 'Series Module', GEDITORIAL_TEXTDOMAIN ),
-					'in_series_desc'  => _x( 'Description', 'Series Module', GEDITORIAL_TEXTDOMAIN ),
+					'in_series_title' => _x( 'Title', 'Modules: Series', GEDITORIAL_TEXTDOMAIN ),
+					'in_series_order' => _x( 'Order', 'Modules: Series', GEDITORIAL_TEXTDOMAIN ),
+					'in_series_desc'  => _x( 'Description', 'Modules: Series', GEDITORIAL_TEXTDOMAIN ),
 				),
 			),
 			'descriptions' => array(
 				'post' => array(
-					'in_series_title' => _x( 'In Series Title', 'Series Module', GEDITORIAL_TEXTDOMAIN ),
-					'in_series_order' => _x( 'In Series Order', 'Series Module', GEDITORIAL_TEXTDOMAIN ),
-					'in_series_desc'  => _x( 'In Series Description', 'Series Module', GEDITORIAL_TEXTDOMAIN ),
+					'in_series_title' => _x( 'In Series Title', 'Modules: Series', GEDITORIAL_TEXTDOMAIN ),
+					'in_series_order' => _x( 'In Series Order', 'Modules: Series', GEDITORIAL_TEXTDOMAIN ),
+					'in_series_desc'  => _x( 'In Series Description', 'Modules: Series', GEDITORIAL_TEXTDOMAIN ),
 				),
 			),
 			'misc' => array(
-				'meta_box_title'      => _x( 'Series', 'Series Module: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
-				'meta_box_action'     => _x( 'Management', 'Series Module: MetaBox Action', GEDITORIAL_TEXTDOMAIN ),
-				'column_title'        => _x( 'Series', 'Series Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				'tweaks_column_title' => _x( 'Series', 'Series Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				'show_option_none'    => _x( '&mdash; Choose a Series &mdash;', 'Series Module', GEDITORIAL_TEXTDOMAIN ),
+				'meta_box_title'      => _x( 'Series', 'Modules: Series: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
+				'meta_box_action'     => _x( 'Management', 'Modules: Series: MetaBox Action', GEDITORIAL_TEXTDOMAIN ),
+				'column_title'        => _x( 'Series', 'Modules: Series: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'tweaks_column_title' => _x( 'Series', 'Modules: Series: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'show_option_none'    => _x( '&mdash; Choose a Series &mdash;', 'Modules: Series', GEDITORIAL_TEXTDOMAIN ),
 			),
 			'noops' => array(
-				'series_tax' => _nx_noop( 'Series', 'Series', 'Series Module: Noop', GEDITORIAL_TEXTDOMAIN ),
+				'series_tax' => _nx_noop( 'Series', 'Series', 'Modules: Series: Noop', GEDITORIAL_TEXTDOMAIN ),
 			),
 		);
 	}

@@ -7,8 +7,8 @@ class gEditorialUsers extends gEditorialModuleCore
 	{
 		return array(
 			'name'  => 'users',
-			'title' => _x( 'Users', 'Users Module', GEDITORIAL_TEXTDOMAIN ),
-			'desc'  => _x( 'Editorial Users', 'Users Module', GEDITORIAL_TEXTDOMAIN ),
+			'title' => _x( 'Users', 'Modules: Users', GEDITORIAL_TEXTDOMAIN ),
+			'desc'  => _x( 'Editorial Users', 'Modules: Users', GEDITORIAL_TEXTDOMAIN ),
 			'icon'  => 'admin-users',
 		);
 	}
@@ -19,18 +19,18 @@ class gEditorialUsers extends gEditorialModuleCore
 			'_general' => array(
 				array(
 					'field'       => 'posttype_counts',
-					'title'       => _x( 'Posttype Counts', 'Users Module: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Displays posttype count for each user', 'Users Module: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Posttype Counts', 'Modules: Users: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Displays posttype count for each user', 'Modules: Users: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 				),
 				array(
 					'field'       => 'user_groups',
-					'title'       => _x( 'User Groups', 'Users Module: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Taxonomy for organizing users in groups', 'Users Module: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'User Groups', 'Modules: Users: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Taxonomy for organizing users in groups', 'Modules: Users: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 				),
 				// array(
 				// 	'field'       => 'user_types',
-				// 	'title'       => _x( 'User Types', 'Users Module: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-				// 	'description' => _x( 'Taxonomy for organizing users in types', 'Users Module: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+				// 	'title'       => _x( 'User Types', 'Modules: Users: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+				// 	'description' => _x( 'Taxonomy for organizing users in types', 'Modules: Users: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 				// ),
 				'calendar_type',
 				'admin_restrict',
@@ -54,21 +54,21 @@ class gEditorialUsers extends gEditorialModuleCore
 		return array(
 			'misc' => array(
 				'group_tax' => array(
-					'show_option_all'    => _x( 'All user groups', 'Users Module: Show Option All', GEDITORIAL_TEXTDOMAIN ),
-					'users_column_title' => _x( 'Users', 'Users Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
-					'menu_name'          => _x( 'Groups', 'Users Module: User Group Tax Labels: Menu Name', GEDITORIAL_TEXTDOMAIN ),
+					'show_option_all'    => _x( 'All user groups', 'Modules: Users: Show Option All', GEDITORIAL_TEXTDOMAIN ),
+					'users_column_title' => _x( 'Users', 'Modules: Users: Column Title', GEDITORIAL_TEXTDOMAIN ),
+					'menu_name'          => _x( 'Groups', 'Modules: Users: User Group Tax Labels: Menu Name', GEDITORIAL_TEXTDOMAIN ),
 				),
 				'type_tax' => array(
-					'show_option_all'    => _x( 'All user types', 'Users Module: Show Option All', GEDITORIAL_TEXTDOMAIN ),
-					'users_column_title' => _x( 'Users', 'Users Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
-					'menu_name'          => _x( 'Types', 'Users Module: User Type Tax Labels: Menu Name', GEDITORIAL_TEXTDOMAIN ),
+					'show_option_all'    => _x( 'All user types', 'Modules: Users: Show Option All', GEDITORIAL_TEXTDOMAIN ),
+					'users_column_title' => _x( 'Users', 'Modules: Users: Column Title', GEDITORIAL_TEXTDOMAIN ),
+					'menu_name'          => _x( 'Types', 'Modules: Users: User Type Tax Labels: Menu Name', GEDITORIAL_TEXTDOMAIN ),
 				),
-				'show_option_all'     => _x( 'All authors', 'Users Module: Show Option All', GEDITORIAL_TEXTDOMAIN ),
-				'counts_column_title' => _x( 'Summary', 'Users Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'show_option_all'     => _x( 'All authors', 'Modules: Users: Show Option All', GEDITORIAL_TEXTDOMAIN ),
+				'counts_column_title' => _x( 'Summary', 'Modules: Users: Column Title', GEDITORIAL_TEXTDOMAIN ),
 			),
 			'noops' => array(
-				'group_tax' => _nx_noop( 'User Group', 'User Groups', 'Users Module: Noop', GEDITORIAL_TEXTDOMAIN ),
-				'type_tax'  => _nx_noop( 'User Type', 'User Types', 'Users Module: Noop', GEDITORIAL_TEXTDOMAIN ),
+				'group_tax' => _nx_noop( 'User Group', 'User Groups', 'Modules: Users: Noop', GEDITORIAL_TEXTDOMAIN ),
+				'type_tax'  => _nx_noop( 'User Type', 'User Types', 'Modules: Users: Noop', GEDITORIAL_TEXTDOMAIN ),
 			),
 		);
 	}
@@ -249,10 +249,10 @@ class gEditorialUsers extends gEditorialModuleCore
 
 		$terms = get_terms( $this->constant( 'group_tax' ), array( 'hide_empty' => FALSE ) );
 
-		gEditorialHTML::h2( _x( 'Group', 'Users Module', GEDITORIAL_TEXTDOMAIN ) );
+		gEditorialHTML::h2( _x( 'Group', 'Modules: Users', GEDITORIAL_TEXTDOMAIN ) );
 
 		echo '<table class="form-table">';
-			echo '<tr><th scope="row">'._x( 'Select Group', 'Users Module', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
+			echo '<tr><th scope="row">'._x( 'Select Group', 'Modules: Users', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
 
 			if ( ! empty( $terms ) ) {
 
@@ -272,7 +272,7 @@ class gEditorialUsers extends gEditorialModuleCore
 				 }
 
 			} else {
-				_ex( 'There are no groups available.', 'Users Module', GEDITORIAL_TEXTDOMAIN );
+				_ex( 'There are no groups available.', 'Modules: Users', GEDITORIAL_TEXTDOMAIN );
 			}
 
 		echo '</td></tr>';
@@ -328,11 +328,11 @@ class gEditorialUsers extends gEditorialModuleCore
 
 		$this->settings_form_before( $uri, $sub, 'bulk', 'reports', FALSE, FALSE );
 
-			gEditorialHTML::h3( _x( 'User Reports', 'Users Module', GEDITORIAL_TEXTDOMAIN ) );
+			gEditorialHTML::h3( _x( 'User Reports', 'Modules: Users', GEDITORIAL_TEXTDOMAIN ) );
 
 			echo '<table class="form-table">';
 
-			echo '<tr><th scope="row">'._x( 'By PostType', 'Users Module', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
+			echo '<tr><th scope="row">'._x( 'By PostType', 'Modules: Users', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
 
 			$this->do_settings_field( array(
 				'type'         => 'select',
@@ -345,7 +345,7 @@ class gEditorialUsers extends gEditorialModuleCore
 			$this->do_settings_field( array(
 				'type'         => 'user',
 				'field'        => 'user_id',
-				'none_title'   => _x( 'All Users', 'Users Module', GEDITORIAL_TEXTDOMAIN ),
+				'none_title'   => _x( 'All Users', 'Modules: Users', GEDITORIAL_TEXTDOMAIN ),
 				'default'      => $args['user_id'],
 				'option_group' => 'reports',
 			) );
@@ -353,14 +353,14 @@ class gEditorialUsers extends gEditorialModuleCore
 			$this->do_settings_field( array(
 				'type'         => 'select',
 				'field'        => 'year_month',
-				'none_title'   => _x( 'All Months', 'Users Module', GEDITORIAL_TEXTDOMAIN ),
+				'none_title'   => _x( 'All Months', 'Modules: Users', GEDITORIAL_TEXTDOMAIN ),
 				'values'       => gEditorialHelper::getPostTypeMonths( $calendar_type, $args['post_type'], array(), $args['user_id'] ),
 				'default'      => $args['year_month'],
 				'option_group' => 'reports',
 			) );
 
 			gEditorialSettingsCore::submitButton( 'posttype_stats',
-				_x( 'Query Stats', 'Users Module: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
+				_x( 'Query Stats', 'Modules: Users: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
 
 			if ( ! empty( $_POST ) && isset( $_POST['posttype_stats'] ) ) {
 

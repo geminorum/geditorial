@@ -10,8 +10,8 @@ class gEditorialHeadings extends gEditorialModuleCore
 	{
 		return array(
 			'name'  => 'headings',
-			'title' => _x( 'Headings', 'Headings Module', GEDITORIAL_TEXTDOMAIN ),
-			'desc'  => _x( 'Table of Contents', 'Headings Module', GEDITORIAL_TEXTDOMAIN ),
+			'title' => _x( 'Headings', 'Modules: Headings', GEDITORIAL_TEXTDOMAIN ),
+			'desc'  => _x( 'Table of Contents', 'Modules: Headings', GEDITORIAL_TEXTDOMAIN ),
 			'icon'  => 'tablet',
 		);
 	}
@@ -23,22 +23,22 @@ class gEditorialHeadings extends gEditorialModuleCore
 				array(
 					'field'       => 'toc_title',
 					'type'        => 'text',
-					'title'       => _x( 'ToC Title', 'Headings Module: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Default text on the ToC box', 'Headings Module: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-					'default'     => _x( 'Table of Contents', 'Headings Module: Setting Default', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'ToC Title', 'Modules: Headings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Default text on the ToC box', 'Modules: Headings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'default'     => _x( 'Table of Contents', 'Modules: Headings: Setting Default', GEDITORIAL_TEXTDOMAIN ),
 				),
 				array(
 					'field'       => 'anchor_title',
 					'type'        => 'text',
-					'title'       => _x( 'Anchor Title', 'Headings Module: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Default text on the anchor link', 'Headings Module: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-					'default'     => _x( 'Permalink to this title', 'Headings Module: Setting Default', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Anchor Title', 'Modules: Headings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Default text on the anchor link', 'Modules: Headings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'default'     => _x( 'Permalink to this title', 'Modules: Headings: Setting Default', GEDITORIAL_TEXTDOMAIN ),
 				),
 				array(
 					'field'       => 'min_headings',
 					'type'        => 'number',
-					'title'       => _x( 'Minimum Headings', 'Headings Module: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Threshold to Display ToC', 'Headings Module: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Minimum Headings', 'Modules: Headings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Threshold to Display ToC', 'Modules: Headings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 					'default'     => '2',
 				),
 				'insert_content_before',

@@ -250,8 +250,8 @@ class gEditorialTodayHelper extends gEditorialHelper
 			'name'         => 'geditorial-today-date-day',
 			'id'           => 'geditorial-today-date-day',
 			'value'        => $args['day'],
-			'title'        => _x( 'Day', 'Today Module: Meta Box Input', GEDITORIAL_TEXTDOMAIN ),
-			'placeholder'  => _x( 'Day', 'Today Module: Meta Box Input Placeholder', GEDITORIAL_TEXTDOMAIN ),
+			'title'        => _x( 'Day', 'Modules: Today: Meta Box Input', GEDITORIAL_TEXTDOMAIN ),
+			'placeholder'  => _x( 'Day', 'Modules: Today: Meta Box Input Placeholder', GEDITORIAL_TEXTDOMAIN ),
 			'data'         => array( 'ortho' => 'number' ),
 		) );
 
@@ -264,8 +264,8 @@ class gEditorialTodayHelper extends gEditorialHelper
 			'name'         => 'geditorial-today-date-month',
 			'id'           => 'geditorial-today-date-month',
 			'value'        => $args['month'],
-			'title'        => _x( 'Month', 'Today Module: Meta Box Input', GEDITORIAL_TEXTDOMAIN ),
-			'placeholder'  => _x( 'Month', 'Today Module: Meta Box Input Placeholder', GEDITORIAL_TEXTDOMAIN ),
+			'title'        => _x( 'Month', 'Modules: Today: Meta Box Input', GEDITORIAL_TEXTDOMAIN ),
+			'placeholder'  => _x( 'Month', 'Modules: Today: Meta Box Input Placeholder', GEDITORIAL_TEXTDOMAIN ),
 			'data'         => array( 'ortho' => 'number' ),
 		) );
 
@@ -277,8 +277,8 @@ class gEditorialTodayHelper extends gEditorialHelper
 			'name'         => 'geditorial-today-date-year',
 			'id'           => 'geditorial-today-date-year',
 			'value'        => $year ? $args['year'] : '',
-			'title'        => _x( 'Year', 'Today Module: Meta Box Input', GEDITORIAL_TEXTDOMAIN ),
-			'placeholder'  => _x( 'Year', 'Today Module: Meta Box Input Placeholder', GEDITORIAL_TEXTDOMAIN ),
+			'title'        => _x( 'Year', 'Modules: Today: Meta Box Input', GEDITORIAL_TEXTDOMAIN ),
+			'placeholder'  => _x( 'Year', 'Modules: Today: Meta Box Input Placeholder', GEDITORIAL_TEXTDOMAIN ),
 			'disabled'     => ! $year,
 			'data'         => array( 'ortho' => 'number' ),
 		) );
@@ -289,7 +289,7 @@ class gEditorialTodayHelper extends gEditorialHelper
 
 		$html = gEditorialHTML::tag( 'option', array(
 			'value' => '',
-		), _x( '&mdash; Select Calendar &mdash;', 'Today Module: Meta Box Input Option None', GEDITORIAL_TEXTDOMAIN ) );
+		), _x( '&mdash; Select Calendar &mdash;', 'Modules: Today: Meta Box Input Option None', GEDITORIAL_TEXTDOMAIN ) );
 
 		foreach ( self::getDefualtCalendars( TRUE ) as $name => $title )
 			$html .= gEditorialHTML::tag( 'option', array(
@@ -300,8 +300,8 @@ class gEditorialTodayHelper extends gEditorialHelper
 		$html = gEditorialHTML::tag( 'select', array(
 			'name'        => 'geditorial-today-date-cal',
 			'id'          => 'geditorial-today-date-cal',
-			'title'       => _x( 'Calendar', 'Today Module: Meta Box Input', GEDITORIAL_TEXTDOMAIN ),
-			'placeholder' => _x( 'Calendar', 'Today Module: Meta Box Input Placeholder', GEDITORIAL_TEXTDOMAIN ),
+			'title'       => _x( 'Calendar', 'Modules: Today: Meta Box Input', GEDITORIAL_TEXTDOMAIN ),
+			'placeholder' => _x( 'Calendar', 'Modules: Today: Meta Box Input Placeholder', GEDITORIAL_TEXTDOMAIN ),
 		), $html );
 
 		echo gEditorialHTML::tag( 'div', array(
@@ -337,7 +337,7 @@ class gEditorialTodayHelper extends gEditorialHelper
 					'class'         => 'button -add-posttype -add-posttype-'.$posttype,
 					'target'        => '_blank',
 					'data-posttype' => $posttype,
-					'title'         => _x( 'New Day!', 'Today Module', GEDITORIAL_TEXTDOMAIN ),
+					'title'         => _x( 'New Day!', 'Modules: Today', GEDITORIAL_TEXTDOMAIN ),
 				), $icon.' '.$posttype_object->labels->edit_item );
 			}
 
@@ -358,7 +358,7 @@ class gEditorialTodayHelper extends gEditorialHelper
 				'class'         => 'button -add-posttype -add-posttype-'.$posttype,
 				'target'        => '_blank',
 				'data-posttype' => $posttype,
-				'title'         => sprintf( _x( 'New %s connected to this day', 'Today Module', GEDITORIAL_TEXTDOMAIN ), $posttype_object->labels->singular_name ),
+				'title'         => sprintf( _x( 'New %s connected to this day', 'Modules: Today', GEDITORIAL_TEXTDOMAIN ), $posttype_object->labels->singular_name ),
 			), $icon.' '.$posttype_object->labels->add_new_item );
 		}
 

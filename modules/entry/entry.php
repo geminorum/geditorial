@@ -11,8 +11,8 @@ class gEditorialEntry extends gEditorialModuleCore
 	{
 		return array(
 			'name'  => 'entry',
-			'title' => _x( 'Entry', 'Entry Module', GEDITORIAL_TEXTDOMAIN ),
-			'desc'  => _x( 'Wiki-like Posts Entries', 'Entry Module', GEDITORIAL_TEXTDOMAIN ),
+			'title' => _x( 'Entry', 'Modules: Entry', GEDITORIAL_TEXTDOMAIN ),
+			'desc'  => _x( 'Wiki-like Posts Entries', 'Modules: Entry', GEDITORIAL_TEXTDOMAIN ),
 			'icon'  => 'media-document',
 		);
 	}
@@ -50,14 +50,14 @@ class gEditorialEntry extends gEditorialModuleCore
 	{
 		return array(
 			'misc' => array(
-				'featured'             => _x( 'Cover Image', 'Entry Module: Entry CPT: Featured', GEDITORIAL_TEXTDOMAIN ),
-				'meta_box_title'       => _x( 'Entry', 'Entry Module: Meta Box Title', GEDITORIAL_TEXTDOMAIN ),
-				'section_column_title' => _x( 'Section', 'Entry Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				'order_column_title'   => _x( 'O', 'Entry Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'featured'             => _x( 'Cover Image', 'Modules: Entry: Entry CPT: Featured', GEDITORIAL_TEXTDOMAIN ),
+				'meta_box_title'       => _x( 'Entry', 'Modules: Entry: Meta Box Title', GEDITORIAL_TEXTDOMAIN ),
+				'section_column_title' => _x( 'Section', 'Modules: Entry: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'order_column_title'   => _x( 'O', 'Modules: Entry: Column Title', GEDITORIAL_TEXTDOMAIN ),
 			),
 			'noops' => array(
-				'entry_cpt'   => _nx_noop( 'Entry', 'Entries', 'Entry Module: Noop', GEDITORIAL_TEXTDOMAIN ),
-				'section_tax' => _nx_noop( 'Section', 'Sections', 'Entry Module: Noop', GEDITORIAL_TEXTDOMAIN ),
+				'entry_cpt'   => _nx_noop( 'Entry', 'Entries', 'Modules: Entry: Noop', GEDITORIAL_TEXTDOMAIN ),
+				'section_tax' => _nx_noop( 'Section', 'Sections', 'Modules: Entry: Noop', GEDITORIAL_TEXTDOMAIN ),
 			),
 		);
 	}

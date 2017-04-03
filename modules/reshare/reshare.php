@@ -9,8 +9,8 @@ class gEditorialReshare extends gEditorialModuleCore
 	{
 		return array(
 			'name'      => 'reshare',
-			'title'     => _x( 'Reshare', 'Reshare Module', GEDITORIAL_TEXTDOMAIN ),
-			'desc'      => _x( 'Contents from Other Sources', 'Reshare Module', GEDITORIAL_TEXTDOMAIN ),
+			'title'     => _x( 'Reshare', 'Modules: Reshare', GEDITORIAL_TEXTDOMAIN ),
+			'desc'      => _x( 'Contents from Other Sources', 'Modules: Reshare', GEDITORIAL_TEXTDOMAIN ),
 			'icon'      => 'external',
 			'configure' => FALSE,
 		);
@@ -39,11 +39,11 @@ class gEditorialReshare extends gEditorialModuleCore
 	{
 		return array(
 			'misc' => array(
-				'tweaks_column_title' => _x( 'Reshare Categories', 'Reshare Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'tweaks_column_title' => _x( 'Reshare Categories', 'Modules: Reshare: Column Title', GEDITORIAL_TEXTDOMAIN ),
 			),
 			'noops' => array(
-				'reshare_cpt' => _nx_noop( 'Reshare', 'Reshares', 'Reshare Module: Noop', GEDITORIAL_TEXTDOMAIN ),
-				'reshare_cat' => _nx_noop( 'Reshare Category', 'Reshare Categories', 'Reshare Module: Noop', GEDITORIAL_TEXTDOMAIN ),
+				'reshare_cpt' => _nx_noop( 'Reshare', 'Reshares', 'Modules: Reshare: Noop', GEDITORIAL_TEXTDOMAIN ),
+				'reshare_cat' => _nx_noop( 'Reshare Category', 'Reshare Categories', 'Modules: Reshare: Noop', GEDITORIAL_TEXTDOMAIN ),
 			),
 		);
 	}

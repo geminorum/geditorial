@@ -9,8 +9,8 @@ class gEditorialToday extends gEditorialModuleCore
 	{
 		return array(
 			'name'  => 'today',
-			'title' => _x( 'Today', 'Today Module', GEDITORIAL_TEXTDOMAIN ),
-			'desc'  => _x( 'The day in History', 'Today Module', GEDITORIAL_TEXTDOMAIN ),
+			'title' => _x( 'Today', 'Modules: Today', GEDITORIAL_TEXTDOMAIN ),
+			'desc'  => _x( 'The day in History', 'Modules: Today', GEDITORIAL_TEXTDOMAIN ),
 			'icon'  => 'calendar-alt',
 		);
 	}
@@ -46,14 +46,14 @@ class gEditorialToday extends gEditorialModuleCore
 	{
 		return array(
 			'misc' => array(
-				'featured'              => _x( 'Cover Image', 'Today Module: Day CPT: Featured', GEDITORIAL_TEXTDOMAIN ),
-				'meta_box_title'        => _x( 'The Day', 'Today Module: Meta Box Title', GEDITORIAL_TEXTDOMAIN ),
-				'theday_column_title'   => _x( 'The Day', 'Today Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				'cover_column_title'    => _x( 'Cover', 'Today Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				'children_column_title' => _x( 'Posts', 'Today Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'featured'              => _x( 'Cover Image', 'Modules: Today: Day CPT: Featured', GEDITORIAL_TEXTDOMAIN ),
+				'meta_box_title'        => _x( 'The Day', 'Modules: Today: Meta Box Title', GEDITORIAL_TEXTDOMAIN ),
+				'theday_column_title'   => _x( 'The Day', 'Modules: Today: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'cover_column_title'    => _x( 'Cover', 'Modules: Today: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'children_column_title' => _x( 'Posts', 'Modules: Today: Column Title', GEDITORIAL_TEXTDOMAIN ),
 			),
 			'noops' => array(
-				'day_cpt' => _nx_noop( 'Day', 'Days', 'Today Module: Noop', GEDITORIAL_TEXTDOMAIN ),
+				'day_cpt' => _nx_noop( 'Day', 'Days', 'Modules: Today: Noop', GEDITORIAL_TEXTDOMAIN ),
 			),
 		);
 	}
@@ -377,7 +377,7 @@ class gEditorialToday extends gEditorialModuleCore
 				'title' => gEditorialHelper::tableColumnPostTitle(),
 				'terms' => gEditorialHelper::tableColumnPostTerms(),
 			), $posts, array(
-				'empty' => gEditorialHTML::warning( _x( 'No Posts!', 'Today Module: Table Notice', GEDITORIAL_TEXTDOMAIN ) ),
+				'empty' => gEditorialHTML::warning( _x( 'No Posts!', 'Modules: Today: Table Notice', GEDITORIAL_TEXTDOMAIN ) ),
 			) );
 
 		echo '</div>';
@@ -519,7 +519,7 @@ class gEditorialToday extends gEditorialModuleCore
 			$this->in_the_loop = FALSE;
 
 		} else {
-			_ex( 'Nothing happened!', 'Today Module', GEDITORIAL_TEXTDOMAIN );
+			_ex( 'Nothing happened!', 'Modules: Today', GEDITORIAL_TEXTDOMAIN );
 		}
 
 		echo '</div>';

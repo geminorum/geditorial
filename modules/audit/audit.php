@@ -296,7 +296,7 @@ class gEditorialAudit extends gEditorialModuleCore
 			$this->do_settings_field( array(
 				'type'         => 'user',
 				'field'        => 'user_id',
-				'none_title'   => _x( 'All Users', 'Users Module', GEDITORIAL_TEXTDOMAIN ),
+				'none_title'   => _x( 'All Users', 'Modules: Audit', GEDITORIAL_TEXTDOMAIN ),
 				'default'      => $args['user_id'],
 				'option_group' => 'reports',
 			) );

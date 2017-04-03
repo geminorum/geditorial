@@ -205,7 +205,7 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 			'title'       => '',
 			'title_wrap'  => 'h3',
 			'title_link'  => FALSE,
-			'title_title' => _x( 'Permanent link to this span', 'Magazine Module: Span Shortcode: title attr', GEDITORIAL_TEXTDOMAIN ),
+			'title_title' => _x( 'Permanent link to this span', 'Modules: Magazine: Span Shortcode: title attr', GEDITORIAL_TEXTDOMAIN ),
 			'list'        => 'ul',
 			'list_class'  => 'issue-list',
 			'limit'       => -1,

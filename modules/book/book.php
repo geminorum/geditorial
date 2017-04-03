@@ -9,8 +9,8 @@ class gEditorialBook extends gEditorialModuleCore
 	{
 		return array(
 			'name'  => 'book',
-			'title' => _x( 'Book', 'Book Module', GEDITORIAL_TEXTDOMAIN ),
-			'desc'  => _x( 'Online House of Publications', 'Book Module', GEDITORIAL_TEXTDOMAIN ),
+			'title' => _x( 'Book', 'Modules: Book', GEDITORIAL_TEXTDOMAIN ),
+			'desc'  => _x( 'Online House of Publications', 'Modules: Book', GEDITORIAL_TEXTDOMAIN ),
 			'icon'  => 'book-alt',
 		);
 	}
@@ -62,84 +62,84 @@ class gEditorialBook extends gEditorialModuleCore
 		return array(
 			'misc' => array(
 				'publication_cpt' => array(
-					'featured'           => _x( 'Cover Image', 'Book Module: Publication CPT: Featured', GEDITORIAL_TEXTDOMAIN ),
-					'meta_box_title'     => _x( 'Metadata', 'Book Module: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
-					'author_box_title'   => _x( 'Curator', 'Book Module: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
-					'excerpt_box_title'  => _x( 'Summary', 'Book Module: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
-					'cover_column_title' => _x( 'Cover', 'Book Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
+					'featured'           => _x( 'Cover Image', 'Modules: Book: Publication CPT: Featured', GEDITORIAL_TEXTDOMAIN ),
+					'meta_box_title'     => _x( 'Metadata', 'Modules: Book: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
+					'author_box_title'   => _x( 'Curator', 'Modules: Book: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
+					'excerpt_box_title'  => _x( 'Summary', 'Modules: Book: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
+					'cover_column_title' => _x( 'Cover', 'Modules: Book: Column Title', GEDITORIAL_TEXTDOMAIN ),
 				),
 				'subject_tax' => array(
-					'meta_box_title'      => _x( 'Subject', 'Book Module: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
-					'tweaks_column_title' => _x( 'Publication Subject', 'Book Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
+					'meta_box_title'      => _x( 'Subject', 'Modules: Book: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
+					'tweaks_column_title' => _x( 'Publication Subject', 'Modules: Book: Column Title', GEDITORIAL_TEXTDOMAIN ),
 				),
 				'library_tax' => array(
-					'meta_box_title'      => _x( 'Library', 'Book Module: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
-					'tweaks_column_title' => _x( 'Publication Library', 'Book Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
+					'meta_box_title'      => _x( 'Library', 'Modules: Book: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
+					'tweaks_column_title' => _x( 'Publication Library', 'Modules: Book: Column Title', GEDITORIAL_TEXTDOMAIN ),
 				),
 				'publisher_tax' => array(
-					'meta_box_title'      => _x( 'Publisher', 'Book Module: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
-					'tweaks_column_title' => _x( 'Publication Publisher', 'Book Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
+					'meta_box_title'      => _x( 'Publisher', 'Modules: Book: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
+					'tweaks_column_title' => _x( 'Publication Publisher', 'Modules: Book: Column Title', GEDITORIAL_TEXTDOMAIN ),
 				),
 				'status_tax' => array(
-					'meta_box_title'      => _x( 'Status', 'Book Module: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
-					'tweaks_column_title' => _x( 'Publication Status', 'Book Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
+					'meta_box_title'      => _x( 'Status', 'Modules: Book: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
+					'tweaks_column_title' => _x( 'Publication Status', 'Modules: Book: Column Title', GEDITORIAL_TEXTDOMAIN ),
 				),
 				'type_tax' => array(
-					'meta_box_title'      => _x( 'Type', 'Book Module: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
-					'tweaks_column_title' => _x( 'Publication Type', 'Book Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
+					'meta_box_title'      => _x( 'Type', 'Modules: Book: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
+					'tweaks_column_title' => _x( 'Publication Type', 'Modules: Book: Column Title', GEDITORIAL_TEXTDOMAIN ),
 				),
 				'size_tax' => array(
-					'meta_box_title'      => _x( 'Size', 'Book Module: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
-					'tweaks_column_title' => _x( 'Publication Size', 'Book Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
+					'meta_box_title'      => _x( 'Size', 'Modules: Book: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
+					'tweaks_column_title' => _x( 'Publication Size', 'Modules: Book: Column Title', GEDITORIAL_TEXTDOMAIN ),
 				),
 			),
 			'settings' => array(
 				'post_types_after'     => gEditorialSettingsCore::infoP2P(),
-				'install_def_size_tax' => _x( 'Install Default Sizes', 'Book Module: Setting Button', GEDITORIAL_TEXTDOMAIN ),
+				'install_def_size_tax' => _x( 'Install Default Sizes', 'Modules: Book: Setting Button', GEDITORIAL_TEXTDOMAIN ),
 			),
 			'noops' => array(
-				'publication_cpt' => _nx_noop( 'Publication', 'Publications', 'Book Module: Noop', GEDITORIAL_TEXTDOMAIN ),
-				'subject_tax'     => _nx_noop( 'Subject', 'Subjects', 'Book Module: Noop', GEDITORIAL_TEXTDOMAIN ),
-				'library_tax'     => _nx_noop( 'Library', 'Libraries', 'Book Module: Noop', GEDITORIAL_TEXTDOMAIN ),
-				'publisher_tax'   => _nx_noop( 'Publisher', 'Publishers', 'Book Module: Noop', GEDITORIAL_TEXTDOMAIN ),
-				'type_tax'        => _nx_noop( 'Publication Type', 'Publication Types', 'Book Module: Noop', GEDITORIAL_TEXTDOMAIN ),
-				'status_tax'      => _nx_noop( 'Publication Status', 'Publication Statuses', 'Book Module: Noop', GEDITORIAL_TEXTDOMAIN ),
-				'size_tax'        => _nx_noop( 'Publication Size', 'Publication Sizes', 'Book Module: Noop', GEDITORIAL_TEXTDOMAIN ),
+				'publication_cpt' => _nx_noop( 'Publication', 'Publications', 'Modules: Book: Noop', GEDITORIAL_TEXTDOMAIN ),
+				'subject_tax'     => _nx_noop( 'Subject', 'Subjects', 'Modules: Book: Noop', GEDITORIAL_TEXTDOMAIN ),
+				'library_tax'     => _nx_noop( 'Library', 'Libraries', 'Modules: Book: Noop', GEDITORIAL_TEXTDOMAIN ),
+				'publisher_tax'   => _nx_noop( 'Publisher', 'Publishers', 'Modules: Book: Noop', GEDITORIAL_TEXTDOMAIN ),
+				'type_tax'        => _nx_noop( 'Publication Type', 'Publication Types', 'Modules: Book: Noop', GEDITORIAL_TEXTDOMAIN ),
+				'status_tax'      => _nx_noop( 'Publication Status', 'Publication Statuses', 'Modules: Book: Noop', GEDITORIAL_TEXTDOMAIN ),
+				'size_tax'        => _nx_noop( 'Publication Size', 'Publication Sizes', 'Modules: Book: Noop', GEDITORIAL_TEXTDOMAIN ),
 			),
 			'terms' => array(
 				'size_tax' => array(
-					'octavo' => _x( 'Octavo', 'Book Module: Publication Size: Default Term', GEDITORIAL_TEXTDOMAIN ), // vaziri
-					'folio'  => _x( 'Folio', 'Book Module: Publication Size: Default Term', GEDITORIAL_TEXTDOMAIN ), // soltani
-					'medium' => _x( 'Medium Octavo', 'Book Module: Publication Size: Default Term', GEDITORIAL_TEXTDOMAIN ), //roghee
-					'quatro' => _x( 'Quatro', 'Book Module: Publication Size: Default Term', GEDITORIAL_TEXTDOMAIN ), //rahli
+					'octavo' => _x( 'Octavo', 'Modules: Book: Publication Size: Default Term', GEDITORIAL_TEXTDOMAIN ), // vaziri
+					'folio'  => _x( 'Folio', 'Modules: Book: Publication Size: Default Term', GEDITORIAL_TEXTDOMAIN ), // soltani
+					'medium' => _x( 'Medium Octavo', 'Modules: Book: Publication Size: Default Term', GEDITORIAL_TEXTDOMAIN ), //roghee
+					'quatro' => _x( 'Quatro', 'Modules: Book: Publication Size: Default Term', GEDITORIAL_TEXTDOMAIN ), //rahli
 				),
 			),
 			'p2p' => array(
 				'publication_cpt' => array(
 					'title' => array(
-						'from' => _x( 'Connected Publications', 'Book Module: P2P', GEDITORIAL_TEXTDOMAIN ),
-						'to'   => _x( 'Connected Posts', 'Book Module: P2P', GEDITORIAL_TEXTDOMAIN )
+						'from' => _x( 'Connected Publications', 'Modules: Book: P2P', GEDITORIAL_TEXTDOMAIN ),
+						'to'   => _x( 'Connected Posts', 'Modules: Book: P2P', GEDITORIAL_TEXTDOMAIN )
 					),
 					'from_labels' => array(
-						'singular_name' => _x( 'Post', 'Book Module: P2P', GEDITORIAL_TEXTDOMAIN ),
-						'search_items'  => _x( 'Search Posts', 'Book Module: P2P', GEDITORIAL_TEXTDOMAIN ),
-						'not_found'     => _x( 'No posts found.', 'Book Module: P2P', GEDITORIAL_TEXTDOMAIN ),
-						'create'        => _x( 'Connect to a post', 'Book Module: P2P', GEDITORIAL_TEXTDOMAIN ),
+						'singular_name' => _x( 'Post', 'Modules: Book: P2P', GEDITORIAL_TEXTDOMAIN ),
+						'search_items'  => _x( 'Search Posts', 'Modules: Book: P2P', GEDITORIAL_TEXTDOMAIN ),
+						'not_found'     => _x( 'No posts found.', 'Modules: Book: P2P', GEDITORIAL_TEXTDOMAIN ),
+						'create'        => _x( 'Connect to a post', 'Modules: Book: P2P', GEDITORIAL_TEXTDOMAIN ),
 					),
 					'to_labels' => array(
-						'singular_name' => _x( 'Publications', 'Book Module: P2P', GEDITORIAL_TEXTDOMAIN ),
-						'search_items'  => _x( 'Search Publication', 'Book Module: P2P', GEDITORIAL_TEXTDOMAIN ),
-						'not_found'     => _x( 'No publications found.', 'Book Module: P2P', GEDITORIAL_TEXTDOMAIN ),
-						'create'        => _x( 'Connect to an publication', 'Book Module: P2P', GEDITORIAL_TEXTDOMAIN ),
+						'singular_name' => _x( 'Publications', 'Modules: Book: P2P', GEDITORIAL_TEXTDOMAIN ),
+						'search_items'  => _x( 'Search Publication', 'Modules: Book: P2P', GEDITORIAL_TEXTDOMAIN ),
+						'not_found'     => _x( 'No publications found.', 'Modules: Book: P2P', GEDITORIAL_TEXTDOMAIN ),
+						'create'        => _x( 'Connect to an publication', 'Modules: Book: P2P', GEDITORIAL_TEXTDOMAIN ),
 					),
 					'fields' => array(
 						'ref' => array(
-							'title' => _x( 'Reference', 'Book Module: P2P', GEDITORIAL_TEXTDOMAIN ),
+							'title' => _x( 'Reference', 'Modules: Book: P2P', GEDITORIAL_TEXTDOMAIN ),
 							'type' => 'text',
 							'value' => '%s',
 						),
 						'desc' => array(
-							'title' => _x( 'Description', 'Book Module: P2P', GEDITORIAL_TEXTDOMAIN ),
+							'title' => _x( 'Description', 'Modules: Book: P2P', GEDITORIAL_TEXTDOMAIN ),
 							'type' => 'text',
 							'value' => '%s',
 						),
@@ -170,45 +170,45 @@ class gEditorialBook extends gEditorialModuleCore
 		return array(
 			$this->constant( 'publication_cpt' ) => array (
 				'collection' => array(
-					'title'       => _x( 'Collection Title', 'Book Module: Field Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'This Publication Is Part of a Collection', 'Book Module: Field Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Collection Title', 'Modules: Book: Field Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'This Publication Is Part of a Collection', 'Modules: Book: Field Description', GEDITORIAL_TEXTDOMAIN ),
 					'type'        => 'title_before',
 				),
 				'sub_title' => array(
-					'title'       => _x( 'Subtitle', 'Book Module: Field Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Subtitle of the Publication', 'Book Module: Field Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Subtitle', 'Modules: Book: Field Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Subtitle of the Publication', 'Modules: Book: Field Description', GEDITORIAL_TEXTDOMAIN ),
 					'type'        => 'title_after',
 				),
 				'alt_title' => array(
-					'title'       => _x( 'Alternative Title', 'Book Module: Field Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'The Original Title or Title in Another Language', 'Book Module: Field Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Alternative Title', 'Modules: Book: Field Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'The Original Title or Title in Another Language', 'Modules: Book: Field Description', GEDITORIAL_TEXTDOMAIN ),
 				),
 				'isbn' => array(
-					'title'       => _x( 'ISBN', 'Book Module: Field Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'International Standard Book Number', 'Book Module: Field Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'ISBN', 'Modules: Book: Field Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'International Standard Book Number', 'Modules: Book: Field Description', GEDITORIAL_TEXTDOMAIN ),
 					'type'        => 'code',
 				),
 				'size' => array(
-					'title'       => _x( 'Size', 'Book Module: Field Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'The Size of the Publication, Mainly Books', 'Book Module: Field Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Size', 'Modules: Book: Field Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'The Size of the Publication, Mainly Books', 'Modules: Book: Field Description', GEDITORIAL_TEXTDOMAIN ),
 					'type'        => 'term',
 					'tax'         => $this->constant( 'size_tax' ),
 				),
 				'publication_date' => array(
-					'title'       => _x( 'Publication Date', 'Book Module: Field Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Date Published', 'Book Module: Field Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Publication Date', 'Modules: Book: Field Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Date Published', 'Modules: Book: Field Description', GEDITORIAL_TEXTDOMAIN ),
 				),
 				'edition' => array(
-					'title'       => _x( 'Edition', 'Book Module: Field Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Edition of the Publication', 'Book Module: Field Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Edition', 'Modules: Book: Field Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Edition of the Publication', 'Modules: Book: Field Description', GEDITORIAL_TEXTDOMAIN ),
 				),
 				'print' => array(
-					'title'       => _x( 'Print', 'Book Module: Field Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Specefic Print of the Publication', 'Book Module: Field Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Print', 'Modules: Book: Field Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Specefic Print of the Publication', 'Modules: Book: Field Description', GEDITORIAL_TEXTDOMAIN ),
 				),
 				'pages' => array(
-					'title'       => _x( 'Pages', 'Book Module: Field Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Total Pages of the Publication', 'Book Module: Field Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Pages', 'Modules: Book: Field Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Total Pages of the Publication', 'Modules: Book: Field Description', GEDITORIAL_TEXTDOMAIN ),
 					'type'        => 'number',
 				),
 			),
@@ -366,7 +366,7 @@ class gEditorialBook extends gEditorialModuleCore
 			foreach ( $post_types as $post_type )
 				$list[] = gEditorialHTML::tag( 'a', array(
 					'href'   => gEditorialWordPress::getPostTypeEditLink( $post_type, 0, $args ),
-					'title'  => _x( 'View the connected list', 'Book Module', GEDITORIAL_TEXTDOMAIN ),
+					'title'  => _x( 'View the connected list', 'Modules: Book', GEDITORIAL_TEXTDOMAIN ),
 					'target' => '_blank',
 				), $this->all_post_types[$post_type] );
 
@@ -402,7 +402,7 @@ class gEditorialBook extends gEditorialModuleCore
 
 				echo gEditorialHTML::tag( 'a', array(
 					'href'   => gEditorialWordPress::getPostTypeEditLink( $post->post_type, 0, $args ),
-					'title'  => _x( 'View all connected', 'Book Module', GEDITORIAL_TEXTDOMAIN ),
+					'title'  => _x( 'View all connected', 'Modules: Book', GEDITORIAL_TEXTDOMAIN ),
 					'target' => '_blank',
 				), gEditorialHelper::trimChars( $item->get_title(), 85 ) );
 

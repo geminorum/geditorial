@@ -11,8 +11,8 @@ class gEditorialDrafts extends gEditorialModuleCore
 	{
 		return array(
 			'name'  => 'drafts',
-			'title' => _x( 'Drafts', 'Drafts Module', GEDITORIAL_TEXTDOMAIN ),
-			'desc'  => _x( 'Tools to work with drafts', 'Drafts Module', GEDITORIAL_TEXTDOMAIN ),
+			'title' => _x( 'Drafts', 'Modules: Drafts', GEDITORIAL_TEXTDOMAIN ),
+			'desc'  => _x( 'Tools to work with drafts', 'Modules: Drafts', GEDITORIAL_TEXTDOMAIN ),
 			'icon'  => 'admin-post',
 		);
 	}
@@ -25,8 +25,8 @@ class gEditorialDrafts extends gEditorialModuleCore
 				array(
 					'field'       => 'max_posts',
 					'type'        => 'number',
-					'title'       => _x( 'Max Posts', 'Drafts Module: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Display maximum posts for each post type', 'Drafts Module: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Max Posts', 'Modules: Drafts: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Display maximum posts for each post type', 'Modules: Drafts: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 					'default'     => 100,
 				),
 			),
@@ -59,7 +59,7 @@ class gEditorialDrafts extends gEditorialModuleCore
 		$wp_admin_bar->add_node( array(
 			'id'    => 'editorial-drafts',
 			'href'  => admin_url( 'edit.php?post_status=draft' ), // FIXME: add default posttype
-			'title' => _x( 'Drafts', 'Drafts Module: Admin Bar Title', GEDITORIAL_TEXTDOMAIN )
+			'title' => _x( 'Drafts', 'Modules: Drafts: Admin Bar Title', GEDITORIAL_TEXTDOMAIN )
 				.'<span class="geditorial-spinner-adminbar"></span>',
 		) );
 	}
@@ -85,7 +85,7 @@ class gEditorialDrafts extends gEditorialModuleCore
 	private function drafts_list()
 	{
 		$html  = '';
-		$all   = _x( 'View all %s drafts', 'Drafts Module', GEDITORIAL_TEXTDOMAIN );
+		$all   = _x( 'View all %s drafts', 'Modules: Drafts', GEDITORIAL_TEXTDOMAIN );
 		$user  = 'all' == $this->get_setting( 'summary_scope', 'all' ) ? 0 : get_current_user_id();
 
 		foreach ( $this->post_types() as $post_type ) {
@@ -111,7 +111,7 @@ class gEditorialDrafts extends gEditorialModuleCore
 			$html .= '<div class="-block"><h3>'.$link.'</h3><ul>'.$block.'</ul></div>';
 		}
 
-		return $html ? $html :'<div class="-empty"><p>'._x( '(none)', 'Drafts Module', GEDITORIAL_TEXTDOMAIN).'</p></div>';
+		return $html ? $html :'<div class="-empty"><p>'._x( '(none)', 'Modules: Drafts', GEDITORIAL_TEXTDOMAIN).'</p></div>';
 	}
 
 	private function get_drafts( $post_type = 'post' )

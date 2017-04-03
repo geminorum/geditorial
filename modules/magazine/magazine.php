@@ -16,8 +16,8 @@ class gEditorialMagazine extends gEditorialModuleCore
 	{
 		return array(
 			'name'  => 'magazine',
-			'title' => _x( 'Magazine', 'Magazine Module', GEDITORIAL_TEXTDOMAIN ),
-			'desc'  => _x( 'Issue Management for Magazines', 'Magazine Module', GEDITORIAL_TEXTDOMAIN ),
+			'title' => _x( 'Magazine', 'Modules: Magazine', GEDITORIAL_TEXTDOMAIN ),
+			'desc'  => _x( 'Issue Management for Magazines', 'Modules: Magazine', GEDITORIAL_TEXTDOMAIN ),
 			'icon'  => 'book',
 		);
 	}
@@ -31,8 +31,8 @@ class gEditorialMagazine extends gEditorialModuleCore
 				'admin_restrict',
 				array(
 					'field'       => 'issue_sections',
-					'title'       => _x( 'Issue Sections', 'Magazine Module: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Section taxonomy for issue and supported post types', 'Magazine Module: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Issue Sections', 'Modules: Magazine: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Section taxonomy for issue and supported post types', 'Modules: Magazine: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 					'default'     => '0',
 				),
 				'posttype_feeds',
@@ -41,8 +41,8 @@ class gEditorialMagazine extends gEditorialModuleCore
 				array(
 					'field'       => 'redirect_spans',
 					'type'        => 'text',
-					'title'       => _x( 'Redirect Spans', 'Magazine Module: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Redirect all Span Archives to a URL', 'Magazine Module: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Redirect Spans', 'Modules: Magazine: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Redirect all Span Archives to a URL', 'Modules: Magazine: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 					'default'     => '',
 					'dir'         => 'ltr',
 				),
@@ -84,48 +84,48 @@ class gEditorialMagazine extends gEditorialModuleCore
 		return array(
 			'misc' => array(
 				'issue_cpt' => array(
-					'featured'              => _x( 'Cover Image', 'Magazine Module: Issue CPT: Featured', GEDITORIAL_TEXTDOMAIN ),
-					'cover_column_title'    => _x( 'Cover', 'Magazine Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
-					'order_column_title'    => _x( 'O', 'Magazine Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
-					'children_column_title' => _x( 'Posts', 'Magazine Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
+					'featured'              => _x( 'Cover Image', 'Modules: Magazine: Issue CPT: Featured', GEDITORIAL_TEXTDOMAIN ),
+					'cover_column_title'    => _x( 'Cover', 'Modules: Magazine: Column Title', GEDITORIAL_TEXTDOMAIN ),
+					'order_column_title'    => _x( 'O', 'Modules: Magazine: Column Title', GEDITORIAL_TEXTDOMAIN ),
+					'children_column_title' => _x( 'Posts', 'Modules: Magazine: Column Title', GEDITORIAL_TEXTDOMAIN ),
 				),
 				'issue_tax' => array(
-					'meta_box_title' => _x( 'In This Issue', 'Magazine Module: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
+					'meta_box_title' => _x( 'In This Issue', 'Modules: Magazine: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
 				),
 				'span_tax' => array(
-					'meta_box_title'      => _x( 'Spans', 'Magazine Module: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
-					'tweaks_column_title' => _x( 'Issue Spans', 'Magazine Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
+					'meta_box_title'      => _x( 'Spans', 'Modules: Magazine: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
+					'tweaks_column_title' => _x( 'Issue Spans', 'Modules: Magazine: Column Title', GEDITORIAL_TEXTDOMAIN ),
 				),
 				'section_tax' => array(
-					'meta_box_title'      => _x( 'Sections', 'Magazine Module: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
-					'tweaks_column_title' => _x( 'Issue Sections', 'Magazine Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
+					'meta_box_title'      => _x( 'Sections', 'Modules: Magazine: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
+					'tweaks_column_title' => _x( 'Issue Sections', 'Modules: Magazine: Column Title', GEDITORIAL_TEXTDOMAIN ),
 				),
-				'meta_box_title'      => _x( 'The Issue', 'Magazine Module: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
-				'tweaks_column_title' => _x( 'Issues', 'Magazine Module: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'meta_box_title'      => _x( 'The Issue', 'Modules: Magazine: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
+				'tweaks_column_title' => _x( 'Issues', 'Modules: Magazine: Column Title', GEDITORIAL_TEXTDOMAIN ),
 			),
 			'noops' => array(
-				'issue_cpt'   => _nx_noop( 'Issue', 'Issues', 'Magazine Module: Noop', GEDITORIAL_TEXTDOMAIN ),
-				'issue_tax'   => _nx_noop( 'Issue', 'Issues', 'Magazine Module: Noop', GEDITORIAL_TEXTDOMAIN ),
-				'span_tax'    => _nx_noop( 'Span', 'Spans', 'Magazine Module: Noop', GEDITORIAL_TEXTDOMAIN ),
-				'section_tax' => _nx_noop( 'Section', 'Sections', 'Magazine Module: Noop', GEDITORIAL_TEXTDOMAIN ),
+				'issue_cpt'   => _nx_noop( 'Issue', 'Issues', 'Modules: Magazine: Noop', GEDITORIAL_TEXTDOMAIN ),
+				'issue_tax'   => _nx_noop( 'Issue', 'Issues', 'Modules: Magazine: Noop', GEDITORIAL_TEXTDOMAIN ),
+				'span_tax'    => _nx_noop( 'Span', 'Spans', 'Modules: Magazine: Noop', GEDITORIAL_TEXTDOMAIN ),
+				'section_tax' => _nx_noop( 'Section', 'Sections', 'Modules: Magazine: Noop', GEDITORIAL_TEXTDOMAIN ),
 			),
 			'p2p' => array(
 				'issue_cpt' => array(
 					'title' => array(
-						'from' => _x( 'Connected Issues', 'Magazine Module: P2P', GEDITORIAL_TEXTDOMAIN ),
-						'to'   => _x( 'Connected Posts', 'Magazine Module: P2P', GEDITORIAL_TEXTDOMAIN )
+						'from' => _x( 'Connected Issues', 'Modules: Magazine: P2P', GEDITORIAL_TEXTDOMAIN ),
+						'to'   => _x( 'Connected Posts', 'Modules: Magazine: P2P', GEDITORIAL_TEXTDOMAIN )
 					),
 					'from_labels' => array(
-						'singular_name' => _x( 'Post', 'Magazine Module: P2P', GEDITORIAL_TEXTDOMAIN ),
-						'search_items'  => _x( 'Search posts', 'Magazine Module: P2P', GEDITORIAL_TEXTDOMAIN ),
-						'not_found'     => _x( 'No posts found.', 'Magazine Module: P2P', GEDITORIAL_TEXTDOMAIN ),
-						'create'        => _x( 'Connect to a post', 'Magazine Module: P2P', GEDITORIAL_TEXTDOMAIN ),
+						'singular_name' => _x( 'Post', 'Modules: Magazine: P2P', GEDITORIAL_TEXTDOMAIN ),
+						'search_items'  => _x( 'Search posts', 'Modules: Magazine: P2P', GEDITORIAL_TEXTDOMAIN ),
+						'not_found'     => _x( 'No posts found.', 'Modules: Magazine: P2P', GEDITORIAL_TEXTDOMAIN ),
+						'create'        => _x( 'Connect to a post', 'Modules: Magazine: P2P', GEDITORIAL_TEXTDOMAIN ),
 					),
 					'to_labels' => array(
-						'singular_name' => _x( 'Issue', 'Magazine Module: P2P', GEDITORIAL_TEXTDOMAIN ),
-						'search_items'  => _x( 'Search issues', 'Magazine Module: P2P', GEDITORIAL_TEXTDOMAIN ),
-						'not_found'     => _x( 'No issues found.', 'Magazine Module: P2P', GEDITORIAL_TEXTDOMAIN ),
-						'create'        => _x( 'Connect to an issue', 'Magazine Module: P2P', GEDITORIAL_TEXTDOMAIN ),
+						'singular_name' => _x( 'Issue', 'Modules: Magazine: P2P', GEDITORIAL_TEXTDOMAIN ),
+						'search_items'  => _x( 'Search issues', 'Modules: Magazine: P2P', GEDITORIAL_TEXTDOMAIN ),
+						'not_found'     => _x( 'No issues found.', 'Modules: Magazine: P2P', GEDITORIAL_TEXTDOMAIN ),
+						'create'        => _x( 'Connect to an issue', 'Modules: Magazine: P2P', GEDITORIAL_TEXTDOMAIN ),
 					),
 				),
 			),
@@ -157,30 +157,30 @@ class gEditorialMagazine extends gEditorialModuleCore
 				'st' => array( 'type' => 'title_after' ),
 
 				'issue_number_line' => array(
-					'title'       => _x( 'Number Line', 'Magazine Module: Field Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'The issue number line', 'Magazine Module: Field Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Number Line', 'Modules: Magazine: Field Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'The issue number line', 'Modules: Magazine: Field Description', GEDITORIAL_TEXTDOMAIN ),
 				),
 				'issue_total_pages' => array(
-					'title'       => _x( 'Total Pages', 'Magazine Module: Field Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'The issue total pages', 'Magazine Module: Field Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Total Pages', 'Modules: Magazine: Field Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'The issue total pages', 'Modules: Magazine: Field Description', GEDITORIAL_TEXTDOMAIN ),
 				),
 			),
 			'post' => array(
 				'in_issue_order' => array(
-					'title'       => _x( 'Order', 'Magazine Module: Field Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Post order in issue list', 'Magazine Module: Field Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Order', 'Modules: Magazine: Field Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Post order in issue list', 'Modules: Magazine: Field Description', GEDITORIAL_TEXTDOMAIN ),
 					'type'        => 'number',
 					'context'     => 'issue',
 				),
 				'in_issue_page_start' => array(
-					'title'       => _x( 'Page Start', 'Magazine Module: Field Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Post start page on issue (printed)', 'Magazine Module: Field Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Page Start', 'Modules: Magazine: Field Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Post start page on issue (printed)', 'Modules: Magazine: Field Description', GEDITORIAL_TEXTDOMAIN ),
 					'type'        => 'number',
 					'context'     => 'issue',
 				),
 				'in_issue_pages' => array(
-					'title'       => _x( 'Total Pages', 'Magazine Module: Field Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Post total pages on issue (printed)', 'Magazine Module: Field Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Total Pages', 'Modules: Magazine: Field Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Post total pages on issue (printed)', 'Modules: Magazine: Field Description', GEDITORIAL_TEXTDOMAIN ),
 					'context'     => 'issue',
 				),
 			),
@@ -771,7 +771,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 			foreach ( $post_types as $post_type )
 				$list[] = gEditorialHTML::tag( 'a', array(
 					'href'   => gEditorialWordPress::getPostTypeEditLink( $post_type, 0, $args ),
-					'title'  => _x( 'View the connected list', 'Magazine Module', GEDITORIAL_TEXTDOMAIN ),
+					'title'  => _x( 'View the connected list', 'Modules: Magazine', GEDITORIAL_TEXTDOMAIN ),
 					'target' => '_blank',
 				), $this->all_post_types[$post_type] );
 
@@ -790,11 +790,11 @@ class gEditorialMagazine extends gEditorialModuleCore
 	{
 		$this->settings_form_before( $uri, $sub, 'bulk', 'tools', FALSE, FALSE );
 
-			gEditorialHTML::h3( _x( 'Magazine Tools', 'Magazine Module', GEDITORIAL_TEXTDOMAIN ) );
+			gEditorialHTML::h3( _x( 'Magazine Tools', 'Modules: Magazine', GEDITORIAL_TEXTDOMAIN ) );
 
 			echo '<table class="form-table">';
 
-			echo '<tr><th scope="row">'._x( 'From Terms', 'Magazine Module', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
+			echo '<tr><th scope="row">'._x( 'From Terms', 'Modules: Magazine', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
 
 			if ( ! empty( $_POST ) && isset( $_POST['issue_tax_check'] ) ) {
 
@@ -803,7 +803,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 					'term_id' => gEditorialHelper::tableColumnTermID(),
 					'name'    => gEditorialHelper::tableColumnTermName(),
 					'linked'   => array(
-						'title' => _x( 'Linked Issue Post', 'Magazine Module: Table Column', GEDITORIAL_TEXTDOMAIN ),
+						'title' => _x( 'Linked Issue Post', 'Modules: Magazine: Table Column', GEDITORIAL_TEXTDOMAIN ),
 						'callback' => function( $value, $row, $column, $index ){
 
 							if ( $post_id = $this->get_linked_post_id( $row, 'issue_cpt', 'issue_tax', FALSE ) )
@@ -813,7 +813,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 						},
 					),
 					'slugged'   => array(
-						'title' => _x( 'Same Slug Issue Post', 'Magazine Module: Table Column', GEDITORIAL_TEXTDOMAIN ),
+						'title' => _x( 'Same Slug Issue Post', 'Modules: Magazine: Table Column', GEDITORIAL_TEXTDOMAIN ),
 						'callback' => function( $value, $row, $column, $index ){
 
 							if ( $post_id = gEditorialWPPostType::getIDbySlug( $row->slug, $this->constant( 'issue_cpt' ) ) )
@@ -823,7 +823,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 						},
 					),
 					'count' => array(
-						'title'    => _x( 'Count', 'Magazine Module: Table Column', GEDITORIAL_TEXTDOMAIN ),
+						'title'    => _x( 'Count', 'Modules: Magazine: Table Column', GEDITORIAL_TEXTDOMAIN ),
 						'callback' => function( $value, $row, $column, $index ){
 							if ( $post_id = gEditorialWPPostType::getIDbySlug( $row->slug, $this->constant( 'issue_cpt' ) ) )
 								return gEditorialNumber::format( $this->get_linked_posts( $post_id, 'issue_cpt', 'issue_tax', TRUE ) );
@@ -837,21 +837,21 @@ class gEditorialMagazine extends gEditorialModuleCore
 			}
 
 			gEditorialSettingsCore::submitButton( 'issue_tax_check',
-				_x( 'Check Terms', 'Magazine Module: Setting Button', GEDITORIAL_TEXTDOMAIN ), TRUE );
+				_x( 'Check Terms', 'Modules: Magazine: Setting Button', GEDITORIAL_TEXTDOMAIN ), TRUE );
 
 			gEditorialSettingsCore::submitButton( 'issue_post_create',
-				_x( 'Create Issue Posts', 'Magazine Module: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
+				_x( 'Create Issue Posts', 'Modules: Magazine: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
 
 			gEditorialSettingsCore::submitButton( 'issue_post_connect',
-				_x( 'Re-Connect Posts', 'Magazine Module: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
+				_x( 'Re-Connect Posts', 'Modules: Magazine: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
 
 			gEditorialSettingsCore::submitButton( 'issue_store_order',
-				_x( 'Store Orders', 'Magazine Module: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
+				_x( 'Store Orders', 'Modules: Magazine: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
 
 			gEditorialSettingsCore::submitButton( 'issue_tax_delete',
-				_x( 'Delete Terms', 'Magazine Module: Setting Button', GEDITORIAL_TEXTDOMAIN ), 'delete', TRUE );
+				_x( 'Delete Terms', 'Modules: Magazine: Setting Button', GEDITORIAL_TEXTDOMAIN ), 'delete', TRUE );
 
-			gEditorialHTML::desc( _x( 'Check for issue terms and create corresponding issue posts.', 'Magazine Module', GEDITORIAL_TEXTDOMAIN ) );
+			gEditorialHTML::desc( _x( 'Check for issue terms and create corresponding issue posts.', 'Modules: Magazine', GEDITORIAL_TEXTDOMAIN ) );
 
 			echo '</td></tr>';
 			echo '</table>';

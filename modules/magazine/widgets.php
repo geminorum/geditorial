@@ -11,8 +11,8 @@ class gEditorialMagazineWidget_IssueCover extends gEditorialWidgetCore
 			'module' => 'magazine',
 			'name'   => 'magazine_issue_cover',
 			'class'  => 'magazine-issue-cover',
-			'title'  => _x( 'Editorial Magazine: Issue Cover', 'Magazine Module', GEDITORIAL_TEXTDOMAIN ),
-			'desc'   => _x( 'Displays selected issue cover', 'Magazine Module', GEDITORIAL_TEXTDOMAIN ),
+			'title'  => _x( 'Editorial Magazine: Issue Cover', 'Modules: Magazine', GEDITORIAL_TEXTDOMAIN ),
+			'desc'   => _x( 'Displays selected issue cover', 'Modules: Magazine', GEDITORIAL_TEXTDOMAIN ),
 		);
 	}
 
@@ -98,12 +98,12 @@ class gEditorialMagazineWidget_IssueCover extends gEditorialWidgetCore
 		$this->form_title( $instance );
 		$this->form_title_link( $instance );
 
-		$this->form_post_id( $instance, '0', 'issue_id', 'posttype', $cpt, _x( 'The Issue:', 'Magazine Module: Widget: Issue Cover', GEDITORIAL_TEXTDOMAIN ) );
+		$this->form_post_id( $instance, '0', 'issue_id', 'posttype', $cpt, _x( 'The Issue:', 'Modules: Magazine: Widget: Issue Cover', GEDITORIAL_TEXTDOMAIN ) );
 		$this->form_image_size( $instance, $cpt.'-thumbnail', 'image_size', $cpt );
 
-		$this->form_checkbox( $instance, FALSE, 'latest_issue', _x( 'Always the latest issue', 'Magazine Module: Widget: Issue Cover', GEDITORIAL_TEXTDOMAIN ) );
-		$this->form_checkbox( $instance, FALSE, 'link_issue', _x( 'Link to the issue', 'Magazine Module: Widget: Issue Cover', GEDITORIAL_TEXTDOMAIN ) );
-		$this->form_checkbox( $instance, FALSE, 'number_line', _x( 'Display the Number Meta', 'Magazine Module: Widget: Issue Cover', GEDITORIAL_TEXTDOMAIN ) );
+		$this->form_checkbox( $instance, FALSE, 'latest_issue', _x( 'Always the latest issue', 'Modules: Magazine: Widget: Issue Cover', GEDITORIAL_TEXTDOMAIN ) );
+		$this->form_checkbox( $instance, FALSE, 'link_issue', _x( 'Link to the issue', 'Modules: Magazine: Widget: Issue Cover', GEDITORIAL_TEXTDOMAIN ) );
+		$this->form_checkbox( $instance, FALSE, 'number_line', _x( 'Display the Number Meta', 'Modules: Magazine: Widget: Issue Cover', GEDITORIAL_TEXTDOMAIN ) );
 
 		$this->form_context( $instance );
 		$this->form_class( $instance );
