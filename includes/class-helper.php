@@ -944,18 +944,9 @@ class gEditorialHelper extends gEditorialBaseCore
 		$messages = [];
 		$strings  = self::getStringsFromName( $name );
 
-		foreach ( $templates as $key => $template ) {
-
-			$nooped = [
-				'singular' => vsprintf( $template['singular'], $strings ),
-				'plural'   => vsprintf( $template['plural'], $strings ),
-				'context'  => $template['context'],
-				'domain'   => $template['domain'],
-			];
-
+		foreach ( $templates as $key => $template )
 			// needs to apply the role so we use noopedCount()
-			$messages[$key] = self::noopedCount( $counts[$key], $nooped );
-		}
+			$messages[$key] = vsprintf( self::noopedCount( $counts[$key], $template ), $strings );
 
 		return $messages;
 	}
