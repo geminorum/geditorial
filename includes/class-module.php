@@ -517,19 +517,19 @@ class gEditorialModuleCore extends gEditorialWPModule
 
 	public function default_buttons( $page = NULL )
 	{
-		$this->register_button( 'submit', _x( 'Save Changes', 'Module Core', GEDITORIAL_TEXTDOMAIN ), array( 'default' => 'default' ), 'primary' );
-		$this->register_button( 'reset-settings', _x( 'Reset Settings', 'Module Core', GEDITORIAL_TEXTDOMAIN ), gEditorialSettingsCore::getButtonConfirm() );
+		$this->register_button( 'submit', NULL, TRUE );
+		$this->register_button( 'reset', NULL, 'reset', TRUE );
 	}
 
-	public function register_button( $key, $value = NULL, $atts = array(), $type = 'secondary' )
+	public function register_button( $key, $value = NULL, $type = FALSE, $atts = array() )
 	{
 		if ( is_null( $value ) )
-			$value = $this->get_string( $key, 'buttons', 'settings' );
+			$value = $this->get_string( $key, 'buttons', 'settings', NULL );
 
 		$this->buttons[$key] = array(
-			'value' => is_null( $value ) ? $key : $value,
-			'atts'  => $atts,
+			'value' => $value,
 			'type'  => $type,
+			'atts'  => $atts,
 		);
 	}
 

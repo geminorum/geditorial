@@ -472,8 +472,16 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 	{
 		$classes = array( '-button', 'button' );
 
+		if ( is_null( $text ) )
+			$text = 'reset' == $name
+				? _x( 'Reset Settings', 'Settings: Button', GEDITORIAL_TEXTDOMAIN )
+				: _x( 'Save Changes', 'Settings: Button', GEDITORIAL_TEXTDOMAIN );
+
 		if ( TRUE === $atts )
 			$atts = self::getButtonConfirm();
+
+		else if ( ! is_array( $atts ) )
+			$atts = array();
 
 		if ( 'primary' == $primary )
 			$primary = TRUE;
@@ -488,7 +496,7 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 			'type'    => 'submit',
 			'name'    => $name,
 			'id'      => $name,
-			'value'   => is_null( $text ) ? _x( 'Save Changes', 'Settings: Button', GEDITORIAL_TEXTDOMAIN ) : $text,
+			'value'   => $text,
 			'class'   => $classes,
 			'default' => TRUE === $primary,
 		) ) );
