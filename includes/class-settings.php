@@ -518,7 +518,7 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 	public static function huh( $message = NULL )
 	{
 		if ( $message )
-			return sprintf ( _x( 'huh? %s', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ), $message );
+			return sprintf( _x( 'huh? %s', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ), $message );
 
 		return _x( 'huh?', 'Settings: Message', GEDITORIAL_TEXTDOMAIN );
 	}
@@ -727,7 +727,7 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 	public static function fieldType( $atts = array(), &$scripts )
 	{
 		$args = self::atts( array(
-			'title'        => '',
+			'title'        => '&nbsp;',
 			'label_for'    => '',
 			'type'         => 'enabled',
 			'field'        => FALSE,

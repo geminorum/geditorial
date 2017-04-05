@@ -30,7 +30,6 @@ class gEditorialHelper extends gEditorialBaseCore
 			: ucwords( str_replace( array( '_', '-' ), ' ', $module ) );
 	}
 
-	// FIXME: MUST DEPRECATE
 	public static function moduleEnabled( $options )
 	{
 		$enabled = isset( $options->enabled ) ? $options->enabled : FALSE;
@@ -832,7 +831,7 @@ class gEditorialHelper extends gEditorialBaseCore
 	 */
 	public static function generateTaxonomyLabels( $name, $pre = array() )
 	{
-		$name_templates = array(
+		$templates = array(
 			'name'                       => _x( '%1$s', 'Module Helper: Tax Generator: Name', GEDITORIAL_TEXTDOMAIN ),
 			// 'menu_name'                  => _x( '%1$s', 'Module Helper: Tax Generator: Menu Name', GEDITORIAL_TEXTDOMAIN ),
 			'singular_name'              => _x( '%2$s', 'Module Helper: Tax Generator: Singular Name', GEDITORIAL_TEXTDOMAIN ),
@@ -857,7 +856,7 @@ class gEditorialHelper extends gEditorialBaseCore
 
 		$strings = self::getStringsFromName( $name );
 
-		foreach ( $name_templates as $key => $template )
+		foreach ( $templates as $key => $template )
 			$pre[$key] = vsprintf( $template, $strings );
 
 		if ( ! isset( $pre['menu_name'] ) )
@@ -877,7 +876,7 @@ class gEditorialHelper extends gEditorialBaseCore
 	{
 		global $post_type_object, $post, $post_ID;
 
-		$name_templates = array(
+		$templates = array(
 			'view_post'                      => _x( 'View %4$s', 'Module Helper: PostType Message Generator', GEDITORIAL_TEXTDOMAIN ),
 			'preview_post'                   => _x( 'Preview %4$s', 'Module Helper: PostType Message Generator', GEDITORIAL_TEXTDOMAIN ),
 			'post_updated'                   => _x( '%2$s updated.', 'Module Helper: PostType Message Generator', GEDITORIAL_TEXTDOMAIN ),
@@ -894,7 +893,7 @@ class gEditorialHelper extends gEditorialBaseCore
 		$messages = array();
 		$strings  = self::getStringsFromName( $name );
 
-		foreach ( $name_templates as $key => $template )
+		foreach ( $templates as $key => $template )
 			$messages[$key] = vsprintf( $template, $strings );
 
 		if ( ! $permalink = get_permalink( $post_ID ) )

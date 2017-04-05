@@ -152,7 +152,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 	protected function get_global_fields()
 	{
 		return array(
-			$this->constant( 'issue_cpt' ) => array (
+			$this->constant( 'issue_cpt' ) => array(
 				'ot' => array( 'type' => 'title_before' ),
 				'st' => array( 'type' => 'title_after' ),
 

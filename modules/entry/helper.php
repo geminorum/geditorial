@@ -104,18 +104,18 @@ class gEditorialEntryHelper extends gEditorialHelper
 		for ($i=0;$i<count($text_name);$i++){
 		if (trim($text_name[$i])!=''){
 
-			if (preg_match('~\b' . preg_quote($text_name[$i], '~') . '\b(?![^<]*?>)~',$content,$result))
+			if (preg_match('~\b' . preg_quote($text_name[$i], '~') . '\b(?![^<]*?>)~', $content, $result))
 			{
 				$rep_html='<label class="wh_highlighted">'.$text_name[$i].'</label>';
 				if ($options['highlightedtext_case'])
 				{
 
-					$content = preg_replace('~\b' . preg_quote($text_name[$i], '~') . '\b(?![^<]*?>)~',$rep_html,$content);
+					$content = preg_replace('~\b' . preg_quote($text_name[$i], '~') . '\b(?![^<]*?>)~', $rep_html, $content);
 
 				}
 				else
 				{
-						$content = preg_replace('~\b' . preg_quote($text_name[$i], '~') . '\b(?![^<]*?>)~i',$rep_html,$content);
+						$content = preg_replace('~\b' . preg_quote($text_name[$i], '~') . '\b(?![^<]*?>)~i', $rep_html, $content);
 
 				}
 			}

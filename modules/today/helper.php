@@ -113,7 +113,7 @@ class gEditorialTodayHelper extends gEditorialHelper
 			if ( ! empty( $post_meta[$constant][0] ) )
 				$the_day[$field] = $post_meta[$constant][0];
 
-		if ( empty ( $the_day['cal'] ) )
+		if ( empty( $the_day['cal'] ) )
 			return array_merge( array( 'cal' => $default_type ), $the_day );
 
 		return $the_day;
@@ -138,7 +138,7 @@ class gEditorialTodayHelper extends gEditorialHelper
 				$the_day[$field] = $var;
 		}
 
-		if ( empty ( $the_day['cal'] ) )
+		if ( empty( $the_day['cal'] ) )
 			return array_merge( array( 'cal' => $default_type ), $the_day );
 
 		return $the_day;

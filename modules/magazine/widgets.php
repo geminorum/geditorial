@@ -33,7 +33,7 @@ class gEditorialMagazineWidget_IssueCover extends gEditorialWidgetCore
 
 		if ( ! empty( $instance['latest_issue'] ) ) {
 			$prefix = 'latest_issue';
-		} else if ( ! empty ( $instance['issue_id'] ) ) {
+		} else if ( ! empty( $instance['issue_id'] ) ) {
 			$prefix = 'issue_'.$instance['issue_id'];
 		} else {
 			$prefix = 'queried_'.get_queried_object_id();
@@ -52,7 +52,7 @@ class gEditorialMagazineWidget_IssueCover extends gEditorialWidgetCore
 		if ( ! empty( $instance['latest_issue'] ) ) {
 			$id = gEditorialWordPress::getLastPostOrder( $cpt, '', 'ID', 'publish' );
 
-		} else if ( ! empty ( $instance['issue_id'] ) ) {
+		} else if ( ! empty( $instance['issue_id'] ) ) {
 			$id = $instance['issue_id'];
 
 		} else {

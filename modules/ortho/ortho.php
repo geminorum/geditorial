@@ -11,7 +11,7 @@ class gEditorialOrtho extends gEditorialModuleCore
 		return array(
 			'name'     => 'ortho',
 			'title'    => _x( 'Ortho', 'Modules: Ortho', GEDITORIAL_TEXTDOMAIN ),
-			'desc'     => _x( 'Orthography Tools', 'Modules: Ortho', GEDITORIAL_TEXTDOMAIN ),
+			'desc'     => _x( 'Persian Orthography Tools', 'Modules: Ortho', GEDITORIAL_TEXTDOMAIN ),
 			'icon'     => 'filter',
 			'frontend' => FALSE,
 		);

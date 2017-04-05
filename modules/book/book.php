@@ -168,7 +168,7 @@ class gEditorialBook extends gEditorialModuleCore
 	public function get_global_fields()
 	{
 		return array(
-			$this->constant( 'publication_cpt' ) => array (
+			$this->constant( 'publication_cpt' ) => array(
 				'collection' => array(
 					'title'       => _x( 'Collection Title', 'Modules: Book: Field Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'This Publication Is Part of a Collection', 'Modules: Book: Field Description', GEDITORIAL_TEXTDOMAIN ),

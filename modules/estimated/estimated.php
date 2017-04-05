@@ -174,7 +174,6 @@ class gEditorialEstimated extends gEditorialModuleCore
 		return $content.$html;
 	}
 
-	// FIXME: use wp internal word count
 	protected function get_post_wordcount( $post_id, $update = FALSE )
 	{
 		$content = get_post_field( 'post_content', $post_id, 'raw' );
