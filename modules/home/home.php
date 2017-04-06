@@ -112,8 +112,11 @@ add_theme_support( \'featured-content\', array(
 		if ( ! is_admin() ) {
 			add_action( 'pre_get_posts', array( $this, 'pre_get_posts' ), 9 );
 
-			if ( count( $post_types ) )
+			if ( count( $post_types ) ) {
 				add_filter( 'gpersiandate_calendar_posttypes', array( $this, 'calendar_posttypes' ) );
+
+				$this->filter( 'widget_posts_args' );
+			}
 		}
 
 		if ( $this->setup_featured( $post_types, $featured_tax ) ) {
@@ -306,5 +309,13 @@ add_theme_support( \'featured-content\', array(
 	public function calendar_posttypes( $posttypes )
 	{
 		return $this->post_types();
+	}
+
+	public function widget_posts_args( $args )
+	{
+		if ( ! isset( $args['post_type'] ) )
+			$args['post_type'] = $this->post_types();
+
+		return $args;
 	}
 }
