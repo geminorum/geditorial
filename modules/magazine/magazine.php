@@ -27,6 +27,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 		return array(
 			'_general' => array(
 				'multiple_instances',
+				'shortcode_support',
 				'admin_ordering',
 				'admin_restrict',
 				array(
@@ -230,8 +231,8 @@ class gEditorialMagazine extends gEditorialModuleCore
 				'show_in_nav_menus'  => TRUE,
 			), $this->post_types( 'issue_cpt' ) );
 
-		$this->register_shortcode( 'issue_shortcode', array( 'gEditorialMagazineTemplates', 'issue_shortcode' ) );
-		$this->register_shortcode( 'span_shortcode', array( 'gEditorialMagazineTemplates', 'span_shortcode' ) );
+		$this->register_shortcode( 'issue_shortcode' );
+		$this->register_shortcode( 'span_shortcode' );
 
 		if ( ! is_admin() ) {
 
@@ -790,6 +791,30 @@ class gEditorialMagazine extends gEditorialModuleCore
 	public function bulk_post_updated_messages( $messages, $counts )
 	{
 		return array_merge( $messages, array( $this->constant( 'issue_cpt' ) => $this->get_bulk_post_updated_messages( 'issue_cpt', $counts ) ) );
+	}
+
+	public function issue_shortcode( $atts = [], $content = NULL, $tag = '' )
+	{
+		return gEditorialShortCode::getAssocPosts(
+			$this->constant( 'issue_cpt' ),
+			$this->constant( 'issue_tax' ),
+			array_merge( [
+				'posttypes' => $this->post_types(),
+			], $atts ),
+			$content,
+			$this->constant( 'issue_shortcode' )
+		);
+	}
+
+	public function span_shortcode( $atts = [], $content = NULL, $tag = '' )
+	{
+		return gEditorialShortCode::getTermPosts(
+			$this->constant( 'issue_cpt' ),
+			$this->constant( 'span_tax' ),
+			$atts,
+			$content,
+			$this->constant( 'span_shortcode' )
+		);
 	}
 
 	public function tools_sub( $uri, $sub )

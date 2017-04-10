@@ -44,8 +44,11 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 		return array( $field );
 	}
 
+	// FIXME: DEPRECATED
 	public static function issue_shortcode( $atts = array(), $content = NULL, $tag = '' )
 	{
+		self::__dep();
+
 		global $post;
 
 		$error  = FALSE;
@@ -190,8 +193,11 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 		return $content;
 	}
 
+	// FIXME: DEPRECATED
 	public static function span_shortcode( $atts, $content = NULL, $tag = '' )
 	{
+		self::__dep();
+
 		global $post;
 
 		$error = FALSE;
