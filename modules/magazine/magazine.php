@@ -664,34 +664,26 @@ class gEditorialMagazine extends gEditorialModuleCore
 		echo '</div>';
 	}
 
-	public function get_assoc_post( $post_id = NULL, $single = FALSE )
+	public function get_assoc_post( $post = NULL, $single = FALSE, $published = TRUE )
 	{
-		if ( is_null( $post_id ) )
-			$post_id = get_the_ID();
-
-		$terms = gEditorialWPTaxonomy::getTerms( $this->constant( 'issue_tax' ), $post_id, TRUE );
-
-		if ( ! count( $terms ) )
-			return FALSE;
-
-		$id  = FALSE;
-		$ids = array();
+		$posts = [];
+		$terms = gEditorialWPTaxonomy::getTerms( $this->constant( 'issue_tax' ), $post, TRUE );
 
 		foreach ( $terms as $term ) {
 
-			if ( $id = $this->get_linked_post_id( $term, 'issue_cpt', 'issue_tax' ) ) {
+			if ( ! $linked = $this->get_linked_post_id( $term, 'issue_cpt', 'issue_tax' ) )
+				continue;
 
-				if ( $single )
-					return $id;
+			if ( $single )
+				return $linked;
 
-				$ids[$id] = 'publish' == get_post_status( $id ) ? get_permalink( $id ) : FALSE;
-			}
+			if ( $published && 'publish' != get_post_status( $linked ) )
+				continue;
+
+			$posts[$term->term_id] = $linked;
 		}
 
-		if ( count( $ids ) )
-			return $ids;
-
-		return FALSE;
+		return count( $posts ) ? $posts : FALSE;
 	}
 
 	public function manage_posts_columns( $columns )
