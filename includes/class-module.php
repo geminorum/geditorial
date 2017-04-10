@@ -1415,7 +1415,7 @@ class gEditorialModuleCore extends gEditorialWPModule
 		), $html );
 	}
 
-	public function field_post_parent( $constant_key, $post, $status = 'publish,private,draft' )
+	public function field_post_parent( $constant_key, $post, $status = array( 'publish', 'future', 'draft' ) )
 	{
 		$pages = wp_dropdown_pages( array(
 			'post_type'        => $this->constant( $constant_key ), // alows for parent of diffrent type

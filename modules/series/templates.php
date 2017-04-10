@@ -234,9 +234,9 @@ class gEditorialSeriesTemplates extends gEditorialTemplateCore
 						$output .= call_user_func_array( $args['cb'], array( $post, $args, $offset ) );
 					} else {
 						if ( $post->post_status == 'publish' )
-							$link = '<span class="the-title in-series-publish"><a href="'.get_permalink( $post->ID ).'">'.get_the_title( $post->ID ).'</a>';
+							$link = '<span class="the-title in-series-publish"><a href="'.get_permalink( $post ).'">'.get_the_title( $post ).'</a>';
 						else
-							$link = '<span class="the-title in-series-future">'.get_the_title( $post->ID ).'</span>';
+							$link = '<span class="the-title in-series-future">'.get_the_title( $post ).'</span>';
 
 						if ( $args['hide'] > 1 && $offset > $args['hide'] ) {
 							$output .= '<li class="in-series-hidden in-series-hidden-'.$args['id'].'">';

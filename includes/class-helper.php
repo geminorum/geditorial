@@ -379,8 +379,8 @@ class gEditorialHelper extends gEditorialBaseCore
 		foreach ( $the_posts as $post ) {
 			setup_postdata( $post );
 
-			$output .= '<li><a href="'.get_permalink( $post->ID ).'">'
-				.get_the_title( $post->ID ).'</a>'
+			$output .= '<li><a href="'.get_permalink( $post ).'">'
+				.self::getPostTitle( $post ).'</a>'
 				.'&nbsp;<span class="edit">'
 				.sprintf( _x( '&ndash; <a href="%1$s" target="_blank" title="Edit this Post">%2$s</a>', 'Module Helper', GEDITORIAL_TEXTDOMAIN ),
 					esc_url( gEditorialWordPress::getPostEditLink( $post->ID ) ),

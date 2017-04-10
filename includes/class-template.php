@@ -109,7 +109,7 @@ class gEditorialTemplateCore extends gEditorialBaseCore
 
 	public static function postImage( $atts = array(), $module = NULL )
 	{
-		$html = FALSE;
+		$html = '';
 
 		if ( is_null( $module ) && self::MODULE )
 			$module = self::MODULE;
@@ -133,7 +133,7 @@ class gEditorialTemplateCore extends gEditorialBaseCore
 		), $atts );
 
 		if ( 'latest' == $args['id'] )
-			$args['id'] = gEditorialWordPress::getLastPostOrder( $args['type'], '', 'ID', 'publish' );
+			$args['id'] = gEditorialWordPress::getLastPostOrder( $args['type'], '', 'ID', array( 'publish' ) );
 
 		else if ( 'random' == $args['id'] )
 			$args['id'] = gEditorialWordPress::getRandomPostID( $args['type'], TRUE );
@@ -143,6 +143,9 @@ class gEditorialTemplateCore extends gEditorialBaseCore
 
 		else if ( 'assoc' == $args['id'] && $module )
 			$args['id'] = gEditorial()->{$module}->get_assoc_post( NULL, TRUE );
+
+		if ( FALSE === $args['id'] )
+			return $args['default'];
 
 		if ( ! $post = get_post( $args['id'] ) )
 			return $args['default'];

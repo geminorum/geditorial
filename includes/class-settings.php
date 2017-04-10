@@ -1147,7 +1147,7 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 					'exclude'     => implode( ',', $exclude ),
 					'sort_column' => 'menu_order',
 					'sort_order'  => 'asc',
-					'post_status' => 'publish,private,draft',
+					'post_status' => array( 'publish', 'future', 'draft' ),
 				), $args['extra'] );
 
 				$pages = get_pages( $query );
