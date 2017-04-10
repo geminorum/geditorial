@@ -5,15 +5,45 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 
 	const MODULE = 'magazine';
 
-	public static function theIssueCover( $atts = array() )
+	public static function theIssue( $atts = [] )
+	{
+		if ( ! isset( $atts['li_title_cb'] ) )
+			$atts['li_title_cb'] = [ __CLASS__, 'theIssueTitleCB' ];
+
+		return self::assocLink( $atts, self::MODULE );
+	}
+
+	public static function theIssueTitleCB( $post, $args = [] )
+	{
+		return trim( strip_tags( self::getMetaField( 'number', [
+			'id'      => $post->ID,
+			'default' => $args['li_title'],
+		] ) ) );
+	}
+
+	public static function theIssueMeta( $field = 'number', $atts = [] )
+	{
+		if ( ! isset( $atts['echo'] ) )
+			$atts['echo'] = TRUE;
+
+		$meta = self::getMetaField( $field, $atts );
+
+		if ( ! $atts['echo'] )
+			return $meta;
+
+		echo $meta;
+		return TRUE;
+	}
+
+	public static function theCover( $atts = [] )
 	{
 		if ( ! isset( $atts['id'] ) )
 			$atts['id'] = NULL;
 
-		return self::issueCover( $atts );
+		return self::cover( $atts );
 	}
 
-	public static function issueCover( $atts = array() )
+	public static function cover( $atts = [] )
 	{
 		if ( ! isset( $atts['id'] ) )
 			$atts['id'] = 'assoc';
@@ -25,17 +55,45 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 	}
 
 	// FIXME: DEPRECATED
-	// USE: self::sanitizeField()
+	public static function theIssueCover( $atts = array() )
+	{
+		self::__dep( 'gEditorialMagazineTemplates::theCover()' );
+
+		if ( ! isset( $atts['id'] ) )
+			$atts['id'] = NULL;
+
+		return self::cover( $atts );
+	}
+
+	// FIXME: DEPRECATED
+	public static function issueCover( $atts = array() )
+	{
+		self::__dep( 'gEditorialMagazineTemplates::cover()' );
+
+		if ( ! isset( $atts['id'] ) )
+			$atts['id'] = 'assoc';
+
+		if ( ! isset( $atts['type'] ) )
+			$atts['type'] = self::constant( 'issue_cpt', 'issue' );
+
+		return parent::postImage( $atts, self::MODULE );
+	}
+
+	// FIXME: DEPRECATED
 	public static function sanitize_field( $field )
 	{
+		self::__dep( 'gEditorialMagazineTemplates::sanitizeField()' );
+
 		if ( is_array( $field ) )
 			return $field;
 
 		$fields = array(
 			'over-title' => array( 'ot', 'over-title' ),
 			'sub-title'  => array( 'st', 'sub-title' ),
-			'number'     => array( 'issue_number_line' ),
-			'pages'      => array( 'issue_total_pages' ),
+			'number'     => array( 'issue_number_line', 'number' ),
+			'pages'      => array( 'issue_total_pages', 'pages' ),
+			'start'      => array( 'in_issue_page_start', 'start' ),
+			'order'      => array( 'in_issue_order', 'order' ),
 		);
 
 		if ( isset( $fields[$field] ) )
@@ -271,7 +329,6 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 
 		if ( $args['title'] ) {
 
-			// TODO: if is_null: get span link / also check for module archive settings!
 
 			if ( FALSE !== $args['title_link'] )
 				$args['title'] = gEditorialHTML::tag( 'a', array(
@@ -356,8 +413,11 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 		), $atts );
 	}
 
+	// FIXME: DEPRECATED
 	public static function the_issue( $b = '', $a = '', $f = FALSE, $post_id = NULL, $args = array() )
 	{
+		self::__dep( 'gEditorialMagazineTemplates::theIssue()' );
+
 		global $post;
 
 		if ( is_null( $post_id ) )
@@ -404,22 +464,19 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 	{
 		return wp_parse_args( $args, array(
 			'id'       => NULL,
-			'attr'     => array(
-				'class' => 'size-'.$size
-			),
+			'attr'     => array( 'class' => 'size-'.$size ),
+			'title'    => 'title',
 			'def'      => FALSE,
 			'cb'       => FALSE,
-			'echo'     => TRUE,
-			'title'    => 'title',
 			'fallback' => FALSE,
+			'echo'     => TRUE,
 		));
 	}
 
 	// FIXME: DEPRECATED
-	// USE: self::issueCover()
 	public static function issue_cover( $b = '', $a = '', $size = 'raw', $link = 'parent', $args = array() )
 	{
-		self::__dev_dep( 'gEditorialMagazineTemplates::issueCover()' );
+		self::__dep( 'gEditorialMagazineTemplates::issueCover()' );
 
 		$args = self::issue_cover_parse_arg( $args, $size );
 
@@ -488,9 +545,10 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 		return $b.$args['def'].$a;
 	}
 
+	// FIXME: DEPRECATED
 	public static function the_issue_cover( $b = '', $a = '', $size = 'raw', $link = 'parent', $args = array() )
 	{
-		self::__dev_dep( 'gEditorialMagazineTemplates::postImage()' );
+		self::__dep( 'gEditorialMagazineTemplates::postImage()' );
 
 		$args = self::issue_cover_parse_arg( $args, $size );
 		$the_issues = gEditorial()->magazine->get_assoc_post( $args['id'] );
@@ -513,9 +571,10 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 	}
 
 	// FIXME: DEPRECATED
-	// USE: self::getPostField()
 	public static function get_issue_title( $field = 'title', $id = NULL, $default = '' )
 	{
+		self::__dep( 'gEditorialMagazineTemplates::getPostField()' );
+
 		if ( 'title' == $field )
 			return strip_tags( get_the_title( $id ) );
 
@@ -542,9 +601,11 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 		return '<div class="geditorial-wrap magazine issue-cover">'.$html.'</div>';
 	}
 
-	// FIXME: DEPRECATED : for back comp
+	// FIXME: DEPRECATED
 	public static function get_latest_issue()
 	{
+		self::__dep( 'gEditorialMagazineTemplates::getLatestIssueID()' );
+
 		return self::getLatestIssueID();
 	}
 
@@ -581,9 +642,10 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 	}
 
 	// FIXME: DEPRECATED
-	// USE: self::getMetaField()
 	public static function issue_info( $field, $before = '', $after = '', $filter = FALSE, $post_id = NULL, $args = array() )
 	{
+		self::__dep( 'gEditorialMagazineTemplates::theIssueMeta()' );
+
 		global $post;
 
 		if ( is_null( $post_id ) )
@@ -611,17 +673,21 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 }
 
 if ( ! function_exists( 'issue_info' ) ) : function issue_info( $field, $b = '', $a = '', $f = FALSE, $id = NULL, $args = array() ){
+	gEditorialHelper::__dev_func( __FUNCTION__, '3.9.16', 'gEditorialMagazineTemplates::theIssueMeta()' );
 	return gEditorialMagazineTemplates::issue_info( $field, $b, $a, $f, $id, $args );
 } endif;
 
 if ( ! function_exists( 'the_issue' ) ) : function the_issue( $b = '', $a = '', $f = FALSE, $id = NULL, $args = array() ) {
+	gEditorialHelper::__dev_func( __FUNCTION__, '3.9.16', 'gEditorialMagazineTemplates::theIssue()' );
 	return gEditorialMagazineTemplates::the_issue( $b, $a, $f, $id, $args );
 } endif;
 
 if ( ! function_exists( 'issue_cover' ) ) : function issue_cover( $b = '', $a = '', $tag = 'raw', $link = 'parent', $args = array() ) {
+	gEditorialHelper::__dev_func( __FUNCTION__, '3.9.16', 'gEditorialMagazineTemplates::cover()' );
 	return gEditorialMagazineTemplates::issue_cover( $b, $a, $tag, $link, $args );
 } endif;
 
 if ( ! function_exists( 'the_issue_cover' ) ) : function the_issue_cover( $b = '', $a = '', $tag = 'raw', $link = 'parent', $args = array() ) {
+	gEditorialHelper::__dev_func( __FUNCTION__, '3.9.16', 'gEditorialMagazineTemplates::theCover()' );
 	return gEditorialMagazineTemplates::the_issue_cover( $b, $a, $tag, $link, $args );
 } endif;
