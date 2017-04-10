@@ -118,7 +118,7 @@ class gEditorialEntry extends gEditorialModuleCore
 				add_filter( 'the_content', array( $this, 'the_content' ), 9 );
 		}
 
-		$this->register_shortcode( 'section_shortcode', array( 'gEditorialEntryTemplates', 'section_shortcode' ) );
+		$this->register_shortcode( 'section_shortcode' );
 	}
 
 	public function init_ajax()
@@ -308,5 +308,16 @@ class gEditorialEntry extends gEditorialModuleCore
 		}
 
 		return $content;
+	}
+
+	public function section_shortcode( $atts = [], $content = NULL, $tag = '' )
+	{
+		return gEditorialShortCode::getTermPosts(
+			$this->constant( 'entry_cpt' ),
+			$this->constant( 'section_tax' ),
+			$atts,
+			$content,
+			$this->constant( 'section_shortcode' )
+		);
 	}
 }
