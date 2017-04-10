@@ -3,6 +3,7 @@
 class gEditorialHelper extends gEditorialBaseCore
 {
 
+	const BASE   = 'geditorial';
 	const MODULE = FALSE;
 
 	protected static function constant( $key, $default = FALSE )
@@ -79,7 +80,7 @@ class gEditorialHelper extends gEditorialBaseCore
 				$allowed = array();
 		}
 
-		return apply_filters( 'geditorial_kses', wp_kses( $text, $allowed ), $allowed, $context );
+		return apply_filters( self::BASE.'_kses', wp_kses( $text, $allowed ), $allowed, $context );
 	}
 
 	public static function prepDescription( $text )
@@ -394,7 +395,7 @@ class gEditorialHelper extends gEditorialBaseCore
 
 	public static function getTinyMceStrings( $locale )
 	{
-		$strings = apply_filters( 'geditorial_tinymce_strings', array() );
+		$strings = apply_filters( self::BASE.'_tinymce_strings', array() );
 
 		return count( $strings ) ? 'tinyMCE.addI18n("'.$locale.'.geditorial", '.wp_json_encode( $strings ).');'."\n" : '';
 	}
@@ -551,8 +552,8 @@ class gEditorialHelper extends gEditorialBaseCore
 		);
 
 		return gEditorialHTML::tag( 'div', array(
-			'class' => array( 'geditorial-wordcount', 'hide-if-no-js' ),
-			'data'  => apply_filters( 'geditorial_helper_wordcount_data', array_merge( $data, $defaults ), $for, $posttype ),
+			'class' => array( self::BASE.'-wordcount', 'hide-if-no-js' ),
+			'data'  => apply_filters( self::BASE.'_helper_wordcount_data', array_merge( $data, $defaults ), $for, $posttype ),
 		), sprintf( _x( 'Word count: %s', 'Module Helper', GEDITORIAL_TEXTDOMAIN ), '<span class="-words">0</span>' ) );
 	}
 
@@ -707,7 +708,7 @@ class gEditorialHelper extends gEditorialBaseCore
 			'ethiopic'      => _x( 'Ethiopic', 'Module Helper: Default Calendar Type', GEDITORIAL_TEXTDOMAIN ),
 		);
 
-		return $filtered ? apply_filters( 'geditorial_default_calendars', $calendars ) : $calendars;
+		return $filtered ? apply_filters( self::BASE.'_default_calendars', $calendars ) : $calendars;
 	}
 
 	// @SOURCE: `translate_nooped_plural()`
