@@ -12,12 +12,12 @@ class gEditorialWPUser extends gEditorialBaseCore
 		return current_user_can( $cap );
 	}
 
+	// alt to `is_super_admin()`
 	public static function isSuperAdmin( $user_id = FALSE )
 	{
-		if ( $user_id )
-			return user_can( $user_id, 'manage_network' );
-
-		return current_user_can( 'manage_network' );
+		return $user_id
+			? user_can( $user_id, 'manage_network' )
+			: current_user_can( 'manage_network' );
 	}
 
 	public static function superAdminOnly()

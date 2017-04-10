@@ -79,7 +79,9 @@ class gEditorialWPModule extends gEditorialBaseCore
 
 		$args[0] = $this->hook( $args[0] );
 
-		return call_user_func_array( 'do_action', $args );
+		call_user_func_array( 'do_action', $args );
+
+		return has_action( $args[0] );
 	}
 
 	protected function filters()

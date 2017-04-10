@@ -74,6 +74,11 @@ class gEditorialBaseCore
 		wp_die( $message, 403 );
 	}
 
+	public static function __log_req()
+	{
+		self::__log( $_REQUEST );
+	}
+
 	// INTERNAL
 	public static function __log( $log )
 	{

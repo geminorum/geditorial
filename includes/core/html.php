@@ -115,7 +115,7 @@ class gEditorialHTML extends gEditorialBaseCore
 				$sanitized = TRUE;
 			}
 
-			if ( in_array( $key, array( 'selected', 'checked', 'readonly', 'disabled' ) ) )
+			if ( in_array( $key, array( 'selected', 'checked', 'readonly', 'disabled', 'default' ) ) )
 				$att = $att ? $key : FALSE;
 
 			if ( FALSE === $att )
@@ -145,19 +145,22 @@ class gEditorialHTML extends gEditorialBaseCore
 		return $html.'>';
 	}
 
-	// like WP core but without filter
-	// @SOURCE: `esc_attr()`
+	// @SEE: `esc_attr()`
 	public static function escapeAttr( $text )
 	{
-		$safe_text = wp_check_invalid_utf8( $text );
-		$safe_text = _wp_specialchars( $safe_text, ENT_QUOTES );
-
-		return $safe_text;
+		return gEditorialCoreText::utf8Compliant( $text )
+			? gEditorialCoreText::utf8SpecialChars( $text, ENT_QUOTES )
+			: '';
 	}
 
 	public static function escapeURL( $url )
 	{
 		return esc_url( $url );
+	}
+
+	public static function escapeTextarea( $html )
+	{
+		return gEditorialCoreText::utf8SpecialChars( $html, ENT_QUOTES );
 	}
 
 	// like WP core but without filter and fallback
@@ -569,9 +572,9 @@ class gEditorialHTML extends gEditorialBaseCore
 			return;
 
 		if ( $reverse )
-			$row = '<tr><td class="-val"><code>%1$s</code></td><td class="-var">%2$s</td></tr>';
+			$row = '<tr><td class="-val"><code>%1$s</code></td><td class="-var" valign="top">%2$s</td></tr>';
 		else
-			$row = '<tr><td class="-var">%1$s</td><td class="-val"><code>%2$s</code></td></tr>';
+			$row = '<tr><td class="-var" valign="top">%1$s</td><td class="-val"><code>%2$s</code></td></tr>';
 
 		echo '<table class="base-table-code'.( $reverse ? ' -reverse' : '' ).'">';
 
@@ -590,6 +593,12 @@ class gEditorialHTML extends gEditorialBaseCore
 
 			else if ( is_array( $val ) || is_object( $val ) )
 				$val = json_encode( $val );
+
+			else if ( empty( $val ) )
+				$val = 'EMPTY';
+
+			else
+				$val = nl2br( $val );
 
 			printf( $row, $key, $val );
 		}

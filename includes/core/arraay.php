@@ -188,11 +188,15 @@ class gEditorialArraay extends gEditorialBaseCore
 		return $new;
 	}
 
-	// array_column() for php < 5.5
+	// `array_column()` for php < 5.5
 	// @SEE: https://github.com/ramsey/array_column/blob/master/src/array_column.php
 	// @REF: http://php.net/manual/en/function.array-column.php#118831
+	// ALT: `wp_list_pluck()`
 	public static function column( $input, $column_key, $index_key = NULL )
 	{
+		if ( function_exists( 'array_column' ) )
+			return array_column( $input, $column_key, $index_key );
+
 		$arr = array_map( function( $d ) use ( $column_key, $index_key ) {
 
 			if ( ! isset( $d[$column_key] ) )

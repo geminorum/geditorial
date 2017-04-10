@@ -42,7 +42,7 @@ class gEditorialWordPress extends gEditorialBaseCore
 	}
 
 	// TODO: use db query
-	public static function getLastPostOrder( $post_type = 'post', $exclude = '', $key = 'menu_order', $status = 'publish,private,draft' )
+	public static function getLastPostOrder( $post_type = 'post', $exclude = '', $key = 'menu_order', $status = array( 'publish', 'future', 'draft' ) )
 	{
 		$post = get_posts( array(
 			'posts_per_page' => 1,

@@ -48,7 +48,7 @@ class gEditorialDate extends gEditorialBaseCore
 		return gEditorialHTML::tag( 'time', array(
 			'datetime' => date( 'c', ( $gmt ? $gmt : $time ) ),
 			'title'    => $title,
-			'class'    => 'do-timeago',
+			'class'    => 'do-timeago', // @SEE: http://timeago.yarp.com/
 		), date_i18n( $format, $time ) );
 	}
 

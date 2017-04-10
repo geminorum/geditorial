@@ -375,8 +375,9 @@ class gEditorialCoreText extends gEditorialBaseCore
 		return preg_replace( '/\x{FEFF}/u', '', $string );
 	}
 
-	// @SOURCE: [Checking UTF-8 for Well Formedness](http://www.phpwact.org/php/i18n/charsets#checking_utf-8_for_well_formedness)
+	// @SOURCE: http://web.archive.org/web/20110215015142/http://www.phpwact.org/php/i18n/charsets#checking_utf-8_for_well_formedness
 	// @SEE: http://www.php.net/manual/en/reference.pcre.pattern.modifiers.php#54805
+	// @SEE: `wp_check_invalid_utf8()`
 	public static function utf8Compliant( $string )
 	{
 		if ( 0 === strlen( $string ) )
@@ -386,7 +387,60 @@ class gEditorialCoreText extends gEditorialBaseCore
 		// modifier is used, then it's valid UTF-8. If the UTF-8 is somehow
 		// invalid, nothing at all will match, even if the string contains
 		// some valid sequences
-		return ( 1 == preg_match( '/^.{1}/us', $string, $ar ) );
+		return ( 1 === @preg_match( '/^.{1}/us', $string ) );
+	}
+
+	// @SOURCE: http://web.archive.org/web/20110215015142/http://www.phpwact.org/php/i18n/charsets#htmlspecialchars
+	// @SOURCE: `_wp_specialchars()`
+	// converts a number of special characters into their HTML entities
+	// specifically deals with: &, <, >, ", and '
+	public static function utf8SpecialChars( $string, $flags = ENT_COMPAT )
+	{
+		$string = (string) $string;
+
+		if ( 0 === strlen( $string ) )
+			return '';
+
+		if ( preg_match( '/[&<>"\']/', $string ) )
+			$string = @htmlspecialchars( $string, $flags, 'UTF-8' );
+
+		return $string;
+	}
+
+	// @SOURCE: http://php.net/manual/en/function.ord.php#109812
+	// As ord() doesn't work with utf-8,
+	// and if you do not have access to mb_* functions
+	public static function utf8Ord( $string, &$offset )
+	{
+		$code = ord( substr( $string, $offset, 1 ) );
+
+		if ( $code >= 128 ) { // otherwise 0xxxxxxx
+
+			if ( $code < 224 )
+				$bytesnumber = 2; // 110xxxxx
+			else if ( $code < 240 )
+				$bytesnumber = 3; // 1110xxxx
+			else if ( $code < 248 )
+				$bytesnumber = 4; // 11110xxx
+
+			$codetemp = $code - 192 - ( $bytesnumber > 2 ? 32 : 0 ) - ( $bytesnumber > 3 ? 16 : 0 );
+
+			for ( $i = 2; $i <= $bytesnumber; $i++ ) {
+				$offset++;
+
+				$code2    = ord( substr( $string, $offset, 1 ) ) - 128; // 10xxxxxx
+				$codetemp = $codetemp * 64 + $code2;
+			}
+
+			$code = $codetemp;
+		}
+
+		$offset += 1;
+
+		if ( $offset >= strlen( $string ) )
+			$offset = -1;
+
+		return $code;
 	}
 
 	public static function wordCountUTF8( $html, $normalize = TRUE )
@@ -526,5 +580,33 @@ class gEditorialCoreText extends gEditorialBaseCore
 			$key .= $chr[( rand( 0, ( strlen( $chr ) - 1 ) ) )];
 
 		return md5( $salt.$key );
+	}
+
+	// @SOURCE: `_deep_replace()`
+	public static function deepStrip( $search, $string )
+	{
+		$string = (string) $string;
+
+		$count = 1;
+		while ( $count )
+			$string = str_replace( $search, '', $string, $count );
+
+		return $string;
+	}
+
+	// @REF: https://en.wikipedia.org/wiki/Control_character
+	// @REF: https://en.wikipedia.org/wiki/Unicode_control_characters
+	// @SEE: `wp_kses_no_null()`
+	public static function stripControlChars( $string )
+	{
+		// remove control chars, the first 32 ascii characters and \x7F
+		// @REF: http://stackoverflow.com/a/1497928/4864081
+		$string = preg_replace( '/[\x00-\x09\x0B\x0C\x0E-\x1F\x7F]/', '', $string );
+		// $string = preg_replace('/[\p{Cc}]/', '', $string );
+
+		// removes any instance of the '\0' string
+		$string = preg_replace( '/\\\\+0+/', '', $string );
+
+		return $string;
 	}
 }
