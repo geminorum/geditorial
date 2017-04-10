@@ -28,120 +28,6 @@ class gEditorialTemplateCore extends gEditorialBaseCore
 		return $parsedown->text( $content );
 	}
 
-	// EDITED: 10/1/2016, 5:32:32 PM
-	public static function shortcodeWrap( $html, $suffix = FALSE, $args = array(), $block = TRUE )
-	{
-		$before = empty( $args['before'] ) ? '' : $args['before'];
-		$after  = empty( $args['after'] ) ? '' : $args['after'];
-
-		if ( empty( $args['wrap'] ) )
-			return $before.$html.$after;
-
-		$classes = array( 'geditorial-wrap-shortcode' );
-
-		if ( $suffix )
-			$classes[] = 'shortcode-'.$suffix;
-
-		if ( isset( $args['context'] ) && $args['context'] )
-			$classes[] = 'context-'.$args['context'];
-
-		if ( $after )
-			return $before.gEditorialHTML::tag( $block ? 'div' : 'span', array( 'class' => $classes ), $html ).$after;
-
-		return gEditorialHTML::tag( $block ? 'div' : 'span', array( 'class' => $classes ), $before.$html );
-	}
-
-	// EDITED: 5/5/2016, 12:05:15 AM
-	public static function shortcodeTermTitle( $atts, $term = FALSE )
-	{
-		$args = self::atts( array(
-			'title'        => NULL, // FALSE to disable
-			'title_link'   => NULL, // FALSE to disable
-			'title_title'  => '',
-			'title_tag'    => 'h3',
-			'title_anchor' => 'term-%2$s',
-		), $atts );
-
-		if ( is_null( $args['title'] ) )
-			$args['title'] = $term ? sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' ) : FALSE;
-
-		if ( $args['title'] ) {
-			if ( is_null( $args['title_link'] ) && $term )
-				$args['title'] = gEditorialHTML::tag( 'a', array(
-					'href'  => get_term_link( $term, $term->taxonomy ),
-					'title' => $args['title_title'],
-				), $args['title'] );
-
-			else if ( $args['title_link'] )
-				$args['title'] = gEditorialHTML::tag( 'a', array(
-					'href'  => $args['title_link'],
-					'title' => $args['title_title'],
-				), $args['title'] );
-		}
-
-		if ( $args['title'] && $args['title_tag'] )
-			$args['title'] = gEditorialHTML::tag( $args['title_tag'], array(
-				'id'    => $term ? sprintf( $args['title_anchor'], $term->term_id, $term->slug ) : FALSE,
-				'class' => '-title',
-			), $args['title'] )."\n";
-
-		return $args['title'];
-	}
-
-	// EDITED: 5/5/2016, 12:05:29 AM
-	public static function shortcodeTermLink( $atts, $term, $before = '', $after = '' )
-	{
-		$args = self::atts( array(
-			'li_link'       => TRUE,
-			'li_before'     => '',
-			'li_after'      => '',
-			'li_title'      => '', // use %s for term title
-			'li_anchor'     => 'term-%1$s',
-		), $atts );
-
-		$title = sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' );
-
-		if ( $term->count && $args['li_link'] )
-			return $args['li_before'].gEditorialHTML::tag( 'a', array(
-				'href'  => get_term_link( $term ),
-				'title' => $args['li_title'] ? sprintf( $args['li_title'], $title ) : FALSE,
-				'class' => '-link -tax-'.$term->taxonomy,
-			), $before.$title.$after ).$args['li_after']."\n";
-
-		else
-			return $args['li_before'].gEditorialHTML::tag( 'span', array(
-				'title' => $args['li_title'] ? sprintf( $args['li_title'], $title ) : FALSE,
-				'class' => $args['li_link'] ? '-no-link -empty -tax-'.$term->taxonomy : FALSE,
-			), $before.$title.$after ).$args['li_after']."\n";
-	}
-
-	// EDITED: 5/5/2016, 12:05:36 AM
-	public static function shortcodePostLink( $atts, $post, $before = '', $after = '' )
-	{
-		$args = self::atts( array(
-			'li_link'       => TRUE,
-			'li_before'     => '',
-			'li_after'      => '',
-			'li_title'      => '', // use %s for post title
-			'li_anchor'     => 'post-%1$s',
-		), $atts );
-
-		$title = get_the_title( $post->ID );
-
-		if ( 'publish' == $post->post_status && $args['li_link'] )
-			return $args['li_before'].gEditorialHTML::tag( 'a', array(
-				'href'  => get_permalink( $post->ID ),
-				'title' => $args['li_title'] ? sprintf( $args['li_title'], $title ) : FALSE,
-				'class' => '-link -posttype-'.$post->post_type,
-			), $before.$title.$after ).$args['li_after']."\n";
-
-		else
-			return $args['li_before'].gEditorialHTML::tag( 'span', array(
-				'title' => $args['li_title'] ? sprintf( $args['li_title'], $title ) : FALSE,
-				'class' => $args['li_link'] ? '-no-link -future -posttype-'.$post->post_type : FALSE,
-			), $before.$title.$after ).$args['li_after']."\n";
-	}
-
 	// FIXME: DEPRECATED
 	public static function termDescription( $term, $echo_attr = FALSE )
 	{
@@ -325,6 +211,50 @@ class gEditorialTemplateCore extends gEditorialBaseCore
 		return FALSE;
 	}
 
+	public static function assocLink( $atts = array(), $module = NULL )
+	{
+		if ( is_null( $module ) && self::MODULE )
+			$module = self::MODULE;
+
+		if ( ! $module )
+			return FALSE;
+
+		$args = self::atts( [
+			'id'          => NULL,
+			'published'   => TRUE,
+			'single'      => FALSE,
+			'li_title'    => '', // use %s for post title
+			'li_title_cb' => FALSE, // callback for title attr
+			'default'     => FALSE,
+			'before'      => '',
+			'after'       => '',
+			'echo'        => TRUE,
+		], $atts );
+
+		if ( ! $posts = gEditorial()->{$module}->get_assoc_post( $args['id'], $args['single'], $args['published'] ) )
+			return $args['default'];
+
+		$links = [];
+
+		foreach ( (array) $posts as $post_id )
+			if ( $link = gEditorialShortCode::postLink( $args, $post_id ) )
+				$links[] = $link;
+
+		if ( $html = gEditorialHelper::getJoined( $links, $args['before'], $args['after'] ) ) {
+
+			if ( ! $args['echo'] )
+				return $html;
+
+			echo $html;
+			return TRUE;
+		}
+
+		if ( $args['default'] )
+			return $args['before'].$args['default'].$args['after'];
+
+		return FALSE;
+	}
+
 	public static function getPostField( $field = 'title', $id = NULL, $default = '' )
 	{
 		if ( 'title' == $field )
@@ -369,6 +299,17 @@ class gEditorialTemplateCore extends gEditorialBaseCore
 		}
 
 		return $args['default'];
+	}
+
+	public static function getMetaFieldRaw( $fields, $post_id )
+	{
+		foreach ( self::sanitizeField( $fields ) as $field ) {
+
+			$meta = gEditorial()->meta->get_postmeta( $post_id, $field, FALSE );
+
+			if ( FALSE !== $meta )
+				return $meta;
+		}
 	}
 
 	public static function metaLabel( $atts = array(), $module = NULL )
@@ -524,6 +465,8 @@ class gEditorialTemplateCore extends gEditorialBaseCore
 			'author'               => array( 'as', 'author' ),
 			'number'               => array( 'issue_number_line', 'number' ),
 			'pages'                => array( 'issue_total_pages', 'pages' ),
+			'start'                => array( 'in_issue_page_start', 'start' ),
+			'order'                => array( 'in_issue_order', 'order' ),
 			'reshare_source_title' => array( 'source_title', 'reshare_source_title' ),
 			'reshare_source_url'   => array( 'source_url', 'reshare_source_url' ),
 		);
@@ -532,5 +475,31 @@ class gEditorialTemplateCore extends gEditorialBaseCore
 			return $fields[$field];
 
 		return array( $field );
+	}
+
+	public static function reorderPosts( $posts )
+	{
+		$i = 1000;
+		$ordered = [];
+
+		foreach ( $posts as &$post ) {
+
+			$start = self::getMetaFieldRaw( 'start', $post->ID );
+			$order = self::getMetaFieldRaw( 'order', $post->ID );
+
+			$key = $start ? ( (int) $start * 10 ) : 0;
+			$key = $order ? ( $key + (int) $order ) : $key;
+			$key = $key ? $key : ( $i * 100 );
+
+			$i++;
+			// $post->menu_order = $start;
+
+			$ordered[$key] = $post;
+		}
+
+		unset( $posts, $post );
+		ksort( $ordered );
+
+		return $ordered;
 	}
 }

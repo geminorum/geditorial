@@ -87,7 +87,7 @@ class gEditorial
 			'widget',
 			'module',
 			// 'listtable',
-			// 'shortcode',
+			'shortcode',
 		);
 
 		foreach ( $includes as $include )
