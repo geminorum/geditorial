@@ -47,7 +47,7 @@ class gEditorialShortCode extends gEditorialBaseCore
 			$attr = call_user_func_array( $args['title_title_cb'], [ $term, $atts ] );
 
 		else if ( $args['title_title'] )
-			$attr = sprintf( $args['title_title'], $title );
+			$attr = sprintf( $args['title_title'], ( $args['title'] ? $args['title'] : '' ) );
 
 		else
 			$attr = FALSE;
