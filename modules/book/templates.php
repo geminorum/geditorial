@@ -5,8 +5,22 @@ class gEditorialBookTemplates extends gEditorialTemplateCore
 
 	const MODULE = 'book';
 
+	public static function theCover( $atts = array() )
+	{
+		if ( ! isset( $atts['id'] ) )
+			$atts['id'] = NULL;
+
+		return self::cover( $atts );
+	}
+
 	public static function cover( $atts = array() )
 	{
+		if ( ! isset( $atts['id'] ) )
+			$atts['id'] = 'assoc';
+
+		if ( ! isset( $atts['type'] ) )
+			$atts['type'] = self::constant( 'publication_cpt', 'publication' );
+
 		return parent::postImage( $atts, self::MODULE );
 	}
 
