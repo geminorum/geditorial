@@ -99,8 +99,29 @@ class gEditorialReshare extends gEditorialModuleCore
 
 			if ( 'edit' == $screen->base ) {
 
+				$this->action( 'restrict_manage_posts', 2, 12 );
+				$this->action( 'parse_query' );
+
 				$this->_tweaks_taxonomy();
 			}
 		}
+	}
+
+	public function dashboard_glance_items( $items )
+	{
+		if ( $glance = $this->dashboard_glance_post( 'reshare_cpt' ) )
+			$items[] = $glance;
+
+		return $items;
+	}
+
+	public function restrict_manage_posts( $post_type, $which )
+	{
+		$this->do_restrict_manage_posts_taxes( 'reshare_cat' );
+	}
+
+	public function parse_query( $query )
+	{
+		$this->do_parse_query_taxes( $query, 'reshare_cat' );
 	}
 }
