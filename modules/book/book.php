@@ -23,6 +23,16 @@ class gEditorialBook extends gEditorialModuleCore
 				'insert_content', // p2p // FIXME
 				'insert_content_before', // cover // FIXME
 				'insert_priority',
+				array(
+					'field' => 'p2p_title_from',
+					'type'  => 'text',
+					'title' => _x( 'Connected From Title', 'Modules: Book: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+				),
+				array(
+					'field' => 'p2p_title_to',
+					'type'  => 'text',
+					'title' => _x( 'Connected To Title', 'Modules: Book: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+				),
 			),
 			'posttypes_option' => 'posttypes_option',
 		);
@@ -530,16 +540,25 @@ class gEditorialBook extends gEditorialModuleCore
 		) );
 
 		if ( $connected->have_posts() ) {
-			echo '<div class="geditorial-wrap -book -p2p '.$class.'"><ul>';
+
+			echo '<div class="geditorial-wrap -book -p2p '.$class.'">';
+
+			if ( $post->post_type == $this->constant( 'publication_cpt' ) ) {
+
+				if ( $title = $this->get_setting( 'p2p_title_from' ) )
+					gEditorialHTML::h3( $title, '-title -p2p-from' );
+
+			} else if ( $title = $this->get_setting( 'p2p_title_to' ) ) {
+				gEditorialHTML::h3( $title, '-title -p2p-to' );
+			}
+
+			echo '<ul>';
 
 			while ( $connected->have_posts() ) {
 				$connected->the_post();
 				echo '<li>';
 
-					echo gEditorialHTML::tag( 'a', array(
-						'href' => get_permalink(),
-					), get_the_title() );
-
+					echo gEditorialHTML::link( get_the_title(), get_permalink() );
 					echo $this->p2p_get_meta( $post->p2p_id, 'ref', ' &ndash; ' );
 					echo $this->p2p_get_meta( $post->p2p_id, 'desc', ' &ndash; ' );
 
