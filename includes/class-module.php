@@ -314,20 +314,23 @@ class gEditorialModuleCore extends gEditorialWPModule
 	// get stored post meta by the field
 	public function get_postmeta( $post_id, $field = FALSE, $default = '', $key = NULL )
 	{
+		global $gEditorialPostMeta;
+
 		if ( is_null( $key ) )
 			$key = $this->meta_key;
 
-		$postmeta = get_metadata( 'post', $post_id, $key, TRUE );
+		if ( ! isset( $gEditorialPostMeta[$post_id][$key] ) )
+			$gEditorialPostMeta[$post_id][$key] = get_metadata( 'post', $post_id, $key, TRUE );
 
-		if ( empty( $postmeta ) )
+		if ( empty( $gEditorialPostMeta[$post_id][$key] ) )
 			return $default;
 
 		if ( FALSE === $field )
-			return $postmeta;
+			return $gEditorialPostMeta[$post_id][$key];
 
 		foreach ( $this->sanitize_meta_field( $field ) as $field_key )
-			if ( isset( $postmeta[$field_key] ) )
-				return $postmeta[$field_key];
+			if ( isset( $gEditorialPostMeta[$post_id][$key][$field_key] ) )
+				return $gEditorialPostMeta[$post_id][$key][$field_key];
 
 		return $default;
 	}
@@ -339,10 +342,14 @@ class gEditorialModuleCore extends gEditorialWPModule
 
 	public function set_meta( $post_id, $postmeta, $key_suffix = '' )
 	{
+		global $gEditorialPostMeta;
+
 		if ( $postmeta && count( $postmeta ) )
 			update_post_meta( $post_id, $this->meta_key.$key_suffix, $postmeta );
 		else
 			delete_post_meta( $post_id, $this->meta_key.$key_suffix );
+
+		unset( $gEditorialPostMeta[$post_id][$this->meta_key.$key_suffix] );
 	}
 
 	public function register_settings_posttypes_option( $title = NULL )
