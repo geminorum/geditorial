@@ -7,7 +7,7 @@ class gEditorialMetaTemplates extends gEditorialTemplateCore
 
 	public static function metaField( $field, $atts = array() )
 	{
-		if ( ! isset( $atts['echo'] ) )
+		if ( ! array_key_exists( 'echo', $atts ) )
 			$atts['echo'] = TRUE;
 
 		$meta = self::getMetaField( $field, $atts );
@@ -26,7 +26,7 @@ class gEditorialMetaTemplates extends gEditorialTemplateCore
 
 	public static function metaLead( $atts = array() )
 	{
-		if ( empty( $atts['filter'] ) )
+		if ( ! array_key_exists( 'filter', $atts ) )
 			$atts['filter'] = array( 'gEditorialHelper', 'prepDescription' );
 
 		return self::metaField( 'lead', $atts );

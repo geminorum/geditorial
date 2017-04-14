@@ -792,6 +792,8 @@ class gEditorialMagazine extends gEditorialModuleCore
 			$this->constant( 'issue_tax' ),
 			array_merge( [
 				'posttypes' => $this->post_types(),
+				'order_cb'  => NULL, // NULL for default ordering by meta
+				'orderby'   => 'order', // order by meta
 			], $atts ),
 			$content,
 			$this->constant( 'issue_shortcode' )

@@ -86,7 +86,7 @@ class gEditorialHelper extends gEditorialBaseCore
 	public static function prepDescription( $text )
 	{
 		if ( ! $text )
-			return $text;
+			return '';
 
 		$text = do_shortcode( $text, TRUE );
 		$text = apply_filters( 'gnetwork_typography', $text );
@@ -808,10 +808,10 @@ class gEditorialHelper extends gEditorialBaseCore
 		foreach ( $name_templates as $key => $template )
 			$pre[$key] = vsprintf( $template, $strings );
 
-		if ( ! isset( $pre['menu_name'] ) )
+		if ( ! array_key_exists( 'menu_name', $pre ) )
 			$pre['menu_name'] = $strings[0];
 
-		if ( ! isset( $pre['name_admin_bar'] ) )
+		if ( ! array_key_exists( 'name_admin_bar', $pre ) )
 			$pre['name_admin_bar'] = $strings[1];
 
 		if ( $featured )
@@ -860,7 +860,7 @@ class gEditorialHelper extends gEditorialBaseCore
 		foreach ( $templates as $key => $template )
 			$pre[$key] = vsprintf( $template, $strings );
 
-		if ( ! isset( $pre['menu_name'] ) )
+		if ( ! array_key_exists( 'menu_name', $pre ) )
 			$pre['menu_name'] = $strings[0];
 
 		return $pre;
@@ -984,7 +984,7 @@ class gEditorialHelper extends gEditorialBaseCore
 				'islamic'   => 'Hijri',
 			);
 
-			if ( ! isset( $map[$calendar_type] ) )
+			if ( ! array_key_exists( $calendar_type, $map ) )
 				return array();
 
 			return gPersianDateStrings::month( NULL, TRUE, $map[$calendar_type] );

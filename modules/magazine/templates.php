@@ -7,8 +7,8 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 
 	public static function theIssue( $atts = [] )
 	{
-		if ( ! isset( $atts['li_title_cb'] ) )
-			$atts['li_title_cb'] = [ __CLASS__, 'theIssueTitleCB' ];
+		if ( ! array_key_exists( 'item_title_cb', $atts ) )
+			$atts['item_title_cb'] = [ __CLASS__, 'theIssueTitleCB' ];
 
 		return self::assocLink( $atts, self::MODULE );
 	}
@@ -17,13 +17,13 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 	{
 		return trim( strip_tags( self::getMetaField( 'number', [
 			'id'      => $post->ID,
-			'default' => $args['li_title'],
+			'default' => $args['item_title'],
 		] ) ) );
 	}
 
 	public static function theIssueMeta( $field = 'number', $atts = [] )
 	{
-		if ( ! isset( $atts['echo'] ) )
+		if ( ! array_key_exists( 'echo', $atts ) )
 			$atts['echo'] = TRUE;
 
 		$meta = self::getMetaField( $field, $atts );
@@ -37,7 +37,7 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 
 	public static function theCover( $atts = [] )
 	{
-		if ( ! isset( $atts['id'] ) )
+		if ( ! array_key_exists( 'id', $atts ) )
 			$atts['id'] = NULL;
 
 		return self::cover( $atts );
@@ -45,10 +45,10 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 
 	public static function cover( $atts = [] )
 	{
-		if ( ! isset( $atts['id'] ) )
+		if ( ! array_key_exists( 'id', $atts ) )
 			$atts['id'] = 'assoc';
 
-		if ( ! isset( $atts['type'] ) )
+		if ( ! array_key_exists( 'type', $atts ) )
 			$atts['type'] = self::constant( 'issue_cpt', 'issue' );
 
 		return parent::postImage( $atts, self::MODULE );
@@ -59,7 +59,7 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 	{
 		self::__dep( 'gEditorialMagazineTemplates::theCover()' );
 
-		if ( ! isset( $atts['id'] ) )
+		if ( ! array_key_exists( 'id', $atts ) )
 			$atts['id'] = NULL;
 
 		return self::cover( $atts );
@@ -70,10 +70,10 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 	{
 		self::__dep( 'gEditorialMagazineTemplates::cover()' );
 
-		if ( ! isset( $atts['id'] ) )
+		if ( ! array_key_exists( 'id', $atts ) )
 			$atts['id'] = 'assoc';
 
-		if ( ! isset( $atts['type'] ) )
+		if ( ! array_key_exists( 'type', $atts ) )
 			$atts['type'] = self::constant( 'issue_cpt', 'issue' );
 
 		return parent::postImage( $atts, self::MODULE );

@@ -7,7 +7,7 @@ class gEditorialBookTemplates extends gEditorialTemplateCore
 
 	public static function theCover( $atts = array() )
 	{
-		if ( ! isset( $atts['id'] ) )
+		if ( ! array_key_exists( 'id', $atts ) )
 			$atts['id'] = NULL;
 
 		return self::cover( $atts );
@@ -15,10 +15,10 @@ class gEditorialBookTemplates extends gEditorialTemplateCore
 
 	public static function cover( $atts = array() )
 	{
-		if ( ! isset( $atts['id'] ) )
+		if ( ! array_key_exists( 'id', $atts ) )
 			$atts['id'] = 'assoc';
 
-		if ( ! isset( $atts['type'] ) )
+		if ( ! array_key_exists( 'type', $atts ) )
 			$atts['type'] = self::constant( 'publication_cpt', 'publication' );
 
 		return parent::postImage( $atts, self::MODULE );
