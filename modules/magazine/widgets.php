@@ -16,74 +16,52 @@ class gEditorialMagazineWidget_IssueCover extends gEditorialWidgetCore
 		);
 	}
 
-	public function widget_NEW( $args, $instance )
-	{
-		$context = empty( $instance['context'] ) ? '' : $instance['context'];
-
-		$this->before_widget( $args, $instance );
-		$this->widget_title( $args, $instance );
-			get_template_part( 'searchform', $context );
-		$this->after_widget( $args, $instance );
-	}
-
 	public function widget( $args, $instance )
 	{
-		if ( ! $instance['latest_issue'] && empty( $instance['issue_id'] ) && ! is_singular() )
-			return;
+		if ( ! $instance['latest_issue']
+			&& ! $instance['issue_id']
+			&& ! is_singular() )
+				return;
 
-		if ( ! empty( $instance['latest_issue'] ) ) {
+		if ( ! empty( $instance['latest_issue'] ) )
 			$prefix = 'latest_issue';
-		} else if ( ! empty( $instance['issue_id'] ) ) {
+
+		else if ( ! empty( $instance['issue_id'] ) )
 			$prefix = 'issue_'.$instance['issue_id'];
-		} else {
+
+		else
 			$prefix = 'queried_'.get_queried_object_id();
-		}
 
 		$this->widget_cache( $args, $instance, '_'.$prefix );
 	}
 
-
 	public function widget_html( $args, $instance )
 	{
-		$func = array( 'gEditorialMagazineTemplates', 'issue_cover' );
-		$cpt  = self::constant( 'issue_cpt', 'issue' );
-		$id   = get_queried_object_id();
+		$atts = [
+			'type'  => self::constant( 'issue_cpt', 'issue' ),
+			'size'  => empty( $instance['image_size'] ) ? NULL : $instance['image_size'],
+			'echo'  => FALSE,
+			'title' => 'number',
+		];
 
-		if ( ! empty( $instance['latest_issue'] ) ) {
-			$id = gEditorialWordPress::getLastPostOrder( $cpt, '', 'ID', 'publish' );
+		if ( ! empty( $instance['latest_issue'] ) )
+			$atts['id'] = (int) gEditorialWordPress::getLastPostOrder( $atts['type'], '', 'ID', 'publish' );
 
-		} else if ( ! empty( $instance['issue_id'] ) ) {
-			$id = $instance['issue_id'];
+		else if ( ! empty( $instance['issue_id'] ) )
+			$atts['id'] = (int) $instance['issue_id'];
 
-		} else {
-			if ( $cpt != get_post_type( $id ) )
-				$func = array( 'gEditorialMagazineTemplates', 'the_issue_cover' );
-		}
+		else if ( is_singular( $atts['type'] ) )
+			$atts['id'] = NULL;
 
-		if ( FALSE === $id || ! is_callable( $func ) )
-			return FALSE;
+		else if ( is_singular() )
+			$atts['id'] = 'assoc';
 
-		// FIXME: write better callback!!
-		$func_args = array( '', '',
-			( empty( $instance['image_size'] ) ? 'issue-thumbnail' : $instance['image_size'] ),
-			( $instance['link_issue'] ? 'parent' : FALSE ), // WHATIF? : custom link?
-			array(
-				'id'    => $id,
-				'echo'  => FALSE,
-				'cb'    => apply_filters( 'geditorial_magazine_widget_issue_cover_cb',
-					array( 'gEditorialMagazineTemplates', 'issue_cover_callback' ), $instance, $this->id_base ),
-				'title' => ( $instance['number_line'] ? 'number' : FALSE ), // or 'title'
-			),
-		);
-
-		$result = call_user_func_array( $func, $func_args );
-
-		if ( ! $result )
+		if ( ! $html = gEditorialMagazineTemplates::cover( $atts ) )
 			return FALSE;
 
 		$this->before_widget( $args, $instance );
 		$this->widget_title( $args, $instance );
-			echo $result;
+			echo $html;
 		$this->after_widget( $args, $instance );
 
 		return TRUE;
