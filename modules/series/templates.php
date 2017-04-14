@@ -5,8 +5,11 @@ class gEditorialSeriesTemplates extends gEditorialTemplateCore
 
 	const MODULE = 'series';
 
+	// FIXME: DEPRECATED
 	public static function shortcode_multiple_series( $atts, $content = NULL, $tag = '' )
 	{
+		self::__dep();
+
 		$args = shortcode_atts( array(
 			'ids'       => array(),
 			'title'     => '',
@@ -51,12 +54,15 @@ class gEditorialSeriesTemplates extends gEditorialTemplateCore
 		return NULL;
 	}
 
+	// FIXME: DEPRECATED
 	// [series]
 	// [series slug="wordpress-themes"]
 	// [series id="146"]
 	// [series title="More WordPress Theme Lists" title_wrap="h4" limit="5" list="ol" future="off" single="off"]
 	public static function shortcode_series( $atts, $content = NULL, $tag = '' )
 	{
+		self::__dep();
+
 		$error = FALSE;
 
 		$shortcode  = self::constant( 'series_shortcode', 'series' );

@@ -32,9 +32,8 @@ class gEditorialSeries extends gEditorialModuleCore
 	protected function get_global_constants()
 	{
 		return array(
-			'series_tax'                => 'series',
-			'series_shortcode'          => 'series',
-			'multiple_series_shortcode' => 'multiple_series',
+			'series_tax'       => 'series',
+			'series_shortcode' => 'series',
 		);
 	}
 
@@ -102,8 +101,7 @@ class gEditorialSeries extends gEditorialModuleCore
 		if ( is_admin() )
 			add_action( 'save_post', array( $this, 'save_post' ), 20, 2 );
 
-		$this->register_shortcode( 'series_shortcode', array( 'gEditorialSeriesTemplates', 'shortcode_series' ) );
-		$this->register_shortcode( 'multiple_series_shortcode', array( 'gEditorialSeriesTemplates', 'shortcode_multiple_series' ) );
+		$this->register_shortcode( 'series_shortcode' );
 	}
 
 	public function current_screen( $screen )
@@ -344,5 +342,80 @@ class gEditorialSeries extends gEditorialModuleCore
 				'class' => 'field-wrap field-wrap-textarea',
 			), $html );
 		}
+	}
+
+	public function series_shortcode( $atts = [], $content = NULL, $tag = '' )
+	{
+		return gEditorialShortCode::getTermPosts(
+			'post',
+			$this->constant( 'series_tax' ),
+			array_merge( [
+				'title_after'  => '<div class="-desc">%3$s</div>',
+				'item_after'   => '<h6>%1$s</h6><div class="summary"><p>%2$s</p></div>', // use meta data after
+				'item_cb'      => [ $this, 'series_shortcode_item_cb' ],
+				'order_cb'     => [ $this, 'series_shortcode_order_cb' ],
+				'orderby'      => 'order',
+				'posttypes'    => $this->post_types(),
+			], $atts ),
+			$content,
+			$this->constant( 'series_shortcode' )
+		);
+	}
+
+	public function series_shortcode_order_cb( $posts, $args, $term )
+	{
+		if ( is_array( $term ) )
+			$term = $term[0];
+
+		if ( 1 == count( $posts ) ) {
+			$posts[0]->series_meta = $this->get_postmeta( $posts[0]->ID, $term->term_id, [] );
+			return $posts;
+		}
+
+		$i = 1000;
+		$o = [];
+
+		foreach ( $posts as &$post ) {
+
+			$post->series_meta = $this->get_postmeta( $post->ID, $term->term_id, [] );
+
+			if ( isset( $post->series_meta['in_series_order'] )
+				&& $post->series_meta['in_series_order'] )
+					$key = intval( $post->series_meta['in_series_order'] ) * $i;
+			else
+				$key = strtotime( $post->post_date );
+
+			$i++;
+			// $post->menu_order = $key;
+
+			$o[$key] = $post;
+		}
+
+		if ( $args['order'] == 'ASC' )
+			ksort( $o, SORT_NUMERIC );
+		else
+			krsort( $o, SORT_NUMERIC );
+
+		unset( $posts, $post, $i );
+
+		return $o;
+	}
+
+	public function series_shortcode_item_cb( $post, $args, $term )
+	{
+		if ( TRUE === $args['item_after'] )
+			$args['item_after'] = '<h6>%1$s</h6><div class="summary"><p>%2$s</p></div>';
+
+		if ( isset( $post->series_meta )
+			&& ( isset( $post->series_meta['in_series_title'] )
+				|| isset( $post->series_meta['in_series_desc'] ) ) ) {
+
+			$args['item_after'] = sprintf( $args['item_after'],
+				isset( $post->series_meta['in_series_title'] ) ? $post->series_meta['in_series_title'] : '',
+				isset( $post->series_meta['in_series_desc'] ) ? $post->series_meta['in_series_desc'] : ''
+			);
+		}
+
+		return gEditorialShortCode::postItem( $args, $post );
 	}
 }
