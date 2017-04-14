@@ -223,15 +223,15 @@ class gEditorialTemplateCore extends gEditorialBaseCore
 			return FALSE;
 
 		$args = self::atts( [
-			'id'          => NULL,
-			'published'   => TRUE,
-			'single'      => FALSE,
-			'li_title'    => '', // use %s for post title
-			'li_title_cb' => FALSE, // callback for title attr
-			'default'     => FALSE,
-			'before'      => '',
-			'after'       => '',
-			'echo'        => TRUE,
+			'id'            => NULL,
+			'published'     => TRUE,
+			'single'        => FALSE,
+			'item_title'    => '', // use %s for post title
+			'item_title_cb' => FALSE, // callback for title attr
+			'default'       => FALSE,
+			'before'        => '',
+			'after'         => '',
+			'echo'          => TRUE,
 		], $atts );
 
 		if ( ! $posts = gEditorial()->{$module}->get_assoc_post( $args['id'], $args['single'], $args['published'] ) )
@@ -240,7 +240,7 @@ class gEditorialTemplateCore extends gEditorialBaseCore
 		$links = [];
 
 		foreach ( (array) $posts as $post_id )
-			if ( $link = gEditorialShortCode::postLink( $args, $post_id ) )
+			if ( $link = gEditorialShortCode::postItem( $args, $post_id ) )
 				$links[] = $link;
 
 		if ( $html = gEditorialHelper::getJoined( $links, $args['before'], $args['after'] ) ) {
@@ -304,11 +304,12 @@ class gEditorialTemplateCore extends gEditorialBaseCore
 		return $args['default'];
 	}
 
-	public static function getMetaFieldRaw( $fields, $post_id )
+	// WARNING: caller must check for module
+	public static function getMetaFieldRaw( $fields, $post_id, $module = 'meta' )
 	{
 		foreach ( self::sanitizeField( $fields ) as $field ) {
 
-			$meta = gEditorial()->meta->get_postmeta( $post_id, $field, FALSE );
+			$meta = gEditorial()->{$module}->get_postmeta( $post_id, $field, FALSE );
 
 			if ( FALSE !== $meta )
 				return $meta;
@@ -461,15 +462,15 @@ class gEditorialTemplateCore extends gEditorialBaseCore
 			return $field;
 
 		$fields = array(
-			'over-title'           => array( 'ot', 'over-title' ),
-			'sub-title'            => array( 'st', 'sub-title' ),
+			'over-title'           => array( 'over_title', 'ot' ),
+			'sub-title'            => array( 'sub_title', 'st' ),
 			'label'                => array( 'ch', 'label', 'column_header' ),
 			'lead'                 => array( 'le', 'lead' ),
 			'author'               => array( 'as', 'author' ),
 			'number'               => array( 'issue_number_line', 'number' ),
 			'pages'                => array( 'issue_total_pages', 'pages' ),
 			'start'                => array( 'in_issue_page_start', 'start' ),
-			'order'                => array( 'in_issue_order', 'order' ),
+			'order'                => array( 'in_issue_order', 'in_series_order', 'order' ),
 			'reshare_source_title' => array( 'source_title', 'reshare_source_title' ),
 			'reshare_source_url'   => array( 'source_url', 'reshare_source_url' ),
 		);
@@ -480,15 +481,15 @@ class gEditorialTemplateCore extends gEditorialBaseCore
 		return array( $field );
 	}
 
-	public static function reorderPosts( $posts )
+	public static function reorderPosts( $posts, $field_module = 'meta' )
 	{
 		$i = 1000;
-		$ordered = [];
+		$o = [];
 
 		foreach ( $posts as &$post ) {
 
-			$start = self::getMetaFieldRaw( 'start', $post->ID );
-			$order = self::getMetaFieldRaw( 'order', $post->ID );
+			$start = self::getMetaFieldRaw( 'start', $post->ID, $field_module );
+			$order = self::getMetaFieldRaw( 'order', $post->ID, $field_module );
 
 			$key = $start ? ( (int) $start * 10 ) : 0;
 			$key = $order ? ( $key + (int) $order ) : $key;
@@ -497,12 +498,12 @@ class gEditorialTemplateCore extends gEditorialBaseCore
 			$i++;
 			// $post->menu_order = $start;
 
-			$ordered[$key] = $post;
+			$o[$key] = $post;
 		}
 
 		unset( $posts, $post );
-		ksort( $ordered );
+		ksort( $o );
 
-		return $ordered;
+		return $o;
 	}
 }
