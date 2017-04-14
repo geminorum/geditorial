@@ -22,26 +22,34 @@ class gEditorialShortCode extends gEditorialBaseCore
 		if ( isset( $args['context'] ) && $args['context'] )
 			$classes[] = 'context-'.$args['context'];
 
+		if ( ! empty( $args['class'] ) )
+			$classes[] = $args['class'];
+
 		if ( $after )
 			return $before.gEditorialHTML::tag( $block ? 'div' : 'span', [ 'class' => $classes ], $html ).$after;
 
 		return gEditorialHTML::tag( $block ? 'div' : 'span', [ 'class' => $classes ], $before.$html );
 	}
 
-	public static function termTitle( $atts, $term = FALSE )
+	// term as title of the list
+	public static function termTitle( $atts, $term_or_id, $taxonomy = 'category' )
 	{
+		if ( is_array( $term_or_id ) )
+			$term_or_id = $term_or_id[0];
+
+		if ( ! $term = gEditorialWPTaxonomy::getTerm( $term_or_id, $taxonomy ) )
+			return '';
+
 		$args = self::atts( [
-			'title'          => NULL, // FALSE to disable
+			'title'          => NULL, // '<a href="%2$s">%1$s</a>', // FALSE to disable
 			'title_link'     => NULL, // FALSE to disable
 			'title_title'    => '',
 			'title_title_cb' => FALSE, // callback for title attr
 			'title_tag'      => 'h3',
 			'title_anchor'   => 'term-%2$s',
 			'title_class'    => '-title',
+			'title_after'    => '', // '<div class="-desc">%3$s</div>',
 		], $atts );
-
-		if ( is_null( $args['title'] ) )
-			$args['title'] = $term ? sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' ) : FALSE;
 
 		if ( $args['title_title_cb'] && is_callable( $args['title_title_cb'] ) )
 			$attr = call_user_func_array( $args['title_title_cb'], [ $term, $atts ] );
@@ -51,6 +59,21 @@ class gEditorialShortCode extends gEditorialBaseCore
 
 		else
 			$attr = FALSE;
+
+		if ( is_null( $args['title'] ) ) {
+			$args['title'] = $term ? sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' ) : FALSE;
+
+		} else if ( $args['title'] && $term && gEditorialCoreText::has( $args['title'], '%' ) ) {
+
+			$args['title'] = sprintf( $args['title'],
+				sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' ),
+				get_term_link( $term, $term->taxonomy ),
+				esc_attr( trim( strip_tags( $term->description ) ) ),
+				( $attr ? $attr : '' )
+			);
+
+			$args['title_link'] = FALSE;
+		}
 
 		if ( $args['title'] ) {
 			if ( is_null( $args['title_link'] ) && $term )
@@ -72,48 +95,72 @@ class gEditorialShortCode extends gEditorialBaseCore
 				'class' => $args['title_class'],
 			], $args['title'] )."\n";
 
+		if ( $args['title_after'] ) {
+
+			if ( $term && gEditorialCoreText::has( $args['title_after'], '%' ) )
+				$args['title_after'] = sprintf( $args['title_after'],
+					sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' ),
+					get_term_link( $term, $term->taxonomy ),
+					gEditorialHelper::prepDescription( $term->description )
+				);
+
+			return $args['title'].$args['title_after'];
+		}
+
 		return $args['title'];
 	}
 
-	public static function termLink( $atts, $term, $before = '', $after = '' )
+	// term as item in the list
+	public static function termItem( $atts, $term, $before = '', $after = '' )
 	{
 		$args = self::atts( [
-			'li_link'   => TRUE,
-			'li_before' => '',
-			'li_after'  => '',
-			'li_title'  => '', // use %s for term title
+			'item_link'     => TRUE,
+			'item_title'    => '', // use %s for post title
+			'item_title_cb' => FALSE,
+			'item_tag'      => 'li',
+			'item_anchor'   => $term->taxonomy.'-%2$s',
+			'item_class'    => '-item',
+			'item_after'    => '',
+			'item_after_cb' => FALSE,
 		], $atts );
 
 		$title = sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' );
 
-		if ( $term->count && $args['li_link'] )
-			return $args['li_before'].gEditorialHTML::tag( 'a', [
+		if ( $term->count && $args['item_link'] )
+			$item = gEditorialHTML::tag( 'a', [
 				'href'  => get_term_link( $term ),
-				'title' => $args['li_title'] ? sprintf( $args['li_title'], $title ) : FALSE,
+				'title' => $args['item_title'] ? sprintf( $args['item_title'], $title ) : FALSE,
 				'class' => '-link -tax-'.$term->taxonomy,
-			], $before.$title.$after ).$args['li_after']."\n";
+			], $title );
 
 		else
-			return $args['li_before'].gEditorialHTML::tag( 'span', [
-				'title' => $args['li_title'] ? sprintf( $args['li_title'], $title ) : FALSE,
-				'class' => $args['li_link'] ? '-no-link -empty -tax-'.$term->taxonomy : FALSE,
-			], $before.$title.$after ).$args['li_after']."\n";
+			$item = gEditorialHTML::tag( 'span', [
+				'title' => $args['item_title'] ? sprintf( $args['item_title'], $title ) : FALSE,
+				'class' => $args['item_link'] ? '-no-link -empty -tax-'.$term->taxonomy : FALSE,
+			], $title );
+
+		if ( $args['item_after_cb'] && is_callable( $args['item_after_cb'] ) ) {
+			$item .= call_user_func_array( $args['item_after_cb'], [ $term, $args, $item ] );
+
+		} else if ( $args['item_after'] ) {
+
+			if ( gEditorialCoreText::has( $args['item_after'], '%' ) )
+				$args['item_after'] = sprintf( $args['item_after'],
+					sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' ),
+					get_term_link( $term, $term->taxonomy ),
+					gEditorialHelper::prepDescription( $term->description )
+				);
+
+			$item .= $args['item_after'];
+		}
+
+		return gEditorialHTML::tag( $args['item_tag'], [
+			'id'    => sprintf( $args['item_anchor'], $term->term_id, $term->slug ),
+			'class' => $args['item_class'],
+		], $before.$title.$after );
 	}
 
-	public static function termWrap( $html, $atts, $term )
-	{
-		$args = self::atts( [
-			'li_tag'    => 'li',
-			'li_class'  => '-item',
-			'li_anchor' => $term->taxonomy.'-%2$s',
-		], $atts );
-
-		return gEditorialHTML::tag( $args['li_tag'], [
-			'id'    => sprintf( $args['li_anchor'], $term->term_id, $term->slug ),
-			'class' => $args['li_class'],
-		], $html );
-	}
-
+	// post as title of the list
 	public static function postTitle( $atts, $post = NULL )
 	{
 		$args = self::atts( [
@@ -161,85 +208,84 @@ class gEditorialShortCode extends gEditorialBaseCore
 		return $args['title'];
 	}
 
-	public static function postOrder( $atts, $post = NULL )
+	// post as item in the list
+	public static function postItem( $atts, $post = NULL, $before = '', $after = '' )
 	{
 		if ( ! $post = get_post( $post ) )
 			return '';
 
 		$args = self::atts( [
+			'item_link'     => TRUE,
+			'item_title'    => '', // use %s for post title
+			'item_title_cb' => FALSE,
+			'item_tag'      => 'li',
+			'item_anchor'   => $post->post_type.'-%2$s',
+			'item_class'    => '-item',
+			'item_after'    => '',
+			'item_after_cb' => FALSE,
 			'order_before'  => FALSE,
 			'order_zeroise' => FALSE,
 			'order_sep'     => ' &ndash; ',
 		], $atts );
 
-		if ( ! $args['order_before'] )
-			return '';
+		if ( $item = gEditorialHelper::getPostTitle( $post, FALSE ) ) {
 
-		$order = $args['order_zeroise'] ? gEditorialNumber::zeroise( $post->menu_order, $args['order_zeroise'] ) : $post->menu_order;
+			if ( $args['item_title_cb'] && is_callable( $args['item_title_cb'] ) )
+				$attr = call_user_func_array( $args['item_title_cb'], [ $post, $args, $item ] );
 
-		return gEditorialNumber::format( $order ).( $args['order_sep'] ? $args['order_sep'] : '' );
+			else if ( $args['item_title'] )
+				$attr = sprintf( $args['item_title'], $item );
+
+			else
+				$attr = FALSE;
+
+			if ( 'publish' == $post->post_status && $args['item_link'] )
+				$item = gEditorialHTML::tag( 'a', [
+					'href'  => get_permalink( $post ),
+					'title' => $attr,
+					'class' => '-link -posttype-'.$post->post_type,
+				], $item );
+
+			else
+				$item = gEditorialHTML::tag( 'span', [
+					'title' => $attr,
+					'class' => $args['item_link'] ? '-no-link -future -posttype-'.$post->post_type : FALSE,
+				], $item );
+
+
+			if ( $args['order_before'] ) {
+				$order = $args['order_zeroise'] ? gEditorialNumber::zeroise( $post->menu_order, $args['order_zeroise'] ) : $post->menu_order;
+				$item = gEditorialNumber::format( $order ).( $args['order_sep'] ? $args['order_sep'] : '' ).$item;
+			}
+		}
+
+		if ( $args['item_after_cb'] && is_callable( $args['item_after_cb'] ) ) {
+			$item .= call_user_func_array( $args['item_after_cb'], [ $post, $args, $item ] );
+
+		} else if ( $args['item_after'] ) {
+
+			if ( gEditorialCoreText::has( $args['item_after'], '%' ) )
+				$args['item_after'] = sprintf( $args['item_after'],
+					apply_filters( 'the_title', $post->post_title, $post->ID ),
+					get_permalink( $post ),
+					gEditorialHelper::prepDescription( $post->post_excerpt )
+					// FIXME: add post_content
+				);
+
+			$item .= $args['item_after'];
+		}
+
+		return gEditorialHTML::tag( $args['item_tag'], [
+			'id'    => sprintf( $args['item_anchor'], $post->ID, $post->post_name ),
+			'class' => $args['item_class'],
+		], $before.$item.$after );
 	}
 
-	public static function postWrap( $html, $atts, $post = NULL )
+	public static function getDefaults( $posttype, $taxonomy, $posttypes = [ 'post' ] )
 	{
-		if ( ! $post = get_post( $post ) )
-			return $html;
-
-		$args = self::atts( [
-			'li_tag'    => 'li',
-			'li_class'  => '-item',
-			'li_anchor' => $post->post_type.'-%2$s',
-		], $atts );
-
-		return gEditorialHTML::tag( $args['li_tag'], [
-			'id'    => sprintf( $args['li_anchor'], $post->ID, $post->post_name ),
-			'class' => $args['li_class'],
-		], $html );
-	}
-
-	public static function postLink( $atts, $post = NULL, $before = '', $after = '' )
-	{
-		if ( ! $post = get_post( $post ) )
-			return '';
-
-		$args = self::atts( [
-			'li_link'     => TRUE,
-			'li_before'   => '',
-			'li_after'    => '',
-			'li_title'    => '', // use %s for post title
-			'li_title_cb' => FALSE, // callback for title attr
-		], $atts );
-
-		$title = gEditorialHelper::getPostTitle( $post );
-
-		if ( $args['li_title_cb'] && is_callable( $args['li_title_cb'] ) )
-			$attr = call_user_func_array( $args['li_title_cb'], [ $post, $atts ] );
-
-		else if ( $args['li_title'] )
-			$attr = sprintf( $args['li_title'], $title );
-
-		else
-			$attr = FALSE;
-
-		if ( 'publish' == $post->post_status && $args['li_link'] )
-			return $args['li_before'].gEditorialHTML::tag( 'a', [
-				'href'  => get_permalink( $post ),
-				'title' => $attr,
-				'class' => '-link -posttype-'.$post->post_type,
-			], $before.$title.$after ).$args['li_after']."\n";
-
-		else
-			return $args['li_before'].gEditorialHTML::tag( 'span', [
-				'title' => $attr,
-				'class' => $args['li_link'] ? '-no-link -future -posttype-'.$post->post_type : FALSE,
-			], $before.$title.$after ).$args['li_after']."\n";
-	}
-
-	public static function getTermPosts( $posttype, $taxonomy, $atts = [], $content = NULL, $tag = '' )
-	{
-		$args = shortcode_atts( [
-			'slug'           => '',
+		return [
 			'id'             => '',
+			'slug'           => '',
 			'title'          => NULL, // FALSE to disable
 			'title_link'     => NULL, // FALSE to disable
 			'title_title'    => _x( 'Permanent link', 'ShortCode Helper: Term Title Attr', GEDITORIAL_TEXTDOMAIN ),
@@ -247,29 +293,39 @@ class gEditorialShortCode extends gEditorialBaseCore
 			'title_tag'      => 'h3',
 			'title_anchor'   => $taxonomy.'-%2$s',
 			'title_class'    => '-title',
-			'list_tag'       => 'ul',
-			'list_class'     => '-list',
-			'limit'          => -1,
-			'future'         => 'on',
-			'li_tag'         => 'li',
-			'li_link'        => TRUE,
-			'li_before'      => '',
-			'li_after'       => '',
-			'li_title'       => '', // use %s for post title
-			'li_title_cb'    => FALSE, // callback for title attr
-			'li_anchor'      => $posttype.'-%2$s',
-			'li_class'       => '-item',
+			'item_cb'        => FALSE,
+			'item_link'      => TRUE,
+			'item_title'     => '', // use %s for post title
+			'item_title_cb'  => FALSE,
+			'item_tag'       => 'li',
+			'item_anchor'    => $posttype.'-%2$s',
+			'item_class'     => '-item',
+			'item_after'     => '',
+			'item_after_cb'  => FALSE,
 			'order_before'   => FALSE,
 			'order_zeroise'  => FALSE,
 			'order_sep'      => ' &ndash; ',
-			'posttypes'      => array( $posttype ),
+			'list_tag'       => 'ul',
+			'list_class'     => '-list',
+			'cover'          => FALSE, // must have thumbnail
+			'posttypes'      => $posttypes,
+			'future'         => 'on',
 			'orderby'        => 'date',
 			'order'          => 'ASC',
-			'cover'          => FALSE, // must have thumbnail
-			'cb'             => FALSE,
+			'order_cb'       => FALSE, // NULL for default order ( by meta, like mag )
+			'limit'          => -1,
+			'field_module'   => 'meta', // getting meta field from
 			'context'        => NULL,
 			'wrap'           => TRUE,
-		], $atts, $tag );
+			'before'         => '', // html after wrap
+			'after'          => '', // html before wrap
+			'class'          => '', // wrap css class
+		];
+	}
+
+	public static function getTermPosts( $posttype, $taxonomy, $atts = [], $content = NULL, $tag = '' )
+	{
+		$args = shortcode_atts( self::getDefaults( $posttype, $taxonomy, [ $posttype ] ), $atts, $tag );
 
 		if ( FALSE === $args['context'] )
 			return NULL;
@@ -282,8 +338,8 @@ class gEditorialShortCode extends gEditorialBaseCore
 		if ( FALSE !== $cache )
 			return $cache;
 
-		if ( $args['cb'] && ! is_callable( $args['cb'] ) )
-			$args['cb'] = FALSE;
+		if ( $args['item_cb'] && ! is_callable( $args['item_cb'] ) )
+			$args['item_cb'] = FALSE;
 
 		if ( $args['id'] ) {
 
@@ -305,14 +361,24 @@ class gEditorialShortCode extends gEditorialBaseCore
 				'terms'    => [ $term->term_id ],
 			] ];
 
-		} else if ( is_singular( $posttype ) ) {
+		} else if ( is_tax( $taxonomy ) ) {
 
-			if ( ! $terms = get_the_terms( NULL, $taxonomy ) )
+			if ( ! $term = get_queried_object() )
 				return $content;
 
 			$tax_query = [ [
 				'taxonomy' => $taxonomy,
-				'terms'    => wp_list_pluck( $terms, 'term_id' ),
+				'terms'    => [ $term->term_id ],
+			] ];
+
+		} else if ( is_singular( $posttype ) ) {
+
+			if ( ! $term = get_the_terms( NULL, $taxonomy ) )
+				return $content;
+
+			$tax_query = [ [
+				'taxonomy' => $taxonomy,
+				'terms'    => wp_list_pluck( $term, 'term_id' ),
 			] ];
 		}
 
@@ -322,7 +388,7 @@ class gEditorialShortCode extends gEditorialBaseCore
 				'compare' => 'EXISTS'
 			] ];
 
-		$args['title'] = self::termTitle( $args, $term );
+		$args['title'] = self::termTitle( $args, $term, $taxonomy );
 
 		if ( 'on' == $args['future'] )
 			$post_status = [ 'publish', 'future', 'draft' ];
@@ -333,7 +399,7 @@ class gEditorialShortCode extends gEditorialBaseCore
 			'tax_query'        => $tax_query,
 			'meta_query'       => $meta_query,
 			'posts_per_page'   => $args['limit'],
-			'orderby'          => $args['orderby'] == 'page' ? 'date' : $args['orderby'],
+			'orderby'          => $args['orderby'] == 'order' ? 'date' : $args['orderby'],
 			'order'            => $args['order'],
 			'post_type'        => $args['posttypes'],
 			'post_status'      => $post_status,
@@ -343,27 +409,32 @@ class gEditorialShortCode extends gEditorialBaseCore
 
 		$query = new \WP_Query;
 		$posts = $query->query( $query_args );
+		$count = count( $posts );
 
-		if ( ! count( $posts ) )
+		if ( ! $count )
 			return $content;
+
+		if ( 1 == $count && is_singular( $args['posttypes'] ) )
+			return $content;
+
+		if ( $args['orderby'] == 'order' ) {
+
+			if ( $args['order_cb'] && is_callable( $args['order_cb'] ) )
+				$posts = call_user_func_array( $args['order_cb'], [ $posts, $args, $term ] );
+
+			else if ( is_null( $args['order_cb'] ) && $count > 1 )
+				$posts = gEditorialTemplateCore::reorderPosts( $posts, $args['field_module'] );
+		}
 
 		foreach ( $posts as $post ) {
 
-			setup_postdata( $post );
+			// setup_postdata( $post );
 
-			if ( $args['cb'] ) {
-				$html .= call_user_func_array( $args['cb'], [ $post, $args ] );
+			if ( $args['item_cb'] )
+				$html .= call_user_func_array( $args['item_cb'], [ $post, $args, $term ] );
 
-			} else {
-
-				$order = self::postOrder( $args, $post );
-				$item  = self::postLink( $args, $post, $order );
-
-				// TODO: add excerpt/content of the entry
-				// TODO: add show/more js like series
-
-				$html .= self::postWrap( $item, $args, $post );
-			}
+			else
+				$html .= self::postItem( $args, $post );
 		}
 
 		$html = gEditorialHTML::tag( $args['list_tag'], [
@@ -375,7 +446,7 @@ class gEditorialShortCode extends gEditorialBaseCore
 
 		$html = self::wrap( $html, $tag, $args );
 
-		wp_reset_postdata();
+		// wp_reset_postdata();
 		wp_cache_set( $key, $html, $posttype );
 
 		return $html;
@@ -383,39 +454,7 @@ class gEditorialShortCode extends gEditorialBaseCore
 
 	public static function getAssocPosts( $posttype, $taxonomy, $atts = [], $content = NULL, $tag = '' )
 	{
-		$args = shortcode_atts( [
-			'slug'           => '',
-			'id'             => '',
-			'title'          => NULL, // FALSE to disable
-			'title_link'     => NULL, // FALSE to disable
-			'title_title'    => _x( 'Permanent link', 'ShortCode Helper: Term Title Attr', GEDITORIAL_TEXTDOMAIN ),
-			'title_title_cb' => FALSE, // callback for title attr
-			'title_tag'      => 'h3',
-			'title_anchor'   => $taxonomy.'-%2$s',
-			'title_class'    => '-title',
-			'list_tag'       => 'ul',
-			'list_class'     => '-list',
-			'limit'          => -1,
-			'future'         => 'on',
-			'li_tag'         => 'li',
-			'li_link'        => TRUE,
-			'li_before'      => '',
-			'li_after'       => '',
-			'li_title'       => '', // use %s for post title
-			'li_title_cb'    => FALSE, // callback for title attr
-			'li_anchor'      => $posttype.'-%2$s',
-			'li_class'       => '-item',
-			'order_before'   => FALSE,
-			'order_zeroise'  => FALSE,
-			'order_sep'      => ' &ndash; ',
-			'posttypes'      => array( 'post' ),
-			'orderby'        => 'date',
-			'order'          => 'ASC',
-			'cover'          => FALSE, // must have thumbnail
-			'cb'             => FALSE,
-			'context'        => NULL,
-			'wrap'           => TRUE,
-		], $atts, $tag );
+		$args = shortcode_atts( self::getDefaults( $posttype, $taxonomy ), $atts, $tag );
 
 		if ( FALSE === $args['context'] )
 			return NULL;
@@ -429,8 +468,12 @@ class gEditorialShortCode extends gEditorialBaseCore
 		if ( FALSE !== $cache )
 			return $cache;
 
-		if ( $args['cb'] && ! is_callable( $args['cb'] ) )
-			$args['cb'] = FALSE;
+		// FIXME: back comp / DROP THIS
+		if ( 'page' == $args['orderby'] )
+			$args['orderby'] = 'order';
+
+		if ( $args['item_cb'] && ! is_callable( $args['item_cb'] ) )
+			$args['item_cb'] = FALSE;
 
 		if ( $args['id'] ) {
 
@@ -452,10 +495,17 @@ class gEditorialShortCode extends gEditorialBaseCore
 				'terms'    => [ $term->term_id ],
 			] ];
 
-		} else if ( is_singular( $posttype ) ) {
+		} else if ( is_tax( $taxonomy ) ) {
 
-			if ( ! $post )
+			if ( ! $term = get_queried_object() )
 				return $content;
+
+			$tax_query = [ [
+				'taxonomy' => $taxonomy,
+				'terms'    => [ $term->term_id ],
+			] ];
+
+		} else if ( $post && is_singular( $posttype ) ) {
 
 			if ( $term_id = get_post_meta( $post->ID, '_'.$posttype.'_term_id', TRUE ) )
 				$term = get_term_by( 'id', intval( $term_id ), $taxonomy );
@@ -473,12 +523,12 @@ class gEditorialShortCode extends gEditorialBaseCore
 
 		} else {
 
-			if ( ! $terms = get_the_terms( NULL, $taxonomy ) )
+			if ( ! $term = get_the_terms( NULL, $taxonomy ) )
 				return $content;
 
 			$tax_query = [ [
 				'taxonomy' => $taxonomy,
-				'terms'    => wp_list_pluck( $terms, 'term_id' ),
+				'terms'    => wp_list_pluck( $term, 'term_id' ),
 			] ];
 		}
 
@@ -499,7 +549,7 @@ class gEditorialShortCode extends gEditorialBaseCore
 			'tax_query'        => $tax_query,
 			'meta_query'       => $meta_query,
 			'posts_per_page'   => $args['limit'],
-			'orderby'          => $args['orderby'] == 'page' ? 'date' : $args['orderby'],
+			'orderby'          => $args['orderby'] == 'order' ? 'date' : $args['orderby'],
 			'order'            => $args['order'],
 			'post_type'        => $args['posttypes'],
 			'post_status'      => $post_status,
@@ -509,30 +559,32 @@ class gEditorialShortCode extends gEditorialBaseCore
 
 		$query = new \WP_Query;
 		$posts = $query->query( $query_args );
+		$count = count( $posts );
 
-		if ( ! count( $posts ) )
+		if ( ! $count )
 			return $content;
 
-		if ( $args['orderby'] == 'page' && count( $posts ) > 1  )
-			$posts = gEditorialTemplateCore::reorderPosts( $posts );
+		if ( 1 == $count && is_singular( $args['posttypes'] ) )
+			return $content;
+
+		if ( $args['orderby'] == 'order' ) {
+
+			if ( $args['order_cb'] && is_callable( $args['order_cb'] ) )
+				$posts = call_user_func_array( $args['order_cb'], [ $posts, $args, $term ] );
+
+			else if ( is_null( $args['order_cb'] ) && $count > 1 )
+				$posts = gEditorialTemplateCore::reorderPosts( $posts, $args['field_module'] );
+		}
 
 		foreach ( $posts as $post ) {
 
-			setup_postdata( $post );
+			// setup_postdata( $post );
 
-			if ( $args['cb'] ) {
-				$html .= call_user_func_array( $args['cb'], [ $post, $args ] );
+			if ( $args['item_cb'] )
+				$html .= call_user_func_array( $args['item_cb'], [ $post, $args, $term ] );
 
-			} else {
-
-				$order = self::postOrder( $args, $post );
-				$item  = self::postLink( $args, $post, $order );
-
-				// TODO: add excerpt/content of the entry
-				// TODO: add show/more js like series
-
-				$html .= self::postWrap( $item, $args, $post );
-			}
+			else
+				$html .= self::postItem( $args, $post );
 		}
 
 		$html = gEditorialHTML::tag( $args['list_tag'], [
@@ -544,7 +596,7 @@ class gEditorialShortCode extends gEditorialBaseCore
 
 		$html = self::wrap( $html, $tag, $args );
 
-		wp_reset_postdata();
+		// wp_reset_postdata();
 		wp_cache_set( $key, $html, $posttype );
 
 		return $html;
