@@ -556,13 +556,12 @@ class gEditorialBook extends gEditorialModuleCore
 
 			while ( $connected->have_posts() ) {
 				$connected->the_post();
-				echo '<li>';
 
-					echo gEditorialHTML::link( get_the_title(), get_permalink() );
-					echo $this->p2p_get_meta( $post->p2p_id, 'ref', ' &ndash; ' );
-					echo $this->p2p_get_meta( $post->p2p_id, 'desc', ' &ndash; ' );
+				$meta = '';
+				$meta .= $this->p2p_get_meta( $post->p2p_id, 'ref', ' &ndash; ' );
+				$meta .= $this->p2p_get_meta( $post->p2p_id, 'desc', ' &ndash; ' );
 
-				echo '</li>';
+				echo gEditorialShortCode::postItem( [ 'item_after' => $meta ] );
 			}
 
 			echo '</ul></div>';
