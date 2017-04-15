@@ -279,11 +279,9 @@ class gEditorialAudit extends gEditorialModuleCore
 		if ( ! count( $terms ) )
 			return gEditorialHTML::warning( _x( 'No Audit Terms', 'Modules: Audit', GEDITORIAL_TEXTDOMAIN ), TRUE );
 
-		$args = self::atts( array(
+		$args = $this->settings_form_req( [
 			'user_id' => '0',
-		), empty( $_POST[$this->module->group]['reports'] )
-			? array()
-			: $_POST[$this->module->group]['reports'] );
+		], 'reports' );
 
 		$this->settings_form_before( $uri, $sub, 'bulk', 'reports', FALSE );
 

@@ -586,6 +586,15 @@ class gEditorialModuleCore extends gEditorialWPModule
 		echo '</form>';
 	}
 
+	protected function settings_form_req( $defaults, $context = 'settings' )
+	{
+		$req = empty( $_POST[$this->module->group][$context] )
+			? []
+			: $_POST[$this->module->group][$context];
+
+		return self::atts( $defaults, $req );
+	}
+
 	protected function settings_fields( $sub, $action = 'update', $context = 'settings' )
 	{
 		gEditorialHTML::inputHidden( 'base', $this->base );

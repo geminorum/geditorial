@@ -316,13 +316,11 @@ class gEditorialUsers extends gEditorialModuleCore
 
 	public function reports_sub( $uri, $sub )
 	{
-		$args = self::atts( array(
+		$args = $this->settings_form_req( [
 			'post_type'  => 'post',
 			'user_id'    => '0',
 			'year_month' => '',
-		), empty( $_POST[$this->module->group]['reports'] )
-			? array()
-			: $_POST[$this->module->group]['reports'] );
+		], 'reports' );
 
 		$calendar_type = $this->get_setting( 'calendar_type', 'gregorian' );
 
