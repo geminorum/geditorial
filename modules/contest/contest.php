@@ -271,7 +271,7 @@ class gEditorialContest extends gEditorialModuleCore
 	private function _edit_screen( $post_type )
 	{
 		add_filter( 'manage_'.$post_type.'_posts_columns', array( $this, 'manage_posts_columns' ) );
-		add_filter( 'manage_'.$post_type.'_posts_custom_column', array( $this, 'posts_custom_column'), 10, 2 );
+		add_filter( 'manage_'.$post_type.'_posts_custom_column', array( $this, 'posts_custom_column' ), 10, 2 );
 	}
 
 	private function _sync_linked( $post_type )

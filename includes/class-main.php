@@ -42,8 +42,8 @@ class gEditorial
 
 		load_plugin_textdomain( GEDITORIAL_TEXTDOMAIN, FALSE, 'geditorial/languages' );
 
-		$this->modules = new stdClass();
-		$this->options = new stdClass();
+		$this->modules = new \stdClass();
+		$this->options = new \stdClass();
 
 		add_action( 'plugins_loaded', array( $this, 'plugins_loaded' ), 20 );
 		add_action( 'init', array( $this, 'init_late' ), 999 );

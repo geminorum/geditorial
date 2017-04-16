@@ -163,7 +163,7 @@ class gEditorialEntry extends gEditorialModuleCore
 	private function _edit_screen( $post_type )
 	{
 		add_filter( 'manage_'.$post_type.'_posts_columns', array( $this, 'manage_posts_columns' ) );
-		add_action( 'manage_'.$post_type.'_posts_custom_column', array( $this, 'posts_custom_column'), 10, 2 );
+		add_action( 'manage_'.$post_type.'_posts_custom_column', array( $this, 'posts_custom_column' ), 10, 2 );
 	}
 
 	public function dashboard_recent_drafts_query_args( $query_args )

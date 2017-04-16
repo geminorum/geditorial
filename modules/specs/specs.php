@@ -433,8 +433,8 @@ class gEditorialSpecs extends gEditorialModuleCore
 			return NULL;
 
 		$the_terms = gEditorialWPTaxonomy::getTerms( $this->constant( 'specs_tax' ), $post->ID, TRUE );
-		$metas = $this->get_postmeta( $post->ID, FALSE, array() );
-		$html = '';
+		$metas     = $this->get_postmeta( $post->ID, FALSE, array() );
+		$html      = '';
 
 		// FIXME: use table helper
 		$html .= '<table class="table table-striped geditorial-specs">';

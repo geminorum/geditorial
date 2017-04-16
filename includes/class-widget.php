@@ -338,8 +338,8 @@ class gEditorialWidgetCore extends WP_Widget
 
 		$html = gEditorialHTML::tag( 'input', array(
 			'type'    => 'checkbox',
-			'name'  => $this->get_field_name( $field ),
-			'id'    => $this->get_field_id( $field ),
+			'name'    => $this->get_field_name( $field ),
+			'id'      => $this->get_field_id( $field ),
 			'checked' => isset( $instance[$field] ) ? $instance[$field] : $default,
 		) );
 

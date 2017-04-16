@@ -684,7 +684,7 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 	public static function settingsSignature()
 	{
 		echo '<div class="signature"><p>';
-			printf( _x( '<a href="%1$s" title="Editorial">gEditorial</a> is a <a href="%2$s">geminorum</a> project.', 'Settings', GEDITORIAL_TEXTDOMAIN ),
+			printf( _x( '<a href="%1$s">gEditorial</a> is a <a href="%2$s">geminorum</a> project.', 'Settings: Signature', GEDITORIAL_TEXTDOMAIN ),
 				'http://github.com/geminorum/geditorial',
 				'http://geminorum.ir/' );
 		echo '</p></div>';

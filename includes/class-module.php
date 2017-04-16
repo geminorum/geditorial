@@ -588,9 +588,9 @@ class gEditorialModuleCore extends gEditorialWPModule
 
 	protected function settings_form_req( $defaults, $context = 'settings' )
 	{
-		$req = empty( $_POST[$this->module->group][$context] )
+		$req = empty( $_REQUEST[$this->module->group][$context] )
 			? []
-			: $_POST[$this->module->group][$context];
+			: $_REQUEST[$this->module->group][$context];
 
 		return self::atts( $defaults, $req );
 	}
@@ -1981,6 +1981,9 @@ SQL;
 	{
 		if ( is_null( $post_types ) )
 			$post_types = $this->post_types();
+
+		if ( ! count( $post_types ) )
+			return FALSE;
 
 		$to  = $this->constant( $constant_key );
 		$p2p = $this->constant( $constant_key.'_p2p' );
