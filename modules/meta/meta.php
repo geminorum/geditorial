@@ -607,27 +607,15 @@ class gEditorialMeta extends gEditorialModuleCore
 		return $display_name;
 	}
 
-	// FIXME: move this to `gEditorialSettingsCore::messages()`
-	public function tools_messages( $messages, $sub )
-	{
-		if ( $this->module->name == $sub ) {
-
-			if ( ! empty( $_REQUEST['field'] ) ) {
-				$field = $this->get_string( $_REQUEST['field'] );
-
-				$messages['converted'] = gEditorialHTML::success( sprintf( _x( 'Field %s Converted', 'Modules: Meta: Tools Message', GEDITORIAL_TEXTDOMAIN ), $field ) );
-				$messages['deleted']   = gEditorialHTML::success( sprintf( _x( 'Field %s Deleted', 'Modules: Meta: Tools Message', GEDITORIAL_TEXTDOMAIN ), $field ) );
-
-			} else {
-				$messages['converted'] = $messages['deleted'] = gEditorialHTML::error( _x( 'No Field', 'Modules: Meta: Tools Message', GEDITORIAL_TEXTDOMAIN ) );
-			}
-		}
-
-		return $messages;
-	}
-
 	public function tools_sub( $uri, $sub )
 	{
+		$args = $this->settings_form_req( [
+			'custom_field'       => '',
+			'custom_field_limit' => '',
+			'custom_field_type'  => 'post',
+			'custom_field_into'  => '',
+		], 'tools' );
+
 		$this->settings_form_before( $uri, $sub, 'bulk', 'tools', FALSE, FALSE );
 
 			gEditorialHTML::h3( _x( 'Meta Tools', 'Modules: Meta', GEDITORIAL_TEXTDOMAIN ) );
@@ -636,45 +624,38 @@ class gEditorialMeta extends gEditorialModuleCore
 
 			echo '<tr><th scope="row">'._x( 'Import Custom Fields', 'Modules: Meta', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
 
-			if ( ! empty( $_POST ) && isset( $_POST['custom_fields_check'] ) ) {
-				if ( isset( $_POST[$this->module->group]['tools'] ) ) {
-					$post = $_POST[$this->module->group]['tools'];
-					$limit = isset( $post['custom_field_limit'] ) ? stripslashes( $post['custom_field_limit'] ) : FALSE;
-
-					if ( isset( $post['custom_field'] ) ) {
-						gEditorialHTML::tableList( array(
-							'post_id' => gEditorialHelper::tableColumnPostID(),
-							'meta'    => 'Meta :'.$post['custom_field'],
-						), gEditorialWPDatabase::getPostMetaRows( stripslashes( $post['custom_field'] ), $limit ) );
-						echo '<br />';
-					}
-				}
-			}
-
-			$this->do_settings_field( array(
+			$this->do_settings_field( [
 				'type'         => 'select',
 				'field'        => 'custom_field',
 				'values'       => gEditorialWPDatabase::getPostMetaKeys( TRUE ),
-				'default'      => ( isset( $post['custom_field'] ) ? $post['custom_field'] : '' ),
+				'default'      => $args['custom_field'],
 				'option_group' => 'tools',
-			) );
+			] );
 
-			$this->do_settings_field( array(
+			$this->do_settings_field( [
 				'type'         => 'text',
 				'field'        => 'custom_field_limit',
-				'default'      => ( isset( $post['custom_field_limit'] ) ? $post['custom_field_limit'] : '' ),
+				'default'      => $args['custom_field_limit'],
 				'option_group' => 'tools',
 				'field_class'  => 'small-text',
-			) );
+				'placeholder'  => 'limit',
+			] );
 
-			$this->do_settings_field( array(
+			$this->do_settings_field( [
+				'type'         => 'select',
+				'field'        => 'custom_field_type',
+				'values'       => $this->list_post_types(),
+				'default'      => $args['custom_field_type'],
+				'option_group' => 'tools',
+			] );
+
+			$this->do_settings_field( [
 				'type'         => 'select',
 				'field'        => 'custom_field_into',
-				// 'values'       => $this->post_type_fields_list( 'post', array( 'ct' => $this->get_string( 'ct', 'post' ) ) ),
-				'values'       => $this->post_type_fields_list(),
-				'default'      => ( isset( $post['custom_field_into'] ) ? $post['custom_field_into'] : '' ),
+				'values'       => $this->post_type_fields_list( $args['custom_field_type'] ),
+				'default'      => $args['custom_field_into'],
 				'option_group' => 'tools',
-			) );
+			] );
 
 			echo '&nbsp;&nbsp;';
 
@@ -688,6 +669,21 @@ class gEditorialMeta extends gEditorialModuleCore
 				_x( 'Delete', 'Modules: Meta: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
 
 			gEditorialHTML::desc( _x( 'Check for Custom Fields and import them into Meta', 'Modules: Meta', GEDITORIAL_TEXTDOMAIN ) );
+
+			if ( isset( $_POST['custom_fields_check'] )
+				&& $args['custom_field'] ) {
+
+				echo '<br />';
+				gEditorialHTML::tableList( [
+					'post_id' => gEditorialHelper::tableColumnPostID(),
+					'meta'    => 'Meta :'.$args['custom_field'],
+				], gEditorialWPDatabase::getPostMetaRows(
+					stripslashes( $args['custom_field'] ),
+					stripslashes( $args['custom_field_limit'] )
+				), [
+					'empty' => gEditorialHTML::warning( _x( 'No Meta Found!', 'Modules: Meta: Table Empty', GEDITORIAL_TEXTDOMAIN ) ),
+				] );
+			}
 
 			echo '</td></tr>';
 			echo '</table>';
@@ -748,7 +744,6 @@ class gEditorialMeta extends gEditorialModuleCore
 				}
 			}
 
-			add_filter( 'geditorial_tools_messages', array( $this, 'tools_messages' ), 10, 2 );
 			add_action( 'geditorial_tools_sub_'.$sub, array( $this, 'tools_sub' ), 10, 2 );
 		}
 
