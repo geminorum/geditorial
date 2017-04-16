@@ -821,46 +821,6 @@ class gEditorialMagazine extends gEditorialModuleCore
 
 			echo '<tr><th scope="row">'._x( 'From Terms', 'Modules: Magazine', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
 
-			if ( ! empty( $_POST ) && isset( $_POST['issue_tax_check'] ) ) {
-
-				gEditorialHTML::tableList( array(
-					'_cb'     => 'term_id',
-					'term_id' => gEditorialHelper::tableColumnTermID(),
-					'name'    => gEditorialHelper::tableColumnTermName(),
-					'linked'   => array(
-						'title' => _x( 'Linked Issue Post', 'Modules: Magazine: Table Column', GEDITORIAL_TEXTDOMAIN ),
-						'callback' => function( $value, $row, $column, $index ){
-
-							if ( $post_id = $this->get_linked_post_id( $row, 'issue_cpt', 'issue_tax', FALSE ) )
-								return gEditorialHelper::getPostTitleRow( $post_id ).' &ndash; <small>'.$post_id.'</small>';
-
-							return '&mdash;';
-						},
-					),
-					'slugged'   => array(
-						'title' => _x( 'Same Slug Issue Post', 'Modules: Magazine: Table Column', GEDITORIAL_TEXTDOMAIN ),
-						'callback' => function( $value, $row, $column, $index ){
-
-							if ( $post_id = gEditorialWPPostType::getIDbySlug( $row->slug, $this->constant( 'issue_cpt' ) ) )
-								return gEditorialHelper::getPostTitleRow( $post_id ).' &ndash; <small>'.$post_id.'</small>';
-
-							return '&mdash;';
-						},
-					),
-					'count' => array(
-						'title'    => _x( 'Count', 'Modules: Magazine: Table Column', GEDITORIAL_TEXTDOMAIN ),
-						'callback' => function( $value, $row, $column, $index ){
-							if ( $post_id = gEditorialWPPostType::getIDbySlug( $row->slug, $this->constant( 'issue_cpt' ) ) )
-								return gEditorialNumber::format( $this->get_linked_posts( $post_id, 'issue_cpt', 'issue_tax', TRUE ) );
-							return gEditorialNumber::format( $row->count );
-						},
-					),
-					'description' => gEditorialHelper::tableColumnTermDesc(),
-				), gEditorialWPTaxonomy::getTerms( $this->constant( 'issue_tax' ), FALSE, TRUE ) );
-
-				echo '<br />';
-			}
-
 			gEditorialSettingsCore::submitButton( 'issue_tax_check',
 				_x( 'Check Terms', 'Modules: Magazine: Setting Button', GEDITORIAL_TEXTDOMAIN ), TRUE );
 
@@ -877,6 +837,47 @@ class gEditorialMagazine extends gEditorialModuleCore
 				_x( 'Delete Terms', 'Modules: Magazine: Setting Button', GEDITORIAL_TEXTDOMAIN ), 'delete', TRUE );
 
 			gEditorialHTML::desc( _x( 'Check for issue terms and create corresponding issue posts.', 'Modules: Magazine', GEDITORIAL_TEXTDOMAIN ) );
+
+			if ( ! empty( $_POST ) && isset( $_POST['issue_tax_check'] ) ) {
+				echo '<br />';
+
+				gEditorialHTML::tableList( [
+					'_cb'     => 'term_id',
+					'term_id' => gEditorialHelper::tableColumnTermID(),
+					'name'    => gEditorialHelper::tableColumnTermName(),
+					'linked'   => [
+						'title' => _x( 'Linked Issue Post', 'Modules: Magazine: Table Column', GEDITORIAL_TEXTDOMAIN ),
+						'callback' => function( $value, $row, $column, $index ){
+
+							if ( $post_id = $this->get_linked_post_id( $row, 'issue_cpt', 'issue_tax', FALSE ) )
+								return gEditorialHelper::getPostTitleRow( $post_id ).' &ndash; <small>'.$post_id.'</small>';
+
+							return '&mdash;';
+						},
+					],
+					'slugged'   => [
+						'title' => _x( 'Same Slug Issue Post', 'Modules: Magazine: Table Column', GEDITORIAL_TEXTDOMAIN ),
+						'callback' => function( $value, $row, $column, $index ){
+
+							if ( $post_id = gEditorialWPPostType::getIDbySlug( $row->slug, $this->constant( 'issue_cpt' ) ) )
+								return gEditorialHelper::getPostTitleRow( $post_id ).' &ndash; <small>'.$post_id.'</small>';
+
+							return '&mdash;';
+						},
+					],
+					'count' => [
+						'title'    => _x( 'Count', 'Modules: Magazine: Table Column', GEDITORIAL_TEXTDOMAIN ),
+						'callback' => function( $value, $row, $column, $index ){
+							if ( $post_id = gEditorialWPPostType::getIDbySlug( $row->slug, $this->constant( 'issue_cpt' ) ) )
+								return gEditorialNumber::format( $this->get_linked_posts( $post_id, 'issue_cpt', 'issue_tax', TRUE ) );
+							return gEditorialNumber::format( $row->count );
+						},
+					],
+					'description' => gEditorialHelper::tableColumnTermDesc(),
+				], gEditorialWPTaxonomy::getTerms( $this->constant( 'issue_tax' ), FALSE, TRUE ), [
+					'empty' => gEditorialHTML::warning( _x( 'No Terms Found!', 'Modules: Magazine: Table Empty', GEDITORIAL_TEXTDOMAIN ) ),
+				] );
+			}
 
 			echo '</td></tr>';
 			echo '</table>';
