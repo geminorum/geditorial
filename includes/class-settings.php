@@ -642,14 +642,14 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 	{
 		$links = self::getModuleWiki( $module );
 
-		$link = gEditorialHTML::tag( 'a', array(
+		gEditorialHTML::h3( gEditorialHTML::tag( 'a', [
 			'href'   => $links[0],
 			'title'  => $links[1],
 			'target' => '_blank',
-		), $module->title );
+		], $module->title ) );
 
-		echo gEditorialHTML::tag( $tag, $link );
-		echo gEditorialHTML::tag( 'p', $module->desc );
+		if ( isset( $module->desc ) )
+			gEditorialHTML::desc( $module->desc );
 	}
 
 	public static function getModuleWiki( $module = FALSE )
