@@ -269,6 +269,20 @@ class gEditorialTemplateCore extends gEditorialBaseCore
 		return $default;
 	}
 
+	public static function metaField( $field, $atts = array() )
+	{
+		if ( ! array_key_exists( 'echo', $atts ) )
+			$atts['echo'] = TRUE;
+
+		$meta = self::getMetaField( $field, $atts );
+
+		if ( ! $atts['echo'] )
+			return $meta;
+
+		echo $meta;
+		return TRUE;
+	}
+
 	public static function getMetaField( $fields, $atts = array(), $check = TRUE )
 	{
 		$args = self::atts( array(
