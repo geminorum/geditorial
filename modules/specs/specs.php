@@ -368,7 +368,7 @@ class gEditorialSpecs extends gEditorialModuleCore
 
 			$title = $this->get_string( $field, $post->post_type );
 			$html = gEditorialHTML::tag( 'textarea', array(
-				'class'        => 'field-textarea textarea-autosize',
+				'class'        => 'textarea-autosize',
 				'name'         => 'geditorial-specs-spec_value[]',
 				'title'        => $title,
 				'placeholder'  => $title,
@@ -387,7 +387,6 @@ class gEditorialSpecs extends gEditorialModuleCore
 			$title = $this->get_string( $field, $post->post_type );
 			$html = gEditorialHTML::tag( 'input', array(
 				'type'         => 'text',
-				'class'        => 'field-inputtext',
 				'name'         => 'geditorial-specs-spec_title[]',
 				'value'        => isset( $meta[$field] ) ? $meta[$field] : '',
 				'title'        => $title,

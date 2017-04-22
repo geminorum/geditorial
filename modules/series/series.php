@@ -280,7 +280,6 @@ class gEditorialSeries extends gEditorialModuleCore
 			$title = $this->get_string( $field, $post->post_type );
 			$html = gEditorialHTML::tag( 'input', array(
 				'type'         => 'text',
-				'class'        => 'field-inputtext',
 				'name'         => 'geditorial-series-'.$field.'['.$counter.']',
 				'id'           => 'geditorial-series-'.$field.'-'.$counter,
 				'value'        => isset( $meta[$field] ) ? $meta[$field] : '',
@@ -305,7 +304,6 @@ class gEditorialSeries extends gEditorialModuleCore
 			$title = $this->get_string( $field, $post->post_type );
 			$html = gEditorialHTML::tag( 'input', array(
 				'type'         => 'text',
-				'class'        => 'field-inputtext',
 				'name'         => 'geditorial-series-'.$field.'['.$counter.']',
 				'id'           => 'geditorial-series-'.$field.'-'.$counter,
 				'value'        => isset( $meta[$field] ) ? $meta[$field] : '',
@@ -327,7 +325,7 @@ class gEditorialSeries extends gEditorialModuleCore
 			$title = $this->get_string( $field, $post->post_type );
 			$html = gEditorialHTML::tag( 'textarea', array(
 				'rows'        => '1',
-				'class'       => 'field-textarea textarea-autosize',
+				'class'       => 'textarea-autosize',
 				'name'        => 'geditorial-series-'.$field.'['.$counter.']',
 				'id'          => 'geditorial-series-'.$field.'-'.$counter,
 				'title'       => $title,

@@ -394,23 +394,31 @@ class gEditorialContest extends gEditorialModuleCore
 	{
 		$this->field_post_order( 'apply_cpt', $post );
 
+		$post_type = $this->constant( 'contest_cpt' );
 		$dropdowns = $excludes = array();
 
 		foreach ( $terms as $term ) {
-			$dropdowns[$term->slug] = gEditorialMetaBox::dropdownAssocPosts( $this->constant( 'contest_cpt' ), $term->slug, $this->classs() );
+			$dropdowns[$term->slug] = gEditorialMetaBox::dropdownAssocPosts( $post_type, $term->slug, $this->classs() );
 			$excludes[] = $term->slug;
 		}
 
 		if ( ! count( $terms ) || $this->get_setting( 'multiple_instances', FALSE ) )
-			$dropdowns[0] = gEditorialMetaBox::dropdownAssocPosts( $this->constant( 'contest_cpt' ), '', $this->classs(), $excludes );
+			$dropdowns[0] = gEditorialMetaBox::dropdownAssocPosts( $post_type, '', $this->classs(), $excludes );
+
+		$empty = TRUE;
 
 		foreach ( $dropdowns as $term_slug => $dropdown ) {
 			if ( $dropdown ) {
 				echo '<div class="field-wrap">';
 					echo $dropdown;
 				echo '</div>';
+
+				$empty = FALSE;
 			}
 		}
+
+		if ( $empty )
+			return gEditorialMetaBox::fieldEmptyPostType( $post_type );
 	}
 
 	public function meta_box_cb_apply_status_tax( $post, $box )
@@ -471,7 +479,7 @@ class gEditorialContest extends gEditorialModuleCore
 
 		$the_term = get_term_by( 'slug', $post_before->post_name, $this->constant( 'contest_tax' ) );
 
-		if ( FALSE === $the_term ){
+		if ( FALSE === $the_term ) {
 			$the_term = get_term_by( 'slug', $post_after->post_name, $this->constant( 'contest_tax' ) );
 			if ( FALSE === $the_term )
 				$term = wp_insert_term( $post_after->post_title, $this->constant( 'contest_tax' ), $args );
@@ -582,7 +590,7 @@ class gEditorialContest extends gEditorialModuleCore
 				$new_columns['cover'] = $this->get_column_title( 'cover', 'contest_cpt' );
 				$new_columns[$key] = $value;
 
-			} else if ( 'date' == $key ){
+			} else if ( 'date' == $key ) {
 				$new_columns['children'] = $this->get_column_title( 'children', 'contest_cpt' );
 
 			} else if ( in_array( $key, array( 'author', 'comments' ) ) ) {

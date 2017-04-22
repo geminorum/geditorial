@@ -428,7 +428,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 
 		$the_term = get_term_by( 'slug', $post_before->post_name, $this->constant( 'issue_tax' ) );
 
-		if ( FALSE === $the_term ){
+		if ( FALSE === $the_term ) {
 			$the_term = get_term_by( 'slug', $post_after->post_name, $this->constant( 'issue_tax' ) );
 			if ( FALSE === $the_term )
 				$term = wp_insert_term( $post_after->post_title, $this->constant( 'issue_tax' ), $args );
@@ -579,15 +579,16 @@ class gEditorialMagazine extends gEditorialModuleCore
 
 	public function supported_meta_box( $post, $box, $terms )
 	{
+		$post_type = $this->constant( 'issue_cpt' );
 		$dropdowns = $excludes = array();
 
 		foreach ( $terms as $term ) {
-			$dropdowns[$term->slug] = gEditorialMetaBox::dropdownAssocPosts( $this->constant( 'issue_cpt' ), $term->slug, $this->classs() );
+			$dropdowns[$term->slug] = gEditorialMetaBox::dropdownAssocPosts( $post_type, $term->slug, $this->classs() );
 			$excludes[] = $term->slug;
 		}
 
 		if ( ! count( $terms ) || $this->get_setting( 'multiple_instances', FALSE ) )
-			$dropdowns[0] = gEditorialMetaBox::dropdownAssocPosts( $this->constant( 'issue_cpt' ), '', $this->classs(), $excludes );
+			$dropdowns[0] = gEditorialMetaBox::dropdownAssocPosts( $post_type, '', $this->classs(), $excludes );
 
 		$empty = TRUE;
 
@@ -602,7 +603,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 		}
 
 		if ( $empty )
-			return gEditorialMetaBox::fieldEmptyPostType( $this->constant( 'issue_cpt' ) );
+			return gEditorialMetaBox::fieldEmptyPostType( $post_type );
 	}
 
 	public function do_meta_box_main( $post, $box )

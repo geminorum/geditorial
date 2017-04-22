@@ -294,12 +294,12 @@ class gEditorialMetaTemplates extends gEditorialTemplateCore
 	}
 }
 
-if ( ! function_exists( 'gmeta' ) ) : function gmeta( $field, $b = '', $a = '', $f = FALSE, $id = NULL, $args = array() ){
+if ( ! function_exists( 'gmeta' ) ) : function gmeta( $field, $b = '', $a = '', $f = FALSE, $id = NULL, $args = array() ) {
 	gEditorialHelper::__dev_func( __FUNCTION__, '3.9.7', 'gEditorialMetaTemplates::metaField()' );
 	return gEditorialMetaTemplates::meta( $field, $b, $a, $f, $id, $args );
 } endif;
 
-if ( ! function_exists( 'get_gmeta' ) ) : function get_gmeta( $field, $args = array() ){
+if ( ! function_exists( 'get_gmeta' ) ) : function get_gmeta( $field, $args = array() ) {
 	gEditorialHelper::__dev_func( __FUNCTION__, '3.9.7', 'gEditorialMetaTemplates::metaField()' );
 	return gEditorialMetaTemplates::get_meta( $field, $args );
 } endif;

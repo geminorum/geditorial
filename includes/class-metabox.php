@@ -86,7 +86,7 @@ class gEditorialMetaBox extends gEditorialBaseCore
 			'show_option_none' => gEditorialSettingsCore::showOptionNone(),
 			'sort_column'      => 'menu_order',
 			'sort_order'       => 'desc',
-			'post_status'      => array( 'publish', 'future', 'draft' ),
+			'post_status'      => array( 'publish', 'future', 'draft', 'pending' ),
 			'value_field'      => 'post_name',
 			'exclude'          => $exclude,
 			'echo'             => 0,
