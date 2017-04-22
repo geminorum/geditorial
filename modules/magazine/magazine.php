@@ -501,19 +501,19 @@ class gEditorialMagazine extends gEditorialModuleCore
 		if ( ! $this->is_save_post( $post, $this->post_types() ) )
 			return $post_ID;
 
-		if ( isset( $_POST['geditorial-magazine-issue'] ) ) {
-			$terms = array();
+		$name = $this->classs( $this->constant( 'issue_cpt' ) );
 
-			foreach ( $_POST['geditorial-magazine-issue'] as $issue ) {
-				if ( trim( $issue ) ) {
-					$term = get_term_by( 'slug', $issue, $this->constant( 'issue_tax' ) );
-					if ( ! empty( $term ) && ! is_wp_error( $term ) )
-						$terms[] = intval( $term->term_id );
-				}
-			}
+		if ( ! isset( $_POST[$name] ) )
+			return $post_ID;
 
-			wp_set_object_terms( $post_ID, ( count( $terms ) ? $terms : NULL ), $this->constant( 'issue_tax' ), FALSE );
-		}
+		$terms = [];
+		$tax   = $this->constant( 'issue_tax' );
+
+		foreach ( (array) $_POST[$name] as $issue )
+			if ( trim( $issue ) && $term = get_term_by( 'slug', $issue, $tax ) )
+				$terms[] = intval( $term->term_id );
+
+		wp_set_object_terms( $post_ID, ( count( $terms ) ? $terms : NULL ), $tax, FALSE );
 
 		return $post_ID;
 	}
@@ -582,42 +582,12 @@ class gEditorialMagazine extends gEditorialModuleCore
 		$dropdowns = $excludes = array();
 
 		foreach ( $terms as $term ) {
-
-			$dropdowns[$term->slug] = wp_dropdown_pages( array(
-				'post_type'        => $this->constant( 'issue_cpt' ),
-				'selected'         => $term->slug,
-				'name'             => 'geditorial-magazine-issue[]',
-				'id'               => 'geditorial-magazine-issue-'.$term->slug,
-				'class'            => 'geditorial-admin-dropbown',
-				'show_option_none' => gEditorialSettingsCore::showOptionNone(),
-				'sort_column'      => 'menu_order',
-				'sort_order'       => 'desc',
-				'post_status'      => array( 'publish', 'future', 'draft' ),
-				'value_field'      => 'post_name',
-				'echo'             => 0,
-				'walker'           => new gEditorial_Walker_PageDropdown(),
-			));
-
+			$dropdowns[$term->slug] = gEditorialMetaBox::dropdownAssocPosts( $this->constant( 'issue_cpt' ), $term->slug, $this->classs() );
 			$excludes[] = $term->slug;
 		}
 
-		if ( ! count( $terms ) || $this->get_setting( 'multiple_instances', FALSE ) ) {
-			$dropdowns[0] = wp_dropdown_pages( array(
-				'post_type'        => $this->constant( 'issue_cpt' ),
-				'selected'         => '',
-				'name'             => 'geditorial-magazine-issue[]',
-				'id'               => 'geditorial-magazine-issue-0',
-				'class'            => 'geditorial-admin-dropbown',
-				'show_option_none' => gEditorialSettingsCore::showOptionNone(),
-				'sort_column'      => 'menu_order',
-				'sort_order'       => 'desc',
-				'post_status'      => array( 'publish', 'future', 'draft' ),
-				'value_field'      => 'post_name',
-				'exclude'          => $excludes,
-				'echo'             => 0,
-				'walker'           => new gEditorial_Walker_PageDropdown(),
-			));
-		}
+		if ( ! count( $terms ) || $this->get_setting( 'multiple_instances', FALSE ) )
+			$dropdowns[0] = gEditorialMetaBox::dropdownAssocPosts( $this->constant( 'issue_cpt' ), '', $this->classs(), $excludes );
 
 		$empty = TRUE;
 

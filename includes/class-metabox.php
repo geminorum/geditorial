@@ -74,4 +74,23 @@ class gEditorialMetaBox extends gEditorialBaseCore
 			), $object->labels->not_found );
 		echo '</div>';
 	}
+
+	public static function dropdownAssocPosts( $post_type, $selected = '', $prefix = '', $exclude = '' )
+	{
+		return wp_dropdown_pages( array(
+			'post_type'        => $post_type,
+			'selected'         => $selected,
+			'name'             => ( $prefix ? $prefix.'-' : '' ).$post_type.'[]',
+			'id'               => ( $prefix ? $prefix.'-' : '' ).$post_type.'-'.( $selected ? $selected : '0' ),
+			'class'            => 'geditorial-admin-dropbown',
+			'show_option_none' => gEditorialSettingsCore::showOptionNone(),
+			'sort_column'      => 'menu_order',
+			'sort_order'       => 'desc',
+			'post_status'      => array( 'publish', 'future', 'draft' ),
+			'value_field'      => 'post_name',
+			'exclude'          => $exclude,
+			'echo'             => 0,
+			'walker'           => new gEditorial_Walker_PageDropdown(),
+		));
+	}
 }
