@@ -354,7 +354,7 @@ class gEditorialSeries extends gEditorialModuleCore
 				'order_cb'     => [ $this, 'series_shortcode_order_cb' ],
 				'orderby'      => 'order',
 				'posttypes'    => $this->post_types(),
-			], $atts ),
+			], (array) $atts ),
 			$content,
 			$this->constant( 'series_shortcode' )
 		);

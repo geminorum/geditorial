@@ -765,7 +765,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 				'posttypes' => $this->post_types(),
 				'order_cb'  => NULL, // NULL for default ordering by meta
 				'orderby'   => 'order', // order by meta
-			], $atts ),
+			], (array) $atts ),
 			$content,
 			$this->constant( 'issue_shortcode' )
 		);

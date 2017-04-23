@@ -341,7 +341,11 @@ class gEditorialShortCode extends gEditorialBaseCore
 		if ( $args['item_cb'] && ! is_callable( $args['item_cb'] ) )
 			$args['item_cb'] = FALSE;
 
-		if ( $args['id'] ) {
+		if ( 'all' == $args['id'] ) {
+
+			// do nothing, will collect all posttype: e.g. all entrys of all sections
+
+		} else if ( $args['id'] ) {
 
 			if ( ! $term = get_term_by( 'id', $args['id'], $taxonomy ) )
 				return $content;
@@ -380,6 +384,9 @@ class gEditorialShortCode extends gEditorialBaseCore
 				'taxonomy' => $taxonomy,
 				'terms'    => wp_list_pluck( $term, 'term_id' ),
 			] ];
+
+		} else {
+			return $content;
 		}
 
 		if ( $args['cover'] )
@@ -475,7 +482,11 @@ class gEditorialShortCode extends gEditorialBaseCore
 		if ( $args['item_cb'] && ! is_callable( $args['item_cb'] ) )
 			$args['item_cb'] = FALSE;
 
-		if ( $args['id'] ) {
+		if ( 'all' == $args['id'] ) {
+
+			// do nothing, will collect all posttype: e.g. all entrys of all sections
+
+		} else if ( $args['id'] ) {
 
 			if ( ! $term = get_term_by( 'id', $args['id'], $taxonomy ) )
 				return $content;
