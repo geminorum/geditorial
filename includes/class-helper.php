@@ -336,6 +336,34 @@ class gEditorialHelper extends gEditorialBaseCore
 		wp_enqueue_script( 'jquery-colorbox' );
 	}
 
+	public static function enqueueScript( $asset, $dep = [ 'jquery' ], $version = GEDITORIAL_VERSION, $base = GEDITORIAL_URL, $path = 'assets/js' )
+	{
+		$handle  = strtolower( self::BASE.'-'.str_replace( '.', '-', $asset ) );
+		$variant = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
+
+		wp_enqueue_script( $handle, $base.$path.'/'.$asset.$variant.'.js', $dep, $version, TRUE );
+
+		return $handle;
+	}
+
+	public static function enqueueScriptVendor( $asset, $dep = [], $version = GEDITORIAL_VERSION, $base = GEDITORIAL_URL, $path = 'assets/js/vendor' )
+	{
+		return self::enqueueScript( $asset, $dep, $version, $base, $path );
+	}
+
+	public static function registerScriptPackage( $asset, $package = NULL, $dep = [], $version = GEDITORIAL_VERSION, $base = GEDITORIAL_URL, $path = 'assets/packages' )
+	{
+		if ( is_null( $package ) )
+			$package = $asset.'/'.$asset;
+
+		$handle  = strtolower( self::BASE.'-'.str_replace( '.', '-', $asset ) );
+		$variant = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
+
+		wp_register_script( $handle, $base.$path.'/'.$package.$variant.'.js', $dep, $version, TRUE );
+
+		return $handle;
+	}
+
 	public static function enqueueTimeAgo()
 	{
 		$callback = array( 'gPersianDateTimeAgo', 'enqueue' );

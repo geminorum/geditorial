@@ -132,16 +132,13 @@ class gEditorialOrtho extends gEditorialModuleCore
 		if ( $this->virastar_enqueued )
 			return;
 
-		wp_register_script( 'geditorial-virastar',
-			GEDITORIAL_URL.'assets/packages/virastar/virastar.min.js',
-			array(),
-			$this->virastar_version,
-			TRUE );
+		$virastar = gEditorialHelper::registerScriptPackage( 'virastar',
+			NULL, [], $this->virastar_version );
 
-		$this->enqueue_asset_js( array(
+		$this->enqueue_asset_js( [
 			'strings'  => $this->strings['js'],
 			'virastar' => $this->negate_virastar_options(),
-		), NULL, array( 'jquery', 'geditorial-virastar' ) );
+		], NULL, [ 'jquery', $virastar ] );
 
 		$this->virastar_enqueued = TRUE;
 	}
