@@ -244,9 +244,9 @@ class gEditorialTodayHelper extends gEditorialHelper
 		$html .= gEditorialHTML::tag( 'input', array(
 			'type'         => 'text',
 			'autocomplete' => 'off',
-			'dir'          => 'ltr',
 			'min'          => '1',
 			'max'          => '31',
+			'class'        => '-day',
 			'name'         => 'geditorial-today-date-day',
 			'id'           => 'geditorial-today-date-day',
 			'value'        => $args['day'],
@@ -258,9 +258,9 @@ class gEditorialTodayHelper extends gEditorialHelper
 		$html .= gEditorialHTML::tag( 'input', array(
 			'type'         => 'text',
 			'autocomplete' => 'off',
-			'dir'          => 'ltr',
 			'min'          => '1',
 			'max'          => '12',
+			'class'        => '-month',
 			'name'         => 'geditorial-today-date-month',
 			'id'           => 'geditorial-today-date-month',
 			'value'        => $args['month'],
@@ -273,7 +273,7 @@ class gEditorialTodayHelper extends gEditorialHelper
 		$html .= gEditorialHTML::tag( 'input', array(
 			'type'         => 'text',
 			'autocomplete' => 'off',
-			'dir'          => 'ltr',
+			'class'        => '-year',
 			'name'         => 'geditorial-today-date-year',
 			'id'           => 'geditorial-today-date-year',
 			'value'        => $year ? $args['year'] : '',
@@ -298,10 +298,10 @@ class gEditorialTodayHelper extends gEditorialHelper
 			), $title );
 
 		$html = gEditorialHTML::tag( 'select', array(
-			'name'        => 'geditorial-today-date-cal',
-			'id'          => 'geditorial-today-date-cal',
-			'title'       => _x( 'Calendar', 'Modules: Today: Meta Box Input', GEDITORIAL_TEXTDOMAIN ),
-			'placeholder' => _x( 'Calendar', 'Modules: Today: Meta Box Input Placeholder', GEDITORIAL_TEXTDOMAIN ),
+			'class' => '-cal',
+			'name'  => 'geditorial-today-date-cal',
+			'id'    => 'geditorial-today-date-cal',
+			'title' => _x( 'Calendar', 'Modules: Today: Meta Box Input', GEDITORIAL_TEXTDOMAIN ),
 		), $html );
 
 		echo gEditorialHTML::tag( 'div', array(

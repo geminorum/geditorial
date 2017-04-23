@@ -392,8 +392,8 @@ class gEditorialTweaks extends gEditorialModuleCore
 	{
 		$taxonomies = get_object_taxonomies( $post->post_type );
 
-		$cat = array( 'icon' => 'category', 'title' => __( 'Categories' ), 'edit'  => NULL );
-		$tag = array( 'icon' => 'tag', 'title' => __( 'Tags' ), 'edit'  => NULL );
+		$cat = [ 'icon' => 'category', 'title' => __( 'Categories' ), 'edit' => NULL ];
+		$tag = [ 'icon' => 'tag', 'title' => __( 'Tags' ), 'edit' => NULL ];
 
 		foreach ( $this->taxonomies() as $taxonomy ) {
 

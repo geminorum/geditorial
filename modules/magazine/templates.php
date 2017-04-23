@@ -428,7 +428,7 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 			return;
 
 		$html = '';
-		foreach ( $the_issues as $the_id => $the_link ){
+		foreach ( $the_issues as $the_id => $the_link ) {
 			$the_issue = get_post( $the_id );
 			if ( $the_issue ) {
 				if ( FALSE !== $the_link )
@@ -672,7 +672,7 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 	}
 }
 
-if ( ! function_exists( 'issue_info' ) ) : function issue_info( $field, $b = '', $a = '', $f = FALSE, $id = NULL, $args = array() ){
+if ( ! function_exists( 'issue_info' ) ) : function issue_info( $field, $b = '', $a = '', $f = FALSE, $id = NULL, $args = array() ) {
 	gEditorialHelper::__dev_func( __FUNCTION__, '3.9.16', 'gEditorialMagazineTemplates::theIssueMeta()' );
 	return gEditorialMagazineTemplates::issue_info( $field, $b, $a, $f, $id, $args );
 } endif;
