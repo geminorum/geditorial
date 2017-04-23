@@ -784,7 +784,11 @@ class gEditorialMeta extends gEditorialModuleCore
 				continue;
 
 			$formatted = apply_filters( 'string_format_i18n', $val );
-			$final .= ', '.( $kses ? gEditorialHelper::kses( $formatted, 'text' ) : $formatted );
+
+			if ( $final )
+				$final .= ', ';
+
+			$final .= $kses ? gEditorialHelper::kses( $formatted, 'text' ) : $formatted;
 		}
 
 		if ( $final ) {
