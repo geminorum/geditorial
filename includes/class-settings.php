@@ -581,11 +581,41 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 					continue;
 				}
 
-				echo '<table class="form-table -section-table">';
-					do_settings_fields( $page, $section['id'] );
-				echo '</table>';
+				echo '<table class="form-table -section-table"><tbody class="-section-body -list">';
+					// do_settings_fields( $page, $section['id'] );
+					self::moduleSectionFields( $page, $section['id'] );
+				echo '</tbody></table>';
 
 			echo '</div>';
+		}
+	}
+
+	// @SOURCE: `do_settings_fields()`
+	public static function moduleSectionFields( $page, $section )
+	{
+		global $wp_settings_fields;
+
+		if ( ! isset( $wp_settings_fields[$page][$section] ) )
+			return;
+
+		foreach ( (array) $wp_settings_fields[$page][$section] as $field ) {
+			$class = '-field';
+
+			if ( ! empty( $field['args']['class'] ) )
+				$class .= ' '.esc_attr( $field['args']['class'] );
+
+			echo '<tr class="'.$class.'">';
+
+			if ( ! empty( $field['args']['label_for'] ) )
+				echo '<th class="-th" scope="row"><label for="'
+					.esc_attr( $field['args']['label_for'] ).'">'.$field['title'].'</label></th>';
+
+			else
+				echo '<th class="-th" scope="row">'.$field['title'].'</th>';
+
+			echo '<td class="-td">';
+				call_user_func( $field['callback'], $field['args'] );
+			echo '</td></tr>';
 		}
 	}
 
