@@ -2,12 +2,12 @@ jQuery(document).ready(function($) {
   'use strict';
 
   var settings = $.extend({}, {
-    checklist_tree: '0',
-    category_search: '0',
-    excerpt_count: '0',
+    checklist_tree: false,
+    category_search: false,
+    excerpt_count: false,
   }, gEditorial.tweaks.settings);
 
-  if ('0' != settings.checklist_tree) {
+  if (settings.checklist_tree) {
 
     $('[id$="-all"] > ul.categorychecklist').each(function() {
 
@@ -24,7 +24,7 @@ jQuery(document).ready(function($) {
     });
   }
 
-  if ('0' != settings.category_search) {
+  if (settings.category_search) {
 
     var $input = $('<input class="category-search" type="search" value="" placeholder="' + gEditorial.tweaks.strings.search_placeholder + '" title="' + gEditorial.tweaks.strings.search_title + '" />');
 
@@ -49,8 +49,9 @@ jQuery(document).ready(function($) {
     });
   }
 
+  // FIXME: https://github.com/sheabunge/visual-term-description-editor/blob/master/js/wordcount.js
   // FIXME: move this to Writing module
-  if ('0' != settings.excerpt_count) {
+  if (settings.excerpt_count) {
 
     if (wp.utils) {
 
@@ -59,13 +60,15 @@ jQuery(document).ready(function($) {
       $('div.geditorial-wordcount-wrap').each(function() {
 
         var $content = $(this).find('textarea'),
-          $count = $(this).find('.geditorial-wordcount .-words'),
+          $count = $(this).find('.geditorial-wordcount .-chars'),
           prevCount = 0,
           contentEditor;
 
         $content.bind('keyup', function(e) {
           var text = $(this).val(),
-            count = counter.count(text);
+            // count = counter.count(text);
+            // count = text.split(" ").join("").length;
+            count = text.trim().length;
 
           if (count !== prevCount) {
             $count.text(count);

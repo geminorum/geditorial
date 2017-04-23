@@ -582,7 +582,7 @@ class gEditorialHelper extends gEditorialBaseCore
 		return gEditorialHTML::tag( 'div', array(
 			'class' => array( self::BASE.'-wordcount', 'hide-if-no-js' ),
 			'data'  => apply_filters( self::BASE.'_helper_wordcount_data', array_merge( $data, $defaults ), $for, $posttype ),
-		), sprintf( _x( 'Word count: %s', 'Module Helper', GEDITORIAL_TEXTDOMAIN ), '<span class="-words">0</span>' ) );
+		), sprintf( _x( 'Letter Count: %s', 'Module Helper', GEDITORIAL_TEXTDOMAIN ), '<span class="-chars">0</span>' ) );
 	}
 
 	public static function htmlCount( $count, $title_attr = NULL )
