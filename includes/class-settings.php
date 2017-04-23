@@ -392,7 +392,7 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 
 	public static function wrapOpen( $sub = 'general', $base = 'geditorial', $page = 'settings' )
 	{
-		echo '<div class="wrap '.$base.'-admin-wrap '.$base.'-'.$page.' '.$base.'-'.$page.'-'.$sub.' sub-'.$sub.'">';
+		echo '<div id="'.$base.'-'.$page.'" class="wrap '.$base.'-admin-wrap '.$base.'-'.$page.' '.$base.'-'.$page.'-'.$sub.' sub-'.$sub.'">';
 	}
 
 	public static function wrapClose()
@@ -400,7 +400,7 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 		echo '<div class="clear"></div></div>';
 	}
 
-	public static function headerTitle( $title = NULL, $back = NULL, $to = NULL, $icon = '' )
+	public static function headerTitle( $title = NULL, $back = NULL, $to = NULL, $icon = '', $count = FALSE, $search = FALSE )
 	{
 		if ( is_null( $title ) )
 			$title = _x( 'Editorial', 'Settings', GEDITORIAL_TEXTDOMAIN );
@@ -415,10 +415,23 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 		if ( $icon )
 			$icon = ' dashicons-before dashicons-'.$icon;
 
+		$extra = '';
+
+		if ( $count )
+			$extra .= sprintf( ' <span class="-count title-count">%s</span>', gEditorialNumber::format( $count ) );
+
 		if ( $back )
-			printf( '<h1 class="settings-title'.$icon.'">%s <a href="%s" class="-action page-title-action">%s</a></h1>', $title, $back, $to );
-		else
-			printf( '<h1 class="settings-title'.$icon.'">%s</h1>', $title );
+			$extra .= sprintf( ' <a href="%s" class="-action page-title-action">%s</a>', $back, $to );
+
+		if ( $search )
+			$extra .= gEditorialHTML::tag( 'input', [
+				'type'        => 'search',
+				'class'       => [ '-search', 'hide-if-no-js' ],
+				'placeholder' => _x( 'Search …', 'Settings: Search Placeholder', GEDITORIAL_TEXTDOMAIN ),
+				'autofocus'   => 'autofocus',
+			] );
+
+		printf( '<h1 class="settings-title'.$icon.'">%s%s</h1>', $title, $extra );
 	}
 
 	public static function message( $messages = NULL )
@@ -650,9 +663,9 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 			),
 		) );
 
-		// echo gEditorialHTML::tag( 'span', array(
-		// 	'class' => array( 'button', 'hide-if-js' ),
-		// ), _x( 'You have to enable Javascript!', 'Settings: Notice', GEDITORIAL_TEXTDOMAIN ) );
+		echo gEditorialHTML::tag( 'span', [
+			'class' => [ 'button', 'hide-if-js' ],
+		], _x( 'You have to enable Javascript!', 'Settings: Notice', GEDITORIAL_TEXTDOMAIN ) );
 	}
 
 	public static function moduleConfigure( $module, $enabled = FALSE )
@@ -677,7 +690,7 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 			'href'   => $links[0],
 			'title'  => $links[1],
 			'target' => '_blank',
-		], $module->title ) );
+		], $module->title ), '-title' );
 
 		if ( isset( $module->desc ) )
 			gEditorialHTML::desc( $module->desc );

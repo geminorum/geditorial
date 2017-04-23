@@ -361,9 +361,11 @@ class gEditorialSettings extends gEditorialModuleCore
 	{
 		global $gEditorial;
 
+		$back = $count = FALSE;
+
 		if ( 'settings' == $current_module->name ) {
 			$title = _x( 'Editorial', 'Modules: Modules', GEDITORIAL_TEXTDOMAIN );
-			$back  = FALSE;
+			$count = count( get_object_vars( $gEditorial->modules ) );
 		} else {
 			$title = sprintf( _x( 'Editorial: %s', 'Modules: Modules', GEDITORIAL_TEXTDOMAIN ), $current_module->title );
 			$back  = gEditorialSettingsCore::settingsURL();
@@ -371,7 +373,7 @@ class gEditorialSettings extends gEditorialModuleCore
 
 		gEditorialSettingsCore::wrapOpen( $current_module->name, $this->base, 'settings' );
 
-			gEditorialSettingsCore::headerTitle( $title, $back, NULL, $current_module->icon );
+			gEditorialSettingsCore::headerTitle( $title, $back, NULL, $current_module->icon, $count, TRUE );
 			gEditorialSettingsCore::message();
 
 			echo '<div class="-header">';
@@ -390,7 +392,7 @@ class gEditorialSettings extends gEditorialModuleCore
 
 	private function print_default_settings()
 	{
-		echo '<div class="modules">';
+		echo '<div class="modules -list">';
 			$this->print_modules();
 		echo '</div>';
 	}
@@ -451,9 +453,10 @@ class gEditorialSettings extends gEditorialModuleCore
 
 		do_action( 'geditorial_settings_load', $page );
 
-		// need the all fields check
-		// if ( gEditorialSettingsCore::SETTINGS == $page )
-			$this->enqueue_asset_js( TRUE );
+		$listjs = gEditorialHelper::registerScriptPackage( 'listjs',
+			'list.js/list', [], '1.5.0' );
+
+		$this->enqueue_asset_js( TRUE, NULL, [ 'jquery', $listjs ] );
 	}
 
 	private function admin_settings_verify( $group )
