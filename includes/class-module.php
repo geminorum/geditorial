@@ -1325,7 +1325,7 @@ class gEditorialModuleCore extends gEditorialWPModule
 
 		wp_enqueue_script(
 			$handle,
-			GEDITORIAL_URL.'assets/js/'.$this->base.'/'.$prefix.$name.$suffix.'.js',
+			GEDITORIAL_URL.'assets/js/'.$prefix.$name.$suffix.'.js',
 			$deps,
 			GEDITORIAL_VERSION,
 			TRUE
@@ -1344,12 +1344,13 @@ class gEditorialModuleCore extends gEditorialWPModule
 		gEditorial()->enqueue_styles();
 	}
 
-	public function register_editor_button( $settings_key = 'editor_button' )
+	public function register_editor_button( $plugin, $settings_key = 'editor_button' )
 	{
 		if ( ! $this->get_setting( $settings_key, TRUE ) )
 			return;
 
-		gEditorial()->register_editor_button( 'ge_'.$this->module->name, 'assets/js/geditorial/tinymce.'.$this->module->name.'.js' );
+		gEditorial()->register_editor_button( $this->hook( $plugin ),
+			'assets/js/tinymce/'.$this->module->name.'.'.$plugin.'.js' );
 	}
 
 	protected function register_shortcode( $constant_key, $callback = NULL )
