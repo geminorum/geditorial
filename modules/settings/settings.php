@@ -274,7 +274,7 @@ class gEditorialSettings extends gEditorialModuleCore
 				if ( gEditorialWPUser::isSuperAdmin() || self::isDev() ) {
 					echo '<br /><p>';
 						gEditorialSettingsCore::submitButton( 'delete_all_options',
-							_x( 'Delete All Options', 'Modules: Modules: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
+							_x( 'Delete All Options', 'Modules: Modules: Setting Button', GEDITORIAL_TEXTDOMAIN ), 'delete', TRUE );
 
 						gEditorialHTML::desc( _x( 'Deletes all editorial options on current site', 'Modules: Modules', GEDITORIAL_TEXTDOMAIN ), FALSE );
 					echo '</p>';
@@ -294,7 +294,7 @@ class gEditorialSettings extends gEditorialModuleCore
 				echo '&nbsp;&nbsp;';
 
 				gEditorialSettingsCore::submitButton( 'custom_fields_empty',
-					_x( 'Empty', 'Modules: Modules: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
+					_x( 'Empty', 'Modules: Modules: Setting Button', GEDITORIAL_TEXTDOMAIN ), 'delete', TRUE );
 
 				gEditorialHTML::desc( _x( 'Will delete empty meta values, solves common problems with imported posts.', 'Modules: Modules', GEDITORIAL_TEXTDOMAIN ) );
 

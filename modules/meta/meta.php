@@ -666,7 +666,7 @@ class gEditorialMeta extends gEditorialModuleCore
 				_x( 'Covert', 'Modules: Meta: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
 
 			gEditorialSettingsCore::submitButton( 'custom_fields_delete',
-				_x( 'Delete', 'Modules: Meta: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
+				_x( 'Delete', 'Modules: Meta: Setting Button', GEDITORIAL_TEXTDOMAIN ), 'delete', TRUE );
 
 			gEditorialHTML::desc( _x( 'Check for Custom Fields and import them into Meta', 'Modules: Meta', GEDITORIAL_TEXTDOMAIN ) );
 
