@@ -30,12 +30,38 @@ class gEditorialHTML extends gEditorialBaseCore
 
 	public static function desc( $html, $block = TRUE, $class = '' )
 	{
-		if ( $html ) echo $block ? '<p class="description '.$class.'">'.$html.'</p>' : '<span class="description '.$class.'">'.$html.'</span>';
+		if ( $html ) echo $block ? '<p class="description -description '.$class.'">'.$html.'</p>' : '<span class="description -description '.$class.'">'.$html.'</span>';
 	}
 
 	public static function inputHidden( $name, $value = '' )
 	{
 		echo '<input type="hidden" name="'.self::escapeAttr( $name ).'" value="'.self::escapeAttr( $value ).'" />';
+	}
+
+	// @REF: https://gist.github.com/eric1234/5802030
+	// useful when you want to pass on a complex data structure via a form
+	public static function inputHiddenArray( $array, $prefix = '' )
+	{
+		if ( (bool) count( array_filter( array_keys( $array ), 'is_string' ) ) ) {
+
+			foreach ( $array as $key => $value ) {
+				$name = empty( $prefix ) ? $key : $prefix.'['.$key.']';
+
+				if ( is_array( $value ) )
+					self::inputHiddenArray( $value, $name );
+				else
+					self::inputHidden( $name, $value );
+			}
+
+		} else {
+
+			foreach( $array as $item ) {
+				if ( is_array( $item ) )
+					self::inputHiddenArray( $item, $prefix.'[]' );
+				else
+					self::inputHidden( $prefix.'[]', $item );
+			}
+		}
 	}
 
 	public static function joined( $items, $before = '', $after = '', $sep = '|' )
@@ -309,7 +335,7 @@ class gEditorialHTML extends gEditorialBaseCore
 					$title = isset( $column['title'] ) ? $column['title'] : $key;
 
 					if ( isset( $column['class'] ) )
-						$class = self::escapeAttr( $column['class'] );
+						$class = self::sanitizeClass( $column['class'] );
 
 				} else if ( '_cb' == $key ) {
 					$title = '<input type="checkbox" id="cb-select-all-1" class="-cb-all" />';
@@ -319,7 +345,7 @@ class gEditorialHTML extends gEditorialBaseCore
 					$title = $column;
 				}
 
-				echo '<'.$tag.' class="-column -column-'.self::escapeAttr( $key ).$class.'">'.$title.'</'.$tag.'>';
+				echo '<'.$tag.' class="-column -column-'.self::sanitizeClass( $key ).$class.'">'.$title.'</'.$tag.'>';
 			}
 		echo '</tr></thead><tbody>';
 
@@ -328,25 +354,54 @@ class gEditorialHTML extends gEditorialBaseCore
 
 			echo '<tr class="-row -row-'.$index.( $alt ? ' alternate' : '' ).'">';
 
-			foreach ( $columns as $key => $column ) {
+			foreach ( $columns as $offset => $column ) {
 
+				$cell  = 'td';
 				$class = $callback = $actions = '';
-				$cell = 'td';
+				$key   = $offset;
+
+				// override key using map
+				if ( isset( $args['map'][$offset] ) )
+					$key = $args['map'][$offset];
+
+				if ( is_array( $column ) ) {
+
+					if ( isset( $column['class'] ) )
+						$class .= ' '.self::sanitizeClass( $column['class'] );
+
+					if ( isset( $column['callback'] ) )
+						$callback = $column['callback'];
+
+					if ( isset( $column['actions'] ) ) {
+						$actions = $column['actions'];
+						$class .= ' has-row-actions';
+					}
+
+					// again override key using map
+					if ( isset( $column['map'] ) )
+						$key = $column['map'];
+				}
 
 				if ( '_cb' == $key ) {
+
 					if ( '_index' == $column )
 						$value = $index;
+
 					else if ( is_array( $column ) && isset( $column['value'] ) )
 						$value = call_user_func_array( $column['value'], array( NULL, $row, $column, $index ) );
+
 					else if ( is_array( $row ) && isset( $row[$column] ) )
 						$value = $row[$column];
+
 					else if ( is_object( $row ) && isset( $row->{$column} ) )
 						$value = $row->{$column};
+
 					else
 						$value = '';
-					$value = '<input type="checkbox" name="_cb[]" value="'.self::escapeAttr( $value ).'" class="-cb" />';
-					$class .= ' check-column';
+
 					$cell = 'th';
+					$class .= ' check-column';
+					$value = '<input type="checkbox" name="_cb[]" value="'.self::escapeAttr( $value ).'" class="-cb" />';
 
 				} else if ( is_array( $row ) && isset( $row[$key] ) ) {
 					$value = $row[$key];
@@ -358,31 +413,17 @@ class gEditorialHTML extends gEditorialBaseCore
 					$value = NULL;
 				}
 
-				if ( is_array( $column ) ) {
-					if ( isset( $column['class'] ) )
-						$class .= ' '.self::escapeAttr( $column['class'] );
+				echo '<'.$cell.' class="-cell -cell-'.self::sanitizeClass( $key ).$class.'">';
 
-					if ( isset( $column['callback'] ) )
-						$callback = $column['callback'];
-
-					if ( isset( $column['actions'] ) ) {
-						$actions = $column['actions'];
-						$class .= ' has-row-actions';
-					}
-				}
-
-				echo '<'.$cell.' class="-cell -cell-'.$key.$class.'">';
-
-				if ( $callback ){
+				if ( $callback )
 					echo call_user_func_array( $callback,
 						array( $value, $row, $column, $index ) );
 
-				} else if ( $value ) {
+				else if ( $value )
 					echo $value;
 
-				} else {
+				else
 					echo '&nbsp;';
-				}
 
 				if ( $actions )
 					self::tableActions( call_user_func_array( $actions,
@@ -546,12 +587,16 @@ class gEditorialHTML extends gEditorialBaseCore
 				if ( is_array( $val ) || is_object( $val ) ) {
 					echo '<td class="-val -table">';
 					self::tableSide( $val, $type );
-				} else if ( is_null( $val ) ){
+
+				} else if ( is_null( $val ) ) {
 					echo '<td class="-val -not-table"><code>NULL</code>';
-				} else if ( is_bool( $val ) ){
+
+				} else if ( is_bool( $val ) ) {
 					echo '<td class="-val -not-table"><code>'.( $val ? 'TRUE' : 'FALSE' ).'</code>';
-				} else if ( ! empty( $val ) ){
+
+				} else if ( ! empty( $val ) ) {
 					echo '<td class="-val -not-table"><code>'.$val.'</code>';
+
 				} else {
 					echo '<td class="-val -not-table"><small class="-empty">EMPTY</small>';
 				}
@@ -652,13 +697,73 @@ class gEditorialHTML extends gEditorialBaseCore
 	}
 
 	// @REF: https://developer.wordpress.org/resource/dashicons/
-	public static function getDashicon( $icon = 'wordpress-alt', $tag = 'span' )
+	public static function getDashicon( $icon = 'wordpress-alt', $tag = 'span', $title = FALSE )
 	{
 		return self::tag( $tag, array(
+			'title' => $title,
 			'class' => array(
 				'dashicons',
 				'dashicons-'.$icon,
 			),
 		), NULL );
+	}
+
+	public static function dropdown( $list, $atts = array() )
+	{
+		$args = self::atts( array(
+			'id'         => '',
+			'name'       => '',
+			'none_title' => NULL,
+			'none_value' => 0,
+			'class'      => FALSE,
+			'selected'   => 0,
+			'disabled'   => FALSE,
+			'dir'        => FALSE,
+			'prop'       => FALSE,
+			'value'      => FALSE,
+			'exclude'    => array(),
+		), $atts );
+
+		$html = '';
+
+		if ( FALSE === $list ) // alow hiding
+			return $html;
+
+		if ( ! is_null( $args['none_title'] ) )
+			$html .= self::tag( 'option', array(
+				'value'    => $args['none_value'],
+				'selected' => $args['selected'] == $args['none_value'],
+			), $args['none_title'] );
+
+		foreach ( $list as $offset => $value ) {
+
+			if ( $args['value'] )
+				$key = is_object( $value ) ? $value->{$args['value']} : $value[$args['value']];
+
+			else
+				$key = $offset;
+
+			if ( in_array( $key, (array) $args['exclude'] ) )
+				continue;
+
+			if ( $args['prop'] )
+				$title = is_object( $value ) ? $value->{$args['prop']} : $value[$args['prop']];
+
+			else
+				$title = $value;
+
+			$html .= self::tag( 'option', array(
+				'value'    => $key,
+				'selected' => $args['selected'] == $key,
+			), $title );
+		}
+
+		return self::tag( 'select', array(
+			'name'     => $args['name'],
+			'id'       => $args['id'],
+			'class'    => $args['class'],
+			'disabled' => $args['disabled'],
+			'dir'      => $args['dir'],
+		), $html );
 	}
 }

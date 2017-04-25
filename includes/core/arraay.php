@@ -61,9 +61,11 @@ class gEditorialArraay extends gEditorialBaseCore
 	{
 		$keys = array_keys( $array );
 
-		foreach ( $keys_map as $old_key => $new_key ){
+		foreach ( $keys_map as $old_key => $new_key ) {
+
 			if ( FALSE === $index = array_search( $old_key, $keys ) )
 				continue;
+
 			$keys[$index] = $new_key;
 		}
 
@@ -106,6 +108,12 @@ class gEditorialArraay extends gEditorialBaseCore
 				unset( $atts[$key] );
 
 		return $atts;
+	}
+
+	// @REF: http://stackoverflow.com/a/11026840/4864081
+	public static function stripByValue( $array, $value )
+	{
+		return array_diff_key( $array, array_flip( array_keys( $array, $value ) ) );
 	}
 
 	// FIXME: TEST THIS!
