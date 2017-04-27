@@ -111,6 +111,8 @@ class gEditorialRevisions extends gEditorialModuleCore
 		if ( ! $purged = self::req( $this->hook( 'purged' ) ) )
 			return;
 
+		$_SERVER['REQUEST_URI'] = remove_query_arg( $this->hook( 'purged' ), $_SERVER['REQUEST_URI'] );
+
 		$message = _x( '%s items(s) revisions purged!', 'Modules: Revisions: Message', GEDITORIAL_TEXTDOMAIN );
 		gEditorialHTML::success( sprintf( $message, gEditorialNumber::format( $purged ) ), TRUE );
 	}

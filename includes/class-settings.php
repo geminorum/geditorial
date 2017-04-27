@@ -446,7 +446,7 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 			else
 				gEditorialHTML::warning( $_GET['message'], TRUE );
 
-			$_SERVER['REQUEST_URI'] = remove_query_arg( 'message', $_SERVER['REQUEST_URI'] );
+			$_SERVER['REQUEST_URI'] = remove_query_arg( array_keys( $messages ), $_SERVER['REQUEST_URI'] );
 		}
 	}
 
