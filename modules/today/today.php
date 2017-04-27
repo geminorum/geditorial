@@ -32,8 +32,6 @@ class gEditorialToday extends gEditorialModuleCore
 			'day_cpt'           => 'day',
 			'day_cpt_archive'   => 'days',
 			'day_cpt_permalink' => '/%postname%',
-			'day_shortcode'     => 'day',
-			'year_shortcode'    => 'year',
 
 			'meta_cal'   => '_theday_cal',
 			'meta_day'   => '_theday_day',
@@ -96,9 +94,6 @@ class gEditorialToday extends gEditorialModuleCore
 		$this->post_types_excluded = array( 'attachment', $this->constant( 'day_cpt' ) );
 
 		$this->register_post_type( 'day_cpt', array(), array( 'post_tag' ) );
-
-		$this->register_shortcode( 'day_shortcode', array( 'gEditorialTodayTemplates', 'day_shortcode' ) );
-		$this->register_shortcode( 'year_shortcode', array( 'gEditorialTodayTemplates', 'year_shortcode' ) );
 	}
 
 	public function init_ajax()

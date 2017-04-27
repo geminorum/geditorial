@@ -292,7 +292,7 @@ class gEditorialSpecs extends gEditorialModuleCore
 		$fields = $this->post_type_fields( $post->post_type );
 		$metas  = $this->get_postmeta( $post->ID, FALSE, array() );
 
-		$handle = '<span class="item-handle dashicons dashicons-editor-expand" title="'._x( 'Sort Me!', 'Modules: Specs: Sortable handler title attr', GEDITORIAL_TEXTDOMAIN ).'"></span>';
+		$handle = '<span class="item-handle dashicons dashicons-move" title="'._x( 'Sort Me!', 'Modules: Specs: Sortable handler title attr', GEDITORIAL_TEXTDOMAIN ).'"></span>';
 		$delete = '<span class="item-delete dashicons dashicons-trash" title="'._x( 'Trash Me!', 'Modules: Specs: Sortable trash title attr', GEDITORIAL_TEXTDOMAIN ).'"></span>';
 
 		echo '<ol class="geditorial-specs-list">';
@@ -341,6 +341,8 @@ class gEditorialSpecs extends gEditorialModuleCore
 				$this->geditorial_specs_meta_box_item( '-1', $fields, $post );
 
 				echo '<div class="field-wrap field-wrap-select">';
+
+				// FIXME: we need custom for disabled options
 				wp_dropdown_categories( array(
 					'taxonomy'         => $tax,
 					'selected'         => 0,

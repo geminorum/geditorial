@@ -428,6 +428,7 @@ class gEditorialHelper extends gEditorialBaseCore
 		return count( $strings ) ? 'tinyMCE.addI18n("'.$locale.'.geditorial", '.wp_json_encode( $strings ).');'."\n" : '';
 	}
 
+	// FIXME: def fallback must be FALSE
 	// TODO: add as general option
 	public static function getEditorialUserID( $fallback = TRUE )
 	{
