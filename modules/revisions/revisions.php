@@ -73,8 +73,8 @@ class gEditorialRevisions extends gEditorialModuleCore
 			} else if ( 'edit' == $screen->base ) {
 
 				if ( $this->cuc( 'edit' ) ) {
-					$this->filter( 'bulk_actions-'.$screen->id, 1, 10, 'bulk_actions' );
-					$this->filter( 'handle_bulk_actions-'.$screen->id, 3, 10, 'handle_bulk_actions' );
+					add_filter( 'bulk_actions-'.$screen->id, [ $this, 'bulk_actions' ] );
+					add_filter( 'handle_bulk_actions-'.$screen->id, [ $this, 'handle_bulk_actions' ], 10, 3 );
 					$this->action( 'admin_notices' );
 				}
 

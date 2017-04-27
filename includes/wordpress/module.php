@@ -60,14 +60,21 @@ class gEditorialWPModule extends gEditorialBaseCore
 		return wp_hash( $this->base.$this->key.$suffix );
 	}
 
-	protected function action( $hook, $args = 1, $priority = 10, $method = FALSE )
+	protected function action( $hook, $args = 1, $priority = 10, $suffix = FALSE )
 	{
-		add_action( $hook, array( $this, ( $method ? $method : $hook ) ), $priority, $args );
+		if ( $method = self::sanitize_hook( ( $suffix ? $hook.'_'.$suffix : $hook ) ) )
+			add_action( $hook, array( $this, $method ), $priority, $args );
 	}
 
-	protected function filter( $hook, $args = 1, $priority = 10, $method = FALSE )
+	protected function filter( $hook, $args = 1, $priority = 10, $suffix = FALSE )
 	{
-		add_filter( $hook, array( $this, ( $method ? $method : $hook ) ), $priority, $args );
+		if ( $method = self::sanitize_hook( ( $suffix ? $hook.'_'.$suffix : $hook ) ) )
+			add_filter( $hook, array( $this, $method ), $priority, $args );
+	}
+
+	protected static function sanitize_hook( $hook )
+	{
+		return trim( str_ireplace( [ '-', '.' ], '_', $hook ) );
 	}
 
 	protected function actions()
