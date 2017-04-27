@@ -43,6 +43,14 @@ class gEditorialRevisions extends gEditorialModuleCore
 					'title'       => _x( 'Revision Word Count', 'Modules: Revisions: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Displays revision word count of the post title, content and excerpt', 'Modules: Revisions: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 				),
+				array(
+					'field'       => 'revision_maxcount',
+					'type'        => 'number',
+					'title'       => _x( 'Revision Max Count', 'Modules: Revisions: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'The maximum number of revisions to save for each post. <code>-1</code> for every revision.', 'Modules: Revisions: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'default'     => '-1',
+					'min_attr'    => '-1',
+				),
 			),
 		);
 	}
@@ -55,6 +63,7 @@ class gEditorialRevisions extends gEditorialModuleCore
 	public function admin_init()
 	{
 		add_action( 'admin_post_'.$this->hook( 'purge' ), array( $this, 'admin_post' ) );
+		$this->filter( 'wp_revisions_to_keep', 2, 12 );
 	}
 
 	public function current_screen( $screen )
@@ -268,6 +277,15 @@ class gEditorialRevisions extends gEditorialModuleCore
 				$count++;
 
 		return $count;
+	}
+
+	public function wp_revisions_to_keep( $num, $post )
+	{
+		// if not supported then no revisions
+		if ( ! in_array( $post->post_type, $this->post_types() ) )
+			return 0;
+
+		return $this->get_setting( 'revision_maxcount', $num );
 	}
 
 	// FIXME: use `bulk_post_updated_messages` for notices
