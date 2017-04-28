@@ -2109,4 +2109,28 @@ SQL;
 
 		return $info;
 	}
+
+	protected function limit_sub( $sub = NULL, $default = 25, $key = 'limit', $option = 'per_page' )
+	{
+		if ( is_null( $sub ) )
+			$sub = $this->module->name;
+
+		$per_page = (int) get_user_option( $sub.'_'.$option );
+
+		if ( empty( $per_page ) || $per_page < 1 )
+			$per_page = $default;
+
+		return intval( self::req( $key, $per_page ) );
+	}
+
+	public function screen_option( $sub = NULL, $option = 'per_page', $default = 25 )
+	{
+		if ( is_null( $sub ) )
+			$sub = $this->module->name;
+
+		add_screen_option( $option, [
+			'default' => $default,
+			'option'  => $sub.'_'.$option,
+		] );
+	}
 }
