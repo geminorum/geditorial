@@ -3,7 +3,7 @@ jQuery(document).ready(function($) {
   var moduleList = new List('geditorial-settings', {
       listClass: '-list',
       searchClass: '-search',
-      valueNames: [ '-title', '-description', '-th' ]
+      valueNames: [ '-title', '-description', '-th', '-module-key' ]
   });
 
   // https://github.com/javve/list.js/issues/366#issuecomment-274942284
@@ -41,7 +41,7 @@ jQuery(document).ready(function($) {
       url: gEditorial._api,
       method: 'POST',
       data: {
-        action: 'geditorial_settings',
+        action: 'geditorial_config',
         what: 'state',
         name: module,
         doing: action,
