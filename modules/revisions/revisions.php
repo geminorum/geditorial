@@ -383,6 +383,7 @@ class gEditorialRevisions extends gEditorialModuleCore
 
 			add_action( 'geditorial_reports_sub_'.$sub, array( $this, 'reports_sub' ), 10, 2 );
 
+			$this->screen_option( $sub );
 			$this->register_button( 'cleanup_revisions', _x( 'Cleanup Revisions', 'Modules: Revisions: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
 		}
 
@@ -444,19 +445,30 @@ class gEditorialRevisions extends gEditorialModuleCore
 
 	protected function getPostArray()
 	{
-		$limit  = self::limit();
+		global $wpdb;
+
+		$limit  = $this->limit_sub();
+		$order  = self::order( 'asc' );
 		$paged  = self::paged();
 		$offset = ( $paged - 1 ) * $limit;
 
-		$args = array(
+		$ids = $wpdb->get_col( "
+			SELECT DISTINCT post_parent
+			FROM {$wpdb->posts}
+			WHERE post_type = 'revision'
+			ORDER BY post_parent {$order}
+		" );
+
+		$total = count( $ids );
+
+		$args = [
 			'posts_per_page'   => $limit,
-			'offset'           => $offset,
-			'orderby'          => self::orderby( 'ID' ),
-			'order'            => self::order( 'asc' ),
-			'post_type'        => $this->post_types(), // 'any', 'revision',
-			'post_status'      => 'any', // array( 'publish', 'future', 'draft', 'pending' ),
+			'post__in'         => array_slice( $ids, $offset, $limit ),
+			'orderby'          => 'post__in',
+			'post_type'        => 'any',
+			'post_status'      => 'any',
 			'suppress_filters' => TRUE,
-		);
+		];
 
 		if ( ! empty( $_REQUEST['id'] ) )
 			$args['post__in'] = explode( ',', maybe_unserialize( $_REQUEST['id'] ) );
@@ -470,8 +482,8 @@ class gEditorialRevisions extends gEditorialModuleCore
 		$query = new \WP_Query;
 		$posts = $query->query( $args );
 
-		$pagination = gEditorialHTML::tablePagination( $query->found_posts, $query->max_num_pages, $limit, $paged );
+		$pagination = gEditorialHTML::tablePagination( $total, ceil( $total / $limit ), $limit, $paged );
 
-		return array( $posts, $pagination );
+		return [ $posts, $pagination ];
 	}
 }
