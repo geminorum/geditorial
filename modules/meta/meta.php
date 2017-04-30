@@ -750,34 +750,33 @@ class gEditorialMeta extends gEditorialModuleCore
 		add_filter( 'geditorial_tools_subs', array( $this, 'append_sub' ), 10, 2 );
 	}
 
-	protected function import_from_meta( $meta_key, $field, $limit = FALSE )
+	protected function import_from_meta( $post_meta_key, $field, $limit = FALSE )
 	{
-		$rows = gEditorialWPDatabase::getPostMetaRows( $meta_key, $limit );
+		$rows = gEditorialWPDatabase::getPostMetaRows( $post_meta_key, $limit );
 
-		foreach ( $rows as $row ) {
-
-			$meta = explode( ',', $row->meta );
-			$meta = (array) apply_filters( 'geditorial_meta_import_pre', $meta, $row->post_id, $meta_key, $field );
-
-			switch ( $field ) {
-				case 'ct' :
-					$this->import_to_terms( $meta, $row->post_id, $this->constant( 'ct_tax' ) );
-				break;
-
-				default :
-					$this->import_to_meta( $meta, $row->post_id, $field );
-				break;
-			}
-		}
+		foreach ( $rows as $row )
+			$this->import_to_meta( explode( ',', $row->meta ), $row->post_id, $field, $post_meta_key );
 
 		return count( $rows );
 	}
 
-	public function import_to_meta( $meta, $post_id, $field, $kses = TRUE )
+	protected function import_to_meta( $meta, $post_id, $field, $form_key = NULL )
+	{
+		$meta = (array) $this->filters( 'import_pre', $meta, $post_id, $field, $form_key );
+
+		switch ( $field ) {
+			case 'ct': $this->import_to_terms( $meta, $post_id, $this->constant( 'ct_tax' ) ); break;
+			default  : $this->import_to_fields( $meta, $post_id, $field ); break;
+		}
+
+		return $meta;
+	}
+
+	public function import_to_fields( $meta, $post_id, $field, $kses = TRUE )
 	{
 		$final = '';
 
-		foreach ( $meta as $i => $val ) {
+		foreach ( $meta as $val ) {
 			$val = trim( $val );
 
 			if ( empty( $val ) )
