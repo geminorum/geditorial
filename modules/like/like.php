@@ -70,7 +70,7 @@ class gEditorialLike extends gEditorialModuleCore
 
 		$this->post_id = get_queried_object_id();
 
-		$this->enqueue_asset_js( TRUE );
+		$this->enqueue_asset_js();
 		$this->enqueue_styles();
 	}
 

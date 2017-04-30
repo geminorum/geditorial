@@ -15,8 +15,8 @@
 
       button.removeAttr('href');
 
-      $.post(gEditorial._api, {
-        action: 'geditorial_like',
+      $.post(gEditorial._url, {
+        action: gEditorial._base + '_like',
         what: 'check',
         id: button.data('id')
       }, function(r) {
@@ -38,8 +38,8 @@
 
       button.click(function(e) {
         e.preventDefault();
-        $.post(gEditorial._api, {
-          action: 'geditorial_like',
+        $.post(gEditorial._url, {
+          action: gEditorial._base + '_like',
           what: button.data('action'),
           id: button.data('id'),
           nonce: button.data('nonce')
