@@ -148,6 +148,7 @@ class gEditorialTerms extends gEditorialModuleCore
 
 			add_action( 'geditorial_reports_sub_'.$sub, array( $this, 'reports_sub' ), 10, 2 );
 
+			$this->screen_option( $sub );
 			$this->register_button( 'cleanup_terms', _x( 'Cleanup Terms', 'Modules: Terms: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
 		}
 
@@ -192,7 +193,7 @@ class gEditorialTerms extends gEditorialModuleCore
 
 	protected static function getPostArray()
 	{
-		$limit  = self::limit();
+		$limit  = $this->limit_sub();
 		$paged  = self::paged();
 		$offset = ( $paged - 1 ) * $limit;
 
