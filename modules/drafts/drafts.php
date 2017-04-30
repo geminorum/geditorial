@@ -34,11 +34,6 @@ class gEditorialDrafts extends gEditorialModuleCore
 		);
 	}
 
-	public function setup_ajax( $request )
-	{
-		$this->_hook_ajax();
-	}
-
 	public function init()
 	{
 		parent::init();
@@ -52,6 +47,11 @@ class gEditorialDrafts extends gEditorialModuleCore
 				$this->enqueue_asset_js( TRUE );
 				$this->enqueue_styles();
 		}
+	}
+
+	public function init_ajax()
+	{
+		$this->_hook_ajax();
 	}
 
 	public function admin_bar_menu( $wp_admin_bar )

@@ -3,9 +3,12 @@
 class gEditorialAjax extends gEditorialBaseCore
 {
 
-	public static function checkReferer( $action = 'geditorial', $key = 'nonce' )
+	const BASE   = 'geditorial';
+	const MODULE = FALSE;
+
+	public static function checkReferer( $action = NULL, $key = 'nonce' )
 	{
-		check_ajax_referer( $action, $key );
+		check_ajax_referer( ( is_null( $action ) ? self::BASE : $action ), $key );
 	}
 
 	public static function successHTML( $html )
@@ -42,10 +45,12 @@ class gEditorialAjax extends gEditorialBaseCore
 
 	public static function printJSConfig( $args, $object = 'gEditorial' )
 	{
-		$args['_domain'] = 'geditorial';
-		$args['_api']    = defined( 'GNETWORK_AJAX_ENDPOINT' ) && GNETWORK_AJAX_ENDPOINT ? GNETWORK_AJAX_ENDPOINT : admin_url( 'admin-ajax.php' );
+		$args['_domain'] = self::BASE; // FIXME: DEPRICATED
+		$args['_base']   = self::BASE;
+		$args['_url']    = defined( 'GNETWORK_AJAX_ENDPOINT' ) && GNETWORK_AJAX_ENDPOINT ? GNETWORK_AJAX_ENDPOINT : admin_url( 'admin-ajax.php' );
+		$args['_api']    = $args['_url']; // FIXME: DEPRICATED
 		$args['_dev']    = gEditorialWordPress::isDev();
-		$args['_nonce']  = wp_create_nonce( 'geditorial' );
+		$args['_nonce']  = wp_create_nonce( self::BASE ); // FIXME: DEPRICATED
 
 	?><script type="text/javascript">
 /* <![CDATA[ */

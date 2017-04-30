@@ -55,7 +55,7 @@ class gEditorialRevisions extends gEditorialModuleCore
 		);
 	}
 
-	public function setup_ajax( $request )
+	public function init_ajax()
 	{
 		$this->_hook_ajax();
 	}

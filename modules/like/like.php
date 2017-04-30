@@ -51,16 +51,16 @@ class gEditorialLike extends gEditorialModuleCore
 		}
 	}
 
-	public function setup_ajax( $request )
-	{
-		$this->_hook_ajax( TRUE );
-	}
-
 	public function init()
 	{
 		parent::init();
 
 		$this->cookie = 'geditorial-like-'.get_current_blog_id();
+	}
+
+	public function init_ajax()
+	{
+		$this->_hook_ajax( TRUE );
 	}
 
 	public function template_redirect()

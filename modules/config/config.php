@@ -27,11 +27,9 @@ class gEditorialConfig extends gEditorialModuleCore
 	{
 		if ( is_admin() )
 			add_action( 'admin_menu', array( $this, 'admin_menu' ) );
-	}
 
-	public function setup_ajax( $request )
-	{
-		$this->_hook_ajax();
+		if ( gEditorialWordPress::isAJAX() )
+			$this->_hook_ajax();
 	}
 
 	public function admin_menu()

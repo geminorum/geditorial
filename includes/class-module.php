@@ -57,9 +57,6 @@ class gEditorialModuleCore extends gEditorialWPModule
 
 		else
 			$this->setup();
-
-		if ( self::isAJAX() && method_exists( $this, 'setup_ajax' ) )
-			$this->setup_ajax( $_REQUEST );
 	}
 
 	protected function setup_remote( $args = array() )
@@ -97,15 +94,15 @@ class gEditorialModuleCore extends gEditorialWPModule
 		if ( method_exists( $this, 'after_setup_theme' ) )
 			add_action( 'after_setup_theme', array( $this, 'after_setup_theme' ), 20 );
 
-		if ( $ajax && method_exists( $this, 'init_ajax' ) )
-			add_action( 'init', array( $this, 'init_ajax' ), $this->priority_init_ajax );
-
 		add_action( 'init', array( $this, 'init' ), $this->priority_init );
 
 		if ( is_admin() ) {
 
 			if ( method_exists( $this, 'admin_init' ) )
 				add_action( 'admin_init', array( $this, 'admin_init' ) );
+
+			if ( $ajax && method_exists( $this, 'init_ajax' ) )
+				$this->action( 'init', 0, $this->priority_init_ajax, 'ajax' );
 
 			if ( $ui && method_exists( $this, 'dashboard_glance_items' ) )
 				add_filter( 'dashboard_glance_items', array( $this, 'dashboard_glance_items' ) );
@@ -1330,6 +1327,8 @@ class gEditorialModuleCore extends gEditorialWPModule
 			GEDITORIAL_VERSION,
 			TRUE
 		);
+
+		$args['_nonce'] = wp_create_nonce( $this->hook() );
 
 		gEditorial()->enqueue_asset_config( $args, $this->module->name );
 
