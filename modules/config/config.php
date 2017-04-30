@@ -316,7 +316,7 @@ class gEditorialConfig extends gEditorialModuleCore
 
 			case 'state':
 
-				gEditorialAjax::checkReferer();
+				gEditorialAjax::checkReferer( $this->hook() );
 
 				if ( ! isset( $_POST['doing'], $_POST['name'] ) )
 					gEditorialAjax::errorMessage( _x( 'No action or name!', 'Modules: Config: Ajax Notice', GEDITORIAL_TEXTDOMAIN ) );
@@ -454,7 +454,7 @@ class gEditorialConfig extends gEditorialModuleCore
 		$listjs = gEditorialHelper::registerScriptPackage( 'listjs',
 			'list.js/list', [], '1.5.0' );
 
-		$this->enqueue_asset_js( TRUE, NULL, [ 'jquery', $listjs ] );
+		$this->enqueue_asset_js( [], NULL, [ 'jquery', $listjs ] );
 	}
 
 	private function admin_settings_verify( $group )

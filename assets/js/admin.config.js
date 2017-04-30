@@ -38,14 +38,14 @@ jQuery(document).ready(function($) {
       $icon = $box.find('.dashicons');
 
     $.ajax({
-      url: gEditorial._api,
+      url: gEditorial._url,
       method: 'POST',
       data: {
-        action: 'geditorial_config',
+        action: gEditorial._base+'_config',
         what: 'state',
         name: module,
         doing: action,
-        nonce: gEditorial._nonce
+        nonce: gEditorial['config']._nonce
       },
       beforeSend: function(xhr) {
         $box.addClass('module-spinning');
