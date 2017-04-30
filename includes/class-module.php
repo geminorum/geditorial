@@ -1302,7 +1302,11 @@ class gEditorialModuleCore extends gEditorialWPModule
 	public function enqueue_asset_js( $args = array(), $name = NULL, $deps = array( 'jquery' ), $handle = NULL )
 	{
 		if ( is_null( $name ) )
-			$name = $this->module->name;
+			$name = $this->key;
+
+		// screen passed
+		else if ( is_object( $name ) )
+			$name = $this->key.'.'.$name->base;
 
 		if ( TRUE === $args ) {
 			$args = array();
@@ -1328,9 +1332,10 @@ class gEditorialModuleCore extends gEditorialWPModule
 			TRUE
 		);
 
-		$args['_nonce'] = wp_create_nonce( $this->hook() );
+		if ( ! array_key_exists( '_nonce', $args ) && is_user_logged_in() )
+			$args['_nonce'] = wp_create_nonce( $this->hook() );
 
-		gEditorial()->enqueue_asset_config( $args, $this->module->name );
+		gEditorial()->enqueue_asset_config( $args, $this->key );
 
 		return $handle;
 	}
