@@ -70,14 +70,17 @@ class gEditorialRevisions extends gEditorialModuleCore
 	{
 		if ( in_array( $screen->post_type, $this->post_types() ) ) {
 
-			if ( 'post' == $screen->base ) {
+			if ( 'post' == $screen->base
+				&& $post = self::req( 'post', FALSE ) ) {
 
 				$this->_admin_enabled();
 
 				$this->action( 'post_submitbox_misc_actions', 1, 12 );
 				$this->filter( 'wp_post_revision_title_expanded', 3, 12 );
 
-				$this->enqueue_asset_js( $screen->base );
+				$this->enqueue_asset_js( [
+					'_nonce' => wp_create_nonce( $this->hook( $post ) ),
+				], $screen );
 
 			} else if ( 'edit' == $screen->base ) {
 
@@ -307,20 +310,20 @@ class gEditorialRevisions extends gEditorialModuleCore
 
 	public function ajax()
 	{
-		gEditorialAjax::checkReferer();
-
 		if ( ! $this->cuc( 'ajax' ) )
 			self::cheatin();
 
 		$post = wp_unslash( $_POST );
 		$what = empty( $post['what'] ) ? 'nothing': trim( $post['what'] );
 
+		if ( empty( $post['post_id'] ) )
+			wp_send_json_error();
+
+		gEditorialAjax::checkReferer( $this->hook( $post['post_id'] ) );
+
 		switch ( $what ) {
 
 			case 'purge':
-
-				if ( empty( $post['post_id'] ) )
-					wp_send_json_error();
 
 				if ( ! current_user_can( $this->caps['purge'], $post['post_id'] ) )
 					wp_send_json_error();
@@ -332,9 +335,8 @@ class gEditorialRevisions extends gEditorialModuleCore
 			break;
 			case 'delete':
 
-				if ( empty( $post['revision_id'] )
-					|| empty( $post['post_id'] ) )
-						wp_send_json_error();
+				if ( empty( $post['revision_id'] ) )
+					wp_send_json_error();
 
 				if ( ! current_user_can( $this->caps['delete'], $post['post_id'] ) )
 					wp_send_json_error();

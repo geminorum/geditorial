@@ -3,7 +3,7 @@
 
   var o = {};
 
-  o.action = p._domain + '_' + m;
+  o.action = p._base + '_' + m;
 
   o.p = function(el) {
 
@@ -16,13 +16,13 @@
       return false;
 
     $.ajax({
-      url: p._api,
+      url: p._url,
       method: 'POST',
       data: {
         action: o.action,
         what: 'purge',
         post_id: post,
-        nonce: p._nonce
+        nonce: p[m]._nonce
       },
       beforeSend: function(xhr) {
         $spinner.addClass('is-active');
@@ -58,14 +58,14 @@
       return false;
 
     $.ajax({
-      url: p._api,
+      url: p._url,
       method: 'POST',
       data: {
         action: o.action,
         what: 'delete',
         revision_id: revision,
         post_id: post,
-        nonce: p._nonce
+        nonce: p[m]._nonce
       },
       beforeSend: function(xhr) {
         $spinner.addClass('is-active');
