@@ -135,10 +135,10 @@ class gEditorialEvent extends gEditorialModuleCore
 	{
 		parent::init();
 
-		$this->register_post_type( 'event_cpt', array(
+		$this->register_post_type( 'event_cpt', [
 			'hierarchical' => TRUE,
 			'meta_box_cb'  => NULL, // default meta box
-		), array( 'post_tag' ) );
+		] );
 
 		$this->register_taxonomy( 'event_cat', array(
 			'hierarchical'       => TRUE,

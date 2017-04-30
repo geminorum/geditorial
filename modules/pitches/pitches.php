@@ -64,7 +64,7 @@ class gEditorialPitches extends gEditorialModuleCore
 	{
 		parent::init();
 
-		$this->register_post_type( 'idea_cpt', array(), array( 'post_tag' ) );
+		$this->register_post_type( 'idea_cpt' );
 
 		$this->register_taxonomy( 'idea_cat', array(
 			'hierarchical'       => TRUE,

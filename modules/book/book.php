@@ -251,7 +251,7 @@ class gEditorialBook extends gEditorialModuleCore
 
 		$this->post_types_excluded = array( 'attachment', $this->constant( 'publication_cpt' ) );
 
-		$this->register_post_type( 'publication_cpt', array(), array( 'post_tag' ) );
+		$this->register_post_type( 'publication_cpt' );
 
 		$this->register_taxonomy( 'subject_tax', array(
 			'hierarchical' => TRUE,

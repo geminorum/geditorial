@@ -204,13 +204,13 @@ class gEditorialMagazine extends gEditorialModuleCore
 
 		$this->post_types_excluded = array( 'attachment', $this->constant( 'issue_cpt' ) );
 
-		$this->register_post_type( 'issue_cpt', array(
+		$this->register_post_type( 'issue_cpt', [
 			'hierarchical' => TRUE,
-			'rewrite'      => array(
+			'rewrite'      => [
 				'feeds' => (bool) $this->get_setting( 'posttype_feeds', FALSE ),
 				'pages' => (bool) $this->get_setting( 'posttype_pages', FALSE ),
-			),
-		), array( 'post_tag' ) );
+			],
+		] );
 
 		$this->register_taxonomy( 'issue_tax', array(
 			'show_ui'      => FALSE,

@@ -93,7 +93,7 @@ class gEditorialToday extends gEditorialModuleCore
 
 		$this->post_types_excluded = array( 'attachment', $this->constant( 'day_cpt' ) );
 
-		$this->register_post_type( 'day_cpt', array(), array( 'post_tag' ) );
+		$this->register_post_type( 'day_cpt' );
 	}
 
 	public function init_ajax()

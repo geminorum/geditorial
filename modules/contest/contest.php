@@ -135,13 +135,13 @@ class gEditorialContest extends gEditorialModuleCore
 
 		$this->post_types_excluded = array( 'attachment', $this->constant( 'contest_cpt' ) );
 
-		$this->register_post_type( 'contest_cpt', array(
+		$this->register_post_type( 'contest_cpt', [
 			'hierarchical'  => TRUE,
-		), array( 'post_tag' ) );
+		] );
 
-		$this->register_post_type( 'apply_cpt', array(
+		$this->register_post_type( 'apply_cpt', [
 			'menu_icon' => 'dashicons-portfolio',
-		), array( 'post_tag' ) );
+		] );
 
 		$this->register_taxonomy( 'contest_cat', array(
 			'hierarchical'       => TRUE,

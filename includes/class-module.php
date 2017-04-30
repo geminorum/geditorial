@@ -1139,7 +1139,26 @@ class gEditorialModuleCore extends gEditorialWPModule
 		return $labels;
 	}
 
-	public function register_post_type( $constant_key, $atts = array(), $taxonomies = NULL )
+	public function get_post_type_supports( $constant_key )
+	{
+		return isset( $this->supports[$constant_key] ) ? $this->supports[$constant_key] : array( 'title', 'editor' );
+	}
+
+	public function get_post_type_icon( $constant_key, $default = 'welcome-write-blog' )
+	{
+		$icons  = $this->get_module_icons();
+		$module = $this->module->icon ? $this->module->icon : 'welcome-write-blog';
+
+		if ( empty( $icons['post_types'] ) )
+			return $module;
+
+		if ( isset( $icons['post_types'][$constant_key] ) )
+			return $icons['post_types'][$constant_key];
+
+		return $module;
+	}
+
+	public function register_post_type( $constant_key, $atts = [], $taxonomies = [ 'post_tag' ] )
 	{
 		if ( is_null( $taxonomies ) )
 			$taxonomies = $this->taxonomies();
@@ -1149,10 +1168,10 @@ class gEditorialModuleCore extends gEditorialWPModule
 		$args = self::recursiveParseArgs( $atts, array(
 			'taxonomies'           => $taxonomies,
 			'labels'               => $this->get_post_type_labels( $constant_key ),
-			'supports'             => isset( $this->supports[$constant_key] ) ? $this->supports[$constant_key] : array( 'title', 'editor' ),
+			'supports'             => $this->get_post_type_supports( $constant_key ),
 			'description'          => isset( $this->strings['labels'][$constant_key]['description'] ) ? $this->strings['labels'][$constant_key]['description'] : '',
 			'register_meta_box_cb' => method_exists( $this, 'add_meta_box_cb_'.$constant_key ) ? array( $this, 'add_meta_box_cb_'.$constant_key ) : NULL,
-			'menu_icon'            => $this->module->icon ? 'dashicons-'.$this->module->icon : 'dashicons-welcome-write-blog',
+			'menu_icon'            => 'dashicons-'.$this->get_post_type_icon( $constant_key ),
 			'has_archive'          => $this->constant( $constant_key.'_archive', FALSE ),
 			'query_var'            => $this->constant( $constant_key.'_query_var', $post_type ),
 			'capability_type'      => $this->constant( $constant_key.'_cap_type', 'post' ),
