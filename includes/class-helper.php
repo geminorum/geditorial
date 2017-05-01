@@ -479,6 +479,17 @@ class gEditorialHelper extends gEditorialBaseCore
 		return $gEditorial_WPImageSizes;
 	}
 
+	public static function tableFilterPostTypes()
+	{
+		return gEditorialHTML::dropdown(
+			gEditorialWPPostType::get(), [
+				'name'       => 'type',
+				'selected'   => self::req( 'type', 'any' ),
+				'none_value' => 'any',
+				'none_title' => _x( 'All PostTypes', 'Module Helper: Table Filter', GEDITORIAL_TEXTDOMAIN ),
+			] );
+	}
+
 	public static function tableColumnPostID()
 	{
 		return _x( 'ID', 'Module Helper: Table Column: Post ID', GEDITORIAL_TEXTDOMAIN );

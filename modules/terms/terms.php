@@ -165,15 +165,17 @@ class gEditorialTerms extends gEditorialModuleCore
 	{
 		$this->settings_form_before( $uri, $sub, 'bulk', 'reports', FALSE, FALSE );
 
-			if ( self::tableUncategorized() )
+			if ( $this->tableUncategorized() )
 				$this->settings_buttons();
 
 		$this->settings_form_after( $uri, $sub );
 	}
 
-	private static function tableUncategorized()
+	private function tableUncategorized()
 	{
-		list( $posts, $pagination ) = self::getPostArray();
+		list( $posts, $pagination ) = $this->getPostArray();
+
+		$pagination['before'][] = gEditorialHelper::tableFilterPostTypes();
 
 		return gEditorialHTML::tableList( array(
 			'_cb'   => 'ID',
@@ -191,7 +193,7 @@ class gEditorialTerms extends gEditorialModuleCore
 		) );
 	}
 
-	protected static function getPostArray()
+	protected function getPostArray()
 	{
 		$limit  = $this->limit_sub();
 		$paged  = self::paged();
