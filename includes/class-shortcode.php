@@ -154,6 +154,9 @@ class gEditorialShortCode extends gEditorialBaseCore
 			$item .= $args['item_after'];
 		}
 
+		if ( ! $args['item_tag'] )
+			return $before.$title.$after;
+
 		return gEditorialHTML::tag( $args['item_tag'], [
 			'id'    => sprintf( $args['item_anchor'], $term->term_id, $term->slug ),
 			'class' => $args['item_class'],
@@ -274,6 +277,9 @@ class gEditorialShortCode extends gEditorialBaseCore
 
 			$item .= $args['item_after'];
 		}
+
+		if ( ! $args['item_tag'] )
+			return $before.$item.$after;
 
 		return gEditorialHTML::tag( $args['item_tag'], [
 			'id'    => sprintf( $args['item_anchor'], $post->ID, $post->post_name ),

@@ -10,6 +10,9 @@ class gEditorialMagazineTemplates extends gEditorialTemplateCore
 		if ( ! array_key_exists( 'item_title_cb', $atts ) )
 			$atts['item_title_cb'] = [ __CLASS__, 'theIssueTitleCB' ];
 
+		if ( ! array_key_exists( 'item_tag', $atts ) )
+			$atts['item_tag'] = FALSE;
+
 		return self::assocLink( $atts, self::MODULE );
 	}
 

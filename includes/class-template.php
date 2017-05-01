@@ -226,6 +226,7 @@ class gEditorialTemplateCore extends gEditorialBaseCore
 			'id'            => NULL,
 			'published'     => TRUE,
 			'single'        => FALSE,
+			'item_tag'      => 'span',
 			'item_title'    => '', // use %s for post title
 			'item_title_cb' => FALSE, // callback for title attr
 			'default'       => FALSE,
