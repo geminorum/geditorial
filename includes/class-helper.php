@@ -195,7 +195,7 @@ class gEditorialHelper extends gEditorialBaseCore
 		return $fallback;
 	}
 
-	public static function getPostTitleRow( $post, $link = 'edit' )
+	public static function getPostTitleRow( $post, $link = 'edit', $title_attr = NULL )
 	{
 		if ( ! $post = get_post( $post ) )
 			return gEditorial::na( FALSE );
@@ -205,7 +205,9 @@ class gEditorialHelper extends gEditorialBaseCore
 		if ( ! $link )
 			return esc_html( $title );
 
-		if ( 'edit' == $link && ! current_user_can( 'edit_post', $post->ID ) )
+		$edit = current_user_can( 'edit_post', $post->ID );
+
+		if ( 'edit' == $link && ! $edit )
 			$link = 'view';
 
 		if ( 'edit' == $link )
@@ -213,7 +215,13 @@ class gEditorialHelper extends gEditorialBaseCore
 				'href'   => gEditorialWordPress::getPostEditLink( $post->ID ),
 				'class'  => '-link -row-link -row-link-edit',
 				'target' => '_blank',
-				'title'  => _x( 'Edit', 'Module Helper: Row Action', GEDITORIAL_TEXTDOMAIN ),
+				'title'  => is_null( $title_attr ) ? _x( 'Edit', 'Module Helper: Row Action', GEDITORIAL_TEXTDOMAIN ) : $title_attr,
+			), esc_html( $title ) );
+
+		if ( 'view' == $link && ! $edit && 'publish' != get_post_status( $post ) )
+			return gEditorialHTML::tag( 'span', array(
+				'class' => '-row-span',
+				'title' => is_null( $title_attr ) ? FALSE : $title_attr,
 			), esc_html( $title ) );
 
 		if ( 'view' == $link )
@@ -221,13 +229,14 @@ class gEditorialHelper extends gEditorialBaseCore
 				'href'   => gEditorialWordPress::getPostShortLink( $post->ID ),
 				'class'  => '-link -row-link -row-link-view',
 				'target' => '_blank',
-				'title'  => _x( 'View', 'Module Helper: Row Action', GEDITORIAL_TEXTDOMAIN ),
+				'title'  => is_null( $title_attr ) ? _x( 'View', 'Module Helper: Row Action', GEDITORIAL_TEXTDOMAIN ) : $title_attr,
 			), esc_html( $title ) );
 
 		return gEditorialHTML::tag( 'a', array(
 			'href'   => $link,
 			'class'  => '-link -row-link -row-link-custom',
 			'target' => '_blank',
+			'title'  => is_null( $title_attr ) ? FALSE : $title_attr,
 		), esc_html( $title ) );
 	}
 
