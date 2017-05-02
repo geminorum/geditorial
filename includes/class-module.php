@@ -43,6 +43,7 @@ class gEditorialModuleCore extends gEditorialWPModule
 
 	protected $root_key = FALSE; // ROOT CONSTANT
 	protected $p2p      = FALSE; // P2P ENABLED/Connection Type
+	protected $o2o      = FALSE; // O2O ENABLED/Connection Type
 
 	protected $scripts_printed = FALSE;
 
@@ -75,6 +76,9 @@ class gEditorialModuleCore extends gEditorialWPModule
 
 		if ( method_exists( $this, 'p2p_init' ) )
 			add_action( 'p2p_init', array( $this, 'p2p_init' ) );
+
+		if ( method_exists( $this, 'o2o_init' ) )
+			add_action( 'o2o_init', array( $this, 'o2o_init' ) );
 
 		if ( method_exists( $this, 'widgets_init' ) )
 			add_action( 'widgets_init', array( $this, 'widgets_init' ) );
@@ -2051,6 +2055,35 @@ SQL;
 		if ( $args = apply_filters( $hook, $args, $post_types ) )
 			if ( p2p_register_connection_type( $args ) )
 				$this->p2p = $p2p;
+	}
+
+	public function o2o_register( $constant_key, $post_types = NULL )
+	{
+		if ( is_null( $post_types ) )
+			$post_types = $this->post_types();
+
+		if ( ! count( $post_types ) )
+			return FALSE;
+
+		$to  = $this->constant( $constant_key );
+		$o2o = $this->constant( $constant_key.'_o2o' );
+
+		$args = array_merge( array(
+			'name'         => $o2o,
+			'from'         => $post_types,
+			'to'           => $to,
+			'admin_column' => 'from', // 'any', 'from', 'to', FALSE
+			'admin_box'    => array(
+				'show'    => 'from',
+				'context' => 'advanced',
+			),
+		), $this->strings['o2o'][$constant_key] );
+
+		$hook = 'geditorial_'.$this->module->name.'_'.$to.'_o2o_args';
+
+		if ( $args = apply_filters( $hook, $args, $post_types ) )
+			if ( o2o_register_connection_type( $args ) )
+				$this->o2o = $o2o;
 	}
 
 	public function p2p_get_meta( $p2p_id, $meta_key, $before = '', $after = '', $title = FALSE )
