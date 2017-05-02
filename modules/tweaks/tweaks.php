@@ -375,9 +375,7 @@ class gEditorialTweaks extends gEditorialModuleCore
 
 		$comment = get_comment( $comment_id );
 
-
-		if ( $comment->user_id
-			&& $user = get_userdata( $comment->user_id ) ) {
+		if ( $comment->user_id && $user = get_userdata( $comment->user_id ) ) {
 
 			// FIXME: make core helper
 			printf( '<a href="%s">%s</a>',
@@ -423,6 +421,9 @@ class gEditorialTweaks extends gEditorialModuleCore
 	// @SEE: [#18375 (Post type templates)](https://core.trac.wordpress.org/ticket/18375)
 	public function column_attr_page_template( $post )
 	{
+		if ( ! current_user_can( 'edit_post', $post->ID ) )
+			return;
+
 		if ( ! empty( $post->page_template )
 			&& 'default' != $post->page_template ) {
 
@@ -447,6 +448,9 @@ class gEditorialTweaks extends gEditorialModuleCore
 	// FIXME: maybe use: `wp_count_attachments()`
 	public function column_attr_attachments( $post )
 	{
+		if ( ! current_user_can( 'edit_post', $post->ID ) )
+			return;
+
 		$attachments = gEditorialWordPress::getAttachments( $post->ID, '' );
 		$count       = count( $attachments );
 		$mime_types  = array_unique( array_map( function( $r ){
@@ -522,7 +526,9 @@ class gEditorialTweaks extends gEditorialModuleCore
 			echo gEditorialHelper::getDateEditRow( $post->post_date, '-date' );
 		echo '</li>';
 
-		if ( $post->post_modified != $post->post_date ) {
+		if ( $post->post_modified != $post->post_date
+			&& current_user_can( 'edit_post', $post->ID ) ) {
+
 			echo '<li class="-attr tweaks-default-atts -post-modified">';
 				echo $this->get_column_icon( FALSE, 'edit', _x( 'Last Edit', 'Modules: Tweaks: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
 				echo gEditorialHelper::getDateEditRow( $post->post_modified, '-edit' );
