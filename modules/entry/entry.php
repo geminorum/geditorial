@@ -127,6 +127,22 @@ class gEditorialEntry extends gEditorialModuleCore
 			$this->_edit_screen( $_REQUEST['post_type'] );
 	}
 
+	public function register_shortcode_ui()
+	{
+		shortcode_ui_register_for_shortcode( $this->constant( 'section_shortcode' ), [
+			'label'         => esc_html_x( 'Entry Section', 'Modules: Entry: UI: Label', GEDITORIAL_TEXTDOMAIN ),
+			'listItemImage' => 'dashicons-'.$this->module->icon,
+			'attrs'         => [
+				[
+				'label'    => esc_html_x( 'Section', 'Modules: Entry: UI: Label', GEDITORIAL_TEXTDOMAIN ),
+				'attr'     => 'id',
+				'type'     => 'term_select',
+				'taxonomy' => $this->constant( 'section_tax' ),
+				],
+			],
+		] );
+	}
+
 	public function current_screen( $screen )
 	{
 		if ( 'dashboard' == $screen->base ) {

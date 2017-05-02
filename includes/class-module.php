@@ -107,6 +107,9 @@ class gEditorialModuleCore extends gEditorialWPModule
 			if ( $ui && method_exists( $this, 'dashboard_glance_items' ) )
 				add_filter( 'dashboard_glance_items', array( $this, 'dashboard_glance_items' ) );
 
+			if ( ( $ui || $ajax ) && method_exists( $this, 'register_shortcode_ui' ) )
+				$this->action( 'register_shortcode_ui' );
+
 			if ( $ui && method_exists( $this, 'current_screen' ) )
 				add_action( 'current_screen', array( $this, 'current_screen' ) );
 
