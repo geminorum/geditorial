@@ -193,7 +193,7 @@ class gEditorialEvent extends gEditorialModuleCore
 
 				if ( $startend ) {
 
-					add_meta_box( 'geditorial-event',
+					add_meta_box( $this->classs( 'main' ),
 						$this->get_meta_box_title( 'event_cpt' ),
 						array( $this, 'do_meta_boxes' ),
 						$screen,

@@ -6,7 +6,8 @@
     "jquery-sortable": "latest",
     "jcarousel": "latest",
     "lity": "latest",
-    "virastar": "https://github.com/juvee/virastar.git"
+    "virastar": "https://github.com/juvee/virastar.git",
+    "list.js": "^1.5.0"
   },
   "devDependencies": {},
   "install": {
@@ -29,6 +30,10 @@
       "jquery-sortable": [
         "assets/components/jquery-sortable/source/js/jquery-sortable.js",
         "assets/components/jquery-sortable/source/js/jquery-sortable-min.js"
+      ],
+      "list.js": [
+        "assets/components/list.js/dist/list.js",
+        "assets/components/list.js/dist/list.min.js"
       ]
     }
   }

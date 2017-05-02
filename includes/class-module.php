@@ -1515,7 +1515,7 @@ class gEditorialModuleCore extends gEditorialWPModule
 		if ( $type )
 			$this->remove_meta_box( $constant_key, $post_type, $type );
 
-		add_meta_box( 'geditorial-'.$this->module->name.'-'.$taxonomy,
+		add_meta_box( $this->classs( $taxonomy ),
 			$this->get_meta_box_title( $constant_key, $edit_url, TRUE ),
 			array( 'gEditorialMetaBox', 'checklistTerms' ),
 			NULL,
@@ -2210,6 +2210,7 @@ SQL;
 		add_screen_option( $option, [
 			'default' => $default,
 			'option'  => $sub.'_'.$option,
+			'label'   => NULL, // default
 		] );
 	}
 }

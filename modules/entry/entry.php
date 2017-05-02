@@ -339,7 +339,7 @@ class gEditorialEntry extends gEditorialModuleCore
 	{
 		if ( $this->is_content_insert( 'entry_cpt' ) ) {
 
-			if ( is_null( $this->sections ) )
+			if ( ! isset( $this->sections ) )
 				$this->sections = gEditorialWPTaxonomy::prepTerms( $this->constant( 'section_tax' ) );
 
 			foreach ( $this->sections as $section )

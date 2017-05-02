@@ -199,7 +199,7 @@ class gEditorialContest extends gEditorialModuleCore
 				add_filter( 'geditorial_meta_box_callback', '__return_false', 12 );
 
 				$this->remove_meta_box( $screen->post_type, $screen->post_type, 'parent' );
-				add_meta_box( 'geditorial-contest-main',
+				add_meta_box( $this->classs( 'main' ),
 					$this->get_meta_box_title( 'contest_cpt', FALSE ),
 					array( $this, 'do_meta_box_main' ),
 					$screen->post_type,
@@ -207,7 +207,7 @@ class gEditorialContest extends gEditorialModuleCore
 					'high'
 				);
 
-				add_meta_box( 'geditorial-contest-list',
+				add_meta_box( $this->classs( 'list' ),
 					$this->get_meta_box_title( 'contest_tax', $this->get_url_post_edit( 'post_cpt' ), 'edit_others_posts' ),
 					array( $this, 'do_meta_box_list' ),
 					$screen->post_type,
@@ -241,7 +241,7 @@ class gEditorialContest extends gEditorialModuleCore
 					add_filter( 'post_updated_messages', array( $this, 'post_updated_messages_supported' ) );
 
 				$this->remove_meta_box( $screen->post_type, $screen->post_type, 'parent' );
-				add_meta_box( 'geditorial-contest-supported',
+				add_meta_box( $this->classs( 'supported' ),
 					$this->get_meta_box_title( $screen->post_type, $this->get_url_post_edit( 'contest_cpt' ), 'edit_others_posts' ),
 					array( $this, 'do_meta_box_supported' ),
 					$screen->post_type,

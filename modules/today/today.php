@@ -46,7 +46,7 @@ class gEditorialToday extends gEditorialModuleCore
 			'misc' => array(
 				'featured'              => _x( 'Cover Image', 'Modules: Today: Day CPT: Featured', GEDITORIAL_TEXTDOMAIN ),
 				'meta_box_title'        => _x( 'The Day', 'Modules: Today: Meta Box Title', GEDITORIAL_TEXTDOMAIN ),
-				'theday_column_title'   => _x( 'The Day', 'Modules: Today: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'theday_column_title'   => _x( 'Day', 'Modules: Today: Column Title', GEDITORIAL_TEXTDOMAIN ),
 				'cover_column_title'    => _x( 'Cover', 'Modules: Today: Column Title', GEDITORIAL_TEXTDOMAIN ),
 				'children_column_title' => _x( 'Posts', 'Modules: Today: Column Title', GEDITORIAL_TEXTDOMAIN ),
 			),
@@ -136,7 +136,7 @@ class gEditorialToday extends gEditorialModuleCore
 				add_filter( 'post_updated_messages', array( $this, 'post_updated_messages' ) );
 				add_action( 'edit_form_advanced', array( $this, 'edit_form_advanced' ), 10, 1 );
 
-				add_meta_box( 'geditorial-today',
+				add_meta_box( $this->classs( 'main' ),
 					$this->get_meta_box_title( 'day_cpt' ),
 					array( $this, 'do_meta_boxes' ),
 					$screen,
@@ -148,7 +148,7 @@ class gEditorialToday extends gEditorialModuleCore
 
 				$this->_save_meta_supported( $screen->post_type );
 
-				add_meta_box( 'geditorial-today-supported',
+				add_meta_box( $this->classs( 'supported' ),
 					$this->get_meta_box_title(),
 					array( $this, 'do_meta_boxes' ),
 					$screen,

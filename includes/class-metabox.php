@@ -3,6 +3,8 @@
 class gEditorialMetaBox extends gEditorialBaseCore
 {
 
+	// @SEE: https://github.com/bainternet/My-Meta-Box
+
 	// SEE: [Use Chosen for a replacement WordPress taxonomy metabox](https://gist.github.com/helen/1573966)
 	// callback for meta box for choose only tax
 	// CAUTION: tax must be cat (hierarchical)

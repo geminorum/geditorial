@@ -128,7 +128,7 @@ class gEditorialBook extends gEditorialModuleCore
 				'publication_cpt' => array(
 					'title' => array(
 						'from' => _x( 'Connected Publications', 'Modules: Book: P2P', GEDITORIAL_TEXTDOMAIN ),
-						'to'   => _x( 'Connected Posts', 'Modules: Book: P2P', GEDITORIAL_TEXTDOMAIN )
+						'to'   => _x( 'Connected Posts', 'Modules: Book: P2P', GEDITORIAL_TEXTDOMAIN ),
 					),
 					'from_labels' => array(
 						'singular_name' => _x( 'Post', 'Modules: Book: P2P', GEDITORIAL_TEXTDOMAIN ),

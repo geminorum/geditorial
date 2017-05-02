@@ -695,7 +695,8 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 		if ( isset( $module->desc ) )
 			gEditorialHTML::desc( $module->desc );
 
-		// FIXME: add module key invisible for search/filter
+		// key for search filter
+		echo '<span class="-module-key" style="display:none;">'.$module->name.'</span>';
 	}
 
 	public static function getModuleWiki( $module = FALSE )

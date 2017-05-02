@@ -213,7 +213,13 @@ class gEditorialMeta extends gEditorialModuleCore
 					$box_func = array( $this, 'default_meta_box' );
 
 				if ( is_callable( $box_func ) )
-					add_meta_box( 'geditorial-meta-'.$screen->post_type, $this->get_meta_box_title(), $box_func, $screen->post_type, 'side', 'high' );
+					add_meta_box( $this->classs( $screen->post_type ),
+						$this->get_meta_box_title(),
+						$box_func,
+						$screen->post_type,
+						'side',
+						'high'
+					);
 
 				$dbx_func = apply_filters( 'geditorial_meta_dbx_callback', TRUE, $screen->post_type );
 

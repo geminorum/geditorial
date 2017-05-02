@@ -110,7 +110,7 @@ class gEditorialSeries extends gEditorialModuleCore
 
 			if ( 'post' == $screen->base ) {
 
-				add_meta_box( 'geditorial-series',
+				add_meta_box( $this->classs( 'supported' ),
 					$this->get_meta_box_title( 'series_tax', $this->get_url_tax_edit( 'series_tax' ), 'edit_others_posts' ),
 					array( $this, 'do_meta_box' ),
 					$screen->post_type,

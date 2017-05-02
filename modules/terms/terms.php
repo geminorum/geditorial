@@ -42,7 +42,7 @@ class gEditorialTerms extends gEditorialModuleCore
 						&& ! empty( $post['live_tax'] ) ) {
 
 						$result = $wpdb->query( $wpdb->prepare( "
-							UPDATE $wpdb->term_taxonomy SET taxonomy = %s WHERE taxonomy = '%s'
+							UPDATE {$wpdb->term_taxonomy} SET taxonomy = %s WHERE taxonomy = '%s'
 						", trim( $post['live_tax'] ), trim( $post['dead_tax'] ) ) );
 
 						if ( count( $result ) )

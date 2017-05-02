@@ -114,7 +114,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 				'issue_cpt' => array(
 					'title' => array(
 						'from' => _x( 'Connected Issues', 'Modules: Magazine: P2P', GEDITORIAL_TEXTDOMAIN ),
-						'to'   => _x( 'Connected Posts', 'Modules: Magazine: P2P', GEDITORIAL_TEXTDOMAIN )
+						'to'   => _x( 'Connected Posts', 'Modules: Magazine: P2P', GEDITORIAL_TEXTDOMAIN ),
 					),
 					'from_labels' => array(
 						'singular_name' => _x( 'Post', 'Modules: Magazine: P2P', GEDITORIAL_TEXTDOMAIN ),
@@ -263,7 +263,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 				add_filter( 'geditorial_meta_box_callback', '__return_false', 12 );
 
 				$this->remove_meta_box( $screen->post_type, $screen->post_type, 'parent' );
-				add_meta_box( 'geditorial-magazine-main',
+				add_meta_box( $this->classs( 'main' ),
 					$this->get_meta_box_title( 'issue_cpt', FALSE ),
 					array( $this, 'do_meta_box_main' ),
 					$screen->post_type,
@@ -271,7 +271,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 					'high'
 				);
 
-				add_meta_box( 'geditorial-magazine-list',
+				add_meta_box( $this->classs( 'list' ),
 					$this->get_meta_box_title( 'issue_tax', $this->get_url_post_edit( 'post_cpt' ), 'edit_others_posts' ),
 					array( $this, 'do_meta_box_list' ),
 					$screen->post_type,
@@ -308,7 +308,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 
 			if ( 'post' == $screen->base ) {
 
-				add_meta_box( 'geditorial-magazine-supported',
+				add_meta_box( $this->classs( 'supported' ),
 					$this->get_meta_box_title( $screen->post_type, $this->get_url_post_edit( 'issue_cpt' ), 'edit_others_posts' ),
 					array( $this, 'do_meta_box_supported' ),
 					$screen->post_type,
