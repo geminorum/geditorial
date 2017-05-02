@@ -88,6 +88,32 @@ class gEditorialAudit extends gEditorialModuleCore
 			) );
 	}
 
+	public function adminbar_init( $wp_admin_bar, $parent, $link )
+	{
+		if ( is_admin() || ! is_singular( $this->post_types() ) )
+			return;
+
+		if ( ! $this->cuc( 'adminbar' ) )
+			return;
+
+		$wp_admin_bar->add_node( [
+			'id'     => $this->classs(),
+			'title'  => _x( 'Audit Attributes', 'Modules: Audit: Adminbar', GEDITORIAL_TEXTDOMAIN ),
+			'parent' => $parent,
+			'href'   => $link,
+		] );
+
+		$terms = gEditorialWPTaxonomy::getTerms( $this->constant( 'audit_tax' ), NULL, TRUE );
+
+		foreach ( $terms as $term )
+			$wp_admin_bar->add_node( [
+				'id'     => $this->classs( 'audit', $term->term_id ),
+				'title'  => sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' ),
+				'parent' => $this->classs(),
+				'href'   => get_term_link( $term ), // FIXME: link to the admin list of other posts in this posttype
+			] );
+	}
+
 	public function current_screen( $screen )
 	{
 		if ( 'dashboard' == $screen->base ) {

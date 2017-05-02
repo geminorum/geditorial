@@ -127,6 +127,32 @@ class gEditorialEntry extends gEditorialModuleCore
 			$this->_edit_screen( $_REQUEST['post_type'] );
 	}
 
+	public function adminbar_init( $wp_admin_bar, $parent, $link )
+	{
+		if ( is_admin() || ! is_singular( $this->constant( 'entry_cpt' ) ) )
+			return;
+
+		if ( ! $this->cuc( 'adminbar' ) )
+			return;
+
+		$wp_admin_bar->add_node( [
+			'id'     => $this->classs(),
+			'title'  => _x( 'Entry Sections', 'Modules: Entry: Adminbar', GEDITORIAL_TEXTDOMAIN ),
+			'parent' => $parent,
+			'href'   => $link,
+		] );
+
+		$terms = gEditorialWPTaxonomy::getTerms( $this->constant( 'section_tax' ), NULL, TRUE );
+
+		foreach ( $terms as $term )
+			$wp_admin_bar->add_node( [
+				'id'     => $this->classs( 'section', $term->term_id ),
+				'title'  => sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' ),
+				'parent' => $this->classs(),
+				'href'   => get_term_link( $term ), // FIXME: link to the admin list of other posts in this posttype
+			] );
+	}
+
 	public function register_shortcode_ui()
 	{
 		shortcode_ui_register_for_shortcode( $this->constant( 'section_shortcode' ), [

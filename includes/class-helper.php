@@ -324,6 +324,18 @@ class gEditorialHelper extends gEditorialBaseCore
 		echo self::getJoined( $list, $before, $after );
 	}
 
+	public static function getAdminBarIcon( $icon = 'screenoptions', $style = 'margin:2px 1px 0 1px;' )
+	{
+		return gEditorialHTML::tag( 'span', array(
+			'class' => array(
+				'ab-icon',
+				'dashicons',
+				'dashicons-'.$icon,
+			),
+			'style' => $style,
+		), NULL );
+	}
+
 	public static function registerColorBox()
 	{
 		wp_register_style( 'jquery-colorbox', GEDITORIAL_URL.'assets/css/admin.colorbox.css', array(), '1.6.4', 'screen' );

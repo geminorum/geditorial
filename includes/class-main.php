@@ -50,6 +50,7 @@ class gEditorial
 		add_action( 'admin_init', array( $this, 'admin_init' ) );
 		add_action( 'wp_footer', array( $this, 'footer_asset_config' ), 1 );
 		add_action( 'wp_enqueue_scripts', array( $this, 'wp_enqueue_scripts' ) );
+		add_action( 'admin_bar_menu', array( $this, 'admin_bar_menu' ), 999 );
 		add_filter( 'mce_external_languages', array( $this, 'mce_external_languages' ) );
 	}
 
@@ -377,6 +378,28 @@ class gEditorial
 	public function register_editor_button( $button, $filepath )
 	{
 		$this->editor_buttons[$button] = GEDITORIAL_URL.$filepath;
+	}
+
+	public function admin_bar_menu( $wp_admin_bar )
+	{
+		if ( ! is_user_logged_in() )
+			return;
+
+		if ( ! has_action( 'geditorial_adminbar' ) )
+			return;
+
+		$parent = 'geditorial';
+		$link   = current_user_can( 'manage_options' ) ? gEditorialSettingsCore::settingsURL() : gEditorialSettingsCore::reportsURL();
+
+		$wp_admin_bar->add_node( array(
+			'id'     => $parent,
+			'title'  => gEditorialHelper::getAdminBarIcon(),
+			// 'parent' => 'top-secondary',
+			'href'   => $link,
+			'meta'   => array( 'title' => _x( 'Editorial', 'Plugin: Main: Adminbar Node', GEDITORIAL_TEXTDOMAIN ) ),
+		) );
+
+		do_action_ref_array( 'geditorial_adminbar', array( &$wp_admin_bar, $parent, $link ) );
 	}
 
 	public static function na( $wrap = 'code' )

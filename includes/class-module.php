@@ -12,8 +12,9 @@ class gEditorialModuleCore extends gEditorialWPModule
 	protected $cookie     = 'geditorial';
 	protected $field_type = 'meta';
 
-	protected $priority_init      = 10;
-	protected $priority_init_ajax = 10;
+	protected $priority_init          = 10;
+	protected $priority_init_ajax     = 10;
+	protected $priority_adminbar_init = 10;
 
 	protected $constants = array();
 	protected $strings   = array();
@@ -37,6 +38,7 @@ class gEditorialModuleCore extends gEditorialWPModule
 		'reports'  => 'edit_others_posts',
 		'settings' => 'manage_options',
 		'tools'    => 'edit_others_posts',
+		'adminbar' => 'edit_others_posts',
 	);
 
 	protected $root_key = FALSE; // ROOT CONSTANT
@@ -95,6 +97,9 @@ class gEditorialModuleCore extends gEditorialWPModule
 			add_action( 'after_setup_theme', array( $this, 'after_setup_theme' ), 20 );
 
 		add_action( 'init', array( $this, 'init' ), $this->priority_init );
+
+		if ( $ui && method_exists( $this, 'adminbar_init' ) )
+			add_action( 'geditorial_adminbar', array( $this, 'adminbar_init' ), $this->priority_adminbar_init, 3 );
 
 		if ( is_admin() ) {
 
