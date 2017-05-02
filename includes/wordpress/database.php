@@ -312,7 +312,7 @@ class gEditorialWPDatabase extends gEditorialBaseCore
 
 		$query = $wpdb->prepare( "
 			SELECT DISTINCT YEAR( post_date ) AS year, MONTH( post_date ) AS month
-			FROM $wpdb->posts
+			FROM {$wpdb->posts}
 			WHERE post_type = %s
 			{$author}
 			{$extra_checks}

@@ -25,7 +25,7 @@ class gEditorialBaseCore
 
 	public static function order( $default = 'desc', $key = 'order' )
 	{
-		return self::req( $key, $default );
+		return ( 'ASC' == strtoupper( self::req( $key, $default ) ) ? 'ASC' : 'DESC' );
 	}
 
 	public static function dump( $var, $safe = TRUE, $echo = TRUE )

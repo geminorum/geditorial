@@ -291,4 +291,34 @@ class gEditorialWordPress extends gEditorialBaseCore
 
 		return FALSE;
 	}
+
+	// @SOURCE: `wp-load.php`
+	public static function getConfigPHP( $path = ABSPATH )
+	{
+		// The config file resides in ABSPATH
+		if ( file_exists( $path.'wp-config.php' ) )
+			return $path.'wp-config.php';
+
+		// The config file resides one level above ABSPATH but is not part of another install
+		if ( @file_exists( dirname( $path ).'/wp-config.php' )
+			&& ! @file_exists( dirname( $path ).'/wp-settings.php' ) )
+				return dirname( $path ).'/wp-config.php';
+
+		return FALSE;
+	}
+
+	public static function definedConfigPHP( $constant = 'WP_DEBUG' )
+	{
+		if ( ! $file = self::getConfigPHP() )
+			return FALSE;
+
+		$contents = file_get_contents( $file );
+		$pattern = "define\( ?'".$constant."'";
+		$pattern = "/^$pattern.*/m";
+
+		if ( preg_match_all( $pattern, $contents, $matches ) )
+			return TRUE;
+
+		return FALSE;
+	}
 }

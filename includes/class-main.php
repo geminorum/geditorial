@@ -77,6 +77,7 @@ class gEditorial
 		require_once( GEDITORIAL_DIR.'includes/wordpress/posttype.php' );
 		require_once( GEDITORIAL_DIR.'includes/wordpress/taxonomy.php' );
 		require_once( GEDITORIAL_DIR.'includes/wordpress/database.php' );
+		require_once( GEDITORIAL_DIR.'includes/wordpress/media.php' );
 		require_once( GEDITORIAL_DIR.'includes/wordpress/user.php' );
 
 		$includes = array(
@@ -85,10 +86,9 @@ class gEditorial
 			'metabox',
 			'settings',
 			'template',
+			'shortcode',
 			'widget',
 			'module',
-			// 'listtable',
-			'shortcode',
 		);
 
 		foreach ( $includes as $include )
@@ -129,9 +129,9 @@ class gEditorial
 
 		$defaults = array(
 			'class'     => gEditorialHelper::moduleClass( $args['name'], FALSE ),
+			'icon'      => 'smiley', // dashicon class
 			'group'     => $this->group.$args['name'],
 			'settings'  => 'geditorial-settings-'.$args['name'],
-			'icon'      => 'smiley', // dashicon class
 			'configure' => 'print_configure_view',
 			'frontend'  => TRUE, // whether or not the module should be loaded on the frontend too
 			'autoload'  => FALSE, // autoloading a module will remove the ability to enable or disable it

@@ -127,8 +127,9 @@ class gEditorialWPTaxonomy extends gEditorialBaseCore
 
 			$new = array(
 				'name'        => $term->name,
+				// 'name'        => sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' ),
 				'description' => $term->description,
-				'link'        => get_term_link( $term, $taxonomy ),
+				'link'        => get_term_link( $term ),
 				'count'       => $term->count,
 				'parent'      => $term->parent,
 				'slug'        => $term->slug,
