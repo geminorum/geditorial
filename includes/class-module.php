@@ -949,6 +949,21 @@ class gEditorialModuleCore extends gEditorialWPModule
 		) ) );
 	}
 
+	protected function check_settings( $sub, $context = 'tools' )
+	{
+		if ( ! $this->cuc( $context ) )
+			return FALSE;
+
+		add_filter( 'geditorial_'.$context.'_subs', [ $this, 'append_sub' ], 10, 2 );
+
+		if ( $this->key != $sub )
+			return FALSE;
+
+		add_action( 'geditorial_'.$context.'_sub_'.$sub, [ $this, $context.'_sub' ], 10, 2 );
+
+		return TRUE;
+	}
+
 	public function is_register_settings( $page )
 	{
 		return $page == $this->module->settings;

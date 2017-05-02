@@ -263,13 +263,7 @@ class gEditorialAudit extends gEditorialModuleCore
 
 	public function reports_settings( $sub )
 	{
-		if ( ! $this->cuc( 'reports' ) )
-			return;
-
-		if ( $this->module->name == $sub )
-			add_action( 'geditorial_reports_sub_'.$sub, array( $this, 'reports_sub' ), 10, 2 );
-
-		add_filter( 'geditorial_reports_subs', array( $this, 'append_sub' ), 10, 2 );
+		$this->check_settings( $sub, 'reports' );
 	}
 
 	public function reports_sub( $uri, $sub )

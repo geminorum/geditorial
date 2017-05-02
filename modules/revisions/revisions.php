@@ -352,10 +352,7 @@ class gEditorialRevisions extends gEditorialModuleCore
 
 	public function reports_settings( $sub )
 	{
-		if ( ! $this->cuc( 'reports' ) )
-			return;
-
-		if ( $this->module->name == $sub ) {
+		if ( $this->check_settings( $sub, 'reports' ) ) {
 
 			if ( ! empty( $_POST ) ) {
 
@@ -383,13 +380,9 @@ class gEditorialRevisions extends gEditorialModuleCore
 				}
 			}
 
-			add_action( 'geditorial_reports_sub_'.$sub, array( $this, 'reports_sub' ), 10, 2 );
-
 			$this->screen_option( $sub );
 			$this->register_button( 'cleanup_revisions', _x( 'Cleanup Revisions', 'Modules: Revisions: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
 		}
-
-		add_filter( 'geditorial_reports_subs', array( $this, 'append_sub' ), 10, 2 );
 	}
 
 	public function reports_sub( $uri, $sub )

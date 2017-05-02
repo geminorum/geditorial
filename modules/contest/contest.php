@@ -286,6 +286,9 @@ class gEditorialContest extends gEditorialModuleCore
 
 	public function register_settings( $page = NULL )
 	{
+		if ( ! $this->is_register_settings( $page ) )
+			return;
+
 		if ( isset( $_POST['install_def_apply_status_tax'] ) )
 			$this->insert_default_terms( 'apply_status_tax' );
 
@@ -731,10 +734,7 @@ class gEditorialContest extends gEditorialModuleCore
 
 	public function tools_settings( $sub )
 	{
-		if ( ! $this->cuc( 'tools' ) )
-			return;
-
-		if ( $this->module->name == $sub ) {
+		if ( $this->check_settings( $sub, 'tools' ) ) {
 
 			if ( ! empty( $_POST ) ) {
 
@@ -816,10 +816,6 @@ class gEditorialContest extends gEditorialModuleCore
 					) );
 				}
 			}
-
-			add_action( 'geditorial_tools_sub_'.$sub, array( $this, 'tools_sub' ), 10, 2 );
 		}
-
-		add_filter( 'geditorial_tools_subs', array( $this, 'append_sub' ), 10, 2 );
 	}
 }

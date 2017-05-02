@@ -297,21 +297,7 @@ class gEditorialUsers extends gEditorialModuleCore
 
 	public function reports_settings( $sub )
 	{
-		if ( ! $this->cuc( 'reports' ) )
-			return;
-
-		if ( $this->module->name == $sub ) {
-
-			// if ( ! empty( $_POST ) ) {
-			// 	$this->settings_check_referer( $sub, 'reports' );
-			// 	if ( isset( $_POST['posttype_stats'] ) ) {}
-			// }
-
-			// add_filter( 'geditorial_reports_messages', array( $this, 'reports_messages' ), 10, 2 );
-			add_action( 'geditorial_reports_sub_'.$sub, array( $this, 'reports_sub' ), 10, 2 );
-		}
-
-		add_filter( 'geditorial_reports_subs', array( $this, 'append_sub' ), 10, 2 );
+		$this->check_settings( $sub, 'reports' );
 	}
 
 	public function reports_sub( $uri, $sub )
