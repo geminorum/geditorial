@@ -7,6 +7,19 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 	const SETTINGS = 'geditorial-settings';
 	const TOOLS    = 'geditorial-tools';
 
+	public static function subURL( $sub = 'overview', $context = 'reports' )
+	{
+		switch ( $context ) {
+			case 'reports' : $url = self::reportsURL();  break;
+			case 'settings': $url = self::settingsURL(); break;
+			case 'tools'   : $url = self::toolsURL();    break;
+
+			default: $url = gEditorialURL::current();
+		}
+
+		return add_query_arg( 'sub', $sub, $url );
+	}
+
 	public static function reportsURL( $full = TRUE, $dashboard = FALSE )
 	{
 		$relative = 'index.php?page='.self::REPORTS;
@@ -116,6 +129,17 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 			return sprintf( _x( '&mdash; Select %s &mdash;', 'Settings: Dropdown Select Option None', GEDITORIAL_TEXTDOMAIN ), $string );
 
 		return _x( '&mdash; Select &mdash;', 'Settings: Dropdown Select Option None', GEDITORIAL_TEXTDOMAIN );
+	}
+
+	public static function fieldSeparate( $string = 'from' )
+	{
+		switch ( $string ) {
+			case 'from': $string = _x( 'from', 'Settings: Field Separate', GEDITORIAL_TEXTDOMAIN ); break;
+			case 'into': $string = _x( 'into', 'Settings: Field Separate', GEDITORIAL_TEXTDOMAIN ); break;
+			case 'to'  : $string = _x( 'to', 'Settings: Field Separate', GEDITORIAL_TEXTDOMAIN );   break;
+		}
+
+		printf( '<span class="-field-sep">&nbsp;&mdash; %s &mdash;&nbsp;</span>', $string );
 	}
 
 	public static function fieldSection( $title, $description = FALSE, $tag = 'h3' )
