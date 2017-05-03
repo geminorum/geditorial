@@ -1,0 +1,42 @@
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+/// Module: Event: Featured Comments -------------------------------------------
+
+.geditorial-comments-row-action {
+  cursor: pointer;
+
+  &:after {
+    content: " | ";
+    padding: 0 2px;
+    color: #555;
+  }
+
+  &:last-child:after {
+    content: "";
+  }
+
+  &.buried.bury,
+  &.featured.feature,
+  &.unbury,
+  &.unfeature {
+    display: none;
+  }
+
+  &.buried.unbury,
+  &.featured.unfeature {
+    display: inline;
+  }
+}
+
+#the-comment-list {
+  tr {
+    &.featured {
+      background-color: #dfd;
+    }
+
+    &.buried {
+      opacity: 0.5;
+    }
+  }
+}

@@ -1,11 +1,11 @@
-@import "modules/all";
-@import "partials/base";
-@import "partials/admin.all";
-@import "partials/admin.help";
-@import "partials/admin.table";
+@import 'modules/all';
+@import 'partials/base';
+@import 'partials/admin.all';
+@import 'partials/admin.help';
+@import 'partials/admin.table';
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-// @import "partials/ortho.admin.all";
+@import 'partials/admin.featured-comments';
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
@@ -13,43 +13,5 @@
 .fixed {
   .column-user {
     width: 15%;
-  }
-}
-
-.geditorial-comments-row-action {
-  cursor: pointer;
-
-  &:after {
-    content: " | ";
-    padding: 0 2px;
-    color: #555;
-  }
-
-  &:last-child:after {
-    content: "";
-  }
-
-  &.buried.bury,
-  &.featured.feature,
-  &.unbury,
-  &.unfeature {
-    display: none;
-  }
-
-  &.buried.unbury,
-  &.featured.unfeature {
-    display: inline;
-  }
-}
-
-#the-comment-list {
-  tr {
-    &.featured {
-      background-color: #dfd;
-    }
-
-    &.buried {
-      opacity: 0.5;
-    }
   }
 }

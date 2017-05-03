@@ -5,6 +5,32 @@
 
 // USAGE: .geditorial-admin-wrap.module { @include mainwrap(); }
 .geditorial-admin-wrap {
+
+  p.submit {
+    .button-primary:active {
+      vertical-align: baseline;
+    }
+  }
+
+  .-button {
+
+    vertical-align: middle !important;
+
+    &.button-primary {}
+
+    &.button-reset,
+    &.button-delete {
+      color: $brand-danger;
+      &:hover {
+        color: darken($brand-danger, 20%);
+      }
+    }
+  }
+
+  .-field-sep {
+    vertical-align: middle;
+  }
+
   .settings-title {
 
     &.dashicons-before:before {
@@ -22,6 +48,35 @@
     }
 
     .-action {}
+
+    .-search {
+      position: relative;
+      top: -2px;
+      left: 20px;
+      margin: 0;
+      width: 280px;
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 1.5;
+
+      @include body-rtl() {
+        left: auto;
+        right: 20px;
+      }
+
+      @media only screen and (max-width: 650px) {
+        & {
+            float: none;
+            clear: both;
+            left: 0;
+            top: 0;
+            right: 0;
+            margin: 10px 0;
+            width: 100%;
+            max-width: 280px;
+        }
+      }
+    }
   }
 
   .credits {

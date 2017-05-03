@@ -1,22 +1,23 @@
-@import "modules/all";
-@import "partials/base";
+@import 'modules/all';
+@import 'partials/base';
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-@import "partials/admin.all";
-@import "partials/admin.help";
-@import "partials/admin.table";
-@import "partials/admin.editor";
+@import 'partials/admin.all';
+@import 'partials/admin.help';
+@import 'partials/admin.table';
+@import 'partials/admin.editor';
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-@import "partials/meta.admin.post";
-@import "partials/specs.admin.post";
-@import "partials/series.admin.post";
-@import "partials/magazine.admin.post";
-@import "partials/tweaks.admin.post";
-@import "partials/revisions.admin.post";
+@import 'partials/meta.admin.post';
+@import 'partials/specs.admin.post';
+@import 'partials/series.admin.post';
+@import 'partials/magazine.admin.post';
+@import 'partials/tweaks.admin.post';
+@import 'partials/revisions.admin.post';
+@import 'partials/drafts.admin.post';
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-@import "partials/ortho.admin.all";
+@import 'partials/ortho.admin.all';
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
@@ -53,11 +54,6 @@
 
   .field-wrap {
     margin-bottom: 2px;
-
-    // wp_dropdown_pages() does not suport css class
-    #parent_id {
-      width: 100%;
-    }
 
     &.field-wrap-empty {
 
@@ -101,6 +97,7 @@
     &.field-wrap-inputtext-date {
       input {
         width: 32.5%;
+        text-align: center;
       }
     }
 
@@ -133,25 +130,6 @@
           margin: 0 2px;
         }
       }
-    }
-
-    // DEPRECATED
-    .field-text {
-      // width: 100%;
-    }
-
-    // DEPRECATED
-    .field-textarea {
-      // width: 100%;
-    }
-
-    // DEPRECATED
-    .field-inputtext {
-      // width: 100%;
-    }
-
-    .field-order {
-      width: auto;
     }
   }
 
