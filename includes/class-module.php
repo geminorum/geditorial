@@ -973,6 +973,9 @@ class gEditorialModuleCore extends gEditorialWPModule
 
 		add_action( 'geditorial_'.$context.'_sub_'.$sub, [ $this, $context.'_sub' ], 10, 2 );
 
+		if ( 'settings' != $context )
+			add_action( 'admin_print_footer_scripts', [ $this, 'settings_print_scripts' ], 99 );
+
 		return TRUE;
 	}
 
