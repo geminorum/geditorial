@@ -6,6 +6,7 @@
 .temp
 
 /assets/bin
+/assets/css/*.css
 /assets/css/maps
 /assets/components
 /assets/views/cache
@@ -17,6 +18,7 @@
 
 composer.lock
 npm-debug.log
+.tinypng-sigs
 
 environment.yml
 .ftpconfig
