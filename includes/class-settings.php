@@ -302,7 +302,7 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 	{
 		return array(
 			'field'       => 'before_content',
-			'type'        => 'textarea',
+			'type'        => 'textarea-quicktags',
 			'title'       => _x( 'Before Content', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 			'description' => _x( 'Adds <code>HTML</code> to the start of all the supported posttypes', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 			'section'     => $section,
@@ -313,7 +313,7 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 	{
 		return array(
 			'field'       => 'after_content',
-			'type'        => 'textarea',
+			'type'        => 'textarea-quicktags',
 			'title'       => _x( 'After Content', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 			'description' => _x( 'Adds <code>HTML</code> to the end of all the supported posttypes', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 			'section'     => $section,
