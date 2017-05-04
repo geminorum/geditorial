@@ -124,9 +124,8 @@ class Terms extends gEditorial\Module
 
 				$this->settings_check_referer( $sub, 'reports' );
 
-				if ( isset( $_POST['cleanup_terms'] )
-					&& isset( $_POST['_cb'] )
-					&& count( $_POST['_cb'] ) ) {
+				if ( 'cleanup_terms' == self::req( 'table_action' )
+					&& count( self::req( '_cb' ) ) ) {
 
 					$all   = Taxonomy::get();
 					$count = 0;
@@ -150,9 +149,7 @@ class Terms extends gEditorial\Module
 			}
 
 			add_action( 'geditorial_reports_sub_'.$sub, array( $this, 'reports_sub' ), 10, 2 );
-
 			$this->screen_option( $sub );
-			$this->register_button( 'cleanup_terms', _x( 'Cleanup Terms', 'Modules: Terms: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
 		}
 
 		add_filter( 'geditorial_reports_subs', array( $this, 'append_sub' ), 10, 2 );
@@ -168,8 +165,7 @@ class Terms extends gEditorial\Module
 	{
 		$this->settings_form_before( $uri, $sub, 'bulk', 'reports', FALSE, FALSE );
 
-			if ( $this->tableUncategorized() )
-				$this->settings_buttons();
+			$this->tableUncategorized();
 
 		$this->settings_form_after( $uri, $sub );
 	}
@@ -178,6 +174,7 @@ class Terms extends gEditorial\Module
 	{
 		list( $posts, $pagination ) = $this->getPostArray();
 
+		$pagination['actions']['cleanup_terms'] = _x( 'Cleanup Terms', 'Modules: Terms: Table Action', GEDITORIAL_TEXTDOMAIN );
 		$pagination['before'][] = Helper::tableFilterPostTypes();
 
 		return HTML::tableList( array(
