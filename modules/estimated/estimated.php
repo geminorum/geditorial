@@ -4,6 +4,7 @@ defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core\HTML;
+use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\Text;
 
 class Estimated extends gEditorial\Module

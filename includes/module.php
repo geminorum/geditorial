@@ -6,11 +6,11 @@ use geminorum\gEditorial\Core\Arraay;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\WordPress;
-use geminorum\gEditorial\WordPress\Module as Core;
+use geminorum\gEditorial\WordPress\Module as Base;
 use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\Taxonomy;
 
-class Module extends Core
+class Module extends Base
 {
 
 	public $module;
