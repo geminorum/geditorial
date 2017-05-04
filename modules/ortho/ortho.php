@@ -14,13 +14,13 @@ class Ortho extends gEditorial\Module
 
 	public static function module()
 	{
-		return array(
+		return [
 			'name'     => 'ortho',
 			'title'    => _x( 'Ortho', 'Modules: Ortho', GEDITORIAL_TEXTDOMAIN ),
 			'desc'     => _x( 'Persian Orthography Tools', 'Modules: Ortho', GEDITORIAL_TEXTDOMAIN ),
 			'icon'     => 'filter',
 			'frontend' => FALSE,
-		);
+		];
 	}
 
 	public function settings_intro_after( $module )
@@ -32,7 +32,7 @@ class Ortho extends gEditorial\Module
 
 	private function virastar_options()
 	{
-		return array(
+		return [
 			// 'normalize_eol'                                  => _x( 'replace Windows end of lines with Unix EOL (<code>&#92;&#110;</code>)', 'Modules: Ortho: Setting Option', GEDITORIAL_TEXTDOMAIN ),
 			'fix_dashes'                                     => _x( 'replace double dash to ndash and triple dash to mdash', 'Modules: Ortho: Setting Option', GEDITORIAL_TEXTDOMAIN ),
 			'fix_three_dots'                                 => _x( 'replace three dots with ellipsis', 'Modules: Ortho: Setting Option', GEDITORIAL_TEXTDOMAIN ),
@@ -57,32 +57,32 @@ class Ortho extends gEditorial\Module
 			// 'preserve_URIs'                                  => _x( 'preserve all URI links in the text', 'Modules: Ortho: Setting Option', GEDITORIAL_TEXTDOMAIN ),
 			// 'preserve_brackets'                              => _x( 'preserve strings inside square brackets (<code>[]</code>)', 'Modules: Ortho: Setting Option', GEDITORIAL_TEXTDOMAIN ),
 			// 'preserve_braces'                                => _x( 'preserve strings inside curly braces (<code>{}</code>)', 'Modules: Ortho: Setting Option', GEDITORIAL_TEXTDOMAIN ),
-		);
+		];
 	}
 
 	protected function get_global_settings()
 	{
 		$virastar_options = $this->virastar_options();
 
-		return array(
+		return [
 			'posttypes_option'  => 'posttypes_option',
 			'taxonomies_option' => 'taxonomies_option',
-			'_general' => array(
-				array(
+			'_general' => [
+				[
 					'field'   => 'virastar_options',
 					'type'    => 'checkbox',
 					'title'   => _x( 'Virastar Options', 'Modules: Ortho: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'default' => array_keys( $virastar_options ),
 					'values'  => $virastar_options,
-				),
-			),
-		);
+				],
+			],
+		];
 	}
 
 	protected function get_global_strings()
 	{
-		return array(
-			'js' => array(
+		return [
+			'js' => [
 				// 'button_virastar'        => HTML::getDashicon( 'filter' ),
 				'button_virastar_title'  => _x( 'Apply Virastar!', 'Modules: Ortho: Javascript String', GEDITORIAL_TEXTDOMAIN ),
 				'qtag_virastar'          => _x( 'Virastar!', 'Modules: Ortho: Javascript String', GEDITORIAL_TEXTDOMAIN ),
@@ -95,15 +95,15 @@ class Ortho extends gEditorial\Module
 				'qtag_download_title'    => _x( 'Download text as markdown', 'Modules: Ortho: Javascript String', GEDITORIAL_TEXTDOMAIN ),
 				'qtag_nbsp'              => _x( 'nbsp', 'Modules: Ortho: Javascript String', GEDITORIAL_TEXTDOMAIN ),
 				'qtag_nbsp_title'        => _x( 'Non-Breaking SPace', 'Modules: Ortho: Javascript String', GEDITORIAL_TEXTDOMAIN ),
-			),
-		);
+			],
+		];
 	}
 
 	public function init()
 	{
 		parent::init();
 
-		$this->taxonomies_excluded = array(
+		$this->taxonomies_excluded = [
 			'nav_menu',
 			'post_format',
 			'link_category',
@@ -116,7 +116,7 @@ class Ortho extends gEditorial\Module
 			'post_status',
 			'flamingo_contact_tag',
 			'flamingo_inbound_channel',
-		);
+		];
 	}
 
 	public function current_screen( $screen )
@@ -151,8 +151,8 @@ class Ortho extends gEditorial\Module
 
 	private function negate_virastar_options()
 	{
-		$saved   = array_values( $this->get_setting( 'virastar_options', array() ) );
-		$options = array();
+		$saved   = array_values( $this->get_setting( 'virastar_options', [] ) );
+		$options = [];
 
 		foreach ( array_keys( $this->virastar_options() ) as $option )
 			if ( ! in_array( $option, $saved ) )

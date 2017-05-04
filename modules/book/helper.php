@@ -13,7 +13,7 @@ class Book extends gEditorial\Helper
 		$string = Number::intval( $input, FALSE );
 
 		if ( self::findISBN( $string ) )
-			return trim( str_ireplace( array( 'isbn', '-', ':', ' ' ), '', $string ) );
+			return trim( str_ireplace( [ 'isbn', '-', ':', ' ' ], '', $string ) );
 
 		return $input; // CAUTION: returns the original
 	}

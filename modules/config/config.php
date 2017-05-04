@@ -14,15 +14,15 @@ use geminorum\gEditorial\WordPress\User;
 class Config extends gEditorial\Module
 {
 
-	protected $caps = array(
+	protected $caps = [
 		'reports'  => 'edit_others_posts',
 		'settings' => 'manage_options',
 		'tools'    => 'edit_others_posts',
-	);
+	];
 
 	public static function module()
 	{
-		return array(
+		return [
 			'name'      => 'config',
 			'title'     => _x( 'Editorial', 'Modules: Config', GEDITORIAL_TEXTDOMAIN ),
 			'desc'      => _x( 'WordPress in Magazine Style', 'Modules: Config', GEDITORIAL_TEXTDOMAIN ),
@@ -31,13 +31,13 @@ class Config extends gEditorial\Module
 			'configure' => 'print_default_settings',
 			'frontend'  => FALSE,
 			'autoload'  => TRUE,
-		);
+		];
 	}
 
-	public function setup( $partials = array() )
+	public function setup( $partials = [] )
 	{
 		if ( is_admin() )
-			add_action( 'admin_menu', array( $this, 'admin_menu' ) );
+			$this->action( 'admin_menu' );
 
 		if ( WordPress::isAJAX() )
 			$this->_hook_ajax();
@@ -56,7 +56,7 @@ class Config extends gEditorial\Module
 			_x( 'My Reports', 'Modules: Config: Menu Title', GEDITORIAL_TEXTDOMAIN ),
 			$this->caps['reports'],
 			'geditorial-reports',
-			array( $this, 'admin_reports_page' )
+			[ $this, 'admin_reports_page' ]
 		);
 
 		$hook_settings = add_menu_page(
@@ -64,7 +64,7 @@ class Config extends gEditorial\Module
 			$this->module->title,
 			$this->caps['settings'],
 			$this->module->settings,
-			array( $this, 'admin_settings_page' ),
+			[ $this, 'admin_settings_page' ],
 			'dashicons-'.$this->module->icon
 		);
 
@@ -77,12 +77,12 @@ class Config extends gEditorial\Module
 			),
 			$this->caps['tools'],
 			'geditorial-tools',
-			array( $this, 'admin_tools_page' )
+			[ $this, 'admin_tools_page' ]
 		);
 
-		add_action( 'load-'.$hook_reports, array( $this, 'admin_reports_load' ) );
-		add_action( 'load-'.$hook_settings, array( $this, 'admin_settings_load' ) );
-		add_action( 'load-'.$hook_tools, array( $this, 'admin_tools_load' ) );
+		add_action( 'load-'.$hook_reports, [ $this, 'admin_reports_load' ] );
+		add_action( 'load-'.$hook_settings, [ $this, 'admin_settings_load' ] );
+		add_action( 'load-'.$hook_tools, [ $this, 'admin_tools_load' ] );
 
 		foreach ( $gEditorial->modules as $name => &$module ) {
 
@@ -95,11 +95,11 @@ class Config extends gEditorial\Module
 					$module->title,
 					$this->caps['settings'], // FIXME: get from module
 					$module->settings,
-					array( $this, 'admin_settings_page' )
+					[ $this, 'admin_settings_page' ]
 				);
 
 				if ( $hook_module )
-					add_action( 'load-'.$hook_module, array( $this, 'admin_settings_load' ) );
+					add_action( 'load-'.$hook_module, [ $this, 'admin_settings_load' ] );
 			}
 		}
 	}
@@ -110,7 +110,7 @@ class Config extends gEditorial\Module
 		$uri = Settings::reportsURL( FALSE, ! $can );
 		$sub = Settings::sub();
 
-		$subs = array( 'overview' => _x( 'Overview', 'Modules: Config: Reports Sub', GEDITORIAL_TEXTDOMAIN ) );
+		$subs = [ 'overview' => _x( 'Overview', 'Modules: Config: Reports Sub', GEDITORIAL_TEXTDOMAIN ) ];
 
 		if ( $can )
 			$subs['general'] = _x( 'General', 'Modules: Config: Reports Sub', GEDITORIAL_TEXTDOMAIN );
@@ -141,7 +141,7 @@ class Config extends gEditorial\Module
 		$uri = Settings::toolsURL( FALSE, ! $can );
 		$sub = Settings::sub( ( $can ? 'general' : 'overview' ) );
 
-		$subs = array( 'overview' => _x( 'Overview', 'Modules: Config: Tools Sub', GEDITORIAL_TEXTDOMAIN ) );
+		$subs = [ 'overview' => _x( 'Overview', 'Modules: Config: Tools Sub', GEDITORIAL_TEXTDOMAIN ) ];
 
 		if ( $can )
 			$subs['general'] = _x( 'General', 'Modules: Config: Tools Sub', GEDITORIAL_TEXTDOMAIN );
@@ -178,7 +178,7 @@ class Config extends gEditorial\Module
 		$sub = Settings::sub();
 
 		if ( 'general' == $sub ) {
-			add_action( 'geditorial_reports_sub_general', array( $this, 'reports_sub' ), 10, 2 );
+			add_action( 'geditorial_reports_sub_general', [ $this, 'reports_sub' ], 10, 2 );
 		}
 
 		do_action( 'geditorial_reports_settings', $sub );
@@ -195,17 +195,17 @@ class Config extends gEditorial\Module
 
 				$this->settings_check_referer( $sub, 'tools' );
 
-				$post = isset( $_POST[$this->module->group]['tools'] ) ? $_POST[$this->module->group]['tools'] : array();
+				$post = isset( $_POST[$this->module->group]['tools'] ) ? $_POST[$this->module->group]['tools'] : [];
 
 				if ( isset( $_POST['upgrade_old_options'] ) ) {
 
 					$result = $gEditorial->upgrade_old_options();
 
 					if ( count( $result ) )
-						WordPress::redirectReferer( array(
+						WordPress::redirectReferer( [
 							'message' => 'upgraded',
 							'count'   => count( $result ),
-						) );
+						] );
 
 				} else if ( isset( $_POST['delete_all_options'] ) ) {
 
@@ -219,15 +219,15 @@ class Config extends gEditorial\Module
 						$result = Database::deleteEmptyMeta( $gEditorial->{$post['empty_module']}->meta_key );
 
 						if ( count( $result ) )
-							WordPress::redirectReferer( array(
+							WordPress::redirectReferer( [
 								'message' => 'emptied',
 								'count'   => count( $result ),
-							) );
+							] );
 					}
 				}
 			}
 
-			add_action( 'geditorial_tools_sub_general', array( $this, 'tools_sub' ), 10, 2 );
+			add_action( 'geditorial_tools_sub_general', [ $this, 'tools_sub' ], 10, 2 );
 		}
 
 		do_action( 'geditorial_tools_settings', $sub );
@@ -263,7 +263,7 @@ class Config extends gEditorial\Module
 		if ( ! $this->cuc( 'settings' ) )
 			self::cheatin();
 
-		$post = isset( $_POST[$this->module->group]['tools'] ) ? $_POST[$this->module->group]['tools'] : array();
+		$post = isset( $_POST[$this->module->group]['tools'] ) ? $_POST[$this->module->group]['tools'] : [];
 
 		$this->settings_form_before( $uri, $sub, 'bulk', 'tools', FALSE, FALSE );
 
@@ -292,13 +292,13 @@ class Config extends gEditorial\Module
 			echo '</td></tr>';
 			echo '<tr><th scope="row">'._x( 'Empty Meta Fields', 'Modules: Config', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
 
-				$this->do_settings_field( array(
+				$this->do_settings_field( [
 					'type'         => 'select',
 					'field'        => 'empty_module',
 					'values'       => $gEditorial->get_all_modules(),
 					'default'      => ( isset( $post['empty_module'] ) ? $post['empty_module'] : 'meta' ),
 					'option_group' => 'tools',
-				) );
+				] );
 
 				echo '&nbsp;&nbsp;';
 
@@ -490,9 +490,7 @@ class Config extends gEditorial\Module
 		if ( ! $this->admin_settings_verify( $gEditorial->{$name}->module->group ) )
 			self::cheatin();
 
-		$gEditorial->update_all_module_options( $gEditorial->{$name}->module->name, array(
-			'enabled' => TRUE,
-		) );
+		$gEditorial->update_all_module_options( $gEditorial->{$name}->module->name, [ 'enabled' => TRUE ] );
 
 		WordPress::redirectReferer( 'resetting' );
 	}
@@ -521,7 +519,7 @@ class Config extends gEditorial\Module
 		if ( ! $this->admin_settings_verify( $group ) )
 			self::cheatin();
 
-		$options = $gEditorial->{$name}->settings_validate( ( isset( $_POST[$group] ) ? $_POST[$group] : array() ) );
+		$options = $gEditorial->{$name}->settings_validate( ( isset( $_POST[$group] ) ? $_POST[$group] : [] ) );
 
 		// $options = (object) array_merge( (array) $gEditorial->{$name}->options, $options );
 		$options['enabled'] = TRUE;

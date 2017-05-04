@@ -18,7 +18,7 @@ class Ajax extends Core\Base
 
 	public static function successHTML( $html )
 	{
-		wp_send_json_success( array( 'html' => $html ) );
+		wp_send_json_success( [ 'html' => $html ] );
 	}
 
 	public static function successMessage( $message = NULL )

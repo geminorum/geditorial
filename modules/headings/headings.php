@@ -8,49 +8,49 @@ use geminorum\gEditorial\Core\HTML;
 class Headings extends gEditorial\Module
 {
 
-	private $anchors  = array();
-	private $toc      = array();
+	private $anchors  = [];
+	private $toc      = [];
 
 	public static function module()
 	{
-		return array(
+		return [
 			'name'  => 'headings',
 			'title' => _x( 'Headings', 'Modules: Headings', GEDITORIAL_TEXTDOMAIN ),
 			'desc'  => _x( 'Table of Contents', 'Modules: Headings', GEDITORIAL_TEXTDOMAIN ),
 			'icon'  => 'tablet',
-		);
+		];
 	}
 
 	protected function get_global_settings()
 	{
-		return array(
-			'_general' => array(
-				array(
+		return [
+			'_general' => [
+				[
 					'field'       => 'toc_title',
 					'type'        => 'text',
 					'title'       => _x( 'ToC Title', 'Modules: Headings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Default text on the ToC box', 'Modules: Headings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 					'default'     => _x( 'Table of Contents', 'Modules: Headings: Setting Default', GEDITORIAL_TEXTDOMAIN ),
-				),
-				array(
+				],
+				[
 					'field'       => 'anchor_title',
 					'type'        => 'text',
 					'title'       => _x( 'Anchor Title', 'Modules: Headings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Default text on the anchor link', 'Modules: Headings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 					'default'     => _x( 'Permalink to this title', 'Modules: Headings: Setting Default', GEDITORIAL_TEXTDOMAIN ),
-				),
-				array(
+				],
+				[
 					'field'       => 'min_headings',
 					'type'        => 'number',
 					'title'       => _x( 'Minimum Headings', 'Modules: Headings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Threshold to Display ToC', 'Modules: Headings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 					'default'     => '2',
-				),
+				],
 				'insert_content_before',
 				'insert_priority',
-			),
+			],
 			'posttypes_option' => 'posttypes_option',
-		);
+		];
 	}
 
 	public function init()
@@ -59,10 +59,10 @@ class Headings extends gEditorial\Module
 
 		if ( ! is_admin() && count( $this->post_types() ) ) {
 
-			add_filter( 'the_content', array( $this, 'the_content' ) );
+			$this->filter( 'the_content' );
 
 			if ( $this->get_setting( 'insert_content_before', FALSE ) )
-				add_action( 'gnetwork_themes_content_before', array( $this, 'content_before' ),
+				add_action( 'gnetwork_themes_content_before', [ $this, 'content_before' ],
 					$this->get_setting( 'insert_priority', -25 ) );
 
 			$this->enqueue_styles();
@@ -83,7 +83,7 @@ class Headings extends gEditorial\Module
 		// $pattern = '#(?P<full_tag><(?P<tag_name>h\d)(?P<tag_extra>[^>]*)>(?P<tag_contents>[^<]*)</h\d>)#';
 
 		$pattern = "/<h([0-9])(.*?)>(.*?)<\/h([0-9])>/imu";
-		return preg_replace_callback( $pattern, array( $this, 'toc_callback' ), $content );
+		return preg_replace_callback( $pattern, [ $this, 'toc_callback' ], $content );
 	}
 
 	public function toc_callback( $match )
@@ -96,7 +96,7 @@ class Headings extends gEditorial\Module
 			return $match[0];
 
 		if ( $match[2] )
-			$atts = HTML::getAtts( $match[2], array( 'id' => '' ) );
+			$atts = HTML::getAtts( $match[2], [ 'id' => '' ] );
 
 		if ( ! empty( $atts['id'] ) ) {
 			$slug = $atts['id'];
@@ -111,23 +111,23 @@ class Headings extends gEditorial\Module
 
 		$this->anchors[] = $slug;
 
-		$this->toc[] = array(
+		$this->toc[] = [
 			'slug'  => $slug,
 			'title' => $title,
 			'niche' => $match[1],
 			'page'  => $page,
-		);
+		];
 
-		$html = HTML::tag( 'a', array(
+		$html = HTML::tag( 'a', [
 			'href'  => '#'.$slug,
 			'class' => 'anchor-link anchorlink dashicons-before',
 			'title' => $this->get_setting( 'anchor_title', '' ),
-		), NULL );
+		], NULL );
 
-		$html = HTML::tag( 'h'.$match[1], array(
+		$html = HTML::tag( 'h'.$match[1], [
 			'id'    => $slug,
 			'class' => 'anchor-title',
-		), $title.$html );
+		], $title.$html );
 
 		return $html;
 	}
@@ -153,7 +153,7 @@ class Headings extends gEditorial\Module
 		if ( is_null( $title ) )
 			$title = $this->get_setting( 'toc_title', '' );
 
-		$tree = array();
+		$tree = [];
 		$last = FALSE;
 
 		foreach ( $this->toc as $heading ) {
@@ -180,7 +180,7 @@ class Headings extends gEditorial\Module
 
 			HTML::menu( $tree, function(){
 				if ( FALSE === $item['page'] )
-					return HTML::tag( 'a', array( 'href' => '#'.$item['slug'] ), $item['title'] );
+					return HTML::link( $item['title'], '#'.$item['slug'] );
 				return rtrim( _wp_link_page( $item['page'] ), '">').'#'.$item['slug'].'">'.$item['title'].'</a>';
 			} );
 

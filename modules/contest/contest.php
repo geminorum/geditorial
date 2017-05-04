@@ -17,30 +17,30 @@ class Contest extends gEditorial\Module
 
 	public static function module()
 	{
-		return array(
+		return [
 			'name'  => 'contest',
 			'title' => _x( 'Contest', 'Modules: Contest', GEDITORIAL_TEXTDOMAIN ),
 			'desc'  => _x( 'Contest Management', 'Modules: Contest', GEDITORIAL_TEXTDOMAIN ),
 			'icon'  => 'megaphone',
-		);
+		];
 	}
 
 	protected function get_global_settings()
 	{
-		return array(
-			'_general' => array(
+		return [
+			'_general' => [
 				'multiple_instances',
 				'admin_ordering',
 				'admin_restrict',
 				'redirect_archives',
-			),
+			],
 			'posttypes_option' => 'posttypes_option',
-		);
+		];
 	}
 
 	protected function get_global_constants()
 	{
-		return array(
+		return [
 			'contest_cpt'         => 'contest',
 			'contest_cpt_archive' => 'contests',
 			'apply_cpt'           => 'apply',
@@ -49,69 +49,69 @@ class Contest extends gEditorial\Module
 			'contest_tax'         => 'contests',
 			'apply_cat'           => 'apply_cat',
 			'apply_status_tax'    => 'apply_status',
-		);
+		];
 	}
 
 	protected function get_module_icons()
 	{
-		return array(
-			'taxonomies' => array(
+		return [
+			'taxonomies' => [
 				'contest_cat'      => 'category',
 				'contest_tax'      => 'megaphone',
 				'apply_cat'        => 'category',
 				'apply_status_tax' => 'post-status', // 'portfolio',
-			),
-		);
+			],
+		];
 	}
 
 	protected function get_global_strings()
 	{
-		return array(
-			'misc' => array(
-				'contest_cpt' => array(
+		return [
+			'misc' => [
+				'contest_cpt' => [
 					'meta_box_title'        => _x( 'Metadata', 'Modules: Contest: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
 					'cover_box_title'       => _x( 'Poster', 'Modules: Contest: CoverBox Title', GEDITORIAL_TEXTDOMAIN ),
 					'cover_column_title'    => _x( 'Poster', 'Modules: Contest: Column Title', GEDITORIAL_TEXTDOMAIN ),
 					'order_column_title'    => _x( 'O', 'Modules: Contest: Column Title', GEDITORIAL_TEXTDOMAIN ),
 					'children_column_title' => _x( 'Applies', 'Modules: Contest: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				),
-				'contest_cat' => array(
+				],
+				'contest_cat' => [
 					'tweaks_column_title' => _x( 'Contest Categories', 'Modules: Contest: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				),
-				'apply_cat' => array(
+				],
+				'apply_cat' => [
 					'tweaks_column_title' => _x( 'Apply Categories', 'Modules: Contest: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				),
-				'apply_status_tax' => array(
+				],
+				'apply_status_tax' => [
 					'meta_box_title'      => _x( 'Apply Statuses', 'Modules: Contest: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
 					'tweaks_column_title' => _x( 'Apply Statuses', 'Modules: Contest: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				),
+				],
 				'meta_box_title'      => _x( 'Contests', 'Modules: Contest: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
 				'tweaks_column_title' => _x( 'Contests', 'Modules: Contest: Column Title', GEDITORIAL_TEXTDOMAIN ),
-			),
-			'settings' => array(
+			],
+			'settings' => [
 				'install_def_apply_status_tax' => _x( 'Install Default Apply Statuses', 'Modules: Contest: Setting Button', GEDITORIAL_TEXTDOMAIN ),
-			),
-			'noops' => array(
+			],
+			'noops' => [
 				'contest_cpt'      => _nx_noop( 'Contest', 'Contests', 'Modules: Contest: Noop', GEDITORIAL_TEXTDOMAIN ),
 				'contest_tax'      => _nx_noop( 'Contest', 'Contests', 'Modules: Contest: Noop', GEDITORIAL_TEXTDOMAIN ),
 				'contest_cat'      => _nx_noop( 'Contest Category', 'Contest Categories', 'Modules: Contest: Noop', GEDITORIAL_TEXTDOMAIN ),
 				'apply_cpt'        => _nx_noop( 'Apply', 'Applies', 'Modules: Contest: Noop', GEDITORIAL_TEXTDOMAIN ),
 				'apply_cat'        => _nx_noop( 'Apply Category', 'Apply Categories', 'Modules: Contest: Noop', GEDITORIAL_TEXTDOMAIN ),
 				'apply_status_tax' => _nx_noop( 'Apply Status', 'Apply Statuses', 'Modules: Contest: Noop', GEDITORIAL_TEXTDOMAIN ),
-			),
-			'terms' => array(
-				'apply_status_tax' => array(
+			],
+			'terms' => [
+				'apply_status_tax' => [
 					'approved' => _x( 'Approved', 'Modules: Contest: Apply Statuses Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
 					'pending'  => _x( 'Pending', 'Modules: Contest: Apply Statuses Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
-				),
-			),
-		);
+				],
+			],
+		];
 	}
 
 	protected function get_global_supports()
 	{
-		return array(
-			'contest_cpt' => array(
+		return [
+			'contest_cpt' => [
 				'title',
 				'editor',
 				'excerpt',
@@ -121,8 +121,8 @@ class Contest extends gEditorial\Module
 				'revisions',
 				'page-attributes',
 				'date-picker', // gPersianDate
-			),
-			'apply_cpt' => array(
+			],
+			'apply_cpt' => [
 				'title',
 				'editor',
 				'excerpt',
@@ -132,8 +132,8 @@ class Contest extends gEditorial\Module
 				'revisions',
 				'page-attributes',
 				'date-picker', // gPersianDate
-			),
-		);
+			],
+		];
 	}
 
 	public function after_setup_theme()
@@ -145,7 +145,7 @@ class Contest extends gEditorial\Module
 	{
 		parent::init();
 
-		$this->post_types_excluded = array( 'attachment', $this->constant( 'contest_cpt' ) );
+		$this->post_types_excluded = [ 'attachment', $this->constant( 'contest_cpt' ) ];
 
 		$this->register_post_type( 'contest_cpt', [
 			'hierarchical'  => TRUE,
@@ -155,37 +155,37 @@ class Contest extends gEditorial\Module
 			'menu_icon' => 'dashicons-portfolio',
 		] );
 
-		$this->register_taxonomy( 'contest_cat', array(
+		$this->register_taxonomy( 'contest_cat', [
 			'hierarchical'       => TRUE,
 			'meta_box_cb'        => NULL, // default meta box
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
-		), 'contest_cpt' );
+		], 'contest_cpt' );
 
-		$this->register_taxonomy( 'contest_tax', array(
+		$this->register_taxonomy( 'contest_tax', [
 			'show_ui'            => FALSE,
 			'hierarchical'       => TRUE,
 			'meta_box_cb'        => NULL, // default meta box
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
-		) );
+		] );
 
-		$this->register_taxonomy( 'apply_cat', array(
+		$this->register_taxonomy( 'apply_cat', [
 			'hierarchical'       => TRUE,
 			'meta_box_cb'        => NULL, // default meta box
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
-		), 'apply_cpt' );
+		], 'apply_cpt' );
 
-		$this->register_taxonomy( 'apply_status_tax', array(
+		$this->register_taxonomy( 'apply_status_tax', [
 			'hierarchical'       => TRUE,
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
-		), 'apply_cpt' );
+		], 'apply_cpt' );
 
 		if ( ! is_admin() ) {
-			add_filter( 'term_link', array( $this, 'term_link' ), 10, 3 );
-			add_action( 'template_redirect', array( $this, 'template_redirect' ) );
+			$this->filter( 'term_link', 3 );
+			$this->action( 'template_redirect' );
 		}
 	}
 
@@ -205,15 +205,15 @@ class Contest extends gEditorial\Module
 
 			if ( 'post' == $screen->base ) {
 
-				add_filter( 'wp_insert_post_data', array( $this, 'wp_insert_post_data' ), 9, 2 );
-				add_filter( 'post_updated_messages', array( $this, 'post_updated_messages' ) );
+				$this->filter( 'wp_insert_post_data', 2, 9 );
+				$this->filter( 'post_updated_messages' );
 
 				add_filter( 'geditorial_meta_box_callback', '__return_false', 12 );
 
 				$this->remove_meta_box( $screen->post_type, $screen->post_type, 'parent' );
 				add_meta_box( $this->classs( 'main' ),
 					$this->get_meta_box_title( 'contest_cpt', FALSE ),
-					array( $this, 'do_meta_box_main' ),
+					[ $this, 'do_meta_box_main' ],
 					$screen->post_type,
 					'side',
 					'high'
@@ -221,7 +221,7 @@ class Contest extends gEditorial\Module
 
 				add_meta_box( $this->classs( 'list' ),
 					$this->get_meta_box_title( 'contest_tax', $this->get_url_post_edit( 'post_cpt' ), 'edit_others_posts' ),
-					array( $this, 'do_meta_box_list' ),
+					[ $this, 'do_meta_box_list' ],
 					$screen->post_type,
 					'advanced',
 					'low'
@@ -234,15 +234,15 @@ class Contest extends gEditorial\Module
 				$this->filter( 'bulk_post_updated_messages', 2 );
 
 				if ( $this->get_setting( 'admin_ordering', TRUE ) )
-					add_action( 'pre_get_posts', array( $this, 'pre_get_posts' ) );
+					$this->action( 'pre_get_posts' );
 
 				$this->_sync_linked( $screen->post_type );
 				$this->_edit_screen( $screen->post_type );
-				add_filter( 'manage_edit-'.$screen->post_type.'_sortable_columns', array( $this, 'sortable_columns' ) );
+				add_filter( 'manage_edit-'.$screen->post_type.'_sortable_columns', [ $this, 'sortable_columns' ] );
 				add_thickbox();
 
 				$this->_tweaks_taxonomy();
-				add_action( 'geditorial_tweaks_column_attr', array( $this, 'main_column_attr' ) );
+				add_action( 'geditorial_tweaks_column_attr', [ $this, 'main_column_attr' ] );
 			}
 
 		} else if ( in_array( $screen->post_type, $this->post_types() ) ) {
@@ -250,50 +250,50 @@ class Contest extends gEditorial\Module
 			if ( 'post' == $screen->base ) {
 
 				if ( $screen->post_type == $this->constant( 'apply_cpt' ) )
-					add_filter( 'post_updated_messages', array( $this, 'post_updated_messages_supported' ) );
+					add_filter( 'post_updated_messages', [ $this, 'post_updated_messages_supported' ] );
 
 				$this->remove_meta_box( $screen->post_type, $screen->post_type, 'parent' );
 				add_meta_box( $this->classs( 'supported' ),
 					$this->get_meta_box_title( $screen->post_type, $this->get_url_post_edit( 'contest_cpt' ), 'edit_others_posts' ),
-					array( $this, 'do_meta_box_supported' ),
+					[ $this, 'do_meta_box_supported' ],
 					$screen->post_type,
 					'side'
 				);
 
 				// internal actions:
-				add_action( 'geditorial_contest_supported_meta_box', array( $this, 'supported_meta_box' ), 5, 2 );
+				add_action( 'geditorial_contest_supported_meta_box', [ $this, 'supported_meta_box' ], 5, 2 );
 
 				// TODO: add a thick-box to list the posts with this issue taxonomy
 
 			} else if ( 'edit' == $screen->base ) {
 
 				if ( $screen->post_type == $this->constant( 'apply_cpt' ) )
-					add_filter( 'bulk_post_updated_messages', array( $this, 'bulk_post_updated_messages_supported' ), 10, 2 );
+					add_filter( 'bulk_post_updated_messages', [ $this, 'bulk_post_updated_messages_supported' ], 10, 2 );
 
 				if ( $this->get_setting( 'admin_restrict', FALSE ) )
-					add_action( 'restrict_manage_posts', array( $this, 'restrict_manage_posts_supported_cpt' ), 12, 2 );
+					add_action( 'restrict_manage_posts', [ $this, 'restrict_manage_posts_supported_cpt' ], 12, 2 );
 
 				$this->_tweaks_taxonomy();
 			}
 
-			add_action( 'save_post', array( $this, 'save_post_supported_cpt' ), 20, 3 );
+			add_action( 'save_post', [ $this, 'save_post_supported_cpt' ], 20, 3 );
 		}
 	}
 
 	private function _edit_screen( $post_type )
 	{
-		add_filter( 'manage_'.$post_type.'_posts_columns', array( $this, 'manage_posts_columns' ) );
-		add_filter( 'manage_'.$post_type.'_posts_custom_column', array( $this, 'posts_custom_column' ), 10, 2 );
+		add_filter( 'manage_'.$post_type.'_posts_columns', [ $this, 'manage_posts_columns' ] );
+		add_filter( 'manage_'.$post_type.'_posts_custom_column', [ $this, 'posts_custom_column' ], 10, 2 );
 	}
 
 	private function _sync_linked( $post_type )
 	{
-		add_action( 'save_post', array( $this, 'save_post_main_cpt' ), 20, 3 );
-		add_action( 'post_updated', array( $this, 'post_updated' ), 20, 3 );
+		add_action( 'save_post', [ $this, 'save_post_main_cpt' ], 20, 3 );
+		$this->action( 'post_updated', 3, 20 );
 
-		add_action( 'wp_trash_post', array( $this, 'wp_trash_post' ) );
-		add_action( 'untrash_post', array( $this, 'untrash_post' ) );
-		add_action( 'before_delete_post', array( $this, 'before_delete_post' ) );
+		$this->action( 'wp_trash_post' );
+		$this->action( 'untrash_post' );
+		$this->action( 'before_delete_post' );
 	}
 
 	public function register_settings( $page = NULL )
@@ -310,18 +310,18 @@ class Contest extends gEditorial\Module
 
 	public function meta_post_types( $post_types )
 	{
-		return array_merge( $post_types, array(
+		return array_merge( $post_types, [
 			$this->constant( 'contest_cpt' ),
 			$this->constant( 'apply_cpt' ),
-		) );
+		] );
 	}
 
 	public function gpeople_support( $post_types )
 	{
-		return array_merge( $post_types, array(
+		return array_merge( $post_types, [
 			$this->constant( 'contest_cpt' ),
 			$this->constant( 'apply_cpt' ),
-		) );
+		] );
 	}
 
 	public function dashboard_glance_items( $items )
@@ -408,7 +408,7 @@ class Contest extends gEditorial\Module
 		MetaBox::fieldPostMenuOrder( $post );
 
 		$post_type = $this->constant( 'contest_cpt' );
-		$dropdowns = $excludes = array();
+		$dropdowns = $excludes = [];
 
 		foreach ( $terms as $term ) {
 			$dropdowns[$term->slug] = MetaBox::dropdownAssocPosts( $post_type, $term->slug, $this->classs() );
@@ -441,22 +441,22 @@ class Contest extends gEditorial\Module
 
 	public function post_updated_messages( $messages )
 	{
-		return array_merge( $messages, array( $this->constant( 'contest_cpt' ) => $this->get_post_updated_messages( 'contest_cpt' ) ) );
+		return array_merge( $messages, [ $this->constant( 'contest_cpt' ) => $this->get_post_updated_messages( 'contest_cpt' ) ] );
 	}
 
 	public function bulk_post_updated_messages( $messages, $counts )
 	{
-		return array_merge( $messages, array( $this->constant( 'contest_cpt' ) => $this->get_bulk_post_updated_messages( 'contest_cpt', $counts ) ) );
+		return array_merge( $messages, [ $this->constant( 'contest_cpt' ) => $this->get_bulk_post_updated_messages( 'contest_cpt', $counts ) ] );
 	}
 
 	public function post_updated_messages_supported( $messages )
 	{
-		return array_merge( $messages, array( $this->constant( 'apply_cpt' ) => $this->get_post_updated_messages( 'apply_cpt' ) ) );
+		return array_merge( $messages, [ $this->constant( 'apply_cpt' ) => $this->get_post_updated_messages( 'apply_cpt' ) ] );
 	}
 
 	public function bulk_post_updated_messages_supported( $messages, $counts )
 	{
-		return array_merge( $messages, array( $this->constant( 'apply_cpt' ) => $this->get_bulk_post_updated_messages( 'apply_cpt', $counts ) ) );
+		return array_merge( $messages, [ $this->constant( 'apply_cpt' ) => $this->get_bulk_post_updated_messages( 'apply_cpt', $counts ) ] );
 	}
 
 
@@ -483,12 +483,12 @@ class Contest extends gEditorial\Module
 		if ( empty( $post_after->post_name ) )
 			$post_after->post_name = sanitize_title( $post_after->post_title );
 
-		$args = array(
+		$args = [
 			'name'        => $post_after->post_title,
 			'slug'        => $post_after->post_name,
 			'description' => $post_after->post_excerpt,
 			// 'parent'      => ( isset( $parent_term_id ) ? $parent_term_id : 0 ),
-		);
+		];
 
 		$the_term = get_term_by( 'slug', $post_before->post_name, $this->constant( 'contest_tax' ) );
 
@@ -520,12 +520,12 @@ class Contest extends gEditorial\Module
 		if ( empty( $post->post_name ) )
 			$post->post_name = sanitize_title( $post->post_title );
 
-		$args = array(
+		$args = [
 			'name'        => $post->post_title,
 			'slug'        => $post->post_name,
 			'description' => $post->post_excerpt,
 			// 'parent'      => ( isset( $parent_term_id ) ? $parent_term_id : 0 ),
-		);
+		];
 
 		$term = wp_insert_term( $post->post_title, $this->constant( 'contest_tax' ), $args );
 
@@ -595,7 +595,7 @@ class Contest extends gEditorial\Module
 
 	public function manage_posts_columns( $posts_columns )
 	{
-		$new_columns = array();
+		$new_columns = [];
 		foreach ( $posts_columns as $key => $value ) {
 
 			if ( $key == 'title' ) {
@@ -606,7 +606,7 @@ class Contest extends gEditorial\Module
 			} else if ( 'date' == $key ) {
 				$new_columns['children'] = $this->get_column_title( 'children', 'contest_cpt' );
 
-			} else if ( in_array( $key, array( 'author', 'comments' ) ) ) {
+			} else if ( in_array( $key, [ 'author', 'comments' ] ) ) {
 				continue; // he he!
 
 			} else {
@@ -630,7 +630,7 @@ class Contest extends gEditorial\Module
 
 	public function sortable_columns( $columns )
 	{
-		return array_merge( $columns, array( 'order' => 'menu_order' ) );
+		return array_merge( $columns, [ 'order' => 'menu_order' ] );
 	}
 
 	public function main_column_attr( $post )
@@ -649,23 +649,21 @@ class Contest extends gEditorial\Module
 				return $r->post_type;
 			}, $posts ) );
 
-			$args = array(
-				$this->constant( 'contest_tax' ) => $post->post_name,
-			);
+			$args = [ $this->constant( 'contest_tax' ) => $post->post_name ];
 
 			if ( empty( $this->all_post_types ) )
 				$this->all_post_types = PostType::get( 2 );
 
 			echo '<span class="-counted">'.$this->nooped_count( 'connected', $count ).'</span>';
 
-			$list = array();
+			$list = [];
 
 			foreach ( $post_types as $post_type )
-				$list[] = HTML::tag( 'a', array(
+				$list[] = HTML::tag( 'a', [
 					'href'   => WordPress::getPostTypeEditLink( $post_type, 0, $args ),
 					'title'  => _x( 'View the connected list', 'Modules: Contest', GEDITORIAL_TEXTDOMAIN ),
 					'target' => '_blank',
-				), $this->all_post_types[$post_type] );
+				], $this->all_post_types[$post_type] );
 
 			echo Helper::getJoined( $list, ' <span class="-posttypes">(', ')</span>' );
 
@@ -684,11 +682,11 @@ class Contest extends gEditorial\Module
 
 			if ( ! empty( $_POST ) && isset( $_POST['contest_tax_check'] ) ) {
 
-				HTML::tableList( array(
+				HTML::tableList( [
 					'_cb'     => 'term_id',
 					'term_id' => Helper::tableColumnTermID(),
 					'name'    => Helper::tableColumnTermName(),
-					'linked'   => array(
+					'linked'   => [
 						'title' => _x( 'Linked Contest Post', 'Modules: Contest: Table Column', GEDITORIAL_TEXTDOMAIN ),
 						'callback' => function( $value, $row, $column, $index ){
 
@@ -697,8 +695,8 @@ class Contest extends gEditorial\Module
 
 							return '&mdash;';
 						},
-					),
-					'slugged'   => array(
+					],
+					'slugged'   => [
 						'title' => _x( 'Same Slug Contest Post', 'Modules: Contest: Table Column', GEDITORIAL_TEXTDOMAIN ),
 						'callback' => function( $value, $row, $column, $index ){
 
@@ -707,17 +705,17 @@ class Contest extends gEditorial\Module
 
 							return '&mdash;';
 						},
-					),
-					'count' => array(
+					],
+					'count' => [
 						'title'    => _x( 'Count', 'Modules: Contest: Table Column', GEDITORIAL_TEXTDOMAIN ),
 						'callback' => function( $value, $row, $column, $index ){
 							if ( $post_id = PostType::getIDbySlug( $row->slug, $this->constant( 'contest_cpt' ) ) )
 								return Number::format( $this->get_linked_posts( $post_id, 'contest_cpt', 'contest_tax', TRUE ) );
 							return Number::format( $row->count );
 						},
-					),
+					],
 					'description' => Helper::tableColumnTermDesc(),
-				), Taxonomy::getTerms( $this->constant( 'contest_tax' ), FALSE, TRUE ) );
+				], Taxonomy::getTerms( $this->constant( 'contest_tax' ), FALSE, TRUE ) );
 
 				echo '<br />';
 			}
@@ -754,7 +752,7 @@ class Contest extends gEditorial\Module
 					&& isset( $_POST['contest_post_create'] ) ) {
 
 					$terms = Taxonomy::getTerms( $this->constant( 'contest_tax' ), FALSE, TRUE );
-					$posts = array();
+					$posts = [];
 
 					foreach ( $_POST['_cb'] as $term_id ) {
 
@@ -774,10 +772,10 @@ class Contest extends gEditorial\Module
 						);
 					}
 
-					WordPress::redirectReferer( array(
+					WordPress::redirectReferer( [
 						'message' => 'created',
 						'count'   => count( $posts ),
-					) );
+					] );
 
 				} else if ( isset( $_POST['_cb'] )
 					&& isset( $_POST['contest_post_connect'] ) ) {
@@ -799,10 +797,10 @@ class Contest extends gEditorial\Module
 							$count++;
 					}
 
-					WordPress::redirectReferer( array(
+					WordPress::redirectReferer( [
 						'message' => 'updated',
 						'count'   => $count,
-					) );
+					] );
 
 				} else if ( isset( $_POST['_cb'] )
 					&& isset( $_POST['contest_tax_delete'] ) ) {
@@ -820,10 +818,10 @@ class Contest extends gEditorial\Module
 						}
 					}
 
-					WordPress::redirectReferer( array(
+					WordPress::redirectReferer( [
 						'message' => 'deleted',
 						'count'   => $count,
-					) );
+					] );
 				}
 			}
 		}

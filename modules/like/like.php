@@ -17,41 +17,41 @@ class Like extends gEditorial\Module
 
 	public static function module()
 	{
-		return array(
+		return [
 			'name'  => 'like',
 			'title' => _x( 'Like', 'Modules: Like', GEDITORIAL_TEXTDOMAIN ),
 			'desc'  => _x( 'Like Button for Posts and Comments', 'Modules: Like', GEDITORIAL_TEXTDOMAIN ),
 			'icon'  => 'heart',
-		);
+		];
 	}
 
 	protected function get_global_settings()
 	{
-		return array(
-			'_general' => array(
-				array(
+		return [
+			'_general' => [
+				[
 					'field'       => 'avatars',
 					'title'       => _x( 'Avatars', 'Modules: Like: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Display avatars next to the like button', 'Modules: Like: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-				),
-				array(
+				],
+				[
 					'field'       => 'comments',
 					'title'       => _x( 'Comments', 'Modules: Like: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Also display button for comments of enabled post types', 'Modules: Like: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-				),
-			),
+				],
+			],
 			'posttypes_option' => 'posttypes_option',
-		);
+		];
 	}
 
-	public function setup( $args = array() )
+	public function setup( $args = [] )
 	{
 		parent::setup();
 
 		if ( ! is_admin() ) {
-			add_action( 'template_redirect', array( $this, 'template_redirect' ) );
+			$this->action( 'template_redirect' );
 
-			add_action( 'gnetwork_debugbar_panel_geditorial_like', array( $this, 'gnetwork_debugbar_panel' ) );
+			add_action( 'gnetwork_debugbar_panel_geditorial_like', [ $this, 'gnetwork_debugbar_panel' ] );
 			add_filter( 'gnetwork_debugbar_panel_groups', function( $groups ){
 				$groups['geditorial_like'] = _x( 'Editorial Like', 'Modules: Like: Debug Bar Panel Title', GEDITORIAL_TEXTDOMAIN );
 				return $groups;
@@ -111,8 +111,8 @@ class Like extends gEditorial\Module
 		if ( ! $this->post_id )
 			return;
 
-		$users = $this->get_postmeta( $this->post_id, FALSE, array(), $this->meta_key.'_users' );
-		$guests = $this->get_postmeta( $this->post_id, FALSE, array(), $this->meta_key.'_guests' );
+		$users = $this->get_postmeta( $this->post_id, FALSE, [], $this->meta_key.'_users' );
+		$guests = $this->get_postmeta( $this->post_id, FALSE, [], $this->meta_key.'_guests' );
 		$cookie = $this->get_cookie();
 
 		echo 'Users:'; self::dump( $users );
@@ -132,7 +132,7 @@ class Like extends gEditorial\Module
 
 				list( $check, $count ) = $this->check( $post['id'] );
 
-				wp_send_json_success( array(
+				wp_send_json_success( [
 					'title'   => $this->title( $check, $post['id'] ),
 					'action'  => $check ? 'unlike' : 'dolike',
 					'remove'  => 'loading',
@@ -140,7 +140,7 @@ class Like extends gEditorial\Module
 					'nonce'   => wp_create_nonce( 'geditorial_like_ajax-'.$post['id'] ),
 					'count'   => Number::format( $count ),
 					'avatars' => $this->get_setting( 'avatars', FALSE ) ? $this->avatars( $post['id'] ) : NULL,
-				) );
+				] );
 
 			break;
 			case 'dolike':
@@ -149,14 +149,14 @@ class Like extends gEditorial\Module
 
 				list( $check, $count ) = $this->like( $post['id'] );
 
-				wp_send_json_success( array(
+				wp_send_json_success( [
 					'title'   => $this->title( $check, $post['id'] ),
 					'action'  => 'unlike',
 					'remove'  => 'dolike',
 					'add'     => 'unlike',
 					'count'   => Number::format( $count ),
 					'avatars' => $this->get_setting( 'avatars', FALSE ) ? $this->avatars( $post['id'] ) : NULL,
-				) );
+				] );
 
 			break;
 			case 'unlike':
@@ -165,14 +165,14 @@ class Like extends gEditorial\Module
 
 				list( $check, $count ) = $this->unlike( $post['id'] );
 
-				wp_send_json_success( array(
+				wp_send_json_success( [
 					'title'   => $this->title( $check, $post['id'] ),
 					'action'  => 'dolike',
 					'remove'  => 'unlike',
 					'add'     => 'dolike',
 					'count'   => Number::format( $count ),
 					'avatars' => $this->get_setting( 'avatars', FALSE ) ? $this->avatars( $post['id'] ) : NULL,
-				) );
+				] );
 		}
 
 		Ajax::errorWhat();
@@ -185,8 +185,8 @@ class Like extends gEditorial\Module
 
 	public function unlike( $post_id )
 	{
-		$users  = $this->get_postmeta( $post_id, FALSE, array(), $this->meta_key.'_users' );
-		$guests = $this->get_postmeta( $post_id, FALSE, array(), $this->meta_key.'_guests' );
+		$users  = $this->get_postmeta( $post_id, FALSE, [], $this->meta_key.'_users' );
+		$guests = $this->get_postmeta( $post_id, FALSE, [], $this->meta_key.'_guests' );
 		$count  = count( $users ) + count( $guests );
 
 		if ( is_user_logged_in() ) {
@@ -214,13 +214,13 @@ class Like extends gEditorial\Module
 
 		}
 
-		return array( FALSE, $count );
+		return [ FALSE, $count ];
 	}
 
 	public function like( $post_id )
 	{
-		$users     = $this->get_postmeta( $post_id, FALSE, array(), $this->meta_key.'_users' );
-		$guests    = $this->get_postmeta( $post_id, FALSE, array(), $this->meta_key.'_guests' );
+		$users     = $this->get_postmeta( $post_id, FALSE, [], $this->meta_key.'_users' );
+		$guests    = $this->get_postmeta( $post_id, FALSE, [], $this->meta_key.'_guests' );
 		$count     = count( $users ) + count( $guests );
 		$timestamp = current_time( 'timestamp' );
 
@@ -231,30 +231,30 @@ class Like extends gEditorial\Module
 				$this->set_meta( $post_id, $users, '_users' );
 				$count++;
 			}
-			return array( TRUE, $count );
+			return [ TRUE, $count ];
 		} else {
 			$cookie = $this->get_cookie();
 			if ( ! array_key_exists( $post_id, $cookie ) ) {
 				$guests[$timestamp] = HTTP::IP();
 				$this->set_meta( $post_id, $guests, '_guests' );
-				$this->set_cookie( array( $post_id => $guests[$timestamp] ) );
+				$this->set_cookie( [ $post_id => $guests[$timestamp] ] );
 				$count++;
 			}
-			return array( TRUE, $count );
+			return [ TRUE, $count ];
 		}
 	}
 
 	public function check( $post_id )
 	{
-		$users  = $this->get_postmeta( $post_id, FALSE, array(), $this->meta_key.'_users' );
-		$guests = $this->get_postmeta( $post_id, FALSE, array(), $this->meta_key.'_guests' );
+		$users  = $this->get_postmeta( $post_id, FALSE, [], $this->meta_key.'_users' );
+		$guests = $this->get_postmeta( $post_id, FALSE, [], $this->meta_key.'_guests' );
 		$count  = count( $users ) + count( $guests );
 
 		if ( is_user_logged_in() ) {
-			return array( array_search( get_current_user_id(), $users ), $count );
+			return [ array_search( get_current_user_id(), $users ), $count ];
 		} else {
 			$cookie = $this->get_cookie();
-			return array( array_key_exists( $post_id, $cookie ), $count );
+			return [ array_key_exists( $post_id, $cookie ), $count ];
 		}
 	}
 
@@ -265,13 +265,14 @@ class Like extends gEditorial\Module
 		if ( ! $this->get_setting( 'avatars', FALSE ) )
 			return $html;
 
-		$users = $this->get_postmeta( $post_id, FALSE, array(), $this->meta_key.'_users' );
+		$users = $this->get_postmeta( $post_id, FALSE, [], $this->meta_key.'_users' );
 
 		if ( count( $users ) ) {
-			$query = new \WP_User_Query( array(
+
+			$query = new \WP_User_Query( [
 				'include' => array_values( $users ),
-				'fields'  => array( 'user_email', 'ID', 'display_name' ),
-			) );
+				'fields'  => [ 'user_email', 'ID', 'display_name' ],
+			] );
 
 			if ( ! empty( $query->results ) ) {
 				foreach ( $query->results as $user ) {

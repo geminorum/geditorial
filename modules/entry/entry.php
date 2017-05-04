@@ -16,18 +16,18 @@ class Entry extends gEditorial\Module
 
 	public static function module()
 	{
-		return array(
+		return [
 			'name'  => 'entry',
 			'title' => _x( 'Entry', 'Modules: Entry', GEDITORIAL_TEXTDOMAIN ),
 			'desc'  => _x( 'Wiki-like Posts Entries', 'Modules: Entry', GEDITORIAL_TEXTDOMAIN ),
 			'icon'  => 'media-document',
-		);
+		];
 	}
 
 	protected function get_global_settings()
 	{
-		return array(
-			'_general' => array(
+		return [
+			'_general' => [
 				'shortcode_support',
 				'admin_ordering',
 				'admin_restrict',
@@ -37,42 +37,42 @@ class Entry extends gEditorial\Module
 				// 'rewrite_prefix', // FIXME: working but needs prem link rewrites
 				'before_content',
 				'after_content',
-			),
-		);
+			],
+		];
 	}
 
 	protected function get_global_constants()
 	{
-		return array(
+		return [
 			'entry_cpt'         => 'entry',
 			'entry_cpt_archive' => 'entries',
 			'rewrite_prefix'    => 'entry', // wiki
 			'section_tax'       => 'entry_section',
 			'section_tax_slug'  => 'entry-section',
 			'section_shortcode' => 'entry-section',
-		);
+		];
 	}
 
 	protected function get_global_strings()
 	{
-		return array(
-			'misc' => array(
+		return [
+			'misc' => [
 				'featured'             => _x( 'Cover Image', 'Modules: Entry: Entry CPT: Featured', GEDITORIAL_TEXTDOMAIN ),
 				'meta_box_title'       => _x( 'Entry', 'Modules: Entry: Meta Box Title', GEDITORIAL_TEXTDOMAIN ),
 				'section_column_title' => _x( 'Section', 'Modules: Entry: Column Title', GEDITORIAL_TEXTDOMAIN ),
 				'order_column_title'   => _x( 'O', 'Modules: Entry: Column Title', GEDITORIAL_TEXTDOMAIN ),
-			),
-			'noops' => array(
+			],
+			'noops' => [
 				'entry_cpt'   => _nx_noop( 'Entry', 'Entries', 'Modules: Entry: Noop', GEDITORIAL_TEXTDOMAIN ),
 				'section_tax' => _nx_noop( 'Section', 'Sections', 'Modules: Entry: Noop', GEDITORIAL_TEXTDOMAIN ),
-			),
-		);
+			],
+		];
 	}
 
 	protected function get_global_supports()
 	{
-		return array(
-			'entry_cpt' => array(
+		return [
+			'entry_cpt' => [
 				'title',
 				'editor',
 				'excerpt',
@@ -81,48 +81,48 @@ class Entry extends gEditorial\Module
 				'comments',
 				'revisions',
 				'date-picker', // gPersianDate
-			),
-		);
+			],
+		];
 	}
 
 	public function meta_post_types( $post_types )
 	{
-		return array_merge( $post_types, array( $this->constant( 'entry_cpt' ) ) );
+		return array_merge( $post_types, [ $this->constant( 'entry_cpt' ) ] );
 	}
 
 	public function gpeople_support( $post_types )
 	{
-		return array_merge( $post_types, array( $this->constant( 'entry_cpt' ) ) );
+		return array_merge( $post_types, [ $this->constant( 'entry_cpt' ) ] );
 	}
 
 	public function init()
 	{
 		parent::init();
 
-		$this->post_types_excluded = array( 'attachment', $this->constant( 'entry_cpt' ) );
+		$this->post_types_excluded = [ 'attachment', $this->constant( 'entry_cpt' ) ];
 
 		$this->register_post_type( 'entry_cpt' );
-		$this->register_taxonomy( 'section_tax', array(
+		$this->register_taxonomy( 'section_tax', [
 			'hierarchical'       => TRUE,
 			'show_in_quick_edit' => TRUE,
 			'show_in_nav_menus'  => TRUE,
 			'meta_box_cb'        => NULL, // default meta box
-		), 'entry_cpt' );
+		], 'entry_cpt' );
 
-		// add_action( 'generate_rewrite_rules', array( $this, 'generate_rewrite_rules' ) );
+		// add_action( 'generate_rewrite_rules', [ $this, 'generate_rewrite_rules' ) );
 
 		if ( is_admin() ) {
 
 		} else {
 
 			if ( $this->get_setting( 'before_content', FALSE ) )
-				add_action( 'gnetwork_themes_content_before', array( $this, 'content_before' ), 100 );
+				add_action( 'gnetwork_themes_content_before', [ $this, 'content_before' ], 100 );
 
 			if ( $this->get_setting( 'after_content', FALSE ) )
-				add_action( 'gnetwork_themes_content_after', array( $this, 'content_after' ), 1 );
+				add_action( 'gnetwork_themes_content_after', [ $this, 'content_after' ], 1 );
 
 			if ( $this->get_setting( 'autolink_terms', FALSE ) )
-				add_filter( 'the_content', array( $this, 'the_content' ), 9 );
+				$this->filter( 'the_content', 1, 9 );
 		}
 
 		$this->register_shortcode( 'section_shortcode' );
@@ -180,45 +180,45 @@ class Entry extends gEditorial\Module
 	{
 		if ( 'dashboard' == $screen->base ) {
 
-			add_filter( 'dashboard_recent_drafts_query_args', array( $this, 'dashboard_recent_drafts_query_args' ) );
+			$this->filter( 'dashboard_recent_drafts_query_args' );
 
 		} else if ( $screen->post_type == $this->constant( 'entry_cpt' ) ) {
 
 			if ( 'post' == $screen->base ) {
 
-				add_filter( 'post_updated_messages', array( $this, 'post_updated_messages' ) );
-				add_filter( 'get_default_comment_status', array( $this, 'get_default_comment_status' ), 10, 3 );
+				$this->filter( 'post_updated_messages' );
+				$this->filter( 'get_default_comment_status', 3 );
 
 			} else if ( 'edit' == $screen->base ) {
 
 				$this->filter( 'bulk_post_updated_messages', 2 );
 
 				if ( $this->get_setting( 'admin_restrict', FALSE ) ) {
-					add_action( 'restrict_manage_posts', array( $this, 'restrict_manage_posts' ), 12, 2 );
-					add_filter( 'parse_query', array( $this, 'parse_query' ) );
+					$this->action( 'restrict_manage_posts', 2, 12 );
+					$this->filter( 'parse_query' );
 				}
 
 				if ( $this->get_setting( 'admin_ordering', TRUE ) )
-					add_action( 'pre_get_posts', array( $this, 'pre_get_posts' ) );
+					$this->action( 'pre_get_posts' );
 
 				$this->filter( 'posts_clauses', 2 );
 
 				$this->_edit_screen( $screen->post_type );
-				add_filter( 'manage_edit-'.$screen->post_type.'_sortable_columns', array( $this, 'sortable_columns' ) );
+				add_filter( 'manage_edit-'.$screen->post_type.'_sortable_columns', [ $this, 'sortable_columns' ] );
 			}
 		}
 	}
 
 	private function _edit_screen( $post_type )
 	{
-		add_filter( 'manage_'.$post_type.'_posts_columns', array( $this, 'manage_posts_columns' ) );
-		add_action( 'manage_'.$post_type.'_posts_custom_column', array( $this, 'posts_custom_column' ), 10, 2 );
+		add_filter( 'manage_'.$post_type.'_posts_columns', [ $this, 'manage_posts_columns' ] );
+		add_action( 'manage_'.$post_type.'_posts_custom_column', [ $this, 'posts_custom_column' ], 10, 2 );
 	}
 
 	public function dashboard_recent_drafts_query_args( $query_args )
 	{
 		if ( 'post' == $query_args['post_type'] )
-			$query_args['post_type'] = array( 'post', $this->constant( 'entry_cpt' ) );
+			$query_args['post_type'] = [ 'post', $this->constant( 'entry_cpt' ) ];
 
 		else if ( is_array( $query_args['post_type'] ) )
 			$query_args['post_type'][] = $this->constant( 'entry_cpt' );
@@ -254,12 +254,12 @@ class Entry extends gEditorial\Module
 
 	public function posts_clauses( $pieces, $wp_query )
 	{
-		return $this->do_posts_clauses_taxes( $pieces, $wp_query, array( 'section_tax' ) );
+		return $this->do_posts_clauses_taxes( $pieces, $wp_query, 'section_tax' );
 	}
 
 	public function manage_posts_columns( $posts_columns )
 	{
-		$new_columns = array();
+		$new_columns = [];
 
 		$section = $this->constant( 'section_tax' );
 
@@ -271,7 +271,7 @@ class Entry extends gEditorial\Module
 				$new_columns['order'] = $this->get_column_title( 'order', 'entry_cpt' );
 				$new_columns[$key] = $value;
 
-			} else if ( in_array( $key, array( 'author', 'comments' ) ) ) {
+			} else if ( in_array( $key, [ 'author', 'comments' ] ) ) {
 				continue; // he he!
 
 			} else {
@@ -285,10 +285,10 @@ class Entry extends gEditorial\Module
 	{
 		$tax = $this->constant( 'section_tax' );
 
-		return array_merge( $columns, array(
+		return array_merge( $columns, [
 			'order'          => 'menu_order',
 			'taxonomy-'.$tax => 'taxonomy-'.$tax,
-		) );
+		] );
 	}
 
 	public function posts_custom_column( $column_name, $post_id )
@@ -307,12 +307,12 @@ class Entry extends gEditorial\Module
 
 	public function post_updated_messages( $messages )
 	{
-		return array_merge( $messages, array( $this->constant( 'entry_cpt' ) => $this->get_post_updated_messages( 'entry_cpt' ) ) );
+		return array_merge( $messages, [ $this->constant( 'entry_cpt' ) => $this->get_post_updated_messages( 'entry_cpt' ) ] );
 	}
 
 	public function bulk_post_updated_messages( $messages, $counts )
 	{
-		return array_merge( $messages, array( $this->constant( 'entry_cpt' ) => $this->get_bulk_post_updated_messages( 'entry_cpt', $counts ) ) );
+		return array_merge( $messages, [ $this->constant( 'entry_cpt' ) => $this->get_bulk_post_updated_messages( 'entry_cpt', $counts ) ] );
 	}
 
 	public function generate_rewrite_rules( $wp_rewrite )
@@ -322,12 +322,12 @@ class Entry extends gEditorial\Module
 		if ( ! $prefix )
 			$prefix = $this->constant( 'rewrite_prefix' );
 
-		$new_rules = array(
+		$new_rules = [
 			$prefix.'/(.*)/(.*)' => 'index.php'
 				.'?post_type='.$this->constant( 'entry_cpt' )
 				.'&'.$this->constant( 'section_tax' ).'='.$wp_rewrite->preg_index( 1 )
 				.'&'.$this->constant( 'entry_cpt' ).'='.$wp_rewrite->preg_index( 2 ),
-		);
+		];
 
 		$wp_rewrite->rules = $new_rules + $wp_rewrite->rules;
 	}

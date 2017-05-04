@@ -1835,7 +1835,7 @@ class Module extends Base
 
 			global $wpdb;
 
-			foreach ( $taxes as $constant_key ) {
+			foreach ( (array) $taxes as $constant_key ) {
 				$tax = $this->constant( $constant_key );
 
 				if ( isset( $wp_query->query['orderby'] )

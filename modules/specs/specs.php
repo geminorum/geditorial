@@ -18,79 +18,78 @@ class Specs extends gEditorial\Module
 
 	public static function module()
 	{
-		return array(
+		return [
 			'name'  => 'specs',
 			'title' => _x( 'Specifications', 'Modules: Specs', GEDITORIAL_TEXTDOMAIN ),
 			'desc'  => _x( 'Post Specifications Management', 'Modules: Specs', GEDITORIAL_TEXTDOMAIN ),
 			'icon'  => 'editor-ul',
-		);
+		];
 	}
 
 	protected function get_global_settings()
 	{
-		return array(
+		return [
 			'posttypes_option' => 'posttypes_option',
 			'fields_option'    => 'fields_option',
-		);
+		];
 	}
 
 	protected function get_global_constants()
 	{
-		return array(
+		return [
 			'specs_tax'                => 'specs',
 			'specs_shortcode'          => 'specs',
 			'multiple_specs_shortcode' => 'multiple_specs',
-		);
+		];
 	}
 
 	protected function get_global_strings()
 	{
-		return array(
-			'titles' => array(
-				'post' => array(
+		return [
+			'titles' => [
+				'post' => [
 					'spec_title' => _x( 'Title', 'Modules: Specs', GEDITORIAL_TEXTDOMAIN ),
 					'spec_order' => _x( 'Order', 'Modules: Specs', GEDITORIAL_TEXTDOMAIN ),
 					'spec_value' => _x( 'Description', 'Modules: Specs', GEDITORIAL_TEXTDOMAIN ),
-				),
-			),
-			'descriptions' => array(
-				'post' => array(
+				],
+			],
+			'descriptions' => [
+				'post' => [
 					'spec_title' => _x( 'In Specifications Title', 'Modules: Specs', GEDITORIAL_TEXTDOMAIN ),
 					'spec_order' => _x( 'In Specifications Order', 'Modules: Specs', GEDITORIAL_TEXTDOMAIN ),
 					'spec_value' => _x( 'In Specifications Description', 'Modules: Specs', GEDITORIAL_TEXTDOMAIN ),
-				),
-			),
-			'misc' => array(
-				'post' => array(
+				],
+			],
+			'misc' => [
+				'post' => [
 					'meta_box_title'   => _x( 'Specifications', 'Modules: Specs', GEDITORIAL_TEXTDOMAIN ),
 					'column_title'     => _x( 'Specifications', 'Modules: Specs', GEDITORIAL_TEXTDOMAIN ),
 					'show_option_none' => _x( '&mdash; Choose a Specification &mdash;', 'Modules: Specs', GEDITORIAL_TEXTDOMAIN ),
-				),
-			),
-			'noops' => array(
+				],
+			],
+			'noops' => [
 				'specs_tax' => _nx_noop( 'Specification', 'Specifications', 'Modules: Specs: Noop', GEDITORIAL_TEXTDOMAIN ),
-			),
-		);
+			],
+		];
 	}
 
 	protected function get_global_fields()
 	{
-		return array(
-			$this->constant( 'post_cpt' ) => array(
+		return [
+			$this->constant( 'post_cpt' ) => [
 				'spec_title' => TRUE,
 				'spec_order' => TRUE,
 				'spec_value' => TRUE,
-			),
-		);
+			],
+		];
 	}
 
-	public function setup( $partials = array() )
+	public function setup( $partials = [] )
 	{
 		parent::setup();
 
-		if ( is_admin() ) {
-			add_action( 'save_post', array( $this, 'save_post' ), 20, 2 );
-		}
+		if ( is_admin() )
+			$this->action( 'save_post', 2, 20 );
 	}
 
 	public function init()
@@ -102,8 +101,8 @@ class Specs extends gEditorial\Module
 		foreach ( $this->post_types() as $post_type )
 			$this->add_post_type_fields( $post_type, $this->fields[$this->constant( 'post_cpt' )], 'specs' );
 
-		// add_shortcode( $this->constant( 'specs_shortcode' ), array( $this, 'shortcode_specs' ) );
-		// add_shortcode( $this->constant( 'multiple_specs_shortcode' ), array( $this, 'shortcode_multiple_specs' ) );
+		// add_shortcode( $this->constant( 'specs_shortcode' ), [ $this, 'shortcode_specs' ] );
+		// add_shortcode( $this->constant( 'multiple_specs_shortcode' ), [ $this, 'shortcode_multiple_specs' ] );
 	}
 
 	public function current_screen( $screen )
@@ -114,7 +113,7 @@ class Specs extends gEditorial\Module
 			add_meta_box(
 				'geditorial-specs',
 				$this->get_meta_box_title( 'specs_tax', $this->get_url_tax_edit( 'specs_tax' ), 'edit_others_posts' ),
-				array( $this, 'do_meta_box' ),
+				[ $this, 'do_meta_box' ],
 				$screen,
 				'side',
 				'high'
@@ -122,15 +121,15 @@ class Specs extends gEditorial\Module
 
 			wp_register_script( 'jquery-sortable',
 				GEDITORIAL_URL.'assets/packages/jquery-sortable/jquery-sortable.min.js',
-				array( 'jquery' ),
+				[ 'jquery' ],
 				'0.9.13',
 				TRUE );
 
-			$this->enqueue_asset_js( array(), 'specs.'.$screen->base, array( 'jquery-sortable' ) );
+			$this->enqueue_asset_js( [], 'specs.'.$screen->base, [ 'jquery-sortable' ] );
 
 			// internal
-			add_action( 'geditorial_specs_meta_box', array( $this, 'geditorial_specs_meta_box' ), 5, 2 );
-			// add_action( 'geditorial_specs_meta_box_item', array( $this, 'geditorial_specs_meta_box_item' ), 5, 5 );
+			add_action( 'geditorial_specs_meta_box', [ $this, 'geditorial_specs_meta_box' ], 5, 2 );
+			// add_action( 'geditorial_specs_meta_box_item', [ $this, 'geditorial_specs_meta_box_item' ], 5, 5 );
 		}
 	}
 
@@ -159,16 +158,16 @@ class Specs extends gEditorial\Module
 		if ( ! $post = get_post( $post_id ) )
 			return FALSE;
 
-		$meta = $this->get_postmeta( $post_id, FALSE, array() );
+		$meta = $this->get_postmeta( $post_id, FALSE, [] );
 		$spec_terms = Taxonomy::getTerms( $this->constant( 'specs_tax' ), FALSE, TRUE, 'slug' );
-		$terms = array();
+		$terms = [];
 
 		foreach ( $meta as $meta_row )
 			$terms[] = intval( $meta_row['spec_term_id'] );
 
 		$counter = 1;
 		foreach ( $specs as $spec ) {
-			$row = array();
+			$row = [];
 
 			if ( isset( $spec_terms[$spec['name']] ) ) {
 				$row['spec_term_id'] = $spec_terms[$spec['name']]->term_id;
@@ -176,7 +175,7 @@ class Specs extends gEditorial\Module
 
 			} else if ( $create ) { // create new term object
 				if ( isset( $spec['title'] ) && $spec['title'] )
-					$new_term = wp_insert_term( $spec['title'], $this->constant( 'specs_tax' ), array( 'slug' => $spec['name'] ) );
+					$new_term = wp_insert_term( $spec['title'], $this->constant( 'specs_tax' ), [ 'slug' => $spec['name'] ] );
 				else
 					$new_term = wp_insert_term( $spec['name'], $this->constant( 'specs_tax' ) );
 
@@ -239,7 +238,7 @@ class Specs extends gEditorial\Module
 			return $postmeta;
 
 		$prefix = 'geditorial-specs-';
-		$postmeta = $terms = array();
+		$postmeta = $terms = [];
 
 		foreach ( $_POST['geditorial-specs_term_id'] as $offset => $term_id )
 			if ( $term_id && '-1' != $term_id )
@@ -300,7 +299,7 @@ class Specs extends gEditorial\Module
 			return MetaBox::fieldEmptyTaxonomy( $tax );
 
 		$fields = $this->post_type_fields( $post->post_type );
-		$metas  = $this->get_postmeta( $post->ID, FALSE, array() );
+		$metas  = $this->get_postmeta( $post->ID, FALSE, [] );
 
 		$handle = '<span class="item-handle dashicons dashicons-move" title="'._x( 'Sort Me!', 'Modules: Specs: Sortable handler title attr', GEDITORIAL_TEXTDOMAIN ).'"></span>';
 		$delete = '<span class="item-delete dashicons dashicons-trash" title="'._x( 'Trash Me!', 'Modules: Specs: Sortable trash title attr', GEDITORIAL_TEXTDOMAIN ).'"></span>';
@@ -322,7 +321,7 @@ class Specs extends gEditorial\Module
 
 			echo '<div class="field-wrap field-wrap-select">';
 
-			wp_dropdown_categories( array(
+			wp_dropdown_categories( [
 				'taxonomy'         => $tax,
 				'selected'         => ( isset( $meta['spec_term_id'] ) ? $the_terms[$meta['spec_term_id']]->term_id : 0 ),
 				'show_option_none' => $this->get_string( 'show_option_none', $post->post_type, 'misc' ),
@@ -332,7 +331,7 @@ class Specs extends gEditorial\Module
 				'show_count'       => 0,
 				'hide_empty'       => 0,
 				'echo'             => 1,
-			) );
+			] );
 
 			echo '</div></div></div></li>';
 		}
@@ -353,7 +352,7 @@ class Specs extends gEditorial\Module
 				echo '<div class="field-wrap field-wrap-select">';
 
 				// FIXME: we need custom for disabled options
-				wp_dropdown_categories( array(
+				wp_dropdown_categories( [
 					'taxonomy'         => $tax,
 					'selected'         => 0,
 					'show_option_none' => $this->get_string( 'show_option_none', $post->post_type, 'misc' ),
@@ -364,7 +363,7 @@ class Specs extends gEditorial\Module
 					'show_count'       => 0,
 					'hide_empty'       => 0,
 					'echo'             => 1,
-				) );
+				] );
 
 		echo '</div></div></div></li></ul>';
 
@@ -372,24 +371,24 @@ class Specs extends gEditorial\Module
 		wp_nonce_field( 'geditorial_specs_post_main', '_geditorial_specs_post_main' );
 	}
 
-	public function geditorial_specs_meta_box_item( $order, $fields, $post, $meta = array() )
+	public function geditorial_specs_meta_box_item( $order, $fields, $post, $meta = [] )
 	{
 		$field = 'spec_value';
 		if ( in_array( $field, $fields )
 			&& self::user_can( 'view', $field ) ) {
 
 			$title = $this->get_string( $field, $post->post_type );
-			$html = HTML::tag( 'textarea', array(
+			$html = HTML::tag( 'textarea', [
 				'class'        => 'textarea-autosize',
 				'name'         => 'geditorial-specs-spec_value[]',
 				'title'        => $title,
 				'placeholder'  => $title,
 				'readonly'     => ! $this->user_can( 'edit', $field ),
-			), isset( $meta[$field] ) ? esc_textarea( $meta[$field] ) : '' );
+			], isset( $meta[$field] ) ? esc_textarea( $meta[$field] ) : '' );
 
-			echo HTML::tag( 'div', array(
+			echo HTML::tag( 'div', [
 				'class' => 'field-wrap field-wrap-textarea',
-			), $html );
+			], $html );
 		}
 
 		$field = 'spec_title';
@@ -397,7 +396,7 @@ class Specs extends gEditorial\Module
 			&& self::user_can( 'view', $field ) ) {
 
 			$title = $this->get_string( $field, $post->post_type );
-			$html = HTML::tag( 'input', array(
+			$html = HTML::tag( 'input', [
 				'type'         => 'text',
 				'name'         => 'geditorial-specs-spec_title[]',
 				'value'        => isset( $meta[$field] ) ? $meta[$field] : '',
@@ -405,11 +404,11 @@ class Specs extends gEditorial\Module
 				'placeholder'  => $title,
 				'readonly'     => ! $this->user_can( 'edit', $field ),
 				'autocomplete' => 'off',
-			) );
+			] );
 
-			echo HTML::tag( 'div', array(
+			echo HTML::tag( 'div', [
 				'class' => 'field-wrap field-wrap-inputtext',
-			), $html );
+			], $html );
 		}
 
 		echo '<input type="hidden" class="item-order" name="geditorial-specs-spec_order[]" value="'.$order.'" />';
@@ -420,7 +419,7 @@ class Specs extends gEditorial\Module
 		global $post;
 		$error = FALSE;
 
-		$args = shortcode_atts( array(
+		$args = shortcode_atts( [
 			'slug'      => '',
 			'id'        => '',
 			'title'     => '<a href="%2$s" title="%3$s">%1$s</a>',
@@ -438,13 +437,13 @@ class Specs extends gEditorial\Module
 			'before'    => '',
 			'after'     => '',
 			'context'   => NULL,
-		), $atts, $this->constant( 'specs_shortcode' ) );
+		], $atts, $this->constant( 'specs_shortcode' ) );
 
 		if ( FALSE === $args['context'] ) // bailing
 			return NULL;
 
 		$the_terms = Taxonomy::getTerms( $this->constant( 'specs_tax' ), $post->ID, TRUE );
-		$metas     = $this->get_postmeta( $post->ID, FALSE, array() );
+		$metas     = $this->get_postmeta( $post->ID, FALSE, [] );
 		$html      = '';
 
 		// FIXME: use table helper
@@ -466,8 +465,8 @@ class Specs extends gEditorial\Module
 	{
 		global $post;
 
-		$args = shortcode_atts( array(
-			'ids'       => array(),
+		$args = shortcode_atts( [
+			'ids'       => [],
 			'title'     => '',
 			'title_tag' => 'h3',
 			'class'     => '',
@@ -477,27 +476,27 @@ class Specs extends gEditorial\Module
 			'before'    => '',
 			'after'     => '',
 			'context'   => NULL,
-			'args'      => array(),
-		), $atts, $this->constant( 'multiple_specs_shortcode' ) );
+			'args'      => [],
+		], $atts, $this->constant( 'multiple_specs_shortcode' ) );
 
 		if ( FALSE === $args['context'] )
 			return NULL;
 
 		if ( empty( $args['ids'] ) || ! count( $args['ids'] ) ) {
-			$terms = wp_get_object_terms( (int) $post->ID, $this->constant( 'specs_tax' ), array(
+			$terms = wp_get_object_terms( (int) $post->ID, $this->constant( 'specs_tax' ), [
 				'order'   => $args['order'],
 				'orderby' => $args['orderby'],
 				'fields'  => 'ids',
-			) );
-			$args['ids'] = is_wp_error( $terms ) ? array() : $terms;
+			] );
+			$args['ids'] = is_wp_error( $terms ) ? [] : $terms;
 		}
 
 		$output = '';
 		foreach ( $args['ids'] as $id )
-			$output .= $this->shortcode_specs( array_merge( array(
+			$output .= $this->shortcode_specs( array_merge( [
 				'id'        => $id,
 				'title_tag' => 'h4',
-			), $args['args'] ), NULL, $this->constant( 'specs_shortcode' ) );
+			], $args['args'] ), NULL, $this->constant( 'specs_shortcode' ) );
 
 		if ( ! empty( $output ) ) {
 			if ( $args['title'] )

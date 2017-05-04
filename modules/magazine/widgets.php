@@ -13,13 +13,13 @@ class IssueCover extends gEditorial\Widget
 
 	protected function setup()
 	{
-		return array(
+		return [
 			'module' => 'magazine',
 			'name'   => 'magazine_issue_cover',
 			'class'  => 'magazine-issue-cover',
 			'title'  => _x( 'Editorial Magazine: Issue Cover', 'Modules: Magazine: Widget Title', GEDITORIAL_TEXTDOMAIN ),
 			'desc'   => _x( 'Displays selected issue cover', 'Modules: Magazine: Widget Description', GEDITORIAL_TEXTDOMAIN ),
-		);
+		];
 	}
 
 	public function widget( $args, $instance )

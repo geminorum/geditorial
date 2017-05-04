@@ -8,55 +8,53 @@ use geminorum\gEditorial\Core\HTML;
 class Reshare extends gEditorial\Module
 {
 
-	protected $partials = array( 'templates' );
-
 	public static function module()
 	{
-		return array(
+		return [
 			'name'      => 'reshare',
 			'title'     => _x( 'Reshare', 'Modules: Reshare', GEDITORIAL_TEXTDOMAIN ),
 			'desc'      => _x( 'Contents from Other Sources', 'Modules: Reshare', GEDITORIAL_TEXTDOMAIN ),
 			'icon'      => 'external',
 			'configure' => FALSE,
-		);
+		];
 	}
 
 	protected function get_global_constants()
 	{
-		return array(
+		return [
 			'reshare_cpt'         => 'reshare',
 			'reshare_cpt_archive' => 'reshares',
 			'reshare_cat'         => 'reshare_cat',
 			'reshare_cat_slug'    => 'reshare-category',
-		);
+		];
 	}
 
 	protected function get_module_icons()
 	{
-		return array(
-			'taxonomies' => array(
+		return [
+			'taxonomies' => [
 				'reshare_cat' => NULL,
-			),
-		);
+			],
+		];
 	}
 
 	protected function get_global_strings()
 	{
-		return array(
-			'misc' => array(
+		return [
+			'misc' => [
 				'tweaks_column_title' => _x( 'Reshare Categories', 'Modules: Reshare: Column Title', GEDITORIAL_TEXTDOMAIN ),
-			),
-			'noops' => array(
+			],
+			'noops' => [
 				'reshare_cpt' => _nx_noop( 'Reshare', 'Reshares', 'Modules: Reshare: Noop', GEDITORIAL_TEXTDOMAIN ),
 				'reshare_cat' => _nx_noop( 'Reshare Category', 'Reshare Categories', 'Modules: Reshare: Noop', GEDITORIAL_TEXTDOMAIN ),
-			),
-		);
+			],
+		];
 	}
 
 	protected function get_global_supports()
 	{
-		return array(
-			'reshare_cpt' => array(
+		return [
+			'reshare_cpt' => [
 				'title',
 				'editor',
 				'excerpt',
@@ -65,18 +63,18 @@ class Reshare extends gEditorial\Module
 				'comments',
 				'revisions',
 				'date-picker', // gPersianDate
-			),
-		);
+			],
+		];
 	}
 
 	public function meta_post_types( $post_types )
 	{
-		return array_merge( $post_types, array( $this->constant( 'reshare_cpt' ) ) );
+		return array_merge( $post_types, [ $this->constant( 'reshare_cpt' ) ] );
 	}
 
 	public function gpeople_support( $post_types )
 	{
-		return array_merge( $post_types, array( $this->constant( 'reshare_cpt' ) ) );
+		return array_merge( $post_types, [ $this->constant( 'reshare_cpt' ) ] );
 	}
 
 	public function after_setup_theme()
@@ -90,12 +88,12 @@ class Reshare extends gEditorial\Module
 
 		$this->register_post_type( 'reshare_cpt' );
 
-		$this->register_taxonomy( 'reshare_cat', array(
+		$this->register_taxonomy( 'reshare_cat', [
 			'hierarchical'       => TRUE,
 			'meta_box_cb'        => NULL, // default meta box
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
-		), 'reshare_cpt' );
+		], 'reshare_cpt' );
 	}
 
 	public function current_screen( $screen )

@@ -10,59 +10,59 @@ class Pitches extends gEditorial\Module
 
 	public static function module()
 	{
-		return array(
+		return [
 			'name'      => 'pitches',
 			'title'     => _x( 'Pitches', 'Modules: Pitches', GEDITORIAL_TEXTDOMAIN ),
 			'desc'      => _x( 'Keep Track of Ideas', 'Modules: Pitches', GEDITORIAL_TEXTDOMAIN ),
 			'icon'      => 'cloud',
 			'configure' => FALSE,
 			'frontend'  => FALSE,
-		);
+		];
 	}
 
 	protected function get_global_constants()
 	{
-		return array(
+		return [
 			'idea_cpt'         => 'idea',
 			'idea_cpt_archive' => 'ideas',
 			'idea_cat'         => 'idea_cat',
 			'idea_cat_slug'    => 'idea-category',
-		);
+		];
 	}
 
 	protected function get_module_icons()
 	{
-		return array(
-			'taxonomies' => array(
+		return [
+			'taxonomies' => [
 				'idea_cat' => NULL,
-			),
-		);
+			],
+		];
 	}
 
 	protected function get_global_strings()
 	{
-		return array(
-			'misc' => array(
+		return [
+			'misc' => [
 				'tweaks_column_title' => _x( 'Idea Categories', 'Modules: Pitches: Column Title', GEDITORIAL_TEXTDOMAIN ),
-			),
-			'noops' => array(
+			],
+			'noops' => [
 				'idea_cpt' => _nx_noop( 'Idea', 'Ideas', 'Modules: Pitches: Noop', GEDITORIAL_TEXTDOMAIN ),
 				'idea_cat' => _nx_noop( 'Idea Category', 'Idea Categories', 'Modules: Pitches: Noop', GEDITORIAL_TEXTDOMAIN ),
-			),
-		);
+			],
+		];
 	}
 
 	protected function get_global_supports()
 	{
-		return array(
-			'idea_cpt' => array(
+		return [
+			'idea_cpt' => [
 				'title',
 				'excerpt',
 				'author',
 				'comments',
 				'date-picker', // gPersianDate
-			),
-		);
+			],
+		];
 	}
 
 	public function init()
@@ -71,11 +71,11 @@ class Pitches extends gEditorial\Module
 
 		$this->register_post_type( 'idea_cpt' );
 
-		$this->register_taxonomy( 'idea_cat', array(
+		$this->register_taxonomy( 'idea_cat', [
 			'hierarchical'       => TRUE,
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
-		), 'idea_cpt' );
+		], 'idea_cpt' );
 	}
 
 	public function current_screen( $screen )

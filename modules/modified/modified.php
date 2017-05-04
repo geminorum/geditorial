@@ -14,60 +14,60 @@ class Modified extends gEditorial\Module
 
 	public static function module()
 	{
-		return array(
+		return [
 			'name'  => 'modified',
 			'title' => _x( 'Modified', 'Modules: Modified', GEDITORIAL_TEXTDOMAIN ),
 			'desc'  => _x( 'Last modifications to the site', 'Modules: Modified', GEDITORIAL_TEXTDOMAIN ),
 			'icon'  => 'update',
-		);
+		];
 	}
 
 	protected function get_global_settings()
 	{
-		return array(
+		return [
 			'posttypes_option' => 'posttypes_option',
-			'_dashboard' => array(
+			'_dashboard' => [
 				'dashboard_widgets',
-				array(
+				[
 					'field'       => 'dashboard_authors',
 					'title'       => _x( 'Dashboard Authors', 'Modules: Modified: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Displays authors column on dashboard widget', 'Modules: Modified: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-				),
-				array(
+				],
+				[
 					'field'       => 'dashboard_count',
 					'title'       => _x( 'Dashboard Count', 'Modules: Modified: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Total rows of posts on dashboard widget', 'Modules: Modified: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 					'type'        => 'number',
 					'default'     => 10,
-				),
-			),
-			'_content' => array(
+				],
+			],
+			'_content' => [
 				'insert_content',
-				array(
+				[
 					'field'       => 'insert_prefix',
 					'type'        => 'text',
 					'title'       => _x( 'Content Prefix', 'Modules: Modified: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'String before the modified time on the content', 'Modules: Modified: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 					'default'     => _x( 'Last modified on', 'Modules: Modified: Setting Default', GEDITORIAL_TEXTDOMAIN ),
-				),
-				array(
+				],
+				[
 					'field'       => 'insert_format',
 					'type'        => 'text',
 					'title'       => _x( 'Insert Format', 'Modules: Modified: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Displays last modified in this format on the content', 'Modules: Modified: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 					'default'     => get_option( 'date_format' ), // TODO: add new setting type to select format
-				),
+				],
 				'insert_priority',
-				array(
+				[
 					'field'       => 'display_after',
 					'type'        => 'select',
 					'title'       => _x( 'Display After', 'Modules: Modified: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Skip displaying modified time since original content published', 'Modules: Modified: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 					'default'     => '60',
 					'values'      => Settings::minutesOptions(),
-				),
-			),
-		);
+				],
+			],
+		];
 	}
 
 	public function init()
@@ -83,7 +83,7 @@ class Modified extends gEditorial\Module
 
 			if ( 'none' != $insert ) {
 
-				add_action( 'gnetwork_themes_content_'.$insert, array( $this, 'insert_content' ),
+				add_action( 'gnetwork_themes_content_'.$insert, [ $this, 'insert_content' ],
 					$this->get_setting( 'insert_priority', 30 ) );
 
 				$this->enqueue_styles();
@@ -97,16 +97,16 @@ class Modified extends gEditorial\Module
 	{
 		wp_add_dashboard_widget( 'geditorial-modified-latests',
 			_x( 'Latest Changes', 'Modules: Modified: Dashboard Widget Title', GEDITORIAL_TEXTDOMAIN ),
-			array( $this, 'dashboard_latests' )
+			[ $this, 'dashboard_latests' ]
 		);
 	}
 
 	public function dashboard_latests()
 	{
-		$args = array(
+		$args = [
 			'orderby'     => 'modified',
 			'post_type'   => $this->post_types(),
-			'post_status' => array( 'publish', 'future', 'draft', 'pending' ),
+			'post_status' => [ 'publish', 'future', 'draft', 'pending' ],
 
 			'posts_per_page'      => $this->get_setting( 'dashboard_count', 10 ),
 			'ignore_sticky_posts' => TRUE,
@@ -116,12 +116,12 @@ class Modified extends gEditorial\Module
 			'update_post_meta_cache' => FALSE,
 			'update_post_term_cache' => FALSE,
 			'lazy_load_term_meta'    => FALSE,
-		);
+		];
 
 		$query = new \WP_Query;
 
-		$columns = array(
-			'modified'   => array(
+		$columns = [
+			'modified'   => [
 				'title'    => _x( 'On', 'Modules: Modified', GEDITORIAL_TEXTDOMAIN ),
 				'callback' => function( $value, $row, $column, $index ){
 					return '<small class="-date-diff" title="'
@@ -129,11 +129,11 @@ class Modified extends gEditorial\Module
 						.Helper::humanTimeDiff( $row->post_modified )
 					.'</small>';
 				},
-			),
-		);
+			],
+		];
 
 		if ( $this->get_setting( 'dashboard_authors', FALSE ) )
-			$columns['author'] = array(
+			$columns['author'] = [
 				'title'    => _x( 'Author', 'Modules: Modified', GEDITORIAL_TEXTDOMAIN ),
 				'callback' => function( $value, $row, $column, $index ){
 
@@ -145,18 +145,18 @@ class Modified extends gEditorial\Module
 
 					return '<span class="-empty">&mdash;</span>';
 				},
-			);
+			];
 
-		$columns['title'] = array(
+		$columns['title'] = [
 			'title'    => _x( 'Title', 'Modules: Modified', GEDITORIAL_TEXTDOMAIN ),
 			'callback' => function( $value, $row, $column, $index ){
 				return Helper::getPostTitleRow( $row, 'edit' );
 			},
-		);
+		];
 
-		HTML::tableList( $columns, $query->query( $args ), array(
+		HTML::tableList( $columns, $query->query( $args ), [
 			'empty' => _x( 'No Posts?!', 'Modules: Modified', GEDITORIAL_TEXTDOMAIN ),
-		) );
+		] );
 	}
 
 	public function insert_content( $content )
@@ -231,10 +231,10 @@ class Modified extends gEditorial\Module
 			$post_types = $this->post_types();
 
 		else if ( FALSE === $post_types )
-			$post_types = array();
+			$post_types = [];
 
 		else if ( ! is_array( $post_types ) )
-			$post_types = array( $post_types );
+			$post_types = [ $post_types ];
 
 		if ( count( $post_types ) ) {
 

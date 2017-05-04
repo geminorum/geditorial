@@ -16,72 +16,72 @@ class Users extends gEditorial\Module
 
 	public static function module()
 	{
-		return array(
+		return [
 			'name'  => 'users',
 			'title' => _x( 'Users', 'Modules: Users', GEDITORIAL_TEXTDOMAIN ),
 			'desc'  => _x( 'Editorial Users', 'Modules: Users', GEDITORIAL_TEXTDOMAIN ),
 			'icon'  => 'admin-users',
-		);
+		];
 	}
 
 	protected function get_global_settings()
 	{
-		return array(
-			'_general' => array(
-				array(
+		return [
+			'_general' => [
+				[
 					'field'       => 'posttype_counts',
 					'title'       => _x( 'Posttype Counts', 'Modules: Users: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Displays posttype count for each user', 'Modules: Users: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-				),
-				array(
+				],
+				[
 					'field'       => 'user_groups',
 					'title'       => _x( 'User Groups', 'Modules: Users: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Taxonomy for organizing users in groups', 'Modules: Users: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-				),
-				// array(
+				],
+				// [
 				// 	'field'       => 'user_types',
 				// 	'title'       => _x( 'User Types', 'Modules: Users: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 				// 	'description' => _x( 'Taxonomy for organizing users in types', 'Modules: Users: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-				// ),
+				// ],
 				'calendar_type',
 				'admin_restrict',
-			),
+			],
 			'posttypes_option' => 'posttypes_option',
-		);
+		];
 	}
 
 	protected function get_global_constants()
 	{
-		return array(
+		return [
 			'group_tax'      => 'user_group',
 			'group_tax_slug' => 'users/group',
 			'type_tax'       => 'user_type',
 			'type_tax_slug'  => 'users/type',
-		);
+		];
 	}
 
 	protected function get_global_strings()
 	{
-		return array(
-			'misc' => array(
-				'group_tax' => array(
+		return [
+			'misc' => [
+				'group_tax' => [
 					'show_option_all'    => _x( 'All user groups', 'Modules: Users: Show Option All', GEDITORIAL_TEXTDOMAIN ),
 					'users_column_title' => _x( 'Users', 'Modules: Users: Column Title', GEDITORIAL_TEXTDOMAIN ),
 					'menu_name'          => _x( 'Groups', 'Modules: Users: User Group Tax Labels: Menu Name', GEDITORIAL_TEXTDOMAIN ),
-				),
-				'type_tax' => array(
+				],
+				'type_tax' => [
 					'show_option_all'    => _x( 'All user types', 'Modules: Users: Show Option All', GEDITORIAL_TEXTDOMAIN ),
 					'users_column_title' => _x( 'Users', 'Modules: Users: Column Title', GEDITORIAL_TEXTDOMAIN ),
 					'menu_name'          => _x( 'Types', 'Modules: Users: User Type Tax Labels: Menu Name', GEDITORIAL_TEXTDOMAIN ),
-				),
+				],
 				'show_option_all'     => _x( 'All authors', 'Modules: Users: Show Option All', GEDITORIAL_TEXTDOMAIN ),
 				'counts_column_title' => _x( 'Summary', 'Modules: Users: Column Title', GEDITORIAL_TEXTDOMAIN ),
-			),
-			'noops' => array(
+			],
+			'noops' => [
 				'group_tax' => _nx_noop( 'User Group', 'User Groups', 'Modules: Users: Noop', GEDITORIAL_TEXTDOMAIN ),
 				'type_tax'  => _nx_noop( 'User Type', 'User Types', 'Modules: Users: Noop', GEDITORIAL_TEXTDOMAIN ),
-			),
-		);
+			],
+		];
 	}
 
 	public function init()
@@ -91,24 +91,24 @@ class Users extends gEditorial\Module
 		if ( ! $this->get_setting( 'user_groups', FALSE ) )
 			return;
 
-		$this->register_taxonomy( 'group_tax', array(
+		$this->register_taxonomy( 'group_tax', [
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
-			'capabilities'       => array(
+			'capabilities'       => [
 				'manage_terms' => 'list_users',
 				'edit_terms'   => 'list_users',
 				'delete_terms' => 'list_users',
 				'assign_terms' => 'list_users',
-			),
-		), array( 'user' ) );
+			],
+		], [ 'user' ] );
 
 		if ( is_admin() ) {
-			add_action( 'admin_menu', array( $this, 'admin_menu' ) );
-			add_filter( 'parent_file', array( $this, 'parent_file' ) );
+			$this->action( 'admin_menu' );
+			$this->filter( 'parent_file' );
 		}
 
 		// no need, we use slash in slug
-		// add_filter( 'sanitize_user', array( $this, 'sanitize_user' ) );
+		// add_filter( 'sanitize_user', [ $this, 'sanitize_user' ] );
 	}
 
 	public function admin_menu()
@@ -144,28 +144,28 @@ class Users extends gEditorial\Module
 			&& in_array( $screen->post_type, $this->post_types() ) ) {
 
 			if ( $this->get_setting( 'admin_restrict', FALSE ) )
-				add_action( 'restrict_manage_posts', array( $this, 'restrict_manage_posts' ), 12, 2 );
+				$this->action( 'restrict_manage_posts', 2, 12 );
 
 		} else if ( 'users' == $screen->base ) {
 
 			if ( $this->get_setting( 'posttype_counts', FALSE ) ) {
-				add_filter( 'manage_users_columns', array( $this, 'manage_users_columns' ) );
-				add_filter( 'manage_users_custom_column', array( $this, 'manage_users_custom_column' ), 10, 3 );
+				$this->filter( 'manage_users_columns' );
+				$this->filter( 'manage_users_custom_column', 3 );
 			}
 
 		} else if ( $groups && ( 'profile' == $screen->base
 			|| 'user-edit' == $screen->base ) ) {
 
-			add_action( 'show_user_profile', array( $this, 'edit_user_profile' ), 5 );
-			add_action( 'edit_user_profile', array( $this, 'edit_user_profile' ), 5 );
-			add_action( 'personal_options_update', array( $this, 'edit_user_profile_update' ) );
-			add_action( 'edit_user_profile_update', array( $this, 'edit_user_profile_update' ) );
+			add_action( 'show_user_profile', [ $this, 'edit_user_profile' ], 5 );
+			add_action( 'edit_user_profile', [ $this, 'edit_user_profile' ], 5 );
+			add_action( 'personal_options_update', [ $this, 'edit_user_profile_update' ] );
+			add_action( 'edit_user_profile_update', [ $this, 'edit_user_profile_update' ] );
 
 		} else if ( $groups && 'edit-tags' == $screen->base
 			&& $this->constant( 'group_tax' ) == $screen->taxonomy ) {
 
-			add_filter( 'manage_edit-'.$this->constant( 'group_tax' ).'_columns', array( $this, 'manage_columns' ) );
-			add_action( 'manage_'.$this->constant( 'group_tax' ).'_custom_column', array( $this, 'custom_column' ), 10, 3 );
+			add_filter( 'manage_edit-'.$this->constant( 'group_tax' ).'_columns', [ $this, 'manage_columns' ] );
+			add_action( 'manage_'.$this->constant( 'group_tax' ).'_custom_column', [ $this, 'custom_column' ], 10, 3 );
 
 		// } else if ( $groups && 'term' == $screen->base
 		// 	&& $this->constant( 'group_tax' ) == $screen->taxonomy ) {
@@ -188,19 +188,19 @@ class Users extends gEditorial\Module
 	{
 		global $wp_query;
 
-		wp_dropdown_users( array(
+		wp_dropdown_users( [
 			'name'                    => 'author',
 			'show'                    => 'display_name_with_login',
 			'selected'                => isset( $wp_query->query['author'] ) ? $wp_query->query['author'] : 0,
 			'show_option_all'         => $this->get_string( 'show_option_all', get_query_var( 'post_type', 'post' ), 'misc' ),
 			'option_none_value'       => 0,
 			'hide_if_only_one_author' => TRUE,
-		) );
+		] );
 	}
 
 	public function manage_users_columns( $columns )
 	{
-		$new = array();
+		$new = [];
 
 		foreach ( $columns as $column => $title )
 			if ( 'posts' == $column )
@@ -220,14 +220,14 @@ class Users extends gEditorial\Module
 			$this->all_posttypes = PostType::get( 1 );
 
 		$counts = Database::countPostsByUser( $user_id );
-		$list   = array();
+		$list   = [];
 
 		foreach ( $this->all_posttypes as $posttype => $label )
 			if ( ! empty( $counts[$posttype] ) )
-				$list[$label] = HTML::tag( 'a', array(
+				$list[$label] = HTML::tag( 'a', [
 					'href'   => WordPress::getPostTypeEditLink( $posttype, $user_id ),
 					'target' => '_blank',
-				), Number::format( $counts[$posttype] ) );
+				], Number::format( $counts[$posttype] ) );
 
 		ob_start();
 
@@ -242,7 +242,7 @@ class Users extends gEditorial\Module
 	public function manage_columns( $columns )
 	{
 		unset( $columns['posts'] );
-		return array_merge( $columns, array( 'users' => $this->get_column_title( 'users', 'group_tax' ) ) );
+		return array_merge( $columns, [ 'users' => $this->get_column_title( 'users', 'group_tax' ) ] );
 	}
 
 	public function custom_column( $display, $column, $term_id )
@@ -258,7 +258,7 @@ class Users extends gEditorial\Module
 		if ( ! current_user_can( $tax->cap->assign_terms ) )
 			return;
 
-		$terms = get_terms( $this->constant( 'group_tax' ), array( 'hide_empty' => FALSE ) );
+		$terms = get_terms( $this->constant( 'group_tax' ), [ 'hide_empty' => FALSE ] );
 
 		HTML::h2( _x( 'Group', 'Modules: Users', GEDITORIAL_TEXTDOMAIN ) );
 
@@ -269,17 +269,17 @@ class Users extends gEditorial\Module
 
 				foreach ( $terms as $term ) {
 
-					$html = HTML::tag( 'input', array(
+					$html = HTML::tag( 'input', [
 						'type'    => 'radio',
 						'name'    => 'groups',
 						'id'      => 'groups-'.$term->slug,
 						'value'   => $term->slug,
 						'checked' => is_object_in_term( $user->ID, $this->constant( 'group_tax' ), $term ),
-					) );
+					] );
 
-					echo '<p>'.HTML::tag( 'label', array(
+					echo '<p>'.HTML::tag( 'label', [
 						'for' => 'groups-'.$term->slug,
-					), $html.'&nbsp;'.esc_html( $term->name ) ).'</p>';
+					], $html.'&nbsp;'.esc_html( $term->name ) ).'</p>';
 				 }
 
 			} else {
@@ -302,7 +302,7 @@ class Users extends gEditorial\Module
 			return;
 
 		$term = esc_attr( $_POST['groups'] );
-		wp_set_object_terms( $user_id, array( $term ), $this->constant( 'group_tax' ), FALSE );
+		wp_set_object_terms( $user_id, [ $term ], $this->constant( 'group_tax' ), FALSE );
 		clean_object_term_cache( $user_id, $this->constant( 'group_tax' ) );
 	}
 
@@ -329,34 +329,34 @@ class Users extends gEditorial\Module
 
 			echo '<tr><th scope="row">'._x( 'By PostType', 'Modules: Users', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
 
-			$this->do_settings_field( array(
+			$this->do_settings_field( [
 				'type'         => 'select',
 				'field'        => 'post_type',
 				'values'       => PostType::get(),
 				'default'      => $args['post_type'],
 				'option_group' => 'reports',
-			) );
+			] );
 
 			echo '&nbsp;';
 
-			$this->do_settings_field( array(
+			$this->do_settings_field( [
 				'type'         => 'user',
 				'field'        => 'user_id',
 				'none_title'   => _x( 'All Users', 'Modules: Users', GEDITORIAL_TEXTDOMAIN ),
 				'default'      => $args['user_id'],
 				'option_group' => 'reports',
-			) );
+			] );
 
 			echo '&nbsp;';
 
-			$this->do_settings_field( array(
+			$this->do_settings_field( [
 				'type'         => 'select',
 				'field'        => 'year_month',
 				'none_title'   => _x( 'All Months', 'Modules: Users', GEDITORIAL_TEXTDOMAIN ),
-				'values'       => Helper::getPostTypeMonths( $calendar_type, $args['post_type'], array(), $args['user_id'] ),
+				'values'       => Helper::getPostTypeMonths( $calendar_type, $args['post_type'], [], $args['user_id'] ),
 				'default'      => $args['year_month'],
 				'option_group' => 'reports',
-			) );
+			] );
 
 			echo '&nbsp;';
 
@@ -365,7 +365,7 @@ class Users extends gEditorial\Module
 
 			if ( ! empty( $_POST ) && isset( $_POST['posttype_stats'] ) ) {
 
-				$period = $args['year_month'] ? Helper::monthFirstAndLast( $calendar_type, substr( $args['year_month'], 0, 4 ), substr( $args['year_month'], 4, 2 ) ) : array();
+				$period = $args['year_month'] ? Helper::monthFirstAndLast( $calendar_type, substr( $args['year_month'], 0, 4 ), substr( $args['year_month'], 4, 2 ) ) : [];
 
 				HTML::tableCode( Database::countPostsByPosttype( $args['post_type'], $args['user_id'], $period ) );
 			}
@@ -390,10 +390,10 @@ class Users extends gEditorial\Module
 					// FIXME: use custom Avatar
 					echo get_avatar( get_the_author_meta( 'email', $user_id ), '96' );
 
-					echo '<h2 class="user-title">'.HTML::tag( 'a', array(
+					echo '<h2 class="user-title">'.HTML::tag( 'a', [
 						'href'  => get_author_posts_url( $user_id ),
 						'title' => '',
-					), get_the_author_meta( 'display_name', $user_id ) ).'</h2>';
+					], get_the_author_meta( 'display_name', $user_id ) ).'</h2>';
 
 					echo '<div class="description">'.wpautop( get_the_author_meta( 'description', $user_id ) ).'</div>';
 

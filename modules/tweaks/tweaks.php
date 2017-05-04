@@ -17,102 +17,102 @@ class Tweaks extends gEditorial\Module
 
 	public static function module()
 	{
-		return array(
+		return [
 			'name'     => 'tweaks',
 			'title'    => _x( 'Tweaks', 'Modules: Tweaks', GEDITORIAL_TEXTDOMAIN ),
 			'desc'     => _x( 'Admin UI Enhancement', 'Modules: Tweaks', GEDITORIAL_TEXTDOMAIN ),
 			'icon'     => 'admin-settings',
 			'frontend' => FALSE,
-		);
+		];
 	}
 
 	protected function settings_help_tabs()
 	{
 		$tabs = Settings::settingsHelpContent( $this->module );
 
-		$tabs[] = array(
+		$tabs[] = [
 			'id'       => 'geditorial-tweaks-category_search',
 			'title'    => _x( 'Category Search', 'Modules: Tweaks: Help Tab Title', GEDITORIAL_TEXTDOMAIN ),
 			'content'  => '<div class="-info"><p>Makes it quick and easy for writers to select categories related to what they are writing. As they type in the search box, categories will be shown and hidden in real time, allowing them to easily select what is relevant to their content without having to scroll through possibly hundreds of categories.</p>
 <p class="-from">Adopted from: <a href="https://wordpress.org/plugins/searchable-categories/" target="_blank">Searchable Categories</a> by <a href="http://ididntbreak.it" target="_blank">Jason Corradino</a></p></div>',
-		);
+		];
 
-		$tabs[] = array(
+		$tabs[] = [
 			'id'       => 'geditorial-tweaks-checklist_tree',
 			'title'    => _x( 'Checklist Tree', 'Modules: Tweaks: Help Tab Title', GEDITORIAL_TEXTDOMAIN ),
 			'content'  => '<div class="-info"><p>If you’ve ever used categories extensively, you will have noticed that after you save a post, the checked categories appear on top of all the other ones. This can be useful if you have a lot of categories, since you don’t have to scroll.</p>
 <p>Unfortunately, this behaviour has a serious side-effect: it breaks the hierarchy. If you have deeply nested categories that don’t make sense out of context, this will completely screw you over.</p>
 <p>It preserves the category tree at all times. Just activate it and you’re good.</p>
 <p class="-from">Adopted from: <a href="https://wordpress.org/plugins/category-checklist-tree/" target="_blank">Category Checklist Tree</a> by <a href="http://scribu.net/wordpress/category-checklist-tree" target="_blank">scribu</a></p></div>',
-		);
+		];
 
 		return $tabs;
 	}
 
 	protected function get_global_settings()
 	{
-		return array(
+		return [
 			'posttypes_option' => 'posttypes_option',
-			'_general' => array(
-				array(
+			'_general' => [
+				[
 					'field'       => 'group_attributes',
 					'title'       => _x( 'Group Attributes', 'Modules: Tweaks: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Group post attributes on selected post type edit pages', 'Modules: Tweaks: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-				),
-				array(
+				],
+				[
 					'field'       => 'column_id',
 					'title'       => _x( 'ID Column', 'Modules: Tweaks: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Displays ID Column on the post list table.', 'Modules: Tweaks: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-				),
-				array(
+				],
+				[
 					'field'       => 'attachment_count',
 					'title'       => _x( 'Attachment Count', 'Modules: Tweaks: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Displays attachment summary of the post.', 'Modules: Tweaks: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-				),
-				array(
+				],
+				[
 					'field'       => 'author_attribute',
 					'title'       => _x( 'Author Attribute', 'Modules: Tweaks: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Displays author name as post type attribute', 'Modules: Tweaks: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-				),
-				array(
+				],
+				[
 					'field'       => 'page_template',
 					'title'       => _x( 'Page Template', 'Modules: Tweaks: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Displays the template used for the post.', 'Modules: Tweaks: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-				),
-				array(
+				],
+				[
 					'field'       => 'category_search',
 					'title'       => _x( 'Category Search', 'Modules: Tweaks: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Replaces the category selector to include searching categories', 'Modules: Tweaks: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-				),
-				array(
+				],
+				[
 					'field'       => 'checklist_tree',
 					'title'       => _x( 'Checklist Tree', 'Modules: Tweaks: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Preserves the category hierarchy on the post editing screen', 'Modules: Tweaks: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-				),
-				array(
+				],
+				[
 					'field'       => 'excerpt_count',
 					'title'       => _x( 'Excerpt Count', 'Modules: Tweaks: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Display word count for excerpt textareas', 'Modules: Tweaks: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-				),
-				array(
+				],
+				[
 					'field'       => 'comments_user',
 					'title'       => _x( 'Comments User Column', 'Modules: Tweaks: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Displays a logged-in comment author\'s site display name on the comments admin', 'Modules: Tweaks: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-				),
-				array(
+				],
+				[
 					'field'       => 'group_taxonomies',
 					'title'       => _x( 'Group Taxonomies', 'Modules: Tweaks: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Group selected taxonomies on selected post type edit pages', 'Modules: Tweaks: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-				),
-			),
+				],
+			],
 			'taxonomies_option' => 'taxonomies_option',
-		);
+		];
 	}
 
 	protected function get_global_strings()
 	{
-		return array(
-			'misc' => array(
+		return [
+			'misc' => [
 				'title_column_title'          => _x( 'Title', 'Modules: Tweaks: Column Title', GEDITORIAL_TEXTDOMAIN ),
 				'rows_column_title'           => _x( 'Extra', 'Modules: Tweaks: Column Title', GEDITORIAL_TEXTDOMAIN ),
 				'atts_column_title'           => _x( 'Attributes', 'Modules: Tweaks: Column Title', GEDITORIAL_TEXTDOMAIN ),
@@ -120,15 +120,15 @@ class Tweaks extends gEditorial\Module
 				'user_column_title'           => _x( 'User', 'Modules: Tweaks: Column Title', GEDITORIAL_TEXTDOMAIN ),
 				'meta_box_search_title'       => _x( 'Type to filter by', 'Modules: Tweaks: Meta Box Search Title', GEDITORIAL_TEXTDOMAIN ),
 				'meta_box_search_placeholder' => _x( 'Search &hellip;', 'Modules: Tweaks: Meta Box Search Placeholder', GEDITORIAL_TEXTDOMAIN ),
-			),
-		);
+			],
+		];
 	}
 
 	public function init()
 	{
 		parent::init();
 
-		$this->taxonomies_excluded = array(
+		$this->taxonomies_excluded = [
 			'nav_menu',
 			'post_format',
 			'link_category',
@@ -148,7 +148,7 @@ class Tweaks extends gEditorial\Module
 			'alphabet_tax',
 			'entry_section',
 			'specs',
-		);
+		];
 	}
 
 	public function init_ajax()
@@ -165,24 +165,24 @@ class Tweaks extends gEditorial\Module
 
 				if ( post_type_supports( $screen->post_type, 'excerpt' ) ) {
 					$this->remove_meta_box( $screen->post_type, $screen->post_type, 'excerpt' );
-					add_meta_box( 'postexcerpt', _x( 'Excerpt', 'Modules: Tweaks', GEDITORIAL_TEXTDOMAIN ), array( $this, 'post_excerpt_meta_box' ), $screen->post_type, 'normal' );
+					add_meta_box( 'postexcerpt', _x( 'Excerpt', 'Modules: Tweaks', GEDITORIAL_TEXTDOMAIN ), [ $this, 'post_excerpt_meta_box' ], $screen->post_type, 'normal' );
 				}
 
 				if ( $this->get_setting( 'checklist_tree', FALSE )
 					|| $this->get_setting( 'category_search', FALSE )
 					|| $this->get_setting( 'excerpt_count', FALSE ) ) {
 
-						$this->enqueue_asset_js( array(
+						$this->enqueue_asset_js( [
 							'settings' => $this->options->settings,
-							'strings'  => array(
+							'strings'  => [
 								'search_title'       => $this->get_string( 'meta_box_search_title', $screen->post_type, 'misc' ),
 								'search_placeholder' => $this->get_string( 'meta_box_search_placeholder', $screen->post_type, 'misc' ),
-							),
-						), 'tweaks.post' );
+							],
+						], 'tweaks.post' );
 
 						if ( $this->get_setting( 'checklist_tree', FALSE ) )
 							add_filter( 'wp_terms_checklist_args', function( $args ){
-								return array_merge( $args, array( 'checked_ontop' => FALSE ) );
+								return array_merge( $args, [ 'checked_ontop' => FALSE ] );
 							} );
 				}
 
@@ -201,8 +201,8 @@ class Tweaks extends gEditorial\Module
 
 				$this->_admin_enabled();
 
-				add_filter( 'manage_edit-comments_columns', array( $this, 'manage_comments_columns' ) );
-				add_action( 'manage_comments_custom_column', array( $this, 'comments_custom_column' ), 10, 2 );
+				add_filter( 'manage_edit-comments_columns', [ $this, 'manage_comments_columns' ] );
+				add_action( 'manage_comments_custom_column', [ $this, 'comments_custom_column' ], 10, 2 );
 
 				// TODO: add sortable for comments
 			}
@@ -211,31 +211,31 @@ class Tweaks extends gEditorial\Module
 
 	private function _edit_screen( $post_type )
 	{
-		add_filter( 'manage_taxonomies_for_'.$post_type.'_columns', array( $this, 'manage_taxonomies_columns'), 10, 2 );
+		add_filter( 'manage_taxonomies_for_'.$post_type.'_columns', [ $this, 'manage_taxonomies_columns' ], 10, 2 );
 
-		add_filter( 'manage_posts_columns', array( $this, 'manage_posts_columns' ), 1, 2 );
-		add_filter( 'manage_pages_columns', array( $this, 'manage_pages_columns' ), 1, 1 );
-		add_action( 'manage_'.$post_type.'_posts_custom_column', array( $this, 'posts_custom_column' ), 10, 2 );
-		add_filter( 'manage_edit-'.$post_type.'_sortable_columns', array( $this, 'sortable_columns' ) );
+		add_filter( 'manage_posts_columns', [ $this, 'manage_posts_columns' ], 1, 2 );
+		add_filter( 'manage_pages_columns', [ $this, 'manage_pages_columns' ], 1, 1 );
+		add_action( 'manage_'.$post_type.'_posts_custom_column', [ $this, 'posts_custom_column' ], 10, 2 );
+		add_filter( 'manage_edit-'.$post_type.'_sortable_columns', [ $this, 'sortable_columns' ] );
 
-		// add_filter( 'manage_'.$post_type.'_posts_columns', array( $this, 'manage_posts_columns_late' ), 999, 1 );
-		// add_filter( 'list_table_primary_column', array( $this, 'list_table_primary_column' ), 10, 2 );
+		// add_filter( 'manage_'.$post_type.'_posts_columns', [ $this, 'manage_posts_columns_late' ], 999, 1 );
+		// add_filter( 'list_table_primary_column', [ $this, 'list_table_primary_column' ], 10, 2 );
 
 		// INTERNAL HOOKS
 		if ( $this->get_setting( 'group_taxonomies', FALSE ) )
-			add_action( $this->hook( 'column_row' ), array( $this, 'column_row_taxonomies' ) );
+			add_action( $this->hook( 'column_row' ), [ $this, 'column_row_taxonomies' ] );
 
 		if ( $this->get_setting( 'author_attribute', TRUE ) && post_type_supports( $post_type, 'author' ) )
-			add_action( $this->hook( 'column_attr' ), array( $this, 'column_attr_author' ), 1 );
+			add_action( $this->hook( 'column_attr' ), [ $this, 'column_attr_author' ], 1 );
 
 		if ( $this->get_setting( 'group_attributes', FALSE ) )
-			add_action( $this->hook( 'column_attr' ), array( $this, 'column_attr_default' ), 2 );
+			add_action( $this->hook( 'column_attr' ), [ $this, 'column_attr_default' ], 2 );
 
 		if ( $this->get_setting( 'attachment_count', FALSE ) )
-			add_action( $this->hook( 'column_attr' ), array( $this, 'column_attr_attachments' ), 20 );
+			add_action( $this->hook( 'column_attr' ), [ $this, 'column_attr_attachments' ], 20 );
 
 		if ( $this->get_setting( 'page_template', FALSE ) )
-			add_action( $this->hook( 'column_attr' ), array( $this, 'column_attr_page_template' ), 50 );
+			add_action( $this->hook( 'column_attr' ), [ $this, 'column_attr_page_template' ], 50 );
 	}
 
 	public function manage_taxonomies_columns( $taxonomies, $post_type )
@@ -254,7 +254,7 @@ class Tweaks extends gEditorial\Module
 	// FIXME: add thumbnail column if posttype supports
 	public function manage_posts_columns( $columns, $post_type )
 	{
-		$new   = array();
+		$new   = [];
 		$added = FALSE;
 
 		$rows = has_action( $this->hook( 'column_row' ) ) ? $this->get_column_title( 'rows', $post_type ) : FALSE;
@@ -297,7 +297,7 @@ class Tweaks extends gEditorial\Module
 
 	public function manage_posts_columns_late( $columns )
 	{
-		$new = array();
+		$new = [];
 
 		foreach ( $columns as $key => $value )
 
@@ -322,7 +322,7 @@ class Tweaks extends gEditorial\Module
 		switch ( $column_name ) {
 
 			// FIXME: wont work beacuse of page-title css class
-			case 'geditorial-tweaks-title' :
+			case 'geditorial-tweaks-title':
 
 				// TODO: add before action
 				$wp_list_table->column_title( $post );
@@ -331,21 +331,21 @@ class Tweaks extends gEditorial\Module
 				// echo $wp_list_table->handle_row_actions( $post, 'title', $wp_list_table->get_primary_column_name() );
 
 			break;
-			case 'geditorial-tweaks-rows' :
+			case 'geditorial-tweaks-rows':
 
 				echo '<div class="geditorial-admin-wrap-column -tweaks -rows"><ul>';
 					do_action( $this->hook( 'column_row' ), $post );
 				echo '</ul></div>';
 
 			break;
-			case 'geditorial-tweaks-atts' :
+			case 'geditorial-tweaks-atts':
 
 				echo '<div class="geditorial-admin-wrap-column -tweaks -atts"><ul>';
 					do_action( $this->hook( 'column_attr' ), $post );
 				echo '</ul></div>';
 
 			break;
-			case 'geditorial-tweaks-id' :
+			case 'geditorial-tweaks-id':
 
 				echo '<div class="geditorial-admin-wrap-column -tweaks -id">';
 					echo esc_html( $post_id );
@@ -357,10 +357,10 @@ class Tweaks extends gEditorial\Module
 
 	public function sortable_columns( $columns )
 	{
-		return array_merge( $columns, array(
-			'geditorial-tweaks-atts' => array( 'date', TRUE ),
-			'geditorial-tweaks-id'   => array( 'ID', TRUE ),
-		) );
+		return array_merge( $columns, [
+			'geditorial-tweaks-atts' => [ 'date', TRUE ],
+			'geditorial-tweaks-id'   => [ 'ID', TRUE ],
+		] );
 	}
 
 	public function manage_comments_columns( $columns )
@@ -475,11 +475,11 @@ class Tweaks extends gEditorial\Module
 				$title = sprintf( _nx( '%s Attachment', '%s Attachments', $count, 'Modules: Tweaks', GEDITORIAL_TEXTDOMAIN ), Number::format( $count ) );
 
 				if ( current_user_can( 'upload_files' ) )
-					echo HTML::tag( 'a', array(
+					echo HTML::tag( 'a', [
 						'href'   => WordPress::getPostAttachmentsLink( $post->ID ),
 						'title'  => _x( 'View the list of attachments', 'Modules: Tweaks', GEDITORIAL_TEXTDOMAIN ),
 						'target' => '_blank',
-					), $title );
+					], $title );
 				else
 					echo $title;
 

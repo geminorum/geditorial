@@ -15,19 +15,19 @@ class Today extends gEditorial\Helper
 	// returns array of post date in given cal
 	public static function getTheDayFromToday( $today = NULL, $type = 'gregorian' )
 	{
-		$the_day = array( 'cal' => 'gregorian' );
+		$the_day = [ 'cal' => 'gregorian' ];
 
 		if ( is_null( $today ) )
 			$today = current_time( 'timestamp' );
 
-		if ( in_array( $type, array( 'hijri', 'islamic' ) ) ) {
+		if ( in_array( $type, [ 'hijri', 'islamic' ] ) ) {
 
-			$convertor = array( 'gPersianDateDateTime', 'toHijri' );
+			$convertor = [ 'gPersianDateDateTime', 'toHijri' ];
 			$the_day['cal'] = 'islamic';
 
-		} else if ( in_array( $type, array( 'jalali', 'persian' ) ) ) {
+		} else if ( in_array( $type, [ 'jalali', 'persian' ] ) ) {
 
-			$convertor = array( 'gPersianDateDateTime', 'toJalali' );
+			$convertor = [ 'gPersianDateDateTime', 'toJalali' ];
 			$the_day['cal'] = 'persian';
 		}
 
@@ -57,12 +57,12 @@ class Today extends gEditorial\Helper
 	{
 		static $calendars, $months;
 
-		$the_day = self::atts( array(
+		$the_day = self::atts( [
 			'cal'   => $default_type,
 			'day'   => '',
 			'month' => '',
 			'year'  => '',
-		), self::getTheDayFromPost( $post, $default_type, $constants ) );
+		], self::getTheDayFromPost( $post, $default_type, $constants ) );
 
 		if ( ! $the_day['day'] && ! $the_day['month'] && ! $the_day['year'] ) {
 
@@ -109,7 +109,7 @@ class Today extends gEditorial\Helper
 
 	public static function getTheDayFromPost( $post, $default_type = 'gregorian', $constants = NULL )
 	{
-		$the_day = array();
+		$the_day = [];
 
 		if ( is_null( $constants ) )
 			$constants = self::getTheDayConstants();
@@ -121,14 +121,14 @@ class Today extends gEditorial\Helper
 				$the_day[$field] = $post_meta[$constant][0];
 
 		if ( empty( $the_day['cal'] ) )
-			return array_merge( array( 'cal' => $default_type ), $the_day );
+			return array_merge( [ 'cal' => $default_type ], $the_day );
 
 		return $the_day;
 	}
 
 	public static function getTheDayFromQuery( $admin = NULL, $default_type = 'gregorian', $constants = NULL )
 	{
-		$the_day = array();
+		$the_day = [];
 
 		if ( is_null( $admin ) )
 			$admin = is_admin();
@@ -146,7 +146,7 @@ class Today extends gEditorial\Helper
 		}
 
 		if ( empty( $the_day['cal'] ) )
-			return array_merge( array( 'cal' => $default_type ), $the_day );
+			return array_merge( [ 'cal' => $default_type ], $the_day );
 
 		return $the_day;
 	}
@@ -154,7 +154,7 @@ class Today extends gEditorial\Helper
 	// NOT USED
 	public static function getTheDayByPost( $post, $default_type = 'gregorian', $constants = NULL )
 	{
-		$the_day = array();
+		$the_day = [];
 
 		if ( is_null( $constants ) )
 			$constants = self::getTheDayConstants();
@@ -174,18 +174,18 @@ class Today extends gEditorial\Helper
 
 	public static function getTheDayConstants()
 	{
-		return array(
+		return [
 			'cal'   => self::constant( 'meta_cal', '_theday_cal' ),
 			'day'   => self::constant( 'meta_day', '_theday_day' ),
 			'month' => self::constant( 'meta_month', '_theday_month' ),
 			'year'  => self::constant( 'meta_year', '_theday_year' ),
-		);
+		];
 	}
 
-	public static function getPostsConnected( $atts = array(), $constants = NULL )
+	public static function getPostsConnected( $atts = [], $constants = NULL )
 	{
-		$args = self::atts( array(
-			'the_day' => array(),
+		$args = self::atts( [
+			'the_day' => [],
 			'type'    => 'any',
 			'all'     => FALSE,
 			'count'   => FALSE,
@@ -193,36 +193,36 @@ class Today extends gEditorial\Helper
 			'paged'   => self::paged(),
 			'orderby' => self::orderby( 'ID' ),
 			'order'   => self::order( 'asc' ),
-			'status'  => array( 'publish', 'future', 'draft', 'pending' ),
-		), $atts );
+			'status'  => [ 'publish', 'future', 'draft', 'pending' ],
+		], $atts );
 
 		if ( is_null( $constants ) )
 			$constants = self::getTheDayConstants();
 
-		$query_args = array(
+		$query_args = [
 			// 'orderby'          => $args['orderby'],
 			// 'order'            => $args['order'],
 			'post_type'        => $args['type'],
 			'post_status'      => $args['status'],
 			'suppress_filters' => TRUE,
 			'no_found_rows'    => TRUE,
-		);
+		];
 
 		if ( ! $args['count'] && ! $args['all'] ) {
 			$query_args['posts_per_page'] = $args['limit'];
 			$query_args['offset'] = ( $args['paged'] - 1 ) * $args['limit'];
 		}
 
-		$query_args['meta_query'] = array();
+		$query_args['meta_query'] = [];
 
 		foreach ( $constants as $field => $constant ) {
 			if ( ! empty( $args['the_day'][$field] ) ) {
 				$query_args['orderby'][$field.'_clause'] = 'ASC'; // https://make.wordpress.org/core/2015/03/30/query-improvements-in-wp-4-2-orderby-and-meta_query/
-				$query_args['meta_query'][$field.'_clause'] = array(
+				$query_args['meta_query'][$field.'_clause'] = [
 					'key'     => $constant,
 					'value'   => $args['the_day'][$field],
 					'compare' => '=',
-				);
+				];
 			}
 		}
 
@@ -234,21 +234,21 @@ class Today extends gEditorial\Helper
 
 		$pagination = HTML::tablePagination( $query->found_posts, $query->max_num_pages, $args['limit'], $args['paged'], $args['all'] );
 
-		return array( $posts, $pagination );
+		return [ $posts, $pagination ];
 	}
 
-	public static function theDaySelect( $atts = array(), $year = TRUE, $default_type = 'gregorian' )
+	public static function theDaySelect( $atts = [], $year = TRUE, $default_type = 'gregorian' )
 	{
-		$args = self::atts( array(
+		$args = self::atts( [
 			'cal'   => $default_type,
 			'day'   => '',
 			'month' => '',
 			'year'  => '',
-		), $atts );
+		], $atts );
 
 		$html = '';
 
-		$html .= HTML::tag( 'input', array(
+		$html .= HTML::tag( 'input', [
 			'type'         => 'text',
 			'autocomplete' => 'off',
 			'min'          => '1',
@@ -259,10 +259,10 @@ class Today extends gEditorial\Helper
 			'value'        => $args['day'],
 			'title'        => _x( 'Day', 'Modules: Today: Meta Box Input', GEDITORIAL_TEXTDOMAIN ),
 			'placeholder'  => _x( 'Day', 'Modules: Today: Meta Box Input Placeholder', GEDITORIAL_TEXTDOMAIN ),
-			'data'         => array( 'ortho' => 'number' ),
-		) );
+			'data'         => [ 'ortho' => 'number' ],
+		] );
 
-		$html .= HTML::tag( 'input', array(
+		$html .= HTML::tag( 'input', [
 			'type'         => 'text',
 			'autocomplete' => 'off',
 			'min'          => '1',
@@ -273,52 +273,52 @@ class Today extends gEditorial\Helper
 			'value'        => $args['month'],
 			'title'        => _x( 'Month', 'Modules: Today: Meta Box Input', GEDITORIAL_TEXTDOMAIN ),
 			'placeholder'  => _x( 'Month', 'Modules: Today: Meta Box Input Placeholder', GEDITORIAL_TEXTDOMAIN ),
-			'data'         => array( 'ortho' => 'number' ),
-		) );
+			'data'         => [ 'ortho' => 'number' ],
+		] );
 
 		if ( $year )
-		$html .= HTML::tag( 'input', array(
-			'type'         => 'text',
-			'autocomplete' => 'off',
-			'class'        => '-year',
-			'name'         => 'geditorial-today-date-year',
-			'id'           => 'geditorial-today-date-year',
-			'value'        => $year ? $args['year'] : '',
-			'title'        => _x( 'Year', 'Modules: Today: Meta Box Input', GEDITORIAL_TEXTDOMAIN ),
-			'placeholder'  => _x( 'Year', 'Modules: Today: Meta Box Input Placeholder', GEDITORIAL_TEXTDOMAIN ),
-			'disabled'     => ! $year,
-			'data'         => array( 'ortho' => 'number' ),
-		) );
+			$html .= HTML::tag( 'input', [
+				'type'         => 'text',
+				'autocomplete' => 'off',
+				'class'        => '-year',
+				'name'         => 'geditorial-today-date-year',
+				'id'           => 'geditorial-today-date-year',
+				'value'        => $year ? $args['year'] : '',
+				'title'        => _x( 'Year', 'Modules: Today: Meta Box Input', GEDITORIAL_TEXTDOMAIN ),
+				'placeholder'  => _x( 'Year', 'Modules: Today: Meta Box Input Placeholder', GEDITORIAL_TEXTDOMAIN ),
+				'disabled'     => ! $year,
+				'data'         => [ 'ortho' => 'number' ],
+			] );
 
-		echo HTML::tag( 'div', array(
+		echo HTML::tag( 'div', [
 			'class' => 'field-wrap '.( $year ? 'field-wrap-inputtext-date' : 'field-wrap-inputtext-half' ),
-		), $html );
+		], $html );
 
-		$html = HTML::tag( 'option', array(
+		$html = HTML::tag( 'option', [
 			'value' => '',
-		), _x( '&mdash; Select Calendar &mdash;', 'Modules: Today: Meta Box Input Option None', GEDITORIAL_TEXTDOMAIN ) );
+		], _x( '&mdash; Select Calendar &mdash;', 'Modules: Today: Meta Box Input Option None', GEDITORIAL_TEXTDOMAIN ) );
 
 		foreach ( self::getDefualtCalendars( TRUE ) as $name => $title )
-			$html .= HTML::tag( 'option', array(
+			$html .= HTML::tag( 'option', [
 				'value'    => $name,
 				'selected' => $args['cal'] == $name,
-			), $title );
+			], $title );
 
-		$html = HTML::tag( 'select', array(
+		$html = HTML::tag( 'select', [
 			'class' => '-cal',
 			'name'  => 'geditorial-today-date-cal',
 			'id'    => 'geditorial-today-date-cal',
 			'title' => _x( 'Calendar', 'Modules: Today: Meta Box Input', GEDITORIAL_TEXTDOMAIN ),
-		), $html );
+		], $html );
 
-		echo HTML::tag( 'div', array(
+		echo HTML::tag( 'div', [
 			'class' => 'field-wrap field-wrap-select',
-		), $html );
+		], $html );
 
 		// TODO: insert conversion buttons
 	}
 
-	public static function theDayNewConnected( $posttypes, $the_day = array(), $posttype = FALSE )
+	public static function theDayNewConnected( $posttypes, $the_day = [], $posttype = FALSE )
 	{
 		if ( ! is_user_logged_in() )
 			return;
@@ -339,13 +339,13 @@ class Today extends gEditorial\Helper
 
 				unset( $noyear['year'] );
 
-				$html .= HTML::tag( 'a', array(
-					'href'          => add_query_arg( array_merge( $noyear, array( 'post_type' => $posttype ) ), $new ),
+				$html .= HTML::tag( 'a', [
+					'href'          => add_query_arg( array_merge( $noyear, [ 'post_type' => $posttype ] ), $new ),
 					'class'         => 'button -add-posttype -add-posttype-'.$posttype,
 					'target'        => '_blank',
 					'data-posttype' => $posttype,
 					'title'         => _x( 'New Day!', 'Modules: Today', GEDITORIAL_TEXTDOMAIN ),
-				), $icon.' '.$posttype_object->labels->edit_item );
+				], $icon.' '.$posttype_object->labels->edit_item );
 			}
 
 			unset( $posttype_object, $posttype, $noyear );
@@ -360,17 +360,17 @@ class Today extends gEditorial\Helper
 
 			$icon = HTML::getDashicon( $posttype_object->menu_icon ? $posttype_object->menu_icon : 'admin-post' );
 
-			$html .= HTML::tag( 'a', array(
-				'href'          => add_query_arg( array_merge( $the_day, array( 'post_type' => $posttype ) ), $new ),
+			$html .= HTML::tag( 'a', [
+				'href'          => add_query_arg( array_merge( $the_day, [ 'post_type' => $posttype ] ), $new ),
 				'class'         => 'button -add-posttype -add-posttype-'.$posttype,
 				'target'        => '_blank',
 				'data-posttype' => $posttype,
 				'title'         => sprintf( _x( 'New %s connected to this day', 'Modules: Today', GEDITORIAL_TEXTDOMAIN ), $posttype_object->labels->singular_name ),
-			), $icon.' '.$posttype_object->labels->add_new_item );
+			], $icon.' '.$posttype_object->labels->add_new_item );
 		}
 
-		echo HTML::tag( 'div', array(
+		echo HTML::tag( 'div', [
 			'class' => 'field-wrap field-wrap-buttons',
-		), $html );
+		], $html );
 	}
 }

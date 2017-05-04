@@ -9,35 +9,35 @@ use geminorum\gEditorial\Core\HTML;
 class Home extends gEditorial\Module
 {
 
-	private $featured = array();
+	private $featured = [];
 
 	public static function module()
 	{
-		return array(
+		return [
 			'name'  => 'home',
 			'title' => _x( 'Home', 'Modules: Home', GEDITORIAL_TEXTDOMAIN ),
 			'desc'  => _x( 'Home Page Customized', 'Modules: Home', GEDITORIAL_TEXTDOMAIN ),
 			'icon'  => 'admin-home',
-		);
+		];
 	}
 
 	protected function settings_help_tabs()
 	{
 		$tabs = Settings::settingsHelpContent( $this->module );
 
-		$tabs[] = array(
+		$tabs[] = [
 			'id'       => 'geditorial-home-featured_content',
 			'title'    => _x( 'Featured Content', 'Modules: Home: Help Tab Title', GEDITORIAL_TEXTDOMAIN ),
 			'content'  => '<div class="-info"><p>Featured Content allows users to spotlight their posts and have them uniquely displayed by a theme. The content is intended to be displayed on a blog’s front page; by using the module consistently in this manner, users are given a reliable Featured Content experience on which they can rely even when switching themes.</p>
 <pre>
-add_theme_support( \'featured-content\', array(
+add_theme_support( \'featured-content\', [
 	\'filter\'     => \'mytheme_get_featured_posts\',
 	\'max_posts\'  => 20,
-	\'post_types\' => array( \'post\', \'page\' ),
+	\'post_types\' => [ \'post\', \'page\' ),
 ) );
 </pre>
 <p class="-from">Adopted from: <a href="https://jetpack.com/support/featured-content/" target="_blank">Jetpack Featured Content</a> by <a href="https://automattic.com/" target="_blank">Automattic</a></p></div>',
-		);
+		];
 
 		return $tabs;
 	}
@@ -59,53 +59,53 @@ add_theme_support( \'featured-content\', array(
 
 	protected function get_global_settings()
 	{
-		return array(
+		return [
 			'posttypes_option' => 'posttypes_option',
-			'_featured' => array(
-				array(
+			'_featured' => [
+				[
 					'field'       => 'featured_term',
 					'type'        => 'text',
 					'title'       => _x( 'Featured Term', 'Modules: Home: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Specify a term slug to use for theme-designated featured content area.', 'Modules: Home: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 					'placeholder' => 'featured-slug',
 					'dir'         => 'ltr',
-				),
-				array(
+				],
+				[
 					'field'       => 'featured_max',
 					'type'        => 'number',
 					'title'       => _x( 'Featured Max Count', 'Modules: Home: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'The maximum number of posts that a Featured Content area can contain.', 'Modules: Home: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 					'default'     => 15,
-				),
-				array(
+				],
+				[
 					'field'       => 'featured_exclude',
 					'title'       => _x( 'Exclude Featured Posts', 'Modules: Home: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Exclude featured contents on the main query.', 'Modules: Home: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-				),
-				array(
+				],
+				[
 					'field'       => 'featured_hide',
 					'title'       => _x( 'Hide Featured Term', 'Modules: Home: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Hide the term on the front-end.', 'Modules: Home: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-				),
-			),
-		);
+				],
+			],
+		];
 	}
 
 	protected function get_global_constants()
 	{
-		return array(
+		return [
 			'featured_tax' => 'post_tag',
-		);
+		];
 	}
 
 	protected function get_global_strings()
 	{
-		return array(
-			'settings' => array(
+		return [
+			'settings' => [
 				'post_types_title' => _x( 'Front-end Posttypes', 'Modules: Home: Setting Info', GEDITORIAL_TEXTDOMAIN ),
 				'post_types_after' => _x( 'Will include in front-end main query.', 'Modules: Home: Setting Info', GEDITORIAL_TEXTDOMAIN ),
-			),
-		);
+			],
+		];
 	}
 
 	public function init()
@@ -116,10 +116,10 @@ add_theme_support( \'featured-content\', array(
 		$featured_tax = $this->constant( 'featured_tax' );
 
 		if ( ! is_admin() ) {
-			add_action( 'pre_get_posts', array( $this, 'pre_get_posts' ), 9 );
+			$this->action( 'pre_get_posts', 1, 9 );
 
 			if ( count( $post_types ) ) {
-				add_filter( 'gpersiandate_calendar_posttypes', array( $this, 'calendar_posttypes' ) );
+				add_filter( 'gpersiandate_calendar_posttypes', [ $this, 'calendar_posttypes' ] );
 
 				$this->filter( 'widget_posts_args' );
 			}
@@ -127,20 +127,20 @@ add_theme_support( \'featured-content\', array(
 
 		if ( $this->setup_featured( $post_types, $featured_tax ) ) {
 
-			add_filter( $this->featured['filter'], array( $this, 'get_featured_posts' ) );
+			add_filter( $this->featured['filter'], [ $this, 'get_featured_posts' ] );
 
-			add_action( 'save_post', array( $this, 'delete_transient' ) );
-			add_action( 'switch_theme', array( $this, 'delete_transient' ) );
-			add_action( 'delete_'.$featured_tax, array( $this, 'delete_featured_tax' ), 10, 4 );
+			add_action( 'save_post', [ $this, 'delete_transient' ] );
+			add_action( 'switch_theme', [ $this, 'delete_transient' ] );
+			add_action( 'delete_'.$featured_tax, [ $this, 'delete_featured_tax' ], 10, 4 );
 
 			if ( ! is_admin() && $this->get_setting( 'featured_hide', FALSE ) ) {
-				add_filter( 'get_terms', array( $this, 'hide_featured_term' ), 10, 3 );
-				add_filter( 'get_the_terms', array( $this, 'hide_the_featured_term' ), 10, 3 );
+				add_filter( 'get_terms', [ $this, 'hide_featured_term' ], 10, 3 );
+				add_filter( 'get_the_terms', [ $this, 'hide_the_featured_term' ], 10, 3 );
 			}
 		}
 	}
 
-	private function setup_featured( $post_types = array(), $tax = 'post_tag' )
+	private function setup_featured( $post_types = [], $tax = 'post_tag' )
 	{
 		if ( ! $this->get_setting( 'featured_term', '' ) )
 			return FALSE;
@@ -164,7 +164,7 @@ add_theme_support( \'featured-content\', array(
 			$support[0]['max_posts'] = absint( $this->get_setting( 'featured_max', 15 ) );
 
 		if ( isset( $support[0]['additional_post_types'] ) ) {
-			$support[0]['post_types'] = array_merge( array( 'post' ), (array) $support[0]['additional_post_types'] );
+			$support[0]['post_types'] = array_merge( [ 'post' ], (array) $support[0]['additional_post_types'] );
 			unset( $support[0]['additional_post_types'] );
 		}
 
@@ -222,13 +222,13 @@ add_theme_support( \'featured-content\', array(
 		$ids = $this->get_featured_post_ids();
 
 		if ( empty( $ids ) )
-			return array();
+			return [];
 
-		return get_posts( array(
+		return get_posts( [
 			'post_type'      => $this->featured['post_types'],
 			'posts_per_page' => count( $ids ),
 			'include'        => $ids,
-		) );
+		] );
 	}
 
 	public function get_featured_post_ids()
@@ -242,22 +242,20 @@ add_theme_support( \'featured-content\', array(
 		if ( ! $term = get_term_by( 'slug',
 			$this->get_setting( 'featured_term', 'featured' ),
 				$this->constant( 'featured_tax' ) ) )
-					return apply_filters( 'featured_content_post_ids', array() );
+					return apply_filters( 'featured_content_post_ids', [] );
 
-		$featured = get_posts( array(
+		$featured = get_posts( [
 			'post_type'   => $this->featured['post_types'],
 			'numberposts' => $this->featured['max_posts'],
-			'tax_query'   => array(
-				array(
-					'field'    => 'term_id',
-					'taxonomy' => $this->constant( 'featured_tax' ),
-					'terms'    => $term->term_id,
-				),
-			),
-		) );
+			'tax_query'   => [ [
+				'field'    => 'term_id',
+				'taxonomy' => $this->constant( 'featured_tax' ),
+				'terms'    => $term->term_id,
+			] ],
+		] );
 
 		if ( ! $featured )
-			return apply_filters( 'featured_content_post_ids', array() );
+			return apply_filters( 'featured_content_post_ids', [] );
 
 		$featured_ids = wp_list_pluck( (array) $featured, 'ID' );
 		$featured_ids = array_map( 'absint', $featured_ids );

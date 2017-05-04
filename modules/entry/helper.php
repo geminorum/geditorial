@@ -16,13 +16,13 @@ class Entry extends gEditorial\Helper
 	/////MUST REWRITE//////////////////////////////////////////
 	///////////////////////////////////////////////////////////
 
-	function sections( $sections = array(), $active_section = NULL )
+	function sections( $sections = [], $active_section = NULL )
 	{
 		$taxonomy = 'section';
 		$link_class = '';
 		if ( empty( $sections ) ) {
 			$link_class = 'root';
-			$sections = get_terms( $taxonomy, array( 'parent' => 0, 'hide_empty' => 0 ) );
+			$sections = get_terms( $taxonomy, [ 'parent' => 0, 'hide_empty' => 0 ] );
 			$active_section = self::active_section();
 			echo '<ul id="kb-sections" class="unstyled">';
 		}
@@ -31,7 +31,7 @@ class Entry extends gEditorial\Helper
 		}
 		foreach ( $sections as $section ) {
 			$toggle = '';
-			$section_children = get_terms( $taxonomy, array( 'parent' => $section->term_id, 'hide_empty' => 0 ) );
+			$section_children = get_terms( $taxonomy, [ 'parent' => $section->term_id, 'hide_empty' => 0 ] );
 			if ( !empty( $section_children ) && $link_class != 'root' ) {
 				$toggle = '<i class="toggle"></i>';
 			}

@@ -16,100 +16,98 @@ class Series extends gEditorial\Module
 	public $meta_key      = '_ge_series';
 	protected $field_type = 'series';
 
-	protected $partials = array( 'templates' );
-
 	public static function module()
 	{
-		return array(
+		return [
 			'name'  => 'series',
 			'title' => _x( 'Series', 'Modules: Series', GEDITORIAL_TEXTDOMAIN ),
 			'desc'  => _x( 'Post Series Management', 'Modules: Series', GEDITORIAL_TEXTDOMAIN ),
 			'icon'  => 'editor-ol',
-		);
+		];
 	}
 
 	protected function get_global_settings()
 	{
-		return array(
-			'_general' => array(
+		return [
+			'_general' => [
 				'multiple_instances',
-			),
+			],
 			'posttypes_option' => 'posttypes_option',
 			'fields_option'    => 'fields_option',
-		);
+		];
 	}
 
 	protected function get_global_constants()
 	{
-		return array(
+		return [
 			'series_tax'       => 'series',
 			'series_shortcode' => 'series',
-		);
+		];
 	}
 
 	protected function get_module_icons()
 	{
-		return array(
-			'taxonomies' => array(
+		return [
+			'taxonomies' => [
 				'series_tax' => NULL,
-			),
-		);
+			],
+		];
 	}
 
 	protected function get_global_strings()
 	{
-		return array(
-			'titles' => array(
-				'post' => array(
+		return [
+			'titles' => [
+				'post' => [
 					'in_series_title' => _x( 'Title', 'Modules: Series', GEDITORIAL_TEXTDOMAIN ),
 					'in_series_order' => _x( 'Order', 'Modules: Series', GEDITORIAL_TEXTDOMAIN ),
 					'in_series_desc'  => _x( 'Description', 'Modules: Series', GEDITORIAL_TEXTDOMAIN ),
-				),
-			),
-			'descriptions' => array(
-				'post' => array(
+				],
+			],
+			'descriptions' => [
+				'post' => [
 					'in_series_title' => _x( 'In Series Title', 'Modules: Series', GEDITORIAL_TEXTDOMAIN ),
 					'in_series_order' => _x( 'In Series Order', 'Modules: Series', GEDITORIAL_TEXTDOMAIN ),
 					'in_series_desc'  => _x( 'In Series Description', 'Modules: Series', GEDITORIAL_TEXTDOMAIN ),
-				),
-			),
-			'misc' => array(
+				],
+			],
+			'misc' => [
 				'meta_box_title'      => _x( 'Series', 'Modules: Series: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
 				'meta_box_action'     => _x( 'Management', 'Modules: Series: MetaBox Action', GEDITORIAL_TEXTDOMAIN ),
 				'column_title'        => _x( 'Series', 'Modules: Series: Column Title', GEDITORIAL_TEXTDOMAIN ),
 				'tweaks_column_title' => _x( 'Series', 'Modules: Series: Column Title', GEDITORIAL_TEXTDOMAIN ),
 				'show_option_none'    => _x( '&mdash; Choose a Series &mdash;', 'Modules: Series', GEDITORIAL_TEXTDOMAIN ),
-			),
-			'noops' => array(
+			],
+			'noops' => [
 				'series_tax' => _nx_noop( 'Series', 'Series', 'Modules: Series: Noop', GEDITORIAL_TEXTDOMAIN ),
-			),
-		);
+			],
+		];
 	}
 
 	protected function get_global_fields()
 	{
-		return array(
-			$this->constant( 'post_cpt' ) => array(
+		return [
+			$this->constant( 'post_cpt' ) => [
 				'in_series_title' => TRUE,
 				'in_series_order' => TRUE,
 				'in_series_desc'  => FALSE,
-			),
-		);
+			],
+		];
 	}
 
 	public function init()
 	{
 		parent::init();
 
-		$this->register_taxonomy( 'series_tax', array(
+		$this->register_taxonomy( 'series_tax', [
 			'show_admin_column' => TRUE,
-		) );
+		] );
 
 		foreach ( $this->post_types() as $post_type )
 			$this->add_post_type_fields( $post_type, $this->fields[$this->constant( 'post_cpt' )], 'series' );
 
 		if ( is_admin() )
-			add_action( 'save_post', array( $this, 'save_post' ), 20, 2 );
+			$this->action( 'save_post', 2, 20 );
 
 		$this->register_shortcode( 'series_shortcode' );
 	}
@@ -122,13 +120,13 @@ class Series extends gEditorial\Module
 
 				add_meta_box( $this->classs( 'supported' ),
 					$this->get_meta_box_title( 'series_tax', $this->get_url_tax_edit( 'series_tax' ), 'edit_others_posts' ),
-					array( $this, 'do_meta_box' ),
+					[ $this, 'do_meta_box' ],
 					$screen->post_type,
 					'side' );
 
 				// internal actions:
-				add_action( 'geditorial_series_meta_box', array( $this, 'geditorial_series_meta_box' ), 5, 3 );
-				add_action( 'geditorial_series_meta_box_item', array( $this, 'geditorial_series_meta_box_item' ), 5, 4 );
+				add_action( 'geditorial_series_meta_box', [ $this, 'geditorial_series_meta_box' ], 5, 3 );
+				add_action( 'geditorial_series_meta_box_item', [ $this, 'geditorial_series_meta_box_item' ], 5, 4 );
 
 			} else if ( 'edit' == $screen->base ) {
 
@@ -166,7 +164,7 @@ class Series extends gEditorial\Module
 			return $postmeta;
 
 		$prefix   = 'geditorial-series-';
-		$postmeta = $pre_terms = array();
+		$postmeta = $pre_terms = [];
 
 		foreach ( $_POST['geditorial-series-terms'] as $offset => $term_id )
 			if ( $term_id && '-1' != $term_id )
@@ -217,12 +215,12 @@ class Series extends gEditorial\Module
 		if ( ! Taxonomy::hasTerms( $tax ) )
 			return MetaBox::fieldEmptyTaxonomy( $tax );
 
-		$dropdowns = $posts = $map = array();
+		$dropdowns = $posts = $map = [];
 		$fields    = $this->post_type_fields( $post->post_type );
 		$i         = 1;
 
 		foreach ( $series as $the_term ) {
-			$dropdowns[$i] = wp_dropdown_categories( array(
+			$dropdowns[$i] = wp_dropdown_categories( [
 				'taxonomy'         => $tax,
 				'selected'         => $the_term->term_id,
 				'show_option_none' => $this->get_string( 'show_option_none', 'post', 'misc' ),
@@ -232,15 +230,15 @@ class Series extends gEditorial\Module
 				'show_count'       => 1,
 				'hide_empty'       => 0,
 				'echo'             => 0,
-			) );
+			] );
 
-			$posts[$i] = Helper::getTermPosts( $tax, $the_term, array( $post->ID ) );
+			$posts[$i] = Helper::getTermPosts( $tax, $the_term, [ $post->ID ] );
 			$map[$i]   = $the_term->term_id;
 			$i++;
 		}
 
 		if ( $this->get_setting( 'multiple_instances', FALSE ) || ! count( $series ) )
-			$dropdowns[0] = wp_dropdown_categories( array(
+			$dropdowns[0] = wp_dropdown_categories( [
 				'taxonomy'         => $tax,
 				'selected'         => 0,
 				'show_option_none' => $this->get_string( 'show_option_none', 'post', 'misc' ),
@@ -251,7 +249,7 @@ class Series extends gEditorial\Module
 				'hide_empty'       => 0,
 				'echo'             => 0,
 				'exclude'          => $map,
-			) );
+			] );
 
 		$map[0] = FALSE;
 
@@ -281,14 +279,14 @@ class Series extends gEditorial\Module
 
 	public function geditorial_series_meta_box_item( $counter, $term_id, $fields, $post )
 	{
-		$meta = ( $counter ? $this->get_postmeta( $post->ID, $term_id, array() ) : array() );
+		$meta = ( $counter ? $this->get_postmeta( $post->ID, $term_id, [] ) : [] );
 
 		$field = 'in_series_title';
 		if ( in_array( $field, $fields )
 			&& self::user_can( 'view', $field ) ) {
 
 			$title = $this->get_string( $field, $post->post_type );
-			$html = HTML::tag( 'input', array(
+			$html = HTML::tag( 'input', [
 				'type'         => 'text',
 				'name'         => 'geditorial-series-'.$field.'['.$counter.']',
 				'id'           => 'geditorial-series-'.$field.'-'.$counter,
@@ -297,14 +295,14 @@ class Series extends gEditorial\Module
 				'placeholder'  => $title,
 				'readonly'     => ! $this->user_can( 'edit', $field ),
 				'autocomplete' => 'off',
-				'data'         => array(
+				'data'         => [
 					'ortho' => 'text',
-				),
-			) );
+				],
+			] );
 
-			echo HTML::tag( 'div', array(
+			echo HTML::tag( 'div', [
 				'class' => 'field-wrap field-wrap-inputtext',
-			), $html );
+			], $html );
 		}
 
 		$field = 'in_series_order';
@@ -312,7 +310,7 @@ class Series extends gEditorial\Module
 			&& self::user_can( 'view', $field ) ) {
 
 			$title = $this->get_string( $field, $post->post_type );
-			$html = HTML::tag( 'input', array(
+			$html = HTML::tag( 'input', [
 				'type'         => 'text',
 				'name'         => 'geditorial-series-'.$field.'['.$counter.']',
 				'id'           => 'geditorial-series-'.$field.'-'.$counter,
@@ -321,11 +319,11 @@ class Series extends gEditorial\Module
 				'placeholder'  => $title,
 				'readonly'     => ! $this->user_can( 'edit', $field ),
 				'autocomplete' => 'off',
-			) );
+			] );
 
-			echo HTML::tag( 'div', array(
+			echo HTML::tag( 'div', [
 				'class' => 'field-wrap field-wrap-inputtext',
-			), $html );
+			], $html );
 		}
 
 		$field = 'in_series_desc';
@@ -333,7 +331,7 @@ class Series extends gEditorial\Module
 			&& self::user_can( 'view', $field ) ) {
 
 			$title = $this->get_string( $field, $post->post_type );
-			$html = HTML::tag( 'textarea', array(
+			$html = HTML::tag( 'textarea', [
 				'rows'        => '1',
 				'class'       => 'textarea-autosize',
 				'name'        => 'geditorial-series-'.$field.'['.$counter.']',
@@ -341,14 +339,14 @@ class Series extends gEditorial\Module
 				'title'       => $title,
 				'placeholder' => $title,
 				'readonly'    => ! $this->user_can( 'edit', $field ),
-				'data'        => array(
+				'data'        => [
 					'ortho' => 'html',
-				),
-			), isset( $meta[$field] ) ? esc_textarea( $meta[$field] ) : '' );
+				],
+			], isset( $meta[$field] ) ? esc_textarea( $meta[$field] ) : '' );
 
-			echo HTML::tag( 'div', array(
+			echo HTML::tag( 'div', [
 				'class' => 'field-wrap field-wrap-textarea',
-			), $html );
+			], $html );
 		}
 	}
 

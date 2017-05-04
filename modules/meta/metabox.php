@@ -87,7 +87,7 @@ class Meta extends gEditorial\MetaBox
 
 			$edit = $gEditorial->meta->user_can( 'edit', $field );
 
-			$atts = array(
+			$atts = [
 				'type'         => 'text',
 				'autocomplete' => 'off',
 				'name'         => 'geditorial-meta-'.$field.( FALSE === $key ? '' : '['.$key.']' ),
@@ -96,16 +96,16 @@ class Meta extends gEditorial\MetaBox
 				'title'        => $gEditorial->meta->get_string( $field, $post->post_type, 'descriptions', $title ), // FIXME: get from fields args
 				'placeholder'  => $title,
 				'readonly'     => ! $edit,
-				'class'        => array(
+				'class'        => [
 					'geditorial-meta-field-'.$field,
 					'geditorial-meta-type-'.$type,
-				),
-				'data' => array(
+				],
+				'data' => [
 					'meta-field' => $field,
 					'meta-type'  => $type,
 					'meta-title' => $title,
-				),
-			);
+				],
+			];
 
 			if ( $ltr )
 				$atts['dir'] = 'ltr';
@@ -115,9 +115,9 @@ class Meta extends gEditorial\MetaBox
 
 			$html = HTML::tag( 'input', $atts );
 
-			echo HTML::tag( 'div', array(
+			echo HTML::tag( 'div', [
 				'class' => 'field-wrap field-wrap-inputtext',
-			), $html );
+			], $html );
 		}
 	}
 
@@ -133,7 +133,7 @@ class Meta extends gEditorial\MetaBox
 
 			$edit = $gEditorial->meta->user_can( 'edit', $field );
 
-			$atts = array(
+			$atts = [
 				'type'         => 'number',
 				'autocomplete' => 'off',
 				'name'         => 'geditorial-meta-'.$field.( FALSE === $key ? '' : '['.$key.']' ),
@@ -142,16 +142,16 @@ class Meta extends gEditorial\MetaBox
 				'title'        => $gEditorial->meta->get_string( $field, $post->post_type, 'descriptions', $title ), // FIXME: get from fields args
 				'placeholder'  => $title,
 				'readonly'     => ! $edit,
-				'class'        => array(
+				'class'        => [
 					'geditorial-meta-field-'.$field,
 					'geditorial-meta-type-'.$type,
-				),
-				'data' => array(
+				],
+				'data' => [
 					'meta-field' => $field,
 					'meta-type'  => $type,
 					'meta-title' => $title,
-				),
-			);
+				],
+			];
 
 			if ( $ltr )
 				$atts['dir'] = 'ltr';
@@ -161,9 +161,9 @@ class Meta extends gEditorial\MetaBox
 
 			$html = HTML::tag( 'input', $atts );
 
-			echo HTML::tag( 'div', array(
+			echo HTML::tag( 'div', [
 				'class' => 'field-wrap field-wrap-inputnumber',
-			), $html );
+			], $html );
 		}
 	}
 
@@ -182,7 +182,7 @@ class Meta extends gEditorial\MetaBox
 			echo '<div class="field-wrap" title="'.esc_attr( $desc ).'">';
 
 			// FIXME: core dropdown does not support: data attr
-			wp_dropdown_categories( array(
+			wp_dropdown_categories( [
 				'taxonomy'          => $tax,
 				'selected'          => Taxonomy::theTerm( $tax, $post->ID ),
 				'show_option_none'  => Settings::showOptionNone( $title ),
@@ -195,7 +195,7 @@ class Meta extends gEditorial\MetaBox
 				'hide_empty'        => FALSE,
 				'hide_if_empty'     => TRUE,
 				'echo'              => TRUE,
-			) );
+			] );
 
 			echo '</div>';
 		}
@@ -213,7 +213,7 @@ class Meta extends gEditorial\MetaBox
 
 			$edit = $gEditorial->meta->user_can( 'edit', $field );
 
-			$atts = array(
+			$atts = [
 				'rows'        => '1',
 				// 'cols'        => '40',
 				'name'        => 'geditorial-meta-'.$field.( FALSE === $key ? '' : '['.$key.']' ),
@@ -222,17 +222,17 @@ class Meta extends gEditorial\MetaBox
 				'placeholder' => $title,
 				'readonly'    => ! $edit,
 				'tabindex'    => '0',
-				'class'       => array(
+				'class'       => [
 					'geditorial-meta-field-'.$field,
 					'geditorial-meta-type-'.$type,
 					'textarea-autosize',
-				),
-				'data' => array(
+				],
+				'data' => [
 					'meta-field' => $field,
 					'meta-type'  => $type,
 					'meta-title' => $title,
-				),
-			);
+				],
+			];
 
 			if ( $ltr )
 				$atts['dir'] = 'ltr';
@@ -242,9 +242,9 @@ class Meta extends gEditorial\MetaBox
 
 			$html = HTML::tag( 'textarea', $atts, esc_textarea( $gEditorial->meta->get_postmeta( $post->ID, $field ) ) );
 
-			echo HTML::tag( 'div', array(
+			echo HTML::tag( 'div', [
 				'class' => 'field-wrap field-wrap-textarea',
-			), $html );
+			], $html );
 		}
 	}
 
@@ -261,7 +261,7 @@ class Meta extends gEditorial\MetaBox
 
 			$edit = $gEditorial->meta->user_can( 'edit', $field );
 
-			$atts = array(
+			$atts = [
 				'type'         => 'text',
 				'autocomplete' => 'off',
 				'name'         => 'geditorial-meta-'.$field.( FALSE === $key ? '' : '['.$key.']' ),
@@ -272,18 +272,18 @@ class Meta extends gEditorial\MetaBox
 				'readonly'     => ! $edit,
 				'tabindex'     => '0',
 				'style'        => 'display:none;',
-				'class'        => array(
+				'class'        => [
 					'geditorial-admin-posttitle',
 					'geditorial-meta-field-'.$field,
 					'geditorial-meta-type-'.$type,
 					'hide-if-no-js',
-				),
-				'data' => array(
+				],
+				'data' => [
 					'meta-field' => $field,
 					'meta-type'  => $type,
 					'meta-title' => $title,
-				),
-			);
+				],
+			];
 
 			if ( $ltr )
 				$atts['dir'] = 'ltr';
@@ -315,7 +315,7 @@ class Meta extends gEditorial\MetaBox
 			$html .= '<div class="geditorial-admin-wrap-textbox geditorial-wordcount-wrap">';
 			$html .= '<div class="field-wrap field-wrap-textarea">';
 
-			$atts = array(
+			$atts = [
 				'rows'     => '1',
 				// 'cols'     => '40',
 				'name'     => 'geditorial-meta-'.$field.( FALSE === $key ? '' : '['.$key.']' ),
@@ -323,17 +323,17 @@ class Meta extends gEditorial\MetaBox
 				'title'    => $gEditorial->meta->get_string( $field, $post->post_type, 'descriptions', $title ), // FIXME: get from fields args
 				'readonly' => ! $edit,
 				'tabindex' => '0',
-				'class'    => array(
+				'class'    => [
 					'geditorial-meta-field-'.$field,
 					'geditorial-meta-type-'.$type,
 					'textarea-autosize',
-				),
-				'data' => array(
+				],
+				'data' => [
 					'meta-field' => $field,
 					'meta-type'  => $type,
 					'meta-title' => $title,
-				),
-			);
+				],
+			];
 
 			if ( $ltr )
 				$atts['dir'] = 'ltr';

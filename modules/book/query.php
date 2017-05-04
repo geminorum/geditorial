@@ -8,36 +8,36 @@ class gEditorialBookQuery extends \WP_Query
 	private $cpt = 'publication';
 	private $tax = 'publication_subject';
 
-	public function __construct( $args = array() )
+	public function __construct( $args = [] )
 	{
 		$this->cpt = gEditorial()->constant( 'book', 'publication_cpt', 'publication' );
 		$this->tax = gEditorial()->constant( 'book', 'subject_tax', 'publication_subject' );
 
 		// Force these args
-		$args = array_merge( $args, array(
+		$args = array_merge( $args, [
 			'post_type'              => $this->cpt,
 			'posts_per_page'         => -1,  // turn off paging
 			'no_found_rows'          => TRUE, // optimize query for no paging
 			'update_post_term_cache' => FALSE,
 			'update_post_meta_cache' => FALSE,
 			'lazy_load_term_meta'    => FALSE,
-		) );
+		] );
 
-		$filters = array(
+		$filters = [
 			'posts_fields',
 			'posts_join',
 			'posts_where',
 			'posts_orderby',
-		);
+		];
 
 		foreach ( $filters as $filter )
-			add_filter( $filter, array( $this, $filter ) );
+			add_filter( $filter, [ $this, $filter ] );
 
 		parent::__construct( $args );
 
 		// make sure these filters don't affect any other queries
 		foreach ( $filters as $filter )
-			remove_filter( $filter, array( $this, $filter ) );
+			remove_filter( $filter, [ $this, $filter ] );
 	}
 
 	public function posts_fields( $sql )

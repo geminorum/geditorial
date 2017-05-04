@@ -15,14 +15,14 @@ class Terms extends gEditorial\Module
 
 	public static function module()
 	{
-		return array(
+		return [
 			'name'      => 'terms',
 			'title'     => _x( 'Terms', 'Modules: Terms', GEDITORIAL_TEXTDOMAIN ),
 			'desc'      => _x( 'Taxonomy & Term Tools', 'Modules: Terms', GEDITORIAL_TEXTDOMAIN ),
 			'icon'      => 'image-filter',
 			'configure' => FALSE,
 			'frontend'  => FALSE,
-		);
+		];
 	}
 
 	public function append_sub( $subs, $page = 'settings' )
@@ -31,11 +31,11 @@ class Terms extends gEditorial\Module
 			return $subs;
 
 		if ( $page == 'reports' )
-			return array_merge( $subs, array(
+			return array_merge( $subs, [
 				'uncategorized' => _x( 'Uncategorized', 'Modules: Terms: Reports: Sub Title', GEDITORIAL_TEXTDOMAIN ),
-			) );
+			] );
 		else
-			return array_merge( $subs, array( $this->module->name => $this->module->title ) );
+			return array_merge( $subs, [ $this->module->name => $this->module->title ] );
 	}
 
 	public function tools_settings( $sub )
@@ -56,10 +56,10 @@ class Terms extends gEditorial\Module
 						", trim( $post['live_tax'] ), trim( $post['dead_tax'] ) ) );
 
 						if ( count( $result ) )
-							WordPress::redirectReferer( array(
+							WordPress::redirectReferer( [
 								'message' => 'changed',
 								'count'   => count( $result ),
-							) );
+							] );
 					}
 				}
 			}
@@ -82,21 +82,21 @@ class Terms extends gEditorial\Module
 
 				echo '<tr><th scope="row">'._x( 'Orphaned Terms', 'Modules: Terms', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
 
-					$this->do_settings_field( array(
+					$this->do_settings_field( [
 						'type'         => 'select',
 						'field'        => 'dead_tax',
 						'values'       => $dead_taxes,
 						'default'      => ( isset( $post['dead_tax'] ) ? $post['dead_tax'] : 'post_tag' ),
 						'option_group' => 'tools',
-					) );
+					] );
 
-					$this->do_settings_field( array(
+					$this->do_settings_field( [
 						'type'         => 'select',
 						'field'        => 'live_tax',
 						'values'       => $live_taxes,
 						'default'      => ( isset( $post['live_tax'] ) ? $post['live_tax'] : 'post_tag' ),
 						'option_group' => 'tools',
-					) );
+					] );
 
 					echo '&nbsp;&nbsp;';
 
@@ -141,18 +141,18 @@ class Terms extends gEditorial\Module
 						$count++;
 					}
 
-					WordPress::redirectReferer( array(
+					WordPress::redirectReferer( [
 						'message' => 'cleaned',
 						'count'   => $count,
-					) );
+					] );
 				}
 			}
 
-			add_action( 'geditorial_reports_sub_'.$sub, array( $this, 'reports_sub' ), 10, 2 );
+			add_action( 'geditorial_reports_sub_'.$sub, [ $this, 'reports_sub' ], 10, 2 );
 			$this->screen_option( $sub );
 		}
 
-		add_filter( 'geditorial_reports_subs', array( $this, 'append_sub' ), 10, 2 );
+		add_filter( 'geditorial_reports_subs', [ $this, 'append_sub' ], 10, 2 );
 	}
 
 	public function reports_sub( $uri, $sub )
@@ -177,20 +177,20 @@ class Terms extends gEditorial\Module
 		$pagination['actions']['cleanup_terms'] = _x( 'Cleanup Terms', 'Modules: Terms: Table Action', GEDITORIAL_TEXTDOMAIN );
 		$pagination['before'][] = Helper::tableFilterPostTypes();
 
-		return HTML::tableList( array(
+		return HTML::tableList( [
 			'_cb'   => 'ID',
 			'ID'    => Helper::tableColumnPostID(),
 			'date'  => Helper::tableColumnPostDate(),
 			'type'  => Helper::tableColumnPostType(),
 			'title' => Helper::tableColumnPostTitle(),
 			'terms' => Helper::tableColumnPostTerms(),
-		), $posts, array(
+		], $posts, [
 			'navigation' => 'before',
 			'search'     => 'before',
 			'title'      => HTML::tag( 'h3', _x( 'Overview of Uncategorized Posts', 'Modules: Terms', GEDITORIAL_TEXTDOMAIN ) ),
 			'empty'      => HTML::warning( _x( 'No Posts!', 'Modules: Terms', GEDITORIAL_TEXTDOMAIN ) ),
 			'pagination' => $pagination,
-		) );
+		] );
 	}
 
 	protected function getPostArray()
@@ -199,20 +199,20 @@ class Terms extends gEditorial\Module
 		$paged  = self::paged();
 		$offset = ( $paged - 1 ) * $limit;
 
-		$args = array(
+		$args = [
 			'posts_per_page'   => $limit,
 			'offset'           => $offset,
 			'orderby'          => self::orderby( 'ID' ),
 			'order'            => self::order( 'asc' ),
 			'post_type'        => 'any', // $this->post_types()
-			'post_status'      => array( 'publish', 'future', 'draft', 'pending' ),
+			'post_status'      => [ 'publish', 'future', 'draft', 'pending' ],
 			'suppress_filters' => TRUE,
-			'tax_query'        => array( array(
+			'tax_query'        => [ [
 				'taxonomy' => 'category',
 				'field'    => 'term_id',
-				'terms'    => array( get_option( 'default_category' ) ),
-			) ),
-		);
+				'terms'    => [ get_option( 'default_category' ) ],
+			] ],
+		];
 
 		if ( ! empty( $_REQUEST['id'] ) )
 			$args['post__in'] = explode( ',', maybe_unserialize( $_REQUEST['id'] ) );
@@ -228,6 +228,6 @@ class Terms extends gEditorial\Module
 
 		$pagination = HTML::tablePagination( $query->found_posts, $query->max_num_pages, $limit, $paged );
 
-		return array( $posts, $pagination );
+		return [ $posts, $pagination ];
 	}
 }

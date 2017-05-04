@@ -12,40 +12,40 @@ class Event extends gEditorial\Module
 
 	public static function module()
 	{
-		return array(
+		return [
 			'name'  => 'event',
 			'title' => _x( 'Event', 'Modules: Event', GEDITORIAL_TEXTDOMAIN ),
 			'desc'  => _x( 'Events Integrated With Your Site', 'Modules: Event', GEDITORIAL_TEXTDOMAIN ),
 			'icon'  => 'calendar-alt',
-		);
+		];
 	}
 
 	protected function get_global_settings()
 	{
-		return array(
-			'_general' => array(
-				array(
+		return [
+			'_general' => [
+				[
 					'field'       => 'startend_support',
 					'title'       => _x( 'Start ~ End Support', 'Modules: Event: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Specify events based on the actual date & time', 'Modules: Event: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 					'default'     => '1',
-				),
-				array(
+				],
+				[
 					'field'       => 'display_type',
 					'title'       => _x( 'Display Calendar Type', 'Modules: Event: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'For each event you can select the calendar type. Or else select default below.', 'Modules: Event: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 					'default'     => '1',
-				),
+				],
 				'calendar_type',
 				'comment_status',
 				'admin_ordering',
-			),
-		);
+			],
+		];
 	}
 
 	protected function get_global_constants()
 	{
-		return array(
+		return [
 			'event_cpt'         => 'event',
 			'event_cpt_archive' => 'events',
 			'event_tag'         => 'event_tag',
@@ -58,74 +58,74 @@ class Event extends gEditorial\Module
 			'event_enddate'   => 'event_enddate',
 			'event_timezone'  => 'event_timezone',
 			'mysql_format'    => 'Y-m-d H:i:s',
-		);
+		];
 	}
 
 	protected function get_module_icons()
 	{
-		return array(
-			'taxonomies' => array(
+		return [
+			'taxonomies' => [
 				'event_cat' => 'category',
 				'event_tag' => 'tag',
 				'cal_tax'   => 'calendar',
-			),
-		);
+			],
+		];
 	}
 
 	protected function get_global_strings()
 	{
-		return array(
-			'misc' => array(
-				'event_cpt' => array(
+		return [
+			'misc' => [
+				'event_cpt' => [
 					'featured'       => _x( 'Poster Image', 'Modules: Event: Event CPT: Featured', GEDITORIAL_TEXTDOMAIN ),
 					'meta_box_title' => _x( 'Date & Times', 'Modules: Event: Event CPT: Meta Box Title', GEDITORIAL_TEXTDOMAIN ),
 
 					'event_starts_column_title' => _x( 'Starts', 'Modules: Event: Column Title', GEDITORIAL_TEXTDOMAIN ),
 					'event_ends_column_title'   => _x( 'Ends', 'Modules: Event: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				),
-				'event_tag' => array(
+				],
+				'event_tag' => [
 					'menu_name'           => _x( 'Types', 'Modules: Event: Event Types Tax Labels: Menu Name', GEDITORIAL_TEXTDOMAIN ),
 					'meta_box_title'      => _x( 'Event Types', 'Modules: Event: Meta Box Title', GEDITORIAL_TEXTDOMAIN ),
 					'tweaks_column_title' => _x( 'Event Types', 'Modules: Event: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				),
-				'cal_tax' => array(
+				],
+				'cal_tax' => [
 					'menu_name'           => _x( 'Calendars', 'Modules: Event: Event Calendars Tax Labels: Menu Name', GEDITORIAL_TEXTDOMAIN ),
 					'meta_box_title'      => _x( 'Event Calendars', 'Modules: Event: Meta Box Title', GEDITORIAL_TEXTDOMAIN ),
 					'tweaks_column_title' => _x( 'Event Calendars', 'Modules: Event: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				),
-			),
-			'settings' => array(
+				],
+			],
+			'settings' => [
 				'install_def_event_tag' => _x( 'Install Default Event Types', 'Modules: Event: Setting Button', GEDITORIAL_TEXTDOMAIN ),
 				'install_def_type_tax'  => _x( 'Install Default Calendar Types', 'Modules: Event: Setting Button', GEDITORIAL_TEXTDOMAIN ),
-			),
-			'noops' => array(
+			],
+			'noops' => [
 				'event_cpt' => _nx_noop( 'Event', 'Events', 'Modules: Event: Noop', GEDITORIAL_TEXTDOMAIN ),
 				'event_tag' => _nx_noop( 'Event Type', 'Event Types', 'Modules: Event: Noop', GEDITORIAL_TEXTDOMAIN ),
 				'event_cat' => _nx_noop( 'Event Category', 'Event Categories', 'Modules: Event: Noop', GEDITORIAL_TEXTDOMAIN ),
 				'cal_tax'   => _nx_noop( 'Event Calendar', 'Event Calendars', 'Modules: Event: Noop', GEDITORIAL_TEXTDOMAIN ),
-			),
-			'labels' => array(
-				'type_tax' => array(
+			],
+			'labels' => [
+				'type_tax' => [
 					'name' => _x( 'Calendar Types', 'Modules: Event: Calendar Type Tax Labels: Name', GEDITORIAL_TEXTDOMAIN ),
-				),
-			),
-			'terms' => array(
-				'event_tag' => array(
+				],
+			],
+			'terms' => [
+				'event_tag' => [
 					'holiday' => _x( 'Holiday', 'Modules: Event: Event Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
 					'birth'   => _x( 'Birth', 'Modules: Event: Event Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
 					'death'   => _x( 'Death', 'Modules: Event: Event Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
 					'start'   => _x( 'Start', 'Modules: Event: Event Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
 					'end'     => _x( 'End', 'Modules: Event: Event Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
-				),
+				],
 				'type_tax' => Helper::getDefualtCalendars( TRUE ),
-			),
-		);
+			],
+		];
 	}
 
 	protected function get_global_supports()
 	{
-		return array(
-			'event_cpt' => array(
+		return [
+			'event_cpt' => [
 				'title',
 				'editor',
 				'excerpt',
@@ -134,8 +134,8 @@ class Event extends gEditorial\Module
 				'comments',
 				'revisions',
 				'date-picker', // gPersianDate
-			),
-		);
+			],
+		];
 	}
 
 	public function init()
@@ -147,35 +147,35 @@ class Event extends gEditorial\Module
 			'meta_box_cb'  => NULL, // default meta box
 		] );
 
-		$this->register_taxonomy( 'event_cat', array(
+		$this->register_taxonomy( 'event_cat', [
 			'hierarchical'       => TRUE,
 			'meta_box_cb'        => NULL, // default meta box
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
-		), 'event_cpt' );
+		], 'event_cpt' );
 
-		$this->register_taxonomy( 'event_tag', array(
+		$this->register_taxonomy( 'event_tag', [
 			'hierarchical'       => TRUE,
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
-		), 'event_cpt' );
+		], 'event_cpt' );
 
-		$this->register_taxonomy( 'cal_tax', array(
+		$this->register_taxonomy( 'cal_tax', [
 			'hierarchical' => TRUE,
-		), 'event_cpt' );
+		], 'event_cpt' );
 
 		if ( $this->get_setting( 'startend_support', TRUE ) )
-			$this->register_taxonomy( 'type_tax', array(
+			$this->register_taxonomy( 'type_tax', [
 				'show_ui' => FALSE,
-			), 'event_cpt' );
+			], 'event_cpt' );
 
 		add_rewrite_endpoint( $this->constant( 'ical_endpoint' ), EP_PAGES, 'ical' );
 
 		if ( ! is_admin() ) {
 
-			add_action( 'pre_get_posts', array( $this, 'pre_get_posts' ) );
-			add_action( 'template_redirect', array( $this, 'template_redirect' ) );
-			add_filter( 'template_include', array( $this, 'template_include' ) );
+			$this->action( 'pre_get_posts' );
+			$this->action( 'template_redirect' );
+			$this->filter( 'template_include' );
 		}
 	}
 
@@ -193,16 +193,16 @@ class Event extends gEditorial\Module
 
 			if ( 'post' == $screen->base ) {
 
-				add_filter( 'post_updated_messages', array( $this, 'post_updated_messages' ) );
-				add_filter( 'get_default_comment_status', array( $this, 'get_default_comment_status' ), 10, 3 );
+				$this->filter( 'post_updated_messages' );
+				$this->filter( 'get_default_comment_status', 3 );
 
-				add_action( 'save_post_'.$screen->post_type, array( $this, 'save_post_main_cpt' ), 20, 3 );
+				add_action( 'save_post_'.$screen->post_type, [ $this, 'save_post_main_cpt' ], 20, 3 );
 
 				if ( $startend ) {
 
 					add_meta_box( $this->classs( 'main' ),
 						$this->get_meta_box_title( 'event_cpt' ),
-						array( $this, 'do_meta_boxes' ),
+						[ $this, 'do_meta_boxes' ],
 						$screen,
 						'side',
 						'high'
@@ -219,19 +219,19 @@ class Event extends gEditorial\Module
 
 				if ( $startend ) {
 
-					add_action( 'restrict_manage_posts', array( $this, 'restrict_manage_posts' ), 12, 2 );
-					add_action( 'parse_query', array( $this, 'parse_query' ) );
-					add_filter( 'request', array( $this, 'request' ) );
+					$this->action( 'restrict_manage_posts', 2, 12 );
+					$this->action( 'parse_query' );
+					$this->filter( 'request' );
 
 				} else if ( $this->get_setting( 'admin_ordering', TRUE ) ) {
 
-					add_action( 'pre_get_posts', array( $this, 'pre_get_posts_admin' ) );
+					add_action( 'pre_get_posts', [ $this, 'pre_get_posts_admin' ] );
 				}
 
 				add_filter( 'disable_months_dropdown', '__return_true', 12 );
 
 				$this->_edit_screen( $screen->post_type );
-				add_filter( 'manage_edit-'.$screen->post_type.'_sortable_columns', array( $this, 'sortable_columns' ) );
+				add_filter( 'manage_edit-'.$screen->post_type.'_sortable_columns', [ $this, 'sortable_columns' ] );
 
 				$this->_tweaks_taxonomy();
 			}
@@ -240,8 +240,8 @@ class Event extends gEditorial\Module
 
 	private function _edit_screen( $post_type )
 	{
-		add_filter( 'manage_'.$post_type.'_posts_columns', array( $this, 'manage_posts_columns' ) );
-		add_action( 'manage_'.$post_type.'_posts_custom_column', array( $this, 'posts_custom_column' ), 10, 2 );
+		add_filter( 'manage_'.$post_type.'_posts_columns', [ $this, 'manage_posts_columns' ] );
+		add_action( 'manage_'.$post_type.'_posts_custom_column', [ $this, 'posts_custom_column' ], 10, 2 );
 	}
 
 	public function register_settings( $page = NULL )
@@ -265,7 +265,7 @@ class Event extends gEditorial\Module
 
 	public function gpeople_support( $post_types )
 	{
-		return array_merge( $post_types, array( $this->constant( 'event_cpt' ) ) );
+		return array_merge( $post_types, [ $this->constant( 'event_cpt' ) ] );
 	}
 
 	public function dashboard_glance_items( $items )
@@ -314,7 +314,7 @@ class Event extends gEditorial\Module
 
 	public function manage_posts_columns( $posts_columns )
 	{
-		$new_columns = array();
+		$new_columns = [];
 
 		foreach ( $posts_columns as $key => $value ) {
 
@@ -327,7 +327,7 @@ class Event extends gEditorial\Module
 
 				$new_columns[$key] = $value;
 
-			} else if ( in_array( $key, array( 'author', 'date', 'comments' ) ) ) {
+			} else if ( in_array( $key, [ 'author', 'date', 'comments' ] ) ) {
 				continue; // he he!
 
 			} else {
@@ -371,10 +371,10 @@ class Event extends gEditorial\Module
 
 	public function sortable_columns( $columns )
 	{
-		return array_merge( $columns, array(
-			'event_starts' => array( 'event_starts', TRUE ),
-			'event_ends'   => array( 'event_ends', TRUE ),
-		) );
+		return array_merge( $columns, [
+			'event_starts' => [ 'event_starts', TRUE ],
+			'event_ends'   => [ 'event_ends', TRUE ],
+		] );
 	}
 
 	public function request( $query_vars )
@@ -382,16 +382,16 @@ class Event extends gEditorial\Module
 		if ( isset( $query_vars['orderby'] ) ) {
 
 			if ( 'event_starts' == $query_vars['orderby'] )
-				$query_vars = array_merge( $query_vars, array(
+				$query_vars = array_merge( $query_vars, [
 					'meta_key' => $this->constant( 'event_startdate' ),
 					'orderby'  => 'meta_value_num'
-				) );
+				] );
 
 			else if ( 'event_ends' == $query_vars['orderby'] )
-				$query_vars = array_merge( $query_vars, array(
+				$query_vars = array_merge( $query_vars, [
 					'meta_key' => $this->constant( 'event_enddate' ),
 					'orderby'  => 'meta_value_num'
-				) );
+				] );
 		}
 
 		return $query_vars;
@@ -399,12 +399,12 @@ class Event extends gEditorial\Module
 
 	public function post_updated_messages( $messages )
 	{
-		return array_merge( $messages, array( $this->constant( 'event_cpt' ) => $this->get_post_updated_messages( 'event_cpt' ) ) );
+		return array_merge( $messages, [ $this->constant( 'event_cpt' ) => $this->get_post_updated_messages( 'event_cpt' ) ] );
 	}
 
 	public function bulk_post_updated_messages( $messages, $counts )
 	{
-		return array_merge( $messages, array( $this->constant( 'event_cpt' ) => $this->get_bulk_post_updated_messages( 'event_cpt', $counts ) ) );
+		return array_merge( $messages, [ $this->constant( 'event_cpt' ) => $this->get_bulk_post_updated_messages( 'event_cpt', $counts ) ] );
 	}
 
 	public function do_meta_boxes( $post, $box )
@@ -418,18 +418,18 @@ class Event extends gEditorial\Module
 		echo '</div>';
 	}
 
-	public function render_box( $post, $atts = array() )
+	public function render_box( $post, $atts = [] )
 	{
-		$args = self::atts( array(
+		$args = self::atts( [
 			'cal-type'   => self::req( 'cal-type', $this->get_setting( 'calendar_type', 'gregorian' ) ),
 			// 'parent-id'  => self::req( 'parent-id', FALSE ),
 			'date-start' => self::req( 'date-start' ),
 			'date-end'   => self::req( 'date-end' ),
 			'time-start' => self::req( 'time-start' ),
 			'time-end'   => self::req( 'time-end' ),
-		), $atts );
+		], $atts );
 
-		$html = HTML::tag( 'input', array(
+		$html = HTML::tag( 'input', [
 			'type'        => 'text',
 			'dir'         => 'ltr',
 			'name'        => 'geditorial-event-date-start',
@@ -437,9 +437,9 @@ class Event extends gEditorial\Module
 			'value'       => $args['date-start'],
 			'title'       => _x( 'Date Start', 'Modules: Event: Meta Box Input', GEDITORIAL_TEXTDOMAIN ),
 			'placeholder' => _x( 'Date Start', 'Modules: Event: Meta Box Input Placeholder', GEDITORIAL_TEXTDOMAIN ),
-		) );
+		] );
 
-		$html .= HTML::tag( 'input', array(
+		$html .= HTML::tag( 'input', [
 			'type'        => 'text',
 			'dir'         => 'ltr',
 			'name'        => 'geditorial-event-time-start',
@@ -447,13 +447,13 @@ class Event extends gEditorial\Module
 			'value'       => $args['time-start'],
 			'title'       => _x( 'Time Start', 'Modules: Event: Meta Box Input', GEDITORIAL_TEXTDOMAIN ),
 			'placeholder' => _x( 'Time Start', 'Modules: Event: Meta Box Input Placeholder', GEDITORIAL_TEXTDOMAIN ),
-		) );
+		] );
 
-		echo HTML::tag( 'div', array(
+		echo HTML::tag( 'div', [
 			'class' => 'field-wrap field-wrap-inputtext-half ltr',
-		), $html );
+		], $html );
 
-		$html = HTML::tag( 'input', array(
+		$html = HTML::tag( 'input', [
 			'type'        => 'text',
 			'dir'         => 'ltr',
 			'name'        => 'geditorial-event-date-end',
@@ -461,9 +461,9 @@ class Event extends gEditorial\Module
 			'value'       => $args['date-end'],
 			'title'       => _x( 'Date End', 'Modules: Event: Meta Box Input', GEDITORIAL_TEXTDOMAIN ),
 			'placeholder' => _x( 'Date End', 'Modules: Event: Meta Box Input Placeholder', GEDITORIAL_TEXTDOMAIN ),
-		) );
+		] );
 
-		$html .= HTML::tag( 'input', array(
+		$html .= HTML::tag( 'input', [
 			'type'        => 'text',
 			'dir'         => 'ltr',
 			'name'        => 'geditorial-event-time-end',
@@ -471,11 +471,11 @@ class Event extends gEditorial\Module
 			'value'       => $args['time-end'],
 			'title'       => _x( 'Time End', 'Modules: Event: Meta Box Input', GEDITORIAL_TEXTDOMAIN ),
 			'placeholder' => _x( 'Time End', 'Modules: Event: Meta Box Input Placeholder', GEDITORIAL_TEXTDOMAIN ),
-		) );
+		] );
 
-		echo HTML::tag( 'div', array(
+		echo HTML::tag( 'div', [
 			'class' => 'field-wrap field-wrap-inputtext-half ltr',
-		), $html );
+		], $html );
 
 		if ( $this->get_setting( 'display_type', TRUE ) )
 			MetaBox::dropdownPostTaxonomy( $this->constant( 'type_tax' ), $post, FALSE, FALSE, '', $args['cal-type'] );
@@ -502,13 +502,11 @@ class Event extends gEditorial\Module
 			&& ! is_admin()
 			&& is_post_type_archive( $this->constant( 'event_type' ) ) ) {
 
-			$meta_query = array(
-				array(
-					'key'     => $this->constant( 'event_startdate' ),
-					'value'   => current_time( 'mysql' ),
-					'compare' => '>'
-				)
-			);
+			$meta_query = [ [
+				'key'     => $this->constant( 'event_startdate' ),
+				'value'   => current_time( 'mysql' ),
+				'compare' => '>'
+			] ];
 
 			$query->set( 'meta_query', $meta_query );
 			$query->set( 'orderby', 'meta_value_num' );

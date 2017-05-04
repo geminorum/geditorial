@@ -13,23 +13,23 @@ use geminorum\gEditorial\Core\WordPress;
 class Revisions extends gEditorial\Module
 {
 
-	protected $caps = array(
+	protected $caps = [
 		'ajax'    => 'edit_posts',
 		'purge'   => 'delete_post',
 		'delete'  => 'delete_post',
 		'edit'    => 'edit_others_posts',
 		'reports' => 'edit_others_posts',
-	);
+	];
 
 	public static function module()
 	{
-		return array(
+		return [
 			'name'     => 'revisions',
 			'title'    => _x( 'Revisions', 'Modules: Revisions', GEDITORIAL_TEXTDOMAIN ),
 			'desc'     => _x( 'Revision Management', 'Modules: Revisions', GEDITORIAL_TEXTDOMAIN ),
 			'icon'     => 'backup',
 			'frontend' => FALSE,
-		);
+		];
 	}
 
 	public function settings_intro_after( $module )
@@ -40,29 +40,29 @@ class Revisions extends gEditorial\Module
 
 	protected function get_global_settings()
 	{
-		return array(
+		return [
 			'posttypes_option' => 'posttypes_option',
-			'_general' => array(
-				array(
+			'_general' => [
+				[
 					'field'       => 'revision_summary',
 					'title'       => _x( 'Revision Count', 'Modules: Revisions: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Displays revision summary of the post on the attributes column', 'Modules: Revisions: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-				),
-				array(
+				],
+				[
 					'field'       => 'revision_wordcount',
 					'title'       => _x( 'Revision Word Count', 'Modules: Revisions: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Displays revision word count of the post title, content and excerpt', 'Modules: Revisions: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-				),
-				array(
+				],
+				[
 					'field'       => 'revision_maxcount',
 					'type'        => 'number',
 					'title'       => _x( 'Revision Max Count', 'Modules: Revisions: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'The maximum number of revisions to save for each post. <code>-1</code> for every revision.', 'Modules: Revisions: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 					'default'     => '-1',
 					'min_attr'    => '-1',
-				),
-			),
-		);
+				],
+			],
+		];
 	}
 
 	public function init_ajax()
@@ -72,7 +72,7 @@ class Revisions extends gEditorial\Module
 
 	public function admin_init()
 	{
-		add_action( 'admin_post_'.$this->hook( 'purge' ), array( $this, 'admin_post' ) );
+		add_action( 'admin_post_'.$this->hook( 'purge' ), [ $this, 'admin_post' ] );
 		$this->filter( 'wp_revisions_to_keep', 2, 12 );
 	}
 
@@ -101,14 +101,14 @@ class Revisions extends gEditorial\Module
 				}
 
 				if ( $this->get_setting( 'revision_summary', FALSE ) )
-					add_action( 'geditorial_tweaks_column_attr', array( $this, 'column_attr' ), 100 );
+					add_action( 'geditorial_tweaks_column_attr', [ $this, 'column_attr' ], 100 );
 			}
 		}
 	}
 
 	public function bulk_actions( $actions )
 	{
-		return array_merge( $actions, array( 'purgerevisions' => _x( 'Purge Revisions', 'Modules: Revisions: Bulk Action', GEDITORIAL_TEXTDOMAIN ) ) );
+		return array_merge( $actions, [ 'purgerevisions' => _x( 'Purge Revisions', 'Modules: Revisions: Bulk Action', GEDITORIAL_TEXTDOMAIN ) ] );
 	}
 
 	public function handle_bulk_actions( $redirect_to, $doaction, $post_ids )
@@ -143,7 +143,7 @@ class Revisions extends gEditorial\Module
 	{
 		if ( wp_revisions_enabled( $post ) ) {
 
-			$revisions = wp_get_post_revisions( $post->ID, array( 'check_enabled' => FALSE ) );
+			$revisions = wp_get_post_revisions( $post->ID, [ 'check_enabled' => FALSE ] );
 
 			$last  = key( $revisions );
 			$count = count( $revisions );
@@ -163,11 +163,11 @@ class Revisions extends gEditorial\Module
 					$title = sprintf( _nx( '%s Revision', '%s Revisions', $count, 'Modules: Revisions', GEDITORIAL_TEXTDOMAIN ), Number::format( $count ) );
 
 					if ( current_user_can( 'edit_post', $last ) )
-						echo HTML::tag( 'a', array(
+						echo HTML::tag( 'a', [
 							'href'   => get_edit_post_link( $last ),
 							'title'  => _x( 'View the last revision', 'Modules: Revisions', GEDITORIAL_TEXTDOMAIN ),
 							'target' => '_blank',
-						), $title );
+						], $title );
 					else
 						echo $title;
 
@@ -183,11 +183,11 @@ class Revisions extends gEditorial\Module
 		if ( isset( $this->authors[$user_id] ) )
 			return $this->authors[$user_id];
 
-		return $this->authors[$user_id] = array(
+		return $this->authors[$user_id] = [
 			'name'   => get_the_author_meta( 'display_name', $user_id ),
 			'avatar' => get_avatar( $user_id, 24 ),
 			// FIXME: add link to user profile
-		);
+		];
 	}
 
 	public static function wordCount( $revision )
@@ -196,17 +196,17 @@ class Revisions extends gEditorial\Module
 		$content = Text::wordCountUTF8( $revision->post_content );
 		$excerpt = Text::wordCountUTF8( $revision->post_excerpt );
 
-		return vsprintf( '[<span class="-wordcount" title="%4$s">%1$s &ndash; %2$s &ndash; %3$s</span>]', array(
+		return vsprintf( '[<span class="-wordcount" title="%4$s">%1$s &ndash; %2$s &ndash; %3$s</span>]', [
 			Helper::htmlCount( $title ),
 			Helper::htmlCount( $content ),
 			Helper::htmlCount( $excerpt ),
 			_x( 'Title/Content/Excerpt Word Count', 'Modules: Revisions', GEDITORIAL_TEXTDOMAIN ),
-		) );
+		] );
 	}
 
 	public function wp_post_revision_title_expanded( $revision_date_author, $revision, $link )
 	{
-		$parts = array();
+		$parts = [];
 		$autosave = FALSE;
 
 		$author = $this->author( $revision->post_author );
@@ -257,25 +257,25 @@ class Revisions extends gEditorial\Module
 
 		echo '<div class="misc-pub-section geditorial-admin-wrap -revisions">';
 
-			echo HTML::tag( 'a', array(
+			echo HTML::tag( 'a', [
 				'id'    => $this->hook( 'purge' ),
 				'class' => 'button button-small -purge',
 				'title' => _x( 'Purge all revisions', 'Modules: Revisions', GEDITORIAL_TEXTDOMAIN ),
-				'data'  => array( 'parent' => $post->ID ),
-				'href'  => WordPress::getAdminPostLink( $this->hook( 'purge' ), array(
+				'data'  => [ 'parent' => $post->ID ],
+				'href'  => WordPress::getAdminPostLink( $this->hook( 'purge' ), [
 					'post_id'  => $post->ID,
 					'_wpnonce' => $this->nonce_create( 'purge_'.$post->ID ),
-				) ),
-			), _x( 'Purge Revisions', 'Modules: Revisions', GEDITORIAL_TEXTDOMAIN ) );
+				] ),
+			], _x( 'Purge Revisions', 'Modules: Revisions', GEDITORIAL_TEXTDOMAIN ) );
 
 			echo '<span class="-loading spinner"></span>';
 
-			echo HTML::tag( 'a', array(
+			echo HTML::tag( 'a', [
 				'id'    => $this->hook( 'browse' ),
 				'class' => 'button b1utton-small -browse hide-if-no-js',
 				'title' => _x( 'Browse all revisions', 'Modules: Revisions', GEDITORIAL_TEXTDOMAIN ),
 				'href'  => get_edit_post_link( $last ),
-			), sprintf( _x( 'Browse %s Revisions', 'Modules: Revisions', GEDITORIAL_TEXTDOMAIN ),
+			], sprintf( _x( 'Browse %s Revisions', 'Modules: Revisions', GEDITORIAL_TEXTDOMAIN ),
 				'<b>'.Number::format( $count ).'</b>' ) );
 
 		echo '</div>';
@@ -313,9 +313,9 @@ class Revisions extends gEditorial\Module
 		if ( ! current_user_can( $this->caps['purge'], $_REQUEST['post_id'] ) )
 			WordPress::redirectReferer( 'noaccess' );
 
-		WordPress::redirectReferer( array(
+		WordPress::redirectReferer( [
 			$this->hook( 'purged' ) => $this->purge( $_REQUEST['post_id'] ),
-		) );
+		] );
 	}
 
 	public function ajax()
@@ -338,9 +338,9 @@ class Revisions extends gEditorial\Module
 				if ( ! current_user_can( $this->caps['purge'], $post['post_id'] ) )
 					wp_send_json_error();
 
-				wp_send_json_success( array(
+				wp_send_json_success( [
 					'count' => $this->purge( $post['post_id'] ),
-				) );
+				] );
 
 			break;
 			case 'delete':
@@ -383,10 +383,10 @@ class Revisions extends gEditorial\Module
 							$count += $this->purge( $post_id );
 					}
 
-					WordPress::redirectReferer( array(
+					WordPress::redirectReferer( [
 						'message' => 'cleaned',
 						'count'   => $count,
-					) );
+					] );
 				}
 			}
 
@@ -409,13 +409,13 @@ class Revisions extends gEditorial\Module
 	{
 		list( $posts, $pagination ) = $this->getPostArray();
 
-		return HTML::tableList( array(
+		return HTML::tableList( [
 			'_cb'   => 'ID',
 			'ID'    => Helper::tableColumnPostID(),
 			'date'  => Helper::tableColumnPostDate(),
 			'type'  => Helper::tableColumnPostType(),
 			'title' => Helper::tableColumnPostTitle(),
-			'revisons' => array(
+			'revisons' => [
 				'title'    => _x( 'Revisions', 'Modules: Revisions: Table Column', GEDITORIAL_TEXTDOMAIN ),
 				'callback' => function( $value, $row, $column, $index ){
 
@@ -437,15 +437,15 @@ class Revisions extends gEditorial\Module
 
 					return $html;
 				},
-			),
+			],
 			'terms' => Helper::tableColumnPostTerms(),
-		), $posts, array(
+		], $posts, [
 			'navigation' => 'before',
 			'search'     => 'before',
 			'title'      => HTML::tag( 'h3', _x( 'Overview of Post Revisions', 'Modules: Revisions', GEDITORIAL_TEXTDOMAIN ) ),
 			'empty'      => HTML::warning( _x( 'No Posts!', 'Modules: Revisions', GEDITORIAL_TEXTDOMAIN ) ),
 			'pagination' => $pagination,
-		) );
+		] );
 	}
 
 	protected function getPostArray()

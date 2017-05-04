@@ -17,77 +17,77 @@ use geminorum\gEditorial\WordPress\Taxonomy;
 class Audit extends gEditorial\Module
 {
 
-	protected $caps = array(
+	protected $caps = [
 		'default' => 'edit_others_posts',
 		'tools'   => 'edit_others_posts',
 		'reports' => 'edit_others_posts',
-	);
+	];
 
 	public static function module()
 	{
-		return array(
+		return [
 			'name'  => 'audit',
 			'title' => _x( 'Audit', 'Modules: Audit', GEDITORIAL_TEXTDOMAIN ),
 			'desc'  => _x( 'Content Inventory Tools', 'Modules: Audit', GEDITORIAL_TEXTDOMAIN ),
 			'icon'  => 'visibility',
-		);
+		];
 	}
 
 	protected function get_global_settings()
 	{
-		return array(
-			'_general' => array(
+		return [
+			'_general' => [
 				'dashboard_widgets',
 				'summary_scope',
 				'count_not',
 				'admin_restrict',
-			),
+			],
 			'posttypes_option' => 'posttypes_option',
-		);
+		];
 	}
 
 	protected function get_global_constants()
 	{
-		return array(
+		return [
 			'audit_tax' => 'audit_attribute',
-		);
+		];
 	}
 
 	protected function get_module_icons()
 	{
-		return array(
-			'taxonomies' => array(
+		return [
+			'taxonomies' => [
 				'audit_tax' => NULL,
-			),
-		);
+			],
+		];
 	}
 
 	protected function get_global_strings()
 	{
-		return array(
-			'misc' => array(
+		return [
+			'misc' => [
 				'menu_name'           => _x( 'Audit', 'Modules: Audit: Audit Attributes Tax Labels: Menu Name', GEDITORIAL_TEXTDOMAIN ),
 				'tweaks_column_title' => _x( 'Audit Attributes', 'Modules: Audit: Column Title', GEDITORIAL_TEXTDOMAIN ),
 				'show_option_all'     => _x( 'Audit', 'Modules: Audit: Show Option All', GEDITORIAL_TEXTDOMAIN ),
 				'show_option_none'    => _x( '(Not audited)', 'Modules: Audit: Show Option All', GEDITORIAL_TEXTDOMAIN ),
-			),
-			'settings' => array(
+			],
+			'settings' => [
 				'install_def_audit_tax' => _x( 'Install Default Attributes', 'Modules: Audit: Setting Button', GEDITORIAL_TEXTDOMAIN ),
-			),
-			'noops' => array(
+			],
+			'noops' => [
 				'audit_tax' => _nx_noop( 'Audit Attribute', 'Audit Attributes', 'Modules: Audit: Noop', GEDITORIAL_TEXTDOMAIN ),
-			),
-			'terms' => array(
-				'audit_tax' => array(
+			],
+			'terms' => [
+				'audit_tax' => [
 					'audited'      => _x( 'Audited', 'Modules: Audit: Audit Attributes Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
 					'outdated'     => _x( 'Outdated', 'Modules: Audit: Audit Attributes Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
 					'redundant'    => _x( 'Redundant', 'Modules: Audit: Audit Attributes Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
 					'review-seo'   => _x( 'Review SEO', 'Modules: Audit: Audit Attributes Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
 					'review-style' => _x( 'Review Style', 'Modules: Audit: Audit Attributes Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
 					'trivial'      => _x( 'Trivial', 'Modules: Audit: Audit Attributes Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
-				),
-			),
-		);
+				],
+			],
+		];
 	}
 
 	public function init()
@@ -96,10 +96,10 @@ class Audit extends gEditorial\Module
 
 		// FIXME: add setting option to choose editing role
 		if ( $this->cuc( 'default' ) )
-			$this->register_taxonomy( 'audit_tax', array(
+			$this->register_taxonomy( 'audit_tax', [
 				'hierarchical'       => TRUE,
 				'show_in_quick_edit' => TRUE,
-			) );
+			] );
 	}
 
 	public function adminbar_init( $wp_admin_bar, $parent, $link )
@@ -133,15 +133,15 @@ class Audit extends gEditorial\Module
 		if ( 'dashboard' == $screen->base ) {
 
 			if ( $this->get_setting( 'dashboard_widgets', FALSE ) )
-				add_action( 'activity_box_end', array( $this, 'activity_box_end' ), 9 );
+				$this->action( 'activity_box_end', 0, 9 );
 
 		} else if ( in_array( $screen->post_type, $this->post_types() ) ) {
 
 			if ( 'edit' == $screen->base ) {
 
 				if ( $this->get_setting( 'admin_restrict', FALSE ) ) {
-					add_action( 'restrict_manage_posts', array( $this, 'restrict_manage_posts' ), 20 ,2 );
-					add_filter( 'parse_query', array( $this, 'parse_query' ) );
+					$this->action( 'restrict_manage_posts', 2, 20 );
+					$this->filter( 'parse_query' );
 				}
 
 				$this->_tweaks_taxonomy();
@@ -161,7 +161,7 @@ class Audit extends gEditorial\Module
 		if ( FALSE === ( $html = get_transient( $key ) ) ) {
 
 			$html  = '';
-			$terms = Taxonomy::getTerms( $this->constant( 'audit_tax' ), FALSE, TRUE, 'slug', array( 'hide_empty' => TRUE ) );
+			$terms = Taxonomy::getTerms( $this->constant( 'audit_tax' ), FALSE, TRUE, 'slug', [ 'hide_empty' => TRUE ] );
 
 			if ( count( $terms ) ) {
 
@@ -174,11 +174,11 @@ class Audit extends gEditorial\Module
 					else
 						$html .= _x( 'Editorial Audit Summary', 'Modules: Audit: Activity Box End', GEDITORIAL_TEXTDOMAIN );
 
-					$html .= ' '.HTML::tag( 'a', array(
+					$html .= ' '.HTML::tag( 'a', [
 						'href'  => add_query_arg( 'flush', '' ),
 						'title' => _x( 'Click to refresh the summary', 'Modules: Audit: Activity Box End', GEDITORIAL_TEXTDOMAIN ),
 						'class' => '-action -flush page-title-action',
-					), _x( 'Refresh', 'Modules: Audit: Activity Box End', GEDITORIAL_TEXTDOMAIN ) );
+					], _x( 'Refresh', 'Modules: Audit: Activity Box End', GEDITORIAL_TEXTDOMAIN ) );
 
 					$html .= '</h3><ul>'.$summary.'</ul></div>';
 
@@ -199,7 +199,7 @@ class Audit extends gEditorial\Module
 		$all    = PostType::get( 3 );
 		$counts = Database::countPostsByTaxonomy( $terms, $posttypes, $user_id );
 
-		$objects = array();
+		$objects = [];
 
 		foreach ( $counts as $term => $posts ) {
 
@@ -210,11 +210,11 @@ class Audit extends gEditorial\Module
 				if ( ! $count )
 					continue;
 
-				$text = vsprintf( '%3$s %1$s (%2$s)', array(
+				$text = vsprintf( '%3$s %1$s (%2$s)', [
 					Helper::noopedCount( $count, $all[$type] ),
 					Helper::trimChars( $name, 35 ),
 					Number::format( $count ),
-				) );
+				] );
 
 				if ( empty( $objects[$type] ) )
 					$objects[$type] = get_post_type_object( $type );
@@ -222,17 +222,15 @@ class Audit extends gEditorial\Module
 				$class = 'geditorial-glance-item -audit -term -taxonomy-'.$tax.' -term-'.$term.'-'.$type.'-count';
 
 				if ( $objects[$type] && current_user_can( $objects[$type]->cap->edit_posts ) )
-					$text = HTML::tag( 'a', array(
-						'href'  => WordPress::getPostTypeEditLink( $type, $user_id, array( $tax => $term ) ),
+					$text = HTML::tag( 'a', [
+						'href'  => WordPress::getPostTypeEditLink( $type, $user_id, [ $tax => $term ] ),
 						'class' => $class,
-					), $text );
+					], $text );
 
 				else
-					$text = HTML::tag( 'div', array(
-						'class' => $class,
-					), $text );
+					$text = HTML::tag( 'div', [ 'class' => $class ], $text );
 
-				$html .= HTML::tag( $list, array(), $text );
+				$html .= HTML::tag( $list, $text );
 			}
 		}
 
@@ -245,11 +243,11 @@ class Audit extends gEditorial\Module
 				if ( ! $count )
 					continue;
 
-				$text = vsprintf( '%3$s %1$s %2$s', array(
+				$text = vsprintf( '%3$s %1$s %2$s', [
 					Helper::noopedCount( $count, $all[$type] ),
 					$this->get_string( 'show_option_none', 'audit_tax', 'misc' ),
 					Number::format( $count ),
-				) );
+				] );
 
 				if ( empty( $objects[$type] ) )
 					$objects[$type] = get_post_type_object( $type );
@@ -257,15 +255,13 @@ class Audit extends gEditorial\Module
 				$class = 'geditorial-glance-item -audit -not-in -taxonomy-'.$tax.' -not-in-'.$type.'-count';
 
 				if ( $objects[$type] && current_user_can( $objects[$type]->cap->edit_posts ) )
-					$text = HTML::tag( 'a', array(
-						'href'  => WordPress::getPostTypeEditLink( $type, $user_id, array( $tax => '-1' ) ),
+					$text = HTML::tag( 'a', [
+						'href'  => WordPress::getPostTypeEditLink( $type, $user_id, [ $tax => '-1' ] ),
 						'class' => $class,
-					), $text );
+					], $text );
 
 				else
-					$text = HTML::tag( 'div', array(
-						'class' => $class,
-					), $text );
+					$text = HTML::tag( 'div', [ 'class' => $class ], $text );
 
 				$html .= HTML::tag( $list, $text );
 			}
@@ -308,7 +304,7 @@ class Audit extends gEditorial\Module
 
 	public function reports_sub( $uri, $sub )
 	{
-		$terms = Taxonomy::getTerms( $this->constant( 'audit_tax' ), FALSE, TRUE, 'slug', array( 'hide_empty' => TRUE ) );
+		$terms = Taxonomy::getTerms( $this->constant( 'audit_tax' ), FALSE, TRUE, 'slug', [ 'hide_empty' => TRUE ] );
 
 		if ( ! count( $terms ) )
 			return HTML::warning( _x( 'No Audit Terms', 'Modules: Audit', GEDITORIAL_TEXTDOMAIN ), TRUE );
@@ -325,13 +321,13 @@ class Audit extends gEditorial\Module
 
 			echo '<tr><th scope="row">'._x( 'By User', 'Modules: Audit', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
 
-			$this->do_settings_field( array(
+			$this->do_settings_field( [
 				'type'         => 'user',
 				'field'        => 'user_id',
 				'none_title'   => _x( 'All Users', 'Modules: Audit', GEDITORIAL_TEXTDOMAIN ),
 				'default'      => $args['user_id'],
 				'option_group' => 'reports',
-			) );
+			] );
 
 			echo '&nbsp;';
 
