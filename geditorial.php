@@ -14,6 +14,7 @@ DomainPath: /languages
 RepoGitHub: geminorum/geditorial
 GitHub Plugin URI: https://github.com/geminorum/geditorial
 GitHub Branch: master
+Release Asset: true
 Requires WP: 4.4
 Requires PHP: 5.4
 */
@@ -25,9 +26,10 @@ define( 'GEDITORIAL_FILE', basename( GEDITORIAL_DIR ).'/'.basename( __FILE__ ) )
 
 defined( 'GEDITORIAL_TEXTDOMAIN' ) or define( 'GEDITORIAL_TEXTDOMAIN', 'geditorial' );
 
-// if ( file_exists( GEDITORIAL_DIR.'assets/vendor/autoload.php' ) ) {
-// 	require_once( GEDITORIAL_DIR.'assets/vendor/autoload.php' );
-	require_once( GEDITORIAL_DIR.'includes/class-main.php' );
+if ( file_exists( GEDITORIAL_DIR.'assets/vendor/autoload.php' ) ) {
+	require_once( GEDITORIAL_DIR.'assets/vendor/autoload.php' );
+
+	require_once( GEDITORIAL_DIR.'includes/plugin.php' );
 
 	function gEditorial() {
 		return \geminorum\gEditorial\Plugin::instance();
@@ -37,4 +39,12 @@ defined( 'GEDITORIAL_TEXTDOMAIN' ) or define( 'GEDITORIAL_TEXTDOMAIN', 'geditori
 	global $gEditorial;
 
 	$gEditorial = gEditorial();
-// }
+
+} else if ( is_admin() ) {
+
+	add_action( 'admin_notices', function(){
+		echo '<div class="notice notice-warning notice-alt is-dismissible"><p>';
+			printf( '<b>gEditorial</b> is not installed correctly. go grab the latest package <a href="%s" target="_blank">here</a>.', 'https://github.com/geminorum/geditorial/releases/latest' ) ;
+		echo '</p></div>';
+	} );
+}
