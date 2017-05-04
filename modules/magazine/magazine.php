@@ -628,10 +628,8 @@ class Magazine extends gEditorial\Module
 
 		do_action( 'geditorial_meta_do_meta_box', $post, $box, NULL );
 
-		$this->field_post_order( 'issue_cpt', $post );
-
-		if ( get_post_type_object( $this->constant( 'issue_cpt' ) )->hierarchical )
-			$this->field_post_parent( 'issue_cpt', $post );
+		MetaBox::fieldPostMenuOrder( $post );
+		MetaBox::fieldPostParent( $post->post_type, $post );
 
 		echo '</div>';
 	}

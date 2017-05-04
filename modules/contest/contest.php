@@ -372,10 +372,8 @@ class Contest extends gEditorial\Module
 
 		do_action( 'geditorial_meta_do_meta_box', $post, $box, NULL );
 
-		$this->field_post_order( 'contest_cpt', $post );
-
-		if ( get_post_type_object( $this->constant( 'contest_cpt' ) )->hierarchical )
-			$this->field_post_parent( 'contest_cpt', $post );
+		MetaBox::fieldPostMenuOrder( $post );
+		MetaBox::fieldPostParent( $post->post_type, $post );
 
 		echo '</div>';
 	}
@@ -407,7 +405,7 @@ class Contest extends gEditorial\Module
 
 	public function supported_meta_box( $post, $terms )
 	{
-		$this->field_post_order( 'apply_cpt', $post );
+		MetaBox::fieldPostMenuOrder( $post );
 
 		$post_type = $this->constant( 'contest_cpt' );
 		$dropdowns = $excludes = array();

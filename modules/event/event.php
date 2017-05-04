@@ -4,6 +4,7 @@ defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Core\HTML;
 
 class Event extends gEditorial\Module
@@ -476,11 +477,10 @@ class Event extends gEditorial\Module
 			'class' => 'field-wrap field-wrap-inputtext-half ltr',
 		), $html );
 
-		if ( get_post_type_object( $this->constant( 'event_cpt' ) )->hierarchical )
-			$this->field_post_parent( 'event_cpt', $post );
-
 		if ( $this->get_setting( 'display_type', TRUE ) )
-			$this->field_post_tax( 'type_tax', $post, FALSE, FALSE, '', $args['cal-type'] );
+			MetaBox::dropdownPostTaxonomy( $this->constant( 'type_tax' ), $post, FALSE, FALSE, '', $args['cal-type'] );
+
+		MetaBox::fieldPostParent( $post->post_type, $post );
 	}
 
 	// https://github.com/devinsays/event-posts/blob/master/event-posts.php

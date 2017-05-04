@@ -4,9 +4,13 @@ defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\WordPress;
+use geminorum\gEditorial\WordPress\Taxonomy;
 
 class MetaBox extends Core\Base
 {
+
+	const BASE   = 'geditorial';
+	const MODULE = FALSE;
 
 	// @SEE: https://github.com/bainternet/My-Meta-Box
 
@@ -99,5 +103,91 @@ class MetaBox extends Core\Base
 			'echo'             => 0,
 			'walker'           => new Walker_PageDropdown(),
 		] );
+	}
+
+	public function fieldPostMenuOrder( $post )
+	{
+		echo '<div class="field-wrap field-wrap-inputnumber">';
+
+		echo HTML::tag( 'input', [
+			'type'        => 'number',
+			'step'        => '1',
+			'size'        => '4',
+			'name'        => 'menu_order',
+			'id'          => 'menu_order',
+			'value'       => $post->menu_order,
+			'title'       => _x( 'Order', 'MetaBox: Title Attr', GEDITORIAL_TEXTDOMAIN ),
+			'placeholder' => _x( 'Order', 'MetaBox: Placeholder', GEDITORIAL_TEXTDOMAIN ),
+			'class'       => 'small-text',
+			'data'        => [ 'ortho' => 'number' ],
+		] );
+
+		echo '</div>';
+	}
+
+	public function fieldPostParent( $post_type, $post, $statuses = [ 'publish', 'future', 'draft' ] )
+	{
+		if ( ! get_post_type_object( $post_type )->hierarchical )
+			return;
+
+		$posts = wp_dropdown_pages( [
+			'post_type'        => $post_type, // alows for parent of diffrent type
+			'selected'         => $post->post_parent,
+			'name'             => 'parent_id',
+			'class'            => 'geditorial-admin-dropbown',
+			'show_option_none' => _x( '&mdash; no parent &mdash;', 'MetaBox: Parent Dropdown: Select Option None', GEDITORIAL_TEXTDOMAIN ),
+			'sort_column'      => 'menu_order',
+			'sort_order'       => 'desc',
+			'post_status'      => $statuses,
+			'exclude_tree'     => $post->ID,
+			'echo'             => 0,
+		] );
+
+		if ( $posts )
+			echo HTML::tag( 'div', [ 'class' => 'field-wrap' ], $posts );
+	}
+
+	// FIXME: finalize name/id
+	public function dropdownPostTaxonomy( $taxonomy, $post, $key = FALSE, $count = TRUE, $excludes = '', $default = '0' )
+	{
+		if ( ! $obj = get_taxonomy( $taxonomy ) )
+			return;
+
+		if ( $default && ! is_numeric( $default ) ) {
+			if ( $term = get_term_by( 'slug', $default, $taxonomy ) )
+				$default = $term->term_id;
+			else
+				$default = '0';
+		}
+
+		if ( ! $selected = Taxonomy::theTerm( $taxonomy, $post->ID ) )
+			$selected = $default;
+
+		$terms = wp_dropdown_categories( [
+			'taxonomy'          => $taxonomy,
+			'selected'          => $selected,
+			'show_option_none'  => Settings::showOptionNone( $obj->labels->menu_name ),
+			'option_none_value' => '0',
+			'class'             => 'geditorial-admin-dropbown',
+			'name'              => 'tax_input['.$taxonomy.'][]',
+			'id'                => self::BASE.'-'.$taxonomy,
+			// 'name'              => 'geditorial-'.$this->module->name.'-'.$taxonomy.( FALSE === $key ? '' : '['.$key.']' ),
+			// 'id'                => 'geditorial-'.$this->module->name.'-'.$taxonomy.( FALSE === $key ? '' : '-'.$key ),
+			'hierarchical'      => $obj->hierarchical,
+			'orderby'           => 'name',
+			'show_count'        => $count,
+			'hide_empty'        => FALSE,
+			'hide_if_empty'     => TRUE,
+			'echo'              => FALSE,
+			'exclude'           => $excludes,
+		] );
+
+		if ( $terms )
+			echo HTML::tag( 'div', [
+				'class' => 'field-wrap' ,
+				'title' => $obj->labels->menu_name,
+			], $terms );
+		else
+			self::fieldEmptyTaxonomy( $obj, NULL );
 	}
 }
