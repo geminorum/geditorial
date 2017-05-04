@@ -512,6 +512,70 @@ class Helper extends Core\Base
 		return $gEditorial_WPImageSizes;
 	}
 
+	// this must be core's
+	// call this late on 'after_setup_theme' hook
+	public static function themeThumbnails( $post_types )
+	{
+		global $_wp_theme_features;
+		$feature = 'post-thumbnails';
+		// $post_types = (array) $post_types;
+
+		if ( isset( $_wp_theme_features[$feature] ) ) {
+
+			// registered for all types
+			if ( TRUE === $_wp_theme_features[$feature] ) {
+
+				// WORKING: but if it is true, it's true!
+				// $post_types[] = 'post';
+				// $_wp_theme_features[$feature] = array( $post_types );
+
+			} else if ( is_array( $_wp_theme_features[$feature][0] ) ) {
+				$_wp_theme_features[$feature][0] = array_merge( $_wp_theme_features[$feature][0], $post_types );
+			}
+
+		} else {
+			$_wp_theme_features[$feature] = [ $post_types ];
+		}
+	}
+
+	// this must be core's
+	// core duplication with post_type & title : add_image_size()
+	public static function registerImageSize( $name, $atts = [] )
+	{
+		global $_wp_additional_image_sizes;
+
+		$args = self::atts( [
+			'n' => _x( 'Undefined Image Size', 'Helper', GEDITORIAL_TEXTDOMAIN ),
+			'w' => 0,
+			'h' => 0,
+			'c' => 0,
+			'p' => [ 'post' ],
+		], $atts );
+
+		$_wp_additional_image_sizes[$name] = [
+			'width'     => absint( $args['w'] ),
+			'height'    => absint( $args['h'] ),
+			'crop'      => $args['c'],
+			'post_type' => $args['p'],
+			'title'     => $args['n'],
+		];
+	}
+
+	public static function getRegisteredImageSizes( $post_type = 'post', $key = 'post_type' )
+	{
+		global $_wp_additional_image_sizes;
+
+		$sizes = [];
+
+		foreach ( $_wp_additional_image_sizes as $name => $size )
+			if ( isset( $size[$key] ) && in_array( $post_type, $size[$key] ) )
+				$sizes[$name] = $size;
+			else if ( 'post' == $post_type ) // fallback
+				$sizes[$name] = $size;
+
+		return $sizes;
+	}
+
 	public static function tableFilterPostTypes()
 	{
 		return HTML::dropdown(
