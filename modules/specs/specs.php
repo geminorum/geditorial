@@ -1,6 +1,15 @@
-<?php defined( 'ABSPATH' ) or die( 'Restricted access' );
+<?php namespace geminorum\gEditorial\Modules;
 
-class gEditorialSpecs extends gEditorialModuleCore
+defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
+
+use geminorum\gEditorial;
+use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\MetaBox;
+use geminorum\gEditorial\Core\HTML;
+use geminorum\gEditorial\Core\Text;
+use geminorum\gEditorial\WordPress\Taxonomy;
+
+class Specs extends gEditorial\Module
 {
 
 	public $meta_key = '_ge_specs';
@@ -150,7 +159,7 @@ class gEditorialSpecs extends gEditorialModuleCore
 			return FALSE;
 
 		$meta = $this->get_postmeta( $post_id, FALSE, array() );
-		$spec_terms = gEditorialWPTaxonomy::getTerms( $this->constant( 'specs_tax' ), FALSE, TRUE, 'slug' );
+		$spec_terms = Taxonomy::getTerms( $this->constant( 'specs_tax' ), FALSE, TRUE, 'slug' );
 		$terms = array();
 
 		foreach ( $meta as $meta_row )
@@ -171,7 +180,7 @@ class gEditorialSpecs extends gEditorialModuleCore
 					$new_term = wp_insert_term( $spec['name'], $this->constant( 'specs_tax' ) );
 
 				if ( is_wp_error( $new_term ) ) {
-					$row['spec_title'] = gEditorialHelper::kses( $spec['name'] );
+					$row['spec_title'] = Helper::kses( $spec['name'] );
 				} else {
 
 					//$spec_terms[$new_term['term_id']] = get_term_by( 'id', $new_term['term_id'], $this->constant( 'specs_tax' ) );
@@ -183,14 +192,14 @@ class gEditorialSpecs extends gEditorialModuleCore
 				}
 
 			} else {
-				$row['spec_title'] = gEditorialHelper::kses( $spec['name'] );
+				$row['spec_title'] = Helper::kses( $spec['name'] );
 			}
 
 			if ( isset( $spec['val'] ) && ! empty( $spec['val'] ) )
-				$row['spec_value'] = gEditorialHelper::kses( $spec['val'], 'text' );
+				$row['spec_value'] = Helper::kses( $spec['val'], 'text' );
 
 			if ( isset( $spec['order'] ) && ! empty( $spec['order'] ) )
-				$row['spec_order'] = gEditorialNumber::intval( $spec['order'] ) + 100;
+				$row['spec_order'] = Number::intval( $spec['order'] ) + 100;
 			else
 				$row['spec_order'] = $counter + 100;
 
@@ -245,7 +254,7 @@ class gEditorialSpecs extends gEditorialModuleCore
 				switch ( $field ) {
 					case 'spec_order' :
 						if ( isset( $_POST[$prefix.$field][$offset] ) && '0' != $_POST[$prefix.$field][$offset] )
-							$postmeta[$offset][$field] = gEditorialNumber::intval( $_POST[$prefix.$field][$offset] );
+							$postmeta[$offset][$field] = Number::intval( $_POST[$prefix.$field][$offset] );
 						else if ( isset( $postmeta[$offset][$field] ) && isset( $_POST[$prefix.$field][$offset] )  )
 							unset( $postmeta[$offset][$field] );
 					break;
@@ -254,7 +263,7 @@ class gEditorialSpecs extends gEditorialModuleCore
 						if ( isset( $_POST[$prefix.$field][$offset] )
 							&& strlen( $_POST[$prefix.$field][$offset] ) > 0
 							&& $this->get_string( $field, $post_type ) !== $_POST[$prefix.$field][$offset] )
-								$postmeta[$offset][$field] = gEditorialHelper::kses( $_POST[$prefix.$field][$offset], 'text' );
+								$postmeta[$offset][$field] = Helper::kses( $_POST[$prefix.$field][$offset], 'text' );
 						else if ( isset( $postmeta[$offset][$field] ) && isset( $_POST[$prefix.$field][$offset] ) )
 							unset( $postmeta[$offset][$field] );
 					break;
@@ -274,7 +283,7 @@ class gEditorialSpecs extends gEditorialModuleCore
 	{
 		echo '<div class="geditorial-admin-wrap-metabox -specs">';
 
-		$specs = gEditorialWPTaxonomy::getTerms( $this->constant( 'specs_tax' ), $post->ID, TRUE );
+		$specs = Taxonomy::getTerms( $this->constant( 'specs_tax' ), $post->ID, TRUE );
 
 		do_action( 'geditorial_specs_meta_box', $post, $specs );
 
@@ -286,8 +295,8 @@ class gEditorialSpecs extends gEditorialModuleCore
 	{
 		$tax = $this->constant( 'specs_tax' );
 
-		if ( ! gEditorialWPTaxonomy::hasTerms( $tax ) )
-			return gEditorialMetaBox::fieldEmptyTaxonomy( $tax );
+		if ( ! Taxonomy::hasTerms( $tax ) )
+			return MetaBox::fieldEmptyTaxonomy( $tax );
 
 		$fields = $this->post_type_fields( $post->post_type );
 		$metas  = $this->get_postmeta( $post->ID, FALSE, array() );
@@ -303,7 +312,7 @@ class gEditorialSpecs extends gEditorialModuleCore
 				echo $handle.'<span class="item-excerpt">';
 					$title = ( isset( $meta['spec_title'] ) && $meta['spec_title'] ) ? $meta['spec_title'] : ( isset( $meta['spec_term_id'] ) && $meta['spec_term_id'] ? $the_terms[$meta['spec_term_id']]->name : _x( 'Unknown Field', 'Modules: Specs',  GEDITORIAL_TEXTDOMAIN ) );
 					$title .= ( isset( $meta['spec_value'] ) && $meta['spec_value'] ? ': '.$meta['spec_value'] : '' );
-					echo gEditorialCoreText::subStr( $title, 0, 28 );
+					echo Text::subStr( $title, 0, 28 );
 				echo '</span>'.$delete;
 
 			echo '</div><div class="item-body"><div class="field-wrap-group">';
@@ -369,7 +378,7 @@ class gEditorialSpecs extends gEditorialModuleCore
 			&& self::user_can( 'view', $field ) ) {
 
 			$title = $this->get_string( $field, $post->post_type );
-			$html = gEditorialHTML::tag( 'textarea', array(
+			$html = HTML::tag( 'textarea', array(
 				'class'        => 'textarea-autosize',
 				'name'         => 'geditorial-specs-spec_value[]',
 				'title'        => $title,
@@ -377,7 +386,7 @@ class gEditorialSpecs extends gEditorialModuleCore
 				'readonly'     => ! $this->user_can( 'edit', $field ),
 			), isset( $meta[$field] ) ? esc_textarea( $meta[$field] ) : '' );
 
-			echo gEditorialHTML::tag( 'div', array(
+			echo HTML::tag( 'div', array(
 				'class' => 'field-wrap field-wrap-textarea',
 			), $html );
 		}
@@ -387,7 +396,7 @@ class gEditorialSpecs extends gEditorialModuleCore
 			&& self::user_can( 'view', $field ) ) {
 
 			$title = $this->get_string( $field, $post->post_type );
-			$html = gEditorialHTML::tag( 'input', array(
+			$html = HTML::tag( 'input', array(
 				'type'         => 'text',
 				'name'         => 'geditorial-specs-spec_title[]',
 				'value'        => isset( $meta[$field] ) ? $meta[$field] : '',
@@ -397,7 +406,7 @@ class gEditorialSpecs extends gEditorialModuleCore
 				'autocomplete' => 'off',
 			) );
 
-			echo gEditorialHTML::tag( 'div', array(
+			echo HTML::tag( 'div', array(
 				'class' => 'field-wrap field-wrap-inputtext',
 			), $html );
 		}
@@ -433,7 +442,7 @@ class gEditorialSpecs extends gEditorialModuleCore
 		if ( FALSE === $args['context'] ) // bailing
 			return NULL;
 
-		$the_terms = gEditorialWPTaxonomy::getTerms( $this->constant( 'specs_tax' ), $post->ID, TRUE );
+		$the_terms = Taxonomy::getTerms( $this->constant( 'specs_tax' ), $post->ID, TRUE );
 		$metas     = $this->get_postmeta( $post->ID, FALSE, array() );
 		$html      = '';
 

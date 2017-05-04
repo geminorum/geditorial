@@ -1,6 +1,18 @@
-<?php defined( 'ABSPATH' ) or die( 'Restricted access' );
+<?php namespace geminorum\gEditorial\Modules;
 
-class gEditorialBook extends gEditorialModuleCore
+defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
+
+use geminorum\gEditorial;
+use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Settings;
+use geminorum\gEditorial\ShortCode;
+use geminorum\gEditorial\Core\HTML;
+use geminorum\gEditorial\Core\WordPress;
+use geminorum\gEditorial\WordPress\PostType;
+use geminorum\gEditorial\Helpers\Book as ModuleHelper;
+use geminorum\gEditorial\Templates\Book as ModuleTemplate;
+
+class Book extends gEditorial\Module
 {
 
 	protected $partials = array( 'templates', 'helper', 'query' );
@@ -104,7 +116,7 @@ class gEditorialBook extends gEditorialModuleCore
 				),
 			),
 			'settings' => array(
-				'post_types_after'     => gEditorialSettingsCore::infoP2P(),
+				'post_types_after'     => Settings::infoP2P(),
 				'install_def_size_tax' => _x( 'Install Default Sizes', 'Modules: Book: Setting Button', GEDITORIAL_TEXTDOMAIN ),
 			),
 			'noops' => array(
@@ -355,7 +367,7 @@ class gEditorialBook extends gEditorialModuleCore
 				NULL, $this->strings['p2p']['publication_cpt']['title']['to'] );
 
 		if ( empty( $this->all_post_types ) )
-			$this->all_post_types = gEditorialWPPostType::get( 2 );
+			$this->all_post_types = PostType::get( 2 );
 
 		$post_types = array_unique( array_map( function( $r ){
 			return $r->post_type;
@@ -376,13 +388,13 @@ class gEditorialBook extends gEditorialModuleCore
 			$list = array();
 
 			foreach ( $post_types as $post_type )
-				$list[] = gEditorialHTML::tag( 'a', array(
-					'href'   => gEditorialWordPress::getPostTypeEditLink( $post_type, 0, $args ),
+				$list[] = HTML::tag( 'a', array(
+					'href'   => WordPress::getPostTypeEditLink( $post_type, 0, $args ),
 					'title'  => _x( 'View the connected list', 'Modules: Book', GEDITORIAL_TEXTDOMAIN ),
 					'target' => '_blank',
 				), $this->all_post_types[$post_type] );
 
-			echo gEditorialHelper::getJoined( $list, ' <span class="-posttypes">(', ')</span>' );
+			echo Helper::getJoined( $list, ' <span class="-posttypes">(', ')</span>' );
 
 		echo '</li>';
 	}
@@ -412,11 +424,11 @@ class gEditorialBook extends gEditorialModuleCore
 					'connected_items'     => $item->get_id(),
 				);
 
-				echo gEditorialHTML::tag( 'a', array(
-					'href'   => gEditorialWordPress::getPostTypeEditLink( $post->post_type, 0, $args ),
+				echo HTML::tag( 'a', array(
+					'href'   => WordPress::getPostTypeEditLink( $post->post_type, 0, $args ),
 					'title'  => _x( 'View all connected', 'Modules: Book', GEDITORIAL_TEXTDOMAIN ),
 					'target' => '_blank',
-				), gEditorialHelper::trimChars( $item->get_title(), 85 ) );
+				), Helper::trimChars( $item->get_title(), 85 ) );
 
 				echo $this->p2p_get_meta( $item->p2p_id, 'ref', ' &ndash; ', '',
 			 		$this->strings['p2p']['publication_cpt']['fields']['ref']['title'] );
@@ -546,10 +558,10 @@ class gEditorialBook extends gEditorialModuleCore
 			if ( $post->post_type == $this->constant( 'publication_cpt' ) ) {
 
 				if ( $title = $this->get_setting( 'p2p_title_from' ) )
-					gEditorialHTML::h3( $title, '-title -p2p-from' );
+					HTML::h3( $title, '-title -p2p-from' );
 
 			} else if ( $title = $this->get_setting( 'p2p_title_to' ) ) {
-				gEditorialHTML::h3( $title, '-title -p2p-to' );
+				HTML::h3( $title, '-title -p2p-to' );
 			}
 
 			echo '<ul>';
@@ -561,7 +573,7 @@ class gEditorialBook extends gEditorialModuleCore
 				$meta .= $this->p2p_get_meta( $post->p2p_id, 'ref', ' &ndash; ' );
 				$meta .= $this->p2p_get_meta( $post->p2p_id, 'desc', ' &ndash; ' );
 
-				echo gEditorialShortCode::postItem( [ 'item_after' => $meta ] );
+				echo ShortCode::postItem( [ 'item_after' => $meta ] );
 			}
 
 			echo '</ul></div>';
@@ -574,7 +586,7 @@ class gEditorialBook extends gEditorialModuleCore
 		if ( ! $this->is_content_insert( $this->post_types( 'publication_cpt' ) ) )
 			return;
 
-		gEditorialBookTemplates::postImage( array(
+		ModuleTemplate::postImage( array(
 			'size' => $this->get_image_size_key( 'publication_cpt', 'medium' ),
 			'link' => 'attachment',
 		) );

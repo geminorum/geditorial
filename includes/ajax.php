@@ -1,6 +1,11 @@
-<?php defined( 'ABSPATH' ) or die( 'Restricted access' );
+<?php namespace geminorum\gEditorial;
 
-class gEditorialAjax extends gEditorialBaseCore
+defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
+
+use geminorum\gEditorial\Core\HTML;
+use geminorum\gEditorial\Core\WordPress;
+
+class Ajax extends Core\Base
 {
 
 	const BASE   = 'geditorial';
@@ -22,7 +27,7 @@ class gEditorialAjax extends gEditorialBaseCore
 			$message = _x( 'Succesful!', 'Ajax Helper: Ajax Notice', GEDITORIAL_TEXTDOMAIN );
 
 		if ( $message )
-			wp_send_json_success( gEditorialHTML::success( $message ) );
+			wp_send_json_success( HTML::success( $message ) );
 		else
 			wp_send_json_success();
 	}
@@ -33,7 +38,7 @@ class gEditorialAjax extends gEditorialBaseCore
 			$message = _x( 'Error!', 'Ajax Helper: Ajax Notice', GEDITORIAL_TEXTDOMAIN );
 
 		if ( $message )
-			wp_send_json_error( gEditorialHTML::error( $message ) );
+			wp_send_json_error( HTML::error( $message ) );
 		else
 			wp_send_json_error();
 	}
@@ -49,7 +54,7 @@ class gEditorialAjax extends gEditorialBaseCore
 		$args['_base']   = self::BASE;
 		$args['_url']    = defined( 'GNETWORK_AJAX_ENDPOINT' ) && GNETWORK_AJAX_ENDPOINT ? GNETWORK_AJAX_ENDPOINT : admin_url( 'admin-ajax.php' );
 		$args['_api']    = $args['_url']; // FIXME: DEPRICATED
-		$args['_dev']    = gEditorialWordPress::isDev();
+		$args['_dev']    = WordPress::isDev();
 		$args['_nonce']  = wp_create_nonce( self::BASE ); // FIXME: DEPRICATED
 
 	?><script type="text/javascript">

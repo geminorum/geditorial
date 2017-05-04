@@ -1,6 +1,15 @@
-<?php defined( 'ABSPATH' ) or die( 'Restricted access' );
+<?php namespace geminorum\gEditorial\Modules;
 
-class gEditorialTweaks extends gEditorialModuleCore
+defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
+
+use geminorum\gEditorial;
+use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Settings;
+use geminorum\gEditorial\Core\HTML;
+use geminorum\gEditorial\Core\Number;
+use geminorum\gEditorial\Core\WordPress;
+
+class Tweaks extends gEditorial\Module
 {
 
 	protected $priority_init = 14;
@@ -19,7 +28,7 @@ class gEditorialTweaks extends gEditorialModuleCore
 
 	protected function settings_help_tabs()
 	{
-		$tabs = gEditorialSettingsCore::settingsHelpContent( $this->module );
+		$tabs = Settings::settingsHelpContent( $this->module );
 
 		$tabs[] = array(
 			'id'       => 'geditorial-tweaks-category_search',
@@ -293,7 +302,7 @@ class gEditorialTweaks extends gEditorialModuleCore
 		foreach ( $columns as $key => $value )
 
 			if ( 'title' == $key )
-				$new['geditorial-tweaks-title'] = $this->get_column_title( 'title', gEditorialWordPress::currentPostType( 'post' ) );
+				$new['geditorial-tweaks-title'] = $this->get_column_title( 'title', WordPress::currentPostType( 'post' ) );
 
 			else
 				$new[$key] = $value;
@@ -407,13 +416,13 @@ class gEditorialTweaks extends gEditorialModuleCore
 
 			if ( is_null( $info['edit'] ) )
 				$info['edit'] = current_user_can( $object->cap->manage_terms )
-					? gEditorialWordPress::getEditTaxLink( $object->name )
+					? WordPress::getEditTaxLink( $object->name )
 					: FALSE;
 
 			$before  = '<li class="-row tweaks-tax-'.$taxonomy.'">';
 			$before .= $this->get_column_icon( $info['edit'], $info['icon'], $info['title'] );
 
-			gEditorialHelper::getTermsEditRow( $post, $object, $before, '</li>' );
+			Helper::getTermsEditRow( $post, $object, $before, '</li>' );
 		}
 	}
 
@@ -451,7 +460,7 @@ class gEditorialTweaks extends gEditorialModuleCore
 		if ( ! current_user_can( 'edit_post', $post->ID ) )
 			return;
 
-		$attachments = gEditorialWordPress::getAttachments( $post->ID, '' );
+		$attachments = WordPress::getAttachments( $post->ID, '' );
 		$count       = count( $attachments );
 		$mime_types  = array_unique( array_map( function( $r ){
 			return $r->post_mime_type;
@@ -463,18 +472,18 @@ class gEditorialTweaks extends gEditorialModuleCore
 
 				echo $this->get_column_icon( FALSE, 'images-alt2', _x( 'Attachments', 'Modules: Tweaks: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
 
-				$title = sprintf( _nx( '%s Attachment', '%s Attachments', $count, 'Modules: Tweaks', GEDITORIAL_TEXTDOMAIN ), gEditorialNumber::format( $count ) );
+				$title = sprintf( _nx( '%s Attachment', '%s Attachments', $count, 'Modules: Tweaks', GEDITORIAL_TEXTDOMAIN ), Number::format( $count ) );
 
 				if ( current_user_can( 'upload_files' ) )
-					echo gEditorialHTML::tag( 'a', array(
-						'href'   => gEditorialWordPress::getPostAttachmentsLink( $post->ID ),
+					echo HTML::tag( 'a', array(
+						'href'   => WordPress::getPostAttachmentsLink( $post->ID ),
 						'title'  => _x( 'View the list of attachments', 'Modules: Tweaks', GEDITORIAL_TEXTDOMAIN ),
 						'target' => '_blank',
 					), $title );
 				else
 					echo $title;
 
-				gEditorialHelper::getMimeTypeEditRow( $mime_types, $post->ID, ' <span class="-mime-types">(', ')</span>' );
+				Helper::getMimeTypeEditRow( $mime_types, $post->ID, ' <span class="-mime-types">(', ')</span>' );
 
 			echo '</li>';
 		}
@@ -483,14 +492,14 @@ class gEditorialTweaks extends gEditorialModuleCore
 	public function column_attr_author( $post )
 	{
 		if ( ! isset( $this->site_user_id ) )
-			$this->site_user_id = gEditorialHelper::getEditorialUserID( FALSE );
+			$this->site_user_id = Helper::getEditorialUserID( FALSE );
 
 		if ( $post->post_author == $this->site_user_id )
 			return;
 
 		echo '<li class="-attr tweaks-default-atts -post-author -post-author-'.$post->post_status.'">';
 			echo $this->get_column_icon( FALSE, 'admin-users', _x( 'Author', 'Modules: Tweaks: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
-			echo '<span class="-author">'.gEditorialWordPress::getAuthorEditHTML( $post->post_type, $post->post_author ).'</span>';
+			echo '<span class="-author">'.WordPress::getAuthorEditHTML( $post->post_type, $post->post_author ).'</span>';
 		echo '</li>';
 	}
 
@@ -523,7 +532,7 @@ class gEditorialTweaks extends gEditorialModuleCore
 
 		echo '<li class="-attr tweaks-default-atts -post-date">';
 			echo $this->get_column_icon( FALSE, 'calendar-alt', _x( 'Publish Date', 'Modules: Tweaks: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
-			echo gEditorialHelper::getDateEditRow( $post->post_date, '-date' );
+			echo Helper::getDateEditRow( $post->post_date, '-date' );
 		echo '</li>';
 
 		if ( $post->post_modified != $post->post_date
@@ -531,7 +540,7 @@ class gEditorialTweaks extends gEditorialModuleCore
 
 			echo '<li class="-attr tweaks-default-atts -post-modified">';
 				echo $this->get_column_icon( FALSE, 'edit', _x( 'Last Edit', 'Modules: Tweaks: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
-				echo gEditorialHelper::getDateEditRow( $post->post_modified, '-edit' );
+				echo Helper::getDateEditRow( $post->post_modified, '-edit' );
 			echo '</li>';
 		}
 	}
@@ -549,7 +558,7 @@ class gEditorialTweaks extends gEditorialModuleCore
 				echo $post->post_excerpt; // textarea_escaped
 			echo '</textarea>';
 
-			echo gEditorialHelper::htmlWordCount( 'excerpt', $post->post_type );
+			echo Helper::htmlWordCount( 'excerpt', $post->post_type );
 
 		echo '</div>';
 	}

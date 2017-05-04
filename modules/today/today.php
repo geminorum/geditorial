@@ -1,6 +1,14 @@
-<?php defined( 'ABSPATH' ) or die( 'Restricted access' );
+<?php namespace geminorum\gEditorial\Modules;
 
-class gEditorialToday extends gEditorialModuleCore
+defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
+
+use geminorum\gEditorial;
+use geminorum\gEditorial\Core\Arraay;
+use geminorum\gEditorial\Core\HTML;
+use geminorum\gEditorial\Core\Number;
+use geminorum\gEditorial\Helpers\Today as ModuleHelper;
+
+class Today extends gEditorial\Module
 {
 
 	protected $partials = array( 'helper' );
@@ -219,15 +227,15 @@ class gEditorialToday extends gEditorialModuleCore
 
 			if ( 'auto-draft' == $post->post_status
 				&& $this->get_setting( 'today_in_draft', FALSE ) ) // FIXME: add setting
-				$the_day = gEditorialTodayHelper::getTheDayFromToday( NULL, $default_type );
+				$the_day = ModuleHelper::getTheDayFromToday( NULL, $default_type );
 
 			else if ( self::req( 'post' ) )
-				$the_day = gEditorialTodayHelper::getTheDayFromPost( $post, $default_type, $this->get_the_day_constants() );
+				$the_day = ModuleHelper::getTheDayFromPost( $post, $default_type, $this->get_the_day_constants() );
 
 			else
-				$the_day = gEditorialTodayHelper::getTheDayFromQuery( TRUE, $default_type, $this->get_the_day_constants() );
+				$the_day = ModuleHelper::getTheDayFromQuery( TRUE, $default_type, $this->get_the_day_constants() );
 
-			gEditorialTodayHelper::theDaySelect( $the_day, ( $post->post_type != $this->constant( 'day_cpt' ) ), $default_type );
+			ModuleHelper::theDaySelect( $the_day, ( $post->post_type != $this->constant( 'day_cpt' ) ), $default_type );
 
 		echo '</div>';
 
@@ -241,7 +249,7 @@ class gEditorialToday extends gEditorialModuleCore
 
 	public function manage_posts_columns_supported( $posts_columns )
 	{
-		return gEditorialArraay::insert( $posts_columns, array(
+		return Arraay::insert( $posts_columns, array(
 			'theday' => $this->get_column_title( 'theday', 'day_cpt' ),
 		), 'title', 'before' );
 	}
@@ -298,7 +306,7 @@ class gEditorialToday extends gEditorialModuleCore
 			echo '<span class="title inline-edit-categories-label">';
 				echo $this->get_string( 'meta_box_title', $post_type, 'misc' );
 			echo '</span>';
-			gEditorialTodayHelper::theDaySelect( array(), TRUE, '' );
+			ModuleHelper::theDaySelect( array(), TRUE, '' );
 		echo '</div>';
 
 		wp_nonce_field( 'geditorial_today_post_raw', '_geditorial_today_post_raw' );
@@ -311,7 +319,7 @@ class gEditorialToday extends gEditorialModuleCore
 
 	public function column_theday( $post_id )
 	{
-		gEditorialTodayHelper::displayTheDayFromPost( get_post( $post_id ),
+		ModuleHelper::displayTheDayFromPost( get_post( $post_id ),
 			$this->get_setting( 'calendar_type', 'gregorian' ),
 			$this->get_the_day_constants() );
 	}
@@ -339,7 +347,7 @@ class gEditorialToday extends gEditorialModuleCore
 
 	protected function check_the_day_posttype( $the_day = array() )
 	{
-		return gEditorialTodayHelper::getPostsConnected( array(
+		return ModuleHelper::getPostsConnected( array(
 			'type'    => $this->constant( 'day_cpt' ),
 			'the_day' => $the_day,
 			'all'     => TRUE,
@@ -360,25 +368,25 @@ class gEditorialToday extends gEditorialModuleCore
 			$constants    = $this->get_the_day_constants();
 			$posttypes    = $this->post_types();
 
-			// $the_day = gEditorialTodayHelper::getTheDayByPost( $post, $default_type, $constants );
-			// $the_day = gEditorialTodayHelper::getTheDayFromQuery( TRUE, $default_type, $constants );
-			$the_day = gEditorialTodayHelper::getTheDayFromPost( $post, $default_type, $constants );
+			// $the_day = ModuleHelper::getTheDayByPost( $post, $default_type, $constants );
+			// $the_day = ModuleHelper::getTheDayFromQuery( TRUE, $default_type, $constants );
+			$the_day = ModuleHelper::getTheDayFromPost( $post, $default_type, $constants );
 
-			list( $posts, $pagination ) = gEditorialTodayHelper::getPostsConnected( array(
+			list( $posts, $pagination ) = ModuleHelper::getPostsConnected( array(
 				'type'    => $posttypes,
 				'the_day' => $the_day,
 				'all'     => TRUE,
 			), $constants );
 
-			gEditorialTodayHelper::theDayNewConnected( $posttypes, $the_day,
+			ModuleHelper::theDayNewConnected( $posttypes, $the_day,
 				( $this->check_the_day_posttype( $the_day ) ? FALSE : $this->constant( 'day_cpt' ) ) );
 
-			gEditorialHTML::tableList( array(
-				'type'  => gEditorialHelper::tableColumnPostType(),
-				'title' => gEditorialHelper::tableColumnPostTitle(),
-				'terms' => gEditorialHelper::tableColumnPostTerms(),
+			HTML::tableList( array(
+				'type'  => Helper::tableColumnPostType(),
+				'title' => Helper::tableColumnPostTitle(),
+				'terms' => Helper::tableColumnPostTerms(),
 			), $posts, array(
-				'empty' => gEditorialHTML::warning( _x( 'No Posts!', 'Modules: Today: Table Notice', GEDITORIAL_TEXTDOMAIN ) ),
+				'empty' => HTML::warning( _x( 'No Posts!', 'Modules: Today: Table Notice', GEDITORIAL_TEXTDOMAIN ) ),
 			) );
 
 		echo '</div>';
@@ -406,7 +414,7 @@ class gEditorialToday extends gEditorialModuleCore
 						$value = trim( $_POST['geditorial-today-date-'.$field] );
 
 						if ( 'cal' != $field )
-							$value = gEditorialNumber::intval( $value, FALSE );
+							$value = Number::intval( $value, FALSE );
 
 						$this->set_meta( $post_id, $value, $constant );
 					}
@@ -435,7 +443,7 @@ class gEditorialToday extends gEditorialModuleCore
 
 			// FIXME: add setting for this
 
-			$this->the_day = gEditorialTodayHelper::getTheDayFromToday( NULL,
+			$this->the_day = ModuleHelper::getTheDayFromToday( NULL,
 				$this->get_setting( 'calendar_type', 'gregorian' ) );
 
 			add_filter( 'the_title', array( $this, 'the_title' ) );
@@ -444,13 +452,13 @@ class gEditorialToday extends gEditorialModuleCore
 
 		} else if ( is_post_type_archive( $this->constant( 'day_cpt' ) ) ) {
 
-			$this->the_day = gEditorialTodayHelper::getTheDayFromQuery( FALSE,
+			$this->the_day = ModuleHelper::getTheDayFromQuery( FALSE,
 				$this->get_setting( 'calendar_type', 'gregorian' ),
 				$this->get_the_day_constants() );
 
 			// no day, just cal
 			if ( 1 === count( $this->the_day ) )
-				$this->the_day = gEditorialTodayHelper::getTheDayFromToday( NULL, $this->the_day['cal'] );
+				$this->the_day = ModuleHelper::getTheDayFromToday( NULL, $this->the_day['cal'] );
 
 			add_filter( 'the_title', array( $this, 'the_title' ) );
 			add_filter( 'the_content', array( $this, 'the_content' ) );
@@ -489,7 +497,7 @@ class gEditorialToday extends gEditorialModuleCore
 
 		$costants = $this->get_the_day_constants();
 
-		list( $posts, $pagination ) = gEditorialTodayHelper::getPostsConnected( array(
+		list( $posts, $pagination ) = ModuleHelper::getPostsConnected( array(
 			'type'    => get_query_var( 'day_posttype', 'any' ),
 			'the_day' => $this->the_day,
 		), $costants );
@@ -498,7 +506,7 @@ class gEditorialToday extends gEditorialModuleCore
 
 		echo '<div class="geditorial-front-wrap-nobox">';
 
-		gEditorialTodayHelper::theDayNewConnected( $this->post_types(), $this->the_day,
+		ModuleHelper::theDayNewConnected( $this->post_types(), $this->the_day,
 			( $this->check_the_day_posttype( $this->the_day ) ? FALSE : $this->constant( 'day_cpt' ) ) );
 
 		if ( count( $posts ) ) {
@@ -621,7 +629,7 @@ class gEditorialToday extends gEditorialModuleCore
 	{
 		if ( $post->post_type == $this->constant( 'day_cpt' ) ) {
 
-			$the_day = gEditorialTodayHelper::getTheDayFromPost( $post,
+			$the_day = ModuleHelper::getTheDayFromPost( $post,
 				$this->get_setting( 'calendar_type', 'gregorian' ),
 				$this->get_the_day_constants() );
 
@@ -637,7 +645,7 @@ class gEditorialToday extends gEditorialModuleCore
 		$day_cpt   = $this->constant( 'day_cpt' );
 		$pattern = '([^/]+)';
 
-		foreach ( gEditorialHelper::getDefualtCalendars( TRUE ) as $cal => $title ) {
+		foreach ( Helper::getDefualtCalendars( TRUE ) as $cal => $title ) {
 
 			// /cal/month/day/year/posttype
 

@@ -1,6 +1,16 @@
-<?php defined( 'ABSPATH' ) or die( 'Restricted access' );
+<?php namespace geminorum\gEditorial;
 
-class gEditorialHelper extends gEditorialBaseCore
+defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
+
+use geminorum\gEditorial\Core\Date;
+use geminorum\gEditorial\Core\HTML;
+use geminorum\gEditorial\Core\Number;
+use geminorum\gEditorial\Core\Text;
+use geminorum\gEditorial\Core\WordPress;
+use geminorum\gEditorial\WordPress\PostType;
+use geminorum\gEditorial\WordPress\Taxonomy;
+
+class Helper extends Core\Base
 {
 
 	const BASE   = 'geditorial';
@@ -11,17 +21,19 @@ class gEditorialHelper extends gEditorialBaseCore
 		return gEditorial()->constant( self::MODULE, $key, $default );
 	}
 
-	public static function moduleClass( $module, $check = TRUE, $prefix = 'gEditorial' )
+	public static function moduleClass( $module, $check = TRUE )
 	{
 		$class = '';
 
 		foreach ( explode( '-', str_replace( '_', '-', $module ) ) as $word )
 			$class .= ucfirst( $word ).'';
 
-		if ( $check && ! class_exists( $prefix.$class ) )
+		$class = __NAMESPACE__.'\\Modules\\'.$class;
+
+		if ( $check && ! class_exists( $class ) )
 			return FALSE;
 
-		return $prefix.$class;
+		return $class;
 	}
 
 	public static function moduleSlug( $module, $link = TRUE )
@@ -47,12 +59,12 @@ class gEditorialHelper extends gEditorialBaseCore
 	// override to use plugin version
 	public static function linkStyleSheet( $url, $version = GEDITORIAL_VERSION, $media = FALSE )
 	{
-		gEditorialHTML::linkStyleSheet( $url, $version, $media );
+		HTML::linkStyleSheet( $url, $version, $media );
 	}
 
 	public static function linkStyleSheetAdmin( $page )
 	{
-		gEditorialHTML::linkStyleSheet( GEDITORIAL_URL.'assets/css/admin.'.$page.'.css', GEDITORIAL_VERSION );
+		HTML::linkStyleSheet( GEDITORIAL_URL.'assets/css/admin.'.$page.'.css', GEDITORIAL_VERSION );
 	}
 
 	public static function kses( $text, $context = 'none', $allowed = NULL )
@@ -117,7 +129,7 @@ class gEditorialHelper extends gEditorialBaseCore
 	{
 		$append = '<span title="'.esc_attr( $text ).'">'.$append.'</span>';
 
-		return gEditorialCoreText::trimChars( $text, $length, $append );
+		return Text::trimChars( $text, $length, $append );
 	}
 
 	public static function getJoined( $items, $before = '', $after = '' )
@@ -152,7 +164,7 @@ class gEditorialHelper extends gEditorialBaseCore
 				$query['term']     = $term->slug;
 			}
 
-			$list[] = gEditorialHTML::tag( 'a', array(
+			$list[] = HTML::tag( 'a', array(
 				'href'  => add_query_arg( $query, 'edit.php' ),
 				'title' => urldecode( $term->slug ),
 				'class' => '-term',
@@ -170,7 +182,7 @@ class gEditorialHelper extends gEditorialBaseCore
 		$list = array();
 
 		foreach ( $authors as $author )
-			if ( $html = gEditorialWordPress::getAuthorEditHTML( $post_type, $author ) )
+			if ( $html = WordPress::getAuthorEditHTML( $post_type, $author ) )
 				$list[] = $html;
 
 		echo self::getJoined( $list, $before, $after );
@@ -179,7 +191,7 @@ class gEditorialHelper extends gEditorialBaseCore
 	public static function getPostTitle( $post, $fallback = NULL )
 	{
 		if ( ! $post = get_post( $post ) )
-			return gEditorial::na( FALSE );
+			return Plugin::na( FALSE );
 
 		$title = apply_filters( 'the_title', $post->post_title, $post->ID );
 
@@ -198,7 +210,7 @@ class gEditorialHelper extends gEditorialBaseCore
 	public static function getPostTitleRow( $post, $link = 'edit', $title_attr = NULL )
 	{
 		if ( ! $post = get_post( $post ) )
-			return gEditorial::na( FALSE );
+			return Plugin::na( FALSE );
 
 		$title = self::getPostTitle( $post );
 
@@ -211,28 +223,28 @@ class gEditorialHelper extends gEditorialBaseCore
 			$link = 'view';
 
 		if ( 'edit' == $link )
-			return gEditorialHTML::tag( 'a', array(
-				'href'   => gEditorialWordPress::getPostEditLink( $post->ID ),
+			return HTML::tag( 'a', array(
+				'href'   => WordPress::getPostEditLink( $post->ID ),
 				'class'  => '-link -row-link -row-link-edit',
 				'target' => '_blank',
 				'title'  => is_null( $title_attr ) ? _x( 'Edit', 'Module Helper: Row Action', GEDITORIAL_TEXTDOMAIN ) : $title_attr,
 			), esc_html( $title ) );
 
 		if ( 'view' == $link && ! $edit && 'publish' != get_post_status( $post ) )
-			return gEditorialHTML::tag( 'span', array(
+			return HTML::tag( 'span', array(
 				'class' => '-row-span',
 				'title' => is_null( $title_attr ) ? FALSE : $title_attr,
 			), esc_html( $title ) );
 
 		if ( 'view' == $link )
-			return gEditorialHTML::tag( 'a', array(
-				'href'   => gEditorialWordPress::getPostShortLink( $post->ID ),
+			return HTML::tag( 'a', array(
+				'href'   => WordPress::getPostShortLink( $post->ID ),
 				'class'  => '-link -row-link -row-link-view',
 				'target' => '_blank',
 				'title'  => is_null( $title_attr ) ? _x( 'View', 'Module Helper: Row Action', GEDITORIAL_TEXTDOMAIN ) : $title_attr,
 			), esc_html( $title ) );
 
-		return gEditorialHTML::tag( 'a', array(
+		return HTML::tag( 'a', array(
 			'href'   => $link,
 			'class'  => '-link -row-link -row-link-custom',
 			'target' => '_blank',
@@ -253,8 +265,8 @@ class gEditorialHelper extends gEditorialBaseCore
 					if ( ! current_user_can( 'edit_post', $post_id ) )
 						continue;
 
-					$list['edit'] = gEditorialHTML::tag( 'a', array(
-						'href'   => gEditorialWordPress::getPostEditLink( $post_id ),
+					$list['edit'] = HTML::tag( 'a', array(
+						'href'   => WordPress::getPostEditLink( $post_id ),
 						'class'  => '-link -row-link -row-link-edit',
 						'target' => '_blank',
 					), _x( 'Edit', 'Module Helper: Row Action', GEDITORIAL_TEXTDOMAIN ) );
@@ -262,8 +274,8 @@ class gEditorialHelper extends gEditorialBaseCore
 				break;
 				case 'view':
 
-					$list['view'] = gEditorialHTML::tag( 'a', array(
-						'href'   => gEditorialWordPress::getPostShortLink( $post_id ),
+					$list['view'] = HTML::tag( 'a', array(
+						'href'   => WordPress::getPostShortLink( $post_id ),
 						'class'  => '-link -row-link -row-link-view',
 						'target' => '_blank',
 					), _x( 'View', 'Module Helper: Row Action', GEDITORIAL_TEXTDOMAIN ) );
@@ -280,7 +292,7 @@ class gEditorialHelper extends gEditorialBaseCore
 		$term = get_term( $term );
 
 		if ( ! $term || is_wp_error( $term ) )
-			return gEditorial::na( FALSE );
+			return Plugin::na( FALSE );
 
 		$title = sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' );
 
@@ -291,22 +303,22 @@ class gEditorialHelper extends gEditorialBaseCore
 			$link = 'view';
 
 		if ( 'edit' == $link )
-			return gEditorialHTML::tag( 'a', array(
-				'href'   => gEditorialWordPress::getEditTaxLink( $term->taxonomy, $term->term_id ),
+			return HTML::tag( 'a', array(
+				'href'   => WordPress::getEditTaxLink( $term->taxonomy, $term->term_id ),
 				'title'  => urldecode( $term->slug ),
 				'class'  => '-link -row-link -row-link-edit',
 				'target' => '_blank',
 			), esc_html( $title ) );
 
 		if ( 'view' == $link )
-			return gEditorialHTML::tag( 'a', array(
+			return HTML::tag( 'a', array(
 				'href'   => get_term_link( $term->term_id, $term->taxonomy ),
 				'class'  => '-link -row-link -row-link-view',
 				'target' => '_blank',
 				'title'  => _x( 'View', 'Module Helper: Row Action', GEDITORIAL_TEXTDOMAIN ),
 			), esc_html( $title ) );
 
-		return gEditorialHTML::tag( 'a', array(
+		return HTML::tag( 'a', array(
 			'href'   => $link,
 			'class'  => '-link -row-link -row-link-custom',
 			'target' => '_blank',
@@ -335,7 +347,7 @@ class gEditorialHelper extends gEditorialBaseCore
 
 	public static function getAdminBarIcon( $icon = 'screenoptions', $style = 'margin:2px 1px 0 1px;' )
 	{
-		return gEditorialHTML::tag( 'span', array(
+		return HTML::tag( 'span', array(
 			'class' => array(
 				'ab-icon',
 				'dashicons',
@@ -397,7 +409,7 @@ class gEditorialHelper extends gEditorialBaseCore
 
 	public static function getTermPosts( $taxonomy, $term_or_id, $exclude = array() )
 	{
-		if ( ! $term = gEditorialWPTaxonomy::getTerm( $term_or_id, $taxonomy ) )
+		if ( ! $term = Taxonomy::getTerm( $term_or_id, $taxonomy ) )
 			return '';
 
 		$query_args = array(
@@ -432,8 +444,8 @@ class gEditorialHelper extends gEditorialBaseCore
 				.self::getPostTitle( $post ).'</a>'
 				.'&nbsp;<span class="edit">'
 				.sprintf( _x( '&ndash; <a href="%1$s" target="_blank" title="Edit this Post">%2$s</a>', 'Module Helper', GEDITORIAL_TEXTDOMAIN ),
-					esc_url( gEditorialWordPress::getPostEditLink( $post->ID ) ),
-					gEditorialHTML::getDashicon( 'welcome-write-blog' )
+					esc_url( WordPress::getPostEditLink( $post->ID ) ),
+					HTML::getDashicon( 'welcome-write-blog' )
 				).'</span></li>';
 		}
 		wp_reset_query();
@@ -502,8 +514,8 @@ class gEditorialHelper extends gEditorialBaseCore
 
 	public static function tableFilterPostTypes()
 	{
-		return gEditorialHTML::dropdown(
-			gEditorialWPPostType::get(), [
+		return HTML::dropdown(
+			PostType::get(), [
 				'name'       => 'type',
 				'selected'   => self::req( 'type', 'any' ),
 				'none_value' => 'any',
@@ -521,7 +533,7 @@ class gEditorialHelper extends gEditorialBaseCore
 		return array(
 			'title'    => _x( 'Date', 'Module Helper: Table Column: Post Date', GEDITORIAL_TEXTDOMAIN ),
 			'callback' => function( $value, $row, $column, $index ){
-				return gEditorialHelper::humanTimeDiffRound( strtotime( $row->post_date ) );
+				return Helper::humanTimeDiffRound( strtotime( $row->post_date ) );
 			},
 		);
 	}
@@ -530,7 +542,7 @@ class gEditorialHelper extends gEditorialBaseCore
 	{
 		return array(
 			'title'    => _x( 'Type', 'Module Helper: Table Column: Post Type', GEDITORIAL_TEXTDOMAIN ),
-			'args'     => array( 'types' => gEditorialWPPostType::get( 2 ) ),
+			'args'     => array( 'types' => PostType::get( 2 ) ),
 			'callback' => function( $value, $row, $column, $index ){
 				return isset( $column['args']['types'][$row->post_type] )
 					? $column['args']['types'][$row->post_type]
@@ -543,7 +555,7 @@ class gEditorialHelper extends gEditorialBaseCore
 	{
 		return array(
 			'title'    => _x( 'Title', 'Module Helper: Table Column: Post Title', GEDITORIAL_TEXTDOMAIN ),
-			'args'     => array( 'statuses' => gEditorialWPPostType::getStatuses( 2 ) ),
+			'args'     => array( 'statuses' => PostType::getStatuses( 2 ) ),
 			'callback' => function( $value, $row, $column, $index ){
 
 				$status = 'publish' != $row->post_status
@@ -552,11 +564,11 @@ class gEditorialHelper extends gEditorialBaseCore
 						: $row->post_status )
 					: '';
 
-				return gEditorialHelper::getPostTitle( $row )
+				return Helper::getPostTitle( $row )
 					.( $status ? ' <small class="-status">('.$status.')</small>' : '' );
 			},
 			'actions' => function( $value, $row, $column, $index ){
-				return gEditorialHelper::getPostRowActions( $row->ID );
+				return Helper::getPostRowActions( $row->ID );
 			},
 		);
 	}
@@ -565,11 +577,11 @@ class gEditorialHelper extends gEditorialBaseCore
 	{
 		return array(
 			'title'    => _x( 'Terms', 'Module Helper: Table Column: Post Terms', GEDITORIAL_TEXTDOMAIN ),
-			'args'     => array( 'taxonomies' => gEditorialWPTaxonomy::get( 4 ) ),
+			'args'     => array( 'taxonomies' => Taxonomy::get( 4 ) ),
 			'callback' => function( $value, $row, $column, $index ){
 				$html = '';
 				foreach( $column['args']['taxonomies'] as $taxonomy => $object )
-					$html .= gEditorialHelper::getTermsEditRow( $row, $object, '<div>'.$object->label.': ', '</div>' );
+					$html .= Helper::getTermsEditRow( $row, $object, '<div>'.$object->label.': ', '</div>' );
 				return $html;
 			},
 		);
@@ -585,7 +597,7 @@ class gEditorialHelper extends gEditorialBaseCore
 		return array(
 			'title'    => _x( 'Name', 'Module Helper: Table Column: Term Name', GEDITORIAL_TEXTDOMAIN ),
 			'callback' => function( $value, $row, $column, $index ){
-				return gEditorialHelper::getTermTitleRow( $row );
+				return Helper::getTermTitleRow( $row );
 			},
 		);
 	}
@@ -612,7 +624,7 @@ class gEditorialHelper extends gEditorialBaseCore
 			'max' => '0',
 		);
 
-		return gEditorialHTML::tag( 'div', array(
+		return HTML::tag( 'div', array(
 			'class' => array( self::BASE.'-wordcount', 'hide-if-no-js' ),
 			'data'  => apply_filters( self::BASE.'_helper_wordcount_data', array_merge( $data, $defaults ), $for, $posttype ),
 		), sprintf( _x( 'Letter Count: %s', 'Module Helper', GEDITORIAL_TEXTDOMAIN ), '<span class="-chars">0</span>' ) );
@@ -624,7 +636,7 @@ class gEditorialHelper extends gEditorialBaseCore
 			$title_attr = _x( 'No Count', 'Module Helper: No Count Title Attribute', GEDITORIAL_TEXTDOMAIN );
 
 		if ( $count )
-			$html = gEditorialNumber::format( $count );
+			$html = Number::format( $count );
 		else
 			$html = sprintf( '<span title="%s" class="column-count-empty">&mdash;</span>', $title_attr );
 
@@ -658,7 +670,7 @@ class gEditorialHelper extends gEditorialBaseCore
 
 		return $attr
 			? sprintf( $title, date_i18n( $format, $local ) )
-			: gEditorialDate::htmlDateTime( $local, $gmt, $format, self::humanTimeDiffRound( $local, FALSE ) );
+			: Date::htmlDateTime( $local, $gmt, $format, self::humanTimeDiffRound( $local, FALSE ) );
 	}
 
 	public static function htmlHumanTime( $timestamp )
@@ -714,7 +726,7 @@ class gEditorialHelper extends gEditorialBaseCore
 		if ( empty( $now ) )
 			$now = current_time( 'timestamp', FALSE );
 
-		return gEditorialDate::humanTimeDiff( $timestamp, $now, $strings );
+		return Date::humanTimeDiff( $timestamp, $now, $strings );
 	}
 
 	// not used yet!
@@ -750,7 +762,7 @@ class gEditorialHelper extends gEditorialBaseCore
 		if ( empty( $now ) )
 			$now = current_time( 'timestamp', FALSE );
 
-		return gEditorialDate::moment( $timestamp, $now, $strings );
+		return Date::moment( $timestamp, $now, $strings );
 	}
 
 	// @REF: [Calendar Classes - ICU User Guide](http://userguide.icu-project.org/datetime/calendar)
@@ -800,8 +812,8 @@ class gEditorialHelper extends gEditorialBaseCore
 			return array(
 				$name.'s',
 				$name,
-				gEditorialCoreText::strToLower( $name.'s' ),
-				gEditorialCoreText::strToLower( $name ),
+				Text::strToLower( $name.'s' ),
+				Text::strToLower( $name ),
 			);
 
 		$strings = array(
@@ -809,8 +821,8 @@ class gEditorialHelper extends gEditorialBaseCore
 			_nx( $name['singular'], $name['plural'], 1, $name['context'], $name['domain'] ),
 		);
 
-		$strings[2] = gEditorialCoreText::strToLower( $strings[0] );
-		$strings[3] = gEditorialCoreText::strToLower( $strings[1] );
+		$strings[2] = Text::strToLower( $strings[0] );
+		$strings[3] = Text::strToLower( $strings[1] );
 
 		$strings[5] = '%s';
 
@@ -877,7 +889,7 @@ class gEditorialHelper extends gEditorialBaseCore
 
 		if ( $featured )
 			foreach ( $featured_templates as $key => $template )
-				$pre[$key] = vsprintf( $template, array( $featured, gEditorialCoreText::strToLower( $featured ) ) );
+				$pre[$key] = vsprintf( $template, array( $featured, Text::strToLower( $featured ) ) );
 
 		return $pre;
 	}
@@ -965,9 +977,9 @@ class gEditorialHelper extends gEditorialBaseCore
 		$scheduled_date = date_i18n( __( 'M j, Y @ H:i' ), strtotime( $post->post_date ) );
 
 		if ( is_post_type_viewable( $post_type_object ) ) {
-			$view      = ' '.gEditorialHTML::link( $messages['view_post'], $permalink );
-			$preview   = ' '.gEditorialHTML::link( $messages['preview_post'], get_preview_post_link( $post ), TRUE );
-			$scheduled = ' '.gEditorialHTML::link( $messages['preview_post'], $permalink, TRUE );
+			$view      = ' '.HTML::link( $messages['view_post'], $permalink );
+			$preview   = ' '.HTML::link( $messages['preview_post'], get_preview_post_link( $post ), TRUE );
+			$scheduled = ' '.HTML::link( $messages['preview_post'], $permalink, TRUE );
 		}
 
 		return array(
@@ -1048,7 +1060,7 @@ class gEditorialHelper extends gEditorialBaseCore
 			if ( ! array_key_exists( $calendar_type, $map ) )
 				return array();
 
-			return gPersianDateStrings::month( NULL, TRUE, $map[$calendar_type] );
+			return \gPersianDateStrings::month( NULL, TRUE, $map[$calendar_type] );
 		}
 
 		global $wp_locale;
@@ -1107,7 +1119,7 @@ class gEditorialHelper extends gEditorialBaseCore
 	}
 }
 
-class gEditorial_Walker_PageDropdown extends Walker_PageDropdown
+class Walker_PageDropdown extends \Walker_PageDropdown
 {
 
 	public function start_el( &$output, $page, $depth = 0, $args = array(), $id = 0 ) {

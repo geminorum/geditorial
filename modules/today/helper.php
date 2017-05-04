@@ -1,6 +1,12 @@
-<?php defined( 'ABSPATH' ) or die( 'Restricted access' );
+<?php namespace geminorum\gEditorial\Helpers;
 
-class gEditorialTodayHelper extends gEditorialHelper
+defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
+
+use geminorum\gEditorial;
+use geminorum\gEditorial\Core\HTML;
+use geminorum\gEditorial\Core\Number;
+
+class Today extends gEditorial\Helper
 {
 
 	const MODULE = 'today';
@@ -66,21 +72,21 @@ class gEditorialTodayHelper extends gEditorialHelper
 		} else {
 
 			if ( empty( $calendars ) )
-				$calendars = gEditorialHelper::getDefualtCalendars();
+				$calendars = Helper::getDefualtCalendars();
 
 			if ( ! isset( $months[$the_day['cal']] ) )
-				$months[$the_day['cal']] = gEditorialHelper::getMonths( $the_day['cal'] );
+				$months[$the_day['cal']] = Helper::getMonths( $the_day['cal'] );
 
 			echo '<div class="-date-icon">';
 
 				if ( $the_day['day'] )
 					echo '<span class="-day" data-day="'.esc_attr( $the_day['day'] )
-						.'">'.gEditorialNumber::format( $the_day['day'] ).'</span>';
+						.'">'.Number::format( $the_day['day'] ).'</span>';
 
 				if ( $the_day['month'] ) {
 
-					$month = gEditorialNumber::intval( $the_day['month'], FALSE );
-					$key = gEditorialNumber::zeroise( $month, 2 );
+					$month = Number::intval( $the_day['month'], FALSE );
+					$key = Number::zeroise( $month, 2 );
 
 					if ( isset( $months[$the_day['cal']][$key] ) )
 						$the_day['month'] = $months[$the_day['cal']][$key];
@@ -89,7 +95,7 @@ class gEditorialTodayHelper extends gEditorialHelper
 				}
 
 				if ( $the_day['year'] )
-					echo '<span class="-year" data-year="'.esc_attr( $the_day['year'] ).'">'.gEditorialNumber::format( $the_day['year'] ).'</span>';
+					echo '<span class="-year" data-year="'.esc_attr( $the_day['year'] ).'">'.Number::format( $the_day['year'] ).'</span>';
 
 				if ( $the_day['cal'] )
 					echo '<span class="-cal" data-cal="'.esc_attr( $the_day['cal'] ).'">'.
@@ -225,7 +231,7 @@ class gEditorialTodayHelper extends gEditorialHelper
 		if ( $args['count'] )
 			return count( $posts );
 
-		$pagination = gEditorialHTML::tablePagination( $query->found_posts, $query->max_num_pages, $args['limit'], $args['paged'], $args['all'] );
+		$pagination = HTML::tablePagination( $query->found_posts, $query->max_num_pages, $args['limit'], $args['paged'], $args['all'] );
 
 		return array( $posts, $pagination );
 	}
@@ -241,7 +247,7 @@ class gEditorialTodayHelper extends gEditorialHelper
 
 		$html = '';
 
-		$html .= gEditorialHTML::tag( 'input', array(
+		$html .= HTML::tag( 'input', array(
 			'type'         => 'text',
 			'autocomplete' => 'off',
 			'min'          => '1',
@@ -255,7 +261,7 @@ class gEditorialTodayHelper extends gEditorialHelper
 			'data'         => array( 'ortho' => 'number' ),
 		) );
 
-		$html .= gEditorialHTML::tag( 'input', array(
+		$html .= HTML::tag( 'input', array(
 			'type'         => 'text',
 			'autocomplete' => 'off',
 			'min'          => '1',
@@ -270,7 +276,7 @@ class gEditorialTodayHelper extends gEditorialHelper
 		) );
 
 		if ( $year )
-		$html .= gEditorialHTML::tag( 'input', array(
+		$html .= HTML::tag( 'input', array(
 			'type'         => 'text',
 			'autocomplete' => 'off',
 			'class'        => '-year',
@@ -283,28 +289,28 @@ class gEditorialTodayHelper extends gEditorialHelper
 			'data'         => array( 'ortho' => 'number' ),
 		) );
 
-		echo gEditorialHTML::tag( 'div', array(
+		echo HTML::tag( 'div', array(
 			'class' => 'field-wrap '.( $year ? 'field-wrap-inputtext-date' : 'field-wrap-inputtext-half' ),
 		), $html );
 
-		$html = gEditorialHTML::tag( 'option', array(
+		$html = HTML::tag( 'option', array(
 			'value' => '',
 		), _x( '&mdash; Select Calendar &mdash;', 'Modules: Today: Meta Box Input Option None', GEDITORIAL_TEXTDOMAIN ) );
 
 		foreach ( self::getDefualtCalendars( TRUE ) as $name => $title )
-			$html .= gEditorialHTML::tag( 'option', array(
+			$html .= HTML::tag( 'option', array(
 				'value'    => $name,
 				'selected' => $args['cal'] == $name,
 			), $title );
 
-		$html = gEditorialHTML::tag( 'select', array(
+		$html = HTML::tag( 'select', array(
 			'class' => '-cal',
 			'name'  => 'geditorial-today-date-cal',
 			'id'    => 'geditorial-today-date-cal',
 			'title' => _x( 'Calendar', 'Modules: Today: Meta Box Input', GEDITORIAL_TEXTDOMAIN ),
 		), $html );
 
-		echo gEditorialHTML::tag( 'div', array(
+		echo HTML::tag( 'div', array(
 			'class' => 'field-wrap field-wrap-select',
 		), $html );
 
@@ -327,12 +333,12 @@ class gEditorialTodayHelper extends gEditorialHelper
 
 				// FIXME: get edit item url
 
-				$icon   = gEditorialHTML::getDashicon( $posttype_object->menu_icon ? $posttype_object->menu_icon : 'admin-post' );
+				$icon   = HTML::getDashicon( $posttype_object->menu_icon ? $posttype_object->menu_icon : 'admin-post' );
 				$noyear = $the_day;
 
 				unset( $noyear['year'] );
 
-				$html .= gEditorialHTML::tag( 'a', array(
+				$html .= HTML::tag( 'a', array(
 					'href'          => add_query_arg( array_merge( $noyear, array( 'post_type' => $posttype ) ), $new ),
 					'class'         => 'button -add-posttype -add-posttype-'.$posttype,
 					'target'        => '_blank',
@@ -351,9 +357,9 @@ class gEditorialTodayHelper extends gEditorialHelper
 			if ( ! current_user_can( $posttype_object->cap->create_posts ) )
 				continue;
 
-			$icon = gEditorialHTML::getDashicon( $posttype_object->menu_icon ? $posttype_object->menu_icon : 'admin-post' );
+			$icon = HTML::getDashicon( $posttype_object->menu_icon ? $posttype_object->menu_icon : 'admin-post' );
 
-			$html .= gEditorialHTML::tag( 'a', array(
+			$html .= HTML::tag( 'a', array(
 				'href'          => add_query_arg( array_merge( $the_day, array( 'post_type' => $posttype ) ), $new ),
 				'class'         => 'button -add-posttype -add-posttype-'.$posttype,
 				'target'        => '_blank',
@@ -362,7 +368,7 @@ class gEditorialTodayHelper extends gEditorialHelper
 			), $icon.' '.$posttype_object->labels->add_new_item );
 		}
 
-		echo gEditorialHTML::tag( 'div', array(
+		echo HTML::tag( 'div', array(
 			'class' => 'field-wrap field-wrap-buttons',
 		), $html );
 	}

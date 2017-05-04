@@ -1,6 +1,14 @@
-<?php defined( 'ABSPATH' ) or die( 'Restricted access' );
+<?php namespace geminorum\gEditorial\Modules;
 
-class gEditorialDrafts extends gEditorialModuleCore
+defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
+
+use geminorum\gEditorial;
+use geminorum\gEditorial\Ajax;
+use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Core\HTML;
+use geminorum\gEditorial\Core\WordPress;
+
+class Drafts extends gEditorial\Module
 {
 
 	protected $caps = array(
@@ -66,7 +74,7 @@ class gEditorialDrafts extends gEditorialModuleCore
 
 	public function ajax()
 	{
-		gEditorialAjax::checkReferer();
+		Ajax::checkReferer( $this->hook() );
 
 		if ( ! $this->cuc( 'ajax' ) )
 			self::cheatin();
@@ -76,10 +84,10 @@ class gEditorialDrafts extends gEditorialModuleCore
 
 		switch ( $what ) {
 
-			case 'list': gEditorialAjax::successHTML( $this->drafts_list() );
+			case 'list': Ajax::successHTML( $this->drafts_list() );
 		}
 
-		gEditorialAjax::errorWhat();
+		Ajax::errorWhat();
 	}
 
 	private function drafts_list()

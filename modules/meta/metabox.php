@@ -1,12 +1,20 @@
-<?php defined( 'ABSPATH' ) or die( 'Restricted access' );
+<?php namespace geminorum\gEditorial\MetaBoxes;
 
-class gEditorialMetaMetaBox extends gEditorialMetaBox
+defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
+
+use geminorum\gEditorial;
+use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Settings;
+use geminorum\gEditorial\Core\HTML;
+use geminorum\gEditorial\WordPress\Taxonomy;
+
+class Meta extends gEditorial\MetaBox
 {
 
 	public static function setPostMetaField_String( &$postmeta, $field, $prefix = 'geditorial-meta-' )
 	{
 		if ( isset( $_POST[$prefix.$field] ) && strlen( $_POST[$prefix.$field] ) > 0 )
-			$postmeta[$field] = trim( gEditorialHelper::kses( $_POST[$prefix.$field] ) );
+			$postmeta[$field] = trim( Helper::kses( $_POST[$prefix.$field] ) );
 
 		else if ( isset( $postmeta[$field] ) && isset( $_POST[$prefix.$field] ) )
 			unset( $postmeta[$field] );
@@ -15,7 +23,7 @@ class gEditorialMetaMetaBox extends gEditorialMetaBox
 	public static function setPostMetaField_Text( &$postmeta, $field, $prefix = 'geditorial-meta-' )
 	{
 		if ( isset( $_POST[$prefix.$field] ) && strlen( $_POST[$prefix.$field] ) > 0 )
-			$postmeta[$field] = trim( gEditorialHelper::kses( $_POST[$prefix.$field], 'text' ) );
+			$postmeta[$field] = trim( Helper::kses( $_POST[$prefix.$field], 'text' ) );
 
 		else if ( isset( $postmeta[$field] ) && isset( $_POST[$prefix.$field] ) )
 			unset( $postmeta[$field] );
@@ -24,7 +32,7 @@ class gEditorialMetaMetaBox extends gEditorialMetaBox
 	public static function setPostMetaField_HTML( &$postmeta, $field, $prefix = 'geditorial-meta-' )
 	{
 		if ( isset( $_POST[$prefix.$field] ) && strlen( $_POST[$prefix.$field] ) > 0 )
-			$postmeta[$field] = trim( gEditorialHelper::kses( $_POST[$prefix.$field], 'html' ) );
+			$postmeta[$field] = trim( Helper::kses( $_POST[$prefix.$field], 'html' ) );
 
 		else if ( isset( $postmeta[$field] ) && isset( $_POST[$prefix.$field] ) )
 			unset( $postmeta[$field] );
@@ -33,7 +41,7 @@ class gEditorialMetaMetaBox extends gEditorialMetaBox
 	public static function setPostMetaField_Number( &$postmeta, $field, $prefix = 'geditorial-meta-' )
 	{
 		if ( isset( $_POST[$prefix.$field] ) && strlen( $_POST[$prefix.$field] ) > 0 )
-			$postmeta[$field] = gEditorialNumber::intval( trim( $_POST[$prefix.$field] ) );
+			$postmeta[$field] = Number::intval( trim( $_POST[$prefix.$field] ) );
 
 		else if ( isset( $postmeta[$field] ) && isset( $_POST[$prefix.$field] ) )
 			unset( $postmeta[$field] );
@@ -104,9 +112,9 @@ class gEditorialMetaMetaBox extends gEditorialMetaBox
 			else if ( $edit && 'text' == $type )
 				$atts['data']['ortho'] = 'text';
 
-			$html = gEditorialHTML::tag( 'input', $atts );
+			$html = HTML::tag( 'input', $atts );
 
-			echo gEditorialHTML::tag( 'div', array(
+			echo HTML::tag( 'div', array(
 				'class' => 'field-wrap field-wrap-inputtext',
 			), $html );
 		}
@@ -150,9 +158,9 @@ class gEditorialMetaMetaBox extends gEditorialMetaBox
 			if ( $edit )
 				$atts['data']['ortho'] = 'number';
 
-			$html = gEditorialHTML::tag( 'input', $atts );
+			$html = HTML::tag( 'input', $atts );
 
-			echo gEditorialHTML::tag( 'div', array(
+			echo HTML::tag( 'div', array(
 				'class' => 'field-wrap field-wrap-inputnumber',
 			), $html );
 		}
@@ -175,8 +183,8 @@ class gEditorialMetaMetaBox extends gEditorialMetaBox
 			// FIXME: core dropdown does not support: data attr
 			wp_dropdown_categories( array(
 				'taxonomy'          => $tax,
-				'selected'          => gEditorialWPTaxonomy::theTerm( $tax, $post->ID ),
-				'show_option_none'  => gEditorialSettingsCore::showOptionNone( $title ),
+				'selected'          => Taxonomy::theTerm( $tax, $post->ID ),
+				'show_option_none'  => Settings::showOptionNone( $title ),
 				'option_none_value' => '0',
 				'class'             => 'geditorial-admin-dropbown geditorial-meta-field-'.$field.( $ltr ? ' dropbown-ltr' : '' ),
 				'name'              => 'geditorial-meta-'.$field.( FALSE === $key ? '' : '['.$key.']' ),
@@ -231,9 +239,9 @@ class gEditorialMetaMetaBox extends gEditorialMetaBox
 			else if ( $edit )
 				$atts['data']['ortho'] = 'html';
 
-			$html = gEditorialHTML::tag( 'textarea', $atts, esc_textarea( $gEditorial->meta->get_postmeta( $post->ID, $field ) ) );
+			$html = HTML::tag( 'textarea', $atts, esc_textarea( $gEditorial->meta->get_postmeta( $post->ID, $field ) ) );
 
-			echo gEditorialHTML::tag( 'div', array(
+			echo HTML::tag( 'div', array(
 				'class' => 'field-wrap field-wrap-textarea',
 			), $html );
 		}
@@ -282,7 +290,7 @@ class gEditorialMetaMetaBox extends gEditorialMetaBox
 			else if ( $edit )
 				$atts['data']['ortho'] = 'text';
 
-			echo gEditorialHTML::tag( 'input', $atts );
+			echo HTML::tag( 'input', $atts );
 		}
 	}
 
@@ -332,8 +340,8 @@ class gEditorialMetaMetaBox extends gEditorialMetaBox
 			else if ( $edit )
 				$atts['data']['ortho'] = 'html';
 
-			$html .= gEditorialHTML::tag( 'textarea', $atts, esc_textarea( $gEditorial->meta->get_postmeta( $post->ID, $field ) ) );
-			$html .= gEditorialHelper::htmlWordCount( ( 'geditorial-meta-'.$field.( FALSE === $key ? '' : '-'.$key ) ), $post->post_type );
+			$html .= HTML::tag( 'textarea', $atts, esc_textarea( $gEditorial->meta->get_postmeta( $post->ID, $field ) ) );
+			$html .= Helper::htmlWordCount( ( 'geditorial-meta-'.$field.( FALSE === $key ? '' : '-'.$key ) ), $post->post_type );
 
 			$html .= '</div></div></div></div>';
 

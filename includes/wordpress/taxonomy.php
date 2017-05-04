@@ -1,6 +1,10 @@
-<?php defined( 'ABSPATH' ) or die( 'Restricted access' );
+<?php namespace geminorum\gEditorial\WordPress;
 
-class gEditorialWPTaxonomy extends gEditorialBaseCore
+defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
+
+use geminorum\gEditorial\Core;
+
+class Taxonomy extends Core\Base
 {
 
 	// TODO: our version of `wp_dropdown_categories()`
@@ -45,7 +49,7 @@ class gEditorialWPTaxonomy extends gEditorialBaseCore
 
 			// with object_type
 			else if ( 5 === $mod )
-				$list[$taxonomy] = $taxonomy_obj->labels->name.gEditorialHTML::joined( $taxonomy_obj->object_type, ' (', ')' );
+				$list[$taxonomy] = $taxonomy_obj->labels->name.Core\HTML::joined( $taxonomy_obj->object_type, ' (', ')' );
 
 			// with name
 			else if ( 6 === $mod )

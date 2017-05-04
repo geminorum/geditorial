@@ -1,6 +1,15 @@
-<?php defined( 'ABSPATH' ) or die( 'Restricted access' );
+<?php namespace geminorum\gEditorial;
 
-class gEditorialShortCode extends gEditorialBaseCore
+defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
+
+use geminorum\gEditorial\Core\HTML;
+use geminorum\gEditorial\Core\Number;
+use geminorum\gEditorial\Core\Text;
+use geminorum\gEditorial\Core\WordPress;
+use geminorum\gEditorial\WordPress\PostType;
+use geminorum\gEditorial\WordPress\Taxonomy;
+
+class ShortCode extends Core\Base
 {
 
 	const BASE   = 'geditorial';
@@ -26,9 +35,9 @@ class gEditorialShortCode extends gEditorialBaseCore
 			$classes[] = $args['class'];
 
 		if ( $after )
-			return $before.gEditorialHTML::tag( $block ? 'div' : 'span', [ 'class' => $classes ], $html ).$after;
+			return $before.HTML::tag( $block ? 'div' : 'span', [ 'class' => $classes ], $html ).$after;
 
-		return gEditorialHTML::tag( $block ? 'div' : 'span', [ 'class' => $classes ], $before.$html );
+		return HTML::tag( $block ? 'div' : 'span', [ 'class' => $classes ], $before.$html );
 	}
 
 	// term as title of the list
@@ -37,7 +46,7 @@ class gEditorialShortCode extends gEditorialBaseCore
 		if ( is_array( $term_or_id ) )
 			$term_or_id = $term_or_id[0];
 
-		if ( ! $term = gEditorialWPTaxonomy::getTerm( $term_or_id, $taxonomy ) )
+		if ( ! $term = Taxonomy::getTerm( $term_or_id, $taxonomy ) )
 			return '';
 
 		$args = self::atts( [
@@ -63,7 +72,7 @@ class gEditorialShortCode extends gEditorialBaseCore
 		if ( is_null( $args['title'] ) ) {
 			$args['title'] = $term ? sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' ) : FALSE;
 
-		} else if ( $args['title'] && $term && gEditorialCoreText::has( $args['title'], '%' ) ) {
+		} else if ( $args['title'] && $term && Text::has( $args['title'], '%' ) ) {
 
 			$args['title'] = sprintf( $args['title'],
 				sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' ),
@@ -77,31 +86,31 @@ class gEditorialShortCode extends gEditorialBaseCore
 
 		if ( $args['title'] ) {
 			if ( is_null( $args['title_link'] ) && $term )
-				$args['title'] = gEditorialHTML::tag( 'a', [
+				$args['title'] = HTML::tag( 'a', [
 					'href'  => get_term_link( $term, $term->taxonomy ),
 					'title' => $attr,
 				], $args['title'] );
 
 			else if ( $args['title_link'] )
-				$args['title'] = gEditorialHTML::tag( 'a', [
+				$args['title'] = HTML::tag( 'a', [
 					'href'  => $args['title_link'],
 					'title' => $attr,
 				], $args['title'] );
 		}
 
 		if ( $args['title'] && $args['title_tag'] )
-			$args['title'] = gEditorialHTML::tag( $args['title_tag'], [
+			$args['title'] = HTML::tag( $args['title_tag'], [
 				'id'    => $term ? sprintf( $args['title_anchor'], $term->term_id, $term->slug ) : FALSE,
 				'class' => $args['title_class'],
 			], $args['title'] )."\n";
 
 		if ( $args['title_after'] ) {
 
-			if ( $term && gEditorialCoreText::has( $args['title_after'], '%' ) )
+			if ( $term && Text::has( $args['title_after'], '%' ) )
 				$args['title_after'] = sprintf( $args['title_after'],
 					sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' ),
 					get_term_link( $term, $term->taxonomy ),
-					gEditorialHelper::prepDescription( $term->description )
+					Helper::prepDescription( $term->description )
 				);
 
 			return $args['title'].$args['title_after'];
@@ -127,14 +136,14 @@ class gEditorialShortCode extends gEditorialBaseCore
 		$title = sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' );
 
 		if ( $term->count && $args['item_link'] )
-			$item = gEditorialHTML::tag( 'a', [
+			$item = HTML::tag( 'a', [
 				'href'  => get_term_link( $term ),
 				'title' => $args['item_title'] ? sprintf( $args['item_title'], $title ) : FALSE,
 				'class' => '-link -tax-'.$term->taxonomy,
 			], $title );
 
 		else
-			$item = gEditorialHTML::tag( 'span', [
+			$item = HTML::tag( 'span', [
 				'title' => $args['item_title'] ? sprintf( $args['item_title'], $title ) : FALSE,
 				'class' => $args['item_link'] ? '-no-link -empty -tax-'.$term->taxonomy : FALSE,
 			], $title );
@@ -144,11 +153,11 @@ class gEditorialShortCode extends gEditorialBaseCore
 
 		} else if ( $args['item_after'] ) {
 
-			if ( gEditorialCoreText::has( $args['item_after'], '%' ) )
+			if ( Text::has( $args['item_after'], '%' ) )
 				$args['item_after'] = sprintf( $args['item_after'],
 					sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' ),
 					get_term_link( $term, $term->taxonomy ),
-					gEditorialHelper::prepDescription( $term->description )
+					Helper::prepDescription( $term->description )
 				);
 
 			$item .= $args['item_after'];
@@ -157,7 +166,7 @@ class gEditorialShortCode extends gEditorialBaseCore
 		if ( ! $args['item_tag'] )
 			return $before.$title.$after;
 
-		return gEditorialHTML::tag( $args['item_tag'], [
+		return HTML::tag( $args['item_tag'], [
 			'id'    => sprintf( $args['item_anchor'], $term->term_id, $term->slug ),
 			'class' => $args['item_class'],
 		], $before.$title.$after );
@@ -177,7 +186,7 @@ class gEditorialShortCode extends gEditorialBaseCore
 		], $atts );
 
 		if ( is_null( $args['title'] ) )
-			$args['title'] = $post ? gEditorialHelper::getPostTitle( $post, FALSE ) : FALSE;
+			$args['title'] = $post ? Helper::getPostTitle( $post, FALSE ) : FALSE;
 
 		if ( $args['title_title_cb'] && is_callable( $args['title_title_cb'] ) )
 			$attr = call_user_func_array( $args['title_title_cb'], [ $post, $atts ] );
@@ -190,20 +199,20 @@ class gEditorialShortCode extends gEditorialBaseCore
 
 		if ( $args['title'] ) {
 			if ( is_null( $args['title_link'] ) && $post )
-				$args['title'] = gEditorialHTML::tag( 'a', [
+				$args['title'] = HTML::tag( 'a', [
 					'href'  => get_permalink( $post ),
 					'title' => $attr,
 				], $args['title'] );
 
 			else if ( $args['title_link'] )
-				$args['title'] = gEditorialHTML::tag( 'a', [
+				$args['title'] = HTML::tag( 'a', [
 					'href'  => $args['title_link'],
 					'title' => $attr,
 				], $args['title'] );
 		}
 
 		if ( $args['title'] && $args['title_tag'] )
-			$args['title'] = gEditorialHTML::tag( $args['title_tag'], [
+			$args['title'] = HTML::tag( $args['title_tag'], [
 				'id'    => $post ? sprintf( $args['title_anchor'], $post->ID, $post->post_name ) : FALSE,
 				'class' => $args['title_class'],
 			], $args['title'] )."\n";
@@ -231,7 +240,7 @@ class gEditorialShortCode extends gEditorialBaseCore
 			'order_sep'     => ' &ndash; ',
 		], $atts );
 
-		if ( $item = gEditorialHelper::getPostTitle( $post, FALSE ) ) {
+		if ( $item = Helper::getPostTitle( $post, FALSE ) ) {
 
 			if ( $args['item_title_cb'] && is_callable( $args['item_title_cb'] ) )
 				$attr = call_user_func_array( $args['item_title_cb'], [ $post, $args, $item ] );
@@ -243,22 +252,22 @@ class gEditorialShortCode extends gEditorialBaseCore
 				$attr = FALSE;
 
 			if ( 'publish' == $post->post_status && $args['item_link'] )
-				$item = gEditorialHTML::tag( 'a', [
+				$item = HTML::tag( 'a', [
 					'href'  => get_permalink( $post ),
 					'title' => $attr,
 					'class' => '-link -posttype-'.$post->post_type,
 				], $item );
 
 			else
-				$item = gEditorialHTML::tag( 'span', [
+				$item = HTML::tag( 'span', [
 					'title' => $attr,
 					'class' => $args['item_link'] ? '-no-link -future -posttype-'.$post->post_type : FALSE,
 				], $item );
 
 
 			if ( $args['order_before'] ) {
-				$order = $args['order_zeroise'] ? gEditorialNumber::zeroise( $post->menu_order, $args['order_zeroise'] ) : $post->menu_order;
-				$item = gEditorialNumber::format( $order ).( $args['order_sep'] ? $args['order_sep'] : '' ).$item;
+				$order = $args['order_zeroise'] ? Number::zeroise( $post->menu_order, $args['order_zeroise'] ) : $post->menu_order;
+				$item = Number::format( $order ).( $args['order_sep'] ? $args['order_sep'] : '' ).$item;
 			}
 		}
 
@@ -267,11 +276,11 @@ class gEditorialShortCode extends gEditorialBaseCore
 
 		} else if ( $args['item_after'] ) {
 
-			if ( gEditorialCoreText::has( $args['item_after'], '%' ) )
+			if ( Text::has( $args['item_after'], '%' ) )
 				$args['item_after'] = sprintf( $args['item_after'],
 					apply_filters( 'the_title', $post->post_title, $post->ID ),
 					get_permalink( $post ),
-					gEditorialHelper::prepDescription( $post->post_excerpt )
+					Helper::prepDescription( $post->post_excerpt )
 					// FIXME: add post_content
 				);
 
@@ -281,7 +290,7 @@ class gEditorialShortCode extends gEditorialBaseCore
 		if ( ! $args['item_tag'] )
 			return $before.$item.$after;
 
-		return gEditorialHTML::tag( $args['item_tag'], [
+		return HTML::tag( $args['item_tag'], [
 			'id'    => sprintf( $args['item_anchor'], $post->ID, $post->post_name ),
 			'class' => $args['item_class'],
 		], $before.$item.$after );
@@ -450,7 +459,7 @@ class gEditorialShortCode extends gEditorialBaseCore
 				$html .= self::postItem( $args, $post );
 		}
 
-		$html = gEditorialHTML::tag( $args['list_tag'], [
+		$html = HTML::tag( $args['list_tag'], [
 			'class' => $args['list_class'],
 		], $html );
 
@@ -604,7 +613,7 @@ class gEditorialShortCode extends gEditorialBaseCore
 				$html .= self::postItem( $args, $post );
 		}
 
-		$html = gEditorialHTML::tag( $args['list_tag'], [
+		$html = HTML::tag( $args['list_tag'], [
 			'class' => $args['list_class'],
 		], $html );
 

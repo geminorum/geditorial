@@ -1,6 +1,8 @@
-<?php defined( 'ABSPATH' ) or die( 'Restricted access' );
+<?php namespace geminorum\gEditorial\Core;
 
-class gEditorialL10n extends gEditorialBaseCore
+defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
+
+class L10n extends Base
 {
 
 	public static function getNooped( $singular, $plural )
@@ -10,6 +12,6 @@ class gEditorialL10n extends gEditorialBaseCore
 
 	public static function sprintfNooped( $nooped, $count )
 	{
-		return sprintf( translate_nooped_plural( $nooped, $count ), gEditorialNumber::format( $count ) );
+		return sprintf( translate_nooped_plural( $nooped, $count ), Number::format( $count ) );
 	}
 }

@@ -1,6 +1,12 @@
-<?php defined( 'ABSPATH' ) or die( 'Restricted access' );
+<?php namespace geminorum\gEditorial\Templates;
 
-class gEditorialSeriesTemplates extends gEditorialTemplateCore
+defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
+
+use geminorum\gEditorial;
+use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Core\HTML;
+
+class Series extends gEditorial\Template
 {
 
 	const MODULE = 'series';
@@ -163,7 +169,7 @@ class gEditorialSeriesTemplates extends gEditorialTemplateCore
 					}
 				}
 
-				$args['title'] = gEditorialHTML::tag( $args['title_tag'], array(
+				$args['title'] = HTML::tag( $args['title_tag'], array(
 					'class' => '-title',
 				), $args['title'] );
 			}
@@ -176,7 +182,7 @@ class gEditorialSeriesTemplates extends gEditorialTemplateCore
 						$args['title_after'] = sprintf( $args['title_after'],
 							sanitize_term_field( 'name', $the_term->name, $the_term->term_id, $the_term->taxonomy, 'display' ),
 							get_term_link( $the_term, $the_term->taxonomy ),
-							gEditorialHelper::prepDescription( $the_term->description )
+							Helper::prepDescription( $the_term->description )
 						);
 					}
 				}
@@ -279,7 +285,7 @@ class gEditorialSeriesTemplates extends gEditorialTemplateCore
 				// $the_series = get_term_by( 'id', $args['id'], $series_tax );
 				// $output .= '<br />'.$the_series->name;
 
-				$output = $args['title'].$args['title_after'].gEditorialHTML::tag( $args['list'], array(
+				$output = $args['title'].$args['title_after'].HTML::tag( $args['list'], array(
 					'class' => '-list',
 				), $output );
 
@@ -296,7 +302,7 @@ class gEditorialSeriesTemplates extends gEditorialTemplateCore
 					</script>';
 				}
 
-				$output = $args['before'].gEditorialHTML::tag( 'div', array(
+				$output = $args['before'].HTML::tag( 'div', array(
 					'class' => array(
 						'geditorial-wrap',
 						'series',

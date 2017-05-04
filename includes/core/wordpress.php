@@ -1,6 +1,8 @@
-<?php defined( 'ABSPATH' ) or die( 'Restricted access' );
+<?php namespace geminorum\gEditorial\Core;
 
-class gEditorialWordPress extends gEditorialBaseCore
+defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
+
+class WordPress extends Base
 {
 
 	public static function mustRegisterUI( $check_admin = TRUE )
@@ -27,7 +29,7 @@ class gEditorialWordPress extends gEditorialBaseCore
 			'fields'  => ( $all_fields ? 'all_with_meta' : 'all' ),
 		), $extra ) );
 
-		return gEditorialArraay::reKey( $users, 'ID' );
+		return Arraay::reKey( $users, 'ID' );
 	}
 
 	public static function getAttachments( $post_id, $mime_type = 'image' )
@@ -126,12 +128,12 @@ class gEditorialWordPress extends gEditorialBaseCore
 		if ( ! $post_thumbnail_img = wp_get_attachment_image_src( $post_thumbnail_id, $size ) )
 			return '';
 
-		$image = gEditorialHTML::tag( 'img', array( 'src' => $post_thumbnail_img[0] ) );
+		$image = HTML::tag( 'img', array( 'src' => $post_thumbnail_img[0] ) );
 
 		if ( ! $link )
 			return $image;
 
-		return gEditorialHTML::tag( 'a', array(
+		return HTML::tag( 'a', array(
 			'href'   => wp_get_attachment_url( $post_thumbnail_id ),
 			'title'  => get_the_title( $post_thumbnail_id ),
 			'class'  => 'thickbox',
@@ -280,7 +282,7 @@ class gEditorialWordPress extends gEditorialBaseCore
 	public static function getAuthorEditHTML( $post_type, $author, $extra = array() )
 	{
 		if ( $author_data = get_user_by( 'id', $author ) )
-			return gEditorialHTML::tag( 'a', array(
+			return HTML::tag( 'a', array(
 				'href' => add_query_arg( array_merge( array(
 					'post_type' => $post_type,
 					'author'    => $author,

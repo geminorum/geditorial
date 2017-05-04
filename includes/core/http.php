@@ -1,6 +1,8 @@
-<?php defined( 'ABSPATH' ) or die( 'Restricted access' );
+<?php namespace geminorum\gEditorial\Core;
 
-class gEditorialHTTP extends gEditorialBaseCore
+defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
+
+class HTTP extends Base
 {
 
 	// if this is a POST request

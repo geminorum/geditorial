@@ -1,6 +1,12 @@
-<?php defined( 'ABSPATH' ) or die( 'Restricted access' );
+<?php namespace geminorum\gEditorial\Widgets\Magazine;
 
-class gEditorialMagazineWidget_IssueCover extends gEditorialWidgetCore
+defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
+
+use geminorum\gEditorial;
+use geminorum\gEditorial\Core\WordPress;
+use geminorum\gEditorial\Templates\Magazine as ModuleTemplate;
+
+class IssueCover extends gEditorial\Widget
 {
 
 	const MODULE = 'magazine';
@@ -45,7 +51,7 @@ class gEditorialMagazineWidget_IssueCover extends gEditorialWidgetCore
 		];
 
 		if ( ! empty( $instance['latest_issue'] ) )
-			$atts['id'] = (int) gEditorialWordPress::getLastPostOrder( $atts['type'], '', 'ID', 'publish' );
+			$atts['id'] = (int) WordPress::getLastPostOrder( $atts['type'], '', 'ID', 'publish' );
 
 		else if ( ! empty( $instance['issue_id'] ) )
 			$atts['id'] = (int) $instance['issue_id'];
@@ -56,7 +62,7 @@ class gEditorialMagazineWidget_IssueCover extends gEditorialWidgetCore
 		else if ( is_singular() )
 			$atts['id'] = 'assoc';
 
-		if ( ! $html = gEditorialMagazineTemplates::cover( $atts ) )
+		if ( ! $html = ModuleTemplate::cover( $atts ) )
 			return FALSE;
 
 		$this->before_widget( $args, $instance );

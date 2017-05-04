@@ -1,6 +1,20 @@
-<?php defined( 'ABSPATH' ) or die( 'Restricted access' );
+<?php namespace geminorum\gEditorial\Modules;
 
-class gEditorialMagazine extends gEditorialModuleCore
+defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
+
+use geminorum\gEditorial;
+use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\MetaBox;
+use geminorum\gEditorial\Settings;
+use geminorum\gEditorial\ShortCode;
+use geminorum\gEditorial\Core\HTML;
+use geminorum\gEditorial\Core\Number;
+use geminorum\gEditorial\Core\WordPress;
+use geminorum\gEditorial\WordPress\PostType;
+use geminorum\gEditorial\WordPress\Taxonomy;
+use geminorum\gEditorial\Templates\Magazine as ModuleTemplate;
+
+class Magazine extends gEditorial\Module
 {
 
 	public $meta_key     = '_ge_magazine';
@@ -356,7 +370,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 	{
 		$this->require_code( 'widgets' );
 
-		register_widget( 'gEditorialMagazineWidget_IssueCover' );
+		register_widget( '\\geminorum\\gEditorial\\Widgets\\Magazine\\IssueCover' );
 	}
 
 	public function meta_init()
@@ -391,17 +405,17 @@ class gEditorialMagazine extends gEditorialModuleCore
 			$term = get_queried_object();
 
 			if ( $post_id = $this->get_linked_post_id( $term, 'issue_cpt', 'issue_tax' ) )
-				gEditorialWordPress::redirect( get_permalink( $post_id ), 301 );
+				WordPress::redirect( get_permalink( $post_id ), 301 );
 
 		} else if ( is_tax( $this->constant( 'span_tax' ) ) ) {
 
 			if ( $redirect = $this->get_setting( 'redirect_spans', FALSE ) )
-				gEditorialWordPress::redirect( $redirect, 301 );
+				WordPress::redirect( $redirect, 301 );
 
 		} else if ( is_post_type_archive( $this->constant( 'issue_cpt' ) ) ) {
 
 			if ( $redirect = $this->get_setting( 'redirect_archives', FALSE ) )
-				gEditorialWordPress::redirect( $redirect, 301 );
+				WordPress::redirect( $redirect, 301 );
 		}
 	}
 
@@ -490,7 +504,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 	public function wp_insert_post_data( $data, $postarr )
 	{
 		if ( $this->constant( 'issue_cpt' ) == $postarr['post_type'] && ! $data['menu_order'] )
-			$data['menu_order'] = gEditorialWordPress::getLastPostOrder( $this->constant( 'issue_cpt' ),
+			$data['menu_order'] = WordPress::getLastPostOrder( $this->constant( 'issue_cpt' ),
 				( isset( $postarr['ID'] ) ? $postarr['ID'] : '' ) ) + 1;
 
 		return $data;
@@ -556,19 +570,19 @@ class gEditorialMagazine extends gEditorialModuleCore
 
 	public function meta_box_cb_span_tax( $post, $box )
 	{
-		gEditorialMetaBox::checklistTerms( $post, $box );
+		MetaBox::checklistTerms( $post, $box );
 	}
 
 	public function meta_box_cb_section_tax( $post, $box )
 	{
-		gEditorialMetaBox::checklistTerms( $post, $box );
+		MetaBox::checklistTerms( $post, $box );
 	}
 
 	public function do_meta_box_supported( $post, $box )
 	{
 		echo '<div class="geditorial-admin-wrap-metabox -magazine">';
 
-		$terms = gEditorialWPTaxonomy::getTerms( $this->constant( 'issue_tax' ), $post->ID, TRUE );
+		$terms = Taxonomy::getTerms( $this->constant( 'issue_tax' ), $post->ID, TRUE );
 
 		do_action( 'geditorial_magazine_supported_meta_box', $post, $box, $terms );
 
@@ -583,12 +597,12 @@ class gEditorialMagazine extends gEditorialModuleCore
 		$dropdowns = $excludes = array();
 
 		foreach ( $terms as $term ) {
-			$dropdowns[$term->slug] = gEditorialMetaBox::dropdownAssocPosts( $post_type, $term->slug, $this->classs() );
+			$dropdowns[$term->slug] = MetaBox::dropdownAssocPosts( $post_type, $term->slug, $this->classs() );
 			$excludes[] = $term->slug;
 		}
 
 		if ( ! count( $terms ) || $this->get_setting( 'multiple_instances', FALSE ) )
-			$dropdowns[0] = gEditorialMetaBox::dropdownAssocPosts( $post_type, '', $this->classs(), $excludes );
+			$dropdowns[0] = MetaBox::dropdownAssocPosts( $post_type, '', $this->classs(), $excludes );
 
 		$empty = TRUE;
 
@@ -603,7 +617,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 		}
 
 		if ( $empty )
-			return gEditorialMetaBox::fieldEmptyPostType( $post_type );
+			return MetaBox::fieldEmptyPostType( $post_type );
 	}
 
 	public function do_meta_box_main( $post, $box )
@@ -630,7 +644,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 
 		// TODO: add collapsible button
 		if ( $term = $this->get_linked_term( $post->ID, 'issue_cpt', 'issue_tax' ) )
-			echo gEditorialHelper::getTermPosts( $this->constant( 'issue_tax' ), $term );
+			echo Helper::getTermPosts( $this->constant( 'issue_tax' ), $term );
 
 		echo '</div>';
 	}
@@ -638,7 +652,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 	public function get_assoc_post( $post = NULL, $single = FALSE, $published = TRUE )
 	{
 		$posts = [];
-		$terms = gEditorialWPTaxonomy::getTerms( $this->constant( 'issue_tax' ), $post, TRUE );
+		$terms = Taxonomy::getTerms( $this->constant( 'issue_tax' ), $post, TRUE );
 
 		foreach ( $terms as $term ) {
 
@@ -728,20 +742,20 @@ class gEditorialMagazine extends gEditorialModuleCore
 			);
 
 			if ( empty( $this->all_post_types ) )
-				$this->all_post_types = gEditorialWPPostType::get( 2 );
+				$this->all_post_types = PostType::get( 2 );
 
 			echo '<span class="-counted">'.$this->nooped_count( 'connected', $count ).'</span>';
 
 			$list = array();
 
 			foreach ( $post_types as $post_type )
-				$list[] = gEditorialHTML::tag( 'a', array(
-					'href'   => gEditorialWordPress::getPostTypeEditLink( $post_type, 0, $args ),
+				$list[] = HTML::tag( 'a', array(
+					'href'   => WordPress::getPostTypeEditLink( $post_type, 0, $args ),
 					'title'  => _x( 'View the connected list', 'Modules: Magazine', GEDITORIAL_TEXTDOMAIN ),
 					'target' => '_blank',
 				), $this->all_post_types[$post_type] );
 
-			echo gEditorialHelper::getJoined( $list, ' <span class="-posttypes">(', ')</span>' );
+			echo Helper::getJoined( $list, ' <span class="-posttypes">(', ')</span>' );
 
 		echo '</li>';
 	}
@@ -758,7 +772,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 
 	public function issue_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
-		return gEditorialShortCode::getAssocPosts(
+		return ShortCode::getAssocPosts(
 			$this->constant( 'issue_cpt' ),
 			$this->constant( 'issue_tax' ),
 			array_merge( [
@@ -773,7 +787,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 
 	public function span_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
-		return gEditorialShortCode::getTermPosts(
+		return ShortCode::getTermPosts(
 			$this->constant( 'issue_cpt' ),
 			$this->constant( 'span_tax' ),
 			$atts,
@@ -786,42 +800,42 @@ class gEditorialMagazine extends gEditorialModuleCore
 	{
 		$this->settings_form_before( $uri, $sub, 'bulk', 'tools', FALSE, FALSE );
 
-			gEditorialHTML::h3( _x( 'Magazine Tools', 'Modules: Magazine', GEDITORIAL_TEXTDOMAIN ) );
+			HTML::h3( _x( 'Magazine Tools', 'Modules: Magazine', GEDITORIAL_TEXTDOMAIN ) );
 
 			echo '<table class="form-table">';
 
 			echo '<tr><th scope="row">'._x( 'From Terms', 'Modules: Magazine', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
 
-			gEditorialSettingsCore::submitButton( 'issue_tax_check',
+			Settings::submitButton( 'issue_tax_check',
 				_x( 'Check Terms', 'Modules: Magazine: Setting Button', GEDITORIAL_TEXTDOMAIN ), TRUE );
 
-			gEditorialSettingsCore::submitButton( 'issue_post_create',
+			Settings::submitButton( 'issue_post_create',
 				_x( 'Create Issue Posts', 'Modules: Magazine: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
 
-			gEditorialSettingsCore::submitButton( 'issue_post_connect',
+			Settings::submitButton( 'issue_post_connect',
 				_x( 'Re-Connect Posts', 'Modules: Magazine: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
 
-			gEditorialSettingsCore::submitButton( 'issue_store_order',
+			Settings::submitButton( 'issue_store_order',
 				_x( 'Store Orders', 'Modules: Magazine: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
 
-			gEditorialSettingsCore::submitButton( 'issue_tax_delete',
+			Settings::submitButton( 'issue_tax_delete',
 				_x( 'Delete Terms', 'Modules: Magazine: Setting Button', GEDITORIAL_TEXTDOMAIN ), 'delete', TRUE );
 
-			gEditorialHTML::desc( _x( 'Check for issue terms and create corresponding issue posts.', 'Modules: Magazine', GEDITORIAL_TEXTDOMAIN ) );
+			HTML::desc( _x( 'Check for issue terms and create corresponding issue posts.', 'Modules: Magazine', GEDITORIAL_TEXTDOMAIN ) );
 
 			if ( ! empty( $_POST ) && isset( $_POST['issue_tax_check'] ) ) {
 				echo '<br />';
 
-				gEditorialHTML::tableList( [
+				HTML::tableList( [
 					'_cb'     => 'term_id',
-					'term_id' => gEditorialHelper::tableColumnTermID(),
-					'name'    => gEditorialHelper::tableColumnTermName(),
+					'term_id' => Helper::tableColumnTermID(),
+					'name'    => Helper::tableColumnTermName(),
 					'linked'   => [
 						'title' => _x( 'Linked Issue Post', 'Modules: Magazine: Table Column', GEDITORIAL_TEXTDOMAIN ),
 						'callback' => function( $value, $row, $column, $index ){
 
 							if ( $post_id = $this->get_linked_post_id( $row, 'issue_cpt', 'issue_tax', FALSE ) )
-								return gEditorialHelper::getPostTitleRow( $post_id ).' &ndash; <small>'.$post_id.'</small>';
+								return Helper::getPostTitleRow( $post_id ).' &ndash; <small>'.$post_id.'</small>';
 
 							return '&mdash;';
 						},
@@ -830,8 +844,8 @@ class gEditorialMagazine extends gEditorialModuleCore
 						'title' => _x( 'Same Slug Issue Post', 'Modules: Magazine: Table Column', GEDITORIAL_TEXTDOMAIN ),
 						'callback' => function( $value, $row, $column, $index ){
 
-							if ( $post_id = gEditorialWPPostType::getIDbySlug( $row->slug, $this->constant( 'issue_cpt' ) ) )
-								return gEditorialHelper::getPostTitleRow( $post_id ).' &ndash; <small>'.$post_id.'</small>';
+							if ( $post_id = PostType::getIDbySlug( $row->slug, $this->constant( 'issue_cpt' ) ) )
+								return Helper::getPostTitleRow( $post_id ).' &ndash; <small>'.$post_id.'</small>';
 
 							return '&mdash;';
 						},
@@ -839,14 +853,14 @@ class gEditorialMagazine extends gEditorialModuleCore
 					'count' => [
 						'title'    => _x( 'Count', 'Modules: Magazine: Table Column', GEDITORIAL_TEXTDOMAIN ),
 						'callback' => function( $value, $row, $column, $index ){
-							if ( $post_id = gEditorialWPPostType::getIDbySlug( $row->slug, $this->constant( 'issue_cpt' ) ) )
-								return gEditorialNumber::format( $this->get_linked_posts( $post_id, 'issue_cpt', 'issue_tax', TRUE ) );
-							return gEditorialNumber::format( $row->count );
+							if ( $post_id = PostType::getIDbySlug( $row->slug, $this->constant( 'issue_cpt' ) ) )
+								return Number::format( $this->get_linked_posts( $post_id, 'issue_cpt', 'issue_tax', TRUE ) );
+							return Number::format( $row->count );
 						},
 					],
-					'description' => gEditorialHelper::tableColumnTermDesc(),
-				], gEditorialWPTaxonomy::getTerms( $this->constant( 'issue_tax' ), FALSE, TRUE ), [
-					'empty' => gEditorialHTML::warning( _x( 'No Terms Found!', 'Modules: Magazine: Table Empty', GEDITORIAL_TEXTDOMAIN ) ),
+					'description' => Helper::tableColumnTermDesc(),
+				], Taxonomy::getTerms( $this->constant( 'issue_tax' ), FALSE, TRUE ), [
+					'empty' => HTML::warning( _x( 'No Terms Found!', 'Modules: Magazine: Table Empty', GEDITORIAL_TEXTDOMAIN ) ),
 				] );
 			}
 
@@ -867,7 +881,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 				if ( isset( $_POST['_cb'] )
 					&& isset( $_POST['issue_post_create'] ) ) {
 
-					$terms = gEditorialWPTaxonomy::getTerms( $this->constant( 'issue_tax' ), FALSE, TRUE );
+					$terms = Taxonomy::getTerms( $this->constant( 'issue_tax' ), FALSE, TRUE );
 					$posts = array();
 
 					foreach ( $_POST['_cb'] as $term_id ) {
@@ -875,20 +889,20 @@ class gEditorialMagazine extends gEditorialModuleCore
 						if ( ! isset( $terms[$term_id] ) )
 							continue;
 
-						$post_id = gEditorialWPPostType::getIDbySlug( $terms[$term_id]->slug, $this->constant( 'issue_cpt' ) ) ;
+						$post_id = PostType::getIDbySlug( $terms[$term_id]->slug, $this->constant( 'issue_cpt' ) ) ;
 
 						if ( FALSE !== $post_id )
 							continue;
 
-						$posts[] = gEditorialWordPress::newPostFromTerm(
+						$posts[] = WordPress::newPostFromTerm(
 							$terms[$term_id],
 							$this->constant( 'issue_tax' ),
 							$this->constant( 'issue_cpt' ),
-							gEditorialHelper::getEditorialUserID()
+							Helper::getEditorialUserID()
 						);
 					}
 
-					gEditorialWordPress::redirectReferer( array(
+					WordPress::redirectReferer( array(
 						'message' => 'created',
 						'count'   => count( $posts ),
 					) );
@@ -916,7 +930,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 						}
 					}
 
-					gEditorialWordPress::redirectReferer( array(
+					WordPress::redirectReferer( array(
 						'message' => 'ordered',
 						'count'   => $count,
 					) );
@@ -924,7 +938,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 				} else if ( isset( $_POST['_cb'] )
 					&& isset( $_POST['issue_post_connect'] ) ) {
 
-					$terms = gEditorialWPTaxonomy::getTerms( $this->constant( 'issue_tax' ), FALSE, TRUE );
+					$terms = Taxonomy::getTerms( $this->constant( 'issue_tax' ), FALSE, TRUE );
 					$count = 0;
 
 					foreach ( $_POST['_cb'] as $term_id ) {
@@ -932,7 +946,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 						if ( ! isset( $terms[$term_id] ) )
 							continue;
 
-						$post_id = gEditorialWPPostType::getIDbySlug( $terms[$term_id]->slug, $this->constant( 'issue_cpt' ) ) ;
+						$post_id = PostType::getIDbySlug( $terms[$term_id]->slug, $this->constant( 'issue_cpt' ) ) ;
 
 						if ( FALSE === $post_id )
 							continue;
@@ -941,7 +955,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 							$count++;
 					}
 
-					gEditorialWordPress::redirectReferer( array(
+					WordPress::redirectReferer( array(
 						'message' => 'updated',
 						'count'   => $count,
 					) );
@@ -962,7 +976,7 @@ class gEditorialMagazine extends gEditorialModuleCore
 						}
 					}
 
-					gEditorialWordPress::redirectReferer( array(
+					WordPress::redirectReferer( array(
 						'message' => 'deleted',
 						'count'   => $count,
 					) );

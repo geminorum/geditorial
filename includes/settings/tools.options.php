@@ -1,5 +1,10 @@
-<?php defined( 'ABSPATH' ) or die( 'Restricted access' );
+<?php namespace geminorum\gEditorial\Settings;
 
-gEditorialWPUser::superAdminOnly();
+defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
 
-gEditorialHTML::tableSide( get_option( 'geditorial_options' ) );
+use geminorum\gNetwork\Core\HTML;
+use geminorum\gNetwork\WordPress\User;
+
+User::superAdminOnly();
+
+HTML::tableSide( get_option( 'geditorial_options' ) );

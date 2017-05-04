@@ -1,6 +1,10 @@
-<?php defined( 'ABSPATH' ) or die( 'Restricted access' );
+<?php namespace geminorum\gEditorial;
 
-class gEditorial
+defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
+
+use geminorum\gEditorial\Core\HTML;
+
+class Plugin
 {
 
 	private $group = 'geditorial_';
@@ -15,7 +19,7 @@ class gEditorial
 		static $instance = NULL;
 
 		if ( NULL === $instance ) {
-			$instance = new gEditorial;
+			$instance = new Plugin;
 			$instance->setup();
 		}
 
@@ -54,33 +58,41 @@ class gEditorial
 		add_filter( 'mce_external_languages', array( $this, 'mce_external_languages' ) );
 	}
 
-	public function admin_init()
+	private function files( $stack )
 	{
-		add_action( 'admin_print_styles', array( $this, 'admin_print_styles' ) );
-		add_action( 'admin_print_footer_scripts', array( $this, 'footer_asset_config' ), 9 );
+		foreach ( (array) $stack as $path )
+			if ( file_exists( GEDITORIAL_DIR.'includes/'.$path.'.php' ) )
+				require_once( GEDITORIAL_DIR.'includes/'.$path.'.php' );
 	}
 
-	public function plugins_loaded()
+	private function require_core()
 	{
-		// FIXME: temporary
-		require_once( GEDITORIAL_DIR.'includes/core/base.php' );
-		require_once( GEDITORIAL_DIR.'includes/core/html.php' );
-		require_once( GEDITORIAL_DIR.'includes/core/http.php' );
-		require_once( GEDITORIAL_DIR.'includes/core/url.php' );
-		require_once( GEDITORIAL_DIR.'includes/core/l10n.php' );
-		require_once( GEDITORIAL_DIR.'includes/core/date.php' );
-		require_once( GEDITORIAL_DIR.'includes/core/text.php' );
-		require_once( GEDITORIAL_DIR.'includes/core/number.php' );
-		require_once( GEDITORIAL_DIR.'includes/core/arraay.php' );
-		require_once( GEDITORIAL_DIR.'includes/core/wordpress.php' );
-		require_once( GEDITORIAL_DIR.'includes/wordpress/module.php' );
-		require_once( GEDITORIAL_DIR.'includes/wordpress/posttype.php' );
-		require_once( GEDITORIAL_DIR.'includes/wordpress/taxonomy.php' );
-		require_once( GEDITORIAL_DIR.'includes/wordpress/database.php' );
-		require_once( GEDITORIAL_DIR.'includes/wordpress/media.php' );
-		require_once( GEDITORIAL_DIR.'includes/wordpress/user.php' );
+		$this->files( [
+			'core/base',
 
-		$includes = array(
+			'core/arraay',
+			'core/date',
+			'core/html',
+			'core/icon',
+			'core/http',
+			'core/l10n',
+			'core/number',
+			'core/text',
+			'core/url',
+			'core/wordpress',
+
+			'wordpress/database',
+			'wordpress/media',
+			'wordpress/module',
+			'wordpress/posttype',
+			'wordpress/taxonomy',
+			'wordpress/user',
+		] );
+	}
+
+	private function require_plugin()
+	{
+		$this->files( [
 			'ajax',
 			'helper',
 			'metabox',
@@ -89,10 +101,19 @@ class gEditorial
 			'shortcode',
 			'widget',
 			'module',
-		);
+		] );
+	}
 
-		foreach ( $includes as $include )
-			require_once( GEDITORIAL_DIR.'includes/class-'.$include.'.php' );
+	public function admin_init()
+	{
+		add_action( 'admin_print_styles', array( $this, 'admin_print_styles' ) );
+		add_action( 'admin_print_footer_scripts', array( $this, 'footer_asset_config' ), 9 );
+	}
+
+	public function plugins_loaded()
+	{
+		$this->require_core();
+		$this->require_plugin();
 
 		foreach ( scandir( GEDITORIAL_DIR.'modules/' ) as $module ) {
 
@@ -102,7 +123,7 @@ class gEditorial
 			if ( file_exists( GEDITORIAL_DIR.'modules/'.$module.'/'.$module.'.php' ) ) {
 				include_once( GEDITORIAL_DIR.'modules/'.$module.'/'.$module.'.php' );
 
-				if ( $class = gEditorialHelper::moduleClass( $module ) )
+				if ( $class = Helper::moduleClass( $module ) )
 					$this->register_module( call_user_func( array( $class, 'module' ) ) );
 			}
 		}
@@ -114,7 +135,7 @@ class gEditorial
 			if ( ! isset( $this->options->{$mod_name} ) )
 				continue;
 
-			if ( $module->autoload || gEditorialHelper::moduleEnabled( $this->options->{$mod_name} ) ) {
+			if ( $module->autoload || Helper::moduleEnabled( $this->options->{$mod_name} ) ) {
 
 				$class = $module->class;
 				$this->{$mod_name} = new $class( $module, $this->options->{$mod_name} );
@@ -128,7 +149,7 @@ class gEditorial
 			return FALSE;
 
 		$defaults = array(
-			'class'     => gEditorialHelper::moduleClass( $args['name'], FALSE ),
+			'class'     => Helper::moduleClass( $args['name'], FALSE ),
 			'icon'      => 'smiley', // dashicon class
 			'group'     => $this->group.$args['name'],
 			'settings'  => 'geditorial-settings-'.$args['name'],
@@ -153,7 +174,7 @@ class gEditorial
 				continue;
 
 			if ( ! isset( $options[$mod_name] ) || FALSE === $options[$mod_name] )
-				$this->options->{$mod_name} = new stdClass;
+				$this->options->{$mod_name} = new \stdClass;
 			else
 				$this->options->{$mod_name} = $options[$mod_name];
 		}
@@ -241,7 +262,7 @@ class gEditorial
 		if ( isset( $options[$name] ) )
 			$module_options = $options[$name];
 		else
-			$module_options = new stdClass();
+			$module_options = new \stdClass();
 
 		$module_options->{$key} = $value;
 		$options[$name] = $module_options;
@@ -315,25 +336,24 @@ class gEditorial
 			'edit-comments',
 			'users',
 		) ) )
-			gEditorialHelper::linkStyleSheetAdmin( $screen->base );
+			Helper::linkStyleSheetAdmin( $screen->base );
 
-		else if ( gEditorialSettingsCore::isReports( $screen ) )
-			gEditorialHelper::linkStyleSheetAdmin( 'reports' );
+		else if ( Settings::isReports( $screen ) )
+			Helper::linkStyleSheetAdmin( 'reports' );
 
-		else if ( gEditorialSettingsCore::isTools( $screen ) )
-			gEditorialHelper::linkStyleSheetAdmin( 'tools' );
+		else if ( Settings::isTools( $screen ) )
+			Helper::linkStyleSheetAdmin( 'tools' );
 
-		else if ( gEditorialSettingsCore::isSettings( $screen ) )
-			gEditorialHelper::linkStyleSheetAdmin( 'settings' );
+		else if ( Settings::isSettings( $screen ) )
+			Helper::linkStyleSheetAdmin( 'settings' );
 
-		else if ( gEditorialSettingsCore::isDashboard( $screen ) )
-			gEditorialHelper::linkStyleSheetAdmin( 'dashboard' );
+		else if ( Settings::isDashboard( $screen ) )
+			Helper::linkStyleSheetAdmin( 'dashboard' );
 	}
 
 	public function mce_external_languages( $languages )
 	{
-		$languages['geditorial'] = GEDITORIAL_DIR.'includes/mce-languages.php';
-		return $languages;
+		return array_merge( $languages, [ 'geditorial' => GEDITORIAL_DIR.'includes/misc/editor-languages.php' ] );
 	}
 
 	public function enqueue_styles()
@@ -372,7 +392,7 @@ class gEditorial
 		if ( ! $this->asset_config )
 			return;
 
-		gEditorialAjax::printJSConfig( $this->asset_args );
+		Ajax::printJSConfig( $this->asset_args );
 	}
 
 	public function register_editor_button( $button, $filepath )
@@ -389,11 +409,11 @@ class gEditorial
 			return;
 
 		$parent = 'geditorial';
-		$link   = current_user_can( 'manage_options' ) ? gEditorialSettingsCore::settingsURL() : gEditorialSettingsCore::reportsURL();
+		$link   = current_user_can( 'manage_options' ) ? Settings::settingsURL() : Settings::reportsURL();
 
 		$wp_admin_bar->add_node( array(
 			'id'     => $parent,
-			'title'  => gEditorialHelper::getAdminBarIcon(),
+			'title'  => Helper::getAdminBarIcon(),
 			// 'parent' => 'top-secondary',
 			'href'   => $link,
 			'meta'   => array( 'title' => _x( 'Editorial', 'Plugin: Main: Adminbar Node', GEDITORIAL_TEXTDOMAIN ) ),
@@ -405,6 +425,6 @@ class gEditorial
 	public static function na( $wrap = 'code' )
 	{
 		$na = __( 'N/A', GEDITORIAL_TEXTDOMAIN );
-		return $wrap ? gEditorialHTML::tag( $wrap, array( 'title' => __( 'Not Available', GEDITORIAL_TEXTDOMAIN ) ), $na ) : $na;
+		return $wrap ? HTML::tag( $wrap, array( 'title' => __( 'Not Available', GEDITORIAL_TEXTDOMAIN ) ), $na ) : $na;
 	}
 }

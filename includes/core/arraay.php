@@ -1,6 +1,8 @@
-<?php defined( 'ABSPATH' ) or die( 'Restricted access' );
+<?php namespace geminorum\gEditorial\Core;
 
-class gEditorialArraay extends gEditorialBaseCore
+defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
+
+class Arraay extends Base
 {
 
 	// deep array_filter()
@@ -77,7 +79,7 @@ class gEditorialArraay extends gEditorialBaseCore
 		$array = array();
 
 		foreach ( range( $start, $end, $step ) as $number )
-			$array[$number] = $format ? gEditorialNumber::format( $number ) : $number;
+			$array[$number] = $format ? Number::format( $number ) : $number;
 
 		return $array;
 	}

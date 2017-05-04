@@ -1,6 +1,12 @@
-<?php defined( 'ABSPATH' ) or die( 'Restricted access' );
+<?php namespace geminorum\gEditorial\Modules;
 
-class gEditorialHome extends gEditorialModuleCore
+defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
+
+use geminorum\gEditorial;
+use geminorum\gEditorial\Settings;
+use geminorum\gEditorial\Core\HTML;
+
+class Home extends gEditorial\Module
 {
 
 	private $featured = array();
@@ -17,7 +23,7 @@ class gEditorialHome extends gEditorialModuleCore
 
 	protected function settings_help_tabs()
 	{
-		$tabs = gEditorialSettingsCore::settingsHelpContent( $this->module );
+		$tabs = Settings::settingsHelpContent( $this->module );
 
 		$tabs[] = array(
 			'id'       => 'geditorial-home-featured_content',
@@ -39,14 +45,14 @@ add_theme_support( \'featured-content\', array(
 	public function settings_intro_after( $module )
 	{
 		if ( get_theme_support( 'featured-content' ) )
-			gEditorialHTML::info( _x( 'Current theme supports Featured Contents', 'Modules: Home: Setting Section Notice', GEDITORIAL_TEXTDOMAIN ), TRUE );
+			HTML::info( _x( 'Current theme supports Featured Contents', 'Modules: Home: Setting Section Notice', GEDITORIAL_TEXTDOMAIN ), TRUE );
 		else
-			gEditorialHTML::warning( _x( 'Current theme does not support Featured Contents', 'Modules: Home: Setting Section Notice', GEDITORIAL_TEXTDOMAIN ), TRUE );
+			HTML::warning( _x( 'Current theme does not support Featured Contents', 'Modules: Home: Setting Section Notice', GEDITORIAL_TEXTDOMAIN ), TRUE );
 	}
 
 	public function settings_section_featured()
 	{
-		gEditorialSettingsCore::fieldSection(
+		Settings::fieldSection(
 			_x( 'Featured Content', 'Modules: Home: Setting Section Title', GEDITORIAL_TEXTDOMAIN )
 		);
 	}

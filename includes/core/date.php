@@ -1,6 +1,8 @@
-<?php defined( 'ABSPATH' ) or die( 'Restricted access' );
+<?php namespace geminorum\gEditorial\Core;
 
-class gEditorialDate extends gEditorialBaseCore
+defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
+
+class Date extends Base
 {
 
 	// [Carbon - A simple PHP API extension for DateTime.](http://carbon.nesbot.com/)
@@ -45,7 +47,7 @@ class gEditorialDate extends gEditorialBaseCore
 
 	public static function htmlDateTime( $time, $gmt = NULL, $format = 'l, F j, Y', $title = FALSE )
 	{
-		return gEditorialHTML::tag( 'time', array(
+		return HTML::tag( 'time', array(
 			'datetime' => date( 'c', ( $gmt ? $gmt : $time ) ),
 			'title'    => $title,
 			'class'    => 'do-timeago', // @SEE: http://timeago.yarp.com/
@@ -60,12 +62,12 @@ class gEditorialDate extends gEditorialBaseCore
 			'_s_ago' => '%s ago',
 			'in__s'  => 'in %s',
 
-			'noop_minutes' => gEditorialL10n::getNooped( '%s min', '%s mins' ),
-			'noop_hours'   => gEditorialL10n::getNooped( '%s hour', '%s hours' ),
-			'noop_days'    => gEditorialL10n::getNooped( '%s day', '%s days' ),
-			'noop_weeks'   => gEditorialL10n::getNooped( '%s week', '%s weeks' ),
-			'noop_months'  => gEditorialL10n::getNooped( '%s month', '%s months' ),
-			'noop_years'   => gEditorialL10n::getNooped( '%s year', '%s years' ),
+			'noop_minutes' => L10n::getNooped( '%s min', '%s mins' ),
+			'noop_hours'   => L10n::getNooped( '%s hour', '%s hours' ),
+			'noop_days'    => L10n::getNooped( '%s day', '%s days' ),
+			'noop_weeks'   => L10n::getNooped( '%s week', '%s weeks' ),
+			'noop_months'  => L10n::getNooped( '%s month', '%s months' ),
+			'noop_years'   => L10n::getNooped( '%s year', '%s years' ),
 		), $atts );
 
 		if ( ! ctype_digit( $timestamp ) )
@@ -88,7 +90,7 @@ class gEditorialDate extends gEditorialBaseCore
 				if ( $mins <= 1 )
 					$mins = 1;
 
-				$since = gEditorialL10n::sprintfNooped( $args['noop_minutes'], $mins );
+				$since = L10n::sprintfNooped( $args['noop_minutes'], $mins );
 
 			} else if ( $diff < self::DAY_IN_SECONDS && $diff >= self::HOUR_IN_SECONDS ) {
 
@@ -97,7 +99,7 @@ class gEditorialDate extends gEditorialBaseCore
 				if ( $hours <= 1 )
 					$hours = 1;
 
-				$since = gEditorialL10n::sprintfNooped( $args['noop_hours'], $hours );
+				$since = L10n::sprintfNooped( $args['noop_hours'], $hours );
 
 			} else if ( $diff < self::WEEK_IN_SECONDS && $diff >= self::DAY_IN_SECONDS ) {
 
@@ -106,7 +108,7 @@ class gEditorialDate extends gEditorialBaseCore
 				if ( $days <= 1 )
 					$days = 1;
 
-				$since = gEditorialL10n::sprintfNooped( $args['noop_days'], $days );
+				$since = L10n::sprintfNooped( $args['noop_days'], $days );
 
 			} else if ( $diff < self::MONTH_IN_SECONDS && $diff >= self::WEEK_IN_SECONDS ) {
 
@@ -115,7 +117,7 @@ class gEditorialDate extends gEditorialBaseCore
 				if ( $weeks <= 1 )
 					$weeks = 1;
 
-				$since = gEditorialL10n::sprintfNooped( $args['noop_weeks'], $weeks );
+				$since = L10n::sprintfNooped( $args['noop_weeks'], $weeks );
 
 			} else if ( $diff < self::YEAR_IN_SECONDS && $diff >= self::MONTH_IN_SECONDS ) {
 
@@ -124,7 +126,7 @@ class gEditorialDate extends gEditorialBaseCore
 				if ( $months <= 1 )
 					$months = 1;
 
-				$since = gEditorialL10n::sprintfNooped( $args['noop_months'], $months );
+				$since = L10n::sprintfNooped( $args['noop_months'], $months );
 
 			} else if ( $diff >= self::YEAR_IN_SECONDS ) {
 
@@ -132,7 +134,7 @@ class gEditorialDate extends gEditorialBaseCore
 				if ( $years <= 1 )
 					$years = 1;
 
-				$since = gEditorialL10n::sprintfNooped( $args['noop_years'], $years );
+				$since = L10n::sprintfNooped( $args['noop_years'], $years );
 			}
 
 			return sprintf( $args['_s_ago'], $since );
@@ -148,7 +150,7 @@ class gEditorialDate extends gEditorialBaseCore
 				if ( $mins <= 1 )
 					$mins = 1;
 
-				$since = gEditorialL10n::sprintfNooped( $args['noop_minutes'], $mins );
+				$since = L10n::sprintfNooped( $args['noop_minutes'], $mins );
 
 			} else if ( $diff < self::DAY_IN_SECONDS && $diff >= self::HOUR_IN_SECONDS ) {
 
@@ -157,7 +159,7 @@ class gEditorialDate extends gEditorialBaseCore
 				if ( $hours <= 1 )
 					$hours = 1;
 
-				$since = gEditorialL10n::sprintfNooped( $args['noop_hours'], $hours );
+				$since = L10n::sprintfNooped( $args['noop_hours'], $hours );
 
 			} else if ( $diff < self::WEEK_IN_SECONDS && $diff >= self::DAY_IN_SECONDS ) {
 
@@ -166,7 +168,7 @@ class gEditorialDate extends gEditorialBaseCore
 				if ( $days <= 1 )
 					$days = 1;
 
-				$since = gEditorialL10n::sprintfNooped( $args['noop_days'], $days );
+				$since = L10n::sprintfNooped( $args['noop_days'], $days );
 
 			} else if ( $diff < self::MONTH_IN_SECONDS && $diff >= self::WEEK_IN_SECONDS ) {
 
@@ -175,7 +177,7 @@ class gEditorialDate extends gEditorialBaseCore
 				if ( $weeks <= 1 )
 					$weeks = 1;
 
-				$since = gEditorialL10n::sprintfNooped( $args['noop_weeks'], $weeks );
+				$since = L10n::sprintfNooped( $args['noop_weeks'], $weeks );
 
 			} else if ( $diff < self::YEAR_IN_SECONDS && $diff >= self::MONTH_IN_SECONDS ) {
 
@@ -184,7 +186,7 @@ class gEditorialDate extends gEditorialBaseCore
 				if ( $months <= 1 )
 					$months = 1;
 
-				$since = gEditorialL10n::sprintfNooped( $args['noop_months'], $months );
+				$since = L10n::sprintfNooped( $args['noop_months'], $months );
 
 			} else if ( $diff >= self::YEAR_IN_SECONDS ) {
 
@@ -192,7 +194,7 @@ class gEditorialDate extends gEditorialBaseCore
 				if ( $years <= 1 )
 					$years = 1;
 
-				$since = gEditorialL10n::sprintfNooped( $args['noop_years'], $years );
+				$since = L10n::sprintfNooped( $args['noop_years'], $years );
 			}
 
 			return sprintf( $args['in__s'], $since );
@@ -228,7 +230,7 @@ class gEditorialDate extends gEditorialBaseCore
 			$result[$date->format( $format )] = self::moment( $date->getTimestamp() ).' :: '.( time() - $date->getTimestamp() );
 		}
 
-		gEditorialHTML::tableCode( $result, TRUE, 'Moment' );
+		HTML::tableCode( $result, TRUE, 'Moment' );
 	}
 
 	// FIXME: correct last week : http://stackoverflow.com/a/7175802/4864081
@@ -282,23 +284,23 @@ class gEditorialDate extends gEditorialBaseCore
 					return $args['one_minute_ago'];
 
 				if ( $diff < self::HOUR_IN_SECONDS )
-					return sprintf( $args['_s_minutes_ago'], gEditorialNumber::format( floor( $diff / 60 ) ) );
+					return sprintf( $args['_s_minutes_ago'], Number::format( floor( $diff / 60 ) ) );
 
 				if ( $diff < 7200 )
 					return $args['one_hour_ago'];
 
 				if ( $diff < self::DAY_IN_SECONDS )
-					return sprintf( $args['_s_hours_ago'], gEditorialNumber::format( floor( $diff / self::HOUR_IN_SECONDS ) ) );
+					return sprintf( $args['_s_hours_ago'], Number::format( floor( $diff / self::HOUR_IN_SECONDS ) ) );
 			}
 
 			if ( 1 == $day_diff )
 				return $args['yesterday'];
 
 			if ( $day_diff < 7 )
-				return sprintf( $args['_s_days_ago'], gEditorialNumber::format( $day_diff ) );
+				return sprintf( $args['_s_days_ago'], Number::format( $day_diff ) );
 
 			if ( $day_diff < 31 )
-				return sprintf( $args['_s_weeks_ago'], gEditorialNumber::format( ceil( $day_diff / 7 ) ) );
+				return sprintf( $args['_s_weeks_ago'], Number::format( ceil( $day_diff / 7 ) ) );
 
 			if ( $day_diff < 60 )
 				return $args['last_month'];
@@ -318,13 +320,13 @@ class gEditorialDate extends gEditorialBaseCore
 					return $args['in_a_minute'];
 
 				if ( $diff < self::HOUR_IN_SECONDS )
-					return sprintf( $args['in__s_minutes'], gEditorialNumber::format( floor( $diff / 60 ) ) );
+					return sprintf( $args['in__s_minutes'], Number::format( floor( $diff / 60 ) ) );
 
 				if ( $diff < 7200 )
 					return $args['in_an_hour'];
 
 				if ( $diff < self::DAY_IN_SECONDS )
-					return sprintf( $args['in__s_hours'], gEditorialNumber::format( floor( $diff / 3600 ) ) );
+					return sprintf( $args['in__s_hours'], Number::format( floor( $diff / 3600 ) ) );
 			}
 
 			if ( 1 == $day_diff )
@@ -337,7 +339,7 @@ class gEditorialDate extends gEditorialBaseCore
 				return $args['next_week'];
 
 			if ( ceil( $day_diff / 7 ) < 4 )
-				return sprintf( $args['in__s_weeks'], gEditorialNumber::format( ceil( $day_diff / 7 ) ) );
+				return sprintf( $args['in__s_weeks'], Number::format( ceil( $day_diff / 7 ) ) );
 
 			if ( date( 'n', $timestamp ) == date( 'n' ) + 1 )
 				return $args['next_month'];

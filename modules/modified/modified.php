@@ -1,6 +1,15 @@
-<?php defined( 'ABSPATH' ) or die( 'Restricted access' );
+<?php namespace geminorum\gEditorial\Modules;
 
-class gEditorialModified extends gEditorialModuleCore
+defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
+
+use geminorum\gEditorial;
+use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Core\Date;
+use geminorum\gEditorial\Core\HTML;
+use geminorum\gEditorial\Core\Text;
+use geminorum\gEditorial\Core\WordPress;
+
+class Modified extends gEditorial\Module
 {
 
 	public static function module()
@@ -55,7 +64,7 @@ class gEditorialModified extends gEditorialModuleCore
 					'title'       => _x( 'Display After', 'Modules: Modified: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Skip displaying modified time since original content published', 'Modules: Modified: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 					'default'     => '60',
-					'values'      => gEditorialSettingsCore::minutesOptions(),
+					'values'      => Settings::minutesOptions(),
 				),
 			),
 		);
@@ -117,7 +126,7 @@ class gEditorialModified extends gEditorialModuleCore
 				'callback' => function( $value, $row, $column, $index ){
 					return '<small class="-date-diff" title="'
 						.esc_attr( mysql2date( 'l, M j, Y @ H:i', $row->post_modified ) ).'">'
-						.gEditorialHelper::humanTimeDiff( $row->post_modified )
+						.Helper::humanTimeDiff( $row->post_modified )
 					.'</small>';
 				},
 			),
@@ -129,7 +138,7 @@ class gEditorialModified extends gEditorialModuleCore
 				'callback' => function( $value, $row, $column, $index ){
 
 					if ( current_user_can( 'edit_post', $row->ID ) )
-						return gEditorialWordPress::getAuthorEditHTML( $row->post_type, $row->post_author );
+						return WordPress::getAuthorEditHTML( $row->post_type, $row->post_author );
 
 					if ( $author_data = get_user_by( 'id', $row->post_author ) )
 						return esc_html( $author_data->display_name );
@@ -141,11 +150,11 @@ class gEditorialModified extends gEditorialModuleCore
 		$columns['title'] = array(
 			'title'    => _x( 'Title', 'Modules: Modified', GEDITORIAL_TEXTDOMAIN ),
 			'callback' => function( $value, $row, $column, $index ){
-				return gEditorialHelper::getPostTitleRow( $row, 'edit' );
+				return Helper::getPostTitleRow( $row, 'edit' );
 			},
 		);
 
-		gEditorialHTML::tableList( $columns, $query->query( $args ), array(
+		HTML::tableList( $columns, $query->query( $args ), array(
 			'empty' => _x( 'No Posts?!', 'Modules: Modified', GEDITORIAL_TEXTDOMAIN ),
 		) );
 	}
@@ -157,7 +166,7 @@ class gEditorialModified extends gEditorialModuleCore
 
 		if ( $modified = $this->get_post_modified() ) {
 
-			gEditorialHelper::enqueueTimeAgo();
+			Helper::enqueueTimeAgo();
 
 			echo '<div class="geditorial-wrap -modified -content-';
 			echo $this->get_setting( 'insert_content', 'none' );
@@ -187,8 +196,8 @@ class gEditorialModified extends gEditorialModuleCore
 		$prefix  = $this->get_setting( 'insert_prefix', '' );
 
 		if ( $gmt >= $publish + ( absint( $minutes ) * MINUTE_IN_SECONDS ) )
-			return $prefix.' '.gEditorialDate::htmlDateTime( $local, $gmt, $format,
-					gEditorialHelper::humanTimeDiffRound( $local, FALSE ) );
+			return $prefix.' '.Date::htmlDateTime( $local, $gmt, $format,
+					Helper::humanTimeDiffRound( $local, FALSE ) );
 
 		return FALSE;
 	}
@@ -196,7 +205,7 @@ class gEditorialModified extends gEditorialModuleCore
 	// just put {SITE_LAST_MODIFIED} on a menu item text!
 	public function wp_nav_menu_items( $items, $args )
 	{
-		if ( ! gEditorialCoreText::has( $items, '{SITE_LAST_MODIFIED}' ) )
+		if ( ! Text::has( $items, '{SITE_LAST_MODIFIED}' ) )
 			return $items;
 
 		if ( ! isset( $this->site_modified ) )

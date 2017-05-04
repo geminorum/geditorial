@@ -1,6 +1,14 @@
-<?php defined( 'ABSPATH' ) or die( 'Restricted access' );
+<?php namespace geminorum\gEditorial\Modules;
 
-class gEditorialLike extends gEditorialModuleCore
+defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
+
+use geminorum\gEditorial;
+use geminorum\gEditorial\Ajax;
+use geminorum\gEditorial\Core\HTML;
+use geminorum\gEditorial\Core\HTTP;
+use geminorum\gEditorial\Core\Number;
+
+class Like extends gEditorial\Module
 {
 
 	public $meta_key   = '_ge_like';
@@ -130,14 +138,14 @@ class gEditorialLike extends gEditorialModuleCore
 					'remove'  => 'loading',
 					'add'     => $check ? 'unlike' : 'dolike',
 					'nonce'   => wp_create_nonce( 'geditorial_like_ajax-'.$post['id'] ),
-					'count'   => gEditorialNumber::format( $count ),
+					'count'   => Number::format( $count ),
 					'avatars' => $this->get_setting( 'avatars', FALSE ) ? $this->avatars( $post['id'] ) : NULL,
 				) );
 
 			break;
 			case 'dolike':
 
-				gEditorialAjax::checkReferer( 'geditorial_like_ajax-'.$post['id'] );
+				Ajax::checkReferer( 'geditorial_like_ajax-'.$post['id'] );
 
 				list( $check, $count ) = $this->like( $post['id'] );
 
@@ -146,14 +154,14 @@ class gEditorialLike extends gEditorialModuleCore
 					'action'  => 'unlike',
 					'remove'  => 'dolike',
 					'add'     => 'unlike',
-					'count'   => gEditorialNumber::format( $count ),
+					'count'   => Number::format( $count ),
 					'avatars' => $this->get_setting( 'avatars', FALSE ) ? $this->avatars( $post['id'] ) : NULL,
 				) );
 
 			break;
 			case 'unlike':
 
-				gEditorialAjax::checkReferer( 'geditorial_like_ajax-'.$post['id'] );
+				Ajax::checkReferer( 'geditorial_like_ajax-'.$post['id'] );
 
 				list( $check, $count ) = $this->unlike( $post['id'] );
 
@@ -162,12 +170,12 @@ class gEditorialLike extends gEditorialModuleCore
 					'action'  => 'dolike',
 					'remove'  => 'unlike',
 					'add'     => 'dolike',
-					'count'   => gEditorialNumber::format( $count ),
+					'count'   => Number::format( $count ),
 					'avatars' => $this->get_setting( 'avatars', FALSE ) ? $this->avatars( $post['id'] ) : NULL,
 				) );
 		}
 
-		gEditorialAjax::errorWhat();
+		Ajax::errorWhat();
 	}
 
 	public function title( $liked, $post_id = NULL )
@@ -227,7 +235,7 @@ class gEditorialLike extends gEditorialModuleCore
 		} else {
 			$cookie = $this->get_cookie();
 			if ( ! array_key_exists( $post_id, $cookie ) ) {
-				$guests[$timestamp] = gEditorialHTTP::IP();
+				$guests[$timestamp] = HTTP::IP();
 				$this->set_meta( $post_id, $guests, '_guests' );
 				$this->set_cookie( array( $post_id => $guests[$timestamp] ) );
 				$count++;
@@ -260,7 +268,7 @@ class gEditorialLike extends gEditorialModuleCore
 		$users = $this->get_postmeta( $post_id, FALSE, array(), $this->meta_key.'_users' );
 
 		if ( count( $users ) ) {
-			$query = new WP_User_Query( array(
+			$query = new \WP_User_Query( array(
 				'include' => array_values( $users ),
 				'fields'  => array( 'user_email', 'ID', 'display_name' ),
 			) );

@@ -1,6 +1,17 @@
-<?php defined( 'ABSPATH' ) or die( 'Restricted access' );
+<?php namespace geminorum\gEditorial\Modules;
 
-class gEditorialMeta extends gEditorialModuleCore
+defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
+
+use geminorum\gEditorial;
+use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Settings;
+use geminorum\gEditorial\Core\HTML;
+use geminorum\gEditorial\Core\WordPress;
+use geminorum\gEditorial\WordPress\Database;
+use geminorum\gEditorial\MetaBoxes\Meta as ModuleMetaBox;
+use geminorum\gEditorial\Templates\Meta as ModuleTemplate;
+
+class Meta extends gEditorial\Module
 {
 
 	public $meta_key = '_gmeta';
@@ -281,31 +292,31 @@ class gEditorialMeta extends gEditorialModuleCore
 			switch ( $args['type'] ) {
 
 				case 'text':
-					gEditorialMetaMetaBox::fieldString( $field, array( $field ), $post, $args['ltr'], $args['title'], FALSE, $args['type'] );
+					ModuleMetaBox::fieldString( $field, array( $field ), $post, $args['ltr'], $args['title'], FALSE, $args['type'] );
 				break;
 
 				case 'note':
-					gEditorialMetaMetaBox::fieldTextarea( $field, array( $field ), $post, $args['ltr'], $args['title'], FALSE, $args['type'] );
+					ModuleMetaBox::fieldTextarea( $field, array( $field ), $post, $args['ltr'], $args['title'], FALSE, $args['type'] );
 				break;
 
 				case 'code':
 				case 'link':
-					gEditorialMetaMetaBox::fieldString( $field, array( $field ), $post, TRUE, $args['title'], FALSE, $args['type'] );
+					ModuleMetaBox::fieldString( $field, array( $field ), $post, TRUE, $args['title'], FALSE, $args['type'] );
 				break;
 
 				case 'number':
-					gEditorialMetaMetaBox::fieldNumber( $field, array( $field ), $post, TRUE, $args['title'], FALSE, $args['type'] );
+					ModuleMetaBox::fieldNumber( $field, array( $field ), $post, TRUE, $args['title'], FALSE, $args['type'] );
 				break;
 
 				case 'textarea':
-					gEditorialMetaMetaBox::fieldTextarea( $field, array( $field ), $post, $args['ltr'], $args['title'], FALSE, $args['type'] );
+					ModuleMetaBox::fieldTextarea( $field, array( $field ), $post, $args['ltr'], $args['title'], FALSE, $args['type'] );
 				break;
 
 				case 'term':
 					if ( $args['tax'] )
-						gEditorialMetaMetaBox::fieldTerm( $field, array( $field ), $post, $args['tax'], $args['ltr'], $args['title'] );
+						ModuleMetaBox::fieldTerm( $field, array( $field ), $post, $args['tax'], $args['ltr'], $args['title'] );
 					else
-						gEditorialMetaMetaBox::fieldString( $field, array( $field ), $post, $args['ltr'], $args['title'], FALSE, $args['type'] );
+						ModuleMetaBox::fieldString( $field, array( $field ), $post, $args['ltr'], $args['title'], FALSE, $args['type'] );
 				break;
 			}
 		}
@@ -351,11 +362,11 @@ class gEditorialMeta extends gEditorialModuleCore
 
 					case 'title_before':
 					case 'title_after':
-						gEditorialMetaMetaBox::fieldTitle( $field, array( $field ), $post, $args['ltr'], $args['title'], FALSE, $args['type'] );
+						ModuleMetaBox::fieldTitle( $field, array( $field ), $post, $args['ltr'], $args['title'], FALSE, $args['type'] );
 					break;
 
 					case 'box':
-						gEditorialMetaMetaBox::fieldBox( $field, array( $field ), $post, $args['ltr'], $args['title'] );
+						ModuleMetaBox::fieldBox( $field, array( $field ), $post, $args['ltr'], $args['title'] );
 					break;
 				}
 			}
@@ -386,31 +397,31 @@ class gEditorialMeta extends gEditorialModuleCore
 					switch ( $args['type'] ) {
 
 						case 'term':
-							gEditorialMetaMetaBox::setPostMetaField_Term( $post_id, $field, $args['tax'] );
+							ModuleMetaBox::setPostMetaField_Term( $post_id, $field, $args['tax'] );
 						break;
 
 						case 'link':
-							gEditorialMetaMetaBox::setPostMetaField_URL( $postmeta, $field );
+							ModuleMetaBox::setPostMetaField_URL( $postmeta, $field );
 						break;
 
 						case 'code':
-							gEditorialMetaMetaBox::setPostMetaField_Code( $postmeta, $field );
+							ModuleMetaBox::setPostMetaField_Code( $postmeta, $field );
 						break;
 
 						case 'number':
-							gEditorialMetaMetaBox::setPostMetaField_Number( $postmeta, $field );
+							ModuleMetaBox::setPostMetaField_Number( $postmeta, $field );
 						break;
 
 						case 'text':
 						case 'title_before':
 						case 'title_after':
-							gEditorialMetaMetaBox::setPostMetaField_String( $postmeta, $field );
+							ModuleMetaBox::setPostMetaField_String( $postmeta, $field );
 						break;
 
 						case 'textarea':
 						case 'note':
 						case 'box':
-							gEditorialMetaMetaBox::setPostMetaField_Text( $postmeta, $field );
+							ModuleMetaBox::setPostMetaField_Text( $postmeta, $field );
 						break;
 					}
 				}
@@ -505,7 +516,7 @@ class gEditorialMeta extends gEditorialModuleCore
 
 		$fields = $this->post_type_fields( $post->post_type );
 		$author = $this->get_setting( 'author_row', FALSE )
-			? gEditorialWordPress::getAuthorEditHTML( $post->post_type, $post->post_author )
+			? WordPress::getAuthorEditHTML( $post->post_type, $post->post_author )
 			: FALSE;
 
 		$rows = array(
@@ -576,7 +587,7 @@ class gEditorialMeta extends gEditorialModuleCore
 		if ( ! $this->is_content_insert( NULL ) )
 			return;
 
-		gEditorialMetaTemplates::metaLead( array(
+		ModuleTemplate::metaLead( array(
 			'before' => '<div class="geditorial-wrap -meta -before entry-lead">',
 			'after'  => '</div>',
 		) );
@@ -587,7 +598,7 @@ class gEditorialMeta extends gEditorialModuleCore
 		if ( ! $this->is_content_insert( NULL, FALSE ) )
 			return;
 
-		gEditorialMetaTemplates::metaLink( array(
+		ModuleTemplate::metaLink( array(
 			'before' => '<div class="geditorial-wrap -meta -after entry-source">'
 				.$this->get_setting( 'before_source', '' ).' ',
 			'after'  => '</div>',
@@ -624,7 +635,7 @@ class gEditorialMeta extends gEditorialModuleCore
 
 		$this->settings_form_before( $uri, $sub, 'bulk', 'tools', FALSE, FALSE );
 
-			gEditorialHTML::h3( _x( 'Meta Tools', 'Modules: Meta', GEDITORIAL_TEXTDOMAIN ) );
+			HTML::h3( _x( 'Meta Tools', 'Modules: Meta', GEDITORIAL_TEXTDOMAIN ) );
 
 			echo '<table class="form-table">';
 
@@ -633,7 +644,7 @@ class gEditorialMeta extends gEditorialModuleCore
 			$this->do_settings_field( [
 				'type'         => 'select',
 				'field'        => 'custom_field',
-				'values'       => gEditorialWPDatabase::getPostMetaKeys( TRUE ),
+				'values'       => Database::getPostMetaKeys( TRUE ),
 				'default'      => $args['custom_field'],
 				'option_group' => 'tools',
 			] );
@@ -665,29 +676,29 @@ class gEditorialMeta extends gEditorialModuleCore
 
 			echo '&nbsp;&nbsp;';
 
-			gEditorialSettingsCore::submitButton( 'custom_fields_check',
+			Settings::submitButton( 'custom_fields_check',
 				_x( 'Check', 'Modules: Meta: Setting Button', GEDITORIAL_TEXTDOMAIN ), TRUE );
 
-			gEditorialSettingsCore::submitButton( 'custom_fields_convert',
+			Settings::submitButton( 'custom_fields_convert',
 				_x( 'Covert', 'Modules: Meta: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
 
-			gEditorialSettingsCore::submitButton( 'custom_fields_delete',
+			Settings::submitButton( 'custom_fields_delete',
 				_x( 'Delete', 'Modules: Meta: Setting Button', GEDITORIAL_TEXTDOMAIN ), 'delete', TRUE );
 
-			gEditorialHTML::desc( _x( 'Check for Custom Fields and import them into Meta', 'Modules: Meta', GEDITORIAL_TEXTDOMAIN ) );
+			HTML::desc( _x( 'Check for Custom Fields and import them into Meta', 'Modules: Meta', GEDITORIAL_TEXTDOMAIN ) );
 
 			if ( isset( $_POST['custom_fields_check'] )
 				&& $args['custom_field'] ) {
 
 				echo '<br />';
-				gEditorialHTML::tableList( [
-					'post_id' => gEditorialHelper::tableColumnPostID(),
+				HTML::tableList( [
+					'post_id' => Helper::tableColumnPostID(),
 					'meta'    => 'Meta :'.$args['custom_field'],
-				], gEditorialWPDatabase::getPostMetaRows(
+				], Database::getPostMetaRows(
 					stripslashes( $args['custom_field'] ),
 					stripslashes( $args['custom_field_limit'] )
 				), [
-					'empty' => gEditorialHTML::warning( _x( 'No Meta Found!', 'Modules: Meta: Table Empty', GEDITORIAL_TEXTDOMAIN ) ),
+					'empty' => HTML::warning( _x( 'No Meta Found!', 'Modules: Meta: Table Empty', GEDITORIAL_TEXTDOMAIN ) ),
 				] );
 			}
 
@@ -717,7 +728,7 @@ class gEditorialMeta extends gEditorialModuleCore
 							$result = $this->import_from_meta( $post['custom_field'], $post['custom_field_into'], $limit );
 
 						if ( count( $result ) )
-							gEditorialWordPress::redirectReferer( array(
+							WordPress::redirectReferer( array(
 								'message' => 'converted',
 								'field'   => $post['custom_field'],
 								'limit'   => $limit,
@@ -734,10 +745,10 @@ class gEditorialMeta extends gEditorialModuleCore
 						$result = FALSE;
 
 						if ( isset( $post['custom_field'] ) )
-							$result = gEditorialWPDatabase::deletePostMeta( $post['custom_field'], $limit );
+							$result = Database::deletePostMeta( $post['custom_field'], $limit );
 
 						if ( count( $result ) )
-							gEditorialWordPress::redirectReferer( array(
+							WordPress::redirectReferer( array(
 								'message' => 'deleted',
 								'field'   => $post['custom_field'],
 								'limit'   => $limit,
@@ -751,7 +762,7 @@ class gEditorialMeta extends gEditorialModuleCore
 
 	protected function import_from_meta( $post_meta_key, $field, $limit = FALSE )
 	{
-		$rows = gEditorialWPDatabase::getPostMetaRows( $post_meta_key, $limit );
+		$rows = Database::getPostMetaRows( $post_meta_key, $limit );
 
 		foreach ( $rows as $row )
 			$this->import_to_meta( explode( ',', $row->meta ), $row->post_id, $field, $post_meta_key );
@@ -786,7 +797,7 @@ class gEditorialMeta extends gEditorialModuleCore
 			if ( $final )
 				$final .= ', ';
 
-			$final .= $kses ? gEditorialHelper::kses( $formatted, 'text' ) : $formatted;
+			$final .= $kses ? Helper::kses( $formatted, 'text' ) : $formatted;
 		}
 
 		if ( $final ) {

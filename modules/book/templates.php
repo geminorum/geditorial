@@ -1,6 +1,11 @@
-<?php defined( 'ABSPATH' ) or die( 'Restricted access' );
+<?php namespace geminorum\gEditorial\Templates;
 
-class gEditorialBookTemplates extends gEditorialTemplateCore
+defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
+
+use geminorum\gEditorial;
+use geminorum\gEditorial\Core\HTML;
+
+class Book extends gEditorial\Template
 {
 
 	const MODULE = 'book';

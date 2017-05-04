@@ -1,9 +1,16 @@
-<?php defined( 'ABSPATH' ) or die( 'Restricted access' );
+<?php namespace geminorum\gEditorial\Modules;
 
-class gEditorialEntry extends gEditorialModuleCore
+defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
+
+use geminorum\gEditorial;
+use geminorum\gEditorial\ShortCode;
+use geminorum\gEditorial\Core\HTML;
+use geminorum\gEditorial\WordPress\Taxonomy;
+
+class Entry extends gEditorial\Module
 {
 
-	protected $partials = array( 'templates', 'helper' );
+	protected $partials = [ 'helper' ];
 
 	private $terms = NULL;
 
@@ -142,7 +149,7 @@ class gEditorialEntry extends gEditorialModuleCore
 			'href'   => $link,
 		] );
 
-		$terms = gEditorialWPTaxonomy::getTerms( $this->constant( 'section_tax' ), NULL, TRUE );
+		$terms = Taxonomy::getTerms( $this->constant( 'section_tax' ), NULL, TRUE );
 
 		foreach ( $terms as $term )
 			$wp_admin_bar->add_node( [
@@ -340,7 +347,7 @@ class gEditorialEntry extends gEditorialModuleCore
 		if ( $this->is_content_insert( 'entry_cpt' ) ) {
 
 			if ( ! isset( $this->sections ) )
-				$this->sections = gEditorialWPTaxonomy::prepTerms( $this->constant( 'section_tax' ) );
+				$this->sections = Taxonomy::prepTerms( $this->constant( 'section_tax' ) );
 
 			foreach ( $this->sections as $section )
 				$content = preg_replace(
@@ -354,7 +361,7 @@ class gEditorialEntry extends gEditorialModuleCore
 
 	public function section_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
-		return gEditorialShortCode::getTermPosts(
+		return ShortCode::getTermPosts(
 			$this->constant( 'entry_cpt' ),
 			$this->constant( 'section_tax' ),
 			$atts,

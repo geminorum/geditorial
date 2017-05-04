@@ -1,6 +1,11 @@
-<?php defined( 'ABSPATH' ) or die( 'Restricted access' );
+<?php namespace geminorum\gEditorial\Modules;
 
-class gEditorialPitches extends gEditorialModuleCore
+defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
+
+use geminorum\gEditorial;
+use geminorum\gEditorial\MetaBox;
+
+class Pitches extends gEditorial\Module
 {
 
 	public static function module()
@@ -89,7 +94,7 @@ class gEditorialPitches extends gEditorialModuleCore
 
 	public function meta_box_cb_idea_cat( $post, $box )
 	{
-		gEditorialMetaBox::checklistTerms( $post, $box );
+		MetaBox::checklistTerms( $post, $box );
 	}
 
 	public function dashboard_glance_items( $items )

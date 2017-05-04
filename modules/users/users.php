@@ -1,6 +1,13 @@
-<?php defined( 'ABSPATH' ) or die( 'Restricted access' );
+<?php namespace geminorum\gEditorial\Modules;
 
-class gEditorialUsers extends gEditorialModuleCore
+defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
+
+use geminorum\gEditorial;
+use geminorum\gEditorial\Core\HTML;
+use geminorum\gEditorial\WordPress\Database;
+use geminorum\gEditorial\WordPress\PostType;
+
+class Users extends gEditorial\Module
 {
 
 	public static function module()
@@ -206,22 +213,22 @@ class gEditorialUsers extends gEditorialModuleCore
 			return $output;
 
 		if ( empty( $this->all_posttypes ) )
-			$this->all_posttypes = gEditorialWPPostType::get( 1 );
+			$this->all_posttypes = PostType::get( 1 );
 
-		$counts = gEditorialWPDatabase::countPostsByUser( $user_id );
+		$counts = Database::countPostsByUser( $user_id );
 		$list   = array();
 
 		foreach ( $this->all_posttypes as $posttype => $label )
 			if ( ! empty( $counts[$posttype] ) )
-				$list[$label] = gEditorialHTML::tag( 'a', array(
-					'href'   => gEditorialWordPress::getPostTypeEditLink( $posttype, $user_id ),
+				$list[$label] = HTML::tag( 'a', array(
+					'href'   => WordPress::getPostTypeEditLink( $posttype, $user_id ),
 					'target' => '_blank',
-				), gEditorialNumber::format( $counts[$posttype] ) );
+				), Number::format( $counts[$posttype] ) );
 
 		ob_start();
 
 		if ( count( $list ) )
-			gEditorialHTML::tableCode( $list );
+			HTML::tableCode( $list );
 		else
 			$this->column_count( 0 );
 
@@ -249,7 +256,7 @@ class gEditorialUsers extends gEditorialModuleCore
 
 		$terms = get_terms( $this->constant( 'group_tax' ), array( 'hide_empty' => FALSE ) );
 
-		gEditorialHTML::h2( _x( 'Group', 'Modules: Users', GEDITORIAL_TEXTDOMAIN ) );
+		HTML::h2( _x( 'Group', 'Modules: Users', GEDITORIAL_TEXTDOMAIN ) );
 
 		echo '<table class="form-table">';
 			echo '<tr><th scope="row">'._x( 'Select Group', 'Modules: Users', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
@@ -258,7 +265,7 @@ class gEditorialUsers extends gEditorialModuleCore
 
 				foreach ( $terms as $term ) {
 
-					$html = gEditorialHTML::tag( 'input', array(
+					$html = HTML::tag( 'input', array(
 						'type'    => 'radio',
 						'name'    => 'groups',
 						'id'      => 'groups-'.$term->slug,
@@ -266,7 +273,7 @@ class gEditorialUsers extends gEditorialModuleCore
 						'checked' => is_object_in_term( $user->ID, $this->constant( 'group_tax' ), $term ),
 					) );
 
-					echo '<p>'.gEditorialHTML::tag( 'label', array(
+					echo '<p>'.HTML::tag( 'label', array(
 						'for' => 'groups-'.$term->slug,
 					), $html.'&nbsp;'.esc_html( $term->name ) ).'</p>';
 				 }
@@ -312,7 +319,7 @@ class gEditorialUsers extends gEditorialModuleCore
 
 		$this->settings_form_before( $uri, $sub, 'bulk', 'reports', FALSE, FALSE );
 
-			gEditorialHTML::h3( _x( 'User Reports', 'Modules: Users', GEDITORIAL_TEXTDOMAIN ) );
+			HTML::h3( _x( 'User Reports', 'Modules: Users', GEDITORIAL_TEXTDOMAIN ) );
 
 			echo '<table class="form-table">';
 
@@ -321,7 +328,7 @@ class gEditorialUsers extends gEditorialModuleCore
 			$this->do_settings_field( array(
 				'type'         => 'select',
 				'field'        => 'post_type',
-				'values'       => gEditorialWPPostType::get(),
+				'values'       => PostType::get(),
 				'default'      => $args['post_type'],
 				'option_group' => 'reports',
 			) );
@@ -338,19 +345,19 @@ class gEditorialUsers extends gEditorialModuleCore
 				'type'         => 'select',
 				'field'        => 'year_month',
 				'none_title'   => _x( 'All Months', 'Modules: Users', GEDITORIAL_TEXTDOMAIN ),
-				'values'       => gEditorialHelper::getPostTypeMonths( $calendar_type, $args['post_type'], array(), $args['user_id'] ),
+				'values'       => Helper::getPostTypeMonths( $calendar_type, $args['post_type'], array(), $args['user_id'] ),
 				'default'      => $args['year_month'],
 				'option_group' => 'reports',
 			) );
 
-			gEditorialSettingsCore::submitButton( 'posttype_stats',
+			Settings::submitButton( 'posttype_stats',
 				_x( 'Query Stats', 'Modules: Users: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
 
 			if ( ! empty( $_POST ) && isset( $_POST['posttype_stats'] ) ) {
 
-				$period = $args['year_month'] ? gEditorialHelper::monthFirstAndLast( $calendar_type, substr( $args['year_month'], 0, 4 ), substr( $args['year_month'], 4, 2 ) ) : array();
+				$period = $args['year_month'] ? Helper::monthFirstAndLast( $calendar_type, substr( $args['year_month'], 0, 4 ), substr( $args['year_month'], 4, 2 ) ) : array();
 
-				gEditorialHTML::tableCode( gEditorialWPDatabase::countPostsByPosttype( $args['post_type'], $args['user_id'], $period ) );
+				HTML::tableCode( Database::countPostsByPosttype( $args['post_type'], $args['user_id'], $period ) );
 			}
 
 			echo '</td></tr>';
@@ -373,7 +380,7 @@ class gEditorialUsers extends gEditorialModuleCore
 					// FIXME: use custom Avatar
 					echo get_avatar( get_the_author_meta( 'email', $user_id ), '96' );
 
-					echo '<h2 class="user-title">'.gEditorialHTML::tag( 'a', array(
+					echo '<h2 class="user-title">'.HTML::tag( 'a', array(
 						'href'  => get_author_posts_url( $user_id ),
 						'title' => '',
 					), get_the_author_meta( 'display_name', $user_id ) ).'</h2>';

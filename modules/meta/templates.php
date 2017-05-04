@@ -1,6 +1,13 @@
-<?php defined( 'ABSPATH' ) or die( 'Restricted access' );
+<?php namespace geminorum\gEditorial\Templates;
 
-class gEditorialMetaTemplates extends gEditorialTemplateCore
+defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
+
+use geminorum\gEditorial;
+use geminorum\gEditorial\Core\HTML;
+use geminorum\gEditorial\Core\WordPress;
+use geminorum\gEditorial\WordPress\Taxonomy;
+
+class Meta extends gEditorial\Template
 {
 
 	const MODULE = 'meta';
@@ -169,7 +176,7 @@ class gEditorialMetaTemplates extends gEditorialTemplateCore
 		$url   = $args['url_meta'] ? self::get_meta( $args['url_meta'], array( 'id' => $args['id'], 'def' => $args['url_default'] ) ) : $args['url_default'];
 
 		if ( $title && $url || ! $url && $title != $args['title_default'] ) {
-			$html = $args['before'].gEditorialHTML::tag( ( $url ? 'a' : 'span' ), array(
+			$html = $args['before'].HTML::tag( ( $url ? 'a' : 'span' ), array(
 				'href'  => $url ? esc_url( $url ) : FALSE,
 				'title' => $args['title_default'], // FIXME: default title attr!
 				'rel'   => $url ? 'nofollow' : 'source', // https://support.google.com/webmasters/answer/96569?hl=en
@@ -210,7 +217,7 @@ class gEditorialMetaTemplates extends gEditorialTemplateCore
 		$title = self::get_meta( 'ch', array( 'id' => $args['id'], 'def' => FALSE ) );
 
 		if ( taxonomy_exists( $tax ) ) {
-			$term = gEditorialWPTaxonomy::theTerm( $tax, $args['id'], TRUE );
+			$term = Taxonomy::theTerm( $tax, $args['id'], TRUE );
 			if ( $term && ! $title )
 				$title = sanitize_term_field( 'name', $term->name, $term->term_id, $tax, 'display' );
 			if ( $term && is_null( $args['link'] ) )
@@ -219,11 +226,11 @@ class gEditorialMetaTemplates extends gEditorialTemplateCore
 				$args['desc'] = esc_attr( trim( strip_tags( $term->description ) ) );
 		} else {
 			if ( $title && is_null( $args['link'] ) )
-				$args['link'] = gEditorialWordPress::getSearchLink( $title );
+				$args['link'] = WordPress::getSearchLink( $title );
 		}
 
 		if ( $args['img'] ) {
-			$html = gEditorialHTML::tag( 'img', array(
+			$html = HTML::tag( 'img', array(
 				'src' => esc_url( $args['img'] ),
 				'alt' => $title,
 			) );
@@ -237,7 +244,7 @@ class gEditorialMetaTemplates extends gEditorialTemplateCore
 		if ( ! $html )
 			return FALSE;
 
-		$html = $args['before'].gEditorialHTML::tag( 'a', array(
+		$html = $args['before'].HTML::tag( 'a', array(
 			'href'  => $args['link'],
 			'title' => $args['desc'],
 		), apply_filters( 'gmeta_label', $html, $args, $title, $term ) ).$args['after'];
@@ -259,7 +266,7 @@ class gEditorialMetaTemplates extends gEditorialTemplateCore
 		$tax = self::constant( 'ct_tax', 'label' );
 		$id  = isset( $args['id'] ) ? $args['id'] : $post->ID;
 
-		$term  = gEditorialWPTaxonomy::theTerm( $tax, $id, TRUE );
+		$term  = Taxonomy::theTerm( $tax, $id, TRUE );
 		$title = self::get_meta( 'ch', array( 'id' => $id, 'def' => FALSE ) );
 		$link  = $term ? get_term_link( $term, $tax ) : ( $title ? get_option( 'home' ).'/?s='.urlencode( $title ) : FALSE );
 		$desc  = $term ? $term->name.( $term->description ? strip_tags( ' :: '.$term->description ) : '' ) : sprintf( apply_filters( 'gmeta_search_link_title_attr', _x( 'Search %1$s for %2$s', 'Modules: Meta', GEDITORIAL_TEXTDOMAIN ) ), get_bloginfo( 'name' ), $title );
@@ -295,38 +302,38 @@ class gEditorialMetaTemplates extends gEditorialTemplateCore
 }
 
 if ( ! function_exists( 'gmeta' ) ) : function gmeta( $field, $b = '', $a = '', $f = FALSE, $id = NULL, $args = array() ) {
-	gEditorialHelper::__dev_func( __FUNCTION__, '3.9.7', 'gEditorialMetaTemplates::metaField()' );
-	return gEditorialMetaTemplates::meta( $field, $b, $a, $f, $id, $args );
+	Helper::__dev_func( __FUNCTION__, '3.9.7', 'gEditorialMetaTemplates::metaField()' );
+	// return gEditorialMetaTemplates::meta( $field, $b, $a, $f, $id, $args );
 } endif;
 
 if ( ! function_exists( 'get_gmeta' ) ) : function get_gmeta( $field, $args = array() ) {
-	gEditorialHelper::__dev_func( __FUNCTION__, '3.9.7', 'gEditorialMetaTemplates::metaField()' );
-	return gEditorialMetaTemplates::get_meta( $field, $args );
+	Helper::__dev_func( __FUNCTION__, '3.9.7', 'gEditorialMetaTemplates::metaField()' );
+	// return gEditorialMetaTemplates::get_meta( $field, $args );
 } endif;
 
 if ( ! function_exists( 'gmeta_label' ) ) : function gmeta_label( $b = '', $a = '', $f = FALSE, $args = array() ) {
-	gEditorialHelper::__dev_func( __FUNCTION__, '3.9.7', 'gEditorialMetaTemplates::metaLabel()' );
-	return gEditorialMetaTemplates::gmeta_label( $b, $a, $f, $args );
+	Helper::__dev_func( __FUNCTION__, '3.9.7', 'gEditorialMetaTemplates::metaLabel()' );
+	// return gEditorialMetaTemplates::gmeta_label( $b, $a, $f, $args );
 } endif;
 
 if ( ! function_exists( 'gmeta_lead' ) ) : function gmeta_lead( $b = '', $a = '', $f = FALSE, $args = array() ) {
-	gEditorialHelper::__dev_func( __FUNCTION__, '3.9.7', 'gEditorialMetaTemplates::metaLead()' );
-	return gEditorialMetaTemplates::gmeta_lead( $b, $a, $f, $args );
+	Helper::__dev_func( __FUNCTION__, '3.9.7', 'gEditorialMetaTemplates::metaLead()' );
+	// return gEditorialMetaTemplates::gmeta_lead( $b, $a, $f, $args );
 } endif;
 
 if ( ! function_exists( 'gmeta_author' ) ) : function gmeta_author( $b = '', $a = '', $f = FALSE, $args = array() ) {
-	gEditorialHelper::__dev_func( __FUNCTION__, '3.9.7', 'gEditorialMetaTemplates::metaAuthor()' );
-	return gEditorialMetaTemplates::gmeta_author( $b, $a, $f, $args );
+	Helper::__dev_func( __FUNCTION__, '3.9.7', 'gEditorialMetaTemplates::metaAuthor()' );
+	// return gEditorialMetaTemplates::gmeta_author( $b, $a, $f, $args );
 	// $author = get_the_author();
 	// if ( ! empty( $author ) ) echo $b.( $f ? $f( $author ) : $author ).$a;
 } endif;
 
 if ( ! function_exists( 'gmeta_thumbnail' ) ) : function gmeta_thumbnail( $place_holder, $b = '', $a = '', $f = FALSE, $args = array() ) {
-	gEditorialHelper::__dev_func( __FUNCTION__, '3.9.7' );
+	Helper::__dev_func( __FUNCTION__, '3.9.7' );
 	return;
 } endif;
 
 if ( ! function_exists( 'gmeta_stats' ) ) : function gmeta_stats( $b = '', $a = '', $f = FALSE, $post_id = FALSE ) {
-	gEditorialHelper::__dev_func( __FUNCTION__, '3.9.7' );
+	Helper::__dev_func( __FUNCTION__, '3.9.7' );
 	return;
 } endif;

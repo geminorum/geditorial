@@ -1,6 +1,11 @@
-<?php defined( 'ABSPATH' ) or die( 'Restricted access' );
+<?php namespace geminorum\gEditorial\Modules;
 
-class gEditorialHeadings extends gEditorialModuleCore
+defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
+
+use geminorum\gEditorial;
+use geminorum\gEditorial\Core\HTML;
+
+class Headings extends gEditorial\Module
 {
 
 	private $anchors  = array();
@@ -91,7 +96,7 @@ class gEditorialHeadings extends gEditorialModuleCore
 			return $match[0];
 
 		if ( $match[2] )
-			$atts = gEditorialHTML::getAtts( $match[2], array( 'id' => '' ) );
+			$atts = HTML::getAtts( $match[2], array( 'id' => '' ) );
 
 		if ( ! empty( $atts['id'] ) ) {
 			$slug = $atts['id'];
@@ -113,13 +118,13 @@ class gEditorialHeadings extends gEditorialModuleCore
 			'page'  => $page,
 		);
 
-		$html = gEditorialHTML::tag( 'a', array(
+		$html = HTML::tag( 'a', array(
 			'href'  => '#'.$slug,
 			'class' => 'anchor-link anchorlink dashicons-before',
 			'title' => $this->get_setting( 'anchor_title', '' ),
 		), NULL );
 
-		$html = gEditorialHTML::tag( 'h'.$match[1], array(
+		$html = HTML::tag( 'h'.$match[1], array(
 			'id'    => $slug,
 			'class' => 'anchor-title',
 		), $title.$html );
@@ -171,11 +176,11 @@ class gEditorialHeadings extends gEditorialModuleCore
 		echo '<div class="geditorial-wrap -headings -toc-box '.$class.'">';
 
 			if ( $title )
-				gEditorialHTML::h3( $title, '-toc-title' );
+				HTML::h3( $title, '-toc-title' );
 
-			gEditorialHTML::menu( $tree, function(){
+			HTML::menu( $tree, function(){
 				if ( FALSE === $item['page'] )
-					return gEditorialHTML::tag( 'a', array( 'href' => '#'.$item['slug'] ), $item['title'] );
+					return HTML::tag( 'a', array( 'href' => '#'.$item['slug'] ), $item['title'] );
 				return rtrim( _wp_link_page( $item['page'] ), '">').'#'.$item['slug'].'">'.$item['title'].'</a>';
 			} );
 

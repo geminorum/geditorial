@@ -1,6 +1,10 @@
-<?php defined( 'ABSPATH' ) or die( 'Restricted access' );
+<?php namespace geminorum\gEditorial\WordPress;
 
-class gEditorialWPDatabase extends gEditorialBaseCore
+defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
+
+use geminorum\gEditorial\Core;
+
+class Database extends Core\Base
 {
 
 	public static function getResults( $query, $output = OBJECT, $key = 'default', $group = 'geditorial' )
@@ -59,7 +63,7 @@ class gEditorialWPDatabase extends gEditorialBaseCore
 			ORDER BY taxonomy ASC
 		" );
 
-		return $same_key ? gEditorialArraay::sameKey( $taxonomies ) : $taxonomies;
+		return $same_key ? Core\Arraay::sameKey( $taxonomies ) : $taxonomies;
 	}
 
 	// @SOURCE: [Custom Field Taxonomies](https://github.com/scribu/wp-custom-field-taxonomies)
@@ -99,7 +103,7 @@ class gEditorialWPDatabase extends gEditorialBaseCore
 			ORDER BY meta_key ASC
 		" );
 
-		return $same_key ? gEditorialArraay::sameKey( $meta_keys ) : $meta_keys;
+		return $same_key ? Core\Arraay::sameKey( $meta_keys ) : $meta_keys;
 	}
 
 	// @SEE: delete_post_meta_by_key( 'related_posts' );
@@ -342,7 +346,7 @@ class gEditorialWPDatabase extends gEditorialBaseCore
 				continue;
 
 			$year  = $row->year;
-			$month = gEditorialNumber::zeroise( $row->month, 2 );
+			$month = Core\Number::zeroise( $row->month, 2 );
 
 			$list[$year.$month] = sprintf( '%1$s %2$s', $wp_locale->get_month( $month ), $year );
 		}

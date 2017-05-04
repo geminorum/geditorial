@@ -1,6 +1,10 @@
-<?php defined( 'ABSPATH' ) or die( 'Restricted access' );
+<?php namespace geminorum\gEditorial\WordPress;
 
-class gEditorialWPPostType extends gEditorialBaseCore
+defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
+
+use geminorum\gEditorial\Core;
+
+class PostType extends Core\Base
 {
 
 	// EDITED: 12/25/2016, 1:27:21 PM

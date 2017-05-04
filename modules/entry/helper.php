@@ -1,6 +1,11 @@
-<?php defined( 'ABSPATH' ) or die( 'Restricted access' );
+<?php namespace geminorum\gEditorial\Helpers;
 
-class gEditorialEntryHelper extends gEditorialHelper
+defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
+
+use geminorum\gEditorial;
+use geminorum\gEditorial\Core\Number;
+
+class Entry extends gEditorial\Helper
 {
 
 	const MODULE = 'entry';

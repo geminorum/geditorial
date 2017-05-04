@@ -1,6 +1,16 @@
-<?php defined( 'ABSPATH' ) or die( 'Restricted access' );
+<?php namespace geminorum\gEditorial;
 
-class gEditorialModuleCore extends gEditorialWPModule
+defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
+
+use geminorum\gEditorial\Core\Arraay;
+use geminorum\gEditorial\Core\HTML;
+use geminorum\gEditorial\Core\Number;
+use geminorum\gEditorial\Core\WordPress;
+use geminorum\gEditorial\WordPress\Module as Core;
+use geminorum\gEditorial\WordPress\PostType;
+use geminorum\gEditorial\WordPress\Taxonomy;
+
+class Module extends Core
 {
 
 	public $module;
@@ -71,8 +81,8 @@ class gEditorialModuleCore extends gEditorialWPModule
 	{
 		$this->require_code( $this->partials );
 
-		$ajax = gEditorialWordPress::isAJAX();
-		$ui   = gEditorialWordPress::mustRegisterUI( FALSE );
+		$ajax = WordPress::isAJAX();
+		$ui   = WordPress::mustRegisterUI( FALSE );
 
 		if ( method_exists( $this, 'p2p_init' ) )
 			add_action( 'p2p_init', array( $this, 'p2p_init' ) );
@@ -157,12 +167,12 @@ class gEditorialModuleCore extends gEditorialWPModule
 
 	protected function settings_help_tabs()
 	{
-		return gEditorialSettingsCore::settingsHelpContent( $this->module );
+		return Settings::settingsHelpContent( $this->module );
 	}
 
 	protected function settings_help_sidebar()
 	{
-		return gEditorialSettingsCore::settingsHelpLinks( $this->module );
+		return Settings::settingsHelpLinks( $this->module );
 	}
 
 	protected function do_globals()
@@ -221,7 +231,7 @@ class gEditorialModuleCore extends gEditorialWPModule
 		else if ( TRUE === $pre )
 			$pre = array( 'all' => _x( 'All PostTypes', 'Module Core', GEDITORIAL_TEXTDOMAIN ) );
 
-		$all = gEditorialWPPostType::get();
+		$all = PostType::get();
 
 		foreach ( $this->post_types( $post_types ) as $post_type )
 			$pre[$post_type] = empty( $all[$post_type] ) ? $post_type : $all[$post_type];
@@ -231,7 +241,7 @@ class gEditorialModuleCore extends gEditorialWPModule
 
 	public function all_post_types( $exclude = TRUE )
 	{
-		$post_types = gEditorialWPPostType::get();
+		$post_types = PostType::get();
 
 		if ( $exclude && count( $this->post_types_excluded ) )
 			$post_types = array_diff_key( $post_types, array_flip( $this->post_types_excluded ) );
@@ -265,7 +275,7 @@ class gEditorialModuleCore extends gEditorialWPModule
 
 	public function all_taxonomies()
 	{
-		$taxonomies = gEditorialWPTaxonomy::get();
+		$taxonomies = Taxonomy::get();
 
 		if ( count( $this->taxonomies_excluded ) )
 			$taxonomies = array_diff_key( $taxonomies, array_flip( $this->taxonomies_excluded ) );
@@ -276,10 +286,10 @@ class gEditorialModuleCore extends gEditorialWPModule
 	public function settings_posttypes_option( $section )
 	{
 		if ( $before = $this->get_string( 'post_types_before', 'post', 'settings', NULL ) )
-			gEditorialHTML::desc( $before );
+			HTML::desc( $before );
 
 		foreach ( $this->all_post_types() as $post_type => $label ) {
-			$html = gEditorialHTML::tag( 'input', array(
+			$html = HTML::tag( 'input', array(
 				'type'    => 'checkbox',
 				'value'   => 'enabled',
 				'id'      => 'type-'.$post_type,
@@ -287,23 +297,23 @@ class gEditorialModuleCore extends gEditorialWPModule
 				'checked' => isset( $this->options->post_types[$post_type] ) && $this->options->post_types[$post_type],
 			) );
 
-			echo '<p>'.gEditorialHTML::tag( 'label', array(
+			echo '<p>'.HTML::tag( 'label', array(
 				'for' => 'type-'.$post_type,
 			), $html.'&nbsp;'.esc_html( $label ).' &mdash; <code>'.$post_type.'</code>' ).'</p>';
 		}
 
 		if ( $after = $this->get_string( 'post_types_after', 'post', 'settings', NULL ) )
-			gEditorialHTML::desc( $after );
+			HTML::desc( $after );
 	}
 
 	public function settings_taxonomies_option( $section )
 	{
 		if ( $before = $this->get_string( 'taxonomies_before', 'post', 'settings', NULL ) )
-			gEditorialHTML::desc( $before );
+			HTML::desc( $before );
 
 		foreach ( $this->all_taxonomies() as $taxonomy => $label ) {
 
-			$html = gEditorialHTML::tag( 'input', array(
+			$html = HTML::tag( 'input', array(
 				'type'    => 'checkbox',
 				'value'   => 'enabled',
 				'id'      => 'tax-'.$taxonomy,
@@ -311,13 +321,13 @@ class gEditorialModuleCore extends gEditorialWPModule
 				'checked' => isset( $this->options->taxonomies[$taxonomy] ) && $this->options->taxonomies[$taxonomy],
 			) );
 
-			echo '<p>'.gEditorialHTML::tag( 'label', array(
+			echo '<p>'.HTML::tag( 'label', array(
 				'for' => 'tax-'.$taxonomy,
 			), $html.'&nbsp;'.esc_html( $label ).' &mdash; <code>'.$taxonomy.'</code>' ).'</p>';
 		}
 
 		if ( $after = $this->get_string( 'taxonomies_after', 'post', 'settings', NULL ) )
-			gEditorialHTML::desc( $after );
+			HTML::desc( $after );
 	}
 
 	// get stored post meta by the field
@@ -369,7 +379,7 @@ class gEditorialModuleCore extends gEditorialWPModule
 
 		$section = $this->module->group.'_posttypes';
 
-		gEditorialSettingsCore::addModuleSection( $this->module->group, array(
+		Settings::addModuleSection( $this->module->group, array(
 			'id'            => $section,
 			'section_class' => 'posttypes_option_section',
 		) );
@@ -390,7 +400,7 @@ class gEditorialModuleCore extends gEditorialWPModule
 
 		$section = $this->module->group.'_taxonomies';
 
-		gEditorialSettingsCore::addModuleSection( $this->module->group, array(
+		Settings::addModuleSection( $this->module->group, array(
 			'id'            => $section,
 			'section_class' => 'taxonomies_option_section',
 		) );
@@ -417,7 +427,7 @@ class gEditorialModuleCore extends gEditorialWPModule
 
 			if ( count( $fields ) ) {
 
-				gEditorialSettingsCore::addModuleSection( $this->module->group, array(
+				Settings::addModuleSection( $this->module->group, array(
 					'id'            => $section,
 					'title'         => sprintf( $title, $all[$post_type] ),
 					'section_class' => 'fields_option_section fields_option-'.$post_type,
@@ -452,7 +462,7 @@ class gEditorialModuleCore extends gEditorialWPModule
 
 			} else if ( isset( $all[$post_type] ) ) {
 
-				gEditorialSettingsCore::addModuleSection( $this->module->group, array(
+				Settings::addModuleSection( $this->module->group, array(
 					'id'            => $section,
 					'title'         => sprintf( $title, $all[$post_type] ),
 					'callback'      => array( $this, 'settings_fields_option_none' ),
@@ -476,7 +486,7 @@ class gEditorialModuleCore extends gEditorialWPModule
 		else
 			$value = FALSE;
 
-		$html = gEditorialHTML::tag( 'input', array(
+		$html = HTML::tag( 'input', array(
 			'type'    => 'checkbox',
 			'value'   => 'enabled',
 			'class'   => 'fields-check',
@@ -485,31 +495,31 @@ class gEditorialModuleCore extends gEditorialWPModule
 			'checked' => $value,
 		) );
 
-		echo '<div>'.gEditorialHTML::tag( 'label', array(
+		echo '<div>'.HTML::tag( 'label', array(
 			'for' => $id,
 		), $html.'&nbsp;'.$args['field_title'] );
 
-		gEditorialHTML::desc( $args['description'] );
+		HTML::desc( $args['description'] );
 
 		echo '</div>';
 	}
 
 	public function settings_fields_option_all( $args )
 	{
-		$html = gEditorialHTML::tag( 'input', array(
+		$html = HTML::tag( 'input', array(
 			'type'  => 'checkbox',
 			'class' => 'fields-check-all',
 			'id'    => $args['post_type'].'_fields_all',
 		) );
 
-		echo gEditorialHTML::tag( 'label', array(
+		echo HTML::tag( 'label', array(
 			'for' => $args['post_type'].'_fields_all',
 		), $html.'&nbsp;<span class="description">'._x( 'Select All Fields', 'Module Core', GEDITORIAL_TEXTDOMAIN ).'</span>' );
 	}
 
 	public function settings_fields_option_none( $args )
 	{
-		gEditorialSettingsCore::moduleSectionEmpty( _x( 'No fields supported', 'Module Core', GEDITORIAL_TEXTDOMAIN ) );
+		Settings::moduleSectionEmpty( _x( 'No fields supported', 'Module Core', GEDITORIAL_TEXTDOMAIN ) );
 	}
 
 	public function print_configure_view()
@@ -519,7 +529,7 @@ class gEditorialModuleCore extends gEditorialWPModule
 			// FIXME: USE: `$this->settings_fields()`
 			settings_fields( $this->module->group );
 
-			gEditorialSettingsCore::moduleSections( $this->module->group );
+			Settings::moduleSections( $this->module->group );
 
 			echo '<input id="geditorial_module_name" name="geditorial_module_name" type="hidden" value="'.esc_attr( $this->module->name ).'" />';
 
@@ -555,7 +565,7 @@ class gEditorialModuleCore extends gEditorialWPModule
 			echo '<p class="submit '.$this->base.'-wrap-buttons '.$wrap.'">';
 
 		foreach ( $this->buttons as $action => $button )
-			gEditorialSettingsCore::submitButton( $action, $button['value'], $button['type'], $button['atts'] );
+			Settings::submitButton( $action, $button['value'], $button['type'], $button['atts'] );
 
 		if ( FALSE !== $wrap )
 			echo '</p>';
@@ -566,7 +576,7 @@ class gEditorialModuleCore extends gEditorialWPModule
 		if ( $name && is_null( $text ) )
 			$text = $this->get_string( $name, 'buttons', 'settings' );
 
-		gEditorialSettingsCore::submitButton( $name, $text, $primary, $atts );
+		Settings::submitButton( $name, $text, $primary, $atts );
 	}
 
 	protected function settings_form_before( $uri, $sub = NULL, $action = 'update', $context = 'settings', $check = TRUE )
@@ -606,11 +616,11 @@ class gEditorialModuleCore extends gEditorialWPModule
 
 	protected function settings_fields( $sub, $action = 'update', $context = 'settings' )
 	{
-		gEditorialHTML::inputHidden( 'base', $this->base );
-		gEditorialHTML::inputHidden( 'key', $this->key );
-		gEditorialHTML::inputHidden( 'context', $context );
-		gEditorialHTML::inputHidden( 'sub', $sub );
-		gEditorialHTML::inputHidden( 'action', $action );
+		HTML::inputHidden( 'base', $this->base );
+		HTML::inputHidden( 'key', $this->key );
+		HTML::inputHidden( 'context', $context );
+		HTML::inputHidden( 'sub', $sub );
+		HTML::inputHidden( 'action', $action );
 
 		$this->nonce_field( $context, $sub );
 	}
@@ -795,7 +805,7 @@ class gEditorialModuleCore extends gEditorialWPModule
 		if ( ! $sort )
 			return $fields;
 
-		return gEditorialArraay::multiSort( $fields, array(
+		return Arraay::multiSort( $fields, array(
 			'group' => SORT_ASC,
 			'order' => SORT_ASC,
 		) );
@@ -904,12 +914,12 @@ class gEditorialModuleCore extends gEditorialWPModule
 	// NOT USED
 	public function nooped( $constant_key, $count )
 	{
-		return gEditorialHelper::nooped( $count, $this->get_noop( $constant_key ) );
+		return Helper::nooped( $count, $this->get_noop( $constant_key ) );
 	}
 
 	public function nooped_count( $constant_key, $count )
 	{
-		return sprintf( gEditorialHelper::noopedCount( $count, $this->get_noop( $constant_key ) ), gEditorialNumber::format( $count ) );
+		return sprintf( Helper::noopedCount( $count, $this->get_noop( $constant_key ) ), Number::format( $count ) );
 	}
 
 	public function constant( $key, $default = FALSE )
@@ -950,12 +960,12 @@ class gEditorialModuleCore extends gEditorialWPModule
 		if ( ! wp_verify_nonce( $_POST['_wpnonce'], $this->module->group.'-options' ) )
 			return;
 
-		$added = gEditorialWPTaxonomy::insertDefaultTerms(
+		$added = Taxonomy::insertDefaultTerms(
 			$this->constant( $constant_key ),
 			$this->strings['terms'][$constant_key]
 		);
 
-		gEditorialWordPress::redirectReferer( ( FALSE === $added ? 'wrong' : array(
+		WordPress::redirectReferer( ( FALSE === $added ? 'wrong' : array(
 			'message' => 'created',
 			'count'   => $added,
 		) ) );
@@ -1007,7 +1017,7 @@ class gEditorialModuleCore extends gEditorialWPModule
 				else
 					$callback = '__return_false';
 
-				gEditorialSettingsCore::addModuleSection( $this->module->group, array(
+				Settings::addModuleSection( $this->module->group, array(
 					'id'            => $section,
 					'callback'      => $callback,
 					'section_class' => 'settings_section',
@@ -1050,12 +1060,12 @@ class gEditorialModuleCore extends gEditorialWPModule
 	protected function settings_footer( $module )
 	{
 		if ( 'settings' == $module->name )
-			gEditorialSettingsCore::settingsCredits();
+			Settings::settingsCredits();
 	}
 
 	protected function settings_signature( $module = NULL, $page = 'settings' )
 	{
-		gEditorialSettingsCore::settingsSignature();
+		Settings::settingsSignature();
 	}
 
 	public function add_settings_field( $r = array() )
@@ -1099,7 +1109,7 @@ class gEditorialModuleCore extends gEditorialWPModule
 		if ( empty( $args['cap'] ) )
 			$args['cap'] = empty( $this->caps[$args['option_group']] ) ? NULL : $this->caps[$args['option_group']];
 
-		gEditorialSettingsCore::fieldType( $args, $this->scripts );
+		Settings::fieldType( $args, $this->scripts );
 	}
 
 	public function settings_print_scripts()
@@ -1108,7 +1118,7 @@ class gEditorialModuleCore extends gEditorialWPModule
 			return;
 
 		if ( count( $this->scripts ) )
-			gEditorialHTML::wrapjQueryReady( implode( "\n", $this->scripts ) );
+			HTML::wrapjQueryReady( implode( "\n", $this->scripts ) );
 
 		$this->scripts_printed = TRUE;
 	}
@@ -1160,7 +1170,7 @@ class gEditorialModuleCore extends gEditorialWPModule
 			$labels['menu_name'] = $menu_name;
 
 		if ( ! empty( $this->strings['noops'][$constant_key] ) )
-			return gEditorialHelper::generatePostTypeLabels(
+			return Helper::generatePostTypeLabels(
 				$this->strings['noops'][$constant_key],
 				$this->get_string( 'featured', $constant_key, 'misc', NULL ),
 				$labels
@@ -1245,7 +1255,7 @@ class gEditorialModuleCore extends gEditorialWPModule
 			$labels['menu_name'] = $menu_name;
 
 		if ( ! empty( $this->strings['noops'][$constant_key] ) )
-			return gEditorialHelper::generateTaxonomyLabels( $this->strings['noops'][$constant_key], $labels );
+			return Helper::generateTaxonomyLabels( $this->strings['noops'][$constant_key], $labels );
 
 		return $labels;
 	}
@@ -1294,12 +1304,12 @@ class gEditorialModuleCore extends gEditorialWPModule
 
 	protected function get_post_updated_messages( $constant_key )
 	{
-		return gEditorialHelper::generatePostTypeMessages( $this->get_noop( $constant_key ) );
+		return Helper::generatePostTypeMessages( $this->get_noop( $constant_key ) );
 	}
 
 	protected function get_bulk_post_updated_messages( $constant_key, $bulk_counts )
 	{
-		return gEditorialHelper::generateBulkPostTypeMessages( $this->get_noop( $constant_key ), $bulk_counts );
+		return Helper::generateBulkPostTypeMessages( $this->get_noop( $constant_key ), $bulk_counts );
 	}
 
 	public function get_image_sizes( $post_type )
@@ -1315,7 +1325,7 @@ class gEditorialModuleCore extends gEditorialWPModule
 				$this->image_sizes[$post_type] = $sizes; // custom sizes
 
 			} else {
-				foreach ( gEditorialHelper::getWPImageSizes() as $size => $args )
+				foreach ( Helper::getWPImageSizes() as $size => $args )
 					$this->image_sizes[$post_type][$post_type.'-'.$size] = $args;
 			}
 		}
@@ -1434,7 +1444,7 @@ class gEditorialModuleCore extends gEditorialWPModule
 					$default = '0';
 			}
 
-			if ( ! $selected = gEditorialWPTaxonomy::theTerm( $tax, $post->ID ) )
+			if ( ! $selected = Taxonomy::theTerm( $tax, $post->ID ) )
 				$selected = $default;
 
 			echo '<div class="field-wrap" title="'.esc_attr( $obj->labels->menu_name ).'">';
@@ -1442,7 +1452,7 @@ class gEditorialModuleCore extends gEditorialWPModule
 			wp_dropdown_categories( array(
 				'taxonomy'          => $tax,
 				'selected'          => $selected,
-				'show_option_none'  => gEditorialSettingsCore::showOptionNone( $obj->labels->menu_name ),
+				'show_option_none'  => Settings::showOptionNone( $obj->labels->menu_name ),
 				'option_none_value' => '0',
 				'class'             => 'geditorial-admin-dropbown',
 				'name'              => 'geditorial-'.$this->module->name.'-'.$tax.( FALSE === $key ? '' : '['.$key.']' ),
@@ -1462,7 +1472,7 @@ class gEditorialModuleCore extends gEditorialWPModule
 
 	public function field_post_order( $constant_key, $post )
 	{
-		$html = gEditorialHTML::tag( 'input', array(
+		$html = HTML::tag( 'input', array(
 			'type'        => 'number',
 			'step'        => '1',
 			'size'        => '4',
@@ -1477,7 +1487,7 @@ class gEditorialModuleCore extends gEditorialWPModule
 			),
 		) );
 
-		echo gEditorialHTML::tag( 'div', array(
+		echo HTML::tag( 'div', array(
 			'class' => array(
 				'field-wrap',
 				'field-wrap-inputnumber',
@@ -1501,7 +1511,7 @@ class gEditorialModuleCore extends gEditorialWPModule
 		));
 
 		if ( $pages )
-			echo gEditorialHTML::tag( 'div', array(
+			echo HTML::tag( 'div', array(
 				'class' => 'field-wrap',
 			), $pages );
 	}
@@ -1513,14 +1523,14 @@ class gEditorialModuleCore extends gEditorialWPModule
 		$taxonomy = $this->constant( $constant_key );
 		$object   = get_taxonomy( $taxonomy );
 		$manage   = current_user_can( $object->cap->manage_terms );
-		$edit_url = $manage ? gEditorialWordPress::getEditTaxLink( $taxonomy ) : FALSE;
+		$edit_url = $manage ? WordPress::getEditTaxLink( $taxonomy ) : FALSE;
 
 		if ( $type )
 			$this->remove_meta_box( $constant_key, $post_type, $type );
 
 		add_meta_box( $this->classs( $taxonomy ),
 			$this->get_meta_box_title( $constant_key, $edit_url, TRUE ),
-			array( 'gEditorialMetaBox', 'checklistTerms' ),
+			[ __NAMESPACE__.'\\MetaBox', 'checklistTerms' ],
 			NULL,
 			'side',
 			'default',
@@ -1613,22 +1623,22 @@ class gEditorialModuleCore extends gEditorialWPModule
 
 	public function get_url_settings( $extra = array() )
 	{
-		return gEditorialWordPress::getAdminPageLink( $this->module->settings, $extra );
+		return WordPress::getAdminPageLink( $this->module->settings, $extra );
 	}
 
 	public function get_url_tax_edit( $constant_key, $term_id = FALSE, $extra = array() )
 	{
-		return gEditorialWordPress::getEditTaxLink( $this->constant( $constant_key ), $term_id, $extra );
+		return WordPress::getEditTaxLink( $this->constant( $constant_key ), $term_id, $extra );
 	}
 
 	public function get_url_post_edit( $constant_key, $extra = array(), $author_id = 0 )
 	{
-		return gEditorialWordPress::getPostTypeEditLink( $this->constant( $constant_key ), $author_id, $extra );
+		return WordPress::getPostTypeEditLink( $this->constant( $constant_key ), $author_id, $extra );
 	}
 
 	public function get_url_post_new( $constant_key, $extra = array() )
 	{
-		return gEditorialWordPress::getPostNewLink( $this->constant( $constant_key ), $extra );
+		return WordPress::getPostNewLink( $this->constant( $constant_key ), $extra );
 	}
 
 	protected function require_code( $filenames = 'templates' )
@@ -1641,7 +1651,7 @@ class gEditorialModuleCore extends gEditorialWPModule
 
 	public function is_current_posttype( $constant_key )
 	{
-		return gEditorialWordPress::currentPostType() == $this->constant( $constant_key );
+		return WordPress::currentPostType() == $this->constant( $constant_key );
 	}
 
 	public function is_save_post( $post, $constant_key = FALSE )
@@ -1698,7 +1708,7 @@ class gEditorialModuleCore extends gEditorialWPModule
 
 	public function set_linked_term( $post_id, $term_or_id, $posttype_constant_key, $tax_constant_key )
 	{
-		if ( ! $term = gEditorialWPTaxonomy::getTerm( $term_or_id, $this->constant( $tax_constant_key ) ) )
+		if ( ! $term = Taxonomy::getTerm( $term_or_id, $this->constant( $tax_constant_key ) ) )
 			return FALSE;
 
 		update_post_meta( $post_id, '_'.$this->constant( $posttype_constant_key ).'_term_id', $term->term_id );
@@ -1711,7 +1721,7 @@ class gEditorialModuleCore extends gEditorialWPModule
 
 	public function rev_linked_term( $post_id, $term_or_id, $posttype_constant_key, $tax_constant_key )
 	{
-		if ( ! $term = gEditorialWPTaxonomy::getTerm( $term_or_id, $this->constant( $tax_constant_key ) ) )
+		if ( ! $term = Taxonomy::getTerm( $term_or_id, $this->constant( $tax_constant_key ) ) )
 			return FALSE;
 
 		if ( ! $post_id )
@@ -1728,7 +1738,7 @@ class gEditorialModuleCore extends gEditorialWPModule
 
 	public function get_linked_post_id( $term_or_id, $posttype_constant_key, $tax_constant_key, $check_slug = TRUE )
 	{
-		if ( ! $term = gEditorialWPTaxonomy::getTerm( $term_or_id, $this->constant( $tax_constant_key ) ) )
+		if ( ! $term = Taxonomy::getTerm( $term_or_id, $this->constant( $tax_constant_key ) ) )
 			return FALSE;
 
 		$post_id = FALSE;
@@ -1737,7 +1747,7 @@ class gEditorialModuleCore extends gEditorialWPModule
 			$post_id = get_term_meta( $term->term_id, $this->constant( $posttype_constant_key ).'_linked', TRUE );
 
 		if ( ! $post_id && $check_slug )
-			$post_id = gEditorialWPPostType::getIDbySlug( $term->slug, $this->constant( $posttype_constant_key ) );
+			$post_id = PostType::getIDbySlug( $term->slug, $this->constant( $posttype_constant_key ) );
 
 		return $post_id;
 	}
@@ -1864,7 +1874,7 @@ class gEditorialModuleCore extends gEditorialWPModule
 			'sort_order'       => 'desc',
 			'post_status'      => array( 'publish', 'future', 'draft', 'pending' ),
 			'value_field'      => 'post_name',
-			'walker'           => new gEditorial_Walker_PageDropdown(),
+			'walker'           => new Walker_PageDropdown(),
 		));
 	}
 
@@ -1944,9 +1954,9 @@ SQL;
 
 		$class  = 'geditorial-glance-item -'.$this->slug().' -posttype -posttype-'.$posttype;
 		$format = current_user_can( $edit_cap ) ? '<a class="'.$class.'" href="edit.php?post_type=%3$s">%1$s %2$s</a>' : '<div class="'.$class.'">%1$s %2$s</div>';
-		$text   = gEditorialHelper::noopedCount( $posts->publish, $this->get_noop( $posttype_constant_key ) );
+		$text   = Helper::noopedCount( $posts->publish, $this->get_noop( $posttype_constant_key ) );
 
-		return sprintf( $format, gEditorialNumber::format( $posts->publish ), $text, $posttype );
+		return sprintf( $format, Number::format( $posts->publish ), $text, $posttype );
 	}
 
 	protected function dashboard_glance_tax( $tax_constant_key, $edit_cap = 'manage_categories' )
@@ -1959,9 +1969,9 @@ SQL;
 
 		$class  = 'geditorial-glance-item -'.$this->slug().' -tax -taxonomy-'.$taxonomy;
 		$format = current_user_can( $edit_cap ) ? '<a class="'.$class.'" href="edit-tags.php?taxonomy=%3$s">%1$s %2$s</a>' : '<div class="'.$class.'">%1$s %2$s</div>';
-		$text   = gEditorialHelper::noopedCount( $terms, $this->get_noop( $tax_constant_key ) );
+		$text   = Helper::noopedCount( $terms, $this->get_noop( $tax_constant_key ) );
 
-		return sprintf( $format, gEditorialNumber::format( $terms ), $text, $taxonomy );
+		return sprintf( $format, Number::format( $terms ), $text, $taxonomy );
 	}
 
 	public function get_column_icon( $link = FALSE, $icon = NULL, $title = NULL )
@@ -1972,23 +1982,23 @@ SQL;
 		if ( is_null( $title ) )
 			$title = $this->get_string( 'column_icon_title', $icon, 'misc', '' );
 
-		return gEditorialHTML::tag( ( $link ? 'a' : 'span' ), array(
+		return HTML::tag( ( $link ? 'a' : 'span' ), array(
 			'href'   => $link ? $link : FALSE,
 			'title'  => $title ? $title : FALSE,
 			'class'  => array( '-icon', ( $link ? '-link' : '-info' ) ),
 			'target' => $link ? '_blank' : FALSE,
-		), gEditorialHTML::getDashicon( $icon ) );
+		), HTML::getDashicon( $icon ) );
 	}
 
 	public function column_thumb( $post_id, $size = array( 45, 72 ) )
 	{
-		echo gEditorialWordPress::getFeaturedImageHTML( $post_id, $size );
+		echo WordPress::getFeaturedImageHTML( $post_id, $size );
 	}
 
 	// TODO: override $title_attr based on passed constant key
 	public function column_count( $count, $title_attr = NULL )
 	{
-		echo gEditorialHelper::htmlCount( $count, $title_attr );
+		echo Helper::htmlCount( $count, $title_attr );
 	}
 
 	public function column_term( $object_id, $tax_constant_key, $title_attr = NULL, $single = TRUE )
@@ -2007,7 +2017,7 @@ SQL;
 				foreach ( $the_terms as $the_term )
 					$terms[] = $the_term->name;
 
-				echo gEditorialHelper::getJoined( $terms );
+				echo Helper::getJoined( $terms );
 			}
 
 		} else {
@@ -2165,7 +2175,7 @@ SQL;
 	// DEFAULT FILTER
 	public function ajax()
 	{
-		gEditorialAjax::errorWhat();
+		Ajax::errorWhat();
 	}
 
 	protected function _tweaks_taxonomy()

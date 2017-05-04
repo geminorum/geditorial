@@ -1,6 +1,11 @@
-<?php defined( 'ABSPATH' ) or die( 'Restricted access' );
+<?php namespace geminorum\gEditorial;
 
-class gEditorialMetaBox extends gEditorialBaseCore
+defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
+
+use geminorum\gEditorial\Core\HTML;
+use geminorum\gEditorial\Core\WordPress;
+
+class MetaBox extends Core\Base
 {
 
 	// @SEE: https://github.com/bainternet/My-Meta-Box
@@ -47,12 +52,12 @@ class gEditorialMetaBox extends gEditorialBaseCore
 		$manage = current_user_can( $object->cap->manage_terms );
 
 		if ( $manage && is_null( $edit ) )
-			$edit = gEditorialWordPress::getEditTaxLink( $object->name );
+			$edit = WordPress::getEditTaxLink( $object->name );
 
 		echo '<div class="field-wrap field-wrap-empty">';
 
 			if ( $edit )
-				echo gEditorialHTML::tag( 'a', array(
+				echo HTML::tag( 'a', array(
 					'href'   => $edit,
 					'title'  => $object->labels->add_new_item,
 					'target' => '_blank',
@@ -69,7 +74,7 @@ class gEditorialMetaBox extends gEditorialBaseCore
 		$object = is_object( $post_type ) ? $post_type : get_post_type_object( $post_type );
 
 		echo '<div class="field-wrap field-wrap-empty">';
-			echo gEditorialHTML::tag( 'a', array(
+			echo HTML::tag( 'a', array(
 				'href'   => add_query_arg( array( 'post_type' => $post_type ), admin_url( 'post-new.php' ) ),
 				'title'  => $object->labels->add_new_item,
 				'target' => '_blank',
@@ -85,14 +90,14 @@ class gEditorialMetaBox extends gEditorialBaseCore
 			'name'             => ( $prefix ? $prefix.'-' : '' ).$post_type.'[]',
 			'id'               => ( $prefix ? $prefix.'-' : '' ).$post_type.'-'.( $selected ? $selected : '0' ),
 			'class'            => 'geditorial-admin-dropbown',
-			'show_option_none' => gEditorialSettingsCore::showOptionNone(),
+			'show_option_none' => Settings::showOptionNone(),
 			'sort_column'      => 'menu_order',
 			'sort_order'       => 'desc',
 			'post_status'      => array( 'publish', 'future', 'draft', 'pending' ),
 			'value_field'      => 'post_name',
 			'exclude'          => $exclude,
 			'echo'             => 0,
-			'walker'           => new gEditorial_Walker_PageDropdown(),
+			'walker'           => new Walker_PageDropdown(),
 		));
 	}
 }

@@ -1,6 +1,16 @@
-<?php defined( 'ABSPATH' ) or die( 'Restricted access' );
+<?php namespace geminorum\gEditorial\Modules;
 
-class gEditorialRevisions extends gEditorialModuleCore
+defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
+
+use geminorum\gEditorial;
+use geminorum\gEditorial\Ajax;
+use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Core\HTML;
+use geminorum\gEditorial\Core\Number;
+use geminorum\gEditorial\Core\Text;
+use geminorum\gEditorial\Core\WordPress;
+
+class Revisions extends gEditorial\Module
 {
 
 	protected $caps = array(
@@ -25,7 +35,7 @@ class gEditorialRevisions extends gEditorialModuleCore
 	public function settings_intro_after( $module )
 	{
 		if ( ! WP_POST_REVISIONS )
-			gEditorialHTML::warning( _x( 'Revisions are deactivated on this site, this module has no reason to be activated.', 'Modules: Revisions: Setting Section Notice', GEDITORIAL_TEXTDOMAIN ), TRUE );
+			HTML::warning( _x( 'Revisions are deactivated on this site, this module has no reason to be activated.', 'Modules: Revisions: Setting Section Notice', GEDITORIAL_TEXTDOMAIN ), TRUE );
 	}
 
 	protected function get_global_settings()
@@ -126,7 +136,7 @@ class gEditorialRevisions extends gEditorialModuleCore
 		$_SERVER['REQUEST_URI'] = remove_query_arg( $this->hook( 'purged' ), $_SERVER['REQUEST_URI'] );
 
 		$message = _x( '%s items(s) revisions purged!', 'Modules: Revisions: Message', GEDITORIAL_TEXTDOMAIN );
-		gEditorialHTML::success( sprintf( $message, gEditorialNumber::format( $purged ) ), TRUE );
+		HTML::success( sprintf( $message, Number::format( $purged ) ), TRUE );
 	}
 
 	public function column_attr( $post )
@@ -150,10 +160,10 @@ class gEditorialRevisions extends gEditorialModuleCore
 
 					echo $this->get_column_icon( FALSE, 'backup', _x( 'Revisions', 'Modules: Revisions: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
 
-					$title = sprintf( _nx( '%s Revision', '%s Revisions', $count, 'Modules: Revisions', GEDITORIAL_TEXTDOMAIN ), gEditorialNumber::format( $count ) );
+					$title = sprintf( _nx( '%s Revision', '%s Revisions', $count, 'Modules: Revisions', GEDITORIAL_TEXTDOMAIN ), Number::format( $count ) );
 
 					if ( current_user_can( 'edit_post', $last ) )
-						echo gEditorialHTML::tag( 'a', array(
+						echo HTML::tag( 'a', array(
 							'href'   => get_edit_post_link( $last ),
 							'title'  => _x( 'View the last revision', 'Modules: Revisions', GEDITORIAL_TEXTDOMAIN ),
 							'target' => '_blank',
@@ -161,7 +171,7 @@ class gEditorialRevisions extends gEditorialModuleCore
 					else
 						echo $title;
 
-					gEditorialHelper::getAuthorsEditRow( $authors, $post->post_type, ' <span class="-authors">(', ')</span>' );
+					Helper::getAuthorsEditRow( $authors, $post->post_type, ' <span class="-authors">(', ')</span>' );
 
 				echo '</li>';
 			}
@@ -182,14 +192,14 @@ class gEditorialRevisions extends gEditorialModuleCore
 
 	public static function wordCount( $revision )
 	{
-		$title   = gEditorialCoreText::wordCountUTF8( $revision->post_title );
-		$content = gEditorialCoreText::wordCountUTF8( $revision->post_content );
-		$excerpt = gEditorialCoreText::wordCountUTF8( $revision->post_excerpt );
+		$title   = Text::wordCountUTF8( $revision->post_title );
+		$content = Text::wordCountUTF8( $revision->post_content );
+		$excerpt = Text::wordCountUTF8( $revision->post_excerpt );
 
 		return vsprintf( '[<span class="-wordcount" title="%4$s">%1$s &ndash; %2$s &ndash; %3$s</span>]', array(
-			gEditorialHelper::htmlCount( $title ),
-			gEditorialHelper::htmlCount( $content ),
-			gEditorialHelper::htmlCount( $excerpt ),
+			Helper::htmlCount( $title ),
+			Helper::htmlCount( $content ),
+			Helper::htmlCount( $excerpt ),
 			_x( 'Title/Content/Excerpt Word Count', 'Modules: Revisions', GEDITORIAL_TEXTDOMAIN ),
 		) );
 	}
@@ -203,7 +213,7 @@ class gEditorialRevisions extends gEditorialModuleCore
 		$parts['author'] = sprintf( '%1$s %2$s &ndash;', $author['avatar'], $author['name'] );
 
 		$time = strtotime( $revision->post_modified );
-		$parts['timediff'] = gEditorialHelper::humanTimeDiffRound( $time, FALSE );
+		$parts['timediff'] = Helper::humanTimeDiffRound( $time, FALSE );
 		$parts['datetime'] = '('.date_i18n( _x( 'M j, Y @ H:i', 'Modules: Revisions', GEDITORIAL_TEXTDOMAIN ), $time ).')';
 
 		if ( $this->get_setting( 'revision_wordcount', FALSE ) )
@@ -217,8 +227,8 @@ class gEditorialRevisions extends gEditorialModuleCore
 		}
 
 		if ( $link && current_user_can( 'edit_post', $revision->ID ) ) {
-			$parts['edit']   = sprintf( '<a class="button button-small" href="%1$s">%2$s %3$s</a>', get_edit_post_link( $revision->ID ), gEditorialHTML::getDashicon( 'edit' ), _x( 'Edit', 'Modules: Revisions', GEDITORIAL_TEXTDOMAIN ) );
-			$parts['delete'] = sprintf( '<a class="button button-small -delete" href="#" data-id="%1$s" data-parent="%2$s">%3$s %4$s</a>', $revision->ID, $revision->post_parent, gEditorialHTML::getDashicon( 'trash' ), _x( 'Delete', 'Modules: Revisions', GEDITORIAL_TEXTDOMAIN ) );
+			$parts['edit']   = sprintf( '<a class="button button-small" href="%1$s">%2$s %3$s</a>', get_edit_post_link( $revision->ID ), HTML::getDashicon( 'edit' ), _x( 'Edit', 'Modules: Revisions', GEDITORIAL_TEXTDOMAIN ) );
+			$parts['delete'] = sprintf( '<a class="button button-small -delete" href="#" data-id="%1$s" data-parent="%2$s">%3$s %4$s</a>', $revision->ID, $revision->post_parent, HTML::getDashicon( 'trash' ), _x( 'Delete', 'Modules: Revisions', GEDITORIAL_TEXTDOMAIN ) );
 		} else {
 			$link = FALSE;
 		}
@@ -247,12 +257,12 @@ class gEditorialRevisions extends gEditorialModuleCore
 
 		echo '<div class="misc-pub-section geditorial-admin-wrap -revisions">';
 
-			echo gEditorialHTML::tag( 'a', array(
+			echo HTML::tag( 'a', array(
 				'id'    => $this->hook( 'purge' ),
 				'class' => 'button button-small -purge',
 				'title' => _x( 'Purge all revisions', 'Modules: Revisions', GEDITORIAL_TEXTDOMAIN ),
 				'data'  => array( 'parent' => $post->ID ),
-				'href'  => gEditorialWordPress::getAdminPostLink( $this->hook( 'purge' ), array(
+				'href'  => WordPress::getAdminPostLink( $this->hook( 'purge' ), array(
 					'post_id'  => $post->ID,
 					'_wpnonce' => $this->nonce_create( 'purge_'.$post->ID ),
 				) ),
@@ -260,13 +270,13 @@ class gEditorialRevisions extends gEditorialModuleCore
 
 			echo '<span class="-loading spinner"></span>';
 
-			echo gEditorialHTML::tag( 'a', array(
+			echo HTML::tag( 'a', array(
 				'id'    => $this->hook( 'browse' ),
 				'class' => 'button b1utton-small -browse hide-if-no-js',
 				'title' => _x( 'Browse all revisions', 'Modules: Revisions', GEDITORIAL_TEXTDOMAIN ),
 				'href'  => get_edit_post_link( $last ),
 			), sprintf( _x( 'Browse %s Revisions', 'Modules: Revisions', GEDITORIAL_TEXTDOMAIN ),
-				'<b>'.gEditorialNumber::format( $count ).'</b>' ) );
+				'<b>'.Number::format( $count ).'</b>' ) );
 
 		echo '</div>';
 	}
@@ -295,15 +305,15 @@ class gEditorialRevisions extends gEditorialModuleCore
 	public function admin_post()
 	{
 		if ( empty( $_REQUEST['post_id'] ) )
-			gEditorialWordPress::redirectReferer( 'wrong' );
+			WordPress::redirectReferer( 'wrong' );
 
 		if ( ! $this->nonce_verify( NULL, 'purge_'.$_REQUEST['post_id'] ) )
 			self::cheatin();
 
 		if ( ! current_user_can( $this->caps['purge'], $_REQUEST['post_id'] ) )
-			gEditorialWordPress::redirectReferer( 'noaccess' );
+			WordPress::redirectReferer( 'noaccess' );
 
-		gEditorialWordPress::redirectReferer( array(
+		WordPress::redirectReferer( array(
 			$this->hook( 'purged' ) => $this->purge( $_REQUEST['post_id'] ),
 		) );
 	}
@@ -319,7 +329,7 @@ class gEditorialRevisions extends gEditorialModuleCore
 		if ( empty( $post['post_id'] ) )
 			wp_send_json_error();
 
-		gEditorialAjax::checkReferer( $this->hook( $post['post_id'] ) );
+		Ajax::checkReferer( $this->hook( $post['post_id'] ) );
 
 		switch ( $what ) {
 
@@ -347,7 +357,7 @@ class gEditorialRevisions extends gEditorialModuleCore
 				wp_send_json_success();
 		}
 
-		gEditorialAjax::errorWhat();
+		Ajax::errorWhat();
 	}
 
 	public function reports_settings( $sub )
@@ -373,7 +383,7 @@ class gEditorialRevisions extends gEditorialModuleCore
 							$count += $this->purge( $post_id );
 					}
 
-					gEditorialWordPress::redirectReferer( array(
+					WordPress::redirectReferer( array(
 						'message' => 'cleaned',
 						'count'   => $count,
 					) );
@@ -399,12 +409,12 @@ class gEditorialRevisions extends gEditorialModuleCore
 	{
 		list( $posts, $pagination ) = $this->getPostArray();
 
-		return gEditorialHTML::tableList( array(
+		return HTML::tableList( array(
 			'_cb'   => 'ID',
-			'ID'    => gEditorialHelper::tableColumnPostID(),
-			'date'  => gEditorialHelper::tableColumnPostDate(),
-			'type'  => gEditorialHelper::tableColumnPostType(),
-			'title' => gEditorialHelper::tableColumnPostTitle(),
+			'ID'    => Helper::tableColumnPostID(),
+			'date'  => Helper::tableColumnPostDate(),
+			'type'  => Helper::tableColumnPostType(),
+			'title' => Helper::tableColumnPostTitle(),
 			'revisons' => array(
 				'title'    => _x( 'Revisions', 'Modules: Revisions: Table Column', GEDITORIAL_TEXTDOMAIN ),
 				'callback' => function( $value, $row, $column, $index ){
@@ -419,7 +429,7 @@ class gEditorialRevisions extends gEditorialModuleCore
 						$block = '<input type="checkbox" name="_cb[]" value="'.$revision->ID.'" title="'.$revision->ID.'" />';
 
 						$block .= ' '.self::wordCount( $revision );
-						$block .= ' &ndash; '.gEditorialHelper::humanTimeDiffRound( strtotime( $revision->post_modified ), FALSE );
+						$block .= ' &ndash; '.Helper::humanTimeDiffRound( strtotime( $revision->post_modified ), FALSE );
 						$block .= ' &ndash; '.get_the_author_meta( 'display_name', $revision->post_author );
 
 						$html .= '<div>'.$block.'</div>';
@@ -428,12 +438,12 @@ class gEditorialRevisions extends gEditorialModuleCore
 					return $html;
 				},
 			),
-			'terms' => gEditorialHelper::tableColumnPostTerms(),
+			'terms' => Helper::tableColumnPostTerms(),
 		), $posts, array(
 			'navigation' => 'before',
 			'search'     => 'before',
-			'title'      => gEditorialHTML::tag( 'h3', _x( 'Overview of Post Revisions', 'Modules: Revisions', GEDITORIAL_TEXTDOMAIN ) ),
-			'empty'      => gEditorialHTML::warning( _x( 'No Posts!', 'Modules: Revisions', GEDITORIAL_TEXTDOMAIN ) ),
+			'title'      => HTML::tag( 'h3', _x( 'Overview of Post Revisions', 'Modules: Revisions', GEDITORIAL_TEXTDOMAIN ) ),
+			'empty'      => HTML::warning( _x( 'No Posts!', 'Modules: Revisions', GEDITORIAL_TEXTDOMAIN ) ),
 			'pagination' => $pagination,
 		) );
 	}
@@ -477,7 +487,7 @@ class gEditorialRevisions extends gEditorialModuleCore
 		$query = new \WP_Query;
 		$posts = $query->query( $args );
 
-		$pagination = gEditorialHTML::tablePagination( $total, ceil( $total / $limit ), $limit, $paged );
+		$pagination = HTML::tablePagination( $total, ceil( $total / $limit ), $limit, $paged );
 
 		return [ $posts, $pagination ];
 	}

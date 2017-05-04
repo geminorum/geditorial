@@ -1,6 +1,11 @@
-<?php defined( 'ABSPATH' ) or die( 'Restricted access' );
+<?php namespace geminorum\gEditorial\WordPress;
 
-class gEditorialWPMedia extends gEditorialBaseCore
+defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
+
+use geminorum\gEditorial\Settings;
+use geminorum\gEditorial\Core;
+
+class Media extends Core\Base
 {
 
 	// PDF: 'application/pdf'
@@ -19,11 +24,11 @@ class gEditorialWPMedia extends gEditorialBaseCore
 		if ( ! $attachments )
 			return;
 
-		echo gEditorialHTML::dropdown(
-			gEditorialArraay::reKey( $attachments, 'ID' ),
+		echo Core\HTML::dropdown(
+			Core\Arraay::reKey( $attachments, 'ID' ),
 			array(
 				'name'       => $name,
-				'none_title' => gEditorialSettingsCore::showOptionNone(),
+				'none_title' => Settings::showOptionNone(),
 				'class'      => '-attachment',
 				'selected'   => $selected,
 				'prop'       => 'post_title',

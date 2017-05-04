@@ -1,6 +1,12 @@
-<?php defined( 'ABSPATH' ) or die( 'Restricted access' );
+<?php namespace geminorum\gEditorial\Modules;
 
-class gEditorialOrtho extends gEditorialModuleCore
+defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
+
+use geminorum\gEditorial;
+use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Core\HTML;
+
+class Ortho extends gEditorial\Module
 {
 
 	private $virastar_version  = '0.12.0';
@@ -19,8 +25,8 @@ class gEditorialOrtho extends gEditorialModuleCore
 
 	public function settings_intro_after( $module )
 	{
-		gEditorialHTML::desc( sprintf( _x( 'Current installed Virastar version is: <code>%s</code>', 'Modules: Ortho: Settings Intro', GEDITORIAL_TEXTDOMAIN ), $this->virastar_version ) );
-		gEditorialHTML::desc( sprintf( _x( 'For more information, Please see Virastar <a href="%s" target="_blank">home page</a> or <a href="%s" target="_blank">live demo</a>.', 'Modules: Ortho: Settings Intro', GEDITORIAL_TEXTDOMAIN ),
+		HTML::desc( sprintf( _x( 'Current installed Virastar version is: <code>%s</code>', 'Modules: Ortho: Settings Intro', GEDITORIAL_TEXTDOMAIN ), $this->virastar_version ) );
+		HTML::desc( sprintf( _x( 'For more information, Please see Virastar <a href="%s" target="_blank">home page</a> or <a href="%s" target="_blank">live demo</a>.', 'Modules: Ortho: Settings Intro', GEDITORIAL_TEXTDOMAIN ),
 			'https://github.com/juvee/virastar', 'http://juvee.github.io/virastar/' ) );
 	}
 
@@ -77,7 +83,7 @@ class gEditorialOrtho extends gEditorialModuleCore
 	{
 		return array(
 			'js' => array(
-				// 'button_virastar'        => gEditorialHTML::getDashicon( 'filter' ),
+				// 'button_virastar'        => HTML::getDashicon( 'filter' ),
 				'button_virastar_title'  => _x( 'Apply Virastar!', 'Modules: Ortho: Javascript String', GEDITORIAL_TEXTDOMAIN ),
 				'qtag_virastar'          => _x( 'Virastar!', 'Modules: Ortho: Javascript String', GEDITORIAL_TEXTDOMAIN ),
 				'qtag_virastar_title'    => _x( 'Apply Virastar!', 'Modules: Ortho: Javascript String', GEDITORIAL_TEXTDOMAIN ),
@@ -132,7 +138,7 @@ class gEditorialOrtho extends gEditorialModuleCore
 		if ( $this->virastar_enqueued )
 			return;
 
-		$virastar = gEditorialHelper::registerScriptPackage( 'virastar',
+		$virastar = Helper::registerScriptPackage( 'virastar',
 			NULL, [], $this->virastar_version );
 
 		$this->enqueue_asset_js( [

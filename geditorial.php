@@ -30,7 +30,7 @@ defined( 'GEDITORIAL_TEXTDOMAIN' ) or define( 'GEDITORIAL_TEXTDOMAIN', 'geditori
 	require_once( GEDITORIAL_DIR.'includes/class-main.php' );
 
 	function gEditorial() {
-		return gEditorial::instance();
+		return \geminorum\gEditorial\Plugin::instance();
 	}
 
 	// FIXME: back comp

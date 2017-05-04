@@ -1,6 +1,16 @@
-<?php defined( 'ABSPATH' ) or die( 'Restricted access' );
+<?php namespace geminorum\gEditorial;
 
-class gEditorialSettingsCore extends gEditorialBaseCore
+defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
+
+use geminorum\gEditorial\Core\Arraay;
+use geminorum\gEditorial\Core\HTML;
+use geminorum\gEditorial\Core\Number;
+use geminorum\gEditorial\Core\URL;
+use geminorum\gEditorial\Core\WordPress;
+use geminorum\gEditorial\WordPress\PostType;
+use geminorum\gEditorial\WordPress\Taxonomy;
+
+class Settings extends Core\Base
 {
 
 	const REPORTS  = 'geditorial-reports';
@@ -14,7 +24,7 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 			case 'settings': $url = self::settingsURL(); break;
 			case 'tools'   : $url = self::toolsURL();    break;
 
-			default: $url = gEditorialURL::current();
+			default: $url = URL::current();
 		}
 
 		return add_query_arg( 'sub', $sub, $url );
@@ -101,10 +111,10 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 	public static function priorityOptions( $format = TRUE )
 	{
 		return
-			array_reverse( gEditorialArraay::range( -100, -1000, 100, $format ), TRUE ) +
-			array_reverse( gEditorialArraay::range( -10, -100, 10, $format ), TRUE ) +
-			gEditorialArraay::range( 0, 100, 10, $format ) +
-			gEditorialArraay::range( 100, 1000, 100, $format );
+			array_reverse( Arraay::range( -100, -1000, 100, $format ), TRUE ) +
+			array_reverse( Arraay::range( -10, -100, 10, $format ), TRUE ) +
+			Arraay::range( 0, 100, 10, $format ) +
+			Arraay::range( 100, 1000, 100, $format );
 	}
 
 	public static function minutesOptions()
@@ -144,9 +154,9 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 
 	public static function fieldSection( $title, $description = FALSE, $tag = 'h3' )
 	{
-		echo gEditorialHTML::tag( $tag, $title );
+		echo HTML::tag( $tag, $title );
 
-		gEditorialHTML::desc( $description );
+		HTML::desc( $description );
 	}
 
 	public static function infoP2P()
@@ -404,7 +414,7 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 			'title'   => _x( 'Default Calendar', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 			'type'    => 'select',
 			'default' => 'gregorian',
-			'values'  => gEditorialHelper::getDefualtCalendars( TRUE ),
+			'values'  => Helper::getDefualtCalendars( TRUE ),
 			'section' => $section,
 		);
 	}
@@ -442,13 +452,13 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 		$extra = '';
 
 		if ( $count )
-			$extra .= sprintf( ' <span class="-count title-count">%s</span>', gEditorialNumber::format( $count ) );
+			$extra .= sprintf( ' <span class="-count title-count">%s</span>', Number::format( $count ) );
 
 		if ( $back )
 			$extra .= sprintf( ' <a href="%s" class="-action page-title-action">%s</a>', $back, $to );
 
 		if ( $search )
-			$extra .= gEditorialHTML::tag( 'input', [
+			$extra .= HTML::tag( 'input', [
 				'type'        => 'search',
 				'class'       => [ '-search', 'hide-if-no-js' ],
 				'placeholder' => _x( 'Search …', 'Settings: Search Placeholder', GEDITORIAL_TEXTDOMAIN ),
@@ -468,7 +478,7 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 			if ( isset( $messages[$_GET['message']] ) )
 				echo $messages[$_GET['message']];
 			else
-				gEditorialHTML::warning( $_GET['message'], TRUE );
+				HTML::warning( $_GET['message'], TRUE );
 
 			$_SERVER['REQUEST_URI'] = remove_query_arg( [ 'message', 'count' ], $_SERVER['REQUEST_URI'] );
 		}
@@ -477,14 +487,14 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 	public static function messages()
 	{
 		return array(
-			'resetting' => gEditorialHTML::success( _x( 'Settings reset.', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
-			'optimized' => gEditorialHTML::success( _x( 'Tables optimized.', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
-			'updated'   => gEditorialHTML::success( _x( 'Settings updated.', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
-			'purged'    => gEditorialHTML::success( _x( 'Data purged.', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
-			'error'     => gEditorialHTML::error( _x( 'Error occurred!', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
-			'wrong'     => gEditorialHTML::error( _x( 'Something\'s wrong!', 'Settings', GEDITORIAL_TEXTDOMAIN ) ),
-			'nochange'  => gEditorialHTML::error( _x( 'No item changed!', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
-			'noaccess'  => gEditorialHTML::error( _x( 'You do not have the access!', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
+			'resetting' => HTML::success( _x( 'Settings reset.', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
+			'optimized' => HTML::success( _x( 'Tables optimized.', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
+			'updated'   => HTML::success( _x( 'Settings updated.', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
+			'purged'    => HTML::success( _x( 'Data purged.', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
+			'error'     => HTML::error( _x( 'Error occurred!', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
+			'wrong'     => HTML::error( _x( 'Something\'s wrong!', 'Settings', GEDITORIAL_TEXTDOMAIN ) ),
+			'nochange'  => HTML::error( _x( 'No item changed!', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
+			'noaccess'  => HTML::error( _x( 'You do not have the access!', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
 			'converted' => self::counted( _x( '%s items(s) converted!', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
 			'created'   => self::counted( _x( '%s items(s) created!', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
 			'deleted'   => self::counted( _x( '%s items(s) deleted!', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
@@ -492,7 +502,7 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 			'changed'   => self::counted( _x( '%s items(s) changed!', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
 			'emptied'   => self::counted( _x( '%s items(s) emptied!', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
 			'ordered'   => self::counted( _x( '%s items(s) re-ordered!', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
-			'huh'       => gEditorialHTML::error( self::huh( self::req( 'huh', NULL ) ) ),
+			'huh'       => HTML::error( self::huh( self::req( 'huh', NULL ) ) ),
 		);
 	}
 
@@ -530,7 +540,7 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 		else if ( $primary )
 			$classes[] = 'button-'.$primary;
 
-		echo gEditorialHTML::tag( 'input', array_merge( $atts, array(
+		echo HTML::tag( 'input', array_merge( $atts, array(
 			'type'    => 'submit',
 			'name'    => $name,
 			'id'      => $name,
@@ -550,7 +560,7 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 		if ( is_null( $count ) )
 			$count = self::req( 'count', 0 );
 
-		return gEditorialHTML::notice( sprintf( $message, gEditorialNumber::format( $count ) ), $class.' fade', FALSE );
+		return HTML::notice( sprintf( $message, Number::format( $count ) ), $class.' fade', FALSE );
 	}
 
 	public static function cheatin( $message = NULL )
@@ -558,7 +568,7 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 		if ( is_null( $message ) )
 			$message = _x( 'Cheatin&#8217; uh?', 'Settings: Message', GEDITORIAL_TEXTDOMAIN );
 
-		gEditorialHTML::error( $message, TRUE );
+		HTML::error( $message, TRUE );
 	}
 
 	public static function huh( $message = NULL )
@@ -571,7 +581,7 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 
 	public static function headerNav( $uri = '', $active = '', $subs = array(), $prefix = 'nav-tab-', $tag = 'h3' )
 	{
-		gEditorialHTML::headerNav( $uri, $active, $subs, $prefix, $tag );
+		HTML::headerNav( $uri, $active, $subs, $prefix, $tag );
 	}
 
 	// @SOURCE: `add_settings_section()`
@@ -605,7 +615,7 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 			echo '<div class="-section-wrap '.$section['section_class'].'">';
 
 				if ( $section['title'] )
-					gEditorialHTML::h2( $section['title'], '-section-title' );
+					HTML::h2( $section['title'], '-section-title' );
 
 				if ( $section['callback'] )
 					call_user_func( $section['callback'], $section );
@@ -658,14 +668,14 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 
 	public static function moduleSectionEmpty( $description )
 	{
-		echo gEditorialHTML::tag( 'p', array(
+		echo HTML::tag( 'p', array(
 			'class' => 'description -section-description -section-empty',
 		), $description );
 	}
 
 	public static function moduleButtons( $module, $enabled = FALSE )
 	{
-		echo gEditorialHTML::tag( 'input', array(
+		echo HTML::tag( 'input', array(
 			'type'  => 'submit',
 			'value' => _x( 'Enable', 'Settings: Button', GEDITORIAL_TEXTDOMAIN ),
 			'style' => $enabled ? 'display:none' : FALSE,
@@ -676,7 +686,7 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 			),
 		) );
 
-		echo gEditorialHTML::tag( 'input', array(
+		echo HTML::tag( 'input', array(
 			'type'  => 'submit',
 			'value' => _x( 'Disable', 'Settings: Button', GEDITORIAL_TEXTDOMAIN ),
 			'style' => $enabled ? FALSE : 'display:none',
@@ -687,7 +697,7 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 			),
 		) );
 
-		echo gEditorialHTML::tag( 'span', [
+		echo HTML::tag( 'span', [
 			'class' => [ 'button', 'hide-if-js' ],
 		], _x( 'You have to enable Javascript!', 'Settings: Notice', GEDITORIAL_TEXTDOMAIN ) );
 	}
@@ -695,7 +705,7 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 	public static function moduleConfigure( $module, $enabled = FALSE )
 	{
 		if ( $module->configure )
-			echo gEditorialHTML::tag( 'a', array(
+			echo HTML::tag( 'a', array(
 				'href'  => add_query_arg( 'page', $module->settings, get_admin_url( NULL, 'admin.php' ) ),
 				'style' => $enabled ? FALSE : 'display:none',
 				'class' => array( 'button', 'button-primary', 'button-configure' ),
@@ -710,14 +720,14 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 	{
 		$links = self::getModuleWiki( $module );
 
-		gEditorialHTML::h3( gEditorialHTML::tag( 'a', [
+		HTML::h3( HTML::tag( 'a', [
 			'href'   => $links[0],
 			'title'  => $links[1],
 			'target' => '_blank',
 		], $module->title ), '-title' );
 
 		if ( isset( $module->desc ) )
-			gEditorialHTML::desc( $module->desc );
+			HTML::desc( $module->desc );
 
 		// key for search filter
 		echo '<span class="-module-key" style="display:none;">'.$module->name.'</span>';
@@ -728,8 +738,8 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 		if ( $module ) {
 
 			return array(
-				'https://github.com/geminorum/geditorial/wiki/Modules-'.gEditorialHelper::moduleSlug( $module->name ),
-				sprintf( 'Editorial %s Documentation', gEditorialHelper::moduleSlug( $module->name, FALSE ) ),
+				'https://github.com/geminorum/geditorial/wiki/Modules-'.Helper::moduleSlug( $module->name ),
+				sprintf( 'Editorial %s Documentation', Helper::moduleSlug( $module->name, FALSE ) ),
 				'https://github.com/geminorum/geditorial',
 			);
 
@@ -782,7 +792,7 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 					'content' => gnetwork_github( array(
 						'repo'    => 'geminorum/geditorial',
 						'type'    => 'wiki',
-						'page'    => 'Modules-'.gEditorialHelper::moduleSlug( $module->name ),
+						'page'    => 'Modules-'.Helper::moduleSlug( $module->name ),
 						'context' => 'help_tab',
 					) ),
 				);
@@ -904,7 +914,7 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 
 			case 'hidden' :
 
-				echo gEditorialHTML::tag( 'input', array(
+				echo HTML::tag( 'input', array(
 					'type'  => 'hidden',
 					'id'    => $id,
 					'name'  => $name,
@@ -917,20 +927,20 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 			break;
 			case 'enabled' :
 
-				$html = gEditorialHTML::tag( 'option', array(
+				$html = HTML::tag( 'option', array(
 					'value'    => '0',
 					'selected' => '0' == $value,
 				), esc_html( empty( $args['values'][0] ) ? $args['string_disabled'] : $args['values'][0] ) );
 
-				$html .= gEditorialHTML::tag( 'option', array(
+				$html .= HTML::tag( 'option', array(
 					'value'    => '1',
 					'selected' => '1' == $value,
 				), esc_html( empty( $args['values'][1] ) ? $args['string_enabled'] : $args['values'][1] ) );
 
-				echo gEditorialHTML::tag( 'select', array(
+				echo HTML::tag( 'select', array(
 					'id'       => $id,
 					'name'     => $name,
-					'class'    => gEditorialHTML::attrClass( $args['field_class'], '-type-enabled' ),
+					'class'    => HTML::attrClass( $args['field_class'], '-type-enabled' ),
 					'disabled' => $args['disabled'],
 					'readonly' => $args['readonly'],
 					'dir'      => $args['dir'],
@@ -946,7 +956,7 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 				if ( ! count( $args['dir'] ) )
 					$args['data'] = array( 'accept' => 'text' );
 
-				echo gEditorialHTML::tag( 'input', array(
+				echo HTML::tag( 'input', array(
 					'type'        => 'text',
 					'id'          => $id,
 					'name'        => $name,
@@ -971,14 +981,14 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 				if ( ! count( $args['dir'] ) )
 					$args['data'] = array( 'accept' => 'number' );
 
-				echo gEditorialHTML::tag( 'input', array(
+				echo HTML::tag( 'input', array(
 					'type'        => 'number',
 					'id'          => $id,
 					'name'        => $name,
 					'value'       => $value,
 					'step'        => $args['step_attr'],
 					'min'         => $args['min_attr'],
-					'class'       => gEditorialHTML::attrClass( $args['field_class'], '-type-number' ),
+					'class'       => HTML::attrClass( $args['field_class'], '-type-number' ),
 					'placeholder' => $args['placeholder'],
 					'disabled'    => $args['disabled'],
 					'readonly'    => $args['readonly'],
@@ -998,7 +1008,7 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 				if ( ! count( $args['dir'] ) )
 					$args['data'] = array( 'accept' => 'url' );
 
-				echo gEditorialHTML::tag( 'input', array(
+				echo HTML::tag( 'input', array(
 					'type'        => 'url',
 					'id'          => $id,
 					'name'        => $name,
@@ -1018,19 +1028,19 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 
 					if ( ! is_null( $args['none_title'] ) ) {
 
-						$html = gEditorialHTML::tag( 'input', array(
+						$html = HTML::tag( 'input', array(
 							'type'     => 'checkbox',
 							'id'       => $id.( is_null( $args['none_value'] ) ? '' : '-'.$args['none_value'] ),
 							'name'     => $name.( is_null( $args['none_value'] ) ? '' : '-'.$args['none_value'] ),
 							'value'    => is_null( $args['none_value'] ) ? '1' : $args['none_value'],
 							'checked'  => in_array( $args['none_value'], ( array ) $value ),
-							'class'    => gEditorialHTML::attrClass( $args['field_class'], '-type-checkbox', '-option-none' ),
+							'class'    => HTML::attrClass( $args['field_class'], '-type-checkbox', '-option-none' ),
 							'disabled' => $args['disabled'],
 							'readonly' => $args['readonly'],
 							'dir'      => $args['dir'],
 						) );
 
-						echo '<p>'.gEditorialHTML::tag( 'label', array(
+						echo '<p>'.HTML::tag( 'label', array(
 							'for' => $id.( is_null( $args['none_value'] ) ? '' : '-'.$args['none_value'] ),
 						), $html.'&nbsp;'.esc_html( $args['none_title'] ) ).'</p>';
 					}
@@ -1040,7 +1050,7 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 						if ( in_array( $value_name, $exclude ) )
 							continue;
 
-						$html = gEditorialHTML::tag( 'input', array(
+						$html = HTML::tag( 'input', array(
 							'type'     => 'checkbox',
 							'id'       => $id.'-'.$value_name,
 							'name'     => $name.'['.$value_name.']',
@@ -1052,14 +1062,14 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 							'dir'      => $args['dir'],
 						) );
 
-						echo '<p>'.gEditorialHTML::tag( 'label', array(
+						echo '<p>'.HTML::tag( 'label', array(
 							'for' => $id.'-'.$value_name,
 						), $html.'&nbsp;'.$value_title ).'</p>';
 					}
 
 				} else {
 
-					$html = gEditorialHTML::tag( 'input', array(
+					$html = HTML::tag( 'input', array(
 						'type'     => 'checkbox',
 						'id'       => $id,
 						'name'     => $name,
@@ -1072,7 +1082,7 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 						'data'     => $args['data'],
 					) );
 
-					echo '<p>'.gEditorialHTML::tag( 'label', array(
+					echo '<p>'.HTML::tag( 'label', array(
 						'for' => $id,
 					), $html.'&nbsp;'.$args['description'] ).'</p>';
 
@@ -1086,19 +1096,19 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 
 					if ( ! is_null( $args['none_title'] ) ) {
 
-						$html = gEditorialHTML::tag( 'input', array(
+						$html = HTML::tag( 'input', array(
 							'type'     => 'radio',
 							'id'       => $id.( is_null( $args['none_value'] ) ? '' : '-'.$args['none_value'] ),
 							'name'     => $name,
 							'value'    => is_null( $args['none_value'] ) ? FALSE : $args['none_value'],
 							'checked'  => in_array( $args['none_value'], ( array ) $value ),
-							'class'    => gEditorialHTML::attrClass( $args['field_class'], '-type-radio', '-option-none' ),
+							'class'    => HTML::attrClass( $args['field_class'], '-type-radio', '-option-none' ),
 							'disabled' => $args['disabled'],
 							'readonly' => $args['readonly'],
 							'dir'      => $args['dir'],
 						) );
 
-						echo '<p>'.gEditorialHTML::tag( 'label', array(
+						echo '<p>'.HTML::tag( 'label', array(
 							'for' => $id.( is_null( $args['none_value'] ) ? '' : '-'.$args['none_value'] ),
 						), $html.'&nbsp;'.esc_html( $args['none_title'] ) ).'</p>';
 					}
@@ -1108,19 +1118,19 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 						if ( in_array( $value_name, $exclude ) )
 							continue;
 
-						$html = gEditorialHTML::tag( 'input', array(
+						$html = HTML::tag( 'input', array(
 							'type'     => 'radio',
 							'id'       => $id.'-'.$value_name,
 							'name'     => $name,
 							'value'    => $value_name,
 							'checked'  => in_array( $value_name, ( array ) $value ),
-							'class'    => gEditorialHTML::attrClass( $args['field_class'], '-type-radio' ),
+							'class'    => HTML::attrClass( $args['field_class'], '-type-radio' ),
 							'disabled' => $args['disabled'],
 							'readonly' => $args['readonly'],
 							'dir'      => $args['dir'],
 						) );
 
-						echo '<p>'.gEditorialHTML::tag( 'label', array(
+						echo '<p>'.HTML::tag( 'label', array(
 							'for' => $id.'-'.$value_name,
 						), $html.'&nbsp;'.$value_title ).'</p>';
 					}
@@ -1136,7 +1146,7 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 						if ( is_null( $args['none_value'] ) )
 							$args['none_value'] = '0';
 
-						$html .= gEditorialHTML::tag( 'option', array(
+						$html .= HTML::tag( 'option', array(
 							'value'    => $args['none_value'],
 							'selected' => $value == $args['none_value'],
 						), esc_html( $args['none_title'] ) );
@@ -1147,16 +1157,16 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 						if ( in_array( $value_name, $exclude ) )
 							continue;
 
-						$html .= gEditorialHTML::tag( 'option', array(
+						$html .= HTML::tag( 'option', array(
 							'value'    => $value_name,
 							'selected' => $value == $value_name,
 						), esc_html( $value_title ) );
 					}
 
-					echo gEditorialHTML::tag( 'select', array(
+					echo HTML::tag( 'select', array(
 						'id'       => $id,
 						'name'     => $name,
-						'class'    => gEditorialHTML::attrClass( $args['field_class'], '-type-select' ),
+						'class'    => HTML::attrClass( $args['field_class'], '-type-select' ),
 						'disabled' => $args['disabled'],
 						'readonly' => $args['readonly'],
 						'dir'      => $args['dir'],
@@ -1173,7 +1183,7 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 
 				if ( 'textarea-quicktags' == $args['type'] ) {
 
-					$args['field_class'] = gEditorialHTML::attrClass( $args['field_class'], 'textarea-quicktags', 'code' );
+					$args['field_class'] = HTML::attrClass( $args['field_class'], 'textarea-quicktags', 'code' );
 
 					if ( ! $args['values'] )
 						$args['values'] = array(
@@ -1187,12 +1197,12 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 					wp_enqueue_script( 'quicktags' );
 				}
 
-				echo gEditorialHTML::tag( 'textarea', array(
+				echo HTML::tag( 'textarea', array(
 					'id'          => $id,
 					'name'        => $name,
 					'rows'        => $args['rows_attr'],
 					'cols'        => $args['cols_attr'],
-					'class'       => gEditorialHTML::attrClass( $args['field_class'], '-type'.$args['type'] ),
+					'class'       => HTML::attrClass( $args['field_class'], '-type'.$args['type'] ),
 					'placeholder' => $args['placeholder'],
 					'disabled'    => $args['disabled'],
 					'readonly'    => $args['readonly'],
@@ -1225,16 +1235,16 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 
 				if ( ! empty( $pages ) ) {
 
-					$html .= gEditorialHTML::tag( 'option', array(
+					$html .= HTML::tag( 'option', array(
 						'value' => $args['none_value'],
 					), esc_html( $args['none_title'] ) );
 
 					$html .= walk_page_dropdown_tree( $pages, ( isset( $query['depth'] ) ? $query['depth'] : 0 ), $query );
 
-					echo gEditorialHTML::tag( 'select', array(
+					echo HTML::tag( 'select', array(
 						'id'       => $id,
 						'name'     => $name,
-						'class'    => gEditorialHTML::attrClass( $args['field_class'], '-type-page', '-posttype-'.$args['values'] ),
+						'class'    => HTML::attrClass( $args['field_class'], '-type-page', '-posttype-'.$args['values'] ),
 						'disabled' => $args['disabled'],
 						'readonly' => $args['readonly'],
 						'dir'      => $args['dir'],
@@ -1257,7 +1267,7 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 				if ( is_null( $args['none_value'] ) )
 					$args['none_value'] = '0';
 
-				$html .= gEditorialHTML::tag( 'option', array(
+				$html .= HTML::tag( 'option', array(
 					'value' => $args['none_value'],
 				), esc_html( $args['none_title'] ) );
 
@@ -1266,16 +1276,16 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 					if ( in_array( $value_name, $exclude ) )
 						continue;
 
-					$html .= gEditorialHTML::tag( 'option', array(
+					$html .= HTML::tag( 'option', array(
 						'value'    => $value_name,
 						'selected' => $value == $value_name,
 					), esc_html( translate_user_role( $value_title['name'] ) ) );
 				}
 
-				echo gEditorialHTML::tag( 'select', array(
+				echo HTML::tag( 'select', array(
 					'id'       => $id,
 					'name'     => $name,
-					'class'    => gEditorialHTML::attrClass( $args['field_class'], '-type-role' ),
+					'class'    => HTML::attrClass( $args['field_class'], '-type-role' ),
 					'disabled' => $args['disabled'],
 					'readonly' => $args['readonly'],
 					'dir'      => $args['dir'],
@@ -1286,11 +1296,11 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 			case 'user' :
 
 				if ( ! $args['values'] )
-					$args['values'] = gEditorialWordPress::getUsers( FALSE, FALSE, $args['extra'] );
+					$args['values'] = WordPress::getUsers( FALSE, FALSE, $args['extra'] );
 
 				if ( ! is_null( $args['none_title'] ) ) {
 
-					$html .= gEditorialHTML::tag( 'option', array(
+					$html .= HTML::tag( 'option', array(
 						'value'    => is_null( $args['none_value'] ) ? FALSE : $args['none_value'],
 						'selected' => $value == $args['none_value'],
 					), esc_html( $args['none_title'] ) );
@@ -1301,16 +1311,16 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 					if ( in_array( $value_name, $exclude ) )
 						continue;
 
-					$html .= gEditorialHTML::tag( 'option', array(
+					$html .= HTML::tag( 'option', array(
 						'value'    => $value_name,
 						'selected' => $value == $value_name,
 					), esc_html( sprintf( '%1$s (%2$s)', $value_title->display_name, $value_title->user_login ) ) );
 				}
 
-				echo gEditorialHTML::tag( 'select', array(
+				echo HTML::tag( 'select', array(
 					'id'       => $id,
 					'name'     => $name,
-					'class'    => gEditorialHTML::attrClass( $args['field_class'], '-type-user' ),
+					'class'    => HTML::attrClass( $args['field_class'], '-type-user' ),
 					'disabled' => $args['disabled'],
 					'readonly' => $args['readonly'],
 					'dir'      => $args['dir'],
@@ -1331,16 +1341,16 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 					if ( in_array( $value_name, $exclude ) )
 						continue;
 
-					$html .= gEditorialHTML::tag( 'option', array(
+					$html .= HTML::tag( 'option', array(
 						'value'    => $value_name,
 						'selected' => $value == $value_name,
 					), esc_html( $value_title ) );
 				}
 
-				echo gEditorialHTML::tag( 'select', array(
+				echo HTML::tag( 'select', array(
 					'id'       => $id,
 					'name'     => $name,
-					'class'    => gEditorialHTML::attrClass( $args['field_class'], '-type-priority' ),
+					'class'    => HTML::attrClass( $args['field_class'], '-type-priority' ),
 					'disabled' => $args['disabled'],
 					'readonly' => $args['readonly'],
 					'dir'      => $args['dir'],
@@ -1360,7 +1370,7 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 			break;
 			case 'file' :
 
-				echo gEditorialHTML::tag( 'input', array(
+				echo HTML::tag( 'input', array(
 					'type'     => 'file',
 					'id'       => $id,
 					'name'     => $id,
@@ -1374,7 +1384,7 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 			case 'posttypes' :
 
 				if ( ! $args['values'] )
-					$args['values'] = gEditorialWPPostType::get( 0,
+					$args['values'] = PostType::get( 0,
 						array_merge( array( 'public' => TRUE ), $args['extra'] ) );
 
 				foreach ( $args['values'] as $value_name => $value_title ) {
@@ -1382,19 +1392,19 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 					if ( in_array( $value_name, $exclude ) )
 						continue;
 
-					$html = gEditorialHTML::tag( 'input', array(
+					$html = HTML::tag( 'input', array(
 						'type'     => 'checkbox',
 						'id'       => $id.'-'.$value_name,
 						'name'     => $name.'['.$value_name.']',
 						'value'    => '1',
 						'checked'  => in_array( $value_name, ( array ) $value ),
-						'class'    => gEditorialHTML::attrClass( $args['field_class'], '-type-posttypes' ),
+						'class'    => HTML::attrClass( $args['field_class'], '-type-posttypes' ),
 						'disabled' => $args['disabled'],
 						'readonly' => $args['readonly'],
 						'dir'      => $args['dir'],
 					) );
 
-					echo '<p>'.gEditorialHTML::tag( 'label', array(
+					echo '<p>'.HTML::tag( 'label', array(
 						'for' => $id.'-'.$value_name,
 					), $html.'&nbsp;'.esc_html( $value_title ) ).'</p>';
 				}
@@ -1403,26 +1413,26 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 			case 'taxonomies' :
 
 				if ( ! $args['values'] )
-					$args['values'] = gEditorialWPTaxonomy::get( 0, $args['extra'] );
+					$args['values'] = Taxonomy::get( 0, $args['extra'] );
 
 				foreach ( $args['values'] as $value_name => $value_title ) {
 
 					if ( in_array( $value_name, $exclude ) )
 						continue;
 
-					$html = gEditorialHTML::tag( 'input', array(
+					$html = HTML::tag( 'input', array(
 						'type'     => 'checkbox',
 						'id'       => $id.'-'.$value_name,
 						'name'     => $name.'['.$value_name.']',
 						'value'    => '1',
 						'checked'  => in_array( $value_name, ( array ) $value ),
-						'class'    => gEditorialHTML::attrClass( $args['field_class'], '-type-taxonomies' ),
+						'class'    => HTML::attrClass( $args['field_class'], '-type-taxonomies' ),
 						'disabled' => $args['disabled'],
 						'readonly' => $args['readonly'],
 						'dir'      => $args['dir'],
 					) );
 
-					echo '<p>'.gEditorialHTML::tag( 'label', array(
+					echo '<p>'.HTML::tag( 'label', array(
 						'for' => $id.'-'.$value_name,
 					), $html.'&nbsp;'.esc_html( $value_title ) ).'</p>';
 				}
@@ -1435,7 +1445,7 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 					call_user_func_array( $args['callback'], array( &$args,
 						compact( 'html', 'value', 'name', 'id', 'exclude' ) ) );
 
-				} else if ( gEditorialWordPress::isDev() ) {
+				} else if ( WordPress::isDev() ) {
 
 					echo 'Error: Setting Is Not Callable!';
 				}
@@ -1443,7 +1453,7 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 			break;
 			case 'noaccess' :
 
-				echo gEditorialHTML::tag( 'span', array(
+				echo HTML::tag( 'span', array(
 					'class' => '-type-noaccess',
 				), $args['string_noaccess'] );
 
@@ -1470,7 +1480,7 @@ class gEditorialSettingsCore extends gEditorialBaseCore
 			echo '&nbsp;'.$args['after'];
 
 		if ( FALSE !== $args['values'] )
-			gEditorialHTML::desc( $args['description'] );
+			HTML::desc( $args['description'] );
 
 		if ( $args['wrap'] )
 			echo '</td></tr>';

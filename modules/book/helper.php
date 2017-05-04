@@ -1,6 +1,11 @@
-<?php defined( 'ABSPATH' ) or die( 'Restricted access' );
+<?php namespace geminorum\gEditorial\Helpers;
 
-class gEditorialBookHelper extends gEditorialHelper
+defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
+
+use geminorum\gEditorial;
+use geminorum\gEditorial\Core\Number;
+
+class Book extends gEditorial\Helper
 {
 
 	public static function getISBN( $input )

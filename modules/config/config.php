@@ -1,6 +1,17 @@
-<?php defined( 'ABSPATH' ) or die( 'Restricted access' );
+<?php namespace geminorum\gEditorial\Modules;
 
-class gEditorialConfig extends gEditorialModuleCore
+defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
+
+use geminorum\gEditorial;
+use geminorum\gEditorial\Ajax;
+use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Settings;
+use geminorum\gEditorial\Core\HTML;
+use geminorum\gEditorial\Core\WordPress;
+use geminorum\gEditorial\WordPress\Database;
+use geminorum\gEditorial\WordPress\User;
+
+class Config extends gEditorial\Module
 {
 
 	protected $caps = array(
@@ -28,7 +39,7 @@ class gEditorialConfig extends gEditorialModuleCore
 		if ( is_admin() )
 			add_action( 'admin_menu', array( $this, 'admin_menu' ) );
 
-		if ( gEditorialWordPress::isAJAX() )
+		if ( WordPress::isAJAX() )
 			$this->_hook_ajax();
 	}
 
@@ -96,8 +107,8 @@ class gEditorialConfig extends gEditorialModuleCore
 	public function admin_reports_page()
 	{
 		$can = $this->cuc( 'reports' );
-		$uri = gEditorialSettingsCore::reportsURL( FALSE, ! $can );
-		$sub = gEditorialSettingsCore::sub();
+		$uri = Settings::reportsURL( FALSE, ! $can );
+		$sub = Settings::sub();
 
 		$subs = array( 'overview' => _x( 'Overview', 'Modules: Config: Reports Sub', GEDITORIAL_TEXTDOMAIN ) );
 
@@ -106,13 +117,13 @@ class gEditorialConfig extends gEditorialModuleCore
 
 		$subs = apply_filters( 'geditorial_reports_subs', $subs, 'reports' );
 
-		$messages = apply_filters( 'geditorial_reports_messages', gEditorialSettingsCore::messages(), $sub );
+		$messages = apply_filters( 'geditorial_reports_messages', Settings::messages(), $sub );
 
-		gEditorialSettingsCore::wrapOpen( $sub, $this->base, 'reports' );
+		Settings::wrapOpen( $sub, $this->base, 'reports' );
 
-			gEditorialSettingsCore::headerTitle( _x( 'Editorial Reports', 'Modules: Config: Page Title', GEDITORIAL_TEXTDOMAIN ) );
-			gEditorialSettingsCore::headerNav( $uri, $sub, $subs );
-			gEditorialSettingsCore::message( $messages );
+			Settings::headerTitle( _x( 'Editorial Reports', 'Modules: Config: Page Title', GEDITORIAL_TEXTDOMAIN ) );
+			Settings::headerNav( $uri, $sub, $subs );
+			Settings::message( $messages );
 
 			if ( file_exists( GEDITORIAL_DIR.'includes/settings/reports.'.$sub.'.php' ) )
 				require_once( GEDITORIAL_DIR.'includes/settings/reports.'.$sub.'.php' );
@@ -121,14 +132,14 @@ class gEditorialConfig extends gEditorialModuleCore
 
 			$this->settings_signature( NULL, 'reports' );
 
-		gEditorialSettingsCore::wrapClose();
+		Settings::wrapClose();
 	}
 
 	public function admin_tools_page()
 	{
 		$can = $this->cuc( 'settings' );
-		$uri = gEditorialSettingsCore::toolsURL( FALSE, ! $can );
-		$sub = gEditorialSettingsCore::sub( ( $can ? 'general' : 'overview' ) );
+		$uri = Settings::toolsURL( FALSE, ! $can );
+		$sub = Settings::sub( ( $can ? 'general' : 'overview' ) );
 
 		$subs = array( 'overview' => _x( 'Overview', 'Modules: Config: Tools Sub', GEDITORIAL_TEXTDOMAIN ) );
 
@@ -137,18 +148,18 @@ class gEditorialConfig extends gEditorialModuleCore
 
 		$subs = apply_filters( 'geditorial_tools_subs', $subs, 'tools' );
 
-		if ( gEditorialWPUser::isSuperAdmin() ) {
+		if ( User::isSuperAdmin() ) {
 			$subs['options'] = _x( 'Options', 'Modules: Config: Tools Sub', GEDITORIAL_TEXTDOMAIN );
 			$subs['console'] = _x( 'Console', 'Modules: Config: Tools Sub', GEDITORIAL_TEXTDOMAIN );
 		}
 
-		$messages = apply_filters( 'geditorial_tools_messages', gEditorialSettingsCore::messages(), $sub );
+		$messages = apply_filters( 'geditorial_tools_messages', Settings::messages(), $sub );
 
-		gEditorialSettingsCore::wrapOpen( $sub, $this->base, 'tools' );
+		Settings::wrapOpen( $sub, $this->base, 'tools' );
 
-			gEditorialSettingsCore::headerTitle( _x( 'Editorial Tools', 'Modules: Config: Page Title', GEDITORIAL_TEXTDOMAIN ) );
-			gEditorialSettingsCore::headerNav( $uri, $sub, $subs );
-			gEditorialSettingsCore::message( $messages );
+			Settings::headerTitle( _x( 'Editorial Tools', 'Modules: Config: Page Title', GEDITORIAL_TEXTDOMAIN ) );
+			Settings::headerNav( $uri, $sub, $subs );
+			Settings::message( $messages );
 
 			if ( file_exists( GEDITORIAL_DIR.'includes/settings/tools.'.$sub.'.php' ) )
 				require_once( GEDITORIAL_DIR.'includes/settings/tools.'.$sub.'.php' );
@@ -157,14 +168,14 @@ class gEditorialConfig extends gEditorialModuleCore
 
 			$this->settings_signature( NULL, 'tools' );
 
-		gEditorialSettingsCore::wrapClose();
+		Settings::wrapClose();
 	}
 
 	public function admin_reports_load()
 	{
 		global $gEditorial, $wpdb;
 
-		$sub = gEditorialSettingsCore::sub();
+		$sub = Settings::sub();
 
 		if ( 'general' == $sub ) {
 			add_action( 'geditorial_reports_sub_general', array( $this, 'reports_sub' ), 10, 2 );
@@ -177,7 +188,7 @@ class gEditorialConfig extends gEditorialModuleCore
 	{
 		global $gEditorial, $wpdb;
 
-		$sub = gEditorialSettingsCore::sub();
+		$sub = Settings::sub();
 
 		if ( 'general' == $sub ) {
 			if ( ! empty( $_POST ) ) {
@@ -191,7 +202,7 @@ class gEditorialConfig extends gEditorialModuleCore
 					$result = $gEditorial->upgrade_old_options();
 
 					if ( count( $result ) )
-						gEditorialWordPress::redirectReferer( array(
+						WordPress::redirectReferer( array(
 							'message' => 'upgraded',
 							'count'   => count( $result ),
 						) );
@@ -199,16 +210,16 @@ class gEditorialConfig extends gEditorialModuleCore
 				} else if ( isset( $_POST['delete_all_options'] ) ) {
 
 					if ( delete_option( 'geditorial_options' ) )
-						gEditorialWordPress::redirectReferer( 'purged' );
+						WordPress::redirectReferer( 'purged' );
 
 				} else if ( isset( $_POST['custom_fields_empty'] ) ) {
 
 					if ( isset( $post['empty_module'] ) && isset( $gEditorial->{$post['empty_module']}->meta_key ) ) {
 
-						$result = gEditorialWPDatabase::deleteEmptyMeta( $gEditorial->{$post['empty_module']}->meta_key );
+						$result = Database::deleteEmptyMeta( $gEditorial->{$post['empty_module']}->meta_key );
 
 						if ( count( $result ) )
-							gEditorialWordPress::redirectReferer( array(
+							WordPress::redirectReferer( array(
 								'message' => 'emptied',
 								'count'   => count( $result ),
 							) );
@@ -231,7 +242,7 @@ class gEditorialConfig extends gEditorialModuleCore
 			self::cheatin();
 
 		// FIXME
-		gEditorialHTML::warning( 'Comming Soon!', TRUE );
+		HTML::warning( 'Comming Soon!', TRUE );
 	}
 
 	public function tools_sub( $uri, $sub )
@@ -256,25 +267,25 @@ class gEditorialConfig extends gEditorialModuleCore
 
 		$this->settings_form_before( $uri, $sub, 'bulk', 'tools', FALSE, FALSE );
 
-			gEditorialHTML::h3( _x( 'Maintenance Tasks', 'Modules: Config', GEDITORIAL_TEXTDOMAIN ) );
+			HTML::h3( _x( 'Maintenance Tasks', 'Modules: Config', GEDITORIAL_TEXTDOMAIN ) );
 
 			echo '<table class="form-table">';
 
 			echo '<tr><th scope="row">'._x( 'Options', 'Modules: Config', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
 
 				echo '<p>';
-					gEditorialSettingsCore::submitButton( 'upgrade_old_options',
+					Settings::submitButton( 'upgrade_old_options',
 						_x( 'Upgrade Old Options', 'Modules: Config: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
 
-					gEditorialHTML::desc( _x( 'Will check for old options and upgrade, also delete old options', 'Modules: Config', GEDITORIAL_TEXTDOMAIN ), FALSE );
+					HTML::desc( _x( 'Will check for old options and upgrade, also delete old options', 'Modules: Config', GEDITORIAL_TEXTDOMAIN ), FALSE );
 				echo '</p>';
 
-				if ( gEditorialWPUser::isSuperAdmin() || self::isDev() ) {
+				if ( User::isSuperAdmin() || self::isDev() ) {
 					echo '<br /><p>';
-						gEditorialSettingsCore::submitButton( 'delete_all_options',
+						Settings::submitButton( 'delete_all_options',
 							_x( 'Delete All Options', 'Modules: Config: Setting Button', GEDITORIAL_TEXTDOMAIN ), 'delete', TRUE );
 
-						gEditorialHTML::desc( _x( 'Deletes all editorial options on current site', 'Modules: Config', GEDITORIAL_TEXTDOMAIN ), FALSE );
+						HTML::desc( _x( 'Deletes all editorial options on current site', 'Modules: Config', GEDITORIAL_TEXTDOMAIN ), FALSE );
 					echo '</p>';
 				}
 
@@ -291,10 +302,10 @@ class gEditorialConfig extends gEditorialModuleCore
 
 				echo '&nbsp;&nbsp;';
 
-				gEditorialSettingsCore::submitButton( 'custom_fields_empty',
+				Settings::submitButton( 'custom_fields_empty',
 					_x( 'Empty', 'Modules: Config: Setting Button', GEDITORIAL_TEXTDOMAIN ), 'delete', TRUE );
 
-				gEditorialHTML::desc( _x( 'Will delete empty meta values, solves common problems with imported posts.', 'Modules: Config', GEDITORIAL_TEXTDOMAIN ) );
+				HTML::desc( _x( 'Will delete empty meta values, solves common problems with imported posts.', 'Modules: Config', GEDITORIAL_TEXTDOMAIN ) );
 
 			echo '</td></tr>';
 			echo '</table>';
@@ -316,23 +327,23 @@ class gEditorialConfig extends gEditorialModuleCore
 
 			case 'state':
 
-				gEditorialAjax::checkReferer( $this->hook() );
+				Ajax::checkReferer( $this->hook() );
 
 				if ( ! isset( $_POST['doing'], $_POST['name'] ) )
-					gEditorialAjax::errorMessage( _x( 'No action or name!', 'Modules: Config: Ajax Notice', GEDITORIAL_TEXTDOMAIN ) );
+					Ajax::errorMessage( _x( 'No action or name!', 'Modules: Config: Ajax Notice', GEDITORIAL_TEXTDOMAIN ) );
 
 				if ( ! $module = $gEditorial->get_module_by( 'name', sanitize_key( $_POST['name'] ) ) )
-					gEditorialAjax::errorMessage( _x( 'Cannot find the module!', 'Modules: Config: Ajax Notice', GEDITORIAL_TEXTDOMAIN ) );
+					Ajax::errorMessage( _x( 'Cannot find the module!', 'Modules: Config: Ajax Notice', GEDITORIAL_TEXTDOMAIN ) );
 
 				$enabled = 'enable' == sanitize_key( $_POST['doing'] ) ? TRUE : FALSE;
 
 				if ( $gEditorial->update_module_option( $module->name, 'enabled', $enabled ) )
-					gEditorialAjax::successMessage( _x( 'Module state succesfully changed.', 'Modules: Config: Ajax Notice', GEDITORIAL_TEXTDOMAIN ) );
+					Ajax::successMessage( _x( 'Module state succesfully changed.', 'Modules: Config: Ajax Notice', GEDITORIAL_TEXTDOMAIN ) );
 				else
-					gEditorialAjax::errorMessage( _x( 'Cannot change module state!', 'Modules: Config: Ajax Notice', GEDITORIAL_TEXTDOMAIN ) );
+					Ajax::errorMessage( _x( 'Cannot change module state!', 'Modules: Config: Ajax Notice', GEDITORIAL_TEXTDOMAIN ) );
 		}
 
-		gEditorialAjax::errorWhat();
+		Ajax::errorWhat();
 	}
 
 	public function admin_settings_page()
@@ -351,7 +362,7 @@ class gEditorialConfig extends gEditorialModuleCore
 
 		} else {
 
-			gEditorialHTML::warning( _x( 'Module not enabled. Please enable it from the Editorial settings page.', 'Modules: Config: Page Notice', GEDITORIAL_TEXTDOMAIN ), TRUE );
+			HTML::warning( _x( 'Module not enabled. Please enable it from the Editorial settings page.', 'Modules: Config: Page Notice', GEDITORIAL_TEXTDOMAIN ), TRUE );
 		}
 	}
 
@@ -366,13 +377,13 @@ class gEditorialConfig extends gEditorialModuleCore
 			$count = count( get_object_vars( $gEditorial->modules ) );
 		} else {
 			$title = sprintf( _x( 'Editorial: %s', 'Modules: Config', GEDITORIAL_TEXTDOMAIN ), $current_module->title );
-			$back  = gEditorialSettingsCore::settingsURL();
+			$back  = Settings::settingsURL();
 		}
 
-		gEditorialSettingsCore::wrapOpen( $current_module->name, $this->base, 'settings' );
+		Settings::wrapOpen( $current_module->name, $this->base, 'settings' );
 
-			gEditorialSettingsCore::headerTitle( $title, $back, NULL, $current_module->icon, $count, TRUE );
-			gEditorialSettingsCore::message();
+			Settings::headerTitle( $title, $back, NULL, $current_module->icon, $count, TRUE );
+			Settings::message();
 
 			echo '<div class="-header">';
 
@@ -385,7 +396,7 @@ class gEditorialConfig extends gEditorialModuleCore
 			if ( method_exists( $gEditorial->{$current_module->name}, 'settings_intro_after' ) )
 				$gEditorial->{$current_module->name}->settings_intro_after( $current_module );
 
-		gEditorialSettingsCore::wrapClose();
+		Settings::wrapClose();
 	}
 
 	private function print_default_settings()
@@ -412,18 +423,18 @@ class gEditorialConfig extends gEditorialModuleCore
 					.'" id="'.$module->settings.'" data-module="'.$module->name.'">';
 
 				if ( $module->icon )
-					echo gEditorialHTML::getDashicon( $module->icon );
+					echo HTML::getDashicon( $module->icon );
 
 				echo '<span class="spinner"></span>';
 
 				echo '<form action="">';
 
-					gEditorialSettingsCore::moduleInfo( $module );
+					Settings::moduleInfo( $module );
 
 					echo '<p class="actions">';
 
-						gEditorialSettingsCore::moduleConfigure( $module, $enabled );
-						gEditorialSettingsCore::moduleButtons( $module, $enabled );
+						Settings::moduleConfigure( $module, $enabled );
+						Settings::moduleButtons( $module, $enabled );
 
 					echo '</p>';
 				echo '</form></div>';
@@ -433,7 +444,7 @@ class gEditorialConfig extends gEditorialModuleCore
 
 		} else {
 
-			gEditorialHTML::warning( _x( 'There are no editorial modules registered!', 'Modules: Config: Page Notice', GEDITORIAL_TEXTDOMAIN ), TRUE );
+			HTML::warning( _x( 'There are no editorial modules registered!', 'Modules: Config: Page Notice', GEDITORIAL_TEXTDOMAIN ), TRUE );
 		}
 	}
 
@@ -446,12 +457,12 @@ class gEditorialConfig extends gEditorialModuleCore
 
 		$screen = get_current_screen();
 
-		foreach ( gEditorialSettingsCore::settingsHelpContent() as $tab )
+		foreach ( Settings::settingsHelpContent() as $tab )
 			$screen->add_help_tab( $tab );
 
 		do_action( 'geditorial_settings_load', $page );
 
-		$listjs = gEditorialHelper::registerScriptPackage( 'listjs',
+		$listjs = Helper::registerScriptPackage( 'listjs',
 			'list.js/list', [], '1.5.0' );
 
 		$this->enqueue_asset_js( [], NULL, [ 'jquery', $listjs ] );
@@ -483,7 +494,7 @@ class gEditorialConfig extends gEditorialModuleCore
 			'enabled' => TRUE,
 		) );
 
-		gEditorialWordPress::redirectReferer( 'resetting' );
+		WordPress::redirectReferer( 'resetting' );
 	}
 
 	public function admin_settings_save( $page = NULL )
@@ -517,6 +528,6 @@ class gEditorialConfig extends gEditorialModuleCore
 
 		$gEditorial->update_all_module_options( $gEditorial->{$name}->module->name, $options );
 
-		gEditorialWordPress::redirectReferer();
+		WordPress::redirectReferer();
 	}
 }

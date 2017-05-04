@@ -1,6 +1,14 @@
-<?php defined( 'ABSPATH' ) or die( 'Restricted access' );
+<?php namespace geminorum\gEditorial\Modules;
 
-class gEditorialSeries extends gEditorialModuleCore
+defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
+
+use geminorum\gEditorial;
+use geminorum\gEditorial\MetaBox;
+use geminorum\gEditorial\ShortCode;
+use geminorum\gEditorial\Core\HTML;
+use geminorum\gEditorial\WordPress\Taxonomy;
+
+class Series extends gEditorial\Module
 {
 
 	public $meta_key      = '_ge_series';
@@ -169,7 +177,7 @@ class gEditorialSeries extends gEditorialModuleCore
 				switch ( $field ) {
 					case 'in_series_order' :
 						if ( isset( $_POST[$prefix.$field][$offset] ) && '0' != $_POST[$prefix.$field][$offset] )
-							$postmeta[$pre_term][$field] = gEditorialNumber::intval( $_POST[$prefix.$field][$offset] );
+							$postmeta[$pre_term][$field] = Number::intval( $_POST[$prefix.$field][$offset] );
 						else if ( isset( $postmeta[$pre_term][$field] ) && isset( $_POST[$prefix.$field][$offset] )  )
 							unset( $postmeta[$pre_term][$field] );
 					break;
@@ -178,7 +186,7 @@ class gEditorialSeries extends gEditorialModuleCore
 						if ( isset( $_POST[$prefix.$field][$offset] )
 							&& strlen( $_POST[$prefix.$field][$offset] ) > 0
 							&& $this->get_string( $field, $post_type ) !== $_POST[$prefix.$field][$offset] )
-								$postmeta[$pre_term][$field] = gEditorialHelper::kses( $_POST[$prefix.$field][$offset], 'text' );
+								$postmeta[$pre_term][$field] = Helper::kses( $_POST[$prefix.$field][$offset], 'text' );
 						else if ( isset( $postmeta[$pre_term][$field] ) && isset( $_POST[$prefix.$field][$offset] ) )
 							unset( $postmeta[$pre_term][$field] );
 					break;
@@ -193,7 +201,7 @@ class gEditorialSeries extends gEditorialModuleCore
 	{
 		echo '<div class="geditorial-admin-wrap-metabox -series">';
 
-		$series = gEditorialWPTaxonomy::getTerms( $this->constant( 'series_tax' ), $post->ID, TRUE );
+		$series = Taxonomy::getTerms( $this->constant( 'series_tax' ), $post->ID, TRUE );
 
 		do_action( 'geditorial_series_meta_box', $post, $box, $series );
 
@@ -204,8 +212,8 @@ class gEditorialSeries extends gEditorialModuleCore
 	{
 		$tax = $this->constant( 'series_tax' );
 
-		if ( ! gEditorialWPTaxonomy::hasTerms( $tax ) )
-			return gEditorialMetaBox::fieldEmptyTaxonomy( $tax );
+		if ( ! Taxonomy::hasTerms( $tax ) )
+			return MetaBox::fieldEmptyTaxonomy( $tax );
 
 		$dropdowns = $posts = $map = array();
 		$fields    = $this->post_type_fields( $post->post_type );
@@ -224,7 +232,7 @@ class gEditorialSeries extends gEditorialModuleCore
 				'echo'             => 0,
 			) );
 
-			$posts[$i] = gEditorialHelper::getTermPosts( $tax, $the_term, array( $post->ID ) );
+			$posts[$i] = Helper::getTermPosts( $tax, $the_term, array( $post->ID ) );
 			$map[$i]   = $the_term->term_id;
 			$i++;
 		}
@@ -278,7 +286,7 @@ class gEditorialSeries extends gEditorialModuleCore
 			&& self::user_can( 'view', $field ) ) {
 
 			$title = $this->get_string( $field, $post->post_type );
-			$html = gEditorialHTML::tag( 'input', array(
+			$html = HTML::tag( 'input', array(
 				'type'         => 'text',
 				'name'         => 'geditorial-series-'.$field.'['.$counter.']',
 				'id'           => 'geditorial-series-'.$field.'-'.$counter,
@@ -292,7 +300,7 @@ class gEditorialSeries extends gEditorialModuleCore
 				),
 			) );
 
-			echo gEditorialHTML::tag( 'div', array(
+			echo HTML::tag( 'div', array(
 				'class' => 'field-wrap field-wrap-inputtext',
 			), $html );
 		}
@@ -302,7 +310,7 @@ class gEditorialSeries extends gEditorialModuleCore
 			&& self::user_can( 'view', $field ) ) {
 
 			$title = $this->get_string( $field, $post->post_type );
-			$html = gEditorialHTML::tag( 'input', array(
+			$html = HTML::tag( 'input', array(
 				'type'         => 'text',
 				'name'         => 'geditorial-series-'.$field.'['.$counter.']',
 				'id'           => 'geditorial-series-'.$field.'-'.$counter,
@@ -313,7 +321,7 @@ class gEditorialSeries extends gEditorialModuleCore
 				'autocomplete' => 'off',
 			) );
 
-			echo gEditorialHTML::tag( 'div', array(
+			echo HTML::tag( 'div', array(
 				'class' => 'field-wrap field-wrap-inputtext',
 			), $html );
 		}
@@ -323,7 +331,7 @@ class gEditorialSeries extends gEditorialModuleCore
 			&& self::user_can( 'view', $field ) ) {
 
 			$title = $this->get_string( $field, $post->post_type );
-			$html = gEditorialHTML::tag( 'textarea', array(
+			$html = HTML::tag( 'textarea', array(
 				'rows'        => '1',
 				'class'       => 'textarea-autosize',
 				'name'        => 'geditorial-series-'.$field.'['.$counter.']',
@@ -336,7 +344,7 @@ class gEditorialSeries extends gEditorialModuleCore
 				),
 			), isset( $meta[$field] ) ? esc_textarea( $meta[$field] ) : '' );
 
-			echo gEditorialHTML::tag( 'div', array(
+			echo HTML::tag( 'div', array(
 				'class' => 'field-wrap field-wrap-textarea',
 			), $html );
 		}
@@ -344,7 +352,7 @@ class gEditorialSeries extends gEditorialModuleCore
 
 	public function series_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
-		return gEditorialShortCode::getTermPosts(
+		return ShortCode::getTermPosts(
 			'post',
 			$this->constant( 'series_tax' ),
 			array_merge( [
@@ -414,6 +422,6 @@ class gEditorialSeries extends gEditorialModuleCore
 			);
 		}
 
-		return gEditorialShortCode::postItem( $args, $post );
+		return ShortCode::postItem( $args, $post );
 	}
 }

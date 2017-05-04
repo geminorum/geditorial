@@ -1,6 +1,16 @@
-<?php defined( 'ABSPATH' ) or die( 'Restricted access' );
+<?php namespace geminorum\gEditorial\Modules;
 
-class gEditorialTerms extends gEditorialModuleCore
+defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
+
+use geminorum\gEditorial;
+use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Settings;
+use geminorum\gEditorial\Core\HTML;
+use geminorum\gEditorial\Core\WordPress;
+use geminorum\gEditorial\WordPress\Database;
+use geminorum\gEditorial\WordPress\Taxonomy;
+
+class Terms extends gEditorial\Module
 {
 
 	public static function module()
@@ -46,7 +56,7 @@ class gEditorialTerms extends gEditorialModuleCore
 						", trim( $post['live_tax'] ), trim( $post['dead_tax'] ) ) );
 
 						if ( count( $result ) )
-							gEditorialWordPress::redirectReferer( array(
+							WordPress::redirectReferer( array(
 								'message' => 'changed',
 								'count'   => count( $result ),
 							) );
@@ -60,12 +70,12 @@ class gEditorialTerms extends gEditorialModuleCore
 	{
 		$this->settings_form_before( $uri, $sub, 'bulk', 'tools', FALSE, FALSE );
 
-			gEditorialHTML::h3( _x( 'Term Tools', 'Modules: Terms', GEDITORIAL_TEXTDOMAIN ) );
+			HTML::h3( _x( 'Term Tools', 'Modules: Terms', GEDITORIAL_TEXTDOMAIN ) );
 
 			echo '<table class="form-table">';
 
-			$db_taxes   = gEditorialWPDatabase::getTaxonomies( TRUE );
-			$live_taxes = gEditorialWPTaxonomy::get( 6 );
+			$db_taxes   = Database::getTaxonomies( TRUE );
+			$live_taxes = Taxonomy::get( 6 );
 			$dead_taxes = array_diff_key( $db_taxes, $live_taxes );
 
 			if ( count( $dead_taxes ) ) {
@@ -90,10 +100,10 @@ class gEditorialTerms extends gEditorialModuleCore
 
 					echo '&nbsp;&nbsp;';
 
-					gEditorialSettingsCore::submitButton( 'orphaned_terms',
+					Settings::submitButton( 'orphaned_terms',
 						_x( 'Convert', 'Modules: Terms: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
 
-					gEditorialHTML::desc( _x( 'Converts orphaned terms into currently registered taxonomies', 'Modules: Terms', GEDITORIAL_TEXTDOMAIN ) );
+					HTML::desc( _x( 'Converts orphaned terms into currently registered taxonomies', 'Modules: Terms', GEDITORIAL_TEXTDOMAIN ) );
 
 				echo '</td></tr>';
 			}
@@ -118,7 +128,7 @@ class gEditorialTerms extends gEditorialModuleCore
 					&& isset( $_POST['_cb'] )
 					&& count( $_POST['_cb'] ) ) {
 
-					$all   = gEditorialWPTaxonomy::get();
+					$all   = Taxonomy::get();
 					$count = 0;
 
 					foreach ( $_POST['_cb'] as $post_id ) {
@@ -132,7 +142,7 @@ class gEditorialTerms extends gEditorialModuleCore
 						$count++;
 					}
 
-					gEditorialWordPress::redirectReferer( array(
+					WordPress::redirectReferer( array(
 						'message' => 'cleaned',
 						'count'   => $count,
 					) );
@@ -168,20 +178,20 @@ class gEditorialTerms extends gEditorialModuleCore
 	{
 		list( $posts, $pagination ) = $this->getPostArray();
 
-		$pagination['before'][] = gEditorialHelper::tableFilterPostTypes();
+		$pagination['before'][] = Helper::tableFilterPostTypes();
 
-		return gEditorialHTML::tableList( array(
+		return HTML::tableList( array(
 			'_cb'   => 'ID',
-			'ID'    => gEditorialHelper::tableColumnPostID(),
-			'date'  => gEditorialHelper::tableColumnPostDate(),
-			'type'  => gEditorialHelper::tableColumnPostType(),
-			'title' => gEditorialHelper::tableColumnPostTitle(),
-			'terms' => gEditorialHelper::tableColumnPostTerms(),
+			'ID'    => Helper::tableColumnPostID(),
+			'date'  => Helper::tableColumnPostDate(),
+			'type'  => Helper::tableColumnPostType(),
+			'title' => Helper::tableColumnPostTitle(),
+			'terms' => Helper::tableColumnPostTerms(),
 		), $posts, array(
 			'navigation' => 'before',
 			'search'     => 'before',
-			'title'      => gEditorialHTML::tag( 'h3', _x( 'Overview of Uncategorized Posts', 'Modules: Terms', GEDITORIAL_TEXTDOMAIN ) ),
-			'empty'      => gEditorialHTML::warning( _x( 'No Posts!', 'Modules: Terms', GEDITORIAL_TEXTDOMAIN ) ),
+			'title'      => HTML::tag( 'h3', _x( 'Overview of Uncategorized Posts', 'Modules: Terms', GEDITORIAL_TEXTDOMAIN ) ),
+			'empty'      => HTML::warning( _x( 'No Posts!', 'Modules: Terms', GEDITORIAL_TEXTDOMAIN ) ),
 			'pagination' => $pagination,
 		) );
 	}
@@ -219,7 +229,7 @@ class gEditorialTerms extends gEditorialModuleCore
 		$query = new \WP_Query;
 		$posts = $query->query( $args );
 
-		$pagination = gEditorialHTML::tablePagination( $query->found_posts, $query->max_num_pages, $limit, $paged );
+		$pagination = HTML::tablePagination( $query->found_posts, $query->max_num_pages, $limit, $paged );
 
 		return array( $posts, $pagination );
 	}

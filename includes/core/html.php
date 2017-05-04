@@ -1,6 +1,8 @@
-<?php defined( 'ABSPATH' ) or die( 'Restricted access' );
+<?php namespace geminorum\gEditorial\Core;
 
-class gEditorialHTML extends gEditorialBaseCore
+defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
+
+class HTML extends Base
 {
 
 	public static function rtl()
@@ -189,8 +191,8 @@ class gEditorialHTML extends gEditorialBaseCore
 	// @SEE: `esc_attr()`
 	public static function escapeAttr( $text )
 	{
-		return gEditorialCoreText::utf8Compliant( $text )
-			? gEditorialCoreText::utf8SpecialChars( $text, ENT_QUOTES )
+		return Text::utf8Compliant( $text )
+			? Text::utf8SpecialChars( $text, ENT_QUOTES )
 			: '';
 	}
 
@@ -201,7 +203,7 @@ class gEditorialHTML extends gEditorialBaseCore
 
 	public static function escapeTextarea( $html )
 	{
-		return gEditorialCoreText::utf8SpecialChars( $html, ENT_QUOTES );
+		return Text::utf8SpecialChars( $html, ENT_QUOTES );
 	}
 
 	// like WP core but without filter and fallback
@@ -552,8 +554,8 @@ class gEditorialHTML extends gEditorialBaseCore
 			echo '&nbsp;';
 
 			vprintf( '<span class="-total-pages">%s / %s</span>', array(
-				gEditorialNumber::format( $args['total'] ),
-				gEditorialNumber::format( $args['pages'] ),
+				Number::format( $args['total'] ),
+				Number::format( $args['pages'] ),
 			) );
 
 			echo '&nbsp;';

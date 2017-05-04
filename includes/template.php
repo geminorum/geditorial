@@ -1,6 +1,12 @@
-<?php defined( 'ABSPATH' ) or die( 'Restricted access' );
+<?php namespace geminorum\gEditorial;
 
-class gEditorialTemplateCore extends gEditorialBaseCore
+defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
+
+use geminorum\gEditorial\Core\HTML;
+use geminorum\gEditorial\Core\WordPress;
+use geminorum\gEditorial\WordPress\Taxonomy;
+
+class Template extends Core\Base
 {
 
 	const MODULE = FALSE;
@@ -82,7 +88,7 @@ class gEditorialTemplateCore extends gEditorialBaseCore
 		), $atts );
 
 		if ( $src = self::getPostImageSrc( $args['size'], $args['id'] ) )
-			$html = gEditorialHTML::tag( 'img', array(
+			$html = HTML::tag( 'img', array(
 				'src'   => $src,
 				'alt'   => $args['alt'],
 				'class' => apply_filters( 'get_image_tag_class', $args['class'], $args['id'], 'none', $args['size'] ),
@@ -133,13 +139,13 @@ class gEditorialTemplateCore extends gEditorialBaseCore
 		), $atts );
 
 		if ( 'latest' == $args['id'] )
-			$args['id'] = gEditorialWordPress::getLastPostOrder( $args['type'], '', 'ID', array( 'publish' ) );
+			$args['id'] = WordPress::getLastPostOrder( $args['type'], '', 'ID', array( 'publish' ) );
 
 		else if ( 'random' == $args['id'] )
-			$args['id'] = gEditorialWordPress::getRandomPostID( $args['type'], TRUE );
+			$args['id'] = WordPress::getRandomPostID( $args['type'], TRUE );
 
 		else if ( 'parent' == $args['id'] )
-			$args['id'] = gEditorialWordPress::getParentPostID();
+			$args['id'] = WordPress::getParentPostID();
 
 		else if ( 'assoc' == $args['id'] && $module )
 			$args['id'] = gEditorial()->{$module}->get_assoc_post( NULL, TRUE );
@@ -182,7 +188,7 @@ class gEditorialTemplateCore extends gEditorialBaseCore
 
 		} else if ( $image ) {
 
-			$html = gEditorialHTML::tag( ( $args['link'] ? 'a' : 'span' ), array(
+			$html = HTML::tag( ( $args['link'] ? 'a' : 'span' ), array(
 				'href'  => $args['link'],
 				'title' => $title,
 				'data'  => $args['link'] ? $args['data'] : FALSE,
@@ -190,7 +196,7 @@ class gEditorialTemplateCore extends gEditorialBaseCore
 
 		} else if ( $args['fallback'] && 'publish' == $status ) {
 
-			$html = gEditorialHTML::tag( 'a', array(
+			$html = HTML::tag( 'a', array(
 				'href'  => get_permalink( $args['id'] ),
 				'title' => $title,
 				'data'  => $args['data'],
@@ -241,10 +247,10 @@ class gEditorialTemplateCore extends gEditorialBaseCore
 		$links = [];
 
 		foreach ( (array) $posts as $post_id )
-			if ( $link = gEditorialShortCode::postItem( $args, $post_id ) )
+			if ( $link = ShortCode::postItem( $args, $post_id ) )
 				$links[] = $link;
 
-		if ( $html = gEditorialHelper::getJoined( $links, $args['before'], $args['after'] ) ) {
+		if ( $html = Helper::getJoined( $links, $args['before'], $args['after'] ) ) {
 
 			if ( ! $args['echo'] )
 				return $html;
@@ -361,7 +367,7 @@ class gEditorialTemplateCore extends gEditorialBaseCore
 			'filter' => $args['filter'],
 		), FALSE );
 
-		if ( $term = gEditorialWPTaxonomy::theTerm( $args['taxonomy'], $post->ID, TRUE ) ) {
+		if ( $term = Taxonomy::theTerm( $args['taxonomy'], $post->ID, TRUE ) ) {
 
 			if ( ! $meta )
 				$meta = sanitize_term_field( 'name', $term->name, $term->term_id, $args['taxonomy'], 'display' );
@@ -374,13 +380,13 @@ class gEditorialTemplateCore extends gEditorialBaseCore
 
 		} else if ( $meta && is_null( $args['link'] ) ) {
 
-			$args['link'] = gEditorialWordPress::getSearchLink( $meta );
+			$args['link'] = WordPress::getSearchLink( $meta );
 
 			if ( is_null( $args['description'] ) )
 				$args['description'] = sprintf( _x( 'Search for %s', 'Template: Search Link Title Attr', GEDITORIAL_TEXTDOMAIN ), $meta );
 		}
 
-		$html = $args['image'] ? gEditorialHTML::tag( 'img', array(
+		$html = $args['image'] ? HTML::tag( 'img', array(
 			'src'   => $args['image'],
 			'alt'   => $meta,
 			'class' => '-label-image',
@@ -394,7 +400,7 @@ class gEditorialTemplateCore extends gEditorialBaseCore
 
 		if ( $args['link'] ) {
 
-			$html = $args['before'].gEditorialHTML::tag( 'a', array(
+			$html = $args['before'].HTML::tag( 'a', array(
 				'href'  => $args['link'],
 				'title' => $args['description'] ? $args['description'] : FALSE,
 				'class' => '-label-link',
@@ -403,7 +409,7 @@ class gEditorialTemplateCore extends gEditorialBaseCore
 
 		} else {
 
-			$html = $args['before'].gEditorialHTML::tag( 'span', array(
+			$html = $args['before'].HTML::tag( 'span', array(
 				'title' => $args['description'] ? $args['description'] : FALSE,
 				'class' => '-label-span',
 				'data'  => $args['description'] ? array( 'toggle' => 'tooltip' ) : FALSE,
@@ -454,7 +460,7 @@ class gEditorialTemplateCore extends gEditorialBaseCore
 		), FALSE ) : $args['url_default'];
 
 		if ( $title && $url || ! $url && $title != $args['title_default'] ) {
-			$html = $args['before'].gEditorialHTML::tag( ( $url ? 'a' : 'span' ), array(
+			$html = $args['before'].HTML::tag( ( $url ? 'a' : 'span' ), array(
 				'href'  => $url,
 				'title' => $url ? $args['title_attr'] : FALSE,
 				'rel'   => $url ? 'nofollow' : 'source', // https://support.google.com/webmasters/answer/96569?hl=en

@@ -1,6 +1,12 @@
-<?php defined( 'ABSPATH' ) or die( 'Restricted access' );
+<?php namespace geminorum\gEditorial\Modules;
 
-class gEditorialEstimated extends gEditorialModuleCore
+defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
+
+use geminorum\gEditorial;
+use geminorum\gEditorial\Core\HTML;
+use geminorum\gEditorial\Core\Text;
+
+class Estimated extends gEditorial\Module
 {
 
 	public $meta_key = '_ge_estimated';
@@ -187,7 +193,7 @@ class gEditorialEstimated extends gEditorialModuleCore
 				}
 		}
 
-		$wordcount = gEditorialCoreText::wordCountUTF8( $content );
+		$wordcount = Text::wordCountUTF8( $content );
 
 		if ( $update )
 			update_post_meta( $post_id, $this->meta_key, $wordcount );
@@ -203,10 +209,10 @@ class gEditorialEstimated extends gEditorialModuleCore
 		if ( $minutes < 1 )
 			$estimated = _x( 'less than 1 minute', 'Modules: Estimated', GEDITORIAL_TEXTDOMAIN );
 		else
-			$estimated = sprintf( _nx( '%s minute', '%s minutes', $minutes, 'Modules: Estimated', GEDITORIAL_TEXTDOMAIN ), gEditorialNumber::format( $minutes ) );
+			$estimated = sprintf( _nx( '%s minute', '%s minutes', $minutes, 'Modules: Estimated', GEDITORIAL_TEXTDOMAIN ), Number::format( $minutes ) );
 
 		if ( $info )
-			return '<span title="'.esc_attr( sprintf( _x( 'If you try to read %s words per minute', 'Modules: Estimated', GEDITORIAL_TEXTDOMAIN ), gEditorialNumber::format( $avgtime ) ) ).'">'.$estimated.'</span>';
+			return '<span title="'.esc_attr( sprintf( _x( 'If you try to read %s words per minute', 'Modules: Estimated', GEDITORIAL_TEXTDOMAIN ), Number::format( $avgtime ) ) ).'">'.$estimated.'</span>';
 
 		return $estimated;
 	}
