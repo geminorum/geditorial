@@ -1,6 +1,12 @@
-<?php defined( 'ABSPATH' ) or die( 'Restricted access' );
+<?php namespace geminorum\gEditorial\Modules;
 
-class gEditorialEvent extends gEditorialModuleCore
+defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
+
+use geminorum\gEditorial;
+use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Core\HTML;
+
+class Event extends gEditorial\Module
 {
 
 	public static function module()
@@ -110,7 +116,7 @@ class gEditorialEvent extends gEditorialModuleCore
 					'start'   => _x( 'Start', 'Modules: Event: Event Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
 					'end'     => _x( 'End', 'Modules: Event: Event Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
 				),
-				'type_tax' => gEditorialHelper::getDefualtCalendars( TRUE ),
+				'type_tax' => Helper::getDefualtCalendars( TRUE ),
 			),
 		);
 	}
@@ -214,9 +220,7 @@ class gEditorialEvent extends gEditorialModuleCore
 
 					add_action( 'restrict_manage_posts', array( $this, 'restrict_manage_posts' ), 12, 2 );
 					add_action( 'parse_query', array( $this, 'parse_query' ) );
-
-					// add_action( 'load-edit.php', array( $this, 'load_edit_php' ) );
-					add_filter( 'request', array( $this, 'load_edit_php_request' ) );
+					add_filter( 'request', array( $this, 'request' ) );
 
 				} else if ( $this->get_setting( 'admin_ordering', TRUE ) ) {
 
@@ -316,8 +320,8 @@ class gEditorialEvent extends gEditorialModuleCore
 			if ( 'title' == $key ) {
 
 				if ( $this->get_setting( 'startend_support', TRUE ) ) {
-					$new_columns['event_dates'] = $this->get_column_title( 'event_dates', 'event_cpt' );
-					$new_columns['event_times'] = $this->get_column_title( 'event_times', 'event_cpt' );
+					$new_columns['event_starts'] = $this->get_column_title( 'event_starts', 'event_cpt' );
+					$new_columns['event_ends'] = $this->get_column_title( 'event_ends', 'event_cpt' );
 				}
 
 				$new_columns[$key] = $value;
@@ -335,53 +339,61 @@ class gEditorialEvent extends gEditorialModuleCore
 
 	public function posts_custom_column( $column, $post_id )
 	{
-		// FIXME: adjust!
-		if ( 'event_dates' == $column ) {
+		if ( 'event_starts' == $column ) {
 
-			$event_meta = get_post_custom( $post_id );
+			// $event_meta = get_post_custom( $post_id );
+			// self::dump($event_meta);
 
 			// TODO: Localize
 			// @$startdate = date( "F j, Y", $event_meta[$this->constant( 'event_startdate' )][0] );
 			// @$enddate = date( "F j, Y", $event_meta[$this->constant( 'event_enddate' )][0] );
 			// echo $startdate . '<br /><em>' . $enddate . '</em>';
 
-			echo date_i18n( _x( 'F j, Y', 'Event Module', GEDITORIAL_TEXTDOMAIN ), strtotime( $event_meta[$this->constant( 'event_startdate' )][0] ) )
-				.'<br /><em>'.date_i18n( _x( 'F j, Y', 'Event Module', GEDITORIAL_TEXTDOMAIN ), strtotime( $event_meta[$this->constant( 'event_enddate' )][0] ) );
+			// echo date_i18n( _x( 'F j, Y', 'Modules: Event', GEDITORIAL_TEXTDOMAIN ), strtotime( $event_meta[$this->constant( 'event_startdate' )][0] ) )
+			// 	.'<br /><em>'.date_i18n( _x( 'F j, Y', 'Modules: Event', GEDITORIAL_TEXTDOMAIN ), strtotime( $event_meta[$this->constant( 'event_enddate' )][0] ) );
 
-		// FIXME: adjust!
-		} else if ( 'event_times' == $column ) {
+			echo '&mdash;';
 
-			$event_meta = get_post_custom( $post_id );
+		} else if ( 'event_ends' == $column ) {
+
+			echo '&mdash;';
+
+			// $event_meta = get_post_custom( $post_id );
 
 			// TODO: Localize
-			$time_format = get_option( 'time_format', 'g:i a' );
-			@$starttime = date( $time_format, strtotime( $event_meta[$this->constant( 'event_startdate' )][0] ) );
-			@$endtime = date( $time_format,  strtotime( $event_meta[$this->constant( 'event_enddate' )][0] ) );
-			echo $starttime . '<br />' .$endtime;
+			// $time_format = get_option( 'time_format', 'g:i a' );
+			// @$starttime = date( $time_format, strtotime( $event_meta[$this->constant( 'event_startdate' )][0] ) );
+			// @$endtime = date( $time_format,  strtotime( $event_meta[$this->constant( 'event_enddate' )][0] ) );
+			// echo $starttime . '<br />' .$endtime;
 		}
 	}
 
 	public function sortable_columns( $columns )
 	{
-		return array_merge( $columns, array( 'event_dates' => 'event_dates' ) );
+		return array_merge( $columns, array(
+			'event_starts' => array( 'event_starts', TRUE ),
+			'event_ends'   => array( 'event_ends', TRUE ),
+		) );
 	}
 
-	// http://justintadlock.com/archives/2011/06/27/custom-columns-for-custom-post-types
-	public function load_edit_php_request( $vars )
+	public function request( $query_vars )
 	{
-		if ( isset( $vars['post_type'] ) && $this->constant( 'event_cpt' ) == $vars['post_type'] ) {
-			if ( isset( $vars['orderby'] ) && 'event_dates' == $vars['orderby'] ) {
-				$vars = array_merge(
-					$vars,
-					array(
-						'meta_key' => $this->constant( 'event_startdate' ),
-						'orderby' => 'meta_value_num'
-					)
-				);
-			}
+		if ( isset( $query_vars['orderby'] ) ) {
+
+			if ( 'event_starts' == $query_vars['orderby'] )
+				$query_vars = array_merge( $query_vars, array(
+					'meta_key' => $this->constant( 'event_startdate' ),
+					'orderby'  => 'meta_value_num'
+				) );
+
+			else if ( 'event_ends' == $query_vars['orderby'] )
+				$query_vars = array_merge( $query_vars, array(
+					'meta_key' => $this->constant( 'event_enddate' ),
+					'orderby'  => 'meta_value_num'
+				) );
 		}
 
-		return $vars;
+		return $query_vars;
 	}
 
 	public function post_updated_messages( $messages )
@@ -416,7 +428,7 @@ class gEditorialEvent extends gEditorialModuleCore
 			'time-end'   => self::req( 'time-end' ),
 		), $atts );
 
-		$html = gEditorialHTML::tag( 'input', array(
+		$html = HTML::tag( 'input', array(
 			'type'        => 'text',
 			'dir'         => 'ltr',
 			'name'        => 'geditorial-event-date-start',
@@ -426,7 +438,7 @@ class gEditorialEvent extends gEditorialModuleCore
 			'placeholder' => _x( 'Date Start', 'Modules: Event: Meta Box Input Placeholder', GEDITORIAL_TEXTDOMAIN ),
 		) );
 
-		$html .= gEditorialHTML::tag( 'input', array(
+		$html .= HTML::tag( 'input', array(
 			'type'        => 'text',
 			'dir'         => 'ltr',
 			'name'        => 'geditorial-event-time-start',
@@ -436,11 +448,11 @@ class gEditorialEvent extends gEditorialModuleCore
 			'placeholder' => _x( 'Time Start', 'Modules: Event: Meta Box Input Placeholder', GEDITORIAL_TEXTDOMAIN ),
 		) );
 
-		echo gEditorialHTML::tag( 'div', array(
+		echo HTML::tag( 'div', array(
 			'class' => 'field-wrap field-wrap-inputtext-half ltr',
 		), $html );
 
-		$html = gEditorialHTML::tag( 'input', array(
+		$html = HTML::tag( 'input', array(
 			'type'        => 'text',
 			'dir'         => 'ltr',
 			'name'        => 'geditorial-event-date-end',
@@ -450,7 +462,7 @@ class gEditorialEvent extends gEditorialModuleCore
 			'placeholder' => _x( 'Date End', 'Modules: Event: Meta Box Input Placeholder', GEDITORIAL_TEXTDOMAIN ),
 		) );
 
-		$html .= gEditorialHTML::tag( 'input', array(
+		$html .= HTML::tag( 'input', array(
 			'type'        => 'text',
 			'dir'         => 'ltr',
 			'name'        => 'geditorial-event-time-end',
@@ -460,7 +472,7 @@ class gEditorialEvent extends gEditorialModuleCore
 			'placeholder' => _x( 'Time End', 'Modules: Event: Meta Box Input Placeholder', GEDITORIAL_TEXTDOMAIN ),
 		) );
 
-		echo gEditorialHTML::tag( 'div', array(
+		echo HTML::tag( 'div', array(
 			'class' => 'field-wrap field-wrap-inputtext-half ltr',
 		), $html );
 
