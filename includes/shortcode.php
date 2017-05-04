@@ -303,7 +303,7 @@ class ShortCode extends Core\Base
 			'slug'           => '',
 			'title'          => NULL, // FALSE to disable
 			'title_link'     => NULL, // FALSE to disable
-			'title_title'    => _x( 'Permanent link', 'ShortCode Helper: Term Title Attr', GEDITORIAL_TEXTDOMAIN ),
+			'title_title'    => _x( 'Permanent link', 'ShortCode: Term Title Attr', GEDITORIAL_TEXTDOMAIN ),
 			'title_title_cb' => FALSE, // callback for title attr
 			'title_tag'      => 'h3',
 			'title_anchor'   => $taxonomy.'-%2$s',

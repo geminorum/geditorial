@@ -229,7 +229,7 @@ class Module extends Base
 			$pre = array();
 
 		else if ( TRUE === $pre )
-			$pre = array( 'all' => _x( 'All PostTypes', 'Module Core', GEDITORIAL_TEXTDOMAIN ) );
+			$pre = array( 'all' => _x( 'All PostTypes', 'Module', GEDITORIAL_TEXTDOMAIN ) );
 
 		$all = PostType::get();
 
@@ -375,7 +375,7 @@ class Module extends Base
 	{
 		if ( is_null( $title ) )
 			$title = $this->get_string( 'post_types_title', 'post', 'settings',
-				_x( 'Enable for Post Types', 'Module Core', GEDITORIAL_TEXTDOMAIN ) );
+				_x( 'Enable for Post Types', 'Module', GEDITORIAL_TEXTDOMAIN ) );
 
 		$section = $this->module->group.'_posttypes';
 
@@ -396,7 +396,7 @@ class Module extends Base
 	{
 		if ( is_null( $title ) )
 			$title = $this->get_string( 'taxonomies_title', 'post', 'settings',
-				_x( 'Enable for Taxonomies', 'Module Core', GEDITORIAL_TEXTDOMAIN ) );
+				_x( 'Enable for Taxonomies', 'Module', GEDITORIAL_TEXTDOMAIN ) );
 
 		$section = $this->module->group.'_taxonomies';
 
@@ -416,7 +416,7 @@ class Module extends Base
 	public function register_settings_fields_option( $title = NULL )
 	{
 		if ( is_null( $title ) )
-			$title = _x( 'Fields for %s', 'Module Core', GEDITORIAL_TEXTDOMAIN );
+			$title = _x( 'Fields for %s', 'Module', GEDITORIAL_TEXTDOMAIN );
 
 		$all = $this->all_post_types();
 
@@ -514,12 +514,12 @@ class Module extends Base
 
 		echo HTML::tag( 'label', array(
 			'for' => $args['post_type'].'_fields_all',
-		), $html.'&nbsp;<span class="description">'._x( 'Select All Fields', 'Module Core', GEDITORIAL_TEXTDOMAIN ).'</span>' );
+		), $html.'&nbsp;<span class="description">'._x( 'Select All Fields', 'Module', GEDITORIAL_TEXTDOMAIN ).'</span>' );
 	}
 
 	public function settings_fields_option_none( $args )
 	{
-		Settings::moduleSectionEmpty( _x( 'No fields supported', 'Module Core', GEDITORIAL_TEXTDOMAIN ) );
+		Settings::moduleSectionEmpty( _x( 'No fields supported', 'Module', GEDITORIAL_TEXTDOMAIN ) );
 	}
 
 	public function print_configure_view()
@@ -887,13 +887,13 @@ class Module extends Base
 			return $this->strings['noops'][$constant_key];
 
 		if ( 'post' == $constant_key )
-			return _nx_noop( '%s Post', '%s Posts', 'Module Core: Noop', GEDITORIAL_TEXTDOMAIN );
+			return _nx_noop( '%s Post', '%s Posts', 'Module: Noop', GEDITORIAL_TEXTDOMAIN );
 
 		if ( 'connected' == $constant_key )
-			return _nx_noop( '%s Item Connected', '%s Items Connected', 'Module Core: Noop', GEDITORIAL_TEXTDOMAIN );
+			return _nx_noop( '%s Item Connected', '%s Items Connected', 'Module: Noop', GEDITORIAL_TEXTDOMAIN );
 
 		if ( 'word' == $constant_key )
-			return _nx_noop( '%s Word', '%s Words', 'Module Core: Noop', GEDITORIAL_TEXTDOMAIN );
+			return _nx_noop( '%s Word', '%s Words', 'Module: Noop', GEDITORIAL_TEXTDOMAIN );
 
 		$noop = array(
 			'plural'   => $constant_key,
@@ -1351,10 +1351,10 @@ class Module extends Base
 	{
 		$post_type = $this->constant( $constant_key );
 
-		self::themeThumbnails( array( $post_type ) );
+		Helper::themeThumbnails( array( $post_type ) );
 
 		foreach ( $this->get_image_sizes( $post_type ) as $name => $size )
-			self::registerImageSize( $name, array_merge( $size, array( 'p' => array( $post_type ) ) ) );
+			Helper::registerImageSize( $name, array_merge( $size, array( 'p' => array( $post_type ) ) ) );
 	}
 
 	// WARNING: every script must have a .min copy
@@ -1479,8 +1479,8 @@ class Module extends Base
 			'name'        => 'menu_order',
 			'id'          => 'menu_order',
 			'value'       => $post->menu_order,
-			'title'       => _x( 'Order', 'Module Core: Title Attr', GEDITORIAL_TEXTDOMAIN ),
-			'placeholder' => _x( 'Order', 'Module Core: Placeholder', GEDITORIAL_TEXTDOMAIN ),
+			'title'       => _x( 'Order', 'Module: Title Attr', GEDITORIAL_TEXTDOMAIN ),
+			'placeholder' => _x( 'Order', 'Module: Placeholder', GEDITORIAL_TEXTDOMAIN ),
 			'class'       => 'small-text',
 			'data'        => array(
 				'ortho' => 'number',
@@ -1502,7 +1502,7 @@ class Module extends Base
 			'selected'         => $post->post_parent,
 			'name'             => 'parent_id',
 			'class'            => 'geditorial-admin-dropbown',
-			'show_option_none' => _x( '&mdash; no parent &mdash;', 'Module Core: MetaBox Parent Dropdown: Select Option None', GEDITORIAL_TEXTDOMAIN ),
+			'show_option_none' => _x( '&mdash; no parent &mdash;', 'Module: MetaBox Parent Dropdown: Select Option None', GEDITORIAL_TEXTDOMAIN ),
 			'sort_column'      => 'menu_order',
 			'sort_order'       => 'desc',
 			'post_status'      => $status,
@@ -1599,7 +1599,7 @@ class Module extends Base
 	public function get_meta_box_title( $constant_key = 'post', $url = NULL, $edit_cap = 'manage_options', $title = NULL )
 	{
 		if ( is_null( $title ) )
-			$title = $this->get_string( 'meta_box_title', $constant_key, 'misc', _x( 'Settings', 'Module Core: MetaBox default title', GEDITORIAL_TEXTDOMAIN ) );
+			$title = $this->get_string( 'meta_box_title', $constant_key, 'misc', _x( 'Settings', 'Module: MetaBox default title', GEDITORIAL_TEXTDOMAIN ) );
 
 		if ( FALSE === $url )
 			return $title;
@@ -1609,7 +1609,7 @@ class Module extends Base
 			if ( is_null( $url ) )
 				$url = $this->get_url_settings();
 
-			$action = $this->get_string( 'meta_box_action', $constant_key, 'misc', _x( 'Configure', 'Module Core: MetaBox default action', GEDITORIAL_TEXTDOMAIN ) );
+			$action = $this->get_string( 'meta_box_action', $constant_key, 'misc', _x( 'Configure', 'Module: MetaBox default action', GEDITORIAL_TEXTDOMAIN ) );
 			$title .= ' <span class="postbox-title-action geditorial-postbox-title-action"><a href="'.esc_url( $url ).'" target="_blank">'.$action.'</a></span>';
 		}
 
@@ -2023,7 +2023,7 @@ SQL;
 		} else {
 
 			if ( is_null( $title_attr ) )
-				$title_attr = _x( 'No Term', 'Module Core: No Count Term Attribute', GEDITORIAL_TEXTDOMAIN );
+				$title_attr = _x( 'No Term', 'Module: No Count Term Attribute', GEDITORIAL_TEXTDOMAIN );
 
 			printf( '<span title="%s" class="column-term-empty">&mdash;</span>', $title_attr );
 		}

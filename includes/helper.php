@@ -135,7 +135,7 @@ class Helper extends Core\Base
 	public static function getJoined( $items, $before = '', $after = '' )
 	{
 		if ( count( $items ) )
-			return $before.join( _x( ', ', 'Module Helper: Item Seperator', GEDITORIAL_TEXTDOMAIN ), $items ).$after;
+			return $before.join( _x( ', ', 'Helper: Item Seperator', GEDITORIAL_TEXTDOMAIN ), $items ).$after;
 
 		return '';
 	}
@@ -202,7 +202,7 @@ class Helper extends Core\Base
 			return '';
 
 		if ( is_null( $fallback ) )
-			return _x( '(untitled)', 'Module Helper: Post Title', GEDITORIAL_TEXTDOMAIN );
+			return _x( '(untitled)', 'Helper: Post Title', GEDITORIAL_TEXTDOMAIN );
 
 		return $fallback;
 	}
@@ -227,7 +227,7 @@ class Helper extends Core\Base
 				'href'   => WordPress::getPostEditLink( $post->ID ),
 				'class'  => '-link -row-link -row-link-edit',
 				'target' => '_blank',
-				'title'  => is_null( $title_attr ) ? _x( 'Edit', 'Module Helper: Row Action', GEDITORIAL_TEXTDOMAIN ) : $title_attr,
+				'title'  => is_null( $title_attr ) ? _x( 'Edit', 'Helper: Row Action', GEDITORIAL_TEXTDOMAIN ) : $title_attr,
 			), esc_html( $title ) );
 
 		if ( 'view' == $link && ! $edit && 'publish' != get_post_status( $post ) )
@@ -241,7 +241,7 @@ class Helper extends Core\Base
 				'href'   => WordPress::getPostShortLink( $post->ID ),
 				'class'  => '-link -row-link -row-link-view',
 				'target' => '_blank',
-				'title'  => is_null( $title_attr ) ? _x( 'View', 'Module Helper: Row Action', GEDITORIAL_TEXTDOMAIN ) : $title_attr,
+				'title'  => is_null( $title_attr ) ? _x( 'View', 'Helper: Row Action', GEDITORIAL_TEXTDOMAIN ) : $title_attr,
 			), esc_html( $title ) );
 
 		return HTML::tag( 'a', array(
@@ -269,7 +269,7 @@ class Helper extends Core\Base
 						'href'   => WordPress::getPostEditLink( $post_id ),
 						'class'  => '-link -row-link -row-link-edit',
 						'target' => '_blank',
-					), _x( 'Edit', 'Module Helper: Row Action', GEDITORIAL_TEXTDOMAIN ) );
+					), _x( 'Edit', 'Helper: Row Action', GEDITORIAL_TEXTDOMAIN ) );
 
 				break;
 				case 'view':
@@ -278,7 +278,7 @@ class Helper extends Core\Base
 						'href'   => WordPress::getPostShortLink( $post_id ),
 						'class'  => '-link -row-link -row-link-view',
 						'target' => '_blank',
-					), _x( 'View', 'Module Helper: Row Action', GEDITORIAL_TEXTDOMAIN ) );
+					), _x( 'View', 'Helper: Row Action', GEDITORIAL_TEXTDOMAIN ) );
 
 				break;
 			}
@@ -315,7 +315,7 @@ class Helper extends Core\Base
 				'href'   => get_term_link( $term->term_id, $term->taxonomy ),
 				'class'  => '-link -row-link -row-link-view',
 				'target' => '_blank',
-				'title'  => _x( 'View', 'Module Helper: Row Action', GEDITORIAL_TEXTDOMAIN ),
+				'title'  => _x( 'View', 'Helper: Row Action', GEDITORIAL_TEXTDOMAIN ),
 			), esc_html( $title ) );
 
 		return HTML::tag( 'a', array(
@@ -432,7 +432,7 @@ class Helper extends Core\Base
 		// FIXME: following must move to MetaBox class
 
 		$output = '<div class="field-wrap field-wrap-list"><h4>';
-		$output .= sprintf( _x( 'Other Posts on <a href="%1$s" target="_blank">%2$s</a>', 'Module Helper', GEDITORIAL_TEXTDOMAIN ),
+		$output .= sprintf( _x( 'Other Posts on <a href="%1$s" target="_blank">%2$s</a>', 'Helper', GEDITORIAL_TEXTDOMAIN ),
 			get_term_link( $term, $term->taxonomy ),
 			sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' )
 		).'</h4><ol>';
@@ -443,7 +443,7 @@ class Helper extends Core\Base
 			$output .= '<li><a href="'.get_permalink( $post ).'">'
 				.self::getPostTitle( $post ).'</a>'
 				.'&nbsp;<span class="edit">'
-				.sprintf( _x( '&ndash; <a href="%1$s" target="_blank" title="Edit this Post">%2$s</a>', 'Module Helper', GEDITORIAL_TEXTDOMAIN ),
+				.sprintf( _x( '&ndash; <a href="%1$s" target="_blank" title="Edit this Post">%2$s</a>', 'Helper', GEDITORIAL_TEXTDOMAIN ),
 					esc_url( WordPress::getPostEditLink( $post->ID ) ),
 					HTML::getDashicon( 'welcome-write-blog' )
 				).'</span></li>';
@@ -490,19 +490,19 @@ class Helper extends Core\Base
 
 		$gEditorial_WPImageSizes = array(
 			'thumbnail' => array(
-				'n' => _x( 'Thumbnail', 'Module Helper', GEDITORIAL_TEXTDOMAIN ),
+				'n' => _x( 'Thumbnail', 'Helper', GEDITORIAL_TEXTDOMAIN ),
 				'w' => get_option( 'thumbnail_size_w' ),
 				'h' => get_option( 'thumbnail_size_h' ),
 				'c' => get_option( 'thumbnail_crop' ),
 			),
 			'medium' => array(
-				'n' => _x( 'Medium', 'Module Helper', GEDITORIAL_TEXTDOMAIN ),
+				'n' => _x( 'Medium', 'Helper', GEDITORIAL_TEXTDOMAIN ),
 				'w' => get_option( 'medium_size_w' ),
 				'h' => get_option( 'medium_size_h' ),
 				'c' => 0,
 			),
 			'large' => array(
-				'n' => _x( 'Large', 'Module Helper', GEDITORIAL_TEXTDOMAIN ),
+				'n' => _x( 'Large', 'Helper', GEDITORIAL_TEXTDOMAIN ),
 				'w' => get_option( 'large_size_w' ),
 				'h' => get_option( 'large_size_h' ),
 				'c' => 0,
@@ -583,19 +583,19 @@ class Helper extends Core\Base
 				'name'       => 'type',
 				'selected'   => self::req( 'type', 'any' ),
 				'none_value' => 'any',
-				'none_title' => _x( 'All PostTypes', 'Module Helper: Table Filter', GEDITORIAL_TEXTDOMAIN ),
+				'none_title' => _x( 'All PostTypes', 'Helper: Table Filter', GEDITORIAL_TEXTDOMAIN ),
 			] );
 	}
 
 	public static function tableColumnPostID()
 	{
-		return _x( 'ID', 'Module Helper: Table Column: Post ID', GEDITORIAL_TEXTDOMAIN );
+		return _x( 'ID', 'Helper: Table Column: Post ID', GEDITORIAL_TEXTDOMAIN );
 	}
 
 	public static function tableColumnPostDate()
 	{
 		return array(
-			'title'    => _x( 'Date', 'Module Helper: Table Column: Post Date', GEDITORIAL_TEXTDOMAIN ),
+			'title'    => _x( 'Date', 'Helper: Table Column: Post Date', GEDITORIAL_TEXTDOMAIN ),
 			'callback' => function( $value, $row, $column, $index ){
 				return Helper::humanTimeDiffRound( strtotime( $row->post_date ) );
 			},
@@ -605,7 +605,7 @@ class Helper extends Core\Base
 	public static function tableColumnPostType()
 	{
 		return array(
-			'title'    => _x( 'Type', 'Module Helper: Table Column: Post Type', GEDITORIAL_TEXTDOMAIN ),
+			'title'    => _x( 'Type', 'Helper: Table Column: Post Type', GEDITORIAL_TEXTDOMAIN ),
 			'args'     => array( 'types' => PostType::get( 2 ) ),
 			'callback' => function( $value, $row, $column, $index ){
 				return isset( $column['args']['types'][$row->post_type] )
@@ -618,7 +618,7 @@ class Helper extends Core\Base
 	public static function tableColumnPostTitle()
 	{
 		return array(
-			'title'    => _x( 'Title', 'Module Helper: Table Column: Post Title', GEDITORIAL_TEXTDOMAIN ),
+			'title'    => _x( 'Title', 'Helper: Table Column: Post Title', GEDITORIAL_TEXTDOMAIN ),
 			'args'     => array( 'statuses' => PostType::getStatuses( 2 ) ),
 			'callback' => function( $value, $row, $column, $index ){
 
@@ -640,7 +640,7 @@ class Helper extends Core\Base
 	public static function tableColumnPostTerms()
 	{
 		return array(
-			'title'    => _x( 'Terms', 'Module Helper: Table Column: Post Terms', GEDITORIAL_TEXTDOMAIN ),
+			'title'    => _x( 'Terms', 'Helper: Table Column: Post Terms', GEDITORIAL_TEXTDOMAIN ),
 			'args'     => array( 'taxonomies' => Taxonomy::get( 4 ) ),
 			'callback' => function( $value, $row, $column, $index ){
 				$html = '';
@@ -653,13 +653,13 @@ class Helper extends Core\Base
 
 	public static function tableColumnTermID()
 	{
-		return _x( 'ID', 'Module Helper: Table Column: Term ID', GEDITORIAL_TEXTDOMAIN );
+		return _x( 'ID', 'Helper: Table Column: Term ID', GEDITORIAL_TEXTDOMAIN );
 	}
 
 	public static function tableColumnTermName()
 	{
 		return array(
-			'title'    => _x( 'Name', 'Module Helper: Table Column: Term Name', GEDITORIAL_TEXTDOMAIN ),
+			'title'    => _x( 'Name', 'Helper: Table Column: Term Name', GEDITORIAL_TEXTDOMAIN ),
 			'callback' => function( $value, $row, $column, $index ){
 				return Helper::getTermTitleRow( $row );
 			},
@@ -668,13 +668,13 @@ class Helper extends Core\Base
 
 	public static function tableColumnTermSlug()
 	{
-		return _x( 'Slug', 'Module Helper: Table Column: Term Slug', GEDITORIAL_TEXTDOMAIN );
+		return _x( 'Slug', 'Helper: Table Column: Term Slug', GEDITORIAL_TEXTDOMAIN );
 	}
 
 	public static function tableColumnTermDesc()
 	{
 		return array(
-			'title'    => _x( 'Description', 'Module Helper: Table Column: Term Desc', GEDITORIAL_TEXTDOMAIN ),
+			'title'    => _x( 'Description', 'Helper: Table Column: Term Desc', GEDITORIAL_TEXTDOMAIN ),
 			'callback' => 'wpautop',
 			'class'    => 'description',
 		);
@@ -691,13 +691,13 @@ class Helper extends Core\Base
 		return HTML::tag( 'div', array(
 			'class' => array( self::BASE.'-wordcount', 'hide-if-no-js' ),
 			'data'  => apply_filters( self::BASE.'_helper_wordcount_data', array_merge( $data, $defaults ), $for, $posttype ),
-		), sprintf( _x( 'Letter Count: %s', 'Module Helper', GEDITORIAL_TEXTDOMAIN ), '<span class="-chars">0</span>' ) );
+		), sprintf( _x( 'Letter Count: %s', 'Helper', GEDITORIAL_TEXTDOMAIN ), '<span class="-chars">0</span>' ) );
 	}
 
 	public static function htmlCount( $count, $title_attr = NULL )
 	{
 		if ( is_null( $title_attr ) )
-			$title_attr = _x( 'No Count', 'Module Helper: No Count Title Attribute', GEDITORIAL_TEXTDOMAIN );
+			$title_attr = _x( 'No Count', 'Helper: No Count Title Attribute', GEDITORIAL_TEXTDOMAIN );
 
 		if ( $count )
 			$html = Number::format( $count );
@@ -711,9 +711,9 @@ class Helper extends Core\Base
 	{
 		$html = '';
 
-		$date = _x( 'm/d/Y', 'Module Helper: Date Edit Row', GEDITORIAL_TEXTDOMAIN );
-		$time = _x( 'H:i', 'Module Helper: Date Edit Row', GEDITORIAL_TEXTDOMAIN );
-		$full = _x( 'l, M j, Y @ H:i', 'Module Helper: Date Edit Row', GEDITORIAL_TEXTDOMAIN );
+		$date = _x( 'm/d/Y', 'Helper: Date Edit Row', GEDITORIAL_TEXTDOMAIN );
+		$time = _x( 'H:i', 'Helper: Date Edit Row', GEDITORIAL_TEXTDOMAIN );
+		$full = _x( 'l, M j, Y @ H:i', 'Helper: Date Edit Row', GEDITORIAL_TEXTDOMAIN );
 
 		$html .= '<span class="-date-date" title="'.esc_attr( mysql2date( $time, $mysql_time ) ).'">'.mysql2date( $date, $mysql_time ).'</span>';
 		$html .= '&nbsp;(<span class="-date-diff" title="'.esc_attr( mysql2date( $full, $mysql_time ) ).'">'.self::humanTimeDiff( $mysql_time ).'</span>)';
@@ -729,8 +729,8 @@ class Helper extends Core\Base
 		$gmt   = strtotime( $post->post_modified_gmt );
 		$local = strtotime( $post->post_modified );
 
-		$format = _x( 'l, F j, Y', 'Module Helper: Post Modified', GEDITORIAL_TEXTDOMAIN );
-		$title  = _x( 'Last Modified on %s', 'Module Helper: Post Modified', GEDITORIAL_TEXTDOMAIN );
+		$format = _x( 'l, F j, Y', 'Helper: Post Modified', GEDITORIAL_TEXTDOMAIN );
+		$title  = _x( 'Last Modified on %s', 'Helper: Post Modified', GEDITORIAL_TEXTDOMAIN );
 
 		return $attr
 			? sprintf( $title, date_i18n( $format, $local ) )
@@ -748,7 +748,7 @@ class Helper extends Core\Base
 
 	public static function humanTimeAgo( $from, $to = '' )
 	{
-		return sprintf( _x( '%s ago', 'Module Helper: Human Time Ago', GEDITORIAL_TEXTDOMAIN ), human_time_diff( $from, $to ) );
+		return sprintf( _x( '%s ago', 'Helper: Human Time Ago', GEDITORIAL_TEXTDOMAIN ), human_time_diff( $from, $to ) );
 	}
 
 	public static function humanTimeDiffRound( $local, $round = DAY_IN_SECONDS, $format = NULL, $now = NULL )
@@ -764,7 +764,7 @@ class Helper extends Core\Base
 			return self::humanTimeAgo( $local, $now );
 
 		if ( is_null( $format ) )
-			$format = _x( 'Y/m/d', 'Module Helper: Human Time Diff Round', GEDITORIAL_TEXTDOMAIN );
+			$format = _x( 'Y/m/d', 'Helper: Human Time Diff Round', GEDITORIAL_TEXTDOMAIN );
 
 		return date_i18n( $format, $local, FALSE );
 	}
@@ -775,16 +775,16 @@ class Helper extends Core\Base
 
 		if ( is_null( $strings ) )
 			$strings = array(
-				'now'    => _x( 'Now', 'Module Helper: Human Time Diff', GEDITORIAL_TEXTDOMAIN ),
-				'_s_ago' => _x( '%s ago', 'Module Helper: Human Time Diff', GEDITORIAL_TEXTDOMAIN ),
-				'in__s'  => _x( 'in %s', 'Module Helper: Human Time Diff', GEDITORIAL_TEXTDOMAIN ),
+				'now'    => _x( 'Now', 'Helper: Human Time Diff', GEDITORIAL_TEXTDOMAIN ),
+				'_s_ago' => _x( '%s ago', 'Helper: Human Time Diff', GEDITORIAL_TEXTDOMAIN ),
+				'in__s'  => _x( 'in %s', 'Helper: Human Time Diff', GEDITORIAL_TEXTDOMAIN ),
 
-				'noop_minutes' => _nx_noop( '%s min', '%s mins', 'Module Helper: Human Time Diff: Noop', GEDITORIAL_TEXTDOMAIN ),
-				'noop_hours'   => _nx_noop( '%s hour', '%s hours', 'Module Helper: Human Time Diff: Noop', GEDITORIAL_TEXTDOMAIN ),
-				'noop_days'    => _nx_noop( '%s day', '%s days', 'Module Helper: Human Time Diff: Noop', GEDITORIAL_TEXTDOMAIN ),
-				'noop_weeks'   => _nx_noop( '%s week', '%s weeks', 'Module Helper: Human Time Diff: Noop', GEDITORIAL_TEXTDOMAIN ),
-				'noop_months'  => _nx_noop( '%s month', '%s months', 'Module Helper: Human Time Diff: Noop', GEDITORIAL_TEXTDOMAIN ),
-				'noop_years'   => _nx_noop( '%s year', '%s years', 'Module Helper: Human Time Diff: Noop', GEDITORIAL_TEXTDOMAIN ),
+				'noop_minutes' => _nx_noop( '%s min', '%s mins', 'Helper: Human Time Diff: Noop', GEDITORIAL_TEXTDOMAIN ),
+				'noop_hours'   => _nx_noop( '%s hour', '%s hours', 'Helper: Human Time Diff: Noop', GEDITORIAL_TEXTDOMAIN ),
+				'noop_days'    => _nx_noop( '%s day', '%s days', 'Helper: Human Time Diff: Noop', GEDITORIAL_TEXTDOMAIN ),
+				'noop_weeks'   => _nx_noop( '%s week', '%s weeks', 'Helper: Human Time Diff: Noop', GEDITORIAL_TEXTDOMAIN ),
+				'noop_months'  => _nx_noop( '%s month', '%s months', 'Helper: Human Time Diff: Noop', GEDITORIAL_TEXTDOMAIN ),
+				'noop_years'   => _nx_noop( '%s year', '%s years', 'Helper: Human Time Diff: Noop', GEDITORIAL_TEXTDOMAIN ),
 			);
 
 		if ( empty( $now ) )
@@ -800,27 +800,27 @@ class Helper extends Core\Base
 
 		if ( is_null( $strings ) )
 			$strings = array(
-				'now'            => _x( 'Now', 'Module Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
-				'just_now'       => _x( 'Just now', 'Module Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
-				'one_minute_ago' => _x( 'One minute ago', 'Module Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
-				'_s_minutes_ago' => _x( '%s minutes ago', 'Module Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
-				'one_hour_ago'   => _x( 'One hour ago', 'Module Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
-				'_s_hours_ago'   => _x( '%s hours ago', 'Module Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
-				'yesterday'      => _x( 'Yesterday', 'Module Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
-				'_s_days_ago'    => _x( '%s days ago', 'Module Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
-				'_s_weeks_ago'   => _x( '%s weeks ago', 'Module Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
-				'last_month'     => _x( 'Last month', 'Module Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
-				'last_year'      => _x( 'Last year', 'Module Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
-				'in_a_minute'    => _x( 'in a minute', 'Module Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
-				'in__s_minutes'  => _x( 'in %s minutes', 'Module Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
-				'in_an_hour'     => _x( 'in an hour', 'Module Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
-				'in__s_hours'    => _x( 'in %s hours', 'Module Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
-				'tomorrow'       => _x( 'Tomorrow', 'Module Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
-				'next_week'      => _x( 'next week', 'Module Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
-				'in__s_weeks'    => _x( 'in %s weeks', 'Module Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
-				'next_month'     => _x( 'next month', 'Module Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
-				'format_l'       => _x( 'l', 'Module Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
-				'format_f_y'     => _x( 'F Y', 'Module Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
+				'now'            => _x( 'Now', 'Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
+				'just_now'       => _x( 'Just now', 'Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
+				'one_minute_ago' => _x( 'One minute ago', 'Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
+				'_s_minutes_ago' => _x( '%s minutes ago', 'Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
+				'one_hour_ago'   => _x( 'One hour ago', 'Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
+				'_s_hours_ago'   => _x( '%s hours ago', 'Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
+				'yesterday'      => _x( 'Yesterday', 'Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
+				'_s_days_ago'    => _x( '%s days ago', 'Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
+				'_s_weeks_ago'   => _x( '%s weeks ago', 'Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
+				'last_month'     => _x( 'Last month', 'Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
+				'last_year'      => _x( 'Last year', 'Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
+				'in_a_minute'    => _x( 'in a minute', 'Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
+				'in__s_minutes'  => _x( 'in %s minutes', 'Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
+				'in_an_hour'     => _x( 'in an hour', 'Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
+				'in__s_hours'    => _x( 'in %s hours', 'Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
+				'tomorrow'       => _x( 'Tomorrow', 'Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
+				'next_week'      => _x( 'next week', 'Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
+				'in__s_weeks'    => _x( 'in %s weeks', 'Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
+				'next_month'     => _x( 'next month', 'Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
+				'format_l'       => _x( 'l', 'Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
+				'format_f_y'     => _x( 'F Y', 'Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
 			);
 
 		if ( empty( $now ) )
@@ -833,16 +833,16 @@ class Helper extends Core\Base
 	public static function getDefualtCalendars( $filtered = FALSE )
 	{
 		$calendars = array(
-			'gregorian'     => _x( 'Gregorian', 'Module Helper: Default Calendar Type', GEDITORIAL_TEXTDOMAIN ),
-			'japanese'      => _x( 'Japanese', 'Module Helper: Default Calendar Type', GEDITORIAL_TEXTDOMAIN ),
-			'buddhist'      => _x( 'Buddhist', 'Module Helper: Default Calendar Type', GEDITORIAL_TEXTDOMAIN ),
-			'chinese'       => _x( 'Chinese', 'Module Helper: Default Calendar Type', GEDITORIAL_TEXTDOMAIN ),
-			'persian'       => _x( 'Persian', 'Module Helper: Default Calendar Type', GEDITORIAL_TEXTDOMAIN ),
-			'indian'        => _x( 'Indian', 'Module Helper: Default Calendar Type', GEDITORIAL_TEXTDOMAIN ),
-			'islamic'       => _x( 'Islamic', 'Module Helper: Default Calendar Type', GEDITORIAL_TEXTDOMAIN ),
-			'islamic-civil' => _x( 'Islamic-Civil', 'Module Helper: Default Calendar Type', GEDITORIAL_TEXTDOMAIN ),
-			'coptic'        => _x( 'Coptic', 'Module Helper: Default Calendar Type', GEDITORIAL_TEXTDOMAIN ),
-			'ethiopic'      => _x( 'Ethiopic', 'Module Helper: Default Calendar Type', GEDITORIAL_TEXTDOMAIN ),
+			'gregorian'     => _x( 'Gregorian', 'Helper: Default Calendar Type', GEDITORIAL_TEXTDOMAIN ),
+			'japanese'      => _x( 'Japanese', 'Helper: Default Calendar Type', GEDITORIAL_TEXTDOMAIN ),
+			'buddhist'      => _x( 'Buddhist', 'Helper: Default Calendar Type', GEDITORIAL_TEXTDOMAIN ),
+			'chinese'       => _x( 'Chinese', 'Helper: Default Calendar Type', GEDITORIAL_TEXTDOMAIN ),
+			'persian'       => _x( 'Persian', 'Helper: Default Calendar Type', GEDITORIAL_TEXTDOMAIN ),
+			'indian'        => _x( 'Indian', 'Helper: Default Calendar Type', GEDITORIAL_TEXTDOMAIN ),
+			'islamic'       => _x( 'Islamic', 'Helper: Default Calendar Type', GEDITORIAL_TEXTDOMAIN ),
+			'islamic-civil' => _x( 'Islamic-Civil', 'Helper: Default Calendar Type', GEDITORIAL_TEXTDOMAIN ),
+			'coptic'        => _x( 'Coptic', 'Helper: Default Calendar Type', GEDITORIAL_TEXTDOMAIN ),
+			'ethiopic'      => _x( 'Ethiopic', 'Helper: Default Calendar Type', GEDITORIAL_TEXTDOMAIN ),
 		);
 
 		return $filtered ? apply_filters( self::BASE.'_default_calendars', $calendars ) : $calendars;
@@ -862,7 +862,7 @@ class Helper extends Core\Base
 
 	public static function noopedCount( $count, $nooped )
 	{
-		$rule = _x( '%2$s', 'Module Helper: Nooped Count', GEDITORIAL_TEXTDOMAIN );
+		$rule = _x( '%2$s', 'Helper: Nooped Count', GEDITORIAL_TEXTDOMAIN );
 
 		$singular = self::nooped( 1, $nooped );
 		$plural   = self::nooped( $count, $nooped );
@@ -909,35 +909,35 @@ class Helper extends Core\Base
 	public static function generatePostTypeLabels( $name, $featured = FALSE, $pre = array() )
 	{
 		$name_templates = array(
-			'name'                  => _x( '%1$s', 'Module Helper: CPT Generator: Name', GEDITORIAL_TEXTDOMAIN ),
-			// 'menu_name'             => _x( '%1$s', 'Module Helper: CPT Generator: Menu Name', GEDITORIAL_TEXTDOMAIN ),
-			// 'description'           => _x( '%1$s', 'Module Helper: CPT Generator: Description', GEDITORIAL_TEXTDOMAIN ),
-			'singular_name'         => _x( '%2$s', 'Module Helper: CPT Generator: Singular Name', GEDITORIAL_TEXTDOMAIN ),
-			'add_new'               => _x( 'Add New', 'Module Helper: CPT Generator', GEDITORIAL_TEXTDOMAIN ),
-			'add_new_item'          => _x( 'Add New %2$s', 'Module Helper: CPT Generator', GEDITORIAL_TEXTDOMAIN ),
-			'edit_item'             => _x( 'Edit %2$s', 'Module Helper: CPT Generator', GEDITORIAL_TEXTDOMAIN ),
-			'new_item'              => _x( 'New %2$s', 'Module Helper: CPT Generator', GEDITORIAL_TEXTDOMAIN ),
-			'view_item'             => _x( 'View %2$s', 'Module Helper: CPT Generator', GEDITORIAL_TEXTDOMAIN ),
-			'view_items'            => _x( 'View %1$s', 'Module Helper: CPT Generator', GEDITORIAL_TEXTDOMAIN ),
-			'search_items'          => _x( 'Search %1$s', 'Module Helper: CPT Generator', GEDITORIAL_TEXTDOMAIN ),
-			'not_found'             => _x( 'No %3$s found.', 'Module Helper: CPT Generator', GEDITORIAL_TEXTDOMAIN ),
-			'not_found_in_trash'    => _x( 'No %3$s found in Trash.', 'Module Helper: CPT Generator', GEDITORIAL_TEXTDOMAIN ),
-			'parent_item_colon'     => _x( 'Parent %2$s:', 'Module Helper: CPT Generator', GEDITORIAL_TEXTDOMAIN ),
-			'all_items'             => _x( 'All %1$s', 'Module Helper: CPT Generator', GEDITORIAL_TEXTDOMAIN ),
-			'archives'              => _x( '%2$s Archives', 'Module Helper: CPT Generator', GEDITORIAL_TEXTDOMAIN ),
-			'attributes'            => _x( '%2$s Attributes', 'Module Helper: CPT Generator', GEDITORIAL_TEXTDOMAIN ),
-			'insert_into_item'      => _x( 'Insert into %4$s', 'Module Helper: CPT Generator', GEDITORIAL_TEXTDOMAIN ),
-			'uploaded_to_this_item' => _x( 'Uploaded to this %4$s', 'Module Helper: CPT Generator', GEDITORIAL_TEXTDOMAIN ),
-			'filter_items_list'     => _x( 'Filter %3$s list', 'Module Helper: CPT Generator', GEDITORIAL_TEXTDOMAIN ),
-			'items_list_navigation' => _x( '%1$s list navigation', 'Module Helper: CPT Generator', GEDITORIAL_TEXTDOMAIN ),
-			'items_list'            => _x( '%1$s list', 'Module Helper: CPT Generator', GEDITORIAL_TEXTDOMAIN ),
+			'name'                  => _x( '%1$s', 'Helper: CPT Generator: Name', GEDITORIAL_TEXTDOMAIN ),
+			// 'menu_name'             => _x( '%1$s', 'Helper: CPT Generator: Menu Name', GEDITORIAL_TEXTDOMAIN ),
+			// 'description'           => _x( '%1$s', 'Helper: CPT Generator: Description', GEDITORIAL_TEXTDOMAIN ),
+			'singular_name'         => _x( '%2$s', 'Helper: CPT Generator: Singular Name', GEDITORIAL_TEXTDOMAIN ),
+			'add_new'               => _x( 'Add New', 'Helper: CPT Generator', GEDITORIAL_TEXTDOMAIN ),
+			'add_new_item'          => _x( 'Add New %2$s', 'Helper: CPT Generator', GEDITORIAL_TEXTDOMAIN ),
+			'edit_item'             => _x( 'Edit %2$s', 'Helper: CPT Generator', GEDITORIAL_TEXTDOMAIN ),
+			'new_item'              => _x( 'New %2$s', 'Helper: CPT Generator', GEDITORIAL_TEXTDOMAIN ),
+			'view_item'             => _x( 'View %2$s', 'Helper: CPT Generator', GEDITORIAL_TEXTDOMAIN ),
+			'view_items'            => _x( 'View %1$s', 'Helper: CPT Generator', GEDITORIAL_TEXTDOMAIN ),
+			'search_items'          => _x( 'Search %1$s', 'Helper: CPT Generator', GEDITORIAL_TEXTDOMAIN ),
+			'not_found'             => _x( 'No %3$s found.', 'Helper: CPT Generator', GEDITORIAL_TEXTDOMAIN ),
+			'not_found_in_trash'    => _x( 'No %3$s found in Trash.', 'Helper: CPT Generator', GEDITORIAL_TEXTDOMAIN ),
+			'parent_item_colon'     => _x( 'Parent %2$s:', 'Helper: CPT Generator', GEDITORIAL_TEXTDOMAIN ),
+			'all_items'             => _x( 'All %1$s', 'Helper: CPT Generator', GEDITORIAL_TEXTDOMAIN ),
+			'archives'              => _x( '%2$s Archives', 'Helper: CPT Generator', GEDITORIAL_TEXTDOMAIN ),
+			'attributes'            => _x( '%2$s Attributes', 'Helper: CPT Generator', GEDITORIAL_TEXTDOMAIN ),
+			'insert_into_item'      => _x( 'Insert into %4$s', 'Helper: CPT Generator', GEDITORIAL_TEXTDOMAIN ),
+			'uploaded_to_this_item' => _x( 'Uploaded to this %4$s', 'Helper: CPT Generator', GEDITORIAL_TEXTDOMAIN ),
+			'filter_items_list'     => _x( 'Filter %3$s list', 'Helper: CPT Generator', GEDITORIAL_TEXTDOMAIN ),
+			'items_list_navigation' => _x( '%1$s list navigation', 'Helper: CPT Generator', GEDITORIAL_TEXTDOMAIN ),
+			'items_list'            => _x( '%1$s list', 'Helper: CPT Generator', GEDITORIAL_TEXTDOMAIN ),
 		);
 
 		$featured_templates = array(
-			'featured_image'        => _x( '%1$s', 'Module Helper: CPT Generator: Featured', GEDITORIAL_TEXTDOMAIN ),
-			'set_featured_image'    => _x( 'Set %2$s', 'Module Helper: CPT Generator: Featured', GEDITORIAL_TEXTDOMAIN ),
-			'remove_featured_image' => _x( 'Remove %2$s', 'Module Helper: CPT Generator: Featured', GEDITORIAL_TEXTDOMAIN ),
-			'use_featured_image'    => _x( 'Use as %2$s', 'Module Helper: CPT Generator: Featured', GEDITORIAL_TEXTDOMAIN ),
+			'featured_image'        => _x( '%1$s', 'Helper: CPT Generator: Featured', GEDITORIAL_TEXTDOMAIN ),
+			'set_featured_image'    => _x( 'Set %2$s', 'Helper: CPT Generator: Featured', GEDITORIAL_TEXTDOMAIN ),
+			'remove_featured_image' => _x( 'Remove %2$s', 'Helper: CPT Generator: Featured', GEDITORIAL_TEXTDOMAIN ),
+			'use_featured_image'    => _x( 'Use as %2$s', 'Helper: CPT Generator: Featured', GEDITORIAL_TEXTDOMAIN ),
 		);
 
 		$strings = self::getStringsFromName( $name );
@@ -970,26 +970,26 @@ class Helper extends Core\Base
 	public static function generateTaxonomyLabels( $name, $pre = array() )
 	{
 		$templates = array(
-			'name'                       => _x( '%1$s', 'Module Helper: Tax Generator: Name', GEDITORIAL_TEXTDOMAIN ),
-			// 'menu_name'                  => _x( '%1$s', 'Module Helper: Tax Generator: Menu Name', GEDITORIAL_TEXTDOMAIN ),
-			'singular_name'              => _x( '%2$s', 'Module Helper: Tax Generator: Singular Name', GEDITORIAL_TEXTDOMAIN ),
-			'search_items'               => _x( 'Search %1$s', 'Module Helper: Tax Generator', GEDITORIAL_TEXTDOMAIN ),
-			'popular_items'              => NULL, // _x( 'Popular %1$s', 'Module Helper: Tax Generator', GEDITORIAL_TEXTDOMAIN ),
-			'all_items'                  => _x( 'All %1$s', 'Module Helper: Tax Generator', GEDITORIAL_TEXTDOMAIN ),
-			'parent_item'                => _x( 'Parent %2$s', 'Module Helper: Tax Generator', GEDITORIAL_TEXTDOMAIN ),
-			'parent_item_colon'          => _x( 'Parent %2$s:', 'Module Helper: Tax Generator', GEDITORIAL_TEXTDOMAIN ),
-			'edit_item'                  => _x( 'Edit %2$s', 'Module Helper: Tax Generator', GEDITORIAL_TEXTDOMAIN ),
-			'view_item'                  => _x( 'View %2$s', 'Module Helper: Tax Generator', GEDITORIAL_TEXTDOMAIN ),
-			'update_item'                => _x( 'Update %2$s', 'Module Helper: Tax Generator', GEDITORIAL_TEXTDOMAIN ),
-			'add_new_item'               => _x( 'Add New %2$s', 'Module Helper: Tax Generator', GEDITORIAL_TEXTDOMAIN ),
-			'new_item_name'              => _x( 'New %2$s Name', 'Module Helper: Tax Generator', GEDITORIAL_TEXTDOMAIN ),
-			'separate_items_with_commas' => _x( 'Separate %3$s with commas', 'Module Helper: Tax Generator', GEDITORIAL_TEXTDOMAIN ),
-			'add_or_remove_items'        => _x( 'Add or remove %3$s', 'Module Helper: Tax Generator', GEDITORIAL_TEXTDOMAIN ),
-			'choose_from_most_used'      => _x( 'Choose from the most used %3$s', 'Module Helper: Tax Generator', GEDITORIAL_TEXTDOMAIN ),
-			'not_found'                  => _x( 'No %3$s found.', 'Module Helper: Tax Generator', GEDITORIAL_TEXTDOMAIN ),
-			'no_terms'                   => _x( 'No %3$s', 'Module Helper: Tax Generator', GEDITORIAL_TEXTDOMAIN ),
-			'items_list_navigation'      => _x( '%1$s list navigation', 'Module Helper: Tax Generator', GEDITORIAL_TEXTDOMAIN ),
-			'items_list'                 => _x( '%1$s list', 'Module Helper: Tax Generator', GEDITORIAL_TEXTDOMAIN ),
+			'name'                       => _x( '%1$s', 'Helper: Tax Generator: Name', GEDITORIAL_TEXTDOMAIN ),
+			// 'menu_name'                  => _x( '%1$s', 'Helper: Tax Generator: Menu Name', GEDITORIAL_TEXTDOMAIN ),
+			'singular_name'              => _x( '%2$s', 'Helper: Tax Generator: Singular Name', GEDITORIAL_TEXTDOMAIN ),
+			'search_items'               => _x( 'Search %1$s', 'Helper: Tax Generator', GEDITORIAL_TEXTDOMAIN ),
+			'popular_items'              => NULL, // _x( 'Popular %1$s', 'Helper: Tax Generator', GEDITORIAL_TEXTDOMAIN ),
+			'all_items'                  => _x( 'All %1$s', 'Helper: Tax Generator', GEDITORIAL_TEXTDOMAIN ),
+			'parent_item'                => _x( 'Parent %2$s', 'Helper: Tax Generator', GEDITORIAL_TEXTDOMAIN ),
+			'parent_item_colon'          => _x( 'Parent %2$s:', 'Helper: Tax Generator', GEDITORIAL_TEXTDOMAIN ),
+			'edit_item'                  => _x( 'Edit %2$s', 'Helper: Tax Generator', GEDITORIAL_TEXTDOMAIN ),
+			'view_item'                  => _x( 'View %2$s', 'Helper: Tax Generator', GEDITORIAL_TEXTDOMAIN ),
+			'update_item'                => _x( 'Update %2$s', 'Helper: Tax Generator', GEDITORIAL_TEXTDOMAIN ),
+			'add_new_item'               => _x( 'Add New %2$s', 'Helper: Tax Generator', GEDITORIAL_TEXTDOMAIN ),
+			'new_item_name'              => _x( 'New %2$s Name', 'Helper: Tax Generator', GEDITORIAL_TEXTDOMAIN ),
+			'separate_items_with_commas' => _x( 'Separate %3$s with commas', 'Helper: Tax Generator', GEDITORIAL_TEXTDOMAIN ),
+			'add_or_remove_items'        => _x( 'Add or remove %3$s', 'Helper: Tax Generator', GEDITORIAL_TEXTDOMAIN ),
+			'choose_from_most_used'      => _x( 'Choose from the most used %3$s', 'Helper: Tax Generator', GEDITORIAL_TEXTDOMAIN ),
+			'not_found'                  => _x( 'No %3$s found.', 'Helper: Tax Generator', GEDITORIAL_TEXTDOMAIN ),
+			'no_terms'                   => _x( 'No %3$s', 'Helper: Tax Generator', GEDITORIAL_TEXTDOMAIN ),
+			'items_list_navigation'      => _x( '%1$s list navigation', 'Helper: Tax Generator', GEDITORIAL_TEXTDOMAIN ),
+			'items_list'                 => _x( '%1$s list', 'Helper: Tax Generator', GEDITORIAL_TEXTDOMAIN ),
 		);
 
 		$strings = self::getStringsFromName( $name );
@@ -1015,17 +1015,17 @@ class Helper extends Core\Base
 		global $post_type_object, $post, $post_ID;
 
 		$templates = array(
-			'view_post'                      => _x( 'View %4$s', 'Module Helper: PostType Message Generator', GEDITORIAL_TEXTDOMAIN ),
-			'preview_post'                   => _x( 'Preview %4$s', 'Module Helper: PostType Message Generator', GEDITORIAL_TEXTDOMAIN ),
-			'post_updated'                   => _x( '%2$s updated.', 'Module Helper: PostType Message Generator', GEDITORIAL_TEXTDOMAIN ),
-			'custom_field_updated'           => _x( 'Custom field updated.', 'Module Helper: PostType Message Generator', GEDITORIAL_TEXTDOMAIN ),
-			'custom_field_deleted'           => _x( 'Custom field deleted.', 'Module Helper: PostType Message Generator', GEDITORIAL_TEXTDOMAIN ),
-			'post_restored_to_revision_from' => _x( '%2$s restored to revision from %5$s.', 'Module Helper: PostType Message Generator', GEDITORIAL_TEXTDOMAIN ),
-			'post_published'                 => _x( '%2$s published.', 'Module Helper: PostType Message Generator', GEDITORIAL_TEXTDOMAIN ),
-			'post_saved'                     => _x( '%2$s saved.' , 'Module Helper: PostType Message Generator', GEDITORIAL_TEXTDOMAIN ),
-			'post_submitted'                 => _x( '%2$s submitted.', 'Module Helper: PostType Message Generator', GEDITORIAL_TEXTDOMAIN ),
-			'post_scheduled_for'             => _x( '%2$s scheduled for: %5$s.', 'Module Helper: PostType Message Generator', GEDITORIAL_TEXTDOMAIN ),
-			'post_draft_updated'             => _x( '%2$s draft updated.', 'Module Helper: PostType Message Generator', GEDITORIAL_TEXTDOMAIN ),
+			'view_post'                      => _x( 'View %4$s', 'Helper: PostType Message Generator', GEDITORIAL_TEXTDOMAIN ),
+			'preview_post'                   => _x( 'Preview %4$s', 'Helper: PostType Message Generator', GEDITORIAL_TEXTDOMAIN ),
+			'post_updated'                   => _x( '%2$s updated.', 'Helper: PostType Message Generator', GEDITORIAL_TEXTDOMAIN ),
+			'custom_field_updated'           => _x( 'Custom field updated.', 'Helper: PostType Message Generator', GEDITORIAL_TEXTDOMAIN ),
+			'custom_field_deleted'           => _x( 'Custom field deleted.', 'Helper: PostType Message Generator', GEDITORIAL_TEXTDOMAIN ),
+			'post_restored_to_revision_from' => _x( '%2$s restored to revision from %5$s.', 'Helper: PostType Message Generator', GEDITORIAL_TEXTDOMAIN ),
+			'post_published'                 => _x( '%2$s published.', 'Helper: PostType Message Generator', GEDITORIAL_TEXTDOMAIN ),
+			'post_saved'                     => _x( '%2$s saved.' , 'Helper: PostType Message Generator', GEDITORIAL_TEXTDOMAIN ),
+			'post_submitted'                 => _x( '%2$s submitted.', 'Helper: PostType Message Generator', GEDITORIAL_TEXTDOMAIN ),
+			'post_scheduled_for'             => _x( '%2$s scheduled for: %5$s.', 'Helper: PostType Message Generator', GEDITORIAL_TEXTDOMAIN ),
+			'post_draft_updated'             => _x( '%2$s draft updated.', 'Helper: PostType Message Generator', GEDITORIAL_TEXTDOMAIN ),
 		);
 
 		$messages = array();
@@ -1071,11 +1071,11 @@ class Helper extends Core\Base
 	public static function generateBulkPostTypeMessages( $name, $counts )
 	{
 		$templates = [
-			'updated'   => _nx_noop( '%5$s %4$s updated.', '%5$s %3$s updated.', 'Module Helper: Bulk PostType Message Generator', GEDITORIAL_TEXTDOMAIN ),
-			'locked'    => _nx_noop( '%5$s %4$s not updated, somebody is editing it.', '%5$s %3$s not updated, somebody is editing them.', 'Module Helper: Bulk PostType Message Generator', GEDITORIAL_TEXTDOMAIN ),
-			'deleted'   => _nx_noop( '%5$s %4$s permanently deleted.', '%5$s %3$s permanently deleted.', 'Module Helper: Bulk PostType Message Generator', GEDITORIAL_TEXTDOMAIN ),
-			'trashed'   => _nx_noop( '%5$s %4$s moved to the Trash.', '%5$s %3$s moved to the Trash.', 'Module Helper: Bulk PostType Message Generator', GEDITORIAL_TEXTDOMAIN ),
-			'untrashed' => _nx_noop( '%5$s %4$s restored from the Trash.', '%5$s %3$s restored from the Trash.', 'Module Helper: Bulk PostType Message Generator', GEDITORIAL_TEXTDOMAIN ),
+			'updated'   => _nx_noop( '%5$s %4$s updated.', '%5$s %3$s updated.', 'Helper: Bulk PostType Message Generator', GEDITORIAL_TEXTDOMAIN ),
+			'locked'    => _nx_noop( '%5$s %4$s not updated, somebody is editing it.', '%5$s %3$s not updated, somebody is editing them.', 'Helper: Bulk PostType Message Generator', GEDITORIAL_TEXTDOMAIN ),
+			'deleted'   => _nx_noop( '%5$s %4$s permanently deleted.', '%5$s %3$s permanently deleted.', 'Helper: Bulk PostType Message Generator', GEDITORIAL_TEXTDOMAIN ),
+			'trashed'   => _nx_noop( '%5$s %4$s moved to the Trash.', '%5$s %3$s moved to the Trash.', 'Helper: Bulk PostType Message Generator', GEDITORIAL_TEXTDOMAIN ),
+			'untrashed' => _nx_noop( '%5$s %4$s restored from the Trash.', '%5$s %3$s restored from the Trash.', 'Helper: Bulk PostType Message Generator', GEDITORIAL_TEXTDOMAIN ),
 		];
 
 		$messages = [];
