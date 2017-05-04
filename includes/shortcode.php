@@ -445,7 +445,7 @@ class ShortCode extends Core\Base
 				$posts = call_user_func_array( $args['order_cb'], [ $posts, $args, $term ] );
 
 			else if ( is_null( $args['order_cb'] ) && $count > 1 )
-				$posts = gEditorialTemplateCore::reorderPosts( $posts, $args['field_module'] );
+				$posts = Template::reorderPosts( $posts, $args['field_module'] );
 		}
 
 		foreach ( $posts as $post ) {
@@ -599,7 +599,7 @@ class ShortCode extends Core\Base
 				$posts = call_user_func_array( $args['order_cb'], [ $posts, $args, $term ] );
 
 			else if ( is_null( $args['order_cb'] ) && $count > 1 )
-				$posts = gEditorialTemplateCore::reorderPosts( $posts, $args['field_module'] );
+				$posts = Template::reorderPosts( $posts, $args['field_module'] );
 		}
 
 		foreach ( $posts as $post ) {

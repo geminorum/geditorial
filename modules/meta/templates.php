@@ -20,7 +20,7 @@ class Meta extends gEditorial\Template
 	public static function metaLead( $atts = array() )
 	{
 		if ( ! array_key_exists( 'filter', $atts ) )
-			$atts['filter'] = array( 'gEditorialHelper', 'prepDescription' );
+			$atts['filter'] = array( 'geminorum\\gEditorial\\Helper', 'prepDescription' );
 
 		return self::metaField( 'lead', $atts );
 	}
@@ -300,40 +300,3 @@ class Meta extends gEditorial\Template
 		return FALSE;
 	}
 }
-
-if ( ! function_exists( 'gmeta' ) ) : function gmeta( $field, $b = '', $a = '', $f = FALSE, $id = NULL, $args = array() ) {
-	Helper::__dev_func( __FUNCTION__, '3.9.7', 'gEditorialMetaTemplates::metaField()' );
-	// return gEditorialMetaTemplates::meta( $field, $b, $a, $f, $id, $args );
-} endif;
-
-if ( ! function_exists( 'get_gmeta' ) ) : function get_gmeta( $field, $args = array() ) {
-	Helper::__dev_func( __FUNCTION__, '3.9.7', 'gEditorialMetaTemplates::metaField()' );
-	// return gEditorialMetaTemplates::get_meta( $field, $args );
-} endif;
-
-if ( ! function_exists( 'gmeta_label' ) ) : function gmeta_label( $b = '', $a = '', $f = FALSE, $args = array() ) {
-	Helper::__dev_func( __FUNCTION__, '3.9.7', 'gEditorialMetaTemplates::metaLabel()' );
-	// return gEditorialMetaTemplates::gmeta_label( $b, $a, $f, $args );
-} endif;
-
-if ( ! function_exists( 'gmeta_lead' ) ) : function gmeta_lead( $b = '', $a = '', $f = FALSE, $args = array() ) {
-	Helper::__dev_func( __FUNCTION__, '3.9.7', 'gEditorialMetaTemplates::metaLead()' );
-	// return gEditorialMetaTemplates::gmeta_lead( $b, $a, $f, $args );
-} endif;
-
-if ( ! function_exists( 'gmeta_author' ) ) : function gmeta_author( $b = '', $a = '', $f = FALSE, $args = array() ) {
-	Helper::__dev_func( __FUNCTION__, '3.9.7', 'gEditorialMetaTemplates::metaAuthor()' );
-	// return gEditorialMetaTemplates::gmeta_author( $b, $a, $f, $args );
-	// $author = get_the_author();
-	// if ( ! empty( $author ) ) echo $b.( $f ? $f( $author ) : $author ).$a;
-} endif;
-
-if ( ! function_exists( 'gmeta_thumbnail' ) ) : function gmeta_thumbnail( $place_holder, $b = '', $a = '', $f = FALSE, $args = array() ) {
-	Helper::__dev_func( __FUNCTION__, '3.9.7' );
-	return;
-} endif;
-
-if ( ! function_exists( 'gmeta_stats' ) ) : function gmeta_stats( $b = '', $a = '', $f = FALSE, $post_id = FALSE ) {
-	Helper::__dev_func( __FUNCTION__, '3.9.7' );
-	return;
-} endif;

@@ -754,8 +754,8 @@ class Module extends Base
 
 					} else if ( $setting == $field ) {
 
-						if ( method_exists( 'gEditorialSettingsCore', 'getSetting_'.$field ) )
-							return call_user_func_array( array( 'gEditorialSettingsCore', 'getSetting_'.$field ), array( NULL ) );
+						if ( method_exists( __NAMESPACE__.'\\Settings', 'getSetting_'.$field ) )
+							return call_user_func_array( array( __NAMESPACE__.'\\Settings', 'getSetting_'.$field ), array( NULL ) );
 
 						return array();
 					}
@@ -1028,8 +1028,8 @@ class Module extends Base
 					if ( is_array( $field ) )
 						$args = array_merge( $field, array( 'section' => $section ) );
 
-					else if ( method_exists( 'gEditorialSettingsCore', 'getSetting_'.$field ) )
-						$args = call_user_func_array( array( 'gEditorialSettingsCore', 'getSetting_'.$field ), array( $section ) );
+					else if ( method_exists( __NAMESPACE__.'\\Settings', 'getSetting_'.$field ) )
+						$args = call_user_func_array( array( __NAMESPACE__.'\\Settings', 'getSetting_'.$field ), array( $section ) );
 
 					else
 						continue;
@@ -1272,7 +1272,7 @@ class Module extends Base
 
 		$args = self::recursiveParseArgs( $atts, array(
 			'labels'                => $this->get_taxonomy_labels( $constant_key ),
-			'update_count_callback' => array( 'gEditorialWPDatabase', 'updateCountCallback' ),
+			'update_count_callback' => array( __NAMESPACE__.'\\WordPress\\Database', 'updateCountCallback' ),
 			'meta_box_cb'           => method_exists( $this, 'meta_box_cb_'.$constant_key ) ? array( $this, 'meta_box_cb_'.$constant_key ) : FALSE,
 			'hierarchical'          => FALSE,
 			'public'                => TRUE,

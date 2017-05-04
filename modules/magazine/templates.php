@@ -680,23 +680,3 @@ class Magazine extends gEditorial\Template
 		return isset( $args['def'] ) ? $args['def'] : FALSE;
 	}
 }
-
-if ( ! function_exists( 'issue_info' ) ) : function issue_info( $field, $b = '', $a = '', $f = FALSE, $id = NULL, $args = array() ) {
-	Helper::__dev_func( __FUNCTION__, '3.9.16', 'gEditorialMagazineTemplates::theIssueMeta()' );
-	// return gEditorialMagazineTemplates::issue_info( $field, $b, $a, $f, $id, $args );
-} endif;
-
-if ( ! function_exists( 'the_issue' ) ) : function the_issue( $b = '', $a = '', $f = FALSE, $id = NULL, $args = array() ) {
-	Helper::__dev_func( __FUNCTION__, '3.9.16', 'gEditorialMagazineTemplates::theIssue()' );
-	// return gEditorialMagazineTemplates::the_issue( $b, $a, $f, $id, $args );
-} endif;
-
-if ( ! function_exists( 'issue_cover' ) ) : function issue_cover( $b = '', $a = '', $tag = 'raw', $link = 'parent', $args = array() ) {
-	Helper::__dev_func( __FUNCTION__, '3.9.16', 'gEditorialMagazineTemplates::cover()' );
-	// return gEditorialMagazineTemplates::issue_cover( $b, $a, $tag, $link, $args );
-} endif;
-
-if ( ! function_exists( 'the_issue_cover' ) ) : function the_issue_cover( $b = '', $a = '', $tag = 'raw', $link = 'parent', $args = array() ) {
-	Helper::__dev_func( __FUNCTION__, '3.9.16', 'gEditorialMagazineTemplates::theCover()' );
-	// return gEditorialMagazineTemplates::the_issue_cover( $b, $a, $tag, $link, $args );
-} endif;

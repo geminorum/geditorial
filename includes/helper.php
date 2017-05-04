@@ -1090,7 +1090,7 @@ class Helper extends Core\Base
 
 	public static function getPostTypeMonths( $calendar_type, $post_type = 'post', $args = array(), $user_id = 0 )
 	{
-		$callback = array( 'gEditorialWPDatabase', 'getPostTypeMonths' );
+		$callback = array( __NAMESPACE__.'\\WordPress\\Database', 'getPostTypeMonths' );
 
 		if ( 'persian' == $calendar_type
 			&& is_callable( array( 'gPersianDateWordPress', 'getPostTypeMonths' ) ) )
@@ -1101,7 +1101,7 @@ class Helper extends Core\Base
 
 	public static function monthFirstAndLast( $calendar_type, $year, $month, $format = 'Y-m-d H:i:s' )
 	{
-		$callback = array( 'gEditorialDate', 'monthFirstAndLast' );
+		$callback = array( __NAMESPACE__.'\\Core\\Date', 'monthFirstAndLast' );
 
 		if ( 'persian' == $calendar_type
 			&& is_callable( array( 'gPersianDateDate', 'monthFirstAndLast' ) ) )
