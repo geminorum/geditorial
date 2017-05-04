@@ -806,6 +806,8 @@ class Magazine extends gEditorial\Module
 
 			echo '<tr><th scope="row">'._x( 'From Terms', 'Modules: Magazine', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
 
+			echo '<p>';
+
 			Settings::submitButton( 'issue_tax_check',
 				_x( 'Check Terms', 'Modules: Magazine: Setting Button', GEDITORIAL_TEXTDOMAIN ), TRUE );
 
@@ -821,7 +823,8 @@ class Magazine extends gEditorial\Module
 			Settings::submitButton( 'issue_tax_delete',
 				_x( 'Delete Terms', 'Modules: Magazine: Setting Button', GEDITORIAL_TEXTDOMAIN ), 'delete', TRUE );
 
-			HTML::desc( _x( 'Check for issue terms and create corresponding issue posts.', 'Modules: Magazine', GEDITORIAL_TEXTDOMAIN ) );
+
+			echo '</p>';
 
 			if ( ! empty( $_POST ) && isset( $_POST['issue_tax_check'] ) ) {
 				echo '<br />';
@@ -863,6 +866,8 @@ class Magazine extends gEditorial\Module
 					'empty' => HTML::warning( _x( 'No Terms Found!', 'Modules: Magazine: Table Empty', GEDITORIAL_TEXTDOMAIN ) ),
 				] );
 			}
+
+			HTML::desc( _x( 'Check for issue terms and create corresponding issue posts.', 'Modules: Magazine', GEDITORIAL_TEXTDOMAIN ) );
 
 			echo '</td></tr>';
 			echo '</table>';

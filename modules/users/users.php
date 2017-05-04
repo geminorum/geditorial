@@ -337,6 +337,8 @@ class Users extends gEditorial\Module
 				'option_group' => 'reports',
 			) );
 
+			echo '&nbsp;';
+
 			$this->do_settings_field( array(
 				'type'         => 'user',
 				'field'        => 'user_id',
@@ -344,6 +346,8 @@ class Users extends gEditorial\Module
 				'default'      => $args['user_id'],
 				'option_group' => 'reports',
 			) );
+
+			echo '&nbsp;';
 
 			$this->do_settings_field( array(
 				'type'         => 'select',
@@ -353,6 +357,8 @@ class Users extends gEditorial\Module
 				'default'      => $args['year_month'],
 				'option_group' => 'reports',
 			) );
+
+			echo '&nbsp;';
 
 			Settings::submitButton( 'posttype_stats',
 				_x( 'Query Stats', 'Modules: Users: Setting Button', GEDITORIAL_TEXTDOMAIN ) );

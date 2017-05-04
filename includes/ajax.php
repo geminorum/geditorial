@@ -24,7 +24,7 @@ class Ajax extends Core\Base
 	public static function successMessage( $message = NULL )
 	{
 		if ( is_null( $message ) )
-			$message = _x( 'Succesful!', 'Ajax Helper: Ajax Notice', GEDITORIAL_TEXTDOMAIN );
+			$message = _x( 'Succesful!', 'Ajax: Ajax Notice', GEDITORIAL_TEXTDOMAIN );
 
 		if ( $message )
 			wp_send_json_success( HTML::success( $message ) );
@@ -35,7 +35,7 @@ class Ajax extends Core\Base
 	public static function errorMessage( $message = NULL )
 	{
 		if ( is_null( $message ) )
-			$message = _x( 'Error!', 'Ajax Helper: Ajax Notice', GEDITORIAL_TEXTDOMAIN );
+			$message = _x( 'Error!', 'Ajax: Ajax Notice', GEDITORIAL_TEXTDOMAIN );
 
 		if ( $message )
 			wp_send_json_error( HTML::error( $message ) );
@@ -45,7 +45,7 @@ class Ajax extends Core\Base
 
 	public static function errorWhat()
 	{
-		self::errorMessage( _x( 'What?!', 'Ajax Helper: Ajax Notice', GEDITORIAL_TEXTDOMAIN ) );
+		self::errorMessage( _x( 'What?!', 'Ajax: Ajax Notice', GEDITORIAL_TEXTDOMAIN ) );
 	}
 
 	public static function printJSConfig( $args, $object = 'gEditorial' )

@@ -10,7 +10,7 @@ class Book extends gEditorial\Helper
 
 	public static function getISBN( $input )
 	{
-		$string = apply_filters( 'string_format_i18n_back', $input );
+		$string = Number::intval( $input, FALSE );
 
 		if ( self::findISBN( $string ) )
 			return trim( str_ireplace( array( 'isbn', '-', ':', ' ' ), '', $string ) );
