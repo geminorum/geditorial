@@ -39,8 +39,8 @@ class Helper extends Core\Base
 	public static function moduleSlug( $module, $link = TRUE )
 	{
 		return $link
-			? ucwords( str_replace( array( '_', ' ' ), '-', $module ), '-' )
-			: ucwords( str_replace( array( '_', '-' ), ' ', $module ) );
+			? ucwords( str_replace( [ '_', ' ' ], '-', $module ), '-' )
+			: ucwords( str_replace( [ '_', '-' ], ' ', $module ) );
 	}
 
 	public static function moduleEnabled( $options )
@@ -72,24 +72,24 @@ class Helper extends Core\Base
 		if ( is_null( $allowed ) ) {
 
 			if ( 'text' == $context )
-				$allowed = array(
-					'a'       => array( 'class' => TRUE, 'title' => TRUE, 'href' => TRUE ),
-					'abbr'    => array( 'class' => TRUE, 'title' => TRUE ),
-					'acronym' => array( 'class' => TRUE, 'title' => TRUE ),
-					'code'    => array( 'class' => TRUE ),
-					'em'      => array( 'class' => TRUE ),
-					'strong'  => array( 'class' => TRUE ),
-					'i'       => array( 'class' => TRUE ),
-					'b'       => array( 'class' => TRUE ),
-					'span'    => array( 'class' => TRUE ),
-					'br'      => array(),
-				);
+				$allowed = [
+					'a'       => [ 'class' => TRUE, 'title' => TRUE, 'href' => TRUE ],
+					'abbr'    => [ 'class' => TRUE, 'title' => TRUE ],
+					'acronym' => [ 'class' => TRUE, 'title' => TRUE ],
+					'code'    => [ 'class' => TRUE ],
+					'em'      => [ 'class' => TRUE ],
+					'strong'  => [ 'class' => TRUE ],
+					'i'       => [ 'class' => TRUE ],
+					'b'       => [ 'class' => TRUE ],
+					'span'    => [ 'class' => TRUE ],
+					'br'      => [],
+				];
 
 			else if ( 'html' == $context )
 				$allowed = wp_kses_allowed_html();
 
 			else if ( 'none' == $context )
-				$allowed = array();
+				$allowed = [];
 		}
 
 		return apply_filters( self::BASE.'_kses', wp_kses( $text, $allowed ), $allowed, $context );
@@ -147,11 +147,11 @@ class Helper extends Core\Base
 		if ( ! $terms = get_the_terms( $post, $object->name ) )
 			return;
 
-		$list = array();
+		$list = [];
 
 		foreach ( $terms as $term ) {
 
-			$query = array();
+			$query = [];
 
 			if ( 'post' != $post->post_type )
 				$query['post_type'] = $post->post_type;
@@ -164,11 +164,11 @@ class Helper extends Core\Base
 				$query['term']     = $term->slug;
 			}
 
-			$list[] = HTML::tag( 'a', array(
+			$list[] = HTML::tag( 'a', [
 				'href'  => add_query_arg( $query, 'edit.php' ),
 				'title' => urldecode( $term->slug ),
 				'class' => '-term',
-			), esc_html( sanitize_term_field( 'name', $term->name, $term->term_id, $object->name, 'display' ) ) );
+			], esc_html( sanitize_term_field( 'name', $term->name, $term->term_id, $object->name, 'display' ) ) );
 		}
 
 		echo self::getJoined( $list, $before, $after );
@@ -179,7 +179,7 @@ class Helper extends Core\Base
 		if ( ! count( $authors ) )
 			return;
 
-		$list = array();
+		$list = [];
 
 		foreach ( $authors as $author )
 			if ( $html = WordPress::getAuthorEditHTML( $post_type, $author ) )
@@ -223,38 +223,38 @@ class Helper extends Core\Base
 			$link = 'view';
 
 		if ( 'edit' == $link )
-			return HTML::tag( 'a', array(
+			return HTML::tag( 'a', [
 				'href'   => WordPress::getPostEditLink( $post->ID ),
 				'class'  => '-link -row-link -row-link-edit',
 				'target' => '_blank',
 				'title'  => is_null( $title_attr ) ? _x( 'Edit', 'Helper: Row Action', GEDITORIAL_TEXTDOMAIN ) : $title_attr,
-			), esc_html( $title ) );
+			], esc_html( $title ) );
 
 		if ( 'view' == $link && ! $edit && 'publish' != get_post_status( $post ) )
-			return HTML::tag( 'span', array(
+			return HTML::tag( 'span', [
 				'class' => '-row-span',
 				'title' => is_null( $title_attr ) ? FALSE : $title_attr,
-			), esc_html( $title ) );
+			], esc_html( $title ) );
 
 		if ( 'view' == $link )
-			return HTML::tag( 'a', array(
+			return HTML::tag( 'a', [
 				'href'   => WordPress::getPostShortLink( $post->ID ),
 				'class'  => '-link -row-link -row-link-view',
 				'target' => '_blank',
 				'title'  => is_null( $title_attr ) ? _x( 'View', 'Helper: Row Action', GEDITORIAL_TEXTDOMAIN ) : $title_attr,
-			), esc_html( $title ) );
+			], esc_html( $title ) );
 
-		return HTML::tag( 'a', array(
+		return HTML::tag( 'a', [
 			'href'   => $link,
 			'class'  => '-link -row-link -row-link-custom',
 			'target' => '_blank',
 			'title'  => is_null( $title_attr ) ? FALSE : $title_attr,
-		), esc_html( $title ) );
+		], esc_html( $title ) );
 	}
 
-	public static function getPostRowActions( $post_id, $actions = array( 'edit', 'view' ) )
+	public static function getPostRowActions( $post_id, $actions = [ 'edit', 'view' ] )
 	{
-		$list = array();
+		$list = [];
 
 		foreach ( $actions as $action ) {
 
@@ -265,20 +265,20 @@ class Helper extends Core\Base
 					if ( ! current_user_can( 'edit_post', $post_id ) )
 						continue;
 
-					$list['edit'] = HTML::tag( 'a', array(
+					$list['edit'] = HTML::tag( 'a', [
 						'href'   => WordPress::getPostEditLink( $post_id ),
 						'class'  => '-link -row-link -row-link-edit',
 						'target' => '_blank',
-					), _x( 'Edit', 'Helper: Row Action', GEDITORIAL_TEXTDOMAIN ) );
+					], _x( 'Edit', 'Helper: Row Action', GEDITORIAL_TEXTDOMAIN ) );
 
 				break;
 				case 'view':
 
-					$list['view'] = HTML::tag( 'a', array(
+					$list['view'] = HTML::tag( 'a', [
 						'href'   => WordPress::getPostShortLink( $post_id ),
 						'class'  => '-link -row-link -row-link-view',
 						'target' => '_blank',
-					), _x( 'View', 'Helper: Row Action', GEDITORIAL_TEXTDOMAIN ) );
+					], _x( 'View', 'Helper: Row Action', GEDITORIAL_TEXTDOMAIN ) );
 
 				break;
 			}
@@ -303,26 +303,26 @@ class Helper extends Core\Base
 			$link = 'view';
 
 		if ( 'edit' == $link )
-			return HTML::tag( 'a', array(
+			return HTML::tag( 'a', [
 				'href'   => WordPress::getEditTaxLink( $term->taxonomy, $term->term_id ),
 				'title'  => urldecode( $term->slug ),
 				'class'  => '-link -row-link -row-link-edit',
 				'target' => '_blank',
-			), esc_html( $title ) );
+			], esc_html( $title ) );
 
 		if ( 'view' == $link )
-			return HTML::tag( 'a', array(
+			return HTML::tag( 'a', [
 				'href'   => get_term_link( $term->term_id, $term->taxonomy ),
 				'class'  => '-link -row-link -row-link-view',
 				'target' => '_blank',
 				'title'  => _x( 'View', 'Helper: Row Action', GEDITORIAL_TEXTDOMAIN ),
-			), esc_html( $title ) );
+			], esc_html( $title ) );
 
-		return HTML::tag( 'a', array(
+		return HTML::tag( 'a', [
 			'href'   => $link,
 			'class'  => '-link -row-link -row-link-custom',
 			'target' => '_blank',
-		), esc_html( $title ) );
+		], esc_html( $title ) );
 	}
 
 	public static function getMimeTypeEditRow( $mime_types, $post_parent, $before = '', $after = '' )
@@ -330,7 +330,7 @@ class Helper extends Core\Base
 		if ( ! count( $mime_types ) )
 			return;
 
-		$list = array();
+		$list       = [];
 		$extensions = wp_get_mime_types();
 
 		foreach ( $mime_types as $mime_type ) {
@@ -347,20 +347,20 @@ class Helper extends Core\Base
 
 	public static function getAdminBarIcon( $icon = 'screenoptions', $style = 'margin:2px 1px 0 1px;' )
 	{
-		return HTML::tag( 'span', array(
-			'class' => array(
+		return HTML::tag( 'span', [
+			'class' => [
 				'ab-icon',
 				'dashicons',
 				'dashicons-'.$icon,
-			),
+			],
 			'style' => $style,
-		), NULL );
+		], NULL );
 	}
 
 	public static function registerColorBox()
 	{
-		wp_register_style( 'jquery-colorbox', GEDITORIAL_URL.'assets/css/admin.colorbox.css', array(), '1.6.4', 'screen' );
-		wp_register_script( 'jquery-colorbox', GEDITORIAL_URL.'assets/packages/jquery-colorbox/jquery.colorbox-min.js', array( 'jquery' ), '1.6.4', TRUE );
+		wp_register_style( 'jquery-colorbox', GEDITORIAL_URL.'assets/css/admin.colorbox.css', [], '1.6.4', 'screen' );
+		wp_register_script( 'jquery-colorbox', GEDITORIAL_URL.'assets/packages/jquery-colorbox/jquery.colorbox-min.js', [ 'jquery' ], '1.6.4', TRUE );
 	}
 
 	public static function enqueueColorBox()
@@ -399,7 +399,7 @@ class Helper extends Core\Base
 
 	public static function enqueueTimeAgo()
 	{
-		$callback = array( 'gPersianDateTimeAgo', 'enqueue' );
+		$callback = [ 'gPersianDateTimeAgo', 'enqueue' ];
 
 		if ( ! is_callable( $callback ) )
 			return FALSE;
@@ -407,23 +407,23 @@ class Helper extends Core\Base
 		return call_user_func( $callback );
 	}
 
-	public static function getTermPosts( $taxonomy, $term_or_id, $exclude = array() )
+	public static function getTermPosts( $taxonomy, $term_or_id, $exclude = [] )
 	{
 		if ( ! $term = Taxonomy::getTerm( $term_or_id, $taxonomy ) )
 			return '';
 
-		$query_args = array(
+		$query_args = [
 			'posts_per_page' => -1,
-			'orderby'        => array( 'menu_order', 'date' ),
+			'orderby'        => [ 'menu_order', 'date' ],
 			'order'          => 'ASC',
-			'post_status'    => array( 'publish', 'future', 'pending', 'draft' ),
+			'post_status'    => [ 'publish', 'future', 'pending', 'draft' ],
 			'post__not_in'   => $exclude,
-			'tax_query'      => array( array(
+			'tax_query'      => [ [
 				'taxonomy' => $taxonomy,
 				'field'    => 'id',
 				'terms'    => $term->term_id,
-			) ),
-		);
+			] ],
+		];
 
 		$the_posts = get_posts( $query_args );
 		if ( ! count( $the_posts ) )
@@ -456,7 +456,7 @@ class Helper extends Core\Base
 
 	public static function getTinyMceStrings( $locale )
 	{
-		$strings = apply_filters( self::BASE.'_tinymce_strings', array() );
+		$strings = apply_filters( self::BASE.'_tinymce_strings', [] );
 
 		return count( $strings ) ? 'tinyMCE.addI18n("'.$locale.'.geditorial", '.wp_json_encode( $strings ).');'."\n" : '';
 	}
@@ -488,26 +488,26 @@ class Helper extends Core\Base
 		if ( ! empty( $gEditorial_WPImageSizes ) )
 			return $gEditorial_WPImageSizes;
 
-		$gEditorial_WPImageSizes = array(
-			'thumbnail' => array(
+		$gEditorial_WPImageSizes = [
+			'thumbnail' => [
 				'n' => _x( 'Thumbnail', 'Helper', GEDITORIAL_TEXTDOMAIN ),
 				'w' => get_option( 'thumbnail_size_w' ),
 				'h' => get_option( 'thumbnail_size_h' ),
 				'c' => get_option( 'thumbnail_crop' ),
-			),
-			'medium' => array(
+			],
+			'medium' => [
 				'n' => _x( 'Medium', 'Helper', GEDITORIAL_TEXTDOMAIN ),
 				'w' => get_option( 'medium_size_w' ),
 				'h' => get_option( 'medium_size_h' ),
 				'c' => 0,
-			),
-			'large' => array(
+			],
+			'large' => [
 				'n' => _x( 'Large', 'Helper', GEDITORIAL_TEXTDOMAIN ),
 				'w' => get_option( 'large_size_w' ),
 				'h' => get_option( 'large_size_h' ),
 				'c' => 0,
-			),
-		);
+			],
+		];
 
 		return $gEditorial_WPImageSizes;
 	}
@@ -527,7 +527,7 @@ class Helper extends Core\Base
 
 				// WORKING: but if it is true, it's true!
 				// $post_types[] = 'post';
-				// $_wp_theme_features[$feature] = array( $post_types );
+				// $_wp_theme_features[$feature] = [ $post_types ];
 
 			} else if ( is_array( $_wp_theme_features[$feature][0] ) ) {
 				$_wp_theme_features[$feature][0] = array_merge( $_wp_theme_features[$feature][0], $post_types );
@@ -594,32 +594,32 @@ class Helper extends Core\Base
 
 	public static function tableColumnPostDate()
 	{
-		return array(
+		return [
 			'title'    => _x( 'Date', 'Helper: Table Column: Post Date', GEDITORIAL_TEXTDOMAIN ),
 			'callback' => function( $value, $row, $column, $index ){
 				return Helper::humanTimeDiffRound( strtotime( $row->post_date ) );
 			},
-		);
+		];
 	}
 
 	public static function tableColumnPostType()
 	{
-		return array(
+		return [
 			'title'    => _x( 'Type', 'Helper: Table Column: Post Type', GEDITORIAL_TEXTDOMAIN ),
-			'args'     => array( 'types' => PostType::get( 2 ) ),
+			'args'     => [ 'types' => PostType::get( 2 ) ],
 			'callback' => function( $value, $row, $column, $index ){
 				return isset( $column['args']['types'][$row->post_type] )
 					? $column['args']['types'][$row->post_type]
 					: $row->post_type;
 			},
-		);
+		];
 	}
 
 	public static function tableColumnPostTitle()
 	{
-		return array(
+		return [
 			'title'    => _x( 'Title', 'Helper: Table Column: Post Title', GEDITORIAL_TEXTDOMAIN ),
-			'args'     => array( 'statuses' => PostType::getStatuses( 2 ) ),
+			'args'     => [ 'statuses' => PostType::getStatuses( 2 ) ],
 			'callback' => function( $value, $row, $column, $index ){
 
 				$status = 'publish' != $row->post_status
@@ -634,21 +634,21 @@ class Helper extends Core\Base
 			'actions' => function( $value, $row, $column, $index ){
 				return Helper::getPostRowActions( $row->ID );
 			},
-		);
+		];
 	}
 
 	public static function tableColumnPostTerms()
 	{
-		return array(
+		return [
 			'title'    => _x( 'Terms', 'Helper: Table Column: Post Terms', GEDITORIAL_TEXTDOMAIN ),
-			'args'     => array( 'taxonomies' => Taxonomy::get( 4 ) ),
+			'args'     => [ 'taxonomies' => Taxonomy::get( 4 ) ],
 			'callback' => function( $value, $row, $column, $index ){
 				$html = '';
 				foreach( $column['args']['taxonomies'] as $taxonomy => $object )
 					$html .= Helper::getTermsEditRow( $row, $object, '<div>'.$object->label.': ', '</div>' );
 				return $html;
 			},
-		);
+		];
 	}
 
 	public static function tableColumnTermID()
@@ -658,12 +658,12 @@ class Helper extends Core\Base
 
 	public static function tableColumnTermName()
 	{
-		return array(
+		return [
 			'title'    => _x( 'Name', 'Helper: Table Column: Term Name', GEDITORIAL_TEXTDOMAIN ),
 			'callback' => function( $value, $row, $column, $index ){
 				return Helper::getTermTitleRow( $row );
 			},
-		);
+		];
 	}
 
 	public static function tableColumnTermSlug()
@@ -673,25 +673,25 @@ class Helper extends Core\Base
 
 	public static function tableColumnTermDesc()
 	{
-		return array(
+		return [
 			'title'    => _x( 'Description', 'Helper: Table Column: Term Desc', GEDITORIAL_TEXTDOMAIN ),
 			'callback' => 'wpautop',
 			'class'    => 'description',
-		);
+		];
 	}
 
 	// CAUTION: must wrap in `.geditorial-wordcount-wrap` along with the textarea
-	public static function htmlWordCount( $for = 'excerpt', $posttype = 'post', $data = array() )
+	public static function htmlWordCount( $for = 'excerpt', $posttype = 'post', $data = [] )
 	{
-		$defaults = array(
+		$defaults = [
 			'min' => '0',
 			'max' => '0',
-		);
+		];
 
-		return HTML::tag( 'div', array(
-			'class' => array( self::BASE.'-wordcount', 'hide-if-no-js' ),
+		return HTML::tag( 'div', [
+			'class' => [ self::BASE.'-wordcount', 'hide-if-no-js' ],
 			'data'  => apply_filters( self::BASE.'_helper_wordcount_data', array_merge( $data, $defaults ), $for, $posttype ),
-		), sprintf( _x( 'Letter Count: %s', 'Helper', GEDITORIAL_TEXTDOMAIN ), '<span class="-chars">0</span>' ) );
+		], sprintf( _x( 'Letter Count: %s', 'Helper', GEDITORIAL_TEXTDOMAIN ), '<span class="-chars">0</span>' ) );
 	}
 
 	public static function htmlCount( $count, $title_attr = NULL )
@@ -774,7 +774,7 @@ class Helper extends Core\Base
 		static $strings = NULL;
 
 		if ( is_null( $strings ) )
-			$strings = array(
+			$strings = [
 				'now'    => _x( 'Now', 'Helper: Human Time Diff', GEDITORIAL_TEXTDOMAIN ),
 				'_s_ago' => _x( '%s ago', 'Helper: Human Time Diff', GEDITORIAL_TEXTDOMAIN ),
 				'in__s'  => _x( 'in %s', 'Helper: Human Time Diff', GEDITORIAL_TEXTDOMAIN ),
@@ -785,7 +785,7 @@ class Helper extends Core\Base
 				'noop_weeks'   => _nx_noop( '%s week', '%s weeks', 'Helper: Human Time Diff: Noop', GEDITORIAL_TEXTDOMAIN ),
 				'noop_months'  => _nx_noop( '%s month', '%s months', 'Helper: Human Time Diff: Noop', GEDITORIAL_TEXTDOMAIN ),
 				'noop_years'   => _nx_noop( '%s year', '%s years', 'Helper: Human Time Diff: Noop', GEDITORIAL_TEXTDOMAIN ),
-			);
+			];
 
 		if ( empty( $now ) )
 			$now = current_time( 'timestamp', FALSE );
@@ -799,7 +799,7 @@ class Helper extends Core\Base
 		static $strings = NULL;
 
 		if ( is_null( $strings ) )
-			$strings = array(
+			$strings = [
 				'now'            => _x( 'Now', 'Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
 				'just_now'       => _x( 'Just now', 'Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
 				'one_minute_ago' => _x( 'One minute ago', 'Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
@@ -821,7 +821,7 @@ class Helper extends Core\Base
 				'next_month'     => _x( 'next month', 'Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
 				'format_l'       => _x( 'l', 'Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
 				'format_f_y'     => _x( 'F Y', 'Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
-			);
+			];
 
 		if ( empty( $now ) )
 			$now = current_time( 'timestamp', FALSE );
@@ -832,7 +832,7 @@ class Helper extends Core\Base
 	// @REF: [Calendar Classes - ICU User Guide](http://userguide.icu-project.org/datetime/calendar)
 	public static function getDefualtCalendars( $filtered = FALSE )
 	{
-		$calendars = array(
+		$calendars = [
 			'gregorian'     => _x( 'Gregorian', 'Helper: Default Calendar Type', GEDITORIAL_TEXTDOMAIN ),
 			'japanese'      => _x( 'Japanese', 'Helper: Default Calendar Type', GEDITORIAL_TEXTDOMAIN ),
 			'buddhist'      => _x( 'Buddhist', 'Helper: Default Calendar Type', GEDITORIAL_TEXTDOMAIN ),
@@ -843,7 +843,7 @@ class Helper extends Core\Base
 			'islamic-civil' => _x( 'Islamic-Civil', 'Helper: Default Calendar Type', GEDITORIAL_TEXTDOMAIN ),
 			'coptic'        => _x( 'Coptic', 'Helper: Default Calendar Type', GEDITORIAL_TEXTDOMAIN ),
 			'ethiopic'      => _x( 'Ethiopic', 'Helper: Default Calendar Type', GEDITORIAL_TEXTDOMAIN ),
-		);
+		];
 
 		return $filtered ? apply_filters( self::BASE.'_default_calendars', $calendars ) : $calendars;
 	}
@@ -873,17 +873,17 @@ class Helper extends Core\Base
 	private static function getStringsFromName( $name )
 	{
 		if ( ! is_array( $name ) )
-			return array(
+			return [
 				$name.'s',
 				$name,
 				Text::strToLower( $name.'s' ),
 				Text::strToLower( $name ),
-			);
+			];
 
-		$strings = array(
+		$strings = [
 			_nx( $name['singular'], $name['plural'], 2, $name['context'], $name['domain'] ),
 			_nx( $name['singular'], $name['plural'], 1, $name['context'], $name['domain'] ),
-		);
+		];
 
 		$strings[2] = Text::strToLower( $strings[0] );
 		$strings[3] = Text::strToLower( $strings[1] );
@@ -906,9 +906,9 @@ class Helper extends Core\Base
 	 *		`_nx_noop()`
 	 *		`translate_nooped_plural()`
 	 */
-	public static function generatePostTypeLabels( $name, $featured = FALSE, $pre = array() )
+	public static function generatePostTypeLabels( $name, $featured = FALSE, $pre = [] )
 	{
-		$name_templates = array(
+		$name_templates = [
 			'name'                  => _x( '%1$s', 'Helper: CPT Generator: Name', GEDITORIAL_TEXTDOMAIN ),
 			// 'menu_name'             => _x( '%1$s', 'Helper: CPT Generator: Menu Name', GEDITORIAL_TEXTDOMAIN ),
 			// 'description'           => _x( '%1$s', 'Helper: CPT Generator: Description', GEDITORIAL_TEXTDOMAIN ),
@@ -931,14 +931,14 @@ class Helper extends Core\Base
 			'filter_items_list'     => _x( 'Filter %3$s list', 'Helper: CPT Generator', GEDITORIAL_TEXTDOMAIN ),
 			'items_list_navigation' => _x( '%1$s list navigation', 'Helper: CPT Generator', GEDITORIAL_TEXTDOMAIN ),
 			'items_list'            => _x( '%1$s list', 'Helper: CPT Generator', GEDITORIAL_TEXTDOMAIN ),
-		);
+		];
 
-		$featured_templates = array(
+		$featured_templates = [
 			'featured_image'        => _x( '%1$s', 'Helper: CPT Generator: Featured', GEDITORIAL_TEXTDOMAIN ),
 			'set_featured_image'    => _x( 'Set %2$s', 'Helper: CPT Generator: Featured', GEDITORIAL_TEXTDOMAIN ),
 			'remove_featured_image' => _x( 'Remove %2$s', 'Helper: CPT Generator: Featured', GEDITORIAL_TEXTDOMAIN ),
 			'use_featured_image'    => _x( 'Use as %2$s', 'Helper: CPT Generator: Featured', GEDITORIAL_TEXTDOMAIN ),
-		);
+		];
 
 		$strings = self::getStringsFromName( $name );
 
@@ -953,7 +953,7 @@ class Helper extends Core\Base
 
 		if ( $featured )
 			foreach ( $featured_templates as $key => $template )
-				$pre[$key] = vsprintf( $template, array( $featured, Text::strToLower( $featured ) ) );
+				$pre[$key] = vsprintf( $template, [ $featured, Text::strToLower( $featured ) ] );
 
 		return $pre;
 	}
@@ -967,9 +967,9 @@ class Helper extends Core\Base
 	 *
 	 *	@REF: `_nx_noop()`, `translate_nooped_plural()`
 	 */
-	public static function generateTaxonomyLabels( $name, $pre = array() )
+	public static function generateTaxonomyLabels( $name, $pre = [] )
 	{
-		$templates = array(
+		$templates = [
 			'name'                       => _x( '%1$s', 'Helper: Tax Generator: Name', GEDITORIAL_TEXTDOMAIN ),
 			// 'menu_name'                  => _x( '%1$s', 'Helper: Tax Generator: Menu Name', GEDITORIAL_TEXTDOMAIN ),
 			'singular_name'              => _x( '%2$s', 'Helper: Tax Generator: Singular Name', GEDITORIAL_TEXTDOMAIN ),
@@ -990,7 +990,7 @@ class Helper extends Core\Base
 			'no_terms'                   => _x( 'No %3$s', 'Helper: Tax Generator', GEDITORIAL_TEXTDOMAIN ),
 			'items_list_navigation'      => _x( '%1$s list navigation', 'Helper: Tax Generator', GEDITORIAL_TEXTDOMAIN ),
 			'items_list'                 => _x( '%1$s list', 'Helper: Tax Generator', GEDITORIAL_TEXTDOMAIN ),
-		);
+		];
 
 		$strings = self::getStringsFromName( $name );
 
@@ -1014,7 +1014,7 @@ class Helper extends Core\Base
 	{
 		global $post_type_object, $post, $post_ID;
 
-		$templates = array(
+		$templates = [
 			'view_post'                      => _x( 'View %4$s', 'Helper: PostType Message Generator', GEDITORIAL_TEXTDOMAIN ),
 			'preview_post'                   => _x( 'Preview %4$s', 'Helper: PostType Message Generator', GEDITORIAL_TEXTDOMAIN ),
 			'post_updated'                   => _x( '%2$s updated.', 'Helper: PostType Message Generator', GEDITORIAL_TEXTDOMAIN ),
@@ -1026,9 +1026,9 @@ class Helper extends Core\Base
 			'post_submitted'                 => _x( '%2$s submitted.', 'Helper: PostType Message Generator', GEDITORIAL_TEXTDOMAIN ),
 			'post_scheduled_for'             => _x( '%2$s scheduled for: %5$s.', 'Helper: PostType Message Generator', GEDITORIAL_TEXTDOMAIN ),
 			'post_draft_updated'             => _x( '%2$s draft updated.', 'Helper: PostType Message Generator', GEDITORIAL_TEXTDOMAIN ),
-		);
+		];
 
-		$messages = array();
+		$messages = [];
 		$strings  = self::getStringsFromName( $name );
 
 		foreach ( $templates as $key => $template )
@@ -1046,7 +1046,7 @@ class Helper extends Core\Base
 			$scheduled = ' '.HTML::link( $messages['preview_post'], $permalink, TRUE );
 		}
 
-		return array(
+		return [
 			0  => '', // Unused. Messages start at index 1.
 			1  => $messages['post_updated'].$view,
 			2  => $messages['custom_field_updated'],
@@ -1058,7 +1058,7 @@ class Helper extends Core\Base
 			8  => $messages['post_submitted'].$preview,
 			9  => sprintf( $messages['post_scheduled_for'], '<strong>'.$scheduled_date.'</strong>' ).$scheduled,
 			10 => $messages['post_draft_updated'].$preview,
-		);
+		];
 	}
 
 	/**
@@ -1088,41 +1088,41 @@ class Helper extends Core\Base
 		return $messages;
 	}
 
-	public static function getPostTypeMonths( $calendar_type, $post_type = 'post', $args = array(), $user_id = 0 )
+	public static function getPostTypeMonths( $calendar_type, $post_type = 'post', $args = [], $user_id = 0 )
 	{
-		$callback = array( __NAMESPACE__.'\\WordPress\\Database', 'getPostTypeMonths' );
+		$callback = [ __NAMESPACE__.'\\WordPress\\Database', 'getPostTypeMonths' ];
 
 		if ( 'persian' == $calendar_type
-			&& is_callable( array( 'gPersianDateWordPress', 'getPostTypeMonths' ) ) )
-				$callback = array( 'gPersianDateWordPress', 'getPostTypeMonths' );
+			&& is_callable( [ 'gPersianDateWordPress', 'getPostTypeMonths' ] ) )
+				$callback = [ 'gPersianDateWordPress', 'getPostTypeMonths' ];
 
-		return call_user_func_array( $callback, array( $post_type, $args, $user_id ) );
+		return call_user_func_array( $callback, [ $post_type, $args, $user_id ] );
 	}
 
 	public static function monthFirstAndLast( $calendar_type, $year, $month, $format = 'Y-m-d H:i:s' )
 	{
-		$callback = array( __NAMESPACE__.'\\Core\\Date', 'monthFirstAndLast' );
+		$callback = [ __NAMESPACE__.'\\Core\\Date', 'monthFirstAndLast' ];
 
 		if ( 'persian' == $calendar_type
-			&& is_callable( array( 'gPersianDateDate', 'monthFirstAndLast' ) ) )
-				$callback = array( 'gPersianDateDate', 'monthFirstAndLast' );
+			&& is_callable( [ 'gPersianDateDate', 'monthFirstAndLast' ] ) )
+				$callback = [ 'gPersianDateDate', 'monthFirstAndLast' ];
 
-		return call_user_func_array( $callback, array( $year, $month, $format ) );
+		return call_user_func_array( $callback, [ $year, $month, $format ] );
 	}
 
 	// FIXME: find a better way!
 	public static function getMonths( $calendar_type = 'gregorian' )
 	{
-		if ( is_callable( array( 'gPersianDateStrings', 'month' ) ) ) {
+		if ( is_callable( [ 'gPersianDateStrings', 'month' ] ) ) {
 
-			$map = array(
+			$map = [
 				'gregorian' => 'Gregorian',
 				'persian'   => 'Jalali',
 				'islamic'   => 'Hijri',
-			);
+			];
 
 			if ( ! array_key_exists( $calendar_type, $map ) )
-				return array();
+				return [];
 
 			return \gPersianDateStrings::month( NULL, TRUE, $map[$calendar_type] );
 		}
@@ -1132,27 +1132,27 @@ class Helper extends Core\Base
 		if ( 'gregorian' )
 			return $wp_locale->month;
 
-		return array();
+		return [];
 	}
 
 	// NOT USED
 	// returns array of post date in given cal
 	public static function getTheDayByPost( $post, $default_type = 'gregorian' )
 	{
-		$the_day = array( 'cal' => 'gregorian' );
+		$the_day = [ 'cal' => 'gregorian' ];
 
 		// 'post_status' => 'auto-draft',
 
 		switch ( strtolower( $default_type ) ) {
 
-			case 'hijri' :
-			case 'islamic' :
-				$convertor = array( 'gPersianDateDateTime', 'toHijri' );
+			case 'hijri':
+			case 'islamic':
+				$convertor = [ 'gPersianDateDateTime', 'toHijri' ];
 				$the_day['cal'] = 'hijri';
 
-			case 'jalali' :
-			case 'persian' :
-				$convertor = array( 'gPersianDateDateTime', 'toJalali' );
+			case 'jalali':
+			case 'persian':
+				$convertor = [ 'gPersianDateDateTime', 'toJalali' ];
 				$the_day['cal'] = 'jalali';
 
 			default:

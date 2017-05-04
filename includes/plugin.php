@@ -11,8 +11,8 @@ class Plugin
 
 	private $asset_styles   = FALSE;
 	private $asset_config   = FALSE;
-	private $asset_args     = array();
-	private $editor_buttons = array();
+	private $asset_args     = [];
+	private $editor_buttons = [];
 
 	public static function instance()
 	{
@@ -49,13 +49,13 @@ class Plugin
 		$this->modules = new \stdClass();
 		$this->options = new \stdClass();
 
-		add_action( 'plugins_loaded', array( $this, 'plugins_loaded' ), 20 );
-		add_action( 'init', array( $this, 'init_late' ), 999 );
-		add_action( 'admin_init', array( $this, 'admin_init' ) );
-		add_action( 'wp_footer', array( $this, 'footer_asset_config' ), 1 );
-		add_action( 'wp_enqueue_scripts', array( $this, 'wp_enqueue_scripts' ) );
-		add_action( 'admin_bar_menu', array( $this, 'admin_bar_menu' ), 999 );
-		add_filter( 'mce_external_languages', array( $this, 'mce_external_languages' ) );
+		add_action( 'plugins_loaded', [ $this, 'plugins_loaded' ], 20 );
+		add_action( 'init', [ $this, 'init_late' ], 999 );
+		add_action( 'admin_init', [ $this, 'admin_init' ] );
+		add_action( 'wp_footer', [ $this, 'footer_asset_config' ], 1 );
+		add_action( 'wp_enqueue_scripts', [ $this, 'wp_enqueue_scripts' ] );
+		add_action( 'admin_bar_menu', [ $this, 'admin_bar_menu' ], 999 );
+		add_filter( 'mce_external_languages', [ $this, 'mce_external_languages' ] );
 	}
 
 	private function files( $stack )
@@ -106,8 +106,8 @@ class Plugin
 
 	public function admin_init()
 	{
-		add_action( 'admin_print_styles', array( $this, 'admin_print_styles' ) );
-		add_action( 'admin_print_footer_scripts', array( $this, 'footer_asset_config' ), 9 );
+		add_action( 'admin_print_styles', [ $this, 'admin_print_styles' ] );
+		add_action( 'admin_print_footer_scripts', [ $this, 'footer_asset_config' ], 9 );
 	}
 
 	public function plugins_loaded()
@@ -117,14 +117,14 @@ class Plugin
 
 		foreach ( scandir( GEDITORIAL_DIR.'modules/' ) as $module ) {
 
-			if ( in_array( $module, array( '.', '..' ) ) )
+			if ( in_array( $module, [ '.', '..' ] ) )
 				continue;
 
 			if ( file_exists( GEDITORIAL_DIR.'modules/'.$module.'/'.$module.'.php' ) ) {
 				include_once( GEDITORIAL_DIR.'modules/'.$module.'/'.$module.'.php' );
 
 				if ( $class = Helper::moduleClass( $module ) )
-					$this->register_module( call_user_func( array( $class, 'module' ) ) );
+					$this->register_module( call_user_func( [ $class, 'module' ] ) );
 			}
 		}
 
@@ -143,12 +143,12 @@ class Plugin
 		}
 	}
 
-	public function register_module( $args = array() )
+	public function register_module( $args = [] )
 	{
 		if ( ! isset( $args['name'], $args['title'] ) )
 			return FALSE;
 
-		$defaults = array(
+		$defaults = [
 			'class'     => Helper::moduleClass( $args['name'], FALSE ),
 			'icon'      => 'smiley', // dashicon class
 			'group'     => $this->group.$args['name'],
@@ -156,7 +156,7 @@ class Plugin
 			'configure' => 'print_configure_view',
 			'frontend'  => TRUE, // whether or not the module should be loaded on the frontend too
 			'autoload'  => FALSE, // autoloading a module will remove the ability to enable or disable it
-		);
+		];
 
 		$this->modules->{$args['name']} = (object) array_merge( $defaults, $args );
 
@@ -185,8 +185,8 @@ class Plugin
 		if ( count( $this->editor_buttons )
 			&& 'true' == get_user_option( 'rich_editing' ) ) {
 
-			add_filter( 'mce_external_plugins', array( $this, 'mce_external_plugins' ) );
-			add_filter( 'mce_buttons', array( $this, 'mce_buttons' ) );
+			add_filter( 'mce_external_plugins', [ $this, 'mce_external_plugins' ] );
+			add_filter( 'mce_buttons', [ $this, 'mce_buttons' ] );
 		}
 	}
 
@@ -246,7 +246,7 @@ class Plugin
 	// HELPER
 	public function get_all_modules( $enabled_only = FALSE )
 	{
-		$modules = array();
+		$modules = [];
 
 		foreach ( $this->modules as $mod_name => &$module )
 			if ( ! $enabled_only || isset( $this->{$name} ) )
@@ -284,7 +284,7 @@ class Plugin
 	// FIXME: DROP THIS
 	public function audit_options()
 	{
-		$options = array();
+		$options = [];
 
 		foreach ( $this->modules as $name => $enabled )
 			$options[$name] = get_option( $this->group.$name.'_options', '{{NO-OPTIONS}}' );
@@ -298,7 +298,7 @@ class Plugin
 	public function upgrade_old_options()
 	{
 		$options  = get_option( 'geditorial_options' );
-		$upgraded = array();
+		$upgraded = [];
 		$update   = FALSE;
 
 		foreach ( $this->modules as $mod_name => &$module ) {
@@ -327,7 +327,7 @@ class Plugin
 	{
 		$screen = get_current_screen();
 
-		if ( in_array( $screen->base, array(
+		if ( in_array( $screen->base, [
 			'post',
 			'edit',
 			'widgets',
@@ -335,7 +335,7 @@ class Plugin
 			'edit-tags',
 			'edit-comments',
 			'users',
-		) ) )
+		] ) )
 			Helper::linkStyleSheetAdmin( $screen->base );
 
 		else if ( Settings::isReports( $screen ) )
@@ -369,10 +369,10 @@ class Plugin
 		if ( defined( 'GEDITORIAL_DISABLE_FRONT_STYLES' ) && GEDITORIAL_DISABLE_FRONT_STYLES )
 			return;
 
-		wp_enqueue_style( 'geditorial-front-all', GEDITORIAL_URL.'assets/css/front.all.css', array(), GEDITORIAL_VERSION );
+		wp_enqueue_style( 'geditorial-front-all', GEDITORIAL_URL.'assets/css/front.all.css', [], GEDITORIAL_VERSION );
 	}
 
-	public function enqueue_asset_config( $args = array(), $module = NULL )
+	public function enqueue_asset_config( $args = [], $module = NULL )
 	{
 		$this->asset_config = TRUE;
 
@@ -380,7 +380,7 @@ class Plugin
 			if ( is_null( $module ) )
 				$this->asset_args = array_merge( $this->asset_args, $args );
 			else
-				$this->asset_args = array_merge( $this->asset_args, array( $module => $args ) );
+				$this->asset_args = array_merge( $this->asset_args, [ $module => $args ] );
 		}
 
 		return $this->asset_config;
@@ -411,20 +411,20 @@ class Plugin
 		$parent = 'geditorial';
 		$link   = current_user_can( 'manage_options' ) ? Settings::settingsURL() : Settings::reportsURL();
 
-		$wp_admin_bar->add_node( array(
+		$wp_admin_bar->add_node( [
 			'id'     => $parent,
 			'title'  => Helper::getAdminBarIcon(),
 			// 'parent' => 'top-secondary',
 			'href'   => $link,
-			'meta'   => array( 'title' => _x( 'Editorial', 'Plugin: Main: Adminbar Node', GEDITORIAL_TEXTDOMAIN ) ),
-		) );
+			'meta'   => [ 'title' => _x( 'Editorial', 'Plugin: Main: Adminbar Node', GEDITORIAL_TEXTDOMAIN ) ],
+		] );
 
-		do_action_ref_array( 'geditorial_adminbar', array( &$wp_admin_bar, $parent, $link ) );
+		do_action_ref_array( 'geditorial_adminbar', [ &$wp_admin_bar, $parent, $link ] );
 	}
 
 	public static function na( $wrap = 'code' )
 	{
 		$na = __( 'N/A', GEDITORIAL_TEXTDOMAIN );
-		return $wrap ? HTML::tag( $wrap, array( 'title' => __( 'Not Available', GEDITORIAL_TEXTDOMAIN ) ), $na ) : $na;
+		return $wrap ? HTML::tag( $wrap, [ 'title' => __( 'Not Available', GEDITORIAL_TEXTDOMAIN ) ], $na ) : $na;
 	}
 }

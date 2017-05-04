@@ -18,45 +18,45 @@ class Widget extends \WP_Widget
 
 	public function __construct()
 	{
-		$args = Template::atts( array(
+		$args = Template::atts( [
 			'module' => FALSE,
 			'name'   => FALSE,
 			'class'  => '',
 			'title'  => '',
 			'desc'   => '',
-			'flush'  => array(),
-		), $this->setup() );
+			'flush'  => [],
+		], $this->setup() );
 
 		if ( ! $args['name'] || ! $args['module'] )
 			return FALSE;
 
-		parent::__construct( 'geditorial_'.$args['name'], $args['title'], array(
+		parent::__construct( 'geditorial_'.$args['name'], $args['title'], [
 			'description' => $args['desc'],
 			'classname'   => '{GEDITORIAL_WIDGET_CLASSNAME}'.'widget-geditorial-'.$args['class'],
-		) );
+		] );
 
 		$this->alt_option_name = 'widget_geditorial_'.$args['name'];
 		$this->parent_module   = $args['module'];
 
 		foreach ( $args['flush'] as $action )
-			add_action( $action, array( $this, 'flush_widget_cache' ) );
+			add_action( $action, [ $this, 'flush_widget_cache' ] );
 	}
 
 	protected function setup()
 	{
-		return array(
+		return [
 			'name'  => '',
 			'class' => '',
 			'title' => '',
 			'desc'  => '',
-			'flush' => array(
+			'flush' => [
 				'save_post',
 				'deleted_post',
 				'switch_theme',
-			),
+			],
 
 			// FIXME: help tab data for the admin widget screen
-		);
+		];
 	}
 
 	public function widget( $args, $instance )
@@ -66,7 +66,7 @@ class Widget extends \WP_Widget
 
 	public function widget_cache( $args, $instance, $prefix = '' )
 	{
-		$cache = $this->is_preview() ? array() : wp_cache_get( $this->alt_option_name, 'widget' );
+		$cache = $this->is_preview() ? [] : wp_cache_get( $this->alt_option_name, 'widget' );
 
 		if ( ! isset( $args['widget_id'] ) )
 			$args['widget_id'] = $this->id;
@@ -120,9 +120,7 @@ class Widget extends \WP_Widget
 		);
 
 		if ( $title && isset( $instance['title_link'] ) && $instance['title_link'] )
-			$title = HTML::tag( 'a', array(
-				'href' => $instance['title_link'],
-			), $title );
+			$title = HTML::link( $title, $instance['title_link'] );
 
 		if ( ! $title )
 			return '';
@@ -142,7 +140,7 @@ class Widget extends \WP_Widget
 
 	public function get_images_sizes( $post_type )
 	{
-		$images = array();
+		$images = [];
 		$sizes  = gEditorial()->{$this->parent_module}->get_image_sizes( $post_type );
 
 		if ( count( $sizes ) ) {
@@ -172,49 +170,49 @@ class Widget extends \WP_Widget
 
 	public function form_number( $instance, $default = '10', $field = 'number' )
 	{
-		$html = HTML::tag( 'input', array(
+		$html = HTML::tag( 'input', [
 			'type'  => 'text',
 			'size'  => 3,
 			'name'  => $this->get_field_name( $field ),
 			'id'    => $this->get_field_id( $field ),
 			'value' => isset( $instance[$field] ) ? $instance[$field] : $default,
-		) );
+		] );
 
-		echo '<p>'. HTML::tag( 'label', array(
+		echo '<p>'. HTML::tag( 'label', [
 			'for' => $this->get_field_id( $field ),
-		), _x( 'Number of posts to show:', 'Widget Core', GEDITORIAL_TEXTDOMAIN ).' '.$html ).'</p>';
+		], _x( 'Number of posts to show:', 'Widget Core', GEDITORIAL_TEXTDOMAIN ).' '.$html ).'</p>';
 	}
 
 	public function form_context( $instance, $default = '', $field = 'context' )
 	{
-		$html = HTML::tag( 'input', array(
+		$html = HTML::tag( 'input', [
 			'type'  => 'text',
 			'class' => 'widefat',
 			'name'  => $this->get_field_name( $field ),
 			'id'    => $this->get_field_id( $field ),
 			'value' => isset( $instance[$field] ) ? $instance[$field] : $default,
 			'dir'   => 'ltr',
-		) );
+		] );
 
-		echo '<p>'. HTML::tag( 'label', array(
+		echo '<p>'. HTML::tag( 'label', [
 			'for' => $this->get_field_id( $field ),
-		), _x( 'Context:', 'Widget Core', GEDITORIAL_TEXTDOMAIN ).$html ).'</p>';
+		], _x( 'Context:', 'Widget Core', GEDITORIAL_TEXTDOMAIN ).$html ).'</p>';
 	}
 
 	public function form_class( $instance, $default = '', $field = 'class' )
 	{
-		$html = HTML::tag( 'input', array(
+		$html = HTML::tag( 'input', [
 			'type'  => 'text',
 			'class' => 'widefat',
 			'name'  => $this->get_field_name( $field ),
 			'id'    => $this->get_field_id( $field ),
 			'value' => isset( $instance[$field] ) ? $instance[$field] : $default,
 			'dir'   => 'ltr',
-		) );
+		] );
 
-		echo '<p>'. HTML::tag( 'label', array(
+		echo '<p>'. HTML::tag( 'label', [
 			'for' => $this->get_field_id( $field ),
-		), _x( 'Class:', 'Widget Core', GEDITORIAL_TEXTDOMAIN ).$html ).'</p>';
+		], _x( 'Class:', 'Widget Core', GEDITORIAL_TEXTDOMAIN ).$html ).'</p>';
 	}
 
 	public function form_post_type( $instance, $default = 'post', $field = 'post_type' )
@@ -223,20 +221,20 @@ class Widget extends \WP_Widget
 		$type = isset( $instance[$field] ) ? $instance[$field] : $default;
 
 		foreach ( PostType::get() as $name => $title )
-			$html .= HTML::tag( 'option', array(
+			$html .= HTML::tag( 'option', [
 				'value'    => $name,
 				'selected' => $type == $name,
-			), $title );
+			], $title );
 
-		$html = HTML::tag( 'select', array(
+		$html = HTML::tag( 'select', [
 			'class' => 'widefat',
 			'name'  => $this->get_field_name( $field ),
 			'id'    => $this->get_field_id( $field ),
-		), $html );
+		], $html );
 
-		echo '<p>'. HTML::tag( 'label', array(
+		echo '<p>'. HTML::tag( 'label', [
 			'for' => $this->get_field_id( $field ),
-		), _x( 'PostType:', 'Widget Core', GEDITORIAL_TEXTDOMAIN ).$html ).'</p>';
+		], _x( 'PostType:', 'Widget Core', GEDITORIAL_TEXTDOMAIN ).$html ).'</p>';
 	}
 
 	public function form_taxonomy( $instance, $default = 'post_tag', $field = 'taxonomy' )
@@ -245,66 +243,66 @@ class Widget extends \WP_Widget
 		$tax = isset( $instance[$field] ) ? $instance[$field] : $default;
 
 		foreach ( Taxonomy::get( 5 ) as $name => $title )
-			$html .= HTML::tag( 'option', array(
+			$html .= HTML::tag( 'option', [
 				'value'    => $name,
 				'selected' => $tax == $name,
-			), $title );
+			], $title );
 
-		$html = HTML::tag( 'select', array(
+		$html = HTML::tag( 'select', [
 			'class' => 'widefat',
 			'name'  => $this->get_field_name( $field ),
 			'id'    => $this->get_field_id( $field ),
-		), $html );
+		], $html );
 
-		echo '<p>'. HTML::tag( 'label', array(
+		echo '<p>'. HTML::tag( 'label', [
 			'for' => $this->get_field_id( $field ),
-		), _x( 'Taxonomy:', 'Widget Core', GEDITORIAL_TEXTDOMAIN ).$html ).'</p>';
+		], _x( 'Taxonomy:', 'Widget Core', GEDITORIAL_TEXTDOMAIN ).$html ).'</p>';
 	}
 
 	public function form_title( $instance, $default = '', $field = 'title' )
 	{
-		$html = HTML::tag( 'input', array(
+		$html = HTML::tag( 'input', [
 			'type'  => 'text',
 			'class' => 'widefat',
 			'name'  => $this->get_field_name( $field ),
 			'id'    => $this->get_field_id( $field ),
 			'value' => isset( $instance[$field] ) ? $instance[$field] : $default,
-		) );
+		] );
 
-		echo '<p>'. HTML::tag( 'label', array(
+		echo '<p>'. HTML::tag( 'label', [
 			'for' => $this->get_field_id( $field ),
-		), _x( 'Title:', 'Widget Core', GEDITORIAL_TEXTDOMAIN ).$html ).'</p>';
+		], _x( 'Title:', 'Widget Core', GEDITORIAL_TEXTDOMAIN ).$html ).'</p>';
 	}
 
 	public function form_title_link( $instance, $default = '', $field = 'title_link' )
 	{
-		$html = HTML::tag( 'input', array(
+		$html = HTML::tag( 'input', [
 			'type'  => 'text',
 			'class' => 'widefat',
 			'name'  => $this->get_field_name( $field ),
 			'id'    => $this->get_field_id( $field ),
 			'value' => isset( $instance[$field] ) ? $instance[$field] : $default,
 			'dir'   => 'ltr',
-		) );
+		] );
 
-		echo '<p>'. HTML::tag( 'label', array(
+		echo '<p>'. HTML::tag( 'label', [
 			'for' => $this->get_field_id( $field ),
-		), _x( 'Title Link:', 'Widget Core', GEDITORIAL_TEXTDOMAIN ).$html ).'</p>';
+		], _x( 'Title Link:', 'Widget Core', GEDITORIAL_TEXTDOMAIN ).$html ).'</p>';
 	}
 
 	public function form_avatar_size( $instance, $default = '32', $field = 'avatar_size' )
 	{
-		$html = HTML::tag( 'input', array(
+		$html = HTML::tag( 'input', [
 			'type'  => 'text',
 			'size'  => 3,
 			'name'  => $this->get_field_name( $field ),
 			'id'    => $this->get_field_id( $field ),
 			'value' => isset( $instance[$field] ) ? $instance[$field] : $default,
-		) );
+		] );
 
-		echo '<p>'. HTML::tag( 'label', array(
+		echo '<p>'. HTML::tag( 'label', [
 			'for' => $this->get_field_id( $field ),
-		), _x( 'Avatar Size:', 'Widget Core', GEDITORIAL_TEXTDOMAIN ).$html ).'</p>';
+		], _x( 'Avatar Size:', 'Widget Core', GEDITORIAL_TEXTDOMAIN ).$html ).'</p>';
 	}
 
 	public function form_image_size( $instance, $default = 'thumbnail', $field = 'image_size', $post_type = 'post' )
@@ -317,20 +315,20 @@ class Widget extends \WP_Widget
 			$html     = '';
 
 			foreach ( $sizes as $size => $title )
-				$html .= HTML::tag( 'option', array(
+				$html .= HTML::tag( 'option', [
 					'value'    => $size,
 					'selected' => $selected == $size,
-				), $title );
+				], $title );
 
-			$html = HTML::tag( 'select', array(
+			$html = HTML::tag( 'select', [
 				'class' => 'widefat',
 				'name'  => $this->get_field_name( $field ),
 				'id'    => $this->get_field_id( $field ),
-			), $html );
+			], $html );
 
-			echo '<p>'. HTML::tag( 'label', array(
+			echo '<p>'. HTML::tag( 'label', [
 				'for' => $this->get_field_id( $field ),
-			), _x( 'Image Size:', 'Widget Core', GEDITORIAL_TEXTDOMAIN ).$html ).'</p>';
+			], _x( 'Image Size:', 'Widget Core', GEDITORIAL_TEXTDOMAIN ).$html ).'</p>';
 
 		} else {
 			echo '<p>'._x( 'No Image Size Available!', 'Widget Core', GEDITORIAL_TEXTDOMAIN ).'</p>';
@@ -342,27 +340,27 @@ class Widget extends \WP_Widget
 		if ( is_null( $label ) )
 			$label = _x( 'Checked:', 'Widget Core', GEDITORIAL_TEXTDOMAIN );
 
-		$html = HTML::tag( 'input', array(
+		$html = HTML::tag( 'input', [
 			'type'    => 'checkbox',
 			'name'    => $this->get_field_name( $field ),
 			'id'      => $this->get_field_id( $field ),
 			'checked' => isset( $instance[$field] ) ? $instance[$field] : $default,
-		) );
+		] );
 
-		echo '<p>'.$html.'&nbsp;'.HTML::tag( 'label', array(
+		echo '<p>'.$html.'&nbsp;'.HTML::tag( 'label', [
 			'for' => $this->get_field_id( $field ),
-		), $label ).'</p>';
+		], $label ).'</p>';
 	}
 
 	public function form_post_id( $instance, $default = '0', $field = 'post_id', $post_type_field = 'posttype', $post_type_default = 'page', $label = NULL )
 	{
 		$post_type = isset( $instance[$post_type_field] ) ? $instance[$post_type_field] : $post_type_default;
-		$post_id  = isset( $instance[$field] ) ? $instance[$field] : $default;
+		$post_id   = isset( $instance[$field] ) ? $instance[$field] : $default;
 
 		if ( is_null( $label ) )
 			$label = _x( 'Page:', 'Widget Core', GEDITORIAL_TEXTDOMAIN );
 
-		$html = wp_dropdown_pages( array(
+		$html = wp_dropdown_pages( [
 			'post_type'        => $post_type,
 			'selected'         => $post_id,
 			'name'             => $this->get_field_name( $field ),
@@ -371,11 +369,11 @@ class Widget extends \WP_Widget
 			'show_option_none' => Settings::showOptionNone(),
 			'sort_column'      => 'menu_order, post_title',
 			'echo'             => FALSE,
-		) );
+		] );
 
-		echo '<p>'. HTML::tag( 'label', array(
+		echo '<p>'. HTML::tag( 'label', [
 			'for' => $this->get_field_id( $field ),
-		), $label.$html ).'</p>';
+		], $label.$html ).'</p>';
 	}
 
 	public function form_term_id( $instance, $default = '0', $field = 'term_id', $taxonomy_field = 'taxonomy', $taxonomy_default = 'post_tag' )
@@ -383,25 +381,25 @@ class Widget extends \WP_Widget
 		$taxonomy = isset( $instance[$taxonomy_field] ) ? $instance[$taxonomy_field] : $taxonomy_default;
 		$term_id  = isset( $instance[$field] ) ? $instance[$field] : $default;
 
-		$html = HTML::tag( 'option', array(
+		$html = HTML::tag( 'option', [
 			'value'    => '0',
 			'selected' => $term_id == '0',
-		), _x( '&mdash; Select &mdash;', 'Widget Core', GEDITORIAL_TEXTDOMAIN ) );
+		], _x( '&mdash; Select &mdash;', 'Widget Core', GEDITORIAL_TEXTDOMAIN ) );
 
 		foreach ( get_terms( $taxonomy ) as $term )
-			$html .= HTML::tag( 'option', array(
+			$html .= HTML::tag( 'option', [
 				'value'    => $term->term_id,
 				'selected' => $term_id == $term->term_id,
-			), $term->name );
+			], $term->name );
 
-		$html = HTML::tag( 'select', array(
+		$html = HTML::tag( 'select', [
 			'class' => 'widefat',
 			'name'  => $this->get_field_name( $field ),
 			'id'    => $this->get_field_id( $field ),
-		), $html );
+		], $html );
 
-		echo '<p>'. HTML::tag( 'label', array(
+		echo '<p>'. HTML::tag( 'label', [
 			'for' => $this->get_field_id( $field ),
-		), _x( 'Term:', 'Widget Core', GEDITORIAL_TEXTDOMAIN ).$html ).'</p>';
+		], _x( 'Term:', 'Widget Core', GEDITORIAL_TEXTDOMAIN ).$html ).'</p>';
 	}
 }

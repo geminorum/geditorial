@@ -21,7 +21,7 @@ class Template extends Core\Base
 		if ( self::MODULE && gEditorial()->enabled( self::MODULE ) )
 			return gEditorial()->{self::MODULE}->post_types( $post_types );
 
-		return array();
+		return [];
 	}
 
 	// FIXME: DRAFT
@@ -76,23 +76,23 @@ class Template extends Core\Base
 		return FALSE;
 	}
 
-	public static function getPostImageTag( $atts = array() )
+	public static function getPostImageTag( $atts = [] )
 	{
 		$html = FALSE;
 
-		$args = self::atts( array(
+		$args = self::atts( [
 			'id'    => NULL,
 			'size'  => NULL,
 			'alt'   => FALSE,
 			'class' => '-post-image',
-		), $atts );
+		], $atts );
 
 		if ( $src = self::getPostImageSrc( $args['size'], $args['id'] ) )
-			$html = HTML::tag( 'img', array(
+			$html = HTML::tag( 'img', [
 				'src'   => $src,
 				'alt'   => $args['alt'],
 				'class' => apply_filters( 'get_image_tag_class', $args['class'], $args['id'], 'none', $args['size'] ),
-			) );
+			] );
 
 		return $html;
 	}
@@ -113,14 +113,14 @@ class Template extends Core\Base
 		return '<div class="geditorial-wrap'.( $module ? ' -'.$module : ' ' ).' -post-image-wrap">'.$html.'</div>';
 	}
 
-	public static function postImage( $atts = array(), $module = NULL )
+	public static function postImage( $atts = [], $module = NULL )
 	{
 		$html = '';
 
 		if ( is_null( $module ) && self::MODULE )
 			$module = self::MODULE;
 
-		$args = self::atts( array(
+		$args = self::atts( [
 			'id'       => NULL,
 			'size'     => NULL,
 			'alt'      => FALSE,
@@ -128,18 +128,18 @@ class Template extends Core\Base
 			'type'     => 'post',
 			'link'     => 'parent',
 			'title'    => 'title',
-			'data'     => array( 'toggle' => 'tooltip' ),
-			'callback' => array( __CLASS__, 'postImageCallback' ),
+			'data'     => [ 'toggle' => 'tooltip' ],
+			'callback' => [ __CLASS__, 'postImageCallback' ],
 			'figure'   => FALSE,
 			'fallback' => FALSE,
 			'default'  => FALSE,
 			'before'   => '',
 			'after'    => '',
 			'echo'     => TRUE,
-		), $atts );
+		], $atts );
 
 		if ( 'latest' == $args['id'] )
-			$args['id'] = WordPress::getLastPostOrder( $args['type'], '', 'ID', array( 'publish' ) );
+			$args['id'] = WordPress::getLastPostOrder( $args['type'], '', 'ID', [ 'publish' ] );
 
 		else if ( 'random' == $args['id'] )
 			$args['id'] = WordPress::getRandomPostID( $args['type'], TRUE );
@@ -184,23 +184,23 @@ class Template extends Core\Base
 
 		if ( $args['callback'] && is_callable( $args['callback'] ) ) {
 
-			$html = call_user_func_array( $args['callback'], array( $image, $args['link'], $args, $status, $title, $module ) );
+			$html = call_user_func_array( $args['callback'], [ $image, $args['link'], $args, $status, $title, $module ] );
 
 		} else if ( $image ) {
 
-			$html = HTML::tag( ( $args['link'] ? 'a' : 'span' ), array(
+			$html = HTML::tag( ( $args['link'] ? 'a' : 'span' ), [
 				'href'  => $args['link'],
 				'title' => $title,
 				'data'  => $args['link'] ? $args['data'] : FALSE,
-			), $image );
+			], $image );
 
 		} else if ( $args['fallback'] && 'publish' == $status ) {
 
-			$html = HTML::tag( 'a', array(
+			$html = HTML::tag( 'a', [
 				'href'  => get_permalink( $args['id'] ),
 				'title' => $title,
 				'data'  => $args['data'],
-			), get_the_title( $args['id'] ) );
+			], get_the_title( $args['id'] ) );
 		}
 
 		if ( $html ) {
@@ -220,7 +220,7 @@ class Template extends Core\Base
 		return FALSE;
 	}
 
-	public static function assocLink( $atts = array(), $module = NULL )
+	public static function assocLink( $atts = [], $module = NULL )
 	{
 		if ( is_null( $module ) && self::MODULE )
 			$module = self::MODULE;
@@ -271,12 +271,12 @@ class Template extends Core\Base
 			return trim( strip_tags( get_the_title( $id ) ) );
 
 		if ( $field )
-			return self::getMetaField( $field, array( 'id' => $id, 'default' => $default ) );
+			return self::getMetaField( $field, [ 'id' => $id, 'default' => $default ] );
 
 		return $default;
 	}
 
-	public static function metaField( $field, $atts = array() )
+	public static function metaField( $field, $atts = [] )
 	{
 		if ( ! array_key_exists( 'echo', $atts ) )
 			$atts['echo'] = TRUE;
@@ -290,15 +290,15 @@ class Template extends Core\Base
 		return TRUE;
 	}
 
-	public static function getMetaField( $fields, $atts = array(), $check = TRUE )
+	public static function getMetaField( $fields, $atts = [], $check = TRUE )
 	{
-		$args = self::atts( array(
+		$args = self::atts( [
 			'id'      => NULL,
 			'default' => FALSE,
 			'filter'  => FALSE,
 			'before'  => '',
 			'after'   => '',
-		), $atts );
+		], $atts );
 
 		if ( $check && ! gEditorial()->enabled( 'meta' ) )
 			return $args['default'];
@@ -337,12 +337,12 @@ class Template extends Core\Base
 		}
 	}
 
-	public static function metaLabel( $atts = array(), $module = NULL )
+	public static function metaLabel( $atts = [], $module = NULL )
 	{
 		if ( is_null( $module ) && self::MODULE )
 			$module = self::MODULE;
 
-		$args = self::atts( array(
+		$args = self::atts( [
 			'id'          => NULL,
 			'default'     => FALSE,
 			'filter'      => FALSE,
@@ -354,7 +354,7 @@ class Template extends Core\Base
 			'image'       => FALSE,
 			'link'        => NULL, // FALSE to disable
 			'description' => NULL, // FALSE to disable
-		), $atts );
+		], $atts );
 
 		if ( ! gEditorial()->enabled( 'meta' ) )
 			return $args['default'];
@@ -362,10 +362,10 @@ class Template extends Core\Base
 		if ( ! $post = get_post( $args['id'] ) )
 			return $args['default'];
 
-		$meta = self::getMetaField( $args['field'], array(
+		$meta = self::getMetaField( $args['field'], [
 			'id'     => $post->ID,
 			'filter' => $args['filter'],
-		), FALSE );
+		], FALSE );
 
 		if ( $term = Taxonomy::theTerm( $args['taxonomy'], $post->ID, TRUE ) ) {
 
@@ -386,11 +386,11 @@ class Template extends Core\Base
 				$args['description'] = sprintf( _x( 'Search for %s', 'Template: Search Link Title Attr', GEDITORIAL_TEXTDOMAIN ), $meta );
 		}
 
-		$html = $args['image'] ? HTML::tag( 'img', array(
+		$html = $args['image'] ? HTML::tag( 'img', [
 			'src'   => $args['image'],
 			'alt'   => $meta,
 			'class' => '-label-image',
-		) ) : $meta;
+		] ) : $meta;
 
 		if ( ! $html && $args['default'] )
 			$html = $args['default'];
@@ -400,20 +400,20 @@ class Template extends Core\Base
 
 		if ( $args['link'] ) {
 
-			$html = $args['before'].HTML::tag( 'a', array(
+			$html = $args['before'].HTML::tag( 'a', [
 				'href'  => $args['link'],
 				'title' => $args['description'] ? $args['description'] : FALSE,
 				'class' => '-label-link',
-				'data'  => $args['description'] ? array( 'toggle' => 'tooltip' ) : FALSE,
-			), $html ).$args['after'];
+				'data'  => $args['description'] ? [ 'toggle' => 'tooltip' ] : FALSE,
+			], $html ).$args['after'];
 
 		} else {
 
-			$html = $args['before'].HTML::tag( 'span', array(
+			$html = $args['before'].HTML::tag( 'span', [
 				'title' => $args['description'] ? $args['description'] : FALSE,
 				'class' => '-label-span',
-				'data'  => $args['description'] ? array( 'toggle' => 'tooltip' ) : FALSE,
-			), $html ).$args['after'];
+				'data'  => $args['description'] ? [ 'toggle' => 'tooltip' ] : FALSE,
+			], $html ).$args['after'];
 		}
 
 		if ( ! $args['echo'] )
@@ -423,12 +423,12 @@ class Template extends Core\Base
 		return TRUE;
 	}
 
-	public static function metaLink( $atts = array(), $module = NULL )
+	public static function metaLink( $atts = [], $module = NULL )
 	{
 		if ( is_null( $module ) && self::MODULE )
 			$module = self::MODULE;
 
-		$args = self::atts( array(
+		$args = self::atts( [
 			'id'            => NULL,
 			'default'       => FALSE,
 			'filter'        => FALSE,
@@ -440,7 +440,7 @@ class Template extends Core\Base
 			'title_attr'    => _x( 'Visit external source', 'Template: Meta Link Default Title Attr', GEDITORIAL_TEXTDOMAIN ),
 			'url_field'     => 'source_url',
 			'url_default'   => FALSE,
-		), $atts );
+		], $atts );
 
 		if ( ! gEditorial()->enabled( 'meta' ) )
 			return $args['default'];
@@ -448,24 +448,24 @@ class Template extends Core\Base
 		if ( ! $post = get_post( $args['id'] ) )
 			return $args['default'];
 
-		$title = $args['title_field'] ? self::getMetaField( $args['title_field'], array(
+		$title = $args['title_field'] ? self::getMetaField( $args['title_field'], [
 			'id'      => $post->ID,
 			'filter'  => $args['filter'],
 			'default' => $args['title_default'],
-		), FALSE ) : $args['title_default'];
+		], FALSE ) : $args['title_default'];
 
-		$url = $args['url_field'] ? self::getMetaField( $args['url_field'], array(
+		$url = $args['url_field'] ? self::getMetaField( $args['url_field'], [
 			'id'      => $post->ID,
 			'default' => $args['url_default'],
-		), FALSE ) : $args['url_default'];
+		], FALSE ) : $args['url_default'];
 
 		if ( $title && $url || ! $url && $title != $args['title_default'] ) {
-			$html = $args['before'].HTML::tag( ( $url ? 'a' : 'span' ), array(
+			$html = $args['before'].HTML::tag( ( $url ? 'a' : 'span' ), [
 				'href'  => $url,
 				'title' => $url ? $args['title_attr'] : FALSE,
 				'rel'   => $url ? 'nofollow' : 'source', // https://support.google.com/webmasters/answer/96569?hl=en
 				'data'  => $url ? array( 'toggle' => 'tooltip' ) : FALSE,
-			), $title ).$args['after'];
+			], $title ).$args['after'];
 		} else {
 			$html = $args['default'];
 		}
@@ -482,24 +482,24 @@ class Template extends Core\Base
 		if ( is_array( $field ) )
 			return $field;
 
-		$fields = array(
-			'over-title'           => array( 'over_title', 'ot' ),
-			'sub-title'            => array( 'sub_title', 'st' ),
-			'label'                => array( 'ch', 'label', 'column_header' ),
-			'lead'                 => array( 'le', 'lead' ),
-			'author'               => array( 'as', 'author' ),
-			'number'               => array( 'issue_number_line', 'number' ),
-			'pages'                => array( 'issue_total_pages', 'pages' ),
-			'start'                => array( 'in_issue_page_start', 'start' ),
-			'order'                => array( 'in_issue_order', 'in_series_order', 'order' ),
-			'reshare_source_title' => array( 'source_title', 'reshare_source_title' ),
-			'reshare_source_url'   => array( 'source_url', 'reshare_source_url' ),
-		);
+		$fields = [
+			'over-title'           => [ 'over_title', 'ot' ],
+			'sub-title'            => [ 'sub_title', 'st' ],
+			'label'                => [ 'ch', 'label', 'column_header' ],
+			'lead'                 => [ 'le', 'lead' ],
+			'author'               => [ 'as', 'author' ],
+			'number'               => [ 'issue_number_line', 'number' ],
+			'pages'                => [ 'issue_total_pages', 'pages' ],
+			'start'                => [ 'in_issue_page_start', 'start' ],
+			'order'                => [ 'in_issue_order', 'in_series_order', 'order' ],
+			'reshare_source_title' => [ 'source_title', 'reshare_source_title' ],
+			'reshare_source_url'   => [ 'source_url', 'reshare_source_url' ],
+		];
 
 		if ( isset( $fields[$field] ) )
 			return $fields[$field];
 
-		return array( $field );
+		return [ $field ];
 	}
 
 	public static function reorderPosts( $posts, $field_module = 'meta' )

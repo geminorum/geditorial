@@ -16,19 +16,19 @@ class MetaBox extends Core\Base
 	// @SOURCE: `post_categories_meta_box()`
 	public static function checklistTerms( $post, $box )
 	{
-		$args = self::atts( array(
+		$args = self::atts( [
 			'taxonomy' => 'category',
 			'edit_url' => NULL,
-		), empty( $box['args'] ) ? array() : $box['args'] );
+		], empty( $box['args'] ) ? [] : $box['args'] );
 
 		$tax_name = esc_attr( $args['taxonomy'] );
 		$taxonomy = get_taxonomy( $args['taxonomy'] );
 
-		$html = wp_terms_checklist( $post->ID, array(
+		$html = wp_terms_checklist( $post->ID, [
 			'taxonomy'      => $tax_name,
 			'checked_ontop' => FALSE,
 			'echo'          => FALSE,
-		) );
+		] );
 
 		echo '<div id="taxonomy-'.$tax_name.'" class="geditorial-admin-wrap-metabox choose-tax">';
 
@@ -57,11 +57,11 @@ class MetaBox extends Core\Base
 		echo '<div class="field-wrap field-wrap-empty">';
 
 			if ( $edit )
-				echo HTML::tag( 'a', array(
+				echo HTML::tag( 'a', [
 					'href'   => $edit,
 					'title'  => $object->labels->add_new_item,
 					'target' => '_blank',
-				), $object->labels->not_found );
+				], $object->labels->not_found );
 
 			else
 				echo '<span>'.$object->labels->not_found.'</span>';
@@ -74,17 +74,17 @@ class MetaBox extends Core\Base
 		$object = is_object( $post_type ) ? $post_type : get_post_type_object( $post_type );
 
 		echo '<div class="field-wrap field-wrap-empty">';
-			echo HTML::tag( 'a', array(
-				'href'   => add_query_arg( array( 'post_type' => $post_type ), admin_url( 'post-new.php' ) ),
+			echo HTML::tag( 'a', [
+				'href'   => add_query_arg( [ 'post_type' => $post_type ], admin_url( 'post-new.php' ) ),
 				'title'  => $object->labels->add_new_item,
 				'target' => '_blank',
-			), $object->labels->not_found );
+			], $object->labels->not_found );
 		echo '</div>';
 	}
 
 	public static function dropdownAssocPosts( $post_type, $selected = '', $prefix = '', $exclude = '' )
 	{
-		return wp_dropdown_pages( array(
+		return wp_dropdown_pages( [
 			'post_type'        => $post_type,
 			'selected'         => $selected,
 			'name'             => ( $prefix ? $prefix.'-' : '' ).$post_type.'[]',
@@ -93,11 +93,11 @@ class MetaBox extends Core\Base
 			'show_option_none' => Settings::showOptionNone(),
 			'sort_column'      => 'menu_order',
 			'sort_order'       => 'desc',
-			'post_status'      => array( 'publish', 'future', 'draft', 'pending' ),
+			'post_status'      => [ 'publish', 'future', 'draft', 'pending' ],
 			'value_field'      => 'post_name',
 			'exclude'          => $exclude,
 			'echo'             => 0,
 			'walker'           => new Walker_PageDropdown(),
-		));
+		] );
 	}
 }

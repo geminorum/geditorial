@@ -26,30 +26,30 @@ class Module extends Base
 	protected $priority_init_ajax     = 10;
 	protected $priority_adminbar_init = 10;
 
-	protected $constants = array();
-	protected $strings   = array();
-	protected $supports  = array();
-	protected $fields    = array();
+	protected $constants = [];
+	protected $strings   = [];
+	protected $supports  = [];
+	protected $fields    = [];
 
-	protected $partials        = array();
-	protected $partials_remote = array();
+	protected $partials        = [];
+	protected $partials_remote = [];
 
-	protected $post_types_excluded = array( 'attachment' );
-	protected $taxonomies_excluded = array();
+	protected $post_types_excluded = [ 'attachment' ];
+	protected $taxonomies_excluded = [];
 
-	protected $image_sizes  = array();
-	protected $kses_allowed = array();
+	protected $image_sizes  = [];
+	protected $kses_allowed = [];
 
-	protected $scripts = array();
-	protected $buttons = array();
-	protected $errors  = array();
+	protected $scripts = [];
+	protected $buttons = [];
+	protected $errors  = [];
 
-	protected $caps = array(
+	protected $caps = [
 		'reports'  => 'edit_others_posts',
 		'settings' => 'manage_options',
 		'tools'    => 'edit_others_posts',
 		'adminbar' => 'edit_others_posts',
-	);
+	];
 
 	protected $root_key = FALSE; // ROOT CONSTANT
 	protected $p2p      = FALSE; // P2P ENABLED/Connection Type
@@ -72,12 +72,12 @@ class Module extends Base
 			$this->setup();
 	}
 
-	protected function setup_remote( $args = array() )
+	protected function setup_remote( $args = [] )
 	{
 		$this->require_code( $this->partials_remote );
 	}
 
-	protected function setup( $args = array() )
+	protected function setup( $args = [] )
 	{
 		$this->require_code( $this->partials );
 
@@ -85,61 +85,61 @@ class Module extends Base
 		$ui   = WordPress::mustRegisterUI( FALSE );
 
 		if ( method_exists( $this, 'p2p_init' ) )
-			add_action( 'p2p_init', array( $this, 'p2p_init' ) );
+			$this->action( 'p2p_init' );
 
 		if ( method_exists( $this, 'o2o_init' ) )
-			add_action( 'o2o_init', array( $this, 'o2o_init' ) );
+			$this->action( 'o2o_init' );
 
 		if ( method_exists( $this, 'widgets_init' ) )
-			add_action( 'widgets_init', array( $this, 'widgets_init' ) );
+			$this->action( 'widgets_init' );
 
 		if ( ! $ajax && method_exists( $this, 'tinymce_strings' ) )
-			add_filter( 'geditorial_tinymce_strings', array( $this, 'tinymce_strings' ) );
+			add_filter( 'geditorial_tinymce_strings', [ $this, 'tinymce_strings' ] );
 
 		if ( method_exists( $this, 'meta_init' ) )
-			add_action( 'geditorial_meta_init', array( $this, 'meta_init' ) );
+			add_action( 'geditorial_meta_init', [ $this, 'meta_init' ] );
 
 		if ( method_exists( $this, 'meta_post_types' ) )
-			add_filter( 'geditorial_meta_support_post_types', array( $this, 'meta_post_types' ) );
+			add_filter( 'geditorial_meta_support_post_types', [ $this, 'meta_post_types' ] );
 
 		if ( method_exists( $this, 'gpeople_support' ) )
-			add_filter( 'gpeople_remote_support_post_types', array( $this, 'gpeople_support' ) );
+			add_filter( 'gpeople_remote_support_post_types', [ $this, 'gpeople_support' ] );
 
-		add_action( 'after_setup_theme', array( $this, '_after_setup_theme' ), 1 );
+		add_action( 'after_setup_theme', [ $this, '_after_setup_theme' ], 1 );
 
 		if ( method_exists( $this, 'after_setup_theme' ) )
-			add_action( 'after_setup_theme', array( $this, 'after_setup_theme' ), 20 );
+			$this->action( 'after_setup_theme', 0, 20 );
 
-		add_action( 'init', array( $this, 'init' ), $this->priority_init );
+		$this->action( 'init', 0, $this->priority_init );
 
 		if ( $ui && method_exists( $this, 'adminbar_init' ) )
-			add_action( 'geditorial_adminbar', array( $this, 'adminbar_init' ), $this->priority_adminbar_init, 3 );
+			add_action( 'geditorial_adminbar', [ $this, 'adminbar_init' ], $this->priority_adminbar_init, 3 );
 
 		if ( is_admin() ) {
 
 			if ( method_exists( $this, 'admin_init' ) )
-				add_action( 'admin_init', array( $this, 'admin_init' ) );
+				$this->action( 'admin_init' );
 
 			if ( $ajax && method_exists( $this, 'init_ajax' ) )
 				$this->action( 'init', 0, $this->priority_init_ajax, 'ajax' );
 
 			if ( $ui && method_exists( $this, 'dashboard_glance_items' ) )
-				add_filter( 'dashboard_glance_items', array( $this, 'dashboard_glance_items' ) );
+				$this->filter( 'dashboard_glance_items' );
 
 			if ( ( $ui || $ajax ) && method_exists( $this, 'register_shortcode_ui' ) )
 				$this->action( 'register_shortcode_ui' );
 
 			if ( $ui && method_exists( $this, 'current_screen' ) )
-				add_action( 'current_screen', array( $this, 'current_screen' ) );
+				$this->action( 'current_screen' );
 
 			if ( $ui )
-				add_action( 'geditorial_settings_load', array( $this, 'register_settings' ) );
+				add_action( 'geditorial_settings_load', [ $this, 'register_settings' ] );
 
 			if ( $ui && method_exists( $this, 'reports_settings' ) )
-				add_action( 'geditorial_reports_settings', array( $this, 'reports_settings' ) );
+				add_action( 'geditorial_reports_settings', [ $this, 'reports_settings' ] );
 
 			if ( $ui && method_exists( $this, 'tools_settings' ) )
-				add_action( 'geditorial_tools_settings', array( $this, 'tools_settings' ) );
+				add_action( 'geditorial_tools_settings', [ $this, 'tools_settings' ] );
 		}
 	}
 
@@ -157,13 +157,13 @@ class Module extends Base
 		$this->do_globals();
 	}
 
-	protected function get_global_settings() { return array(); }
-	protected function get_global_constants() { return array(); }
-	protected function get_global_strings() { return array(); }
-	protected function get_global_supports() { return array(); }
-	protected function get_global_fields() { return array(); }
+	protected function get_global_settings() { return []; }
+	protected function get_global_constants() { return []; }
+	protected function get_global_strings() { return []; }
+	protected function get_global_supports() { return []; }
+	protected function get_global_fields() { return []; }
 
-	protected function get_module_icons() { return array(); }
+	protected function get_module_icons() { return []; }
 
 	protected function settings_help_tabs()
 	{
@@ -199,10 +199,10 @@ class Module extends Base
 	public function post_types( $post_types = NULL )
 	{
 		if ( is_null( $post_types ) )
-			$post_types = array();
+			$post_types = [];
 
 		else if ( ! is_array( $post_types ) )
-			$post_types = array( $this->constant( $post_types ) );
+			$post_types = [ $this->constant( $post_types ) ];
 
 		if ( isset( $this->options->post_types )
 			&& is_array( $this->options->post_types ) ) {
@@ -226,10 +226,10 @@ class Module extends Base
 	public function list_post_types( $pre = NULL, $post_types = NULL )
 	{
 		if ( is_null( $pre ) )
-			$pre = array();
+			$pre = [];
 
 		else if ( TRUE === $pre )
-			$pre = array( 'all' => _x( 'All PostTypes', 'Module', GEDITORIAL_TEXTDOMAIN ) );
+			$pre = [ 'all' => _x( 'All PostTypes', 'Module', GEDITORIAL_TEXTDOMAIN ) ];
 
 		$all = PostType::get();
 
@@ -252,7 +252,7 @@ class Module extends Base
 	// enabled post types for this module
 	public function taxonomies()
 	{
-		$taxonomies = array();
+		$taxonomies = [];
 
 		if ( isset( $this->options->taxonomies )
 			&& is_array( $this->options->taxonomies ) ) {
@@ -289,17 +289,17 @@ class Module extends Base
 			HTML::desc( $before );
 
 		foreach ( $this->all_post_types() as $post_type => $label ) {
-			$html = HTML::tag( 'input', array(
+			$html = HTML::tag( 'input', [
 				'type'    => 'checkbox',
 				'value'   => 'enabled',
 				'id'      => 'type-'.$post_type,
 				'name'    => $this->module->group.'[post_types]['.$post_type.']',
 				'checked' => isset( $this->options->post_types[$post_type] ) && $this->options->post_types[$post_type],
-			) );
+			] );
 
-			echo '<p>'.HTML::tag( 'label', array(
+			echo '<p>'.HTML::tag( 'label', [
 				'for' => 'type-'.$post_type,
-			), $html.'&nbsp;'.esc_html( $label ).' &mdash; <code>'.$post_type.'</code>' ).'</p>';
+			], $html.'&nbsp;'.esc_html( $label ).' &mdash; <code>'.$post_type.'</code>' ).'</p>';
 		}
 
 		if ( $after = $this->get_string( 'post_types_after', 'post', 'settings', NULL ) )
@@ -313,17 +313,17 @@ class Module extends Base
 
 		foreach ( $this->all_taxonomies() as $taxonomy => $label ) {
 
-			$html = HTML::tag( 'input', array(
+			$html = HTML::tag( 'input', [
 				'type'    => 'checkbox',
 				'value'   => 'enabled',
 				'id'      => 'tax-'.$taxonomy,
 				'name'    => $this->module->group.'[taxonomies]['.$taxonomy.']',
 				'checked' => isset( $this->options->taxonomies[$taxonomy] ) && $this->options->taxonomies[$taxonomy],
-			) );
+			] );
 
-			echo '<p>'.HTML::tag( 'label', array(
+			echo '<p>'.HTML::tag( 'label', [
 				'for' => 'tax-'.$taxonomy,
-			), $html.'&nbsp;'.esc_html( $label ).' &mdash; <code>'.$taxonomy.'</code>' ).'</p>';
+			], $html.'&nbsp;'.esc_html( $label ).' &mdash; <code>'.$taxonomy.'</code>' ).'</p>';
 		}
 
 		if ( $after = $this->get_string( 'taxonomies_after', 'post', 'settings', NULL ) )
@@ -379,14 +379,14 @@ class Module extends Base
 
 		$section = $this->module->group.'_posttypes';
 
-		Settings::addModuleSection( $this->module->group, array(
+		Settings::addModuleSection( $this->module->group, [
 			'id'            => $section,
 			'section_class' => 'posttypes_option_section',
-		) );
+		] );
 
 		add_settings_field( 'post_types',
 			$title,
-			array( $this, 'settings_posttypes_option' ),
+			[ $this, 'settings_posttypes_option' ],
 			$this->module->group,
 			$section
 		);
@@ -400,14 +400,14 @@ class Module extends Base
 
 		$section = $this->module->group.'_taxonomies';
 
-		Settings::addModuleSection( $this->module->group, array(
+		Settings::addModuleSection( $this->module->group, [
 			'id'            => $section,
 			'section_class' => 'taxonomies_option_section',
-		) );
+		] );
 
 		add_settings_field( 'taxonomies',
 			$title,
-			array( $this, 'settings_taxonomies_option' ),
+			[ $this, 'settings_taxonomies_option' ],
 			$this->module->group,
 			$section
 		);
@@ -427,30 +427,30 @@ class Module extends Base
 
 			if ( count( $fields ) ) {
 
-				Settings::addModuleSection( $this->module->group, array(
+				Settings::addModuleSection( $this->module->group, [
 					'id'            => $section,
 					'title'         => sprintf( $title, $all[$post_type] ),
 					'section_class' => 'fields_option_section fields_option-'.$post_type,
-				) );
+				] );
 
-				$this->add_settings_field( array(
+				$this->add_settings_field( [
 					'field'     => $post_type.'_fields_all',
 					'post_type' => $post_type,
 					'section'   => $section,
 					'title'     => '&nbsp;',
-					'callback'  => array( $this, 'settings_fields_option_all' ),
-				) );
+					'callback'  => [ $this, 'settings_fields_option_all' ],
+				] );
 
 				foreach ( $fields as $field => $atts ) {
 
-					$args = array(
+					$args = [
 						'field'       => $field,
 						'post_type'   => $post_type,
 						'section'     => $section,
 						'field_title' => isset( $atts['title'] ) ? $atts['title'] : $this->get_string( $field, $post_type ),
 						'description' => isset( $atts['description'] ) ? $atts['description'] : $this->get_string( $field, $post_type, 'descriptions' ),
-						'callback'    => array( $this, 'settings_fields_option' ),
-					);
+						'callback'    => [ $this, 'settings_fields_option' ],
+					];
 
 					if ( is_array( $atts ) )
 						$args = array_merge( $args, $atts );
@@ -462,12 +462,12 @@ class Module extends Base
 
 			} else if ( isset( $all[$post_type] ) ) {
 
-				Settings::addModuleSection( $this->module->group, array(
+				Settings::addModuleSection( $this->module->group, [
 					'id'            => $section,
 					'title'         => sprintf( $title, $all[$post_type] ),
-					'callback'      => array( $this, 'settings_fields_option_none' ),
+					'callback'      => [ $this, 'settings_fields_option_none' ],
 					'section_class' => 'fields_option_section fields_option_none',
-				) );
+				] );
 			}
 		}
 	}
@@ -486,18 +486,18 @@ class Module extends Base
 		else
 			$value = FALSE;
 
-		$html = HTML::tag( 'input', array(
+		$html = HTML::tag( 'input', [
 			'type'    => 'checkbox',
 			'value'   => 'enabled',
 			'class'   => 'fields-check',
 			'name'    => $name,
 			'id'      => $id,
 			'checked' => $value,
-		) );
+		] );
 
-		echo '<div>'.HTML::tag( 'label', array(
+		echo '<div>'.HTML::tag( 'label', [
 			'for' => $id,
-		), $html.'&nbsp;'.$args['field_title'] );
+		], $html.'&nbsp;'.$args['field_title'] );
 
 		HTML::desc( $args['description'] );
 
@@ -506,15 +506,15 @@ class Module extends Base
 
 	public function settings_fields_option_all( $args )
 	{
-		$html = HTML::tag( 'input', array(
+		$html = HTML::tag( 'input', [
 			'type'  => 'checkbox',
 			'class' => 'fields-check-all',
 			'id'    => $args['post_type'].'_fields_all',
-		) );
+		] );
 
-		echo HTML::tag( 'label', array(
+		echo HTML::tag( 'label', [
 			'for' => $args['post_type'].'_fields_all',
-		), $html.'&nbsp;<span class="description">'._x( 'Select All Fields', 'Module', GEDITORIAL_TEXTDOMAIN ).'</span>' );
+		], $html.'&nbsp;<span class="description">'._x( 'Select All Fields', 'Module', GEDITORIAL_TEXTDOMAIN ).'</span>' );
 	}
 
 	public function settings_fields_option_none( $args )
@@ -547,16 +547,16 @@ class Module extends Base
 		$this->register_button( 'reset', NULL, 'reset', TRUE );
 	}
 
-	public function register_button( $key, $value = NULL, $type = FALSE, $atts = array() )
+	public function register_button( $key, $value = NULL, $type = FALSE, $atts = [] )
 	{
 		if ( is_null( $value ) )
 			$value = $this->get_string( $key, 'buttons', 'settings', NULL );
 
-		$this->buttons[$key] = array(
+		$this->buttons[$key] = [
 			'value' => $value,
 			'type'  => $type,
 			'atts'  => $atts,
-		);
+		];
 	}
 
 	protected function settings_buttons( $page = NULL, $wrap = '' )
@@ -571,7 +571,7 @@ class Module extends Base
 			echo '</p>';
 	}
 
-	protected function submit_button( $name = '', $primary = FALSE, $text = NULL, $atts = array() )
+	protected function submit_button( $name = '', $primary = FALSE, $text = NULL, $atts = [] )
 	{
 		if ( $name && is_null( $text ) )
 			$text = $this->get_string( $name, 'buttons', 'settings' );
@@ -631,7 +631,7 @@ class Module extends Base
 		if ( ! $this->cuc( $page ) )
 			return $subs;
 
-		return array_merge( $subs, array( $this->module->name => $this->module->title ) );
+		return array_merge( $subs, [ $this->module->name => $this->module->title ] );
 	}
 
 	// FIXME: DEPRICATED
@@ -653,7 +653,7 @@ class Module extends Base
 		if ( isset( $this->settings['posttypes_option'] ) ) {
 
 			if ( ! isset( $options['post_types'] ) )
-				$options['post_types'] = array();
+				$options['post_types'] = [];
 
 			foreach ( $this->all_post_types() as $post_type => $post_type_label )
 				if ( ! isset( $options['post_types'][$post_type] )
@@ -669,7 +669,7 @@ class Module extends Base
 		if ( isset( $this->settings['taxonomies_option'] ) ) {
 
 			if ( ! isset( $options['taxonomies'] ) )
-				$options['taxonomies'] = array();
+				$options['taxonomies'] = [];
 
 			foreach ( $this->all_taxonomies() as $taxonomy => $label )
 				if ( ! isset( $options['taxonomies'][$taxonomy] )
@@ -685,12 +685,12 @@ class Module extends Base
 		if ( isset( $this->settings['fields_option'] ) ) {
 
 			if ( ! isset( $options['fields'] ) )
-				$options['fields'] = array();
+				$options['fields'] = [];
 
 			foreach ( $this->post_types() as $post_type ) {
 
 				if ( ! isset( $options['fields'][$post_type] ) )
-					$options['fields'][$post_type] = array();
+					$options['fields'][$post_type] = [];
 
 				foreach ( $this->post_type_all_fields( $post_type ) as $field => $args ) {
 
@@ -755,12 +755,12 @@ class Module extends Base
 					} else if ( $setting == $field ) {
 
 						if ( method_exists( __NAMESPACE__.'\\Settings', 'getSetting_'.$field ) )
-							return call_user_func_array( array( __NAMESPACE__.'\\Settings', 'getSetting_'.$field ), array( NULL ) );
+							return call_user_func_array( [ __NAMESPACE__.'\\Settings', 'getSetting_'.$field ], [ NULL ] );
 
-						return array();
+						return [];
 					}
 
-		return array();
+		return [];
 	}
 
 	// enabled fields for a post type
@@ -769,7 +769,7 @@ class Module extends Base
 		if ( $is_constant )
 			$post_type = $this->constant( $post_type );
 
-		$fields = array();
+		$fields = [];
 
 		if ( isset( $this->options->fields[$post_type] )
 			&& is_array( $this->options->fields[$post_type] ) )
@@ -783,13 +783,13 @@ class Module extends Base
 	// enabled fields with args for a post type
 	public function post_type_field_types( $post_type = 'post', $sort = FALSE )
 	{
-		$fields = array();
+		$fields = [];
 
 		$all = $this->post_type_all_fields( $post_type );
 		$enabled = $this->post_type_fields( $post_type );
 
 		foreach ( $enabled as $i => $field )
-			$fields[$field] = self::atts( array(
+			$fields[$field] = self::atts( [
 				'title'       => $this->get_string( $field, $post_type, 'titles', $field ),
 				'description' => $this->get_string( $field, $post_type, 'descriptions' ),
 				'icon'        => 'smiley',
@@ -800,21 +800,21 @@ class Module extends Base
 				'tax'         => FALSE,
 				'group'       => 'general',
 				'order'       => 10+$i,
-			), ( isset( $all[$field] ) && is_array( $all[$field] ) ? $all[$field] : array() ) );
+			], ( isset( $all[$field] ) && is_array( $all[$field] ) ? $all[$field] : [] ) );
 
 		if ( ! $sort )
 			return $fields;
 
-		return Arraay::multiSort( $fields, array(
+		return Arraay::multiSort( $fields, [
 			'group' => SORT_ASC,
 			'order' => SORT_ASC,
-		) );
+		] );
 	}
 
 	// HELPER: for importer tools
-	public function post_type_fields_list( $post_type = 'post', $extra = array() )
+	public function post_type_fields_list( $post_type = 'post', $extra = [] )
 	{
-		$list = array();
+		$list = [];
 
 		foreach ( $this->post_type_fields( $post_type ) as $field )
 			$list[$field] = $this->get_string( $field, $post_type );
@@ -836,7 +836,7 @@ class Module extends Base
 		if ( $append )
 			$fields = array_merge( $this->post_type_supports( $post_type, $type.'_fields', FALSE ), $fields );
 
-		add_post_type_support( $post_type, array( $type.'_fields' ), $fields );
+		add_post_type_support( $post_type, [ $type.'_fields' ], $fields );
 	}
 
 	// like WP core but returns the actual array!
@@ -851,12 +851,12 @@ class Module extends Base
 			&& is_array( $all[$feature][0] ) )
 				return $all[$feature][0];
 
-		return array();
+		return [];
 	}
 
 	public function post_type_all_fields( $post_type = 'post' )
 	{
-		$fields = array();
+		$fields = [];
 
 		foreach ( $this->post_type_supports( $post_type, $this->field_type.'_fields', FALSE ) as $field => $args )
 			$fields[$field] = $args;
@@ -895,12 +895,12 @@ class Module extends Base
 		if ( 'word' == $constant_key )
 			return _nx_noop( '%s Word', '%s Words', 'Module: Noop', GEDITORIAL_TEXTDOMAIN );
 
-		$noop = array(
+		$noop = [
 			'plural'   => $constant_key,
 			'singular' => $constant_key,
 			// 'context'  => ucwords( $module->name ).' Module: Noop', // no need
 			'domain'   => GEDITORIAL_TEXTDOMAIN,
-		);
+		];
 
 		if ( ! empty( $this->strings['labels'][$constant_key]['name'] ) )
 			$noop['plural'] = $this->strings['labels'][$constant_key]['name'];
@@ -947,7 +947,7 @@ class Module extends Base
 
 		if ( empty( $geditorial_modules_caps )
 			&& isset( $geditorial_modules_caps[$this->module->name] ) )
-				$geditorial_modules_caps[$this->module->name] = apply_filters( 'geditorial_'.$this->module->name.'_caps', array() );
+				$geditorial_modules_caps[$this->module->name] = apply_filters( 'geditorial_'.$this->module->name.'_caps', [] );
 
 		if ( isset( $geditorial_modules_caps[$this->module->name][$action][$post_type][$field] ) )
 			return current_user_can( $geditorial_modules_caps[$this->module->name][$action][$post_type][$field] );
@@ -965,10 +965,10 @@ class Module extends Base
 			$this->strings['terms'][$constant_key]
 		);
 
-		WordPress::redirectReferer( ( FALSE === $added ? 'wrong' : array(
+		WordPress::redirectReferer( ( FALSE === $added ? 'wrong' : [
 			'message' => 'created',
 			'count'   => $added,
-		) ) );
+		] ) );
 	}
 
 	protected function check_settings( $sub, $context = 'tools' )
@@ -1013,23 +1013,23 @@ class Module extends Base
 				$section = $this->module->group.$section_suffix;
 
 				if ( method_exists( $this, 'settings_section'.$section_suffix ) )
-					$callback = array( $this, 'settings_section'.$section_suffix );
+					$callback = [ $this, 'settings_section'.$section_suffix ];
 				else
 					$callback = '__return_false';
 
-				Settings::addModuleSection( $this->module->group, array(
+				Settings::addModuleSection( $this->module->group, [
 					'id'            => $section,
 					'callback'      => $callback,
 					'section_class' => 'settings_section',
-				) );
+				] );
 
 				foreach ( $fields as $field ) {
 
 					if ( is_array( $field ) )
-						$args = array_merge( $field, array( 'section' => $section ) );
+						$args = array_merge( $field, [ 'section' => $section ] );
 
 					else if ( method_exists( __NAMESPACE__.'\\Settings', 'getSetting_'.$field ) )
-						$args = call_user_func_array( array( __NAMESPACE__.'\\Settings', 'getSetting_'.$field ), array( $section ) );
+						$args = call_user_func_array( [ __NAMESPACE__.'\\Settings', 'getSetting_'.$field ], [ $section ] );
 
 					else
 						continue;
@@ -1039,7 +1039,7 @@ class Module extends Base
 
 			} else if ( method_exists( $this, 'register_settings_'.$section_suffix ) ) {
 				$title = $section_suffix == $fields ? NULL : $fields;
-				call_user_func_array( array( $this, 'register_settings_'.$section_suffix ), array( $title ) );
+				call_user_func_array( [ $this, 'register_settings_'.$section_suffix ], [ $title ] );
 			}
 		}
 
@@ -1054,7 +1054,7 @@ class Module extends Base
 			$screen->set_help_sidebar( $sidebar );
 
 		// register settings on the settings page only
-		add_action( 'admin_print_footer_scripts', array( $this, 'settings_print_scripts' ), 99 );
+		add_action( 'admin_print_footer_scripts', [ $this, 'settings_print_scripts' ], 99 );
 	}
 
 	protected function settings_footer( $module )
@@ -1068,17 +1068,17 @@ class Module extends Base
 		Settings::settingsSignature();
 	}
 
-	public function add_settings_field( $r = array() )
+	public function add_settings_field( $r = [] )
 	{
-		$args = array_merge( array(
+		$args = array_merge( [
 			'page'        => $this->module->group,
 			'section'     => $this->module->group.'_general',
 			'field'       => FALSE,
 			'label_for'   => '',
 			'title'       => '',
 			'description' => '',
-			'callback'    => array( $this, 'do_settings_field' ),
-		), $r );
+			'callback'    => [ $this, 'do_settings_field' ],
+		], $r );
 
 		if ( ! $args['field'] )
 			return;
@@ -1091,20 +1091,20 @@ class Module extends Base
 
 	public function settings_id_name_cb( $args )
 	{
-		return array(
+		return [
 			( $args['id_attr'] ? $args['id_attr'] : $args['option_base'].'-'.$args['option_group'].'-'.$args['field'] ),
 			( $args['name_attr'] ? $args['name_attr'] : $args['option_base'].'['.$args['option_group'].']['.$args['field'].']' ),
-		);
+		];
 	}
 
-	public function do_settings_field( $atts = array() )
+	public function do_settings_field( $atts = [] )
 	{
-		$args = array_merge( array(
-			'options'      => isset( $this->options->settings ) ? $this->options->settings : array(),
+		$args = array_merge( [
+			'options'      => isset( $this->options->settings ) ? $this->options->settings : [],
 			'option_base'  => $this->module->group,
 			'option_group' => 'settings',
-			'id_name_cb'   => array( $this, 'settings_id_name_cb' ),
-		), $atts );
+			'id_name_cb'   => [ $this, 'settings_id_name_cb' ],
+		], $atts );
 
 		if ( empty( $args['cap'] ) )
 			$args['cap'] = empty( $this->caps[$args['option_group']] ) ? NULL : $this->caps[$args['option_group']];
@@ -1140,7 +1140,7 @@ class Module extends Base
 	public function set_cookie( $array, $append = TRUE, $expire = '+ 365 day' )
 	{
 		if ( $append ) {
-			$old = isset( $_COOKIE[$this->cookie] ) ? json_decode( wp_unslash( $_COOKIE[$this->cookie] ) ) : array();
+			$old = isset( $_COOKIE[$this->cookie] ) ? json_decode( wp_unslash( $_COOKIE[$this->cookie] ) ) : [];
 			$new = wp_json_encode( self::recursiveParseArgs( $array, $old ) );
 		} else {
 			$new = wp_json_encode( $array );
@@ -1151,7 +1151,7 @@ class Module extends Base
 
 	public function get_cookie()
 	{
-		return isset( $_COOKIE[$this->cookie] ) ? json_decode( wp_unslash( $_COOKIE[$this->cookie] ), TRUE ) : array();
+		return isset( $_COOKIE[$this->cookie] ) ? json_decode( wp_unslash( $_COOKIE[$this->cookie] ), TRUE ) : [];
 	}
 
 	public function delete_cookie()
@@ -1164,7 +1164,7 @@ class Module extends Base
 		if ( ! empty( $this->strings['labels'][$constant_key] ) )
 			return $this->strings['labels'][$constant_key];
 
-		$labels = array();
+		$labels = [];
 
 		if ( $menu_name = $this->get_string( 'menu_name', $constant_key, 'misc', NULL ) )
 			$labels['menu_name'] = $menu_name;
@@ -1181,7 +1181,7 @@ class Module extends Base
 
 	public function get_post_type_supports( $constant_key )
 	{
-		return isset( $this->supports[$constant_key] ) ? $this->supports[$constant_key] : array( 'title', 'editor' );
+		return isset( $this->supports[$constant_key] ) ? $this->supports[$constant_key] : [ 'title', 'editor' ];
 	}
 
 	public function get_post_type_icon( $constant_key, $default = 'welcome-write-blog' )
@@ -1205,23 +1205,23 @@ class Module extends Base
 
 		$post_type = $this->constant( $constant_key );
 
-		$args = self::recursiveParseArgs( $atts, array(
+		$args = self::recursiveParseArgs( $atts, [
 			'taxonomies'           => $taxonomies,
 			'labels'               => $this->get_post_type_labels( $constant_key ),
 			'supports'             => $this->get_post_type_supports( $constant_key ),
 			'description'          => isset( $this->strings['labels'][$constant_key]['description'] ) ? $this->strings['labels'][$constant_key]['description'] : '',
-			'register_meta_box_cb' => method_exists( $this, 'add_meta_box_cb_'.$constant_key ) ? array( $this, 'add_meta_box_cb_'.$constant_key ) : NULL,
+			'register_meta_box_cb' => method_exists( $this, 'add_meta_box_cb_'.$constant_key ) ? [ $this, 'add_meta_box_cb_'.$constant_key ] : NULL,
 			'menu_icon'            => 'dashicons-'.$this->get_post_type_icon( $constant_key ),
 			'has_archive'          => $this->constant( $constant_key.'_archive', FALSE ),
 			'query_var'            => $this->constant( $constant_key.'_query_var', $post_type ),
 			'capability_type'      => $this->constant( $constant_key.'_cap_type', 'post' ),
-			'rewrite'              => array(
+			'rewrite'              => [
 				'slug'       => $this->constant( $constant_key.'_slug', $post_type ),
 				'with_front' => FALSE,
 				'feeds'      => TRUE,
 				'pages'      => TRUE,
 				'ep_mask'    => EP_PERMALINK, // https://make.wordpress.org/plugins?p=29
-			),
+			],
 			'hierarchical'     => FALSE,
 			'public'           => TRUE,
 			'show_ui'          => TRUE,
@@ -1239,7 +1239,7 @@ class Module extends Base
 			// 'cptp_permalink_structure' => $this->constant( $constant_key.'_permalink', '/%post_id%' ),
 			// Only `%post_id%` and `%postname%` | SEE: https://github.com/torounit/simple-post-type-permalinks
 			// 'sptp_permalink_structure' => $this->constant( $constant_key.'_permalink', '/%post_id%' ),
-		) );
+		] );
 
 		return register_post_type( $post_type, $args );
 	}
@@ -1249,7 +1249,7 @@ class Module extends Base
 		if ( ! empty( $this->strings['labels'][$constant_key] ) )
 			return $this->strings['labels'][$constant_key];
 
-		$labels = array();
+		$labels = [];
 
 		if ( $menu_name = $this->get_string( 'menu_name', $constant_key, 'misc', NULL ) )
 			$labels['menu_name'] = $menu_name;
@@ -1260,7 +1260,7 @@ class Module extends Base
 		return $labels;
 	}
 
-	public function register_taxonomy( $constant_key, $atts = array(), $post_types = NULL )
+	public function register_taxonomy( $constant_key, $atts = [], $post_types = NULL )
 	{
 		$taxonomy = $this->constant( $constant_key );
 
@@ -1268,12 +1268,12 @@ class Module extends Base
 			$post_types = $this->post_types();
 
 		else if ( ! is_array( $post_types ) )
-			$post_types = array( $this->constant( $post_types ) );
+			$post_types = [ $this->constant( $post_types ) ];
 
-		$args = self::recursiveParseArgs( $atts, array(
+		$args = self::recursiveParseArgs( $atts, [
 			'labels'                => $this->get_taxonomy_labels( $constant_key ),
-			'update_count_callback' => array( __NAMESPACE__.'\\WordPress\\Database', 'updateCountCallback' ),
-			'meta_box_cb'           => method_exists( $this, 'meta_box_cb_'.$constant_key ) ? array( $this, 'meta_box_cb_'.$constant_key ) : FALSE,
+			'update_count_callback' => [ __NAMESPACE__.'\\WordPress\\Database', 'updateCountCallback' ],
+			'meta_box_cb'           => method_exists( $this, 'meta_box_cb_'.$constant_key ) ? [ $this, 'meta_box_cb_'.$constant_key ] : FALSE,
 			'hierarchical'          => FALSE,
 			'public'                => TRUE,
 			'show_ui'               => TRUE,
@@ -1282,22 +1282,22 @@ class Module extends Base
 			'show_in_nav_menus'     => FALSE,
 			'show_tagcloud'         => FALSE,
 			'query_var'             => $this->constant( $constant_key.'_query', $taxonomy ),
-			'rewrite'               => array(
+			'rewrite'               => [
 				'slug'       => $this->constant( $constant_key.'_slug', $taxonomy ),
 				'with_front' => FALSE,
-			),
-			'capabilities' => array(
+			],
+			'capabilities' => [
 				'manage_terms' => 'edit_others_posts', // 'manage_categories',
 				'edit_terms'   => 'edit_others_posts', // 'manage_categories',
 				'delete_terms' => 'edit_others_posts', // 'manage_categories',
 				'assign_terms' => 'edit_posts', // 'edit_published_posts',
-			),
+			],
 
 			// @SEE: https://core.trac.wordpress.org/ticket/39023
 			'show_in_rest' => TRUE,
 			'rest_base'    => $this->constant( $constant_key.'_rest', $taxonomy ),
 			// 'rest_controller_class' => 'WP_REST_Terms_Controller',
-		) );
+		] );
 
 		return register_taxonomy( $taxonomy, $post_types, $args );
 	}
@@ -1316,10 +1316,10 @@ class Module extends Base
 	{
 		if ( ! isset( $this->image_sizes[$post_type] ) ) {
 
-			$sizes = apply_filters( 'geditorial_'.$this->module->name.'_'.$post_type.'_image_sizes', array() );
+			$sizes = apply_filters( 'geditorial_'.$this->module->name.'_'.$post_type.'_image_sizes', [] );
 
 			if ( FALSE === $sizes ) {
-				$this->image_sizes[$post_type] = array(); // no sizes
+				$this->image_sizes[$post_type] = []; // no sizes
 
 			} else if ( count( $sizes ) ) {
 				$this->image_sizes[$post_type] = $sizes; // custom sizes
@@ -1351,14 +1351,14 @@ class Module extends Base
 	{
 		$post_type = $this->constant( $constant_key );
 
-		Helper::themeThumbnails( array( $post_type ) );
+		Helper::themeThumbnails( [ $post_type ] );
 
 		foreach ( $this->get_image_sizes( $post_type ) as $name => $size )
-			Helper::registerImageSize( $name, array_merge( $size, array( 'p' => array( $post_type ) ) ) );
+			Helper::registerImageSize( $name, array_merge( $size, [ 'p' => [ $post_type ] ] ) );
 	}
 
 	// WARNING: every script must have a .min copy
-	public function enqueue_asset_js( $args = array(), $name = NULL, $deps = array( 'jquery' ), $handle = NULL )
+	public function enqueue_asset_js( $args = [], $name = NULL, $deps = [ 'jquery' ], $handle = NULL )
 	{
 		if ( is_null( $name ) )
 			$name = $this->key;
@@ -1368,11 +1368,11 @@ class Module extends Base
 			$name = $this->key.'.'.$name->base;
 
 		if ( TRUE === $args ) {
-			$args = array();
+			$args = [];
 
 		} else if ( ! is_array( $args ) ) {
 			$name .= '.'.$args;
-			$args = array();
+			$args = [];
 		}
 
 		$name = str_replace( '_', '-', $name );
@@ -1422,7 +1422,7 @@ class Module extends Base
 			return;
 
 		if ( is_null( $callback ) && method_exists( $this, $constant_key ) )
-			$callback = array( $this, $constant_key );
+			$callback = [ $this, $constant_key ];
 
 		$shortcode = $this->constant( $constant_key );
 
@@ -1432,6 +1432,7 @@ class Module extends Base
 		add_filter( 'geditorial_shortcode_'.$shortcode, $callback, 10, 3 );
 	}
 
+	// FIXME: move this to MetaBox
 	public function field_post_tax( $constant_key, $post, $key = FALSE, $count = TRUE, $excludes = '', $default = '0' )
 	{
 		$tax = $this->constant( $constant_key );
@@ -1449,7 +1450,7 @@ class Module extends Base
 
 			echo '<div class="field-wrap" title="'.esc_attr( $obj->labels->menu_name ).'">';
 
-			wp_dropdown_categories( array(
+			wp_dropdown_categories( [
 				'taxonomy'          => $tax,
 				'selected'          => $selected,
 				'show_option_none'  => Settings::showOptionNone( $obj->labels->menu_name ),
@@ -1464,15 +1465,16 @@ class Module extends Base
 				'hide_if_empty'     => TRUE,
 				'echo'              => TRUE,
 				'exclude'           => $excludes,
-			) );
+			] );
 
 			echo '</div>';
 		}
 	}
 
+	// FIXME: move this to MetaBox
 	public function field_post_order( $constant_key, $post )
 	{
-		$html = HTML::tag( 'input', array(
+		$html = HTML::tag( 'input', [
 			'type'        => 'number',
 			'step'        => '1',
 			'size'        => '4',
@@ -1482,22 +1484,23 @@ class Module extends Base
 			'title'       => _x( 'Order', 'Module: Title Attr', GEDITORIAL_TEXTDOMAIN ),
 			'placeholder' => _x( 'Order', 'Module: Placeholder', GEDITORIAL_TEXTDOMAIN ),
 			'class'       => 'small-text',
-			'data'        => array(
+			'data'        => [
 				'ortho' => 'number',
-			),
-		) );
+			],
+		] );
 
-		echo HTML::tag( 'div', array(
-			'class' => array(
+		echo HTML::tag( 'div', [
+			'class' => [
 				'field-wrap',
 				'field-wrap-inputnumber',
-			),
-		), $html );
+			],
+		], $html );
 	}
 
-	public function field_post_parent( $constant_key, $post, $status = array( 'publish', 'future', 'draft' ) )
+	// FIXME: move this to MetaBox
+	public function field_post_parent( $constant_key, $post, $status = [ 'publish', 'future', 'draft' ] )
 	{
-		$pages = wp_dropdown_pages( array(
+		$pages = wp_dropdown_pages( [
 			'post_type'        => $this->constant( $constant_key ), // alows for parent of diffrent type
 			'selected'         => $post->post_parent,
 			'name'             => 'parent_id',
@@ -1508,12 +1511,12 @@ class Module extends Base
 			'post_status'      => $status,
 			'exclude_tree'     => $post->ID,
 			'echo'             => 0,
-		));
+		] );
 
 		if ( $pages )
-			echo HTML::tag( 'div', array(
+			echo HTML::tag( 'div', [
 				'class' => 'field-wrap',
-			), $pages );
+			], $pages );
 	}
 
 	// CAUTION: tax must be cat (hierarchical)
@@ -1534,10 +1537,10 @@ class Module extends Base
 			NULL,
 			'side',
 			'default',
-			array(
+			[
 				'taxonomy' => $taxonomy,
 				'edit_url' => $edit_url,
-			)
+			]
 		);
 	}
 
@@ -1621,22 +1624,22 @@ class Module extends Base
 		return $this->get_string( $column.'_column_title', $constant_key, 'misc', ( is_null( $fallback ) ? $column : $fallback ) );
 	}
 
-	public function get_url_settings( $extra = array() )
+	public function get_url_settings( $extra = [] )
 	{
 		return WordPress::getAdminPageLink( $this->module->settings, $extra );
 	}
 
-	public function get_url_tax_edit( $constant_key, $term_id = FALSE, $extra = array() )
+	public function get_url_tax_edit( $constant_key, $term_id = FALSE, $extra = [] )
 	{
 		return WordPress::getEditTaxLink( $this->constant( $constant_key ), $term_id, $extra );
 	}
 
-	public function get_url_post_edit( $constant_key, $extra = array(), $author_id = 0 )
+	public function get_url_post_edit( $constant_key, $extra = [], $author_id = 0 )
 	{
 		return WordPress::getPostTypeEditLink( $this->constant( $constant_key ), $author_id, $extra );
 	}
 
-	public function get_url_post_new( $constant_key, $extra = array() )
+	public function get_url_post_new( $constant_key, $extra = [] )
 	{
 		return WordPress::getPostNewLink( $this->constant( $constant_key ), $extra );
 	}
@@ -1757,15 +1760,15 @@ class Module extends Base
 		if ( is_null( $term_id ) )
 			$term_id = get_post_meta( $post_id, '_'.$this->constant( $posttype_constant_key ).'_term_id', TRUE );
 
-		$args = array(
-			'tax_query' => array( array(
+		$args = [
+			'tax_query' => [ [
 				'taxonomy' => $this->constant( $tax_constant_key ),
 				'field'    => 'id',
-				'terms'    => array( $term_id )
-			) ),
+				'terms'    => [ $term_id ]
+			] ],
 			'post_type'   => $this->post_types(),
 			'numberposts' => -1,
-		);
+		];
 
 		if ( $count ) {
 			$args['fields'] = 'ids';
@@ -1792,20 +1795,20 @@ class Module extends Base
 	protected function do_trash_post( $post_id, $posttype_constant_key, $taxonomy_constant_key )
 	{
 		if ( $term = $this->get_linked_term( $post_id, $posttype_constant_key, $taxonomy_constant_key ) ) {
-			wp_update_term( $term->term_id, $this->constant( $taxonomy_constant_key ), array(
+			wp_update_term( $term->term_id, $this->constant( $taxonomy_constant_key ), [
 				'name' => $term->name.'___TRASHED',
 				'slug' => $term->slug.'-trashed',
-			) );
+			] );
 		}
 	}
 
 	protected function do_untrash_post( $post_id, $posttype_constant_key, $taxonomy_constant_key )
 	{
 		if ( $term = $this->get_linked_term( $post_id, $posttype_constant_key, $taxonomy_constant_key ) ) {
-			wp_update_term( $term->term_id, $this->constant( $taxonomy_constant_key ), array(
+			wp_update_term( $term->term_id, $this->constant( $taxonomy_constant_key ), [
 				'name' => str_ireplace( '___TRASHED', '', $term->name ),
 				'slug' => str_ireplace( '-trashed', '', $term->slug ),
-			) );
+			] );
 		}
 	}
 
@@ -1841,7 +1844,7 @@ class Module extends Base
 							$selected = '';
 					}
 
-					wp_dropdown_categories( array(
+					wp_dropdown_categories( [
 						'show_option_all'  => $this->get_string( 'show_option_all', $constant_key, 'misc', $obj->labels->all_items ),
 						'show_option_none' => $this->get_string( 'show_option_none', $constant_key, 'misc', '('.$obj->labels->no_terms.')' ),
 						'taxonomy'         => $tax,
@@ -1854,7 +1857,7 @@ class Module extends Base
 						'show_count'       => FALSE,
 						'hide_empty'       => TRUE,
 						'hide_if_empty'    => TRUE,
-					) );
+					] );
 				}
 			}
 		}
@@ -1864,7 +1867,7 @@ class Module extends Base
 	{
 		$tax_obj = get_taxonomy( $tax = $this->constant( $tax_constant_key ) );
 
-		wp_dropdown_pages( array(
+		wp_dropdown_pages( [
 			'post_type'        => $this->constant( $posttype_constant_key ),
 			'selected'         => isset( $_GET[$tax] ) ? $_GET[$tax] : '',
 			'name'             => $tax,
@@ -1872,10 +1875,10 @@ class Module extends Base
 			'show_option_none' => $tax_obj->labels->all_items,
 			'sort_column'      => 'menu_order',
 			'sort_order'       => 'desc',
-			'post_status'      => array( 'publish', 'future', 'draft', 'pending' ),
+			'post_status'      => [ 'publish', 'future', 'draft', 'pending' ],
 			'value_field'      => 'post_name',
 			'walker'           => new Walker_PageDropdown(),
-		));
+		] );
 	}
 
 	protected function do_parse_query_taxes( &$query, $taxes, $posttype_constant_key = TRUE )
@@ -1891,10 +1894,10 @@ class Module extends Base
 
 					if ( '-1' == $query->query_vars[$tax] ) {
 
-						$query->query_vars['tax_query'] = array( array(
+						$query->query_vars['tax_query'] = [ [
 							'taxonomy' => $tax,
 							'operator' => 'NOT EXISTS',
-						) );
+						] ];
 
 						unset( $query->query_vars[$tax] );
 
@@ -1982,15 +1985,15 @@ SQL;
 		if ( is_null( $title ) )
 			$title = $this->get_string( 'column_icon_title', $icon, 'misc', '' );
 
-		return HTML::tag( ( $link ? 'a' : 'span' ), array(
+		return HTML::tag( ( $link ? 'a' : 'span' ), [
 			'href'   => $link ? $link : FALSE,
 			'title'  => $title ? $title : FALSE,
-			'class'  => array( '-icon', ( $link ? '-link' : '-info' ) ),
+			'class'  => [ '-icon', ( $link ? '-link' : '-info' ) ],
 			'target' => $link ? '_blank' : FALSE,
-		), HTML::getDashicon( $icon ) );
+		], HTML::getDashicon( $icon ) );
 	}
 
-	public function column_thumb( $post_id, $size = array( 45, 72 ) )
+	public function column_thumb( $post_id, $size = [ 45, 72 ] )
 	{
 		echo WordPress::getFeaturedImageHTML( $post_id, $size );
 	}
@@ -2012,7 +2015,7 @@ SQL;
 
 			} else {
 
-				$terms = array();
+				$terms = [];
 
 				foreach ( $the_terms as $the_term )
 					$terms[] = $the_term->name;
@@ -2032,7 +2035,7 @@ SQL;
 	// adds the module enabled class to body in admin
 	public function _admin_enabled()
 	{
-		add_action( 'admin_body_class', array( $this, 'admin_body_class_enabled' ) );
+		add_action( 'admin_body_class', [ $this, 'admin_body_class_enabled' ] );
 	}
 
 	public function admin_body_class_enabled( $classes )
@@ -2052,16 +2055,16 @@ SQL;
 		$to  = $this->constant( $constant_key );
 		$p2p = $this->constant( $constant_key.'_p2p' );
 
-		$args = array_merge( array(
+		$args = array_merge( [
 			'name'         => $p2p,
 			'from'         => $post_types,
 			'to'           => $to,
 			'admin_column' => 'from', // 'any', 'from', 'to', FALSE
-			'admin_box'    => array(
+			'admin_box'    => [
 				'show'    => 'from',
 				'context' => 'advanced',
-			),
-		), $this->strings['p2p'][$constant_key] );
+			],
+		], $this->strings['p2p'][$constant_key] );
 
 		$hook = 'geditorial_'.$this->module->name.'_'.$to.'_p2p_args';
 
@@ -2081,16 +2084,16 @@ SQL;
 		$to  = $this->constant( $constant_key );
 		$o2o = $this->constant( $constant_key.'_o2o' );
 
-		$args = array_merge( array(
+		$args = array_merge( [
 			'name'         => $o2o,
 			'from'         => $post_types,
 			'to'           => $to,
 			'admin_column' => 'from', // 'any', 'from', 'to', FALSE
-			'admin_box'    => array(
+			'admin_box'    => [
 				'show'    => 'from',
 				'context' => 'advanced',
-			),
-		), $this->strings['o2o'][$constant_key] );
+			],
+		], $this->strings['o2o'][$constant_key] );
 
 		$hook = 'geditorial_'.$this->module->name.'_'.$to.'_o2o_args';
 
@@ -2166,10 +2169,10 @@ SQL;
 
 	protected function _hook_ajax( $nopriv = FALSE )
 	{
-		add_action( 'wp_ajax_'.$this->hook(), array( $this, 'ajax' ) );
+		add_action( 'wp_ajax_'.$this->hook(), [ $this, 'ajax' ] );
 
 		if ( $nopriv )
-			add_action( 'wp_ajax_nopriv_'.$this->hook(), array( $this, 'ajax' ) );
+			add_action( 'wp_ajax_nopriv_'.$this->hook(), [ $this, 'ajax' ] );
 	}
 
 	// DEFAULT FILTER
@@ -2180,7 +2183,7 @@ SQL;
 
 	protected function _tweaks_taxonomy()
 	{
-		add_filter( 'geditorial_tweaks_taxonomy_info', array( $this, 'tweaks_taxonomy_info' ), 10, 3 );
+		add_filter( 'geditorial_tweaks_taxonomy_info', [ $this, 'tweaks_taxonomy_info' ], 10, 3 );
 	}
 
 	// DEFAULT FILTER
@@ -2193,11 +2196,11 @@ SQL;
 
 		foreach ( $icons['taxonomies'] as $tax => $icon )
 			if ( $object->name == $this->constant( $tax ) )
-				return array(
+				return [
 					'icon'  => is_null( $icon ) ? $this->module->icon : $icon,
 					'title' => $this->get_column_title( 'tweaks', $tax ),
 					'edit'  => NULL,
-				);
+				];
 
 		return $info;
 	}

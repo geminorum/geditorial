@@ -417,7 +417,7 @@ class ShortCode extends Core\Base
 		else
 			$post_status = [ 'publish' ];
 
-		$query_args = array(
+		$query_args = [
 			'tax_query'        => $tax_query,
 			'meta_query'       => $meta_query,
 			'posts_per_page'   => $args['limit'],
@@ -427,7 +427,7 @@ class ShortCode extends Core\Base
 			'post_status'      => $post_status,
 			'suppress_filters' => TRUE,
 			'no_found_rows'    => TRUE,
-		);
+		];
 
 		$query = new \WP_Query;
 		$posts = $query->query( $query_args );
@@ -571,7 +571,7 @@ class ShortCode extends Core\Base
 		else
 			$post_status = [ 'publish' ];
 
-		$query_args = array(
+		$query_args = [
 			'tax_query'        => $tax_query,
 			'meta_query'       => $meta_query,
 			'posts_per_page'   => $args['limit'],
@@ -581,7 +581,7 @@ class ShortCode extends Core\Base
 			'post_status'      => $post_status,
 			'suppress_filters' => TRUE,
 			'no_found_rows'    => TRUE,
-		);
+		];
 
 		$query = new \WP_Query;
 		$posts = $query->query( $query_args );

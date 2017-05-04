@@ -119,7 +119,7 @@ class Settings extends Core\Base
 
 	public static function minutesOptions()
 	{
-		return array(
+		return [
 			'5'    => _x( '5 Minutes', 'Settings: Option: Time in Minutes', GEDITORIAL_TEXTDOMAIN ),
 			'10'   => _x( '10 Minutes', 'Settings: Option: Time in Minutes', GEDITORIAL_TEXTDOMAIN ),
 			'15'   => _x( '15 Minutes', 'Settings: Option: Time in Minutes', GEDITORIAL_TEXTDOMAIN ),
@@ -130,7 +130,7 @@ class Settings extends Core\Base
 			'240'  => _x( '4 Hours', 'Settings: Option: Time in Minutes', GEDITORIAL_TEXTDOMAIN ),
 			'480'  => _x( '8 Hours', 'Settings: Option: Time in Minutes', GEDITORIAL_TEXTDOMAIN ),
 			'1440' => _x( '24 Hours', 'Settings: Option: Time in Minutes', GEDITORIAL_TEXTDOMAIN ),
-		);
+		];
 	}
 
 	public static function showOptionNone( $string = NULL )
@@ -166,58 +166,58 @@ class Settings extends Core\Base
 
 	public static function getSetting_editor_button( $section )
 	{
-		return array(
+		return [
 			'field'   => 'editor_button',
 			'title'   => _x( 'Editor Button', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 			'default' => '1',
 			'section' => $section,
-		);
+		];
 	}
 
 	public static function getSetting_shortcode_support( $section )
 	{
-		return array(
+		return [
 			'field'   => 'shortcode_support',
 			'title'   => _x( 'Default Shortcodes', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 			'default' => '1',
 			'section' => $section,
-		);
+		];
 	}
 
 	public static function getSetting_markdown_support( $section )
 	{
-		return array(
+		return [
 			'field'   => 'markdown_support',
 			'title'   => _x( 'Markdown Support', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 			'default' => '0',
 			'section' => $section,
-		);
+		];
 	}
 
 	public static function getSetting_multiple_instances( $section )
 	{
-		return array(
+		return [
 			'field'   => 'multiple_instances',
 			'title'   => _x( 'Multiple Instances', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 			'default' => '0',
 			'section' => $section,
-		);
+		];
 	}
 
 	public static function getSetting_autolink_terms( $section )
 	{
-		return array(
+		return [
 			'field'       => 'autolink_terms',
 			'title'       => _x( 'Autolink Terms', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 			'description' => _x( 'Trying to link the terms titles in the content.', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 			'default'     => '0',
 			'section'     => $section,
-		);
+		];
 	}
 
 	public static function getSetting_rewrite_prefix( $section )
 	{
-		return array(
+		return [
 			'field'       => 'rewrite_prefix',
 			'type'        => 'text',
 			'title'       => _x( 'URL Base Prefix', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
@@ -226,12 +226,12 @@ class Settings extends Core\Base
 			'dir'         => 'ltr',
 			'placeholder' => 'wiki',
 			'section'     => $section,
-		);
+		];
 	}
 
 	public static function getSetting_redirect_archives( $section )
 	{
-		return array(
+		return [
 			'field'       => 'redirect_archives',
 			'type'        => 'text',
 			'title'       => _x( 'Redirect Archives', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
@@ -240,40 +240,40 @@ class Settings extends Core\Base
 			'dir'         => 'ltr',
 			'placeholder' => 'http://example.com/archives/',
 			'section'     => $section,
-		);
+		];
 	}
 
 	public static function getSetting_comment_status( $section )
 	{
-		return array(
+		return [
 			'field'       => 'comment_status',
 			'type'        => 'select',
 			'title'       => _x( 'Comment Status', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 			'description' => _x( 'Default Comment Status of the Posttype', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 			'default'     => 'closed',
 			'section'     => $section,
-			'values'      => array(
+			'values'      => [
 				'open'   => _x( 'Open', 'Settings: Setting Option', GEDITORIAL_TEXTDOMAIN ),
 				'closed' => _x( 'Closed', 'Settings: Setting Option', GEDITORIAL_TEXTDOMAIN ),
-			),
-		);
+			],
+		];
 	}
 
 	public static function getSetting_insert_content( $section )
 	{
-		return array(
+		return [
 			'field'       => 'insert_content',
 			'type'        => 'select',
 			'title'       => _x( 'Insert in Content', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 			'description' => _x( 'Puts automatically in the content', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 			'default'     => 'none',
 			'section'     => $section,
-			'values'      => array(
+			'values'      => [
 				'none'   => _x( 'No', 'Settings: Setting Option', GEDITORIAL_TEXTDOMAIN ),
 				'before' => _x( 'Before', 'Settings: Setting Option', GEDITORIAL_TEXTDOMAIN ),
 				'after'  => _x( 'After', 'Settings: Setting Option', GEDITORIAL_TEXTDOMAIN ),
-			),
-		);
+			],
+		];
 	}
 
 	public static function getSetting_insert_content_before( $section )
@@ -298,125 +298,125 @@ class Settings extends Core\Base
 
 	public static function getSetting_insert_priority( $section )
 	{
-		return array(
+		return [
 			'field'       => 'insert_priority',
 			'type'        => 'priority',
 			'title'       => _x( 'Insert Priority', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 			'description' => _x( 'Priority of inserting buttons on the content.', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 			'default'     => '10',
 			'section'     => $section,
-		);
+		];
 	}
 
 	public static function getSetting_before_content( $section )
 	{
-		return array(
+		return [
 			'field'       => 'before_content',
 			'type'        => 'textarea-quicktags',
 			'title'       => _x( 'Before Content', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 			'description' => _x( 'Adds <code>HTML</code> to the start of all the supported posttypes', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 			'section'     => $section,
-		);
+		];
 	}
 
 	public static function getSetting_after_content( $section )
 	{
-		return array(
+		return [
 			'field'       => 'after_content',
 			'type'        => 'textarea-quicktags',
 			'title'       => _x( 'After Content', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 			'description' => _x( 'Adds <code>HTML</code> to the end of all the supported posttypes', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 			'section'     => $section,
-		);
+		];
 	}
 
 	public static function getSetting_admin_ordering( $section )
 	{
-		return array(
+		return [
 			'field'       => 'admin_ordering',
 			'title'       => _x( 'Ordering', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 			'description' => _x( 'Enhance admin edit page ordering', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 			'default'     => '1',
 			'section'     => $section,
-		);
+		];
 	}
 
 	public static function getSetting_admin_restrict( $section )
 	{
-		return array(
+		return [
 			'field'       => 'admin_restrict',
 			'title'       => _x( 'Restrictions', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 			'description' => _x( 'Enhance admin edit page restrictions', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 			'section'     => $section,
-		);
+		];
 	}
 
 	public static function getSetting_dashboard_widgets( $section )
 	{
-		return array(
+		return [
 			'field'       => 'dashboard_widgets',
 			'title'       => _x( 'Dashboard Widgets', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 			'description' => _x( 'Enhance admin dashboard with customized widgets', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 			'section'     => $section,
-		);
+		];
 	}
 
 	public static function getSetting_summary_scope( $section )
 	{
-		return array(
+		return [
 			'field'       => 'summary_scope',
 			'type'        => 'select',
 			'title'       => _x( 'Summary Scope', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 			'description' => _x( 'User scope for the content summary', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 			'default'     => 'all',
 			'section'     => $section,
-			'values'      => array(
+			'values'      => [
 				'all'     => _x( 'All Users', 'Settings: Setting Option', GEDITORIAL_TEXTDOMAIN ),
 				'current' => _x( 'Current User', 'Settings: Setting Option', GEDITORIAL_TEXTDOMAIN ),
-			),
-		);
+			],
+		];
 	}
 
 	public static function getSetting_count_not( $section )
 	{
-		return array(
+		return [
 			'field'       => 'count_not',
 			'title'       => _x( 'Count Not', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 			'description' => _x( 'Count not affacted items in content summary', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 			'section'     => $section,
-		);
+		];
 	}
 
 	public static function getSetting_posttype_feeds( $section )
 	{
-		return array(
+		return [
 			'field'       => 'posttype_feeds',
 			'title'       => _x( 'Feeds', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 			'description' => _x( 'Supporting feeds on the posttype', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 			'section'     => $section,
-		);
+		];
 	}
 
 	public static function getSetting_posttype_pages( $section )
 	{
-		return array(
+		return [
 			'field'       => 'posttype_pages',
 			'title'       => _x( 'Pages', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 			'description' => _x( 'Supporting pagination on the posttype', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 			'section'     => $section,
-		);
+		];
 	}
 
 	public static function getSetting_calendar_type( $section )
 	{
-		return array(
+		return [
 			'field'   => 'calendar_type',
 			'title'   => _x( 'Default Calendar', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 			'type'    => 'select',
 			'default' => 'gregorian',
 			'values'  => Helper::getDefualtCalendars( TRUE ),
 			'section' => $section,
-		);
+		];
 	}
 
 	public static function sub( $default = 'general' )
@@ -486,7 +486,7 @@ class Settings extends Core\Base
 
 	public static function messages()
 	{
-		return array(
+		return [
 			'resetting' => HTML::success( _x( 'Settings reset.', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
 			'optimized' => HTML::success( _x( 'Tables optimized.', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
 			'updated'   => HTML::success( _x( 'Settings updated.', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
@@ -503,7 +503,7 @@ class Settings extends Core\Base
 			'emptied'   => self::counted( _x( '%s items(s) emptied!', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
 			'ordered'   => self::counted( _x( '%s items(s) re-ordered!', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
 			'huh'       => HTML::error( self::huh( self::req( 'huh', NULL ) ) ),
-		);
+		];
 	}
 
 	public static function getButtonConfirm( $message = NULL )
@@ -511,14 +511,12 @@ class Settings extends Core\Base
 		if ( is_null( $message ) )
 			$message = _x( 'Are you sure? This operation can not be undone.', 'Settings: Confirm', GEDITORIAL_TEXTDOMAIN );
 
-		return array(
-			'onclick' => sprintf( 'return confirm(\'%s\')', esc_attr( $message ) ),
-		);
+		return [ 'onclick' => sprintf( 'return confirm(\'%s\')', esc_attr( $message ) ) ];
 	}
 
-	public static function submitButton( $name = 'submit', $text = NULL, $primary = FALSE, $atts = array() )
+	public static function submitButton( $name = 'submit', $text = NULL, $primary = FALSE, $atts = [] )
 	{
-		$classes = array( '-button', 'button' );
+		$classes = [ '-button', 'button' ];
 
 		if ( is_null( $text ) )
 			$text = 'reset' == $name
@@ -529,7 +527,7 @@ class Settings extends Core\Base
 			$atts = self::getButtonConfirm();
 
 		else if ( ! is_array( $atts ) )
-			$atts = array();
+			$atts = [];
 
 		if ( 'primary' == $primary )
 			$primary = TRUE;
@@ -540,14 +538,14 @@ class Settings extends Core\Base
 		else if ( $primary )
 			$classes[] = 'button-'.$primary;
 
-		echo HTML::tag( 'input', array_merge( $atts, array(
+		echo HTML::tag( 'input', array_merge( $atts, [
 			'type'    => 'submit',
 			'name'    => $name,
 			'id'      => $name,
 			'value'   => $text,
 			'class'   => $classes,
 			'default' => TRUE === $primary,
-		) ) );
+		] ) );
 
 		echo '&nbsp;&nbsp;';
 	}
@@ -579,22 +577,22 @@ class Settings extends Core\Base
 		return _x( 'huh?', 'Settings: Message', GEDITORIAL_TEXTDOMAIN );
 	}
 
-	public static function headerNav( $uri = '', $active = '', $subs = array(), $prefix = 'nav-tab-', $tag = 'h3' )
+	public static function headerNav( $uri = '', $active = '', $subs = [], $prefix = 'nav-tab-', $tag = 'h3' )
 	{
 		HTML::headerNav( $uri, $active, $subs, $prefix, $tag );
 	}
 
 	// @SOURCE: `add_settings_section()`
-	public static function addModuleSection( $page, $atts = array() )
+	public static function addModuleSection( $page, $atts = [] )
 	{
 		global $wp_settings_sections;
 
-		$args = self::atts( array(
+		$args = self::atts( [
 			'id'            => FALSE,
 			'title'         => FALSE,
 			'callback'      => '__return_false',
 			'section_class' => '',
-		), $atts );
+		], $atts );
 
 		if ( ! $args['id'] )
 			return FALSE;
@@ -668,34 +666,32 @@ class Settings extends Core\Base
 
 	public static function moduleSectionEmpty( $description )
 	{
-		echo HTML::tag( 'p', array(
-			'class' => 'description -section-description -section-empty',
-		), $description );
+		HTML::desc( $description, TRUE, '-section-description -section-empty' );
 	}
 
 	public static function moduleButtons( $module, $enabled = FALSE )
 	{
-		echo HTML::tag( 'input', array(
+		echo HTML::tag( 'input', [
 			'type'  => 'submit',
 			'value' => _x( 'Enable', 'Settings: Button', GEDITORIAL_TEXTDOMAIN ),
 			'style' => $enabled ? 'display:none' : FALSE,
-			'class' => array( 'hide-if-no-js', 'button', 'button-primary', 'button-toggle' ),
-			'data'  => array(
+			'class' => [ 'hide-if-no-js', 'button', 'button-primary', 'button-toggle' ],
+			'data'  => [
 				'module' => $module->name,
 				'do'     => 'enable',
-			),
-		) );
+			],
+		] );
 
-		echo HTML::tag( 'input', array(
+		echo HTML::tag( 'input', [
 			'type'  => 'submit',
 			'value' => _x( 'Disable', 'Settings: Button', GEDITORIAL_TEXTDOMAIN ),
 			'style' => $enabled ? FALSE : 'display:none',
-			'class' => array( 'hide-if-no-js', 'button', 'button-secondary', 'button-toggle', 'button-remove' ),
-			'data'  => array(
+			'class' => [ 'hide-if-no-js', 'button', 'button-secondary', 'button-toggle', 'button-remove' ],
+			'data'  => [
 				'module' => $module->name,
 				'do'     => 'disable',
-			),
-		) );
+			],
+		] );
 
 		echo HTML::tag( 'span', [
 			'class' => [ 'button', 'hide-if-js' ],
@@ -705,15 +701,15 @@ class Settings extends Core\Base
 	public static function moduleConfigure( $module, $enabled = FALSE )
 	{
 		if ( $module->configure )
-			echo HTML::tag( 'a', array(
+			echo HTML::tag( 'a', [
 				'href'  => add_query_arg( 'page', $module->settings, get_admin_url( NULL, 'admin.php' ) ),
 				'style' => $enabled ? FALSE : 'display:none',
-				'class' => array( 'button', 'button-primary', 'button-configure' ),
-				'data'  => array(
+				'class' => [ 'button', 'button-primary', 'button-configure' ],
+				'data'  => [
 					'module' => $module->name,
 					'do'     => 'configure',
-				),
-			), _x( 'Configure', 'Settings: Button', GEDITORIAL_TEXTDOMAIN ) );
+				],
+			], _x( 'Configure', 'Settings: Button', GEDITORIAL_TEXTDOMAIN ) );
 	}
 
 	public static function moduleInfo( $module, $tag = 'h3' )
@@ -737,19 +733,19 @@ class Settings extends Core\Base
 	{
 		if ( $module ) {
 
-			return array(
+			return [
 				'https://github.com/geminorum/geditorial/wiki/Modules-'.Helper::moduleSlug( $module->name ),
 				sprintf( 'Editorial %s Documentation', Helper::moduleSlug( $module->name, FALSE ) ),
 				'https://github.com/geminorum/geditorial',
-			);
+			];
 
 		} else {
 
-			return array(
+			return [
 				'https://github.com/geminorum/geditorial/wiki',
 				'Editorial Documentation',
 				'https://github.com/geminorum/geditorial',
-			);
+			];
 		}
 	}
 
@@ -781,46 +777,46 @@ class Settings extends Core\Base
 
 	public static function settingsHelpContent( $module = FALSE )
 	{
-		$tabs = array();
+		$tabs = [];
 
 		if ( function_exists( 'gnetwork_github' ) ) {
 
 			if ( $module )
-				$tabs[] = array(
+				$tabs[] = [
 					'id'      => 'geditorial-'.$module->name.'-overview',
 					'title'   => sprintf( _x( '%s Overview', 'Settings: Help Content Title', GEDITORIAL_TEXTDOMAIN ), $module->title ),
-					'content' => gnetwork_github( array(
+					'content' => gnetwork_github( [
 						'repo'    => 'geminorum/geditorial',
 						'type'    => 'wiki',
 						'page'    => 'Modules-'.Helper::moduleSlug( $module->name ),
 						'context' => 'help_tab',
-					) ),
-				);
+					] ),
+				];
 
 			else
-				$tabs[] = array(
+				$tabs[] = [
 					'id'      => 'geditorial-overview',
 					'title'   => _x( 'Editorial Overview', 'Settings: Help Content Title', GEDITORIAL_TEXTDOMAIN ),
-					'content' => gnetwork_github( array(
+					'content' => gnetwork_github( [
 						'repo'    => 'geminorum/geditorial',
 						'type'    => 'wiki',
 						'page'    => 'Modules',
 						'context' => 'help_tab',
-					) ),
-				);
+					] ),
+				];
 		}
 
 		return $tabs;
 	}
 
-	public static function fieldType( $atts = array(), &$scripts )
+	public static function fieldType( $atts = [], &$scripts )
 	{
-		$args = self::atts( array(
+		$args = self::atts( [
 			'title'        => '&nbsp;',
 			'label_for'    => '',
 			'type'         => 'enabled',
 			'field'        => FALSE,
-			'values'       => array(),
+			'values'       => [],
 			'exclude'      => '',
 			'none_title'   => NULL, // select option none title
 			'none_value'   => NULL, // select option none value
@@ -830,7 +826,7 @@ class Settings extends Core\Base
 			'disabled'     => FALSE,
 			'readonly'     => FALSE,
 			'default'      => '',
-			'defaults'     => array(), // default value to ignore && override the saved
+			'defaults'     => [], // default value to ignore && override the saved
 			'description'  => isset( $atts['desc'] ) ? $atts['desc'] : '',
 			'before'       => '', // html to print before field
 			'after'        => '', // html to print after field
@@ -838,7 +834,7 @@ class Settings extends Core\Base
 			'class'        => '', // now used on wrapper
 			'option_group' => 'settings',
 			'option_base'  => 'geditorial',
-			'options'      => array(), // saved options
+			'options'      => [], // saved options
 			'id_name_cb'   => FALSE, // id/name generator callback
 			'id_attr'      => FALSE, // override
 			'name_attr'    => FALSE, // override
@@ -848,8 +844,8 @@ class Settings extends Core\Base
 			'cols_attr'    => '45', // for textarea type
 			'placeholder'  => FALSE,
 			'constant'     => FALSE, // override value if constant defined & disabling
-			'data'         => array(), // data attr
-			'extra'        => array(), // extra args to pass to deeper generator
+			'data'         => [], // data attr
+			'extra'        => [], // extra args to pass to deeper generator
 			'wrap'         => FALSE,
 			'cap'          => NULL,
 
@@ -857,7 +853,7 @@ class Settings extends Core\Base
 			'string_enabled'  => _x( 'Enabled', 'Settings', GEDITORIAL_TEXTDOMAIN ),
 			'string_select'   => self::showOptionNone(),
 			'string_noaccess' => _x( 'You do not have access to change this option.', 'Settings', GEDITORIAL_TEXTDOMAIN ),
-		), $atts );
+		], $atts );
 
 		if ( $args['wrap'] ) {
 			if ( ! empty( $args['label_for'] ) )
@@ -871,7 +867,7 @@ class Settings extends Core\Base
 
 		$html    = '';
 		$value   = $args['default'];
-		$exclude = $args['exclude'] && ! is_array( $args['exclude'] ) ? array_filter( explode( ',', $args['exclude'] ) ) : array();
+		$exclude = $args['exclude'] && ! is_array( $args['exclude'] ) ? array_filter( explode( ',', $args['exclude'] ) ) : [];
 
 		if ( $args['id_name_cb'] ) {
 			list( $id, $name ) = call_user_func( $args['id_name_cb'], $args );
@@ -898,7 +894,7 @@ class Settings extends Core\Base
 
 		if ( is_null( $args['cap'] ) ) {
 
-			if ( in_array( $args['type'], array( 'role', 'cap', 'user' ) ) )
+			if ( in_array( $args['type'], [ 'role', 'cap', 'user' ] ) )
 				$args['cap'] = 'promote_users';
 			else
 				$args['cap'] = 'manage_options';
@@ -912,32 +908,32 @@ class Settings extends Core\Base
 
 		switch ( $args['type'] ) {
 
-			case 'hidden' :
+			case 'hidden':
 
-				echo HTML::tag( 'input', array(
+				echo HTML::tag( 'input', [
 					'type'  => 'hidden',
 					'id'    => $id,
 					'name'  => $name,
 					'value' => $value,
 					'data'  => $args['data'],
-				) );
+				] );
 
 				$args['description'] = FALSE;
 
 			break;
-			case 'enabled' :
+			case 'enabled':
 
-				$html = HTML::tag( 'option', array(
+				$html = HTML::tag( 'option', [
 					'value'    => '0',
 					'selected' => '0' == $value,
-				), esc_html( empty( $args['values'][0] ) ? $args['string_disabled'] : $args['values'][0] ) );
+				], esc_html( empty( $args['values'][0] ) ? $args['string_disabled'] : $args['values'][0] ) );
 
-				$html .= HTML::tag( 'option', array(
+				$html .= HTML::tag( 'option', [
 					'value'    => '1',
 					'selected' => '1' == $value,
-				), esc_html( empty( $args['values'][1] ) ? $args['string_enabled'] : $args['values'][1] ) );
+				], esc_html( empty( $args['values'][1] ) ? $args['string_enabled'] : $args['values'][1] ) );
 
-				echo HTML::tag( 'select', array(
+				echo HTML::tag( 'select', [
 					'id'       => $id,
 					'name'     => $name,
 					'class'    => HTML::attrClass( $args['field_class'], '-type-enabled' ),
@@ -945,18 +941,18 @@ class Settings extends Core\Base
 					'readonly' => $args['readonly'],
 					'dir'      => $args['dir'],
 					'data'     => $args['data'],
-				), $html );
+				], $html );
 
 			break;
-			case 'text' :
+			case 'text':
 
 				if ( ! $args['field_class'] )
 					$args['field_class'] = 'regular-text';
 
 				if ( ! count( $args['dir'] ) )
-					$args['data'] = array( 'accept' => 'text' );
+					$args['data'] = [ 'accept' => 'text' ];
 
-				echo HTML::tag( 'input', array(
+				echo HTML::tag( 'input', [
 					'type'        => 'text',
 					'id'          => $id,
 					'name'        => $name,
@@ -967,10 +963,10 @@ class Settings extends Core\Base
 					'readonly'    => $args['readonly'],
 					'dir'         => $args['dir'],
 					'data'        => $args['data'],
-				) );
+				] );
 
 			break;
-			case 'number' :
+			case 'number':
 
 				if ( ! $args['field_class'] )
 					$args['field_class'] = 'small-text';
@@ -979,9 +975,9 @@ class Settings extends Core\Base
 					$args['dir'] = 'ltr';
 
 				if ( ! count( $args['dir'] ) )
-					$args['data'] = array( 'accept' => 'number' );
+					$args['data'] = [ 'accept' => 'number' ];
 
-				echo HTML::tag( 'input', array(
+				echo HTML::tag( 'input', [
 					'type'        => 'number',
 					'id'          => $id,
 					'name'        => $name,
@@ -994,21 +990,21 @@ class Settings extends Core\Base
 					'readonly'    => $args['readonly'],
 					'dir'         => $args['dir'],
 					'data'        => $args['data'],
-				) );
+				] );
 
 			break;
-			case 'url' :
+			case 'url':
 
 				if ( ! $args['field_class'] )
-					$args['field_class'] = array( 'large-text', 'url-text' );
+					$args['field_class'] = [ 'large-text', 'url-text' ];
 
 				if ( ! $args['dir'] )
 					$args['dir'] = 'ltr';
 
 				if ( ! count( $args['dir'] ) )
-					$args['data'] = array( 'accept' => 'url' );
+					$args['data'] = [ 'accept' => 'url' ];
 
-				echo HTML::tag( 'input', array(
+				echo HTML::tag( 'input', [
 					'type'        => 'url',
 					'id'          => $id,
 					'name'        => $name,
@@ -1019,30 +1015,30 @@ class Settings extends Core\Base
 					'readonly'    => $args['readonly'],
 					'dir'         => $args['dir'],
 					'data'        => $args['data'],
-				) );
+				] );
 
 			break;
-			case 'checkbox' :
+			case 'checkbox':
 
 				if ( count( $args['values'] ) ) {
 
 					if ( ! is_null( $args['none_title'] ) ) {
 
-						$html = HTML::tag( 'input', array(
+						$html = HTML::tag( 'input', [
 							'type'     => 'checkbox',
 							'id'       => $id.( is_null( $args['none_value'] ) ? '' : '-'.$args['none_value'] ),
 							'name'     => $name.( is_null( $args['none_value'] ) ? '' : '-'.$args['none_value'] ),
 							'value'    => is_null( $args['none_value'] ) ? '1' : $args['none_value'],
-							'checked'  => in_array( $args['none_value'], ( array ) $value ),
+							'checked'  => in_array( $args['none_value'], (array) $value ),
 							'class'    => HTML::attrClass( $args['field_class'], '-type-checkbox', '-option-none' ),
 							'disabled' => $args['disabled'],
 							'readonly' => $args['readonly'],
 							'dir'      => $args['dir'],
-						) );
+						] );
 
-						echo '<p>'.HTML::tag( 'label', array(
+						echo '<p>'.HTML::tag( 'label', [
 							'for' => $id.( is_null( $args['none_value'] ) ? '' : '-'.$args['none_value'] ),
-						), $html.'&nbsp;'.esc_html( $args['none_title'] ) ).'</p>';
+						], $html.'&nbsp;'.esc_html( $args['none_title'] ) ).'</p>';
 					}
 
 					foreach ( $args['values'] as $value_name => $value_title ) {
@@ -1050,26 +1046,26 @@ class Settings extends Core\Base
 						if ( in_array( $value_name, $exclude ) )
 							continue;
 
-						$html = HTML::tag( 'input', array(
+						$html = HTML::tag( 'input', [
 							'type'     => 'checkbox',
 							'id'       => $id.'-'.$value_name,
 							'name'     => $name.'['.$value_name.']',
 							'value'    => '1',
-							'checked'  => in_array( $value_name, ( array ) $value ),
+							'checked'  => in_array( $value_name, (array) $value ),
 							'class'    => $args['field_class'],
 							'disabled' => $args['disabled'],
 							'readonly' => $args['readonly'],
 							'dir'      => $args['dir'],
-						) );
+						] );
 
-						echo '<p>'.HTML::tag( 'label', array(
+						echo '<p>'.HTML::tag( 'label', [
 							'for' => $id.'-'.$value_name,
-						), $html.'&nbsp;'.$value_title ).'</p>';
+						], $html.'&nbsp;'.$value_title ).'</p>';
 					}
 
 				} else {
 
-					$html = HTML::tag( 'input', array(
+					$html = HTML::tag( 'input', [
 						'type'     => 'checkbox',
 						'id'       => $id,
 						'name'     => $name,
@@ -1080,37 +1076,37 @@ class Settings extends Core\Base
 						'readonly' => $args['readonly'],
 						'dir'      => $args['dir'],
 						'data'     => $args['data'],
-					) );
+					] );
 
-					echo '<p>'.HTML::tag( 'label', array(
+					echo '<p>'.HTML::tag( 'label', [
 						'for' => $id,
-					), $html.'&nbsp;'.$args['description'] ).'</p>';
+					], $html.'&nbsp;'.$args['description'] ).'</p>';
 
 					$args['description'] = FALSE;
 				}
 
 			break;
-			case 'radio' :
+			case 'radio':
 
 				if ( count( $args['values'] ) ) {
 
 					if ( ! is_null( $args['none_title'] ) ) {
 
-						$html = HTML::tag( 'input', array(
+						$html = HTML::tag( 'input', [
 							'type'     => 'radio',
 							'id'       => $id.( is_null( $args['none_value'] ) ? '' : '-'.$args['none_value'] ),
 							'name'     => $name,
 							'value'    => is_null( $args['none_value'] ) ? FALSE : $args['none_value'],
-							'checked'  => in_array( $args['none_value'], ( array ) $value ),
+							'checked'  => in_array( $args['none_value'], (array) $value ),
 							'class'    => HTML::attrClass( $args['field_class'], '-type-radio', '-option-none' ),
 							'disabled' => $args['disabled'],
 							'readonly' => $args['readonly'],
 							'dir'      => $args['dir'],
-						) );
+						] );
 
-						echo '<p>'.HTML::tag( 'label', array(
+						echo '<p>'.HTML::tag( 'label', [
 							'for' => $id.( is_null( $args['none_value'] ) ? '' : '-'.$args['none_value'] ),
-						), $html.'&nbsp;'.esc_html( $args['none_title'] ) ).'</p>';
+						], $html.'&nbsp;'.esc_html( $args['none_title'] ) ).'</p>';
 					}
 
 					foreach ( $args['values'] as $value_name => $value_title ) {
@@ -1118,26 +1114,26 @@ class Settings extends Core\Base
 						if ( in_array( $value_name, $exclude ) )
 							continue;
 
-						$html = HTML::tag( 'input', array(
+						$html = HTML::tag( 'input', [
 							'type'     => 'radio',
 							'id'       => $id.'-'.$value_name,
 							'name'     => $name,
 							'value'    => $value_name,
-							'checked'  => in_array( $value_name, ( array ) $value ),
+							'checked'  => in_array( $value_name, (array) $value ),
 							'class'    => HTML::attrClass( $args['field_class'], '-type-radio' ),
 							'disabled' => $args['disabled'],
 							'readonly' => $args['readonly'],
 							'dir'      => $args['dir'],
-						) );
+						] );
 
-						echo '<p>'.HTML::tag( 'label', array(
+						echo '<p>'.HTML::tag( 'label', [
 							'for' => $id.'-'.$value_name,
-						), $html.'&nbsp;'.$value_title ).'</p>';
+						], $html.'&nbsp;'.$value_title ).'</p>';
 					}
 				}
 
 			break;
-			case 'select' :
+			case 'select':
 
 				if ( FALSE !== $args['values'] ) {
 
@@ -1146,10 +1142,10 @@ class Settings extends Core\Base
 						if ( is_null( $args['none_value'] ) )
 							$args['none_value'] = '0';
 
-						$html .= HTML::tag( 'option', array(
+						$html .= HTML::tag( 'option', [
 							'value'    => $args['none_value'],
 							'selected' => $value == $args['none_value'],
-						), esc_html( $args['none_title'] ) );
+						], esc_html( $args['none_title'] ) );
 					}
 
 					foreach ( $args['values'] as $value_name => $value_title ) {
@@ -1157,13 +1153,13 @@ class Settings extends Core\Base
 						if ( in_array( $value_name, $exclude ) )
 							continue;
 
-						$html .= HTML::tag( 'option', array(
+						$html .= HTML::tag( 'option', [
 							'value'    => $value_name,
 							'selected' => $value == $value_name,
-						), esc_html( $value_title ) );
+						], esc_html( $value_title ) );
 					}
 
-					echo HTML::tag( 'select', array(
+					echo HTML::tag( 'select', [
 						'id'       => $id,
 						'name'     => $name,
 						'class'    => HTML::attrClass( $args['field_class'], '-type-select' ),
@@ -1171,12 +1167,12 @@ class Settings extends Core\Base
 						'readonly' => $args['readonly'],
 						'dir'      => $args['dir'],
 						'data'     => $args['data'],
-					), $html );
+					], $html );
 				}
 
 			break;
-			case 'textarea' :
-			case 'textarea-quicktags' :
+			case 'textarea':
+			case 'textarea-quicktags':
 
 				if ( ! $args['field_class'] )
 					$args['field_class'] = 'large-text';
@@ -1186,18 +1182,18 @@ class Settings extends Core\Base
 					$args['field_class'] = HTML::attrClass( $args['field_class'], 'textarea-quicktags', 'code' );
 
 					if ( ! $args['values'] )
-						$args['values'] = array(
+						$args['values'] = [
 							'link',
 							'em',
 							'strong',
-						);
+						];
 
 					$scripts[] = 'quicktags({id:"'.$id.'",buttons:"'.implode( ',', $args['values'] ).'"});';
 
 					wp_enqueue_script( 'quicktags' );
 				}
 
-				echo HTML::tag( 'textarea', array(
+				echo HTML::tag( 'textarea', [
 					'id'          => $id,
 					'name'        => $name,
 					'rows'        => $args['rows_attr'],
@@ -1208,10 +1204,10 @@ class Settings extends Core\Base
 					'readonly'    => $args['readonly'],
 					'dir'         => $args['dir'],
 					'data'        => $args['data'],
-				), $value );
+				], $value );
 
 			break;
-			case 'page' :
+			case 'page':
 
 				if ( ! $args['values'] )
 					$args['values'] = 'page';
@@ -1222,26 +1218,26 @@ class Settings extends Core\Base
 				if ( is_null( $args['none_value'] ) )
 					$args['none_value'] = '0';
 
-				$query = array_merge( array(
+				$query = array_merge( [
 					'post_type'   => $args['values'],
 					'selected'    => $value,
 					'exclude'     => implode( ',', $exclude ),
 					'sort_column' => 'menu_order',
 					'sort_order'  => 'asc',
-					'post_status' => array( 'publish', 'future', 'draft' ),
-				), $args['extra'] );
+					'post_status' => [ 'publish', 'future', 'draft' ],
+				], $args['extra'] );
 
 				$pages = get_pages( $query );
 
 				if ( ! empty( $pages ) ) {
 
-					$html .= HTML::tag( 'option', array(
+					$html .= HTML::tag( 'option', [
 						'value' => $args['none_value'],
-					), esc_html( $args['none_title'] ) );
+					], esc_html( $args['none_title'] ) );
 
 					$html .= walk_page_dropdown_tree( $pages, ( isset( $query['depth'] ) ? $query['depth'] : 0 ), $query );
 
-					echo HTML::tag( 'select', array(
+					echo HTML::tag( 'select', [
 						'id'       => $id,
 						'name'     => $name,
 						'class'    => HTML::attrClass( $args['field_class'], '-type-page', '-posttype-'.$args['values'] ),
@@ -1249,14 +1245,14 @@ class Settings extends Core\Base
 						'readonly' => $args['readonly'],
 						'dir'      => $args['dir'],
 						'data'     => $args['data'],
-					), $html );
+					], $html );
 
 				} else {
 					$args['description'] = FALSE;
 				}
 
 			break;
-			case 'role' :
+			case 'role':
 
 				if ( ! $args['values'] )
 					$args['values'] = array_reverse( get_editable_roles() );
@@ -1267,22 +1263,22 @@ class Settings extends Core\Base
 				if ( is_null( $args['none_value'] ) )
 					$args['none_value'] = '0';
 
-				$html .= HTML::tag( 'option', array(
+				$html .= HTML::tag( 'option', [
 					'value' => $args['none_value'],
-				), esc_html( $args['none_title'] ) );
+				], esc_html( $args['none_title'] ) );
 
 				foreach ( $args['values'] as $value_name => $value_title ) {
 
 					if ( in_array( $value_name, $exclude ) )
 						continue;
 
-					$html .= HTML::tag( 'option', array(
+					$html .= HTML::tag( 'option', [
 						'value'    => $value_name,
 						'selected' => $value == $value_name,
-					), esc_html( translate_user_role( $value_title['name'] ) ) );
+					], esc_html( translate_user_role( $value_title['name'] ) ) );
 				}
 
-				echo HTML::tag( 'select', array(
+				echo HTML::tag( 'select', [
 					'id'       => $id,
 					'name'     => $name,
 					'class'    => HTML::attrClass( $args['field_class'], '-type-role' ),
@@ -1290,20 +1286,20 @@ class Settings extends Core\Base
 					'readonly' => $args['readonly'],
 					'dir'      => $args['dir'],
 					'data'     => $args['data'],
-				), $html );
+				], $html );
 
 			break;
-			case 'user' :
+			case 'user':
 
 				if ( ! $args['values'] )
 					$args['values'] = WordPress::getUsers( FALSE, FALSE, $args['extra'] );
 
 				if ( ! is_null( $args['none_title'] ) ) {
 
-					$html .= HTML::tag( 'option', array(
+					$html .= HTML::tag( 'option', [
 						'value'    => is_null( $args['none_value'] ) ? FALSE : $args['none_value'],
 						'selected' => $value == $args['none_value'],
-					), esc_html( $args['none_title'] ) );
+					], esc_html( $args['none_title'] ) );
 				}
 
 				foreach ( $args['values'] as $value_name => $value_title ) {
@@ -1311,13 +1307,13 @@ class Settings extends Core\Base
 					if ( in_array( $value_name, $exclude ) )
 						continue;
 
-					$html .= HTML::tag( 'option', array(
+					$html .= HTML::tag( 'option', [
 						'value'    => $value_name,
 						'selected' => $value == $value_name,
-					), esc_html( sprintf( '%1$s (%2$s)', $value_title->display_name, $value_title->user_login ) ) );
+					], esc_html( sprintf( '%1$s (%2$s)', $value_title->display_name, $value_title->user_login ) ) );
 				}
 
-				echo HTML::tag( 'select', array(
+				echo HTML::tag( 'select', [
 					'id'       => $id,
 					'name'     => $name,
 					'class'    => HTML::attrClass( $args['field_class'], '-type-user' ),
@@ -1325,10 +1321,10 @@ class Settings extends Core\Base
 					'readonly' => $args['readonly'],
 					'dir'      => $args['dir'],
 					'data'     => $args['data'],
-				), $html );
+				], $html );
 
 			break;
-			case 'priority' :
+			case 'priority':
 
 				if ( ! $args['values'] )
 					$args['values'] = self::priorityOptions( FALSE );
@@ -1341,13 +1337,13 @@ class Settings extends Core\Base
 					if ( in_array( $value_name, $exclude ) )
 						continue;
 
-					$html .= HTML::tag( 'option', array(
+					$html .= HTML::tag( 'option', [
 						'value'    => $value_name,
 						'selected' => $value == $value_name,
-					), esc_html( $value_title ) );
+					], esc_html( $value_title ) );
 				}
 
-				echo HTML::tag( 'select', array(
+				echo HTML::tag( 'select', [
 					'id'       => $id,
 					'name'     => $name,
 					'class'    => HTML::attrClass( $args['field_class'], '-type-priority' ),
@@ -1355,10 +1351,10 @@ class Settings extends Core\Base
 					'readonly' => $args['readonly'],
 					'dir'      => $args['dir'],
 					'data'     => $args['data'],
-				), $html );
+				], $html );
 
 			break;
-			case 'button' :
+			case 'button':
 
 				self::submitButton(
 					$args['field'],
@@ -1368,9 +1364,9 @@ class Settings extends Core\Base
 				);
 
 			break;
-			case 'file' :
+			case 'file':
 
-				echo HTML::tag( 'input', array(
+				echo HTML::tag( 'input', [
 					'type'     => 'file',
 					'id'       => $id,
 					'name'     => $id,
@@ -1378,39 +1374,39 @@ class Settings extends Core\Base
 					'disabled' => $args['disabled'],
 					'dir'      => $args['dir'],
 					'data'     => $args['data'],
-				) );
+				] );
 
 			break;
-			case 'posttypes' :
+			case 'posttypes':
 
 				if ( ! $args['values'] )
 					$args['values'] = PostType::get( 0,
-						array_merge( array( 'public' => TRUE ), $args['extra'] ) );
+						array_merge( [ 'public' => TRUE ], $args['extra'] ) );
 
 				foreach ( $args['values'] as $value_name => $value_title ) {
 
 					if ( in_array( $value_name, $exclude ) )
 						continue;
 
-					$html = HTML::tag( 'input', array(
+					$html = HTML::tag( 'input', [
 						'type'     => 'checkbox',
 						'id'       => $id.'-'.$value_name,
 						'name'     => $name.'['.$value_name.']',
 						'value'    => '1',
-						'checked'  => in_array( $value_name, ( array ) $value ),
+						'checked'  => in_array( $value_name, (array) $value ),
 						'class'    => HTML::attrClass( $args['field_class'], '-type-posttypes' ),
 						'disabled' => $args['disabled'],
 						'readonly' => $args['readonly'],
 						'dir'      => $args['dir'],
-					) );
+					] );
 
-					echo '<p>'.HTML::tag( 'label', array(
+					echo '<p>'.HTML::tag( 'label', [
 						'for' => $id.'-'.$value_name,
-					), $html.'&nbsp;'.esc_html( $value_title ) ).'</p>';
+					], $html.'&nbsp;'.esc_html( $value_title ) ).'</p>';
 				}
 
 			break;
-			case 'taxonomies' :
+			case 'taxonomies':
 
 				if ( ! $args['values'] )
 					$args['values'] = Taxonomy::get( 0, $args['extra'] );
@@ -1420,30 +1416,30 @@ class Settings extends Core\Base
 					if ( in_array( $value_name, $exclude ) )
 						continue;
 
-					$html = HTML::tag( 'input', array(
+					$html = HTML::tag( 'input', [
 						'type'     => 'checkbox',
 						'id'       => $id.'-'.$value_name,
 						'name'     => $name.'['.$value_name.']',
 						'value'    => '1',
-						'checked'  => in_array( $value_name, ( array ) $value ),
+						'checked'  => in_array( $value_name, (array) $value ),
 						'class'    => HTML::attrClass( $args['field_class'], '-type-taxonomies' ),
 						'disabled' => $args['disabled'],
 						'readonly' => $args['readonly'],
 						'dir'      => $args['dir'],
-					) );
+					] );
 
-					echo '<p>'.HTML::tag( 'label', array(
+					echo '<p>'.HTML::tag( 'label', [
 						'for' => $id.'-'.$value_name,
-					), $html.'&nbsp;'.esc_html( $value_title ) ).'</p>';
+					], $html.'&nbsp;'.esc_html( $value_title ) ).'</p>';
 				}
 
 			break;
-			case 'callback' :
+			case 'callback':
 
 				if ( is_callable( $args['callback'] ) ) {
 
-					call_user_func_array( $args['callback'], array( &$args,
-						compact( 'html', 'value', 'name', 'id', 'exclude' ) ) );
+					call_user_func_array( $args['callback'], [ &$args,
+						compact( 'html', 'value', 'name', 'id', 'exclude' ) ] );
 
 				} else if ( WordPress::isDev() ) {
 
@@ -1451,14 +1447,14 @@ class Settings extends Core\Base
 				}
 
 			break;
-			case 'noaccess' :
+			case 'noaccess':
 
-				echo HTML::tag( 'span', array(
+				echo HTML::tag( 'span', [
 					'class' => '-type-noaccess',
-				), $args['string_noaccess'] );
+				], $args['string_noaccess'] );
 
 			break;
-			case 'custom' :
+			case 'custom':
 
 				if ( ! is_array( $args['values'] ) )
 					echo $args['values'];
@@ -1466,12 +1462,12 @@ class Settings extends Core\Base
 					echo $value;
 
 			break;
-			case 'debug' :
+			case 'debug':
 
 				self::dump( $args['options'] );
 
 			break;
-			default :
+			default:
 
 				echo 'Error: setting type not defind!';
 		}
