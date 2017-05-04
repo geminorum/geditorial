@@ -4,7 +4,7 @@
   var o = {};
 
   o.e = true; // empty
-  o.action = 'geditorial_' + m;
+  o.action = p._base + '_' + m;
   o.box = '#editorial-' + m;
   o.button = '#wp-admin-bar-editorial-drafts a.ab-item';
   o.spinner = '.geditorial-spinner-adminbar';
@@ -32,12 +32,12 @@
     var spinner = $(this.button).find(this.spinner);
 
     $.ajax({
-      url: p._api,
+      url: p._url,
       method: 'POST',
       data: {
         action: o.action,
         what: 'list',
-        nonce: p._nonce
+        nonce: p[m]._nonce
       },
       beforeSend: function(xhr) {
         spinner.addClass('is-active');
