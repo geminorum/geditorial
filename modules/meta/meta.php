@@ -532,8 +532,7 @@ class Meta extends gEditorial\Module
 
 		foreach ( $rows as $field => $icon ) {
 
-			if ( in_array( $field, $fields )
-				&& self::user_can( 'view', $field ) ) {
+			if ( in_array( $field, $fields ) ) {
 
 				if ( $value = $this->get_postmeta( $post_id, $field, '' ) ) {
 
@@ -573,7 +572,7 @@ class Meta extends gEditorial\Module
 		$fields = $this->post_type_fields( $post_type );
 
 		foreach ( [ 'ot', 'st', 'as' ] as $field ) {
-			if ( in_array( $field, $fields ) && self::user_can( 'edit', $field )  ) {
+			if ( in_array( $field, $fields ) ) {
 				$selector = 'geditorial-meta-'.$field;
 				echo '<label class="'.$selector.'">';
 					echo '<span class="title">'.$this->get_string( $field, $post_type ).'</span>';

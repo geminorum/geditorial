@@ -282,8 +282,7 @@ class Series extends gEditorial\Module
 		$meta = ( $counter ? $this->get_postmeta( $post->ID, $term_id, [] ) : [] );
 
 		$field = 'in_series_title';
-		if ( in_array( $field, $fields )
-			&& self::user_can( 'view', $field ) ) {
+		if ( in_array( $field, $fields ) ) {
 
 			$title = $this->get_string( $field, $post->post_type );
 			$html = HTML::tag( 'input', [
@@ -293,7 +292,6 @@ class Series extends gEditorial\Module
 				'value'        => isset( $meta[$field] ) ? $meta[$field] : '',
 				'title'        => $title,
 				'placeholder'  => $title,
-				'readonly'     => ! $this->user_can( 'edit', $field ),
 				'autocomplete' => 'off',
 				'data'         => [
 					'ortho' => 'text',
@@ -306,8 +304,7 @@ class Series extends gEditorial\Module
 		}
 
 		$field = 'in_series_order';
-		if ( in_array( $field, $fields )
-			&& self::user_can( 'view', $field ) ) {
+		if ( in_array( $field, $fields ) ) {
 
 			$title = $this->get_string( $field, $post->post_type );
 			$html = HTML::tag( 'input', [
@@ -317,7 +314,6 @@ class Series extends gEditorial\Module
 				'value'        => isset( $meta[$field] ) ? $meta[$field] : '',
 				'title'        => $title,
 				'placeholder'  => $title,
-				'readonly'     => ! $this->user_can( 'edit', $field ),
 				'autocomplete' => 'off',
 			] );
 
@@ -327,8 +323,7 @@ class Series extends gEditorial\Module
 		}
 
 		$field = 'in_series_desc';
-		if ( in_array( $field, $fields )
-			&& self::user_can( 'view', $field ) ) {
+		if ( in_array( $field, $fields ) ) {
 
 			$title = $this->get_string( $field, $post->post_type );
 			$html = HTML::tag( 'textarea', [
@@ -338,7 +333,6 @@ class Series extends gEditorial\Module
 				'id'          => 'geditorial-series-'.$field.'-'.$counter,
 				'title'       => $title,
 				'placeholder' => $title,
-				'readonly'    => ! $this->user_can( 'edit', $field ),
 				'data'        => [
 					'ortho' => 'html',
 				],

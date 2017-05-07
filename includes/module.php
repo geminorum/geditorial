@@ -941,20 +941,6 @@ class Module extends Base
 		return str_replace( '_', '-', $this->module->name );
 	}
 
-	public function user_can( $action = 'view', $field = '', $post_type = 'post' )
-	{
-		global $geditorial_modules_caps;
-
-		if ( empty( $geditorial_modules_caps )
-			&& isset( $geditorial_modules_caps[$this->module->name] ) )
-				$geditorial_modules_caps[$this->module->name] = apply_filters( 'geditorial_'.$this->module->name.'_caps', [] );
-
-		if ( isset( $geditorial_modules_caps[$this->module->name][$action][$post_type][$field] ) )
-			return current_user_can( $geditorial_modules_caps[$this->module->name][$action][$post_type][$field] );
-
-		return TRUE;
-	}
-
 	protected function insert_default_terms( $constant_key )
 	{
 		if ( ! wp_verify_nonce( $_POST['_wpnonce'], $this->module->group.'-options' ) )

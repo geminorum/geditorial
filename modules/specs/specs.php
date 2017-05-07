@@ -374,16 +374,14 @@ class Specs extends gEditorial\Module
 	public function geditorial_specs_meta_box_item( $order, $fields, $post, $meta = [] )
 	{
 		$field = 'spec_value';
-		if ( in_array( $field, $fields )
-			&& self::user_can( 'view', $field ) ) {
+		if ( in_array( $field, $fields ) ) {
 
 			$title = $this->get_string( $field, $post->post_type );
 			$html = HTML::tag( 'textarea', [
-				'class'        => 'textarea-autosize',
-				'name'         => 'geditorial-specs-spec_value[]',
-				'title'        => $title,
-				'placeholder'  => $title,
-				'readonly'     => ! $this->user_can( 'edit', $field ),
+				'class'       => 'textarea-autosize',
+				'name'        => 'geditorial-specs-spec_value[]',
+				'title'       => $title,
+				'placeholder' => $title,
 			], isset( $meta[$field] ) ? esc_textarea( $meta[$field] ) : '' );
 
 			echo HTML::tag( 'div', [
@@ -392,8 +390,7 @@ class Specs extends gEditorial\Module
 		}
 
 		$field = 'spec_title';
-		if ( in_array( $field, $fields )
-			&& self::user_can( 'view', $field ) ) {
+		if ( in_array( $field, $fields ) ) {
 
 			$title = $this->get_string( $field, $post->post_type );
 			$html = HTML::tag( 'input', [
@@ -402,7 +399,6 @@ class Specs extends gEditorial\Module
 				'value'        => isset( $meta[$field] ) ? $meta[$field] : '',
 				'title'        => $title,
 				'placeholder'  => $title,
-				'readonly'     => ! $this->user_can( 'edit', $field ),
 				'autocomplete' => 'off',
 			] );
 
