@@ -330,6 +330,18 @@ class Module extends Base
 			HTML::desc( $after );
 	}
 
+	protected function settings_supports_option( $constant_key )
+	{
+		return [
+			'field'       => $constant_key.'_supports',
+			'type'        => 'checkbox',
+			'title'       => sprintf( _x( '%s Supports', 'Module: Setting Title', GEDITORIAL_TEXTDOMAIN ), $this->strings['noops'][$constant_key]['singular'] ),
+			'description' => _x( 'Posttype support features', 'Module: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+			'default'     => $this->supports[$constant_key],
+			'values'      => Settings::supportsOptions(),
+		];
+	}
+
 	// get stored post meta by the field
 	public function get_postmeta( $post_id, $field = FALSE, $default = '', $key = NULL )
 	{
@@ -1167,7 +1179,13 @@ class Module extends Base
 
 	public function get_post_type_supports( $constant_key )
 	{
-		return isset( $this->supports[$constant_key] ) ? $this->supports[$constant_key] : [ 'title', 'editor' ];
+		if ( isset( $this->options->settings[$constant_key.'_supports'] ) )
+			return $this->options->settings[$constant_key.'_supports'];
+
+		if ( isset( $this->supports[$constant_key] ) )
+			return $this->supports[$constant_key];
+
+		return [ 'title', 'editor' ];
 	}
 
 	public function get_post_type_icon( $constant_key, $default = 'welcome-write-blog' )

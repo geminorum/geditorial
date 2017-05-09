@@ -133,6 +133,21 @@ class Settings extends Core\Base
 		];
 	}
 
+	public static function supportsOptions()
+	{
+		return [
+			'title'           => _x( 'Title', 'Settings: Option: PostType Support', GEDITORIAL_TEXTDOMAIN ),
+			'editor'          => _x( 'Editor', 'Settings: Option: PostType Support', GEDITORIAL_TEXTDOMAIN ),
+			'excerpt'         => _x( 'Excerpt', 'Settings: Option: PostType Support', GEDITORIAL_TEXTDOMAIN ),
+			'author'          => _x( 'Author', 'Settings: Option: PostType Support', GEDITORIAL_TEXTDOMAIN ),
+			'thumbnail'       => _x( 'Thumbnail', 'Settings: Option: PostType Support', GEDITORIAL_TEXTDOMAIN ),
+			'comments'        => _x( 'Comments', 'Settings: Option: PostType Support', GEDITORIAL_TEXTDOMAIN ),
+			'revisions'       => _x( 'Revisions', 'Settings: Option: PostType Support', GEDITORIAL_TEXTDOMAIN ),
+			'page-attributes' => _x( 'Page Attributes', 'Settings: Option: PostType Support', GEDITORIAL_TEXTDOMAIN ),
+			'date-picker'     => _x( 'gPersianDate: Date Picker', 'Settings: Option: PostType Support', GEDITORIAL_TEXTDOMAIN ),
+		];
+	}
+
 	public static function showOptionNone( $string = NULL )
 	{
 		if ( $string )
