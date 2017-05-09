@@ -280,7 +280,7 @@ class Config extends gEditorial\Module
 					HTML::desc( _x( 'Will check for old options and upgrade, also delete old options', 'Modules: Config', GEDITORIAL_TEXTDOMAIN ), FALSE );
 				echo '</p>';
 
-				if ( User::isSuperAdmin() || self::isDev() ) {
+				if ( User::isSuperAdmin() || WordPress::isDev() ) {
 					echo '<br /><p>';
 						Settings::submitButton( 'delete_all_options',
 							_x( 'Delete All Options', 'Modules: Config: Setting Button', GEDITORIAL_TEXTDOMAIN ), 'delete', TRUE );

@@ -130,7 +130,7 @@ class Base
 	// INTERNAL: used on anything deprecated : only on dev mode
 	protected static function __dev_dep( $note = '', $prefix = 'DEP: ', $offset = 2 )
 	{
-		if ( self::isDev() )
+		if ( WordPress::isDev() )
 			self::__dep( $note, $prefix, $offset );
 	}
 
@@ -183,65 +183,5 @@ class Base
 				$r[$k] = $v;
 
 		return $r;
-	}
-
-	public static function isDebug()
-	{
-		if ( WP_DEBUG && WP_DEBUG_DISPLAY && ! self::isDev() )
-			return TRUE;
-
-		return FALSE;
-	}
-
-	public static function isDev()
-	{
-		if ( defined( 'WP_STAGE' )
-			&& 'development' == constant( 'WP_STAGE' ) )
-				return TRUE;
-
-		return FALSE;
-	}
-
-	public static function isFlush()
-	{
-		if ( isset( $_GET['flush'] ) )
-			return did_action( 'init' ) && current_user_can( 'publish_posts' );
-
-		return FALSE;
-	}
-
-	public static function isAJAX()
-	{
-		return defined( 'DOING_AJAX' ) && DOING_AJAX;
-	}
-
-	public static function isCRON()
-	{
-		return defined( 'DOING_CRON' ) && DOING_CRON;
-	}
-
-	public static function isCLI()
-	{
-		return defined( 'WP_CLI' ) && WP_CLI;
-	}
-
-	public static function isXMLRPC()
-	{
-		return defined( 'XMLRPC_REQUEST' ) && XMLRPC_REQUEST;
-	}
-
-	public static function isREST()
-	{
-		return defined( 'REST_REQUEST' ) && REST_REQUEST;
-	}
-
-	public static function isIFrame()
-	{
-		return defined( 'IFRAME_REQUEST' ) && IFRAME_REQUEST;
-	}
-
-	public static function doNotCache()
-	{
-		defined( 'DONOTCACHEPAGE' ) or define( 'DONOTCACHEPAGE', TRUE );
 	}
 }

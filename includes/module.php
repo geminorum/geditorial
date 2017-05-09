@@ -537,7 +537,7 @@ class Module extends Base
 
 		echo '</form>';
 
-		if ( self::isDev() )
+		if ( WordPress::isDev() )
 			self::dump( $this->options );
 	}
 
