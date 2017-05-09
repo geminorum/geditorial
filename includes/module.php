@@ -330,15 +330,23 @@ class Module extends Base
 			HTML::desc( $after );
 	}
 
-	protected function settings_supports_option( $constant_key )
+	protected function settings_supports_option( $constant_key, $defaults = NULL )
 	{
+		$supports = $this->filters( $constant_key.'_supports', Settings::supportsOptions() );
+
+		if ( is_null( $defaults ) )
+			$defaults = $this->supports[$constant_key];
+
+		else if ( TRUE === $defaults )
+			$defaults = $supports;
+
 		return [
 			'field'       => $constant_key.'_supports',
 			'type'        => 'checkbox',
 			'title'       => sprintf( _x( '%s Supports', 'Module: Setting Title', GEDITORIAL_TEXTDOMAIN ), $this->strings['noops'][$constant_key]['singular'] ),
-			'description' => _x( 'Posttype support features', 'Module: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-			'default'     => $this->supports[$constant_key],
-			'values'      => Settings::supportsOptions(),
+			'description' => _x( 'Posttype support core features', 'Module: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+			'default'     => $defaults,
+			'values'      => $supports,
 		];
 	}
 
