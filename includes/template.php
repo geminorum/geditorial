@@ -34,28 +34,6 @@ class Template extends Core\Base
 		return $parsedown->text( $content );
 	}
 
-	// FIXME: DEPRECATED
-	public static function termDescription( $term, $echo_attr = FALSE )
-	{
-		self::__dev_dep();
-
-		if ( ! $term )
-			return;
-
-		if ( ! $term->description )
-			return;
-
-		// Bootstrap 3
-		$desc = esc_attr( $term->name ).
-			'"  data-toggle="popover" data-trigger="hover" data-content="'.
-			esc_attr( trim( strip_tags( $term->description ) ) );
-
-		if ( ! $echo_attr )
-			return $desc;
-
-		echo ' title="'.$desc.'"';
-	}
-
 	public static function getPostImageSrc( $size = NULL, $post_id = NULL )
 	{
 		if ( ! $post = get_post( $post_id ) )

@@ -227,7 +227,7 @@ class Meta extends gEditorial\MetaBox
 		if ( $ltr )
 			$atts['dir'] = 'ltr';
 
-		else if ( $edit )
+		else
 			$atts['data']['ortho'] = 'html';
 
 		$html = HTML::tag( 'textarea', $atts, esc_textarea( $gEditorial->meta->get_postmeta( $post->ID, $field ) ) );
@@ -320,7 +320,7 @@ class Meta extends gEditorial\MetaBox
 		if ( $ltr )
 			$atts['dir'] = 'ltr';
 
-		else if ( $edit )
+		else
 			$atts['data']['ortho'] = 'html';
 
 		$html .= HTML::tag( 'textarea', $atts, esc_textarea( $gEditorial->meta->get_postmeta( $post->ID, $field ) ) );
