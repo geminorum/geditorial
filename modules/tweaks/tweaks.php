@@ -80,6 +80,11 @@ class Tweaks extends gEditorial\Module
 					'description' => _x( 'Displays the template used for the post.', 'Modules: Tweaks: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 				],
 				[
+					'field'       => 'comment_status',
+					'title'       => _x( 'Comment Status', 'Modules: Tweaks: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Displays only the closed comment status for the post.', 'Modules: Tweaks: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+				],
+				[
 					'field'       => 'category_search',
 					'title'       => _x( 'Category Search', 'Modules: Tweaks: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Replaces the category selector to include searching categories', 'Modules: Tweaks: Setting Description', GEDITORIAL_TEXTDOMAIN ),
@@ -236,6 +241,9 @@ class Tweaks extends gEditorial\Module
 
 		if ( $this->get_setting( 'page_template', FALSE ) )
 			add_action( $this->hook( 'column_attr' ), [ $this, 'column_attr_page_template' ], 50 );
+
+		if ( $this->get_setting( 'comment_status', FALSE ) && post_type_supports( $post_type, 'comments' ) )
+			add_action( $this->hook( 'column_attr' ), [ $this, 'column_attr_comment_status' ], 55 );
 	}
 
 	public function manage_taxonomies_columns( $taxonomies, $post_type )
@@ -451,6 +459,31 @@ class Tweaks extends gEditorial\Module
 
 			echo '</li>';
 		}
+	}
+
+	public function column_attr_comment_status( $post )
+	{
+		if ( $filtered = comments_open( $post ) )
+			return;
+
+		echo '<li class="-row tweaks-page-template">';
+
+			$link = add_query_arg( [ 'p' => $post->ID ], admin_url( 'edit-comments.php' ) );
+
+			echo $this->get_column_icon( $link, 'welcome-comments', _x( 'Comment Status', 'Modules: Tweaks: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
+
+			if ( 'closed' == $post->comment_status )
+				$status = _x( 'Closed', 'Modules: Tweaks: Comment Status', GEDITORIAL_TEXTDOMAIN );
+
+			else if ( ! $filtered )
+				$status = _x( 'Closed for Old Posts', 'Modules: Tweaks: Comment Status', GEDITORIAL_TEXTDOMAIN );
+
+			else
+				$status = $post->comment_status;
+
+			printf( _x( 'Comments are %s', 'Modules: Tweaks: Comment Status', GEDITORIAL_TEXTDOMAIN ), $status );
+
+		echo '</li>';
 	}
 
 	// FIXME: move this to attachments module
