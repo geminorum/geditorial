@@ -8,6 +8,7 @@ use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\WordPress;
+use geminorum\gEditorial\WordPress\PostType;
 
 class Tweaks extends gEditorial\Module
 {
@@ -52,7 +53,8 @@ class Tweaks extends gEditorial\Module
 	protected function get_global_settings()
 	{
 		return [
-			'posttypes_option' => 'posttypes_option',
+			'posttypes_option'  => 'posttypes_option',
+			'taxonomies_option' => 'taxonomies_option',
 			'_general' => [
 				[
 					'field'       => 'group_attributes',
@@ -63,6 +65,13 @@ class Tweaks extends gEditorial\Module
 					'field'       => 'column_id',
 					'title'       => _x( 'ID Column', 'Modules: Tweaks: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Displays ID Column on the post list table.', 'Modules: Tweaks: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+				],
+				[
+					'field'       => 'column_thumb',
+					'type'        => 'posttypes',
+					'title'       => _x( 'Thumbnail Column', 'Modules: Tweaks: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Displays Thumbnail Column on the post list table.', 'Modules: Tweaks: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'values'      => $this->get_posttypes_support_thumbnail(),
 				],
 				[
 					'field'       => 'attachment_count',
@@ -110,7 +119,6 @@ class Tweaks extends gEditorial\Module
 					'description' => _x( 'Group selected taxonomies on selected post type edit pages', 'Modules: Tweaks: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 				],
 			],
-			'taxonomies_option' => 'taxonomies_option',
 		];
 	}
 
@@ -122,11 +130,34 @@ class Tweaks extends gEditorial\Module
 				'rows_column_title'           => _x( 'Extra', 'Modules: Tweaks: Column Title', GEDITORIAL_TEXTDOMAIN ),
 				'atts_column_title'           => _x( 'Attributes', 'Modules: Tweaks: Column Title', GEDITORIAL_TEXTDOMAIN ),
 				'id_column_title'             => _x( 'ID', 'Modules: Tweaks: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'thumb_column_title'          => _x( 'Featured', 'Modules: Tweaks: Column Title', GEDITORIAL_TEXTDOMAIN ),
 				'user_column_title'           => _x( 'User', 'Modules: Tweaks: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				'meta_box_search_title'       => _x( 'Type to filter by', 'Modules: Tweaks: Meta Box Search Title', GEDITORIAL_TEXTDOMAIN ),
-				'meta_box_search_placeholder' => _x( 'Search &hellip;', 'Modules: Tweaks: Meta Box Search Placeholder', GEDITORIAL_TEXTDOMAIN ),
+			],
+			'js' => [
+				'search_title'       => _x( 'Type to filter by', 'Modules: Tweaks: Meta Box Search Title', GEDITORIAL_TEXTDOMAIN ),
+				'search_placeholder' => _x( 'Search &hellip;', 'Modules: Tweaks: Meta Box Search Placeholder', GEDITORIAL_TEXTDOMAIN ),
 			],
 		];
+	}
+
+	private function get_posttypes_support_thumbnail()
+	{
+		$supported = get_post_types_by_support( 'thumbnail' );
+		$posttypes = [];
+		$excludes  = [
+			'attachment:audio',
+			'attachment:video',
+			'publication',
+			'issue',
+			'contest',
+		];
+
+		foreach ( PostType::get() as $post_type => $label )
+			if ( in_array( $post_type, $supported )
+				&& ! in_array( $post_type, $excludes ) )
+					$posttypes[$post_type] = $label;
+
+		return $posttypes;
 	}
 
 	public function init()
@@ -179,11 +210,8 @@ class Tweaks extends gEditorial\Module
 
 						$this->enqueue_asset_js( [
 							'settings' => $this->options->settings,
-							'strings'  => [
-								'search_title'       => $this->get_string( 'meta_box_search_title', $screen->post_type, 'misc' ),
-								'search_placeholder' => $this->get_string( 'meta_box_search_placeholder', $screen->post_type, 'misc' ),
-							],
-						], 'tweaks.post' );
+							'strings'  => $this->strings['js'],
+						], $screen );
 
 						if ( $this->get_setting( 'checklist_tree', FALSE ) )
 							add_filter( 'wp_terms_checklist_args', function( $args ){
@@ -225,6 +253,9 @@ class Tweaks extends gEditorial\Module
 
 		// add_filter( 'manage_'.$post_type.'_posts_columns', [ $this, 'manage_posts_columns_late' ], 999, 1 );
 		// add_filter( 'list_table_primary_column', [ $this, 'list_table_primary_column' ], 10, 2 );
+
+		if ( in_array( $post_type, $this->get_setting( 'column_thumb', [] ) ) )
+			add_thickbox();
 
 		// INTERNAL HOOKS
 		if ( $this->get_setting( 'group_taxonomies', FALSE ) )
@@ -269,6 +300,9 @@ class Tweaks extends gEditorial\Module
 		$atts = has_action( $this->hook( 'column_attr' ) ) ? $this->get_column_title( 'atts', $post_type ) : FALSE;
 
 		foreach ( $columns as $key => $value ) {
+
+			if ( 'title' == $key && in_array( $post_type, $this->get_setting( 'column_thumb', [] ) ) )
+				$new[$this->classs( 'thumb' )] = $this->get_column_title( 'thumb', $post_type );
 
 			if ( ( 'comments' == $key && ! $added )
 				|| ( 'date' == $key && ! $added ) ) {
@@ -351,6 +385,11 @@ class Tweaks extends gEditorial\Module
 				echo '<div class="geditorial-admin-wrap-column -tweaks -atts"><ul>';
 					do_action( $this->hook( 'column_attr' ), $post );
 				echo '</ul></div>';
+
+			break;
+			case $this->classs( 'thumb' ):
+
+				$this->column_thumb( $post_id );
 
 			break;
 			case 'geditorial-tweaks-id':
