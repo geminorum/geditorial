@@ -274,6 +274,7 @@ class Template extends Core\Base
 			'id'      => NULL,
 			'default' => FALSE,
 			'filter'  => FALSE,
+			'trim'    => FALSE, // or number of chars
 			'before'  => '',
 			'after'   => '',
 		], $atts );
@@ -297,7 +298,7 @@ class Template extends Core\Base
 				$meta = call_user_func( $args['filter'], $meta );
 
 			if ( $meta )
-				return $args['before'].$meta.$args['after'];
+				return $args['before'].( $args['trim'] ? Helper::trimChars( $meta, $args['trim'] ) : $meta ).$args['after'];
 		}
 
 		return $args['default'];
