@@ -2128,9 +2128,9 @@ SQL;
 	protected function limit_sub( $sub = NULL, $default = 25, $key = 'limit', $option = 'per_page' )
 	{
 		if ( is_null( $sub ) )
-			$sub = $this->module->name;
+			$sub = $this->key;
 
-		$per_page = (int) get_user_option( $sub.'_'.$option );
+		$per_page = (int) get_user_option( $this->base.'_'.$sub.'_'.$option );
 
 		if ( empty( $per_page ) || $per_page < 1 )
 			$per_page = $default;
@@ -2138,15 +2138,15 @@ SQL;
 		return intval( self::req( $key, $per_page ) );
 	}
 
-	public function screen_option( $sub = NULL, $option = 'per_page', $default = 25 )
+	public function screen_option( $sub = NULL, $option = 'per_page', $default = 25, $label = NULL )
 	{
 		if ( is_null( $sub ) )
-			$sub = $this->module->name;
+			$sub = $this->key;
 
 		add_screen_option( $option, [
 			'default' => $default,
-			'option'  => $sub.'_'.$option,
-			'label'   => NULL, // default
+			'option'  => $this->base.'_'.$sub.'_'.$option,
+			'label'   => $label,
 		] );
 	}
 }

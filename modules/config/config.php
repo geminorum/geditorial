@@ -7,6 +7,7 @@ use geminorum\gEditorial\Ajax;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Core\HTML;
+use geminorum\gEditorial\Core\Text;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\Database;
 use geminorum\gEditorial\WordPress\User;
@@ -36,8 +37,10 @@ class Config extends gEditorial\Module
 
 	public function setup( $partials = [] )
 	{
-		if ( is_admin() )
+		if ( is_admin() ) {
 			$this->action( 'admin_menu' );
+			$this->filter( 'set-screen-option', 3 );
+		}
 
 		if ( WordPress::isAJAX() )
 			$this->_hook_ajax();
@@ -102,6 +105,12 @@ class Config extends gEditorial\Module
 					add_action( 'load-'.$hook_module, [ $this, 'admin_settings_load' ] );
 			}
 		}
+	}
+
+	// lets our screen options passing through
+	public function set_screen_option( $false, $option, $value )
+	{
+		return Text::has( $option, $this->base ) ? $value : $false;
 	}
 
 	public function admin_reports_page()
