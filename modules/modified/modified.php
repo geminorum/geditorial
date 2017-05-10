@@ -4,6 +4,8 @@ defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Settings;
+use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\Core\Date;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Text;
@@ -70,6 +72,14 @@ class Modified extends gEditorial\Module
 		];
 	}
 
+	protected function get_global_constants()
+	{
+		return [
+			'post_modified_shortcode' => 'post-modified',
+			'site_modified_shortcode' => 'site-modified',
+		];
+	}
+
 	public function init()
 	{
 		parent::init();
@@ -91,6 +101,9 @@ class Modified extends gEditorial\Module
 
 			$this->filter( 'wp_nav_menu_items', 2 );
 		}
+
+		$this->register_shortcode( 'post_modified_shortcode' );
+		$this->register_shortcode( 'site_modified_shortcode' );
 	}
 
 	public function wp_dashboard_setup()
@@ -174,10 +187,43 @@ class Modified extends gEditorial\Module
 		}
 	}
 
-	public function post_modified( $format = NULL, $posttypes = NULL )
+	// `Posted on 22nd May 2014 This post was last updated on 23rd April 2016`
+	public function post_modified_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
-		// TODO: add last modified shortcode
-		// `Posted on 22nd May 2014 This post was last updated on 23rd April 2016`
+		$args = shortcode_atts( [
+			'id'       => get_queried_object_id(),
+			'format'   => _x( 'l, F j, Y', 'Modules: Modified: Defaults: Last Modified', GEDITORIAL_TEXTDOMAIN ),
+			'title'    => 'timeago',
+			'round'    => FALSE,
+			'link'     => FALSE,
+			'context'  => NULL,
+			'wrap'     => TRUE,
+			'before'   => '',
+			'after'    => '',
+		], $atts, $tag );
+
+		if ( FALSE === $args['context'] )
+			return NULL;
+
+		if ( ! $post = get_post( $args['id'] ) )
+			return NULL;
+
+		$gmt   = strtotime( $post->post_modified_gmt );
+		$local = strtotime( $post->post_modified );
+
+		if ( 'timeago' == $args['title'] )
+			$title = Helper::enqueueTimeAgo()
+				? FALSE
+				: Helper::humanTimeDiffRound( $local, $args['round'] );
+		else
+			$title = esc_attr( $args['title'] );
+
+		$html = Date::htmlDateTime( $local, $gmt, $args['format'], $title );
+
+		if ( $args['link'] )
+			$html = HTML::link( $html, $args['link'] );
+
+		return ShortCode::wrap( $html, 'post-modified', $args, FALSE );
 	}
 
 	public function get_post_modified( $format = NULL, $post = NULL )
@@ -214,10 +260,39 @@ class Modified extends gEditorial\Module
 		return preg_replace( '%{SITE_LAST_MODIFIED}%', $this->site_modified, $items );
 	}
 
-	public function site_modified( $format = NULL, $posttypes = NULL )
+	public function site_modified_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
-		// TODO: add last modified shortcode
-		// This website was last updated:
+		$args = shortcode_atts( [
+			'format'   => _x( 'l, F j, Y', 'Modules: Modified: Defaults: Last Modified', GEDITORIAL_TEXTDOMAIN ),
+			'title'    => 'timeago',
+			'round'    => FALSE,
+			'link'     => FALSE,
+			'context'  => NULL,
+			'wrap'     => TRUE,
+			'before'   => '',
+			'after'    => '',
+		], $atts, $tag );
+
+		if ( FALSE === $args['context'] )
+			return NULL;
+
+		$site  = $this->get_site_modified( TRUE );
+		$gmt   = strtotime( $site[1] );
+		$local = strtotime( $site[0] );
+
+		if ( 'timeago' == $args['title'] )
+			$title = Helper::enqueueTimeAgo()
+				? FALSE
+				: Helper::humanTimeDiffRound( $local, $args['round'] );
+		else
+			$title = esc_attr( $args['title'] );
+
+		$html = Date::htmlDateTime( $local, $gmt, $args['format'], $title );
+
+		if ( $args['link'] )
+			$html = HTML::link( $html, $args['link'] );
+
+		return ShortCode::wrap( $html, 'site-modified', $args, FALSE );
 	}
 
 	public function get_site_modified( $format = NULL, $post_types = NULL )
@@ -239,28 +314,33 @@ class Modified extends gEditorial\Module
 		if ( count( $post_types ) ) {
 
 			$query = "
-				SELECT post_modified
+				SELECT post_modified, post_modified_gmt
 				FROM {$wpdb->posts}
 				WHERE post_status = 'publish'
 				AND post_type IN ( '".join( "', '", esc_sql( $post_types ) )."' )
-				ORDER BY post_modified DESC
+				ORDER BY post_modified_gmt DESC
+				LIMIT 1
 			";
 
 		} else {
 
 			$query = "
-				SELECT post_modified
+				SELECT post_modified, post_modified_gmt
 				FROM {$wpdb->posts}
 				WHERE post_status = 'publish'
-				ORDER BY post_modified DESC
+				ORDER BY post_modified_gmt DESC
+				LIMIT 1
 			";
 		}
 
-		$modified = $wpdb->get_var( $query );
+		$results = $wpdb->get_results( $query );
 
 		if ( FALSE === $format )
-			return $modified;
+			return $results[0]->post_modified;
 
-		return date_i18n( $format, strtotime( $modified ), FALSE );
+		if ( TRUE === $format )
+			return [ $results[0]->post_modified, $results[0]->post_modified_gmt ];
+
+		return date_i18n( $format, strtotime( $results[0]->post_modified ), FALSE );
 	}
 }
