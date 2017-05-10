@@ -338,7 +338,7 @@ class Module extends Base
 			$defaults = $this->supports[$constant_key];
 
 		else if ( TRUE === $defaults )
-			$defaults = $supports;
+			$defaults = array_keys( $supports );
 
 		return [
 			'field'       => $constant_key.'_supports',
@@ -736,23 +736,18 @@ class Module extends Base
 				$args = $this->get_settings_field( $setting );
 
 				// disabled select
-				if ( isset( $args['values'] ) && FALSE === $args['values'] )
+				if ( array_key_exists( 'values', $args ) && FALSE === $args['values'] )
 					continue;
 
-				if ( ! isset( $args['type'] )
-					|| 'enabled' == $args['type'] ) {
-
+				if ( ! array_key_exists( 'type', $args ) || 'enabled' == $args['type'] )
 					$options['settings'][$setting] = (bool) $option;
 
 				// multiple checkboxes
-				} else if ( 'checkbox' == $args['type'] ) {
+				else if ( is_array( $option ) )
+					$options['settings'][$setting] = array_keys( $option );
 
-					if ( is_array( $option ) )
-						$options['settings'][$setting] = array_keys( $option );
-
-				} else {
+				else
 					$options['settings'][$setting] = trim( stripslashes( $option ) );
-				}
 			}
 
 			if ( ! count( $options['settings'] ) )
