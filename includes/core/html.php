@@ -505,13 +505,14 @@ class HTML extends Base
 	public static function tableNavigation( $pagination = array() )
 	{
 		$args = self::atts( array(
+			'actions'  => array(),
 			'before'   => array(),
 			'after'    => array(),
 			'total'    => 0,
 			'pages'    => 0,
 			'limit'    => self::limit(),
 			'paged'    => self::paged(),
-			'order'    => self::order( 'asc' ),
+			'order'    => self::order( 'ASC' ),
 			'all'      => FALSE,
 			'next'     => FALSE,
 			'previous' => FALSE,
@@ -519,6 +520,7 @@ class HTML extends Base
 		), $pagination );
 
 		$icons = array(
+			'action'   => self::getDashicon( 'update' ),
 			'filter'   => self::getDashicon( 'filter' ),
 			'last'     => self::getDashicon( $args['rtl'] ? 'controls-skipback' : 'controls-skipforward' ),
 			'first'    => self::getDashicon( $args['rtl'] ? 'controls-skipforward' : 'controls-skipback' ),
@@ -530,6 +532,18 @@ class HTML extends Base
 
 		echo '<div class="base-table-navigation">';
 
+			if ( count( $args['actions'] ) ) {
+				echo '<span class="-before">';
+				echo self::dropdown( $args['actions'], array(
+					'name'       => 'table_action',
+					'selected'   => self::req( 'table_action', 'none' ),
+					'none_value' => 'none',
+					'none_title' => '&mdash;',
+				) );
+				echo '</span>&nbsp;';
+				echo '<button type="submit" class="button -action" />'.$icons['action'].'</button>&nbsp;&nbsp;';
+			}
+
 			foreach ( (array) $args['before'] as $before )
 				echo '<span class="-before">'.$before.'</span>&nbsp;';
 
@@ -539,7 +553,7 @@ class HTML extends Base
 
 			echo self::tag( 'a', array(
 				'href'  => add_query_arg( array(
-					'order' => 'asc' == $args['order'] ? 'desc' : 'asc',
+					'order' => ( 'ASC' === $args['order'] ) ? 'desc' : 'asc',
 					'limit' => $args['limit'],
 				) ),
 				'class' => '-order -link button',
