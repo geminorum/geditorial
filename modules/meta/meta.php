@@ -559,7 +559,7 @@ class Meta extends gEditorial\Module
 			echo '</li>';
 		}
 
-		if ( 'excerpt' == $mode ) {
+		if ( 'excerpt' == $mode && in_array( 'le', $fields ) ) {
 			$icon = $this->get_column_icon( FALSE, 'editor-paragraph', $this->get_string( 'le', $post->post_type, 'titles', 'lead' ) );
 			ModuleTemplate::metaLead( [
 				'before' => '<li class="-row meta-lead">'.$icon,
