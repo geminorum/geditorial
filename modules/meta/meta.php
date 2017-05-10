@@ -515,7 +515,7 @@ class Meta extends gEditorial\Module
 		if ( 'geditorial-meta' != $column_name )
 			return;
 
-		global $post;
+		global $post, $mode;
 
 		$fields = $this->post_type_fields( $post->post_type );
 		$author = $this->get_setting( 'author_row', FALSE )
@@ -557,6 +557,16 @@ class Meta extends gEditorial\Module
 				echo $this->get_column_icon( FALSE, $rows['as'], $this->get_string( 'author', $post->post_type, 'titles', 'author' ) );
 				echo $author;
 			echo '</li>';
+		}
+
+		if ( 'excerpt' == $mode ) {
+			$icon = $this->get_column_icon( FALSE, 'editor-paragraph', $this->get_string( 'le', $post->post_type, 'titles', 'lead' ) );
+			ModuleTemplate::metaLead( [
+				'before' => '<li class="-row meta-lead">'.$icon,
+				'after'  => '</li>',
+				'filter' => FALSE,
+				'trim'   => 450,
+			] );
 		}
 
 		do_action( $this->hook( 'column_row' ), get_post( $post_id ) );
