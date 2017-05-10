@@ -1423,7 +1423,7 @@ class Settings extends Core\Base
 
 					echo '<p>'.HTML::tag( 'label', [
 						'for' => $id.'-'.$value_name,
-					], $html.'&nbsp;'.esc_html( $value_title ) ).'</p>';
+					], $html.'&nbsp;'.esc_html( $value_title ) ).' &mdash; <code>'.$value_name.'</code>'.'</p>';
 				}
 
 			break;
@@ -1451,7 +1451,7 @@ class Settings extends Core\Base
 
 					echo '<p>'.HTML::tag( 'label', [
 						'for' => $id.'-'.$value_name,
-					], $html.'&nbsp;'.esc_html( $value_title ) ).'</p>';
+					], $html.'&nbsp;'.esc_html( $value_title ) ).' &mdash; <code>'.$value_name.'</code>'.'</p>';
 				}
 
 			break;
