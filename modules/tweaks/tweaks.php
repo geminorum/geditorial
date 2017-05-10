@@ -514,7 +514,7 @@ class Tweaks extends gEditorial\Module
 			if ( 'closed' == $post->comment_status )
 				$status = _x( 'Closed', 'Modules: Tweaks: Comment Status', GEDITORIAL_TEXTDOMAIN );
 
-			else if ( ! $filtered )
+			else if ( 'open' == $post->comment_status && ! $filtered )
 				$status = _x( 'Closed for Old Posts', 'Modules: Tweaks: Comment Status', GEDITORIAL_TEXTDOMAIN );
 
 			else
