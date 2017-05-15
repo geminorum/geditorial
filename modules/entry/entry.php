@@ -342,6 +342,7 @@ class Entry extends gEditorial\Module
 		parent::content_after( $content, 'entry_cpt' );
 	}
 
+	// FIXME: pattern must ignore within links
 	public function the_content( $content )
 	{
 		if ( $this->is_content_insert( 'entry_cpt' ) ) {
@@ -351,8 +352,8 @@ class Entry extends gEditorial\Module
 
 			foreach ( $this->sections as $section )
 				$content = preg_replace(
-					"|(?!<[^<>]*?)(?<![?./&])\b($section->name)\b(?!:)(?![^<>]*?>)|imsU",
-					"<a href=\"$section->link\" class=\"-entry-section\">$1</a>",
+					'/(?!<[^<>]*?)(?<![?.\/&])\b('.$section->name.')\b(?!:)(?![^<>]*?>)/imsu',
+					'<a href="'.$section->link.'" class="-entry-section">$1</a>',
 				$content );
 		}
 
