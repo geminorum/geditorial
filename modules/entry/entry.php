@@ -11,10 +11,6 @@ use geminorum\gEditorial\WordPress\Taxonomy;
 class Entry extends gEditorial\Module
 {
 
-	protected $partials = [ 'helper' ];
-
-	private $terms = NULL;
-
 	public static function module()
 	{
 		return [
@@ -35,9 +31,20 @@ class Entry extends gEditorial\Module
 				'editor_button',
 				'comment_status',
 				'autolink_terms',
-				// 'rewrite_prefix', // FIXME: working but needs prem link rewrites
 				'before_content',
 				'after_content',
+			],
+			'_supports' => [
+				$this->settings_supports_option( 'entry_cpt', [
+					'title',
+					'editor',
+					'excerpt',
+					'author',
+					'thumbnail',
+					'comments',
+					'revisions',
+					'date-picker', // gPersianDate
+				] ),
 			],
 		];
 	}
@@ -47,7 +54,6 @@ class Entry extends gEditorial\Module
 		return [
 			'entry_cpt'         => 'entry',
 			'entry_cpt_archive' => 'entries',
-			'rewrite_prefix'    => 'entry', // wiki
 			'section_tax'       => 'entry_section',
 			'section_tax_slug'  => 'entry-section',
 			'section_shortcode' => 'entry-section',
@@ -56,18 +62,24 @@ class Entry extends gEditorial\Module
 
 	protected function get_global_strings()
 	{
-		return [
-			'misc' => [
-				'featured'             => _x( 'Cover Image', 'Modules: Entry: Entry CPT: Featured', GEDITORIAL_TEXTDOMAIN ),
-				'meta_box_title'       => _x( 'Entry', 'Modules: Entry: Meta Box Title', GEDITORIAL_TEXTDOMAIN ),
-				'section_column_title' => _x( 'Section', 'Modules: Entry: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				'order_column_title'   => _x( 'O', 'Modules: Entry: Column Title', GEDITORIAL_TEXTDOMAIN ),
-			],
+		$strings = [
 			'noops' => [
 				'entry_cpt'   => _nx_noop( 'Entry', 'Entries', 'Modules: Entry: Noop', GEDITORIAL_TEXTDOMAIN ),
 				'section_tax' => _nx_noop( 'Section', 'Sections', 'Modules: Entry: Noop', GEDITORIAL_TEXTDOMAIN ),
 			],
 		];
+
+		if ( ! is_admin() )
+			return $strings;
+
+		$strings['misc'] = [
+			'featured'             => _x( 'Cover Image', 'Modules: Entry: Entry CPT: Featured', GEDITORIAL_TEXTDOMAIN ),
+			'meta_box_title'       => _x( 'Entry', 'Modules: Entry: Meta Box Title', GEDITORIAL_TEXTDOMAIN ),
+			'section_column_title' => _x( 'Section', 'Modules: Entry: Column Title', GEDITORIAL_TEXTDOMAIN ),
+			'order_column_title'   => _x( 'O', 'Modules: Entry: Column Title', GEDITORIAL_TEXTDOMAIN ),
+		];
+
+		return $strings;
 	}
 
 	protected function get_global_supports()
@@ -109,11 +121,7 @@ class Entry extends gEditorial\Module
 			'show_in_nav_menus'  => TRUE,
 		], 'entry_cpt' );
 
-		// add_action( 'generate_rewrite_rules', [ $this, 'generate_rewrite_rules' ) );
-
-		if ( is_admin() ) {
-
-		} else {
+		if ( ! is_admin() ) {
 
 			if ( $this->get_setting( 'before_content', FALSE ) )
 				add_action( 'gnetwork_themes_content_before', [ $this, 'content_before' ], 100 );
@@ -272,7 +280,7 @@ class Entry extends gEditorial\Module
 				$new_columns[$key] = $value;
 
 			} else if ( in_array( $key, [ 'author', 'comments' ] ) ) {
-				continue; // he he!
+				continue;
 
 			} else {
 				$new_columns[$key] = $value;
@@ -315,22 +323,8 @@ class Entry extends gEditorial\Module
 		return array_merge( $messages, [ $this->constant( 'entry_cpt' ) => $this->get_bulk_post_updated_messages( 'entry_cpt', $counts ) ] );
 	}
 
-	public function generate_rewrite_rules( $wp_rewrite )
 	public function meta_box_cb_section_tax( $post, $box )
 	{
-		$prefix = $this->get_setting( 'rewrite_prefix', FALSE );
-
-		if ( ! $prefix )
-			$prefix = $this->constant( 'rewrite_prefix' );
-
-		$new_rules = [
-			$prefix.'/(.*)/(.*)' => 'index.php'
-				.'?post_type='.$this->constant( 'entry_cpt' )
-				.'&'.$this->constant( 'section_tax' ).'='.$wp_rewrite->preg_index( 1 )
-				.'&'.$this->constant( 'entry_cpt' ).'='.$wp_rewrite->preg_index( 2 ),
-		];
-
-		$wp_rewrite->rules = $new_rules + $wp_rewrite->rules;
 		MetaBox::checklistTerms( $post, $box );
 	}
 
