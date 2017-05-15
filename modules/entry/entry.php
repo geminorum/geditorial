@@ -3,6 +3,7 @@
 defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
+use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\WordPress\Taxonomy;
@@ -106,7 +107,6 @@ class Entry extends gEditorial\Module
 			'hierarchical'       => TRUE,
 			'show_in_quick_edit' => TRUE,
 			'show_in_nav_menus'  => TRUE,
-			'meta_box_cb'        => NULL, // default meta box
 		], 'entry_cpt' );
 
 		// add_action( 'generate_rewrite_rules', [ $this, 'generate_rewrite_rules' ) );
@@ -316,6 +316,7 @@ class Entry extends gEditorial\Module
 	}
 
 	public function generate_rewrite_rules( $wp_rewrite )
+	public function meta_box_cb_section_tax( $post, $box )
 	{
 		$prefix = $this->get_setting( 'rewrite_prefix', FALSE );
 
@@ -330,6 +331,7 @@ class Entry extends gEditorial\Module
 		];
 
 		$wp_rewrite->rules = $new_rules + $wp_rewrite->rules;
+		MetaBox::checklistTerms( $post, $box );
 	}
 
 	public function content_before( $content, $posttypes = NULL )
