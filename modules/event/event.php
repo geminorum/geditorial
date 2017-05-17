@@ -399,12 +399,12 @@ class Event extends gEditorial\Module
 
 	public function post_updated_messages( $messages )
 	{
-		return array_merge( $messages, [ $this->constant( 'event_cpt' ) => $this->get_post_updated_messages( 'event_cpt' ) ] );
+		return array_merge( $messages, $this->get_post_updated_messages( 'event_cpt' ) );
 	}
 
 	public function bulk_post_updated_messages( $messages, $counts )
 	{
-		return array_merge( $messages, [ $this->constant( 'event_cpt' ) => $this->get_bulk_post_updated_messages( 'event_cpt', $counts ) ] );
+		return array_merge( $messages, $this->get_bulk_post_updated_messages( 'event_cpt', $counts ) );
 	}
 
 	public function do_meta_boxes( $post, $box )

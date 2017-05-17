@@ -327,12 +327,12 @@ class Today extends gEditorial\Module
 
 	public function post_updated_messages( $messages )
 	{
-		return array_merge( $messages, [ $this->constant( 'day_cpt' ) => $this->get_post_updated_messages( 'day_cpt' ) ] );
+		return array_merge( $messages, $this->get_post_updated_messages( 'day_cpt' ) );
 	}
 
 	public function bulk_post_updated_messages( $messages, $counts )
 	{
-		return array_merge( $messages, [ $this->constant( 'day_cpt' ) => $this->get_bulk_post_updated_messages( 'day_cpt', $counts ) ] );
+		return array_merge( $messages, $this->get_bulk_post_updated_messages( 'day_cpt', $counts ) );
 	}
 
 	// CAUTION: the ordering is crucial

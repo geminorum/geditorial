@@ -529,12 +529,12 @@ class Book extends gEditorial\Module
 
 	public function post_updated_messages( $messages )
 	{
-		return array_merge( $messages, [ $this->constant( 'publication_cpt' ) => $this->get_post_updated_messages( 'publication_cpt' ) ] );
+		return array_merge( $messages, $this->get_post_updated_messages( 'publication_cpt' ) );
 	}
 
 	public function bulk_post_updated_messages( $messages, $counts )
 	{
-		return array_merge( $messages, [ $this->constant( 'publication_cpt' ) => $this->get_bulk_post_updated_messages( 'publication_cpt', $counts ) ] );
+		return array_merge( $messages, $this->get_bulk_post_updated_messages( 'publication_cpt', $counts ) );
 	}
 
 	public function insert_content( $content, $posttypes = NULL )

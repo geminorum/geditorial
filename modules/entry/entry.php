@@ -315,12 +315,12 @@ class Entry extends gEditorial\Module
 
 	public function post_updated_messages( $messages )
 	{
-		return array_merge( $messages, [ $this->constant( 'entry_cpt' ) => $this->get_post_updated_messages( 'entry_cpt' ) ] );
+		return array_merge( $messages, $this->get_post_updated_messages( 'entry_cpt' ) );
 	}
 
 	public function bulk_post_updated_messages( $messages, $counts )
 	{
-		return array_merge( $messages, [ $this->constant( 'entry_cpt' ) => $this->get_bulk_post_updated_messages( 'entry_cpt', $counts ) ] );
+		return array_merge( $messages, $this->get_bulk_post_updated_messages( 'entry_cpt', $counts ) );
 	}
 
 	public function meta_box_cb_section_tax( $post, $box )

@@ -1311,12 +1311,12 @@ class Module extends Base
 
 	protected function get_post_updated_messages( $constant_key )
 	{
-		return Helper::generatePostTypeMessages( $this->get_noop( $constant_key ) );
+		return [ $this->constant( $constant_key ) => Helper::generatePostTypeMessages( $this->get_noop( $constant_key ) ) ];
 	}
 
 	protected function get_bulk_post_updated_messages( $constant_key, $bulk_counts )
 	{
-		return Helper::generateBulkPostTypeMessages( $this->get_noop( $constant_key ), $bulk_counts );
+		return [ $this->constant( $constant_key ) => Helper::generateBulkPostTypeMessages( $this->get_noop( $constant_key ), $bulk_counts ) ];
 	}
 
 	public function get_image_sizes( $post_type )

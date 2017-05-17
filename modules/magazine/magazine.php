@@ -757,12 +757,12 @@ class Magazine extends gEditorial\Module
 
 	public function post_updated_messages( $messages )
 	{
-		return array_merge( $messages, [ $this->constant( 'issue_cpt' ) => $this->get_post_updated_messages( 'issue_cpt' ) ] );
+		return array_merge( $messages, $this->get_post_updated_messages( 'issue_cpt' ) );
 	}
 
 	public function bulk_post_updated_messages( $messages, $counts )
 	{
-		return array_merge( $messages, [ $this->constant( 'issue_cpt' ) => $this->get_bulk_post_updated_messages( 'issue_cpt', $counts ) ] );
+		return array_merge( $messages, $this->get_bulk_post_updated_messages( 'issue_cpt', $counts ) );
 	}
 
 	public function issue_shortcode( $atts = [], $content = NULL, $tag = '' )

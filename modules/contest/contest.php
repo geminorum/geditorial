@@ -441,22 +441,22 @@ class Contest extends gEditorial\Module
 
 	public function post_updated_messages( $messages )
 	{
-		return array_merge( $messages, [ $this->constant( 'contest_cpt' ) => $this->get_post_updated_messages( 'contest_cpt' ) ] );
+		return array_merge( $messages, $this->get_post_updated_messages( 'contest_cpt' ) );
 	}
 
 	public function bulk_post_updated_messages( $messages, $counts )
 	{
-		return array_merge( $messages, [ $this->constant( 'contest_cpt' ) => $this->get_bulk_post_updated_messages( 'contest_cpt', $counts ) ] );
+		return array_merge( $messages, $this->get_bulk_post_updated_messages( 'contest_cpt', $counts ) );
 	}
 
 	public function post_updated_messages_supported( $messages )
 	{
-		return array_merge( $messages, [ $this->constant( 'apply_cpt' ) => $this->get_post_updated_messages( 'apply_cpt' ) ] );
+		return array_merge( $messages, $this->get_post_updated_messages( 'apply_cpt' ) );
 	}
 
 	public function bulk_post_updated_messages_supported( $messages, $counts )
 	{
-		return array_merge( $messages, [ $this->constant( 'apply_cpt' ) => $this->get_bulk_post_updated_messages( 'apply_cpt', $counts ) ] );
+		return array_merge( $messages, $this->get_bulk_post_updated_messages( 'apply_cpt', $counts ) );
 	}
 
 
