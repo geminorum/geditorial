@@ -17,9 +17,6 @@ use geminorum\gEditorial\Templates\Magazine as ModuleTemplate;
 class Magazine extends gEditorial\Module
 {
 
-	public $meta_key     = '_ge_magazine';
-	protected $root_key  = 'GEDITORIAL_MAGAZINE_ROOT_BLOG';
-
 	protected $partials = [ 'templates' ];
 
 	protected $caps = [

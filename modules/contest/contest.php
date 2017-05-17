@@ -724,7 +724,7 @@ class Contest extends gEditorial\Module
 				_x( 'Check Terms', 'Modules: Contest: Setting Button', GEDITORIAL_TEXTDOMAIN ), TRUE );
 
 			Settings::submitButton( 'contest_post_create',
-				_x( 'Create Contest Posts', 'Modules: Contest: Setting Button', GEDITORIAL_TEXTDOMAIN ));
+				_x( 'Create Contest Posts', 'Modules: Contest: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
 
 			Settings::submitButton( 'contest_post_connect',
 				_x( 'Re-Connect Posts', 'Modules: Contest: Setting Button', GEDITORIAL_TEXTDOMAIN ) );

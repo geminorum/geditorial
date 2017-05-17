@@ -35,7 +35,8 @@
     "lawondyss/moment-php": "dev-master",
     "amirhabibzadeh/intl-carbon": "dev-master",
     "addwiki/mediawiki-api": "^0.5.1",
-    "nesbot/carbon": "^1.21"
+    "nesbot/carbon": "^1.21",
+    "endroid/simple-excel": "^1.1"
   },
   "config": {
     "vendor-dir": "assets/vendor",

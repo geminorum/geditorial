@@ -141,7 +141,7 @@ class Today extends gEditorial\Helper
 			if ( ! $admin && ( $var = get_query_var( 'day_'.$field, FALSE ) ) )
 				$the_day[$field] = $var;
 
-			if ( $admin && ( $var = self::req( $field, FALSE ) ))
+			if ( $admin && ( $var = self::req( $field, FALSE ) ) )
 				$the_day[$field] = $var;
 		}
 

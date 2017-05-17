@@ -150,6 +150,7 @@ class Tweaks extends gEditorial\Module
 			'publication',
 			'issue',
 			'contest',
+			'profile', // gPeople
 		];
 
 		foreach ( PostType::get() as $post_type => $label )

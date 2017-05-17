@@ -430,7 +430,7 @@ class Today extends gEditorial\Module
 	// https://wphierarchy.com/
 	public function template_include( $template )
 	{
-		// self::kill(get_query_template( 'singular' ));
+		// self::kill( get_query_template( 'singular' ) );
 		// if ( is_singular( $this->constant( 'day_cpt' ) ) ) {
 		// 	add_filter( 'the_title', [ $this, 'the_title' ) );
 		// 	add_filter( 'the_content', [ $this, 'the_content' ) );
@@ -603,7 +603,7 @@ class Today extends gEditorial\Module
 		$timestamp = strtotime($customdate);
 
 		// Do nothing if have the wrong values
-		if (!$timestamp || !isset($hours[$timespan])) {
+		if (!$timestamp || !isset($hours[$timespan] ) ) {
 			return;
 		}
 

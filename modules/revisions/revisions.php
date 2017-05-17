@@ -327,7 +327,7 @@ class Revisions extends gEditorial\Module
 		$what = empty( $post['what'] ) ? 'nothing': trim( $post['what'] );
 
 		if ( empty( $post['post_id'] ) )
-			wp_send_json_error();
+			Ajax::errorMessage();
 
 		Ajax::checkReferer( $this->hook( $post['post_id'] ) );
 
@@ -336,7 +336,7 @@ class Revisions extends gEditorial\Module
 			case 'purge':
 
 				if ( ! current_user_can( $this->caps['purge'], $post['post_id'] ) )
-					wp_send_json_error();
+					Ajax::errorMessage();
 
 				wp_send_json_success( [
 					'count' => $this->purge( $post['post_id'] ),
@@ -346,15 +346,15 @@ class Revisions extends gEditorial\Module
 			case 'delete':
 
 				if ( empty( $post['revision_id'] ) )
-					wp_send_json_error();
+					Ajax::errorMessage();
 
 				if ( ! current_user_can( $this->caps['delete'], $post['post_id'] ) )
-					wp_send_json_error();
+					Ajax::errorMessage();
 
 				if ( is_wp_error( wp_delete_post_revision( $post['revision_id'] ) ) )
-					wp_send_json_error();
+					Ajax::errorMessage();
 
-				wp_send_json_success();
+				Ajax::successMessage();
 		}
 
 		Ajax::errorWhat();
@@ -488,6 +488,8 @@ class Revisions extends gEditorial\Module
 		$posts = $query->query( $args );
 
 		$pagination = HTML::tablePagination( $total, ceil( $total / $limit ), $limit, $paged );
+
+		$pagination['order'] = $order;
 
 		return [ $posts, $pagination ];
 	}

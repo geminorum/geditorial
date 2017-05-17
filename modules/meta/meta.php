@@ -189,7 +189,7 @@ class Meta extends gEditorial\Module
 		$post_cpt = $this->constant( 'post_cpt' );
 
 		// default fields for custom post types
-		foreach ( apply_filters( 'geditorial_meta_support_post_types', [ $post_cpt ] ) as $post_type )
+		foreach ( $this->filters( 'support_post_types', [ $post_cpt ] ) as $post_type )
 			$this->add_post_type_fields( $post_type, $this->fields[$post_cpt] );
 
 		$this->add_post_type_fields( $this->constant( 'page_cpt' ) );
@@ -226,7 +226,7 @@ class Meta extends gEditorial\Module
 				if ( TRUE === $box_func )
 					$box_func = [ $this, 'default_meta_box' ];
 
-				if ( is_callable( $box_func ) )
+				if ( $box_func && is_callable( $box_func ) )
 					add_meta_box( $this->classs( $screen->post_type ),
 						$this->get_meta_box_title(),
 						$box_func,
@@ -238,9 +238,9 @@ class Meta extends gEditorial\Module
 				$dbx_func = apply_filters( 'geditorial_meta_dbx_callback', TRUE, $screen->post_type );
 
 				if ( TRUE === $dbx_func )
-					$dbx_func = [ $this, 'default_meta_raw' ];
+					add_action( 'dbx_post_sidebar', [ $this, 'default_meta_raw' ], 10, 1 );
 
-				if ( is_callable( $dbx_func ) )
+				else if ( $dbx_func && is_callable( $dbx_func ) )
 					add_action( 'dbx_post_sidebar', $dbx_func, 10, 1 );
 
 				add_action( 'geditorial_meta_do_meta_box', [ $this, 'do_meta_box' ], 10, 4 );

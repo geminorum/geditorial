@@ -6,8 +6,9 @@
     "jquery-sortable": "latest",
     "jcarousel": "latest",
     "lity": "latest",
-    "virastar": "https://github.com/juvee/virastar.git",
-    "list.js": "^1.5.0"
+    "virastar": "juvee/virastar",
+    "persiantools": "Bersam/persiantools",
+    "list.js": "latest"
   },
   "devDependencies": {},
   "install": {
@@ -34,6 +35,10 @@
       "list.js": [
         "assets/components/list.js/dist/list.js",
         "assets/components/list.js/dist/list.min.js"
+      ],
+      "persiantools": [
+        "assets/components/persiantools/dist/persiantools.js",
+        "assets/components/persiantools/dist/persiantools.min.js"
       ]
     }
   }
