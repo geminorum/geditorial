@@ -376,14 +376,19 @@ class Plugin
 	{
 		$this->asset_config = TRUE;
 
-		if ( count( $args ) ) {
-			if ( is_null( $module ) )
-				$this->asset_args = array_merge( $this->asset_args, $args );
-			else
-				$this->asset_args = array_merge( $this->asset_args, [ $module => $args ] );
-		}
+		if ( ! count( $args ) )
+			return TRUE;
 
-		return $this->asset_config;
+		if ( is_null( $module ) )
+			$this->asset_args = array_merge( $this->asset_args, $args );
+
+		else if ( isset( $this->asset_args[$module] ) )
+			$this->asset_args[$module] = array_merge( $this->asset_args[$module], $args );
+
+		else
+			$this->asset_args[$module] = $args;
+
+		return TRUE;
 	}
 
 	// used in front & admin
