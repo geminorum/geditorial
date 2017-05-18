@@ -73,16 +73,12 @@ class MetaBox extends Core\Base
 		if ( ! count( $posts ) )
 			return FALSE;
 
-		$html  = '<div class="field-wrap field-wrap-list"><h4>';
-		$html .= sprintf( _x( 'Other Posts on %s', 'MetaBox', GEDITORIAL_TEXTDOMAIN ), HTML::link(
-				sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' ),
-				get_term_link( $term, $term->taxonomy ), TRUE ) );
-		$html .= '</h4><ol>';
+		$html = '<h4>'.Helper::getTermTitleRow( $term ).'</h4><ol>';
 
 		foreach ( $posts as $post )
 			$html .= '<li>'.Helper::getPostTitleRow( $post ).'</li>';
 
-		return $html.'</ol></div>';
+		return '<div class="field-wrap field-wrap-list">'.$html.'</ol></div>';
 	}
 
 	public static function fieldEmptyTaxonomy( $taxonomy, $edit = NULL )
