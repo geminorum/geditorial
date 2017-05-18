@@ -258,15 +258,10 @@ class Meta extends gEditorial\Module
 
 				$this->action( 'save_post', 2 );
 
-				$localize = [
-					// not used yet!
-					// 'constants' => [
-					// 	'ct' => $this->constant( 'ct_tax' ),
-					// ),
-				];
+				$localize = [ 'fields' => $this->post_type_fields( $screen->post_type, TRUE ) ];
 
-				foreach ( $this->post_type_fields( $screen->post_type ) as $field )
-					$localize[$field] = $this->get_string( $field, $screen->post_type );
+				// foreach ( $this->post_type_fields( $screen->post_type ) as $field )
+				// 	$localize[$field] = $this->get_string( $field, $screen->post_type );
 
 				$this->enqueue_asset_js( $localize, $screen );
 			}

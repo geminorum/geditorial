@@ -5,11 +5,17 @@
 
     inlineEditPost.revert(); // revert Quick Edit menu so that it refreshes properly
 
+    var fields = $.extend({}, {
+      ot: false,
+      st: false,
+      as: false,
+    }, gEditorial.meta.fields);
+
     var tag_id = $(this).parents('tr').attr('id'),
       postTitleLabel = $(':input[name="post_title"]', '.inline-edit-row').parents('label'),
       postNameLabel = $(':input[name="post_name"]', '.inline-edit-row').parents('label');
 
-    if (gEditorial.meta.hasOwnProperty('ot')) {
+    if (fields.ot) {
       var ot = $('#' + tag_id)
         .find('div.geditorial-meta-ot-value')
         .text();
@@ -21,7 +27,7 @@
         .insertBefore(postTitleLabel);
     }
 
-    if (gEditorial.meta.hasOwnProperty('st')) {
+    if (fields.st) {
       var st = $('#' + tag_id)
         .find('div.geditorial-meta-st-value')
         .text();
@@ -33,7 +39,7 @@
         .insertAfter(postTitleLabel);
     }
 
-    if (gEditorial.meta.hasOwnProperty('as')) {
+    if (fields.as) {
       var as = $('#' + tag_id)
         .find('div.geditorial-meta-as-value')
         .text();
