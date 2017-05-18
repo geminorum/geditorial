@@ -136,7 +136,7 @@ class MetaBox extends Core\Base
 		] );
 	}
 
-	public function fieldPostMenuOrder( $post )
+	public static function fieldPostMenuOrder( $post )
 	{
 		echo '<div class="field-wrap field-wrap-inputnumber">';
 
@@ -156,7 +156,7 @@ class MetaBox extends Core\Base
 		echo '</div>';
 	}
 
-	public function fieldPostParent( $post_type, $post, $statuses = [ 'publish', 'future', 'draft' ] )
+	public static function fieldPostParent( $post_type, $post, $statuses = [ 'publish', 'future', 'draft' ] )
 	{
 		if ( ! get_post_type_object( $post_type )->hierarchical )
 			return;
@@ -179,7 +179,7 @@ class MetaBox extends Core\Base
 	}
 
 	// FIXME: finalize name/id
-	public function dropdownPostTaxonomy( $taxonomy, $post, $key = FALSE, $count = TRUE, $excludes = '', $default = '0' )
+	public static function dropdownPostTaxonomy( $taxonomy, $post, $key = FALSE, $count = TRUE, $excludes = '', $default = '0' )
 	{
 		if ( ! $obj = get_taxonomy( $taxonomy ) )
 			return;
