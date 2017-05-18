@@ -50,6 +50,41 @@ class MetaBox extends Core\Base
 		echo '</div>';
 	}
 
+	public static function getTermPosts( $taxonomy, $term_or_id, $exclude = [] )
+	{
+		if ( ! $term = Taxonomy::getTerm( $term_or_id, $taxonomy ) )
+			return '';
+
+		$args = [
+			'posts_per_page' => -1,
+			'orderby'        => [ 'menu_order', 'date' ],
+			'order'          => 'ASC',
+			'post_status'    => [ 'publish', 'future', 'pending', 'draft' ],
+			'post__not_in'   => $exclude,
+			'tax_query'      => [ [
+				'taxonomy' => $taxonomy,
+				'field'    => 'id',
+				'terms'    => [ $term->term_id ],
+			] ],
+		];
+
+		$posts = get_posts( $args );
+
+		if ( ! count( $posts ) )
+			return FALSE;
+
+		$html  = '<div class="field-wrap field-wrap-list"><h4>';
+		$html .= sprintf( _x( 'Other Posts on %s', 'MetaBox', GEDITORIAL_TEXTDOMAIN ), HTML::link(
+				sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' ),
+				get_term_link( $term, $term->taxonomy ), TRUE ) );
+		$html .= '</h4><ol>';
+
+		foreach ( $posts as $post )
+			$html .= '<li>'.Helper::getPostTitleRow( $post ).'</li>';
+
+		return $html.'</ol></div>';
+	}
+
 	public static function fieldEmptyTaxonomy( $taxonomy, $edit = NULL )
 	{
 		$object = is_object( $taxonomy ) ? $taxonomy : get_taxonomy( $taxonomy );

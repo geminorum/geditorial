@@ -232,7 +232,7 @@ class Series extends gEditorial\Module
 				'echo'             => 0,
 			] );
 
-			$posts[$i] = Helper::getTermPosts( $tax, $the_term, [ $post->ID ] );
+			$posts[$i] = MetaBox::getTermPosts( $tax, $the_term, [ $post->ID ] );
 			$map[$i]   = $the_term->term_id;
 			$i++;
 		}

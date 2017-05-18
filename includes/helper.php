@@ -407,53 +407,6 @@ class Helper extends Core\Base
 		return call_user_func( $callback );
 	}
 
-	public static function getTermPosts( $taxonomy, $term_or_id, $exclude = [] )
-	{
-		if ( ! $term = Taxonomy::getTerm( $term_or_id, $taxonomy ) )
-			return '';
-
-		$query_args = [
-			'posts_per_page' => -1,
-			'orderby'        => [ 'menu_order', 'date' ],
-			'order'          => 'ASC',
-			'post_status'    => [ 'publish', 'future', 'pending', 'draft' ],
-			'post__not_in'   => $exclude,
-			'tax_query'      => [ [
-				'taxonomy' => $taxonomy,
-				'field'    => 'id',
-				'terms'    => $term->term_id,
-			] ],
-		];
-
-		$the_posts = get_posts( $query_args );
-		if ( ! count( $the_posts ) )
-			return FALSE;
-
-		// FIXME: following must move to MetaBox class
-
-		$output = '<div class="field-wrap field-wrap-list"><h4>';
-		$output .= sprintf( _x( 'Other Posts on <a href="%1$s" target="_blank">%2$s</a>', 'Helper', GEDITORIAL_TEXTDOMAIN ),
-			get_term_link( $term, $term->taxonomy ),
-			sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' )
-		).'</h4><ol>';
-
-		foreach ( $the_posts as $post ) {
-			setup_postdata( $post );
-
-			$output .= '<li><a href="'.get_permalink( $post ).'">'
-				.self::getPostTitle( $post ).'</a>'
-				.'&nbsp;<span class="edit">'
-				.sprintf( _x( '&ndash; <a href="%1$s" target="_blank" title="Edit this Post">%2$s</a>', 'Helper', GEDITORIAL_TEXTDOMAIN ),
-					esc_url( WordPress::getPostEditLink( $post->ID ) ),
-					HTML::getDashicon( 'welcome-write-blog' )
-				).'</span></li>';
-		}
-		wp_reset_query();
-		$output .= '</ol></div>';
-
-		return $output;
-	}
-
 	public static function getTinyMceStrings( $locale )
 	{
 		$strings = apply_filters( self::BASE.'_tinymce_strings', [] );

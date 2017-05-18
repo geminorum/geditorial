@@ -638,7 +638,7 @@ class Magazine extends gEditorial\Module
 
 		// TODO: add collapsible button
 		if ( $term = $this->get_linked_term( $post->ID, 'issue_cpt', 'issue_tax' ) )
-			echo Helper::getTermPosts( $this->constant( 'issue_tax' ), $term );
+			echo MetaBox::getTermPosts( $this->constant( 'issue_tax' ), $term );
 
 		echo '</div>';
 	}

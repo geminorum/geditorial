@@ -386,7 +386,7 @@ class Contest extends gEditorial\Module
 
 		// TODO: add collapsible button
 		if ( $term = $this->get_linked_term( $post->ID, 'contest_cpt', 'contest_tax' ) )
-			echo Helper::getTermPosts( $this->constant( 'contest_tax' ), $term );
+			echo MetaBox::getTermPosts( $this->constant( 'contest_tax' ), $term );
 
 		echo '</div>';
 	}
