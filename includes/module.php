@@ -779,17 +779,16 @@ class Module extends Base
 	}
 
 	// enabled fields for a post type
-	public function post_type_fields( $post_type = 'post', $is_constant = FALSE )
+	public function post_type_fields( $post_type = 'post', $js = FALSE )
 	{
-		if ( $is_constant )
-			$post_type = $this->constant( $post_type );
-
 		$fields = [];
 
 		if ( isset( $this->options->fields[$post_type] )
 			&& is_array( $this->options->fields[$post_type] ) )
 				foreach ( $this->options->fields[$post_type] as $field => $enabled )
-					if ( $enabled )
+					if ( $js )
+						$fields[$field] = (bool) $enabled;
+					else if ( $enabled )
 						$fields[] = $field;
 
 		return $fields;
