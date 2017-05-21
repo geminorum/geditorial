@@ -616,6 +616,13 @@ class Tweaks extends gEditorial\Module
 				echo Helper::getDateEditRow( $post->post_modified, '-edit' );
 			echo '</li>';
 		}
+
+		if ( 'excerpt' == $GLOBALS['mode'] && $post->post_name ) {
+			echo '<li class="-attr tweaks-default-atts -post-name">';
+				echo $this->get_column_icon( FALSE, 'admin-links', _x( 'Post Slug', 'Modules: Tweaks: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
+				echo '<code>'.urldecode( $post->post_name ).'</code>';
+			echo '</li>';
+		}
 	}
 
 	// display post excerpt form fields
