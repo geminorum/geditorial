@@ -221,7 +221,7 @@ class Meta extends gEditorial\Module
 
 			if ( 'post' == $screen->base ) {
 
-				$box_func = apply_filters( 'geditorial_meta_box_callback', TRUE, $screen->post_type );
+				$box_func = $this->filters( 'box_callback', TRUE, $screen->post_type );
 
 				if ( TRUE === $box_func )
 					$box_func = [ $this, 'default_meta_box' ];
@@ -235,7 +235,7 @@ class Meta extends gEditorial\Module
 						'high'
 					);
 
-				$dbx_func = apply_filters( 'geditorial_meta_dbx_callback', TRUE, $screen->post_type );
+				$dbx_func = $this->filters( 'dbx_callback', TRUE, $screen->post_type );
 
 				if ( TRUE === $dbx_func )
 					add_action( 'dbx_post_sidebar', [ $this, 'default_meta_raw' ], 10, 1 );

@@ -145,9 +145,9 @@ class Module extends Base
 
 	public function _after_setup_theme()
 	{
-		$this->constants = apply_filters( $this->hook( 'constants' ), $this->get_global_constants(), $this->module );
-		$this->supports  = apply_filters( $this->hook( 'supports' ), $this->get_global_supports(), $this->module );
-		$this->fields    = apply_filters( $this->hook( 'fields' ), $this->get_global_fields(), $this->module );
+		$this->constants = $this->filters( 'constants', $this->get_global_constants(), $this->module );
+		$this->supports  = $this->filters( 'supports', $this->get_global_supports(), $this->module );
+		$this->fields    = $this->filters( 'fields', $this->get_global_fields(), $this->module );
 	}
 
 	// DEFAULT FILTER
@@ -177,7 +177,7 @@ class Module extends Base
 
 	protected function do_globals()
 	{
-		$this->strings = apply_filters( 'geditorial_'.$this->module->name.'_strings', $this->get_global_strings(), $this->module );
+		$this->strings = $this->filters( 'strings', $this->get_global_strings(), $this->module );
 	}
 
 	// check if this module loaded as remote for another blog's editorial module
@@ -342,7 +342,7 @@ class Module extends Base
 
 		return [
 			'field'       => $constant_key.'_supports',
-			'type'        => 'checkbox',
+			'type'        => 'checkbox', // FIXME: add as setting type with `code` after title
 			'title'       => sprintf( _x( '%s Supports', 'Module: Setting Title', GEDITORIAL_TEXTDOMAIN ), $this->strings['noops'][$constant_key]['singular'] ),
 			'description' => _x( 'Posttype support core features', 'Module: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 			'default'     => $defaults,
@@ -997,7 +997,7 @@ class Module extends Base
 	public function init_settings()
 	{
 		if ( ! isset( $this->settings ) )
-			$this->settings = apply_filters( 'geditorial_'.$this->module->name.'_settings', $this->get_global_settings(), $this->module );
+			$this->settings = $this->filters( 'settings', $this->get_global_settings(), $this->module );
 	}
 
 	public function register_settings( $page = NULL )
@@ -1322,7 +1322,7 @@ class Module extends Base
 	{
 		if ( ! isset( $this->image_sizes[$post_type] ) ) {
 
-			$sizes = apply_filters( 'geditorial_'.$this->module->name.'_'.$post_type.'_image_sizes', [] );
+			$sizes = $this->filters( $post_type.'_image_sizes', [] );
 
 			if ( FALSE === $sizes ) {
 				$this->image_sizes[$post_type] = []; // no sizes
@@ -1376,7 +1376,7 @@ class Module extends Base
 		if ( TRUE === $args ) {
 			$args = [];
 
-		} else if ( ! is_array( $args ) ) {
+		} else if ( ! is_array( $args ) && $args ) {
 			$name .= '.'.$args;
 			$args = [];
 		}
@@ -1439,6 +1439,7 @@ class Module extends Base
 	}
 
 	// CAUTION: tax must be cat (hierarchical)
+	// hierarchical taxonomies save by IDs, whereas non save by slugs
 	// TODO: supporting tag (non-hierarchical)
 	public function add_meta_box_checklist_terms( $constant_key, $post_type, $type = FALSE )
 	{

@@ -89,12 +89,12 @@ class Like extends gEditorial\Module
 
 		$avatars = $this->get_setting( 'avatars', FALSE );
 
-		$title = apply_filters( 'geditorial_like_loading', _x( 'Loading &hellip;', 'Modules: Like', GEDITORIAL_TEXTDOMAIN ), $post_id );
+		$title = $this->filters( 'loading', _x( 'Loading &hellip;', 'Modules: Like', GEDITORIAL_TEXTDOMAIN ), $post_id );
 
 		$html  = '<div class="geditorial-wrap like" style="display:none;" data-avatars="'.( $avatars ? 'true' : 'false' ).'">';
 		$html .= '<div><a class="like loading" title="'.esc_attr( $title ).'" href="#" data-id="'.$post_id.'">';
 
-		$html .= apply_filters( 'geditorial_like_icon', '<span class="genericon genericon-heart"></span>', $post_id );
+		$html .= $this->filters( 'icon', '<span class="genericon genericon-heart"></span>', $post_id );
 
 		$html .= '</a></div><div><span class="like"></span></div>';
 
@@ -180,7 +180,7 @@ class Like extends gEditorial\Module
 
 	public function title( $liked, $post_id = NULL )
 	{
-		return apply_filters( 'geditorial_like_title', ( $liked ? _x( 'Unlike', 'Modules: Like', GEDITORIAL_TEXTDOMAIN ) : _x( 'Like', 'Modules: Like', GEDITORIAL_TEXTDOMAIN ) ), $liked, $post_id );
+		return $this->filters( 'title', ( $liked ? _x( 'Unlike', 'Modules: Like', GEDITORIAL_TEXTDOMAIN ) : _x( 'Like', 'Modules: Like', GEDITORIAL_TEXTDOMAIN ) ), $liked, $post_id );
 	}
 
 	public function unlike( $post_id )

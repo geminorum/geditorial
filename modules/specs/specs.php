@@ -275,8 +275,7 @@ class Specs extends gEditorial\Module
 		$postmeta = array_combine( $the_list, $postmeta );
 		krsort( $postmeta );
 
-		$postmeta = apply_filters( 'geditorial_specs_sanitize_post_meta', $postmeta, $fields, $post_id, $post_type );
-		return $postmeta;
+		return $this->filters( 'sanitize_post_meta', $postmeta, $fields, $post_id, $post_type );
 	}
 
 	public function do_meta_box( $post )

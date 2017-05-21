@@ -193,8 +193,8 @@ class Series extends gEditorial\Module
 				}
 			}
 		}
-		$postmeta = apply_filters( 'geditorial_series_sanitize_post_meta', $postmeta, $fields, $post_id, $post_type );
-		return $postmeta;
+
+		return $this->filters( 'sanitize_post_meta', $postmeta, $fields, $post_id, $post_type );
 	}
 
 	public function do_meta_box( $post, $box )

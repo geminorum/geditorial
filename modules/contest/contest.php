@@ -459,7 +459,6 @@ class Contest extends gEditorial\Module
 		return array_merge( $messages, $this->get_bulk_post_updated_messages( 'apply_cpt', $counts ) );
 	}
 
-
 	public function wp_insert_post_data( $data, $postarr )
 	{
 		if ( $this->constant( 'contest_cpt' ) == $postarr['post_type'] && ! $data['menu_order'] )

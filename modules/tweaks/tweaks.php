@@ -275,7 +275,7 @@ class Tweaks extends gEditorial\Module
 			add_action( $this->hook( 'column_attr' ), [ $this, 'column_attr_page_template' ], 50 );
 
 		if ( $this->get_setting( 'comment_status', FALSE ) && post_type_supports( $post_type, 'comments' ) )
-			add_action( $this->hook( 'column_attr' ), [ $this, 'column_attr_comment_status' ], 55 );
+			add_action( $this->hook( 'column_attr' ), [ $this, 'column_attr_comment_status' ], 15 );
 	}
 
 	public function manage_taxonomies_columns( $taxonomies, $post_type )

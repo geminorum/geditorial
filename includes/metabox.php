@@ -17,6 +17,7 @@ class MetaBox extends Core\Base
 	// SEE: [Use Chosen for a replacement WordPress taxonomy metabox](https://gist.github.com/helen/1573966)
 	// callback for meta box for choose only tax
 	// CAUTION: tax must be cat (hierarchical)
+	// hierarchical taxonomies save by IDs, whereas non save by slugs
 	// @SOURCE: `post_categories_meta_box()`
 	public static function checklistTerms( $post, $box )
 	{

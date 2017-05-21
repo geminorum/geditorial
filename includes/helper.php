@@ -592,7 +592,7 @@ class Helper extends Core\Base
 			'args'     => [ 'taxonomies' => Taxonomy::get( 4 ) ],
 			'callback' => function( $value, $row, $column, $index ){
 				$html = '';
-				foreach( $column['args']['taxonomies'] as $taxonomy => $object )
+				foreach ( $column['args']['taxonomies'] as $taxonomy => $object )
 					$html .= Helper::getTermsEditRow( $row, $object, '<div>'.$object->label.': ', '</div>' );
 				return $html;
 			},
