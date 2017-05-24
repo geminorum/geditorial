@@ -1,3 +1,92 @@
+### 3.10.0
+* assets/js: rethinking structure
+* assets/js: jquery sortable from packages dir
+* main/main: first attempt for an adminbar api
+* main/main: na helper method
+* main/ajax: get nonce for each module
+* main/helper: term title helpers
+* main/helper: bulk post updated messages generator, [ref](https://github.com/morganestes/post-updated-messages)
+* main/helper: class const for base string
+* main/helper: register helper for asset packages
+* main/helper: check for drafts on post title row
+* main/helper: default fallback not to current user
+* main/metabox: helper for assoc dropdown
+* main/metabox: helpers moved from module
+* main/metabox: helpers moved from helper
+* main/module: is content insert helper
+* main/module: better handling post updated messages
+* main/module: internal cache for post meta
+* main/module: settings form request defaults helper
+* main/module: better hook helpers
+* main/module: screen option/limit hlper for current sub
+* main/module: post tag default for every cpt
+* main/module: helper for checking settings sub
+* main/module: basic o2o support
+* main/module: scripts on other settings pages
+* main/module: remove internal cap checking for each field
+* main/module: posttype supports settings
+* main/module: :warning: passing array post in settings form
+* main/module: simpler post update messages
+* main/module: posttype fields helper for js
+* main/plugin: merge js args for existing module
+* main/settings: submit button helper
+* main/settings: default button strings moved
+* main/settings: check for module with no desc
+* main/settings: new default message string
+* main/settings: delete buttons with js confirmation
+* main/settings: custom settings field renderer
+* main/settings: removing processed keys from request uri
+* main/settings: correct check if exclude is an array
+* main/settings: cpt/tax names along with labels
+* main/shortcode: :new: new main helper class
+* main/template: meta field helper moved up
+* main/template: trim arg for meta fields
+* module/book: basic template helpers
+* module/book: custom titles for p2p lists
+* module/book: helper for post item in p2p lists
+* module/config: renamed from settings
+* module/config: :new: search/filter for module list/options via [List.js](http://listjs.com)
+* module/drafts: :new: public preview
+* module/drafts: check cap for each draft
+* module/entry: :up: utilizing internal helpers for shortcodes
+* module/entry: first attempt on supporting shortcake
+* module/entry: :warning: correct pattern for unicode section names
+* module/entry: custom box for section tax in edit post
+* module/home: support recent posts widget
+* module/magazine: :up: utilizing internal helpers for shortcodes
+* module/magazine: better handling assoc posts
+* module/magazine: upgrading template helpers
+* module/magazine: cover widget updated
+* module/magazine: tools page revised
+* module/magazine: not wrapping assoc links
+* module/meta: auto insert source moved from reshare module
+* module/meta: correct focus on quick edit
+* module/meta: tools page revised
+* module/meta: better handling meta import
+* module/meta: lead on admin edit column in excerpt mode
+* moduel/meta: :warning: importer helper sep fixed
+* module/meta: fields as args in js
+* module/modified: :new: shortcodes for post/site
+* module/reshare: post update messages
+* module/revisions: check each post for revision max count
+* module/revisions: skip posts with no revison in the overview
+* module/revisions: nonce for each post
+* module/series: :up: utilizing internal helpers for shortcodes
+* module/shortcodes: :new: module
+* module/ortho: exporting meta fields as front matter on md download
+* module/pitches: post updated messages
+* module/pitches: support for restrict mange posts/dashboard glance items
+* module/reshare: support for restrict mange posts/dashboard glance items
+* module/terms: orphaned convertor moved from settings module
+* module/terms: limit screen option
+* module/terms: filter by posttype on overview
+* module/terms: using table actions on overview
+* module/tweaks: check for cap before additional info
+* module/tweaks: switch to letter count for excerpts
+* module/tweaks: :new: comment status on attr column
+* module/tweaks: :new: post name on attr column
+* module/tweaks: :new: thumbnail column
+
 ### 3.9.15
 * main/modulecore: simplifying init/ajax hooks
 * main/modulecore: settings form before/after helpers
