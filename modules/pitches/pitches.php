@@ -82,7 +82,13 @@ class Pitches extends gEditorial\Module
 	{
 		if ( $screen->post_type == $this->constant( 'idea_cpt' ) ) {
 
-			if ( 'edit' == $screen->base ) {
+			if ( 'post' == $screen->base ) {
+
+				$this->filter( 'post_updated_messages' );
+
+			} else if ( 'edit' == $screen->base ) {
+
+				$this->filter( 'bulk_post_updated_messages', 2 );
 
 				$this->action( 'restrict_manage_posts', 2, 12 );
 				$this->action( 'parse_query' );
@@ -103,6 +109,16 @@ class Pitches extends gEditorial\Module
 			$items[] = $glance;
 
 		return $items;
+	}
+
+	public function post_updated_messages( $messages )
+	{
+		return array_merge( $messages, $this->get_post_updated_messages( 'idea_cpt' ) );
+	}
+
+	public function bulk_post_updated_messages( $messages, $counts )
+	{
+		return array_merge( $messages, $this->get_bulk_post_updated_messages( 'idea_cpt', $counts ) );
 	}
 
 	public function restrict_manage_posts( $post_type, $which )
