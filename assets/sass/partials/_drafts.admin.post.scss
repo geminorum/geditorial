@@ -3,14 +3,18 @@
 ////////////////////////////////////////////////////////////////////////////////
 /// Module: Drafts: Admin Post -------------------------------------------------
 
-body.geditorial-drafts-enabled {
-  // .misc-pub-section.misc-pub-drafts {
-  //   display: none;
-  //   visibility: hidden;
-  // }
-}
+body.geditorial-drafts-enabled {}
 
 .geditorial-admin-wrap.-drafts {
   clear: both;
   padding: 10px 0 8px;
+
+  .-loading {
+    float: none;
+    margin-top: 2px;
+  }
+
+  input {
+    margin-bottom: 10px;
+  }
 }
