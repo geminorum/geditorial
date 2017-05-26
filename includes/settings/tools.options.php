@@ -2,8 +2,8 @@
 
 defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
 
-use geminorum\gNetwork\Core\HTML;
-use geminorum\gNetwork\WordPress\User;
+use geminorum\gEditorial\Core\HTML;
+use geminorum\gEditorial\WordPress\User;
 
 User::superAdminOnly();
 
