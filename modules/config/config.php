@@ -381,7 +381,7 @@ class Config extends gEditorial\Module
 
 		$back = $count = FALSE;
 
-		if ( 'settings' == $current_module->name ) {
+		if ( 'config' == $current_module->name ) {
 			$title = _x( 'Editorial', 'Modules: Config', GEDITORIAL_TEXTDOMAIN );
 			$count = count( get_object_vars( $gEditorial->modules ) );
 		} else {
