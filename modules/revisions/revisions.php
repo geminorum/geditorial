@@ -466,6 +466,9 @@ class Revisions extends gEditorial\Module
 
 		$total = count( $ids );
 
+		if ( ! $total )
+			return [ [], [] ];
+
 		$args = [
 			'posts_per_page'   => $limit,
 			'post__in'         => array_slice( $ids, $offset, $limit ),
