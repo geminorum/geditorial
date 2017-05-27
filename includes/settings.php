@@ -449,14 +449,15 @@ class Settings extends Core\Base
 		echo '<div class="clear"></div></div>';
 	}
 
+	// @REF: `get_admin_page_title()`
 	public static function headerTitle( $title = NULL, $back = NULL, $to = NULL, $icon = '', $count = FALSE, $search = FALSE )
 	{
 		if ( is_null( $title ) )
 			$title = _x( 'Editorial', 'Settings', GEDITORIAL_TEXTDOMAIN );
 
-		if ( is_null( $back )
-			&& current_user_can( 'manage_options' ) ) // FIXME: get cap from settings module
-				$back = self::settingsURL();
+		// FIXME: get cap from settings module
+		if ( is_null( $back ) && current_user_can( 'manage_options' ) )
+			$back = self::settingsURL();
 
 		if ( is_null( $to ) )
 			$to = _x( 'Back to Editorial', 'Settings', GEDITORIAL_TEXTDOMAIN );
@@ -466,21 +467,23 @@ class Settings extends Core\Base
 
 		$extra = '';
 
-		if ( $count )
-			$extra .= sprintf( ' <span class="-count title-count">%s</span>', Number::format( $count ) );
+		if ( FALSE !== $count )
+			$extra .= sprintf( ' <span class="title-count settings-title-count">%s</span>', Number::format( $count ) );
+
+		printf( '<h1 class="wp-heading-inline settings-title'.$icon.'">%s%s</h1>', $title, $extra );
 
 		if ( $back )
-			$extra .= sprintf( ' <a href="%s" class="-action page-title-action">%s</a>', $back, $to );
+			printf( ' <a href="%s" class="page-title-action settings-title-action">%s</a>', $back, $to );
 
 		if ( $search )
-			$extra .= HTML::tag( 'input', [
+			echo HTML::tag( 'input', [
 				'type'        => 'search',
-				'class'       => [ '-search', 'hide-if-no-js' ],
+				'class'       => [ 'settings-title-search', '-search', 'hide-if-no-js' ],
 				'placeholder' => _x( 'Search …', 'Settings: Search Placeholder', GEDITORIAL_TEXTDOMAIN ),
 				'autofocus'   => 'autofocus',
 			] );
 
-		printf( '<h1 class="settings-title'.$icon.'">%s%s</h1>', $title, $extra );
+		echo '<hr class="wp-header-end">';
 	}
 
 	public static function message( $messages = NULL )
