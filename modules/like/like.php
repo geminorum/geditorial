@@ -269,21 +269,31 @@ class Like extends gEditorial\Module
 		$timestamp = current_time( 'timestamp' );
 
 		if ( is_user_logged_in() ) {
+
 			$user_id = get_current_user_id();
+
 			if ( ! array_search( $user_id, $users ) ) {
 				$users[$timestamp] = $user_id;
 				$this->set_meta( $post_id, $users, '_users' );
 				$count++;
 			}
+
 			return [ TRUE, $count ];
+
 		} else {
+
 			$cookie = $this->get_cookie();
-			if ( ! array_key_exists( $post_id, $cookie ) ) {
-				$guests[$timestamp] = HTTP::IP();
+			$ip     = HTTP::IP();
+
+			if ( ! array_key_exists( $post_id, $cookie )
+				&& ! array_search( $ip, $guests ) ) {
+
+				$guests[$timestamp] = $ip;
 				$this->set_meta( $post_id, $guests, '_guests' );
 				$this->set_cookie( [ $post_id => $guests[$timestamp] ] );
 				$count++;
 			}
+
 			return [ TRUE, $count ];
 		}
 	}
