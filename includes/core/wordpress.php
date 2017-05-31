@@ -356,6 +356,13 @@ class WordPress extends Base
 		return FALSE;
 	}
 
+	public static function getUserEditLink( $user_id, $extra = array() )
+	{
+		return add_query_arg( array_merge( array(
+			'user_id' => $user_id,
+		), $extra ), admin_url( 'user-edit.php' ) );
+	}
+
 	// @SOURCE: `wp-load.php`
 	public static function getConfigPHP( $path = ABSPATH )
 	{
