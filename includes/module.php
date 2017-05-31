@@ -45,8 +45,9 @@ class Module extends Base
 	protected $errors  = [];
 
 	protected $caps = [
-		'reports'  => 'edit_others_posts',
+		'default'  => 'manage_options',
 		'settings' => 'manage_options',
+		'reports'  => 'edit_others_posts',
 		'tools'    => 'edit_others_posts',
 		'adminbar' => 'edit_others_posts',
 	];
