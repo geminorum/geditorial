@@ -28,6 +28,7 @@ class Entry extends gEditorial\Module
 				'shortcode_support',
 				'admin_ordering',
 				'admin_restrict',
+				'adminbar_summary',
 				'editor_button',
 				'comment_status',
 				'autolink_terms',

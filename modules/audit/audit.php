@@ -41,6 +41,7 @@ class Audit extends gEditorial\Module
 				'summary_scope',
 				'count_not',
 				'admin_restrict',
+				'adminbar_summary',
 			],
 			'posttypes_option' => 'posttypes_option',
 		];

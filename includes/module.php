@@ -112,7 +112,7 @@ class Module extends Base
 
 		$this->action( 'init', 0, $this->priority_init );
 
-		if ( $ui && method_exists( $this, 'adminbar_init' ) )
+		if ( $ui && method_exists( $this, 'adminbar_init' ) && $this->get_setting( 'adminbar_summary' ) )
 			add_action( 'geditorial_adminbar', [ $this, 'adminbar_init' ], $this->priority_adminbar_init, 3 );
 
 		if ( is_admin() ) {

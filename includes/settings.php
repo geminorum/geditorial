@@ -366,6 +366,16 @@ class Settings extends Core\Base
 		];
 	}
 
+	public static function getSetting_adminbar_summary( $section )
+	{
+		return [
+			'field'       => 'adminbar_summary',
+			'title'       => _x( 'Adminbar Summary', 'Setting: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+			'description' => _x( 'Summary for the current item as a node in adminbar', 'Setting: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+			'section'     => $section,
+		];
+	}
+
 	public static function getSetting_dashboard_widgets( $section )
 	{
 		return [
