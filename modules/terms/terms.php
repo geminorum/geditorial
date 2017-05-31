@@ -13,16 +13,69 @@ use geminorum\gEditorial\WordPress\Taxonomy;
 class Terms extends gEditorial\Module
 {
 
+	protected $taxonomies_excluded = [
+		'nav_menu',
+	];
+
 	public static function module()
 	{
 		return [
-			'name'      => 'terms',
-			'title'     => _x( 'Terms', 'Modules: Terms', GEDITORIAL_TEXTDOMAIN ),
-			'desc'      => _x( 'Taxonomy & Term Tools', 'Modules: Terms', GEDITORIAL_TEXTDOMAIN ),
-			'icon'      => 'image-filter',
-			'configure' => FALSE,
-			'frontend'  => FALSE,
+			'name'  => 'terms',
+			'title' => _x( 'Terms', 'Modules: Terms', GEDITORIAL_TEXTDOMAIN ),
+			'desc'  => _x( 'Taxonomy & Term Tools', 'Modules: Terms', GEDITORIAL_TEXTDOMAIN ),
+			'icon'  => 'image-filter',
 		];
+	}
+
+	protected function get_global_settings()
+	{
+		return [
+			'_general' => [
+				'adminbar_summary',
+			],
+			'taxonomies_option' => 'taxonomies_option',
+		];
+	}
+
+	public function adminbar_init( $wp_admin_bar, $parent, $link )
+	{
+		if ( is_admin() )
+			return;
+
+		if ( ! $this->cuc( 'adminbar' ) )
+			return;
+
+		$wp_admin_bar->add_node( [
+			'id'     => $this->classs(),
+			'title'  => _x( 'Term Summary', 'Modules: Terms: Adminbar', GEDITORIAL_TEXTDOMAIN ),
+			'parent' => $parent,
+			'href'   => Settings::subURL( 'uncategorized', 'reports' ),
+		] );
+
+		foreach ( $this->taxonomies() as $taxonomy ) {
+
+			$terms = get_the_terms( NULL, $taxonomy );
+
+			if ( ! $terms || is_wp_error( $terms ) )
+				continue;
+
+			$object = get_taxonomy( $taxonomy );
+
+			$wp_admin_bar->add_node( [
+				'id'     => $this->classs( 'tax', $taxonomy ),
+				'title'  => $object->labels->name.':',
+				'parent' => $this->classs(),
+				'href'   => WordPress::getEditTaxLink( $taxonomy ),
+			] );
+
+			foreach ( $terms as $term )
+				$wp_admin_bar->add_node( [
+					'id'     => $this->classs( 'term', $term->term_id ),
+					'title'  => '&ndash; '.sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' ),
+					'parent' => $this->classs(),
+					'href'   => get_term_link( $term ),
+				] );
+		}
 	}
 
 	public function append_sub( $subs, $page = 'settings' )
