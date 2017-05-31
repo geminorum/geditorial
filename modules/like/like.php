@@ -4,9 +4,12 @@ defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Ajax;
+use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\HTTP;
 use geminorum\gEditorial\Core\Number;
+use geminorum\gEditorial\Core\WordPress;
 
 class Like extends gEditorial\Module
 {
@@ -39,6 +42,7 @@ class Like extends gEditorial\Module
 					'title'       => _x( 'Comments', 'Modules: Like: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Also display button for comments of enabled post types', 'Modules: Like: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 				],
+				'adminbar_summary',
 			],
 			'posttypes_option' => 'posttypes_option',
 		];
@@ -48,15 +52,8 @@ class Like extends gEditorial\Module
 	{
 		parent::setup();
 
-		if ( ! is_admin() ) {
+		if ( ! is_admin() )
 			$this->action( 'template_redirect' );
-
-			add_action( 'gnetwork_debugbar_panel_geditorial_like', [ $this, 'gnetwork_debugbar_panel' ] );
-			add_filter( 'gnetwork_debugbar_panel_groups', function( $groups ){
-				$groups['geditorial_like'] = _x( 'Editorial Like', 'Modules: Like: Debug Bar Panel Title', GEDITORIAL_TEXTDOMAIN );
-				return $groups;
-			} );
-		}
 	}
 
 	public function init()
@@ -106,18 +103,65 @@ class Like extends gEditorial\Module
 		return $html;
 	}
 
-	public function gnetwork_debugbar_panel()
+	public function adminbar_init( $wp_admin_bar, $parent, $link )
 	{
 		if ( ! $this->post_id )
 			return;
 
-		$users = $this->get_postmeta( $this->post_id, FALSE, [], $this->meta_key.'_users' );
-		$guests = $this->get_postmeta( $this->post_id, FALSE, [], $this->meta_key.'_guests' );
-		$cookie = $this->get_cookie();
+		if ( is_admin() || ! is_singular( $this->post_types() ) )
+			return;
 
-		echo 'Users:'; self::dump( $users );
-		echo 'Guests:'; self::dump( $guests );
-		echo 'Cookie:'; self::dump( $cookie );
+		if ( ! $this->cuc( 'adminbar' ) )
+			return;
+
+		$users  = $this->get_postmeta( $this->post_id, FALSE, [], $this->meta_key.'_users' );
+		$guests = $this->get_postmeta( $this->post_id, FALSE, [], $this->meta_key.'_guests' );
+
+		if ( count( $users ) ) {
+
+			$cap = current_user_can( 'edit_users' );
+
+			$wp_admin_bar->add_node( [
+				'id'     => $this->classs( 'users' ),
+				'title'  => sprintf( _x( 'Like Summary: Users %s', 'Modules: Like: Adminbar', GEDITORIAL_TEXTDOMAIN ),
+					'(<span class="count">'.Number::format( count( $users ) ).'<span>)' ),
+				'parent' => $parent,
+				'href'   => Settings::subURL( $this->key, 'reports' ),
+			] );
+
+			foreach ( $users as $timestamp => $user_id )
+				$wp_admin_bar->add_node( [
+					'id'     => $this->classs( 'user', $user_id ),
+					'title'  => Helper::humanTimeDiffRound( intval( $timestamp ) ).' &ndash; '.get_the_author_meta( 'display_name', $user_id ),
+					'parent' => $this->classs( 'users' ),
+					'href'   => $cap ? WordPress::getUserEditLink( $user_id ) : FALSE,
+					'meta'   => [
+						'title' => Helper::humanTimeAgo( intval( $timestamp ), current_time( 'timestamp', FALSE ) ),
+					],
+				] );
+		}
+
+		if ( count( $guests ) ) {
+
+			$wp_admin_bar->add_node( [
+				'id'     => $this->classs( 'guests' ),
+				'title'  => sprintf( _x( 'Like Summary: Guests %s', 'Modules: Like: Adminbar', GEDITORIAL_TEXTDOMAIN ),
+					'(<span class="count">'.Number::format( count( $guests ) ).'<span>)' ),
+				'parent' => $parent,
+				'href'   => Settings::subURL( $this->key, 'reports' ),
+			] );
+
+			foreach ( $guests as $timestamp => $ip )
+				$wp_admin_bar->add_node( [
+					'id'     => $this->classs( 'guest', $timestamp ),
+					'title'  => Helper::humanTimeDiffRound( intval( $timestamp ) ).' &ndash; '.$ip,
+					'parent' => $this->classs( 'guests' ),
+					'href'   => sprintf( 'http://freegeoip.net/?q=%s', $ip ),
+					'meta'   => [
+						'title' => Helper::humanTimeAgo( intval( $timestamp ), current_time( 'timestamp', FALSE ) ),
+					],
+				] );
+		}
 	}
 
 	public function ajax()
