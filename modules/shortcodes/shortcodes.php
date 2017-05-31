@@ -13,18 +13,26 @@ class Shortcodes extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'      => 'shortcodes',
-			'title'     => _x( 'Shortcodes', 'Modules: Shortcodes', GEDITORIAL_TEXTDOMAIN ),
-			'desc'      => _x( 'Shortcode Tools', 'Modules: Shortcodes', GEDITORIAL_TEXTDOMAIN ),
-			'icon'      => 'media-code',
-			'frontend'  => FALSE,
-			'configure' => FALSE,
+			'name'  => 'shortcodes',
+			'title' => _x( 'Shortcodes', 'Modules: Shortcodes', GEDITORIAL_TEXTDOMAIN ),
+			'desc'  => _x( 'Shortcode Tools', 'Modules: Shortcodes', GEDITORIAL_TEXTDOMAIN ),
+			'icon'  => 'media-code',
+		];
+	}
+
+	protected function get_global_settings()
+	{
+		return [
+			'_general' => [
+				'adminbar_summary',
+			],
+			'posttypes_option' => 'posttypes_option',
 		];
 	}
 
 	public function adminbar_init( $wp_admin_bar, $parent, $link )
 	{
-		if ( is_admin() || ! is_singular() )
+		if ( is_admin() || ! is_singular( $this->post_types() ) )
 			return;
 
 		if ( ! $this->cuc( 'adminbar' ) )
