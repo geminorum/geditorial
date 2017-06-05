@@ -83,17 +83,6 @@ class WordPress extends Base
 		defined( 'DONOTCACHEPAGE' ) or define( 'DONOTCACHEPAGE', TRUE );
 	}
 
-	public static function getUsers( $all_fields = FALSE, $network = FALSE, $extra = array() )
-	{
-		$users = get_users( array_merge( array(
-			'blog_id' => ( $network ? '' : $GLOBALS['blog_id'] ),
-			'orderby' => 'display_name',
-			'fields'  => ( $all_fields ? 'all_with_meta' : 'all' ),
-		), $extra ) );
-
-		return Arraay::reKey( $users, 'ID' );
-	}
-
 	public static function getAttachments( $post_id, $mime_type = 'image' )
 	{
 		return get_children( array(

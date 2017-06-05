@@ -29,7 +29,7 @@ class Module extends Core\Base
 		$suffix = '';
 
 		foreach ( func_get_args() as $arg )
-			$suffix .= '_'.$arg;
+			$suffix .= '_'.strtolower( $arg );
 
 		return $this->base.'_'.$this->key.$suffix;
 	}
@@ -39,7 +39,7 @@ class Module extends Core\Base
 		$suffix = '';
 
 		foreach ( func_get_args() as $arg )
-			$suffix .= '-'.$arg;
+			$suffix .= '-'.strtolower( $arg );
 
 		return $this->base.'-'.$this->key.$suffix;
 	}
