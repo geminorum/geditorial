@@ -17,7 +17,7 @@ class Settings extends Core\Base
 	const SETTINGS = 'geditorial-settings';
 	const TOOLS    = 'geditorial-tools';
 
-	public static function subURL( $sub = 'overview', $context = 'reports' )
+	public static function subURL( $sub = 'overview', $context = 'reports', $extra = [] )
 	{
 		switch ( $context ) {
 			case 'reports' : $url = self::reportsURL();  break;
@@ -27,7 +27,9 @@ class Settings extends Core\Base
 			default: $url = URL::current();
 		}
 
-		return add_query_arg( 'sub', $sub, $url );
+		return add_query_arg( array_merge( [
+			'sub' => $sub,
+		], $extra ), $url );
 	}
 
 	public static function reportsURL( $full = TRUE, $dashboard = FALSE )
