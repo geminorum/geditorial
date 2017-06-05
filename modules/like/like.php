@@ -48,19 +48,14 @@ class Like extends gEditorial\Module
 		];
 	}
 
-	public function setup( $args = [] )
-	{
-		parent::setup();
-
-		if ( ! is_admin() )
-			$this->action( 'template_redirect' );
-	}
-
 	public function init()
 	{
 		parent::init();
 
 		$this->cookie = 'geditorial-like-'.get_current_blog_id();
+
+		if ( ! is_admin() && count( $this->post_types() ) )
+			$this->action( 'template_redirect' );
 	}
 
 	public function init_ajax()
