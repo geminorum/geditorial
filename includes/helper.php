@@ -140,6 +140,11 @@ class Helper extends Core\Base
 		return '';
 	}
 
+	public static function getCounted( $count, $template = '%s' )
+	{
+		return sprintf( $template, '(<span class="count">'.Number::format( $count ).'<span>)' );
+	}
+
 	public static function getTermsEditRow( $post, $taxonomy, $before = '', $after = '' )
 	{
 		$object = is_object( $taxonomy ) ? $taxonomy : get_taxonomy( $taxonomy );
@@ -384,6 +389,19 @@ class Helper extends Core\Base
 		return self::enqueueScript( $asset, $dep, $version, $base, $path );
 	}
 
+	public static function enqueueScriptPackage( $asset, $package = NULL, $dep = [], $version = GEDITORIAL_VERSION, $base = GEDITORIAL_URL, $path = 'assets/packages' )
+	{
+		if ( is_null( $package ) )
+			$package = $asset.'/'.$asset;
+
+		$handle  = strtolower( self::BASE.'-'.str_replace( '.', '-', $asset ) );
+		$variant = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
+
+		wp_enqueue_script( $handle, $base.$path.'/'.$package.$variant.'.js', $dep, $version, TRUE );
+
+		return $handle;
+	}
+
 	public static function registerScriptPackage( $asset, $package = NULL, $dep = [], $version = GEDITORIAL_VERSION, $base = GEDITORIAL_URL, $path = 'assets/packages' )
 	{
 		if ( is_null( $package ) )
@@ -405,6 +423,14 @@ class Helper extends Core\Base
 			return FALSE;
 
 		return call_user_func( $callback );
+	}
+
+	public static function ipLookup( $ip )
+	{
+		if ( function_exists( 'gnetwork_ip_lookup' ) )
+			return gnetwork_ip_lookup( $ip );
+
+		return $ip;
 	}
 
 	public static function getTinyMceStrings( $locale )
