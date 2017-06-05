@@ -21,6 +21,7 @@ class Module extends Base
 
 	protected $cookie     = 'geditorial';
 	protected $field_type = 'meta';
+	protected $icon_group = 'genericons-neue';
 
 	protected $priority_init          = 10;
 	protected $priority_init_ajax     = 10;
@@ -2149,5 +2150,10 @@ SQL;
 			'option'  => $this->base.'_'.$sub.'_'.$option,
 			'label'   => $label,
 		] );
+	}
+
+	public function get_icon( $name, $group = NULL )
+	{
+		return gEditorial()->icon( $name, ( is_null( $group ) ? $this->icon_group : $group ) );
 	}
 }
