@@ -104,7 +104,7 @@ class Audit extends gEditorial\Module
 	}
 
 	// FIXME: no need / instead top level with ajax change option
-	public function adminbar_init( $wp_admin_bar, $parent, $link )
+	public function adminbar_init( &$nodes, $parent )
 	{
 		if ( is_admin() || ! is_singular( $this->post_types() ) )
 			return;
@@ -112,22 +112,22 @@ class Audit extends gEditorial\Module
 		if ( ! $this->cuc( 'adminbar' ) )
 			return;
 
-		$wp_admin_bar->add_node( [
+		$nodes[] = [
 			'id'     => $this->classs(),
 			'title'  => _x( 'Audit Attributes', 'Modules: Audit: Adminbar', GEDITORIAL_TEXTDOMAIN ),
 			'parent' => $parent,
 			'href'   => Settings::subURL( $this->key, 'reports' ),
-		] );
+		];
 
 		$terms = Taxonomy::getTerms( $this->constant( 'audit_tax' ), NULL, TRUE );
 
 		foreach ( $terms as $term )
-			$wp_admin_bar->add_node( [
+			$nodes[] = [
 				'id'     => $this->classs( 'attribute', $term->term_id ),
 				'title'  => sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' ),
 				'parent' => $this->classs(),
 				'href'   => get_term_link( $term ),
-			] );
+			];
 	}
 
 	public function current_screen( $screen )

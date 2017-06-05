@@ -30,7 +30,7 @@ class Shortcodes extends gEditorial\Module
 		];
 	}
 
-	public function adminbar_init( $wp_admin_bar, $parent, $link )
+	public function adminbar_init( &$nodes, $parent )
 	{
 		if ( is_admin() || ! is_singular( $this->post_types() ) )
 			return;
@@ -46,20 +46,20 @@ class Shortcodes extends gEditorial\Module
 		if ( ! preg_match_all( '/'.$pattern.'/s', $post->post_content, $matches ) )
 			return;
 
-		$wp_admin_bar->add_node( [
+		$nodes[] = [
 			'id'     => $this->classs(),
 			'title'  => _x( 'Shortcodes', 'Modules: Shortcodes: Adminbar', GEDITORIAL_TEXTDOMAIN ),
 			'parent' => $parent,
 			'href'   => Settings::subURL( $this->key, 'reports' ),
-		] );
+		];
 
 		foreach ( $matches[0] as $offset => $shortcode )
-			$wp_admin_bar->add_node( [
+			$nodes[] = [
 				'id'     => $this->classs( 'shortcode', $offset ),
 				'title'  => '<span dir="ltr">'.$matches[2][$offset].': '.Helper::trimChars( strip_tags( $shortcode ), 125 ).'</span>',
 				'parent' => $this->classs(),
 				'href'   => FALSE,
-			] );
+			];
 	}
 
 	public function reports_settings( $sub )

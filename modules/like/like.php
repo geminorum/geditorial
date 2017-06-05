@@ -103,7 +103,7 @@ class Like extends gEditorial\Module
 		return $html;
 	}
 
-	public function adminbar_init( $wp_admin_bar, $parent, $link )
+	public function adminbar_init( &$nodes, $parent )
 	{
 		if ( ! $this->post_id )
 			return;
@@ -121,16 +121,16 @@ class Like extends gEditorial\Module
 
 			$cap = current_user_can( 'edit_users' );
 
-			$wp_admin_bar->add_node( [
+			$nodes[] = [
 				'id'     => $this->classs( 'users' ),
 				'title'  => sprintf( _x( 'Like Summary: Users %s', 'Modules: Like: Adminbar', GEDITORIAL_TEXTDOMAIN ),
 					'(<span class="count">'.Number::format( count( $users ) ).'<span>)' ),
 				'parent' => $parent,
 				'href'   => Settings::subURL( $this->key, 'reports' ),
-			] );
+			];
 
 			foreach ( $users as $timestamp => $user_id )
-				$wp_admin_bar->add_node( [
+				$nodes[] = [
 					'id'     => $this->classs( 'user', $user_id ),
 					'title'  => Helper::humanTimeDiffRound( intval( $timestamp ) ).' &ndash; '.get_the_author_meta( 'display_name', $user_id ),
 					'parent' => $this->classs( 'users' ),
@@ -138,7 +138,7 @@ class Like extends gEditorial\Module
 					'meta'   => [
 						'title' => Helper::humanTimeAgo( intval( $timestamp ), current_time( 'timestamp', FALSE ) ),
 					],
-				] );
+				];
 		}
 
 		if ( count( $guests ) ) {

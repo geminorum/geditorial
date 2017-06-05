@@ -37,7 +37,7 @@ class Terms extends gEditorial\Module
 		];
 	}
 
-	public function adminbar_init( $wp_admin_bar, $parent, $link )
+	public function adminbar_init( &$nodes, $parent )
 	{
 		if ( is_admin() )
 			return;
@@ -45,12 +45,12 @@ class Terms extends gEditorial\Module
 		if ( ! $this->cuc( 'adminbar' ) )
 			return;
 
-		$wp_admin_bar->add_node( [
+		$nodes[] = [
 			'id'     => $this->classs(),
 			'title'  => _x( 'Term Summary', 'Modules: Terms: Adminbar', GEDITORIAL_TEXTDOMAIN ),
 			'parent' => $parent,
 			'href'   => Settings::subURL( 'uncategorized', 'reports' ),
-		] );
+		];
 
 		foreach ( $this->taxonomies() as $taxonomy ) {
 
@@ -61,20 +61,20 @@ class Terms extends gEditorial\Module
 
 			$object = get_taxonomy( $taxonomy );
 
-			$wp_admin_bar->add_node( [
+			$nodes[] = [
 				'id'     => $this->classs( 'tax', $taxonomy ),
 				'title'  => $object->labels->name.':',
 				'parent' => $this->classs(),
 				'href'   => WordPress::getEditTaxLink( $taxonomy ),
-			] );
+			];
 
 			foreach ( $terms as $term )
-				$wp_admin_bar->add_node( [
+				$nodes[] = [
 					'id'     => $this->classs( 'term', $term->term_id ),
 					'title'  => '&ndash; '.sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' ),
 					'parent' => $this->classs(),
 					'href'   => get_term_link( $term ),
-				] );
+				];
 		}
 	}
 

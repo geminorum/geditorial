@@ -2,8 +2,10 @@
 
 defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
 
+use geminorum\gEditorial\Core\Arraay;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Icon;
+use geminorum\gEditorial\WordPress\User;
 
 class Plugin
 {
@@ -15,6 +17,7 @@ class Plugin
 	private $asset_jsargs   = [];
 	private $asset_icons    = [];
 	private $editor_buttons = [];
+	private $adminbar_nodes = [];
 
 	public static function instance()
 	{
@@ -56,7 +59,8 @@ class Plugin
 		add_action( 'admin_init', [ $this, 'admin_init' ] );
 		add_action( 'wp_footer', [ $this, 'footer_asset_config' ], 1 );
 		add_action( 'wp_enqueue_scripts', [ $this, 'wp_enqueue_scripts' ] );
-		add_action( 'admin_bar_menu', [ $this, 'admin_bar_menu' ], 999 );
+		add_action( 'admin_bar_menu', [ $this, 'admin_bar_menu_early' ], 9 );
+		add_action( 'admin_bar_menu', [ $this, 'admin_bar_menu_late' ], 999 );
 		add_filter( 'mce_external_languages', [ $this, 'mce_external_languages' ] );
 	}
 
@@ -428,26 +432,41 @@ class Plugin
 		$this->editor_buttons[$button] = GEDITORIAL_URL.$filepath;
 	}
 
-	public function admin_bar_menu( $wp_admin_bar )
+	public function admin_bar_menu_early( $wp_admin_bar )
 	{
-		if ( ! is_user_logged_in() )
+		do_action_ref_array( 'geditorial_adminbar', [ &$this->adminbar_nodes, self::BASE ] );
+	}
+
+	public function admin_bar_menu_late( $wp_admin_bar )
+	{
+		if ( ! count( $this->adminbar_nodes ) )
 			return;
 
-		if ( ! has_action( 'geditorial_adminbar' ) )
-			return;
+		if ( in_array( self::BASE, Arraay::column( $this->adminbar_nodes, 'parent' ) ) ) {
 
-		$parent = 'geditorial';
-		$link   = current_user_can( 'manage_options' ) ? Settings::settingsURL() : Settings::reportsURL();
+			if ( ! is_user_logged_in() )
+				$link = FALSE;
 
-		$wp_admin_bar->add_node( [
-			'id'     => $parent,
-			'title'  => Helper::getAdminBarIcon(),
-			// 'parent' => 'top-secondary',
-			'href'   => $link,
-			'meta'   => [ 'title' => _x( 'Editorial', 'Plugin: Main: Adminbar Node', GEDITORIAL_TEXTDOMAIN ) ],
-		] );
+			else if ( User::cuc( 'manage_options' ) )
+				$link = Settings::settingsURL();
 
-		do_action_ref_array( 'geditorial_adminbar', [ &$wp_admin_bar, $parent, $link ] );
+			else if ( User::cuc( 'edit_others_posts' ) )
+				$link = Settings::reportsURL();
+
+			else
+				$link = FALSE;
+
+			$wp_admin_bar->add_node( [
+				'id'     => self::BASE,
+				'title'  => Helper::getAdminBarIcon(),
+				// 'parent' => 'top-secondary',
+				'href'   => $link,
+				'meta'   => [ 'title' => _x( 'Editorial', 'Plugin: Main: Adminbar Node', GEDITORIAL_TEXTDOMAIN ) ],
+			] );
+		}
+
+		foreach ( $this->adminbar_nodes as $node )
+			$wp_admin_bar->add_node( $node );
 	}
 
 	public static function na( $wrap = 'code' )
