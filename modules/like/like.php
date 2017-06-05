@@ -138,16 +138,16 @@ class Like extends gEditorial\Module
 
 		if ( count( $guests ) ) {
 
-			$wp_admin_bar->add_node( [
+			$nodes[] = [
 				'id'     => $this->classs( 'guests' ),
 				'title'  => sprintf( _x( 'Like Summary: Guests %s', 'Modules: Like: Adminbar', GEDITORIAL_TEXTDOMAIN ),
 					'(<span class="count">'.Number::format( count( $guests ) ).'<span>)' ),
 				'parent' => $parent,
 				'href'   => Settings::subURL( $this->key, 'reports' ),
-			] );
+			];
 
 			foreach ( $guests as $timestamp => $ip )
-				$wp_admin_bar->add_node( [
+				$nodes[] = [
 					'id'     => $this->classs( 'guest', $timestamp ),
 					'title'  => Helper::humanTimeDiffRound( intval( $timestamp ) ).' &ndash; '.$ip,
 					'parent' => $this->classs( 'guests' ),
@@ -155,7 +155,7 @@ class Like extends gEditorial\Module
 					'meta'   => [
 						'title' => Helper::humanTimeAgo( intval( $timestamp ), current_time( 'timestamp', FALSE ) ),
 					],
-				] );
+				];
 		}
 	}
 
