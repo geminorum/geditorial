@@ -3,6 +3,7 @@
 defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core\HTML;
+use geminorum\gEditorial\Core\Icon;
 
 class Plugin
 {
@@ -11,7 +12,8 @@ class Plugin
 
 	private $asset_styles   = FALSE;
 	private $asset_config   = FALSE;
-	private $asset_args     = [];
+	private $asset_jsargs   = [];
+	private $asset_icons    = [];
 	private $editor_buttons = [];
 
 	public static function instance()
@@ -380,13 +382,13 @@ class Plugin
 			return TRUE;
 
 		if ( is_null( $module ) )
-			$this->asset_args = array_merge( $this->asset_args, $args );
+			$this->asset_jsargs = array_merge( $this->asset_jsargs, $args );
 
-		else if ( isset( $this->asset_args[$module] ) )
-			$this->asset_args[$module] = array_merge( $this->asset_args[$module], $args );
+		else if ( isset( $this->asset_jsargs[$module] ) )
+			$this->asset_jsargs[$module] = array_merge( $this->asset_jsargs[$module], $args );
 
 		else
-			$this->asset_args[$module] = $args;
+			$this->asset_jsargs[$module] = $args;
 
 		return TRUE;
 	}
@@ -394,10 +396,31 @@ class Plugin
 	// used in front & admin
 	public function footer_asset_config()
 	{
-		if ( ! $this->asset_config )
-			return;
+		if ( $this->asset_config )
+			Ajax::printJSConfig( $this->asset_jsargs );
 
-		Ajax::printJSConfig( $this->asset_args );
+		Icon::printSprites( $this->asset_icons );
+	}
+
+	public function icon( $name, $group, $enqueue = TRUE )
+	{
+		if ( $icon = Icon::get( $name, $group ) ) {
+
+			if ( ! $enqueue )
+				return $icon;
+
+			$key = $group.'_'.$name;
+
+			if ( ! isset( $this->asset_icons[$key] ) )
+				$this->asset_icons[$key] = [
+					'icon'    => $name,
+					'group'   => $group,
+				];
+
+			return $icon;
+		}
+
+		return FALSE;
 	}
 
 	public function register_editor_button( $button, $filepath )
