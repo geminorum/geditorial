@@ -446,6 +446,30 @@ class Settings extends Core\Base
 		];
 	}
 
+	public static function getSetting_supported_roles( $section )
+	{
+		return [
+			'field'   => 'supported_roles',
+			'type'    => 'checkbox',
+			'title'   => _x( 'Supported Roles', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+			'default' => [],
+			'values'  => User::getRoleList(),
+			'section' => $section,
+		];
+	}
+
+	public static function getSetting_excluded_roles( $section )
+	{
+		return [
+			'field'   => 'excluded_roles',
+			'type'    => 'checkbox',
+			'title'   => _x( 'Excluded Roles', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+			'default' => [],
+			'values'  => User::getRoleList(),
+			'section' => $section,
+		];
+	}
+
 	public static function sub( $default = 'general' )
 	{
 		return trim( self::req( 'sub', $default ) );
