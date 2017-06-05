@@ -7,7 +7,7 @@ use geminorum\gEditorial\Core\HTML;
 class Plugin
 {
 
-	private $group = 'geditorial_';
+	const BASE = 'geditorial';
 
 	private $asset_styles   = FALSE;
 	private $asset_config   = FALSE;
@@ -151,7 +151,7 @@ class Plugin
 		$defaults = [
 			'class'     => Helper::moduleClass( $args['name'], FALSE ),
 			'icon'      => 'smiley', // dashicon class
-			'group'     => $this->group.$args['name'],
+			'group'     => self::BASE.'_'.$args['name'],
 			'settings'  => 'geditorial-settings-'.$args['name'],
 			'configure' => 'print_configure_view',
 			'frontend'  => TRUE, // whether or not the module should be loaded on the frontend too
@@ -287,7 +287,7 @@ class Plugin
 		$options = [];
 
 		foreach ( $this->modules as $name => $enabled )
-			$options[$name] = get_option( $this->group.$name.'_options', '{{NO-OPTIONS}}' );
+			$options[$name] = get_option( self::BASE.'_'.$name.'_options', '{{NO-OPTIONS}}' );
 
 		$options['{{GLOBAL}}'] = get_option( 'geditorial_options', FALSE );
 
@@ -303,7 +303,7 @@ class Plugin
 
 		foreach ( $this->modules as $mod_name => &$module ) {
 
-			$key = $this->group.$mod_name.'_options';
+			$key = self::BASE.'_'.$mod_name.'_options';
 			$old = get_option( $key );
 
 			if ( isset( $options[$mod_name] ) ) {
