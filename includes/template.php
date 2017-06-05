@@ -365,11 +365,15 @@ class Template extends Core\Base
 				$args['description'] = sprintf( _x( 'Search for %s', 'Template: Search Link Title Attr', GEDITORIAL_TEXTDOMAIN ), $meta );
 		}
 
-		$html = $args['image'] ? HTML::tag( 'img', [
-			'src'   => $args['image'],
-			'alt'   => $meta,
-			'class' => '-label-image',
-		] ) : $meta;
+		if ( $args['image'] )
+			$html = HTML::tag( 'img', [
+				'src'   => $args['image'],
+				'alt'   => $meta,
+				'class' => '-label-image',
+			] );
+
+		else
+			$html = $meta;
 
 		if ( ! $html && $args['default'] )
 			$html = $args['default'];

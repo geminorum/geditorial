@@ -108,7 +108,7 @@ class Drafts extends gEditorial\Module
 
 	public function ajax()
 	{
-		$post = wp_unslash( $_POST );
+		$post = self::unslash( $_POST );
 		$what = empty( $post['what'] ) ? 'nothing': trim( $post['what'] );
 
 		switch ( $what ) {

@@ -323,7 +323,7 @@ class Revisions extends gEditorial\Module
 		if ( ! $this->cuc( 'ajax' ) )
 			self::cheatin();
 
-		$post = wp_unslash( $_POST );
+		$post = self::unslash( $_POST );
 		$what = empty( $post['what'] ) ? 'nothing': trim( $post['what'] );
 
 		if ( empty( $post['post_id'] ) )

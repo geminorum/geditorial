@@ -9,6 +9,7 @@ use geminorum\gEditorial\Core\URL;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\Taxonomy;
+use geminorum\gEditorial\WordPress\User;
 
 class Settings extends Core\Base
 {
@@ -1352,7 +1353,7 @@ class Settings extends Core\Base
 			case 'user':
 
 				if ( ! $args['values'] )
-					$args['values'] = WordPress::getUsers( FALSE, FALSE, $args['extra'] );
+					$args['values'] = User::get( FALSE, FALSE, $args['extra'] );
 
 				if ( ! is_null( $args['none_title'] ) ) {
 

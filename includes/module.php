@@ -115,7 +115,7 @@ class Module extends Base
 		$this->action( 'init', 0, $this->priority_init );
 
 		if ( $ui && method_exists( $this, 'adminbar_init' ) && $this->get_setting( 'adminbar_summary' ) )
-			add_action( 'geditorial_adminbar', [ $this, 'adminbar_init' ], $this->priority_adminbar_init, 3 );
+			add_action( 'geditorial_adminbar', [ $this, 'adminbar_init' ], $this->priority_adminbar_init, 2 );
 
 		if ( is_admin() ) {
 
@@ -1142,7 +1142,7 @@ class Module extends Base
 	public function set_cookie( $array, $append = TRUE, $expire = '+ 365 day' )
 	{
 		if ( $append ) {
-			$old = isset( $_COOKIE[$this->cookie] ) ? json_decode( wp_unslash( $_COOKIE[$this->cookie] ) ) : [];
+			$old = isset( $_COOKIE[$this->cookie] ) ? json_decode( self::unslash( $_COOKIE[$this->cookie] ) ) : [];
 			$new = wp_json_encode( self::recursiveParseArgs( $array, $old ) );
 		} else {
 			$new = wp_json_encode( $array );
@@ -1153,7 +1153,7 @@ class Module extends Base
 
 	public function get_cookie()
 	{
-		return isset( $_COOKIE[$this->cookie] ) ? json_decode( wp_unslash( $_COOKIE[$this->cookie] ), TRUE ) : [];
+		return isset( $_COOKIE[$this->cookie] ) ? json_decode( self::unslash( $_COOKIE[$this->cookie] ), TRUE ) : [];
 	}
 
 	public function delete_cookie()

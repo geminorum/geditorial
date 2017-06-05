@@ -118,8 +118,7 @@ class Like extends gEditorial\Module
 
 			$nodes[] = [
 				'id'     => $this->classs( 'users' ),
-				'title'  => sprintf( _x( 'Like Summary: Users %s', 'Modules: Like: Adminbar', GEDITORIAL_TEXTDOMAIN ),
-					'(<span class="count">'.Number::format( count( $users ) ).'<span>)' ),
+				'title'  => Helper::getCounted( count( $users ), _x( 'Like Summary: Users %s', 'Modules: Like: Adminbar', GEDITORIAL_TEXTDOMAIN ) ),
 				'parent' => $parent,
 				'href'   => Settings::subURL( $this->key, 'reports' ),
 			];
@@ -140,8 +139,7 @@ class Like extends gEditorial\Module
 
 			$nodes[] = [
 				'id'     => $this->classs( 'guests' ),
-				'title'  => sprintf( _x( 'Like Summary: Guests %s', 'Modules: Like: Adminbar', GEDITORIAL_TEXTDOMAIN ),
-					'(<span class="count">'.Number::format( count( $guests ) ).'<span>)' ),
+				'title'  => Helper::getCounted( count( $guests ), _x( 'Like Summary: Guests %s', 'Modules: Like: Adminbar', GEDITORIAL_TEXTDOMAIN ) ),
 				'parent' => $parent,
 				'href'   => Settings::subURL( $this->key, 'reports' ),
 			];
@@ -161,7 +159,7 @@ class Like extends gEditorial\Module
 
 	public function ajax()
 	{
-		$post = wp_unslash( $_POST );
+		$post = self::unslash( $_POST );
 		$what = isset( $post['what'] ) ? $post['what'] : 'nothing';
 
 		switch ( $what ) {

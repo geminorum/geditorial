@@ -60,6 +60,9 @@ class Magazine extends gEditorial\Module
 				],
 			],
 			'posttypes_option' => 'posttypes_option',
+			'_supports' => [
+				$this->settings_supports_option( 'issue_cpt', TRUE ),
+			],
 		];
 	}
 
