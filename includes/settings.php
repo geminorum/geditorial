@@ -251,11 +251,9 @@ class Settings extends Core\Base
 	{
 		return [
 			'field'       => 'redirect_archives',
-			'type'        => 'text',
+			'type'        => 'url',
 			'title'       => _x( 'Redirect Archives', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 			'description' => _x( 'Redirect Post Type Archives to a URL', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-			'default'     => '',
-			'dir'         => 'ltr',
 			'placeholder' => 'http://example.com/archives/',
 			'section'     => $section,
 		];
@@ -1010,9 +1008,6 @@ class Settings extends Core\Base
 				if ( ! $args['field_class'] )
 					$args['field_class'] = 'regular-text';
 
-				if ( ! count( $args['dir'] ) )
-					$args['data'] = [ 'accept' => 'text' ];
-
 				echo HTML::tag( 'input', [
 					'type'        => 'text',
 					'id'          => $id,
@@ -1035,9 +1030,6 @@ class Settings extends Core\Base
 				if ( ! $args['dir'] )
 					$args['dir'] = 'ltr';
 
-				if ( ! count( $args['dir'] ) )
-					$args['data'] = [ 'accept' => 'number' ];
-
 				echo HTML::tag( 'input', [
 					'type'        => 'number',
 					'id'          => $id,
@@ -1057,13 +1049,10 @@ class Settings extends Core\Base
 			case 'url':
 
 				if ( ! $args['field_class'] )
-					$args['field_class'] = [ 'large-text', 'url-text' ];
+					$args['field_class'] = [ 'regular-text', 'url-text' ];
 
 				if ( ! $args['dir'] )
 					$args['dir'] = 'ltr';
-
-				if ( ! count( $args['dir'] ) )
-					$args['data'] = [ 'accept' => 'url' ];
 
 				echo HTML::tag( 'input', [
 					'type'        => 'url',

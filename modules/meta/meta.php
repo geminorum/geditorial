@@ -290,32 +290,37 @@ class Meta extends gEditorial\Module
 			switch ( $args['type'] ) {
 
 				case 'text':
+
 					ModuleMetaBox::fieldString( $field, [ $field ], $post, $args['ltr'], $args['title'], FALSE, $args['type'] );
-				break;
 
+				break;
 				case 'note':
-					ModuleMetaBox::fieldTextarea( $field, [ $field ], $post, $args['ltr'], $args['title'], FALSE, $args['type'] );
-				break;
 
+					ModuleMetaBox::fieldTextarea( $field, [ $field ], $post, $args['ltr'], $args['title'], FALSE, $args['type'] );
+
+				break;
 				case 'code':
 				case 'link':
+
 					ModuleMetaBox::fieldString( $field, [ $field ], $post, TRUE, $args['title'], FALSE, $args['type'] );
-				break;
 
+				break;
 				case 'number':
+
 					ModuleMetaBox::fieldNumber( $field, [ $field ], $post, TRUE, $args['title'], FALSE, $args['type'] );
-				break;
 
+				break;
 				case 'textarea':
-					ModuleMetaBox::fieldTextarea( $field, [ $field ], $post, $args['ltr'], $args['title'], FALSE, $args['type'] );
-				break;
 
+					ModuleMetaBox::fieldTextarea( $field, [ $field ], $post, $args['ltr'], $args['title'], FALSE, $args['type'] );
+
+				break;
 				case 'term':
+
 					if ( $args['tax'] )
 						ModuleMetaBox::fieldTerm( $field, [ $field ], $post, $args['tax'], $args['ltr'], $args['title'] );
 					else
 						ModuleMetaBox::fieldString( $field, [ $field ], $post, $args['ltr'], $args['title'], FALSE, $args['type'] );
-				break;
 			}
 		}
 
@@ -395,32 +400,37 @@ class Meta extends gEditorial\Module
 					switch ( $args['type'] ) {
 
 						case 'term':
+
 							ModuleMetaBox::setPostMetaField_Term( $post_id, $field, $args['tax'] );
-						break;
 
+						break;
 						case 'link':
+
 							ModuleMetaBox::setPostMetaField_URL( $postmeta, $field );
-						break;
 
+						break;
 						case 'code':
+
 							ModuleMetaBox::setPostMetaField_Code( $postmeta, $field );
-						break;
 
+						break;
 						case 'number':
-							ModuleMetaBox::setPostMetaField_Number( $postmeta, $field );
-						break;
 
+							ModuleMetaBox::setPostMetaField_Number( $postmeta, $field );
+
+						break;
 						case 'text':
 						case 'title_before':
 						case 'title_after':
-							ModuleMetaBox::setPostMetaField_String( $postmeta, $field );
-						break;
 
+							ModuleMetaBox::setPostMetaField_String( $postmeta, $field );
+
+						break;
 						case 'textarea':
 						case 'note':
 						case 'box':
+
 							ModuleMetaBox::setPostMetaField_Text( $postmeta, $field );
-						break;
 					}
 				}
 			}

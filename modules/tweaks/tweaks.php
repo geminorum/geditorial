@@ -398,8 +398,6 @@ class Tweaks extends gEditorial\Module
 				echo '<div class="geditorial-admin-wrap-column -tweaks -id">';
 					echo esc_html( $post_id );
 				echo '</div>';
-
-			break;
 		}
 	}
 

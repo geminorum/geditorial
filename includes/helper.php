@@ -284,8 +284,6 @@ class Helper extends Core\Base
 						'class'  => '-link -row-link -row-link-view',
 						'target' => '_blank',
 					], _x( 'View', 'Helper: Row Action', GEDITORIAL_TEXTDOMAIN ) );
-
-				break;
 			}
 		}
 
@@ -1121,11 +1119,13 @@ class Helper extends Core\Base
 
 			case 'hijri':
 			case 'islamic':
+
 				$convertor = [ 'gPersianDateDateTime', 'toHijri' ];
 				$the_day['cal'] = 'hijri';
 
 			case 'jalali':
 			case 'persian':
+
 				$convertor = [ 'gPersianDateDateTime', 'toJalali' ];
 				$the_day['cal'] = 'jalali';
 
@@ -1150,7 +1150,6 @@ class Helper extends Core\Base
 				}
 
 				// FIXME: add time
-
 		}
 
 		return $the_day;

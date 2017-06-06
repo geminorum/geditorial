@@ -329,7 +329,7 @@ class Config extends gEditorial\Module
 		if ( ! $this->cuc( 'settings' ) )
 			self::cheatin();
 
-		$post = wp_unslash( $_POST );
+		$post = self::unslash( $_POST );
 		$what = empty( $post['what'] ) ? 'nothing': trim( $post['what'] );
 
 		switch ( $what ) {

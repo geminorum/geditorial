@@ -174,22 +174,29 @@ class Series extends gEditorial\Module
 
 		foreach ( $pre_terms as $offset => $pre_term ) {
 			foreach ( $fields as $field ) {
+
 				switch ( $field ) {
-					case 'in_series_order' :
+
+					case 'in_series_order':
+
 						if ( isset( $_POST[$prefix.$field][$offset] ) && '0' != $_POST[$prefix.$field][$offset] )
 							$postmeta[$pre_term][$field] = Number::intval( $_POST[$prefix.$field][$offset] );
+
 						else if ( isset( $postmeta[$pre_term][$field] ) && isset( $_POST[$prefix.$field][$offset] )  )
 							unset( $postmeta[$pre_term][$field] );
+
 					break;
-					case 'in_series_title' :
-					case 'in_series_desc' :
+					case 'in_series_title':
+					case 'in_series_desc':
+
 						if ( isset( $_POST[$prefix.$field][$offset] )
 							&& strlen( $_POST[$prefix.$field][$offset] ) > 0
 							&& $this->get_string( $field, $post_type ) !== $_POST[$prefix.$field][$offset] )
 								$postmeta[$pre_term][$field] = Helper::kses( $_POST[$prefix.$field][$offset], 'text' );
+
 						else if ( isset( $postmeta[$pre_term][$field] ) && isset( $_POST[$prefix.$field][$offset] ) )
 							unset( $postmeta[$pre_term][$field] );
-					break;
+
 				}
 			}
 		}

@@ -251,22 +251,28 @@ class Specs extends gEditorial\Module
 			$postmeta[$offset]['spec_term_id'] = $term;
 
 			foreach ( $fields as $field ) {
+
 				switch ( $field ) {
-					case 'spec_order' :
+
+					case 'spec_order':
+
 						if ( isset( $_POST[$prefix.$field][$offset] ) && '0' != $_POST[$prefix.$field][$offset] )
 							$postmeta[$offset][$field] = Number::intval( $_POST[$prefix.$field][$offset] );
+
 						else if ( isset( $postmeta[$offset][$field] ) && isset( $_POST[$prefix.$field][$offset] )  )
 							unset( $postmeta[$offset][$field] );
+
 					break;
-					case 'spec_title' :
-					case 'spec_value' :
+					case 'spec_title':
+					case 'spec_value':
+
 						if ( isset( $_POST[$prefix.$field][$offset] )
 							&& strlen( $_POST[$prefix.$field][$offset] ) > 0
 							&& $this->get_string( $field, $post_type ) !== $_POST[$prefix.$field][$offset] )
 								$postmeta[$offset][$field] = Helper::kses( $_POST[$prefix.$field][$offset], 'text' );
+
 						else if ( isset( $postmeta[$offset][$field] ) && isset( $_POST[$prefix.$field][$offset] ) )
 							unset( $postmeta[$offset][$field] );
-					break;
 				}
 			}
 		}
