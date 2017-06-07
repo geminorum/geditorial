@@ -50,19 +50,20 @@ class Ajax extends Core\Base
 
 	public static function printJSConfig( $args, $object = 'gEditorial' )
 	{
-		$args['_domain'] = self::BASE; // FIXME: DEPRICATED
-		$args['_base']   = self::BASE;
-		$args['_url']    = defined( 'GNETWORK_AJAX_ENDPOINT' ) && GNETWORK_AJAX_ENDPOINT ? GNETWORK_AJAX_ENDPOINT : admin_url( 'admin-ajax.php' );
-		$args['_api']    = $args['_url']; // FIXME: DEPRICATED
-		$args['_dev']    = WordPress::isDev();
-		$args['_nonce']  = wp_create_nonce( self::BASE ); // FIXME: DEPRICATED
+		$props = array_merge( $args, [
+			'_base'  => self::BASE,
+			'_url'   => esc_url_raw( admin_url( 'admin-ajax.php' ) ),
+			'_api'   => esc_url_raw( rest_url() ),
+			'_dev'   => WordPress::isDev(),
+			// '_nonce' => wp_create_nonce( self::BASE ), // FIXME: DEPRICATED
+		] );
 
 	?><script type="text/javascript">
 /* <![CDATA[ */
 	var <?php echo $object.'Modules'; ?> = {};
-	var <?php echo $object; ?> = <?php echo wp_json_encode( $args ); ?>;
-	<?php if ( $args['_dev'] ) echo 'console.log('.$object.');'."\n"; ?>
+	var <?php echo $object; ?> = <?php echo wp_json_encode( $props ); ?>;
+	<?php if ( $props['_dev'] ) echo 'console.log('.$object.');'."\n"; ?>
 /* ]]> */
 </script><?php
-}
 	}
+}
