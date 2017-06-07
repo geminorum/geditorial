@@ -2040,6 +2040,9 @@ SQL;
 	// should we insert content?
 	public function is_content_insert( $posttypes = '', $first_page = TRUE )
 	{
+		if ( is_embed() )
+			return FALSE;
+
 		if ( ! is_main_query() )
 			return FALSE;
 
