@@ -1240,7 +1240,7 @@ class Module extends Base
 
 			// @SEE: https://core.trac.wordpress.org/ticket/39023
 			'show_in_rest' => TRUE,
-			'rest_base'    => $this->constant( $constant_key.'_rest', $post_type ),
+			'rest_base'    => $this->constant( $constant_key.'_rest', $this->constant( $constant_key.'_archive', $post_type ) ),
 			// 'rest_controller_class' => 'WP_REST_Posts_Controller',
 
 			// SEE: https://github.com/torounit/custom-post-type-permalinks
