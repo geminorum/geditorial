@@ -45,6 +45,11 @@ class Users extends gEditorial\Module
 				// ],
 				'calendar_type',
 				'admin_restrict',
+				[
+					'field'       => 'author_restrict',
+					'title'       => _x( 'Author Restrictions', 'Modules: Users: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Enhance admin edit page for authors', 'Modules: Users: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+				],
 			],
 			'posttypes_option' => 'posttypes_option',
 		];
@@ -146,6 +151,9 @@ class Users extends gEditorial\Module
 			if ( $this->get_setting( 'admin_restrict', FALSE ) )
 				$this->action( 'restrict_manage_posts', 2, 12 );
 
+			if ( $this->get_setting( 'author_restrict', FALSE ) )
+				$this->action( 'pre_get_posts' );
+
 		} else if ( 'users' == $screen->base ) {
 
 			if ( $this->get_setting( 'posttype_counts', FALSE ) ) {
@@ -191,11 +199,25 @@ class Users extends gEditorial\Module
 		wp_dropdown_users( [
 			'name'                    => 'author',
 			'show'                    => 'display_name_with_login',
-			'selected'                => isset( $wp_query->query['author'] ) ? $wp_query->query['author'] : 0,
+			'selected'                => $wp_query->get( 'author' ) ? $wp_query->get( 'author' ) : 0,
 			'show_option_all'         => $this->get_string( 'show_option_all', get_query_var( 'post_type', 'post' ), 'misc' ),
 			'option_none_value'       => 0,
 			'hide_if_only_one_author' => TRUE,
 		] );
+	}
+
+	public function pre_get_posts( $wp_query )
+	{
+ 		if ( ! $wp_query->is_admin )
+			return $wp_query;
+
+		if ( current_user_can( 'edit_others_posts' ) )
+			return $wp_query;
+
+		if ( ! $wp_query->get( 'author' ) )
+			$wp_query->set( 'author', $GLOBALS['user_ID'] );
+
+		return $wp_query;
 	}
 
 	public function manage_users_columns( $columns )
