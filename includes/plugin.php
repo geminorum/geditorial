@@ -64,11 +64,15 @@ class Plugin
 		add_filter( 'mce_external_languages', [ $this, 'mce_external_languages' ] );
 	}
 
-	private function files( $stack )
+	private function files( $stack, $check = TRUE, $base = GEDITORIAL_DIR )
 	{
 		foreach ( (array) $stack as $path )
-			if ( file_exists( GEDITORIAL_DIR.'includes/'.$path.'.php' ) )
-				require_once( GEDITORIAL_DIR.'includes/'.$path.'.php' );
+
+			if ( ! $check )
+				require_once( $base.'includes/'.$path.'.php' );
+
+			else if ( file_exists( $base.'includes/'.$path.'.php' ) )
+				require_once( $base.'includes/'.$path.'.php' );
 	}
 
 	private function require_core()
