@@ -241,7 +241,7 @@ class Terms extends gEditorial\Module
 			'navigation' => 'before',
 			'search'     => 'before',
 			'title'      => HTML::tag( 'h3', _x( 'Overview of Uncategorized Posts', 'Modules: Terms', GEDITORIAL_TEXTDOMAIN ) ),
-			'empty'      => HTML::warning( _x( 'No Posts!', 'Modules: Terms', GEDITORIAL_TEXTDOMAIN ) ),
+			'empty'      => Helper::tableArgEmptyPosts(),
 			'pagination' => $pagination,
 		] );
 	}

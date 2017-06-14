@@ -123,42 +123,15 @@ class Modified extends gEditorial\Module
 
 		$query = new \WP_Query;
 
-		$columns = [
-			'modified'   => [
-				'title'    => _x( 'On', 'Modules: Modified', GEDITORIAL_TEXTDOMAIN ),
-				'callback' => function( $value, $row, $column, $index ){
-					return '<small class="-date-diff" title="'
-						.esc_attr( mysql2date( 'l, M j, Y @ H:i', $row->post_modified ) ).'">'
-						.Helper::humanTimeDiff( $row->post_modified )
-					.'</small>';
-				},
-			],
-		];
+		$columns = [ 'modified' => Helper::tableColumnPostDateModified() ];
 
 		if ( $this->get_setting( 'dashboard_authors', FALSE ) )
-			$columns['author'] = [
-				'title'    => _x( 'Author', 'Modules: Modified', GEDITORIAL_TEXTDOMAIN ),
-				'callback' => function( $value, $row, $column, $index ){
+			$columns['author'] = Helper::tableColumnPostAuthorSummary();
 
-					if ( current_user_can( 'edit_post', $row->ID ) )
-						return WordPress::getAuthorEditHTML( $row->post_type, $row->post_author );
-
-					if ( $author_data = get_user_by( 'id', $row->post_author ) )
-						return esc_html( $author_data->display_name );
-
-					return '<span class="-empty">&mdash;</span>';
-				},
-			];
-
-		$columns['title'] = [
-			'title'    => _x( 'Title', 'Modules: Modified', GEDITORIAL_TEXTDOMAIN ),
-			'callback' => function( $value, $row, $column, $index ){
-				return Helper::getPostTitleRow( $row, 'edit' );
-			},
-		];
+		$columns['title'] = Helper::tableColumnPostTitleSummary();
 
 		HTML::tableList( $columns, $query->query( $args ), [
-			'empty' => _x( 'No Posts?!', 'Modules: Modified', GEDITORIAL_TEXTDOMAIN ),
+			'empty' => Helper::tableArgEmptyPosts( FALSE ),
 		] );
 	}
 

@@ -117,7 +117,7 @@ class Shortcodes extends gEditorial\Module
 			'navigation' => 'before',
 			'search'     => 'before',
 			'title'      => HTML::tag( 'h3', _x( 'Overview of Post Shortcodes', 'Modules: Shortcodes', GEDITORIAL_TEXTDOMAIN ) ),
-			'empty'      => HTML::warning( _x( 'No Posts with Shortcodes!', 'Modules: Shortcodes', GEDITORIAL_TEXTDOMAIN ) ),
+			'empty'      => Helper::tableArgEmptyPosts(),
 			'pagination' => $pagination,
 		] );
 	}

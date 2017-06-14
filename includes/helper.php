@@ -574,6 +574,19 @@ class Helper extends Core\Base
 		];
 	}
 
+	public static function tableColumnPostDateModified( $title = NULL )
+	{
+		return [
+			'title'    => is_null( $title ) ? _x( 'On', 'Helper: Table Column: Post Date Modified', GEDITORIAL_TEXTDOMAIN ) : $title,
+			'callback' => function( $value, $row, $column, $index ){
+				return '<small class="-date-diff" title="'
+					.esc_attr( mysql2date( 'l, M j, Y @ H:i', $row->post_modified ) ).'">'
+					.Helper::humanTimeDiff( $row->post_modified )
+				.'</small>';
+			},
+		];
+	}
+
 	public static function tableColumnPostType()
 	{
 		return [
@@ -605,6 +618,33 @@ class Helper extends Core\Base
 			},
 			'actions' => function( $value, $row, $column, $index ){
 				return Helper::getPostRowActions( $row->ID );
+			},
+		];
+	}
+
+	public static function tableColumnPostTitleSummary()
+	{
+		return [
+			'title'    => _x( 'Title', 'Helper: Table Column: Post Title', GEDITORIAL_TEXTDOMAIN ),
+			'callback' => function( $value, $row, $column, $index ){
+				return Helper::getPostTitleRow( $row, 'edit' );
+			},
+		];
+	}
+
+	public static function tableColumnPostAuthorSummary()
+	{
+		return [
+			'title'    => _x( 'Author', 'Helper: Table Column: Post Author', GEDITORIAL_TEXTDOMAIN ),
+			'callback' => function( $value, $row, $column, $index ){
+
+				if ( current_user_can( 'edit_post', $row->ID ) )
+					return WordPress::getAuthorEditHTML( $row->post_type, $row->post_author );
+
+				if ( $author_data = get_user_by( 'id', $row->post_author ) )
+					return esc_html( $author_data->display_name );
+
+				return '<span class="-empty">&mdash;</span>';
 			},
 		];
 	}
@@ -650,6 +690,12 @@ class Helper extends Core\Base
 			'callback' => 'wpautop',
 			'class'    => 'description',
 		];
+	}
+
+	public static function tableArgEmptyPosts( $wrap = TRUE )
+	{
+		$message = _x( 'No Posts?!', 'Helper: Table Arg: Empty Posts', GEDITORIAL_TEXTDOMAIN );
+		return $wrap ? HTML::warning( $message ) : $message;
 	}
 
 	// CAUTION: must wrap in `.geditorial-wordcount-wrap` along with the textarea

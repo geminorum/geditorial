@@ -387,7 +387,7 @@ class Today extends gEditorial\Module
 				'title' => Helper::tableColumnPostTitle(),
 				'terms' => Helper::tableColumnPostTerms(),
 			], $posts, [
-				'empty' => HTML::warning( _x( 'No Posts!', 'Modules: Today: Table Notice', GEDITORIAL_TEXTDOMAIN ) ),
+				'empty' => Helper::tableArgEmptyPosts(),
 			] );
 
 		echo '</div>';

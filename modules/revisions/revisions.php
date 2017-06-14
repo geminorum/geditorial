@@ -443,7 +443,7 @@ class Revisions extends gEditorial\Module
 			'navigation' => 'before',
 			'search'     => 'before',
 			'title'      => HTML::tag( 'h3', _x( 'Overview of Post Revisions', 'Modules: Revisions', GEDITORIAL_TEXTDOMAIN ) ),
-			'empty'      => HTML::warning( _x( 'No Posts!', 'Modules: Revisions', GEDITORIAL_TEXTDOMAIN ) ),
+			'empty'      => Helper::tableArgEmptyPosts(),
 			'pagination' => $pagination,
 		] );
 	}
