@@ -54,8 +54,8 @@ class Ajax extends Core\Base
 			'_base'  => self::BASE,
 			'_url'   => esc_url_raw( admin_url( 'admin-ajax.php' ) ),
 			'_api'   => esc_url_raw( rest_url() ),
+			'_nonce' => wp_create_nonce( 'wp_rest' ),
 			'_dev'   => WordPress::isDev(),
-			// '_nonce' => wp_create_nonce( self::BASE ), // FIXME: DEPRICATED
 		] );
 
 	?><script type="text/javascript">
