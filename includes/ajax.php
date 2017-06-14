@@ -27,7 +27,7 @@ class Ajax extends Core\Base
 			$message = _x( 'Succesful!', 'Ajax: Ajax Notice', GEDITORIAL_TEXTDOMAIN );
 
 		if ( $message )
-			wp_send_json_success( HTML::success( $message ) );
+			self::successHTML( HTML::success( $message ) );
 		else
 			wp_send_json_success();
 	}
