@@ -19,7 +19,7 @@ class MetaBox extends Core\Base
 	// CAUTION: tax must be cat (hierarchical)
 	// hierarchical taxonomies save by IDs, whereas non save by slugs
 	// @SOURCE: `post_categories_meta_box()`
-	public static function checklistTerms( $post, $box )
+	public static function checklistTerms( $post, $box, $wrap = TRUE )
 	{
 		$args = self::atts( [
 			'taxonomy' => 'category',
@@ -38,20 +38,22 @@ class MetaBox extends Core\Base
 		if ( ! $html && FALSE === $args['edit_url'] )
 			return FALSE;
 
-		echo '<div id="taxonomy-'.$tax_name.'" class="geditorial-admin-wrap-metabox">';
+		if ( $wrap )
+			echo '<div id="taxonomy-'.$tax_name.'" class="geditorial-admin-wrap-metabox">';
 
-			if ( $html ) {
+		if ( $html ) {
 
-				echo '<div class="field-wrap-list"><ul>'.$html.'</ul></div>';
+			echo '<div class="field-wrap-list"><ul>'.$html.'</ul></div>';
 
-				// allows for an empty term set to be sent. 0 is an invalid Term ID and will be ignored by empty() checks.
-				echo '<input type="hidden" name="tax_input['.$tax_name.'][]" value="0" />';
+			// allows for an empty term set to be sent. 0 is an invalid Term ID and will be ignored by empty() checks.
+			echo '<input type="hidden" name="tax_input['.$tax_name.'][]" value="0" />';
 
-			} else {
-				self::fieldEmptyTaxonomy( $taxonomy, $args['edit_url'] );
-			}
+		} else {
+			self::fieldEmptyTaxonomy( $taxonomy, $args['edit_url'] );
+		}
 
-		echo '</div>';
+		if ( $wrap )
+			echo '</div>';
 	}
 
 	public static function getTermPosts( $taxonomy, $term_or_id, $exclude = [] )
