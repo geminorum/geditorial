@@ -35,7 +35,10 @@ class MetaBox extends Core\Base
 			'echo'          => FALSE,
 		] );
 
-		echo '<div id="taxonomy-'.$tax_name.'" class="geditorial-admin-wrap-metabox choose-tax">';
+		if ( ! $html && FALSE === $args['edit_url'] )
+			return FALSE;
+
+		echo '<div id="taxonomy-'.$tax_name.'" class="geditorial-admin-wrap-metabox">';
 
 			if ( $html ) {
 
