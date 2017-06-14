@@ -387,6 +387,28 @@ class Settings extends Core\Base
 		];
 	}
 
+	public static function getSetting_dashboard_authors( $section )
+	{
+		return [
+			'field'       => 'dashboard_authors',
+			'title'       => _x( 'Dashboard Authors', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+			'description' => _x( 'Displays the author column on dashboard widget', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+			'section'     => $section,
+		];
+	}
+
+	public static function getSetting_dashboard_count( $section )
+	{
+		return [
+			'field'       => 'dashboard_count',
+			'type'        => 'number',
+			'title'       => _x( 'Dashboard Count', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+			'description' => _x( 'Total rows of items on dashboard widget', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+			'default'     => 10,
+			'section'     => $section,
+		];
+	}
+
 	public static function getSetting_summary_scope( $section )
 	{
 		return [

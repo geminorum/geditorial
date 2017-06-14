@@ -30,18 +30,8 @@ class Modified extends gEditorial\Module
 			'posttypes_option' => 'posttypes_option',
 			'_dashboard' => [
 				'dashboard_widgets',
-				[
-					'field'       => 'dashboard_authors',
-					'title'       => _x( 'Dashboard Authors', 'Modules: Modified: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Displays authors column on dashboard widget', 'Modules: Modified: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-				],
-				[
-					'field'       => 'dashboard_count',
-					'title'       => _x( 'Dashboard Count', 'Modules: Modified: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Total rows of posts on dashboard widget', 'Modules: Modified: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-					'type'        => 'number',
-					'default'     => 10,
-				],
+				'dashboard_authors',
+				'dashboard_count',
 			],
 			'_content' => [
 				'insert_content',
