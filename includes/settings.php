@@ -351,7 +351,7 @@ class Settings extends Core\Base
 		return [
 			'field'       => 'admin_ordering',
 			'title'       => _x( 'Ordering', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'description' => _x( 'Enhance admin edit page ordering', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+			'description' => _x( 'Enhance item ordering on admin edit pages.', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 			'default'     => '1',
 			'section'     => $section,
 		];
@@ -362,7 +362,17 @@ class Settings extends Core\Base
 		return [
 			'field'       => 'admin_restrict',
 			'title'       => _x( 'Restrictions', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'description' => _x( 'Enhance admin edit page restrictions', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+			'description' => _x( 'Enhance restrictions on admin edit pages.', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+			'section'     => $section,
+		];
+	}
+
+	public static function getSetting_admin_bulkactions( $section )
+	{
+		return [
+			'field'       => 'admin_bulkactions',
+			'title'       => _x( 'Bulk Actions', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+			'description' => _x( 'Enhance bulk actions on admin edit pages.', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 			'section'     => $section,
 		];
 	}

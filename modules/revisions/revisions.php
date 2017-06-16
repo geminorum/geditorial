@@ -43,6 +43,7 @@ class Revisions extends gEditorial\Module
 		return [
 			'posttypes_option' => 'posttypes_option',
 			'_general' => [
+				'admin_bulkactions',
 				[
 					'field'       => 'revision_summary',
 					'title'       => _x( 'Revision Count', 'Modules: Revisions: Setting Title', GEDITORIAL_TEXTDOMAIN ),
@@ -94,7 +95,7 @@ class Revisions extends gEditorial\Module
 
 			} else if ( 'edit' == $screen->base ) {
 
-				if ( $this->cuc( 'edit' ) ) {
+				if ( $this->get_setting( 'admin_bulkactions' ) && $this->cuc( 'edit' ) ) {
 					add_filter( 'bulk_actions-'.$screen->id, [ $this, 'bulk_actions' ] );
 					add_filter( 'handle_bulk_actions-'.$screen->id, [ $this, 'handle_bulk_actions' ], 10, 3 );
 					$this->action( 'admin_notices' );
