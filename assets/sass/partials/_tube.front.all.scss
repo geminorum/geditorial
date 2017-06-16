@@ -1,0 +1,36 @@
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+/// gEditorial Partials: Tube Front ALL ----------------------------------------
+
+// @import '../vendor/mediaelement_source_chooser';
+
+.-wrap.geditorial-tube-video {
+  margin: 1em 0;
+
+  .-button {
+    line-height: 1.1;
+    margin-right: .5em;
+    padding: 5px 5px 2px 2px;
+    // padding: 5px 10px 5px 7px;
+
+    @include body-rtl() {
+      margin-right: 0;
+      margin-left: .5em;
+      padding: 5px 2px 2px 5px;
+      // padding: 5px 7px 5px 10px;
+    }
+
+    color: $gray;
+  }
+
+  .-icon-button {
+    padding: 4px 3px 3px!important;
+  }
+
+  .-iconsvg {
+    width: 1.4em;
+    height: 1.4em;
+    vertical-align: middle;
+  }
+}

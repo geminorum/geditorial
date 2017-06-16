@@ -12,9 +12,11 @@
 @import 'partials/magazine.admin.edit';
 @import 'partials/today.admin.edit';
 @import 'partials/tweaks.admin.edit';
+@import 'partials/tweaks.admin.all';
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 // @import 'partials/ortho.admin.all';
+@import 'partials/adminbar.all';
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
@@ -46,58 +48,6 @@
   }
 }
 
-.geditorial-admin-wrap-column {
-  @include mainwrap();
-
-  ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-
-  .-row,
-  .-attr {
-    margin-bottom: 4px;
-    font-size: 0.89em;
-
-    .-icon {
-      cursor: help;
-      margin: 0 4px 0 0;
-      @include body-rtl() {
-        margin: 0 0 0 4px;
-      }
-    }
-
-    > code {
-      vertical-align: middle;
-    }
-
-    span.dashicons {
-      color: #b4b9be;
-      width: 16px;
-      height: 16px;
-      font-size: 16px;
-      vertical-align: middle;
-      transition: all 0.3s ease;
-    }
-
-    &:hover {
-      .-icon span.dashicons {
-        color: $gray-dark;
-        transition: all 0.1s ease;
-      }
-    }
-
-    a:focus {
-      box-shadow: none;
-    }
-  }
-
-  .-row:last-child {
-    margin-bottom: 0;
-  }
-}
-
 .fixed {
 
   .column-children {
@@ -120,22 +70,6 @@
     img {
       max-width: 45px;
       max-height: 72px;
-    }
-  }
-
-  .column-geditorial-tweaks-thumb {
-
-    width: 70px;
-    padding: 2px;
-    text-align: center;
-
-    a:focus {
-      box-shadow: none !important;
-    }
-
-    img {
-      max-width: 65px;
-      max-height: 65px;
     }
   }
 

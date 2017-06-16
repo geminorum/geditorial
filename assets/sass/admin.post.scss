@@ -18,6 +18,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 @import 'partials/ortho.admin.all';
+@import 'partials/adminbar.all';
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
@@ -150,9 +151,16 @@
   }
 
   .field-wrap-list {
+
+
     background-color: #fdfdfd;
     border: solid 1px #ddd;
-    padding: 4px 4px 0;
+    // padding: 4px 4px 0;
+    margin-bottom: 12px;
+
+    &:last-of-type {
+      margin-bottom: 0;
+    }
 
     a {
       text-decoration: none;
@@ -181,13 +189,35 @@
 
     ol,
     ul {
-      margin: 0 2px;
-      padding: 2px 4px;
+
+      max-height: 240px;
+      overflow: auto;
+
+      margin: 0;
+      padding: 0;
       list-style-position: inside;
 
       li {
+        margin: 4px 6px 6px 6px;
+
         span.edit {
           font-size: 0.8em;
+        }
+
+        &.-user {
+
+          padding-bottom: 6px;
+          margin: 8px 6px 6px;
+          border-bottom: 1px solid #e5e5e5;
+
+          &:last-of-type {
+            border-bottom: none;
+            margin-bottom: 0;
+          }
+
+          label {
+            display: block;
+          }
         }
       }
     }

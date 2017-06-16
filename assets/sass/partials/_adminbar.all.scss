@@ -1,0 +1,24 @@
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+/// gEditorial Partials: Adminbar All ------------------------------------------
+
+#wp-admin-bar-geditorial {
+
+  > a {
+    padding: 0 5px !important;
+  }
+
+  span.-count {
+    background: #ddd;
+    color: #333;
+    margin: 0;
+    border-radius: 10px;
+
+    display: inline;
+    padding: 2px 5px;
+    font-size: 10px;
+    font-weight: bold;
+    text-shadow: none;
+  }
+}

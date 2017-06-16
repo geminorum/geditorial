@@ -6,15 +6,83 @@
 @import 'partials/admin.help';
 @import 'partials/admin.table';
 @import 'partials/admin.caltable';
-@import 'partials/admin.dashboard';
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 @import 'partials/audit.admin.dashboard';
 @import 'partials/calendar.admin.dashboard';
-@import 'partials/modified.admin.dashboard';
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 // @import 'partials/ortho.admin.all';
+@import 'partials/adminbar.all';
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
+
+#dashboard-widgets-wrap {
+
+  // tables whitin widgets
+  .base-table-wrap {
+
+    .-column-modified {
+      width: 22%;
+    }
+
+    .-column-author {
+      width: 22%;
+    }
+
+    .-column-follow {
+      width: 20px;
+    }
+
+    .-cell-follow,
+    .-cell-author {
+      @include link-colors( $gray-light, null, $gray);
+    }
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+.geditorial-glance-item {
+
+  &.-posttype::before {
+    content: "\f105" !important;
+  }
+
+  &.-tax::before {}
+
+  &.-term::before {
+    content: "\f323" !important; // tag
+  }
+
+  &.-not-in::before {
+    content: "\f534" !important; // warning
+    // content: "\f223" !important; // question
+  }
+
+  &.-posttype-issue::before {
+    content: "\f330" !important;
+  }
+
+  &.-posttype-publication::before {
+    content: "\f331" !important;
+  }
+
+  &.-posttype-entry::before {
+    content: "\f497" !important;
+  }
+
+  &.-posttype-event::before {
+    content: "\f508" !important;
+  }
+
+  &.-posttype-contest::before {
+    content: "\f488" !important;
+  }
+
+  &.-posttype-apply::before {
+    content: "\f322" !important;
+  }
+}

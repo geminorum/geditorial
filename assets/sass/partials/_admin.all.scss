@@ -3,6 +3,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 /// gEditorial Partials: Admin All ---------------------------------------------
 
+// .geditorial-clearfix {
+//   @include clearfix();
+// }
+
 // USAGE: .geditorial-admin-wrap.module { @include mainwrap(); }
 .geditorial-admin-wrap {
 
@@ -42,39 +46,36 @@
         padding: 2px 5px;
       }
     }
+  }
 
-    .-extra {
-      color: $gray-light;
+  .settings-title-count {}
+  .settings-title-action {}
+
+  .settings-title-search {
+    position: relative;
+    top: -2px;
+    left: 20px;
+    margin: 0;
+    width: 280px;
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.5;
+
+    @include body-rtl() {
+      left: auto;
+      right: 20px;
     }
 
-    .-action {}
-
-    .-search {
-      position: relative;
-      top: -2px;
-      left: 20px;
-      margin: 0;
-      width: 280px;
-      font-size: 16px;
-      font-weight: 300;
-      line-height: 1.5;
-
-      @include body-rtl() {
-        left: auto;
-        right: 20px;
-      }
-
-      @media only screen and (max-width: 650px) {
-        & {
-            float: none;
-            clear: both;
-            left: 0;
-            top: 0;
-            right: 0;
-            margin: 10px 0;
-            width: 100%;
-            max-width: 280px;
-        }
+    @media only screen and (max-width: 650px) {
+      & {
+          float: none;
+          clear: both;
+          left: 0;
+          top: 0;
+          right: 0;
+          margin: 10px 0;
+          width: 100%;
+          max-width: 280px;
       }
     }
   }
