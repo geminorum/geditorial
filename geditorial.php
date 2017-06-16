@@ -9,8 +9,8 @@ License: GPLv3+
 Author: geminorum
 Author URI: http://geminorum.ir/
 Network: false
-TextDomain: geditorial
-DomainPath: /languages
+Text Domain: geditorial
+Domain Path: /languages
 RepoGitHub: geminorum/geditorial
 GitHub Plugin URI: https://github.com/geminorum/geditorial
 GitHub Branch: master

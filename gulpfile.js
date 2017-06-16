@@ -25,7 +25,7 @@
     input = {
       'php': [
         './**/*.php',
-        '!./assets/libs/**',
+        '!./assets{,/**}',
       ],
       'sass': './assets/sass/**/*.scss',
       'js': [
@@ -123,7 +123,7 @@
     gulp.watch(input.sass, gulp.series('dev:sass'));
   });
 
-  // without livereload
+  // all styles / without livereload
   gulp.task('dev:styles', function() {
     return gulp.src(input.sass)
     .pipe(plugins.sourcemaps.init())
@@ -133,9 +133,9 @@
       zindex: false,
       discardComments: false,
     }))
-    // .pipe(plugins.header(banner, {
-    //   pkg: pkg
-    // }))
+    .pipe(plugins.header(banner, {
+      pkg: pkg
+    }))
     .pipe(plugins.sourcemaps.write(output.sourcemaps))
     .pipe(gulp.dest(output.css)).on('error', gutil.log);
   });
@@ -213,8 +213,9 @@
     gulp.watch('./assets/sass/**/*.scss', gulp.series('sass'));
   });
 
-  gulp.task('default', function() {
+  gulp.task('default', function(done) {
     gutil.log('Hi, I\'m Gulp!');
     gutil.log("Sass is:\n"+require('node-sass').info);
+    done();
   });
 }());
