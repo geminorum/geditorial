@@ -1,3 +1,38 @@
+### 3.10.1
+* main/ajax: rest api in global js object
+* main/ajax: correct send success message
+* main/ajax: default nonce for wp rest
+* main/metabox: hide choose box for empty tax
+* main/metabox: wrap arg for choose box
+* main/module: default setting for adminbar api
+* main/module: default cap key
+* main/module: register post rest base fallback to archive slug
+* main/module: skip content actions on embed
+* main/module: new before settings method
+* main/plugin: better file loader
+* main/plugin: using const as base
+* main/plugin: icon api working draft
+* main/plugin: adminbar api revised
+* main/settings: new wp page heading structure, [ref](https://make.wordpress.org/core/?p=22141)
+* main/settings: extra args for sub url helper
+* main/settings: default setting for supported/excluded roles
+* main/settings: default setting for admin bulk actions
+* main/settings: default setting for dashboard widgets
+* main/settings: default message for synced items
+* main/helper: more table pre columns/args
+* module/audit: adminbar node depricated
+* module/book: p2p type name changed
+* module/config: missed module name check
+* module/like: adminbar summary of post
+* module/like: check stored ip for guests
+* module/like: check for posttypes
+* module/pitches: new pool tax
+* module/revisions: bail if no revision on report table
+* module/shortcodes: adminbar summary of post
+* module/terms: adminbar summary of post
+* module/users: author default restrictions
+* module/users: groups on user tweaks column
+
 ### 3.10.0
 * assets/js: rethinking structure
 * assets/js: jquery sortable from packages dir
