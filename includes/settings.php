@@ -587,6 +587,7 @@ class Settings extends Core\Base
 			'changed'   => self::counted( _x( '%s items(s) changed!', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
 			'emptied'   => self::counted( _x( '%s items(s) emptied!', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
 			'ordered'   => self::counted( _x( '%s items(s) re-ordered!', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
+			'synced'    => self::counted( _x( '%s items(s) synced!', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
 			'huh'       => HTML::error( self::huh( self::req( 'huh', NULL ) ) ),
 		];
 	}
