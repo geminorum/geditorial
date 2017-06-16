@@ -55,7 +55,7 @@ class Book extends gEditorial\Module
 		return [
 			'publication_cpt'         => 'publication',
 			'publication_cpt_archive' => 'publications',
-			'publication_cpt_p2p'     => 'publications_to_posts',
+			'publication_cpt_p2p'     => 'related_publications', // OLD: 'publications_to_posts'
 			'subject_tax'             => 'publication_subject',
 			'library_tax'             => 'publication_library',
 			'publisher_tax'           => 'publication_publisher',
