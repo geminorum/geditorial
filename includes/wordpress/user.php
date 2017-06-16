@@ -3,6 +3,8 @@
 defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Core\Arraay;
+use geminorum\gEditorial\Core\HTML;
 
 class User extends Core\Base
 {
@@ -16,6 +18,29 @@ class User extends Core\Base
 		), $extra ) );
 
 		return Arraay::reKey( $users, 'ID' );
+	}
+
+	public static function user( $field, $key = FALSE )
+	{
+		if ( is_int( $field ) )
+			$user = get_user_by( 'id', $field );
+
+		else if ( is_string( $field ) )
+			$user = get_user_by( 'login', $field );
+
+		else
+			return FALSE;
+
+		if ( ! is_object( $user ) )
+			return FALSE;
+
+		if ( ! $key )
+			return $user;
+
+		if ( isset( $user->{$key} ) )
+			return $user->{$key};
+
+		return FALSE;
 	}
 
 	// current user can
@@ -78,5 +103,30 @@ class User extends Core\Base
 				$roles[$role_name] = translate_user_role( $role['name'] );
 
 		return $roles;
+	}
+}
+
+class Walker_User_Checklist extends \Walker
+{
+	public $tree_type = 'user';
+	public $db_fields = array ('parent' => 'parent', 'id' => 'ID');
+
+	public function start_el( &$output, $user, $depth = 0, $args = array(), $id = 0 )
+	{
+		$output .= "\n".'<li class="-user"><label>'.
+			HTML::tag( 'input', array(
+				'type'     => 'checkbox',
+				'name'     => $args['name'].'[]',
+				'value'    => $user->user_login,
+				'checked'  => in_array( $user->user_login, (array) $args['selected'] ),
+				'disabled' => empty( $args['disabled'] ) ? FALSE : $args['disabled'],
+			) ).
+			' <code class="-login">'.$user->user_login.'</code> '.esc_html( $user->display_name ).
+			'<br /><span class="-email code">'.$user->user_email.'</span></label>';
+	}
+
+	public function end_el( &$output, $category, $depth = 0, $args = array() )
+	{
+		$output .= '</li>';
 	}
 }

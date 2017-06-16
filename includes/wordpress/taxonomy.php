@@ -88,10 +88,13 @@ class Taxonomy extends Core\Base
 		return $term;
 	}
 
-	public static function getTerms( $taxonomy = 'category', $post = FALSE, $object = FALSE, $key = 'term_id', $extra = array() )
+	public static function getTerms( $taxonomy = 'category', $object_id = FALSE, $object = FALSE, $key = 'term_id', $extra = array() )
 	{
-		if ( FALSE !== $post )
-			$terms = get_the_terms( $post, $taxonomy );
+		if ( is_null( $object_id ) )
+			$terms = wp_get_object_terms( get_post()->ID, $taxonomy, $extra );
+
+		else if ( FALSE !== $object_id )
+			$terms = wp_get_object_terms( $object_id, $taxonomy, $extra );
 
 		else
 			$terms = get_terms( array_merge( array(
@@ -176,6 +179,24 @@ class Taxonomy extends Core\Base
 				return $object ? $term : $term->term_id;
 
 		return '0';
+	}
+
+	public static function addTerm( $term, $taxonomy = 'category', $sanitize = TRUE )
+	{
+		if ( ! taxonomy_exists( $taxonomy ) )
+			return FALSE;
+
+		if ( self::getTerm( $term, $taxonomy ) )
+			return TRUE;
+
+		if ( TRUE === $sanitize )
+			$slug = sanitize_title( $term );
+		else if ( ! $sanitize )
+			$slug = $term;
+		else
+			$slug = $sanitize;
+
+		return wp_insert_term( $term, $taxonomy, array( 'slug' => $slug ) );
 	}
 
 	// EDITED: 5/2/2016, 9:31:13 AM

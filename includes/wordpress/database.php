@@ -58,7 +58,7 @@ class Database extends Core\Base
 
 		$taxonomies = $wpdb->get_col( "
 			SELECT taxonomy
-			FROM $wpdb->term_taxonomy
+			FROM {$wpdb->term_taxonomy}
 			GROUP BY taxonomy
 			ORDER BY taxonomy ASC
 		" );
@@ -74,7 +74,7 @@ class Database extends Core\Base
 		if ( $limit )
 			$query = $wpdb->prepare( "
 				SELECT post_id, GROUP_CONCAT( meta_value ) as meta
-				FROM $wpdb->postmeta
+				FROM {$wpdb->postmeta}
 				WHERE meta_key = %s
 				GROUP BY post_id
 				LIMIT %d
@@ -82,7 +82,7 @@ class Database extends Core\Base
 		else
 			$query = $wpdb->prepare( "
 				SELECT post_id, GROUP_CONCAT( meta_value ) as meta
-				FROM $wpdb->postmeta
+				FROM {$wpdb->postmeta}
 				WHERE meta_key = %s
 				GROUP BY post_id
 			", $meta_key );
@@ -97,7 +97,7 @@ class Database extends Core\Base
 
 		$meta_keys = $wpdb->get_col( "
 			SELECT meta_key
-			FROM $wpdb->postmeta
+			FROM {$wpdb->postmeta}
 			GROUP BY meta_key
 			HAVING meta_key NOT LIKE '\_%'
 			ORDER BY meta_key ASC
@@ -112,9 +112,9 @@ class Database extends Core\Base
 		global $wpdb;
 
 		if ( $limit )
-			$query = $wpdb->prepare( "DELETE FROM $wpdb->postmeta WHERE meta_key = %s LIMIT %d", $meta_key, $limit );
+			$query = $wpdb->prepare( "DELETE FROM {$wpdb->postmeta} WHERE meta_key = %s LIMIT %d", $meta_key, $limit );
 		else
-			$query = $wpdb->prepare( "DELETE FROM $wpdb->postmeta WHERE meta_key = %s", $meta_key );
+			$query = $wpdb->prepare( "DELETE FROM {$wpdb->postmeta} WHERE meta_key = %s", $meta_key );
 
 		return $wpdb->query( $query );
 	}
@@ -124,7 +124,7 @@ class Database extends Core\Base
 		global $wpdb;
 
 		$query = $wpdb->prepare( "
-			DELETE FROM $wpdb->postmeta
+			DELETE FROM {$wpdb->postmeta}
 			WHERE meta_key = %s
 			AND meta_value = ''
 		" , $meta_key );
@@ -165,7 +165,7 @@ class Database extends Core\Base
 		", $taxonomy );
 
 		foreach ( (array) $wpdb->get_results( $query, ARRAY_A ) as $row )
-			$counts[$row['post_type']] = $row['total'];
+			$counts[$row['post_type']] = intval( $row['total'] );
 
 		wp_cache_set( $key, $counts, 'counts' );
 
@@ -212,7 +212,7 @@ class Database extends Core\Base
 			", $term->term_id );
 
 			foreach ( (array) $wpdb->get_results( $query, ARRAY_A ) as $row )
-				$counts[$term->slug][$row['post_type']] = $row['total'];
+				$counts[$term->slug][$row['post_type']] = intval( $row['total'] );
 		}
 
 		wp_cache_set( $key, $counts, 'counts' );
@@ -251,7 +251,7 @@ class Database extends Core\Base
 		$results = self::getResults( $query, ARRAY_A, 'counts' );
 
 		foreach ( (array) $results as $row )
-			$counts[$row['post_status']] = $row['total'];
+			$counts[$row['post_status']] = intval( $row['total'] );
 
 		return $counts;
 	}
@@ -294,7 +294,7 @@ class Database extends Core\Base
 		$results = self::getResults( $query, ARRAY_A, 'counts' );
 
 		foreach ( (array) $results as $row )
-			$counts[$row['post_type']] = $row['total'];
+			$counts[$row['post_type']] = intval( $row['total'] );
 
 		return $counts;
 	}
@@ -360,7 +360,7 @@ class Database extends Core\Base
 
 		foreach ( (array) $terms as $term ) {
 
-			$count = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM $wpdb->term_relationships WHERE term_taxonomy_id = %d", $term ) );
+			$count = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$wpdb->term_relationships} WHERE term_taxonomy_id = %d", $term ) );
 
 			do_action( 'edit_term_taxonomy', $term, $taxonomy );
 
