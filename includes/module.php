@@ -1007,6 +1007,9 @@ class Module extends Base
 		if ( ! $this->is_register_settings( $page ) )
 			return;
 
+		if ( method_exists( $this, 'before_settings' ) )
+			$this->before_settings( $page );
+
 		$this->init_settings();
 
 		foreach ( $this->settings as $section_suffix => $fields ) {

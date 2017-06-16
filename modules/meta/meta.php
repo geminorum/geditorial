@@ -119,9 +119,6 @@ class Meta extends gEditorial\Module
 				'meta_box_title'      => _x( 'Metadata', 'Modules: Meta: Meta Box Title', GEDITORIAL_TEXTDOMAIN ),
 				'meta_box_action'     => _x( 'Configure', 'Modules: Meta: Meta Box Action Title', GEDITORIAL_TEXTDOMAIN ),
 			],
-			'settings' => [
-				'install_def_ct_tax' => _x( 'Install Default Column Headers', 'Modules: Meta: Setting Button', GEDITORIAL_TEXTDOMAIN ),
-			],
 			'noops' => [
 				'ct_tax' => _nx_noop( 'Column Header', 'Column Headers', 'Modules: Meta: Noop', GEDITORIAL_TEXTDOMAIN ),
 			],
@@ -161,16 +158,16 @@ class Meta extends gEditorial\Module
 		];
 	}
 
-	public function register_settings( $page = NULL )
+	public function before_settings( $page = NULL )
 	{
-		if ( ! $this->is_register_settings( $page ) )
-			return;
-
 		if ( isset( $_POST['install_def_ct_tax'] ) )
 			$this->insert_default_terms( 'ct_tax' );
+	}
 
-		parent::register_settings( $page );
-		$this->register_button( 'install_def_ct_tax' );
+	public function default_buttons( $page = NULL )
+	{
+		parent::default_buttons( $page );
+		$this->register_button( 'install_def_ct_tax', _x( 'Install Default Column Headers', 'Modules: Meta: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
 	}
 
 	public function init()

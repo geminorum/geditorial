@@ -116,8 +116,7 @@ class Book extends gEditorial\Module
 				],
 			],
 			'settings' => [
-				'post_types_after'     => Settings::infoP2P(),
-				'install_def_size_tax' => _x( 'Install Default Sizes', 'Modules: Book: Setting Button', GEDITORIAL_TEXTDOMAIN ),
+				'post_types_after' => Settings::infoP2P(),
 			],
 			'noops' => [
 				'publication_cpt' => _nx_noop( 'Publication', 'Publications', 'Modules: Book: Noop', GEDITORIAL_TEXTDOMAIN ),
@@ -235,6 +234,18 @@ class Book extends gEditorial\Module
 				],
 			],
 		];
+	}
+
+	public function before_settings( $page = NULL )
+	{
+		if ( isset( $_POST['install_def_size_tax'] ) )
+			$this->insert_default_terms( 'size_tax' );
+	}
+
+	public function default_buttons( $page = NULL )
+	{
+		parent::default_buttons( $page );
+		$this->register_button( 'install_def_size_tax', _x( 'Install Default Sizes', 'Modules: Book: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
 	}
 
 	public function after_setup_theme()
@@ -442,18 +453,6 @@ class Book extends gEditorial\Module
 
 			echo '</li>';
 		}
-	}
-
-	public function register_settings( $page = NULL )
-	{
-		if ( ! $this->is_register_settings( $page ) )
-			return;
-
-		if ( isset( $_POST['install_def_size_tax'] ) )
-			$this->insert_default_terms( 'size_tax' );
-
-		parent::register_settings( $page );
-		$this->register_button( 'install_def_size_tax' );
 	}
 
 	public function gpeople_support( $post_types )

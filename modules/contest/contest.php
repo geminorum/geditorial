@@ -92,9 +92,6 @@ class Contest extends gEditorial\Module
 				'meta_box_title'      => _x( 'Contests', 'Modules: Contest: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
 				'tweaks_column_title' => _x( 'Contests', 'Modules: Contest: Column Title', GEDITORIAL_TEXTDOMAIN ),
 			],
-			'settings' => [
-				'install_def_apply_status_tax' => _x( 'Install Default Apply Statuses', 'Modules: Contest: Setting Button', GEDITORIAL_TEXTDOMAIN ),
-			],
 			'noops' => [
 				'contest_cpt'      => _nx_noop( 'Contest', 'Contests', 'Modules: Contest: Noop', GEDITORIAL_TEXTDOMAIN ),
 				'contest_tax'      => _nx_noop( 'Contest', 'Contests', 'Modules: Contest: Noop', GEDITORIAL_TEXTDOMAIN ),
@@ -138,6 +135,18 @@ class Contest extends gEditorial\Module
 				'date-picker', // gPersianDate
 			],
 		];
+	}
+
+	public function before_settings( $page = NULL )
+	{
+		if ( isset( $_POST['install_def_apply_status_tax'] ) )
+			$this->insert_default_terms( 'apply_status_tax' );
+	}
+
+	public function default_buttons( $page = NULL )
+	{
+		parent::default_buttons( $page );
+		$this->register_button( 'install_def_apply_status_tax', _x( 'Install Default Apply Statuses', 'Modules: Contest: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
 	}
 
 	public function after_setup_theme()
@@ -298,18 +307,6 @@ class Contest extends gEditorial\Module
 		$this->action( 'wp_trash_post' );
 		$this->action( 'untrash_post' );
 		$this->action( 'before_delete_post' );
-	}
-
-	public function register_settings( $page = NULL )
-	{
-		if ( ! $this->is_register_settings( $page ) )
-			return;
-
-		if ( isset( $_POST['install_def_apply_status_tax'] ) )
-			$this->insert_default_terms( 'apply_status_tax' );
-
-		parent::register_settings( $page );
-		$this->register_button( 'install_def_apply_status_tax' );
 	}
 
 	public function meta_post_types( $post_types )

@@ -72,9 +72,6 @@ class Audit extends gEditorial\Module
 				'show_option_all'     => _x( 'Audit', 'Modules: Audit: Show Option All', GEDITORIAL_TEXTDOMAIN ),
 				'show_option_none'    => _x( '(Not audited)', 'Modules: Audit: Show Option All', GEDITORIAL_TEXTDOMAIN ),
 			],
-			'settings' => [
-				'install_def_audit_tax' => _x( 'Install Default Attributes', 'Modules: Audit: Setting Button', GEDITORIAL_TEXTDOMAIN ),
-			],
 			'noops' => [
 				'audit_tax' => _nx_noop( 'Audit Attribute', 'Audit Attributes', 'Modules: Audit: Noop', GEDITORIAL_TEXTDOMAIN ),
 			],
@@ -89,6 +86,18 @@ class Audit extends gEditorial\Module
 				],
 			],
 		];
+	}
+
+	public function before_settings( $page = NULL )
+	{
+		if ( isset( $_POST['install_def_audit_tax'] ) )
+			$this->insert_default_terms( 'audit_tax' );
+	}
+
+	public function default_buttons( $page = NULL )
+	{
+		parent::default_buttons( $page );
+		$this->register_button( 'install_def_audit_tax', _x( 'Install Default Attributes', 'Modules: Audit: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
 	}
 
 	public function init()
@@ -270,18 +279,6 @@ class Audit extends gEditorial\Module
 		}
 
 		return $html;
-	}
-
-	public function register_settings( $page = NULL )
-	{
-		if ( ! $this->is_register_settings( $page ) )
-			return;
-
-		if ( isset( $_POST['install_def_audit_tax'] ) )
-			$this->insert_default_terms( 'audit_tax' );
-
-		parent::register_settings( $page );
-		$this->register_button( 'install_def_audit_tax' );
 	}
 
 	public function restrict_manage_posts( $post_type, $which )

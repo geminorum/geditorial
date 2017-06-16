@@ -94,10 +94,6 @@ class Event extends gEditorial\Module
 					'tweaks_column_title' => _x( 'Event Calendars', 'Modules: Event: Column Title', GEDITORIAL_TEXTDOMAIN ),
 				],
 			],
-			'settings' => [
-				'install_def_event_tag' => _x( 'Install Default Event Types', 'Modules: Event: Setting Button', GEDITORIAL_TEXTDOMAIN ),
-				'install_def_type_tax'  => _x( 'Install Default Calendar Types', 'Modules: Event: Setting Button', GEDITORIAL_TEXTDOMAIN ),
-			],
 			'noops' => [
 				'event_cpt' => _nx_noop( 'Event', 'Events', 'Modules: Event: Noop', GEDITORIAL_TEXTDOMAIN ),
 				'event_tag' => _nx_noop( 'Event Type', 'Event Types', 'Modules: Event: Noop', GEDITORIAL_TEXTDOMAIN ),
@@ -136,6 +132,24 @@ class Event extends gEditorial\Module
 				'date-picker', // gPersianDate
 			],
 		];
+	}
+
+	public function before_settings( $page = NULL )
+	{
+		if ( isset( $_POST['install_def_event_tag'] ) )
+			$this->insert_default_terms( 'event_tag' );
+
+		else if ( isset( $_POST['install_def_type_tax'] ) )
+			$this->insert_default_terms( 'type_tax' );
+	}
+
+	public function default_buttons( $page = NULL )
+	{
+		parent::default_buttons( $page );
+		$this->register_button( 'install_def_event_tag', _x( 'Install Default Event Types', 'Modules: Event: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
+
+		if ( $this->get_setting( 'startend_support', TRUE ) )
+			$this->register_button( 'install_def_type_tax', _x( 'Install Default Calendar Types', 'Modules: Event: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
 	}
 
 	public function init()
@@ -242,25 +256,6 @@ class Event extends gEditorial\Module
 	{
 		add_filter( 'manage_'.$post_type.'_posts_columns', [ $this, 'manage_posts_columns' ] );
 		add_action( 'manage_'.$post_type.'_posts_custom_column', [ $this, 'posts_custom_column' ], 10, 2 );
-	}
-
-	public function register_settings( $page = NULL )
-	{
-		if ( ! $this->is_register_settings( $page ) )
-			return;
-
-		if ( isset( $_POST['install_def_event_tag'] ) )
-			$this->insert_default_terms( 'event_tag' );
-
-		if ( isset( $_POST['install_def_type_tax'] ) )
-			$this->insert_default_terms( 'type_tax' );
-
-		parent::register_settings( $page );
-
-		$this->register_button( 'install_def_event_tag' );
-
-		if ( $this->get_setting( 'startend_support', TRUE ) )
-			$this->register_button( 'install_def_type_tax' );
 	}
 
 	public function gpeople_support( $post_types )
