@@ -10,6 +10,7 @@ use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\Database;
 use geminorum\gEditorial\WordPress\PostType;
+use geminorum\gEditorial\WordPress\Taxonomy;
 
 class Users extends gEditorial\Module
 {
@@ -161,6 +162,8 @@ class Users extends gEditorial\Module
 				$this->filter( 'manage_users_custom_column', 3 );
 			}
 
+			add_action( 'geditorial_tweaks_column_user', [ $this, 'column_user' ], 1, 12 );
+
 		} else if ( $groups && ( 'profile' == $screen->base
 			|| 'user-edit' == $screen->base ) ) {
 
@@ -260,6 +263,23 @@ class Users extends gEditorial\Module
 			$this->column_count( 0 );
 
 		return ob_get_clean();
+	}
+
+	public function column_user( $user )
+	{
+		if ( $this->get_setting( 'user_groups', FALSE ) ) {
+
+			if ( $terms = Taxonomy::getTerms( $this->constant( 'group_tax' ), $user->ID, TRUE ) ) {
+
+				foreach ( $terms as $term ) {
+
+					echo '<li class="-attr -users -groups">';
+						echo $this->get_column_icon( FALSE, 'networking', _x( 'Group', 'Modules: Users: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
+						echo sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' );
+					echo '</li>';
+				}
+			}
+		}
 	}
 
 	public function manage_columns( $columns )
