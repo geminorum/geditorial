@@ -27,6 +27,8 @@ class Pitches extends gEditorial\Module
 			'idea_cpt_archive' => 'ideas',
 			'idea_cat'         => 'idea_cat',
 			'idea_cat_slug'    => 'idea-category',
+			'pool_tax'         => 'idea_pool',
+			'pool_tax_slug'    => 'idea-pool',
 		];
 	}
 
@@ -35,21 +37,34 @@ class Pitches extends gEditorial\Module
 		return [
 			'taxonomies' => [
 				'idea_cat' => NULL,
+				'pool_tax' => 'clipboard',
 			],
 		];
 	}
 
 	protected function get_global_strings()
 	{
-		return [
-			'misc' => [
-				'tweaks_column_title' => _x( 'Idea Categories', 'Modules: Pitches: Column Title', GEDITORIAL_TEXTDOMAIN ),
-			],
+		$strings = [
 			'noops' => [
 				'idea_cpt' => _nx_noop( 'Idea', 'Ideas', 'Modules: Pitches: Noop', GEDITORIAL_TEXTDOMAIN ),
 				'idea_cat' => _nx_noop( 'Idea Category', 'Idea Categories', 'Modules: Pitches: Noop', GEDITORIAL_TEXTDOMAIN ),
+				'pool_tax' => _nx_noop( 'Idea Pool', 'Idea Pools', 'Modules: Pitches: Noop', GEDITORIAL_TEXTDOMAIN ),
 			],
 		];
+
+		if ( ! is_admin() )
+			return $strings;
+
+		$strings['misc'] = [
+			'idea_cat' => [
+				'tweaks_column_title' => _x( 'Idea Categories', 'Modules: Pitches: Column Title', GEDITORIAL_TEXTDOMAIN ),
+			],
+			'pool_tax' => [
+				'tweaks_column_title' => _x( 'Idea Pools', 'Modules: Pitches: Column Title', GEDITORIAL_TEXTDOMAIN ),
+			],
+		];
+
+		return $strings;
 	}
 
 	protected function get_global_supports()
@@ -72,6 +87,12 @@ class Pitches extends gEditorial\Module
 		$this->register_post_type( 'idea_cpt' );
 
 		$this->register_taxonomy( 'idea_cat', [
+			'hierarchical'       => TRUE,
+			'show_admin_column'  => TRUE,
+			'show_in_quick_edit' => TRUE,
+		], 'idea_cpt' );
+
+		$this->register_taxonomy( 'pool_tax', [
 			'hierarchical'       => TRUE,
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
@@ -103,6 +124,11 @@ class Pitches extends gEditorial\Module
 		MetaBox::checklistTerms( $post, $box );
 	}
 
+	public function meta_box_cb_pool_tax( $post, $box )
+	{
+		MetaBox::checklistTerms( $post, $box );
+	}
+
 	public function dashboard_glance_items( $items )
 	{
 		if ( $glance = $this->dashboard_glance_post( 'idea_cpt' ) )
@@ -124,10 +150,12 @@ class Pitches extends gEditorial\Module
 	public function restrict_manage_posts( $post_type, $which )
 	{
 		$this->do_restrict_manage_posts_taxes( 'idea_cat' );
+		$this->do_restrict_manage_posts_taxes( 'pool_tax' );
 	}
 
 	public function parse_query( $query )
 	{
 		$this->do_parse_query_taxes( $query, 'idea_cat' );
+		$this->do_parse_query_taxes( $query, 'pool_tax' );
 	}
 }
