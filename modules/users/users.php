@@ -198,6 +198,7 @@ class Users extends gEditorial\Module
 
 		wp_dropdown_users( [
 			'name'                    => 'author',
+			'who'                     => 'authors',
 			'show'                    => 'display_name_with_login',
 			'selected'                => $wp_query->get( 'author' ) ? $wp_query->get( 'author' ) : 0,
 			'show_option_all'         => $this->get_string( 'show_option_all', get_query_var( 'post_type', 'post' ), 'misc' ),

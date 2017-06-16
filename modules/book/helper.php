@@ -75,4 +75,25 @@ class Book extends gEditorial\Helper
 
 		return ( 0 === ( $check % 10 ) ) ? 2 : FALSE;
 	}
+
+	// usort( $posts, 'bcpt_sort_books' );
+	function bcpt_sort_books( $a, $b )
+	{
+		$title_a = mb_strtolower( preg_replace( '~\P{Xan}++~u', '', $a->post_title ) );
+		$title_b = mb_strtolower( preg_replace( '~\P{Xan}++~u', '', $b->post_title ) );
+
+		if( $title_a == $title_b ) {
+			return 0 ;
+		}
+		return ( $title_a < $title_b ) ? -1 : 1;
+	}
+
+	// usort( $terms, 'bcpt_sort_artists' );
+	function bcpt_sort_artists( $a, $b )
+	{
+		$aLast = end( explode( ' ', $a->name ) );
+		$bLast = end( explode( ' ', $b->name ) );
+
+		return strcasecmp( $aLast, $bLast );
+	}
 }

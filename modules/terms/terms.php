@@ -263,7 +263,7 @@ class Terms extends gEditorial\Module
 			'tax_query'        => [ [
 				'taxonomy' => 'category',
 				'field'    => 'term_id',
-				'terms'    => [ get_option( 'default_category' ) ],
+				'terms'    => [ intval( get_option( 'default_category' ) ) ],
 			] ],
 		];
 

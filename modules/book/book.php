@@ -156,12 +156,12 @@ class Book extends gEditorial\Module
 					'fields' => [
 						'ref' => [
 							'title' => _x( 'Reference', 'Modules: Book: P2P', GEDITORIAL_TEXTDOMAIN ),
-							'type' => 'text',
+							'type'  => 'text',
 							'value' => '%s',
 						],
 						'desc' => [
 							'title' => _x( 'Description', 'Modules: Book: P2P', GEDITORIAL_TEXTDOMAIN ),
-							'type' => 'text',
+							'type'  => 'text',
 							'value' => '%s',
 						],
 					],

@@ -98,13 +98,13 @@ class Modified extends gEditorial\Module
 
 	public function wp_dashboard_setup()
 	{
-		wp_add_dashboard_widget( 'geditorial-modified-latests',
+		wp_add_dashboard_widget( $this->classs(),
 			_x( 'Latest Changes', 'Modules: Modified: Dashboard Widget Title', GEDITORIAL_TEXTDOMAIN ),
-			[ $this, 'dashboard_latests' ]
+			[ $this, 'dashboard_summary' ]
 		);
 	}
 
-	public function dashboard_latests()
+	public function dashboard_summary()
 	{
 		$args = [
 			'orderby'     => 'modified',

@@ -10,6 +10,21 @@ class Book extends gEditorial\Template
 
 	const MODULE = 'book';
 
+	// FIXME: DRAFT / NOT USED
+	public static function summary( $atts = [] )
+	{
+		$posttype = self::constant( 'publication_cpt', 'publication' );
+		$fields = gEditorial()->book->post_type_all_fields( $posttype );
+
+		$rows = [];
+
+		foreach ( $fields as $field => $args )
+			if ( $meta = self::getMetaField( $field, [ 'id' => 116 ] ) )
+				$rows[$args['title']] = $meta;
+
+		HTML::tableCode( $rows );
+	}
+
 	public static function theCover( $atts = [] )
 	{
 		if ( ! array_key_exists( 'id', $atts ) )
