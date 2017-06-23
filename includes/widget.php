@@ -4,6 +4,7 @@ defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
+use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\Taxonomy;
 
@@ -19,12 +20,13 @@ class Widget extends \WP_Widget
 	public function __construct()
 	{
 		$args = Template::atts( [
-			'module' => FALSE,
-			'name'   => FALSE,
-			'class'  => '',
-			'title'  => '',
-			'desc'   => '',
-			'flush'  => [],
+			'module'  => FALSE,
+			'name'    => FALSE,
+			'class'   => '',
+			'title'   => '',
+			'desc'    => '',
+			'control' => [],
+			'flush'   => [],
 		], $this->setup() );
 
 		if ( ! $args['name'] || ! $args['module'] )
@@ -33,7 +35,7 @@ class Widget extends \WP_Widget
 		parent::__construct( 'geditorial_'.$args['name'], $args['title'], [
 			'description' => $args['desc'],
 			'classname'   => '{GEDITORIAL_WIDGET_CLASSNAME}'.'widget-geditorial-'.$args['class'],
-		] );
+		], $args['control'] );
 
 		$this->alt_option_name = 'widget_geditorial_'.$args['name'];
 		$this->parent_module   = $args['module'];
@@ -65,6 +67,35 @@ class Widget extends \WP_Widget
 	}
 
 	public function widget_cache( $args, $instance, $prefix = '' )
+	{
+		if ( $this->is_preview() )
+			return $this->widget_html( $args, $instance );
+
+		if ( WordPress::isFlush() )
+			delete_transient( $this->alt_option_name );
+
+		if ( FALSE === ( $cache = get_transient( $this->alt_option_name ) ) )
+			$cache = array();
+
+		if ( ! isset( $args['widget_id'] ) )
+			$args['widget_id'] = $this->id;
+
+		if ( isset( $cache[$args['widget_id'].$prefix] ) )
+			return print $cache[$args['widget_id'].$prefix];
+
+		ob_start();
+
+		if ( $this->widget_html( $args, $instance ) )
+			$cache[$args['widget_id'].$prefix] = ob_get_flush();
+
+		else
+			return ob_end_flush();
+
+		set_transient( $this->alt_option_name, $cache, 12 * HOUR_IN_SECONDS );
+	}
+
+	// FIXME: DROP THIS
+	public function widget_cache_OLD( $args, $instance, $prefix = '' )
 	{
 		$cache = $this->is_preview() ? [] : wp_cache_get( $this->alt_option_name, 'widget' );
 
@@ -111,10 +142,10 @@ class Widget extends \WP_Widget
 		echo $args['after_widget'];
 	}
 
-	public function widget_title( $args, $instance, $echo = TRUE )
+	public function widget_title( $args, $instance, $default = '', $echo = TRUE )
 	{
 		$title = apply_filters( 'widget_title',
-			empty( $instance['title'] ) ? '' : $instance['title'],
+			empty( $instance['title'] ) ? $default : $instance['title'],
 			$instance,
 			$this->id_base
 		);
@@ -237,12 +268,13 @@ class Widget extends \WP_Widget
 		], _x( 'PostType:', 'Widget Core', GEDITORIAL_TEXTDOMAIN ).$html ).'</p>';
 	}
 
-	public function form_taxonomy( $instance, $default = 'post_tag', $field = 'taxonomy' )
+	public function form_taxonomy( $instance, $default = 'post_tag', $field = 'taxonomy', $post_type_field = 'post_type', $post_type_default = 'post' )
 	{
 		$html = '';
-		$tax = isset( $instance[$field] ) ? $instance[$field] : $default;
+		$type = isset( $instance[$post_type_field] ) ? $instance[$post_type_field] : $post_type_default;
+		$tax  = isset( $instance[$field] ) ? $instance[$field] : $default;
 
-		foreach ( Taxonomy::get( 5 ) as $name => $title )
+		foreach ( Taxonomy::get( 0, [], $type ) as $name => $title )
 			$html .= HTML::tag( 'option', [
 				'value'    => $name,
 				'selected' => $tax == $name,
@@ -338,7 +370,7 @@ class Widget extends \WP_Widget
 	public function form_checkbox( $instance, $default = FALSE, $field = 'checked', $label = NULL )
 	{
 		if ( is_null( $label ) )
-			$label = _x( 'Checked:', 'Widget Core', GEDITORIAL_TEXTDOMAIN );
+			$label = _x( 'Checked', 'Widget Core', GEDITORIAL_TEXTDOMAIN );
 
 		$html = HTML::tag( 'input', [
 			'type'    => 'checkbox',
