@@ -39,7 +39,7 @@ class Terms extends gEditorial\Module
 
 	public function adminbar_init( &$nodes, $parent )
 	{
-		if ( is_admin() )
+		if ( is_admin() || ! is_singular() )
 			return;
 
 		if ( ! $this->cuc( 'adminbar' ) )
