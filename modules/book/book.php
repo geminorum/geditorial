@@ -27,27 +27,43 @@ class Book extends gEditorial\Module
 		];
 	}
 
+	public function settings_intro_after( $module )
+	{
+		if ( ! $this->p2p )
+			HTML::desc( sprintf( _x( 'Please consider installing <a href="%s" target="_blank">Posts to Posts</a> or <a href="%s" target="_blank">Objects to Objects</a>.', 'Modules: Book: Settings Intro', GEDITORIAL_TEXTDOMAIN ),
+				'https://github.com/scribu/wp-posts-to-posts/', 'https://github.com/voceconnect/objects-to-objects' ) );
+	}
+
 	protected function get_global_settings()
 	{
-		return [
+		$settings = [
 			'_general' => [
 				'comment_status',
-				'insert_content', // p2p // FIXME
-				'insert_content_before', // cover // FIXME
+				'insert_cover',
 				'insert_priority',
-				[
-					'field' => 'p2p_title_from',
-					'type'  => 'text',
-					'title' => _x( 'Connected From Title', 'Modules: Book: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-				],
-				[
-					'field' => 'p2p_title_to',
-					'type'  => 'text',
-					'title' => _x( 'Connected To Title', 'Modules: Book: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-				],
 			],
-			'posttypes_option' => 'posttypes_option',
 		];
+
+		if ( $this->p2p ) {
+
+			$settings['posttypes_option'] = 'posttypes_option';
+
+			$settings['_general'][] = 'insert_content';
+
+			$settings['_general'][] = [
+				'field' => 'p2p_title_from',
+				'type'  => 'text',
+				'title' => _x( 'Connected From Title', 'Modules: Book: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+			];
+
+			$settings['_general'][] = [
+				'field' => 'p2p_title_to',
+				'type'  => 'text',
+				'title' => _x( 'Connected To Title', 'Modules: Book: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+			];
+		}
+
+		return $settings;
 	}
 
 	protected function get_global_constants()
@@ -302,7 +318,7 @@ class Book extends gEditorial\Module
 		if ( is_admin() ) {
 
 
-		} else if ( $this->get_setting( 'insert_content_before', FALSE ) ) {
+		} else if ( $this->get_setting( 'insert_cover' ) ) {
 
 			add_action( 'gnetwork_themes_content_before',
 				[ $this, 'content_before' ],
