@@ -39,6 +39,8 @@ class Magazine extends gEditorial\Module
 			'_general' => [
 				'multiple_instances',
 				'shortcode_support',
+				'insert_cover',
+				'insert_priority',
 				'admin_ordering',
 				'admin_restrict',
 				[
@@ -249,6 +251,12 @@ class Magazine extends gEditorial\Module
 		if ( ! is_admin() ) {
 			$this->filter( 'term_link', 3 );
 			$this->action( 'template_redirect' );
+
+			if ( $this->get_setting( 'insert_cover' ) )
+				add_action( 'gnetwork_themes_content_before',
+					[ $this, 'content_before' ],
+					$this->get_setting( 'insert_priority', -50 )
+				);
 		}
 	}
 
@@ -414,6 +422,17 @@ class Magazine extends gEditorial\Module
 			if ( $redirect = $this->get_setting( 'redirect_archives', FALSE ) )
 				WordPress::redirect( $redirect, 301 );
 		}
+	}
+
+	public function content_before( $content, $posttypes = NULL )
+	{
+		if ( ! $this->is_content_insert( $this->post_types( 'issue_cpt' ) ) )
+			return;
+
+		ModuleTemplate::postImage( [
+			'size' => $this->get_image_size_key( 'issue_cpt', 'medium' ),
+			'link' => 'attachment',
+		] );
 	}
 
 	public function post_updated( $post_ID, $post_after, $post_before )
