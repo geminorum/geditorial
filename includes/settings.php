@@ -312,15 +312,23 @@ class Settings extends Core\Base
 		return $args;
 	}
 
+	public static function getSetting_insert_cover( $section )
+	{
+		return [
+			'field'   => 'insert_cover',
+			'title'   => _x( 'Insert Cover', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+			'section' => $section,
+		];
+	}
+
 	public static function getSetting_insert_priority( $section )
 	{
 		return [
-			'field'       => 'insert_priority',
-			'type'        => 'priority',
-			'title'       => _x( 'Insert Priority', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'description' => _x( 'Priority of inserting buttons on the content.', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-			'default'     => '10',
-			'section'     => $section,
+			'field'   => 'insert_priority',
+			'type'    => 'priority',
+			'title'   => _x( 'Insert Priority', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+			'default' => '10',
+			'section' => $section,
 		];
 	}
 
