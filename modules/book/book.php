@@ -315,15 +315,13 @@ class Book extends gEditorial\Module
 			'show_in_quick_edit' => TRUE,
 		], 'publication_cpt' );
 
-		if ( is_admin() ) {
+		if ( ! is_admin() ) {
 
-
-		} else if ( $this->get_setting( 'insert_cover' ) ) {
-
-			add_action( 'gnetwork_themes_content_before',
-				[ $this, 'content_before' ],
-				$this->get_setting( 'insert_priority', -50 )
-			);
+			if ( $this->get_setting( 'insert_cover' ) )
+				add_action( 'gnetwork_themes_content_before',
+					[ $this, 'content_before' ],
+					$this->get_setting( 'insert_priority', -50 )
+				);
 		}
 	}
 
