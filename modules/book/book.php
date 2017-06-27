@@ -235,6 +235,10 @@ class Book extends gEditorial\Module
 					'title'       => _x( 'Publication Date', 'Modules: Book: Field Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Date Published', 'Modules: Book: Field Description', GEDITORIAL_TEXTDOMAIN ),
 				],
+				'publish_location' => [
+					'title'       => _x( 'Publish Location', 'Modules: Book: Field Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Location Published', 'Modules: Book: Field Description', GEDITORIAL_TEXTDOMAIN ),
+				],
 				'edition' => [
 					'title'       => _x( 'Edition', 'Modules: Book: Field Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Edition of the Publication', 'Modules: Book: Field Description', GEDITORIAL_TEXTDOMAIN ),
@@ -246,6 +250,11 @@ class Book extends gEditorial\Module
 				'pages' => [
 					'title'       => _x( 'Pages', 'Modules: Book: Field Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Total Pages of the Publication', 'Modules: Book: Field Description', GEDITORIAL_TEXTDOMAIN ),
+					'type'        => 'number',
+				],
+				'volumes' => [
+					'title'       => _x( 'Volumes', 'Modules: Book: Field Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Total Volumes of the Publication', 'Modules: Book: Field Description', GEDITORIAL_TEXTDOMAIN ),
 					'type'        => 'number',
 				],
 			],
