@@ -409,13 +409,17 @@ class Today extends gEditorial\Module
 			if ( wp_verify_nonce( @$_REQUEST['_geditorial_today_post_main'], 'geditorial_today_post_main' )
 				|| wp_verify_nonce( @$_REQUEST['_geditorial_today_post_raw'], 'geditorial_today_post_raw' ) ) {
 
+				$default_type = $this->get_setting( 'calendar_type', 'gregorian' );
+
 				foreach ( $this->get_the_day_constants() as $field => $constant ) {
 					if ( isset( $_POST['geditorial-today-date-'.$field] ) ) {
 
 						$value = trim( $_POST['geditorial-today-date-'.$field] );
 
-						if ( 'cal' != $field )
-							$value = Number::intval( $value, FALSE );
+						if ( 'cal' == $field )
+							$value = Helper::sanitizeCalendar( trim( $value ), $default_type );
+						else
+							$value = Number::intval( trim( $value ), FALSE );
 
 						$this->set_meta( $post_id, $value, $constant );
 					}

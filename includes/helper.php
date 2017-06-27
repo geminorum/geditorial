@@ -866,6 +866,35 @@ class Helper extends Core\Base
 		return $filtered ? apply_filters( self::BASE.'_default_calendars', $calendars ) : $calendars;
 	}
 
+	public static function sanitizeCalendar( $calendar, $default_type = 'gregorian' )
+	{
+		$calendars = self::getDefualtCalendars( FALSE );
+		$sanitized = $calendar;
+
+		if ( ! $calendar )
+			$sanitized = $default_type;
+
+		else if ( in_array( $calendar, [ 'Jalali', 'jalali', 'Persian', 'persian' ] ) )
+			$sanitized = 'persian';
+
+		else if ( in_array( $calendar, [ 'Hijri', 'hijri', 'Islamic', 'islamic' ] ) )
+			$sanitized = 'islamic';
+
+		else if ( in_array( $calendar, [ 'Gregorian', 'gregorian' ] ) )
+			$sanitized = 'gregorian';
+
+		else if ( in_array( $calendar, array_keys( $calendars ) ) )
+			$sanitized = $calendar;
+
+		else if ( $key = array_search( $calendar, $calendars ) )
+			$sanitized = $key;
+
+		else
+			$sanitized = $default_type;
+
+		return apply_filters( self::BASE.'_sanitize_calendar', $sanitized, $default_type, $calendar );
+	}
+
 	// @SOURCE: `translate_nooped_plural()`
 	public static function nooped( $count, $nooped )
 	{
