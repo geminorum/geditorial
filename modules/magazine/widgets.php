@@ -30,15 +30,15 @@ class IssueCover extends gEditorial\Widget
 				return;
 
 		if ( ! empty( $instance['latest_issue'] ) )
-			$prefix = 'latest_issue';
+			$prefix = '_latest_issue';
 
 		else if ( ! empty( $instance['issue_id'] ) )
-			$prefix = 'issue_'.$instance['issue_id'];
+			$prefix = '_issue_'.$instance['issue_id'];
 
 		else
-			$prefix = 'queried_'.get_queried_object_id();
+			$prefix = '_queried_'.get_queried_object_id();
 
-		$this->widget_cache( $args, $instance, '_'.$prefix );
+		$this->widget_cache( $args, $instance, $prefix );
 	}
 
 	public function widget_html( $args, $instance )
@@ -110,11 +110,6 @@ class IssueCover extends gEditorial\Widget
 		$instance['class']        = strip_tags( $new_instance['class'] );
 
 		$this->flush_widget_cache();
-
-		$alloptions = wp_cache_get( 'alloptions', 'options' );
-
-		if ( isset( $alloptions[$this->alt_option_name] ) )
-			delete_option( $this->alt_option_name );
 
 		return $instance;
 	}

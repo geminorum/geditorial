@@ -53,11 +53,9 @@ class Today extends gEditorial\Module
 	{
 		return [
 			'misc' => [
-				'featured'              => _x( 'Cover Image', 'Modules: Today: Day CPT: Featured', GEDITORIAL_TEXTDOMAIN ),
-				'meta_box_title'        => _x( 'The Day', 'Modules: Today: Meta Box Title', GEDITORIAL_TEXTDOMAIN ),
-				'theday_column_title'   => _x( 'Day', 'Modules: Today: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				'cover_column_title'    => _x( 'Cover', 'Modules: Today: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				'children_column_title' => _x( 'Posts', 'Modules: Today: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'featured'            => _x( 'Cover Image', 'Modules: Today: Day CPT: Featured', GEDITORIAL_TEXTDOMAIN ),
+				'meta_box_title'      => _x( 'The Day', 'Modules: Today: Meta Box Title', GEDITORIAL_TEXTDOMAIN ),
+				'theday_column_title' => _x( 'Day', 'Modules: Today: Column Title', GEDITORIAL_TEXTDOMAIN ),
 			],
 			'noops' => [
 				'day_cpt' => _nx_noop( 'Day', 'Days', 'Modules: Today: Noop', GEDITORIAL_TEXTDOMAIN ),

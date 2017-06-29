@@ -316,7 +316,7 @@ class Template extends Core\Base
 		}
 	}
 
-	public static function metaLabel( $atts = [], $module = NULL )
+	public static function metaLabel( $atts = [], $module = NULL, $chack = TRUE )
 	{
 		if ( is_null( $module ) && self::MODULE )
 			$module = self::MODULE;
@@ -335,7 +335,7 @@ class Template extends Core\Base
 			'description' => NULL, // FALSE to disable
 		], $atts );
 
-		if ( ! gEditorial()->enabled( 'meta' ) )
+		if ( $chack && ! gEditorial()->enabled( 'meta' ) )
 			return $args['default'];
 
 		if ( ! $post = get_post( $args['id'] ) )
@@ -406,7 +406,7 @@ class Template extends Core\Base
 		return TRUE;
 	}
 
-	public static function metaLink( $atts = [], $module = NULL )
+	public static function metaLink( $atts = [], $module = NULL, $check = TRUE )
 	{
 		if ( is_null( $module ) && self::MODULE )
 			$module = self::MODULE;
@@ -425,7 +425,7 @@ class Template extends Core\Base
 			'url_default'   => FALSE,
 		], $atts );
 
-		if ( ! gEditorial()->enabled( 'meta' ) )
+		if ( $check && ! gEditorial()->enabled( 'meta' ) )
 			return $args['default'];
 
 		if ( ! $post = get_post( $args['id'] ) )

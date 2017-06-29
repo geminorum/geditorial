@@ -161,8 +161,6 @@ class Tweaks extends gEditorial\Module
 		$excludes  = [
 			'attachment:audio',
 			'attachment:video',
-			'issue',
-			'contest',
 			'profile', // gPeople
 		];
 
@@ -198,6 +196,7 @@ class Tweaks extends gEditorial\Module
 			'alphabet_tax',
 			'entry_section',
 			'specs',
+			'label',
 		];
 	}
 
@@ -314,10 +313,8 @@ class Tweaks extends gEditorial\Module
 
 		foreach ( $columns as $key => $value ) {
 
-			if ( 'title' == $key
-				&& post_type_supports( $post_type, 'thumbnail' )
-				&& in_array( $post_type, $this->get_setting( 'column_thumb', [] ) ) )
-					$new[$this->classs( 'thumb' )] = $this->get_column_title( 'thumb', $post_type );
+			if ( 'title' == $key && in_array( $post_type, $this->get_setting( 'column_thumb', [] ) ) )
+				$new[$this->classs( 'thumb' )] = $this->get_column_title( 'thumb', $post_type );
 
 			if ( ( 'comments' == $key && ! $added )
 				|| ( 'date' == $key && ! $added ) ) {
