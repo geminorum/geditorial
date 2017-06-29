@@ -334,12 +334,6 @@ class Book extends gEditorial\Module
 		}
 	}
 
-	public function init_ajax()
-	{
-		if ( $this->is_inline_save( $_REQUEST, 'publication_cpt' ) )
-			$this->_edit_screen( $_REQUEST['post_type'] );
-	}
-
 	public function current_screen( $screen )
 	{
 		if ( $screen->post_type == $this->constant( 'publication_cpt' ) ) {
@@ -351,9 +345,9 @@ class Book extends gEditorial\Module
 
 			} else if ( 'edit' == $screen->base ) {
 
-				$this->filter( 'bulk_post_updated_messages', 2 );
-
 				add_filter( 'disable_months_dropdown', '__return_true', 12 );
+
+				$this->filter( 'bulk_post_updated_messages', 2 );
 				$this->action( 'restrict_manage_posts', 2, 12 );
 				$this->action( 'parse_query' );
 
@@ -361,9 +355,6 @@ class Book extends gEditorial\Module
 					add_action( 'geditorial_tweaks_column_row', [ $this, 'column_row_p2p_to' ], -25 );
 
 				$this->_tweaks_taxonomy();
-
-				$this->_edit_screen( $screen->post_type );
-				add_thickbox();
 			}
 
 		} else if ( $this->p2p && 'edit' == $screen->base
@@ -371,12 +362,6 @@ class Book extends gEditorial\Module
 
 			add_action( 'geditorial_tweaks_column_row', [ $this, 'column_row_p2p_from' ], -25 );
 		}
-	}
-
-	private function _edit_screen( $post_type )
-	{
-		add_filter( 'manage_'.$post_type.'_posts_columns', [ $this, 'manage_posts_columns' ] );
-		add_action( 'manage_'.$post_type.'_posts_custom_column', [ $this, 'posts_custom_column' ], 10, 2 );
 	}
 
 	public function add_meta_box_cb_publication_cpt( $post )
@@ -520,33 +505,6 @@ class Book extends gEditorial\Module
 			'status_tax',
 			'publisher_tax',
 		] );
-	}
-
-	public function manage_posts_columns( $posts_columns )
-	{
-		$new_columns = [];
-
-		foreach ( $posts_columns as $key => $value ) {
-
-			if ( 'title' == $key ) {
-				$new_columns['cover'] = $this->get_column_title( 'cover', 'publication_cpt' );
-				$new_columns[$key]    = $value;
-
-			} else if ( in_array( $key, [ 'author', 'date', 'comments' ] ) ) {
-				continue; // he he!
-
-			} else {
-				$new_columns[$key] = $value;
-			}
-		}
-
-		return $new_columns;
-	}
-
-	public function posts_custom_column( $column_name, $post_id )
-	{
-		if ( 'cover' == $column_name )
-			$this->column_thumb( $post_id, $this->get_image_size_key( 'publication_cpt' ) );
 	}
 
 	public function post_updated_messages( $messages )

@@ -147,7 +147,6 @@ class Tweaks extends gEditorial\Module
 		$excludes  = [
 			'attachment:audio',
 			'attachment:video',
-			'publication',
 			'issue',
 			'contest',
 			'profile', // gPeople
