@@ -68,15 +68,6 @@ class Meta extends gEditorial\Module
 		];
 	}
 
-	protected function get_module_icons()
-	{
-		return [
-			'taxonomies' => [
-				'ct_tax' => 'admin-post',
-			],
-		];
-	}
-
 	protected function get_global_strings()
 	{
 		return [
@@ -95,6 +86,7 @@ class Meta extends gEditorial\Module
 					'highlight'    => _x( 'Highlight', 'Modules: Meta: Titles', GEDITORIAL_TEXTDOMAIN ),
 				],
 				'author' => _x( 'Author', 'Modules: Meta: Titles', GEDITORIAL_TEXTDOMAIN ),
+				'source' => _x( 'Source', 'Modules: Meta: Titles', GEDITORIAL_TEXTDOMAIN ),
 			],
 			'descriptions' => [
 				'post' => [
@@ -112,9 +104,6 @@ class Meta extends gEditorial\Module
 				],
 			],
 			'misc' => [
-				'ct_tax' => [
-					'tweaks_column_title' => _x( 'Column Headers', 'Modules: Meta: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				],
 				'meta_column_title'   => _x( 'Metadata', 'Modules: Meta: Column Title', GEDITORIAL_TEXTDOMAIN ),
 				'author_column_title' => _x( 'Author', 'Modules: Meta: Column Title', GEDITORIAL_TEXTDOMAIN ),
 				'meta_box_title'      => _x( 'Metadata', 'Modules: Meta: Meta Box Title', GEDITORIAL_TEXTDOMAIN ),
@@ -251,8 +240,6 @@ class Meta extends gEditorial\Module
 
 				$this->_admin_enabled();
 				$this->_edit_screen( $screen->post_type );
-
-				$this->_tweaks_taxonomy();
 			}
 
 			if ( 'post' == $screen->base
@@ -511,15 +498,17 @@ class Meta extends gEditorial\Module
 
 		global $post, $mode;
 
+		$meta   = (array) $this->get_postmeta( $post_id );
 		$fields = $this->post_type_field_types( $post->post_type );
 		$author = $this->get_setting( 'author_row', FALSE )
 			? WordPress::getAuthorEditHTML( $post->post_type, $post->post_author )
 			: FALSE;
 
 		$rows = [
-			'ot' => 'arrow-up-alt2',
-			'st' => 'arrow-down-alt2',
-			'as' => 'admin-users',
+			'ot'        => 'arrow-up-alt2',
+			'st'        => 'arrow-down-alt2',
+			'highlight' => 'pressthis',
+			'as'        => 'admin-users',
 		];
 
 		echo '<ul class="geditorial-admin-wrap-column -meta -rows">';
@@ -540,6 +529,8 @@ class Meta extends gEditorial\Module
 						}
 
 					echo '</li>';
+
+					unset( $meta[$field] );
 				}
 
 				echo '<div class="hidden geditorial-meta-'.$field.'-value">'.$value.'</div>';
@@ -553,12 +544,26 @@ class Meta extends gEditorial\Module
 			echo '</li>';
 		}
 
-		$this->actions( 'column_row', get_post( $post_id ), $fields, (array) $this->get_postmeta( $post_id ) );
+		unset( $meta['ch'], $meta['le'], $meta['source_title'], $meta['source_url'] );
+
+		$this->actions( 'column_row', get_post( $post_id ), $fields, $meta );
+
+		$label = $this->get_column_icon( FALSE, 'megaphone', $this->get_string( 'ch', $post->post_type, 'titles', 'label' ) );
+		ModuleTemplate::metaLabel( [
+			'before' => '<li class="-row meta-label">'.$label,
+			'after'  => '</li>',
+		], 'meta', FALSE );
+
+		$source = $this->get_column_icon( FALSE, 'external', $this->get_string( 'source', $post->post_type, 'titles', 'source' ) );
+		ModuleTemplate::metaSource( [
+			'before' => '<li class="-row meta-source">'.$source,
+			'after'  => '</li>',
+		] );
 
 		if ( 'excerpt' == $mode && array_key_exists( 'le', $fields ) ) {
-			$icon = $this->get_column_icon( FALSE, 'editor-paragraph', $this->get_string( 'le', $post->post_type, 'titles', 'lead' ) );
+			$lead = $this->get_column_icon( FALSE, 'editor-paragraph', $this->get_string( 'le', $post->post_type, 'titles', 'lead' ) );
 			ModuleTemplate::metaLead( [
-				'before' => '<li class="-row meta-lead">'.$icon,
+				'before' => '<li class="-row meta-lead">'.$lead,
 				'after'  => '</li>',
 				'filter' => FALSE,
 				'trim'   => 450,
@@ -570,7 +575,7 @@ class Meta extends gEditorial\Module
 
 	public function quick_edit_custom_box( $column_name, $post_type )
 	{
-		if ( 'geditorial-meta' != $column_name )
+		if ( $this->hook() != $column_name )
 			return FALSE;
 
 		$fields = $this->post_type_fields( $post_type );
@@ -604,7 +609,7 @@ class Meta extends gEditorial\Module
 		if ( ! $this->is_content_insert( NULL, FALSE ) )
 			return;
 
-		ModuleTemplate::metaLink( [
+		ModuleTemplate::metaSource( [
 			'before' => '<div class="geditorial-wrap -meta -after entry-source">'
 				.$this->get_setting( 'before_source', '' ).' ',
 			'after'  => '</div>',
