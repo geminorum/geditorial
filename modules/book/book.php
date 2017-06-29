@@ -231,6 +231,7 @@ class Book extends gEditorial\Module
 				'publish_location' => [
 					'title'       => _x( 'Publish Location', 'Modules: Book: Field Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Location Published', 'Modules: Book: Field Description', GEDITORIAL_TEXTDOMAIN ),
+					'icon'        => 'location-alt',
 				],
 				'publication_date' => [
 					'title'       => _x( 'Publication Date', 'Modules: Book: Field Title', GEDITORIAL_TEXTDOMAIN ),
@@ -245,11 +246,13 @@ class Book extends gEditorial\Module
 					'title'       => _x( 'Pages', 'Modules: Book: Field Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Total Pages of the Publication', 'Modules: Book: Field Description', GEDITORIAL_TEXTDOMAIN ),
 					'type'        => 'number',
+					'icon'        => 'admin-page',
 				],
 				'volumes' => [
 					'title'       => _x( 'Volumes', 'Modules: Book: Field Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Total Volumes of the Publication', 'Modules: Book: Field Description', GEDITORIAL_TEXTDOMAIN ),
 					'type'        => 'number',
+					'icon'        => 'book-alt',
 				],
 				'size' => [
 					'title'       => _x( 'Size', 'Modules: Book: Field Title', GEDITORIAL_TEXTDOMAIN ),
@@ -353,6 +356,8 @@ class Book extends gEditorial\Module
 
 				if ( $this->p2p )
 					add_action( 'geditorial_tweaks_column_row', [ $this, 'column_row_p2p_to' ], -25 );
+
+				add_action( 'geditorial_meta_column_row', [ $this, 'column_row_meta' ], 12, 3 );
 
 				$this->_tweaks_taxonomy();
 			}
@@ -461,6 +466,33 @@ class Book extends gEditorial\Module
 
 			echo '</li>';
 		}
+	}
+
+	public function column_row_meta( $post, $fields, $meta )
+	{
+		foreach ( $fields as $field => $args ) {
+
+			if ( empty( $meta[$field] ) )
+				continue;
+
+			echo '<li class="-row -book -field-'.$field.'">';
+				echo $this->get_column_icon( FALSE, $args['icon'], $args['title'] );
+				echo $this->display_meta( $meta[$field], $field, $args );
+			echo '</li>';
+		}
+	}
+
+	public function display_meta( $value, $key = NULL, $field = [] )
+	{
+		switch ( $key ) {
+			case 'isbn': return ModuleHelper::ISBN( $value );
+			case 'edition': return sprintf( _x( '%s Edition', 'Modules: Book: Display', GEDITORIAL_TEXTDOMAIN ), $value );
+			case 'print': return sprintf( _x( '%s Print', 'Modules: Book: Display', GEDITORIAL_TEXTDOMAIN ), $value );
+			case 'pages': return Helper::getCounted( $value, _x( '%s Pages', 'Modules: Book: Display', GEDITORIAL_TEXTDOMAIN ) );
+			case 'volumes': return Helper::getCounted( $value, _x( '%s Volumes', 'Modules: Book: Display', GEDITORIAL_TEXTDOMAIN ) );
+		}
+
+		return esc_html( $value );
 	}
 
 	public function gpeople_support( $post_types )
