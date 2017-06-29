@@ -109,7 +109,7 @@ class Today extends gEditorial\Module
 	{
 		if ( $this->is_inline_save( $_REQUEST, 'day_cpt' ) ) {
 
-			$this->_edit_screen( $_REQUEST['post_type'] );
+			$this->_edit_screen_supported( $_REQUEST['post_type'] );
 
 			$this->_save_meta_supported( $_REQUEST['post_type'] );
 
@@ -128,17 +128,6 @@ class Today extends gEditorial\Module
 			if ( $screen->post_type == $this->constant( 'day_cpt' ) ) {
 
 				// SEE: http://make.wordpress.org/core/2012/12/01/more-hooks-on-the-edit-screen/
-				// add_action( 'edit_form_after_title', function() {
-				//     echo '<h2>This is edit_form_after_title!</h2>';
-				// } );
-				//
-				// add_action( 'edit_form_after_editor', function() {
-				//     echo '<h2>This is edit_form_after_editor!</h2>';
-				// } );
-				//
-				// add_action( 'submitpost_box', function() {
-				//     echo '<h2>This is submitpost_box!</h2>';
-				// } );
 
 				$this->_save_meta_supported( $screen->post_type );
 
@@ -177,9 +166,8 @@ class Today extends gEditorial\Module
 
 				add_filter( 'disable_months_dropdown', '__return_true', 12 );
 
-				$this->_edit_screen( $screen->post_type );
-				add_filter( 'manage_edit-'.$screen->post_type.'_sortable_columns', [ $this, 'sortable_columns' ] );
-				add_thickbox();
+				$this->_edit_screen_supported( $screen->post_type );
+
 
 				$this->enqueue_asset_js( $screen->base );
 
@@ -189,26 +177,18 @@ class Today extends gEditorial\Module
 				$this->_admin_enabled();
 
 				$this->_edit_screen_supported( $screen->post_type );
-				add_filter( 'manage_edit-'.$screen->post_type.'_sortable_columns', [ $this, 'sortable_columns' ] );
-				add_thickbox();
 
 				$this->enqueue_asset_js( $screen->base );
 			}
 		}
 	}
 
-	private function _edit_screen( $post_type )
-	{
-		add_filter( 'manage_'.$post_type.'_posts_columns', [ $this, 'manage_posts_columns' ] );
-		add_filter( 'manage_'.$post_type.'_posts_custom_column', [ $this, 'posts_custom_column' ], 10, 2 );
-
-		add_action( 'quick_edit_custom_box', [ $this, 'quick_edit_custom_box' ], 10, 2 );
-	}
-
+	// for main & supported
 	private function _edit_screen_supported( $post_type )
 	{
-		add_filter( 'manage_'.$post_type.'_posts_columns', [ $this, 'manage_posts_columns_supported' ], 12 );
-		add_filter( 'manage_'.$post_type.'_posts_custom_column', [ $this, 'posts_custom_column_supported' ], 10, 2 );
+		add_filter( 'manage_'.$post_type.'_posts_columns', [ $this, 'manage_posts_columns' ], 12 );
+		add_filter( 'manage_'.$post_type.'_posts_custom_column', [ $this, 'posts_custom_column' ], 10, 2 );
+		add_filter( 'manage_edit-'.$post_type.'_sortable_columns', [ $this, 'sortable_columns' ] );
 
 		add_action( 'quick_edit_custom_box', [ $this, 'quick_edit_custom_box' ], 10, 2 );
 	}
@@ -248,54 +228,19 @@ class Today extends gEditorial\Module
 		return array_merge( $post_types, [ $this->constant( 'day_cpt' ) ] );
 	}
 
-	public function manage_posts_columns_supported( $posts_columns )
+	public function manage_posts_columns( $columns )
 	{
-		return Arraay::insert( $posts_columns, [
+		return Arraay::insert( $columns, [
 			'theday' => $this->get_column_title( 'theday', 'day_cpt' ),
 		], 'title', 'before' );
 	}
 
-	public function manage_posts_columns( $posts_columns )
-	{
-		$new_columns = [];
-
-		foreach ( $posts_columns as $key => $value ) {
-
-			if ( $key == 'title' ) {
-				$new_columns['theday'] = $this->get_column_title( 'theday', 'day_cpt' );
-				$new_columns['cover'] = $this->get_column_title( 'cover', 'day_cpt' );
-				$new_columns[$key] = $value;
-
-			} else if ( 'date' == $key ) {
-				$new_columns['children'] = $this->get_column_title( 'children', 'day_cpt' );
-
-			} else if ( in_array( $key, [ 'author', 'comments' ] ) ) {
-				continue; // he he!
-
-			} else {
-				$new_columns[$key] = $value;
-			}
-		}
-
-		return $new_columns;
-	}
-
 	public function posts_custom_column( $column_name, $post_id )
 	{
-		if ( 'children' == $column_name )
-			$this->column_count( $this->get_linked_posts( $post_id, 'day_cpt', 'day_tax', TRUE ) );
-
-		else if ( 'theday' == $column_name )
-			$this->column_theday( $post_id );
-
-		else if ( 'cover' == $column_name )
-			$this->column_thumb( $post_id, $this->get_image_size_key( 'day_cpt' ) );
-	}
-
-	public function posts_custom_column_supported( $column_name, $post_id )
-	{
 		if ( 'theday' == $column_name )
-			$this->column_theday( $post_id );
+			ModuleHelper::displayTheDayFromPost( get_post( $post_id ),
+				$this->get_setting( 'calendar_type', 'gregorian' ),
+				$this->get_the_day_constants() );
 	}
 
 	public function quick_edit_custom_box( $column_name, $post_type )
@@ -316,13 +261,6 @@ class Today extends gEditorial\Module
 	public function sortable_columns( $columns )
 	{
 		return array_merge( $columns, [ 'theday' => 'theday' ] ); // FIXME: add var query
-	}
-
-	public function column_theday( $post_id )
-	{
-		ModuleHelper::displayTheDayFromPost( get_post( $post_id ),
-			$this->get_setting( 'calendar_type', 'gregorian' ),
-			$this->get_the_day_constants() );
 	}
 
 	public function post_updated_messages( $messages )
