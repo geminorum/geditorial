@@ -39,12 +39,11 @@ class Users extends gEditorial\Module
 					'title'       => _x( 'User Groups', 'Modules: Users: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Taxonomy for organizing users in groups', 'Modules: Users: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 				],
-				// [
-				// 	'field'       => 'user_types',
-				// 	'title'       => _x( 'User Types', 'Modules: Users: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-				// 	'description' => _x( 'Taxonomy for organizing users in types', 'Modules: Users: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-				// ],
-				'calendar_type',
+				[
+					'field'       => 'user_types',
+					'title'       => _x( 'User Types', 'Modules: Users: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Taxonomy for organizing users in types', 'Modules: Users: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+				],
 				'admin_restrict',
 				[
 					'field'       => 'author_restrict',
@@ -162,7 +161,7 @@ class Users extends gEditorial\Module
 				$this->filter( 'manage_users_custom_column', 3 );
 			}
 
-			add_action( 'geditorial_tweaks_column_user', [ $this, 'column_user' ], 1, 12 );
+			add_action( 'geditorial_tweaks_column_user', [ $this, 'column_user' ], 12 );
 
 		} else if ( $groups && ( 'profile' == $screen->base
 			|| 'user-edit' == $screen->base ) ) {
@@ -275,6 +274,20 @@ class Users extends gEditorial\Module
 
 					echo '<li class="-attr -users -groups">';
 						echo $this->get_column_icon( FALSE, 'networking', _x( 'Group', 'Modules: Users: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
+						echo sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' );
+					echo '</li>';
+				}
+			}
+		}
+
+		if ( $this->get_setting( 'user_types', FALSE ) ) {
+
+			if ( $terms = Taxonomy::getTerms( $this->constant( 'type_tax' ), $user->ID, TRUE ) ) {
+
+				foreach ( $terms as $term ) {
+
+					echo '<li class="-attr -users -types">';
+						echo $this->get_column_icon( FALSE, 'networking', _x( 'Type', 'Modules: Users: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
 						echo sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' );
 					echo '</li>';
 				}
