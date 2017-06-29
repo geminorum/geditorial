@@ -5,6 +5,7 @@ defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\MetaBox;
+use geminorum\gEditorial\Core\Arraay;
 use geminorum\gEditorial\Core\HTML;
 
 class Event extends gEditorial\Module
@@ -77,9 +78,8 @@ class Event extends gEditorial\Module
 		return [
 			'misc' => [
 				'event_cpt' => [
-					'featured'       => _x( 'Poster Image', 'Modules: Event: Event CPT: Featured', GEDITORIAL_TEXTDOMAIN ),
-					'meta_box_title' => _x( 'Date & Times', 'Modules: Event: Event CPT: Meta Box Title', GEDITORIAL_TEXTDOMAIN ),
-
+					'featured'                  => _x( 'Poster Image', 'Modules: Event: Event CPT: Featured', GEDITORIAL_TEXTDOMAIN ),
+					'meta_box_title'            => _x( 'Date & Times', 'Modules: Event: Event CPT: Meta Box Title', GEDITORIAL_TEXTDOMAIN ),
 					'event_starts_column_title' => _x( 'Starts', 'Modules: Event: Column Title', GEDITORIAL_TEXTDOMAIN ),
 					'event_ends_column_title'   => _x( 'Ends', 'Modules: Event: Column Title', GEDITORIAL_TEXTDOMAIN ),
 				],
@@ -245,8 +245,6 @@ class Event extends gEditorial\Module
 				add_filter( 'disable_months_dropdown', '__return_true', 12 );
 
 				$this->_edit_screen( $screen->post_type );
-				add_filter( 'manage_edit-'.$screen->post_type.'_sortable_columns', [ $this, 'sortable_columns' ] );
-
 				$this->_tweaks_taxonomy();
 			}
 		}
@@ -254,8 +252,9 @@ class Event extends gEditorial\Module
 
 	private function _edit_screen( $post_type )
 	{
-		add_filter( 'manage_'.$post_type.'_posts_columns', [ $this, 'manage_posts_columns' ] );
+		add_filter( 'manage_'.$post_type.'_posts_columns', [ $this, 'manage_posts_columns' ], 16 );
 		add_action( 'manage_'.$post_type.'_posts_custom_column', [ $this, 'posts_custom_column' ], 10, 2 );
+		add_filter( 'manage_edit-'.$post_type.'_sortable_columns', [ $this, 'sortable_columns' ] );
 	}
 
 	public function gpeople_support( $post_types )
@@ -307,30 +306,15 @@ class Event extends gEditorial\Module
 		$this->do_parse_query_taxes( $query, 'event_cat' );
 	}
 
-	public function manage_posts_columns( $posts_columns )
+	public function manage_posts_columns( $columns )
 	{
-		$new_columns = [];
+		if ( ! $this->get_setting( 'startend_support', TRUE ) )
+			return $columns;
 
-		foreach ( $posts_columns as $key => $value ) {
-
-			if ( 'title' == $key ) {
-
-				if ( $this->get_setting( 'startend_support', TRUE ) ) {
-					$new_columns['event_starts'] = $this->get_column_title( 'event_starts', 'event_cpt' );
-					$new_columns['event_ends'] = $this->get_column_title( 'event_ends', 'event_cpt' );
-				}
-
-				$new_columns[$key] = $value;
-
-			} else if ( in_array( $key, [ 'author', 'date', 'comments' ] ) ) {
-				continue; // he he!
-
-			} else {
-				$new_columns[$key] = $value;
-			}
-		}
-
-		return $new_columns;
+		return Arraay::insert( $columns, [
+			'event_starts' => $this->get_column_title( 'event_starts', 'event_cpt' ),
+			'event_ends'   => $this->get_column_title( 'event_ends', 'event_cpt' ),
+		], 'title', 'before' );
 	}
 
 	public function posts_custom_column( $column, $post_id )
