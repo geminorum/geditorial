@@ -67,6 +67,13 @@ class Tweaks extends gEditorial\Module
 					'description' => _x( 'Displays ID Column on the post list table.', 'Modules: Tweaks: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 				],
 				[
+					'field'       => 'column_order',
+					'type'        => 'posttypes',
+					'title'       => _x( 'Order Column', 'Modules: Tweaks: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Displays Order Column on the post list table.', 'Modules: Tweaks: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'values'      => $this->get_posttypes_support_order(),
+				],
+				[
 					'field'       => 'column_thumb',
 					'type'        => 'posttypes',
 					'title'       => _x( 'Thumbnail Column', 'Modules: Tweaks: Setting Title', GEDITORIAL_TEXTDOMAIN ),
@@ -126,18 +133,25 @@ class Tweaks extends gEditorial\Module
 	{
 		return [
 			'misc' => [
-				'title_column_title'          => _x( 'Title', 'Modules: Tweaks: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				'rows_column_title'           => _x( 'Extra', 'Modules: Tweaks: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				'atts_column_title'           => _x( 'Attributes', 'Modules: Tweaks: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				'id_column_title'             => _x( 'ID', 'Modules: Tweaks: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				'thumb_column_title'          => _x( 'Featured', 'Modules: Tweaks: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				'user_column_title'           => _x( 'User', 'Modules: Tweaks: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'title_column_title' => _x( 'Title', 'Modules: Tweaks: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'rows_column_title'  => _x( 'Extra', 'Modules: Tweaks: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'atts_column_title'  => _x( 'Attributes', 'Modules: Tweaks: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'id_column_title'    => _x( 'ID', 'Modules: Tweaks: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'thumb_column_title' => _x( 'Featured', 'Modules: Tweaks: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'order_column_title' => _x( 'Order', 'Modules: Tweaks: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'user_column_title'  => _x( 'User', 'Modules: Tweaks: Column Title', GEDITORIAL_TEXTDOMAIN ),
 			],
 			'js' => [
 				'search_title'       => _x( 'Type to filter by', 'Modules: Tweaks: Meta Box Search Title', GEDITORIAL_TEXTDOMAIN ),
 				'search_placeholder' => _x( 'Search &hellip;', 'Modules: Tweaks: Meta Box Search Placeholder', GEDITORIAL_TEXTDOMAIN ),
 			],
 		];
+	}
+
+	// FIXME:
+	private function get_posttypes_support_order()
+	{
+		return PostType::get();
 	}
 
 	private function get_posttypes_support_thumbnail()
@@ -321,6 +335,9 @@ class Tweaks extends gEditorial\Module
 				continue;
 
 			$new[$key] = $value;
+
+			if ( 'cb' == $key && in_array( $post_type, $this->get_setting( 'column_order', [] ) ) )
+				$new[$this->classs( 'order' )] = $this->get_column_title( 'order', $post_type );
 		}
 
 		if ( $this->get_setting( 'group_attributes', FALSE ) )
@@ -368,7 +385,7 @@ class Tweaks extends gEditorial\Module
 		switch ( $column_name ) {
 
 			// FIXME: wont work beacuse of page-title css class
-			case 'geditorial-tweaks-title':
+			case $this->classs( 'title' ):
 
 				// TODO: add before action
 				$wp_list_table->column_title( $post );
@@ -377,14 +394,14 @@ class Tweaks extends gEditorial\Module
 				// echo $wp_list_table->handle_row_actions( $post, 'title', $wp_list_table->get_primary_column_name() );
 
 			break;
-			case 'geditorial-tweaks-rows':
+			case $this->classs( 'rows' ):
 
 				echo '<div class="geditorial-admin-wrap-column -tweaks -rows"><ul>';
 					do_action( $this->hook( 'column_row' ), $post );
 				echo '</ul></div>';
 
 			break;
-			case 'geditorial-tweaks-atts':
+			case $this->classs( 'atts' ):
 
 				echo '<div class="geditorial-admin-wrap-column -tweaks -atts"><ul>';
 					do_action( $this->hook( 'column_attr' ), $post );
@@ -396,7 +413,12 @@ class Tweaks extends gEditorial\Module
 				$this->column_thumb( $post_id );
 
 			break;
-			case 'geditorial-tweaks-id':
+			case $this->classs( 'order' ):
+
+				$this->column_count( $post->menu_order );
+
+			break;
+			case $this->classs( 'id' ):
 
 				echo '<div class="geditorial-admin-wrap-column -tweaks -id">';
 					echo esc_html( $post_id );
@@ -407,8 +429,9 @@ class Tweaks extends gEditorial\Module
 	public function sortable_columns( $columns )
 	{
 		return array_merge( $columns, [
-			'geditorial-tweaks-atts' => [ 'date', TRUE ],
-			'geditorial-tweaks-id'   => [ 'ID', TRUE ],
+			$this->classs( 'order' ) => 'menu_order',
+			$this->classs( 'atts' )  => [ 'date', TRUE ],
+			$this->classs( 'id' )    => [ 'ID', TRUE ],
 		] );
 	}
 
