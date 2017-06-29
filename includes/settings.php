@@ -164,7 +164,10 @@ class Settings extends Core\Base
 		switch ( $string ) {
 			case 'from': $string = _x( 'from', 'Settings: Field Separate', GEDITORIAL_TEXTDOMAIN ); break;
 			case 'into': $string = _x( 'into', 'Settings: Field Separate', GEDITORIAL_TEXTDOMAIN ); break;
+			case 'in'  : $string = _x( 'in', 'Settings: Field Separate', GEDITORIAL_TEXTDOMAIN );   break;
 			case 'to'  : $string = _x( 'to', 'Settings: Field Separate', GEDITORIAL_TEXTDOMAIN );   break;
+			case 'as'  : $string = _x( 'as', 'Settings: Field Separate', GEDITORIAL_TEXTDOMAIN );   break;
+			case 'or'  : $string = _x( 'or', 'Settings: Field Separate', GEDITORIAL_TEXTDOMAIN );   break;
 		}
 
 		printf( '<span class="-field-sep">&nbsp;&mdash; %s &mdash;&nbsp;</span>', $string );
@@ -271,6 +274,31 @@ class Settings extends Core\Base
 				'open'   => _x( 'Open', 'Settings: Setting Option', GEDITORIAL_TEXTDOMAIN ),
 				'closed' => _x( 'Closed', 'Settings: Setting Option', GEDITORIAL_TEXTDOMAIN ),
 			],
+		];
+	}
+
+	public static function getSetting_post_status( $section )
+	{
+		return [
+			'field'   => 'post_status',
+			'type'    => 'select',
+			'title'   => _x( 'Post Status', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+			'default' => 'pending',
+			'section' => $section,
+			'values'  => PostType::getStatuses(),
+		];
+	}
+
+	public static function getSetting_post_type( $section )
+	{
+		return [
+			'field'   => 'post_type',
+			'type'    => 'select',
+			'title'   => _x( 'Post Type', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+			'default' => 'post',
+			'section' => $section,
+			'values'  => PostType::get( 2 ),
+			'exclude' => [ 'attachment' ],
 		];
 	}
 
@@ -588,6 +616,7 @@ class Settings extends Core\Base
 			'nochange'  => HTML::error( _x( 'No item changed!', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
 			'noaccess'  => HTML::error( _x( 'You do not have the access!', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
 			'converted' => self::counted( _x( '%s items(s) converted!', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
+			'imported'  => self::counted( _x( '%s items(s) imported!', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
 			'created'   => self::counted( _x( '%s items(s) created!', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
 			'deleted'   => self::counted( _x( '%s items(s) deleted!', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
 			'cleaned'   => self::counted( _x( '%s items(s) cleaned!', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
