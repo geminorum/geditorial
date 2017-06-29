@@ -220,25 +220,6 @@ class Book extends gEditorial\Module
 					'title'       => _x( 'Alternative Title', 'Modules: Book: Field Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'The Original Title or Title in Another Language', 'Modules: Book: Field Description', GEDITORIAL_TEXTDOMAIN ),
 				],
-				'isbn' => [
-					'title'       => _x( 'ISBN', 'Modules: Book: Field Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'International Standard Book Number', 'Modules: Book: Field Description', GEDITORIAL_TEXTDOMAIN ),
-					'type'        => 'code',
-				],
-				'size' => [
-					'title'       => _x( 'Size', 'Modules: Book: Field Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'The Size of the Publication, Mainly Books', 'Modules: Book: Field Description', GEDITORIAL_TEXTDOMAIN ),
-					'type'        => 'term',
-					'tax'         => $this->constant( 'size_tax' ),
-				],
-				'publication_date' => [
-					'title'       => _x( 'Publication Date', 'Modules: Book: Field Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Date Published', 'Modules: Book: Field Description', GEDITORIAL_TEXTDOMAIN ),
-				],
-				'publish_location' => [
-					'title'       => _x( 'Publish Location', 'Modules: Book: Field Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Location Published', 'Modules: Book: Field Description', GEDITORIAL_TEXTDOMAIN ),
-				],
 				'edition' => [
 					'title'       => _x( 'Edition', 'Modules: Book: Field Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Edition of the Publication', 'Modules: Book: Field Description', GEDITORIAL_TEXTDOMAIN ),
@@ -246,6 +227,19 @@ class Book extends gEditorial\Module
 				'print' => [
 					'title'       => _x( 'Print', 'Modules: Book: Field Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Specefic Print of the Publication', 'Modules: Book: Field Description', GEDITORIAL_TEXTDOMAIN ),
+				],
+				'publish_location' => [
+					'title'       => _x( 'Publish Location', 'Modules: Book: Field Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Location Published', 'Modules: Book: Field Description', GEDITORIAL_TEXTDOMAIN ),
+				],
+				'publication_date' => [
+					'title'       => _x( 'Publication Date', 'Modules: Book: Field Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Date Published', 'Modules: Book: Field Description', GEDITORIAL_TEXTDOMAIN ),
+				],
+				'isbn' => [
+					'title'       => _x( 'ISBN', 'Modules: Book: Field Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'International Standard Book Number', 'Modules: Book: Field Description', GEDITORIAL_TEXTDOMAIN ),
+					'type'        => 'code',
 				],
 				'pages' => [
 					'title'       => _x( 'Pages', 'Modules: Book: Field Title', GEDITORIAL_TEXTDOMAIN ),
@@ -256,6 +250,12 @@ class Book extends gEditorial\Module
 					'title'       => _x( 'Volumes', 'Modules: Book: Field Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Total Volumes of the Publication', 'Modules: Book: Field Description', GEDITORIAL_TEXTDOMAIN ),
 					'type'        => 'number',
+				],
+				'size' => [
+					'title'       => _x( 'Size', 'Modules: Book: Field Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'The Size of the Publication, Mainly Books', 'Modules: Book: Field Description', GEDITORIAL_TEXTDOMAIN ),
+					'type'        => 'term',
+					'tax'         => $this->constant( 'size_tax' ),
 				],
 			],
 		];
