@@ -9,6 +9,7 @@ use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\PostType;
+use geminorum\gEditorial\WordPress\User;
 
 class Tweaks extends gEditorial\Module
 {
@@ -133,13 +134,14 @@ class Tweaks extends gEditorial\Module
 	{
 		return [
 			'misc' => [
-				'title_column_title' => _x( 'Title', 'Modules: Tweaks: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				'rows_column_title'  => _x( 'Extra', 'Modules: Tweaks: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				'atts_column_title'  => _x( 'Attributes', 'Modules: Tweaks: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				'id_column_title'    => _x( 'ID', 'Modules: Tweaks: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				'thumb_column_title' => _x( 'Featured', 'Modules: Tweaks: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				'order_column_title' => _x( 'Order', 'Modules: Tweaks: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				'user_column_title'  => _x( 'User', 'Modules: Tweaks: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'title_column_title'   => _x( 'Title', 'Modules: Tweaks: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'rows_column_title'    => _x( 'Extra', 'Modules: Tweaks: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'atts_column_title'    => _x( 'Attributes', 'Modules: Tweaks: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'id_column_title'      => _x( 'ID', 'Modules: Tweaks: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'thumb_column_title'   => _x( 'Featured', 'Modules: Tweaks: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'order_column_title'   => _x( 'Order', 'Modules: Tweaks: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'user_column_title'    => _x( 'User', 'Modules: Tweaks: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'contacts_column_title' => _x( 'Contacts', 'Modules: Tweaks: Column Title', GEDITORIAL_TEXTDOMAIN ),
 			],
 			'js' => [
 				'search_title'       => _x( 'Type to filter by', 'Modules: Tweaks: Meta Box Search Title', GEDITORIAL_TEXTDOMAIN ),
@@ -236,6 +238,16 @@ class Tweaks extends gEditorial\Module
 				$this->_admin_enabled();
 				$this->_edit_screen( $screen->post_type );
 			}
+
+		} else if ( 'users' == $screen->base ) {
+
+			$this->filter( 'manage_users_columns', 1, 1 );
+			$this->filter( 'manage_users_custom_column', 3, 1 );
+			$this->filter( 'manage_users_sortable_columns' );
+
+			// INTERNAL HOOKS
+			add_action( $this->hook( 'column_user' ), [ $this, 'column_user_default' ] );
+			add_action( $this->hook( 'column_contacts' ), [ $this, 'column_contacts_default' ] );
 
 		} else if ( 'edit-tags' == $screen->base ) {
 
@@ -430,6 +442,67 @@ class Tweaks extends gEditorial\Module
 			$this->classs( 'atts' )  => [ 'date', TRUE ],
 			$this->classs( 'id' )    => [ 'ID', TRUE ],
 		] );
+	}
+
+	public function manage_users_columns( $columns )
+	{
+		$new = [];
+
+		foreach ( $columns as $key => $value )
+
+			if ( 'username' == $key ) {
+
+				$new[$key] = $value;
+				$new[$this->classs( 'user' )] = $this->get_column_title( 'rows', 'users' );
+
+			} else if ( 'email' == $key ) {
+
+				$new[$this->classs( 'contacts' )] = $this->get_column_title( 'contacts', 'users' );
+
+			} else if ( in_array( $key, [
+				'name',
+				'role',
+				'posts',
+			] ) ) {
+
+				// do nothing
+
+			} else {
+				$new[$key] = $value;
+			}
+
+		return $new;
+	}
+
+	public function manage_users_custom_column( $output, $column_name, $user_id )
+	{
+		if ( $this->classs( 'user' ) == $column_name ) {
+
+			ob_start();
+
+			echo '<div class="geditorial-admin-wrap-column -tweaks -user"><ul>';
+				do_action( $this->hook( 'column_user' ), get_userdata( $user_id ) );
+			echo '</ul></div>';
+
+			$output .= ob_get_clean();
+
+		} else if ( $this->classs( 'contacts' ) == $column_name ) {
+
+			ob_start();
+
+			echo '<div class="geditorial-admin-wrap-column -tweaks -contacts"><ul>';
+				do_action( $this->hook( 'column_contacts' ), get_userdata( $user_id ) );
+			echo '</ul></div>';
+
+			$output .= ob_get_clean();
+		}
+
+		return $output;
+	}
+
+	public function manage_users_sortable_columns( $columns )
+	{
+		return array_merge( $columns, [ $this->classs( 'contacts' ) => 'email' ] );
 	}
 
 	public function manage_comments_columns( $columns )
@@ -644,6 +717,57 @@ class Tweaks extends gEditorial\Module
 				echo '<code>'.urldecode( $post->post_name ).'</code>';
 			echo '</li>';
 		}
+	}
+
+	public function column_user_default( $user )
+	{
+		if ( $user->first_name || $user->last_name ) {
+			echo '<li class="-attr tweaks-user-atts -name">';
+				echo $this->get_column_icon( FALSE, 'nametag', _x( 'Name', 'Modules: Tweaks: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
+				echo "$user->first_name $user->last_name";
+			echo '</li>';
+		}
+
+		$role = $this->get_column_icon( FALSE, 'businessman', _x( 'Roles', 'Modules: Tweaks: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
+		echo Helper::getJoined( User::getRoleList( $user ), '<li class="-attr tweaks-user-atts -roles">'.$role, '</li>' );
+	}
+
+	public function column_contacts_default( $user )
+	{
+		if ( $user->user_email ) {
+			echo '<li class="-attr tweaks-user-contacts -email">';
+				echo $this->get_column_icon( FALSE, 'email', _x( 'Email', 'Modules: Tweaks: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
+				echo HTML::mailto( $user->user_email );
+			echo '</li>';
+		}
+
+		foreach( wp_get_user_contact_methods( $user ) as $method => $title ) {
+
+			if ( ! $meta = get_user_meta( $user->ID, $method, TRUE ) )
+				continue;
+
+			if ( in_array( $method, [ 'twitter', 'facebook', 'googleplus' ] ) )
+				$icon = $method;
+			else if ( in_array( $method, [ 'mobile', 'phone' ] ) )
+				$icon = 'phone';
+			else
+				$icon = 'email-alt';
+
+			echo '<li class="-attr tweaks-user-contacts -contact-'.$method.'">';
+				echo $this->get_column_icon( FALSE, $icon, $title );
+				echo $this->display_meta( $meta, $method );
+			echo '</li>';
+		}
+	}
+
+	public function display_meta( $value, $key = NULL, $field = [] )
+	{
+		switch ( $key ) {
+			case 'mobile': return HTML::tel( $value );
+			case 'twitter': return HTML::link( '@'.$value, sprintf( 'https://twitter.com/intent/user?screen_name=%s', $value ), TRUE ); // FIXME: validate
+		}
+
+		return esc_html( $value );
 	}
 
 	// display post excerpt form fields
