@@ -150,10 +150,17 @@ class Tweaks extends gEditorial\Module
 		];
 	}
 
-	// FIXME:
 	private function get_posttypes_support_order()
 	{
-		return PostType::get();
+		$supported = PostType::get();
+		$excludes  = [
+			'publication',
+			'attachment',
+			'day',
+			'profile', // gPeople
+		];
+
+		return array_diff_key( $supported, array_flip( $excludes ) );
 	}
 
 	private function get_posttypes_support_thumbnail()
