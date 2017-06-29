@@ -2044,15 +2044,31 @@ SQL;
 
 	public function p2p_get_meta( $p2p_id, $meta_key, $before = '', $after = '', $title = FALSE )
 	{
-		if ( $meta = p2p_get_meta( $p2p_id, $meta_key, TRUE ) ) {
+		if ( ! $meta = p2p_get_meta( $p2p_id, $meta_key, TRUE ) )
+			return '';
 
-			$html = apply_filters( 'string_format_i18n', $meta );
+		$html = apply_filters( 'string_format_i18n', $meta );
 
-			if ( $title )
-				$html = '<span title="'.esc_attr( $title ).'">'.$html.'</span>';
+		if ( $title )
+			$html = '<span title="'.esc_attr( $title ).'">'.$html.'</span>';
 
-			return $before.$html.$after;
-		}
+		return $before.$html.$after;
+	}
+
+	// @REF: https://github.com/scribu/wp-posts-to-posts/wiki/Creating-connections-programmatically
+	public function p2p_connect( $constant_key, $from, $to, $meta = [] )
+	{
+		$type = p2p_type( $this->constant( $constant_key.'_p2p' ) );
+		// $id   = $type->connect( $from, $to, [ 'date' => current_time( 'mysql' ) ] );
+		$id   = $type->connect( $from, $to, $meta );
+
+		if ( is_wp_error( $id ) )
+			return FALSE;
+
+		// foreach ( $meta as $key => $value )
+		// 	p2p_add_meta( $id, $key, $value );
+
+		return TRUE;
 	}
 
 	// should we insert content?
