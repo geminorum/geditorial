@@ -17,6 +17,17 @@ class Meta extends gEditorial\Template
 		return self::metaField( 'author', $atts );
 	}
 
+	public static function metaSource( $atts = [] )
+	{
+		if ( ! array_key_exists( 'title_field', $atts ) )
+			$atts['title_field'] = 'source_title';
+
+		if ( ! array_key_exists( 'url_field', $atts ) )
+			$atts['url_field'] = 'source_url';
+
+		return self::metaLink( $atts, 'meta', FALSE );
+	}
+
 	public static function metaLead( $atts = [] )
 	{
 		if ( ! array_key_exists( 'filter', $atts ) )
