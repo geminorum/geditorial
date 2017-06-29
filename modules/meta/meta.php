@@ -5,6 +5,7 @@ defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Settings;
+use geminorum\gEditorial\Core\Arraay;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\Database;
@@ -216,29 +217,36 @@ class Meta extends gEditorial\Module
 	{
 		if ( in_array( $screen->post_type, $this->post_types() ) ) {
 
+			// bail if no fields enabled for this posttype
+			if ( ! count( $this->post_type_fields( $screen->post_type ) ) )
+				return;
+
 			if ( 'post' == $screen->base ) {
 
-				$box_func = $this->filters( 'box_callback', TRUE, $screen->post_type );
+				$fields   = $this->post_type_field_types( $screen->post_type );
+				$contexts = Arraay::column( $fields, 'context' );
 
-				if ( TRUE === $box_func )
-					$box_func = [ $this, 'default_meta_box' ];
+				$box_callback = $this->filters( 'box_callback', in_array( 'box', $contexts ), $screen->post_type );
 
-				if ( $box_func && is_callable( $box_func ) )
+				if ( TRUE === $box_callback )
+					$box_callback = [ $this, 'default_meta_box' ];
+
+				if ( $box_callback && is_callable( $box_callback ) )
 					add_meta_box( $this->classs( $screen->post_type ),
 						$this->get_meta_box_title(),
-						$box_func,
+						$box_callback,
 						$screen->post_type,
 						'side',
 						'high'
 					);
 
-				$dbx_func = $this->filters( 'dbx_callback', TRUE, $screen->post_type );
+				$dbx_callback = $this->filters( 'dbx_callback', in_array( 'dbx', $contexts ), $screen->post_type );
 
-				if ( TRUE === $dbx_func )
+				if ( TRUE === $dbx_callback )
 					add_action( 'dbx_post_sidebar', [ $this, 'default_meta_raw' ], 10, 1 );
 
-				else if ( $dbx_func && is_callable( $dbx_func ) )
-					add_action( 'dbx_post_sidebar', $dbx_func, 10, 1 );
+				else if ( $dbx_callback && is_callable( $dbx_callback ) )
+					add_action( 'dbx_post_sidebar', $dbx_callback, 10, 1 );
 
 				add_action( 'geditorial_meta_do_meta_box', [ $this, 'do_meta_box' ], 10, 4 );
 

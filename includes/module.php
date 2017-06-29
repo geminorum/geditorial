@@ -809,7 +809,14 @@ class Module extends Base
 		$all = $this->post_type_all_fields( $post_type );
 		$enabled = $this->post_type_fields( $post_type );
 
-		foreach ( $enabled as $i => $field )
+		foreach ( $enabled as $i => $field ) {
+
+			$args = isset( $all[$field] ) && is_array( $all[$field] ) ? $all[$field] : [];
+
+			if ( ! isset( $args['context'] ) && isset( $args['type'] ) )
+				$args['context'] = in_array( $args['type'], [ 'box', 'title_before', 'title_after' ] )
+					? 'dbx' : 'box';
+
 			$fields[$field] = self::atts( [
 				'title'       => $this->get_string( $field, $post_type, 'titles', $field ),
 				'description' => $this->get_string( $field, $post_type, 'descriptions' ),
@@ -821,7 +828,8 @@ class Module extends Base
 				'tax'         => FALSE,
 				'group'       => 'general',
 				'order'       => 10+$i,
-			], ( isset( $all[$field] ) && is_array( $all[$field] ) ? $all[$field] : [] ) );
+			], $args );
+		}
 
 		$gEditorialPostTypeFields[$post_type] = Arraay::multiSort( $fields, [
 			'group' => SORT_ASC,
