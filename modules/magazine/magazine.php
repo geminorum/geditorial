@@ -100,8 +100,6 @@ class Magazine extends gEditorial\Module
 			'misc' => [
 				'issue_cpt' => [
 					'featured'              => _x( 'Cover Image', 'Modules: Magazine: Issue CPT: Featured', GEDITORIAL_TEXTDOMAIN ),
-					'cover_column_title'    => _x( 'Cover', 'Modules: Magazine: Column Title', GEDITORIAL_TEXTDOMAIN ),
-					'order_column_title'    => _x( 'O', 'Modules: Magazine: Column Title', GEDITORIAL_TEXTDOMAIN ),
 					'children_column_title' => _x( 'Posts', 'Modules: Magazine: Column Title', GEDITORIAL_TEXTDOMAIN ),
 				],
 				'issue_tax' => [
@@ -267,12 +265,8 @@ class Magazine extends gEditorial\Module
 
 	public function init_ajax()
 	{
-		if ( $this->is_inline_save( $_REQUEST, 'issue_cpt' ) ) {
-
-			$this->_edit_screen( $_REQUEST['post_type'] );
-
+		if ( $this->is_inline_save( $_REQUEST, 'issue_cpt' ) )
 			$this->_sync_linked( $_REQUEST['post_type'] );
-		}
 	}
 
 	public function current_screen( $screen )
@@ -320,9 +314,6 @@ class Magazine extends gEditorial\Module
 					$this->action( 'pre_get_posts' );
 
 				$this->_sync_linked( $screen->post_type );
-				$this->_edit_screen( $screen->post_type );
-				add_filter( 'manage_edit-'.$screen->post_type.'_sortable_columns', [ $this, 'sortable_columns' ] );
-				add_thickbox();
 
 				$this->_tweaks_taxonomy();
 				add_action( 'geditorial_tweaks_column_attr', [ $this, 'main_column_attr' ] );
@@ -358,13 +349,6 @@ class Magazine extends gEditorial\Module
 		}
 
 		// $size = apply_filters( 'admin_post_thumbnail_size', $size, $thumbnail_id, $post );
-	}
-
-	// FIXME: make this api
-	private function _edit_screen( $post_type )
-	{
-		add_filter( 'manage_'.$post_type.'_posts_columns', [ $this, 'manage_posts_columns' ] );
-		add_filter( 'manage_'.$post_type.'_posts_custom_column', [ $this, 'posts_custom_column' ], 10, 2 );
 	}
 
 	// FIXME: make this api
@@ -690,56 +674,6 @@ class Magazine extends gEditorial\Module
 		}
 
 		return count( $posts ) ? $posts : FALSE;
-	}
-
-	public function manage_posts_columns( $columns )
-	{
-		$new = [];
-
-		foreach ( $columns as $key => $value ) {
-
-			if ( 'title' == $key ) {
-				$new['order'] = $this->get_column_title( 'order', 'issue_cpt' );
-				$new['cover'] = $this->get_column_title( 'cover', 'issue_cpt' );
-
-				$new[$key] = $value;
-
-			} else if ( 'date' == $key ) {
-				$new['children'] = $this->get_column_title( 'children', 'issue_cpt' );
-
-			} else if ( in_array( $key, [ 'author', 'comments' ] ) ) {
-				continue; // he he!
-
-			} else {
-				$new[$key] = $value;
-			}
-		}
-
-		return $new;
-	}
-
-	public function posts_custom_column( $column_name, $post_id )
-	{
-		if ( 'children' == $column_name )
-			$this->column_count( $this->get_linked_posts( $post_id, 'issue_cpt', 'issue_tax', TRUE ) );
-
-		else if ( 'order' == $column_name )
-			$this->column_count( get_post( $post_id )->menu_order );
-
-		else if ( 'cover' == $column_name )
-			$this->column_thumb( $post_id, $this->get_image_size_key( 'issue_cpt' ) );
-	}
-
-	public function sortable_columns( $columns )
-	{
-		$span    = $this->constant( 'span_tax' );
-		$section = $this->constant( 'section_tax' );
-
-		return array_merge( $columns, [
-			'order'              => 'menu_order',
-			'taxonomy-'.$span    => 'taxonomy-'.$span,
-			'taxonomy-'.$section => 'taxonomy-'.$section,
-		] );
 	}
 
 	public function main_column_attr( $post )
