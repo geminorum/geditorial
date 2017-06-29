@@ -426,7 +426,10 @@ class Tweaks extends gEditorial\Module
 			break;
 			case $this->classs( 'thumb' ):
 
-				$this->column_thumb( $post_id );
+				$sizes = Helper::getRegisteredImageSizes( $post->post_type );
+				$size  = isset( $sizes[$post->post_type.'-thumbnail'] ) ? $post->post_type.'-thumbnail' : 'thumbnail';
+
+				$this->column_thumb( $post_id, $size );
 
 			break;
 			case $this->classs( 'order' ):
