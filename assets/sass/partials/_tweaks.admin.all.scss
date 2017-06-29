@@ -34,7 +34,8 @@
       width: 16px;
       height: 16px;
       font-size: 16px;
-      vertical-align: middle;
+      // vertical-align: middle;
+      vertical-align: text-top;
       transition: all 0.3s ease;
     }
 
@@ -69,18 +70,25 @@
   }
 }
 
-.fixed .column-geditorial-tweaks-thumb {
+.fixed {
 
-  width: 70px;
-  padding: 2px;
-  text-align: center;
-
-  a:focus {
-    box-shadow: none !important;
+  .column-geditorial-tweaks-order {
+    width: 50px;
   }
 
-  img {
-    max-width: 65px;
-    max-height: 65px;
+  .column-geditorial-tweaks-thumb {
+
+    width: 70px;
+    padding: 2px;
+    text-align: center;
+
+    a:focus {
+      box-shadow: none !important;
+    }
+
+    img {
+      max-width: 65px;
+      max-height: 65px;
+    }
   }
 }
