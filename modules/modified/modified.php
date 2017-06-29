@@ -123,12 +123,12 @@ class Modified extends gEditorial\Module
 
 		$query = new \WP_Query;
 
-		$columns = [ 'modified' => Helper::tableColumnPostDateModified() ];
+		$columns = [ 'title' => Helper::tableColumnPostTitleSummary() ];
 
 		if ( $this->get_setting( 'dashboard_authors', FALSE ) )
 			$columns['author'] = Helper::tableColumnPostAuthorSummary();
 
-		$columns['title'] = Helper::tableColumnPostTitleSummary();
+		$columns['modified'] = Helper::tableColumnPostDateModified();
 
 		HTML::tableList( $columns, $query->query( $args ), [
 			'empty' => Helper::tableArgEmptyPosts( FALSE ),
