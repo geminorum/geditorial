@@ -291,7 +291,6 @@ class Tweaks extends gEditorial\Module
 		return $this->manage_posts_columns( $columns, 'page' );
 	}
 
-	// FIXME: add thumbnail column if posttype supports
 	public function manage_posts_columns( $columns, $post_type )
 	{
 		$new   = [];
@@ -302,8 +301,10 @@ class Tweaks extends gEditorial\Module
 
 		foreach ( $columns as $key => $value ) {
 
-			if ( 'title' == $key && in_array( $post_type, $this->get_setting( 'column_thumb', [] ) ) )
-				$new[$this->classs( 'thumb' )] = $this->get_column_title( 'thumb', $post_type );
+			if ( 'title' == $key
+				&& post_type_supports( $post_type, 'thumbnail' )
+				&& in_array( $post_type, $this->get_setting( 'column_thumb', [] ) ) )
+					$new[$this->classs( 'thumb' )] = $this->get_column_title( 'thumb', $post_type );
 
 			if ( ( 'comments' == $key && ! $added )
 				|| ( 'date' == $key && ! $added ) ) {
