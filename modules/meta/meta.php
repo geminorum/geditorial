@@ -277,7 +277,7 @@ class Meta extends gEditorial\Module
 	public function do_meta_box( $post, $box, $fields = NULL, $context = 'box' )
 	{
 		if ( is_null( $fields ) )
-			$fields = $this->post_type_field_types( $post->post_type, TRUE );
+			$fields = $this->post_type_field_types( $post->post_type );
 
 		foreach ( $fields as $field => $args ) {
 
@@ -326,7 +326,7 @@ class Meta extends gEditorial\Module
 
 	public function default_meta_box( $post, $box )
 	{
-		$fields = $this->post_type_field_types( $post->post_type, TRUE );
+		$fields = $this->post_type_field_types( $post->post_type );
 
 		echo '<div class="geditorial-admin-wrap-metabox">';
 
@@ -350,7 +350,7 @@ class Meta extends gEditorial\Module
 
 	public function default_meta_raw( $post )
 	{
-		$fields = $this->post_type_field_types( $post->post_type, TRUE );
+		$fields = $this->post_type_field_types( $post->post_type );
 
 		if ( count( $fields ) ) {
 

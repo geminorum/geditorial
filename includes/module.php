@@ -797,8 +797,13 @@ class Module extends Base
 	}
 
 	// enabled fields with args for a post type
-	public function post_type_field_types( $post_type = 'post', $sort = FALSE )
+	public function post_type_field_types( $post_type = 'post' )
 	{
+		global $gEditorialPostTypeFields;
+
+		if ( isset( $gEditorialPostTypeFields[$post_type] ) )
+			return $gEditorialPostTypeFields[$post_type];
+
 		$fields = [];
 
 		$all = $this->post_type_all_fields( $post_type );
@@ -818,13 +823,12 @@ class Module extends Base
 				'order'       => 10+$i,
 			], ( isset( $all[$field] ) && is_array( $all[$field] ) ? $all[$field] : [] ) );
 
-		if ( ! $sort )
-			return $fields;
-
-		return Arraay::multiSort( $fields, [
+		$gEditorialPostTypeFields[$post_type] = Arraay::multiSort( $fields, [
 			'group' => SORT_ASC,
 			'order' => SORT_ASC,
 		] );
+
+		return $gEditorialPostTypeFields[$post_type];
 	}
 
 	// HELPER: for importer tools
