@@ -5,6 +5,7 @@ defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\ShortCode;
+use geminorum\gEditorial\Core\Arraay;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\WordPress\Taxonomy;
 
@@ -77,7 +78,6 @@ class Entry extends gEditorial\Module
 			'featured'             => _x( 'Cover Image', 'Modules: Entry: Entry CPT: Featured', GEDITORIAL_TEXTDOMAIN ),
 			'meta_box_title'       => _x( 'Entry', 'Modules: Entry: Meta Box Title', GEDITORIAL_TEXTDOMAIN ),
 			'section_column_title' => _x( 'Section', 'Modules: Entry: Column Title', GEDITORIAL_TEXTDOMAIN ),
-			'order_column_title'   => _x( 'O', 'Modules: Entry: Column Title', GEDITORIAL_TEXTDOMAIN ),
 		];
 
 		return $strings;
@@ -221,7 +221,6 @@ class Entry extends gEditorial\Module
 	private function _edit_screen( $post_type )
 	{
 		add_filter( 'manage_'.$post_type.'_posts_columns', [ $this, 'manage_posts_columns' ] );
-		add_action( 'manage_'.$post_type.'_posts_custom_column', [ $this, 'posts_custom_column' ], 10, 2 );
 	}
 
 	public function dashboard_recent_drafts_query_args( $query_args )
@@ -266,44 +265,17 @@ class Entry extends gEditorial\Module
 		return $this->do_posts_clauses_taxes( $pieces, $wp_query, 'section_tax' );
 	}
 
-	public function manage_posts_columns( $posts_columns )
+	public function manage_posts_columns( $columns )
 	{
-		$new_columns = [];
-
-		$section = $this->constant( 'section_tax' );
-
-		foreach ( $posts_columns as $key => $value ) {
-
-			if ( 'title' == $key ) {
-
-				$new_columns['taxonomy-'.$section] = $this->get_column_title( 'section', 'entry_cpt' );
-				$new_columns['order'] = $this->get_column_title( 'order', 'entry_cpt' );
-				$new_columns[$key] = $value;
-
-			} else if ( in_array( $key, [ 'author', 'comments' ] ) ) {
-				continue;
-
-			} else {
-				$new_columns[$key] = $value;
-			}
-		}
-		return $new_columns;
+		return Arraay::insert( $columns, [
+			'taxonomy-'.$this->constant( 'section_tax' ) => $this->get_column_title( 'section', 'entry_cpt' ),
+		], 'cb', 'after' );
 	}
 
 	public function sortable_columns( $columns )
 	{
 		$tax = $this->constant( 'section_tax' );
-
-		return array_merge( $columns, [
-			'order'          => 'menu_order',
-			'taxonomy-'.$tax => 'taxonomy-'.$tax,
-		] );
-	}
-
-	public function posts_custom_column( $column_name, $post_id )
-	{
-		if ( 'order' == $column_name )
-			$this->column_count( get_post( $post_id )->menu_order );
+		return array_merge( $columns, [ 'taxonomy-'.$tax => 'taxonomy-'.$tax ] );
 	}
 
 	public function dashboard_glance_items( $items )
