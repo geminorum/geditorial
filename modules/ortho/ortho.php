@@ -10,7 +10,9 @@ class Ortho extends gEditorial\Module
 {
 
 	private $virastar_version  = '0.12.0';
+	private $persiantools_version  = '0.1.0';
 	private $virastar_enqueued = FALSE;
+	private $persiantools_enqueued = FALSE;
 
 	public static function module()
 	{
@@ -149,6 +151,19 @@ class Ortho extends gEditorial\Module
 		$this->virastar_enqueued = TRUE;
 	}
 
+	private function enqueuePersianTools()
+	{
+		if ( $this->persiantools_enqueued )
+			return;
+
+		$persiantools = Helper::registerScriptPackage( 'persiantools',
+			NULL, [], $this->persiantools_version );
+
+		$this->enqueue_asset_js( 'persiantools', NULL, [ 'jquery', $persiantools ] );
+
+		$this->persiantools_enqueued = TRUE;
+	}
+
 	private function negate_virastar_options()
 	{
 		$saved   = array_values( $this->get_setting( 'virastar_options', [] ) );
@@ -159,5 +174,29 @@ class Ortho extends gEditorial\Module
 				$options[$option] = FALSE;
 
 		return $options;
+	}
+
+	public function tools_settings( $sub )
+	{
+		if ( $this->check_settings( $sub, 'tools' ) ) {
+			$this->enqueueVirastar();
+			$this->enqueuePersianTools();
+		}
+	}
+
+	public function tools_sub( $uri, $sub )
+	{
+		$this->settings_form_before( $uri, $sub, 'bulk', 'tools', FALSE, FALSE );
+
+			HTML::h3( _x( 'Orthography Sandbox', 'Modules: Ortho', GEDITORIAL_TEXTDOMAIN ) );
+
+			$this->do_settings_field( [
+				'type'         => 'textarea-quicktags',
+				'field'        => 'sandbox',
+				'dir'          => 'rtl',
+				'option_group' => 'tools',
+			] );
+
+		$this->settings_form_after( $uri, $sub );
 	}
 }
