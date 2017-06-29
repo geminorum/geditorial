@@ -75,8 +75,6 @@ class Contest extends gEditorial\Module
 				'contest_cpt' => [
 					'meta_box_title'        => _x( 'Metadata', 'Modules: Contest: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
 					'cover_box_title'       => _x( 'Poster', 'Modules: Contest: CoverBox Title', GEDITORIAL_TEXTDOMAIN ),
-					'cover_column_title'    => _x( 'Poster', 'Modules: Contest: Column Title', GEDITORIAL_TEXTDOMAIN ),
-					'order_column_title'    => _x( 'O', 'Modules: Contest: Column Title', GEDITORIAL_TEXTDOMAIN ),
 					'children_column_title' => _x( 'Applies', 'Modules: Contest: Column Title', GEDITORIAL_TEXTDOMAIN ),
 				],
 				'contest_cat' => [
@@ -204,12 +202,8 @@ class Contest extends gEditorial\Module
 
 	public function init_ajax()
 	{
-		if ( $this->is_inline_save( $_REQUEST, 'contest_cpt' ) ) {
-
-			$this->_edit_screen( $_REQUEST['post_type'] );
-
+		if ( $this->is_inline_save( $_REQUEST, 'contest_cpt' ) )
 			$this->_sync_linked( $_REQUEST['post_type'] );
-		}
 	}
 
 	public function current_screen( $screen )
@@ -250,9 +244,6 @@ class Contest extends gEditorial\Module
 					$this->action( 'pre_get_posts' );
 
 				$this->_sync_linked( $screen->post_type );
-				$this->_edit_screen( $screen->post_type );
-				add_filter( 'manage_edit-'.$screen->post_type.'_sortable_columns', [ $this, 'sortable_columns' ] );
-				add_thickbox();
 
 				$this->_tweaks_taxonomy();
 				add_action( 'geditorial_tweaks_column_attr', [ $this, 'main_column_attr' ] );
@@ -291,12 +282,6 @@ class Contest extends gEditorial\Module
 
 			add_action( 'save_post', [ $this, 'save_post_supported_cpt' ], 20, 3 );
 		}
-	}
-
-	private function _edit_screen( $post_type )
-	{
-		add_filter( 'manage_'.$post_type.'_posts_columns', [ $this, 'manage_posts_columns' ] );
-		add_filter( 'manage_'.$post_type.'_posts_custom_column', [ $this, 'posts_custom_column' ], 10, 2 );
 	}
 
 	private function _sync_linked( $post_type )
@@ -591,46 +576,6 @@ class Contest extends gEditorial\Module
 					$wp_query->set( 'order', 'DESC' );
 			}
 		}
-	}
-
-	public function manage_posts_columns( $posts_columns )
-	{
-		$new_columns = [];
-		foreach ( $posts_columns as $key => $value ) {
-
-			if ( $key == 'title' ) {
-				$new_columns['order'] = $this->get_column_title( 'order', 'contest_cpt' );
-				$new_columns['cover'] = $this->get_column_title( 'cover', 'contest_cpt' );
-				$new_columns[$key] = $value;
-
-			} else if ( 'date' == $key ) {
-				$new_columns['children'] = $this->get_column_title( 'children', 'contest_cpt' );
-
-			} else if ( in_array( $key, [ 'author', 'comments' ] ) ) {
-				continue; // he he!
-
-			} else {
-				$new_columns[$key] = $value;
-			}
-		}
-		return $new_columns;
-	}
-
-	public function posts_custom_column( $column_name, $post_id )
-	{
-		if ( 'children' == $column_name )
-			$this->column_count( $this->get_linked_posts( $post_id, 'contest_cpt', 'contest_tax', TRUE ) );
-
-		else if ( 'order' == $column_name )
-			$this->column_count( get_post( $post_id )->menu_order );
-
-		else if ( 'cover' == $column_name )
-			$this->column_thumb( $post_id, $this->get_image_size_key( 'contest_cpt' ) );
-	}
-
-	public function sortable_columns( $columns )
-	{
-		return array_merge( $columns, [ 'order' => 'menu_order' ] );
 	}
 
 	public function main_column_attr( $post )
