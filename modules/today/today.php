@@ -221,11 +221,6 @@ class Today extends gEditorial\Module
 		wp_nonce_field( 'geditorial_today_post_main', '_geditorial_today_post_main' );
 	}
 
-	public function gpeople_support( $post_types )
-	{
-		return array_merge( $post_types, [ $this->constant( 'day_cpt' ) ] );
-	}
-
 	public function manage_posts_columns( $columns )
 	{
 		return Arraay::insert( $columns, [

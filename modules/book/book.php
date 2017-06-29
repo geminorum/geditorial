@@ -227,6 +227,7 @@ class Book extends gEditorial\Module
 				'print' => [
 					'title'       => _x( 'Print', 'Modules: Book: Field Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Specefic Print of the Publication', 'Modules: Book: Field Description', GEDITORIAL_TEXTDOMAIN ),
+					'icon'        => 'book',
 				],
 				'publish_location' => [
 					'title'       => _x( 'Publish Location', 'Modules: Book: Field Title', GEDITORIAL_TEXTDOMAIN ),
@@ -236,11 +237,13 @@ class Book extends gEditorial\Module
 				'publication_date' => [
 					'title'       => _x( 'Publication Date', 'Modules: Book: Field Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Date Published', 'Modules: Book: Field Description', GEDITORIAL_TEXTDOMAIN ),
+					'icon'        => 'calendar-alt',
 				],
 				'isbn' => [
 					'title'       => _x( 'ISBN', 'Modules: Book: Field Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'International Standard Book Number', 'Modules: Book: Field Description', GEDITORIAL_TEXTDOMAIN ),
 					'type'        => 'code',
+					'icon'        => 'menu',
 				],
 				'pages' => [
 					'title'       => _x( 'Pages', 'Modules: Book: Field Title', GEDITORIAL_TEXTDOMAIN ),
@@ -485,7 +488,7 @@ class Book extends gEditorial\Module
 	public function display_meta( $value, $key = NULL, $field = [] )
 	{
 		switch ( $key ) {
-			case 'isbn': return ModuleHelper::ISBN( $value );
+			case 'isbn': return sprintf( _x( 'ISBN: %s', 'Modules: Book: Display', GEDITORIAL_TEXTDOMAIN ), ModuleHelper::ISBN( $value ) );
 			case 'edition': return sprintf( _x( '%s Edition', 'Modules: Book: Display', GEDITORIAL_TEXTDOMAIN ), $value );
 			case 'print': return sprintf( _x( '%s Print', 'Modules: Book: Display', GEDITORIAL_TEXTDOMAIN ), $value );
 			case 'pages': return Helper::getCounted( $value, _x( '%s Pages', 'Modules: Book: Display', GEDITORIAL_TEXTDOMAIN ) );
@@ -493,11 +496,6 @@ class Book extends gEditorial\Module
 		}
 
 		return esc_html( $value );
-	}
-
-	public function gpeople_support( $post_types )
-	{
-		return array_merge( $post_types, [ $this->constant( 'publication_cpt' ) ] );
 	}
 
 	public function meta_init()

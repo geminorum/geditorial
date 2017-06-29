@@ -72,11 +72,6 @@ class Reshare extends gEditorial\Module
 		return array_merge( $post_types, [ $this->constant( 'reshare_cpt' ) ] );
 	}
 
-	public function gpeople_support( $post_types )
-	{
-		return array_merge( $post_types, [ $this->constant( 'reshare_cpt' ) ] );
-	}
-
 	public function after_setup_theme()
 	{
 		$this->register_post_type_thumbnail( 'reshare_cpt' );

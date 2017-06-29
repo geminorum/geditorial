@@ -51,6 +51,9 @@ class Users extends gEditorial\Module
 					'description' => _x( 'Enhance admin edit page for authors', 'Modules: Users: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 				],
 			],
+			'_reports' => [
+				'calendar_type',
+			],
 			'posttypes_option' => 'posttypes_option',
 		];
 	}

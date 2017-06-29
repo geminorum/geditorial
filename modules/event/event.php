@@ -257,11 +257,6 @@ class Event extends gEditorial\Module
 		add_filter( 'manage_edit-'.$post_type.'_sortable_columns', [ $this, 'sortable_columns' ] );
 	}
 
-	public function gpeople_support( $post_types )
-	{
-		return array_merge( $post_types, [ $this->constant( 'event_cpt' ) ] );
-	}
-
 	public function dashboard_glance_items( $items )
 	{
 		if ( $glance = $this->dashboard_glance_post( 'event_cpt' ) )

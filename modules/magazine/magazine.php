@@ -539,11 +539,6 @@ class Magazine extends gEditorial\Module
 		return $post_ID;
 	}
 
-	public function gpeople_support( $post_types )
-	{
-		return array_merge( $post_types, [ $this->constant( 'issue_cpt' ) ] );
-	}
-
 	public function pre_get_posts( $wp_query )
 	{
 		if ( $wp_query->is_admin

@@ -104,9 +104,6 @@ class Module extends Base
 		if ( method_exists( $this, 'meta_post_types' ) )
 			add_filter( 'geditorial_meta_support_post_types', [ $this, 'meta_post_types' ] );
 
-		if ( method_exists( $this, 'gpeople_support' ) )
-			add_filter( 'gpeople_remote_support_post_types', [ $this, 'gpeople_support' ] );
-
 		add_action( 'after_setup_theme', [ $this, '_after_setup_theme' ], 1 );
 
 		if ( method_exists( $this, 'after_setup_theme' ) )

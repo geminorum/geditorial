@@ -302,14 +302,6 @@ class Contest extends gEditorial\Module
 		] );
 	}
 
-	public function gpeople_support( $post_types )
-	{
-		return array_merge( $post_types, [
-			$this->constant( 'contest_cpt' ),
-			$this->constant( 'apply_cpt' ),
-		] );
-	}
-
 	public function dashboard_glance_items( $items )
 	{
 		if ( $contests = $this->dashboard_glance_post( 'contest_cpt' ) )

@@ -481,12 +481,12 @@ class Meta extends gEditorial\Module
 		return $this->manage_posts_columns( $columns, 'page' );
 	}
 
-	public function manage_posts_columns( $posts_columns, $post_type )
+	public function manage_posts_columns( $columns, $post_type )
 	{
 		if ( in_array( 'as', $this->post_type_fields( $post_type ) ) )
-			unset( $posts_columns['author'] );
+			unset( $columns['author'] );
 
-		return Arraay::insert( $posts_columns, [
+		return Arraay::insert( $columns, [
 			$this->hook() => $this->get_column_title( 'meta', $post_type ),
 		], 'title', 'after' );
 	}

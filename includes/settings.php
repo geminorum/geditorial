@@ -262,13 +262,12 @@ class Settings extends Core\Base
 	public static function getSetting_comment_status( $section )
 	{
 		return [
-			'field'       => 'comment_status',
-			'type'        => 'select',
-			'title'       => _x( 'Comment Status', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'description' => _x( 'Default Comment Status of the Posttype', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-			'default'     => 'closed',
-			'section'     => $section,
-			'values'      => [
+			'field'   => 'comment_status',
+			'type'    => 'select',
+			'title'   => _x( 'Comment Status', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+			'default' => 'closed',
+			'section' => $section,
+			'values'  => [
 				'open'   => _x( 'Open', 'Settings: Setting Option', GEDITORIAL_TEXTDOMAIN ),
 				'closed' => _x( 'Closed', 'Settings: Setting Option', GEDITORIAL_TEXTDOMAIN ),
 			],
@@ -369,7 +368,7 @@ class Settings extends Core\Base
 	{
 		return [
 			'field'       => 'admin_restrict',
-			'title'       => _x( 'Restrictions', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+			'title'       => _x( 'List Restrictions', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 			'description' => _x( 'Enhance restrictions on admin edit pages.', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 			'section'     => $section,
 		];
@@ -492,7 +491,7 @@ class Settings extends Core\Base
 			'type'    => 'checkbox',
 			'title'   => _x( 'Supported Roles', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 			'default' => [],
-			'values'  => User::getRoleList(),
+			'values'  => User::getAllRoleList(),
 			'section' => $section,
 		];
 	}
@@ -504,7 +503,7 @@ class Settings extends Core\Base
 			'type'    => 'checkbox',
 			'title'   => _x( 'Excluded Roles', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 			'default' => [],
-			'values'  => User::getRoleList(),
+			'values'  => User::getAllRoleList(),
 			'section' => $section,
 		];
 	}

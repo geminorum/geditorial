@@ -748,7 +748,7 @@ class Tweaks extends gEditorial\Module
 			echo '</li>';
 		}
 
-		foreach( wp_get_user_contact_methods( $user ) as $method => $title ) {
+		foreach ( wp_get_user_contact_methods( $user ) as $method => $title ) {
 
 			if ( ! $meta = get_user_meta( $user->ID, $method, TRUE ) )
 				continue;
