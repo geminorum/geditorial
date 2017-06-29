@@ -817,6 +817,9 @@ class Module extends Base
 				$args['context'] = in_array( $args['type'], [ 'box', 'title_before', 'title_after' ] )
 					? 'dbx' : 'box';
 
+			if ( ! isset( $args['icon'] ) )
+				$args['icon'] = $this->get_field_icon( $field, $post_type, $args );
+
 			$fields[$field] = self::atts( [
 				'title'       => $this->get_string( $field, $post_type, 'titles', $field ),
 				'description' => $this->get_string( $field, $post_type, 'descriptions' ),
@@ -2143,6 +2146,17 @@ SQL;
 				];
 
 		return $info;
+	}
+
+	public function get_field_icon( $field, $post_type = 'post', $args = [] )
+	{
+		switch ( $field ) {
+			case 'ot': return 'arrow-up-alt2';
+			case 'st': return 'arrow-down-alt2';
+			case 'as': return 'admin-users';
+		}
+
+		return 'admin-post';
 	}
 
 	protected function limit_sub( $sub = NULL, $default = 25, $key = 'limit', $option = 'per_page' )
