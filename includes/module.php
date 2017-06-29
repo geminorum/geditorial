@@ -1932,7 +1932,7 @@ SQL;
 
 	public function column_thumb( $post_id, $size = [ 45, 72 ] )
 	{
-		echo WordPress::getFeaturedImageHTML( $post_id, $size );
+		echo $this->filters( 'column_thumb', WordPress::getFeaturedImageHTML( $post_id, $size ), $post_id, $size );
 	}
 
 	// TODO: override $title_attr based on passed constant key
