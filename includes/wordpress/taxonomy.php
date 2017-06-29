@@ -13,12 +13,16 @@ class Taxonomy extends Core\Base
 	// ALSO: trim term titles
 	// MUST USE: custom walker
 
-	// EDITED: 12/27/2016, 6:36:20 AM
-	public static function get( $mod = 0, $args = array() )
+	public static function get( $mod = 0, $args = array(), $object = FALSE )
 	{
 		$list = array();
 
-		foreach ( get_taxonomies( $args, 'objects' ) as $taxonomy => $taxonomy_obj ) {
+		if ( FALSE === $object )
+			$objects = get_taxonomies( $args, 'objects' );
+		else
+			$objects = get_object_taxonomies( $object, 'objects' );
+
+		foreach ( $objects as $taxonomy => $taxonomy_obj ) {
 
 			// label
 			if ( 0 === $mod )
@@ -49,7 +53,7 @@ class Taxonomy extends Core\Base
 
 			// with object_type
 			else if ( 5 === $mod )
-				$list[$taxonomy] = $taxonomy_obj->labels->name.Core\HTML::joined( $taxonomy_obj->object_type, ' (', ')' );
+				$list[$taxonomy] = $taxonomy_obj->labels->name.Core\HTML::joined( $taxonomy_obj->object_type, ' [', ']' );
 
 			// with name
 			else if ( 6 === $mod )

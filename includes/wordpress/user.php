@@ -55,15 +55,35 @@ class User extends Core\Base
 	// alt to `is_super_admin()`
 	public static function isSuperAdmin( $user_id = FALSE )
 	{
-		return $user_id
-			? user_can( $user_id, 'manage_network' )
-			: current_user_can( 'manage_network' );
+		$cap = is_multisite() ? 'manage_network' : 'manage_options';
+		return $user_id ? user_can( $user_id, $cap ) : current_user_can( $cap );
 	}
 
 	public static function superAdminOnly()
 	{
 		if ( ! self::isSuperAdmin() )
 			self::cheatin();
+	}
+
+	// @REF: `get_role_list()`
+	public static function getRoleList( $user_id = FALSE )
+	{
+		if ( ! $user_id )
+			return self::getAllRoleList();
+
+		$list = array();
+		$user = is_object( $user_id ) ? $user_id : get_user_by( 'id', $user_id );
+
+		if ( ! is_object( $user ) )
+			return $list;
+
+		$roles = wp_roles();
+
+		foreach ( $user->roles as $role )
+			if ( isset( $roles->role_names[$role] ) )
+				$list[$role] = translate_user_role( $roles->role_names[$role] );
+
+		return $list;
 	}
 
 	public static function getRoles( $user_id = FALSE )
@@ -90,7 +110,7 @@ class User extends Core\Base
 		return $role ? in_array( $role, $roles ) : $roles;
 	}
 
-	public static function getRoleList( $object = FALSE )
+	public static function getAllRoleList( $object = FALSE )
 	{
 		$roles = $object ? new stdClass : array();
 

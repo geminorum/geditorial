@@ -20,6 +20,17 @@ class HTML extends Base
 		return '<a class="-mailto" href="mailto:'.trim( $email ).'">'.( $title ? $title : trim( $email ) ).'</a>';
 	}
 
+	public static function tel( $number, $title = FALSE, $content = NULL )
+	{
+		if ( is_null( $content ) )
+			$content = Number::format( $number );
+
+		return '<a class="-tel" href="'.self::sanitizePhoneNumber( $number )
+				.'"'.( $title ? ' data-toggle="tooltip" title="'.self::escapeAttr( $title ).'"' : '' )
+				.' data-tel-number="'.self::escapeAttr( $number ).'">'
+				.'&#8206;'.$content.'&#8207;</a>';
+	}
+
 	public static function scroll( $html, $to )
 	{
 		return '<a class="scroll" href="#'.$to.'">'.$html.'</a>';
@@ -81,9 +92,9 @@ class HTML extends Base
 		}
 	}
 
-	public static function joined( $items, $before = '', $after = '', $sep = '|' )
+	public static function joined( $items, $before = '', $after = '', $sep = '|', $empty = '' )
 	{
-		return count( $items ) ? ( $before.join( $sep, $items ).$after ) : '';
+		return count( $items ) ? ( $before.join( $sep, $items ).$after ) : $empty;
 	}
 
 	public static function tag( $tag, $atts = array(), $content = FALSE, $sep = '' )
@@ -321,10 +332,13 @@ class HTML extends Base
 			'title'      => NULL,
 			'before'     => FALSE,
 			'after'      => FALSE,
+			'callback'   => FALSE, // for all cells
+			'sanitize'   => TRUE, // using sanitizeDisplay()
 			'search'     => FALSE, // 'before', // 'after', // FIXME: add search box
 			'navigation' => FALSE, // 'before', // 'after',
 			'pagination' => array(),
 			'map'        => array(),
+			'extra'      => array(), // just passing around!
 		), $atts );
 
 		if ( ! $data || ! count( $data ) ) {
@@ -413,7 +427,7 @@ class HTML extends Base
 						$value = $index;
 
 					else if ( is_array( $column ) && isset( $column['value'] ) )
-						$value = call_user_func_array( $column['value'], array( NULL, $row, $column, $index ) );
+						$value = call_user_func_array( $column['value'], array( NULL, $row, $column, $index, $key, $args ) );
 
 					else if ( is_array( $row ) && array_key_exists( $column, $row ) )
 						$value = $row[$column];
@@ -443,7 +457,14 @@ class HTML extends Base
 
 				if ( $callback )
 					echo call_user_func_array( $callback,
-						array( $value, $row, $column, $index ) );
+						array( $value, $row, $column, $index, $key, $args ) );
+
+				else if ( $args['callback'] && '_cb' !== $key )
+					echo call_user_func_array( $args['callback'],
+						array( $value, $row, $column, $index, $key, $args ) );
+
+				else if ( $args['sanitize'] && '_cb' !== $key )
+					echo self::sanitizeDisplay( $value );
 
 				else if ( $value )
 					echo $value;
@@ -453,7 +474,7 @@ class HTML extends Base
 
 				if ( $actions )
 					self::tableActions( call_user_func_array( $actions,
-						array( $value, $row, $column, $index ) ) );
+						array( $value, $row, $column, $index, $key, $args ) ) );
 
 				echo '</'.$cell.'>';
 			}
@@ -716,30 +737,36 @@ class HTML extends Base
 
 		echo '<tbody>';
 
-		foreach ( (array) $array as $key => $val ) {
-
-			if ( is_null( $val ) )
-				$val = 'NULL';
-
-			else if ( is_bool( $val ) )
-				$val = $val ? 'TRUE' : 'FALSE';
-
-			else if ( is_array( $val ) || is_object( $val ) )
-				$val = json_encode( $val );
-
-			else if ( is_int( $val ) )
-				$val = $val;
-
-			else if ( empty( $val ) )
-				$val = 'EMPTY';
-
-			else
-				$val = nl2br( $val );
-
-			printf( $row, $key, $val );
-		}
+		foreach ( (array) $array as $key => $value )
+			printf( $row, $key, self::sanitizeDisplay( $value ) );
 
 		echo '</tbody></table>';
+	}
+
+	public static function sanitizeDisplay( $value )
+	{
+		if ( is_null( $value ) )
+			$value = 'NULL';
+
+		else if ( is_bool( $value ) )
+			$value = $value ? 'TRUE' : 'FALSE';
+
+		else if ( is_array( $value ) )
+			$value = self::joined( $value, '[', ']', ',', 'EMPTY ARRAY' );
+
+		else if ( is_object( $value ) )
+			$value = json_encode( $value );
+
+		else if ( is_int( $value ) )
+			$value = $value;
+
+		else if ( empty( $value ) )
+			$value = 'EMPTY';
+
+		else
+			$value = nl2br( trim( $value ) );
+
+		return $value;
 	}
 
 	public static function menu( $menu, $callback = FALSE, $list = 'ul', $children = 'children' )
