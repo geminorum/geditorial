@@ -150,8 +150,7 @@ class Meta extends gEditorial\MetaBox
 		if ( $ltr )
 			$atts['dir'] = 'ltr';
 
-		else
-			$atts['data']['ortho'] = 'number';
+		$atts['data']['ortho'] = 'number';
 
 		$html = HTML::tag( 'input', $atts );
 
