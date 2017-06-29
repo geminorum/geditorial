@@ -1,3 +1,37 @@
+### 3.10.2
+* main/helper: sanitize calendar
+* main/settings: insert cover default setting
+* main/widget: switch to transient
+* main/module: helper for field icons
+* main/module: p2p connect helper
+* module/book: check if p2p installed on settings
+* module/book: insert cover in the content
+* module/book: location/volumes meta fields
+* module/book: cover column removed in favor of tweaks thumb
+* module/book: meta fields reordered
+* module/book: fields on meta column
+* module/contest: cover/order column removed in favor of tweaks thumb/order
+* module/entry: order column removed in favor of tweaks order
+* module/event: cleanup post columns
+* module/magazine: insert cover in the content
+* module/magazine: support for meta column
+* module/magazine: cover/order column removed in favor of tweaks thumb/order
+* module/meta: check for field context before metabox/dbx cb
+* module/meta: caching field types
+* module/meta: internal api for meta column
+* module/meta: more fields on meta column
+* module/meta: ortho support for metabox number types
+* module/meta: wrapper for source links
+* module/ortho: :pray: persiantools lib in tools
+* module/terms: adminbar summary only on singular
+* module/today: cover/children column removed in favor of tweaks thumb
+* module/tube: :new: module
+* module/tweaks: :new: custom columns for user list table
+* module/tweaks: :new: order column
+* module/tweaks: check if posttype support thumbnail before column
+* module/tweaks: hide author column if has attr action
+* module/users: user types on tweaks column
+
 ### 3.10.1
 * main/ajax: rest api in global js object
 * main/ajax: correct send success message
