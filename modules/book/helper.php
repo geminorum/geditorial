@@ -3,19 +3,30 @@
 defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
+use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
 
 class Book extends gEditorial\Helper
 {
 
-	public static function getISBN( $input )
+	public static function ISBN( $string )
+	{
+		return HTML::link( self::getISBN( $string, TRUE ),
+			sprintf( 'https://www.google.com/search?q=ISBN:%s',
+				urlencode( trim( str_ireplace( [ 'isbn', '-', ':', ' ' ], '', $string ) ) ) ), TRUE );
+	}
+
+	public static function getISBN( $input, $wrap = FALSE, $link = FALSE )
 	{
 		$string = Number::intval( $input, FALSE );
 
-		if ( self::findISBN( $string ) )
-			return trim( str_ireplace( [ 'isbn', '-', ':', ' ' ], '', $string ) );
+		if ( self::findISBN( $string ) ) {
+			$string = trim( str_ireplace( [ 'isbn', '-', ':', ' ' ], '', $string ) );
+			return $wrap ? '<span class="isbn -valid">'.$string.'<span>' : $string;
+		}
 
-		return $input; // CAUTION: returns the original
+		// CAUTION: returns the original
+		return $wrap ? '<span class="isbn -not-valid">'.$input.'<span>' : $input;
 	}
 
 	// Finding ISBNs
@@ -37,8 +48,8 @@ class Book extends gEditorial\Helper
 
 		if ( preg_match( $pattern, str_replace( '-', '', $str ), $matches ) )
 			return ( 10 === strlen( $matches[1] ) )
-				   ? self::isValidISBN10( $matches[1] )  // ISBN-10
-				   : self::isValidISBN13( $matches[1] ); // ISBN-13
+				? self::isValidISBN10( $matches[1] )  // ISBN-10
+				: self::isValidISBN13( $matches[1] ); // ISBN-13
 
 		return FALSE;
 	}

@@ -192,10 +192,7 @@ class Meta extends gEditorial\Module
 
 		$this->add_post_type_fields( $this->constant( 'page_cpt' ) );
 
-		if ( is_admin() ) {
-
-
-		} else {
+		if ( ! is_admin() ) {
 
 			add_action( 'gnetwork_themes_content_before', [ $this, 'content_before' ], 50 );
 			add_action( 'gnetwork_themes_content_after', [ $this, 'content_after' ], 50 );
@@ -499,35 +496,22 @@ class Meta extends gEditorial\Module
 
 	public function manage_posts_columns( $posts_columns, $post_type )
 	{
-		$fields = $this->post_type_fields( $post_type );
+		if ( in_array( 'as', $this->post_type_fields( $post_type ) ) )
+			unset( $posts_columns['author'] );
 
-		if ( ! in_array( 'ot', $fields )
-			&& ! in_array( 'st', $fields )
-			&& ! in_array( 'as', $fields ) )
-				return $posts_columns;
-
-		$new = [];
-
-		foreach ( $posts_columns as $key => $value ) {
-
-			if ( 'author' != $key )
-				$new[$key] = $value;
-
-			if ( 'title' == $key )
-				$new['geditorial-meta'] = $this->get_column_title( 'meta', $post_type );
-		}
-
-		return $new;
+		return Arraay::insert( $posts_columns, [
+			$this->hook() => $this->get_column_title( 'meta', $post_type ),
+		], 'title', 'after' );
 	}
 
 	public function posts_custom_column( $column_name, $post_id )
 	{
-		if ( 'geditorial-meta' != $column_name )
+		if ( $this->hook() != $column_name )
 			return;
 
 		global $post, $mode;
 
-		$fields = $this->post_type_fields( $post->post_type );
+		$fields = $this->post_type_field_types( $post->post_type );
 		$author = $this->get_setting( 'author_row', FALSE )
 			? WordPress::getAuthorEditHTML( $post->post_type, $post->post_author )
 			: FALSE;
@@ -542,7 +526,7 @@ class Meta extends gEditorial\Module
 
 		foreach ( $rows as $field => $icon ) {
 
-			if ( in_array( $field, $fields ) ) {
+			if ( array_key_exists( $field, $fields ) ) {
 
 				if ( $value = $this->get_postmeta( $post_id, $field, '' ) ) {
 
@@ -569,7 +553,9 @@ class Meta extends gEditorial\Module
 			echo '</li>';
 		}
 
-		if ( 'excerpt' == $mode && in_array( 'le', $fields ) ) {
+		$this->actions( 'column_row', get_post( $post_id ), $fields, (array) $this->get_postmeta( $post_id ) );
+
+		if ( 'excerpt' == $mode && array_key_exists( 'le', $fields ) ) {
 			$icon = $this->get_column_icon( FALSE, 'editor-paragraph', $this->get_string( 'le', $post->post_type, 'titles', 'lead' ) );
 			ModuleTemplate::metaLead( [
 				'before' => '<li class="-row meta-lead">'.$icon,
@@ -578,8 +564,6 @@ class Meta extends gEditorial\Module
 				'trim'   => 450,
 			] );
 		}
-
-		do_action( $this->hook( 'column_row' ), get_post( $post_id ) );
 
 		echo '</ul>';
 	}

@@ -48,6 +48,20 @@
     a:focus {
       box-shadow: none;
     }
+
+    .-valid {
+      color: $brand-success;
+      &:hover {
+        color: darken($brand-success, 20%);
+      }
+    }
+
+    .-not-valid {
+      color: $brand-danger;
+      &:hover {
+        color: darken($brand-danger, 20%);
+      }
+    }
   }
 
   .-row:last-child {
