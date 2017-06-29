@@ -318,6 +318,9 @@ class Tweaks extends gEditorial\Module
 					$added = TRUE;
 			}
 
+			if ( 'author' == $key && $atts && $this->get_setting( 'author_attribute', TRUE ) )
+				continue;
+
 			$new[$key] = $value;
 		}
 
