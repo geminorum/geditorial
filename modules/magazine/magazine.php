@@ -174,10 +174,12 @@ class Magazine extends gEditorial\Module
 				'issue_number_line' => [
 					'title'       => _x( 'Number Line', 'Modules: Magazine: Field Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'The issue number line', 'Modules: Magazine: Field Description', GEDITORIAL_TEXTDOMAIN ),
+					'icon'        => 'menu',
 				],
 				'issue_total_pages' => [
 					'title'       => _x( 'Total Pages', 'Modules: Magazine: Field Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'The issue total pages', 'Modules: Magazine: Field Description', GEDITORIAL_TEXTDOMAIN ),
+					'icon'        => 'admin-page',
 				],
 			],
 			'post' => [
@@ -186,17 +188,20 @@ class Magazine extends gEditorial\Module
 					'description' => _x( 'Post order in issue list', 'Modules: Magazine: Field Description', GEDITORIAL_TEXTDOMAIN ),
 					'type'        => 'number',
 					'context'     => 'issue',
+					'icon'        => 'sort',
 				],
 				'in_issue_page_start' => [
 					'title'       => _x( 'Page Start', 'Modules: Magazine: Field Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Post start page on issue (printed)', 'Modules: Magazine: Field Description', GEDITORIAL_TEXTDOMAIN ),
 					'type'        => 'number',
 					'context'     => 'issue',
+					'icon'        => 'media-default',
 				],
 				'in_issue_pages' => [
 					'title'       => _x( 'Total Pages', 'Modules: Magazine: Field Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Post total pages on issue (printed)', 'Modules: Magazine: Field Description', GEDITORIAL_TEXTDOMAIN ),
 					'context'     => 'issue',
+					'icon'        => 'admin-page',
 				],
 			],
 		];
@@ -321,6 +326,7 @@ class Magazine extends gEditorial\Module
 
 				$this->_tweaks_taxonomy();
 				add_action( 'geditorial_tweaks_column_attr', [ $this, 'main_column_attr' ] );
+				add_action( 'geditorial_meta_column_row', [ $this, 'column_row_meta' ], 12, 3 );
 			}
 
 		} else if ( in_array( $screen->post_type, $this->post_types() ) ) {
@@ -345,6 +351,7 @@ class Magazine extends gEditorial\Module
 					add_action( 'restrict_manage_posts', [ $this, 'restrict_manage_posts_supported_cpt' ], 12, 2 );
 
 				$this->_tweaks_taxonomy();
+				add_action( 'geditorial_meta_column_row', [ $this, 'column_row_meta' ], 12, 3 );
 			}
 
 			add_action( 'save_post', [ $this, 'save_post_supported_cpt' ], 20, 3 );
@@ -770,6 +777,31 @@ class Magazine extends gEditorial\Module
 			echo Helper::getJoined( $list, ' <span class="-posttypes">(', ')</span>' );
 
 		echo '</li>';
+	}
+
+	public function column_row_meta( $post, $fields, $meta )
+	{
+		foreach ( $fields as $field => $args ) {
+
+			if ( empty( $meta[$field] ) )
+				continue;
+
+			echo '<li class="-row -magazine -field-'.$field.'">';
+				echo $this->get_column_icon( FALSE, $args['icon'], $args['title'] );
+				echo $this->display_meta( $meta[$field], $field, $args );
+			echo '</li>';
+		}
+	}
+
+	public function display_meta( $value, $key = NULL, $field = [] )
+	{
+		switch ( $key ) {
+			case 'in_issue_order': return Helper::getCounted( $value, _x( 'Order in Issue: %s', 'Modules: Magazine: Display', GEDITORIAL_TEXTDOMAIN ) );
+			case 'in_issue_page_start': return Helper::getCounted( $value, _x( 'Page in Issue: %s', 'Modules: Magazine: Display', GEDITORIAL_TEXTDOMAIN ) );
+			case 'in_issue_pages': return Helper::getCounted( $value, _x( 'Total Pages: %s', 'Modules: Magazine: Display', GEDITORIAL_TEXTDOMAIN ) );
+		}
+
+		return esc_html( $value );
 	}
 
 	public function post_updated_messages( $messages )
