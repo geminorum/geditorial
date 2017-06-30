@@ -149,14 +149,14 @@ class Module extends Base
 		$this->fields    = $this->filters( 'fields', $this->get_global_fields(), $this->module );
 	}
 
-	// DEFAULT FILTER
+	// MUST ALWAYS CALL THIS
 	public function init()
 	{
-		do_action( $this->hook( 'init' ), $this->module );
+		$this->actions( 'init', $this->module );
 
-		$this->do_globals();
+		$this->strings = $this->filters( 'strings', $this->get_global_strings(), $this->module );
 
-		foreach ( $this->get_global_templates() as $constant => $templates ) {
+		foreach ( $this->get_module_templates() as $constant => $templates ) {
 
 			if ( ! count( $templates ) )
 				continue;
@@ -180,7 +180,7 @@ class Module extends Base
 	protected function get_global_strings() { return []; }
 	protected function get_global_supports() { return []; }
 	protected function get_global_fields() { return []; }
-	protected function get_global_templates() { return []; }
+	protected function get_module_templates() { return []; }
 
 	protected function get_module_icons() { return []; }
 
@@ -192,11 +192,6 @@ class Module extends Base
 	protected function settings_help_sidebar()
 	{
 		return Settings::settingsHelpLinks( $this->module );
-	}
-
-	protected function do_globals()
-	{
-		$this->strings = $this->filters( 'strings', $this->get_global_strings(), $this->module );
 	}
 
 	// check if this module loaded as remote for another blog's editorial module
