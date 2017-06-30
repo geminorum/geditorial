@@ -22,11 +22,11 @@ class Book extends gEditorial\Helper
 
 		if ( self::findISBN( $string ) ) {
 			$string = trim( str_ireplace( [ 'isbn', '-', ':', ' ' ], '', $string ) );
-			return $wrap ? '<span class="isbn -valid">'.$string.'<span>' : $string;
+			return $wrap ? '<span class="isbn -valid">&#8206;'.$string.'&#8207;<span>' : $string;
 		}
 
 		// CAUTION: returns the original
-		return $wrap ? '<span class="isbn -not-valid">'.$input.'<span>' : $input;
+		return $wrap ? '<span class="isbn -not-valid">&#8206;'.$input.'&#8207;<span>' : $input;
 	}
 
 	// Finding ISBNs
