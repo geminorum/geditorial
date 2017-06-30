@@ -286,7 +286,7 @@ class Tweaks extends gEditorial\Module
 		// add_filter( 'manage_'.$post_type.'_posts_columns', [ $this, 'manage_posts_columns_late' ], 999, 1 );
 		// add_filter( 'list_table_primary_column', [ $this, 'list_table_primary_column' ], 10, 2 );
 
-		if ( in_array( $post_type, $this->get_setting( 'column_thumb', [] ) ) )
+		if ( ! WordPress::isAJAX() && in_array( $post_type, $this->get_setting( 'column_thumb', [] ) ) )
 			add_thickbox();
 
 		// INTERNAL HOOKS
@@ -327,8 +327,9 @@ class Tweaks extends gEditorial\Module
 		$new   = [];
 		$added = FALSE;
 
-		$rows = has_action( $this->hook( 'column_row' ) ) ? $this->get_column_title( 'rows', $post_type ) : FALSE;
-		$atts = has_action( $this->hook( 'column_attr' ) ) ? $this->get_column_title( 'atts', $post_type ) : FALSE;
+		$ajax = WordPress::isAJAX();
+		$rows = $ajax || has_action( $this->hook( 'column_row' ) ) ? $this->get_column_title( 'rows', $post_type ) : FALSE;
+		$atts = $ajax || has_action( $this->hook( 'column_attr' ) ) ? $this->get_column_title( 'atts', $post_type ) : FALSE;
 
 		foreach ( $columns as $key => $value ) {
 
