@@ -153,7 +153,26 @@ class Module extends Base
 	public function init()
 	{
 		do_action( $this->hook( 'init' ), $this->module );
+
 		$this->do_globals();
+
+		foreach ( $this->get_global_templates() as $constant => $templates ) {
+
+			if ( ! count( $templates ) )
+				continue;
+
+			$list = [];
+			$type = $this->constant( $constant );
+
+			foreach ( $templates as $slug => $title )
+				$list[$this->key.'-'.$slug.'.php'] = $title;
+
+			add_filter( 'theme_'.$type.'_templates',
+				function( $filtered ) use( $list ) {
+					return array_merge( $filtered, $list );
+				}
+			);
+		}
 	}
 
 	protected function get_global_settings() { return []; }
@@ -161,6 +180,7 @@ class Module extends Base
 	protected function get_global_strings() { return []; }
 	protected function get_global_supports() { return []; }
 	protected function get_global_fields() { return []; }
+	protected function get_global_templates() { return []; }
 
 	protected function get_module_icons() { return []; }
 

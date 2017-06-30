@@ -62,6 +62,7 @@ class Plugin
 		add_action( 'admin_bar_menu', [ $this, 'admin_bar_menu_early' ], 9 );
 		add_action( 'admin_bar_menu', [ $this, 'admin_bar_menu_late' ], 999 );
 		add_filter( 'mce_external_languages', [ $this, 'mce_external_languages' ] );
+		add_filter( 'template_include', [ $this, 'template_include' ], 98 ); // before gTheme
 	}
 
 	private function files( $stack, $check = TRUE, $base = GEDITORIAL_DIR )
@@ -364,6 +365,36 @@ class Plugin
 	public function mce_external_languages( $languages )
 	{
 		return array_merge( $languages, [ 'geditorial' => GEDITORIAL_DIR.'includes/misc/editor-languages.php' ] );
+	}
+
+	public function template_include( $template )
+	{
+		if ( ! $custom = get_page_template_slug() )
+			return $template;
+
+		if ( $in_theme = locate_template( 'editorial/'.$custom ) )
+			return $in_theme;
+
+		if ( file_exists( GEDITORIAL_DIR.'includes/templates/'.$custom ) )
+			return GEDITORIAL_DIR.'includes/templates/'.$custom;
+
+		return $template;
+	}
+
+	public function get_header( $name = 'editorial' )
+	{
+		if ( defined( 'GTHEME_VERSION' ) )
+			return;
+
+		get_header( $name );
+	}
+
+	public function get_footer( $name = 'editorial' )
+	{
+		if ( defined( 'GTHEME_VERSION' ) )
+			return;
+
+		get_footer( $name );
 	}
 
 	public function enqueue_styles()
