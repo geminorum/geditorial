@@ -29,7 +29,7 @@ class Meta extends gEditorial\Module
 		return [
 			'name'  => 'meta',
 			'title' => _x( 'Meta', 'Modules: Meta', GEDITORIAL_TEXTDOMAIN ),
-			'desc'  => _x( 'Metadata, magazine style.', 'Modules: Meta', GEDITORIAL_TEXTDOMAIN ),
+			'desc'  => _x( 'Curated Metadata', 'Modules: Meta', GEDITORIAL_TEXTDOMAIN ),
 			'icon'  => 'tag',
 		];
 	}

@@ -21,7 +21,7 @@ class Series extends gEditorial\Module
 		return [
 			'name'  => 'series',
 			'title' => _x( 'Series', 'Modules: Series', GEDITORIAL_TEXTDOMAIN ),
-			'desc'  => _x( 'Post Series Management', 'Modules: Series', GEDITORIAL_TEXTDOMAIN ),
+			'desc'  => _x( 'List Posts in Series', 'Modules: Series', GEDITORIAL_TEXTDOMAIN ),
 			'icon'  => 'editor-ol',
 		];
 	}

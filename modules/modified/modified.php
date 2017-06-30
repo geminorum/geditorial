@@ -19,7 +19,7 @@ class Modified extends gEditorial\Module
 		return [
 			'name'  => 'modified',
 			'title' => _x( 'Modified', 'Modules: Modified', GEDITORIAL_TEXTDOMAIN ),
-			'desc'  => _x( 'Last modifications to the site', 'Modules: Modified', GEDITORIAL_TEXTDOMAIN ),
+			'desc'  => _x( 'Last Modifications', 'Modules: Modified', GEDITORIAL_TEXTDOMAIN ),
 			'icon'  => 'update',
 		];
 	}

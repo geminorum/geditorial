@@ -23,7 +23,7 @@ class Like extends gEditorial\Module
 		return [
 			'name'  => 'like',
 			'title' => _x( 'Like', 'Modules: Like', GEDITORIAL_TEXTDOMAIN ),
-			'desc'  => _x( 'Like Button for Posts and Comments', 'Modules: Like', GEDITORIAL_TEXTDOMAIN ),
+			'desc'  => _x( 'Button for Guests & Users', 'Modules: Like', GEDITORIAL_TEXTDOMAIN ),
 			'icon'  => 'heart',
 		];
 	}

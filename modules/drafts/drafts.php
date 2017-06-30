@@ -20,7 +20,7 @@ class Drafts extends gEditorial\Module
 		return [
 			'name'  => 'drafts',
 			'title' => _x( 'Drafts', 'Modules: Drafts', GEDITORIAL_TEXTDOMAIN ),
-			'desc'  => _x( 'Tools to work with drafts', 'Modules: Drafts', GEDITORIAL_TEXTDOMAIN ),
+			'desc'  => _x( 'Tools to Work With Drafts', 'Modules: Drafts', GEDITORIAL_TEXTDOMAIN ),
 			'icon'  => 'admin-post',
 		];
 	}

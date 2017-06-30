@@ -18,7 +18,7 @@ class Estimated extends gEditorial\Module
 		return [
 			'name'  => 'estimated',
 			'title' => _x( 'Estimated', 'Modules: Estimated', GEDITORIAL_TEXTDOMAIN ),
-			'desc'  => _x( 'Calculates an average required time to complete reading a post.', 'Modules: Estimated', GEDITORIAL_TEXTDOMAIN ),
+			'desc'  => _x( 'Average Required Reading Time', 'Modules: Estimated', GEDITORIAL_TEXTDOMAIN ),
 			'icon'  => 'clock',
 		];
 	}

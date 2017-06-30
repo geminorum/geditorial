@@ -28,7 +28,7 @@ class Magazine extends gEditorial\Module
 		return [
 			'name'  => 'magazine',
 			'title' => _x( 'Magazine', 'Modules: Magazine', GEDITORIAL_TEXTDOMAIN ),
-			'desc'  => _x( 'Issue Management for Magazines', 'Modules: Magazine', GEDITORIAL_TEXTDOMAIN ),
+			'desc'  => _x( 'Magazine Issue Management', 'Modules: Magazine', GEDITORIAL_TEXTDOMAIN ),
 			'icon'  => 'book',
 		];
 	}

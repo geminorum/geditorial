@@ -16,7 +16,7 @@ class Event extends gEditorial\Module
 		return [
 			'name'  => 'event',
 			'title' => _x( 'Event', 'Modules: Event', GEDITORIAL_TEXTDOMAIN ),
-			'desc'  => _x( 'Events Integrated With Your Site', 'Modules: Event', GEDITORIAL_TEXTDOMAIN ),
+			'desc'  => _x( 'Integrated Events', 'Modules: Event', GEDITORIAL_TEXTDOMAIN ),
 			'icon'  => 'calendar-alt',
 		];
 	}
