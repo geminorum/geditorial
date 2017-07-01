@@ -82,14 +82,14 @@ class Reshare extends gEditorial\Module
 	{
 		parent::init();
 
-		$this->register_post_type( 'reshare_cpt' );
-
 		$this->register_taxonomy( 'reshare_cat', [
 			'hierarchical'       => TRUE,
 			'meta_box_cb'        => NULL, // default meta box
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
 		], 'reshare_cpt' );
+
+		$this->register_post_type( 'reshare_cpt' );
 	}
 
 	public function current_screen( $screen )

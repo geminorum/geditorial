@@ -80,12 +80,13 @@ class Entry extends gEditorial\Module
 
 		$this->post_types_excluded = [ 'attachment', $this->constant( 'entry_cpt' ) ];
 
-		$this->register_post_type( 'entry_cpt' );
 		$this->register_taxonomy( 'section_tax', [
 			'hierarchical'       => TRUE,
 			'show_in_quick_edit' => TRUE,
 			'show_in_nav_menus'  => TRUE,
 		], 'entry_cpt' );
+
+		$this->register_post_type( 'entry_cpt' );
 
 		if ( ! is_admin() ) {
 

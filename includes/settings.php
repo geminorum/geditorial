@@ -1500,6 +1500,7 @@ class Settings extends Core\Base
 			break;
 			case 'posttypes':
 
+				// FIXME: false to disable
 				if ( ! $args['values'] )
 					$args['values'] = PostType::get( 0,
 						array_merge( [ 'public' => TRUE ], $args['extra'] ) );

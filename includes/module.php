@@ -1140,6 +1140,7 @@ class Module extends Base
 		Settings::fieldType( $args, $this->scripts );
 	}
 
+	// FIXME: TEST THIS!
 	public function do_post_field( $atts = [], $post = NULL )
 	{
 		if ( ! $post = get_post( $post ) )
@@ -1238,7 +1239,8 @@ class Module extends Base
 		return array_keys( Settings::supportsOptions() );
 	}
 
-	public function get_post_type_icon( $constant_key, $default = 'welcome-write-blog' )
+	// FIXME: use: `Icon::getPosttypeMenu()`
+	public function get_posttype_icon( $constant_key, $default = 'welcome-write-blog' )
 	{
 		$icons  = $this->get_module_icons();
 		$module = $this->module->icon ? $this->module->icon : 'welcome-write-blog';
@@ -1278,7 +1280,7 @@ class Module extends Base
 			'supports'             => $this->get_post_type_supports( $constant_key ),
 			'description'          => isset( $this->strings['labels'][$constant_key]['description'] ) ? $this->strings['labels'][$constant_key]['description'] : '',
 			'register_meta_box_cb' => method_exists( $this, 'add_meta_box_cb_'.$constant_key ) ? [ $this, 'add_meta_box_cb_'.$constant_key ] : NULL,
-			'menu_icon'            => 'dashicons-'.$this->get_post_type_icon( $constant_key ),
+			'menu_icon'            => 'dashicons-'.$this->get_posttype_icon( $constant_key ),
 			'has_archive'          => $this->constant( $constant_key.'_archive', FALSE ),
 			'query_var'            => $this->constant( $constant_key.'_query_var', $post_type ),
 			'capability_type'      => $this->get_posttype_cap_type( $constant_key ),
@@ -1389,7 +1391,7 @@ class Module extends Base
 			'capabilities'          => $this->get_taxonomy_caps( $caps, $post_types ),
 			'query_var'             => $this->constant( $constant_key.'_query', $taxonomy ),
 			'rewrite'               => [
-				'slug'       => $this->constant( $constant_key.'_slug', $taxonomy ),
+				'slug'       => $this->constant( $constant_key.'_slug', $taxonomy ), // can use : 'cpt/tax' if cpt registered after tax: https://developer.wordpress.org/reference/functions/register_taxonomy/#comment-2274
 				'with_front' => FALSE,
 			],
 

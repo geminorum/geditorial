@@ -86,8 +86,6 @@ class Pitches extends gEditorial\Module
 	{
 		parent::init();
 
-		$this->register_post_type( 'idea_cpt' );
-
 		$this->register_taxonomy( 'idea_cat', [
 			'hierarchical'       => TRUE,
 			'show_admin_column'  => TRUE,
@@ -99,6 +97,8 @@ class Pitches extends gEditorial\Module
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
 		], 'idea_cpt' );
+
+		$this->register_post_type( 'idea_cpt' );
 	}
 
 	public function current_screen( $screen )

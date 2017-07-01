@@ -59,6 +59,10 @@ class Contest extends gEditorial\Module
 	protected function get_module_icons()
 	{
 		return [
+			'post_types' => [
+				'contest_cpt' => NULL,
+				'apply_cpt'   => 'dashicons-portfolio',
+			],
 			'taxonomies' => [
 				'contest_cat'      => 'category',
 				'contest_tax'      => 'megaphone',
@@ -130,14 +134,6 @@ class Contest extends gEditorial\Module
 
 		$this->post_types_excluded = [ 'attachment', $this->constant( 'contest_cpt' ) ];
 
-		$this->register_post_type( 'contest_cpt', [
-			'hierarchical'  => TRUE,
-		] );
-
-		$this->register_post_type( 'apply_cpt', [
-			'menu_icon' => 'dashicons-portfolio',
-		] );
-
 		$this->register_taxonomy( 'contest_cat', [
 			'hierarchical'       => TRUE,
 			'meta_box_cb'        => NULL, // default meta box
@@ -165,6 +161,12 @@ class Contest extends gEditorial\Module
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
 		], 'apply_cpt' );
+
+		$this->register_post_type( 'contest_cpt', [
+			'hierarchical' => TRUE,
+		] );
+
+		$this->register_post_type( 'apply_cpt' );
 
 		if ( ! is_admin() ) {
 			$this->filter( 'term_link', 3 );

@@ -143,11 +143,6 @@ class Event extends gEditorial\Module
 	{
 		parent::init();
 
-		$this->register_post_type( 'event_cpt', [
-			'hierarchical' => TRUE,
-			'meta_box_cb'  => NULL, // default meta box
-		] );
-
 		$this->register_taxonomy( 'event_cat', [
 			'hierarchical'       => TRUE,
 			'meta_box_cb'        => NULL, // default meta box
@@ -169,6 +164,11 @@ class Event extends gEditorial\Module
 			$this->register_taxonomy( 'type_tax', [
 				'show_ui' => FALSE,
 			], 'event_cpt' );
+
+		$this->register_post_type( 'event_cpt', [
+			'hierarchical' => TRUE,
+			'meta_box_cb'  => NULL, // default meta box
+		] );
 
 		add_rewrite_endpoint( $this->constant( 'ical_endpoint' ), EP_PAGES, 'ical' );
 

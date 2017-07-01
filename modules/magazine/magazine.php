@@ -204,14 +204,6 @@ class Magazine extends gEditorial\Module
 
 		$this->post_types_excluded = [ 'attachment', $this->constant( 'issue_cpt' ) ];
 
-		$this->register_post_type( 'issue_cpt', [
-			'hierarchical' => TRUE,
-			'rewrite'      => [
-				'feeds' => (bool) $this->get_setting( 'posttype_feeds', FALSE ),
-				'pages' => (bool) $this->get_setting( 'posttype_pages', FALSE ),
-			],
-		] );
-
 		$this->register_taxonomy( 'issue_tax', [
 			'show_ui'      => FALSE,
 			'hierarchical' => TRUE,
@@ -230,6 +222,14 @@ class Magazine extends gEditorial\Module
 				'show_in_quick_edit' => TRUE,
 				'show_in_nav_menus'  => TRUE,
 			], $this->post_types( 'issue_cpt' ) );
+
+		$this->register_post_type( 'issue_cpt', [
+			'hierarchical' => TRUE,
+			'rewrite'      => [
+				'feeds' => (bool) $this->get_setting( 'posttype_feeds', FALSE ),
+				'pages' => (bool) $this->get_setting( 'posttype_pages', FALSE ),
+			],
+		] );
 
 		$this->register_shortcode( 'issue_shortcode' );
 		$this->register_shortcode( 'span_shortcode' );

@@ -74,7 +74,7 @@ class Book extends gEditorial\Module
 		return [
 			'publication_cpt'         => 'publication',
 			'publication_cpt_archive' => 'publications',
-			'publication_cpt_p2p'     => 'related_publications', // OLD: 'publications_to_posts'
+			'publication_cpt_p2p'     => 'related_publications',
 			'subject_tax'             => 'publication_subject',
 			'library_tax'             => 'publication_library',
 			'publisher_tax'           => 'publication_publisher',
@@ -293,8 +293,6 @@ class Book extends gEditorial\Module
 
 		$this->post_types_excluded = [ 'attachment', $this->constant( 'publication_cpt' ) ];
 
-		$this->register_post_type( 'publication_cpt' );
-
 		$this->register_taxonomy( 'subject_tax', [
 			'hierarchical' => TRUE,
 			'meta_box_cb'  => NULL, // default meta box
@@ -317,6 +315,8 @@ class Book extends gEditorial\Module
 			'hierarchical'       => TRUE,
 			'show_in_quick_edit' => TRUE,
 		], 'publication_cpt' );
+
+		$this->register_post_type( 'publication_cpt' );
 
 		if ( ! is_admin() ) {
 

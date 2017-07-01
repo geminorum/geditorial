@@ -125,9 +125,6 @@ class Tube extends gEditorial\Module
 			$this->constant( 'channel_cpt' ),
 		];
 
-		$this->register_post_type( 'video_cpt' );
-		$this->register_post_type( 'channel_cpt' );
-
 		$this->register_taxonomy( 'video_cat', [
 			'hierarchical'       => TRUE,
 			'meta_box_cb'        => NULL,
@@ -141,6 +138,9 @@ class Tube extends gEditorial\Module
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
 		], 'channel_cpt' );
+
+		$this->register_post_type( 'video_cpt' );
+		$this->register_post_type( 'channel_cpt' );
 
 		if ( ! is_admin() && $this->get_setting( 'video_toolbar' ) ) {
 			$this->filter( 'wp_video_shortcode', 5 );

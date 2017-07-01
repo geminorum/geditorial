@@ -52,6 +52,9 @@ class Team extends gEditorial\Module
 	{
 		return [
 			'misc' => [
+				'member_cpt' => [
+					'menu_name' => _x( 'Team Members', 'Modules: Team: Menu Name', GEDITORIAL_TEXTDOMAIN ),
+				],
 				'tweaks_column_title' => _x( 'Team Member Categories', 'Modules: Team: Column Title', GEDITORIAL_TEXTDOMAIN ),
 			],
 			'noops' => [
