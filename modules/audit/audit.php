@@ -324,6 +324,7 @@ class Audit extends gEditorial\Module
 				'type'         => 'user',
 				'field'        => 'user_id',
 				'none_title'   => _x( 'All Users', 'Modules: Audit', GEDITORIAL_TEXTDOMAIN ),
+				'none_value'   => '0',
 				'default'      => $args['user_id'],
 				'option_group' => 'reports',
 			] );
