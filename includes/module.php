@@ -1018,11 +1018,6 @@ class Module extends Base
 		return TRUE;
 	}
 
-	public function is_register_settings( $page )
-	{
-		return $page == $this->module->settings;
-	}
-
 	public function init_settings()
 	{
 		if ( ! isset( $this->settings ) )
@@ -1031,13 +1026,13 @@ class Module extends Base
 
 	public function register_settings( $page = NULL )
 	{
-		if ( ! $this->is_register_settings( $page ) )
+		if ( $page != $this->module->settings )
 			return;
+
+		$this->init_settings();
 
 		if ( method_exists( $this, 'before_settings' ) )
 			$this->before_settings( $page );
-
-		$this->init_settings();
 
 		foreach ( $this->settings as $section_suffix => $fields ) {
 			if ( is_array( $fields ) ) {
