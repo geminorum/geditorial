@@ -1139,6 +1139,26 @@ class Module extends Base
 		Settings::fieldType( $args, $this->scripts );
 	}
 
+	public function do_post_field( $atts = [], $post = NULL )
+	{
+		if ( ! $post = get_post( $post ) )
+			return;
+
+		$args = array_merge( [
+			'option_base'  => $this->module->group,
+			'option_group' => 'meta',
+			'id_name_cb'   => [ $this, 'settings_id_name_cb' ],
+		], $atts );
+
+		if ( ! array_key_exists( 'options', $args ) )
+			$args['options'] = $this->get_postmeta( $post->ID, FALSE, [] );
+
+		if ( empty( $args['cap'] ) )
+			$args['cap'] = empty( $this->caps[$args['option_group']] ) ? NULL : $this->caps[$args['option_group']];
+
+		Settings::fieldType( $args, $this->scripts );
+	}
+
 	public function settings_print_scripts()
 	{
 		if ( $this->scripts_printed )
@@ -1231,6 +1251,19 @@ class Module extends Base
 		return $module;
 	}
 
+	public function get_posttype_cap_type( $constant )
+	{
+		$default = $this->constant( $constant.'_cap_type', 'post' );
+
+		if ( ! gEditorial()->enabled( 'roles' ) )
+			return $default;
+
+		if ( ! in_array( $this->constant( $constant ), gEditorial()->roles->post_types() ) )
+			return $default;
+
+		return gEditorial()->roles->constant( 'base_type' );
+	}
+
 	public function register_post_type( $constant_key, $atts = [], $taxonomies = [ 'post_tag' ] )
 	{
 		if ( is_null( $taxonomies ) )
@@ -1247,7 +1280,7 @@ class Module extends Base
 			'menu_icon'            => 'dashicons-'.$this->get_post_type_icon( $constant_key ),
 			'has_archive'          => $this->constant( $constant_key.'_archive', FALSE ),
 			'query_var'            => $this->constant( $constant_key.'_query_var', $post_type ),
-			'capability_type'      => $this->constant( $constant_key.'_cap_type', 'post' ),
+			'capability_type'      => $this->get_posttype_cap_type( $constant_key ),
 			'rewrite'              => [
 				'slug'       => $this->constant( $constant_key.'_slug', $post_type ),
 				'with_front' => FALSE,
@@ -1293,7 +1326,45 @@ class Module extends Base
 		return $labels;
 	}
 
-	public function register_taxonomy( $constant_key, $atts = [], $post_types = NULL )
+	public function get_taxonomy_caps( $caps, $posttypes )
+	{
+		if ( is_array( $caps ) )
+			return $caps;
+
+		if ( FALSE === $caps )
+			return [
+				'manage_terms' => 'manage_categories',
+				'edit_terms'   => 'manage_categories',
+				'delete_terms' => 'manage_categories',
+				'assign_terms' => 'edit_posts',
+			];
+
+		$defaults = [
+			'manage_terms' => 'edit_others_posts',
+			'edit_terms'   => 'edit_others_posts',
+			'delete_terms' => 'edit_others_posts',
+			'assign_terms' => 'edit_posts',
+		];
+
+		if ( ! gEditorial()->enabled( 'roles' ) )
+			return $defaults;
+
+		$posttype = is_null( $caps ) ? $posttypes[0] : $this->constant( $caps );
+
+		if ( ! in_array( $posttype, gEditorial()->roles->post_types() ) )
+			return $defaults;
+
+		$base = gEditorial()->roles->constant( 'base_type' );
+
+		return [
+			'manage_terms' => 'edit_others_'.$base[1],
+			'edit_terms'   => 'edit_others_'.$base[1],
+			'delete_terms' => 'edit_others_'.$base[1],
+			'assign_terms' => 'edit_'.$base[1],
+		];
+	}
+
+	public function register_taxonomy( $constant_key, $atts = [], $post_types = NULL, $caps = NULL )
 	{
 		$taxonomy = $this->constant( $constant_key );
 
@@ -1314,16 +1385,11 @@ class Module extends Base
 			'show_in_quick_edit'    => FALSE,
 			'show_in_nav_menus'     => FALSE,
 			'show_tagcloud'         => FALSE,
+			'capabilities'          => $this->get_taxonomy_caps( $caps, $post_types ),
 			'query_var'             => $this->constant( $constant_key.'_query', $taxonomy ),
 			'rewrite'               => [
 				'slug'       => $this->constant( $constant_key.'_slug', $taxonomy ),
 				'with_front' => FALSE,
-			],
-			'capabilities' => [
-				'manage_terms' => 'edit_others_posts', // 'manage_categories',
-				'edit_terms'   => 'edit_others_posts', // 'manage_categories',
-				'delete_terms' => 'edit_others_posts', // 'manage_categories',
-				'assign_terms' => 'edit_posts', // 'edit_published_posts',
 			],
 
 			// @SEE: https://core.trac.wordpress.org/ticket/39023
