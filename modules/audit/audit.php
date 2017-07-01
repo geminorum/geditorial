@@ -175,7 +175,7 @@ class Audit extends gEditorial\Module
 		if ( User::hasRole( $roles, $user_id ) )
 			return TRUE;
 
-		return FALSE;
+		return User::isSuperAdmin( $user_id );
 	}
 
 	// FIXME: no need / instead top level with ajax change option
