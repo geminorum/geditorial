@@ -42,6 +42,9 @@ class Book extends gEditorial\Module
 				'insert_cover',
 				'insert_priority',
 			],
+			'_supports' => [
+				$this->settings_supports_option( 'publication_cpt', TRUE ),
+			],
 		];
 
 		if ( $this->p2p ) {
@@ -183,21 +186,6 @@ class Book extends gEditorial\Module
 					],
 					'admin_column' => FALSE, // adding through tweaks module
 				],
-			],
-		];
-	}
-
-	protected function get_global_supports()
-	{
-		return [
-			'publication_cpt' => [
-				'title',
-				'editor',
-				'excerpt',
-				'author',
-				'thumbnail',
-				'comments',
-				'revisions',
 			],
 		];
 	}

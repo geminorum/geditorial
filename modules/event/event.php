@@ -41,6 +41,9 @@ class Event extends gEditorial\Module
 				'comment_status',
 				'admin_ordering',
 			],
+			'_supports' => [
+				$this->settings_supports_option( 'event_cpt', TRUE ),
+			],
 		];
 	}
 
@@ -114,22 +117,6 @@ class Event extends gEditorial\Module
 					'end'     => _x( 'End', 'Modules: Event: Event Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
 				],
 				'type_tax' => Helper::getDefualtCalendars( TRUE ),
-			],
-		];
-	}
-
-	protected function get_global_supports()
-	{
-		return [
-			'event_cpt' => [
-				'title',
-				'editor',
-				'excerpt',
-				'author',
-				'thumbnail',
-				'comments',
-				'revisions',
-				'date-picker', // gPersianDate
 			],
 		];
 	}

@@ -32,6 +32,13 @@ class Today extends gEditorial\Module
 				'calendar_type',
 			],
 			'posttypes_option' => 'posttypes_option',
+			'_supports' => [
+				$this->settings_supports_option( 'day_cpt', [
+					'title',
+					'excerpt',
+					'editorial-roles'
+				] ),
+			],
 		];
 	}
 
@@ -59,16 +66,6 @@ class Today extends gEditorial\Module
 			],
 			'noops' => [
 				'day_cpt' => _nx_noop( 'Day', 'Days', 'Modules: Today: Noop', GEDITORIAL_TEXTDOMAIN ),
-			],
-		];
-	}
-
-	protected function get_global_supports()
-	{
-		return [
-			'day_cpt' => [
-				'title',
-				'excerpt',
 			],
 		];
 	}

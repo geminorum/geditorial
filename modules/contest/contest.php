@@ -107,34 +107,6 @@ class Contest extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_supports()
-	{
-		return [
-			'contest_cpt' => [
-				'title',
-				'editor',
-				'excerpt',
-				'author',
-				'thumbnail',
-				'comments',
-				'revisions',
-				'page-attributes',
-				'date-picker', // gPersianDate
-			],
-			'apply_cpt' => [
-				'title',
-				'editor',
-				'excerpt',
-				'author',
-				'thumbnail',
-				'comments',
-				'revisions',
-				'page-attributes',
-				'date-picker', // gPersianDate
-			],
-		];
-	}
-
 	public function before_settings( $page = NULL )
 	{
 		if ( isset( $_POST['install_def_apply_status_tax'] ) )
@@ -292,14 +264,6 @@ class Contest extends gEditorial\Module
 		$this->action( 'wp_trash_post' );
 		$this->action( 'untrash_post' );
 		$this->action( 'before_delete_post' );
-	}
-
-	public function meta_post_types( $post_types )
-	{
-		return array_merge( $post_types, [
-			$this->constant( 'contest_cpt' ),
-			$this->constant( 'apply_cpt' ),
-		] );
 	}
 
 	public function dashboard_glance_items( $items )

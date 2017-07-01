@@ -101,9 +101,6 @@ class Module extends Base
 		if ( method_exists( $this, 'meta_init' ) )
 			add_action( 'geditorial_meta_init', [ $this, 'meta_init' ] );
 
-		if ( method_exists( $this, 'meta_post_types' ) )
-			add_filter( 'geditorial_meta_support_post_types', [ $this, 'meta_post_types' ] );
-
 		add_action( 'after_setup_theme', [ $this, '_after_setup_theme' ], 1 );
 
 		if ( method_exists( $this, 'after_setup_theme' ) )
@@ -145,7 +142,7 @@ class Module extends Base
 	public function _after_setup_theme()
 	{
 		$this->constants = $this->filters( 'constants', $this->get_global_constants(), $this->module );
-		$this->supports  = $this->filters( 'supports', $this->get_global_supports(), $this->module );
+		$this->supports  = $this->filters( 'supports', $this->get_global_supports(), $this->module ); // FIXME: DEPRICATED
 		$this->fields    = $this->filters( 'fields', $this->get_global_fields(), $this->module );
 	}
 
@@ -178,10 +175,10 @@ class Module extends Base
 	protected function get_global_settings() { return []; }
 	protected function get_global_constants() { return []; }
 	protected function get_global_strings() { return []; }
-	protected function get_global_supports() { return []; }
+	protected function get_global_supports() { return []; } // FIXME: DEPRICATED
 	protected function get_global_fields() { return []; }
-	protected function get_module_templates() { return []; }
 
+	protected function get_module_templates() { return []; }
 	protected function get_module_icons() { return []; }
 
 	protected function settings_help_tabs()
@@ -348,6 +345,10 @@ class Module extends Base
 	{
 		$supports = $this->filters( $constant_key.'_supports', Settings::supportsOptions() );
 
+		// has custom fields
+		if ( isset( $this->fields[$this->constant( $constant_key )] ) )
+			unset( $supports['editorial-meta'] );
+
 		if ( is_null( $defaults ) )
 			$defaults = $this->supports[$constant_key];
 
@@ -357,8 +358,8 @@ class Module extends Base
 		return [
 			'field'       => $constant_key.'_supports',
 			'type'        => 'checkbox', // FIXME: add as setting type with `code` after title
-			'title'       => sprintf( _x( '%s Supports', 'Module: Setting Title', GEDITORIAL_TEXTDOMAIN ), $this->strings['noops'][$constant_key]['singular'] ),
-			'description' => _x( 'Posttype support core features', 'Module: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+			'title'       => sprintf( _x( '%s Supports', 'Module: Setting Title', GEDITORIAL_TEXTDOMAIN ), translate_nooped_plural( $this->strings['noops'][$constant_key], 1 ) ),
+			'description' => _x( 'Support core and extra features for this posttype.', 'Module: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 			'default'     => $defaults,
 			'values'      => $supports,
 		];
@@ -1234,7 +1235,7 @@ class Module extends Base
 		if ( isset( $this->supports[$constant_key] ) )
 			return $this->supports[$constant_key];
 
-		return [ 'title', 'editor' ];
+		return array_keys( Settings::supportsOptions() );
 	}
 
 	public function get_post_type_icon( $constant_key, $default = 'welcome-write-blog' )

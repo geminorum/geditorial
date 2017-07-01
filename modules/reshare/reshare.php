@@ -11,11 +11,33 @@ class Reshare extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'      => 'reshare',
-			'title'     => _x( 'Reshare', 'Modules: Reshare', GEDITORIAL_TEXTDOMAIN ),
-			'desc'      => _x( 'Contents from Other Sources', 'Modules: Reshare', GEDITORIAL_TEXTDOMAIN ),
-			'icon'      => 'external',
-			'configure' => FALSE,
+			'name'  => 'reshare',
+			'title' => _x( 'Reshare', 'Modules: Reshare', GEDITORIAL_TEXTDOMAIN ),
+			'desc'  => _x( 'Contents from Other Sources', 'Modules: Reshare', GEDITORIAL_TEXTDOMAIN ),
+			'icon'  => 'external',
+		];
+	}
+
+	protected function get_global_settings()
+	{
+		return [
+			'_general' => [
+				'comment_status',
+			],
+			'_supports' => [
+				$this->settings_supports_option( 'reshare_cpt', [
+					'title',
+					'editor',
+					'excerpt',
+					'author',
+					'thumbnail',
+					'comments',
+					'revisions',
+					'date-picker',
+					'editorial-meta',
+					'editorial-roles',
+				] ),
+			],
 		];
 	}
 
@@ -49,27 +71,6 @@ class Reshare extends gEditorial\Module
 				'reshare_cat' => _nx_noop( 'Reshare Category', 'Reshare Categories', 'Modules: Reshare: Noop', GEDITORIAL_TEXTDOMAIN ),
 			],
 		];
-	}
-
-	protected function get_global_supports()
-	{
-		return [
-			'reshare_cpt' => [
-				'title',
-				'editor',
-				'excerpt',
-				'author',
-				'thumbnail',
-				'comments',
-				'revisions',
-				'date-picker', // gPersianDate
-			],
-		];
-	}
-
-	public function meta_post_types( $post_types )
-	{
-		return array_merge( $post_types, [ $this->constant( 'reshare_cpt' ) ] );
 	}
 
 	public function after_setup_theme()

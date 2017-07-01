@@ -145,23 +145,6 @@ class Magazine extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_supports()
-	{
-		return [
-			'issue_cpt' => [
-				'title',
-				'editor',
-				'excerpt',
-				'author',
-				'thumbnail',
-				'comments',
-				'revisions',
-				'page-attributes',
-				'date-picker', // gPersianDate
-			],
-		];
-	}
-
 	protected function get_global_fields()
 	{
 		return [

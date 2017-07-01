@@ -148,6 +148,20 @@ class Meta extends gEditorial\Module
 		];
 	}
 
+	private function get_posttypes_support_meta()
+	{
+		$posttypes = [ 'post' ];
+		$supported = get_post_types_by_support( 'editorial-meta' );
+		$excludes  = [
+			'attachment',
+			'page',
+		];
+
+		$list = array_diff( array_merge( $posttypes, $supported ), $excludes );
+
+		return $this->filters( 'support_post_types', $list );
+	}
+
 	public function before_settings( $page = NULL )
 	{
 		if ( isset( $_POST['install_def_ct_tax'] ) )
@@ -173,13 +187,11 @@ class Meta extends gEditorial\Module
 		if ( count( $ct_tax_posttypes ) )
 			$this->register_taxonomy( 'ct_tax', [], $ct_tax_posttypes );
 
-		$post_cpt = $this->constant( 'post_cpt' );
-
 		// default fields for custom post types
-		foreach ( $this->filters( 'support_post_types', [ $post_cpt ] ) as $post_type )
-			$this->add_post_type_fields( $post_type, $this->fields[$post_cpt] );
+		foreach ( $this->get_posttypes_support_meta() as $post_type )
+			$this->add_post_type_fields( $post_type, $this->fields['post'] );
 
-		$this->add_post_type_fields( $this->constant( 'page_cpt' ) );
+		$this->add_post_type_fields( 'page' );
 
 		if ( ! is_admin() ) {
 

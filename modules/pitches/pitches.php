@@ -15,8 +15,23 @@ class Pitches extends gEditorial\Module
 			'title'     => _x( 'Pitches', 'Modules: Pitches', GEDITORIAL_TEXTDOMAIN ),
 			'desc'      => _x( 'Keep Track of Ideas', 'Modules: Pitches', GEDITORIAL_TEXTDOMAIN ),
 			'icon'      => 'cloud',
-			'configure' => FALSE,
 			'frontend'  => FALSE,
+		];
+	}
+
+	protected function get_global_settings()
+	{
+		return [
+			'_supports' => [
+				$this->settings_supports_option( 'idea_cpt', [
+					'title',
+					'excerpt',
+					'author',
+					'comments',
+					'date-picker',
+					'editorial-roles'
+				] ),
+			],
 		];
 	}
 
@@ -65,19 +80,6 @@ class Pitches extends gEditorial\Module
 		];
 
 		return $strings;
-	}
-
-	protected function get_global_supports()
-	{
-		return [
-			'idea_cpt' => [
-				'title',
-				'excerpt',
-				'author',
-				'comments',
-				'date-picker', // gPersianDate
-			],
-		];
 	}
 
 	public function init()

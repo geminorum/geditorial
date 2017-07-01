@@ -13,11 +13,19 @@ class Team extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'      => 'team',
-			'title'     => _x( 'Team', 'Modules: Team', GEDITORIAL_TEXTDOMAIN ),
-			'desc'      => _x( 'Team Profile Management', 'Modules: Team', GEDITORIAL_TEXTDOMAIN ),
-			'icon'      => 'groups',
-			'configure' => FALSE,
+			'name'  => 'team',
+			'title' => _x( 'Team', 'Modules: Team', GEDITORIAL_TEXTDOMAIN ),
+			'desc'  => _x( 'Profiles for Editorial Teams', 'Modules: Team', GEDITORIAL_TEXTDOMAIN ),
+			'icon'  => 'groups',
+		];
+	}
+
+	protected function get_global_settings()
+	{
+		return [
+			'_supports' => [
+				$this->settings_supports_option( 'member_cpt', TRUE ),
+			],
 		];
 	}
 
@@ -49,20 +57,6 @@ class Team extends gEditorial\Module
 			'noops' => [
 				'member_cpt' => _nx_noop( 'Team Member', 'Team Members', 'Modules: Team: Noop', GEDITORIAL_TEXTDOMAIN ),
 				'member_cat' => _nx_noop( 'Team Member Category', 'Team Member Categories', 'Modules: Team: Noop', GEDITORIAL_TEXTDOMAIN ),
-			],
-		];
-	}
-
-	protected function get_global_supports()
-	{
-		return [
-			'member_cpt' => [
-				'title',
-				'editor',
-				'excerpt',
-				'author',
-				'thumbnail',
-				'revisions',
 			],
 		];
 	}

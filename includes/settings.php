@@ -146,8 +146,10 @@ class Settings extends Core\Base
 			'thumbnail'       => _x( 'Thumbnail', 'Settings: Option: PostType Support', GEDITORIAL_TEXTDOMAIN ),
 			'comments'        => _x( 'Comments', 'Settings: Option: PostType Support', GEDITORIAL_TEXTDOMAIN ),
 			'revisions'       => _x( 'Revisions', 'Settings: Option: PostType Support', GEDITORIAL_TEXTDOMAIN ),
-			'page-attributes' => _x( 'Page Attributes', 'Settings: Option: PostType Support', GEDITORIAL_TEXTDOMAIN ),
-			'date-picker'     => _x( 'gPersianDate: Date Picker', 'Settings: Option: PostType Support', GEDITORIAL_TEXTDOMAIN ),
+			'page-attributes' => _x( 'Post Attributes', 'Settings: Option: PostType Support', GEDITORIAL_TEXTDOMAIN ),
+			'date-picker'     => _x( 'Persian Date: Date Picker', 'Settings: Option: PostType Support', GEDITORIAL_TEXTDOMAIN ),
+			'editorial-meta'  => _x( 'Editorial: Meta Fields', 'Settings: Option: PostType Support', GEDITORIAL_TEXTDOMAIN ),
+			'editorial-roles' => _x( 'Editorial: Custom Roles', 'Settings: Option: PostType Support', GEDITORIAL_TEXTDOMAIN ),
 		];
 	}
 

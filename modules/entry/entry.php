@@ -37,16 +37,7 @@ class Entry extends gEditorial\Module
 				'after_content',
 			],
 			'_supports' => [
-				$this->settings_supports_option( 'entry_cpt', [
-					'title',
-					'editor',
-					'excerpt',
-					'author',
-					'thumbnail',
-					'comments',
-					'revisions',
-					'date-picker', // gPersianDate
-				] ),
+				$this->settings_supports_option( 'entry_cpt', TRUE ),
 			],
 		];
 	}
@@ -81,27 +72,6 @@ class Entry extends gEditorial\Module
 		];
 
 		return $strings;
-	}
-
-	protected function get_global_supports()
-	{
-		return [
-			'entry_cpt' => [
-				'title',
-				'editor',
-				'excerpt',
-				'author',
-				'thumbnail',
-				'comments',
-				'revisions',
-				'date-picker', // gPersianDate
-			],
-		];
-	}
-
-	public function meta_post_types( $post_types )
-	{
-		return array_merge( $post_types, [ $this->constant( 'entry_cpt' ) ] );
 	}
 
 	public function init()

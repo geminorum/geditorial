@@ -36,24 +36,8 @@ class Tube extends gEditorial\Module
 				],
 			],
 			'_supports' => [
-				$this->settings_supports_option( 'video_cpt', [
-					'title',
-					'editor',
-					'excerpt',
-					'author',
-					'thumbnail',
-					'comments',
-					'revisions',
-				] ),
-				$this->settings_supports_option( 'channel_cpt', [
-					'title',
-					'editor',
-					'excerpt',
-					'author',
-					'thumbnail',
-					'comments',
-					'revisions',
-				] ),
+				$this->settings_supports_option( 'video_cpt', TRUE ),
+				$this->settings_supports_option( 'channel_cpt', TRUE ),
 			],
 		];
 	}
@@ -129,14 +113,6 @@ class Tube extends gEditorial\Module
 	{
 		$this->register_post_type_thumbnail( 'video_cpt' );
 		$this->register_post_type_thumbnail( 'channel_cpt' );
-	}
-
-	public function meta_post_types( $post_types )
-	{
-		return array_merge( $post_types, [
-			$this->constant( 'video_cpt' ),
-			$this->constant( 'channel_cpt' ),
-		] );
 	}
 
 	public function init()
