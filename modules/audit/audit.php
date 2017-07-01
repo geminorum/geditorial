@@ -13,14 +13,13 @@ use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\Database;
 use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\Taxonomy;
+use geminorum\gEditorial\WordPress\User;
 
 class Audit extends gEditorial\Module
 {
 
 	protected $caps = [
 		'default' => 'edit_others_posts',
-		'tools'   => 'edit_others_posts',
-		'reports' => 'edit_others_posts',
 	];
 
 	public static function module()
@@ -35,7 +34,37 @@ class Audit extends gEditorial\Module
 
 	protected function get_global_settings()
 	{
+		$roles   = User::getAllRoleList();
+		$exclude = [ 'administrator', 'subscriber' ];
+
 		return [
+			'posttypes_option' => 'posttypes_option',
+			'_roles' => [
+				[
+					'field'       => 'manage_roles',
+					'type'        => 'checkbox',
+					'title'       => _x( 'Manage Roles', 'Modules: Audit: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Roles that can Manage, Edit and Delete Audit Attributes. Though Administrators have it all!', 'Modules: Audit: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'exclude'     => $exclude,
+					'values'      => $roles,
+				],
+				[
+					'field'       => 'assign_roles',
+					'type'        => 'checkbox',
+					'title'       => _x( 'Assign Roles', 'Modules: Audit: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Roles that can Assign Audit Attributes. Though Administrators have it all!', 'Modules: Audit: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'exclude'     => $exclude,
+					'values'      => $roles,
+				],
+				[
+					'field'       => 'reports_roles',
+					'type'        => 'checkbox',
+					'title'       => _x( 'Reports Roles', 'Modules: Audit: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Roles that can See Audit Attributes Reports. Though Administrators have it all!', 'Modules: Audit: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'exclude'     => $exclude,
+					'values'      => $roles,
+				],
+			],
 			'_general' => [
 				'dashboard_widgets',
 				'summary_scope',
@@ -43,7 +72,6 @@ class Audit extends gEditorial\Module
 				'admin_restrict',
 				'adminbar_summary',
 			],
-			'posttypes_option' => 'posttypes_option',
 		];
 	}
 
@@ -104,12 +132,50 @@ class Audit extends gEditorial\Module
 	{
 		parent::init();
 
-		// FIXME: add setting option to choose editing role
-		if ( $this->cuc( 'default' ) )
-			$this->register_taxonomy( 'audit_tax', [
-				'hierarchical'       => TRUE,
-				'show_in_quick_edit' => TRUE,
-			] );
+		$this->register_taxonomy( 'audit_tax', [
+			'hierarchical'       => TRUE,
+			'show_in_quick_edit' => TRUE,
+		], NULL, [
+			'manage_terms' => 'manage_audit_tax',
+			'edit_terms'   => 'edit_audit_tax',
+			'delete_terms' => 'delete_audit_tax',
+			'assign_terms' => 'assign_audit_tax',
+		] );
+
+		$this->filter( 'map_meta_cap', 4 );
+	}
+
+	public function map_meta_cap( $caps, $cap, $user_id, $args )
+	{
+		switch ( $cap ) {
+
+			case 'manage_audit_tax':
+			case 'edit_audit_tax':
+			case 'delete_audit_tax':
+				return $this->audit_can( 'manage', $user_id ) ? [ 'read' ] : [ 'do_not_allow' ];
+			break;
+
+			case 'assign_audit_tax':
+				return $this->audit_can( 'assign', $user_id ) ? [ 'read' ] : [ 'do_not_allow' ];
+		}
+
+		return $caps;
+	}
+
+	private function audit_can( $what = 'assign', $user_id = NULL )
+	{
+		if ( is_null( $user_id ) )
+			$user_id = get_current_user_id();
+
+		if ( ! $user_id )
+			return FALSE;
+
+		$roles = array_merge( $this->get_setting( $what.'_roles', [] ), [ 'administrator' ] );
+
+		if ( User::hasRole( $roles, $user_id ) )
+			return TRUE;
+
+		return FALSE;
 	}
 
 	// FIXME: no need / instead top level with ajax change option
@@ -118,7 +184,7 @@ class Audit extends gEditorial\Module
 		if ( is_admin() || ! is_singular( $this->post_types() ) )
 			return;
 
-		if ( ! $this->cuc( 'adminbar' ) )
+		if ( ! $this->audit_can() )
 			return;
 
 		$nodes[] = [
@@ -143,14 +209,14 @@ class Audit extends gEditorial\Module
 	{
 		if ( 'dashboard' == $screen->base ) {
 
-			if ( $this->get_setting( 'dashboard_widgets', FALSE ) )
+			if ( $this->get_setting( 'dashboard_widgets', FALSE ) && $this->audit_can() )
 				$this->action( 'activity_box_end', 0, 9 );
 
 		} else if ( in_array( $screen->post_type, $this->post_types() ) ) {
 
 			if ( 'edit' == $screen->base ) {
 
-				if ( $this->get_setting( 'admin_restrict', FALSE ) ) {
+				if ( $this->get_setting( 'admin_restrict', FALSE ) && $this->audit_can() ) {
 					$this->action( 'restrict_manage_posts', 2, 20 );
 					$this->filter( 'parse_query' );
 				}
@@ -294,6 +360,17 @@ class Audit extends gEditorial\Module
 	public function meta_box_cb_audit_tax( $post, $box )
 	{
 		MetaBox::checklistTerms( $post, $box );
+	}
+
+	public function append_sub( $subs, $page = 'settings' )
+	{
+		if ( 'reports' != $page )
+			return parent::append_sub( $subs, $page );
+
+		if ( $this->audit_can( 'reports' ) )
+			return array_merge( $subs, [ $this->module->name => $this->module->title ] );
+
+		return $subs;
 	}
 
 	public function reports_settings( $sub )
