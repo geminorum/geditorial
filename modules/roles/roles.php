@@ -6,6 +6,7 @@ use geminorum\gEditorial;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Text;
+use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\User;
 
 class Roles extends gEditorial\Module
@@ -23,13 +24,6 @@ class Roles extends gEditorial\Module
 
 	protected function get_global_settings()
 	{
-		$caps   = [];
-		$prefix = $this->constant( 'base_prefix' );
-
-		foreach ( User::getAllRoleList() as $role => $title )
-			if ( ! Text::has( $role, $prefix ) )
-				$caps[$role] = $title;
-
 		return [
 			'_general' => [
 				[
@@ -44,10 +38,16 @@ class Roles extends gEditorial\Module
 					'description' => _x( 'Roles to duplicate as editorial roles. Though Administrators have it all!', 'Modules: Roles: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 					'default'     => [ 'editor', 'author', 'contributor' ],
 					'exclude'     => [ 'administrator', 'subscriber' ],
-					'values'      => $caps,
+					'values'      => $this->get_roles_support_duplicate(),
+				],
+				[
+					'field'       => 'editorial_posttypes',
+					'type'        => 'posttypes',
+					'title'       => _x( 'Editorial Posttypes', 'Modules: Roles: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Posttypes to handle via Editorial roles.', 'Modules: Roles: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'values'      => $this->get_posttypes_support_editorial(),
 				],
 			],
-			'posttypes_option' => 'posttypes_option', // TODO: make note that only works on editorial posttypes
 		];
 	}
 
@@ -57,6 +57,34 @@ class Roles extends gEditorial\Module
 			'base_type'   => [ 'editorial', 'editorials' ],
 			'base_prefix' => 'editorial_',
 		];
+	}
+
+	private function get_roles_support_duplicate()
+	{
+		$caps   = [];
+		$prefix = $this->constant( 'base_prefix' );
+
+		foreach ( User::getAllRoleList() as $role => $title )
+			if ( ! Text::has( $role, $prefix ) )
+				$caps[$role] = $title;
+
+		return $caps;
+	}
+
+	private function get_posttypes_support_editorial()
+	{
+		$posttypes = [];
+		$supported = get_post_types_by_support( 'editorial-roles' );
+		$excludes  = [
+			'profile', // gPeople
+		];
+
+		foreach ( PostType::get( 0, [ 'public' => TRUE, '_builtin' => FALSE ] ) as $post_type => $label )
+			if ( in_array( $post_type, $supported )
+				&& ! in_array( $post_type, $excludes ) )
+					$posttypes[$post_type] = $label;
+
+		return $posttypes;
 	}
 
 	public function before_settings( $page = NULL )
@@ -99,6 +127,21 @@ class Roles extends gEditorial\Module
 		foreach ( $menu as $offset => $item )
 			if ( Text::has( $item[2], 'edit-tags.php' ) && ! current_user_can( $item[1] ) )
 				unset( $menu[$offset] );
+	}
+
+	// OVERWRITE
+	public function post_types( $post_types = NULL )
+	{
+		$supported = $this->get_setting( 'editorial_posttypes', [] );
+
+		if ( is_null( $post_types ) )
+			return $supported;
+
+		foreach ( (array) $post_types as $post_type )
+			if ( in_array( $post_type, $supported ) )
+				return TRUE;
+
+		return FALSE;
 	}
 
 	// @SEE: https://developer.wordpress.org/?p=1109
