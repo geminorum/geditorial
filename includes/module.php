@@ -1352,7 +1352,12 @@ class Module extends Base
 		if ( ! gEditorial()->enabled( 'roles' ) )
 			return $defaults;
 
-		$posttype = is_null( $caps ) ? $posttypes[0] : $this->constant( $caps );
+		if ( ! is_null( $caps ) )
+			$posttype = $this->constant( $caps );
+		else if ( count( $posttypes ) )
+			$posttype = $posttypes[0];
+		else
+			return $defaults;
 
 		if ( ! in_array( $posttype, gEditorial()->roles->post_types() ) )
 			return $defaults;
