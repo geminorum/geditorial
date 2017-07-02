@@ -178,6 +178,12 @@ class Audit extends gEditorial\Module
 		return User::isSuperAdmin( $user_id );
 	}
 
+	// Override
+	public function cuc( $context = 'settings', $fallback = '' )
+	{
+		return 'reports' == $context ? $this->audit_can( 'reports' ) : parent::cuc( $context, $fallback );
+	}
+
 	// FIXME: no need / instead top level with ajax change option
 	public function adminbar_init( &$nodes, $parent )
 	{
@@ -360,17 +366,6 @@ class Audit extends gEditorial\Module
 	public function meta_box_cb_audit_tax( $post, $box )
 	{
 		MetaBox::checklistTerms( $post, $box );
-	}
-
-	public function append_sub( $subs, $page = 'settings' )
-	{
-		if ( 'reports' != $page )
-			return parent::append_sub( $subs, $page );
-
-		if ( $this->audit_can( 'reports' ) )
-			return array_merge( $subs, [ $this->module->name => $this->module->title ] );
-
-		return $subs;
 	}
 
 	public function reports_settings( $sub )
