@@ -7,6 +7,7 @@ use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
+use geminorum\gEditorial\Core\URL;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\User;
@@ -776,6 +777,8 @@ class Tweaks extends gEditorial\Module
 		switch ( $key ) {
 			case 'mobile': return HTML::tel( $value );
 			case 'twitter': return HTML::link( '@'.$value, sprintf( 'https://twitter.com/intent/user?screen_name=%s', $value ), TRUE ); // FIXME: validate
+			case 'googleplus': return HTML::link( URL::prepTitle( $value ), $value );
+			case 'facebook': return HTML::link( URL::prepTitle( $value ), $value );
 		}
 
 		return esc_html( $value );
