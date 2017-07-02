@@ -1047,6 +1047,9 @@ class Helper extends Core\Base
 		if ( ! array_key_exists( 'menu_name', $pre ) )
 			$pre['menu_name'] = $strings[0];
 
+		if ( ! array_key_exists( 'most_used', $pre ) )
+			$pre['most_used'] = _x( 'Most Used', 'Helper: Tax Generator', GEDITORIAL_TEXTDOMAIN );
+
 		return $pre;
 	}
 
