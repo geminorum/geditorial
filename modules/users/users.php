@@ -404,6 +404,13 @@ class Users extends gEditorial\Module
 			echo '</li>';
 		}
 
+		if ( $user->user_url ) {
+			echo '<li class="-attr -users -url">';
+				echo $this->get_column_icon( FALSE, 'admin-links', _x( 'URL', 'Modules: Users: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
+				echo HTML::link( URL::prepTitle( $user->user_url ), $user->user_url );
+			echo '</li>';
+		}
+
 		foreach ( wp_get_user_contact_methods( $user ) as $method => $title ) {
 
 			if ( ! $meta = get_user_meta( $user->ID, $method, TRUE ) )
@@ -419,6 +426,14 @@ class Users extends gEditorial\Module
 			echo '<li class="-attr -users -contact-'.$method.'">';
 				echo $this->get_column_icon( FALSE, $icon, $title );
 				echo $this->display_meta( $meta, $method );
+			echo '</li>';
+		}
+
+		if ( $user->user_registered ) {
+			echo '<li class="-attr -users -registered">';
+				echo $this->get_column_icon( FALSE, 'calendar', _x( 'Registered', 'Modules: Users: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
+				echo sprintf( _x( 'Registered on %s', 'Modules: Users', GEDITORIAL_TEXTDOMAIN ),
+					Helper::getDateEditRow( $user->user_registered, '-registered' ) );
 			echo '</li>';
 		}
 
