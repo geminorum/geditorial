@@ -11,6 +11,9 @@ use geminorum\gEditorial\WordPress\User;
 
 class Roles extends gEditorial\Module
 {
+	protected $caps = [
+		'default' => 'manage_options',
+	];
 
 	public static function module()
 	{
