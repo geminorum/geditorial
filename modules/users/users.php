@@ -7,6 +7,7 @@ use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
+use geminorum\gEditorial\Core\URL;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\Database;
 use geminorum\gEditorial\WordPress\PostType;
@@ -383,7 +384,18 @@ class Users extends gEditorial\Module
 	{
 		$user = wp_get_current_user();
 
-		echo '<div class="geditorial-admin-wrap-widget -users -contacts"><ul>';
+		echo '<div class="geditorial-admin-wrap-widget -users -contacts">';
+
+		echo HTML::wrap( get_avatar( $user->user_email, 86 ), '-avatar' );
+
+		echo '<ul>';
+
+		if ( $user->first_name || $user->last_name ) {
+			echo '<li class="-attr -users -name">';
+				echo $this->get_column_icon( FALSE, 'nametag', _x( 'Name', 'Modules: Users: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
+				echo "$user->first_name $user->last_name";
+			echo '</li>';
+		}
 
 		if ( $user->user_email ) {
 			echo '<li class="-attr -users -email">';
@@ -410,7 +422,12 @@ class Users extends gEditorial\Module
 			echo '</li>';
 		}
 
-		echo '</ul></div>';
+		echo '<li class="-attr -users -edit">';
+			echo $this->get_column_icon( FALSE, 'edit', _x( 'Edit', 'Modules: Users: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
+			echo HTML::link( _x( 'Edit Your Profile', 'Modules: Users', GEDITORIAL_TEXTDOMAIN ), WordPress::getUserEditLink( $user->ID ) );
+		echo '</li>';
+
+		echo '</ul><div class="clear"></div></div>';
 	}
 
 	public function display_meta( $value, $key = NULL, $field = [] )
@@ -418,6 +435,8 @@ class Users extends gEditorial\Module
 		switch ( $key ) {
 			case 'mobile': return HTML::tel( $value );
 			case 'twitter': return HTML::link( '@'.$value, sprintf( 'https://twitter.com/intent/user?screen_name=%s', $value ), TRUE ); // FIXME: validate
+			case 'googleplus': return HTML::link( URL::prepTitle( $value ), $value );
+			case 'facebook': return HTML::link( URL::prepTitle( $value ), $value );
 		}
 
 		return esc_html( $value );
