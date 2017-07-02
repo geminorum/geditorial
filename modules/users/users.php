@@ -44,6 +44,7 @@ class Users extends gEditorial\Module
 					'title'       => _x( 'User Types', 'Modules: Users: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Taxonomy for organizing users in types', 'Modules: Users: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 				],
+				'dashboard_widgets',
 				'admin_restrict',
 				[
 					'field'       => 'author_restrict',
@@ -148,7 +149,12 @@ class Users extends gEditorial\Module
 	{
 		$groups = $this->get_setting( 'user_groups', FALSE );
 
-		if ( 'edit' == $screen->base
+		if ( 'dashboard' == $screen->base
+			&& $this->get_setting( 'dashboard_widgets', FALSE ) ) {
+
+			$this->action( 'wp_dashboard_setup' );
+
+		} else if ( 'edit' == $screen->base
 			&& in_array( $screen->post_type, $this->post_types() ) ) {
 
 			if ( $this->get_setting( 'admin_restrict', FALSE ) )
@@ -195,6 +201,14 @@ class Users extends gEditorial\Module
 			$username = '';
 
 		return $username;
+	}
+
+	public function wp_dashboard_setup()
+	{
+		wp_add_dashboard_widget( $this->classs(),
+			_x( 'Your Profile', 'Modules: Users: Dashboard Widget Title', GEDITORIAL_TEXTDOMAIN ),
+			[ $this, 'dashboard_summary' ]
+		);
 	}
 
 	public function restrict_manage_posts( $post_type, $which )
@@ -363,6 +377,50 @@ class Users extends gEditorial\Module
 		$term = esc_attr( $_POST['groups'] );
 		wp_set_object_terms( $user_id, [ $term ], $this->constant( 'group_tax' ), FALSE );
 		clean_object_term_cache( $user_id, $this->constant( 'group_tax' ) );
+	}
+
+	public function dashboard_summary()
+	{
+		$user = wp_get_current_user();
+
+		echo '<div class="geditorial-admin-wrap-widget -users -contacts"><ul>';
+
+		if ( $user->user_email ) {
+			echo '<li class="-attr -users -email">';
+				echo $this->get_column_icon( FALSE, 'email', _x( 'Email', 'Modules: Users: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
+				echo HTML::mailto( $user->user_email );
+			echo '</li>';
+		}
+
+		foreach ( wp_get_user_contact_methods( $user ) as $method => $title ) {
+
+			if ( ! $meta = get_user_meta( $user->ID, $method, TRUE ) )
+				continue;
+
+			if ( in_array( $method, [ 'twitter', 'facebook', 'googleplus' ] ) )
+				$icon = $method;
+			else if ( in_array( $method, [ 'mobile', 'phone' ] ) )
+				$icon = 'phone';
+			else
+				$icon = 'email-alt';
+
+			echo '<li class="-attr -users -contact-'.$method.'">';
+				echo $this->get_column_icon( FALSE, $icon, $title );
+				echo $this->display_meta( $meta, $method );
+			echo '</li>';
+		}
+
+		echo '</ul></div>';
+	}
+
+	public function display_meta( $value, $key = NULL, $field = [] )
+	{
+		switch ( $key ) {
+			case 'mobile': return HTML::tel( $value );
+			case 'twitter': return HTML::link( '@'.$value, sprintf( 'https://twitter.com/intent/user?screen_name=%s', $value ), TRUE ); // FIXME: validate
+		}
+
+		return esc_html( $value );
 	}
 
 	public function reports_settings( $sub )
