@@ -16,7 +16,7 @@ class Config extends gEditorial\Module
 {
 
 	protected $caps = [
-		'reports'  => 'edit_others_posts',
+		'reports'  => 'publish_posts',
 		'settings' => 'manage_options',
 		'tools'    => 'edit_others_posts',
 	];
