@@ -77,13 +77,13 @@ class Today extends gEditorial\Module
 		if ( ! is_admin() ) {
 
 			// FIXME: add setting to disable this
-			$this->filter( 'query_vars' );
-			$this->filter( 'template_include' );
-			$this->action( 'pre_get_posts' );
+			// $this->filter( 'query_vars' );
+			// $this->filter( 'template_include' );
+			// $this->action( 'pre_get_posts' );
 		}
 
-		$this->filter( 'rewrite_rules_array' );
-		$this->filter( 'post_type_link', 4 );
+		// $this->filter( 'rewrite_rules_array' );
+		// $this->filter( 'post_type_link', 4 );
 	}
 
 	public function after_setup_theme()

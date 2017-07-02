@@ -61,7 +61,7 @@ class Contest extends gEditorial\Module
 		return [
 			'post_types' => [
 				'contest_cpt' => NULL,
-				'apply_cpt'   => 'dashicons-portfolio',
+				'apply_cpt'   => 'portfolio',
 			],
 			'taxonomies' => [
 				'contest_cat'      => 'category',

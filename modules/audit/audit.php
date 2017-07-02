@@ -60,7 +60,7 @@ class Audit extends gEditorial\Module
 					'field'       => 'reports_roles',
 					'type'        => 'checkbox',
 					'title'       => _x( 'Reports Roles', 'Modules: Audit: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Roles that can See Audit Attributes Reports. Though Administrators have it all!', 'Modules: Audit: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Roles that can see Audit Attributes Reports. Though Administrators have it all!', 'Modules: Audit: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 					'exclude'     => $exclude,
 					'values'      => $roles,
 				],
@@ -145,6 +145,7 @@ class Audit extends gEditorial\Module
 		$this->filter( 'map_meta_cap', 4 );
 	}
 
+	// @REF: https://make.wordpress.org/core/?p=20496
 	public function map_meta_cap( $caps, $cap, $user_id, $args )
 	{
 		switch ( $cap ) {
@@ -399,6 +400,7 @@ class Audit extends gEditorial\Module
 				'none_value'   => '0',
 				'default'      => $args['user_id'],
 				'option_group' => 'reports',
+				'cap'          => 'read',
 			] );
 
 			echo '&nbsp;';
