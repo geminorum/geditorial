@@ -123,7 +123,52 @@ class HTTP extends Base
 
 	public static function normalizeIP( $ip )
 	{
-		return trim( preg_replace( '/[^0-9., ]/', '', stripslashes( $ip ) ) );
+		return trim( preg_replace( '/[^0-9a-fA-F:., ]/', '', stripslashes( $ip ) ) );
+	}
+
+	public static function IPinRange( $ip, $range, $block )
+	{
+		// 1.2.3/24  OR  1.2.3.4/255.255.255.0
+		if ( FALSE !== strpos( $range, '/' ) )
+			return self::IPinCIDR( $ip, $range );
+
+		// 255.255.*.*
+		if ( FALSE !== strpos( $range, '*' ) )
+			$range = ( str_replace( '*', '0', $range )
+				.'-'.str_replace( '*', '255', $range ) );
+
+		$long = ip2long( $ip );
+
+		// 1.6.0.0 - 1.7.255.255
+		if ( FALSE !== strpos( $range, '-' ) ) {
+
+			$block = array_map( 'trim', explode( '-', $range, 2 ) );
+
+			if ( $long >= ip2long( $block[0] )
+				&& $long <= ip2long( $block[1] ) )
+					return TRUE;
+		}
+
+		// 1.8.0.1
+		if ( $long == ip2long( trim( $range ) ) )
+			return TRUE;
+
+		return FALSE;
+	}
+
+	// @REF: https://stackoverflow.com/a/594134/4864081
+	public static function IPinCIDR( $ip, $range )
+	{
+		list ( $subnet, $bits ) = explode( '/', $range );
+
+		$ip     = ip2long( $ip );
+		$subnet = ip2long( $subnet );
+		$mask   = -1 << ( 32 - $bits );
+
+		// in case the supplied subnet wasn't correctly aligned
+		$subnet &= $mask;
+
+		return ( $ip & $mask ) == $subnet;
 	}
 
 	public static function headers( $array )

@@ -51,9 +51,11 @@ class HTML extends Base
 		echo self::tag( 'h3', array( 'class' => $class ), $html );
 	}
 
-	public static function desc( $html, $block = TRUE, $class = '' )
+	public static function desc( $html, $block = TRUE, $class = '', $nl2br = TRUE )
 	{
-		if ( $html ) echo $block ? '<p class="description -description '.$class.'">'.$html.'</p>' : '<span class="description -description '.$class.'">'.$html.'</span>';
+		if ( ! $html ) return;
+		if ( $nl2br ) $html = nl2br( trim( $html ) );
+		echo $block ? '<p class="description -description '.$class.'">'.$html.'</p>' : '<span class="description -description '.$class.'">'.$html.'</span>';
 	}
 
 	public static function wrap( $html, $class = '', $block = TRUE )
@@ -503,7 +505,7 @@ class HTML extends Base
 		return TRUE;
 	}
 
-	public static function tableActions( $actions )
+	public static function tableActions( $actions, $echo = TRUE )
 	{
 		if ( ! $actions || ! is_array( $actions ) )
 			return;
@@ -512,15 +514,20 @@ class HTML extends Base
 
 		$i = 0;
 
-		echo '<div class="base-table-actions row-actions">';
+		$html = '<div class="base-table-actions row-actions">';
 
-			foreach ( $actions as $action => $html ) {
+			foreach ( $actions as $name => $action ) {
 				++$i;
 				$sep = $i == $count ? '' : ' | ';
-				echo '<span class="-action-'.$action.'">'.$html.$sep.'</span>';
+				$html .= '<span class="-action-'.$name.' '.$name.'">'.$action.$sep.'</span>';
 			}
 
-		echo '</div>';
+		$html .= '</div>';
+
+		if ( ! $echo )
+			return $html;
+
+		echo $html;
 	}
 
 	public static function tableNavigation( $pagination = array() )

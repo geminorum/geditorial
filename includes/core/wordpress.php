@@ -381,4 +381,34 @@ class WordPress extends Base
 
 		return FALSE;
 	}
+
+	// flush rewrite rules when it's necessary.
+	// this could be put in an init hook or the like and ensures that
+	// the rewrite rules option is only rewritten when the generated rules
+	// don't match up with the option
+	// @REF: https://gist.github.com/tott/9548734
+	public static function maybeFlushRules( $flush = FALSE )
+	{
+		global $wp_rewrite;
+
+		$list    = [];
+		$missing = FALSE;
+
+		foreach ( get_option( 'rewrite_rules' ) as $rule => $rewrite )
+			$list[$rule]['rewrite'] = $rewrite;
+
+		$list = array_reverse( $list, TRUE );
+
+		foreach ( $wp_rewrite->rewrite_rules() as $rule => $rewrite ) {
+			if ( ! array_key_exists( $rule, $list ) ) {
+				$missing = TRUE;
+				break;
+			}
+		}
+
+		if ( $missing && $flush )
+			flush_rewrite_rules();
+
+		return $missing;
+	}
 }
