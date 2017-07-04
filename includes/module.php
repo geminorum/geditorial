@@ -341,27 +341,27 @@ class Module extends Base
 			HTML::desc( $after );
 	}
 
-	protected function settings_supports_option( $constant_key, $defaults = NULL, $excludes = NULL )
+	protected function settings_supports_option( $constant, $defaults = NULL, $excludes = NULL )
 	{
-		$supports = $this->filters( $constant_key.'_supports', Settings::supportsOptions() );
+		$supports = $this->filters( $constant.'_supports', Settings::supportsOptions() );
 
 		// has custom fields
-		if ( isset( $this->fields[$this->constant( $constant_key )] ) )
+		if ( isset( $this->fields[$this->constant( $constant )] ) )
 			unset( $supports['editorial-meta'] );
 
 		if ( ! is_null( $excludes ) )
 			$supports = array_diff_key( $supports, array_flip( (array) $excludes ) );
 
 		if ( is_null( $defaults ) )
-			$defaults = $this->supports[$constant_key];
+			$defaults = $this->supports[$constant];
 
 		else if ( TRUE === $defaults )
 			$defaults = array_keys( $supports );
 
 		return [
-			'field'       => $constant_key.'_supports',
+			'field'       => $constant.'_supports',
 			'type'        => 'checkbox', // FIXME: add as setting type with `code` after title
-			'title'       => sprintf( _x( '%s Supports', 'Module: Setting Title', GEDITORIAL_TEXTDOMAIN ), translate_nooped_plural( $this->strings['noops'][$constant_key], 1 ) ),
+			'title'       => sprintf( _x( '%s Supports', 'Module: Setting Title', GEDITORIAL_TEXTDOMAIN ), translate_nooped_plural( $this->strings['noops'][$constant], 1 ) ),
 			'description' => _x( 'Support core and extra features for this posttype.', 'Module: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 			'default'     => $defaults,
 			'values'      => $supports,
@@ -928,45 +928,45 @@ class Module extends Base
 		return $fallback;
 	}
 
-	public function get_noop( $constant_key )
+	public function get_noop( $constant )
 	{
-		if ( ! empty( $this->strings['noops'][$constant_key] ) )
-			return $this->strings['noops'][$constant_key];
+		if ( ! empty( $this->strings['noops'][$constant] ) )
+			return $this->strings['noops'][$constant];
 
-		if ( 'post' == $constant_key )
+		if ( 'post' == $constant )
 			return _nx_noop( '%s Post', '%s Posts', 'Module: Noop', GEDITORIAL_TEXTDOMAIN );
 
-		if ( 'connected' == $constant_key )
+		if ( 'connected' == $constant )
 			return _nx_noop( '%s Item Connected', '%s Items Connected', 'Module: Noop', GEDITORIAL_TEXTDOMAIN );
 
-		if ( 'word' == $constant_key )
+		if ( 'word' == $constant )
 			return _nx_noop( '%s Word', '%s Words', 'Module: Noop', GEDITORIAL_TEXTDOMAIN );
 
 		$noop = [
-			'plural'   => $constant_key,
-			'singular' => $constant_key,
+			'plural'   => $constant,
+			'singular' => $constant,
 			// 'context'  => ucwords( $module->name ).' Module: Noop', // no need
 			'domain'   => GEDITORIAL_TEXTDOMAIN,
 		];
 
-		if ( ! empty( $this->strings['labels'][$constant_key]['name'] ) )
-			$noop['plural'] = $this->strings['labels'][$constant_key]['name'];
+		if ( ! empty( $this->strings['labels'][$constant]['name'] ) )
+			$noop['plural'] = $this->strings['labels'][$constant]['name'];
 
-		if ( ! empty( $this->strings['labels'][$constant_key]['singular_name'] ) )
-			$noop['singular'] = $this->strings['labels'][$constant_key]['singular_name'];
+		if ( ! empty( $this->strings['labels'][$constant]['singular_name'] ) )
+			$noop['singular'] = $this->strings['labels'][$constant]['singular_name'];
 
 		return $noop;
 	}
 
 	// NOT USED
-	public function nooped( $constant_key, $count )
+	public function nooped( $constant, $count )
 	{
-		return Helper::nooped( $count, $this->get_noop( $constant_key ) );
+		return Helper::nooped( $count, $this->get_noop( $constant ) );
 	}
 
-	public function nooped_count( $constant_key, $count )
+	public function nooped_count( $constant, $count )
 	{
-		return sprintf( Helper::noopedCount( $count, $this->get_noop( $constant_key ) ), Number::format( $count ) );
+		return sprintf( Helper::noopedCount( $count, $this->get_noop( $constant ) ), Number::format( $count ) );
 	}
 
 	public function constant( $key, $default = FALSE )
@@ -988,14 +988,14 @@ class Module extends Base
 		return str_replace( '_', '-', $this->module->name );
 	}
 
-	protected function insert_default_terms( $constant_key )
+	protected function insert_default_terms( $constant )
 	{
 		if ( ! wp_verify_nonce( $_POST['_wpnonce'], $this->module->group.'-options' ) )
 			return;
 
 		$added = Taxonomy::insertDefaultTerms(
-			$this->constant( $constant_key ),
-			$this->strings['terms'][$constant_key]
+			$this->constant( $constant ),
+			$this->strings['terms'][$constant]
 		);
 
 		WordPress::redirectReferer( ( FALSE === $added ? 'wrong' : [
@@ -1214,39 +1214,39 @@ class Module extends Base
 		setcookie( $this->cookie, '', time() - 3600, COOKIEPATH, COOKIE_DOMAIN, FALSE );
 	}
 
-	public function get_post_type_labels( $constant_key )
+	public function get_post_type_labels( $constant )
 	{
-		if ( ! empty( $this->strings['labels'][$constant_key] ) )
-			return $this->strings['labels'][$constant_key];
+		if ( ! empty( $this->strings['labels'][$constant] ) )
+			return $this->strings['labels'][$constant];
 
 		$labels = [];
 
-		if ( $menu_name = $this->get_string( 'menu_name', $constant_key, 'misc', NULL ) )
+		if ( $menu_name = $this->get_string( 'menu_name', $constant, 'misc', NULL ) )
 			$labels['menu_name'] = $menu_name;
 
-		if ( ! empty( $this->strings['noops'][$constant_key] ) )
+		if ( ! empty( $this->strings['noops'][$constant] ) )
 			return Helper::generatePostTypeLabels(
-				$this->strings['noops'][$constant_key],
-				$this->get_string( 'featured', $constant_key, 'misc', NULL ),
+				$this->strings['noops'][$constant],
+				$this->get_string( 'featured', $constant, 'misc', NULL ),
 				$labels
 			);
 
 		return $labels;
 	}
 
-	public function get_post_type_supports( $constant_key )
+	protected function get_post_type_supports( $constant )
 	{
-		if ( isset( $this->options->settings[$constant_key.'_supports'] ) )
-			return $this->options->settings[$constant_key.'_supports'];
+		if ( isset( $this->options->settings[$constant.'_supports'] ) )
+			return $this->options->settings[$constant.'_supports'];
 
-		if ( isset( $this->supports[$constant_key] ) )
-			return $this->supports[$constant_key];
+		if ( isset( $this->supports[$constant] ) )
+			return $this->supports[$constant];
 
 		return array_keys( Settings::supportsOptions() );
 	}
 
 	// FIXME: use: `Icon::getPosttypeMenu()`
-	public function get_posttype_icon( $constant_key, $default = 'welcome-write-blog' )
+	public function get_posttype_icon( $constant, $default = 'welcome-write-blog' )
 	{
 		$icons  = $this->get_module_icons();
 		$module = $this->module->icon ? $this->module->icon : 'welcome-write-blog';
@@ -1254,8 +1254,8 @@ class Module extends Base
 		if ( empty( $icons['post_types'] ) )
 			return $module;
 
-		if ( isset( $icons['post_types'][$constant_key] ) )
-			return $icons['post_types'][$constant_key];
+		if ( isset( $icons['post_types'][$constant] ) )
+			return $icons['post_types'][$constant];
 
 		return $module;
 	}
@@ -1273,25 +1273,25 @@ class Module extends Base
 		return gEditorial()->roles->constant( 'base_type' );
 	}
 
-	public function register_post_type( $constant_key, $atts = [], $taxonomies = [ 'post_tag' ] )
+	public function register_post_type( $constant, $atts = [], $taxonomies = [ 'post_tag' ] )
 	{
 		if ( is_null( $taxonomies ) )
 			$taxonomies = $this->taxonomies();
 
-		$post_type = $this->constant( $constant_key );
+		$post_type = $this->constant( $constant );
 
 		$args = self::recursiveParseArgs( $atts, [
 			'taxonomies'           => $taxonomies,
-			'labels'               => $this->get_post_type_labels( $constant_key ),
-			'supports'             => $this->get_post_type_supports( $constant_key ),
-			'description'          => isset( $this->strings['labels'][$constant_key]['description'] ) ? $this->strings['labels'][$constant_key]['description'] : '',
-			'register_meta_box_cb' => method_exists( $this, 'add_meta_box_cb_'.$constant_key ) ? [ $this, 'add_meta_box_cb_'.$constant_key ] : NULL,
-			'menu_icon'            => 'dashicons-'.$this->get_posttype_icon( $constant_key ),
-			'has_archive'          => $this->constant( $constant_key.'_archive', FALSE ),
-			'query_var'            => $this->constant( $constant_key.'_query_var', $post_type ),
-			'capability_type'      => $this->get_posttype_cap_type( $constant_key ),
+			'labels'               => $this->get_post_type_labels( $constant ),
+			'supports'             => $this->get_post_type_supports( $constant ),
+			'description'          => isset( $this->strings['labels'][$constant]['description'] ) ? $this->strings['labels'][$constant]['description'] : '',
+			'register_meta_box_cb' => method_exists( $this, 'add_meta_box_cb_'.$constant ) ? [ $this, 'add_meta_box_cb_'.$constant ] : NULL,
+			'menu_icon'            => 'dashicons-'.$this->get_posttype_icon( $constant ),
+			'has_archive'          => $this->constant( $constant.'_archive', FALSE ),
+			'query_var'            => $this->constant( $constant.'_query_var', $post_type ),
+			'capability_type'      => $this->get_posttype_cap_type( $constant ),
 			'rewrite'              => [
-				'slug'       => $this->constant( $constant_key.'_slug', $post_type ),
+				'slug'       => $this->constant( $constant.'_slug', $post_type ),
 				'with_front' => FALSE,
 				'feeds'      => TRUE,
 				'pages'      => TRUE,
@@ -1307,30 +1307,30 @@ class Module extends Base
 
 			// @SEE: https://core.trac.wordpress.org/ticket/39023
 			'show_in_rest' => TRUE,
-			'rest_base'    => $this->constant( $constant_key.'_rest', $this->constant( $constant_key.'_archive', $post_type ) ),
+			'rest_base'    => $this->constant( $constant.'_rest', $this->constant( $constant.'_archive', $post_type ) ),
 			// 'rest_controller_class' => 'WP_REST_Posts_Controller',
 
 			// SEE: https://github.com/torounit/custom-post-type-permalinks
-			// 'cptp_permalink_structure' => $this->constant( $constant_key.'_permalink', '/%post_id%' ),
+			// 'cptp_permalink_structure' => $this->constant( $constant.'_permalink', '/%post_id%' ),
 			// Only `%post_id%` and `%postname%` | SEE: https://github.com/torounit/simple-post-type-permalinks
-			// 'sptp_permalink_structure' => $this->constant( $constant_key.'_permalink', '/%post_id%' ),
+			// 'sptp_permalink_structure' => $this->constant( $constant.'_permalink', '/%post_id%' ),
 		] );
 
 		return register_post_type( $post_type, $args );
 	}
 
-	public function get_taxonomy_labels( $constant_key )
+	public function get_taxonomy_labels( $constant )
 	{
-		if ( ! empty( $this->strings['labels'][$constant_key] ) )
-			return $this->strings['labels'][$constant_key];
+		if ( ! empty( $this->strings['labels'][$constant] ) )
+			return $this->strings['labels'][$constant];
 
 		$labels = [];
 
-		if ( $menu_name = $this->get_string( 'menu_name', $constant_key, 'misc', NULL ) )
+		if ( $menu_name = $this->get_string( 'menu_name', $constant, 'misc', NULL ) )
 			$labels['menu_name'] = $menu_name;
 
-		if ( ! empty( $this->strings['noops'][$constant_key] ) )
-			return Helper::generateTaxonomyLabels( $this->strings['noops'][$constant_key], $labels );
+		if ( ! empty( $this->strings['noops'][$constant] ) )
+			return Helper::generateTaxonomyLabels( $this->strings['noops'][$constant], $labels );
 
 		return $labels;
 	}
@@ -1378,9 +1378,9 @@ class Module extends Base
 		];
 	}
 
-	public function register_taxonomy( $constant_key, $atts = [], $post_types = NULL, $caps = NULL )
+	public function register_taxonomy( $constant, $atts = [], $post_types = NULL, $caps = NULL )
 	{
-		$taxonomy = $this->constant( $constant_key );
+		$taxonomy = $this->constant( $constant );
 
 		if ( is_null( $post_types ) )
 			$post_types = $this->post_types();
@@ -1389,9 +1389,9 @@ class Module extends Base
 			$post_types = [ $this->constant( $post_types ) ];
 
 		$args = self::recursiveParseArgs( $atts, [
-			'labels'                => $this->get_taxonomy_labels( $constant_key ),
+			'labels'                => $this->get_taxonomy_labels( $constant ),
 			'update_count_callback' => [ __NAMESPACE__.'\\WordPress\\Database', 'updateCountCallback' ],
-			'meta_box_cb'           => method_exists( $this, 'meta_box_cb_'.$constant_key ) ? [ $this, 'meta_box_cb_'.$constant_key ] : FALSE,
+			'meta_box_cb'           => method_exists( $this, 'meta_box_cb_'.$constant ) ? [ $this, 'meta_box_cb_'.$constant ] : FALSE,
 			'hierarchical'          => FALSE,
 			'public'                => TRUE,
 			'show_ui'               => TRUE,
@@ -1400,29 +1400,29 @@ class Module extends Base
 			'show_in_nav_menus'     => FALSE,
 			'show_tagcloud'         => FALSE,
 			'capabilities'          => $this->get_taxonomy_caps( $caps, $post_types ),
-			'query_var'             => $this->constant( $constant_key.'_query', $taxonomy ),
+			'query_var'             => $this->constant( $constant.'_query', $taxonomy ),
 			'rewrite'               => [
-				'slug'       => $this->constant( $constant_key.'_slug', $taxonomy ), // can use : 'cpt/tax' if cpt registered after tax: https://developer.wordpress.org/reference/functions/register_taxonomy/#comment-2274
+				'slug'       => $this->constant( $constant.'_slug', $taxonomy ), // can use : 'cpt/tax' if cpt registered after tax: https://developer.wordpress.org/reference/functions/register_taxonomy/#comment-2274
 				'with_front' => FALSE,
 			],
 
 			// @SEE: https://core.trac.wordpress.org/ticket/39023
 			'show_in_rest' => TRUE,
-			'rest_base'    => $this->constant( $constant_key.'_rest', $taxonomy ),
+			'rest_base'    => $this->constant( $constant.'_rest', $taxonomy ),
 			// 'rest_controller_class' => 'WP_REST_Terms_Controller',
 		] );
 
 		return register_taxonomy( $taxonomy, $post_types, $args );
 	}
 
-	protected function get_post_updated_messages( $constant_key )
+	protected function get_post_updated_messages( $constant )
 	{
-		return [ $this->constant( $constant_key ) => Helper::generatePostTypeMessages( $this->get_noop( $constant_key ) ) ];
+		return [ $this->constant( $constant ) => Helper::generatePostTypeMessages( $this->get_noop( $constant ) ) ];
 	}
 
-	protected function get_bulk_post_updated_messages( $constant_key, $bulk_counts )
+	protected function get_bulk_post_updated_messages( $constant, $bulk_counts )
 	{
-		return [ $this->constant( $constant_key ) => Helper::generateBulkPostTypeMessages( $this->get_noop( $constant_key ), $bulk_counts ) ];
+		return [ $this->constant( $constant ) => Helper::generateBulkPostTypeMessages( $this->get_noop( $constant ), $bulk_counts ) ];
 	}
 
 	public function get_image_sizes( $post_type )
@@ -1446,9 +1446,9 @@ class Module extends Base
 		return $this->image_sizes[$post_type];
 	}
 
-	public function get_image_size_key( $constant_key, $size = 'thumbnail' )
+	public function get_image_size_key( $constant, $size = 'thumbnail' )
 	{
-		$post_type = $this->constant( $constant_key );
+		$post_type = $this->constant( $constant );
 
 		if ( isset( $this->image_sizes[$post_type][$post_type.'-'.$size] ) )
 			return $post_type.'-'.$size;
@@ -1460,9 +1460,9 @@ class Module extends Base
 	}
 
 	// use this on 'after_setup_theme'
-	public function register_post_type_thumbnail( $constant_key )
+	public function register_post_type_thumbnail( $constant )
 	{
-		$post_type = $this->constant( $constant_key );
+		$post_type = $this->constant( $constant );
 
 		Helper::themeThumbnails( [ $post_type ] );
 
@@ -1529,15 +1529,15 @@ class Module extends Base
 			'assets/js/tinymce/'.$this->module->name.'.'.$plugin.'.js' );
 	}
 
-	protected function register_shortcode( $constant_key, $callback = NULL )
+	protected function register_shortcode( $constant, $callback = NULL )
 	{
 		if ( ! $this->get_setting( 'shortcode_support', TRUE ) )
 			return;
 
-		if ( is_null( $callback ) && method_exists( $this, $constant_key ) )
-			$callback = [ $this, $constant_key ];
+		if ( is_null( $callback ) && method_exists( $this, $constant ) )
+			$callback = [ $this, $constant ];
 
-		$shortcode = $this->constant( $constant_key );
+		$shortcode = $this->constant( $constant );
 
 		remove_shortcode( $shortcode );
 		add_shortcode( $shortcode, $callback );
@@ -1548,18 +1548,18 @@ class Module extends Base
 	// CAUTION: tax must be cat (hierarchical)
 	// hierarchical taxonomies save by IDs, whereas non save by slugs
 	// TODO: supporting tag (non-hierarchical)
-	public function add_meta_box_checklist_terms( $constant_key, $post_type, $type = FALSE )
+	public function add_meta_box_checklist_terms( $constant, $post_type, $type = FALSE )
 	{
-		$taxonomy = $this->constant( $constant_key );
+		$taxonomy = $this->constant( $constant );
 		$object   = get_taxonomy( $taxonomy );
 		$manage   = current_user_can( $object->cap->manage_terms );
 		$edit_url = $manage ? WordPress::getEditTaxLink( $taxonomy ) : FALSE;
 
 		if ( $type )
-			$this->remove_meta_box( $constant_key, $post_type, $type );
+			$this->remove_meta_box( $constant, $post_type, $type );
 
 		add_meta_box( $this->classs( $taxonomy ),
-			$this->get_meta_box_title( $constant_key, $edit_url, TRUE ),
+			$this->get_meta_box_title( $constant, $edit_url, TRUE ),
 			[ __NAMESPACE__.'\\MetaBox', 'checklistTerms' ],
 			NULL,
 			'side',
@@ -1571,9 +1571,9 @@ class Module extends Base
 		);
 	}
 
-	public function add_meta_box_author( $constant_key, $callback = 'post_author_meta_box' )
+	public function add_meta_box_author( $constant, $callback = 'post_author_meta_box' )
 	{
-		$post_type = $this->constant( $constant_key );
+		$post_type = $this->constant( $constant );
 		$object    = get_post_type_object( $post_type );
 
 		if ( current_user_can( $object->cap->edit_others_posts ) ) {
@@ -1581,7 +1581,7 @@ class Module extends Base
 			remove_meta_box( 'authordiv', $post_type, 'normal' );
 
 			add_meta_box( 'authordiv',
-				$this->get_string( 'author_box_title', $constant_key, 'misc', __( 'Author' ) ),
+				$this->get_string( 'author_box_title', $constant, 'misc', __( 'Author' ) ),
 				$callback,
 				NULL,
 				'normal',
@@ -1590,14 +1590,14 @@ class Module extends Base
 		}
 	}
 
-	public function add_meta_box_excerpt( $constant_key, $callback = 'post_excerpt_meta_box' )
+	public function add_meta_box_excerpt( $constant, $callback = 'post_excerpt_meta_box' )
 	{
-		$post_type = $this->constant( $constant_key );
+		$post_type = $this->constant( $constant );
 
 		remove_meta_box( 'postexcerpt', $post_type, 'normal' );
 
 		add_meta_box( 'postexcerpt',
-			$this->get_string( 'excerpt_box_title', $constant_key, 'misc', __( 'Excerpt' ) ),
+			$this->get_string( 'excerpt_box_title', $constant, 'misc', __( 'Excerpt' ) ),
 			$callback,
 			$post_type,
 			'normal',
@@ -1605,31 +1605,31 @@ class Module extends Base
 		);
 	}
 
-	public function remove_meta_box( $constant_key, $post_type, $type = 'tag' )
+	public function remove_meta_box( $constant, $post_type, $type = 'tag' )
 	{
 		if ( 'tag' == $type )
-			remove_meta_box( 'tagsdiv-'.$this->constant( $constant_key ), $post_type, 'side' );
+			remove_meta_box( 'tagsdiv-'.$this->constant( $constant ), $post_type, 'side' );
 
 		else if ( 'cat' == $type )
-			remove_meta_box( $this->constant( $constant_key ).'div', $post_type, 'side' );
+			remove_meta_box( $this->constant( $constant ).'div', $post_type, 'side' );
 
 		else if ( 'parent' == $type )
 			remove_meta_box( 'pageparentdiv', $post_type, 'side' );
 
 		else if ( 'image' == $type )
-			remove_meta_box( 'postimagediv', $this->constant( $constant_key ), 'side' );
+			remove_meta_box( 'postimagediv', $this->constant( $constant ), 'side' );
 
 		else if ( 'author' == $type )
-			remove_meta_box( 'authordiv', $this->constant( $constant_key ), 'normal' );
+			remove_meta_box( 'authordiv', $this->constant( $constant ), 'normal' );
 
 		else if ( 'excerpt' == $type )
 			remove_meta_box( 'postexcerpt', $post_type, 'normal' );
 	}
 
-	public function get_meta_box_title( $constant_key = 'post', $url = NULL, $edit_cap = 'manage_options', $title = NULL )
+	public function get_meta_box_title( $constant = 'post', $url = NULL, $edit_cap = 'manage_options', $title = NULL )
 	{
 		if ( is_null( $title ) )
-			$title = $this->get_string( 'meta_box_title', $constant_key, 'misc', _x( 'Settings', 'Module: MetaBox default title', GEDITORIAL_TEXTDOMAIN ) );
+			$title = $this->get_string( 'meta_box_title', $constant, 'misc', _x( 'Settings', 'Module: MetaBox default title', GEDITORIAL_TEXTDOMAIN ) );
 
 		if ( FALSE === $url )
 			return $title;
@@ -1639,16 +1639,16 @@ class Module extends Base
 			if ( is_null( $url ) )
 				$url = $this->get_url_settings();
 
-			$action = $this->get_string( 'meta_box_action', $constant_key, 'misc', _x( 'Configure', 'Module: MetaBox default action', GEDITORIAL_TEXTDOMAIN ) );
+			$action = $this->get_string( 'meta_box_action', $constant, 'misc', _x( 'Configure', 'Module: MetaBox default action', GEDITORIAL_TEXTDOMAIN ) );
 			$title .= ' <span class="postbox-title-action geditorial-postbox-title-action"><a href="'.esc_url( $url ).'" target="_blank">'.$action.'</a></span>';
 		}
 
 		return $title;
 	}
 
-	public function get_column_title( $column, $constant_key, $fallback = NULL )
+	public function get_column_title( $column, $constant, $fallback = NULL )
 	{
-		return $this->get_string( $column.'_column_title', $constant_key, 'misc', ( is_null( $fallback ) ? $column : $fallback ) );
+		return $this->get_string( $column.'_column_title', $constant, 'misc', ( is_null( $fallback ) ? $column : $fallback ) );
 	}
 
 	public function get_url_settings( $extra = [] )
@@ -1656,19 +1656,19 @@ class Module extends Base
 		return WordPress::getAdminPageLink( $this->module->settings, $extra );
 	}
 
-	public function get_url_tax_edit( $constant_key, $term_id = FALSE, $extra = [] )
+	public function get_url_tax_edit( $constant, $term_id = FALSE, $extra = [] )
 	{
-		return WordPress::getEditTaxLink( $this->constant( $constant_key ), $term_id, $extra );
+		return WordPress::getEditTaxLink( $this->constant( $constant ), $term_id, $extra );
 	}
 
-	public function get_url_post_edit( $constant_key, $extra = [], $author_id = 0 )
+	public function get_url_post_edit( $constant, $extra = [], $author_id = 0 )
 	{
-		return WordPress::getPostTypeEditLink( $this->constant( $constant_key ), $author_id, $extra );
+		return WordPress::getPostTypeEditLink( $this->constant( $constant ), $author_id, $extra );
 	}
 
-	public function get_url_post_new( $constant_key, $extra = [] )
+	public function get_url_post_new( $constant, $extra = [] )
 	{
-		return WordPress::getPostNewLink( $this->constant( $constant_key ), $extra );
+		return WordPress::getPostNewLink( $this->constant( $constant ), $extra );
 	}
 
 	protected function require_code( $filenames = 'templates' )
@@ -1679,12 +1679,12 @@ class Module extends Base
 			require_once( GEDITORIAL_DIR.'modules/'.$module.'/'.$filename.'.php' );
 	}
 
-	public function is_current_posttype( $constant_key )
+	public function is_current_posttype( $constant )
 	{
-		return WordPress::currentPostType() == $this->constant( $constant_key );
+		return WordPress::currentPostType() == $this->constant( $constant );
 	}
 
-	public function is_save_post( $post, $constant_key = FALSE )
+	public function is_save_post( $post, $constant = FALSE )
 	{
 		if ( wp_is_post_autosave( $post ) )
 			return FALSE;
@@ -1695,20 +1695,20 @@ class Module extends Base
 		if ( empty( $_POST ) )
 			return FALSE;
 
-		if ( is_array( $constant_key )
-			&& ! in_array( $post->post_type, $constant_key ) )
+		if ( is_array( $constant )
+			&& ! in_array( $post->post_type, $constant ) )
 				return FALSE;
 
-		if ( $constant_key
-			&& ! is_array( $constant_key )
-			&& $post->post_type != $this->constant( $constant_key ) )
+		if ( $constant
+			&& ! is_array( $constant )
+			&& $post->post_type != $this->constant( $constant ) )
 				return FALSE;
 
 		return TRUE;
 	}
 
 	// for ajax calls on quick edit
-	public function is_inline_save( $request, $constant_key = FALSE )
+	public function is_inline_save( $request, $constant = FALSE )
 	{
 		if ( empty( $request['action'] )
 			|| 'inline-save' != $request['action'] )
@@ -1718,13 +1718,13 @@ class Module extends Base
 			|| empty( $request['post_type'] ) )
 				return FALSE;
 
-		if ( is_array( $constant_key )
-			&& ! in_array( $request['post_type'], $constant_key ) )
+		if ( is_array( $constant )
+			&& ! in_array( $request['post_type'], $constant ) )
 				return FALSE;
 
-		if ( $constant_key
-			&& ! is_array( $constant_key )
-			&& $request['post_type'] != $this->constant( $constant_key ) )
+		if ( $constant
+			&& ! is_array( $constant )
+			&& $request['post_type'] != $this->constant( $constant ) )
 				return FALSE;
 
 		return TRUE;
@@ -1854,9 +1854,9 @@ class Module extends Base
 		if ( TRUE === $posttype_constant_key ||
 			$this->is_current_posttype( $posttype_constant_key ) ) {
 
-			foreach ( (array) $taxes as $constant_key ) {
+			foreach ( (array) $taxes as $constant ) {
 
-				$tax = $this->constant( $constant_key );
+				$tax = $this->constant( $constant );
 				if ( $obj = get_taxonomy( $tax ) ) {
 
 					$selected = isset( $wp_query->query[$tax] ) ? $wp_query->query[$tax] : '';
@@ -1872,8 +1872,8 @@ class Module extends Base
 					}
 
 					wp_dropdown_categories( [
-						'show_option_all'  => $this->get_string( 'show_option_all', $constant_key, 'misc', $obj->labels->all_items ),
-						'show_option_none' => $this->get_string( 'show_option_none', $constant_key, 'misc', '('.$obj->labels->no_terms.')' ),
+						'show_option_all'  => $this->get_string( 'show_option_all', $constant, 'misc', $obj->labels->all_items ),
+						'show_option_none' => $this->get_string( 'show_option_none', $constant, 'misc', '('.$obj->labels->no_terms.')' ),
 						'taxonomy'         => $tax,
 						'name'             => $obj->name,
 						'orderby'          => 'name',
@@ -1913,9 +1913,9 @@ class Module extends Base
 		if ( TRUE === $posttype_constant_key ||
 			$this->is_current_posttype( $posttype_constant_key ) ) {
 
-			foreach ( (array) $taxes as $constant_key ) {
+			foreach ( (array) $taxes as $constant ) {
 
-				$tax = $this->constant( $constant_key );
+				$tax = $this->constant( $constant );
 
 				if ( isset( $query->query_vars[$tax] ) ) {
 
@@ -1949,8 +1949,8 @@ class Module extends Base
 
 			global $wpdb;
 
-			foreach ( (array) $taxes as $constant_key ) {
-				$tax = $this->constant( $constant_key );
+			foreach ( (array) $taxes as $constant ) {
+				$tax = $this->constant( $constant );
 
 				if ( isset( $wp_query->query['orderby'] )
 					&& 'taxonomy-'.$tax == $wp_query->query['orderby'] ) {
@@ -2071,7 +2071,7 @@ SQL;
 	}
 
 	// @REF: https://github.com/scribu/wp-posts-to-posts/wiki/Connection-information
-	public function p2p_register( $constant_key, $post_types = NULL )
+	public function p2p_register( $constant, $post_types = NULL )
 	{
 		if ( is_null( $post_types ) )
 			$post_types = $this->post_types();
@@ -2079,8 +2079,8 @@ SQL;
 		if ( ! count( $post_types ) )
 			return FALSE;
 
-		$to  = $this->constant( $constant_key );
-		$p2p = $this->constant( $constant_key.'_p2p' );
+		$to  = $this->constant( $constant );
+		$p2p = $this->constant( $constant.'_p2p' );
 
 		$args = array_merge( [
 			'name'         => $p2p,
@@ -2091,7 +2091,7 @@ SQL;
 				'show'    => 'from',
 				'context' => 'advanced',
 			],
-		], $this->strings['p2p'][$constant_key] );
+		], $this->strings['p2p'][$constant] );
 
 		$hook = 'geditorial_'.$this->module->name.'_'.$to.'_p2p_args';
 
@@ -2100,7 +2100,7 @@ SQL;
 				$this->p2p = $p2p;
 	}
 
-	public function o2o_register( $constant_key, $post_types = NULL )
+	public function o2o_register( $constant, $post_types = NULL )
 	{
 		if ( is_null( $post_types ) )
 			$post_types = $this->post_types();
@@ -2108,8 +2108,8 @@ SQL;
 		if ( ! count( $post_types ) )
 			return FALSE;
 
-		$to  = $this->constant( $constant_key );
-		$o2o = $this->constant( $constant_key.'_o2o' );
+		$to  = $this->constant( $constant );
+		$o2o = $this->constant( $constant.'_o2o' );
 
 		$args = array_merge( [
 			'name'         => $o2o,
@@ -2120,7 +2120,7 @@ SQL;
 				'show'    => 'from',
 				'context' => 'advanced',
 			],
-		], $this->strings['o2o'][$constant_key] );
+		], $this->strings['o2o'][$constant] );
 
 		$hook = 'geditorial_'.$this->module->name.'_'.$to.'_o2o_args';
 
@@ -2143,9 +2143,9 @@ SQL;
 	}
 
 	// @REF: https://github.com/scribu/wp-posts-to-posts/wiki/Creating-connections-programmatically
-	public function p2p_connect( $constant_key, $from, $to, $meta = [] )
+	public function p2p_connect( $constant, $from, $to, $meta = [] )
 	{
-		$type = p2p_type( $this->constant( $constant_key.'_p2p' ) );
+		$type = p2p_type( $this->constant( $constant.'_p2p' ) );
 		// $id   = $type->connect( $from, $to, [ 'date' => current_time( 'mysql' ) ] );
 		$id   = $type->connect( $from, $to, $meta );
 
