@@ -341,13 +341,16 @@ class Module extends Base
 			HTML::desc( $after );
 	}
 
-	protected function settings_supports_option( $constant_key, $defaults = NULL )
+	protected function settings_supports_option( $constant_key, $defaults = NULL, $excludes = NULL )
 	{
 		$supports = $this->filters( $constant_key.'_supports', Settings::supportsOptions() );
 
 		// has custom fields
 		if ( isset( $this->fields[$this->constant( $constant_key )] ) )
 			unset( $supports['editorial-meta'] );
+
+		if ( ! is_null( $excludes ) )
+			$supports = array_diff_key( $supports, array_flip( (array) $excludes ) );
 
 		if ( is_null( $defaults ) )
 			$defaults = $this->supports[$constant_key];
@@ -1052,6 +1055,9 @@ class Module extends Base
 				] );
 
 				foreach ( $fields as $field ) {
+
+					if ( FALSE === $field )
+						continue;
 
 					if ( is_array( $field ) )
 						$args = array_merge( $field, [ 'section' => $section ] );
