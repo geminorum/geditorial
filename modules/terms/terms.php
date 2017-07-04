@@ -101,8 +101,12 @@ class Terms extends gEditorial\Module
 
 				if ( isset( $_POST['orphaned_terms'] ) ) {
 
+					$post = isset( $_POST[$this->module->group]['tools'] ) ? $_POST[$this->module->group]['tools'] : [];
+
 					if ( ! empty( $post['dead_tax'] )
 						&& ! empty( $post['live_tax'] ) ) {
+
+						global $wpdb;
 
 						$result = $wpdb->query( $wpdb->prepare( "
 							UPDATE {$wpdb->term_taxonomy} SET taxonomy = %s WHERE taxonomy = '%s'
@@ -156,9 +160,13 @@ class Terms extends gEditorial\Module
 					Settings::submitButton( 'orphaned_terms',
 						_x( 'Convert', 'Modules: Terms: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
 
-					HTML::desc( _x( 'Converts orphaned terms into currently registered taxonomies', 'Modules: Terms', GEDITORIAL_TEXTDOMAIN ) );
+					HTML::desc( _x( 'Converts orphaned terms into currently registered taxonomies.', 'Modules: Terms', GEDITORIAL_TEXTDOMAIN ) );
 
 				echo '</td></tr>';
+
+			} else {
+
+				HTML::desc( _x( 'Currently no tool available.', 'Modules: Terms', GEDITORIAL_TEXTDOMAIN ) );
 			}
 
 			echo '</table>';
