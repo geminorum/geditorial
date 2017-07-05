@@ -415,7 +415,7 @@ class Revisions extends gEditorial\Module
 			'ID'    => Helper::tableColumnPostID(),
 			'date'  => Helper::tableColumnPostDate(),
 			'type'  => Helper::tableColumnPostType(),
-			'title' => Helper::tableColumnPostTitle(),
+			'title' => Helper::tableColumnPostTitle( [ 'edit', 'view', 'revisions' ] ),
 			'revisons' => [
 				'title'    => _x( 'Revisions', 'Modules: Revisions: Table Column', GEDITORIAL_TEXTDOMAIN ),
 				'callback' => function( $value, $row, $column, $index ){

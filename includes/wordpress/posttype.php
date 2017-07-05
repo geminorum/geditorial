@@ -82,11 +82,12 @@ class PostType extends Core\Base
 		global $wpdb;
 
 		$post_id = $wpdb->get_var(
-			$wpdb->prepare(
-				"SELECT ID FROM $wpdb->posts WHERE post_name = %s AND post_type = %s",
-				$slug,
-				$post_type
-			)
+			$wpdb->prepare( "
+				SELECT ID
+				FROM {$wpdb->posts}
+				WHERE post_name = %s
+				AND post_type = %s
+			", $slug, $post_type )
 		);
 
 		if ( is_array( $post_id ) )
@@ -96,5 +97,24 @@ class PostType extends Core\Base
 			return $post_id;
 
 		return $strings[$post_type][$slug] = FALSE;
+	}
+
+	public static function getLastRevisionID( $post )
+	{
+		if ( ! $post = get_post( $post ) )
+			return FALSE;
+
+		global $wpdb;
+
+		return $wpdb->get_var(
+			$wpdb->prepare( "
+				SELECT ID
+				FROM {$wpdb->posts}
+				WHERE post_parent = %s
+				AND post_type = 'revision'
+				AND post_status = 'inherit'
+				ORDER BY post_date DESC
+			", $post->ID )
+		);
 	}
 }

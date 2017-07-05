@@ -257,14 +257,30 @@ class Helper extends Core\Base
 		], esc_html( $title ) );
 	}
 
-	public static function getPostRowActions( $post_id, $actions = [ 'edit', 'view' ] )
+	public static function getPostRowActions( $post_id, $actions = NULL )
 	{
+		if ( is_null( $actions ) )
+			$actions = [ 'edit', 'view' ];
+
 		$list = [];
 
 		foreach ( $actions as $action ) {
 
 			switch ( $action ) {
 
+				case 'revisions':
+
+					if ( ! current_user_can( 'edit_post', $post_id ) )
+						continue;
+
+					if ( $revision_id = PostType::getLastRevisionID( $post_id ) )
+						$list['revisions'] = HTML::tag( 'a', [
+							'href'   => get_edit_post_link( $revision_id ),
+							'class'  => '-link -row-link -row-link-revisions',
+							'target' => '_blank',
+						], _x( 'Revisions', 'Helper: Row Action', GEDITORIAL_TEXTDOMAIN ) );
+
+				break;
 				case 'edit':
 
 					if ( ! current_user_can( 'edit_post', $post_id ) )
@@ -610,7 +626,7 @@ class Helper extends Core\Base
 		];
 	}
 
-	public static function tableColumnPostTitle()
+	public static function tableColumnPostTitle( $actions = NULL )
 	{
 		return [
 			'title'    => _x( 'Title', 'Helper: Table Column: Post Title', GEDITORIAL_TEXTDOMAIN ),
@@ -626,8 +642,8 @@ class Helper extends Core\Base
 				return Helper::getPostTitle( $row )
 					.( $status ? ' <small class="-status">('.$status.')</small>' : '' );
 			},
-			'actions' => function( $value, $row, $column, $index ){
-				return Helper::getPostRowActions( $row->ID );
+			'actions' => function( $value, $row, $column, $index ) use( $actions ) {
+				return Helper::getPostRowActions( $row->ID, $actions );
 			},
 		];
 	}
