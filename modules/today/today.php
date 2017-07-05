@@ -37,7 +37,7 @@ class Today extends gEditorial\Module
 					'title'       => _x( 'Insert The Day', 'Modules: Today: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Displays the day info for supported posttypes.', 'Modules: Today: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 				],
-				'insert_priority',
+				$this->settings_insert_priority_option( -20, 'theday' ),
 			],
 			'posttypes_option' => 'posttypes_option',
 			'_supports' => [
@@ -115,7 +115,7 @@ class Today extends gEditorial\Module
 
 				add_action( 'gnetwork_themes_content_before',
 					[ $this, 'content_before' ],
-					$this->get_setting( 'insert_priority', -50 )
+					$this->get_setting( 'insert_priority_theday', -20 )
 				);
 
 				$this->enqueue_styles(); // since no shortcode available yet!

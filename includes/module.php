@@ -368,6 +368,16 @@ class Module extends Base
 		];
 	}
 
+	protected function settings_insert_priority_option( $default = 10, $prefix = FALSE )
+	{
+		return [
+			'field'   => 'insert_priority'.( $prefix ? '_'.$prefix : '' ),
+			'type'    => 'priority',
+			'title'   => _x( 'Insert Priority', 'Module: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+			'default' => $default,
+		];
+	}
+
 	// get stored post meta by the field
 	public function get_postmeta( $post_id, $field = FALSE, $default = '', $key = NULL )
 	{
