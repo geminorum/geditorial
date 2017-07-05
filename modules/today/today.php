@@ -31,6 +31,14 @@ class Today extends gEditorial\Module
 				'multiple_instances',
 				'calendar_type',
 			],
+			'_frontend' => [
+				[
+					'field'       => 'insert_theday',
+					'title'       => _x( 'Insert The Day', 'Modules: Today: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Displays the day info for supported posttypes.', 'Modules: Today: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+				],
+				'insert_priority',
+			],
 			'posttypes_option' => 'posttypes_option',
 			'_supports' => [
 				$this->settings_supports_option( 'day_cpt', [
@@ -100,6 +108,19 @@ class Today extends gEditorial\Module
 		$this->register_post_type( 'day_cpt' );
 
 		add_filter( 'the_title', [ $this, 'the_day_title' ], 8, 2 );
+
+		if ( ! is_admin() && count( $this->post_types() ) ) {
+
+			if ( $this->get_setting( 'insert_theday' ) ) {
+
+				add_action( 'gnetwork_themes_content_before',
+					[ $this, 'content_before' ],
+					$this->get_setting( 'insert_priority', -50 )
+				);
+
+				$this->enqueue_styles(); // since no shortcode available yet!
+			}
+		}
 	}
 
 	public function init_ajax()
@@ -374,6 +395,16 @@ class Today extends gEditorial\Module
 				$this->get_the_day_constants() );
 
 		return $title;
+	}
+
+	public function content_before( $content, $posttypes = NULL )
+	{
+		if ( ! $this->is_content_insert( $this->post_types() ) )
+			return;
+
+		ModuleHelper::displayTheDayFromPost( get_post(),
+			$this->get_setting( 'calendar_type', 'gregorian' ),
+			$this->get_the_day_constants(), FALSE );
 	}
 
 	// @SEE: `bp_theme_compat_reset_post()`
