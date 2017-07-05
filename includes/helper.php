@@ -628,24 +628,44 @@ class Helper extends Core\Base
 		];
 	}
 
-	public static function tableColumnPostTitle( $actions = NULL )
+	public static function tableColumnPostTitle( $actions = NULL, $excerpt = FALSE )
 	{
 		return [
 			'title'    => _x( 'Title', 'Helper: Table Column: Post Title', GEDITORIAL_TEXTDOMAIN ),
 			'args'     => [ 'statuses' => PostType::getStatuses( 2 ) ],
-			'callback' => function( $value, $row, $column, $index ){
+			'callback' => function( $value, $row, $column, $index ) use( $excerpt ) {
 
-				$status = 'publish' != $row->post_status
-					? ( isset( $column['args']['statuses'][$row->post_status] )
-						? $column['args']['statuses'][$row->post_status]
-						: $row->post_status )
-					: '';
+				$title = Helper::getPostTitle( $row );
 
-				return Helper::getPostTitle( $row )
-					.( $status ? ' <small class="-status">('.$status.')</small>' : '' );
+				if ( 'publish' != $row->post_status ) {
+
+					if ( isset( $column['args']['statuses'][$row->post_status] ) )
+						$status = $column['args']['statuses'][$row->post_status];
+					else
+						$status = $row->post_status;
+
+					$title .= ' <small class="-status">('.$status.')</small>';
+				}
+
+				if ( $excerpt && $row->post_excerpt )
+					$title .= wpautop( Helper::prepDescription( $row->post_excerpt ), FALSE );
+
+				return $title;
 			},
 			'actions' => function( $value, $row, $column, $index ) use( $actions ) {
 				return Helper::getPostRowActions( $row->ID, $actions );
+			},
+		];
+	}
+
+	public static function tableColumnPostExcerpt()
+	{
+		return [
+			'title'    => _x( 'Excerpt', 'Helper: Table Column: Post Excerpt', GEDITORIAL_TEXTDOMAIN ),
+			'callback' => function( $value, $row, $column, $index ) {
+				return $row->post_excerpt
+					? wpautop( Helper::prepDescription( $row->post_excerpt ), FALSE )
+					: '&mdash;';
 			},
 		];
 	}
