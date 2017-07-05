@@ -52,10 +52,58 @@ class Today extends gEditorial\Helper
 		return $the_day;
 	}
 
-	// TODO: link each part to front summary page
-	public static function displayTheDayFromPost( $post, $default_type = 'gregorian', $constants = NULL )
+	public static function titleTheDayFromPost( $post, $default_type = 'gregorian', $constants = NULL, $empty = '&mdash;' )
 	{
-		static $calendars, $months;
+		global $gEditorialTodayCalendars, $gEditorialTodayMonths;
+
+		$the_day = self::atts( [
+			'cal'   => $default_type,
+			'day'   => '',
+			'month' => '',
+			'year'  => '',
+		], self::getTheDayFromPost( $post, $default_type, $constants ) );
+
+		if ( ! $the_day['day'] && ! $the_day['month'] && ! $the_day['year'] )
+			return $empty;
+
+		if ( empty( $gEditorialTodayCalendars ) )
+			$gEditorialTodayCalendars = Helper::getDefualtCalendars();
+
+		if ( ! isset( $gEditorialTodayMonths[$the_day['cal']] ) )
+			$gEditorialTodayMonths[$the_day['cal']] = Helper::getMonths( $the_day['cal'] );
+
+		$parts = [];
+
+		if ( $the_day['day'] )
+			$parts['day'] = Number::format( $the_day['day'] );
+
+		if ( $the_day['month'] ) {
+
+			$month = Number::intval( $the_day['month'], FALSE );
+			$key   = Number::zeroise( $month, 2 );
+
+			if ( isset( $gEditorialTodayMonths[$the_day['cal']][$key] ) )
+				$the_day['month'] = $gEditorialTodayMonths[$the_day['cal']][$key];
+
+			$parts['month'] = $the_day['month'];
+		}
+
+		if ( $the_day['year'] )
+			$parts['year'] = Number::format( $the_day['year'] );
+
+		if ( ! count( $parts ) )
+			return $empty;
+
+		if ( $the_day['cal'] )
+			$parts['cal'] = empty( $gEditorialTodayCalendars[$the_day['cal']] ) ? $the_day['cal'] : $gEditorialTodayCalendars[$the_day['cal']];
+
+		return Helper::getJoined( $parts, '[', ']' );
+	}
+
+	// TODO: link each part to front summary page
+	public static function displayTheDayFromPost( $post, $default_type = 'gregorian', $constants = NULL, $empty = '&mdash;' )
+	{
+		global $gEditorialTodayCalendars, $gEditorialTodayMonths;
 
 		$the_day = self::atts( [
 			'cal'   => $default_type,
@@ -67,16 +115,16 @@ class Today extends gEditorial\Helper
 		if ( ! $the_day['day'] && ! $the_day['month'] && ! $the_day['year'] ) {
 
 			echo '<div class="-date-icon-empty">';
-				echo '&mdash;';
+				echo $empty;
 			echo '</div>';
 
 		} else {
 
-			if ( empty( $calendars ) )
-				$calendars = Helper::getDefualtCalendars();
+			if ( empty( $gEditorialTodayCalendars ) )
+				$gEditorialTodayCalendars = Helper::getDefualtCalendars();
 
-			if ( ! isset( $months[$the_day['cal']] ) )
-				$months[$the_day['cal']] = Helper::getMonths( $the_day['cal'] );
+			if ( ! isset( $gEditorialTodayMonths[$the_day['cal']] ) )
+				$gEditorialTodayMonths[$the_day['cal']] = Helper::getMonths( $the_day['cal'] );
 
 			echo '<div class="-date-icon">';
 
@@ -87,10 +135,10 @@ class Today extends gEditorial\Helper
 				if ( $the_day['month'] ) {
 
 					$month = Number::intval( $the_day['month'], FALSE );
-					$key = Number::zeroise( $month, 2 );
+					$key   = Number::zeroise( $month, 2 );
 
-					if ( isset( $months[$the_day['cal']][$key] ) )
-						$the_day['month'] = $months[$the_day['cal']][$key];
+					if ( isset( $gEditorialTodayMonths[$the_day['cal']][$key] ) )
+						$the_day['month'] = $gEditorialTodayMonths[$the_day['cal']][$key];
 
 					echo '<span class="-month" data-month="'.esc_attr( $month ).'">'.$the_day['month'].'</span>';
 				}
@@ -100,7 +148,7 @@ class Today extends gEditorial\Helper
 
 				if ( $the_day['cal'] )
 					echo '<span class="-cal" data-cal="'.esc_attr( $the_day['cal'] ).'">'.
-						( empty( $calendars[$the_day['cal']] ) ? $the_day['cal'] : $calendars[$the_day['cal']] )
+						( empty( $gEditorialTodayCalendars[$the_day['cal']] ) ? $the_day['cal'] : $gEditorialTodayCalendars[$the_day['cal']] )
 					.'</span>';
 
 			echo '</div>';

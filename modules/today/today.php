@@ -98,6 +98,8 @@ class Today extends gEditorial\Module
 		$this->post_types_excluded = [ 'attachment', $this->constant( 'day_cpt' ) ];
 
 		$this->register_post_type( 'day_cpt' );
+
+		add_filter( 'the_title', [ $this, 'the_day_title' ], 8, 2 );
 	}
 
 	public function init_ajax()
@@ -356,6 +358,22 @@ class Today extends gEditorial\Module
 		}
 
 		return $post_id;
+	}
+
+	public function the_day_title( $title, $post_id )
+	{
+		if ( $title )
+			return $title;
+
+		if ( ! $post = get_post( $post_id ) )
+			return $title;
+
+		if ( $this->constant( 'day_cpt' ) == $post->post_type )
+			return ModuleHelper::titleTheDayFromPost( $post,
+				$this->get_setting( 'calendar_type', 'gregorian' ),
+				$this->get_the_day_constants() );
+
+		return $title;
 	}
 
 	// @SEE: `bp_theme_compat_reset_post()`
