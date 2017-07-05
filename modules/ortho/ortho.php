@@ -4,7 +4,11 @@ defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Core\HTML;
+use geminorum\gEditorial\Core\WordPress;
+
+use geminorum\gNetwork\Core\Orthography;
 
 class Ortho extends gEditorial\Module
 {
@@ -176,6 +180,43 @@ class Ortho extends gEditorial\Module
 		return $options;
 	}
 
+	public function cleanup_post( $post )
+	{
+		if ( ! $post = get_post( $post ) )
+			return FALSE;
+
+		$data   = [];
+		$update = FALSE;
+		$fields = [
+			'post_title'   => FALSE,
+			// 'post_content' => TRUE, // working but wait for more tests!
+			'post_excerpt' => TRUE,
+		];
+
+		foreach ( $fields as $field => $html ) {
+			if ( ! empty( $post->{$field} ) ) {
+				$cleaned = $this->cleanup_chars( $post->{$field}, $html );
+				if ( 0 !== strcmp( $post->{$field}, $cleaned ) ) {
+					$data[$field] = $cleaned;
+					$update = TRUE;
+				}
+			}
+		}
+
+		if ( ! $update )
+			return FALSE;
+
+		$data['ID'] = $post->ID;
+
+		return (bool) wp_update_post( $data );
+	}
+
+	public function cleanup_chars( $string, $html = FALSE )
+	{
+		return Orthography::cleanupPersianChars( $string );
+		return $html ? Orthography::cleanupPersianHTML( $string ) : Orthography::cleanupPersian( $string );
+	}
+
 	public function tools_settings( $sub )
 	{
 		if ( $this->check_settings( $sub, 'tools' ) ) {
@@ -198,5 +239,121 @@ class Ortho extends gEditorial\Module
 			] );
 
 		$this->settings_form_after( $uri, $sub );
+	}
+
+	public function reports_settings( $sub )
+	{
+		if ( ! class_exists( 'geminorum\\gNetwork\\Core\\Orthography' ) )
+			return FALSE;
+
+		if ( $this->check_settings( $sub, 'reports' ) ) {
+
+			if ( ! empty( $_POST ) ) {
+
+				$this->settings_check_referer( $sub, 'reports' );
+
+				if ( isset( $_POST['cleanup_chars'] )
+					&& isset( $_POST['_cb'] )
+					&& count( $_POST['_cb'] ) ) {
+
+					$count = 0;
+
+					foreach ( $_POST['_cb'] as $post_id )
+						$count += $this->cleanup_post( $post_id );
+
+					WordPress::redirectReferer( [
+						'message' => 'cleaned',
+						'count'   => $count,
+					] );
+				}
+			}
+
+			$this->screen_option( $sub );
+			$this->register_button( 'cleanup_chars', _x( 'Cleanup Chars', 'Modules: Ortho: Setting Button', GEDITORIAL_TEXTDOMAIN ), TRUE );
+		}
+	}
+
+	public function reports_sub( $uri, $sub )
+	{
+		$this->settings_form_before( $uri, $sub, 'bulk', 'reports', FALSE, FALSE );
+
+			if ( $this->tableSummary() )
+				$this->settings_buttons();
+
+		$this->settings_form_after( $uri, $sub );
+	}
+
+	private function tableSummary()
+	{
+		list( $posts, $pagination ) = $this->getPostArray();
+
+		$pagination['before'][] = HTML::dropdown( [
+			'ي' => _x( 'Arabic Letter Yeh U+064A', 'Modules: Ortho', GEDITORIAL_TEXTDOMAIN ),
+			'ك' => _x( 'Arabic Letter Kaf U+0643', 'Modules: Ortho', GEDITORIAL_TEXTDOMAIN ),
+		], [
+			'name'       => 'char',
+			'selected'   => self::req( 'char', 'none' ),
+			'none_value' => 'none',
+			'none_title' => Settings::showOptionNone(),
+		] );
+
+		$pagination['before'][] = Helper::tableFilterPostTypes( $this->list_post_types() );
+
+		return HTML::tableList( [
+			'_cb'     => 'ID',
+			'ID'      => Helper::tableColumnPostID(),
+			'date'    => Helper::tableColumnPostDate(),
+			'type'    => Helper::tableColumnPostType(),
+			'title'   => Helper::tableColumnPostTitle(),
+			'excerpt' => Helper::tableColumnPostExcerpt(),
+		], $posts, [
+			'navigation' => 'before',
+			'search'     => 'before',
+			'title'      => HTML::tag( 'h3', _x( 'Overview of Post Orthography', 'Modules: Ortho', GEDITORIAL_TEXTDOMAIN ) ),
+			'empty'      => Helper::tableArgEmptyPosts(),
+			'pagination' => $pagination,
+		] );
+	}
+
+	protected function getPostArray()
+	{
+		$char = self::req( 'char', 'none' );
+
+		$extra  = [];
+		$limit  = $this->limit_sub();
+		$paged  = self::paged();
+		$offset = ( $paged - 1 ) * $limit;
+
+		$args = [
+			'posts_per_page'   => $limit,
+			'offset'           => $offset,
+			'orderby'          => self::orderby( 'ID' ),
+			'order'            => self::order( 'DESC' ),
+			'post_type'        => $this->post_types(), // 'any',
+			'post_status'      => [ 'publish', 'future', 'draft', 'pending' ],
+			'suppress_filters' => TRUE,
+		];
+
+		if ( 'none' != $char )
+			$args['s'] = $extra['char'] = $char;
+
+		if ( ! empty( $_REQUEST['id'] ) )
+			$args['post__in'] = explode( ',', maybe_unserialize( $_REQUEST['id'] ) );
+
+		if ( ! empty( $_REQUEST['type'] ) )
+			$args['post_type'] = $extra['type'] = $_REQUEST['type'];
+
+		if ( 'attachment' == $args['post_type'] )
+			$args['post_status'][] = 'inherit';
+
+		$query = new \WP_Query;
+		$posts = $query->query( $args );
+
+		$pagination = HTML::tablePagination( $query->found_posts, $query->max_num_pages, $limit, $paged, $extra );
+
+		$pagination['orderby'] = $args['orderby'];
+		$pagination['order']   = $args['order'];
+
+		return [ $posts, $pagination ];
 	}
 }
