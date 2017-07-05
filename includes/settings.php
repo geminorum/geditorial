@@ -577,6 +577,8 @@ class Settings extends Core\Base
 
 		printf( '<h1 class="wp-heading-inline settings-title'.$icon.'">%s%s</h1>', $title, $extra );
 
+		// echo '<span class="subtitle">'.'</span>';
+
 		if ( $back )
 			printf( ' <a href="%s" class="page-title-action settings-title-action">%s</a>', $back, $to );
 

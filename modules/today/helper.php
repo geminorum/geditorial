@@ -264,7 +264,7 @@ class Today extends gEditorial\Helper
 
 		foreach ( $constants as $field => $constant ) {
 			if ( ! empty( $args['the_day'][$field] ) ) {
-				$query_args['orderby'][$field.'_clause'] = 'ASC'; // https://make.wordpress.org/core/2015/03/30/query-improvements-in-wp-4-2-orderby-and-meta_query/
+				$query_args['orderby'][$field.'_clause'] = 'ASC'; // https://make.wordpress.org/core/?p=12639
 				$query_args['meta_query'][$field.'_clause'] = [
 					'key'     => $constant,
 					'value'   => $args['the_day'][$field],
@@ -279,7 +279,7 @@ class Today extends gEditorial\Helper
 		if ( $args['count'] )
 			return count( $posts );
 
-		$pagination = HTML::tablePagination( $query->found_posts, $query->max_num_pages, $args['limit'], $args['paged'], $args['all'] );
+		$pagination = HTML::tablePagination( $query->found_posts, $query->max_num_pages, $args['limit'], $args['paged'], [], $args['all'] );
 
 		return [ $posts, $pagination ];
 	}

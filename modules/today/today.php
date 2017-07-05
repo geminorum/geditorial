@@ -108,6 +108,7 @@ class Today extends gEditorial\Module
 		$this->register_post_type( 'day_cpt' );
 
 		add_filter( 'the_title', [ $this, 'the_day_title' ], 8, 2 );
+		// add_filter( 'enter_title_here', [ $this, 'enter_day_title_here' ], 8, 2 ); // no need/not nec
 
 		if ( ! is_admin() && count( $this->post_types() ) ) {
 
@@ -338,7 +339,7 @@ class Today extends gEditorial\Module
 				'title' => Helper::tableColumnPostTitle(),
 				'terms' => Helper::tableColumnPostTerms(),
 			], $posts, [
-				'empty' => Helper::tableArgEmptyPosts(),
+				'empty' => Helper::tableArgEmptyPosts( FALSE ),
 			] );
 
 		echo '</div>';
@@ -379,6 +380,16 @@ class Today extends gEditorial\Module
 		}
 
 		return $post_id;
+	}
+
+	public function enter_day_title_here( $title, $post )
+	{
+		if ( $this->constant( 'day_cpt' ) == $post->post_type )
+			return ModuleHelper::titleTheDayFromPost( $post,
+				$this->get_setting( 'calendar_type', 'gregorian' ),
+				$this->get_the_day_constants() );
+
+		return $title;
 	}
 
 	public function the_day_title( $title, $post_id )

@@ -450,6 +450,9 @@ class ShortCode extends Core\Base
 
 		foreach ( $posts as $post ) {
 
+			// caller must setup postdata
+			// REF: https://developer.wordpress.org/?p=2837#comment-874
+			// $GLOBALS['post'] = $post;
 			// setup_postdata( $post );
 
 			if ( $args['item_cb'] )
