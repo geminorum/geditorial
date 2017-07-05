@@ -410,6 +410,8 @@ class Revisions extends gEditorial\Module
 	{
 		list( $posts, $pagination ) = $this->getPostArray();
 
+		$pagination['before'][] = Helper::tableFilterPostTypes( $this->list_post_types() );
+
 		return HTML::tableList( [
 			'_cb'   => 'ID',
 			'ID'    => Helper::tableColumnPostID(),
@@ -453,10 +455,13 @@ class Revisions extends gEditorial\Module
 	{
 		global $wpdb;
 
+		$extra  = [];
 		$limit  = $this->limit_sub();
 		$order  = self::order( 'asc' );
 		$paged  = self::paged();
 		$offset = ( $paged - 1 ) * $limit;
+
+		// FIXME: must factor parent postype on the list
 
 		$ids = $wpdb->get_col( "
 			SELECT DISTINCT post_parent
@@ -483,7 +488,7 @@ class Revisions extends gEditorial\Module
 			$args['post__in'] = explode( ',', maybe_unserialize( $_REQUEST['id'] ) );
 
 		if ( ! empty( $_REQUEST['type'] ) )
-			$args['post_type'] = $_REQUEST['type'];
+			$args['post_type'] = $extra['type'] = $_REQUEST['type'];
 
 		if ( 'attachment' == $args['post_type'] )
 			$args['post_status'][] = 'inherit';
@@ -491,7 +496,7 @@ class Revisions extends gEditorial\Module
 		$query = new \WP_Query;
 		$posts = $query->query( $args );
 
-		$pagination = HTML::tablePagination( $total, ceil( $total / $limit ), $limit, $paged );
+		$pagination = HTML::tablePagination( $total, ceil( $total / $limit ), $limit, $paged, $extra );
 
 		$pagination['order'] = $order;
 

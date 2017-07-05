@@ -574,15 +574,17 @@ class Helper extends Core\Base
 		return $sizes;
 	}
 
-	public static function tableFilterPostTypes()
+	public static function tableFilterPostTypes( $list = NULL )
 	{
-		return HTML::dropdown(
-			PostType::get(), [
-				'name'       => 'type',
-				'selected'   => self::req( 'type', 'any' ),
-				'none_value' => 'any',
-				'none_title' => _x( 'All PostTypes', 'Helper: Table Filter', GEDITORIAL_TEXTDOMAIN ),
-			] );
+		if ( is_null( $list ) )
+			$list = PostType::get();
+
+		return HTML::dropdown( $list, [
+			'name'       => 'type',
+			'selected'   => self::req( 'type', 'any' ),
+			'none_value' => 'any',
+			'none_title' => _x( 'All PostTypes', 'Helper: Table Filter', GEDITORIAL_TEXTDOMAIN ),
+		] );
 	}
 
 	public static function tableColumnPostID()

@@ -89,7 +89,7 @@ class Shortcodes extends gEditorial\Module
 				'none_title' => _x( 'All Shortcodes', 'Modules: Shortcodes', GEDITORIAL_TEXTDOMAIN ),
 			] );
 
-		$pagination['before'][] = Helper::tableFilterPostTypes();
+		$pagination['before'][] = Helper::tableFilterPostTypes( $this->list_post_types() );
 
 		return HTML::tableList( [
 			'_cb'   => 'ID',
@@ -138,6 +138,7 @@ class Shortcodes extends gEditorial\Module
 	{
 		$shortcode = self::req( 'shortcode', 'none' );
 
+		$extra  = [];
 		$limit  = $this->limit_sub();
 		$paged  = self::paged();
 		$offset = ( $paged - 1 ) * $limit;
@@ -147,19 +148,21 @@ class Shortcodes extends gEditorial\Module
 			'offset'           => $offset,
 			'orderby'          => self::orderby( 'ID' ),
 			'order'            => self::order( 'DESC' ),
-			'post_type'        => 'any', // $this->post_types()
+			'post_type'        => $this->post_types(), // 'any',
 			'post_status'      => [ 'publish', 'future', 'draft', 'pending' ],
 			'suppress_filters' => TRUE,
 		];
 
-		if ( 'none' != $shortcode )
+		if ( 'none' != $shortcode ) {
 			$args['s'] = '['.$shortcode;
+			$extra['shortcode'] = $shortcode;
+		}
 
 		if ( ! empty( $_REQUEST['id'] ) )
 			$args['post__in'] = explode( ',', maybe_unserialize( $_REQUEST['id'] ) );
 
 		if ( ! empty( $_REQUEST['type'] ) )
-			$args['post_type'] = $_REQUEST['type'];
+			$args['post_type'] = $extra['type'] = $_REQUEST['type'];
 
 		if ( 'attachment' == $args['post_type'] )
 			$args['post_status'][] = 'inherit';
@@ -167,7 +170,7 @@ class Shortcodes extends gEditorial\Module
 		$query = new \WP_Query;
 		$posts = $query->query( $args );
 
-		$pagination = HTML::tablePagination( $query->found_posts, $query->max_num_pages, $limit, $paged );
+		$pagination = HTML::tablePagination( $query->found_posts, $query->max_num_pages, $limit, $paged, $extra );
 
 		$pagination['orderby'] = $args['orderby'];
 		$pagination['order']   = $args['order'];

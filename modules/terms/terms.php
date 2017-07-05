@@ -256,6 +256,7 @@ class Terms extends gEditorial\Module
 
 	protected function getPostArray()
 	{
+		$extra  = [];
 		$limit  = $this->limit_sub();
 		$paged  = self::paged();
 		$offset = ( $paged - 1 ) * $limit;
@@ -279,7 +280,7 @@ class Terms extends gEditorial\Module
 			$args['post__in'] = explode( ',', maybe_unserialize( $_REQUEST['id'] ) );
 
 		if ( ! empty( $_REQUEST['type'] ) )
-			$args['post_type'] = $_REQUEST['type'];
+			$args['post_type'] = $extra['type'] = $_REQUEST['type'];
 
 		if ( 'attachment' == $args['post_type'] )
 			$args['post_status'][] = 'inherit';
@@ -287,7 +288,7 @@ class Terms extends gEditorial\Module
 		$query = new \WP_Query;
 		$posts = $query->query( $args );
 
-		$pagination = HTML::tablePagination( $query->found_posts, $query->max_num_pages, $limit, $paged );
+		$pagination = HTML::tablePagination( $query->found_posts, $query->max_num_pages, $limit, $paged, $extra );
 
 		return [ $posts, $pagination ];
 	}
