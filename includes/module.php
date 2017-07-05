@@ -358,11 +358,13 @@ class Module extends Base
 		else if ( TRUE === $defaults )
 			$defaults = array_keys( $supports );
 
+		$singular = translate_nooped_plural( $this->strings['noops'][$constant], 1 );
+
 		return [
 			'field'       => $constant.'_supports',
 			'type'        => 'checkbox', // FIXME: add as setting type with `code` after title
-			'title'       => sprintf( _x( '%s Supports', 'Module: Setting Title', GEDITORIAL_TEXTDOMAIN ), translate_nooped_plural( $this->strings['noops'][$constant], 1 ) ),
-			'description' => _x( 'Support core and extra features for this posttype.', 'Module: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+			'title'       => sprintf( _x( '%s Supports', 'Module: Setting Title', GEDITORIAL_TEXTDOMAIN ), $singular ),
+			'description' => sprintf( _x( 'Support core and extra features for %s posttype.', 'Module: Setting Description', GEDITORIAL_TEXTDOMAIN ), $singular ),
 			'default'     => $defaults,
 			'values'      => $supports,
 		];
