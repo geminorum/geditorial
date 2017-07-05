@@ -360,6 +360,16 @@ class Helper extends Core\Base
 		], NULL );
 	}
 
+	public static function getPostTypeIcon( $posttype, $fallback = 'admin-post' )
+	{
+		if ( ! is_object( $posttype ) )
+			$posttype = get_post_type_object( $posttype );
+
+		$icon = isset( $posttype->menu_icon ) ? str_ireplace( 'dashicons-', '', $posttype->menu_icon ) : $fallback;
+
+		return HTML::getDashicon( $icon );
+	}
+
 	public static function registerColorBox()
 	{
 		wp_register_style( 'jquery-colorbox', GEDITORIAL_URL.'assets/css/admin.colorbox.css', [], '1.6.4', 'screen' );

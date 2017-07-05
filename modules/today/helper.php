@@ -382,7 +382,6 @@ class Today extends gEditorial\Helper
 
 				// FIXME: get edit item url
 
-				$icon   = HTML::getDashicon( $posttype_object->menu_icon ? $posttype_object->menu_icon : 'admin-post' );
 				$noyear = $the_day;
 
 				unset( $noyear['year'] );
@@ -393,7 +392,7 @@ class Today extends gEditorial\Helper
 					'target'        => '_blank',
 					'data-posttype' => $posttype,
 					'title'         => _x( 'New Day!', 'Modules: Today', GEDITORIAL_TEXTDOMAIN ),
-				], $icon.' '.$posttype_object->labels->edit_item );
+				], Helper::getPostTypeIcon( $posttype_object ).' '.$posttype_object->labels->edit_item );
 			}
 
 			unset( $posttype_object, $posttype, $noyear );
@@ -406,15 +405,13 @@ class Today extends gEditorial\Helper
 			if ( ! current_user_can( $posttype_object->cap->create_posts ) )
 				continue;
 
-			$icon = HTML::getDashicon( $posttype_object->menu_icon ? $posttype_object->menu_icon : 'admin-post' );
-
 			$html .= HTML::tag( 'a', [
 				'href'          => add_query_arg( array_merge( $the_day, [ 'post_type' => $posttype ] ), $new ),
 				'class'         => 'button -add-posttype -add-posttype-'.$posttype,
 				'target'        => '_blank',
 				'data-posttype' => $posttype,
 				'title'         => sprintf( _x( 'New %s connected to this day', 'Modules: Today', GEDITORIAL_TEXTDOMAIN ), $posttype_object->labels->singular_name ),
-			], $icon.' '.$posttype_object->labels->add_new_item );
+			], Helper::getPostTypeIcon( $posttype_object ).' '.$posttype_object->labels->add_new_item );
 		}
 
 		echo HTML::tag( 'div', [
