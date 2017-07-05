@@ -31,9 +31,11 @@ class Ortho extends gEditorial\Module
 
 	public function settings_intro_after( $module )
 	{
-		HTML::desc( sprintf( _x( 'Current installed Virastar version is: <code>%s</code>', 'Modules: Ortho: Settings Intro', GEDITORIAL_TEXTDOMAIN ), $this->virastar_version ) );
-		HTML::desc( sprintf( _x( 'For more information, Please see Virastar <a href="%s" target="_blank">home page</a> or <a href="%s" target="_blank">live demo</a>.', 'Modules: Ortho: Settings Intro', GEDITORIAL_TEXTDOMAIN ),
-			'https://github.com/juvee/virastar', 'http://juvee.github.io/virastar/' ) );
+		HTML::desc( sprintf( _x( 'Virastar <code>%s</code> installed. For more information, Please see Virastar <a href="%s" target="_blank">home page</a> or <a href="%s" target="_blank">live demo</a>.', 'Modules: Ortho: Settings Intro', GEDITORIAL_TEXTDOMAIN ),
+			$this->virastar_version, 'https://github.com/juvee/virastar', 'http://juvee.github.io/virastar/' ) );
+
+		HTML::desc( sprintf( _x( 'PersianTools <code>%s</code> installed. For more information, Please see PersianTools <a href="%s" target="_blank">home page</a> or <a href="%s" target="_blank">live demo</a>.', 'Modules: Ortho: Settings Intro', GEDITORIAL_TEXTDOMAIN ),
+			$this->persiantools_version, 'https://github.com/Bersam/persiantools', 'https://github.com/Bersam/persiantools' ) );
 	}
 
 	private function virastar_options()
