@@ -147,27 +147,30 @@ class Roles extends gEditorial\Module
 	}
 
 	// @SEE: https://developer.wordpress.org/?p=1109
-	private function caps()
+	private function map( $base = NULL )
 	{
+		if ( is_null( $base ) )
+			$base = $this->constant( 'base_type' );
+
 		return [
 
 			// mapped, no need to add them to ours
-			// 'edit_post'   => 'edit_editorial',
-			// 'read_post'   => 'read_editorial',
-			// 'delete_post' => 'delete_editorial',
+			// 'edit_post'   => 'edit_'.$base[0],
+			// 'read_post'   => 'read_'.$base[0],
+			// 'delete_post' => 'delete_'.$base[0],
 
 			// must add to roles
-			'edit_posts'             => 'edit_editorials',
-			'edit_others_posts'      => 'edit_others_editorials',
-			'publish_posts'          => 'publish_editorials',
-			'read_private_posts'     => 'read_private_editorials',
+			'edit_posts'             => 'edit_'.$base[1],
+			'edit_others_posts'      => 'edit_others_'.$base[1],
+			'publish_posts'          => 'publish_'.$base[1],
+			'read_private_posts'     => 'read_private_'.$base[1],
 			'read'                   => 'read',
-			'delete_posts'           => 'delete_editorials',
-			'delete_private_posts'   => 'delete_private_editorials',
-			'delete_published_posts' => 'delete_published_editorials',
-			'delete_others_posts'    => 'delete_others_editorials',
-			'edit_private_posts'     => 'edit_private_editorials',
-			'edit_published_posts'   => 'edit_published_editorials',
+			'delete_posts'           => 'delete_'.$base[1],
+			'delete_private_posts'   => 'delete_private_'.$base[1],
+			'delete_published_posts' => 'delete_published_'.$base[1],
+			'delete_others_posts'    => 'delete_others_'.$base[1],
+			'edit_private_posts'     => 'edit_private_'.$base[1],
+			'edit_published_posts'   => 'edit_published_'.$base[1],
 		];
 	}
 
@@ -234,8 +237,8 @@ class Roles extends gEditorial\Module
 	{
 		$count  = 0;
 		$roles  = User::getRoleList();
-		$caps   = $this->caps();
 		$prefix = $this->constant( 'base_prefix' );
+		$map    = $this->map();
 
 		foreach ( $this->get_setting( 'duplicate_roles', [] ) as $core ) {
 
@@ -250,7 +253,7 @@ class Roles extends gEditorial\Module
 			if ( is_null( $role ) )
 				continue;
 
-			foreach ( $caps as $cap => $editorial )
+			foreach ( $map as $cap => $editorial )
 				if ( $object->has_cap( $cap ) )
 					$role->add_cap( $editorial );
 
@@ -268,7 +271,7 @@ class Roles extends gEditorial\Module
 		$count  = 0;
 		$object = get_role( $role );
 
-		foreach ( $this->caps() as $cap => $editorial )
+		foreach ( $this->map() as $cap => $editorial )
 			if ( $object->has_cap( $cap ) )
 				if ( $object->add_cap( $editorial ) )
 					$count++;
@@ -281,7 +284,7 @@ class Roles extends gEditorial\Module
 		$count  = 0;
 		$object = get_role( $role );
 
-		foreach ( $this->caps() as $cap => $editorial )
+		foreach ( $this->map() as $cap => $editorial )
 			if ( $object->remove_cap( $editorial ) )
 					$count++;
 
@@ -291,7 +294,6 @@ class Roles extends gEditorial\Module
 	private function remove_default_roles()
 	{
 		$count  = 0;
-		$caps   = $this->caps();
 		$prefix = $this->constant( 'base_prefix' );
 
 		foreach ( $this->get_setting( 'duplicate_roles', [] ) as $core )
