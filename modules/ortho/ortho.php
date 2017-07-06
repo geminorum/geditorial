@@ -301,14 +301,19 @@ class Ortho extends gEditorial\Module
 
 		$pagination['before'][] = Helper::tableFilterPostTypes( $this->list_post_types() );
 
-		return HTML::tableList( [
+		$columns = [
 			'_cb'     => 'ID',
 			'ID'      => Helper::tableColumnPostID(),
 			'date'    => Helper::tableColumnPostDate(),
 			'type'    => Helper::tableColumnPostType(),
 			'title'   => Helper::tableColumnPostTitle(),
 			'excerpt' => Helper::tableColumnPostExcerpt(),
-		], $posts, [
+		];
+
+		if ( gEditorial()->enabled( 'meta' ) )
+			$columns['meta'] = gEditorial()->meta->tableColumnPostMeta();
+
+		return HTML::tableList( $columns, $posts, [
 			'navigation' => 'before',
 			'search'     => 'before',
 			'title'      => HTML::tag( 'h3', _x( 'Overview of Post Orthography', 'Modules: Ortho', GEDITORIAL_TEXTDOMAIN ) ),

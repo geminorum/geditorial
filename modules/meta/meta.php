@@ -252,6 +252,7 @@ class Meta extends gEditorial\Module
 
 				$this->_admin_enabled();
 				$this->_edit_screen( $screen->post_type );
+				$this->_default_rows();
 			}
 
 			if ( 'post' == $screen->base
@@ -276,6 +277,12 @@ class Meta extends gEditorial\Module
 		add_action( 'manage_'.$post_type.'_posts_custom_column', [ $this, 'posts_custom_column' ], 10, 2 );
 
 		add_action( 'quick_edit_custom_box', [ $this, 'quick_edit_custom_box' ], 10, 2 );
+	}
+
+	private function _default_rows()
+	{
+		add_action( $this->hook( 'column_row' ), [ $this, 'column_row_default' ], 8, 3 );
+		add_action( $this->hook( 'column_row' ), [ $this, 'column_row_extra' ], 12, 3 );
 	}
 
 	public function do_meta_box( $post, $box, $fields = NULL, $context = 'box' )
@@ -508,10 +515,20 @@ class Meta extends gEditorial\Module
 		if ( $this->hook() != $column_name )
 			return;
 
-		global $post, $mode;
+		if ( ! $post = get_post( $post_id ) )
+			return;
 
-		$meta   = (array) $this->get_postmeta( $post_id );
-		$fields = $this->post_type_field_types( $post->post_type );
+		$meta    = (array) $this->get_postmeta( $post->ID );
+		$fields  = $this->post_type_field_types( $post->post_type );
+		$exclude = [ 'ot', 'st', 'highlight', 'as', 'ch', 'le', 'source_title', 'source_url' ];
+
+		echo '<ul class="geditorial-admin-wrap-column -meta -rows">';
+			$this->actions( 'column_row', $post, $fields, array_diff_key( $meta, array_flip( $exclude ) ) );
+		echo '</ul>';
+	}
+
+	public function column_row_default( $post, $fields, $meta )
+	{
 		$author = $this->get_setting( 'author_row', FALSE )
 			? WordPress::getAuthorEditHTML( $post->post_type, $post->post_author )
 			: FALSE;
@@ -523,13 +540,11 @@ class Meta extends gEditorial\Module
 			'as'        => 'admin-users',
 		];
 
-		echo '<ul class="geditorial-admin-wrap-column -meta -rows">';
-
 		foreach ( $rows as $field => $icon ) {
 
 			if ( array_key_exists( $field, $fields ) ) {
 
-				if ( $value = $this->get_postmeta( $post_id, $field, '' ) ) {
+				if ( $value = $this->get_postmeta( $post->ID, $field, '' ) ) {
 
 					echo '<li class="-row meta-'.$field.'">';
 						echo $this->get_column_icon( FALSE, $icon, $this->get_string( $field, $post->post_type, 'titles', $field ) );
@@ -541,8 +556,6 @@ class Meta extends gEditorial\Module
 						}
 
 					echo '</li>';
-
-					unset( $meta[$field] );
 				}
 
 				echo '<div class="hidden geditorial-meta-'.$field.'-value">'.$value.'</div>';
@@ -555,10 +568,11 @@ class Meta extends gEditorial\Module
 				echo $author;
 			echo '</li>';
 		}
+	}
 
-		unset( $meta['ch'], $meta['le'], $meta['source_title'], $meta['source_url'] );
-
-		$this->actions( 'column_row', get_post( $post_id ), $fields, $meta );
+	public function column_row_extra( $post, $fields, $meta )
+	{
+		global $mode;
 
 		$label = $this->get_column_icon( FALSE, 'megaphone', $this->get_string( 'ch', $post->post_type, 'titles', 'label' ) );
 		ModuleTemplate::metaLabel( [
@@ -581,8 +595,24 @@ class Meta extends gEditorial\Module
 				'trim'   => 450,
 			] );
 		}
+	}
 
-		echo '</ul>';
+	public function tableColumnPostMeta()
+	{
+		$this->_default_rows();
+
+		// hiding the author row
+		$this->options->settings['author_row'] = FALSE;
+
+		return [
+			'title'    => $this->get_column_title( 'meta' ),
+			'callback' => [ $this, 'tableColumnPostMeta_callback'],
+		];
+	}
+
+	public function tableColumnPostMeta_callback( $value, $row, $column, $index )
+	{
+		$this->posts_custom_column( $this->hook(), $row );
 	}
 
 	public function quick_edit_custom_box( $column_name, $post_type )
