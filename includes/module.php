@@ -893,34 +893,14 @@ class Module extends Base
 			return;
 
 		if ( $append )
-			$fields = array_merge( $this->post_type_supports( $post_type, $type.'_fields', FALSE ), $fields );
+			$fields = array_merge( PostType::supports( $post_type, $type.'_fields' ), $fields );
 
 		add_post_type_support( $post_type, [ $type.'_fields' ], $fields );
 	}
 
-	// like WP core but returns the actual array!
-	public function post_type_supports( $post_type, $feature, $is_constant = FALSE )
+	public function post_type_all_fields( $post_type = 'post', $field_type = NULL )
 	{
-		if ( $is_constant )
-			$post_type = $this->constant( $post_type );
-
-		$all = get_all_post_type_supports( $post_type );
-
-		if ( isset( $all[$feature][0] )
-			&& is_array( $all[$feature][0] ) )
-				return $all[$feature][0];
-
-		return [];
-	}
-
-	public function post_type_all_fields( $post_type = 'post' )
-	{
-		$fields = [];
-
-		foreach ( $this->post_type_supports( $post_type, $this->field_type.'_fields', FALSE ) as $field => $args )
-			$fields[$field] = $args;
-
-		return $fields;
+		return PostType::supports( $post_type, ( is_null( $field_type ) ? $this->field_type : $field_type ).'_fields' );
 	}
 
 	public function get_string( $string, $post_type = 'post', $group = 'titles', $fallback = FALSE )

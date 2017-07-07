@@ -117,4 +117,16 @@ class PostType extends Core\Base
 			", $post->ID )
 		);
 	}
+
+	// like WP core but returns the actual array!
+	// @REF: `post_type_supports()`
+	public static function supports( $post_type, $feature )
+	{
+		$all = get_all_post_type_supports( $post_type );
+
+		if ( isset( $all[$feature][0] ) && is_array( $all[$feature][0] ) )
+			return $all[$feature][0];
+
+		return array();
+	}
 }
