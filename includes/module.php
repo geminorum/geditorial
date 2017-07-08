@@ -595,6 +595,16 @@ class Module extends Base
 	{
 		$this->register_button( 'submit', NULL, TRUE );
 		$this->register_button( 'reset', NULL, 'reset', TRUE );
+
+		if ( method_exists( $this, 'reports_settings' ) )
+			foreach ( $this->append_sub( [], 'reports' ) as $sub => $title )
+				$this->register_button( Settings::subURL( $sub, 'reports' ),
+					sprintf( _x( 'Jump to Reports: %s', 'Module: Button', GEDITORIAL_TEXTDOMAIN ), $title ), 'link' );
+
+		if ( method_exists( $this, 'tools_settings' ) )
+			foreach ( $this->append_sub( [], 'tools' ) as $sub => $title )
+				$this->register_button( Settings::subURL( $sub, 'tools' ),
+					sprintf( _x( 'Jump to Tools: %s', 'Module: Button', GEDITORIAL_TEXTDOMAIN ), $title ), 'link' );
 	}
 
 	public function register_button( $key, $value = NULL, $type = FALSE, $atts = [] )
