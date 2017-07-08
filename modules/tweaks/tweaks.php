@@ -436,7 +436,7 @@ class Tweaks extends gEditorial\Module
 			break;
 			case $this->classs( 'order' ):
 
-				$this->column_count( $post->menu_order );
+				$this->column_order( $post->menu_order );
 
 			break;
 			case $this->classs( 'id' ):

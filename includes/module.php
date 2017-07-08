@@ -2023,15 +2023,28 @@ SQL;
 		], HTML::getDashicon( $icon ) );
 	}
 
+	// for posts
 	public function column_thumb( $post_id, $size = [ 45, 72 ] )
 	{
-		echo $this->filters( 'column_thumb', WordPress::getFeaturedImageHTML( $post_id, $size ), $post_id, $size );
+		echo $this->filters( 'column_thumb', PostType::getFeaturedImageHTML( $post_id, $size ), $post_id, $size );
+	}
+
+	// for terms
+	public function column_image( $term_id, $size = [ 45, 72 ] )
+	{
+		echo $this->filters( 'column_image', Taxonomy::getFeaturedImageHTML( $term_id, $size ), $term_id, $size );
 	}
 
 	// TODO: override $title_attr based on passed constant key
 	public function column_count( $count, $title_attr = NULL )
 	{
 		echo Helper::htmlCount( $count, $title_attr );
+	}
+
+	// TODO: override $title_attr based on passed constant key
+	public function column_order( $order, $title_attr = NULL )
+	{
+		echo Helper::htmlOrder( $order, $title_attr );
 	}
 
 	public function column_term( $object_id, $tax_constant_key, $title_attr = NULL, $single = TRUE )
