@@ -768,7 +768,20 @@ class Helper extends Core\Base
 		if ( $count )
 			$html = Number::format( $count );
 		else
-			$html = sprintf( '<span title="%s" class="column-count-empty">&mdash;</span>', $title_attr );
+			$html = sprintf( '<span title="%s" class="column-count-empty -empty">&mdash;</span>', $title_attr );
+
+		return $html;
+	}
+
+	public static function htmlOrder( $order, $title_attr = NULL )
+	{
+		if ( is_null( $title_attr ) )
+			$title_attr = _x( 'No Order', 'Helper: No Order Title Attribute', GEDITORIAL_TEXTDOMAIN );
+
+		if ( $order )
+			$html = Number::format( $order );
+		else
+			$html = sprintf( '<span title="%s" class="column-order-empty -empty">&mdash;</span>', $title_attr );
 
 		return $html;
 	}
