@@ -602,7 +602,8 @@ class Module extends Base
 		if ( is_null( $value ) )
 			$value = $this->get_string( $key, 'buttons', 'settings', NULL );
 
-		$this->buttons[$key] = [
+		$this->buttons[] = [
+			'key'   => $key,
 			'value' => $value,
 			'type'  => $type,
 			'atts'  => $atts,
@@ -614,8 +615,8 @@ class Module extends Base
 		if ( FALSE !== $wrap )
 			echo '<p class="submit '.$this->base.'-wrap-buttons '.$wrap.'">';
 
-		foreach ( $this->buttons as $action => $button )
-			Settings::submitButton( $action, $button['value'], $button['type'], $button['atts'] );
+		foreach ( $this->buttons as $button )
+			Settings::submitButton( $button['key'], $button['value'], $button['type'], $button['atts'] );
 
 		if ( FALSE !== $wrap )
 			echo '</p>';
