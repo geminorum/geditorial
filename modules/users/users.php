@@ -98,27 +98,27 @@ class Users extends gEditorial\Module
 	{
 		parent::init();
 
-		if ( ! $this->get_setting( 'user_groups', FALSE ) )
-			return;
+		if ( $this->get_setting( 'user_groups', FALSE ) ) {
 
-		$this->register_taxonomy( 'group_tax', [
-			'show_admin_column'  => TRUE,
-			'show_in_quick_edit' => TRUE,
-			'capabilities'       => [
-				'manage_terms' => 'list_users',
-				'edit_terms'   => 'list_users',
-				'delete_terms' => 'list_users',
-				'assign_terms' => 'list_users',
-			],
-		], [ 'user' ] );
+			$this->register_taxonomy( 'group_tax', [
+				'show_admin_column'  => TRUE,
+				'show_in_quick_edit' => TRUE,
+				'capabilities'       => [
+					'manage_terms' => 'list_users',
+					'edit_terms'   => 'list_users',
+					'delete_terms' => 'list_users',
+					'assign_terms' => 'list_users',
+				],
+			], [ 'user' ] );
 
-		if ( is_admin() ) {
-			$this->action( 'admin_menu' );
-			$this->filter( 'parent_file' );
+			if ( is_admin() ) {
+				$this->action( 'admin_menu' );
+				$this->filter( 'parent_file' );
+			}
+
+			// no need, we use slash in slug
+			// add_filter( 'sanitize_user', [ $this, 'sanitize_user' ] );
 		}
-
-		// no need, we use slash in slug
-		// add_filter( 'sanitize_user', [ $this, 'sanitize_user' ] );
 	}
 
 	public function admin_menu()

@@ -130,7 +130,9 @@ class Team extends gEditorial\Module
 			'show_in_quick_edit' => TRUE,
 		], 'member_cpt' );
 
-		$this->register_post_type( 'member_cpt' );
+		$this->register_post_type( 'member_cpt', [
+			'menu_position' => 65,
+		] );
 	}
 
 	public function current_screen( $screen )

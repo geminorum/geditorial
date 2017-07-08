@@ -54,6 +54,29 @@ class Tweaks extends gEditorial\Module
 
 	protected function get_global_settings()
 	{
+		$this->taxonomies_excluded = [
+			'nav_menu',
+			'post_format',
+			'link_category',
+			'bp_member_type',
+			'bp_group_type',
+			'bp-email-type',
+			'ef_editorial_meta',
+			'following_users',
+			'ef_usergroup',
+			'post_status',
+			'flamingo_contact_tag',
+			'flamingo_inbound_channel',
+			'people',
+			'rel_people',
+			'rel_post',
+			'affiliation',
+			'alphabet_tax',
+			'entry_section',
+			'specs',
+			'label',
+		];
+
 		return [
 			'posttypes_option'  => 'posttypes_option',
 			'taxonomies_option' => 'taxonomies_option',
@@ -180,34 +203,6 @@ class Tweaks extends gEditorial\Module
 					$posttypes[$post_type] = $label;
 
 		return $posttypes;
-	}
-
-	public function init()
-	{
-		parent::init();
-
-		$this->taxonomies_excluded = [
-			'nav_menu',
-			'post_format',
-			'link_category',
-			'bp_member_type',
-			'bp_group_type',
-			'bp-email-type',
-			'ef_editorial_meta',
-			'following_users',
-			'ef_usergroup',
-			'post_status',
-			'flamingo_contact_tag',
-			'flamingo_inbound_channel',
-			'people',
-			'rel_people',
-			'rel_post',
-			'affiliation',
-			'alphabet_tax',
-			'entry_section',
-			'specs',
-			'label',
-		];
 	}
 
 	public function init_ajax()

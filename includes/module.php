@@ -273,8 +273,9 @@ class Module extends Base
 					if ( 'off' === $value )
 						$value = FALSE;
 
-					if ( in_array( $taxonomy, $this->taxonomies_excluded ) )
-						$value = FALSE;
+					// no need
+					// if ( in_array( $taxonomy, $this->taxonomies_excluded ) )
+					// 	$value = FALSE;
 
 					if ( $value )
 						$taxonomies[] = $taxonomy;
@@ -1649,7 +1650,7 @@ class Module extends Base
 		return $title;
 	}
 
-	public function get_column_title( $column, $constant, $fallback = NULL )
+	public function get_column_title( $column, $constant = NULL, $fallback = NULL )
 	{
 		return $this->get_string( $column.'_column_title', $constant, 'misc', ( is_null( $fallback ) ? $column : $fallback ) );
 	}

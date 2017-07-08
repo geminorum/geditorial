@@ -95,6 +95,14 @@ class Helper extends Core\Base
 		return apply_filters( self::BASE.'_kses', wp_kses( $text, $allowed ), $allowed, $context );
 	}
 
+	public static function ksesArray( $array, $context = 'none', $allowed = NULL )
+	{
+		foreach ( $array as $key => $value )
+			$array[$key] = self::kses( $value, $context, $allowed );
+
+		return $array;
+	}
+
 	public static function prepDescription( $text )
 	{
 		if ( ! $text )
@@ -130,6 +138,17 @@ class Helper extends Core\Base
 		$append = '<span title="'.esc_attr( $text ).'">'.$append.'</span>';
 
 		return Text::trimChars( $text, $length, $append );
+	}
+
+	public static function getSeperated( $string, $delimiters = NULL, $delimiter = '|' )
+	{
+		if ( is_array( $string ) )
+			return $string;
+
+		if ( is_null( $delimiters ) )
+			$delimiters = [ '/', '،', '؛', ';', ',' ];
+
+		return explode( $delimiter, str_ireplace( $delimiters, $delimiter, $string ) );
 	}
 
 	public static function getJoined( $items, $before = '', $after = '' )
@@ -1109,7 +1128,7 @@ class Helper extends Core\Base
 			$pre['menu_name'] = $strings[0];
 
 		if ( ! array_key_exists( 'most_used', $pre ) )
-			$pre['most_used'] = _x( 'Most Used', 'Helper: Tax Generator', GEDITORIAL_TEXTDOMAIN );
+			$pre['most_used'] = vsprintf( _x( 'Most Used', 'Helper: Tax Generator', GEDITORIAL_TEXTDOMAIN ), $strings );
 
 		return $pre;
 	}

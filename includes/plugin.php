@@ -360,6 +360,9 @@ class Plugin
 
 		else if ( Settings::isDashboard( $screen ) )
 			Helper::linkStyleSheetAdmin( 'dashboard' );
+
+		if ( ! defined( 'GNETWORK_VERSION' ) )
+			Helper::linkStyleSheetAdmin( 'gnetwork' );
 	}
 
 	public function mce_external_languages( $languages )

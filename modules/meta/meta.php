@@ -572,8 +572,6 @@ class Meta extends gEditorial\Module
 
 	public function column_row_extra( $post, $fields, $meta )
 	{
-		global $mode;
-
 		$label = $this->get_column_icon( FALSE, 'megaphone', $this->get_string( 'ch', $post->post_type, 'titles', 'label' ) );
 		ModuleTemplate::metaLabel( [
 			'before' => '<li class="-row meta-label">'.$label,
@@ -586,7 +584,7 @@ class Meta extends gEditorial\Module
 			'after'  => '</li>',
 		] );
 
-		if ( 'excerpt' == $mode && array_key_exists( 'le', $fields ) ) {
+		if ( 'excerpt' == $GLOBALS['mode'] && array_key_exists( 'le', $fields ) ) {
 			$lead = $this->get_column_icon( FALSE, 'editor-paragraph', $this->get_string( 'le', $post->post_type, 'titles', 'lead' ) );
 			ModuleTemplate::metaLead( [
 				'before' => '<li class="-row meta-lead">'.$lead,
@@ -597,12 +595,12 @@ class Meta extends gEditorial\Module
 		}
 	}
 
-	public function tableColumnPostMeta()
+	public function tableColumnPostMeta( $author = NULL )
 	{
 		$this->_default_rows();
 
-		// hiding the author row
-		$this->options->settings['author_row'] = FALSE;
+		if ( ! is_null( $author ) ) // force the author row
+			$this->options->settings['author_row'] = $author;
 
 		return [
 			'title'    => $this->get_column_title( 'meta' ),

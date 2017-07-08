@@ -235,6 +235,7 @@ class Magazine extends gEditorial\Module
 		$this->register_shortcode( 'span_shortcode' );
 
 		if ( ! is_admin() ) {
+
 			$this->filter( 'term_link', 3 );
 			$this->action( 'template_redirect' );
 
