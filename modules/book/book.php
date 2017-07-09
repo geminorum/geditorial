@@ -543,6 +543,27 @@ class Book extends gEditorial\Module
 		$this->list_p2p( NULL, '-'.$this->get_setting( 'insert_content', 'none' ) );
 	}
 
+	public function get_assoc_post( $post = NULL, $single = FALSE, $published = TRUE )
+	{
+		$posts = [];
+		$extra = [ 'p2p:per_page' => -1, 'p2p:context' => 'admin_column' ];
+		$type  = $this->constant( 'publication_cpt_p2p' );
+		$p2p   = p2p_type( $type )->get_connected( get_post( $post ), $extra, 'abstract' );
+
+		foreach ( $p2p->items as $item ) {
+
+			if ( $single )
+				return $item->ID;
+
+			if ( $published && 'publish' != get_post_status( $item ) )
+				continue;
+
+			$posts[$item->p2p_id] = $item->ID;
+		}
+
+		return count( $posts ) ? $posts : FALSE;
+	}
+
 	public function list_p2p( $post = NULL, $class = '' )
 	{
 		if ( is_null( $post ) )
