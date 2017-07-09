@@ -2175,6 +2175,92 @@ SQL;
 		return TRUE;
 	}
 
+	protected function column_row_p2p_to_posttype( $constant, $post )
+	{
+		$extra = [ 'p2p:per_page' => -1, 'p2p:context' => 'admin_column' ];
+		$type  = $this->constant( $constant.'_p2p' );
+		$p2p   = p2p_type( $type )->get_connected( $post, $extra, 'abstract' );
+		$count = count( $p2p->items );
+
+		if ( ! $count )
+			return;
+
+		if ( empty( $this->cache_column_icon ) )
+			$this->cache_column_icon = $this->get_column_icon( FALSE,
+				NULL, $this->strings['p2p'][$constant]['title']['to'] );
+
+		if ( empty( $this->cache_post_types ) )
+			$this->cache_post_types = PostType::get( 2 );
+
+		$post_types = array_unique( array_map( function( $r ){
+			return $r->post_type;
+		}, $p2p->items ) );
+
+		$args = [
+			'connected_direction' => 'to',
+			'connected_type'      => $type,
+			'connected_items'     => $post->ID,
+		];
+
+		echo '<li class="-row -book -p2p -connected">';
+
+			echo $this->cache_column_icon;
+
+			echo '<span class="-counted">'.$this->nooped_count( 'connected', $count ).'</span>';
+
+			$list = [];
+
+			foreach ( $post_types as $post_type )
+				$list[] = HTML::tag( 'a', [
+					'href'   => WordPress::getPostTypeEditLink( $post_type, 0, $args ),
+					'title'  => _x( 'View the connected list', 'Module: P2P', GEDITORIAL_TEXTDOMAIN ),
+					'target' => '_blank',
+				], $this->cache_post_types[$post_type] );
+
+			echo Helper::getJoined( $list, ' <span class="-posttypes">(', ')</span>' );
+
+		echo '</li>';
+	}
+
+	protected function column_row_p2p_from_posttype( $constant, $post )
+	{
+		if ( empty( $this->cache_column_icon ) )
+			$this->cache_column_icon = $this->get_column_icon( FALSE,
+				NULL, $this->strings['p2p'][$constant]['title']['from'] );
+
+		$extra = [ 'p2p:per_page' => -1, 'p2p:context' => 'admin_column' ];
+		$type  = $this->constant( $constant.'_p2p' );
+		$p2p   = p2p_type( $type )->get_connected( $post, $extra, 'abstract' );
+
+		foreach ( $p2p->items as $item ) {
+			echo '<li class="-row -book -p2p -connected">';
+
+				if ( current_user_can( 'edit_post', $item->get_id() ) )
+					echo $this->get_column_icon( get_edit_post_link( $item->get_id() ),
+						NULL, $this->strings['p2p'][$constant]['title']['from'] );
+				else
+					echo $this->cache_column_icon;
+
+				$args = [
+					'connected_direction' => 'to',
+					'connected_type'      => $type,
+					'connected_items'     => $item->get_id(),
+				];
+
+				echo HTML::tag( 'a', [
+					'href'   => WordPress::getPostTypeEditLink( $post->post_type, 0, $args ),
+					'title'  => _x( 'View all connected', 'Module: P2P', GEDITORIAL_TEXTDOMAIN ),
+					'target' => '_blank',
+				], Helper::trimChars( $item->get_title(), 85 ) );
+
+				if ( ! empty( $this->strings['p2p'][$constant]['fields'] ) )
+					foreach ( $this->strings['p2p'][$constant]['fields'] as $field => $field_args )
+						echo $this->p2p_get_meta( $item->p2p_id, $field, ' &ndash; ', '', $field_args['title'] );
+
+			echo '</li>';
+		}
+	}
+
 	// should we insert content?
 	public function is_content_insert( $posttypes = '', $first_page = TRUE )
 	{
