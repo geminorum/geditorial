@@ -29,7 +29,7 @@ class Book extends gEditorial\Module
 
 	public function settings_intro_after( $module )
 	{
-		if ( ! $this->p2p )
+		if ( ! defined( 'P2P_PLUGIN_VERSION' ) )
 			HTML::desc( sprintf( _x( 'Please consider installing <a href="%s" target="_blank">Posts to Posts</a> or <a href="%s" target="_blank">Objects to Objects</a>.', 'Modules: Book: Settings Intro', GEDITORIAL_TEXTDOMAIN ),
 				'https://github.com/scribu/wp-posts-to-posts/', 'https://github.com/voceconnect/objects-to-objects' ) );
 	}
@@ -47,7 +47,7 @@ class Book extends gEditorial\Module
 			],
 		];
 
-		if ( $this->p2p ) {
+		if ( defined( 'P2P_PLUGIN_VERSION' ) ) {
 
 			$settings['posttypes_option'] = 'posttypes_option';
 
