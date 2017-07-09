@@ -81,6 +81,7 @@ class Book extends gEditorial\Module
 			'type_tax'                => 'publication_type',
 			'status_tax'              => 'publication_status',
 			'size_tax'                => 'publication_size',
+			'cover_shortcode'         => 'publication-cover',
 		];
 	}
 
@@ -318,6 +319,8 @@ class Book extends gEditorial\Module
 
 		$this->register_post_type( 'publication_cpt' );
 
+		$this->register_shortcode( 'cover_shortcode' );
+
 		if ( ! is_admin() ) {
 
 			if ( $this->get_setting( 'insert_cover' ) )
@@ -533,6 +536,29 @@ class Book extends gEditorial\Module
 	public function bulk_post_updated_messages( $messages, $counts )
 	{
 		return array_merge( $messages, $this->get_bulk_post_updated_messages( 'publication_cpt', $counts ) );
+	}
+
+	public function cover_shortcode( $atts = [], $content = NULL, $tag = '' )
+	{
+		$args = [
+			'size' => $this->get_image_size_key( 'publication_cpt', 'medium' ),
+			'type' => $this->constant( 'publication_cpt' ),
+			'echo' => FALSE,
+		];
+
+		if ( is_singular( $args['type'] ) )
+			$args['id'] = NULL;
+
+		else if ( is_singular() )
+			$args['id'] = 'assoc';
+
+		if ( ! $html = ModuleTemplate::postImage( array_merge( $args, (array) $atts ) ) )
+			return $content;
+
+		return ShortCode::wrap( $html,
+			$this->constant( 'cover_shortcode' ),
+			array_merge( [ 'wrap' => TRUE ], (array) $atts )
+		);
 	}
 
 	public function insert_content( $content, $posttypes = NULL )
