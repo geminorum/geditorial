@@ -80,6 +80,7 @@ class Magazine extends gEditorial\Module
 			'section_tax_slug'    => 'issue-section',
 			'issue_shortcode'     => 'issue',
 			'span_shortcode'      => 'issue-span',
+			'cover_shortcode'     => 'issue-cover',
 		];
 	}
 
@@ -233,6 +234,7 @@ class Magazine extends gEditorial\Module
 
 		$this->register_shortcode( 'issue_shortcode' );
 		$this->register_shortcode( 'span_shortcode' );
+		$this->register_shortcode( 'cover_shortcode' );
 
 		if ( ! is_admin() ) {
 
@@ -750,6 +752,29 @@ class Magazine extends gEditorial\Module
 			$atts,
 			$content,
 			$this->constant( 'span_shortcode' )
+		);
+	}
+
+	public function cover_shortcode( $atts = [], $content = NULL, $tag = '' )
+	{
+		$args = [
+			'size' => $this->get_image_size_key( 'issue_cpt', 'medium' ),
+			'type' => $this->constant( 'issue_cpt' ),
+			'echo' => FALSE,
+		];
+
+		if ( is_singular( $args['type'] ) )
+			$args['id'] = NULL;
+
+		else if ( is_singular() )
+			$args['id'] = 'assoc';
+
+		if ( ! $html = ModuleTemplate::postImage( array_merge( $args, (array) $atts ) ) )
+			return $content;
+
+		return ShortCode::wrap( $html,
+			$this->constant( 'cover_shortcode' ),
+			array_merge( [ 'wrap' => TRUE ], (array) $atts )
 		);
 	}
 
