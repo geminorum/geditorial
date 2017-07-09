@@ -403,17 +403,18 @@ class Widget extends \WP_Widget
 		], $label ).'</p>';
 	}
 
-	public function form_post_id( $instance, $default = '0', $field = 'post_id', $post_type_field = 'posttype', $post_type_default = 'page', $label = NULL )
+	// only works on hierarchical
+	public function form_page_id( $instance, $default = '0', $field = 'page_id', $post_type_field = 'posttype', $post_type_default = 'page', $label = NULL )
 	{
 		$post_type = isset( $instance[$post_type_field] ) ? $instance[$post_type_field] : $post_type_default;
-		$post_id   = isset( $instance[$field] ) ? $instance[$field] : $default;
+		$page_id   = isset( $instance[$field] ) ? $instance[$field] : $default;
 
 		if ( is_null( $label ) )
 			$label = _x( 'Page:', 'Widget Core', GEDITORIAL_TEXTDOMAIN );
 
 		$html = wp_dropdown_pages( [
 			'post_type'        => $post_type,
-			'selected'         => $post_id,
+			'selected'         => $page_id,
 			'name'             => $this->get_field_name( $field ),
 			'id'               => $this->get_field_id( $field ),
 			'class'            => 'widefat',
@@ -421,6 +422,9 @@ class Widget extends \WP_Widget
 			'sort_column'      => 'menu_order, post_title',
 			'echo'             => FALSE,
 		] );
+
+		if ( ! $html )
+			$html = '<br />'.Plugin::na();
 
 		echo '<p>'. HTML::tag( 'label', [
 			'for' => $this->get_field_id( $field ),

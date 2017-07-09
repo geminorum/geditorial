@@ -25,15 +25,15 @@ class IssueCover extends gEditorial\Widget
 	public function widget( $args, $instance )
 	{
 		if ( ! $instance['latest_issue']
-			&& ! $instance['post_id']
+			&& ! $instance['page_id']
 			&& ! is_singular() )
 				return;
 
 		if ( ! empty( $instance['latest_issue'] ) )
 			$prefix = '_latest_issue';
 
-		else if ( ! empty( $instance['post_id'] ) )
-			$prefix = '_issue_'.$instance['post_id'];
+		else if ( ! empty( $instance['page_id'] ) )
+			$prefix = '_issue_'.$instance['page_id'];
 
 		else
 			$prefix = '_queried_'.get_queried_object_id();
@@ -62,8 +62,8 @@ class IssueCover extends gEditorial\Widget
 		if ( ! empty( $instance['latest_issue'] ) )
 			$atts['id'] = (int) WordPress::getLastPostOrder( $atts['type'], '', 'ID', 'publish' );
 
-		else if ( ! empty( $instance['post_id'] ) )
-			$atts['id'] = (int) $instance['post_id'];
+		else if ( ! empty( $instance['page_id'] ) )
+			$atts['id'] = (int) $instance['page_id'];
 
 		else if ( is_singular( $atts['type'] ) )
 			$atts['id'] = NULL;
@@ -91,7 +91,7 @@ class IssueCover extends gEditorial\Widget
 		$this->form_title( $instance );
 		$this->form_title_link( $instance );
 
-		$this->form_post_id( $instance, '0', 'post_id', 'posttype', $cpt, _x( 'The Issue:', 'Modules: Magazine: Widget: Issue Cover', GEDITORIAL_TEXTDOMAIN ) );
+		$this->form_page_id( $instance, '0', 'page_id', 'posttype', $cpt, _x( 'The Issue:', 'Modules: Magazine: Widget: Issue Cover', GEDITORIAL_TEXTDOMAIN ) );
 		$this->form_image_size( $instance, $cpt.'-thumbnail', 'image_size', $cpt );
 
 		$this->form_checkbox( $instance, FALSE, 'latest_issue', _x( 'Always the latest issue', 'Modules: Magazine: Widget: Issue Cover', GEDITORIAL_TEXTDOMAIN ) );
@@ -111,7 +111,7 @@ class IssueCover extends gEditorial\Widget
 
 		$instance['title']        = strip_tags( $new_instance['title'] );
 		$instance['title_link']   = strip_tags( $new_instance['title_link'] );
-		$instance['post_id']      = intval( $new_instance['post_id'] );
+		$instance['page_id']      = intval( $new_instance['page_id'] );
 		$instance['image_size']   = isset( $new_instance['image_size'] ) ? strip_tags( $new_instance['image_size'] ) : 'thumbnail';
 		$instance['latest_issue'] = isset( $new_instance['latest_issue'] );
 		$instance['number_line']  = isset( $new_instance['number_line'] );
