@@ -309,7 +309,7 @@ class Widget extends \WP_Widget
 	public function form_title_link( $instance, $default = '', $field = 'title_link' )
 	{
 		$html = HTML::tag( 'input', [
-			'type'  => 'text',
+			'type'  => 'url',
 			'class' => 'widefat',
 			'name'  => $this->get_field_name( $field ),
 			'id'    => $this->get_field_id( $field ),
@@ -320,6 +320,25 @@ class Widget extends \WP_Widget
 		echo '<p>'. HTML::tag( 'label', [
 			'for' => $this->get_field_id( $field ),
 		], _x( 'Title Link:', 'Widget Core', GEDITORIAL_TEXTDOMAIN ).$html ).'</p>';
+	}
+
+	public function form_custom_link( $instance, $default = '', $field = 'custom_link', $label = NULL )
+	{
+		if ( is_null( $label ) )
+			$label = _x( 'Custom Link:', 'Widget Core', GEDITORIAL_TEXTDOMAIN );
+
+		$html = HTML::tag( 'input', [
+			'type'  => 'url',
+			'class' => 'widefat',
+			'name'  => $this->get_field_name( $field ),
+			'id'    => $this->get_field_id( $field ),
+			'value' => isset( $instance[$field] ) ? $instance[$field] : $default,
+			'dir'   => 'ltr',
+		] );
+
+		echo '<p>'. HTML::tag( 'label', [
+			'for' => $this->get_field_id( $field ),
+		], $label.$html ).'</p>';
 	}
 
 	public function form_avatar_size( $instance, $default = '32', $field = 'avatar_size' )
