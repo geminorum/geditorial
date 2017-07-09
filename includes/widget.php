@@ -424,7 +424,7 @@ class Widget extends \WP_Widget
 		] );
 
 		if ( ! $html )
-			$html = '<br />'.Plugin::na();
+			$html = ' '.Plugin::na();
 
 		echo '<p>'. HTML::tag( 'label', [
 			'for' => $this->get_field_id( $field ),

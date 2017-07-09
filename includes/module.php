@@ -1818,7 +1818,7 @@ class Module extends Base
 
 	// DEFAULT METHOD
 	// used for issue/book/etc.
-	public function get_assoc_post( $post_id = NULL, $single = FALSE )
+	public function get_assoc_post( $post = NULL, $single = FALSE, $published = TRUE )
 	{
 		return FALSE;
 	}
