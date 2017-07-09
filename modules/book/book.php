@@ -288,6 +288,13 @@ class Book extends gEditorial\Module
 			add_action( 'gnetwork_themes_content_after', [ $this, 'insert_content' ], 100 );
 	}
 
+	public function widgets_init()
+	{
+		$this->require_code( 'widgets' );
+
+		register_widget( '\\geminorum\\gEditorial\\Widgets\\Book\\PublicationCover' );
+	}
+
 	public function init()
 	{
 		parent::init();
