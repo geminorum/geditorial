@@ -724,7 +724,8 @@ class Helper extends Core\Base
 			'callback' => function( $value, $row, $column, $index ){
 				$html = '';
 				foreach ( $column['args']['taxonomies'] as $taxonomy => $object )
-					$html .= Helper::getTermsEditRow( $row, $object, '<div>'.$object->label.': ', '</div>' );
+					if ( $object->label ) // only public taxes
+						$html .= Helper::getTermsEditRow( $row, $object, '<div>'.$object->label.': ', '</div>' );
 				return $html;
 			},
 		];

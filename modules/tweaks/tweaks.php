@@ -409,14 +409,14 @@ class Tweaks extends gEditorial\Module
 			break;
 			case $this->classs( 'rows' ):
 
-				echo '<div class="geditorial-admin-wrap-column -tweaks -rows"><ul>';
+				echo '<div class="geditorial-admin-wrap-column -tweaks -rows"><ul class="-rows">';
 					do_action( $this->hook( 'column_row' ), $post );
 				echo '</ul></div>';
 
 			break;
 			case $this->classs( 'atts' ):
 
-				echo '<div class="geditorial-admin-wrap-column -tweaks -atts"><ul>';
+				echo '<div class="geditorial-admin-wrap-column -tweaks -atts"><ul class="-rows">';
 					do_action( $this->hook( 'column_attr' ), $post );
 				echo '</ul></div>';
 
@@ -487,7 +487,7 @@ class Tweaks extends gEditorial\Module
 
 			ob_start();
 
-			echo '<div class="geditorial-admin-wrap-column -tweaks -user"><ul>';
+			echo '<div class="geditorial-admin-wrap-column -tweaks -user"><ul class="-rows">';
 				do_action( $this->hook( 'column_user' ), get_userdata( $user_id ) );
 			echo '</ul></div>';
 
@@ -497,7 +497,7 @@ class Tweaks extends gEditorial\Module
 
 			ob_start();
 
-			echo '<div class="geditorial-admin-wrap-column -tweaks -contacts"><ul>';
+			echo '<div class="geditorial-admin-wrap-column -tweaks -contacts"><ul class="-rows">';
 				do_action( $this->hook( 'column_contacts' ), get_userdata( $user_id ) );
 			echo '</ul></div>';
 
@@ -671,7 +671,7 @@ class Tweaks extends gEditorial\Module
 		if ( $post->post_author == $this->site_user_id )
 			return;
 
-		echo '<li class="-attr tweaks-default-atts -post-author -post-author-'.$post->post_status.'">';
+		echo '<li class="-row tweaks-default-atts -post-author -post-author-'.$post->post_status.'">';
 			echo $this->get_column_icon( FALSE, 'admin-users', _x( 'Author', 'Modules: Tweaks: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
 			echo '<span class="-author">'.WordPress::getAuthorEditHTML( $post->post_type, $post->post_author ).'</span>';
 		echo '</li>';
@@ -699,12 +699,12 @@ class Tweaks extends gEditorial\Module
 			$status = _x( 'Drafted', 'Modules: Tweaks: Attr: Status', GEDITORIAL_TEXTDOMAIN );
 		}
 
-		echo '<li class="-attr tweaks-default-atts -post-status -post-status-'.$post->post_status.'">';
+		echo '<li class="-row tweaks-default-atts -post-status -post-status-'.$post->post_status.'">';
 			echo $this->get_column_icon( FALSE, 'post-status', _x( 'Status', 'Modules: Tweaks: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
 			echo '<span class="-status" title="'.$post->post_status.'">'.$status.'</span>';
 		echo '</li>';
 
-		echo '<li class="-attr tweaks-default-atts -post-date">';
+		echo '<li class="-row tweaks-default-atts -post-date">';
 			echo $this->get_column_icon( FALSE, 'calendar-alt', _x( 'Publish Date', 'Modules: Tweaks: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
 			echo Helper::getDateEditRow( $post->post_date, '-date' );
 		echo '</li>';
@@ -712,14 +712,14 @@ class Tweaks extends gEditorial\Module
 		if ( $post->post_modified != $post->post_date
 			&& current_user_can( 'edit_post', $post->ID ) ) {
 
-			echo '<li class="-attr tweaks-default-atts -post-modified">';
+			echo '<li class="-row tweaks-default-atts -post-modified">';
 				echo $this->get_column_icon( FALSE, 'edit', _x( 'Last Edit', 'Modules: Tweaks: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
 				echo Helper::getDateEditRow( $post->post_modified, '-edit' );
 			echo '</li>';
 		}
 
 		if ( 'excerpt' == $GLOBALS['mode'] && $post->post_name ) {
-			echo '<li class="-attr tweaks-default-atts -post-name">';
+			echo '<li class="-row tweaks-default-atts -post-name">';
 				echo $this->get_column_icon( FALSE, 'admin-links', _x( 'Post Slug', 'Modules: Tweaks: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
 				echo '<code>'.urldecode( $post->post_name ).'</code>';
 			echo '</li>';
@@ -729,20 +729,20 @@ class Tweaks extends gEditorial\Module
 	public function column_user_default( $user )
 	{
 		if ( $user->first_name || $user->last_name ) {
-			echo '<li class="-attr tweaks-user-atts -name">';
+			echo '<li class="-row tweaks-user-atts -name">';
 				echo $this->get_column_icon( FALSE, 'nametag', _x( 'Name', 'Modules: Tweaks: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
 				echo "$user->first_name $user->last_name";
 			echo '</li>';
 		}
 
 		$role = $this->get_column_icon( FALSE, 'businessman', _x( 'Roles', 'Modules: Tweaks: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
-		echo Helper::getJoined( User::getRoleList( $user ), '<li class="-attr tweaks-user-atts -roles">'.$role, '</li>' );
+		echo Helper::getJoined( User::getRoleList( $user ), '<li class="-row tweaks-user-atts -roles">'.$role, '</li>' );
 	}
 
 	public function column_contacts_default( $user )
 	{
 		if ( $user->user_email ) {
-			echo '<li class="-attr tweaks-user-contacts -email">';
+			echo '<li class="-row tweaks-user-contacts -email">';
 				echo $this->get_column_icon( FALSE, 'email', _x( 'Email', 'Modules: Tweaks: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
 				echo HTML::mailto( $user->user_email );
 			echo '</li>';
@@ -760,7 +760,7 @@ class Tweaks extends gEditorial\Module
 			else
 				$icon = 'email-alt';
 
-			echo '<li class="-attr tweaks-user-contacts -contact-'.$method.'">';
+			echo '<li class="-row tweaks-user-contacts -contact-'.$method.'">';
 				echo $this->get_column_icon( FALSE, $icon, $title );
 				echo $this->display_meta( $meta, $method );
 			echo '</li>';

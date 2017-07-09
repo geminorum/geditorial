@@ -523,9 +523,9 @@ class Meta extends gEditorial\Module
 		$fields  = $this->post_type_field_types( $post->post_type );
 		$exclude = [ 'ot', 'st', 'highlight', 'as', 'ch', 'le', 'source_title', 'source_url' ];
 
-		echo '<ul class="geditorial-admin-wrap-column -meta -rows">';
+		echo '<div class="geditorial-admin-wrap-column -meta"><ul class="-rows">';
 			$this->actions( 'column_row', $post, $fields, array_diff_key( $meta, array_flip( $exclude ) ) );
-		echo '</ul>';
+		echo '</ul></div>';
 	}
 
 	public function column_row_default( $post, $fields, $meta )

@@ -388,7 +388,7 @@ class Users extends gEditorial\Module
 
 		echo HTML::wrap( get_avatar( $user->user_email, 86 ), '-avatar' );
 
-		echo '<ul>';
+		echo '<ul class="-rows">';
 
 		if ( $user->first_name || $user->last_name ) {
 			echo '<li class="-attr -users -name">';
