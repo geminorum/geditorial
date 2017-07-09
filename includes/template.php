@@ -142,20 +142,14 @@ class Template extends Core\Base
 
 		if ( $args['link'] ) {
 
-			if ( 'publish' == $status ) {
+			if ( 'parent' == $args['link'] )
+				$args['link'] = 'publish' == $status ? get_permalink( $args['id'] ) : FALSE;
 
-				if ( 'parent' == $args['link'] )
-					$args['link'] = get_permalink( $args['id'] );
+			else if ( 'attachment' == $args['link'] )
+				$args['link'] = ( $thumbnail && 'publish' == $status ) ? get_attachment_link( $thumbnail ) : FALSE;
 
-				else if ( 'attachment' == $args['link'] && $thumbnail )
-					$args['link'] = get_attachment_link( $thumbnail );
-
-				else if ( 'url' == $args['link'] && $thumbnail )
-					$args['link'] = wp_get_attachment_url( $thumbnail );
-
-			} else {
-				$args['link'] = FALSE;
-			}
+			else if ( 'url' == $args['link'] )
+				$args['link'] = ( $thumbnail && 'publish' == $status ) ? wp_get_attachment_url( $thumbnail ) : FALSE;
 		}
 
 		$image = self::getPostImageTag( $args );
