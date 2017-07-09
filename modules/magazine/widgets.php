@@ -25,15 +25,15 @@ class IssueCover extends gEditorial\Widget
 	public function widget( $args, $instance )
 	{
 		if ( ! $instance['latest_issue']
-			&& ! $instance['issue_id']
+			&& ! $instance['post_id']
 			&& ! is_singular() )
 				return;
 
 		if ( ! empty( $instance['latest_issue'] ) )
 			$prefix = '_latest_issue';
 
-		else if ( ! empty( $instance['issue_id'] ) )
-			$prefix = '_issue_'.$instance['issue_id'];
+		else if ( ! empty( $instance['post_id'] ) )
+			$prefix = '_issue_'.$instance['post_id'];
 
 		else
 			$prefix = '_queried_'.get_queried_object_id();
@@ -43,18 +43,27 @@ class IssueCover extends gEditorial\Widget
 
 	public function widget_html( $args, $instance )
 	{
+		$link = 'parent';
+
+		if ( ! empty( $instance['custom_link'] ) )
+			$link = $instance['custom_link'];
+
+		else if ( empty( $instance['link_issue'] ) )
+			$link = FALSE;
+
 		$atts = [
 			'type'  => self::constant( 'issue_cpt', 'issue' ),
 			'size'  => empty( $instance['image_size'] ) ? NULL : $instance['image_size'],
+			'title' => empty( $instance['number_line'] ) ? 'title' : 'number',
+			'link'  => $link,
 			'echo'  => FALSE,
-			'title' => 'number',
 		];
 
 		if ( ! empty( $instance['latest_issue'] ) )
 			$atts['id'] = (int) WordPress::getLastPostOrder( $atts['type'], '', 'ID', 'publish' );
 
-		else if ( ! empty( $instance['issue_id'] ) )
-			$atts['id'] = (int) $instance['issue_id'];
+		else if ( ! empty( $instance['post_id'] ) )
+			$atts['id'] = (int) $instance['post_id'];
 
 		else if ( is_singular( $atts['type'] ) )
 			$atts['id'] = NULL;
@@ -82,12 +91,13 @@ class IssueCover extends gEditorial\Widget
 		$this->form_title( $instance );
 		$this->form_title_link( $instance );
 
-		$this->form_post_id( $instance, '0', 'issue_id', 'posttype', $cpt, _x( 'The Issue:', 'Modules: Magazine: Widget: Issue Cover', GEDITORIAL_TEXTDOMAIN ) );
+		$this->form_post_id( $instance, '0', 'post_id', 'posttype', $cpt, _x( 'The Issue:', 'Modules: Magazine: Widget: Issue Cover', GEDITORIAL_TEXTDOMAIN ) );
 		$this->form_image_size( $instance, $cpt.'-thumbnail', 'image_size', $cpt );
 
 		$this->form_checkbox( $instance, FALSE, 'latest_issue', _x( 'Always the latest issue', 'Modules: Magazine: Widget: Issue Cover', GEDITORIAL_TEXTDOMAIN ) );
-		$this->form_checkbox( $instance, FALSE, 'link_issue', _x( 'Link to the issue', 'Modules: Magazine: Widget: Issue Cover', GEDITORIAL_TEXTDOMAIN ) );
-		$this->form_checkbox( $instance, FALSE, 'number_line', _x( 'Display the Number Meta', 'Modules: Magazine: Widget: Issue Cover', GEDITORIAL_TEXTDOMAIN ) );
+		$this->form_checkbox( $instance, TRUE, 'number_line', _x( 'Display the Number Meta', 'Modules: Magazine: Widget: Issue Cover', GEDITORIAL_TEXTDOMAIN ) );
+		$this->form_checkbox( $instance, TRUE, 'link_issue', _x( 'Link to the issue', 'Modules: Magazine: Widget: Issue Cover', GEDITORIAL_TEXTDOMAIN ) );
+		$this->form_custom_link( $instance );
 
 		$this->form_context( $instance );
 		$this->form_class( $instance );
@@ -101,11 +111,12 @@ class IssueCover extends gEditorial\Widget
 
 		$instance['title']        = strip_tags( $new_instance['title'] );
 		$instance['title_link']   = strip_tags( $new_instance['title_link'] );
-		$instance['issue_id']     = intval( $new_instance['issue_id'] );
+		$instance['post_id']      = intval( $new_instance['post_id'] );
 		$instance['image_size']   = isset( $new_instance['image_size'] ) ? strip_tags( $new_instance['image_size'] ) : 'thumbnail';
 		$instance['latest_issue'] = isset( $new_instance['latest_issue'] );
-		$instance['link_issue']   = isset( $new_instance['link_issue'] );
 		$instance['number_line']  = isset( $new_instance['number_line'] );
+		$instance['link_issue']   = isset( $new_instance['link_issue'] );
+		$instance['custom_link']  = strip_tags( $new_instance['custom_link'] );
 		$instance['context']      = strip_tags( $new_instance['context'] );
 		$instance['class']        = strip_tags( $new_instance['class'] );
 
