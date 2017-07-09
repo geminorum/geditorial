@@ -3,6 +3,7 @@
 defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Core\HTML;
 
 class PostType extends Core\Base
 {
@@ -128,5 +129,31 @@ class PostType extends Core\Base
 			return $all[$feature][0];
 
 		return array();
+	}
+
+	// must add `add_thickbox()` for thickbox
+	public static function getFeaturedImageHTML( $post_id, $size = 'thumbnail', $link = TRUE )
+	{
+		if ( ! $post_thumbnail_id = get_post_thumbnail_id( $post_id ) )
+			return '';
+
+		if ( ! $post_thumbnail_img = wp_get_attachment_image_src( $post_thumbnail_id, $size ) )
+			return '';
+
+		$image = HTML::img( $post_thumbnail_img[0], '-featured' );
+
+		if ( ! $link )
+			return $image;
+
+		return HTML::tag( 'a', array(
+			'href'   => wp_get_attachment_url( $post_thumbnail_id ),
+			'title'  => get_the_title( $post_thumbnail_id ),
+			'class'  => 'thickbox',
+			'target' => '_blank',
+			'data'   => array(
+				'post'       => $post_id,
+				'attachment' => $post_thumbnail_id,
+			),
+		), $image );
 	}
 }

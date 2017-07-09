@@ -3,6 +3,7 @@
 defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Core\HTML;
 
 class Taxonomy extends Core\Base
 {
@@ -257,5 +258,80 @@ class Taxonomy extends Core\Base
 		}
 
 		return $count;
+	}
+
+	public static function addSupport( $taxonomy, $features )
+	{
+		global $gEditorialTaxonomyFeatures;
+
+		foreach ( (array) $features as $feature )
+
+			if ( 2 == func_num_args() )
+				$gEditorialTaxonomyFeatures[$taxonomy][$feature] = TRUE;
+
+			else
+				$gEditorialTaxonomyFeatures[$taxonomy][$feature] = array_slice( func_get_args(), 2 );
+	}
+
+	public static function removeSupport( $taxonomy, $feature )
+	{
+		global $gEditorialTaxonomyFeatures;
+
+		unset( $gEditorialTaxonomyFeatures[$taxonomy][$feature] );
+	}
+
+	public static function getAllSupports( $taxonomy )
+	{
+		global $gEditorialTaxonomyFeatures;
+
+		if ( isset( $gEditorialTaxonomyFeatures[$taxonomy] ) )
+			return $gEditorialTaxonomyFeatures[$taxonomy];
+
+		return array();
+	}
+
+	public static function supports( $taxonomy, $feature )
+	{
+		$all = self::getAllSupports( $taxonomy );
+
+		if ( isset( $all[$feature][0] ) && is_array( $all[$feature][0] ) )
+			return $all[$feature][0];
+
+		return array();
+	}
+
+	public static function getBySupport( $feature, $operator = 'and' )
+	{
+		global $gEditorialTaxonomyFeatures;
+
+		$features = array_fill_keys( (array) $feature, TRUE );
+
+		return array_keys( wp_filter_object_list( $gEditorialTaxonomyFeatures, $features, $operator ) );
+	}
+
+	// must add `add_thickbox()` for thickbox
+	public static function getFeaturedImageHTML( $term_id, $size = 'thumbnail', $link = TRUE )
+	{
+		if ( ! $term_image_id = get_term_meta( $term_id, 'image', TRUE ) )
+			return '';
+
+		if ( ! $term_thumbnail_img = wp_get_attachment_image_src( $term_image_id, $size ) )
+			return '';
+
+		$image = HTML::img( $term_thumbnail_img[0], '-featured' );
+
+		if ( ! $link )
+			return $image;
+
+		return HTML::tag( 'a', array(
+			'href'   => wp_get_attachment_url( $term_image_id ),
+			'title'  => get_the_title( $term_image_id ),
+			'class'  => 'thickbox',
+			'target' => '_blank',
+			'data'   => array(
+				'term'       => $term_id,
+				'attachment' => $term_image_id,
+			),
+		), $image );
 	}
 }

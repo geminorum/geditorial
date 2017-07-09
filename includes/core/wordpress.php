@@ -170,28 +170,6 @@ class WordPress extends Base
 		return $post_thumbnail_img[0];
 	}
 
-	// must add `add_thickbox()` for thickbox
-	public static function getFeaturedImageHTML( $post_id, $size = 'thumbnail', $link = TRUE )
-	{
-		if ( ! $post_thumbnail_id = get_post_thumbnail_id( $post_id ) )
-			return '';
-
-		if ( ! $post_thumbnail_img = wp_get_attachment_image_src( $post_thumbnail_id, $size ) )
-			return '';
-
-		$image = HTML::tag( 'img', array( 'src' => $post_thumbnail_img[0] ) );
-
-		if ( ! $link )
-			return $image;
-
-		return HTML::tag( 'a', array(
-			'href'   => wp_get_attachment_url( $post_thumbnail_id ),
-			'title'  => get_the_title( $post_thumbnail_id ),
-			'class'  => 'thickbox',
-			'target' => '_blank',
-		), $image );
-	}
-
 	public static function newPostFromTerm( $term, $taxonomy = 'category', $post_type = 'post', $user_id = 0 )
 	{
 		if ( ! is_object( $term ) && ! is_array( $term ) )

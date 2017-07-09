@@ -126,7 +126,7 @@ class HTTP extends Base
 		return trim( preg_replace( '/[^0-9a-fA-F:., ]/', '', stripslashes( $ip ) ) );
 	}
 
-	public static function IPinRange( $ip, $range, $block )
+	public static function IPinRange( $ip, $range )
 	{
 		// 1.2.3/24  OR  1.2.3.4/255.255.255.0
 		if ( FALSE !== strpos( $range, '/' ) )

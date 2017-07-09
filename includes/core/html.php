@@ -541,6 +541,7 @@ class HTML extends Base
 			'limit'    => self::limit(),
 			'paged'    => self::paged(),
 			'order'    => self::order( 'ASC' ),
+			'extra'    => array(),
 			'all'      => FALSE,
 			'next'     => FALSE,
 			'previous' => FALSE,
@@ -580,10 +581,10 @@ class HTML extends Base
 			echo '<button type="submit" name="filter_action" class="button -filter" />'.$icons['filter'].'</button>&nbsp;';
 
 			echo self::tag( 'a', array(
-				'href'  => add_query_arg( array(
+				'href' => add_query_arg( array_merge( $args['extra'], array(
 					'order' => ( 'ASC' === $args['order'] ) ? 'desc' : 'asc',
 					'limit' => $args['limit'],
-				) ),
+				) ) ),
 				'class' => '-order -link button',
 			), $icons['order'] );
 
@@ -617,20 +618,20 @@ class HTML extends Base
 				), $icons['first'] );
 				echo '&nbsp;';
 				echo self::tag( 'a', array(
-					'href'  => add_query_arg( array(
+					'href'  => add_query_arg( array_merge( $args['extra'], array(
 						'paged' => $args['previous'],
 						'limit' => $args['limit'],
-					) ),
+					) ) ),
 					'class' => '-previous -link button',
 				), $icons['previous'] );
 			}
 
 			echo '&nbsp;';
 			echo self::tag( 'a', array(
-				'href'  => add_query_arg( array(
+				'href'  => add_query_arg( array_merge( $args['extra'], array(
 					'paged' => $args['paged'],
 					'limit' => $args['limit'],
-				) ),
+				) ) ),
 				'class' => '-refresh -link button',
 			), $icons['refresh'] );
 			echo '&nbsp;';
@@ -641,18 +642,18 @@ class HTML extends Base
 				echo '<span class="-next -span button" disabled="disabled">'.$icons['next'].'</span>';
 			} else {
 				echo self::tag( 'a', array(
-					'href'  => add_query_arg( array(
+					'href'  => add_query_arg( array_merge( $args['extra'], array(
 						'paged' => $args['next'],
 						'limit' => $args['limit'],
-					) ),
+					) ) ),
 					'class' => '-next -link button',
 				), $icons['next'] );
 				echo '&nbsp;';
 				echo self::tag( 'a', array(
-					'href'  => add_query_arg( array(
+					'href'  => add_query_arg( array_merge( $args['extra'], array(
 						'paged' => $args['pages'],
 						'limit' => $args['limit'],
-					) ),
+					) ) ),
 					'class' => '-last -link button',
 				), $icons['last'] );
 			}
@@ -661,14 +662,15 @@ class HTML extends Base
 		echo '</div>';
 	}
 
-	public static function tablePagination( $found, $max, $limit, $paged, $all = FALSE )
+	public static function tablePagination( $found, $max, $limit, $paged, $extra = array(), $all = FALSE )
 	{
 		$pagination = array(
 			'total'    => intval( $found ),
 			'pages'    => intval( $max ),
 			'limit'    => intval( $limit ),
 			'paged'    => intval( $paged ),
-			'all'      => $all,
+			'extra'    => $extra, // extra args to add to the links
+			'all'      => $all, // WTF?! (probably display all!)
 			'next'     => FALSE,
 			'previous' => FALSE,
 		);
