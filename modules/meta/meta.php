@@ -207,6 +207,7 @@ class Meta extends gEditorial\Module
 	{
 		if ( $this->is_inline_save( $_REQUEST, $this->post_types() ) ) {
 			$this->_edit_screen( $_REQUEST['post_type'] );
+			$this->_default_rows();
 			$this->action( 'save_post', 2 );
 		}
 	}
@@ -547,7 +548,9 @@ class Meta extends gEditorial\Module
 				if ( $value = $this->get_postmeta( $post->ID, $field, '' ) ) {
 
 					echo '<li class="-row meta-'.$field.'">';
+
 						echo $this->get_column_icon( FALSE, $icon, $this->get_string( $field, $post->post_type, 'titles', $field ) );
+
 						echo esc_html( $value );
 
 						if ( 'as' == $field && $author ) {
@@ -555,10 +558,10 @@ class Meta extends gEditorial\Module
 							$author = FALSE;
 						}
 
+						echo '<div class="hidden geditorial-meta-'.$field.'-value">'.$value.'</div>';
+
 					echo '</li>';
 				}
-
-				echo '<div class="hidden geditorial-meta-'.$field.'-value">'.$value.'</div>';
 			}
 		}
 
