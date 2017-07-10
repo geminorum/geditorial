@@ -57,11 +57,10 @@ class Event extends gEditorial\Module
 			'type_tax'          => 'event_type',
 			'cal_tax'           => 'event_calendar',
 
-			'ical_endpoint'   => 'ics',
-			'event_startdate' => 'event_startdate',
-			'event_enddate'   => 'event_enddate',
-			'event_timezone'  => 'event_timezone',
-			'mysql_format'    => 'Y-m-d H:i:s',
+			'endpoint_ical'     => 'ics',
+			'metakey_startdate' => '_event_startdate',
+			'metakey_enddate'   => '_event_enddate',
+			'metakey_timezone'  => '_event_timezone',
 		];
 	}
 
@@ -170,7 +169,7 @@ class Event extends gEditorial\Module
 			'meta_box_cb'  => NULL, // default meta box
 		] );
 
-		add_rewrite_endpoint( $this->constant( 'ical_endpoint' ), EP_PAGES, 'ical' );
+		add_rewrite_endpoint( $this->constant( 'endpoint_ical' ), EP_PAGES, 'ical' );
 
 		if ( ! is_admin() ) {
 
@@ -307,12 +306,12 @@ class Event extends gEditorial\Module
 			// self::dump($event_meta);
 
 			// TODO: Localize
-			// @$startdate = date( "F j, Y", $event_meta[$this->constant( 'event_startdate' )][0] );
-			// @$enddate = date( "F j, Y", $event_meta[$this->constant( 'event_enddate' )][0] );
+			// @$startdate = date( "F j, Y", $event_meta[$this->constant( 'metakey_startdate' )][0] );
+			// @$enddate = date( "F j, Y", $event_meta[$this->constant( 'metakey_enddate' )][0] );
 			// echo $startdate . '<br /><em>' . $enddate . '</em>';
 
-			// echo date_i18n( _x( 'F j, Y', 'Modules: Event', GEDITORIAL_TEXTDOMAIN ), strtotime( $event_meta[$this->constant( 'event_startdate' )][0] ) )
-			// 	.'<br /><em>'.date_i18n( _x( 'F j, Y', 'Modules: Event', GEDITORIAL_TEXTDOMAIN ), strtotime( $event_meta[$this->constant( 'event_enddate' )][0] ) );
+			// echo date_i18n( _x( 'F j, Y', 'Modules: Event', GEDITORIAL_TEXTDOMAIN ), strtotime( $event_meta[$this->constant( 'metakey_startdate' )][0] ) )
+			// 	.'<br /><em>'.date_i18n( _x( 'F j, Y', 'Modules: Event', GEDITORIAL_TEXTDOMAIN ), strtotime( $event_meta[$this->constant( 'metakey_enddate' )][0] ) );
 
 			echo '&mdash;';
 
@@ -324,8 +323,8 @@ class Event extends gEditorial\Module
 
 			// TODO: Localize
 			// $time_format = get_option( 'time_format', 'g:i a' );
-			// @$starttime = date( $time_format, strtotime( $event_meta[$this->constant( 'event_startdate' )][0] ) );
-			// @$endtime = date( $time_format,  strtotime( $event_meta[$this->constant( 'event_enddate' )][0] ) );
+			// @$starttime = date( $time_format, strtotime( $event_meta[$this->constant( 'metakey_startdate' )][0] ) );
+			// @$endtime = date( $time_format,  strtotime( $event_meta[$this->constant( 'metakey_enddate' )][0] ) );
 			// echo $starttime . '<br />' .$endtime;
 		}
 	}
@@ -344,13 +343,13 @@ class Event extends gEditorial\Module
 
 			if ( 'event_starts' == $query_vars['orderby'] )
 				$query_vars = array_merge( $query_vars, [
-					'meta_key' => $this->constant( 'event_startdate' ),
+					'meta_key' => $this->constant( 'metakey_startdate' ),
 					'orderby'  => 'meta_value_num'
 				] );
 
 			else if ( 'event_ends' == $query_vars['orderby'] )
 				$query_vars = array_merge( $query_vars, [
-					'meta_key' => $this->constant( 'event_enddate' ),
+					'meta_key' => $this->constant( 'metakey_enddate' ),
 					'orderby'  => 'meta_value_num'
 				] );
 		}
@@ -464,14 +463,14 @@ class Event extends gEditorial\Module
 			&& is_post_type_archive( $this->constant( 'event_type' ) ) ) {
 
 			$meta_query = [ [
-				'key'     => $this->constant( 'event_startdate' ),
+				'key'     => $this->constant( 'metakey_startdate' ),
 				'value'   => current_time( 'mysql' ),
 				'compare' => '>'
 			] ];
 
 			$query->set( 'meta_query', $meta_query );
 			$query->set( 'orderby', 'meta_value_num' );
-			$query->set( 'meta_key', $this->constant( 'event_startdate' ) );
+			$query->set( 'meta_key', $this->constant( 'metakey_startdate' ) );
 			$query->set( 'order', 'ASC' );
 			// $query->set( 'posts_per_page', '2' );
 		}
