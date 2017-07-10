@@ -27,9 +27,13 @@ class Today extends gEditorial\Module
 	protected function get_global_settings()
 	{
 		return [
-			'_general' => [
-				'multiple_instances',
+			'_defaults' => [
 				'calendar_type',
+				[
+					'field'       => 'today_in_draft',
+					'title'       => _x( 'Fill The Day', 'Modules: Today: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Fills the current day info for newly drafted supported posttypes.', 'Modules: Today: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+				],
 			],
 			'_frontend' => [
 				[
@@ -225,8 +229,7 @@ class Today extends gEditorial\Module
 
 			$default_type = $this->get_setting( 'calendar_type', 'gregorian' );
 
-			if ( 'auto-draft' == $post->post_status
-				&& $this->get_setting( 'today_in_draft', FALSE ) ) // FIXME: add setting
+			if ( 'auto-draft' == $post->post_status && $this->get_setting( 'today_in_draft' ) )
 				$the_day = ModuleHelper::getTheDayFromToday( NULL, $default_type );
 
 			else if ( self::req( 'post' ) )
