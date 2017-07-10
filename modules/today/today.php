@@ -353,12 +353,23 @@ class Today extends gEditorial\Module
 		echo '</div>';
 	}
 
-	public function set_meta( $post_id, $postmeta, $key_suffix = '' )
+	public function set_today_meta( $post_id, $postmeta, $constants )
 	{
-		if ( $postmeta )
-			update_post_meta( $post_id, $key_suffix, $postmeta );
-		else
-			delete_post_meta( $post_id, $key_suffix );
+		// if only cal meta, delete all
+		if ( 1 === count( $postmeta )
+			&& array_key_exists( 'cal', $postmeta ) ) {
+
+			foreach ( $constants as $field => $constant )
+				delete_post_meta( $post_id, $constant );
+
+			return;
+		}
+
+		foreach ( $constants as $field => $constant )
+			if ( array_key_exists( $field, $postmeta ) )
+				update_post_meta( $post_id, $constant, $postmeta[$field] );
+			else
+				delete_post_meta( $post_id, $constant );
 	}
 
 	public function save_post_supported( $post_id, $post, $update )
@@ -369,21 +380,28 @@ class Today extends gEditorial\Module
 			if ( wp_verify_nonce( @$_REQUEST['_geditorial_today_post_main'], 'geditorial_today_post_main' )
 				|| wp_verify_nonce( @$_REQUEST['_geditorial_today_post_raw'], 'geditorial_today_post_raw' ) ) {
 
-				$default_type = $this->get_setting( 'calendar_type', 'gregorian' );
+				$postmeta      = [];
+				$save_the_year = $post->post_type != $this->constant( 'day_cpt' );
+				$default_type  = $this->get_setting( 'calendar_type', 'gregorian' );
+				$constants     = $this->get_the_day_constants( $save_the_year );
 
-				foreach ( $this->get_the_day_constants() as $field => $constant ) {
-					if ( isset( $_POST['geditorial-today-date-'.$field] ) ) {
+				foreach ( $constants as $field => $constant ) {
 
-						$value = trim( $_POST['geditorial-today-date-'.$field] );
+					$key = 'geditorial-today-date-'.$field;
 
-						if ( 'cal' == $field )
-							$value = Helper::sanitizeCalendar( trim( $value ), $default_type );
-						else
-							$value = Number::intval( trim( $value ), FALSE );
+					if ( ! array_key_exists( $key, $_POST ) )
+						continue;
 
-						$this->set_meta( $post_id, $value, $constant );
-					}
+					if ( ! $value = trim( $_POST[$key] ) )
+						continue;
+
+					if ( 'cal' == $field )
+						$postmeta[$field] = Helper::sanitizeCalendar( $value, $default_type );
+					else
+						$postmeta[$field] = Number::intval( $value, FALSE );
 				}
+
+				$this->set_today_meta( $post->ID, $postmeta, $constants );
 			}
 		}
 
