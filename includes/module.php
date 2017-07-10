@@ -2394,4 +2394,43 @@ SQL;
 	{
 		return gEditorial()->icon( $name, ( is_null( $group ) ? $this->icon_group : $group ) );
 	}
+
+	protected function getTablePosts( $atts = [], $extra = [], $posttypes = NULL )
+	{
+		if ( is_null( $posttypes ) )
+			$posttypes = $this->post_types();
+
+		$limit  = $this->limit_sub();
+		$paged  = self::paged();
+		$offset = ( $paged - 1 ) * $limit;
+
+		$args = array_merge( [
+			'posts_per_page'   => $limit,
+			'offset'           => $offset,
+			'orderby'          => self::orderby( 'ID' ),
+			'order'            => self::order( 'DESC' ),
+			'post_type'        => $posttypes, // 'any',
+			'post_status'      => [ 'publish', 'future', 'draft', 'pending' ],
+			'suppress_filters' => TRUE,
+		], $atts );
+
+		if ( ! empty( $_REQUEST['id'] ) )
+			$args['post__in'] = explode( ',', maybe_unserialize( $_REQUEST['id'] ) );
+
+		if ( ! empty( $_REQUEST['type'] ) )
+			$args['post_type'] = $extra['type'] = $_REQUEST['type'];
+
+		if ( 'attachment' == $args['post_type'] )
+			$args['post_status'][] = 'inherit';
+
+		$query = new \WP_Query;
+		$posts = $query->query( $args );
+
+		$pagination = HTML::tablePagination( $query->found_posts, $query->max_num_pages, $limit, $paged, $extra );
+
+		$pagination['orderby'] = $args['orderby'];
+		$pagination['order']   = $args['order'];
+
+		return [ $posts, $pagination ];
+	}
 }

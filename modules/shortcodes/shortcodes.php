@@ -79,7 +79,15 @@ class Shortcodes extends gEditorial\Module
 
 	private function tableSummary()
 	{
-		list( $posts, $pagination ) = $this->getPostArray();
+		$query     = $extra = [];
+		$shortcode = self::req( 'shortcode', 'none' );
+
+		if ( 'none' != $shortcode ) {
+			$query['s'] = '['.$shortcode;
+			$extra['shortcode'] = $shortcode;
+		}
+
+		list( $posts, $pagination ) = $this->getTablePosts( $query, $extra );
 
 		$pagination['before'][] = HTML::dropdown(
 			$this->get_shortcode_list(), [
@@ -132,49 +140,5 @@ class Shortcodes extends gEditorial\Module
 			$list[$shortcode] = $shortcode; // sprintf( '[%s]', $shortcode ); // for search
 
 		return $list;
-	}
-
-	protected function getPostArray()
-	{
-		$shortcode = self::req( 'shortcode', 'none' );
-
-		$extra  = [];
-		$limit  = $this->limit_sub();
-		$paged  = self::paged();
-		$offset = ( $paged - 1 ) * $limit;
-
-		$args = [
-			'posts_per_page'   => $limit,
-			'offset'           => $offset,
-			'orderby'          => self::orderby( 'ID' ),
-			'order'            => self::order( 'DESC' ),
-			'post_type'        => $this->post_types(), // 'any',
-			'post_status'      => [ 'publish', 'future', 'draft', 'pending' ],
-			'suppress_filters' => TRUE,
-		];
-
-		if ( 'none' != $shortcode ) {
-			$args['s'] = '['.$shortcode;
-			$extra['shortcode'] = $shortcode;
-		}
-
-		if ( ! empty( $_REQUEST['id'] ) )
-			$args['post__in'] = explode( ',', maybe_unserialize( $_REQUEST['id'] ) );
-
-		if ( ! empty( $_REQUEST['type'] ) )
-			$args['post_type'] = $extra['type'] = $_REQUEST['type'];
-
-		if ( 'attachment' == $args['post_type'] )
-			$args['post_status'][] = 'inherit';
-
-		$query = new \WP_Query;
-		$posts = $query->query( $args );
-
-		$pagination = HTML::tablePagination( $query->found_posts, $query->max_num_pages, $limit, $paged, $extra );
-
-		$pagination['orderby'] = $args['orderby'];
-		$pagination['order']   = $args['order'];
-
-		return [ $posts, $pagination ];
 	}
 }

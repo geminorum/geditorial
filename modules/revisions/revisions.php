@@ -451,6 +451,7 @@ class Revisions extends gEditorial\Module
 		] );
 	}
 
+	// FIXME: better to user `getTablePosts()`
 	protected function getPostArray()
 	{
 		global $wpdb;

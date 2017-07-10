@@ -233,7 +233,15 @@ class Terms extends gEditorial\Module
 
 	private function tableUncategorized()
 	{
-		list( $posts, $pagination ) = $this->getPostArray();
+		$query = [
+			'tax_query'        => [ [
+				'taxonomy' => 'category',
+				'field'    => 'term_id',
+				'terms'    => [ intval( get_option( 'default_category' ) ) ],
+			],
+		],];
+
+		list( $posts, $pagination ) = $this->getTablePosts( $query, [], 'any' );
 
 		$pagination['actions']['cleanup_terms'] = _x( 'Cleanup Terms', 'Modules: Terms: Table Action', GEDITORIAL_TEXTDOMAIN );
 		$pagination['before'][] = Helper::tableFilterPostTypes();
@@ -252,44 +260,5 @@ class Terms extends gEditorial\Module
 			'empty'      => Helper::tableArgEmptyPosts(),
 			'pagination' => $pagination,
 		] );
-	}
-
-	protected function getPostArray()
-	{
-		$extra  = [];
-		$limit  = $this->limit_sub();
-		$paged  = self::paged();
-		$offset = ( $paged - 1 ) * $limit;
-
-		$args = [
-			'posts_per_page'   => $limit,
-			'offset'           => $offset,
-			'orderby'          => self::orderby( 'ID' ),
-			'order'            => self::order( 'asc' ),
-			'post_type'        => 'any', // $this->post_types()
-			'post_status'      => [ 'publish', 'future', 'draft', 'pending' ],
-			'suppress_filters' => TRUE,
-			'tax_query'        => [ [
-				'taxonomy' => 'category',
-				'field'    => 'term_id',
-				'terms'    => [ intval( get_option( 'default_category' ) ) ],
-			] ],
-		];
-
-		if ( ! empty( $_REQUEST['id'] ) )
-			$args['post__in'] = explode( ',', maybe_unserialize( $_REQUEST['id'] ) );
-
-		if ( ! empty( $_REQUEST['type'] ) )
-			$args['post_type'] = $extra['type'] = $_REQUEST['type'];
-
-		if ( 'attachment' == $args['post_type'] )
-			$args['post_status'][] = 'inherit';
-
-		$query = new \WP_Query;
-		$posts = $query->query( $args );
-
-		$pagination = HTML::tablePagination( $query->found_posts, $query->max_num_pages, $limit, $paged, $extra );
-
-		return [ $posts, $pagination ];
 	}
 }

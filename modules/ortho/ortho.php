@@ -282,7 +282,13 @@ class Ortho extends gEditorial\Module
 
 	private function tableSummary()
 	{
-		list( $posts, $pagination ) = $this->getPostArray();
+		$query = $extra = [];
+		$char  = self::req( 'char', 'none' );
+
+		if ( 'none' != $char )
+			$query['s'] = $extra['char'] = $char;
+
+		list( $posts, $pagination ) = $this->getTablePosts( $query, $extra );
 
 		$pagination['before'][] = HTML::dropdown( [
 			'ي' => _x( 'Arabic Letter Yeh U+064A', 'Modules: Ortho', GEDITORIAL_TEXTDOMAIN ),
@@ -315,47 +321,5 @@ class Ortho extends gEditorial\Module
 			'empty'      => Helper::tableArgEmptyPosts(),
 			'pagination' => $pagination,
 		] );
-	}
-
-	protected function getPostArray()
-	{
-		$char = self::req( 'char', 'none' );
-
-		$extra  = [];
-		$limit  = $this->limit_sub();
-		$paged  = self::paged();
-		$offset = ( $paged - 1 ) * $limit;
-
-		$args = [
-			'posts_per_page'   => $limit,
-			'offset'           => $offset,
-			'orderby'          => self::orderby( 'ID' ),
-			'order'            => self::order( 'DESC' ),
-			'post_type'        => $this->post_types(), // 'any',
-			'post_status'      => [ 'publish', 'future', 'draft', 'pending' ],
-			'suppress_filters' => TRUE,
-		];
-
-		if ( 'none' != $char )
-			$args['s'] = $extra['char'] = $char;
-
-		if ( ! empty( $_REQUEST['id'] ) )
-			$args['post__in'] = explode( ',', maybe_unserialize( $_REQUEST['id'] ) );
-
-		if ( ! empty( $_REQUEST['type'] ) )
-			$args['post_type'] = $extra['type'] = $_REQUEST['type'];
-
-		if ( 'attachment' == $args['post_type'] )
-			$args['post_status'][] = 'inherit';
-
-		$query = new \WP_Query;
-		$posts = $query->query( $args );
-
-		$pagination = HTML::tablePagination( $query->found_posts, $query->max_num_pages, $limit, $paged, $extra );
-
-		$pagination['orderby'] = $args['orderby'];
-		$pagination['order']   = $args['order'];
-
-		return [ $posts, $pagination ];
 	}
 }
