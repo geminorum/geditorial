@@ -27,6 +27,7 @@ class Today extends gEditorial\Module
 	protected function get_global_settings()
 	{
 		return [
+			'posttypes_option' => 'posttypes_option',
 			'_defaults' => [
 				'calendar_type',
 				[
@@ -43,7 +44,6 @@ class Today extends gEditorial\Module
 				],
 				$this->settings_insert_priority_option( -20, 'theday' ),
 			],
-			'posttypes_option' => 'posttypes_option',
 			'_supports' => [
 				$this->settings_supports_option( 'day_cpt', [
 					'title',
@@ -60,11 +60,10 @@ class Today extends gEditorial\Module
 			'day_cpt'           => 'day',
 			'day_cpt_archive'   => 'days',
 			'day_cpt_permalink' => '/%postname%',
-
-			'meta_cal'   => '_theday_cal',
-			'meta_day'   => '_theday_day',
-			'meta_month' => '_theday_month',
-			'meta_year'  => '_theday_year',
+			'metakey_cal'       => '_theday_cal',
+			'metakey_day'       => '_theday_day',
+			'metakey_month'     => '_theday_month',
+			'metakey_year'      => '_theday_year',
 		];
 	}
 
@@ -295,13 +294,13 @@ class Today extends gEditorial\Module
 	protected function get_the_day_constants( $year = TRUE )
 	{
 		$list = [
-			'cal'   => $this->constant( 'meta_cal' ),
-			'month' => $this->constant( 'meta_month' ),
-			'day'   => $this->constant( 'meta_day' ),
+			'cal'   => $this->constant( 'metakey_cal' ),
+			'month' => $this->constant( 'metakey_month' ),
+			'day'   => $this->constant( 'metakey_day' ),
 		];
 
 		if ( $year )
-			$list['year'] = $this->constant( 'meta_year' );
+			$list['year'] = $this->constant( 'metakey_year' );
 
 		return $list;
 	}

@@ -219,14 +219,18 @@ class Today extends gEditorial\Helper
 		return $the_day;
 	}
 
-	public static function getTheDayConstants()
+	public static function getTheDayConstants( $year = TRUE )
 	{
-		return [
-			'cal'   => self::constant( 'meta_cal', '_theday_cal' ),
-			'day'   => self::constant( 'meta_day', '_theday_day' ),
-			'month' => self::constant( 'meta_month', '_theday_month' ),
-			'year'  => self::constant( 'meta_year', '_theday_year' ),
+		$list = [
+			'cal'   => self::constant( 'metakey_cal', '_theday_cal' ),
+			'day'   => self::constant( 'metakey_day', '_theday_day' ),
+			'month' => self::constant( 'metakey_month', '_theday_month' ),
 		];
+
+		if ( $year )
+			$list['year'] = self::constant( 'metakey_year', '_theday_year' );
+
+		return $list;
 	}
 
 	public static function getPostsConnected( $atts = [], $constants = NULL )
