@@ -354,21 +354,19 @@ class Today extends gEditorial\Module
 
 	public function set_today_meta( $post_id, $postmeta, $constants )
 	{
-		// if only cal meta, delete all
-		if ( 1 === count( $postmeta )
-			&& array_key_exists( 'cal', $postmeta ) ) {
+		foreach ( $constants as $field => $constant ) {
+			if ( array_key_exists( $field, $postmeta ) ) {
 
-			foreach ( $constants as $field => $constant )
+				// if only cal meta, delete all
+				if ( 'cal' == $field && 1 === count( $postmeta ) )
+					delete_post_meta( $post_id, $constant );
+				else
+					update_post_meta( $post_id, $constant, $postmeta[$field] );
+
+			} else {
 				delete_post_meta( $post_id, $constant );
-
-			return;
+			}
 		}
-
-		foreach ( $constants as $field => $constant )
-			if ( array_key_exists( $field, $postmeta ) )
-				update_post_meta( $post_id, $constant, $postmeta[$field] );
-			else
-				delete_post_meta( $post_id, $constant );
 	}
 
 	public function save_post_supported( $post_id, $post, $update )
@@ -378,6 +376,10 @@ class Today extends gEditorial\Module
 
 			if ( wp_verify_nonce( @$_REQUEST['_geditorial_today_post_main'], 'geditorial_today_post_main' )
 				|| wp_verify_nonce( @$_REQUEST['_geditorial_today_post_raw'], 'geditorial_today_post_raw' ) ) {
+
+				// probably no input!
+				if ( ! array_key_exists( 'geditorial-today-date-cal', $_POST ) )
+					return $post_id;
 
 				$postmeta      = [];
 				$save_the_year = $post->post_type != $this->constant( 'day_cpt' );
