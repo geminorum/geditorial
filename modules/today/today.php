@@ -227,18 +227,19 @@ class Today extends gEditorial\Module
 
 			do_action( 'geditorial_today_meta_box', $post, $box );
 
+			$display_year = $post->post_type != $this->constant( 'day_cpt' );
 			$default_type = $this->get_setting( 'calendar_type', 'gregorian' );
 
 			if ( 'auto-draft' == $post->post_status && $this->get_setting( 'today_in_draft' ) )
 				$the_day = ModuleHelper::getTheDayFromToday( NULL, $default_type );
 
 			else if ( self::req( 'post' ) )
-				$the_day = ModuleHelper::getTheDayFromPost( $post, $default_type, $this->get_the_day_constants() );
+				$the_day = ModuleHelper::getTheDayFromPost( $post, $default_type, $this->get_the_day_constants( $display_year ) );
 
 			else
-				$the_day = ModuleHelper::getTheDayFromQuery( TRUE, $default_type, $this->get_the_day_constants() );
+				$the_day = ModuleHelper::getTheDayFromQuery( TRUE, $default_type, $this->get_the_day_constants( $display_year ) );
 
-			ModuleHelper::theDaySelect( $the_day, ( $post->post_type != $this->constant( 'day_cpt' ) ), $default_type );
+			ModuleHelper::theDaySelect( $the_day, $display_year, $default_type );
 
 		echo '</div>';
 
@@ -291,14 +292,18 @@ class Today extends gEditorial\Module
 	}
 
 	// CAUTION: the ordering is crucial
-	protected function get_the_day_constants()
+	protected function get_the_day_constants( $year = TRUE )
 	{
-		return [
+		$list = [
 			'cal'   => $this->constant( 'meta_cal' ),
 			'month' => $this->constant( 'meta_month' ),
 			'day'   => $this->constant( 'meta_day' ),
-			'year'  => $this->constant( 'meta_year' ),
 		];
+
+		if ( $year )
+			$list['year'] = $this->constant( 'meta_year' );
+
+		return $list;
 	}
 
 	protected function check_the_day_posttype( $the_day = [] )
