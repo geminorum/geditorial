@@ -1106,6 +1106,20 @@ class Module extends Base
 		Settings::settingsSignature();
 	}
 
+	public function settings_section_defaults()
+	{
+		Settings::fieldSection(
+			_x( 'Defaults', 'Module: Setting Section Title', GEDITORIAL_TEXTDOMAIN )
+		);
+	}
+
+	public function settings_section_frontend()
+	{
+		Settings::fieldSection(
+			_x( 'Front-end', 'Module: Setting Section Title', GEDITORIAL_TEXTDOMAIN )
+		);
+	}
+
 	public function add_settings_field( $r = [] )
 	{
 		$args = array_merge( [
