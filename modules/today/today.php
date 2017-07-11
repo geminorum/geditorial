@@ -362,6 +362,15 @@ class Today extends gEditorial\Module
 	public function set_today_meta( $post_id, $postmeta, $constants )
 	{
 		foreach ( $constants as $field => $constant ) {
+
+			// if month with no cal
+			if ( 'month' == $field && ! array_key_exists( 'cal', $postmeta ) )
+				unset( $postmeta['month'] );
+
+			// if only day with no month
+			if ( 'day' == $field && ! array_key_exists( 'month', $postmeta ) )
+				unset( $postmeta['day'] );
+
 			if ( array_key_exists( $field, $postmeta ) ) {
 
 				// if only cal meta, delete all
