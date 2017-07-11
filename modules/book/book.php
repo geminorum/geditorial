@@ -7,6 +7,7 @@ use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\Core\HTML;
+use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\Helpers\Book as ModuleHelper;
 use geminorum\gEditorial\Templates\Book as ModuleTemplate;
 
@@ -80,6 +81,10 @@ class Book extends gEditorial\Module
 			'status_tax'              => 'publication_status',
 			'size_tax'                => 'publication_size',
 			'cover_shortcode'         => 'publication-cover',
+			'metakey_import_id'       => 'book_publication_id',
+			'metakey_import_title'    => 'book_publication_title',
+			'metakey_import_ref'      => 'book_publication_ref',
+			'metakey_import_desc'     => 'book_publication_desc',
 		];
 	}
 
@@ -326,7 +331,13 @@ class Book extends gEditorial\Module
 
 		$this->register_shortcode( 'cover_shortcode' );
 
-		if ( ! is_admin() ) {
+		if ( is_admin() ) {
+
+			add_filter( 'geditorial_importer_fields', [ $this, 'importer_fields' ], 10, 2 );
+			add_filter( 'geditorial_importer_prepare', [ $this, 'importer_prepare' ], 10, 4 );
+			add_action( 'geditorial_importer_saved', [ $this, 'importer_saved' ], 10, 5 );
+
+		} else {
 
 			if ( $this->get_setting( 'insert_cover' ) )
 				add_action( 'gnetwork_themes_content_before',
@@ -566,5 +577,143 @@ class Book extends gEditorial\Module
 			'size' => $this->get_image_size_key( 'publication_cpt', 'medium' ),
 			'link' => 'attachment',
 		] );
+	}
+
+	public function tools_settings( $sub )
+	{
+		if ( $this->check_settings( $sub, 'tools' ) ) {}
+	}
+
+	public function tools_sub( $uri, $sub )
+	{
+		$this->settings_form_before( $uri, $sub, 'bulk', 'tools', FALSE, FALSE );
+
+			$this->tableSummary();
+
+		$this->settings_form_after( $uri, $sub );
+	}
+
+	// @REF: meta query: http://wordpress.stackexchange.com/a/246358/3687
+	private function tableSummary()
+	{
+		$query = [
+			'meta_query' => [
+				'relation'         => 'OR',
+				'import_id_clause' => [
+					'key'     => $this->constant( 'metakey_import_id' ),
+					'compare' => 'EXISTS',
+				],
+				'import_title_clause' => [
+					'key'     => $this->constant( 'metakey_import_title' ),
+					'compare' => 'EXISTS',
+				],
+				'orderby' => [
+					'import_id_clause'    => 'DESC',
+					'import_title_clause' => 'ASC',
+				],
+			],
+		];
+
+		list( $posts, $pagination ) = $this->getTablePosts( $query );
+
+		$pagination['before'][] = Helper::tableFilterPostTypes( $this->list_post_types() );
+
+		return HTML::tableList( [
+			'_cb'   => 'ID',
+			'ID'    => Helper::tableColumnPostID(),
+			'date'  => Helper::tableColumnPostDate(),
+			'type'  => Helper::tableColumnPostType(),
+			'title' => Helper::tableColumnPostTitle(),
+			'metas' => [
+				'title'    => _x( 'Import Meta', 'Modules: Book: Table Column', GEDITORIAL_TEXTDOMAIN ),
+				'args'     => [ 'fields' => $this->get_importer_fields() ],
+				'callback' => function( $value, $row, $column, $index ){
+					$html = '';
+
+					foreach( $column['args']['fields'] as $key => $title )
+						if ( $meta = get_post_meta( $row->ID, $key, TRUE ) )
+							$html .= '<div><b>'.$title.'</b>: '.$meta.'</div>';
+
+					return $html ? $html : '&mdash;';
+				},
+			],
+			'related' => [
+				'title'    => _x( 'Import Related', 'Modules: Book: Table Column', GEDITORIAL_TEXTDOMAIN ),
+				'args'     => [ 'type' => $this->constant( 'publication_cpt' ) ],
+				'callback' => function( $value, $row, $column, $index ){
+
+					$html = '';
+
+					if ( $id = get_post_meta( $row->ID, 'book_publication_id', TRUE ) )
+						$html .= '<div><b>'._x( 'By ID', 'Modules: Book', GEDITORIAL_TEXTDOMAIN ).'</b>: '.Helper::getPostTitleRow( $id ).'</div>';
+
+					if ( $title = get_post_meta( $row->ID, 'book_publication_title', TRUE ) )
+						foreach ( (array) PostType::getIDsByTitle( $title, [ 'post_type' => $column['args']['type'] ] ) as $post_id )
+							$html .= '<div><b>'._x( 'By Title', 'Modules: Book', GEDITORIAL_TEXTDOMAIN ).'</b>: '.Helper::getPostTitleRow( $post_id ).'</div>';
+
+					return $html ? $html : '&mdash;';
+				},
+			],
+		], $posts, [
+			'navigation' => 'before',
+			'search'     => 'before',
+			'title'      => HTML::tag( 'h3', _x( 'Overview of Meta Information about Related Publications', 'Modules: Book', GEDITORIAL_TEXTDOMAIN ) ),
+			'empty'      => Helper::tableArgEmptyPosts(),
+			'pagination' => $pagination,
+		] );
+	}
+
+	public function set_meta( $post_id, $postmeta, $key_suffix = '' )
+	{
+		if ( $postmeta )
+			update_post_meta( $post_id, $key_suffix, $postmeta );
+		else
+			delete_post_meta( $post_id, $key_suffix );
+	}
+
+	private function get_importer_fields( $post_type = NULL )
+	{
+		return [
+			'book_publication_id'    => _x( 'Book: Publication ID', 'Modules: Book: Import Field', GEDITORIAL_TEXTDOMAIN ),
+			'book_publication_title' => _x( 'Book: Publication Title', 'Modules: Book: Import Field', GEDITORIAL_TEXTDOMAIN ),
+			'book_publication_ref'   => _x( 'Book: Publication Ref (P2P)', 'Modules: Book: Import Field', GEDITORIAL_TEXTDOMAIN ),
+			'book_publication_desc'  => _x( 'Book: Publication Desc (P2P)', 'Modules: Book: Import Field', GEDITORIAL_TEXTDOMAIN ),
+		];
+	}
+
+	public function importer_fields( $fields, $post_type )
+	{
+		if ( ! in_array( $post_type, $this->post_types() ) )
+			return $fields;
+
+		return array_merge( $fields, $this->get_importer_fields( $post_type ) );
+	}
+
+	public function importer_prepare( $value, $post_type, $field, $raw )
+	{
+		if ( ! in_array( $post_type, $this->post_types() ) )
+			return $value;
+
+		if ( ! in_array( $field, array_keys( $this->get_importer_fields( $post_type ) ) ) )
+			return $value;
+
+		return Helper::kses( $value, 'none' );
+	}
+
+	public function importer_saved( $post, $data, $raw, $field_map, $attach_id )
+	{
+		if ( ! in_array( $post->post_type, $this->post_types() ) )
+			return;
+
+		$fields = array_keys( $this->get_importer_fields( $post->post_type ) );
+
+		foreach ( $field_map as $offset => $field ) {
+
+			if ( ! in_array( $field, $fields ) )
+				continue;
+
+			if ( $value = trim( Helper::kses( $raw[$offset], 'none' ) ) )
+				$this->set_meta( $post->ID, $value, $field );
+		}
 	}
 }
