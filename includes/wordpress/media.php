@@ -11,7 +11,7 @@ class Media extends Core\Base
 	// PDF: 'application/pdf'
 	// MP3: 'audio/mpeg'
 	// CSV: 'application/vnd.ms-excel'
-	public static function selectAttachment( $selected = 0, $mime = NULL, $name = 'attach_id' )
+	public static function selectAttachment( $selected = 0, $mime = NULL, $name = 'attach_id', $empty = '' )
 	{
 		$attachments = get_posts( array(
 			'post_type'      => 'attachment',
@@ -21,8 +21,10 @@ class Media extends Core\Base
 			'post_parent'    => NULL,
 		) );
 
-		if ( ! $attachments )
-			return;
+		if ( ! count( $attachments ) ) {
+			echo $empty;
+			return FALSE;
+		}
 
 		echo Core\HTML::dropdown(
 			Core\Arraay::reKey( $attachments, 'ID' ),

@@ -124,6 +124,7 @@ class WordPress extends Base
 			'orderby'                => 'rand',
 			'ignore_sticky_posts'    => TRUE,
 			'no_found_rows'          => TRUE,
+			'suppress_filters'       => TRUE,
 			'update_post_meta_cache' => FALSE,
 			'update_post_term_cache' => FALSE,
 			'lazy_load_term_meta'    => FALSE,

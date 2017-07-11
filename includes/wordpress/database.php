@@ -29,7 +29,7 @@ class Database extends Core\Base
 	{
 		global $wpdb;
 
-		return $wpdb->get_var( "
+		return (bool) $wpdb->get_var( "
 			SELECT 1 as test
 			FROM {$wpdb->posts}
 			WHERE post_type IN ( '".join( "', '", esc_sql( (array) $post_types ) )."' )

@@ -318,7 +318,15 @@ class Taxonomy extends Core\Base
 		if ( ! $term_thumbnail_img = wp_get_attachment_image_src( $term_image_id, $size ) )
 			return '';
 
-		$image = HTML::img( $term_thumbnail_img[0], '-featured' );
+		$image = HTML::tag( 'img', array(
+			'src'   => $term_thumbnail_img[0],
+			'class' => '-featured',
+			'alt'   => '',
+			'data'  => array(
+				'term'       => $term_id,
+				'attachment' => $term_image_id,
+			),
+		) );
 
 		if ( ! $link )
 			return $image;

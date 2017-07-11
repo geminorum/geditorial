@@ -66,6 +66,25 @@ class PostType extends Core\Base
 		return $statuses;
 	}
 
+	public static function getIDsByTitle( $title, $atts = [] )
+	{
+		$args = array_merge( [
+			'title'                  => $title,
+			'fields'                 => 'ids',
+			'post_type'              => 'any',
+			'post_status'            => 'any',
+			'posts_per_page'         => -1,
+			'suppress_filters'       => TRUE,
+			'update_post_meta_cache' => FALSE,
+			'update_post_term_cache' => FALSE,
+			'lazy_load_term_meta'    => FALSE,
+		], $atts );
+
+		$query = new \WP_Query;
+
+		return (array) $query->query( $args );
+	}
+
 	public static function getIDbySlug( $slug, $post_type, $url = FALSE )
 	{
 		static $strings = array();
