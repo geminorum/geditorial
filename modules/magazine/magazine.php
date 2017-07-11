@@ -665,7 +665,7 @@ class Magazine extends gEditorial\Module
 		if ( ! $count )
 			return;
 
-		echo '<li class="-attr -magazine -children">';
+		echo '<li class="-row -magazine -children">';
 
 			echo $this->get_column_icon( FALSE, NULL, $this->get_column_title( 'children', 'issue_cpt' ) );
 

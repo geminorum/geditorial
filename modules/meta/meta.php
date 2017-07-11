@@ -605,6 +605,9 @@ class Meta extends gEditorial\Module
 		if ( ! is_null( $author ) ) // force the author row
 			$this->options->settings['author_row'] = $author;
 
+		if ( empty( $GLOBALS['mode'] ) )
+			$GLOBALS['mode'] = 'excerpt';
+
 		return [
 			'title'    => $this->get_column_title( 'meta' ),
 			'callback' => [ $this, 'tableColumnPostMeta_callback'],

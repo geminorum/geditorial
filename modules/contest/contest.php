@@ -544,7 +544,7 @@ class Contest extends gEditorial\Module
 		if ( ! $count )
 			return;
 
-		echo '<li class="-attr -contest -children">';
+		echo '<li class="-row -contest -children">';
 
 			echo $this->get_column_icon( FALSE, NULL, $this->get_column_title( 'children', 'contest_cpt' ) );
 

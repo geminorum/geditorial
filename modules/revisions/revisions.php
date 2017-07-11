@@ -157,7 +157,7 @@ class Revisions extends gEditorial\Module
 
 				$edit = current_user_can( 'edit_post', $last );
 
-				echo '<li class="-attr -revisions -count">';
+				echo '<li class="-row -revisions -count">';
 
 					echo $this->get_column_icon( FALSE, 'backup', _x( 'Revisions', 'Modules: Revisions: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
 

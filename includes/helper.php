@@ -151,12 +151,12 @@ class Helper extends Core\Base
 		return explode( $delimiter, str_ireplace( $delimiters, $delimiter, $string ) );
 	}
 
-	public static function getJoined( $items, $before = '', $after = '' )
+	public static function getJoined( $items, $before = '', $after = '', $empty = '' )
 	{
 		if ( count( $items ) )
 			return $before.join( _x( ', ', 'Helper: Item Seperator', GEDITORIAL_TEXTDOMAIN ), $items ).$after;
 
-		return '';
+		return $empty;
 	}
 
 	public static function getCounted( $count, $template = '%s' )

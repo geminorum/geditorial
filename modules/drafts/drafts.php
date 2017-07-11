@@ -320,7 +320,7 @@ class Drafts extends gEditorial\Module
 
 		$link = $this->get_preview_url( $post->ID );
 
-		echo '<li class="-attr -drafts -preview-link">';
+		echo '<li class="-row -drafts -preview-link">';
 			echo $this->get_column_icon( FALSE, 'welcome-view-site', _x( 'Preview', 'Modules: Drafts: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
 
 			echo HTML::tag( 'a', [

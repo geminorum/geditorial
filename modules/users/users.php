@@ -290,7 +290,7 @@ class Users extends gEditorial\Module
 
 				foreach ( $terms as $term ) {
 
-					echo '<li class="-attr -users -groups">';
+					echo '<li class="-row -groups">';
 						echo $this->get_column_icon( FALSE, 'networking', _x( 'Group', 'Modules: Users: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
 						echo sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' );
 					echo '</li>';
@@ -304,7 +304,7 @@ class Users extends gEditorial\Module
 
 				foreach ( $terms as $term ) {
 
-					echo '<li class="-attr -users -types">';
+					echo '<li class="-row -types">';
 						echo $this->get_column_icon( FALSE, 'networking', _x( 'Type', 'Modules: Users: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
 						echo sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' );
 					echo '</li>';
@@ -391,21 +391,21 @@ class Users extends gEditorial\Module
 		echo '<ul class="-rows">';
 
 		if ( $user->first_name || $user->last_name ) {
-			echo '<li class="-attr -users -name">';
+			echo '<li class="-row -name">';
 				echo $this->get_column_icon( FALSE, 'nametag', _x( 'Name', 'Modules: Users: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
 				echo "$user->first_name $user->last_name";
 			echo '</li>';
 		}
 
 		if ( $user->user_email ) {
-			echo '<li class="-attr -users -email">';
+			echo '<li class="-row -email">';
 				echo $this->get_column_icon( FALSE, 'email', _x( 'Email', 'Modules: Users: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
 				echo HTML::mailto( $user->user_email );
 			echo '</li>';
 		}
 
 		if ( $user->user_url ) {
-			echo '<li class="-attr -users -url">';
+			echo '<li class="-row -url">';
 				echo $this->get_column_icon( FALSE, 'admin-links', _x( 'URL', 'Modules: Users: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
 				echo HTML::link( URL::prepTitle( $user->user_url ), $user->user_url );
 			echo '</li>';
@@ -423,21 +423,21 @@ class Users extends gEditorial\Module
 			else
 				$icon = 'email-alt';
 
-			echo '<li class="-attr -users -contact-'.$method.'">';
+			echo '<li class="-row -contact -contact-'.$method.'">';
 				echo $this->get_column_icon( FALSE, $icon, $title );
 				echo $this->display_meta( $meta, $method );
 			echo '</li>';
 		}
 
 		if ( $user->user_registered ) {
-			echo '<li class="-attr -users -registered">';
+			echo '<li class="-row -registered">';
 				echo $this->get_column_icon( FALSE, 'calendar', _x( 'Registered', 'Modules: Users: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
 				echo sprintf( _x( 'Registered on %s', 'Modules: Users', GEDITORIAL_TEXTDOMAIN ),
 					Helper::getDateEditRow( $user->user_registered, '-registered' ) );
 			echo '</li>';
 		}
 
-		echo '<li class="-attr -users -edit">';
+		echo '<li class="-row -edit">';
 			echo $this->get_column_icon( FALSE, 'edit', _x( 'Edit', 'Modules: Users: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
 			echo HTML::link( _x( 'Edit Your Profile', 'Modules: Users', GEDITORIAL_TEXTDOMAIN ), WordPress::getUserEditLink( $user->ID ) );
 		echo '</li>';

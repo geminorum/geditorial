@@ -35,7 +35,7 @@ class Module extends Base
 	protected $partials        = [];
 	protected $partials_remote = [];
 
-	protected $post_types_excluded = [ 'attachment' ];
+	protected $post_types_excluded = [ 'attachment', 'inbound_message' ];
 	protected $taxonomies_excluded = [];
 
 	protected $image_sizes  = [];
@@ -2428,7 +2428,7 @@ SQL;
 			'orderby'          => self::orderby( 'ID' ),
 			'order'            => self::order( 'DESC' ),
 			'post_type'        => $posttypes, // 'any',
-			'post_status'      => [ 'publish', 'future', 'draft', 'pending' ],
+			'post_status'      => 'any', // [ 'publish', 'future', 'draft', 'pending' ],
 			'suppress_filters' => TRUE,
 		], $atts );
 
