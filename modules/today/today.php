@@ -113,9 +113,16 @@ class Today extends gEditorial\Module
 		add_filter( 'the_title', [ $this, 'the_day_title' ], 8, 2 );
 		// add_filter( 'enter_title_here', [ $this, 'enter_day_title_here' ], 8, 2 ); // no need/not nec
 
-		if ( ! is_admin() && count( $this->post_types() ) ) {
+		if ( is_admin() ) {
 
-			if ( $this->get_setting( 'insert_theday' ) ) {
+			add_filter( 'geditorial_importer_fields', [ $this, 'importer_fields' ], 10, 2 );
+			add_filter( 'geditorial_importer_prepare', [ $this, 'importer_prepare' ], 10, 4 );
+			add_action( 'geditorial_importer_saved', [ $this, 'importer_saved' ], 10, 5 );
+
+		} else {
+
+			if ( $this->get_setting( 'insert_theday' )
+				&& count( $this->post_types() ) ) {
 
 				add_action( 'gnetwork_themes_content_before',
 					[ $this, 'content_before' ],
@@ -697,5 +704,128 @@ class Today extends gEditorial\Module
 		}
 
 		return array_merge( $new_rules, $rules );
+	}
+
+	public function tools_settings( $sub )
+	{
+		if ( $this->check_settings( $sub, 'tools' ) ) {}
+	}
+
+	public function tools_sub( $uri, $sub )
+	{
+		$this->settings_form_before( $uri, $sub, 'bulk', 'tools', FALSE, FALSE );
+
+			$this->tableSummary();
+
+		$this->settings_form_after( $uri, $sub );
+	}
+
+	private function tableSummary()
+	{
+		$constants    = $this->get_the_day_constants();
+		$default_type = $this->get_setting( 'calendar_type', 'gregorian' );
+
+		$query = [ 'meta_query' => [ 'relation' => 'OR' ] ];
+
+		foreach ( $constants as $field => $constant ) {
+			$query['meta_query'][$field.'_clause'] = [ 'key' => $constant, 'compare' => 'EXISTS' ];
+			$query['meta_query']['orderby'][$field.'_clause'] = 'ASC';
+		}
+
+		list( $posts, $pagination ) = $this->getTablePosts( $query );
+
+		$pagination['before'][] = Helper::tableFilterPostTypes( $this->list_post_types() );
+
+		return HTML::tableList( [
+			'_cb'   => 'ID',
+			'ID'    => Helper::tableColumnPostID(),
+			'date'  => Helper::tableColumnPostDate(),
+			'type'  => Helper::tableColumnPostType(),
+			'title' => Helper::tableColumnPostTitle(),
+			'theday' => [
+				'title'    => _x( 'The Day', 'Modules: Today: Table Column', GEDITORIAL_TEXTDOMAIN ),
+				'args'     => [
+					'constants'    => $constants,
+					'default_type' => $default_type,
+				],
+				'callback' => function( $value, $row, $column, $index ){
+					return ModuleHelper::titleTheDayFromPost( $row,
+						$column['args']['default_type'],
+						$column['args']['constants'] );
+				},
+			],
+		], $posts, [
+			'navigation' => 'before',
+			'search'     => 'before',
+			'title'      => HTML::tag( 'h3', _x( 'Overview of Post with Day Information', 'Modules: Today', GEDITORIAL_TEXTDOMAIN ) ),
+			'empty'      => Helper::tableArgEmptyPosts(),
+			'pagination' => $pagination,
+		] );
+	}
+
+	private function get_importer_fields( $post_type = NULL )
+	{
+		return [
+			'today_cal'   => _x( 'Today: Calendar', 'Modules: Today: Import Field', GEDITORIAL_TEXTDOMAIN ),
+			'today_year'  => _x( 'Today: Year', 'Modules: Today: Import Field', GEDITORIAL_TEXTDOMAIN ),
+			'today_month' => _x( 'Today: Month', 'Modules: Today: Import Field', GEDITORIAL_TEXTDOMAIN ),
+			'today_day'   => _x( 'Today: Day', 'Modules: Today: Import Field', GEDITORIAL_TEXTDOMAIN ),
+		];
+	}
+
+	public function importer_fields( $fields, $post_type )
+	{
+		if ( ! in_array( $post_type, $this->post_types() ) )
+			return $fields;
+
+		return array_merge( $fields, $this->get_importer_fields( $post_type ) );
+	}
+
+	public function importer_prepare( $value, $post_type, $field, $raw )
+	{
+		if ( ! in_array( $post_type, $this->post_types() ) )
+			return $value;
+
+		if ( ! in_array( $field, array_keys( $this->get_importer_fields( $post_type ) ) ) )
+			return $value;
+
+		switch ( $field ) {
+
+			case 'today_cal': return Helper::sanitizeCalendar( trim( $value ), $this->get_setting( 'calendar_type', 'gregorian' ) );
+			case 'today_year':
+			case 'today_month':
+			case 'today_day': return Number::intval( trim( $value ), FALSE );
+		}
+
+		return $value;
+	}
+
+	public function importer_saved( $post, $data, $raw, $field_map, $attach_id )
+	{
+		if ( ! in_array( $post->post_type, $this->post_types() ) )
+			return;
+
+		$postmeta     = [];
+		$default_type = $this->get_setting( 'calendar_type', 'gregorian' );
+		$fields       = array_keys( $this->get_importer_fields( $post->post_type ) );
+
+		foreach ( $field_map as $offset => $field ) {
+
+			if ( ! in_array( $field, $fields ) )
+				continue;
+
+			if ( ! $value = trim( $raw[$offset] ) )
+				continue;
+
+			$key = str_ireplace( 'today_', '', $field );
+
+			if ( 'cal' == $key )
+				$postmeta[$key] = Helper::sanitizeCalendar( $value, $default_type );
+			else
+				$postmeta[$key] = Number::intval( $value, FALSE );
+		}
+
+		if ( count( $postmeta ) )
+			$this->set_today_meta( $post->ID, $postmeta, $this->get_the_day_constants() );
 	}
 }
