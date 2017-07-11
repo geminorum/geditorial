@@ -1,0 +1,63 @@
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+/// Module: Terms: Admin All ---------------------------------------------------
+
+body.geditorial-terms-enabled {
+
+  .fixed.tags {
+
+    .column-slug {
+      width: 15%;
+    }
+
+    .column-posts {
+      width: 50px;
+    }
+
+    .column-geditorial-terms-order {
+      width: 45px;
+    }
+
+    .column-geditorial-terms-image {
+      width: 75px;
+    }
+
+    .column-geditorial-terms-author {
+      width: 120px;
+    }
+
+    .column-geditorial-terms-color {
+      width: 45px;
+    }
+
+    .column-geditorial-terms-image img,
+    .inline-edit-row img.-img {
+      max-height: 55px;
+      max-width: 55px;
+      height: auto;
+      width: auto;
+      display: inline-block;
+      // border: 2px solid #eee;
+    }
+
+    i.-color {
+      height: 25px;
+      width: 25px;
+      display: inline-block;
+      border: 2px solid #eee;
+      border-radius: 100%;
+    }
+  }
+}
+
+// img.geditorial-terms-image-img,
+// .column-geditorial-terms-image img
+
+#geditorial-terms-image-img {
+  max-height: 125px;
+  max-width: 125px;
+  height: auto;
+  width: auto;
+  // border: 2px solid #ccc;
+}

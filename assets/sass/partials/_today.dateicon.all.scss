@@ -1,0 +1,54 @@
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+/// Module: Today: Date Icon All -----------------------------------------------
+
+.-date-icon-empty {
+  color: $gray-light;
+}
+
+.-date-icon {
+
+  width: 60px;
+  // margin: 0 auto;
+
+  border: 1px solid $gray-lighter;
+  border-bottom: none;
+  border-radius: 2px;
+
+  cursor: pointer;
+
+  .-day,
+  .-month,
+  .-year,
+  .-cal {
+    display: block;
+    text-align: center;
+    color: $gray-light;
+    border-bottom: 1px solid $gray-lighter;
+  }
+
+  .-day {
+    font-size: 2.6em;
+    font-weight: bold;
+    font-family: arial, sans-serif;
+    padding: 8px 0 6px;
+  }
+
+  .-month {
+    font-size: 1.1em;
+    // font-weight: bold;
+    padding: 4px 0;
+  }
+
+  .-year {
+    font-size: 1.4em;
+    font-family: arial, sans-serif;
+    padding: 6px 0 2px;
+  }
+
+  .-cal {
+    font-size: 0.8em;
+    // padding: 4px 0;
+  }
+}

@@ -3,83 +3,19 @@
 ////////////////////////////////////////////////////////////////////////////////
 /// Module: Tweaks: Admin All -------------------------------------------------
 
-.geditorial-admin-wrap-column {
-  @include mainwrap();
-
-  ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-
-  .-row,
-  .-attr {
-    margin-bottom: 4px;
-    font-size: 0.89em;
-
-    .-icon {
-      cursor: help;
-      margin: 0 4px 0 0;
-      @include body-rtl() {
-        margin: 0 0 0 4px;
-      }
-    }
-
-    > code {
-      vertical-align: middle;
-    }
-
-    span.dashicons {
-      color: #b4b9be;
-      width: 16px;
-      height: 16px;
-      font-size: 16px;
-      // vertical-align: middle;
-      vertical-align: text-top;
-      transition: all 0.3s ease;
-    }
-
-    &:hover {
-      .-icon span.dashicons {
-        color: $gray-dark;
-        transition: all 0.1s ease;
-      }
-    }
-
-    a:focus {
-      box-shadow: none;
-    }
-
-    .-valid {
-      color: $brand-success;
-      &:hover {
-        color: darken($brand-success, 20%);
-      }
-    }
-
-    .-not-valid {
-      color: $brand-danger;
-      &:hover {
-        color: darken($brand-danger, 20%);
-      }
-    }
-  }
-
-  .-row:last-child {
-    margin-bottom: 0;
-  }
-}
-
 .fixed {
 
-  .column-geditorial-tweaks-order {
+  th.column-geditorial-tweaks-order {
     width: 50px;
   }
 
-  .column-geditorial-tweaks-thumb {
-
+  th.column-geditorial-tweaks-thumb {
     width: 70px;
-    padding: 2px;
+  }
+
+  td.column-geditorial-tweaks-thumb {
+
+    padding: 10px 0 0 0;
     text-align: center;
 
     a:focus {
@@ -87,8 +23,8 @@
     }
 
     img {
-      max-width: 65px;
-      max-height: 65px;
+      max-width: 80px; // WIDTH + HALF PADDING
+      max-height: 133px; // 3:5
     }
   }
 }

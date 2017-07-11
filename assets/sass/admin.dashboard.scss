@@ -5,11 +5,15 @@
 @import 'partials/admin.all';
 @import 'partials/admin.help';
 @import 'partials/admin.table';
+@import 'partials/admin.rows';
+@import 'partials/admin.glance';
 @import 'partials/admin.caltable';
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 @import 'partials/audit.admin.dashboard';
 @import 'partials/calendar.admin.dashboard';
+@import 'partials/users.admin.dashboard';
+@import 'partials/tweaks.admin.all';
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 // @import 'partials/ortho.admin.all';
@@ -39,50 +43,5 @@
     .-cell-author {
       @include link-colors( $gray-light, null, $gray);
     }
-  }
-}
-
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
-
-.geditorial-glance-item {
-
-  &.-posttype::before {
-    content: "\f105" !important;
-  }
-
-  &.-tax::before {}
-
-  &.-term::before {
-    content: "\f323" !important; // tag
-  }
-
-  &.-not-in::before {
-    content: "\f534" !important; // warning
-    // content: "\f223" !important; // question
-  }
-
-  &.-posttype-issue::before {
-    content: "\f330" !important;
-  }
-
-  &.-posttype-publication::before {
-    content: "\f331" !important;
-  }
-
-  &.-posttype-entry::before {
-    content: "\f497" !important;
-  }
-
-  &.-posttype-event::before {
-    content: "\f508" !important;
-  }
-
-  &.-posttype-contest::before {
-    content: "\f488" !important;
-  }
-
-  &.-posttype-apply::before {
-    content: "\f322" !important;
   }
 }

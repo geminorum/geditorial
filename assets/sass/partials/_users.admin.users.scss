@@ -1,19 +1,21 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-/// Module: Event: Admin Edit --------------------------------------------------
-
-.geditorial-admin-wrap.-event {}
+/// Module: Users: Admin: Users ------------------------------------------------
 
 .fixed {
 
-  .column-event_starts {
-    width: 12%;
-    color: $gray-light;
+  th.column-counts {
+    width: 220px;
   }
 
-  .column-event_ends {
-    width: 12%;
-    color: $gray-light;
+  .column-counts {
+    table td {
+      padding: 0 0 2px;
+
+      code {
+        cursor: pointer;
+      }
+    }
   }
 }

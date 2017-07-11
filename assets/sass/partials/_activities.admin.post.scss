@@ -1,0 +1,40 @@
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+/// Module: Activities: Admin Post ----------------------------------------------
+
+#geditorial-activities.postbox {
+  .inside {
+    margin: 0;
+    padding: 0;
+
+    > p {
+      padding: 8px 10px;
+      margin: 0;
+    }
+  }
+
+  .geditorial-activity-box {
+
+    border: 0 none;
+
+    td {
+      // vertical-align: top;
+    }
+
+    .column-comment {
+      padding: 4px 6px 8px;
+      > p {
+        margin-bottom: 5px;
+      }
+    }
+    .column-author {
+      width: 25%;
+      // padding-top: 8px;
+    }
+
+    .row-actions {
+      font-size: smaller;
+    }
+  }
+}

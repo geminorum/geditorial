@@ -66,6 +66,16 @@
     top: auto;
   }
 
+  // .term-description-wrap & textarea + a.do-ortho {
+  .term-description-wrap & {
+    position: relative;
+    display: block;
+    a.do-ortho {
+      left: 5%;
+      top: 5px;
+    }
+  }
+
   textarea#excerpt + a.do-ortho {
     // top: -22px;
   }

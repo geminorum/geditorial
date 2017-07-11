@@ -5,6 +5,8 @@
 @import 'partials/admin.all';
 @import 'partials/admin.help';
 @import 'partials/admin.table';
+@import 'partials/admin.rows';
+@import 'partials/admin.quickedit';
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 @import 'partials/book.admin.edit';
@@ -21,72 +23,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-.geditorial-admin-wrap-quickedit {
-  @include mainwrap();
-  padding-top: 0.2em;
-
-  .field-wrap {
-
-    &.field-wrap-select {
-      select {
-        width: 100%;
-      }
-    }
-
-    &.field-wrap-inputtext-half {
-      input {
-        width: 49%;
-      }
-    }
-
-    &.field-wrap-inputtext-date {
-      input {
-        width: 32.5%;
-        text-align: center;
-      }
-    }
-  }
-}
-
 .fixed {
 
-  .column-children {
-    width: 65px;
-  }
-
-  .column-order {
-    width: 50px;
-  }
-
-  .column-cover {
-
-    width: 50px;
-    padding: 2px;
-
-    a:focus {
-      box-shadow: none !important;
-    }
-
-    img {
-      max-width: 45px;
-      max-height: 72px;
-    }
-  }
-
-  // Module: Event
-  .column-event_starts {
-    width: 12%;
-    color: $gray-light;
-  }
-
-  .column-event_ends {
-    width: 12%;
-    color: $gray-light;
-  }
-
-  // Module: Meta
-  .column-gpeople {
-    width: 15%;
+  // Module: Entry
+  .column-taxonomy-entry_section {
+    width: 16%;
   }
 
   // Module: Magazine
@@ -96,10 +37,5 @@
 
   .column-taxonomy-issues {
     width: 120px;
-  }
-
-  // Module: Entry
-  .column-taxonomy-entry_section {
-    width: 16%;
   }
 }
