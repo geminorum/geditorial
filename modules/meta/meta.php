@@ -193,7 +193,13 @@ class Meta extends gEditorial\Module
 
 		$this->add_post_type_fields( 'page' );
 
-		if ( ! is_admin() ) {
+		if ( is_admin() ) {
+
+			add_filter( 'geditorial_importer_fields', [ $this, 'importer_fields' ], 10, 2 );
+			add_filter( 'geditorial_importer_prepare', [ $this, 'importer_prepare' ], 10, 4 );
+			add_action( 'geditorial_importer_saved', [ $this, 'importer_saved' ], 10, 5 );
+
+		} else {
 
 			add_action( 'gnetwork_themes_content_before', [ $this, 'content_before' ], 50 );
 			add_action( 'gnetwork_themes_content_after', [ $this, 'content_after' ], 50 );
@@ -890,5 +896,54 @@ class Meta extends gEditorial\Module
 		}
 
 		return wp_set_post_terms( $post_id, $terms, $taxonomy, TRUE );
+	}
+
+	private function get_importer_fields( $post_type = NULL, $object = FALSE )
+	{
+		$fields = [];
+
+		foreach ( $this->post_type_field_types( $post_type ) as $field => $args )
+			$fields['meta_'.$field] = $object ? $args : sprintf( _x( 'Meta: %s', 'Modules: Meta: Import Field', GEDITORIAL_TEXTDOMAIN ), $args['title'] );
+
+		return $fields;
+	}
+
+	public function importer_fields( $fields, $post_type )
+	{
+		if ( ! in_array( $post_type, $this->post_types() ) )
+			return $fields;
+
+		return array_merge( $fields, $this->get_importer_fields( $post_type ) );
+	}
+
+	public function importer_prepare( $value, $post_type, $field, $raw )
+	{
+		if ( ! in_array( $post_type, $this->post_types() ) )
+			return $value;
+
+		$fields = $this->get_importer_fields( $post_type, TRUE );
+
+		if ( ! in_array( $field, array_keys( $fields ) ) )
+			return $value;
+
+		// FIXME: check for field type filter
+		return Helper::kses( $value, 'none' );
+	}
+
+	public function importer_saved( $post, $data, $raw, $field_map, $attach_id )
+	{
+		if ( ! in_array( $post->post_type, $this->post_types() ) )
+			return;
+
+		$fields = array_keys( $this->get_importer_fields( $post->post_type ) );
+
+		foreach ( $field_map as $offset => $field ) {
+
+			if ( ! in_array( $field, $fields ) )
+				continue;
+
+			if ( $value = trim( Helper::kses( $raw[$offset], 'none' ) ) )
+				$this->import_to_meta( $value, $post->ID, str_ireplace( 'meta_', '', $field ) );
+		}
 	}
 }
