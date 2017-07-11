@@ -100,8 +100,7 @@ class Magazine extends gEditorial\Module
 		return [
 			'misc' => [
 				'issue_cpt' => [
-					'featured'              => _x( 'Cover Image', 'Modules: Magazine: Issue CPT: Featured', GEDITORIAL_TEXTDOMAIN ),
-					'children_column_title' => _x( 'Posts', 'Modules: Magazine: Column Title', GEDITORIAL_TEXTDOMAIN ),
+					'featured' => _x( 'Cover Image', 'Modules: Magazine: Issue CPT: Featured', GEDITORIAL_TEXTDOMAIN ),
 				],
 				'issue_tax' => [
 					'meta_box_title' => _x( 'In This Issue', 'Modules: Magazine: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
@@ -114,8 +113,9 @@ class Magazine extends gEditorial\Module
 					'meta_box_title'      => _x( 'Sections', 'Modules: Magazine: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
 					'tweaks_column_title' => _x( 'Issue Sections', 'Modules: Magazine: Column Title', GEDITORIAL_TEXTDOMAIN ),
 				],
-				'meta_box_title'      => _x( 'The Issue', 'Modules: Magazine: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
-				'tweaks_column_title' => _x( 'Issues', 'Modules: Magazine: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'meta_box_title'         => _x( 'The Issue', 'Modules: Magazine: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
+				'tweaks_column_title'    => _x( 'Issues', 'Modules: Magazine: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'connected_column_title' => _x( 'Connected Items', 'Modules: Magazine: Column Title', GEDITORIAL_TEXTDOMAIN ),
 			],
 			'noops' => [
 				'issue_cpt'   => _nx_noop( 'Issue', 'Issues', 'Modules: Magazine: Noop', GEDITORIAL_TEXTDOMAIN ),
@@ -665,9 +665,9 @@ class Magazine extends gEditorial\Module
 		if ( ! $count )
 			return;
 
-		echo '<li class="-row -magazine -children">';
+		echo '<li class="-row -magazine -connected">';
 
-			echo $this->get_column_icon( FALSE, NULL, $this->get_column_title( 'children', 'issue_cpt' ) );
+			echo $this->get_column_icon( FALSE, NULL, $this->get_column_title( 'connected', 'issue_cpt' ) );
 
 			$post_types = array_unique( array_map( function( $r ){
 				return $r->post_type;

@@ -403,7 +403,7 @@ class Importer extends gEditorial\Module
 			HTML::desc( _x( 'Upload or select a CSV file, post-type and user to map the import.', 'Modules: Importer', GEDITORIAL_TEXTDOMAIN ), FALSE );
 
 		} else {
-			HTML::desc( _x( 'Import Not supported for any post-types!', 'Modules: Importer', GEDITORIAL_TEXTDOMAIN ), FALSE );
+			HTML::desc( _x( 'Imports are not supported for any of the post-types!', 'Modules: Importer', GEDITORIAL_TEXTDOMAIN ), FALSE );
 		}
 
 		echo '</p>';
