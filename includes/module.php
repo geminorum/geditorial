@@ -2058,12 +2058,14 @@ SQL;
 	public function column_count( $count, $title_attr = NULL )
 	{
 		echo Helper::htmlCount( $count, $title_attr );
+		echo '<span class="count" data-count="'.( FALSE === $count ? '' : $count ).'"></span>';
 	}
 
 	// TODO: override $title_attr based on passed constant key
 	public function column_order( $order, $title_attr = NULL )
 	{
 		echo Helper::htmlOrder( $order, $title_attr );
+		echo '<span class="order" data-order="'.( FALSE === $order ? '' : $order ).'"></span>';
 	}
 
 	public function column_term( $object_id, $tax_constant_key, $title_attr = NULL, $single = TRUE )
