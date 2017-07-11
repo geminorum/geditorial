@@ -21,10 +21,11 @@
   },
   "require": {
     "php": ">=5.4",
-    "composer/installers": "^1.2"
+    "composer/installers": "^1.2",
+    "kzykhys/php-csv-parser": ">1.4",
+    "nicmart/string-template": "~0.1"
   },
   "require-dev": {
-    "kzykhys/php-csv-parser": ">1.4",
     "erusev/parsedown-extra": "^0.7.1",
     "mustache/mustache": "^2.11",
     "evert/sitemap-php": "^1.2",

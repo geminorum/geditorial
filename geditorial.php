@@ -15,7 +15,7 @@ RepoGitHub: geminorum/geditorial
 GitHub Plugin URI: https://github.com/geminorum/geditorial
 GitHub Branch: master
 Release Asset: true
-Requires WP: 4.4
+Requires WP: 4.7
 Requires PHP: 5.4
 */
 
