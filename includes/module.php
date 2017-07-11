@@ -350,7 +350,11 @@ class Module extends Base
 		if ( isset( $this->fields[$this->constant( $constant )] ) )
 			unset( $supports['editorial-meta'] );
 
-		if ( ! is_null( $excludes ) )
+		// default excludes
+		if ( is_null( $excludes ) )
+			$excludes = [ 'post-formats', 'trackbacks' ];
+
+		if ( count( $excludes ) )
 			$supports = array_diff_key( $supports, array_flip( (array) $excludes ) );
 
 		if ( is_null( $defaults ) )
