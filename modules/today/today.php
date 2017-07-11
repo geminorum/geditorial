@@ -363,6 +363,10 @@ class Today extends gEditorial\Module
 	{
 		foreach ( $constants as $field => $constant ) {
 
+			// if year with no cal
+			if ( 'year' == $field && ! array_key_exists( 'cal', $postmeta ) )
+				unset( $postmeta['year'] );
+
 			// if month with no cal
 			if ( 'month' == $field && ! array_key_exists( 'cal', $postmeta ) )
 				unset( $postmeta['month'] );
