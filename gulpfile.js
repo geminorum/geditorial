@@ -81,6 +81,14 @@
       'final': '..',
     },
 
+    sass = {
+      errLogToConsole: true,
+      includePaths: [
+        '../gnetwork/assets/sass',
+        '../../gnetwork/assets/sass'
+      ]
+    },
+
     logs = {
       'tinypng': './assets/images/raw/.tinypng-sigs'
     };
@@ -107,7 +115,7 @@
       ext: '.css',
     }))
     .pipe(plugins.sourcemaps.init())
-    .pipe(plugins.sass().on('error', plugins.sass.logError))
+    .pipe(plugins.sass(sass).on('error', plugins.sass.logError))
     .pipe(plugins.cssnano({
       core: false,
       zindex: false,
@@ -127,7 +135,7 @@
   gulp.task('dev:styles', function() {
     return gulp.src(input.sass)
     .pipe(plugins.sourcemaps.init())
-    .pipe(plugins.sass().on('error', plugins.sass.logError))
+    .pipe(plugins.sass(sass).on('error', plugins.sass.logError))
     .pipe(plugins.cssnano({
       core: false,
       zindex: false,
@@ -142,7 +150,7 @@
 
   gulp.task('build:styles', function() {
     return gulp.src(input.sass)
-    .pipe(plugins.sass().on('error', plugins.sass.logError))
+    .pipe(plugins.sass(sass).on('error', plugins.sass.logError))
     .pipe(plugins.cssnano({
       zindex: false,
       discardComments: {
@@ -199,7 +207,7 @@
   gulp.task('sass', function() {
     return gulp.src('./assets/sass/**/*.scss')
       // .pipe(sourcemaps.init())
-      .pipe(plugins.sass().on('error', plugins.sass.logError)).pipe(plugins.cssnano({
+      .pipe(plugins.sass(sass).on('error', plugins.sass.logError)).pipe(plugins.cssnano({
         zindex: false,
         discardComments: {
           removeAll: true
