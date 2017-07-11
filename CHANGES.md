@@ -1,3 +1,63 @@
+### 3.11.0
+* main/plugin: :new: internal api for posttype templates
+* main/module: filter for column thumb html
+* main/module: cleanup init actions
+* main/module: init settings before before settings
+* main/module: posttype supports api revised
+* main/module: dynamic insert priority option
+* main/module: posttype supports moved up to the core
+* main/module: jump to tools/reports subs on settings
+* main/module: column order/image helpers
+* main/module: count/order as data on columns
+* main/module: p2p from/to column rows moved here form book module
+* main/module: internal for table posts
+* main/module: some default section titles
+* main/helper: new string on tax label generator
+* main/helper: posttype icon helper
+* main/helper: custom posttype support for table filters
+* main/helper: excerpt for title columns
+* main/settings: support for links via submit button generator
+* main/settings: more posttype supports and default excludes
+* main/template: fallback for custom links on post images
+* main/widget: :new: form field for custom links
+* main/widget: form post id field only for hierarchical
+* module/audit: :new: audit roles
+* module/audit: correct none value on reports
+* module/book: rtl control chars before/after isbn numbers
+* module/book: :warning: correct check for p2p installed
+* module/book: get assoc for p2p
+* module/book: :new: cover shortcode
+* module/book: :new: cover widget
+* module/book: initial support for importer module
+* module/config: default reports page for authors
+* module/importer: :new: module
+* module/magazine: :new: cover shortcode
+* module/magazine: :warning: cover widget fixed not factoring options
+* module/meta: column rows as actions
+* module/meta: row actions after quick edit
+* module/meta: initial support for importer module
+* module/modified: reorder columns on dashboard widget
+* module/ortho: first draft to bulk cleanup chars
+* module/ortho: persiantools verson on settings intro after
+* module/reshare: default comment status
+* module/revisions: link to the post revision browser on table summary
+* module/roles: :new: module
+* module/team: :new: module
+* module/terms: :new: support for order/image/author/color meta for each term
+* module/terms: :warning: broken orphaned terms tool
+* module/today: better handling meta
+* module/today: insert the day badge on frontend
+* module/today: fill empty day title with d/m/y/cal
+* module/today: fill the current day option
+* module/today: initial support for importer module
+* module/today: more checks: year with cal/month with cal/day with month
+* module/today: empty cal select before new quick edit
+* module/tweaks: :warning: thumbnail size for column image
+* module/tweaks: handle ajax quick edit requests
+* module/tweaks: url link handling on user contacts
+* module/users: check for selected all users on author restrict
+* module/users: :new: dashboard widget for current user contacts
+
 ### 3.10.2
 * main/helper: sanitize calendar
 * main/settings: insert cover default setting
