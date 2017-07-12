@@ -560,6 +560,8 @@ class Settings extends Core\Base
 	// @REF: `get_admin_page_title()`
 	public static function headerTitle( $title = NULL, $back = NULL, $to = NULL, $icon = '', $count = FALSE, $search = FALSE )
 	{
+		$before = $class = '';
+
 		if ( is_null( $title ) )
 			$title = _x( 'Editorial', 'Settings', GEDITORIAL_TEXTDOMAIN );
 
@@ -570,15 +572,18 @@ class Settings extends Core\Base
 		if ( is_null( $to ) )
 			$to = _x( 'Back to Editorial', 'Settings', GEDITORIAL_TEXTDOMAIN );
 
-		if ( $icon )
-			$icon = ' dashicons-before dashicons-'.$icon;
+		if ( is_array( $icon ) )
+			$before = gEditorial()->icon( $icon[1], $icon[0] ).' ';
+
+		else if ( $icon )
+			$class = ' dashicons-before dashicons-'.$icon;
 
 		$extra = '';
 
 		if ( FALSE !== $count )
 			$extra .= sprintf( ' <span class="title-count settings-title-count">%s</span>', Number::format( $count ) );
 
-		printf( '<h1 class="wp-heading-inline settings-title'.$icon.'">%s%s</h1>', $title, $extra );
+		printf( '<h1 class="wp-heading-inline settings-title'.$class.'">%s%s%s</h1>', $before, $title, $extra );
 
 		// echo '<span class="subtitle">'.'</span>';
 

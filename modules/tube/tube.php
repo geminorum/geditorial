@@ -173,20 +173,20 @@ class Tube extends gEditorial\Module
 			$html .= HTML::tag( 'button', [
 				'class' => [ '-button', 'btn', 'btn-default', 'btn-xs' ],
 				'title' => _x( 'The date of this video', 'Modules: Tube: Button', GEDITORIAL_TEXTDOMAIN ),
-			], $this->get_icon( 'calendar', 'gridicons' ).' '.$attr['date'] );
+			], $this->icon( 'calendar', 'gridicons' ).' '.$attr['date'] );
 
 		if ( ! empty( $attr['time'] ) )
 			$html .= HTML::tag( 'button', [
 				'class' => [ '-button', 'btn', 'btn-default', 'btn-xs' ],
 				'title' => _x( 'Total time of this video', 'Modules: Tube: Button', GEDITORIAL_TEXTDOMAIN ),
-			], $this->get_icon( 'time' ).' '.Number::format( $attr['time'] ) );
+			], $this->icon( 'time' ).' '.Number::format( $attr['time'] ) );
 
 		if ( ! empty( $attr['src'] ) )
 			$html .= HTML::tag( 'a', [
 				'href'  => $attr['src'],
 				'class' => [ '-button', 'btn', 'btn-default', 'btn-xs' ],
 				'title' => _x( 'Download this video', 'Modules: Tube: Button', GEDITORIAL_TEXTDOMAIN ),
-			], $this->get_icon( 'download' ).' '._x( 'Download', 'Modules: Tube: Button', GEDITORIAL_TEXTDOMAIN ) );
+			], $this->icon( 'download' ).' '._x( 'Download', 'Modules: Tube: Button', GEDITORIAL_TEXTDOMAIN ) );
 
 		if ( ! empty( $attr['youtube'] ) )
 			$html .= HTML::tag( 'a', [
@@ -194,7 +194,7 @@ class Tube extends gEditorial\Module
 				'class'  => [ '-button', 'btn', 'btn-default', 'btn-xs' ],
 				'title'  => _x( 'View this video on YouTube', 'Modules: Tube: Button', GEDITORIAL_TEXTDOMAIN ),
 				'target' => '_blank',
-			], $this->get_icon( 'youtube', 'social-logos' ).' '._x( 'YouTube', 'Modules: Tube: Button', GEDITORIAL_TEXTDOMAIN ) );
+			], $this->icon( 'youtube', 'social-logos' ).' '._x( 'YouTube', 'Modules: Tube: Button', GEDITORIAL_TEXTDOMAIN ) );
 
 		if ( ! empty( $attr['aparat'] ) )
 			$html .= HTML::tag( 'a', [
@@ -202,7 +202,7 @@ class Tube extends gEditorial\Module
 				'class'  => [ '-button', 'btn', 'btn-default', 'btn-xs' ],
 				'title'  => _x( 'View this video on Aparat', 'Modules: Tube: Button', GEDITORIAL_TEXTDOMAIN ),
 				'target' => '_blank',
-			], $this->get_icon( 'aparat', 'gorbeh' ).' '._x( 'Aparat', 'Modules: Tube: Button', GEDITORIAL_TEXTDOMAIN ) );
+			], $this->icon( 'aparat', 'gorbeh' ).' '._x( 'Aparat', 'Modules: Tube: Button', GEDITORIAL_TEXTDOMAIN ) );
 
 		$link = empty( $attr['shortlink'] ) ? WordPress::getPostShortLink( $post_id ) : $attr['shortlink'];
 
@@ -211,35 +211,35 @@ class Tube extends gEditorial\Module
 			'class'  => [ '-button', 'btn', 'btn-default', 'btn-xs' ],
 			'title'  => _x( 'Shortlink to this video', 'Modules: Tube: Button', GEDITORIAL_TEXTDOMAIN ),
 			'target' => '_blank',
-		], $this->get_icon( 'link' ).' '._x( 'Shortlink', 'Modules: Tube: Button', GEDITORIAL_TEXTDOMAIN ) );
+		], $this->icon( 'link' ).' '._x( 'Shortlink', 'Modules: Tube: Button', GEDITORIAL_TEXTDOMAIN ) );
 
 		$html .= HTML::tag( 'a', [
 			'href'   => sprintf( 'https://telegram.me/share/url?url=%s', urlencode( $link ) ),
 			'class'  => [ '-button', 'btn', 'btn-default', 'btn-xs', '-icon-button' ],
 			'title'  => _x( 'Share this video', 'Modules: Tube: Button', GEDITORIAL_TEXTDOMAIN ),
 			'target' => '_blank',
-		], $this->get_icon( 'telegram', 'social-logos' ) );
+		], $this->icon( 'telegram', 'social-logos' ) );
 
 		$html .= HTML::tag( 'a', [
 			'href'   => sprintf( 'https://twitter.com/intent/tweet?url=%s', urlencode( $link ) ),
 			'class'  => [ '-button', 'btn', 'btn-default', 'btn-xs', '-icon-button' ],
 			'title'  => _x( 'Share this video', 'Modules: Tube: Button', GEDITORIAL_TEXTDOMAIN ),
 			'target' => '_blank',
-		], $this->get_icon( 'twitter-alt', 'social-logos' ) );
+		], $this->icon( 'twitter-alt', 'social-logos' ) );
 
 		$html .= HTML::tag( 'a', [
 			'href'   => sprintf( 'https://plus.google.com/share?url=%s', urlencode( $link ) ),
 			'class'  => [ '-button', 'btn', 'btn-default', 'btn-xs', '-icon-button' ],
 			'title'  => _x( 'Share this video', 'Modules: Tube: Button', GEDITORIAL_TEXTDOMAIN ),
 			'target' => '_blank',
-		], $this->get_icon( 'google-plus-alt', 'social-logos' ) );
+		], $this->icon( 'google-plus-alt', 'social-logos' ) );
 
 		$html .= HTML::tag( 'a', [
 			'href'   => sprintf( 'https://www.facebook.com/sharer/sharer.php?u=%s', urlencode( $link ) ),
 			'class'  => [ '-button', 'btn', 'btn-default', 'btn-xs', '-icon-button' ],
 			'title'  => _x( 'Share this video', 'Modules: Tube: Button', GEDITORIAL_TEXTDOMAIN ),
 			'target' => '_blank',
-		], $this->get_icon( 'facebook', 'social-logos' ) );
+		], $this->icon( 'facebook', 'social-logos' ) );
 
 		return $output.HTML::wrap( $html, $this->classs( 'video' ) );
 	}

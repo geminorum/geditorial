@@ -56,6 +56,17 @@ class Helper extends Core\Base
 		return $enabled;
 	}
 
+	public static function getIcon( $icon, $fallback = 'admin-post' )
+	{
+		if ( is_array( $icon ) )
+			return gEditorial()->icon( $icon[1], $icon[0] );
+
+		if ( ! $icon )
+			return HTML::getDashicon( $fallback );
+
+		return HTML::getDashicon( $icon );
+	}
+
 	// override to use plugin version
 	public static function linkStyleSheet( $url, $version = GEDITORIAL_VERSION, $media = FALSE )
 	{

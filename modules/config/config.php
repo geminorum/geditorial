@@ -68,7 +68,7 @@ class Config extends gEditorial\Module
 			$this->caps['settings'],
 			$this->module->settings,
 			[ $this, 'admin_settings_page' ],
-			'dashicons-'.$this->module->icon
+			$this->get_posttype_icon()
 		);
 
 		$hook_tools = add_submenu_page(
@@ -432,7 +432,7 @@ class Config extends gEditorial\Module
 					.'" id="'.$module->settings.'" data-module="'.$module->name.'">';
 
 				if ( $module->icon )
-					echo HTML::getDashicon( $module->icon );
+					echo Helper::getIcon( $module->icon );
 
 				echo '<span class="spinner"></span>';
 

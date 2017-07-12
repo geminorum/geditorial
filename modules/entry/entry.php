@@ -139,7 +139,7 @@ class Entry extends gEditorial\Module
 	{
 		shortcode_ui_register_for_shortcode( $this->constant( 'section_shortcode' ), [
 			'label'         => esc_html_x( 'Entry Section', 'Modules: Entry: UI: Label', GEDITORIAL_TEXTDOMAIN ),
-			'listItemImage' => 'dashicons-'.$this->module->icon,
+			'listItemImage' => $this->get_posttype_icon( 'entry_cpt' ),
 			'attrs'         => [
 				[
 				'label'    => esc_html_x( 'Section', 'Modules: Entry: UI: Label', GEDITORIAL_TEXTDOMAIN ),

@@ -4,6 +4,7 @@ defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core\Arraay;
 use geminorum\gEditorial\Core\HTML;
+use geminorum\gEditorial\Core\Icon;
 use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\Module as Base;
@@ -1267,19 +1268,21 @@ class Module extends Base
 		return array_keys( Settings::supportsOptions() );
 	}
 
-	// FIXME: use: `Icon::getPosttypeMenu()`
-	public function get_posttype_icon( $constant, $default = 'welcome-write-blog' )
+	public function get_posttype_icon( $constant = NULL, $default = 'welcome-write-blog' )
 	{
-		$icons  = $this->get_module_icons();
-		$module = $this->module->icon ? $this->module->icon : 'welcome-write-blog';
+		$icon  = $this->module->icon ? $this->module->icon : $default;
+		$icons = $this->get_module_icons();
 
-		if ( empty( $icons['post_types'] ) )
-			return $module;
+		if ( $constant && isset( $icons['post_types'][$constant] ) )
+			$icon = $icons['post_types'][$constant];
 
-		if ( isset( $icons['post_types'][$constant] ) )
-			return $icons['post_types'][$constant];
+		if ( is_array( $icon ) )
+			$icon = Icon::getBase64( $icon[1], $icon[0] );
 
-		return $module;
+		else if ( $icon )
+			$icon = 'dashicons-'.$icon;
+
+		return $icon ? $icon : 'dashicons-'.$default;
 	}
 
 	public function get_posttype_cap_type( $constant )
@@ -1308,7 +1311,7 @@ class Module extends Base
 			'supports'             => $this->get_post_type_supports( $constant ),
 			'description'          => isset( $this->strings['labels'][$constant]['description'] ) ? $this->strings['labels'][$constant]['description'] : '',
 			'register_meta_box_cb' => method_exists( $this, 'add_meta_box_cb_'.$constant ) ? [ $this, 'add_meta_box_cb_'.$constant ] : NULL,
-			'menu_icon'            => 'dashicons-'.$this->get_posttype_icon( $constant ),
+			'menu_icon'            => $this->get_posttype_icon( $constant ),
 			'has_archive'          => $this->constant( $constant.'_archive', FALSE ),
 			'query_var'            => $this->constant( $constant.'_query_var', $post_type ),
 			'capability_type'      => $this->get_posttype_cap_type( $constant ),
@@ -2026,20 +2029,20 @@ SQL;
 		return sprintf( $format, Number::format( $terms ), $text, $taxonomy );
 	}
 
-	public function get_column_icon( $link = FALSE, $icon = NULL, $title = NULL )
+	public function get_column_icon( $link = FALSE, $icon = NULL, $title = NULL, $posttype = 'post' )
 	{
 		if ( is_null( $icon ) )
 			$icon = $this->module->icon;
 
 		if ( is_null( $title ) )
-			$title = $this->get_string( 'column_icon_title', $icon, 'misc', '' );
+			$title = $this->get_string( 'column_icon_title', $posttype, 'misc', '' );
 
 		return HTML::tag( ( $link ? 'a' : 'span' ), [
 			'href'   => $link ? $link : FALSE,
 			'title'  => $title ? $title : FALSE,
 			'class'  => [ '-icon', ( $link ? '-link' : '-info' ) ],
 			'target' => $link ? '_blank' : FALSE,
-		], HTML::getDashicon( $icon ) );
+		], Helper::getIcon( $icon ) );
 	}
 
 	// for posts
@@ -2410,7 +2413,7 @@ SQL;
 		] );
 	}
 
-	public function get_icon( $name, $group = NULL )
+	public function icon( $name, $group = NULL )
 	{
 		return gEditorial()->icon( $name, ( is_null( $group ) ? $this->icon_group : $group ) );
 	}
