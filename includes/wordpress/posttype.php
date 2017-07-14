@@ -159,7 +159,15 @@ class PostType extends Core\Base
 		if ( ! $post_thumbnail_img = wp_get_attachment_image_src( $post_thumbnail_id, $size ) )
 			return '';
 
-		$image = HTML::img( $post_thumbnail_img[0], '-featured' );
+		$image = HTML::tag( 'img', array(
+			'src'   => $term_thumbnail_img[0],
+			'class' => '-featured',
+			'alt'   => '',
+			'data'  => array(
+				'post'       => $post_id,
+				'attachment' => $post_thumbnail_id,
+			),
+		) );
 
 		if ( ! $link )
 			return $image;

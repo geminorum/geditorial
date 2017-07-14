@@ -31,9 +31,9 @@ class HTML extends Base
 				.'&#8206;'.$content.'&#8207;</a>';
 	}
 
-	public static function scroll( $html, $to )
+	public static function scroll( $html, $to, $title = '' )
 	{
-		return '<a class="scroll" href="#'.$to.'">'.$html.'</a>';
+		return '<a class="scroll" title="'.$title.'" href="#'.$to.'">'.$html.'</a>';
 	}
 
 	public static function img( $src, $class = '', $alt = '' )
