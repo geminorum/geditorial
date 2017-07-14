@@ -1125,6 +1125,20 @@ class Module extends Base
 		);
 	}
 
+	public function settings_section_dashboard()
+	{
+		Settings::fieldSection(
+			_x( 'Admin Dashboard', 'Module: Setting Section Title', GEDITORIAL_TEXTDOMAIN )
+		);
+	}
+
+	public function settings_section_editlist()
+	{
+		Settings::fieldSection(
+			_x( 'Admin Post List', 'Module: Setting Section Title', GEDITORIAL_TEXTDOMAIN )
+		);
+	}
+
 	public function add_settings_field( $r = [] )
 	{
 		$args = array_merge( [
