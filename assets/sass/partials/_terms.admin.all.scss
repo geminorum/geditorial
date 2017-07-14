@@ -38,7 +38,6 @@ body.geditorial-terms-enabled {
       height: auto;
       width: auto;
       display: inline-block;
-      // border: 2px solid #eee;
     }
 
     i.-color {
@@ -54,10 +53,11 @@ body.geditorial-terms-enabled {
 // img.geditorial-terms-image-img,
 // .column-geditorial-terms-image img
 
+// on addtag/edittag
 #geditorial-terms-image-img {
   max-height: 125px;
   max-width: 125px;
   height: auto;
   width: auto;
-  // border: 2px solid #ccc;
+  margin-bottom: 0.25em;
 }

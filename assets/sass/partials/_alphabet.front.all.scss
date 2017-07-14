@@ -1,0 +1,32 @@
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+/// gEditorial Partials: Alphabet Front ALL ------------------------------------
+
+.-wrap {
+  &.geditorial-alphabet-posts,
+  &.geditorial-alphabet-terms {
+
+    .-letters {
+
+      li {
+        list-style: none;
+        display: inline-block;
+        margin-left: 5px;
+
+        a, span {
+          display: inline-block;
+          padding: 2px 5px;
+        }
+      }
+    }
+
+    .-definitions {
+      .-heading {}
+      .-title {}
+      .-excerpt {}
+      .-description {}
+      .-term-count {}
+    }
+  }
+}
