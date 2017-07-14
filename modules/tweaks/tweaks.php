@@ -9,6 +9,7 @@ use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\URL;
 use geminorum\gEditorial\Core\WordPress;
+use geminorum\gEditorial\WordPress\Media;
 use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\User;
 
@@ -423,7 +424,7 @@ class Tweaks extends gEditorial\Module
 			break;
 			case $this->classs( 'thumb' ):
 
-				$sizes = Helper::getRegisteredImageSizes( $post->post_type );
+				$sizes = Media::getRegisteredImageSizes( $post->post_type );
 				$size  = isset( $sizes[$post->post_type.'-thumbnail'] ) ? $post->post_type.'-thumbnail' : 'thumbnail';
 
 				$this->column_thumb( $post_id, $size );

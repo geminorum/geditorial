@@ -8,6 +8,7 @@ use geminorum\gEditorial\Core\Icon;
 use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\Module as Base;
+use geminorum\gEditorial\WordPress\Media;
 use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\Taxonomy;
 
@@ -1503,10 +1504,10 @@ class Module extends Base
 	{
 		$post_type = $this->constant( $constant );
 
-		Helper::themeThumbnails( [ $post_type ] );
+		Media::themeThumbnails( [ $post_type ] );
 
 		foreach ( $this->get_image_sizes( $post_type ) as $name => $size )
-			Helper::registerImageSize( $name, array_merge( $size, [ 'p' => [ $post_type ] ] ) );
+			Media::registerImageSize( $name, array_merge( $size, [ 'p' => [ $post_type ] ] ) );
 	}
 
 	// WARNING: every script must have a .min copy

@@ -9,6 +9,7 @@ use geminorum\gEditorial\Core\Arraay;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\Database;
+use geminorum\gEditorial\WordPress\Media;
 use geminorum\gEditorial\WordPress\Taxonomy;
 use geminorum\gEditorial\Templates\Terms as ModuleTemplate;
 
@@ -277,7 +278,7 @@ class Terms extends gEditorial\Module
 		} else if ( $this->classs( 'image' ) == $column ) {
 
 			// FIXME
-			// $sizes = Helper::getRegisteredImageSizes( $post->post_type );
+			// $sizes = Media::getRegisteredImageSizes( $post->post_type );
 			// $size  = isset( $sizes[$post->post_type.'-thumbnail'] ) ? $post->post_type.'-thumbnail' : 'thumbnail';
 			$size = [ 45, 72 ];
 

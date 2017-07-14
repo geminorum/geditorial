@@ -5,6 +5,7 @@ defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\WordPress;
+use geminorum\gEditorial\WordPress\Media;
 use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\Taxonomy;
 
@@ -180,7 +181,7 @@ class Widget extends \WP_Widget
 			}
 		} else {
 
-			$sizes = Helper::getRegisteredImageSizes( $post_type );
+			$sizes = Media::getRegisteredImageSizes( $post_type );
 
 			if ( count( $sizes ) ) {
 				foreach ( $sizes as $name => $size )
