@@ -379,11 +379,12 @@ class Config extends gEditorial\Module
 	{
 		global $gEditorial;
 
-		$back = $count = FALSE;
+		$back = $count = $flush = FALSE;
 
 		if ( 'config' == $current_module->name ) {
 			$title = _x( 'Editorial', 'Modules: Config', GEDITORIAL_TEXTDOMAIN );
 			$count = count( get_object_vars( $gEditorial->modules ) );
+			$flush = WordPress::maybeFlushRules();
 		} else {
 			$title = sprintf( _x( 'Editorial: %s', 'Modules: Config', GEDITORIAL_TEXTDOMAIN ), $current_module->title );
 			$back  = Settings::settingsURL();
@@ -393,6 +394,9 @@ class Config extends gEditorial\Module
 
 			Settings::headerTitle( $title, $back, NULL, $current_module->icon, $count, TRUE );
 			Settings::message();
+
+			if ( $flush )
+				HTML::warning( _x( 'You need to flush rewrite rules!', 'Modules: Config', GEDITORIAL_TEXTDOMAIN ), TRUE );
 
 			echo '<div class="-header">';
 
