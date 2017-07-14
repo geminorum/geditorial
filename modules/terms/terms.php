@@ -397,12 +397,11 @@ class Terms extends gEditorial\Module
 				] );
 
 				echo HTML::tag( 'a', [
-					'class' => [ 'button-secondary', '-button', '-modal' ],
-					'style' => empty( $meta ) ? FALSE : 'display:none',
+					'class' => [ 'button', 'button-small', 'button-secondary', '-modal' ],
 				], _x( 'Choose', 'Modules: Terms: Button', GEDITORIAL_TEXTDOMAIN ) );
 
-				echo HTML::tag( 'a', [
-					'class' => [ 'button', '-button', '-remove' ],
+				echo '&nbsp;'.HTML::tag( 'a', [
+					'class' => [ 'button', 'button-small', 'button-link-delete', '-remove' ],
 					'style' => empty( $meta ) ? 'display:none' : FALSE,
 				], _x( 'Remove', 'Modules: Terms: Button', GEDITORIAL_TEXTDOMAIN ) );
 
@@ -456,20 +455,20 @@ class Terms extends gEditorial\Module
 				echo '<input type="hidden" name="term-'.$field.'" value="" />';
 
 				echo HTML::tag( 'button', [
-					'class' => [ 'button-secondary', '-button', '-modal', '-quick' ],
+					'class' => [ 'button', 'button-small', 'button-secondary', '-modal', '-quick' ],
 				], _x( 'Choose', 'Modules: Terms: Button', GEDITORIAL_TEXTDOMAIN ) );
+
+				echo '&nbsp;'.HTML::tag( 'a', [
+					'href'  => '',
+					'class' => [ 'button', 'button-small', 'button-link-delete', '-remove', '-quick' ],
+					'style' => 'display:none',
+				], _x( 'Remove', 'Modules: Terms: Button', GEDITORIAL_TEXTDOMAIN ) ).'&nbsp;';
 
 				echo HTML::tag( 'img', [
 					// 'src'   => '',
 					'class' => '-img',
 					'style' => 'display:none',
 				] );
-
-				echo HTML::tag( 'a', [
-					'href'  => '',
-					'class' => [ 'button', '-button', '-remove', '-quick' ],
-					'style' => 'display:none',
-				], _x( 'Remove', 'Modules: Terms: Button', GEDITORIAL_TEXTDOMAIN ) );
 
 			break;
 			case 'order':
