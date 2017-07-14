@@ -172,7 +172,7 @@ class Helper extends Core\Base
 
 	public static function getCounted( $count, $template = '%s' )
 	{
-		return sprintf( $template, '<span class="-count">'.Number::format( $count ).'</span>' );
+		return sprintf( $template, '<span class="-count" data-count="'.$count.'">'.Number::format( $count ).'</span>' );
 	}
 
 	public static function getTermsEditRow( $post, $taxonomy, $before = '', $after = '' )
