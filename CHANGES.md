@@ -1,3 +1,10 @@
+### 3.11.1
+* main/module: :new: support for custom svg icons
+* main/module: some default section titles
+* main/helper: data count on get counted
+* module/alphabet: :new: module
+* module/terms: tuning scripts on edit tags screen
+
 ### 3.11.0
 * main/plugin: :new: internal api for posttype templates
 * main/module: filter for column thumb html
