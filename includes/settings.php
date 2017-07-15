@@ -627,6 +627,7 @@ class Settings extends Core\Base
 			'error'     => HTML::error( _x( 'Error occurred!', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
 			'wrong'     => HTML::error( _x( 'Something\'s wrong!', 'Settings', GEDITORIAL_TEXTDOMAIN ) ),
 			'nochange'  => HTML::error( _x( 'No item changed!', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
+			'noadded'   => HTML::error( _x( 'No item added!', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
 			'noaccess'  => HTML::error( _x( 'You do not have the access!', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
 			'converted' => self::counted( _x( '%s items(s) converted!', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
 			'imported'  => self::counted( _x( '%s items(s) imported!', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),

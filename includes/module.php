@@ -998,20 +998,27 @@ class Module extends Base
 		return str_replace( '_', '-', $this->module->name );
 	}
 
-	protected function insert_default_terms( $constant )
+	protected function insert_default_terms( $constant, $terms = NULL )
 	{
 		if ( ! wp_verify_nonce( $_POST['_wpnonce'], $this->module->group.'-options' ) )
 			return;
 
-		$added = Taxonomy::insertDefaultTerms(
-			$this->constant( $constant ),
-			$this->strings['terms'][$constant]
-		);
+		if ( is_null( $terms ) && isset( $this->strings['terms'][$constant] ) )
+			$terms = $this->strings['terms'][$constant];
 
-		WordPress::redirectReferer( ( FALSE === $added ? 'wrong' : [
-			'message' => 'created',
-			'count'   => $added,
-		] ) );
+		if ( ! count( $terms ) )
+			$message = 'noadded';
+
+		else if ( $added = Taxonomy::insertDefaultTerms( $this->constant( $constant ), $terms ) )
+			$message = [
+				'message' => 'created',
+				'count'   => $added,
+			];
+
+		else
+			$message = 'wrong';
+
+		WordPress::redirectReferer( $message );
 	}
 
 	protected function check_settings( $sub, $context = 'tools' )
