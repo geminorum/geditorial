@@ -518,6 +518,18 @@ class Settings extends Core\Base
 		];
 	}
 
+	public static function getSetting_calendar_list( $section )
+	{
+		return [
+			'field'   => 'calendar_list',
+			'title'   => _x( 'Calendar List', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+			'type'    => 'checkbox',
+			'default' => [ 'gregorian' ],
+			'values'  => Helper::getDefualtCalendars( TRUE ),
+			'section' => $section,
+		];
+	}
+
 	public static function getSetting_supported_roles( $section )
 	{
 		return [

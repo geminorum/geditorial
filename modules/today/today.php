@@ -30,6 +30,7 @@ class Today extends gEditorial\Module
 			'posttypes_option' => 'posttypes_option',
 			'_defaults' => [
 				'calendar_type',
+				'calendar_list',
 				[
 					'field'       => 'today_in_draft',
 					'title'       => _x( 'Fill The Day', 'Modules: Today: Setting Title', GEDITORIAL_TEXTDOMAIN ),
@@ -235,6 +236,8 @@ class Today extends gEditorial\Module
 
 			$display_year = $post->post_type != $this->constant( 'day_cpt' );
 			$default_type = $this->get_setting( 'calendar_type', 'gregorian' );
+			$calendars    = array_intersect_key( Helper::getDefualtCalendars( TRUE ),
+				array_flip( $this->get_setting( 'calendar_list', [ 'gregorian' ] ) ) );
 
 			if ( 'auto-draft' == $post->post_status && $this->get_setting( 'today_in_draft' ) )
 				$the_day = ModuleHelper::getTheDayFromToday( NULL, $default_type );
@@ -245,7 +248,7 @@ class Today extends gEditorial\Module
 			else
 				$the_day = ModuleHelper::getTheDayFromQuery( TRUE, $default_type, $this->get_the_day_constants( $display_year ) );
 
-			ModuleHelper::theDaySelect( $the_day, $display_year, $default_type );
+			ModuleHelper::theDaySelect( $the_day, $display_year, $default_type, $calendars );
 
 		echo '</div>';
 
@@ -272,11 +275,14 @@ class Today extends gEditorial\Module
 		if ( 'theday' != $column_name )
 			return FALSE;
 
+		$calendars = array_intersect_key( Helper::getDefualtCalendars( TRUE ),
+			array_flip( $this->get_setting( 'calendar_list', [ 'gregorian' ] ) ) );
+
 		echo '<div class="inline-edit-col geditorial-admin-wrap-quickedit -today">';
 			echo '<span class="title inline-edit-categories-label">';
 				echo $this->get_string( 'meta_box_title', $post_type, 'misc' );
 			echo '</span>';
-			ModuleHelper::theDaySelect( [], TRUE, '' );
+			ModuleHelper::theDaySelect( [], TRUE, '', $calendars );
 		echo '</div>';
 
 		wp_nonce_field( 'geditorial_today_post_raw', '_geditorial_today_post_raw' );
@@ -686,7 +692,7 @@ class Today extends gEditorial\Module
 		$day_cpt   = $this->constant( 'day_cpt' );
 		$pattern = '([^/]+)';
 
-		foreach ( Helper::getDefualtCalendars( TRUE ) as $cal => $title ) {
+		foreach ( $this->get_setting( 'calendar_list', [] ) as $cal ) {
 
 			// /cal/month/day/year/posttype
 

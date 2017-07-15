@@ -288,7 +288,7 @@ class Today extends gEditorial\Helper
 		return [ $posts, $pagination ];
 	}
 
-	public static function theDaySelect( $atts = [], $year = TRUE, $default_type = 'gregorian' )
+	public static function theDaySelect( $atts = [], $year = TRUE, $default_type = 'gregorian', $calendars = NULL )
 	{
 		$args = self::atts( [
 			'cal'   => $default_type,
@@ -296,6 +296,9 @@ class Today extends gEditorial\Helper
 			'month' => '',
 			'year'  => '',
 		], $atts );
+
+		if ( is_null( $calendars ) )
+			$calendars = self::getDefualtCalendars( TRUE );
 
 		$html = '';
 
@@ -349,7 +352,7 @@ class Today extends gEditorial\Helper
 			'value' => '',
 		], _x( '&mdash; Select Calendar &mdash;', 'Modules: Today: Meta Box Input Option None', GEDITORIAL_TEXTDOMAIN ) );
 
-		foreach ( self::getDefualtCalendars( TRUE ) as $name => $title )
+		foreach ( $calendars as $name => $title )
 			$html .= HTML::tag( 'option', [
 				'value'    => $name,
 				'selected' => $args['cal'] == $name,

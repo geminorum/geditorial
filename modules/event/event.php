@@ -38,6 +38,7 @@ class Event extends gEditorial\Module
 					'default'     => '1',
 				],
 				'calendar_type',
+				'calendar_list',
 				'comment_status',
 				'admin_ordering',
 			],
@@ -115,7 +116,6 @@ class Event extends gEditorial\Module
 					'start'   => _x( 'Start', 'Modules: Event: Event Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
 					'end'     => _x( 'End', 'Modules: Event: Event Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
 				],
-				'type_tax' => Helper::getDefualtCalendars( TRUE ),
 			],
 		];
 	}
@@ -126,7 +126,10 @@ class Event extends gEditorial\Module
 			$this->insert_default_terms( 'event_tag' );
 
 		else if ( isset( $_POST['install_def_type_tax'] ) )
-			$this->insert_default_terms( 'type_tax' );
+			$this->insert_default_terms( 'type_tax', array_intersect_key(
+				Helper::getDefualtCalendars( TRUE ),
+				array_flip( $this->get_setting( 'calendar_list', [] ) )
+			) );
 	}
 
 	public function default_buttons( $page = NULL )
