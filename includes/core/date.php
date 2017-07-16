@@ -45,6 +45,12 @@ class Date extends Base
 		return $date->format( \DateTime::ISO8601 );
 	}
 
+	public static function htmlCurrent( $format = 'l, F j, Y', $class = FALSE, $title = FALSE )
+	{
+		$html = self::htmlDateTime( current_time( 'timestamp' ), current_time( 'timestamp', TRUE ), $format, $title );
+		return $class ? '<span class="'.$class.'">'.$html.'</span>' : $html;
+	}
+
 	public static function htmlDateTime( $time, $gmt = NULL, $format = 'l, F j, Y', $title = FALSE )
 	{
 		return HTML::tag( 'time', array(

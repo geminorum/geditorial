@@ -753,7 +753,7 @@ class Helper extends Core\Base
 		return $html;
 	}
 
-	public static function getDateEditRow( $mysql_time, $wrap_class = FALSE )
+	public static function getDateEditRow( $mysql_time, $class = FALSE )
 	{
 		$html = '';
 
@@ -764,7 +764,12 @@ class Helper extends Core\Base
 		$html .= '<span class="-date-date" title="'.esc_attr( mysql2date( $time, $mysql_time ) ).'">'.mysql2date( $date, $mysql_time ).'</span>';
 		$html .= '&nbsp;(<span class="-date-diff" title="'.esc_attr( mysql2date( $full, $mysql_time ) ).'">'.self::humanTimeDiff( $mysql_time ).'</span>)';
 
-		return $wrap_class ? '<span class="'.$wrap_class.'">'.$html.'</span>' : $html;
+		return $class ? '<span class="'.$class.'">'.$html.'</span>' : $html;
+	}
+
+	public static function htmlCurrent( $format = NULL, $class = FALSE, $title = FALSE )
+	{
+		return Date::htmlCurrent( ( is_null( $format ) ? _x( 'm/d/Y g:i:s a', 'Helper: Date Current', GEDITORIAL_TEXTDOMAIN ) : $format ), $class, $title );
 	}
 
 	public static function postModified( $post = NULL, $attr = FALSE )
