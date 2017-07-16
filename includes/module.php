@@ -2382,12 +2382,15 @@ SQL;
 		return $this->get_setting( 'comment_status', $status );
 	}
 
-	protected function _hook_ajax( $nopriv = FALSE )
+	protected function _hook_ajax( $nopriv = FALSE, $hook = NULL )
 	{
-		add_action( 'wp_ajax_'.$this->hook(), [ $this, 'ajax' ] );
+		if ( is_null( $hook ) )
+			$hook = $this->hook();
+
+		add_action( 'wp_ajax_'.$hook, [ $this, 'ajax' ] );
 
 		if ( $nopriv )
-			add_action( 'wp_ajax_nopriv_'.$this->hook(), [ $this, 'ajax' ] );
+			add_action( 'wp_ajax_nopriv_'.$hook, [ $this, 'ajax' ] );
 	}
 
 	// DEFAULT FILTER
