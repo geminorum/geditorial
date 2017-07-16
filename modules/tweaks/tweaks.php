@@ -81,30 +81,16 @@ class Tweaks extends gEditorial\Module
 		return [
 			'posttypes_option'  => 'posttypes_option',
 			'taxonomies_option' => 'taxonomies_option',
-			'_general' => [
+			'_editlist' => [
+				[
+					'field'       => 'group_taxonomies',
+					'title'       => _x( 'Group Taxonomies', 'Modules: Tweaks: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Group selected taxonomies on selected post type edit pages', 'Modules: Tweaks: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+				],
 				[
 					'field'       => 'group_attributes',
 					'title'       => _x( 'Group Attributes', 'Modules: Tweaks: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Group post attributes on selected post type edit pages', 'Modules: Tweaks: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-				],
-				[
-					'field'       => 'column_id',
-					'title'       => _x( 'ID Column', 'Modules: Tweaks: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Displays ID Column on the post list table.', 'Modules: Tweaks: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-				],
-				[
-					'field'       => 'column_order',
-					'type'        => 'posttypes',
-					'title'       => _x( 'Order Column', 'Modules: Tweaks: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Displays Order Column on the post list table.', 'Modules: Tweaks: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-					'values'      => $this->get_posttypes_support_order(),
-				],
-				[
-					'field'       => 'column_thumb',
-					'type'        => 'posttypes',
-					'title'       => _x( 'Thumbnail Column', 'Modules: Tweaks: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Displays Thumbnail Column on the post list table.', 'Modules: Tweaks: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-					'values'      => $this->get_posttypes_support_thumbnail(),
 				],
 				[
 					'field'       => 'attachment_count',
@@ -126,6 +112,29 @@ class Tweaks extends gEditorial\Module
 					'title'       => _x( 'Comment Status', 'Modules: Tweaks: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Displays only the closed comment status for the post.', 'Modules: Tweaks: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 				],
+			],
+			'_columns' => [
+				[
+					'field'       => 'column_id',
+					'title'       => _x( 'ID Column', 'Modules: Tweaks: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Displays ID Column on the post list table.', 'Modules: Tweaks: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+				],
+				[
+					'field'       => 'column_order',
+					'type'        => 'posttypes',
+					'title'       => _x( 'Order Column', 'Modules: Tweaks: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Displays Order Column on the post list table.', 'Modules: Tweaks: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'values'      => $this->get_posttypes_support_order(),
+				],
+				[
+					'field'       => 'column_thumb',
+					'type'        => 'posttypes',
+					'title'       => _x( 'Thumbnail Column', 'Modules: Tweaks: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Displays Thumbnail Column on the post list table.', 'Modules: Tweaks: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'values'      => $this->get_posttypes_support_thumbnail(),
+				],
+			],
+			'_editpost' => [
 				[
 					'field'       => 'category_search',
 					'title'       => _x( 'Category Search', 'Modules: Tweaks: Setting Title', GEDITORIAL_TEXTDOMAIN ),
@@ -141,15 +150,12 @@ class Tweaks extends gEditorial\Module
 					'title'       => _x( 'Excerpt Count', 'Modules: Tweaks: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Display word count for excerpt textareas', 'Modules: Tweaks: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 				],
+			],
+			'_comments' => [
 				[
 					'field'       => 'comments_user',
 					'title'       => _x( 'Comments User Column', 'Modules: Tweaks: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Displays a logged-in comment author\'s site display name on the comments admin', 'Modules: Tweaks: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-				],
-				[
-					'field'       => 'group_taxonomies',
-					'title'       => _x( 'Group Taxonomies', 'Modules: Tweaks: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Group selected taxonomies on selected post type edit pages', 'Modules: Tweaks: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 				],
 			],
 		];
@@ -214,31 +220,46 @@ class Tweaks extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
-		if ( in_array( $screen->post_type, $this->post_types() ) ) {
+		$enqueue = FALSE;
 
-			if ( 'post' == $screen->base ) {
+		if ( 'post' == $screen->base ) {
 
-				if ( post_type_supports( $screen->post_type, 'excerpt' ) ) {
-					$this->remove_meta_box( $screen->post_type, $screen->post_type, 'excerpt' );
-					add_meta_box( 'postexcerpt', _x( 'Excerpt', 'Modules: Tweaks', GEDITORIAL_TEXTDOMAIN ), [ $this, 'post_excerpt_meta_box' ], $screen->post_type, 'normal' );
-				}
+			if ( $this->get_setting( 'excerpt_count', FALSE )
+				&& post_type_supports( $screen->post_type, 'excerpt' ) ) {
 
-				if ( $this->get_setting( 'checklist_tree', FALSE )
-					|| $this->get_setting( 'category_search', FALSE )
-					|| $this->get_setting( 'excerpt_count', FALSE ) ) {
+				$this->remove_meta_box( $screen->post_type, $screen->post_type, 'excerpt' );
 
-						$this->enqueue_asset_js( [
-							'settings' => $this->options->settings,
-							'strings'  => $this->strings['js'],
-						], $screen );
+				add_meta_box( 'postexcerpt',
+					_x( 'Excerpt', 'Modules: Tweaks', GEDITORIAL_TEXTDOMAIN ),
+					[ $this, 'post_excerpt_meta_box' ],
+					$screen->post_type,
+					'normal'
+				);
 
-						if ( $this->get_setting( 'checklist_tree', FALSE ) )
-							add_filter( 'wp_terms_checklist_args', function( $args ){
-								return array_merge( $args, [ 'checked_ontop' => FALSE ] );
-							} );
-				}
+				$enqueue = TRUE;
+			}
 
-			} else if ( 'edit' == $screen->base ) {
+			if ( $this->get_setting( 'checklist_tree', FALSE ) ) {
+
+				add_filter( 'wp_terms_checklist_args', function( $args ){
+					return array_merge( $args, [ 'checked_ontop' => FALSE ] );
+				} );
+
+				$enqueue = TRUE;
+			}
+
+			if ( $this->get_setting( 'category_search', FALSE ) )
+				$enqueue = TRUE;
+
+			if ( $enqueue )
+				$this->enqueue_asset_js( [
+					'settings' => $this->options->settings,
+					'strings'  => $this->strings['js'],
+				], $screen );
+
+		} else if ( 'edit' == $screen->base ) {
+
+			if ( in_array( $screen->post_type, $this->post_types() ) ) {
 				$this->_admin_enabled();
 				$this->_edit_screen( $screen->post_type );
 			}
