@@ -376,7 +376,7 @@ class HTML extends Base
 					$title = isset( $column['title'] ) ? $column['title'] : $key;
 
 					if ( isset( $column['class'] ) )
-						$class = self::sanitizeClass( $column['class'] );
+						$class = ' '.self::sanitizeClass( $column['class'] );
 
 				} else if ( '_cb' === $key ) {
 					$title = '<input type="checkbox" id="cb-select-all-1" class="-cb-all" />';

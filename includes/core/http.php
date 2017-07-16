@@ -75,10 +75,10 @@ class HTTP extends Base
 	public static function referer()
 	{
 		if ( ! empty( $_REQUEST['_wp_http_referer'] ) )
-			return self::normalizeIP( $_REQUEST['_wp_http_referer'] );
+			return self::unslash( $_REQUEST['_wp_http_referer'] );
 
 		if ( ! empty( $_SERVER['HTTP_REFERER'] ) )
-			return self::normalizeIP( $_SERVER['HTTP_REFERER'] );
+			return self::unslash( $_SERVER['HTTP_REFERER'] );
 
 		return FALSE;
 	}
