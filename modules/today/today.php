@@ -445,7 +445,7 @@ class Today extends gEditorial\Module
 		return $title;
 	}
 
-	public function the_day_title( $title, $post_id )
+	public function the_day_title( $title, $post_id = NULL )
 	{
 		if ( $title )
 			return $title;

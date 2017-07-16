@@ -141,4 +141,21 @@ class Shortcodes extends gEditorial\Module
 
 		return $list;
 	}
+
+	// FIXME: add table action
+	protected function remove_shortcode( $post_id, $shortcode )
+	{
+		if ( ! $post = get_post( $post_id ) )
+			return FALSE;
+
+		$pattern = '#\['.$shortcode.'[^\]]*\]#i';
+
+		if ( ! preg_match_all( $pattern, $post->post_content, $matches ) )
+			return FALSE;
+
+		return wp_update_post( [
+			'ID'           => $post->ID,
+			'post_content' => preg_replace( $pattern, '', $post->post_content ),
+		] );
+	}
 }

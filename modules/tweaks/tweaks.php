@@ -232,7 +232,7 @@ class Tweaks extends gEditorial\Module
 				add_meta_box( 'postexcerpt',
 					_x( 'Excerpt', 'Modules: Tweaks', GEDITORIAL_TEXTDOMAIN ),
 					[ $this, 'post_excerpt_meta_box' ],
-					$screen->post_type,
+					$screen,
 					'normal'
 				);
 
