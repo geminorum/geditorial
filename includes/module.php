@@ -1143,7 +1143,28 @@ class Module extends Base
 	public function settings_section_editlist()
 	{
 		Settings::fieldSection(
-			_x( 'Admin Post List', 'Module: Setting Section Title', GEDITORIAL_TEXTDOMAIN )
+			_x( 'Admin Edit List', 'Module: Setting Section Title', GEDITORIAL_TEXTDOMAIN )
+		);
+	}
+
+	public function settings_section_columns()
+	{
+		Settings::fieldSection(
+			_x( 'Admin List Columns', 'Module: Setting Section Title', GEDITORIAL_TEXTDOMAIN )
+		);
+	}
+
+	public function settings_section_editpost()
+	{
+		Settings::fieldSection(
+			_x( 'Admin Edit Post', 'Module: Setting Section Title', GEDITORIAL_TEXTDOMAIN )
+		);
+	}
+
+	public function settings_section_comments()
+	{
+		Settings::fieldSection(
+			_x( 'Admin Comment List', 'Module: Setting Section Title', GEDITORIAL_TEXTDOMAIN )
 		);
 	}
 
