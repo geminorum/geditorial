@@ -278,7 +278,7 @@ class Terms extends gEditorial\Module
 		} else if ( $this->classs( 'image' ) == $column ) {
 
 			// FIXME
-			// $sizes = Media::getRegisteredImageSizes( $post->post_type );
+			// $sizes = Media::getPosttypeImageSizes( $post->post_type );
 			// $size  = isset( $sizes[$post->post_type.'-thumbnail'] ) ? $post->post_type.'-thumbnail' : 'thumbnail';
 			$size = [ 45, 72 ];
 

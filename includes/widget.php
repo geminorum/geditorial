@@ -181,7 +181,7 @@ class Widget extends \WP_Widget
 			}
 		} else {
 
-			$sizes = Media::getRegisteredImageSizes( $post_type );
+			$sizes = Media::getPosttypeImageSizes( $post_type );
 
 			if ( count( $sizes ) ) {
 				foreach ( $sizes as $name => $size )

@@ -19,7 +19,7 @@ class Media extends Core\Base
 			'w' => 0,
 			'h' => 0,
 			'c' => 0,
-			'p' => array( 'post' ),
+			'p' => array( 'post' ), // posttype: TRUE: all/array: posttypes/FALSE: none
 			't' => FALSE, // taxonomy: TRUE: all/array: taxes/FALSE: none
 		), $atts );
 
@@ -59,17 +59,65 @@ class Media extends Core\Base
 		}
 	}
 
-	public static function getRegisteredImageSizes( $post_type = 'post', $key = 'post_type' )
+	// OLD: `getRegisteredImageSizes()`
+	public static function getPosttypeImageSizes( $posttype = 'post', $fallback = 'post' )
 	{
 		global $_wp_additional_image_sizes;
 
 		$sizes = [];
 
-		foreach ( $_wp_additional_image_sizes as $name => $size )
-			if ( isset( $size[$key] ) && in_array( $post_type, $size[$key] ) )
+		foreach ( (array) $_wp_additional_image_sizes as $name => $size ) {
+
+			if ( array_key_exists( 'post_type', $size ) ) {
+
+				if ( is_array( $size['post_type'] ) ) {
+
+					if ( in_array( $posttype, $size['post_type'] ) )
+						$sizes[$name] = $size;
+
+					else if ( $fallback && in_array( $fallback, $size['post_type'] ) )
+						$sizes[$name] = $size;
+
+				} else if ( $size['post_type'] ) {
+					$sizes[$name] = $size;
+				}
+
+			} else if ( TRUE === $fallback ) {
+
 				$sizes[$name] = $size;
-			else if ( 'post' == $post_type ) // fallback
+			}
+		}
+
+		return $sizes;
+	}
+
+	public static function getTaxonomyImageSizes( $taxonomy = 'category', $fallback = FALSE )
+	{
+		global $_wp_additional_image_sizes;
+
+		$sizes = [];
+
+		foreach ( (array) $_wp_additional_image_sizes as $name => $size ) {
+
+			if ( array_key_exists( 'taxonomy', $size ) ) {
+
+				if ( is_array( $size['taxonomy'] ) ) {
+
+					if ( in_array( $taxonomy, $size['taxonomy'] ) )
+						$sizes[$name] = $size;
+
+					else if ( $fallback && in_array( $fallback, $size['taxonomy'] ) )
+						$sizes[$name] = $size;
+
+				} else if ( $size['taxonomy'] ) {
+					$sizes[$name] = $size;
+				}
+
+			} else if ( TRUE === $fallback ) {
+
 				$sizes[$name] = $size;
+			}
+		}
 
 		return $sizes;
 	}
