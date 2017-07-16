@@ -1,3 +1,14 @@
+### 3.11.2
+* main/module: passing terms into default terms installer
+* main/module: some default section titles
+* main/module: custom hook for ajax helper
+* main/settings: :new: calendar list option
+* main/settings: :new: email setting type
+* main/helper: media related methods moved
+* main/helper: helper for current time html tag
+* module/config: flush rewrite rules warning
+* module/tweaks: reorganizing setting options
+
 ### 3.11.1
 * main/module: :new: support for custom svg icons
 * main/module: some default section titles
