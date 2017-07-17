@@ -62,6 +62,9 @@ class PublicationCover extends gEditorial\Widget
 		else if ( is_singular() ) // FIXME: it's better to catch not supported here
 			$atts['id'] = 'assoc';
 
+		else
+			return FALSE;
+
 		if ( ! $html = ModuleTemplate::cover( $atts ) )
 			return FALSE;
 

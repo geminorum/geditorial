@@ -71,6 +71,9 @@ class IssueCover extends gEditorial\Widget
 		else if ( is_singular() )
 			$atts['id'] = 'assoc';
 
+		else
+			return FALSE;
+
 		if ( ! $html = ModuleTemplate::cover( $atts ) )
 			return FALSE;
 
