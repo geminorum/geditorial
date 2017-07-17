@@ -582,7 +582,7 @@ class Book extends gEditorial\Module
 
 	public function content_before( $content, $posttypes = NULL )
 	{
-		if ( ! $this->is_content_insert( $this->post_types( 'publication_cpt' ) ) )
+		if ( ! $this->is_content_insert( 'publication_cpt' ) )
 			return;
 
 		ModuleTemplate::postImage( [
