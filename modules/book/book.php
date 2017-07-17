@@ -487,8 +487,11 @@ class Book extends gEditorial\Module
 		if ( is_singular( $args['type'] ) )
 			$args['id'] = NULL;
 
-		else if ( is_singular() )
+		else if ( is_singular( $this->post_types() ) )
 			$args['id'] = 'assoc';
+
+		else // no publication/no p2p
+			return $content;
 
 		if ( ! $html = ModuleTemplate::postImage( array_merge( $args, (array) $atts ) ) )
 			return $content;
@@ -509,10 +512,19 @@ class Book extends gEditorial\Module
 
 	public function get_assoc_post( $post = NULL, $single = FALSE, $published = TRUE )
 	{
+		if ( ! $post = get_post( $post ) )
+			return FALSE;
+
+		if ( ! in_array( $post->post_type, $this->post_types() ) )
+			return FALSE;
+
 		$posts = [];
 		$extra = [ 'p2p:per_page' => -1, 'p2p:context' => 'admin_column' ];
-		$type  = $this->constant( 'publication_cpt_p2p' );
-		$p2p   = p2p_type( $type )->get_connected( get_post( $post ), $extra, 'abstract' );
+
+		if ( ! $p2p_type = p2p_type( $this->constant( 'publication_cpt_p2p' ) ) )
+			return FALSE;
+
+		$p2p = $p2p_type->get_connected( $post, $extra, 'abstract' );
 
 		foreach ( $p2p->items as $item ) {
 

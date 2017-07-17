@@ -2245,7 +2245,11 @@ SQL;
 	{
 		$extra = [ 'p2p:per_page' => -1, 'p2p:context' => 'admin_column' ];
 		$type  = $this->constant( $constant.'_p2p' );
-		$p2p   = p2p_type( $type )->get_connected( $post, $extra, 'abstract' );
+
+		if ( ! $p2p_type = p2p_type( $type ) )
+			return;
+
+		$p2p   = $p2p_type->get_connected( $post, $extra, 'abstract' );
 		$count = count( $p2p->items );
 
 		if ( ! $count )
@@ -2296,7 +2300,11 @@ SQL;
 
 		$extra = [ 'p2p:per_page' => -1, 'p2p:context' => 'admin_column' ];
 		$type  = $this->constant( $constant.'_p2p' );
-		$p2p   = p2p_type( $type )->get_connected( $post, $extra, 'abstract' );
+
+		if ( ! $p2p_type = p2p_type( $type ) )
+			return;
+
+		$p2p = $p2p_type->get_connected( $post, $extra, 'abstract' );
 
 		foreach ( $p2p->items as $item ) {
 			echo '<li class="-row -book -p2p -connected">';
