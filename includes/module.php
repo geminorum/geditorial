@@ -2497,7 +2497,10 @@ SQL;
 		if ( ! empty( $_REQUEST['type'] ) )
 			$args['post_type'] = $extra['type'] = $_REQUEST['type'];
 
-		if ( 'attachment' == $args['post_type'] )
+		if ( ! empty( $_REQUEST['parent'] ) )
+			$args['post_parent'] = $extra['parent'] = $_REQUEST['parent'];
+
+		if ( 'attachment' == $args['post_type'] && is_array( $args['post_status'] ) )
 			$args['post_status'][] = 'inherit';
 
 		$query = new \WP_Query;
