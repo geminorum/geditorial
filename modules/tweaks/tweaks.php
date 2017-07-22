@@ -93,11 +93,6 @@ class Tweaks extends gEditorial\Module
 					'description' => _x( 'Group post attributes on selected post type edit pages', 'Modules: Tweaks: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 				],
 				[
-					'field'       => 'attachment_count',
-					'title'       => _x( 'Attachment Count', 'Modules: Tweaks: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Displays attachment summary of the post.', 'Modules: Tweaks: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-				],
-				[
 					'field'       => 'author_attribute',
 					'title'       => _x( 'Author Attribute', 'Modules: Tweaks: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Displays author name as post type attribute', 'Modules: Tweaks: Setting Description', GEDITORIAL_TEXTDOMAIN ),
@@ -316,9 +311,6 @@ class Tweaks extends gEditorial\Module
 
 		if ( $this->get_setting( 'group_attributes', FALSE ) )
 			add_action( $this->hook( 'column_attr' ), [ $this, 'column_attr_default' ], 2 );
-
-		if ( $this->get_setting( 'attachment_count', FALSE ) )
-			add_action( $this->hook( 'column_attr' ), [ $this, 'column_attr_attachments' ], 20 );
 
 		if ( $this->get_setting( 'page_template', FALSE ) )
 			add_action( $this->hook( 'column_attr' ), [ $this, 'column_attr_page_template' ], 50 );
@@ -647,42 +639,6 @@ class Tweaks extends gEditorial\Module
 			printf( _x( 'Comments are %s', 'Modules: Tweaks: Comment Status', GEDITORIAL_TEXTDOMAIN ), $status );
 
 		echo '</li>';
-	}
-
-	// FIXME: move this to attachments module
-	// FIXME: maybe use: `wp_count_attachments()`
-	public function column_attr_attachments( $post )
-	{
-		if ( ! current_user_can( 'edit_post', $post->ID ) )
-			return;
-
-		$attachments = WordPress::getAttachments( $post->ID, '' );
-		$count       = count( $attachments );
-		$mime_types  = array_unique( array_map( function( $r ){
-			return $r->post_mime_type;
-		}, $attachments ) );
-
-		if ( $count ) {
-
-			echo '<li class="-row tweaks-attachment-count">';
-
-				echo $this->get_column_icon( FALSE, 'images-alt2', _x( 'Attachments', 'Modules: Tweaks: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
-
-				$title = sprintf( _nx( '%s Attachment', '%s Attachments', $count, 'Modules: Tweaks', GEDITORIAL_TEXTDOMAIN ), Number::format( $count ) );
-
-				if ( current_user_can( 'upload_files' ) )
-					echo HTML::tag( 'a', [
-						'href'   => WordPress::getPostAttachmentsLink( $post->ID ),
-						'title'  => _x( 'View the list of attachments', 'Modules: Tweaks', GEDITORIAL_TEXTDOMAIN ),
-						'target' => '_blank',
-					], $title );
-				else
-					echo $title;
-
-				Helper::getMimeTypeEditRow( $mime_types, $post->ID, ' <span class="-mime-types">(', ')</span>' );
-
-			echo '</li>';
-		}
 	}
 
 	public function column_attr_author( $post )
