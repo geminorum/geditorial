@@ -293,32 +293,45 @@ class Helper extends Core\Base
 			$actions = [ 'edit', 'view' ];
 
 		$list = [];
+		$edit = current_user_can( 'edit_post', $post_id );
 
 		foreach ( $actions as $action ) {
 
 			switch ( $action ) {
 
+				case 'attached':
+
+					if ( $attached = wp_get_attachment_url( $post_id ) )
+						$list['attached'] = HTML::tag( 'a', [
+							'href'   => $attached,
+							'class'  => '-link -row-link -row-link-attached',
+							'data'   => [ 'id' => $post_id, 'row' => 'attached' ],
+							'target' => '_blank',
+						], _x( 'Attached', 'Helper: Row Action', GEDITORIAL_TEXTDOMAIN ) );
+
 				case 'revisions':
 
-					if ( ! current_user_can( 'edit_post', $post_id ) )
+					if ( ! $edit )
 						continue;
 
 					if ( $revision_id = PostType::getLastRevisionID( $post_id ) )
 						$list['revisions'] = HTML::tag( 'a', [
 							'href'   => get_edit_post_link( $revision_id ),
 							'class'  => '-link -row-link -row-link-revisions',
+							'data'   => [ 'id' => $post_id, 'row' => 'revisions' ],
 							'target' => '_blank',
 						], _x( 'Revisions', 'Helper: Row Action', GEDITORIAL_TEXTDOMAIN ) );
 
 				break;
 				case 'edit':
 
-					if ( ! current_user_can( 'edit_post', $post_id ) )
+					if ( ! $edit )
 						continue;
 
 					$list['edit'] = HTML::tag( 'a', [
 						'href'   => WordPress::getPostEditLink( $post_id ),
 						'class'  => '-link -row-link -row-link-edit',
+						'data'   => [ 'id' => $post_id, 'row' => 'edit' ],
 						'target' => '_blank',
 					], _x( 'Edit', 'Helper: Row Action', GEDITORIAL_TEXTDOMAIN ) );
 
@@ -328,6 +341,7 @@ class Helper extends Core\Base
 					$list['view'] = HTML::tag( 'a', [
 						'href'   => WordPress::getPostShortLink( $post_id ),
 						'class'  => '-link -row-link -row-link-view',
+						'data'   => [ 'id' => $post_id, 'row' => 'view' ],
 						'target' => '_blank',
 					], _x( 'View', 'Helper: Row Action', GEDITORIAL_TEXTDOMAIN ) );
 			}
