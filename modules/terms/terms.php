@@ -324,15 +324,19 @@ class Terms extends gEditorial\Module
 
 				if ( $meta ) {
 
-					if ( 'image' == $field )
+					if ( 'image' == $field ) {
 						update_post_meta( intval( $meta ), '_wp_attachment_is_term_image', $taxonomy );
+						do_action( 'clean_term_attachment_cache', intval( $meta ), $taxonomy, $term_id );
+					}
 
 					update_term_meta( $term_id, $field, $meta );
 
 				} else {
 
-					if ( 'image' == $field && $meta = get_term_meta( $term_id, $field, TRUE ) )
+					if ( 'image' == $field && $meta = get_term_meta( $term_id, $field, TRUE ) ) {
 						delete_post_meta( intval( $meta ), '_wp_attachment_is_term_image' );
+						do_action( 'clean_term_attachment_cache', intval( $meta ), $taxonomy, $term_id );
+					}
 
 					delete_term_meta( $term_id, $field );
 				}
