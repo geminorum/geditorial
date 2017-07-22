@@ -345,13 +345,13 @@ class Roles extends gEditorial\Module
 			Settings::submitButton( 'remove_default_roles', _x( 'Remove Defaults', 'Modules: Roles: Setting Button', GEDITORIAL_TEXTDOMAIN ), 'delete' );
 
 			if ( isset( $_POST['check_current_roles'] ) )
-				HTML::tableCode( User::getRoleList(), TRUE );
+				echo HTML::tableCode( User::getRoleList(), TRUE );
 
 			if ( isset( $_POST['check_current_caps'] ) ) {
 				$prefix = $this->constant( 'base_prefix' );
 				foreach ( $this->get_setting( 'duplicate_roles', [] ) as $core ) {
 					$role = get_role( $prefix.$core );
-					HTML::tableCode( $role->capabilities, TRUE, $role->name );
+					echo HTML::tableCode( $role->capabilities, TRUE, $role->name );
 				}
 			}
 

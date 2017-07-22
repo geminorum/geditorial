@@ -275,7 +275,7 @@ class Users extends gEditorial\Module
 		ob_start();
 
 		if ( count( $list ) )
-			HTML::tableCode( $list );
+			echo HTML::tableCode( $list );
 		else
 			$this->column_count( 0 );
 
@@ -518,7 +518,7 @@ class Users extends gEditorial\Module
 
 				$period = $args['year_month'] ? Helper::monthFirstAndLast( $calendar_type, substr( $args['year_month'], 0, 4 ), substr( $args['year_month'], 4, 2 ) ) : [];
 
-				HTML::tableCode( Database::countPostsByPosttype( $args['post_type'], $args['user_id'], $period ) );
+				echo HTML::tableCode( Database::countPostsByPosttype( $args['post_type'], $args['user_id'], $period ) );
 			}
 
 			echo '</td></tr>';

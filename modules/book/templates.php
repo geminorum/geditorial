@@ -22,7 +22,7 @@ class Book extends gEditorial\Template
 			if ( $meta = self::getMetaField( $field, [ 'id' => 116 ] ) )
 				$rows[$args['title']] = $meta;
 
-		HTML::tableCode( $rows );
+		echo HTML::tableCode( $rows );
 	}
 
 	public static function theCover( $atts = [] )

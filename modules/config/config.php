@@ -251,7 +251,7 @@ class Config extends gEditorial\Module
 			self::cheatin();
 
 		// FIXME
-		HTML::warning( 'Comming Soon!', TRUE );
+		HTML::desc( 'Comming Soon!' );
 	}
 
 	public function tools_sub( $uri, $sub )
