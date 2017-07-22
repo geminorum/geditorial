@@ -388,24 +388,13 @@ class Helper extends Core\Base
 		], esc_html( $title ) );
 	}
 
-	public static function getMimeTypeEditRow( $mime_types, $post_parent, $before = '', $after = '' )
+	public static function getExtension( $mime_type, $extensions )
 	{
-		if ( ! count( $mime_types ) )
-			return;
+		if ( FALSE === ( $key = array_search( $mime_type, $extensions ) ) )
+			return FALSE;
 
-		$list       = [];
-		$extensions = wp_get_mime_types();
-
-		foreach ( $mime_types as $mime_type ) {
-
-			if ( FALSE === ( $key = array_search( $mime_type, $extensions ) ) )
-				continue;
-
-			$extension = explode( '|', $key );
-			$list[] = strtoupper( $extension[0] );
-		}
-
-		echo self::getJoined( $list, $before, $after );
+		$ext = explode( '|', $key );
+		return strtoupper( $ext[0] );
 	}
 
 	public static function getAdminBarIcon( $icon = 'screenoptions', $style = 'margin:2px 1px 0 1px;' )
@@ -554,14 +543,14 @@ class Helper extends Core\Base
 		return $gEditorial_WPImageSizes;
 	}
 
-	public static function tableFilterPostTypes( $list = NULL )
+	public static function tableFilterPostTypes( $list = NULL, $name = 'type' )
 	{
 		if ( is_null( $list ) )
 			$list = PostType::get();
 
 		return HTML::dropdown( $list, [
-			'name'       => 'type',
-			'selected'   => self::req( 'type', 'any' ),
+			'name'       => $name,
+			'selected'   => self::req( $name, 'any' ),
 			'none_value' => 'any',
 			'none_title' => _x( 'All PostTypes', 'Helper: Table Filter', GEDITORIAL_TEXTDOMAIN ),
 		] );
@@ -608,7 +597,21 @@ class Helper extends Core\Base
 		];
 	}
 
-	public static function tableColumnPostTitle( $actions = NULL, $excerpt = FALSE )
+	public static function tableColumnPostMime()
+	{
+		return [
+			'title'    => _x( 'Mime', 'Helper: Table Column: Post Mime', GEDITORIAL_TEXTDOMAIN ),
+			'args'     => [ 'mime_types' => wp_get_mime_types() ],
+			'callback' => function( $value, $row, $column, $index ){
+				if ( $ext = Helper::getExtension( $row->post_mime_type, $column['args']['mime_types'] ) )
+					return '<span title="'.$row->post_mime_type.'">'.$ext.'</span>';
+
+				return $row->post_mime_type;
+			},
+		];
+	}
+
+	public static function tableColumnPostTitle( $actions = NULL, $excerpt = FALSE, $custom = [] )
 	{
 		return [
 			'title'    => _x( 'Title', 'Helper: Table Column: Post Title', GEDITORIAL_TEXTDOMAIN ),
@@ -619,21 +622,32 @@ class Helper extends Core\Base
 
 				if ( 'publish' != $row->post_status ) {
 
-					if ( isset( $column['args']['statuses'][$row->post_status] ) )
+					if ( 'inherit' == $row->post_status && 'attachment' == $row->post_type )
+						$status = '';
+					else if ( isset( $column['args']['statuses'][$row->post_status] ) )
 						$status = $column['args']['statuses'][$row->post_status];
 					else
 						$status = $row->post_status;
 
-					$title .= ' <small class="-status">('.$status.')</small>';
+					if ( $status )
+						$title .= ' <small class="-status">('.$status.')</small>';
 				}
+
+				if ( 'attachment' == $row->post_type && $attached = wp_get_attachment_url( $row->ID ) )
+					$title .= '<br />'.HTML::tag( 'a', [
+						'href'   => $attached,
+						'class'  => wp_attachment_is( 'image', $row->ID ) ? 'thickbox' : FALSE,
+						'target' => '_blank',
+						'dir'    => 'ltr',
+					], get_post_meta( $row->ID, '_wp_attached_file', TRUE ) );
 
 				if ( $excerpt && $row->post_excerpt )
 					$title .= wpautop( Helper::prepDescription( $row->post_excerpt ), FALSE );
 
 				return $title;
 			},
-			'actions' => function( $value, $row, $column, $index ) use( $actions ) {
-				return Helper::getPostRowActions( $row->ID, $actions );
+			'actions' => function( $value, $row, $column, $index ) use( $actions, $custom ) {
+				return array_merge( Helper::getPostRowActions( $row->ID, $actions ), $custom );
 			},
 		];
 	}
