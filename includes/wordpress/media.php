@@ -122,6 +122,37 @@ class Media extends Core\Base
 		return $sizes;
 	}
 
+	public static function getAttachments( $post_id, $mime_type = 'image' )
+	{
+		return get_children( array(
+			'post_mime_type' => $mime_type,
+			'post_parent'    => $post_id,
+			'post_type'      => 'attachment',
+			'post_status'    => 'inherit',
+			'numberposts'    => -1,
+		) );
+	}
+
+	public static function isCustom( $attachment_id )
+	{
+		if ( get_post_meta( $attachment_id, '_wp_attachment_is_custom_header', TRUE ) )
+			return 'custom_header';
+
+		if ( get_post_meta( $attachment_id, '_wp_attachment_is_custom_background', TRUE ) )
+			return 'custom_background';
+
+		if ( get_post_meta( $attachment_id, '_wp_attachment_is_term_image', TRUE ) )
+			return 'term_image';
+
+		if ( $attachment_id == get_option( 'site_icon' ) )
+			return 'site_icon';
+
+		if ( $attachment_id == get_theme_mod( 'site_logo' ) )
+			return 'site_logo';
+
+		return FALSE;
+	}
+
 	// PDF: 'application/pdf'
 	// MP3: 'audio/mpeg'
 	// CSV: 'application/vnd.ms-excel'

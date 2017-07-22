@@ -83,17 +83,6 @@ class WordPress extends Base
 		defined( 'DONOTCACHEPAGE' ) or define( 'DONOTCACHEPAGE', TRUE );
 	}
 
-	public static function getAttachments( $post_id, $mime_type = 'image' )
-	{
-		return get_children( array(
-			'post_mime_type' => $mime_type,
-			'post_parent'    => $post_id,
-			'post_type'      => 'attachment',
-			'post_status'    => 'inherit',
-			'numberposts'    => -1,
-		) );
-	}
-
 	// TODO: use db query
 	public static function getLastPostOrder( $post_type = 'post', $exclude = '', $key = 'menu_order', $status = array( 'publish', 'future', 'draft' ) )
 	{
