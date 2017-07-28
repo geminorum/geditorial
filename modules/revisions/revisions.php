@@ -35,7 +35,7 @@ class Revisions extends gEditorial\Module
 	public function settings_intro_after( $module )
 	{
 		if ( ! WP_POST_REVISIONS )
-			HTML::warning( _x( 'Revisions are deactivated on this site, this module has no reason to be activated.', 'Modules: Revisions: Setting Section Notice', GEDITORIAL_TEXTDOMAIN ), TRUE );
+			echo HTML::warning( _x( 'Revisions are deactivated on this site, this module has no reason to be activated.', 'Modules: Revisions: Setting Section Notice', GEDITORIAL_TEXTDOMAIN ), FALSE );
 	}
 
 	protected function get_global_settings()
@@ -137,7 +137,7 @@ class Revisions extends gEditorial\Module
 		$_SERVER['REQUEST_URI'] = remove_query_arg( $this->hook( 'purged' ), $_SERVER['REQUEST_URI'] );
 
 		$message = _x( '%s items(s) revisions purged!', 'Modules: Revisions: Message', GEDITORIAL_TEXTDOMAIN );
-		HTML::success( sprintf( $message, Number::format( $purged ) ), TRUE );
+		echo HTML::success( sprintf( $message, Number::format( $purged ) ) );
 	}
 
 	public function column_attr( $post )

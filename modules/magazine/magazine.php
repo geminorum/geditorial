@@ -845,7 +845,7 @@ class Magazine extends gEditorial\Module
 					],
 					'description' => Helper::tableColumnTermDesc(),
 				], Taxonomy::getTerms( $this->constant( 'issue_tax' ), FALSE, TRUE ), [
-					'empty' => HTML::warning( _x( 'No Terms Found!', 'Modules: Magazine: Table Empty', GEDITORIAL_TEXTDOMAIN ) ),
+					'empty' => HTML::warning( _x( 'No Terms Found!', 'Modules: Magazine: Table Empty', GEDITORIAL_TEXTDOMAIN ), FALSE ),
 				] );
 			}
 

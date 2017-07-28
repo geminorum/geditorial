@@ -379,7 +379,7 @@ class Audit extends gEditorial\Module
 		$terms = Taxonomy::getTerms( $this->constant( 'audit_tax' ), FALSE, TRUE, 'slug', [ 'hide_empty' => TRUE ] );
 
 		if ( ! count( $terms ) )
-			return HTML::warning( _x( 'No Audit Terms', 'Modules: Audit', GEDITORIAL_TEXTDOMAIN ), TRUE );
+			return HTML::warning( _x( 'No Audit Terms', 'Modules: Audit', GEDITORIAL_TEXTDOMAIN ), FALSE );
 
 		$args = $this->settings_form_req( [
 			'user_id' => '0',

@@ -623,7 +623,7 @@ class Settings extends Core\Base
 			if ( isset( $messages[$_GET['message']] ) )
 				echo $messages[$_GET['message']];
 			else
-				HTML::warning( $_GET['message'], TRUE );
+				echo HTML::warning( $_GET['message'] );
 
 			$_SERVER['REQUEST_URI'] = remove_query_arg( [ 'message', 'count' ], $_SERVER['REQUEST_URI'] );
 		}
@@ -632,15 +632,16 @@ class Settings extends Core\Base
 	public static function messages()
 	{
 		return [
-			'resetting' => HTML::success( _x( 'Settings reset.', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
-			'optimized' => HTML::success( _x( 'Tables optimized.', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
-			'updated'   => HTML::success( _x( 'Settings updated.', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
-			'purged'    => HTML::success( _x( 'Data purged.', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
-			'error'     => HTML::error( _x( 'Error occurred!', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
-			'wrong'     => HTML::error( _x( 'Something\'s wrong!', 'Settings', GEDITORIAL_TEXTDOMAIN ) ),
-			'nochange'  => HTML::error( _x( 'No item changed!', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
-			'noadded'   => HTML::error( _x( 'No item added!', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
-			'noaccess'  => HTML::error( _x( 'You do not have the access!', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
+			'resetting' => self::success( _x( 'Settings reset.', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
+			'optimized' => self::success( _x( 'Tables optimized.', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
+			'updated'   => self::success( _x( 'Settings updated.', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
+			'purged'    => self::success( _x( 'Data purged.', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
+			'maked'     => self::success( _x( 'File/Folder created.', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
+			'error'     => self::error( _x( 'Error occurred!', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
+			'wrong'     => self::error( _x( 'Something\'s wrong!', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
+			'nochange'  => self::error( _x( 'No item changed!', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
+			'noadded'   => self::error( _x( 'No item added!', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
+			'noaccess'  => self::error( _x( 'You do not have the access!', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
 			'converted' => self::counted( _x( '%s items(s) converted!', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
 			'imported'  => self::counted( _x( '%s items(s) imported!', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
 			'created'   => self::counted( _x( '%s items(s) created!', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
@@ -652,6 +653,37 @@ class Settings extends Core\Base
 			'synced'    => self::counted( _x( '%s items(s) synced!', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
 			'huh'       => HTML::error( self::huh( self::req( 'huh', NULL ) ) ),
 		];
+	}
+
+	public static function messageExtra()
+	{
+		$extra = [];
+
+		if ( isset( $_REQUEST['count'] ) )
+			$extra[] = sprintf( _x( '%s Counted!', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ),
+				Number::format( $_REQUEST['count'] ) );
+
+		return count( $extra ) ? ' ('.implode( ', ', $extra ).')' : '';
+	}
+
+	public static function error( $message, $dismissible = TRUE )
+	{
+		return HTML::error( $message.self::messageExtra(), $dismissible );
+	}
+
+	public static function success( $message, $dismissible = TRUE )
+	{
+		return HTML::success( $message.self::messageExtra(), $dismissible );
+	}
+
+	public static function warning( $message, $dismissible = TRUE )
+	{
+		return HTML::warning( $message.self::messageExtra(), $dismissible );
+	}
+
+	public static function info( $message, $dismissible = TRUE )
+	{
+		return HTML::info( $message.self::messageExtra(), $dismissible );
 	}
 
 	public static function getButtonConfirm( $message = NULL )
@@ -717,15 +749,12 @@ class Settings extends Core\Base
 		if ( is_null( $count ) )
 			$count = self::req( 'count', 0 );
 
-		return HTML::notice( sprintf( $message, Number::format( $count ) ), $class.' fade', FALSE );
+		return HTML::notice( sprintf( $message, Number::format( $count ) ), $class.' fade' );
 	}
 
 	public static function cheatin( $message = NULL )
 	{
-		if ( is_null( $message ) )
-			$message = _x( 'Cheatin&#8217; uh?', 'Settings: Message', GEDITORIAL_TEXTDOMAIN );
-
-		HTML::error( $message, TRUE );
+		echo HTML::error( is_null( $message ) ? _x( 'Cheatin&#8217; uh?', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) : $message );
 	}
 
 	public static function huh( $message = NULL )

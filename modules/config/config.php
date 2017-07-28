@@ -371,7 +371,7 @@ class Config extends gEditorial\Module
 
 		} else {
 
-			HTML::warning( _x( 'Module not enabled. Please enable it from the Editorial settings page.', 'Modules: Config: Page Notice', GEDITORIAL_TEXTDOMAIN ), TRUE );
+			echo HTML::warning( _x( 'Module not enabled. Please enable it from the Editorial settings page.', 'Modules: Config: Page Notice', GEDITORIAL_TEXTDOMAIN ), FALSE );
 		}
 	}
 
@@ -396,7 +396,7 @@ class Config extends gEditorial\Module
 			Settings::message();
 
 			if ( $flush )
-				HTML::warning( _x( 'You need to flush rewrite rules!', 'Modules: Config', GEDITORIAL_TEXTDOMAIN ), TRUE );
+				echo HTML::warning( _x( 'You need to flush rewrite rules!', 'Modules: Config', GEDITORIAL_TEXTDOMAIN ), FALSE );
 
 			echo '<div class="-header">';
 
@@ -457,7 +457,7 @@ class Config extends gEditorial\Module
 
 		} else {
 
-			HTML::warning( _x( 'There are no editorial modules registered!', 'Modules: Config: Page Notice', GEDITORIAL_TEXTDOMAIN ), TRUE );
+			echo HTML::warning( _x( 'There are no editorial modules registered!', 'Modules: Config: Page Notice', GEDITORIAL_TEXTDOMAIN ), FALSE );
 		}
 	}
 

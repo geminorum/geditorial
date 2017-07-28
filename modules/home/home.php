@@ -45,9 +45,9 @@ add_theme_support( \'featured-content\', [
 	public function settings_intro_after( $module )
 	{
 		if ( get_theme_support( 'featured-content' ) )
-			HTML::info( _x( 'Current theme supports Featured Contents', 'Modules: Home: Setting Section Notice', GEDITORIAL_TEXTDOMAIN ), TRUE );
+			echo HTML::info( _x( 'Current theme supports Featured Contents', 'Modules: Home: Setting Section Notice', GEDITORIAL_TEXTDOMAIN ), FALSE );
 		else
-			HTML::warning( _x( 'Current theme does not support Featured Contents', 'Modules: Home: Setting Section Notice', GEDITORIAL_TEXTDOMAIN ), TRUE );
+			echo HTML::warning( _x( 'Current theme does not support Featured Contents', 'Modules: Home: Setting Section Notice', GEDITORIAL_TEXTDOMAIN ), FALSE );
 	}
 
 	public function settings_section_featured()

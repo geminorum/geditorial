@@ -737,8 +737,8 @@ class Helper extends Core\Base
 
 	public static function tableArgEmptyPosts( $wrap = TRUE )
 	{
-		$message = _x( 'No Posts?!', 'Helper: Table Arg: Empty Posts', GEDITORIAL_TEXTDOMAIN );
-		return $wrap ? HTML::warning( $message ) : $message;
+		$message = _x( 'No posts found.', 'Helper: Table Arg: Empty Posts', GEDITORIAL_TEXTDOMAIN );
+		return $wrap ? HTML::warning( $message, FALSE ) : $message;
 	}
 
 	// CAUTION: must wrap in `.geditorial-wordcount-wrap` along with the textarea

@@ -383,7 +383,7 @@ class Widget extends \WP_Widget
 			], _x( 'Image Size:', 'Widget Core', GEDITORIAL_TEXTDOMAIN ).$html ).'</p>';
 
 		} else {
-			echo '<p>'._x( 'No Image Size Available!', 'Widget Core', GEDITORIAL_TEXTDOMAIN ).'</p>';
+			HTML::desc( _x( 'No Image Size Available!', 'Widget Core', GEDITORIAL_TEXTDOMAIN ) );
 		}
 	}
 
