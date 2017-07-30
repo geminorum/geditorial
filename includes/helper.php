@@ -4,6 +4,7 @@ defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core\Date;
 use geminorum\gEditorial\Core\HTML;
+use geminorum\gEditorial\Core\HTTP;
 use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\Text;
 use geminorum\gEditorial\Core\WordPress;
@@ -112,6 +113,17 @@ class Helper extends Core\Base
 			$array[$key] = self::kses( $value, $context, $allowed );
 
 		return $array;
+	}
+
+	public static function prepTitle( $text )
+	{
+		if ( ! $text )
+			return '';
+
+		$text = apply_filters( 'the_title', $text, 0 );
+		$text = apply_filters( 'gnetwork_typography', $text );
+
+		return trim( $text );
 	}
 
 	public static function prepDescription( $text )
@@ -1328,6 +1340,37 @@ class Helper extends Core\Base
 		}
 
 		return $the_day;
+	}
+
+	// @REF: https://developers.google.com/google-apps/calendar/
+	// @SOURCE: https://wordpress.org/plugins/gcal-events-list/
+	public static function getGCalEvents( $atts )
+	{
+		$args = self::atts( [
+			'calendar_id' => FALSE,
+			'api_key'     => '',
+			'time_min'    => '',
+			'max_results' => 5,
+		], $atts );
+
+		if ( ! $args['calendar_id'] )
+			return FALSE;
+
+		$time = $args['time_min'] && Date::isInFormat( $args['time_min'] ) ? $args['time_min'] : date( 'Y-m-d' );
+
+		$url = 'https://www.googleapis.com/calendar/v3/calendars/'
+			.urlencode( $args['calendar_id'] )
+			.'/events?key='.$args['api_key']
+			.'&maxResults='.$args['max_results']
+			.'&orderBy=startTime'
+			.'&singleEvents=true'
+			.'&timeMin='.$time.'T00:00:00Z';
+
+		$data = HTTP::getJSON( $url );
+
+		self::__log($data);
+
+		return $data;
 	}
 }
 
