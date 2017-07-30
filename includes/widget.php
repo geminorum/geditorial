@@ -200,8 +200,11 @@ class Widget extends \WP_Widget
 		return $images;
 	}
 
-	public function form_number( $instance, $default = '10', $field = 'number' )
+	public function form_number( $instance, $default = '10', $field = 'number', $label = NULL )
 	{
+		if ( is_null( $label ) )
+			$label = _x( 'Number of posts to show:', 'Widget Core', GEDITORIAL_TEXTDOMAIN );
+
 		$html = HTML::tag( 'input', [
 			'type'  => 'text',
 			'size'  => 3,
@@ -212,7 +215,7 @@ class Widget extends \WP_Widget
 
 		echo '<p>'. HTML::tag( 'label', [
 			'for' => $this->get_field_id( $field ),
-		], _x( 'Number of posts to show:', 'Widget Core', GEDITORIAL_TEXTDOMAIN ).' '.$html ).'</p>';
+		], $label.' '.$html ).'</p>';
 	}
 
 	public function form_context( $instance, $default = '', $field = 'context' )
@@ -331,6 +334,25 @@ class Widget extends \WP_Widget
 		$html = HTML::tag( 'input', [
 			'type'  => 'url',
 			'class' => 'widefat',
+			'name'  => $this->get_field_name( $field ),
+			'id'    => $this->get_field_id( $field ),
+			'value' => isset( $instance[$field] ) ? $instance[$field] : $default,
+			'dir'   => 'ltr',
+		] );
+
+		echo '<p>'. HTML::tag( 'label', [
+			'for' => $this->get_field_id( $field ),
+		], $label.$html ).'</p>';
+	}
+
+	public function form_custom_code( $instance, $default = '', $field = 'custom_code', $label = NULL )
+	{
+		if ( is_null( $label ) )
+			$label = _x( 'Custom Code:', 'Widget Core', GEDITORIAL_TEXTDOMAIN );
+
+		$html = HTML::tag( 'input', [
+			'type'  => 'text',
+			'class' => [ 'widefat', 'code' ],
 			'name'  => $this->get_field_name( $field ),
 			'id'    => $this->get_field_id( $field ),
 			'value' => isset( $instance[$field] ) ? $instance[$field] : $default,
