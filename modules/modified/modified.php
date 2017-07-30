@@ -155,7 +155,7 @@ class Modified extends gEditorial\Module
 	{
 		$args = shortcode_atts( [
 			'id'       => get_queried_object_id(),
-			'format'   => _x( 'l, F j, Y', 'Modules: Modified: Defaults: Last Modified', GEDITORIAL_TEXTDOMAIN ),
+			'format'   => Helper::dateFormats( 'dateonly' ),
 			'title'    => 'timeago',
 			'round'    => FALSE,
 			'link'     => FALSE,
@@ -226,7 +226,7 @@ class Modified extends gEditorial\Module
 	public function site_modified_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
 		$args = shortcode_atts( [
-			'format'   => _x( 'l, F j, Y', 'Modules: Modified: Defaults: Last Modified', GEDITORIAL_TEXTDOMAIN ),
+			'format'   => Helper::dateFormats( 'dateonly' ),
 			'title'    => 'timeago',
 			'round'    => FALSE,
 			'link'     => FALSE,

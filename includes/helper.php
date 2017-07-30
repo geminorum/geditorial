@@ -576,10 +576,7 @@ class Helper extends Core\Base
 		return [
 			'title'    => is_null( $title ) ? _x( 'On', 'Helper: Table Column: Post Date Modified', GEDITORIAL_TEXTDOMAIN ) : $title,
 			'callback' => function( $value, $row, $column, $index ){
-				return '<small class="-date-diff" title="'
-					.esc_attr( mysql2date( 'l, M j, Y @ H:i', $row->post_modified ) ).'">'
-					.Helper::humanTimeDiff( $row->post_modified )
-				.'</small>';
+				return Helper::htmlHumanTime( $row->post_modified, TRUE );
 			},
 		];
 	}
@@ -786,21 +783,43 @@ class Helper extends Core\Base
 		if ( ! ctype_digit( $timestamp ) )
 			$timestamp = strtotime( $timestamp );
 
-		$html = '';
+		$formats = self::dateFormats( FALSE );
 
-		$date = _x( 'm/d/Y', 'Helper: Date Edit Row', GEDITORIAL_TEXTDOMAIN );
-		$time = _x( 'H:i', 'Helper: Date Edit Row', GEDITORIAL_TEXTDOMAIN );
-		$full = _x( 'l, M j, Y @ H:i', 'Helper: Date Edit Row', GEDITORIAL_TEXTDOMAIN );
-
-		$html .= '<span class="-date-date" title="'.esc_attr( date_i18n( $time, $timestamp ) ).'" data-time="'.date( 'c', $timestamp ).'">'.date_i18n( $date, $timestamp ).'</span>';
-		$html .= '&nbsp;(<span class="-date-diff" title="'.esc_attr( date_i18n( $full, $timestamp ) ).'">'.self::humanTimeDiff( $timestamp ).'</span>)';
+		$html  = '<span class="-date-date" title="'.esc_attr( date_i18n( $formats['timeonly'], $timestamp ) ).'" data-time="'.date( 'c', $timestamp ).'">'.date_i18n( $formats['default'], $timestamp ).'</span>';
+		$html .= '&nbsp;(<span class="-date-diff" title="'.esc_attr( date_i18n( $formats['fulltime'], $timestamp ) ).'">'.self::humanTimeDiff( $timestamp ).'</span>)';
 
 		return $class ? '<span class="'.$class.'">'.$html.'</span>' : $html;
 	}
 
 	public static function htmlCurrent( $format = NULL, $class = FALSE, $title = FALSE )
 	{
-		return Date::htmlCurrent( ( is_null( $format ) ? _x( 'm/d/Y g:i:s a', 'Helper: Date Current', GEDITORIAL_TEXTDOMAIN ) : $format ), $class, $title );
+		return Date::htmlCurrent( ( is_null( $format ) ? self::dateFormats( 'datetime' ) : $format ), $class, $title );
+	}
+
+	// @SEE: http://www.phpformatdate.com/
+	public static function dateFormats( $context = 'default' )
+	{
+		static $formats;
+
+		if ( empty( $formats ) )
+			$formats = apply_filters( 'custom_date_formats', [
+				'fulltime' => _x( 'l, M j, Y @ H:i', 'Date Format', GEDITORIAL_TEXTDOMAIN ),
+				'datetime' => _x( 'M j, Y @ G:i', 'Date Format', GEDITORIAL_TEXTDOMAIN ),
+				'dateonly' => _x( 'l, F j, Y', 'Date Format', GEDITORIAL_TEXTDOMAIN ),
+				'timedate' => _x( 'H:i - F j, Y', 'Date Format', GEDITORIAL_TEXTDOMAIN ),
+				'timeampm' => _x( 'g:i a', 'Date Format', GEDITORIAL_TEXTDOMAIN ),
+				'timeonly' => _x( 'H:i', 'Date Format', GEDITORIAL_TEXTDOMAIN ),
+				'monthday' => _x( 'n/j', 'Date Format', GEDITORIAL_TEXTDOMAIN ),
+				'default'  => _x( 'm/d/Y', 'Date Format', GEDITORIAL_TEXTDOMAIN ),
+			] );
+
+		if ( FALSE === $context )
+			return $formats;
+
+		if ( isset( $formats[$context] ) )
+			return $formats[$context];
+
+		return $formats['default'];
 	}
 
 	public static function postModified( $post = NULL, $attr = FALSE )
@@ -811,7 +830,7 @@ class Helper extends Core\Base
 		$gmt   = strtotime( $post->post_modified_gmt );
 		$local = strtotime( $post->post_modified );
 
-		$format = _x( 'l, F j, Y', 'Helper: Post Modified', GEDITORIAL_TEXTDOMAIN );
+		$format = self::dateFormats( 'dateonly' );
 		$title  = _x( 'Last Modified on %s', 'Helper: Post Modified', GEDITORIAL_TEXTDOMAIN );
 
 		return $attr
@@ -819,12 +838,22 @@ class Helper extends Core\Base
 			: Date::htmlDateTime( $local, $gmt, $format, self::humanTimeDiffRound( $local, FALSE ) );
 	}
 
-	public static function htmlHumanTime( $timestamp )
+	public static function htmlHumanTime( $timestamp, $flip = FALSE )
 	{
-		$time = strtotime( $timestamp );
+		if ( ! ctype_digit( $timestamp ) )
+			$timestamp = strtotime( $timestamp );
+
+		$now = current_time( 'timestamp', FALSE );
+
+		if ( $flip )
+			return '<span class="-date-diff" title="'
+					.esc_attr( date_i18n( self::dateFormats( 'fulltime' ), $timestamp ) ).'">'
+					.self::humanTimeDiff( $timestamp, $now )
+				.'</span>';
+
 		return '<span class="-time" title="'
-			.self::humanTimeAgo( $time, current_time( 'timestamp', FALSE ) ).'">'
-			.self::humanTimeDiffRound( $time )
+			.esc_attr( self::humanTimeAgo( $timestamp, $now ) ).'">'
+			.self::humanTimeDiffRound( $timestamp, NULL, self::dateFormats( 'default' ), $now )
 		.'</span>';
 	}
 
@@ -833,12 +862,16 @@ class Helper extends Core\Base
 		return sprintf( _x( '%s ago', 'Helper: Human Time Ago', GEDITORIAL_TEXTDOMAIN ), human_time_diff( $from, $to ) );
 	}
 
-	public static function humanTimeDiffRound( $local, $round = DAY_IN_SECONDS, $format = NULL, $now = NULL )
+	public static function humanTimeDiffRound( $local, $round = NULL, $format = NULL, $now = NULL )
 	{
-		$now = is_null( $now ) ? current_time( 'timestamp', FALSE ) : '';
+		if ( is_null( $now ) )
+			$now = current_time( 'timestamp', FALSE );
 
 		if ( FALSE === $round )
 			return self::humanTimeAgo( $local, $now );
+
+		if ( is_null( $round ) )
+			$round = Date::DAY_IN_SECONDS;
 
 		$diff = $now - $local;
 
@@ -846,7 +879,7 @@ class Helper extends Core\Base
 			return self::humanTimeAgo( $local, $now );
 
 		if ( is_null( $format ) )
-			$format = _x( 'Y/m/d', 'Helper: Human Time Diff Round', GEDITORIAL_TEXTDOMAIN );
+			$format = self::dateFormats( 'default' );
 
 		return date_i18n( $format, $local, FALSE );
 	}
@@ -1152,7 +1185,7 @@ class Helper extends Core\Base
 			$permalink = '';
 
 		$preview = $scheduled = $view = '';
-		$scheduled_date = date_i18n( __( 'M j, Y @ H:i' ), strtotime( $post->post_date ) );
+		$scheduled_date = date_i18n( self::dateFormats( 'datetime' ), strtotime( $post->post_date ) );
 
 		if ( is_post_type_viewable( $post_type_object ) ) {
 			$view      = ' '.HTML::link( $messages['view_post'], $permalink );
