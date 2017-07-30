@@ -229,4 +229,10 @@ class Base
 
 		return (bool) $var;
 	}
+
+	// ANCESTOR: is_wp_error()
+	public static function isError( $thing )
+	{
+		return ( ( $thing instanceof \WP_Error ) || ( $thing instanceof Error ) );
+	}
 }
