@@ -1641,8 +1641,8 @@ class Module extends Base
 
 	public function add_meta_box_author( $constant, $callback = 'post_author_meta_box' )
 	{
-		$post_type = $this->constant( $constant );
-		$object    = get_post_type_object( $post_type );
+		$posttype = $this->constant( $constant );
+		$object   = get_post_type_object( $posttype );
 
 		if ( current_user_can( $object->cap->edit_others_posts ) ) {
 
@@ -1697,7 +1697,7 @@ class Module extends Base
 	public function get_meta_box_title( $constant = 'post', $url = NULL, $edit_cap = 'manage_options', $title = NULL )
 	{
 		if ( is_null( $title ) )
-			$title = $this->get_string( 'meta_box_title', $constant, 'misc', _x( 'Settings', 'Module: MetaBox default title', GEDITORIAL_TEXTDOMAIN ) );
+			$title = $this->get_string( 'meta_box_title', $constant, 'misc', _x( 'Settings', 'Module: MetaBox Default Title', GEDITORIAL_TEXTDOMAIN ) );
 
 		if ( FALSE === $url )
 			return $title;
@@ -1707,8 +1707,48 @@ class Module extends Base
 			if ( is_null( $url ) )
 				$url = $this->get_url_settings();
 
-			$action = $this->get_string( 'meta_box_action', $constant, 'misc', _x( 'Configure', 'Module: MetaBox default action', GEDITORIAL_TEXTDOMAIN ) );
-			$title .= ' <span class="postbox-title-action geditorial-postbox-title-action"><a href="'.esc_url( $url ).'" target="_blank">'.$action.'</a></span>';
+			$action = $this->get_string( 'meta_box_action', $constant, 'misc', _x( 'Configure', 'Module: MetaBox Default Action', GEDITORIAL_TEXTDOMAIN ) );
+			$title .= ' <span class="postbox-title-action"><a href="'.esc_url( $url ).'" target="_blank">'.$action.'</a></span>';
+		}
+
+		return $title;
+	}
+
+	public function get_meta_box_title_tax( $constant, $url = NULL, $title = NULL )
+	{
+		$taxonomy = $this->constant( $constant );
+		$object   = get_taxonomy( $taxonomy );
+
+		if ( is_null( $title ) )
+			$title = $object->labels->name;
+
+		if ( current_user_can( $object->cap->manage_terms ) ) {
+
+			if ( is_null( $url ) )
+				$url = WordPress::getEditTaxLink( $taxonomy );
+
+			$action = $this->get_string( 'meta_box_action', $constant, 'misc', _x( 'Manage', 'Module: MetaBox Default Action', GEDITORIAL_TEXTDOMAIN ) );
+			$title .= ' <span class="postbox-title-action"><a href="'.esc_url( $url ).'" target="_blank">'.$action.'</a></span>';
+		}
+
+		return $title;
+	}
+
+	public function get_meta_box_title_posttype( $constant, $url = NULL, $title = NULL )
+	{
+		$posttype = $this->constant( $constant );
+		$object   = get_post_type_object( $posttype );
+
+		if ( is_null( $title ) )
+			$title = $this->get_string( 'meta_box_title', $constant, 'misc', $object->labels->name );
+
+		if ( current_user_can( $object->cap->edit_others_posts ) ) {
+
+			if ( is_null( $url ) )
+				$url = WordPress::getPostTypeEditLink( $posttype );
+
+			$action = $this->get_string( 'meta_box_action', $constant, 'misc', _x( 'Manage', 'Module: MetaBox Default Action', GEDITORIAL_TEXTDOMAIN ) );
+			$title .= ' <span class="postbox-title-action"><a href="'.esc_url( $url ).'" target="_blank">'.$action.'</a></span>';
 		}
 
 		return $title;
@@ -1722,21 +1762,6 @@ class Module extends Base
 	public function get_url_settings( $extra = [] )
 	{
 		return WordPress::getAdminPageLink( $this->module->settings, $extra );
-	}
-
-	public function get_url_tax_edit( $constant, $term_id = FALSE, $extra = [] )
-	{
-		return WordPress::getEditTaxLink( $this->constant( $constant ), $term_id, $extra );
-	}
-
-	public function get_url_post_edit( $constant, $extra = [], $author_id = 0 )
-	{
-		return WordPress::getPostTypeEditLink( $this->constant( $constant ), $author_id, $extra );
-	}
-
-	public function get_url_post_new( $constant, $extra = [] )
-	{
-		return WordPress::getPostNewLink( $this->constant( $constant ), $extra );
 	}
 
 	protected function require_code( $filenames = 'templates' )

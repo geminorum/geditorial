@@ -62,7 +62,6 @@ class Specs extends gEditorial\Module
 			],
 			'misc' => [
 				'post' => [
-					'meta_box_title'   => _x( 'Specifications', 'Modules: Specs', GEDITORIAL_TEXTDOMAIN ),
 					'column_title'     => _x( 'Specifications', 'Modules: Specs', GEDITORIAL_TEXTDOMAIN ),
 					'show_option_none' => _x( '&mdash; Choose a Specification &mdash;', 'Modules: Specs', GEDITORIAL_TEXTDOMAIN ),
 				],
@@ -110,9 +109,8 @@ class Specs extends gEditorial\Module
 		if ( 'post' == $screen->base
 			&& in_array( $screen->post_type, $this->post_types() ) ) {
 
-			add_meta_box(
-				'geditorial-specs',
-				$this->get_meta_box_title( 'specs_tax', $this->get_url_tax_edit( 'specs_tax' ), 'edit_others_posts' ),
+			add_meta_box( $this->classs(),
+				$this->get_meta_box_title_tax( 'specs_tax' ),
 				[ $this, 'do_meta_box' ],
 				$screen,
 				'side',

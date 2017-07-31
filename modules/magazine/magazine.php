@@ -276,7 +276,7 @@ class Magazine extends gEditorial\Module
 				);
 
 				add_meta_box( $this->classs( 'list' ),
-					$this->get_meta_box_title( 'issue_tax', $this->get_url_post_edit( 'post_cpt' ), 'edit_others_posts' ),
+					$this->get_meta_box_title( 'issue_tax' ),
 					[ $this, 'do_meta_box_list' ],
 					$screen->post_type,
 					'advanced',
@@ -311,7 +311,7 @@ class Magazine extends gEditorial\Module
 			if ( 'post' == $screen->base ) {
 
 				add_meta_box( $this->classs( 'supported' ),
-					$this->get_meta_box_title( $screen->post_type, $this->get_url_post_edit( 'issue_cpt' ), 'edit_others_posts' ),
+					$this->get_meta_box_title_posttype( 'issue_cpt' ),
 					[ $this, 'do_meta_box_supported' ],
 					$screen->post_type,
 					'side'

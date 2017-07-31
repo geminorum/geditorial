@@ -72,8 +72,6 @@ class Series extends gEditorial\Module
 				],
 			],
 			'misc' => [
-				'meta_box_title'      => _x( 'Series', 'Modules: Series: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
-				'meta_box_action'     => _x( 'Management', 'Modules: Series: MetaBox Action', GEDITORIAL_TEXTDOMAIN ),
 				'column_title'        => _x( 'Series', 'Modules: Series: Column Title', GEDITORIAL_TEXTDOMAIN ),
 				'tweaks_column_title' => _x( 'Series', 'Modules: Series: Column Title', GEDITORIAL_TEXTDOMAIN ),
 				'show_option_none'    => _x( '&mdash; Choose a Series &mdash;', 'Modules: Series', GEDITORIAL_TEXTDOMAIN ),
@@ -119,7 +117,7 @@ class Series extends gEditorial\Module
 			if ( 'post' == $screen->base ) {
 
 				add_meta_box( $this->classs( 'supported' ),
-					$this->get_meta_box_title( 'series_tax', $this->get_url_tax_edit( 'series_tax' ), 'edit_others_posts' ),
+					$this->get_meta_box_title_tax( 'series_tax' ),
 					[ $this, 'do_meta_box' ],
 					$screen->post_type,
 					'side' );
