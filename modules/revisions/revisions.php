@@ -339,9 +339,7 @@ class Revisions extends gEditorial\Module
 				if ( ! current_user_can( $this->caps['purge'], $post['post_id'] ) )
 					Ajax::errorMessage();
 
-				wp_send_json_success( [
-					'count' => $this->purge( $post['post_id'] ),
-				] );
+				Ajax::success( [ 'count' => $this->purge( $post['post_id'] ) ] );
 
 			break;
 			case 'delete':

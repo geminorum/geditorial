@@ -127,7 +127,7 @@ class Drafts extends gEditorial\Module
 				if ( ! $this->make_private( $post['post_id'] ) )
 					Ajax::errorMessage( _x( 'Unable to make preview private. Please try again.', 'Modules: Drafts', GEDITORIAL_TEXTDOMAIN ) );
 
-				Ajax::successMessage();
+				Ajax::success();
 
 			break;
 			case 'public':
@@ -144,7 +144,7 @@ class Drafts extends gEditorial\Module
 				if ( ! $link = $this->make_public( $post['post_id'] ) )
 					Ajax::errorMessage( _x( 'Unable to make preview public. Please try again.', 'Modules: Drafts', GEDITORIAL_TEXTDOMAIN ) );
 
-				wp_send_json_success( [ 'link' => $link ] );
+				Ajax::success( $link );
 
 			break;
 			case 'list':
@@ -154,7 +154,7 @@ class Drafts extends gEditorial\Module
 				if ( ! $this->cuc( 'ajax' ) )
 					self::cheatin();
 
-				Ajax::successHTML( $this->drafts_list() );
+				Ajax::success( $this->drafts_list() );
 		}
 
 		Ajax::errorWhat();

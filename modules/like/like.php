@@ -169,7 +169,7 @@ class Like extends gEditorial\Module
 
 				list( $check, $count ) = $this->check( $post['id'] );
 
-				wp_send_json_success( [
+				Ajax::success( [
 					'title'   => $this->title( $check, $post['id'] ),
 					'action'  => $check ? 'unlike' : 'dolike',
 					'remove'  => 'loading',
@@ -186,7 +186,7 @@ class Like extends gEditorial\Module
 
 				list( $check, $count ) = $this->like( $post['id'] );
 
-				wp_send_json_success( [
+				Ajax::success( [
 					'title'   => $this->title( $check, $post['id'] ),
 					'action'  => 'unlike',
 					'remove'  => 'dolike',
@@ -202,7 +202,7 @@ class Like extends gEditorial\Module
 
 				list( $check, $count ) = $this->unlike( $post['id'] );
 
-				wp_send_json_success( [
+				Ajax::success( [
 					'title'   => $this->title( $check, $post['id'] ),
 					'action'  => 'dolike',
 					'remove'  => 'unlike',
