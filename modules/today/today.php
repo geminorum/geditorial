@@ -335,7 +335,7 @@ class Today extends gEditorial\Module
 
 		echo '<div class="geditorial-admin-wrap-nobox">';
 
-			do_action( 'geditorial_today_no_box', $post );
+			$this->actions( 'no_box', $post );
 
 			$default_type = $this->get_setting( 'calendar_type', 'gregorian' );
 			$constants    = $this->get_the_day_constants();

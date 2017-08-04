@@ -17,7 +17,7 @@ class Attachments extends gEditorial\Module
 		return [
 			'name'  => 'attachments',
 			'title' => _x( 'Attachments', 'Modules: Attachments', GEDITORIAL_TEXTDOMAIN ),
-			'desc'  => _x( 'Attachment Tools', 'Modules: Attachments', GEDITORIAL_TEXTDOMAIN ),
+			'desc'  => _x( 'Attachment Management', 'Modules: Attachments', GEDITORIAL_TEXTDOMAIN ),
 			'icon'  => 'admin-media',
 		];
 	}

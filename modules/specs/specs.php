@@ -47,24 +47,18 @@ class Specs extends gEditorial\Module
 	{
 		return [
 			'titles' => [
-				'post' => [
-					'spec_title' => _x( 'Title', 'Modules: Specs', GEDITORIAL_TEXTDOMAIN ),
-					'spec_order' => _x( 'Order', 'Modules: Specs', GEDITORIAL_TEXTDOMAIN ),
-					'spec_value' => _x( 'Description', 'Modules: Specs', GEDITORIAL_TEXTDOMAIN ),
-				],
+				'spec_title' => _x( 'Title', 'Modules: Specs', GEDITORIAL_TEXTDOMAIN ),
+				'spec_order' => _x( 'Order', 'Modules: Specs', GEDITORIAL_TEXTDOMAIN ),
+				'spec_value' => _x( 'Description', 'Modules: Specs', GEDITORIAL_TEXTDOMAIN ),
 			],
 			'descriptions' => [
-				'post' => [
-					'spec_title' => _x( 'In Specifications Title', 'Modules: Specs', GEDITORIAL_TEXTDOMAIN ),
-					'spec_order' => _x( 'In Specifications Order', 'Modules: Specs', GEDITORIAL_TEXTDOMAIN ),
-					'spec_value' => _x( 'In Specifications Description', 'Modules: Specs', GEDITORIAL_TEXTDOMAIN ),
-				],
+				'spec_title' => _x( 'In Specifications Title', 'Modules: Specs', GEDITORIAL_TEXTDOMAIN ),
+				'spec_order' => _x( 'In Specifications Order', 'Modules: Specs', GEDITORIAL_TEXTDOMAIN ),
+				'spec_value' => _x( 'In Specifications Description', 'Modules: Specs', GEDITORIAL_TEXTDOMAIN ),
 			],
 			'misc' => [
-				'post' => [
-					'column_title'     => _x( 'Specifications', 'Modules: Specs', GEDITORIAL_TEXTDOMAIN ),
-					'show_option_none' => _x( '&mdash; Choose a Specification &mdash;', 'Modules: Specs', GEDITORIAL_TEXTDOMAIN ),
-				],
+				'column_title'     => _x( 'Specifications', 'Modules: Specs: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'show_option_none' => _x( '&mdash; Choose a Specification &mdash;', 'Modules: Specs', GEDITORIAL_TEXTDOMAIN ),
 			],
 			'noops' => [
 				'specs_tax' => _nx_noop( 'Specification', 'Specifications', 'Modules: Specs: Noop', GEDITORIAL_TEXTDOMAIN ),
@@ -117,13 +111,8 @@ class Specs extends gEditorial\Module
 				'high'
 			);
 
-			wp_register_script( 'jquery-sortable',
-				GEDITORIAL_URL.'assets/packages/jquery-sortable/jquery-sortable.min.js',
-				[ 'jquery' ],
-				'0.9.13',
-				TRUE );
-
-			$this->enqueue_asset_js( [], 'specs.'.$screen->base, [ 'jquery-sortable' ] );
+			$sortable = Helper::registerScriptPackage( 'jquery-sortable', NULL, [ 'jquery' ], '0.9.13' );
+			$this->enqueue_asset_js( [], $screen, [ $sortable ] );
 
 			// internal
 			add_action( 'geditorial_specs_meta_box', [ $this, 'geditorial_specs_meta_box' ], 5, 2 );
@@ -286,9 +275,8 @@ class Specs extends gEditorial\Module
 	{
 		echo '<div class="geditorial-admin-wrap-metabox -specs">';
 
-		$specs = Taxonomy::getTerms( $this->constant( 'specs_tax' ), $post->ID, TRUE );
-
-		do_action( 'geditorial_specs_meta_box', $post, $specs );
+		$terms = Taxonomy::getTerms( $this->constant( 'specs_tax' ), $post->ID, TRUE );
+		$this->actions( 'meta_box', $post, $terms );
 
 		echo '</div>';
 	}
@@ -304,8 +292,8 @@ class Specs extends gEditorial\Module
 		$fields = $this->post_type_fields( $post->post_type );
 		$metas  = $this->get_postmeta( $post->ID, FALSE, [] );
 
-		$handle = '<span class="item-handle dashicons dashicons-move" title="'._x( 'Sort Me!', 'Modules: Specs: Sortable handler title attr', GEDITORIAL_TEXTDOMAIN ).'"></span>';
-		$delete = '<span class="item-delete dashicons dashicons-trash" title="'._x( 'Trash Me!', 'Modules: Specs: Sortable trash title attr', GEDITORIAL_TEXTDOMAIN ).'"></span>';
+		$handle = '<span class="item-handle dashicons dashicons-move" title="'._x( 'Sort me!', 'Modules: Specs: Sortable Handler', GEDITORIAL_TEXTDOMAIN ).'"></span>';
+		$delete = '<span class="item-delete dashicons dashicons-trash" title="'._x( 'Trash me!', 'Modules: Specs: Sortable Trash', GEDITORIAL_TEXTDOMAIN ).'"></span>';
 
 		echo '<ol class="geditorial-specs-list">';
 		foreach ( $metas as $order => $meta ) {

@@ -519,7 +519,9 @@ class Terms extends gEditorial\Module
 		if ( is_admin() || ! is_singular() )
 			return;
 
-		if ( ! $this->cuc( 'adminbar' ) )
+		$post_id = get_queried_object_id();
+
+		if ( ! current_user_can( 'edit_post', $post_id ) )
 			return;
 
 		$nodes[] = [
@@ -531,7 +533,7 @@ class Terms extends gEditorial\Module
 
 		foreach ( $this->taxonomies() as $taxonomy ) {
 
-			$terms = get_the_terms( NULL, $taxonomy );
+			$terms = get_the_terms( $post_id, $taxonomy );
 
 			if ( ! $terms || is_wp_error( $terms ) )
 				continue;

@@ -164,6 +164,14 @@ class Settings extends Core\Base
 		return _x( '&mdash; Select &mdash;', 'Settings: Dropdown Select Option None', GEDITORIAL_TEXTDOMAIN );
 	}
 
+	public static function showOptionAll( $string = NULL )
+	{
+		if ( $string )
+			return sprintf( _x( '&mdash; All %s &mdash;', 'Settings: Dropdown Select Option All', GEDITORIAL_TEXTDOMAIN ), $string );
+
+		return _x( '&mdash; All &mdash;', 'Settings: Dropdown Select Option All', GEDITORIAL_TEXTDOMAIN );
+	}
+
 	public static function fieldSeparate( $string = 'from' )
 	{
 		switch ( $string ) {
@@ -649,6 +657,7 @@ class Settings extends Core\Base
 			'cleaned'   => self::counted( _x( '%s items(s) cleaned!', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
 			'changed'   => self::counted( _x( '%s items(s) changed!', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
 			'emptied'   => self::counted( _x( '%s items(s) emptied!', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
+			'closed'    => self::counted( _x( '%s items(s) closed!', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
 			'ordered'   => self::counted( _x( '%s items(s) re-ordered!', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
 			'synced'    => self::counted( _x( '%s items(s) synced!', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
 			'huh'       => HTML::error( self::huh( self::req( 'huh', NULL ) ) ),
