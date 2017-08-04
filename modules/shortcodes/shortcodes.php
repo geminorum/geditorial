@@ -35,10 +35,10 @@ class Shortcodes extends gEditorial\Module
 		if ( is_admin() || ! is_singular( $this->post_types() ) )
 			return;
 
-		if ( ! $this->cuc( 'adminbar' ) )
+		if ( ! $post = get_queried_object() )
 			return;
 
-		if ( ! $post = get_post() )
+		if ( ! current_user_can( 'edit_post', $post->ID ) )
 			return;
 
 		$pattern = get_shortcode_regex();

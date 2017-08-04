@@ -106,7 +106,7 @@ class Like extends gEditorial\Module
 		if ( is_admin() || ! is_singular( $this->post_types() ) )
 			return;
 
-		if ( ! $this->cuc( 'adminbar' ) )
+		if ( ! current_user_can( 'edit_post', $this->post_id ) )
 			return;
 
 		$users  = $this->get_postmeta( $this->post_id, FALSE, [], $this->meta_key.'_users' );

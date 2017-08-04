@@ -52,10 +52,11 @@ class Attachments extends gEditorial\Module
 		if ( is_admin() || ! is_singular( $this->post_types() ) )
 			return;
 
-		if ( ! $this->cuc( 'adminbar' ) )
+		$post_id = get_queried_object_id();
+
+		if ( ! current_user_can( 'edit_post', $post_id ) )
 			return;
 
-		$post_id     = get_queried_object_id();
 		$attachments = Media::getAttachments( $post_id, '' );
 
 		if ( ! count( $attachments ) )

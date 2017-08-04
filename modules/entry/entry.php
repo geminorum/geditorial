@@ -114,7 +114,9 @@ class Entry extends gEditorial\Module
 		if ( is_admin() || ! is_singular( $this->constant( 'entry_cpt' ) ) )
 			return;
 
-		if ( ! $this->cuc( 'adminbar' ) )
+		$post_id = get_queried_object_id();
+
+		if ( ! current_user_can( 'edit_post', $post_id ) )
 			return;
 
 		$nodes[] = [
@@ -124,7 +126,7 @@ class Entry extends gEditorial\Module
 			'href'   => $link,
 		];
 
-		$terms = Taxonomy::getTerms( $this->constant( 'section_tax' ), NULL, TRUE );
+		$terms = Taxonomy::getTerms( $this->constant( 'section_tax' ), $post_id, TRUE );
 
 		foreach ( $terms as $term )
 			$nodes[] = [
