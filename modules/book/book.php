@@ -177,15 +177,25 @@ class Book extends gEditorial\Module
 						'create'        => _x( 'Connect to a publication', 'Modules: Book: P2P', GEDITORIAL_TEXTDOMAIN ),
 					],
 					'fields' => [
+						'page' => [
+							'title'    => _x( 'Pages', 'Modules: Book: P2P', GEDITORIAL_TEXTDOMAIN ),
+							'type'     => 'text',
+							'template' => _x( 'P. %s', 'Modules: Book: P2P', GEDITORIAL_TEXTDOMAIN ),
+						],
+						'vol' => [
+							'title'    => _x( 'Volume', 'Modules: Book: P2P', GEDITORIAL_TEXTDOMAIN ),
+							'type'     => 'text',
+							'template' => _x( 'Vol. %s', 'Modules: Book: P2P', GEDITORIAL_TEXTDOMAIN ),
+						],
 						'ref' => [
-							'title' => _x( 'Reference', 'Modules: Book: P2P', GEDITORIAL_TEXTDOMAIN ),
-							'type'  => 'text',
-							'value' => '%s',
+							'title'    => _x( 'Reference', 'Modules: Book: P2P', GEDITORIAL_TEXTDOMAIN ),
+							'type'     => 'text',
+							'template' => '%s',
 						],
 						'desc' => [
-							'title' => _x( 'Description', 'Modules: Book: P2P', GEDITORIAL_TEXTDOMAIN ),
-							'type'  => 'text',
-							'value' => '%s',
+							'title'    => _x( 'Description', 'Modules: Book: P2P', GEDITORIAL_TEXTDOMAIN ),
+							'type'     => 'text',
+							'template' => '%s',
 						],
 					],
 					'admin_column' => FALSE, // adding through tweaks module
