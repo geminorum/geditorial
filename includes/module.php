@@ -2188,11 +2188,12 @@ SQL;
 		$p2p = $this->constant( $constant.'_p2p' );
 
 		$args = array_merge( [
-			'name'         => $p2p,
-			'from'         => $post_types,
-			'to'           => $to,
-			'admin_column' => 'from', // 'any', 'from', 'to', FALSE
-			'admin_box'    => [
+			'name'            => $p2p,
+			'from'            => $post_types,
+			'to'              => $to,
+			'can_create_post' => FALSE,
+			'admin_column'    => 'from', // 'any', 'from', 'to', FALSE
+			'admin_box'       => [
 				'show'    => 'from',
 				'context' => 'advanced',
 			],
@@ -2217,11 +2218,12 @@ SQL;
 		$o2o = $this->constant( $constant.'_o2o' );
 
 		$args = array_merge( [
-			'name'         => $o2o,
-			'from'         => $post_types,
-			'to'           => $to,
-			'admin_column' => 'from', // 'any', 'from', 'to', FALSE
-			'admin_box'    => [
+			'name'            => $o2o,
+			'from'            => $post_types,
+			'to'              => $to,
+			'can_create_post' => FALSE,
+			'admin_column'    => 'from', // 'any', 'from', 'to', FALSE
+			'admin_box'       => [
 				'show'    => 'from',
 				'context' => 'advanced',
 			],
@@ -2234,17 +2236,32 @@ SQL;
 				$this->o2o = $o2o;
 	}
 
-	public function p2p_get_meta( $p2p_id, $meta_key, $before = '', $after = '', $title = FALSE )
+	public function p2p_get_meta( $p2p_id, $meta_key, $before = '', $after = '', $args = [] )
 	{
 		if ( ! $meta = p2p_get_meta( $p2p_id, $meta_key, TRUE ) )
 			return '';
 
-		$html = apply_filters( 'string_format_i18n', $meta );
+		if ( ! empty( $args['type'] ) && 'text' == $args['type'] )
+			$meta = apply_filters( 'string_format_i18n', $meta );
 
-		if ( $title )
-			$html = '<span title="'.esc_attr( $title ).'">'.$html.'</span>';
+		if ( ! empty( $args['template'] ) )
+			$meta = sprintf( $args['template'], $meta );
 
-		return $before.$html.$after;
+		if ( ! empty( $args['title'] ) )
+			$meta = '<span title="'.esc_attr( $args['title'] ).'">'.$meta.'</span>';
+
+		return $before.$meta.$after;
+	}
+
+	public function p2p_get_meta_row( $constant, $p2p_id, $before = '', $after = '' )
+	{
+		$row = '';
+
+		if ( ! empty( $this->strings['p2p'][$constant]['fields'] ) )
+			foreach ( $this->strings['p2p'][$constant]['fields'] as $field => $args )
+				$row .= $this->p2p_get_meta( $p2p_id, $field, $before, $after, $args );
+
+		return $row;
 	}
 
 	// @REF: https://github.com/scribu/wp-posts-to-posts/wiki/Creating-connections-programmatically
@@ -2349,9 +2366,7 @@ SQL;
 					'target' => '_blank',
 				], Helper::trimChars( $item->get_title(), 85 ) );
 
-				if ( ! empty( $this->strings['p2p'][$constant]['fields'] ) )
-					foreach ( $this->strings['p2p'][$constant]['fields'] as $field => $field_args )
-						echo $this->p2p_get_meta( $item->p2p_id, $field, ' &ndash; ', '', $field_args['title'] );
+				echo $this->p2p_get_meta_row( $constant, $item->p2p_id, ' &ndash; ', '' );
 
 			echo '</li>';
 		}
