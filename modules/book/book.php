@@ -255,6 +255,11 @@ class Book extends gEditorial\Module
 					'type'        => 'term',
 					'tax'         => $this->constant( 'size_tax' ),
 				],
+				'reference' => [
+					'title'       => _x( 'Reference', 'Modules: Book: Field Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Full reference to this publication', 'Modules: Book: Field Description', GEDITORIAL_TEXTDOMAIN ),
+					'type'        => 'note',
+				],
 			],
 		];
 	}
