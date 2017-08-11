@@ -64,6 +64,13 @@ class Audit extends gEditorial\Module
 					'exclude'     => $exclude,
 					'values'      => $roles,
 				],
+				[
+					'field'       => 'locking_terms',
+					'type'        => 'checkbox',
+					'title'       => _x( 'Locking Terms', 'Modules: Audit: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Selected terms will lock the post to audit managers.', 'Modules: Audit: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'values'      => Taxonomy::listTerms( $this->constant( 'audit_tax' ) ),
+				],
 			],
 			'_general' => [
 				'dashboard_widgets',
@@ -149,6 +156,29 @@ class Audit extends gEditorial\Module
 	public function map_meta_cap( $caps, $cap, $user_id, $args )
 	{
 		switch ( $cap ) {
+
+			case 'edit_post':
+			case 'edit_page':
+			case 'delete_post':
+			case 'delete_page':
+			case 'publish_post':
+
+				$locking = $this->get_setting( 'locking_terms', [] );
+
+				if ( ! count( $locking ) )
+					return $caps;
+
+				if ( ! $post = get_post( $args[0] ) )
+					return $caps;
+
+				if ( ! in_array( $post->post_type, $this->post_types() ) )
+					return $caps;
+
+				foreach ( $locking as $term_id )
+					if ( is_object_in_term( $post->ID, $this->constant( 'audit_tax' ), intval( $term_id ) ) )
+						return $this->audit_can( 'manage', $user_id ) ? $caps : [ 'do_not_allow' ];
+
+			break;
 
 			case 'manage_audit_tax':
 			case 'edit_audit_tax':
