@@ -89,23 +89,23 @@ class MetaBox extends Core\Base
 
 	public static function fieldEmptyTaxonomy( $taxonomy, $edit = NULL )
 	{
-		$object = is_object( $taxonomy ) ? $taxonomy : get_taxonomy( $taxonomy );
-		$manage = current_user_can( $object->cap->manage_terms );
+		if ( ! is_object( $taxonomy ) )
+			$taxonomy = get_taxonomy( $taxonomy );
 
-		if ( $manage && is_null( $edit ) )
-			$edit = WordPress::getEditTaxLink( $object->name );
+		if ( is_null( $edit ) )
+			$edit = WordPress::getEditTaxLink( $taxonomy->name );
 
 		echo '<div class="field-wrap field-wrap-empty">';
 
 			if ( $edit )
 				echo HTML::tag( 'a', [
 					'href'   => $edit,
-					'title'  => $object->labels->add_new_item,
+					'title'  => $taxonomy->labels->add_new_item,
 					'target' => '_blank',
-				], $object->labels->not_found );
+				], $taxonomy->labels->not_found );
 
 			else
-				echo '<span>'.$object->labels->not_found.'</span>';
+				echo '<span>'.$taxonomy->labels->not_found.'</span>';
 
 		echo '</div>';
 	}

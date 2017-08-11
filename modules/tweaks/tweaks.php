@@ -578,9 +578,7 @@ class Tweaks extends gEditorial\Module
 				continue;
 
 			if ( is_null( $info['edit'] ) )
-				$info['edit'] = current_user_can( $object->cap->manage_terms )
-					? WordPress::getEditTaxLink( $object->name )
-					: FALSE;
+				$info['edit'] = WordPress::getEditTaxLink( $object->name );
 
 			$before  = '<li class="-row tweaks-tax-'.$taxonomy.'">';
 			$before .= $this->get_column_icon( $info['edit'], $info['icon'], $info['title'] );

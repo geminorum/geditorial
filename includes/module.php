@@ -1619,9 +1619,7 @@ class Module extends Base
 	public function add_meta_box_checklist_terms( $constant, $post_type, $type = FALSE )
 	{
 		$taxonomy = $this->constant( $constant );
-		$object   = get_taxonomy( $taxonomy );
-		$manage   = current_user_can( $object->cap->manage_terms );
-		$edit_url = $manage ? WordPress::getEditTaxLink( $taxonomy ) : FALSE;
+		$edit_url = WordPress::getEditTaxLink( $taxonomy );
 
 		if ( $type )
 			$this->remove_meta_box( $constant, $post_type, $type );
@@ -1722,11 +1720,10 @@ class Module extends Base
 		if ( is_null( $title ) )
 			$title = $object->labels->name;
 
-		if ( current_user_can( $object->cap->manage_terms ) ) {
+		if ( is_null( $url ) )
+			$url = WordPress::getEditTaxLink( $taxonomy );
 
-			if ( is_null( $url ) )
-				$url = WordPress::getEditTaxLink( $taxonomy );
-
+		if ( $url ) {
 			$action = $this->get_string( 'meta_box_action', $constant, 'misc', _x( 'Manage', 'Module: MetaBox Default Action', GEDITORIAL_TEXTDOMAIN ) );
 			$title .= ' <span class="postbox-title-action"><a href="'.esc_url( $url ).'" target="_blank">'.$action.'</a></span>';
 		}

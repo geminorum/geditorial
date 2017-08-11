@@ -243,19 +243,28 @@ class WordPress extends Base
 		return $query ? add_query_arg( 's', urlencode( $query ), get_option( 'home' ) ) : get_option( 'home' );
 	}
 
-	// @SEE: get_edit_term_link()
+	// @REF: get_edit_term_link()
 	public static function getEditTaxLink( $taxonomy, $term_id = FALSE, $extra = array() )
 	{
-		if ( $term_id )
-			return add_query_arg( array_merge( array(
-				'taxonomy' => $taxonomy,
-				'tag_ID'   => $term_id,
-			), $extra ), admin_url( 'term.php' ) );
+		if ( $term_id ) {
 
-		else
-			return add_query_arg( array_merge( array(
-				'taxonomy' => $taxonomy,
-			), $extra ), admin_url( 'edit-tags.php' ) );
+			if ( current_user_can( 'edit_term', $term_id ) )
+				return add_query_arg( array_merge( array(
+					'taxonomy' => $taxonomy,
+					'tag_ID'   => $term_id,
+				), $extra ), admin_url( 'term.php' ) );
+
+		} else {
+
+			$object = get_taxonomy( $taxonomy );
+
+			if ( current_user_can( $object->cap->manage_terms ) )
+				return add_query_arg( array_merge( array(
+					'taxonomy' => $taxonomy,
+				), $extra ), admin_url( 'edit-tags.php' ) );
+		}
+
+		return FALSE;
 	}
 
 	public static function getPostTypeEditLink( $post_type, $user_id = 0, $extra = array() )

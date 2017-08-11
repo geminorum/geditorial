@@ -374,12 +374,14 @@ class Helper extends Core\Base
 		if ( ! $link )
 			return esc_html( $title );
 
-		if ( 'edit' == $link && ! current_user_can( 'edit_term', $term->term_id ) )
-			$link = 'view';
+		if ( 'edit' == $link ) {
+			if ( ! $edit = WordPress::getEditTaxLink( $term->taxonomy, $term->term_id ) )
+				$link = 'view';
+		}
 
 		if ( 'edit' == $link )
 			return HTML::tag( 'a', [
-				'href'   => WordPress::getEditTaxLink( $term->taxonomy, $term->term_id ),
+				'href'   => $edit,
 				'title'  => urldecode( $term->slug ),
 				'class'  => '-link -row-link -row-link-edit',
 				'target' => '_blank',
