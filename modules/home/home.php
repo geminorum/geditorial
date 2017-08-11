@@ -61,6 +61,13 @@ add_theme_support( \'featured-content\', [
 	{
 		return [
 			'posttypes_option' => 'posttypes_option',
+			'_general' => [
+				[
+					'field'       => 'posttypes_feed',
+					'title'       => _x( 'Posttypes on Feeds', 'Modules: Home: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Appears supported posttypes also on the main site feeds.', 'Modules: Home: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+				],
+			],
 			'_featured' => [
 				[
 					'field'       => 'featured_term',
@@ -181,7 +188,8 @@ add_theme_support( \'featured-content\', [
 
 	public function pre_get_posts( &$query )
 	{
-		if ( ! $query->is_main_query() )
+		if ( ! $query->is_main_query()
+			|| ( is_feed() && ! $this->get_setting( 'posttypes_feed', FALSE ) ) )
 			return;
 
 		$post_types = $this->post_types();
