@@ -1639,12 +1639,11 @@ class Module extends Base
 
 	public function add_meta_box_author( $constant, $callback = 'post_author_meta_box' )
 	{
-		$posttype = $this->constant( $constant );
-		$object   = get_post_type_object( $posttype );
+		$posttype = get_post_type_object( $this->constant( $constant ) );
 
-		if ( current_user_can( $object->cap->edit_others_posts ) ) {
+		if ( current_user_can( $posttype->cap->edit_others_posts ) ) {
 
-			remove_meta_box( 'authordiv', $post_type, 'normal' );
+			remove_meta_box( 'authordiv', $posttype->name, 'normal' );
 
 			add_meta_box( 'authordiv',
 				$this->get_string( 'author_box_title', $constant, 'misc', __( 'Author' ) ),
@@ -1658,29 +1657,29 @@ class Module extends Base
 
 	public function add_meta_box_excerpt( $constant, $callback = 'post_excerpt_meta_box' )
 	{
-		$post_type = $this->constant( $constant );
+		$posttype = $this->constant( $constant );
 
-		remove_meta_box( 'postexcerpt', $post_type, 'normal' );
+		remove_meta_box( 'postexcerpt', $posttype, 'normal' );
 
 		add_meta_box( 'postexcerpt',
 			$this->get_string( 'excerpt_box_title', $constant, 'misc', __( 'Excerpt' ) ),
 			$callback,
-			$post_type,
+			$posttype->name,
 			'normal',
 			'high'
 		);
 	}
 
-	public function remove_meta_box( $constant, $post_type, $type = 'tag' )
+	public function remove_meta_box( $constant, $posttype, $type = 'tag' )
 	{
 		if ( 'tag' == $type )
-			remove_meta_box( 'tagsdiv-'.$this->constant( $constant ), $post_type, 'side' );
+			remove_meta_box( 'tagsdiv-'.$this->constant( $constant ), $posttype, 'side' );
 
 		else if ( 'cat' == $type )
-			remove_meta_box( $this->constant( $constant ).'div', $post_type, 'side' );
+			remove_meta_box( $this->constant( $constant ).'div', $posttype, 'side' );
 
 		else if ( 'parent' == $type )
-			remove_meta_box( 'pageparentdiv', $post_type, 'side' );
+			remove_meta_box( 'pageparentdiv', $posttype, 'side' );
 
 		else if ( 'image' == $type )
 			remove_meta_box( 'postimagediv', $this->constant( $constant ), 'side' );
@@ -1689,7 +1688,7 @@ class Module extends Base
 			remove_meta_box( 'authordiv', $this->constant( $constant ), 'normal' );
 
 		else if ( 'excerpt' == $type )
-			remove_meta_box( 'postexcerpt', $post_type, 'normal' );
+			remove_meta_box( 'postexcerpt', $posttype, 'normal' );
 	}
 
 	public function get_meta_box_title( $constant = 'post', $url = NULL, $edit_cap = 'manage_options', $title = NULL )

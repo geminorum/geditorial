@@ -381,13 +381,16 @@ class Book extends gEditorial\Module
 
 	public function add_meta_box_cb_publication_cpt( $post )
 	{
-		$post_type = $this->constant( 'publication_cpt' );
+		$posttype = $this->constant( 'publication_cpt' );
 
-		$this->add_meta_box_author( 'publication_cpt' );
-		$this->add_meta_box_excerpt( 'publication_cpt' );
+		if ( post_type_supports( $posttype, 'author' ) )
+			$this->add_meta_box_author( 'publication_cpt' );
 
-		$this->add_meta_box_checklist_terms( 'status_tax', $post_type );
-		$this->add_meta_box_checklist_terms( 'type_tax', $post_type );
+		if ( post_type_supports( $posttype, 'excerpt' ) )
+			$this->add_meta_box_excerpt( 'publication_cpt' );
+
+		$this->add_meta_box_checklist_terms( 'status_tax', $posttype );
+		$this->add_meta_box_checklist_terms( 'type_tax', $posttype );
 	}
 
 	public function column_row_p2p_to( $post )
