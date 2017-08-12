@@ -47,7 +47,7 @@ class Text extends Base
 		// remove a P of entirely whitespace
 		$string = preg_replace( '|<p>\s*</p>|', '', $string );
 
-		return $string;
+		return trim( $string );
 	}
 
 	// like wp but without check for func_overload

@@ -118,6 +118,23 @@ class Taxonomy extends Core\Base
 		return $object ? array_combine( $list, $terms ) : $list;
 	}
 
+	// @REF: https://developer.wordpress.org/?p=22286
+	public static function listTerms( $taxonomy = 'category', $fields = NULL, $extra = array() )
+	{
+		$query = new \WP_Term_Query( array_merge( array(
+			'taxonomy'   => (array) $taxonomy,
+			'order'      => 'ASC',
+			'orderby'    => 'name',
+			'fields'     => is_null( $fields ) ? 'id=>name' : $fields,
+			'hide_empty' => FALSE,
+		), $extra ) );
+
+		if ( empty( $query->terms ) )
+			return array();
+
+		return $query->terms;
+	}
+
 	public static function prepTerms( $taxonomy = 'category', $extra = array(), $terms = NULL, $key = 'term_id', $object = TRUE )
 	{
 		$new_terms = array();
