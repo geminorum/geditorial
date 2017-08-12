@@ -1,5 +1,5 @@
 jQuery(document).ready(function($) {
-  'use strict';
+  "use strict";
 
   $("[data-meta-type='title_before']").each(function() {
     $(this).insertBefore('#titlewrap').show();

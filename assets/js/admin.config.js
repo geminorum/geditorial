@@ -60,6 +60,8 @@ jQuery(document).ready(function($) {
         if (response.success) {
           $box.find('.button-toggle').hide();
 
+          // FIXME: display response somewhere!
+
           if ('disable' == action) {
             $box.addClass('module-disabled').removeClass('module-enabled');
             $box.find('.button-toggle.button-primary').show();

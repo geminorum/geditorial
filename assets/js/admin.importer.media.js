@@ -1,13 +1,14 @@
 (function($, p, c, m, s) {
-  'use strict';
+  "use strict";
 
-  var o = {},
-    modal;
+  var modal,
+    o = {
+      strings: $.extend({}, {
+        modal_title: 'Choose a Datasheet',
+        modal_button: 'Select as Source',
+      }, p[m].strings || {} ),
+   };
 
-  o.s = $.extend({}, {
-    modal_title: 'Choose a Datasheet',
-    modal_button: 'Select as Source',
-  }, p[m].strings || {} );
 
   $(document).ready(function() {
 
@@ -19,8 +20,8 @@
 
         // https://codex.wordpress.org/Javascript_Reference/wp.media
         modal = wp.media({
-          title: o.s['modal_title'],
-          button: { text: o.s['modal_button'] },
+          title: o.strings['modal_title'],
+          button: { text: o.strings['modal_button'] },
           library: { type: [ 'application/vnd.ms-excel', 'text/csv' ] },
           multiple: false,
         });

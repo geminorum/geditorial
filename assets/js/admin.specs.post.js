@@ -1,65 +1,104 @@
-jQuery(document).ready(function($) {
+(function ($, p, c, m) {
+  "use strict";
 
-  $('ul.geditorial-specs-new select.item-dropdown-new').change(function() {
-    if ($(this).parents('ol.geditorial-specs-list').length) {
-      return false;
-    }
+  var s = {
+    action: p._base + '_' + m,
+    classs: p._base + '-' + m,
 
-    var selectedVal = $(this).find(":selected").val();
-    if (selectedVal == '-1') {
-      return false;
-    }
-
-    $("ol.geditorial-specs-list .item-body").slideUp();
-    var row = $('ul.geditorial-specs-new li').clone(true);
-    var selectedTitle = $(this).find(":selected").text();
-    // $(this).find(":selected").remove();
-    // $(this).find(":selected").attr("disabled", "disabled");
-    $(this).find(":selected").prop( "disabled", true );
-
-    row.find('select.item-dropdown-new').removeClass('item-dropdown-new');
-    row.find('span.item-excerpt').html(selectedTitle);
-    row.find('select.item-dropdown option[value="-1"]').remove();
-    row.find('select.item-dropdown option[value="' + selectedVal + '"]').selected = true;
-    row.appendTo('ol.geditorial-specs-list');
-    row.find('.item-body').slideDown();
-    row.find('textarea').focus();
-    gEditorialSpecsReOrder();
-  });
-
-  $('body').on('click', 'ol.geditorial-specs-list .item-delete', function(e) {
-    e.preventDefault();
-    // FIXME: must remove disable from ul selector
-    $(this).closest('li').slideUp('normal', function() {
-      $(this).remove();
-    });
-  });
-
-  $('body').on('click', 'ol.geditorial-specs-list .item-excerpt', function(e) {
-    e.preventDefault();
-    $("ol.geditorial-specs-list .item-body").slideUp();
-    var clicked = $(this).parent().parent().find('.item-body');
-    if (!clicked.is(":visible")) {
-      clicked.slideDown();
-    }
-  });
-
-  $('ol.geditorial-specs-list').sortable({
-    // disable: true,
-    group: 'geditorial-specs',
-    handle: '.item-handle',
-    stop: function() {
-        gEditorialSpecsReOrder();
-      }
-      // }).disableSelection();
-  });
-
-  // http://stackoverflow.com/a/14736775
-  var gEditorialSpecsReOrder = function() {
-    var inputs = $('input.item-order');
-    var nbElems = inputs.length;
-    inputs.each(function(idx) {
-      $(this).val(nbElems - idx);
-    });
+    wrap: 'ol.' + p._base + '-' + m + '-list',
+    raw: 'ul.' + p._base + '-' + m + '-new',
+    body: '.item-body'
   };
-});
+
+  var o = {
+
+    // http://stackoverflow.com/a/14736775
+    reOrder: function() {
+      var inputs = $('input.item-order');
+      var nbElems = inputs.length;
+      inputs.each(function(idx) {
+        $(this).val(nbElems - idx);
+      });
+    },
+
+    expandItem: function(element){
+      $(s.body, s.wrap).slideUp();
+      var clicked = $(element).parent().parent().find(s.body);
+      if (!clicked.is(':visible')) {
+        clicked.slideDown();
+      }
+    },
+
+    removeItem: function(element){
+      // FIXME: must remove disable from ul selector
+      $(element).closest('li').slideUp('normal', function() {
+        $(this).remove();
+      });
+    },
+
+    newItem: function(element){
+
+      if ($(element).parents(s.wrap).length) {
+        return false;
+      };
+
+      var selectedVal = $(element).find(':selected').val();
+
+      if (selectedVal === '-1') {
+        return false;
+      };
+
+      $(s.body, s.wrap).slideUp();
+      var row = $('li', s.raw).clone(true);
+
+      $(element).find(':selected').prop('disabled', true);
+
+      row.find('select.item-dropdown-new').removeClass('item-dropdown-new');
+      row.find('span.item-excerpt').html($(element).find(':selected').text());
+      row.find('select.item-dropdown option[value="-1"]').remove();
+      row.find('select.item-dropdown option[value="' + selectedVal + '"]').selected = true;
+
+      row.appendTo(s.wrap);
+
+      row.find(s.body).slideDown();
+      row.find('textarea').focus();
+
+      this.reOrder();
+    }
+
+  };
+
+  $(document).ready(function() {
+
+    $('select.item-dropdown-new', s.raw).change(function() {
+      return o.newItem(this);
+    });
+
+    $('body').on('click', s.wrap + ' .item-delete', function(e) {
+      e.preventDefault();
+      o.removeItem(this);
+    });
+
+    $('body').on('click', s.wrap + ' .item-excerpt', function(e) {
+      e.preventDefault();
+      o.expandItem(this);
+    });
+
+    $(s.wrap).sortable({
+      // disable: true,
+      group: s.classs,
+      handle: '.item-handle',
+      stop: function() {
+        o.reOrder();
+      }
+    // }).disableSelection();
+    });
+  });
+
+  c[m] = o;
+
+  if (p._dev) {
+    console.log(o);
+  }
+
+}(jQuery, gEditorial, gEditorialModules, 'specs'));

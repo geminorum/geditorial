@@ -1,5 +1,5 @@
 (function($, p, c, m) {
-  'use strict';
+  "use strict";
 
   var modal,
     o = {
@@ -38,7 +38,7 @@
                 $('img.-img', '.inline-edit-row').attr('src', image.url).show();
               }
             }
-          } );
+          });
         }
 
         modal.open();

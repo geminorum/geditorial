@@ -1,5 +1,5 @@
 (function($, p, c, m) {
-  'use strict';
+  "use strict";
 
   var o = {};
 
@@ -31,7 +31,7 @@
         if (response.success) {
 
           if ( action === 'public' ) {
-            $input.val( response.data.link ).show();
+            $input.val(response.data).show();
           } else {
             $input.hide();
           }

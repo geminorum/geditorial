@@ -1,5 +1,5 @@
 jQuery(document).ready(function($) {
-  'use strict';
+  "use strict";
 
   var settings = $.extend({}, {
     checklist_tree: false,

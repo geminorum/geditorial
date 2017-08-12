@@ -1,5 +1,5 @@
 (function($) {
-  'use strict';
+  "use strict";
 
   $('#the-list').on('click', '.editinline', function() {
 

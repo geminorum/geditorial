@@ -1,5 +1,5 @@
 (function($, p, c, m) {
-  'use strict';
+  "use strict";
 
   var o = {};
 
@@ -46,7 +46,7 @@
         spinner.removeClass('is-active');
 
         if (response.success) {
-          $(o.box).find('.-content').html(response.data.html);
+          $(o.box).find('.-content').html(response.data);
           o.e = false;
           o.toggle();
         }

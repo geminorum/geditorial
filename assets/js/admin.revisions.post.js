@@ -1,5 +1,5 @@
 (function($, p, c, m) {
-  'use strict';
+  "use strict";
 
   var o = {};
 
