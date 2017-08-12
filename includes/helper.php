@@ -1012,8 +1012,12 @@ class Helper extends Core\Base
 		if ( ! empty( $nooped['domain'] ) )
 			$nooped['domain'] = GEDITORIAL_TEXTDOMAIN;
 
-		if ( empty( $nooped['context'] ) )
+		if ( ! array_key_exists( 'domain', $nooped ) )
+			return _n( $nooped['singular'], $nooped['plural'], $count );
+
+		else if ( empty( $nooped['context'] ) )
 			return _n( $nooped['singular'], $nooped['plural'], $count, $nooped['domain'] );
+
 		else
 			return _nx( $nooped['singular'], $nooped['plural'], $count, $nooped['context'], $nooped['domain'] );
 	}
@@ -1038,10 +1042,17 @@ class Helper extends Core\Base
 				Text::strToLower( $name ),
 			];
 
-		$strings = [
-			_nx( $name['singular'], $name['plural'], 2, $name['context'], $name['domain'] ),
-			_nx( $name['singular'], $name['plural'], 1, $name['context'], $name['domain'] ),
-		];
+		if ( array_key_exists( 'domain', $name ) )
+			$strings = [
+				_nx( $name['singular'], $name['plural'], 2, $name['context'], $name['domain'] ),
+				_nx( $name['singular'], $name['plural'], 1, $name['context'], $name['domain'] ),
+			];
+
+		else
+			$strings = [
+				$name['plural'],
+				$name['singular'],
+			];
 
 		$strings[2] = Text::strToLower( $strings[0] );
 		$strings[3] = Text::strToLower( $strings[1] );
