@@ -227,18 +227,16 @@ class Users extends gEditorial\Module
 		] );
 	}
 
-	public function pre_get_posts( $wp_query )
+	public function pre_get_posts( &$wp_query )
 	{
  		if ( ! $wp_query->is_admin )
-			return $wp_query;
+			return;
 
 		if ( current_user_can( 'edit_others_posts' ) )
-			return $wp_query;
+			return;
 
 		if ( '' === $wp_query->get( 'author' ) )
 			$wp_query->set( 'author', $GLOBALS['user_ID'] );
-
-		return $wp_query;
 	}
 
 	public function manage_users_columns( $columns )

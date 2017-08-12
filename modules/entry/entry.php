@@ -207,7 +207,7 @@ class Entry extends gEditorial\Module
 		$this->do_restrict_manage_posts_taxes( 'section_tax' );
 	}
 
-	public function pre_get_posts( $wp_query )
+	public function pre_get_posts( &$wp_query )
 	{
 		if ( $wp_query->is_admin
 			&& isset( $wp_query->query['post_type'] ) ) {

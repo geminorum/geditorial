@@ -525,7 +525,7 @@ class Magazine extends gEditorial\Module
 		return $post_ID;
 	}
 
-	public function pre_get_posts( $wp_query )
+	public function pre_get_posts( &$wp_query )
 	{
 		if ( $wp_query->is_admin
 			&& isset( $wp_query->query['post_type'] ) ) {

@@ -186,30 +186,30 @@ add_theme_support( \'featured-content\', [
 		return $this->featured = $support[0];
 	}
 
-	public function pre_get_posts( &$query )
+	public function pre_get_posts( &$wp_query )
 	{
-		if ( ! $query->is_main_query()
-			|| ( is_feed() && ! $this->get_setting( 'posttypes_feed', FALSE ) ) )
+		if ( ! $wp_query->is_main_query()
+			|| ( $wp_query->is_feed() && ! $this->get_setting( 'posttypes_feed', FALSE ) ) )
 			return;
 
 		$post_types = $this->post_types();
 
 		if ( count( $post_types ) ) {
 
-			if ( $query->is_home() )
-				$query->set( 'post_type', $post_types );
+			if ( $wp_query->is_home() )
+				$wp_query->set( 'post_type', $post_types );
 
-			else if ( $query->is_search() && empty( $query->query_vars['post_type'] ) )
-				$query->set( 'post_type', $post_types );
+			else if ( $wp_query->is_search() && empty( $wp_query->query_vars['post_type'] ) )
+				$wp_query->set( 'post_type', $post_types );
 
-			else if ( $query->is_archive() && empty( $query->query_vars['post_type'] ) )
-				$query->set( 'post_type', $post_types );
+			else if ( $wp_query->is_archive() && empty( $wp_query->query_vars['post_type'] ) )
+				$wp_query->set( 'post_type', $post_types );
 
-			else if ( $query->is_feed() && empty( $query->query_vars['post_type'] ) )
-				$query->set( 'post_type', $post_types );
+			else if ( $wp_query->is_feed() && empty( $wp_query->query_vars['post_type'] ) )
+				$wp_query->set( 'post_type', $post_types );
 		}
 
-		if ( $query->is_home()
+		if ( $wp_query->is_home()
 			&& $this->get_setting( 'featured_exclude', FALSE )
 			&& 'posts' === get_option( 'show_on_front' ) ) {
 
@@ -217,10 +217,10 @@ add_theme_support( \'featured-content\', [
 
 			if ( count( $ids ) ) {
 
-				if ( $not = $query->get( 'post__not_in' ) )
+				if ( $not = $wp_query->get( 'post__not_in' ) )
 					$ids = array_unique( array_merge( (array) $not, $ids ) );
 
-				$query->set( 'post__not_in', $ids );
+				$wp_query->set( 'post__not_in', $ids );
 			}
 		}
 	}

@@ -451,7 +451,7 @@ class Event extends gEditorial\Module
 	// http://www.billerickson.net/customize-the-wordpress-query/
 	// https://gist.github.com/1238281
 	// http://www.billerickson.net/code/event-query/
-	public function pre_get_posts( $query )
+	public function pre_get_posts( &$wp_query )
 	{
 		// http://codex.wordpress.org/Function_Reference/current_time
 		// $current_time = current_time('mysql');
@@ -461,7 +461,7 @@ class Event extends gEditorial\Module
 		// $current_time = current_time( 'timestamp' );
 		// $current_time = current_time( 'mysql' );
 
-		if ( $query->is_main_query()
+		if ( $wp_query->is_main_query()
 			&& ! is_admin()
 			&& is_post_type_archive( $this->constant( 'event_type' ) ) ) {
 
@@ -471,11 +471,11 @@ class Event extends gEditorial\Module
 				'compare' => '>'
 			] ];
 
-			$query->set( 'meta_query', $meta_query );
-			$query->set( 'orderby', 'meta_value_num' );
-			$query->set( 'meta_key', $this->constant( 'metakey_startdate' ) );
-			$query->set( 'order', 'ASC' );
-			// $query->set( 'posts_per_page', '2' );
+			$wp_query->set( 'meta_query', $meta_query );
+			$wp_query->set( 'orderby', 'meta_value_num' );
+			$wp_query->set( 'meta_key', $this->constant( 'metakey_startdate' ) );
+			$wp_query->set( 'order', 'ASC' );
+			// $wp_query->set( 'posts_per_page', '2' );
 		}
 	}
 

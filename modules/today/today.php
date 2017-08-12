@@ -599,7 +599,7 @@ class Today extends gEditorial\Module
 	}
 
 	// NO NEED if we override the whole archive page
-	public function pre_get_posts( $wp_query )
+	public function pre_get_posts( &$wp_query )
 	{
 		return;
 

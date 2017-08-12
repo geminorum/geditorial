@@ -209,7 +209,7 @@ class Audit extends gEditorial\Module
 		return User::isSuperAdmin( $user_id );
 	}
 
-	// Override
+	// override
 	public function cuc( $context = 'settings', $fallback = '' )
 	{
 		return 'reports' == $context ? $this->audit_can( 'reports' ) : parent::cuc( $context, $fallback );

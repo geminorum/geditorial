@@ -1664,7 +1664,7 @@ class Module extends Base
 		add_meta_box( 'postexcerpt',
 			$this->get_string( 'excerpt_box_title', $constant, 'misc', __( 'Excerpt' ) ),
 			$callback,
-			$posttype->name,
+			$posttype,
 			'normal',
 			'high'
 		);
