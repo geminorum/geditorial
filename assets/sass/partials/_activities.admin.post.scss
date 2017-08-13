@@ -4,6 +4,7 @@
 /// Module: Activities: Admin Post ----------------------------------------------
 
 #geditorial-activities.postbox {
+
   .inside {
     margin: 0;
     padding: 0;
@@ -14,27 +15,89 @@
     }
   }
 
+  // div.-no-logs,
+  div.-add-log,
+  div.-manual-log {
+    padding: 8px 5px 8px;
+
+    textarea {
+      width:100%
+    }
+
+    p {
+      margin: 0;
+    }
+
+    .button {
+      margin: 0 4px 0 0;
+      @include body-rtl(){
+        margin: 0 0 0 4px;
+      }
+    }
+
+    .button-primary {
+      float: left;
+      margin: 0;
+    }
+  }
+
+  // div.-no-logs {
+  //   p {
+  //     color: $gray-light;
+  //     font-size: smaller;
+  //     margin: 0 4px;
+  //   }
+  // }
+
+  div.-add-log {
+    span.-message {
+      color: $gray-light;
+      font-size: smaller;
+      padding: 0 4px;
+    }
+  }
+
+  div.-manual-log {
+    p {
+      margin: 4px 0 0;
+      // text-align: left;
+    }
+  }
+
+  td.column-primary {
+    div.-manual-log {
+      padding: 8px 0;
+    }
+  }
+
+
   .geditorial-activity-box {
 
     border: 0 none;
 
     td {
       // vertical-align: top;
-    }
 
-    .column-comment {
-      padding: 4px 6px 8px;
-      > p {
-        margin-bottom: 5px;
+      padding: 4px 6px 4px;
+      p {
+        line-height: 1;
+        margin: 0 0 6px;
+        &:last-child {
+          margin: 0 0 4px;
+        }
       }
     }
+
     .column-author {
-      width: 25%;
-      // padding-top: 8px;
+      width: 20%;
+    }
+
+    .column-date {
+      width: 15%;
     }
 
     .row-actions {
-      font-size: smaller;
+      // font-size: smaller;
     }
   }
 }

@@ -5,55 +5,8 @@
 
 body.geditorial-tweaks-enabled {
   .fixed {
-
     .column-comments {
       width: 3.5em;
-    }
-
-    .column-geditorial-tweaks-rows {
-      width: 25%;
-    }
-
-    .column-geditorial-tweaks-atts {
-      width: 15%;
-    }
-
-    th.column-geditorial-tweaks-id {
-      width: 5%;
-
-      a > span {
-        float: right;
-      }
-
-      .sorting-indicator {
-        margin-left: 0;
-        margin-right: 7px;
-      }
-    }
-
-    td.column-geditorial-tweaks-id {
-      text-align: right;
-      font-size: 0.9em;
-    }
-  }
-
-  &.rtl {
-    .fixed {
-
-      th.column-geditorial-tweaks-id {
-        a > span {
-          float: left;
-        }
-
-        .sorting-indicator {
-          margin-left: 7px;
-          margin-right: 0;
-        }
-      }
-
-      td.column-geditorial-tweaks-id {
-        text-align: left;
-      }
     }
   }
 }

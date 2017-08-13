@@ -16,4 +16,32 @@ body.geditorial-today-enabled {
   }
 }
 
+@media screen and ( max-width: 782px ) {
+
+  .wp-list-table tr {
+
+    // columns before primary column must be hidden
+    // must be both
+    th.column-theday,
+    td.column-theday {
+      display: none !important;
+    }
+
+    &.is-expanded {
+      td.column-theday {
+        .-date-icon {
+          border: none !important;
+          width: 100%;
+          > span {
+            display: inline-block !important;
+            padding: 4px !important;
+            border: none !important;
+            font-size: inherit !important;
+          }
+        }
+      }
+    }
+  }
+}
+
 .geditorial-admin-wrap.-today {}

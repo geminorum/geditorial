@@ -12,6 +12,24 @@
   }
 }
 
+table.base-table-list {
+  th.-column {
+
+    &.-attachment-custom {
+      width: 125px;
+    }
+
+    &.-attachment-sizes {
+      width: 200px;
+    }
+
+    &.-attachment-meta {
+      width: 200px;
+    }
+  }
+}
+
+
 // table.helper-table {
 //   thead {
 //     .check-column {

@@ -1,0 +1,99 @@
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+/// Module: Letter: Admin Post --------------------------------------------------
+
+.geditorial-admin-wrap-nobox.-letter {
+
+  @include mainwrap;
+
+  background-color: #fff;
+  border: 1px solid #ddd;
+
+  margin-top: 1em;
+
+  .-halfwrap {
+    width: 50%;
+    float: left;
+    border-right: 1px solid #ddd;
+    &:last-child {
+      border-right: none;
+    }
+  }
+
+  .field-wrap-iframe {
+    iframe {
+      width: 100%;
+      min-height: 400px;
+    }
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.geditorial-admin-toolbar.-letter {
+  padding: .7em .5em 0.5em;
+  border-bottom: 1px solid #ddd;
+
+  .button {
+    margin: 0 2px;
+  }
+
+  .-loading {
+    float: right;
+    margin: 2px 5px 0;
+  }
+
+  .-render {
+    float: right;
+  }
+}
+
+.geditorial-letter-empty,
+.geditorial-letter-list {
+  list-style: none;
+  margin: .7em .5em;
+}
+
+.geditorial-letter-block {
+  position: relative;
+  margin-bottom: 5px;
+
+  &:before {
+    position: absolute;
+  }
+
+  .-head {
+      border: 1px solid #ddd;
+      border-radius: 2px 2px 0 0;
+      background-color: $gray-lighter;
+      padding: 3px 3px 3px;
+  }
+
+  .-title {
+    padding: 7px;
+    font-weight: bolder;
+    cursor: pointer;
+  }
+
+  .-body {
+      border: 1px solid #ddd;
+      border-top: 0;
+      border-radius: 0 0 2px 2px;
+      background-color: #fefefe;
+      padding: 5px;
+  }
+
+  .-handle,
+  .-delete {
+    width: 16px;
+    height: 16px;
+    font-size: 16px;
+    cursor: pointer;
+    color: $gray-light;
+  }
+
+  .-delete {
+    float: right;
+  }
+}

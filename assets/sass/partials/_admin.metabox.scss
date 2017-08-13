@@ -3,25 +3,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 /// gEditorial Partials: Admin MetaBox -----------------------------------------
 
-.hndle {
-  .geditorial-postbox-title-action {
-    opacity: 0;
-    float: right;
-    line-height: 1.2;
-    @include body-rtl() {
-      float: left;
-    }
-  }
-
-  &:hover {
-    .geditorial-postbox-title-action {
-      opacity: 1;
-    }
-  }
-}
-
-
-
 .geditorial-admin-wrap-metabox,
 .geditorial-admin-wrap-nobox,
 .geditorial-admin-wrap-textbox {
@@ -105,6 +86,15 @@
           vertical-align: text-top;
           margin: 0 2px;
         }
+      }
+    }
+
+    &.field-wrap-image {
+      img {
+        max-width: 100%;
+        max-height: 200px;
+        height: auto;
+        width: auto;
       }
     }
   }
