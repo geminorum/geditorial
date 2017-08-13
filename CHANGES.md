@@ -1,3 +1,31 @@
+### 3.11.3
+* main/ajax: better success method
+* main/helper: support timestamp for date edit row
+* main/helper: attachment link row action
+* main/helper: table methodes updated
+* main/helper: internal date format api
+* main/helper: check for term cap before linking
+* main/helper: support for filtered noops
+* main/module: parent in extra args on table posts
+* main/module: better metabox title actions
+* main/module: p2p meta row helper
+* main/module: check if posttype support excerpt/author for metabox
+* main/plugin: adminbar node cap based on queried object
+* main/settings: admin notices revised
+* main/widget: form custom code field
+* settings/options: check if fresh install
+* module/attachments: :new: module
+* module/audit: :new: locking terms
+* module/book: skip cover widget/shortcode on not supported posttypes
+* module/book: insert cover only on main posttype
+* module/book: :new: meta field: reference
+* module/book: :new: p2p fields: pages/volume
+* module/home: :new: posttypes on feeds
+* module/magazine: skip cover widget on not supported posttypes
+* module/magazine: insert cover only on main posttype
+* module/terms: trigger action on updating term images
+* module/widgets: :new: module
+
 ### 3.11.2
 * main/module: passing terms into default terms installer
 * main/module: some default section titles
