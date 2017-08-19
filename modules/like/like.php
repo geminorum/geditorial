@@ -31,20 +31,45 @@ class Like extends gEditorial\Module
 	protected function get_global_settings()
 	{
 		return [
-			'_general' => [
-				[
-					'field'       => 'avatars',
-					'title'       => _x( 'Avatars', 'Modules: Like: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Display avatars next to the like button', 'Modules: Like: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-				],
-				[
-					'field'       => 'comments',
-					'title'       => _x( 'Comments', 'Modules: Like: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Also display button for comments of enabled post types', 'Modules: Like: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-				],
-				'adminbar_summary',
-			],
 			'posttypes_option' => 'posttypes_option',
+			'_general' => [
+				'adminbar_summary',
+				[
+					'field'       => 'display_avatars',
+					'title'       => _x( 'Display Avatars', 'Modules: Like: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Displays avatars next to the like button.', 'Modules: Like: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+				],
+				[
+					'field'       => 'max_avatars',
+					'type'        => 'number',
+					'title'       => _x( 'Max Avatars', 'Modules: Like: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Maximum number of avatars to display.', 'Modules: Like: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'default'     => 12,
+				],
+			],
+			'_strings' => [
+				[
+					'field'       => 'string_loading',
+					'type'        => 'text',
+					'title'       => _x( 'Loading Title', 'Modules: Like: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Title attribute of the like button.', 'Modules: Like: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'default'     => _x( 'Loading &hellip;', 'Modules: Like', GEDITORIAL_TEXTDOMAIN ),
+				],
+				[
+					'field'       => 'string_like',
+					'type'        => 'text',
+					'title'       => _x( 'Like Title', 'Modules: Like: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Title attribute of the like button.', 'Modules: Like: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'default'     => _x( 'Like', 'Modules: Like', GEDITORIAL_TEXTDOMAIN ),
+				],
+				[
+					'field'       => 'string_unlike',
+					'type'        => 'text',
+					'title'       => _x( 'Unlike Title', 'Modules: Like: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Title attribute of the like button.', 'Modules: Like: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'default'     => _x( 'Unlike', 'Modules: Like', GEDITORIAL_TEXTDOMAIN ),
+				],
+			],
 		];
 	}
 
@@ -52,7 +77,7 @@ class Like extends gEditorial\Module
 	{
 		parent::init();
 
-		$this->cookie = 'geditorial-like-'.get_current_blog_id();
+		$this->cookie = $this->classs( get_current_blog_id() );
 
 		if ( ! is_admin() && count( $this->post_types() ) )
 			$this->action( 'template_redirect' );
@@ -79,14 +104,25 @@ class Like extends gEditorial\Module
 		if ( is_null( $post_id ) )
 			$post_id = $this->post_id;
 
-		$avatars = $this->get_setting( 'avatars', FALSE );
+		if ( ! $post_id )
+			return FALSE;
 
-		$title = $this->filters( 'loading', _x( 'Loading &hellip;', 'Modules: Like', GEDITORIAL_TEXTDOMAIN ), $post_id );
+		if ( ! $post = get_post( $post_id ) )
+			return FALSE;
+
+		if ( ! in_array( $post->post_type, $this->post_types() ) )
+			return FALSE;
+
+		$avatars = $this->get_setting( 'display_avatars', FALSE );
+
+		$title = $this->get_setting( 'string_loading', _x( 'Loading &hellip;', 'Modules: Like', GEDITORIAL_TEXTDOMAIN ) );
+		$title = $this->filters( 'loading', $title, $post );
 
 		$html  = '<div class="geditorial-wrap like" style="display:none;" data-avatars="'.( $avatars ? 'true' : 'false' ).'">';
-		$html .= '<div><a class="like loading" title="'.esc_attr( $title ).'" href="#" data-id="'.$post_id.'">';
+		$html .= '<div><a class="like loading" title="'.esc_attr( $title ).'" href="#" data-id="'.$post->ID.'">';
 
-		$html .= $this->filters( 'icon', '<span class="genericon genericon-heart"></span>', $post_id );
+		// $html .= $this->filters( 'icon', '<span class="genericon genericon-heart"></span>', $post->ID );
+		$html .= $this->icon( 'heart', 'old' );
 
 		$html .= '</a></div><div><span class="like"></span></div>';
 
@@ -176,7 +212,7 @@ class Like extends gEditorial\Module
 					'add'     => $check ? 'unlike' : 'dolike',
 					'nonce'   => wp_create_nonce( 'geditorial_like_ajax-'.$post['id'] ),
 					'count'   => Number::format( $count ),
-					'avatars' => $this->get_setting( 'avatars', FALSE ) ? $this->avatars( $post['id'] ) : NULL,
+					'avatars' => $this->avatars( $post['id'] ),
 				] );
 
 			break;
@@ -192,7 +228,7 @@ class Like extends gEditorial\Module
 					'remove'  => 'dolike',
 					'add'     => 'unlike',
 					'count'   => Number::format( $count ),
-					'avatars' => $this->get_setting( 'avatars', FALSE ) ? $this->avatars( $post['id'] ) : NULL,
+					'avatars' => $this->avatars( $post['id'] ),
 				] );
 
 			break;
@@ -208,7 +244,7 @@ class Like extends gEditorial\Module
 					'remove'  => 'unlike',
 					'add'     => 'dolike',
 					'count'   => Number::format( $count ),
-					'avatars' => $this->get_setting( 'avatars', FALSE ) ? $this->avatars( $post['id'] ) : NULL,
+					'avatars' => $this->avatars( $post['id'] ),
 				] );
 		}
 
@@ -217,7 +253,12 @@ class Like extends gEditorial\Module
 
 	public function title( $liked, $post_id = NULL )
 	{
-		return $this->filters( 'title', ( $liked ? _x( 'Unlike', 'Modules: Like', GEDITORIAL_TEXTDOMAIN ) : _x( 'Like', 'Modules: Like', GEDITORIAL_TEXTDOMAIN ) ), $liked, $post_id );
+		if ( $liked )
+			$title = $this->get_setting( 'string_unlike', _x( 'Unlike', 'Modules: Like', GEDITORIAL_TEXTDOMAIN ) );
+		else
+			$title = $this->get_setting( 'string_like', _x( 'Like', 'Modules: Like', GEDITORIAL_TEXTDOMAIN ) );
+
+		return $this->filters( 'title', $title, $liked, $post_id );
 	}
 
 	public function unlike( $post_id )
@@ -309,7 +350,7 @@ class Like extends gEditorial\Module
 	{
 		$html = '';
 
-		if ( ! $this->get_setting( 'avatars', FALSE ) )
+		if ( ! $this->get_setting( 'display_avatars', FALSE ) )
 			return $html;
 
 		$users = $this->get_postmeta( $post_id, FALSE, [], $this->meta_key.'_users' );
@@ -317,7 +358,10 @@ class Like extends gEditorial\Module
 		if ( count( $users ) ) {
 
 			$query = new \WP_User_Query( [
+				'blog_id' => 0,
 				'include' => array_values( $users ),
+				'orderby' => 'post_count',
+				'number'  => $this->get_setting( 'max_avatars', 12 ),
 				'fields'  => [ 'user_email', 'ID', 'display_name' ],
 			] );
 
