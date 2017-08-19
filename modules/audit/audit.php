@@ -72,11 +72,20 @@ class Audit extends gEditorial\Module
 					'values'      => Taxonomy::listTerms( $this->constant( 'audit_tax' ) ),
 				],
 			],
-			'_general' => [
+			'_dashboard' => [
 				'dashboard_widgets',
 				'summary_scope',
+				[
+					'field'       => 'summary_drafts',
+					'title'       => _x( 'Include Drafts', 'Modules: Audit: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Include drafted items in the content summary.', 'Modules: Audit: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+				],
 				'count_not',
+			],
+			'_editlist' => [
 				'admin_restrict',
+			],
+			'_frontend' => [
 				'adminbar_summary',
 			],
 		];
@@ -100,27 +109,34 @@ class Audit extends gEditorial\Module
 
 	protected function get_global_strings()
 	{
-		return [
-			'misc' => [
-				'menu_name'           => _x( 'Audit', 'Modules: Audit: Audit Attributes Tax Labels: Menu Name', GEDITORIAL_TEXTDOMAIN ),
-				'tweaks_column_title' => _x( 'Audit Attributes', 'Modules: Audit: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				'show_option_all'     => _x( 'Audit', 'Modules: Audit: Show Option All', GEDITORIAL_TEXTDOMAIN ),
-				'show_option_none'    => _x( '(Not audited)', 'Modules: Audit: Show Option All', GEDITORIAL_TEXTDOMAIN ),
-			],
+		$strings = [
 			'noops' => [
 				'audit_tax' => _nx_noop( 'Audit Attribute', 'Audit Attributes', 'Modules: Audit: Noop', GEDITORIAL_TEXTDOMAIN ),
 			],
-			'terms' => [
-				'audit_tax' => [
-					'audited'      => _x( 'Audited', 'Modules: Audit: Audit Attributes Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
-					'outdated'     => _x( 'Outdated', 'Modules: Audit: Audit Attributes Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
-					'redundant'    => _x( 'Redundant', 'Modules: Audit: Audit Attributes Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
-					'review-seo'   => _x( 'Review SEO', 'Modules: Audit: Audit Attributes Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
-					'review-style' => _x( 'Review Style', 'Modules: Audit: Audit Attributes Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
-					'trivial'      => _x( 'Trivial', 'Modules: Audit: Audit Attributes Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
-				],
+		];
+
+		if ( ! is_admin() )
+			return $strings;
+
+		$strings['misc'] = [
+			'menu_name'           => _x( 'Audit', 'Modules: Audit: Audit Attributes Tax Labels: Menu Name', GEDITORIAL_TEXTDOMAIN ),
+			'tweaks_column_title' => _x( 'Audit Attributes', 'Modules: Audit: Column Title', GEDITORIAL_TEXTDOMAIN ),
+			'show_option_all'     => _x( 'Audit', 'Modules: Audit: Show Option All', GEDITORIAL_TEXTDOMAIN ),
+			'show_option_none'    => _x( '(Not audited)', 'Modules: Audit: Show Option All', GEDITORIAL_TEXTDOMAIN ),
+		];
+
+		$strings['terms'] = [
+			'audit_tax' => [
+				'audited'      => _x( 'Audited', 'Modules: Audit: Audit Attributes Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
+				'outdated'     => _x( 'Outdated', 'Modules: Audit: Audit Attributes Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
+				'redundant'    => _x( 'Redundant', 'Modules: Audit: Audit Attributes Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
+				'review-seo'   => _x( 'Review SEO', 'Modules: Audit: Audit Attributes Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
+				'review-style' => _x( 'Review Style', 'Modules: Audit: Audit Attributes Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
+				'trivial'      => _x( 'Trivial', 'Modules: Audit: Audit Attributes Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
 			],
 		];
+
+		return $strings;
 	}
 
 	public function before_settings( $page = NULL )
@@ -308,11 +324,15 @@ class Audit extends gEditorial\Module
 
 	private function get_summary( $posttypes, $terms, $user_id = 0, $list = 'li' )
 	{
-		$html   = '';
-		$tax    = $this->constant( 'audit_tax' );
-		$all    = PostType::get( 3 );
-		$counts = Database::countPostsByTaxonomy( $terms, $posttypes, $user_id );
+		$html    = '';
+		$tax     = $this->constant( 'audit_tax' );
+		$all     = PostType::get( 3 );
+		$exclude = Database::getExcludeStatuses();
 
+		if ( $this->get_setting( 'summary_drafts', FALSE ) )
+			$exclude = array_diff( $exclude, [ 'draft' ] );
+
+		$counts  = Database::countPostsByTaxonomy( $terms, $posttypes, $user_id, $exclude );
 		$objects = [];
 
 		foreach ( $counts as $term => $posts ) {
