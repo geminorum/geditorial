@@ -26,7 +26,7 @@ class Home extends gEditorial\Module
 		$tabs = Settings::settingsHelpContent( $this->module );
 
 		$tabs[] = [
-			'id'       => 'geditorial-home-featured_content',
+			'id'       => $this->classs( 'featured_content' ),
 			'title'    => _x( 'Featured Content', 'Modules: Home: Help Tab Title', GEDITORIAL_TEXTDOMAIN ),
 			'content'  => '<div class="-info"><p>Featured Content allows users to spotlight their posts and have them uniquely displayed by a theme. The content is intended to be displayed on a blog’s front page; by using the module consistently in this manner, users are given a reliable Featured Content experience on which they can rely even when switching themes.</p>
 <pre>

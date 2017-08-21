@@ -2063,9 +2063,9 @@ SQL;
 		return $pieces;
 	}
 
-	protected function dashboard_glance_post( $posttype_constant_key, $edit_cap = 'edit_posts' )
+	protected function dashboard_glance_post( $constant, $edit_cap = 'edit_posts' )
 	{
-		$posttype = $this->constant( $posttype_constant_key );
+		$posttype = $this->constant( $constant );
 		$posts    = wp_count_posts( $posttype );
 
 		if ( ! $posts->publish )
@@ -2073,14 +2073,14 @@ SQL;
 
 		$class  = 'geditorial-glance-item -'.$this->slug().' -posttype -posttype-'.$posttype;
 		$format = current_user_can( $edit_cap ) ? '<a class="'.$class.'" href="edit.php?post_type=%3$s">%1$s %2$s</a>' : '<div class="'.$class.'">%1$s %2$s</div>';
-		$text   = Helper::noopedCount( $posts->publish, $this->get_noop( $posttype_constant_key ) );
+		$text   = Helper::noopedCount( $posts->publish, $this->get_noop( $constant ) );
 
 		return sprintf( $format, Number::format( $posts->publish ), $text, $posttype );
 	}
 
-	protected function dashboard_glance_tax( $tax_constant_key, $edit_cap = 'manage_categories' )
+	protected function dashboard_glance_tax( $constant, $edit_cap = 'manage_categories' )
 	{
-		$taxonomy = $this->constant( $tax_constant_key );
+		$taxonomy = $this->constant( $constant );
 		$terms    = wp_count_terms( $taxonomy );
 
 		if ( ! $terms )
@@ -2088,7 +2088,7 @@ SQL;
 
 		$class  = 'geditorial-glance-item -'.$this->slug().' -tax -taxonomy-'.$taxonomy;
 		$format = current_user_can( $edit_cap ) ? '<a class="'.$class.'" href="edit-tags.php?taxonomy=%3$s">%1$s %2$s</a>' : '<div class="'.$class.'">%1$s %2$s</div>';
-		$text   = Helper::noopedCount( $terms, $this->get_noop( $tax_constant_key ) );
+		$text   = Helper::noopedCount( $terms, $this->get_noop( $constant ) );
 
 		return sprintf( $format, Number::format( $terms ), $text, $taxonomy );
 	}
@@ -2135,9 +2135,9 @@ SQL;
 		echo '<span class="order" data-order="'.( FALSE === $order ? '' : $order ).'"></span>';
 	}
 
-	public function column_term( $object_id, $tax_constant_key, $title_attr = NULL, $single = TRUE )
+	public function column_term( $object_id, $constant, $title_attr = NULL, $single = TRUE )
 	{
-		$the_terms = wp_get_object_terms( $object_id, $this->constant( $tax_constant_key ) );
+		$the_terms = wp_get_object_terms( $object_id, $this->constant( $constant ) );
 
 		if ( ! is_wp_error( $the_terms ) && count( $the_terms ) ) {
 

@@ -38,8 +38,8 @@ class Media extends Core\Base
 	public static function themeThumbnails( $post_types )
 	{
 		global $_wp_theme_features;
+
 		$feature = 'post-thumbnails';
-		// $post_types = (array) $post_types;
 
 		if ( isset( $_wp_theme_features[$feature] ) ) {
 
