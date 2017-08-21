@@ -472,11 +472,15 @@ class Plugin
 
 	public function admin_bar_menu_early( $wp_admin_bar )
 	{
-		do_action_ref_array( 'geditorial_adminbar', [ &$this->adminbar_nodes, self::BASE ] );
+		if ( is_admin_bar_showing() )
+			do_action_ref_array( 'geditorial_adminbar', [ &$this->adminbar_nodes, self::BASE ] );
 	}
 
 	public function admin_bar_menu_late( $wp_admin_bar )
 	{
+		if ( ! is_admin_bar_showing() )
+			return;
+
 		if ( ! count( $this->adminbar_nodes ) )
 			return;
 
