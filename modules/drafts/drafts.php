@@ -304,6 +304,11 @@ class Drafts extends gEditorial\Module
 
 	public function post_row_actions( $actions, $post )
 	{
+		$allowed = $this->filters( 'preview_statuses', [ 'draft', 'pending', 'auto-draft', 'future' ] );
+
+		if ( ! in_array( get_post_status( $post ), $allowed ) )
+			return $actions;
+
 		if ( $this->is_public( $post->ID ) )
 			$actions['public_link'] = HTML::link(
 				_x( 'Public Preview', 'Modules: Drafts', GEDITORIAL_TEXTDOMAIN ),
