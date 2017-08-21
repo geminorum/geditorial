@@ -162,7 +162,6 @@ class Plugin
 		$defaults = [
 			'class'     => Helper::moduleClass( $args['name'], FALSE ),
 			'icon'      => 'smiley', // dashicon class
-			'group'     => self::BASE.'_'.$args['name'],
 			'settings'  => 'geditorial-settings-'.$args['name'],
 			'configure' => 'print_configure_view',
 			'frontend'  => TRUE, // whether or not the module should be loaded on the frontend too

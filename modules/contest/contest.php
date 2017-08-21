@@ -311,8 +311,7 @@ class Contest extends gEditorial\Module
 	{
 		echo '<div class="geditorial-admin-wrap-metabox -contest">';
 
-		// OLD ACTION: 'geditorial_the_contest_meta_box'
-		do_action( 'geditorial_contest_main_meta_box', $post );
+		$this->actions( 'main_meta_box', $post, $box );
 
 		do_action( 'geditorial_meta_do_meta_box', $post, $box, NULL );
 
@@ -326,7 +325,7 @@ class Contest extends gEditorial\Module
 	{
 		echo '<div class="geditorial-admin-wrap-metabox -contest">';
 
-		do_action( 'geditorial_contest_list_meta_box', $post, $box );
+		$this->actions( 'list_meta_box', $post, $box );
 
 		// TODO: add collapsible button
 		if ( $term = $this->get_linked_term( $post->ID, 'contest_cpt', 'contest_tax' ) )
@@ -649,7 +648,7 @@ class Contest extends gEditorial\Module
 
 			if ( ! empty( $_POST ) ) {
 
-				$this->settings_check_referer( $sub, 'tools' );
+				$this->nonce_check( 'tools', $sub );
 
 				if ( isset( $_POST['_cb'] )
 					&& isset( $_POST['contest_post_create'] ) ) {

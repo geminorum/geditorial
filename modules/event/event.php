@@ -374,7 +374,7 @@ class Event extends gEditorial\Module
 	{
 		echo '<div class="geditorial-admin-wrap-metabox">';
 
-			do_action( 'geditorial_event_meta_box', $post, $box );
+			$this->actions( 'meta_box', $post, $box );
 
 			$this->render_box( $post );
 

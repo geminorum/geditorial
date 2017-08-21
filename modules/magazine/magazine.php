@@ -612,7 +612,7 @@ class Magazine extends gEditorial\Module
 	{
 		echo '<div class="geditorial-admin-wrap-metabox -magazine">';
 
-		do_action( 'geditorial_magazine_main_meta_box', $post, $box );
+		$this->actions( 'main_meta_box', $post, $box );
 
 		do_action( 'geditorial_meta_do_meta_box', $post, $box, NULL );
 
@@ -626,7 +626,7 @@ class Magazine extends gEditorial\Module
 	{
 		echo '<div class="geditorial-admin-wrap-metabox -magazine">';
 
-		do_action( 'geditorial_magazine_list_meta_box', $post, $box );
+		$this->actions( 'list_meta_box', $post, $box );
 
 		// TODO: add collapsible button
 		if ( $term = $this->get_linked_term( $post->ID, 'issue_cpt', 'issue_tax' ) )
@@ -863,7 +863,7 @@ class Magazine extends gEditorial\Module
 
 			if ( ! empty( $_POST ) ) {
 
-				$this->settings_check_referer( $sub, 'tools' );
+				$this->nonce_check( 'tools', $sub );
 
 				if ( isset( $_POST['_cb'] )
 					&& isset( $_POST['issue_post_create'] ) ) {

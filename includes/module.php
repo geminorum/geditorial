@@ -307,7 +307,7 @@ class Module extends Base
 				'type'    => 'checkbox',
 				'value'   => 'enabled',
 				'id'      => 'type-'.$post_type,
-				'name'    => $this->module->group.'[post_types]['.$post_type.']',
+				'name'    => $this->base.'_'.$this->module->name.'[post_types]['.$post_type.']',
 				'checked' => isset( $this->options->post_types[$post_type] ) && $this->options->post_types[$post_type],
 			] );
 
@@ -331,7 +331,7 @@ class Module extends Base
 				'type'    => 'checkbox',
 				'value'   => 'enabled',
 				'id'      => 'tax-'.$taxonomy,
-				'name'    => $this->module->group.'[taxonomies]['.$taxonomy.']',
+				'name'    => $this->base.'_'.$this->module->name.'[taxonomies]['.$taxonomy.']',
 				'checked' => isset( $this->options->taxonomies[$taxonomy] ) && $this->options->taxonomies[$taxonomy],
 			] );
 
@@ -434,18 +434,18 @@ class Module extends Base
 			$title = $this->get_string( 'post_types_title', 'post', 'settings',
 				_x( 'Enable for Post Types', 'Module', GEDITORIAL_TEXTDOMAIN ) );
 
-		$section = $this->module->group.'_posttypes';
+		$option = $this->base.'_'.$this->module->name;
 
-		Settings::addModuleSection( $this->module->group, [
-			'id'            => $section,
+		Settings::addModuleSection( $option, [
+			'id'            => $option.'_posttypes',
 			'section_class' => 'posttypes_option_section',
 		] );
 
 		add_settings_field( 'post_types',
 			$title,
 			[ $this, 'settings_posttypes_option' ],
-			$this->module->group,
-			$section
+			$option,
+			$option.'_posttypes'
 		);
 	}
 
@@ -455,18 +455,18 @@ class Module extends Base
 			$title = $this->get_string( 'taxonomies_title', 'post', 'settings',
 				_x( 'Enable for Taxonomies', 'Module', GEDITORIAL_TEXTDOMAIN ) );
 
-		$section = $this->module->group.'_taxonomies';
+		$option = $this->base.'_'.$this->module->name;
 
-		Settings::addModuleSection( $this->module->group, [
-			'id'            => $section,
+		Settings::addModuleSection( $option, [
+			'id'            => $option.'_taxonomies',
 			'section_class' => 'taxonomies_option_section',
 		] );
 
 		add_settings_field( 'taxonomies',
 			$title,
 			[ $this, 'settings_taxonomies_option' ],
-			$this->module->group,
-			$section
+			$option,
+			$option.'_taxonomies'
 		);
 	}
 
@@ -484,7 +484,7 @@ class Module extends Base
 
 			if ( count( $fields ) ) {
 
-				Settings::addModuleSection( $this->module->group, [
+				Settings::addModuleSection( $this->base.'_'.$this->module->name, [
 					'id'            => $section,
 					'title'         => sprintf( $title, $all[$post_type] ),
 					'section_class' => 'fields_option_section fields_option-'.$post_type,
@@ -519,7 +519,7 @@ class Module extends Base
 
 			} else if ( isset( $all[$post_type] ) ) {
 
-				Settings::addModuleSection( $this->module->group, [
+				Settings::addModuleSection( $this->base.'_'.$this->module->name, [
 					'id'            => $section,
 					'title'         => sprintf( $title, $all[$post_type] ),
 					'callback'      => [ $this, 'settings_fields_option_none' ],
@@ -531,8 +531,8 @@ class Module extends Base
 
 	public function settings_fields_option( $args )
 	{
-		$name = $this->module->group.'[fields]['.$args['post_type'].']['.$args['field'].']';
-		$id   = $this->module->group.'-fields-'.$args['post_type'].'-'.$args['field'];
+		$name = $this->base.'_'.$this->module->name.'[fields]['.$args['post_type'].']['.$args['field'].']';
+		$id   = $this->base.'_'.$this->module->name.'-fields-'.$args['post_type'].'-'.$args['field'];
 
 		if ( isset( $this->options->fields[$args['post_type']][$args['field']] ) )
 			$value = $this->options->fields[$args['post_type']][$args['field']];
@@ -583,10 +583,9 @@ class Module extends Base
 	{
 		echo '<form action="'.$this->get_url_settings().'" method="post">';
 
-			// FIXME: USE: `$this->settings_fields()`
-			settings_fields( $this->module->group );
+			$this->settings_fields( $this->module->name );
 
-			Settings::moduleSections( $this->module->group );
+			Settings::moduleSections( $this->base.'_'.$this->module->name );
 
 			echo '<input id="geditorial_module_name" name="geditorial_module_name" type="hidden" value="'.esc_attr( $this->module->name ).'" />';
 
@@ -675,9 +674,9 @@ class Module extends Base
 
 	protected function settings_form_req( $defaults, $context = 'settings' )
 	{
-		$req = empty( $_REQUEST[$this->module->group][$context] )
+		$req = empty( $_REQUEST[$this->base.'_'.$this->module->name][$context] )
 			? []
-			: $_REQUEST[$this->module->group][$context];
+			: $_REQUEST[$this->base.'_'.$this->module->name][$context];
 
 		return self::atts( $defaults, $req );
 	}
@@ -690,6 +689,7 @@ class Module extends Base
 		HTML::inputHidden( 'sub', $sub );
 		HTML::inputHidden( 'action', $action );
 
+		WordPress::fieldReferer();
 		$this->nonce_field( $context, $sub );
 	}
 
@@ -700,18 +700,6 @@ class Module extends Base
 			return $subs;
 
 		return array_merge( $subs, [ $this->module->name => $this->module->title ] );
-	}
-
-	// FIXME: DEPRICATED
-	// USE: `$this->settings_fields()`
-	protected function settings_field_referer( $sub = NULL, $page = 'settings' )
-	{
-		$this->nonce_field( $page, $sub );
-	}
-
-	protected function settings_check_referer( $sub = NULL, $page = 'settings' )
-	{
-		$this->nonce_check( $page, $sub );
 	}
 
 	public function settings_validate( $options )
@@ -1000,7 +988,7 @@ class Module extends Base
 
 	protected function insert_default_terms( $constant, $terms = NULL )
 	{
-		if ( ! wp_verify_nonce( $_POST['_wpnonce'], $this->module->group.'-options' ) )
+		if ( ! $this->nonce_verify( 'settings' ) )
 			return;
 
 		if ( is_null( $terms ) && isset( $this->strings['terms'][$constant] ) )
@@ -1058,14 +1046,14 @@ class Module extends Base
 		foreach ( $this->settings as $section_suffix => $fields ) {
 			if ( is_array( $fields ) ) {
 
-				$section = $this->module->group.$section_suffix;
+				$section = $this->base.'_'.$this->module->name.$section_suffix;
 
 				if ( method_exists( $this, 'settings_section'.$section_suffix ) )
 					$callback = [ $this, 'settings_section'.$section_suffix ];
 				else
 					$callback = '__return_false';
 
-				Settings::addModuleSection( $this->module->group, [
+				Settings::addModuleSection( $this->base.'_'.$this->module->name, [
 					'id'            => $section,
 					'callback'      => $callback,
 					'section_class' => 'settings_section',
@@ -1171,8 +1159,8 @@ class Module extends Base
 	public function add_settings_field( $r = [] )
 	{
 		$args = array_merge( [
-			'page'        => $this->module->group,
-			'section'     => $this->module->group.'_general',
+			'page'        => $this->base.'_'.$this->module->name,
+			'section'     => $this->base.'_'.$this->module->name.'_general',
 			'field'       => FALSE,
 			'label_for'   => '',
 			'title'       => '',
@@ -1201,7 +1189,7 @@ class Module extends Base
 	{
 		$args = array_merge( [
 			'options'      => isset( $this->options->settings ) ? $this->options->settings : [],
-			'option_base'  => $this->module->group,
+			'option_base'  => $this->base.'_'.$this->module->name,
 			'option_group' => 'settings',
 			'id_name_cb'   => [ $this, 'settings_id_name_cb' ],
 		], $atts );
@@ -1219,7 +1207,7 @@ class Module extends Base
 			return;
 
 		$args = array_merge( [
-			'option_base'  => $this->module->group,
+			'option_base'  => $this->base.'_'.$this->module->name,
 			'option_group' => 'meta',
 			'id_name_cb'   => [ $this, 'settings_id_name_cb' ],
 		], $atts );

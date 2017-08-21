@@ -196,6 +196,12 @@ class WordPress extends Base
 		return $default;
 	}
 
+	// @REF: `wp_referer_field()`
+	public static function fieldReferer()
+	{
+		echo '<input type="hidden" name="_wp_http_referer" value="'.HTML::escapeAttr( self::unslash( $_SERVER['REQUEST_URI'] ) ).'" />';
+	}
+
 	public static function redirect( $location = NULL, $status = 302 )
 	{
 		if ( is_null( $location ) )

@@ -96,7 +96,7 @@ class Config extends gEditorial\Module
 				$hook_module = add_submenu_page( $this->module->settings,
 					$module->title,
 					$module->title,
-					$this->caps['settings'], // FIXME: get from module
+					$this->caps['settings'],
 					$module->settings,
 					[ $this, 'admin_settings_page' ]
 				);
@@ -182,8 +182,6 @@ class Config extends gEditorial\Module
 
 	public function admin_reports_load()
 	{
-		global $gEditorial, $wpdb;
-
 		$sub = Settings::sub();
 
 		if ( 'general' == $sub ) {
@@ -195,20 +193,21 @@ class Config extends gEditorial\Module
 
 	public function admin_tools_load()
 	{
-		global $gEditorial, $wpdb;
-
 		$sub = Settings::sub();
 
 		if ( 'general' == $sub ) {
+
 			if ( ! empty( $_POST ) ) {
 
-				$this->settings_check_referer( $sub, 'tools' );
+				$this->nonce_check( 'tools', $sub );
 
-				$post = isset( $_POST[$this->module->group]['tools'] ) ? $_POST[$this->module->group]['tools'] : [];
+				$post = $this->settings_form_req( [
+					'empty_module' => FALSE,
+				], 'tools' );
 
 				if ( isset( $_POST['upgrade_old_options'] ) ) {
 
-					$result = $gEditorial->upgrade_old_options();
+					$result = gEditorial()->upgrade_old_options();
 
 					if ( count( $result ) )
 						WordPress::redirectReferer( [
@@ -223,9 +222,9 @@ class Config extends gEditorial\Module
 
 				} else if ( isset( $_POST['custom_fields_empty'] ) ) {
 
-					if ( isset( $post['empty_module'] ) && isset( $gEditorial->{$post['empty_module']}->meta_key ) ) {
+					if ( $post['empty_module'] && isset( gEditorial()->{$post['empty_module']}->meta_key ) ) {
 
-						$result = Database::deleteEmptyMeta( $gEditorial->{$post['empty_module']}->meta_key );
+						$result = Database::deleteEmptyMeta( gEditorial()->{$post['empty_module']}->meta_key );
 
 						if ( count( $result ) )
 							WordPress::redirectReferer( [
@@ -250,8 +249,8 @@ class Config extends gEditorial\Module
 		if ( ! $this->cuc( 'reports' ) )
 			self::cheatin();
 
-		// FIXME
-		HTML::desc( 'Comming Soon!' );
+		HTML::h3( _x( 'General Editorial Reports', 'Modules: Config', GEDITORIAL_TEXTDOMAIN ) );
+		HTML::desc( _x( 'No reports available!', 'Modules: Config', GEDITORIAL_TEXTDOMAIN ) );
 	}
 
 	public function tools_sub( $uri, $sub )
@@ -269,10 +268,12 @@ class Config extends gEditorial\Module
 	{
 		global $gEditorial;
 
-		if ( ! $this->cuc( 'settings' ) )
+		if ( ! $this->cuc( 'tools' ) )
 			self::cheatin();
 
-		$post = isset( $_POST[$this->module->group]['tools'] ) ? $_POST[$this->module->group]['tools'] : [];
+		$post = $this->settings_form_req( [
+			'empty_module' => 'meta',
+		], 'tools' );
 
 		$this->settings_form_before( $uri, $sub, 'bulk', 'tools', FALSE, FALSE );
 
@@ -305,7 +306,7 @@ class Config extends gEditorial\Module
 					'type'         => 'select',
 					'field'        => 'empty_module',
 					'values'       => $gEditorial->get_all_modules(),
-					'default'      => ( isset( $post['empty_module'] ) ? $post['empty_module'] : 'meta' ),
+					'default'      => $post['empty_module'],
 					'option_group' => 'tools',
 				] );
 
@@ -463,6 +464,9 @@ class Config extends gEditorial\Module
 
 	public function admin_settings_load()
 	{
+		if ( ! $this->cuc( 'settings' ) )
+			return FALSE;
+
 		$page = self::req( 'page', NULL );
 
 		$this->admin_settings_reset( $page );
@@ -481,63 +485,42 @@ class Config extends gEditorial\Module
 		$this->enqueue_asset_js( [], NULL, [ 'jquery', $listjs ] );
 	}
 
-	private function admin_settings_verify( $group )
-	{
-		if ( ! $this->cuc( 'settings' ) )
-			return FALSE;
-
-		if ( ! wp_verify_nonce( $_POST['_wpnonce'], $group.'-options' ) )
-			return FALSE;
-
-		return TRUE;
-	}
-
 	public function admin_settings_reset( $page = NULL )
 	{
 		if ( ! isset( $_POST['reset'], $_POST['geditorial_module_name'] ) )
-			return;
+			return FALSE;
 
-		global $gEditorial;
-		$name = sanitize_key( $_POST['geditorial_module_name'] );
+		if ( ! $module = gEditorial()->get_module_by( 'name', sanitize_key( $_POST['geditorial_module_name'] ) ) )
+			return FALSE;
 
-		if ( ! $this->admin_settings_verify( $gEditorial->{$name}->module->group ) )
+		if ( ! $this->nonce_verify( 'settings', NULL, $module->name ) )
 			self::cheatin();
 
-		$gEditorial->update_all_module_options( $gEditorial->{$name}->module->name, [ 'enabled' => TRUE ] );
+		gEditorial()->update_all_module_options( $module->name, [ 'enabled' => TRUE ] );
 
 		WordPress::redirectReferer( 'resetting' );
 	}
 
 	public function admin_settings_save( $page = NULL )
 	{
-		if ( ! isset(
-			$_POST['_wpnonce'],
-			$_POST['_wp_http_referer'],
-			$_POST['action'],
-			$_POST['option_page'],
-			$_POST['geditorial_module_name'],
-			$_POST['submit']
-		) )
+		if ( ! isset( $_POST['submit'], $_POST['action'], $_POST['geditorial_module_name'] ) )
 			return FALSE;
 
-		global $gEditorial;
+		if ( 'update' != $_POST['action'] )
+			return FALSE;
 
-		$name  = sanitize_key( $_POST['geditorial_module_name'] );
-		$group = $gEditorial->{$name}->module->group;
+		if ( ! $module = gEditorial()->get_module_by( 'name', sanitize_key( $_POST['geditorial_module_name'] ) ) )
+			return FALSE;
 
-		if ( $_POST['action'] != 'update'
-			|| $_POST['option_page'] != $group )
-				return FALSE;
-
-		if ( ! $this->admin_settings_verify( $group ) )
+		if ( ! $this->nonce_verify( 'settings', NULL, $module->name ) )
 			self::cheatin();
 
-		$options = $gEditorial->{$name}->settings_validate( ( isset( $_POST[$group] ) ? $_POST[$group] : [] ) );
+		$posted  = empty( $_POST[$this->base.'_'.$module->name] ) ? [] : $_POST[$this->base.'_'.$module->name];
+		$options = gEditorial()->{$module->name}->settings_validate( $posted );
 
-		// $options = (object) array_merge( (array) $gEditorial->{$name}->options, $options );
 		$options['enabled'] = TRUE;
 
-		$gEditorial->update_all_module_options( $gEditorial->{$name}->module->name, $options );
+		gEditorial()->update_all_module_options( $module->name, $options );
 
 		WordPress::redirectReferer();
 	}

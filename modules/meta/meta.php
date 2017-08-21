@@ -339,7 +339,7 @@ class Meta extends gEditorial\Module
 			}
 		}
 
-		wp_nonce_field( 'geditorial_meta_post_main', '_geditorial_meta_post_main' );
+		$this->nonce_field( 'post_main' );
 	}
 
 	public function default_meta_box( $post, $box )
@@ -390,15 +390,13 @@ class Meta extends gEditorial\Module
 			}
 		}
 
-		do_action( 'geditorial_meta_box_raw', $this->module, $post, $fields );
-
-		wp_nonce_field( 'geditorial_meta_post_raw', '_geditorial_meta_post_raw' );
+		$this->actions( 'box_raw', $this->module, $post, $fields );
+		$this->nonce_field( 'post_raw' );
 	}
 
 	public function sanitize_post_meta( $postmeta, $fields, $post_id, $post_type )
 	{
-		if ( wp_verify_nonce( @$_REQUEST['_geditorial_meta_post_main'], 'geditorial_meta_post_main' )
-			|| wp_verify_nonce( @$_REQUEST['_geditorial_meta_post_raw'], 'geditorial_meta_post_raw' ) ) {
+		if ( $this->nonce_verify( 'post_main' ) || $this->nonce_verify( 'post_raw' ) ) {
 
 			$post = get_post( $post_id );
 			$cap  = empty( $post->cap->edit_post ) ? 'edit_post' : $post->cap->edit_post;
@@ -642,7 +640,7 @@ class Meta extends gEditorial\Module
 			}
 		}
 
-		wp_nonce_field( 'geditorial_meta_post_raw', '_geditorial_meta_post_raw' );
+		$this->nonce_field( 'post_raw' );
 	}
 
 	public function content_before( $content, $posttypes = NULL )
@@ -777,47 +775,51 @@ class Meta extends gEditorial\Module
 
 			if ( ! empty( $_POST ) ) {
 
-				$this->settings_check_referer( $sub, 'tools' );
+				$this->nonce_check( 'tools', $sub );
 
 				if ( isset( $_POST['custom_fields_convert'] ) ) {
 
-					if ( isset( $_POST[$this->module->group]['tools'] ) ) {
+					$post = $this->settings_form_req( [
+						'custom_field'       => FALSE,
+						'custom_field_into'  => FALSE,
+						'custom_field_limit' => '25',
+					], 'tools' );
 
-						$post   = $_POST[$this->module->group]['tools'];
-						$limit  = isset( $post['custom_field_limit'] ) ? $post['custom_field_limit'] : '25';
-						$result = FALSE;
+					$result = [];
 
-						if ( isset( $post['custom_field'] ) && isset( $post['custom_field_into'] ) )
-							$result = $this->import_from_meta( $post['custom_field'], $post['custom_field_into'], $limit );
+					if ( $post['custom_field'] && $post['custom_field_into'] )
+						$result = $this->import_from_meta(
+							$post['custom_field'],
+							$post['custom_field_into'],
+							$post['custom_field_limit'] );
 
-						if ( count( $result ) )
-							WordPress::redirectReferer( [
-								'message' => 'converted',
-								'field'   => $post['custom_field'],
-								'limit'   => $limit,
-								'count'   => count( $result ),
-							] );
-					}
+					if ( count( $result ) )
+						WordPress::redirectReferer( [
+							'message' => 'converted',
+							'field'   => $post['custom_field'],
+							'limit'   => $post['custom_field_limit'],
+							'count'   => count( $result ),
+						] );
 
 				} else if ( isset( $_POST['custom_fields_delete'] ) ) {
 
-					if ( isset( $_POST[$this->module->group]['tools'] ) ) {
+					$post = $this->settings_form_req( [
+						'custom_field'       => FALSE,
+						'custom_field_limit' => '',
+					], 'tools' );
 
-						$post   = $_POST[$this->module->group]['tools'];
-						$limit  = isset( $post['custom_field_limit'] ) ? $post['custom_field_limit'] : '';
-						$result = FALSE;
+					$result = [];
 
-						if ( isset( $post['custom_field'] ) )
-							$result = Database::deletePostMeta( $post['custom_field'], $limit );
+					if ( $post['custom_field'] )
+						$result = Database::deletePostMeta( $post['custom_field'], $post['custom_field_limit'] );
 
-						if ( count( $result ) )
-							WordPress::redirectReferer( [
-								'message' => 'deleted',
-								'field'   => $post['custom_field'],
-								'limit'   => $limit,
-								'count'   => count( $result ),
-							] );
-					}
+					if ( count( $result ) )
+						WordPress::redirectReferer( [
+							'message' => 'deleted',
+							'field'   => $post['custom_field'],
+							'limit'   => $post['custom_field_limit'],
+							'count'   => count( $result ),
+						] );
 				}
 			}
 		}

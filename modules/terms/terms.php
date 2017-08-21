@@ -576,14 +576,16 @@ class Terms extends gEditorial\Module
 
 			if ( ! empty( $_POST ) ) {
 
-				$this->settings_check_referer( $sub, 'tools' );
+				$this->nonce_check( 'tools', $sub );
 
 				if ( isset( $_POST['orphaned_terms'] ) ) {
 
-					$post = isset( $_POST[$this->module->group]['tools'] ) ? $_POST[$this->module->group]['tools'] : [];
+					$post = $this->settings_form_req( [
+						'dead_tax' => FALSE,
+						'live_tax' => FALSE,
+					], 'tools' );
 
-					if ( ! empty( $post['dead_tax'] )
-						&& ! empty( $post['live_tax'] ) ) {
+					if ( $post['dead_tax'] && $post['live_tax'] ) {
 
 						global $wpdb;
 
@@ -662,7 +664,7 @@ class Terms extends gEditorial\Module
 
 			if ( ! empty( $_POST ) ) {
 
-				$this->settings_check_referer( $sub, 'reports' );
+				$this->nonce_check( 'reports', $sub );
 
 				if ( 'cleanup_terms' == self::req( 'table_action' )
 					&& count( self::req( '_cb' ) ) ) {

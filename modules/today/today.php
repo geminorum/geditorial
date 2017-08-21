@@ -232,7 +232,7 @@ class Today extends gEditorial\Module
 	{
 		echo '<div class="geditorial-admin-wrap-metabox">';
 
-			do_action( 'geditorial_today_meta_box', $post, $box );
+			$this->actions( 'meta_box', $post, $box );
 
 			$display_year = $post->post_type != $this->constant( 'day_cpt' );
 			$default_type = $this->get_setting( 'calendar_type', 'gregorian' );
@@ -252,7 +252,7 @@ class Today extends gEditorial\Module
 
 		echo '</div>';
 
-		wp_nonce_field( 'geditorial_today_post_main', '_geditorial_today_post_main' );
+		$this->nonce_field( 'post_main' );
 	}
 
 	public function manage_posts_columns( $columns )
@@ -285,7 +285,7 @@ class Today extends gEditorial\Module
 			ModuleHelper::theDaySelect( [], TRUE, '', $calendars );
 		echo '</div>';
 
-		wp_nonce_field( 'geditorial_today_post_raw', '_geditorial_today_post_raw' );
+		$this->nonce_field( 'post_raw' );
 	}
 
 	public function sortable_columns( $columns )
@@ -400,8 +400,7 @@ class Today extends gEditorial\Module
 		if ( $this->is_save_post( $post )
 			|| $this->is_save_post( $post, $this->post_types() ) ) {
 
-			if ( wp_verify_nonce( @$_REQUEST['_geditorial_today_post_main'], 'geditorial_today_post_main' )
-				|| wp_verify_nonce( @$_REQUEST['_geditorial_today_post_raw'], 'geditorial_today_post_raw' ) ) {
+			if ( $this->nonce_verify( 'post_main' ) || $this->nonce_verify( 'post_raw' ) ) {
 
 				// probably no input!
 				if ( ! array_key_exists( 'geditorial-today-date-cal', $_POST ) )

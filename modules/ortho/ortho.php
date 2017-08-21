@@ -247,7 +247,7 @@ class Ortho extends gEditorial\Module
 
 			if ( ! empty( $_POST ) ) {
 
-				$this->settings_check_referer( $sub, 'reports' );
+				$this->nonce_check( 'reports', $sub );
 
 				if ( isset( $_POST['cleanup_chars'] )
 					&& isset( $_POST['_cb'] )

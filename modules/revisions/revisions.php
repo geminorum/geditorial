@@ -308,7 +308,7 @@ class Revisions extends gEditorial\Module
 		if ( empty( $_REQUEST['post_id'] ) )
 			WordPress::redirectReferer( 'wrong' );
 
-		if ( ! $this->nonce_verify( NULL, 'purge_'.$_REQUEST['post_id'] ) )
+		if ( ! $this->nonce_verify( 'purge_'.$_REQUEST['post_id'], $_REQUEST['_wpnonce'] ) )
 			self::cheatin();
 
 		if ( ! current_user_can( $this->caps['purge'], $_REQUEST['post_id'] ) )
@@ -365,7 +365,7 @@ class Revisions extends gEditorial\Module
 
 			if ( ! empty( $_POST ) ) {
 
-				$this->settings_check_referer( $sub, 'reports' );
+				$this->nonce_check( 'reports', $sub );
 
 				if ( isset( $_POST['cleanup_revisions'] )
 					&& isset( $_POST['_cb'] )

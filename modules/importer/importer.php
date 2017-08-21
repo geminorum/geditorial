@@ -231,7 +231,7 @@ class Importer extends gEditorial\Module
 
 			if ( ! empty( $_POST ) ) {
 
-				$this->settings_check_referer( $sub, 'tools' );
+				$this->nonce_check( 'tools', $sub );
 
 				if ( isset( $_POST['csv_import'] ) ) {
 

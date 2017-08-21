@@ -121,7 +121,7 @@ class Drafts extends gEditorial\Module
 				if ( ! current_user_can( 'edit_post', $post['post_id'] ) )
 					Ajax::errorMessage();
 
-				if ( ! $this->nonce_verify( $post['nonce'], $post['post_id'] ) )
+				if ( ! $this->nonce_verify( $post['post_id'], $post['nonce'] ) )
 					self::cheatin();
 
 				if ( ! $this->make_private( $post['post_id'] ) )
@@ -138,7 +138,7 @@ class Drafts extends gEditorial\Module
 				if ( ! current_user_can( 'edit_post', $post['post_id'] ) )
 					Ajax::errorMessage();
 
-				if ( ! $this->nonce_verify( $post['nonce'], $post['post_id'] ) )
+				if ( ! $this->nonce_verify( $post['post_id'], $post['nonce'] ) )
 					self::cheatin();
 
 				if ( ! $link = $this->make_public( $post['post_id'] ) )

@@ -155,7 +155,7 @@ class Series extends gEditorial\Module
 
 	private function sanitize_post_meta( $postmeta, $fields, $post_id, $post_type )
 	{
-		if ( ! wp_verify_nonce( @ $_REQUEST['_geditorial_series_post_main'], 'geditorial_series_post_main' ) )
+		if ( ! $this->nonce_verify( 'post_main' ) )
 			return $postmeta;
 
 		if ( ! isset( $_POST['geditorial-series-terms'] ) )
@@ -278,8 +278,8 @@ class Series extends gEditorial\Module
 
 		// TODO: list other post in this series by the order and link to their edit pages
 
-		do_action( 'geditorial_series_box_after', $this->module, $post, $fields );
-		wp_nonce_field( 'geditorial_series_post_main', '_geditorial_series_post_main' );
+		$this->actions( 'box_after', $this->module, $post, $fields );
+		$this->nonce_field( 'post_main' );
 	}
 
 	public function geditorial_series_meta_box_item( $counter, $term_id, $fields, $post )

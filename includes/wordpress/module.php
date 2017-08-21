@@ -147,30 +147,36 @@ class Module extends Core\Base
 		return wp_create_nonce( $this->base.'-'.$key.'-'.$context );
 	}
 
-	protected function nonce_verify( $nonce = NULL, $context = 'settings', $key = NULL )
+	protected function nonce_verify( $context = 'settings', $nonce = NULL, $key = NULL )
 	{
-		if ( is_null( $nonce ) )
-			$nonce = $_REQUEST['_wpnonce'];
-
 		if ( is_null( $key ) )
 			$key = $this->key;
+
+		if ( is_null( $nonce ) )
+			$nonce = @$_REQUEST['_'.$this->base.'-'.$key.'-'.$context]; // OLD: $_REQUEST['_wpnonce']
 
 		return wp_verify_nonce( $nonce, $this->base.'-'.$key.'-'.$context );
 	}
 
-	protected function nonce_field( $context = 'settings', $key = NULL )
+	protected function nonce_field( $context = 'settings', $key = NULL, $name = NULL )
 	{
 		if ( is_null( $key ) )
 			$key = $this->key;
 
-		return wp_nonce_field( $this->base.'-'.$key.'-'.$context );
+		if ( is_null( $name ) )
+			$name = '_'.$this->base.'-'.$key.'-'.$context; // OLD: '_wpnonce'
+
+		return wp_nonce_field( $this->base.'-'.$key.'-'.$context, $name, FALSE, TRUE );
 	}
 
-	protected function nonce_check( $context = 'settings', $key = NULL )
+	protected function nonce_check( $context = 'settings', $key = NULL, $name = NULL )
 	{
 		if ( is_null( $key ) )
 			$key = $this->key;
 
-		return check_admin_referer( $this->base.'-'.$key.'-'.$context );
+		if ( is_null( $name ) )
+			$name = '_'.$this->base.'-'.$key.'-'.$context; // OLD: '_wpnonce'
+
+		return check_admin_referer( $this->base.'-'.$key.'-'.$context, $name );
 	}
 }
