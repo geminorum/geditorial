@@ -156,6 +156,9 @@ class Plugin
 
 	public function register_module( $args = [] )
 	{
+		if ( FALSE === $args )
+			return FALSE;
+
 		if ( ! isset( $args['name'], $args['title'] ) )
 			return FALSE;
 
