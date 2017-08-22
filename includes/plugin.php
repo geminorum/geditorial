@@ -57,11 +57,15 @@ class Plugin
 		add_action( 'plugins_loaded', [ $this, 'plugins_loaded' ], 20 );
 		add_action( 'init', [ $this, 'init_late' ], 999 );
 		add_action( 'admin_init', [ $this, 'admin_init' ] );
-		add_action( 'wp_footer', [ $this, 'footer_asset_config' ], 1 );
-		add_action( 'wp_enqueue_scripts', [ $this, 'wp_enqueue_scripts' ] );
 		add_action( 'admin_bar_menu', [ $this, 'admin_bar_menu_early' ], 9 );
 		add_action( 'admin_bar_menu', [ $this, 'admin_bar_menu_late' ], 999 );
 		add_filter( 'mce_external_languages', [ $this, 'mce_external_languages' ] );
+
+		if ( is_admin() )
+			return;
+
+		add_action( 'wp_footer', [ $this, 'footer_asset_config' ], 1 );
+		add_action( 'wp_enqueue_scripts', [ $this, 'wp_enqueue_scripts' ] );
 		add_filter( 'template_include', [ $this, 'template_include' ], 98 ); // before gTheme
 	}
 
