@@ -437,8 +437,10 @@ class Tweaks extends gEditorial\Module
 			break;
 			case $this->classs( 'thumb' ):
 
-				$sizes = Media::getPosttypeImageSizes( $post->post_type );
-				$size  = isset( $sizes[$post->post_type.'-thumbnail'] ) ? $post->post_type.'-thumbnail' : 'thumbnail';
+				$sizes = wp_get_additional_image_sizes();
+				$size  = isset( $sizes[$post->post_type.'-thumbnail'] )
+					? $post->post_type.'-thumbnail'
+					: [ 45, 72 ];
 
 				$this->column_thumb( $post_id, $size );
 
