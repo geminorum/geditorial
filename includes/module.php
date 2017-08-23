@@ -1518,6 +1518,9 @@ class Module extends Base
 	// use this on 'after_setup_theme'
 	public function register_post_type_thumbnail( $constant )
 	{
+		if ( ! $this->get_setting( 'thumbnail_support', FALSE ) )
+			return;
+
 		$post_type = $this->constant( $constant );
 
 		Media::themeThumbnails( [ $post_type ] );
@@ -1587,7 +1590,7 @@ class Module extends Base
 
 	protected function register_shortcode( $constant, $callback = NULL )
 	{
-		if ( ! $this->get_setting( 'shortcode_support', TRUE ) )
+		if ( ! $this->get_setting( 'shortcode_support', FALSE ) )
 			return;
 
 		if ( is_null( $callback ) && method_exists( $this, $constant ) )

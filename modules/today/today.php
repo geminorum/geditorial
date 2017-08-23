@@ -46,6 +46,7 @@ class Today extends gEditorial\Module
 				$this->settings_insert_priority_option( -20, 'theday' ),
 			],
 			'_supports' => [
+				'thumbnail_support',
 				$this->settings_supports_option( 'day_cpt', [
 					'title',
 					'excerpt',

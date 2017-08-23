@@ -24,6 +24,7 @@ class Team extends gEditorial\Module
 	{
 		return [
 			'_supports' => [
+				'thumbnail_support',
 				$this->settings_supports_option( 'member_cpt', TRUE ),
 			],
 		];

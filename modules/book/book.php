@@ -36,12 +36,14 @@ class Book extends gEditorial\Module
 	protected function get_global_settings()
 	{
 		$settings = [
-			'_general' => [
-				'comment_status',
+			'_frontend' => [
 				'insert_cover',
 				'insert_priority',
 			],
 			'_supports' => [
+				'comment_status',
+				'shortcode_support',
+				'thumbnail_support',
 				$this->settings_supports_option( 'publication_cpt', TRUE ),
 			],
 		];
@@ -50,15 +52,15 @@ class Book extends gEditorial\Module
 
 			$settings['posttypes_option'] = 'posttypes_option';
 
-			$settings['_general'][] = 'insert_content';
+			$settings['_frontend'][] = 'insert_content';
 
-			$settings['_general'][] = [
+			$settings['_frontend'][] = [
 				'field' => 'p2p_title_from',
 				'type'  => 'text',
 				'title' => _x( 'Connected From Title', 'Modules: Book: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 			];
 
-			$settings['_general'][] = [
+			$settings['_frontend'][] = [
 				'field' => 'p2p_title_to',
 				'type'  => 'text',
 				'title' => _x( 'Connected To Title', 'Modules: Book: Setting Title', GEDITORIAL_TEXTDOMAIN ),

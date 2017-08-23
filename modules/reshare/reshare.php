@@ -25,6 +25,7 @@ class Reshare extends gEditorial\Module
 				'comment_status',
 			],
 			'_supports' => [
+				'thumbnail_support',
 				$this->settings_supports_option( 'reshare_cpt', [
 					'title',
 					'editor',

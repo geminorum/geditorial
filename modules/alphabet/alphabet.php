@@ -28,6 +28,9 @@ class Alphabet extends gEditorial\Module
 		return [
 			'posttypes_option'  => 'posttypes_option',
 			'taxonomies_option' => 'taxonomies_option',
+			'_supports' => [
+				'shortcode_support',
+			],
 		];
 	}
 

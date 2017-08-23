@@ -23,6 +23,7 @@ class Pitches extends gEditorial\Module
 	{
 		return [
 			'_supports' => [
+				'thumbnail_support',
 				$this->settings_supports_option( 'idea_cpt', [
 					'title',
 					'excerpt',
@@ -80,6 +81,11 @@ class Pitches extends gEditorial\Module
 		];
 
 		return $strings;
+	}
+
+	public function after_setup_theme()
+	{
+		$this->register_post_type_thumbnail( 'idea_cpt' );
 	}
 
 	public function init()

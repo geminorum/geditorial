@@ -213,7 +213,17 @@ class Settings extends Core\Base
 		return [
 			'field'   => 'shortcode_support',
 			'title'   => _x( 'Default Shortcodes', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'default' => '1',
+			'default' => '0',
+			'section' => $section,
+		];
+	}
+
+	public static function getSetting_thumbnail_support( $section )
+	{
+		return [
+			'field'   => 'thumbnail_support',
+			'title'   => _x( 'Default Image Sizes', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+			'default' => '0',
 			'section' => $section,
 		];
 	}

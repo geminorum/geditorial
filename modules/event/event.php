@@ -39,10 +39,13 @@ class Event extends gEditorial\Module
 				],
 				'calendar_type',
 				'calendar_list',
-				'comment_status',
+			],
+			'_editlist' => [
 				'admin_ordering',
 			],
 			'_supports' => [
+				'comment_status',
+				'thumbnail_support',
 				$this->settings_supports_option( 'event_cpt', TRUE ),
 			],
 		];
@@ -139,6 +142,11 @@ class Event extends gEditorial\Module
 
 		if ( $this->get_setting( 'startend_support', TRUE ) )
 			$this->register_button( 'install_def_type_tax', _x( 'Install Default Calendar Types', 'Modules: Event: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
+	}
+
+	public function after_setup_theme()
+	{
+		$this->register_post_type_thumbnail( 'event_cpt' );
 	}
 
 	public function init()

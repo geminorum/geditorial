@@ -36,6 +36,7 @@ class Tube extends gEditorial\Module
 				],
 			],
 			'_supports' => [
+				'thumbnail_support',
 				$this->settings_supports_option( 'video_cpt', TRUE ),
 				$this->settings_supports_option( 'channel_cpt', TRUE ),
 			],

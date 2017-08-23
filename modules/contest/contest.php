@@ -36,6 +36,7 @@ class Contest extends gEditorial\Module
 			],
 			'posttypes_option' => 'posttypes_option',
 			'_supports' => [
+				'thumbnail_support',
 				$this->settings_supports_option( 'contest_cpt', TRUE ),
 				$this->settings_supports_option( 'apply_cpt', TRUE ),
 			],

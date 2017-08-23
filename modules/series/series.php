@@ -34,6 +34,9 @@ class Series extends gEditorial\Module
 			],
 			'posttypes_option' => 'posttypes_option',
 			'fields_option'    => 'fields_option',
+			'_supports' => [
+				'shortcode_support',
+			],
 		];
 	}
 

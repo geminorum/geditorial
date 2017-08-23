@@ -38,16 +38,19 @@ class Magazine extends gEditorial\Module
 		return [
 			'_general' => [
 				'multiple_instances',
-				'shortcode_support',
-				'insert_cover',
-				'insert_priority',
-				'admin_ordering',
-				'admin_restrict',
 				[
 					'field'       => 'issue_sections',
 					'title'       => _x( 'Issue Sections', 'Modules: Magazine: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Section taxonomy for issue and supported post types', 'Modules: Magazine: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 				],
+			],
+			'_editlist' => [
+				'admin_ordering',
+				'admin_restrict',
+			],
+			'_frontend' => [
+				'insert_cover',
+				'insert_priority',
 				'posttype_feeds',
 				'posttype_pages',
 				'redirect_archives',
@@ -61,6 +64,8 @@ class Magazine extends gEditorial\Module
 			],
 			'posttypes_option' => 'posttypes_option',
 			'_supports' => [
+				'shortcode_support',
+				'thumbnail_support',
 				$this->settings_supports_option( 'issue_cpt', TRUE ),
 			],
 		];

@@ -33,7 +33,7 @@ class Modified extends gEditorial\Module
 				'dashboard_authors',
 				'dashboard_count',
 			],
-			'_content' => [
+			'_frontend' => [
 				'insert_content',
 				[
 					'field'       => 'insert_prefix',
@@ -58,6 +58,9 @@ class Modified extends gEditorial\Module
 					'default'     => '60',
 					'values'      => Settings::minutesOptions(),
 				],
+			],
+			'_supports' => [
+				'shortcode_support',
 			],
 		];
 	}

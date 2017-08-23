@@ -25,18 +25,20 @@ class Entry extends gEditorial\Module
 	protected function get_global_settings()
 	{
 		return [
-			'_general' => [
-				'shortcode_support',
+			'_editlist' => [
 				'admin_ordering',
 				'admin_restrict',
+			],
+			'_frontend' => [
 				'adminbar_summary',
-				'editor_button',
-				'comment_status',
 				'autolink_terms',
 				'before_content',
 				'after_content',
 			],
 			'_supports' => [
+				'comment_status',
+				'shortcode_support',
+				'thumbnail_support',
 				$this->settings_supports_option( 'entry_cpt', TRUE ),
 			],
 		];
@@ -72,6 +74,11 @@ class Entry extends gEditorial\Module
 		];
 
 		return $strings;
+	}
+
+	public function after_setup_theme()
+	{
+		$this->register_post_type_thumbnail( 'entry_cpt' );
 	}
 
 	public function init()
