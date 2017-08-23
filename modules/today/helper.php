@@ -413,7 +413,7 @@ class Today extends gEditorial\Helper
 
 			$html .= HTML::tag( 'a', [
 				'href'          => add_query_arg( array_merge( $the_day, [ 'post_type' => $posttype ] ), $new ),
-				'class'         => 'button -add-posttype -add-posttype-'.$posttype,
+				'class'         => [ 'button', 'button-icon', '-add-posttype', '-add-posttype-'.$posttype ],
 				'target'        => '_blank',
 				'data-posttype' => $posttype,
 				'title'         => sprintf( _x( 'New %s connected to this day', 'Modules: Today', GEDITORIAL_TEXTDOMAIN ), $posttype_object->labels->singular_name ),

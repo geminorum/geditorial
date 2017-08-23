@@ -136,13 +136,13 @@ class Magazine extends gEditorial\Module
 					],
 					'from_labels' => [
 						'singular_name' => _x( 'Post', 'Modules: Magazine: P2P', GEDITORIAL_TEXTDOMAIN ),
-						'search_items'  => _x( 'Search posts', 'Modules: Magazine: P2P', GEDITORIAL_TEXTDOMAIN ),
+						'search_items'  => _x( 'Search Posts', 'Modules: Magazine: P2P', GEDITORIAL_TEXTDOMAIN ),
 						'not_found'     => _x( 'No posts found.', 'Modules: Magazine: P2P', GEDITORIAL_TEXTDOMAIN ),
 						'create'        => _x( 'Connect to a post', 'Modules: Magazine: P2P', GEDITORIAL_TEXTDOMAIN ),
 					],
 					'to_labels' => [
 						'singular_name' => _x( 'Issue', 'Modules: Magazine: P2P', GEDITORIAL_TEXTDOMAIN ),
-						'search_items'  => _x( 'Search issues', 'Modules: Magazine: P2P', GEDITORIAL_TEXTDOMAIN ),
+						'search_items'  => _x( 'Search Issues', 'Modules: Magazine: P2P', GEDITORIAL_TEXTDOMAIN ),
 						'not_found'     => _x( 'No issues found.', 'Modules: Magazine: P2P', GEDITORIAL_TEXTDOMAIN ),
 						'create'        => _x( 'Connect to an issue', 'Modules: Magazine: P2P', GEDITORIAL_TEXTDOMAIN ),
 					],

@@ -287,7 +287,7 @@ class Config extends gEditorial\Module
 					Settings::submitButton( 'upgrade_old_options',
 						_x( 'Upgrade Old Options', 'Modules: Config: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
 
-					HTML::desc( _x( 'Will check for old options and upgrade, also delete old options', 'Modules: Config', GEDITORIAL_TEXTDOMAIN ), FALSE );
+					HTML::desc( _x( 'Checks for old options and upgrade them. Also deletes the old options.', 'Modules: Config', GEDITORIAL_TEXTDOMAIN ), FALSE );
 				echo '</p>';
 
 				if ( User::isSuperAdmin() || WordPress::isDev() ) {
@@ -315,7 +315,7 @@ class Config extends gEditorial\Module
 				Settings::submitButton( 'custom_fields_empty',
 					_x( 'Empty', 'Modules: Config: Setting Button', GEDITORIAL_TEXTDOMAIN ), 'delete', TRUE );
 
-				HTML::desc( _x( 'Will delete empty meta values, solves common problems with imported posts.', 'Modules: Config', GEDITORIAL_TEXTDOMAIN ) );
+				HTML::desc( _x( 'Deletes empty meta values. This solves common problems with imported posts.', 'Modules: Config', GEDITORIAL_TEXTDOMAIN ) );
 
 			echo '</td></tr>';
 			echo '</table>';

@@ -467,6 +467,7 @@ class Audit extends gEditorial\Module
 
 			echo '</td></tr>';
 			echo '</table>';
+
 		$this->settings_form_after( $uri, $sub );
 	}
 }

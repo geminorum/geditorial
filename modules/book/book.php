@@ -174,7 +174,7 @@ class Book extends gEditorial\Module
 					],
 					'to_labels' => [
 						'singular_name' => _x( 'Publications', 'Modules: Book: P2P', GEDITORIAL_TEXTDOMAIN ),
-						'search_items'  => _x( 'Search Publication', 'Modules: Book: P2P', GEDITORIAL_TEXTDOMAIN ),
+						'search_items'  => _x( 'Search Publications', 'Modules: Book: P2P', GEDITORIAL_TEXTDOMAIN ),
 						'not_found'     => _x( 'No publications found.', 'Modules: Book: P2P', GEDITORIAL_TEXTDOMAIN ),
 						'create'        => _x( 'Connect to a publication', 'Modules: Book: P2P', GEDITORIAL_TEXTDOMAIN ),
 					],
