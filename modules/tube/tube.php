@@ -5,6 +5,7 @@ defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Settings;
+use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\WordPress;
@@ -36,6 +37,7 @@ class Tube extends gEditorial\Module
 				],
 			],
 			'_supports' => [
+				'shortcode_support',
 				'thumbnail_support',
 				$this->settings_supports_option( 'video_cpt', TRUE ),
 				$this->settings_supports_option( 'channel_cpt', TRUE ),
@@ -46,18 +48,20 @@ class Tube extends gEditorial\Module
 	protected function get_global_constants()
 	{
 		return [
-			'video_cpt'           => 'video', // clip
-			'video_cpt_archive'   => 'videos',
-			'video_cpt_p2p'       => 'related_videos',
-			'video_cat'           => 'video_cat',
-			'video_cat_slug'      => 'video-category',
-			'video_shortcode'     => 'tube-video',
-			'channel_cpt'         => 'channel',
-			'channel_cpt_archive' => 'channels',
-			'channel_cpt_p2p'     => 'related_channels',
-			'channel_cat'         => 'channel_cat',
-			'channel_cat_slug'    => 'channel-category',
-			'channel_shortcode'   => 'tube-channel',
+			'video_cpt'             => 'video', // clip
+			'video_cpt_archive'     => 'videos',
+			'video_cpt_p2p'         => 'related_videos',
+			'video_cat'             => 'video_cat',
+			'video_cat_slug'        => 'video-category',
+			'video_cat_shortcode'   => 'video-category',
+			'video_shortcode'       => 'tube-video',
+			'channel_cpt'           => 'channel',
+			'channel_cpt_archive'   => 'channels',
+			'channel_cpt_p2p'       => 'related_channels',
+			'channel_cat'           => 'channel_cat',
+			'channel_cat_slug'      => 'channel-category',
+			'channel_cat_shortcode' => 'channel-category',
+			'channel_shortcode'     => 'tube-channel',
 		];
 	}
 
@@ -143,6 +147,8 @@ class Tube extends gEditorial\Module
 		$this->register_post_type( 'video_cpt' );
 		$this->register_post_type( 'channel_cpt' );
 
+		$this->register_shortcode( 'video_cat_shortcode' );
+		$this->register_shortcode( 'channel_cat_shortcode' );
 		if ( ! is_admin() && $this->get_setting( 'video_toolbar' ) ) {
 			$this->filter( 'wp_video_shortcode', 5 );
 			$this->filter( 'wp_video_shortcode_override', 4 );
@@ -243,5 +249,27 @@ class Tube extends gEditorial\Module
 		], $this->icon( 'facebook', 'social-logos' ) );
 
 		return $output.HTML::wrap( $html, $this->classs( 'video' ) );
+	}
+
+	public function video_cat_shortcode( $atts = [], $content = NULL, $tag = '' )
+	{
+		return ShortCode::getTermPosts(
+			$this->constant( 'video_cpt' ),
+			$this->constant( 'video_cat' ),
+			$atts,
+			$content,
+			$this->constant( 'video_cat_shortcode' )
+		);
+	}
+
+	public function channel_cat_shortcode( $atts = [], $content = NULL, $tag = '' )
+	{
+		return ShortCode::getTermPosts(
+			$this->constant( 'channel_cpt' ),
+			$this->constant( 'channel_cat' ),
+			$atts,
+			$content,
+			$this->constant( 'channel_cat_shortcode' )
+		);
 	}
 }
