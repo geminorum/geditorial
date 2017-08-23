@@ -81,25 +81,7 @@ class Event extends gEditorial\Module
 
 	protected function get_global_strings()
 	{
-		return [
-			'misc' => [
-				'event_cpt' => [
-					'featured'                  => _x( 'Poster Image', 'Modules: Event: Event CPT: Featured', GEDITORIAL_TEXTDOMAIN ),
-					'meta_box_title'            => _x( 'Date & Times', 'Modules: Event: Event CPT: Meta Box Title', GEDITORIAL_TEXTDOMAIN ),
-					'event_starts_column_title' => _x( 'Starts', 'Modules: Event: Column Title', GEDITORIAL_TEXTDOMAIN ),
-					'event_ends_column_title'   => _x( 'Ends', 'Modules: Event: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				],
-				'event_tag' => [
-					'menu_name'           => _x( 'Types', 'Modules: Event: Event Types Tax Labels: Menu Name', GEDITORIAL_TEXTDOMAIN ),
-					'meta_box_title'      => _x( 'Event Types', 'Modules: Event: Meta Box Title', GEDITORIAL_TEXTDOMAIN ),
-					'tweaks_column_title' => _x( 'Event Types', 'Modules: Event: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				],
-				'cal_tax' => [
-					'menu_name'           => _x( 'Calendars', 'Modules: Event: Event Calendars Tax Labels: Menu Name', GEDITORIAL_TEXTDOMAIN ),
-					'meta_box_title'      => _x( 'Event Calendars', 'Modules: Event: Meta Box Title', GEDITORIAL_TEXTDOMAIN ),
-					'tweaks_column_title' => _x( 'Event Calendars', 'Modules: Event: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				],
-			],
+		$strings = [
 			'noops' => [
 				'event_cpt' => _nx_noop( 'Event', 'Events', 'Modules: Event: Noop', GEDITORIAL_TEXTDOMAIN ),
 				'event_tag' => _nx_noop( 'Event Type', 'Event Types', 'Modules: Event: Noop', GEDITORIAL_TEXTDOMAIN ),
@@ -111,16 +93,41 @@ class Event extends gEditorial\Module
 					'name' => _x( 'Calendar Types', 'Modules: Event: Calendar Type Tax Labels: Name', GEDITORIAL_TEXTDOMAIN ),
 				],
 			],
-			'terms' => [
-				'event_tag' => [
-					'holiday' => _x( 'Holiday', 'Modules: Event: Event Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
-					'birth'   => _x( 'Birth', 'Modules: Event: Event Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
-					'death'   => _x( 'Death', 'Modules: Event: Event Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
-					'start'   => _x( 'Start', 'Modules: Event: Event Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
-					'end'     => _x( 'End', 'Modules: Event: Event Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
-				],
+		];
+
+		if ( ! is_admin() )
+			return $strings;
+
+		$strings['misc'] = [
+			'event_cpt' => [
+				'featured'                  => _x( 'Poster Image', 'Modules: Event: Event CPT: Featured', GEDITORIAL_TEXTDOMAIN ),
+				'meta_box_title'            => _x( 'Date & Times', 'Modules: Event: Event CPT: Meta Box Title', GEDITORIAL_TEXTDOMAIN ),
+				'event_starts_column_title' => _x( 'Starts', 'Modules: Event: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'event_ends_column_title'   => _x( 'Ends', 'Modules: Event: Column Title', GEDITORIAL_TEXTDOMAIN ),
+			],
+			'event_tag' => [
+				'menu_name'           => _x( 'Types', 'Modules: Event: Event Types Tax Labels: Menu Name', GEDITORIAL_TEXTDOMAIN ),
+				'meta_box_title'      => _x( 'Event Types', 'Modules: Event: Meta Box Title', GEDITORIAL_TEXTDOMAIN ),
+				'tweaks_column_title' => _x( 'Event Types', 'Modules: Event: Column Title', GEDITORIAL_TEXTDOMAIN ),
+			],
+			'cal_tax' => [
+				'menu_name'           => _x( 'Calendars', 'Modules: Event: Event Calendars Tax Labels: Menu Name', GEDITORIAL_TEXTDOMAIN ),
+				'meta_box_title'      => _x( 'Event Calendars', 'Modules: Event: Meta Box Title', GEDITORIAL_TEXTDOMAIN ),
+				'tweaks_column_title' => _x( 'Event Calendars', 'Modules: Event: Column Title', GEDITORIAL_TEXTDOMAIN ),
 			],
 		];
+
+		$strings['terms'] = [
+			'event_tag' => [
+				'holiday' => _x( 'Holiday', 'Modules: Event: Event Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
+				'birth'   => _x( 'Birth', 'Modules: Event: Event Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
+				'death'   => _x( 'Death', 'Modules: Event: Event Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
+				'start'   => _x( 'Start', 'Modules: Event: Event Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
+				'end'     => _x( 'End', 'Modules: Event: Event Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
+			],
+		];
+
+		return $strings;
 	}
 
 	public function before_settings( $page = NULL )

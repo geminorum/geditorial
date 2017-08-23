@@ -102,26 +102,7 @@ class Magazine extends gEditorial\Module
 
 	protected function get_global_strings()
 	{
-		return [
-			'misc' => [
-				'issue_cpt' => [
-					'featured' => _x( 'Cover Image', 'Modules: Magazine: Issue CPT: Featured', GEDITORIAL_TEXTDOMAIN ),
-				],
-				'issue_tax' => [
-					'meta_box_title' => _x( 'In This Issue', 'Modules: Magazine: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
-				],
-				'span_tax' => [
-					'meta_box_title'      => _x( 'Spans', 'Modules: Magazine: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
-					'tweaks_column_title' => _x( 'Issue Spans', 'Modules: Magazine: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				],
-				'section_tax' => [
-					'meta_box_title'      => _x( 'Sections', 'Modules: Magazine: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
-					'tweaks_column_title' => _x( 'Issue Sections', 'Modules: Magazine: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				],
-				'meta_box_title'         => _x( 'The Issue', 'Modules: Magazine: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
-				'tweaks_column_title'    => _x( 'Issues', 'Modules: Magazine: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				'connected_column_title' => _x( 'Connected Items', 'Modules: Magazine: Column Title', GEDITORIAL_TEXTDOMAIN ),
-			],
+		$strings = [
 			'noops' => [
 				'issue_cpt'   => _nx_noop( 'Issue', 'Issues', 'Modules: Magazine: Noop', GEDITORIAL_TEXTDOMAIN ),
 				'issue_tax'   => _nx_noop( 'Issue', 'Issues', 'Modules: Magazine: Noop', GEDITORIAL_TEXTDOMAIN ),
@@ -129,26 +110,55 @@ class Magazine extends gEditorial\Module
 				'section_tax' => _nx_noop( 'Section', 'Sections', 'Modules: Magazine: Noop', GEDITORIAL_TEXTDOMAIN ),
 			],
 			'p2p' => [
-				'issue_cpt' => [
-					'title' => [
-						'from' => _x( 'Connected Issues', 'Modules: Magazine: P2P', GEDITORIAL_TEXTDOMAIN ),
-						'to'   => _x( 'Connected Posts', 'Modules: Magazine: P2P', GEDITORIAL_TEXTDOMAIN ),
-					],
-					'from_labels' => [
-						'singular_name' => _x( 'Post', 'Modules: Magazine: P2P', GEDITORIAL_TEXTDOMAIN ),
-						'search_items'  => _x( 'Search Posts', 'Modules: Magazine: P2P', GEDITORIAL_TEXTDOMAIN ),
-						'not_found'     => _x( 'No posts found.', 'Modules: Magazine: P2P', GEDITORIAL_TEXTDOMAIN ),
-						'create'        => _x( 'Connect to a post', 'Modules: Magazine: P2P', GEDITORIAL_TEXTDOMAIN ),
-					],
-					'to_labels' => [
-						'singular_name' => _x( 'Issue', 'Modules: Magazine: P2P', GEDITORIAL_TEXTDOMAIN ),
-						'search_items'  => _x( 'Search Issues', 'Modules: Magazine: P2P', GEDITORIAL_TEXTDOMAIN ),
-						'not_found'     => _x( 'No issues found.', 'Modules: Magazine: P2P', GEDITORIAL_TEXTDOMAIN ),
-						'create'        => _x( 'Connect to an issue', 'Modules: Magazine: P2P', GEDITORIAL_TEXTDOMAIN ),
-					],
+				'issue_cpt' => [],
+			],
+		];
+
+		if ( ! is_admin() )
+			return $strings;
+
+		$strings['misc'] = [
+			'issue_cpt' => [
+				'featured' => _x( 'Cover Image', 'Modules: Magazine: Issue CPT: Featured', GEDITORIAL_TEXTDOMAIN ),
+			],
+			'issue_tax' => [
+				'meta_box_title' => _x( 'In This Issue', 'Modules: Magazine: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
+			],
+			'span_tax' => [
+				'meta_box_title'      => _x( 'Spans', 'Modules: Magazine: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
+				'tweaks_column_title' => _x( 'Issue Spans', 'Modules: Magazine: Column Title', GEDITORIAL_TEXTDOMAIN ),
+			],
+			'section_tax' => [
+				'meta_box_title'      => _x( 'Sections', 'Modules: Magazine: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
+				'tweaks_column_title' => _x( 'Issue Sections', 'Modules: Magazine: Column Title', GEDITORIAL_TEXTDOMAIN ),
+			],
+			'meta_box_title'         => _x( 'The Issue', 'Modules: Magazine: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
+			'tweaks_column_title'    => _x( 'Issues', 'Modules: Magazine: Column Title', GEDITORIAL_TEXTDOMAIN ),
+			'connected_column_title' => _x( 'Connected Items', 'Modules: Magazine: Column Title', GEDITORIAL_TEXTDOMAIN ),
+		];
+
+		$strings['p2p'] = [
+			'issue_cpt' => [
+				'title' => [
+					'from' => _x( 'Connected Issues', 'Modules: Magazine: P2P', GEDITORIAL_TEXTDOMAIN ),
+					'to'   => _x( 'Connected Posts', 'Modules: Magazine: P2P', GEDITORIAL_TEXTDOMAIN ),
+				],
+				'from_labels' => [
+					'singular_name' => _x( 'Post', 'Modules: Magazine: P2P', GEDITORIAL_TEXTDOMAIN ),
+					'search_items'  => _x( 'Search Posts', 'Modules: Magazine: P2P', GEDITORIAL_TEXTDOMAIN ),
+					'not_found'     => _x( 'No posts found.', 'Modules: Magazine: P2P', GEDITORIAL_TEXTDOMAIN ),
+					'create'        => _x( 'Connect to a post', 'Modules: Magazine: P2P', GEDITORIAL_TEXTDOMAIN ),
+				],
+				'to_labels' => [
+					'singular_name' => _x( 'Issue', 'Modules: Magazine: P2P', GEDITORIAL_TEXTDOMAIN ),
+					'search_items'  => _x( 'Search Issues', 'Modules: Magazine: P2P', GEDITORIAL_TEXTDOMAIN ),
+					'not_found'     => _x( 'No issues found.', 'Modules: Magazine: P2P', GEDITORIAL_TEXTDOMAIN ),
+					'create'        => _x( 'Connect to an issue', 'Modules: Magazine: P2P', GEDITORIAL_TEXTDOMAIN ),
 				],
 			],
 		];
+
+		return $strings;
 	}
 
 	protected function get_global_fields()

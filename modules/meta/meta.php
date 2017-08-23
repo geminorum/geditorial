@@ -70,7 +70,7 @@ class Meta extends gEditorial\Module
 
 	protected function get_global_strings()
 	{
-		return [
+		$strings = [
 			'titles' => [
 				'post' => [
 					'ot'          => _x( 'OverTitle', 'Modules: Meta: Titles', GEDITORIAL_TEXTDOMAIN ),
@@ -103,24 +103,31 @@ class Meta extends gEditorial\Module
 					'highlight'    => _x( 'A Short Note Highlighted About the Post', 'Modules: Meta: Descriptions', GEDITORIAL_TEXTDOMAIN ),
 				],
 			],
-			'misc' => [
-				'meta_column_title'   => _x( 'Metadata', 'Modules: Meta: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				'author_column_title' => _x( 'Author', 'Modules: Meta: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				'meta_box_title'      => _x( 'Metadata', 'Modules: Meta: Meta Box Title', GEDITORIAL_TEXTDOMAIN ),
-				'meta_box_action'     => _x( 'Configure', 'Modules: Meta: Meta Box Action Title', GEDITORIAL_TEXTDOMAIN ),
-			],
 			'noops' => [
 				'ct_tax' => _nx_noop( 'Column Header', 'Column Headers', 'Modules: Meta: Noop', GEDITORIAL_TEXTDOMAIN ),
 			],
-			'terms' => [
-				'ct_tax' => [
-					'introduction' => _x( 'Introduction', 'Modules: Meta: Column Headers Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
-					'interview'    => _x( 'Interview', 'Modules: Meta: Column Headers Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
-					'review'       => _x( 'Review', 'Modules: Meta: Column Headers Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
-					'report'       => _x( 'Report', 'Modules: Meta: Column Headers Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
-				],
+		];
+
+		if ( ! is_admin() )
+			return $strings;
+
+		$strings['misc'] = [
+			'meta_column_title'   => _x( 'Metadata', 'Modules: Meta: Column Title', GEDITORIAL_TEXTDOMAIN ),
+			'author_column_title' => _x( 'Author', 'Modules: Meta: Column Title', GEDITORIAL_TEXTDOMAIN ),
+			'meta_box_title'      => _x( 'Metadata', 'Modules: Meta: Meta Box Title', GEDITORIAL_TEXTDOMAIN ),
+			'meta_box_action'     => _x( 'Configure', 'Modules: Meta: Meta Box Action Title', GEDITORIAL_TEXTDOMAIN ),
+		];
+
+		$strings['terms'] = [
+			'ct_tax' => [
+				'introduction' => _x( 'Introduction', 'Modules: Meta: Column Headers Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
+				'interview'    => _x( 'Interview', 'Modules: Meta: Column Headers Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
+				'review'       => _x( 'Review', 'Modules: Meta: Column Headers Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
+				'report'       => _x( 'Report', 'Modules: Meta: Column Headers Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
 			],
 		];
+
+		return $strings;
 	}
 
 	protected function get_global_fields()

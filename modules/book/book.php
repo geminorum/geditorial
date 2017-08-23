@@ -106,43 +106,7 @@ class Book extends gEditorial\Module
 
 	protected function get_global_strings()
 	{
-		return [
-			'misc' => [
-				'publication_cpt' => [
-					'featured'           => _x( 'Cover Image', 'Modules: Book: Publication CPT: Featured', GEDITORIAL_TEXTDOMAIN ),
-					'meta_box_title'     => _x( 'Metadata', 'Modules: Book: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
-					'author_box_title'   => _x( 'Curator', 'Modules: Book: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
-					'excerpt_box_title'  => _x( 'Summary', 'Modules: Book: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
-					'cover_column_title' => _x( 'Cover', 'Modules: Book: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				],
-				'subject_tax' => [
-					'meta_box_title'      => _x( 'Subject', 'Modules: Book: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
-					'tweaks_column_title' => _x( 'Publication Subject', 'Modules: Book: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				],
-				'library_tax' => [
-					'meta_box_title'      => _x( 'Library', 'Modules: Book: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
-					'tweaks_column_title' => _x( 'Publication Library', 'Modules: Book: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				],
-				'publisher_tax' => [
-					'meta_box_title'      => _x( 'Publisher', 'Modules: Book: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
-					'tweaks_column_title' => _x( 'Publication Publisher', 'Modules: Book: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				],
-				'status_tax' => [
-					'meta_box_title'      => _x( 'Status', 'Modules: Book: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
-					'tweaks_column_title' => _x( 'Publication Status', 'Modules: Book: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				],
-				'type_tax' => [
-					'meta_box_title'      => _x( 'Type', 'Modules: Book: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
-					'tweaks_column_title' => _x( 'Publication Type', 'Modules: Book: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				],
-				'size_tax' => [
-					'meta_box_title'      => _x( 'Size', 'Modules: Book: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
-					'tweaks_column_title' => _x( 'Publication Size', 'Modules: Book: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				],
-			],
-			'settings' => [
-				'post_types_after' => Settings::infoP2P(),
-			],
+		$strings = [
 			'noops' => [
 				'publication_cpt' => _nx_noop( 'Publication', 'Publications', 'Modules: Book: Noop', GEDITORIAL_TEXTDOMAIN ),
 				'subject_tax'     => _nx_noop( 'Subject', 'Subjects', 'Modules: Book: Noop', GEDITORIAL_TEXTDOMAIN ),
@@ -152,32 +116,8 @@ class Book extends gEditorial\Module
 				'status_tax'      => _nx_noop( 'Publication Status', 'Publication Statuses', 'Modules: Book: Noop', GEDITORIAL_TEXTDOMAIN ),
 				'size_tax'        => _nx_noop( 'Publication Size', 'Publication Sizes', 'Modules: Book: Noop', GEDITORIAL_TEXTDOMAIN ),
 			],
-			'terms' => [
-				'size_tax' => [
-					'octavo' => _x( 'Octavo', 'Modules: Book: Publication Size: Default Term', GEDITORIAL_TEXTDOMAIN ), // vaziri
-					'folio'  => _x( 'Folio', 'Modules: Book: Publication Size: Default Term', GEDITORIAL_TEXTDOMAIN ), // soltani
-					'medium' => _x( 'Medium Octavo', 'Modules: Book: Publication Size: Default Term', GEDITORIAL_TEXTDOMAIN ), //roghee
-					'quatro' => _x( 'Quatro', 'Modules: Book: Publication Size: Default Term', GEDITORIAL_TEXTDOMAIN ), //rahli
-				],
-			],
 			'p2p' => [
 				'publication_cpt' => [
-					'title' => [
-						'from' => _x( 'Connected Publications', 'Modules: Book: P2P', GEDITORIAL_TEXTDOMAIN ),
-						'to'   => _x( 'Connected Posts', 'Modules: Book: P2P', GEDITORIAL_TEXTDOMAIN ),
-					],
-					'from_labels' => [
-						'singular_name' => _x( 'Post', 'Modules: Book: P2P', GEDITORIAL_TEXTDOMAIN ),
-						'search_items'  => _x( 'Search Posts', 'Modules: Book: P2P', GEDITORIAL_TEXTDOMAIN ),
-						'not_found'     => _x( 'No posts found.', 'Modules: Book: P2P', GEDITORIAL_TEXTDOMAIN ),
-						'create'        => _x( 'Connect to a post', 'Modules: Book: P2P', GEDITORIAL_TEXTDOMAIN ),
-					],
-					'to_labels' => [
-						'singular_name' => _x( 'Publications', 'Modules: Book: P2P', GEDITORIAL_TEXTDOMAIN ),
-						'search_items'  => _x( 'Search Publications', 'Modules: Book: P2P', GEDITORIAL_TEXTDOMAIN ),
-						'not_found'     => _x( 'No publications found.', 'Modules: Book: P2P', GEDITORIAL_TEXTDOMAIN ),
-						'create'        => _x( 'Connect to a publication', 'Modules: Book: P2P', GEDITORIAL_TEXTDOMAIN ),
-					],
 					'fields' => [
 						'page' => [
 							'title'    => _x( 'Pages', 'Modules: Book: P2P', GEDITORIAL_TEXTDOMAIN ),
@@ -200,10 +140,82 @@ class Book extends gEditorial\Module
 							'template' => '%s',
 						],
 					],
-					'admin_column' => FALSE, // adding through tweaks module
 				],
 			],
 		];
+
+		if ( ! is_admin() )
+			return $strings;
+
+		$strings['misc'] = [
+			'publication_cpt' => [
+				'featured'           => _x( 'Cover Image', 'Modules: Book: Publication CPT: Featured', GEDITORIAL_TEXTDOMAIN ),
+				'meta_box_title'     => _x( 'Metadata', 'Modules: Book: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
+				'author_box_title'   => _x( 'Curator', 'Modules: Book: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
+				'excerpt_box_title'  => _x( 'Summary', 'Modules: Book: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
+				'cover_column_title' => _x( 'Cover', 'Modules: Book: Column Title', GEDITORIAL_TEXTDOMAIN ),
+			],
+			'subject_tax' => [
+				'meta_box_title'      => _x( 'Subject', 'Modules: Book: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
+				'tweaks_column_title' => _x( 'Publication Subject', 'Modules: Book: Column Title', GEDITORIAL_TEXTDOMAIN ),
+			],
+			'library_tax' => [
+				'meta_box_title'      => _x( 'Library', 'Modules: Book: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
+				'tweaks_column_title' => _x( 'Publication Library', 'Modules: Book: Column Title', GEDITORIAL_TEXTDOMAIN ),
+			],
+			'publisher_tax' => [
+				'meta_box_title'      => _x( 'Publisher', 'Modules: Book: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
+				'tweaks_column_title' => _x( 'Publication Publisher', 'Modules: Book: Column Title', GEDITORIAL_TEXTDOMAIN ),
+			],
+			'status_tax' => [
+				'meta_box_title'      => _x( 'Status', 'Modules: Book: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
+				'tweaks_column_title' => _x( 'Publication Status', 'Modules: Book: Column Title', GEDITORIAL_TEXTDOMAIN ),
+			],
+			'type_tax' => [
+				'meta_box_title'      => _x( 'Type', 'Modules: Book: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
+				'tweaks_column_title' => _x( 'Publication Type', 'Modules: Book: Column Title', GEDITORIAL_TEXTDOMAIN ),
+			],
+			'size_tax' => [
+				'meta_box_title'      => _x( 'Size', 'Modules: Book: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
+				'tweaks_column_title' => _x( 'Publication Size', 'Modules: Book: Column Title', GEDITORIAL_TEXTDOMAIN ),
+			],
+		];
+
+		$strings['settings'] = [
+			'post_types_after' => Settings::infoP2P(),
+		];
+
+		$strings['terms'] = [
+			'size_tax' => [
+				'octavo' => _x( 'Octavo', 'Modules: Book: Publication Size: Default Term', GEDITORIAL_TEXTDOMAIN ), // vaziri
+				'folio'  => _x( 'Folio', 'Modules: Book: Publication Size: Default Term', GEDITORIAL_TEXTDOMAIN ), // soltani
+				'medium' => _x( 'Medium Octavo', 'Modules: Book: Publication Size: Default Term', GEDITORIAL_TEXTDOMAIN ), //roghee
+				'quatro' => _x( 'Quatro', 'Modules: Book: Publication Size: Default Term', GEDITORIAL_TEXTDOMAIN ), //rahli
+			],
+		];
+
+		$strings['p2p']['publication_cpt']['title'] = [
+			'from' => _x( 'Connected Publications', 'Modules: Book: P2P', GEDITORIAL_TEXTDOMAIN ),
+			'to'   => _x( 'Connected Posts', 'Modules: Book: P2P', GEDITORIAL_TEXTDOMAIN ),
+		];
+
+		$strings['p2p']['publication_cpt']['from_labels'] = [
+			'singular_name' => _x( 'Post', 'Modules: Book: P2P', GEDITORIAL_TEXTDOMAIN ),
+			'search_items'  => _x( 'Search Posts', 'Modules: Book: P2P', GEDITORIAL_TEXTDOMAIN ),
+			'not_found'     => _x( 'No posts found.', 'Modules: Book: P2P', GEDITORIAL_TEXTDOMAIN ),
+			'create'        => _x( 'Connect to a post', 'Modules: Book: P2P', GEDITORIAL_TEXTDOMAIN ),
+		];
+
+		$strings['p2p']['publication_cpt']['to_labels'] = [
+			'singular_name' => _x( 'Publications', 'Modules: Book: P2P', GEDITORIAL_TEXTDOMAIN ),
+			'search_items'  => _x( 'Search Publications', 'Modules: Book: P2P', GEDITORIAL_TEXTDOMAIN ),
+			'not_found'     => _x( 'No publications found.', 'Modules: Book: P2P', GEDITORIAL_TEXTDOMAIN ),
+			'create'        => _x( 'Connect to a publication', 'Modules: Book: P2P', GEDITORIAL_TEXTDOMAIN ),
+		];
+
+		$strings['p2p']['publication_cpt']['admin_column'] = FALSE; // adding through tweaks module
+
+		return $strings;
 	}
 
 	public function get_global_fields()

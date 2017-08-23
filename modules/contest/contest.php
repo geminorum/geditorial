@@ -75,26 +75,7 @@ class Contest extends gEditorial\Module
 
 	protected function get_global_strings()
 	{
-		return [
-			'misc' => [
-				'contest_cpt' => [
-					'meta_box_title'        => _x( 'Metadata', 'Modules: Contest: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
-					'cover_box_title'       => _x( 'Poster', 'Modules: Contest: CoverBox Title', GEDITORIAL_TEXTDOMAIN ),
-					'children_column_title' => _x( 'Applies', 'Modules: Contest: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				],
-				'contest_cat' => [
-					'tweaks_column_title' => _x( 'Contest Categories', 'Modules: Contest: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				],
-				'apply_cat' => [
-					'tweaks_column_title' => _x( 'Apply Categories', 'Modules: Contest: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				],
-				'apply_status_tax' => [
-					'meta_box_title'      => _x( 'Apply Statuses', 'Modules: Contest: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
-					'tweaks_column_title' => _x( 'Apply Statuses', 'Modules: Contest: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				],
-				'meta_box_title'      => _x( 'Contests', 'Modules: Contest: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
-				'tweaks_column_title' => _x( 'Contests', 'Modules: Contest: Column Title', GEDITORIAL_TEXTDOMAIN ),
-			],
+		$strings = [
 			'noops' => [
 				'contest_cpt'      => _nx_noop( 'Contest', 'Contests', 'Modules: Contest: Noop', GEDITORIAL_TEXTDOMAIN ),
 				'contest_tax'      => _nx_noop( 'Contest', 'Contests', 'Modules: Contest: Noop', GEDITORIAL_TEXTDOMAIN ),
@@ -103,13 +84,39 @@ class Contest extends gEditorial\Module
 				'apply_cat'        => _nx_noop( 'Apply Category', 'Apply Categories', 'Modules: Contest: Noop', GEDITORIAL_TEXTDOMAIN ),
 				'apply_status_tax' => _nx_noop( 'Apply Status', 'Apply Statuses', 'Modules: Contest: Noop', GEDITORIAL_TEXTDOMAIN ),
 			],
-			'terms' => [
-				'apply_status_tax' => [
-					'approved' => _x( 'Approved', 'Modules: Contest: Apply Statuses Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
-					'pending'  => _x( 'Pending', 'Modules: Contest: Apply Statuses Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
-				],
+		];
+
+		if ( ! is_admin() )
+			return $strings;
+
+		$strings['misc'] = [
+			'contest_cpt' => [
+				'meta_box_title'        => _x( 'Metadata', 'Modules: Contest: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
+				'cover_box_title'       => _x( 'Poster', 'Modules: Contest: CoverBox Title', GEDITORIAL_TEXTDOMAIN ),
+				'children_column_title' => _x( 'Applies', 'Modules: Contest: Column Title', GEDITORIAL_TEXTDOMAIN ),
+			],
+			'contest_cat' => [
+				'tweaks_column_title' => _x( 'Contest Categories', 'Modules: Contest: Column Title', GEDITORIAL_TEXTDOMAIN ),
+			],
+			'apply_cat' => [
+				'tweaks_column_title' => _x( 'Apply Categories', 'Modules: Contest: Column Title', GEDITORIAL_TEXTDOMAIN ),
+			],
+			'apply_status_tax' => [
+				'meta_box_title'      => _x( 'Apply Statuses', 'Modules: Contest: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
+				'tweaks_column_title' => _x( 'Apply Statuses', 'Modules: Contest: Column Title', GEDITORIAL_TEXTDOMAIN ),
+			],
+			'meta_box_title'      => _x( 'Contests', 'Modules: Contest: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
+			'tweaks_column_title' => _x( 'Contests', 'Modules: Contest: Column Title', GEDITORIAL_TEXTDOMAIN ),
+		];
+
+		$strings['terms'] = [
+			'apply_status_tax' => [
+				'approved' => _x( 'Approved', 'Modules: Contest: Apply Statuses Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
+				'pending'  => _x( 'Pending', 'Modules: Contest: Apply Statuses Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
 			],
 		];
+
+		return $strings;
 	}
 
 	public function before_settings( $page = NULL )
