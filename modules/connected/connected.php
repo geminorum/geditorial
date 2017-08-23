@@ -63,7 +63,7 @@ class Connected extends gEditorial\Module
 	protected function get_global_constants()
 	{
 		return [
-			'p2p_name' => 'related_posts',
+			'p2p_name' => 'connected_posts',
 		];
 	}
 
