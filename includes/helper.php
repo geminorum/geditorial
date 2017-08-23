@@ -76,7 +76,7 @@ class Helper extends Core\Base
 
 	public static function linkStyleSheetAdmin( $page )
 	{
-		HTML::linkStyleSheet( GEDITORIAL_URL.'assets/css/admin.'.$page.'.css', GEDITORIAL_VERSION );
+		HTML::linkStyleSheet( GEDITORIAL_URL.'assets/css/admin.'.$page.( is_rtl() ? '-rtl' : '' ).'.css', GEDITORIAL_VERSION );
 	}
 
 	public static function kses( $text, $context = 'none', $allowed = NULL )
