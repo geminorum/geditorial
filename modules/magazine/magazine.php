@@ -77,7 +77,6 @@ class Magazine extends gEditorial\Module
 			'issue_cpt'           => 'issue',
 			'issue_cpt_archive'   => 'issues',
 			'issue_cpt_permalink' => '/%postname%',
-			'issue_cpt_p2p'       => 'related_issues',
 			'issue_tax'           => 'issues',
 			'span_tax'            => 'issue_span',
 			'span_tax_slug'       => 'issue-span',
@@ -109,9 +108,6 @@ class Magazine extends gEditorial\Module
 				'span_tax'    => _nx_noop( 'Span', 'Spans', 'Modules: Magazine: Noop', GEDITORIAL_TEXTDOMAIN ),
 				'section_tax' => _nx_noop( 'Section', 'Sections', 'Modules: Magazine: Noop', GEDITORIAL_TEXTDOMAIN ),
 			],
-			'p2p' => [
-				'issue_cpt' => [],
-			],
 		];
 
 		if ( ! is_admin() )
@@ -135,27 +131,6 @@ class Magazine extends gEditorial\Module
 			'meta_box_title'         => _x( 'The Issue', 'Modules: Magazine: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
 			'tweaks_column_title'    => _x( 'Issues', 'Modules: Magazine: Column Title', GEDITORIAL_TEXTDOMAIN ),
 			'connected_column_title' => _x( 'Connected Items', 'Modules: Magazine: Column Title', GEDITORIAL_TEXTDOMAIN ),
-		];
-
-		$strings['p2p'] = [
-			'issue_cpt' => [
-				'title' => [
-					'from' => _x( 'Connected Issues', 'Modules: Magazine: P2P', GEDITORIAL_TEXTDOMAIN ),
-					'to'   => _x( 'Connected Posts', 'Modules: Magazine: P2P', GEDITORIAL_TEXTDOMAIN ),
-				],
-				'from_labels' => [
-					'singular_name' => _x( 'Post', 'Modules: Magazine: P2P', GEDITORIAL_TEXTDOMAIN ),
-					'search_items'  => _x( 'Search Posts', 'Modules: Magazine: P2P', GEDITORIAL_TEXTDOMAIN ),
-					'not_found'     => _x( 'No posts found.', 'Modules: Magazine: P2P', GEDITORIAL_TEXTDOMAIN ),
-					'create'        => _x( 'Connect to a post', 'Modules: Magazine: P2P', GEDITORIAL_TEXTDOMAIN ),
-				],
-				'to_labels' => [
-					'singular_name' => _x( 'Issue', 'Modules: Magazine: P2P', GEDITORIAL_TEXTDOMAIN ),
-					'search_items'  => _x( 'Search Issues', 'Modules: Magazine: P2P', GEDITORIAL_TEXTDOMAIN ),
-					'not_found'     => _x( 'No issues found.', 'Modules: Magazine: P2P', GEDITORIAL_TEXTDOMAIN ),
-					'create'        => _x( 'Connect to an issue', 'Modules: Magazine: P2P', GEDITORIAL_TEXTDOMAIN ),
-				],
-			],
 		];
 
 		return $strings;
@@ -207,11 +182,6 @@ class Magazine extends gEditorial\Module
 	public function after_setup_theme()
 	{
 		$this->register_post_type_thumbnail( 'issue_cpt' );
-	}
-
-	public function p2p_init()
-	{
-		$this->p2p_register( 'issue_cpt' );
 	}
 
 	public function init()
