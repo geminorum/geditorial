@@ -2469,6 +2469,27 @@ SQL;
 		return 'admin-post';
 	}
 
+	// DEFAULT FILTER
+	public function column_row_meta( $post, $fields, $meta )
+	{
+		foreach ( $fields as $field => $args ) {
+
+			if ( empty( $meta[$field] ) )
+				continue;
+
+			echo '<li class="-row -'.$this->module->name.' -field-'.$field.'">';
+				echo $this->get_column_icon( FALSE, $args['icon'], $args['title'] );
+				echo $this->display_meta( $meta[$field], $field, $args );
+			echo '</li>';
+		}
+	}
+
+	// DEFAULT METHOD
+	public function display_meta( $value, $key = NULL, $field = [] )
+	{
+		return esc_html( $value );
+	}
+
 	protected function limit_sub( $sub = NULL, $default = 25, $key = 'limit', $option = 'per_page' )
 	{
 		if ( is_null( $sub ) )

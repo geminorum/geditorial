@@ -158,20 +158,6 @@ class Team extends gEditorial\Module
 		}
 	}
 
-	public function column_row_meta( $post, $fields, $meta )
-	{
-		foreach ( $fields as $field => $args ) {
-
-			if ( empty( $meta[$field] ) )
-				continue;
-
-			echo '<li class="-row -team -field-'.$field.'">';
-				echo $this->get_column_icon( FALSE, $args['icon'], $args['title'] );
-				echo $this->display_meta( $meta[$field], $field, $args );
-			echo '</li>';
-		}
-	}
-
 	public function display_meta( $value, $key = NULL, $field = [] )
 	{
 		switch ( $key ) {

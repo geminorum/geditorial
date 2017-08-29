@@ -432,20 +432,6 @@ class Book extends gEditorial\Module
 		$this->column_row_p2p_from_posttype( 'publication_cpt', $post );
 	}
 
-	public function column_row_meta( $post, $fields, $meta )
-	{
-		foreach ( $fields as $field => $args ) {
-
-			if ( empty( $meta[$field] ) )
-				continue;
-
-			echo '<li class="-row -book -field-'.$field.'">';
-				echo $this->get_column_icon( FALSE, $args['icon'], $args['title'] );
-				echo $this->display_meta( $meta[$field], $field, $args );
-			echo '</li>';
-		}
-	}
-
 	public function display_meta( $value, $key = NULL, $field = [] )
 	{
 		switch ( $key ) {
