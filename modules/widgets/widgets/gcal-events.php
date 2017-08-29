@@ -70,7 +70,7 @@ class GCalEvents extends gEditorial\Widget
 
 	public function form( $instance )
 	{
-		echo '<div class="geditorial-admin-wrap-widgetform">';
+		$this->before_form( $instance );
 
 		$this->form_title( $instance );
 		$this->form_title_link( $instance );
@@ -87,7 +87,7 @@ class GCalEvents extends gEditorial\Widget
 		$this->form_context( $instance );
 		$this->form_class( $instance );
 
-		echo '</div>';
+		$this->after_form( $instance );
 	}
 
 	public function update( $new_instance, $old_instance )
