@@ -1,3 +1,28 @@
+### 3.12.0
+* main/plugin: check if adminbar is showing
+* main/plugin: bypass module registration
+* main/plugin: skip front hooks on admin
+* main/module: internal api for nonces
+* main/module: thumbnail/shortcode registeration api
+* main/module: skip strings for non admin
+* main/module: moving up column row meta helpers
+* main/helper: :new: specefic rtl styles
+* main/widget: form before/after
+* main/widget: form form content field
+* module/audit: option to include drafts in summary
+* module/audit: no term notice on reports
+* module/connected: :new: module
+* module/drafts: hide row action for published posts
+* module/like: custom strings
+* module/like: max avatars
+* module/like: deprecate genericons
+* module/magazine: removed p2p
+* module/markdown: :new: module
+* module/meta: insert source only in the last page
+* module/tube: category shortcodes
+* module/tweaks: simpler check for posttype image size
+* module/widgets: :new: widget: custom html
+
 ### 3.11.3
 * main/ajax: better success method
 * main/helper: support timestamp for date edit row
