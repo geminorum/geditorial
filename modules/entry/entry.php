@@ -130,7 +130,7 @@ class Entry extends gEditorial\Module
 			'id'     => $this->classs(),
 			'title'  => _x( 'Entry Sections', 'Modules: Entry: Adminbar', GEDITORIAL_TEXTDOMAIN ),
 			'parent' => $parent,
-			'href'   => $link,
+			'href'   => get_post_type_archive_link( $this->constant( 'entry_cpt' ) ),
 		];
 
 		$terms = Taxonomy::getTerms( $this->constant( 'section_tax' ), $post_id, TRUE );
