@@ -4,52 +4,56 @@
 /// gEditorial Partials: Like Front ALL ----------------------------------------
 
 .geditorial-wrap.like {
-  line-height: 32px;
+
+  @include mainwrap();
+
+  line-height: 30px;
 
   > div {
     display: inline-block;
-    float: right;
+    float: left;
   }
 
   a.like {
-    // box-shadow: 0 1px 0 rgba(0,0,0,.1);
+
     text-decoration: none;
     display: inline-block;
     outline: 0 none;
     cursor: pointer;
-    width: 34px;
-    height: 34px;
-    // display: inline !important;
+
+    width: 32px;
+    height: 32px;
+
     color: inherit;
-    background: #f7f7f7;
-    border: 1px solid #ddd;
+    background: $gray-lighter;
+    border: 1px solid $gray-lighter;
     border-radius: 3px;
-    // vertical-align: baseline;
-    padding: 0 2px 3px 3px;
-    // line-height: 30px;
-  }
 
-  a.like:hover {
-    background: #eee;
-    border: 1px solid #ccc;
-    text-decoration: none;
-  }
-
-  a.like:focus {}
-
-  a.like.loading {
-    .genericon {
-      color: #f7f7f7;
+    &:hover {
+      border: 1px solid $gray-light;
+      text-decoration: none;
     }
-  }
 
-  a.like.dolike {
-    .genericon {}
-  }
+    &:focus {}
 
-  a.like.unlike {
-    .genericon {
-      color: #dd4b39;
+    &.loading {
+      color: $gray-lighter;
+    }
+
+    &.unlike {
+      color: $brand-danger;
+    }
+
+    &.dolike {}
+
+    // span.genericon {
+    //   font-size: 30px;
+    // }
+
+    svg {
+      width: 24px;
+      height: 24px;
+      margin: 3px;
     }
   }
 
@@ -57,76 +61,71 @@
     display: inline-block;
     position: relative;
     background: #fff;
-    border: 1px solid #ddd;
+
+    color: $gray;
+    cursor: help;
+
+    border: 1px solid $gray-lighter;
     border-radius: 3px;
+
     margin-left: 6px;
     font-size: 20px;
     font-family: Arial;
     padding: 0 6px;
-    //vertical-align: top;
-    @include body-rtl() {
-      margin-left: 0;
-      margin-right: 6px;
-    }
   }
 
   span.like:before {
     content: "";
     position: absolute;
-    top: 14px;
+    margin: auto;
+
+    top: 0;
+    bottom: 0;
     left: -3px;
     width: 4px;
     height: 4px;
+
     border-width: 0 0 1px 1px;
     border-style: solid;
-    border-color: #ddd;
+    border-color: $gray-lighter;
+
     background: #fff;
+
     -webkit-transform: rotate(45deg);
     -moz-transform: rotate(45deg);
     -ms-transform: rotate(45deg);
     -o-transform: rotate(45deg);
-    @include body-rtl() {
-      left: auto;
-      right: -3px;
-      -webkit-transform: rotate(225deg);
-      -moz-transform: rotate(225deg);
-      -ms-transform: rotate(225deg);
-      -o-transform: rotate(225deg);
-    }
-  }
-
-  span.genericon {
-    vertical-align: middle;
-    font-size: 28px;
-    line-height: 1.2;
-    font-weight: bold;
-    text-shadow: 1px 1px 1px rgba(0,0,0,0.004);
   }
 
   ul.like {
-    display: inline-block;
-    margin: 1px 0 0 8px;
-    float: right;
-    @include body-rtl() {
-      margin: 1px 8px 0 0;
-    }
+
+    margin: 0 0 0 6px;
+    padding: 0;
+    float: left;
 
     li {
       display: inline-block;
+      padding: 0;
       margin: 0 4px 0 0;
-      @include body-rtl() {
-        margin: 0 0 0 4px;
-      }
 
       a {
         display: inline-block;
         outline: 0 none;
 
+        border: 1px solid $gray-lighter;
+        border-radius: 3px;
+
+        &:hover {
+          border: 1px solid $gray-light;
+          text-decoration: none;
+        }
+
         img {
-          max-width: 32px;
-          max-height: 32px;
+          max-width: 30px;
+          max-height: 30px;
           display: inline-block;
-          // padding: 0;
+          border-radius: 2px;
+          padding: 0;
         }
       }
     }

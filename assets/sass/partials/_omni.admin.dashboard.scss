@@ -1,0 +1,45 @@
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+/// Module: Omni: Admin: Dashboard ---------------------------------------------
+
+.geditorial-admin-wrap.geditorial-search-omni {
+
+  form {
+    position: relative;
+  }
+
+  input[type=search] {
+    border-radius: 0.25em;
+    font-size: 2.2em;
+    line-height: 1.35;
+    width: 100%;
+    padding: 0.25em 2em 0.25em 0.5em;
+  }
+
+  input[type=search]::-webkit-search-cancel-button {
+    display: none;
+  }
+
+  button[type=submit] {
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    display: block;
+    font-size: 2.45em;
+    padding: 0.3em 0.5em 0.1em;
+    text-align: center;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+  }
+
+  button[type=submit]::before {
+    font-family: dashicons;
+    content: '\f179';
+  }
+
+  button[type=submit] span {
+    display: none;
+  }
+}

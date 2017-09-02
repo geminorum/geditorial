@@ -37,9 +37,6 @@
 
   .-browse {
     float: right;
-    @include body-rtl() {
-      float: left;
-    };
   }
 }
 
@@ -71,17 +68,16 @@
       font-size: 18px;
       margin: 2px 2px 0 -4px;
       vertical-align: top;
-      @include body-rtl() {
-        margin: 2px -4px 0 0;
-      }
     }
   }
 
   a.-delete {
-    color: #a00;
-
+    color: $brand-danger;
     &:hover {
-      color: red;
+      color: darken($brand-danger, 20%);
+    }
+    .dashicons {
+      color: darken($brand-danger, 20%);
     }
   }
 }

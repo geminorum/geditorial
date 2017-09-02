@@ -37,9 +37,6 @@
       width: auto;
       height: auto;
       font-size: inherit;
-      @include body-rtl() {
-        padding: 2px 5px;
-      }
     }
 
     .-iconsvg {
@@ -64,11 +61,6 @@
     font-weight: 300;
     line-height: 1.5;
 
-    @include body-rtl() {
-      left: auto;
-      right: 20px;
-    }
-
     @media only screen and (max-width: 650px) {
       & {
           float: none;
@@ -80,35 +72,6 @@
           width: 100%;
           max-width: 280px;
       }
-    }
-  }
-
-  .credits {
-    direction: ltr;
-
-    p {
-      font-size: 0.98em;
-    }
-  }
-
-  .signature {
-    @include body-rtl() {
-      direction: ltr;
-    }
-  }
-
-  .credits,
-  .signature {
-    color: #777;
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    a:hover {
-      color: #333;
-      text-decoration: underline;
     }
   }
 }

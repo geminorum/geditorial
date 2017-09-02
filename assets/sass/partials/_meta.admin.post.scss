@@ -2,8 +2,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 /// Module: Meta: Admin Post ---------------------------------------------------
-// Overtitle & Subtitle Fields
+
+
+// ot/st fields
 .geditorial-admin-posttitle {
+
   @extend %box-reset;
   font-size: 1.3em;
   padding: 3px 8px;
@@ -14,6 +17,28 @@
   }
 
   &.geditorial-meta-field-st {
-    margin: 3px 0 15px;
+    margin: 2px 0 10px;
+  }
+}
+
+.geditorial-admin-postbox {
+
+  // lead box
+  &.geditorial-meta-field-le {
+     margin: 10px 0 0 0;
+  }
+
+  .handlediv.button-link {
+    text-align: center;
+  }
+
+  .toggle-indicator:before {
+    content: "\f142";
+    display: inline-block;
+    font: normal 20px/1 dashicons;
+    speak: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-decoration: none !important;
   }
 }

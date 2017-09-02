@@ -39,10 +39,6 @@
         display: inline;
         list-style-type: none;
         padding-right: 0.5em;
-        @include body-rtl() {
-          padding-right: 0;
-          padding-left: 0.5em;
-        }
 
         a {
           color: #999;

@@ -44,3 +44,9 @@
     content: "\f322" !important;
   }
 }
+
+.gpeople-glance-item {
+  &.-people::before {
+    content: "\f110" !important;
+  }
+}

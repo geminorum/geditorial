@@ -60,6 +60,8 @@
 
   // on main settings
   .modules {
+
+    box-sizing: border-box;
     margin-top: 20px;
     overflow: hidden;
     width: 100%;
@@ -79,6 +81,7 @@
         transition: all 0.1s ease;
       }
 
+      box-sizing: border-box;
       border: 1px solid #e1e1e1;
       border-radius: 3px;
       cursor: pointer;
@@ -88,11 +91,6 @@
       padding: 10px;
       position: relative;
       width: 210px;
-
-      @include body-rtl() {
-        float: right;
-        margin: 0 0 15px 15px;
-      }
 
       h3 {
         color: $gray-darker;
@@ -115,17 +113,13 @@
       }
 
       .actions {
+        box-sizing: border-box;
+        position: absolute;
         bottom: 0;
+        right: 10px;
+        width: 100%;
         margin: 0 0 10px;
         padding: 0 0 0 20px;
-        position: absolute;
-        right: 10px;
-        width: 210px;
-        @include body-rtl() {
-          left: 10px;
-          padding: 0 20px 0 0;
-          right: auto;
-        }
       }
 
       .button {
@@ -135,9 +129,6 @@
 
       .button-primary {
         float: right;
-        @include body-rtl() {
-          float: left;
-        }
       }
 
       .button-secondary {}
@@ -151,8 +142,10 @@
         }
       }
 
+      .-iconsvg,
       .dashicons {
-        color: $gray;
+        color: $gray; // for dashicon
+        fill: $gray; // for svg
         font-size: 24px;
         height: 24px;
         width: 24px;
@@ -162,12 +155,20 @@
         margin: 0;
       }
 
+      .-iconsvg,
       .dashicons,
       .spinner {
         float: right;
-        @include body-rtl() {
-          float: left;
-        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 782px) {
+  .geditorial-admin-wrap.geditorial-settings {
+    .modules {
+      .module {
+        width: 100%;
       }
     }
   }

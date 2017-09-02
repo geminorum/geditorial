@@ -7,7 +7,7 @@
 
   .do-ortho {
     position: absolute;
-    left: 4px;
+    right: 4px;
     top: 1px;
     color: #82878c;
     opacity: 0.7;
@@ -42,7 +42,7 @@
 
   &.ortho-input-html-wrap {
     .do-ortho {
-      left: 14px;
+      right: 14px;
       top: 2px;
     }
   }
@@ -61,7 +61,7 @@
 
   .geditorial-admin-wrap-metabox & textarea + a.do-ortho {
   // textarea[data-meta-type="note"] + a.do-ortho {
-    left: 2px;
+    right: 2px;
     bottom: 4px;
     top: auto;
   }
@@ -71,7 +71,7 @@
     position: relative;
     display: block;
     a.do-ortho {
-      left: 5%;
+      right: 5%;
       top: 5px;
     }
   }

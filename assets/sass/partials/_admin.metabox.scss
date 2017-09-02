@@ -41,6 +41,7 @@
     &.field-wrap-inputnumber {
       input {
         width: 32%;
+        /*rtl:ignore*/
         direction: ltr;
       }
     }
@@ -60,7 +61,9 @@
 
     &.field-wrap-textarea {
       textarea {
+        display: block;
         width: 100%;
+        margin: 0;
         resize: vertical;
       }
     }
@@ -73,18 +76,30 @@
 
     &.field-wrap-buttons {
       .button {
-        margin: 0 5px 4px 0;
-        padding: 0 10px 4px 4px;
-        @include body-rtl() {
-          margin: 0 0 4px 5px;
-          padding: 0 4px 4px 10px;
+        margin-bottom: 4px;
+
+        &.button-remove {
+          color: $brand-danger;
+
+          &:hover,
+          .dashicons {
+            color: darken($brand-danger, 20%);
+          }
         }
 
-        .dashicons {
-          width: 20px;
-          height: 20px;
-          vertical-align: text-top;
-          margin: 0 2px;
+        &.button-full {
+          width: 100%;
+        }
+
+        &.button-icon {
+          padding-left: 3px;
+          .dashicons {
+            width: 22px;
+            height: 22px;
+            font-size: 22px;
+            margin-top: 4px;
+            margin-right: 4px;
+          }
         }
       }
     }
@@ -116,7 +131,6 @@
   }
 
   .field-wrap-list {
-
 
     background-color: #fdfdfd;
     border: solid 1px #ddd;
@@ -202,6 +216,29 @@
       color: #555;
     }
   }
+
+  .nav-tab-wrapper {
+    border-color: #eee;
+    margin: 0 -12px 0 -12px;
+    padding: 0;
+  }
+
+  .nav-tab {
+    margin-left: 6px;
+    line-height: 12px !important;
+    &:first-child {
+      margin-left: 12px;
+    }
+  }
+
+  .nav-tab-content {
+    margin-top: 12px;
+    margin-bottom: -4px;
+    display: none;
+    &.-active {
+      display: block;
+    }
+  }
 }
 
 .geditorial-admin-wrap-metabox {
@@ -211,18 +248,8 @@
     &.field-wrap-textarea {
       padding-left: 1px;
       margin-right: -1px;
-      @include body-rtl() {
-        padding-left: 0px;
-        padding-right: 1px;
-        margin-right: 0px;
-        margin-left: -1px;
-      }
     }
   }
-}
-
-.geditorial-admin-wrap-textbox {
-  margin-bottom: -6px;
 }
 
 .geditorial-admin-dropbown {
@@ -230,6 +257,7 @@
   width: 100%;
 
   &.dropbown-ltr {
+    /*rtl:ignore*/
     direction: ltr;
   }
 }

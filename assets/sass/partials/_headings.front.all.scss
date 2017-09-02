@@ -11,10 +11,6 @@
     width: 40%;
     padding: 1em 2em;
     margin: 0 0 0.5em 0.5em;
-    @include body-rtl() {
-      float: left;
-      margin: 0 0.5em 0.5em 0;
-    }
 
     ol,
     ul {
@@ -53,8 +49,8 @@
     animation: highlight 1s ease;
   }
 }
-// show IDs for anchors
 
+// show IDs for anchors
 h1[id]:hover a.anchorlink:before,
 h2[id]:hover a.anchorlink:before,
 h3[id]:hover a.anchorlink:before,
@@ -74,11 +70,8 @@ a.anchorlink {
   text-decoration: none;
   font-size: smaller;
   margin-left: 0.5em;
-  @include body-rtl() {
-    margin-left: 0;
-    margin-right: 0.5em;
-  }
 }
+
 @keyframes highlight {
   from {
     background: $brand-warning;

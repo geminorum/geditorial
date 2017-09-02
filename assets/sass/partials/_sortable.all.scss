@@ -11,9 +11,7 @@ body.dragging * {
 .dragged {
   position: absolute;
   top: 0;
+  left: 0;
   opacity: 0.7;
   z-index: 2000;
-  @include body-rtl() {
-    right: 0;
-  }
 }

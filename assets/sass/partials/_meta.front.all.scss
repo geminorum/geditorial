@@ -13,4 +13,9 @@
       line-height: inherit;
     }
   }
+
+  &.entry-source.-after {
+    margin-top: 1em;
+    text-align: right;
+  }
 }

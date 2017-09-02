@@ -11,11 +11,13 @@
 }
 
 .geditorial-wordcount-wrap {
+
   .geditorial-wordcount {
-    display: none; // will show with js
-    font-size: 0.8em;
-    margin-bottom: -0.4em;
-    margin-top: 0.1em;
+    display: none;
+    margin: 1px 0 -10px 0;
+    padding: 0 2px;
+    font-size: 10px;
+    color: $gray-light;
 
     .-words {}
     .-chars {}

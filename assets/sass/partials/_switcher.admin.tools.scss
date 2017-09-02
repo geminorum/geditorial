@@ -9,10 +9,6 @@
     width: 20%;
     float: left;
     margin-right: 1em;
-    @include body-rtl() {
-      float: right;
-      margin: 0 0 0 1em;
-    }
   }
 
   ul.cat-checklist {

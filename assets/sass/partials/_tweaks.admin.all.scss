@@ -23,6 +23,8 @@
     }
 
     img {
+      width: auto;
+      height: auto;
       max-width: 80px; // WIDTH + HALF PADDING
       max-height: 133px; // 3:5
     }
@@ -53,24 +55,6 @@
     text-align: right;
     font-size: 0.9em;
   }
-
-  body.rtl & {
-
-    th.column-geditorial-tweaks-id {
-      a > span {
-        float: left;
-      }
-
-      .sorting-indicator {
-        margin-left: 7px;
-        margin-right: 0;
-      }
-    }
-
-    td.column-geditorial-tweaks-id {
-      text-align: left;
-    }
-  }
 }
 
 @media screen and ( max-width: 782px ) {
@@ -83,7 +67,8 @@
       display: none !important;
     }
 
-    .column-geditorial-tweaks-id {
+    .column-geditorial-tweaks-id,
+    .column-geditorial-tweaks-thumb {
       text-align: inherit !important;
     }
   }

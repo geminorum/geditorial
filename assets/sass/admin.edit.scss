@@ -53,12 +53,11 @@
     &.is-expanded {
 
       td.column-theday,
-      td.column-taxonomy-entry_section {
+      td.column-taxonomy-entry_section,
+      td.column-geditorial-tweaks-order,
+      td.column-geditorial-tweaks-thumb {
 
         padding: 3px 8px 3px 35%;
-        @include body-rtl() {
-          padding: 3px 35% 3px 8px;
-        }
       }
     }
   }

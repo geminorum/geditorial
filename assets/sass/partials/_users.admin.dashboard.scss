@@ -9,10 +9,5 @@
     display: inline-block;
     float: right;
     margin: 0 0 5px 5px;
-
-    @include body-rtl(){
-      float: left;
-      margin: 0 5px 5px 0;
-    }
   }
 }

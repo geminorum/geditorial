@@ -6,8 +6,5 @@
 .geditorial-admin-wrap.-audit {
   h3 .-action {
     float: right;
-    @include body-rtl(){
-      float: left;
-    }
   }
 }

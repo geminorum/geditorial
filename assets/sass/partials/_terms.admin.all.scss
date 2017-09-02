@@ -19,8 +19,8 @@ body.geditorial-terms-enabled {
       width: 45px;
     }
 
-    .column-geditorial-terms-image {
-      width: 75px;
+    th.column-geditorial-terms-image {
+      width: 55px;
     }
 
     .column-geditorial-terms-author {
@@ -31,7 +31,23 @@ body.geditorial-terms-enabled {
       width: 45px;
     }
 
-    .column-geditorial-terms-image img,
+    td.column-geditorial-terms-image {
+
+      padding: 10px 0 0 0;
+      text-align: center;
+
+      a:focus {
+        box-shadow: none !important;
+      }
+
+      img {
+        width: auto;
+        height: auto;
+        max-width: 50px; // WIDTH + HALF PADDING
+        max-height: 83px; // 3:5
+      }
+    }
+
     .inline-edit-row img.-img {
       max-height: 55px;
       max-width: 55px;

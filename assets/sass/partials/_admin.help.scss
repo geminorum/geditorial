@@ -4,11 +4,16 @@
 /// gEditorial Partials: Admin Help -------------------------------------------
 
 #contextual-help-wrap {
-  .contextual-help-tabs {}
 
-  .contextual-help-tabs-wrap {
+  .help-tab-content {
+
+    .-info {
+      margin-right: -22px; // it's a hack!
+    }
+
     .-info,
     .-info p {
+      /*rtl:ignore*/
       direction: ltr;
     }
 
@@ -22,6 +27,7 @@
   .contextual-help-sidebar {
     .-links,
     .-links p {
+      /*rtl:ignore*/
       direction: ltr;
     }
   }

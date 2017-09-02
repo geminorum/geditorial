@@ -41,9 +41,6 @@
         float: right;
         margin: 2px;
         cursor: pointer;
-        @include body-rtl() {
-          float: left;
-        }
       }
     }
 

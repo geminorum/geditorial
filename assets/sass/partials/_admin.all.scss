@@ -9,10 +9,35 @@
 
 // USAGE: .geditorial-admin-wrap.module { @include mainwrap(); }
 
-.geditorial-admin-wrap {}
 .geditorial-admin-wrap-column {}
 .geditorial-admin-wrap-widget {}
 .geditorial-admin-wrap-inline {}
 .geditorial-admin-wrap-nobox {}
 
 .geditorial-admin-postbox {}
+
+.geditorial-admin-wrap {
+
+  .credits,
+  .signature {
+    color: #777;
+    text-align: right;
+    // @include body-rtl() {
+    //   text-align: left;
+    // }
+
+    p {
+      font-size: 0.9em;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: #333;
+      text-decoration: underline;
+    }
+  }
+}
