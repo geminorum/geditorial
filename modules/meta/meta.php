@@ -666,11 +666,15 @@ class Meta extends gEditorial\Module
 		if ( ! $this->is_content_insert( NULL, FALSE ) )
 			return;
 
-		ModuleTemplate::metaSource( [
-			'before' => '<div class="geditorial-wrap -meta -after entry-source">'
-				.$this->get_setting( 'before_source', '' ).' ',
-			'after'  => '</div>',
-		] );
+		global $page, $pages;
+
+		// only on the last page
+		if ( $page == count( $pages ) )
+			ModuleTemplate::metaSource( [
+				'before' => '<div class="geditorial-wrap -meta -after entry-source">'
+					.$this->get_setting( 'before_source', '' ).' ',
+				'after'  => '</div>',
+			] );
 	}
 
 	public function the_author( $display_name )
