@@ -68,7 +68,7 @@
 
   };
 
-  $(document).ready(function() {
+  $(function() {
 
     $('select.item-dropdown-new', s.raw).change(function() {
       return o.newItem(this);
@@ -95,10 +95,10 @@
     });
   });
 
-  c[m] = o;
-
-  if (p._dev) {
-    console.log(o);
-  }
+  // c[m] = o;
+  //
+  // if (p._dev) {
+  //   console.log(o);
+  // }
 
 }(jQuery, gEditorial, gEditorialModules, 'specs'));

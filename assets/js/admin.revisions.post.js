@@ -88,7 +88,7 @@
     });
   };
 
-  $(document).ready(function() {
+  $(function() {
 
     $('#revisionsdiv a.-delete').on('click', function(e) {
       e.preventDefault();
@@ -101,9 +101,9 @@
     });
   });
 
-  c[m] = o;
-
-  if (p._dev)
-    console.log(o);
+  // c[m] = o;
+  //
+  // if (p._dev)
+  //   console.log(o);
 
 }(jQuery, gEditorial, gEditorialModules, 'revisions'));

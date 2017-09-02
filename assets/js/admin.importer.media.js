@@ -10,7 +10,7 @@
    };
 
 
-  $(document).ready(function() {
+  $(function() {
 
     $('#upload_csv_button').click(function(e) {
 
@@ -39,8 +39,8 @@
   });
 
   // c[m] = o;
-
-  if (p._dev)
-    console.log(o);
+  //
+  // if (p._dev)
+  //   console.log(o);
 
 }(jQuery, gEditorial, gEditorialModules, 'importer', 'media'));

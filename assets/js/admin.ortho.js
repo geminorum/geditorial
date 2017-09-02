@@ -29,7 +29,7 @@
     qtag_nbsp_title: 'Non-Breaking SPace',
   }, p[m].strings);
 
-  o.b = '<a href="#" class="do-' + m + '" title="' + o.s['button_virastar_title'] + '" tabindex="-1">' + o.s['button_virastar'] + '</span></a>';
+  o.b = '<a href="#" class="do-' + m + '" title="' + o.s['button_virastar_title'] + '" tabindex="-1">' + o.s['button_virastar'] + '</a>';
   o.w = '<span class="' + m + '-input-wrap"></span>';
 
   o.o = p[m].virastar || {};
@@ -149,7 +149,7 @@
     },
   };
 
-  $(document).ready(function() {
+  $(function() {
 
     for (var t in o.t) {
 
@@ -191,9 +191,9 @@
     try{document.post.title.focus();}catch(e){}
   });
 
-  c[m] = o;
+  // c[m] = o;
 
-  if (p._dev)
-    console.log(o);
+  // if (p._dev)
+  //   console.log(o);
 
 }(jQuery, gEditorial, gEditorialModules, 'ortho'));

@@ -72,7 +72,7 @@
     },
   };
 
-  $(document).ready(function() {
+  $(function() {
 
     if (typeof(QTags) !== 'undefined') {
       for (var b in o.q) {
@@ -83,7 +83,7 @@
 
   // c[m] = o;
 
-  if (p._dev)
-    console.log(o);
+  // if (p._dev)
+  //   console.log(o);
 
 }(jQuery, gEditorial, gEditorialModules, 'ortho', 'persiantools'));

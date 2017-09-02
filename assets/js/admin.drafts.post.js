@@ -46,16 +46,16 @@
     });
   };
 
-  $(document).ready(function() {
+  $(function() {
     $('.geditorial-admin-wrap.-drafts a.-action').on('click', function(e) {
       e.preventDefault();
       o.a(this);
     });
   });
 
-  c[m] = o;
-
-  if (p._dev)
-    console.log(o);
+  // c[m] = o;
+  //
+  // if (p._dev)
+  //   console.log(o);
 
 }(jQuery, gEditorial, gEditorialModules, 'drafts'));

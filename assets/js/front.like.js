@@ -21,7 +21,13 @@
         id: button.data('id')
       }, function(r) {
         if (r.success) {
-          button.prop('title', r.data.title).data('action', r.data.action).data('nonce', r.data.nonce).removeClass(r.data.remove).addClass(r.data.add);
+
+          button
+            .prop('title', r.data.title)
+            .data('action', r.data.action)
+            .data('nonce', r.data.nonce)
+            .removeClass(r.data.remove)
+            .addClass(r.data.add);
 
           counter.html(r.data.count);
 

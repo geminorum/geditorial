@@ -93,7 +93,7 @@
       },
     };
 
-  $(document).ready(function() {
+  $(function() {
 
     $('#addtag, #edittag, #the-list')
       .on('click', '.-modal', function(event){
@@ -124,9 +124,9 @@
 
   });
 
-  c[m] = o;
-
-  if (p._dev)
-    console.log(o);
+  // c[m] = o;
+  //
+  // if (p._dev)
+  //   console.log(o);
 
 }(jQuery, gEditorial, gEditorialModules, 'terms'));

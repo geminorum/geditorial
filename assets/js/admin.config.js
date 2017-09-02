@@ -1,4 +1,4 @@
-jQuery(document).ready(function($) {
+jQuery(function($) {
 
   var moduleList = new List('geditorial-settings', {
       listClass: '-list',
@@ -35,7 +35,7 @@ jQuery(document).ready(function($) {
       action = $(this).data('do'),
       $box = $("div[data-module='" + module + "']"),
       $spinner = $box.find('.spinner'),
-      $icon = $box.find('.dashicons');
+      $icon = $box.find('.dashicons, .-iconsvg');
 
     $.ajax({
       url: gEditorial._url,

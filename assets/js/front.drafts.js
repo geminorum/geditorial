@@ -54,16 +54,16 @@
     });
   };
 
-  $(document).ready(function() {
+  $(function() {
     $(o.button).click(function(e) {
       e.preventDefault();
       o.populate();
     });
   });
 
-  c[m] = o;
-
-  if (p._dev)
-    console.log(o);
+  // c[m] = o;
+  //
+  // if (p._dev)
+  //   console.log(o);
 
 }(jQuery, gEditorial, gEditorialModules, 'drafts'));

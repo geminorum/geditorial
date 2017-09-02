@@ -1,4 +1,4 @@
-jQuery(document).ready(function($) {
+jQuery(function($) {
   "use strict";
 
   $("[data-meta-type='title_before']").each(function() {
