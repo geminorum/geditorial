@@ -66,9 +66,22 @@
   "sass": {
     "errLogToConsole": true,
     "includePaths": [
-      "../gnetwork/assets/sass",
-      "../../gnetwork/assets/sass"
+      "./../../gnetwork/assets/sass",
+      "./../gnetwork/assets/sass"
     ]
+  },
+  "cssnano": {
+    "dev": {
+      "core": false,
+      "zindex": false,
+      "discardComments": false
+    },
+    "build": {
+      "zindex": false,
+      "discardComments": {
+        "removeAll": true
+      }
+    }
   },
   "constants": {
     "version": "GEDITORIAL_VERSION"

@@ -11,7 +11,7 @@
   "authors": [{
     "name": "Nasser Rafie",
     "email": "contact@geminorum.ir",
-    "homepage": "http://geminorum.ir/",
+    "homepage": "http://geminorum.ir",
     "role": "Developer"
   }],
   "support": {
@@ -21,13 +21,14 @@
   },
   "require": {
     "php": ">=5.4",
-    "composer/installers": "^1.2",
+    "composer/installers": "^1.4",
     "kzykhys/php-csv-parser": ">1.4",
-    "nicmart/string-template": "~0.1"
+    "nicmart/string-template": "~0.1",
+    "michelf/php-markdown": "^1.7"
   },
   "require-dev": {
     "erusev/parsedown-extra": "^0.7.1",
-    "mustache/mustache": "^2.11",
+    "mustache/mustache": "^2.12",
     "evert/sitemap-php": "^1.2",
     "eluceo/ical": "^0.11.0",
     "johngrogg/ics-parser": "^2.0",
@@ -43,7 +44,7 @@
     "vendor-dir": "assets/vendor",
     "vendor/bin": "assets/bin",
     "platform": {
-      "php": "5.6.30"
+      "php": "5.6.31"
     }
   }
 }

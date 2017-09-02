@@ -4,6 +4,8 @@
     gulp = require('gulp'),
     gutil = require('gulp-util'),
     plugins = require('gulp-load-plugins')(),
+    cssnano = require('cssnano'),
+    rtlcss = require('rtlcss'),
     parseChangelog = require('parse-changelog'),
     prettyjson = require('prettyjson'),
     extend = require('xtend'),
@@ -63,20 +65,37 @@
   });
 
   gulp.task('dev:sass', function() {
+    var processors = [
+      cssnano(config.cssnano.dev)
+      // TODO: add prefixer
+     ];
+    return gulp.src(config.input.sass)
+    // .pipe(plugins.sourcemaps.init())
+    .pipe(plugins.sass.sync(config.sass).on('error', plugins.sass.logError))
+    .pipe(plugins.postcss(processors))
+    // .pipe(plugins.sourcemaps.write(config.output.sourcemaps))
+    .pipe(gulp.dest(config.output.css)).on('error', gutil.log)
+    .pipe(plugins.postcss([rtlcss()]))
+    .pipe(plugins.rename({suffix: '-rtl'}))
+    .pipe(gulp.dest(config.output.css)).on('error', gutil.log)
+    .pipe(plugins.changedInPlace())
+    .pipe(plugins.debug({title: 'Changed'}))
+    .pipe(plugins.if(function(file){
+      if(file.extname != '.map') return true;
+    }, plugins.livereload()));
+  });
+
+  gulp.task('old:sass', function() {
     return gulp.src(config.input.sass)
     .pipe(plugins.sourcemaps.init())
     .pipe(plugins.sass.sync(config.sass).on('error', plugins.sass.logError))
-    .pipe(plugins.cssnano({
-      core: false,
-      zindex: false,
-      discardComments: false,
-    }))
+    .pipe(plugins.cssnano(config.cssnano.dev))
     .pipe(plugins.sourcemaps.write(config.output.sourcemaps))
     .pipe(gulp.dest(config.output.css)).on('error', gutil.log)
     .pipe(plugins.changedInPlace())
-    .pipe(plugins.debug({title: 'unicorn:'}))
-    .pipe(plugins.if( function(file){
-      if (file.extname != '.map') return true;
+    .pipe(plugins.debug({title: 'Changed'}))
+    .pipe(plugins.if(function(file){
+      if(file.extname != '.map') return true;
     }, plugins.livereload()));
   });
 
@@ -87,47 +106,66 @@
 
   // all styles / without livereload
   gulp.task('dev:styles', function() {
+    var processors = [
+      cssnano(config.cssnano.dev)
+      // TODO: add prefixer
+     ];
+    return gulp.src(config.input.sass)
+    // .pipe(plugins.sourcemaps.init())
+    .pipe(plugins.sass.sync(config.sass).on('error', plugins.sass.logError))
+    .pipe(plugins.postcss(processors))
+    .pipe(plugins.header(banner, {pkg: pkg}))
+    // .pipe(plugins.sourcemaps.write(config.output.sourcemaps))
+    .pipe(plugins.debug({title: 'Changed'}))
+    .pipe(gulp.dest(config.output.css)).on('error', gutil.log)
+    .pipe(plugins.postcss([rtlcss()]))
+    .pipe(plugins.rename({suffix: '-rtl'}))
+    .pipe(plugins.debug({title: 'RTLed'}))
+    .pipe(gulp.dest(config.output.css)).on('error', gutil.log);
+  });
+
+  // all styles / without livereload
+  gulp.task('old:styles', function() {
     return gulp.src(config.input.sass)
     .pipe(plugins.sourcemaps.init())
     .pipe(plugins.sass.sync(config.sass).on('error', plugins.sass.logError))
-    .pipe(plugins.cssnano({
-      core: false,
-      zindex: false,
-      discardComments: false,
-    }))
-    .pipe(plugins.header(banner, {
-      pkg: pkg
-    }))
+    .pipe(plugins.cssnano(config.cssnano.dev))
+    .pipe(plugins.header(banner, {pkg: pkg}))
     .pipe(plugins.sourcemaps.write(config.output.sourcemaps))
-    .pipe(plugins.debug({title: 'unicorn:'}))
+    .pipe(plugins.debug({title: 'Changed'}))
     .pipe(gulp.dest(config.output.css)).on('error', gutil.log);
   });
 
   gulp.task('build:styles', function() {
+    var processors = [
+      cssnano(config.cssnano.build)
+      // TODO: add prefixer
+     ];
     return gulp.src(config.input.sass)
-    .pipe(plugins.sass().on('error', plugins.sass.logError))
-    .pipe(plugins.cssnano({
-      zindex: false,
-      discardComments: {
-        removeAll: true
-      }
-    }))
+    .pipe(plugins.sass(config.sass).on('error', plugins.sass.logError))
+    .pipe(plugins.postcss(processors))
+    .pipe(gulp.dest(config.output.css)).on('error', gutil.log)
+    .pipe(plugins.postcss([rtlcss()]))
+    .pipe(plugins.rename({suffix: '-rtl'}))
+    .pipe(gulp.dest(config.output.css)).on('error', gutil.log);
+  });
+
+  gulp.task('old:build:styles', function() {
+    return gulp.src(config.input.sass)
+    .pipe(plugins.sass(config.sass).on('error', plugins.sass.logError))
+    .pipe(plugins.cssnano(config.cssnano.build))
     .pipe(gulp.dest(config.output.css));
   });
 
   gulp.task('build:scripts', function() {
     return gulp.src(config.input.js, {base: '.'})
-    .pipe(plugins.rename({
-      suffix: '.min',
-    }))
+    .pipe(plugins.rename({suffix: '.min'}))
     .pipe(plugins.uglify());
   });
 
   gulp.task('build:banner', function() {
     return gulp.src(config.input.banner, {'base': '.'})
-    .pipe(plugins.header(banner, {
-      pkg: pkg
-    }))
+    .pipe(plugins.header(banner, {pkg: pkg}))
     .pipe(gulp.dest('.'));
   });
 
