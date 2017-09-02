@@ -587,7 +587,7 @@ class Book extends gEditorial\Module
 				$connected->the_post();
 
 				echo ShortCode::postItem( [
-					'item_after' => $this->p2p_get_meta_row( $constant, $post->p2p_id, ' &ndash; ', '' ),
+					'item_after' => $this->p2p_get_meta_row( 'publication_cpt', $post->p2p_id, ' &ndash; ', '' ),
 				] );
 			}
 
