@@ -370,7 +370,7 @@ class Audit extends gEditorial\Module
 
 		if ( $this->get_setting( 'count_not', FALSE ) ) {
 
-			$not = Database::countPostsByNotTaxonomy( $tax, $posttypes, $user_id );
+			$not = Database::countPostsByNotTaxonomy( $tax, $posttypes, $user_id, $exclude );
 
 			foreach ( $not as $type => $count ) {
 
