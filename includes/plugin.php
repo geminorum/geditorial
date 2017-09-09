@@ -419,7 +419,7 @@ class Plugin
 		if ( defined( 'GEDITORIAL_DISABLE_FRONT_STYLES' ) && GEDITORIAL_DISABLE_FRONT_STYLES )
 			return;
 
-		wp_enqueue_style( 'geditorial-front-all', GEDITORIAL_URL.'assets/css/front.all.css', [], GEDITORIAL_VERSION );
+		wp_enqueue_style( 'geditorial-front-all', GEDITORIAL_URL.'assets/css/front.all'.( is_rtl() ? '-rtl' : '' ).'.css', [], GEDITORIAL_VERSION );
 	}
 
 	public function enqueue_asset_config( $args = [], $module = NULL )
