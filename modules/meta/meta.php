@@ -264,6 +264,8 @@ class Meta extends gEditorial\Module
 
 			} else if ( 'edit' == $screen->base ) {
 
+				$this->action( 'pre_get_posts' );
+
 				$this->_admin_enabled();
 				$this->_edit_screen( $screen->post_type );
 				$this->_default_rows();
@@ -297,6 +299,26 @@ class Meta extends gEditorial\Module
 	{
 		add_action( $this->hook( 'column_row' ), [ $this, 'column_row_default' ], 8, 3 );
 		add_action( $this->hook( 'column_row' ), [ $this, 'column_row_extra' ], 12, 3 );
+	}
+
+	public function pre_get_posts( &$wp_query )
+	{
+		if ( ! $wp_query->is_search() )
+			return;
+
+		$wp_query->set( 'meta_query', [ [
+			'key'     => $this->meta_key,
+			'value'   => $wp_query->query['s'],
+			'compare' => 'LIKE',
+		] ] );
+
+		$this->filter_once( 'get_meta_sql' );
+	}
+
+	public function get_meta_sql( $sql )
+	{
+		$sql['where'] = ' OR '.ltrim( $sql['where'], ' AND ' );
+		return $sql;
 	}
 
 	public function do_meta_box( $post, $box, $fields = NULL, $context = 'box' )
