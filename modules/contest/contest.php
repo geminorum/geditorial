@@ -197,9 +197,9 @@ class Contest extends gEditorial\Module
 				$this->filter( 'wp_insert_post_data', 2, 9 );
 				$this->filter( 'post_updated_messages' );
 
-				add_filter( 'geditorial_meta_box_callback', '__return_false', 12 );
-
+				$this->filter_false( 'geditorial_meta_box_callback', 12 );
 				$this->remove_meta_box( $screen->post_type, $screen->post_type, 'parent' );
+
 				add_meta_box( $this->classs( 'main' ),
 					$this->get_meta_box_title( 'contest_cpt', FALSE ),
 					[ $this, 'do_meta_box_main' ],

@@ -362,9 +362,9 @@ class Book extends gEditorial\Module
 
 		if ( is_admin() ) {
 
-			add_filter( 'geditorial_importer_fields', [ $this, 'importer_fields' ], 10, 2 );
-			add_filter( 'geditorial_importer_prepare', [ $this, 'importer_prepare' ], 10, 4 );
-			add_action( 'geditorial_importer_saved', [ $this, 'importer_saved' ], 10, 5 );
+			$this->filter_module( 'importer', 'fields', 2 );
+			$this->filter_module( 'importer', 'prepare', 4 );
+			$this->filter_module( 'importer', 'saved', 5 );
 
 		} else {
 
@@ -387,8 +387,7 @@ class Book extends gEditorial\Module
 
 			} else if ( 'edit' == $screen->base ) {
 
-				add_filter( 'disable_months_dropdown', '__return_true', 12 );
-
+				$this->filter_true( 'disable_months_dropdown', 12 );
 				$this->filter( 'bulk_post_updated_messages', 2 );
 				$this->action( 'restrict_manage_posts', 2, 12 );
 				$this->action( 'parse_query' );

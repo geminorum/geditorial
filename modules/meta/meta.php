@@ -202,9 +202,9 @@ class Meta extends gEditorial\Module
 
 		if ( is_admin() ) {
 
-			add_filter( 'geditorial_importer_fields', [ $this, 'importer_fields' ], 10, 2 );
-			add_filter( 'geditorial_importer_prepare', [ $this, 'importer_prepare' ], 10, 4 );
-			add_action( 'geditorial_importer_saved', [ $this, 'importer_saved' ], 10, 5 );
+			$this->filter_module( 'importer', 'fields', 2 );
+			$this->filter_module( 'importer', 'prepare', 4 );
+			$this->filter_module( 'importer', 'saved', 5 );
 
 		} else {
 

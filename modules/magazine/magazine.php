@@ -249,9 +249,9 @@ class Magazine extends gEditorial\Module
 				$this->filter( 'wp_insert_post_data', 2, 9 );
 				$this->filter( 'post_updated_messages' );
 
-				add_filter( 'geditorial_meta_box_callback', '__return_false', 12 );
-
+				$this->filter_false( 'geditorial_meta_box_callback', 12 );
 				$this->remove_meta_box( $screen->post_type, $screen->post_type, 'parent' );
+
 				add_meta_box( $this->classs( 'main' ),
 					$this->get_meta_box_title( 'issue_cpt', FALSE ),
 					[ $this, 'do_meta_box_main' ],
@@ -272,9 +272,8 @@ class Magazine extends gEditorial\Module
 
 			} else if ( 'edit' == $screen->base ) {
 
+				$this->filter_true( 'disable_months_dropdown', 12 );
 				$this->filter( 'bulk_post_updated_messages', 2 );
-
-				add_filter( 'disable_months_dropdown', '__return_true', 12 );
 
 				if ( $this->get_setting( 'admin_restrict', FALSE ) ) {
 					add_action( 'restrict_manage_posts', [ $this, 'restrict_manage_posts_main_cpt' ], 12, 2 );

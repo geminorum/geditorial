@@ -246,7 +246,7 @@ class Event extends gEditorial\Module
 					add_action( 'pre_get_posts', [ $this, 'pre_get_posts_admin' ] );
 				}
 
-				add_filter( 'disable_months_dropdown', '__return_true', 12 );
+				$this->filter_true( 'disable_months_dropdown', 12 );
 
 				$this->_edit_screen( $screen->post_type );
 				$this->_tweaks_taxonomy();
