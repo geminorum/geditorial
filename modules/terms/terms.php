@@ -187,9 +187,10 @@ class Terms extends gEditorial\Module
 				add_action( 'manage_edit-'.$screen->taxonomy.'_sortable_columns', [ $this, 'sortable_columns' ], 10, 3 );
 
 				wp_enqueue_media();
+
 				$this->enqueue_asset_js( [
 					'strings' => $this->strings['js'],
-				], NULL );
+				], NULL, [ 'jquery', 'media-upload' ] );
 			}
 
 		} else if ( 'term' == $screen->base ) {
@@ -221,9 +222,10 @@ class Terms extends gEditorial\Module
 				$this->_admin_enabled();
 
 				wp_enqueue_media();
+
 				$this->enqueue_asset_js( [
 					'strings' => $this->strings['js'],
-				], NULL );
+				], NULL, [ 'jquery', 'media-upload' ] );
 			}
 		}
 	}
