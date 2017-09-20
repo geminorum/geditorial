@@ -43,28 +43,28 @@ class gEditorialBookQuery extends \WP_Query
 	public function posts_fields( $sql )
 	{
 		global $wpdb;
-		return $sql . ", $wpdb->terms.name AS '{$this->tax}'";
+		return $sql.", {$wpdb->terms}.name AS '{$this->tax}'";
 	}
 
 	public function posts_join( $sql )
 	{
 		global $wpdb;
 		return $sql . "
-			INNER JOIN $wpdb->term_relationships ON ($wpdb->posts.ID = $wpdb->term_relationships.object_id)
-			INNER JOIN $wpdb->term_taxonomy ON ($wpdb->term_relationships.term_taxonomy_id = $wpdb->term_taxonomy.term_taxonomy_id)
-			INNER JOIN $wpdb->terms ON ($wpdb->terms.term_id = $wpdb->term_taxonomy.term_id)
+			INNER JOIN {$wpdb->term_relationships} ON ( {$wpdb->posts}.ID = $wpdb->term_relationships.object_id )
+			INNER JOIN {$wpdb->term_taxonomy} ON ( {$wpdb->term_relationships}.term_taxonomy_id = {$wpdb->term_taxonomy}.term_taxonomy_id )
+			INNER JOIN {$wpdb->terms} ON ( {$wpdb->terms}.term_id = {$wpdb->term_taxonomy}.term_id )
 		";
 	}
 
 	public function posts_where( $sql )
 	{
 		global $wpdb;
-		return $sql . " AND $wpdb->term_taxonomy.taxonomy = '{$this->tax}'";
+		return $sql." AND {$wpdb->term_taxonomy}.taxonomy = '{$this->tax}'";
 	}
 
 	public function posts_orderby( $sql )
 	{
 		global $wpdb;
-		return "$wpdb->terms.name ASC, $wpdb->posts.post_title ASC";
+		return "{$wpdb->terms}.name ASC, {$wpdb->posts}.post_title ASC";
 	}
 }

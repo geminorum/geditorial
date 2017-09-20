@@ -24,16 +24,6 @@ class Template extends Core\Base
 		return [];
 	}
 
-	// FIXME: DRAFT
-	public static function parseMarkDown( $content )
-	{
-		if ( ! class_exists( 'ParsedownExtra' ) )
-			return $content;
-
-		$parsedown = new \ParsedownExtra();
-		return $parsedown->text( $content );
-	}
-
 	public static function getPostImageSrc( $size = NULL, $post_id = NULL )
 	{
 		if ( ! $post = get_post( $post_id ) )

@@ -155,6 +155,9 @@ class Module extends Base
 
 		$this->strings = $this->filters( 'strings', $this->get_global_strings(), $this->module );
 
+		if ( ! is_admin() )
+			return;
+
 		foreach ( $this->get_module_templates() as $constant => $templates ) {
 
 			if ( ! count( $templates ) )
