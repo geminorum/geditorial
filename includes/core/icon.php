@@ -76,6 +76,9 @@ class Icon extends Base
 
 		// @REF: https://simpleicons.org/
 		'simpleicons' => array(),
+
+		// @REF: https://linearicons.com/
+		'linearicons' => array(),
 	);
 
 	public static $viewboxes = array(
@@ -89,7 +92,7 @@ class Icon extends Base
 
 	public static function get( $icon, $group )
 	{
-		return '<svg class="'.self::BASE.'-icon -iconsvg icon-'.$group.'-'.$icon.'"><use xlink:href="#icon-'.$group.'-'.$icon.'"></use></svg>';
+		return '<svg data-icon="svg" class="'.self::BASE.'-icon -iconsvg icon-'.$group.'-'.$icon.'"><use xlink:href="#icon-'.$group.'-'.$icon.'"></use></svg>';
 	}
 
 	// @REF: https://stackoverflow.com/a/42265057/4864081

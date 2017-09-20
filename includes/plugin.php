@@ -101,6 +101,7 @@ class Plugin
 			'wordpress/module',
 			'wordpress/posttype',
 			'wordpress/taxonomy',
+			'wordpress/theme',
 			'wordpress/user',
 		] );
 	}

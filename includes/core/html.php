@@ -58,6 +58,28 @@ class HTML extends Base
 		echo $block ? '<p class="description -description '.$class.'">'.$html.'</p>' : '<span class="description -description '.$class.'">'.$html.'</span>';
 	}
 
+	public static function button( $html, $link = '#', $title = FALSE, $icon = FALSE, $data = array() )
+	{
+		$classes = array(
+			'btn',
+			'btn-default',
+			'btn-xs',
+			'button',
+			'-button',
+		);
+
+		if ( $icon )
+			$classes[] = '-button-icon';
+
+		return self::tag( ( $link ? 'a' : 'span' ), array(
+			'href'   => $link ? $link : FALSE,
+			'title'  => $title,
+			'class'  => $classes,
+			'data'   => $data,
+			'target' => '_blank',
+		), $html );
+	}
+
 	public static function wrap( $html, $class = '', $block = TRUE )
 	{
 		return $block ? '<div class="-wrap '.$class.'">'.$html.'</div>' : '<span class="-wrap '.$class.'">'.$html.'</span>';
@@ -857,8 +879,9 @@ class HTML extends Base
 	public static function getDashicon( $icon = 'wordpress-alt', $tag = 'span', $title = FALSE )
 	{
 		return self::tag( $tag, array(
-			'title' => $title,
-			'class' => array(
+			'data-icon' => 'dashicons',
+			'title'     => $title,
+			'class'     => array(
 				'dashicons',
 				'dashicons-'.$icon,
 			),
