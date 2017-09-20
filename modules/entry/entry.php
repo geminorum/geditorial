@@ -7,7 +7,10 @@ use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\Core\Arraay;
 use geminorum\gEditorial\Core\HTML;
+use geminorum\gEditorial\Core\URL;
+use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\Taxonomy;
+use geminorum\gEditorial\WordPress\Theme;
 
 class Entry extends gEditorial\Module
 {
@@ -105,6 +108,8 @@ class Entry extends gEditorial\Module
 
 			if ( $this->get_setting( 'autolink_terms', FALSE ) )
 				$this->filter( 'the_content', 1, 9 );
+
+			$this->filter( 'template_include', 1, 9 );
 		}
 
 		$this->register_shortcode( 'section_shortcode' );
@@ -302,6 +307,50 @@ class Entry extends gEditorial\Module
 		}
 
 		return $content;
+	}
+
+	public function template_include( $template )
+	{
+		global $wp_query;
+
+		if ( ! is_404() || is_embed() || $this->constant( 'entry_cpt' ) != $wp_query->get( 'post_type' ) )
+			return $template;
+
+		Theme::resetQuery( [
+			'ID'         => 0,
+			'post_title' => URL::prepTitleQuery( $wp_query->get( 'name' ) ),
+			'post_type'  => $this->constant( 'entry_cpt' ),
+			'is_single'  => TRUE,
+		], [ $this, 'empty_content' ] );
+
+		$this->filter_append( 'post_class', 'empty-entry' );
+		$this->enqueue_styles();
+
+		defined( 'GNETWORK_DISABLE_CONTENT_ACTIONS' ) or define( 'GNETWORK_DISABLE_CONTENT_ACTIONS', TRUE );
+
+		// look again for template
+		return get_single_template();
+	}
+
+	// TODO: list other entries that linked to this title
+	public function empty_content( $content )
+	{
+		global $wp_query;
+
+		$html = '<p>'._x( 'There are no entry by this title. Search again or create one.', 'Modules: Entry', GEDITORIAL_TEXTDOMAIN ).'</p>';
+		$html .= get_search_form( FALSE );
+
+		$posttype = get_post_type_object( $this->constant( 'entry_cpt' ) );
+
+		if ( current_user_can( $posttype->cap->create_posts ) )
+			$html .= '<p>'.HTML::tag( 'a', [
+				'href'          => WordPress::getPostNewLink( $posttype->name, [ 'post_title' => URL::prepTitleQuery( $wp_query->get( 'name' ) ) ] ),
+				'class'         => [ 'button', '-add-posttype', '-add-posttype-'.$posttype->name ],
+				'target'        => '_blank',
+				'data-posttype' => $posttype->name,
+			], $posttype->labels->add_new_item ).'</p>';
+
+		return HTML::wrap( $html, $this->classs( 'empty-content' ) );
 	}
 
 	public function section_shortcode( $atts = [], $content = NULL, $tag = '' )
