@@ -127,6 +127,7 @@ add_theme_support( \'featured-content\', [
 
 			if ( count( $post_types ) ) {
 				add_filter( 'gpersiandate_calendar_posttypes', [ $this, 'calendar_posttypes' ] );
+				add_filter( 'gnetwork_search_404_posttypes', [ $this, 'search_404_posttypes' ] );
 
 				$this->filter( 'widget_posts_args' );
 			}
@@ -319,6 +320,11 @@ add_theme_support( \'featured-content\', [
 	}
 
 	public function calendar_posttypes( $posttypes )
+	{
+		return $this->post_types();
+	}
+
+	public function search_404_posttypes( $posttypes )
 	{
 		return $this->post_types();
 	}
