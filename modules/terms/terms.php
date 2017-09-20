@@ -657,10 +657,7 @@ class Terms extends gEditorial\Module
 
 	public function reports_settings( $sub )
 	{
-		if ( ! $this->cuc( 'reports' ) )
-			return;
-
-		if ( 'uncategorized' == $sub ) {
+		if ( $this->check_settings( $sub, 'reports', 'uncategorized' ) ) {
 
 			if ( ! empty( $_POST ) ) {
 
@@ -690,11 +687,8 @@ class Terms extends gEditorial\Module
 				}
 			}
 
-			add_action( 'geditorial_reports_sub_'.$sub, [ $this, 'reports_sub' ], 10, 2 );
 			$this->screen_option( $sub );
 		}
-
-		add_filter( 'geditorial_reports_subs', [ $this, 'append_sub' ], 10, 2 );
 	}
 
 	public function reports_sub( $uri, $sub )

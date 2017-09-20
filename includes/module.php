@@ -1009,17 +1009,20 @@ class Module extends Base
 		WordPress::redirectReferer( $message );
 	}
 
-	protected function check_settings( $sub, $context = 'tools' )
+	protected function check_settings( $sub, $context = 'tools', $key = NULL )
 	{
 		if ( ! $this->cuc( $context ) )
 			return FALSE;
 
-		add_filter( 'geditorial_'.$context.'_subs', [ $this, 'append_sub' ], 10, 2 );
+		add_filter( $this->base.'_'.$context.'_subs', [ $this, 'append_sub' ], 10, 2 );
 
-		if ( $this->key != $sub )
+		if ( is_null( $key ) )
+			$key = $this->key;
+
+		if ( $key != $sub )
 			return FALSE;
 
-		add_action( 'geditorial_'.$context.'_sub_'.$sub, [ $this, $context.'_sub' ], 10, 2 );
+		add_action( $this->base.'_'.$context.'_sub_'.$sub, [ $this, $context.'_sub' ], 10, 2 );
 
 		if ( 'settings' != $context )
 			add_action( 'admin_print_footer_scripts', [ $this, 'settings_print_scripts' ], 99 );
