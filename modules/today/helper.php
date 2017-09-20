@@ -6,6 +6,7 @@ use geminorum\gEditorial;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
+use geminorum\gEditorial\Core\WordPress;
 
 class Today extends gEditorial\Helper
 {
@@ -52,16 +53,16 @@ class Today extends gEditorial\Helper
 		return $the_day;
 	}
 
-	public static function titleTheDayFromPost( $post, $default_type = 'gregorian', $constants = NULL, $empty = '&mdash;' )
+	public static function titleTheDay( $stored, $empty = '&mdash;' )
 	{
 		global $gEditorialTodayCalendars, $gEditorialTodayMonths;
 
-		$the_day = self::atts( [
-			'cal'   => $default_type,
+		$the_day = array_merge( [
+			'cal'   => '',
 			'day'   => '',
 			'month' => '',
 			'year'  => '',
-		], self::getTheDayFromPost( $post, $default_type, $constants ) );
+		], $stored );
 
 		if ( ! $the_day['day'] && ! $the_day['month'] && ! $the_day['year'] )
 			return $empty;
@@ -95,22 +96,23 @@ class Today extends gEditorial\Helper
 			return $empty;
 
 		if ( $the_day['cal'] )
-			$parts['cal'] = empty( $gEditorialTodayCalendars[$the_day['cal']] ) ? $the_day['cal'] : $gEditorialTodayCalendars[$the_day['cal']];
+			$parts['cal'] = empty( $gEditorialTodayCalendars[$the_day['cal']] )
+				? $the_day['cal']
+				: $gEditorialTodayCalendars[$the_day['cal']];
 
 		return Helper::getJoined( $parts, '[', ']' );
 	}
 
-	// TODO: link each part to front summary page
-	public static function displayTheDayFromPost( $post, $default_type = 'gregorian', $constants = NULL, $empty = '&mdash;' )
+	public static function displayTheDay( $stored, $empty = '&mdash;' )
 	{
 		global $gEditorialTodayCalendars, $gEditorialTodayMonths;
 
-		$the_day = self::atts( [
-			'cal'   => $default_type,
+		$the_day = array_merge( [
+			'cal'   => '',
 			'day'   => '',
 			'month' => '',
 			'year'  => '',
-		], self::getTheDayFromPost( $post, $default_type, $constants ) );
+		], $stored );
 
 		if ( ! $the_day['day'] && ! $the_day['month'] && ! $the_day['year'] ) {
 
@@ -129,7 +131,8 @@ class Today extends gEditorial\Helper
 
 				if ( $the_day['day'] )
 					echo '<span class="-day" data-day="'.esc_attr( $the_day['day'] )
-						.'">'.Number::format( $the_day['day'] ).'</span>';
+						.'"><a target="_blank" href="'.self::getTheDayLink( $stored, 'day' )
+						.'">'.Number::format( $the_day['day'] ).'</a></span>';
 
 				if ( $the_day['month'] ) {
 
@@ -139,19 +142,36 @@ class Today extends gEditorial\Helper
 					if ( isset( $gEditorialTodayMonths[$the_day['cal']][$key] ) )
 						$the_day['month'] = $gEditorialTodayMonths[$the_day['cal']][$key];
 
-					echo '<span class="-month" data-month="'.esc_attr( $month ).'">'.$the_day['month'].'</span>';
+					echo '<span class="-month" data-month="'.esc_attr( $month )
+						.'"><a target="_blank" href="'.self::getTheDayLink( $stored, 'month' )
+						.'">'.$the_day['month'].'</a></span>';
 				}
 
 				if ( $the_day['year'] )
-					echo '<span class="-year" data-year="'.esc_attr( $the_day['year'] ).'">'.Number::format( $the_day['year'] ).'</span>';
+					echo '<span class="-year" data-year="'.esc_attr( $the_day['year'] )
+						.'"><a target="_blank" href="'.self::getTheDayLink( $stored, 'year' )
+						.'">'.Number::format( $the_day['year'] ).'</a></span>';
 
 				if ( $the_day['cal'] )
-					echo '<span class="-cal" data-cal="'.esc_attr( $the_day['cal'] ).'">'.
-						( empty( $gEditorialTodayCalendars[$the_day['cal']] ) ? $the_day['cal'] : $gEditorialTodayCalendars[$the_day['cal']] )
-					.'</span>';
+					echo '<span class="-cal" data-cal="'.esc_attr( $the_day['cal'] )
+						.'"><a target="_blank" href="'.self::getTheDayLink( $stored, 'cal' )
+						.'">'.( empty( $gEditorialTodayCalendars[$the_day['cal']] )
+							? $the_day['cal']
+							: $gEditorialTodayCalendars[$the_day['cal']] ).'</a></span>';
 
 			echo '</div>';
 		}
+	}
+
+	public static function getTheDayLink( $the_day, $context = 'full' )
+	{
+		switch ( $context ) {
+			case 'cal': unset( $the_day['year'], $the_day['month'], $the_day['day'] ); break;
+			case 'year': unset( $the_day['month'], $the_day['day'] ); break;
+			case 'month': unset( $the_day['day'] ); break;
+		}
+
+		return home_url( implode( '/', $the_day ) );
 	}
 
 	public static function getTheDayFromPost( $post, $default_type = 'gregorian', $constants = NULL )
@@ -288,6 +308,7 @@ class Today extends gEditorial\Helper
 		return [ $posts, $pagination ];
 	}
 
+	// TODO: conversion buttons
 	public static function theDaySelect( $atts = [], $year = TRUE, $default_type = 'gregorian', $calendars = NULL )
 	{
 		$args = self::atts( [
@@ -344,9 +365,7 @@ class Today extends gEditorial\Helper
 				'data'         => [ 'ortho' => 'number' ],
 			] );
 
-		echo HTML::tag( 'div', [
-			'class' => 'field-wrap '.( $year ? 'field-wrap-inputtext-date' : 'field-wrap-inputtext-half' ),
-		], $html );
+		echo HTML::wrap( $html, 'field-wrap '.( $year ? 'field-wrap-inputtext-date' : 'field-wrap-inputtext-half' ) );
 
 		$html = HTML::tag( 'option', [
 			'value' => '',
@@ -365,63 +384,58 @@ class Today extends gEditorial\Helper
 			'title' => _x( 'Calendar', 'Modules: Today: Meta Box Input', GEDITORIAL_TEXTDOMAIN ),
 		], $html );
 
-		echo HTML::tag( 'div', [
-			'class' => 'field-wrap field-wrap-select',
-		], $html );
-
-		// TODO: insert conversion buttons
+		echo HTML::wrap( $html, 'field-wrap field-wrap-select' );
 	}
 
-	public static function theDayNewConnected( $posttypes, $the_day = [], $posttype = FALSE )
+	public static function theDayNewConnected( $posttypes, $the_day = [], $new_day = FALSE )
 	{
 		if ( ! is_user_logged_in() )
 			return;
 
 		$html = '';
-		$new  = admin_url( 'post-new.php' );
-
-		if ( $posttype ) {
-
-			$posttype_object = get_post_type_object( $posttype );
-
-			if ( current_user_can( $posttype_object->cap->create_posts ) ) {
-
-				// FIXME: get edit item url
-
-				$noyear = $the_day;
-
-				unset( $noyear['year'] );
-
-				$html .= HTML::tag( 'a', [
-					'href'          => add_query_arg( array_merge( $noyear, [ 'post_type' => $posttype ] ), $new ),
-					'class'         => 'button -add-posttype -add-posttype-'.$posttype,
-					'target'        => '_blank',
-					'data-posttype' => $posttype,
-					'title'         => _x( 'New Day!', 'Modules: Today', GEDITORIAL_TEXTDOMAIN ),
-				], Helper::getPostTypeIcon( $posttype_object ).' '.$posttype_object->labels->edit_item );
-			}
-
-			unset( $posttype_object, $posttype, $noyear );
-		}
 
 		foreach ( $posttypes as $posttype ) {
 
-			$posttype_object = get_post_type_object( $posttype );
+			$object = get_post_type_object( $posttype );
 
-			if ( ! current_user_can( $posttype_object->cap->create_posts ) )
+			if ( ! current_user_can( $object->cap->create_posts ) )
 				continue;
 
-			$html .= HTML::tag( 'a', [
-				'href'          => add_query_arg( array_merge( $the_day, [ 'post_type' => $posttype ] ), $new ),
-				'class'         => [ 'button', 'button-icon', '-add-posttype', '-add-posttype-'.$posttype ],
-				'target'        => '_blank',
-				'data-posttype' => $posttype,
-				'title'         => sprintf( _x( 'New %s connected to this day', 'Modules: Today', GEDITORIAL_TEXTDOMAIN ), $posttype_object->labels->singular_name ),
-			], Helper::getPostTypeIcon( $posttype_object ).' '.$posttype_object->labels->add_new_item );
+			$title = $object->labels->add_new_item;
+
+			if ( is_admin() )
+				$title = Helper::getPostTypeIcon( $object ).' '.$title;
+
+			$html .= HTML::button( $title,
+				WordPress::getPostNewLink( $object->name, $the_day ),
+				sprintf( _x( 'New %s connected to this day', 'Modules: Today', GEDITORIAL_TEXTDOMAIN ), $object->labels->singular_name ),
+				is_admin()
+			).' ';
 		}
 
-		echo HTML::tag( 'div', [
-			'class' => 'field-wrap field-wrap-buttons',
-		], $html );
+		if ( $new_day ) {
+
+			$object = get_post_type_object( $new_day );
+
+			if ( current_user_can( $object->cap->create_posts ) ) {
+
+				// FIXME: get edit item url
+
+				unset( $the_day['year'] );
+
+				$title = $object->labels->edit_item;
+
+				if ( is_admin() )
+					$title = Helper::getPostTypeIcon( $object ).' '.$title;
+
+				$html .= HTML::button( $title,
+					WordPress::getPostNewLink( $object->name, $the_day ),
+					_x( 'New Day!', 'Modules: Today', GEDITORIAL_TEXTDOMAIN ),
+					is_admin()
+				);
+			}
+		}
+
+		echo HTML::wrap( $html, 'field-wrap field-wrap-buttons' );
 	}
 }
