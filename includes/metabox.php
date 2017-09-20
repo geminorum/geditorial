@@ -43,7 +43,7 @@ class MetaBox extends Core\Base
 
 		if ( $html ) {
 
-			echo '<div class="field-wrap-list"><ul>'.$html.'</ul></div>';
+			echo HTML::wrap( '<ul>'.$html.'</ul>', 'field-wrap field-wrap-list' );
 
 			// allows for an empty term set to be sent. 0 is an invalid Term ID and will be ignored by empty() checks.
 			echo '<input type="hidden" name="tax_input['.$tax_name.'][]" value="0" />';
@@ -84,7 +84,7 @@ class MetaBox extends Core\Base
 		foreach ( $posts as $post )
 			$html .= '<li>'.Helper::getPostTitleRow( $post ).'</li>';
 
-		return '<div class="field-wrap field-wrap-list">'.$html.'</ol></div>';
+		return HTML::wrap( $html.'</ol>', 'field-wrap field-wrap-list' );
 	}
 
 	public static function fieldEmptyTaxonomy( $taxonomy, $edit = NULL )
@@ -95,37 +95,35 @@ class MetaBox extends Core\Base
 		if ( is_null( $edit ) )
 			$edit = WordPress::getEditTaxLink( $taxonomy->name );
 
-		echo '<div class="field-wrap field-wrap-empty">';
+		if ( $edit )
+			$html = HTML::tag( 'a', [
+				'href'   => $edit,
+				'title'  => $taxonomy->labels->add_new_item,
+				'target' => '_blank',
+			], $taxonomy->labels->not_found );
 
-			if ( $edit )
-				echo HTML::tag( 'a', [
-					'href'   => $edit,
-					'title'  => $taxonomy->labels->add_new_item,
-					'target' => '_blank',
-				], $taxonomy->labels->not_found );
+		else
+			$html = '<span>'.$taxonomy->labels->not_found.'</span>';
 
-			else
-				echo '<span>'.$taxonomy->labels->not_found.'</span>';
-
-		echo '</div>';
+		echo HTML::wrap( $html, 'field-wrap field-wrap-empty' );
 	}
 
 	public static function fieldEmptyPostType( $post_type )
 	{
 		$object = is_object( $post_type ) ? $post_type : get_post_type_object( $post_type );
 
-		echo '<div class="field-wrap field-wrap-empty">';
-			echo HTML::tag( 'a', [
-				'href'   => add_query_arg( [ 'post_type' => $post_type ], admin_url( 'post-new.php' ) ),
-				'title'  => $object->labels->add_new_item,
-				'target' => '_blank',
-			], $object->labels->not_found );
-		echo '</div>';
+		$html = HTML::tag( 'a', [
+			'href'   => WordPress::getPostNewLink( $post_type ),
+			'title'  => $object->labels->add_new_item,
+			'target' => '_blank',
+		], $object->labels->not_found );
+
+		echo HTML::wrap( $html, 'field-wrap field-wrap-empty' );
 	}
 
 	public static function dropdownAssocPosts( $post_type, $selected = '', $prefix = '', $exclude = '' )
 	{
-		return wp_dropdown_pages( [
+		$html = wp_dropdown_pages( [
 			'post_type'        => $post_type,
 			'selected'         => $selected,
 			'name'             => ( $prefix ? $prefix.'-' : '' ).$post_type.'[]',
@@ -140,13 +138,13 @@ class MetaBox extends Core\Base
 			'echo'             => 0,
 			'walker'           => new Walker_PageDropdown(),
 		] );
+
+		return $html ? HTML::wrap( $html, 'field-wrap field-wrap-select' ) : FALSE;
 	}
 
 	public static function fieldPostMenuOrder( $post )
 	{
-		echo '<div class="field-wrap field-wrap-inputnumber">';
-
-		echo HTML::tag( 'input', [
+		$html = HTML::tag( 'input', [
 			'type'        => 'number',
 			'step'        => '1',
 			'size'        => '4',
@@ -159,7 +157,7 @@ class MetaBox extends Core\Base
 			'data'        => [ 'ortho' => 'number' ],
 		] );
 
-		echo '</div>';
+		echo HTML::wrap( $html, 'field-wrap field-wrap-inputnumber' );
 	}
 
 	public static function fieldPostParent( $post_type, $post, $statuses = [ 'publish', 'future', 'draft' ] )
@@ -167,7 +165,7 @@ class MetaBox extends Core\Base
 		if ( ! get_post_type_object( $post_type )->hierarchical )
 			return;
 
-		$posts = wp_dropdown_pages( [
+		$html = wp_dropdown_pages( [
 			'post_type'        => $post_type, // alows for parent of diffrent type
 			'selected'         => $post->post_parent,
 			'name'             => 'parent_id',
@@ -180,8 +178,8 @@ class MetaBox extends Core\Base
 			'echo'             => 0,
 		] );
 
-		if ( $posts )
-			echo HTML::tag( 'div', [ 'class' => 'field-wrap' ], $posts );
+		if ( $html )
+			echo HTML::wrap( $html, 'field-wrap field-wrap-select' );
 	}
 
 	// FIXME: finalize name/id
@@ -221,7 +219,7 @@ class MetaBox extends Core\Base
 
 		if ( $terms )
 			echo HTML::tag( 'div', [
-				'class' => 'field-wrap' ,
+				'class' => '-wrap field-wrap field-wrap-select',
 				'title' => $obj->labels->menu_name,
 			], $terms );
 		else

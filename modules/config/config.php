@@ -433,7 +433,7 @@ class Config extends gEditorial\Module
 
 				$enabled = isset( $gEditorial->{$name} );
 
-				echo '<div class="module '.( $enabled ? 'module-enabled' : 'module-disabled' )
+				echo '<div class="module '.( $enabled ? '-enabled' : '-disabled' )
 					.'" id="'.$module->settings.'" data-module="'.$module->name.'">';
 
 				if ( $module->icon )

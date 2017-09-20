@@ -222,28 +222,28 @@ class Tube extends gEditorial\Module
 
 		$html .= HTML::tag( 'a', [
 			'href'   => sprintf( 'https://telegram.me/share/url?url=%s', urlencode( $link ) ),
-			'class'  => [ '-button', 'btn', 'btn-default', 'btn-xs', '-icon-button' ],
+			'class'  => [ '-button', 'btn', 'btn-default', 'btn-xs', '-button-icon' ],
 			'title'  => _x( 'Share this video', 'Modules: Tube: Button', GEDITORIAL_TEXTDOMAIN ),
 			'target' => '_blank',
 		], $this->icon( 'telegram', 'social-logos' ) );
 
 		$html .= HTML::tag( 'a', [
 			'href'   => sprintf( 'https://twitter.com/intent/tweet?url=%s', urlencode( $link ) ),
-			'class'  => [ '-button', 'btn', 'btn-default', 'btn-xs', '-icon-button' ],
+			'class'  => [ '-button', 'btn', 'btn-default', 'btn-xs', '-button-icon' ],
 			'title'  => _x( 'Share this video', 'Modules: Tube: Button', GEDITORIAL_TEXTDOMAIN ),
 			'target' => '_blank',
 		], $this->icon( 'twitter-alt', 'social-logos' ) );
 
 		$html .= HTML::tag( 'a', [
 			'href'   => sprintf( 'https://plus.google.com/share?url=%s', urlencode( $link ) ),
-			'class'  => [ '-button', 'btn', 'btn-default', 'btn-xs', '-icon-button' ],
+			'class'  => [ '-button', 'btn', 'btn-default', 'btn-xs', '-button-icon' ],
 			'title'  => _x( 'Share this video', 'Modules: Tube: Button', GEDITORIAL_TEXTDOMAIN ),
 			'target' => '_blank',
 		], $this->icon( 'google-plus-alt', 'social-logos' ) );
 
 		$html .= HTML::tag( 'a', [
 			'href'   => sprintf( 'https://www.facebook.com/sharer/sharer.php?u=%s', urlencode( $link ) ),
-			'class'  => [ '-button', 'btn', 'btn-default', 'btn-xs', '-icon-button' ],
+			'class'  => [ '-button', 'btn', 'btn-default', 'btn-xs', '-button-icon' ],
 			'title'  => _x( 'Share this video', 'Modules: Tube: Button', GEDITORIAL_TEXTDOMAIN ),
 			'target' => '_blank',
 		], $this->icon( 'facebook', 'social-logos' ) );

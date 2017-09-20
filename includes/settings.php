@@ -882,7 +882,7 @@ class Settings extends Core\Base
 			'type'  => 'submit',
 			'value' => _x( 'Enable', 'Settings: Button', GEDITORIAL_TEXTDOMAIN ),
 			'style' => $enabled ? 'display:none' : FALSE,
-			'class' => [ 'hide-if-no-js', 'button', 'button-primary', 'button-toggle' ],
+			'class' => [ 'hide-if-no-js', 'button-primary', 'button', 'button-small', '-button' ],
 			'data'  => [
 				'module' => $module->name,
 				'do'     => 'enable',
@@ -893,7 +893,7 @@ class Settings extends Core\Base
 			'type'  => 'submit',
 			'value' => _x( 'Disable', 'Settings: Button', GEDITORIAL_TEXTDOMAIN ),
 			'style' => $enabled ? FALSE : 'display:none',
-			'class' => [ 'hide-if-no-js', 'button', 'button-secondary', 'button-toggle', 'button-remove' ],
+			'class' => [ 'hide-if-no-js', 'button-secondary', 'button', 'button-small', '-button', '-button-danger' ],
 			'data'  => [
 				'module' => $module->name,
 				'do'     => 'disable',
@@ -911,7 +911,7 @@ class Settings extends Core\Base
 			echo HTML::tag( 'a', [
 				'href'  => add_query_arg( 'page', $module->settings, get_admin_url( NULL, 'admin.php' ) ),
 				'style' => $enabled ? FALSE : 'display:none',
-				'class' => [ 'button', 'button-primary', 'button-configure' ],
+				'class' => [ 'button-primary', 'button', 'button-small', '-button' ],
 				'data'  => [
 					'module' => $module->name,
 					'do'     => 'configure',

@@ -374,16 +374,13 @@ class Contest extends gEditorial\Module
 
 		foreach ( $dropdowns as $term_slug => $dropdown ) {
 			if ( $dropdown ) {
-				echo '<div class="field-wrap">';
-					echo $dropdown;
-				echo '</div>';
-
+				echo $dropdown;
 				$empty = FALSE;
 			}
 		}
 
 		if ( $empty )
-			return MetaBox::fieldEmptyPostType( $post_type );
+			MetaBox::fieldEmptyPostType( $post_type );
 	}
 
 	public function meta_box_cb_apply_status_tax( $post, $box )

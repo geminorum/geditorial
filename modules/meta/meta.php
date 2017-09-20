@@ -379,16 +379,11 @@ class Meta extends gEditorial\Module
 
 		do_action( 'geditorial_meta_box_before', $this->module, $post, $fields );
 
-		if ( count( $fields ) ) {
-
+		if ( count( $fields ) )
 			do_action( 'geditorial_meta_do_meta_box', $post, $box, $fields, 'box' );
 
-		} else {
-
-			echo '<div class="field-wrap field-wrap-empty">';
-				_ex( 'No Meta Fields', 'Modules: Meta', GEDITORIAL_TEXTDOMAIN );
-			echo '</div>';
-		}
+		else
+			echo HTML::wrap( _x( 'No Meta Fields', 'Modules: Meta', GEDITORIAL_TEXTDOMAIN ), 'field-wrap field-wrap-empty' );
 
 		do_action( 'geditorial_meta_box_after', $this->module, $post, $fields );
 

@@ -28,14 +28,14 @@ jQuery(function($) {
     $(this).closest('table').find('.fields-check-all').prop('checked', false);
   });
 
-  $('.button-toggle').click(function(e) {
+  $('input[data-do]').click(function(e) {
     e.preventDefault();
 
     var module = $(this).data('module'),
       action = $(this).data('do'),
       $box = $("div[data-module='" + module + "']"),
       $spinner = $box.find('.spinner'),
-      $icon = $box.find('.dashicons, .-iconsvg');
+      $icon = $box.find('[data-icon]');
 
     $.ajax({
       url: gEditorial._url,
@@ -48,28 +48,28 @@ jQuery(function($) {
         nonce: gEditorial['config']._nonce
       },
       beforeSend: function(xhr) {
-        $box.addClass('module-spinning');
+        $box.addClass('-spinning');
         $icon.hide();
         $spinner.addClass('is-active');
       },
       success: function(response, textStatus, xhr) {
-        $box.removeClass('module-spinning');
+        $box.removeClass('-spinning');
         $icon.show();
         $spinner.removeClass('is-active');
 
         if (response.success) {
-          $box.find('.button-toggle').hide();
+          $box.find('[data-do]').hide();
 
           // FIXME: display response somewhere!
 
           if ('disable' == action) {
-            $box.addClass('module-disabled').removeClass('module-enabled');
-            $box.find('.button-toggle.button-primary').show();
-            $box.find('.button-configure').hide();
+            $box.addClass('-disabled').removeClass('-enabled');
+            $box.find('[data-do="enable"]').show();
+            $box.find('[data-do="configure"]').hide();
           } else if ('enable' == action) {
-            $box.addClass('module-enabled').removeClass('module-disabled');
-            $box.find('.button-toggle.button-remove').show();
-            $box.find('.button-configure').show();
+            $box.addClass('-enabled').removeClass('-disabled');
+            $box.find('[data-do="disable"]').show();
+            $box.find('[data-do="configure"]').show();
           }
         }
       }

@@ -232,6 +232,7 @@ class Ortho extends gEditorial\Module
 				'type'         => 'textarea-quicktags',
 				'field'        => 'sandbox',
 				'dir'          => 'rtl',
+				'field_class'  => [ 'large-text', 'textarea-autosize' ],
 				'option_group' => 'tools',
 			] );
 

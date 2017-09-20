@@ -292,8 +292,8 @@ class Specs extends gEditorial\Module
 		$fields = $this->post_type_fields( $post->post_type );
 		$metas  = $this->get_postmeta( $post->ID, FALSE, [] );
 
-		$handle = '<span class="item-handle dashicons dashicons-move" title="'._x( 'Sort me!', 'Modules: Specs: Sortable Handler', GEDITORIAL_TEXTDOMAIN ).'"></span>';
-		$delete = '<span class="item-delete dashicons dashicons-trash" title="'._x( 'Trash me!', 'Modules: Specs: Sortable Trash', GEDITORIAL_TEXTDOMAIN ).'"></span>';
+		$handle = '<span data-icon="dashicons" class="item-handle dashicons dashicons-move" title="'._x( 'Sort me!', 'Modules: Specs: Sortable Handler', GEDITORIAL_TEXTDOMAIN ).'"></span>';
+		$delete = '<span data-icon="dashicons" class="item-delete dashicons dashicons-trash" title="'._x( 'Trash me!', 'Modules: Specs: Sortable Trash', GEDITORIAL_TEXTDOMAIN ).'"></span>';
 
 		echo '<ol class="geditorial-specs-list">';
 		foreach ( $metas as $order => $meta ) {
@@ -310,9 +310,7 @@ class Specs extends gEditorial\Module
 
 			$this->geditorial_specs_meta_box_item( $order, $fields, $post, $meta );
 
-			echo '<div class="field-wrap field-wrap-select">';
-
-			wp_dropdown_categories( [
+			$html = wp_dropdown_categories( [
 				'taxonomy'         => $tax,
 				'selected'         => ( isset( $meta['spec_term_id'] ) ? $the_terms[$meta['spec_term_id']]->term_id : 0 ),
 				'show_option_none' => $this->get_string( 'show_option_none', $post->post_type, 'misc' ),
@@ -321,10 +319,12 @@ class Specs extends gEditorial\Module
 				'class'            => 'geditorial-admin-dropbown item-dropdown',
 				'show_count'       => 0,
 				'hide_empty'       => 0,
-				'echo'             => 1,
+				'echo'             => 0,
 			] );
 
-			echo '</div></div></div></li>';
+			echo HTML::wrap( $html, 'field-wrap field-wrap-select' );
+
+			echo '</div></div></li>';
 		}
 		echo '</ol>';
 
@@ -340,10 +340,8 @@ class Specs extends gEditorial\Module
 
 				$this->geditorial_specs_meta_box_item( '-1', $fields, $post );
 
-				echo '<div class="field-wrap field-wrap-select">';
-
 				// FIXME: we need custom for disabled options
-				wp_dropdown_categories( [
+				$html = wp_dropdown_categories( [
 					'taxonomy'         => $tax,
 					'selected'         => 0,
 					'show_option_none' => $this->get_string( 'show_option_none', $post->post_type, 'misc' ),
@@ -353,10 +351,12 @@ class Specs extends gEditorial\Module
 					'class'            => 'geditorial-admin-dropbown item-dropdown item-dropdown-new',
 					'show_count'       => 0,
 					'hide_empty'       => 0,
-					'echo'             => 1,
+					'echo'             => 0,
 				] );
 
-		echo '</div></div></div></li></ul>';
+				echo HTML::wrap( $html, 'field-wrap field-wrap-select' );
+
+		echo '</div></div></li></ul>';
 
 		$this->actions( 'box_after', $this->module, $post, $fields );
 		$this->nonce_field( 'post_main' );
@@ -368,6 +368,7 @@ class Specs extends gEditorial\Module
 		if ( in_array( $field, $fields ) ) {
 
 			$title = $this->get_string( $field, $post->post_type );
+
 			$html = HTML::tag( 'textarea', [
 				'class'       => 'textarea-autosize',
 				'name'        => 'geditorial-specs-spec_value[]',
@@ -375,15 +376,14 @@ class Specs extends gEditorial\Module
 				'placeholder' => $title,
 			], isset( $meta[$field] ) ? esc_textarea( $meta[$field] ) : '' );
 
-			echo HTML::tag( 'div', [
-				'class' => 'field-wrap field-wrap-textarea',
-			], $html );
+			echo HTML::wrap( $html, 'field-wrap field-wrap-textarea' );
 		}
 
 		$field = 'spec_title';
 		if ( in_array( $field, $fields ) ) {
 
 			$title = $this->get_string( $field, $post->post_type );
+
 			$html = HTML::tag( 'input', [
 				'type'         => 'text',
 				'name'         => 'geditorial-specs-spec_title[]',
@@ -393,9 +393,7 @@ class Specs extends gEditorial\Module
 				'autocomplete' => 'off',
 			] );
 
-			echo HTML::tag( 'div', [
-				'class' => 'field-wrap field-wrap-inputtext',
-			], $html );
+			echo HTML::wrap( $html, 'field-wrap field-wrap-inputtext' );
 		}
 
 		echo '<input type="hidden" class="item-order" name="geditorial-specs-spec_order[]" value="'.$order.'" />';

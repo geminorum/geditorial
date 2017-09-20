@@ -266,9 +266,7 @@ class Series extends gEditorial\Module
 
 				echo '<div class="field-wrap-group">';
 
-					echo '<div class="field-wrap field-wrap-select">';
-						echo $dropdown;
-					echo '</div>';
+					echo HTML::wrap( $dropdown, 'field-wrap field-wrap-select' );
 
 					do_action( 'geditorial_series_meta_box_item', $counter, $map[$counter], $fields, $post );
 
@@ -293,6 +291,7 @@ class Series extends gEditorial\Module
 		if ( in_array( $field, $fields ) ) {
 
 			$title = $this->get_string( $field, $post->post_type );
+
 			$html = HTML::tag( 'input', [
 				'type'         => 'text',
 				'name'         => 'geditorial-series-'.$field.'['.$counter.']',
@@ -306,15 +305,14 @@ class Series extends gEditorial\Module
 				],
 			] );
 
-			echo HTML::tag( 'div', [
-				'class' => 'field-wrap field-wrap-inputtext',
-			], $html );
+			echo HTML::wrap( $html, 'field-wrap field-wrap-inputtext' );
 		}
 
 		$field = 'in_series_order';
 		if ( in_array( $field, $fields ) ) {
 
 			$title = $this->get_string( $field, $post->post_type );
+
 			$html = HTML::tag( 'input', [
 				'type'         => 'text',
 				'name'         => 'geditorial-series-'.$field.'['.$counter.']',
@@ -325,15 +323,14 @@ class Series extends gEditorial\Module
 				'autocomplete' => 'off',
 			] );
 
-			echo HTML::tag( 'div', [
-				'class' => 'field-wrap field-wrap-inputtext',
-			], $html );
+			echo HTML::wrap( $html, 'field-wrap field-wrap-inputtext' );
 		}
 
 		$field = 'in_series_desc';
 		if ( in_array( $field, $fields ) ) {
 
 			$title = $this->get_string( $field, $post->post_type );
+
 			$html = HTML::tag( 'textarea', [
 				'rows'        => '1',
 				'class'       => 'textarea-autosize',
@@ -346,9 +343,7 @@ class Series extends gEditorial\Module
 				],
 			], isset( $meta[$field] ) ? esc_textarea( $meta[$field] ) : '' );
 
-			echo HTML::tag( 'div', [
-				'class' => 'field-wrap field-wrap-textarea',
-			], $html );
+			echo HTML::wrap( $html, 'field-wrap field-wrap-textarea' );
 		}
 	}
 

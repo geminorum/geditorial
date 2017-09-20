@@ -110,11 +110,7 @@ class Meta extends gEditorial\MetaBox
 		else if ( 'text' == $type )
 			$atts['data']['ortho'] = 'text';
 
-		$html = HTML::tag( 'input', $atts );
-
-		echo HTML::tag( 'div', [
-			'class' => 'field-wrap field-wrap-inputtext',
-		], $html );
+		echo HTML::wrap( HTML::tag( 'input', $atts ), 'field-wrap field-wrap-inputtext' );
 	}
 
 	public static function fieldNumber( $field, $fields, $post, $ltr = TRUE, $title = NULL, $key = FALSE, $type = 'number' )
@@ -152,11 +148,7 @@ class Meta extends gEditorial\MetaBox
 
 		$atts['data']['ortho'] = 'number';
 
-		$html = HTML::tag( 'input', $atts );
-
-		echo HTML::tag( 'div', [
-			'class' => 'field-wrap field-wrap-inputnumber',
-		], $html );
+		echo HTML::wrap( HTML::tag( 'input', $atts ), 'field-wrap field-wrap-inputnumber' );
 	}
 
 	public static function fieldTerm( $field, $fields, $post, $tax, $ltr = FALSE, $title = NULL, $key = FALSE, $type = 'term' )
@@ -171,7 +163,7 @@ class Meta extends gEditorial\MetaBox
 
 		$desc = $gEditorial->meta->get_string( $field, $post->post_type, 'descriptions', $title ); // FIXME: get from fields args
 
-		echo '<div class="field-wrap" title="'.esc_attr( $desc ).'">';
+		echo '<div class="-wrap field-wrap field-wrap-select" title="'.esc_attr( $desc ).'">';
 
 		// FIXME: core dropdown does not support: data attr
 		wp_dropdown_categories( [
@@ -231,9 +223,7 @@ class Meta extends gEditorial\MetaBox
 
 		$html = HTML::tag( 'textarea', $atts, esc_textarea( $gEditorial->meta->get_postmeta( $post->ID, $field ) ) );
 
-		echo HTML::tag( 'div', [
-			'class' => 'field-wrap field-wrap-textarea',
-		], $html );
+		echo HTML::wrap( $html, 'field-wrap field-wrap-textarea' );
 	}
 
 	// for meta fields before and after post title
@@ -295,7 +285,7 @@ class Meta extends gEditorial\MetaBox
 		$html .= '<span class="toggle-indicator" aria-hidden="true"></span></button>';
 		$html .= '<h2 class="hndle"><span>'.$title.'</span></h2><div class="inside">';
 		$html .= '<div class="geditorial-admin-wrap-textbox geditorial-wordcount-wrap">';
-		$html .= '<div class="field-wrap field-wrap-textarea">';
+		$html .= '<div class="-wrap field-wrap field-wrap-textarea">';
 
 		$atts = [
 			'rows'     => '1',
