@@ -284,12 +284,12 @@ class Event extends gEditorial\Module
 		$this->do_restrict_manage_posts_taxes( 'event_cat' );
 	}
 
+	// FIXME: merge filters
 	public function pre_get_posts_admin( $wp_query )
 	{
-		if ( $wp_query->is_admin
-			&& isset( $wp_query->query['post_type'] ) ) {
+		if ( $this->constant( 'event_cpt' ) == $wp_query->get( 'post_type' ) ) {
 
-			if ( $this->constant( 'event_cpt' ) == $wp_query->query['post_type'] ) {
+			if ( $wp_query->is_admin ) {
 
 				if ( ! isset( $_GET['orderby'] ) )
 					$wp_query->set( 'orderby', 'date' );

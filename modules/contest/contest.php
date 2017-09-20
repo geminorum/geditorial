@@ -530,10 +530,9 @@ class Contest extends gEditorial\Module
 
 	public function pre_get_posts( &$wp_query )
 	{
-		if ( $wp_query->is_admin
-			&& isset( $wp_query->query['post_type'] ) ) {
+		if ( $this->constant( 'contest_cpt' ) == $wp_query->get( 'post_type' ) ) {
 
-			if ( $this->constant( 'contest_cpt' ) == $wp_query->query['post_type'] ) {
+			if ( $wp_query->is_admin ) {
 
 				if ( ! isset( $_GET['orderby'] ) )
 					$wp_query->set( 'orderby', 'menu_order' );
