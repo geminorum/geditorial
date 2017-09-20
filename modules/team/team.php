@@ -132,7 +132,8 @@ class Team extends gEditorial\Module
 		], 'member_cpt' );
 
 		$this->register_post_type( 'member_cpt', [
-			'menu_position' => 65,
+			'menu_position'     => 65,
+			'show_in_admin_bar' => FALSE,
 		] );
 	}
 
