@@ -77,7 +77,7 @@ class Specs extends gEditorial\Module
 		];
 	}
 
-	public function setup( $partials = [] )
+	protected function setup( $args = [] )
 	{
 		parent::setup();
 

@@ -70,6 +70,9 @@ class Module extends Base
 		$this->module  = $module;
 		$this->options = $options;
 
+		if ( FALSE !== $module->disabled )
+			return;
+
 		if ( $this->remote() )
 			$this->setup_remote();
 

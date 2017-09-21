@@ -174,6 +174,7 @@ class Plugin
 			'configure' => 'print_configure_view',
 			'frontend'  => TRUE, // whether or not the module should be loaded on the frontend too
 			'autoload'  => FALSE, // autoloading a module will remove the ability to enable or disable it
+			'disabled'  => FALSE, // string explaining why this module is not available
 		];
 
 		$this->modules->{$args['name']} = (object) array_merge( $defaults, $args );

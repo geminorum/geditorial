@@ -35,7 +35,7 @@ class Config extends gEditorial\Module
 		];
 	}
 
-	public function setup( $partials = [] )
+	protected function setup( $args = [] )
 	{
 		parent::setup();
 
@@ -88,6 +88,9 @@ class Config extends gEditorial\Module
 		add_action( 'load-'.$hook_tools, [ $this, 'admin_tools_load' ] );
 
 		foreach ( $gEditorial->modules as $name => &$module ) {
+
+			if ( FALSE !== $module->disabled )
+				continue;
 
 			if ( isset( $gEditorial->{$name} )
 				&& $module->configure
@@ -445,12 +448,18 @@ class Config extends gEditorial\Module
 
 					Settings::moduleInfo( $module );
 
-					echo '<p class="actions">';
+					if ( FALSE === $module->disabled ) {
 
-						Settings::moduleConfigure( $module, $enabled );
-						Settings::moduleButtons( $module, $enabled );
+						echo '<p class="actions">';
+							Settings::moduleConfigure( $module, $enabled );
+							Settings::moduleButtons( $module, $enabled );
+						echo '</p>';
 
-					echo '</p>';
+					} else if ( $module->disabled ) {
+
+						echo HTML::wrap( $module->disabled, 'actions -danger' );
+					}
+
 				echo '</form></div>';
 			}
 
