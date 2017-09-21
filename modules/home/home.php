@@ -321,7 +321,7 @@ add_theme_support( \'featured-content\', [
 
 	public function calendar_posttypes( $posttypes )
 	{
-		return $this->post_types();
+		return $posttypes === [ 'post' ] ? $this->post_types() : $posttypes;
 	}
 
 	public function search_404_posttypes( $posttypes )
