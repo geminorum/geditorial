@@ -1617,6 +1617,11 @@ class Module extends Base
 		return array_intersect_key( $defaults, array_flip( $settings ) );
 	}
 
+	public function default_calendar( $default = 'gregorian' )
+	{
+		return $this->get_setting( 'calendar_type', $default );
+	}
+
 	// CAUTION: tax must be cat (hierarchical)
 	// hierarchical taxonomies save by IDs, whereas non save by slugs
 	// TODO: supporting tag (non-hierarchical)

@@ -468,8 +468,6 @@ class Users extends gEditorial\Module
 			'year_month' => '',
 		], 'reports' );
 
-		$calendar_type = $this->get_setting( 'calendar_type', 'gregorian' );
-
 		$this->settings_form_before( $uri, $sub, 'bulk', 'reports', FALSE, FALSE );
 
 			HTML::h3( _x( 'User Reports', 'Modules: Users', GEDITORIAL_TEXTDOMAIN ) );
@@ -502,7 +500,7 @@ class Users extends gEditorial\Module
 				'type'         => 'select',
 				'field'        => 'year_month',
 				'none_title'   => _x( 'All Months', 'Modules: Users', GEDITORIAL_TEXTDOMAIN ),
-				'values'       => Helper::getPostTypeMonths( $calendar_type, $args['post_type'], [], $args['user_id'] ),
+				'values'       => Helper::getPostTypeMonths( $this->default_calendar(), $args['post_type'], [], $args['user_id'] ),
 				'default'      => $args['year_month'],
 				'option_group' => 'reports',
 			] );
@@ -514,7 +512,7 @@ class Users extends gEditorial\Module
 
 			if ( ! empty( $_POST ) && isset( $_POST['posttype_stats'] ) ) {
 
-				$period = $args['year_month'] ? Helper::monthFirstAndLast( $calendar_type, substr( $args['year_month'], 0, 4 ), substr( $args['year_month'], 4, 2 ) ) : [];
+				$period = $args['year_month'] ? Helper::monthFirstAndLast( $this->default_calendar(), substr( $args['year_month'], 0, 4 ), substr( $args['year_month'], 4, 2 ) ) : [];
 
 				echo HTML::tableCode( Database::countPostsByPosttype( $args['post_type'], $args['user_id'], $period ) );
 			}

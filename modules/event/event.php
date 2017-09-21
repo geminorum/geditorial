@@ -399,7 +399,7 @@ class Event extends gEditorial\Module
 	public function render_box( $post, $atts = [] )
 	{
 		$args = self::atts( [
-			'cal-type'   => self::req( 'cal-type', $this->get_setting( 'calendar_type', 'gregorian' ) ),
+			'cal-type'   => self::req( 'cal-type', $this->default_calendar() ),
 			// 'parent-id'  => self::req( 'parent-id', FALSE ),
 			'date-start' => self::req( 'date-start' ),
 			'date-end'   => self::req( 'date-end' ),

@@ -238,7 +238,7 @@ class Today extends gEditorial\Module
 			$this->actions( 'meta_box', $post, $box );
 
 			$display_year = $post->post_type != $this->constant( 'day_cpt' );
-			$default_type = $this->get_setting( 'calendar_type', 'gregorian' );
+			$default_type = $this->default_calendar();
 
 			// FIXME: must first check query
 
@@ -272,9 +272,11 @@ class Today extends gEditorial\Module
 	{
 		if ( 'theday' == $column_name ) {
 
-			$the_day = ModuleHelper::getTheDayFromPost( get_post( $post_id ),
-				$this->get_setting( 'calendar_type', 'gregorian' ),
-				$this->get_the_day_constants() );
+			$the_day = ModuleHelper::getTheDayFromPost(
+				get_post( $post_id ),
+				$this->default_calendar(),
+				$this->get_the_day_constants()
+			);
 
 			ModuleHelper::displayTheDay( $the_day );
 		}
@@ -348,11 +350,10 @@ class Today extends gEditorial\Module
 
 			$this->actions( 'no_box', $post );
 
-			$default_type = $this->get_setting( 'calendar_type', 'gregorian' );
-			$constants    = $this->get_the_day_constants();
-			$posttypes    = $this->post_types();
+			$posttypes = $this->post_types();
+			$constants = $this->get_the_day_constants();
 
-			$the_day = ModuleHelper::getTheDayFromPost( $post, $default_type, $constants );
+			$the_day = ModuleHelper::getTheDayFromPost( $post, $this->default_calendar(), $constants );
 
 			list( $posts, $pagination ) = ModuleHelper::getPostsConnected( [
 				'type'    => $posttypes,
@@ -414,10 +415,8 @@ class Today extends gEditorial\Module
 				if ( ! array_key_exists( 'geditorial-today-date-cal', $_POST ) )
 					return $post_id;
 
-				$postmeta      = [];
-				$save_the_year = $post->post_type != $this->constant( 'day_cpt' );
-				$default_type  = $this->get_setting( 'calendar_type', 'gregorian' );
-				$constants     = $this->get_the_day_constants( $save_the_year );
+				$postmeta  = [];
+				$constants = $this->get_the_day_constants( $post->post_type != $this->constant( 'day_cpt' ) );
 
 				foreach ( $constants as $field => $constant ) {
 
@@ -430,7 +429,7 @@ class Today extends gEditorial\Module
 						continue;
 
 					if ( 'cal' == $field )
-						$postmeta[$field] = Helper::sanitizeCalendar( $value, $default_type );
+						$postmeta[$field] = Helper::sanitizeCalendar( $value, $this->default_calendar() );
 					else
 						$postmeta[$field] = Number::intval( $value, FALSE );
 				}
@@ -452,9 +451,11 @@ class Today extends gEditorial\Module
 
 		if ( $this->constant( 'day_cpt' ) == $post->post_type ) {
 
-			$the_day = ModuleHelper::getTheDayFromPost( $post,
-				$this->get_setting( 'calendar_type', 'gregorian' ),
-				$this->get_the_day_constants() );
+			$the_day = ModuleHelper::getTheDayFromPost(
+				$post,
+				$this->default_calendar(),
+				$this->get_the_day_constants()
+			);
 
 			return ModuleHelper::titleTheDay( $the_day );
 		}
@@ -467,9 +468,11 @@ class Today extends gEditorial\Module
 		if ( ! $this->is_content_insert( $this->post_types() ) )
 			return;
 
-		$the_day = ModuleHelper::getTheDayFromPost( get_post(),
-			$this->get_setting( 'calendar_type', 'gregorian' ),
-			$this->get_the_day_constants() );
+		$the_day = ModuleHelper::getTheDayFromPost(
+			get_post(),
+			$this->default_calendar(),
+			$this->get_the_day_constants()
+		);
 
 		ModuleHelper::displayTheDay( $the_day, FALSE );
 	}
@@ -479,16 +482,15 @@ class Today extends gEditorial\Module
 		if ( ( $this->get_setting( 'override_frontpage' ) && is_front_page() )
 			|| is_post_type_archive( $this->constant( 'day_cpt' ) ) ) {
 
-			$default_type = $this->get_setting( 'calendar_type', 'gregorian' );
-			$constants    = $this->get_the_day_constants();
+			$constants = $this->get_the_day_constants();
 
 			if ( is_front_page() ) {
 
-				$this->the_day = ModuleHelper::getTheDayFromToday( NULL, $default_type );
+				$this->the_day = ModuleHelper::getTheDayFromToday( NULL, $this->default_calendar() );
 
 			} else {
 
-				$this->the_day = ModuleHelper::getTheDayFromQuery( FALSE, $default_type, $constants );
+				$this->the_day = ModuleHelper::getTheDayFromQuery( FALSE, $this->default_calendar(), $constants );
 
 				// no day, just cal
 				if ( 1 === count( $this->the_day ) )
@@ -630,9 +632,11 @@ class Today extends gEditorial\Module
 	{
 		if ( $post->post_type == $this->constant( 'day_cpt' ) ) {
 
-			$the_day = ModuleHelper::getTheDayFromPost( $post,
-				$this->get_setting( 'calendar_type', 'gregorian' ),
-				$this->get_the_day_constants() );
+			$the_day = ModuleHelper::getTheDayFromPost(
+				$post,
+				$this->default_calendar(),
+				$this->get_the_day_constants()
+			);
 
 			return ModuleHelper::getTheDayLink( $the_day );
 		}
@@ -694,10 +698,8 @@ class Today extends gEditorial\Module
 
 	private function tableSummary()
 	{
-		$constants    = $this->get_the_day_constants();
-		$default_type = $this->get_setting( 'calendar_type', 'gregorian' );
-
-		$query = [ 'meta_query' => [ 'relation' => 'OR' ] ];
+		$constants = $this->get_the_day_constants();
+		$query     = [ 'meta_query' => [ 'relation' => 'OR' ] ];
 
 		foreach ( $constants as $field => $constant ) {
 			$query['meta_query'][$field.'_clause'] = [ 'key' => $constant, 'compare' => 'EXISTS' ];
@@ -718,7 +720,7 @@ class Today extends gEditorial\Module
 				'title'    => _x( 'The Day', 'Modules: Today: Table Column', GEDITORIAL_TEXTDOMAIN ),
 				'args'     => [
 					'constants'    => $constants,
-					'default_type' => $default_type,
+					'default_type' => $this->default_calendar(),
 				],
 				'callback' => function( $value, $row, $column, $index ){
 					$the_day = ModuleHelper::getTheDayFromPost( $row,
@@ -765,7 +767,7 @@ class Today extends gEditorial\Module
 
 		switch ( $field ) {
 
-			case 'today_cal': return Helper::sanitizeCalendar( trim( $value ), $this->get_setting( 'calendar_type', 'gregorian' ) );
+			case 'today_cal': return Helper::sanitizeCalendar( trim( $value ), $this->default_calendar() );
 			case 'today_year':
 			case 'today_month':
 			case 'today_day': return Number::intval( trim( $value ), FALSE );
@@ -779,9 +781,8 @@ class Today extends gEditorial\Module
 		if ( ! in_array( $post->post_type, $this->post_types() ) )
 			return;
 
-		$postmeta     = [];
-		$default_type = $this->get_setting( 'calendar_type', 'gregorian' );
-		$fields       = array_keys( $this->get_importer_fields( $post->post_type ) );
+		$postmeta = [];
+		$fields   = array_keys( $this->get_importer_fields( $post->post_type ) );
 
 		foreach ( $field_map as $offset => $field ) {
 
@@ -794,7 +795,7 @@ class Today extends gEditorial\Module
 			$key = str_ireplace( 'today_', '', $field );
 
 			if ( 'cal' == $key )
-				$postmeta[$key] = Helper::sanitizeCalendar( $value, $default_type );
+				$postmeta[$key] = Helper::sanitizeCalendar( $value, $this->default_calendar() );
 			else
 				$postmeta[$key] = Number::intval( $value, FALSE );
 		}
