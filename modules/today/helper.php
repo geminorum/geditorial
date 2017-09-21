@@ -482,8 +482,8 @@ class Today extends gEditorial\Helper
 						$title = Helper::getPostTypeIcon( $object ).' '.$title;
 
 					$html .= HTML::button( $title,
-						WordPress::getPostNewLink( $object->name, $the_day ),
-						_x( 'New Day!', 'Modules: Today', GEDITORIAL_TEXTDOMAIN ),
+						WordPress::getPostEditLink( $the_post ),
+						_x( 'Edit Day!', 'Modules: Today', GEDITORIAL_TEXTDOMAIN ),
 						is_admin()
 					);
 				}
