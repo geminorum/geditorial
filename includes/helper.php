@@ -1306,6 +1306,27 @@ class Helper extends Core\Base
 		return [];
 	}
 
+	public static function getCalendar( $calendar_type = 'gregorian', $args = [] )
+	{
+		if ( is_callable( [ 'gPersianDateCalendar', 'build' ] ) ) {
+
+			$map = [
+				'gregorian' => 'Gregorian',
+				'persian'   => 'Jalali',
+				'islamic'   => 'Hijri',
+			];
+
+			if ( ! array_key_exists( $calendar_type, $map ) )
+				return FALSE;
+
+			$args['calendar'] = $map[$calendar_type];
+
+			return \gPersianDateCalendar::build( $args );
+		}
+
+		return FALSE;
+	}
+
 	// NOT USED
 	// returns array of post date in given cal
 	public static function getTheDayByPost( $post, $default_type = 'gregorian' )
