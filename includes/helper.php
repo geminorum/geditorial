@@ -1275,11 +1275,10 @@ class Helper extends Core\Base
 	{
 		$callback = [ __NAMESPACE__.'\\Core\\Date', 'monthFirstAndLast' ];
 
-		if ( 'persian' == $calendar_type
-			&& is_callable( [ 'gPersianDateDate', 'monthFirstAndLast' ] ) )
-				$callback = [ 'gPersianDateDate', 'monthFirstAndLast' ];
+		if ( is_callable( [ 'gPersianDateDate', 'monthFirstAndLast' ] ) )
+			$callback = [ 'gPersianDateDate', 'monthFirstAndLast' ];
 
-		return call_user_func_array( $callback, [ $year, $month, $format ] );
+		return call_user_func_array( $callback, [ $year, $month, $format, $calendar_type ] );
 	}
 
 	// FIXME: find a better way!
