@@ -92,6 +92,15 @@ class Today extends gEditorial\Module
 		];
 	}
 
+	protected function get_module_templates()
+	{
+		return [
+			'page_cpt' => [
+				'frontpage' => _x( 'Editorial: Today: Front-page', 'Modules: Today', GEDITORIAL_TEXTDOMAIN ),
+			],
+		];
+	}
+
 	public function setup( $args = [] )
 	{
 		parent::setup();
@@ -480,11 +489,12 @@ class Today extends gEditorial\Module
 	public function template_include( $template )
 	{
 		if ( ( $this->get_setting( 'override_frontpage' ) && is_front_page() )
-			|| is_post_type_archive( $this->constant( 'day_cpt' ) ) ) {
+			|| is_post_type_archive( $this->constant( 'day_cpt' ) )
+			|| is_page_template( 'today-frontpage.php' ) ) {
 
 			$constants = $this->get_the_day_constants();
 
-			if ( is_front_page() ) {
+			if ( is_front_page() || is_page_template() ) {
 
 				$this->the_day = ModuleHelper::getTheDayFromToday( NULL, $this->default_calendar() );
 
