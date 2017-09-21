@@ -253,6 +253,41 @@ class Today extends gEditorial\Helper
 		return $list;
 	}
 
+	public static function getDayPost( $stored, $constants = NULL )
+	{
+		$the_day = self::atts( [
+			'cal'   => '',
+			'day'   => '',
+			'month' => '',
+			// 'year'  => '', // there is no year in day cpt
+		], $stored );
+
+		if ( is_null( $constants ) )
+			$constants = self::getTheDayConstants();
+
+		$args = [
+			'post_type'        => self::constant( 'day_cpt', 'day' ),
+			'post_status'      => 'any',
+			'suppress_filters' => TRUE,
+			'no_found_rows'    => TRUE,
+			'meta_query'       => [],
+		];
+
+		foreach ( $constants as $field => $constant ) {
+			if ( ! empty( $the_day[$field] ) ) {
+				$args['orderby'][$field.'_clause'] = 'ASC'; // https://make.wordpress.org/core/?p=12639
+				$args['meta_query'][$field.'_clause'] = [
+					'key'     => $constant,
+					'value'   => $the_day[$field],
+					'compare' => '=',
+				];
+			}
+		}
+
+		$query = new \WP_Query;
+		return $query->query( $args );
+	}
+
 	public static function getPostsConnected( $atts = [], $constants = NULL )
 	{
 		$args = self::atts( [
@@ -276,13 +311,16 @@ class Today extends gEditorial\Helper
 			'post_type'        => $args['type'],
 			'post_status'      => $args['status'],
 			'suppress_filters' => TRUE,
-			'no_found_rows'    => TRUE,
+			// 'no_found_rows'    => TRUE,
 		];
 
 		if ( ! $args['count'] && ! $args['all'] ) {
 			$query_args['posts_per_page'] = $args['limit'];
 			$query_args['offset'] = ( $args['paged'] - 1 ) * $args['limit'];
 		}
+
+		if ( $args['count'] )
+			$query_args['fields'] = 'ids';
 
 		$query_args['meta_query'] = [];
 
@@ -308,7 +346,6 @@ class Today extends gEditorial\Helper
 		return [ $posts, $pagination ];
 	}
 
-	// TODO: conversion buttons
 	public static function theDaySelect( $atts = [], $year = TRUE, $default_type = 'gregorian', $calendars = NULL )
 	{
 		$args = self::atts( [
@@ -387,7 +424,7 @@ class Today extends gEditorial\Helper
 		echo HTML::wrap( $html, 'field-wrap field-wrap-select' );
 	}
 
-	public static function theDayNewConnected( $posttypes, $the_day = [], $new_day = FALSE )
+	public static function theDayNewConnected( $posttypes, $the_day = [], $the_post = FALSE )
 	{
 		if ( ! is_user_logged_in() )
 			return;
@@ -413,26 +450,43 @@ class Today extends gEditorial\Helper
 			).' ';
 		}
 
-		if ( $new_day ) {
+		if ( FALSE !== $the_post ) {
 
-			$object = get_post_type_object( $new_day );
+			$object = get_post_type_object( self::constant( 'day_cpt', 'day' ) );
 
-			if ( current_user_can( $object->cap->create_posts ) ) {
+			unset( $the_day['year'] );
 
-				// FIXME: get edit item url
+			if ( TRUE === $the_post ) {
 
-				unset( $the_day['year'] );
+				if ( current_user_can( $object->cap->create_posts ) ) {
 
-				$title = $object->labels->edit_item;
+					$title = $object->labels->add_new_item;
 
-				if ( is_admin() )
-					$title = Helper::getPostTypeIcon( $object ).' '.$title;
+					if ( is_admin() )
+						$title = Helper::getPostTypeIcon( $object ).' '.$title;
 
-				$html .= HTML::button( $title,
-					WordPress::getPostNewLink( $object->name, $the_day ),
-					_x( 'New Day!', 'Modules: Today', GEDITORIAL_TEXTDOMAIN ),
-					is_admin()
-				);
+					$html .= HTML::button( $title,
+						WordPress::getPostNewLink( $object->name, $the_day ),
+						_x( 'New Day!', 'Modules: Today', GEDITORIAL_TEXTDOMAIN ),
+						is_admin()
+					);
+				}
+
+			} else if ( $the_post ) {
+
+				if ( current_user_can( 'edit_post', intval( $the_post ) ) ) {
+
+					$title = $object->labels->edit_item;
+
+					if ( is_admin() )
+						$title = Helper::getPostTypeIcon( $object ).' '.$title;
+
+					$html .= HTML::button( $title,
+						WordPress::getPostNewLink( $object->name, $the_day ),
+						_x( 'New Day!', 'Modules: Today', GEDITORIAL_TEXTDOMAIN ),
+						is_admin()
+					);
+				}
 			}
 		}
 

@@ -16,6 +16,7 @@ class Today extends gEditorial\Module
 
 	protected $partials = [ 'helper' ];
 	protected $the_day  = [];
+	protected $the_post = [];
 
 	public static function module()
 	{
@@ -252,6 +253,9 @@ class Today extends gEditorial\Module
 
 			ModuleHelper::theDaySelect( $the_day, $display_year, $default_type, $this->get_calendars() );
 
+			// TODO: conversion buttons
+			// FIXME: must check for duplicate day and gave a green light via js
+
 		echo '</div>';
 
 		$this->nonce_field( 'post_main' );
@@ -324,6 +328,7 @@ class Today extends gEditorial\Module
 		return $list;
 	}
 
+	// NOT USED
 	protected function check_the_day_posttype( $the_day = [] )
 	{
 		return ModuleHelper::getPostsConnected( [
@@ -337,7 +342,7 @@ class Today extends gEditorial\Module
 	public function edit_form_advanced( $post )
 	{
 		if ( ! self::req( 'post' ) )
-			return; // notice: save the post first
+			return HTML::desc( _x( 'You can connect posts to this day once you\'ve saved it for the first time.', 'Modules: Today', GEDITORIAL_TEXTDOMAIN ) );
 
 		echo '<div class="geditorial-admin-wrap-nobox">';
 
@@ -347,8 +352,6 @@ class Today extends gEditorial\Module
 			$constants    = $this->get_the_day_constants();
 			$posttypes    = $this->post_types();
 
-			// $the_day = ModuleHelper::getTheDayByPost( $post, $default_type, $constants );
-			// $the_day = ModuleHelper::getTheDayFromQuery( TRUE, $default_type, $constants );
 			$the_day = ModuleHelper::getTheDayFromPost( $post, $default_type, $constants );
 
 			list( $posts, $pagination ) = ModuleHelper::getPostsConnected( [
@@ -357,8 +360,7 @@ class Today extends gEditorial\Module
 				'all'     => TRUE,
 			], $constants );
 
-			ModuleHelper::theDayNewConnected( $posttypes, $the_day,
-				( $this->check_the_day_posttype( $the_day ) ? FALSE : $this->constant( 'day_cpt' ) ) );
+			ModuleHelper::theDayNewConnected( $posttypes, $the_day );
 
 			HTML::tableList( [
 				'type'  => Helper::tableColumnPostType(),
@@ -477,25 +479,32 @@ class Today extends gEditorial\Module
 		if ( ( $this->get_setting( 'override_frontpage' ) && is_front_page() )
 			|| is_post_type_archive( $this->constant( 'day_cpt' ) ) ) {
 
+			$default_type = $this->get_setting( 'calendar_type', 'gregorian' );
+			$constants    = $this->get_the_day_constants();
+
 			if ( is_front_page() ) {
 
-				$this->the_day = ModuleHelper::getTheDayFromToday( NULL,
-					$this->get_setting( 'calendar_type', 'gregorian' ) );
+				$this->the_day = ModuleHelper::getTheDayFromToday( NULL, $default_type );
 
 			} else {
 
-				$this->the_day = ModuleHelper::getTheDayFromQuery( FALSE,
-					$this->get_setting( 'calendar_type', 'gregorian' ),
-					$this->get_the_day_constants() );
+				$this->the_day = ModuleHelper::getTheDayFromQuery( FALSE, $default_type, $constants );
 
 				// no day, just cal
 				if ( 1 === count( $this->the_day ) )
 					$this->the_day = ModuleHelper::getTheDayFromToday( NULL, $this->the_day['cal'] );
 			}
 
+			$this->the_post = ModuleHelper::getDayPost( $this->the_day, $constants );
+
+			$title = trim( ModuleHelper::titleTheDay( $this->the_day ), '[]' );
+
+			if ( ! empty( $this->the_post[0] ) )
+				$title = Helper::getPostTitle( $this->the_post[0] ).' ['.$title.']';
+
 			Theme::resetQuery( [
 				'ID'         => 0,
-				'post_title' => trim( ModuleHelper::titleTheDay( $this->the_day ), '[]' ),
+				'post_title' => $title,
 				'post_type'  => $this->constant( 'day_cpt' ),
 				'is_single'  => TRUE,
 			], [ $this, 'the_day_content' ] );
@@ -522,8 +531,19 @@ class Today extends gEditorial\Module
 
 		ob_start();
 
-		ModuleHelper::theDayNewConnected( $this->post_types(), $this->the_day,
-			( $this->check_the_day_posttype( $this->the_day ) ? FALSE : $this->constant( 'day_cpt' ) ) );
+		if ( ! empty( $this->the_post[0] ) ) {
+
+			// has excerpt
+			if ( $this->the_post[0]->post_excerpt ) {
+				$html = wpautop( Helper::prepDescription( $this->the_post[0]->post_excerpt ), FALSE );
+				echo HTML::wrap( $html, $this->classs( 'theday-excerpt' ) );
+			}
+		}
+
+		// TODO: next/prev day buttons
+		// TODO: next/perv month button
+
+		ModuleHelper::theDayNewConnected( $this->post_types(), $this->the_day, ( empty( $this->the_post[0] ) ? TRUE : $this->the_post[0]->ID ) );
 
 		if ( count( $posts ) ) {
 
