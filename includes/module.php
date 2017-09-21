@@ -1610,6 +1610,13 @@ class Module extends Base
 		add_filter( 'geditorial_shortcode_'.$shortcode, $callback, 10, 3 );
 	}
 
+	public function get_calendars( $default = [ 'gregorian' ], $filtered = TRUE )
+	{
+		$settings = $this->get_setting( 'calendar_list', $default );
+		$defaults = Helper::getDefualtCalendars( $filtered );
+		return array_intersect_key( $defaults, array_flip( $settings ) );
+	}
+
 	// CAUTION: tax must be cat (hierarchical)
 	// hierarchical taxonomies save by IDs, whereas non save by slugs
 	// TODO: supporting tag (non-hierarchical)

@@ -238,8 +238,6 @@ class Today extends gEditorial\Module
 
 			$display_year = $post->post_type != $this->constant( 'day_cpt' );
 			$default_type = $this->get_setting( 'calendar_type', 'gregorian' );
-			$calendars    = array_intersect_key( Helper::getDefualtCalendars( TRUE ),
-				array_flip( $this->get_setting( 'calendar_list', [ 'gregorian' ] ) ) );
 
 			// FIXME: must first check query
 
@@ -252,7 +250,7 @@ class Today extends gEditorial\Module
 			else
 				$the_day = ModuleHelper::getTheDayFromQuery( TRUE, $default_type, $this->get_the_day_constants( $display_year ) );
 
-			ModuleHelper::theDaySelect( $the_day, $display_year, $default_type, $calendars );
+			ModuleHelper::theDaySelect( $the_day, $display_year, $default_type, $this->get_calendars() );
 
 		echo '</div>';
 
@@ -283,14 +281,14 @@ class Today extends gEditorial\Module
 		if ( 'theday' != $column_name )
 			return FALSE;
 
-		$calendars = array_intersect_key( Helper::getDefualtCalendars( TRUE ),
-			array_flip( $this->get_setting( 'calendar_list', [ 'gregorian' ] ) ) );
-
 		echo '<div class="inline-edit-col geditorial-admin-wrap-quickedit -today">';
+
 			echo '<span class="title inline-edit-categories-label">';
 				echo $this->get_string( 'meta_box_title', $post_type, 'misc' );
 			echo '</span>';
-			ModuleHelper::theDaySelect( [], TRUE, '', $calendars );
+
+			ModuleHelper::theDaySelect( [], TRUE, '', $this->get_calendars() );
+
 		echo '</div>';
 
 		$this->nonce_field( 'post_raw' );
