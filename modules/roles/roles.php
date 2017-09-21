@@ -15,6 +15,8 @@ class Roles extends gEditorial\Module
 		'default' => 'manage_options',
 	];
 
+	protected $priority_admin_menu = 99;
+
 	public static function module()
 	{
 		return [
@@ -116,9 +118,6 @@ class Roles extends gEditorial\Module
 		parent::init();
 
 		$this->filter( 'map_meta_cap', 4 );
-
-		if ( is_admin() )
-			$this->filter( 'admin_menu', 0, 99 );
 	}
 
 	// hack to hide shared tag submenu on other cpt

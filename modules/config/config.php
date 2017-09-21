@@ -37,10 +37,10 @@ class Config extends gEditorial\Module
 
 	public function setup( $partials = [] )
 	{
-		if ( is_admin() ) {
-			$this->action( 'admin_menu' );
+		parent::setup();
+
+		if ( is_admin() )
 			$this->filter( 'set-screen-option', 3 );
-		}
 
 		if ( WordPress::isAJAX() )
 			$this->_hook_ajax();

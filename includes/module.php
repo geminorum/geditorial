@@ -27,6 +27,7 @@ class Module extends Base
 
 	protected $priority_init          = 10;
 	protected $priority_init_ajax     = 10;
+	protected $priority_admin_menu    = 10;
 	protected $priority_adminbar_init = 10;
 
 	protected $constants = [];
@@ -117,6 +118,9 @@ class Module extends Base
 
 			if ( method_exists( $this, 'admin_init' ) )
 				$this->action( 'admin_init' );
+
+			if ( $ui && method_exists( $this, 'admin_menu' ) )
+				$this->action( 'admin_menu', 0, $this->priority_admin_menu );
 
 			if ( $ajax && method_exists( $this, 'init_ajax' ) )
 				$this->action( 'init', 0, $this->priority_init_ajax, 'ajax' );

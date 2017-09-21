@@ -111,11 +111,6 @@ class Users extends gEditorial\Module
 				],
 			], [ 'user' ] );
 
-			if ( is_admin() ) {
-				$this->action( 'admin_menu' );
-				$this->filter( 'parent_file' );
-			}
-
 			// no need, we use slash in slug
 			// add_filter( 'sanitize_user', [ $this, 'sanitize_user' ] );
 		}
@@ -123,6 +118,9 @@ class Users extends gEditorial\Module
 
 	public function admin_menu()
 	{
+		if ( ! $this->get_setting( 'user_groups' ) )
+			return;
+
 		if ( ! $tax = get_taxonomy( $this->constant( 'group_tax' ) ) )
 			return;
 
@@ -132,18 +130,6 @@ class Users extends gEditorial\Module
 			$tax->cap->manage_terms,
 			'edit-tags.php?taxonomy='.$tax->name
 		);
-	}
-
-	public function parent_file( $parent_file = '' )
-	{
-		global $pagenow;
-
-		if ( ! empty( $_GET['taxonomy'] )
-			&& $_GET['taxonomy'] == $this->constant( 'group_tax' )
-			&& ( $pagenow == 'edit-tags.php' || $pagenow == 'term.php' ) )
-				$parent_file = 'users.php';
-
-		return $parent_file;
 	}
 
 	public function current_screen( $screen )
@@ -184,6 +170,8 @@ class Users extends gEditorial\Module
 		} else if ( $groups && 'edit-tags' == $screen->base
 			&& $this->constant( 'group_tax' ) == $screen->taxonomy ) {
 
+			$this->filter( 'parent_file' );
+
 			add_filter( 'manage_edit-'.$this->constant( 'group_tax' ).'_columns', [ $this, 'manage_columns' ] );
 			add_action( 'manage_'.$this->constant( 'group_tax' ).'_custom_column', [ $this, 'custom_column' ], 10, 3 );
 
@@ -191,6 +179,18 @@ class Users extends gEditorial\Module
 		// 	&& $this->constant( 'group_tax' ) == $screen->taxonomy ) {
 
 		}
+	}
+
+	public function parent_file( $parent_file = '' )
+	{
+		global $pagenow;
+
+		if ( ! empty( $_GET['taxonomy'] )
+			&& $_GET['taxonomy'] == $this->constant( 'group_tax' )
+			&& ( $pagenow == 'edit-tags.php' || $pagenow == 'term.php' ) )
+				$parent_file = 'users.php';
+
+		return $parent_file;
 	}
 
 	public function sanitize_user( $username )
