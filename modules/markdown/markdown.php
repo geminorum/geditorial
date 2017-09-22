@@ -19,11 +19,10 @@ class Markdown extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'     => 'markdown',
-			'title'    => _x( 'Markdown', 'Modules: Markdown', GEDITORIAL_TEXTDOMAIN ),
-			'desc'     => _x( 'Write Posts in Markdown', 'Modules: Markdown', GEDITORIAL_TEXTDOMAIN ),
-			'icon'     => [ 'old', 'markdown' ],
-			'frontend' => FALSE,
+			'name'  => 'markdown',
+			'title' => _x( 'Markdown', 'Modules: Markdown', GEDITORIAL_TEXTDOMAIN ),
+			'desc'  => _x( 'Write Posts in Markdown', 'Modules: Markdown', GEDITORIAL_TEXTDOMAIN ),
+			'icon'  => [ 'old', 'markdown' ],
 		];
 	}
 
@@ -37,6 +36,9 @@ class Markdown extends gEditorial\Module
 					'title'       => _x( 'Wiki Linking', 'Modules: Markdown: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Converts wiki like markup to internal links.', 'Modules: Markdown: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 				],
+			],
+			'_frontend' => [
+				'adminbar_summary',
 			],
 		];
 	}
@@ -56,6 +58,11 @@ class Markdown extends gEditorial\Module
 			add_post_type_support( $posttype, 'editorial-markdown' );
 	}
 
+	public function init_ajax()
+	{
+		$this->_hook_ajax();
+	}
+
 	public function current_screen( $screen )
 	{
 		if ( in_array( $screen->post_type, $this->post_types() ) ) {
@@ -66,6 +73,112 @@ class Markdown extends gEditorial\Module
 			}
 		}
 	}
+
+	public function adminbar_init( &$nodes, $parent )
+	{
+		if ( is_admin() || ! is_singular( $this->post_types() ) )
+			return;
+
+		$post_id = get_queried_object_id();
+
+		if ( ! current_user_can( 'edit_post', $post_id ) )
+			return;
+
+		$nodes[] = [
+			'id'     => $this->classs(),
+			'title'  => _x( 'Markdown Summary', 'Modules: Markdown: Adminbar', GEDITORIAL_TEXTDOMAIN ),
+			'parent' => $parent,
+			'href'   => Settings::subURL( $this->key, 'reports' ),
+		];
+
+		if ( ! $this->is_markdown( $post_id ) ) {
+
+			$nodes[] = [
+				'id'     => $this->classs( 'convert' ),
+				'title'  => _x( 'Markdown Convert', 'Modules: Markdown: Adminbar', GEDITORIAL_TEXTDOMAIN ),
+				'parent' => $this->classs(),
+				'href'   => '#',
+			];
+
+		} else {
+
+			$nodes[] = [
+				'id'     => $this->classs( 'process' ),
+				'title'  => _x( 'Markdown Process', 'Modules: Markdown: Adminbar', GEDITORIAL_TEXTDOMAIN ),
+				'parent' => $this->classs(),
+				'href'   => '#',
+			];
+
+			$nodes[] = [
+				'id'     => $this->classs( 'cleanup' ),
+				'title'  => _x( 'Markdown Cleanup', 'Modules: Markdown: Adminbar', GEDITORIAL_TEXTDOMAIN ),
+				'parent' => $this->classs(),
+				'href'   => '#',
+			];
+
+			$nodes[] = [
+				'id'     => $this->classs( 'discard' ),
+				'title'  => _x( 'Markdown Discard', 'Modules: Markdown: Adminbar', GEDITORIAL_TEXTDOMAIN ),
+				'parent' => $this->classs(),
+				'href'   => '#',
+			];
+		}
+
+		// $this->enqueue_asset_js();
+	}
+
+	public function ajax()
+	{
+		$post = self::unslash( $_POST );
+		$what = empty( $post['what'] ) ? 'nothing': trim( $post['what'] );
+
+		if ( empty( $post['post_id'] ) )
+			Ajax::errorMessage();
+
+		if ( ! current_user_can( 'edit_post', $post['post_id'] ) )
+			Ajax::errorMessage();
+
+		if ( ! $this->nonce_verify( $post['post_id'], $post['nonce'] ) )
+			self::cheatin();
+
+		switch ( $what ) {
+
+			case 'process':
+
+				if ( ! $this->process_post( $post['post_id'] ) )
+					Ajax::errorMessage( _x( 'Unable process Makrdown content into HTML. Please try again.', 'Modules: Markdown', GEDITORIAL_TEXTDOMAIN ) );
+
+				Ajax::success();
+
+			break;
+			case 'convert':
+
+				if ( ! $this->convert_post( $post['post_id'] ) )
+					Ajax::errorMessage( _x( 'Unable convert content into Makrdown. Please try again.', 'Modules: Markdown', GEDITORIAL_TEXTDOMAIN ) );
+
+				Ajax::success();
+
+			break;
+			case 'cleanup':
+
+
+				if ( ! $this->cleanup_post( $post['post_id'] ) )
+					Ajax::errorMessage( _x( 'Unable cleanup Makrdown content. Please try again.', 'Modules: Markdown', GEDITORIAL_TEXTDOMAIN ) );
+
+				Ajax::success();
+
+			break;
+			case 'discard':
+
+				if ( ! $this->discard_post( $post['post_id'] ) )
+					Ajax::errorMessage( _x( 'Unable discard Makrdown content into HTML. Please try again.', 'Modules: Markdown', GEDITORIAL_TEXTDOMAIN ) );
+
+				Ajax::success();
+		}
+
+		Ajax::errorWhat();
+	}
+
 
 	// @REF: https://github.com/michelf/php-markdown
 	private function process_content( $content, $id )
