@@ -326,18 +326,12 @@ class Entry extends gEditorial\Module
 
 		if ( is_404() ) {
 
-			$title = $this->get_title_from_query();
-
 			Theme::resetQuery( [
 				'ID'         => 0,
-				'post_title' => $title,
+				'post_title' => $this->get_title_from_query(),
 				'post_type'  => $posttype,
 				'is_single'  => TRUE,
 			], [ $this, 'empty_content' ] );
-
-			add_filter( 'get_search_query', function( $query ) use( $title ){
-				return $query ? $query : $title;
-			} );
 
 			$this->filter_append( 'post_class', 'empty-entry' );
 
@@ -371,10 +365,12 @@ class Entry extends gEditorial\Module
 	// TODO: link to search page with list other entries that linked to this title
 	public function empty_content( $content )
 	{
-		$html = '<p>'._x( 'There are no entry by this title. Search again or create one.', 'Modules: Entry', GEDITORIAL_TEXTDOMAIN ).'</p>';
-		$html.= $this->get_search_form( [ 'type' => $this->constant( 'entry_cpt' ) ] );
+		$title = $this->get_title_from_query();
 
-		if ( $add_new = $this->get_add_new( $this->get_title_from_query() ) )
+		$html = '<p>'._x( 'There are no entry by this title. Search again or create one.', 'Modules: Entry', GEDITORIAL_TEXTDOMAIN ).'</p>';
+		$html.= $this->get_search_form( 'entry_cpt', $title );
+
+		if ( $add_new = $this->get_add_new( $title ) )
 			$html.= '<p>'.$add_new.'</p>';
 
 		return HTML::wrap( $html, $this->classs( 'empty-content' ) );
@@ -382,7 +378,7 @@ class Entry extends gEditorial\Module
 
 	public function archive_content( $content )
 	{
-		$html = $this->get_search_form( [ 'type' => $this->constant( 'entry_cpt' ) ] );
+		$html = $this->get_search_form( 'entry_cpt' );
 		$html.= $this->section_shortcode( [ 'id' => 'all' ] );
 
 		if ( $add_new = $this->get_add_new() )

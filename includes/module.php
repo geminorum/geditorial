@@ -1636,16 +1636,24 @@ class Module extends Base
 		return $this->get_setting( 'calendar_type', $default );
 	}
 
-	public function get_search_form( $extra = [] )
+	public function get_search_form( $constant_or_hidden = [], $search_query = FALSE )
 	{
 		if ( ! $this->get_setting( 'display_searchform' ) )
 			return '';
 
+		if ( $search_query )
+			add_filter( 'get_search_query', function( $query ) use( $search_query ){
+				return $query ? $query : $search_query;
+			} );
+
 		$form = get_search_form( FALSE );
 
-		if ( count( $extra ) ) {
+		if ( $constant_or_hidden && ! is_array( $constant_or_hidden ) )
+			$constant_or_hidden = [ 'post_type[]' => $this->constant( $constant_or_hidden ) ];
+
+		if ( count( $constant_or_hidden ) ) {
 			$form = rtrim( $form, '</form>' );
-			foreach ( $extra as $name => $value )
+			foreach ( $constant_or_hidden as $name => $value )
 				$form.= '<input type="hidden" name="'.esc_attr( $name ).'" value="'.esc_attr( $value ).'" />';
 			$form.= '</form>';
 		}
