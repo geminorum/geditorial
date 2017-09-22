@@ -315,8 +315,9 @@ class Entry extends gEditorial\Module
 
 	public function template_include( $template )
 	{
-		if ( is_embed() || $this->constant( 'entry_cpt' ) != $GLOBALS['wp_query']->get( 'post_type' ) )
-			return $template;
+		if ( is_embed() || is_search()
+			|| $this->constant( 'entry_cpt' ) != $GLOBALS['wp_query']->get( 'post_type' ) )
+				return $template;
 
 		$posttype = $this->constant( 'entry_cpt' );
 
@@ -371,7 +372,7 @@ class Entry extends gEditorial\Module
 	public function empty_content( $content )
 	{
 		$html = '<p>'._x( 'There are no entry by this title. Search again or create one.', 'Modules: Entry', GEDITORIAL_TEXTDOMAIN ).'</p>';
-		$html.= $this->get_search_form( [ 'post_type' => $this->constant( 'entry_cpt' ) ] );
+		$html.= $this->get_search_form( [ 'type' => $this->constant( 'entry_cpt' ) ] );
 
 		if ( $add_new = $this->get_add_new( $this->get_title_from_query() ) )
 			$html.= '<p>'.$add_new.'</p>';
@@ -381,7 +382,7 @@ class Entry extends gEditorial\Module
 
 	public function archive_content( $content )
 	{
-		$html = $this->get_search_form( [ 'post_type' => $this->constant( 'entry_cpt' ) ] );
+		$html = $this->get_search_form( [ 'type' => $this->constant( 'entry_cpt' ) ] );
 		$html.= $this->section_shortcode( [ 'id' => 'all' ] );
 
 		if ( $add_new = $this->get_add_new() )
