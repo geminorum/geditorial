@@ -1134,6 +1134,13 @@ class Module extends Base
 		);
 	}
 
+	public function settings_section_content()
+	{
+		Settings::fieldSection(
+			_x( 'Generated Contents', 'Module: Setting Section Title', GEDITORIAL_TEXTDOMAIN )
+		);
+	}
+
 	public function settings_section_dashboard()
 	{
 		Settings::fieldSection(
@@ -1627,6 +1634,23 @@ class Module extends Base
 	public function default_calendar( $default = 'gregorian' )
 	{
 		return $this->get_setting( 'calendar_type', $default );
+	}
+
+	public function get_search_form( $extra = [] )
+	{
+		if ( ! $this->get_setting( 'display_searchform' ) )
+			return '';
+
+		$form = get_search_form( FALSE );
+
+		if ( count( $extra ) ) {
+			$form = rtrim( $form, '</form>' );
+			foreach ( $extra as $name => $value )
+				$form.= '<input type="hidden" name="'.esc_attr( $name ).'" value="'.esc_attr( $value ).'" />';
+			$form.= '</form>';
+		}
+
+		return $form;
 	}
 
 	// CAUTION: tax must be cat (hierarchical)

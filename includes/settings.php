@@ -524,6 +524,16 @@ class Settings extends Core\Base
 		];
 	}
 
+	public static function getSetting_display_searchform( $section )
+	{
+		return [
+			'field'       => 'display_searchform',
+			'title'       => _x( 'Display Search Form', 'Setting: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+			'description' => _x( 'Appends a search form to the content generated on front-end.', 'Setting: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+			'section'     => $section,
+		];
+	}
+
 	public static function getSetting_calendar_type( $section )
 	{
 		return [
