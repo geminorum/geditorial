@@ -30,18 +30,25 @@ class Drafts extends gEditorial\Module
 		return [
 			'posttypes_option' => 'posttypes_option',
 			'_general' => [
+				[
+					'field'       => 'public_preview',
+					'title'       => _x( 'Public Preview', 'Modules: Drafts: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Provides a secret link to non-logged in users to view post drafts.', 'Modules: Drafts: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+				],
+			],
+			'_frontend' => [
+				[
+					'field'       => 'adminbar_summary',
+					'title'       => _x( 'Adminbar Summary', 'Modules: Drafts: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Summary for the current item as a node in adminbar', 'Modules: Drafts: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+				],
 				'summary_scope',
 				[
 					'field'       => 'max_posts',
 					'type'        => 'number',
 					'title'       => _x( 'Max Posts', 'Modules: Drafts: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Display maximum posts for each post type', 'Modules: Drafts: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-					'default'     => 100,
-				],
-				[
-					'field'       => 'public_preview',
-					'title'       => _x( 'Public Preview', 'Modules: Drafts: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Provide a secret link to non-logged in users to view post drafts', 'Modules: Drafts: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Maximum number of posts for each post-type.', 'Modules: Drafts: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'default'     => 25,
 				],
 			],
 		];
@@ -58,20 +65,11 @@ class Drafts extends gEditorial\Module
 	{
 		parent::init();
 
-		if ( ! is_admin() ) {
+		if ( is_admin() )
+			return;
 
-			if ( is_admin_bar_showing()
-				&& $this->cuc( 'ajax' )
-				&& count( $this->post_types() ) ) {
-
-				$this->action( 'admin_bar_menu', 1, 265 );
-				$this->enqueue_asset_js();
-				$this->enqueue_styles();
-			}
-
-			if ( $this->get_setting( 'public_preview', FALSE ) )
-				$this->filter( 'the_posts', 2 );
-		}
+		if ( $this->get_setting( 'public_preview', FALSE ) )
+			$this->filter( 'the_posts', 2 );
 	}
 
 	public function init_ajax()
@@ -96,14 +94,23 @@ class Drafts extends gEditorial\Module
 		}
 	}
 
-	public function admin_bar_menu( $wp_admin_bar )
+	public function adminbar_init( &$nodes, $parent )
 	{
-		$wp_admin_bar->add_node( [
-			'id'    => 'editorial-drafts',
-			'href'  => admin_url( 'edit.php?post_status=draft' ), // FIXME: add default posttype
-			'title' => _x( 'Drafts', 'Modules: Drafts: Admin Bar Title', GEDITORIAL_TEXTDOMAIN )
+		if ( is_admin() || ! count( $this->post_types() ) )
+			return;
+
+		if ( ! $this->cuc( 'ajax' ) )
+			return;
+
+		$nodes[] = [
+			'id'    => $this->classs(),
+			'href'  => '#',
+			'title' => _x( 'Drafts', 'Modules: Markdown: Adminbar', GEDITORIAL_TEXTDOMAIN )
 				.'<span class="geditorial-spinner-adminbar"></span>',
-		] );
+		];
+
+		$this->enqueue_asset_js();
+		$this->enqueue_styles();
 	}
 
 	public function ajax()
@@ -187,7 +194,7 @@ class Drafts extends gEditorial\Module
 				continue; // FIXME: add new posttype link
 
 			$link = HTML::tag( 'a', [
-				'href'  => WordPress::getPostTypeEditLink( $post_type, $user ),
+				'href'  => WordPress::getPostTypeEditLink( $post_type, $user, [ 'post_status' => 'draft' ] ),
 				'title' => sprintf( $all, $object->labels->singular_name ),
 			], esc_html( $object->labels->name ) );
 
@@ -202,7 +209,7 @@ class Drafts extends gEditorial\Module
 		$args = [
 			'post_type'      => $post_type,
 			'post_status'    => 'draft',
-			'posts_per_page' => $this->get_setting( 'max_posts', 100 ),
+			'posts_per_page' => $this->get_setting( 'max_posts', 25 ),
 			'order'          => 'DESC',
 			'orderby'        => 'modified',
 		];
