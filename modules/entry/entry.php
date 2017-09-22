@@ -317,12 +317,18 @@ class Entry extends gEditorial\Module
 		if ( ! is_404() || is_embed() || $this->constant( 'entry_cpt' ) != $wp_query->get( 'post_type' ) )
 			return $template;
 
+		$title = URL::prepTitleQuery( $wp_query->get( 'name' ) );
+
 		Theme::resetQuery( [
 			'ID'         => 0,
-			'post_title' => URL::prepTitleQuery( $wp_query->get( 'name' ) ),
+			'post_title' => $title,
 			'post_type'  => $this->constant( 'entry_cpt' ),
 			'is_single'  => TRUE,
 		], [ $this, 'empty_content' ] );
+
+		add_filter( 'get_search_query', function( $query ) use( $title ){
+			return $query ? $query : $title;
+		} );
 
 		$this->filter_append( 'post_class', 'empty-entry' );
 		$this->enqueue_styles();
