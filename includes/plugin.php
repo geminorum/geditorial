@@ -57,8 +57,8 @@ class Plugin
 		add_action( 'plugins_loaded', [ $this, 'plugins_loaded' ], 20 );
 		add_action( 'init', [ $this, 'init_late' ], 999 );
 		add_action( 'admin_init', [ $this, 'admin_init' ] );
-		add_action( 'admin_bar_menu', [ $this, 'admin_bar_menu_early' ], 9 );
-		add_action( 'admin_bar_menu', [ $this, 'admin_bar_menu_late' ], 999 );
+		add_action( 'admin_bar_init', [ $this, 'admin_bar_init' ] );
+		add_action( 'admin_bar_menu', [ $this, 'admin_bar_menu' ], 999 );
 		add_filter( 'mce_external_languages', [ $this, 'mce_external_languages' ] );
 
 		if ( is_admin() )
@@ -478,13 +478,12 @@ class Plugin
 		$this->editor_buttons[$button] = GEDITORIAL_URL.$filepath;
 	}
 
-	public function admin_bar_menu_early( $wp_admin_bar )
+	public function admin_bar_init()
 	{
-		if ( is_admin_bar_showing() )
-			do_action_ref_array( 'geditorial_adminbar', [ &$this->adminbar_nodes, self::BASE ] );
+		do_action_ref_array( 'geditorial_adminbar', [ &$this->adminbar_nodes, self::BASE ] );
 	}
 
-	public function admin_bar_menu_late( $wp_admin_bar )
+	public function admin_bar_menu( $wp_admin_bar )
 	{
 		if ( ! is_admin_bar_showing() )
 			return;
