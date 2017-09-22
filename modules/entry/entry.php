@@ -38,6 +38,9 @@ class Entry extends gEditorial\Module
 				'before_content',
 				'after_content',
 			],
+			'_content' => [
+				'display_searchform',
+			],
 			'_supports' => [
 				'comment_status',
 				'shortcode_support',
@@ -312,25 +315,45 @@ class Entry extends gEditorial\Module
 
 	public function template_include( $template )
 	{
-		global $wp_query;
-
-		if ( ! is_404() || is_embed() || $this->constant( 'entry_cpt' ) != $wp_query->get( 'post_type' ) )
+		if ( is_embed() || $this->constant( 'entry_cpt' ) != $GLOBALS['wp_query']->get( 'post_type' ) )
 			return $template;
 
-		$title = URL::prepTitleQuery( $wp_query->get( 'name' ) );
+		$posttype = $this->constant( 'entry_cpt' );
 
-		Theme::resetQuery( [
-			'ID'         => 0,
-			'post_title' => $title,
-			'post_type'  => $this->constant( 'entry_cpt' ),
-			'is_single'  => TRUE,
-		], [ $this, 'empty_content' ] );
+		if ( ! is_404() && ! is_post_type_archive( $posttype ) )
+			return $template;
 
-		add_filter( 'get_search_query', function( $query ) use( $title ){
-			return $query ? $query : $title;
-		} );
+		if ( is_404() ) {
 
-		$this->filter_append( 'post_class', 'empty-entry' );
+			$title = $this->get_title_from_query();
+
+			Theme::resetQuery( [
+				'ID'         => 0,
+				'post_title' => $title,
+				'post_type'  => $posttype,
+				'is_single'  => TRUE,
+			], [ $this, 'empty_content' ] );
+
+			add_filter( 'get_search_query', function( $query ) use( $title ){
+				return $query ? $query : $title;
+			} );
+
+			$this->filter_append( 'post_class', 'empty-entry' );
+
+		} else {
+
+			$object = get_post_type_object( $posttype );
+
+			Theme::resetQuery( [
+				'ID'         => 0,
+				'post_title' => $object->labels->all_items,
+				'post_type'  => $posttype,
+				'is_single'  => TRUE,
+			], [ $this, 'archive_content' ] );
+
+			$this->filter_append( 'post_class', 'archive-entry' );
+		}
+
 		$this->enqueue_styles();
 
 		defined( 'GNETWORK_DISABLE_CONTENT_ACTIONS' ) or define( 'GNETWORK_DISABLE_CONTENT_ACTIONS', TRUE );
@@ -339,25 +362,47 @@ class Entry extends gEditorial\Module
 		return get_single_template();
 	}
 
-	// TODO: list other entries that linked to this title
+	public function get_title_from_query()
+	{
+		return URL::prepTitleQuery( $GLOBALS['wp_query']->get( 'name' ) );
+	}
+
+	// TODO: link to search page with list other entries that linked to this title
 	public function empty_content( $content )
 	{
-		global $wp_query;
-
 		$html = '<p>'._x( 'There are no entry by this title. Search again or create one.', 'Modules: Entry', GEDITORIAL_TEXTDOMAIN ).'</p>';
-		$html .= get_search_form( FALSE );
+		$html.= $this->get_search_form( [ 'post_type' => $this->constant( 'entry_cpt' ) ] );
 
-		$posttype = get_post_type_object( $this->constant( 'entry_cpt' ) );
-
-		if ( current_user_can( $posttype->cap->create_posts ) )
-			$html .= '<p>'.HTML::tag( 'a', [
-				'href'          => WordPress::getPostNewLink( $posttype->name, [ 'post_title' => URL::prepTitleQuery( $wp_query->get( 'name' ) ) ] ),
-				'class'         => [ 'button', '-add-posttype', '-add-posttype-'.$posttype->name ],
-				'target'        => '_blank',
-				'data-posttype' => $posttype->name,
-			], $posttype->labels->add_new_item ).'</p>';
+		if ( $add_new = $this->get_add_new( $this->get_title_from_query() ) )
+			$html.= '<p>'.$add_new.'</p>';
 
 		return HTML::wrap( $html, $this->classs( 'empty-content' ) );
+	}
+
+	public function archive_content( $content )
+	{
+		$html = $this->get_search_form( [ 'post_type' => $this->constant( 'entry_cpt' ) ] );
+		$html.= $this->section_shortcode( [ 'id' => 'all' ] );
+
+		if ( $add_new = $this->get_add_new() )
+			$html.= '<p>'.$add_new.'</p>';
+
+		return HTML::wrap( $html, $this->classs( 'archive-content' ) );
+	}
+
+	public function get_add_new( $title = FALSE )
+	{
+		$posttype = get_post_type_object( $this->constant( 'entry_cpt' ) );
+
+		if ( ! current_user_can( $posttype->cap->create_posts ) )
+			return '';
+
+		return '<p>'.HTML::tag( 'a', [
+			'href'          => WordPress::getPostNewLink( $posttype->name, [ 'post_title' => $title ] ),
+			'class'         => [ 'button', '-add-posttype', '-add-posttype-'.$posttype->name ],
+			'target'        => '_blank',
+			'data-posttype' => $posttype->name,
+		], $posttype->labels->add_new_item ).'</p>';
 	}
 
 	public function section_shortcode( $atts = [], $content = NULL, $tag = '' )
