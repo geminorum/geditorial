@@ -3,6 +3,8 @@
 defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
+use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Text;
 use geminorum\gEditorial\Core\WordPress;
@@ -12,6 +14,7 @@ class Markdown extends gEditorial\Module
 {
 
 	protected $parser;
+	protected $convertor;
 
 	public static function module()
 	{
@@ -65,7 +68,7 @@ class Markdown extends gEditorial\Module
 	}
 
 	// @REF: https://github.com/michelf/php-markdown
-	private function process( $content, $id )
+	private function process_content( $content, $id )
 	{
 		// $content is slashed, but Markdown parser hates it precious.
 		$content = stripslashes( $content );
@@ -83,6 +86,25 @@ class Markdown extends gEditorial\Module
 
 		// WordPress expects slashed data. Put needed ones back.
 		return addslashes( $content );
+	}
+
+	// @REF: https://github.com/thephpleague/html-to-markdown
+	private function convert_content( $content, $id )
+	{
+		$content = stripslashes( $content );
+
+		if ( ! $this->convertor )
+			$this->convertor = new \League\HTMLToMarkdown\HtmlConverter;
+
+		$content = $this->convertor->convert( $content );
+
+		return addslashes( $content );
+	}
+
+	// FIXME: do the cleanup!
+	private function cleanup_content( $content, $id )
+	{
+		return $content;
 	}
 
 	// @REF: https://en.wikipedia.org/wiki/Help:Wiki_markup#Links_and_URLs
@@ -120,9 +142,105 @@ class Markdown extends gEditorial\Module
 				'name'      => $slug,
 			], get_bloginfo( 'url' ) );
 
-		// self::__log( $text, $link, $slug );
-
 		return [ $text, $link, $slug, $post_id ];
+	}
+
+	public function process_post( $post )
+	{
+		if ( ! $post = get_post( $post ) )
+			return FALSE;
+
+		if ( empty( $post->post_content_filtered ) )
+			return FALSE;
+
+		$data = [
+			'ID'           => $post->ID,
+			'post_content' => $this->process_content( $post->post_content_filtered, $post->ID ),
+		];
+
+		if ( ! current_user_can( 'unfiltered_html' ) )
+			$data['post_content'] = wp_kses_post( $data['post_content'] );
+
+		if ( ! wp_insert_post( $data ) )
+			return FALSE;
+
+		update_post_meta( $post->ID, $this->constant( 'metakey_is_markdown' ), TRUE );
+
+		return TRUE;
+	}
+
+	public function convert_post( $post )
+	{
+		if ( ! $post = get_post( $post ) )
+			return FALSE;
+
+		if ( $this->is_markdown( $post->ID ) )
+			return FALSE;
+
+		if ( empty( $post->post_content ) )
+			return FALSE;
+
+		$data = [
+			'ID'                    => $post->ID,
+			'post_content_filtered' => $post->post_content,
+			'post_content'          => $this->convert_content( $post->post_content, $post->ID ),
+		];
+
+		if ( ! current_user_can( 'unfiltered_html' ) )
+			$data['post_content'] = wp_kses_post( $data['post_content'] );
+
+		update_post_meta( $post->ID, $this->constant( 'metakey_is_markdown' ), TRUE );
+
+		return TRUE;
+	}
+
+	public function cleanup_post( $post )
+	{
+		if ( ! $post = get_post( $post ) )
+			continue;
+
+		if ( ! $this->is_markdown( $post->ID ) )
+			return FALSE;
+
+		if ( empty( $post->post_content_filtered ) )
+			return FALSE;
+
+		$cleaned = $this->cleanup_content( $post->post_content_filtered, $post->ID );
+
+		$data = [
+			'ID'                    => $post->ID,
+			'post_content_filtered' => $cleaned,
+			'post_content'          => $this->process_content( $cleaned, $post->ID ),
+		];
+
+		if ( ! current_user_can( 'unfiltered_html' ) )
+			$data['post_content'] = wp_kses_post( $data['post_content'] );
+
+		update_post_meta( $post->ID, $this->constant( 'metakey_is_markdown' ), TRUE );
+
+		return TRUE;
+	}
+
+	public function discard_post( $post )
+	{
+		if ( ! $post = get_post( $post ) )
+			return FALSE;
+
+		if ( empty( $post->post_content_filtered ) )
+			return FALSE;
+
+		$data = [
+			'ID'                    => $post->ID,
+			'post_content'          => $post->post_content_filtered,
+			'post_content_filtered' => '',
+		];
+
+		if ( ! wp_insert_post( $data ) )
+			return FALSE;
+
+		delete_post_meta( $post->ID, $this->constant( 'metakey_is_markdown' ) );
+
+		return TRUE;
 	}
 
 	private function is_markdown( $post_id )
@@ -135,7 +253,7 @@ class Markdown extends gEditorial\Module
 		$post_id = empty( $postarr['ID'] ) ? 0 : $postarr['ID'];
 
 		$data['post_content_filtered'] = $data['post_content'];
-		$data['post_content'] = $this->process( $data['post_content'], $post_id );
+		$data['post_content'] = $this->process_content( $data['post_content'], $post_id );
 
 		if ( ! current_user_can( 'unfiltered_html' ) )
 			$data['post_content'] = wp_kses_post( $data['post_content'] );
@@ -157,5 +275,111 @@ class Markdown extends gEditorial\Module
 			return $post->post_content_filtered;
 
 		return $value;
+	}
+
+	public function reports_settings( $sub )
+	{
+		if ( $this->check_settings( $sub, 'reports' ) ) {
+
+			if ( ! empty( $_POST ) && isset( $_POST['_cb'] ) && count( $_POST['_cb'] ) ) {
+
+				$this->nonce_check( 'reports', $sub );
+
+				$count = 0;
+
+				if ( isset( $_POST['convert_markdown'] ) ) {
+
+					foreach ( $_POST['_cb'] as $post_id )
+						if ( $this->convert_post( $post_id ) )
+							$count++;
+
+					if ( $count )
+						WordPress::redirectReferer( [
+							'message' => 'converted',
+							'count'   => $count,
+						] );
+
+				} else if ( isset( $_POST['process_markdown'] ) ) {
+
+					foreach ( $_POST['_cb'] as $post_id )
+						if ( $this->process_post( $post_id ) )
+							$count++;
+
+					if ( $count )
+						WordPress::redirectReferer( [
+							'message' => 'changed',
+							'count'   => $count,
+						] );
+
+				} else if ( isset( $_POST['cleanup_markdown'] ) ) {
+
+					foreach ( $_POST['_cb'] as $post_id )
+						if ( $this->cleanup_post( $post_id ) )
+							$count++;
+
+					if ( $count )
+						WordPress::redirectReferer( [
+							'message' => 'cleaned',
+							'count'   => $count,
+						] );
+
+				} else if ( isset( $_POST['discard_markdown'] ) ) {
+
+					foreach ( $_POST['_cb'] as $post_id )
+						if ( $this->discard_post( $post_id ) )
+							$count++;
+
+					if ( $count )
+						WordPress::redirectReferer( [
+							'message' => 'purged',
+							'count'   => $count,
+						] );
+				}
+			}
+
+			$this->screen_option( $sub );
+		}
+	}
+
+	public function reports_sub( $uri, $sub )
+	{
+		$this->settings_form_before( $uri, $sub, 'bulk', 'reports', FALSE, FALSE );
+
+			$this->tableSummary();
+
+		$this->settings_form_after( $uri, $sub );
+	}
+
+	private function tableSummary()
+	{
+		list( $posts, $pagination ) = $this->getTablePosts();
+
+		$pagination['actions']['convert_markdown'] = _x( 'Convert into Markdown', 'Modules: Markdown: Table Action', GEDITORIAL_TEXTDOMAIN );
+		$pagination['actions']['process_markdown'] = _x( 'Re-Process Markdown', 'Modules: Markdown: Table Action', GEDITORIAL_TEXTDOMAIN );
+		$pagination['actions']['cleanup_markdown'] = _x( 'Cleanup Markdown', 'Modules: Markdown: Table Action', GEDITORIAL_TEXTDOMAIN );
+		$pagination['actions']['discard_markdown'] = _x( 'Discard Markdown', 'Modules: Markdown: Table Action', GEDITORIAL_TEXTDOMAIN );
+		$pagination['before'][] = Helper::tableFilterPostTypes( $this->list_post_types() );
+
+		return HTML::tableList( [
+			'_cb'      => 'ID',
+			'ID'       => Helper::tableColumnPostID(),
+			'date'     => Helper::tableColumnPostDate(),
+			'type'     => Helper::tableColumnPostType(),
+			'markdown' => [
+				'title'    => _x( 'Markdown', 'Modules: Markdown: Table Column', GEDITORIAL_TEXTDOMAIN ),
+				'class'    => [ '-icon-column' ],
+				'callback' => function( $value, $row, $column, $index ){
+					return $this->is_markdown( $row->ID ) ? Helper::getIcon( $this->module->icon ) : '';
+				},
+			],
+			'title' => Helper::tableColumnPostTitle(),
+			'terms' => Helper::tableColumnPostTerms(),
+		], $posts, [
+			'navigation' => 'before',
+			'search'     => 'before',
+			'title'      => HTML::tag( 'h3', _x( 'Overview of Markdown Posts', 'Modules: Markdown', GEDITORIAL_TEXTDOMAIN ) ),
+			'empty'      => Helper::tableArgEmptyPosts(),
+			'pagination' => $pagination,
+		] );
 	}
 }
