@@ -627,7 +627,7 @@ class Helper extends Core\Base
 		return [
 			'title'    => _x( 'Title', 'Helper: Table Column: Post Title', GEDITORIAL_TEXTDOMAIN ),
 			'args'     => [ 'statuses' => PostType::getStatuses( 2 ) ],
-			'callback' => function( $value, $row, $column, $index ) use( $excerpt ) {
+			'callback' => function( $value, $row, $column, $index ) use( $excerpt ){
 
 				$title = Helper::getPostTitle( $row );
 
@@ -657,7 +657,7 @@ class Helper extends Core\Base
 
 				return $title;
 			},
-			'actions' => function( $value, $row, $column, $index ) use( $actions, $custom ) {
+			'actions' => function( $value, $row, $column, $index ) use( $actions, $custom ){
 				return array_merge( Helper::getPostRowActions( $row->ID, $actions ), $custom );
 			},
 		];

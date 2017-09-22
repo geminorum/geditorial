@@ -310,7 +310,7 @@ class Markdown extends gEditorial\Module
 	public function cleanup_post( $post )
 	{
 		if ( ! $post = get_post( $post ) )
-			continue;
+			return FALSE;
 
 		if ( ! $this->is_markdown( $post->ID ) )
 			return FALSE;

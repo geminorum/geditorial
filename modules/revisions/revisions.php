@@ -408,6 +408,7 @@ class Revisions extends gEditorial\Module
 	{
 		list( $posts, $pagination ) = $this->getPostArray();
 
+		$pagination['actions']['cleanup_revisions'] = _x( 'Cleanup Revisions', 'Modules: Revisions: Table Action', GEDITORIAL_TEXTDOMAIN );
 		$pagination['before'][] = Helper::tableFilterPostTypes( $this->list_post_types() );
 
 		return HTML::tableList( [

@@ -105,7 +105,7 @@ class Drafts extends gEditorial\Module
 		$nodes[] = [
 			'id'    => $this->classs(),
 			'href'  => '#',
-			'title' => _x( 'Drafts', 'Modules: Markdown: Adminbar', GEDITORIAL_TEXTDOMAIN )
+			'title' => _x( 'Drafts', 'Modules: Drafts: Adminbar', GEDITORIAL_TEXTDOMAIN )
 				.'<span class="geditorial-spinner-adminbar"></span>',
 		];
 

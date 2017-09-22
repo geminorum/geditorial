@@ -715,8 +715,8 @@ class Terms extends gEditorial\Module
 				'taxonomy' => 'category',
 				'field'    => 'term_id',
 				'terms'    => [ intval( get_option( 'default_category' ) ) ],
-			],
-		],];
+			] ],
+		];
 
 		list( $posts, $pagination ) = $this->getTablePosts( $query, [], 'any' );
 

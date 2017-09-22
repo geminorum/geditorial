@@ -783,7 +783,7 @@ class Magazine extends gEditorial\Module
 					'term_id' => Helper::tableColumnTermID(),
 					'name'    => Helper::tableColumnTermName(),
 					'linked'   => [
-						'title' => _x( 'Linked Issue Post', 'Modules: Magazine: Table Column', GEDITORIAL_TEXTDOMAIN ),
+						'title'    => _x( 'Linked Issue Post', 'Modules: Magazine: Table Column', GEDITORIAL_TEXTDOMAIN ),
 						'callback' => function( $value, $row, $column, $index ){
 
 							if ( $post_id = $this->get_linked_post_id( $row, 'issue_cpt', 'issue_tax', FALSE ) )

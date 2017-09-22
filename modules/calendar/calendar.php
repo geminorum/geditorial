@@ -114,7 +114,7 @@ class Calendar extends gEditorial\Module
 			$html.= '<ul>';
 			foreach ( $data as $post )
 				$html.= '<li>'.Helper::getPostTypeIcon( $post['type'] )
-					.' '.Helper::getPostTitleRow( $post['ID'] ).'</li>';
+					.' '.Helper::getPostTitleRow( $post['ID'] ).'</li>'; // FIXME: add status/author/front/preview
 			$html.= '</ul>';
 		}
 
