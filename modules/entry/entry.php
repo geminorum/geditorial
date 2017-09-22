@@ -178,6 +178,8 @@ class Entry extends gEditorial\Module
 				$this->filter( 'post_updated_messages' );
 				$this->filter( 'get_default_comment_status', 3 );
 
+				$this->filter_module( 'markdown', 'linking', 8, 8 );
+
 			} else if ( 'edit' == $screen->base ) {
 
 				$this->filter( 'bulk_post_updated_messages', 2 );
@@ -361,5 +363,19 @@ class Entry extends gEditorial\Module
 			$content,
 			$this->constant( 'section_shortcode' )
 		);
+	}
+
+	public function markdown_linking( $html, $text, $link, $slug, $post_id, $match, $post, $content )
+	{
+		if ( $post->post_type != $this->constant( 'entry_cpt' ) )
+			return $html;
+
+		if ( $post_id )
+			$link = get_permalink( $post_id );
+
+		else
+			$link = $slug; // we handle 404s
+
+		return '<a href="'.$link.'" data-slug="'.$slug.'">'.$text.'</a>';
 	}
 }
