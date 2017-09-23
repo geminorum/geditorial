@@ -37,6 +37,7 @@ class Tube extends gEditorial\Module
 				],
 			],
 			'_supports' => [
+				'comment_status',
 				'shortcode_support',
 				'thumbnail_support',
 				$this->settings_supports_option( 'video_cpt', TRUE ),
@@ -114,6 +115,28 @@ class Tube extends gEditorial\Module
 		return $strings;
 	}
 
+	// @REF: https://www.videouniversity.com/?p=6660
+	public function get_global_fields()
+	{
+		return [
+			$this->constant( 'video_cpt' ) => [
+				'ot' => [ 'type' => 'title_before' ],
+				'st' => [ 'type' => 'title_after' ],
+
+				'featured_people' => [
+					'title'       => _x( 'Featured People', 'Modules: Tube: Field Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Featured People', 'Modules: Tube: Field Description', GEDITORIAL_TEXTDOMAIN ),
+					'icon'        => 'groups',
+				],
+				'creation_date' => [
+					'title'       => _x( 'Creation Date', 'Modules: Tube: Field Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Creation Date', 'Modules: Tube: Field Description', GEDITORIAL_TEXTDOMAIN ),
+					'icon'        => 'calendar-alt',
+				],
+			],
+		];
+	}
+
 	public function after_setup_theme()
 	{
 		$this->register_post_type_thumbnail( 'video_cpt' );
@@ -145,14 +168,49 @@ class Tube extends gEditorial\Module
 		], 'channel_cpt' );
 
 		$this->register_post_type( 'video_cpt' );
-		$this->register_post_type( 'channel_cpt' );
+		$this->register_post_type( 'channel_cpt', [
+			'show_in_admin_bar' => FALSE,
+		] );
 
 		$this->register_shortcode( 'video_cat_shortcode' );
 		$this->register_shortcode( 'channel_cat_shortcode' );
+
 		if ( ! is_admin() && $this->get_setting( 'video_toolbar' ) ) {
 			$this->filter( 'wp_video_shortcode', 5 );
 			$this->filter( 'wp_video_shortcode_override', 4 );
 		}
+	}
+
+	public function current_screen( $screen )
+	{
+		if ( $screen->post_type == $this->constant( 'video_cpt' ) ) {
+
+			if ( 'post' == $screen->base ) {
+
+				$this->filter( 'get_default_comment_status', 3 );
+
+
+			} else if ( 'edit' == $screen->base ) {
+
+				add_action( 'geditorial_meta_column_row', [ $this, 'column_row_meta' ], 12, 3 );
+			}
+
+		} else if ( $screen->post_type == $this->constant( 'channel_cpt' ) ) {
+
+			if ( 'post' == $screen->base ) {
+
+				$this->filter( 'get_default_comment_status', 3 );
+
+			} else if ( 'edit' == $screen->base ) {
+
+				// add_action( 'geditorial_meta_column_row', [ $this, 'column_row_meta' ], 12, 3 );
+			}
+		}
+	}
+
+	public function meta_init()
+	{
+		$this->add_post_type_fields( $this->constant( 'video_cpt' ) );
 	}
 
 	public function wp_video_shortcode_override( $override, $attr, $content, $instance )
