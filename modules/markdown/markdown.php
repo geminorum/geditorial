@@ -197,6 +197,8 @@ class Markdown extends gEditorial\Module
 		// reference the post_id to make footnote ids unique
 		$content = preg_replace( '/fn(ref)?:/', "fn$1-$id:", $content );
 
+		$content = Text::removeP( $content );
+
 		// WordPress expects slashed data. Put needed ones back.
 		return addslashes( $content );
 	}
