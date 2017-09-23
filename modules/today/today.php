@@ -43,16 +43,19 @@ class Today extends gEditorial\Module
 			],
 			'_frontend' => [
 				[
-					'field'       => 'override_frontpage',
-					'title'       => _x( 'Override Front-Page', 'Modules: Today: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Displays today list of connected posts on front-page.', 'Modules: Today: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-				],
-				[
 					'field'       => 'insert_theday',
 					'title'       => _x( 'Insert The Day', 'Modules: Today: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Displays the day info for supported posttypes.', 'Modules: Today: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 				],
 				$this->settings_insert_priority_option( -20, 'theday' ),
+			],
+			'_content' => [
+				[
+					'field'       => 'override_frontpage',
+					'title'       => _x( 'Override Front-Page', 'Modules: Today: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Displays today list of connected posts on front-page.', 'Modules: Today: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+				],
+				'display_searchform',
 			],
 			'_supports' => [
 				'thumbnail_support',
@@ -488,6 +491,9 @@ class Today extends gEditorial\Module
 
 	public function template_include( $template )
 	{
+		if ( is_embed() || is_search() )
+			return $template;
+
 		if ( ( $this->get_setting( 'override_frontpage' ) && is_front_page() )
 			|| is_post_type_archive( $this->constant( 'day_cpt' ) )
 			|| is_page_template( 'today-frontpage.php' ) ) {
@@ -536,8 +542,10 @@ class Today extends gEditorial\Module
 	{
 		global $post;
 
+		$posttypes = $this->post_types();
+
 		list( $posts, $pagination ) = ModuleHelper::getPostsConnected( [
-			'type'    => get_query_var( 'day_posttype', $this->post_types() ),
+			'type'    => get_query_var( 'day_posttype', $posttypes ),
 			'the_day' => $this->the_day,
 		], $this->get_the_day_constants() );
 
@@ -555,7 +563,7 @@ class Today extends gEditorial\Module
 		// TODO: next/prev day buttons
 		// TODO: next/perv month button
 
-		ModuleHelper::theDayNewConnected( $this->post_types(), $this->the_day, ( empty( $this->the_post[0] ) ? TRUE : $this->the_post[0]->ID ) );
+		ModuleHelper::theDayNewConnected( $posttypes, $this->the_day, ( empty( $this->the_post[0] ) ? TRUE : $this->the_post[0]->ID ) );
 
 		if ( count( $posts ) ) {
 
@@ -567,6 +575,11 @@ class Today extends gEditorial\Module
 		} else {
 			HTML::desc( _x( 'Nothing happened!', 'Modules: Today', GEDITORIAL_TEXTDOMAIN ) );
 		}
+
+		foreach ( $posttypes as $posttype )
+			$hiddens['post_type[]'] = $posttype;
+
+		echo $this->get_search_form( $hiddens );
 
 		return HTML::wrap( ob_get_clean(), $this->classs( 'theday-content' ) );
 	}
