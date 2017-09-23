@@ -57,7 +57,7 @@ class MetaBox extends Core\Base
 			echo '</div>';
 	}
 
-	public static function getTermPosts( $taxonomy, $term_or_id, $exclude = [] )
+	public static function getTermPosts( $taxonomy, $term_or_id, $exclude = [], $title = TRUE )
 	{
 		if ( ! $term = Taxonomy::getTerm( $term_or_id, $taxonomy ) )
 			return '';
@@ -80,12 +80,16 @@ class MetaBox extends Core\Base
 		if ( ! count( $posts ) )
 			return FALSE;
 
+		$html     = '';
 		$statuses = PostType::getStatuses();
 
-		$html = '<h4>'.Helper::getTermTitleRow( $term ).'</h4><ol>';
+		if ( $title )
+			$html.= '<h4>'.Helper::getTermTitleRow( $term ).'</h4>';
+
+		$html.= '<ol>';
 
 		foreach ( $posts as $post )
-			$html .= '<li>'.Helper::getPostTitleRow( $post, 'edit', $statuses ).'</li>';
+			$html.= '<li>'.Helper::getPostTitleRow( $post, 'edit', $statuses ).'</li>';
 
 		return HTML::wrap( $html.'</ol>', 'field-wrap field-wrap-list' );
 	}

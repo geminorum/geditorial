@@ -336,9 +336,8 @@ class Contest extends gEditorial\Module
 
 		$this->actions( 'list_meta_box', $post, $box );
 
-		// TODO: add collapsible button
 		if ( $term = $this->get_linked_term( $post->ID, 'contest_cpt', 'contest_tax' ) )
-			echo MetaBox::getTermPosts( $this->constant( 'contest_tax' ), $term );
+			echo MetaBox::getTermPosts( $this->constant( 'contest_tax' ), $term, [], FALSE );
 
 		echo '</div>';
 	}
