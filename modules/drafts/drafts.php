@@ -184,7 +184,7 @@ class Drafts extends gEditorial\Module
 
 			foreach ( $this->get_drafts( $post_type, $user ) as $post ) {
 
-				$block .= '<li>'.Helper::getPostTitleRow( $post, 'edit',
+				$block .= '<li>'.Helper::getPostTitleRow( $post, 'edit', FALSE,
 					Helper::postModified( $post, TRUE ) ).'</li>';
 
 				// FIXME: add author suffix
