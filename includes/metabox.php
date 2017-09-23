@@ -4,6 +4,7 @@ defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\WordPress;
+use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\Taxonomy;
 
 class MetaBox extends Core\Base
@@ -79,10 +80,12 @@ class MetaBox extends Core\Base
 		if ( ! count( $posts ) )
 			return FALSE;
 
+		$statuses = PostType::getStatuses();
+
 		$html = '<h4>'.Helper::getTermTitleRow( $term ).'</h4><ol>';
 
 		foreach ( $posts as $post )
-			$html .= '<li>'.Helper::getPostTitleRow( $post ).'</li>';
+			$html .= '<li>'.Helper::getPostTitleRow( $post, 'edit', $statuses ).'</li>';
 
 		return HTML::wrap( $html.'</ol>', 'field-wrap field-wrap-list' );
 	}

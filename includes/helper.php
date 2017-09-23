@@ -254,15 +254,34 @@ class Helper extends Core\Base
 		return $fallback;
 	}
 
-	public static function getPostTitleRow( $post, $link = 'edit', $title_attr = NULL )
+	public static function getPostTitleRow( $post, $link = 'edit', $status = FALSE, $title_attr = NULL )
 	{
 		if ( ! $post = get_post( $post ) )
 			return Plugin::na( FALSE );
 
 		$title = self::getPostTitle( $post );
+		$after = '';
+
+		if ( $status ) {
+
+			$statuses = TRUE === $status ? PostType::getStatuses() : $status;
+
+			if ( 'publish' != $post->post_status ) {
+
+				if ( 'inherit' == $post->post_status && 'attachment' == $post->post_type )
+					$status = '';
+				else if ( isset( $statuses[$post->post_status] ) )
+					$status = $statuses[$post->post_status];
+				else
+					$status = $post->post_status;
+
+				if ( $status )
+					$after = ' <small class="-status" title="'.esc_attr( $post->post_status ).'">('.$status.')</small>';
+			}
+		}
 
 		if ( ! $link )
-			return esc_html( $title );
+			return esc_html( $title ).$after;
 
 		$edit = current_user_can( 'edit_post', $post->ID );
 
@@ -275,13 +294,13 @@ class Helper extends Core\Base
 				'class'  => '-link -row-link -row-link-edit',
 				'target' => '_blank',
 				'title'  => is_null( $title_attr ) ? _x( 'Edit', 'Helper: Row Action', GEDITORIAL_TEXTDOMAIN ) : $title_attr,
-			], esc_html( $title ) );
+			], esc_html( $title ) ).$after;
 
 		if ( 'view' == $link && ! $edit && 'publish' != get_post_status( $post ) )
 			return HTML::tag( 'span', [
 				'class' => '-row-span',
 				'title' => is_null( $title_attr ) ? FALSE : $title_attr,
-			], esc_html( $title ) );
+			], esc_html( $title ) ).$after;
 
 		if ( 'view' == $link )
 			return HTML::tag( 'a', [
@@ -289,14 +308,14 @@ class Helper extends Core\Base
 				'class'  => '-link -row-link -row-link-view',
 				'target' => '_blank',
 				'title'  => is_null( $title_attr ) ? _x( 'View', 'Helper: Row Action', GEDITORIAL_TEXTDOMAIN ) : $title_attr,
-			], esc_html( $title ) );
+			], esc_html( $title ) ).$after;
 
 		return HTML::tag( 'a', [
 			'href'   => $link,
 			'class'  => '-link -row-link -row-link-custom',
 			'target' => '_blank',
 			'title'  => is_null( $title_attr ) ? FALSE : $title_attr,
-		], esc_html( $title ) );
+		], esc_html( $title ) ).$after;
 	}
 
 	public static function getPostRowActions( $post_id, $actions = NULL )
@@ -626,7 +645,7 @@ class Helper extends Core\Base
 	{
 		return [
 			'title'    => _x( 'Title', 'Helper: Table Column: Post Title', GEDITORIAL_TEXTDOMAIN ),
-			'args'     => [ 'statuses' => PostType::getStatuses( 2 ) ],
+			'args'     => [ 'statuses' => PostType::getStatuses() ],
 			'callback' => function( $value, $row, $column, $index ) use( $excerpt ){
 
 				$title = Helper::getPostTitle( $row );
