@@ -58,6 +58,11 @@ class Ajax extends Core\Base
 		self::errorMessage( _x( 'What?!', 'Ajax: Ajax Notice', GEDITORIAL_TEXTDOMAIN ) );
 	}
 
+	public static function spinner()
+	{
+		return '<span class="'.self::BASE.'-spinner"></span>';
+	}
+
 	public static function printJSConfig( $args, $object = 'gEditorial' )
 	{
 		$props = array_merge( $args, [

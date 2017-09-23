@@ -3,6 +3,7 @@
 defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
+use geminorum\gEditorial\Ajax;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Core\HTML;
@@ -95,7 +96,7 @@ class Markdown extends gEditorial\Module
 
 			$nodes[] = [
 				'id'     => $this->classs( 'convert' ),
-				'title'  => _x( 'Markdown Convert', 'Modules: Markdown: Adminbar', GEDITORIAL_TEXTDOMAIN ),
+				'title'  => _x( 'Markdown Convert', 'Modules: Markdown: Adminbar', GEDITORIAL_TEXTDOMAIN ).Ajax::spinner(),
 				'parent' => $this->classs(),
 				'href'   => '#',
 			];
@@ -104,22 +105,22 @@ class Markdown extends gEditorial\Module
 
 			$nodes[] = [
 				'id'     => $this->classs( 'process' ),
-				'title'  => _x( 'Markdown Process', 'Modules: Markdown: Adminbar', GEDITORIAL_TEXTDOMAIN ),
 				'parent' => $this->classs(),
+				'title'  => _x( 'Markdown Process', 'Modules: Markdown: Adminbar', GEDITORIAL_TEXTDOMAIN ).Ajax::spinner(),
 				'href'   => '#',
 			];
 
 			$nodes[] = [
 				'id'     => $this->classs( 'cleanup' ),
-				'title'  => _x( 'Markdown Cleanup', 'Modules: Markdown: Adminbar', GEDITORIAL_TEXTDOMAIN ),
 				'parent' => $this->classs(),
+				'title'  => _x( 'Markdown Cleanup', 'Modules: Markdown: Adminbar', GEDITORIAL_TEXTDOMAIN ).Ajax::spinner(),
 				'href'   => '#',
 			];
 
 			$nodes[] = [
 				'id'     => $this->classs( 'discard' ),
-				'title'  => _x( 'Markdown Discard', 'Modules: Markdown: Adminbar', GEDITORIAL_TEXTDOMAIN ),
 				'parent' => $this->classs(),
+				'title'  => _x( 'Markdown Discard', 'Modules: Markdown: Adminbar', GEDITORIAL_TEXTDOMAIN ).Ajax::spinner(),
 				'href'   => '#',
 			];
 		}
