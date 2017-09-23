@@ -3,6 +3,7 @@
 defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
+use geminorum\gEditorial\Ajax;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Settings;
@@ -113,17 +114,16 @@ class Audit extends gEditorial\Module
 			'noops' => [
 				'audit_tax' => _nx_noop( 'Audit Attribute', 'Audit Attributes', 'Modules: Audit: Noop', GEDITORIAL_TEXTDOMAIN ),
 			],
+			'misc' => [
+				'menu_name'           => _x( 'Audit', 'Modules: Audit: Audit Attributes Tax Labels: Menu Name', GEDITORIAL_TEXTDOMAIN ),
+				'tweaks_column_title' => _x( 'Audit Attributes', 'Modules: Audit: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'show_option_all'     => _x( 'Audit', 'Modules: Audit: Show Option All', GEDITORIAL_TEXTDOMAIN ),
+				'show_option_none'    => _x( '(Not audited)', 'Modules: Audit: Show Option All', GEDITORIAL_TEXTDOMAIN ),
+			],
 		];
 
 		if ( ! is_admin() )
 			return $strings;
-
-		$strings['misc'] = [
-			'menu_name'           => _x( 'Audit', 'Modules: Audit: Audit Attributes Tax Labels: Menu Name', GEDITORIAL_TEXTDOMAIN ),
-			'tweaks_column_title' => _x( 'Audit Attributes', 'Modules: Audit: Column Title', GEDITORIAL_TEXTDOMAIN ),
-			'show_option_all'     => _x( 'Audit', 'Modules: Audit: Show Option All', GEDITORIAL_TEXTDOMAIN ),
-			'show_option_none'    => _x( '(Not audited)', 'Modules: Audit: Show Option All', GEDITORIAL_TEXTDOMAIN ),
-		];
 
 		$strings['terms'] = [
 			'audit_tax' => [
@@ -166,6 +166,62 @@ class Audit extends gEditorial\Module
 		] );
 
 		$this->filter( 'map_meta_cap', 4 );
+	}
+
+	public function init_ajax()
+	{
+		$this->_hook_ajax();
+	}
+
+	public function ajax()
+	{
+		$post = self::unslash( $_POST );
+		$what = empty( $post['what'] ) ? 'nothing': trim( $post['what'] );
+
+		if ( empty( $post['post_id'] ) )
+			Ajax::errorMessage();
+
+		if ( ! current_user_can( 'edit_post', $post['post_id'] ) )
+			Ajax::errorMessage();
+
+		Ajax::checkReferer( $this->hook( $post['post_id'] ) );
+
+		switch ( $what ) {
+
+			case 'list':
+
+				Ajax::success( $this->get_adminbar_checklist( $post['post_id'] ) );
+
+			break;
+			case 'store':
+
+				$taxonomy = $this->constant( 'audit_tax' );
+
+				parse_str( $post['data'], $data );
+
+				$terms = empty( $data['tax_input'][$taxonomy] ) ? NULL
+					: array_map( 'intval', (array) $data['tax_input'][$taxonomy] );
+
+				wp_set_object_terms( $post['post_id'], $terms, $taxonomy, FALSE );
+				clean_object_term_cache( $post['post_id'], $taxonomy );
+
+				Ajax::success( $this->get_adminbar_checklist( $post['post_id'] ) );
+		}
+
+		Ajax::errorWhat();
+	}
+
+	private function get_adminbar_checklist( $post_id )
+	{
+		require_once( ABSPATH.'wp-admin/includes/template.php' );
+
+		$html = wp_terms_checklist( $post_id, [
+			'taxonomy'      => $this->constant( 'audit_tax' ),
+			'checked_ontop' => FALSE,
+			'echo'          => FALSE,
+		] );
+
+		return HTML::wrap( '<ul>'.$html.'</ul>', 'geditorial-adminbar-box-wrap' );
 	}
 
 	// @REF: https://make.wordpress.org/core/?p=20496
@@ -231,31 +287,68 @@ class Audit extends gEditorial\Module
 		return 'reports' == $context ? $this->audit_can( 'reports' ) : parent::cuc( $context, $fallback );
 	}
 
-	// FIXME: no need / instead top level with ajax change option
 	public function adminbar_init( &$nodes, $parent )
 	{
 		if ( is_admin() || ! is_singular( $this->post_types() ) )
 			return;
 
+		$post_id = get_queried_object_id();
+
+		if ( $this->audit_can( 'reports' ) ) {
+
+			$nodes[] = [
+				'id'     => $this->classs(),
+				'title'  => _x( 'Audit Attributes', 'Modules: Audit: Adminbar', GEDITORIAL_TEXTDOMAIN ),
+				'parent' => $parent,
+				'href'   => Settings::subURL( $this->key, 'reports' ),
+			];
+
+			if ( $terms = Taxonomy::getTerms( $this->constant( 'audit_tax' ), $post_id, TRUE ) )
+				foreach ( $terms as $term )
+					$nodes[] = [
+						'id'     => $this->classs( 'attribute', $term->term_id ),
+						'title'  => sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' ),
+						'parent' => $this->classs(),
+						'href'   => get_term_link( $term ),
+					];
+
+			else
+				$nodes[] = [
+					'id'     => $this->classs( 'attribute', 0 ),
+					'title'  => $this->get_string( 'show_option_none', 'audit_tax', 'misc' ),
+					'parent' => $this->classs(),
+					'href'   => FALSE,
+				];
+
+		}
+
 		if ( ! $this->audit_can() )
 			return;
 
-		$nodes[] = [
-			'id'     => $this->classs(),
-			'title'  => _x( 'Audit Attributes', 'Modules: Audit: Adminbar', GEDITORIAL_TEXTDOMAIN ),
-			'parent' => $parent,
-			'href'   => Settings::subURL( $this->key, 'reports' ),
-		];
+		$this->action( 'admin_bar_menu', 1, 699 );
 
-		$terms = Taxonomy::getTerms( $this->constant( 'audit_tax' ), NULL, TRUE );
+		$this->enqueue_styles();
+		$this->enqueue_asset_js( [
+			'post_id' => $post_id,
+			'_nonce'  => wp_create_nonce( $this->hook( $post_id ) ),
+		] );
+	}
 
-		foreach ( $terms as $term )
-			$nodes[] = [
-				'id'     => $this->classs( 'attribute', $term->term_id ),
-				'title'  => sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' ),
-				'parent' => $this->classs(),
-				'href'   => get_term_link( $term ),
-			];
+	public function admin_bar_menu( $wp_admin_bar )
+	{
+		$wp_admin_bar->add_node( [
+			'id'    => $this->classs( 'attributes' ),
+			'href'  => Settings::subURL( $this->key, 'reports' ),
+			'title' => _x( 'Auditing', 'Modules: Audit: Adminbar', GEDITORIAL_TEXTDOMAIN ).Ajax::spinner(),
+			'meta'  => [ 'class' => 'geditorial-adminbar-node' ],
+		] );
+
+		$wp_admin_bar->add_node( [
+			'id'     => $this->classs( 'box' ),
+			'parent' => $this->classs( 'attributes' ),
+			'title'  => _x( 'Click to load attributes &hellip;', 'Modules: Audit: Adminbar', GEDITORIAL_TEXTDOMAIN ),
+			'meta'   => [ 'class' => 'geditorial-adminbar-wrap' ],
+		] );
 	}
 
 	public function current_screen( $screen )
