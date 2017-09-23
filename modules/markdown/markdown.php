@@ -87,8 +87,8 @@ class Markdown extends gEditorial\Module
 
 		$nodes[] = [
 			'id'     => $this->classs(),
-			'title'  => _x( 'Markdown Summary', 'Modules: Markdown: Adminbar', GEDITORIAL_TEXTDOMAIN ),
 			'parent' => $parent,
+			'title'  => _x( 'Markdown Summary', 'Modules: Markdown: Adminbar', GEDITORIAL_TEXTDOMAIN ),
 			'href'   => Settings::subURL( $this->key, 'reports' ),
 		];
 
@@ -96,9 +96,10 @@ class Markdown extends gEditorial\Module
 
 			$nodes[] = [
 				'id'     => $this->classs( 'convert' ),
-				'title'  => _x( 'Markdown Convert', 'Modules: Markdown: Adminbar', GEDITORIAL_TEXTDOMAIN ).Ajax::spinner(),
 				'parent' => $this->classs(),
+				'title'  => _x( 'Markdown Convert', 'Modules: Markdown: Adminbar', GEDITORIAL_TEXTDOMAIN ).Ajax::spinner(),
 				'href'   => '#',
+				'meta'   => [ 'rel' => 'convert', 'class' => '-action' ],
 			];
 
 		} else {
@@ -108,6 +109,7 @@ class Markdown extends gEditorial\Module
 				'parent' => $this->classs(),
 				'title'  => _x( 'Markdown Process', 'Modules: Markdown: Adminbar', GEDITORIAL_TEXTDOMAIN ).Ajax::spinner(),
 				'href'   => '#',
+				'meta'   => [ 'rel' => 'process', 'class' => '-action' ],
 			];
 
 			$nodes[] = [
@@ -115,6 +117,7 @@ class Markdown extends gEditorial\Module
 				'parent' => $this->classs(),
 				'title'  => _x( 'Markdown Cleanup', 'Modules: Markdown: Adminbar', GEDITORIAL_TEXTDOMAIN ).Ajax::spinner(),
 				'href'   => '#',
+				'meta'   => [ 'rel' => 'cleanup', 'class' => '-action' ],
 			];
 
 			$nodes[] = [
@@ -122,10 +125,14 @@ class Markdown extends gEditorial\Module
 				'parent' => $this->classs(),
 				'title'  => _x( 'Markdown Discard', 'Modules: Markdown: Adminbar', GEDITORIAL_TEXTDOMAIN ).Ajax::spinner(),
 				'href'   => '#',
+				'meta'   => [ 'rel' => 'discard', 'class' => '-action -danger' ],
 			];
 		}
 
-		// $this->enqueue_asset_js();
+		$this->enqueue_asset_js( [
+			'post_id' => $post_id,
+			'_nonce'  => wp_create_nonce( $this->hook( $post_id ) ),
+		] );
 	}
 
 	public function ajax()
@@ -139,8 +146,7 @@ class Markdown extends gEditorial\Module
 		if ( ! current_user_can( 'edit_post', $post['post_id'] ) )
 			Ajax::errorMessage();
 
-		if ( ! $this->nonce_verify( $post['post_id'], $post['nonce'] ) )
-			self::cheatin();
+		Ajax::checkReferer( $this->hook( $post['post_id'] ) );
 
 		switch ( $what ) {
 
@@ -149,7 +155,7 @@ class Markdown extends gEditorial\Module
 				if ( ! $this->process_post( $post['post_id'] ) )
 					Ajax::errorMessage( _x( 'Unable process Makrdown content into HTML. Please try again.', 'Modules: Markdown', GEDITORIAL_TEXTDOMAIN ) );
 
-				Ajax::success();
+				Ajax::successMessage();
 
 			break;
 			case 'convert':
@@ -157,7 +163,7 @@ class Markdown extends gEditorial\Module
 				if ( ! $this->convert_post( $post['post_id'] ) )
 					Ajax::errorMessage( _x( 'Unable convert content into Makrdown. Please try again.', 'Modules: Markdown', GEDITORIAL_TEXTDOMAIN ) );
 
-				Ajax::success();
+				Ajax::successMessage();
 
 			break;
 			case 'cleanup':
@@ -166,7 +172,7 @@ class Markdown extends gEditorial\Module
 				if ( ! $this->cleanup_post( $post['post_id'] ) )
 					Ajax::errorMessage( _x( 'Unable cleanup Makrdown content. Please try again.', 'Modules: Markdown', GEDITORIAL_TEXTDOMAIN ) );
 
-				Ajax::success();
+				Ajax::successMessage();
 
 			break;
 			case 'discard':
@@ -174,7 +180,7 @@ class Markdown extends gEditorial\Module
 				if ( ! $this->discard_post( $post['post_id'] ) )
 					Ajax::errorMessage( _x( 'Unable discard Makrdown content into HTML. Please try again.', 'Modules: Markdown', GEDITORIAL_TEXTDOMAIN ) );
 
-				Ajax::success();
+				Ajax::successMessage();
 		}
 
 		Ajax::errorWhat();
@@ -277,7 +283,7 @@ class Markdown extends gEditorial\Module
 		if ( ! current_user_can( 'unfiltered_html' ) )
 			$data['post_content'] = wp_kses_post( $data['post_content'] );
 
-		if ( ! wp_insert_post( $data ) )
+		if ( ! wp_update_post( $data ) )
 			return FALSE;
 
 		update_post_meta( $post->ID, $this->constant( 'metakey_is_markdown' ), TRUE );
@@ -304,6 +310,9 @@ class Markdown extends gEditorial\Module
 
 		if ( ! current_user_can( 'unfiltered_html' ) )
 			$data['post_content'] = wp_kses_post( $data['post_content'] );
+
+		if ( ! wp_update_post( $data ) )
+			return FALSE;
 
 		update_post_meta( $post->ID, $this->constant( 'metakey_is_markdown' ), TRUE );
 
@@ -332,6 +341,9 @@ class Markdown extends gEditorial\Module
 		if ( ! current_user_can( 'unfiltered_html' ) )
 			$data['post_content'] = wp_kses_post( $data['post_content'] );
 
+		if ( ! wp_update_post( $data ) )
+			return FALSE;
+
 		update_post_meta( $post->ID, $this->constant( 'metakey_is_markdown' ), TRUE );
 
 		return TRUE;
@@ -351,7 +363,7 @@ class Markdown extends gEditorial\Module
 			'post_content_filtered' => '',
 		];
 
-		if ( ! wp_insert_post( $data ) )
+		if ( ! wp_update_post( $data ) )
 			return FALSE;
 
 		delete_post_meta( $post->ID, $this->constant( 'metakey_is_markdown' ) );
