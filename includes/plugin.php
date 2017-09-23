@@ -415,13 +415,16 @@ class Plugin
 
 	public function wp_enqueue_scripts()
 	{
+		if ( count( $this->adminbar_nodes ) && is_admin_bar_showing() )
+			wp_enqueue_style( 'geditorial-adminbar', GEDITORIAL_URL.'assets/css/adminbar.all'.( is_rtl() ? '-rtl' : '' ).'.css', [], GEDITORIAL_VERSION );
+
 		if ( ! $this->asset_styles )
 			return;
 
 		if ( defined( 'GEDITORIAL_DISABLE_FRONT_STYLES' ) && GEDITORIAL_DISABLE_FRONT_STYLES )
 			return;
 
-		wp_enqueue_style( 'geditorial-front-all', GEDITORIAL_URL.'assets/css/front.all'.( is_rtl() ? '-rtl' : '' ).'.css', [], GEDITORIAL_VERSION );
+		wp_enqueue_style( 'geditorial-front', GEDITORIAL_URL.'assets/css/front.all'.( is_rtl() ? '-rtl' : '' ).'.css', [], GEDITORIAL_VERSION );
 	}
 
 	public function enqueue_asset_config( $args = [], $module = NULL )
@@ -485,9 +488,6 @@ class Plugin
 
 	public function admin_bar_menu( $wp_admin_bar )
 	{
-		if ( ! is_admin_bar_showing() )
-			return;
-
 		if ( ! count( $this->adminbar_nodes ) )
 			return;
 
