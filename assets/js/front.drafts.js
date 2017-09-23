@@ -6,8 +6,8 @@
   o.e = true; // empty
   o.action = p._base + '_' + m;
   o.box = '#editorial-' + m;
-  o.button = '#wp-admin-bar-editorial-drafts a.ab-item';
-  o.spinner = '.geditorial-spinner-adminbar';
+  o.button = '#wp-admin-bar-geditorial-drafts a.ab-item';
+  o.spinner = '.geditorial-spinner';
   o.wrapper = '<div id="editorial-' + m + '" class="geditorial-wrap -drafts" style="display:none;"><div class="-content"></div></div>';
 
   o.toggle = function() {
