@@ -213,14 +213,10 @@ class Markdown extends gEditorial\Module
 	// @REF: https://github.com/thephpleague/html-to-markdown
 	private function convert_content( $content, $id )
 	{
-		$content = stripslashes( $content );
-
 		if ( ! $this->convertor )
 			$this->convertor = new \League\HTMLToMarkdown\HtmlConverter;
 
-		$content = $this->convertor->convert( $content );
-
-		return addslashes( $content );
+		return $this->convertor->convert( $content );
 	}
 
 	// FIXME: do the cleanup!
@@ -304,9 +300,10 @@ class Markdown extends gEditorial\Module
 
 		$data = [
 			'ID'                    => $post->ID,
-			'post_content_filtered' => $post->post_content,
-			'post_content'          => $this->convert_content( $post->post_content, $post->ID ),
+			'post_content_filtered' => $this->convert_content( wpautop( $post->post_content ), $post->ID ),
 		];
+
+		$data['post_content'] = $this->process_content( $data['post_content_filtered'], $post->ID );
 
 		if ( ! current_user_can( 'unfiltered_html' ) )
 			$data['post_content'] = wp_kses_post( $data['post_content'] );
@@ -330,13 +327,12 @@ class Markdown extends gEditorial\Module
 		if ( empty( $post->post_content_filtered ) )
 			return FALSE;
 
-		$cleaned = $this->cleanup_content( $post->post_content_filtered, $post->ID );
-
 		$data = [
 			'ID'                    => $post->ID,
-			'post_content_filtered' => $cleaned,
-			'post_content'          => $this->process_content( $cleaned, $post->ID ),
+			'post_content_filtered' => $this->cleanup_content( $post->post_content_filtered, $post->ID ),
 		];
+
+		$data['post_content'] = $this->process_content( $data['post_content_filtered'], $post->ID );
 
 		if ( ! current_user_can( 'unfiltered_html' ) )
 			$data['post_content'] = wp_kses_post( $data['post_content'] );
