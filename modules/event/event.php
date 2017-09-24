@@ -26,10 +26,9 @@ class Event extends gEditorial\Module
 		return [
 			'_general' => [
 				[
-					'field'       => 'startend_support',
+					'field'       => 'extra_metadata',
 					'title'       => _x( 'Start ~ End Support', 'Modules: Event: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Specify events based on the actual date & time', 'Modules: Event: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-					'default'     => '1',
+					'description' => _x( 'Specifies events based on the actual date and time.', 'Modules: Event: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 				],
 				[
 					'field'       => 'display_type',
@@ -147,7 +146,7 @@ class Event extends gEditorial\Module
 		parent::default_buttons( $page );
 		$this->register_button( 'install_def_event_tag', _x( 'Install Default Event Types', 'Modules: Event: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
 
-		if ( $this->get_setting( 'startend_support', TRUE ) )
+		if ( $this->get_setting( 'extra_metadata' ) )
 			$this->register_button( 'install_def_type_tax', _x( 'Install Default Calendar Types', 'Modules: Event: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
 	}
 
@@ -177,7 +176,7 @@ class Event extends gEditorial\Module
 			'hierarchical' => TRUE,
 		], 'event_cpt' );
 
-		if ( $this->get_setting( 'startend_support', TRUE ) )
+		if ( $this->get_setting( 'extra_metadata' ) )
 			$this->register_taxonomy( 'type_tax', [
 				'show_ui' => FALSE,
 			], 'event_cpt' );
@@ -205,7 +204,7 @@ class Event extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
-		$startend = $this->get_setting( 'startend_support', TRUE );
+		$startend = $this->get_setting( 'extra_metadata' );
 
 		if ( $screen->post_type == $this->constant( 'event_cpt' ) ) {
 
@@ -256,6 +255,9 @@ class Event extends gEditorial\Module
 
 	private function _edit_screen( $post_type )
 	{
+		if ( ! $this->get_setting( 'extra_metadata' ) )
+			return;
+
 		add_filter( 'manage_'.$post_type.'_posts_columns', [ $this, 'manage_posts_columns' ], 16 );
 		add_action( 'manage_'.$post_type.'_posts_custom_column', [ $this, 'posts_custom_column' ], 10, 2 );
 		add_filter( 'manage_edit-'.$post_type.'_sortable_columns', [ $this, 'sortable_columns' ] );
@@ -307,9 +309,6 @@ class Event extends gEditorial\Module
 
 	public function manage_posts_columns( $columns )
 	{
-		if ( ! $this->get_setting( 'startend_support', TRUE ) )
-			return $columns;
-
 		return Arraay::insert( $columns, [
 			'event_starts' => $this->get_column_title( 'event_starts', 'event_cpt' ),
 			'event_ends'   => $this->get_column_title( 'event_ends', 'event_cpt' ),
