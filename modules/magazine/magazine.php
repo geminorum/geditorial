@@ -319,6 +319,9 @@ class Magazine extends gEditorial\Module
 			add_action( 'save_post', [ $this, 'save_post_supported_cpt' ], 20, 3 );
 		}
 
+		if ( Settings::isDashboard( $screen ) )
+			$this->filter_module( 'calendar', 'post_row_title', 4, 12 );
+
 		// $size = apply_filters( 'admin_post_thumbnail_size', $size, $thumbnail_id, $post );
 	}
 
@@ -693,6 +696,17 @@ class Magazine extends gEditorial\Module
 	public function bulk_post_updated_messages( $messages, $counts )
 	{
 		return array_merge( $messages, $this->get_bulk_post_updated_messages( 'issue_cpt', $counts ) );
+	}
+
+	public function calendar_post_row_title( $title, $post, $the_day, $calendar_args )
+	{
+		if ( ! in_array( $post->post_type, $this->post_types() ) )
+			return $title;
+
+		if ( ! $issue = $this->get_assoc_post( $post->ID, TRUE ) )
+			return $title;
+
+		return $title.' – '.Helper::getPostTitle( $issue );
 	}
 
 	public function issue_shortcode( $atts = [], $content = NULL, $tag = '' )
