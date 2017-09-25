@@ -65,7 +65,9 @@ class Ajax extends Core\Base
 
 	public static function spinner()
 	{
-		return '<span class="'.self::BASE.'-spinner"></span>';
+		return is_admin()
+			? '<span class="-loading spinner"></span>'
+			: '<span class="-loading '.self::BASE.'-spinner"></span>';
 	}
 
 	public static function printJSConfig( $args, $object = 'gEditorial' )
