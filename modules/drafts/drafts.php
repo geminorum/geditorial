@@ -126,7 +126,7 @@ class Drafts extends gEditorial\Module
 					Ajax::errorMessage();
 
 				if ( ! current_user_can( 'edit_post', $post['post_id'] ) )
-					Ajax::errorMessage();
+					Ajax::errorUserCant();
 
 				if ( ! $this->nonce_verify( $post['post_id'], $post['nonce'] ) )
 					self::cheatin();
@@ -143,7 +143,7 @@ class Drafts extends gEditorial\Module
 					Ajax::errorMessage();
 
 				if ( ! current_user_can( 'edit_post', $post['post_id'] ) )
-					Ajax::errorMessage();
+					Ajax::errorUserCant();
 
 				if ( ! $this->nonce_verify( $post['post_id'], $post['nonce'] ) )
 					self::cheatin();

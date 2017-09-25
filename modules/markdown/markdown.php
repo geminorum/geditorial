@@ -141,7 +141,7 @@ class Markdown extends gEditorial\Module
 		$what = empty( $post['what'] ) ? 'nothing': trim( $post['what'] );
 
 		if ( empty( $post['post_id'] ) )
-			Ajax::errorMessage();
+			Ajax::errorUserCant();
 
 		if ( ! current_user_can( 'edit_post', $post['post_id'] ) )
 			Ajax::errorMessage();

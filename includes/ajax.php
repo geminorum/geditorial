@@ -53,6 +53,11 @@ class Ajax extends Core\Base
 			self::error();
 	}
 
+	public static function errorUserCant()
+	{
+		self::errorMessage( _x( 'You\'re not authorized!', 'Ajax: Ajax Notice', GEDITORIAL_TEXTDOMAIN ) );
+	}
+
 	public static function errorWhat()
 	{
 		self::errorMessage( _x( 'What?!', 'Ajax: Ajax Notice', GEDITORIAL_TEXTDOMAIN ) );

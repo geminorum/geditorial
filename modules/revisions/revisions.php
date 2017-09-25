@@ -334,7 +334,7 @@ class Revisions extends gEditorial\Module
 			case 'purge':
 
 				if ( ! current_user_can( $this->caps['purge'], $post['post_id'] ) )
-					Ajax::errorMessage();
+					Ajax::errorUserCant();
 
 				Ajax::success( [ 'count' => $this->purge( $post['post_id'] ) ] );
 
@@ -345,7 +345,7 @@ class Revisions extends gEditorial\Module
 					Ajax::errorMessage();
 
 				if ( ! current_user_can( $this->caps['delete'], $post['post_id'] ) )
-					Ajax::errorMessage();
+					Ajax::errorUserCant();
 
 				if ( is_wp_error( wp_delete_post_revision( $post['revision_id'] ) ) )
 					Ajax::errorMessage();

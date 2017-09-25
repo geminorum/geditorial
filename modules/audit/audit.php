@@ -182,7 +182,7 @@ class Audit extends gEditorial\Module
 			Ajax::errorMessage();
 
 		if ( ! current_user_can( 'edit_post', $post['post_id'] ) )
-			Ajax::errorMessage();
+			Ajax::errorUserCant();
 
 		Ajax::checkReferer( $this->hook( $post['post_id'] ) );
 
