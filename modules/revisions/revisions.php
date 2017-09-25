@@ -13,6 +13,8 @@ use geminorum\gEditorial\Core\WordPress;
 class Revisions extends gEditorial\Module
 {
 
+	protected $disable_no_posttypes = TRUE;
+
 	protected $caps = [
 		'ajax'    => 'edit_posts',
 		'purge'   => 'delete_post',

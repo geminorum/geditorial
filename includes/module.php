@@ -42,6 +42,10 @@ class Module extends Base
 	protected $post_types_excluded = [ 'attachment', 'inbound_message' ];
 	protected $taxonomies_excluded = [];
 
+	protected $disable_no_customs    = FALSE; // not hooking module if has no posttypes/taxonomies
+	protected $disable_no_posttypes  = FALSE; // not hooking module if has no posttypes
+	protected $disable_no_taxonomies = FALSE; // not hooking module if has no taxonomies
+
 	protected $image_sizes  = [];
 	protected $kses_allowed = [];
 
@@ -88,10 +92,17 @@ class Module extends Base
 
 	protected function setup( $args = [] )
 	{
-		$this->require_code( $this->partials );
+		$admin = is_admin();
+		$ajax  = WordPress::isAJAX();
+		$ui    = WordPress::mustRegisterUI( FALSE );
 
-		$ajax = WordPress::isAJAX();
-		$ui   = WordPress::mustRegisterUI( FALSE );
+		if ( $admin && $ui )
+			add_action( 'geditorial_settings_load', [ $this, 'register_settings' ] );
+
+		if ( $this->setup_disabled() )
+			return FALSE;
+
+		$this->require_code( $this->partials );
 
 		if ( method_exists( $this, 'p2p_init' ) )
 			$this->action( 'p2p_init' );
@@ -118,7 +129,7 @@ class Module extends Base
 		if ( $ui && method_exists( $this, 'adminbar_init' ) && $this->get_setting( 'adminbar_summary' ) )
 			add_action( 'geditorial_adminbar', [ $this, 'adminbar_init' ], $this->priority_adminbar_init, 2 );
 
-		if ( is_admin() ) {
+		if ( $admin ) {
 
 			if ( method_exists( $this, 'admin_init' ) )
 				$this->action( 'admin_init' );
@@ -138,15 +149,28 @@ class Module extends Base
 			if ( $ui && method_exists( $this, 'current_screen' ) )
 				$this->action( 'current_screen' );
 
-			if ( $ui )
-				add_action( 'geditorial_settings_load', [ $this, 'register_settings' ] );
-
 			if ( $ui && method_exists( $this, 'reports_settings' ) )
 				add_action( 'geditorial_reports_settings', [ $this, 'reports_settings' ] );
 
 			if ( $ui && method_exists( $this, 'tools_settings' ) )
 				add_action( 'geditorial_tools_settings', [ $this, 'tools_settings' ] );
 		}
+
+		return TRUE;
+	}
+
+	protected function setup_disabled()
+	{
+		if ( $this->disable_no_customs && ! count( $this->post_types() ) && ! count( $this->taxonomies() ) )
+			return TRUE;
+
+		if ( $this->disable_no_posttypes && ! count( $this->post_types() ) )
+			return TRUE;
+
+		if ( $this->disable_no_taxonomies && ! count( $this->taxonomies() ) )
+			return TRUE;
+
+		return FALSE;
 	}
 
 	public function _after_setup_theme()

@@ -12,6 +12,8 @@ use geminorum\gEditorial\Core\WordPress;
 class Calendar extends gEditorial\Module
 {
 
+	protected $disable_no_posttypes = TRUE;
+
 	public static function module()
 	{
 		return [
