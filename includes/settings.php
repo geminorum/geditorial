@@ -640,8 +640,14 @@ class Settings extends Core\Base
 
 		// echo '<span class="subtitle">'.'</span>';
 
-		if ( $back )
-			printf( ' <a href="%s" class="page-title-action settings-title-action">%s</a>', $back, $to );
+		$action = ' <a href="%s" class="page-title-action settings-title-action">%s</a>';
+
+		if ( $back && is_array( $back ) )
+			foreach ( $back as $back_link => $back_title )
+				printf( $action, $back_link, $back_title );
+
+		else if ( $back )
+			printf( $action, $back, $to );
 
 		if ( $search )
 			echo HTML::tag( 'input', [
