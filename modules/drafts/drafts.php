@@ -13,10 +13,6 @@ class Drafts extends gEditorial\Module
 
 	protected $disable_no_posttypes = TRUE;
 
-	protected $caps = [
-		'ajax' => 'edit_posts',
-	];
-
 	public static function module()
 	{
 		return [
@@ -45,6 +41,7 @@ class Drafts extends gEditorial\Module
 					'description' => _x( 'Summary for the current item as a node in adminbar', 'Modules: Drafts: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 				],
 				'summary_scope',
+				'adminbar_roles',
 				[
 					'field'       => 'max_posts',
 					'type'        => 'number',
@@ -101,7 +98,7 @@ class Drafts extends gEditorial\Module
 		if ( is_admin() )
 			return;
 
-		if ( ! $this->cuc( 'ajax' ) )
+		if ( ! $this->role_can( 'adminbar' ) )
 			return;
 
 		$nodes[] = [
@@ -160,7 +157,7 @@ class Drafts extends gEditorial\Module
 
 				Ajax::checkReferer( $this->hook() );
 
-				if ( ! $this->cuc( 'ajax' ) )
+				if ( ! $this->role_can( 'adminbar' ) )
 					self::cheatin();
 
 				Ajax::success( $this->drafts_list() );
