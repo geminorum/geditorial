@@ -188,12 +188,10 @@ class Event extends gEditorial\Module
 
 		add_rewrite_endpoint( $this->constant( 'endpoint_ical' ), EP_PAGES, 'ical' );
 
-		if ( ! is_admin() ) {
+		if ( is_admin() )
+			return;
 
-			$this->action( 'pre_get_posts' );
-			$this->action( 'template_redirect' );
-			$this->filter( 'template_include' );
-		}
+		$this->action( 'pre_get_posts' );
 	}
 
 	public function init_ajax()

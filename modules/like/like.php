@@ -81,11 +81,6 @@ class Like extends gEditorial\Module
 		parent::init();
 
 		$this->cookie = $this->classs( get_current_blog_id() );
-
-		if ( is_admin() )
-			return;
-
-		$this->action( 'template_redirect' );
 	}
 
 	public function init_ajax()

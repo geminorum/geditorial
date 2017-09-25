@@ -15,6 +15,8 @@ use geminorum\gEditorial\WordPress\Theme;
 class Entry extends gEditorial\Module
 {
 
+	protected $priority_template_include = 9;
+
 	public static function module()
 	{
 		return [
@@ -101,21 +103,19 @@ class Entry extends gEditorial\Module
 
 		$this->register_post_type( 'entry_cpt' );
 
-		if ( ! is_admin() ) {
-
-			if ( $this->get_setting( 'before_content', FALSE ) )
-				add_action( 'gnetwork_themes_content_before', [ $this, 'content_before' ], 100 );
-
-			if ( $this->get_setting( 'after_content', FALSE ) )
-				add_action( 'gnetwork_themes_content_after', [ $this, 'content_after' ], 1 );
-
-			if ( $this->get_setting( 'autolink_terms', FALSE ) )
-				$this->filter( 'the_content', 1, 9 );
-
-			$this->filter( 'template_include', 1, 9 );
-		}
-
 		$this->register_shortcode( 'section_shortcode' );
+
+		if ( is_admin() )
+			return;
+
+		if ( $this->get_setting( 'before_content', FALSE ) )
+			add_action( 'gnetwork_themes_content_before', [ $this, 'content_before' ], 100 );
+
+		if ( $this->get_setting( 'after_content', FALSE ) )
+			add_action( 'gnetwork_themes_content_after', [ $this, 'content_after' ], 1 );
+
+		if ( $this->get_setting( 'autolink_terms', FALSE ) )
+			$this->filter( 'the_content', 1, 9 );
 	}
 
 	public function init_ajax()

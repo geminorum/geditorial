@@ -222,17 +222,16 @@ class Magazine extends gEditorial\Module
 		$this->register_shortcode( 'span_shortcode' );
 		$this->register_shortcode( 'cover_shortcode' );
 
-		if ( ! is_admin() ) {
+		if ( is_admin() )
+			return;
 
-			$this->filter( 'term_link', 3 );
-			$this->action( 'template_redirect' );
+		if ( $this->get_setting( 'insert_cover' ) )
+			add_action( 'gnetwork_themes_content_before',
+				[ $this, 'content_before' ],
+				$this->get_setting( 'insert_priority', -50 )
+			);
 
-			if ( $this->get_setting( 'insert_cover' ) )
-				add_action( 'gnetwork_themes_content_before',
-					[ $this, 'content_before' ],
-					$this->get_setting( 'insert_priority', -50 )
-				);
-		}
+		$this->filter( 'term_link', 3 );
 	}
 
 	public function init_ajax()

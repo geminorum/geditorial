@@ -108,14 +108,13 @@ class Today extends gEditorial\Module
 	{
 		parent::setup();
 
-		if ( ! is_admin() ) {
-
-			$this->filter( 'query_vars' );
-			$this->filter( 'template_include' );
-		}
-
 		$this->filter( 'rewrite_rules_array' );
 		$this->filter( 'post_type_link', 4 );
+
+		if ( is_admin() )
+			return;
+
+		$this->filter( 'query_vars' );
 	}
 
 	public function after_setup_theme()

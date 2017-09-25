@@ -26,10 +26,12 @@ class Module extends Base
 	protected $field_type = 'meta';
 	protected $icon_group = 'genericons-neue';
 
-	protected $priority_init          = 10;
-	protected $priority_init_ajax     = 10;
-	protected $priority_admin_menu    = 10;
-	protected $priority_adminbar_init = 10;
+	protected $priority_init              = 10;
+	protected $priority_init_ajax         = 10;
+	protected $priority_admin_menu        = 10;
+	protected $priority_adminbar_init     = 10;
+	protected $priority_template_redirect = 10;
+	protected $priority_template_include  = 10;
 
 	protected $constants = [];
 	protected $strings   = [];
@@ -154,6 +156,14 @@ class Module extends Base
 
 			if ( $ui && method_exists( $this, 'tools_settings' ) )
 				add_action( 'geditorial_tools_settings', [ $this, 'tools_settings' ] );
+
+		} else {
+
+			if ( $ui && method_exists( $this, 'template_redirect' ) )
+				add_action( 'template_redirect', [ $this, 'template_redirect' ],  $this->priority_template_redirect );
+
+			if ( $ui && method_exists( $this, 'template_include' ) )
+				add_filter( 'template_include', [ $this, 'template_include' ],  $this->priority_template_include );
 		}
 
 		return TRUE;

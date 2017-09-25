@@ -177,10 +177,10 @@ class Contest extends gEditorial\Module
 
 		$this->register_post_type( 'apply_cpt' );
 
-		if ( ! is_admin() ) {
-			$this->filter( 'term_link', 3 );
-			$this->action( 'template_redirect' );
-		}
+		if ( is_admin() )
+			return;
+
+		$this->filter( 'term_link', 3 );
 	}
 
 	public function init_ajax()
