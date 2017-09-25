@@ -2131,31 +2131,33 @@ SQL;
 		return $pieces;
 	}
 
-	protected function dashboard_glance_post( $constant, $edit_cap = 'edit_posts' )
+	protected function dashboard_glance_post( $constant )
 	{
 		$posttype = $this->constant( $constant );
+		$object   = get_post_type_object( $posttype );
 		$posts    = wp_count_posts( $posttype );
 
 		if ( ! $posts->publish )
 			return FALSE;
 
 		$class  = 'geditorial-glance-item -'.$this->slug().' -posttype -posttype-'.$posttype;
-		$format = current_user_can( $edit_cap ) ? '<a class="'.$class.'" href="edit.php?post_type=%3$s">%1$s %2$s</a>' : '<div class="'.$class.'">%1$s %2$s</div>';
+		$format = current_user_can( $object->cap->edit_posts ) ? '<a class="'.$class.'" href="edit.php?post_type=%3$s">%1$s %2$s</a>' : '<div class="'.$class.'">%1$s %2$s</div>';
 		$text   = Helper::noopedCount( $posts->publish, $this->get_noop( $constant ) );
 
 		return sprintf( $format, Number::format( $posts->publish ), $text, $posttype );
 	}
 
-	protected function dashboard_glance_tax( $constant, $edit_cap = 'manage_categories' )
+	protected function dashboard_glance_tax( $constant )
 	{
 		$taxonomy = $this->constant( $constant );
+		$object   = get_taxonomy( $taxonomy );
 		$terms    = wp_count_terms( $taxonomy );
 
 		if ( ! $terms )
 			return FALSE;
 
 		$class  = 'geditorial-glance-item -'.$this->slug().' -tax -taxonomy-'.$taxonomy;
-		$format = current_user_can( $edit_cap ) ? '<a class="'.$class.'" href="edit-tags.php?taxonomy=%3$s">%1$s %2$s</a>' : '<div class="'.$class.'">%1$s %2$s</div>';
+		$format = current_user_can( $object->cap->manage_terms ) ? '<a class="'.$class.'" href="edit-tags.php?taxonomy=%3$s">%1$s %2$s</a>' : '<div class="'.$class.'">%1$s %2$s</div>';
 		$text   = Helper::noopedCount( $terms, $this->get_noop( $constant ) );
 
 		return sprintf( $format, Number::format( $terms ), $text, $taxonomy );
