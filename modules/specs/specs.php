@@ -14,6 +14,9 @@ class Specs extends gEditorial\Module
 {
 
 	public $meta_key = '_ge_specs';
+
+	protected $disable_no_posttypes = TRUE;
+
 	protected $field_type = 'specs';
 
 	public static function module()

@@ -10,6 +10,8 @@ use geminorum\gEditorial\Core\HTML;
 class Shortcodes extends gEditorial\Module
 {
 
+	protected $disable_no_posttypes = TRUE;
+
 	public static function module()
 	{
 		return [

@@ -14,11 +14,12 @@ use geminorum\gEditorial\Templates\Meta as ModuleTemplate;
 
 class Meta extends gEditorial\Module
 {
-
 	public $meta_key = '_gmeta';
 	protected $priority_init = 12;
 
 	protected $partials = [ 'metabox', 'templates' ];
+
+	protected $disable_no_posttypes = TRUE;
 
 	protected $caps = [
 		'tools' => 'import',

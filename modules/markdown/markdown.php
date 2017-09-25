@@ -14,8 +14,10 @@ use geminorum\gEditorial\WordPress\PostType;
 class Markdown extends gEditorial\Module
 {
 
-	protected $parser;
-	protected $convertor;
+	protected $disable_no_posttypes = TRUE;
+
+	private $parser;
+	private $convertor;
 
 	public static function module()
 	{

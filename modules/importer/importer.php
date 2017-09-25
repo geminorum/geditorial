@@ -16,6 +16,8 @@ use geminorum\gEditorial\WordPress\User;
 class Importer extends gEditorial\Module
 {
 
+	protected $disable_no_posttypes = TRUE;
+
 	public $meta_key = '_geditorial_importer';
 
 	public static function module()

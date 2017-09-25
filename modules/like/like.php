@@ -14,7 +14,10 @@ use geminorum\gEditorial\Core\WordPress;
 class Like extends gEditorial\Module
 {
 
-	public $meta_key   = '_ge_like';
+	public $meta_key = '_ge_like';
+
+	protected $disable_no_posttypes = TRUE;
+
 	protected $cookie  = 'geditorial-like';
 	protected $post_id = FALSE;
 
@@ -79,8 +82,10 @@ class Like extends gEditorial\Module
 
 		$this->cookie = $this->classs( get_current_blog_id() );
 
-		if ( ! is_admin() && count( $this->post_types() ) )
-			$this->action( 'template_redirect' );
+		if ( is_admin() )
+			return;
+
+		$this->action( 'template_redirect' );
 	}
 
 	public function init_ajax()

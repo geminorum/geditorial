@@ -11,6 +11,8 @@ use geminorum\gEditorial\Core\WordPress;
 class Drafts extends gEditorial\Module
 {
 
+	protected $disable_no_posttypes = TRUE;
+
 	protected $caps = [
 		'ajax' => 'edit_posts',
 	];
@@ -96,7 +98,7 @@ class Drafts extends gEditorial\Module
 
 	public function adminbar_init( &$nodes, $parent )
 	{
-		if ( is_admin() || ! count( $this->post_types() ) )
+		if ( is_admin() )
 			return;
 
 		if ( ! $this->cuc( 'ajax' ) )

@@ -14,6 +14,8 @@ use geminorum\gEditorial\Core\WordPress;
 class Modified extends gEditorial\Module
 {
 
+	protected $disable_no_posttypes = TRUE;
+
 	public static function module()
 	{
 		return [
@@ -80,7 +82,7 @@ class Modified extends gEditorial\Module
 		if ( is_blog_admin() && $this->get_setting( 'dashboard_widgets', FALSE ) )
 			$this->action( 'wp_dashboard_setup' );
 
-		if ( ! is_admin() && count( $this->post_types() ) ) {
+		if ( ! is_admin() ) {
 
 			$insert = $this->get_setting( 'insert_content', 'none' );
 

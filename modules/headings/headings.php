@@ -8,6 +8,8 @@ use geminorum\gEditorial\Core\HTML;
 class Headings extends gEditorial\Module
 {
 
+	protected $disable_no_posttypes = TRUE;
+
 	private $anchors  = [];
 	private $toc      = [];
 
@@ -57,16 +59,16 @@ class Headings extends gEditorial\Module
 	{
 		parent::init();
 
-		if ( ! is_admin() && count( $this->post_types() ) ) {
+		if ( is_admin() )
+			return;
 
-			$this->filter( 'the_content' );
+		$this->filter( 'the_content' );
 
-			if ( $this->get_setting( 'insert_content_before', FALSE ) )
-				add_action( 'gnetwork_themes_content_before', [ $this, 'content_before' ],
-					$this->get_setting( 'insert_priority', -25 ) );
+		if ( $this->get_setting( 'insert_content_before', FALSE ) )
+			add_action( 'gnetwork_themes_content_before', [ $this, 'content_before' ],
+				$this->get_setting( 'insert_priority', -25 ) );
 
-			$this->enqueue_styles();
-		}
+		$this->enqueue_styles();
 	}
 
 	public function the_content( $content )

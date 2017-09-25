@@ -13,7 +13,10 @@ use geminorum\gEditorial\WordPress\Taxonomy;
 class Series extends gEditorial\Module
 {
 
-	public $meta_key      = '_ge_series';
+	public $meta_key = '_ge_series';
+
+	protected $disable_no_posttypes = TRUE;
+
 	protected $field_type = 'series';
 
 	public static function module()

@@ -11,7 +11,10 @@ class Estimated extends gEditorial\Module
 {
 
 	public $meta_key = '_ge_estimated';
-	private $added   = FALSE;
+
+	protected $disable_no_posttypes = TRUE;
+
+	private $added = FALSE;
 
 	public static function module()
 	{
@@ -70,16 +73,16 @@ class Estimated extends gEditorial\Module
 	{
 		parent::init();
 
-		if ( ! is_admin() && count( $this->post_types() ) ) {
+		if ( is_admin() )
+			return;
 
-			if ( 'none' != $this->get_setting( 'insert_content', 'none' ) )
-				$this->filter( 'the_content', 1, $this->get_setting( 'insert_priority', 22 ) );
-			else
-				add_action( 'gnetwork_themes_content_before', [ $this, 'content_before' ],
-					$this->get_setting( 'insert_priority', 60 ) );
+		if ( 'none' != $this->get_setting( 'insert_content', 'none' ) )
+			$this->filter( 'the_content', 1, $this->get_setting( 'insert_priority', 22 ) );
+		else
+			add_action( 'gnetwork_themes_content_before', [ $this, 'content_before' ],
+				$this->get_setting( 'insert_priority', 60 ) );
 
-			$this->enqueue_styles();
-		}
+		$this->enqueue_styles();
 
 		// TODO: add shortcode
 	}
