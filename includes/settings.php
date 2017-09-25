@@ -582,6 +582,19 @@ class Settings extends Core\Base
 		];
 	}
 
+	public static function getSetting_adminmenu_roles( $section )
+	{
+		return [
+			'field'   => 'adminmenu_roles',
+			'type'    => 'checkbox',
+			'title'   => _x( 'Admin Menu Roles', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+			'default' => [],
+			'exclude' => [ 'administrator', 'subscriber' ],
+			'values'  => User::getAllRoleList(),
+			'section' => $section,
+		];
+	}
+
 	public static function sub( $default = 'general' )
 	{
 		return trim( self::req( 'sub', $default ) );
