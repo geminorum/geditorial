@@ -31,13 +31,8 @@ class Revisions extends gEditorial\Module
 			'desc'     => _x( 'Revision Management', 'Modules: Revisions', GEDITORIAL_TEXTDOMAIN ),
 			'icon'     => 'backup',
 			'frontend' => FALSE,
+			'disabled' => ! WP_POST_REVISIONS ? _x( 'Deactivated by Constant', 'Modules: Revisions', GEDITORIAL_TEXTDOMAIN ) : FALSE,
 		];
-	}
-
-	public function settings_intro_after( $module )
-	{
-		if ( ! WP_POST_REVISIONS )
-			echo HTML::warning( _x( 'Revisions are deactivated on this site, this module has no reason to be activated.', 'Modules: Revisions: Setting Section Notice', GEDITORIAL_TEXTDOMAIN ), FALSE );
 	}
 
 	protected function get_global_settings()
