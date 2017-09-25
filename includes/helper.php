@@ -5,6 +5,7 @@ defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial\Core\Date;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\HTTP;
+use geminorum\gEditorial\Core\Icon;
 use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\Text;
 use geminorum\gEditorial\Core\WordPress;
@@ -447,9 +448,19 @@ class Helper extends Core\Base
 		if ( ! is_object( $posttype ) )
 			$posttype = get_post_type_object( $posttype );
 
-		$icon = isset( $posttype->menu_icon ) ? str_ireplace( 'dashicons-', '', $posttype->menu_icon ) : $fallback;
+		if ( $posttype->menu_icon && is_string( $posttype->menu_icon ) ) {
 
-		return HTML::getDashicon( $icon );
+			if ( Text::has( $posttype->menu_icon, 'data:image/svg+xml;base64,' ) )
+				return Icon::wrapBase64( $posttype->menu_icon );
+
+
+			if ( Text::has( $posttype->menu_icon, 'dashicons-' ) )
+				return HTML::getDashicon( str_ireplace( 'dashicons-', '', $posttype->menu_icon ) );
+
+			return Icon::wrapURL( esc_url( $posttype->menu_icon ) );
+		}
+
+		return HTML::getDashicon( $fallback );
 	}
 
 	public static function registerColorBox()
