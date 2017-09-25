@@ -11,6 +11,7 @@ use geminorum\gEditorial\WordPress\Module as Base;
 use geminorum\gEditorial\WordPress\Media;
 use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\Taxonomy;
+use geminorum\gEditorial\WordPress\User;
 
 class Module extends Base
 {
@@ -1659,6 +1660,25 @@ class Module extends Base
 		}
 
 		return $form;
+	}
+
+	protected function role_can( $what = 'supported', $user_id = NULL, $fallback = FALSE )
+	{
+		if ( is_null( $user_id ) )
+			$user_id = get_current_user_id();
+
+		if ( ! $user_id )
+			return $fallback;
+
+		$setting = $this->get_setting( $what.'_roles', [] );
+
+		if ( User::hasRole( array_merge( $setting, [ 'administrator' ] ), $user_id ) )
+			return TRUE;
+
+		if ( User::isSuperAdmin( $user_id ) )
+			return TRUE;
+
+		return $fallback;
 	}
 
 	// CAUTION: tax must be cat (hierarchical)

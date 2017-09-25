@@ -248,43 +248,27 @@ class Audit extends gEditorial\Module
 
 				foreach ( $locking as $term_id )
 					if ( is_object_in_term( $post->ID, $this->constant( 'audit_tax' ), intval( $term_id ) ) )
-						return $this->audit_can( 'manage', $user_id ) ? $caps : [ 'do_not_allow' ];
+						return $this->role_can( 'manage', $user_id ) ? $caps : [ 'do_not_allow' ];
 
 			break;
 
 			case 'manage_audit_tax':
 			case 'edit_audit_tax':
 			case 'delete_audit_tax':
-				return $this->audit_can( 'manage', $user_id ) ? [ 'read' ] : [ 'do_not_allow' ];
+				return $this->role_can( 'manage', $user_id ) ? [ 'read' ] : [ 'do_not_allow' ];
 			break;
 
 			case 'assign_audit_tax':
-				return $this->audit_can( 'assign', $user_id ) ? [ 'read' ] : [ 'do_not_allow' ];
+				return $this->role_can( 'assign', $user_id ) ? [ 'read' ] : [ 'do_not_allow' ];
 		}
 
 		return $caps;
 	}
 
-	private function audit_can( $what = 'assign', $user_id = NULL )
-	{
-		if ( is_null( $user_id ) )
-			$user_id = get_current_user_id();
-
-		if ( ! $user_id )
-			return FALSE;
-
-		$roles = array_merge( $this->get_setting( $what.'_roles', [] ), [ 'administrator' ] );
-
-		if ( User::hasRole( $roles, $user_id ) )
-			return TRUE;
-
-		return User::isSuperAdmin( $user_id );
-	}
-
 	// override
 	public function cuc( $context = 'settings', $fallback = '' )
 	{
-		return 'reports' == $context ? $this->audit_can( 'reports' ) : parent::cuc( $context, $fallback );
+		return 'reports' == $context ? $this->role_can( 'reports' ) : parent::cuc( $context, $fallback );
 	}
 
 	public function adminbar_init( &$nodes, $parent )
@@ -294,7 +278,7 @@ class Audit extends gEditorial\Module
 
 		$post_id = get_queried_object_id();
 
-		if ( $this->audit_can( 'reports' ) ) {
+		if ( $this->role_can( 'reports' ) ) {
 
 			$nodes[] = [
 				'id'     => $this->classs(),
@@ -319,10 +303,9 @@ class Audit extends gEditorial\Module
 					'parent' => $this->classs(),
 					'href'   => FALSE,
 				];
-
 		}
 
-		if ( ! $this->audit_can() )
+		if ( ! $this->role_can( 'assign' ) )
 			return;
 
 		$this->action( 'admin_bar_menu', 1, 699 );
@@ -355,14 +338,14 @@ class Audit extends gEditorial\Module
 	{
 		if ( 'dashboard' == $screen->base ) {
 
-			if ( $this->get_setting( 'dashboard_widgets', FALSE ) && $this->audit_can() )
+			if ( $this->get_setting( 'dashboard_widgets', FALSE ) && $this->role_can( 'assign' ) )
 				$this->action( 'activity_box_end', 0, 9 );
 
 		} else if ( in_array( $screen->post_type, $this->post_types() ) ) {
 
 			if ( 'edit' == $screen->base ) {
 
-				if ( $this->get_setting( 'admin_restrict', FALSE ) && $this->audit_can() ) {
+				if ( $this->get_setting( 'admin_restrict', FALSE ) && $this->role_can( 'assign' ) ) {
 					$this->action( 'restrict_manage_posts', 2, 20 );
 					$this->filter( 'parse_query' );
 				}
