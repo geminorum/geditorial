@@ -657,7 +657,7 @@ class Book extends gEditorial\Module
 				'callback' => function( $value, $row, $column, $index ){
 					$html = '';
 
-					foreach( $column['args']['fields'] as $key => $title )
+					foreach ( $column['args']['fields'] as $key => $title )
 						if ( $meta = get_post_meta( $row->ID, $key, TRUE ) )
 							$html .= '<div><b>'.$title.'</b>: '.$meta.'</div>';
 

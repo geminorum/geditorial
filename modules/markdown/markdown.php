@@ -141,10 +141,10 @@ class Markdown extends gEditorial\Module
 		$what = empty( $post['what'] ) ? 'nothing': trim( $post['what'] );
 
 		if ( empty( $post['post_id'] ) )
-			Ajax::errorUserCant();
+			Ajax::errorMessage();
 
 		if ( ! current_user_can( 'edit_post', $post['post_id'] ) )
-			Ajax::errorMessage();
+			Ajax::errorUserCant();
 
 		Ajax::checkReferer( $this->hook( $post['post_id'] ) );
 
@@ -178,7 +178,7 @@ class Markdown extends gEditorial\Module
 			case 'discard':
 
 				if ( ! $this->discard_post( $post['post_id'] ) )
-					Ajax::errorMessage( _x( 'Unable discard Makrdown content into HTML. Please try again.', 'Modules: Markdown', GEDITORIAL_TEXTDOMAIN ) );
+					Ajax::errorMessage( _x( 'Unable discard Makrdown content back into HTML. Please try again.', 'Modules: Markdown', GEDITORIAL_TEXTDOMAIN ) );
 
 				Ajax::successMessage();
 		}
@@ -216,7 +216,7 @@ class Markdown extends gEditorial\Module
 		if ( ! $this->convertor )
 			$this->convertor = new \League\HTMLToMarkdown\HtmlConverter;
 
-		return $this->convertor->convert( $content );
+		return $this->convertor->convert( wpautop( $content ) );
 	}
 
 	// FIXME: do the cleanup!
@@ -300,7 +300,7 @@ class Markdown extends gEditorial\Module
 
 		$data = [
 			'ID'                    => $post->ID,
-			'post_content_filtered' => $this->convert_content( wpautop( $post->post_content ), $post->ID ),
+			'post_content_filtered' => $this->convert_content( $post->post_content, $post->ID ),
 		];
 
 		$data['post_content'] = $this->process_content( $data['post_content_filtered'], $post->ID );

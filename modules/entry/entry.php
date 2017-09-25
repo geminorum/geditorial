@@ -134,14 +134,15 @@ class Entry extends gEditorial\Module
 		if ( ! current_user_can( 'edit_post', $post_id ) )
 			return;
 
+		if ( ! $terms = Taxonomy::getTerms( $this->constant( 'section_tax' ), $post_id, TRUE ) )
+			return;
+
 		$nodes[] = [
 			'id'     => $this->classs(),
 			'title'  => _x( 'Entry Sections', 'Modules: Entry: Adminbar', GEDITORIAL_TEXTDOMAIN ),
 			'parent' => $parent,
 			'href'   => get_post_type_archive_link( $this->constant( 'entry_cpt' ) ),
 		];
-
-		$terms = Taxonomy::getTerms( $this->constant( 'section_tax' ), $post_id, TRUE );
 
 		foreach ( $terms as $term )
 			$nodes[] = [
@@ -378,8 +379,8 @@ class Entry extends gEditorial\Module
 
 	public function archive_content( $content )
 	{
-		$html = $this->get_search_form( 'entry_cpt' );
-		$html.= $this->section_shortcode( [ 'id' => 'all' ] );
+		$html = $this->section_shortcode( [ 'id' => 'all' ] );
+		$html.= $this->get_search_form( 'entry_cpt' );
 
 		if ( $add_new = $this->get_add_new() )
 			$html.= '<p>'.$add_new.'</p>';

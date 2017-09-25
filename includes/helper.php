@@ -982,15 +982,15 @@ class Helper extends Core\Base
 	{
 		$calendars = [
 			'gregorian'     => _x( 'Gregorian', 'Helper: Default Calendar Type', GEDITORIAL_TEXTDOMAIN ),
-			'japanese'      => _x( 'Japanese', 'Helper: Default Calendar Type', GEDITORIAL_TEXTDOMAIN ),
-			'buddhist'      => _x( 'Buddhist', 'Helper: Default Calendar Type', GEDITORIAL_TEXTDOMAIN ),
-			'chinese'       => _x( 'Chinese', 'Helper: Default Calendar Type', GEDITORIAL_TEXTDOMAIN ),
+			// 'japanese'      => _x( 'Japanese', 'Helper: Default Calendar Type', GEDITORIAL_TEXTDOMAIN ),
+			// 'buddhist'      => _x( 'Buddhist', 'Helper: Default Calendar Type', GEDITORIAL_TEXTDOMAIN ),
+			// 'chinese'       => _x( 'Chinese', 'Helper: Default Calendar Type', GEDITORIAL_TEXTDOMAIN ),
 			'persian'       => _x( 'Persian', 'Helper: Default Calendar Type', GEDITORIAL_TEXTDOMAIN ),
-			'indian'        => _x( 'Indian', 'Helper: Default Calendar Type', GEDITORIAL_TEXTDOMAIN ),
+			// 'indian'        => _x( 'Indian', 'Helper: Default Calendar Type', GEDITORIAL_TEXTDOMAIN ),
 			'islamic'       => _x( 'Islamic', 'Helper: Default Calendar Type', GEDITORIAL_TEXTDOMAIN ),
-			'islamic-civil' => _x( 'Islamic-Civil', 'Helper: Default Calendar Type', GEDITORIAL_TEXTDOMAIN ),
-			'coptic'        => _x( 'Coptic', 'Helper: Default Calendar Type', GEDITORIAL_TEXTDOMAIN ),
-			'ethiopic'      => _x( 'Ethiopic', 'Helper: Default Calendar Type', GEDITORIAL_TEXTDOMAIN ),
+			// 'islamic-civil' => _x( 'Islamic-Civil', 'Helper: Default Calendar Type', GEDITORIAL_TEXTDOMAIN ),
+			// 'coptic'        => _x( 'Coptic', 'Helper: Default Calendar Type', GEDITORIAL_TEXTDOMAIN ),
+			// 'ethiopic'      => _x( 'Ethiopic', 'Helper: Default Calendar Type', GEDITORIAL_TEXTDOMAIN ),
 		];
 
 		return $filtered ? apply_filters( self::BASE.'_default_calendars', $calendars ) : $calendars;

@@ -112,7 +112,7 @@ class Specs extends gEditorial\Module
 			);
 
 			$sortable = Helper::registerScriptPackage( 'jquery-sortable', NULL, [ 'jquery' ], '0.9.13' );
-			$this->enqueue_asset_js( [], $screen, [ $sortable ] );
+			$this->enqueue_asset_js( [], $screen, [ 'jquery', $sortable ] );
 
 			// internal
 			add_action( 'geditorial_specs_meta_box', [ $this, 'geditorial_specs_meta_box' ], 5, 2 );
@@ -292,15 +292,15 @@ class Specs extends gEditorial\Module
 		$fields = $this->post_type_fields( $post->post_type );
 		$metas  = $this->get_postmeta( $post->ID, FALSE, [] );
 
-		$handle = '<span data-icon="dashicons" class="item-handle dashicons dashicons-move" title="'._x( 'Sort me!', 'Modules: Specs: Sortable Handler', GEDITORIAL_TEXTDOMAIN ).'"></span>';
-		$delete = '<span data-icon="dashicons" class="item-delete dashicons dashicons-trash" title="'._x( 'Trash me!', 'Modules: Specs: Sortable Trash', GEDITORIAL_TEXTDOMAIN ).'"></span>';
+		$handle = '<span data-icon="dashicons" class="-handle dashicons dashicons-move" title="'._x( 'Sort me!', 'Modules: Specs: Sortable Handler', GEDITORIAL_TEXTDOMAIN ).'"></span>';
+		$delete = '<span data-icon="dashicons" class="-delete dashicons dashicons-trash" title="'._x( 'Trash me!', 'Modules: Specs: Sortable Trash', GEDITORIAL_TEXTDOMAIN ).'"></span>';
 
-		echo '<ol class="geditorial-specs-list">';
+		echo '<ol class="geditorial-specs-list -sortable">';
 		foreach ( $metas as $order => $meta ) {
 
 			echo '<li><div class="item-head">';
 
-				echo $handle.'<span class="item-excerpt">';
+				echo $handle.'<span class="-excerpt">';
 					$title = ( isset( $meta['spec_title'] ) && $meta['spec_title'] ) ? $meta['spec_title'] : ( isset( $meta['spec_term_id'] ) && $meta['spec_term_id'] ? $the_terms[$meta['spec_term_id']]->name : _x( 'Unknown Field', 'Modules: Specs',  GEDITORIAL_TEXTDOMAIN ) );
 					$title .= ( isset( $meta['spec_value'] ) && $meta['spec_value'] ? ': '.$meta['spec_value'] : '' );
 					echo Text::subStr( $title, 0, 28 );
@@ -331,7 +331,7 @@ class Specs extends gEditorial\Module
 		echo '<ul class="geditorial-specs-new">';
 			echo '<li>';
 			echo '<div class="item-head">';
-				echo $handle.'<span class="item-excerpt">';
+				echo $handle.'<span class="-excerpt">';
 					// echo '&hellip;';
 				echo '</span>'.$delete;
 			echo '</div><div class="item-body">';

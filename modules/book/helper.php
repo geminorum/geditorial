@@ -93,9 +93,9 @@ class Book extends gEditorial\Helper
 		$title_a = mb_strtolower( preg_replace( '~\P{Xan}++~u', '', $a->post_title ) );
 		$title_b = mb_strtolower( preg_replace( '~\P{Xan}++~u', '', $b->post_title ) );
 
-		if( $title_a == $title_b ) {
+		if ( $title_a == $title_b )
 			return 0 ;
-		}
+
 		return ( $title_a < $title_b ) ? -1 : 1;
 	}
 
