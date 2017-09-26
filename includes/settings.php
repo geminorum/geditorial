@@ -565,6 +565,7 @@ class Settings extends Core\Base
 			'type'    => 'checkbox',
 			'title'   => _x( 'Supported Roles', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 			'default' => [],
+			'exclude' => [ 'administrator' ],
 			'values'  => User::getAllRoleList(),
 			'section' => $section,
 		];
@@ -577,6 +578,7 @@ class Settings extends Core\Base
 			'type'    => 'checkbox',
 			'title'   => _x( 'Excluded Roles', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 			'default' => [],
+			'exclude' => [ 'administrator' ],
 			'values'  => User::getAllRoleList(),
 			'section' => $section,
 		];
@@ -600,7 +602,7 @@ class Settings extends Core\Base
 		return [
 			'field'   => 'adminbar_roles',
 			'type'    => 'checkbox',
-			'title'   => _x( 'Admin-Bar Roles', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+			'title'   => _x( 'Adminbar Roles', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 			'default' => [],
 			'exclude' => [ 'administrator', 'subscriber' ],
 			'values'  => User::getAllRoleList(),

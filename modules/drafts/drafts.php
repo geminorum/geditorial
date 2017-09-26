@@ -158,7 +158,7 @@ class Drafts extends gEditorial\Module
 				Ajax::checkReferer( $this->hook() );
 
 				if ( ! $this->role_can( 'adminbar' ) )
-					self::cheatin();
+					Ajax::errorUserCant();
 
 				Ajax::success( $this->drafts_list() );
 		}

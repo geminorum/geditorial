@@ -16,7 +16,6 @@ class Revisions extends gEditorial\Module
 	protected $disable_no_posttypes = TRUE;
 
 	protected $caps = [
-		'ajax'    => 'edit_posts',
 		'purge'   => 'delete_post',
 		'delete'  => 'delete_post',
 		'edit'    => 'edit_others_posts',
@@ -318,9 +317,6 @@ class Revisions extends gEditorial\Module
 
 	public function ajax()
 	{
-		if ( ! $this->cuc( 'ajax' ) )
-			self::cheatin();
-
 		$post = self::unslash( $_POST );
 		$what = empty( $post['what'] ) ? 'nothing': trim( $post['what'] );
 
