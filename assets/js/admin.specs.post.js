@@ -74,12 +74,12 @@
       return o.newItem(this);
     });
 
-    $('body').on('click', s.wrap + ' .item-delete', function(e) {
+    $('body').on('click', s.wrap + ' .-delete', function(e) {
       e.preventDefault();
       o.removeItem(this);
     });
 
-    $('body').on('click', s.wrap + ' .item-excerpt', function(e) {
+    $('body').on('click', s.wrap + ' .-excerpt', function(e) {
       e.preventDefault();
       o.expandItem(this);
     });
@@ -87,7 +87,7 @@
     $(s.wrap).sortable({
       // disable: true,
       group: s.classs,
-      handle: '.item-handle',
+      handle: '.-handle',
       stop: function() {
         o.reOrder();
       }
