@@ -335,6 +335,9 @@ class Calendar extends gEditorial\Module
 		if ( ! is_callable( 'gPersianDateDate', 'getByCal' ) )
 			return FALSE;
 
+		if ( ! $this->role_can( 'adminmenu' ) )
+			return FALSE;
+
 		$cal  = $this->default_calendar();
 		$date = \gPersianDateDate::getByCal( strtotime( $post->post_date_gmt ), $cal );
 
