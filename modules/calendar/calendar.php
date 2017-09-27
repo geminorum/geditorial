@@ -39,6 +39,15 @@ class Calendar extends gEditorial\Module
 				'calendar_type',
 				'calendar_list',
 				'adminmenu_roles',
+				[
+					'field'       => 'noschedule_statuses',
+					'type'        => 'checkbox',
+					'title'       => _x( 'Non-Reschedulable Statuses', 'Modules: Calendar: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Posts in these statuses can <b>not</b> be rescheduled.', 'Modules: Calendar: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'default'     => [ 'publish', 'future', 'private' ],
+					'exclude'     => [ 'trash', 'inherit', 'auto-draft' ],
+					'values'      => PostType::getStatuses(),
+				],
 			],
 			'posttypes_option' => 'posttypes_option',
 		];
@@ -256,8 +265,7 @@ class Calendar extends gEditorial\Module
 
 		$html = '<li data-day="'.$the_day.'"';
 
-		if ( ! in_array( $post->post_status, [ 'publish', 'future', 'private' ] )
-			&& current_user_can( 'edit_post', $post->ID ) ) {
+		if ( $this->can_reschedule( $post ) && current_user_can( 'edit_post', $post->ID ) ) {
 
 			$html.= ' data-post="'.$post->ID.'" data-nonce="'.wp_create_nonce( $this->hook( $post->ID ) ).'">';
 			$html.= '<span class="-handle" title="'._x( 'Drag me!', 'Modules: Calendar: Sortable', GEDITORIAL_TEXTDOMAIN ).'">';
@@ -338,6 +346,11 @@ class Calendar extends gEditorial\Module
 		], get_admin_url( NULL, 'index.php' ) );
 	}
 
+	private function can_reschedule( $post )
+	{
+		return ! in_array( $post->post_status, $this->get_setting( 'noschedule_statuses', [ 'publish', 'future', 'private' ] ) );
+	}
+
 	// - for post time, if the post is unpublished, the change sets the
 	// publication timestamp
 	// - if the post was published or scheduled for the future, the change will
@@ -354,8 +367,7 @@ class Calendar extends gEditorial\Module
 		if ( ! $post = get_post( $post ) )
 			return FALSE;
 
-		// check that it's not yet published
-		if ( in_array( $post->post_status, [ 'publish', 'future', 'private' ] ) )
+		if ( ! $this->can_reschedule( $post ) )
 			return _x( 'Updating the post date dynamically doesn\'t work for published content.', 'Modules: Calendar', GEDITORIAL_TEXTDOMAIN );
 
 		// persist the old hourstamp because we can't manipulate the exact time
