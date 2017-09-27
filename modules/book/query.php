@@ -13,10 +13,10 @@ class gEditorialBookQuery extends \WP_Query
 		$this->cpt = gEditorial()->constant( 'book', 'publication_cpt', 'publication' );
 		$this->tax = gEditorial()->constant( 'book', 'subject_tax', 'publication_subject' );
 
-		// Force these args
+		// force these args
 		$args = array_merge( $args, [
 			'post_type'              => $this->cpt,
-			'posts_per_page'         => -1,  // turn off paging
+			'posts_per_page'         => -1, // turn off paging
 			'no_found_rows'          => TRUE, // optimize query for no paging
 			'update_post_term_cache' => FALSE,
 			'update_post_meta_cache' => FALSE,

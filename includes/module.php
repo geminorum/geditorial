@@ -160,10 +160,10 @@ class Module extends Base
 		} else {
 
 			if ( $ui && method_exists( $this, 'template_redirect' ) )
-				add_action( 'template_redirect', [ $this, 'template_redirect' ],  $this->priority_template_redirect );
+				add_action( 'template_redirect', [ $this, 'template_redirect' ], $this->priority_template_redirect );
 
 			if ( $ui && method_exists( $this, 'template_include' ) )
-				add_filter( 'template_include', [ $this, 'template_include' ],  $this->priority_template_include );
+				add_filter( 'template_include', [ $this, 'template_include' ], $this->priority_template_include );
 		}
 
 		return TRUE;

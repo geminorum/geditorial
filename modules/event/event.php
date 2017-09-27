@@ -339,7 +339,7 @@ class Event extends gEditorial\Module
 			// TODO: Localize
 			// $time_format = get_option( 'time_format', 'g:i a' );
 			// @$starttime = date( $time_format, strtotime( $event_meta[$this->constant( 'metakey_startdate' )][0] ) );
-			// @$endtime = date( $time_format,  strtotime( $event_meta[$this->constant( 'metakey_enddate' )][0] ) );
+			// @$endtime = date( $time_format, strtotime( $event_meta[$this->constant( 'metakey_enddate' )][0] ) );
 			// echo $starttime . '<br />' .$endtime;
 		}
 	}

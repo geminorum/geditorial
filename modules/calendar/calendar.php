@@ -139,6 +139,9 @@ class Calendar extends gEditorial\Module
 		foreach ( Settings::settingsHelpContent() as $tab )
 			$screen->add_help_tab( $tab );
 
+		if ( $sidebar = $this->settings_help_sidebar() )
+			$screen->set_help_sidebar( $sidebar );
+
 		$this->actions( 'load', $page );
 
 		$sortable = Helper::registerScriptPackage( 'jquery-sortable', NULL, [ 'jquery' ], '0.9.13' );

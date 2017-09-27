@@ -110,6 +110,11 @@ class Config extends gEditorial\Module
 		}
 	}
 
+	public function get_adminmenu( $page = TRUE, $extra = [] )
+	{
+		return FALSE;
+	}
+
 	// lets our screen options passing through
 	public function set_screen_option( $false, $option, $value )
 	{
