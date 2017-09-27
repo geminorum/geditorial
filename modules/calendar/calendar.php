@@ -123,7 +123,7 @@ class Calendar extends gEditorial\Module
 			_x( 'Editorial Calendar', 'Modules: Calendar: Page Title', GEDITORIAL_TEXTDOMAIN ),
 			_x( 'My Calendar', 'Modules: Calendar: Menu Title', GEDITORIAL_TEXTDOMAIN ),
 			$this->role_can( 'adminmenu' ) ? 'read' : 'do_not_allow',
-			$this->classs(),
+			$this->get_adminmenu(),
 			[ $this, 'admin_calendar_page' ]
 		);
 
@@ -341,12 +341,11 @@ class Calendar extends gEditorial\Module
 		$cal  = $this->default_calendar();
 		$date = \gPersianDateDate::getByCal( strtotime( $post->post_date_gmt ), $cal );
 
-		return add_query_arg( [
-			'page'  => $this->classs(),
+		return get_adminmenu( FALSE, [
 			'cal'   => $cal,
 			'year'  => $date['year'],
 			'month' => $date['mon'],
-		], get_admin_url( NULL, 'index.php' ) );
+		] );
 	}
 
 	private function can_reschedule( $post )

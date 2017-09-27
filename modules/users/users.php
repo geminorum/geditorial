@@ -132,6 +132,11 @@ class Users extends gEditorial\Module
 		);
 	}
 
+	public function get_adminmenu( $page = TRUE, $extra = [] )
+	{
+		return FALSE;
+	}
+
 	public function current_screen( $screen )
 	{
 		$groups = $this->get_setting( 'user_groups', FALSE );

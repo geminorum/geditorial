@@ -238,6 +238,12 @@ class Module extends Base
 		return Settings::settingsHelpLinks( $this->module );
 	}
 
+	// OVERRIDE: if has no admin menu but using the hook
+	public function get_adminmenu( $page = TRUE, $extra = [] )
+	{
+		return $page ? $this->classs() : add_query_arg( array_merge( [ 'page' => $this->classs() ], $extra ), get_admin_url( NULL, 'index.php' ) );
+	}
+
 	// check if this module loaded as remote for another blog's editorial module
 	public function remote()
 	{
