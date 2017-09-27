@@ -235,7 +235,66 @@ class Module extends Base
 
 	protected function settings_help_sidebar()
 	{
-		return Settings::settingsHelpLinks( $this->module );
+		$extra    = '';
+		$defaults = Settings::settingsHelpLinks( $this->module );
+
+		foreach ( $this->settings_extra_links() as $link )
+			$extra.= '<li>'.HTML::tag( 'a' , [
+				'href'   => $link['url'],
+				// 'title'  => $link['title'],
+				'target' => '_blank',
+			], $link['title'] ).'</li>';
+
+		return $defaults.( $extra ? '<ul>'.$extra.'</ul>' : '' );
+	}
+
+	// FIXME: settings on non settings pages
+	protected function settings_extra_links()
+	{
+		$links  = [];
+		$screen = get_current_screen();
+
+		// FIXME: WTF: this is a good idea?!
+		if ( ( $list = $this->get_adminmenu( FALSE ) ) && method_exists( $this, 'admin_menu' ) && ! Settings::isDashboard( $screen ) )
+			if ( $this->role_can( 'adminmenu' ) )
+				$links[] = [
+					'context' => 'listtable',
+					'sub'     => $this->key,
+					'text'    => $this->module->title,
+					'url'     => $list,
+					'title'   => sprintf( _x( '%s', 'Module: Extra Link: Listtable', GEDITORIAL_TEXTDOMAIN ), $this->module->title ),
+				];
+
+		if ( method_exists( $this, 'reports_settings' ) && ! Settings::isReports( $screen ) )
+			foreach ( $this->append_sub( [], 'reports' ) as $sub => $title )
+				$links[] = [
+					'context' => 'reports',
+					'sub'     => $sub,
+					'text'    => $title,
+					'url'     => Settings::subURL( $sub, 'reports' ),
+					'title'   => sprintf( _x( '%s Reports', 'Module: Extra Link: Reports', GEDITORIAL_TEXTDOMAIN ), $title ),
+				];
+
+		if ( method_exists( $this, 'tools_settings' ) && ! Settings::isTools( $screen ) )
+			foreach ( $this->append_sub( [], 'tools' ) as $sub => $title )
+				$links[] = [
+					'context' => 'tools',
+					'sub'     => $sub,
+					'text'    => $title,
+					'url'     => Settings::subURL( $sub, 'tools' ),
+					'title'   => sprintf( _x( '%s Tools', 'Module: Extra Link: Tools', GEDITORIAL_TEXTDOMAIN ), $title ),
+				];
+
+		if ( isset( $this->caps['settings'] ) && ! Settings::isSettings( $screen ) && $this->cuc( $this->caps['settings'] ) )
+			$links[] = [
+				'context' => 'settings',
+				'sub'     => $this->key,
+				'text'    => $this->module->title,
+				'url'     => add_query_arg( 'page', $this->module->settings, get_admin_url( NULL, 'admin.php' ) ),
+				'title'   => sprintf( _x( '%s Settings', 'Module: Extra Link: Settings', GEDITORIAL_TEXTDOMAIN ), $this->module->title ),
+			];
+
+		return $links;
 	}
 
 	// OVERRIDE: if has no admin menu but using the hook
@@ -653,15 +712,8 @@ class Module extends Base
 		$this->register_button( 'submit', NULL, TRUE );
 		$this->register_button( 'reset', NULL, 'reset', TRUE );
 
-		if ( method_exists( $this, 'reports_settings' ) )
-			foreach ( $this->append_sub( [], 'reports' ) as $sub => $title )
-				$this->register_button( Settings::subURL( $sub, 'reports' ),
-					sprintf( _x( 'Jump to Reports: %s', 'Module: Button', GEDITORIAL_TEXTDOMAIN ), $title ), 'link' );
-
-		if ( method_exists( $this, 'tools_settings' ) )
-			foreach ( $this->append_sub( [], 'tools' ) as $sub => $title )
-				$this->register_button( Settings::subURL( $sub, 'tools' ),
-					sprintf( _x( 'Jump to Tools: %s', 'Module: Button', GEDITORIAL_TEXTDOMAIN ), $title ), 'link' );
+		foreach ( $this->settings_extra_links() as $link )
+			$this->register_button( $link['url'], $link['title'], 'link' );
 	}
 
 	public function register_button( $key, $value = NULL, $type = FALSE, $atts = [] )
