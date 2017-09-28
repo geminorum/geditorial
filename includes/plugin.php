@@ -248,6 +248,22 @@ class Plugin
 		return isset( $this->{$module} );
 	}
 
+	public function modules( $orderby = FALSE )
+	{
+		if ( ! count( $this->modules ) )
+			return [];
+
+		if ( FALSE === $orderby )
+			return (array) $this->modules;
+
+		$callback = [ __NAMESPACE__.'\\Modules\Alphabet', 'sort' ];
+
+		if ( ! is_callable( $callback ) || 'fa_IR' != get_locale() )
+			return wp_list_sort( (array) $this->modules, $orderby );
+
+		return call_user_func_array( $callback, [ (array) $this->modules, $orderby ] );
+	}
+
 	public function constant( $module, $key, $default = NULL )
 	{
 		if ( $module && self::enabled( $module ) )

@@ -48,7 +48,7 @@ class Config extends gEditorial\Module
 
 	public function admin_menu()
 	{
-		global $gEditorial;
+		$gEditorial = gEditorial();
 
 		$can  = $this->cuc( 'settings' );
 		$page = 'index.php';
@@ -87,26 +87,28 @@ class Config extends gEditorial\Module
 		add_action( 'load-'.$hook_settings, [ $this, 'admin_settings_load' ] );
 		add_action( 'load-'.$hook_tools, [ $this, 'admin_tools_load' ] );
 
-		foreach ( $gEditorial->modules as $name => &$module ) {
+		foreach ( gEditorial()->modules( 'title' ) as $module ) {
 
 			if ( FALSE !== $module->disabled )
 				continue;
 
-			if ( isset( $gEditorial->{$name} )
-				&& $module->configure
-				&& $name != $this->module->name ) {
+			if ( ! gEditorial()->enabled( $module->name ) )
+				continue;
 
-				$hook_module = add_submenu_page( $this->module->settings,
-					$module->title,
-					$module->title,
-					$this->caps['settings'],
-					$module->settings,
-					[ $this, 'admin_settings_page' ]
-				);
+			if ( ! $module->configure && $module->name == $this->module->name )
+				continue;
 
-				if ( $hook_module )
-					add_action( 'load-'.$hook_module, [ $this, 'admin_settings_load' ] );
-			}
+			$hook_module = add_submenu_page(
+				$this->module->settings,
+				$module->title,
+				$module->title,
+				$this->caps['settings'],
+				$module->settings,
+				[ $this, 'admin_settings_page' ]
+			);
+
+			if ( $hook_module )
+				add_action( 'load-'.$hook_module, [ $this, 'admin_settings_load' ] );
 		}
 	}
 
@@ -442,54 +444,44 @@ class Config extends gEditorial\Module
 	{
 		echo '<div class="modules -list">';
 			$this->print_modules();
+			echo '<div class="clear"></div>';
 		echo '</div>';
 	}
 
 	private function print_modules()
 	{
-		global $gEditorial;
+		foreach ( gEditorial()->modules( 'title' ) as $module ) {
 
-		if ( count( $gEditorial->modules ) ) {
+			if ( $module->autoload )
+				continue;
 
-			foreach ( $gEditorial->modules as $name => &$module ) {
+			$enabled = gEditorial()->enabled( $module->name );
 
-				if ( $module->autoload )
-					continue;
+			echo '<div class="module '.( $enabled ? '-enabled' : '-disabled' )
+				.'" id="'.$module->settings.'" data-module="'.$module->name.'">';
 
-				$enabled = isset( $gEditorial->{$name} );
+			if ( $module->icon )
+				echo Helper::getIcon( $module->icon );
 
-				echo '<div class="module '.( $enabled ? '-enabled' : '-disabled' )
-					.'" id="'.$module->settings.'" data-module="'.$module->name.'">';
+			echo '<span class="spinner"></span>';
 
-				if ( $module->icon )
-					echo Helper::getIcon( $module->icon );
+			echo '<form action="">';
 
-				echo '<span class="spinner"></span>';
+				Settings::moduleInfo( $module );
 
-				echo '<form action="">';
+				if ( FALSE === $module->disabled ) {
 
-					Settings::moduleInfo( $module );
+					echo '<p class="actions">';
+						Settings::moduleConfigure( $module, $enabled );
+						Settings::moduleButtons( $module, $enabled );
+					echo '</p>';
 
-					if ( FALSE === $module->disabled ) {
+				} else if ( $module->disabled ) {
 
-						echo '<p class="actions">';
-							Settings::moduleConfigure( $module, $enabled );
-							Settings::moduleButtons( $module, $enabled );
-						echo '</p>';
+					echo HTML::wrap( $module->disabled, 'actions -danger' );
+				}
 
-					} else if ( $module->disabled ) {
-
-						echo HTML::wrap( $module->disabled, 'actions -danger' );
-					}
-
-				echo '</form></div>';
-			}
-
-			echo '<div class="clear"></div>';
-
-		} else {
-
-			echo HTML::warning( _x( 'There are no editorial modules registered!', 'Modules: Config: Page Notice', GEDITORIAL_TEXTDOMAIN ), FALSE );
+			echo '</form></div>';
 		}
 	}
 
