@@ -1011,9 +1011,9 @@ class Settings extends Core\Base
 		if ( ! function_exists( 'gnetwork_github' ) )
 			return [];
 
-		$overview = [
-			'id'      => 'geditorial-overview',
-			'title'   => _x( 'Editorial Overview', 'Settings: Help Content Title', GEDITORIAL_TEXTDOMAIN ),
+		$wikihome = [
+			'id'      => 'geditorial-wikihome',
+			'title'   => _x( 'Editorial Wiki', 'Settings: Help Content Title', GEDITORIAL_TEXTDOMAIN ),
 			'content' => gnetwork_github( [
 				'repo'    => 'geminorum/geditorial',
 				'type'    => 'wiki',
@@ -1023,11 +1023,11 @@ class Settings extends Core\Base
 		];
 
 		if ( FALSE === $module || 'config' == $module->name )
-			return [ $overview ];
+			return [ 'wikihome' => $wikihome ];
 
-		$themodule = [
-			'id'      => 'geditorial-'.$module->name.'-overview',
-			'title'   => sprintf( _x( '%s Overview', 'Settings: Help Content Title', GEDITORIAL_TEXTDOMAIN ), $module->title ),
+		$wikimodule = [
+			'id'      => 'geditorial-'.$module->name.'-wikihome',
+			'title'   => sprintf( _x( '%s Wiki', 'Settings: Help Content Title', GEDITORIAL_TEXTDOMAIN ), $module->title ),
 			'content' => gnetwork_github( [
 				'repo'    => 'geminorum/geditorial',
 				'type'    => 'wiki',
@@ -1036,7 +1036,7 @@ class Settings extends Core\Base
 			] ),
 		];
 
-		return [ $themodule, $overview ];
+		return [ 'wikimodule' => $wikimodule, 'wikihome' => $wikihome ];
 	}
 
 	public static function fieldType( $atts = [], &$scripts )
