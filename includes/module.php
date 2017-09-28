@@ -235,17 +235,12 @@ class Module extends Base
 
 	protected function settings_help_sidebar()
 	{
-		$extra    = '';
-		$defaults = Settings::settingsHelpLinks( $this->module );
+		$html = '';
 
 		foreach ( $this->settings_extra_links() as $link )
-			$extra.= '<li>'.HTML::tag( 'a' , [
-				'href'   => $link['url'],
-				// 'title'  => $link['title'],
-				'target' => '_blank',
-			], $link['title'] ).'</li>';
+			$html.= '<li>'.HTML::link( $link['title'], $link['url'], TRUE ).'</li>';
 
-		return $defaults.( $extra ? '<ul>'.$extra.'</ul>' : '' );
+		return $html ? HTML::wrap( '<ul>'.$html.'</ul>', '-help-sidebar' ) : FALSE;
 	}
 
 	// FIXME: settings on non settings pages
@@ -294,6 +289,24 @@ class Module extends Base
 				'title'   => sprintf( _x( '%s Settings', 'Module: Extra Link: Settings', GEDITORIAL_TEXTDOMAIN ), $this->module->title ),
 			];
 
+		if ( $docs = $this->get_module_url( 'docs', FALSE ) )
+			$links[] = [
+				'context' => 'docs',
+				'sub'     => $this->key,
+				'text'    => $this->module->title,
+				'url'     => $docs,
+				'title'   => sprintf( _x( '%s Documentation', 'Module: Extra Link: Documentation', GEDITORIAL_TEXTDOMAIN ), $this->module->title ),
+			];
+
+		if ( 'config' != $this->module->name )
+			$links[] = [
+				'context' => 'docs',
+				'sub'     => FALSE,
+				'text'    => _x( 'Editorial Documentation', 'Module: Extra Link: Documentation', GEDITORIAL_TEXTDOMAIN ),
+				'url'     => Settings::getModuleDocsURL( FALSE ),
+				'title'   => _x( 'Editorial Documentation', 'Module: Extra Link: Documentation', GEDITORIAL_TEXTDOMAIN ),
+			];
+
 		return $links;
 	}
 
@@ -306,6 +319,7 @@ class Module extends Base
 			case 'config'    : $url = Settings::settingsURL(); break;
 			case 'reports'   : $url = Settings::reportsURL(); break;
 			case 'tools'     : $url = Settings::toolsURL(); break;
+			case 'docs'      : $url = Settings::getModuleDocsURL( $this->module ); break;
 			case 'settings'  : $url = add_query_arg( 'page', $this->module->settings, get_admin_url( NULL, 'admin.php' ) ); break;
 			case 'listtable' : $url = $this->get_adminmenu( FALSE ); break;
 			default          : $url = URL::current();

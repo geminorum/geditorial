@@ -965,11 +965,9 @@ class Settings extends Core\Base
 
 	public static function moduleInfo( $module, $tag = 'h3' )
 	{
-		$links = self::getModuleWiki( $module );
-
 		HTML::h3( HTML::tag( 'a', [
-			'href'   => $links[0],
-			'title'  => $links[1],
+			'href'   => self::getModuleDocsURL( $module ),
+			'title'  => sprintf( _x( '%s Documentation', 'Settings', GEDITORIAL_TEXTDOMAIN ), $this->module->title ),
 			'target' => '_blank',
 		], $module->title ), '-title' );
 
@@ -980,24 +978,11 @@ class Settings extends Core\Base
 		echo '<span class="-module-key" style="display:none;">'.$module->name.'</span>';
 	}
 
-	public static function getModuleWiki( $module = FALSE )
+	public static function getModuleDocsURL( $module = FALSE )
 	{
-		if ( $module ) {
-
-			return [
-				'https://github.com/geminorum/geditorial/wiki/Modules-'.Helper::moduleSlug( $module->name ),
-				sprintf( 'Editorial %s Documentation', Helper::moduleSlug( $module->name, FALSE ) ),
-				'https://github.com/geminorum/geditorial',
-			];
-
-		} else {
-
-			return [
-				'https://github.com/geminorum/geditorial/wiki',
-				'Editorial Documentation',
-				'https://github.com/geminorum/geditorial',
-			];
-		}
+		return FALSE === $module || 'config' == $module->name
+			? 'https://github.com/geminorum/geditorial/wiki'
+			: 'https://github.com/geminorum/geditorial/wiki/Modules-'.Helper::moduleSlug( $module->name );
 	}
 
 	public static function settingsCredits()
@@ -1016,14 +1001,6 @@ class Settings extends Core\Base
 				'http://github.com/geminorum/geditorial',
 				'http://geminorum.ir/' );
 		echo '</p></div>';
-	}
-
-	public static function settingsHelpLinks( $module = FALSE, $template = NULL )
-	{
-		if ( is_null( $template ) )
-			$template = '<div class="-links"><p><strong>For more information</strong>:</p><p><a href="%1$s">%2$s</a></p><p><a href="%3$s">gEditorial on GitHub</a></p></div>';
-
-		return vsprintf( $template, self::getModuleWiki( $module ) );
 	}
 
 	public static function settingsHelpContent( $module = FALSE )
