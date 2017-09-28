@@ -29,7 +29,7 @@
     "gulp-checktextdomain": "^2.0.0",
     "gulp-cssnano": "^2.1.2",
     "gulp-debug": "^3.1.0",
-    "gulp-exclude-gitignore": "^1.1.1",
+    "gulp-exclude-gitignore": "^1.2.0",
     "gulp-github-release": "^1.2.1",
     "gulp-header": "^1.8.9",
     "gulp-if": "^2.0.2",
@@ -48,7 +48,7 @@
     "gulp-zip": "^4.0.0",
     "cssnano": "^3.10.0",
     "rtlcss": "^2.2.0",
-    "js-yaml": "^3.9.1",
+    "js-yaml": "^3.10.0",
     "parse-changelog": "^1.0.2",
     "prettyjson": "^1.2.1",
     "xtend": "^4.0.1"
