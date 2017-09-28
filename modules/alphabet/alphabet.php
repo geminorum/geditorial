@@ -223,16 +223,98 @@ class Alphabet extends gEditorial\Module
 		return $html;
 	}
 
+	// sort array by value based on locale
+	// @REF: https://stackoverflow.com/a/7096937/4864081
+	// @REF: `WP_List_Util::sort_callback()`
+	public static function sort( $array, $orderby = NULL, $order = 'ASC', $preserve_keys = FALSE, $locale = NULL )
+	{
+		if ( is_null( $orderby ) )
+			return self::sortSimple( $array, $order, $preserve_keys, $locale );
+
+		$alphabet = self::getAlphabet( $locale );
+		$letters  = Arraay::column( $alphabet, 'letter' );
+		$sort     = $preserve_keys ? 'uasort' : 'usort';
+
+		if ( is_string( $orderby ) )
+			$orderby = [ $orderby => $order ];
+
+		foreach ( $orderby as $field => $direction )
+			$orderby[$field] = 'DESC' === strtoupper( $direction ) ? 'DESC' : 'ASC';
+
+		$sort( $array, function( $a, $b ) use( $orderby, $alphabet, $letters ){
+
+			$a = (array) $a;
+			$b = (array) $b;
+
+			foreach ( $orderby as $field => $direction ) {
+
+				if ( ! isset( $a[$field] ) || ! isset( $b[$field] ) )
+					continue;
+
+				if ( $a[$field] == $b[$field] )
+					continue;
+
+				$results = 'DESC' === $direction ? [ 1, -1 ] : [ -1, 1 ];
+
+				if ( is_numeric( $a[$field] ) && is_numeric( $b[$field] ) )
+					return ( $a[$field] < $b[$field] ) ? $results[0] : $results[1];
+
+				$a_order = array_search( self::firstLetter( $a[$field], $alphabet ), $letters );
+				$b_order = array_search( self::firstLetter( $b[$field], $alphabet ), $letters );
+
+				// not in this locale
+				if ( FALSE === $a_order || FALSE === $b_order )
+					return 0 > strcmp( $a[$field], $b[$field] ) ? $results[0] : $results[1];
+
+				if ( $a_order < $b_order )
+					return $results[0];
+
+				if ( $a_order > $b_order )
+					return $results[1];
+			}
+
+			return 0;
+		} );
+
+		return $array;
+	}
+
+	public static function sortSimple( $array, $order = 'ASC', $preserve_keys = FALSE, $locale = NULL )
+	{
+		$alphabet = self::getAlphabet( $locale );
+		$letters  = Arraay::column( $alphabet, 'letter' );
+		$sort     = $preserve_keys ? 'uasort' : 'usort';
+
+		$sort( $array, function( $a, $b ) use( $order, $alphabet, $letters ){
+
+			$results = 'DESC' === strtoupper( $order ) ? [ 1, -1 ] : [ -1, 1 ];
+
+			$a_order = array_search( self::firstLetter( $a, $alphabet ), $letters );
+			$b_order = array_search( self::firstLetter( $b, $alphabet ), $letters );
+
+			// not in this locale
+			if ( FALSE === $a_order || FALSE === $b_order )
+				return 0 > strcmp( $a, $b ) ? $results[0] : $results[1];
+
+			if ( $a_order < $b_order )
+				return $results[0];
+
+			if ( $a_order > $b_order )
+				return $results[1];
+
+			return 0;
+		} );
+
+		return $array;
+	}
+
 	public static function firstLetter( $string, $alphabet )
 	{
 		$first = Text::subStr( $string, 0, 1 );
 
-		foreach ( Arraay::column( $alphabet, 'search', 'letter' ) as $letter => $searchs ) {
-			if ( FALSE !== array_search( $first, $searchs ) ) {
-				$first = $letter;
-				break;
-			}
-		}
+		foreach ( Arraay::column( $alphabet, 'search', 'letter' ) as $letter => $searchs )
+			if ( FALSE !== array_search( $first, $searchs ) )
+				return $letter;
 
 		return $first;
 	}
