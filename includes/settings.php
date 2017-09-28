@@ -18,14 +18,14 @@ class Settings extends Core\Base
 	const SETTINGS = 'geditorial-settings';
 	const TOOLS    = 'geditorial-tools';
 
-	public static function subURL( $sub = 'overview', $context = 'reports', $extra = [] )
+	// better to use `$this->get_module_url()`
+	public static function subURL( $sub = FALSE, $context = 'reports', $extra = [] )
 	{
 		switch ( $context ) {
 			case 'reports' : $url = self::reportsURL();  break;
 			case 'settings': $url = self::settingsURL(); break;
 			case 'tools'   : $url = self::toolsURL();    break;
-
-			default: $url = URL::current();
+			default        : $url = URL::current();
 		}
 
 		return add_query_arg( array_merge( [
@@ -33,6 +33,7 @@ class Settings extends Core\Base
 		], $extra ), $url );
 	}
 
+	// FIXME: MUST DEPRICATE
 	public static function reportsURL( $full = TRUE, $dashboard = FALSE )
 	{
 		$relative = 'index.php?page='.self::REPORTS;
@@ -43,6 +44,7 @@ class Settings extends Core\Base
 		return $relative;
 	}
 
+	// FIXME: MUST DEPRICATE
 	public static function settingsURL( $full = TRUE )
 	{
 		$relative = 'admin.php?page='.self::SETTINGS;
@@ -53,6 +55,7 @@ class Settings extends Core\Base
 		return $relative;
 	}
 
+	// FIXME: MUST DEPRICATE: problem with dashboard
 	public static function toolsURL( $full = TRUE, $dashboard = FALSE )
 	{
 		$relative = $dashboard ? 'index.php?page='.self::TOOLS : 'admin.php?page='.self::TOOLS;
