@@ -1164,8 +1164,18 @@ class Module extends Base
 
 		add_action( $this->base.'_'.$context.'_sub_'.$sub, [ $this, $context.'_sub' ], 10, 2 );
 
-		if ( 'settings' != $context )
+		if ( 'settings' != $context ) {
+
+			$screen = get_current_screen();
+
+			foreach ( $this->settings_help_tabs() as $tab )
+				$screen->add_help_tab( $tab );
+
+			if ( $sidebar = $this->settings_help_sidebar() )
+				$screen->set_help_sidebar( $sidebar );
+
 			add_action( 'admin_print_footer_scripts', [ $this, 'settings_print_scripts' ], 99 );
+		}
 
 		return TRUE;
 	}

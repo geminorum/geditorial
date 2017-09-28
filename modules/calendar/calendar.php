@@ -136,7 +136,7 @@ class Calendar extends gEditorial\Module
 
 		$screen = get_current_screen();
 
-		foreach ( Settings::settingsHelpContent() as $tab )
+		foreach ( $this->settings_help_tabs() as $tab )
 			$screen->add_help_tab( $tab );
 
 		if ( $sidebar = $this->settings_help_sidebar() )

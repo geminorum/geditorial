@@ -193,7 +193,16 @@ class Config extends gEditorial\Module
 		$sub = Settings::sub();
 
 		if ( 'general' == $sub ) {
+
 			add_action( 'geditorial_reports_sub_general', [ $this, 'reports_sub' ], 10, 2 );
+
+			$screen = get_current_screen();
+
+			foreach ( $this->settings_help_tabs() as $tab )
+				$screen->add_help_tab( $tab );
+
+			if ( $sidebar = $this->settings_help_sidebar() )
+				$screen->set_help_sidebar( $sidebar );
 		}
 
 		do_action( 'geditorial_reports_settings', $sub );
@@ -244,6 +253,14 @@ class Config extends gEditorial\Module
 			}
 
 			add_action( 'geditorial_tools_sub_general', [ $this, 'tools_sub' ], 10, 2 );
+
+			$screen = get_current_screen();
+
+			foreach ( $this->settings_help_tabs() as $tab )
+				$screen->add_help_tab( $tab );
+
+			if ( $sidebar = $this->settings_help_sidebar() )
+				$screen->set_help_sidebar( $sidebar );
 		}
 
 		do_action( 'geditorial_tools_settings', $sub );
@@ -485,11 +502,6 @@ class Config extends gEditorial\Module
 
 		$this->admin_settings_reset( $page );
 		$this->admin_settings_save( $page );
-
-		$screen = get_current_screen();
-
-		foreach ( Settings::settingsHelpContent() as $tab )
-			$screen->add_help_tab( $tab );
 
 		do_action( 'geditorial_settings_load', $page );
 
