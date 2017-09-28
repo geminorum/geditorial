@@ -248,6 +248,11 @@ class Plugin
 		return isset( $this->{$module} );
 	}
 
+	public function count()
+	{
+		return count( get_object_vars( $this->modules ) );
+	}
+
 	public function modules( $orderby = FALSE )
 	{
 		if ( ! count( $this->modules ) )

@@ -411,7 +411,7 @@ class Config extends gEditorial\Module
 
 		if ( 'config' == $current_module->name ) {
 			$title = _x( 'Editorial', 'Modules: Config', GEDITORIAL_TEXTDOMAIN );
-			$count = count( get_object_vars( $gEditorial->modules ) );
+			$count = gEditorial()->count();
 			$flush = WordPress::maybeFlushRules();
 		} else {
 			$title = sprintf( _x( 'Editorial: %s', 'Modules: Config', GEDITORIAL_TEXTDOMAIN ), $current_module->title );
@@ -434,6 +434,7 @@ class Config extends gEditorial\Module
 			if ( isset( $current_module->intro ) && $current_module->intro )
 				echo wpautop( $current_module->intro );
 
+			// FIXME: find a better way
 			if ( method_exists( $gEditorial->{$current_module->name}, 'settings_intro_after' ) )
 				$gEditorial->{$current_module->name}->settings_intro_after( $current_module );
 
