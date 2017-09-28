@@ -7,28 +7,49 @@
 
   .help-tab-content {
 
-    .-info {
-      margin-right: -22px; // it's a hack!
+    .-info,
+    .shortcode-github-readme {
+
+      // it's a hack!
+      margin-right: -22px;
+
+      ul li {
+        list-style-type: none;
+      }
+
+      code {
+        display: inline-block;
+        pre {
+          padding: 4px 12px;
+          margin: 0;
+        }
+      }
     }
 
     .-info,
-    .-info p {
+    .-info p,
+    .shortcode-github-readme {
       /*rtl:ignore*/
       direction: ltr;
     }
 
     .-from {
       margin-top: 1em;
-      border-top: solid 1px #eee;
-      padding-top: 1em;
+      border-top: solid 1px $gray-lighter;
+      padding-top: 0.5em;
+      font-size: 0.8em;
+      &, & a {
+        color: $gray-light;
+      }
+      a:hover {
+        color: $gray-dark;
+      }
     }
   }
 
   .contextual-help-sidebar {
-    .-links,
-    .-links p {
-      /*rtl:ignore*/
-      direction: ltr;
+    .-wrap.-help-sidebar {
+      ul {}
     }
   }
 }

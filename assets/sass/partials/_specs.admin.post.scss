@@ -23,12 +23,7 @@
       border: 1px solid #dfdfdf;
       background-color: #f1f1f1;
 
-      span.item-handle {
-        margin: 2px;
-        cursor: pointer;
-      }
-
-      span.item-excerpt {
+      span.-excerpt {
         font-size: 0.89em;
         vertical-align: top;
         padding: 3px 5px 0;
@@ -37,10 +32,13 @@
         cursor: pointer;
       }
 
-      span.item-delete {
+      span.-handle {
+        margin: 2px;
+      }
+
+      span.-delete {
         float: right;
         margin: 2px;
-        cursor: pointer;
       }
     }
 

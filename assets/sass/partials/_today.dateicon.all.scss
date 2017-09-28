@@ -26,6 +26,22 @@
     text-align: center;
     color: $gray-light;
     border-bottom: 1px solid $gray-lighter;
+
+    > a {
+      color: $gray-light;
+      display: block;
+      height: 100%;
+      width: 100%;
+
+      &:hover {
+        color: $gray-dark;
+      }
+
+      &:focus {
+        box-shadow: none;
+        color: $gray-darker;
+      }
+    }
   }
 
   .-day {

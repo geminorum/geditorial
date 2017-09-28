@@ -1,0 +1,91 @@
+@import 'modules/all';
+@import 'partials/base';
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+@import 'partials/drafts.adminbar.all';
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+#wp-admin-bar-geditorial {
+
+  > a {
+    padding: 0 5px !important;
+  }
+
+  span.-count {
+    background: #ddd;
+    color: #333;
+    margin: 0;
+    border-radius: 10px;
+
+    display: inline;
+    padding: 2px 5px;
+    font-size: 10px;
+    font-weight: bold;
+    text-shadow: none;
+  }
+
+  // ajax responses
+  div.notice p {
+    padding: 0 10px;
+    margin: 0;
+    line-height: 26px;
+  }
+
+  .ab-submenu .ab-item {
+    > .geditorial-spinner {
+
+    }
+  }
+
+  li.-danger a.ab-item {
+    color: $brand-danger !important;
+    &:hover {
+      color: darken($brand-danger, 20%) !important;
+    }
+  }
+}
+
+#wpadminbar {
+
+  .geditorial-adminbar-node {
+
+    > a.ab-item {
+      position: relative;
+
+      > .geditorial-spinner {
+        bottom: 0;
+        left: 0;
+        margin: 6px auto 0 !important;
+        position: absolute;
+        right: 0;
+        top: 0;
+      }
+    }
+  }
+
+  .geditorial-adminbar-wrap {}
+
+  .geditorial-adminbar-box-wrap {
+
+    width: 200px;
+
+    ul {
+      padding: 0 10px;
+      margin: 0;
+    }
+
+    @include theme-form-checkbox-radio;
+
+    input[type="checkbox"] {
+      background-color: #464b50;
+    }
+  }
+}
+
+#wp-admin-bar-geditorial-audit-box {
+  .ab-empty-item {
+    font-size: smaller;
+  }
+}

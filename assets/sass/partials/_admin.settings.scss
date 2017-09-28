@@ -12,17 +12,16 @@
   }
 
   .-button {
-
     vertical-align: middle !important;
+  }
 
-    &.button-primary {}
-
-    &.button-reset,
-    &.button-delete {
-      color: $brand-danger;
-      &:hover {
-        color: darken($brand-danger, 20%);
-      }
+  .-wrap.-danger,
+  .-button.button-delete, // DEPRICATED
+  .-button.button-reset,
+  .-button.button-danger {
+    color: $brand-danger;
+    &:hover {
+      color: darken($brand-danger, 20%);
     }
   }
 
@@ -32,6 +31,10 @@
 
   .settings-title {
 
+    .-extra {
+      color: $gray-light;
+    }
+
     &.dashicons-before:before {
       padding: 5px;
       width: auto;
@@ -39,7 +42,7 @@
       font-size: inherit;
     }
 
-    .-iconsvg {
+    .geditorial-icon {
       margin: 2px 5px;
       width: 24px;
       height: 24px;

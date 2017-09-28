@@ -75,10 +75,12 @@
     }
 
     &.field-wrap-buttons {
-      .button {
+
+      .button, // DEPRICATED
+      .-button {
         margin-bottom: 4px;
 
-        &.button-remove {
+        &.-button-danger {
           color: $brand-danger;
 
           &:hover,
@@ -87,11 +89,12 @@
           }
         }
 
-        &.button-full {
+        &.-button-full {
           width: 100%;
         }
 
-        &.button-icon {
+        &.button-icon, // DEPRICATED
+        &.-button-icon {
           padding-left: 3px;
           .dashicons {
             width: 22px;

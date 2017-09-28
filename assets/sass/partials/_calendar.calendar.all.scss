@@ -1,0 +1,350 @@
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+/// Module: Calendar: Calendar All -----------------------------------------------
+
+$table-border-color: #e5e5e5 !default;
+$table-bg-accent: #f9f9f9 !default;
+$padding-base-vertical: 6px !default;
+$padding-base-horizontal: 12px !default;
+$padding-small-vertical: 4px !default;
+$padding-small-horizontal: 8px !default;
+
+.geditorial-calendar-calendar {
+
+  position: relative;
+
+  .-wrap.-messages {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: auto;
+    // width: 100%;
+    // height: 30px;
+    // border: 1px solid red;
+    > div {
+      margin: 0;
+      padding: 2px 12px 4px 10px;
+      background-color: transparent;
+      box-shadow: none;
+
+      p {
+        margin: 0;
+      }
+    }
+  }
+
+  table {
+
+    border: 1px solid $table-border-color;
+    border-width: 1px 1px 1px 0;
+    border-spacing: 0;
+    margin: 0.7em 0 1.5em;
+    width: 100%;
+
+    background: #f9f9f9;
+
+    caption {
+      font-family: serif;
+      font-weight: 600;
+      font-size: 1em;
+      color: #72777c;
+      padding: 0.5em 1em;
+      text-align: right;
+    }
+
+    td {
+      border: 1px solid $table-border-color;
+      border-width: 1px 0 0 1px;
+      // padding: $padding-base-vertical $padding-base-horizontal;
+      vertical-align: top;
+
+      // padding: 2px 4px;
+      padding: 0;
+      margin: 0 -1px;
+      height: 75px;
+      width: 14.28571428571429%;
+      // overflow-y:hidden;
+
+      position: relative;
+      z-index: 120;
+
+      .-loading {
+        margin: 0;
+        position: absolute;
+        // top: 0;
+        right: 2px;
+        bottom: 2px;
+        z-index: 200;
+      }
+
+      .-the-day-number {
+        position: absolute;
+        // top: 0;
+        right: 2px;
+        bottom: -2px;
+        z-index: 100;
+
+        font-family: serif;
+        font-weight: 600;
+        font-size: 2em;
+        line-height: 1;
+        color: #e0e0e0;
+
+        user-select: none;
+        transition: all 0.1s ease;
+
+        body.dragging & {
+          color: $gray;
+          transition: all 0.3s ease;
+        }
+      }
+
+      .-the-day-today {
+        position: absolute;
+        top: 10px;
+        right: -5px;
+        z-index: 110;
+
+        transform: rotate(90deg);
+        // transform-origin: right top;
+
+        // padding: 2px;
+        font-size: smaller;
+        font-weight: 600;
+        line-height: 20px;
+        // color: $gray;
+        color: #b4b9be;
+      }
+
+      .-wrap.-buttons {
+
+        display: none;
+        user-select: none;
+        transition: all 0.3s ease;
+
+        position: absolute;
+        // top: 0;
+        left: 0;
+        bottom: 0;
+        z-index: 130;
+
+        a {
+          border-top: 1px solid $table-border-color;
+          border-right: 1px solid $table-border-color;
+          padding: 2px 4px 0 4px;
+          color: $gray-dark;
+
+          &:hover {
+            color: $brand-success;
+          }
+
+          &:last-of-type {
+            border-top-right-radius: 2px;
+          }
+
+          &:focus {
+            box-shadow: none;
+          }
+        }
+
+        .geditorial-icon svg,
+        .geditorial-icon img,
+        .dashicons {
+          font-size: 12px;
+          width: 12px;
+          height: 12px;
+          vertical-align: baseline;
+        }
+      }
+
+      &:hover {
+
+        .-wrap.-buttons {
+          display: block;
+          transition: all 0.3s ease;
+          body.dragging & {
+            display: none;
+          }
+        }
+
+        .-the-day-number {
+          color: $gray;
+          transition: all 0.3s ease;
+        }
+      }
+
+      transition: all 0.1s ease;
+
+      body.dragging & {
+        opacity: 0.5;
+        transition: all 0.3s ease;
+      }
+
+      &.-dragged-here {
+        opacity: 1 !important;
+      }
+
+      ul, ol {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+
+        li {
+
+          // hack for rtl
+          // no need, hacked the sortable!
+          // body.rtl &.dragged {
+          //   /*rtl:ignore*/
+          //   text-align: left;
+          // }
+
+          border-bottom: 1px dotted $table-border-color;
+          padding: 0 0 2px 2px;
+          margin: 0;
+          font-size: smaller;
+
+          &:last-of-type {
+            border-bottom: transparent;
+          }
+
+          .geditorial-icon svg,
+          .geditorial-icon img,
+          .dashicons {
+            vertical-align: middle;
+            font-size: 14px;
+            width: 14px;
+            height: 14px;
+            color: #b4b9be;
+          }
+
+          &.placeholder {
+            display: none;
+          }
+        }
+      }
+    }
+
+    tfoot {
+      td {
+        height: auto;
+        font-weight: 600;
+
+        > a {
+          display: block;
+          height: 100%;
+          width: 100%;
+          box-sizing: border-box;
+
+          font-family: serif;
+          font-weight: 600;
+          font-size: 1em;
+          color: #72777c;
+
+          &:hover {
+            color: $brand-primary;
+          }
+
+          &:focus {
+            box-shadow: none;
+          }
+        }
+
+        &.-next a {
+          text-align: right;
+          padding: 10px 20px 10px 0;
+        }
+
+        &.-prev a {
+          text-align: left;
+          padding: 10px 0 10px 20px;
+        }
+
+        // &.-middle { height: auto; }
+        // &.-pad { display: none; }
+      }
+    }
+
+    th {
+      background-color: $table-bg-accent;
+      border-left: 1px solid $table-border-color;
+      margin: 0;
+      padding: 10px 0;
+
+      font-family: serif;
+      font-weight: 600;
+      font-size: 1em;
+      color: #72777c;
+    }
+
+    tr {
+      border: 0;
+      border-width: 0;
+    }
+
+    blockquote,
+    p,
+    ol,
+    ul {
+      margin-top: 0 !important;
+      margin-bottom: 1.6em !important;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    // ol,
+    // ul {
+    //   @include theme-list-reset();
+    // }
+  }
+}
+
+#geditorial-calendar-add-new {
+
+  box-sizing: border-box;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 190;
+  background-color: #f9f9f9;
+  padding: 2px 5px 2px 2px;
+
+  input[type="text"] {
+    width: 100%;
+    padding: 2px;
+    box-sizing: border-box;
+    // margin-right: 4px;
+  }
+
+  .-actions {
+    text-align: right;
+  }
+
+  .-button {
+    margin: 2px 0 0 2px;
+    padding: 0px 0 4px 0;
+    // line-height: 1;
+    // vertical-align: middle;
+    height: 20px;
+
+    &[data-action=close] {
+      color: $brand-danger;
+      &:hover {
+        color: darken($brand-danger, 20%);
+      }
+    }
+
+    &[data-action=save] {
+      color: darken($brand-success, 20%);
+      &:hover {
+        color: $brand-success;
+      }
+    }
+  }
+}

@@ -1,0 +1,35 @@
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+/// Module: Entry: Front All ---------------------------------------------------
+
+.hentry.empty-entry {
+
+  .entry-title {
+    color: $brand-danger;
+
+    &:hover {
+      color: darken($brand-danger, 20%);
+    }
+  }
+
+  .entry-content {
+    .geditorial-entry-empty-content {
+      color: $gray-light;
+
+      #searchform {
+        margin-bottom: 1em;
+      }
+    }
+  }
+}
+
+.hentry.archive-entry {
+
+  .geditorial-entry-archive-content {
+
+    #searchform {
+      margin-bottom: 1em;
+    }
+  }
+}
