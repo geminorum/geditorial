@@ -237,14 +237,14 @@ class Module extends Base
 	{
 		$html = '';
 
-		foreach ( $this->settings_extra_links() as $link )
+		foreach ( $this->get_module_links() as $link )
 			$html.= '<li>'.HTML::link( $link['title'], $link['url'], TRUE ).'</li>';
 
 		return $html ? HTML::wrap( '<ul>'.$html.'</ul>', '-help-sidebar' ) : FALSE;
 	}
 
 	// FIXME: settings on non settings pages
-	protected function settings_extra_links()
+	protected function get_module_links()
 	{
 		$links  = [];
 		$screen = get_current_screen();
@@ -748,8 +748,9 @@ class Module extends Base
 		$this->register_button( 'submit', NULL, TRUE );
 		$this->register_button( 'reset', NULL, 'reset', TRUE );
 
-		foreach ( $this->settings_extra_links() as $link )
-			$this->register_button( $link['url'], $link['title'], 'link' );
+		foreach ( $this->get_module_links() as $link )
+			if ( ! empty( $link['context'] ) && in_array( $link['context'], [ 'tools', 'reports', 'listtable' ] ) )
+				$this->register_button( $link['url'], $link['title'], 'link' );
 	}
 
 	public function register_button( $key, $value = NULL, $type = FALSE, $atts = [] )
