@@ -2,6 +2,7 @@
 
 [WordPress](https://wordpress.org/), Magazine Style!
 
+[![Travis](https://img.shields.io/travis/geminorum/geditorial.svg?style=flat-square)](https://travis-ci.org/geminorum/geditorial)
 [![GitHub releases](https://img.shields.io/github/release/geminorum/geditorial.svg?style=flat-square)](https://github.com/geminorum/geditorial/releases)
 [![GitHub issues](https://img.shields.io/github/issues/geminorum/geditorial.svg?style=flat-square)](https://github.com/geminorum/geditorial/issues)
 [![Gratipay](http://img.shields.io/gratipay/geminorum.svg?style=flat-square)](https://gratipay.com/geminorum/)
