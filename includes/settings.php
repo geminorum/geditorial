@@ -1012,31 +1012,48 @@ class Settings extends Core\Base
 			return [];
 
 		$wikihome = [
-			'id'      => 'geditorial-wikihome',
-			'title'   => _x( 'Editorial Wiki', 'Settings: Help Content Title', GEDITORIAL_TEXTDOMAIN ),
-			'content' => gnetwork_github( [
-				'repo'    => 'geminorum/geditorial',
-				'type'    => 'wiki',
-				'page'    => 'Home',
-				'context' => 'help_tab',
-			] ),
+			'id'       => 'geditorial-wikihome',
+			'title'    => _x( 'Editorial Wiki', 'Settings: Help Content Title', GEDITORIAL_TEXTDOMAIN ),
+			'callback' => [ __CLASS__, 'add_help_tab_home_callback' ],
+			'module'   => $module,
 		];
 
 		if ( FALSE === $module || 'config' == $module->name )
 			return [ 'wikihome' => $wikihome ];
 
 		$wikimodule = [
-			'id'      => 'geditorial-'.$module->name.'-wikihome',
-			'title'   => sprintf( _x( '%s Wiki', 'Settings: Help Content Title', GEDITORIAL_TEXTDOMAIN ), $module->title ),
-			'content' => gnetwork_github( [
-				'repo'    => 'geminorum/geditorial',
-				'type'    => 'wiki',
-				'page'    => 'Modules-'.Helper::moduleSlug( $module->name ),
-				'context' => 'help_tab',
-			] ),
+			'id'       => 'geditorial-'.$module->name.'-wikihome',
+			'title'    => sprintf( _x( '%s Wiki', 'Settings: Help Content Title', GEDITORIAL_TEXTDOMAIN ), $module->title ),
+			'callback' => [ __CLASS__, 'add_help_tab_module_callback' ],
+			'module'   => $module,
 		];
 
 		return [ 'wikimodule' => $wikimodule, 'wikihome' => $wikihome ];
+	}
+
+	public static function add_help_tab_home_callback( $screen, $tab )
+	{
+		$tab['module'] = FALSE;
+		self::add_help_tab_module_callback( $screen, $tab );
+	}
+
+	public static function add_help_tab_module_callback( $screen, $tab )
+	{
+		if ( ! function_exists( 'gnetwork_github' ) )
+			return;
+
+		$module = empty( $tab['module'] ) ? FALSE : $tab['module'];
+
+		$page = FALSE === $module || 'config' == $module->name
+			? 'Home'
+			: 'Modules-'.Helper::moduleSlug( $module->name );
+
+		echo gnetwork_github( [
+			'repo'    => 'geminorum/geditorial',
+			'type'    => 'wiki',
+			'page'    => $page,
+			'context' => 'help_tab',
+		] );
 	}
 
 	public static function fieldType( $atts = [], &$scripts )
