@@ -967,7 +967,7 @@ class Settings extends Core\Base
 	{
 		HTML::h3( HTML::tag( 'a', [
 			'href'   => self::getModuleDocsURL( $module ),
-			'title'  => sprintf( _x( '%s Documentation', 'Settings', GEDITORIAL_TEXTDOMAIN ), $this->module->title ),
+			'title'  => sprintf( _x( '%s Documentation', 'Settings', GEDITORIAL_TEXTDOMAIN ), $module->title ),
 			'target' => '_blank',
 		], $module->title ), '-title' );
 
