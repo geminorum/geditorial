@@ -1005,36 +1005,35 @@ class Settings extends Core\Base
 
 	public static function settingsHelpContent( $module = FALSE )
 	{
-		$tabs = [];
+		if ( ! function_exists( 'gnetwork_github' ) )
+			return [];
 
-		if ( function_exists( 'gnetwork_github' ) ) {
+		$overview = [
+			'id'      => 'geditorial-overview',
+			'title'   => _x( 'Editorial Overview', 'Settings: Help Content Title', GEDITORIAL_TEXTDOMAIN ),
+			'content' => gnetwork_github( [
+				'repo'    => 'geminorum/geditorial',
+				'type'    => 'wiki',
+				'page'    => 'Home',
+				'context' => 'help_tab',
+			] ),
+		];
 
-			if ( $module )
-				$tabs[] = [
-					'id'      => 'geditorial-'.$module->name.'-overview',
-					'title'   => sprintf( _x( '%s Overview', 'Settings: Help Content Title', GEDITORIAL_TEXTDOMAIN ), $module->title ),
-					'content' => gnetwork_github( [
-						'repo'    => 'geminorum/geditorial',
-						'type'    => 'wiki',
-						'page'    => 'Modules-'.Helper::moduleSlug( $module->name ),
-						'context' => 'help_tab',
-					] ),
-				];
+		if ( FALSE === $module || 'config' == $module->name )
+			return [ $overview ];
 
-			else
-				$tabs[] = [
-					'id'      => 'geditorial-overview',
-					'title'   => _x( 'Editorial Overview', 'Settings: Help Content Title', GEDITORIAL_TEXTDOMAIN ),
-					'content' => gnetwork_github( [
-						'repo'    => 'geminorum/geditorial',
-						'type'    => 'wiki',
-						'page'    => 'Modules',
-						'context' => 'help_tab',
-					] ),
-				];
-		}
+		$themodule = [
+			'id'      => 'geditorial-'.$module->name.'-overview',
+			'title'   => sprintf( _x( '%s Overview', 'Settings: Help Content Title', GEDITORIAL_TEXTDOMAIN ), $module->title ),
+			'content' => gnetwork_github( [
+				'repo'    => 'geminorum/geditorial',
+				'type'    => 'wiki',
+				'page'    => 'Modules-'.Helper::moduleSlug( $module->name ),
+				'context' => 'help_tab',
+			] ),
+		];
 
-		return $tabs;
+		return [ $themodule, $overview ];
 	}
 
 	public static function fieldType( $atts = [], &$scripts )
