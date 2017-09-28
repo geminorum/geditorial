@@ -1189,6 +1189,7 @@ class Helper extends Core\Base
 			'no_terms'                   => _x( 'No %3$s', 'Helper: Tax Generator', GEDITORIAL_TEXTDOMAIN ),
 			'items_list_navigation'      => _x( '%1$s list navigation', 'Helper: Tax Generator', GEDITORIAL_TEXTDOMAIN ),
 			'items_list'                 => _x( '%1$s list', 'Helper: Tax Generator', GEDITORIAL_TEXTDOMAIN ),
+			'back_to_items'              => _x( '&larr; Back to %1$s', 'Helper: Tax Generator', GEDITORIAL_TEXTDOMAIN ),
 		];
 
 		$strings = self::getStringsFromName( $name );
