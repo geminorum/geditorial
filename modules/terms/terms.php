@@ -530,7 +530,7 @@ class Terms extends gEditorial\Module
 			'id'     => $this->classs(),
 			'title'  => _x( 'Term Summary', 'Modules: Terms: Adminbar', GEDITORIAL_TEXTDOMAIN ),
 			'parent' => $parent,
-			'href'   => Settings::subURL( 'uncategorized', 'reports' ),
+			'href'   => $this->get_module_url( 'reports', 'uncategorized' ),
 		];
 
 		foreach ( $this->taxonomies() as $taxonomy ) {

@@ -271,7 +271,7 @@ class Module extends Base
 					'context' => 'reports',
 					'sub'     => $sub,
 					'text'    => $title,
-					'url'     => Settings::subURL( $sub, 'reports' ),
+					'url'     => $this->get_module_url( 'reports', $sub ),
 					'title'   => sprintf( _x( '%s Reports', 'Module: Extra Link: Reports', GEDITORIAL_TEXTDOMAIN ), $title ),
 				];
 
@@ -281,7 +281,7 @@ class Module extends Base
 					'context' => 'tools',
 					'sub'     => $sub,
 					'text'    => $title,
-					'url'     => Settings::subURL( $sub, 'tools' ),
+					'url'     => $this->get_module_url( 'tools', $sub ),
 					'title'   => sprintf( _x( '%s Tools', 'Module: Extra Link: Tools', GEDITORIAL_TEXTDOMAIN ), $title ),
 				];
 
@@ -290,11 +290,33 @@ class Module extends Base
 				'context' => 'settings',
 				'sub'     => $this->key,
 				'text'    => $this->module->title,
-				'url'     => add_query_arg( 'page', $this->module->settings, get_admin_url( NULL, 'admin.php' ) ),
+				'url'     => $this->get_module_url( 'settings', FALSE ),
 				'title'   => sprintf( _x( '%s Settings', 'Module: Extra Link: Settings', GEDITORIAL_TEXTDOMAIN ), $this->module->title ),
 			];
 
 		return $links;
+	}
+
+	public function get_module_url( $context = 'reports', $sub = NULL, $extra = [] )
+	{
+		if ( is_null( $sub ) )
+			$sub = $this->key;
+
+		switch ( $context ) {
+			case 'config'    : $url = Settings::settingsURL(); break;
+			case 'reports'   : $url = Settings::reportsURL(); break;
+			case 'tools'     : $url = Settings::toolsURL(); break;
+			case 'settings'  : $url = add_query_arg( 'page', $this->module->settings, get_admin_url( NULL, 'admin.php' ) ); break;
+			case 'listtable' : $url = $this->get_adminmenu( FALSE ); break;
+			default          : $url = URL::current();
+		}
+
+		if ( FALSE === $url )
+			return FALSE;
+
+		return add_query_arg( array_merge( [
+			'sub' => $sub,
+		], $extra ), $url );
 	}
 
 	// OVERRIDE: if has no admin menu but using the hook

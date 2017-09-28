@@ -52,7 +52,7 @@ class Shortcodes extends gEditorial\Module
 			'id'     => $this->classs(),
 			'title'  => _x( 'Shortcodes', 'Modules: Shortcodes: Adminbar', GEDITORIAL_TEXTDOMAIN ),
 			'parent' => $parent,
-			'href'   => Settings::subURL( $this->key, 'reports' ),
+			'href'   => $this->get_module_url(),
 		];
 
 		foreach ( $matches[0] as $offset => $shortcode )

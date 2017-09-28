@@ -91,7 +91,7 @@ class Markdown extends gEditorial\Module
 			'id'     => $this->classs(),
 			'parent' => $parent,
 			'title'  => _x( 'Markdown Summary', 'Modules: Markdown: Adminbar', GEDITORIAL_TEXTDOMAIN ),
-			'href'   => Settings::subURL( $this->key, 'reports' ),
+			'href'   => $this->get_module_url(),
 		];
 
 		if ( ! $this->is_markdown( $post_id ) ) {

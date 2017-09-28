@@ -156,7 +156,7 @@ class Like extends gEditorial\Module
 				'id'     => $this->classs( 'users' ),
 				'title'  => Helper::getCounted( count( $users ), _x( 'Like Summary: Users %s', 'Modules: Like: Adminbar', GEDITORIAL_TEXTDOMAIN ) ),
 				'parent' => $parent,
-				'href'   => Settings::subURL( $this->key, 'reports' ),
+				'href'   => $this->get_module_url(),
 			];
 
 			foreach ( $users as $timestamp => $user_id )
@@ -177,7 +177,7 @@ class Like extends gEditorial\Module
 				'id'     => $this->classs( 'guests' ),
 				'title'  => Helper::getCounted( count( $guests ), _x( 'Like Summary: Guests %s', 'Modules: Like: Adminbar', GEDITORIAL_TEXTDOMAIN ) ),
 				'parent' => $parent,
-				'href'   => Settings::subURL( $this->key, 'reports' ),
+				'href'   => $this->get_module_url(),
 			];
 
 			foreach ( $guests as $timestamp => $ip )

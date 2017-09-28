@@ -286,7 +286,7 @@ class Audit extends gEditorial\Module
 				'id'     => $this->classs(),
 				'title'  => _x( 'Audit Attributes', 'Modules: Audit: Adminbar', GEDITORIAL_TEXTDOMAIN ),
 				'parent' => $parent,
-				'href'   => Settings::subURL( $this->key, 'reports' ),
+				'href'   => $this->get_module_url(),
 			];
 
 			if ( $terms = Taxonomy::getTerms( $this->constant( 'audit_tax' ), $post_id, TRUE ) )
@@ -323,7 +323,7 @@ class Audit extends gEditorial\Module
 	{
 		$wp_admin_bar->add_node( [
 			'id'    => $this->classs( 'attributes' ),
-			'href'  => Settings::subURL( $this->key, 'reports' ),
+			'href'  => $this->get_module_url(),
 			'title' => _x( 'Auditing', 'Modules: Audit: Adminbar', GEDITORIAL_TEXTDOMAIN ).Ajax::spinner(),
 			'meta'  => [ 'class' => 'geditorial-adminbar-node' ],
 		] );
