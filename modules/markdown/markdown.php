@@ -236,7 +236,7 @@ class Markdown extends gEditorial\Module
 		return preg_replace_callback( $pattern, function( $match ) use( $content, $post ){
 
 			list( $text, $link, $slug, $post_id ) = $this->make_link( $match[1], $post, $content );
-			$html = '<a href="'.$link.'" data-slug="'.$slug.'">'.$text.'</a>';
+			$html = '<a href="'.$link.'" data-slug="'.$slug.'" class="-wikilink'.( $post_id ? '' : ' -notfound').'">'.$text.'</a>';
 
 			return $this->filters( 'linking', $html, $text, $link, $slug, $post_id, $match, $post, $content );
 		}, $content );

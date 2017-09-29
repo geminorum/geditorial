@@ -425,6 +425,6 @@ class Entry extends gEditorial\Module
 		else
 			$link = $slug; // we handle 404s
 
-		return '<a href="'.$link.'" data-slug="'.$slug.'">'.$text.'</a>';
+		return '<a href="'.$link.'" data-slug="'.$slug.'" class="-wikilink'.( $post_id ? '' : ' -notfound').'">'.$text.'</a>';
 	}
 }
