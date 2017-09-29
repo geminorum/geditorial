@@ -344,7 +344,7 @@ class Calendar extends gEditorial\Module
 		$cal  = $this->default_calendar();
 		$date = \gPersianDateDate::getByCal( strtotime( $post->post_date_gmt ), $cal );
 
-		return get_adminmenu( FALSE, [
+		return $this->get_adminmenu( FALSE, [
 			'cal'   => $cal,
 			'year'  => $date['year'],
 			'month' => $date['mon'],
