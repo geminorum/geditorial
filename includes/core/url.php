@@ -33,7 +33,7 @@ class URL extends Base
 
 	public static function prepTitleQuery( $string )
 	{
-		return str_ireplace ( '_', ' ', urldecode( $string ) );
+		return str_ireplace( array( '_', '-' ), ' ', urldecode( $string ) );
 	}
 
 	// @SOURCE: `add_query_arg()`

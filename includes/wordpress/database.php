@@ -233,10 +233,10 @@ class Database extends Core\Base
 			$author = $wpdb->prepare( "AND post_author = %d", $user_id );
 
 		if ( ! empty( $period[0] ) )
-			$from = $wpdb->prepare( "AND post_date >= '%s'", $period[0] );
+			$from = $wpdb->prepare( "AND post_date >= %s", $period[0] );
 
 		if ( ! empty( $period[1] ) )
-			$to = $wpdb->prepare( "AND post_date <= '%s'", $period[1] );
+			$to = $wpdb->prepare( "AND post_date <= %s", $period[1] );
 
 		$query = $wpdb->prepare( "
 			SELECT post_status, COUNT( * ) AS total
@@ -276,10 +276,10 @@ class Database extends Core\Base
 			$extra_checks = $wpdb->prepare( 'AND post_status = %s', $args['post_status'] );
 
 		if ( ! empty( $period[0] ) )
-			$from = $wpdb->prepare( "AND post_date >= '%s'", $period[0] );
+			$from = $wpdb->prepare( "AND post_date >= %s", $period[0] );
 
 		if ( ! empty( $period[1] ) )
-			$to = $wpdb->prepare( "AND post_date <= '%s'", $period[1] );
+			$to = $wpdb->prepare( "AND post_date <= %s", $period[1] );
 
 		$query = $wpdb->prepare( "
 			SELECT post_type, COUNT( * ) AS total

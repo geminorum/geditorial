@@ -300,7 +300,7 @@ class HTML extends Base
 		else if ( $version )
 			$url = add_query_arg( 'ver', $version, $url );
 
-		echo "\t".self::tag( 'link', array(
+		echo self::tag( 'link', array(
 			'rel'   => 'stylesheet',
 			'href'  => $url,
 			'type'  => 'text/css',
