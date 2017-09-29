@@ -628,6 +628,14 @@ class Settings extends Core\Base
 		echo '<div class="clear"></div></div>';
 	}
 
+	public static function wrapError( $message, $title = NULL )
+	{
+		self::wrapOpen( 'error' );
+			self::headerTitle( $title );
+			echo $message;
+		self::wrapClose();
+	}
+
 	// @REF: `get_admin_page_title()`
 	public static function headerTitle( $title = NULL, $back = NULL, $to = NULL, $icon = '', $count = FALSE, $search = FALSE )
 	{
