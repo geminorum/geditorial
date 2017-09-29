@@ -122,6 +122,8 @@ class Entry extends gEditorial\Module
 	{
 		if ( $this->is_inline_save( $_REQUEST, 'entry_cpt' ) )
 			$this->_edit_screen( $_REQUEST['post_type'] );
+
+		$this->filter_module( 'markdown', 'linking', 8, 8 );
 	}
 
 	public function adminbar_init( &$nodes, $parent )
