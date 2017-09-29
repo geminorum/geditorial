@@ -13,7 +13,20 @@ class MetaBox extends Core\Base
 	const BASE   = 'geditorial';
 	const MODULE = FALSE;
 
-	// @SEE: https://github.com/bainternet/My-Meta-Box
+	protected static function constant( $key, $default = FALSE )
+	{
+		return gEditorial()->constant( self::MODULE, $key, $default );
+	}
+
+	protected static function getString( $string, $post_type = 'post', $group = 'titles', $fallback = FALSE )
+	{
+		return gEditorial()->{self::MODULE}->get_string( $string, $post_type, $group, $fallback );
+	}
+
+	protected static function getPostMeta( $post_id, $field = FALSE, $default = '', $key = NULL )
+	{
+		return gEditorial()->{self::MODULE}->get_postmeta( $post_id, $field, $default, $key );
+	}
 
 	// SEE: [Use Chosen for a replacement WordPress taxonomy metabox](https://gist.github.com/helen/1573966)
 	// callback for meta box for choose only tax
