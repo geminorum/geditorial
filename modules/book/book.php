@@ -569,7 +569,7 @@ class Book extends gEditorial\Module
 
 		if ( $connected->have_posts() ) {
 
-			echo '<div class="geditorial-wrap -book -p2p '.$class.'">';
+			echo $this->wrap_open( '-p2p '.$class );
 
 			if ( $post->post_type == $this->constant( 'publication_cpt' ) ) {
 

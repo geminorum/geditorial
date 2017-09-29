@@ -9,6 +9,7 @@ use geminorum\gEditorial\WordPress\Taxonomy;
 class Template extends Core\Base
 {
 
+	const BASE   = 'geditorial';
 	const MODULE = FALSE;
 
 	protected static function constant( $key, $default = FALSE )
@@ -78,7 +79,7 @@ class Template extends Core\Base
 		if ( $link )
 			$html = '<a title="'.esc_attr( $args['figure'] ? self::getPostField( 'title', $args['id'] ) : $title ).'" href="'.$link.'">'.$html.'</a>';
 
-		return '<div class="geditorial-wrap'.( $module ? ' -'.$module : ' ' ).' -post-image-wrap">'.$html.'</div>';
+		return '<div class="'.self::BASE.'-wrap'.( $module ? ' -'.$module : ' ' ).' -post-image-wrap">'.$html.'</div>';
 	}
 
 	public static function postImage( $atts = [], $module = NULL )
@@ -276,7 +277,7 @@ class Template extends Core\Base
 			if ( FALSE === $meta )
 				continue;
 
-			$meta = apply_filters( 'geditorial_meta_field', $meta, $field, $post, $args );
+			$meta = apply_filters( self::BASE.'_meta_field', $meta, $field, $post, $args );
 
 			if ( $args['filter'] && is_callable( $args['filter'] ) )
 				$meta = call_user_func( $args['filter'], $meta );

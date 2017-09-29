@@ -145,14 +145,12 @@ class Modified extends gEditorial\Module
 		if ( ! $this->is_content_insert( NULL, FALSE ) )
 			return;
 
-		if ( $modified = $this->get_post_modified() ) {
+		if ( ! $modified = $this->get_post_modified() )
+			return;
 
-			Helper::enqueueTimeAgo();
+		echo $this->wrap( '<small>'.$modified.'</small>', '-'.$this->get_setting( 'insert_content', 'none' ) );
 
-			echo '<div class="geditorial-wrap -modified -content-';
-			echo $this->get_setting( 'insert_content', 'none' );
-			echo '"><small>'.$modified.'</small></div>';
-		}
+		Helper::enqueueTimeAgo();
 	}
 
 	// `Posted on 22nd May 2014 This post was last updated on 23rd April 2016`

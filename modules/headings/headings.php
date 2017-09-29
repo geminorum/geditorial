@@ -175,7 +175,7 @@ class Headings extends gEditorial\Module
 			}
 		}
 
-		echo '<div class="geditorial-wrap -headings -toc-box '.$class.'">';
+		echo $this->wrap_open( '-toc-box '.$class );
 
 			if ( $title )
 				HTML::h3( $title, '-toc-title' );

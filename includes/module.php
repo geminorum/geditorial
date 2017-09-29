@@ -249,7 +249,6 @@ class Module extends Base
 		$links  = [];
 		$screen = get_current_screen();
 
-		// FIXME: WTF: this is a good idea?!
 		if ( ( $list = $this->get_adminmenu( FALSE ) ) && method_exists( $this, 'admin_menu' ) && ! Settings::isDashboard( $screen ) )
 			if ( $this->role_can( 'adminmenu' ) )
 				$links[] = [
@@ -2609,8 +2608,7 @@ SQL;
 				return;
 
 		if ( $before = $this->get_setting( 'before_content', FALSE ) )
-			echo '<div class="geditorial-wrap -'.$this->module->name.' -content-before">'
-				.do_shortcode( $before ).'</div>';
+			echo $this->wrap( do_shortcode( $before ), '-content-before' );
 	}
 
 	public function content_after( $content, $posttypes = NULL )
@@ -2620,8 +2618,7 @@ SQL;
 				return;
 
 		if ( $after = $this->get_setting( 'after_content', FALSE ) )
-			echo '<div class="geditorial-wrap -'.$this->module->name.' -content-after">'
-				.do_shortcode( $after ).'</div>';
+			echo $this->wrap( do_shortcode( $after ), '-content-after' );
 	}
 
 	// DEFAULT FILTER

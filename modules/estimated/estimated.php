@@ -147,10 +147,7 @@ class Estimated extends gEditorial\Module
 			return;
 
 		$pref = $this->get_setting( 'prefix', _x( 'Estimated read time:', 'Modules: Estimated', GEDITORIAL_TEXTDOMAIN ) );
-
-		echo '<div class="geditorial-wrap -estimated -before">';
-			echo ( $pref ? $pref.' ' : '' ).$this->get_time_estimated( $wordcount, TRUE );
-		echo '</div>';
+		echo $this->wrap( ( $pref ? $pref.' ' : '' ).$this->get_time_estimated( $wordcount, TRUE ), '-before' );
 	}
 
 	public function the_content( $content )
@@ -173,7 +170,7 @@ class Estimated extends gEditorial\Module
 
 		$place = $this->get_setting( 'insert_content', 'none' );
 		$pref  = $this->get_setting( 'prefix', _x( 'Estimated read time:', 'Modules: Estimated', GEDITORIAL_TEXTDOMAIN ) );
-		$html  = '<div class="geditorial-wrap -estimated -'.$place.'">'.( $pref ? $pref.' ' : '' ).$this->get_time_estimated( $wordcount, TRUE ).'</div>';
+		$html  = $this->wrap( ( $pref ? $pref.' ' : '' ).$this->get_time_estimated( $wordcount, TRUE ), '-'.$place );
 
 		$this->added = TRUE;
 
@@ -188,12 +185,12 @@ class Estimated extends gEditorial\Module
 		$content = get_post_field( 'post_content', $post_id, 'raw' );
 
 		if ( 'ignore' == $this->get_setting( 'teaser', 'include' )
-			|| FALSE !== strpos( $content, '<!--noteaser-->' ) ) {
+			|| Text::has( $content, '<!--noteaser-->' ) ) {
 
-				if ( preg_match( '/<!--more(.*?)?-->/', $content, $matches ) ) {
-					$content = explode( $matches[0], $content, 2 );
-					$content = $content[1];
-				}
+			if ( preg_match( '/<!--more(.*?)?-->/', $content, $matches ) ) {
+				$content = explode( $matches[0], $content, 2 );
+				$content = $content[1];
+			}
 		}
 
 		$wordcount = Text::wordCountUTF8( $content );

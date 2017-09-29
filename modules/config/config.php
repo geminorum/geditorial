@@ -86,6 +86,9 @@ class Config extends gEditorial\Module
 
 		foreach ( gEditorial()->modules( 'title' ) as $module ) {
 
+			if ( ! $module->configure )
+				continue;
+
 			if ( $module->name == $this->module->name )
 				continue;
 
@@ -93,9 +96,6 @@ class Config extends gEditorial\Module
 				continue;
 
 			if ( ! gEditorial()->enabled( $module->name ) )
-				continue;
-
-			if ( ! $module->configure )
 				continue;
 
 			$hook_module = add_submenu_page(

@@ -674,7 +674,7 @@ class Meta extends gEditorial\Module
 			return;
 
 		ModuleTemplate::metaLead( [
-			'before' => '<div class="geditorial-wrap -meta -before entry-lead">',
+			'before' => $this->wrap_open( '-before entry-lead' ),
 			'after'  => '</div>',
 		] );
 	}
@@ -689,7 +689,7 @@ class Meta extends gEditorial\Module
 		// only on the last page
 		if ( $page == count( $pages ) )
 			ModuleTemplate::metaSource( [
-				'before' => '<div class="geditorial-wrap -meta -after entry-source">'
+				'before' => $this->wrap_open( '-after entry-source' )
 					.$this->get_setting( 'before_source', '' ).' ',
 				'after'  => '</div>',
 			] );
