@@ -423,7 +423,7 @@ class Entry extends gEditorial\Module
 			$link = get_permalink( $post_id );
 
 		else
-			$link = $slug; // we handle 404s
+			$link = rawurlencode( $slug ); // we handle 404s
 
 		return '<a href="'.$link.'" data-slug="'.$slug.'" class="-wikilink'.( $post_id ? '' : ' -notfound').'">'.$text.'</a>';
 	}
