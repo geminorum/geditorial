@@ -2,7 +2,7 @@
   "use strict";
   $(function() {
 
-    var $like = $('.geditorial-wrap.like'),
+    var $like = $('.geditorial-wrap.-like'),
       $list = $like.data('avatars');
 
     if ($like.length > 0) {
