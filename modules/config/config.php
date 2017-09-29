@@ -48,18 +48,14 @@ class Config extends gEditorial\Module
 
 	public function admin_menu()
 	{
-		$gEditorial = gEditorial();
-
-		$can       = $this->cuc( 'settings' );
-		$settings  = $this->base.'-settings';
-		$dashboard = 'index.php';
+		$can = $this->cuc( 'settings' );
 
 		$hook_reports = add_submenu_page(
-			$dashboard,
+			'index.php',
 			_x( 'Editorial Reports', 'Modules: Config: Menu Title', GEDITORIAL_TEXTDOMAIN ),
 			_x( 'My Reports', 'Modules: Config: Menu Title', GEDITORIAL_TEXTDOMAIN ),
 			$this->caps['reports'],
-			'geditorial-reports',
+			$this->base.'-reports',
 			[ $this, 'admin_reports_page' ]
 		);
 
@@ -67,20 +63,20 @@ class Config extends gEditorial\Module
 			$this->module->title,
 			$this->module->title,
 			$this->caps['settings'],
-			$settings,
+			$this->base.'-settings',
 			[ $this, 'admin_settings_page' ],
 			$this->get_posttype_icon()
 		);
 
 		$hook_tools = add_submenu_page(
-			( $can ? $settings : $dashboard ),
+			( $can ? $this->base.'-settings' : 'index.php' ),
 			_x( 'Editorial Tools', 'Modules: Config: Menu Title', GEDITORIAL_TEXTDOMAIN ),
 			( $can
 				? _x( 'Tools', 'Modules: Config: Menu Title', GEDITORIAL_TEXTDOMAIN )
 				: _x( 'My Tools', 'Modules: Config: Menu Title', GEDITORIAL_TEXTDOMAIN )
 			),
 			$this->caps['tools'],
-			'geditorial-tools',
+			$this->base.'-tools',
 			[ $this, 'admin_tools_page' ]
 		);
 
@@ -90,17 +86,20 @@ class Config extends gEditorial\Module
 
 		foreach ( gEditorial()->modules( 'title' ) as $module ) {
 
+			if ( $module->name == $this->module->name )
+				continue;
+
 			if ( FALSE !== $module->disabled )
 				continue;
 
 			if ( ! gEditorial()->enabled( $module->name ) )
 				continue;
 
-			if ( ! $module->configure && $module->name == $this->module->name )
+			if ( ! $module->configure )
 				continue;
 
 			$hook_module = add_submenu_page(
-				$settings,
+				$this->base.'-settings',
 				$module->title,
 				$module->title,
 				$this->caps['settings'],
