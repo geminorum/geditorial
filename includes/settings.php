@@ -5,6 +5,7 @@ defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial\Core\Arraay;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
+use geminorum\gEditorial\Core\Text;
 use geminorum\gEditorial\Core\URL;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\PostType;
@@ -71,9 +72,8 @@ class Settings extends Core\Base
 		if ( is_null( $screen ) )
 			$screen = get_current_screen();
 
-		if ( isset( $screen->base )
-			&& FALSE !== strripos( $screen->base, self::REPORTS ) )
-				return TRUE;
+		if ( ! empty( $screen->base ) && Text::has( $screen->base, self::REPORTS ) )
+			return TRUE;
 
 		return FALSE;
 	}
@@ -83,9 +83,8 @@ class Settings extends Core\Base
 		if ( is_null( $screen ) )
 			$screen = get_current_screen();
 
-		if ( isset( $screen->base )
-			&& FALSE !== strripos( $screen->base, self::SETTINGS ) )
-				return TRUE;
+		if ( ! empty( $screen->base ) && Text::has( $screen->base, self::SETTINGS ) )
+			return TRUE;
 
 		return FALSE;
 	}
@@ -95,9 +94,8 @@ class Settings extends Core\Base
 		if ( is_null( $screen ) )
 			$screen = get_current_screen();
 
-		if ( isset( $screen->base )
-			&& FALSE !== strripos( $screen->base, self::TOOLS ) )
-				return TRUE;
+		if ( ! empty( $screen->base ) && Text::has( $screen->base, self::TOOLS ) )
+			return TRUE;
 
 		return FALSE;
 	}
@@ -107,9 +105,8 @@ class Settings extends Core\Base
 		if ( is_null( $screen ) )
 			$screen = get_current_screen();
 
-		if ( isset( $screen->base )
-			&& FALSE !== strripos( $screen->base, 'dashboard' ) )
-				return TRUE;
+		if ( ! empty( $screen->base ) && Text::has( $screen->base, 'dashboard' ) )
+			return TRUE;
 
 		return FALSE;
 	}
