@@ -285,11 +285,11 @@ class Module extends Base
 				'context' => 'settings',
 				'sub'     => $this->key,
 				'text'    => $this->module->title,
-				'url'     => $this->get_module_url( 'settings', FALSE ),
+				'url'     => $this->get_module_url( 'settings' ),
 				'title'   => sprintf( _x( '%s Settings', 'Module: Extra Link: Settings', GEDITORIAL_TEXTDOMAIN ), $this->module->title ),
 			];
 
-		if ( $docs = $this->get_module_url( 'docs', FALSE ) )
+		if ( $docs = $this->get_module_url( 'docs' ) )
 			$links[] = [
 				'context' => 'docs',
 				'sub'     => $this->key,
@@ -319,9 +319,9 @@ class Module extends Base
 			case 'config'    : $url = Settings::settingsURL(); break;
 			case 'reports'   : $url = Settings::reportsURL(); break;
 			case 'tools'     : $url = Settings::toolsURL(); break;
-			case 'docs'      : $url = Settings::getModuleDocsURL( $this->module ); break;
-			case 'settings'  : $url = add_query_arg( 'page', $this->module->settings, get_admin_url( NULL, 'admin.php' ) ); break;
-			case 'listtable' : $url = $this->get_adminmenu( FALSE ); break;
+			case 'docs'      : $url = Settings::getModuleDocsURL( $this->module ); $sub = FALSE; break;
+			case 'settings'  : $url = add_query_arg( 'page', $this->module->settings, get_admin_url( NULL, 'admin.php' ) ); $sub = FALSE; break;
+			case 'listtable' : $url = $this->get_adminmenu( FALSE ); $sub = FALSE; break;
 			default          : $url = URL::current();
 		}
 
@@ -727,7 +727,7 @@ class Module extends Base
 
 	public function print_configure_view()
 	{
-		echo '<form action="'.$this->get_url_settings().'" method="post">';
+		echo '<form action="'.$this->get_module_url( 'settings' ).'" method="post">';
 
 			$this->settings_fields( $this->module->name );
 
@@ -1909,7 +1909,7 @@ class Module extends Base
 		if ( TRUE === $edit_cap || current_user_can( $edit_cap ) ) {
 
 			if ( is_null( $url ) )
-				$url = $this->get_url_settings();
+				$url = $this->get_module_url( 'settings' );
 
 			$action = $this->get_string( 'meta_box_action', $constant, 'misc', _x( 'Configure', 'Module: MetaBox Default Action', GEDITORIAL_TEXTDOMAIN ) );
 			$title .= ' <span class="postbox-title-action"><a href="'.esc_url( $url ).'" target="_blank">'.$action.'</a></span>';
@@ -1960,11 +1960,6 @@ class Module extends Base
 	public function get_column_title( $column, $constant = NULL, $fallback = NULL )
 	{
 		return $this->get_string( $column.'_column_title', $constant, 'misc', ( is_null( $fallback ) ? $column : $fallback ) );
-	}
-
-	public function get_url_settings( $extra = [] )
-	{
-		return WordPress::getAdminPageLink( $this->module->settings, $extra );
 	}
 
 	protected function require_code( $filenames = 'templates' )
