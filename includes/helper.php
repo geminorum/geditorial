@@ -1093,17 +1093,16 @@ class Helper extends Core\Base
 	}
 
 	/**
-	 *	%1$s => Camel Case / Plural
-	 *	%2$s => Camel Case / Singular
-	 *	%3$s => Lower Case / Plural
-	 *	%4$s => Lower Case / Singular
-	 *	%5$s => %s
+	 * %1$s => Camel Case / Plural   : Posts
+	 * %2$s => Camel Case / Singular : Post
+	 * %3$s => Lower Case / Plural   : posts
+	 * %4$s => Lower Case / Singular : post
+	 * %5$s => %s
 	 *
-	 *	@REF:
-	 *		`get_post_type_labels()`
-	 *		`_get_custom_object_labels()`
-	 *		`_nx_noop()`
-	 *		`translate_nooped_plural()`
+	 * @REF: `get_post_type_labels()`
+	 * @REF: `_get_custom_object_labels()`
+	 * @REF: `_nx_noop()`
+	 * @REF: `translate_nooped_plural()`
 	 */
 	public static function generatePostTypeLabels( $name, $featured = FALSE, $pre = [] )
 	{
@@ -1158,13 +1157,14 @@ class Helper extends Core\Base
 	}
 
 	/**
-	 *	%1$s => Camel Case / Plural   : Posts
-	 *	%2$s => Camel Case / Singular : Post
-	 *	%3$s => Lower Case / Plural   : posts
-	 *	%4$s => Lower Case / Singular : post
-	 *	%5$s => %s
+	 * %1$s => Camel Case / Plural   : Tags
+	 * %2$s => Camel Case / Singular : Tag
+	 * %3$s => Lower Case / Plural   : tags
+	 * %4$s => Lower Case / Singular : tag
+	 * %5$s => %s
 	 *
-	 *	@REF: `_nx_noop()`, `translate_nooped_plural()`
+	 * @REF: `_nx_noop()`
+	 * @REF: `translate_nooped_plural()`
 	 */
 	public static function generateTaxonomyLabels( $name, $pre = [] )
 	{
@@ -1207,11 +1207,11 @@ class Helper extends Core\Base
 	}
 
 	/**
-	 *	%1$s => Camel Case / Plural
-	 *	%2$s => Camel Case / Singular
-	 *	%3$s => Lower Case / Plural
-	 *	%4$s => Lower Case / Singular
-	 *	%5$s => %s
+	 * %1$s => Camel Case / Plural
+	 * %2$s => Camel Case / Singular
+	 * %3$s => Lower Case / Plural
+	 * %4$s => Lower Case / Singular
+	 * %5$s => %s
 	 */
 	public static function generatePostTypeMessages( $name )
 	{
@@ -1265,11 +1265,11 @@ class Helper extends Core\Base
 	}
 
 	/**
-	 *	%1$s => Camel Case / Plural
-	 *	%2$s => Camel Case / Singular
-	 *	%3$s => Lower Case / Plural
-	 *	%4$s => Lower Case / Singular
-	 *	%5$s => %s
+	 * %1$s => Camel Case / Plural
+	 * %2$s => Camel Case / Singular
+	 * %3$s => Lower Case / Plural
+	 * %4$s => Lower Case / Singular
+	 * %5$s => %s
 	 */
 	public static function generateBulkPostTypeMessages( $name, $counts )
 	{

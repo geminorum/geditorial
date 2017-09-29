@@ -118,7 +118,7 @@ class Like extends gEditorial\Module
 		$title = $this->get_setting( 'string_loading', _x( 'Loading &hellip;', 'Modules: Like', GEDITORIAL_TEXTDOMAIN ) );
 		$title = $this->filters( 'loading', $title, $post );
 
-		$html  = '<div class="geditorial-wrap like" style="display:none;" data-avatars="'.( $avatars ? 'true' : 'false' ).'">';
+		$html  = '<div class="geditorial-wrap -like" style="display:none;" data-avatars="'.( $avatars ? 'true' : 'false' ).'">';
 		$html .= '<div><a class="like loading" title="'.esc_attr( $title ).'" href="#" data-id="'.$post->ID.'">';
 
 		// $html .= $this->filters( 'icon', '<span class="genericon genericon-heart"></span>', $post->ID );

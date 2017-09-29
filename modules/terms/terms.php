@@ -592,7 +592,7 @@ class Terms extends gEditorial\Module
 						global $wpdb;
 
 						$result = $wpdb->query( $wpdb->prepare( "
-							UPDATE {$wpdb->term_taxonomy} SET taxonomy = %s WHERE taxonomy = '%s'
+							UPDATE {$wpdb->term_taxonomy} SET taxonomy = %s WHERE taxonomy = %s
 						", trim( $post['live_tax'] ), trim( $post['dead_tax'] ) ) );
 
 						if ( count( $result ) )

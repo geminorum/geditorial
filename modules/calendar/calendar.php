@@ -159,7 +159,7 @@ class Calendar extends gEditorial\Module
 		if ( $link = $this->get_calendar_link( $post ) )
 			$actions[$this->classs()] = HTML::tag( 'a', [
 				'href'   => $link,
-				'title'  => _x( 'Click to view this post on calendar.', 'Modules: Calendar', GEDITORIAL_TEXTDOMAIN ),
+				'title'  => _x( 'View on Calendar', 'Modules: Calendar', GEDITORIAL_TEXTDOMAIN ),
 				'class'  => '-calendar',
 				'target' => '_blank',
 			], _x( 'Calendar', 'Modules: Calendar', GEDITORIAL_TEXTDOMAIN ) );

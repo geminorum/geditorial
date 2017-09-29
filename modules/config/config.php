@@ -352,8 +352,6 @@ class Config extends gEditorial\Module
 
 	public function ajax()
 	{
-		global $gEditorial;
-
 		if ( ! $this->cuc( 'settings' ) )
 			self::cheatin();
 
@@ -369,12 +367,12 @@ class Config extends gEditorial\Module
 				if ( ! isset( $_POST['doing'], $_POST['name'] ) )
 					Ajax::errorMessage( _x( 'No action or name!', 'Modules: Config: Ajax Notice', GEDITORIAL_TEXTDOMAIN ) );
 
-				if ( ! $module = $gEditorial->get_module_by( 'name', sanitize_key( $_POST['name'] ) ) )
+				if ( ! $module = gEditorial()->get_module_by( 'name', sanitize_key( $_POST['name'] ) ) )
 					Ajax::errorMessage( _x( 'Cannot find the module!', 'Modules: Config: Ajax Notice', GEDITORIAL_TEXTDOMAIN ) );
 
 				$enabled = 'enable' == sanitize_key( $_POST['doing'] ) ? TRUE : FALSE;
 
-				if ( $gEditorial->update_module_option( $module->name, 'enabled', $enabled ) )
+				if ( gEditorial()->update_module_option( $module->name, 'enabled', $enabled ) )
 					Ajax::successMessage( _x( 'Module state succesfully changed.', 'Modules: Config: Ajax Notice', GEDITORIAL_TEXTDOMAIN ) );
 				else
 					Ajax::errorMessage( _x( 'Cannot change module state!', 'Modules: Config: Ajax Notice', GEDITORIAL_TEXTDOMAIN ) );
@@ -387,10 +385,10 @@ class Config extends gEditorial\Module
 	{
 		global $gEditorial;
 
-		if ( ! $module = $gEditorial->get_module_by( 'settings', $_GET['page'] ) )
+		if ( ! $module = gEditorial()->get_module_by( 'settings', $_GET['page'] ) )
 			wp_die( _x( 'Not a registered Editorial module', 'Modules: Config: Page Notice', GEDITORIAL_TEXTDOMAIN ) );
 
-		if ( isset( $gEditorial->{$module->name} ) ) {
+		if ( gEditorial()->enabled( $module->name ) ) {
 
 			$this->print_default_header( $module );
 			$gEditorial->{$module->name}->{$module->configure}();

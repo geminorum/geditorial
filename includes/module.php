@@ -1400,10 +1400,10 @@ class Module extends Base
 		return $default;
 	}
 
+	// for out of context manipulations
 	public function update_option( $key, $value )
 	{
-		global $gEditorial;
-		return $gEditorial->update_module_option( $this->module->name, $key, $value );
+		return gEditorial()->update_module_option( $this->module->name, $key, $value );
 	}
 
 	public function set_cookie( $array, $append = TRUE, $expire = '+ 365 day' )
@@ -2257,7 +2257,7 @@ LEFT OUTER JOIN {$wpdb->term_taxonomy} USING (term_taxonomy_id)
 LEFT OUTER JOIN {$wpdb->terms} USING (term_id)
 SQL;
 
-					$pieces['where']   .= $wpdb->prepare( " AND (taxonomy = '%s' OR taxonomy IS NULL)", $tax );
+					$pieces['where']   .= $wpdb->prepare( " AND (taxonomy = %s OR taxonomy IS NULL)", $tax );
 					$pieces['groupby']  = "object_id";
 					$pieces['orderby']  = "GROUP_CONCAT({$wpdb->terms}.name ORDER BY name ASC) ";
 					$pieces['orderby'] .= ( 'ASC' == strtoupper( $wp_query->get('order') ) ) ? 'ASC' : 'DESC';

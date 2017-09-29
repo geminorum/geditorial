@@ -304,6 +304,7 @@ class Audit extends gEditorial\Module
 					'title'  => $this->get_string( 'show_option_none', 'audit_tax', 'misc' ),
 					'parent' => $this->classs(),
 					'href'   => FALSE,
+					'meta'   => [ 'class' => '-danger' ],
 				];
 		}
 

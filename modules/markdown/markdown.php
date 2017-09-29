@@ -188,7 +188,6 @@ class Markdown extends gEditorial\Module
 		Ajax::errorWhat();
 	}
 
-
 	// @REF: https://github.com/michelf/php-markdown
 	private function process_content( $content, $id )
 	{
@@ -249,7 +248,7 @@ class Markdown extends gEditorial\Module
 		$link = $post_id = FALSE;
 
 		if ( Text::has( $text, '|' ) )
-			list( $text, $slug ) = explode( '|', $text );
+			list( $text, $slug ) = explode( '|', $text, 2 );
 
 		$slug = preg_replace( '/\s+/', '-', $slug );
 
