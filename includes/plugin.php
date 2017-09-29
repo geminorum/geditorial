@@ -283,16 +283,15 @@ class Plugin
 		return $this->{$module}->constant( $key, $default );
 	}
 
-	// HELPER
-	public function get_all_modules( $enabled_only = FALSE )
+	public function list_modules( $enabled_only = FALSE, $orderby = 'title' )
 	{
-		$modules = [];
+		$list = [];
 
-		foreach ( $this->modules as $mod_name => &$module )
-			if ( ! $enabled_only || isset( $this->{$name} ) )
-				$modules[$mod_name] = $module->title;
+		foreach ( $this->modules( $orderby ) as $module )
+			if ( ! $enabled_only || $this->enabled( $module->name ) )
+				$list[$module->name] = $module->title;
 
-		return $modules;
+		return $list;
 	}
 
 	public function update_module_option( $name, $key, $value )

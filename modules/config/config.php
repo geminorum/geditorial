@@ -294,8 +294,6 @@ class Config extends gEditorial\Module
 
 	private function tools_sub_general( $uri, $sub )
 	{
-		global $gEditorial;
-
 		if ( ! $this->cuc( 'tools' ) )
 			self::cheatin();
 
@@ -333,7 +331,7 @@ class Config extends gEditorial\Module
 				$this->do_settings_field( [
 					'type'         => 'select',
 					'field'        => 'empty_module',
-					'values'       => $gEditorial->get_all_modules(),
+					'values'       => gEditorial()->list_modules(),
 					'default'      => $post['empty_module'],
 					'option_group' => 'tools',
 				] );
