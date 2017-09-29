@@ -15,7 +15,7 @@ class ShortCode extends Core\Base
 	const BASE   = 'geditorial';
 	const MODULE = FALSE;
 
-	public static function wrap( $html, $suffix = FALSE, $args = [], $block = TRUE )
+	public static function wrap( $html, $suffix = FALSE, $args = [], $block = TRUE, $extra = [] )
 	{
 		$before = empty( $args['before'] ) ? '' : $args['before'];
 		$after  = empty( $args['after'] ) ? '' : $args['after'];
@@ -35,9 +35,9 @@ class ShortCode extends Core\Base
 			$classes[] = $args['class'];
 
 		if ( $after )
-			return $before.HTML::tag( $block ? 'div' : 'span', [ 'class' => $classes ], $html ).$after;
+			return $before.HTML::tag( $block ? 'div' : 'span', array_merge( [ 'class' => $classes ], $extra ), $html ).$after;
 
-		return HTML::tag( $block ? 'div' : 'span', [ 'class' => $classes ], $before.$html );
+		return HTML::tag( $block ? 'div' : 'span', array_merge( [ 'class' => $classes ], $extra ), $before.$html );
 	}
 
 	// term as title of the list
