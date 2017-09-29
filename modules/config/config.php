@@ -50,11 +50,12 @@ class Config extends gEditorial\Module
 	{
 		$gEditorial = gEditorial();
 
-		$can  = $this->cuc( 'settings' );
-		$page = 'index.php';
+		$can       = $this->cuc( 'settings' );
+		$settings  = $this->base.'-settings';
+		$dashboard = 'index.php';
 
 		$hook_reports = add_submenu_page(
-			$page,
+			$dashboard,
 			_x( 'Editorial Reports', 'Modules: Config: Menu Title', GEDITORIAL_TEXTDOMAIN ),
 			_x( 'My Reports', 'Modules: Config: Menu Title', GEDITORIAL_TEXTDOMAIN ),
 			$this->caps['reports'],
@@ -66,13 +67,13 @@ class Config extends gEditorial\Module
 			$this->module->title,
 			$this->module->title,
 			$this->caps['settings'],
-			$this->module->settings,
+			$settings,
 			[ $this, 'admin_settings_page' ],
 			$this->get_posttype_icon()
 		);
 
 		$hook_tools = add_submenu_page(
-			( $can ? $this->module->settings : $page ),
+			( $can ? $settings : $dashboard ),
 			_x( 'Editorial Tools', 'Modules: Config: Menu Title', GEDITORIAL_TEXTDOMAIN ),
 			( $can
 				? _x( 'Tools', 'Modules: Config: Menu Title', GEDITORIAL_TEXTDOMAIN )
@@ -99,7 +100,7 @@ class Config extends gEditorial\Module
 				continue;
 
 			$hook_module = add_submenu_page(
-				$this->module->settings,
+				$settings,
 				$module->title,
 				$module->title,
 				$this->caps['settings'],
@@ -386,19 +387,17 @@ class Config extends gEditorial\Module
 		global $gEditorial;
 
 		if ( ! $module = gEditorial()->get_module_by( 'settings', $_GET['page'] ) )
-			wp_die( _x( 'Not a registered Editorial module', 'Modules: Config: Page Notice', GEDITORIAL_TEXTDOMAIN ) );
+			return Settings::wrapError( HTML::warning( _x( 'Not a registered Editorial module.', 'Modules: Config: Page Notice', GEDITORIAL_TEXTDOMAIN ), FALSE ) );
 
-		if ( gEditorial()->enabled( $module->name ) ) {
+		if ( ! gEditorial()->enabled( $module->name ) )
+			return Settings::wrapError( HTML::warning( _x( 'Module not enabled. Please enable it from the Editorial settings page.', 'Modules: Config: Page Notice', GEDITORIAL_TEXTDOMAIN ), FALSE ) );
 
-			$this->print_default_header( $module );
+		$this->print_default_header( $module );
+
 			$gEditorial->{$module->name}->{$module->configure}();
-			$this->settings_footer( $module );
-			$this->settings_signature( $module );
 
-		} else {
-
-			echo HTML::warning( _x( 'Module not enabled. Please enable it from the Editorial settings page.', 'Modules: Config: Page Notice', GEDITORIAL_TEXTDOMAIN ), FALSE );
-		}
+		$this->settings_footer( $module );
+		$this->settings_signature( $module );
 	}
 
 	public function print_default_header( $current_module )
@@ -408,7 +407,7 @@ class Config extends gEditorial\Module
 		$back = $count = $flush = FALSE;
 
 		if ( 'config' == $current_module->name ) {
-			$title = _x( 'Editorial', 'Modules: Config', GEDITORIAL_TEXTDOMAIN );
+			$title = NULL;
 			$count = gEditorial()->count();
 			$flush = WordPress::maybeFlushRules();
 		} else {
@@ -442,13 +441,7 @@ class Config extends gEditorial\Module
 	private function print_default_settings()
 	{
 		echo '<div class="modules -list">';
-			$this->print_modules();
-			echo '<div class="clear"></div>';
-		echo '</div>';
-	}
 
-	private function print_modules()
-	{
 		foreach ( gEditorial()->modules( 'title' ) as $module ) {
 
 			if ( $module->autoload )
@@ -456,32 +449,32 @@ class Config extends gEditorial\Module
 
 			$enabled = gEditorial()->enabled( $module->name );
 
-			echo '<div class="module '.( $enabled ? '-enabled' : '-disabled' )
-				.'" id="'.$module->settings.'" data-module="'.$module->name.'">';
+			echo '<div data-module="'.$module->name.'" class="module '
+				.( $enabled ? '-enabled' : '-disabled' ).'">';
 
 			if ( $module->icon )
 				echo Helper::getIcon( $module->icon );
 
-			echo '<span class="spinner"></span>';
+			echo Ajax::spinner();
 
-			echo '<form action="">';
+			Settings::moduleInfo( $module );
 
-				Settings::moduleInfo( $module );
+			if ( FALSE === $module->disabled ) {
 
-				if ( FALSE === $module->disabled ) {
+				echo '<p class="actions">';
+					Settings::moduleConfigure( $module, $enabled );
+					Settings::moduleButtons( $module, $enabled );
+				echo '</p>';
 
-					echo '<p class="actions">';
-						Settings::moduleConfigure( $module, $enabled );
-						Settings::moduleButtons( $module, $enabled );
-					echo '</p>';
+			} else if ( $module->disabled ) {
 
-				} else if ( $module->disabled ) {
+				echo HTML::wrap( $module->disabled, 'actions -danger' );
+			}
 
-					echo HTML::wrap( $module->disabled, 'actions -danger' );
-				}
-
-			echo '</form></div>';
+			echo '</div>';
 		}
+
+		echo '<div class="clear"></div></div>';
 	}
 
 	public function admin_settings_load()
