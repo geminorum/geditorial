@@ -130,6 +130,7 @@ add_theme_support( \'featured-content\', [
 				add_filter( 'gnetwork_search_404_posttypes', [ $this, 'search_404_posttypes' ] );
 
 				$this->filter( 'widget_posts_args' );
+				$this->filter( 'widget_comments_args' );
 			}
 		}
 
@@ -330,6 +331,14 @@ add_theme_support( \'featured-content\', [
 	}
 
 	public function widget_posts_args( $args )
+	{
+		if ( ! isset( $args['post_type'] ) )
+			$args['post_type'] = $this->post_types();
+
+		return $args;
+	}
+
+	public function widget_comments_args( $args )
 	{
 		if ( ! isset( $args['post_type'] ) )
 			$args['post_type'] = $this->post_types();
