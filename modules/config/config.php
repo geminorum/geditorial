@@ -24,14 +24,12 @@ class Config extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'      => 'config',
-			'title'     => _x( 'Editorial', 'Modules: Config', GEDITORIAL_TEXTDOMAIN ),
-			'desc'      => _x( 'WordPress in Magazine Style', 'Modules: Config', GEDITORIAL_TEXTDOMAIN ),
-			'icon'      => 'screenoptions',
-			'settings'  => 'geditorial-settings',
-			'configure' => 'print_default_settings',
-			'frontend'  => FALSE,
-			'autoload'  => TRUE,
+			'name'     => 'config',
+			'title'    => _x( 'Editorial', 'Modules: Config', GEDITORIAL_TEXTDOMAIN ),
+			'desc'     => _x( 'WordPress in Magazine Style', 'Modules: Config', GEDITORIAL_TEXTDOMAIN ),
+			'settings' => 'geditorial-settings',
+			'frontend' => FALSE,
+			'autoload' => TRUE,
 		];
 	}
 
@@ -389,15 +387,15 @@ class Config extends gEditorial\Module
 		if ( ! gEditorial()->enabled( $module->name ) )
 			return Settings::wrapError( HTML::warning( _x( 'Module not enabled. Please enable it from the Editorial settings page.', 'Modules: Config: Page Notice', GEDITORIAL_TEXTDOMAIN ), FALSE ) );
 
-		$this->print_default_header( $module );
+		$this->settings_header( $module );
 
-			$gEditorial->{$module->name}->{$module->configure}();
+			$gEditorial->{$module->name}->settings_from();
 
 		$this->settings_footer( $module );
 		$this->settings_signature( $module );
 	}
 
-	public function print_default_header( $current_module )
+	public function settings_header( $current_module )
 	{
 		global $gEditorial;
 
@@ -435,7 +433,7 @@ class Config extends gEditorial\Module
 		Settings::wrapClose();
 	}
 
-	private function print_default_settings()
+	public function settings_from()
 	{
 		echo '<div class="modules -list">';
 
