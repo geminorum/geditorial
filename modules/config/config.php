@@ -96,17 +96,14 @@ class Config extends gEditorial\Module
 			if ( ! gEditorial()->enabled( $module->name ) )
 				continue;
 
-			$hook_module = add_submenu_page(
+			add_submenu_page(
 				$this->base.'-settings',
 				$module->title,
 				$module->title,
 				$this->caps['settings'],
-				$module->settings,
+				$this->base.'-settings&module='.$module->name,
 				[ $this, 'admin_settings_page' ]
 			);
-
-			if ( $hook_module )
-				add_action( 'load-'.$hook_module, [ $this, 'admin_settings_load' ] );
 		}
 	}
 
@@ -379,9 +376,10 @@ class Config extends gEditorial\Module
 
 	public function admin_settings_page()
 	{
-		global $gEditorial;
+		if ( ! $key = self::req( 'module', FALSE ) )
+			$module = $this->module;
 
-		if ( ! $module = gEditorial()->get_module_by( 'settings', $_GET['page'] ) )
+		else if ( ! $module = gEditorial()->get_module_by( 'name', $key ) )
 			return Settings::wrapError( HTML::warning( _x( 'Not a registered Editorial module.', 'Modules: Config: Page Notice', GEDITORIAL_TEXTDOMAIN ), FALSE ) );
 
 		if ( ! gEditorial()->enabled( $module->name ) )
@@ -389,7 +387,7 @@ class Config extends gEditorial\Module
 
 		$this->settings_header( $module );
 
-			$gEditorial->{$module->name}->settings_from();
+			gEditorial()->{$module->name}->settings_from();
 
 		$this->settings_footer( $module );
 		$this->settings_signature( $module );
@@ -477,12 +475,12 @@ class Config extends gEditorial\Module
 		if ( ! $this->cuc( 'settings' ) )
 			return FALSE;
 
-		$page = self::req( 'page', NULL );
+		$module = self::req( 'module', FALSE );
 
-		$this->admin_settings_reset( $page );
-		$this->admin_settings_save( $page );
+		$this->settings_reset( $module );
+		$this->settings_save( $module );
 
-		do_action( 'geditorial_settings_load', $page );
+		do_action( 'geditorial_settings_load', $module );
 
 		$listjs = Helper::registerScriptPackage( 'listjs',
 			'list.js/list', [], '1.5.0' );
@@ -490,7 +488,7 @@ class Config extends gEditorial\Module
 		$this->enqueue_asset_js( [], NULL, [ 'jquery', $listjs ] );
 	}
 
-	public function admin_settings_reset( $page = NULL )
+	public function settings_reset( $module = FALSE )
 	{
 		if ( ! isset( $_POST['reset'], $_POST['geditorial_module_name'] ) )
 			return FALSE;
@@ -506,7 +504,7 @@ class Config extends gEditorial\Module
 		WordPress::redirectReferer( 'resetting' );
 	}
 
-	public function admin_settings_save( $page = NULL )
+	public function settings_save( $module = FALSE )
 	{
 		if ( ! isset( $_POST['submit'], $_POST['action'], $_POST['geditorial_module_name'] ) )
 			return FALSE;

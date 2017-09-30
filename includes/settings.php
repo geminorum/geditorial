@@ -961,7 +961,7 @@ class Settings extends Core\Base
 	{
 		if ( $module->configure )
 			echo HTML::tag( 'a', [
-				'href'  => add_query_arg( 'page', $module->settings, get_admin_url( NULL, 'admin.php' ) ),
+				'href'  => add_query_arg( [ 'page' => static::SETTINGS, 'module' => $module->name ], get_admin_url( NULL, 'admin.php' ) ),
 				'style' => $enabled ? FALSE : 'display:none',
 				'class' => [ 'button-primary', 'button', 'button-small', '-button' ],
 				'data'  => [

@@ -319,7 +319,7 @@ class Module extends Base
 			case 'reports'   : $url = Settings::reportsURL(); break;
 			case 'tools'     : $url = Settings::toolsURL(); break;
 			case 'docs'      : $url = Settings::getModuleDocsURL( $this->module ); $sub = FALSE; break;
-			case 'settings'  : $url = add_query_arg( 'page', $this->module->settings, get_admin_url( NULL, 'admin.php' ) ); $sub = FALSE; break;
+			case 'settings'  : $url = add_query_arg( 'module', $this->module->name, Settings::settingsURL() ); $sub = FALSE; break;
 			case 'listtable' : $url = $this->get_adminmenu( FALSE ); $sub = FALSE; break;
 			default          : $url = URL::current();
 		}
@@ -1185,9 +1185,9 @@ class Module extends Base
 			$this->settings = $this->filters( 'settings', $this->get_global_settings(), $this->module );
 	}
 
-	public function register_settings( $page = NULL )
+	public function register_settings( $module = FALSE )
 	{
-		if ( $page != $this->module->settings )
+		if ( $module != $this->module->name )
 			return;
 
 		$this->init_settings();

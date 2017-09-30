@@ -170,7 +170,6 @@ class Plugin
 		$defaults = [
 			'class'     => Helper::moduleClass( $args['name'], FALSE ),
 			'icon'      => 'screenoptions', // dashicon class
-			'settings'  => 'geditorial-settings-'.$args['name'],
 			'configure' => TRUE,
 			'frontend'  => TRUE, // whether or not the module should be loaded on the frontend too
 			'autoload'  => FALSE, // autoloading a module will remove the ability to enable or disable it
