@@ -742,7 +742,7 @@ class Module extends Base
 			self::dump( $this->options );
 	}
 
-	public function default_buttons( $page = NULL )
+	public function default_buttons( $module = FALSE )
 	{
 		$this->register_button( 'submit', NULL, TRUE );
 		$this->register_button( 'reset', NULL, 'reset', TRUE );
@@ -765,7 +765,7 @@ class Module extends Base
 		];
 	}
 
-	protected function settings_buttons( $page = NULL, $wrap = '' )
+	protected function settings_buttons( $module = FALSE, $wrap = '' )
 	{
 		if ( FALSE !== $wrap )
 			echo '<p class="submit '.$this->base.'-wrap-buttons '.$wrap.'">';
@@ -833,9 +833,9 @@ class Module extends Base
 	}
 
 	// DEFAULT METHOD
-	public function append_sub( $subs, $page = 'settings' )
+	public function append_sub( $subs, $context = 'settings' )
 	{
-		if ( ! $this->cuc( $page ) )
+		if ( ! $this->cuc( $context ) )
 			return $subs;
 
 		return array_merge( $subs, [ $this->module->name => $this->module->title ] );
@@ -1193,7 +1193,7 @@ class Module extends Base
 		$this->init_settings();
 
 		if ( method_exists( $this, 'before_settings' ) )
-			$this->before_settings( $page );
+			$this->before_settings( $module );
 
 		foreach ( $this->settings as $section_suffix => $fields ) {
 			if ( is_array( $fields ) ) {
@@ -1234,7 +1234,7 @@ class Module extends Base
 			}
 		}
 
-		$this->default_buttons( $page );
+		$this->default_buttons( $module );
 
 		$screen = get_current_screen();
 
@@ -1254,7 +1254,7 @@ class Module extends Base
 			Settings::settingsCredits();
 	}
 
-	protected function settings_signature( $module = NULL, $page = 'settings' )
+	protected function settings_signature( $module = NULL, $context = 'settings' )
 	{
 		Settings::settingsSignature();
 	}

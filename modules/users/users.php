@@ -186,7 +186,7 @@ class Users extends gEditorial\Module
 		}
 	}
 
-	public function parent_file( $parent_file = '' )
+	public function parent_file( $parent_file )
 	{
 		global $pagenow;
 

@@ -288,15 +288,16 @@ class Book extends gEditorial\Module
 		];
 	}
 
-	public function before_settings( $page = NULL )
+	public function before_settings( $module = FALSE )
 	{
 		if ( isset( $_POST['install_def_size_tax'] ) )
 			$this->insert_default_terms( 'size_tax' );
 	}
 
-	public function default_buttons( $page = NULL )
+	public function default_buttons( $module = FALSE )
 	{
-		parent::default_buttons( $page );
+		parent::default_buttons( $module );
+
 		$this->register_button( 'install_def_size_tax', _x( 'Install Default Sizes', 'Modules: Book: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
 	}
 

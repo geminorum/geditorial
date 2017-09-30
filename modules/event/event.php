@@ -129,7 +129,7 @@ class Event extends gEditorial\Module
 		return $strings;
 	}
 
-	public function before_settings( $page = NULL )
+	public function before_settings( $module = FALSE )
 	{
 		if ( isset( $_POST['install_def_event_tag'] ) )
 			$this->insert_default_terms( 'event_tag' );
@@ -141,9 +141,10 @@ class Event extends gEditorial\Module
 			) );
 	}
 
-	public function default_buttons( $page = NULL )
+	public function default_buttons( $module = FALSE )
 	{
-		parent::default_buttons( $page );
+		parent::default_buttons( $module );
+
 		$this->register_button( 'install_def_event_tag', _x( 'Install Default Event Types', 'Modules: Event: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
 
 		if ( $this->get_setting( 'extra_metadata' ) )

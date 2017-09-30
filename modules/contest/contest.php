@@ -119,15 +119,16 @@ class Contest extends gEditorial\Module
 		return $strings;
 	}
 
-	public function before_settings( $page = NULL )
+	public function before_settings( $module = FALSE )
 	{
 		if ( isset( $_POST['install_def_apply_status_tax'] ) )
 			$this->insert_default_terms( 'apply_status_tax' );
 	}
 
-	public function default_buttons( $page = NULL )
+	public function default_buttons( $module = FALSE )
 	{
-		parent::default_buttons( $page );
+		parent::default_buttons( $module );
+
 		$this->register_button( 'install_def_apply_status_tax', _x( 'Install Default Apply Statuses', 'Modules: Contest: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
 	}
 

@@ -27,7 +27,6 @@ class Config extends gEditorial\Module
 			'name'     => 'config',
 			'title'    => _x( 'Editorial', 'Modules: Config', GEDITORIAL_TEXTDOMAIN ),
 			'desc'     => _x( 'WordPress in Magazine Style', 'Modules: Config', GEDITORIAL_TEXTDOMAIN ),
-			'settings' => 'geditorial-settings',
 			'frontend' => FALSE,
 			'autoload' => TRUE,
 		];

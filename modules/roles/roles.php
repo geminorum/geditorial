@@ -91,7 +91,7 @@ class Roles extends gEditorial\Module
 		return $posttypes;
 	}
 
-	public function before_settings( $page = NULL )
+	public function before_settings( $module = FALSE )
 	{
 		//FIXME: WTF: nonce!
 
@@ -105,9 +105,10 @@ class Roles extends gEditorial\Module
 			$this->remove_default_roles();
 	}
 
-	public function default_buttons( $page = NULL )
+	public function default_buttons( $module = FALSE )
 	{
-		parent::default_buttons( $page );
+		parent::default_buttons( $module );
+
 		$this->register_button( 'add_default_roles', _x( 'Add Default Roles', 'Modules: Roles: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
 		$this->register_button( 'add_defaults_to_editor', _x( 'Add Default Caps to Editor Role', 'Modules: Roles: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
 		$this->register_button( 'remove_default_roles', _x( 'Remove Default Roles', 'Modules: Roles: Setting Button', GEDITORIAL_TEXTDOMAIN ), 'delete' );

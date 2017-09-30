@@ -170,15 +170,16 @@ class Meta extends gEditorial\Module
 		return $this->filters( 'support_post_types', $list );
 	}
 
-	public function before_settings( $page = NULL )
+	public function before_settings( $module = FALSE )
 	{
 		if ( isset( $_POST['install_def_ct_tax'] ) )
 			$this->insert_default_terms( 'ct_tax' );
 	}
 
-	public function default_buttons( $page = NULL )
+	public function default_buttons( $module = FALSE )
 	{
-		parent::default_buttons( $page );
+		parent::default_buttons( $module );
+
 		$this->register_button( 'install_def_ct_tax', _x( 'Install Default Column Headers', 'Modules: Meta: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
 	}
 
