@@ -20,7 +20,7 @@ class Helper extends Core\Base
 
 	protected static function constant( $key, $default = FALSE )
 	{
-		return gEditorial()->constant( self::MODULE, $key, $default );
+		return gEditorial()->constant( static::MODULE, $key, $default );
 	}
 
 	public static function moduleClass( $module, $check = TRUE )
@@ -105,7 +105,7 @@ class Helper extends Core\Base
 				$allowed = [];
 		}
 
-		return apply_filters( self::BASE.'_kses', wp_kses( $text, $allowed ), $allowed, $context );
+		return apply_filters( static::BASE.'_kses', wp_kses( $text, $allowed ), $allowed, $context );
 	}
 
 	public static function ksesArray( $array, $context = 'none', $allowed = NULL )
@@ -477,7 +477,7 @@ class Helper extends Core\Base
 
 	public static function enqueueScript( $asset, $dep = [ 'jquery' ], $version = GEDITORIAL_VERSION, $base = GEDITORIAL_URL, $path = 'assets/js' )
 	{
-		$handle  = strtolower( self::BASE.'-'.str_replace( '.', '-', $asset ) );
+		$handle  = strtolower( static::BASE.'-'.str_replace( '.', '-', $asset ) );
 		$variant = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
 
 		wp_enqueue_script( $handle, $base.$path.'/'.$asset.$variant.'.js', $dep, $version, TRUE );
@@ -495,7 +495,7 @@ class Helper extends Core\Base
 		if ( is_null( $package ) )
 			$package = $asset.'/'.$asset;
 
-		$handle  = strtolower( self::BASE.'-'.str_replace( '.', '-', $asset ) );
+		$handle  = strtolower( static::BASE.'-'.str_replace( '.', '-', $asset ) );
 		$variant = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
 
 		wp_enqueue_script( $handle, $base.$path.'/'.$package.$variant.'.js', $dep, $version, TRUE );
@@ -508,7 +508,7 @@ class Helper extends Core\Base
 		if ( is_null( $package ) )
 			$package = $asset.'/'.$asset;
 
-		$handle  = strtolower( self::BASE.'-'.str_replace( '.', '-', $asset ) );
+		$handle  = strtolower( static::BASE.'-'.str_replace( '.', '-', $asset ) );
 		$variant = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
 
 		wp_register_script( $handle, $base.$path.'/'.$package.$variant.'.js', $dep, $version, TRUE );
@@ -536,7 +536,7 @@ class Helper extends Core\Base
 
 	public static function getTinyMceStrings( $locale )
 	{
-		$strings = apply_filters( self::BASE.'_tinymce_strings', [] );
+		$strings = apply_filters( static::BASE.'_tinymce_strings', [] );
 
 		return count( $strings ) ? 'tinyMCE.addI18n("'.$locale.'.geditorial", '.wp_json_encode( $strings ).');'."\n" : '';
 	}
@@ -791,8 +791,8 @@ class Helper extends Core\Base
 		];
 
 		return HTML::tag( 'div', [
-			'class' => [ self::BASE.'-wordcount', 'hide-if-no-js' ],
-			'data'  => apply_filters( self::BASE.'_helper_wordcount_data', array_merge( $data, $defaults ), $for, $posttype ),
+			'class' => [ static::BASE.'-wordcount', 'hide-if-no-js' ],
+			'data'  => apply_filters( static::BASE.'_helper_wordcount_data', array_merge( $data, $defaults ), $for, $posttype ),
 		], sprintf( _x( 'Letter Count: %s', 'Helper', GEDITORIAL_TEXTDOMAIN ), '<span class="-chars">0</span>' ) );
 	}
 
@@ -1004,7 +1004,7 @@ class Helper extends Core\Base
 			// 'ethiopic'      => _x( 'Ethiopic', 'Helper: Default Calendar Type', GEDITORIAL_TEXTDOMAIN ),
 		];
 
-		return $filtered ? apply_filters( self::BASE.'_default_calendars', $calendars ) : $calendars;
+		return $filtered ? apply_filters( static::BASE.'_default_calendars', $calendars ) : $calendars;
 	}
 
 	public static function sanitizeCalendar( $calendar, $default_type = 'gregorian' )
@@ -1033,7 +1033,7 @@ class Helper extends Core\Base
 		else
 			$sanitized = $default_type;
 
-		return apply_filters( self::BASE.'_sanitize_calendar', $sanitized, $default_type, $calendar );
+		return apply_filters( static::BASE.'_sanitize_calendar', $sanitized, $default_type, $calendar );
 	}
 
 	// @SOURCE: `translate_nooped_plural()`

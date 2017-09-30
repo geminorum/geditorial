@@ -17,7 +17,7 @@ class Magazine extends gEditorial\Template
 		if ( ! array_key_exists( 'item_tag', $atts ) )
 			$atts['item_tag'] = FALSE;
 
-		return self::assocLink( $atts, self::MODULE );
+		return self::assocLink( $atts, static::MODULE );
 	}
 
 	public static function theIssueTitleCB( $post, $args = [] )
@@ -58,7 +58,7 @@ class Magazine extends gEditorial\Template
 		if ( ! array_key_exists( 'type', $atts ) )
 			$atts['type'] = self::constant( 'issue_cpt', 'issue' );
 
-		return parent::postImage( $atts, self::MODULE );
+		return parent::postImage( $atts, static::MODULE );
 	}
 
 	// FIXME: DEPRECATED
@@ -83,7 +83,7 @@ class Magazine extends gEditorial\Template
 		if ( ! array_key_exists( 'type', $atts ) )
 			$atts['type'] = self::constant( 'issue_cpt', 'issue' );
 
-		return parent::postImage( $atts, self::MODULE );
+		return parent::postImage( $atts, static::MODULE );
 	}
 
 	// FIXME: DEPRECATED

@@ -23,7 +23,7 @@ class ShortCode extends Core\Base
 		if ( empty( $args['wrap'] ) )
 			return $before.$html.$after;
 
-		$classes = [ self::BASE.'-wrap-shortcode' ];
+		$classes = [ static::BASE.'-wrap-shortcode' ];
 
 		if ( $suffix )
 			$classes[] = 'shortcode-'.$suffix;

@@ -13,7 +13,7 @@ class Ajax extends Core\Base
 
 	public static function checkReferer( $action = NULL, $key = 'nonce' )
 	{
-		check_ajax_referer( ( is_null( $action ) ? self::BASE : $action ), $key );
+		check_ajax_referer( ( is_null( $action ) ? static::BASE : $action ), $key );
 	}
 
 	public static function success( $data = NULL, $status_code = NULL )
@@ -67,13 +67,13 @@ class Ajax extends Core\Base
 	{
 		return is_admin()
 			? '<span class="-loading spinner"></span>'
-			: '<span class="-loading '.self::BASE.'-spinner"></span>';
+			: '<span class="-loading '.static::BASE.'-spinner"></span>';
 	}
 
 	public static function printJSConfig( $args, $object = 'gEditorial' )
 	{
 		$props = array_merge( $args, [
-			'_base'  => self::BASE,
+			'_base'  => static::BASE,
 			'_url'   => esc_url_raw( admin_url( 'admin-ajax.php' ) ),
 			'_api'   => esc_url_raw( rest_url() ),
 			'_nonce' => wp_create_nonce( 'wp_rest' ),

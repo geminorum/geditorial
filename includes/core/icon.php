@@ -92,17 +92,17 @@ class Icon extends Base
 
 	public static function get( $icon, $group )
 	{
-		return '<span data-icon="svg" class="'.self::BASE.'-icon -iconsvg icon-'.$group.'-'.$icon.'"><svg><use xlink:href="#icon-'.$group.'-'.$icon.'"></use></svg></span>';
+		return '<span data-icon="svg" class="'.static::BASE.'-icon -iconsvg icon-'.$group.'-'.$icon.'"><svg><use xlink:href="#icon-'.$group.'-'.$icon.'"></use></svg></span>';
 	}
 
 	public static function wrapBase64( $data )
 	{
-		return '<span data-icon="base64" class="'.self::BASE.'-icon -iconbase64"><img src="'.$data.'" /></span>';
+		return '<span data-icon="base64" class="'.static::BASE.'-icon -iconbase64"><img src="'.$data.'" /></span>';
 	}
 
 	public static function wrapURL( $url )
 	{
-		return '<span data-icon="url" class="'.self::BASE.'-icon -iconurl"><img src="'.$url.'" /></span>';
+		return '<span data-icon="url" class="'.static::BASE.'-icon -iconurl"><img src="'.$url.'" /></span>';
 	}
 
 	// @REF: https://stackoverflow.com/a/42265057/4864081

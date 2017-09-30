@@ -326,7 +326,7 @@ class Plugin
 		$options = [];
 
 		foreach ( $this->modules as $name => $enabled )
-			$options[$name] = get_option( self::BASE.'_'.$name.'_options', '{{NO-OPTIONS}}' );
+			$options[$name] = get_option( static::BASE.'_'.$name.'_options', '{{NO-OPTIONS}}' );
 
 		$options['{{GLOBAL}}'] = get_option( 'geditorial_options', FALSE );
 
@@ -342,7 +342,7 @@ class Plugin
 
 		foreach ( $this->modules as $mod_name => &$module ) {
 
-			$key = self::BASE.'_'.$mod_name.'_options';
+			$key = static::BASE.'_'.$mod_name.'_options';
 			$old = get_option( $key );
 
 			if ( isset( $options[$mod_name] ) ) {
@@ -503,7 +503,7 @@ class Plugin
 
 	public function admin_bar_init()
 	{
-		do_action_ref_array( 'geditorial_adminbar', [ &$this->adminbar_nodes, self::BASE ] );
+		do_action_ref_array( 'geditorial_adminbar', [ &$this->adminbar_nodes, static::BASE ] );
 	}
 
 	public function admin_bar_menu( $wp_admin_bar )
@@ -511,7 +511,7 @@ class Plugin
 		if ( ! count( $this->adminbar_nodes ) )
 			return;
 
-		if ( in_array( self::BASE, Arraay::column( $this->adminbar_nodes, 'parent' ) ) ) {
+		if ( in_array( static::BASE, Arraay::column( $this->adminbar_nodes, 'parent' ) ) ) {
 
 			if ( ! is_user_logged_in() )
 				$link = FALSE;
@@ -526,7 +526,7 @@ class Plugin
 				$link = FALSE;
 
 			$wp_admin_bar->add_node( [
-				'id'     => self::BASE,
+				'id'     => static::BASE,
 				'title'  => Helper::getAdminBarIcon(),
 				// 'parent' => 'top-secondary',
 				'href'   => $link,

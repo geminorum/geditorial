@@ -14,13 +14,13 @@ class Template extends Core\Base
 
 	protected static function constant( $key, $default = FALSE )
 	{
-		return gEditorial()->constant( self::MODULE, $key, $default );
+		return gEditorial()->constant( static::MODULE, $key, $default );
 	}
 
 	protected static function post_types( $post_types = NULL )
 	{
-		if ( self::MODULE && gEditorial()->enabled( self::MODULE ) )
-			return gEditorial()->{self::MODULE}->post_types( $post_types );
+		if ( static::MODULE && gEditorial()->enabled( static::MODULE ) )
+			return gEditorial()->{static::MODULE}->post_types( $post_types );
 
 		return [];
 	}
@@ -79,15 +79,15 @@ class Template extends Core\Base
 		if ( $link )
 			$html = '<a title="'.esc_attr( $args['figure'] ? self::getPostField( 'title', $args['id'] ) : $title ).'" href="'.$link.'">'.$html.'</a>';
 
-		return '<div class="'.self::BASE.'-wrap'.( $module ? ' -'.$module : ' ' ).' -post-image-wrap">'.$html.'</div>';
+		return '<div class="'.static::BASE.'-wrap'.( $module ? ' -'.$module : ' ' ).' -post-image-wrap">'.$html.'</div>';
 	}
 
 	public static function postImage( $atts = [], $module = NULL )
 	{
 		$html = '';
 
-		if ( is_null( $module ) && self::MODULE )
-			$module = self::MODULE;
+		if ( is_null( $module ) && static::MODULE )
+			$module = static::MODULE;
 
 		$args = self::atts( [
 			'id'       => NULL,
@@ -185,8 +185,8 @@ class Template extends Core\Base
 
 	public static function assocLink( $atts = [], $module = NULL )
 	{
-		if ( is_null( $module ) && self::MODULE )
-			$module = self::MODULE;
+		if ( is_null( $module ) && static::MODULE )
+			$module = static::MODULE;
 
 		if ( ! $module )
 			return FALSE;
@@ -277,7 +277,7 @@ class Template extends Core\Base
 			if ( FALSE === $meta )
 				continue;
 
-			$meta = apply_filters( self::BASE.'_meta_field', $meta, $field, $post, $args );
+			$meta = apply_filters( static::BASE.'_meta_field', $meta, $field, $post, $args );
 
 			if ( $args['filter'] && is_callable( $args['filter'] ) )
 				$meta = call_user_func( $args['filter'], $meta );
@@ -303,8 +303,8 @@ class Template extends Core\Base
 
 	public static function metaLabel( $atts = [], $module = NULL, $chack = TRUE )
 	{
-		if ( is_null( $module ) && self::MODULE )
-			$module = self::MODULE;
+		if ( is_null( $module ) && static::MODULE )
+			$module = static::MODULE;
 
 		$args = self::atts( [
 			'id'          => NULL,
@@ -393,8 +393,8 @@ class Template extends Core\Base
 
 	public static function metaLink( $atts = [], $module = NULL, $check = TRUE )
 	{
-		if ( is_null( $module ) && self::MODULE )
-			$module = self::MODULE;
+		if ( is_null( $module ) && static::MODULE )
+			$module = static::MODULE;
 
 		$args = self::atts( [
 			'id'            => NULL,

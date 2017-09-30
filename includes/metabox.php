@@ -15,17 +15,17 @@ class MetaBox extends Core\Base
 
 	protected static function constant( $key, $default = FALSE )
 	{
-		return gEditorial()->constant( self::MODULE, $key, $default );
+		return gEditorial()->constant( static::MODULE, $key, $default );
 	}
 
 	protected static function getString( $string, $post_type = 'post', $group = 'titles', $fallback = FALSE )
 	{
-		return gEditorial()->{self::MODULE}->get_string( $string, $post_type, $group, $fallback );
+		return gEditorial()->{static::MODULE}->get_string( $string, $post_type, $group, $fallback );
 	}
 
 	protected static function getPostMeta( $post_id, $field = FALSE, $default = '', $key = NULL )
 	{
-		return gEditorial()->{self::MODULE}->get_postmeta( $post_id, $field, $default, $key );
+		return gEditorial()->{static::MODULE}->get_postmeta( $post_id, $field, $default, $key );
 	}
 
 	// SEE: [Use Chosen for a replacement WordPress taxonomy metabox](https://gist.github.com/helen/1573966)
@@ -225,7 +225,7 @@ class MetaBox extends Core\Base
 			'option_none_value' => '0',
 			'class'             => 'geditorial-admin-dropbown',
 			'name'              => 'tax_input['.$taxonomy.'][]',
-			'id'                => self::BASE.'-'.$taxonomy,
+			'id'                => static::BASE.'-'.$taxonomy,
 			// 'name'              => 'geditorial-'.$this->module->name.'-'.$taxonomy.( FALSE === $key ? '' : '['.$key.']' ),
 			// 'id'                => 'geditorial-'.$this->module->name.'-'.$taxonomy.( FALSE === $key ? '' : '-'.$key ),
 			'hierarchical'      => $obj->hierarchical,

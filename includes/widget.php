@@ -17,7 +17,7 @@ class Widget extends \WP_Widget
 
 	protected static function constant( $key, $default = FALSE )
 	{
-		return gEditorial()->constant( self::MODULE, $key, $default );
+		return gEditorial()->constant( static::MODULE, $key, $default );
 	}
 
 	public function __construct()
@@ -35,12 +35,12 @@ class Widget extends \WP_Widget
 		if ( ! $args['name'] || ! $args['module'] )
 			return FALSE;
 
-		parent::__construct( self::BASE.'_'.$args['name'], $args['title'], [
+		parent::__construct( static::BASE.'_'.$args['name'], $args['title'], [
 			'description' => $args['desc'],
-			'classname'   => '{GEDITORIAL_WIDGET_CLASSNAME}'.'widget-'.self::BASE.'-'.$args['class'],
+			'classname'   => '{GEDITORIAL_WIDGET_CLASSNAME}'.'widget-'.static::BASE.'-'.$args['class'],
 		], $args['control'] );
 
-		$this->alt_option_name = 'widget_'.self::BASE.'_'.$args['name'];
+		$this->alt_option_name = 'widget_'.static::BASE.'_'.$args['name'];
 		$this->parent_module   = $args['module'];
 
 		foreach ( $args['flush'] as $action )
@@ -211,10 +211,10 @@ class Widget extends \WP_Widget
 
 	public function before_form( $instance, $echo = TRUE )
 	{
-		$classes = [ self::BASE.'-admin-wrap-widgetform' ];
+		$classes = [ static::BASE.'-admin-wrap-widgetform' ];
 
-		if ( self::MODULE )
-			$classes[] = '-'.self::MODULE;
+		if ( static::MODULE )
+			$classes[] = '-'.static::MODULE;
 
 		$html = '<div class="'.join( ' ', $classes ).'">';
 

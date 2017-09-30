@@ -41,7 +41,7 @@ class Book extends gEditorial\Template
 		if ( ! array_key_exists( 'type', $atts ) )
 			$atts['type'] = self::constant( 'publication_cpt', 'publication' );
 
-		return parent::postImage( $atts, self::MODULE );
+		return parent::postImage( $atts, static::MODULE );
 	}
 
 	// FIXME: DRAFT

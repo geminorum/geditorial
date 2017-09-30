@@ -164,8 +164,8 @@ class Meta extends gEditorial\Template
 	// FIXME: DROP THIS
 	public static function metaLink_OLD( $atts = [], $module = NULL )
 	{
-		if ( is_null( $module ) && self::MODULE )
-			$module = self::MODULE;
+		if ( is_null( $module ) && static::MODULE )
+			$module = static::MODULE;
 
 		global $post;
 
@@ -209,8 +209,8 @@ class Meta extends gEditorial\Template
 	{
 		global $post;
 
-		if ( is_null( $module ) && self::MODULE )
-			$module = self::MODULE;
+		if ( is_null( $module ) && static::MODULE )
+			$module = static::MODULE;
 
 		$args = self::atts( [
 			'id'      => $post->ID,
