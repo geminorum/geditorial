@@ -108,6 +108,8 @@ class Entry extends gEditorial\Module
 		if ( is_admin() )
 			return;
 
+		$this->filter( 'redirect_canonical', 2 );
+
 		if ( $this->get_setting( 'before_content', FALSE ) )
 			add_action( 'gnetwork_themes_content_before', [ $this, 'content_before' ], 100 );
 
@@ -428,5 +430,14 @@ class Entry extends gEditorial\Module
 			$link = rawurlencode( $slug ); // we handle 404s
 
 		return '<a href="'.$link.'" data-slug="'.$slug.'" class="-wikilink'.( $post_id ? '' : ' -notfound').'">'.$text.'</a>';
+	}
+
+	// cleanup query arg added by markdown module
+	public function redirect_canonical( $redirect_url, $requested_url )
+	{
+		if ( is_singular( $this->constant( 'entry_cpt' ) ) )
+			return remove_query_arg( 'post_type', $redirect_url );
+
+		return $redirect_url;
 	}
 }
