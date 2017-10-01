@@ -202,7 +202,7 @@ class Calendar extends gEditorial\Module
 
 			echo '<div class="'.$this->classs( 'calendar' ).'" data-cal="'.$cal.'">'.$html.'</div>';
 
-			$this->settings_signature( $this->module, 'listtable' );
+			$this->settings_signature( 'listtable' );
 		Settings::wrapClose();
 	}
 

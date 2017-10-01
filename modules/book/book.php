@@ -26,7 +26,7 @@ class Book extends gEditorial\Module
 		];
 	}
 
-	public function settings_intro_after( $module )
+	public function settings_intro()
 	{
 		if ( ! defined( 'P2P_PLUGIN_VERSION' ) )
 			HTML::desc( sprintf( _x( 'Please consider installing <a href="%s" target="_blank">Posts to Posts</a> or <a href="%s" target="_blank">Objects to Objects</a>.', 'Modules: Book: Settings Intro', GEDITORIAL_TEXTDOMAIN ),

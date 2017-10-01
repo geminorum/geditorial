@@ -649,7 +649,7 @@ class Settings extends Core\Base
 			$to = _x( 'Back to Editorial', 'Settings', GEDITORIAL_TEXTDOMAIN );
 
 		if ( is_array( $icon ) )
-			$before = gEditorial()->icon( $icon[1], $icon[0] ).' ';
+			$before = gEditorial()->icon( $icon[1], $icon[0] );
 
 		else if ( $icon )
 			$class = ' dashicons-before dashicons-'.$icon;
@@ -995,11 +995,18 @@ class Settings extends Core\Base
 
 	public static function settingsCredits()
 	{
-		echo '<div class="credits"><p>';
-			echo 'You\'re using gEditorial v'.GEDITORIAL_VERSION.'<br />';
+		echo '<div class="credits">';
+
+		echo '<p>';
 			echo 'This is a fork in structure of <a href="http://editflow.org/">EditFlow</a><br />';
-			echo '<a href="https://github.com/geminorum/geditorial/issues">Feedback, Ideas and Bug Reports</a> are welcomed';
-		echo '</p></div>';
+			echo '<a href="https://github.com/geminorum/geditorial/issues" target="_blank">Feedback, Ideas and Bug Reports</a> are welcomed.<br />';
+			echo 'You\'re using gEditorial <a href="https://github.com/geminorum/geditorial/releases/latest" target="_blank" title="Check for the latest version">v'.GEDITORIAL_VERSION.'</a>';
+		echo '</p>';
+
+		echo '<a href="http://geminorum.ir" title="it\'s a geminorum project"><img src="'
+			.GEDITORIAL_URL.'assets/images/itsageminorumproject-lightgrey.svg" alt="" /></a>';
+
+		echo '</div>';
 	}
 
 	public static function settingsSignature()
@@ -1024,7 +1031,7 @@ class Settings extends Core\Base
 		];
 
 		if ( FALSE === $module || 'config' == $module->name )
-			return [ 'wikihome' => $wikihome ];
+			return [ $wikihome ];
 
 		$wikimodule = [
 			'id'       => 'geditorial-'.$module->name.'-wikihome',
@@ -1033,7 +1040,7 @@ class Settings extends Core\Base
 			'module'   => $module,
 		];
 
-		return [ 'wikimodule' => $wikimodule, 'wikihome' => $wikihome ];
+		return [ $wikimodule, $wikihome ];
 	}
 
 	public static function add_help_tab_home_callback( $screen, $tab )

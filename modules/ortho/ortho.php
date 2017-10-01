@@ -26,19 +26,30 @@ class Ortho extends gEditorial\Module
 			'name'     => 'ortho',
 			'title'    => _x( 'Ortho', 'Modules: Ortho', GEDITORIAL_TEXTDOMAIN ),
 			'desc'     => _x( 'Persian Orthography Tools', 'Modules: Ortho', GEDITORIAL_TEXTDOMAIN ),
-			'icon'     => 'filter',
+			'icon'     => [ 'old', 'pen' ],
 			'frontend' => FALSE,
 			'disabled' => 'fa_IR' == get_locale() ? FALSE : _x( 'Only on Persian Locale', 'Modules: Revisions', GEDITORIAL_TEXTDOMAIN ),
 		];
 	}
 
-	public function settings_intro_after( $module )
+	protected function settings_help_tabs()
 	{
-		HTML::desc( sprintf( _x( 'Virastar <code>%s</code> installed. For more information, Please see Virastar <a href="%s" target="_blank">home page</a> or <a href="%s" target="_blank">live demo</a>.', 'Modules: Ortho: Settings Intro', GEDITORIAL_TEXTDOMAIN ),
-			$this->virastar_version, 'https://github.com/juvee/virastar', 'http://juvee.github.io/virastar/' ) );
+		$tabs = [
+			[
+				'id'       => $this->classs( 'virastar' ),
+				'title'    => _x( 'Virastar', 'Modules: Ortho: Help Tab Title', GEDITORIAL_TEXTDOMAIN ),
+				'content'  => sprintf( '<div class="-info"><p>Virastar is a Persian text cleaner.</p><p class="-from">Virastar v%s installed. For more information, Please see Virastar <a href="%s" target="_blank">home page</a> or <a href="%s" target="_blank">live demo</a>.</p></div>',
+					$this->virastar_version, 'https://github.com/juvee/virastar', 'http://juvee.github.io/virastar/' ),
+			],
+			[
+				'id'       => $this->classs( 'persiantools' ),
+				'title'    => _x( 'PersianTools', 'Modules: Ortho: Help Tab Title', GEDITORIAL_TEXTDOMAIN ),
+				'content'  => sprintf( '<div class="-info"><p>PersianTools is a Persian text library.</p><p class="-from">PersianTools v%s installed. For more information, Please see PersianTools <a href="%s" target="_blank">home page</a>.</p></div>',
+					$this->persiantools_version, 'https://github.com/Bersam/persiantools' ),
+			],
+		];
 
-		HTML::desc( sprintf( _x( 'PersianTools <code>%s</code> installed. For more information, Please see PersianTools <a href="%s" target="_blank">home page</a> or <a href="%s" target="_blank">live demo</a>.', 'Modules: Ortho: Settings Intro', GEDITORIAL_TEXTDOMAIN ),
-			$this->persiantools_version, 'https://github.com/Bersam/persiantools', 'https://github.com/Bersam/persiantools' ) );
+		return array_merge( $tabs, Settings::settingsHelpContent( $this->module ) );
 	}
 
 	private function virastar_options()

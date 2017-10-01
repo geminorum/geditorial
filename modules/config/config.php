@@ -143,7 +143,7 @@ class Config extends gEditorial\Module
 			else
 				do_action( 'geditorial_reports_sub_'.$sub, $uri, $sub );
 
-			$this->settings_signature( NULL, 'reports' );
+			$this->settings_signature( 'reports' );
 
 		Settings::wrapClose();
 	}
@@ -179,7 +179,7 @@ class Config extends gEditorial\Module
 			else
 				do_action( 'geditorial_tools_sub_'.$sub, $uri, $sub );
 
-			$this->settings_signature( NULL, 'tools' );
+			$this->settings_signature( 'tools' );
 
 		Settings::wrapClose();
 	}
@@ -384,50 +384,11 @@ class Config extends gEditorial\Module
 		if ( ! gEditorial()->enabled( $module->name ) )
 			return Settings::wrapError( HTML::warning( _x( 'Module not enabled. Please enable it from the Editorial settings page.', 'Modules: Config: Page Notice', GEDITORIAL_TEXTDOMAIN ), FALSE ) );
 
-		$this->settings_header( $module );
+		$plugin = gEditorial();
 
-			gEditorial()->{$module->name}->settings_from();
-
-		$this->settings_footer( $module );
-		$this->settings_signature( $module );
-	}
-
-	public function settings_header( $current_module )
-	{
-		global $gEditorial;
-
-		$back = $count = $flush = FALSE;
-
-		if ( 'config' == $current_module->name ) {
-			$title = NULL;
-			$count = gEditorial()->count();
-			$flush = WordPress::maybeFlushRules();
-		} else {
-			$title = sprintf( _x( 'Editorial: %s', 'Modules: Config', GEDITORIAL_TEXTDOMAIN ), $current_module->title );
-			$back  = Settings::settingsURL();
-		}
-
-		Settings::wrapOpen( $current_module->name, $this->base, 'settings' );
-
-			Settings::headerTitle( $title, $back, NULL, $current_module->icon, $count, TRUE );
-			Settings::message();
-
-			if ( $flush )
-				echo HTML::warning( _x( 'You need to flush rewrite rules!', 'Modules: Config', GEDITORIAL_TEXTDOMAIN ), FALSE );
-
-			echo '<div class="-header">';
-
-			if ( isset( $current_module->desc ) && $current_module->desc )
-				echo '<h4>'.$current_module->desc.'</h4>';
-
-			if ( isset( $current_module->intro ) && $current_module->intro )
-				echo wpautop( $current_module->intro );
-
-			// FIXME: find a better way
-			if ( method_exists( $gEditorial->{$current_module->name}, 'settings_intro_after' ) )
-				$gEditorial->{$current_module->name}->settings_intro_after( $current_module );
-
-		Settings::wrapClose();
+		$plugin->{$module->name}->settings_header();
+			$plugin->{$module->name}->settings_from();
+		$plugin->{$module->name}->settings_footer();
 	}
 
 	public function settings_from()

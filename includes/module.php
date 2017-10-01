@@ -1247,13 +1247,48 @@ class Module extends Base
 		add_action( 'admin_print_footer_scripts', [ $this, 'settings_print_scripts' ], 99 );
 	}
 
-	protected function settings_footer( $module )
+	public function settings_header()
 	{
-		if ( 'settings' == $module->name )
-			Settings::settingsCredits();
+		$back = $count = $flush = FALSE;
+
+		if ( 'config' == $this->module->name ) {
+			$title = NULL;
+			$count = gEditorial()->count();
+			$flush = WordPress::maybeFlushRules();
+		} else {
+			$title = sprintf( _x( 'Editorial: %s', 'Module', GEDITORIAL_TEXTDOMAIN ), $this->module->title );
+			$back  = Settings::settingsURL();
+		}
+
+		Settings::wrapOpen( $this->module->name, $this->base, 'settings' );
+
+			Settings::headerTitle( $title, $back, NULL, $this->module->icon, $count, TRUE );
+			Settings::message();
+
+			if ( $flush )
+				echo HTML::warning( _x( 'You need to flush rewrite rules!', 'Module', GEDITORIAL_TEXTDOMAIN ), FALSE );
+
+			echo '<div class="-header">';
+
+			if ( isset( $this->module->desc ) && $this->module->desc )
+				echo '<h4>'.$this->module->desc.'</h4>';
+
+			if ( method_exists( $this, 'settings_intro' ) )
+				$this->settings_intro();
+
+		Settings::wrapClose();
 	}
 
-	protected function settings_signature( $module = NULL, $context = 'settings' )
+	protected function settings_footer()
+	{
+		if ( 'config' == $this->module->name )
+			Settings::settingsCredits();
+
+		else
+			$this->settings_signature( 'settings' );
+	}
+
+	protected function settings_signature( $context = 'settings' )
 	{
 		Settings::settingsSignature();
 	}

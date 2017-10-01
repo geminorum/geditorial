@@ -24,10 +24,10 @@ class Home extends gEditorial\Module
 	protected function settings_help_tabs()
 	{
 		$tabs = [
-			'featured_content' => [
-				'id'       => $this->classs( 'featured-content' ),
-				'title'    => _x( 'Featured Content', 'Modules: Home: Help Tab Title', GEDITORIAL_TEXTDOMAIN ),
-				'content'  => '<div class="-info"><p>Featured Content allows users to spotlight their posts and have them uniquely displayed by a theme. The content is intended to be displayed on a blog’s front page; by using the module consistently in this manner, users are given a reliable Featured Content experience on which they can rely even when switching themes.</p>
+			[
+				'id'      => $this->classs( 'featured-content' ),
+				'title'   => _x( 'Featured Content', 'Modules: Home: Help Tab Title', GEDITORIAL_TEXTDOMAIN ),
+				'content' => '<div class="-info"><p>Featured Content allows users to spotlight their posts and have them uniquely displayed by a theme. The content is intended to be displayed on a blog’s front page; by using the module consistently in this manner, users are given a reliable Featured Content experience on which they can rely even when switching themes.</p>
 <code><pre>
 add_theme_support( \'featured-content\', [
 	\'filter\'     => \'mytheme_get_featured_posts\',
@@ -42,7 +42,7 @@ add_theme_support( \'featured-content\', [
 		return array_merge( $tabs, Settings::settingsHelpContent( $this->module ) );
 	}
 
-	public function settings_intro_after( $module )
+	public function settings_intro()
 	{
 		if ( get_theme_support( 'featured-content' ) )
 			echo HTML::info( _x( 'Current theme supports Featured Contents', 'Modules: Home: Setting Section Notice', GEDITORIAL_TEXTDOMAIN ), FALSE );

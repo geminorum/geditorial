@@ -57,11 +57,7 @@ class Template extends Core\Base
 		], $atts );
 
 		if ( $src = self::getPostImageSrc( $args['size'], $args['id'] ) )
-			$html = HTML::tag( 'img', [
-				'src'   => $src,
-				'alt'   => $args['alt'],
-				'class' => apply_filters( 'get_image_tag_class', $args['class'], $args['id'], 'none', $args['size'] ),
-			] );
+			$html = HTML::img( $src, apply_filters( 'get_image_tag_class', $args['class'], $args['id'], 'none', $args['size'] ), $args['alt'] );
 
 		return $html;
 	}
@@ -350,15 +346,7 @@ class Template extends Core\Base
 				$args['description'] = sprintf( _x( 'Search for %s', 'Template: Search Link Title Attr', GEDITORIAL_TEXTDOMAIN ), $meta );
 		}
 
-		if ( $args['image'] )
-			$html = HTML::tag( 'img', [
-				'src'   => $args['image'],
-				'alt'   => $meta,
-				'class' => '-label-image',
-			] );
-
-		else
-			$html = $meta;
+		$html = $args['image'] ? HTML::img( $args['image'], '-label-image', $meta ) : $meta;
 
 		if ( ! $html && $args['default'] )
 			$html = $args['default'];
