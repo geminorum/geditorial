@@ -10,7 +10,7 @@
   }
 
   input[type=search] {
-    border-radius: 0.25em;
+    border-radius: 0.12em;
     font-size: 2.2em;
     line-height: 1.35;
     width: 100%;
@@ -32,6 +32,10 @@
     position: absolute;
     right: 0;
     bottom: 0;
+    color: $gray;
+    &:focus {
+      box-shadow: none;
+    }
   }
 
   button[type=submit]::before {

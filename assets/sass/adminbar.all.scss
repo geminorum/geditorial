@@ -39,7 +39,7 @@
     }
   }
 
-  li.-danger a.ab-item {
+  li.-danger .ab-item {
     color: $brand-danger !important;
     &:hover {
       color: darken($brand-danger, 20%) !important;

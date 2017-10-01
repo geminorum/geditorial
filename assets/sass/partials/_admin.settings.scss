@@ -36,17 +36,16 @@
     }
 
     &.dashicons-before:before {
-      padding: 5px;
-      width: auto;
-      height: auto;
-      font-size: inherit;
+      font-size: 32px;
+      width: 32px;
+      height: 32px;
+      padding-right: 10px;
     }
 
-    .geditorial-icon {
-      margin: 2px 5px;
-      width: 24px;
-      height: 24px;
-      display: inline-block;
+    .geditorial-icon svg {
+      width: 30px;
+      height: 30px;
+      padding-right: 10px;
       vertical-align: top;
     }
   }
