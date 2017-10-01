@@ -1,3 +1,64 @@
+### 3.13.0
+* main/plugin: rtl style on front
+* main/plugin: :new: module disabled notice
+* main/plugin: separate adminbar styles
+* main/plugin: early fire of adminbar hook
+* main/plugin: list modules helper
+* main/module: check for custom key settings sub
+* main/module: available calendars method
+* main/module: default calendar method
+* main/module: auto hook admin menu action
+* main/module: auto hook template redirect/include
+* main/module: internal api for front-end search form
+* main/module: internal api for user in supported roles
+* main/module: internal api for disabling the module
+* main/module: internal api for admin menu slug/url
+* main/module: internal api for module extra links
+* main/module: internal api for module urls
+* main/module: correct cap check for glance items
+* main/module: correct setting help tabs
+* main/module: better help sidebar
+* main/helper: passing type for first/last of the month
+* main/helper: handling non dashicon post icons
+* main/helper: new key string for taxes: `back_to_items`
+* main/ajax: admin/front spinner helper
+* main/ajax: custom error for cap
+* main/settings: admin menu supported roles
+* main/settings: multiple title actions
+* main/settings: correct wiki contents
+* main/settings: better handling help contents
+* main/settings: using callbacks for expensive help contents
+* main/metabox: post edit row statuses
+* main/metabox: optional title on term posts
+* main/metabox: module helpers
+* main/shortcode: extra attrs for wraping
+* module/alphabet: :new: sort by locale
+* module/audit: :new: frontend control
+* module/audit: drafts in not audited summary
+* module/calendar: :new: module
+* module/config: :new: sort modules by title
+* module/config: uniting settings form methods
+* module/config: fewer hooks & args
+* module/drafts: using internal api for adminbar
+* module/drafts: admin bar supported roles
+* module/entry: :new: custom content on archives/404
+* module/event: date/time support disabled by default
+* module/markdown: support wiki like links
+* module/markdown: :new: summary of markdown posts
+* module/markdown: :new: frontend adminbar actions
+* module/markdown: :new: conversion html into markdown
+* module/markdown: remove p tags after process
+* module/media: correct js deps
+* module/meta: :new: extend admin search into meta values
+* module/ortho: disabled on non-persian locale
+* module/today: :new: frontend handling
+* module/today: check for saved day post
+* module/home: filter gnetwork search posttypes
+* module/home: override defaults only on calendars
+* module/home: support recent comments widget
+* module/revisions: disabled while disabled by constant
+* module/tube: default meta fields
+
 ### 3.12.0
 * main/plugin: check if adminbar is showing
 * main/plugin: bypass module registration
