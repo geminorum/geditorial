@@ -241,7 +241,7 @@ class Drafts extends gEditorial\Module
 			'onclick'  => 'this.focus();this.select()',
 		] );
 
-		echo '<span class="-loading spinner"></span>';
+		echo Ajax::spinner();
 
 		echo HTML::tag( 'a', [
 			'href'  => '#',

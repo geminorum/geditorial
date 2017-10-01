@@ -169,11 +169,11 @@ class Plugin
 
 		$defaults = [
 			'class'     => Helper::moduleClass( $args['name'], FALSE ),
-			'icon'      => 'screenoptions', // dashicon class
+			'icon'      => 'screenoptions', // dashicon class / svg icon array
 			'configure' => TRUE,
-			'frontend'  => TRUE, // whether or not the module should be loaded on the frontend too
-			'autoload'  => FALSE, // autoloading a module will remove the ability to enable or disable it
-			'disabled'  => FALSE, // string explaining why this module is not available
+			'frontend'  => TRUE,  // whether or not the module should be loaded on the frontend
+			'autoload'  => FALSE, // autoloading a module will remove the ability to enable/disable it
+			'disabled'  => FALSE, // or string explaining why the module is not available
 		];
 
 		$this->modules->{$args['name']} = (object) array_merge( $defaults, $args );

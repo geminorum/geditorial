@@ -98,7 +98,7 @@ class Module extends Base
 		$ajax  = WordPress::isAJAX();
 		$ui    = WordPress::mustRegisterUI( FALSE );
 
-		if ( $admin && $ui )
+		if ( $admin && $ui && $this->module->configure )
 			add_action( 'geditorial_settings_load', [ $this, 'register_settings' ] );
 
 		if ( $this->setup_disabled() )
@@ -243,7 +243,6 @@ class Module extends Base
 		return $html ? HTML::wrap( '<ul>'.$html.'</ul>', '-help-sidebar' ) : FALSE;
 	}
 
-	// FIXME: settings on non settings pages
 	protected function get_module_links()
 	{
 		$links  = [];

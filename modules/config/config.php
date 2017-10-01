@@ -487,6 +487,21 @@ class Config extends gEditorial\Module
 		$this->enqueue_asset_js( [], NULL, [ 'jquery', $listjs ] );
 	}
 
+	// no settings/only screen options
+	public function register_settings( $module = FALSE )
+	{
+		if ( $module )
+			return;
+
+		$screen = get_current_screen();
+
+		foreach ( $this->settings_help_tabs() as $tab )
+			$screen->add_help_tab( $tab );
+
+		if ( $sidebar = $this->settings_help_sidebar() )
+			$screen->set_help_sidebar( $sidebar );
+	}
+
 	public function settings_reset( $module = FALSE )
 	{
 		if ( ! isset( $_POST['reset'], $_POST['geditorial_module_name'] ) )

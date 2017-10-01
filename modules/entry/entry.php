@@ -320,9 +320,11 @@ class Entry extends gEditorial\Module
 
 	public function template_include( $template )
 	{
-		if ( is_embed() || is_search()
-			|| $this->constant( 'entry_cpt' ) != $GLOBALS['wp_query']->get( 'post_type' ) )
-				return $template;
+		if ( is_embed() || is_search() )
+			return $template;
+
+		if ( $this->constant( 'entry_cpt' ) != $GLOBALS['wp_query']->get( 'post_type' ) )
+			return $template;
 
 		$posttype = $this->constant( 'entry_cpt' );
 
@@ -424,7 +426,7 @@ class Entry extends gEditorial\Module
 			return $html;
 
 		if ( $post_id )
-			$link = get_permalink( $post_id );
+			$link = get_permalink( $post_id ); // full permalink
 
 		else
 			$link = rawurlencode( $slug ); // we handle 404s

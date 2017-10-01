@@ -234,7 +234,7 @@ class Revisions extends gEditorial\Module
 			$parts['autosave'] = _x( '[Autosave]', 'Modules: Revisions', GEDITORIAL_TEXTDOMAIN );
 
 		if ( $link )
-			$parts['loading'] = '<span class="-loading spinner"></span>';
+			$parts['loading'] = Ajax::spinner();
 
 		return sprintf( '<span class="geditorial-admin-wrap-inline -revisions">%s</span>', implode( $parts, ' ' ) );
 	}
@@ -265,7 +265,7 @@ class Revisions extends gEditorial\Module
 				] ),
 			], _x( 'Purge Revisions', 'Modules: Revisions', GEDITORIAL_TEXTDOMAIN ) );
 
-			echo '<span class="-loading spinner"></span>';
+			echo Ajax::spinner();
 
 			echo HTML::tag( 'a', [
 				'id'    => $this->hook( 'browse' ),
