@@ -239,4 +239,18 @@ class Module extends Core\Base
 
 		return check_admin_referer( $this->base.'-'.$key.'-'.$context, $name );
 	}
+
+	protected function wrap( $html, $class = '', $block = TRUE )
+	{
+		return $block
+			? '<div class="'.$this->base.'-wrap -'.$this->key.' '.$class.'">'.$html.'</div>'
+			: '<span class="'.$this->base.'-wrap -'.$this->key.' '.$class.'">'.$html.'</span>';
+	}
+
+	protected function wrap_open( $class = '', $block = TRUE )
+	{
+		return $block
+			? '<div class="'.$this->base.'-wrap -'.$this->key.' '.$class.'">'
+			: '<span class="'.$this->base.'-wrap -'.$this->key.' '.$class.'">';
+	}
 }

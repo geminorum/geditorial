@@ -36,6 +36,12 @@ class Icon extends Base
 			'writing' => '<path d="M29.024 6.499l-2.467 2.467-3.523-3.523 2.467-2.467c0.973-0.973 2.551-0.973 3.523 0s0.973 2.55 0 3.523zM27.614 9.317c0.195-0.194 0.511-0.194 0.705 0 0.195 0.195 0.195 0.511 0 0.705l-9.16 9.161c-0.195 0.194-0.511 0.194-0.705 0s-0.194-0.51 0-0.704l5.99-5.99-4.934-4.934 2.114-2.113 4.933 4.933 1.057-1.058zM19.511 8.966l3.523 3.523-14.094 14.094-3.523-3.523 14.094-14.094zM2.246 29.754l2.466-5.989 3.523 3.523-5.989 2.466z"></path>',
 		),
 
+		// viewBox 24
+		'old-24' => array(
+			// from Materical Icon (icomoon.io)
+			'today' => '<path d="M6.984 9.984h5.016v5.016h-5.016v-5.016zM18.984 18.984v-10.969h-13.969v10.969h13.969zM18.984 3c1.078 0 2.016 0.938 2.016 2.016v13.969c0 1.078-0.938 2.016-2.016 2.016h-13.969c-1.125 0-2.016-0.938-2.016-2.016v-13.969c0-1.078 0.891-2.016 2.016-2.016h0.984v-2.016h2.016v2.016h7.969v-2.016h2.016v2.016h0.984z"></path>',
+		),
+
 		// @REF: https://github.com/Automattic/social-logos
 		'social-logos' => array(
 			'youtube' => '<path d="M21.8 8s-.195-1.377-.795-1.984c-.76-.797-1.613-.8-2.004-.847-2.798-.203-6.996-.203-6.996-.203h-.01s-4.197 0-6.996.202c-.39.046-1.242.05-2.003.846C2.395 6.623 2.2 8 2.2 8S2 9.62 2 11.24v1.517c0 1.618.2 3.237.2 3.237s.195 1.378.795 1.985c.76.797 1.76.77 2.205.855 1.6.153 6.8.2 6.8.2s4.203-.005 7-.208c.392-.047 1.244-.05 2.005-.847.6-.607.795-1.985.795-1.985s.2-1.618.2-3.237v-1.517C22 9.62 21.8 8 21.8 8zM9.935 14.595v-5.62l5.403 2.82-5.403 2.8z"/>',
@@ -82,7 +88,8 @@ class Icon extends Base
 	);
 
 	public static $viewboxes = array(
-		'old'      => '0 0 32 32',
+		'old'             => '0 0 32 32',
+		'old-24'          => '0 0 24 24',
 		'social-logos'    => '0 0 24 24',
 		'gridicons'       => '0 0 24 24',
 		'octicons'        => '0 0 28 32',
@@ -95,6 +102,9 @@ class Icon extends Base
 		return '<span data-icon="svg" class="'.static::BASE.'-icon -iconsvg icon-'.$group.'-'.$icon.'"><svg><use xlink:href="#icon-'.$group.'-'.$icon.'"></use></svg></span>';
 	}
 
+	// FIXME: use css background
+	// SEE: #adminmenu div.wp-menu-image.svg
+	// SEE: https://stackoverflow.com/a/19570011/4864081
 	public static function wrapBase64( $data )
 	{
 		return '<span data-icon="base64" class="'.static::BASE.'-icon -iconbase64"><img src="'.$data.'" /></span>';
