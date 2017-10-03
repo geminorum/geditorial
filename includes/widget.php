@@ -417,6 +417,24 @@ class Widget extends \WP_Widget
 		], $label.$html ).'</p>';
 	}
 
+	public function form_custom_empty( $instance, $default = '', $field = 'empty', $label = NULL )
+	{
+		if ( is_null( $label ) )
+			$label = _x( 'Empty Message:', 'Widget Core', GEDITORIAL_TEXTDOMAIN );
+
+		$html = HTML::tag( 'input', [
+			'type'  => 'text',
+			'class' => [ 'widefat' ],
+			'name'  => $this->get_field_name( $field ),
+			'id'    => $this->get_field_id( $field ),
+			'value' => isset( $instance[$field] ) ? $instance[$field] : $default,
+		] );
+
+		echo '<p>'.HTML::tag( 'label', [
+			'for' => $this->get_field_id( $field ),
+		], $label.$html ).'</p>';
+	}
+
 	public function form_avatar_size( $instance, $default = '32', $field = 'avatar_size' )
 	{
 		$html = HTML::tag( 'input', [

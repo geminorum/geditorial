@@ -28,12 +28,17 @@ class GCalEvents extends gEditorial\Widget
 		if ( ! $data = Helper::getGCalEvents( $instance ) )
 			return FALSE;
 
+		$empty = empty( $instance['empty'] ) ? FALSE : $instance['empty'];
+
+		if ( empty( $data->items ) && ! $empty )
+			return TRUE;
+
 		$this->before_widget( $args, $instance );
 		$this->widget_title( $args, $instance, $data->summary );
 
 		if ( empty( $data->items ) ) {
 
-			HTML::desc( _x( 'No events scheduled.', 'Modules: Widgets: Widget: Google Calendar', GEDITORIAL_TEXTDOMAIN ) );
+			HTML::desc( $empty, TRUE, '-empty' );
 
 		} else {
 
@@ -84,6 +89,7 @@ class GCalEvents extends gEditorial\Widget
 		$this->form_number( $instance, 5, 'max_results', _x( 'Max results:', 'Modules: Widgets: Widget: Google Calendar', GEDITORIAL_TEXTDOMAIN ) );
 		$this->form_checkbox( $instance, FALSE, 'display_time', _x( 'Display Time', 'Modules: Widgets: Widget: Google Calendar', GEDITORIAL_TEXTDOMAIN ) );
 
+		$this->form_custom_empty( $instance, _x( 'No events scheduled.', 'Modules: Widgets: Widget: Google Calendar', GEDITORIAL_TEXTDOMAIN ) );
 		$this->form_context( $instance );
 		$this->form_class( $instance );
 
@@ -98,6 +104,7 @@ class GCalEvents extends gEditorial\Widget
 		$instance['title_link'] = strip_tags( $new['title_link'] );
 		$instance['context']    = strip_tags( $new['context'] );
 		$instance['class']      = strip_tags( $new['class'] );
+		$instance['empty']      = wp_kses_post( $new['empty'] );
 
 		$instance['calendar_id']  = strip_tags( $new['calendar_id'] );
 		$instance['api_key']      = strip_tags( $new['api_key'] );

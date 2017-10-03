@@ -34,6 +34,7 @@ class WPRestPosts extends gEditorial\Widget
 		$tags       = empty( $instance['tags'] ) ? FALSE : $instance['tags'];
 		$categories = empty( $instance['categories'] ) ? FALSE : $instance['categories'];
 		$extra      = empty( $instance['extra'] ) ? FALSE : $instance['extra'];
+		$empty      = empty( $instance['empty'] ) ? FALSE : $instance['empty'];
 
 		// @REF: https://developer.wordpress.org/rest-api/reference/posts/
 		$resource = URL::untrail( $instance['resource'] ).'/wp-json/wp/v2/posts/?per_page='.$number;
@@ -49,28 +50,35 @@ class WPRestPosts extends gEditorial\Widget
 
 		$data = HTTP::getJSON( $resource );
 
-		if ( empty( $data ) )
-			return FALSE;
+		if ( empty( $data ) && ! $empty )
+			return TRUE;
 
 		$this->before_widget( $args, $instance );
 		$this->widget_title( $args, $instance );
 
-		echo '<ul>';
+		if ( empty( $data ) ) {
 
-		add_filter( 'the_permalink', [ '\geminorum\\gEditorial\\WordPress\\Theme', 'restPost_the_permalink' ], 1, 2 );
+			HTML::desc( $empty, TRUE, '-empty' );
 
-		foreach ( $data as $item ) {
+		} else {
 
-			Theme::restPost( $item, TRUE );
+			echo '<ul>';
 
-			echo '<li>';
-				get_template_part( 'row', $context );
-			echo '</li>';
+			add_filter( 'the_permalink', [ '\geminorum\\gEditorial\\WordPress\\Theme', 'restPost_the_permalink' ], 1, 2 );
+
+			foreach ( $data as $item ) {
+
+				Theme::restPost( $item, TRUE );
+
+				echo '<li>';
+					get_template_part( 'row', $context );
+				echo '</li>';
+			}
+
+			remove_filter( 'the_permalink', [ '\geminorum\\gEditorial\\WordPress\\Theme', 'restPost_the_permalink' ], 1, 2 );
+
+			echo '</ul>';
 		}
-
-		remove_filter( 'the_permalink', [ '\geminorum\\gEditorial\\WordPress\\Theme', 'restPost_the_permalink' ], 1, 2 );
-
-		echo '</ul>';
 
 		$this->after_widget( $args, $instance );
 
@@ -90,6 +98,7 @@ class WPRestPosts extends gEditorial\Widget
 		$this->form_custom_code( $instance, '', 'extra', _x( 'Extra Args:', 'Modules: Widgets: Widget: WP-REST Posts', GEDITORIAL_TEXTDOMAIN ) );
 		$this->form_number( $instance );
 
+		$this->form_custom_empty( $instance, _x( 'No posts!', 'Modules: Widgets: Widget: WP-REST Posts', GEDITORIAL_TEXTDOMAIN ) );
 		$this->form_context( $instance );
 		$this->form_class( $instance );
 
@@ -104,6 +113,7 @@ class WPRestPosts extends gEditorial\Widget
 		$instance['title_link'] = strip_tags( $new['title_link'] );
 		$instance['context']    = strip_tags( $new['context'] );
 		$instance['class']      = strip_tags( $new['class'] );
+		$instance['empty']      = wp_kses_post( $new['empty'] );
 
 		$instance['resource']   = esc_url( $new['resource'] );
 		$instance['tags']       = strip_tags( $new['tags'] );
