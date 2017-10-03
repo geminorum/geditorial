@@ -23,9 +23,11 @@ class Widgets extends gEditorial\Module
 		$this->require_code( [
 			'widgets/custom-html',
 			'widgets/gcal-events',
+			'widgets/wprest-posts',
 		] );
 
 		register_widget( '\\geminorum\\gEditorial\\Widgets\\Widgets\\CustomHTML' );
 		register_widget( '\\geminorum\\gEditorial\\Widgets\\Widgets\\GCalEvents' );
+		register_widget( '\\geminorum\\gEditorial\\Widgets\\Widgets\\WPRestPosts' );
 	}
 }
