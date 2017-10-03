@@ -10,7 +10,7 @@ class PublicationCover extends gEditorial\Widget
 
 	const MODULE = 'book';
 
-	protected function setup()
+	public static function setup()
 	{
 		return [
 			'module' => 'book',

@@ -12,13 +12,13 @@ class GCalEvents extends gEditorial\Widget
 
 	const MODULE = 'widgets';
 
-	protected function setup()
+	public static function setup()
 	{
 		return [
 			'module' => 'widgets',
 			'name'   => 'gcal_events',
 			'class'  => 'gcal-events',
-			'title'  => _x( 'Editorial Widgets: Google Calendar', 'Modules: Widgets: Widget Title', GEDITORIAL_TEXTDOMAIN ),
+			'title'  => _x( 'Editorial: Google Calendar', 'Modules: Widgets: Widget Title', GEDITORIAL_TEXTDOMAIN ),
 			'desc'   => _x( 'Displays list of events from a public Google Calendar.', 'Modules: Widgets: Widget Description', GEDITORIAL_TEXTDOMAIN ),
 		];
 	}
@@ -33,7 +33,7 @@ class GCalEvents extends gEditorial\Widget
 
 		if ( empty( $data->items ) ) {
 
-			_ex( 'No events scheduled.', 'Modules: Widgets: Widget: Google Calendar', GEDITORIAL_TEXTDOMAIN );
+			HTML::desc( _x( 'No events scheduled.', 'Modules: Widgets: Widget: Google Calendar', GEDITORIAL_TEXTDOMAIN ) );
 
 		} else {
 
@@ -90,19 +90,20 @@ class GCalEvents extends gEditorial\Widget
 		$this->after_form( $instance );
 	}
 
-	public function update( $new_instance, $old_instance )
+	public function update( $new, $old )
 	{
-		$instance = $old_instance;
+		$instance = $old;
 
-		$instance['title']        = strip_tags( $new_instance['title'] );
-		$instance['title_link']   = strip_tags( $new_instance['title_link'] );
-		$instance['calendar_id']  = strip_tags( $new_instance['calendar_id'] );
-		$instance['api_key']      = strip_tags( $new_instance['api_key'] );
-		$instance['time_min']     = strip_tags( $new_instance['time_min'] );
-		$instance['max_results']  = intval( $new_instance['max_results'] );
-		$instance['display_time'] = isset( $new_instance['display_time'] );
-		$instance['context']      = strip_tags( $new_instance['context'] );
-		$instance['class']        = strip_tags( $new_instance['class'] );
+		$instance['title']      = strip_tags( $new['title'] );
+		$instance['title_link'] = strip_tags( $new['title_link'] );
+		$instance['context']    = strip_tags( $new['context'] );
+		$instance['class']      = strip_tags( $new['class'] );
+
+		$instance['calendar_id']  = strip_tags( $new['calendar_id'] );
+		$instance['api_key']      = strip_tags( $new['api_key'] );
+		$instance['time_min']     = strip_tags( $new['time_min'] );
+		$instance['max_results']  = intval( $new['max_results'] );
+		$instance['display_time'] = isset( $new['display_time'] );
 
 		$this->flush_widget_cache();
 

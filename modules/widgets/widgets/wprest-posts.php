@@ -13,7 +13,7 @@ class WPRestPosts extends gEditorial\Widget
 
 	const MODULE = 'widgets';
 
-	protected function setup()
+	public static function setup()
 	{
 		return [
 			'module' => 'widgets',

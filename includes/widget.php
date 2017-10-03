@@ -47,7 +47,7 @@ class Widget extends \WP_Widget
 			add_action( $action, [ $this, 'flush_widget_cache' ] );
 	}
 
-	protected function setup()
+	public static function setup()
 	{
 		return [
 			'name'  => '',
@@ -133,7 +133,7 @@ class Widget extends \WP_Widget
 	public function before_widget( $args, $instance, $echo = TRUE )
 	{
 		$classes = isset( $instance['context'] ) && $instance['context'] ? 'context-'.sanitize_html_class( $instance['context'], 'general' ).' ' : '';
-		$classes .= isset( $instance['class'] ) && $instance['class'] ? $instance['class'].' ' : '';
+		$classes.= isset( $instance['class'] ) && $instance['class'] ? $instance['class'].' ' : '';
 
 		$html = preg_replace( '%{GEDITORIAL_WIDGET_CLASSNAME}%', $classes, $args['before_widget'] );
 
