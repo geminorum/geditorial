@@ -133,6 +133,11 @@ class Tube extends gEditorial\Module
 					'description' => _x( 'Creation Date', 'Modules: Tube: Field Description', GEDITORIAL_TEXTDOMAIN ),
 					'icon'        => 'calendar-alt',
 				],
+				'video_duration' => [
+					'title'       => _x( 'Video Duration', 'Modules: Tube: Field Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Video Duration', 'Modules: Tube: Field Description', GEDITORIAL_TEXTDOMAIN ),
+					'icon'        => 'backup',
+				],
 			],
 		];
 	}
