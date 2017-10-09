@@ -138,6 +138,10 @@ class Tube extends gEditorial\Module
 					'description' => _x( 'Video Duration', 'Modules: Tube: Field Description', GEDITORIAL_TEXTDOMAIN ),
 					'icon'        => 'backup',
 				],
+
+				'source_title' => [ 'type' => 'text' ],
+				'source_url'   => [ 'type' => 'link' ],
+				'highlight'    => [ 'type' => 'note' ],
 			],
 		];
 	}
