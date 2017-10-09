@@ -441,7 +441,7 @@ class Module extends Base
 		return $taxonomies;
 	}
 
-	public function settings_posttypes_option( $section )
+	public function settings_posttypes_option()
 	{
 		if ( $before = $this->get_string( 'post_types_before', 'post', 'settings', NULL ) )
 			HTML::desc( $before );
@@ -464,7 +464,7 @@ class Module extends Base
 			HTML::desc( $after );
 	}
 
-	public function settings_taxonomies_option( $section )
+	public function settings_taxonomies_option()
 	{
 		if ( $before = $this->get_string( 'taxonomies_before', 'post', 'settings', NULL ) )
 			HTML::desc( $before );
@@ -944,7 +944,7 @@ class Module extends Base
 					} else if ( $setting == $field ) {
 
 						if ( method_exists( __NAMESPACE__.'\\Settings', 'getSetting_'.$field ) )
-							return call_user_func_array( [ __NAMESPACE__.'\\Settings', 'getSetting_'.$field ], [ NULL ] );
+							return call_user_func( [ __NAMESPACE__.'\\Settings', 'getSetting_'.$field ] );
 
 						return [];
 					}
@@ -1216,15 +1216,15 @@ class Module extends Base
 						continue;
 
 					if ( is_array( $field ) )
-						$args = array_merge( $field, [ 'section' => $section ] );
+						$args = $field;
 
 					else if ( method_exists( __NAMESPACE__.'\\Settings', 'getSetting_'.$field ) )
-						$args = call_user_func_array( [ __NAMESPACE__.'\\Settings', 'getSetting_'.$field ], [ $section ] );
+						$args = call_user_func( [ __NAMESPACE__.'\\Settings', 'getSetting_'.$field ] );
 
 					else
 						continue;
 
-					$this->add_settings_field( $args );
+					$this->add_settings_field( array_merge( $args, [ 'section' => $section ] ) );
 				}
 
 			} else if ( method_exists( $this, 'register_settings_'.$section_suffix ) ) {
