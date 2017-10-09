@@ -842,6 +842,14 @@ class Helper extends Core\Base
 		return Date::htmlCurrent( ( is_null( $format ) ? self::dateFormats( 'datetime' ) : $format ), $class, $title );
 	}
 
+	public static function dateFormat( $timestamp, $context = 'default' )
+	{
+		if ( ! ctype_digit( $timestamp ) )
+			$timestamp = strtotime( $timestamp );
+
+		return date_i18n( self::dateFormats( $context ), $timestamp );
+	}
+
 	// @SEE: http://www.phpformatdate.com/
 	public static function dateFormats( $context = 'default' )
 	{
@@ -894,7 +902,7 @@ class Helper extends Core\Base
 
 		if ( $flip )
 			return '<span class="-date-diff" title="'
-					.esc_attr( date_i18n( self::dateFormats( 'fulltime' ), $timestamp ) ).'">'
+					.esc_attr( self::dateFormat( $timestamp, 'fulltime' ) ).'">'
 					.self::humanTimeDiff( $timestamp, $now )
 				.'</span>';
 
@@ -953,6 +961,23 @@ class Helper extends Core\Base
 			$now = current_time( 'timestamp', FALSE );
 
 		return Date::humanTimeDiff( $timestamp, $now, $strings );
+	}
+
+	public static function htmlFromSeconds( $seconds, $round = FALSE )
+	{
+		static $strings = NULL;
+
+		if ( is_null( $strings ) )
+			$strings = [
+				'sep' => _x( ', ', 'Helper: From Seconds: Seperator', GEDITORIAL_TEXTDOMAIN ),
+
+				'noop_seconds' => _nx_noop( '%s second', '%s seconds', 'Helper: From Seconds: Noop', GEDITORIAL_TEXTDOMAIN ),
+				'noop_minutes' => _nx_noop( '%s min', '%s mins', 'Helper: From Seconds: Noop', GEDITORIAL_TEXTDOMAIN ),
+				'noop_hours'   => _nx_noop( '%s hour', '%s hours', 'Helper: From Seconds: Noop', GEDITORIAL_TEXTDOMAIN ),
+				'noop_days'    => _nx_noop( '%s day', '%s days', 'Helper: From Seconds: Noop', GEDITORIAL_TEXTDOMAIN ),
+			];
+
+		return Date::htmlFromSeconds( $seconds, $round, $strings );
 	}
 
 	// not used yet!
@@ -1244,7 +1269,7 @@ class Helper extends Core\Base
 			$permalink = '';
 
 		$preview = $scheduled = $view = '';
-		$scheduled_date = date_i18n( self::dateFormats( 'datetime' ), strtotime( $post->post_date ) );
+		$scheduled_date = self::dateFormat( $post->post_date, 'datetime' );
 
 		if ( is_post_type_viewable( $post_type_object ) ) {
 			$view      = ' '.HTML::link( $messages['view_post'], $permalink );

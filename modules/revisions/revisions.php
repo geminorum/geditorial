@@ -211,7 +211,7 @@ class Revisions extends gEditorial\Module
 
 		$time = strtotime( $revision->post_modified );
 		$parts['timediff'] = Helper::humanTimeDiffRound( $time, FALSE );
-		$parts['datetime'] = '('.date_i18n( Helper::dateFormats( 'datetime' ), $time ).')';
+		$parts['datetime'] = '('.Helper::dateFormat( $time, 'datetime' ).')';
 
 		if ( $this->get_setting( 'revision_wordcount', FALSE ) )
 			$parts['wordcount'] = self::wordCount( $revision );
