@@ -14,7 +14,7 @@ class Pitches extends gEditorial\Module
 			'name'      => 'pitches',
 			'title'     => _x( 'Pitches', 'Modules: Pitches', GEDITORIAL_TEXTDOMAIN ),
 			'desc'      => _x( 'Keep Track of Ideas', 'Modules: Pitches', GEDITORIAL_TEXTDOMAIN ),
-			'icon'      => 'cloud',
+			'icon'      => 'lightbulb',
 			'frontend'  => FALSE,
 		];
 	}

@@ -49,8 +49,6 @@ class Plugin
 				return FALSE;
 		}
 
-		load_plugin_textdomain( GEDITORIAL_TEXTDOMAIN, FALSE, 'geditorial/languages' );
-
 		$this->modules = new \stdClass();
 		$this->options = new \stdClass();
 
@@ -128,6 +126,8 @@ class Plugin
 
 	public function plugins_loaded()
 	{
+		load_plugin_textdomain( GEDITORIAL_TEXTDOMAIN, FALSE, 'geditorial/languages' );
+
 		$this->require_core();
 		$this->require_plugin();
 

@@ -187,10 +187,12 @@ class Book extends gEditorial\Module
 
 		$strings['terms'] = [
 			'size_tax' => [
-				'octavo' => _x( 'Octavo', 'Modules: Book: Publication Size: Default Term', GEDITORIAL_TEXTDOMAIN ), // vaziri
-				'folio'  => _x( 'Folio', 'Modules: Book: Publication Size: Default Term', GEDITORIAL_TEXTDOMAIN ), // soltani
-				'medium' => _x( 'Medium Octavo', 'Modules: Book: Publication Size: Default Term', GEDITORIAL_TEXTDOMAIN ), //roghee
-				'quatro' => _x( 'Quatro', 'Modules: Book: Publication Size: Default Term', GEDITORIAL_TEXTDOMAIN ), //rahli
+				'octavo'      => _x( 'Octavo', 'Modules: Book: Publication Size: Default Term', GEDITORIAL_TEXTDOMAIN ), // vaziri
+				'folio'       => _x( 'Folio', 'Modules: Book: Publication Size: Default Term', GEDITORIAL_TEXTDOMAIN ), // soltani
+				'medium'      => _x( 'Medium Octavo', 'Modules: Book: Publication Size: Default Term', GEDITORIAL_TEXTDOMAIN ), // roghee
+				'quatro'      => _x( 'Quatro', 'Modules: Book: Publication Size: Default Term', GEDITORIAL_TEXTDOMAIN ), // rahli
+				'duodecimo'   => _x( 'Duodecimo', 'Modules: Book: Publication Size: Default Term', GEDITORIAL_TEXTDOMAIN ), // paltoyee
+				'sextodecimo' => _x( 'Sextodecimo', 'Modules: Book: Publication Size: Default Term', GEDITORIAL_TEXTDOMAIN ), // jibi
 			],
 		];
 

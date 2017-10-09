@@ -20,7 +20,7 @@ class Attachments extends gEditorial\Module
 			'name'  => 'attachments',
 			'title' => _x( 'Attachments', 'Modules: Attachments', GEDITORIAL_TEXTDOMAIN ),
 			'desc'  => _x( 'Attachment Management', 'Modules: Attachments', GEDITORIAL_TEXTDOMAIN ),
-			'icon'  => 'admin-media',
+			'icon'  => 'paperclip',
 		];
 	}
 

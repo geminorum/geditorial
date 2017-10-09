@@ -312,7 +312,7 @@ class Config extends gEditorial\Module
 				if ( User::isSuperAdmin() || WordPress::isDev() ) {
 					echo '<br /><p>';
 						Settings::submitButton( 'delete_all_options',
-							_x( 'Delete All Options', 'Modules: Config: Setting Button', GEDITORIAL_TEXTDOMAIN ), 'delete', TRUE );
+							_x( 'Delete All Options', 'Modules: Config: Setting Button', GEDITORIAL_TEXTDOMAIN ), 'danger', TRUE );
 
 						HTML::desc( _x( 'Deletes all editorial options on current site', 'Modules: Config', GEDITORIAL_TEXTDOMAIN ), FALSE );
 					echo '</p>';
@@ -332,7 +332,7 @@ class Config extends gEditorial\Module
 				echo '&nbsp;&nbsp;';
 
 				Settings::submitButton( 'custom_fields_empty',
-					_x( 'Empty', 'Modules: Config: Setting Button', GEDITORIAL_TEXTDOMAIN ), 'delete', TRUE );
+					_x( 'Empty', 'Modules: Config: Setting Button', GEDITORIAL_TEXTDOMAIN ), 'danger', TRUE );
 
 				HTML::desc( _x( 'Deletes empty meta values. This solves common problems with imported posts.', 'Modules: Config', GEDITORIAL_TEXTDOMAIN ) );
 

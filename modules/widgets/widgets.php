@@ -22,11 +22,10 @@ class Widgets extends gEditorial\Module
 		return [
 			'_general' => [
 				[
-					'field'   => 'widgets',
-					'title'       => _x( 'Widgets', 'Modules: Widgets: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					// 'description' => _x( 'Displays ID Column on the post list table.', 'Modules: Tweaks: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-					'type'    => 'checkbox',
-					'values'  => $this->list_widgets(),
+					'field'  => 'widgets',
+					'title'  => _x( 'Widgets', 'Modules: Widgets: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'type'   => 'checkbox',
+					'values' => $this->list_widgets(),
 				]
 			],
 		];

@@ -111,7 +111,7 @@ class Roles extends gEditorial\Module
 
 		$this->register_button( 'add_default_roles', _x( 'Add Default Roles', 'Modules: Roles: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
 		$this->register_button( 'add_defaults_to_editor', _x( 'Add Default Caps to Editor Role', 'Modules: Roles: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
-		$this->register_button( 'remove_default_roles', _x( 'Remove Default Roles', 'Modules: Roles: Setting Button', GEDITORIAL_TEXTDOMAIN ), 'delete' );
+		$this->register_button( 'remove_default_roles', _x( 'Remove Default Roles', 'Modules: Roles: Setting Button', GEDITORIAL_TEXTDOMAIN ), 'danger' );
 	}
 
 	public function init()
@@ -347,7 +347,7 @@ class Roles extends gEditorial\Module
 			Settings::submitButton( 'check_current_caps', _x( 'Check Capabilities', 'Modules: Roles: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
 			Settings::submitButton( 'add_default_roles', _x( 'Add Defaults', 'Modules: Roles: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
 			Settings::submitButton( 'add_defaults_to_editor', _x( 'Add Default Caps to Editors', 'Modules: Roles: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
-			Settings::submitButton( 'remove_default_roles', _x( 'Remove Defaults', 'Modules: Roles: Setting Button', GEDITORIAL_TEXTDOMAIN ), 'delete' );
+			Settings::submitButton( 'remove_default_roles', _x( 'Remove Defaults', 'Modules: Roles: Setting Button', GEDITORIAL_TEXTDOMAIN ), 'danger' );
 
 			if ( isset( $_POST['check_current_roles'] ) )
 				echo HTML::tableCode( User::getRoleList(), TRUE );

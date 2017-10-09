@@ -16,7 +16,7 @@ class PublicationCover extends gEditorial\Widget
 			'module' => 'book',
 			'name'   => 'book_publication_cover',
 			'class'  => 'book-publication-cover',
-			'title'  => _x( 'Editorial Book: Publication Cover', 'Modules: Book: Widget Title', GEDITORIAL_TEXTDOMAIN ),
+			'title'  => _x( 'Editorial: Publication Cover', 'Modules: Book: Widget Title', GEDITORIAL_TEXTDOMAIN ),
 			'desc'   => _x( 'Displays selected, connected or current publication cover.', 'Modules: Book: Widget Description', GEDITORIAL_TEXTDOMAIN ),
 		];
 	}

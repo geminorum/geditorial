@@ -637,7 +637,7 @@ class Contest extends gEditorial\Module
 				_x( 'Re-Connect Posts', 'Modules: Contest: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
 
 			Settings::submitButton( 'contest_tax_delete',
-				_x( 'Delete Terms', 'Modules: Contest: Setting Button', GEDITORIAL_TEXTDOMAIN ), 'delete', TRUE );
+				_x( 'Delete Terms', 'Modules: Contest: Setting Button', GEDITORIAL_TEXTDOMAIN ), 'danger', TRUE );
 
 			HTML::desc( _x( 'Check for contest terms and create corresponding contest posts.', 'Modules: Contest', GEDITORIAL_TEXTDOMAIN ) );
 

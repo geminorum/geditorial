@@ -127,12 +127,14 @@ class Helper extends Core\Base
 		return trim( $text );
 	}
 
-	public static function prepDescription( $text )
+	public static function prepDescription( $text, $shortcode = TRUE )
 	{
 		if ( ! $text )
 			return '';
 
-		$text = do_shortcode( $text, TRUE );
+		if ( $shortcode )
+			$text = do_shortcode( $text, TRUE );
+
 		$text = apply_filters( 'gnetwork_typography', $text );
 
 		return wpautop( $text );
@@ -847,14 +849,15 @@ class Helper extends Core\Base
 
 		if ( empty( $formats ) )
 			$formats = apply_filters( 'custom_date_formats', [
-				'fulltime' => _x( 'l, M j, Y @ H:i', 'Date Format', GEDITORIAL_TEXTDOMAIN ),
-				'datetime' => _x( 'M j, Y @ G:i', 'Date Format', GEDITORIAL_TEXTDOMAIN ),
-				'dateonly' => _x( 'l, F j, Y', 'Date Format', GEDITORIAL_TEXTDOMAIN ),
-				'timedate' => _x( 'H:i - F j, Y', 'Date Format', GEDITORIAL_TEXTDOMAIN ),
-				'timeampm' => _x( 'g:i a', 'Date Format', GEDITORIAL_TEXTDOMAIN ),
-				'timeonly' => _x( 'H:i', 'Date Format', GEDITORIAL_TEXTDOMAIN ),
-				'monthday' => _x( 'n/j', 'Date Format', GEDITORIAL_TEXTDOMAIN ),
-				'default'  => _x( 'm/d/Y', 'Date Format', GEDITORIAL_TEXTDOMAIN ),
+				'fulltime'  => _x( 'l, M j, Y @ H:i', 'Date Format', GEDITORIAL_TEXTDOMAIN ),
+				'datetime'  => _x( 'M j, Y @ G:i', 'Date Format', GEDITORIAL_TEXTDOMAIN ),
+				'dateonly'  => _x( 'l, F j, Y', 'Date Format', GEDITORIAL_TEXTDOMAIN ),
+				'timedate'  => _x( 'H:i - F j, Y', 'Date Format', GEDITORIAL_TEXTDOMAIN ),
+				'timeampm'  => _x( 'g:i a', 'Date Format', GEDITORIAL_TEXTDOMAIN ),
+				'timeonly'  => _x( 'H:i', 'Date Format', GEDITORIAL_TEXTDOMAIN ),
+				'monthday'  => _x( 'n/j', 'Date Format', GEDITORIAL_TEXTDOMAIN ),
+				'default'   => _x( 'm/d/Y', 'Date Format', GEDITORIAL_TEXTDOMAIN ),
+				'wordpress' => get_option( 'date_format' ),
 			] );
 
 		if ( FALSE === $context )
@@ -1404,37 +1407,6 @@ class Helper extends Core\Base
 		}
 
 		return $the_day;
-	}
-
-	// @REF: https://developers.google.com/google-apps/calendar/
-	// @SOURCE: https://wordpress.org/plugins/gcal-events-list/
-	public static function getGCalEvents( $atts )
-	{
-		$args = self::atts( [
-			'calendar_id' => FALSE,
-			'api_key'     => '',
-			'time_min'    => '',
-			'max_results' => 5,
-		], $atts );
-
-		if ( ! $args['calendar_id'] )
-			return FALSE;
-
-		$time = $args['time_min'] && Date::isInFormat( $args['time_min'] ) ? $args['time_min'] : date( 'Y-m-d' );
-
-		$url = 'https://www.googleapis.com/calendar/v3/calendars/'
-			.urlencode( $args['calendar_id'] )
-			.'/events?key='.$args['api_key']
-			.'&maxResults='.$args['max_results']
-			.'&orderBy=startTime'
-			.'&singleEvents=true'
-			.'&timeMin='.$time.'T00:00:00Z';
-
-		$data = HTTP::getJSON( $url );
-
-		self::__log($data);
-
-		return $data;
 	}
 }
 

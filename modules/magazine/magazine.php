@@ -782,7 +782,7 @@ class Magazine extends gEditorial\Module
 				_x( 'Store Orders', 'Modules: Magazine: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
 
 			Settings::submitButton( 'issue_tax_delete',
-				_x( 'Delete Terms', 'Modules: Magazine: Setting Button', GEDITORIAL_TEXTDOMAIN ), 'delete', TRUE );
+				_x( 'Delete Terms', 'Modules: Magazine: Setting Button', GEDITORIAL_TEXTDOMAIN ), 'danger', TRUE );
 
 
 			echo '</p>';
