@@ -105,6 +105,15 @@ class URL extends Base
 		return preg_replace( '|^(https?:)?//[^/]+(/?.*)|i', '$2', $url );
 	}
 
+	public static function fromPath( $path, $base = ABSPATH )
+	{
+		return str_ireplace(
+			wp_normalize_path( $base ),
+			self::trail( get_option( 'siteurl' ) ),
+			wp_normalize_path( $path )
+		);
+	}
+
 	public static function checkExternals( $urls = array(), $site = NULL )
 	{
 		if ( ! count( $urls ) )

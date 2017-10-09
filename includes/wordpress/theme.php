@@ -7,6 +7,55 @@ use geminorum\gEditorial\Core;
 class Theme extends Core\Base
 {
 
+	public static function restPost( $data, $setup = FALSE, $network = FALSE )
+	{
+		$dummy = array(
+			'ID'                    => 0,
+			'post_status'           => $data->status,
+			'post_author'           => $network ? $data->author : 0,
+			'post_parent'           => 0,
+			'post_type'             => $data->type,
+			'post_date'             => date( 'Y-m-d H:i:s', strtotime( $data->date ) ),
+			'post_date_gmt'         => gmdate( 'Y-m-d H:i:s', strtotime( $data->date_gmt ) ),
+			'post_modified'         => date( 'Y-m-d H:i:s', strtotime( $data->modified ) ),
+			'post_modified_gmt'     => gmdate( 'Y-m-d H:i:s', strtotime( $data->modified_gmt ) ),
+			'post_content'          => $data->content->rendered,
+			'post_title'            => $data->title->rendered,
+			'post_excerpt'          => $data->excerpt->rendered,
+			'post_content_filtered' => '',
+			'post_mime_type'        => '',
+			'post_password'         => '',
+			'post_name'             => $data->slug,
+			'guid'                  => $data->guid->rendered,
+			'menu_order'            => 0,
+			'pinged'                => '',
+			'to_ping'               => '',
+			'ping_status'           => $data->ping_status,
+			'comment_status'        => $data->comment_status,
+			'comment_count'         => 0,
+			'filter'                => 'raw',
+
+			// extra
+			'link' => $data->link,
+		);
+
+		$post = new \WP_Post( (object) $dummy );
+
+		if ( $setup ) {
+			$GLOBALS['post'] = $post;
+			setup_postdata( $post );
+		}
+
+		return $post;
+	}
+
+	// add_filter( 'the_permalink', [ '\geminorum\\gEditorial\\WordPress\\Theme', 'restPost_the_permalink' ], 1, 2 );
+	// remove_filter( 'the_permalink', [ '\geminorum\\gEditorial\\WordPress\\Theme', 'restPost_the_permalink' ], 1, 2 );
+	public static function restPost_the_permalink( $permalink, $post )
+	{
+		return $GLOBALS['post']->link;
+	}
+
 	// @SOURCE: `bp_set_theme_compat_active()`
 	public static function compatActive( $set = TRUE )
 	{
