@@ -104,6 +104,13 @@ class Tweaks extends gEditorial\Module
 					'title'       => _x( 'Comment Status', 'Modules: Tweaks: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Displays only the closed comment status for the post.', 'Modules: Tweaks: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 				],
+				[
+					'field'       => 'search_meta',
+					'type'        => 'posttypes',
+					'title'       => _x( 'Search Meta', 'Modules: Tweaks: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Extends admin search to include custom fields.', 'Modules: Tweaks: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'values'      => $this->get_posttypes_support_search_meta(),
+				],
 			],
 			'_columns' => [
 				[
@@ -171,6 +178,17 @@ class Tweaks extends gEditorial\Module
 				'search_placeholder' => _x( 'Search &hellip;', 'Modules: Tweaks: Meta Box Search Placeholder', GEDITORIAL_TEXTDOMAIN ),
 			],
 		];
+	}
+
+	private function get_posttypes_support_search_meta()
+	{
+		$supported = PostType::get();
+		$excludes  = [
+			'attachment',
+			'day',
+		];
+
+		return array_diff_key( $supported, array_flip( $excludes ) );
 	}
 
 	private function get_posttypes_support_order()
@@ -256,6 +274,12 @@ class Tweaks extends gEditorial\Module
 				$this->_edit_screen( $screen->post_type );
 			}
 
+			if ( in_array( $screen->post_type, $this->get_setting( 'search_meta', [] ) ) ) {
+				$this->filter( 'posts_join', 2, 9 );
+				$this->filter( 'posts_where', 2, 9 );
+				$this->filter( 'posts_distinct', 2, 9 );
+			}
+
 		} else if ( 'users' == $screen->base ) {
 
 			$this->filter( 'manage_users_columns', 1, 1 );
@@ -314,6 +338,36 @@ class Tweaks extends gEditorial\Module
 
 		if ( $this->get_setting( 'comment_status', FALSE ) && post_type_supports( $post_type, 'comments' ) )
 			add_action( $this->hook( 'column_attr' ), [ $this, 'column_attr_comment_status' ], 15 );
+	}
+
+	// @REF: https://adambalee.com/search-wordpress-by-custom-fields-without-a-plugin/
+	// join posts and postmeta tables
+	public function posts_join( $join, $wp_query )
+	{
+		if ( ! $wp_query->is_search() )
+			return $join;
+
+		global $wpdb;
+
+		return $join." LEFT JOIN {$wpdb->postmeta} ON {$wpdb->posts}.ID = {$wpdb->postmeta}.post_id ";
+	}
+
+	// modify the search query with posts_where
+	public function posts_where( $where, $wp_query )
+	{
+		if ( ! $wp_query->is_search() )
+			return $where;
+
+		global $wpdb;
+
+		return preg_replace( "/\(\s*".$wpdb->posts.".post_title\s+LIKE\s*(\'[^\']+\')\s*\)/",
+			"({$wpdb->posts}.post_title LIKE $1) OR ({$wpdb->postmeta}.meta_value LIKE $1)", $where );
+	}
+
+	// prevent duplicates
+	public function posts_distinct( $distinct, $wp_query )
+	{
+		return $wp_query->is_search() ? "DISTINCT" : $distinct;
 	}
 
 	public function manage_taxonomies_columns( $taxonomies, $post_type )
