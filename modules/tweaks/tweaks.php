@@ -743,7 +743,7 @@ class Tweaks extends gEditorial\Module
 
 			echo '<li class="-row tweaks-default-atts -post-modified">';
 				echo $this->get_column_icon( FALSE, 'edit', _x( 'Last Edit', 'Modules: Tweaks: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
-				echo Helper::getDateEditRow( $post->post_modified, '-edit' );
+				echo Helper::getModifiedEditRow( $post, '-edit' );
 			echo '</li>';
 		}
 
