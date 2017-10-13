@@ -442,9 +442,9 @@ class Audit extends gEditorial\Module
 					], $text );
 
 				else
-					$text = HTML::tag( 'div', [ 'class' => $class ], $text );
+					$text = HTML::wrap( $text, $class );
 
-				$html .= HTML::tag( $list, $text );
+				$html.= HTML::tag( $list, $text );
 			}
 		}
 
@@ -475,9 +475,9 @@ class Audit extends gEditorial\Module
 					], $text );
 
 				else
-					$text = HTML::tag( 'div', [ 'class' => $class ], $text );
+					$text = HTML::wrap( $text, $class );
 
-				$html .= HTML::tag( $list, $text );
+				$html.= HTML::tag( $list, [ 'class' => 'warning' ],  $text );
 			}
 		}
 
