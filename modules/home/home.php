@@ -122,7 +122,13 @@ add_theme_support( \'featured-content\', [
 		$post_types   = $this->post_types();
 		$featured_tax = $this->constant( 'featured_tax' );
 
-		if ( ! is_admin() ) {
+		if ( is_admin() ) {
+
+			if ( count( $post_types ) )
+				$this->filter( 'dashboard_recent_posts_query_args' );
+
+		} else {
+
 			$this->action( 'pre_get_posts', 1, 9 );
 
 			if ( count( $post_types ) ) {
@@ -318,6 +324,14 @@ add_theme_support( \'featured-content\', [
 				unset( $terms[$order] );
 
 		return $terms;
+	}
+
+	public function dashboard_recent_posts_query_args( $query_args )
+	{
+		if ( isset( $query_args['post_type'] ) && 'post' == $query_args['post_type'] )
+			$query_args['post_type'] = $this->post_types();
+
+		return $query_args;
 	}
 
 	public function calendar_posttypes( $posttypes )
