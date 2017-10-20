@@ -55,9 +55,10 @@ class Alphabet extends gEditorial\Module
 		$args = shortcode_atts( [
 			'locale'    => get_locale(),
 			'post_type' => $this->post_types(),
+			'comments'  => FALSE,
 			'excerpt'   => FALSE,
 			'context'   => NULL,
-			'wrap'      => FALSE,
+			'wrap'      => TRUE,
 			'before'    => '',
 			'after'     => '',
 			'class'     => '',
@@ -96,10 +97,10 @@ class Alphabet extends gEditorial\Module
 
 				if ( $current != $letter ) {
 
-					$html .= ( count( $actives ) ? '</dl></li>' : '' );
+					$html.= ( count( $actives ) ? '</dl><div class="clearfix"></div></li>' : '' );
 
-					$html .= '<li id="'.( isset( $keys[$letter] ) ? $keys[$letter] : $letter ).'">';
-					$html .= '<h4 class="-heading">'.$letter.'</h4><dl>';
+					$html.= '<li id="'.( isset( $keys[$letter] ) ? $keys[$letter] : $letter ).'">';
+					$html.= '<h4 class="-heading">'.$letter.'</h4><dl class="dl-horizontal">';
 
 					$actives[] = $current = $letter;
 				}
@@ -107,24 +108,31 @@ class Alphabet extends gEditorial\Module
 				$title = Helper::getPostTitle( $post );
 				$link  = WordPress::getPostShortLink( $post->ID );
 
-				$html .= '<dt><span class="-title">'.HTML::link( $title, $link, TRUE ).'</dt>';
+				$html.= '<dt><span class="-title">'.HTML::link( $title, $link, TRUE ).'</span>';
+
+				if ( $args['comments'] && $post->comment_count )
+					$html.= '<span class="-comments-count">'.Helper::getCounted( $post->comment_count, '&nbsp;(%s)' ).'</span>';
+
+				$html.= '</dt>';
 
 				if ( $args['excerpt'] && $post->post_excerpt )
-					$html .= '<dd class="-excerpt">'.wpautop( Helper::prepDescription( $post->post_excerpt ), FALSE ).'</dd>';
+					$html.= '<dd class="-excerpt">'.wpautop( Helper::prepDescription( $post->post_excerpt ), FALSE ).'</dd>';
+				else
+					$html.= '<dd class="-empty"></dd>';
 			}
 
-			$html .= '</dl></li>';
+			$html.= '</dl><div class="clearfix"></div></li>';
 
 			foreach ( $alphabet as $key => $info )
-				$list .= '<li>'.(
+				$list.= '<li>'.(
 					in_array( $info['letter'], $actives )
 					? HTML::scroll( $info['letter'], $info['key'], $info['name'] )
 					: '<span>'.$info['letter'].'</span>'
 				).'</li>';
 
-			$fields = '<input class="-search" type="search" style="display:none;"/>';
+			$fields = '<input class="-search" type="search" style="display:none;" />';
+			$html   = '<ul class="list-inline -letters">'.$list.'</ul>'.$fields.'<ul class="list-unstyled -definitions">'.$html.'</ul>';
 
-			$html = HTML::wrap ( '<ul class="-letters">'.$list.'</ul>'.$fields.'<ul class="-definitions">'.$html.'</ul>', $this->classs( 'posts' ) );
 			$html = ShortCode::wrap( $html, $this->constant( 'shortcode_posts' ), $args );
 			$html = Text::minifyHTML( $html );
 
@@ -140,9 +148,9 @@ class Alphabet extends gEditorial\Module
 			'locale'      => get_locale(),
 			'taxonomy'    => $this->taxonomies(),
 			'description' => FALSE,
-			'count'       => TRUE,
+			'count'       => FALSE,
 			'context'     => NULL,
-			'wrap'        => FALSE,
+			'wrap'        => TRUE,
 			'before'      => '',
 			'after'       => '',
 			'class'       => '',
@@ -178,10 +186,10 @@ class Alphabet extends gEditorial\Module
 
 				if ( $current != $letter ) {
 
-					$html .= ( count( $actives ) ? '</dl></li>' : '' );
+					$html.= ( count( $actives ) ? '</dl><div class="clearfix"></div></li>' : '' );
 
-					$html .= '<li id="'.( isset( $keys[$letter] ) ? $keys[$letter] : $letter ).'">';
-					$html .= '<h4 class="-heading">'.$letter.'</h4><dl>';
+					$html.= '<li id="'.( isset( $keys[$letter] ) ? $keys[$letter] : $letter ).'">';
+					$html.= '<h4 class="-heading">'.$letter.'</h4><dl class="dl-horizontal">';
 
 					$actives[] = $current = $letter;
 				}
@@ -190,29 +198,31 @@ class Alphabet extends gEditorial\Module
 				$title = Text::reFormatName( $title ); // no need
 				$link  = get_term_link( $term->term_id, $term->taxonomy );
 
-				$html .= '<dt><span class="-title">'.HTML::link( $title, $link, TRUE ).'</span>';
+				$html.= '<dt><span class="-title">'.HTML::link( $title, $link, TRUE ).'</span>';
 
 				if ( $args['count'] && $term->count )
-					$html .= '<span class="-term-count">'.Helper::getCounted( $term->count, ' (%s)' ).'</span>';
+					$html.= '<span class="-term-count">'.Helper::getCounted( $term->count, '&nbsp;(%s)' ).'</span>';
 
-				$html .= '</dt>';
+				$html.= '</dt>';
 
 				if ( $args['description'] && $term->description )
-					$html .= '<dd class="-description">'.wpautop( Helper::prepDescription( $term->description ), FALSE ).'</dd>';
+					$html.= '<dd class="-description">'.wpautop( Helper::prepDescription( $term->description ), FALSE ).'</dd>';
+				else
+					$html.= '<dd class="-empty"></dd>';
 			}
 
-			$html .= '</dl></li>';
+			$html.= '</dl><div class="clearfix"></div></li>';
 
 			foreach ( $alphabet as $key => $info )
-				$list .= '<li>'.(
+				$list.= '<li>'.(
 					in_array( $info['letter'], $actives )
 					? HTML::scroll( $info['letter'], $info['key'], $info['name'] )
 					: '<span>'.$info['letter'].'</span>'
 				).'</li>';
 
-			$fields = '<input class="-search" type="search" style="display:none;"/>';
+			$fields = '<input class="-search" type="search" style="display:none;" />';
 
-			$html = HTML::wrap ( '<ul class="-letters">'.$list.'</ul>'.$fields.'<ul class="-definitions">'.$html.'</ul>', $this->classs( 'terms' ) );
+			$html = '<ul class="list-inline -letters">'.$list.'</ul>'.$fields.'<ul class="list-unstyled -definitions">'.$html.'</ul>';
 
 			$html = ShortCode::wrap( $html, $this->constant( 'shortcode_terms' ), $args );
 			$html = Text::minifyHTML( $html );
