@@ -340,12 +340,7 @@ class Audit extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
-		if ( 'dashboard' == $screen->base ) {
-
-			if ( $this->get_setting( 'dashboard_widgets', FALSE ) && $this->role_can( 'assign' ) )
-				$this->action( 'activity_box_end', 0, 9 );
-
-		} else if ( in_array( $screen->post_type, $this->post_types() ) ) {
+		if ( in_array( $screen->post_type, $this->post_types() ) ) {
 
 			if ( 'edit' == $screen->base ) {
 
@@ -359,44 +354,42 @@ class Audit extends gEditorial\Module
 		}
 	}
 
-	public function activity_box_end()
+	protected function dashboard_widgets()
+	{
+		if ( ! $this->role_can( 'assign' ) )
+			return;
+
+		$title = 'all' == $this->get_setting( 'summary_scope', 'all' )
+			? _x( 'Editorial Audit Summary', 'Modules: Audit: Dashboard Widget Title', GEDITORIAL_TEXTDOMAIN )
+			: _x( 'Your Audit Summary', 'Modules: Audit: Dashboard Widget Title', GEDITORIAL_TEXTDOMAIN );
+
+		$title.= ' <span class="postbox-title-action"><a href="'.esc_url( add_query_arg( 'flush', '' ) ).'"';
+		$title.= ' title="'._x( 'Click to refresh the summary', 'Modules: Audit: Dashboard Widget Action', GEDITORIAL_TEXTDOMAIN ).'">';
+		$title.= _x( 'Refresh', 'Modules: Audit: Dashboard Widget Action', GEDITORIAL_TEXTDOMAIN ).'</a></span>';
+
+		wp_add_dashboard_widget( $this->classs( 'summary' ), $title, [ $this, 'dashboard_widget_summary' ] );
+	}
+
+	public function dashboard_widget_summary()
 	{
 		$user_id = 'all' == $this->get_setting( 'summary_scope', 'all' ) ? 0 : get_current_user_id();
-
-		$key = $this->hash( 'activityboxend', $user_id );
+		$key     = $this->hash( 'widgetsummary', $user_id );
 
 		if ( WordPress::isFlush() )
 			delete_transient( $key );
 
 		if ( FALSE === ( $html = get_transient( $key ) ) ) {
 
-			$html  = '';
 			$terms = Taxonomy::getTerms( $this->constant( 'audit_tax' ), FALSE, TRUE, 'slug', [ 'hide_empty' => TRUE ] );
 
-			if ( count( $terms ) ) {
+			if ( ! $summary = $this->get_summary( $this->post_types(), $terms, $user_id ) )
+				return HTML::desc( _x( 'No audit attributes found!', 'Modules: Audit', GEDITORIAL_TEXTDOMAIN ), TRUE, '-empty' );
 
-				if ( $summary = $this->get_summary( $this->post_types(), $terms, $user_id ) ) {
+			// using core styles
+			$html = '<div id="dashboard_right_now" class="geditorial-admin-wrap -audit"><div class="main">';
+			$html = Text::minifyHTML( $html.'<ul>'.$summary.'</ul></div></div>' );
 
-					$html .= '<div class="geditorial-admin-wrap -audit"><h3>';
-
-					if ( $user_id )
-						$html .= _x( 'Your Audit Summary', 'Modules: Audit: Activity Box End', GEDITORIAL_TEXTDOMAIN );
-					else
-						$html .= _x( 'Editorial Audit Summary', 'Modules: Audit: Activity Box End', GEDITORIAL_TEXTDOMAIN );
-
-					$html .= ' '.HTML::tag( 'a', [
-						'href'  => add_query_arg( 'flush', '' ),
-						'title' => _x( 'Click to refresh the summary', 'Modules: Audit: Activity Box End', GEDITORIAL_TEXTDOMAIN ),
-						'class' => '-action -flush page-title-action',
-					], _x( 'Refresh', 'Modules: Audit: Activity Box End', GEDITORIAL_TEXTDOMAIN ) );
-
-					$html .= '</h3><ul>'.$summary.'</ul></div>';
-
-					$html = Text::minifyHTML( $html );
-
-					set_transient( $key, $html, 12 * HOUR_IN_SECONDS );
-				}
-			}
+			set_transient( $key, $html, 12 * HOUR_IN_SECONDS );
 		}
 
 		echo $html;
@@ -412,39 +405,42 @@ class Audit extends gEditorial\Module
 		if ( $this->get_setting( 'summary_drafts', FALSE ) )
 			$exclude = array_diff( $exclude, [ 'draft' ] );
 
-		$counts  = Database::countPostsByTaxonomy( $terms, $posttypes, $user_id, $exclude );
-		$objects = [];
+		if ( count( $terms ) ) {
 
-		foreach ( $counts as $term => $posts ) {
+			$counts  = Database::countPostsByTaxonomy( $terms, $posttypes, $user_id, $exclude );
+			$objects = [];
 
-			$name = sanitize_term_field( 'name', $terms[$term]->name, $terms[$term]->term_id, $terms[$term]->taxonomy, 'display' );
+			foreach ( $counts as $term => $posts ) {
 
-			foreach ( $posts as $type => $count ) {
+				$name = sanitize_term_field( 'name', $terms[$term]->name, $terms[$term]->term_id, $terms[$term]->taxonomy, 'display' );
 
-				if ( ! $count )
-					continue;
+				foreach ( $posts as $type => $count ) {
 
-				$text = vsprintf( '%3$s %1$s (%2$s)', [
-					Helper::noopedCount( $count, $all[$type] ),
-					Helper::trimChars( $name, 35 ),
-					Number::format( $count ),
-				] );
+					if ( ! $count )
+						continue;
 
-				if ( empty( $objects[$type] ) )
-					$objects[$type] = get_post_type_object( $type );
+					$text = vsprintf( '%3$s %1$s (%2$s)', [
+						Helper::noopedCount( $count, $all[$type] ),
+						Helper::trimChars( $name, 35 ),
+						Number::format( $count ),
+					] );
 
-				$class = 'geditorial-glance-item -audit -term -taxonomy-'.$tax.' -term-'.$term.'-'.$type.'-count';
+					if ( empty( $objects[$type] ) )
+						$objects[$type] = get_post_type_object( $type );
 
-				if ( $objects[$type] && current_user_can( $objects[$type]->cap->edit_posts ) )
-					$text = HTML::tag( 'a', [
-						'href'  => WordPress::getPostTypeEditLink( $type, $user_id, [ $tax => $term ] ),
-						'class' => $class,
-					], $text );
+					$class = 'geditorial-glance-item -audit -term -taxonomy-'.$tax.' -term-'.$term.'-'.$type.'-count';
 
-				else
-					$text = HTML::wrap( $text, $class );
+					if ( $objects[$type] && current_user_can( $objects[$type]->cap->edit_posts ) )
+						$text = HTML::tag( 'a', [
+							'href'  => WordPress::getPostTypeEditLink( $type, $user_id, [ $tax => $term ] ),
+							'class' => $class,
+						], $text );
 
-				$html.= HTML::tag( $list, $text );
+					else
+						$text = HTML::wrap( $text, $class );
+
+					$html.= HTML::tag( $list, $text );
+				}
 			}
 		}
 
