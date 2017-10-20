@@ -142,8 +142,8 @@ class Module extends Base
 			if ( $ajax && method_exists( $this, 'init_ajax' ) )
 				$this->action( 'init', 0, $this->priority_init_ajax, 'ajax' );
 
-			if ( $ui && method_exists( $this, 'dashboard_glance_items' ) )
-				$this->filter( 'dashboard_glance_items' );
+			if ( $ui )
+				add_action( 'wp_dashboard_setup', [ $this, 'setup_dashboard' ] );
 
 			if ( ( $ui || $ajax ) && method_exists( $this, 'register_shortcode_ui' ) )
 				$this->action( 'register_shortcode_ui' );
@@ -181,6 +181,16 @@ class Module extends Base
 			return TRUE;
 
 		return FALSE;
+	}
+
+	public function setup_dashboard()
+	{
+		if ( method_exists( $this, 'dashboard_glance_items' ) )
+			$this->filter( 'dashboard_glance_items' );
+
+		if ( method_exists( $this, 'dashboard_widgets' )
+			&& $this->get_setting( 'dashboard_widgets', FALSE ) )
+				$this->dashboard_widgets();
 	}
 
 	public function _after_setup_theme()

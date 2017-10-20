@@ -141,12 +141,7 @@ class Users extends gEditorial\Module
 	{
 		$groups = $this->get_setting( 'user_groups', FALSE );
 
-		if ( 'dashboard' == $screen->base
-			&& $this->get_setting( 'dashboard_widgets', FALSE ) ) {
-
-			$this->action( 'wp_dashboard_setup' );
-
-		} else if ( 'edit' == $screen->base
+		if ( 'edit' == $screen->base
 			&& in_array( $screen->post_type, $this->post_types() ) ) {
 
 			if ( $this->get_setting( 'admin_restrict', FALSE ) )
@@ -209,7 +204,7 @@ class Users extends gEditorial\Module
 		return $username;
 	}
 
-	public function wp_dashboard_setup()
+	protected function dashboard_widgets()
 	{
 		wp_add_dashboard_widget( $this->classs(),
 			_x( 'Your Profile', 'Modules: Users: Dashboard Widget Title', GEDITORIAL_TEXTDOMAIN ),

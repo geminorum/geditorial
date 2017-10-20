@@ -79,37 +79,34 @@ class Modified extends gEditorial\Module
 	{
 		parent::init();
 
-		if ( is_blog_admin() && $this->get_setting( 'dashboard_widgets', FALSE ) )
-			$this->action( 'wp_dashboard_setup' );
-
-		if ( ! is_admin() ) {
-
-			$insert = $this->get_setting( 'insert_content', 'none' );
-
-			if ( 'none' != $insert ) {
-
-				add_action( 'gnetwork_themes_content_'.$insert, [ $this, 'insert_content' ],
-					$this->get_setting( 'insert_priority', 30 ) );
-
-				$this->enqueue_styles();
-			}
-
-			$this->filter( 'wp_nav_menu_items', 2 );
-		}
-
 		$this->register_shortcode( 'post_modified_shortcode' );
 		$this->register_shortcode( 'site_modified_shortcode' );
+
+		if ( is_admin() )
+			return;
+
+		$insert = $this->get_setting( 'insert_content', 'none' );
+
+		if ( 'none' != $insert ) {
+
+			add_action( 'gnetwork_themes_content_'.$insert, [ $this, 'insert_content' ],
+				$this->get_setting( 'insert_priority', 30 ) );
+
+			$this->enqueue_styles();
+		}
+
+		$this->filter( 'wp_nav_menu_items', 2 );
 	}
 
-	public function wp_dashboard_setup()
+	protected function dashboard_widgets()
 	{
 		wp_add_dashboard_widget( $this->classs(),
 			_x( 'Latest Changes', 'Modules: Modified: Dashboard Widget Title', GEDITORIAL_TEXTDOMAIN ),
-			[ $this, 'dashboard_summary' ]
+			[ $this, 'dashboard_widget_summary' ]
 		);
 	}
 
-	public function dashboard_summary()
+	public function dashboard_widget_summary()
 	{
 		$args = [
 			'orderby'     => 'modified',
