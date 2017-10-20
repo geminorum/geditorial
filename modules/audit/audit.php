@@ -161,6 +161,7 @@ class Audit extends gEditorial\Module
 		$this->register_taxonomy( 'audit_tax', [
 			'hierarchical'       => TRUE,
 			'show_in_quick_edit' => TRUE,
+			'show_in_rest'       => $this->role_can( 'assign' ), // QUESTION: what if auth by plugin
 		], NULL, [
 			'manage_terms' => 'manage_audit_tax',
 			'edit_terms'   => 'edit_audit_tax',
