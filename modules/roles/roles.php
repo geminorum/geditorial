@@ -103,6 +103,9 @@ class Roles extends gEditorial\Module
 
 		else if ( isset( $_POST['remove_default_roles'] ) )
 			$this->remove_default_roles();
+
+		else if ( isset( $_POST['add_theme_to_editor'] ) )
+			$this->add_theme_caps( 'editor' );
 	}
 
 	public function default_buttons( $module = FALSE )
@@ -112,6 +115,8 @@ class Roles extends gEditorial\Module
 		$this->register_button( 'add_default_roles', _x( 'Add Default Roles', 'Modules: Roles: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
 		$this->register_button( 'add_defaults_to_editor', _x( 'Add Default Caps to Editor Role', 'Modules: Roles: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
 		$this->register_button( 'remove_default_roles', _x( 'Remove Default Roles', 'Modules: Roles: Setting Button', GEDITORIAL_TEXTDOMAIN ), 'danger' );
+
+		$this->register_button( 'add_theme_to_editor', _x( 'Add Theme Caps to Editor Role', 'Modules: Roles: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
 	}
 
 	public function init()
@@ -314,6 +319,16 @@ class Roles extends gEditorial\Module
 		$this->remove_default_caps( 'editor' );
 
 		return $count;
+	}
+
+	private function add_theme_caps( $role )
+	{
+		if ( ! $object = get_role( $role ) )
+			return FALSE;
+
+		$object->add_cap( 'edit_theme_options' );
+
+		return TRUE;
 	}
 
 	public function tools_settings( $sub )
