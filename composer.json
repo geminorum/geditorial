@@ -25,7 +25,7 @@
     "kzykhys/php-csv-parser": ">1.4",
     "nicmart/string-template": "~0.1",
     "michelf/php-markdown": "^1.7",
-    "league/html-to-markdown": "^4.4"
+    "league/html-to-markdown": "^4.5"
   },
   "require-dev": {
     "mustache/mustache": "^2.12",
