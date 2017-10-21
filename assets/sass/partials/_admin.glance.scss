@@ -18,6 +18,7 @@
   &.-not-in::before {
     content: "\f534" !important; // warning
     // content: "\f223" !important; // question
+    // color: darken($brand-danger, 10%) !important; // we use `warning` class
   }
 
   &.-posttype-issue::before {

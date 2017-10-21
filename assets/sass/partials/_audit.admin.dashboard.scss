@@ -3,8 +3,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 /// Module: Audit: Admin: Dashboard --------------------------------------------
 
-.geditorial-admin-wrap.-audit {
-  h3 .-action {
-    float: right;
+#geditorial-audit-summary {
+  .inside {
+    padding: 0;
+  }
+
+  .-empty {
+    padding: 0 12px 12px; // core defaults for .main
   }
 }
