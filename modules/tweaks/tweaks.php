@@ -69,7 +69,6 @@ class Tweaks extends gEditorial\Module
 			'rel_people',
 			'rel_post',
 			'affiliation',
-			'alphabet_tax',
 			'entry_section',
 			'specs',
 			'label',

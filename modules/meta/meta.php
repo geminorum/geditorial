@@ -223,7 +223,7 @@ class Meta extends gEditorial\Module
 		if ( $this->is_inline_save( $_REQUEST, $this->post_types() ) ) {
 			$this->_edit_screen( $_REQUEST['post_type'] );
 			$this->_default_rows();
-			$this->action( 'save_post', 2 );
+			$this->action( 'save_post', 3 );
 		}
 	}
 
@@ -274,7 +274,7 @@ class Meta extends gEditorial\Module
 			if ( 'post' == $screen->base
 				|| 'edit' == $screen->base ) {
 
-				$this->action( 'save_post', 2 );
+				$this->action( 'save_post', 3 );
 
 				$localize = [ 'fields' => $this->post_type_fields( $screen->post_type, TRUE ) ];
 
@@ -484,7 +484,7 @@ class Meta extends gEditorial\Module
 		return [ $field ];
 	}
 
-	public function save_post( $post_id, $post )
+	public function save_post( $post_id, $post, $update )
 	{
 		if ( ! $this->is_save_post( $post, $this->post_types() ) )
 			return $post_id;

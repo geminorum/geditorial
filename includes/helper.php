@@ -835,7 +835,7 @@ class Helper extends Core\Base
 		$html.= '" data-time="'.date( 'c', $timestamp ).'">'.date_i18n( $formats['default'], $timestamp ).'</span>';
 
 		$html.= '&nbsp;(<span class="-date-diff" title="';
-		$html.= esc_attr( date_i18n( $formats['fulltime'], $timestamp ) ).'">'
+		$html.= esc_attr( date_i18n( $formats['fulltime'], $timestamp ) ).'">';
 		$html.= self::humanTimeDiff( $timestamp ).'</span>)';
 
 		return $class ? '<span class="'.$class.'">'.$html.'</span>' : $html;

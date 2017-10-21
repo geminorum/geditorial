@@ -14,7 +14,7 @@ class Connected extends gEditorial\Module
 		return [
 			'name'     => 'connected',
 			'title'    => _x( 'Connected', 'Modules: Connected', GEDITORIAL_TEXTDOMAIN ),
-			'desc'     => _x( 'Posts to Posts Extended', 'Modules: Connected', GEDITORIAL_TEXTDOMAIN ),
+			'desc'     => _x( 'Posts-to-Posts Extended', 'Modules: Connected', GEDITORIAL_TEXTDOMAIN ),
 			'icon'     => 'controls-repeat',
 			'disabled' => defined( 'P2P_PLUGIN_VERSION' ) ? FALSE : _x( 'Needs Posts-to-Posts', 'Modules: Connected', GEDITORIAL_TEXTDOMAIN ),
 		];

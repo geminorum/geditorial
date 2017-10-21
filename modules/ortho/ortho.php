@@ -87,6 +87,7 @@ class Ortho extends gEditorial\Module
 		$virastar_options = $this->virastar_options();
 
 		$this->taxonomies_excluded = [
+			'system_tags',
 			'nav_menu',
 			'post_format',
 			'link_category',
@@ -97,8 +98,8 @@ class Ortho extends gEditorial\Module
 			'following_users',
 			'ef_usergroup',
 			'post_status',
-			'flamingo_contact_tag',
-			'flamingo_inbound_channel',
+			'rel_people',
+			'rel_post',
 		];
 
 		return [

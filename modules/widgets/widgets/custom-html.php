@@ -93,11 +93,11 @@ class CustomHTML extends gEditorial\Widget
 		else
 			$instance['content'] = wp_kses_post( $new['content'] );
 
-		$instance['embeds']     = (bool) $new['embeds'];
-		$instance['shortcodes'] = (bool) $new['shortcodes'];
-		$instance['filters']    = (bool) $new['filters'];
-		$instance['legacy']     = (bool) $new['legacy'];
-		$instance['autop']      = (bool) $new['autop'];
+		$instance['embeds']     = isset( $new['embeds'] );
+		$instance['shortcodes'] = isset( $new['shortcodes'] );
+		$instance['filters']    = isset( $new['filters'] );
+		$instance['legacy']     = isset( $new['legacy'] );
+		$instance['autop']      = isset( $new['autop'] );
 
 		$this->flush_widget_cache();
 

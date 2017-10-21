@@ -31,6 +31,7 @@ class Terms extends gEditorial\Module
 	protected function get_global_settings()
 	{
 		$this->taxonomies_excluded = [
+			'system_tags',
 			'nav_menu',
 			'post_format',
 			'link_category',
@@ -41,16 +42,8 @@ class Terms extends gEditorial\Module
 			'following_users',
 			'ef_usergroup',
 			'post_status',
-			'flamingo_contact_tag',
-			'flamingo_inbound_channel',
-			// 'people',
 			'rel_people',
 			'rel_post',
-			// 'affiliation',
-			'alphabet_tax',
-			// 'entry_section',
-			// 'specs',
-			// 'label',
 		];
 
 		return [

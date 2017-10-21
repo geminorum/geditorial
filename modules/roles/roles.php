@@ -98,7 +98,7 @@ class Roles extends gEditorial\Module
 		if ( isset( $_POST['add_default_roles'] ) )
 			$this->add_default_roles();
 
-		if ( isset( $_POST['add_defaults_to_editor'] ) )
+		else if ( isset( $_POST['add_defaults_to_editor'] ) )
 			$this->add_default_caps( 'editor' );
 
 		else if ( isset( $_POST['remove_default_roles'] ) )
@@ -273,8 +273,10 @@ class Roles extends gEditorial\Module
 
 	private function add_default_caps( $role )
 	{
+		if ( ! $object = get_role( $role ) )
+			return FALSE;
+
 		$count  = 0;
-		$object = get_role( $role );
 
 		foreach ( $this->map() as $cap => $editorial )
 			if ( $object->has_cap( $cap ) )
@@ -286,12 +288,14 @@ class Roles extends gEditorial\Module
 
 	private function remove_default_caps( $role )
 	{
+		if ( ! $object = get_role( $role ) )
+			return FALSE;
+
 		$count  = 0;
-		$object = get_role( $role );
 
 		foreach ( $this->map() as $cap => $editorial )
 			if ( $object->remove_cap( $editorial ) )
-					$count++;
+				$count++;
 
 		return $count;
 	}

@@ -85,7 +85,7 @@ class Specs extends gEditorial\Module
 		parent::setup();
 
 		if ( is_admin() )
-			$this->action( 'save_post', 2, 20 );
+			$this->action( 'save_post', 3, 20 );
 	}
 
 	public function init()
@@ -123,7 +123,7 @@ class Specs extends gEditorial\Module
 		}
 	}
 
-	public function save_post( $post_id, $post )
+	public function save_post( $post_id, $post, $update )
 	{
 		if ( ! $this->is_save_post( $post, $this->post_types() ) )
 			return $post_id;

@@ -25,6 +25,24 @@ class Alphabet extends gEditorial\Module
 
 	protected function get_global_settings()
 	{
+		$this->taxonomies_excluded = [
+			'system_tags',
+			'nav_menu',
+			'post_format',
+			'link_category',
+			'bp_member_type',
+			'bp_group_type',
+			'bp-email-type',
+			'ef_editorial_meta',
+			'following_users',
+			'ef_usergroup',
+			'post_status',
+			'rel_people',
+			'rel_post',
+			'affiliation',
+			'specs',
+		];
+
 		return [
 			'posttypes_option'  => 'posttypes_option',
 			'taxonomies_option' => 'taxonomies_option',

@@ -111,7 +111,7 @@ class Series extends gEditorial\Module
 			$this->add_post_type_fields( $post_type, $this->fields[$this->constant( 'post_cpt' )], 'series' );
 
 		if ( is_admin() )
-			$this->action( 'save_post', 2, 20 );
+			$this->action( 'save_post', 3, 20 );
 
 		$this->register_shortcode( 'series_shortcode' );
 	}
@@ -141,7 +141,7 @@ class Series extends gEditorial\Module
 		}
 	}
 
-	public function save_post( $post_id, $post )
+	public function save_post( $post_id, $post, $update )
 	{
 		if ( ! $this->is_save_post( $post, $this->post_types() ) )
 			return $post_id;
