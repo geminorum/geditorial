@@ -1,3 +1,19 @@
+### 3.13.1
+* main/module: internal api for dashboard setup
+* main/module: skip pasing section to setting methods
+* module/alphabet: refactoring shortcode markup
+* module/audit: independent dashboard widget
+* module/audit: warning color for not counted posts
+* module/audit: cap check on rest
+* module/home: filter dashboard recent posts
+* module/roles: adding theme caps to editor role
+* module/tweaks: :new: including meta in search
+* module/tweaks: last edited user
+* module/tube: more meta fields
+* module/widgets: :new: wp-rest posts widget
+* module/widgets: selective enabling widgets
+* moduel/widgets: custom empty message
+
 ### 3.13.0
 * main/plugin: rtl style on front
 * main/plugin: :new: module disabled notice
