@@ -65,6 +65,37 @@ class User extends Core\Base
 			self::cheatin();
 	}
 
+	// @REF: `get_blogs_of_user()`
+	public static function getUserBlogs( $user_id, $prefix )
+	{
+		$blogs = array();
+		$keys  = get_user_meta( $user_id );
+
+		if ( empty( $keys ) )
+			return $blogs;
+
+		if ( isset( $keys[$prefix.'capabilities'] ) && defined( 'MULTISITE' ) ) {
+			$blogs[] = 1;
+			unset( $keys[$prefix.'capabilities'] );
+		}
+
+		foreach ( array_keys( $keys ) as $key ) {
+
+			if ( 'capabilities' !== substr( $key, -12 ) )
+				continue;
+
+			if ( $prefix && 0 !== strpos( $key, $prefix ) )
+				continue;
+
+			$blog = str_replace( array( $prefix, '_capabilities' ), '', $key );
+
+			if ( is_numeric( $blog ) )
+				$blogs[] = (int) $blog;
+		}
+
+		return $blogs;
+	}
+
 	// @REF: `get_role_list()`
 	public static function getRoleList( $user_id = FALSE )
 	{

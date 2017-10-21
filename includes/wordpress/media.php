@@ -124,6 +124,20 @@ class Media extends Core\Base
 		return $sizes;
 	}
 
+	public static function upload( $post = FALSE )
+	{
+		if ( FALSE === $post )
+			return wp_upload_dir();
+
+		if ( ! $post = get_post( $post ) )
+			return wp_upload_dir();
+
+		if ( 'page' === $post->post_type )
+			return wp_upload_dir();
+
+		return wp_upload_dir( ( substr( $post->post_date, 0, 4 ) > 0 ? $post->post_date : NULL ) );
+	}
+
 	public static function getAttachments( $post_id, $mime_type = 'image' )
 	{
 		return get_children( array(

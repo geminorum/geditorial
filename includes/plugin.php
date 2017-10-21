@@ -89,6 +89,7 @@ class Plugin
 			'core/icon',
 			'core/http',
 			'core/l10n',
+			'core/misc',
 			'core/number',
 			'core/text',
 			'core/url',
