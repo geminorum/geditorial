@@ -90,6 +90,9 @@ class Like extends gEditorial\Module
 
 	public function template_redirect()
 	{
+		if ( is_embed() )
+			return;
+
 		if ( ! is_singular( $this->post_types() ) )
 			return;
 
