@@ -118,7 +118,7 @@ class Alphabet extends gEditorial\Module
 					$html.= ( count( $actives ) ? '</dl><div class="clearfix"></div></li>' : '' );
 
 					$html.= '<li id="'.( isset( $keys[$letter] ) ? $keys[$letter] : $letter ).'">';
-					$html.= '<h4 class="-heading">'.$letter.'</h4><dl class="dl-horizontal">';
+					$html.= '<h4 class="-heading">'.$letter.'</h4><dl'.( $args['excerpt'] ? ' class="dl-horizontal"' : '' ).'>';
 
 					$actives[] = $current = $letter;
 				}
@@ -207,7 +207,7 @@ class Alphabet extends gEditorial\Module
 					$html.= ( count( $actives ) ? '</dl><div class="clearfix"></div></li>' : '' );
 
 					$html.= '<li id="'.( isset( $keys[$letter] ) ? $keys[$letter] : $letter ).'">';
-					$html.= '<h4 class="-heading">'.$letter.'</h4><dl class="dl-horizontal">';
+					$html.= '<h4 class="-heading">'.$letter.'</h4><dl'.( $args['description'] ? ' class="dl-horizontal"' : '' ).'>';
 
 					$actives[] = $current = $letter;
 				}
