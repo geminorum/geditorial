@@ -206,10 +206,12 @@ class Users extends gEditorial\Module
 
 	protected function dashboard_widgets()
 	{
-		wp_add_dashboard_widget( $this->classs(),
-			_x( 'Your Profile', 'Modules: Users: Dashboard Widget Title', GEDITORIAL_TEXTDOMAIN ),
-			[ $this, 'dashboard_summary' ]
-		);
+		$title = _x( 'Your Profile', 'Modules: Users: Dashboard Widget Title', GEDITORIAL_TEXTDOMAIN );
+		$title.= ' <span class="postbox-title-action"><a href="'.esc_url( admin_url( 'profile.php' )  ).'"';
+		$title.= ' title="'._x( 'Edit your profile', 'Modules: Modules: Dashboard Widget Action', GEDITORIAL_TEXTDOMAIN ).'">';
+		$title.= _x( 'Edit', 'Modules: Modules: Dashboard Widget Action', GEDITORIAL_TEXTDOMAIN ).'</a></span>';
+
+		wp_add_dashboard_widget( $this->classs( 'profile-summary' ), $title, [ $this, 'dashboard_summary' ] );
 	}
 
 	public function restrict_manage_posts( $post_type, $which )
@@ -437,11 +439,6 @@ class Users extends gEditorial\Module
 					Helper::getDateEditRow( $user->user_registered, '-registered' ) );
 			echo '</li>';
 		}
-
-		echo '<li class="-row -edit">';
-			echo $this->get_column_icon( FALSE, 'edit', _x( 'Edit', 'Modules: Users: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
-			echo HTML::link( _x( 'Edit Your Profile', 'Modules: Users', GEDITORIAL_TEXTDOMAIN ), WordPress::getUserEditLink( $user->ID ) );
-		echo '</li>';
 
 		echo '</ul><div class="clear"></div></div>';
 	}
