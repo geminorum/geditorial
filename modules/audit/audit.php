@@ -374,6 +374,9 @@ class Audit extends gEditorial\Module
 	public function dashboard_widget_summary()
 	{
 		$user_id = 'all' == $this->get_setting( 'summary_scope', 'all' ) ? 0 : get_current_user_id();
+		// using core styles
+		echo '<div id="dashboard_right_now" class="geditorial-admin-wrap-widget -audit -core-styles">';
+
 		$key     = $this->hash( 'widgetsummary', $user_id );
 
 		if ( WordPress::isFlush() )
@@ -383,17 +386,21 @@ class Audit extends gEditorial\Module
 
 			$terms = Taxonomy::getTerms( $this->constant( 'audit_tax' ), FALSE, TRUE, 'slug', [ 'hide_empty' => TRUE ] );
 
-			if ( ! $summary = $this->get_summary( $this->post_types(), $terms, $user_id ) )
-				return HTML::desc( _x( 'No audit attributes found!', 'Modules: Audit', GEDITORIAL_TEXTDOMAIN ), TRUE, '-empty' );
+			if ( $summary = $this->get_summary( $this->post_types(), $terms, $user_id ) ) {
 
-			// using core styles
-			$html = '<div id="dashboard_right_now" class="geditorial-admin-wrap -audit"><div class="main">';
-			$html = Text::minifyHTML( $html.'<ul>'.$summary.'</ul></div></div>' );
+				$html = Text::minifyHTML( $summary );
+				set_transient( $key, $html, 12 * HOUR_IN_SECONDS );
 
-			set_transient( $key, $html, 12 * HOUR_IN_SECONDS );
+			} else {
+
+				HTML::desc( _x( 'No reports available!', 'Modules: Audit', GEDITORIAL_TEXTDOMAIN ), FALSE, '-empty' );
+			}
 		}
 
-		echo $html;
+		if ( $html )
+			echo '<div class="main"><ul>'.$html.'</ul></div>';
+
+		echo '</div>';
 	}
 
 	private function get_summary( $posttypes, $terms, $user_id = 0, $list = 'li' )
@@ -505,11 +512,8 @@ class Audit extends gEditorial\Module
 	{
 		$terms = Taxonomy::getTerms( $this->constant( 'audit_tax' ), FALSE, TRUE, 'slug', [ 'hide_empty' => TRUE ] );
 
-		if ( ! count( $terms ) ) {
-			HTML::h3( _x( 'Audit Reports', 'Modules: Audit', GEDITORIAL_TEXTDOMAIN ) );
-			HTML::desc( _x( 'No audit attributes found!', 'Modules: Audit', GEDITORIAL_TEXTDOMAIN ) );
-			return;
-		}
+		if ( ! count( $terms ) )
+			return HTML::desc( _x( 'No reports available!', 'Modules: Audit', GEDITORIAL_TEXTDOMAIN ), TRUE, '-empty' );
 
 		$args = $this->settings_form_req( [
 			'user_id' => '0',
