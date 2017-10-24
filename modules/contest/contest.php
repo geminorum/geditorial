@@ -319,6 +319,9 @@ class Contest extends gEditorial\Module
 
 	public function do_meta_box_main( $post, $box )
 	{
+		if ( $this->check_hidden_metabox( 'main' ) )
+			return;
+
 		echo '<div class="geditorial-admin-wrap-metabox -contest">';
 
 		$this->actions( 'main_meta_box', $post, $box );
@@ -333,24 +336,36 @@ class Contest extends gEditorial\Module
 
 	public function do_meta_box_list( $post, $box )
 	{
+		if ( $this->check_hidden_metabox( 'list' ) )
+			return;
+
 		echo '<div class="geditorial-admin-wrap-metabox -contest">';
 
-		$this->actions( 'list_meta_box', $post, $box );
+		$term = $this->get_linked_term( $post->ID, 'contest_cpt', 'contest_tax' );
 
-		if ( $term = $this->get_linked_term( $post->ID, 'contest_cpt', 'contest_tax' ) )
-			echo MetaBox::getTermPosts( $this->constant( 'contest_tax' ), $term, [], FALSE );
+		$this->actions( 'list_meta_box', $post, $box, $term );
+
+		if ( $list = MetaBox::getTermPosts( $this->constant( 'contest_tax' ), $term, [], FALSE ) )
+			echo $list;
+		else
+			HTML::desc( _x( 'No items connected!', 'Modules: Contest', GEDITORIAL_TEXTDOMAIN ), FALSE, '-empty' );
 
 		echo '</div>';
 	}
 
 	public function do_meta_box_supported( $post, $box )
 	{
+		if ( $this->check_hidden_metabox( 'supported' ) )
+			return;
+
 		echo '<div class="geditorial-admin-wrap-metabox -contest">';
 
 		$terms = Taxonomy::getTerms( $this->constant( 'contest_tax' ), $post->ID, TRUE );
 
-		// OLD ACTION: 'geditorial_contest_meta_box'
+		// OLD: 'geditorial_contest_meta_box'
 		do_action( 'geditorial_contest_supported_meta_box', $post, $terms );
+
+		do_action( 'geditorial_meta_do_meta_box', $post, $box, NULL, 'contest' );
 
 		echo '</div>';
 	}

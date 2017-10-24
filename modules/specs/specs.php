@@ -106,9 +106,9 @@ class Specs extends gEditorial\Module
 		if ( 'post' == $screen->base
 			&& in_array( $screen->post_type, $this->post_types() ) ) {
 
-			add_meta_box( $this->classs(),
+			add_meta_box( $this->classs( 'supported' ),
 				$this->get_meta_box_title_tax( 'specs_tax' ),
-				[ $this, 'do_meta_box' ],
+				[ $this, 'do_meta_box_supported' ],
 				$screen,
 				'side',
 				'high'
@@ -274,8 +274,11 @@ class Specs extends gEditorial\Module
 		return $this->filters( 'sanitize_post_meta', $postmeta, $fields, $post_id, $post_type );
 	}
 
-	public function do_meta_box( $post )
+	public function do_meta_box_supported( $post, $box )
 	{
+		if ( $this->check_hidden_metabox( 'supported' ) )
+			return;
+
 		echo '<div class="geditorial-admin-wrap-metabox -specs">';
 
 		$terms = Taxonomy::getTerms( $this->constant( 'specs_tax' ), $post->ID, TRUE );

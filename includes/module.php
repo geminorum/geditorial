@@ -1869,12 +1869,13 @@ class Module extends Base
 	public function add_meta_box_checklist_terms( $constant, $post_type, $type = FALSE )
 	{
 		$taxonomy = $this->constant( $constant );
+		$metabox  = $this->classs( $taxonomy );
 		$edit_url = WordPress::getEditTaxLink( $taxonomy );
 
 		if ( $type )
 			$this->remove_meta_box( $constant, $post_type, $type );
 
-		add_meta_box( $this->classs( $taxonomy ),
+		add_meta_box( $metabox,
 			$this->get_meta_box_title( $constant, $edit_url, TRUE ),
 			[ __NAMESPACE__.'\\MetaBox', 'checklistTerms' ],
 			NULL,
@@ -1882,6 +1883,7 @@ class Module extends Base
 			'default',
 			[
 				'taxonomy' => $taxonomy,
+				'metabox'  => $metabox,
 				'edit_url' => $edit_url,
 			]
 		);
@@ -2819,16 +2821,6 @@ SQL;
 	// checks to bail early if metabox/widget is hidden
 	protected function check_hidden_metabox( $widget, $after = '' )
 	{
-		if ( ! in_array( $this->classs( $widget ), get_hidden_meta_boxes( get_current_screen() ) ) )
-			return FALSE;
-
-		echo HTML::tag( 'a', [
-			'href'  => add_query_arg( 'flush', '' ),
-			'class' => [ '-description', '-refresh' ],
-		], _x( 'Please refresh the page to generate the data.', 'Module', GEDITORIAL_TEXTDOMAIN ) );
-
-		echo $after;
-
-		return TRUE;
+		return MetaBox::checkHidden( $this->classs( $widget ), $after );
 	}
 }

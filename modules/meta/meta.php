@@ -4,6 +4,7 @@ defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Core\Arraay;
 use geminorum\gEditorial\Core\HTML;
@@ -239,6 +240,7 @@ class Meta extends gEditorial\Module
 
 				$fields   = $this->post_type_field_types( $screen->post_type );
 				$contexts = Arraay::column( $fields, 'context' );
+				$metabox  = $this->classs( $screen->post_type );
 
 				$box_callback = $this->filters( 'box_callback', in_array( 'box', $contexts ), $screen->post_type );
 
@@ -246,12 +248,16 @@ class Meta extends gEditorial\Module
 					$box_callback = [ $this, 'default_meta_box' ];
 
 				if ( $box_callback && is_callable( $box_callback ) )
-					add_meta_box( $this->classs( $screen->post_type ),
+					add_meta_box( $metabox,
 						$this->get_meta_box_title(),
 						$box_callback,
 						$screen->post_type,
 						'side',
-						'high'
+						'high',
+						[
+							'posttype' => $screen->post_type,
+							'metabox'  => $metabox,
+						]
 					);
 
 				$dbx_callback = $this->filters( 'dbx_callback', in_array( 'dbx', $contexts ), $screen->post_type );
@@ -353,6 +359,9 @@ class Meta extends gEditorial\Module
 
 	public function default_meta_box( $post, $box )
 	{
+		if ( ! empty( $box['args']['metabox'] ) && MetaBox::checkHidden( $box['args']['metabox'] ) )
+			return;
+
 		$fields = $this->post_type_field_types( $post->post_type );
 
 		echo '<div class="geditorial-admin-wrap-metabox">';

@@ -182,9 +182,9 @@ class Today extends gEditorial\Module
 				$this->filter( 'post_updated_messages' );
 				$this->action( 'edit_form_advanced' );
 
-				add_meta_box( $this->classs( 'main' ),
+				add_meta_box( $this->classs( 'supported' ),
 					$this->get_meta_box_title( 'day_cpt' ),
-					[ $this, 'do_meta_boxes' ],
+					[ $this, 'do_meta_box_supported' ],
 					$screen,
 					'side',
 					'high'
@@ -196,7 +196,7 @@ class Today extends gEditorial\Module
 
 				add_meta_box( $this->classs( 'supported' ),
 					$this->get_meta_box_title(),
-					[ $this, 'do_meta_boxes' ],
+					[ $this, 'do_meta_box_supported' ],
 					$screen,
 					'side',
 					'high'
@@ -242,8 +242,11 @@ class Today extends gEditorial\Module
 		add_action( 'save_post', [ $this, 'save_post_supported' ], 20, 3 );
 	}
 
-	public function do_meta_boxes( $post, $box )
+	public function do_meta_box_supported( $post, $box )
 	{
+		if ( $this->check_hidden_metabox( 'supported' ) )
+			return;
+
 		echo '<div class="geditorial-admin-wrap-metabox">';
 
 			$this->actions( 'meta_box', $post, $box );

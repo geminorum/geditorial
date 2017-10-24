@@ -554,6 +554,9 @@ class Magazine extends gEditorial\Module
 
 	public function do_meta_box_supported( $post, $box )
 	{
+		if ( $this->check_hidden_metabox( 'supported' ) )
+			return;
+
 		echo '<div class="geditorial-admin-wrap-metabox -magazine">';
 
 		$terms = Taxonomy::getTerms( $this->constant( 'issue_tax' ), $post->ID, TRUE );
@@ -593,6 +596,9 @@ class Magazine extends gEditorial\Module
 
 	public function do_meta_box_main( $post, $box )
 	{
+		if ( $this->check_hidden_metabox( 'main' ) )
+			return;
+
 		echo '<div class="geditorial-admin-wrap-metabox -magazine">';
 
 		$this->actions( 'main_meta_box', $post, $box );
@@ -607,12 +613,19 @@ class Magazine extends gEditorial\Module
 
 	public function do_meta_box_list( $post, $box )
 	{
+		if ( $this->check_hidden_metabox( 'list' ) )
+			return;
+
 		echo '<div class="geditorial-admin-wrap-metabox -magazine">';
 
-		$this->actions( 'list_meta_box', $post, $box );
+		$term = $this->get_linked_term( $post->ID, 'issue_cpt', 'issue_tax' );
 
-		if ( $term = $this->get_linked_term( $post->ID, 'issue_cpt', 'issue_tax' ) )
-			echo MetaBox::getTermPosts( $this->constant( 'issue_tax' ), $term, [], FALSE );
+		$this->actions( 'list_meta_box', $post, $box, $term );
+
+		if ( $list = MetaBox::getTermPosts( $this->constant( 'issue_tax' ), $term, [], FALSE ) )
+			echo $list;
+		else
+			HTML::desc( _x( 'No items connected!', 'Modules: Magazine', GEDITORIAL_TEXTDOMAIN ), FALSE, '-empty' );
 
 		echo '</div>';
 	}

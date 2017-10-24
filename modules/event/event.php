@@ -218,7 +218,7 @@ class Event extends gEditorial\Module
 
 					add_meta_box( $this->classs( 'main' ),
 						$this->get_meta_box_title( 'event_cpt' ),
-						[ $this, 'do_meta_boxes' ],
+						[ $this, 'do_meta_box_main' ],
 						$screen,
 						'side',
 						'high'
@@ -383,8 +383,11 @@ class Event extends gEditorial\Module
 		return array_merge( $messages, $this->get_bulk_post_updated_messages( 'event_cpt', $counts ) );
 	}
 
-	public function do_meta_boxes( $post, $box )
+	public function do_meta_box_main( $post, $box )
 	{
+		if ( $this->check_hidden_metabox( 'main' ) )
+			return;
+
 		echo '<div class="geditorial-admin-wrap-metabox">';
 
 			$this->actions( 'meta_box', $post, $box );

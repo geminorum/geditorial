@@ -28,8 +28,26 @@ class MetaBox extends Core\Base
 		return gEditorial()->{static::MODULE}->get_postmeta( $post_id, $field, $default, $key );
 	}
 
+	public static function checkHidden( $metabox_id, $after = '' )
+	{
+		if ( ! in_array( $metabox_id, get_hidden_meta_boxes( get_current_screen() ) ) )
+			return FALSE;
+
+		echo HTML::tag( 'a', [
+			'href'  => add_query_arg( 'flush', '' ),
+			'class' => [ '-description', '-refresh' ],
+		], _x( 'Please refresh the page to generate the data.', 'MetaBox: Refresh Link', GEDITORIAL_TEXTDOMAIN ) );
+
+		echo $after;
+
+		return TRUE;
+	}
+
+	// TODO: radio list box using custom walker on `wp_terms_checklist()`
+
 	// SEE: [Use Chosen for a replacement WordPress taxonomy metabox](https://gist.github.com/helen/1573966)
 	// callback for meta box for choose only tax
+
 	// CAUTION: tax must be cat (hierarchical)
 	// hierarchical taxonomies save by IDs, whereas non save by slugs
 	// @SOURCE: `post_categories_meta_box()`
@@ -37,8 +55,12 @@ class MetaBox extends Core\Base
 	{
 		$args = self::atts( [
 			'taxonomy' => 'category',
+			'metabox'  => NULL,
 			'edit_url' => NULL,
 		], empty( $box['args'] ) ? [] : $box['args'] );
+
+		if ( $args['metabox'] && self::checkHidden( $args['metabox'] ) )
+			return;
 
 		$tax_name = esc_attr( $args['taxonomy'] );
 		$taxonomy = get_taxonomy( $args['taxonomy'] );
@@ -72,6 +94,9 @@ class MetaBox extends Core\Base
 
 	public static function getTermPosts( $taxonomy, $term_or_id, $exclude = [], $title = TRUE )
 	{
+		if ( ! $term_or_id || is_wp_error( $term_or_id ) )
+			return '';
+
 		if ( ! $term = Taxonomy::getTerm( $term_or_id, $taxonomy ) )
 			return '';
 

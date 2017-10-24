@@ -124,9 +124,10 @@ class Series extends gEditorial\Module
 
 				add_meta_box( $this->classs( 'supported' ),
 					$this->get_meta_box_title_tax( 'series_tax' ),
-					[ $this, 'do_meta_box' ],
+					[ $this, 'do_meta_box_supported' ],
 					$screen->post_type,
-					'side' );
+					'side'
+				);
 
 				// internal actions:
 				add_action( 'geditorial_series_meta_box', [ $this, 'geditorial_series_meta_box' ], 5, 3 );
@@ -208,8 +209,11 @@ class Series extends gEditorial\Module
 		return $this->filters( 'sanitize_post_meta', $postmeta, $fields, $post_id, $post_type );
 	}
 
-	public function do_meta_box( $post, $box )
+	public function do_meta_box_supported( $post, $box )
 	{
+		if ( $this->check_hidden_metabox( 'supported' ) )
+			return;
+
 		echo '<div class="geditorial-admin-wrap-metabox -series">';
 
 		$series = Taxonomy::getTerms( $this->constant( 'series_tax' ), $post->ID, TRUE );
