@@ -399,6 +399,9 @@ class Audit extends gEditorial\Module
 
 		if ( FALSE === ( $html = get_transient( $key ) ) ) {
 
+			if ( $this->check_hidden_metabox( 'summary', '</div>' ) )
+				return;
+
 			$terms = Taxonomy::getTerms( $this->constant( 'audit_tax' ), FALSE, TRUE, 'slug', [ 'hide_empty' => TRUE ] );
 
 			if ( $summary = $this->get_summary( $this->post_types(), $terms, $user_id ) ) {

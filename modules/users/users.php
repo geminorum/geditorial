@@ -380,6 +380,9 @@ class Users extends gEditorial\Module
 
 	public function dashboard_summary()
 	{
+		if ( $this->check_hidden_metabox( 'profile-summary' ) )
+			return;
+
 		$user = wp_get_current_user();
 
 		echo '<div class="geditorial-admin-wrap-widget -users -contacts">';
