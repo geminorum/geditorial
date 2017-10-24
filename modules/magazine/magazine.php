@@ -41,7 +41,7 @@ class Magazine extends gEditorial\Module
 				[
 					'field'       => 'issue_sections',
 					'title'       => _x( 'Issue Sections', 'Modules: Magazine: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Section taxonomy for issue and supported post types', 'Modules: Magazine: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Section taxonomy for issues and supported posttypes.', 'Modules: Magazine: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 				],
 			],
 			'_editlist' => [

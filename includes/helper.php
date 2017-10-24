@@ -122,6 +122,7 @@ class Helper extends Core\Base
 			return '';
 
 		$text = apply_filters( 'the_title', $text, 0 );
+		$text = apply_filters( 'string_format_i18n', $text );
 		$text = apply_filters( 'gnetwork_typography', $text );
 
 		return trim( $text );
@@ -135,6 +136,7 @@ class Helper extends Core\Base
 		if ( $shortcode )
 			$text = do_shortcode( $text, TRUE );
 
+		$text = apply_filters( 'html_format_i18n', $text );
 		$text = apply_filters( 'gnetwork_typography', $text );
 
 		return wpautop( $text );
@@ -1458,25 +1460,30 @@ class Helper extends Core\Base
 class Walker_PageDropdown extends \Walker_PageDropdown
 {
 
-	public function start_el( &$output, $page, $depth = 0, $args = array(), $id = 0 ) {
-		$pad = str_repeat('&nbsp;', $depth * 3);
+	public function start_el( &$output, $page, $depth = 0, $args = array(), $id = 0 )
+	{
+		$pad = str_repeat( '&nbsp;', $depth * 3 );
 
-		if ( ! isset( $args['value_field'] ) || ! isset( $page->{$args['value_field']} ) ) {
+		if ( ! isset( $args['value_field'] ) || ! isset( $page->{$args['value_field']} ) )
 			$args['value_field'] = 'ID';
-		}
 
-		$output .= "\t<option class=\"level-$depth\" value=\"" . esc_attr( $page->{$args['value_field']} ) . "\"";
+		$output.= "\t<option class=\"level-$depth\" value=\"".esc_attr( $page->{$args['value_field']} )."\"";
+
 		if ( $page->{$args['value_field']} == $args['selected'] ) // <---- CHANGED
-			$output .= ' selected="selected"';
-		$output .= '>';
+			$output.= ' selected="selected"';
+
+		$output.= '>';
 
 		$title = $page->post_title;
-		if ( '' === $title ) {
-			$title = sprintf( __( '#%d (no title)' ), $page->ID );
-		}
 
-		$title = apply_filters( 'list_pages', $title, $page );
-		$output .= $pad . esc_html( $title );
-		$output .= "</option>\n";
+		if ( ! empty( $args['title_with_meta'] ) // FIXME: must sanitize meta field name
+			&& ( $meta = gEditorial()->meta->get_postmeta( $page->ID, $args['title_with_meta'], FALSE ) ) )
+				$title = $meta;
+
+		if ( '' === $title )
+			$title = sprintf( __( '#%d (no title)' ), $page->ID );
+
+		$output.= $pad.esc_html( apply_filters( 'list_pages', $title, $page ) );
+		$output.= "</option>\n";
 	}
 }

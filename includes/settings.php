@@ -514,7 +514,6 @@ class Settings extends Core\Base
 			'type'    => 'select',
 			'default' => 'gregorian',
 			'values'  => Helper::getDefualtCalendars( TRUE ),
-			'section' => $section,
 		];
 	}
 
@@ -526,7 +525,6 @@ class Settings extends Core\Base
 			'type'    => 'checkbox',
 			'default' => [ 'gregorian' ],
 			'values'  => Helper::getDefualtCalendars( TRUE ),
-			'section' => $section,
 		];
 	}
 
@@ -539,7 +537,6 @@ class Settings extends Core\Base
 			'default' => [],
 			'exclude' => [ 'administrator' ],
 			'values'  => User::getAllRoleList(),
-			'section' => $section,
 		];
 	}
 
@@ -552,7 +549,6 @@ class Settings extends Core\Base
 			'default' => [],
 			'exclude' => [ 'administrator' ],
 			'values'  => User::getAllRoleList(),
-			'section' => $section,
 		];
 	}
 
@@ -565,7 +561,6 @@ class Settings extends Core\Base
 			'default' => [],
 			'exclude' => [ 'administrator', 'subscriber' ],
 			'values'  => User::getAllRoleList(),
-			'section' => $section,
 		];
 	}
 
@@ -578,7 +573,6 @@ class Settings extends Core\Base
 			'default' => [],
 			'exclude' => [ 'administrator', 'subscriber' ],
 			'values'  => User::getAllRoleList(),
-			'section' => $section,
 		];
 	}
 

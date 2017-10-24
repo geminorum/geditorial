@@ -82,6 +82,8 @@ class Modified extends gEditorial\Module
 		$this->register_shortcode( 'post_modified_shortcode' );
 		$this->register_shortcode( 'site_modified_shortcode' );
 
+		$this->filter( 'wp_nav_menu_items', 2 );
+
 		if ( is_admin() )
 			return;
 
@@ -94,8 +96,6 @@ class Modified extends gEditorial\Module
 
 			$this->enqueue_styles();
 		}
-
-		$this->filter( 'wp_nav_menu_items', 2 );
 	}
 
 	protected function dashboard_widgets()

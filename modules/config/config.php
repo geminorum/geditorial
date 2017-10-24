@@ -271,7 +271,7 @@ class Config extends gEditorial\Module
 			self::cheatin();
 
 		HTML::h3( _x( 'General Editorial Reports', 'Modules: Config', GEDITORIAL_TEXTDOMAIN ) );
-		HTML::desc( _x( 'No reports available!', 'Modules: Config', GEDITORIAL_TEXTDOMAIN ) );
+		HTML::desc( _x( 'No reports available!', 'Modules: Config', GEDITORIAL_TEXTDOMAIN ), TRUE, '-empty' );
 	}
 
 	public function tools_sub( $uri, $sub )

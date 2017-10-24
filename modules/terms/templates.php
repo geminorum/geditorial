@@ -13,6 +13,6 @@ class Terms extends gEditorial\Template
 	// FIXME: write and move it up!
 	public static function termImage( $atts = [], $module = NULL )
 	{
-		// Taxonomy::getFeaturedImageHTML( $term_id, $size )
+		// Taxonomy::htmlFeaturedImage( $term_id, $size )
 	}
 }

@@ -390,7 +390,7 @@ class Users extends gEditorial\Module
 
 		echo '<div class="geditorial-admin-wrap-widget -users -contacts">';
 
-		echo HTML::wrap( get_avatar( $user->user_email, 86 ), '-avatar' );
+		echo HTML::wrap( get_avatar( $user->user_email, 125 ), '-avatar' );
 
 		echo '<ul class="-rows">';
 

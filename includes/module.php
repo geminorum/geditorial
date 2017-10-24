@@ -2359,13 +2359,13 @@ SQL;
 	// for posts
 	public function column_thumb( $post_id, $size = [ 45, 72 ] )
 	{
-		echo $this->filters( 'column_thumb', PostType::getFeaturedImageHTML( $post_id, $size ), $post_id, $size );
+		echo $this->filters( 'column_thumb', PostType::htmlFeaturedImage( $post_id, $size ), $post_id, $size );
 	}
 
 	// for terms
 	public function column_image( $term_id, $size = [ 45, 72 ] )
 	{
-		echo $this->filters( 'column_image', Taxonomy::getFeaturedImageHTML( $term_id, $size ), $term_id, $size );
+		echo $this->filters( 'column_image', Taxonomy::htmlFeaturedImage( $term_id, $size ), $term_id, $size );
 	}
 
 	// TODO: override $title_attr based on passed constant key

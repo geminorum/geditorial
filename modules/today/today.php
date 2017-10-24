@@ -38,7 +38,7 @@ class Today extends gEditorial\Module
 				[
 					'field'       => 'today_in_draft',
 					'title'       => _x( 'Fill The Day', 'Modules: Today: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Fills the current day info for newly drafted supported posttypes.', 'Modules: Today: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Fills the current day info on newly drafted supported posttypes.', 'Modules: Today: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 				],
 			],
 			'_frontend' => [
