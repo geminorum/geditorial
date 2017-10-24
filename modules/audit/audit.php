@@ -282,7 +282,8 @@ class Audit extends gEditorial\Module
 
 		$post_id = get_queried_object_id();
 
-		if ( $this->role_can( 'reports' ) ) {
+		if ( $this->role_can( 'reports' )
+			|| current_user_can( 'edit_post', $post_id ) ) {
 
 			$nodes[] = [
 				'id'     => $this->classs(),
@@ -360,7 +361,7 @@ class Audit extends gEditorial\Module
 		if ( ! $this->role_can( 'assign' ) )
 			return;
 
-		$title = 'all' == $this->get_setting( 'summary_scope', 'all' )
+		$title = $this->summary_scope_user()
 			? _x( 'Editorial Audit Summary', 'Modules: Audit: Dashboard Widget Title', GEDITORIAL_TEXTDOMAIN )
 			: _x( 'Your Audit Summary', 'Modules: Audit: Dashboard Widget Title', GEDITORIAL_TEXTDOMAIN );
 
@@ -371,12 +372,26 @@ class Audit extends gEditorial\Module
 		wp_add_dashboard_widget( $this->classs( 'summary' ), $title, [ $this, 'dashboard_widget_summary' ] );
 	}
 
+	// 0 for all
+	private function summary_scope_user()
+	{
+		// FIXME: DEPRICATED
+		if ( 'all' == $this->get_setting( 'summary_scope', 'all' ) )
+			return 0;
+
+		// working but wait on hh
+		// if ( $this->role_can( 'reports' ) )
+		// 	return 0;
+
+		return get_current_user_id();
+	}
+
 	public function dashboard_widget_summary()
 	{
-		$user_id = 'all' == $this->get_setting( 'summary_scope', 'all' ) ? 0 : get_current_user_id();
 		// using core styles
 		echo '<div id="dashboard_right_now" class="geditorial-admin-wrap-widget -audit -core-styles">';
 
+		$user_id = $this->summary_scope_user();
 		$key     = $this->hash( 'widgetsummary', $user_id );
 
 		if ( WordPress::isFlush() )
