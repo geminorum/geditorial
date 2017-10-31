@@ -777,7 +777,7 @@ class Module extends Base
 	protected function settings_buttons( $module = FALSE, $wrap = '' )
 	{
 		if ( FALSE !== $wrap )
-			echo '<p class="submit '.$this->base.'-wrap-buttons '.$wrap.'">';
+			echo $this->wrap_open_buttons( $wrap );
 
 		foreach ( $this->buttons as $button )
 			Settings::submitButton( $button['key'], $button['value'], $button['type'], $button['atts'] );

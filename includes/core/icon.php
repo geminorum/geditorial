@@ -5,6 +5,8 @@ defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
 class Icon extends Base
 {
 
+	// https://github.com/JJJ/meta-icon
+
 	const BASE = 'geditorial';
 
 	public static $icons = array(

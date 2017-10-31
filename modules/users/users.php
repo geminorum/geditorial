@@ -6,8 +6,8 @@ use geminorum\gEditorial;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Core\HTML;
-use geminorum\gEditorial\Core\Misc;
 use geminorum\gEditorial\Core\Number;
+use geminorum\gEditorial\Core\Third;
 use geminorum\gEditorial\Core\URL;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\Database;
@@ -209,8 +209,8 @@ class Users extends gEditorial\Module
 	{
 		$title = _x( 'Your Profile', 'Modules: Users: Dashboard Widget Title', GEDITORIAL_TEXTDOMAIN );
 		$title.= ' <span class="postbox-title-action"><a href="'.esc_url( admin_url( 'profile.php' )  ).'"';
-		$title.= ' title="'._x( 'Edit your profile', 'Modules: Modules: Dashboard Widget Action', GEDITORIAL_TEXTDOMAIN ).'">';
-		$title.= _x( 'Edit', 'Modules: Modules: Dashboard Widget Action', GEDITORIAL_TEXTDOMAIN ).'</a></span>';
+		$title.= ' title="'._x( 'Edit your profile', 'Modules: Users: Dashboard Widget Action', GEDITORIAL_TEXTDOMAIN ).'">';
+		$title.= _x( 'Edit', 'Modules: Users: Dashboard Widget Action', GEDITORIAL_TEXTDOMAIN ).'</a></span>';
 
 		wp_add_dashboard_widget( $this->classs( 'profile-summary' ), $title, [ $this, 'dashboard_summary' ] );
 	}
@@ -448,7 +448,7 @@ class Users extends gEditorial\Module
 	{
 		switch ( $key ) {
 			case 'mobile': return HTML::tel( $value );
-			case 'twitter': return Misc::htmlTwitterIntent( $value, TRUE );
+			case 'twitter': return Third::htmlTwitterIntent( $value, TRUE );
 			case 'googleplus': return HTML::link( URL::prepTitle( $value ), $value );
 			case 'facebook': return HTML::link( URL::prepTitle( $value ), $value );
 		}

@@ -6,7 +6,7 @@ use geminorum\gEditorial;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Core\Date;
 use geminorum\gEditorial\Core\HTML;
-use geminorum\gEditorial\Core\Misc;
+use geminorum\gEditorial\Core\Third;
 
 class GCalEvents extends gEditorial\Widget
 {
@@ -26,7 +26,7 @@ class GCalEvents extends gEditorial\Widget
 
 	public function widget_html( $args, $instance )
 	{
-		if ( ! $data = Misc::getGoogleCalendarEvents( $instance ) )
+		if ( ! $data = Third::getGoogleCalendarEvents( $instance ) )
 			return FALSE;
 
 		$empty = empty( $instance['empty'] ) ? FALSE : $instance['empty'];

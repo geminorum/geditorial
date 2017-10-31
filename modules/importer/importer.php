@@ -347,7 +347,7 @@ class Importer extends gEditorial\Module
 
 			$this->form_check( $selected, $attach_id, $field_map, $post_type );
 
-			echo '<p class="submit">';
+			echo $this->wrap_open_buttons();
 
 			Settings::submitButton( 'csv_import',
 				_x( 'Step 4: Import', 'Modules: Importer: Setting Button', GEDITORIAL_TEXTDOMAIN ), TRUE );
@@ -363,7 +363,7 @@ class Importer extends gEditorial\Module
 
 			$this->form_table( $attach_id, $field_map, $post_type );
 
-			echo '<p class="submit">';
+			echo $this->wrap_open_buttons();
 
 			// Settings::submitButton( 'csv_step_four',
 			// 	_x( 'Step 3: Select', 'Modules: Importer: Setting Button', GEDITORIAL_TEXTDOMAIN ), TRUE );
@@ -384,7 +384,7 @@ class Importer extends gEditorial\Module
 
 			$this->form_map( $attach_id, $post_type );
 
-			echo '<p class="submit">';
+			echo $this->wrap_open_buttons();
 
 			Settings::submitButton( 'csv_step_three',
 				_x( 'Step 2: Map', 'Modules: Importer: Setting Button', GEDITORIAL_TEXTDOMAIN ), TRUE );
@@ -397,7 +397,7 @@ class Importer extends gEditorial\Module
 
 			$this->from_attached( 0, $post_type );
 
-			echo '<p class="submit">';
+			echo $this->wrap_open_buttons();
 
 			Settings::submitButton( 'csv_step_two',
 				_x( 'Step 1: Attachment', 'Modules: Importer: Setting Button', GEDITORIAL_TEXTDOMAIN ), TRUE );

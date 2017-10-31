@@ -17,6 +17,9 @@ class ShortCode extends Core\Base
 
 	public static function wrap( $html, $suffix = FALSE, $args = [], $block = TRUE, $extra = [] )
 	{
+		if ( is_null( $html ) )
+			return $html;
+
 		$before = empty( $args['before'] ) ? '' : $args['before'];
 		$after  = empty( $args['after'] ) ? '' : $args['after'];
 

@@ -6,8 +6,8 @@ use geminorum\gEditorial;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Core\HTML;
-use geminorum\gEditorial\Core\Misc;
 use geminorum\gEditorial\Core\Number;
+use geminorum\gEditorial\Core\Third;
 use geminorum\gEditorial\Core\URL;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\Media;
@@ -800,7 +800,7 @@ class Tweaks extends gEditorial\Module
 	{
 		switch ( $key ) {
 			case 'mobile': return HTML::tel( $value );
-			case 'twitter': return Misc::htmlTwitterIntent( $value, TRUE );
+			case 'twitter': return Third::htmlTwitterIntent( $value, TRUE );
 			case 'googleplus': return HTML::link( URL::prepTitle( $value ), $value );
 			case 'facebook': return HTML::link( URL::prepTitle( $value ), $value );
 		}

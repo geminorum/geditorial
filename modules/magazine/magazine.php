@@ -777,10 +777,8 @@ class Magazine extends gEditorial\Module
 			HTML::h3( _x( 'Magazine Tools', 'Modules: Magazine', GEDITORIAL_TEXTDOMAIN ) );
 
 			echo '<table class="form-table">';
-
 			echo '<tr><th scope="row">'._x( 'From Terms', 'Modules: Magazine', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
-
-			echo '<p>';
+			echo $this->wrap_open_buttons( '-tools' );
 
 			Settings::submitButton( 'issue_tax_check',
 				_x( 'Check Terms', 'Modules: Magazine: Setting Button', GEDITORIAL_TEXTDOMAIN ), TRUE );
