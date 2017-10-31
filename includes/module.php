@@ -923,15 +923,31 @@ class Module extends Base
 				if ( array_key_exists( 'values', $args ) && FALSE === $args['values'] )
 					continue;
 
-				if ( ! array_key_exists( 'type', $args ) || 'enabled' == $args['type'] )
+				if ( ! array_key_exists( 'type', $args ) || 'enabled' == $args['type'] ) {
+
 					$options['settings'][$setting] = (bool) $option;
 
-				// multiple checkboxes
-				else if ( is_array( $option ) )
-					$options['settings'][$setting] = array_keys( $option );
+				} else if ( is_array( $option ) ) {
 
-				else
-					$options['settings'][$setting] = trim( stripslashes( $option ) );
+					if ( array_key_exists( 'type', $args ) && 'text' == $args['type'] ) {
+
+						// multiple texts
+						$options['settings'][$setting] = [];
+
+						foreach ( $option as $key => $value )
+							if ( $string = trim( self::unslash( $value ) ) )
+								$options['settings'][$setting][sanitize_key( $key )] = $string;
+
+					} else {
+
+						// multiple checkboxes
+						$options['settings'][$setting] = array_keys( $option );
+					}
+
+				} else {
+
+					$options['settings'][$setting] = trim( self::unslash( $option ) );
+				}
 			}
 
 			if ( ! count( $options['settings'] ) )
