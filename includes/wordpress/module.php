@@ -253,4 +253,11 @@ class Module extends Core\Base
 			? '<div class="-wrap '.$this->base.'-wrap -'.$this->key.' '.$class.'">'
 			: '<span class="-wrap '.$this->base.'-wrap -'.$this->key.' '.$class.'">';
 	}
+
+	protected function wrap_open_buttons( $class = '', $block = TRUE )
+	{
+		return $block
+			? '<p class="submit '.$this->base.'-wrap -wrap-buttons -'.$this->key.' '.$class.'">'
+			: '<span class="submit '.$this->base.'-wrap -wrap-buttons -'.$this->key.' '.$class.'">';
+	}
 }

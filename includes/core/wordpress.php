@@ -5,6 +5,11 @@ defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
 class WordPress extends Base
 {
 
+	public static function isMinWPv( $minimum_version )
+	{
+		return ( version_compare( get_bloginfo( 'version' ), $minimum_version ) >= 0 );
+	}
+
 	public static function mustRegisterUI( $check_admin = TRUE )
 	{
 		if ( self::isAJAX()

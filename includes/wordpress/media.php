@@ -8,6 +8,17 @@ use geminorum\gEditorial\Core;
 class Media extends Core\Base
 {
 
+	// FIXME: get title if html is empty
+	public static function htmlAttachmentShortLink( $id, $html )
+	{
+		return HTML::tag( 'a', [
+			'href'  => WordPress::getPostShortLink( $id ),
+			'rel'   => 'attachment',
+			'class' => '-attachment',
+			'data'  => [ 'id' => $id ],
+		], $html );
+	}
+
 	// core dup with posttype/taxonomy/title
 	// @REF: `add_image_size()`
 	public static function registerImageSize( $name, $atts = array() )

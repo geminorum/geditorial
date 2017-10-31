@@ -2,11 +2,36 @@
 
 defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
 
-class Misc extends Base
+class Third extends Base
 {
 
+	public static function htmlTwitterIntent( $string, $thickbox = FALSE )
+	{
+		$handle = self::getTwitter( $string );
+		$url    = URL::untrail( self::getTwitter( $string, TRUE, 'https://twitter.com/intent/user?screen_name=' ) );
+
+		if ( $thickbox ) {
+
+			$args  = array(
+				'href'    => add_query_arg( array( 'TB_iframe' => '1' ), $url ),
+				'title'   => $handle,
+				'class'   => '-twitter thickbox',
+				'onclick' => 'return false;',
+			);
+
+			if ( function_exists( 'add_thickbox' ) )
+				add_thickbox();
+
+		} else {
+
+			$args = array( 'href' => $url, 'class' => '-twitter' );
+		}
+
+		return HTML::tag( 'a', $args, '&lrm;'.$handle.'&rlm;' );
+	}
+
 	// @REF: https://gist.github.com/boonebgorges/5537311
-	public static function getTwitter( $string, $url = FALSE )
+	public static function getTwitter( $string, $url = FALSE, $base = 'https://twitter.com/' )
 	{
 		$parts = parse_url( $string );
 
@@ -15,7 +40,7 @@ class Misc extends Base
 		else
 			$handle = trim( $parts['path'], '/\\' );
 
-		return $url ? URL::trail( 'https://twitter.com/'.$handle ) : '@'.$handle;
+		return $url ? URL::trail( $base.$handle ) : '@'.$handle;
 	}
 
 	// @REF: https://developers.google.com/google-apps/calendar/

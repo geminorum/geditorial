@@ -151,7 +151,7 @@ class PostType extends Core\Base
 	}
 
 	// must add `add_thickbox()` for thickbox
-	public static function getFeaturedImageHTML( $post_id, $size = 'thumbnail', $link = TRUE )
+	public static function htmlFeaturedImage( $post_id, $size = 'thumbnail', $link = TRUE )
 	{
 		if ( ! $post_thumbnail_id = get_post_thumbnail_id( $post_id ) )
 			return '';
