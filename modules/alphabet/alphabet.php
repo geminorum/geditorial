@@ -75,6 +75,7 @@ class Alphabet extends gEditorial\Module
 			'post_type' => $this->post_types(),
 			'comments'  => FALSE,
 			'excerpt'   => FALSE,
+			'item_cb'   => FALSE,
 			'context'   => NULL,
 			'wrap'      => TRUE,
 			'before'    => '',
@@ -109,6 +110,9 @@ class Alphabet extends gEditorial\Module
 			$alphabet = self::getAlphabet( $args['locale'] );
 			$keys     = array_flip( Arraay::column( $alphabet, 'letter', 'key' ) );
 
+			if ( $args['item_cb'] && ! is_callable( $args['item_cb'] ) )
+				$args['item_cb'] = FALSE;
+
 			foreach ( $posts as $post ) {
 
 				$letter = self::firstLetter( $post->post_title, $alphabet );
@@ -123,20 +127,27 @@ class Alphabet extends gEditorial\Module
 					$actives[] = $current = $letter;
 				}
 
-				$title = Helper::getPostTitle( $post );
-				$link  = WordPress::getPostShortLink( $post->ID );
+				if ( $args['item_cb'] ) {
 
-				$html.= '<dt><span class="-title">'.HTML::link( $title, $link, TRUE ).'</span>';
+					$html.= call_user_func_array( $args['item_cb'], [ $post, $args ] );
 
-				if ( $args['comments'] && $post->comment_count )
-					$html.= '<span class="-comments-count">'.Helper::getCounted( $post->comment_count, '&nbsp;(%s)' ).'</span>';
+				} else {
 
-				$html.= '</dt>';
+					$title = Helper::getPostTitle( $post );
+					$link  = WordPress::getPostShortLink( $post->ID );
 
-				if ( $args['excerpt'] && $post->post_excerpt )
-					$html.= '<dd class="-excerpt">'.wpautop( Helper::prepDescription( $post->post_excerpt ), FALSE ).'</dd>';
-				else
-					$html.= '<dd class="-empty"></dd>';
+					$html.= '<dt><span class="-title">'.HTML::link( $title, $link, TRUE ).'</span>';
+
+					if ( $args['comments'] && $post->comment_count )
+						$html.= '<span class="-comments-count">'.Helper::getCounted( $post->comment_count, '&nbsp;(%s)' ).'</span>';
+
+					$html.= '</dt>';
+
+					if ( $args['excerpt'] && $post->post_excerpt )
+						$html.= '<dd class="-excerpt">'.wpautop( Helper::prepDescription( $post->post_excerpt ), FALSE ).'</dd>';
+					else
+						$html.= '<dd class="-empty"></dd>';
+				}
 			}
 
 			$html.= '</dl><div class="clearfix"></div></li>';
@@ -167,6 +178,7 @@ class Alphabet extends gEditorial\Module
 			'taxonomy'    => $this->taxonomies(),
 			'description' => FALSE,
 			'count'       => FALSE,
+			'item_cb'     => FALSE,
 			'context'     => NULL,
 			'wrap'        => TRUE,
 			'before'      => '',
@@ -198,6 +210,9 @@ class Alphabet extends gEditorial\Module
 			$alphabet = self::getAlphabet( $args['locale'] );
 			$keys     = array_flip( Arraay::column( $alphabet, 'letter', 'key' ) );
 
+			if ( $args['item_cb'] && ! is_callable( $args['item_cb'] ) )
+				$args['item_cb'] = FALSE;
+
 			foreach ( $terms as $term ) {
 
 				$letter = self::firstLetter( $term->name, $alphabet );
@@ -212,21 +227,28 @@ class Alphabet extends gEditorial\Module
 					$actives[] = $current = $letter;
 				}
 
-				$title = sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' );
-				$title = Text::reFormatName( $title ); // no need
-				$link  = get_term_link( $term->term_id, $term->taxonomy );
+				if ( $args['item_cb'] ) {
 
-				$html.= '<dt><span class="-title">'.HTML::link( $title, $link, TRUE ).'</span>';
+					$html.= call_user_func_array( $args['item_cb'], [ $term, $args ] );
 
-				if ( $args['count'] && $term->count )
-					$html.= '<span class="-term-count">'.Helper::getCounted( $term->count, '&nbsp;(%s)' ).'</span>';
+				} else {
 
-				$html.= '</dt>';
+					$title = sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' );
+					$title = Text::reFormatName( $title ); // no need
+					$link  = get_term_link( $term->term_id, $term->taxonomy );
 
-				if ( $args['description'] && $term->description )
-					$html.= '<dd class="-description">'.wpautop( Helper::prepDescription( $term->description ), FALSE ).'</dd>';
-				else
-					$html.= '<dd class="-empty"></dd>';
+					$html.= '<dt><span class="-title">'.HTML::link( $title, $link, TRUE ).'</span>';
+
+					if ( $args['count'] && $term->count )
+						$html.= '<span class="-term-count">'.Helper::getCounted( $term->count, '&nbsp;(%s)' ).'</span>';
+
+					$html.= '</dt>';
+
+					if ( $args['description'] && $term->description )
+						$html.= '<dd class="-description">'.wpautop( Helper::prepDescription( $term->description ), FALSE ).'</dd>';
+					else
+						$html.= '<dd class="-empty"></dd>';
+				}
 			}
 
 			$html.= '</dl><div class="clearfix"></div></li>';
