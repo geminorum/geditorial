@@ -255,7 +255,7 @@ class Plugin
 
 	public function modules( $orderby = FALSE )
 	{
-		if ( ! count( $this->modules ) )
+		if ( empty( $this->modules ) )
 			return [];
 
 		if ( FALSE === $orderby )
@@ -451,7 +451,7 @@ class Plugin
 	{
 		$this->asset_config = TRUE;
 
-		if ( ! count( $args ) )
+		if ( empty( $args ) )
 			return TRUE;
 
 		if ( is_null( $module ) )
@@ -508,7 +508,7 @@ class Plugin
 
 	public function admin_bar_menu( $wp_admin_bar )
 	{
-		if ( ! count( $this->adminbar_nodes ) )
+		if ( empty( $this->adminbar_nodes ) )
 			return;
 
 		if ( in_array( static::BASE, Arraay::column( $this->adminbar_nodes, 'parent' ) ) ) {

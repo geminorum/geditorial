@@ -473,7 +473,7 @@ class Specs extends gEditorial\Module
 		if ( FALSE === $args['context'] )
 			return NULL;
 
-		if ( empty( $args['ids'] ) || ! count( $args['ids'] ) ) {
+		if ( empty( $args['ids'] ) || empty( $args['ids'] ) ) {
 			$terms = wp_get_object_terms( (int) $post->ID, $this->constant( 'specs_tax' ), [
 				'order'   => $args['order'],
 				'orderby' => $args['orderby'],

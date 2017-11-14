@@ -242,7 +242,7 @@ class Audit extends gEditorial\Module
 
 				$locking = $this->get_setting( 'locking_terms', [] );
 
-				if ( ! count( $locking ) )
+				if ( empty( $locking ) )
 					return $caps;
 
 				if ( ! $post = get_post( $args[0] ) )
@@ -531,7 +531,7 @@ class Audit extends gEditorial\Module
 	{
 		$terms = Taxonomy::getTerms( $this->constant( 'audit_tax' ), FALSE, TRUE, 'slug', [ 'hide_empty' => TRUE ] );
 
-		if ( ! count( $terms ) )
+		if ( empty( $terms ) )
 			return HTML::desc( _x( 'No reports available!', 'Modules: Audit', GEDITORIAL_TEXTDOMAIN ), TRUE, '-empty' );
 
 		$args = $this->settings_form_req( [

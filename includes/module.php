@@ -212,7 +212,7 @@ class Module extends Base
 
 		foreach ( $this->get_module_templates() as $constant => $templates ) {
 
-			if ( ! count( $templates ) )
+			if ( empty( $templates ) )
 				continue;
 
 			$list = [];
@@ -1059,7 +1059,7 @@ class Module extends Base
 		if ( is_null( $fields ) )
 			$fields = $this->fields[$post_type];
 
-		if ( ! count( $fields ) )
+		if ( empty( $fields ) )
 			return;
 
 		if ( $append )
@@ -1158,7 +1158,7 @@ class Module extends Base
 		if ( is_null( $terms ) && isset( $this->strings['terms'][$constant] ) )
 			$terms = $this->strings['terms'][$constant];
 
-		if ( ! count( $terms ) )
+		if ( empty( $terms ) )
 			$message = 'noadded';
 
 		else if ( $added = Taxonomy::insertDefaultTerms( $this->constant( $constant ), $terms ) )
@@ -2445,7 +2445,7 @@ SQL;
 		if ( is_null( $post_types ) )
 			$post_types = $this->post_types();
 
-		if ( ! count( $post_types ) )
+		if ( empty( $post_types ) )
 			return FALSE;
 
 		$to  = $this->constant( $constant );
@@ -2475,7 +2475,7 @@ SQL;
 		if ( is_null( $post_types ) )
 			$post_types = $this->post_types();
 
-		if ( ! count( $post_types ) )
+		if ( empty( $post_types ) )
 			return FALSE;
 
 		$to  = $this->constant( $constant );

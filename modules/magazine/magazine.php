@@ -578,7 +578,7 @@ class Magazine extends gEditorial\Module
 			$excludes[] = $term->slug;
 		}
 
-		if ( ! count( $terms ) || $this->get_setting( 'multiple_instances', FALSE ) )
+		if ( empty( $terms ) || $this->get_setting( 'multiple_instances', FALSE ) )
 			$dropdowns[0] = MetaBox::dropdownAssocPosts( $post_type, '', $this->classs(), $excludes );
 
 		$empty = TRUE;

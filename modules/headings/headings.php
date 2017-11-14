@@ -136,7 +136,7 @@ class Headings extends gEditorial\Module
 
 	public function content_before( $content, $posttypes = NULL )
 	{
-		if ( ! count( $this->toc ) )
+		if ( empty( $this->toc ) )
 			return;
 
 		if ( ! $this->is_content_insert( NULL ) )

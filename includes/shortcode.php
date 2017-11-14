@@ -459,10 +459,10 @@ class ShortCode extends Core\Base
 			// setup_postdata( $post );
 
 			if ( $args['item_cb'] )
-				$html .= call_user_func_array( $args['item_cb'], [ $post, $args, $term ] );
+				$html.= call_user_func_array( $args['item_cb'], [ $post, $args, $term ] );
 
 			else
-				$html .= self::postItem( $args, $post );
+				$html.= self::postItem( $args, $post );
 		}
 
 		$html = HTML::tag( $args['list_tag'], [

@@ -61,7 +61,7 @@ class Attachments extends gEditorial\Module
 
 		$attachments = Media::getAttachments( $post_id, '' );
 
-		if ( ! count( $attachments ) )
+		if ( empty( $attachments ) )
 			return;
 
 		$nodes[] = [

@@ -160,7 +160,7 @@ class Importer extends gEditorial\Module
 
 					$posts = PostType::getIDsByTitle( $title );
 
-					if ( ! count( $posts ) )
+					if ( empty( $posts ) )
 						return '&mdash;';
 
 					$html = '<div class="-danger">'._x( 'Similar to Title:', 'Modules: Importer: Table Column', GEDITORIAL_TEXTDOMAIN );

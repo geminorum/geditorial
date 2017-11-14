@@ -92,7 +92,7 @@ class Today extends gEditorial\Helper
 		if ( $the_day['year'] )
 			$parts['year'] = Number::format( $the_day['year'] );
 
-		if ( ! count( $parts ) )
+		if ( empty( $parts ) )
 			return $empty;
 
 		if ( $the_day['cal'] )

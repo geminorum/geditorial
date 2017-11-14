@@ -115,7 +115,7 @@ class MetaBox extends Core\Base
 
 		$posts = get_posts( $args );
 
-		if ( ! count( $posts ) )
+		if ( empty( $posts ) )
 			return FALSE;
 
 		$html     = '';

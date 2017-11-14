@@ -252,7 +252,7 @@ class Series extends gEditorial\Module
 			$i++;
 		}
 
-		if ( $this->get_setting( 'multiple_instances', FALSE ) || ! count( $series ) )
+		if ( $this->get_setting( 'multiple_instances', FALSE ) || empty( $series ) )
 			$dropdowns[0] = wp_dropdown_categories( [
 				'taxonomy'         => $tax,
 				'selected'         => 0,

@@ -71,7 +71,7 @@ class Connected extends gEditorial\Module
 	{
 		$post_types = $this->post_types();
 
-		if ( ! count( $post_types ) )
+		if ( empty( $post_types ) )
 			return;
 
 		$args = [

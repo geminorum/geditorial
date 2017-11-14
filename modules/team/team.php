@@ -4,7 +4,7 @@ defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core\HTML;
-use geminorum\gEditorial\Core\Misc;
+use geminorum\gEditorial\Core\Third;
 
 class Team extends gEditorial\Module
 {
@@ -167,7 +167,7 @@ class Team extends gEditorial\Module
 			case 'email_contact': return HTML::mailto( $value );
 			case 'personal_site': return HTML::link( $value );
 			case 'phone': return HTML::tel( $value );
-			case 'twitter': return Misc::htmlTwitterIntent( $value, is_admin() );
+			case 'twitter': return Third::htmlTwitterIntent( $value, is_admin() );
 			case 'username': return '@'.$value; // FIXME
 		}
 

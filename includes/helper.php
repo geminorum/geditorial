@@ -228,7 +228,7 @@ class Helper extends Core\Base
 
 	public static function getAuthorsEditRow( $authors, $post_type = 'post', $before = '', $after = '' )
 	{
-		if ( ! count( $authors ) )
+		if ( empty( $authors ) )
 			return;
 
 		$list = [];
