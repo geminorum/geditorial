@@ -382,6 +382,9 @@ class Module extends Base
 					if ( in_array( $post_type, $this->post_types_excluded ) )
 						$value = FALSE;
 
+					if ( ! post_type_exists( $post_type ) )
+						$value = FALSE;
+
 					if ( $value )
 						$post_types[] = $post_type;
 				}
