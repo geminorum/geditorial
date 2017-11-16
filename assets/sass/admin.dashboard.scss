@@ -28,8 +28,13 @@
 
 #dashboard-widgets-wrap {
 
-  // tables whitin widgets
+  // tables within widgets
   .base-table-wrap {
+
+    th.-column {
+      font-size: smaller;
+      font-weight: 600;
+    }
 
     .-column-modified {
       width: 22%;
@@ -46,6 +51,12 @@
     .-cell-follow,
     .-cell-author {
       @include link-colors($gray-light, null, $gray);
+    }
+
+    .-cell-author,
+    .-cell-modified {
+      font-size: smaller;
+      line-height: inherit;
     }
   }
 }
