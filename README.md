@@ -3,9 +3,10 @@
 [WordPress](https://wordpress.org/), Magazine Style!
 
 [![Travis](https://img.shields.io/travis/geminorum/geditorial.svg?style=flat-square)](https://travis-ci.org/geminorum/geditorial)
+[![GitHub license](https://img.shields.io/badge/license-GPLv3+-blue.svg?style=flat-square)](https://raw.githubusercontent.com/geminorum/geditorial/master/LICENSE)
 [![GitHub releases](https://img.shields.io/github/release/geminorum/geditorial.svg?style=flat-square)](https://github.com/geminorum/geditorial/releases)
 [![GitHub issues](https://img.shields.io/github/issues/geminorum/geditorial.svg?style=flat-square)](https://github.com/geminorum/geditorial/issues)
-[![Gratipay](http://img.shields.io/gratipay/geminorum.svg?style=flat-square)](https://gratipay.com/geminorum/)
+[![js-semistandard-style](https://img.shields.io/badge/code%20style-semistandard-brightgreen.svg?style=flat-square)](https://github.com/Flet/semistandard)
 
 gEditorial is a fork in structure of [EditFlow](http://editflow.org/).
 
