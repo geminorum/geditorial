@@ -1,19 +1,17 @@
-(function($, p, c, m) {
-  "use strict";
+/* global jQuery, gEditorial, gEditorialModules */
 
+(function ($, p, c, m) {
   var o = {};
 
   o.action = p._base + '_' + m;
 
-  o.p = function(el) {
+  o.p = function (el) {
+    var $el = $(el);
+    var $row = $el.parent('.misc-pub-section');
+    var post = $el.data('parent');
+    var $spinner = $row.find('.spinner');
 
-    var $el = $(el),
-      $row = $el.parent('.misc-pub-section'),
-      post = $el.data('parent'),
-      $spinner = $row.find('.spinner');
-
-    if ($row.hasClass('-done'))
-      return false;
+    if ($row.hasClass('-done')) return false;
 
     $.ajax({
       url: p._url,
@@ -24,17 +22,17 @@
         post_id: post,
         nonce: p[m]._nonce
       },
-      beforeSend: function(xhr) {
+      beforeSend: function (xhr) {
         $spinner.addClass('is-active');
       },
-      success: function(response, textStatus, xhr) {
+      success: function (response, textStatus, xhr) {
         $spinner.removeClass('is-active');
         $el.attr('disabled', 'disabled');
         $row.addClass('-done');
         if (response.success) {
           $row.append('<span class="dashicons dashicons-yes -success"></span>');
-          setTimeout(function() {
-            $row.fadeOut('slow', function() {
+          setTimeout(function () {
+            $row.fadeOut('slow', function () {
               $(this).remove();
             });
           }, 3500);
@@ -46,16 +44,14 @@
     });
   };
 
-  o.d = function(el) {
+  o.d = function (el) {
+    var $el = $(el);
+    var $row = $el.parents('li');
+    var post = $el.data('parent');
+    var revision = $el.data('id');
+    var $spinner = $row.find('.spinner');
 
-    var $el = $(el),
-      $row = $el.parents('li'),
-      post = $el.data('parent'),
-      revision = $el.data('id'),
-      $spinner = $row.find('.spinner');
-
-    if ($row.hasClass('-done'))
-      return false;
+    if ($row.hasClass('-done')) return false;
 
     $.ajax({
       url: p._url,
@@ -67,17 +63,17 @@
         post_id: post,
         nonce: p[m]._nonce
       },
-      beforeSend: function(xhr) {
+      beforeSend: function (xhr) {
         $spinner.addClass('is-active');
       },
-      success: function(response, textStatus, xhr) {
+      success: function (response, textStatus, xhr) {
         $spinner.removeClass('is-active');
         $el.attr('disabled', 'disabled');
         $row.addClass('-done');
         if (response.success) {
           $row.append('<span class="dashicons dashicons-yes -success"></span>');
-          setTimeout(function() {
-            $row.fadeOut('slow', function() {
+          setTimeout(function () {
+            $row.fadeOut('slow', function () {
               $(this).remove();
             });
           }, 3500);
@@ -88,14 +84,13 @@
     });
   };
 
-  $(function() {
-
-    $('#revisionsdiv a.-delete').on('click', function(e) {
+  $(function () {
+    $('#revisionsdiv a.-delete').on('click', function (e) {
       e.preventDefault();
       o.d(this);
     });
 
-    $('.misc-pub-section.geditorial-admin-wrap.-revisions a.-purge').on('click', function(e) {
+    $('.misc-pub-section.geditorial-admin-wrap.-revisions a.-purge').on('click', function (e) {
       e.preventDefault();
       o.p(this);
     });
@@ -105,5 +100,4 @@
   //
   // if (p._dev)
   //   console.log(o);
-
 }(jQuery, gEditorial, gEditorialModules, 'revisions'));

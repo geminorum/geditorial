@@ -1,6 +1,6 @@
-(function($, p, c, m) {
-  "use strict";
+/* global jQuery, gEditorial, gEditorialModules */
 
+(function ($, p, c, m) {
   var o = {};
 
   o.e = true; // empty
@@ -10,18 +10,17 @@
   o.spinner = '.geditorial-spinner';
   o.wrapper = '<div id="editorial-' + m + '" class="geditorial-wrap -drafts" style="display:none;"><div class="-content"></div></div>';
 
-  o.toggle = function() {
+  o.toggle = function () {
     if ($(this.box).is(':visible')) {
-      $(this.box).slideUp(function() {
+      $(this.box).slideUp(function () {
         $(this).hide();
       });
     } else {
       $(this.box).css({height: 'auto'}).slideDown();
-    };
+    }
   };
 
-  o.populate = function() {
-
+  o.populate = function () {
     if (!this.e) {
       this.toggle();
       return;
@@ -39,10 +38,10 @@
         what: 'list',
         nonce: p[m]._nonce
       },
-      beforeSend: function(xhr) {
+      beforeSend: function (xhr) {
         spinner.addClass('is-active');
       },
-      success: function(response, textStatus, xhr) {
+      success: function (response, textStatus, xhr) {
         spinner.removeClass('is-active');
 
         if (response.success) {
@@ -54,8 +53,8 @@
     });
   };
 
-  $(function() {
-    $(o.button).click(function(e) {
+  $(function () {
+    $(o.button).click(function (e) {
       e.preventDefault();
       o.populate();
     });
@@ -65,5 +64,4 @@
   //
   // if (p._dev)
   //   console.log(o);
-
 }(jQuery, gEditorial, gEditorialModules, 'drafts'));

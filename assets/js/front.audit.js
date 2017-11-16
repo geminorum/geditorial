@@ -1,6 +1,6 @@
-(function($, p, c, m) {
-  "use strict";
+/* global jQuery, gEditorial, gEditorialModules */
 
+(function ($, p, c, m) {
   var o = {};
 
   o.e = true; // empty
@@ -9,21 +9,21 @@
   o.button = '#wp-admin-bar-geditorial-audit-attributes a.ab-item';
   o.spinner = '.geditorial-spinner';
 
-  o.watch = function() {
+  o.watch = function () {
     // do stuff when user has been idle for 1 second
     // @REF: https://stackoverflow.com/a/9424784/4864081
     var wto;
-    $(':input', o.box).change(function() {
+    $(':input', o.box).change(function () {
       clearTimeout(wto);
-      wto = setTimeout(function() {
+      wto = setTimeout(function () {
         o.store();
       }, 1000);
     });
   };
 
-  o.store = function() {
-    var data = $(':input', o.box).serialize(),
-      spinner = $(o.button).find(o.spinner);
+  o.store = function () {
+    var data = $(':input', o.box).serialize();
+    var spinner = $(o.button).find(o.spinner);
 
     $.ajax({
       url: p._url,
@@ -35,10 +35,10 @@
         data: data,
         nonce: p[m]._nonce
       },
-      beforeSend: function(xhr) {
+      beforeSend: function (xhr) {
         spinner.addClass('is-active');
       },
-      success: function(response, textStatus, xhr) {
+      success: function (response, textStatus, xhr) {
         spinner.removeClass('is-active');
 
         if (response.success) {
@@ -49,11 +49,8 @@
     });
   };
 
-  o.populate = function() {
-
-    if (!this.e) {
-      return;
-    }
+  o.populate = function () {
+    if (!this.e) return;
 
     var spinner = $(this.button).find(this.spinner);
 
@@ -66,10 +63,10 @@
         post_id: p[m].post_id,
         nonce: p[m]._nonce
       },
-      beforeSend: function(xhr) {
+      beforeSend: function (xhr) {
         spinner.addClass('is-active');
       },
-      success: function(response, textStatus, xhr) {
+      success: function (response, textStatus, xhr) {
         spinner.removeClass('is-active');
 
         if (response.success) {
@@ -82,8 +79,8 @@
     });
   };
 
-  $(function() {
-    $(o.button).click(function(e) {
+  $(function () {
+    $(o.button).click(function (e) {
       e.preventDefault();
       o.populate();
     });
@@ -93,5 +90,4 @@
   //
   // if (p._dev)
   //   console.log(o);
-
 }(jQuery, gEditorial, gEditorialModules, 'audit'));

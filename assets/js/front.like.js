@@ -1,17 +1,14 @@
-(function($) {
-  "use strict";
-  $(function() {
+/* global jQuery, gEditorial */
 
-    var $like = $('.geditorial-wrap.-like'),
-      $list = $like.data('avatars');
+(function ($) {
+  $(function () {
+    var $like = $('.geditorial-wrap.-like');
+    var $list = $like.data('avatars');
 
     if ($like.length > 0) {
-
-      var button = $like.find('a.like'),
-        counter = $like.find('span.like'),
-        avatars = $list
-          ? $like.find('ul.like')
-          : null;
+      var button = $like.find('a.like');
+      var counter = $like.find('span.like');
+      var avatars = $list ? $like.find('ul.like') : null;
 
       button.removeAttr('href');
 
@@ -19,9 +16,8 @@
         action: gEditorial._base + '_like',
         what: 'check',
         id: button.data('id')
-      }, function(r) {
+      }, function (r) {
         if (r.success) {
-
           button
             .prop('title', r.data.title)
             .data('action', r.data.action)
@@ -36,20 +32,19 @@
           }
 
           $like.show();
-
         } else {
           console.log(r.data);
         }
       });
 
-      button.click(function(e) {
+      button.click(function (e) {
         e.preventDefault();
         $.post(gEditorial._url, {
           action: gEditorial._base + '_like',
           what: button.data('action'),
           id: button.data('id'),
           nonce: button.data('nonce')
-        }, function(r) {
+        }, function (r) {
           if (r.success) {
             button.prop('title', r.data.title).data('action', r.data.action).removeClass(r.data.remove).addClass(r.data.add);
 

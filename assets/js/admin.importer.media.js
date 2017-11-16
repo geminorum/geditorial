@@ -1,32 +1,28 @@
-(function($, p, c, m, s) {
-  "use strict";
+/* global jQuery, wp, gEditorial, gEditorialModules */
 
-  var modal,
-    o = {
-      strings: $.extend({}, {
-        modal_title: 'Choose a Datasheet',
-        modal_button: 'Select as Source',
-      }, p[m].strings || {} ),
-   };
+(function ($, p, c, m, s) {
+  var modal;
+  var o = {
+    strings: $.extend({}, {
+      modal_title: 'Choose a Datasheet',
+      modal_button: 'Select as Source'
+    }, p[m].strings || {})
+  };
 
-
-  $(function() {
-
-    $('#upload_csv_button').click(function(e) {
-
+  $(function () {
+    $('#upload_csv_button').click(function (e) {
       e.preventDefault();
 
-      if ( ! modal ) {
-
+      if (!modal) {
         // https://codex.wordpress.org/Javascript_Reference/wp.media
         modal = wp.media({
           title: o.strings['modal_title'],
           button: { text: o.strings['modal_button'] },
           library: { type: [ 'application/vnd.ms-excel', 'text/csv' ] },
-          multiple: false,
+          multiple: false
         });
 
-        modal.on('select', function() {
+        modal.on('select', function () {
           var attachment = modal.state().get('selection').first().toJSON();
           // $('.wpaparat_thumbnail').attr('src', attachment.url);
           $('#upload_attach_id').val(attachment.id);
@@ -39,8 +35,5 @@
   });
 
   // c[m] = o;
-  //
-  // if (p._dev)
-  //   console.log(o);
-
+  // if (p._dev) console.log(o);
 }(jQuery, gEditorial, gEditorialModules, 'importer', 'media'));

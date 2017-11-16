@@ -1,44 +1,38 @@
-jQuery(function($) {
-  "use strict";
+/* global jQuery, wp, gEditorial */
 
+jQuery(function ($) {
   var settings = $.extend({}, {
     checklist_tree: false,
     category_search: false,
-    excerpt_count: false,
+    excerpt_count: false
   }, gEditorial.tweaks.settings);
 
   if (settings.checklist_tree) {
-
-    $('[id$="-all"] > ul.categorychecklist').each(function() {
-
+    $('[id$="-all"] > ul.categorychecklist').each(function () {
       var $list = $(this);
       var $firstChecked = $list.find(':checkbox:checked').first();
 
-      if (!$firstChecked.length)
-        return;
+      if (!$firstChecked.length) return;
 
-      var pos_first = $list.find(':checkbox').position().top;
-      var pos_checked = $firstChecked.position().top;
+      var posFirst = $list.find(':checkbox').position().top;
+      var posChecked = $firstChecked.position().top;
 
-      $list.closest('.tabs-panel').scrollTop(pos_checked - pos_first + 5);
+      $list.closest('.tabs-panel').scrollTop(posChecked - posFirst + 5);
     });
   }
 
   if (settings.category_search) {
-
     var $input = $('<input class="category-search" type="search" value="" placeholder="' + gEditorial.tweaks.strings.search_placeholder + '" title="' + gEditorial.tweaks.strings.search_title + '" />');
 
-    $('.inside > div.categorydiv').each(function() {
-
-      var $tax = $(this),
-        $row = $input.clone(true);
+    $('.inside > div.categorydiv').each(function () {
+      // var $tax = $(this);
+      var $row = $input.clone(true);
 
       $row.prependTo(this)
-        .bind('keyup', function(e) {
-
-          var val = $(this).val(),
-            li = $(this).parent().find('ul.categorychecklist li'),
-            list = $(this).parent().find('ul.categorychecklist');
+        .bind('keyup', function (e) {
+          var val = $(this).val();
+          var li = $(this).parent().find('ul.categorychecklist li');
+          var list = $(this).parent().find('ul.categorychecklist');
 
           li.hide();
           var containingLabels = list.find("label:contains('" + val + "')");
@@ -52,23 +46,20 @@ jQuery(function($) {
   // FIXME: https://github.com/sheabunge/visual-term-description-editor/blob/master/js/wordcount.js
   // FIXME: move this to Writing module
   if (settings.excerpt_count) {
-
     if (wp.utils) {
+      // var counter = new wp.utils.WordCounter();
 
-      var counter = new wp.utils.WordCounter();
+      $('div.geditorial-wordcount-wrap').each(function () {
+        var $content = $(this).find('textarea');
+        var $count = $(this).find('.geditorial-wordcount .-chars');
+        var prevCount = 0;
+        // var contentEditor;
 
-      $('div.geditorial-wordcount-wrap').each(function() {
-
-        var $content = $(this).find('textarea'),
-          $count = $(this).find('.geditorial-wordcount .-chars'),
-          prevCount = 0,
-          contentEditor;
-
-        $content.bind('keyup', function(e) {
-          var text = $(this).val(),
-            // count = counter.count(text);
-            // count = text.split(" ").join("").length;
-            count = text.trim().length;
+        $content.bind('keyup', function (e) {
+          var text = $(this).val();
+          // var count = counter.count(text);
+          // var count = text.split(" ").join("").length;
+          var count = text.trim().length;
 
           if (count !== prevCount) {
             $count.text(count);

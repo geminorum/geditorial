@@ -1,22 +1,21 @@
-(function($) {
-  "use strict";
+/* global jQuery, inlineEditPost, gEditorial */
 
-  $('#the-list').on('click', '.editinline', function() {
-
+(function ($) {
+  $('#the-list').on('click', '.editinline', function () {
     inlineEditPost.revert(); // revert Quick Edit menu so that it refreshes properly
 
     var fields = $.extend({}, {
       ot: false,
       st: false,
-      as: false,
+      as: false
     }, gEditorial.meta.fields);
 
-    var tag_id = $(this).parents('tr').attr('id'),
-      postTitleLabel = $(':input[name="post_title"]', '.inline-edit-row').parents('label'),
-      postNameLabel = $(':input[name="post_name"]', '.inline-edit-row').parents('label');
+    var tagID = $(this).parents('tr').attr('id');
+    var postTitleLabel = $(':input[name="post_title"]', '.inline-edit-row').parents('label');
+    var postNameLabel = $(':input[name="post_name"]', '.inline-edit-row').parents('label');
 
     if (fields.ot) {
-      var ot = $('#' + tag_id)
+      var ot = $('#' + tagID)
         .find('div.geditorial-meta-ot-value')
         .text();
 
@@ -28,7 +27,7 @@
     }
 
     if (fields.st) {
-      var st = $('#' + tag_id)
+      var st = $('#' + tagID)
         .find('div.geditorial-meta-st-value')
         .text();
 
@@ -40,7 +39,7 @@
     }
 
     if (fields.as) {
-      var as = $('#' + tag_id)
+      var as = $('#' + tagID)
         .find('div.geditorial-meta-as-value')
         .text();
 

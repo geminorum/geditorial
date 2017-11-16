@@ -1,27 +1,25 @@
-(function ($, p, c, m) {
-  "use strict";
+/* global jQuery, gEditorial, gEditorialModules */
 
+(function ($, p, c, m) {
   var s = {
     action: p._base + '_' + m,
     classs: p._base + '-' + m,
-
     wrap: 'ol.' + p._base + '-' + m + '-list',
     raw: 'ul.' + p._base + '-' + m + '-new',
     body: '.item-body'
   };
 
   var o = {
-
     // http://stackoverflow.com/a/14736775
-    reOrder: function() {
+    reOrder: function () {
       var inputs = $('input.item-order');
       var nbElems = inputs.length;
-      inputs.each(function(idx) {
+      inputs.each(function (idx) {
         $(this).val(nbElems - idx);
       });
     },
 
-    expandItem: function(element){
+    expandItem: function (element) {
       $(s.body, s.wrap).slideUp();
       var clicked = $(element).parent().parent().find(s.body);
       if (!clicked.is(':visible')) {
@@ -29,24 +27,19 @@
       }
     },
 
-    removeItem: function(element){
+    removeItem: function (element) {
       // FIXME: must remove disable from ul selector
-      $(element).closest('li').slideUp('normal', function() {
+      $(element).closest('li').slideUp('normal', function () {
         $(this).remove();
       });
     },
 
-    newItem: function(element){
-
-      if ($(element).parents(s.wrap).length) {
-        return false;
-      };
+    newItem: function (element) {
+      if ($(element).parents(s.wrap).length) return false;
 
       var selectedVal = $(element).find(':selected').val();
 
-      if (selectedVal === '-1') {
-        return false;
-      };
+      if (selectedVal === '-1') return false;
 
       $(s.body, s.wrap).slideUp();
       var row = $('li', s.raw).clone(true);
@@ -68,18 +61,17 @@
 
   };
 
-  $(function() {
-
-    $('select.item-dropdown-new', s.raw).change(function() {
+  $(function () {
+    $('select.item-dropdown-new', s.raw).change(function () {
       return o.newItem(this);
     });
 
-    $('body').on('click', s.wrap + ' .-delete', function(e) {
+    $('body').on('click', s.wrap + ' .-delete', function (e) {
       e.preventDefault();
       o.removeItem(this);
     });
 
-    $('body').on('click', s.wrap + ' .-excerpt', function(e) {
+    $('body').on('click', s.wrap + ' .-excerpt', function (e) {
       e.preventDefault();
       o.expandItem(this);
     });
@@ -88,7 +80,7 @@
       // disable: true,
       group: s.classs,
       handle: '.-handle',
-      stop: function() {
+      stop: function () {
         o.reOrder();
       }
     // }).disableSelection();
@@ -100,5 +92,4 @@
   // if (p._dev) {
   //   console.log(o);
   // }
-
 }(jQuery, gEditorial, gEditorialModules, 'specs'));
