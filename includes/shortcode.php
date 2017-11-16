@@ -467,9 +467,10 @@ class ShortCode extends Core\Base
 				$html.= self::postItem( $args, $post );
 		}
 
-		$html = HTML::tag( $args['list_tag'], [
-			'class' => $args['list_class'],
-		], $html );
+		if ( $args['list_tag'] )
+			$html = HTML::tag( $args['list_tag'], [
+				'class' => $args['list_class'],
+			], $html );
 
 		if ( $args['title'] )
 			$html = $args['title'].$html;
@@ -621,9 +622,10 @@ class ShortCode extends Core\Base
 				$html .= self::postItem( $args, $post );
 		}
 
-		$html = HTML::tag( $args['list_tag'], [
-			'class' => $args['list_class'],
-		], $html );
+		if ( $args['list_tag'] )
+			$html = HTML::tag( $args['list_tag'], [
+				'class' => $args['list_class'],
+			], $html );
 
 		if ( $args['title'] )
 			$html = $args['title'].$html;
