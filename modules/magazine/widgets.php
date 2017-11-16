@@ -3,7 +3,6 @@
 defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
-use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\Templates\Magazine as ModuleTemplate;
 
 class IssueCover extends gEditorial\Widget
@@ -60,7 +59,7 @@ class IssueCover extends gEditorial\Widget
 		];
 
 		if ( ! empty( $instance['latest_issue'] ) )
-			$atts['id'] = (int) WordPress::getLastPostOrder( $atts['type'], '', 'ID', 'publish' );
+			$atts['id'] = (int) ModuleTemplate::getLatestIssueID();
 
 		else if ( ! empty( $instance['page_id'] ) )
 			$atts['id'] = (int) $instance['page_id'];
