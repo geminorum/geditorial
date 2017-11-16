@@ -147,6 +147,7 @@ class Base
 			self::__log( sprintf( 'DEP: \'%1$s\' function, since %2$s, Use \'%3$s\'', $function, $version, $replacement ) );
 	}
 
+	// @REF: `shortcode_atts()`
 	public static function atts( $pairs, $atts )
 	{
 		$atts = (array) $atts;
@@ -160,6 +161,25 @@ class Base
 		}
 
 		return $out;
+	}
+
+	// @REF: `wp_parse_args()`
+	public static function args( $args, $defaults = '' )
+	{
+		if ( is_object( $args ) )
+			$r = get_object_vars( $args );
+
+		else if ( is_array( $args ) )
+			$r = &$args;
+
+		else
+			// wp_parse_str( $args, $r );
+			parse_str( $args, $r );
+
+		if ( is_array( $defaults ) )
+			return array_merge( $defaults, $r );
+
+		return $r;
 	}
 
 	/**

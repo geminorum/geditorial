@@ -184,7 +184,7 @@ class Database extends Core\Base
 
 		$terms = is_array( $taxonomy ) ? $taxonomy : get_terms( $taxonomy );
 
-		if ( ! count( $terms ) )
+		if ( empty( $terms ) )
 			return array();
 
 		global $wpdb;

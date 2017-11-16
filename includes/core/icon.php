@@ -134,7 +134,7 @@ class Icon extends Base
 
 	public static function printSprites( $icons = array() )
 	{
-		if ( ! count( $icons ) )
+		if ( empty( $icons ) )
 			return;
 
 		echo '<svg style="position: absolute; width: 0; height: 0; overflow: hidden" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><defs>';

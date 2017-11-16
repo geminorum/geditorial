@@ -99,7 +99,7 @@ class WordPress extends Base
 			'post_status'    => $status,
 		) );
 
-		if ( ! count( $post ) )
+		if ( empty( $post ) )
 			return 0;
 
 		if ( 'menu_order' == $key )
@@ -136,10 +136,7 @@ class WordPress extends Base
 		$query = new \WP_Query;
 		$posts = $query->query( $args );
 
-		if ( ! count( $posts ) )
-			return FALSE;
-
-		return $posts[0];
+		return empty( $posts ) ? FALSE : $posts[0];
 	}
 
 	public static function getParentPostID( $post_id = NULL, $object = FALSE )

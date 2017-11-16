@@ -157,6 +157,8 @@ class Media extends Core\Base
 			'post_type'      => 'attachment',
 			'post_status'    => 'inherit',
 			'numberposts'    => -1,
+			'orderby'        => 'menu_order',
+			'order'          => 'ASC',
 		) );
 	}
 
@@ -193,7 +195,7 @@ class Media extends Core\Base
 			'post_parent'    => NULL,
 		) );
 
-		if ( ! count( $attachments ) ) {
+		if ( empty( $attachments ) ) {
 			echo $empty;
 			return FALSE;
 		}

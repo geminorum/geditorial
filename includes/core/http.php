@@ -365,7 +365,7 @@ class HTTP extends Base
 		if ( ! extension_loaded( 'curl' ) )
 			return FALSE;
 
-		if ( ! count( $urls ) )
+		if ( empty( $urls ) )
 			return array();
 
 		$ch = $results = array();
