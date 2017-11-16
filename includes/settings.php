@@ -358,7 +358,7 @@ class Settings extends Core\Base
 		];
 	}
 
-	// FIXME: DEPRICATED: USE: `settings_insert_priority_option()`
+	// FIXME: DEPRECATED: USE: `settings_insert_priority_option()`
 	public static function getSetting_insert_priority()
 	{
 		return [

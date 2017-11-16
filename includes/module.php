@@ -196,7 +196,7 @@ class Module extends Base
 	public function _after_setup_theme()
 	{
 		$this->constants = $this->filters( 'constants', $this->get_global_constants(), $this->module );
-		$this->supports  = $this->filters( 'supports', $this->get_global_supports(), $this->module ); // FIXME: DEPRICATED
+		$this->supports  = $this->filters( 'supports', $this->get_global_supports(), $this->module ); // FIXME: DEPRECATED
 		$this->fields    = $this->filters( 'fields', $this->get_global_fields(), $this->module );
 	}
 
@@ -232,7 +232,7 @@ class Module extends Base
 	protected function get_global_settings() { return []; }
 	protected function get_global_constants() { return []; }
 	protected function get_global_strings() { return []; }
-	protected function get_global_supports() { return []; } // FIXME: DEPRICATED
+	protected function get_global_supports() { return []; } // FIXME: DEPRECATED
 	protected function get_global_fields() { return []; }
 
 	protected function get_module_templates() { return []; }

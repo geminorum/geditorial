@@ -376,7 +376,7 @@ class Audit extends gEditorial\Module
 	// 0 for all
 	private function summary_scope_user()
 	{
-		// FIXME: DEPRICATED
+		// FIXME: DEPRECATED
 		if ( 'all' == $this->get_setting( 'summary_scope', 'all' ) )
 			return 0;
 

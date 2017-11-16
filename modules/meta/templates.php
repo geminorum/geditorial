@@ -113,7 +113,7 @@ class Meta extends gEditorial\Template
 		return $args['def'];
 	}
 
-	// FIXME: DEPRICATED
+	// FIXME: DEPRECATED
 	// USE: self::metaLead()
 	public static function gmeta_lead( $before = '', $after = '', $filter = FALSE, $args = [] )
 	{
@@ -138,7 +138,7 @@ class Meta extends gEditorial\Template
 		return TRUE;
 	}
 
-	// FIXME: DEPRICATED
+	// FIXME: DEPRECATED
 	// USE: self::metaAuthor()
 	public static function gmeta_author( $before = '', $after = '', $filter = FALSE, $args = [] )
 	{
@@ -267,7 +267,7 @@ class Meta extends gEditorial\Template
 		return TRUE;
 	}
 
-	// FIXME: DEPRICATED / USE: gEditorialMetaTemplates::metaLabel()
+	// FIXME: DEPRECATED / USE: gEditorialMetaTemplates::metaLabel()
 	public static function gmeta_label( $b = '', $a = '', $filter = FALSE, $args = [] )
 	{
 		self::__dev_dep( 'gEditorialMetaTemplates::metaLabel()' );

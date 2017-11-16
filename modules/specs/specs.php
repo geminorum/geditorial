@@ -473,16 +473,20 @@ class Specs extends gEditorial\Module
 		if ( FALSE === $args['context'] )
 			return NULL;
 
-		if ( empty( $args['ids'] ) || empty( $args['ids'] ) ) {
+		if ( empty( $args['ids'] ) ) {
+
+			// FIXME: use: `Taxonomy::getTerms()`
 			$terms = wp_get_object_terms( (int) $post->ID, $this->constant( 'specs_tax' ), [
 				'order'   => $args['order'],
 				'orderby' => $args['orderby'],
 				'fields'  => 'ids',
 			] );
+
 			$args['ids'] = is_wp_error( $terms ) ? [] : $terms;
 		}
 
 		$output = '';
+
 		foreach ( $args['ids'] as $id )
 			$output .= $this->shortcode_specs( array_merge( [
 				'id'        => $id,
