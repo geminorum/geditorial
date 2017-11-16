@@ -727,9 +727,11 @@ class Magazine extends gEditorial\Module
 			$this->constant( 'issue_cpt' ),
 			$this->constant( 'issue_tax' ),
 			array_merge( [
-				'posttypes' => $this->post_types(),
-				'order_cb'  => NULL, // NULL for default ordering by meta
-				'orderby'   => 'order', // order by meta
+				'posttypes'   => $this->post_types(),
+				'order_cb'    => NULL, // NULL for default ordering by meta
+				'orderby'     => 'order', // order by meta
+				'order_start' => 'in_issue_page_start', // meta field for ordering
+				'order_order' => 'in_issue_order', // meta field for ordering
 			], (array) $atts ),
 			$content,
 			$this->constant( 'issue_shortcode' )

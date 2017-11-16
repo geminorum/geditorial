@@ -331,6 +331,8 @@ class ShortCode extends Core\Base
 			'orderby'        => 'date',
 			'order'          => 'ASC',
 			'order_cb'       => FALSE, // NULL for default order ( by meta, like mag )
+			'order_start'    => 'start', // meta field for ordering
+			'order_order'    => 'order', // meta field for ordering
 			'limit'          => -1,
 			'field_module'   => 'meta', // getting meta field from
 			'context'        => NULL,
@@ -448,7 +450,7 @@ class ShortCode extends Core\Base
 				$posts = call_user_func_array( $args['order_cb'], [ $posts, $args, $term ] );
 
 			else if ( is_null( $args['order_cb'] ) && $count > 1 )
-				$posts = Template::reorderPosts( $posts, $args['field_module'] );
+				$posts = Template::reorderPosts( $posts, $args['field_module'], $args['order_start'], $args['order_order'] );
 		}
 
 		foreach ( $posts as $post ) {
@@ -605,7 +607,7 @@ class ShortCode extends Core\Base
 				$posts = call_user_func_array( $args['order_cb'], [ $posts, $args, $term ] );
 
 			else if ( is_null( $args['order_cb'] ) && $count > 1 )
-				$posts = Template::reorderPosts( $posts, $args['field_module'] );
+				$posts = Template::reorderPosts( $posts, $args['field_module'], $args['order_start'], $args['order_order'] );
 		}
 
 		foreach ( $posts as $post ) {

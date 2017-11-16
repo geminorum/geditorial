@@ -447,7 +447,7 @@ class Template extends Core\Base
 			'number'               => [ 'issue_number_line', 'number' ],
 			'pages'                => [ 'issue_total_pages', 'pages' ],
 			'start'                => [ 'in_issue_page_start', 'start' ],
-			'order'                => [ 'in_issue_order', 'in_series_order', 'order' ],
+			'order'                => [ 'in_issue_order', 'in_collection_order', 'in_series_order', 'order' ],
 			'reshare_source_title' => [ 'source_title', 'reshare_source_title' ],
 			'reshare_source_url'   => [ 'source_url', 'reshare_source_url' ],
 		];
@@ -458,15 +458,15 @@ class Template extends Core\Base
 		return [ $field ];
 	}
 
-	public static function reorderPosts( $posts, $field_module = 'meta' )
+	public static function reorderPosts( $posts, $field_module = 'meta', $field_start = 'start', $field_order = 'order' )
 	{
 		$i = 1000;
 		$o = [];
 
-		foreach ( $posts as &$post ) {
+		foreach ( $posts as $post ) {
 
-			$start = self::getMetaFieldRaw( 'start', $post->ID, $field_module );
-			$order = self::getMetaFieldRaw( 'order', $post->ID, $field_module );
+			$start = self::getMetaFieldRaw( $field_start, $post->ID, $field_module );
+			$order = self::getMetaFieldRaw( $field_order, $post->ID, $field_module );
 
 			$key = $start ? ( (int) $start * 10 ) : 0;
 			$key = $order ? ( $key + (int) $order ) : $key;
