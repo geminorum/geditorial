@@ -287,7 +287,7 @@ class Users extends gEditorial\Module
 	{
 		if ( $this->get_setting( 'user_groups', FALSE ) ) {
 
-			if ( $terms = Taxonomy::getTerms( $this->constant( 'group_tax' ), $user->ID, TRUE ) ) {
+			if ( $terms = Taxonomy::getTerms( $this->constant( 'group_tax' ), $user->ID, TRUE, 'term_id', [], FALSE ) ) {
 
 				foreach ( $terms as $term ) {
 
@@ -301,7 +301,7 @@ class Users extends gEditorial\Module
 
 		if ( $this->get_setting( 'user_types', FALSE ) ) {
 
-			if ( $terms = Taxonomy::getTerms( $this->constant( 'type_tax' ), $user->ID, TRUE ) ) {
+			if ( $terms = Taxonomy::getTerms( $this->constant( 'type_tax' ), $user->ID, TRUE, 'term_id', [], FALSE ) ) {
 
 				foreach ( $terms as $term ) {
 
