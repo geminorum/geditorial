@@ -1,3 +1,24 @@
+### 3.13.2
+* main/main: check for minimum required veriosn of php
+* main/module: :new: internal api for bailing on hidden metaboxes
+* main/module: conditional check for embed before insert content
+* main/module: saintizing twitter handles
+* main/module: check if saved supported posttype currently registered
+* main/module: passing description to setting methods
+* main/shortcode: better handling order meta fields
+* main/shortcode: conditional list tag
+* main/settings: support for multiple text fields
+* module/alphabet: item callback for markup
+* module/alphabet: horizontal class if excerpt/description
+* module/audit: refactor widget styles
+* module/audit: better check for reports
+* module/collect: :new: new module
+* module/gallery: :new: new module
+* module/like: skip scripts on embed
+* module/magazine: latest issue helper
+* module/users: profile edit as metabox action
+* module/users: avoid using post terms cache for user objects
+
 ### 3.13.1
 * main/module: internal api for dashboard setup
 * main/module: skip pasing section to setting methods
