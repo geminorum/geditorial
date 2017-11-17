@@ -73,31 +73,31 @@ class Media extends Core\Base
 	}
 
 	// OLD: `getRegisteredImageSizes()`
-	public static function getPosttypeImageSizes( $posttype = 'post', $fallback = 'post' )
+	public static function getPosttypeImageSizes( $posttype = 'post', $fallback = FALSE )
 	{
 		global $_wp_additional_image_sizes;
 
 		$sizes = [];
 
-		foreach ( (array) $_wp_additional_image_sizes as $name => $size ) {
+		foreach ( (array) $_wp_additional_image_sizes as $name => $args ) {
 
-			if ( array_key_exists( 'post_type', $size ) ) {
+			if ( array_key_exists( 'post_type', $args ) ) {
 
-				if ( is_array( $size['post_type'] ) ) {
+				if ( is_array( $args['post_type'] ) ) {
 
-					if ( in_array( $posttype, $size['post_type'] ) )
-						$sizes[$name] = $size;
+					if ( in_array( $posttype, $args['post_type'] ) )
+						$sizes[$name] = $args;
 
-					else if ( $fallback && in_array( $fallback, $size['post_type'] ) )
-						$sizes[$name] = $size;
+					else if ( is_string( $fallback ) && in_array( $fallback, $args['post_type'] ) )
+						$sizes[$name] = $args;
 
-				} else if ( $size['post_type'] ) {
-					$sizes[$name] = $size;
+				} else if ( $args['post_type'] ) {
+					$sizes[$name] = $args;
 				}
 
 			} else if ( TRUE === $fallback ) {
 
-				$sizes[$name] = $size;
+				$sizes[$name] = $args;
 			}
 		}
 
@@ -110,25 +110,25 @@ class Media extends Core\Base
 
 		$sizes = [];
 
-		foreach ( (array) $_wp_additional_image_sizes as $name => $size ) {
+		foreach ( (array) $_wp_additional_image_sizes as $name => $args ) {
 
-			if ( array_key_exists( 'taxonomy', $size ) ) {
+			if ( array_key_exists( 'taxonomy', $args ) ) {
 
-				if ( is_array( $size['taxonomy'] ) ) {
+				if ( is_array( $args['taxonomy'] ) ) {
 
-					if ( in_array( $taxonomy, $size['taxonomy'] ) )
-						$sizes[$name] = $size;
+					if ( in_array( $taxonomy, $args['taxonomy'] ) )
+						$sizes[$name] = $args;
 
-					else if ( $fallback && in_array( $fallback, $size['taxonomy'] ) )
-						$sizes[$name] = $size;
+					else if ( is_string( $fallback ) && in_array( $fallback, $args['taxonomy'] ) )
+						$sizes[$name] = $args;
 
-				} else if ( $size['taxonomy'] ) {
-					$sizes[$name] = $size;
+				} else if ( $args['taxonomy'] ) {
+					$sizes[$name] = $args;
 				}
 
 			} else if ( TRUE === $fallback ) {
 
-				$sizes[$name] = $size;
+				$sizes[$name] = $args;
 			}
 		}
 
