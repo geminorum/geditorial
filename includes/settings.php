@@ -198,129 +198,137 @@ class Settings extends Core\Base
 		return _x( 'Connected via <code>P2P</code>', 'Settings: Setting Info', GEDITORIAL_TEXTDOMAIN );
 	}
 
-	public static function getSetting_editor_button()
+	public static function getSetting_editor_button( $description = NULL )
 	{
 		return [
-			'field'   => 'editor_button',
-			'title'   => _x( 'Editor Button', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'default' => '1',
+			'field'       => 'editor_button',
+			'title'       => _x( 'Editor Button', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+			'description' => $description ?: '',
+			'default'     => '1',
 		];
 	}
 
-	public static function getSetting_shortcode_support()
+	public static function getSetting_shortcode_support( $description = NULL )
 	{
 		return [
-			'field'   => 'shortcode_support',
-			'title'   => _x( 'Default Shortcodes', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'default' => '0',
-		];
-	}
-
-	public static function getSetting_thumbnail_support()
-	{
-		return [
-			'field'   => 'thumbnail_support',
-			'title'   => _x( 'Default Image Sizes', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'default' => '0',
-		];
-	}
-
-	public static function getSetting_markdown_support()
-	{
-		return [
-			'field'   => 'markdown_support',
-			'title'   => _x( 'Markdown Support', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'default' => '0',
-		];
-	}
-
-	public static function getSetting_multiple_instances()
-	{
-		return [
-			'field'   => 'multiple_instances',
-			'title'   => _x( 'Multiple Instances', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'default' => '0',
-		];
-	}
-
-	public static function getSetting_autolink_terms()
-	{
-		return [
-			'field'       => 'autolink_terms',
-			'title'       => _x( 'Autolink Terms', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'description' => _x( 'Trying to link the terms titles in the content.', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+			'field'       => 'shortcode_support',
+			'title'       => _x( 'Default Shortcodes', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+			'description' => $description ?: '',
 			'default'     => '0',
 		];
 	}
 
-	public static function getSetting_rewrite_prefix()
+	public static function getSetting_thumbnail_support( $description = NULL )
+	{
+		return [
+			'field'       => 'thumbnail_support',
+			'title'       => _x( 'Default Image Sizes', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+			'description' => $description ?: '',
+			'default'     => '0',
+		];
+	}
+
+	public static function getSetting_markdown_support( $description = NULL )
+	{
+		return [
+			'field'       => 'markdown_support',
+			'title'       => _x( 'Markdown Support', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+			'description' => $description ?: '',
+			'default'     => '0',
+		];
+	}
+
+	public static function getSetting_multiple_instances( $description = NULL )
+	{
+		return [
+			'field'       => 'multiple_instances',
+			'title'       => _x( 'Multiple Instances', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+			'description' => $description ?: '',
+			'default'     => '0',
+		];
+	}
+
+	public static function getSetting_autolink_terms( $description = NULL )
+	{
+		return [
+			'field'       => 'autolink_terms',
+			'title'       => _x( 'Auto-link Terms', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+			'description' => $description ?: _x( 'Tries to link the term titles in the content.', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+			'default'     => '0',
+		];
+	}
+
+	public static function getSetting_rewrite_prefix( $description = NULL )
 	{
 		return [
 			'field'       => 'rewrite_prefix',
 			'type'        => 'text',
 			'title'       => _x( 'URL Base Prefix', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'description' => _x( 'String before the permalink structure', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+			'description' => $description ?: _x( 'String before the permalink structure', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 			'default'     => '',
 			'dir'         => 'ltr',
 			'placeholder' => 'wiki',
 		];
 	}
 
-	public static function getSetting_redirect_archives()
+	public static function getSetting_redirect_archives( $description = NULL )
 	{
 		return [
 			'field'       => 'redirect_archives',
 			'type'        => 'url',
 			'title'       => _x( 'Redirect Archives', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'description' => _x( 'Redirect Post Type Archives to a URL', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+			'description' => $description ?: _x( 'Redirect Post Type Archives to a URL', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 			'placeholder' => 'http://example.com/archives/',
 		];
 	}
 
-	public static function getSetting_comment_status()
+	public static function getSetting_comment_status( $description = NULL )
 	{
 		return [
-			'field'   => 'comment_status',
-			'type'    => 'select',
-			'title'   => _x( 'Comment Status', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'default' => 'closed',
-			'values'  => [
+			'field'       => 'comment_status',
+			'type'        => 'select',
+			'title'       => _x( 'Comment Status', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+			'description' => $description ?: '',
+			'default'     => 'closed',
+			'values'      => [
 				'open'   => _x( 'Open', 'Settings: Setting Option', GEDITORIAL_TEXTDOMAIN ),
 				'closed' => _x( 'Closed', 'Settings: Setting Option', GEDITORIAL_TEXTDOMAIN ),
 			],
 		];
 	}
 
-	public static function getSetting_post_status()
+	public static function getSetting_post_status( $description = NULL )
 	{
 		return [
-			'field'   => 'post_status',
-			'type'    => 'select',
-			'title'   => _x( 'Post Status', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'default' => 'pending',
-			'values'  => PostType::getStatuses(),
+			'field'       => 'post_status',
+			'type'        => 'select',
+			'title'       => _x( 'Post Status', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+			'description' => $description ?: '',
+			'default'     => 'pending',
+			'values'      => PostType::getStatuses(),
 		];
 	}
 
-	public static function getSetting_post_type()
+	public static function getSetting_post_type( $description = NULL )
 	{
 		return [
-			'field'   => 'post_type',
-			'type'    => 'select',
-			'title'   => _x( 'Post Type', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'default' => 'post',
-			'values'  => PostType::get( 2 ),
-			'exclude' => [ 'attachment' ],
+			'field'       => 'post_type',
+			'type'        => 'select',
+			'title'       => _x( 'Post Type', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+			'description' => $description ?: '',
+			'default'     => 'post',
+			'values'      => PostType::get( 2 ),
+			'exclude'     => [ 'attachment' ],
 		];
 	}
 
-	public static function getSetting_insert_content()
+	public static function getSetting_insert_content( $description = NULL )
 	{
 		return [
 			'field'       => 'insert_content',
 			'type'        => 'select',
 			'title'       => _x( 'Insert in Content', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'description' => _x( 'Puts automatically in the content', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+			'description' => $description ?: _x( 'Puts automatically in the content', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 			'default'     => 'none',
 			'values'      => [
 				'none'   => _x( 'No', 'Settings: Setting Option', GEDITORIAL_TEXTDOMAIN ),
@@ -330,9 +338,9 @@ class Settings extends Core\Base
 		];
 	}
 
-	public static function getSetting_insert_content_before()
+	public static function getSetting_insert_content_before( $description = NULL )
 	{
-		$args = self::getSetting_insert_content();
+		$args = self::getSetting_insert_content( $description );
 
 		$args['field'] = 'insert_content_before';
 		unset( $args['values'], $args['type'], $args['default'] );
@@ -340,9 +348,9 @@ class Settings extends Core\Base
 		return $args;
 	}
 
-	public static function getSetting_insert_content_after()
+	public static function getSetting_insert_content_after( $description = NULL )
 	{
-		$args = self::getSetting_insert_content();
+		$args = self::getSetting_insert_content( $description );
 
 		$args['field'] = 'insert_content_after';
 		unset( $args['values'], $args['type'], $args['default'] );
@@ -350,118 +358,120 @@ class Settings extends Core\Base
 		return $args;
 	}
 
-	public static function getSetting_insert_cover()
+	public static function getSetting_insert_cover( $description = NULL )
 	{
 		return [
-			'field' => 'insert_cover',
-			'title' => _x( 'Insert Cover', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+			'field'       => 'insert_cover',
+			'title'       => _x( 'Insert Cover', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+			'description' => $description ?: '',
 		];
 	}
 
 	// FIXME: DEPRECATED: USE: `settings_insert_priority_option()`
-	public static function getSetting_insert_priority()
+	public static function getSetting_insert_priority( $description = NULL )
 	{
 		return [
-			'field'   => 'insert_priority',
-			'type'    => 'priority',
-			'title'   => _x( 'Insert Priority', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'default' => '10',
+			'field'       => 'insert_priority',
+			'type'        => 'priority',
+			'title'       => _x( 'Insert Priority', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+			'description' => $description ?: '',
+			'default'     => '10',
 		];
 	}
 
-	public static function getSetting_before_content()
+	public static function getSetting_before_content( $description = NULL )
 	{
 		return [
 			'field'       => 'before_content',
 			'type'        => 'textarea-quicktags',
 			'title'       => _x( 'Before Content', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'description' => _x( 'Adds <code>HTML</code> to the start of all the supported posttypes', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+			'description' => $description ?: _x( 'Adds <code>HTML</code> to the start of all the supported posttypes', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 		];
 	}
 
-	public static function getSetting_after_content()
+	public static function getSetting_after_content( $description = NULL )
 	{
 		return [
 			'field'       => 'after_content',
 			'type'        => 'textarea-quicktags',
 			'title'       => _x( 'After Content', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'description' => _x( 'Adds <code>HTML</code> to the end of all the supported posttypes', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+			'description' => $description ?: _x( 'Adds <code>HTML</code> to the end of all the supported posttypes', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 		];
 	}
 
-	public static function getSetting_admin_ordering()
+	public static function getSetting_admin_ordering( $description = NULL )
 	{
 		return [
 			'field'       => 'admin_ordering',
 			'title'       => _x( 'Ordering', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'description' => _x( 'Enhance item ordering on admin edit pages.', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+			'description' => $description ?: _x( 'Enhance item ordering on admin edit pages.', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 			'default'     => '1',
 		];
 	}
 
-	public static function getSetting_admin_restrict()
+	public static function getSetting_admin_restrict( $description = NULL )
 	{
 		return [
 			'field'       => 'admin_restrict',
 			'title'       => _x( 'List Restrictions', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'description' => _x( 'Enhance restrictions on admin edit pages.', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+			'description' => $description ?: _x( 'Enhance restrictions on admin edit pages.', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 		];
 	}
 
-	public static function getSetting_admin_bulkactions()
+	public static function getSetting_admin_bulkactions( $description = NULL )
 	{
 		return [
 			'field'       => 'admin_bulkactions',
 			'title'       => _x( 'Bulk Actions', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'description' => _x( 'Enhance bulk actions on admin edit pages.', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+			'description' => $description ?: _x( 'Enhance bulk actions on admin edit pages.', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 		];
 	}
 
-	public static function getSetting_adminbar_summary()
+	public static function getSetting_adminbar_summary( $description = NULL )
 	{
 		return [
 			'field'       => 'adminbar_summary',
 			'title'       => _x( 'Adminbar Summary', 'Setting: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'description' => _x( 'Summary for the current item as a node in adminbar', 'Setting: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+			'description' => $description ?: _x( 'Summary for the current item as a node in adminbar', 'Setting: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 		];
 	}
 
-	public static function getSetting_dashboard_widgets()
+	public static function getSetting_dashboard_widgets( $description = NULL )
 	{
 		return [
 			'field'       => 'dashboard_widgets',
 			'title'       => _x( 'Dashboard Widgets', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'description' => _x( 'Enhance admin dashboard with customized widgets', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+			'description' => $description ?: _x( 'Enhance admin dashboard with customized widgets', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 		];
 	}
 
-	public static function getSetting_dashboard_authors()
+	public static function getSetting_dashboard_authors( $description = NULL )
 	{
 		return [
 			'field'       => 'dashboard_authors',
 			'title'       => _x( 'Dashboard Authors', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'description' => _x( 'Displays the author column on dashboard widget', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+			'description' => $description ?: _x( 'Displays the author column on dashboard widget', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 		];
 	}
 
-	public static function getSetting_dashboard_count()
+	public static function getSetting_dashboard_count( $description = NULL )
 	{
 		return [
 			'field'       => 'dashboard_count',
 			'type'        => 'number',
 			'title'       => _x( 'Dashboard Count', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'description' => _x( 'Total rows of items on dashboard widget', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+			'description' => $description ?: _x( 'Total rows of items on dashboard widget', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 			'default'     => 10,
 		];
 	}
 
-	public static function getSetting_summary_scope()
+	public static function getSetting_summary_scope( $description = NULL )
 	{
 		return [
 			'field'       => 'summary_scope',
 			'type'        => 'select',
 			'title'       => _x( 'Summary Scope', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'description' => _x( 'User scope for the content summary', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+			'description' => $description ?: _x( 'User scope for the content summary', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 			'default'     => 'all',
 			'values'      => [
 				'all'     => _x( 'All Users', 'Settings: Setting Option', GEDITORIAL_TEXTDOMAIN ),
@@ -470,109 +480,115 @@ class Settings extends Core\Base
 		];
 	}
 
-	public static function getSetting_count_not()
+	public static function getSetting_count_not( $description = NULL )
 	{
 		return [
 			'field'       => 'count_not',
 			'title'       => _x( 'Count Not', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'description' => _x( 'Count not affacted items in content summary', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+			'description' => $description ?: _x( 'Count not affacted items in content summary', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 		];
 	}
 
-	public static function getSetting_posttype_feeds()
+	public static function getSetting_posttype_feeds( $description = NULL )
 	{
 		return [
 			'field'       => 'posttype_feeds',
 			'title'       => _x( 'Feeds', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'description' => _x( 'Supporting feeds on the posttype', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+			'description' => $description ?: _x( 'Supporting feeds on the posttype', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 		];
 	}
 
-	public static function getSetting_posttype_pages()
+	public static function getSetting_posttype_pages( $description = NULL )
 	{
 		return [
 			'field'       => 'posttype_pages',
 			'title'       => _x( 'Pages', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'description' => _x( 'Supporting pagination on the posttype', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+			'description' => $description ?: _x( 'Supporting pagination on the posttype', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 		];
 	}
 
-	public static function getSetting_display_searchform()
+	public static function getSetting_display_searchform( $description = NULL )
 	{
 		return [
 			'field'       => 'display_searchform',
 			'title'       => _x( 'Display Search Form', 'Setting: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'description' => _x( 'Appends a search form to the content generated on front-end.', 'Setting: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+			'description' => $description ?: _x( 'Appends a search form to the content generated on front-end.', 'Setting: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 		];
 	}
 
-	public static function getSetting_calendar_type()
+	public static function getSetting_calendar_type( $description = NULL )
 	{
 		return [
-			'field'   => 'calendar_type',
-			'title'   => _x( 'Default Calendar', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'type'    => 'select',
-			'default' => 'gregorian',
-			'values'  => Helper::getDefualtCalendars( TRUE ),
+			'field'       => 'calendar_type',
+			'title'       => _x( 'Default Calendar', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+			'description' => $description ?: '',
+			'type'        => 'select',
+			'default'     => 'gregorian',
+			'values'      => Helper::getDefualtCalendars( TRUE ),
 		];
 	}
 
-	public static function getSetting_calendar_list()
+	public static function getSetting_calendar_list( $description = NULL )
 	{
 		return [
-			'field'   => 'calendar_list',
-			'title'   => _x( 'Calendar List', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'type'    => 'checkbox',
-			'default' => [ 'gregorian' ],
-			'values'  => Helper::getDefualtCalendars( TRUE ),
+			'field'       => 'calendar_list',
+			'title'       => _x( 'Calendar List', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+			'description' => $description ?: '',
+			'type'        => 'checkbox',
+			'default'     => [ 'gregorian' ],
+			'values'      => Helper::getDefualtCalendars( TRUE ),
 		];
 	}
 
-	public static function getSetting_supported_roles()
+	public static function getSetting_supported_roles( $description = NULL )
 	{
 		return [
-			'field'   => 'supported_roles',
-			'type'    => 'checkbox',
-			'title'   => _x( 'Supported Roles', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'default' => [],
-			'exclude' => [ 'administrator' ],
-			'values'  => User::getAllRoleList(),
+			'field'       => 'supported_roles',
+			'type'        => 'checkbox',
+			'title'       => _x( 'Supported Roles', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+			'description' => $description ?: '',
+			'default'     => [],
+			'exclude'     => [ 'administrator' ],
+			'values'      => User::getAllRoleList(),
 		];
 	}
 
-	public static function getSetting_excluded_roles()
+	public static function getSetting_excluded_roles( $description = NULL )
 	{
 		return [
-			'field'   => 'excluded_roles',
-			'type'    => 'checkbox',
-			'title'   => _x( 'Excluded Roles', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'default' => [],
-			'exclude' => [ 'administrator' ],
-			'values'  => User::getAllRoleList(),
+			'field'       => 'excluded_roles',
+			'type'        => 'checkbox',
+			'title'       => _x( 'Excluded Roles', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+			'description' => $description ?: '',
+			'default'     => [],
+			'exclude'     => [ 'administrator' ],
+			'values'      => User::getAllRoleList(),
 		];
 	}
 
-	public static function getSetting_adminmenu_roles()
+	public static function getSetting_adminmenu_roles( $description = NULL )
 	{
 		return [
-			'field'   => 'adminmenu_roles',
-			'type'    => 'checkbox',
-			'title'   => _x( 'Admin Menu Roles', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'default' => [],
-			'exclude' => [ 'administrator', 'subscriber' ],
-			'values'  => User::getAllRoleList(),
+			'field'       => 'adminmenu_roles',
+			'type'        => 'checkbox',
+			'title'       => _x( 'Admin Menu Roles', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+			'description' => $description ?: '',
+			'default'     => [],
+			'exclude'     => [ 'administrator', 'subscriber' ],
+			'values'      => User::getAllRoleList(),
 		];
 	}
 
-	public static function getSetting_adminbar_roles()
+	public static function getSetting_adminbar_roles( $description = NULL )
 	{
 		return [
-			'field'   => 'adminbar_roles',
-			'type'    => 'checkbox',
-			'title'   => _x( 'Adminbar Roles', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'default' => [],
-			'exclude' => [ 'administrator', 'subscriber' ],
-			'values'  => User::getAllRoleList(),
+			'field'       => 'adminbar_roles',
+			'type'        => 'checkbox',
+			'title'       => _x( 'Adminbar Roles', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+			'description' => $description ?: '',
+			'default'     => [],
+			'exclude'     => [ 'administrator', 'subscriber' ],
+			'values'      => User::getAllRoleList(),
 		];
 	}
 

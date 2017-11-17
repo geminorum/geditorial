@@ -962,13 +962,23 @@ class Module extends Base
 
 	protected function get_settings_field( $setting )
 	{
-		foreach ( $this->settings as $section )
-			if ( is_array( $section ) )
-				foreach ( $section as $field )
+		foreach ( $this->settings as $section ) {
+
+			if ( is_array( $section ) ) {
+
+				foreach ( $section as $suffix => $field ) {
+
 					if ( is_array( $field ) ) {
 
 						if ( isset( $field['field'] ) && $setting == $field['field'] )
 							return $field;
+
+					} else if ( is_string( $suffix ) && $setting == $suffix ) {
+
+						if ( method_exists( __NAMESPACE__.'\\Settings', 'getSetting_'.$suffix ) )
+							return call_user_func_array( [ __NAMESPACE__.'\\Settings', 'getSetting_'.$suffix ], [ $field ] );
+
+						return [];
 
 					} else if ( $setting == $field ) {
 
@@ -977,6 +987,9 @@ class Module extends Base
 
 						return [];
 					}
+				}
+			}
+		}
 
 		return [];
 	}
@@ -1224,6 +1237,7 @@ class Module extends Base
 			$this->before_settings( $module );
 
 		foreach ( $this->settings as $section_suffix => $fields ) {
+
 			if ( is_array( $fields ) ) {
 
 				$section = $this->base.'_'.$this->module->name.$section_suffix;
@@ -1239,13 +1253,17 @@ class Module extends Base
 					'section_class' => 'settings_section',
 				] );
 
-				foreach ( $fields as $field ) {
+				foreach ( $fields as $suffix => $field ) {
 
 					if ( FALSE === $field )
 						continue;
 
 					if ( is_array( $field ) )
 						$args = $field;
+
+					// passing as custom description
+					else if ( is_string( $suffix ) && method_exists( __NAMESPACE__.'\\Settings', 'getSetting_'.$suffix ) )
+						$args = call_user_func_array( [ __NAMESPACE__.'\\Settings', 'getSetting_'.$suffix ], [ $field ] );
 
 					else if ( method_exists( __NAMESPACE__.'\\Settings', 'getSetting_'.$field ) )
 						$args = call_user_func( [ __NAMESPACE__.'\\Settings', 'getSetting_'.$field ] );
@@ -1257,7 +1275,9 @@ class Module extends Base
 				}
 
 			} else if ( method_exists( $this, 'register_settings_'.$section_suffix ) ) {
+
 				$title = $section_suffix == $fields ? NULL : $fields;
+
 				call_user_func_array( [ $this, 'register_settings_'.$section_suffix ], [ $title ] );
 			}
 		}
