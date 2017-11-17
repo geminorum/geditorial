@@ -580,6 +580,12 @@ class Helper extends Core\Base
 				'h' => get_option( 'medium_size_h' ),
 				'c' => 0,
 			],
+			// 'medium_large' => [
+			// 	'n' => _x( 'Medium Large', 'Helper', GEDITORIAL_TEXTDOMAIN ),
+			// 	'w' => get_option( 'medium_large_size_w' ),
+			// 	'h' => get_option( 'medium_large_size_h' ),
+			// 	'c' => 0,
+			// ],
 			'large' => [
 				'n' => _x( 'Large', 'Helper', GEDITORIAL_TEXTDOMAIN ),
 				'w' => get_option( 'large_size_w' ),

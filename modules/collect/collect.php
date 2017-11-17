@@ -84,7 +84,7 @@ class Collect extends gEditorial\Module
 			'part_tax_slug'            => 'collection-part',
 			'collection_shortcode'     => 'collection',
 			'group_shortcode'          => 'collection-group',
-			'poster_shortcode'          => 'collection-poster',
+			'poster_shortcode'         => 'collection-poster',
 		];
 	}
 
@@ -212,9 +212,8 @@ class Collect extends gEditorial\Module
 			], $this->post_types( 'collection_cpt' ) );
 
 		$this->register_post_type( 'collection_cpt', [
-			'hierarchical'      => TRUE,
-			'show_in_admin_bar' => FALSE,
-			'rewrite'           => [
+			'hierarchical' => TRUE,
+			'rewrite'      => [
 				'feeds' => (bool) $this->get_setting( 'posttype_feeds', FALSE ),
 				'pages' => (bool) $this->get_setting( 'posttype_pages', FALSE ),
 			],
@@ -627,7 +626,7 @@ class Collect extends gEditorial\Module
 		if ( $list = MetaBox::getTermPosts( $this->constant( 'collection_tax' ), $term, [], FALSE ) )
 			echo $list;
 		else
-			HTML::desc( _x( 'No items connected!', 'Modules: Contest', GEDITORIAL_TEXTDOMAIN ), FALSE, '-empty' );
+			HTML::desc( _x( 'No items connected!', 'Modules: Collect', GEDITORIAL_TEXTDOMAIN ), FALSE, '-empty' );
 
 		echo '</div>';
 	}

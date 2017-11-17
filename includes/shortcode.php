@@ -363,7 +363,7 @@ class ShortCode extends Core\Base
 
 		if ( 'all' == $args['id'] ) {
 
-			// do nothing, will collect all posttype: e.g. all entrys of all sections
+			// do nothing, will collect all posttype: e.g. all entries of all sections
 
 		} else if ( $args['id'] ) {
 
@@ -508,7 +508,7 @@ class ShortCode extends Core\Base
 
 		if ( 'all' == $args['id'] ) {
 
-			// do nothing, will collect all posttype: e.g. all entrys of all sections
+			// do nothing, will collect all posttype: e.g. all entries of all sections
 
 		} else if ( $args['id'] ) {
 

@@ -1588,9 +1588,11 @@ class Module extends Base
 			'rest_base'    => $this->constant( $constant.'_rest', $this->constant( $constant.'_archive', $post_type ) ),
 			// 'rest_controller_class' => 'WP_REST_Posts_Controller',
 
-			// SEE: https://github.com/torounit/custom-post-type-permalinks
+			// @SEE: https://github.com/torounit/custom-post-type-permalinks
 			// 'cptp_permalink_structure' => $this->constant( $constant.'_permalink', '/%post_id%' ),
-			// Only `%post_id%` and `%postname%` | SEE: https://github.com/torounit/simple-post-type-permalinks
+
+			// only `%post_id%` and `%postname%`
+			// @SEE: https://github.com/torounit/simple-post-type-permalinks
 			// 'sptp_permalink_structure' => $this->constant( $constant.'_permalink', '/%post_id%' ),
 		] );
 
@@ -1680,7 +1682,10 @@ class Module extends Base
 			'capabilities'          => $this->get_taxonomy_caps( $caps, $post_types ),
 			'query_var'             => $this->constant( $constant.'_query', $taxonomy ),
 			'rewrite'               => [
-				'slug'       => $this->constant( $constant.'_slug', $taxonomy ), // can use : 'cpt/tax' if cpt registered after tax: https://developer.wordpress.org/reference/functions/register_taxonomy/#comment-2274
+
+				// we can use `cpt/tax` if cpt registered after the tax
+				// @REF: https://developer.wordpress.org/reference/functions/register_taxonomy/#comment-2274
+				'slug'       => $this->constant( $constant.'_slug', $taxonomy ),
 				'with_front' => FALSE,
 			],
 

@@ -172,8 +172,7 @@ class Contest extends gEditorial\Module
 		], 'apply_cpt' );
 
 		$this->register_post_type( 'contest_cpt', [
-			'hierarchical'      => TRUE,
-			'show_in_admin_bar' => FALSE,
+			'hierarchical' => TRUE,
 		] );
 
 		$this->register_post_type( 'apply_cpt' );

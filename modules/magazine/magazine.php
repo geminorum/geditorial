@@ -210,9 +210,8 @@ class Magazine extends gEditorial\Module
 			], $this->post_types( 'issue_cpt' ) );
 
 		$this->register_post_type( 'issue_cpt', [
-			'hierarchical'      => TRUE,
-			'show_in_admin_bar' => FALSE,
-			'rewrite'           => [
+			'hierarchical' => TRUE,
+			'rewrite'      => [
 				'feeds' => (bool) $this->get_setting( 'posttype_feeds', FALSE ),
 				'pages' => (bool) $this->get_setting( 'posttype_pages', FALSE ),
 			],
