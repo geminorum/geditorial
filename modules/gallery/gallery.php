@@ -47,8 +47,8 @@ class Gallery extends gEditorial\Module
 	{
 		return [
 			'taxonomies' => [
-				'album_cat' => NULL,
-				'photo_tag' => 'clipboard',
+				'album_cat' => 'format-image',
+				'photo_tag' => 'images-alt2',
 			],
 		];
 	}
@@ -58,7 +58,7 @@ class Gallery extends gEditorial\Module
 		$strings = [
 			'noops' => [
 				'album_cpt' => _nx_noop( 'Photo Album', 'Photo Albums', 'Modules: Gallery: Noop', GEDITORIAL_TEXTDOMAIN ),
-				'album_cat' => _nx_noop( 'Album Category', 'Album Categories', 'Modules: Gallery: Noop', GEDITORIAL_TEXTDOMAIN ),
+				'album_cat' => _nx_noop( 'Album Gallery', 'Album Galleries', 'Modules: Gallery: Noop', GEDITORIAL_TEXTDOMAIN ),
 				'photo_tag' => _nx_noop( 'Photo Tag', 'Photo Tags', 'Modules: Gallery: Noop', GEDITORIAL_TEXTDOMAIN ),
 			],
 		];
@@ -72,7 +72,7 @@ class Gallery extends gEditorial\Module
 				'featured'  => _x( 'Featured Photo', 'Modules: Gallery: Photo Album CPT: Featured', GEDITORIAL_TEXTDOMAIN ),
 			],
 			'album_cat' => [
-				'tweaks_column_title' => _x( 'Album Categories', 'Modules: Gallery: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'tweaks_column_title' => _x( 'Album Galleries', 'Modules: Gallery: Column Title', GEDITORIAL_TEXTDOMAIN ),
 			],
 			'photo_tag' => [
 				'tweaks_column_title' => _x( 'Photo Tags', 'Modules: Gallery: Column Title', GEDITORIAL_TEXTDOMAIN ),

@@ -11,7 +11,7 @@
 
   o.watch = function () {
     // do stuff when user has been idle for 1 second
-    // @REF: https://stackoverflow.com/a/9424784/4864081
+    // @REF: https://stackoverflow.com/a/9424784
     var wto;
     $(':input', o.box).change(function () {
       clearTimeout(wto);

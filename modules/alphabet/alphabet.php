@@ -274,7 +274,7 @@ class Alphabet extends gEditorial\Module
 	}
 
 	// sort array by value based on locale
-	// @REF: https://stackoverflow.com/a/7096937/4864081
+	// @REF: https://stackoverflow.com/a/7096937
 	// @REF: `WP_List_Util::sort_callback()`
 	public static function sort( $array, $orderby = NULL, $order = 'ASC', $preserve_keys = FALSE, $locale = NULL )
 	{

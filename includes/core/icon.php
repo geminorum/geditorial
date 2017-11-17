@@ -106,7 +106,7 @@ class Icon extends Base
 
 	// FIXME: use css background
 	// SEE: #adminmenu div.wp-menu-image.svg
-	// SEE: https://stackoverflow.com/a/19570011/4864081
+	// SEE: https://stackoverflow.com/a/19570011
 	public static function wrapBase64( $data )
 	{
 		return '<span data-icon="base64" class="'.static::BASE.'-icon -iconbase64"><img src="'.$data.'" /></span>';
@@ -117,7 +117,7 @@ class Icon extends Base
 		return '<span data-icon="url" class="'.static::BASE.'-icon -iconurl"><img src="'.$url.'" /></span>';
 	}
 
-	// @REF: https://stackoverflow.com/a/42265057/4864081
+	// @REF: https://stackoverflow.com/a/42265057
 	// The fill="black" is important. Without the fill attribute, WordPress won’t be able to match the admin color scheme
 	public static function getBase64( $icon, $group )
 	{
