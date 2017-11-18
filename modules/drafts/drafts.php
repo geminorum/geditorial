@@ -33,6 +33,7 @@ class Drafts extends gEditorial\Module
 					'title'       => _x( 'Public Preview', 'Modules: Drafts: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Provides a secret link to non-logged in users to view post drafts.', 'Modules: Drafts: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 				],
+				'admin_rowactions',
 			],
 			'_frontend' => [
 				[
@@ -83,11 +84,16 @@ class Drafts extends gEditorial\Module
 
 		if ( in_array( $screen->post_type, $this->post_types() ) ) {
 			if ( 'post' == $screen->base ) {
+
 				$this->action( 'post_submitbox_minor_actions', 1, 12 );
+
 				$this->enqueue_asset_js( [], $screen );
 
 			} else if ( 'edit' == $screen->base ) {
-				$this->filter( 'post_row_actions', 2 );
+
+				if ( $this->get_setting( 'admin_rowactions' ) )
+					$this->filter( 'post_row_actions', 2 );
+
 				add_action( 'geditorial_tweaks_column_attr', [ $this, 'column_attr' ], 90 );
 			}
 		}

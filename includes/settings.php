@@ -427,6 +427,15 @@ class Settings extends Core\Base
 		];
 	}
 
+	public static function getSetting_admin_rowactions( $description = NULL )
+	{
+		return [
+			'field'       => 'admin_rowactions',
+			'title'       => _x( 'Row Actions', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+			'description' => $description ?: _x( 'Enhance row actions on admin edit pages.', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+		];
+	}
+
 	public static function getSetting_adminbar_summary( $description = NULL )
 	{
 		return [

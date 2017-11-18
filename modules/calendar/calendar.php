@@ -38,6 +38,7 @@ class Calendar extends gEditorial\Module
 			'_dashboard' => [
 				'calendar_type',
 				'calendar_list',
+				'admin_rowactions',
 				'adminmenu_roles',
 				[
 					'field'       => 'noschedule_statuses',
@@ -58,7 +59,9 @@ class Calendar extends gEditorial\Module
 		parent::init();
 
 		// has no frontend
-		$this->filter( 'post_row_actions', 2 );
+
+		if ( $this->get_setting( 'admin_rowactions' ) )
+			$this->filter( 'post_row_actions', 2 );
 	}
 
 	public function init_ajax()
