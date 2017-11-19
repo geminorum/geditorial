@@ -43,6 +43,7 @@ class Magazine extends gEditorial\Module
 					'title'       => _x( 'Issue Sections', 'Modules: Magazine: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Section taxonomy for issues and supported posttypes.', 'Modules: Magazine: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 				],
+				'comment_status',
 			],
 			'_editlist' => [
 				'admin_ordering',
@@ -247,6 +248,7 @@ class Magazine extends gEditorial\Module
 
 				$this->filter( 'wp_insert_post_data', 2, 9, 'menu_order' );
 				$this->filter( 'post_updated_messages' );
+				$this->filter( 'get_default_comment_status', 3 );
 
 				$this->filter_false( 'geditorial_meta_box_callback', 12 );
 				$this->remove_meta_box( $screen->post_type, $screen->post_type, 'parent' );

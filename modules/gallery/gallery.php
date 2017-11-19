@@ -133,7 +133,7 @@ class Gallery extends gEditorial\Module
 			if ( 'post' == $screen->base ) {
 
 				$this->filter( 'post_updated_messages' );
-				$this->filter( 'get_default_comment_status', 3, 10 );
+				$this->filter( 'get_default_comment_status', 3 );
 
 			} else if ( 'edit' == $screen->base ) {
 

@@ -30,8 +30,13 @@ class Contest extends gEditorial\Module
 		return [
 			'_general' => [
 				'multiple_instances',
+				'comment_status',
+			],
+			'_editlist' => [
 				'admin_ordering',
 				'admin_restrict',
+			],
+			'_frontend' => [
 				'redirect_archives',
 			],
 			'posttypes_option' => 'posttypes_option',
@@ -197,6 +202,7 @@ class Contest extends gEditorial\Module
 
 				$this->filter( 'wp_insert_post_data', 2, 9, 'menu_order' );
 				$this->filter( 'post_updated_messages' );
+				$this->filter( 'get_default_comment_status', 3 );
 
 				$this->filter_false( 'geditorial_meta_box_callback', 12 );
 				$this->remove_meta_box( $screen->post_type, $screen->post_type, 'parent' );
