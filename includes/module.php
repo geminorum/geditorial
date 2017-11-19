@@ -365,7 +365,7 @@ class Module extends Base
 	// enabled post types for this module
 	public function post_types( $post_types = NULL )
 	{
-		$init = did_action( 'init' );
+		$loaded = did_action( 'wp_loaded' );
 
 		if ( is_null( $post_types ) )
 			$post_types = [];
@@ -384,7 +384,7 @@ class Module extends Base
 					if ( in_array( $post_type, $this->post_types_excluded ) )
 						$value = FALSE;
 
-					if ( $init && ! post_type_exists( $post_type ) )
+					if ( $loaded && ! post_type_exists( $post_type ) )
 						$value = FALSE;
 
 					if ( $value )
