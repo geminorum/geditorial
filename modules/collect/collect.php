@@ -247,7 +247,7 @@ class Collect extends gEditorial\Module
 
 			if ( 'post' == $screen->base ) {
 
-				$this->filter( 'wp_insert_post_data', 2, 9 );
+				$this->filter( 'wp_insert_post_data', 2, 9, 'menu_order' );
 				$this->filter( 'post_updated_messages' );
 
 				$this->filter_false( 'geditorial_meta_box_callback', 12 );
@@ -479,16 +479,6 @@ class Collect extends gEditorial\Module
 	public function before_delete_post( $post_id )
 	{
 		$this->do_before_delete_post( $post_id, 'collection_cpt', 'collection_tax' );
-	}
-
-	// FIXME: make this api
-	public function wp_insert_post_data( $data, $postarr )
-	{
-		if ( $this->constant( 'collection_cpt' ) == $postarr['post_type'] && ! $data['menu_order'] )
-			$data['menu_order'] = WordPress::getLastPostOrder( $this->constant( 'collection_cpt' ),
-				( isset( $postarr['ID'] ) ? $postarr['ID'] : '' ) ) + 1;
-
-		return $data;
 	}
 
 	public function save_post_supported_cpt( $post_ID, $post, $update )

@@ -195,7 +195,7 @@ class Contest extends gEditorial\Module
 
 			if ( 'post' == $screen->base ) {
 
-				$this->filter( 'wp_insert_post_data', 2, 9 );
+				$this->filter( 'wp_insert_post_data', 2, 9, 'menu_order' );
 				$this->filter( 'post_updated_messages' );
 
 				$this->filter_false( 'geditorial_meta_box_callback', 12 );
@@ -420,15 +420,6 @@ class Contest extends gEditorial\Module
 	public function bulk_post_updated_messages_supported( $messages, $counts )
 	{
 		return array_merge( $messages, $this->get_bulk_post_updated_messages( 'apply_cpt', $counts ) );
-	}
-
-	public function wp_insert_post_data( $data, $postarr )
-	{
-		if ( $this->constant( 'contest_cpt' ) == $postarr['post_type'] && ! $data['menu_order'] )
-			$data['menu_order'] = WordPress::getLastPostOrder( $this->constant( 'contest_cpt' ),
-				( isset( $postarr['ID'] ) ? $postarr['ID'] : '' ) ) + 1;
-
-		return $data;
 	}
 
 	public function post_updated( $post_ID, $post_after, $post_before )

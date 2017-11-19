@@ -2719,6 +2719,17 @@ SQL;
 		return $this->get_setting( 'comment_status', $status );
 	}
 
+	// DEFAULT FILTER
+	// increases last menu_order for new posts
+	public function wp_insert_post_data_menu_order( $data, $postarr )
+	{
+		if ( ! $data['menu_order'] && $postarr['post_type'] )
+			$data['menu_order'] = WordPress::getLastPostOrder( $postarr['post_type'],
+				( isset( $postarr['ID'] ) ? $postarr['ID'] : '' ) ) + 1;
+
+		return $data;
+	}
+
 	protected function _hook_ajax( $nopriv = FALSE, $hook = NULL )
 	{
 		if ( is_null( $hook ) )
