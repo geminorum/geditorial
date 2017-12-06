@@ -44,7 +44,7 @@ class ShortCode extends Core\Base
 	}
 
 	// term as title of the list
-	public static function termTitle( $atts, $term_or_id, $taxonomy = 'category' )
+	public static function termTitle( $term_or_id, $taxonomy = 'category', $atts = [] )
 	{
 		if ( is_array( $term_or_id ) )
 			$term_or_id = $term_or_id[0];
@@ -123,7 +123,7 @@ class ShortCode extends Core\Base
 	}
 
 	// term as item in the list
-	public static function termItem( $atts, $term, $before = '', $after = '' )
+	public static function termItem( $term, $atts = [], $before = '', $after = '' )
 	{
 		$args = self::atts( [
 			'item_link'     => TRUE,
@@ -176,7 +176,7 @@ class ShortCode extends Core\Base
 	}
 
 	// post as title of the list
-	public static function postTitle( $atts, $post = NULL )
+	public static function postTitle( $post = NULL, $atts = [] )
 	{
 		$args = self::atts( [
 			'title'          => NULL, // FALSE to disable
@@ -224,7 +224,7 @@ class ShortCode extends Core\Base
 	}
 
 	// post as item in the list
-	public static function postItem( $atts, $post = NULL, $before = '', $after = '' )
+	public static function postItem( $post = NULL, $atts = [], $before = '', $after = '' )
 	{
 		if ( ! $post = get_post( $post ) )
 			return '';
@@ -415,7 +415,7 @@ class ShortCode extends Core\Base
 				'compare' => 'EXISTS'
 			] ];
 
-		$args['title'] = self::termTitle( $args, $term, $taxonomy );
+		$args['title'] = self::termTitle( $term, $taxonomy, $args );
 
 		if ( 'on' == $args['future'] )
 			$post_status = [ 'publish', 'future', 'draft' ];
@@ -464,7 +464,7 @@ class ShortCode extends Core\Base
 				$html.= call_user_func_array( $args['item_cb'], [ $post, $args, $term ] );
 
 			else
-				$html.= self::postItem( $args, $post );
+				$html.= self::postItem( $post, $args );
 		}
 
 		if ( $args['list_tag'] )
@@ -573,7 +573,7 @@ class ShortCode extends Core\Base
 				'compare' => 'EXISTS'
 			] ];
 
-		$args['title'] = self::postTitle( $args, $post );
+		$args['title'] = self::postTitle( $post, $args );
 
 		if ( 'on' == $args['future'] )
 			$post_status = [ 'publish', 'future', 'draft' ];
@@ -619,7 +619,7 @@ class ShortCode extends Core\Base
 				$html .= call_user_func_array( $args['item_cb'], [ $post, $args, $term ] );
 
 			else
-				$html .= self::postItem( $args, $post );
+				$html .= self::postItem( $post, $args );
 		}
 
 		if ( $args['list_tag'] )

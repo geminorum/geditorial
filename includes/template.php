@@ -206,7 +206,7 @@ class Template extends Core\Base
 		$links = [];
 
 		foreach ( (array) $posts as $post_id )
-			if ( $link = ShortCode::postItem( $args, $post_id ) )
+			if ( $link = ShortCode::postItem( $post_id, $args ) )
 				$links[] = $link;
 
 		if ( $html = Helper::getJoined( $links, $args['before'], $args['after'] ) ) {

@@ -426,6 +426,6 @@ class Series extends gEditorial\Module
 			);
 		}
 
-		return ShortCode::postItem( $args, $post );
+		return ShortCode::postItem( $post, $args );
 	}
 }
