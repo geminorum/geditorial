@@ -210,7 +210,8 @@ class WordPress extends Base
 			$location = add_query_arg( wp_get_referer() );
 
 		wp_redirect( $location, $status );
-		exit();
+
+		die;
 	}
 
 	public static function redirectReferer( $message = 'updated', $key = 'message' )

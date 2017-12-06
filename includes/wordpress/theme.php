@@ -7,10 +7,34 @@ use geminorum\gEditorial\Core;
 class Theme extends Core\Base
 {
 
+	// core duplicate with extra action/filter hooks
+	// @REF: `get_template_part()`
+	public static function getPart( $slug, $name = NULL, $locate = TRUE )
+	{
+		$templates = array();
+		$name      = (string) $name;
+
+		if ( '' !== $name )
+			$templates[] = "{$slug}-{$name}.php";
+
+		$templates[] = "{$slug}.php";
+
+		$templates = apply_filters( 'get_template_part', $templates, $slug, $name );
+
+		if ( ! $locate )
+			return $templates;
+
+		do_action( "get_template_part_{$slug}", $slug, $name, $templates );
+
+		locate_template( $templates, TRUE, FALSE );
+
+		do_action( "get_template_part_{$slug}_after", $slug, $name, $templates );
+	}
+
 	public static function restPost( $data, $setup = FALSE, $network = FALSE )
 	{
 		$dummy = array(
-			'ID'                    => 0,
+			'ID'                    => -9999,
 			'post_status'           => $data->status,
 			'post_author'           => $network ? $data->author : 0,
 			'post_parent'           => 0,
@@ -20,7 +44,7 @@ class Theme extends Core\Base
 			'post_modified'         => date( 'Y-m-d H:i:s', strtotime( $data->modified ) ),
 			'post_modified_gmt'     => gmdate( 'Y-m-d H:i:s', strtotime( $data->modified_gmt ) ),
 			'post_content'          => $data->content->rendered,
-			'post_title'            => $data->title->rendered,
+			'post_title'            => str_replace( '&nbsp;', ' ', $data->title->rendered ),
 			'post_excerpt'          => $data->excerpt->rendered,
 			'post_content_filtered' => '',
 			'post_mime_type'        => '',
@@ -49,9 +73,9 @@ class Theme extends Core\Base
 		return $post;
 	}
 
-	// add_filter( 'the_permalink', [ '\geminorum\\gEditorial\\WordPress\\Theme', 'restPost_the_permalink' ], 1, 2 );
-	// remove_filter( 'the_permalink', [ '\geminorum\\gEditorial\\WordPress\\Theme', 'restPost_the_permalink' ], 1, 2 );
-	public static function restPost_the_permalink( $permalink, $post )
+	// add_filter( 'post_link', [ '\geminorum\\gEditorial\\WordPress\\Theme', 'restPost_permalink' ], 1 );
+	// remove_filter( 'post_link', [ '\geminorum\\gEditorial\\WordPress\\Theme', 'restPost_permalink' ], 1 );
+	public static function restPost_permalink( $permalink )
 	{
 		return $GLOBALS['post']->link;
 	}
