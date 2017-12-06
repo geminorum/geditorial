@@ -36,9 +36,20 @@ class Attachments extends gEditorial\Module
 					'title'       => _x( 'Attachment Count', 'Modules: Attachments: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Displays attachment summary of the post.', 'Modules: Attachments: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 				],
+				[
+					'field'       => 'restrict_library',
+					'title'       => _x( 'Restrict Library', 'Modules: Attachments: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Restricts Media Library access to user’s own uploads.', 'Modules: Attachments: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+				],
 			],
 			'posttypes_option' => 'posttypes_option',
 		];
+	}
+
+	public function init_ajax()
+	{
+		if ( $this->get_setting( 'restrict_library' ) )
+			$this->filter( 'ajax_query_attachments_args' );
 	}
 
 	public function current_screen( $screen )
@@ -47,6 +58,17 @@ class Attachments extends gEditorial\Module
 
 			add_action( 'geditorial_tweaks_column_attr', [ $this, 'column_attr' ], 20 );
 		}
+	}
+
+	// @REF: http://wpbeg.in/2yZXJ2n
+	public function ajax_query_attachments_args( $query )
+	{
+		$user_id = get_current_user_id();
+
+		if ( $user_id && ! current_user_can( 'edit_others_posts' ) )
+			$query['author'] = $user_id;
+
+		return $query;
 	}
 
 	public function adminbar_init( &$nodes, $parent )
