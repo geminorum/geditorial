@@ -3,6 +3,7 @@
 defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
+use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\HTTP;
 use geminorum\gEditorial\Core\URL;
@@ -62,20 +63,33 @@ class WPRestPosts extends gEditorial\Widget
 
 		} else {
 
+			$template = locate_template( Theme::getPart( 'row', $context, FALSE ) );
+
 			echo '<ul>';
 
-			add_filter( 'the_permalink', [ '\geminorum\\gEditorial\\WordPress\\Theme', 'restPost_the_permalink' ], 1, 2 );
+			add_filter( 'post_link', [ '\geminorum\\gEditorial\\WordPress\\Theme', 'restPost_permalink' ], 1 );
 
 			foreach ( $data as $item ) {
 
-				Theme::restPost( $item, TRUE );
+				$post = Theme::restPost( $item, TRUE );
 
-				echo '<li>';
-					get_template_part( 'row', $context );
-				echo '</li>';
+				if ( $template ) {
+
+					echo '<li>';
+						load_template( $template, FALSE );
+					echo '</li>';
+
+				} else {
+
+					echo ShortCode::postItem( $post, [
+						'item_anchor' => '',
+					] );
+				}
 			}
 
-			remove_filter( 'the_permalink', [ '\geminorum\\gEditorial\\WordPress\\Theme', 'restPost_the_permalink' ], 1, 2 );
+			remove_filter( 'post_link', [ '\geminorum\\gEditorial\\WordPress\\Theme', 'restPost_permalink' ], 1 );
+
+			wp_reset_postdata();
 
 			echo '</ul>';
 		}
