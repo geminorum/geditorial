@@ -222,6 +222,17 @@ class Tube extends gEditorial\Module
 		$this->add_post_type_fields( $this->constant( 'video_cpt' ) );
 	}
 
+	public function dashboard_glance_items( $items )
+	{
+		if ( $glance = $this->dashboard_glance_post( 'video_cpt' ) )
+			$items[] = $glance;
+
+		if ( $glance = $this->dashboard_glance_post( 'channel_cpt' ) )
+			$items[] = $glance;
+
+		return $items;
+	}
+
 	public function wp_video_shortcode_override( $override, $attr, $content, $instance )
 	{
 		$this->wp_video_shortcode_attr = $attr;
