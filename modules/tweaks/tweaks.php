@@ -658,7 +658,7 @@ class Tweaks extends gEditorial\Module
 				echo $this->get_column_icon( FALSE, 'admin-page', _x( 'Page Template', 'Modules: Tweaks: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
 
 				if ( ! empty( $this->page_templates[$post->post_type][$post->page_template] ) )
-					echo '<span title="'.esc_attr( $post->page_template ).'">'
+					echo '<span title="'.HTML::escapeAttr( $post->page_template ).'">'
 						.esc_html( $this->page_templates[$post->post_type][$post->page_template] ).'</span>';
 				else
 					echo '<span>'.esc_html( $post->page_template ).'</span>';

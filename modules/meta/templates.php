@@ -234,7 +234,7 @@ class Meta extends gEditorial\Template
 			if ( $term && is_null( $args['link'] ) )
 				$args['link'] = get_term_link( $term, $tax );
 			if ( $term && is_null( $args['desc'] ) )
-				$args['desc'] = esc_attr( trim( strip_tags( $term->description ) ) );
+				$args['desc'] = trim( strip_tags( $term->description ) );
 		} else {
 			if ( $title && is_null( $args['link'] ) )
 				$args['link'] = WordPress::getSearchLink( $title );
@@ -291,7 +291,7 @@ class Meta extends gEditorial\Template
 			if ( isset( $args['img'] ) && $args['img'] )
 				$value = '<img src="'.$args['img'].'" title="'.$value.'" alt="'.$value.'" />';
 
-			$html = $b.'<a href="'.$link.'" title="'.esc_attr( $desc ).'">'.$value.'</a>'.$a;
+			$html = $b.'<a href="'.$link.'" title="'.HTML::escapeAttr( $desc ).'">'.$value.'</a>'.$a;
 
 			if ( isset( $args['echo'] ) && ! $args['echo'] )
 				return $html;

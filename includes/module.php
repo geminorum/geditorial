@@ -746,7 +746,7 @@ class Module extends Base
 
 			Settings::moduleSections( $this->base.'_'.$this->module->name );
 
-			echo '<input id="geditorial_module_name" name="geditorial_module_name" type="hidden" value="'.esc_attr( $this->module->name ).'" />';
+			echo '<input id="geditorial_module_name" name="geditorial_module_name" type="hidden" value="'.HTML::escapeAttr( $this->module->name ).'" />';
 
 			$this->settings_buttons();
 
@@ -1235,6 +1235,10 @@ class Module extends Base
 
 		$this->init_settings();
 
+		// FIXME: find a better way
+		if ( $this->setup_disabled() )
+			$this->strings = $this->filters( 'strings', $this->get_global_strings(), $this->module );
+
 		if ( method_exists( $this, 'before_settings' ) )
 			$this->before_settings( $module );
 
@@ -1694,6 +1698,7 @@ class Module extends Base
 			'labels'                => $this->get_taxonomy_labels( $constant ),
 			'update_count_callback' => [ __NAMESPACE__.'\\WordPress\\Database', 'updateCountCallback' ],
 			'meta_box_cb'           => method_exists( $this, 'meta_box_cb_'.$constant ) ? [ $this, 'meta_box_cb_'.$constant ] : FALSE,
+			'meta_box_sanitize_cb'  => NULL, // @REF: https://core.trac.wordpress.org/ticket/36514
 			'hierarchical'          => FALSE,
 			'public'                => TRUE,
 			'show_ui'               => TRUE,
@@ -1883,7 +1888,7 @@ class Module extends Base
 		if ( count( $constant_or_hidden ) ) {
 			$form = rtrim( $form, '</form>' );
 			foreach ( $constant_or_hidden as $name => $value )
-				$form.= '<input type="hidden" name="'.esc_attr( $name ).'" value="'.esc_attr( $value ).'" />';
+				$form.= '<input type="hidden" name="'.HTML::escapeAttr( $name ).'" value="'.HTML::escapeAttr( $value ).'" />';
 			$form.= '</form>';
 		}
 
@@ -2542,7 +2547,7 @@ SQL;
 			$meta = sprintf( $args['template'], $meta );
 
 		if ( ! empty( $args['title'] ) )
-			$meta = '<span title="'.esc_attr( $args['title'] ).'">'.$meta.'</span>';
+			$meta = '<span title="'.HTML::escapeAttr( $args['title'] ).'">'.$meta.'</span>';
 
 		return $before.$meta.$after;
 	}
@@ -2833,7 +2838,7 @@ SQL;
 		return gEditorial()->icon( $name, ( is_null( $group ) ? $this->icon_group : $group ) );
 	}
 
-	protected function getTablePosts( $atts = [], $extra = [], $posttypes = NULL )
+	public function getTablePosts( $atts = [], $extra = [], $posttypes = NULL )
 	{
 		if ( is_null( $posttypes ) )
 			$posttypes = $this->post_types();
@@ -2879,5 +2884,28 @@ SQL;
 	protected function check_hidden_metabox( $widget, $after = '' )
 	{
 		return MetaBox::checkHidden( $this->classs( $widget ), $after );
+	}
+
+	protected function get_blog_users( $fields = NULL )
+	{
+		if ( is_null( $fields ) )
+			$fields = [
+				'ID',
+				'display_name',
+				'user_login',
+				'user_email',
+			];
+
+		$args = [
+			'number'       => -1,
+			'orderby'      => 'post_count',
+			'fields'       => $fields,
+			'role__not_in' => $this->get_setting( 'excluded_roles', [] ),
+			'count_total'  => FALSE,
+		];
+
+		$query = new \WP_User_Query( $args );
+
+		return $query->get_results();
 	}
 }

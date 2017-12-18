@@ -212,7 +212,7 @@ class Estimated extends gEditorial\Module
 			$estimated = sprintf( _nx( '%s minute', '%s minutes', $minutes, 'Modules: Estimated', GEDITORIAL_TEXTDOMAIN ), Number::format( $minutes ) );
 
 		if ( $info )
-			return '<span title="'.esc_attr( sprintf( _x( 'If you try to read %s words per minute', 'Modules: Estimated', GEDITORIAL_TEXTDOMAIN ), Number::format( $avgtime ) ) ).'">'.$estimated.'</span>';
+			return '<span title="'.HTML::escapeAttr( sprintf( _x( 'If you try to read %s words per minute', 'Modules: Estimated', GEDITORIAL_TEXTDOMAIN ), Number::format( $avgtime ) ) ).'">'.$estimated.'</span>';
 
 		return $estimated;
 	}

@@ -182,7 +182,7 @@ class Modified extends gEditorial\Module
 				? FALSE
 				: Helper::humanTimeDiffRound( $local, $args['round'] );
 		else
-			$title = esc_attr( $args['title'] );
+			$title = $args['title'];
 
 		$html = Date::htmlDateTime( $local, $gmt, $args['format'], $title );
 
@@ -251,7 +251,7 @@ class Modified extends gEditorial\Module
 				? FALSE
 				: Helper::humanTimeDiffRound( $local, $args['round'] );
 		else
-			$title = esc_attr( $args['title'] );
+			$title = $args['title'];
 
 		$html = Date::htmlDateTime( $local, $gmt, $args['format'], $title );
 

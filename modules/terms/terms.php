@@ -300,7 +300,7 @@ class Terms extends gEditorial\Module
 		} else if ( $this->classs( 'color' ) == $column ) {
 
 			if ( $meta = get_term_meta( $term_id, 'color', TRUE ) )
-				echo '<i class="-color" data-color="'.esc_attr( $meta ).'" style="background-color:'.esc_attr( $meta ).'"></i>';
+				echo '<i class="-color" data-color="'.HTML::escapeAttr( $meta ).'" style="background-color:'.HTML::escapeAttr( $meta ).'"></i>';
 		}
 	}
 

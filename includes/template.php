@@ -73,7 +73,7 @@ class Template extends Core\Base
 			$html = '<figure>'.$html.'<figcaption>'.$title.'</figcaption></figure>';
 
 		if ( $link )
-			$html = '<a title="'.esc_attr( $args['figure'] ? self::getPostField( 'title', $args['id'] ) : $title ).'" href="'.$link.'">'.$html.'</a>';
+			$html = '<a title="'.HTML::escapeAttr( $args['figure'] ? self::getPostField( 'title', $args['id'] ) : $title ).'" href="'.$link.'">'.$html.'</a>';
 
 		return '<div class="'.static::BASE.'-wrap'.( $module ? ' -'.$module : ' ' ).' -post-image-wrap">'.$html.'</div>';
 	}

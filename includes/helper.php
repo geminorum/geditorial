@@ -163,7 +163,7 @@ class Helper extends Core\Base
 
 	public static function trimChars( $text, $length = 45, $append = '&nbsp;&hellip;' )
 	{
-		$append = '<span title="'.esc_attr( $text ).'">'.$append.'</span>';
+		$append = '<span title="'.HTML::escapeAttr( $text ).'">'.$append.'</span>';
 
 		return Text::trimChars( $text, $length, $append );
 	}
@@ -281,7 +281,7 @@ class Helper extends Core\Base
 					$status = $post->post_status;
 
 				if ( $status )
-					$after = ' <small class="-status" title="'.esc_attr( $post->post_status ).'">('.$status.')</small>';
+					$after = ' <small class="-status" title="'.HTML::escapeAttr( $post->post_status ).'">('.$status.')</small>';
 			}
 		}
 
@@ -839,11 +839,11 @@ class Helper extends Core\Base
 
 		$formats = self::dateFormats( FALSE );
 
-		$html = '<span class="-date-date" title="'.esc_attr( date_i18n( $formats['timeonly'], $timestamp ) );
+		$html = '<span class="-date-date" title="'.HTML::escapeAttr( date_i18n( $formats['timeonly'], $timestamp ) );
 		$html.= '" data-time="'.date( 'c', $timestamp ).'">'.date_i18n( $formats['default'], $timestamp ).'</span>';
 
 		$html.= '&nbsp;(<span class="-date-diff" title="';
-		$html.= esc_attr( date_i18n( $formats['fulltime'], $timestamp ) ).'">';
+		$html.= HTML::escapeAttr( date_i18n( $formats['fulltime'], $timestamp ) ).'">';
 		$html.= self::humanTimeDiff( $timestamp ).'</span>)';
 
 		return $class ? '<span class="'.$class.'">'.$html.'</span>' : $html;
@@ -854,7 +854,7 @@ class Helper extends Core\Base
 		$timestamp = strtotime( $post->post_modified );
 		$formats   = self::dateFormats( FALSE );
 
-		$html = '<span class="-date-modified" title="'.esc_attr( date_i18n( $formats['default'], $timestamp ) );
+		$html = '<span class="-date-modified" title="'.HTML::escapeAttr( date_i18n( $formats['default'], $timestamp ) );
 		$html.='" data-time="'.date( 'c', $timestamp ).'">'.self::humanTimeDiff( $timestamp ).'</span>';
 
 		$edit_last = get_post_meta( $post->ID, '_edit_last', TRUE );
@@ -930,12 +930,12 @@ class Helper extends Core\Base
 
 		if ( $flip )
 			return '<span class="-date-diff" title="'
-					.esc_attr( self::dateFormat( $timestamp, 'fulltime' ) ).'">'
+					.HTML::escapeAttr( self::dateFormat( $timestamp, 'fulltime' ) ).'">'
 					.self::humanTimeDiff( $timestamp, $now )
 				.'</span>';
 
 		return '<span class="-time" title="'
-			.esc_attr( self::humanTimeAgo( $timestamp, $now ) ).'">'
+			.HTML::escapeAttr( self::humanTimeAgo( $timestamp, $now ) ).'">'
 			.self::humanTimeDiffRound( $timestamp, NULL, self::dateFormats( 'default' ), $now )
 		.'</span>';
 	}

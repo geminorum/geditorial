@@ -122,7 +122,7 @@ class Like extends gEditorial\Module
 		$title = $this->filters( 'loading', $title, $post );
 
 		$html  = '<div class="geditorial-wrap -like" style="display:none;" data-avatars="'.( $avatars ? 'true' : 'false' ).'">';
-		$html .= '<div><a class="like loading" title="'.esc_attr( $title ).'" href="#" data-id="'.$post->ID.'">';
+		$html .= '<div><a class="like loading" title="'.HTML::escapeAttr( $title ).'" href="#" data-id="'.$post->ID.'">';
 
 		// $html .= $this->filters( 'icon', '<span class="genericon genericon-heart"></span>', $post->ID );
 		$html .= $this->icon( 'heart', 'old' );
@@ -373,7 +373,7 @@ class Like extends gEditorial\Module
 					if ( function_exists( 'bp_core_get_userlink' ) ) {
 						$html .= '<li><a href="'.bp_core_get_user_domain( $user->ID ).'" title="'.bp_core_get_user_displayname( $user->ID ).'">'.get_avatar( $user->user_email, 40, '', 'avatar' ).'</a></li>';
 					} else {
-						$html .= '<li><a title="'.esc_attr( $user->display_name ).'" >'.get_avatar( $user->user_email, 40, '', 'avatar' ).'</a></li>';
+						$html .= '<li><a title="'.HTML::escapeAttr( $user->display_name ).'" >'.get_avatar( $user->user_email, 40, '', 'avatar' ).'</a></li>';
 					}
 				}
 			}

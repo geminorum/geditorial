@@ -11,11 +11,11 @@ class Pitches extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'      => 'pitches',
-			'title'     => _x( 'Pitches', 'Modules: Pitches', GEDITORIAL_TEXTDOMAIN ),
-			'desc'      => _x( 'Keep Track of Ideas', 'Modules: Pitches', GEDITORIAL_TEXTDOMAIN ),
-			'icon'      => 'lightbulb',
-			'frontend'  => FALSE,
+			'name'     => 'pitches',
+			'title'    => _x( 'Pitches', 'Modules: Pitches', GEDITORIAL_TEXTDOMAIN ),
+			'desc'     => _x( 'Keep Track of Ideas', 'Modules: Pitches', GEDITORIAL_TEXTDOMAIN ),
+			'icon'     => 'lightbulb',
+			'frontend' => FALSE,
 		];
 	}
 

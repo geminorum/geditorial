@@ -311,7 +311,7 @@ class Calendar extends gEditorial\Module
 			if ( current_user_can( $object->cap->create_posts ) ) {
 
 				$buttons.= '<a href="'.WordPress::getPostNewLink( $object->name )
-					.'" title="'.esc_attr( $object->labels->add_new_item )
+					.'" title="'.HTML::escapeAttr( $object->labels->add_new_item )
 					.'" data-type="'.$object->name.'" data-title="'.$object->labels->new_item
 					.'" class="-the-day-newpost" target="_blank">'
 					.Helper::getPostTypeIcon( $object ).'</a>';

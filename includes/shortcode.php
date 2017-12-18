@@ -80,7 +80,7 @@ class ShortCode extends Core\Base
 			$args['title'] = sprintf( $args['title'],
 				sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' ),
 				get_term_link( $term, $term->taxonomy ),
-				esc_attr( trim( strip_tags( $term->description ) ) ),
+				HTML::escapeAttr( trim( strip_tags( $term->description ) ) ),
 				( $attr ? $attr : '' )
 			);
 

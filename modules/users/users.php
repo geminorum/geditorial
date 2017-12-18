@@ -126,8 +126,8 @@ class Users extends gEditorial\Module
 			return;
 
 		add_users_page(
-			esc_attr( $tax->labels->menu_name ),
-			esc_attr( $tax->labels->menu_name ),
+			HTML::escapeAttr( $tax->labels->menu_name ),
+			HTML::escapeAttr( $tax->labels->menu_name ),
 			$tax->cap->manage_terms,
 			'edit-tags.php?taxonomy='.$tax->name
 		);
@@ -376,7 +376,7 @@ class Users extends gEditorial\Module
 		if ( ! isset( $_POST['groups'] ) )
 			return;
 
-		$term = esc_attr( $_POST['groups'] );
+		$term = HTML::escapeAttr( $_POST['groups'] );
 		wp_set_object_terms( $user_id, [ $term ], $this->constant( 'group_tax' ), FALSE );
 		clean_object_term_cache( $user_id, $this->constant( 'group_tax' ) );
 	}

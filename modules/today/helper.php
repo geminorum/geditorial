@@ -130,7 +130,7 @@ class Today extends gEditorial\Helper
 			echo '<div class="-today -date-icon">';
 
 				if ( $the_day['day'] )
-					echo '<span class="-day" data-day="'.esc_attr( $the_day['day'] )
+					echo '<span class="-day" data-day="'.HTML::escapeAttr( $the_day['day'] )
 						.'"><a target="_blank" href="'.self::getTheDayLink( $stored, 'day' )
 						.'">'.Number::format( $the_day['day'] ).'</a></span>';
 
@@ -142,18 +142,18 @@ class Today extends gEditorial\Helper
 					if ( isset( $gEditorialTodayMonths[$the_day['cal']][$key] ) )
 						$the_day['month'] = $gEditorialTodayMonths[$the_day['cal']][$key];
 
-					echo '<span class="-month" data-month="'.esc_attr( $month )
+					echo '<span class="-month" data-month="'.HTML::escapeAttr( $month )
 						.'"><a target="_blank" href="'.self::getTheDayLink( $stored, 'month' )
 						.'">'.$the_day['month'].'</a></span>';
 				}
 
 				if ( $the_day['year'] )
-					echo '<span class="-year" data-year="'.esc_attr( $the_day['year'] )
+					echo '<span class="-year" data-year="'.HTML::escapeAttr( $the_day['year'] )
 						.'"><a target="_blank" href="'.self::getTheDayLink( $stored, 'year' )
 						.'">'.Number::format( $the_day['year'] ).'</a></span>';
 
 				if ( $the_day['cal'] )
-					echo '<span class="-cal" data-cal="'.esc_attr( $the_day['cal'] )
+					echo '<span class="-cal" data-cal="'.HTML::escapeAttr( $the_day['cal'] )
 						.'"><a target="_blank" href="'.self::getTheDayLink( $stored, 'cal' )
 						.'">'.( empty( $gEditorialTodayCalendars[$the_day['cal']] )
 							? $the_day['cal']

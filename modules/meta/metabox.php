@@ -158,7 +158,7 @@ class Meta extends gEditorial\MetaBox
 
 		$desc = self::getString( $field, $post->post_type, 'descriptions', $title ); // FIXME: get from fields args
 
-		echo '<div class="-wrap field-wrap field-wrap-select" title="'.esc_attr( $desc ).'">';
+		echo '<div class="-wrap field-wrap field-wrap-select" title="'.HTML::escapeAttr( $desc ).'">';
 
 		// FIXME: core dropdown does not support: data attr
 		wp_dropdown_categories( [

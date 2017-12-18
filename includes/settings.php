@@ -754,7 +754,7 @@ class Settings extends Core\Base
 		if ( is_null( $message ) )
 			$message = _x( 'Are you sure? This operation can not be undone.', 'Settings: Confirm', GEDITORIAL_TEXTDOMAIN );
 
-		return [ 'onclick' => sprintf( 'return confirm(\'%s\')', esc_attr( $message ) ) ];
+		return [ 'onclick' => sprintf( 'return confirm(\'%s\')', HTML::escapeAttr( $message ) ) ];
 	}
 
 	public static function submitButton( $name = 'submit', $text = NULL, $primary = FALSE, $atts = [] )
@@ -898,13 +898,13 @@ class Settings extends Core\Base
 			$class = '-field';
 
 			if ( ! empty( $field['args']['class'] ) )
-				$class .= ' '.esc_attr( $field['args']['class'] );
+				$class .= ' '.HTML::escapeAttr( $field['args']['class'] );
 
 			echo '<tr class="'.$class.'">';
 
 			if ( ! empty( $field['args']['label_for'] ) )
 				echo '<th class="-th" scope="row"><label for="'
-					.esc_attr( $field['args']['label_for'] ).'">'.$field['title'].'</label></th>';
+					.HTML::escapeAttr( $field['args']['label_for'] ).'">'.$field['title'].'</label></th>';
 
 			else
 				echo '<th class="-th" scope="row">'.$field['title'].'</th>';
@@ -1109,7 +1109,7 @@ class Settings extends Core\Base
 
 		if ( $args['wrap'] ) {
 			if ( ! empty( $args['label_for'] ) )
-				echo '<tr class="'.$args['class'].'"><th scope="row"><label for="'.esc_attr( $args['label_for'] ).'">'.$args['title'].'</label></th><td>';
+				echo '<tr class="'.$args['class'].'"><th scope="row"><label for="'.HTML::escapeAttr( $args['label_for'] ).'">'.$args['title'].'</label></th><td>';
 			else
 				echo '<tr class="'.$args['class'].'"><th scope="row">'.$args['title'].'</th><td>';
 		}
@@ -1130,8 +1130,8 @@ class Settings extends Core\Base
 		if ( $args['id_name_cb'] ) {
 			list( $id, $name ) = call_user_func( $args['id_name_cb'], $args );
 		} else {
-			$id   = $args['id_attr'] ? $args['id_attr'] : ( $args['option_base'] ? $args['option_base'].'-' : '' ).$args['option_group'].'-'.esc_attr( $args['field'] );
-			$name = $args['name_attr'] ? $args['name_attr'] : ( $args['option_base'] ? $args['option_base'].'_' : '' ).$args['option_group'].'['.esc_attr( $args['field'] ).']';
+			$id   = $args['id_attr'] ? $args['id_attr'] : ( $args['option_base'] ? $args['option_base'].'-' : '' ).$args['option_group'].'-'.HTML::escapeAttr( $args['field'] );
+			$name = $args['name_attr'] ? $args['name_attr'] : ( $args['option_base'] ? $args['option_base'].'_' : '' ).$args['option_group'].'['.HTML::escapeAttr( $args['field'] ).']';
 		}
 
 		if ( isset( $args['options'][$args['field']] ) ) {

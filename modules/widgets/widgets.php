@@ -50,7 +50,7 @@ class Widgets extends gEditorial\Module
 
 			$widget = call_user_func( [ '\\geminorum\\gEditorial\\Widgets\\Widgets\\'.$class, 'setup' ] );
 
-			$list[$file] = $widget['title'].' :: '.$widget['desc'];
+			$list[$file] = $widget['title'].': <em>'.$widget['desc'].'</em>';
 		}
 
 		return $list;
