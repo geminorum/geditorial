@@ -4,9 +4,7 @@
 /// gEditorial Partials: Admin Help -------------------------------------------
 
 #contextual-help-wrap {
-
   .help-tab-content {
-
     .-info,
     .shortcode-github-readme {
 
@@ -19,6 +17,7 @@
 
       code {
         display: inline-block;
+
         pre {
           padding: 4px 12px;
           margin: 0;
@@ -29,6 +28,7 @@
     .-info,
     .-info p,
     .shortcode-github-readme {
+
       /*rtl:ignore*/
       direction: ltr;
     }
@@ -38,9 +38,12 @@
       border-top: solid 1px $gray-lighter;
       padding-top: 0.5em;
       font-size: 0.8em;
-      &, & a {
+
+      &,
+      & a {
         color: $gray-light;
       }
+
       a:hover {
         color: $gray-dark;
       }

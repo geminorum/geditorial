@@ -27,6 +27,7 @@
     // visibility: none;
     display: none;
   }
+
   span.-loading.is-active {
     display: inline-block;
   }
@@ -73,9 +74,11 @@
 
   a.-delete {
     color: $brand-danger;
+
     &:hover {
       color: darken($brand-danger, 20%);
     }
+
     .dashicons {
       color: darken($brand-danger, 20%);
     }

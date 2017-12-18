@@ -1,10 +1,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-/// Module: Letter: Admin Post --------------------------------------------------
+/// Module: Letter: Admin Post -------------------------------------------------
 
 .geditorial-admin-wrap-nobox.-letter {
-
   @include mainwrap;
 
   background-color: #fff;
@@ -16,6 +15,7 @@
     width: 50%;
     float: left;
     border-right: 1px solid #ddd;
+
     &:last-child {
       border-right: none;
     }
@@ -64,10 +64,10 @@
   }
 
   .-head {
-      border: 1px solid #ddd;
-      border-radius: 2px 2px 0 0;
-      background-color: $gray-lighter;
-      padding: 3px 3px 3px;
+    border: 1px solid #ddd;
+    border-radius: 2px 2px 0 0;
+    background-color: $gray-lighter;
+    padding: 3px;
   }
 
   .-title {
@@ -77,11 +77,11 @@
   }
 
   .-body {
-      border: 1px solid #ddd;
-      border-top: 0;
-      border-radius: 0 0 2px 2px;
-      background-color: #fefefe;
-      padding: 5px;
+    border: 1px solid #ddd;
+    border-top: 0;
+    border-radius: 0 0 2px 2px;
+    background-color: #fefefe;
+    padding: 5px;
   }
 
   .-handle,

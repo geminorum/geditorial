@@ -4,7 +4,6 @@
 /// Module: Specs: Admin Post --------------------------------------------------
 
 .geditorial-admin-wrap-metabox.-specs {
-
   @include mainwrap();
   margin-top: 11px;
 
@@ -43,11 +42,11 @@
     }
 
     .item-body {
-      padding: 5px 0;
+      // padding: 5px 0;
+      padding: 2px;
       display: none;
       border: 1px solid #dfdfdf;
       background-color: #f9f9f9;
-      padding: 2px;
       border-top: none;
 
       .field-wrap-group {

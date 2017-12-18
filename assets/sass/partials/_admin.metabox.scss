@@ -24,6 +24,7 @@
 
       a {
         text-decoration: none;
+
         &:hover {
           text-decoration: underline;
         }
@@ -41,6 +42,7 @@
     &.field-wrap-inputnumber {
       input {
         width: 32%;
+
         /*rtl:ignore*/
         direction: ltr;
       }
@@ -75,7 +77,6 @@
     }
 
     &.field-wrap-buttons {
-
       .button, // DEPRECATED
       .-button {
         margin-bottom: 4px;
@@ -96,6 +97,7 @@
         &.button-icon, // DEPRECATED
         &.-button-icon {
           padding-left: 3px;
+
           .dashicons {
             width: 22px;
             height: 22px;
@@ -165,7 +167,7 @@
       font-size: 0.89em;
       margin: 0 4px;
       padding: 0;
-      font-weight: normal;
+      font-weight: 400;
       font-family: inherit;
     }
 
@@ -180,7 +182,7 @@
       list-style-position: inside;
 
       li {
-        margin: 4px 6px 6px 6px;
+        margin: 4px 6px 6px;
 
         span.edit {
           font-size: 0.8em;
@@ -229,6 +231,7 @@
   .nav-tab {
     margin-left: 6px;
     line-height: 12px !important;
+
     &:first-child {
       margin-left: 12px;
     }
@@ -238,6 +241,7 @@
     margin-top: 12px;
     margin-bottom: -4px;
     display: none;
+
     &.-active {
       display: block;
     }
@@ -245,9 +249,7 @@
 }
 
 .geditorial-admin-wrap-metabox {
-
   .field-wrap {
-
     &.field-wrap-textarea {
       padding-left: 1px;
       margin-right: -1px;
@@ -260,6 +262,7 @@
   width: 100%;
 
   &.dropbown-ltr {
+
     /*rtl:ignore*/
     direction: ltr;
   }

@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-/// Module: Calendar: Calendar All -----------------------------------------------
+/// Module: Calendar: Calendar All ---------------------------------------------
 
 $table-border-color: #e5e5e5 !default;
 $table-bg-accent: #f9f9f9 !default;
@@ -132,7 +132,7 @@ $padding-small-horizontal: 8px !default;
         a {
           border-top: 1px solid $table-border-color;
           border-right: 1px solid $table-border-color;
-          padding: 2px 4px 0 4px;
+          padding: 2px 4px 0;
           color: $gray-dark;
 
           &:hover {
@@ -159,10 +159,10 @@ $padding-small-horizontal: 8px !default;
       }
 
       &:hover {
-
         .-wrap.-buttons {
           display: block;
           transition: all 0.3s ease;
+
           body.dragging & {
             display: none;
           }
@@ -185,7 +185,8 @@ $padding-small-horizontal: 8px !default;
         opacity: 1 !important;
       }
 
-      ul, ol {
+      ul,
+      ol {
         list-style-type: none;
         margin: 0;
         padding: 0;
@@ -328,20 +329,22 @@ $padding-small-horizontal: 8px !default;
 
   .-button {
     margin: 2px 0 0 2px;
-    padding: 0px 0 4px 0;
+    padding: 0 0 4px;
     // line-height: 1;
     // vertical-align: middle;
     height: 20px;
 
-    &[data-action=close] {
+    &[data-action="close"] {
       color: $brand-danger;
+
       &:hover {
         color: darken($brand-danger, 20%);
       }
     }
 
-    &[data-action=save] {
+    &[data-action="save"] {
       color: darken($brand-success, 20%);
+
       &:hover {
         color: $brand-success;
       }

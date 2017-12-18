@@ -5,19 +5,17 @@
 
 body.geditorial-today-enabled {
   .fixed {
-
     th.column-theday {
       width: 80px;
     }
 
     td.column-theday {
-      @import 'today.dateicon.all';
+      @import "today.dateicon.all";
     }
   }
 }
 
 @media screen and ( max-width: 782px ) {
-
   .wp-list-table tr {
 
     // columns before primary column must be hidden
@@ -32,6 +30,7 @@ body.geditorial-today-enabled {
         .-date-icon {
           border: none !important;
           width: 100%;
+
           > span {
             display: inline-block !important;
             padding: 4px !important;

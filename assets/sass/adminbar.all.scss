@@ -1,5 +1,5 @@
-@import 'modules/all';
-@import 'partials/base';
+@import "modules/all";
+@import "partials/base";
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 @import 'partials/drafts.adminbar.all';
@@ -34,6 +34,7 @@
   }
 
   .ab-submenu .ab-item {
+
     > .geditorial-spinner {
 
     }
@@ -85,6 +86,7 @@
 }
 
 #wp-admin-bar-geditorial-audit-box {
+
   .ab-empty-item {
     font-size: smaller;
   }

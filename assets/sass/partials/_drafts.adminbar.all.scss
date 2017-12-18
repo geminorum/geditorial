@@ -1,14 +1,14 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-/// gEditorial Partials: Drafts Adminbar ALL --------------------------------------
+/// gEditorial Partials: Drafts Adminbar ALL -----------------------------------
 
 .geditorial-wrap.-drafts {
   @include mainwrap();
 
   // position: relative;
   background: $gray;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.8), inset 0 0 4px rgba(0,0,0,0.5);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.8), inset 0 0 4px rgba(0, 0, 0, 0.5);
   color: #fff;
   left: 0;
   overflow: hidden;
@@ -20,9 +20,7 @@
   z-index: 1999;
 
   .-content {
-
     a {
-
       &,
       &:visited {
         color: $gray-lighter;

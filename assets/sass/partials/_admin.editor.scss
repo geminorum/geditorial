@@ -5,8 +5,8 @@
 
 // TINYMCE BUTTON ICONS
 .geditorial-tinymce-icon {
-  &::before {
-    font-family: "dashicons";
+  &:before {
+    font-family: dashicons;
     content: "\f159"; // DEFAULT
   }
 }

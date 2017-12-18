@@ -1,24 +1,24 @@
-@import 'modules/all';
-@import 'partials/base';
+@import "modules/all";
+@import "partials/base";
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-@import 'partials/icon.all';
-@import 'partials/spinner.all';
+@import "partials/icon.all";
+@import "partials/spinner.all";
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-@import 'partials/alphabet.front.all';
-@import 'partials/like.front.all';
-@import 'partials/meta.front.all';
-@import 'partials/magazine.front.all';
-@import 'partials/series.front.all';
-@import 'partials/specs.front.all';
-@import 'partials/sharing.front.all';
-@import 'partials/estimated.front.all';
-@import 'partials/entry.front.all';
-@import 'partials/headings.front.all';
-@import 'partials/today.front.all';
-@import 'partials/tube.front.all';
-@import 'partials/markdown.front.all';
+@import "partials/alphabet.front.all";
+@import "partials/like.front.all";
+@import "partials/meta.front.all";
+@import "partials/magazine.front.all";
+@import "partials/series.front.all";
+@import "partials/specs.front.all";
+@import "partials/sharing.front.all";
+@import "partials/estimated.front.all";
+@import "partials/entry.front.all";
+@import "partials/headings.front.all";
+@import "partials/today.front.all";
+@import "partials/tube.front.all";
+@import "partials/markdown.front.all";
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
@@ -27,7 +27,7 @@
   @include mainwrap();
 }
 
-.geditorial-wrap.-p2p {
-  &.-before {}
-  &.-after {}
-}
+// .geditorial-wrap.-p2p {
+//   &.-before {}
+//   &.-after {}
+// }

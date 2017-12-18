@@ -1,10 +1,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-/// Module: Activities: Admin Post ----------------------------------------------
+/// Module: Activities: Admin Post ---------------------------------------------
 
 #geditorial-activities.postbox {
-
   .inside {
     margin: 0;
     padding: 0;
@@ -18,10 +17,10 @@
   // div.-no-logs,
   div.-add-log,
   div.-manual-log {
-    padding: 8px 5px 8px;
+    padding: 8px 5px;
 
     textarea {
-      width:100%
+      width: 100%;
     }
 
     p {
@@ -74,11 +73,12 @@
 
     td {
       // vertical-align: top;
+      padding: 4px 6px;
 
-      padding: 4px 6px 4px;
       p {
         line-height: 1;
         margin: 0 0 6px;
+
         &:last-child {
           margin: 0 0 4px;
         }

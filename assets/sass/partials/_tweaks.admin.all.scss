@@ -4,7 +4,6 @@
 /// Module: Tweaks: Admin All -------------------------------------------------
 
 .fixed {
-
   th.column-geditorial-tweaks-order {
     width: 50px;
   }
@@ -14,8 +13,7 @@
   }
 
   td.column-geditorial-tweaks-thumb {
-
-    padding: 10px 0 0 0;
+    padding: 10px 0 0;
     text-align: center;
 
     a:focus {
@@ -58,7 +56,6 @@
 }
 
 @media screen and ( max-width: 782px ) {
-
   .wp-list-table tr {
 
     // columns before primary column must be hidden

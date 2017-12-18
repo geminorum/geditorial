@@ -4,7 +4,6 @@
 /// gEditorial Partials: Admin Settings ----------------------------------------
 
 .geditorial-admin-wrap {
-
   p.submit {
     .button-primary:active {
       vertical-align: baseline;
@@ -20,6 +19,7 @@
   .-button.button-reset,
   .-button.button-danger {
     color: $brand-danger;
+
     &:hover {
       color: darken($brand-danger, 20%);
     }
@@ -30,7 +30,6 @@
   }
 
   .settings-title {
-
     .-extra {
       color: $gray-light;
     }
@@ -50,8 +49,8 @@
     }
   }
 
-  .settings-title-count {}
-  .settings-title-action {}
+  // .settings-title-count {}
+  // .settings-title-action {}
 
   .settings-title-search {
     position: relative;
@@ -65,14 +64,14 @@
 
     @media only screen and (max-width: 650px) {
       & {
-          float: none;
-          clear: both;
-          left: 0;
-          top: 0;
-          right: 0;
-          margin: 10px 0;
-          width: 100%;
-          max-width: 280px;
+        float: none;
+        clear: both;
+        left: 0;
+        top: 0;
+        right: 0;
+        margin: 10px 0;
+        width: 100%;
+        max-width: 280px;
       }
     }
   }

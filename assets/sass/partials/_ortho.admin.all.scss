@@ -4,7 +4,6 @@
 /// Module: Ortho: Admin All ---------------------------------------------------
 
 .ortho-input-wrap {
-
   .do-ortho {
     position: absolute;
     right: 4px;
@@ -60,7 +59,7 @@
   }
 
   .geditorial-admin-wrap-metabox & textarea + a.do-ortho {
-  // textarea[data-meta-type="note"] + a.do-ortho {
+    // textarea[data-meta-type="note"] + a.do-ortho {
     right: 2px;
     bottom: 4px;
     top: auto;
@@ -70,6 +69,7 @@
   .term-description-wrap & {
     position: relative;
     display: block;
+
     a.do-ortho {
       right: 5%;
       top: 5px;

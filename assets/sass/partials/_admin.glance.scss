@@ -1,53 +1,52 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-/// gEditorial Partials: Admin Glance ---------------------------------------------
+/// gEditorial Partials: Admin Glance ------------------------------------------
 
 .geditorial-glance-item {
-
-  &.-posttype::before {
+  &.-posttype:before {
     content: "\f105" !important;
   }
 
-  &.-tax::before {}
+  &.-tax:before {}
 
-  &.-term::before {
+  &.-term:before {
     content: "\f323" !important; // tag
   }
 
-  &.-not-in::before {
+  &.-not-in:before {
     content: "\f534" !important; // warning
     // content: "\f223" !important; // question
     // color: darken($brand-danger, 10%) !important; // we use `warning` class
   }
 
-  &.-posttype-issue::before {
+  &.-posttype-issue:before {
     content: "\f330" !important;
   }
 
-  &.-posttype-publication::before {
+  &.-posttype-publication:before {
     content: "\f331" !important;
   }
 
-  &.-posttype-entry::before {
+  &.-posttype-entry:before {
     content: "\f497" !important;
   }
 
-  &.-posttype-event::before {
+  &.-posttype-event:before {
     content: "\f508" !important;
   }
 
-  &.-posttype-contest::before {
+  &.-posttype-contest:before {
     content: "\f488" !important;
   }
 
-  &.-posttype-apply::before {
+  &.-posttype-apply:before {
     content: "\f322" !important;
   }
 }
 
 .gpeople-glance-item {
-  &.-people::before {
+  &.-people:before {
     content: "\f110" !important;
   }
 }

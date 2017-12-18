@@ -6,27 +6,26 @@
 .-wrap {
   &.shortcode-alphabet-posts,
   &.shortcode-alphabet-terms {
-
     .-letters {
-
       li {
         list-style: none;
         display: inline-block;
         margin-left: 5px;
 
-        a, span {
+        a,
+        span {
           display: inline-block;
           padding: 2px 5px;
         }
       }
     }
 
-    .-definitions {
-      .-heading {}
-      .-title {}
-      .-excerpt {}
-      .-description {}
-      .-term-count {}
-    }
+    // .-definitions {
+    //   .-heading {}
+    //   .-title {}
+    //   .-excerpt {}
+    //   .-description {}
+    //   .-term-count {}
+    // }
   }
 }

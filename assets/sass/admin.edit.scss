@@ -1,25 +1,25 @@
-@import 'modules/all';
-@import 'partials/base';
+@import "modules/all";
+@import "partials/base";
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-@import 'partials/admin.all';
-@import 'partials/admin.help';
-@import 'partials/admin.table';
-@import 'partials/admin.rows';
-@import 'partials/admin.quickedit';
+@import "partials/admin.all";
+@import "partials/admin.help";
+@import "partials/admin.table";
+@import "partials/admin.rows";
+@import "partials/admin.quickedit";
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-@import 'partials/icon.all';
-@import 'partials/spinner.all';
+@import "partials/icon.all";
+@import "partials/spinner.all";
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-@import 'partials/book.admin.edit';
-@import 'partials/event.admin.edit';
-@import 'partials/magazine.admin.edit';
-@import 'partials/today.admin.edit';
-@import 'partials/tweaks.admin.edit';
-@import 'partials/tweaks.admin.all';
-// @import 'partials/ortho.admin.all';
+@import "partials/book.admin.edit";
+@import "partials/event.admin.edit";
+@import "partials/magazine.admin.edit";
+@import "partials/today.admin.edit";
+@import "partials/tweaks.admin.edit";
+@import "partials/tweaks.admin.all";
+// @import "partials/ortho.admin.all";
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
@@ -42,7 +42,6 @@
 }
 
 @media screen and ( max-width: 782px ) {
-
   .wp-list-table tr {
 
     // columns before primary column must be hidden
@@ -52,7 +51,6 @@
     }
 
     &.is-expanded {
-
       td.column-theday,
       td.column-taxonomy-entry_section,
       td.column-geditorial-tweaks-order,

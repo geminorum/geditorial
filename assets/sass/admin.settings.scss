@@ -1,20 +1,20 @@
-@import 'modules/all';
-@import 'partials/base';
+@import "modules/all";
+@import "partials/base";
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-@import 'partials/admin.all';
-@import 'partials/admin.help';
-@import 'partials/admin.table';
-@import 'partials/admin.rows';
-@import 'partials/admin.settings';
+@import "partials/admin.all";
+@import "partials/admin.help";
+@import "partials/admin.table";
+@import "partials/admin.rows";
+@import "partials/admin.settings";
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-@import 'partials/icon.all';
-@import 'partials/spinner.all';
-// @import 'partials/ortho.admin.all';
+@import "partials/icon.all";
+@import "partials/spinner.all";
+// @import "partials/ortho.admin.all";
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-@import 'vendor/animate';
+@import "vendor/animate";
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
@@ -40,10 +40,11 @@
   }
 
   // settings sections
-  .-section-wrap {}
-  .-section-table {}
-  .-section-title {}
-  .-section-description {}
+  // .-section-wrap {}
+  // .-section-table {}
+  // .-section-title {}
+  // .-section-description {}
+
   .-section-empty {
     margin-bottom: 3em;
   }
@@ -73,7 +74,6 @@
     width: 100%;
 
     .module {
-
       &.-disabled {
         opacity: 0.5;
         transition: all 0.3s ease;
@@ -123,7 +123,7 @@
 
       p {
         font-size: 12px;
-        line-height: 150%;
+        line-height: 1.5; // 150%;
       }
 
       .actions {
@@ -141,7 +141,7 @@
       }
 
       .-button {
-        font-weight: normal;
+        font-weight: 400;
         margin: 0;
       }
 
@@ -154,6 +154,7 @@
       .-wrap.-danger,
       .-button-danger {
         color: $brand-danger;
+
         &:hover {
           color: darken($brand-danger, 20%);
         }
