@@ -308,7 +308,7 @@ class Specs extends gEditorial\Module
 
 				echo $handle.'<span class="-excerpt">';
 					$title = ( isset( $meta['spec_title'] ) && $meta['spec_title'] ) ? $meta['spec_title'] : ( isset( $meta['spec_term_id'] ) && $meta['spec_term_id'] ? $the_terms[$meta['spec_term_id']]->name : _x( 'Unknown Field', 'Modules: Specs', GEDITORIAL_TEXTDOMAIN ) );
-					$title .= ( isset( $meta['spec_value'] ) && $meta['spec_value'] ? ': '.$meta['spec_value'] : '' );
+					$title.= ( isset( $meta['spec_value'] ) && $meta['spec_value'] ? ': '.$meta['spec_value'] : '' );
 					echo Text::subStr( $title, 0, 28 );
 				echo '</span>'.$delete;
 
@@ -438,16 +438,16 @@ class Specs extends gEditorial\Module
 		$html      = '';
 
 		// FIXME: use table helper
-		$html .= '<table class="table table-striped geditorial-specs">';
+		$html.= '<table class="table table-striped geditorial-specs">';
 		foreach ( $metas as $order => $meta ) {
-			$html .= '<tr><td>';
-				$html .= ( isset( $meta['spec_title'] ) && $meta['spec_title'] ) ? $meta['spec_title'] : ( isset( $meta['spec_term_id'] ) && $meta['spec_term_id'] ? $the_terms[$meta['spec_term_id']]->name : _x( 'Unknown Field', 'Modules: Specs', GEDITORIAL_TEXTDOMAIN ) );
-			$html .= '</td><td>';
+			$html.= '<tr><td>';
+				$html.= ( isset( $meta['spec_title'] ) && $meta['spec_title'] ) ? $meta['spec_title'] : ( isset( $meta['spec_term_id'] ) && $meta['spec_term_id'] ? $the_terms[$meta['spec_term_id']]->name : _x( 'Unknown Field', 'Modules: Specs', GEDITORIAL_TEXTDOMAIN ) );
+			$html.= '</td><td>';
 				// FIXME: add filter for each spec
-				$html .= isset( $meta['spec_value'] ) ? $meta['spec_value'] : '';
-			$html .= '</td></tr>';
+				$html.= isset( $meta['spec_value'] ) ? $meta['spec_value'] : '';
+			$html.= '</td></tr>';
 		}
-		$html .= '</table>';
+		$html.= '</table>';
 
 		return $html;
 	}
@@ -488,7 +488,7 @@ class Specs extends gEditorial\Module
 		$output = '';
 
 		foreach ( $args['ids'] as $id )
-			$output .= $this->shortcode_specs( array_merge( [
+			$output.= $this->shortcode_specs( array_merge( [
 				'id'        => $id,
 				'title_tag' => 'h4',
 			], $args['args'] ), NULL, $this->constant( 'specs_shortcode' ) );

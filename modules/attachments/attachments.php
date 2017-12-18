@@ -102,13 +102,13 @@ class Attachments extends gEditorial\Module
 			$title = get_post_meta( $attachment->ID, '_wp_attached_file', TRUE );
 
 			if ( $thumbnail_id == $attachment->ID )
-				$title .= ' &ndash; <b>thumbnail</b>';
+				$title.= ' &ndash; <b>thumbnail</b>';
 
 			if ( $gtheme_images && in_array( $attachment->ID, $gtheme_images ) )
-				$title .= ' &ndash; tagged: '.array_search( $attachment->ID, $gtheme_images );
+				$title.= ' &ndash; tagged: '.array_search( $attachment->ID, $gtheme_images );
 
 			if ( $gtheme_terms && in_array( $attachment->ID, $gtheme_terms ) )
-				$title .= ' &ndash; for term: '.array_search( $attachment->ID, $gtheme_terms );
+				$title.= ' &ndash; for term: '.array_search( $attachment->ID, $gtheme_terms );
 
 			$nodes[] = [
 				'id'     => $this->classs( 'attachment', $attachment->ID ),

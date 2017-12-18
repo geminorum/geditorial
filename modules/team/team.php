@@ -163,15 +163,15 @@ class Team extends gEditorial\Module
 	public function display_meta( $value, $key = NULL, $field = [] )
 	{
 		switch ( $key ) {
-			case 'email_gravatar': return HTML::mailto( $value );
-			case 'email_contact': return HTML::mailto( $value );
-			case 'personal_site': return HTML::link( $value );
-			case 'phone': return HTML::tel( $value );
-			case 'twitter': return Third::htmlTwitterIntent( $value, is_admin() );
-			case 'username': return '@'.$value; // FIXME
+			case 'email_gravatar' : return HTML::mailto( $value );
+			case 'email_contact'  : return HTML::mailto( $value );
+			case 'personal_site'  : return HTML::link( $value );
+			case 'phone'          : return HTML::tel( $value );
+			case 'twitter'        : return Third::htmlTwitterIntent( $value, is_admin() );
+			case 'username'       : return '@'.$value; // FIXME
 		}
 
-		return esc_html( $value );
+		return HTML::escape( $value );
 	}
 
 	public function meta_init()

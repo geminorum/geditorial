@@ -418,7 +418,7 @@ class Event extends gEditorial\Module
 			'placeholder' => _x( 'Date Start', 'Modules: Event: Meta Box Input Placeholder', GEDITORIAL_TEXTDOMAIN ),
 		] );
 
-		$html .= HTML::tag( 'input', [
+		$html.= HTML::tag( 'input', [
 			'type'        => 'text',
 			'dir'         => 'ltr',
 			'name'        => 'geditorial-event-time-start',
@@ -440,7 +440,7 @@ class Event extends gEditorial\Module
 			'placeholder' => _x( 'Date End', 'Modules: Event: Meta Box Input Placeholder', GEDITORIAL_TEXTDOMAIN ),
 		] );
 
-		$html .= HTML::tag( 'input', [
+		$html.= HTML::tag( 'input', [
 			'type'        => 'text',
 			'dir'         => 'ltr',
 			'name'        => 'geditorial-event-time-end',

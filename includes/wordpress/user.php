@@ -164,7 +164,7 @@ class Walker_User_Checklist extends \Walker
 
 	public function start_el( &$output, $user, $depth = 0, $args = array(), $id = 0 )
 	{
-		$output .= "\n".'<li class="-user"><label>'.
+		$output.= "\n".'<li class="-user"><label>'.
 			HTML::tag( 'input', array(
 				'type'     => 'checkbox',
 				'name'     => $args['name'].'[]',
@@ -172,12 +172,12 @@ class Walker_User_Checklist extends \Walker
 				'checked'  => in_array( $user->user_login, (array) $args['selected'] ),
 				'disabled' => empty( $args['disabled'] ) ? FALSE : $args['disabled'],
 			) ).
-			' <code class="-login">'.$user->user_login.'</code> '.esc_html( $user->display_name ).
+			' <code class="-login">'.$user->user_login.'</code> '.HTML::escape( $user->display_name ).
 			'<br /><span class="-email code">'.$user->user_email.'</span></label>';
 	}
 
 	public function end_el( &$output, $category, $depth = 0, $args = array() )
 	{
-		$output .= '</li>';
+		$output.= '</li>';
 	}
 }

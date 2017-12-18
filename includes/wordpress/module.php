@@ -29,7 +29,7 @@ class Module extends Core\Base
 		$suffix = '';
 
 		foreach ( func_get_args() as $arg )
-			$suffix .= '_'.strtolower( $arg );
+			$suffix.= '_'.strtolower( $arg );
 
 		return $this->base.'_'.$this->key.$suffix;
 	}
@@ -39,7 +39,7 @@ class Module extends Core\Base
 		$suffix = '';
 
 		foreach ( func_get_args() as $arg )
-			$suffix .= '-'.strtolower( $arg );
+			$suffix.= '-'.strtolower( $arg );
 
 		return $this->base.'-'.$this->key.$suffix;
 	}
@@ -49,7 +49,7 @@ class Module extends Core\Base
 		$suffix = '';
 
 		foreach ( func_get_args() as $arg )
-			$suffix .= maybe_serialize( $arg );
+			$suffix.= maybe_serialize( $arg );
 
 		return md5( $this->base.$this->key.$suffix );
 	}
@@ -59,7 +59,7 @@ class Module extends Core\Base
 		$suffix = '';
 
 		foreach ( func_get_args() as $arg )
-			$suffix .= maybe_serialize( $arg );
+			$suffix.= maybe_serialize( $arg );
 
 		return wp_hash( $this->base.$this->key.$suffix );
 	}

@@ -688,7 +688,7 @@ class Collect extends gEditorial\Module
 			case 'in_collection_order': return Helper::getCounted( $value, _x( 'Order in Collection: %s', 'Modules: Collect: Display', GEDITORIAL_TEXTDOMAIN ) );
 		}
 
-		return esc_html( $value );
+		return HTML::escape( $value );
 	}
 
 	public function post_updated_messages( $messages )

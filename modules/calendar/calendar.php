@@ -193,7 +193,7 @@ class Calendar extends gEditorial\Module
 		$calendars = [];
 
 		foreach ( $this->get_calendars() as $calendar => $calendar_title )
-			$calendars[add_query_arg( [ 'cal' => $calendar ], $args['caption_link'] )] = esc_html( $calendar_title );
+			$calendars[add_query_arg( [ 'cal' => $calendar ], $args['caption_link'] )] = HTML::escape( $calendar_title );
 
 		Settings::wrapOpen( $this->key, $this->base, 'listtable' );
 
@@ -311,7 +311,7 @@ class Calendar extends gEditorial\Module
 			if ( current_user_can( $object->cap->create_posts ) ) {
 
 				$buttons.= '<a href="'.WordPress::getPostNewLink( $object->name )
-					.'" title="'.HTML::escapeAttr( $object->labels->add_new_item )
+					.'" title="'.HTML::escape( $object->labels->add_new_item )
 					.'" data-type="'.$object->name.'" data-title="'.$object->labels->new_item
 					.'" class="-the-day-newpost" target="_blank">'
 					.Helper::getPostTypeIcon( $object ).'</a>';

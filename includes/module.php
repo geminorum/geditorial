@@ -472,7 +472,7 @@ class Module extends Base
 
 			echo '<p>'.HTML::tag( 'label', [
 				'for' => 'type-'.$post_type,
-			], $html.'&nbsp;'.esc_html( $label ).' &mdash; <code>'.$post_type.'</code>' ).'</p>';
+			], $html.'&nbsp;'.HTML::escape( $label ).' &mdash; <code>'.$post_type.'</code>' ).'</p>';
 		}
 
 		if ( $after = $this->get_string( 'post_types_after', 'post', 'settings', NULL ) )
@@ -496,7 +496,7 @@ class Module extends Base
 
 			echo '<p>'.HTML::tag( 'label', [
 				'for' => 'tax-'.$taxonomy,
-			], $html.'&nbsp;'.esc_html( $label ).' &mdash; <code>'.$taxonomy.'</code>' ).'</p>';
+			], $html.'&nbsp;'.HTML::escape( $label ).' &mdash; <code>'.$taxonomy.'</code>' ).'</p>';
 		}
 
 		if ( $after = $this->get_string( 'taxonomies_after', 'post', 'settings', NULL ) )
@@ -746,7 +746,7 @@ class Module extends Base
 
 			Settings::moduleSections( $this->base.'_'.$this->module->name );
 
-			echo '<input id="geditorial_module_name" name="geditorial_module_name" type="hidden" value="'.HTML::escapeAttr( $this->module->name ).'" />';
+			echo '<input id="geditorial_module_name" name="geditorial_module_name" type="hidden" value="'.HTML::escape( $this->module->name ).'" />';
 
 			$this->settings_buttons();
 
@@ -807,7 +807,7 @@ class Module extends Base
 		$class = $this->base.'-form -'.$this->module->name.' -sub-'.$sub;
 
 		if ( $check && $sidebox = method_exists( $this, 'settings_sidebox' ) )
-			$class .= ' has-sidebox';
+			$class.= ' has-sidebox';
 
 		echo '<form class="'.$class.'" method="post" action="">';
 
@@ -1797,7 +1797,7 @@ class Module extends Base
 			$args = [];
 
 		} else if ( ! is_array( $args ) && $args ) {
-			$name .= '.'.$args;
+			$name.= '.'.$args;
 			$args = [];
 		}
 
@@ -1888,7 +1888,7 @@ class Module extends Base
 		if ( count( $constant_or_hidden ) ) {
 			$form = rtrim( $form, '</form>' );
 			foreach ( $constant_or_hidden as $name => $value )
-				$form.= '<input type="hidden" name="'.HTML::escapeAttr( $name ).'" value="'.HTML::escapeAttr( $value ).'" />';
+				$form.= '<input type="hidden" name="'.HTML::escape( $name ).'" value="'.HTML::escape( $value ).'" />';
 			$form.= '</form>';
 		}
 
@@ -2008,7 +2008,7 @@ class Module extends Base
 				$url = $this->get_module_url( 'settings' );
 
 			$action = $this->get_string( 'meta_box_action', $constant, 'misc', _x( 'Configure', 'Module: MetaBox Default Action', GEDITORIAL_TEXTDOMAIN ) );
-			$title .= ' <span class="postbox-title-action"><a href="'.esc_url( $url ).'" target="_blank">'.$action.'</a></span>';
+			$title.= ' <span class="postbox-title-action"><a href="'.esc_url( $url ).'" target="_blank">'.$action.'</a></span>';
 		}
 
 		return $title;
@@ -2027,7 +2027,7 @@ class Module extends Base
 
 		if ( $url ) {
 			$action = $this->get_string( 'meta_box_action', $constant, 'misc', _x( 'Manage', 'Module: MetaBox Default Action', GEDITORIAL_TEXTDOMAIN ) );
-			$title .= ' <span class="postbox-title-action"><a href="'.esc_url( $url ).'" target="_blank">'.$action.'</a></span>';
+			$title.= ' <span class="postbox-title-action"><a href="'.esc_url( $url ).'" target="_blank">'.$action.'</a></span>';
 		}
 
 		return $title;
@@ -2047,7 +2047,7 @@ class Module extends Base
 				$url = WordPress::getPostTypeEditLink( $posttype );
 
 			$action = $this->get_string( 'meta_box_action', $constant, 'misc', _x( 'Manage', 'Module: MetaBox Default Action', GEDITORIAL_TEXTDOMAIN ) );
-			$title .= ' <span class="postbox-title-action"><a href="'.esc_url( $url ).'" target="_blank">'.$action.'</a></span>';
+			$title.= ' <span class="postbox-title-action"><a href="'.esc_url( $url ).'" target="_blank">'.$action.'</a></span>';
 		}
 
 		return $title;
@@ -2342,16 +2342,16 @@ class Module extends Base
 				if ( isset( $wp_query->query['orderby'] )
 					&& 'taxonomy-'.$tax == $wp_query->query['orderby'] ) {
 
-						$pieces['join'] .= <<<SQL
+						$pieces['join'].= <<<SQL
 LEFT OUTER JOIN {$wpdb->term_relationships} ON {$wpdb->posts}.ID={$wpdb->term_relationships}.object_id
 LEFT OUTER JOIN {$wpdb->term_taxonomy} USING (term_taxonomy_id)
 LEFT OUTER JOIN {$wpdb->terms} USING (term_id)
 SQL;
 
-					$pieces['where']   .= $wpdb->prepare( " AND (taxonomy = %s OR taxonomy IS NULL)", $tax );
-					$pieces['groupby']  = "object_id";
-					$pieces['orderby']  = "GROUP_CONCAT({$wpdb->terms}.name ORDER BY name ASC) ";
-					$pieces['orderby'] .= ( 'ASC' == strtoupper( $wp_query->get('order') ) ) ? 'ASC' : 'DESC';
+					$pieces['where'].  = $wpdb->prepare( " AND (taxonomy = %s OR taxonomy IS NULL)", $tax );
+					$pieces['groupby'] = "object_id";
+					$pieces['orderby'] = "GROUP_CONCAT({$wpdb->terms}.name ORDER BY name ASC) ";
+					$pieces['orderby'].= ( 'ASC' == strtoupper( $wp_query->get('order') ) ) ? 'ASC' : 'DESC';
 
 					break;
 				}
@@ -2547,7 +2547,7 @@ SQL;
 			$meta = sprintf( $args['template'], $meta );
 
 		if ( ! empty( $args['title'] ) )
-			$meta = '<span title="'.HTML::escapeAttr( $args['title'] ).'">'.$meta.'</span>';
+			$meta = '<span title="'.HTML::escape( $args['title'] ).'">'.$meta.'</span>';
 
 		return $before.$meta.$after;
 	}
@@ -2558,7 +2558,7 @@ SQL;
 
 		if ( ! empty( $this->strings['p2p'][$constant]['fields'] ) )
 			foreach ( $this->strings['p2p'][$constant]['fields'] as $field => $args )
-				$row .= $this->p2p_get_meta( $p2p_id, $field, $before, $after, $args );
+				$row.= $this->p2p_get_meta( $p2p_id, $field, $before, $after, $args );
 
 		return $row;
 	}
@@ -2805,7 +2805,7 @@ SQL;
 	// DEFAULT METHOD
 	public function display_meta( $value, $key = NULL, $field = [] )
 	{
-		return esc_html( $value );
+		return HTML::escape( $value );
 	}
 
 	protected function limit_sub( $sub = NULL, $default = 25, $key = 'limit', $option = 'per_page' )

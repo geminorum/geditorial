@@ -270,7 +270,7 @@ class Database extends Core\Base
 
 		if ( ! isset( $args['post_status'] )
 			|| 'trash' !== $args['post_status'] )
-				$extra_checks .= " AND post_status != 'trash'";
+				$extra_checks.= " AND post_status != 'trash'";
 
 		else if ( isset( $args['post_status'] ) )
 			$extra_checks = $wpdb->prepare( 'AND post_status = %s', $args['post_status'] );
@@ -309,7 +309,7 @@ class Database extends Core\Base
 
 		if ( ! isset( $args['post_status'] )
 			|| 'trash' !== $args['post_status'] )
-				$extra_checks .= " AND post_status != 'trash'";
+				$extra_checks.= " AND post_status != 'trash'";
 
 		else if ( isset( $args['post_status'] ) )
 			$extra_checks = $wpdb->prepare( 'AND post_status = %s', $args['post_status'] );

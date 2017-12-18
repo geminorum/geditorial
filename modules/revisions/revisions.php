@@ -422,12 +422,11 @@ class Revisions extends gEditorial\Module
 					foreach ( $revisions as $revision ) {
 
 						$block = '<input type="checkbox" name="_cb[]" value="'.$revision->ID.'" title="'.$revision->ID.'" />';
+						$block.= ' '.self::wordCount( $revision );
+						$block.= ' &ndash; '.Helper::humanTimeDiffRound( strtotime( $revision->post_modified ), FALSE );
+						$block.= ' &ndash; '.get_the_author_meta( 'display_name', $revision->post_author );
 
-						$block .= ' '.self::wordCount( $revision );
-						$block .= ' &ndash; '.Helper::humanTimeDiffRound( strtotime( $revision->post_modified ), FALSE );
-						$block .= ' &ndash; '.get_the_author_meta( 'display_name', $revision->post_author );
-
-						$html .= '<div>'.$block.'</div>';
+						$html.= '<div>'.$block.'</div>';
 					}
 
 					return $html;

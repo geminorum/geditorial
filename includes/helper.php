@@ -28,7 +28,7 @@ class Helper extends Core\Base
 		$class = '';
 
 		foreach ( explode( '-', str_replace( '_', '-', $module ) ) as $word )
-			$class .= ucfirst( $word ).'';
+			$class.= ucfirst( $word ).'';
 
 		$class = __NAMESPACE__.'\\Modules\\'.$class;
 
@@ -151,7 +151,7 @@ class Helper extends Core\Base
 		if ( count( $words ) > $word_count ) {
 			array_pop( $words ); // remove remainder of words
 			$content = implode( ' ', $words );
-			$content .= '…';
+			$content.= '…';
 		} else {
 			$content = implode( ' ', $words );
 		}
@@ -163,7 +163,7 @@ class Helper extends Core\Base
 
 	public static function trimChars( $text, $length = 45, $append = '&nbsp;&hellip;' )
 	{
-		$append = '<span title="'.HTML::escapeAttr( $text ).'">'.$append.'</span>';
+		$append = '<span title="'.HTML::escape( $text ).'">'.$append.'</span>';
 
 		return Text::trimChars( $text, $length, $append );
 	}
@@ -220,7 +220,7 @@ class Helper extends Core\Base
 				'href'  => add_query_arg( $query, 'edit.php' ),
 				'title' => urldecode( $term->slug ),
 				'class' => '-term',
-			], esc_html( sanitize_term_field( 'name', $term->name, $term->term_id, $object->name, 'display' ) ) );
+			], HTML::escape( sanitize_term_field( 'name', $term->name, $term->term_id, $object->name, 'display' ) ) );
 		}
 
 		echo self::getJoined( $list, $before, $after );
@@ -281,12 +281,12 @@ class Helper extends Core\Base
 					$status = $post->post_status;
 
 				if ( $status )
-					$after = ' <small class="-status" title="'.HTML::escapeAttr( $post->post_status ).'">('.$status.')</small>';
+					$after = ' <small class="-status" title="'.HTML::escape( $post->post_status ).'">('.$status.')</small>';
 			}
 		}
 
 		if ( ! $link )
-			return esc_html( $title ).$after;
+			return HTML::escape( $title ).$after;
 
 		$edit = current_user_can( 'edit_post', $post->ID );
 
@@ -299,13 +299,13 @@ class Helper extends Core\Base
 				'class'  => '-link -row-link -row-link-edit',
 				'target' => '_blank',
 				'title'  => is_null( $title_attr ) ? _x( 'Edit', 'Helper: Row Action', GEDITORIAL_TEXTDOMAIN ) : $title_attr,
-			], esc_html( $title ) ).$after;
+			], HTML::escape( $title ) ).$after;
 
 		if ( 'view' == $link && ! $edit && 'publish' != get_post_status( $post ) )
 			return HTML::tag( 'span', [
 				'class' => '-row-span',
 				'title' => is_null( $title_attr ) ? FALSE : $title_attr,
-			], esc_html( $title ) ).$after;
+			], HTML::escape( $title ) ).$after;
 
 		if ( 'view' == $link )
 			return HTML::tag( 'a', [
@@ -313,14 +313,14 @@ class Helper extends Core\Base
 				'class'  => '-link -row-link -row-link-view',
 				'target' => '_blank',
 				'title'  => is_null( $title_attr ) ? _x( 'View', 'Helper: Row Action', GEDITORIAL_TEXTDOMAIN ) : $title_attr,
-			], esc_html( $title ) ).$after;
+			], HTML::escape( $title ) ).$after;
 
 		return HTML::tag( 'a', [
 			'href'   => $link,
 			'class'  => '-link -row-link -row-link-custom',
 			'target' => '_blank',
 			'title'  => is_null( $title_attr ) ? FALSE : $title_attr,
-		], esc_html( $title ) ).$after;
+		], HTML::escape( $title ) ).$after;
 	}
 
 	public static function getPostRowActions( $post_id, $actions = NULL )
@@ -396,7 +396,7 @@ class Helper extends Core\Base
 		$title = sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' );
 
 		if ( ! $link )
-			return esc_html( $title );
+			return HTML::escape( $title );
 
 		if ( 'edit' == $link ) {
 			if ( ! $edit = WordPress::getEditTaxLink( $term->taxonomy, $term->term_id ) )
@@ -409,7 +409,7 @@ class Helper extends Core\Base
 				'title'  => urldecode( $term->slug ),
 				'class'  => '-link -row-link -row-link-edit',
 				'target' => '_blank',
-			], esc_html( $title ) );
+			], HTML::escape( $title ) );
 
 		if ( 'view' == $link )
 			return HTML::tag( 'a', [
@@ -417,13 +417,13 @@ class Helper extends Core\Base
 				'class'  => '-link -row-link -row-link-view',
 				'target' => '_blank',
 				'title'  => _x( 'View', 'Helper: Row Action', GEDITORIAL_TEXTDOMAIN ),
-			], esc_html( $title ) );
+			], HTML::escape( $title ) );
 
 		return HTML::tag( 'a', [
 			'href'   => $link,
 			'class'  => '-link -row-link -row-link-custom',
 			'target' => '_blank',
-		], esc_html( $title ) );
+		], HTML::escape( $title ) );
 	}
 
 	public static function getExtension( $mime_type, $extensions )
@@ -681,11 +681,11 @@ class Helper extends Core\Base
 						$status = $row->post_status;
 
 					if ( $status )
-						$title .= ' <small class="-status">('.$status.')</small>';
+						$title.= ' <small class="-status">('.$status.')</small>';
 				}
 
 				if ( 'attachment' == $row->post_type && $attached = wp_get_attachment_url( $row->ID ) )
-					$title .= '<br />'.HTML::tag( 'a', [
+					$title.= '<br />'.HTML::tag( 'a', [
 						'href'   => $attached,
 						'class'  => wp_attachment_is( 'image', $row->ID ) ? 'thickbox' : FALSE,
 						'target' => '_blank',
@@ -693,7 +693,7 @@ class Helper extends Core\Base
 					], get_post_meta( $row->ID, '_wp_attached_file', TRUE ) );
 
 				if ( $excerpt && $row->post_excerpt )
-					$title .= wpautop( Helper::prepDescription( $row->post_excerpt ), FALSE );
+					$title.= wpautop( Helper::prepDescription( $row->post_excerpt ), FALSE );
 
 				return $title;
 			},
@@ -735,7 +735,7 @@ class Helper extends Core\Base
 					return WordPress::getAuthorEditHTML( $row->post_type, $row->post_author );
 
 				if ( $author_data = get_user_by( 'id', $row->post_author ) )
-					return esc_html( $author_data->display_name );
+					return HTML::escape( $author_data->display_name );
 
 				return '<span class="-empty">&mdash;</span>';
 			},
@@ -751,7 +751,7 @@ class Helper extends Core\Base
 				$html = '';
 				foreach ( $column['args']['taxonomies'] as $taxonomy => $object )
 					if ( $object->label ) // only public taxes
-						$html .= Helper::getTermsEditRow( $row, $object, '<div>'.$object->label.': ', '</div>' );
+						$html.= Helper::getTermsEditRow( $row, $object, '<div>'.$object->label.': ', '</div>' );
 				return $html;
 			},
 		];
@@ -839,11 +839,11 @@ class Helper extends Core\Base
 
 		$formats = self::dateFormats( FALSE );
 
-		$html = '<span class="-date-date" title="'.HTML::escapeAttr( date_i18n( $formats['timeonly'], $timestamp ) );
+		$html = '<span class="-date-date" title="'.HTML::escape( date_i18n( $formats['timeonly'], $timestamp ) );
 		$html.= '" data-time="'.date( 'c', $timestamp ).'">'.date_i18n( $formats['default'], $timestamp ).'</span>';
 
 		$html.= '&nbsp;(<span class="-date-diff" title="';
-		$html.= HTML::escapeAttr( date_i18n( $formats['fulltime'], $timestamp ) ).'">';
+		$html.= HTML::escape( date_i18n( $formats['fulltime'], $timestamp ) ).'">';
 		$html.= self::humanTimeDiff( $timestamp ).'</span>)';
 
 		return $class ? '<span class="'.$class.'">'.$html.'</span>' : $html;
@@ -854,7 +854,7 @@ class Helper extends Core\Base
 		$timestamp = strtotime( $post->post_modified );
 		$formats   = self::dateFormats( FALSE );
 
-		$html = '<span class="-date-modified" title="'.HTML::escapeAttr( date_i18n( $formats['default'], $timestamp ) );
+		$html = '<span class="-date-modified" title="'.HTML::escape( date_i18n( $formats['default'], $timestamp ) );
 		$html.='" data-time="'.date( 'c', $timestamp ).'">'.self::humanTimeDiff( $timestamp ).'</span>';
 
 		$edit_last = get_post_meta( $post->ID, '_edit_last', TRUE );
@@ -930,12 +930,12 @@ class Helper extends Core\Base
 
 		if ( $flip )
 			return '<span class="-date-diff" title="'
-					.HTML::escapeAttr( self::dateFormat( $timestamp, 'fulltime' ) ).'">'
+					.HTML::escape( self::dateFormat( $timestamp, 'fulltime' ) ).'">'
 					.self::humanTimeDiff( $timestamp, $now )
 				.'</span>';
 
 		return '<span class="-time" title="'
-			.HTML::escapeAttr( self::humanTimeAgo( $timestamp, $now ) ).'">'
+			.HTML::escape( self::humanTimeAgo( $timestamp, $now ) ).'">'
 			.self::humanTimeDiffRound( $timestamp, NULL, self::dateFormats( 'default' ), $now )
 		.'</span>';
 	}

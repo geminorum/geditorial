@@ -26,8 +26,8 @@ class HTML extends Base
 			$content = Number::format( $number );
 
 		return '<a class="-tel" href="'.self::sanitizePhoneNumber( $number )
-				.'"'.( $title ? ' data-toggle="tooltip" title="'.self::escapeAttr( $title ).'"' : '' )
-				.' data-tel-number="'.self::escapeAttr( $number ).'">'
+				.'"'.( $title ? ' data-toggle="tooltip" title="'.self::escape( $title ).'"' : '' )
+				.' data-tel-number="'.self::escape( $number ).'">'
 				.'&#8206;'.$content.'&#8207;</a>';
 	}
 
@@ -94,7 +94,7 @@ class HTML extends Base
 
 	public static function inputHidden( $name, $value = '' )
 	{
-		echo '<input type="hidden" name="'.self::escapeAttr( $name ).'" value="'.self::escapeAttr( $value ).'" />';
+		echo '<input type="hidden" name="'.self::escape( $name ).'" value="'.self::escape( $value ).'" />';
 	}
 
 	// @REF: https://gist.github.com/eric1234/5802030
@@ -184,13 +184,13 @@ class HTML extends Base
 					foreach ( $att as $data_key => $data_val ) {
 
 						if ( is_array( $data_val ) )
-							$html .= ' data-'.$data_key.'=\''.wp_json_encode( $data_val ).'\'';
+							$html.= ' data-'.$data_key.'=\''.wp_json_encode( $data_val ).'\'';
 
 						else if ( FALSE === $data_val )
 							continue;
 
 						else
-							$html .= ' data-'.$data_key.'="'.self::escapeAttr( $data_val ).'"';
+							$html.= ' data-'.$data_key.'="'.self::escape( $data_val ).'"';
 					}
 
 					continue;
@@ -224,9 +224,9 @@ class HTML extends Base
 				$att = self::escapeURL( $att );
 
 			else
-				$att = self::escapeAttr( $att );
+				$att = self::escape( $att );
 
-			$html .= ' '.$key.'="'.trim( $att ).'"';
+			$html.= ' '.$key.'="'.trim( $att ).'"';
 		}
 
 		if ( FALSE === $content )
@@ -235,12 +235,18 @@ class HTML extends Base
 		return $html.'>';
 	}
 
-	// @SEE: `esc_attr()`
-	public static function escapeAttr( $text )
+	// @ref: `esc_html()`, `esc_attr()`
+	public static function escape( $text )
 	{
 		return Text::utf8Compliant( $text )
 			? Text::utf8SpecialChars( $text, ENT_QUOTES )
 			: '';
+	}
+
+	// FIXME: DEPRICIATED
+	public static function escapeAttr( $text )
+	{
+		return self::escape( $text );
 	}
 
 	public static function escapeURL( $url )
@@ -316,7 +322,7 @@ class HTML extends Base
 		$html = '';
 
 		foreach ( $subs as $slug => $page )
-			$html .= self::tag( 'a', array(
+			$html.= self::tag( 'a', array(
 				'class' => 'nav-tab '.$prefix.$slug.( $slug == $active ? ' nav-tab-active' : '' ),
 				'href'  => add_query_arg( 'sub', $slug, $uri ),
 			), $page );
@@ -334,7 +340,7 @@ class HTML extends Base
 		$html = '';
 
 		foreach ( $subs as $slug => $page )
-			$html .= self::tag( 'a', array(
+			$html.= self::tag( 'a', array(
 				'class' => 'nav-tab '.$prefix.$slug.( $slug == $active ? ' nav-tab-active' : '' ),
 				'href'  => '#'.$slug,
 			), $page );
@@ -458,14 +464,14 @@ class HTML extends Base
 				if ( is_array( $column ) ) {
 
 					if ( isset( $column['class'] ) )
-						$class .= ' '.self::prepClass( $column['class'] );
+						$class.= ' '.self::prepClass( $column['class'] );
 
 					if ( isset( $column['callback'] ) )
 						$callback = $column['callback'];
 
 					if ( isset( $column['actions'] ) ) {
 						$actions = $column['actions'];
-						$class .= ' has-row-actions';
+						$class.= ' has-row-actions';
 					}
 
 					// again override key using map
@@ -491,8 +497,8 @@ class HTML extends Base
 						$value = '';
 
 					$cell = 'th';
-					$class .= ' check-column';
-					$value = '<input type="checkbox" name="_cb[]" value="'.self::escapeAttr( $value ).'" class="-cb" />';
+					$class.= ' check-column';
+					$value = '<input type="checkbox" name="_cb[]" value="'.self::escape( $value ).'" class="-cb" />';
 
 				} else if ( is_array( $row ) ) {
 
@@ -569,10 +575,10 @@ class HTML extends Base
 			foreach ( $actions as $name => $action ) {
 				++$i;
 				$sep = $i == $count ? '' : ' | ';
-				$html .= '<span class="-action-'.$name.' '.$name.'">'.$action.$sep.'</span>';
+				$html.= '<span class="-action-'.$name.' '.$name.'">'.$action.$sep.'</span>';
 			}
 
-		$html .= '</div>';
+		$html.= '</div>';
 
 		if ( ! $echo )
 			return $html;
@@ -792,12 +798,12 @@ class HTML extends Base
 		$html = '<table class="base-table-code'.( $reverse ? ' -reverse' : '' ).'">';
 
 		if ( $caption )
-			$html .= '<caption>'.$caption.'</caption>';
+			$html.= '<caption>'.$caption.'</caption>';
 
-		$html .= '<tbody>';
+		$html.= '<tbody>';
 
 		foreach ( (array) $array as $key => $value )
-			$html .= sprintf( $row, $key, self::sanitizeDisplay( $value ) );
+			$html.= sprintf( $row, $key, self::sanitizeDisplay( $value ) );
 
 		return $html.'</tbody></table>';
 	}
@@ -919,7 +925,7 @@ class HTML extends Base
 			return $html;
 
 		if ( ! is_null( $args['none_title'] ) )
-			$html .= self::tag( 'option', array(
+			$html.= self::tag( 'option', array(
 				'value'    => $args['none_value'],
 				'selected' => $args['selected'] == $args['none_value'],
 			), $args['none_title'] );
@@ -941,7 +947,7 @@ class HTML extends Base
 			else
 				$title = $value;
 
-			$html .= self::tag( 'option', array(
+			$html.= self::tag( 'option', array(
 				'value'    => $key,
 				'selected' => $args['selected'] == $key,
 			), $title );

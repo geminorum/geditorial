@@ -189,7 +189,7 @@ class Drafts extends gEditorial\Module
 
 			foreach ( $this->get_drafts( $post_type, $user ) as $post ) {
 
-				$block .= '<li>'.Helper::getPostTitleRow( $post, 'edit', FALSE,
+				$block.= '<li>'.Helper::getPostTitleRow( $post, 'edit', FALSE,
 					Helper::postModified( $post, TRUE ) ).'</li>';
 
 				// FIXME: add author suffix
@@ -201,9 +201,9 @@ class Drafts extends gEditorial\Module
 			$link = HTML::tag( 'a', [
 				'href'  => WordPress::getPostTypeEditLink( $post_type, $user, [ 'post_status' => 'draft' ] ),
 				'title' => sprintf( $all, $object->labels->singular_name ),
-			], esc_html( $object->labels->name ) );
+			], HTML::escape( $object->labels->name ) );
 
-			$html .= '<div class="-block"><h3>'.$link.'</h3><ul>'.$block.'</ul></div>';
+			$html.= '<div class="-block"><h3>'.$link.'</h3><ul>'.$block.'</ul></div>';
 		}
 
 		return $html ? $html :'<div class="-empty"><p>'._x( '(none)', 'Modules: Drafts', GEDITORIAL_TEXTDOMAIN ).'</p></div>';

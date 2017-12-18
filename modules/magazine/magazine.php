@@ -683,12 +683,12 @@ class Magazine extends gEditorial\Module
 	public function display_meta( $value, $key = NULL, $field = [] )
 	{
 		switch ( $key ) {
-			case 'in_issue_order': return Helper::getCounted( $value, _x( 'Order in Issue: %s', 'Modules: Magazine: Display', GEDITORIAL_TEXTDOMAIN ) );
-			case 'in_issue_page_start': return Helper::getCounted( $value, _x( 'Page in Issue: %s', 'Modules: Magazine: Display', GEDITORIAL_TEXTDOMAIN ) );
-			case 'in_issue_pages': return Helper::getCounted( $value, _x( 'Total Pages: %s', 'Modules: Magazine: Display', GEDITORIAL_TEXTDOMAIN ) );
+			case 'in_issue_order'      : return Helper::getCounted( $value, _x( 'Order in Issue: %s', 'Modules: Magazine: Display', GEDITORIAL_TEXTDOMAIN ) );
+			case 'in_issue_page_start' : return Helper::getCounted( $value, _x( 'Page in Issue: %s', 'Modules: Magazine: Display', GEDITORIAL_TEXTDOMAIN ) );
+			case 'in_issue_pages'      : return Helper::getCounted( $value, _x( 'Total Pages: %s', 'Modules: Magazine: Display', GEDITORIAL_TEXTDOMAIN ) );
 		}
 
-		return esc_html( $value );
+		return HTML::escape( $value );
 	}
 
 	public function post_updated_messages( $messages )

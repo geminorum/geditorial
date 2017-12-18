@@ -568,7 +568,7 @@ class Meta extends gEditorial\Module
 
 						echo $this->get_column_icon( FALSE, $icon, $this->get_string( $field, $post->post_type, 'titles', $field ) );
 
-						echo esc_html( $value );
+						echo HTML::escape( $value );
 
 						if ( 'as' == $field && $author ) {
 							echo ' <small>('.$author.')</small>';
@@ -877,9 +877,9 @@ class Meta extends gEditorial\Module
 			$formatted = apply_filters( 'string_format_i18n', $val );
 
 			if ( $final )
-				$final .= ', ';
+				$final.= ', ';
 
-			$final .= $kses ? Helper::kses( $formatted, 'text' ) : $formatted;
+			$final.= $kses ? Helper::kses( $formatted, 'text' ) : $formatted;
 		}
 
 		if ( $final ) {

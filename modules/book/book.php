@@ -437,14 +437,14 @@ class Book extends gEditorial\Module
 	public function display_meta( $value, $key = NULL, $field = [] )
 	{
 		switch ( $key ) {
-			case 'isbn': return sprintf( _x( 'ISBN: %s', 'Modules: Book: Display', GEDITORIAL_TEXTDOMAIN ), ModuleHelper::ISBN( $value ) );
-			case 'edition': return sprintf( _x( '%s Edition', 'Modules: Book: Display', GEDITORIAL_TEXTDOMAIN ), $value );
-			case 'print': return sprintf( _x( '%s Print', 'Modules: Book: Display', GEDITORIAL_TEXTDOMAIN ), $value );
-			case 'pages': return Helper::getCounted( $value, _x( '%s Pages', 'Modules: Book: Display', GEDITORIAL_TEXTDOMAIN ) );
-			case 'volumes': return Helper::getCounted( $value, _x( '%s Volumes', 'Modules: Book: Display', GEDITORIAL_TEXTDOMAIN ) );
+			case 'isbn'    : return sprintf( _x( 'ISBN: %s', 'Modules: Book: Display', GEDITORIAL_TEXTDOMAIN ), ModuleHelper::ISBN( $value ) );
+			case 'edition' : return sprintf( _x( '%s Edition', 'Modules: Book: Display', GEDITORIAL_TEXTDOMAIN ), $value );
+			case 'print'   : return sprintf( _x( '%s Print', 'Modules: Book: Display', GEDITORIAL_TEXTDOMAIN ), $value );
+			case 'pages'   : return Helper::getCounted( $value, _x( '%s Pages', 'Modules: Book: Display', GEDITORIAL_TEXTDOMAIN ) );
+			case 'volumes' : return Helper::getCounted( $value, _x( '%s Volumes', 'Modules: Book: Display', GEDITORIAL_TEXTDOMAIN ) );
 		}
 
-		return esc_html( $value );
+		return HTML::escape( $value );
 	}
 
 	public function meta_init()
@@ -662,7 +662,7 @@ class Book extends gEditorial\Module
 
 					foreach ( $column['args']['fields'] as $key => $title )
 						if ( $meta = get_post_meta( $row->ID, $key, TRUE ) )
-							$html .= '<div><b>'.$title.'</b>: '.$meta.'</div>';
+							$html.= '<div><b>'.$title.'</b>: '.$meta.'</div>';
 
 					return $html ? $html : '&mdash;';
 				},
@@ -675,11 +675,11 @@ class Book extends gEditorial\Module
 					$html = '';
 
 					if ( $id = get_post_meta( $row->ID, 'book_publication_id', TRUE ) )
-						$html .= '<div><b>'._x( 'By ID', 'Modules: Book', GEDITORIAL_TEXTDOMAIN ).'</b>: '.Helper::getPostTitleRow( $id ).'</div>';
+						$html.= '<div><b>'._x( 'By ID', 'Modules: Book', GEDITORIAL_TEXTDOMAIN ).'</b>: '.Helper::getPostTitleRow( $id ).'</div>';
 
 					if ( $title = get_post_meta( $row->ID, 'book_publication_title', TRUE ) )
 						foreach ( (array) PostType::getIDsByTitle( $title, [ 'post_type' => $column['args']['type'] ] ) as $post_id )
-							$html .= '<div><b>'._x( 'By Title', 'Modules: Book', GEDITORIAL_TEXTDOMAIN ).'</b>: '.Helper::getPostTitleRow( $post_id ).'</div>';
+							$html.= '<div><b>'._x( 'By Title', 'Modules: Book', GEDITORIAL_TEXTDOMAIN ).'</b>: '.Helper::getPostTitleRow( $post_id ).'</div>';
 
 					return $html ? $html : '&mdash;';
 				},

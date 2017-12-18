@@ -300,7 +300,7 @@ class Terms extends gEditorial\Module
 		} else if ( $this->classs( 'color' ) == $column ) {
 
 			if ( $meta = get_term_meta( $term_id, 'color', TRUE ) )
-				echo '<i class="-color" data-color="'.HTML::escapeAttr( $meta ).'" style="background-color:'.HTML::escapeAttr( $meta ).'"></i>';
+				echo '<i class="-color" data-color="'.HTML::escape( $meta ).'" style="background-color:'.HTML::escape( $meta ).'"></i>';
 		}
 	}
 
@@ -345,7 +345,7 @@ class Terms extends gEditorial\Module
 	private function quick_form_field( $field, $taxonomy )
 	{
 		echo '<fieldset><div class="inline-edit-col"><label><span class="title">';
-			echo esc_html( $this->get_string( $field, $taxonomy, 'titles', $field ) );
+			echo HTML::escape( $this->get_string( $field, $taxonomy, 'titles', $field ) );
 		echo '</span><span class="input-text-wrap">';
 			$this->quickedit_field( $field, $taxonomy );
 		echo '</span></label></div></fieldset>';
@@ -355,7 +355,7 @@ class Terms extends gEditorial\Module
 	{
 		echo '<div class="form-field term-'.$field.'-wrap">';
 		echo '<label for="term-'.$field.'">';
-			echo esc_html( $this->get_string( $field, $taxonomy, 'titles', $field ) );
+			echo HTML::escape( $this->get_string( $field, $taxonomy, 'titles', $field ) );
 		echo '</label>';
 			$this->form_field( $field, $taxonomy, $term );
 			HTML::desc( $this->get_string( $field, $taxonomy, 'descriptions', '' ) );
@@ -366,7 +366,7 @@ class Terms extends gEditorial\Module
 	{
 		echo '<tr class="form-field term-'.$field.'-wrap"><th scope="row" valign="top">';
 		echo '<label for="term-'.$field.'">';
-			echo esc_html( $this->get_string( $field, $taxonomy, 'titles', $field ) );
+			echo HTML::escape( $this->get_string( $field, $taxonomy, 'titles', $field ) );
 		echo '</label></th><td>';
 			$this->form_field( $field, $taxonomy, $term );
 			HTML::desc( $this->get_string( $field, $taxonomy, 'descriptions', '' ) );

@@ -62,7 +62,7 @@ class MetaBox extends Core\Base
 		if ( $args['metabox'] && self::checkHidden( $args['metabox'] ) )
 			return;
 
-		$tax_name = HTML::escapeAttr( $args['taxonomy'] );
+		$tax_name = HTML::escape( $args['taxonomy'] );
 		$taxonomy = get_taxonomy( $args['taxonomy'] );
 
 		$html = wp_terms_checklist( $post->ID, [

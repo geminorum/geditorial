@@ -130,7 +130,7 @@ class Today extends gEditorial\Helper
 			echo '<div class="-today -date-icon">';
 
 				if ( $the_day['day'] )
-					echo '<span class="-day" data-day="'.HTML::escapeAttr( $the_day['day'] )
+					echo '<span class="-day" data-day="'.HTML::escape( $the_day['day'] )
 						.'"><a target="_blank" href="'.self::getTheDayLink( $stored, 'day' )
 						.'">'.Number::format( $the_day['day'] ).'</a></span>';
 
@@ -142,18 +142,18 @@ class Today extends gEditorial\Helper
 					if ( isset( $gEditorialTodayMonths[$the_day['cal']][$key] ) )
 						$the_day['month'] = $gEditorialTodayMonths[$the_day['cal']][$key];
 
-					echo '<span class="-month" data-month="'.HTML::escapeAttr( $month )
+					echo '<span class="-month" data-month="'.HTML::escape( $month )
 						.'"><a target="_blank" href="'.self::getTheDayLink( $stored, 'month' )
 						.'">'.$the_day['month'].'</a></span>';
 				}
 
 				if ( $the_day['year'] )
-					echo '<span class="-year" data-year="'.HTML::escapeAttr( $the_day['year'] )
+					echo '<span class="-year" data-year="'.HTML::escape( $the_day['year'] )
 						.'"><a target="_blank" href="'.self::getTheDayLink( $stored, 'year' )
 						.'">'.Number::format( $the_day['year'] ).'</a></span>';
 
 				if ( $the_day['cal'] )
-					echo '<span class="-cal" data-cal="'.HTML::escapeAttr( $the_day['cal'] )
+					echo '<span class="-cal" data-cal="'.HTML::escape( $the_day['cal'] )
 						.'"><a target="_blank" href="'.self::getTheDayLink( $stored, 'cal' )
 						.'">'.( empty( $gEditorialTodayCalendars[$the_day['cal']] )
 							? $the_day['cal']
@@ -360,7 +360,7 @@ class Today extends gEditorial\Helper
 
 		$html = '';
 
-		$html .= HTML::tag( 'input', [
+		$html.= HTML::tag( 'input', [
 			'type'         => 'text',
 			'autocomplete' => 'off',
 			'min'          => '1',
@@ -374,7 +374,7 @@ class Today extends gEditorial\Helper
 			'data'         => [ 'ortho' => 'number' ],
 		] );
 
-		$html .= HTML::tag( 'input', [
+		$html.= HTML::tag( 'input', [
 			'type'         => 'text',
 			'autocomplete' => 'off',
 			'min'          => '1',
@@ -389,7 +389,7 @@ class Today extends gEditorial\Helper
 		] );
 
 		if ( $year )
-			$html .= HTML::tag( 'input', [
+			$html.= HTML::tag( 'input', [
 				'type'         => 'text',
 				'autocomplete' => 'off',
 				'class'        => '-year',
@@ -409,7 +409,7 @@ class Today extends gEditorial\Helper
 		], _x( '&mdash; Select Calendar &mdash;', 'Modules: Today: Meta Box Input Option None', GEDITORIAL_TEXTDOMAIN ) );
 
 		foreach ( $calendars as $name => $title )
-			$html .= HTML::tag( 'option', [
+			$html.= HTML::tag( 'option', [
 				'value'    => $name,
 				'selected' => $args['cal'] == $name,
 			], $title );
@@ -443,7 +443,7 @@ class Today extends gEditorial\Helper
 			if ( is_admin() )
 				$title = Helper::getPostTypeIcon( $object ).' '.$title;
 
-			$html .= HTML::button( $title,
+			$html.= HTML::button( $title,
 				WordPress::getPostNewLink( $object->name, $the_day ),
 				sprintf( _x( 'New %s connected to this day', 'Modules: Today', GEDITORIAL_TEXTDOMAIN ), $object->labels->singular_name ),
 				is_admin()
@@ -465,7 +465,7 @@ class Today extends gEditorial\Helper
 					if ( is_admin() )
 						$title = Helper::getPostTypeIcon( $object ).' '.$title;
 
-					$html .= HTML::button( $title,
+					$html.= HTML::button( $title,
 						WordPress::getPostNewLink( $object->name, $the_day ),
 						_x( 'New Day!', 'Modules: Today', GEDITORIAL_TEXTDOMAIN ),
 						is_admin()
@@ -481,7 +481,7 @@ class Today extends gEditorial\Helper
 					if ( is_admin() )
 						$title = Helper::getPostTypeIcon( $object ).' '.$title;
 
-					$html .= HTML::button( $title,
+					$html.= HTML::button( $title,
 						WordPress::getPostEditLink( $the_post ),
 						_x( 'Edit Day!', 'Modules: Today', GEDITORIAL_TEXTDOMAIN ),
 						is_admin()

@@ -250,31 +250,31 @@ class Tube extends gEditorial\Module
 			return $output;
 
 		if ( ! empty( $attr['title'] ) )
-			$output .= HTML::tag( 'h3', $attr['title'] );
+			$output.= HTML::tag( 'h3', $attr['title'] );
 
 		$html = '';
 
 		if ( ! empty( $attr['date'] ) )
-			$html .= HTML::tag( 'button', [
+			$html.= HTML::tag( 'button', [
 				'class' => [ '-button', 'btn', 'btn-default', 'btn-xs' ],
 				'title' => _x( 'The date of this video', 'Modules: Tube: Button', GEDITORIAL_TEXTDOMAIN ),
 			], $this->icon( 'calendar', 'gridicons' ).' '.$attr['date'] );
 
 		if ( ! empty( $attr['time'] ) )
-			$html .= HTML::tag( 'button', [
+			$html.= HTML::tag( 'button', [
 				'class' => [ '-button', 'btn', 'btn-default', 'btn-xs' ],
 				'title' => _x( 'Total time of this video', 'Modules: Tube: Button', GEDITORIAL_TEXTDOMAIN ),
 			], $this->icon( 'time' ).' '.Number::format( $attr['time'] ) );
 
 		if ( ! empty( $attr['src'] ) )
-			$html .= HTML::tag( 'a', [
+			$html.= HTML::tag( 'a', [
 				'href'  => $attr['src'],
 				'class' => [ '-button', 'btn', 'btn-default', 'btn-xs' ],
 				'title' => _x( 'Download this video', 'Modules: Tube: Button', GEDITORIAL_TEXTDOMAIN ),
 			], $this->icon( 'download' ).' '._x( 'Download', 'Modules: Tube: Button', GEDITORIAL_TEXTDOMAIN ) );
 
 		if ( ! empty( $attr['youtube'] ) )
-			$html .= HTML::tag( 'a', [
+			$html.= HTML::tag( 'a', [
 				'href'   => $attr['youtube'],
 				'class'  => [ '-button', 'btn', 'btn-default', 'btn-xs' ],
 				'title'  => _x( 'View this video on YouTube', 'Modules: Tube: Button', GEDITORIAL_TEXTDOMAIN ),
@@ -282,7 +282,7 @@ class Tube extends gEditorial\Module
 			], $this->icon( 'youtube', 'social-logos' ).' '._x( 'YouTube', 'Modules: Tube: Button', GEDITORIAL_TEXTDOMAIN ) );
 
 		if ( ! empty( $attr['aparat'] ) )
-			$html .= HTML::tag( 'a', [
+			$html.= HTML::tag( 'a', [
 				'href'   => $attr['aparat'],
 				'class'  => [ '-button', 'btn', 'btn-default', 'btn-xs' ],
 				'title'  => _x( 'View this video on Aparat', 'Modules: Tube: Button', GEDITORIAL_TEXTDOMAIN ),
@@ -291,35 +291,35 @@ class Tube extends gEditorial\Module
 
 		$link = empty( $attr['shortlink'] ) ? WordPress::getPostShortLink( $post_id ) : $attr['shortlink'];
 
-		$html .= HTML::tag( 'a', [
+		$html.= HTML::tag( 'a', [
 			'href'   => $link,
 			'class'  => [ '-button', 'btn', 'btn-default', 'btn-xs' ],
 			'title'  => _x( 'Shortlink to this video', 'Modules: Tube: Button', GEDITORIAL_TEXTDOMAIN ),
 			'target' => '_blank',
 		], $this->icon( 'link' ).' '._x( 'Shortlink', 'Modules: Tube: Button', GEDITORIAL_TEXTDOMAIN ) );
 
-		$html .= HTML::tag( 'a', [
+		$html.= HTML::tag( 'a', [
 			'href'   => sprintf( 'https://telegram.me/share/url?url=%s', urlencode( $link ) ),
 			'class'  => [ '-button', 'btn', 'btn-default', 'btn-xs', '-button-icon' ],
 			'title'  => _x( 'Share this video', 'Modules: Tube: Button', GEDITORIAL_TEXTDOMAIN ),
 			'target' => '_blank',
 		], $this->icon( 'telegram', 'social-logos' ) );
 
-		$html .= HTML::tag( 'a', [
+		$html.= HTML::tag( 'a', [
 			'href'   => sprintf( 'https://twitter.com/intent/tweet?url=%s', urlencode( $link ) ),
 			'class'  => [ '-button', 'btn', 'btn-default', 'btn-xs', '-button-icon' ],
 			'title'  => _x( 'Share this video', 'Modules: Tube: Button', GEDITORIAL_TEXTDOMAIN ),
 			'target' => '_blank',
 		], $this->icon( 'twitter-alt', 'social-logos' ) );
 
-		$html .= HTML::tag( 'a', [
+		$html.= HTML::tag( 'a', [
 			'href'   => sprintf( 'https://plus.google.com/share?url=%s', urlencode( $link ) ),
 			'class'  => [ '-button', 'btn', 'btn-default', 'btn-xs', '-button-icon' ],
 			'title'  => _x( 'Share this video', 'Modules: Tube: Button', GEDITORIAL_TEXTDOMAIN ),
 			'target' => '_blank',
 		], $this->icon( 'google-plus-alt', 'social-logos' ) );
 
-		$html .= HTML::tag( 'a', [
+		$html.= HTML::tag( 'a', [
 			'href'   => sprintf( 'https://www.facebook.com/sharer/sharer.php?u=%s', urlencode( $link ) ),
 			'class'  => [ '-button', 'btn', 'btn-default', 'btn-xs', '-button-icon' ],
 			'title'  => _x( 'Share this video', 'Modules: Tube: Button', GEDITORIAL_TEXTDOMAIN ),

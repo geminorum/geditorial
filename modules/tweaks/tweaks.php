@@ -504,7 +504,7 @@ class Tweaks extends gEditorial\Module
 			case $this->classs( 'id' ):
 
 				echo '<div class="geditorial-admin-wrap-column -tweaks -id">';
-					echo esc_html( $post_id );
+					echo HTML::escape( $post_id );
 				echo '</div>';
 		}
 	}
@@ -558,7 +558,7 @@ class Tweaks extends gEditorial\Module
 				do_action( $this->hook( 'column_user' ), get_userdata( $user_id ) );
 			echo '</ul></div>';
 
-			$output .= ob_get_clean();
+			$output.= ob_get_clean();
 
 		} else if ( $this->classs( 'contacts' ) == $column_name ) {
 
@@ -568,7 +568,7 @@ class Tweaks extends gEditorial\Module
 				do_action( $this->hook( 'column_contacts' ), get_userdata( $user_id ) );
 			echo '</ul></div>';
 
-			$output .= ob_get_clean();
+			$output.= ob_get_clean();
 		}
 
 		return $output;
@@ -606,7 +606,7 @@ class Tweaks extends gEditorial\Module
 			printf( '<a href="%s">%s</a>',
 				esc_url( add_query_arg( 'user_id', $comment->user_id,
 					admin_url( 'edit-comments.php' ) ) ),
-				esc_html( $user->display_name )
+				HTML::escape( $user->display_name )
 			);
 		}
 	}
@@ -633,8 +633,8 @@ class Tweaks extends gEditorial\Module
 			if ( is_null( $info['edit'] ) )
 				$info['edit'] = WordPress::getEditTaxLink( $object->name );
 
-			$before  = '<li class="-row tweaks-tax-'.$taxonomy.'">';
-			$before .= $this->get_column_icon( $info['edit'], $info['icon'], $info['title'] );
+			$before = '<li class="-row tweaks-tax-'.$taxonomy.'">';
+			$before.= $this->get_column_icon( $info['edit'], $info['icon'], $info['title'] );
 
 			Helper::getTermsEditRow( $post, $object, $before, '</li>' );
 		}
@@ -658,10 +658,10 @@ class Tweaks extends gEditorial\Module
 				echo $this->get_column_icon( FALSE, 'admin-page', _x( 'Page Template', 'Modules: Tweaks: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
 
 				if ( ! empty( $this->page_templates[$post->post_type][$post->page_template] ) )
-					echo '<span title="'.HTML::escapeAttr( $post->page_template ).'">'
-						.esc_html( $this->page_templates[$post->post_type][$post->page_template] ).'</span>';
+					echo '<span title="'.HTML::escape( $post->page_template ).'">'
+						.HTML::escape( $this->page_templates[$post->post_type][$post->page_template] ).'</span>';
 				else
-					echo '<span>'.esc_html( $post->page_template ).'</span>';
+					echo '<span>'.HTML::escape( $post->page_template ).'</span>';
 
 			echo '</li>';
 		}
@@ -799,13 +799,13 @@ class Tweaks extends gEditorial\Module
 	public function display_meta( $value, $key = NULL, $field = [] )
 	{
 		switch ( $key ) {
-			case 'mobile': return HTML::tel( $value );
-			case 'twitter': return Third::htmlTwitterIntent( $value, TRUE );
+			case 'mobile'    : return HTML::tel( $value );
+			case 'twitter'   : return Third::htmlTwitterIntent( $value, TRUE );
 			case 'googleplus': return HTML::link( URL::prepTitle( $value ), $value );
-			case 'facebook': return HTML::link( URL::prepTitle( $value ), $value );
+			case 'facebook'  : return HTML::link( URL::prepTitle( $value ), $value );
 		}
 
-		return esc_html( $value );
+		return HTML::escape( $value );
 	}
 
 	// display post excerpt form fields

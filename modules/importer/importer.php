@@ -86,7 +86,7 @@ class Importer extends gEditorial\Module
 
 		foreach ( $items[0] as $key => $title )
 			echo '<tr><td class="-val"><code>'
-				.esc_html( $title )
+				.HTML::escape( $title )
 			.'</td><td></code>'
 				.HTML::dropdown( $fields, [
 					'selected' => array_key_exists( $key, $map ) ? $map[$key] : 'none',
@@ -166,7 +166,7 @@ class Importer extends gEditorial\Module
 					$html = '<div class="-danger">'._x( 'Similar to Title:', 'Modules: Importer: Table Column', GEDITORIAL_TEXTDOMAIN );
 
 					foreach ( $posts as $post_id )
-						$html .= '<br />'.Helper::getPostTitleRow( $post_id ).' <code>'.$post_id.'</code>';
+						$html.= '<br />'.Helper::getPostTitleRow( $post_id ).' <code>'.$post_id.'</code>';
 
 					return $html.'</div>';
 				},

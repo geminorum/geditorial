@@ -158,7 +158,7 @@ class Meta extends gEditorial\MetaBox
 
 		$desc = self::getString( $field, $post->post_type, 'descriptions', $title ); // FIXME: get from fields args
 
-		echo '<div class="-wrap field-wrap field-wrap-select" title="'.HTML::escapeAttr( $desc ).'">';
+		echo '<div class="-wrap field-wrap field-wrap-select" title="'.HTML::escape( $desc ).'">';
 
 		// FIXME: core dropdown does not support: data attr
 		wp_dropdown_categories( [
@@ -268,13 +268,13 @@ class Meta extends gEditorial\MetaBox
 		if ( is_null( $title ) )
 			$title = self::getString( $field, $post->post_type );
 
-		$html  = '<div id="geditorial-meta-'.$field.'-wrap" class="postbox geditorial-admin-postbox geditorial-meta-field-'.$field.'">';
-		$html .= '<button type="button" class="handlediv button-link" aria-expanded="true">';
-		$html .= '<span class="screen-reader-text">'.esc_attr_x( 'Click to toggle', 'MetaBox', GEDITORIAL_TEXTDOMAIN ).'</span>';
-		$html .= '<span class="toggle-indicator" aria-hidden="true"></span></button>';
-		$html .= '<h2 class="hndle"><span>'.$title.'</span></h2><div class="inside">';
-		$html .= '<div class="geditorial-admin-wrap-textbox geditorial-wordcount-wrap">';
-		$html .= '<div class="-wrap field-wrap field-wrap-textarea">';
+		$html = '<div id="geditorial-meta-'.$field.'-wrap" class="postbox geditorial-admin-postbox geditorial-meta-field-'.$field.'">';
+		$html.= '<button type="button" class="handlediv button-link" aria-expanded="true">';
+		$html.= '<span class="screen-reader-text">'.esc_attr_x( 'Click to toggle', 'MetaBox', GEDITORIAL_TEXTDOMAIN ).'</span>';
+		$html.= '<span class="toggle-indicator" aria-hidden="true"></span></button>';
+		$html.= '<h2 class="hndle"><span>'.$title.'</span></h2><div class="inside">';
+		$html.= '<div class="geditorial-admin-wrap-textbox geditorial-wordcount-wrap">';
+		$html.= '<div class="-wrap field-wrap field-wrap-textarea">';
 
 		$atts = [
 			'rows'     => '1',
@@ -301,10 +301,10 @@ class Meta extends gEditorial\MetaBox
 		else
 			$atts['data']['ortho'] = 'html';
 
-		$html .= HTML::tag( 'textarea', $atts, esc_textarea( self::getPostMeta( $post->ID, $field ) ) );
-		$html .= Helper::htmlWordCount( ( 'geditorial-meta-'.$field.( FALSE === $key ? '' : '-'.$key ) ), $post->post_type );
+		$html.= HTML::tag( 'textarea', $atts, esc_textarea( self::getPostMeta( $post->ID, $field ) ) );
+		$html.= Helper::htmlWordCount( ( 'geditorial-meta-'.$field.( FALSE === $key ? '' : '-'.$key ) ), $post->post_type );
 
-		$html .= '</div></div></div></div>';
+		$html.= '</div></div></div></div>';
 
 		echo $html;
 	}

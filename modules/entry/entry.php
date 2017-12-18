@@ -160,11 +160,11 @@ class Entry extends gEditorial\Module
 	public function register_shortcode_ui()
 	{
 		shortcode_ui_register_for_shortcode( $this->constant( 'section_shortcode' ), [
-			'label'         => esc_html_x( 'Entry Section', 'Modules: Entry: UI: Label', GEDITORIAL_TEXTDOMAIN ),
+			'label'         => HTML::escape( _x( 'Entry Section', 'Modules: Entry: UI: Label', GEDITORIAL_TEXTDOMAIN ) ),
 			'listItemImage' => $this->get_posttype_icon( 'entry_cpt' ),
 			'attrs'         => [
 				[
-				'label'    => esc_html_x( 'Section', 'Modules: Entry: UI: Label', GEDITORIAL_TEXTDOMAIN ),
+				'label'    => HTML::escape( _x( 'Section', 'Modules: Entry: UI: Label', GEDITORIAL_TEXTDOMAIN ) ),
 				'attr'     => 'id',
 				'type'     => 'term_select',
 				'taxonomy' => $this->constant( 'section_tax' ),

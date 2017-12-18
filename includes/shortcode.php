@@ -80,7 +80,7 @@ class ShortCode extends Core\Base
 			$args['title'] = sprintf( $args['title'],
 				sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' ),
 				get_term_link( $term, $term->taxonomy ),
-				HTML::escapeAttr( trim( strip_tags( $term->description ) ) ),
+				HTML::escape( trim( strip_tags( $term->description ) ) ),
 				( $attr ? $attr : '' )
 			);
 
@@ -152,7 +152,7 @@ class ShortCode extends Core\Base
 			], $title );
 
 		if ( $args['item_after_cb'] && is_callable( $args['item_after_cb'] ) ) {
-			$item .= call_user_func_array( $args['item_after_cb'], [ $term, $args, $item ] );
+			$item.= call_user_func_array( $args['item_after_cb'], [ $term, $args, $item ] );
 
 		} else if ( $args['item_after'] ) {
 
@@ -163,7 +163,7 @@ class ShortCode extends Core\Base
 					Helper::prepDescription( $term->description )
 				);
 
-			$item .= $args['item_after'];
+			$item.= $args['item_after'];
 		}
 
 		if ( ! $args['item_tag'] )
@@ -275,7 +275,7 @@ class ShortCode extends Core\Base
 		}
 
 		if ( $args['item_after_cb'] && is_callable( $args['item_after_cb'] ) ) {
-			$item .= call_user_func_array( $args['item_after_cb'], [ $post, $args, $item ] );
+			$item.= call_user_func_array( $args['item_after_cb'], [ $post, $args, $item ] );
 
 		} else if ( $args['item_after'] ) {
 
@@ -287,7 +287,7 @@ class ShortCode extends Core\Base
 					// FIXME: add post_content
 				);
 
-			$item .= $args['item_after'];
+			$item.= $args['item_after'];
 		}
 
 		if ( ! $args['item_tag'] )
@@ -616,10 +616,10 @@ class ShortCode extends Core\Base
 			// setup_postdata( $post );
 
 			if ( $args['item_cb'] )
-				$html .= call_user_func_array( $args['item_cb'], [ $post, $args, $term ] );
+				$html.= call_user_func_array( $args['item_cb'], [ $post, $args, $term ] );
 
 			else
-				$html .= self::postItem( $post, $args );
+				$html.= self::postItem( $post, $args );
 		}
 
 		if ( $args['list_tag'] )

@@ -309,7 +309,7 @@ class Widget extends \WP_Widget
 		$type = isset( $instance[$field] ) ? $instance[$field] : $default;
 
 		foreach ( PostType::get() as $name => $title )
-			$html .= HTML::tag( 'option', [
+			$html.= HTML::tag( 'option', [
 				'value'    => $name,
 				'selected' => $type == $name,
 			], $title );
@@ -332,7 +332,7 @@ class Widget extends \WP_Widget
 		$tax  = isset( $instance[$field] ) ? $instance[$field] : $default;
 
 		foreach ( Taxonomy::get( 0, [], $type ) as $name => $title )
-			$html .= HTML::tag( 'option', [
+			$html.= HTML::tag( 'option', [
 				'value'    => $name,
 				'selected' => $tax == $name,
 			], $title );
@@ -460,7 +460,7 @@ class Widget extends \WP_Widget
 			$html     = '';
 
 			foreach ( $sizes as $size => $title )
-				$html .= HTML::tag( 'option', [
+				$html.= HTML::tag( 'option', [
 					'value'    => $size,
 					'selected' => $selected == $size,
 				], $title );
@@ -536,7 +536,7 @@ class Widget extends \WP_Widget
 		], _x( '&mdash; Select &mdash;', 'Widget Core', GEDITORIAL_TEXTDOMAIN ) );
 
 		foreach ( get_terms( $taxonomy ) as $term )
-			$html .= HTML::tag( 'option', [
+			$html.= HTML::tag( 'option', [
 				'value'    => $term->term_id,
 				'selected' => $term_id == $term->term_id,
 			], $term->name );

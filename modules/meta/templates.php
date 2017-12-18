@@ -291,7 +291,7 @@ class Meta extends gEditorial\Template
 			if ( isset( $args['img'] ) && $args['img'] )
 				$value = '<img src="'.$args['img'].'" title="'.$value.'" alt="'.$value.'" />';
 
-			$html = $b.'<a href="'.$link.'" title="'.HTML::escapeAttr( $desc ).'">'.$value.'</a>'.$a;
+			$html = $b.'<a href="'.$link.'" title="'.HTML::escape( $desc ).'">'.$value.'</a>'.$a;
 
 			if ( isset( $args['echo'] ) && ! $args['echo'] )
 				return $html;

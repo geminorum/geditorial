@@ -126,8 +126,8 @@ class Users extends gEditorial\Module
 			return;
 
 		add_users_page(
-			HTML::escapeAttr( $tax->labels->menu_name ),
-			HTML::escapeAttr( $tax->labels->menu_name ),
+			HTML::escape( $tax->labels->menu_name ),
+			HTML::escape( $tax->labels->menu_name ),
 			$tax->cap->manage_terms,
 			'edit-tags.php?taxonomy='.$tax->name
 		);
@@ -354,7 +354,7 @@ class Users extends gEditorial\Module
 
 					echo '<p>'.HTML::tag( 'label', [
 						'for' => 'groups-'.$term->slug,
-					], $html.'&nbsp;'.esc_html( $term->name ) ).'</p>';
+					], $html.'&nbsp;'.HTML::escape( $term->name ) ).'</p>';
 				 }
 
 			} else {
@@ -376,8 +376,8 @@ class Users extends gEditorial\Module
 		if ( ! isset( $_POST['groups'] ) )
 			return;
 
-		$term = HTML::escapeAttr( $_POST['groups'] );
-		wp_set_object_terms( $user_id, [ $term ], $this->constant( 'group_tax' ), FALSE );
+		wp_set_object_terms( $user_id, [ HTML::escape( $_POST['groups'] ) ], $this->constant( 'group_tax' ), FALSE );
+
 		clean_object_term_cache( $user_id, $this->constant( 'group_tax' ) );
 	}
 
@@ -447,13 +447,13 @@ class Users extends gEditorial\Module
 	public function display_meta( $value, $key = NULL, $field = [] )
 	{
 		switch ( $key ) {
-			case 'mobile': return HTML::tel( $value );
-			case 'twitter': return Third::htmlTwitterIntent( $value, TRUE );
+			case 'mobile'    : return HTML::tel( $value );
+			case 'twitter'   : return Third::htmlTwitterIntent( $value, TRUE );
 			case 'googleplus': return HTML::link( URL::prepTitle( $value ), $value );
-			case 'facebook': return HTML::link( URL::prepTitle( $value ), $value );
+			case 'facebook'  : return HTML::link( URL::prepTitle( $value ), $value );
 		}
 
-		return esc_html( $value );
+		return HTML::escape( $value );
 	}
 
 	public function reports_settings( $sub )
