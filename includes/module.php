@@ -203,7 +203,7 @@ class Module extends Base
 	// MUST ALWAYS CALL THIS
 	public function init()
 	{
-		$this->actions( 'init', $this->module );
+		$this->actions( 'init', $this->options, $this->module );
 
 		$this->strings = $this->filters( 'strings', $this->get_global_strings(), $this->module );
 
