@@ -366,9 +366,7 @@ class Audit extends gEditorial\Module
 			? _x( 'Editorial Audit Summary', 'Modules: Audit: Dashboard Widget Title', GEDITORIAL_TEXTDOMAIN )
 			: _x( 'Your Audit Summary', 'Modules: Audit: Dashboard Widget Title', GEDITORIAL_TEXTDOMAIN );
 
-		$title.= ' <span class="postbox-title-action"><a href="'.esc_url( add_query_arg( 'flush', '' ) ).'"';
-		$title.= ' title="'._x( 'Click to refresh the summary', 'Modules: Audit: Dashboard Widget Action', GEDITORIAL_TEXTDOMAIN ).'">';
-		$title.= _x( 'Refresh', 'Modules: Audit: Dashboard Widget Action', GEDITORIAL_TEXTDOMAIN ).'</a></span>';
+		$title.= MetaBox::titleActionRefresh();
 
 		wp_add_dashboard_widget( $this->classs( 'summary' ), $title, [ $this, 'dashboard_widget_summary' ] );
 	}

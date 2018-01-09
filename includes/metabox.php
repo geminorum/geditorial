@@ -166,6 +166,15 @@ class MetaBox extends Core\Base
 		echo HTML::wrap( $html, 'field-wrap field-wrap-empty' );
 	}
 
+	public static function titleActionRefresh()
+	{
+		$html = ' <span class="postbox-title-action"><a href="'.esc_url( add_query_arg( 'flush', '' ) ).'"';
+		$html.= ' title="'._x( 'Click to refresh the content', 'MetaBox: Title Action', GEDITORIAL_TEXTDOMAIN ).'">';
+		$html.= _x( 'Refresh', 'MetaBox: Title Action', GEDITORIAL_TEXTDOMAIN ).'</a></span>';
+
+		return $html;
+	}
+
 	public static function dropdownAssocPosts( $post_type, $selected = '', $prefix = '', $exclude = '' )
 	{
 		$html = wp_dropdown_pages( [
