@@ -1895,7 +1895,7 @@ class Module extends Base
 		return $form;
 	}
 
-	protected function role_can( $what = 'supported', $user_id = NULL, $fallback = FALSE )
+	protected function role_can( $what = 'supported', $user_id = NULL, $fallback = FALSE, $admins = TRUE )
 	{
 		if ( is_null( $user_id ) )
 			$user_id = get_current_user_id();
@@ -1905,10 +1905,13 @@ class Module extends Base
 
 		$setting = $this->get_setting( $what.'_roles', [] );
 
-		if ( User::hasRole( array_merge( $setting, [ 'administrator' ] ), $user_id ) )
+		if ( $admins )
+			$setting = array_merge( $setting, [ 'administrator' ] );
+
+		if ( User::hasRole( $setting, $user_id ) )
 			return TRUE;
 
-		if ( User::isSuperAdmin( $user_id ) )
+		if ( $admins && User::isSuperAdmin( $user_id ) )
 			return TRUE;
 
 		return $fallback;
