@@ -442,10 +442,7 @@ class Config extends gEditorial\Module
 
 		do_action( 'geditorial_settings_load', $module );
 
-		$listjs = Helper::registerScriptPackage( 'listjs',
-			'list.js/list', [], '1.5.0' );
-
-		$this->enqueue_asset_js( [], NULL, [ 'jquery', $listjs ] );
+		$this->enqueue_asset_js( [], NULL, [ 'jquery', Helper::scriptListJS() ] );
 	}
 
 	// no settings/only screen options

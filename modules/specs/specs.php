@@ -114,8 +114,7 @@ class Specs extends gEditorial\Module
 				'high'
 			);
 
-			$sortable = Helper::registerScriptPackage( 'jquery-sortable', NULL, [ 'jquery' ], '0.9.13' );
-			$this->enqueue_asset_js( [], $screen, [ 'jquery', $sortable ] );
+			$this->enqueue_asset_js( [], $screen, [ 'jquery', Helper::scriptSortable() ] );
 
 			// internal
 			add_action( 'geditorial_specs_meta_box', [ $this, 'geditorial_specs_meta_box' ], 5, 2 );

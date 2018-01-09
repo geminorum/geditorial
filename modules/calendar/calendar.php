@@ -147,8 +147,7 @@ class Calendar extends gEditorial\Module
 
 		$this->actions( 'load', $page );
 
-		$sortable = Helper::registerScriptPackage( 'jquery-sortable', NULL, [ 'jquery' ], '0.9.13' );
-		$this->enqueue_asset_js( 'calendar', NULL, [ 'jquery', $sortable ] );
+		$this->enqueue_asset_js( 'calendar', NULL, [ 'jquery', Helper::scriptSortable() ] );
 	}
 
 	public function post_row_actions( $actions, $post )

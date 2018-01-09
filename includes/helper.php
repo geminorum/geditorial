@@ -479,6 +479,20 @@ class Helper extends Core\Base
 		wp_enqueue_script( 'jquery-colorbox' );
 	}
 
+	public static function scriptSortable( $enqueue = FALSE )
+	{
+		return $enqueue
+			? self::enqueueScriptPackage( 'jquery-sortable', NULL, [ 'jquery' ], '0.9.13' )
+			: self::registerScriptPackage( 'jquery-sortable', NULL, [ 'jquery' ], '0.9.13' );
+	}
+
+	public static function scriptListJS( $enqueue = FALSE )
+	{
+		return $enqueue
+			? self::enqueueScriptPackage( 'listjs', 'list.js/list', [], '1.5.0' )
+			: self::registerScriptPackage( 'listjs', 'list.js/list', [], '1.5.0' );
+	}
+
 	public static function enqueueScript( $asset, $dep = [ 'jquery' ], $version = GEDITORIAL_VERSION, $base = GEDITORIAL_URL, $path = 'assets/js' )
 	{
 		$handle  = strtolower( static::BASE.'-'.str_replace( '.', '-', $asset ) );
