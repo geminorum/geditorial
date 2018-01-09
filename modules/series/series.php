@@ -214,7 +214,7 @@ class Series extends gEditorial\Module
 		if ( $this->check_hidden_metabox( 'supported' ) )
 			return;
 
-		echo '<div class="geditorial-admin-wrap-metabox -series">';
+		echo $this->wrap_open( '-admin-metabox' );
 
 		$series = Taxonomy::getTerms( $this->constant( 'series_tax' ), $post->ID, TRUE );
 

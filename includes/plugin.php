@@ -67,7 +67,7 @@ class Plugin
 		add_filter( 'template_include', [ $this, 'template_include' ], 98 ); // before gTheme
 	}
 
-	private function files( $stack, $check = TRUE, $base = GEDITORIAL_DIR )
+	public function files( $stack, $check = TRUE, $base = GEDITORIAL_DIR )
 	{
 		foreach ( (array) $stack as $path )
 

@@ -40,7 +40,7 @@ class Roles extends gEditorial\Module
 					'field'       => 'duplicate_roles',
 					'type'        => 'checkbox',
 					'title'       => _x( 'Duplicate Roles', 'Modules: Roles: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Roles to duplicate as editorial roles. Though Administrators have it all!', 'Modules: Roles: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Roles to duplicate as Editorial Roles.', 'Modules: Roles: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 					'exclude'     => [ 'administrator', 'subscriber' ],
 					'values'      => $this->get_roles_support_duplicate(),
 				],

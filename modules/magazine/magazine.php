@@ -548,7 +548,7 @@ class Magazine extends gEditorial\Module
 		if ( $this->check_hidden_metabox( 'supported' ) )
 			return;
 
-		echo '<div class="geditorial-admin-wrap-metabox -magazine">';
+		echo $this->wrap_open( '-admin-metabox' );
 
 		$terms = Taxonomy::getTerms( $this->constant( 'issue_tax' ), $post->ID, TRUE );
 
@@ -590,7 +590,7 @@ class Magazine extends gEditorial\Module
 		if ( $this->check_hidden_metabox( 'main' ) )
 			return;
 
-		echo '<div class="geditorial-admin-wrap-metabox -magazine">';
+		echo $this->wrap_open( '-admin-metabox' );
 
 		$this->actions( 'main_meta_box', $post, $box );
 
@@ -607,7 +607,7 @@ class Magazine extends gEditorial\Module
 		if ( $this->check_hidden_metabox( 'list' ) )
 			return;
 
-		echo '<div class="geditorial-admin-wrap-metabox -magazine">';
+		echo $this->wrap_open( '-admin-metabox' );
 
 		$term = $this->get_linked_term( $post->ID, 'issue_cpt', 'issue_tax' );
 

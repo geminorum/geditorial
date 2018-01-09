@@ -364,7 +364,7 @@ class Meta extends gEditorial\Module
 
 		$fields = $this->post_type_field_types( $post->post_type );
 
-		echo '<div class="geditorial-admin-wrap-metabox">';
+		echo $this->wrap_open( '-admin-metabox' );
 
 		do_action( 'geditorial_meta_box_before', $this->module, $post, $fields );
 

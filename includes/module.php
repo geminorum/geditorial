@@ -1404,6 +1404,14 @@ class Module extends Base
 		);
 	}
 
+	public function settings_section_roles()
+	{
+		Settings::fieldSection(
+			_x( 'Accessibility', 'Module: Setting Section Title', GEDITORIAL_TEXTDOMAIN ),
+			_x( 'Though Administrators have it all!', 'Module: Setting Section Description', GEDITORIAL_TEXTDOMAIN )
+		);
+	}
+
 	public function add_settings_field( $r = [] )
 	{
 		$args = array_merge( [
@@ -2360,7 +2368,7 @@ LEFT OUTER JOIN {$wpdb->term_taxonomy} USING (term_taxonomy_id)
 LEFT OUTER JOIN {$wpdb->terms} USING (term_id)
 SQL;
 
-					$pieces['where'].  = $wpdb->prepare( " AND (taxonomy = %s OR taxonomy IS NULL)", $tax );
+					$pieces['where']  .= $wpdb->prepare( " AND (taxonomy = %s OR taxonomy IS NULL)", $tax );
 					$pieces['groupby'] = "object_id";
 					$pieces['orderby'] = "GROUP_CONCAT({$wpdb->terms}.name ORDER BY name ASC) ";
 					$pieces['orderby'].= ( 'ASC' == strtoupper( $wp_query->get('order') ) ) ? 'ASC' : 'DESC';

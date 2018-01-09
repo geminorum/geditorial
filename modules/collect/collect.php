@@ -550,7 +550,7 @@ class Collect extends gEditorial\Module
 		if ( $this->check_hidden_metabox( 'supported' ) )
 			return;
 
-		echo '<div class="geditorial-admin-wrap-metabox -collect">';
+		echo $this->wrap_open( '-admin-metabox' );
 
 		$terms = Taxonomy::getTerms( $this->constant( 'collection_tax' ), $post->ID, TRUE );
 
@@ -592,7 +592,7 @@ class Collect extends gEditorial\Module
 		if ( $this->check_hidden_metabox( 'main' ) )
 			return;
 
-		echo '<div class="geditorial-admin-wrap-metabox -collect">';
+		echo $this->wrap_open( '-admin-metabox' );
 
 		$this->actions( 'main_meta_box', $post, $box );
 
@@ -609,7 +609,7 @@ class Collect extends gEditorial\Module
 		if ( $this->check_hidden_metabox( 'list' ) )
 			return;
 
-		echo '<div class="geditorial-admin-wrap-metabox -collect">';
+		echo $this->wrap_open( '-admin-metabox' );
 
 		$term = $this->get_linked_term( $post->ID, 'collection_cpt', 'collection_tax' );
 

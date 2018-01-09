@@ -327,7 +327,7 @@ class Contest extends gEditorial\Module
 		if ( $this->check_hidden_metabox( 'main' ) )
 			return;
 
-		echo '<div class="geditorial-admin-wrap-metabox -contest">';
+		echo $this->wrap_open( '-admin-metabox' );
 
 		$this->actions( 'main_meta_box', $post, $box );
 
@@ -344,7 +344,7 @@ class Contest extends gEditorial\Module
 		if ( $this->check_hidden_metabox( 'list' ) )
 			return;
 
-		echo '<div class="geditorial-admin-wrap-metabox -contest">';
+		echo $this->wrap_open( '-admin-metabox' );
 
 		$term = $this->get_linked_term( $post->ID, 'contest_cpt', 'contest_tax' );
 
@@ -363,7 +363,7 @@ class Contest extends gEditorial\Module
 		if ( $this->check_hidden_metabox( 'supported' ) )
 			return;
 
-		echo '<div class="geditorial-admin-wrap-metabox -contest">';
+		echo $this->wrap_open( '-admin-metabox' );
 
 		$terms = Taxonomy::getTerms( $this->constant( 'contest_tax' ), $post->ID, TRUE );
 

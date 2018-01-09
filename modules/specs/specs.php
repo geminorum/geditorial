@@ -278,7 +278,7 @@ class Specs extends gEditorial\Module
 		if ( $this->check_hidden_metabox( 'supported' ) )
 			return;
 
-		echo '<div class="geditorial-admin-wrap-metabox -specs">';
+		echo $this->wrap_open( '-admin-metabox' );
 
 		$terms = Taxonomy::getTerms( $this->constant( 'specs_tax' ), $post->ID, TRUE );
 		$this->actions( 'meta_box', $post, $terms );

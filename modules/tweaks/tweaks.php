@@ -536,6 +536,8 @@ class Tweaks extends gEditorial\Module
 			} else if ( in_array( $key, [
 				'name',
 				'role',
+				'roles',
+				'md_multiple_roles_column',
 				'posts',
 			] ) ) {
 
@@ -642,6 +644,7 @@ class Tweaks extends gEditorial\Module
 
 	// @SEE: [Post Type Templates in 4.7](https://make.wordpress.org/core/?p=20437)
 	// @SEE: [#18375 (Post type templates)](https://core.trac.wordpress.org/ticket/18375)
+	// FIXME: use `get_file_description( untrailingslashit( get_stylesheet_directory() ).'/'.get_page_template_slug() )`
 	public function column_attr_page_template( $post )
 	{
 		if ( ! current_user_can( 'edit_post', $post->ID ) )

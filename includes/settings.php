@@ -1369,6 +1369,10 @@ class Settings extends Core\Base
 						], $html.'&nbsp;'.$value_title ).'</p>';
 					}
 
+				} else if ( is_array( $args['values'] ) ) {
+
+					$args['description'] = $args['string_empty'];
+
 				} else {
 
 					$html = HTML::tag( 'input', [

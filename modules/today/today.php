@@ -247,8 +247,7 @@ class Today extends gEditorial\Module
 		if ( $this->check_hidden_metabox( 'supported' ) )
 			return;
 
-		echo '<div class="geditorial-admin-wrap-metabox">';
-
+		echo $this->wrap_open( '-admin-metabox' );
 			$this->actions( 'meta_box', $post, $box );
 
 			$display_year = $post->post_type != $this->constant( 'day_cpt' );
