@@ -11,12 +11,15 @@ use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\Database;
 use geminorum\gEditorial\WordPress\Media;
 use geminorum\gEditorial\WordPress\Taxonomy;
+use geminorum\gEditorial\WordPress\PostType;
+use geminorum\gEditorial\WordPress\User;
 use geminorum\gEditorial\Templates\Terms as ModuleTemplate;
 
 class Terms extends gEditorial\Module
 {
 
-	protected $partials = [ 'templates' ];
+	protected $partials  = [ 'templates' ];
+	protected $supported = [ 'order', 'image', 'author', 'color', 'role', 'posttype' ];
 
 	public static function module()
 	{
@@ -76,6 +79,20 @@ class Terms extends gEditorial\Module
 					'description' => _x( 'Supports term color for selected taxonomies.', 'Modules: Terms: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 					'values'      => $this->get_taxonomies_support( 'color' ),
 				],
+				[
+					'field'       => 'term_role',
+					'type'        => 'taxonomies',
+					'title'       => _x( 'Term Role', 'Modules: Terms: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Supports term role for selected taxonomies.', 'Modules: Terms: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'values'      => $this->get_taxonomies_support( 'role' ),
+				],
+				[
+					'field'       => 'term_posttype',
+					'type'        => 'taxonomies',
+					'title'       => _x( 'Term Posttype', 'Modules: Terms: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Supports term posttype for selected taxonomies.', 'Modules: Terms: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'values'      => $this->get_taxonomies_support( 'posttype' ),
+				],
 			],
 			'_frontend' => [
 				'adminbar_summary',
@@ -88,26 +105,32 @@ class Terms extends gEditorial\Module
 	{
 		return [
 			'titles' => [
-				'order'  => _x( 'Order', 'Modules: Terms: Titles', GEDITORIAL_TEXTDOMAIN ),
-				'image'  => _x( 'Image', 'Modules: Terms: Titles', GEDITORIAL_TEXTDOMAIN ),
-				'author' => _x( 'Author', 'Modules: Terms: Titles', GEDITORIAL_TEXTDOMAIN ),
-				'color'  => _x( 'Color', 'Modules: Terms: Titles', GEDITORIAL_TEXTDOMAIN ),
+				'order'    => _x( 'Order', 'Modules: Terms: Titles', GEDITORIAL_TEXTDOMAIN ),
+				'image'    => _x( 'Image', 'Modules: Terms: Titles', GEDITORIAL_TEXTDOMAIN ),
+				'author'   => _x( 'Author', 'Modules: Terms: Titles', GEDITORIAL_TEXTDOMAIN ),
+				'color'    => _x( 'Color', 'Modules: Terms: Titles', GEDITORIAL_TEXTDOMAIN ),
+				'role'     => _x( 'Role', 'Modules: Terms: Titles', GEDITORIAL_TEXTDOMAIN ),
+				'posttype' => _x( 'Posttype', 'Modules: Terms: Titles', GEDITORIAL_TEXTDOMAIN ),
 			],
 			'descriptions' => [
-				'order'  => _x( 'Terms are usually ordered alphabetically, but you can choose your own order by entering a number (1 for first, etc.) in this field.', 'Modules: Terms: Descriptions', GEDITORIAL_TEXTDOMAIN ),
-				'image'  => _x( 'Assign terms a custom image to visually separate them from each-other.', 'Modules: Terms: Descriptions', GEDITORIAL_TEXTDOMAIN ),
-				'author' => _x( 'Set term author to help identify who created or owns each term.', 'Modules: Terms: Descriptions', GEDITORIAL_TEXTDOMAIN ),
-				'color'  => _x( 'Terms can have unique colors to help separate them from each other.', 'Modules: Terms: Descriptions', GEDITORIAL_TEXTDOMAIN ),
+				'order'    => _x( 'Terms are usually ordered alphabetically, but you can choose your own order by entering a number (1 for first, etc.) in this field.', 'Modules: Terms: Descriptions', GEDITORIAL_TEXTDOMAIN ),
+				'image'    => _x( 'Assign terms a custom image to visually separate them from each other.', 'Modules: Terms: Descriptions', GEDITORIAL_TEXTDOMAIN ),
+				'author'   => _x( 'Set term author to help identify who created or owns each term.', 'Modules: Terms: Descriptions', GEDITORIAL_TEXTDOMAIN ),
+				'color'    => _x( 'Terms can have unique colors to help separate them from each other.', 'Modules: Terms: Descriptions', GEDITORIAL_TEXTDOMAIN ),
+				'role'     => _x( 'Terms can have unique role visibility to help separate them for users.', 'Modules: Terms: Descriptions', GEDITORIAL_TEXTDOMAIN ),
+				'posttype' => _x( 'Terms can have unique posttype visibility to help separate them on editing.', 'Modules: Terms: Descriptions', GEDITORIAL_TEXTDOMAIN ),
 			],
 			'misc' => [
-				'order_column_title'  => _x( 'O', 'Modules: Terms: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				'image_column_title'  => _x( 'Image', 'Modules: Terms: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				'author_column_title' => _x( 'Author', 'Modules: Terms: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				'color_column_title'  => _x( 'C', 'Modules: Terms: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				'posts_column_title'  => _x( 'P', 'Modules: Terms: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'order_column_title'    => _x( 'O', 'Modules: Terms: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'image_column_title'    => _x( 'Image', 'Modules: Terms: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'author_column_title'   => _x( 'Author', 'Modules: Terms: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'color_column_title'    => _x( 'C', 'Modules: Terms: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'role_column_title'     => _x( 'Role', 'Modules: Terms: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'posttype_column_title' => _x( 'Posttype', 'Modules: Terms: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'posts_column_title'    => _x( 'P', 'Modules: Terms: Column Title', GEDITORIAL_TEXTDOMAIN ),
 			],
 			'js' => [
-				'modal_title' => _x( 'Choose an Image', 'Modules: Terms: Javascript String', GEDITORIAL_TEXTDOMAIN ),
+				'modal_title'  => _x( 'Choose an Image', 'Modules: Terms: Javascript String', GEDITORIAL_TEXTDOMAIN ),
 				'modal_button' => _x( 'Set as image', 'Modules: Terms: Javascript String', GEDITORIAL_TEXTDOMAIN ),
 			],
 		];
@@ -141,12 +164,11 @@ class Terms extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
-		$fields  = [ 'order', 'image', 'author', 'color' ];
 		$enqueue = FALSE;
 
 		if ( 'edit-tags' == $screen->base ) {
 
-			foreach ( $fields as $field ) {
+			foreach ( $this->supported as $field ) {
 
 				if ( ! in_array( $screen->taxonomy, $this->get_setting( 'term_'.$field, [] ) ) )
 					continue;
@@ -188,7 +210,7 @@ class Terms extends gEditorial\Module
 
 		} else if ( 'term' == $screen->base ) {
 
-			foreach ( $fields as $field ) {
+			foreach ( $this->supported as $field ) {
 
 				if ( ! in_array( $screen->taxonomy, $this->get_setting( 'term_'.$field, [] ) ) )
 					continue;
@@ -235,10 +257,12 @@ class Terms extends gEditorial\Module
 			return $columns;
 
 		$fields = [
-			'order'  => [ 'cb', 'after' ],
-			'image'  => [ 'name', 'before' ],
-			'author' => [ 'name', 'after' ],
-			'color'  => [ 'name', 'before' ],
+			'order'    => [ 'cb', 'after' ],
+			'image'    => [ 'name', 'before' ],
+			'author'   => [ 'name', 'after' ],
+			'color'    => [ 'name', 'before' ],
+			'role'     => [ 'name', 'after' ],
+			'posttype' => [ 'name', 'after' ],
 		];
 
 		foreach ( $fields as $field => $place )
@@ -256,9 +280,7 @@ class Terms extends gEditorial\Module
 
 	public function sortable_columns( $columns )
 	{
-		$fields = [ 'order', 'image', 'author', 'color' ];
-
-		foreach ( $fields as $field )
+		foreach ( $this->supported as $field )
 			$columns[$this->classs( $field )] = 'meta_'.$field;
 
 		return $columns;
@@ -293,22 +315,55 @@ class Terms extends gEditorial\Module
 
 				echo '<span class="author" data-author="'.$meta.'"></span>';
 			} else {
-				echo '<span class="column-author-empty -empty">&mdash;</span>';
-				echo '<span class="author" data-author="0"></span>';
+				$this->field_empty( 'author' );
 			}
 
 		} else if ( $this->classs( 'color' ) == $column ) {
 
 			if ( $meta = get_term_meta( $term_id, 'color', TRUE ) )
 				echo '<i class="-color" data-color="'.HTML::escape( $meta ).'" style="background-color:'.HTML::escape( $meta ).'"></i>';
+
+		} else if ( $this->classs( 'role' ) == $column ) {
+
+			if ( empty( $this->all_roles ) )
+				$this->all_roles = User::getAllRoleList();
+
+			if ( $meta = get_term_meta( $term_id, 'role', TRUE ) )
+				echo '<span class="role" data-role="'.HTML::escape( $meta ).'">'
+					.( empty( $this->all_roles[$meta] )
+						? HTML::escape( $meta )
+						: $this->all_roles[$meta] )
+					.'</span>';
+
+			else
+				$this->field_empty( 'role' );
+
+		} else if ( $this->classs( 'posttype' ) == $column ) {
+
+			if ( empty( $this->all_posttypes ) )
+				$this->all_posttypes = PostType::get( 2 );
+
+			if ( $meta = get_term_meta( $term_id, 'posttype', TRUE ) )
+				echo '<span class="posttype" data-posttype="'.HTML::escape( $meta ).'">'
+					.( empty( $this->all_posttypes[$meta] )
+						? HTML::escape( $meta )
+						: $this->all_posttypes[$meta] )
+					.'</span>';
+
+			else
+				$this->field_empty( 'posttype' );
 		}
+	}
+
+	private function field_empty( $field, $value = '0' )
+	{
+		echo '<span class="column-'.$field.'-empty -empty">&mdash;</span>';
+		echo '<span class="'.$field.'" data-'.$field.'="'.$value.'"></span>';
 	}
 
 	public function edit_term( $term_id, $tt_id, $taxonomy )
 	{
-		$fields = [ 'order', 'image', 'author', 'color' ];
-
-		foreach ( $fields as $field ) {
+		foreach ( $this->supported as $field ) {
 
 			if ( in_array( $taxonomy, $this->get_setting( 'term_'.$field, [] ) ) ) {
 
@@ -434,6 +489,26 @@ class Terms extends gEditorial\Module
 				] );
 
 			break;
+			case 'role':
+
+				echo HTML::dropdown( User::getRoleList(), [
+					'id'         => $this->classs( $field, 'id' ),
+					'name'       => 'term-'.$field,
+					'selected'   => empty( $meta ) ? '0' : $meta,
+					'none_title' => Settings::showOptionNone(),
+				] );
+
+			break;
+			case 'posttype':
+
+				echo HTML::dropdown( PostType::get( 2 ), [
+					'id'         => $this->classs( $field, 'id' ),
+					'name'       => 'term-'.$field,
+					'selected'   => empty( $meta ) ? '0' : $meta,
+					'none_title' => Settings::showOptionNone(),
+				] );
+
+			break;
 			default:
 
 				echo HTML::tag( 'input', [
@@ -501,6 +576,24 @@ class Terms extends gEditorial\Module
 					'value' => '',
 					'class' => [ 'small-text' ],
 					'data'  => [ 'ortho' => 'color' ],
+				] );
+
+			break;
+			case 'role':
+
+				echo HTML::dropdown( User::getRoleList(), [
+					'name'       => 'term-'.$field,
+					'selected'   => '0',
+					'none_title' => Settings::showOptionNone(),
+				] );
+
+			break;
+			case 'posttype':
+
+				echo HTML::dropdown( PostType::get( 2 ), [
+					'name'       => 'term-'.$field,
+					'selected'   => '0',
+					'none_title' => Settings::showOptionNone(),
 				] );
 
 			break;

@@ -74,21 +74,21 @@
     },
 
     inlineColor: function (tag, event) {
-      var color = $('td.geditorial-terms-color i', '#' + tag).attr('data-color');
-      $(':input[name="term-color"]', '.inline-edit-row').val(color);
+      var value = $('td.geditorial-terms-color i', '#' + tag).attr('data-color');
+      $(':input[name="term-color"]', '.inline-edit-row').val(value);
     },
 
     inlineOrder: function (tag, event) {
-      var order = $('td.geditorial-terms-order span.order', '#' + tag).attr('data-order');
-      $(':input[name="term-order"]', '.inline-edit-row').val(order);
+      var value = $('td.geditorial-terms-order span.order', '#' + tag).attr('data-order');
+      $(':input[name="term-order"]', '.inline-edit-row').val(value);
     },
 
-    inlineAuthor: function (tag, event) {
-      var author = $('td.geditorial-terms-author span.author', '#' + tag).attr('data-author');
-      var $select = $(':input[name="term-author"]', '.inline-edit-row');
+    inlineSelect: function (field, tag, event) {
+      var value = $('td.' + o.classs + '-' + field + ' span.' + field, '#' + tag).attr('data-' + field);
+      var $el = $(':input[name="term-' + field + '"]', '.inline-edit-row');
 
-      $select.find('option:selected').attr('selected', false);
-      $select.find('option[value="' + author + '"]').attr('selected', true);
+      $el.find('option:selected').attr('selected', false);
+      $el.find('option[value="' + value + '"]').attr('selected', true);
     }
   };
 
@@ -106,7 +106,9 @@
       o.inlineImage(tag, event);
       o.inlineColor(tag, event);
       o.inlineOrder(tag, event);
-      o.inlineAuthor(tag, event);
+      o.inlineSelect('author', tag, event);
+      o.inlineSelect('role', tag, event);
+      o.inlineSelect('posttype', tag, event);
     });
 
     // reset the form on submit
