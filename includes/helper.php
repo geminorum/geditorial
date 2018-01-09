@@ -742,11 +742,14 @@ class Helper extends Core\Base
 		];
 	}
 
-	public static function tableColumnPostTerms()
+	public static function tableColumnPostTerms( $taxonomies = NULL )
 	{
+		if ( is_null( $taxonomies ) )
+			$taxonomies = Taxonomy::get( 4 );
+
 		return [
 			'title'    => _x( 'Terms', 'Helper: Table Column: Post Terms', GEDITORIAL_TEXTDOMAIN ),
-			'args'     => [ 'taxonomies' => Taxonomy::get( 4 ) ],
+			'args'     => [ 'taxonomies' => $taxonomies ],
 			'callback' => function( $value, $row, $column, $index ){
 				$html = '';
 				foreach ( $column['args']['taxonomies'] as $taxonomy => $object )
