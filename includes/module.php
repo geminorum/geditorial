@@ -2002,6 +2002,9 @@ class Module extends Base
 		if ( is_null( $title ) )
 			$title = $this->get_string( 'meta_box_title', $constant, 'misc', _x( 'Settings', 'Module: MetaBox Default Title', GEDITORIAL_TEXTDOMAIN ) );
 
+		if ( $info = $this->get_string( 'meta_box_info', $constant, 'misc', NULL ) )
+			$title.= ' <span class="postbox-title-info" data-title="info" title="'.HTML::escape( $info ).'">'.HTML::getDashicon( 'info' ).'</span>';
+
 		if ( FALSE === $url )
 			return $title;
 
@@ -2025,6 +2028,9 @@ class Module extends Base
 		if ( is_null( $title ) )
 			$title = $object->labels->name;
 
+		if ( $info = $this->get_string( 'meta_box_info', $constant, 'misc', NULL ) )
+			$title.= ' <span class="postbox-title-info" data-title="info" title="'.HTML::escape( $info ).'">'.HTML::getDashicon( 'info' ).'</span>';
+
 		if ( is_null( $url ) )
 			$url = WordPress::getEditTaxLink( $taxonomy );
 
@@ -2043,6 +2049,9 @@ class Module extends Base
 
 		if ( is_null( $title ) )
 			$title = $this->get_string( 'meta_box_title', $constant, 'misc', $object->labels->name );
+
+		if ( $info = $this->get_string( 'meta_box_info', $constant, 'misc', NULL ) )
+			$title.= ' <span class="postbox-title-info" data-title="info" title="'.HTML::escape( $info ).'">'.HTML::getDashicon( 'info' ).'</span>';
 
 		if ( current_user_can( $object->cap->edit_others_posts ) ) {
 
