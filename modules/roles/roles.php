@@ -273,8 +273,10 @@ class Roles extends gEditorial\Module
 			if ( is_null( $object ) )
 				continue;
 
-			$title = sprintf( _x( 'Editorial: %s', 'Modules: Roles', GEDITORIAL_TEXTDOMAIN ), translate_user_role( $roles[$core] ) );
-			$role  = add_role( $prefix.$core, $this->get_setting( 'role_name_'.$core, $title ) );
+			if ( ! $name = $this->get_setting( 'role_name_'.$core, FALSE ) )
+				$name = sprintf( _x( 'Editorial: %s', 'Modules: Roles', GEDITORIAL_TEXTDOMAIN ), translate_user_role( $roles[$core] ) );
+
+			$role = add_role( $prefix.$core, $name );
 
 			if ( is_null( $role ) )
 				continue;
