@@ -64,7 +64,7 @@ class Roles extends gEditorial\Module
 				'field'       => 'role_name_'.$role,
 				'type'        => 'text',
 				'title'       => sprintf( _x( 'Role Name for %s', 'Modules: Roles: Setting Title', GEDITORIAL_TEXTDOMAIN ), $roles[$role] ),
-				'description' => _x( 'Custom Name for the duplicated role.', 'Modules: Roles: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+				'description' => _x( 'Custom name for the duplicated role.', 'Modules: Roles: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 				'default'     => sprintf( _x( 'Editorial: %s', 'Modules: Roles', GEDITORIAL_TEXTDOMAIN ), $roles[$role] ),
 			];
 
@@ -109,16 +109,16 @@ class Roles extends gEditorial\Module
 
 	public function before_settings( $module = FALSE )
 	{
-		//FIXME: WTF: nonce!
+		// FIXME: WTF: nonce!
 
-		if ( isset( $_POST['add_default_roles'] ) )
-			$this->add_default_roles();
+		if ( isset( $_POST['duplicate_default_roles'] ) )
+			$this->duplicate_default_roles();
 
 		else if ( isset( $_POST['add_defaults_to_editor'] ) )
 			$this->add_default_caps( 'editor' );
 
-		else if ( isset( $_POST['remove_default_roles'] ) )
-			$this->remove_default_roles();
+		else if ( isset( $_POST['remove_duplicate_roles'] ) )
+			$this->remove_duplicate_roles();
 
 		else if ( isset( $_POST['add_theme_to_editor'] ) )
 			$this->add_theme_caps( 'editor' );
@@ -128,9 +128,9 @@ class Roles extends gEditorial\Module
 	{
 		parent::default_buttons( $module );
 
-		$this->register_button( 'add_default_roles', _x( 'Add Default Roles', 'Modules: Roles: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
+		$this->register_button( 'duplicate_default_roles', _x( 'Duplicate Default Roles', 'Modules: Roles: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
+		$this->register_button( 'remove_duplicate_roles', _x( 'Remove Duplicated Roles', 'Modules: Roles: Setting Button', GEDITORIAL_TEXTDOMAIN ), 'danger' );
 		$this->register_button( 'add_defaults_to_editor', _x( 'Add Default Caps to Editor Role', 'Modules: Roles: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
-		$this->register_button( 'remove_default_roles', _x( 'Remove Default Roles', 'Modules: Roles: Setting Button', GEDITORIAL_TEXTDOMAIN ), 'danger' );
 
 		$this->register_button( 'add_theme_to_editor', _x( 'Add Theme Caps to Editor Role', 'Modules: Roles: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
 	}
@@ -203,21 +203,23 @@ class Roles extends gEditorial\Module
 	// @REF: http://justintadlock.com/?p=2462
 	public function map_meta_cap( $caps, $cap, $user_id, $args )
 	{
-		$base = $this->constant( 'base_type' );
+		list( $singular, $plural ) = $this->constant( 'base_type' );
 
 		if ( in_array( $cap, [ 'manage_post_tags', 'edit_post_tags', 'delete_post_tags' ] ) ) {
 
 			if ( $this->get_setting( 'author_posttags', FALSE ) )
-				return user_can( $user_id, 'publish_posts' ) ? [ 'publish_posts' ] : [ 'publish_'.$base[1] ];
+				return user_can( $user_id, 'publish_posts' ) ? [ 'publish_posts' ] : [ 'publish_'.$plural ];
 
 			else
-				return user_can( $user_id, 'manage_categories' ) ? $caps : [ 'edit_others_'.$base[1] ];
+				return user_can( $user_id, 'manage_categories' ) ? $caps : [ 'edit_others_'.$plural ];
 		}
 
 		if ( 'assign_post_tags' == $cap )
-			return user_can( $user_id, 'edit_posts' ) ? $caps : [ 'edit_'.$base[1] ];
+			return user_can( $user_id, 'edit_posts' ) ? $caps : [ 'edit_'.$plural ];
 
-		if ( 'edit_'.$base[0] == $cap || 'delete_'.$base[0] == $cap || 'read_'.$base[0] == $cap ) {
+		if ( 'edit_'.$singular == $cap
+			|| 'delete_'.$singular == $cap
+			|| 'read_'.$singular == $cap ) {
 
 			$post = get_post( $args[0] );
 			$type = get_post_type_object( $post->post_type );
@@ -228,7 +230,7 @@ class Roles extends gEditorial\Module
 			return $caps; // bailing!
 		}
 
-		if ( 'edit_'.$base[0] == $cap ) {
+		if ( 'edit_'.$singular == $cap ) {
 
 			if ( $user_id == $post->post_author )
 				$caps[] = $type->cap->edit_posts;
@@ -236,7 +238,7 @@ class Roles extends gEditorial\Module
 			else
 				$caps[] = $type->cap->edit_others_posts;
 
-		} else if ( 'delete_'.$base[0] == $cap ) {
+		} else if ( 'delete_'.$singular == $cap ) {
 
 			if ( $user_id == $post->post_author )
 				$caps[] = $type->cap->delete_posts;
@@ -244,7 +246,7 @@ class Roles extends gEditorial\Module
 			else
 				$caps[] = $type->cap->delete_others_posts;
 
-		} else if ( 'read_'.$base[0] == $cap ) {
+		} else if ( 'read_'.$singular == $cap ) {
 
 			if ( 'private' != $post->post_status )
 				$caps[] = 'read';
@@ -259,7 +261,7 @@ class Roles extends gEditorial\Module
 		return $caps;
 	}
 
-	private function add_default_roles()
+	private function duplicate_default_roles()
 	{
 		$count  = 0;
 		$roles  = User::getRoleList();
@@ -322,7 +324,7 @@ class Roles extends gEditorial\Module
 		return $count;
 	}
 
-	private function remove_default_roles()
+	private function remove_duplicate_roles()
 	{
 		$count  = 0;
 		$prefix = $this->constant( 'base_prefix' );
@@ -338,6 +340,7 @@ class Roles extends gEditorial\Module
 		return $count;
 	}
 
+	// FIXME: move this to Network
 	private function add_theme_caps( $role )
 	{
 		if ( ! $object = get_role( $role ) )
@@ -356,14 +359,14 @@ class Roles extends gEditorial\Module
 
 				$this->nonce_check( 'tools', $sub );
 
-				if ( isset( $_POST['add_default_roles'] ) ) {
-					$this->add_default_roles();
+				if ( isset( $_POST['duplicate_default_roles'] ) ) {
+					$this->duplicate_default_roles();
 
 				} else if ( isset( $_POST['add_defaults_to_editor'] ) ) {
 					$this->add_default_caps( 'editor' );
 
-				} else if ( isset( $_POST['remove_default_roles'] ) ) {
-					$this->remove_default_roles();
+				} else if ( isset( $_POST['remove_duplicate_roles'] ) ) {
+					$this->remove_duplicate_roles();
 				}
 			}
 		}
@@ -381,9 +384,9 @@ class Roles extends gEditorial\Module
 
 			Settings::submitButton( 'check_current_roles', _x( 'Check Roles', 'Modules: Roles: Setting Button', GEDITORIAL_TEXTDOMAIN ), TRUE );
 			Settings::submitButton( 'check_current_caps', _x( 'Check Capabilities', 'Modules: Roles: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
-			Settings::submitButton( 'add_default_roles', _x( 'Add Defaults', 'Modules: Roles: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
+			Settings::submitButton( 'duplicate_default_roles', _x( 'Duplicate Defaults', 'Modules: Roles: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
 			Settings::submitButton( 'add_defaults_to_editor', _x( 'Add Default Caps to Editors', 'Modules: Roles: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
-			Settings::submitButton( 'remove_default_roles', _x( 'Remove Defaults', 'Modules: Roles: Setting Button', GEDITORIAL_TEXTDOMAIN ), 'danger' );
+			Settings::submitButton( 'remove_duplicate_roles', _x( 'Remove Duplicates', 'Modules: Roles: Setting Button', GEDITORIAL_TEXTDOMAIN ), 'danger' );
 
 			if ( isset( $_POST['check_current_roles'] ) )
 				echo HTML::tableCode( User::getRoleList(), TRUE );
