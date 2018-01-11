@@ -29,21 +29,11 @@ class Roles extends gEditorial\Module
 
 	protected function get_global_settings()
 	{
-		return [
+		$roles   = $this->get_roles_support_duplicate();
+		$exclude = [ 'administrator', 'subscriber' ];
+
+		$settings = [
 			'_general' => [
-				[
-					'field'       => 'author_posttags',
-					'title'       => _x( 'Tags for Authors', 'Modules: Roles: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Allows Authors to manage post tags.', 'Modules: Roles: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-				],
-				[
-					'field'       => 'duplicate_roles',
-					'type'        => 'checkbox',
-					'title'       => _x( 'Duplicate Roles', 'Modules: Roles: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Roles to duplicate as Editorial Roles.', 'Modules: Roles: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-					'exclude'     => [ 'administrator', 'subscriber' ],
-					'values'      => $this->get_roles_support_duplicate(),
-				],
 				[
 					'field'       => 'editorial_posttypes',
 					'type'        => 'posttypes',
@@ -51,8 +41,34 @@ class Roles extends gEditorial\Module
 					'description' => _x( 'Posttypes to handle via Editorial roles.', 'Modules: Roles: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 					'values'      => $this->get_posttypes_support_editorial(),
 				],
+				[
+					'field'       => 'duplicate_roles',
+					'type'        => 'checkbox',
+					'title'       => _x( 'Duplicate Roles', 'Modules: Roles: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Roles to duplicate as Editorial Roles.', 'Modules: Roles: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'exclude'     => $exclude,
+					'values'      => $roles,
+				],
+			],
+			'_misc' => [
+				[
+					'field'       => 'author_posttags',
+					'title'       => _x( 'Tags for Authors', 'Modules: Roles: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Allows Authors to manage post tags.', 'Modules: Roles: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+				],
 			],
 		];
+
+		foreach ( $this->get_setting( 'duplicate_roles', [] ) as $role )
+			$settings['_general'][] = [
+				'field'       => 'role_name_'.$role,
+				'type'        => 'text',
+				'title'       => sprintf( _x( 'Role Name for %s', 'Modules: Roles: Setting Title', GEDITORIAL_TEXTDOMAIN ), $roles[$role] ),
+				'description' => _x( 'Custom Name for the duplicated role.', 'Modules: Roles: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+				'default'     => sprintf( _x( 'Editorial: %s', 'Modules: Roles', GEDITORIAL_TEXTDOMAIN ), $roles[$role] ),
+			];
+
+		return $settings;
 	}
 
 	protected function get_global_constants()
@@ -258,7 +274,7 @@ class Roles extends gEditorial\Module
 				continue;
 
 			$title = sprintf( _x( 'Editorial: %s', 'Modules: Roles', GEDITORIAL_TEXTDOMAIN ), translate_user_role( $roles[$core] ) );
-			$role  = add_role( $prefix.$core, $title );
+			$role  = add_role( $prefix.$core, $this->get_setting( 'role_name_'.$core, $title ) );
 
 			if ( is_null( $role ) )
 				continue;
