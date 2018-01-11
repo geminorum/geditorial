@@ -281,9 +281,8 @@ class Roles extends gEditorial\Module
 			if ( is_null( $role ) )
 				continue;
 
-			foreach ( $map as $cap => $editorial )
-				if ( $object->has_cap( $cap ) )
-					$role->add_cap( $editorial );
+			foreach ( $object->capabilities as $cap => $true )
+				$role->add_cap( ( array_key_exists( $cap, $map ) ? $map[$cap] : $cap ) );
 
 			$count++;
 		}
