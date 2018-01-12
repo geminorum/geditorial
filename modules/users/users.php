@@ -342,20 +342,24 @@ class Users extends gEditorial\Module
 
 			if ( ! empty( $terms ) ) {
 
+				echo '<div class="wp-tab-panel"><ul>';
+
 				foreach ( $terms as $term ) {
 
 					$html = HTML::tag( 'input', [
-						'type'    => 'radio',
+						'type'    => 'checkbox',
 						'name'    => 'groups',
 						'id'      => 'groups-'.$term->slug,
 						'value'   => $term->slug,
 						'checked' => is_object_in_term( $user->ID, $this->constant( 'group_tax' ), $term ),
 					] );
 
-					echo '<p>'.HTML::tag( 'label', [
+					echo '<li>'.HTML::tag( 'label', [
 						'for' => 'groups-'.$term->slug,
-					], $html.'&nbsp;'.HTML::escape( $term->name ) ).'</p>';
+					], $html.'&nbsp;'.HTML::escape( $term->name ) ).'</li>';
 				 }
+
+				echo '</ul></div>';
 
 			} else {
 				_ex( 'There are no groups available.', 'Modules: Users', GEDITORIAL_TEXTDOMAIN );
