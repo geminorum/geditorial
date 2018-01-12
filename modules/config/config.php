@@ -440,6 +440,9 @@ class Config extends gEditorial\Module
 		$this->settings_reset( $module );
 		$this->settings_save( $module );
 
+		if ( $module )
+			$GLOBALS['submenu_file'] = $this->base.'-settings&module='.$module;
+
 		do_action( 'geditorial_settings_load', $module );
 
 		$this->enqueue_asset_js( [], NULL, [ 'jquery', Helper::scriptListJS() ] );
