@@ -709,26 +709,24 @@ class Tweaks extends gEditorial\Module
 		echo '</li>';
 	}
 
-	// @SEE: `_post_states()`
 	public function column_attr_default( $post )
 	{
 		$status = $date = '';
 
-		if ( 'publish' === $post->post_status ) {
-			$status = _x( 'Published', 'Modules: Tweaks: Attr: Status', GEDITORIAL_TEXTDOMAIN );
+		if ( ! isset( $this->post_statuses ) )
+			$this->post_statuses = PostType::getStatuses();
 
-		} else if ( 'future' === $post->post_status ) {
+		if ( isset( $this->post_statuses[$post->post_status] ) )
+			$status = HTML::escape( $this->post_statuses[$post->post_status] );
+		else
+			$status = $post->post_status;
+
+		if ( 'future' === $post->post_status ) {
 
 			$time_diff = time() - get_post_time( 'G', TRUE, $post );
 
 			if ( $time_diff > 0 )
 				$status = '<strong class="error-message">'._x( 'Missed schedule', 'Modules: Tweaks: Attr: Status', GEDITORIAL_TEXTDOMAIN ).'</strong>';
-
-			else
-				$status = _x( 'Scheduled', 'Modules: Tweaks: Attr: Status', GEDITORIAL_TEXTDOMAIN );
-
-		} else {
-			$status = _x( 'Drafted', 'Modules: Tweaks: Attr: Status', GEDITORIAL_TEXTDOMAIN );
 		}
 
 		echo '<li class="-row tweaks-default-atts -post-status -post-status-'.$post->post_status.'">';
