@@ -3,7 +3,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 /// Module: Specs: Admin Post --------------------------------------------------
 
-.geditorial-admin-wrap-metabox.-specs {
+.geditorial-admin-wrap-metabox.-specs, // FIXME: DEPRECATED
+.geditorial-wrap.-admin-metabox.-specs {
   @include mainwrap();
   margin-top: 11px;
 

@@ -32,7 +32,8 @@
     }
   }
 
-  .geditorial-admin-wrap-metabox &,
+  .geditorial-admin-wrap-metabox &, // FIXME: DEPRECATED
+  .geditorial-wrap.-admin-metabox &,
   &.ortho-input-text-wrap {
     position: relative;
   }
@@ -58,7 +59,8 @@
     top: -2px;
   }
 
-  .geditorial-admin-wrap-metabox & textarea + a.do-ortho {
+  .geditorial-admin-wrap-metabox & textarea + a.do-ortho, // FIXME: DEPRECATED
+  .geditorial-wrap.-admin-metabox & textarea + a.do-ortho {
     // textarea[data-meta-type="note"] + a.do-ortho {
     right: 2px;
     bottom: 4px;

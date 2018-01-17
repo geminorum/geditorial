@@ -3,7 +3,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 /// gEditorial Partials: Admin MetaBox -----------------------------------------
 
-.geditorial-admin-wrap-metabox,
+.geditorial-admin-wrap-metabox, // FIXME: DEPRECATED
+.geditorial-wrap.-admin-metabox,
 .geditorial-admin-wrap-nobox,
 .geditorial-admin-wrap-textbox {
   @include mainwrap();
@@ -11,6 +12,19 @@
 
   .field-wrap {
     margin-bottom: 2px;
+
+    &.field-wrap-summary {
+      ol,
+      ul {
+        margin: 0;
+        padding: 0;
+        list-style-position: inside;
+
+        li {
+
+        }
+      }
+    }
 
     &.field-wrap-empty {
 
@@ -135,16 +149,44 @@
     margin-bottom: 0;
   }
 
-  .field-wrap-list {
+  .field-wrap-filter {
+    input[type="search"] {
+      box-sizing: border-box;
+      width: 50%;
+      height: 24px;
+      margin: 1px 2px 1px 0;
+      padding: 0 6px 1px;
+      line-height: 22px;
+      font-size: 11px;
+    }
 
-    background-color: #fdfdfd;
-    border: solid 1px #ddd;
-    // padding: 4px 4px 0;
+    button {
+      float: right;
+      padding: 0 5px;
+    }
+
+    .dashicons {
+      width: 16px;
+      height: 16px;
+      font-size: 16px;
+      vertical-align: middle;
+      color: $gray;
+    }
+  }
+
+  .field-wrap-list,
+  .field-wrap-listjs {
     margin-bottom: 12px;
 
     &:last-of-type {
       margin-bottom: 0;
     }
+  }
+
+  .field-wrap-list {
+
+    background-color: #fdfdfd;
+    border: solid 1px #ddd;
 
     a {
       text-decoration: none;
@@ -169,6 +211,14 @@
       padding: 0;
       font-weight: 400;
       font-family: inherit;
+    }
+
+    .-selected {
+      font-weight: 600;
+
+      .dashicons {
+        color: $brand-success;
+      }
     }
 
     ol,
@@ -202,8 +252,22 @@
           label {
             display: block;
           }
+
+          .-email {
+            a {
+              color: $gray-darker;
+
+              &:hover {
+                color: $brand-danger;
+              }
+            }
+          }
         }
       }
+    }
+
+    ul {
+      list-style: none;
     }
 
     ol {
@@ -248,7 +312,8 @@
   }
 }
 
-.geditorial-admin-wrap-metabox {
+.geditorial-admin-wrap-metabox, // FIXME: DEPRECATED
+.geditorial-wrap.-admin-metabox {
   .field-wrap {
     &.field-wrap-textarea {
       padding-left: 1px;
