@@ -42,11 +42,14 @@ class Terms extends gEditorial\Module
 			'bp_group_type',
 			'bp-email-type',
 			'ef_editorial_meta',
-			'following_users',
 			'ef_usergroup',
 			'post_status',
 			'rel_people',
 			'rel_post',
+			'cartable_user',
+			'cartable_group',
+			'follow_users',
+			'follow_groups',
 		];
 
 		return [
@@ -261,8 +264,8 @@ class Terms extends gEditorial\Module
 			'image'    => [ 'name', 'before' ],
 			'author'   => [ 'name', 'after' ],
 			'color'    => [ 'name', 'before' ],
-			'role'     => [ 'name', 'after' ],
-			'posttype' => [ 'name', 'after' ],
+			'role'     => [ 'name', 'before' ],
+			'posttype' => [ 'name', 'before' ],
 		];
 
 		foreach ( $fields as $field => $place )
@@ -400,9 +403,14 @@ class Terms extends gEditorial\Module
 	private function quick_form_field( $field, $taxonomy )
 	{
 		echo '<fieldset><div class="inline-edit-col"><label><span class="title">';
-			echo HTML::escape( $this->get_string( $field, $taxonomy, 'titles', $field ) );
+
+			$title = $this->get_string( $field, $taxonomy, 'titles', $field );
+			echo HTML::escape( $this->filters( 'field_'.$field.'_title', $title, $field, $taxonomy, FALSE ) );
+
 		echo '</span><span class="input-text-wrap">';
+
 			$this->quickedit_field( $field, $taxonomy );
+
 		echo '</span></label></div></fieldset>';
 	}
 
@@ -410,10 +418,17 @@ class Terms extends gEditorial\Module
 	{
 		echo '<div class="form-field term-'.$field.'-wrap">';
 		echo '<label for="term-'.$field.'">';
-			echo HTML::escape( $this->get_string( $field, $taxonomy, 'titles', $field ) );
+
+			$title = $this->get_string( $field, $taxonomy, 'titles', $field );
+			echo HTML::escape( $this->filters( 'field_'.$field.'_title', $title, $field, $taxonomy, $term ) );
+
 		echo '</label>';
+
 			$this->form_field( $field, $taxonomy, $term );
-			HTML::desc( $this->get_string( $field, $taxonomy, 'descriptions', '' ) );
+
+			$desc = $this->get_string( $field, $taxonomy, 'descriptions', '' );
+			HTML::desc( $this->filters( 'field_'.$field.'_desc', $desc, $field, $taxonomy, $term ) );
+
 		echo '</div>';
 	}
 
@@ -421,10 +436,17 @@ class Terms extends gEditorial\Module
 	{
 		echo '<tr class="form-field term-'.$field.'-wrap"><th scope="row" valign="top">';
 		echo '<label for="term-'.$field.'">';
-			echo HTML::escape( $this->get_string( $field, $taxonomy, 'titles', $field ) );
+
+			$title = $this->get_string( $field, $taxonomy, 'titles', $field );
+			echo HTML::escape( $this->filters( 'field_'.$field.'_title', $title, $field, $taxonomy, $term ) );
+
 		echo '</label></th><td>';
+
 			$this->form_field( $field, $taxonomy, $term );
-			HTML::desc( $this->get_string( $field, $taxonomy, 'descriptions', '' ) );
+
+			$desc = $this->get_string( $field, $taxonomy, 'descriptions', '' );
+			HTML::desc( $this->filters( 'field_'.$field.'_desc', $desc, $field, $taxonomy, $term ) );
+
 		echo '</td></tr>';
 	}
 
