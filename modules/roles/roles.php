@@ -186,6 +186,7 @@ class Roles extends gEditorial\Module
 			// 'delete_post' => 'delete_'.$base[0],
 
 			// must add to roles
+			'create_posts'           => 'create_'.$base[1],
 			'edit_posts'             => 'edit_'.$base[1],
 			'edit_others_posts'      => 'edit_others_'.$base[1],
 			'publish_posts'          => 'publish_'.$base[1],
@@ -289,6 +290,9 @@ class Roles extends gEditorial\Module
 
 			foreach ( $object->capabilities as $cap => $true )
 				$role->add_cap( ( array_key_exists( $cap, $map ) ? $map[$cap] : $cap ) );
+
+			$role->add_cap( 'read' ); // duh?!
+			// $role->add_cap( $map['create_posts'] ); // its not on defaults
 
 			$count++;
 		}

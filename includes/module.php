@@ -288,7 +288,7 @@ class Module extends Base
 					'title'   => sprintf( _x( '%s Tools', 'Module: Extra Link: Tools', GEDITORIAL_TEXTDOMAIN ), $title ),
 				];
 
-		if ( isset( $this->caps['settings'] ) && ! Settings::isSettings( $screen ) && $this->cuc( $this->caps['settings'] ) )
+		if ( isset( $this->caps['settings'] ) && ! Settings::isSettings( $screen ) && $this->cuc( 'settings' ) )
 			$links[] = [
 				'context' => 'settings',
 				'sub'     => $this->key,
@@ -344,7 +344,12 @@ class Module extends Base
 	// OVERRIDE: if has no admin menu but using the hook
 	public function get_adminmenu( $page = TRUE, $extra = [] )
 	{
-		return $page ? $this->classs() : add_query_arg( array_merge( [ 'page' => $this->classs() ], $extra ), get_admin_url( NULL, 'index.php' ) );
+		if ( $page )
+			return $this->classs();
+
+		$url = get_admin_url( NULL, 'index.php' );
+
+		return add_query_arg( array_merge( [ 'page' => $this->classs() ], $extra ), $url );
 	}
 
 	// check if this module loaded as remote for another blog's editorial module
@@ -1903,7 +1908,7 @@ class Module extends Base
 		return $form;
 	}
 
-	protected function role_can( $what = 'supported', $user_id = NULL, $fallback = FALSE, $admins = TRUE )
+	protected function role_can( $what = 'supported', $user_id = NULL, $fallback = FALSE, $admins = TRUE, $prefix = '_roles' )
 	{
 		if ( is_null( $user_id ) )
 			$user_id = get_current_user_id();
@@ -1911,7 +1916,7 @@ class Module extends Base
 		if ( ! $user_id )
 			return $fallback;
 
-		$setting = $this->get_setting( $what.'_roles', [] );
+		$setting = $this->get_setting( $what.$prefix, [] );
 
 		if ( $admins )
 			$setting = array_merge( $setting, [ 'administrator' ] );
@@ -2907,7 +2912,7 @@ SQL;
 		return MetaBox::checkHidden( $this->classs( $widget ), $after );
 	}
 
-	protected function get_blog_users( $fields = NULL )
+	protected function get_blog_users( $fields = NULL, $list = FALSE )
 	{
 		if ( is_null( $fields ) )
 			$fields = [
@@ -2924,6 +2929,9 @@ SQL;
 			'role__not_in' => $this->get_setting( 'excluded_roles', [] ),
 			'count_total'  => FALSE,
 		];
+
+		if ( $list )
+			$args['include'] = (array) $list;
 
 		$query = new \WP_User_Query( $args );
 

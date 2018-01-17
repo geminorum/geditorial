@@ -73,6 +73,12 @@ class Tweaks extends gEditorial\Module
 			'entry_section',
 			'specs',
 			'label',
+			'user_group',
+			'cartable_user',
+			'cartable_group',
+			'follow_users',
+			'follow_groups',
+			'status',
 		];
 
 		return [
