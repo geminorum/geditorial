@@ -95,28 +95,49 @@ class Taxonomy extends Core\Base
 
 	public static function getTerms( $taxonomy = 'category', $object_id = FALSE, $object = FALSE, $key = 'term_id', $extra = array(), $post_object = TRUE )
 	{
-		// using cached terms, only for posts, when no extra args provided
-		if ( is_null( $object_id ) && empty( $extra ) )
+		if ( is_null( $object_id ) && empty( $extra ) ) {
+
+			// using cached terms, only for posts, when no extra args provided
 			$terms = get_the_terms( get_post(), $taxonomy );
 
-		else if ( is_null( $object_id ) )
+		} else if ( is_null( $object_id ) ) {
+
 			$terms = wp_get_object_terms( get_post()->ID, $taxonomy, $extra );
 
-		// using cached terms, only for posts, when no extra args provided
-		else if ( FALSE !== $object_id && empty( $extra ) && $post_object )
+		} else if ( FALSE !== $object_id && empty( $extra ) && $post_object ) {
+
+			// using cached terms, only for posts, when no extra args provided
 			$terms = get_the_terms( $object_id, $taxonomy );
 
-		else if ( FALSE !== $object_id )
+		} else if ( FALSE !== $object_id ) {
+
 			$terms = wp_get_object_terms( $object_id, $taxonomy, $extra );
 
-		else
+		} else {
+
+			// FIXME: use WP_Term_Query directly
+
 			$terms = get_terms( array_merge( array(
-				'taxonomy'               => $taxonomy,
-				'hide_empty'             => FALSE,
-				'orderby'                => 'name',
-				'order'                  => 'ASC',
+				'taxonomy'   => $taxonomy,
+				'hide_empty' => FALSE,
+				'order'      => 'ASC',
+				'orderby'    => 'meta_value_num',
+				'meta_query' => [
+					// @REF: https://core.trac.wordpress.org/ticket/34996
+					'relation' => 'OR',
+					[
+						'key'     => 'order',
+						'value'   => 0,
+						'compare' => '>=',
+					],
+					[
+						'key'     => 'order',
+						'compare' => 'NOT EXISTS'
+					],
+				],
 				'update_term_meta_cache' => FALSE,
 			), $extra ) );
+		}
 
 		if ( ! $terms || is_wp_error( $terms ) )
 			return array();

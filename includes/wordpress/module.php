@@ -76,15 +76,15 @@ class Module extends Core\Base
 			add_filter( $hook, array( $this, $method ), $priority, $args );
 	}
 
-	// USAGE: $this->filter_module( 'importer', 'saved', 5 );
-	protected function action_module( $hook, $args = 1, $priority = 10, $suffix = FALSE )
+	// USAGE: $this->action_module( 'importer', 'saved', 5 );
+	protected function action_module( $module, $hook = 'init', $args = 1, $priority = 10, $suffix = FALSE )
 	{
 		if ( $method = self::sanitize_hook( ( $suffix ? $module.'_'.$hook.'_'.$suffix : $module.'_'.$hook ) ) )
 			add_action( $this->base.'_'.$module.'_'.$hook, array( $this, $method ), $priority, $args );
 	}
 
 	// USAGE: $this->filter_module( 'importer', 'prepare', 4 );
-	protected function filter_module( $module, $hook, $args = 1, $priority = 10, $suffix = FALSE )
+	protected function filter_module( $module, $hook = 'init', $args = 1, $priority = 10, $suffix = FALSE )
 	{
 		if ( $method = self::sanitize_hook( ( $suffix ? $module.'_'.$hook.'_'.$suffix : $module.'_'.$hook ) ) )
 			add_filter( $this->base.'_'.$module.'_'.$hook, array( $this, $method ), $priority, $args );
