@@ -1,3 +1,31 @@
+### 3.13.3
+* main/module: check for init action along with posttype exists
+* main/module: default filter for increasing menu order on new posts
+* main/module: comment status on more modules
+* main/module: passing module options into init action
+* main/module: optional admin checks for role can
+* main/module: metabox title info api
+* main/helper: custom list of taxonomies for table term column
+* main/helper: moving up common used script packages
+* main/metabox: checklist overhaul
+* main/metabox: refresh title action
+* main/shortcode: correct order of args for helper methods
+* main/settings: pre setting for post row actions
+* module/attachments: restrict media library for non editors
+* module/audit: factor role meta for each term
+* module/config: correct submenu file for the current module
+* module/roles: custom names for duplicated roles
+* module/roles: :warning: passing other caps into duplicated roles
+* module/roles: check for already duplicated
+* module/statuses: :new: new module
+* module/terms: support for role/posttype fields
+* module/terms: filter title/desc for each field
+* module/tweaks: support for custom statuses
+* module/tube: dashboard glance items
+* module/users: multiple group for each user
+* module/users: roles/groups/types on the profile widget
+* module/widgets: wprest: fallback for themes with no partial for rows
+
 ### 3.13.2
 * main/main: check for minimum required veriosn of php
 * main/module: :new: internal api for bailing on hidden metaboxes
