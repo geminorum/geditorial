@@ -68,11 +68,31 @@ class Audit extends gEditorial\Module
 					'values'      => $roles,
 				],
 				[
-					'field'       => 'locking_terms',
+					'field'       => 'restricted_roles',
 					'type'        => 'checkbox',
-					'title'       => _x( 'Locking Terms', 'Modules: Audit: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Selected terms will lock the post to audit managers.', 'Modules: Audit: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-					'values'      => Taxonomy::listTerms( $this->constant( 'audit_tax' ) ),
+					'title'       => _x( 'Restricted Roles', 'Modules: Audit: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Roles that check for Audit Attributes visibility.', 'Modules: Audit: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'exclude'     => $exclude,
+					'values'      => $roles,
+				],
+				[
+					'field'       => 'restricted',
+					'type'        => 'select',
+					'title'       => _x( 'Restricted Terms', 'Modules: Audit: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Handles visibility of each term based on meta values.', 'Modules: Audit: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'default'     => 'disabled',
+					'values'      => [
+						'disabled' => _x( 'Disabled', 'Modules: Audit: Setting Option', GEDITORIAL_TEXTDOMAIN ),
+						'hidden'   => _x( 'Hidden', 'Modules: Audit: Setting Option', GEDITORIAL_TEXTDOMAIN ),
+					],
+				],
+				[
+					'field'        => 'locking_terms',
+					'type'         => 'checkbox',
+					'title'        => _x( 'Locking Terms', 'Modules: Audit: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description'  => _x( 'Selected terms will lock the post to audit managers.', 'Modules: Audit: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'string_empty' => _x( 'There\'s no audit attributes!', 'Modules: Audit: Setting', GEDITORIAL_TEXTDOMAIN ),
+					'values'       => Taxonomy::listTerms( $this->constant( 'audit_tax' ) ),
 				],
 			],
 			'_dashboard' => [
@@ -263,6 +283,24 @@ class Audit extends gEditorial\Module
 				return $this->role_can( 'manage', $user_id ) ? [ 'read' ] : [ 'do_not_allow' ];
 			break;
 
+			case 'assign_term':
+
+				$term = get_term( (int) $args[0] );
+
+				if ( ! $term || is_wp_error( $term ) )
+					return $caps;
+
+				if ( ! $tax = get_taxonomy( $term->taxonomy ) )
+					return $caps;
+
+				if ( ! $role = get_term_meta( $term->term_id, 'role', TRUE ) )
+					return $caps;
+
+				if ( ! User::hasRole( [ 'administrator', $role ] ) )
+					return [ 'do_not_allow' ];
+
+			break;
+
 			case 'assign_audit_tax':
 				return $this->role_can( 'assign', $user_id ) ? [ 'read' ] : [ 'do_not_allow' ];
 		}
@@ -426,6 +464,8 @@ class Audit extends gEditorial\Module
 		$tax     = $this->constant( 'audit_tax' );
 		$all     = PostType::get( 3 );
 		$exclude = Database::getExcludeStatuses();
+		$check   = $this->role_can( 'restricted', NULL, FALSE, FALSE );
+		$hidden  = 'hidden' == $this->get_setting( 'restricted', 'disabled' );
 
 		if ( $this->get_setting( 'summary_drafts', FALSE ) )
 			$exclude = array_diff( $exclude, [ 'draft' ] );
@@ -436,6 +476,13 @@ class Audit extends gEditorial\Module
 			$objects = [];
 
 			foreach ( $counts as $term => $posts ) {
+
+				if ( $check && $hidden && $user_id ) {
+					if ( $role = get_term_meta( $terms[$term]->term_id, 'role', TRUE ) ) {
+						if ( ! User::hasRole( [ 'administrator', $role ] ) )
+							continue;
+					}
+				}
 
 				$name = sanitize_term_field( 'name', $terms[$term]->name, $terms[$term]->term_id, $terms[$term]->taxonomy, 'display' );
 
@@ -517,6 +564,9 @@ class Audit extends gEditorial\Module
 
 	public function meta_box_cb_audit_tax( $post, $box )
 	{
+		if ( $this->role_can( 'restricted', NULL, FALSE, FALSE ) )
+			$box['args']['role'] = $this->get_setting( 'restricted', 'disabled' );
+
 		echo $this->wrap_open( '-admin-metabox' );
 			MetaBox::checklistTerms( $post->ID, $box['args'] );
 		echo '</div>';
