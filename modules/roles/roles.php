@@ -270,6 +270,10 @@ class Roles extends gEditorial\Module
 
 		foreach ( $this->get_setting( 'duplicate_roles', [] ) as $core ) {
 
+			// already added
+			if ( get_role( $prefix.$core ) )
+				continue;
+
 			$object = get_role( $core );
 
 			if ( is_null( $object ) )
