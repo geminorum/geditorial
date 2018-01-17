@@ -13,6 +13,7 @@ use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\Database;
 use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\Taxonomy;
+use geminorum\gEditorial\WordPress\User;
 
 class Users extends gEditorial\Module
 {
@@ -142,8 +143,16 @@ class Users extends gEditorial\Module
 	{
 		$groups = $this->get_setting( 'user_groups', FALSE );
 
-		if ( 'edit' == $screen->base
-			&& in_array( $screen->post_type, $this->post_types() ) ) {
+		if ( 'users' == $screen->base ) {
+
+			if ( $this->get_setting( 'posttype_counts', FALSE ) ) {
+				$this->filter( 'manage_users_columns' );
+				$this->filter( 'manage_users_custom_column', 3 );
+			}
+
+			$this->action_module( 'tweaks', 'column_user', 1, 12 );
+
+		} else if ( 'edit' == $screen->base && in_array( $screen->post_type, $this->post_types() ) ) {
 
 			if ( $this->get_setting( 'admin_restrict', FALSE ) )
 				$this->action( 'restrict_manage_posts', 2, 12 );
@@ -151,47 +160,24 @@ class Users extends gEditorial\Module
 			if ( $this->get_setting( 'author_restrict', FALSE ) )
 				$this->action( 'pre_get_posts' );
 
-		} else if ( 'users' == $screen->base ) {
-
-			if ( $this->get_setting( 'posttype_counts', FALSE ) ) {
-				$this->filter( 'manage_users_columns' );
-				$this->filter( 'manage_users_custom_column', 3 );
-			}
-
-			add_action( 'geditorial_tweaks_column_user', [ $this, 'column_user' ], 12 );
-
-		} else if ( $groups && ( 'profile' == $screen->base
-			|| 'user-edit' == $screen->base ) ) {
+		} else if ( $groups && ( 'profile' == $screen->base || 'user-edit' == $screen->base ) ) {
 
 			add_action( 'show_user_profile', [ $this, 'edit_user_profile' ], 5 );
 			add_action( 'edit_user_profile', [ $this, 'edit_user_profile' ], 5 );
 			add_action( 'personal_options_update', [ $this, 'edit_user_profile_update' ] );
 			add_action( 'edit_user_profile_update', [ $this, 'edit_user_profile_update' ] );
 
-		} else if ( $groups && 'edit-tags' == $screen->base
-			&& $this->constant( 'group_tax' ) == $screen->taxonomy ) {
+		} else if ( $groups && $this->constant( 'group_tax' ) == $screen->taxonomy ) {
 
-			$this->filter( 'parent_file' );
+			add_filter( 'parent_file', function(){
+				return 'users.php';
+			} );
 
-			add_filter( 'manage_edit-'.$this->constant( 'group_tax' ).'_columns', [ $this, 'manage_columns' ] );
-			add_action( 'manage_'.$this->constant( 'group_tax' ).'_custom_column', [ $this, 'custom_column' ], 10, 3 );
-
-		// } else if ( $groups && 'term' == $screen->base
-		// 	&& $this->constant( 'group_tax' ) == $screen->taxonomy ) {
-
+			if ( 'edit-tags' == $screen->base ) {
+				add_filter( 'manage_edit-'.$this->constant( 'group_tax' ).'_columns', [ $this, 'manage_columns' ] );
+				add_action( 'manage_'.$this->constant( 'group_tax' ).'_custom_column', [ $this, 'custom_column' ], 10, 3 );
+			}
 		}
-	}
-
-	public function parent_file( $parent_file )
-	{
-		global $pagenow;
-
-		if ( ! empty( $_GET['taxonomy'] )
-			&& $_GET['taxonomy'] == $this->constant( 'group_tax' )
-			&& ( $pagenow == 'edit-tags.php' || $pagenow == 'term.php' ) )
-				$parent_file = 'users.php';
-
-		return $parent_file;
 	}
 
 	public function sanitize_user( $username )
@@ -283,7 +269,7 @@ class Users extends gEditorial\Module
 		return ob_get_clean();
 	}
 
-	public function column_user( $user )
+	public function tweaks_column_user( $user )
 	{
 		if ( $this->get_setting( 'user_groups', FALSE ) ) {
 
@@ -445,6 +431,11 @@ class Users extends gEditorial\Module
 			echo '</li>';
 		}
 
+		$role = $this->get_column_icon( FALSE, 'businessman', _x( 'Roles', 'Modules: Users: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
+		echo Helper::getJoined( User::getRoleList( $user ), '<li class="-row -roles">'.$role, '</li>' );
+
+		$this->tweaks_column_user( $user );
+
 		echo '</ul><div class="clear"></div></div>';
 	}
 
@@ -528,6 +519,7 @@ class Users extends gEditorial\Module
 	}
 
 	// FIXME: DRAFT : need styling / register the shortcode!!
+	// @SEE: https://core.trac.wordpress.org/ticket/31383
 	public function user_groups_shortcode()
 	{
 		$term_id = get_queried_object_id();
