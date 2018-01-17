@@ -6,6 +6,7 @@ use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\Taxonomy;
+use geminorum\gEditorial\WordPress\User;
 
 class MetaBox extends Core\Base
 {
@@ -43,53 +44,236 @@ class MetaBox extends Core\Base
 		return TRUE;
 	}
 
-	// TODO: radio list box using custom walker on `wp_terms_checklist()`
-
-	// SEE: [Use Chosen for a replacement WordPress taxonomy metabox](https://gist.github.com/helen/1573966)
-	// callback for meta box for choose only tax
-
+	// TODO: radio list box using custom walker
 	// CAUTION: tax must be cat (hierarchical)
-	// hierarchical taxonomies save by IDs, whereas non save by slugs
-	// @SOURCE: `post_categories_meta_box()`
-	public static function checklistTerms( $post, $box, $wrap = TRUE )
+	// hierarchical taxonomies save by IDs,
+	// whereas non-hierarchical save by slugs
+	// WTF: because the core's not passing args into the waker!
+	// @REF: `post_categories_meta_box()`, `wp_terms_checklist()`
+	public static function checklistTerms( $post_id = 0, $atts = [] )
 	{
-		$args = self::atts( [
-			'taxonomy' => 'category',
-			'metabox'  => NULL,
-			'edit_url' => NULL,
-		], empty( $box['args'] ) ? [] : $box['args'] );
+		$atts = apply_filters( 'wp_terms_checklist_args', $atts, $post_id );
+
+		$args = self::args( $atts, [
+			'taxonomy'             => NULL,
+			'metabox'              => NULL, // metabox id to check for disabled
+			'list_only'            => NULL,
+			'selected_only'        => NULL,
+			'descendants_and_self' => 0,
+			'selected_cats'        => FALSE,
+			'popular_cats'         => FALSE,
+			'walker'               => NULL,
+			'checked_ontop'        => TRUE,
+			'edit'                 => NULL, // manage page if has no terms, FALSE to disable
+			'role'                 => FALSE, // `disabled` / `hidden`
+			'name'                 => 'tax_input', // override if not saving by core
+			'walker'               => FALSE,
+			'echo'                 => TRUE,
+		] );
+
+		if ( ! $args['taxonomy'] )
+			return FALSE;
 
 		if ( $args['metabox'] && self::checkHidden( $args['metabox'] ) )
 			return;
 
-		$tax_name = HTML::escape( $args['taxonomy'] );
-		$taxonomy = get_taxonomy( $args['taxonomy'] );
+		if ( $args['descendants_and_self'] ) {
 
-		$html = wp_terms_checklist( $post->ID, [
-			'taxonomy'      => $tax_name,
-			'checked_ontop' => FALSE,
-			'echo'          => FALSE,
-		] );
+			$childs = intval( $args['descendants_and_self'] );
 
-		if ( ! $html && FALSE === $args['edit_url'] )
-			return FALSE;
+			$terms = (array) get_terms( $args['taxonomy'], [
+				'child_of'     => $childs,
+				'hierarchical' => 0,
+				'hide_empty'   => 0,
+			] );
 
-		if ( $wrap )
-			echo '<div id="taxonomy-'.$tax_name.'" class="geditorial-admin-wrap-metabox">';
+			$self = get_term( $childs, $args['taxonomy'] );
 
-		if ( $html ) {
-
-			echo HTML::wrap( '<ul>'.$html.'</ul>', 'field-wrap field-wrap-list' );
-
-			// allows for an empty term set to be sent. 0 is an invalid Term ID and will be ignored by empty() checks.
-			echo '<input type="hidden" name="tax_input['.$tax_name.'][]" value="0" />';
+			array_unshift( $terms, $self );
 
 		} else {
-			self::fieldEmptyTaxonomy( $taxonomy, $args['edit_url'] );
+
+			$terms = Taxonomy::getTerms( $args['taxonomy'], FALSE, TRUE );
 		}
 
-		if ( $wrap )
-			echo '</div>';
+		if ( ! count( $terms ) )
+			return self::fieldEmptyTaxonomy( $args['taxonomy'], $args['edit'] );
+
+		$html = '';
+		$tax  = get_taxonomy( $args['taxonomy'] );
+		$atts = [ 'taxonomy' => $args['taxonomy'], 'atts' => $args ];
+
+		if ( empty( $args['walker'] ) || ! ( $args['walker'] instanceof \Walker ) ) {
+
+			gEditorial()->files( 'misc/walker-category-checklist' );
+			$walker = new Misc\Walker_Category_Checklist;
+
+		} else {
+			$walker = $args['walker'];
+		}
+
+		if ( is_array( $args['selected_cats'] ) )
+			$atts['selected_cats'] = $args['selected_cats'];
+
+		else if ( $post_id )
+			$atts['selected_cats'] = wp_get_object_terms( $post_id, $args['taxonomy'], [ 'fields' => 'ids' ] );
+
+		else
+			$atts['selected_cats'] = [];
+
+		if ( FALSE === $args['popular_cats'] )
+			$atts['popular_cats'] = [];
+
+		else if ( is_array( $args['popular_cats'] ) )
+			$atts['popular_cats'] = $args['popular_cats'];
+
+		else
+			$atts['popular_cats'] = get_terms( $args['taxonomy'], [
+				'fields'       => 'ids',
+				'orderby'      => 'count',
+				'order'        => 'DESC',
+				'number'       => 10,
+				'hierarchical' => FALSE,
+			] );
+
+		$atts['disabled']      = ! current_user_can( $tax->cap->assign_terms );
+		$atts['list_only']     = ! empty( $args['list_only'] );
+		$atts['selected_only'] = ! empty( $args['selected_only'] );
+
+		if ( $args['checked_ontop'] || $atts['selected_only'] ) {
+
+			// post process $terms rather than adding an exclude to
+			// the get_terms() query to keep the query the same across
+			// all posts (for any query cache)
+			$checked = [];
+
+			foreach ( array_keys( $terms ) as $key ) {
+				if ( in_array( $terms[$key]->term_id, $atts['selected_cats'] ) ) {
+					$checked[] = $terms[$key];
+					unset( $terms[$key] );
+				}
+			}
+
+			// put checked terms on top
+			$html.= call_user_func_array( [ $walker, 'walk' ] , [ $checked, 0, $atts ] );
+		}
+
+		if ( ! $atts['selected_only'] )
+			$html.= call_user_func_array( [ $walker, 'walk' ], [ $terms, 0, $atts ] );
+
+		// allows for an empty term set to be sent. 0 is an invalid Term ID
+		// and will be ignored by empty() checks
+		if ( ! $args['list_only'] && ! $atts['disabled'] )
+			$html.= '<input type="hidden" name="'.$args['name'].'['.$tax->name.'][]" value="0" />';
+
+		$html = HTML::wrap( '<ul>'.$html.'</ul>', 'field-wrap field-wrap-list' );
+
+		if ( ! $args['echo'] )
+			return $html;
+
+		echo $html;
+	}
+
+	public static function checklistUserTerms( $post_id = 0, $atts = [], $users = NULL, $threshold = 5 )
+	{
+		$args = self::args( $atts, [
+			'taxonomy'      => NULL,
+			'metabox'       => NULL,
+			'edit'          => FALSE,
+			'role'          => NULL,
+			'list_only'     => NULL,
+			'selected_only' => NULL,
+			'walker'        => NULL,
+			'name'          => 'tax_input', // override if not saving by core
+		] );
+
+		if ( ! $args['taxonomy'] )
+			return FALSE;
+
+		if ( $args['metabox'] && self::checkHidden( $args['metabox'] ) )
+			return FALSE;
+
+		$selected = $post_id ? Taxonomy::getTerms( $args['taxonomy'], $post_id, FALSE, 'slug' ) : [];
+
+		if ( is_null( $users ) )
+			$users = User::get();
+
+		if ( empty( $args['walker'] ) || ! ( $args['walker'] instanceof \Walker ) ) {
+
+			gEditorial()->files( 'misc/walker-user-checklist' );
+			$walker = new Misc\Walker_User_Checklist;
+
+		} else {
+			$walker = $args['walker'];
+		}
+
+		$html = $form = $list = '';
+		$id   = static::BASE.'-'.$args['taxonomy'].'-list';
+		$atts = [ 'taxonomy' => $args['taxonomy'], 'atts' => $args, 'selected' => $selected ];
+
+		$atts['list_only']     = ! empty( $args['list_only'] );
+		$atts['selected_only'] = ! empty( $args['selected_only'] );
+
+		if ( ! $atts['list_only'] && count( $users ) > $threshold ) {
+
+			$form.= HTML::tag( 'input', [
+				'type'        => 'search',
+				'class'       => [ '-search', 'hide-if-no-js' ],
+				'placeholder' => _x( 'Search …', 'MetaBox: Checklist', GEDITORIAL_TEXTDOMAIN ),
+			] );
+
+			$form.= HTML::tag( 'button', [
+				'type'  => 'button',
+				'class' => [ '-button', 'button', 'button-small', '-sort', 'hide-if-no-js' ],
+				'data'  => [ 'sort' => '-name' ],
+				'title' => _x( 'Sort by name', 'MetaBox: Checklist', GEDITORIAL_TEXTDOMAIN ),
+			], HTML::getDashicon( 'sort' ) );
+
+			$html.= HTML::wrap( $form, 'field-wrap field-wrap-filter' );
+		}
+
+		if ( count( $selected ) ) {
+			$checked = [];
+
+			foreach ( array_keys( $users ) as $key ) {
+				if ( in_array( $users[$key]->user_login, $selected ) ) {
+					$checked[] = $users[$key];
+					unset( $users[$key] );
+				}
+			}
+
+			$list.= call_user_func_array( [ $walker, 'walk' ], [ $checked, 0, $atts ] );
+		}
+
+		if ( ! $atts['selected_only'] )
+			$list.= call_user_func_array( [ $walker, 'walk' ], [ $users, 0, $atts ] );
+
+		if ( ! $list )
+			return FALSE;
+
+		$html.= HTML::wrap( '<ul class="-list">'.$list.'</ul>', 'field-wrap field-wrap-list' );
+
+		// allows for an empty term set to be sent. 0 is an invalid Term ID
+		// and will be ignored by empty() checks
+		if ( ! $atts['list_only'] )
+			$html.= '<input type="hidden" name="'.$args['name'].'['.$args['taxonomy'].'][]" value="0" />';
+
+		// ListJS needs the wrap!
+		echo '<div id="'.$id.'" class="field-wrap-listjs">'.$html.'</div>';
+
+		if ( $form ) {
+
+			$script = "(function($){List('".$id."', {
+				listClass: '-list',
+				searchClass: '-search',
+				sortClass: '-sort',
+				valueNames: [ '-name', '-email', '-login' ]
+			});}(jQuery));";
+
+			wp_add_inline_script( Helper::scriptListJS( TRUE ), $script );
+		}
+
+		return TRUE;
 	}
 
 	public static function getTermPosts( $taxonomy, $term_or_id, $exclude = [], $title = TRUE )
@@ -134,6 +318,9 @@ class MetaBox extends Core\Base
 
 	public static function fieldEmptyTaxonomy( $taxonomy, $edit = NULL )
 	{
+		if ( FALSE === $edit )
+			return FALSE;
+
 		if ( ! is_object( $taxonomy ) )
 			$taxonomy = get_taxonomy( $taxonomy );
 
@@ -177,6 +364,8 @@ class MetaBox extends Core\Base
 
 	public static function dropdownAssocPosts( $post_type, $selected = '', $prefix = '', $exclude = '' )
 	{
+		gEditorial()->files( 'misc/walker-page-dropdown' );
+
 		$html = wp_dropdown_pages( [
 			'post_type'        => $post_type,
 			'selected'         => $selected,
@@ -190,7 +379,7 @@ class MetaBox extends Core\Base
 			'value_field'      => 'post_name',
 			'exclude'          => $exclude,
 			'echo'             => 0,
-			'walker'           => new Walker_PageDropdown(),
+			'walker'           => new Misc\Walker_PageDropdown(),
 			'title_with_meta'  => 'issue_number_line', // extra arg for the walker
 		] );
 

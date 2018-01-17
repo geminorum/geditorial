@@ -1925,20 +1925,18 @@ class Module extends Base
 		return $fallback;
 	}
 
-	// CAUTION: tax must be cat (hierarchical)
-	// hierarchical taxonomies save by IDs, whereas non save by slugs
-	// TODO: supporting tag (non-hierarchical)
-	public function add_meta_box_checklist_terms( $constant, $post_type, $type = FALSE )
+	// CAUTION: tax must be hierarchical
+	public function add_meta_box_checklist_terms( $constant, $post_type, $role = NULL, $type = FALSE )
 	{
 		$taxonomy = $this->constant( $constant );
 		$metabox  = $this->classs( $taxonomy );
-		$edit_url = WordPress::getEditTaxLink( $taxonomy );
+		$edit     = WordPress::getEditTaxLink( $taxonomy );
 
 		if ( $type )
 			$this->remove_meta_box( $constant, $post_type, $type );
 
 		add_meta_box( $metabox,
-			$this->get_meta_box_title( $constant, $edit_url, TRUE ),
+			$this->get_meta_box_title( $constant, $edit, TRUE ),
 			[ __NAMESPACE__.'\\MetaBox', 'checklistTerms' ],
 			NULL,
 			'side',
@@ -1946,7 +1944,8 @@ class Module extends Base
 			[
 				'taxonomy' => $taxonomy,
 				'metabox'  => $metabox,
-				'edit_url' => $edit_url,
+				'edit'     => $edit,
+				'role'     => $role,
 			]
 		);
 	}
@@ -2301,6 +2300,8 @@ class Module extends Base
 	{
 		$tax_obj = get_taxonomy( $tax = $this->constant( $tax_constant_key ) );
 
+		gEditorial()->files( 'misc/walker-page-dropdown' );
+
 		wp_dropdown_pages( [
 			'post_type'        => $this->constant( $posttype_constant_key ),
 			'selected'         => isset( $_GET[$tax] ) ? $_GET[$tax] : '',
@@ -2311,7 +2312,7 @@ class Module extends Base
 			'sort_order'       => 'desc',
 			'post_status'      => [ 'publish', 'future', 'draft', 'pending' ],
 			'value_field'      => 'post_name',
-			'walker'           => new Walker_PageDropdown(),
+			'walker'           => new Misc\Walker_PageDropdown(),
 		] );
 	}
 

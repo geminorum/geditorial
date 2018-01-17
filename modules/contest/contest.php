@@ -405,7 +405,9 @@ class Contest extends gEditorial\Module
 
 	public function meta_box_cb_apply_status_tax( $post, $box )
 	{
-		MetaBox::checklistTerms( $post, $box );
+		echo $this->wrap_open( '-admin-metabox' );
+			MetaBox::checklistTerms( $post->ID, $box['args'] );
+		echo '</div>';
 	}
 
 	public function post_updated_messages( $messages )

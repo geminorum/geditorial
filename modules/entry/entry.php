@@ -287,7 +287,9 @@ class Entry extends gEditorial\Module
 
 	public function meta_box_cb_section_tax( $post, $box )
 	{
-		MetaBox::checklistTerms( $post, $box );
+		echo $this->wrap_open( '-admin-metabox' );
+			MetaBox::checklistTerms( $post->ID, $box['args'] );
+		echo '</div>';
 	}
 
 	public function content_before( $content, $posttypes = NULL )

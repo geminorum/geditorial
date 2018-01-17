@@ -535,12 +535,16 @@ class Magazine extends gEditorial\Module
 
 	public function meta_box_cb_span_tax( $post, $box )
 	{
-		MetaBox::checklistTerms( $post, $box );
+		echo $this->wrap_open( '-admin-metabox' );
+			MetaBox::checklistTerms( $post->ID, $box['args'] );
+		echo '</div>';
 	}
 
 	public function meta_box_cb_section_tax( $post, $box )
 	{
-		MetaBox::checklistTerms( $post, $box );
+		echo $this->wrap_open( '-admin-metabox' );
+			MetaBox::checklistTerms( $post->ID, $box['args'] );
+		echo '</div>';
 	}
 
 	public function do_meta_box_supported( $post, $box )
