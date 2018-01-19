@@ -334,7 +334,7 @@ class Users extends gEditorial\Module
 
 					$html = HTML::tag( 'input', [
 						'type'    => 'checkbox',
-						'name'    => 'groups',
+						'name'    => 'groups[]',
 						'id'      => 'groups-'.$term->slug,
 						'value'   => $term->slug,
 						'checked' => is_object_in_term( $user->ID, $this->constant( 'group_tax' ), $term ),
@@ -347,6 +347,9 @@ class Users extends gEditorial\Module
 
 				echo '</ul></div>';
 
+				// passing empty value for clearing up
+				echo '<input type="hidden" name="groups[]" value="0" />';
+
 			} else {
 				_ex( 'There are no groups available.', 'Modules: Users', GEDITORIAL_TEXTDOMAIN );
 			}
@@ -357,16 +360,18 @@ class Users extends gEditorial\Module
 
 	public function edit_user_profile_update( $user_id )
 	{
+		if ( ! current_user_can( 'edit_user', $user_id ) )
+			return FALSE;
+
 		$tax = get_taxonomy( $this->constant( 'group_tax' ) );
 
-		if ( ! current_user_can( 'edit_user', $user_id )
-			&& current_user_can( $tax->cap->assign_terms ) )
-				return FALSE;
+		if ( ! current_user_can( $tax->cap->assign_terms ) )
+			return FALSE;
 
 		if ( ! isset( $_POST['groups'] ) )
 			return;
 
-		wp_set_object_terms( $user_id, [ HTML::escape( $_POST['groups'] ) ], $this->constant( 'group_tax' ), FALSE );
+		wp_set_object_terms( $user_id, array_filter( $_POST['groups'] ), $tax->name, FALSE );
 
 		clean_object_term_cache( $user_id, $this->constant( 'group_tax' ) );
 	}
