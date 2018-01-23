@@ -19,7 +19,7 @@ class Terms extends gEditorial\Module
 {
 
 	protected $partials  = [ 'templates' ];
-	protected $supported = [ 'order', 'image', 'author', 'color', 'role', 'posttype' ];
+	protected $supported = [ 'order', 'image', 'author', 'color', 'role', 'roles', 'posttype', 'posttypes' ];
 
 	public static function module()
 	{
@@ -96,6 +96,20 @@ class Terms extends gEditorial\Module
 					'description' => _x( 'Supports term posttype for selected taxonomies.', 'Modules: Terms: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 					'values'      => $this->get_taxonomies_support( 'posttype' ),
 				],
+				[
+					'field'       => 'term_roles',
+					'type'        => 'taxonomies',
+					'title'       => _x( 'Term Roles', 'Modules: Terms: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Supports term roles for selected taxonomies.', 'Modules: Terms: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'values'      => $this->get_taxonomies_support( 'roles' ),
+				],
+				[
+					'field'       => 'term_posttypes',
+					'type'        => 'taxonomies',
+					'title'       => _x( 'Term Posttypes', 'Modules: Terms: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Supports term posttypes for selected taxonomies.', 'Modules: Terms: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'values'      => $this->get_taxonomies_support( 'posttypes' ),
+				],
 			],
 			'_frontend' => [
 				'adminbar_summary',
@@ -108,29 +122,35 @@ class Terms extends gEditorial\Module
 	{
 		return [
 			'titles' => [
-				'order'    => _x( 'Order', 'Modules: Terms: Titles', GEDITORIAL_TEXTDOMAIN ),
-				'image'    => _x( 'Image', 'Modules: Terms: Titles', GEDITORIAL_TEXTDOMAIN ),
-				'author'   => _x( 'Author', 'Modules: Terms: Titles', GEDITORIAL_TEXTDOMAIN ),
-				'color'    => _x( 'Color', 'Modules: Terms: Titles', GEDITORIAL_TEXTDOMAIN ),
-				'role'     => _x( 'Role', 'Modules: Terms: Titles', GEDITORIAL_TEXTDOMAIN ),
-				'posttype' => _x( 'Posttype', 'Modules: Terms: Titles', GEDITORIAL_TEXTDOMAIN ),
+				'order'     => _x( 'Order', 'Modules: Terms: Titles', GEDITORIAL_TEXTDOMAIN ),
+				'image'     => _x( 'Image', 'Modules: Terms: Titles', GEDITORIAL_TEXTDOMAIN ),
+				'author'    => _x( 'Author', 'Modules: Terms: Titles', GEDITORIAL_TEXTDOMAIN ),
+				'color'     => _x( 'Color', 'Modules: Terms: Titles', GEDITORIAL_TEXTDOMAIN ),
+				'role'      => _x( 'Role', 'Modules: Terms: Titles', GEDITORIAL_TEXTDOMAIN ),
+				'posttype'  => _x( 'Posttype', 'Modules: Terms: Titles', GEDITORIAL_TEXTDOMAIN ),
+				'roles'     => _x( 'Roles', 'Modules: Terms: Titles', GEDITORIAL_TEXTDOMAIN ),
+				'posttypes' => _x( 'Posttypes', 'Modules: Terms: Titles', GEDITORIAL_TEXTDOMAIN ),
 			],
 			'descriptions' => [
-				'order'    => _x( 'Terms are usually ordered alphabetically, but you can choose your own order by entering a number (1 for first, etc.) in this field.', 'Modules: Terms: Descriptions', GEDITORIAL_TEXTDOMAIN ),
-				'image'    => _x( 'Assign terms a custom image to visually separate them from each other.', 'Modules: Terms: Descriptions', GEDITORIAL_TEXTDOMAIN ),
-				'author'   => _x( 'Set term author to help identify who created or owns each term.', 'Modules: Terms: Descriptions', GEDITORIAL_TEXTDOMAIN ),
-				'color'    => _x( 'Terms can have unique colors to help separate them from each other.', 'Modules: Terms: Descriptions', GEDITORIAL_TEXTDOMAIN ),
-				'role'     => _x( 'Terms can have unique role visibility to help separate them for users.', 'Modules: Terms: Descriptions', GEDITORIAL_TEXTDOMAIN ),
-				'posttype' => _x( 'Terms can have unique posttype visibility to help separate them on editing.', 'Modules: Terms: Descriptions', GEDITORIAL_TEXTDOMAIN ),
+				'order'     => _x( 'Terms are usually ordered alphabetically, but you can choose your own order by entering a number (1 for first, etc.) in this field.', 'Modules: Terms: Descriptions', GEDITORIAL_TEXTDOMAIN ),
+				'image'     => _x( 'Assign terms a custom image to visually separate them from each other.', 'Modules: Terms: Descriptions', GEDITORIAL_TEXTDOMAIN ),
+				'author'    => _x( 'Set term author to help identify who created or owns each term.', 'Modules: Terms: Descriptions', GEDITORIAL_TEXTDOMAIN ),
+				'color'     => _x( 'Terms can have unique colors to help separate them from each other.', 'Modules: Terms: Descriptions', GEDITORIAL_TEXTDOMAIN ),
+				'role'      => _x( 'Terms can have unique role visibility to help separate them for users.', 'Modules: Terms: Descriptions', GEDITORIAL_TEXTDOMAIN ),
+				'roles'     => _x( 'Terms can have unique roles visibility to help separate them for users.', 'Modules: Terms: Descriptions', GEDITORIAL_TEXTDOMAIN ),
+				'posttype'  => _x( 'Terms can have unique posttype visibility to help separate them on editing.', 'Modules: Terms: Descriptions', GEDITORIAL_TEXTDOMAIN ),
+				'posttypes' => _x( 'Terms can have unique posttypes visibility to help separate them on editing.', 'Modules: Terms: Descriptions', GEDITORIAL_TEXTDOMAIN ),
 			],
 			'misc' => [
-				'order_column_title'    => _x( 'O', 'Modules: Terms: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				'image_column_title'    => _x( 'Image', 'Modules: Terms: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				'author_column_title'   => _x( 'Author', 'Modules: Terms: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				'color_column_title'    => _x( 'C', 'Modules: Terms: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				'role_column_title'     => _x( 'Role', 'Modules: Terms: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				'posttype_column_title' => _x( 'Posttype', 'Modules: Terms: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				'posts_column_title'    => _x( 'P', 'Modules: Terms: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'order_column_title'     => _x( 'O', 'Modules: Terms: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'image_column_title'     => _x( 'Image', 'Modules: Terms: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'author_column_title'    => _x( 'Author', 'Modules: Terms: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'color_column_title'     => _x( 'C', 'Modules: Terms: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'role_column_title'      => _x( 'Role', 'Modules: Terms: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'roles_column_title'     => _x( 'Roles', 'Modules: Terms: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'posttype_column_title'  => _x( 'Posttype', 'Modules: Terms: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'posttypes_column_title' => _x( 'Posttypes', 'Modules: Terms: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'posts_column_title'     => _x( 'P', 'Modules: Terms: Column Title', GEDITORIAL_TEXTDOMAIN ),
 			],
 			'js' => [
 				'modal_title'  => _x( 'Choose an Image', 'Modules: Terms: Javascript String', GEDITORIAL_TEXTDOMAIN ),
@@ -144,7 +164,9 @@ class Terms extends gEditorial\Module
 		$supported = Taxonomy::get();
 		$excludes  = $this->taxonomies_excluded;
 
-		// FIXME: factoring the field?
+		switch ( $field ) {
+			case 'role': $excludes[] = 'audit_attribute'; break;
+		}
 
 		return array_diff_key( $supported, array_flip( $excludes ) );
 	}
@@ -180,10 +202,15 @@ class Terms extends gEditorial\Module
 					$this->add_form_field( $field, $taxonomy );
 				}, 8, 1 );
 
-				add_action( 'quick_edit_custom_box', function( $column, $screen, $taxonomy ) use( $field ){
-					if ( $this->classs( $field ) == $column )
-						$this->quick_form_field( $field, $taxonomy );
-				}, 10, 3 );
+				if ( ! in_array( $field, [ 'roles', 'posttypes' ] ) ) {
+
+					add_action( 'quick_edit_custom_box', function( $column, $screen, $taxonomy ) use( $field ){
+						if ( $this->classs( $field ) == $column )
+							$this->quick_form_field( $field, $taxonomy );
+					}, 10, 3 );
+
+					$enqueue = TRUE;
+				}
 
 				if ( 'image' == $field ) {
 
@@ -193,8 +220,6 @@ class Terms extends gEditorial\Module
 					wp_enqueue_script( 'wp-color-picker' );
 					wp_enqueue_style( 'wp-color-picker' );
 				}
-
-				$enqueue = TRUE;
 			}
 
 			if ( $enqueue ) {
@@ -222,6 +247,9 @@ class Terms extends gEditorial\Module
 					$this->edit_form_field( $field, $taxonomy, $term );
 				}, 8, 2 );
 
+				if ( ! in_array( $field, [ 'roles', 'posttypes' ] ) )
+					$enqueue = TRUE;
+
 				if ( 'image' == $field ) {
 
 					add_thickbox();
@@ -231,8 +259,6 @@ class Terms extends gEditorial\Module
 					wp_enqueue_script( 'wp-color-picker' );
 					wp_enqueue_style( 'wp-color-picker' );
 				}
-
-				$enqueue = TRUE;
 			}
 
 			if ( $enqueue ) {
@@ -260,12 +286,14 @@ class Terms extends gEditorial\Module
 			return $columns;
 
 		$fields = [
-			'order'    => [ 'cb', 'after' ],
-			'image'    => [ 'name', 'before' ],
-			'author'   => [ 'name', 'after' ],
-			'color'    => [ 'name', 'before' ],
-			'role'     => [ 'name', 'before' ],
-			'posttype' => [ 'name', 'before' ],
+			'order'     => [ 'cb', 'after' ],
+			'image'     => [ 'name', 'before' ],
+			'author'    => [ 'name', 'after' ],
+			'color'     => [ 'name', 'before' ],
+			'role'      => [ 'name', 'before' ],
+			'roles'     => [ 'name', 'after' ],
+			'posttype'  => [ 'name', 'before' ],
+			'posttypes' => [ 'name', 'after' ],
 		];
 
 		foreach ( $fields as $field => $place )
@@ -341,6 +369,28 @@ class Terms extends gEditorial\Module
 			else
 				$this->field_empty( 'role' );
 
+		} else if ( $this->classs( 'roles' ) == $column ) {
+
+			if ( empty( $this->all_roles ) )
+				$this->all_roles = User::getAllRoleList();
+
+			if ( $meta = get_term_meta( $term_id, 'roles', TRUE ) ) {
+
+				$list = [];
+
+				foreach( (array) $meta as $role )
+					$list[] = '<span class="roles" data-roles="'.HTML::escape( $role ).'">'
+						.( empty( $this->all_roles[$role] )
+							? HTML::escape( $role )
+							: $this->all_roles[$role] )
+						.'</span>';
+
+				echo Helper::getJoined( $list );
+
+			} else {
+				$this->field_empty( 'roles' );
+			}
+
 		} else if ( $this->classs( 'posttype' ) == $column ) {
 
 			if ( empty( $this->all_posttypes ) )
@@ -355,6 +405,28 @@ class Terms extends gEditorial\Module
 
 			else
 				$this->field_empty( 'posttype' );
+
+		} else if ( $this->classs( 'posttypes' ) == $column ) {
+
+			if ( empty( $this->all_posttypes ) )
+				$this->all_posttypes = PostType::get( 2 );
+
+			if ( $meta = get_term_meta( $term_id, 'posttypes', TRUE ) ) {
+
+				$list = [];
+
+				foreach( (array) $meta as $posttype )
+					$list[] = '<span class="posttypes" data-posttypes="'.HTML::escape( $posttype ).'">'
+						.( empty( $this->all_posttypes[$posttype] )
+							? HTML::escape( $posttype )
+							: $this->all_posttypes[$posttype] )
+						.'</span>';
+
+				echo Helper::getJoined( $list );
+
+			} else {
+				$this->field_empty( 'posttypes' );
+			}
 		}
 	}
 
@@ -373,9 +445,11 @@ class Terms extends gEditorial\Module
 				if ( ! array_key_exists( 'term-'.$field, $_REQUEST ) )
 					continue;
 
-				$meta = empty( $_REQUEST['term-'.$field] ) ? FALSE : trim( $_REQUEST['term-'.$field] );
+				$meta = empty( $_REQUEST['term-'.$field] ) ? FALSE : $_REQUEST['term-'.$field];
 
 				if ( $meta ) {
+
+					$meta = is_array( $meta ) ? array_filter( $meta ) : trim( HTML::escape( $meta ) );
 
 					if ( 'image' == $field ) {
 						update_post_meta( intval( $meta ), '_wp_attachment_is_term_image', $taxonomy );
@@ -521,6 +595,28 @@ class Terms extends gEditorial\Module
 				] );
 
 			break;
+			case 'roles':
+
+				echo '<div class="wp-tab-panel"><ul>';
+
+				foreach ( User::getRoleList() as $role => $name ) {
+
+					$html = HTML::tag( 'input', [
+						'type'    => 'checkbox',
+						'name'    => 'term-'.$field.'[]',
+						'id'      => $this->classs( $field, 'id', $role ),
+						'value'   => $role,
+						'checked' => empty( $meta ) ? FALSE : in_array( $role, (array) $meta ),
+					] );
+
+					echo '<li>'.HTML::tag( 'label', [
+						'for' => $this->classs( $field, 'id', $role ),
+					], $html.'&nbsp;'.HTML::escape( $name ) ).'</li>';
+				}
+
+				echo '</ul></div>';
+
+			break;
 			case 'posttype':
 
 				echo HTML::dropdown( PostType::get( 2 ), [
@@ -529,6 +625,28 @@ class Terms extends gEditorial\Module
 					'selected'   => empty( $meta ) ? '0' : $meta,
 					'none_title' => Settings::showOptionNone(),
 				] );
+
+			break;
+			case 'posttypes':
+
+				echo '<div class="wp-tab-panel"><ul>';
+
+				foreach ( PostType::get( 2 ) as $posttype => $name ) {
+
+					$html = HTML::tag( 'input', [
+						'type'    => 'checkbox',
+						'name'    => 'term-'.$field.'[]',
+						'id'      => $this->classs( $field, 'id', $posttype ),
+						'value'   => $posttype,
+						'checked' => empty( $meta ) ? FALSE : in_array( $posttype, (array) $meta ),
+					] );
+
+					echo '<li>'.HTML::tag( 'label', [
+						'for' => $this->classs( $field, 'id', $posttype ),
+					], $html.'&nbsp;'.HTML::escape( $name ) ).'</li>';
+				}
+
+				echo '</ul></div>';
 
 			break;
 			default:
