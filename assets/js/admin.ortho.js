@@ -15,7 +15,7 @@
   };
 
   o.s = $.extend({}, {
-    button_virastar: '<span class="dashicons dashicons-filter">',
+    button_virastar: '<span class="dashicons dashicons-text">',
     button_virastar_title: 'Apply Virastar!',
     qtag_virastar: 'Virastar!',
     qtag_virastar_title: 'Apply Virastar!',
