@@ -31,7 +31,7 @@ class Statuses extends gEditorial\Module
 	{
 		$roles    = User::getAllRoleList();
 		$exclude  = [ 'administrator', 'subscriber' ];
-		$statuses = Taxonomy::listTerms( $this->constant( 'status_tax' ) );
+		$statuses = Taxonomy::getTerms( $this->constant( 'status_tax' ), FALSE, TRUE );
 
 		$settings = [
 			'posttypes_option' => 'posttypes_option',
@@ -50,14 +50,21 @@ class Statuses extends gEditorial\Module
 					'field' => 'map_status_roles',
 					'title' => _x( 'Map Status Roles', 'Modules: Statuses: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 				],
+				[
+					'field'   => 'default_status',
+					'title'   => _x( 'Default Status', 'Modules: Statuses: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'type'    => 'select',
+					'default' => 'draft',
+					'values'  => [ 'draft' => __( 'Draft' ) ] + wp_list_pluck( $statuses, 'name', 'slug' ),
+				],
 			],
 		];
 
-		foreach ( $statuses as $id => $name )
+		foreach ( $statuses as $status )
 			$settings['_roles'][] = [
-				'field'       => 'status_roles_'.$id,
+				'field'       => 'status_roles_'.$status->term_id,
 				'type'        => 'checkbox',
-				'title'       => sprintf( _x( 'Roles for %s', 'Modules: Statuses: Setting Title', GEDITORIAL_TEXTDOMAIN ), $name ),
+				'title'       => sprintf( _x( 'Roles for %s', 'Modules: Statuses: Setting Title', GEDITORIAL_TEXTDOMAIN ), $status->name ),
 				'description' => _x( 'Roles that check for status visibility.', 'Modules: Statuses: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 				'exclude'     => $exclude,
 				'values'      => $roles,
