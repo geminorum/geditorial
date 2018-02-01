@@ -193,10 +193,7 @@ class Terms extends gEditorial\Module
 
 		if ( 'edit-tags' == $screen->base ) {
 
-			foreach ( $this->supported as $field ) {
-
-				if ( ! in_array( $screen->taxonomy, $this->get_setting( 'term_'.$field, [] ) ) )
-					continue;
+			foreach ( $this->get_supported( $screen->taxonomy ) as $field ) {
 
 				add_action( $screen->taxonomy.'_add_form_fields', function( $taxonomy ) use( $field ){
 					$this->add_form_field( $field, $taxonomy );
@@ -238,10 +235,7 @@ class Terms extends gEditorial\Module
 
 		} else if ( 'term' == $screen->base ) {
 
-			foreach ( $this->supported as $field ) {
-
-				if ( ! in_array( $screen->taxonomy, $this->get_setting( 'term_'.$field, [] ) ) )
-					continue;
+			foreach ( $this->get_supported( $screen->taxonomy ) as $field ) {
 
 				add_action( $screen->taxonomy.'_edit_form_fields', function( $term, $taxonomy ) use( $field ){
 					$this->edit_form_field( $field, $taxonomy, $term );
@@ -280,27 +274,53 @@ class Terms extends gEditorial\Module
 		add_filter( 'manage_'.$taxonomy.'_custom_column', [ $this, 'custom_column' ], 10, 3 );
 	}
 
+	private function get_supported( $taxonomy = FALSE )
+	{
+		$list = [];
+
+		foreach ( $this->supported as $field )
+			if ( $taxonomy && in_array( $taxonomy, $this->get_setting( 'term_'.$field, [] ) ) )
+				$list[] = $field;
+
+		return $this->filters( 'supported_fields', $list, $taxonomy );
+	}
+
+	private function get_supported_position( $field, $taxonomy = FALSE )
+	{
+		switch ( $field ) {
+			case 'order':
+
+				$position = [ 'cb', 'after' ];
+
+			break;
+			case 'image':
+			case 'color':
+			case 'role':
+			case 'posttype':
+
+				$position = [ 'name', 'before' ];
+
+			break;
+			default:
+				$position = [ 'name', 'after' ];
+		}
+
+		return $this->filters( 'supported_field_position', $position, $field, $taxonomy );
+	}
+
 	public function manage_columns( $columns )
 	{
 		if ( ! $taxonomy = self::req( 'taxonomy' ) )
 			return $columns;
 
-		$fields = [
-			'order'     => [ 'cb', 'after' ],
-			'image'     => [ 'name', 'before' ],
-			'author'    => [ 'name', 'after' ],
-			'color'     => [ 'name', 'before' ],
-			'role'      => [ 'name', 'before' ],
-			'roles'     => [ 'name', 'after' ],
-			'posttype'  => [ 'name', 'before' ],
-			'posttypes' => [ 'name', 'after' ],
-		];
+		foreach ( $this->get_supported( $taxonomy ) as $field ) {
 
-		foreach ( $fields as $field => $place )
-			if ( in_array( $taxonomy, $this->get_setting( 'term_'.$field, [] ) ) )
-				$columns = Arraay::insert( $columns, [
-					$this->classs( $field ) => $this->get_column_title( $field, $taxonomy ),
-				], $place[0], $place[1] );
+			$position = $this->get_supported_position( $field, $taxonomy );
+
+			$columns = Arraay::insert( $columns, [
+				$this->classs( $field ) => $this->get_column_title( $field, $taxonomy ),
+			], $position[0], $position[1] );
+		}
 
 		// smaller name for posts column
 		if ( array_key_exists( 'posts', $columns ) )
@@ -311,7 +331,7 @@ class Terms extends gEditorial\Module
 
 	public function sortable_columns( $columns )
 	{
-		foreach ( $this->supported as $field )
+		foreach ( $this->get_supported() as $field )
 			$columns[$this->classs( $field )] = 'meta_'.$field;
 
 		return $columns;
@@ -319,158 +339,171 @@ class Terms extends gEditorial\Module
 
 	public function custom_column( $display, $column, $term_id )
 	{
-		if ( $this->classs( 'order' ) == $column ) {
+		$html   = '';
+		$meta   = '';
+		$screen = get_current_screen();
 
-			echo $this->column_order( get_term_meta( $term_id, 'order', TRUE ) );
+		foreach ( $this->get_supported( $screen->taxonomy ) as $field ) {
 
-		} else if ( $this->classs( 'image' ) == $column ) {
+			if ( $this->classs( $field ) != $column )
+				continue;
 
-			// FIXME
-			// $sizes = Media::getPosttypeImageSizes( $post->post_type );
-			// $size  = isset( $sizes[$post->post_type.'-thumbnail'] ) ? $post->post_type.'-thumbnail' : 'thumbnail';
-			$size = [ 45, 72 ];
+			switch ( $field ) {
+				case 'order':
 
-			echo $this->column_image( $term_id, $size );
+					$html = $this->column_order( get_term_meta( $term_id, 'order', TRUE ) );
 
-		} else if ( $this->classs( 'author' ) == $column ) {
+				break;
+				case 'image':
 
-			if ( $meta = get_term_meta( $term_id, 'author', TRUE ) ) {
+					// $sizes = Media::getPosttypeImageSizes( $post->post_type );
+					// $size  = isset( $sizes[$post->post_type.'-thumbnail'] ) ? $post->post_type.'-thumbnail' : 'thumbnail';
+					$size = [ 45, 72 ]; // FIXME
 
-				$user = get_user_by( 'id', $meta );
+					$html = $this->column_image( $term_id, $size );
 
-				if ( ! empty( $user->first_name ) && ! empty( $user->last_name ) )
-					echo "{$user->first_name} {$user->last_name}";
+				break;
+				case 'author':
 
-				else
-					echo $user->display_name;
+					if ( $meta = get_term_meta( $term_id, 'author', TRUE ) ) {
 
-				echo '<span class="author" data-author="'.$meta.'"></span>';
-			} else {
-				$this->field_empty( 'author' );
+						$user = get_user_by( 'id', $meta );
+						$html = '<span class="author" data-author="'.$meta.'">'.$user->display_name.'</span>';
+
+					} else {
+						$html = $this->field_empty( 'author' );
+					}
+
+				break;
+				case 'color':
+
+					if ( $meta = get_term_meta( $term_id, 'color', TRUE ) )
+						$html = '<i class="-color" data-color="'.HTML::escape( $meta )
+							.'" style="background-color:'.HTML::escape( $meta ).'"></i>';
+
+				break;
+				case 'role':
+
+					if ( empty( $this->all_roles ) )
+						$this->all_roles = User::getAllRoleList();
+
+					if ( $meta = get_term_meta( $term_id, 'role', TRUE ) )
+						$html = '<span class="role" data-role="'.HTML::escape( $meta ).'">'
+							.( empty( $this->all_roles[$meta] )
+								? HTML::escape( $meta )
+								: $this->all_roles[$meta] )
+							.'</span>';
+
+					else
+						$html = $this->field_empty( 'role' );
+
+				break;
+				case 'roles':
+
+					if ( empty( $this->all_roles ) )
+						$this->all_roles = User::getAllRoleList();
+
+					if ( $meta = get_term_meta( $term_id, 'roles', TRUE ) ) {
+
+						$list = [];
+
+						foreach( (array) $meta as $role )
+							$list[] = '<span class="roles" data-roles="'.HTML::escape( $role ).'">'
+								.( empty( $this->all_roles[$role] )
+									? HTML::escape( $role )
+									: $this->all_roles[$role] )
+								.'</span>';
+
+						$html = Helper::getJoined( $list );
+
+					} else {
+						$html = $this->field_empty( 'roles' );
+					}
+
+				break;
+				case 'posttype':
+
+					if ( empty( $this->all_posttypes ) )
+						$this->all_posttypes = PostType::get( 2 );
+
+					if ( $meta = get_term_meta( $term_id, 'posttype', TRUE ) )
+						$html = '<span class="posttype" data-posttype="'.HTML::escape( $meta ).'">'
+							.( empty( $this->all_posttypes[$meta] )
+								? HTML::escape( $meta )
+								: $this->all_posttypes[$meta] )
+							.'</span>';
+
+					else
+						$html = $this->field_empty( 'posttype' );
+
+				break;
+				case 'posttypes':
+
+					if ( empty( $this->all_posttypes ) )
+						$this->all_posttypes = PostType::get( 2 );
+
+					if ( $meta = get_term_meta( $term_id, 'posttypes', TRUE ) ) {
+
+						$list = [];
+
+						foreach( (array) $meta as $posttype )
+							$list[] = '<span class="posttypes" data-posttypes="'.HTML::escape( $posttype ).'">'
+								.( empty( $this->all_posttypes[$posttype] )
+									? HTML::escape( $posttype )
+									: $this->all_posttypes[$posttype] )
+								.'</span>';
+
+						$html = Helper::getJoined( $list );
+
+					} else {
+						$html = $this->field_empty( 'posttypes' );
+					}
+				}
 			}
 
-		} else if ( $this->classs( 'color' ) == $column ) {
-
-			if ( $meta = get_term_meta( $term_id, 'color', TRUE ) )
-				echo '<i class="-color" data-color="'.HTML::escape( $meta ).'" style="background-color:'.HTML::escape( $meta ).'"></i>';
-
-		} else if ( $this->classs( 'role' ) == $column ) {
-
-			if ( empty( $this->all_roles ) )
-				$this->all_roles = User::getAllRoleList();
-
-			if ( $meta = get_term_meta( $term_id, 'role', TRUE ) )
-				echo '<span class="role" data-role="'.HTML::escape( $meta ).'">'
-					.( empty( $this->all_roles[$meta] )
-						? HTML::escape( $meta )
-						: $this->all_roles[$meta] )
-					.'</span>';
-
-			else
-				$this->field_empty( 'role' );
-
-		} else if ( $this->classs( 'roles' ) == $column ) {
-
-			if ( empty( $this->all_roles ) )
-				$this->all_roles = User::getAllRoleList();
-
-			if ( $meta = get_term_meta( $term_id, 'roles', TRUE ) ) {
-
-				$list = [];
-
-				foreach( (array) $meta as $role )
-					$list[] = '<span class="roles" data-roles="'.HTML::escape( $role ).'">'
-						.( empty( $this->all_roles[$role] )
-							? HTML::escape( $role )
-							: $this->all_roles[$role] )
-						.'</span>';
-
-				echo Helper::getJoined( $list );
-
-			} else {
-				$this->field_empty( 'roles' );
-			}
-
-		} else if ( $this->classs( 'posttype' ) == $column ) {
-
-			if ( empty( $this->all_posttypes ) )
-				$this->all_posttypes = PostType::get( 2 );
-
-			if ( $meta = get_term_meta( $term_id, 'posttype', TRUE ) )
-				echo '<span class="posttype" data-posttype="'.HTML::escape( $meta ).'">'
-					.( empty( $this->all_posttypes[$meta] )
-						? HTML::escape( $meta )
-						: $this->all_posttypes[$meta] )
-					.'</span>';
-
-			else
-				$this->field_empty( 'posttype' );
-
-		} else if ( $this->classs( 'posttypes' ) == $column ) {
-
-			if ( empty( $this->all_posttypes ) )
-				$this->all_posttypes = PostType::get( 2 );
-
-			if ( $meta = get_term_meta( $term_id, 'posttypes', TRUE ) ) {
-
-				$list = [];
-
-				foreach( (array) $meta as $posttype )
-					$list[] = '<span class="posttypes" data-posttypes="'.HTML::escape( $posttype ).'">'
-						.( empty( $this->all_posttypes[$posttype] )
-							? HTML::escape( $posttype )
-							: $this->all_posttypes[$posttype] )
-						.'</span>';
-
-				echo Helper::getJoined( $list );
-
-			} else {
-				$this->field_empty( 'posttypes' );
-			}
+			echo $this->filters( 'supported_field_column', $html, $field, $screen->taxonomy, $term_id, $meta );
 		}
 	}
 
 	private function field_empty( $field, $value = '0' )
 	{
-		echo '<span class="column-'.$field.'-empty -empty">&mdash;</span>';
-		echo '<span class="'.$field.'" data-'.$field.'="'.$value.'"></span>';
+		return '<span class="column-'.$field.'-empty -empty">&mdash;</span>'
+			.'<span class="'.$field.'" data-'.$field.'="'.$value.'"></span>';
 	}
 
 	public function edit_term( $term_id, $tt_id, $taxonomy )
 	{
-		foreach ( $this->supported as $field ) {
+		foreach ( $this->get_supported( $taxonomy ) as $field ) {
 
-			if ( in_array( $taxonomy, $this->get_setting( 'term_'.$field, [] ) ) ) {
+			if ( ! array_key_exists( 'term-'.$field, $_REQUEST ) )
+				continue;
 
-				if ( ! array_key_exists( 'term-'.$field, $_REQUEST ) )
-					continue;
+			$meta = empty( $_REQUEST['term-'.$field] ) ? FALSE : $_REQUEST['term-'.$field];
+			$meta = $this->filters( 'supported_filed_edit', $meta, $field, $taxonomy, $term_id );
 
-				$meta = empty( $_REQUEST['term-'.$field] ) ? FALSE : $_REQUEST['term-'.$field];
+			if ( $meta ) {
 
-				if ( $meta ) {
+				$meta = is_array( $meta ) ? array_filter( $meta ) : trim( HTML::escape( $meta ) );
 
-					$meta = is_array( $meta ) ? array_filter( $meta ) : trim( HTML::escape( $meta ) );
-
-					if ( 'image' == $field ) {
-						update_post_meta( intval( $meta ), '_wp_attachment_is_term_image', $taxonomy );
-						do_action( 'clean_term_attachment_cache', intval( $meta ), $taxonomy, $term_id );
-					}
-
-					update_term_meta( $term_id, $field, $meta );
-
-				} else {
-
-					if ( 'image' == $field && $meta = get_term_meta( $term_id, $field, TRUE ) ) {
-						delete_post_meta( intval( $meta ), '_wp_attachment_is_term_image' );
-						do_action( 'clean_term_attachment_cache', intval( $meta ), $taxonomy, $term_id );
-					}
-
-					delete_term_meta( $term_id, $field );
+				if ( 'image' == $field ) {
+					update_post_meta( intval( $meta ), '_wp_attachment_is_term_image', $taxonomy );
+					do_action( 'clean_term_attachment_cache', intval( $meta ), $taxonomy, $term_id );
 				}
 
-				// FIXME: experiment: since the action may trigger twice
-				unset( $_REQUEST['term-'.$field] );
+				update_term_meta( $term_id, $field, $meta );
+
+			} else {
+
+				if ( 'image' == $field && $meta = get_term_meta( $term_id, $field, TRUE ) ) {
+					delete_post_meta( intval( $meta ), '_wp_attachment_is_term_image' );
+					do_action( 'clean_term_attachment_cache', intval( $meta ), $taxonomy, $term_id );
+				}
+
+				delete_term_meta( $term_id, $field );
 			}
+
+			// FIXME: experiment: since the action may trigger twice
+			unset( $_REQUEST['term-'.$field] );
 		}
 	}
 
@@ -479,7 +512,7 @@ class Terms extends gEditorial\Module
 		echo '<fieldset><div class="inline-edit-col"><label><span class="title">';
 
 			$title = $this->get_string( $field, $taxonomy, 'titles', $field );
-			echo HTML::escape( $this->filters( 'field_'.$field.'_title', $title, $field, $taxonomy, FALSE ) );
+			echo HTML::escape( $this->filters( 'field_'.$field.'_title', $title, $taxonomy, $field, FALSE ) );
 
 		echo '</span><span class="input-text-wrap">';
 
@@ -494,14 +527,14 @@ class Terms extends gEditorial\Module
 		echo '<label for="term-'.$field.'">';
 
 			$title = $this->get_string( $field, $taxonomy, 'titles', $field );
-			echo HTML::escape( $this->filters( 'field_'.$field.'_title', $title, $field, $taxonomy, $term ) );
+			echo HTML::escape( $this->filters( 'field_'.$field.'_title', $title, $taxonomy, $field, $term ) );
 
 		echo '</label>';
 
 			$this->form_field( $field, $taxonomy, $term );
 
 			$desc = $this->get_string( $field, $taxonomy, 'descriptions', '' );
-			HTML::desc( $this->filters( 'field_'.$field.'_desc', $desc, $field, $taxonomy, $term ) );
+			HTML::desc( $this->filters( 'field_'.$field.'_desc', $desc, $taxonomy, $field, $term ) );
 
 		echo '</div>';
 	}
@@ -512,20 +545,21 @@ class Terms extends gEditorial\Module
 		echo '<label for="term-'.$field.'">';
 
 			$title = $this->get_string( $field, $taxonomy, 'titles', $field );
-			echo HTML::escape( $this->filters( 'field_'.$field.'_title', $title, $field, $taxonomy, $term ) );
+			echo HTML::escape( $this->filters( 'field_'.$field.'_title', $title, $taxonomy, $field, $term ) );
 
 		echo '</label></th><td>';
 
 			$this->form_field( $field, $taxonomy, $term );
 
 			$desc = $this->get_string( $field, $taxonomy, 'descriptions', '' );
-			HTML::desc( $this->filters( 'field_'.$field.'_desc', $desc, $field, $taxonomy, $term ) );
+			HTML::desc( $this->filters( 'field_'.$field.'_desc', $desc, $taxonomy, $field, $term ) );
 
 		echo '</td></tr>';
 	}
 
 	private function form_field( $field, $taxonomy, $term = FALSE )
 	{
+		$html    = '';
 		$term_id = empty( $term->term_id ) ? 0 : $term->term_id;
 		$meta    = get_term_meta( $term_id, $field, TRUE );
 
@@ -533,13 +567,13 @@ class Terms extends gEditorial\Module
 
 			case 'image':
 
-				echo '<div>'.HTML::tag( 'img', [
+				$html.= '<div>'.HTML::tag( 'img', [
 					'id'    => $this->classs( $field, 'img' ),
 					'src'   => empty( $meta ) ? '' : wp_get_attachment_image_url( $meta, 'thumbnail' ),
 					'style' => empty( $meta ) ? 'display:none' : FALSE,
 				] ).'</div>';
 
-				echo HTML::tag( 'input', [
+				$html.= HTML::tag( 'input', [
 					'id'    => $this->classs( $field, 'id' ),
 					'name'  => 'term-'.$field,
 					'type'  => 'text',
@@ -547,11 +581,11 @@ class Terms extends gEditorial\Module
 					'style' => 'display:none',
 				] );
 
-				echo HTML::tag( 'a', [
+				$html.= HTML::tag( 'a', [
 					'class' => [ 'button', 'button-small', 'button-secondary', '-modal' ],
 				], _x( 'Choose', 'Modules: Terms: Button', GEDITORIAL_TEXTDOMAIN ) );
 
-				echo '&nbsp;'.HTML::tag( 'a', [
+				$html.= '&nbsp;'.HTML::tag( 'a', [
 					'class' => [ 'button', 'button-small', 'button-link-delete', '-remove' ],
 					'style' => empty( $meta ) ? 'display:none' : FALSE,
 				], _x( 'Remove', 'Modules: Terms: Button', GEDITORIAL_TEXTDOMAIN ) );
@@ -559,7 +593,7 @@ class Terms extends gEditorial\Module
 			break;
 			case 'order':
 
-				echo HTML::tag( 'input', [
+				$html.= HTML::tag( 'input', [
 					'id'    => $this->classs( $field, 'id' ),
 					'name'  => 'term-'.$field,
 					'type'  => 'number',
@@ -575,19 +609,20 @@ class Terms extends gEditorial\Module
 				if ( empty( $meta ) && FALSE === $term )
 					$meta = get_current_user_id();
 
-				wp_dropdown_users( [
+				$html.= wp_dropdown_users( [
 					'name'              => 'term-'.$field,
 					'who'               => 'authors',
 					'show'              => 'display_name_with_login',
 					'selected'          => empty( $meta ) ? '0' : $meta,
 					'show_option_all'   => Settings::showOptionNone(),
 					'option_none_value' => 0,
+					'echo'              => 0,
 				] );
 
 			break;
 			case 'role':
 
-				echo HTML::dropdown( User::getRoleList(), [
+				$html.= HTML::dropdown( User::getRoleList(), [
 					'id'         => $this->classs( $field, 'id' ),
 					'name'       => 'term-'.$field,
 					'selected'   => empty( $meta ) ? '0' : $meta,
@@ -597,11 +632,11 @@ class Terms extends gEditorial\Module
 			break;
 			case 'roles':
 
-				echo '<div class="wp-tab-panel"><ul>';
+				$html.= '<div class="wp-tab-panel"><ul>';
 
 				foreach ( User::getRoleList() as $role => $name ) {
 
-					$html = HTML::tag( 'input', [
+					$checkbox = HTML::tag( 'input', [
 						'type'    => 'checkbox',
 						'name'    => 'term-'.$field.'[]',
 						'id'      => $this->classs( $field, 'id', $role ),
@@ -609,17 +644,17 @@ class Terms extends gEditorial\Module
 						'checked' => empty( $meta ) ? FALSE : in_array( $role, (array) $meta ),
 					] );
 
-					echo '<li>'.HTML::tag( 'label', [
+					$html.= '<li>'.HTML::tag( 'label', [
 						'for' => $this->classs( $field, 'id', $role ),
-					], $html.'&nbsp;'.HTML::escape( $name ) ).'</li>';
+					], $checkbox.'&nbsp;'.HTML::escape( $name ) ).'</li>';
 				}
 
-				echo '</ul></div>';
+				$html.= '</ul></div>';
 
 			break;
 			case 'posttype':
 
-				echo HTML::dropdown( PostType::get( 2 ), [
+				$html.= HTML::dropdown( PostType::get( 2 ), [
 					'id'         => $this->classs( $field, 'id' ),
 					'name'       => 'term-'.$field,
 					'selected'   => empty( $meta ) ? '0' : $meta,
@@ -629,11 +664,11 @@ class Terms extends gEditorial\Module
 			break;
 			case 'posttypes':
 
-				echo '<div class="wp-tab-panel"><ul>';
+				$html.= '<div class="wp-tab-panel"><ul>';
 
 				foreach ( PostType::get( 2 ) as $posttype => $name ) {
 
-					$html = HTML::tag( 'input', [
+					$checkbox = HTML::tag( 'input', [
 						'type'    => 'checkbox',
 						'name'    => 'term-'.$field.'[]',
 						'id'      => $this->classs( $field, 'id', $posttype ),
@@ -641,17 +676,17 @@ class Terms extends gEditorial\Module
 						'checked' => empty( $meta ) ? FALSE : in_array( $posttype, (array) $meta ),
 					] );
 
-					echo '<li>'.HTML::tag( 'label', [
+					$html.= '<li>'.HTML::tag( 'label', [
 						'for' => $this->classs( $field, 'id', $posttype ),
-					], $html.'&nbsp;'.HTML::escape( $name ) ).'</li>';
+					], $checkbox.'&nbsp;'.HTML::escape( $name ) ).'</li>';
 				}
 
-				echo '</ul></div>';
+				$html.= '</ul></div>';
 
 			break;
 			default:
 
-				echo HTML::tag( 'input', [
+				$html.= HTML::tag( 'input', [
 					'id'    => $this->classs( $field, 'id' ),
 					'name'  => 'term-'.$field,
 					'type'  => 'text',
@@ -659,27 +694,31 @@ class Terms extends gEditorial\Module
 					'data'  => [ 'ortho' => 'color' ],
 				] );
 		}
+
+		echo $this->filters( 'supported_field_form', $html, $field, $taxonomy, $term_id, $meta );
 	}
 
 	private function quickedit_field( $field, $taxonomy )
 	{
+		$html = '';
+
 		switch ( $field ) {
 
 			case 'image':
 
-				echo '<input type="hidden" name="term-'.$field.'" value="" />';
+				$html.= '<input type="hidden" name="term-'.$field.'" value="" />';
 
-				echo HTML::tag( 'button', [
+				$html.= HTML::tag( 'button', [
 					'class' => [ 'button', 'button-small', 'button-secondary', '-modal', '-quick' ],
 				], _x( 'Choose', 'Modules: Terms: Button', GEDITORIAL_TEXTDOMAIN ) );
 
-				echo '&nbsp;'.HTML::tag( 'a', [
+				$html.= '&nbsp;'.HTML::tag( 'a', [
 					'href'  => '',
 					'class' => [ 'button', 'button-small', 'button-link-delete', '-remove', '-quick' ],
 					'style' => 'display:none',
 				], _x( 'Remove', 'Modules: Terms: Button', GEDITORIAL_TEXTDOMAIN ) ).'&nbsp;';
 
-				echo HTML::tag( 'img', [
+				$html.= HTML::tag( 'img', [
 					// 'src'   => '',
 					'class' => '-img',
 					'style' => 'display:none',
@@ -688,7 +727,7 @@ class Terms extends gEditorial\Module
 			break;
 			case 'order':
 
-				echo HTML::tag( 'input', [
+				$html.= HTML::tag( 'input', [
 					'name'  => 'term-'.$field,
 					'type'  => 'number',
 					'value' => '',
@@ -699,18 +738,19 @@ class Terms extends gEditorial\Module
 			break;
 			case 'author':
 
-				wp_dropdown_users( [
+				$html.= wp_dropdown_users( [
 					'name'              => 'term-'.$field,
 					'who'               => 'authors',
 					'show'              => 'display_name_with_login',
 					'show_option_all'   => Settings::showOptionNone(),
 					'option_none_value' => 0,
+					'echo'              => 0,
 				] );
 
 			break;
 			case 'color':
 
-				echo HTML::tag( 'input', [
+				$html.= HTML::tag( 'input', [
 					'name'  => 'term-'.$field,
 					'type'  => 'color',
 					'value' => '',
@@ -721,7 +761,7 @@ class Terms extends gEditorial\Module
 			break;
 			case 'role':
 
-				echo HTML::dropdown( User::getRoleList(), [
+				$html.= HTML::dropdown( User::getRoleList(), [
 					'name'       => 'term-'.$field,
 					'selected'   => '0',
 					'none_title' => Settings::showOptionNone(),
@@ -730,7 +770,7 @@ class Terms extends gEditorial\Module
 			break;
 			case 'posttype':
 
-				echo HTML::dropdown( PostType::get( 2 ), [
+				$html.= HTML::dropdown( PostType::get( 2 ), [
 					'name'       => 'term-'.$field,
 					'selected'   => '0',
 					'none_title' => Settings::showOptionNone(),
@@ -738,8 +778,10 @@ class Terms extends gEditorial\Module
 
 			break;
 			default:
-				echo '<input type="text" class="ptitle" name="term-'.$field.'" value="" />';
+				$html.= '<input type="text" class="ptitle" name="term-'.$field.'" value="" />';
 		}
+
+		echo $this->filters( 'supported_field_quickedit', $html, $field, $taxonomy );
 	}
 
 	public function adminbar_init( &$nodes, $parent )
