@@ -226,15 +226,7 @@ class Statuses extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
-		if ( 'edit' == $screen->base
-			&& in_array( $screen->post_type, $this->post_types() ) ) {
-
-			// if ( $this->get_setting( 'status_restrict' ) )
-			// 	$this->action( 'pre_get_posts', 1, 20, 'admin' );
-
-			$this->filter( 'display_post_states', 2 );
-
-		} else if ( $this->constant( 'status_tax' ) == $screen->taxonomy ) {
+		if ( $this->constant( 'status_tax' ) == $screen->taxonomy ) {
 
 			add_filter( 'parent_file', function(){
 				return 'options-general.php';
@@ -242,8 +234,19 @@ class Statuses extends gEditorial\Module
 
 			if ( 'edit-tags' == $screen->base )
 				add_filter( 'manage_edit-'.$this->constant( 'status_tax' ).'_columns', [ $this, 'manage_columns' ] );
-		}
 
+		} else if ( in_array( $screen->post_type, $this->post_types() ) ) {
+
+			if ( 'post' == $screen->base ) {
+
+			} else if ( 'edit' == $screen->base ) {
+
+				// if ( $this->get_setting( 'status_restrict' ) )
+				// 	$this->action( 'pre_get_posts', 1, 20, 'admin' );
+
+				$this->filter( 'display_post_states', 2 ); // FIXME: add setting
+			}
+		}
 	}
 
 	public function manage_columns( $columns )
