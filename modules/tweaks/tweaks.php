@@ -170,13 +170,13 @@ class Tweaks extends gEditorial\Module
 	{
 		return [
 			'misc' => [
-				'title_column_title'   => _x( 'Title', 'Modules: Tweaks: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				'rows_column_title'    => _x( 'Extra', 'Modules: Tweaks: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				'atts_column_title'    => _x( 'Attributes', 'Modules: Tweaks: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				'id_column_title'      => _x( 'ID', 'Modules: Tweaks: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				'thumb_column_title'   => _x( 'Featured', 'Modules: Tweaks: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				'order_column_title'   => _x( 'Order', 'Modules: Tweaks: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				'user_column_title'    => _x( 'User', 'Modules: Tweaks: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'title_column_title'    => _x( 'Title', 'Modules: Tweaks: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'rows_column_title'     => _x( 'Extra', 'Modules: Tweaks: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'atts_column_title'     => _x( 'Attributes', 'Modules: Tweaks: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'id_column_title'       => _x( 'ID', 'Modules: Tweaks: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'thumb_column_title'    => _x( 'Featured', 'Modules: Tweaks: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'order_column_title'    => _x( 'Order', 'Modules: Tweaks: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'user_column_title'     => _x( 'User', 'Modules: Tweaks: Column Title', GEDITORIAL_TEXTDOMAIN ),
 				'contacts_column_title' => _x( 'Contacts', 'Modules: Tweaks: Column Title', GEDITORIAL_TEXTDOMAIN ),
 			],
 			'js' => [
@@ -815,7 +815,6 @@ class Tweaks extends gEditorial\Module
 		return HTML::escape( $value );
 	}
 
-	// display post excerpt form fields
 	public function post_excerpt_meta_box( $post )
 	{
 		echo '<div class="geditorial-admin-wrap-textbox geditorial-wordcount-wrap">';

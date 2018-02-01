@@ -121,7 +121,7 @@ class Ortho extends gEditorial\Module
 	{
 		return [
 			'js' => [
-				// 'button_virastar'        => HTML::getDashicon( 'filter' ),
+				// 'button_virastar'        => HTML::getDashicon( 'text' ),
 				'button_virastar_title'  => _x( 'Apply Virastar!', 'Modules: Ortho: Javascript String', GEDITORIAL_TEXTDOMAIN ),
 				'qtag_virastar'          => _x( 'Virastar!', 'Modules: Ortho: Javascript String', GEDITORIAL_TEXTDOMAIN ),
 				'qtag_virastar_title'    => _x( 'Apply Virastar!', 'Modules: Ortho: Javascript String', GEDITORIAL_TEXTDOMAIN ),

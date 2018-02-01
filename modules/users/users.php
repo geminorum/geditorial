@@ -383,7 +383,7 @@ class Users extends gEditorial\Module
 
 		$user = wp_get_current_user();
 
-		echo '<div class="geditorial-admin-wrap-widget -users -contacts">';
+		echo '<div class="geditorial-wrap -admin-widget -users -contacts">';
 
 		echo HTML::wrap( get_avatar( $user->user_email, 125 ), '-avatar' );
 

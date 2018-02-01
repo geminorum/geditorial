@@ -211,7 +211,7 @@ class Widget extends \WP_Widget
 
 	public function before_form( $instance, $echo = TRUE )
 	{
-		$classes = [ static::BASE.'-admin-wrap-widgetform' ];
+		$classes = [ static::BASE.'wrap', '-admin-widgetform' ];
 
 		if ( static::MODULE )
 			$classes[] = '-'.static::MODULE;

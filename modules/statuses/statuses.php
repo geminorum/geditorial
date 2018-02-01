@@ -94,8 +94,6 @@ class Statuses extends gEditorial\Module
 			]
 		);
 
-		// FIXME: better to keep status info with meta as internal val on the module to avoid furthe queries
-		// FIXME: query by order: https://core.trac.wordpress.org/ticket/34996
 		$statuses = Taxonomy::getTerms( $this->constant( 'status_tax' ), FALSE, TRUE );
 
 		foreach ( $statuses as $status ) {
@@ -297,8 +295,7 @@ class Statuses extends gEditorial\Module
 		if ( self::req( 'post_status' ) )
 			return $states;
 
-		$statuses = get_post_stati( [ 'show_in_admin_status_list' => TRUE ], 'objects' );
-		// $statuses = Taxonomy::getTerms( $this->constant( 'status_tax' ), FALSE, TRUE, 'slug' );
+		$statuses = get_post_stati( [], 'objects' );
 
 		if ( array_key_exists( $post->post_status, $statuses ) )
 			return [ $post->post_status => $statuses[$post->post_status]->label ] + $states;

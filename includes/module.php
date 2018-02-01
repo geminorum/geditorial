@@ -2007,6 +2007,9 @@ class Module extends Base
 
 		else if ( 'excerpt' == $type )
 			remove_meta_box( 'postexcerpt', $posttype, 'normal' );
+
+		else if ( 'submit' == $type )
+			remove_meta_box( 'submitdiv', $posttype, 'side' );
 	}
 
 	public function get_meta_box_title( $constant = 'post', $url = NULL, $edit_cap = 'manage_options', $title = NULL )
@@ -2015,7 +2018,7 @@ class Module extends Base
 			$title = $this->get_string( 'meta_box_title', $constant, 'misc', _x( 'Settings', 'Module: MetaBox Default Title', GEDITORIAL_TEXTDOMAIN ) );
 
 		if ( $info = $this->get_string( 'meta_box_info', $constant, 'misc', NULL ) )
-			$title.= ' <span class="postbox-title-info" data-title="info" title="'.HTML::escape( $info ).'">'.HTML::getDashicon( 'info' ).'</span>';
+			$title.= ' <span class="postbox-title-info" data-title="info" title="'.HTML::escape( $info ).'">'.HTML::getDashicon( 'editor-help' ).'</span>';
 
 		if ( FALSE === $url )
 			return $title;
@@ -2926,7 +2929,7 @@ SQL;
 			'number'       => -1,
 			'orderby'      => 'post_count',
 			'fields'       => $fields,
-			'role__not_in' => $this->get_setting( 'excluded_roles', [] ),
+			'role__not_in' => array_merge( $this->get_setting( 'excluded_roles', [] ), [ 'administrator' ] ),
 			'count_total'  => FALSE,
 		];
 

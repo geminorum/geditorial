@@ -480,11 +480,12 @@ class Settings extends Core\Base
 			'field'       => 'summary_scope',
 			'type'        => 'select',
 			'title'       => _x( 'Summary Scope', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'description' => $description ?: _x( 'User scope for the content summary', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+			'description' => $description ?: _x( 'User scope for the content summary.', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 			'default'     => 'all',
 			'values'      => [
 				'all'     => _x( 'All Users', 'Settings: Setting Option', GEDITORIAL_TEXTDOMAIN ),
 				'current' => _x( 'Current User', 'Settings: Setting Option', GEDITORIAL_TEXTDOMAIN ),
+				'roles'   => _x( 'Within the Roles', 'Settings: Setting Option', GEDITORIAL_TEXTDOMAIN ),
 			],
 		];
 	}
@@ -1455,7 +1456,7 @@ class Settings extends Core\Base
 						$html.= HTML::tag( 'option', [
 							'value'    => $args['none_value'],
 							'selected' => $value == $args['none_value'],
-						], HTML::escape( $args['none_title'] ) );
+						], $args['none_title'] );
 					}
 
 					foreach ( $args['values'] as $value_name => $value_title ) {
