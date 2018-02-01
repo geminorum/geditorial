@@ -65,7 +65,7 @@ class Statuses extends gEditorial\Module
 				'field'       => 'status_roles_'.$status->term_id,
 				'type'        => 'checkbox',
 				'title'       => sprintf( _x( 'Roles for %s', 'Modules: Statuses: Setting Title', GEDITORIAL_TEXTDOMAIN ), $status->name ),
-				'description' => _x( 'Roles that check for status visibility.', 'Modules: Statuses: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+				'description' => sprintf( _x( 'The <b>%s</b> status will be visibile to the selected roles.', 'Modules: Statuses: Setting Description', GEDITORIAL_TEXTDOMAIN ), $status->name ),
 				'exclude'     => $exclude,
 				'values'      => $roles,
 			];
