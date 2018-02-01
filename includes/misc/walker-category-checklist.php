@@ -21,12 +21,12 @@ class Walker_Category_Checklist extends \Walker_Category_Checklist
 		if ( empty( $atts['role'] ) )
 			return $this->_start_el( $output, $term, $depth, $args, $id );
 
-		$role = get_term_meta( $term->term_id, 'role', TRUE );
+		$roles = get_term_meta( $term->term_id, 'roles', TRUE );
 
-		if ( ! $role )
+		if ( ! $roles )
 			return $this->_start_el( $output, $term, $depth, $args, $id );
 
-		if ( $role && User::hasRole( [ 'administrator', $role ] ) )
+		if ( User::hasRole( array_merge( [ 'administrator' ], (array) $roles ) ) )
 			return $this->_start_el( $output, $term, $depth, $args, $id );
 
 		if ( 'disabled' == $atts['role'] ) {
