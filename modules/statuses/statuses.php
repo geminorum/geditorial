@@ -138,6 +138,7 @@ class Statuses extends gEditorial\Module
 		}
 
 		$this->filter( 'wp_statuses_get_registered_post_types', 2 );
+		$this->filter( 'wp_insert_post_data', 2 );
 
 		if ( $this->get_setting( 'map_status_roles' ) )
 			$this->filter( 'map_meta_cap', 4 );
@@ -287,6 +288,47 @@ class Statuses extends gEditorial\Module
 
 		// all other statuses won't be applied to our posttypes
 		return array_diff( $posttypes, $this->post_types() );
+	}
+
+	public function wp_insert_post_data( $data, $postarr )
+	{
+		if ( in_array( $data['post_status'], [ 'trash', 'private', 'auto-draft' ] ) )
+			return $data;
+
+		if ( ! in_array( $data['post_type'], $this->post_types() ) )
+			return $data;
+
+		if ( empty( $postarr['original_post_status'] ) ) {
+			$data['post_status'] = $this->get_setting( 'default_status', 'draft' );
+			return $data;
+		}
+
+		$original = $postarr['original_post_status'];
+		$allowed  = get_post_stati( [ 'show_in_admin_status_list' => TRUE ] );
+
+		// saved from auto-draft
+		if ( in_array( $original, [ 'trash', 'private', 'auto-draft' ] ) ) {
+
+			if ( ! in_array( $data['post_status'], $allowed ) )
+				$data['post_status'] = $this->get_setting( 'default_status', 'draft' );
+
+			return $data;
+		}
+
+		// saved from old status
+		if ( ! in_array( $original, $allowed ) )
+			$data['post_status'] = $original; // revert
+
+		else if ( empty( $postarr['_wp_statuses_status'] ) )
+			$data['post_status'] = $this->get_setting( 'default_status', 'draft' );
+
+		else if ( in_array( $postarr['_wp_statuses_status'], $allowed ) )
+			$data['post_status'] = sanitize_key( $postarr['_wp_statuses_status'] );
+
+		else
+			$data['post_status'] = $this->get_setting( 'default_status', 'draft' );
+
+		return $data;
 	}
 
 	public function display_post_states( $states, $post )
