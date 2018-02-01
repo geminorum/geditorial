@@ -430,6 +430,30 @@ class MetaBox extends Core\Base
 			echo HTML::wrap( $html, 'field-wrap field-wrap-select' );
 	}
 
+	public static function fieldPostExcerpt( $post, $title = '' )
+	{
+		if ( is_null( $title ) )
+			$title = __( 'Excerpt' );
+
+		$html = '<div id="postexcerpt" class="postbox geditorial-wrap -admin-postbox">';
+		$html.= '<button type="button" class="handlediv button-link" aria-expanded="true">';
+		$html.= '<span class="screen-reader-text">'.esc_attr_x( 'Click to toggle', 'MetaBox', GEDITORIAL_TEXTDOMAIN ).'</span>';
+		$html.= '<span class="toggle-indicator" aria-hidden="true"></span></button>';
+		$html.= '<h2 class="hndle"><span>'.$title.'</span></h2><div class="inside">';
+		$html.= '<div class="geditorial-admin-wrap-textbox geditorial-wordcount-wrap">';
+		$html.= '<div class="-wrap field-wrap field-wrap-textarea">';
+		$html.= '<label class="screen-reader-text" for="excerpt">'.$title.'</label>';
+
+		$html.= '<textarea rows="1" cols="40" name="excerpt" id="excerpt">';
+			$html.= $post->post_excerpt; // textarea_escaped
+		$html.= '</textarea>';
+
+		$html.= Helper::htmlWordCount( 'excerpt', $post->post_type );
+		$html.= '</div></div></div></div>';
+
+		echo $html;
+	}
+
 	// FIXME: finalize name/id
 	public static function dropdownPostTaxonomy( $taxonomy, $post, $key = FALSE, $count = TRUE, $excludes = '', $default = '0' )
 	{
