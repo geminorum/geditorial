@@ -400,36 +400,23 @@ class Audit extends gEditorial\Module
 		if ( ! $this->role_can( 'assign' ) )
 			return;
 
-		$title = $this->summary_scope_user()
-			? _x( 'Editorial Audit Summary', 'Modules: Audit: Dashboard Widget Title', GEDITORIAL_TEXTDOMAIN )
-			: _x( 'Your Audit Summary', 'Modules: Audit: Dashboard Widget Title', GEDITORIAL_TEXTDOMAIN );
+		$title = 'current' == $this->get_setting( 'summary_scope', 'all' )
+			? _x( 'Your Audit Summary', 'Modules: Audit: Dashboard Widget Title', GEDITORIAL_TEXTDOMAIN )
+			: _x( 'Editorial Audit Summary', 'Modules: Audit: Dashboard Widget Title', GEDITORIAL_TEXTDOMAIN );
 
 		$title.= MetaBox::titleActionRefresh();
 
 		wp_add_dashboard_widget( $this->classs( 'summary' ), $title, [ $this, 'dashboard_widget_summary' ] );
 	}
 
-	// 0 for all
-	private function summary_scope_user()
-	{
-		// FIXME: DEPRECATED
-		if ( 'all' == $this->get_setting( 'summary_scope', 'all' ) )
-			return 0;
-
-		// working but wait on hh
-		// if ( $this->role_can( 'reports' ) )
-		// 	return 0;
-
-		return get_current_user_id();
-	}
-
 	public function dashboard_widget_summary()
 	{
 		// using core styles
-		echo '<div id="dashboard_right_now" class="geditorial-admin-wrap-widget -audit -core-styles">';
+		echo '<div id="dashboard_right_now" class="geditorial-wrap -admin-widget -audit -core-styles">';
 
-		$user_id = $this->summary_scope_user();
-		$key     = $this->hash( 'widgetsummary', $user_id );
+		$scope  = $this->get_setting( 'summary_scope', 'all' );
+		$suffix = 'all' == $scope ? 'all' : get_current_user_id();
+		$key    = $this->hash( 'widgetsummary', $scope, $suffix );
 
 		if ( WordPress::isFlush() )
 			delete_transient( $key );
@@ -441,7 +428,7 @@ class Audit extends gEditorial\Module
 
 			$terms = Taxonomy::getTerms( $this->constant( 'audit_tax' ), FALSE, TRUE, 'slug', [ 'hide_empty' => TRUE ] );
 
-			if ( $summary = $this->get_summary( $this->post_types(), $terms, $user_id ) ) {
+			if ( $summary = $this->get_summary( $this->post_types(), $terms, $scope ) ) {
 
 				$html = Text::minifyHTML( $summary );
 				set_transient( $key, $html, 12 * HOUR_IN_SECONDS );
@@ -458,30 +445,34 @@ class Audit extends gEditorial\Module
 		echo '</div>';
 	}
 
-	private function get_summary( $posttypes, $terms, $user_id = 0, $list = 'li' )
+	private function get_summary( $posttypes, $terms, $scope = 'all', $user_id = NULL, $list = 'li' )
 	{
 		$html    = '';
+		$check   = FALSE;
 		$tax     = $this->constant( 'audit_tax' );
 		$all     = PostType::get( 3 );
 		$exclude = Database::getExcludeStatuses();
-		$check   = $this->role_can( 'restricted', NULL, FALSE, FALSE );
-		$hidden  = 'hidden' == $this->get_setting( 'restricted', 'disabled' );
+
+		if ( is_null( $user_id ) )
+			$user_id = get_current_user_id();
+
+		if ( 'roles' == $scope && $this->role_can( 'restricted', $user_id, FALSE, FALSE ) )
+			$check = TRUE; // 'hidden' == $this->get_setting( 'restricted', 'disabled' );
 
 		if ( $this->get_setting( 'summary_drafts', FALSE ) )
 			$exclude = array_diff( $exclude, [ 'draft' ] );
 
 		if ( count( $terms ) ) {
 
-			$counts  = Database::countPostsByTaxonomy( $terms, $posttypes, $user_id, $exclude );
+			$counts  = Database::countPostsByTaxonomy( $terms, $posttypes, ( 'current' == $scope ? $user_id : 0 ), $exclude );
 			$objects = [];
 
 			foreach ( $counts as $term => $posts ) {
 
-				if ( $check && $hidden && $user_id ) {
-					if ( $role = get_term_meta( $terms[$term]->term_id, 'role', TRUE ) ) {
-						if ( ! User::hasRole( [ 'administrator', $role ] ) )
-							continue;
-					}
+				if ( $check && ( $roles = get_term_meta( $terms[$term]->term_id, 'roles', TRUE ) ) ) {
+
+					if ( ! User::hasRole( array_merge( [ 'administrator' ], (array) $roles ), $user_id ) )
+						continue;
 				}
 
 				$name = sanitize_term_field( 'name', $terms[$term]->name, $terms[$term]->term_id, $terms[$term]->taxonomy, 'display' );
@@ -508,7 +499,7 @@ class Audit extends gEditorial\Module
 
 					if ( $objects[$type] && current_user_can( $objects[$type]->cap->edit_posts ) )
 						$text = HTML::tag( 'a', [
-							'href'  => WordPress::getPostTypeEditLink( $type, $user_id, [ $tax => $term ] ),
+							'href'  => WordPress::getPostTypeEditLink( $type, ( 'current' == $scope ? $user_id : 0 ), [ $tax => $term ] ),
 							'class' => $class,
 						], $text );
 
@@ -522,7 +513,7 @@ class Audit extends gEditorial\Module
 
 		if ( $this->get_setting( 'count_not', FALSE ) ) {
 
-			$not = Database::countPostsByNotTaxonomy( $tax, $posttypes, $user_id, $exclude );
+			$not = Database::countPostsByNotTaxonomy( $tax, $posttypes, ( 'current' == $scope ? $user_id : 0 ), $exclude );
 
 			foreach ( $not as $type => $count ) {
 
@@ -546,7 +537,7 @@ class Audit extends gEditorial\Module
 
 				if ( $objects[$type] && current_user_can( $objects[$type]->cap->edit_posts ) )
 					$text = HTML::tag( 'a', [
-						'href'  => WordPress::getPostTypeEditLink( $type, $user_id, [ $tax => '-1' ] ),
+						'href'  => WordPress::getPostTypeEditLink( $type, ( 'current' == $scope ? $user_id : 0 ), [ $tax => '-1' ] ),
 						'class' => $class,
 					], $text );
 
@@ -620,7 +611,7 @@ class Audit extends gEditorial\Module
 				_x( 'Apply Filter', 'Modules: Audit: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
 
 			// FIXME: style this!
-			if ( $summary = $this->get_summary( $this->post_types(), $terms, $args['user_id'] ) )
+			if ( $summary = $this->get_summary( $this->post_types(), $terms, ( $args['user_id'] ? 'current' : 'all' ), $args['user_id'] ) )
 				echo '<div><ul>'.$summary.'</ul></div>';
 
 			echo '</td></tr>';
