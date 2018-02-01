@@ -216,6 +216,8 @@ class Event extends gEditorial\Module
 
 				if ( $startend ) {
 
+					$this->class_meta_box( $screen, 'main' );
+
 					add_meta_box( $this->classs( 'main' ),
 						$this->get_meta_box_title( 'event_cpt' ),
 						[ $this, 'do_meta_box_main' ],

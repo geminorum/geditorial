@@ -2012,6 +2012,13 @@ class Module extends Base
 			remove_meta_box( 'submitdiv', $posttype, 'side' );
 	}
 
+	protected function class_meta_box( $screen, $context = 'main' )
+	{
+		add_filter( 'postbox_classes_'.$screen->id.'_'.$this->classs( $context ), function( $classes ) use ( $context ) {
+			return array_merge( $classes, [ $this->base.'-wrap', '-admin-postbox', '-'.$this->key, '-'.$this->key.'-'.$context ] );
+		} );
+	}
+
 	public function get_meta_box_title( $constant = 'post', $url = NULL, $edit_cap = 'manage_options', $title = NULL )
 	{
 		if ( is_null( $title ) )

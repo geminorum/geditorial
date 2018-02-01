@@ -257,6 +257,8 @@ class Cartable extends gEditorial\Module
 
 				// if ( $this->role_can( 'cartable' ) ) {
 
+					$this->class_meta_box( $screen, 'main' );
+
 					add_meta_box( $this->classs( 'main' ),
 						$this->get_meta_box_title( 'users', $this->get_adminmenu( FALSE ), TRUE ),
 						[ $this, 'do_meta_box_main' ],

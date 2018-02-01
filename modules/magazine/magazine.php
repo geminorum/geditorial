@@ -252,6 +252,7 @@ class Magazine extends gEditorial\Module
 
 				$this->filter_false( 'geditorial_meta_box_callback', 12 );
 				$this->remove_meta_box( $screen->post_type, $screen->post_type, 'parent' );
+				$this->class_meta_box( $screen, 'main' );
 
 				add_meta_box( $this->classs( 'main' ),
 					$this->get_meta_box_title( 'issue_cpt', FALSE ),
@@ -260,6 +261,8 @@ class Magazine extends gEditorial\Module
 					'side',
 					'high'
 				);
+
+				$this->class_meta_box( $screen, 'list' );
 
 				add_meta_box( $this->classs( 'list' ),
 					$this->get_meta_box_title( 'issue_tax' ),
@@ -294,6 +297,8 @@ class Magazine extends gEditorial\Module
 		} else if ( in_array( $screen->post_type, $this->post_types() ) ) {
 
 			if ( 'post' == $screen->base ) {
+
+				$this->class_meta_box( $screen, 'supported' );
 
 				add_meta_box( $this->classs( 'supported' ),
 					$this->get_meta_box_title_posttype( 'issue_cpt' ),
