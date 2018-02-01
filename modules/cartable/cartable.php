@@ -41,34 +41,34 @@ class Cartable extends gEditorial\Module
 			'_roles' => [
 				'excluded_roles' => _x( 'Roles that excluded from cartables.', 'Modules: Cartable: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 				[
-					'field'       => 'cartable_user_roles',
+					'field'       => 'view_user_roles',
 					'type'        => 'checkbox',
-					'title'       => _x( 'User Cartable Roles', 'Modules: Cartable: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'View User Cartable', 'Modules: Cartable: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Roles that can view user cartables.', 'Modules: Cartable: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 					'exclude'     => $exclude,
 					'values'      => $roles,
 				],
 				[
-					'field'       => 'cartable_group_roles',
+					'field'       => 'view_group_roles',
 					'type'        => 'checkbox',
-					'title'       => _x( 'Group Cartable Roles', 'Modules: Cartable: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'View Group Cartable', 'Modules: Cartable: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Roles that can view group cartables.', 'Modules: Cartable: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 					'exclude'     => $exclude,
 					'values'      => $roles,
 					'disabled'    => ! $this->support_groups,
 				],
 				[
-					'field'       => 'user_roles',
+					'field'       => 'assign_user_roles',
 					'type'        => 'checkbox',
-					'title'       => _x( 'User Cartable Roles', 'Modules: Cartable: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Assign User Cartables', 'Modules: Cartable: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Roles that can assign user cartables.', 'Modules: Cartable: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 					'exclude'     => $exclude,
 					'values'      => $roles,
 				],
 				[
-					'field'       => 'group_roles',
+					'field'       => 'assign_group_roles',
 					'type'        => 'checkbox',
-					'title'       => _x( 'Group Cartable Roles', 'Modules: Cartable: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Assign Group Cartables', 'Modules: Cartable: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Roles that can assign gorup cartables.', 'Modules: Cartable: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 					'exclude'     => $exclude,
 					'values'      => $roles,
@@ -77,7 +77,7 @@ class Cartable extends gEditorial\Module
 				[
 					'field'       => 'restricted_roles',
 					'type'        => 'checkbox',
-					'title'       => _x( 'Restricted Roles', 'Modules: Cartable: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Restricted Groups', 'Modules: Cartable: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Roles that restricted to their group users.', 'Modules: Cartable: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 					'exclude'     => $exclude,
 					'values'      => $roles,
@@ -96,11 +96,11 @@ class Cartable extends gEditorial\Module
 				],
 				// 'admin_rowactions',
 			],
-			'_dashboard' => [
-				'dashboard_widgets',
-				'dashboard_authors',
-				'dashboard_count',
-			],
+			// '_dashboard' => [
+			// 	'dashboard_widgets',
+			// 	'dashboard_authors',
+			// 	'dashboard_count',
+			// ],
 		];
 	}
 
@@ -288,7 +288,7 @@ class Cartable extends gEditorial\Module
 			$page,
 			_x( 'Editorial Cartable', 'Modules: Cartable: Page Title', GEDITORIAL_TEXTDOMAIN ),
 			_x( 'My Cartable', 'Modules: Cartable: Menu Title', GEDITORIAL_TEXTDOMAIN ),
-			'read', // $this->role_can( 'cartable_user', $user_id ) ? 'read' : 'do_not_allow', // FIXME this will lock the group's
+			'read', // $this->role_can( 'view_user', $user_id ) ? 'read' : 'do_not_allow', // FIXME: this will lock the group's
 			$menu,
 			[ $this, 'admin_cartable_page' ]
 		);
@@ -298,7 +298,7 @@ class Cartable extends gEditorial\Module
 		if ( ! $this->support_groups )
 			return;
 
-		if ( ! $this->role_can( 'cartable_group', $user_id ) )
+		if ( ! $this->role_can( 'view_group', $user_id ) )
 			return;
 
 		$groups = wp_get_object_terms( $user_id, $this->constant( 'group_ref' ) );
@@ -470,7 +470,7 @@ class Cartable extends gEditorial\Module
 	public function main_meta_box_users( $post, $box )
 	{
 		$users   = [];
-		$disable = ! $this->role_can( 'user' );
+		$disable = ! $this->role_can( 'assign_user' );
 
 		if ( $this->support_groups && ! $disable && $this->role_can( 'restricted', NULL, FALSE, FALSE ) ) {
 
@@ -505,7 +505,7 @@ class Cartable extends gEditorial\Module
 
 	public function main_meta_box_groups( $post, $box )
 	{
-		$disable = ! $this->role_can( 'group' );
+		$disable = ! $this->role_can( 'assign_group' );
 
 		MetaBox::checklistTerms( $post->ID, [
 			'taxonomy'      => $this->constant( 'group_tax' ),
@@ -530,10 +530,10 @@ class Cartable extends gEditorial\Module
 		$user = wp_get_current_user();
 		$term = FALSE;
 
-		if ( $this->support_groups && $group && $this->role_can( 'cartable_group', $user->ID ) )
+		if ( $this->support_groups && $group && $this->role_can( 'view_group', $user->ID ) )
 			$term = Taxonomy::getTerm( $group, $this->constant( 'group_tax' ) );
 
-		else if ( $this->role_can( 'cartable_user', $user->ID ) )
+		else if ( $this->role_can( 'view_user', $user->ID ) )
 			$term = Taxonomy::getTerm( $user->user_login, $this->constant( 'user_tax' ) );
 
 		if ( ! $term )

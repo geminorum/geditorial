@@ -2915,7 +2915,7 @@ SQL;
 		return MetaBox::checkHidden( $this->classs( $widget ), $after );
 	}
 
-	protected function get_blog_users( $fields = NULL, $list = FALSE )
+	protected function get_blog_users( $fields = NULL, $list = FALSE, $admins = FALSE )
 	{
 		if ( is_null( $fields ) )
 			$fields = [
@@ -2925,11 +2925,16 @@ SQL;
 				'user_email',
 			];
 
+		$excludes = $this->get_setting( 'excluded_roles', [] );
+
+		if ( $admins )
+			$excludes[] = 'administrator';
+
 		$args = [
 			'number'       => -1,
 			'orderby'      => 'post_count',
 			'fields'       => $fields,
-			'role__not_in' => array_merge( $this->get_setting( 'excluded_roles', [] ), [ 'administrator' ] ),
+			'role__not_in' => $excludes,
 			'count_total'  => FALSE,
 		];
 
