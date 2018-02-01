@@ -152,6 +152,9 @@ class Calendar extends gEditorial\Module
 
 	public function post_row_actions( $actions, $post )
 	{
+		if ( in_array( $post->post_status, [ 'trash', 'private', 'auto-draft' ] ) )
+			return $actions;
+
 		if ( ! in_array( $post->post_type, $this->post_types() ) )
 			return $actions;
 
