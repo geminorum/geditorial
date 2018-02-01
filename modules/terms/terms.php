@@ -458,7 +458,6 @@ class Terms extends gEditorial\Module
 					} else {
 						$html = $this->field_empty( 'posttypes' );
 					}
-				}
 			}
 
 			echo $this->filters( 'supported_field_column', $html, $field, $screen->taxonomy, $term_id, $meta );
