@@ -404,13 +404,17 @@ class MetaBox extends Core\Base
 		echo HTML::wrap( $html, 'field-wrap field-wrap-inputnumber' );
 	}
 
-	public static function fieldPostParent( $post_type, $post, $statuses = [ 'publish', 'future', 'draft' ] )
+	public static function fieldPostParent( $post, $post_type = NULL, $statuses = [ 'publish', 'future', 'draft' ] )
 	{
+		// allows for parent of a diffrent type
+		if ( is_null( $post_type ) )
+			$post_type = $post->post_type;
+
 		if ( ! get_post_type_object( $post_type )->hierarchical )
 			return;
 
 		$html = wp_dropdown_pages( [
-			'post_type'        => $post_type, // alows for parent of diffrent type
+			'post_type'        => $post_type,
 			'selected'         => $post->post_parent,
 			'name'             => 'parent_id',
 			'class'            => 'geditorial-admin-dropbown',

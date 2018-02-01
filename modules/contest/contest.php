@@ -334,7 +334,7 @@ class Contest extends gEditorial\Module
 		do_action( 'geditorial_meta_do_meta_box', $post, $box, NULL );
 
 		MetaBox::fieldPostMenuOrder( $post );
-		MetaBox::fieldPostParent( $post->post_type, $post );
+		MetaBox::fieldPostParent( $post );
 
 		echo '</div>';
 	}

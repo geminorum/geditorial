@@ -455,7 +455,7 @@ class Event extends gEditorial\Module
 		if ( $this->get_setting( 'display_type', TRUE ) )
 			MetaBox::dropdownPostTaxonomy( $this->constant( 'type_tax' ), $post, FALSE, FALSE, '', $args['cal-type'] );
 
-		MetaBox::fieldPostParent( $post->post_type, $post );
+		MetaBox::fieldPostParent( $post );
 	}
 
 	// https://github.com/devinsays/event-posts/blob/master/event-posts.php
