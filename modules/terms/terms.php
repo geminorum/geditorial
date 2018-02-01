@@ -321,7 +321,7 @@ class Terms extends gEditorial\Module
 	{
 		if ( $this->classs( 'order' ) == $column ) {
 
-			$this->column_order( get_term_meta( $term_id, 'order', TRUE ) );
+			echo $this->column_order( get_term_meta( $term_id, 'order', TRUE ) );
 
 		} else if ( $this->classs( 'image' ) == $column ) {
 
@@ -330,7 +330,7 @@ class Terms extends gEditorial\Module
 			// $size  = isset( $sizes[$post->post_type.'-thumbnail'] ) ? $post->post_type.'-thumbnail' : 'thumbnail';
 			$size = [ 45, 72 ];
 
-			$this->column_image( $term_id, $size );
+			echo $this->column_image( $term_id, $size );
 
 		} else if ( $this->classs( 'author' ) == $column ) {
 

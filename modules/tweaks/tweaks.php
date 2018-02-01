@@ -499,12 +499,12 @@ class Tweaks extends gEditorial\Module
 					? $post->post_type.'-thumbnail'
 					: [ 45, 72 ];
 
-				$this->column_thumb( $post_id, $size );
+				echo $this->column_thumb( $post_id, $size );
 
 			break;
 			case $this->classs( 'order' ):
 
-				$this->column_order( $post->menu_order );
+				echo $this->column_order( $post->menu_order );
 
 			break;
 			case $this->classs( 'id' ):

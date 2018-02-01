@@ -264,7 +264,7 @@ class Users extends gEditorial\Module
 		if ( count( $list ) )
 			echo HTML::tableCode( $list );
 		else
-			$this->column_count( 0 );
+			echo $this->column_count( 0 );
 
 		return ob_get_clean();
 	}
@@ -309,7 +309,7 @@ class Users extends gEditorial\Module
 	public function custom_column( $display, $column, $term_id )
 	{
 		if ( 'users' == $column )
-			$this->column_count( get_term( $term_id, $this->constant( 'group_tax' ) )->count );
+			echo $this->column_count( get_term( $term_id, $this->constant( 'group_tax' ) )->count );
 	}
 
 	public function edit_user_profile( $user )

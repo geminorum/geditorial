@@ -2448,27 +2448,29 @@ SQL;
 	// for posts
 	public function column_thumb( $post_id, $size = [ 45, 72 ] )
 	{
-		echo $this->filters( 'column_thumb', PostType::htmlFeaturedImage( $post_id, $size ), $post_id, $size );
+		return $this->filters( 'column_thumb', PostType::htmlFeaturedImage( $post_id, $size ), $post_id, $size );
 	}
 
 	// for terms
 	public function column_image( $term_id, $size = [ 45, 72 ] )
 	{
-		echo $this->filters( 'column_image', Taxonomy::htmlFeaturedImage( $term_id, $size ), $term_id, $size );
+		return $this->filters( 'column_image', Taxonomy::htmlFeaturedImage( $term_id, $size ), $term_id, $size );
 	}
 
 	// TODO: override $title_attr based on passed constant key
 	public function column_count( $count, $title_attr = NULL )
 	{
-		echo Helper::htmlCount( $count, $title_attr );
-		echo '<span class="count" data-count="'.( FALSE === $count ? '' : $count ).'"></span>';
+		return Helper::htmlCount( $count, $title_attr )
+			.'<span class="count" data-count="'
+			.( FALSE === $count ? '' : $count ).'"></span>';
 	}
 
 	// TODO: override $title_attr based on passed constant key
 	public function column_order( $order, $title_attr = NULL )
 	{
-		echo Helper::htmlOrder( $order, $title_attr );
-		echo '<span class="order" data-order="'.( FALSE === $order ? '' : $order ).'"></span>';
+		return Helper::htmlOrder( $order, $title_attr )
+			.'<span class="order" data-order="'
+			.( FALSE === $order ? '' : $order ).'"></span>';
 	}
 
 	public function column_term( $object_id, $constant, $title_attr = NULL, $single = TRUE )
@@ -2478,7 +2480,7 @@ SQL;
 		if ( ! is_wp_error( $the_terms ) && count( $the_terms ) ) {
 
 			if ( $single ) {
-				echo $the_terms[0]->name;
+				return $the_terms[0]->name;
 
 			} else {
 
@@ -2487,7 +2489,7 @@ SQL;
 				foreach ( $the_terms as $the_term )
 					$terms[] = $the_term->name;
 
-				echo Helper::getJoined( $terms );
+				return Helper::getJoined( $terms );
 			}
 
 		} else {
@@ -2495,7 +2497,7 @@ SQL;
 			if ( is_null( $title_attr ) )
 				$title_attr = _x( 'No Term', 'Module: No Count Term Attribute', GEDITORIAL_TEXTDOMAIN );
 
-			printf( '<span title="%s" class="column-term-empty">&mdash;</span>', $title_attr );
+			return sprintf( '<span title="%s" class="column-term-empty">&mdash;</span>', $title_attr );
 		}
 	}
 
