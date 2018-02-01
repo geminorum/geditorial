@@ -491,11 +491,15 @@ class Audit extends gEditorial\Module
 					if ( ! $count )
 						continue;
 
-					$text = vsprintf( '%3$s %1$s (%2$s)', [
-						Helper::noopedCount( $count, $all[$type] ),
-						Helper::trimChars( $name, 35 ),
-						Number::format( $count ),
-					] );
+					if ( count( $posttypes ) > 1 )
+						$text = vsprintf( '%3$s %1$s (%2$s)', [
+							Helper::noopedCount( $count, $all[$type] ),
+							Helper::trimChars( $name, 35 ),
+							Number::format( $count ),
+						] );
+
+					else
+						$text = sprintf( '%2$s %1$s', $name, Number::format( $count ) );
 
 					if ( empty( $objects[$type] ) )
 						$objects[$type] = get_post_type_object( $type );
@@ -525,11 +529,15 @@ class Audit extends gEditorial\Module
 				if ( ! $count )
 					continue;
 
-				$text = vsprintf( '%3$s %1$s %2$s', [
-					Helper::noopedCount( $count, $all[$type] ),
-					$this->get_string( 'show_option_none', 'audit_tax', 'misc' ),
-					Number::format( $count ),
-				] );
+				if ( count( $posttypes ) > 1 )
+					$text = vsprintf( '%3$s %1$s %2$s', [
+						Helper::noopedCount( $count, $all[$type] ),
+						$this->get_string( 'show_option_none', 'audit_tax', 'misc' ),
+						Number::format( $count ),
+					] );
+
+				else
+					$text = sprintf( '%2$s %1$s', $this->get_string( 'show_option_none', 'audit_tax', 'misc' ), Number::format( $count ) );
 
 				if ( empty( $objects[$type] ) )
 					$objects[$type] = get_post_type_object( $type );
