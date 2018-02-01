@@ -349,11 +349,21 @@ class Cartable extends gEditorial\Module
 		if ( ! $this->nonce_verify( 'settings' ) )
 			return;
 
-		$count = 0;
+		$count  = 0;
+		$site   = Helper::getEditorialUserID();
+		$admins = get_super_admins();
 
-		foreach ( $this->get_blog_users() as $user )
+		foreach ( $this->get_blog_users() as $user ) {
+
+			if ( $site == $user->ID )
+				continue;
+
+			if ( in_array( $user->user_login, $admins ) )
+				continue;
+
 			if ( Taxonomy::addTerm( $user->user_login, $this->constant( 'user_tax' ), FALSE ) )
 				$count++;
+		}
 
 		if ( $this->support_groups )
 			foreach ( Taxonomy::getTerms( $this->constant( 'group_ref' ), FALSE, TRUE ) as $group )
