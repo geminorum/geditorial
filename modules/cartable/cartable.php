@@ -490,25 +490,28 @@ class Cartable extends gEditorial\Module
 		echo '</div>';
 	}
 
-	public function metabox_summary( $post, $check_groups = TRUE )
+	public function metabox_summary( $post, $check_groups = TRUE, $wrap = TRUE )
 	{
 		$html  = '';
 		$user  = wp_get_current_user();
 		$users = $this->get_users( $post->ID );
 
 		if ( in_array( $user->user_login, $users ) )
-			$html.= '<li>'._x( 'This currently is on your cartable.', 'Modules: Cartable', GEDITORIAL_TEXTDOMAIN ).'</li>';
+			$html.= '<li class="-row">'._x( 'This currently is on your cartable.', 'Modules: Cartable', GEDITORIAL_TEXTDOMAIN ).'</li>';
 
 		if ( $check_groups && $this->support_groups ) {
 			$groups = $this->get_groups( $post->ID );
 
 			foreach( $groups as $group )
 				if ( is_object_in_term( $user->ID, $this->constant( 'group_ref' ), $group ) )
-					$html.= '<li>'._x( 'This currently is on your group cartable.', 'Modules: Cartable', GEDITORIAL_TEXTDOMAIN ).'</li>';
+					$html.= '<li class="-row">'._x( 'This currently is on your group cartable.', 'Modules: Cartable', GEDITORIAL_TEXTDOMAIN ).'</li>';
 		}
 
+		if ( ! $wrap )
+			return $html;
+
 		if ( ! $html )
-			$html.= '<li>'._x( 'This currently is <b>not</b> on any of your cartables.', 'Modules: Cartable', GEDITORIAL_TEXTDOMAIN ).'</li>';
+			$html.= '<li class="-row">'._x( 'This currently is <b>not</b> on any of your cartables.', 'Modules: Cartable', GEDITORIAL_TEXTDOMAIN ).'</li>';
 
 		return HTML::wrap( '<ul>'.$html.'</ul>', 'field-wrap field-wrap-summary' );
 	}
