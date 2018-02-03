@@ -98,6 +98,15 @@ class Workflow extends gEditorial\Module
 			$this->filter( 'map_meta_cap', 4, 12 );
 	}
 
+	public function init_ajax()
+	{
+		if ( $taxonomy = self::req( 'taxonomy' ) ) {
+
+			if ( $taxonomy == $this->constant( 'status_tax' ) )
+				$this->_edit_tags_screen( $taxonomy );
+		}
+	}
+
 	public function map_meta_cap( $caps, $cap, $user_id, $args )
 	{
 		switch ( $cap ) {
@@ -198,7 +207,7 @@ class Workflow extends gEditorial\Module
 			} );
 
 			if ( 'edit-tags' == $screen->base )
-				add_filter( 'manage_edit-'.$this->constant( 'status_tax' ).'_columns', [ $this, 'manage_columns' ] );
+				$this->_edit_tags_screen( $screen->taxonomy );
 
 		} else if ( in_array( $screen->post_type, $this->post_types() ) ) {
 
@@ -223,6 +232,12 @@ class Workflow extends gEditorial\Module
 					$this->filter( 'display_post_states', 2 );
 			}
 		}
+	}
+
+	private function _edit_tags_screen( $taxonomy )
+	{
+		add_filter( 'manage_edit-'.$taxonomy.'_columns', [ $this, 'manage_columns' ] );
+		// add_filter( 'manage_'.$taxonomy.'_custom_column', [ $this, 'custom_column' ], 10, 3 );
 	}
 
 	public function manage_columns( $columns )
