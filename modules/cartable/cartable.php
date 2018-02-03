@@ -152,7 +152,7 @@ class Cartable extends gEditorial\Module
 			'manage_terms' => $this->caps['settings'],
 			'edit_terms'   => $this->caps['settings'],
 			'delete_terms' => $this->caps['settings'],
-			'assign_terms' => $this->role_can( 'assign_user' ) ? 'read' : 'do_not_allow',
+			'assign_terms' => 'assign_'.$this->constant( 'user_tax' ),
 		] );
 
 		// see gpeople affiliations
@@ -169,10 +169,7 @@ class Cartable extends gEditorial\Module
 
 		$this->action_module( 'users' );
 		$this->action( 'add_user_to_blog', 3 ); // new term for new users
-
-		if ( $this->get_setting( 'map_cap_user' )
-			|| $this->get_setting( 'map_cap_group' ) )
-				$this->filter( 'map_meta_cap', 4 );
+		$this->filter( 'map_meta_cap', 4 );
 	}
 
 	public function users_init( $options )
@@ -188,7 +185,7 @@ class Cartable extends gEditorial\Module
 			'manage_terms' => $this->caps['settings'],
 			'edit_terms'   => $this->caps['settings'],
 			'delete_terms' => $this->caps['settings'],
-			'assign_terms' => $this->role_can( 'assign_group' ) ? 'read' : 'do_not_allow',
+			'assign_terms' => 'assign_'.$this->constant( 'group_tax' ),
 		] );
 
 		$this->filter( 'wp_update_term_data', 4 );
@@ -221,6 +218,20 @@ class Cartable extends gEditorial\Module
 
 		switch ( $cap ) {
 
+			case 'assign_'.$this->constant( 'user_tax' ):
+
+				return $this->role_can( 'assign_user' )
+					? [ 'read' ]
+					: [ 'do_not_allow' ];
+
+			break;
+			case 'assign_'.$this->constant( 'group_tax' ):
+
+				return $this->role_can( 'assign_group' )
+					? [ 'read' ]
+					: [ 'do_not_allow' ];
+
+			break;
 			case 'read_post':
 			case 'read_page':
 			case 'edit_post':
