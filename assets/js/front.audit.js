@@ -9,16 +9,24 @@
   o.button = '#wp-admin-bar-geditorial-audit-attributes a.ab-item';
   o.spinner = '.geditorial-spinner';
 
+  // @REF: https://remysharp.com/2010/07/21/throttling-function-calls
+  // @OLD: https://stackoverflow.com/a/9424784
+  o.debounce = function (fn, delay) {
+    var timer = null;
+    return function () {
+      var context = this;
+      var args = arguments;
+      clearTimeout(timer);
+      timer = setTimeout(function () {
+        fn.apply(context, args);
+      }, delay);
+    };
+  };
+
   o.watch = function () {
-    // do stuff when user has been idle for 1 second
-    // @REF: https://stackoverflow.com/a/9424784
-    var wto;
-    $(':input', o.box).change(function () {
-      clearTimeout(wto);
-      wto = setTimeout(function () {
-        o.store();
-      }, 1000);
-    });
+    $(':input', o.box).change(o.debounce(function () {
+      o.store();
+    }, 1000));
   };
 
   o.store = function () {
