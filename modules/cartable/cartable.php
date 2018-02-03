@@ -253,6 +253,12 @@ class Cartable extends gEditorial\Module
 				// 	$this->enqueue_asset_js( [], $screen );
 				// }
 
+				if ( $this->role_can( 'view_user' ) )
+					$this->action_module( 'tweaks', 'column_attr', 1, 20, 'users' );
+
+				if ( $this->support_groups && $this->role_can( 'view_group' ) )
+					$this->action_module( 'tweaks', 'column_attr', 1, 20, 'groups' );
+
 			} else if ( 'post' == $screen->base ) {
 
 				// if ( $this->role_can( 'cartable' ) ) {
@@ -334,6 +340,44 @@ class Cartable extends gEditorial\Module
 
 			$this->settings_signature( 'listtable' );
 		Settings::wrapClose();
+	}
+
+	public function tweaks_column_attr_users( $post )
+	{
+		if ( ! $users = $this->get_users( $post->ID ) )
+			return FALSE;
+
+		echo '<li class="-row -cartable-user">';
+
+			echo $this->get_column_icon( FALSE, 'portfolio', _x( 'User Cartables', 'Modules: Cartable: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
+
+			$list = [];
+
+			foreach ( $users as $slug )
+				if ( $user = get_user_by( 'login', $slug ) )
+					$list[] = $user->display_name; // FIXME: make clickable
+
+			echo Helper::getJoined( $list );
+		echo '</li>';
+	}
+
+	public function tweaks_column_attr_groups( $post )
+	{
+		if ( ! $groups = $this->get_groups( $post->ID ) )
+			return FALSE;
+
+		echo '<li class="-row -cartable-user">';
+
+			echo $this->get_column_icon( FALSE, 'groups', _x( 'Group Cartables', 'Modules: Cartable: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
+
+			$list = [];
+
+			foreach ( $groups as $slug )
+				if ( $group = get_term_by( 'slug', $slug, $this->constant( 'group_tax' ) ) )
+					$list[] = $group->name; // FIXME: make clickable
+
+			echo Helper::getJoined( $list );
+		echo '</li>';
 	}
 
 	// protected function dashboard_widgets()
