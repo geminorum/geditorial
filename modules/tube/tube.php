@@ -201,7 +201,7 @@ class Tube extends gEditorial\Module
 
 			} else if ( 'edit' == $screen->base ) {
 
-				add_action( 'geditorial_meta_column_row', [ $this, 'column_row_meta' ], 12, 3 );
+				$this->action_module( 'meta', 'column_row', 3, 12 );
 			}
 
 		} else if ( $screen->post_type == $this->constant( 'channel_cpt' ) ) {
@@ -212,7 +212,7 @@ class Tube extends gEditorial\Module
 
 			} else if ( 'edit' == $screen->base ) {
 
-				// add_action( 'geditorial_meta_column_row', [ $this, 'column_row_meta' ], 12, 3 );
+				// $this->action_module( 'meta', 'column_row', 3, 12 );
 			}
 		}
 	}

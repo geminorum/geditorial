@@ -137,7 +137,7 @@ class Series extends gEditorial\Module
 
 				$this->_admin_enabled();
 
-				$this->_tweaks_taxonomy();
+				$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
 			}
 		}
 	}

@@ -122,7 +122,7 @@ class Pitches extends gEditorial\Module
 				$this->action( 'restrict_manage_posts', 2, 12 );
 				$this->action( 'parse_query' );
 
-				$this->_tweaks_taxonomy();
+				$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
 			}
 		}
 	}

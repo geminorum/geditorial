@@ -56,7 +56,7 @@ class Attachments extends gEditorial\Module
 	{
 		if ( 'edit' == $screen->base && in_array( $screen->post_type, $this->post_types() ) ) {
 
-			add_action( 'geditorial_tweaks_column_attr', [ $this, 'column_attr' ], 20 );
+			$this->action_module( 'tweaks', 'column_attr', 1, 20 );
 		}
 	}
 
@@ -119,7 +119,7 @@ class Attachments extends gEditorial\Module
 		}
 	}
 
-	public function column_attr( $post )
+	public function tweaks_column_attr( $post )
 	{
 		if ( ! current_user_can( 'edit_post', $post->ID ) )
 			return;

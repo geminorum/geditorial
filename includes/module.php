@@ -2790,11 +2790,6 @@ SQL;
 		Ajax::errorWhat();
 	}
 
-	protected function _tweaks_taxonomy()
-	{
-		add_filter( 'geditorial_tweaks_taxonomy_info', [ $this, 'tweaks_taxonomy_info' ], 10, 3 );
-	}
-
 	// DEFAULT FILTER
 	public function tweaks_taxonomy_info( $info, $object, $post_type )
 	{
@@ -2826,7 +2821,7 @@ SQL;
 	}
 
 	// DEFAULT FILTER
-	public function column_row_meta( $post, $fields, $meta )
+	public function meta_column_row( $post, $fields, $meta )
 	{
 		foreach ( $fields as $field => $args ) {
 

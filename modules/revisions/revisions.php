@@ -98,7 +98,7 @@ class Revisions extends gEditorial\Module
 				}
 
 				if ( $this->get_setting( 'revision_summary', FALSE ) )
-					add_action( 'geditorial_tweaks_column_attr', [ $this, 'column_attr' ], 100 );
+					$this->action_module( 'tweaks', 'column_attr', 1, 100 );
 			}
 		}
 	}
@@ -136,7 +136,7 @@ class Revisions extends gEditorial\Module
 		echo HTML::success( sprintf( $message, Number::format( $purged ) ) );
 	}
 
-	public function column_attr( $post )
+	public function tweaks_column_attr( $post )
 	{
 		if ( wp_revisions_enabled( $post ) ) {
 

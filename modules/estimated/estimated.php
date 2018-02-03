@@ -97,12 +97,12 @@ class Estimated extends gEditorial\Module
 
 			} else if ( 'edit' == $screen->base ) {
 
-				add_action( 'geditorial_tweaks_column_attr', [ $this, 'column_attr' ], 12 );
+				$this->action_module( 'tweaks', 'column_attr', 1, 12 );
 			}
 		}
 	}
 
-	public function column_attr( $post )
+	public function tweaks_column_attr( $post )
 	{
 		if ( $wordcount = get_post_meta( $post->ID, $this->meta_key, TRUE ) ) {
 

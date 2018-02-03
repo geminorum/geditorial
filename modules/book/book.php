@@ -396,17 +396,16 @@ class Book extends gEditorial\Module
 				$this->action( 'parse_query' );
 
 				if ( $this->p2p )
-					add_action( 'geditorial_tweaks_column_row', [ $this, 'column_row_p2p_to' ], -25 );
+					$this->action_module( 'tweaks', 'column_row', 1, -25, 'p2p_to' );
 
-				add_action( 'geditorial_meta_column_row', [ $this, 'column_row_meta' ], 12, 3 );
-
-				$this->_tweaks_taxonomy();
+				$this->action_module( 'meta', 'column_row', 3, 12 );
+				$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
 			}
 
 		} else if ( $this->p2p && 'edit' == $screen->base
 			&& in_array( $screen->post_type, $this->post_types() ) ) {
 
-			add_action( 'geditorial_tweaks_column_row', [ $this, 'column_row_p2p_from' ], -25 );
+			$this->action_module( 'tweaks', 'column_row', 1, -25, 'p2p_from' );
 		}
 	}
 
@@ -424,12 +423,12 @@ class Book extends gEditorial\Module
 		$this->add_meta_box_checklist_terms( 'type_tax', $posttype );
 	}
 
-	public function column_row_p2p_to( $post )
+	public function tweaks_column_row_p2p_to( $post )
 	{
 		$this->column_row_p2p_to_posttype( 'publication_cpt', $post );
 	}
 
-	public function column_row_p2p_from( $post )
+	public function tweaks_column_row_p2p_from( $post )
 	{
 		$this->column_row_p2p_from_posttype( 'publication_cpt', $post );
 	}

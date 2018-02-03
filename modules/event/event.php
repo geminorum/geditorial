@@ -249,7 +249,7 @@ class Event extends gEditorial\Module
 				$this->filter_true( 'disable_months_dropdown', 12 );
 
 				$this->_edit_screen( $screen->post_type );
-				$this->_tweaks_taxonomy();
+				$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
 			}
 		}
 	}

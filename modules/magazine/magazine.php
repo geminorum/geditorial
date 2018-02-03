@@ -289,9 +289,9 @@ class Magazine extends gEditorial\Module
 
 				$this->_sync_linked( $screen->post_type );
 
-				$this->_tweaks_taxonomy();
-				add_action( 'geditorial_tweaks_column_attr', [ $this, 'main_column_attr' ] );
-				add_action( 'geditorial_meta_column_row', [ $this, 'column_row_meta' ], 12, 3 );
+				$this->action_module( 'meta', 'column_row', 3, 12 );
+				$this->action_module( 'tweaks', 'column_attr' );
+				$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
 			}
 
 		} else if ( in_array( $screen->post_type, $this->post_types() ) ) {
@@ -317,8 +317,8 @@ class Magazine extends gEditorial\Module
 				if ( $this->get_setting( 'admin_restrict', FALSE ) )
 					add_action( 'restrict_manage_posts', [ $this, 'restrict_manage_posts_supported_cpt' ], 12, 2 );
 
-				$this->_tweaks_taxonomy();
-				add_action( 'geditorial_meta_column_row', [ $this, 'column_row_meta' ], 12, 3 );
+				$this->action_module( 'meta', 'column_row', 3, 12 );
+				$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
 			}
 
 			add_action( 'save_post', [ $this, 'save_post_supported_cpt' ], 20, 3 );
@@ -652,7 +652,7 @@ class Magazine extends gEditorial\Module
 		return count( $posts ) ? $posts : FALSE;
 	}
 
-	public function main_column_attr( $post )
+	public function tweaks_column_attr( $post )
 	{
 		$posts = $this->get_linked_posts( $post->ID, 'issue_cpt', 'issue_tax' );
 		$count = count( $posts );

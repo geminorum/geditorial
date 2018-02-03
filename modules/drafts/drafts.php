@@ -94,7 +94,7 @@ class Drafts extends gEditorial\Module
 				if ( $this->get_setting( 'admin_rowactions' ) )
 					$this->filter( 'post_row_actions', 2 );
 
-				add_action( 'geditorial_tweaks_column_attr', [ $this, 'column_attr' ], 90 );
+				$this->action_module( 'tweaks', 'column_attr', 1, 90 );
 			}
 		}
 	}
@@ -330,7 +330,7 @@ class Drafts extends gEditorial\Module
 		return $actions;
 	}
 
-	public function column_attr( $post )
+	public function tweaks_column_attr( $post )
 	{
 		if ( ! $this->is_public( $post->ID ) )
 			return;
