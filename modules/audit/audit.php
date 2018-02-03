@@ -179,15 +179,17 @@ class Audit extends gEditorial\Module
 	{
 		parent::init();
 
+		$taxonomy = $this->constant( 'audit_tax' );
+
 		$this->register_taxonomy( 'audit_tax', [
 			'hierarchical'       => TRUE,
 			'show_in_quick_edit' => TRUE,
 			'show_in_rest'       => $this->role_can( 'assign' ), // QUESTION: what if auth by plugin
 		], NULL, [
-			'manage_terms' => 'manage_audit_tax',
-			'edit_terms'   => 'edit_audit_tax',
-			'delete_terms' => 'delete_audit_tax',
-			'assign_terms' => 'assign_audit_tax',
+			'manage_terms' => 'manage_'.$taxonomy,
+			'edit_terms'   => 'edit_'.$taxonomy,
+			'delete_terms' => 'delete_'.$taxonomy,
+			'assign_terms' => 'assign_'.$taxonomy,
 		] );
 
 		$this->filter( 'map_meta_cap', 4 );
@@ -252,6 +254,8 @@ class Audit extends gEditorial\Module
 	// @REF: https://make.wordpress.org/core/?p=20496
 	public function map_meta_cap( $caps, $cap, $user_id, $args )
 	{
+		$taxonomy = $this->constant( 'audit_tax' );
+
 		switch ( $cap ) {
 
 			case 'edit_post':
@@ -272,17 +276,25 @@ class Audit extends gEditorial\Module
 					return $caps;
 
 				foreach ( $locking as $term_id )
-					if ( is_object_in_term( $post->ID, $this->constant( 'audit_tax' ), intval( $term_id ) ) )
+					if ( is_object_in_term( $post->ID, $taxonomy, intval( $term_id ) ) )
 						return $this->role_can( 'manage', $user_id ) ? $caps : [ 'do_not_allow' ];
 
 			break;
+			case 'manage_'.$taxonomy:
+			case 'edit_'.$taxonomy:
+			case 'delete_'.$taxonomy:
 
-			case 'manage_audit_tax':
-			case 'edit_audit_tax':
-			case 'delete_audit_tax':
-				return $this->role_can( 'manage', $user_id ) ? [ 'read' ] : [ 'do_not_allow' ];
+				return $this->role_can( 'manage', $user_id )
+					? [ 'read' ]
+					: [ 'do_not_allow' ];
+
 			break;
+			case 'assign_'.$taxonomy:
 
+				return $this->role_can( 'assign', $user_id )
+					? [ 'read' ]
+					: [ 'do_not_allow' ];
+			break;
 			case 'assign_term':
 
 				$term = get_term( (int) $args[0] );
@@ -290,19 +302,14 @@ class Audit extends gEditorial\Module
 				if ( ! $term || is_wp_error( $term ) )
 					return $caps;
 
-				if ( ! $tax = get_taxonomy( $term->taxonomy ) )
+				if ( $taxonomy != $term->taxonomy )
 					return $caps;
 
-				if ( ! $role = get_term_meta( $term->term_id, 'role', TRUE ) )
+				( ! $roles = get_term_meta( $term->term_id, 'roles', TRUE ) )
 					return $caps;
 
-				if ( ! User::hasRole( [ 'administrator', $role ] ) )
+				if ( ! User::hasRole( array_merge( [ 'administrator' ], (array) $roles ) ) )
 					return [ 'do_not_allow' ];
-
-			break;
-
-			case 'assign_audit_tax':
-				return $this->role_can( 'assign', $user_id ) ? [ 'read' ] : [ 'do_not_allow' ];
 		}
 
 		return $caps;
