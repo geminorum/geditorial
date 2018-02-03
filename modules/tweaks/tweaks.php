@@ -101,6 +101,11 @@ class Tweaks extends gEditorial\Module
 					'description' => _x( 'Displays author name as post type attribute', 'Modules: Tweaks: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 				],
 				[
+					'field'       => 'slug_attribute',
+					'title'       => _x( 'Slug Attribute', 'Modules: Tweaks: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Displays post name as post type attribute.', 'Modules: Tweaks: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+				],
+				[
 					'field'       => 'page_template',
 					'title'       => _x( 'Page Template', 'Modules: Tweaks: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Displays the template used for the post.', 'Modules: Tweaks: Setting Description', GEDITORIAL_TEXTDOMAIN ),
@@ -341,6 +346,9 @@ class Tweaks extends gEditorial\Module
 
 		if ( $this->get_setting( 'page_template', FALSE ) )
 			add_action( $this->hook( 'column_attr' ), [ $this, 'column_attr_page_template' ], 50 );
+
+		if ( $this->get_setting( 'slug_attribute', FALSE ) && is_post_type_viewable( $post_type ) )
+			add_action( $this->hook( 'column_attr' ), [ $this, 'column_attr_slug' ], 50 );
 
 		if ( $this->get_setting( 'comment_status', FALSE ) && post_type_supports( $post_type, 'comments' ) )
 			add_action( $this->hook( 'column_attr' ), [ $this, 'column_attr_comment_status' ], 15 );
@@ -715,6 +723,17 @@ class Tweaks extends gEditorial\Module
 		echo '</li>';
 	}
 
+	public function column_attr_slug( $post )
+	{
+		if ( ! $post->post_name )
+			return;
+
+		echo '<li class="-row tweaks-default-atts -post-name">';
+			echo $this->get_column_icon( FALSE, 'admin-links', _x( 'Post Slug', 'Modules: Tweaks: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
+			echo '<code>'.urldecode( $post->post_name ).'</code>';
+		echo '</li>';
+	}
+
 	public function column_attr_default( $post )
 	{
 		$status = $date = '';
@@ -751,13 +770,6 @@ class Tweaks extends gEditorial\Module
 			echo '<li class="-row tweaks-default-atts -post-modified">';
 				echo $this->get_column_icon( FALSE, 'edit', _x( 'Last Edit', 'Modules: Tweaks: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
 				echo Helper::getModifiedEditRow( $post, '-edit' );
-			echo '</li>';
-		}
-
-		if ( 'excerpt' == $GLOBALS['mode'] && $post->post_name ) {
-			echo '<li class="-row tweaks-default-atts -post-name">';
-				echo $this->get_column_icon( FALSE, 'admin-links', _x( 'Post Slug', 'Modules: Tweaks: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
-				echo '<code>'.urldecode( $post->post_name ).'</code>';
 			echo '</li>';
 		}
 	}
