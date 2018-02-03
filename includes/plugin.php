@@ -110,6 +110,7 @@ class Plugin
 		$this->files( [
 			'ajax',
 			'helper',
+			'scripts',
 			'metabox',
 			'settings',
 			'template',

@@ -5,6 +5,7 @@ defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial;
 use geminorum\gEditorial\Ajax;
 use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
@@ -147,7 +148,7 @@ class Calendar extends gEditorial\Module
 
 		$this->actions( 'load', $page );
 
-		$this->enqueue_asset_js( 'calendar', NULL, [ 'jquery', Helper::scriptSortable() ] );
+		$this->enqueue_asset_js( 'calendar', NULL, [ 'jquery', Scripts::pkgSortable() ] );
 	}
 
 	public function post_row_actions( $actions, $post )

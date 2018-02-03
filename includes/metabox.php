@@ -270,7 +270,7 @@ class MetaBox extends Core\Base
 				valueNames: [ '-name', '-email', '-login' ]
 			});}(jQuery));";
 
-			wp_add_inline_script( Helper::scriptListJS( TRUE ), $script );
+			wp_add_inline_script( Scripts::pkgListJS( TRUE ), $script );
 		}
 
 		return TRUE;

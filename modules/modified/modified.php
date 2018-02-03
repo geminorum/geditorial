@@ -4,6 +4,7 @@ defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\Core\Date;
@@ -150,7 +151,7 @@ class Modified extends gEditorial\Module
 
 		echo $this->wrap( '<small>'.$modified.'</small>', '-'.$this->get_setting( 'insert_content', 'none' ) );
 
-		Helper::enqueueTimeAgo();
+		Scripts::enqueueTimeAgo();
 	}
 
 	// `Posted on 22nd May 2014 This post was last updated on 23rd April 2016`
@@ -178,7 +179,7 @@ class Modified extends gEditorial\Module
 		$local = strtotime( $post->post_modified );
 
 		if ( 'timeago' == $args['title'] )
-			$title = Helper::enqueueTimeAgo()
+			$title = Scripts::enqueueTimeAgo()
 				? FALSE
 				: Helper::humanTimeDiffRound( $local, $args['round'] );
 		else
@@ -247,7 +248,7 @@ class Modified extends gEditorial\Module
 		$local = strtotime( $site[0] );
 
 		if ( 'timeago' == $args['title'] )
-			$title = Helper::enqueueTimeAgo()
+			$title = Scripts::enqueueTimeAgo()
 				? FALSE
 				: Helper::humanTimeDiffRound( $local, $args['round'] );
 		else

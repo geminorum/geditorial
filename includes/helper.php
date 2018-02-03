@@ -467,83 +467,6 @@ class Helper extends Core\Base
 		return HTML::getDashicon( $fallback );
 	}
 
-	public static function registerColorBox()
-	{
-		wp_register_style( 'jquery-colorbox', GEDITORIAL_URL.'assets/css/admin.colorbox.css', [], '1.6.4', 'screen' );
-		wp_register_script( 'jquery-colorbox', GEDITORIAL_URL.'assets/packages/jquery-colorbox/jquery.colorbox-min.js', [ 'jquery' ], '1.6.4', TRUE );
-	}
-
-	public static function enqueueColorBox()
-	{
-		wp_enqueue_style( 'jquery-colorbox' );
-		wp_enqueue_script( 'jquery-colorbox' );
-	}
-
-	public static function scriptSortable( $enqueue = FALSE )
-	{
-		return $enqueue
-			? self::enqueueScriptPackage( 'jquery-sortable', NULL, [ 'jquery' ], '0.9.13' )
-			: self::registerScriptPackage( 'jquery-sortable', NULL, [ 'jquery' ], '0.9.13' );
-	}
-
-	public static function scriptListJS( $enqueue = FALSE )
-	{
-		return $enqueue
-			? self::enqueueScriptPackage( 'listjs', 'list.js/list', [], '1.5.0' )
-			: self::registerScriptPackage( 'listjs', 'list.js/list', [], '1.5.0' );
-	}
-
-	public static function enqueueScript( $asset, $dep = [ 'jquery' ], $version = GEDITORIAL_VERSION, $base = GEDITORIAL_URL, $path = 'assets/js' )
-	{
-		$handle  = strtolower( static::BASE.'-'.str_replace( '.', '-', $asset ) );
-		$variant = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
-
-		wp_enqueue_script( $handle, $base.$path.'/'.$asset.$variant.'.js', $dep, $version, TRUE );
-
-		return $handle;
-	}
-
-	public static function enqueueScriptVendor( $asset, $dep = [], $version = GEDITORIAL_VERSION, $base = GEDITORIAL_URL, $path = 'assets/js/vendor' )
-	{
-		return self::enqueueScript( $asset, $dep, $version, $base, $path );
-	}
-
-	public static function enqueueScriptPackage( $asset, $package = NULL, $dep = [], $version = GEDITORIAL_VERSION, $base = GEDITORIAL_URL, $path = 'assets/packages' )
-	{
-		if ( is_null( $package ) )
-			$package = $asset.'/'.$asset;
-
-		$handle  = strtolower( static::BASE.'-'.str_replace( '.', '-', $asset ) );
-		$variant = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
-
-		wp_enqueue_script( $handle, $base.$path.'/'.$package.$variant.'.js', $dep, $version, TRUE );
-
-		return $handle;
-	}
-
-	public static function registerScriptPackage( $asset, $package = NULL, $dep = [], $version = GEDITORIAL_VERSION, $base = GEDITORIAL_URL, $path = 'assets/packages' )
-	{
-		if ( is_null( $package ) )
-			$package = $asset.'/'.$asset;
-
-		$handle  = strtolower( static::BASE.'-'.str_replace( '.', '-', $asset ) );
-		$variant = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
-
-		wp_register_script( $handle, $base.$path.'/'.$package.$variant.'.js', $dep, $version, TRUE );
-
-		return $handle;
-	}
-
-	public static function enqueueTimeAgo()
-	{
-		$callback = [ 'gPersianDateTimeAgo', 'enqueue' ];
-
-		if ( ! is_callable( $callback ) )
-			return FALSE;
-
-		return call_user_func( $callback );
-	}
-
 	public static function ipLookup( $ip )
 	{
 		if ( function_exists( 'gnetwork_ip_lookup' ) )
@@ -556,7 +479,7 @@ class Helper extends Core\Base
 	{
 		$strings = apply_filters( static::BASE.'_tinymce_strings', [] );
 
-		return count( $strings ) ? 'tinyMCE.addI18n("'.$locale.'.geditorial", '.wp_json_encode( $strings ).');'."\n" : '';
+		return count( $strings ) ? 'tinyMCE.addI18n("'.$locale.'.'.static::BASE.'", '.wp_json_encode( $strings ).');'."\n" : '';
 	}
 
 	// DEPRECATED

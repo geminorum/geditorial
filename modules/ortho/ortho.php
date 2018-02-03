@@ -4,6 +4,7 @@ defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\WordPress;
@@ -156,7 +157,7 @@ class Ortho extends gEditorial\Module
 		if ( $this->virastar_enqueued )
 			return;
 
-		$virastar = Helper::registerScriptPackage( 'virastar',
+		$virastar = Scripts::registerPackage( 'virastar',
 			NULL, [], $this->virastar_version );
 
 		$this->enqueue_asset_js( [
@@ -172,7 +173,7 @@ class Ortho extends gEditorial\Module
 		if ( $this->persiantools_enqueued )
 			return;
 
-		$persiantools = Helper::registerScriptPackage( 'persiantools',
+		$persiantools = Scripts::registerPackage( 'persiantools',
 			NULL, [], $this->persiantools_version );
 
 		$this->enqueue_asset_js( 'persiantools', NULL, [ 'jquery', $persiantools ] );

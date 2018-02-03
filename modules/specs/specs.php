@@ -5,6 +5,7 @@ defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\MetaBox;
+use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\Text;
@@ -114,7 +115,7 @@ class Specs extends gEditorial\Module
 				'high'
 			);
 
-			$this->enqueue_asset_js( [], $screen, [ 'jquery', Helper::scriptSortable() ] );
+			$this->enqueue_asset_js( [], $screen, [ 'jquery', Scripts::pkgSortable() ] );
 
 			// internal
 			add_action( 'geditorial_specs_meta_box', [ $this, 'geditorial_specs_meta_box' ], 5, 2 );

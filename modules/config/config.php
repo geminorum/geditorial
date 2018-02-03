@@ -5,6 +5,7 @@ defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial;
 use geminorum\gEditorial\Ajax;
 use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Text;
@@ -457,7 +458,7 @@ class Config extends gEditorial\Module
 
 		do_action( 'geditorial_settings_load', $module );
 
-		$this->enqueue_asset_js( [], NULL, [ 'jquery', Helper::scriptListJS() ] );
+		$this->enqueue_asset_js( [], NULL, [ 'jquery', Scripts::pkgListJS() ] );
 	}
 
 	// no settings/only screen options
