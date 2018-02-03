@@ -390,7 +390,7 @@ class Audit extends gEditorial\Module
 					$this->filter( 'parse_query' );
 				}
 
-				$this->_tweaks_taxonomy();
+				$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
 			}
 		}
 	}
