@@ -341,8 +341,11 @@ class Tweaks extends gEditorial\Module
 		if ( $this->get_setting( 'author_attribute', TRUE ) && post_type_supports( $post_type, 'author' ) )
 			add_action( $this->hook( 'column_attr' ), [ $this, 'column_attr_author' ], 1 );
 
+		if ( ! self::req( 'post_status' ) ) // if the view is NOT set
+			add_action( $this->hook( 'column_attr' ), [ $this, 'column_attr_status' ], 2 );
+
 		if ( $this->get_setting( 'group_attributes', FALSE ) )
-			add_action( $this->hook( 'column_attr' ), [ $this, 'column_attr_default' ], 2 );
+			add_action( $this->hook( 'column_attr' ), [ $this, 'column_attr_default' ], 3 );
 
 		if ( $this->get_setting( 'page_template', FALSE ) && count( get_page_templates( NULL, $post_type ) ) )
 			add_action( $this->hook( 'column_attr' ), [ $this, 'column_attr_page_template' ], 50 );
@@ -717,7 +720,7 @@ class Tweaks extends gEditorial\Module
 		if ( $post->post_author == $this->site_user_id )
 			return;
 
-		echo '<li class="-row tweaks-default-atts -post-author -post-author-'.$post->post_status.'">';
+		echo '<li class="-row tweaks-default-atts -post-author -post-author-'.$post->post_author.'">';
 			echo $this->get_column_icon( FALSE, 'admin-users', _x( 'Author', 'Modules: Tweaks: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
 			echo '<span class="-author">'.WordPress::getAuthorEditHTML( $post->post_type, $post->post_author ).'</span>';
 		echo '</li>';
@@ -734,10 +737,8 @@ class Tweaks extends gEditorial\Module
 		echo '</li>';
 	}
 
-	public function column_attr_default( $post )
+	public function column_attr_status( $post )
 	{
-		$status = $date = '';
-
 		if ( ! isset( $this->post_statuses ) )
 			$this->post_statuses = PostType::getStatuses();
 
@@ -758,7 +759,10 @@ class Tweaks extends gEditorial\Module
 			echo $this->get_column_icon( FALSE, 'post-status', _x( 'Status', 'Modules: Tweaks: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
 			echo '<span class="-status" title="'.$post->post_status.'">'.$status.'</span>';
 		echo '</li>';
+	}
 
+	public function column_attr_default( $post )
+	{
 		echo '<li class="-row tweaks-default-atts -post-date">';
 			echo $this->get_column_icon( FALSE, 'calendar-alt', _x( 'Publish Date', 'Modules: Tweaks: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
 			echo Helper::getDateEditRow( $post->post_date, '-date' );
