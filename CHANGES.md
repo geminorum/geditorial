@@ -1,3 +1,30 @@
+### 3.14.0
+* main/plugin: editorial user api
+* main/module: internal api for metabox class
+* main/module: returning html for columns
+* main/module: better hooks for column row/attr
+* main/metabox: custom metabox for excerpt
+* main/metabox: better args for post parent field
+* main/metabox: roles meta support for cat checklist
+* main/scripts: :new: new main component
+* module/audit: omit name for one posttype support
+* module/audit: role based context on widget summary
+* module/audit: using debounce for front submissions
+* module/calendar: check for status on row actions
+* module/cartable: :new: new module
+* module/inquire: :new: new module
+* module/ortho: button icon changed
+* module/statuses: check roles for status changes
+* module/statuses: default status setting
+* module/statuses: check for taxonomy before posttype on screen
+* module/terms: multiple role/posttype support
+* module/terms: filtering supported fields
+* module/tweaks: optional post slug attribute
+* module/tweaks: checks posttype templates before attr action
+* module/tweaks: checks status not set before attr action
+* module/users: :warning: fixed clearing up user groups
+* module/workflow: :new: new module
+
 ### 3.13.3
 * main/module: check for init action along with posttype exists
 * main/module: default filter for increasing menu order on new posts
