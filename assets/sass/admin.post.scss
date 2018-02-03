@@ -13,7 +13,6 @@
 @import "partials/spinner.all";
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-@import "partials/meta.admin.post";
 @import "partials/letter.admin.post";
 @import "partials/specs.admin.post";
 @import "partials/series.admin.post";
@@ -22,6 +21,7 @@
 @import "partials/revisions.admin.post";
 @import "partials/activities.admin.post";
 @import "partials/drafts.admin.post";
+@import "partials/workflow.admin.post";
 @import "partials/activities.admin.all";
 @import "partials/ortho.admin.all";
 ////////////////////////////////////////////////////////////////////////////////
@@ -30,3 +30,36 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
+
+.geditorial-wrap.-edit-form-after-title,
+.geditorial-wrap.-admin-postbox.geditorial-meta-field-le {
+  margin: 10px 0 0;
+}
+
+.geditorial-wrap.-admin-postbox.-workflow-main {
+  .inside,
+  .-admin-metabox {
+    margin: 0;
+    padding: 0;
+  }
+
+  .-browse-revisions {
+    float: left;
+  }
+}
+
+// Module: Meta
+.geditorial-admin-posttitle {
+  @extend %box-reset;
+  font-size: 1.3em;
+  padding: 3px 8px;
+  width: 100%;
+
+  &.geditorial-meta-field-ot {
+    margin: 0 0 5px;
+  }
+
+  &.geditorial-meta-field-st {
+    margin: 2px 0 10px;
+  }
+}
