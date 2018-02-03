@@ -14,10 +14,10 @@
 /assets/vendor
 /node_modules
 
-package-lock.json
 composer.lock
 npm-debug.log
 .tinypng-sigs
 
 environment.yml
+.env
 .ftpconfig

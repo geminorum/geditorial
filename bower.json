@@ -15,7 +15,9 @@
     "social-logos": "Automattic/social-logos",
     "themicons": "cedaro/themicons",
     "gorbeh": "IKAcc/Gorbeh",
-    "list.js": "latest"
+    "list.js": "latest",
+    "handsontable": "^0.34.5",
+    "medium-editor": "^5.23.2"
   },
   "devDependencies": {},
   "install": {
@@ -55,7 +57,9 @@
       ],
       "mediaelement-plugins": {
         "mapping": [
-          { "assets/components/mediaelement-plugins/dist/source-chooser/**": "source-chooser" }
+          {
+            "assets/components/mediaelement-plugins/dist/source-chooser/**": "source-chooser"
+          }
         ]
       }
     }
