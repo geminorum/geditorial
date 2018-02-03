@@ -4,7 +4,6 @@ defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Ajax;
-use geminorum\gEditorial\Core\Arraay;
 use geminorum\gEditorial\Core\L10n;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
@@ -48,7 +47,7 @@ class Workflow extends gEditorial\Module
 					'title'        => _x( 'Locking Statuses', 'Modules: Workflow: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description'  => _x( 'Selected statuses will lock editing the post to their assigned roles.', 'Modules: Workflow: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 					'string_empty' => _x( 'There\'s no status available!', 'Modules: Workflow: Setting', GEDITORIAL_TEXTDOMAIN ),
-					'values'       => Arraay::column( $this->get_statuses(), 'label', 'name' ),
+					'values'       => wp_list_pluck( $this->get_statuses(), 'label', 'name' ),
 				],
 			],
 		];
