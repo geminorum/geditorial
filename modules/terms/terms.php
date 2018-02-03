@@ -339,11 +339,13 @@ class Terms extends gEditorial\Module
 
 	public function custom_column( $display, $column, $term_id )
 	{
-		$html   = '';
-		$meta   = '';
-		$screen = get_current_screen();
+		if ( ! $taxonomy = self::req( 'taxonomy' ) )
+			return;
 
-		foreach ( $this->get_supported( $screen->taxonomy ) as $field ) {
+		$html = '';
+		$meta = '';
+
+		foreach ( $this->get_supported( $taxonomy ) as $field ) {
 
 			if ( $this->classs( $field ) != $column )
 				continue;
@@ -460,7 +462,7 @@ class Terms extends gEditorial\Module
 					}
 			}
 
-			echo $this->filters( 'supported_field_column', $html, $field, $screen->taxonomy, $term_id, $meta );
+			echo $this->filters( 'supported_field_column', $html, $field, $taxonomy, $term_id, $meta );
 		}
 	}
 
