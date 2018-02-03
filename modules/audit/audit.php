@@ -305,7 +305,7 @@ class Audit extends gEditorial\Module
 				if ( $taxonomy != $term->taxonomy )
 					return $caps;
 
-				( ! $roles = get_term_meta( $term->term_id, 'roles', TRUE ) )
+				if ( ! $roles = get_term_meta( $term->term_id, 'roles', TRUE ) )
 					return $caps;
 
 				if ( ! User::hasRole( array_merge( [ 'administrator' ], (array) $roles ) ) )
