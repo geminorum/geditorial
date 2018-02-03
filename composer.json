@@ -39,8 +39,6 @@
     "addwiki/mediawiki-api": "^0.5.1",
     "nesbot/carbon": "^1.22",
     "endroid/simple-excel": "^1.1",
-    "citation-style-language/locales": "@dev",
-    "citation-style-language/styles-distribution": "@dev",
     "seboettg/citeproc-php": "^2"
   },
   "config": {
