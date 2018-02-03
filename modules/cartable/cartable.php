@@ -220,14 +220,14 @@ class Cartable extends gEditorial\Module
 
 			case 'assign_'.$this->constant( 'user_tax' ):
 
-				return $this->role_can( 'assign_user' )
+				return $this->role_can( 'assign_user', $user_id )
 					? [ 'read' ]
 					: [ 'do_not_allow' ];
 
 			break;
 			case 'assign_'.$this->constant( 'group_tax' ):
 
-				return $this->role_can( 'assign_group' )
+				return $this->role_can( 'assign_group', $user_id )
 					? [ 'read' ]
 					: [ 'do_not_allow' ];
 
