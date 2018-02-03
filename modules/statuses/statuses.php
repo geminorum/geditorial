@@ -21,7 +21,7 @@ class Statuses extends gEditorial\Module
 		return [
 			'name'     => 'statuses',
 			'title'    => _x( 'Statuses', 'Modules: Statuses', GEDITORIAL_TEXTDOMAIN ),
-			'desc'     => _x( 'Custom Post Statuses', 'Modules: Statuses', GEDITORIAL_TEXTDOMAIN ),
+			'desc'     => _x( 'WP-Statuses Companion', 'Modules: Statuses', GEDITORIAL_TEXTDOMAIN ),
 			'icon'     => 'post-status',
 			'disabled' => class_exists( 'WP_Statuses' ) ? FALSE : _x( 'Needs WP Statuses', 'Modules: Statuses', GEDITORIAL_TEXTDOMAIN ),
 		];

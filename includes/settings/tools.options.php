@@ -7,7 +7,9 @@ use geminorum\gEditorial\WordPress\User;
 
 User::superAdminOnly();
 
+echo '<br />';
+
 if ( $options = get_option( 'geditorial_options' ) )
 	HTML::tableSide( $options );
 else
-	HTML::desc( '<br />'.\geminorum\gEditorial\Plugin::na() );
+	HTML::desc( \geminorum\gEditorial\Plugin::na() );
