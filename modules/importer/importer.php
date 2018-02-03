@@ -116,7 +116,7 @@ class Importer extends gEditorial\Module
 		Settings::fieldSeparate( 'as' );
 
 		echo HTML::dropdown( User::get(), [
-			'selected' => is_null( $user_id ) ? Helper::getEditorialUserID( TRUE ) : $user_id,
+			'selected' => is_null( $user_id ) ? gEditorial()->user( TRUE ) : $user_id,
 			'name'     => 'user_id',
 			'prop'     => 'display_name',
 		] );
@@ -242,7 +242,7 @@ class Importer extends gEditorial\Module
 					$field_map = self::req( 'field_map', [] );
 					$post_type = self::req( 'posttype', $this->get_setting( 'post_type', 'post' ) );
 					$attach_id = self::req( 'attach_id', FALSE );
-					$user_id   = self::req( 'user_id', Helper::getEditorialUserID( TRUE ) );
+					$user_id   = self::req( 'user_id', gEditorial()->user( TRUE ) );
 
 					if ( ! $file = get_attached_file( $attach_id ) )
 						WordPress::redirectReferer( 'wrong' );
@@ -331,7 +331,7 @@ class Importer extends gEditorial\Module
 		$post_type = self::req( 'posttype', $this->get_setting( 'post_type', 'post' ) );
 		$upload_id = self::req( 'upload_id', FALSE );
 		$attach_id = self::req( 'attach_id', FALSE );
-		$user_id   = self::req( 'user_id', Helper::getEditorialUserID( TRUE ) );
+		$user_id   = self::req( 'user_id', gEditorial()->user( TRUE ) );
 
 		if ( $upload_id )
 			$attach_id = $upload_id;

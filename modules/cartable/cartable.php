@@ -352,7 +352,7 @@ class Cartable extends gEditorial\Module
 			return;
 
 		$count  = 0;
-		$site   = Helper::getEditorialUserID();
+		$site   = gEditorial()->user();
 		$admins = get_super_admins();
 
 		foreach ( $this->get_blog_users() as $user ) {

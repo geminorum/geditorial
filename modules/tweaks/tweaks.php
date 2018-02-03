@@ -704,7 +704,7 @@ class Tweaks extends gEditorial\Module
 	public function column_attr_author( $post )
 	{
 		if ( ! isset( $this->site_user_id ) )
-			$this->site_user_id = Helper::getEditorialUserID( FALSE );
+			$this->site_user_id = gEditorial()->user();
 
 		if ( $post->post_author == $this->site_user_id )
 			return;

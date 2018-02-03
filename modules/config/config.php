@@ -296,6 +296,18 @@ class Config extends gEditorial\Module
 
 		$this->settings_form_before( $uri, $sub, 'bulk', 'tools', FALSE, FALSE );
 
+			// FIXME: add setting sidebox
+			if ( $user = gEditorial()->user() ) {
+
+				$name = get_userdata( $user )->display_name;
+				$edit = WordPress::getUserEditLink( $user );
+
+				echo '<br />';
+
+				HTML::desc( sprintf( _x( 'Editorial Site User Is %s', 'Modules: Config', GEDITORIAL_TEXTDOMAIN ),
+					$edit ? HTML::link( $name, $edit, TRUE ) : $name ) );
+			}
+
 			HTML::h3( _x( 'Maintenance Tasks', 'Modules: Config', GEDITORIAL_TEXTDOMAIN ) );
 
 			echo '<table class="form-table">';

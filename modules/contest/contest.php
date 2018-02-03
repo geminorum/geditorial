@@ -693,7 +693,7 @@ class Contest extends gEditorial\Module
 							$terms[$term_id],
 							$this->constant( 'contest_tax' ),
 							$this->constant( 'contest_cpt' ),
-							Helper::getEditorialUserID( TRUE )
+							gEditorial()->user( TRUE )
 						);
 					}
 

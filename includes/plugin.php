@@ -538,6 +538,25 @@ class Plugin
 			$wp_admin_bar->add_node( $node );
 	}
 
+	// @OLD: `WordPress::getEditorialUserID()`
+	public function user( $fallback = FALSE )
+	{
+		if ( function_exists( 'gNetwork' ) )
+			return gNetwork()->user( $fallback );
+
+		if ( defined( 'GNETWORK_SITE_USER_ID' ) && GNETWORK_SITE_USER_ID )
+			return intval( GNETWORK_SITE_USER_ID );
+
+		if ( function_exists( 'gtheme_get_option' )
+			&& ( $user_id = gtheme_get_option( 'default_user', 0 ) ) )
+				return intval( $user_id );
+
+		if ( $fallback )
+			return intval( get_current_user_id() );
+
+		return 0;
+	}
+
 	public static function na( $wrap = 'code' )
 	{
 		$na = __( 'N/A', GEDITORIAL_TEXTDOMAIN );

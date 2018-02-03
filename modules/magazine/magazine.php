@@ -877,7 +877,7 @@ class Magazine extends gEditorial\Module
 							$terms[$term_id],
 							$this->constant( 'issue_tax' ),
 							$this->constant( 'issue_cpt' ),
-							Helper::getEditorialUserID( TRUE )
+							gEditorial()->user( TRUE )
 						);
 					}
 

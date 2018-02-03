@@ -559,18 +559,11 @@ class Helper extends Core\Base
 		return count( $strings ) ? 'tinyMCE.addI18n("'.$locale.'.geditorial", '.wp_json_encode( $strings ).');'."\n" : '';
 	}
 
-	// TODO: add as general option
+	// DEPRECATED
 	public static function getEditorialUserID( $fallback = FALSE )
 	{
-		if ( defined( 'GNETWORK_SITE_USER_ID' ) && GNETWORK_SITE_USER_ID )
-			return GNETWORK_SITE_USER_ID;
-
-		if ( function_exists( 'gtheme_get_option' ) ) {
-			if ( $gtheme = gtheme_get_option( 'default_user', 0 ) )
-				return $gtheme;
-		}
-
-		return $fallback ? get_current_user_id() : 0;
+		self::__dep();
+		return gEditorial()->user( $fallback );
 	}
 
 	// WP default sizes from options

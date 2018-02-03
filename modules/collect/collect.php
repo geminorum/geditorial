@@ -876,7 +876,7 @@ class Collect extends gEditorial\Module
 							$terms[$term_id],
 							$this->constant( 'collection_tax' ),
 							$this->constant( 'collection_cpt' ),
-							Helper::getEditorialUserID( TRUE )
+							gEditorial()->user( TRUE )
 						);
 					}
 
