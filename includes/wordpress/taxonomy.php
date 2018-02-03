@@ -127,12 +127,12 @@ class Taxonomy extends Core\Base
 					'relation' => 'OR',
 					[
 						'key'     => 'order',
-						'value'   => 0,
-						'compare' => '>=',
+						'compare' => 'NOT EXISTS'
 					],
 					[
 						'key'     => 'order',
-						'compare' => 'NOT EXISTS'
+						'value'   => 0,
+						'compare' => '>=',
 					],
 				],
 				'update_term_meta_cache' => FALSE,
@@ -153,7 +153,20 @@ class Taxonomy extends Core\Base
 		$query = new \WP_Term_Query( array_merge( array(
 			'taxonomy'   => (array) $taxonomy,
 			'order'      => 'ASC',
-			'orderby'    => 'name',
+			'orderby'    => 'meta_value_num', // 'name',
+			'meta_query' => [
+				// @REF: https://core.trac.wordpress.org/ticket/34996
+				'relation' => 'OR',
+				[
+					'key'     => 'order',
+					'compare' => 'NOT EXISTS'
+				],
+				[
+					'key'     => 'order',
+					'value'   => 0,
+					'compare' => '>=',
+				],
+			],
 			'fields'     => is_null( $fields ) ? 'id=>name' : $fields,
 			'hide_empty' => FALSE,
 		), $extra ) );
