@@ -149,7 +149,10 @@ class Cartable extends gEditorial\Module
 			'show_ui'     => FALSE,
 			'meta_box_cb' => FALSE,
 		], NULL, [
-			// FIXME: CAPS!
+			'manage_terms' => $this->caps['settings'],
+			'edit_terms'   => $this->caps['settings'],
+			'delete_terms' => $this->caps['settings'],
+			'assign_terms' => $this->role_can( 'assign_user' ) ? 'read' : 'do_not_allow',
 		] );
 
 		// see gpeople affiliations
@@ -158,8 +161,11 @@ class Cartable extends gEditorial\Module
 		// 	'public'       => FALSE,
 		// 	'show_ui'      => FALSE,
 		// ], 'user_tax', [
-		// 	// FIXME: CAPS!
-		// ] );
+		// 	'manage_terms' => $this->caps['settings'],
+		// 	'edit_terms'   => $this->caps['settings'],
+		// 	'delete_terms' => $this->caps['settings'],
+		// 	'delete_terms' => $this->caps['settings'],
+		// ]  );
 
 		$this->action_module( 'users' );
 		$this->action( 'add_user_to_blog', 3 ); // new term for new users
@@ -179,7 +185,10 @@ class Cartable extends gEditorial\Module
 			'public'       => FALSE,
 			'show_ui'      => FALSE,
 		], NULL, [
-			// FIXME: CAPS!
+			'manage_terms' => $this->caps['settings'],
+			'edit_terms'   => $this->caps['settings'],
+			'delete_terms' => $this->caps['settings'],
+			'assign_terms' => $this->role_can( 'assign_group' ) ? 'read' : 'do_not_allow',
 		] );
 
 		$this->filter( 'wp_update_term_data', 4 );
