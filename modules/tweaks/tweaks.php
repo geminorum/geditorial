@@ -344,7 +344,7 @@ class Tweaks extends gEditorial\Module
 		if ( $this->get_setting( 'group_attributes', FALSE ) )
 			add_action( $this->hook( 'column_attr' ), [ $this, 'column_attr_default' ], 2 );
 
-		if ( $this->get_setting( 'page_template', FALSE ) )
+		if ( $this->get_setting( 'page_template', FALSE ) && count( get_page_templates( NULL, $post_type ) ) )
 			add_action( $this->hook( 'column_attr' ), [ $this, 'column_attr_page_template' ], 50 );
 
 		if ( $this->get_setting( 'slug_attribute', FALSE ) && is_post_type_viewable( $post_type ) )
