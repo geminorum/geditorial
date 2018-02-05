@@ -3,6 +3,7 @@
 defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core\HTML;
+use geminorum\gEditorial\Core\Text;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\Taxonomy;
@@ -430,7 +431,7 @@ class MetaBox extends Core\Base
 			echo HTML::wrap( $html, 'field-wrap field-wrap-select' );
 	}
 
-	public static function fieldPostExcerpt( $post, $title = '' )
+	public static function fieldPostExcerpt( $post, $title = '', $locked = FALSE )
 	{
 		if ( is_null( $title ) )
 			$title = __( 'Excerpt' );
@@ -444,11 +445,20 @@ class MetaBox extends Core\Base
 		$html.= '<div class="-wrap field-wrap field-wrap-textarea">';
 		$html.= '<label class="screen-reader-text" for="excerpt">'.$title.'</label>';
 
-		$html.= '<textarea rows="1" cols="40" name="excerpt" id="excerpt">';
-			$html.= $post->post_excerpt; // textarea_escaped
-		$html.= '</textarea>';
+		if ( ! $locked )
+			$html.= '<textarea rows="1" cols="40" name="excerpt" id="excerpt">';
 
-		$html.= Helper::htmlWordCount( 'excerpt', $post->post_type );
+		if ( $locked )
+			$html.= HTML::wrap( Text::autoP( $post->post_excerpt ), '-excerpt' );
+		else
+			$html.= $post->post_excerpt; // textarea_escaped
+
+		if ( ! $locked )
+			$html.= '</textarea>';
+
+		if ( ! $locked )
+			$html.= Helper::htmlWordCount( 'excerpt', $post->post_type );
+
 		$html.= '</div></div></div></div>';
 
 		echo $html;

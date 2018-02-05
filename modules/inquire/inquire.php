@@ -5,6 +5,7 @@ defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Core\HTML;
+use geminorum\gEditorial\WordPress\User;
 // use geminorum\gEditorial\Templates\Inquire as ModuleTemplate;
 
 class Inquire extends gEditorial\Module
@@ -24,7 +25,20 @@ class Inquire extends gEditorial\Module
 
 	protected function get_global_settings()
 	{
+		$roles   = User::getAllRoleList();
+		$exclude = [ 'administrator', 'subscriber' ];
+
 		return [
+			'_editpost' => [
+				[
+					'field'       => 'excerpt_roles',
+					'type'        => 'checkbox-panel',
+					'title'       => _x( 'Question Roles', 'Modules: Inquire: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Roles that can change the question.', 'Modules: Inquire: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'exclude'     => $exclude,
+					'values'      => $roles,
+				],
+			],
 			'_supports' => [
 				[
 					'field'       => 'make_public',
@@ -163,7 +177,10 @@ class Inquire extends gEditorial\Module
 	public function edit_form_after_title( $post )
 	{
 		echo $this->wrap_open( '-edit-form-after-title' );
-			MetaBox::fieldPostExcerpt( $post, $this->get_string( 'excerpt_box_title', 'inquiry_cpt', 'misc' ) );
+			MetaBox::fieldPostExcerpt( $post,
+				$this->get_string( 'excerpt_box_title', 'inquiry_cpt', 'misc' ),
+				! $this->role_can( 'excerpt' )
+			);
 		echo '</div>';
 	}
 }
