@@ -251,6 +251,15 @@ class Workflow extends gEditorial\Module
 
 			} else if ( 'edit' == $screen->base ) {
 
+				// FIXME: temporarily hiding inline/bulk edit action
+				// @REF: https://core.trac.wordpress.org/ticket/19343
+				if ( is_post_type_hierarchical( $screen->post_type ) )
+					$this->filter( 'page_row_actions', 2 );
+				else
+					$this->filter( 'post_row_actions', 2 );
+
+				add_filter( 'bulk_actions-'.$screen->id, [ $this, 'bulk_actions' ] );
+
 				if ( $this->get_setting( 'display_states' ) )
 					$this->filter( 'display_post_states', 2 );
 			}
@@ -324,6 +333,24 @@ class Workflow extends gEditorial\Module
 
 			register_post_status( $status->name, $args );
 		}
+	}
+
+	public function page_row_actions( $actions, $post )
+	{
+		unset( $actions['inline hide-if-no-js'] );
+		return $actions;
+	}
+
+	public function post_row_actions( $actions, $post )
+	{
+		unset( $actions['inline hide-if-no-js'] );
+		return $actions;
+	}
+
+	public function bulk_actions( $actions )
+	{
+		unset( $actions['edit'] );
+		return $actions;
 	}
 
 	public function display_post_states( $states, $post )
