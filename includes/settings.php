@@ -526,6 +526,17 @@ class Settings extends Core\Base
 		];
 	}
 
+	public static function getSetting_display_threshold( $description = NULL )
+	{
+		return [
+			'field'       => 'display_threshold',
+			'type'        => 'number',
+			'title'       => _x( 'Display Threshold', 'Setting: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+			'description' => $description ?: _x( 'Maximum number of items to consider as a long list.', 'Setting: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+			'default'     => '5',
+		];
+	}
+
 	public static function getSetting_calendar_type( $description = NULL )
 	{
 		return [
