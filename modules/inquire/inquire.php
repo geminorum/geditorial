@@ -151,6 +151,23 @@ class Inquire extends gEditorial\Module
 		}
 	}
 
+	// FIXME: this is a hack for users with no `create_posts` cap
+	// @REF: https://core.trac.wordpress.org/ticket/22895
+	// @REF: https://wordpress.stackexchange.com/a/178059
+	// @REF: https://herbmiller.me/2014/09/21/wordpress-capabilities-restrict-add-new-allowing-edit/
+	public function admin_menu()
+	{
+		$posttype = get_post_type_object( $this->constant( 'inquiry_cpt' ) );
+		add_submenu_page( 'edit.php?post_type='.$posttype->name, '', '', $posttype->cap->edit_posts, $this->classs() );
+		$this->filter( 'add_menu_classes' );
+	}
+
+	public function add_menu_classes ($menu)
+	{
+		remove_submenu_page( 'edit.php?post_type='.$this->constant( 'inquiry_cpt' ), $this->classs() );
+		return $menu;
+	}
+
 	public function dashboard_glance_items( $items )
 	{
 		if ( $glance = $this->dashboard_glance_post( 'inquiry_cpt' ) )
