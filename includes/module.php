@@ -1596,36 +1596,44 @@ class Module extends Base
 			$taxonomies = $this->taxonomies();
 
 		$post_type = $this->constant( $constant );
+		$cap_type  = $this->get_posttype_cap_type( $constant );
 
 		$args = self::recursiveParseArgs( $atts, [
-			'taxonomies'           => $taxonomies,
-			'labels'               => $this->get_post_type_labels( $constant ),
-			'supports'             => $this->get_post_type_supports( $constant ),
-			'description'          => isset( $this->strings['labels'][$constant]['description'] ) ? $this->strings['labels'][$constant]['description'] : '',
-			'register_meta_box_cb' => method_exists( $this, 'add_meta_box_cb_'.$constant ) ? [ $this, 'add_meta_box_cb_'.$constant ] : NULL,
-			'menu_icon'            => $this->get_posttype_icon( $constant ),
-			'has_archive'          => $this->constant( $constant.'_archive', FALSE ),
-			'query_var'            => $this->constant( $constant.'_query_var', $post_type ),
-			'capability_type'      => $this->get_posttype_cap_type( $constant ),
-			'rewrite'              => [
+			'taxonomies'    => $taxonomies,
+			'labels'        => $this->get_post_type_labels( $constant ),
+			'supports'      => $this->get_post_type_supports( $constant ),
+			'description'   => isset( $this->strings['labels'][$constant]['description'] ) ? $this->strings['labels'][$constant]['description'] : '',
+			'menu_icon'     => $this->get_posttype_icon( $constant ),
+			'menu_position' => 4,
+
+			'query_var'   => $this->constant( $constant.'_query_var', $post_type ),
+			'has_archive' => $this->constant( $constant.'_archive', FALSE ),
+			'rewrite'     => [
 				'slug'       => $this->constant( $constant.'_slug', $post_type ),
 				'with_front' => FALSE,
 				'feeds'      => TRUE,
 				'pages'      => TRUE,
 				'ep_mask'    => EP_PERMALINK, // https://make.wordpress.org/plugins?p=29
 			],
-			'hierarchical'     => FALSE,
-			'public'           => TRUE,
-			'show_ui'          => TRUE,
-			'map_meta_cap'     => TRUE,
-			'can_export'       => TRUE,
-			'delete_with_user' => FALSE,
-			'menu_position'    => 4,
+
+			'hierarchical' => FALSE,
+			'public'       => TRUE,
+			'show_ui'      => TRUE,
+
+			// @ALSO SEE: https://core.trac.wordpress.org/ticket/22895
+			'capabilities'    => [ 'create_posts' => is_array( $cap_type ) ? 'create_'.$cap_type[1] : 'create_'.$cap_type.'s' ],
+			'capability_type' => $cap_type,
+			'map_meta_cap'    => TRUE,
+
+			'register_meta_box_cb' => method_exists( $this, 'add_meta_box_cb_'.$constant ) ? [ $this, 'add_meta_box_cb_'.$constant ] : NULL,
 
 			// @SEE: https://core.trac.wordpress.org/ticket/39023
 			'show_in_rest' => TRUE,
 			'rest_base'    => $this->constant( $constant.'_rest', $this->constant( $constant.'_archive', $post_type ) ),
 			// 'rest_controller_class' => 'WP_REST_Posts_Controller',
+
+			'can_export'       => TRUE,
+			'delete_with_user' => FALSE,
 
 			// @SEE: https://github.com/torounit/custom-post-type-permalinks
 			// 'cptp_permalink_structure' => $this->constant( $constant.'_permalink', '/%post_id%' ),
