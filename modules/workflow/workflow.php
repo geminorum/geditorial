@@ -4,6 +4,7 @@ defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Ajax;
+use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Core\L10n;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
@@ -293,6 +294,7 @@ class Workflow extends gEditorial\Module
 		foreach ( $terms as $term ) {
 
 			$status = [
+				'term_id'   => $term->term_id,
 				'name'      => $term->slug,
 				'label'     => $term->name,
 				'post_type' => $posttypes, // FIXME: check for posttype meta
@@ -470,12 +472,13 @@ class Workflow extends gEditorial\Module
 		if ( empty( $current ) )
 			return;
 
+		$html  = $info = '';
 		$list  = $this->get_statuses();
 		$hide  = $this->get_setting( 'hide_disabled' );
 		$draft = $this->role_can( 'draft' );
 
 		if ( ! $hide || $draft )
-			$html = HTML::tag( 'option', [
+			$html.= HTML::tag( 'option', [
 				'value'    => 'draft',
 				'disabled' => ! $draft,
 				'selected' => $current == 'draft',
@@ -491,6 +494,20 @@ class Workflow extends gEditorial\Module
 				'disabled' => $status->disabled,
 				'selected' => $current == $status->name,
 			], HTML::escape( $status->label ) );
+
+			if ( $status->disabled )
+				continue;
+
+			if ( ! $desc = get_term_field( 'description', $status->term_id, $this->constant( 'status_tax' ) ) )
+				continue;
+
+			$class = 'field-wrap field-wrap-desc misc-pub-section status-'.$status->name;
+
+			if ( $current != $status->name )
+				$class.= ' hidden';
+
+			// TODO: changes via js and `status-` class
+			$info.= HTML::wrap( Helper::prepDescription( $desc, FALSE ), $class  );
 		}
 
 		$html = HTML::tag( 'select', [
@@ -507,7 +524,7 @@ class Workflow extends gEditorial\Module
 		if ( ! empty( $list[$current]->disabled ) )
 			echo '<input type="hidden" name="post_status" value="'.$current.'" />';
 
-		echo HTML::wrap( $label.$html, 'field-wrap field-wrap-select misc-pub-section' );
+		echo HTML::wrap( $label.$html, 'field-wrap field-wrap-select misc-pub-section' ).$info;
 	}
 
 	public function do_time_publishing( $post, $current = '' )
