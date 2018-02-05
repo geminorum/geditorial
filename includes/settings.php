@@ -1408,6 +1408,61 @@ class Settings extends Core\Base
 				}
 
 			break;
+			case 'checkbox-panel':
+
+				if ( count( $args['values'] ) ) {
+
+					echo '<div class="wp-tab-panel"><ul>';
+
+					if ( ! is_null( $args['none_title'] ) ) {
+
+						$html = HTML::tag( 'input', [
+							'type'     => 'checkbox',
+							'id'       => $id.( is_null( $args['none_value'] ) ? '' : '-'.$args['none_value'] ),
+							'name'     => $name.( is_null( $args['none_value'] ) ? '' : '-'.$args['none_value'] ),
+							'value'    => is_null( $args['none_value'] ) ? '1' : $args['none_value'],
+							'checked'  => in_array( $args['none_value'], (array) $value ),
+							'class'    => HTML::attrClass( $args['field_class'], '-type-checkbox', '-option-none' ),
+							'disabled' => $args['disabled'],
+							'readonly' => $args['readonly'],
+							'dir'      => $args['dir'],
+						] );
+
+						echo '<li>'.HTML::tag( 'label', [
+							'for' => $id.( is_null( $args['none_value'] ) ? '' : '-'.$args['none_value'] ),
+						], $html.'&nbsp;'.HTML::escape( $args['none_title'] ) ).'</li>';
+					}
+
+					foreach ( $args['values'] as $value_name => $value_title ) {
+
+						if ( in_array( $value_name, $exclude ) )
+							continue;
+
+						$html = HTML::tag( 'input', [
+							'type'     => 'checkbox',
+							'id'       => $id.'-'.$value_name,
+							'name'     => $name.'['.$value_name.']',
+							'value'    => '1',
+							'checked'  => in_array( $value_name, (array) $value ),
+							'class'    => $args['field_class'],
+							'disabled' => $args['disabled'],
+							'readonly' => $args['readonly'],
+							'dir'      => $args['dir'],
+						] );
+
+						echo '<li>'.HTML::tag( 'label', [
+							'for' => $id.'-'.$value_name,
+						], $html.'&nbsp;'.$value_title ).'</li>';
+					}
+
+					echo '</ul></div>';
+
+				} else if ( is_array( $args['values'] ) ) {
+
+					$args['description'] = $args['string_empty'];
+				}
+
+			break;
 			case 'radio':
 
 				if ( count( $args['values'] ) ) {
