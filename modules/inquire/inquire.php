@@ -26,6 +26,11 @@ class Inquire extends gEditorial\Module
 	{
 		return [
 			'_supports' => [
+				[
+					'field'       => 'make_public',
+					'title'       => _x( 'Make Public', 'Modules: Inquire: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Displays Inquiries on the front-end.', 'Modules: Inquire: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+				],
 				$this->settings_supports_option( 'inquiry_cpt', TRUE ),
 			],
 		];
@@ -86,9 +91,20 @@ class Inquire extends gEditorial\Module
 		// 	'show_in_quick_edit' => TRUE,
 		// ], $posttypes );
 
-		$this->register_post_type( 'inquiry_cpt', [
-			// 'publicly_queryable' => FALSE,
-		] );
+		$args = [];
+
+		if ( ! $this->get_setting( 'make_public' ) )
+			$args = [
+				'public'              => FALSE,
+				'show_ui'             => TRUE,
+				'exclude_from_search' => TRUE,
+				'publicly_queryable'  => FALSE,
+				'show_in_nav_menus'   => FALSE,
+				'show_in_admin_bar'   => FALSE,
+				'show_in_rest'        => FALSE,
+			];
+
+		$this->register_post_type( 'inquiry_cpt', $args );
 	}
 
 	// protected function get_module_templates()
