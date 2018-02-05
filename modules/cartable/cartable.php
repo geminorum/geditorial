@@ -526,14 +526,26 @@ class Cartable extends gEditorial\Module
 		$users = $this->get_users( $post->ID );
 
 		if ( in_array( $user->user_login, $users ) )
-			$html.= '<li class="-row">'._x( 'This currently is on your cartable.', 'Modules: Cartable', GEDITORIAL_TEXTDOMAIN ).'</li>';
+			$html.= '<li class="-row">'
+				.$this->get_column_icon( FALSE, 'portfolio', _x( 'User Cartables', 'Modules: Cartable: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) )
+				._x( 'This currently is on your cartable.', 'Modules: Cartable', GEDITORIAL_TEXTDOMAIN )
+				.'</li>';
 
 		if ( $check_groups && $this->support_groups ) {
 			$groups = $this->get_groups( $post->ID );
 
-			foreach( $groups as $group )
-				if ( is_object_in_term( $user->ID, $this->constant( 'group_ref' ), $group ) )
-					$html.= '<li class="-row">'._x( 'This currently is on your group cartable.', 'Modules: Cartable', GEDITORIAL_TEXTDOMAIN ).'</li>';
+			foreach( $groups as $group ) {
+
+				if ( is_object_in_term( $user->ID, $this->constant( 'group_ref' ), $group ) ) {
+
+					$html.= '<li class="-row">'
+						.$this->get_column_icon( FALSE, 'groups', _x( 'Group Cartables', 'Modules: Cartable: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) )
+						._x( 'This currently is on your group cartable.', 'Modules: Cartable', GEDITORIAL_TEXTDOMAIN )
+						.'</li>';
+
+					break;
+				}
+			}
 		}
 
 		if ( ! $wrap )
@@ -542,7 +554,7 @@ class Cartable extends gEditorial\Module
 		if ( ! $html )
 			$html.= '<li class="-row">'._x( 'This currently is <b>not</b> on any of your cartables.', 'Modules: Cartable', GEDITORIAL_TEXTDOMAIN ).'</li>';
 
-		return HTML::wrap( '<ul>'.$html.'</ul>', 'field-wrap field-wrap-summary' );
+		return HTML::wrap( '<ul class="-rows">'.$html.'</ul>', 'field-wrap field-wrap-summary' );
 	}
 
 	public function main_meta_box_users( $post, $box )
