@@ -28,8 +28,26 @@ class Workflow extends gEditorial\Module
 
 	protected function get_global_settings()
 	{
+		$roles   = User::getAllRoleList();
+		$exclude = [ 'administrator', 'subscriber' ];
+
 		$settings = [
 			'posttypes_option' => 'posttypes_option',
+			'_editpost' => [
+				[
+					'field'       => 'draft_roles',
+					'type'        => 'checkbox-panel',
+					'title'       => _x( 'Draft Roles', 'Modules: Cartable: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Roles that can rollback to Draft status.', 'Modules: Cartable: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'exclude'     => $exclude,
+					'values'      => $roles,
+				],
+				[
+					'field'       => 'action_time',
+					'title'       => _x( 'Time Action', 'Modules: Workflow: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Displays time action on the workflow meta-box.', 'Modules: Workflow: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+				],
+			],
 			'_editlist' => [
 				[
 					'field'       => 'status_menus',
@@ -350,7 +368,9 @@ class Workflow extends gEditorial\Module
 
 				$this->do_status_publishing( $post, $status );
 				// $this->do_status_extra_attributes( $post, $status );
-				$this->do_time_publishing( $post, $status );
+
+				if ( $this->get_setting( 'action_time' ) )
+					$this->do_time_publishing( $post, $status );
 
 			echo '</div><div class="clear"></div>';
 
@@ -422,7 +442,7 @@ class Workflow extends gEditorial\Module
 
 		$html = HTML::tag( 'option', [
 			'value'    => 'draft',
-			'disabled' => ! current_user_can( 'delete_post', $post->ID ), // $current != 'draft', // prevent going back to draft!
+			'disabled' => ! $this->role_can( 'draft' ),
 			'selected' => $current == 'draft',
 		], __( 'Draft' ) );
 
