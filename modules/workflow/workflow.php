@@ -35,17 +35,22 @@ class Workflow extends gEditorial\Module
 			'posttypes_option' => 'posttypes_option',
 			'_editpost' => [
 				[
+					'field'       => 'hide_disabled',
+					'title'       => _x( 'Hide Disabled', 'Modules: Workflow: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Hides statuses disabled for each role on the dropdown.', 'Modules: Workflow: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+				],
+				[
+					'field'       => 'action_time',
+					'title'       => _x( 'Time Action', 'Modules: Workflow: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Displays time action on the workflow meta-box.', 'Modules: Workflow: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+				],
+				[
 					'field'       => 'draft_roles',
 					'type'        => 'checkbox-panel',
 					'title'       => _x( 'Draft Roles', 'Modules: Cartable: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Roles that can rollback to Draft status.', 'Modules: Cartable: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 					'exclude'     => $exclude,
 					'values'      => $roles,
-				],
-				[
-					'field'       => 'action_time',
-					'title'       => _x( 'Time Action', 'Modules: Workflow: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Displays time action on the workflow meta-box.', 'Modules: Workflow: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 				],
 			],
 			'_editlist' => [
@@ -438,20 +443,28 @@ class Workflow extends gEditorial\Module
 		if ( empty( $current ) )
 			return;
 
-		$list = $this->get_statuses();
+		$list  = $this->get_statuses();
+		$hide  = $this->get_setting( 'hide_disabled' );
+		$draft = $this->role_can( 'draft' );
 
-		$html = HTML::tag( 'option', [
-			'value'    => 'draft',
-			'disabled' => ! $this->role_can( 'draft' ),
-			'selected' => $current == 'draft',
-		], __( 'Draft' ) );
+		if ( ! $hide || $draft )
+			$html = HTML::tag( 'option', [
+				'value'    => 'draft',
+				'disabled' => ! $draft,
+				'selected' => $current == 'draft',
+			], __( 'Draft' ) );
 
-		foreach ( $list as $status )
+		foreach ( $list as $status ) {
+
+			if ( $hide && $status->disabled && $current != $status->name )
+				continue;
+
 			$html.= HTML::tag( 'option', [
 				'value'    => $status->name,
 				'disabled' => $status->disabled,
 				'selected' => $current == $status->name,
 			], HTML::escape( $status->label ) );
+		}
 
 		$html = HTML::tag( 'select', [
 			'id'       => $this->classs( 'post-status' ),
