@@ -33,6 +33,7 @@ class Modified extends gEditorial\Module
 			'posttypes_option' => 'posttypes_option',
 			'_dashboard' => [
 				'dashboard_widgets',
+				'dashboard_statuses',
 				'dashboard_authors',
 				'dashboard_count',
 			],
@@ -130,6 +131,9 @@ class Modified extends gEditorial\Module
 		$query = new \WP_Query;
 
 		$columns = [ 'title' => Helper::tableColumnPostTitleSummary() ];
+
+		if ( $this->get_setting( 'dashboard_statuses', FALSE ) )
+			$columns['status'] = Helper::tableColumnPostStatus();
 
 		if ( $this->get_setting( 'dashboard_authors', FALSE ) )
 			$columns['author'] = Helper::tableColumnPostAuthorSummary();
