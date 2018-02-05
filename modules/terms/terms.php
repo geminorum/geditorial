@@ -224,7 +224,7 @@ class Terms extends gEditorial\Module
 				$this->_admin_enabled();
 
 				$this->_edit_tags_screen( $screen->taxonomy );
-				add_action( 'manage_edit-'.$screen->taxonomy.'_sortable_columns', [ $this, 'sortable_columns' ], 10, 3 );
+				add_filter( 'manage_edit-'.$screen->taxonomy.'_sortable_columns', [ $this, 'sortable_columns' ] );
 
 				wp_enqueue_media();
 
@@ -279,7 +279,7 @@ class Terms extends gEditorial\Module
 		$list = [];
 
 		foreach ( $this->supported as $field )
-			if ( $taxonomy && in_array( $taxonomy, $this->get_setting( 'term_'.$field, [] ) ) )
+			if ( ! $taxonomy || in_array( $taxonomy, $this->get_setting( 'term_'.$field, [] ) ) )
 				$list[] = $field;
 
 		return $this->filters( 'supported_fields', $list, $taxonomy );
@@ -331,8 +331,12 @@ class Terms extends gEditorial\Module
 
 	public function sortable_columns( $columns )
 	{
-		foreach ( $this->get_supported() as $field )
-			$columns[$this->classs( $field )] = 'meta_'.$field;
+		if ( ! $taxonomy = self::req( 'taxonomy' ) )
+			return $columns;
+
+		foreach ( $this->get_supported( $taxonomy ) as $field )
+			if ( ! in_array( $field, [ 'image', 'roles', 'posttypes' ] ) )
+				$columns[$this->classs( $field )] = 'meta_'.$field;
 
 		return $columns;
 	}
