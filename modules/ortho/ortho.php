@@ -29,7 +29,7 @@ class Ortho extends gEditorial\Module
 			'desc'     => _x( 'Persian Orthography Tools', 'Modules: Ortho', GEDITORIAL_TEXTDOMAIN ),
 			'icon'     => [ 'old', 'pen' ],
 			'frontend' => FALSE,
-			'disabled' => 'fa_IR' == get_locale() ? FALSE : _x( 'Only on Persian Locale', 'Modules: Revisions', GEDITORIAL_TEXTDOMAIN ),
+			'disabled' => 'fa_IR' == get_locale() ? FALSE : _x( 'Only on Persian Locale', 'Modules: Ortho', GEDITORIAL_TEXTDOMAIN ),
 		];
 	}
 

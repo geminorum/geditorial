@@ -224,7 +224,7 @@ class Revisions extends gEditorial\Module
 		}
 
 		if ( $link && current_user_can( 'edit_post', $revision->ID ) ) {
-			$parts['edit']   = sprintf( '<a class="button button-small" href="%1$s">%2$s %3$s</a>', get_edit_post_link( $revision->ID ), HTML::getDashicon( 'edit' ), _x( 'Edit', 'Modules: Revisions', GEDITORIAL_TEXTDOMAIN ) );
+			$parts['edit']   = sprintf( '<a class="button button-small" href="%1$s">%2$s %3$s</a>', get_edit_post_link( $revision->ID ), HTML::getDashicon( 'backup' ), _x( 'Browse', 'Modules: Revisions', GEDITORIAL_TEXTDOMAIN ) );
 			$parts['delete'] = sprintf( '<a class="button button-small -delete" href="#" data-id="%1$s" data-parent="%2$s">%3$s %4$s</a>', $revision->ID, $revision->post_parent, HTML::getDashicon( 'trash' ), _x( 'Delete', 'Modules: Revisions', GEDITORIAL_TEXTDOMAIN ) );
 		} else {
 			$link = FALSE;
