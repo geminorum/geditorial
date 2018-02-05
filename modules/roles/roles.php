@@ -288,11 +288,10 @@ class Roles extends gEditorial\Module
 			if ( is_null( $role ) )
 				continue;
 
-			foreach ( $object->capabilities as $cap => $true )
-				$role->add_cap( ( array_key_exists( $cap, $map ) ? $map[$cap] : $cap ) );
+			foreach ( $object->capabilities as $cap => $grant )
+				$role->add_cap( ( array_key_exists( $cap, $map ) ? $map[$cap] : $cap ), $grant );
 
 			$role->add_cap( 'read' ); // duh?!
-			// $role->add_cap( $map['create_posts'] ); // its not on defaults
 
 			$count++;
 		}
