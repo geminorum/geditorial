@@ -480,7 +480,7 @@ class Users extends gEditorial\Module
 			$this->do_settings_field( [
 				'type'         => 'select',
 				'field'        => 'post_type',
-				'values'       => PostType::get(),
+				'values'       => PostType::get( 0, [ 'show_ui' => TRUE ] ),
 				'default'      => $args['post_type'],
 				'option_group' => 'reports',
 			] );

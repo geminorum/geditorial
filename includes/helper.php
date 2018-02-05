@@ -530,7 +530,7 @@ class Helper extends Core\Base
 	public static function tableFilterPostTypes( $list = NULL, $name = 'type' )
 	{
 		if ( is_null( $list ) )
-			$list = PostType::get();
+			$list = PostType::get( 0, [ 'show_ui' => TRUE ] );
 
 		return HTML::dropdown( $list, [
 			'name'       => $name,

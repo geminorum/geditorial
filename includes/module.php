@@ -408,7 +408,7 @@ class Module extends Base
 		else if ( TRUE === $pre )
 			$pre = [ 'all' => _x( 'All PostTypes', 'Module', GEDITORIAL_TEXTDOMAIN ) ];
 
-		$all = PostType::get();
+		$all = PostType::get( 0, [ 'show_ui' => TRUE ] );
 
 		foreach ( $this->post_types( $post_types ) as $post_type )
 			$pre[$post_type] = empty( $all[$post_type] ) ? $post_type : $all[$post_type];
@@ -418,7 +418,7 @@ class Module extends Base
 
 	public function all_post_types( $exclude = TRUE )
 	{
-		$post_types = PostType::get();
+		$post_types = PostType::get( 0, [ 'show_ui' => TRUE ] );
 
 		if ( $exclude && count( $this->post_types_excluded ) )
 			$post_types = array_diff_key( $post_types, array_flip( $this->post_types_excluded ) );

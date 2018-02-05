@@ -193,7 +193,7 @@ class Tweaks extends gEditorial\Module
 
 	private function get_posttypes_support_search_meta()
 	{
-		$supported = PostType::get();
+		$supported = PostType::get( 0, [ 'show_ui' => TRUE ] );
 		$excludes  = [
 			'attachment',
 			'day',
@@ -204,7 +204,7 @@ class Tweaks extends gEditorial\Module
 
 	private function get_posttypes_support_order()
 	{
-		$supported = PostType::get();
+		$supported = PostType::get( 0, [ 'show_ui' => TRUE ] );
 		$excludes  = [
 			'publication',
 			'attachment',
