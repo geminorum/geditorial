@@ -60,6 +60,7 @@ class MetaBox extends Core\Base
 			'metabox'              => NULL, // metabox id to check for disabled
 			'list_only'            => NULL,
 			'selected_only'        => NULL,
+			'selected_preserve'    => NULL, // keep hidden selected / NULL to check for assign cap
 			'descendants_and_self' => 0,
 			'selected_cats'        => FALSE,
 			'popular_cats'         => FALSE,
@@ -141,6 +142,18 @@ class MetaBox extends Core\Base
 		$atts['list_only']     = ! empty( $args['list_only'] );
 		$atts['selected_only'] = ! empty( $args['selected_only'] );
 
+		if ( is_null( $args['selected_preserve'] ) )
+			$args['selected_preserve'] = ! $atts['disabled'];
+
+		// preserves terms that hidden on the current list
+		if ( $args['selected_preserve'] ) {
+
+			$diff = array_diff( $atts['selected_cats'], wp_list_pluck( $terms, 'term_id' ) );
+
+			foreach ( $diff as $hidden )
+				$html.= '<input type="hidden" name="'.$args['name'].'['.$tax->name.'][]" value="'.$hidden.'" />';
+		}
+
 		if ( $args['checked_ontop'] || $atts['selected_only'] ) {
 
 			// post process $terms rather than adding an exclude to
@@ -178,14 +191,15 @@ class MetaBox extends Core\Base
 	public static function checklistUserTerms( $post_id = 0, $atts = [], $users = NULL, $threshold = 5 )
 	{
 		$args = self::args( $atts, [
-			'taxonomy'      => NULL,
-			'metabox'       => NULL,
-			'edit'          => FALSE,
-			'role'          => NULL,
-			'list_only'     => NULL,
-			'selected_only' => NULL,
-			'walker'        => NULL,
-			'name'          => 'tax_input', // override if not saving by core
+			'taxonomy'          => NULL,
+			'metabox'           => NULL,
+			'edit'              => FALSE,
+			'role'              => NULL,
+			'list_only'         => NULL,
+			'selected_only'     => NULL,
+			'selected_preserve' => NULL, // keep hidden selected / NULL to check for assign cap
+			'walker'            => NULL,
+			'name'              => 'tax_input', // override if not saving by core
 		] );
 
 		if ( ! $args['taxonomy'] )
@@ -210,8 +224,10 @@ class MetaBox extends Core\Base
 
 		$html = $form = $list = '';
 		$id   = static::BASE.'-'.$args['taxonomy'].'-list';
+		$tax  = get_taxonomy( $args['taxonomy'] );
 		$atts = [ 'taxonomy' => $args['taxonomy'], 'atts' => $args, 'selected' => $selected ];
 
+		$atts['disabled']      = ! current_user_can( $tax->cap->assign_terms );
 		$atts['list_only']     = ! empty( $args['list_only'] );
 		$atts['selected_only'] = ! empty( $args['selected_only'] );
 
@@ -231,6 +247,18 @@ class MetaBox extends Core\Base
 			], HTML::getDashicon( 'sort' ) );
 
 			$html.= HTML::wrap( $form, 'field-wrap field-wrap-filter' );
+		}
+
+		if ( is_null( $args['selected_preserve'] ) )
+			$args['selected_preserve'] = ! $atts['disabled'];
+
+		// preserves users that hidden on the current list
+		if ( $args['selected_preserve'] ) {
+
+			$diff = array_diff( $selected, wp_list_pluck( $users, 'user_login' ) );
+
+			foreach ( $diff as $hidden )
+				$html.= '<input type="hidden" name="'.$args['name'].'['.$args['taxonomy'].'][]" value="'.$hidden.'" />';
 		}
 
 		if ( count( $selected ) ) {
@@ -256,7 +284,7 @@ class MetaBox extends Core\Base
 
 		// allows for an empty term set to be sent. 0 is an invalid Term ID
 		// and will be ignored by empty() checks
-		if ( ! $atts['list_only'] )
+		if ( ! $args['list_only'] && ! $atts['disabled'] )
 			$html.= '<input type="hidden" name="'.$args['name'].'['.$args['taxonomy'].'][]" value="0" />';
 
 		// ListJS needs the wrap!

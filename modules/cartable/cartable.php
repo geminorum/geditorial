@@ -38,6 +38,19 @@ class Cartable extends gEditorial\Module
 
 		return [
 			'posttypes_option' => 'posttypes_option',
+			'_general' => [
+				[
+					'field'       => 'map_cap_user',
+					'title'       => _x( 'Map User Capabilities', 'Modules: Cartable: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Gives access to edit posts based on user cartables.', 'Modules: Cartable: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+				],
+				[
+					'field'       => 'map_cap_group',
+					'title'       => _x( 'Map Group Capabilities', 'Modules: Cartable: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Gives access to edit posts based on group cartables.', 'Modules: Cartable: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'disabled'    => ! $this->support_groups,
+				],
+			],
 			'_roles' => [
 				'excluded_roles' => _x( 'Roles that excluded from cartables.', 'Modules: Cartable: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 				[
@@ -83,19 +96,13 @@ class Cartable extends gEditorial\Module
 					'values'      => $roles,
 					'disabled'    => ! $this->support_groups,
 				],
-				[
-					'field'       => 'map_cap_user',
-					'title'       => _x( 'Map User Capabilities', 'Modules: Cartable: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Gives access to edit posts based on user cartables.', 'Modules: Cartable: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-				],
-				[
-					'field'       => 'map_cap_group',
-					'title'       => _x( 'Map Group Capabilities', 'Modules: Cartable: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Gives access to edit posts based on group cartables.', 'Modules: Cartable: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-					'disabled'    => ! $this->support_groups,
-				],
-				// 'admin_rowactions',
 			],
+			'_editpost' => [
+				'display_threshold' => _x( 'Maximum number of users to display the search box.', 'Modules: Cartable: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+			],
+			// '_editlist' => [
+			// 	'admin_rowactions',
+			// ],
 			// '_dashboard' => [
 			// 	'dashboard_widgets',
 			// 	'dashboard_authors',
@@ -563,10 +570,11 @@ class Cartable extends gEditorial\Module
 		}
 
 		$list = MetaBox::checklistUserTerms( $post->ID, [
-			'taxonomy'      => $this->constant( 'user_tax' ),
-			'list_only'     => $disable,
-			'selected_only' => $disable,
-		], $users, 5 ); // FIXME: add setting
+			'taxonomy'          => $this->constant( 'user_tax' ),
+			'list_only'         => $disable,
+			'selected_only'     => $disable,
+			'selected_preserve' => TRUE,
+		], $users, $this->get_setting( 'display_threshold', 5 ) );
 
 		if ( FALSE === $list )
 			echo $this->metabox_summary( $post, FALSE );
@@ -577,10 +585,11 @@ class Cartable extends gEditorial\Module
 		$disable = ! $this->role_can( 'assign_group' );
 
 		MetaBox::checklistTerms( $post->ID, [
-			'taxonomy'      => $this->constant( 'group_tax' ),
-			'edit'          => FALSE,
-			'list_only'     => $disable,
-			'selected_only' => $disable,
+			'taxonomy'          => $this->constant( 'group_tax' ),
+			'edit'              => FALSE,
+			'list_only'         => $disable,
+			'selected_only'     => $disable,
+			// 'selected_preserve' => TRUE, // NO NEED: only on custom group lists
 		] );
 	}
 
