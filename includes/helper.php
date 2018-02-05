@@ -655,6 +655,24 @@ class Helper extends Core\Base
 		];
 	}
 
+	public static function tableColumnPostStatusSummary()
+	{
+		return [
+			'title'    => _x( 'Status', 'Helper: Table Column: Post Title', GEDITORIAL_TEXTDOMAIN ),
+			'args'     => [ 'statuses' => PostType::getStatuses() ],
+			'callback' => function( $value, $row, $column, $index ){
+
+				if ( ! $row->post_status )
+					return gEditorial()->na();
+
+				if ( isset( $column['args']['statuses'][$row->post_status] ) )
+					return $column['args']['statuses'][$row->post_status];
+
+				return '<code>'.$row->post_status.'</code>';
+			},
+		];
+	}
+
 	public static function tableColumnPostAuthorSummary()
 	{
 		return [

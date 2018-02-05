@@ -103,11 +103,12 @@ class Cartable extends gEditorial\Module
 			// '_editlist' => [
 			// 	'admin_rowactions',
 			// ],
-			// '_dashboard' => [
-			// 	'dashboard_widgets',
-			// 	'dashboard_authors',
-			// 	'dashboard_count',
-			// ],
+			'_dashboard' => [
+				'dashboard_widgets',
+				'dashboard_statuses',
+				'dashboard_authors',
+				'dashboard_count',
+			],
 		];
 	}
 
@@ -409,15 +410,19 @@ class Cartable extends gEditorial\Module
 		echo '</li>';
 	}
 
-	// protected function dashboard_widgets()
-	// {
-	// 	wp_add_dashboard_widget( $this->classs( 'summary' ),
-	// 		_x( 'Your Cartable', 'Modules: Cartable: Dashboard Widget Title', GEDITORIAL_TEXTDOMAIN ),
-	// 		[ $this, 'dashboard_widget_summary' ]
-	// 	);
-    //
-	// 	// $this->enqueue_asset_js( [], 'cartable.dashboard' );
-	// }
+	// TODO: add group cartables
+	protected function dashboard_widgets()
+	{
+		if ( $this->role_can( 'view_user' ) ) {
+
+			$title = _x( 'Your Cartable', 'Modules: Cartable: Dashboard Widget Title', GEDITORIAL_TEXTDOMAIN );
+			$title.= ' <span class="postbox-title-action"><a href="'.esc_url( $this->get_adminmenu( FALSE ) ).'"';
+			$title.= ' title="'._x( 'Click to view all items in your cartable', 'Modules: Cartable: Dashboard Widget Title Action', GEDITORIAL_TEXTDOMAIN ).'">';
+			$title.= _x( 'All Items', 'Modules: Cartable: Dashboard Widget Title Action', GEDITORIAL_TEXTDOMAIN ).'</a></span>';
+
+			wp_add_dashboard_widget( $this->classs( 'user-cartable' ), $title, [ $this, 'dashboard_widget_user_cartable' ] );
+		}
+	}
 
 	protected function do_sync_terms()
 	{
@@ -493,12 +498,54 @@ class Cartable extends gEditorial\Module
 		Taxonomy::addTerm( $user->user_login, $this->constant( 'user_tax' ), FALSE );
 	}
 
-	// public function dashboard_widget_summary()
-	// {
-	// 	if ( $this->check_hidden_metabox( 'summary' ) )
-	// 		return;
-	//
-	// }
+	public function dashboard_widget_user_cartable()
+	{
+		if ( $this->check_hidden_metabox( 'user-cartable' ) )
+			return;
+
+		$user = wp_get_current_user();
+
+		if ( ! $term = Taxonomy::getTerm( $user->user_login, $this->constant( 'user_tax' ) ) )
+			return HTML::desc( _x( 'Something\'s wrong!', 'Modules: Cartable', GEDITORIAL_TEXTDOMAIN ), FALSE, '-empty' );
+
+		$args = [
+
+			'tax_query'      => [ [
+				'taxonomy' => $this->constant( 'user_tax' ),
+				'field'    => 'id',
+				'terms'    => [ $term->term_id ],
+			] ],
+
+			'orderby'     => 'modified',
+			'post_type'   => $this->post_types(),
+			'post_status' => 'any',
+
+			'posts_per_page'      => $this->get_setting( 'dashboard_count', 10 ),
+			'ignore_sticky_posts' => TRUE,
+			'suppress_filters'    => TRUE,
+			'no_found_rows'       => TRUE,
+
+			'update_post_meta_cache' => FALSE,
+			'update_post_term_cache' => FALSE,
+			'lazy_load_term_meta'    => FALSE,
+		];
+
+		$query = new \WP_Query;
+
+		$columns = [ 'title' => Helper::tableColumnPostTitleSummary() ];
+
+		if ( $this->get_setting( 'dashboard_statuses', FALSE ) )
+			$columns['status'] = Helper::tableColumnPostStatusSummary();
+
+		if ( $this->get_setting( 'dashboard_authors', FALSE ) )
+			$columns['author'] = Helper::tableColumnPostAuthorSummary();
+
+		$columns['modified'] = Helper::tableColumnPostDateModified();
+
+		HTML::tableList( $columns, $query->query( $args ), [
+			'empty' => _x( 'The cartable is empty!', 'Modules: Cartable', GEDITORIAL_TEXTDOMAIN ),
+		] );
+	}
 
 	public function do_meta_box_main( $post, $box )
 	{
@@ -682,7 +729,7 @@ class Cartable extends gEditorial\Module
 		], $posts, [
 			'navigation' => 'before',
 			'search'     => 'before',
-			'empty'      => Helper::tableArgEmptyPosts(),
+			'empty'      => _x( 'The cartable is empty!', 'Modules: Cartable', GEDITORIAL_TEXTDOMAIN ),
 			'pagination' => $pagination,
 		] );
 	}

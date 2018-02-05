@@ -463,6 +463,15 @@ class Settings extends Core\Base
 		];
 	}
 
+	public static function getSetting_dashboard_statuses( $description = NULL )
+	{
+		return [
+			'field'       => 'dashboard_statuses',
+			'title'       => _x( 'Dashboard Statuses', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+			'description' => $description ?: _x( 'Displays the status column on dashboard widget', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+		];
+	}
+
 	public static function getSetting_dashboard_count( $description = NULL )
 	{
 		return [
