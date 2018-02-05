@@ -253,9 +253,13 @@ class Cartable extends gEditorial\Module
 				if ( ! in_array( $post->post_type, $this->post_types() ) )
 					return $caps;
 
-				if ( $this->get_setting( 'map_cap_user' )
-					&& in_array( get_user_by( 'id', $user_id )->user_login, $this->get_users( $post->ID ) ) )
+				if ( $this->get_setting( 'map_cap_user' ) ) {
+
+					$user = get_user_by( 'id', $user_id )->user_login;
+
+					if ( in_array( $user, $this->get_users( $post->ID ) ) )
 						return [ 'read' ];
+				}
 
 				if ( $this->support_groups && $this->get_setting( 'map_cap_group' ) ) {
 
@@ -336,9 +340,7 @@ class Cartable extends gEditorial\Module
 		if ( ! $this->role_can( 'view_group', $user_id ) )
 			return;
 
-		$groups = wp_get_object_terms( $user_id, $this->constant( 'group_ref' ) );
-
-		foreach ( $groups as $group ) {
+		foreach ( $this->get_user_groups( $user_id ) as $group ) {
 
 			$hook = add_submenu_page(
 				$page,
@@ -550,9 +552,7 @@ class Cartable extends gEditorial\Module
 
 		if ( $this->support_groups && ! $disable && $this->role_can( 'restricted', NULL, FALSE, FALSE ) ) {
 
-			$groups = wp_get_object_terms( get_current_user_id(), $this->constant( 'group_ref' ) );
-
-			foreach ( $groups as $group ) {
+			foreach ( $this->get_user_groups() as $group ) {
 
 				$members = get_objects_in_term( $group->term_id, $this->constant( 'group_ref' ) );
 
@@ -603,6 +603,14 @@ class Cartable extends gEditorial\Module
 		return Taxonomy::getTerms( $this->constant( 'group_tax' ), $post_id, $object, $key );
 	}
 
+	private function get_user_groups( $user_id = NULL )
+	{
+		if ( is_null( $user_id ) )
+			$user_id = get_current_user_id();
+
+		return wp_get_object_terms( $user_id, $this->constant( 'group_ref' ) );
+	}
+
 	private function tableCartable( $group = FALSE )
 	{
 		$user = wp_get_current_user();
@@ -614,15 +622,24 @@ class Cartable extends gEditorial\Module
 		else if ( $this->role_can( 'view_user', $user->ID ) )
 			$term = Taxonomy::getTerm( $user->user_login, $this->constant( 'user_tax' ) );
 
-		if ( ! $term )
-			return HTML::desc( _x( 'Something\'s wrong!', 'Modules: Cartable', GEDITORIAL_TEXTDOMAIN ), TRUE, '-empty' );
-
-		if ( $group )
+		if ( $group && $term )
 			$title = sprintf( _x( 'Cartable: %s', 'Modules: Cartable: Menu Title', GEDITORIAL_TEXTDOMAIN ), $term->name );
 		else
 			$title = _x( 'Your Cartable', 'Modules: Cartable: Page Title', GEDITORIAL_TEXTDOMAIN );
 
 		Settings::headerTitle( $title, FALSE );
+
+		// checking for group access
+		if ( $group && $term && $this->role_can( 'restricted', NULL, FALSE, FALSE ) ) {
+
+			if ( ! in_array( $term->slug, wp_list_pluck( $this->get_user_groups( $user->ID ), 'slug' ) ) )
+				$term = FALSE;
+		}
+
+		if ( ! $term ) {
+			echo HTML::error( _x( 'Something\'s wrong!', 'Modules: Cartable', GEDITORIAL_TEXTDOMAIN ), FALSE );
+			return FALSE;
+		}
 
 		$query = [
 			'tax_query'      => [ [
