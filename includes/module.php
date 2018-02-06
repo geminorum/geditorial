@@ -2922,9 +2922,9 @@ SQL;
 	}
 
 	// checks to bail early if metabox/widget is hidden
-	protected function check_hidden_metabox( $widget, $after = '' )
+	protected function check_hidden_metabox( $box, $after = '' )
 	{
-		return MetaBox::checkHidden( $this->classs( $widget ), $after );
+		return MetaBox::checkHidden( ( empty( $box['id'] ) ? $this->classs( $box ) : $box['id'] ), $after );
 	}
 
 	protected function get_blog_users( $fields = NULL, $list = FALSE, $admins = FALSE )
