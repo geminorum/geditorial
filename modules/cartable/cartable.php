@@ -36,80 +36,80 @@ class Cartable extends gEditorial\Module
 		$roles   = User::getAllRoleList();
 		$exclude = [ 'administrator', 'subscriber' ];
 
-		return [
-			'posttypes_option' => 'posttypes_option',
-			'_general' => [
-				[
-					'field'       => 'map_cap_user',
-					'title'       => _x( 'Map User Capabilities', 'Modules: Cartable: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Gives access to edit posts based on user cartables.', 'Modules: Cartable: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-				],
-				[
-					'field'       => 'map_cap_group',
-					'title'       => _x( 'Map Group Capabilities', 'Modules: Cartable: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Gives access to edit posts based on group cartables.', 'Modules: Cartable: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-					'disabled'    => ! $this->support_groups,
-				],
-			],
-			'_roles' => [
-				'excluded_roles' => _x( 'Roles that excluded from cartables.', 'Modules: Cartable: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-				[
-					'field'       => 'view_user_roles',
-					'type'        => 'checkbox',
-					'title'       => _x( 'View User Cartable', 'Modules: Cartable: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Roles that can view user cartables.', 'Modules: Cartable: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-					'exclude'     => $exclude,
-					'values'      => $roles,
-				],
-				[
-					'field'       => 'view_group_roles',
-					'type'        => 'checkbox',
-					'title'       => _x( 'View Group Cartable', 'Modules: Cartable: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Roles that can view group cartables.', 'Modules: Cartable: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-					'exclude'     => $exclude,
-					'values'      => $roles,
-					'disabled'    => ! $this->support_groups,
-				],
-				[
-					'field'       => 'assign_user_roles',
-					'type'        => 'checkbox',
-					'title'       => _x( 'Assign User Cartables', 'Modules: Cartable: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Roles that can assign user cartables.', 'Modules: Cartable: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-					'exclude'     => $exclude,
-					'values'      => $roles,
-				],
-				[
-					'field'       => 'assign_group_roles',
-					'type'        => 'checkbox',
-					'title'       => _x( 'Assign Group Cartables', 'Modules: Cartable: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Roles that can assign gorup cartables.', 'Modules: Cartable: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-					'exclude'     => $exclude,
-					'values'      => $roles,
-					'disabled'    => ! $this->support_groups,
-				],
-				[
-					'field'       => 'restricted_roles',
-					'type'        => 'checkbox',
-					'title'       => _x( 'Restricted Groups', 'Modules: Cartable: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Roles that restricted to their group users.', 'Modules: Cartable: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-					'exclude'     => $exclude,
-					'values'      => $roles,
-					'disabled'    => ! $this->support_groups,
-				],
-			],
-			'_editpost' => [
-				'display_threshold' => _x( 'Maximum number of users to display the search box.', 'Modules: Cartable: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-			],
-			// '_editlist' => [
-			// 	'admin_rowactions',
-			// ],
-			'_dashboard' => [
-				'dashboard_widgets',
-				'dashboard_statuses',
-				'dashboard_authors',
-				'dashboard_count',
-			],
+		$settings = [ 'posttypes_option' => 'posttypes_option' ];
+
+		$settings['_general'][] = [
+			'field'       => 'map_cap_user',
+			'title'       => _x( 'Map User Capabilities', 'Modules: Cartable: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+			'description' => _x( 'Gives access to edit posts based on user cartables.', 'Modules: Cartable: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 		];
+
+		if ( $this->support_groups )
+			$settings['_general'][] = [
+				'field'       => 'map_cap_group',
+				'title'       => _x( 'Map Group Capabilities', 'Modules: Cartable: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+				'description' => _x( 'Gives access to edit posts based on group cartables.', 'Modules: Cartable: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+			];
+
+		$settings['_roles']['excluded_roles'] = _x( 'Roles that excluded from cartables.', 'Modules: Cartable: Setting Description', GEDITORIAL_TEXTDOMAIN );
+		$settings['_roles'][] = [
+			'field'       => 'view_user_roles',
+			'type'        => 'checkbox',
+			'title'       => _x( 'View User Cartable', 'Modules: Cartable: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+			'description' => _x( 'Roles that can view user cartables.', 'Modules: Cartable: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+			'exclude'     => $exclude,
+			'values'      => $roles,
+		];
+
+		if ( $this->support_groups )
+			$settings['_roles'][] = [
+				'field'       => 'view_group_roles',
+				'type'        => 'checkbox',
+				'title'       => _x( 'View Group Cartable', 'Modules: Cartable: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+				'description' => _x( 'Roles that can view group cartables.', 'Modules: Cartable: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+				'exclude'     => $exclude,
+				'values'      => $roles,
+			];
+
+		$settings['_roles'][] = [
+			'field'       => 'assign_user_roles',
+			'type'        => 'checkbox',
+			'title'       => _x( 'Assign User Cartables', 'Modules: Cartable: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+			'description' => _x( 'Roles that can assign user cartables.', 'Modules: Cartable: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+			'exclude'     => $exclude,
+			'values'      => $roles,
+		];
+
+		if ( $this->support_groups ) {
+			$settings['_roles'][] = [
+				'field'       => 'assign_group_roles',
+				'type'        => 'checkbox',
+				'title'       => _x( 'Assign Group Cartables', 'Modules: Cartable: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+				'description' => _x( 'Roles that can assign gorup cartables.', 'Modules: Cartable: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+				'exclude'     => $exclude,
+				'values'      => $roles,
+			];
+
+			$settings['_roles'][] = [
+				'field'       => 'restricted_roles',
+				'type'        => 'checkbox',
+				'title'       => _x( 'Restricted Groups', 'Modules: Cartable: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+				'description' => _x( 'Roles that restricted to their group users.', 'Modules: Cartable: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+				'exclude'     => $exclude,
+				'values'      => $roles,
+			];
+		}
+
+		$settings['_editpost']['display_threshold'] = _x( 'Maximum number of users to display the search box.', 'Modules: Cartable: Setting Description', GEDITORIAL_TEXTDOMAIN );
+
+		$settings['_dashboard'] = [
+			'dashboard_widgets',
+			'dashboard_statuses',
+			'dashboard_authors',
+			'dashboard_count',
+		];
+
+		return $settings;
 	}
 
 	protected function get_global_constants()
@@ -279,12 +279,6 @@ class Cartable extends gEditorial\Module
 
 			if ( 'edit' == $screen->base ) {
 
-				// if ( $this->get_setting( 'admin_rowactions' ) ) {
-				//
-				// 	$this->filter( 'post_row_actions', 2 );
-				// 	$this->enqueue_asset_js( [], $screen );
-				// }
-
 				if ( $this->role_can( 'view_user' ) )
 					$this->action_module( 'tweaks', 'column_attr', 1, 20, 'users' );
 
@@ -293,23 +287,20 @@ class Cartable extends gEditorial\Module
 
 			} else if ( 'post' == $screen->base ) {
 
-				// if ( $this->role_can( 'cartable' ) ) {
+				$this->class_meta_box( $screen, 'main' );
 
-					$this->class_meta_box( $screen, 'main' );
+				add_meta_box( $this->classs( 'main' ),
+					$this->get_meta_box_title( 'users', $this->get_adminmenu( FALSE ), TRUE ),
+					[ $this, 'do_meta_box_main' ],
+					$screen->post_type,
+					'side',
+					'high'
+				);
 
-					add_meta_box( $this->classs( 'main' ),
-						$this->get_meta_box_title( 'users', $this->get_adminmenu( FALSE ), TRUE ),
-						[ $this, 'do_meta_box_main' ],
-						$screen->post_type,
-						'side',
-						'high'
-					);
+				if ( $this->support_groups )
+					add_action( $this->hook( 'main_meta_box' ), [ $this, 'main_meta_box_groups' ], 10, 2 );
 
-					if ( $this->support_groups )
-						add_action( $this->hook( 'main_meta_box' ), [ $this, 'main_meta_box_groups' ], 10, 2 );
-
-					add_action( $this->hook( 'main_meta_box' ), [ $this, 'main_meta_box_users' ], 10, 2 );
-				// }
+				add_action( $this->hook( 'main_meta_box' ), [ $this, 'main_meta_box_users' ], 10, 2 );
 			}
 		}
 	}
