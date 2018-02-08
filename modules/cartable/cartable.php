@@ -226,7 +226,6 @@ class Cartable extends gEditorial\Module
 
 		if ( $this->get_setting( 'support_types' ) ) {
 
-			// see gpeople affiliations
 			$this->register_taxonomy( 'type_tax', [
 				'hierarchical' => TRUE,
 				'public'       => FALSE,
@@ -263,7 +262,6 @@ class Cartable extends gEditorial\Module
 
 		$this->filter( 'wp_update_term_data', 4 );
 		add_action( 'edited_'.$this->constant( 'group_ref' ), [ $this, 'edited_term' ], 10, 2 );
-		// add_action( 'created_'.$this->constant( 'group_ref' ), [ $this, 'created_term' ], 10, 2 ); // only on edit/resync after new groups
 
 		$this->support_groups = TRUE;
 	}
@@ -356,9 +354,6 @@ class Cartable extends gEditorial\Module
 				return 'options-general.php';
 			} );
 
-			if ( 'edit-tags' == $screen->base )
-				$this->_edit_tags_screen( $screen->taxonomy );
-
 		} else if ( in_array( $screen->post_type, $this->post_types() ) ) {
 
 			if ( 'edit' == $screen->base ) {
@@ -421,7 +416,7 @@ class Cartable extends gEditorial\Module
 			|| $this->role_can( 'view_group', $user_id )
 			|| $this->role_can( 'type_group', $user_id ) ) {
 
-			$hook = add_submenu_page(
+			add_submenu_page(
 				'index.php',
 				_x( 'Editorial Cartable', 'Modules: Cartable: Page Title', GEDITORIAL_TEXTDOMAIN ),
 				_x( 'My Cartable', 'Modules: Cartable: Menu Title', GEDITORIAL_TEXTDOMAIN ),
@@ -429,14 +424,8 @@ class Cartable extends gEditorial\Module
 				$this->get_adminmenu(),
 				[ $this, 'admin_cartable_page' ]
 			);
-
-			// add_action( 'load-'.$hook, [ $this, 'admin_cartable_load' ] );
 		}
 	}
-
-	// public function admin_cartable_load()
-	// {
-	// }
 
 	public function admin_cartable_page()
 	{
@@ -508,7 +497,7 @@ class Cartable extends gEditorial\Module
 
 			if ( $current && 'group' == $context && $this->role_can( 'restricted', NULL, FALSE, FALSE ) ) {
 
-				// checking for group access
+				// prevents access to other groups
 				if ( ! in_array( $current->slug, wp_list_pluck( $this->get_user_groups( $user->ID ), 'slug' ) ) )
 					$current = FALSE;
 			}
@@ -541,7 +530,7 @@ class Cartable extends gEditorial\Module
 
 			foreach ( $users as $slug )
 				if ( $user = get_user_by( 'login', $slug ) )
-					$list[] = $user->display_name; // FIXME: make clickable
+					$list[] = HTML::escape( $user->display_name ); // FIXME: make clickable
 
 			echo Helper::getJoined( $list );
 		echo '</li>';
@@ -559,8 +548,8 @@ class Cartable extends gEditorial\Module
 			$list = [];
 
 			foreach ( $groups as $slug )
-				if ( $group = get_term_by( 'slug', $slug, $this->constant( 'group_tax' ) ) )
-					$list[] = $group->name; // FIXME: make clickable
+				if ( $term = get_term_by( 'slug', $slug, $this->constant( 'group_tax' ) ) )
+					$list[] = HTML::escape( $term->name ); // FIXME: make clickable
 
 			echo Helper::getJoined( $list );
 		echo '</li>';
@@ -578,8 +567,8 @@ class Cartable extends gEditorial\Module
 			$list = [];
 
 			foreach ( $types as $slug )
-				if ( $type = get_term_by( 'slug', $slug, $this->constant( 'type_tax' ) ) )
-					$list[] = $type->name; // FIXME: make clickable
+				if ( $term = get_term_by( 'slug', $slug, $this->constant( 'type_tax' ) ) )
+					$list[] = HTML::escape( $term->name ); // FIXME: make clickable
 
 			echo Helper::getJoined( $list );
 		echo '</li>';
@@ -646,18 +635,6 @@ class Cartable extends gEditorial\Module
 				);
 			}
 		}
-	}
-
-	private function _edit_tags_screen( $taxonomy )
-	{
-		// add_filter( 'manage_edit-'.$taxonomy.'_columns', [ $this, 'manage_columns' ] );
-		// add_filter( 'manage_'.$taxonomy.'_custom_column', [ $this, 'custom_column' ], 10, 3 );
-	}
-
-	public function manage_columns( $columns )
-	{
-		// unset( $columns['posts'] );
-		return $columns;
 	}
 
 	protected function do_sync_terms()
