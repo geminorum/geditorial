@@ -387,7 +387,7 @@ class Event extends gEditorial\Module
 
 	public function do_meta_box_main( $post, $box )
 	{
-		if ( $this->check_hidden_metabox( 'main' ) )
+		if ( $this->check_hidden_metabox( $box ) )
 			return;
 
 		echo $this->wrap_open( '-admin-metabox' );

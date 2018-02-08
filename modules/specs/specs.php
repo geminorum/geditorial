@@ -276,7 +276,7 @@ class Specs extends gEditorial\Module
 
 	public function do_meta_box_supported( $post, $box )
 	{
-		if ( $this->check_hidden_metabox( 'supported' ) )
+		if ( $this->check_hidden_metabox( $box ) )
 			return;
 
 		echo $this->wrap_open( '-admin-metabox' );
