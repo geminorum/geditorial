@@ -198,7 +198,7 @@ class Users extends gEditorial\Module
 		$title.= ' title="'._x( 'Edit your profile', 'Modules: Users: Dashboard Widget Action', GEDITORIAL_TEXTDOMAIN ).'">';
 		$title.= _x( 'Edit', 'Modules: Users: Dashboard Widget Action', GEDITORIAL_TEXTDOMAIN ).'</a></span>';
 
-		wp_add_dashboard_widget( $this->classs( 'profile-summary' ), $title, [ $this, 'dashboard_summary' ] );
+		wp_add_dashboard_widget( $this->classs( 'profile-summary' ), $title, [ $this, 'dashboard_widget_summary' ] );
 	}
 
 	public function restrict_manage_posts( $post_type, $which )
@@ -376,9 +376,9 @@ class Users extends gEditorial\Module
 		clean_object_term_cache( $user_id, $this->constant( 'group_tax' ) );
 	}
 
-	public function dashboard_summary()
+	public function dashboard_widget_summary( $object, $box )
 	{
-		if ( $this->check_hidden_metabox( 'profile-summary' ) )
+		if ( $this->check_hidden_metabox( $box ) )
 			return;
 
 		$user = wp_get_current_user();

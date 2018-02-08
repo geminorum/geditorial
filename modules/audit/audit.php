@@ -416,8 +416,11 @@ class Audit extends gEditorial\Module
 		wp_add_dashboard_widget( $this->classs( 'summary' ), $title, [ $this, 'dashboard_widget_summary' ] );
 	}
 
-	public function dashboard_widget_summary()
+	public function dashboard_widget_summary( $object, $box )
 	{
+		if ( $this->check_hidden_metabox( $box ) )
+			return;
+
 		// using core styles
 		echo '<div id="dashboard_right_now" class="geditorial-wrap -admin-widget -audit -core-styles">';
 

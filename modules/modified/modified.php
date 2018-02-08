@@ -108,9 +108,9 @@ class Modified extends gEditorial\Module
 		);
 	}
 
-	public function dashboard_widget_summary()
+	public function dashboard_widget_summary( $object, $box )
 	{
-		if ( $this->check_hidden_metabox( 'summary' ) )
+		if ( $this->check_hidden_metabox( $box ) )
 			return;
 
 		$args = [
