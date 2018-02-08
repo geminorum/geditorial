@@ -443,13 +443,17 @@ class Cartable extends gEditorial\Module
 		$user = wp_get_current_user();
 		$uri  = $this->get_adminmenu( FALSE );
 
-		$subs    = [];
-		$sub     = self::req( 'sub', 'personal' );
-		$slug    = self::req( 'slug', $user->user_login );
-		$context = self::req( 'context', 'user' );
+		$sub  = $slug = $context = FALSE;
+		$subs = [];
 
-		if ( $this->support_users && $this->role_can( 'view_user', $user->ID ) )
+		if ( $this->support_users && $this->role_can( 'view_user', $user->ID ) ) {
+
+			$sub     = 'personal';
+			$slug    = $user->user_login;
+			$context = 'user';
+
 			$subs['personal'] = _x( 'Personal', 'Modules: Cartable', GEDITORIAL_TEXTDOMAIN );
+		}
 
 		if ( $this->support_groups && $this->role_can( 'view_group', $user->ID ) ) {
 
@@ -495,9 +499,10 @@ class Cartable extends gEditorial\Module
 
 		Settings::wrapOpen( $this->key, $this->base, 'listtable' );
 
-			Settings::headerTitle( _x( 'Editorial Cartable', 'Modules: Cartable: Page Title', GEDITORIAL_TEXTDOMAIN ) );
+			Settings::headerTitle( _x( 'Editorial Cartable', 'Modules: Cartable: Page Title', GEDITORIAL_TEXTDOMAIN ), FALSE );
 
-			$current = Taxonomy::getTerm( $slug, $this->constant( $context.'_tax' ) );
+			$context = self::req( 'context', $context );
+			$current = Taxonomy::getTerm( self::req( 'slug', $slug ), $this->constant( $context.'_tax' ) );
 
 			if ( $current && 'group' == $context && $this->role_can( 'restricted', NULL, FALSE, FALSE ) ) {
 
@@ -508,7 +513,7 @@ class Cartable extends gEditorial\Module
 
 			if ( $current && count( $subs ) ) {
 
-				Settings::headerNav( $uri, $sub, $subs );
+				Settings::headerNav( $uri, self::req( 'sub', $sub ), $subs );
 
 				$this->tableCartable( $current, $context );
 
