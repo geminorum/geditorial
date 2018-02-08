@@ -17,7 +17,9 @@ class Cartable extends gEditorial\Module
 	protected $disable_no_posttypes = TRUE;
 	protected $priority_admin_menu  = 90;
 
+	protected $support_users  = FALSE;
 	protected $support_groups = FALSE;
+	protected $support_types  = FALSE;
 	protected $before_terms   = [];
 
 	public static function module()
@@ -25,7 +27,7 @@ class Cartable extends gEditorial\Module
 		return [
 			'name'     => 'cartable',
 			'title'    => _x( 'Cartable', 'Modules: Cartable', GEDITORIAL_TEXTDOMAIN ),
-			'desc'     => _x( 'Personalized Folders for Users', 'Modules: Cartable', GEDITORIAL_TEXTDOMAIN ),
+			'desc'     => _x( 'Customized Content Folders', 'Modules: Cartable', GEDITORIAL_TEXTDOMAIN ),
 			'icon'     => 'portfolio',
 			'frontend' => FALSE,
 		];
@@ -36,30 +38,53 @@ class Cartable extends gEditorial\Module
 		$roles   = User::getAllRoleList();
 		$exclude = [ 'administrator', 'subscriber' ];
 
-		$settings = [ 'posttypes_option' => 'posttypes_option' ];
-
-		$settings['_general'][] = [
-			'field'       => 'map_cap_user',
-			'title'       => _x( 'Map User Capabilities', 'Modules: Cartable: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'description' => _x( 'Gives access to edit posts based on user cartables.', 'Modules: Cartable: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+		$settings = [
+			'posttypes_option' => 'posttypes_option',
+			'_general' => [
+				[
+					'field'       => 'support_users',
+					'title'       => _x( 'User Cartables', 'Modules: Cartable: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Enables cartables based on registered users.', 'Modules: Cartable: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+				],
+				[
+					'field'       => 'support_groups',
+					'title'       => _x( 'Group Cartables', 'Modules: Cartable: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Enables cartables based on custom groups. Needs <i>Users</i> module.', 'Modules: Cartable: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+				],
+				[
+					'field'       => 'support_types',
+					'title'       => _x( 'Type Cartables', 'Modules: Cartable: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Enables cartables based on custom types.', 'Modules: Cartable: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+				],
+			],
 		];
 
+		if ( $this->support_users )
+			$settings['_roles'][] = [
+				'field'       => 'map_cap_user',
+				'title'       => _x( 'Map User Capabilities', 'Modules: Cartable: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+				'description' => _x( 'Gives access to edit posts based on user cartables.', 'Modules: Cartable: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+			];
+
 		if ( $this->support_groups )
-			$settings['_general'][] = [
+			$settings['_roles'][] = [
 				'field'       => 'map_cap_group',
 				'title'       => _x( 'Map Group Capabilities', 'Modules: Cartable: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 				'description' => _x( 'Gives access to edit posts based on group cartables.', 'Modules: Cartable: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 			];
 
-		$settings['_roles']['excluded_roles'] = _x( 'Roles that excluded from cartables.', 'Modules: Cartable: Setting Description', GEDITORIAL_TEXTDOMAIN );
-		$settings['_roles'][] = [
-			'field'       => 'view_user_roles',
-			'type'        => 'checkbox',
-			'title'       => _x( 'View User Cartable', 'Modules: Cartable: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'description' => _x( 'Roles that can view user cartables.', 'Modules: Cartable: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-			'exclude'     => $exclude,
-			'values'      => $roles,
-		];
+		if ( $this->support_users )
+			$settings['_roles']['excluded_roles'] = _x( 'Roles that excluded from cartables.', 'Modules: Cartable: Setting Description', GEDITORIAL_TEXTDOMAIN );
+
+		if ( $this->support_users )
+			$settings['_roles'][] = [
+				'field'       => 'view_user_roles',
+				'type'        => 'checkbox',
+				'title'       => _x( 'View User Cartable', 'Modules: Cartable: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+				'description' => _x( 'Roles that can view user cartables.', 'Modules: Cartable: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+				'exclude'     => $exclude,
+				'values'      => $roles,
+			];
 
 		if ( $this->support_groups )
 			$settings['_roles'][] = [
@@ -71,16 +96,27 @@ class Cartable extends gEditorial\Module
 				'values'      => $roles,
 			];
 
-		$settings['_roles'][] = [
-			'field'       => 'assign_user_roles',
-			'type'        => 'checkbox',
-			'title'       => _x( 'Assign User Cartables', 'Modules: Cartable: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'description' => _x( 'Roles that can assign user cartables.', 'Modules: Cartable: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-			'exclude'     => $exclude,
-			'values'      => $roles,
-		];
+		if ( $this->support_types )
+			$settings['_roles'][] = [
+				'field'       => 'view_type_roles',
+				'type'        => 'checkbox',
+				'title'       => _x( 'View Type Cartable', 'Modules: Cartable: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+				'description' => _x( 'Roles that can view type cartables.', 'Modules: Cartable: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+				'exclude'     => $exclude,
+				'values'      => $roles,
+			];
 
-		if ( $this->support_groups ) {
+		if ( $this->support_users )
+			$settings['_roles'][] = [
+				'field'       => 'assign_user_roles',
+				'type'        => 'checkbox',
+				'title'       => _x( 'Assign User Cartables', 'Modules: Cartable: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+				'description' => _x( 'Roles that can assign user cartables.', 'Modules: Cartable: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+				'exclude'     => $exclude,
+				'values'      => $roles,
+			];
+
+		if ( $this->support_groups )
 			$settings['_roles'][] = [
 				'field'       => 'assign_group_roles',
 				'type'        => 'checkbox',
@@ -90,6 +126,17 @@ class Cartable extends gEditorial\Module
 				'values'      => $roles,
 			];
 
+		if ( $this->support_types )
+			$settings['_roles'][] = [
+				'field'       => 'assign_type_roles',
+				'type'        => 'checkbox',
+				'title'       => _x( 'Assign Type Cartables', 'Modules: Cartable: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+				'description' => _x( 'Roles that can assign type cartables.', 'Modules: Cartable: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+				'exclude'     => $exclude,
+				'values'      => $roles,
+			];
+
+		if ( $this->support_groups )
 			$settings['_roles'][] = [
 				'field'       => 'restricted_roles',
 				'type'        => 'checkbox',
@@ -98,9 +145,9 @@ class Cartable extends gEditorial\Module
 				'exclude'     => $exclude,
 				'values'      => $roles,
 			];
-		}
 
-		$settings['_editpost']['display_threshold'] = _x( 'Maximum number of users to display the search box.', 'Modules: Cartable: Setting Description', GEDITORIAL_TEXTDOMAIN );
+		if ( $this->support_users )
+			$settings['_editpost']['display_threshold'] = _x( 'Maximum number of users to display the search box.', 'Modules: Cartable: Setting Description', GEDITORIAL_TEXTDOMAIN );
 
 		$settings['_dashboard'] = [
 			'dashboard_widgets',
@@ -117,7 +164,7 @@ class Cartable extends gEditorial\Module
 		return [
 			'user_tax'  => 'cartable_user',
 			'group_tax' => 'cartable_group',
-			// 'type_tax'  => 'cartable_type',
+			'type_tax'  => 'cartable_type',
 			'group_ref' => 'user_group', // ref to the constant in Users module
 		];
 	}
@@ -128,6 +175,9 @@ class Cartable extends gEditorial\Module
 			'misc' => [
 				'meta_box_title'  => _x( 'Cartable', 'Modules: Cartable: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
 				'meta_box_action' => _x( 'View All', 'Modules: Cartable: MetaBox Action', GEDITORIAL_TEXTDOMAIN ),
+			],
+			'noops' => [
+				'type_tax' => _nx_noop( 'Cartable Type', 'Cartable Types', 'Modules: Cartable: Noop', GEDITORIAL_TEXTDOMAIN ),
 			],
 			'settings' => [
 				'sync_terms' => _x( 'Sync Users & Groups', 'Modules: Cartable: Setting Button', GEDITORIAL_TEXTDOMAIN ),
@@ -151,32 +201,47 @@ class Cartable extends gEditorial\Module
 	{
 		parent::init();
 
-		$this->register_taxonomy( 'user_tax', [
-			'hierarchical' => TRUE,
-			'public'      => FALSE,
-			'show_ui'     => FALSE,
-			'meta_box_cb' => FALSE,
-		], NULL, [
-			'manage_terms' => $this->caps['settings'],
-			'edit_terms'   => $this->caps['settings'],
-			'delete_terms' => $this->caps['settings'],
-			'assign_terms' => 'assign_'.$this->constant( 'user_tax' ),
-		] );
+		if ( $this->get_setting( 'support_users' ) ) {
 
-		// see gpeople affiliations
-		// $this->register_taxonomy( 'type_tax', [
-		// 	'hierarchical' => TRUE,
-		// 	'public'       => FALSE,
-		// 	'show_ui'      => FALSE,
-		// ], 'user_tax', [
-		// 	'manage_terms' => $this->caps['settings'],
-		// 	'edit_terms'   => $this->caps['settings'],
-		// 	'delete_terms' => $this->caps['settings'],
-		// 	'delete_terms' => $this->caps['settings'],
-		// ]  );
+			$this->register_taxonomy( 'user_tax', [
+				'hierarchical' => TRUE,
+				'public'       => FALSE,
+				'show_ui'      => FALSE,
+				'meta_box_cb'  => FALSE,
+			], NULL, [
+				'manage_terms' => $this->caps['settings'],
+				'edit_terms'   => $this->caps['settings'],
+				'delete_terms' => $this->caps['settings'],
+				'assign_terms' => 'assign_'.$this->constant( 'user_tax' ),
+			] );
 
-		$this->action_module( 'users' );
-		$this->action( 'add_user_to_blog', 3 ); // new term for new users
+			// new term for new users
+			$this->action( 'add_user_to_blog', 3 );
+
+			$this->support_users = TRUE;
+		}
+
+		if ( $this->get_setting( 'support_groups' ) )
+			$this->action_module( 'users' );
+
+		if ( $this->get_setting( 'support_types' ) ) {
+
+			// see gpeople affiliations
+			$this->register_taxonomy( 'type_tax', [
+				'hierarchical' => TRUE,
+				'public'       => FALSE,
+				'show_ui'      => TRUE,
+				'show_in_menu' => FALSE,
+			], NULL, [
+				'manage_terms' => $this->caps['settings'],
+				'edit_terms'   => $this->caps['settings'],
+				'delete_terms' => $this->caps['settings'],
+				'assign_terms' => 'assign_'.$this->constant( 'type_tax' ),
+			]  );
+
+			$this->support_types = TRUE;
+		}
+
 		$this->filter( 'map_meta_cap', 4 );
 	}
 
@@ -228,16 +293,26 @@ class Cartable extends gEditorial\Module
 
 			case 'assign_'.$this->constant( 'user_tax' ):
 
-				return $this->role_can( 'assign_user', $user_id )
-					? [ 'read' ]
-					: [ 'do_not_allow' ];
+				if ( $this->support_users )
+					return $this->role_can( 'assign_user', $user_id )
+						? [ 'read' ]
+						: [ 'do_not_allow' ];
 
 			break;
 			case 'assign_'.$this->constant( 'group_tax' ):
 
-				return $this->role_can( 'assign_group', $user_id )
-					? [ 'read' ]
-					: [ 'do_not_allow' ];
+				if ( $this->support_groups )
+					return $this->role_can( 'assign_group', $user_id )
+						? [ 'read' ]
+						: [ 'do_not_allow' ];
+
+			break;
+			case 'assign_'.$this->constant( 'type_tax' ):
+
+				if ( $this->support_types )
+					return $this->role_can( 'assign_type', $user_id )
+						? [ 'read' ]
+						: [ 'do_not_allow' ];
 
 			break;
 			case 'read_post':
@@ -254,7 +329,7 @@ class Cartable extends gEditorial\Module
 				if ( ! in_array( $post->post_type, $this->post_types() ) )
 					return $caps;
 
-				if ( $this->get_setting( 'map_cap_user' ) ) {
+				if ( $this->support_users && $this->get_setting( 'map_cap_user' ) ) {
 
 					$user = get_user_by( 'id', $user_id )->user_login;
 
@@ -275,15 +350,27 @@ class Cartable extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
-		if ( in_array( $screen->post_type, $this->post_types() ) ) {
+		if ( $this->constant( 'type_tax' ) == $screen->taxonomy ) {
+
+			add_filter( 'parent_file', function(){
+				return 'options-general.php';
+			} );
+
+			if ( 'edit-tags' == $screen->base )
+				$this->_edit_tags_screen( $screen->taxonomy );
+
+		} else if ( in_array( $screen->post_type, $this->post_types() ) ) {
 
 			if ( 'edit' == $screen->base ) {
 
-				if ( $this->role_can( 'view_user' ) )
+				if ($this->support_users && $this->role_can( 'view_user' ) )
 					$this->action_module( 'tweaks', 'column_attr', 1, 20, 'users' );
 
 				if ( $this->support_groups && $this->role_can( 'view_group' ) )
 					$this->action_module( 'tweaks', 'column_attr', 1, 20, 'groups' );
+
+				if ( $this->support_types && $this->role_can( 'view_type' ) )
+					$this->action_module( 'tweaks', 'column_attr', 1, 20, 'types' );
 
 			} else if ( 'post' == $screen->base ) {
 
@@ -297,67 +384,138 @@ class Cartable extends gEditorial\Module
 					'high'
 				);
 
+				if ( $this->support_types )
+					add_action( $this->hook( 'main_meta_box' ), [ $this, 'main_meta_box_types' ], 10, 2 );
+
 				if ( $this->support_groups )
 					add_action( $this->hook( 'main_meta_box' ), [ $this, 'main_meta_box_groups' ], 10, 2 );
 
-				add_action( $this->hook( 'main_meta_box' ), [ $this, 'main_meta_box_users' ], 10, 2 );
+				if ( $this->support_users )
+					add_action( $this->hook( 'main_meta_box' ), [ $this, 'main_meta_box_users' ], 10, 2 );
 			}
 		}
 	}
 
 	public function admin_menu()
 	{
-		$page    = 'index.php';
-		$menu    = $this->get_adminmenu();
+		if ( $this->support_types ) {
+
+			$tax = get_taxonomy( $this->constant( 'type_tax' ) );
+
+			add_options_page(
+				HTML::escape( $tax->labels->menu_name ),
+				HTML::escape( $tax->labels->menu_name ),
+				$tax->cap->manage_terms,
+				'edit-tags.php?taxonomy='.$tax->name
+			);
+		}
+
+		if ( ! $this->support_users
+			&& ! $this->support_groups
+			&& ! $this->support_types )
+				return;
+
 		$user_id = get_current_user_id();
 
-		// just for super admins
-		if ( ! is_user_member_of_blog( $user_id ) )
-			return;
-
-		$hook = add_submenu_page(
-			$page,
-			_x( 'Editorial Cartable', 'Modules: Cartable: Page Title', GEDITORIAL_TEXTDOMAIN ),
-			_x( 'My Cartable', 'Modules: Cartable: Menu Title', GEDITORIAL_TEXTDOMAIN ),
-			'read', // $this->role_can( 'view_user', $user_id ) ? 'read' : 'do_not_allow', // FIXME: this will lock the group's
-			$menu,
-			[ $this, 'admin_cartable_page' ]
-		);
-
-		add_action( 'load-'.$hook, [ $this, 'admin_cartable_load' ] );
-
-		if ( ! $this->support_groups )
-			return;
-
-		if ( ! $this->role_can( 'view_group', $user_id ) )
-			return;
-
-		foreach ( $this->get_user_groups( $user_id ) as $group ) {
+		if ( $this->role_can( 'view_user', $user_id )
+			|| $this->role_can( 'view_group', $user_id )
+			|| $this->role_can( 'type_group', $user_id ) ) {
 
 			$hook = add_submenu_page(
-				$page,
+				'index.php',
 				_x( 'Editorial Cartable', 'Modules: Cartable: Page Title', GEDITORIAL_TEXTDOMAIN ),
-				sprintf( _x( 'Cartable: %s', 'Modules: Cartable: Menu Title', GEDITORIAL_TEXTDOMAIN ), $group->name ),
+				_x( 'My Cartable', 'Modules: Cartable: Menu Title', GEDITORIAL_TEXTDOMAIN ),
 				'read',
-				$menu.'&group='.$group->slug, // must be slug
+				$this->get_adminmenu(),
 				[ $this, 'admin_cartable_page' ]
 			);
 
-			add_action( 'load-'.$hook, [ $this, 'admin_cartable_load' ] );
+			// add_action( 'load-'.$hook, [ $this, 'admin_cartable_load' ] );
 		}
 	}
 
-	public function admin_cartable_load()
-	{
-		if ( ( $group = isset( $_REQUEST['group'] ) ? $_REQUEST['group'] : NULL ) )
-			$GLOBALS['submenu_file'] = $this->get_adminmenu().'&group='.$group;
-	}
+	// public function admin_cartable_load()
+	// {
+	// }
 
 	public function admin_cartable_page()
 	{
+		$user = wp_get_current_user();
+		$uri  = $this->get_adminmenu( FALSE );
+
+		$subs    = [];
+		$sub     = self::req( 'sub', 'personal' );
+		$slug    = self::req( 'slug', $user->user_login );
+		$context = self::req( 'context', 'user' );
+
+		if ( $this->support_users && $this->role_can( 'view_user', $user->ID ) )
+			$subs['personal'] = _x( 'Personal', 'Modules: Cartable', GEDITORIAL_TEXTDOMAIN );
+
+		if ( $this->support_groups && $this->role_can( 'view_group', $user->ID ) ) {
+
+			foreach ( $this->get_user_groups( $user->ID ) as $term ) {
+
+				if ( ! count( $subs ) ) {
+					$sub     = 'group-'.$term->slug;
+					$slug    = $term->slug;
+					$context = 'group';
+				}
+
+				$subs['group-'.$term->slug] = [
+					'title' => HTML::escape( $term->name ),
+					'args'  => [
+						'sub'     => 'group-'.$term->slug,
+						'context' => 'group',
+						'slug'    => $term->slug,
+					],
+				];
+			}
+		}
+
+		if ( $this->support_types && $this->role_can( 'type_group', $user->ID ) ) {
+
+			foreach ( $this->get_types( FALSE, TRUE ) as $term ) {
+
+				if ( ! count( $subs ) ) {
+					$sub     = 'type-'.$term->slug;
+					$slug    = $term->slug;
+					$context = 'type';
+				}
+
+				$subs['type-'.$term->slug] = [
+					'title' => HTML::escape( $term->name ),
+					'args'  => [
+						'sub'     => 'type-'.$term->slug,
+						'context' => 'type',
+						'slug'    => $term->slug,
+					],
+				];
+			}
+		}
+
 		Settings::wrapOpen( $this->key, $this->base, 'listtable' );
 
-			$this->tableCartable( self::req( 'group', FALSE ) );
+			Settings::headerTitle( _x( 'Editorial Cartable', 'Modules: Cartable: Page Title', GEDITORIAL_TEXTDOMAIN ) );
+
+			$current = Taxonomy::getTerm( $slug, $this->constant( $context.'_tax' ) );
+
+			if ( $current && 'group' == $context && $this->role_can( 'restricted', NULL, FALSE, FALSE ) ) {
+
+				// checking for group access
+				if ( ! in_array( $current->slug, wp_list_pluck( $this->get_user_groups( $user->ID ), 'slug' ) ) )
+					$current = FALSE;
+			}
+
+			if ( $current && count( $subs ) ) {
+
+				Settings::headerNav( $uri, $sub, $subs );
+
+				$this->tableCartable( $current, $context );
+
+			} else {
+
+				HTML::desc( _x( 'Something\'s wrong!', 'Modules: Cartable', GEDITORIAL_TEXTDOMAIN ), FALSE, '-empty' );
+			}
 
 			$this->settings_signature( 'listtable' );
 		Settings::wrapClose();
@@ -401,35 +559,98 @@ class Cartable extends gEditorial\Module
 		echo '</li>';
 	}
 
+	public function tweaks_column_attr_types( $post )
+	{
+		if ( ! $types = $this->get_types( $post->ID ) )
+			return FALSE;
+
+		echo '<li class="-row -cartable-type">';
+
+			echo $this->get_column_icon( FALSE, 'portfolio', _x( 'Type Cartables', 'Modules: Cartable: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
+
+			$list = [];
+
+			foreach ( $types as $slug )
+				if ( $type = get_term_by( 'slug', $slug, $this->constant( 'type_tax' ) ) )
+					$list[] = $type->name; // FIXME: make clickable
+
+			echo Helper::getJoined( $list );
+		echo '</li>';
+	}
+
 	protected function dashboard_widgets()
 	{
 		$user_id = get_current_user_id();
 
-		if ( $this->role_can( 'view_user', $user_id ) ) {
+		if ( $this->support_users && $this->role_can( 'view_user', $user_id ) ) {
 
 			$title = _x( 'Your Cartable', 'Modules: Cartable: Dashboard Widget Title', GEDITORIAL_TEXTDOMAIN );
 			$title.= ' <span class="postbox-title-action"><a href="'.esc_url( $this->get_adminmenu( FALSE ) ).'"';
 			$title.= ' title="'._x( 'Click to view all items in this cartable', 'Modules: Cartable: Dashboard Widget Title Action', GEDITORIAL_TEXTDOMAIN ).'">';
 			$title.= _x( 'All Items', 'Modules: Cartable: Dashboard Widget Title Action', GEDITORIAL_TEXTDOMAIN ).'</a></span>';
 
-			wp_add_dashboard_widget( $this->classs( 'user-cartable' ), $title, [ $this, 'dashboard_widget_user_cartable' ] );
+			wp_add_dashboard_widget(
+				$this->classs( 'user-cartable' ),
+				$title,
+				[ $this, 'dashboard_widget_summary' ],
+				NULL,
+				[ 'context' => 'user', 'slug' => get_user_by( 'id', $user_id )->user_login ]
+			);
 		}
 
-		if ( ! $this->support_groups )
-			return;
+		if ( $this->support_groups && $this->role_can( 'view_group', $user_id ) ) {
 
-		if ( ! $this->role_can( 'view_group', $user_id ) )
-			return;
+			foreach ( $this->get_user_groups( $user_id ) as $term ) {
 
-		foreach ( $this->get_user_groups( $user_id ) as $group ) {
+				$url = $this->get_adminmenu( FALSE, [ 'context' => 'group', 'slug' => $term->slug, 'sub' => 'group-'.$term->slug ] );
 
-			$title = sprintf( _x( 'Cartable: %s', 'Modules: Cartable: Dashboard Widget Title', GEDITORIAL_TEXTDOMAIN ), $group->name );
-			$title.= ' <span class="postbox-title-action"><a href="'.esc_url( $this->get_adminmenu( FALSE ).'&group='.$group->slug ).'"';
-			$title.= ' title="'._x( 'Click to view all items in this cartable', 'Modules: Cartable: Dashboard Widget Title Action', GEDITORIAL_TEXTDOMAIN ).'">';
-			$title.= _x( 'All Items', 'Modules: Cartable: Dashboard Widget Title Action', GEDITORIAL_TEXTDOMAIN ).'</a></span>';
+				$title = sprintf( _x( 'Cartable: %s', 'Modules: Cartable: Dashboard Widget Title', GEDITORIAL_TEXTDOMAIN ), $term->name );
+				$title.= ' <span class="postbox-title-action"><a href="'.esc_url( $url ).'"';
+				$title.= ' title="'._x( 'Click to view all items in this cartable', 'Modules: Cartable: Dashboard Widget Title Action', GEDITORIAL_TEXTDOMAIN ).'">';
+				$title.= _x( 'All Items', 'Modules: Cartable: Dashboard Widget Title Action', GEDITORIAL_TEXTDOMAIN ).'</a></span>';
 
-			wp_add_dashboard_widget( $this->classs( 'group-cartable', $group->slug ), $title, [ $this, 'dashboard_widget_group_cartable' ], NULL, [ 'group' => $group ] );
+				wp_add_dashboard_widget(
+					$this->classs( 'group-cartable', $term->slug ),
+					$title,
+					[ $this, 'dashboard_widget_summary' ],
+					NULL,
+					[ 'context' => 'group', 'slug' => $term->slug ]
+				);
+			}
 		}
+
+		if ( $this->support_types && $this->role_can( 'view_type', $user_id ) ) {
+
+			foreach ( $this->get_types( FALSE, TRUE ) as $term ) {
+
+				$url = $this->get_adminmenu( FALSE, [ 'context' => 'type', 'slug' => $term->slug, 'sub' => 'type-'.$term->slug ] );
+
+				$title = sprintf( _x( 'Cartable: %s', 'Modules: Cartable: Dashboard Widget Title', GEDITORIAL_TEXTDOMAIN ), $term->name );
+				$title.= ' <span class="postbox-title-action"><a href="'.esc_url( $url ).'"';
+				$title.= ' title="'._x( 'Click to view all items in this cartable', 'Modules: Cartable: Dashboard Widget Title Action', GEDITORIAL_TEXTDOMAIN ).'">';
+				$title.= _x( 'All Items', 'Modules: Cartable: Dashboard Widget Title Action', GEDITORIAL_TEXTDOMAIN ).'</a></span>';
+
+				wp_add_dashboard_widget(
+					$this->classs( 'type-cartable', $term->slug ),
+					$title,
+					[ $this, 'dashboard_widget_summary' ],
+					NULL,
+					[ 'context' => 'type', 'slug' => $term->slug ]
+				);
+			}
+		}
+	}
+
+	private function _edit_tags_screen( $taxonomy )
+	{
+		// add_filter( 'manage_edit-'.$taxonomy.'_columns', [ $this, 'manage_columns' ] );
+		// add_filter( 'manage_'.$taxonomy.'_custom_column', [ $this, 'custom_column' ], 10, 3 );
+	}
+
+	public function manage_columns( $columns )
+	{
+		// unset( $columns['posts'] );
+		return $columns;
 	}
 
 	protected function do_sync_terms()
@@ -438,19 +659,23 @@ class Cartable extends gEditorial\Module
 			return;
 
 		$count  = 0;
-		$site   = gEditorial()->user();
-		$admins = get_super_admins();
 
-		foreach ( $this->get_blog_users() as $user ) {
+		if ( $this->support_users ) {
 
-			if ( $site == $user->ID )
-				continue;
+			$site   = gEditorial()->user();
+			$admins = get_super_admins();
 
-			if ( in_array( $user->user_login, $admins ) )
-				continue;
+			foreach ( $this->get_blog_users() as $user ) {
 
-			if ( Taxonomy::addTerm( $user->user_login, $this->constant( 'user_tax' ), FALSE ) )
-				$count++;
+				if ( $site == $user->ID )
+					continue;
+
+				if ( in_array( $user->user_login, $admins ) )
+					continue;
+
+				if ( Taxonomy::addTerm( $user->user_login, $this->constant( 'user_tax' ), FALSE ) )
+					$count++;
+			}
 		}
 
 		if ( $this->support_groups )
@@ -506,28 +731,15 @@ class Cartable extends gEditorial\Module
 		Taxonomy::addTerm( $user->user_login, $this->constant( 'user_tax' ), FALSE );
 	}
 
-	public function dashboard_widget_user_cartable( $object, $box )
+	public function dashboard_widget_summary( $object, $box )
 	{
 		if ( $this->check_hidden_metabox( $box ) )
 			return;
 
-		$user = wp_get_current_user();
-
-		if ( ! $term = Taxonomy::getTerm( $user->user_login, $this->constant( 'user_tax' ) ) )
+		if ( ! $term = Taxonomy::getTerm( $box['args']['slug'], $this->constant( $box['args']['context'].'_tax' ) ) )
 			return HTML::desc( _x( 'Something\'s wrong!', 'Modules: Cartable', GEDITORIAL_TEXTDOMAIN ), FALSE, '-empty' );
 
-		$this->tableCartableSummary( $term );
-	}
-
-	public function dashboard_widget_group_cartable( $object, $box )
-	{
-		if ( $this->check_hidden_metabox( $box ) )
-			return;
-
-		if ( ! $term = Taxonomy::getTerm( $box['args']['group']->slug, $this->constant( 'group_tax' ) ) )
-			return HTML::desc( _x( 'Something\'s wrong!', 'Modules: Cartable', GEDITORIAL_TEXTDOMAIN ), FALSE, '-empty' );
-
-		$this->tableCartableSummary( $term, TRUE );
+		$this->tableCartableSummary( $term, $box['args']['context'] );
 	}
 
 	public function do_meta_box_main( $post, $box )
@@ -635,6 +847,19 @@ class Cartable extends gEditorial\Module
 		] );
 	}
 
+	public function main_meta_box_types( $post, $box )
+	{
+		$disable = ! $this->role_can( 'assign_type' );
+
+		MetaBox::checklistTerms( $post->ID, [
+			'taxonomy'          => $this->constant( 'type_tax' ),
+			'edit'              => FALSE,
+			'list_only'         => $disable,
+			'selected_only'     => $disable,
+			// 'selected_preserve' => TRUE, // NO NEED: only on custom group lists
+		] );
+	}
+
 	private function get_users( $post_id, $object = FALSE, $key = 'slug' )
 	{
 		return Taxonomy::getTerms( $this->constant( 'user_tax' ), $post_id, $object, $key );
@@ -645,6 +870,11 @@ class Cartable extends gEditorial\Module
 		return Taxonomy::getTerms( $this->constant( 'group_tax' ), $post_id, $object, $key );
 	}
 
+	private function get_types( $post_id, $object = FALSE, $key = 'slug' )
+	{
+		return Taxonomy::getTerms( $this->constant( 'type_tax' ), $post_id, $object, $key );
+	}
+
 	private function get_user_groups( $user_id = NULL )
 	{
 		if ( is_null( $user_id ) )
@@ -653,39 +883,18 @@ class Cartable extends gEditorial\Module
 		return wp_get_object_terms( $user_id, $this->constant( 'group_ref' ) );
 	}
 
-	private function tableCartable( $group = FALSE )
+	private function tableCartable( $term, $context = 'user' )
 	{
-		$user = wp_get_current_user();
-		$term = FALSE;
-
-		if ( $this->support_groups && $group && $this->role_can( 'view_group', $user->ID ) )
-			$term = Taxonomy::getTerm( $group, $this->constant( 'group_tax' ) );
-
-		else if ( $this->role_can( 'view_user', $user->ID ) )
-			$term = Taxonomy::getTerm( $user->user_login, $this->constant( 'user_tax' ) );
-
-		if ( $group && $term )
-			$title = sprintf( _x( 'Cartable: %s', 'Modules: Cartable: Menu Title', GEDITORIAL_TEXTDOMAIN ), $term->name );
-		else
+		if ( 'user' == $context )
 			$title = _x( 'Your Cartable', 'Modules: Cartable: Page Title', GEDITORIAL_TEXTDOMAIN );
+		else
+			$title = sprintf( _x( 'Cartable: %s', 'Modules: Cartable: Menu Title', GEDITORIAL_TEXTDOMAIN ), $term->name );
 
-		Settings::headerTitle( $title, FALSE );
-
-		// checking for group access
-		if ( $group && $term && $this->role_can( 'restricted', NULL, FALSE, FALSE ) ) {
-
-			if ( ! in_array( $term->slug, wp_list_pluck( $this->get_user_groups( $user->ID ), 'slug' ) ) )
-				$term = FALSE;
-		}
-
-		if ( ! $term ) {
-			echo HTML::error( _x( 'Something\'s wrong!', 'Modules: Cartable', GEDITORIAL_TEXTDOMAIN ), FALSE );
-			return FALSE;
-		}
+		HTML::h3( $title );
 
 		$query = [
 			'tax_query'      => [ [
-				'taxonomy' => $this->constant( $group ? 'group_tax' : 'user_tax' ),
+				'taxonomy' => $this->constant( $context.'_tax' ),
 				'field'    => 'id',
 				'terms'    => [ $term->term_id ],
 			] ],
@@ -717,12 +926,12 @@ class Cartable extends gEditorial\Module
 		] );
 	}
 
-	private function tableCartableSummary( $term, $group = FALSE )
+	private function tableCartableSummary( $term, $context = 'user' )
 	{
 		$args = [
 
 			'tax_query'      => [ [
-				'taxonomy' => $this->constant( $group ? 'group_tax' : 'user_tax' ),
+				'taxonomy' => $this->constant( $context.'_tax' ),
 				'field'    => 'id',
 				'terms'    => [ $term->term_id ],
 			] ],
