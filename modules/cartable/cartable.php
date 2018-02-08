@@ -502,7 +502,9 @@ class Cartable extends gEditorial\Module
 			Settings::headerTitle( _x( 'Editorial Cartable', 'Modules: Cartable: Page Title', GEDITORIAL_TEXTDOMAIN ), FALSE );
 
 			$context = self::req( 'context', $context );
-			$current = Taxonomy::getTerm( self::req( 'slug', $slug ), $this->constant( $context.'_tax' ) );
+			$slug    = 'user' == $context ? $slug : self::req( 'slug', $slug ); // prevents access to other users
+
+			$current = Taxonomy::getTerm( $slug, $this->constant( $context.'_tax' ) );
 
 			if ( $current && 'group' == $context && $this->role_can( 'restricted', NULL, FALSE, FALSE ) ) {
 
