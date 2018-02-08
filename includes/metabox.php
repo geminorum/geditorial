@@ -101,7 +101,7 @@ class MetaBox extends Core\Base
 		if ( ! count( $terms ) )
 			return self::fieldEmptyTaxonomy( $args['taxonomy'], $args['edit'] );
 
-		$html = '';
+		$html = $hidden = '';
 		$tax  = get_taxonomy( $args['taxonomy'] );
 		$atts = [ 'taxonomy' => $args['taxonomy'], 'atts' => $args ];
 
@@ -150,8 +150,8 @@ class MetaBox extends Core\Base
 
 			$diff = array_diff( $atts['selected_cats'], wp_list_pluck( $terms, 'term_id' ) );
 
-			foreach ( $diff as $hidden )
-				$html.= '<input type="hidden" name="'.$args['name'].'['.$tax->name.'][]" value="'.$hidden.'" />';
+			foreach ( $diff as $term )
+				$hidden.= '<input type="hidden" name="'.$args['name'].'['.$tax->name.'][]" value="'.$term.'" />';
 		}
 
 		if ( $args['checked_ontop'] || $atts['selected_only'] ) {
@@ -178,9 +178,12 @@ class MetaBox extends Core\Base
 		// allows for an empty term set to be sent. 0 is an invalid Term ID
 		// and will be ignored by empty() checks
 		if ( ! $args['list_only'] && ! $atts['disabled'] )
-			$html.= '<input type="hidden" name="'.$args['name'].'['.$tax->name.'][]" value="0" />';
+			$hidden.= '<input type="hidden" name="'.$args['name'].'['.$tax->name.'][]" value="0" />';
 
-		$html = HTML::wrap( '<ul>'.$html.'</ul>', 'field-wrap field-wrap-list' );
+		if ( $html )
+			$html = HTML::wrap( '<ul>'.$html.'</ul>', 'field-wrap field-wrap-list' );
+
+		$html.= $hidden;
 
 		if ( ! $args['echo'] )
 			return $html;
@@ -222,7 +225,7 @@ class MetaBox extends Core\Base
 			$walker = $args['walker'];
 		}
 
-		$html = $form = $list = '';
+		$html = $form = $list = $hidden = '';
 		$id   = static::BASE.'-'.$args['taxonomy'].'-list';
 		$tax  = get_taxonomy( $args['taxonomy'] );
 		$atts = [ 'taxonomy' => $args['taxonomy'], 'atts' => $args, 'selected' => $selected ];
@@ -257,8 +260,8 @@ class MetaBox extends Core\Base
 
 			$diff = array_diff( $selected, wp_list_pluck( $users, 'user_login' ) );
 
-			foreach ( $diff as $hidden )
-				$html.= '<input type="hidden" name="'.$args['name'].'['.$args['taxonomy'].'][]" value="'.$hidden.'" />';
+			foreach ( $diff as $term )
+				$hidden.= '<input type="hidden" name="'.$args['name'].'['.$args['taxonomy'].'][]" value="'.$term.'" />';
 		}
 
 		if ( count( $selected ) ) {
@@ -277,18 +280,21 @@ class MetaBox extends Core\Base
 		if ( ! $atts['selected_only'] )
 			$list.= call_user_func_array( [ $walker, 'walk' ], [ $users, 0, $atts ] );
 
-		if ( ! $list )
+		if ( ! $list ) {
+			echo $hidden;
 			return FALSE;
+		}
 
 		$html.= HTML::wrap( '<ul class="-list">'.$list.'</ul>', 'field-wrap field-wrap-list' );
 
 		// allows for an empty term set to be sent. 0 is an invalid Term ID
 		// and will be ignored by empty() checks
 		if ( ! $args['list_only'] && ! $atts['disabled'] )
-			$html.= '<input type="hidden" name="'.$args['name'].'['.$args['taxonomy'].'][]" value="0" />';
+			$hidden.= '<input type="hidden" name="'.$args['name'].'['.$args['taxonomy'].'][]" value="0" />';
 
 		// ListJS needs the wrap!
 		echo '<div id="'.$id.'" class="field-wrap-listjs">'.$html.'</div>';
+		echo $hidden;
 
 		if ( $form ) {
 
