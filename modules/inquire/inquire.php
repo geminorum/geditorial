@@ -140,7 +140,7 @@ class Inquire extends gEditorial\Module
 				$this->filter( 'post_updated_messages' );
 
 				if ( post_type_supports( $screen->post_type, 'excerpt' ) ) {
-					$this->remove_meta_box( $screen->post_type, $screen->post_type, 'excerpt' );
+					remove_meta_box( 'postexcerpt', $screen, 'normal' );
 					$this->action( 'edit_form_after_title' );
 				}
 

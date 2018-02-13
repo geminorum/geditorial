@@ -129,6 +129,9 @@ class Pitches extends gEditorial\Module
 
 	public function meta_box_cb_idea_cat( $post, $box )
 	{
+		if ( $this->check_hidden_metabox( $box ) )
+			return;
+
 		echo $this->wrap_open( '-admin-metabox' );
 			MetaBox::checklistTerms( $post->ID, $box['args'] );
 		echo '</div>';
@@ -136,6 +139,9 @@ class Pitches extends gEditorial\Module
 
 	public function meta_box_cb_pool_tax( $post, $box )
 	{
+		if ( $this->check_hidden_metabox( $box ) )
+			return;
+
 		echo $this->wrap_open( '-admin-metabox' );
 			MetaBox::checklistTerms( $post->ID, $box['args'] );
 		echo '</div>';

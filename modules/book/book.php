@@ -4,6 +4,7 @@ defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\Core\HTML;
@@ -388,6 +389,12 @@ class Book extends gEditorial\Module
 				$this->filter( 'post_updated_messages' );
 				$this->filter( 'get_default_comment_status', 3 );
 
+				if ( post_type_supports( $screen->post_type, 'author' ) )
+					$this->add_meta_box_author( 'publication_cpt' );
+
+				if ( post_type_supports( $screen->post_type, 'excerpt' ) )
+					$this->add_meta_box_excerpt( 'publication_cpt' );
+
 			} else if ( 'edit' == $screen->base ) {
 
 				$this->filter_true( 'disable_months_dropdown', 12 );
@@ -407,20 +414,6 @@ class Book extends gEditorial\Module
 
 			$this->action_module( 'tweaks', 'column_row', 1, -25, 'p2p_from' );
 		}
-	}
-
-	public function add_meta_box_cb_publication_cpt( $post )
-	{
-		$posttype = $this->constant( 'publication_cpt' );
-
-		if ( post_type_supports( $posttype, 'author' ) )
-			$this->add_meta_box_author( 'publication_cpt' );
-
-		if ( post_type_supports( $posttype, 'excerpt' ) )
-			$this->add_meta_box_excerpt( 'publication_cpt' );
-
-		$this->add_meta_box_checklist_terms( 'status_tax', $posttype );
-		$this->add_meta_box_checklist_terms( 'type_tax', $posttype );
 	}
 
 	public function tweaks_column_row_p2p_to( $post )
@@ -493,6 +486,26 @@ class Book extends gEditorial\Module
 	public function bulk_post_updated_messages( $messages, $counts )
 	{
 		return array_merge( $messages, $this->get_bulk_post_updated_messages( 'publication_cpt', $counts ) );
+	}
+
+	public function meta_box_cb_status_tax( $post, $box )
+	{
+		if ( $this->check_hidden_metabox( $box ) )
+			return;
+
+		echo $this->wrap_open( '-admin-metabox' );
+			MetaBox::checklistTerms( $post->ID, $box['args'] );
+		echo '</div>';
+	}
+
+	public function meta_box_cb_type_tax( $post, $box )
+	{
+		if ( $this->check_hidden_metabox( $box ) )
+			return;
+
+		echo $this->wrap_open( '-admin-metabox' );
+			MetaBox::checklistTerms( $post->ID, $box['args'] );
+		echo '</div>';
 	}
 
 	public function cover_shortcode( $atts = [], $content = NULL, $tag = '' )

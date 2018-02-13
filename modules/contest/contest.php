@@ -205,9 +205,9 @@ class Contest extends gEditorial\Module
 				$this->filter( 'get_default_comment_status', 3 );
 
 				$this->filter_false( 'geditorial_meta_box_callback', 12 );
-				$this->remove_meta_box( $screen->post_type, $screen->post_type, 'parent' );
 				$this->class_meta_box( $screen, 'main' );
 
+				remove_meta_box( 'pageparentdiv', $screen, 'side' );
 				add_meta_box( $this->classs( 'main' ),
 					$this->get_meta_box_title( 'contest_cpt', FALSE ),
 					[ $this, 'do_meta_box_main' ],
@@ -248,9 +248,9 @@ class Contest extends gEditorial\Module
 				if ( $screen->post_type == $this->constant( 'apply_cpt' ) )
 					add_filter( 'post_updated_messages', [ $this, 'post_updated_messages_supported' ] );
 
-				$this->remove_meta_box( $screen->post_type, $screen->post_type, 'parent' );
 				$this->class_meta_box( $screen, 'supported' );
 
+				remove_meta_box( 'pageparentdiv', $screen, 'side' );
 				add_meta_box( $this->classs( 'supported' ),
 					$this->get_meta_box_title_posttype( 'contest_cpt' ),
 					[ $this, 'do_meta_box_supported' ],
@@ -410,6 +410,9 @@ class Contest extends gEditorial\Module
 
 	public function meta_box_cb_apply_status_tax( $post, $box )
 	{
+		if ( $this->check_hidden_metabox( $box ) )
+			return;
+
 		echo $this->wrap_open( '-admin-metabox' );
 			MetaBox::checklistTerms( $post->ID, $box['args'] );
 		echo '</div>';

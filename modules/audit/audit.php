@@ -573,6 +573,9 @@ class Audit extends gEditorial\Module
 
 	public function meta_box_cb_audit_tax( $post, $box )
 	{
+		if ( $this->check_hidden_metabox( $box ) )
+			return;
+
 		if ( $this->role_can( 'restricted', NULL, FALSE, FALSE ) )
 			$box['args']['role'] = $this->get_setting( 'restricted', 'disabled' );
 

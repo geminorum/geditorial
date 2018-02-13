@@ -1949,6 +1949,7 @@ class Module extends Base
 		return $fallback;
 	}
 
+	// FIXME: DEPRECATED
 	// CAUTION: tax must be hierarchical
 	public function add_meta_box_checklist_terms( $constant, $post_type, $role = NULL, $type = FALSE )
 	{
@@ -2023,6 +2024,7 @@ class Module extends Base
 		);
 	}
 
+	// FIXME: DEPRECATED
 	public function remove_meta_box( $constant, $posttype, $type = 'tag' )
 	{
 		if ( 'tag' == $type )

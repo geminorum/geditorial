@@ -253,9 +253,9 @@ class Collect extends gEditorial\Module
 				$this->filter( 'get_default_comment_status', 3 );
 
 				$this->filter_false( 'geditorial_meta_box_callback', 12 );
-				$this->remove_meta_box( $screen->post_type, $screen->post_type, 'parent' );
 				$this->class_meta_box( $screen, 'main' );
 
+				remove_meta_box( 'pageparentdiv', $screen, 'side' );
 				add_meta_box( $this->classs( 'main' ),
 					$this->get_meta_box_title( 'collection_cpt', FALSE ),
 					[ $this, 'do_meta_box_main' ],
@@ -542,6 +542,9 @@ class Collect extends gEditorial\Module
 
 	public function meta_box_cb_group_tax( $post, $box )
 	{
+		if ( $this->check_hidden_metabox( $box ) )
+			return;
+
 		echo $this->wrap_open( '-admin-metabox' );
 			MetaBox::checklistTerms( $post->ID, $box['args'] );
 		echo '</div>';
@@ -549,6 +552,9 @@ class Collect extends gEditorial\Module
 
 	public function meta_box_cb_part_tax( $post, $box )
 	{
+		if ( $this->check_hidden_metabox( $box ) )
+			return;
+
 		echo $this->wrap_open( '-admin-metabox' );
 			MetaBox::checklistTerms( $post->ID, $box['args'] );
 		echo '</div>';

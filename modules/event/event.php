@@ -218,6 +218,7 @@ class Event extends gEditorial\Module
 
 					$this->class_meta_box( $screen, 'main' );
 
+					remove_meta_box( 'pageparentdiv', $screen, 'side' );
 					add_meta_box( $this->classs( 'main' ),
 						$this->get_meta_box_title( 'event_cpt' ),
 						[ $this, 'do_meta_box_main' ],
@@ -226,10 +227,6 @@ class Event extends gEditorial\Module
 						'high'
 					);
 				}
-
-				$this->remove_meta_box( $screen->post_type, $screen->post_type, 'parent' );
-				$this->add_meta_box_checklist_terms( 'event_tag', $screen->post_type );
-				$this->add_meta_box_checklist_terms( 'cal_tax', $screen->post_type );
 
 			} else if ( 'edit' == $screen->base ) {
 
@@ -270,6 +267,26 @@ class Event extends gEditorial\Module
 			$items[] = $glance;
 
 		return $items;
+	}
+
+	public function meta_box_cb_event_tag( $post, $box )
+	{
+		if ( $this->check_hidden_metabox( $box ) )
+			return;
+
+		echo $this->wrap_open( '-admin-metabox' );
+			MetaBox::checklistTerms( $post->ID, $box['args'] );
+		echo '</div>';
+	}
+
+	public function meta_box_cb_cal_tax( $post, $box )
+	{
+		if ( $this->check_hidden_metabox( $box ) )
+			return;
+
+		echo $this->wrap_open( '-admin-metabox' );
+			MetaBox::checklistTerms( $post->ID, $box['args'] );
+		echo '</div>';
 	}
 
 	public function save_post_main_cpt( $post_ID, $post, $update )
