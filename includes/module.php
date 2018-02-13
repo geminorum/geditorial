@@ -1958,7 +1958,7 @@ class Module extends Base
 
 		add_meta_box( $metabox,
 			$this->get_meta_box_title( $constant, $edit, TRUE ),
-			[ __NAMESPACE__.'\\MetaBox', 'checklistTerms' ],
+			[ $this, 'add_meta_box_checklist_terms_cb' ],
 			NULL,
 			'side',
 			'default',
@@ -1969,6 +1969,16 @@ class Module extends Base
 				'role'     => $role,
 			]
 		);
+	}
+
+	public function add_meta_box_checklist_terms_cb( $post, $box )
+	{
+		if ( $this->check_hidden_metabox( $box ) )
+			return;
+
+		echo $this->wrap_open( '-admin-metabox' );
+			MetaBox::checklistTerms( $post->ID, $box['args'] );
+		echo '</div>';
 	}
 
 	public function add_meta_box_author( $constant, $callback = 'post_author_meta_box' )
