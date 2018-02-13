@@ -1213,13 +1213,7 @@ class Module extends Base
 
 		if ( 'settings' != $context ) {
 
-			$screen = get_current_screen();
-
-			foreach ( $this->settings_help_tabs() as $tab )
-				$screen->add_help_tab( $tab );
-
-			if ( $sidebar = $this->settings_help_sidebar() )
-				$screen->set_help_sidebar( $sidebar );
+			$this->register_help_tabs();
 
 			add_action( 'admin_print_footer_scripts', [ $this, 'settings_print_scripts' ], 99 );
 		}
@@ -1294,17 +1288,25 @@ class Module extends Base
 		}
 
 		$this->default_buttons( $module );
+		$this->register_help_tabs();
 
-		$screen = get_current_screen();
+		// register settings on the settings page only
+		add_action( 'admin_print_footer_scripts', [ $this, 'settings_print_scripts' ], 99 );
+	}
+
+	protected function register_help_tabs( $screen = NULL )
+	{
+		if ( ! WordPress::mustRegisterUI( FALSE ) )
+			return;
+
+		if ( is_null( $screen ) )
+			$screen = get_current_screen();
 
 		foreach ( $this->settings_help_tabs() as $tab )
 			$screen->add_help_tab( $tab );
 
 		if ( $sidebar = $this->settings_help_sidebar() )
 			$screen->set_help_sidebar( $sidebar );
-
-		// register settings on the settings page only
-		add_action( 'admin_print_footer_scripts', [ $this, 'settings_print_scripts' ], 99 );
 	}
 
 	public function settings_header()

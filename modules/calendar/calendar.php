@@ -136,18 +136,8 @@ class Calendar extends gEditorial\Module
 
 	public function admin_calendar_load()
 	{
-		$page = isset( $_REQUEST['page'] ) ? $_REQUEST['page'] : NULL;
-
-		$screen = get_current_screen();
-
-		foreach ( $this->settings_help_tabs() as $tab )
-			$screen->add_help_tab( $tab );
-
-		if ( $sidebar = $this->settings_help_sidebar() )
-			$screen->set_help_sidebar( $sidebar );
-
-		$this->actions( 'load', $page );
-
+		$this->register_help_tabs();
+		$this->actions( 'load', self::req( 'page', NULL ) );
 		$this->enqueue_asset_js( 'calendar', NULL, [ 'jquery', Scripts::pkgSortable() ] );
 	}
 
