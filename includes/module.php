@@ -148,6 +148,9 @@ class Module extends Base
 			if ( ( $ui || $ajax ) && method_exists( $this, 'register_shortcode_ui' ) )
 				$this->action( 'register_shortcode_ui' );
 
+			if ( $ui && method_exists( $this, 'add_meta_boxes' ) )
+				$this->action( 'add_meta_boxes', 2, 12 );
+
 			if ( $ui && method_exists( $this, 'current_screen' ) )
 				$this->action( 'current_screen' );
 
