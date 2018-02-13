@@ -1541,6 +1541,12 @@ class Module extends Base
 		if ( $menu_name = $this->get_string( 'menu_name', $constant, 'misc', NULL ) )
 			$labels['menu_name'] = $menu_name;
 
+		if ( $author_metabox = $this->get_string( 'author_metabox', $constant, 'misc', NULL ) )
+			$labels['author_metabox'] = $author_metabox;
+
+		if ( $excerpt_metabox = $this->get_string( 'excerpt_metabox', $constant, 'misc', NULL ) )
+			$labels['excerpt_metabox'] = $excerpt_metabox;
+
 		if ( ! empty( $this->strings['noops'][$constant] ) )
 			return Helper::generatePostTypeLabels(
 				$this->strings['noops'][$constant],
@@ -1967,14 +1973,17 @@ class Module extends Base
 
 	public function add_meta_box_author( $constant, $callback = 'post_author_meta_box' )
 	{
+		if ( ! apply_filters( $this->base.'_module_add_metabox_author', TRUE ) )
+			return;
+
 		$posttype = get_post_type_object( $this->constant( $constant ) );
 
 		if ( current_user_can( $posttype->cap->edit_others_posts ) ) {
 
-			remove_meta_box( 'authordiv', $posttype->name, 'normal' );
+			// remove_meta_box( 'authordiv', $posttype->name, 'normal' );
 
 			add_meta_box( 'authordiv',
-				$this->get_string( 'author_box_title', $constant, 'misc', __( 'Author' ) ),
+				$this->get_string( 'author_metabox', $constant, 'misc', __( 'Author' ) ),
 				$callback,
 				NULL,
 				'normal',
@@ -1985,12 +1994,15 @@ class Module extends Base
 
 	public function add_meta_box_excerpt( $constant, $callback = 'post_excerpt_meta_box' )
 	{
+		if ( ! apply_filters( $this->base.'_module_add_metabox_excerpt', TRUE ) )
+			return;
+
 		$posttype = $this->constant( $constant );
 
-		remove_meta_box( 'postexcerpt', $posttype, 'normal' );
+		// remove_meta_box( 'postexcerpt', $posttype, 'normal' );
 
 		add_meta_box( 'postexcerpt',
-			$this->get_string( 'excerpt_box_title', $constant, 'misc', __( 'Excerpt' ) ),
+			$this->get_string( 'excerpt_metabox', $constant, 'misc', __( 'Excerpt' ) ),
 			$callback,
 			$posttype,
 			'normal',

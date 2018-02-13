@@ -1156,6 +1156,14 @@ class Helper extends Core\Base
 		if ( ! array_key_exists( 'name_admin_bar', $pre ) )
 			$pre['name_admin_bar'] = $strings[1];
 
+		// EXTRA: must be in the core!
+		if ( ! array_key_exists( 'author_metabox', $pre ) )
+			$pre['author_metabox'] = __( 'Author' );
+
+		// EXTRA: must be in the core!
+		if ( ! array_key_exists( 'excerpt_metabox', $pre ) )
+			$pre['excerpt_metabox'] = __( 'Excerpt' );
+
 		if ( $featured )
 			foreach ( $featured_templates as $key => $template )
 				$pre[$key] = vsprintf( $template, [ $featured, Text::strToLower( $featured ) ] );

@@ -82,8 +82,8 @@ class Inquire extends gEditorial\Module
 			],
 			'misc' => [
 				'inquiry_cpt' => [
-					'excerpt_box_title' => _x( 'Question', 'Modules: Inquire: Labels: Excerpt Box Title', GEDITORIAL_TEXTDOMAIN ),
-					'menu_name'         => _x( 'Inquiries', 'Modules: Inquire: Labels: Menu Name', GEDITORIAL_TEXTDOMAIN ),
+					'menu_name'       => _x( 'Inquiries', 'Modules: Inquire: Labels: Menu Name', GEDITORIAL_TEXTDOMAIN ),
+					'excerpt_metabox' => _x( 'Question', 'Modules: Inquire: Labels: Excerpt Box Title', GEDITORIAL_TEXTDOMAIN ),
 				],
 			],
 		];
@@ -195,7 +195,7 @@ class Inquire extends gEditorial\Module
 	{
 		echo $this->wrap_open( '-edit-form-after-title' );
 			MetaBox::fieldPostExcerpt( $post,
-				$this->get_string( 'excerpt_box_title', 'inquiry_cpt', 'misc' ),
+				$this->get_string( 'excerpt_metabox', 'inquiry_cpt', 'misc' ),
 				! $this->role_can( 'excerpt' )
 			);
 		echo '</div>';
