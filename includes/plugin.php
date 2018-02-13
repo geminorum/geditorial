@@ -5,6 +5,7 @@ defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial\Core\Arraay;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Icon;
+use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\User;
 
 class Plugin
@@ -367,7 +368,10 @@ class Plugin
 	{
 		$screen = get_current_screen();
 
-		if ( in_array( $screen->base, [
+		if ( WordPress::isIFrame() )
+			Helper::linkStyleSheetAdmin( 'iframe' );
+
+		else if ( in_array( $screen->base, [
 			'post',
 			'edit',
 			'widgets',
