@@ -439,27 +439,29 @@ class MetaBox extends Core\Base
 		echo HTML::wrap( $html, 'field-wrap field-wrap-inputnumber' );
 	}
 
-	public static function fieldPostParent( $post, $post_type = NULL, $statuses = [ 'publish', 'future', 'draft' ] )
+	public static function fieldPostParent( $post, $check = TRUE, $post_type = NULL, $statuses = [ 'publish', 'future', 'draft' ] )
 	{
-		// allows for parent of a diffrent type
+		// allows for a parent of diffrent type
 		if ( is_null( $post_type ) )
 			$post_type = $post->post_type;
 
-		if ( ! get_post_type_object( $post_type )->hierarchical )
+		if ( $check && ! get_post_type_object( $post_type )->hierarchical )
 			return;
 
-		$html = wp_dropdown_pages( [
+		$args = [
 			'post_type'        => $post_type,
 			'selected'         => $post->post_parent,
 			'name'             => 'parent_id',
 			'class'            => 'geditorial-admin-dropbown',
 			'show_option_none' => _x( '&mdash; no parent &mdash;', 'MetaBox: Parent Dropdown: Select Option None', GEDITORIAL_TEXTDOMAIN ),
-			'sort_column'      => 'menu_order',
+			'sort_column'      => 'menu_order, post_title',
 			'sort_order'       => 'desc',
 			'post_status'      => $statuses,
 			'exclude_tree'     => $post->ID,
 			'echo'             => 0,
-		] );
+		];
+
+		$html = wp_dropdown_pages( apply_filters( 'page_attributes_dropdown_pages_args', $args, $post ) );
 
 		if ( $html )
 			echo HTML::wrap( $html, 'field-wrap field-wrap-select' );
