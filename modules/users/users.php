@@ -469,7 +469,7 @@ class Users extends gEditorial\Module
 			'year_month' => '',
 		], 'reports' );
 
-		$this->settings_form_before( $uri, $sub, 'bulk', 'reports', FALSE, FALSE );
+		$this->settings_form_before( $uri, $sub, 'bulk', 'reports', FALSE );
 
 			HTML::h3( _x( 'User Reports', 'Modules: Users', GEDITORIAL_TEXTDOMAIN ) );
 

@@ -389,7 +389,7 @@ class Revisions extends gEditorial\Module
 
 	public function reports_sub( $uri, $sub )
 	{
-		$this->settings_form_before( $uri, $sub, 'bulk', 'reports', FALSE, FALSE );
+		$this->settings_form_before( $uri, $sub, 'bulk', 'reports', FALSE );
 
 			if ( $this->tableSummary() )
 				$this->settings_buttons();

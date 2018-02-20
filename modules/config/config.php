@@ -283,21 +283,7 @@ class Config extends gEditorial\Module
 			'empty_module' => 'meta',
 		], 'tools' );
 
-		$this->settings_form_before( $uri, $sub, 'bulk', 'tools', FALSE, FALSE );
-
-			// FIXME: add setting sidebox
-			if ( $user = gEditorial()->user() ) {
-
-				$name = get_userdata( $user )->display_name;
-				$edit = WordPress::getUserEditLink( $user );
-
-				echo '<br />';
-
-				HTML::desc( sprintf( _x( 'Editorial Site User Is %s', 'Modules: Config', GEDITORIAL_TEXTDOMAIN ),
-					$edit ? HTML::link( $name, $edit, TRUE ) : $name ) );
-			}
-
-			HTML::h3( _x( 'Maintenance Tasks', 'Modules: Config', GEDITORIAL_TEXTDOMAIN ) );
+		$this->settings_form_before( $uri, $sub, 'bulk', 'tools', TRUE );
 
 			echo '<table class="form-table">';
 
@@ -319,7 +305,12 @@ class Config extends gEditorial\Module
 					echo '</p>';
 				}
 
-			echo '</td></tr>';
+			echo '</td></tr></table>';
+
+			HTML::h2( _x( 'Maintenance Tasks', 'Modules: Config', GEDITORIAL_TEXTDOMAIN ) );
+
+			echo '<table class="form-table">';
+
 			echo '<tr><th scope="row">'._x( 'Empty Meta Fields', 'Modules: Config', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
 
 				$this->do_settings_field( [
@@ -337,10 +328,23 @@ class Config extends gEditorial\Module
 
 				HTML::desc( _x( 'Deletes empty meta values. This solves common problems with imported posts.', 'Modules: Config', GEDITORIAL_TEXTDOMAIN ) );
 
-			echo '</td></tr>';
-			echo '</table>';
+			echo '</td></tr></table>';
 
 		$this->settings_form_after( $uri, $sub );
+	}
+
+	public function settings_sidebox( $sub, $uri )
+	{
+		if ( $user = gEditorial()->user() ) {
+
+			$name = get_userdata( $user )->display_name;
+			$edit = WordPress::getUserEditLink( $user );
+
+			HTML::desc( sprintf( _x( 'Editorial Site User Is %s', 'Modules: Config', GEDITORIAL_TEXTDOMAIN ),
+				$edit ? HTML::link( $name, $edit, TRUE ) : $name ) );
+		} else {
+			HTML::desc( _x( 'No Editorial Site User available!', 'Modules: Config', GEDITORIAL_TEXTDOMAIN ), TRUE, '-empty' );
+		}
 	}
 
 	public function ajax()

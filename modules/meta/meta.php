@@ -711,7 +711,7 @@ class Meta extends gEditorial\Module
 			'custom_field_into'  => '',
 		], 'tools' );
 
-		$this->settings_form_before( $uri, $sub, 'bulk', 'tools', FALSE, FALSE );
+		$this->settings_form_before( $uri, $sub, 'bulk', 'tools', FALSE );
 
 			HTML::h3( _x( 'Meta Tools', 'Modules: Meta', GEDITORIAL_TEXTDOMAIN ) );
 

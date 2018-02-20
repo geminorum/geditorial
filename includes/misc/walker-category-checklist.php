@@ -74,7 +74,7 @@ class Walker_Category_Checklist extends \Walker_Category_Checklist
 			$icon_after   = '';
 
 			if ( in_array( $term->term_id, $selected ) ) {
-				$inner_class .= ' selected -selected';
+				$inner_class.= ' selected -selected';
 				$aria_checked = 'true';
 				// $icon_after   = HTML::getDashicon( 'yes' ); // working but no need
 			}

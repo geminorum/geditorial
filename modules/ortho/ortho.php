@@ -240,7 +240,7 @@ class Ortho extends gEditorial\Module
 
 	public function tools_sub( $uri, $sub )
 	{
-		$this->settings_form_before( $uri, $sub, 'bulk', 'tools', FALSE, FALSE );
+		$this->settings_form_before( $uri, $sub, 'bulk', 'tools', FALSE );
 
 			HTML::h3( _x( 'Orthography Sandbox', 'Modules: Ortho', GEDITORIAL_TEXTDOMAIN ) );
 
@@ -289,7 +289,7 @@ class Ortho extends gEditorial\Module
 
 	public function reports_sub( $uri, $sub )
 	{
-		$this->settings_form_before( $uri, $sub, 'bulk', 'reports', FALSE, FALSE );
+		$this->settings_form_before( $uri, $sub, 'bulk', 'reports', FALSE );
 
 			if ( $this->tableSummary() )
 				$this->settings_buttons();

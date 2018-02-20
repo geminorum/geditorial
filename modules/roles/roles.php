@@ -381,7 +381,7 @@ class Roles extends gEditorial\Module
 
 	public function tools_sub( $uri, $sub )
 	{
-		$this->settings_form_before( $uri, $sub, 'bulk', 'tools', FALSE, FALSE );
+		$this->settings_form_before( $uri, $sub, 'bulk', 'tools', FALSE );
 
 			HTML::h3( _x( 'Editorial Roles', 'Modules: Roles', GEDITORIAL_TEXTDOMAIN ) );
 

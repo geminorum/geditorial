@@ -713,7 +713,7 @@ class Today extends gEditorial\Module
 
 	public function tools_sub( $uri, $sub )
 	{
-		$this->settings_form_before( $uri, $sub, 'bulk', 'tools', FALSE, FALSE );
+		$this->settings_form_before( $uri, $sub, 'bulk', 'tools', FALSE );
 
 			$this->tableSummary();
 

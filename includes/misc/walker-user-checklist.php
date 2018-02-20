@@ -33,7 +33,7 @@ class Walker_User_Checklist extends \Walker
 			$icon_after   = '';
 
 			if ( in_array( $user->user_login, (array) $args['selected'] ) ) {
-				$inner_class .= ' selected -selected';
+				$inner_class.= ' selected -selected';
 				$aria_checked = 'true';
 				// $icon_after   = HTML::getDashicon( 'yes' ); // working but no need
 			}

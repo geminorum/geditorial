@@ -748,7 +748,8 @@ class Module extends Base
 
 	public function settings_from()
 	{
-		echo '<form action="'.$this->get_module_url( 'settings' ).'" method="post">';
+		echo '<form class="'.$this->base.'-form -form -'.$this->module->name
+			.'" action="'.$this->get_module_url( 'settings' ).'" method="post">';
 
 			$this->settings_fields( $this->module->name );
 
@@ -812,7 +813,7 @@ class Module extends Base
 		if ( is_null( $sub ) )
 			$sub = $this->module->name;
 
-		$class = $this->base.'-form -'.$this->module->name.' -sub-'.$sub;
+		$class = $this->base.'-form -form -'.$this->module->name.' -sub-'.$sub;
 
 		if ( $check && $sidebox = method_exists( $this, 'settings_sidebox' ) )
 			$class.= ' has-sidebox';
@@ -822,7 +823,7 @@ class Module extends Base
 			$this->settings_fields( $sub, $action, $context );
 
 			if ( $check && $sidebox ) {
-				echo '<div class="settings-sidebox -'.$this->module->name.' settings-sidebox-'.$sub.'">';
+				echo '<div class="-sidebox -'.$this->module->name.' -sidebox-'.$sub.'">';
 					$this->settings_sidebox( $sub, $uri, $context );
 				echo '</div>';
 			}
