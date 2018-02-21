@@ -72,7 +72,7 @@ class Base
 	public static function cheatin( $message = NULL )
 	{
 		if ( is_null( $message ) )
-			$message = __( 'Cheatin&#8217; uh?' );
+			$message = __( 'You don&#8217;t have permission to do this.' );
 
 		wp_die( $message, 403 );
 	}

@@ -24,12 +24,22 @@ class Module extends Core\Base
 		return $this->base.'_'.$this->key;
 	}
 
+	protected static function sanitize_hook( $hook )
+	{
+		return trim( str_ireplace( [ '-', '.' ], '_', $hook ) );
+	}
+
+	protected static function sanitize_base( $hook )
+	{
+		return trim( str_ireplace( [ '_', '.' ], '-', $hook ) );
+	}
+
 	protected function hook()
 	{
 		$suffix = '';
 
 		foreach ( func_get_args() as $arg )
-			$suffix.= '_'.strtolower( $arg );
+			$suffix.= '_'.strtolower( self::sanitize_hook( $arg ) );
 
 		return $this->base.'_'.$this->key.$suffix;
 	}
@@ -39,9 +49,9 @@ class Module extends Core\Base
 		$suffix = '';
 
 		foreach ( func_get_args() as $arg )
-			$suffix.= '-'.strtolower( $arg );
+			$suffix.= '-'.strtolower( self::sanitize_base( $arg ) );
 
-		return $this->base.'-'.$this->key.$suffix;
+		return $this->base.'-'.self::sanitize_base( $this->key ).$suffix;
 	}
 
 	protected function hash()
@@ -134,11 +144,6 @@ class Module extends Core\Base
 			$first[$key] = $value;
 			return $first;
 		}, $priority, 1 );
-	}
-
-	protected static function sanitize_hook( $hook )
-	{
-		return trim( str_ireplace( [ '-', '.' ], '_', $hook ) );
 	}
 
 	protected function actions()
@@ -240,24 +245,24 @@ class Module extends Core\Base
 		return check_admin_referer( $this->base.'-'.$key.'-'.$context, $name );
 	}
 
-	protected function wrap( $html, $class = '', $block = TRUE )
+	protected function wrap( $html, $class = '', $block = TRUE, $id = FALSE, $hide = FALSE )
 	{
 		return $block
-			? '<div class="-wrap '.$this->base.'-wrap -'.$this->key.' '.$class.'">'.$html.'</div>'
-			: '<span class="-wrap '.$this->base.'-wrap -'.$this->key.' '.$class.'">'.$html.'</span>';
+			? '<div class="-wrap '.$this->base.'-wrap -'.$this->key.' '.$class.'"'.( $id ? ' id="'.$id.'"' : '' ).( $hide ? ' style="display:none"' : '' ).'>'.$html.'</div>'
+			: '<span class="-wrap '.$this->base.'-wrap -'.$this->key.' '.$class.'"'.( $id ? ' id="'.$id.'"' : '' ).( $hide ? ' style="display:none"' : '' ).'>'.$html.'</span>';
 	}
 
-	protected function wrap_open( $class = '', $block = TRUE )
+	protected function wrap_open( $class = '', $block = TRUE, $id = FALSE, $hide = FALSE )
 	{
 		return $block
-			? '<div class="-wrap '.$this->base.'-wrap -'.$this->key.' '.$class.'">'
-			: '<span class="-wrap '.$this->base.'-wrap -'.$this->key.' '.$class.'">';
+			? '<div class="-wrap '.$this->base.'-wrap -'.$this->key.' '.$class.'"'.( $id ? ' id="'.$id.'"' : '' ).( $hide ? ' style="display:none"' : '' ).'>'
+			: '<span class="-wrap '.$this->base.'-wrap -'.$this->key.' '.$class.'"'.( $id ? ' id="'.$id.'"' : '' ).( $hide ? ' style="display:none"' : '' ).'>';
 	}
 
-	protected function wrap_open_buttons( $class = '', $block = TRUE )
+	protected function wrap_open_buttons( $class = '', $block = TRUE, $id = FALSE, $hide = FALSE )
 	{
 		return $block
-			? '<p class="submit '.$this->base.'-wrap -wrap-buttons -'.$this->key.' '.$class.'">'
-			: '<span class="submit '.$this->base.'-wrap -wrap-buttons -'.$this->key.' '.$class.'">';
+			? '<p class="submit '.$this->base.'-wrap -wrap-buttons -'.$this->key.' '.$class.'"'.( $id ? ' id="'.$id.'"' : '' ).( $hide ? ' style="display:none"' : '' ).'>'
+			: '<span class="submit '.$this->base.'-wrap -wrap-buttons -'.$this->key.' '.$class.'"'.( $id ? ' id="'.$id.'"' : '' ).( $hide ? ' style="display:none"' : '' ).'>';
 	}
 }

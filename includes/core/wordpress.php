@@ -51,16 +51,16 @@ class WordPress extends Base
 		return FALSE;
 	}
 
-	// @SEE: `wp_doing_ajax()` since 4.7.0
 	public static function isAJAX()
 	{
-		return defined( 'DOING_AJAX' ) && DOING_AJAX;
+		// return defined( 'DOING_AJAX' ) && DOING_AJAX;
+		return wp_doing_ajax(); // @since WP 4.7.0
 	}
 
-	// @SEE: `wp_doing_cron()` since 4.8.0
 	public static function isCRON()
 	{
-		return defined( 'DOING_CRON' ) && DOING_CRON;
+		// return defined( 'DOING_CRON' ) && DOING_CRON;
+		return wp_doing_cron(); // @since WP 4.8.0
 	}
 
 	public static function isCLI()
