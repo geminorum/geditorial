@@ -439,6 +439,47 @@ class MetaBox extends Core\Base
 		echo HTML::wrap( $html, 'field-wrap field-wrap-inputnumber' );
 	}
 
+	// @REF: `post_slug_meta_box()`
+	public static function fieldPostSlug( $post )
+	{
+		$html = '<label class="screen-reader-text" for="post_name">'.__( 'Slug' ).'</label>';
+
+		$html.= HTML::tag( 'input', [
+			'type'        => 'text',
+			'name'        => 'post_name',
+			'id'          => 'post_name',
+			'value'       => apply_filters( 'editable_slug', $post->post_name, $post ),
+			'title'       => _x( 'Slug', 'MetaBox: Title Attr', GEDITORIAL_TEXTDOMAIN ),
+			'placeholder' => _x( 'Slug', 'MetaBox: Placeholder', GEDITORIAL_TEXTDOMAIN ),
+			'class'       => 'code-text',
+		] );
+
+		echo HTML::wrap( $html, 'field-wrap field-wrap-inputcode' );
+	}
+
+	// @REF: `post_author_meta_box()`
+	public static function fieldPostAuthor( $post )
+	{
+		global $user_ID;
+
+		$args = [
+			'who'              => 'authors',
+			'name'             => 'post_author_override',
+			'selected'         => empty( $post->ID ) ? $user_ID : $post->post_author,
+			'include_selected' => TRUE,
+			'show'             => 'display_name_with_login',
+			'class'            => 'geditorial-admin-dropbown',
+			'echo'             => 0,
+		];
+
+		if ( ! $html = wp_dropdown_users( $args ) )
+			return;
+
+		$html = '<label class="screen-reader-text" for="post_author_override">'.__( 'Author' ).'</label>'.$html;
+
+		echo HTML::wrap( $html, 'field-wrap field-wrap-select' );
+	}
+
 	public static function fieldPostParent( $post, $check = TRUE, $post_type = NULL, $statuses = [ 'publish', 'future', 'draft' ] )
 	{
 		// allows for a parent of diffrent type

@@ -4,6 +4,7 @@ defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
@@ -146,6 +147,13 @@ class Tweaks extends gEditorial\Module
 			],
 			'_editpost' => [
 				[
+					'field'       => 'post_mainbox',
+					'type'        => 'posttypes',
+					'title'       => _x( 'Group Post-Boxes', 'Modules: Tweaks: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Group common post-boxes into one for simpler editing experience.', 'Modules: Tweaks: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'values'      => $this->get_posttypes_support_mainbox(),
+				],
+				[
 					'field'       => 'category_search',
 					'title'       => _x( 'Category Search', 'Modules: Tweaks: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Replaces the category selector to include searching categories', 'Modules: Tweaks: Setting Description', GEDITORIAL_TEXTDOMAIN ),
@@ -233,6 +241,16 @@ class Tweaks extends gEditorial\Module
 		return $posttypes;
 	}
 
+	private function get_posttypes_support_mainbox()
+	{
+		$supported = PostType::get( 0, [ 'show_ui' => TRUE ] );
+		$excludes  = [
+			'attachment',
+		];
+
+		return array_diff_key( $supported, array_flip( $excludes ) );
+	}
+
 	public function init_ajax()
 	{
 		if ( $this->is_inline_save( $_REQUEST, $this->post_types() ) )
@@ -245,21 +263,6 @@ class Tweaks extends gEditorial\Module
 
 		if ( 'post' == $screen->base ) {
 
-			if ( $this->get_setting( 'excerpt_count', FALSE )
-				&& post_type_supports( $screen->post_type, 'excerpt' ) ) {
-
-				$this->remove_meta_box( $screen->post_type, $screen->post_type, 'excerpt' );
-
-				add_meta_box( 'postexcerpt',
-					_x( 'Excerpt', 'Modules: Tweaks', GEDITORIAL_TEXTDOMAIN ),
-					[ $this, 'post_excerpt_meta_box' ],
-					$screen,
-					'normal'
-				);
-
-				$enqueue = TRUE;
-			}
-
 			if ( $this->get_setting( 'checklist_tree', FALSE ) ) {
 
 				add_filter( 'wp_terms_checklist_args', function( $args ){
@@ -268,6 +271,9 @@ class Tweaks extends gEditorial\Module
 
 				$enqueue = TRUE;
 			}
+
+			if ( $this->get_setting( 'excerpt_count', FALSE ) )
+				$enqueue = TRUE;
 
 			if ( $this->get_setting( 'category_search', FALSE ) )
 				$enqueue = TRUE;
@@ -355,6 +361,46 @@ class Tweaks extends gEditorial\Module
 
 		if ( $this->get_setting( 'comment_status', FALSE ) && post_type_supports( $post_type, 'comments' ) )
 			add_action( $this->hook( 'column_attr' ), [ $this, 'column_attr_comment_status' ], 15 );
+	}
+
+	// we use this hook to early control `current_screen` on other modules
+	public function add_meta_boxes( $post_type, $post )
+	{
+		$screen = get_current_screen();
+		$object = get_post_type_object( $post_type );
+
+		if ( in_array( $post_type, $this->get_setting( 'post_mainbox', [] ) ) ) {
+
+			remove_meta_box( 'pageparentdiv', $screen, 'side' );
+			// remove_meta_box( 'trackbacksdiv', $screen, 'normal' );
+			remove_meta_box( 'commentstatusdiv', $screen, 'normal' );
+			remove_meta_box( 'authordiv', $screen, 'normal' );
+			remove_meta_box( 'slugdiv', $screen, 'normal' );
+
+			add_filter( $this->base.'_module_metabox_author', '__return_false' );
+
+			add_meta_box( $this->classs( 'mainbox' ),
+				$object->labels->attributes,
+				[ $this, 'do_metabox_mainbox' ],
+				$screen,
+				'side',
+				'low'
+			);
+		}
+
+		if ( $this->get_setting( 'excerpt_count', FALSE )
+			&& post_type_supports( $post_type, 'excerpt' ) ) {
+
+			add_filter( $this->base.'_module_metabox_excerpt', '__return_false' );
+			// remove_meta_box( 'postexcerpt', $screen, 'normal' );
+
+			add_meta_box( 'postexcerpt',
+				empty( $object->labels->excerpt_metabox ) ? __( 'Excerpt' ) : $object->labels->excerpt_metabox,
+				[ $this, 'do_metabox_excerpt' ],
+				$screen,
+				'normal'
+			);
+		}
 	}
 
 	// @REF: https://adambalee.com/search-wordpress-by-custom-fields-without-a-plugin/
@@ -831,7 +877,120 @@ class Tweaks extends gEditorial\Module
 		return HTML::escape( $value );
 	}
 
-	public function post_excerpt_meta_box( $post )
+	public function do_metabox_mainbox( $post, $box )
+	{
+		if ( $this->check_hidden_metabox( $box ) )
+			return;
+
+		$posttype = get_post_type_object( $post->post_type );
+
+		echo $this->wrap_open( '-admin-metabox' );
+			$this->actions( 'mainbox', $post, $box );
+
+			if ( post_type_supports( $posttype->name, 'author' ) && current_user_can( $posttype->cap->edit_others_posts ) )
+				$this->do_mainbox_author( $post, $posttype );
+
+			if ( ! ( 'pending' == get_post_status( $post ) && ! current_user_can( $posttype->cap->publish_posts ) ) )
+				$this->do_mainbox_slug( $post, $posttype );
+
+			if ( post_type_supports( $posttype->name, 'page-attributes' ) )
+				$this->do_mainbox_parent( $post, $posttype );
+
+			if ( get_option( 'page_for_posts' ) != $post->ID
+				&& count( get_page_templates( $post ) ) > 0 )
+					$this->do_mainbox_templates( $post, $posttype );
+
+			if ( post_type_supports( $posttype->name, 'page-attributes' ) )
+				$this->do_mainbox_menuorder( $post, $posttype );
+
+			if ( post_type_supports( $posttype->name, 'comments' ) )
+				$this->do_mainbox_comment_status( $post, $posttype );
+
+			do_action( 'page_attributes_misc_attributes', $post );
+
+		echo '</div>';
+	}
+
+	private function do_mainbox_parent( $post, $posttype )
+	{
+		if ( ! $this->filters( 'metabox_parent', $posttype->hierarchical, $posttype->name, $post ) )
+			return;
+
+		MetaBox::fieldPostParent( $post, FALSE );
+	}
+
+	private function do_mainbox_menuorder( $post, $posttype )
+	{
+		if ( ! $this->filters( 'metabox_menuorder', TRUE, $posttype->name, $post ) )
+			return;
+
+		MetaBox::fieldPostMenuOrder( $post );
+	}
+
+	private function do_mainbox_slug( $post, $posttype )
+	{
+		if ( ! $this->filters( 'metabox_slug', TRUE, $posttype->name, $post ) )
+			return;
+
+		MetaBox::fieldPostSlug( $post );
+	}
+
+	private function do_mainbox_author( $post, $posttype )
+	{
+		if ( ! $this->filters( 'metabox_author', TRUE, $posttype->name, $post ) )
+			return;
+
+		MetaBox::fieldPostAuthor( $post );
+	}
+
+	// @REF: `post_comment_status_meta_box()`
+	private function do_mainbox_comment_status( $post, $posttype )
+	{
+		echo '<input name="advanced_view" type="hidden" value="1" />'; // FIXME: check this
+
+		echo '<label for="comment_status" class="selectit">';
+		echo '<input name="comment_status" type="checkbox" id="comment_status" value="open" ';
+		checked( $post->comment_status, 'open' );
+		echo ' /> '.__( 'Allow comments' );
+		echo '</label><br />';
+
+		echo '<label for="ping_status" class="selectit">';
+		echo '<input name="ping_status" type="checkbox" id="ping_status" value="open" ';
+		checked( $post->ping_status, 'open' );
+		echo ' /> ';
+		printf(
+			_x( 'Allow <a href="%s">trackbacks and pingbacks</a>', 'Modules: Tweaks: MainBox', GEDITORIAL_TEXTDOMAIN ),
+			__( 'https://codex.wordpress.org/Introduction_to_Blogging#Managing_Comments' )
+		);
+		echo '</label>';
+
+		do_action( 'post_comment_status_meta_box-options', $post );
+	}
+
+	private function do_mainbox_templates( $post, $posttype )
+	{
+		if ( ! $this->filters( 'metabox_templates', TRUE, $posttype->name, $post ) )
+			return;
+
+		$template = empty( $post->page_template ) ? FALSE : $post->page_template;
+
+		echo '<div class="-wrap field-wrap field-wrap-select">';
+
+			do_action( 'page_attributes_meta_box_template', $template, $post );
+
+			echo '<select name="page_template" id="page_template">';
+
+				echo '<option value="default">';
+					echo HTML::escape( apply_filters( 'default_page_template_title', __( 'Default Template' ), 'meta-box' ) );
+				echo '</option>';
+
+				page_template_dropdown( $template, $post->post_type );
+
+		echo '</select><div>';
+	}
+
+	// @REF: `post_excerpt_meta_box()`
+	public function do_metabox_excerpt( $post, $box )
 	{
 		echo '<div class="geditorial-admin-wrap-textbox geditorial-wordcount-wrap">';
 

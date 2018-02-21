@@ -1988,35 +1988,31 @@ class Module extends Base
 
 	public function add_meta_box_author( $constant, $callback = 'post_author_meta_box' )
 	{
-		if ( ! apply_filters( $this->base.'_module_add_metabox_author', TRUE ) )
-			return;
-
 		$posttype = get_post_type_object( $this->constant( $constant ) );
 
-		if ( current_user_can( $posttype->cap->edit_others_posts ) ) {
+		if ( ! apply_filters( $this->base.'_module_metabox_author', TRUE, $posttype->name ) )
+			return;
 
-			// remove_meta_box( 'authordiv', $posttype->name, 'normal' );
+		if ( ! current_user_can( $posttype->cap->edit_others_posts ) )
+			return;
 
-			add_meta_box( 'authordiv',
-				$this->get_string( 'author_metabox', $constant, 'misc', __( 'Author' ) ),
-				$callback,
-				NULL,
-				'normal',
-				'core'
-			);
-		}
+		add_meta_box( 'authordiv', // same as core to override
+			$this->get_string( 'author_metabox', $constant, 'misc', __( 'Author' ) ),
+			$callback,
+			NULL,
+			'normal',
+			'core'
+		);
 	}
 
 	public function add_meta_box_excerpt( $constant, $callback = 'post_excerpt_meta_box' )
 	{
-		if ( ! apply_filters( $this->base.'_module_add_metabox_excerpt', TRUE ) )
-			return;
-
 		$posttype = $this->constant( $constant );
 
-		// remove_meta_box( 'postexcerpt', $posttype, 'normal' );
+		if ( ! apply_filters( $this->base.'_module_metabox_excerpt', TRUE, $posttype ) )
+			return;
 
-		add_meta_box( 'postexcerpt',
+		add_meta_box( 'postexcerpt', // same as core to override
 			$this->get_string( 'excerpt_metabox', $constant, 'misc', __( 'Excerpt' ) ),
 			$callback,
 			$posttype,
