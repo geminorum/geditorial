@@ -1,67 +1,66 @@
-/* global jQuery, gEditorial, gEditorialModules */
+/* global jQuery, gEditorial */
 
-(function ($, p, c, m) {
-  var o = {};
-
-  o.e = true; // empty
-  o.action = p._base + '_' + m;
-  o.box = '#editorial-' + m;
-  o.button = '#wp-admin-bar-geditorial-drafts a.ab-item';
-  o.spinner = '.geditorial-spinner';
-  o.wrapper = '<div id="editorial-' + m + '" class="geditorial-wrap -drafts" style="display:none;"><div class="-content"></div></div>';
-
-  o.toggle = function () {
-    if ($(this.box).is(':visible')) {
-      $(this.box).slideUp(function () {
-        $(this).hide();
-      });
-    } else {
-      $(this.box).css({height: 'auto'}).slideDown();
-    }
+(function ($, plugin, module) {
+  var s = {
+    action: plugin._base + '_' + module,
+    wrap: '#' + plugin._base + '-' + module + '-wrap',
+    button: '#wpadminbar .' + plugin._base + '-' + module + ' a.ab-item',
+    spinner: '.' + plugin._base + '-spinner'
   };
 
-  o.populate = function () {
-    if (!this.e) {
-      this.toggle();
-      return;
-    }
+  var app = {
+    empty: true,
+    wrap: '<div id="' + plugin._base + '-' + module + '-wrap" class="geditorial-wrap -drafts" style="display:none;"><div class="-content"></div></div>',
 
-    $('body').append(this.wrapper);
-
-    var spinner = $(this.button).find(this.spinner);
-
-    $.ajax({
-      url: p._url,
-      method: 'POST',
-      data: {
-        action: o.action,
-        what: 'list',
-        nonce: p[m]._nonce
-      },
-      beforeSend: function (xhr) {
-        spinner.addClass('is-active');
-      },
-      success: function (response, textStatus, xhr) {
-        spinner.removeClass('is-active');
-
-        if (response.success) {
-          $(o.box).find('.-content').html(response.data);
-          o.e = false;
-          o.toggle();
-        }
+    toggle: function () {
+      if ($(s.wrap).is(':visible')) {
+        $(s.wrap).slideUp(function () {
+          $(this).hide();
+        });
+      } else {
+        $(s.wrap).css({height: 'auto'}).slideDown();
       }
-    });
+    },
+
+    populate: function () {
+      if (!app.empty) {
+        app.toggle();
+        return;
+      }
+
+      $('body').append(app.wrap);
+
+      var spinner = $(s.button).find(s.spinner);
+
+      $.ajax({
+        url: plugin._url,
+        method: 'POST',
+        data: {
+          action: s.action,
+          what: 'list',
+          nonce: plugin[module]._nonce
+        },
+        beforeSend: function (xhr) {
+          spinner.addClass('is-active');
+        },
+        success: function (response, textStatus, xhr) {
+          spinner.removeClass('is-active');
+
+          if (response.success) {
+            $(s.wrap).find('.-content').html(response.data);
+            app.empty = false;
+            app.toggle();
+          }
+        }
+      });
+    }
   };
 
   $(function () {
-    $(o.button).click(function (e) {
+    $(s.button).click(function (e) {
       e.preventDefault();
-      o.populate();
+      app.populate();
     });
+    $(document).trigger('gEditorialReady', [ module, app ]);
   });
-
-  // c[m] = o;
-  //
-  // if (p._dev)
-  //   console.log(o);
-}(jQuery, gEditorial, gEditorialModules, 'drafts'));
+}(jQuery, gEditorial, 'drafts'));

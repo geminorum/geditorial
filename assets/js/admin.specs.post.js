@@ -1,15 +1,15 @@
-/* global jQuery, gEditorial, gEditorialModules */
+/* global jQuery, gEditorial */
 
-(function ($, p, c, m) {
+(function ($, plugin, module) {
   var s = {
-    action: p._base + '_' + m,
-    classs: p._base + '-' + m,
-    wrap: 'ol.' + p._base + '-' + m + '-list',
-    raw: 'ul.' + p._base + '-' + m + '-new',
+    action: plugin._base + '_' + module,
+    classs: plugin._base + '-' + module,
+    wrap: 'ol.' + plugin._base + '-' + module + '-list',
+    raw: 'ul.' + plugin._base + '-' + module + '-new',
     body: '.item-body'
   };
 
-  var o = {
+  var app = {
     // http://stackoverflow.com/a/14736775
     reOrder: function () {
       var inputs = $('input.item-order');
@@ -63,17 +63,17 @@
 
   $(function () {
     $('select.item-dropdown-new', s.raw).change(function () {
-      return o.newItem(this);
+      return app.newItem(this);
     });
 
     $('body').on('click', s.wrap + ' .-delete', function (e) {
       e.preventDefault();
-      o.removeItem(this);
+      app.removeItem(this);
     });
 
     $('body').on('click', s.wrap + ' .-excerpt', function (e) {
       e.preventDefault();
-      o.expandItem(this);
+      app.expandItem(this);
     });
 
     $(s.wrap).sortable({
@@ -81,15 +81,11 @@
       group: s.classs,
       handle: '.-handle',
       stop: function () {
-        o.reOrder();
+        app.reOrder();
       }
     // }).disableSelection();
     });
-  });
 
-  // c[m] = o;
-  //
-  // if (p._dev) {
-  //   console.log(o);
-  // }
-}(jQuery, gEditorial, gEditorialModules, 'specs'));
+    $(document).trigger('gEditorialReady', [ module, app ]);
+  });
+}(jQuery, gEditorial, 'specs'));

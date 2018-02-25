@@ -1,6 +1,6 @@
-/* global jQuery, QTags, gEditorial, gEditorialModules, Virastar */
+/* global jQuery, QTags, gEditorial, Virastar */
 
-(function ($, p, c, m) {
+(function ($, p, m) {
   var o = {};
 
   o.t = {
@@ -68,12 +68,12 @@
   o.u = {
     pF: function (c) {
       var fn = {};
-      c = c.replace(/\<a[^h]*(?=href\=\"[^\"]*\#_(?:ftn|edn|etc)ref([0-9]+)\")[^>]*\>\[([0-9]+)\]\<\/a\>(.*)/g, function (m, p1, p2, p3) {
+      c = c.replace(/<a[^h]*(?=href="[^"]*#_(?:ftn|edn|etc)ref([0-9]+)")[^>]*>\[([0-9]+)\]<\/a>(.*)/g, function (m, p1, p2, p3) {
         fn[p1] = p3.replace(/^\s*./, '').trim();
         return '';
       });
 
-      return c.replace(/\<a[^h]*(?=href\=\"[^\"]*\#_(?:ftn|edn|etc)([0-9]+)\")[^>]*\>(?:\<\w+\>)*\[([0-9]+)\](?:\<\/\w+\>)*\<\/a\>/g, function (m, p1, p2, p3, p4) {
+      return c.replace(/<a[^h]*(?=href="[^"]*#_(?:ftn|edn|etc)([0-9]+)")[^>]*>(?:<\w+>)*\[([0-9]+)\](?:<\/\w+>)*<\/a>/g, function (m, p1, p2, p3, p4) {
         return '[ref]' + fn[p1].replace(/\r\n|\r|\n/g, ' ').trim() + '[/ref]';
       });
     },
@@ -191,8 +191,7 @@
     try {
       document.post.title.focus();
     } catch (e) {}
-  });
 
-  // c[m] = o;
-  // if (p._dev) console.log(o);
-}(jQuery, gEditorial, gEditorialModules, 'ortho'));
+    $(document).trigger('gEditorialReady', [ m, o ]);
+  });
+}(jQuery, gEditorial, 'ortho'));

@@ -1,101 +1,103 @@
-/* global jQuery, gEditorial, gEditorialModules */
+/* global jQuery, gEditorial */
 
-(function ($, p, c, m) {
-  var o = {};
-
-  o.e = true; // empty
-  o.action = p._base + '_' + m;
-  o.box = '#wp-admin-bar-geditorial-audit-box';
-  o.button = '#wp-admin-bar-geditorial-audit-attributes a.ab-item';
-  o.spinner = '.geditorial-spinner';
-
-  // @REF: https://remysharp.com/2010/07/21/throttling-function-calls
-  // @OLD: https://stackoverflow.com/a/9424784
-  o.debounce = function (fn, delay) {
-    var timer = null;
-    return function () {
-      var context = this;
-      var args = arguments;
-      clearTimeout(timer);
-      timer = setTimeout(function () {
-        fn.apply(context, args);
-      }, delay);
-    };
+(function ($, plugin, module) {
+  var s = {
+    action: plugin._base + '_' + module,
+    wrap: '#wpadminbar .' + plugin._base + '-' + module + '.-wrap',
+    button: '#wpadminbar .' + plugin._base + '-' + module + '.-action a.ab-item',
+    spinner: '.geditorial-spinner'
   };
 
-  o.watch = function () {
-    $(':input', o.box).change(o.debounce(function () {
-      o.store();
-    }, 1000));
-  };
+  var app = {
+    empty: true,
 
-  o.store = function () {
-    var data = $(':input', o.box).serialize();
-    var spinner = $(o.button).find(o.spinner);
+    watch: function () {
+      $(':input', s.wrap).change(utils.debounce(function () {
+        app.store();
+      }, 1000));
+    },
 
-    $.ajax({
-      url: p._url,
-      method: 'POST',
-      data: {
-        action: o.action,
-        what: 'store',
-        post_id: p[m].post_id,
-        data: data,
-        nonce: p[m]._nonce
-      },
-      beforeSend: function (xhr) {
-        spinner.addClass('is-active');
-      },
-      success: function (response, textStatus, xhr) {
-        spinner.removeClass('is-active');
+    store: function () {
+      var data = $(':input', s.wrap).serialize();
+      var spinner = $(s.button).find(s.spinner);
 
-        if (response.success) {
-          $(o.box).html(response.data);
-          o.watch();
+      $.ajax({
+        url: plugin._url,
+        method: 'POST',
+        data: {
+          action: s.action,
+          what: 'store',
+          post_id: plugin[module].post_id,
+          nonce: plugin[module]._nonce,
+          data: data
+        },
+        beforeSend: function (xhr) {
+          spinner.addClass('is-active');
+        },
+        success: function (response, textStatus, xhr) {
+          spinner.removeClass('is-active');
+
+          if (response.success) {
+            $(s.wrap).html(response.data); // utils.io will not work
+            app.watch();
+          }
         }
-      }
-    });
+      });
+    },
+
+    populate: function () {
+      if (!app.empty) return;
+
+      var spinner = $(s.button).find(s.spinner);
+
+      $.ajax({
+        url: plugin._url,
+        method: 'POST',
+        data: {
+          action: s.action,
+          what: 'list',
+          post_id: plugin[module].post_id,
+          nonce: plugin[module]._nonce
+        },
+        beforeSend: function (xhr) {
+          spinner.addClass('is-active');
+        },
+        success: function (response, textStatus, xhr) {
+          spinner.removeClass('is-active');
+
+          if (response.success) {
+            $(s.wrap).html(response.data); // utils.io will not work
+            app.empty = false;
+            app.watch();
+          }
+        }
+      });
+    }
   };
 
-  o.populate = function () {
-    if (!this.e) return;
-
-    var spinner = $(this.button).find(this.spinner);
-
-    $.ajax({
-      url: p._url,
-      method: 'POST',
-      data: {
-        action: o.action,
-        what: 'list',
-        post_id: p[m].post_id,
-        nonce: p[m]._nonce
-      },
-      beforeSend: function (xhr) {
-        spinner.addClass('is-active');
-      },
-      success: function (response, textStatus, xhr) {
-        spinner.removeClass('is-active');
-
-        if (response.success) {
-          $(o.box).html(response.data);
-          o.e = false;
-
-          o.watch();
-        }
-      }
-    });
+  var utils = {
+    // @REF: https://remysharp.com/2010/07/21/throttling-function-calls
+    // @OLD: https://stackoverflow.com/a/9424784
+    debounce: function (fn, delay) {
+      var timer = null;
+      return function () {
+        // var context = this;
+        var context = app;
+        var args = arguments;
+        clearTimeout(timer);
+        timer = setTimeout(function () {
+          fn.apply(context, args);
+        }, delay);
+      };
+    }
   };
 
   $(function () {
-    $(o.button).click(function (e) {
-      e.preventDefault();
-      o.populate();
+    $(s.button).click(function (event) {
+      event.preventDefault();
+      app.populate();
     });
-  });
 
-  // c[m] = o;
-  //
-  // if (p._dev)
-  //   console.log(o);
-}(jQuery, gEditorial, gEditorialModules, 'audit'));
+    $(document).trigger('gEditorialReady', [ module, app ]);
+  });
+}(jQuery, gEditorial, 'audit'));

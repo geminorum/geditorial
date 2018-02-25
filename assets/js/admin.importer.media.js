@@ -1,23 +1,20 @@
-/* global jQuery, wp, gEditorial, gEditorialModules */
+/* global jQuery, wp, gEditorial */
 
-(function ($, p, c, m, s) {
+(function ($, plugin, module, section) {
   var modal;
-  var o = {
+
+  var app = {
     strings: $.extend({}, {
       modal_title: 'Choose a Datasheet',
       modal_button: 'Select as Source'
-    }, p[m].strings || {})
-  };
+    }, plugin[module].strings || {}),
 
-  $(function () {
-    $('#upload_csv_button').click(function (e) {
-      e.preventDefault();
-
+    init: function () {
       if (!modal) {
-        // https://codex.wordpress.org/Javascript_Reference/wp.media
+        // @REF: https://codex.wordpress.org/Javascript_Reference/wp.media
         modal = wp.media({
-          title: o.strings['modal_title'],
-          button: { text: o.strings['modal_button'] },
+          title: app.strings['modal_title'],
+          button: { text: app.strings['modal_button'] },
           library: { type: [ 'application/vnd.ms-excel', 'text/csv' ] },
           multiple: false
         });
@@ -29,11 +26,16 @@
           // console.log(attachment);
         });
       }
+    }
+  };
 
+  $(function () {
+    $('#upload_csv_button').click(function (e) {
+      e.preventDefault();
+      app.init();
       modal.open();
     });
-  });
 
-  // c[m] = o;
-  // if (p._dev) console.log(o);
-}(jQuery, gEditorial, gEditorialModules, 'importer', 'media'));
+    $(document).trigger('gEditorialReady', [ module, app ]);
+  });
+}(jQuery, gEditorial, 'importer', 'media'));

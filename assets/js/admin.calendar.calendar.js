@@ -1,22 +1,18 @@
-/* global jQuery, gEditorial, gEditorialModules */
+/* global jQuery, gEditorial */
 
-(function ($, p, c, m) {
+(function ($, plugin, module) {
   var s = {
-    action: p._base + '_' + m,
-    classs: p._base + '-' + m,
+    action: plugin._base + '_' + module,
+    classs: plugin._base + '-' + module,
     spinner: 'span.-loading',
     theday: 'span.-the-day-number',
-    msg: '.' + p._base + '-' + m + '-calendar > .-wrap.-messages',
-    cal: '#' + p._base + '-' + m + '-calendar',
-    box: '#' + p._base + '-' + m + '-add-new'
+    msg: '.' + plugin._base + '-' + module + '-calendar > .-wrap.-messages',
+    cal: '#' + plugin._base + '-' + module + '-calendar',
+    box: '#' + plugin._base + '-' + module + '-add-new'
   };
 
-  var o = {
-    rtl: $('html').attr('dir') === 'rtl',
-    // strings: $.extend({}, {
-    //   modal_title: 'Choose an Image',
-    //   modal_button: 'Set as image',
-    // }, p[m].strings || {} ),
+  var app = {
+    rtl: false,
 
     append: function (el) {
       var $box = $(s.box);
@@ -46,7 +42,7 @@
       var $spinner = $day.find(s.spinner);
 
       $.ajax({
-        url: p._url,
+        url: plugin._url,
         method: 'POST',
         data: {
           action: s.action,
@@ -64,10 +60,10 @@
           $spinner.removeClass('is-active');
           if (response.success) {
             $(response.data).appendTo($('ol', $day));
-            o.close(true);
+            app.close(true);
           } else {
             $messages.html(response.data);
-            o.close();
+            app.close();
             setTimeout(function () {
               $messages.html('');
             }, 4500);
@@ -87,7 +83,7 @@
       var $spinner = $day.find(s.spinner);
 
       $.ajax({
-        url: p._url,
+        url: plugin._url,
         method: 'POST',
         data: {
           action: s.action,
@@ -121,30 +117,32 @@
   };
 
   $(function () {
+    app.rtl = $('html').attr('dir') === 'rtl';
+
     $('a.-the-day-newpost', s.cal).click(function (e) {
       e.preventDefault();
-      o.append(this);
+      app.append(this);
     });
 
     $('a[data-action="close"]', s.box).click(function (e) {
       e.preventDefault();
-      o.close(true);
+      app.close(true);
     });
 
     $('a[data-action="save"]', s.box).click(function (e) {
       e.preventDefault();
-      o.save();
+      app.save();
     });
 
     $('input[data-field="title"]', s.box).bind('enterKey', function (e) {
-      o.save();
+      app.save();
     });
 
     $('input[data-field="title"]', s.box).keyup(function (e) {
       if (e.keyCode === 13) {
-        o.save();
+        app.save();
       } else if (e.keyCode === 27) {
-        o.close();
+        app.close();
       }
     });
 
@@ -163,7 +161,7 @@
         var theday = $(container.el).data('day');
 
         if (day !== theday) {
-          o.reorder(sortable,
+          app.reorder(sortable,
             $($item).data('post'),
             $($item).data('nonce'),
             theday
@@ -174,7 +172,7 @@
         _super($item, container);
       },
       onDrag: function ($item, position, _super, event) {
-        if (o.rtl) {
+        if (app.rtl) {
           position = {
             top: position.top,
             right: (position.left - $item.outerWidth()) * -1
@@ -188,8 +186,7 @@
       }
     // }).disableSelection();
     });
-  });
 
-  // c[m] = o;
-  // if (p._dev) console.log(o);
-}(jQuery, gEditorial, gEditorialModules, 'calendar'));
+    $(document).trigger('gEditorialReady', [ module, app ]);
+  });
+}(jQuery, gEditorial, 'calendar'));

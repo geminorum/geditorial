@@ -1,16 +1,19 @@
-/* global jQuery, wp, gEditorial, gEditorialModules */
+/* global jQuery, wp, gEditorial */
 
-(function ($, p, c, m) {
+(function ($, plugin, module) {
   var modal;
 
-  var o = {
-    action: p._base + '_' + m,
-    classs: p._base + '-' + m,
+  var s = {
+    action: plugin._base + '_' + module,
+    classs: plugin._base + '-' + module
+  };
+
+  var app = {
 
     strings: $.extend({}, {
       modal_title: 'Choose an Image',
       modal_button: 'Set as image'
-    }, p[m].strings || {}),
+    }, plugin[module].strings || {}),
 
     modalImage: function (element, event) {
       event.preventDefault();
@@ -28,8 +31,8 @@
 
           if (image !== '') {
             if (!$(element).hasClass('-quick')) {
-              $('#' + o.classs + '-image-id').val(image.id);
-              $('#' + o.classs + '-image-img').attr('src', image.url).show();
+              $('#' + s.classs + '-image-id').val(image.id);
+              $('#' + s.classs + '-image-img').attr('src', image.url).show();
               $('a.-remove').show();
             } else {
               $('a.-remove', '.inline-edit-row').show();
@@ -47,8 +50,8 @@
       event.preventDefault();
 
       if (!$(element).hasClass('-quick')) {
-        $('#' + o.classs + '-image-id').val(0);
-        $('#' + o.classs + '-image-img').attr('src', '').hide();
+        $('#' + s.classs + '-image-id').val(0);
+        $('#' + s.classs + '-image-img').attr('src', '').hide();
         $('a.-remove').hide();
       } else {
         $('a.-remove', '.inline-edit-row').hide();
@@ -84,7 +87,7 @@
     },
 
     inlineSelect: function (field, tag, event) {
-      var value = $('td.' + o.classs + '-' + field + ' span.' + field, '#' + tag).attr('data-' + field);
+      var value = $('td.' + s.classs + '-' + field + ' span.' + field, '#' + tag).attr('data-' + field);
       var $el = $(':input[name="term-' + field + '"]', '.inline-edit-row');
 
       $el.find('option:selected').attr('selected', false);
@@ -95,20 +98,20 @@
   $(function () {
     $('#addtag, #edittag, #the-list')
       .on('click', '.-modal', function (event) {
-        o.modalImage(this, event);
+        app.modalImage(this, event);
       })
       .on('click', '.-remove', function (event) {
-        o.resetImage(this, event);
+        app.resetImage(this, event);
       });
 
     $('#the-list').on('click', 'a.editinline', function (event) {
       var tag = $(this).parents('tr').attr('id');
-      o.inlineImage(tag, event);
-      o.inlineColor(tag, event);
-      o.inlineOrder(tag, event);
-      o.inlineSelect('author', tag, event);
-      o.inlineSelect('role', tag, event);
-      o.inlineSelect('posttype', tag, event);
+      app.inlineImage(tag, event);
+      app.inlineColor(tag, event);
+      app.inlineOrder(tag, event);
+      app.inlineSelect('author', tag, event);
+      app.inlineSelect('role', tag, event);
+      app.inlineSelect('posttype', tag, event);
     });
 
     // reset the form on submit
@@ -116,16 +119,13 @@
     // on #submit being clicked), we'll have to do the same
     // @SEE: https://core.trac.wordpress.org/ticket/36956
     $(document).on('term-added', function (event) {
-      o.resetImage($('#addtag #submit'), event);
+      app.resetImage($('#addtag #submit'), event);
     });
 
     if (typeof $.wp === 'object' && typeof $.wp.wpColorPicker === 'function') {
-      $('#' + o.classs + '-color-id').wpColorPicker();
+      $('#' + s.classs + '-color-id').wpColorPicker();
     }
-  });
 
-  // c[m] = o;
-  //
-  // if (p._dev)
-  //   console.log(o);
-}(jQuery, gEditorial, gEditorialModules, 'terms'));
+    $(document).trigger('gEditorialReady', [ module, app ]);
+  });
+}(jQuery, gEditorial, 'terms'));

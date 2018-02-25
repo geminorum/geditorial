@@ -1,6 +1,6 @@
-/* global jQuery, QTags, gEditorial, gEditorialModules, persianTools */
+/* global jQuery, QTags, gEditorial, persianTools */
 
-(function ($, p, c, m, s) {
+(function ($, p, m, s) {
   var o = {};
 
   o.s = $.extend({}, {
@@ -14,12 +14,12 @@
   o.u = {
     pF: function (c) {
       var fn = {};
-      c = c.replace(/\<a[^h]*(?=href\=\"[^\"]*\#_(?:ftn|edn|etc)ref([0-9]+)\")[^>]*\>\[([0-9]+)\]\<\/a\>(.*)/g, function (m, p1, p2, p3) {
+      c = c.replace(/<a[^h]*(?=href="[^"]*#_(?:ftn|edn|etc)ref([0-9]+)")[^>]*>\[([0-9]+)\]<\/a>(.*)/g, function (m, p1, p2, p3) {
         fn[p1] = p3.replace(/^\s*./, '').trim();
         return '';
       });
 
-      return c.replace(/\<a[^h]*(?=href\=\"[^\"]*\#_(?:ftn|edn|etc)([0-9]+)\")[^>]*\>(?:\<\w+\>)*\[([0-9]+)\](?:\<\/\w+\>)*\<\/a\>/g, function (m, p1, p2, p3, p4) {
+      return c.replace(/<a[^h]*(?=href="[^"]*#_(?:ftn|edn|etc)([0-9]+)")[^>]*>(?:<\w+>)*\[([0-9]+)\](?:<\/\w+>)*<\/a>/g, function (m, p1, p2, p3, p4) {
         return '[ref]' + fn[p1].replace(/\r\n|\r|\n/g, ' ').trim() + '[/ref]';
       });
     },
@@ -78,10 +78,7 @@
         QTags.addButton(b, o.s['qtag_' + b], o.q[b], '', '', o.s['qtag_' + b + '_title']);
       }
     }
+
+    $(document).trigger('gEditorialReady', [ m, o, s ]);
   });
-
-  // c[m] = o;
-
-  // if (p._dev)
-  //   console.log(o);
-}(jQuery, gEditorial, gEditorialModules, 'ortho', 'persiantools'));
+}(jQuery, gEditorial, 'ortho', 'persiantools'));
