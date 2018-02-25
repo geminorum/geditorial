@@ -327,12 +327,13 @@ class Audit extends gEditorial\Module
 			return;
 
 		$post_id = get_queried_object_id();
+		$classs  = $this->classs();
 
 		if ( $this->role_can( 'reports' )
 			|| current_user_can( 'edit_post', $post_id ) ) {
 
 			$nodes[] = [
-				'id'     => $this->classs(),
+				'id'     => $classs,
 				'title'  => _x( 'Audit Attributes', 'Modules: Audit: Adminbar', GEDITORIAL_TEXTDOMAIN ),
 				'parent' => $parent,
 				'href'   => $this->get_module_url(),
@@ -342,18 +343,18 @@ class Audit extends gEditorial\Module
 				foreach ( $terms as $term )
 					$nodes[] = [
 						'id'     => $this->classs( 'attribute', $term->term_id ),
+						'parent' => $classs,
 						'title'  => sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' ),
-						'parent' => $this->classs(),
 						'href'   => get_term_link( $term ),
 					];
 
 			else
 				$nodes[] = [
 					'id'     => $this->classs( 'attribute', 0 ),
+					'parent' => $classs,
 					'title'  => $this->get_string( 'show_option_none', 'audit_tax', 'misc' ),
-					'parent' => $this->classs(),
 					'href'   => FALSE,
-					'meta'   => [ 'class' => '-danger' ],
+					'meta'   => [ 'class' => '-danger '.$classs ],
 				];
 		}
 
@@ -375,14 +376,14 @@ class Audit extends gEditorial\Module
 			'id'    => $this->classs( 'attributes' ),
 			'href'  => $this->get_module_url(),
 			'title' => _x( 'Auditing', 'Modules: Audit: Adminbar', GEDITORIAL_TEXTDOMAIN ).Ajax::spinner(),
-			'meta'  => [ 'class' => 'geditorial-adminbar-node' ],
+			'meta'  => [ 'class' => 'geditorial-adminbar-node -action '.$this->classs() ],
 		] );
 
 		$wp_admin_bar->add_node( [
 			'id'     => $this->classs( 'box' ),
 			'parent' => $this->classs( 'attributes' ),
 			'title'  => _x( 'Click to load attributes &hellip;', 'Modules: Audit: Adminbar', GEDITORIAL_TEXTDOMAIN ),
-			'meta'   => [ 'class' => 'geditorial-adminbar-wrap' ],
+			'meta'   => [ 'class' => 'geditorial-adminbar-wrap -wrap '.$this->classs() ],
 		] );
 	}
 

@@ -83,12 +83,13 @@ class Markdown extends gEditorial\Module
 			return;
 
 		$post_id = get_queried_object_id();
+		$classs  = $this->classs();
 
 		if ( ! current_user_can( 'edit_post', $post_id ) )
 			return;
 
 		$nodes[] = [
-			'id'     => $this->classs(),
+			'id'     => $classs,
 			'parent' => $parent,
 			'title'  => _x( 'Markdown Summary', 'Modules: Markdown: Adminbar', GEDITORIAL_TEXTDOMAIN ),
 			'href'   => $this->get_module_url(),
@@ -98,36 +99,36 @@ class Markdown extends gEditorial\Module
 
 			$nodes[] = [
 				'id'     => $this->classs( 'convert' ),
-				'parent' => $this->classs(),
+				'parent' => $classs,
 				'title'  => _x( 'Markdown Convert', 'Modules: Markdown: Adminbar', GEDITORIAL_TEXTDOMAIN ).Ajax::spinner(),
 				'href'   => '#',
-				'meta'   => [ 'rel' => 'convert', 'class' => '-action' ],
+				'meta'   => [ 'rel' => 'convert', 'class' => '-action '.$classs ],
 			];
 
 		} else {
 
 			$nodes[] = [
 				'id'     => $this->classs( 'process' ),
-				'parent' => $this->classs(),
+				'parent' => $classs,
 				'title'  => _x( 'Markdown Process', 'Modules: Markdown: Adminbar', GEDITORIAL_TEXTDOMAIN ).Ajax::spinner(),
 				'href'   => '#',
-				'meta'   => [ 'rel' => 'process', 'class' => '-action' ],
+				'meta'   => [ 'rel' => 'process', 'class' => '-action '.$classs ],
 			];
 
 			$nodes[] = [
 				'id'     => $this->classs( 'cleanup' ),
-				'parent' => $this->classs(),
+				'parent' => $classs,
 				'title'  => _x( 'Markdown Cleanup', 'Modules: Markdown: Adminbar', GEDITORIAL_TEXTDOMAIN ).Ajax::spinner(),
 				'href'   => '#',
-				'meta'   => [ 'rel' => 'cleanup', 'class' => '-action' ],
+				'meta'   => [ 'rel' => 'cleanup', 'class' => '-action '.$classs ],
 			];
 
 			$nodes[] = [
 				'id'     => $this->classs( 'discard' ),
-				'parent' => $this->classs(),
+				'parent' => $classs,
 				'title'  => _x( 'Markdown Discard', 'Modules: Markdown: Adminbar', GEDITORIAL_TEXTDOMAIN ).Ajax::spinner(),
 				'href'   => '#',
-				'meta'   => [ 'rel' => 'discard', 'class' => '-action -danger' ],
+				'meta'   => [ 'rel' => 'discard', 'class' => '-action -danger '.$classs ],
 			];
 		}
 

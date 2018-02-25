@@ -546,6 +546,17 @@ class Settings extends Core\Base
 		];
 	}
 
+	public static function getSetting_display_perpage( $description = NULL )
+	{
+		return [
+			'field'       => 'display_perpage',
+			'type'        => 'number',
+			'title'       => _x( 'Display Per-Page', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+			'description' => $description ?: _x( 'Total rows of items per each page of the list.', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+			'default'     => 15,
+		];
+	}
+
 	public static function getSetting_calendar_type( $description = NULL )
 	{
 		return [
