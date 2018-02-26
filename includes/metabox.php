@@ -3,6 +3,7 @@
 defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core\HTML;
+use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\Text;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\PostType;
@@ -406,7 +407,7 @@ class MetaBox extends Core\Base
 			'selected'         => $selected,
 			'name'             => ( $prefix ? $prefix.'-' : '' ).$post_type.'[]',
 			'id'               => ( $prefix ? $prefix.'-' : '' ).$post_type.'-'.( $selected ? $selected : '0' ),
-			'class'            => 'geditorial-admin-dropbown',
+			'class'            => static::BASE.'-admin-dropbown',
 			'show_option_none' => Settings::showOptionNone(),
 			'sort_column'      => 'menu_order',
 			'sort_order'       => 'desc',
@@ -468,7 +469,7 @@ class MetaBox extends Core\Base
 			'selected'         => empty( $post->ID ) ? $user_ID : $post->post_author,
 			'include_selected' => TRUE,
 			'show'             => 'display_name_with_login',
-			'class'            => 'geditorial-admin-dropbown',
+			'class'            => static::BASE.'-admin-dropbown',
 			'echo'             => 0,
 		];
 
@@ -493,7 +494,7 @@ class MetaBox extends Core\Base
 			'post_type'        => $post_type,
 			'selected'         => $post->post_parent,
 			'name'             => 'parent_id',
-			'class'            => 'geditorial-admin-dropbown',
+			'class'            => static::BASE.'-admin-dropbown',
 			'show_option_none' => _x( '&mdash; no parent &mdash;', 'MetaBox: Parent Dropdown: Select Option None', GEDITORIAL_TEXTDOMAIN ),
 			'sort_column'      => 'menu_order, post_title',
 			'sort_order'       => 'desc',
@@ -513,12 +514,12 @@ class MetaBox extends Core\Base
 		if ( is_null( $title ) )
 			$title = __( 'Excerpt' );
 
-		$html = '<div id="postexcerpt" class="postbox geditorial-wrap -admin-postbox">';
+		$html = '<div id="postexcerpt" class="postbox '.static::BASE.'-wrap -admin-postbox">';
 		$html.= '<button type="button" class="handlediv button-link" aria-expanded="true">';
 		$html.= '<span class="screen-reader-text">'.esc_attr_x( 'Click to toggle', 'MetaBox', GEDITORIAL_TEXTDOMAIN ).'</span>';
 		$html.= '<span class="toggle-indicator" aria-hidden="true"></span></button>';
 		$html.= '<h2 class="hndle"><span>'.$title.'</span></h2><div class="inside">';
-		$html.= '<div class="geditorial-admin-wrap-textbox geditorial-wordcount-wrap">';
+		$html.= '<div class="'.static::BASE.'-admin-wrap-textbox '.static::BASE.'-wordcount-wrap">';
 		$html.= '<div class="-wrap field-wrap field-wrap-textarea">';
 		$html.= '<label class="screen-reader-text" for="excerpt">'.$title.'</label>';
 
@@ -562,11 +563,11 @@ class MetaBox extends Core\Base
 			'selected'          => $selected,
 			'show_option_none'  => Settings::showOptionNone( $obj->labels->menu_name ),
 			'option_none_value' => '0',
-			'class'             => 'geditorial-admin-dropbown',
+			'class'             => static::BASE.'-admin-dropbown',
 			'name'              => 'tax_input['.$taxonomy.'][]',
 			'id'                => static::BASE.'-'.$taxonomy,
-			// 'name'              => 'geditorial-'.$this->module->name.'-'.$taxonomy.( FALSE === $key ? '' : '['.$key.']' ),
-			// 'id'                => 'geditorial-'.$this->module->name.'-'.$taxonomy.( FALSE === $key ? '' : '-'.$key ),
+			// 'name'              => static::BASE.'-'.$this->module->name.'-'.$taxonomy.( FALSE === $key ? '' : '['.$key.']' ),
+			// 'id'                => static::BASE.'-'.$this->module->name.'-'.$taxonomy.( FALSE === $key ? '' : '-'.$key ),
 			'hierarchical'      => $obj->hierarchical,
 			'orderby'           => 'name',
 			'show_count'        => $count,
@@ -583,5 +584,45 @@ class MetaBox extends Core\Base
 			], $terms );
 		else
 			self::fieldEmptyTaxonomy( $obj, NULL );
+	}
+
+	public static function glancePosttype( $posttype, $noop, $extra_class = '' )
+	{
+		$posts = wp_count_posts( $posttype );
+
+		if ( ! $posts->publish )
+			return FALSE;
+
+		$object = get_post_type_object( $posttype );
+
+		$class  = 'geditorial-glance-item -posttype -posttype-'.$posttype.' '.$extra_class;
+		$format = current_user_can( $object->cap->edit_posts )
+			? '<a class="'.$class.'" href="edit.php?post_type=%3$s">%1$s %2$s</a>'
+			: '<div class="'.$class.'">%1$s %2$s</div>';
+
+		return vsprintf( $format, [
+			Number::format( $posts->publish ),
+			Helper::noopedCount( $posts->publish, $noop ),
+			$posttype,
+		] );
+	}
+
+	public static function glanceTaxonomy( $taxonomy, $noop, $extra_class = '' )
+	{
+		if ( ! $terms = wp_count_terms( $taxonomy ) )
+			return FALSE;
+
+		$object = get_taxonomy( $taxonomy );
+
+		$class  = 'geditorial-glance-item -tax -taxonomy-'.$taxonomy.' '.$extra_class;
+		$format = current_user_can( $object->cap->manage_terms )
+			? '<a class="'.$class.'" href="edit-tags.php?taxonomy=%3$s">%1$s %2$s</a>'
+			: '<div class="'.$class.'">%1$s %2$s</div>';
+
+		return vsprintf( $format, [
+			Number::format( $terms ),
+			Helper::noopedCount( $terms, $noop ),
+			$taxonomy,
+		] );
 	}
 }
