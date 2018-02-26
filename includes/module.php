@@ -2304,65 +2304,16 @@ class Module extends Base
 
 	protected function do_restrict_manage_posts_taxes( $taxes, $posttype_constant_key = TRUE )
 	{
-		global $wp_query;
-
 		if ( TRUE === $posttype_constant_key ||
 			$this->is_current_posttype( $posttype_constant_key ) ) {
 
-			foreach ( (array) $taxes as $constant ) {
-
-				$tax = $this->constant( $constant );
-				if ( $obj = get_taxonomy( $tax ) ) {
-
-					$selected = isset( $wp_query->query[$tax] ) ? $wp_query->query[$tax] : '';
-
-					// if selected is term_id instead of term slug
-					if ( $selected && '-1' != $selected && is_numeric( $selected ) ) {
-
-						if ( $term = get_term_by( 'id', $selected, $tax ) )
-							$selected = $term->slug;
-
-						else
-							$selected = '';
-					}
-
-					wp_dropdown_categories( [
-						'show_option_all'  => $this->get_string( 'show_option_all', $constant, 'misc', $obj->labels->all_items ),
-						'show_option_none' => $this->get_string( 'show_option_none', $constant, 'misc', '('.$obj->labels->no_terms.')' ),
-						'taxonomy'         => $tax,
-						'name'             => $obj->name,
-						'orderby'          => 'name',
-						'value_field'      => 'slug',
-						'selected'         => $selected,
-						'hierarchical'     => $obj->hierarchical,
-						'depth'            => 3,
-						'show_count'       => FALSE,
-						'hide_empty'       => TRUE,
-						'hide_if_empty'    => TRUE,
-					] );
-				}
-			}
+			foreach ( (array) $taxes as $constant )
+				Listtable::restrictByTaxonomy(
+					$this->constant( $constant ),
+					$this->get_string( 'show_option_all', $constant, 'misc', NULL ),
+					$this->get_string( 'show_option_none', $constant, 'misc', NULL )
+				);
 		}
-	}
-
-	protected function do_restrict_manage_posts_posts( $tax_constant_key, $posttype_constant_key )
-	{
-		$tax_obj = get_taxonomy( $tax = $this->constant( $tax_constant_key ) );
-
-		gEditorial()->files( 'misc/walker-page-dropdown' );
-
-		wp_dropdown_pages( [
-			'post_type'        => $this->constant( $posttype_constant_key ),
-			'selected'         => isset( $_GET[$tax] ) ? $_GET[$tax] : '',
-			'name'             => $tax,
-			'class'            => 'geditorial-admin-dropbown',
-			'show_option_none' => $tax_obj->labels->all_items,
-			'sort_column'      => 'menu_order',
-			'sort_order'       => 'desc',
-			'post_status'      => [ 'publish', 'future', 'draft', 'pending' ],
-			'value_field'      => 'post_name',
-			'walker'           => new Misc\Walker_PageDropdown(),
-		] );
 	}
 
 	protected function do_parse_query_taxes( &$query, $taxes, $posttype_constant_key = TRUE )
@@ -2370,61 +2321,30 @@ class Module extends Base
 		if ( TRUE === $posttype_constant_key ||
 			$this->is_current_posttype( $posttype_constant_key ) ) {
 
-			foreach ( (array) $taxes as $constant ) {
-
-				$tax = $this->constant( $constant );
-
-				if ( isset( $query->query_vars[$tax] ) ) {
-
-					if ( '-1' == $query->query_vars[$tax] ) {
-
-						$query->query_vars['tax_query'] = [ [
-							'taxonomy' => $tax,
-							'operator' => 'NOT EXISTS',
-						] ];
-
-						unset( $query->query_vars[$tax] );
-
-					} else if ( is_numeric( $query->query_vars[$tax] ) ) {
-
-						$term = get_term_by( 'id', $query->query_vars[$tax], $tax );
-
-						if ( ! empty( $term ) && ! is_wp_error( $term ) )
-							$query->query_vars[$tax] = $term->slug;
-					}
-				}
-			}
+			foreach ( (array) $taxes as $constant )
+				Listtable::parseQueryTaxonomy( $query, $this->constant( $constant ) );
 		}
 	}
 
-	// @SEE: https://core.trac.wordpress.org/ticket/23421
-	// @SOURCE: http://scribu.net/wordpress/sortable-taxonomy-columns.html
-	protected function do_posts_clauses_taxes( $pieces, &$wp_query, $taxes, $posttype_constant_key = TRUE )
+	protected function do_restrict_manage_posts_posts( $tax_constant_key, $posttype_constant_key )
+	{
+		Listtable::restrictByPosttype(
+			$this->constant( $tax_constant_key ),
+			$this->constant( $posttype_constant_key )
+		);
+	}
+
+	protected function do_posts_clauses_taxes( $pieces, $query, $taxes, $posttype_constant_key = TRUE )
 	{
 		if ( TRUE === $posttype_constant_key ||
 			$this->is_current_posttype( $posttype_constant_key ) ) {
 
-			global $wpdb;
-
 			foreach ( (array) $taxes as $constant ) {
-				$tax = $this->constant( $constant );
 
-				if ( isset( $wp_query->query['orderby'] )
-					&& 'taxonomy-'.$tax == $wp_query->query['orderby'] ) {
+				$taxonomy = $this->constant( $constant );
 
-						$pieces['join'].= <<<SQL
-LEFT OUTER JOIN {$wpdb->term_relationships} ON {$wpdb->posts}.ID={$wpdb->term_relationships}.object_id
-LEFT OUTER JOIN {$wpdb->term_taxonomy} USING (term_taxonomy_id)
-LEFT OUTER JOIN {$wpdb->terms} USING (term_id)
-SQL;
-
-					$pieces['where']  .= $wpdb->prepare( " AND (taxonomy = %s OR taxonomy IS NULL)", $tax );
-					$pieces['groupby'] = "object_id";
-					$pieces['orderby'] = "GROUP_CONCAT({$wpdb->terms}.name ORDER BY name ASC) ";
-					$pieces['orderby'].= ( 'ASC' == strtoupper( $wp_query->get('order') ) ) ? 'ASC' : 'DESC';
-
-					break;
-				}
+				if ( isset( $query->query['orderby'] ) && 'taxonomy-'.$taxonomy == $query->query['orderby'] )
+					return Listtable::orderClausesByTaxonomy( $pieces, $query, $taxonomy );
 			}
 		}
 

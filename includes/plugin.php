@@ -111,6 +111,7 @@ class Plugin
 		$this->files( [
 			'ajax',
 			'helper',
+			'listtable',
 			'scripts',
 			'metabox',
 			'settings',
