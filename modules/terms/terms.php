@@ -699,6 +699,16 @@ class Terms extends gEditorial\Module
 					'value' => empty( $meta ) ? '' : $meta,
 					'data'  => [ 'ortho' => 'color' ],
 				] );
+
+			break;
+			default:
+
+				$html.= HTML::tag( 'input', [
+					'id'    => $this->classs( $field, 'id' ),
+					'name'  => 'term-'.$field,
+					'type'  => 'text',
+					'value' => empty( $meta ) ? '' : $meta,
+				] );
 		}
 
 		echo $this->filters( 'supported_field_form', $html, $field, $taxonomy, $term_id, $meta );
@@ -783,7 +793,7 @@ class Terms extends gEditorial\Module
 				] );
 
 			break;
-			default:
+			case 'color':
 				$html.= '<input type="text" class="ptitle" name="term-'.$field.'" value="" />';
 		}
 
