@@ -4,6 +4,7 @@ defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Listtable;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Core\Arraay;
 use geminorum\gEditorial\Core\HTML;
@@ -357,7 +358,7 @@ class Terms extends gEditorial\Module
 			switch ( $field ) {
 				case 'order':
 
-					$html = $this->column_order( get_term_meta( $term_id, 'order', TRUE ) );
+					$html = Listtable::columnOrder( get_term_meta( $term_id, 'order', TRUE ) );
 
 				break;
 				case 'image':
@@ -366,7 +367,7 @@ class Terms extends gEditorial\Module
 					// $size  = isset( $sizes[$post->post_type.'-thumbnail'] ) ? $post->post_type.'-thumbnail' : 'thumbnail';
 					$size = [ 45, 72 ]; // FIXME
 
-					$html = $this->column_image( $term_id, $size );
+					$html = $this->filters( 'column_image', Taxonomy::htmlFeaturedImage( $term_id, $size ), $term_id, $size );
 
 				break;
 				case 'author':

@@ -23,6 +23,48 @@ class Listtable extends Core\Base
 		return gEditorial()->{static::MODULE}->get_postmeta( $post_id, $field, $default, $key );
 	}
 
+	public static function columnCount( $count, $title_attr = NULL )
+	{
+		return Helper::htmlCount( $count, $title_attr )
+			.'<span class="count" data-count="'
+			.( FALSE === $count ? '' : $count ).'"></span>';
+	}
+
+	public static function columnOrder( $order, $title_attr = NULL )
+	{
+		return Helper::htmlOrder( $order, $title_attr )
+			.'<span class="order" data-order="'
+			.( FALSE === $order ? '' : $order ).'"></span>';
+	}
+
+	public static function columnTerm( $object_id, $taxonomy, $title_attr = NULL, $single = TRUE )
+	{
+		$the_terms = wp_get_object_terms( $object_id, $taxonomy );
+
+		if ( ! is_wp_error( $the_terms ) && count( $the_terms ) ) {
+
+			if ( $single ) {
+				return $the_terms[0]->name;
+
+			} else {
+
+				$terms = [];
+
+				foreach ( $the_terms as $the_term )
+					$terms[] = $the_term->name;
+
+				return Helper::getJoined( $terms );
+			}
+
+		} else {
+
+			if ( is_null( $title_attr ) )
+				$title_attr = _x( 'No Term', 'Listtable: No Count Term Attribute', GEDITORIAL_TEXTDOMAIN );
+
+			return sprintf( '<span title="%s" class="column-term-empty">&mdash;</span>', $title_attr );
+		}
+	}
+
 	public static function parseQueryTaxonomy( &$query, $taxonomy )
 	{
 		if ( ! isset( $query->query_vars[$taxonomy] ) )

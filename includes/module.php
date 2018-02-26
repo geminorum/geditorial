@@ -2385,62 +2385,6 @@ class Module extends Base
 		], Helper::getIcon( $icon ) );
 	}
 
-	// for posts
-	public function column_thumb( $post_id, $size = [ 45, 72 ] )
-	{
-		return $this->filters( 'column_thumb', PostType::htmlFeaturedImage( $post_id, $size ), $post_id, $size );
-	}
-
-	// for terms
-	public function column_image( $term_id, $size = [ 45, 72 ] )
-	{
-		return $this->filters( 'column_image', Taxonomy::htmlFeaturedImage( $term_id, $size ), $term_id, $size );
-	}
-
-	// TODO: override $title_attr based on passed constant key
-	public function column_count( $count, $title_attr = NULL )
-	{
-		return Helper::htmlCount( $count, $title_attr )
-			.'<span class="count" data-count="'
-			.( FALSE === $count ? '' : $count ).'"></span>';
-	}
-
-	// TODO: override $title_attr based on passed constant key
-	public function column_order( $order, $title_attr = NULL )
-	{
-		return Helper::htmlOrder( $order, $title_attr )
-			.'<span class="order" data-order="'
-			.( FALSE === $order ? '' : $order ).'"></span>';
-	}
-
-	public function column_term( $object_id, $constant, $title_attr = NULL, $single = TRUE )
-	{
-		$the_terms = wp_get_object_terms( $object_id, $this->constant( $constant ) );
-
-		if ( ! is_wp_error( $the_terms ) && count( $the_terms ) ) {
-
-			if ( $single ) {
-				return $the_terms[0]->name;
-
-			} else {
-
-				$terms = [];
-
-				foreach ( $the_terms as $the_term )
-					$terms[] = $the_term->name;
-
-				return Helper::getJoined( $terms );
-			}
-
-		} else {
-
-			if ( is_null( $title_attr ) )
-				$title_attr = _x( 'No Term', 'Module: No Count Term Attribute', GEDITORIAL_TEXTDOMAIN );
-
-			return sprintf( '<span title="%s" class="column-term-empty">&mdash;</span>', $title_attr );
-		}
-	}
-
 	// adds the module enabled class to body in admin
 	public function _admin_enabled()
 	{

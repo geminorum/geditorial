@@ -4,6 +4,7 @@ defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Listtable;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
@@ -264,7 +265,7 @@ class Users extends gEditorial\Module
 		if ( count( $list ) )
 			echo HTML::tableCode( $list );
 		else
-			echo $this->column_count( 0 );
+			echo Listtable::columnCount( 0 );
 
 		return ob_get_clean();
 	}
@@ -309,7 +310,7 @@ class Users extends gEditorial\Module
 	public function custom_column( $display, $column, $term_id )
 	{
 		if ( 'users' == $column )
-			echo $this->column_count( get_term( $term_id, $this->constant( 'group_tax' ) )->count );
+			echo Listtable::columnCount( get_term( $term_id, $this->constant( 'group_tax' ) )->count );
 	}
 
 	public function edit_user_profile( $user )

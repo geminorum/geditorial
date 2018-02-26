@@ -4,6 +4,7 @@ defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Listtable;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Core\HTML;
@@ -556,12 +557,12 @@ class Tweaks extends gEditorial\Module
 					? $post->post_type.'-thumbnail'
 					: [ 45, 72 ];
 
-				echo $this->column_thumb( $post_id, $size );
+				echo $this->filters( 'column_thumb', PostType::htmlFeaturedImage( $post_id, $size ), $post_id, $size );
 
 			break;
 			case $this->classs( 'order' ):
 
-				echo $this->column_order( $post->menu_order );
+				echo Listtable::columnOrder( $post->menu_order );
 
 			break;
 			case $this->classs( 'id' ):
