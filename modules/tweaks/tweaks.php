@@ -354,7 +354,7 @@ class Tweaks extends gEditorial\Module
 		if ( $this->get_setting( 'group_attributes', FALSE ) )
 			add_action( $this->hook( 'column_attr' ), [ $this, 'column_attr_default' ], 3 );
 
-		if ( $this->get_setting( 'page_template', FALSE ) && count( get_page_templates( NULL, $post_type ) ) )
+		if ( $this->get_setting( 'page_template', FALSE ) )
 			add_action( $this->hook( 'column_attr' ), [ $this, 'column_attr_page_template' ], 50 );
 
 		if ( $this->get_setting( 'slug_attribute', FALSE ) && is_post_type_viewable( $post_type ) )
@@ -718,7 +718,7 @@ class Tweaks extends gEditorial\Module
 			&& 'default' != $post->page_template ) {
 
 			if ( ! isset( $this->page_templates[$post->post_type] ) )
-				$this->page_templates[$post->post_type] = array_flip( get_page_templates( $post, $post->post_type ) );
+				$this->page_templates[$post->post_type] = wp_get_theme()->get_page_templates( $post, $post->post_type );
 
 			echo '<li class="-row tweaks-page-template">';
 
