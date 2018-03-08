@@ -242,7 +242,7 @@ class Workflow extends gEditorial\Module
 
 				remove_meta_box( 'submitdiv', $screen, 'side' );
 				add_meta_box( $this->classs( 'main' ),
-					$this->get_meta_box_title( $screen->post_type, $edit, $this->caps['settings'] ),
+					$this->get_meta_box_title( $screen->post_type, $edit ),
 					[ $this, 'do_meta_box_main' ],
 					$screen->post_type,
 					'side',

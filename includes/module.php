@@ -2053,7 +2053,7 @@ class Module extends Base
 		} );
 	}
 
-	public function get_meta_box_title( $constant = 'post', $url = NULL, $edit_cap = 'manage_options', $title = NULL )
+	public function get_meta_box_title( $constant = 'post', $url = NULL, $edit_cap = NULL, $title = NULL )
 	{
 		if ( is_null( $title ) )
 			$title = $this->get_string( 'meta_box_title', $constant, 'misc', _x( 'Settings', 'Module: MetaBox Default Title', GEDITORIAL_TEXTDOMAIN ) );
@@ -2061,8 +2061,11 @@ class Module extends Base
 		if ( $info = $this->get_string( 'meta_box_info', $constant, 'misc', NULL ) )
 			$title.= ' <span class="postbox-title-info" data-title="info" title="'.HTML::escape( $info ).'">'.HTML::getDashicon( 'editor-help' ).'</span>';
 
-		if ( FALSE === $url )
+		if ( FALSE === $url || FALSE === $edit_cap )
 			return $title;
+
+		if ( is_null( $edit_cap ) )
+			$edit_cap = $this->caps['settings'];
 
 		if ( TRUE === $edit_cap || current_user_can( $edit_cap ) ) {
 
