@@ -179,10 +179,10 @@ class Widget extends \WP_Widget
 		delete_transient( $this->alt_option_name );
 	}
 
-	public function get_images_sizes( $post_type )
+	public function get_images_sizes( $posttype )
 	{
 		$images = [];
-		$sizes  = gEditorial()->{$this->parent_module}->get_image_sizes( $post_type );
+		$sizes  = gEditorial()->{$this->parent_module}->get_image_sizes( $posttype );
 
 		if ( count( $sizes ) ) {
 			foreach ( $sizes as $name => $size ) {
@@ -190,7 +190,7 @@ class Widget extends \WP_Widget
 			}
 		} else {
 
-			$sizes = Media::getPosttypeImageSizes( $post_type );
+			$sizes = Media::getPosttypeImageSizes( $posttype );
 
 			if ( count( $sizes ) ) {
 				foreach ( $sizes as $name => $size )
@@ -201,7 +201,7 @@ class Widget extends \WP_Widget
 
 			} else {
 				// foreach ( Helper::getWPImageSizes() as $name => $size ) {
-				// 	$images[$post_type.'-'.$name] = $size['n'].' ('.Number::format( $size['w'] ).'&nbsp;&times;&nbsp;'.Number::format( $size['h'] ).')';
+				// 	$images[$posttype.'-'.$name] = $size['n'].' ('.Number::format( $size['w'] ).'&nbsp;&times;&nbsp;'.Number::format( $size['h'] ).')';
 				// }
 			}
 		}
@@ -325,10 +325,10 @@ class Widget extends \WP_Widget
 		], _x( 'PostType:', 'Widget Core', GEDITORIAL_TEXTDOMAIN ).$html ).'</p>';
 	}
 
-	public function form_taxonomy( $instance, $default = 'post_tag', $field = 'taxonomy', $post_type_field = 'post_type', $post_type_default = 'post' )
+	public function form_taxonomy( $instance, $default = 'post_tag', $field = 'taxonomy', $posttype_field = 'post_type', $posttype_default = 'post' )
 	{
 		$html = '';
-		$type = isset( $instance[$post_type_field] ) ? $instance[$post_type_field] : $post_type_default;
+		$type = isset( $instance[$posttype_field] ) ? $instance[$posttype_field] : $posttype_default;
 		$tax  = isset( $instance[$field] ) ? $instance[$field] : $default;
 
 		foreach ( Taxonomy::get( 0, [], $type ) as $name => $title )
@@ -450,9 +450,9 @@ class Widget extends \WP_Widget
 		], _x( 'Avatar Size:', 'Widget Core', GEDITORIAL_TEXTDOMAIN ).$html ).'</p>';
 	}
 
-	public function form_image_size( $instance, $default = 'thumbnail', $field = 'image_size', $post_type = 'post' )
+	public function form_image_size( $instance, $default = 'thumbnail', $field = 'image_size', $posttype = 'post' )
 	{
-		$sizes = $this->get_images_sizes( $post_type );
+		$sizes = $this->get_images_sizes( $posttype );
 
 		if ( count( $sizes ) ) {
 
@@ -498,16 +498,16 @@ class Widget extends \WP_Widget
 	}
 
 	// only works on hierarchical
-	public function form_page_id( $instance, $default = '0', $field = 'page_id', $post_type_field = 'posttype', $post_type_default = 'page', $label = NULL )
+	public function form_page_id( $instance, $default = '0', $field = 'page_id', $posttype_field = 'posttype', $posttype_default = 'page', $label = NULL )
 	{
-		$post_type = isset( $instance[$post_type_field] ) ? $instance[$post_type_field] : $post_type_default;
+		$posttype = isset( $instance[$posttype_field] ) ? $instance[$posttype_field] : $posttype_default;
 		$page_id   = isset( $instance[$field] ) ? $instance[$field] : $default;
 
 		if ( is_null( $label ) )
 			$label = _x( 'Page:', 'Widget Core', GEDITORIAL_TEXTDOMAIN );
 
 		$html = wp_dropdown_pages( [
-			'post_type'        => $post_type,
+			'post_type'        => $posttype,
 			'selected'         => $page_id,
 			'name'             => $this->get_field_name( $field ),
 			'id'               => $this->get_field_id( $field ),

@@ -13,9 +13,9 @@ class Listtable extends Core\Base
 		return gEditorial()->constant( static::MODULE, $key, $default );
 	}
 
-	protected static function getString( $string, $post_type = 'post', $group = 'titles', $fallback = FALSE )
+	protected static function getString( $string, $posttype = 'post', $group = 'titles', $fallback = FALSE )
 	{
-		return gEditorial()->{static::MODULE}->get_string( $string, $post_type, $group, $fallback );
+		return gEditorial()->{static::MODULE}->get_string( $string, $posttype, $group, $fallback );
 	}
 
 	protected static function getPostMeta( $post_id, $field = FALSE, $default = '', $key = NULL )

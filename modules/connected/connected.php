@@ -69,15 +69,15 @@ class Connected extends gEditorial\Module
 
 	public function p2p_init()
 	{
-		$post_types = $this->post_types();
+		$posttypes = $this->posttypes();
 
-		if ( empty( $post_types ) )
+		if ( empty( $posttypes ) )
 			return;
 
 		$args = [
 			'name'       => $this->constant( 'p2p_name' ),
-			'from'       => $post_types,
-			'to'         => $post_types,
+			'from'       => $posttypes,
+			'to'         => $posttypes,
 			'reciprocal' => TRUE,
 
 			'duplicate_connections' => $this->get_setting( 'duplicate_connections', FALSE ),

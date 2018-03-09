@@ -234,10 +234,10 @@ class Tweaks extends gEditorial\Module
 			'profile', // gPeople
 		];
 
-		foreach ( PostType::get() as $post_type => $label )
-			if ( in_array( $post_type, $supported )
-				&& ! in_array( $post_type, $excludes ) )
-					$posttypes[$post_type] = $label;
+		foreach ( PostType::get() as $posttype => $label )
+			if ( in_array( $posttype, $supported )
+				&& ! in_array( $posttype, $excludes ) )
+					$posttypes[$posttype] = $label;
 
 		return $posttypes;
 	}
@@ -254,7 +254,7 @@ class Tweaks extends gEditorial\Module
 
 	public function init_ajax()
 	{
-		if ( $this->is_inline_save( $_REQUEST, $this->post_types() ) )
+		if ( $this->is_inline_save( $_REQUEST, $this->posttypes() ) )
 			$this->_edit_screen( $_REQUEST['post_type'] );
 	}
 
@@ -287,7 +287,7 @@ class Tweaks extends gEditorial\Module
 
 		} else if ( 'edit' == $screen->base ) {
 
-			if ( in_array( $screen->post_type, $this->post_types() ) ) {
+			if ( in_array( $screen->post_type, $this->posttypes() ) ) {
 				$this->_admin_enabled();
 				$this->_edit_screen( $screen->post_type );
 			}
@@ -326,26 +326,26 @@ class Tweaks extends gEditorial\Module
 		}
 	}
 
-	private function _edit_screen( $post_type )
+	private function _edit_screen( $posttype )
 	{
-		add_filter( 'manage_taxonomies_for_'.$post_type.'_columns', [ $this, 'manage_taxonomies_columns' ], 10, 2 );
+		add_filter( 'manage_taxonomies_for_'.$posttype.'_columns', [ $this, 'manage_taxonomies_columns' ], 10, 2 );
 
 		add_filter( 'manage_posts_columns', [ $this, 'manage_posts_columns' ], 1, 2 );
 		add_filter( 'manage_pages_columns', [ $this, 'manage_pages_columns' ], 1, 1 );
-		add_action( 'manage_'.$post_type.'_posts_custom_column', [ $this, 'posts_custom_column' ], 10, 2 );
-		add_filter( 'manage_edit-'.$post_type.'_sortable_columns', [ $this, 'sortable_columns' ] );
+		add_action( 'manage_'.$posttype.'_posts_custom_column', [ $this, 'posts_custom_column' ], 10, 2 );
+		add_filter( 'manage_edit-'.$posttype.'_sortable_columns', [ $this, 'sortable_columns' ] );
 
-		// add_filter( 'manage_'.$post_type.'_posts_columns', [ $this, 'manage_posts_columns_late' ], 999, 1 );
+		// add_filter( 'manage_'.$posttype.'_posts_columns', [ $this, 'manage_posts_columns_late' ], 999, 1 );
 		// add_filter( 'list_table_primary_column', [ $this, 'list_table_primary_column' ], 10, 2 );
 
-		if ( ! WordPress::isAJAX() && in_array( $post_type, $this->get_setting( 'column_thumb', [] ) ) )
+		if ( ! WordPress::isAJAX() && in_array( $posttype, $this->get_setting( 'column_thumb', [] ) ) )
 			add_thickbox();
 
 		// INTERNAL HOOKS
 		if ( $this->get_setting( 'group_taxonomies', FALSE ) )
 			add_action( $this->hook( 'column_row' ), [ $this, 'column_row_taxonomies' ] );
 
-		if ( $this->get_setting( 'author_attribute', TRUE ) && post_type_supports( $post_type, 'author' ) )
+		if ( $this->get_setting( 'author_attribute', TRUE ) && post_type_supports( $posttype, 'author' ) )
 			add_action( $this->hook( 'column_attr' ), [ $this, 'column_attr_author' ], 1 );
 
 		if ( ! self::req( 'post_status' ) ) // if the view is NOT set
@@ -357,20 +357,20 @@ class Tweaks extends gEditorial\Module
 		if ( $this->get_setting( 'page_template', FALSE ) )
 			add_action( $this->hook( 'column_attr' ), [ $this, 'column_attr_page_template' ], 50 );
 
-		if ( $this->get_setting( 'slug_attribute', FALSE ) && is_post_type_viewable( $post_type ) )
+		if ( $this->get_setting( 'slug_attribute', FALSE ) && is_post_type_viewable( $posttype ) )
 			add_action( $this->hook( 'column_attr' ), [ $this, 'column_attr_slug' ], 50 );
 
-		if ( $this->get_setting( 'comment_status', FALSE ) && post_type_supports( $post_type, 'comments' ) )
+		if ( $this->get_setting( 'comment_status', FALSE ) && post_type_supports( $posttype, 'comments' ) )
 			add_action( $this->hook( 'column_attr' ), [ $this, 'column_attr_comment_status' ], 15 );
 	}
 
 	// we use this hook to early control `current_screen` on other modules
-	public function add_meta_boxes( $post_type, $post )
+	public function add_meta_boxes( $posttype, $post )
 	{
 		$screen = get_current_screen();
-		$object = get_post_type_object( $post_type );
+		$object = get_post_type_object( $posttype );
 
-		if ( in_array( $post_type, $this->get_setting( 'post_mainbox', [] ) ) ) {
+		if ( in_array( $posttype, $this->get_setting( 'post_mainbox', [] ) ) ) {
 
 			remove_meta_box( 'pageparentdiv', $screen, 'side' );
 			// remove_meta_box( 'trackbacksdiv', $screen, 'normal' );
@@ -390,7 +390,7 @@ class Tweaks extends gEditorial\Module
 		}
 
 		if ( $this->get_setting( 'excerpt_count', FALSE )
-			&& post_type_supports( $post_type, 'excerpt' ) ) {
+			&& post_type_supports( $posttype, 'excerpt' ) ) {
 
 			add_filter( $this->base.'_module_metabox_excerpt', '__return_false' );
 			// remove_meta_box( 'postexcerpt', $screen, 'normal' );
@@ -434,7 +434,7 @@ class Tweaks extends gEditorial\Module
 		return $wp_query->is_search() ? "DISTINCT" : $distinct;
 	}
 
-	public function manage_taxonomies_columns( $taxonomies, $post_type )
+	public function manage_taxonomies_columns( $taxonomies, $posttype )
 	{
 		foreach ( $this->taxonomies() as $taxonomy )
 			unset( $taxonomies[$taxonomy] );
@@ -447,19 +447,19 @@ class Tweaks extends gEditorial\Module
 		return $this->manage_posts_columns( $columns, 'page' );
 	}
 
-	public function manage_posts_columns( $columns, $post_type )
+	public function manage_posts_columns( $columns, $posttype )
 	{
 		$new   = [];
 		$added = FALSE;
 
 		$ajax = WordPress::isAJAX();
-		$rows = $ajax || has_action( $this->hook( 'column_row' ) ) ? $this->get_column_title( 'rows', $post_type ) : FALSE;
-		$atts = $ajax || has_action( $this->hook( 'column_attr' ) ) ? $this->get_column_title( 'atts', $post_type ) : FALSE;
+		$rows = $ajax || has_action( $this->hook( 'column_row' ) ) ? $this->get_column_title( 'rows', $posttype ) : FALSE;
+		$atts = $ajax || has_action( $this->hook( 'column_attr' ) ) ? $this->get_column_title( 'atts', $posttype ) : FALSE;
 
 		foreach ( $columns as $key => $value ) {
 
-			if ( 'title' == $key && in_array( $post_type, $this->get_setting( 'column_thumb', [] ) ) )
-				$new[$this->classs( 'thumb' )] = $this->get_column_title( 'thumb', $post_type );
+			if ( 'title' == $key && in_array( $posttype, $this->get_setting( 'column_thumb', [] ) ) )
+				$new[$this->classs( 'thumb' )] = $this->get_column_title( 'thumb', $posttype );
 
 			if ( ( 'comments' == $key && ! $added )
 				|| ( 'date' == $key && ! $added ) ) {
@@ -478,8 +478,8 @@ class Tweaks extends gEditorial\Module
 
 			$new[$key] = $value;
 
-			if ( 'cb' == $key && in_array( $post_type, $this->get_setting( 'column_order', [] ) ) )
-				$new[$this->classs( 'order' )] = $this->get_column_title( 'order', $post_type );
+			if ( 'cb' == $key && in_array( $posttype, $this->get_setting( 'column_order', [] ) ) )
+				$new[$this->classs( 'order' )] = $this->get_column_title( 'order', $posttype );
 		}
 
 		if ( $this->get_setting( 'group_attributes', FALSE ) )
@@ -495,7 +495,7 @@ class Tweaks extends gEditorial\Module
 		}
 
 		if ( $this->get_setting( 'column_id', FALSE ) )
-			$new['geditorial-tweaks-id'] = $this->get_column_title( 'id', $post_type );
+			$new['geditorial-tweaks-id'] = $this->get_column_title( 'id', $posttype );
 
 		return $new;
 	}

@@ -119,19 +119,19 @@ add_theme_support( \'featured-content\', [
 	{
 		parent::init();
 
-		$post_types   = $this->post_types();
-		$featured_tax = $this->constant( 'featured_tax' );
+		$posttypes = $this->posttypes();
+		$featured  = $this->constant( 'featured_tax' );
 
 		if ( is_admin() ) {
 
-			if ( count( $post_types ) )
+			if ( count( $posttypes ) )
 				$this->filter( 'dashboard_recent_posts_query_args' );
 
 		} else {
 
 			$this->action( 'pre_get_posts', 1, 9 );
 
-			if ( count( $post_types ) ) {
+			if ( count( $posttypes ) ) {
 				add_filter( 'gpersiandate_calendar_posttypes', [ $this, 'calendar_posttypes' ] );
 				add_filter( 'gnetwork_search_404_posttypes', [ $this, 'search_404_posttypes' ] );
 
@@ -140,13 +140,13 @@ add_theme_support( \'featured-content\', [
 			}
 		}
 
-		if ( $this->setup_featured( $post_types, $featured_tax ) ) {
+		if ( $this->setup_featured( $posttypes, $featured ) ) {
 
 			add_filter( $this->featured['filter'], [ $this, 'get_featured_posts' ] );
 
 			add_action( 'save_post', [ $this, 'delete_transient' ] );
 			add_action( 'switch_theme', [ $this, 'delete_transient' ] );
-			add_action( 'delete_'.$featured_tax, [ $this, 'delete_featured_tax' ], 10, 4 );
+			add_action( 'delete_'.$featured, [ $this, 'delete_featured_tax' ], 10, 4 );
 
 			if ( ! is_admin() && $this->get_setting( 'featured_hide', FALSE ) ) {
 				add_filter( 'get_terms', [ $this, 'hide_featured_term' ], 10, 3 );
@@ -155,7 +155,7 @@ add_theme_support( \'featured-content\', [
 		}
 	}
 
-	private function setup_featured( $post_types = [], $tax = 'post_tag' )
+	private function setup_featured( $posttypes = [], $tax = 'post_tag' )
 	{
 		if ( ! $this->get_setting( 'featured_term', '' ) )
 			return FALSE;
@@ -184,12 +184,12 @@ add_theme_support( \'featured-content\', [
 		}
 
 		if ( ! isset( $support[0]['post_types'] ) )
-			$support[0]['post_types'] = $post_types;
+			$support[0]['post_types'] = $posttypes;
 
 		unset( $support[0]['description'] );
 
-		foreach ( $support[0]['post_types'] as $post_type )
-			register_taxonomy_for_object_type( $tax, $post_type );
+		foreach ( $support[0]['post_types'] as $posttype )
+			register_taxonomy_for_object_type( $tax, $posttype );
 
 		return $this->featured = $support[0];
 	}
@@ -200,21 +200,21 @@ add_theme_support( \'featured-content\', [
 			|| ( $wp_query->is_feed() && ! $this->get_setting( 'posttypes_feed', FALSE ) ) )
 			return;
 
-		$post_types = $this->post_types();
+		$posttypes = $this->posttypes();
 
-		if ( count( $post_types ) ) {
+		if ( count( $posttypes ) ) {
 
 			if ( $wp_query->is_home() )
-				$wp_query->set( 'post_type', $post_types );
+				$wp_query->set( 'post_type', $posttypes );
 
 			else if ( $wp_query->is_search() && empty( $wp_query->query_vars['post_type'] ) )
-				$wp_query->set( 'post_type', $post_types );
+				$wp_query->set( 'post_type', $posttypes );
 
 			else if ( $wp_query->is_archive() && empty( $wp_query->query_vars['post_type'] ) )
-				$wp_query->set( 'post_type', $post_types );
+				$wp_query->set( 'post_type', $posttypes );
 
 			else if ( $wp_query->is_feed() && empty( $wp_query->query_vars['post_type'] ) )
-				$wp_query->set( 'post_type', $post_types );
+				$wp_query->set( 'post_type', $posttypes );
 		}
 
 		if ( $wp_query->is_home()
@@ -329,25 +329,25 @@ add_theme_support( \'featured-content\', [
 	public function dashboard_recent_posts_query_args( $query_args )
 	{
 		if ( isset( $query_args['post_type'] ) && 'post' == $query_args['post_type'] )
-			$query_args['post_type'] = $this->post_types();
+			$query_args['post_type'] = $this->posttypes();
 
 		return $query_args;
 	}
 
 	public function calendar_posttypes( $posttypes )
 	{
-		return $posttypes === [ 'post' ] ? $this->post_types() : $posttypes;
+		return $posttypes === [ 'post' ] ? $this->posttypes() : $posttypes;
 	}
 
 	public function search_404_posttypes( $posttypes )
 	{
-		return $this->post_types();
+		return $this->posttypes();
 	}
 
 	public function widget_posts_args( $args )
 	{
 		if ( ! isset( $args['post_type'] ) )
-			$args['post_type'] = $this->post_types();
+			$args['post_type'] = $this->posttypes();
 
 		return $args;
 	}
@@ -355,7 +355,7 @@ add_theme_support( \'featured-content\', [
 	public function widget_comments_args( $args )
 	{
 		if ( ! isset( $args['post_type'] ) )
-			$args['post_type'] = $this->post_types();
+			$args['post_type'] = $this->posttypes();
 
 		return $args;
 	}

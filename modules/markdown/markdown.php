@@ -57,7 +57,7 @@ class Markdown extends gEditorial\Module
 	{
 		parent::init();
 
-		foreach ( $this->post_types() as $posttype )
+		foreach ( $this->posttypes() as $posttype )
 			add_post_type_support( $posttype, 'editorial-markdown' );
 	}
 
@@ -68,7 +68,7 @@ class Markdown extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
-		if ( in_array( $screen->post_type, $this->post_types() ) ) {
+		if ( in_array( $screen->post_type, $this->posttypes() ) ) {
 			if ( 'post' == $screen->base ) {
 
 				$this->filter( 'wp_insert_post_data', 2 );
@@ -79,7 +79,7 @@ class Markdown extends gEditorial\Module
 
 	public function adminbar_init( &$nodes, $parent )
 	{
-		if ( is_admin() || ! is_singular( $this->post_types() ) )
+		if ( is_admin() || ! is_singular( $this->posttypes() ) )
 			return;
 
 		$post_id = get_queried_object_id();
@@ -484,7 +484,7 @@ class Markdown extends gEditorial\Module
 		$pagination['actions']['process_markdown'] = _x( 'Re-Process Markdown', 'Modules: Markdown: Table Action', GEDITORIAL_TEXTDOMAIN );
 		$pagination['actions']['cleanup_markdown'] = _x( 'Cleanup Markdown', 'Modules: Markdown: Table Action', GEDITORIAL_TEXTDOMAIN );
 		$pagination['actions']['discard_markdown'] = _x( 'Discard Markdown', 'Modules: Markdown: Table Action', GEDITORIAL_TEXTDOMAIN );
-		$pagination['before'][] = Helper::tableFilterPostTypes( $this->list_post_types() );
+		$pagination['before'][] = Helper::tableFilterPostTypes( $this->list_posttypes() );
 
 		return HTML::tableList( [
 			'_cb'      => 'ID',

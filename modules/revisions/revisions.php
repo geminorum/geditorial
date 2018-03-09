@@ -75,7 +75,7 @@ class Revisions extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
-		if ( in_array( $screen->post_type, $this->post_types() ) ) {
+		if ( in_array( $screen->post_type, $this->posttypes() ) ) {
 
 			if ( 'post' == $screen->base
 				&& $post = self::req( 'post', FALSE ) ) {
@@ -292,7 +292,7 @@ class Revisions extends gEditorial\Module
 	public function wp_revisions_to_keep( $num, $post )
 	{
 		// if not supported then no revisions
-		if ( ! in_array( $post->post_type, $this->post_types() ) )
+		if ( ! in_array( $post->post_type, $this->posttypes() ) )
 			return 0;
 
 		return $this->get_setting( 'revision_maxcount', $num );
@@ -402,7 +402,7 @@ class Revisions extends gEditorial\Module
 		list( $posts, $pagination ) = $this->getPostArray();
 
 		$pagination['actions']['cleanup_revisions'] = _x( 'Cleanup Revisions', 'Modules: Revisions: Table Action', GEDITORIAL_TEXTDOMAIN );
-		$pagination['before'][] = Helper::tableFilterPostTypes( $this->list_post_types() );
+		$pagination['before'][] = Helper::tableFilterPostTypes( $this->list_posttypes() );
 
 		return HTML::tableList( [
 			'_cb'   => 'ID',

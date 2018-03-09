@@ -89,13 +89,13 @@ class WordPress extends Base
 	}
 
 	// TODO: use db query
-	public static function getLastPostOrder( $post_type = 'post', $exclude = '', $key = 'menu_order', $status = array( 'publish', 'future', 'draft' ) )
+	public static function getLastPostOrder( $posttype = 'post', $exclude = '', $key = 'menu_order', $status = array( 'publish', 'future', 'draft' ) )
 	{
 		$post = get_posts( array(
 			'posts_per_page' => 1,
 			'orderby'        => 'menu_order',
 			'exclude'        => $exclude,
-			'post_type'      => $post_type,
+			'post_type'      => $posttype,
 			'post_status'    => $status,
 		) );
 
@@ -109,10 +109,10 @@ class WordPress extends Base
 	}
 
 	// TODO: use db query
-	public static function getRandomPostID( $post_type, $has_thumbnail = FALSE, $object = FALSE, $status = 'publish' )
+	public static function getRandomPostID( $posttype, $has_thumbnail = FALSE, $object = FALSE, $status = 'publish' )
 	{
 		$args = array(
-			'post_type'              => $post_type,
+			'post_type'              => $posttype,
 			'post_status'            => $status,
 			'posts_per_page'         => 1,
 			'orderby'                => 'rand',
@@ -162,7 +162,7 @@ class WordPress extends Base
 		return $post_thumbnail_img[0];
 	}
 
-	public static function newPostFromTerm( $term, $taxonomy = 'category', $post_type = 'post', $user_id = 0 )
+	public static function newPostFromTerm( $term, $taxonomy = 'category', $posttype = 'post', $user_id = 0 )
 	{
 		if ( ! is_object( $term ) && ! is_array( $term ) )
 			$term = get_term( $term, $taxonomy );
@@ -173,7 +173,7 @@ class WordPress extends Base
 			'post_content' => $term->description,
 			'post_status'  => 'draft',
 			'post_author'  => $user_id ? $user_id : get_current_user_id(),
-			'post_type'    => $post_type,
+			'post_type'    => $posttype,
 		);
 
 		return wp_insert_post( $new_post );
@@ -276,9 +276,9 @@ class WordPress extends Base
 		return FALSE;
 	}
 
-	public static function getPostTypeEditLink( $post_type, $user_id = 0, $extra = array() )
+	public static function getPostTypeEditLink( $posttype, $user_id = 0, $extra = array() )
 	{
-		$query = array( 'post_type' => $post_type );
+		$query = array( 'post_type' => $posttype );
 
 		if ( $user_id )
 			$query['author'] = $user_id;
@@ -302,10 +302,10 @@ class WordPress extends Base
 		), $extra ), get_bloginfo( 'url' ) );
 	}
 
-	public static function getPostNewLink( $post_type, $extra = array() )
+	public static function getPostNewLink( $posttype, $extra = array() )
 	{
 		return add_query_arg( array_merge( array(
-			'post_type' => $post_type,
+			'post_type' => $posttype,
 		), $extra ), admin_url( 'post-new.php' ) );
 	}
 
@@ -316,12 +316,12 @@ class WordPress extends Base
 		), $extra ), admin_url( 'upload.php' ) );
 	}
 
-	public static function getAuthorEditHTML( $post_type, $author, $extra = array() )
+	public static function getAuthorEditHTML( $posttype, $author, $extra = array() )
 	{
 		if ( $author_data = get_user_by( 'id', $author ) )
 			return HTML::tag( 'a', array(
 				'href' => add_query_arg( array_merge( array(
-					'post_type' => $post_type,
+					'post_type' => $posttype,
 					'author'    => $author,
 				), $extra ), admin_url( 'edit.php' ) ),
 				'title' => $author_data->user_login,

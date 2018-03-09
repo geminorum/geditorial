@@ -275,7 +275,7 @@ class Cartable extends gEditorial\Module
 	{
 		// hack to bypass the dumb `_wp_translate_postdata()`
 		if ( isset( $_POST['post_type'] )
-			&& in_array( $_POST['post_type'], $this->post_types() ) ) {
+			&& in_array( $_POST['post_type'], $this->posttypes() ) ) {
 
 			$posttype = get_post_type_object( $_POST['post_type'] );
 
@@ -324,7 +324,7 @@ class Cartable extends gEditorial\Module
 				if ( ! $post = get_post( $args[0] ) )
 					return $caps;
 
-				if ( ! in_array( $post->post_type, $this->post_types() ) )
+				if ( ! in_array( $post->post_type, $this->posttypes() ) )
 					return $caps;
 
 				if ( $this->support_users && $this->get_setting( 'map_cap_user' ) ) {
@@ -354,7 +354,7 @@ class Cartable extends gEditorial\Module
 				return 'options-general.php';
 			} );
 
-		} else if ( in_array( $screen->post_type, $this->post_types() ) ) {
+		} else if ( in_array( $screen->post_type, $this->posttypes() ) ) {
 
 			if ( 'edit' == $screen->base ) {
 
@@ -887,7 +887,7 @@ class Cartable extends gEditorial\Module
 		list( $posts, $pagination ) = $this->getTablePosts( $query );
 
 		$pagination['actions']['empty_cartable'] = _x( 'Empty Cartable', 'Modules: Cartable: Table Action', GEDITORIAL_TEXTDOMAIN );
-		$pagination['before'][] = Helper::tableFilterPostTypes( $this->list_post_types() );
+		$pagination['before'][] = Helper::tableFilterPostTypes( $this->list_posttypes() );
 
 		return HTML::tableList( [
 			'_cb'   => 'ID',
@@ -921,7 +921,7 @@ class Cartable extends gEditorial\Module
 			] ],
 
 			'orderby'     => 'modified',
-			'post_type'   => $this->post_types(),
+			'post_type'   => $this->posttypes(),
 			'post_status' => 'any',
 
 			'posts_per_page'      => $this->get_setting( 'dashboard_count', 10 ),

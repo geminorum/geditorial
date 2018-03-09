@@ -68,19 +68,18 @@ class Importer extends gEditorial\Module
 		];
 	}
 
-	protected function form_map( $id, $post_type = 'post' )
+	protected function form_map( $id, $posttype = 'post' )
 	{
 		if ( ! $file = get_attached_file( $id ) )
 			return FALSE;
 
 		// https://github.com/kzykhys/PHPCsvParser
 		$iterator = new \SplFileObject( wp_normalize_path( $file ) );
-		$options  = [ 'encoding' => 'UTF-8', 'limit' => 1 ];
-		$parser   = new \KzykHys\CsvParser\CsvParser( $iterator, $options );
+		$parser   = new \KzykHys\CsvParser\CsvParser( $iterator, [ 'encoding' => 'UTF-8', 'limit' => 1 ] );
 		$items    = $parser->parse();
 
 		$map    = $this->get_postmeta( $id, FALSE, [], $this->meta_key.'_map' );
-		$fields = $this->get_importer_fields( $post_type );
+		$fields = $this->get_importer_fields( $posttype );
 
 		echo '<table class="base-table-raw"><tbody>';
 
@@ -97,7 +96,7 @@ class Importer extends gEditorial\Module
 		echo '</tbody></table>';
 	}
 
-	protected function from_attached( $id = 0, $post_type = 'post', $user_id = NULL )
+	protected function from_attached( $id = 0, $posttype = 'post', $user_id = NULL )
 	{
 		echo '<input id="upload_csv_button" class="button" value="'._x( 'Upload', 'Modules: Importer: Button', GEDITORIAL_TEXTDOMAIN ).'" type="button" />';
 		echo '<input id="upload_attach_id" type="hidden" name="upload_id" value="" />';
@@ -108,8 +107,8 @@ class Importer extends gEditorial\Module
 
 		Settings::fieldSeparate( 'into' );
 
-		echo HTML::dropdown( $this->list_post_types(), [
-			'selected' => $post_type,
+		echo HTML::dropdown( $this->list_posttypes(), [
+			'selected' => $posttype,
 			'name'     => 'posttype',
 		] );
 
@@ -122,27 +121,26 @@ class Importer extends gEditorial\Module
 		] );
 	}
 
-	protected function form_table( $id, $map = [], $post_type = 'post' )
+	protected function form_table( $id, $map = [], $posttype = 'post' )
 	{
 		if ( ! $file = get_attached_file( $id ) )
 			return FALSE;
 
 		// https://github.com/kzykhys/PHPCsvParser
 		$iterator = new \SplFileObject( wp_normalize_path( $file ) );
-		$options  = [ 'encoding' => 'UTF-8' ];
-		$parser   = new \KzykHys\CsvParser\CsvParser( $iterator, $options );
+		$parser   = new \KzykHys\CsvParser\CsvParser( $iterator, [ 'encoding' => 'UTF-8' ] );
 		$items    = $parser->parse();
 
 		unset( $iterator, $parser, $items[0] );
 
-		$this->data_table( $items, $map, $post_type );
+		$this->data_table( $items, $map, $posttype );
 
 		$this->set_meta( $id, $map, '_map' );
 	}
 
-	private function data_table( $data, $map = [], $post_type = 'post' )
+	private function data_table( $data, $map = [], $posttype = 'post' )
 	{
-		$fields   = $this->get_importer_fields( $post_type );
+		$fields   = $this->get_importer_fields( $posttype );
 		$selected = array_flip( Arraay::stripByValue( $map, 'none' ) );
 		$columns  = array_intersect_key( $fields, $selected );
 
@@ -177,7 +175,7 @@ class Importer extends gEditorial\Module
 			'map'      => $selected,
 			'check'    => [ $this, 'form_table_check' ],
 			'callback' => [ $this, 'form_table_callback' ],
-			'extra'    => [ 'post_type' => $post_type ],
+			'extra'    => [ 'post_type' => $posttype ],
 			'title'    => HTML::tag( 'h3', Helper::getCounted( count( $data ), _x( '%s Records Found', 'Modules: Importer', GEDITORIAL_TEXTDOMAIN ) ) ),
 		] );
 	}
@@ -193,7 +191,7 @@ class Importer extends gEditorial\Module
 	}
 
 	// no need / not used
-	protected function form_check( $selected, $id, $map = [], $post_type = 'post' )
+	protected function form_check( $selected, $id, $map = [], $posttype = 'post' )
 	{
 		if ( ! $file = get_attached_file( $id ) )
 			return FALSE;
@@ -221,7 +219,7 @@ class Importer extends gEditorial\Module
 
 		unset( $iterator );
 
-		$this->data_table( $data, $map, $post_type );
+		$this->data_table( $data, $map, $posttype );
 	}
 
 	public function tools_settings( $sub )
@@ -240,7 +238,7 @@ class Importer extends gEditorial\Module
 					$count     = 0;
 					$selected  = self::req( '_cb', [] );
 					$field_map = self::req( 'field_map', [] );
-					$post_type = self::req( 'posttype', $this->get_setting( 'post_type', 'post' ) );
+					$posttype = self::req( 'posttype', $this->get_setting( 'post_type', 'post' ) );
 					$attach_id = self::req( 'attach_id', FALSE );
 					$user_id   = self::req( 'user_id', gEditorial()->user( TRUE ) );
 
@@ -273,7 +271,7 @@ class Importer extends gEditorial\Module
 							// 'post_parent'    => 0, // Sets the parent of the new post, if any. Default 0.
 							// 'tax_input'      => [], //[ array( <taxonomy> => <array | string> ) ] // For custom taxonomies. Default empty.
 
-							'post_type'      => $post_type,
+							'post_type'      => $posttype,
 							'post_status'    => $post_status,
 							'comment_status' => $comment_status,
 							'post_author'    => $user_id,
@@ -281,7 +279,7 @@ class Importer extends gEditorial\Module
 
 						foreach ( $field_map as $key => $field )	{
 
-							$value = $this->filters( 'prepare', $raw[$key], $post_type, $field, $raw );
+							$value = $this->filters( 'prepare', $raw[$key], $posttype, $field, $raw );
 
 							switch ( $field ) {
 
@@ -328,7 +326,7 @@ class Importer extends gEditorial\Module
 
 		$selected  = self::req( '_cb', [] );
 		$field_map = self::req( 'field_map', [] );
-		$post_type = self::req( 'posttype', $this->get_setting( 'post_type', 'post' ) );
+		$posttype = self::req( 'posttype', $this->get_setting( 'post_type', 'post' ) );
 		$upload_id = self::req( 'upload_id', FALSE );
 		$attach_id = self::req( 'attach_id', FALSE );
 		$user_id   = self::req( 'user_id', gEditorial()->user( TRUE ) );
@@ -341,11 +339,11 @@ class Importer extends gEditorial\Module
 
 			HTML::inputHiddenArray( $selected, '_cb' );
 			HTML::inputHiddenArray( $field_map, 'field_map' );
-			HTML::inputHidden( 'posttype', $post_type );
+			HTML::inputHidden( 'posttype', $posttype );
 			HTML::inputHidden( 'attach_id', $attach_id );
 			HTML::inputHidden( 'user_id', $user_id );
 
-			$this->form_check( $selected, $attach_id, $field_map, $post_type );
+			$this->form_check( $selected, $attach_id, $field_map, $posttype );
 
 			echo $this->wrap_open_buttons();
 
@@ -357,11 +355,11 @@ class Importer extends gEditorial\Module
 		} else if ( isset( $_POST['csv_step_three'] ) && $attach_id ) {
 
 			HTML::inputHiddenArray( $field_map, 'field_map' );
-			HTML::inputHidden( 'posttype', $post_type );
+			HTML::inputHidden( 'posttype', $posttype );
 			HTML::inputHidden( 'attach_id', $attach_id );
 			HTML::inputHidden( 'user_id', $user_id );
 
-			$this->form_table( $attach_id, $field_map, $post_type );
+			$this->form_table( $attach_id, $field_map, $posttype );
 
 			echo $this->wrap_open_buttons();
 
@@ -378,11 +376,11 @@ class Importer extends gEditorial\Module
 
 			HTML::h3( _x( 'Map the Importer', 'Modules: Importer', GEDITORIAL_TEXTDOMAIN ) );
 
-			HTML::inputHidden( 'posttype', $post_type );
+			HTML::inputHidden( 'posttype', $posttype );
 			HTML::inputHidden( 'attach_id', $attach_id );
 			HTML::inputHidden( 'user_id', $user_id );
 
-			$this->form_map( $attach_id, $post_type );
+			$this->form_map( $attach_id, $posttype );
 
 			echo $this->wrap_open_buttons();
 
@@ -391,11 +389,11 @@ class Importer extends gEditorial\Module
 
 			HTML::desc( _x( 'Map the file fields to the post-type fields.', 'Modules: Importer', GEDITORIAL_TEXTDOMAIN ), FALSE );
 
-		} else if ( count( $this->post_types() ) ) {
+		} else if ( count( $this->posttypes() ) ) {
 
 			HTML::h3( _x( 'Importer Tools', 'Modules: Importer', GEDITORIAL_TEXTDOMAIN ) );
 
-			$this->from_attached( 0, $post_type );
+			$this->from_attached( 0, $posttype );
 
 			echo $this->wrap_open_buttons();
 
@@ -413,7 +411,7 @@ class Importer extends gEditorial\Module
 		$this->settings_form_after( $uri, $sub );
 	}
 
-	public function get_importer_fields( $post_type = NULL )
+	public function get_importer_fields( $posttype = NULL )
 	{
 		return $this->filters( 'fields', [
 			'none'                  => Settings::showOptionNone(),
@@ -425,10 +423,10 @@ class Importer extends gEditorial\Module
 			'importer_post_tags'    => _x( 'Post Tags', 'Modules: Importer: Post Field', GEDITORIAL_TEXTDOMAIN ),
 			// 'importer_post_author'  => _x( 'Post Author', 'Modules: Importer: Post Field', GEDITORIAL_TEXTDOMAIN ),
 			// 'importer_post_status'  => _x( 'Post Status', 'Modules: Importer: Post Field', GEDITORIAL_TEXTDOMAIN ),
-		], $post_type );
+		], $posttype );
 	}
 
-	public function importer_prepare( $value, $post_type, $field, $raw )
+	public function importer_prepare( $value, $posttype, $field, $raw )
 	{
 		switch ( $field ) {
 

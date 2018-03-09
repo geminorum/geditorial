@@ -93,7 +93,7 @@ class Like extends gEditorial\Module
 		if ( is_embed() )
 			return;
 
-		if ( ! is_singular( $this->post_types() ) )
+		if ( ! is_singular( $this->posttypes() ) )
 			return;
 
 		$this->post_id = get_queried_object_id();
@@ -113,7 +113,7 @@ class Like extends gEditorial\Module
 		if ( ! $post = get_post( $post_id ) )
 			return FALSE;
 
-		if ( ! in_array( $post->post_type, $this->post_types() ) )
+		if ( ! in_array( $post->post_type, $this->posttypes() ) )
 			return FALSE;
 
 		$avatars = $this->get_setting( 'display_avatars', FALSE );
@@ -142,7 +142,7 @@ class Like extends gEditorial\Module
 		if ( ! $this->post_id )
 			return;
 
-		if ( is_admin() || ! is_singular( $this->post_types() ) )
+		if ( is_admin() || ! is_singular( $this->posttypes() ) )
 			return;
 
 		if ( ! current_user_can( 'edit_post', $this->post_id ) )

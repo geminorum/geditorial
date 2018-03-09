@@ -142,7 +142,7 @@ class Ortho extends gEditorial\Module
 	{
 		if ( 'post' == $screen->base ) {
 
-			if ( in_array( $screen->post_type, $this->post_types() ) )
+			if ( in_array( $screen->post_type, $this->posttypes() ) )
 				$this->enqueueVirastar();
 
 		} else if ( 'edit-tags' == $screen->base || 'term' == $screen->base ) {
@@ -317,7 +317,7 @@ class Ortho extends gEditorial\Module
 			'none_title' => Settings::showOptionNone(),
 		] );
 
-		$pagination['before'][] = Helper::tableFilterPostTypes( $this->list_post_types() );
+		$pagination['before'][] = Helper::tableFilterPostTypes( $this->list_posttypes() );
 
 		$columns = [
 			'_cb'     => 'ID',

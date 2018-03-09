@@ -73,7 +73,7 @@ class Headings extends gEditorial\Module
 
 	public function the_content( $content )
 	{
-		if ( ! is_singular( $this->post_types() ) || '' == $content )
+		if ( ! is_singular( $this->posttypes() ) || '' == $content )
 			return $content;
 
 		// FIXME: temp: skip on paginated posts

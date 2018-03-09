@@ -54,7 +54,7 @@ class Attachments extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
-		if ( 'edit' == $screen->base && in_array( $screen->post_type, $this->post_types() ) ) {
+		if ( 'edit' == $screen->base && in_array( $screen->post_type, $this->posttypes() ) ) {
 
 			$this->action_module( 'tweaks', 'column_attr', 1, 20 );
 		}
@@ -73,7 +73,7 @@ class Attachments extends gEditorial\Module
 
 	public function adminbar_init( &$nodes, $parent )
 	{
-		if ( is_admin() || ! is_singular( $this->post_types() ) )
+		if ( is_admin() || ! is_singular( $this->posttypes() ) )
 			return;
 
 		$post_id = get_queried_object_id();
@@ -186,7 +186,7 @@ class Attachments extends gEditorial\Module
 
 		list( $posts, $pagination ) = $this->getTablePosts( $query, $extra, 'attachment' );
 
-		// $pagination['before'][] = Helper::tableFilterPostTypes( $this->list_post_types(), 'type_parent' );
+		// $pagination['before'][] = Helper::tableFilterPostTypes( $this->list_posttypes(), 'type_parent' );
 
 		$custom = [
 			// FIXME: must add ajax

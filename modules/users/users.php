@@ -153,7 +153,7 @@ class Users extends gEditorial\Module
 
 			$this->action_module( 'tweaks', 'column_user', 1, 12 );
 
-		} else if ( 'edit' == $screen->base && in_array( $screen->post_type, $this->post_types() ) ) {
+		} else if ( 'edit' == $screen->base && in_array( $screen->post_type, $this->posttypes() ) ) {
 
 			if ( $this->get_setting( 'admin_restrict', FALSE ) )
 				$this->action( 'restrict_manage_posts', 2, 12 );
@@ -202,7 +202,7 @@ class Users extends gEditorial\Module
 		wp_add_dashboard_widget( $this->classs( 'profile-summary' ), $title, [ $this, 'dashboard_widget_summary' ] );
 	}
 
-	public function restrict_manage_posts( $post_type, $which )
+	public function restrict_manage_posts( $posttype, $which )
 	{
 		global $wp_query;
 

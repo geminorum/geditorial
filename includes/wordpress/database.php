@@ -25,14 +25,14 @@ class Database extends Core\Base
 		return $cache[$sub];
 	}
 
-	public static function hasPosts( $post_types = array( 'post' ), $exclude_statuses = NULL )
+	public static function hasPosts( $posttypes = array( 'post' ), $exclude_statuses = NULL )
 	{
 		global $wpdb;
 
 		return (bool) $wpdb->get_var( "
 			SELECT 1 as test
 			FROM {$wpdb->posts}
-			WHERE post_type IN ( '".join( "', '", esc_sql( (array) $post_types ) )."' )
+			WHERE post_type IN ( '".join( "', '", esc_sql( (array) $posttypes ) )."' )
 			AND post_status NOT IN ( '".join( "', '", esc_sql( self::getExcludeStatuses( $exclude_statuses ) ) )."' )
 			LIMIT 1
 		" );
@@ -134,9 +134,9 @@ class Database extends Core\Base
 
 	// @REF: https://core.trac.wordpress.org/ticket/29181
 	// EDITED: 2/5/2017, 12:24:01 AM
-	public static function countPostsByNotTaxonomy( $taxonomy, $post_types = array( 'post' ), $user_id = 0, $exclude_statuses = NULL )
+	public static function countPostsByNotTaxonomy( $taxonomy, $posttypes = array( 'post' ), $user_id = 0, $exclude_statuses = NULL )
 	{
-		$key = md5( 'not_'.$taxonomy.'_'.serialize( $post_types ).'_'.$user_id );
+		$key = md5( 'not_'.$taxonomy.'_'.serialize( $posttypes ).'_'.$user_id );
 		$counts = wp_cache_get( $key, 'counts' );
 
 		if ( FALSE !== $counts )
@@ -144,14 +144,14 @@ class Database extends Core\Base
 
 		global $wpdb;
 
-		$counts = array_fill_keys( $post_types, 0 );
+		$counts = array_fill_keys( $posttypes, 0 );
 
 		$author = $user_id ? $wpdb->prepare( "AND posts.post_author = %d", $user_id ) : '';
 
 		$query = $wpdb->prepare( "
 			SELECT posts.post_type, COUNT( * ) AS total
 			FROM {$wpdb->posts} AS posts
-			WHERE posts.post_type IN ( '".join( "', '", esc_sql( $post_types ) )."' )
+			WHERE posts.post_type IN ( '".join( "', '", esc_sql( $posttypes ) )."' )
 			AND posts.post_status NOT IN ( '".join( "', '", esc_sql( self::getExcludeStatuses( $exclude_statuses ) ) )."' )
 			{$author}
 			AND NOT EXISTS ( SELECT 1
@@ -174,9 +174,9 @@ class Database extends Core\Base
 
 	// ADOPTED FROM: `wp_count_posts()`
 	// EDITED: 2/5/2017, 12:23:40 AM
-	public static function countPostsByTaxonomy( $taxonomy, $post_types = array( 'post' ), $user_id = 0, $exclude_statuses = NULL )
+	public static function countPostsByTaxonomy( $taxonomy, $posttypes = array( 'post' ), $user_id = 0, $exclude_statuses = NULL )
 	{
-		$key = md5( serialize( $taxonomy ).'_'.serialize( $post_types ).'_'.$user_id );
+		$key = md5( serialize( $taxonomy ).'_'.serialize( $posttypes ).'_'.$user_id );
 		$counts = wp_cache_get( $key, 'counts' );
 
 		if ( FALSE !== $counts )
@@ -190,7 +190,7 @@ class Database extends Core\Base
 		global $wpdb;
 
 		$counts = array();
-		$totals = array_fill_keys( $post_types, 0 );
+		$totals = array_fill_keys( $posttypes, 0 );
 
 		$author = $user_id ? $wpdb->prepare( "AND posts.post_author = %d", $user_id ) : '';
 
@@ -205,7 +205,7 @@ class Database extends Core\Base
 				INNER JOIN {$wpdb->term_relationships} AS tr ON tr.term_taxonomy_id = tt.term_taxonomy_id
 				WHERE t.term_id = %d
 				AND tr.object_id = posts.ID
-				AND posts.post_type IN ( '".join( "', '", esc_sql( $post_types ) )."' )
+				AND posts.post_type IN ( '".join( "', '", esc_sql( $posttypes ) )."' )
 				AND posts.post_status NOT IN ( '".join( "', '", esc_sql( self::getExcludeStatuses( $exclude_statuses ) ) )."' )
 				{$author}
 				GROUP BY posts.post_type
@@ -299,7 +299,7 @@ class Database extends Core\Base
 		return $counts;
 	}
 
-	public static function getPostTypeMonths( $post_type = 'post', $args = array(), $user_id = 0 )
+	public static function getPostTypeMonths( $posttype = 'post', $args = array(), $user_id = 0 )
 	{
 		global $wpdb, $wp_locale;
 
@@ -321,7 +321,7 @@ class Database extends Core\Base
 			{$author}
 			{$extra_checks}
 			ORDER BY post_date DESC
-		", $post_type );
+		", $posttype );
 
 		$key = md5( $query );
 		$cache = wp_cache_get( 'wp_get_archives' , 'general' );

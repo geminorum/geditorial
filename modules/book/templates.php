@@ -14,7 +14,7 @@ class Book extends gEditorial\Template
 	public static function summary( $atts = [] )
 	{
 		$posttype = self::constant( 'publication_cpt', 'publication' );
-		$fields = gEditorial()->meta->post_type_all_fields( $posttype );
+		$fields = gEditorial()->meta->posttype_all_fields( $posttype );
 
 		$rows = [];
 

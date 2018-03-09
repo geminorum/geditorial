@@ -335,7 +335,7 @@ class Book extends gEditorial\Module
 	{
 		parent::init();
 
-		$this->post_types_excluded = [ 'attachment', $this->constant( 'publication_cpt' ) ];
+		$this->posttypes_excluded = [ 'attachment', $this->constant( 'publication_cpt' ) ];
 
 		$this->register_taxonomy( 'subject_tax', [
 			'hierarchical' => TRUE,
@@ -410,7 +410,7 @@ class Book extends gEditorial\Module
 			}
 
 		} else if ( $this->p2p && 'edit' == $screen->base
-			&& in_array( $screen->post_type, $this->post_types() ) ) {
+			&& in_array( $screen->post_type, $this->posttypes() ) ) {
 
 			$this->action_module( 'tweaks', 'column_row', 1, -25, 'p2p_from' );
 		}
@@ -456,7 +456,7 @@ class Book extends gEditorial\Module
 		return $items;
 	}
 
-	public function restrict_manage_posts( $post_type, $which )
+	public function restrict_manage_posts( $posttype, $which )
 	{
 		$this->do_restrict_manage_posts_taxes( [
 			'type_tax',
@@ -467,7 +467,7 @@ class Book extends gEditorial\Module
 		] );
 	}
 
-	public function parse_query( $query )
+	public function parse_query( &$query )
 	{
 		$this->do_parse_query_taxes( $query, [
 			'type_tax',
@@ -519,7 +519,7 @@ class Book extends gEditorial\Module
 		if ( is_singular( $args['type'] ) )
 			$args['id'] = NULL;
 
-		else if ( is_singular( $this->post_types() ) )
+		else if ( is_singular( $this->posttypes() ) )
 			$args['id'] = 'assoc';
 
 		else // no publication/no p2p
@@ -536,7 +536,7 @@ class Book extends gEditorial\Module
 
 	public function insert_content( $content, $posttypes = NULL )
 	{
-		if ( ! $this->is_content_insert( $this->post_types( 'publication_cpt' ) ) )
+		if ( ! $this->is_content_insert( $this->posttypes( 'publication_cpt' ) ) )
 			return;
 
 		$this->list_p2p( NULL, '-'.$this->get_setting( 'insert_content', 'none' ) );
@@ -547,7 +547,7 @@ class Book extends gEditorial\Module
 		if ( ! $post = get_post( $post ) )
 			return FALSE;
 
-		if ( ! in_array( $post->post_type, $this->post_types() ) )
+		if ( ! in_array( $post->post_type, $this->posttypes() ) )
 			return FALSE;
 
 		$posts = [];
@@ -658,7 +658,7 @@ class Book extends gEditorial\Module
 
 		list( $posts, $pagination ) = $this->getTablePosts( $query );
 
-		$pagination['before'][] = Helper::tableFilterPostTypes( $this->list_post_types() );
+		$pagination['before'][] = Helper::tableFilterPostTypes( $this->list_posttypes() );
 
 		return HTML::tableList( [
 			'_cb'   => 'ID',
@@ -713,7 +713,7 @@ class Book extends gEditorial\Module
 			delete_post_meta( $post_id, $key_suffix );
 	}
 
-	private function get_importer_fields( $post_type = NULL )
+	private function get_importer_fields( $posttype = NULL )
 	{
 		return [
 			'book_publication_id'    => _x( 'Book: Publication ID', 'Modules: Book: Import Field', GEDITORIAL_TEXTDOMAIN ),
@@ -723,20 +723,20 @@ class Book extends gEditorial\Module
 		];
 	}
 
-	public function importer_fields( $fields, $post_type )
+	public function importer_fields( $fields, $posttype )
 	{
-		if ( ! in_array( $post_type, $this->post_types() ) )
+		if ( ! in_array( $posttype, $this->posttypes() ) )
 			return $fields;
 
-		return array_merge( $fields, $this->get_importer_fields( $post_type ) );
+		return array_merge( $fields, $this->get_importer_fields( $posttype ) );
 	}
 
-	public function importer_prepare( $value, $post_type, $field, $raw )
+	public function importer_prepare( $value, $posttype, $field, $raw )
 	{
-		if ( ! in_array( $post_type, $this->post_types() ) )
+		if ( ! in_array( $posttype, $this->posttypes() ) )
 			return $value;
 
-		if ( ! in_array( $field, array_keys( $this->get_importer_fields( $post_type ) ) ) )
+		if ( ! in_array( $field, array_keys( $this->get_importer_fields( $posttype ) ) ) )
 			return $value;
 
 		return Helper::kses( $value, 'none' );
@@ -744,7 +744,7 @@ class Book extends gEditorial\Module
 
 	public function importer_saved( $post, $data, $raw, $field_map, $attach_id )
 	{
-		if ( ! in_array( $post->post_type, $this->post_types() ) )
+		if ( ! in_array( $post->post_type, $this->posttypes() ) )
 			return;
 
 		$fields = array_keys( $this->get_importer_fields( $post->post_type ) );

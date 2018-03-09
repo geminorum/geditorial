@@ -191,7 +191,7 @@ class Collect extends gEditorial\Module
 	{
 		parent::init();
 
-		$this->post_types_excluded = [ 'attachment', $this->constant( 'collection_cpt' ) ];
+		$this->posttypes_excluded = [ 'attachment', $this->constant( 'collection_cpt' ) ];
 
 		$this->register_taxonomy( 'collection_tax', [
 			'show_ui'      => FALSE,
@@ -210,7 +210,7 @@ class Collect extends gEditorial\Module
 				'show_admin_column'  => TRUE,
 				'show_in_quick_edit' => TRUE,
 				'show_in_nav_menus'  => TRUE,
-			], $this->post_types( 'collection_cpt' ) );
+			], $this->posttypes( 'collection_cpt' ) );
 
 		$this->register_post_type( 'collection_cpt', [
 			'hierarchical' => TRUE,
@@ -296,7 +296,7 @@ class Collect extends gEditorial\Module
 				$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
 			}
 
-		} else if ( in_array( $screen->post_type, $this->post_types() ) ) {
+		} else if ( in_array( $screen->post_type, $this->posttypes() ) ) {
 
 			if ( 'post' == $screen->base ) {
 
@@ -333,7 +333,7 @@ class Collect extends gEditorial\Module
 	}
 
 	// FIXME: make this api
-	private function _sync_linked( $post_type )
+	private function _sync_linked( $posttype )
 	{
 		add_action( 'save_post', [ $this, 'save_post_main_cpt' ], 20, 3 );
 		$this->action( 'post_updated', 3, 20 );
@@ -490,7 +490,7 @@ class Collect extends gEditorial\Module
 
 	public function save_post_supported_cpt( $post_ID, $post, $update )
 	{
-		if ( ! $this->is_save_post( $post, $this->post_types() ) )
+		if ( ! $this->is_save_post( $post, $this->posttypes() ) )
 			return $post_ID;
 
 		$name = $this->classs( $this->constant( 'collection_cpt' ) );
@@ -525,17 +525,17 @@ class Collect extends gEditorial\Module
 		}
 	}
 
-	public function restrict_manage_posts_main_cpt( $post_type, $which )
+	public function restrict_manage_posts_main_cpt( $posttype, $which )
 	{
 		$this->do_restrict_manage_posts_taxes( 'group_tax' );
 	}
 
-	public function restrict_manage_posts_supported_cpt( $post_type, $which )
+	public function restrict_manage_posts_supported_cpt( $posttype, $which )
 	{
 		$this->do_restrict_manage_posts_posts( 'collection_tax', 'collection_cpt' );
 	}
 
-	public function parse_query( $query )
+	public function parse_query( &$query )
 	{
 		$this->do_parse_query_taxes( $query, 'group_tax' );
 	}
@@ -578,16 +578,16 @@ class Collect extends gEditorial\Module
 
 	public function supported_meta_box( $post, $box, $terms )
 	{
-		$post_type = $this->constant( 'collection_cpt' );
+		$posttype = $this->constant( 'collection_cpt' );
 		$dropdowns = $excludes = [];
 
 		foreach ( $terms as $term ) {
-			$dropdowns[$term->slug] = MetaBox::dropdownAssocPosts( $post_type, $term->slug, $this->classs() );
+			$dropdowns[$term->slug] = MetaBox::dropdownAssocPosts( $posttype, $term->slug, $this->classs() );
 			$excludes[] = $term->slug;
 		}
 
 		if ( empty( $terms ) || $this->get_setting( 'multiple_instances', FALSE ) )
-			$dropdowns[0] = MetaBox::dropdownAssocPosts( $post_type, '', $this->classs(), $excludes );
+			$dropdowns[0] = MetaBox::dropdownAssocPosts( $posttype, '', $this->classs(), $excludes );
 
 		$empty = TRUE;
 
@@ -599,7 +599,7 @@ class Collect extends gEditorial\Module
 		}
 
 		if ( $empty )
-			MetaBox::fieldEmptyPostType( $post_type );
+			MetaBox::fieldEmptyPostType( $posttype );
 	}
 
 	public function do_meta_box_main( $post, $box )
@@ -672,7 +672,7 @@ class Collect extends gEditorial\Module
 
 			echo $this->get_column_icon( FALSE, NULL, $this->get_column_title( 'connected', 'collection_cpt' ) );
 
-			$post_types = array_unique( array_map( function( $r ){
+			$posttypes = array_unique( array_map( function( $r ){
 				return $r->post_type;
 			}, $posts ) );
 
@@ -685,12 +685,12 @@ class Collect extends gEditorial\Module
 
 			$list = [];
 
-			foreach ( $post_types as $post_type )
+			foreach ( $posttypes as $posttype )
 				$list[] = HTML::tag( 'a', [
-					'href'   => WordPress::getPostTypeEditLink( $post_type, 0, $args ),
+					'href'   => WordPress::getPostTypeEditLink( $posttype, 0, $args ),
 					'title'  => _x( 'View the connected list', 'Modules: Collect', GEDITORIAL_TEXTDOMAIN ),
 					'target' => '_blank',
-				], $this->all_post_types[$post_type] );
+				], $this->all_post_types[$posttype] );
 
 			echo Helper::getJoined( $list, ' <span class="-posttypes">(', ')</span>' );
 
@@ -718,7 +718,7 @@ class Collect extends gEditorial\Module
 
 	public function calendar_post_row_title( $title, $post, $the_day, $calendar_args )
 	{
-		if ( ! in_array( $post->post_type, $this->post_types() ) )
+		if ( ! in_array( $post->post_type, $this->posttypes() ) )
 			return $title;
 
 		if ( ! $collection = $this->get_assoc_post( $post->ID, TRUE ) )
@@ -733,7 +733,7 @@ class Collect extends gEditorial\Module
 			$this->constant( 'collection_cpt' ),
 			$this->constant( 'collection_tax' ),
 			array_merge( [
-				'posttypes'   => $this->post_types(),
+				'posttypes'   => $this->posttypes(),
 				'order_cb'    => NULL, // NULL for default ordering by meta
 				'orderby'     => 'order', // order by meta
 				'order_order' => 'in_collection_order', // meta field for ordering

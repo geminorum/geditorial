@@ -122,7 +122,7 @@ class Statuses extends gEditorial\Module
 				'show_in_press_this_dropdown' => $can,
 
 				// FIXME: check for posttype meta
-				'post_type' => $this->post_types(),
+				'post_type' => $this->posttypes(),
 
 				// FIXME: check for posttype icon
 				// 'dashicon' => 'dashicons-archive',
@@ -168,7 +168,7 @@ class Statuses extends gEditorial\Module
 
 		$this->map_caps = [];
 
-		foreach ( $this->post_types() as $posttype ) {
+		foreach ( $this->posttypes() as $posttype ) {
 			$object = get_post_type_object( $posttype );
 			$this->map_caps[$object->cap->publish_posts] = $object->cap->edit_posts;
 		}
@@ -182,7 +182,7 @@ class Statuses extends gEditorial\Module
 
 			$statuses = get_post_stati( [ 'show_in_admin_status_list' => TRUE ], 'objects' );
 
-			foreach ( $this->post_types() as $posttype ) {
+			foreach ( $this->posttypes() as $posttype ) {
 
 				$object = get_post_type_object( $posttype );
 
@@ -235,7 +235,7 @@ class Statuses extends gEditorial\Module
 			if ( 'edit-tags' == $screen->base )
 				add_filter( 'manage_edit-'.$this->constant( 'status_tax' ).'_columns', [ $this, 'manage_columns' ] );
 
-		} else if ( in_array( $screen->post_type, $this->post_types() ) ) {
+		} else if ( in_array( $screen->post_type, $this->posttypes() ) ) {
 
 			if ( 'post' == $screen->base ) {
 
@@ -266,7 +266,7 @@ class Statuses extends gEditorial\Module
 		if ( ! $posttype = $wp_query->get( 'post_type' ) )
 			return;
 
-		if ( ! in_array( $posttype, $this->post_types() ) )
+		if ( ! in_array( $posttype, $this->posttypes() ) )
 			return;
 
 		$args = [
@@ -297,7 +297,7 @@ class Statuses extends gEditorial\Module
 			return $posttypes;
 
 		// all other statuses won't be applied to our posttypes
-		return array_diff( $posttypes, $this->post_types() );
+		return array_diff( $posttypes, $this->posttypes() );
 	}
 
 	public function wp_insert_post_data( $data, $postarr )
@@ -305,7 +305,7 @@ class Statuses extends gEditorial\Module
 		if ( in_array( $data['post_status'], [ 'trash', 'private', 'auto-draft' ] ) )
 			return $data;
 
-		if ( ! in_array( $data['post_type'], $this->post_types() ) )
+		if ( ! in_array( $data['post_type'], $this->posttypes() ) )
 			return $data;
 
 		if ( empty( $postarr['original_post_status'] ) ) {
@@ -360,7 +360,7 @@ class Statuses extends gEditorial\Module
 		if ( ! $wp_query->is_main_query() )
 			return;
 
-		if ( in_array( $wp_query->get( 'post_type', 'post' ), $this->post_types() ) )
+		if ( in_array( $wp_query->get( 'post_type', 'post' ), $this->posttypes() ) )
 			$wp_query->set( 'post_status', 'publish' ); // FIXME: add settings for this
 	}
 }

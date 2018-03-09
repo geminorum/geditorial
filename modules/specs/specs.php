@@ -95,8 +95,8 @@ class Specs extends gEditorial\Module
 
 		$this->register_taxonomy( 'specs_tax' );
 
-		foreach ( $this->post_types() as $post_type )
-			$this->add_post_type_fields( $post_type, $this->fields[$this->constant( 'post_cpt' )], 'specs' );
+		foreach ( $this->posttypes() as $posttype )
+			$this->add_post_type_fields( $posttype, $this->fields[$this->constant( 'post_cpt' )], 'specs' );
 
 		// add_shortcode( $this->constant( 'specs_shortcode' ), [ $this, 'shortcode_specs' ] );
 		// add_shortcode( $this->constant( 'multiple_specs_shortcode' ), [ $this, 'shortcode_multiple_specs' ] );
@@ -105,7 +105,7 @@ class Specs extends gEditorial\Module
 	public function current_screen( $screen )
 	{
 		if ( 'post' == $screen->base
-			&& in_array( $screen->post_type, $this->post_types() ) ) {
+			&& in_array( $screen->post_type, $this->posttypes() ) ) {
 
 			add_meta_box( $this->classs( 'supported' ),
 				$this->get_meta_box_title_tax( 'specs_tax' ),
@@ -125,7 +125,7 @@ class Specs extends gEditorial\Module
 
 	public function save_post( $post_id, $post, $update )
 	{
-		if ( ! $this->is_save_post( $post, $this->post_types() ) )
+		if ( ! $this->is_save_post( $post, $this->posttypes() ) )
 			return $post_id;
 
 		$postmeta = $this->sanitize_post_meta(
@@ -219,7 +219,7 @@ class Specs extends gEditorial\Module
 		return FALSE;
 	}
 
-	private function sanitize_post_meta( $postmeta, $fields, $post_id, $post_type )
+	private function sanitize_post_meta( $postmeta, $fields, $post_id, $posttype )
 	{
 		if ( ! $this->nonce_verify( 'post_main' ) )
 			return $postmeta;
@@ -258,7 +258,7 @@ class Specs extends gEditorial\Module
 
 						if ( isset( $_POST[$prefix.$field][$offset] )
 							&& strlen( $_POST[$prefix.$field][$offset] ) > 0
-							&& $this->get_string( $field, $post_type ) !== $_POST[$prefix.$field][$offset] )
+							&& $this->get_string( $field, $posttype ) !== $_POST[$prefix.$field][$offset] )
 								$postmeta[$offset][$field] = Helper::kses( $_POST[$prefix.$field][$offset], 'text' );
 
 						else if ( isset( $postmeta[$offset][$field] ) && isset( $_POST[$prefix.$field][$offset] ) )
@@ -271,7 +271,7 @@ class Specs extends gEditorial\Module
 		$postmeta = array_combine( $the_list, $postmeta );
 		krsort( $postmeta );
 
-		return $this->filters( 'sanitize_post_meta', $postmeta, $fields, $post_id, $post_type );
+		return $this->filters( 'sanitize_post_meta', $postmeta, $fields, $post_id, $posttype );
 	}
 
 	public function do_meta_box_supported( $post, $box )

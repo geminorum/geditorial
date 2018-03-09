@@ -272,7 +272,7 @@ class Audit extends gEditorial\Module
 				if ( ! $post = get_post( $args[0] ) )
 					return $caps;
 
-				if ( ! in_array( $post->post_type, $this->post_types() ) )
+				if ( ! in_array( $post->post_type, $this->posttypes() ) )
 					return $caps;
 
 				foreach ( $locking as $term_id )
@@ -323,7 +323,7 @@ class Audit extends gEditorial\Module
 
 	public function adminbar_init( &$nodes, $parent )
 	{
-		if ( is_admin() || ! is_singular( $this->post_types() ) )
+		if ( is_admin() || ! is_singular( $this->posttypes() ) )
 			return;
 
 		$post_id = get_queried_object_id();
@@ -389,7 +389,7 @@ class Audit extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
-		if ( in_array( $screen->post_type, $this->post_types() ) ) {
+		if ( in_array( $screen->post_type, $this->posttypes() ) ) {
 
 			if ( 'edit' == $screen->base ) {
 
@@ -439,7 +439,7 @@ class Audit extends gEditorial\Module
 
 			$terms = Taxonomy::getTerms( $this->constant( 'audit_tax' ), FALSE, TRUE, 'slug', [ 'hide_empty' => TRUE ] );
 
-			if ( $summary = $this->get_summary( $this->post_types(), $terms, $scope ) ) {
+			if ( $summary = $this->get_summary( $this->posttypes(), $terms, $scope ) ) {
 
 				$html = Text::minifyHTML( $summary );
 				set_transient( $key, $html, 12 * HOUR_IN_SECONDS );
@@ -562,12 +562,12 @@ class Audit extends gEditorial\Module
 		return $html;
 	}
 
-	public function restrict_manage_posts( $post_type, $which )
+	public function restrict_manage_posts( $posttype, $which )
 	{
 		$this->do_restrict_manage_posts_taxes( 'audit_tax' );
 	}
 
-	public function parse_query( $query )
+	public function parse_query( &$query )
 	{
 		$this->do_parse_query_taxes( $query, 'audit_tax' );
 	}
@@ -625,7 +625,7 @@ class Audit extends gEditorial\Module
 				_x( 'Apply Filter', 'Modules: Audit: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
 
 			// FIXME: style this!
-			if ( $summary = $this->get_summary( $this->post_types(), $terms, ( $args['user_id'] ? 'current' : 'all' ), $args['user_id'] ) )
+			if ( $summary = $this->get_summary( $this->posttypes(), $terms, ( $args['user_id'] ? 'current' : 'all' ), $args['user_id'] ) )
 				echo '<div><ul>'.$summary.'</ul></div>';
 
 			echo '</td></tr>';

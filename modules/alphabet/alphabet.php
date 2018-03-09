@@ -72,7 +72,7 @@ class Alphabet extends gEditorial\Module
 	{
 		$args = shortcode_atts( [
 			'locale'    => get_locale(),
-			'post_type' => $this->post_types(),
+			'post_type' => $this->posttypes(),
 			'comments'  => FALSE,
 			'excerpt'   => FALSE,
 			'item_cb'   => FALSE,

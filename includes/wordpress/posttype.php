@@ -13,34 +13,34 @@ class PostType extends Core\Base
 	{
 		$list = array();
 
-		foreach ( get_post_types( $args, 'objects' ) as $post_type => $post_type_obj ) {
+		foreach ( get_post_types( $args, 'objects' ) as $posttype => $posttype_obj ) {
 
 			// label
 			if ( 0 === $mod )
-				$list[$post_type] = $post_type_obj->label ? $post_type_obj->label : $post_type_obj->name;
+				$list[$posttype] = $posttype_obj->label ? $posttype_obj->label : $posttype_obj->name;
 
 			// plural
 			else if ( 1 === $mod )
-				$list[$post_type] = $post_type_obj->labels->name;
+				$list[$posttype] = $posttype_obj->labels->name;
 
 			// singular
 			else if ( 2 === $mod )
-				$list[$post_type] = $post_type_obj->labels->singular_name;
+				$list[$posttype] = $posttype_obj->labels->singular_name;
 
 			// nooped
 			else if ( 3 === $mod )
-				$list[$post_type] = array(
-					0          => $post_type_obj->labels->singular_name,
-					1          => $post_type_obj->labels->name,
-					'singular' => $post_type_obj->labels->singular_name,
-					'plural'   => $post_type_obj->labels->name,
+				$list[$posttype] = array(
+					0          => $posttype_obj->labels->singular_name,
+					1          => $posttype_obj->labels->name,
+					'singular' => $posttype_obj->labels->singular_name,
+					'plural'   => $posttype_obj->labels->name,
 					'context'  => NULL,
 					'domain'   => NULL,
 				);
 
 			// object
 			else if ( 4 === $mod )
-				$list[$post_type] = $post_type_obj;
+				$list[$posttype] = $posttype_obj;
 		}
 
 		return $list;
@@ -85,7 +85,7 @@ class PostType extends Core\Base
 		return (array) $query->query( $args );
 	}
 
-	public static function getIDbySlug( $slug, $post_type, $url = FALSE )
+	public static function getIDbySlug( $slug, $posttype, $url = FALSE )
 	{
 		static $strings = array();
 
@@ -96,8 +96,8 @@ class PostType extends Core\Base
 
 		$slug = trim( $slug );
 
-		if ( isset( $strings[$post_type][$slug] ) )
-			return $strings[$post_type][$slug];
+		if ( isset( $strings[$posttype][$slug] ) )
+			return $strings[$posttype][$slug];
 
 		global $wpdb;
 
@@ -107,16 +107,16 @@ class PostType extends Core\Base
 				FROM {$wpdb->posts}
 				WHERE post_name = %s
 				AND post_type = %s
-			", $slug, $post_type )
+			", $slug, $posttype )
 		);
 
 		if ( is_array( $post_id ) )
-			return $strings[$post_type][$slug] = $post_id[0];
+			return $strings[$posttype][$slug] = $post_id[0];
 
 		else if ( ! empty( $post_id ) )
 			return $post_id;
 
-		return $strings[$post_type][$slug] = FALSE;
+		return $strings[$posttype][$slug] = FALSE;
 	}
 
 	public static function getLastRevisionID( $post )
@@ -140,9 +140,9 @@ class PostType extends Core\Base
 
 	// like WP core but returns the actual array!
 	// @REF: `post_type_supports()`
-	public static function supports( $post_type, $feature )
+	public static function supports( $posttype, $feature )
 	{
-		$all = get_all_post_type_supports( $post_type );
+		$all = get_all_post_type_supports( $posttype );
 
 		if ( isset( $all[$feature][0] ) && is_array( $all[$feature][0] ) )
 			return $all[$feature][0];

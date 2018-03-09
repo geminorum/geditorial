@@ -99,10 +99,10 @@ class Roles extends gEditorial\Module
 			'profile', // gPeople
 		];
 
-		foreach ( PostType::get( 0, [ 'public' => TRUE, '_builtin' => FALSE ] ) as $post_type => $label )
-			if ( in_array( $post_type, $supported )
-				&& ! in_array( $post_type, $excludes ) )
-					$posttypes[$post_type] = $label;
+		foreach ( PostType::get( 0, [ 'public' => TRUE, '_builtin' => FALSE ] ) as $posttype => $label )
+			if ( in_array( $posttype, $supported )
+				&& ! in_array( $posttype, $excludes ) )
+					$posttypes[$posttype] = $label;
 
 		return $posttypes;
 	}
@@ -158,15 +158,15 @@ class Roles extends gEditorial\Module
 	}
 
 	// OVERWRITE
-	public function post_types( $post_types = NULL )
+	public function post_types( $posttypes = NULL )
 	{
 		$supported = $this->get_setting( 'editorial_posttypes', [] );
 
-		if ( is_null( $post_types ) )
+		if ( is_null( $posttypes ) )
 			return $supported;
 
-		foreach ( (array) $post_types as $post_type )
-			if ( in_array( $post_type, $supported ) )
+		foreach ( (array) $posttypes as $posttype )
+			if ( in_array( $posttype, $supported ) )
 				return TRUE;
 
 		return FALSE;

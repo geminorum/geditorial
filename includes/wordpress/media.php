@@ -48,7 +48,7 @@ class Media extends Core\Base
 
 	// this must be core's
 	// call this late on 'after_setup_theme' hook
-	public static function themeThumbnails( $post_types )
+	public static function themeThumbnails( $posttypes )
 	{
 		global $_wp_theme_features;
 
@@ -60,15 +60,15 @@ class Media extends Core\Base
 			if ( TRUE === $_wp_theme_features[$feature] ) {
 
 				// WORKING: but if it is true, it's true!
-				// $post_types[] = 'post';
-				// $_wp_theme_features[$feature] = [ $post_types ];
+				// $posttypes[] = 'post';
+				// $_wp_theme_features[$feature] = [ $posttypes ];
 
 			} else if ( is_array( $_wp_theme_features[$feature][0] ) ) {
-				$_wp_theme_features[$feature][0] = array_merge( $_wp_theme_features[$feature][0], $post_types );
+				$_wp_theme_features[$feature][0] = array_merge( $_wp_theme_features[$feature][0], $posttypes );
 			}
 
 		} else {
-			$_wp_theme_features[$feature] = [ $post_types ];
+			$_wp_theme_features[$feature] = [ $posttypes ];
 		}
 	}
 

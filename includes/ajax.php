@@ -92,7 +92,7 @@ class Ajax extends Core\Base
 	var <?php echo $object; ?> = <?php echo wp_json_encode( $props ); ?>;
 	<?php if ( $props['_dev'] ) {
 		echo 'console.log("'.$object.'", '.$object.');'."\n";
-		echo "\t".'jQuery(document).on("gEditorialReady", function(e, module, app){console.log(module, app);});'."\n";
+		echo "\t".'jQuery(document).on("gEditorialReady", function(e, module, app){console.log("'.$object.': "+module, app);});'."\n";
 	} ?>
 /* ]]> */
 </script><?php

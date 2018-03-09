@@ -132,12 +132,12 @@ class Reshare extends gEditorial\Module
 		return array_merge( $messages, $this->get_bulk_post_updated_messages( 'reshare_cpt', $counts ) );
 	}
 
-	public function restrict_manage_posts( $post_type, $which )
+	public function restrict_manage_posts( $posttype, $which )
 	{
 		$this->do_restrict_manage_posts_taxes( 'reshare_cat' );
 	}
 
-	public function parse_query( $query )
+	public function parse_query( &$query )
 	{
 		$this->do_parse_query_taxes( $query, 'reshare_cat' );
 	}

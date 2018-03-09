@@ -190,16 +190,16 @@ class Meta extends gEditorial\Module
 
 		$ct_tax_posttypes = [];
 
-		foreach ( $this->post_types() as $post_type )
-			if ( in_array( 'ct', $this->post_type_fields( $post_type ) ) )
-				$ct_tax_posttypes[] = $post_type;
+		foreach ( $this->posttypes() as $posttype )
+			if ( in_array( 'ct', $this->post_type_fields( $posttype ) ) )
+				$ct_tax_posttypes[] = $posttype;
 
 		if ( count( $ct_tax_posttypes ) )
 			$this->register_taxonomy( 'ct_tax', [], $ct_tax_posttypes );
 
 		// default fields for custom post types
-		foreach ( $this->get_posttypes_support_meta() as $post_type )
-			$this->add_post_type_fields( $post_type, $this->fields['post'] );
+		foreach ( $this->get_posttypes_support_meta() as $posttype )
+			$this->add_post_type_fields( $posttype, $this->fields['post'] );
 
 		$this->add_post_type_fields( 'page' );
 
@@ -221,7 +221,7 @@ class Meta extends gEditorial\Module
 
 	public function init_ajax()
 	{
-		if ( $this->is_inline_save( $_REQUEST, $this->post_types() ) ) {
+		if ( $this->is_inline_save( $_REQUEST, $this->posttypes() ) ) {
 			$this->_edit_screen( $_REQUEST['post_type'] );
 			$this->_default_rows();
 			$this->action( 'save_post', 3 );
@@ -230,7 +230,7 @@ class Meta extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
-		if ( in_array( $screen->post_type, $this->post_types() ) ) {
+		if ( in_array( $screen->post_type, $this->posttypes() ) ) {
 
 			// bail if no fields enabled for this posttype
 			if ( ! count( $this->post_type_fields( $screen->post_type ) ) )
@@ -292,11 +292,11 @@ class Meta extends gEditorial\Module
 		}
 	}
 
-	private function _edit_screen( $post_type )
+	private function _edit_screen( $posttype )
 	{
 		add_filter( 'manage_posts_columns', [ $this, 'manage_posts_columns' ], 5, 2 );
 		add_filter( 'manage_pages_columns', [ $this, 'manage_pages_columns' ], 5, 1 );
-		add_action( 'manage_'.$post_type.'_posts_custom_column', [ $this, 'posts_custom_column' ], 10, 2 );
+		add_action( 'manage_'.$posttype.'_posts_custom_column', [ $this, 'posts_custom_column' ], 10, 2 );
 
 		add_action( 'quick_edit_custom_box', [ $this, 'quick_edit_custom_box' ], 10, 2 );
 	}
@@ -407,7 +407,7 @@ class Meta extends gEditorial\Module
 		$this->nonce_field( 'post_raw' );
 	}
 
-	public function sanitize_post_meta( $postmeta, $fields, $post_id, $post_type )
+	public function sanitize_post_meta( $postmeta, $fields, $post_id, $posttype )
 	{
 		if ( $this->nonce_verify( 'post_main' ) || $this->nonce_verify( 'post_raw' ) ) {
 
@@ -417,7 +417,7 @@ class Meta extends gEditorial\Module
 			if ( ! current_user_can( $cap, $post_id ) )
 				return $postmeta;
 
-			$fields = $this->post_type_field_types( $post_type );
+			$fields = $this->post_type_field_types( $posttype );
 
 			if ( count( $fields ) ) {
 
@@ -495,7 +495,7 @@ class Meta extends gEditorial\Module
 
 	public function save_post( $post_id, $post, $update )
 	{
-		if ( ! $this->is_save_post( $post, $this->post_types() ) )
+		if ( ! $this->is_save_post( $post, $this->posttypes() ) )
 			return $post_id;
 
 		// NOUNCES MUST CHECKED BY FILTERS
@@ -518,13 +518,13 @@ class Meta extends gEditorial\Module
 		return $this->manage_posts_columns( $columns, 'page' );
 	}
 
-	public function manage_posts_columns( $columns, $post_type )
+	public function manage_posts_columns( $columns, $posttype )
 	{
-		if ( in_array( 'as', $this->post_type_fields( $post_type ) ) )
+		if ( in_array( 'as', $this->post_type_fields( $posttype ) ) )
 			unset( $columns['author'] );
 
 		return Arraay::insert( $columns, [
-			$this->hook() => $this->get_column_title( 'meta', $post_type ),
+			$this->hook() => $this->get_column_title( 'meta', $posttype ),
 		], 'title', 'after' );
 	}
 
@@ -636,18 +636,18 @@ class Meta extends gEditorial\Module
 		$this->posts_custom_column( $this->hook(), $row );
 	}
 
-	public function quick_edit_custom_box( $column_name, $post_type )
+	public function quick_edit_custom_box( $column_name, $posttype )
 	{
 		if ( $this->hook() != $column_name )
 			return FALSE;
 
-		$fields = $this->post_type_fields( $post_type );
+		$fields = $this->post_type_fields( $posttype );
 
 		foreach ( [ 'ot', 'st', 'as' ] as $field ) {
 			if ( in_array( $field, $fields ) ) {
 				$selector = 'geditorial-meta-'.$field;
 				echo '<label class="'.$selector.'">';
-					echo '<span class="title">'.$this->get_string( $field, $post_type ).'</span>';
+					echo '<span class="title">'.$this->get_string( $field, $posttype ).'</span>';
 					echo '<span class="input-text-wrap"><input type="text" name="'.$selector.'" class="'.$selector.'" value=""></span>';
 				echo '</label>';
 			}
@@ -688,7 +688,7 @@ class Meta extends gEditorial\Module
 		if ( ! $post = get_post() )
 			return $display_name;
 
-		if ( ! in_array( $post->post_type, $this->post_types() ) )
+		if ( ! in_array( $post->post_type, $this->posttypes() ) )
 			return $display_name;
 
 		$fields = $this->post_type_fields( $post->post_type );
@@ -739,7 +739,7 @@ class Meta extends gEditorial\Module
 			$this->do_settings_field( [
 				'type'         => 'select',
 				'field'        => 'custom_field_type',
-				'values'       => $this->list_post_types(),
+				'values'       => $this->list_posttypes(),
 				'default'      => $args['custom_field_type'],
 				'option_group' => 'tools',
 			] );
@@ -917,30 +917,30 @@ class Meta extends gEditorial\Module
 		return wp_set_post_terms( $post_id, $terms, $taxonomy, TRUE );
 	}
 
-	private function get_importer_fields( $post_type = NULL, $object = FALSE )
+	private function get_importer_fields( $posttype = NULL, $object = FALSE )
 	{
 		$fields = [];
 
-		foreach ( $this->post_type_field_types( $post_type ) as $field => $args )
+		foreach ( $this->post_type_field_types( $posttype ) as $field => $args )
 			$fields['meta_'.$field] = $object ? $args : sprintf( _x( 'Meta: %s', 'Modules: Meta: Import Field', GEDITORIAL_TEXTDOMAIN ), $args['title'] );
 
 		return $fields;
 	}
 
-	public function importer_fields( $fields, $post_type )
+	public function importer_fields( $fields, $posttype )
 	{
-		if ( ! in_array( $post_type, $this->post_types() ) )
+		if ( ! in_array( $posttype, $this->posttypes() ) )
 			return $fields;
 
-		return array_merge( $fields, $this->get_importer_fields( $post_type ) );
+		return array_merge( $fields, $this->get_importer_fields( $posttype ) );
 	}
 
-	public function importer_prepare( $value, $post_type, $field, $raw )
+	public function importer_prepare( $value, $posttype, $field, $raw )
 	{
-		if ( ! in_array( $post_type, $this->post_types() ) )
+		if ( ! in_array( $posttype, $this->posttypes() ) )
 			return $value;
 
-		$fields = $this->get_importer_fields( $post_type, TRUE );
+		$fields = $this->get_importer_fields( $posttype, TRUE );
 
 		if ( ! in_array( $field, array_keys( $fields ) ) )
 			return $value;
@@ -951,7 +951,7 @@ class Meta extends gEditorial\Module
 
 	public function importer_saved( $post, $data, $raw, $field_map, $attach_id )
 	{
-		if ( ! in_array( $post->post_type, $this->post_types() ) )
+		if ( ! in_array( $post->post_type, $this->posttypes() ) )
 			return;
 
 		$fields = array_keys( $this->get_importer_fields( $post->post_type ) );

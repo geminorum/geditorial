@@ -146,7 +146,7 @@ class Calendar extends gEditorial\Module
 		if ( in_array( $post->post_status, [ 'trash', 'private', 'auto-draft' ] ) )
 			return $actions;
 
-		if ( ! in_array( $post->post_type, $this->post_types() ) )
+		if ( ! in_array( $post->post_type, $this->posttypes() ) )
 			return $actions;
 
 		if ( ! current_user_can( 'edit_post', $post->ID ) )
@@ -171,7 +171,7 @@ class Calendar extends gEditorial\Module
 			'id'                  => $this->classs( 'calendar' ),
 			'initial'             => FALSE,
 			'caption_link'        => remove_query_arg( [ 'year', 'month' ] ),
-			'post_type'           => $this->post_types(),
+			'post_type'           => $this->posttypes(),
 			'exclude_statuses'    => [ 'private', 'trash', 'auto-draft', 'inherit' ],
 			'link_build_callback' => [ $this, 'calendar_link_build' ],
 			'the_day_callback'    => [ $this, 'calendar_the_day' ],
@@ -293,11 +293,11 @@ class Calendar extends gEditorial\Module
 		return $html.'</li>';
 	}
 
-	private function get_addnew_links( $post_types )
+	private function get_addnew_links( $posttypes )
 	{
 		$buttons = '';
 
-		foreach ( $post_types as $posttype ) {
+		foreach ( $posttypes as $posttype ) {
 
 			$object = get_post_type_object( $posttype );
 
@@ -314,14 +314,14 @@ class Calendar extends gEditorial\Module
 		return $buttons;
 	}
 
-	private function add_new_post( $post_type, $cal, $year, $month, $day, $title )
+	private function add_new_post( $posttype, $cal, $year, $month, $day, $title )
 	{
 		if ( ! is_callable( 'gPersianDateDate', 'makeMySQL' ) )
 			return FALSE;
 
 		$data = [
 			'post_title'  => wp_unslash( $title ),
-			'post_type'   => $post_type,
+			'post_type'   => $posttype,
 			'post_status' => 'draft',
 			'post_date'   => \gPersianDateDate::makeMySQL( 0, 0, 0, $month, $day, $year, $cal ),
 		];

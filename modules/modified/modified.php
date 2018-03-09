@@ -115,7 +115,7 @@ class Modified extends gEditorial\Module
 
 		$args = [
 			'orderby'     => 'modified',
-			'post_type'   => $this->post_types(),
+			'post_type'   => $this->posttypes(),
 			'post_status' => [ 'publish', 'future', 'draft', 'pending' ],
 
 			'posts_per_page'      => $this->get_setting( 'dashboard_count', 10 ),
@@ -266,29 +266,29 @@ class Modified extends gEditorial\Module
 		return ShortCode::wrap( $html, 'site-modified', $args, FALSE );
 	}
 
-	public function get_site_modified( $format = NULL, $post_types = NULL )
+	public function get_site_modified( $format = NULL, $posttypes = NULL )
 	{
 		global $wpdb;
 
 		if ( is_null( $format ) )
 			$format = get_option( 'date_format' );
 
-		if ( is_null( $post_types ) )
-			$post_types = $this->post_types();
+		if ( is_null( $posttypes ) )
+			$posttypes = $this->posttypes();
 
-		else if ( FALSE === $post_types )
-			$post_types = [];
+		else if ( FALSE === $posttypes )
+			$posttypes = [];
 
-		else if ( ! is_array( $post_types ) )
-			$post_types = [ $post_types ];
+		else if ( ! is_array( $posttypes ) )
+			$posttypes = [ $posttypes ];
 
-		if ( count( $post_types ) ) {
+		if ( count( $posttypes ) ) {
 
 			$query = "
 				SELECT post_modified, post_modified_gmt
 				FROM {$wpdb->posts}
 				WHERE post_status = 'publish'
-				AND post_type IN ( '".join( "', '", esc_sql( $post_types ) )."' )
+				AND post_type IN ( '".join( "', '", esc_sql( $posttypes ) )."' )
 				ORDER BY post_modified_gmt DESC
 				LIMIT 1
 			";

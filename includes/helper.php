@@ -226,7 +226,7 @@ class Helper extends Core\Base
 		echo self::getJoined( $list, $before, $after );
 	}
 
-	public static function getAuthorsEditRow( $authors, $post_type = 'post', $before = '', $after = '' )
+	public static function getAuthorsEditRow( $authors, $posttype = 'post', $before = '', $after = '' )
 	{
 		if ( empty( $authors ) )
 			return;
@@ -234,7 +234,7 @@ class Helper extends Core\Base
 		$list = [];
 
 		foreach ( $authors as $author )
-			if ( $html = WordPress::getAuthorEditHTML( $post_type, $author ) )
+			if ( $html = WordPress::getAuthorEditHTML( $posttype, $author ) )
 				$list[] = $html;
 
 		echo self::getJoined( $list, $before, $after );
@@ -1306,7 +1306,7 @@ class Helper extends Core\Base
 		return $messages;
 	}
 
-	public static function getPostTypeMonths( $calendar_type, $post_type = 'post', $args = [], $user_id = 0 )
+	public static function getPostTypeMonths( $calendar_type, $posttype = 'post', $args = [], $user_id = 0 )
 	{
 		$callback = [ __NAMESPACE__.'\\WordPress\\Database', 'getPostTypeMonths' ];
 
@@ -1314,7 +1314,7 @@ class Helper extends Core\Base
 			&& is_callable( [ 'gPersianDateWordPress', 'getPostTypeMonths' ] ) )
 				$callback = [ 'gPersianDateWordPress', 'getPostTypeMonths' ];
 
-		return call_user_func_array( $callback, [ $post_type, $args, $user_id ] );
+		return call_user_func_array( $callback, [ $posttype, $args, $user_id ] );
 	}
 
 	public static function monthFirstAndLast( $calendar_type, $year, $month, $format = 'Y-m-d H:i:s' )

@@ -17,10 +17,10 @@ class Template extends Core\Base
 		return gEditorial()->constant( static::MODULE, $key, $default );
 	}
 
-	protected static function post_types( $post_types = NULL )
+	protected static function post_types( $posttypes = NULL )
 	{
 		if ( static::MODULE && gEditorial()->enabled( static::MODULE ) )
-			return gEditorial()->{static::MODULE}->post_types( $post_types );
+			return gEditorial()->{static::MODULE}->posttypes( $posttypes );
 
 		return [];
 	}

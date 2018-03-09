@@ -34,7 +34,7 @@ class Shortcodes extends gEditorial\Module
 
 	public function adminbar_init( &$nodes, $parent )
 	{
-		if ( is_admin() || ! is_singular( $this->post_types() ) )
+		if ( is_admin() || ! is_singular( $this->posttypes() ) )
 			return;
 
 		if ( ! $post = get_queried_object() )
@@ -99,7 +99,7 @@ class Shortcodes extends gEditorial\Module
 				'none_title' => _x( 'All Shortcodes', 'Modules: Shortcodes', GEDITORIAL_TEXTDOMAIN ),
 			] );
 
-		$pagination['before'][] = Helper::tableFilterPostTypes( $this->list_post_types() );
+		$pagination['before'][] = Helper::tableFilterPostTypes( $this->list_posttypes() );
 
 		return HTML::tableList( [
 			'_cb'   => 'ID',

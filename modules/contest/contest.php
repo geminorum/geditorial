@@ -146,7 +146,7 @@ class Contest extends gEditorial\Module
 	{
 		parent::init();
 
-		$this->post_types_excluded = [ 'attachment', $this->constant( 'contest_cpt' ) ];
+		$this->posttypes_excluded = [ 'attachment', $this->constant( 'contest_cpt' ) ];
 
 		$this->register_taxonomy( 'contest_cat', [
 			'hierarchical'       => TRUE,
@@ -241,7 +241,7 @@ class Contest extends gEditorial\Module
 				$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
 			}
 
-		} else if ( in_array( $screen->post_type, $this->post_types() ) ) {
+		} else if ( in_array( $screen->post_type, $this->posttypes() ) ) {
 
 			if ( 'post' == $screen->base ) {
 
@@ -278,7 +278,7 @@ class Contest extends gEditorial\Module
 		}
 	}
 
-	private function _sync_linked( $post_type )
+	private function _sync_linked( $posttype )
 	{
 		add_action( 'save_post', [ $this, 'save_post_main_cpt' ], 20, 3 );
 		$this->action( 'post_updated', 3, 20 );
@@ -384,16 +384,16 @@ class Contest extends gEditorial\Module
 	{
 		MetaBox::fieldPostMenuOrder( $post );
 
-		$post_type = $this->constant( 'contest_cpt' );
+		$posttype = $this->constant( 'contest_cpt' );
 		$dropdowns = $excludes = [];
 
 		foreach ( $terms as $term ) {
-			$dropdowns[$term->slug] = MetaBox::dropdownAssocPosts( $post_type, $term->slug, $this->classs() );
+			$dropdowns[$term->slug] = MetaBox::dropdownAssocPosts( $posttype, $term->slug, $this->classs() );
 			$excludes[] = $term->slug;
 		}
 
 		if ( empty( $terms ) || $this->get_setting( 'multiple_instances', FALSE ) )
-			$dropdowns[0] = MetaBox::dropdownAssocPosts( $post_type, '', $this->classs(), $excludes );
+			$dropdowns[0] = MetaBox::dropdownAssocPosts( $posttype, '', $this->classs(), $excludes );
 
 		$empty = TRUE;
 
@@ -405,7 +405,7 @@ class Contest extends gEditorial\Module
 		}
 
 		if ( $empty )
-			MetaBox::fieldEmptyPostType( $post_type );
+			MetaBox::fieldEmptyPostType( $posttype );
 	}
 
 	public function meta_box_cb_apply_status_tax( $post, $box )
@@ -506,7 +506,7 @@ class Contest extends gEditorial\Module
 
 	public function save_post_supported_cpt( $post_ID, $post, $update )
 	{
-		if ( ! $this->is_save_post( $post, $this->post_types() ) )
+		if ( ! $this->is_save_post( $post, $this->posttypes() ) )
 			return $post_ID;
 
 		$name = $this->classs( $this->constant( 'contest_cpt' ) );
@@ -541,7 +541,7 @@ class Contest extends gEditorial\Module
 		$this->do_before_delete_post( $post_id, 'contest_cpt', 'contest_tax' );
 	}
 
-	public function restrict_manage_posts_supported_cpt( $post_type, $which )
+	public function restrict_manage_posts_supported_cpt( $posttype, $which )
 	{
 		$this->do_restrict_manage_posts_posts( 'contest_tax', 'contest_cpt' );
 	}
@@ -573,7 +573,7 @@ class Contest extends gEditorial\Module
 
 			echo $this->get_column_icon( FALSE, NULL, $this->get_column_title( 'children', 'contest_cpt' ) );
 
-			$post_types = array_unique( array_map( function( $r ){
+			$posttypes = array_unique( array_map( function( $r ){
 				return $r->post_type;
 			}, $posts ) );
 
@@ -586,12 +586,12 @@ class Contest extends gEditorial\Module
 
 			$list = [];
 
-			foreach ( $post_types as $post_type )
+			foreach ( $posttypes as $posttype )
 				$list[] = HTML::tag( 'a', [
-					'href'   => WordPress::getPostTypeEditLink( $post_type, 0, $args ),
+					'href'   => WordPress::getPostTypeEditLink( $posttype, 0, $args ),
 					'title'  => _x( 'View the connected list', 'Modules: Contest', GEDITORIAL_TEXTDOMAIN ),
 					'target' => '_blank',
-				], $this->all_post_types[$post_type] );
+				], $this->all_post_types[$posttype] );
 
 			echo Helper::getJoined( $list, ' <span class="-posttypes">(', ')</span>' );
 

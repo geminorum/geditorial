@@ -21,9 +21,9 @@ class MetaBox extends Core\Base
 		return gEditorial()->constant( static::MODULE, $key, $default );
 	}
 
-	protected static function getString( $string, $post_type = 'post', $group = 'titles', $fallback = FALSE )
+	protected static function getString( $string, $posttype = 'post', $group = 'titles', $fallback = FALSE )
 	{
-		return gEditorial()->{static::MODULE}->get_string( $string, $post_type, $group, $fallback );
+		return gEditorial()->{static::MODULE}->get_string( $string, $posttype, $group, $fallback );
 	}
 
 	protected static function getPostMeta( $post_id, $field = FALSE, $default = '', $key = NULL )
@@ -376,12 +376,12 @@ class MetaBox extends Core\Base
 		echo HTML::wrap( $html, 'field-wrap field-wrap-empty' );
 	}
 
-	public static function fieldEmptyPostType( $post_type )
+	public static function fieldEmptyPostType( $posttype )
 	{
-		$object = is_object( $post_type ) ? $post_type : get_post_type_object( $post_type );
+		$object = is_object( $posttype ) ? $posttype : get_post_type_object( $posttype );
 
 		$html = HTML::tag( 'a', [
-			'href'   => WordPress::getPostNewLink( $post_type ),
+			'href'   => WordPress::getPostNewLink( $posttype ),
 			'title'  => $object->labels->add_new_item,
 			'target' => '_blank',
 		], $object->labels->not_found );
@@ -398,15 +398,15 @@ class MetaBox extends Core\Base
 		return $html;
 	}
 
-	public static function dropdownAssocPosts( $post_type, $selected = '', $prefix = '', $exclude = '' )
+	public static function dropdownAssocPosts( $posttype, $selected = '', $prefix = '', $exclude = '' )
 	{
 		gEditorial()->files( 'misc/walker-page-dropdown' );
 
 		$html = wp_dropdown_pages( [
-			'post_type'        => $post_type,
+			'post_type'        => $posttype,
 			'selected'         => $selected,
-			'name'             => ( $prefix ? $prefix.'-' : '' ).$post_type.'[]',
-			'id'               => ( $prefix ? $prefix.'-' : '' ).$post_type.'-'.( $selected ? $selected : '0' ),
+			'name'             => ( $prefix ? $prefix.'-' : '' ).$posttype.'[]',
+			'id'               => ( $prefix ? $prefix.'-' : '' ).$posttype.'-'.( $selected ? $selected : '0' ),
 			'class'            => static::BASE.'-admin-dropbown',
 			'show_option_none' => Settings::showOptionNone(),
 			'sort_column'      => 'menu_order',
@@ -481,17 +481,17 @@ class MetaBox extends Core\Base
 		echo HTML::wrap( $html, 'field-wrap field-wrap-select' );
 	}
 
-	public static function fieldPostParent( $post, $check = TRUE, $post_type = NULL, $statuses = [ 'publish', 'future', 'draft' ] )
+	public static function fieldPostParent( $post, $check = TRUE, $posttype = NULL, $statuses = [ 'publish', 'future', 'draft' ] )
 	{
 		// allows for a parent of diffrent type
-		if ( is_null( $post_type ) )
-			$post_type = $post->post_type;
+		if ( is_null( $posttype ) )
+			$posttype = $post->post_type;
 
-		if ( $check && ! get_post_type_object( $post_type )->hierarchical )
+		if ( $check && ! get_post_type_object( $posttype )->hierarchical )
 			return;
 
 		$args = [
-			'post_type'        => $post_type,
+			'post_type'        => $posttype,
 			'selected'         => $post->post_parent,
 			'name'             => 'parent_id',
 			'class'            => static::BASE.'-admin-dropbown',

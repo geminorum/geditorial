@@ -41,7 +41,7 @@ class Module extends Base
 	protected $partials        = [];
 	protected $partials_remote = [];
 
-	protected $post_types_excluded = [ 'attachment', 'inbound_message' ];
+	protected $posttypes_excluded = [ 'attachment', 'inbound_message' ];
 	protected $taxonomies_excluded = [];
 
 	protected $disable_no_customs    = FALSE; // not hooking module if has no posttypes/taxonomies
@@ -174,10 +174,10 @@ class Module extends Base
 
 	protected function setup_disabled()
 	{
-		if ( $this->disable_no_customs && ! count( $this->post_types() ) && ! count( $this->taxonomies() ) )
+		if ( $this->disable_no_customs && ! count( $this->posttypes() ) && ! count( $this->taxonomies() ) )
 			return TRUE;
 
-		if ( $this->disable_no_posttypes && ! count( $this->post_types() ) )
+		if ( $this->disable_no_posttypes && ! count( $this->posttypes() ) )
 			return TRUE;
 
 		if ( $this->disable_no_taxonomies && ! count( $this->taxonomies() ) )
@@ -371,39 +371,39 @@ class Module extends Base
 	}
 
 	// enabled post types for this module
-	public function post_types( $post_types = NULL )
+	public function posttypes( $posttypes = NULL )
 	{
 		$loaded = did_action( 'wp_loaded' );
 
-		if ( is_null( $post_types ) )
-			$post_types = [];
+		if ( is_null( $posttypes ) )
+			$posttypes = [];
 
-		else if ( ! is_array( $post_types ) )
-			$post_types = [ $this->constant( $post_types ) ];
+		else if ( ! is_array( $posttypes ) )
+			$posttypes = [ $this->constant( $posttypes ) ];
 
 		if ( isset( $this->options->post_types )
 			&& is_array( $this->options->post_types ) ) {
 
-				foreach ( $this->options->post_types as $post_type => $value ) {
+				foreach ( $this->options->post_types as $posttype => $value ) {
 
 					if ( 'off' === $value )
 						$value = FALSE;
 
-					if ( in_array( $post_type, $this->post_types_excluded ) )
+					if ( in_array( $posttype, $this->posttypes_excluded ) )
 						$value = FALSE;
 
-					if ( $loaded && ! post_type_exists( $post_type ) )
+					if ( $loaded && ! post_type_exists( $posttype ) )
 						$value = FALSE;
 
 					if ( $value )
-						$post_types[] = $post_type;
+						$posttypes[] = $posttype;
 				}
 		}
 
-		return $post_types;
+		return $posttypes;
 	}
 
-	public function list_post_types( $pre = NULL, $post_types = NULL )
+	public function list_posttypes( $pre = NULL, $posttypes = NULL, $args = [ 'show_ui' => TRUE ] )
 	{
 		if ( is_null( $pre ) )
 			$pre = [];
@@ -411,22 +411,22 @@ class Module extends Base
 		else if ( TRUE === $pre )
 			$pre = [ 'all' => _x( 'All PostTypes', 'Module', GEDITORIAL_TEXTDOMAIN ) ];
 
-		$all = PostType::get( 0, [ 'show_ui' => TRUE ] );
+		$all = PostType::get( 0, $args );
 
-		foreach ( $this->post_types( $post_types ) as $post_type )
-			$pre[$post_type] = empty( $all[$post_type] ) ? $post_type : $all[$post_type];
+		foreach ( $this->posttypes( $posttypes ) as $posttype )
+			$pre[$posttype] = empty( $all[$posttype] ) ? $posttype : $all[$posttype];
 
 		return $pre;
 	}
 
-	public function all_post_types( $exclude = TRUE )
+	public function all_posttypes( $exclude = TRUE, $args = [ 'show_ui' => TRUE ] )
 	{
-		$post_types = PostType::get( 0, [ 'show_ui' => TRUE ] );
+		$posttypes = PostType::get( 0, $args );
 
-		if ( $exclude && count( $this->post_types_excluded ) )
-			$post_types = array_diff_key( $post_types, array_flip( $this->post_types_excluded ) );
+		if ( $exclude && count( $this->posttypes_excluded ) )
+			$posttypes = array_diff_key( $posttypes, array_flip( $this->posttypes_excluded ) );
 
-		return $post_types;
+		return $posttypes;
 	}
 
 	// enabled post types for this module
@@ -454,9 +454,9 @@ class Module extends Base
 		return $taxonomies;
 	}
 
-	public function all_taxonomies()
+	public function all_taxonomies( $args = [] )
 	{
-		$taxonomies = Taxonomy::get();
+		$taxonomies = Taxonomy::get( 0, $args );
 
 		if ( count( $this->taxonomies_excluded ) )
 			$taxonomies = array_diff_key( $taxonomies, array_flip( $this->taxonomies_excluded ) );
@@ -469,18 +469,18 @@ class Module extends Base
 		if ( $before = $this->get_string( 'post_types_before', 'post', 'settings', NULL ) )
 			HTML::desc( $before );
 
-		foreach ( $this->all_post_types() as $post_type => $label ) {
+		foreach ( $this->all_posttypes() as $posttype => $label ) {
 			$html = HTML::tag( 'input', [
 				'type'    => 'checkbox',
 				'value'   => 'enabled',
-				'id'      => 'type-'.$post_type,
-				'name'    => $this->base.'_'.$this->module->name.'[post_types]['.$post_type.']',
-				'checked' => isset( $this->options->post_types[$post_type] ) && $this->options->post_types[$post_type],
+				'id'      => 'type-'.$posttype,
+				'name'    => $this->base.'_'.$this->module->name.'[post_types]['.$posttype.']',
+				'checked' => isset( $this->options->post_types[$posttype] ) && $this->options->post_types[$posttype],
 			] );
 
 			echo '<p>'.HTML::tag( 'label', [
-				'for' => 'type-'.$post_type,
-			], $html.'&nbsp;'.HTML::escape( $label ).' &mdash; <code>'.$post_type.'</code>' ).'</p>';
+				'for' => 'type-'.$posttype,
+			], $html.'&nbsp;'.HTML::escape( $label ).' &mdash; <code>'.$posttype.'</code>' ).'</p>';
 		}
 
 		if ( $after = $this->get_string( 'post_types_after', 'post', 'settings', NULL ) )
@@ -642,24 +642,24 @@ class Module extends Base
 		if ( is_null( $title ) )
 			$title = _x( 'Fields for %s', 'Module', GEDITORIAL_TEXTDOMAIN );
 
-		$all = $this->all_post_types();
+		$all = $this->all_posttypes();
 
-		foreach ( $this->post_types() as $post_type ) {
+		foreach ( $this->posttypes() as $posttype ) {
 
-			$fields  = $this->post_type_all_fields( $post_type );
-			$section = $post_type.'_fields';
+			$fields  = $this->posttype_all_fields( $posttype );
+			$section = $posttype.'_fields';
 
 			if ( count( $fields ) ) {
 
 				Settings::addModuleSection( $this->base.'_'.$this->module->name, [
 					'id'            => $section,
-					'title'         => sprintf( $title, $all[$post_type] ),
-					'section_class' => 'fields_option_section fields_option-'.$post_type,
+					'title'         => sprintf( $title, $all[$posttype] ),
+					'section_class' => 'fields_option_section fields_option-'.$posttype,
 				] );
 
 				$this->add_settings_field( [
-					'field'     => $post_type.'_fields_all',
-					'post_type' => $post_type,
+					'field'     => $posttype.'_fields_all',
+					'post_type' => $posttype,
 					'section'   => $section,
 					'title'     => '&nbsp;',
 					'callback'  => [ $this, 'settings_fields_option_all' ],
@@ -669,10 +669,10 @@ class Module extends Base
 
 					$args = [
 						'field'       => $field,
-						'post_type'   => $post_type,
+						'post_type'   => $posttype,
 						'section'     => $section,
-						'field_title' => isset( $atts['title'] ) ? $atts['title'] : $this->get_string( $field, $post_type ),
-						'description' => isset( $atts['description'] ) ? $atts['description'] : $this->get_string( $field, $post_type, 'descriptions' ),
+						'field_title' => isset( $atts['title'] ) ? $atts['title'] : $this->get_string( $field, $posttype ),
+						'description' => isset( $atts['description'] ) ? $atts['description'] : $this->get_string( $field, $posttype, 'descriptions' ),
 						'callback'    => [ $this, 'settings_fields_option' ],
 					];
 
@@ -684,11 +684,11 @@ class Module extends Base
 					$this->add_settings_field( $args );
 				}
 
-			} else if ( isset( $all[$post_type] ) ) {
+			} else if ( isset( $all[$posttype] ) ) {
 
 				Settings::addModuleSection( $this->base.'_'.$this->module->name, [
 					'id'            => $section,
-					'title'         => sprintf( $title, $all[$post_type] ),
+					'title'         => sprintf( $title, $all[$posttype] ),
 					'callback'      => [ $this, 'settings_fields_option_none' ],
 					'section_class' => 'fields_option_section fields_option_none',
 				] );
@@ -873,12 +873,12 @@ class Module extends Base
 			if ( ! isset( $options['post_types'] ) )
 				$options['post_types'] = [];
 
-			foreach ( $this->all_post_types() as $post_type => $post_type_label )
-				if ( ! isset( $options['post_types'][$post_type] )
-					|| $options['post_types'][$post_type] != 'enabled' )
-						unset( $options['post_types'][$post_type] );
+			foreach ( $this->all_posttypes() as $posttype => $posttype_label )
+				if ( ! isset( $options['post_types'][$posttype] )
+					|| $options['post_types'][$posttype] != 'enabled' )
+						unset( $options['post_types'][$posttype] );
 				else
-					$options['post_types'][$post_type] = TRUE;
+					$options['post_types'][$posttype] = TRUE;
 
 			if ( ! count( $options['post_types'] ) )
 				unset( $options['post_types'] );
@@ -905,22 +905,22 @@ class Module extends Base
 			if ( ! isset( $options['fields'] ) )
 				$options['fields'] = [];
 
-			foreach ( $this->post_types() as $post_type ) {
+			foreach ( $this->posttypes() as $posttype ) {
 
-				if ( ! isset( $options['fields'][$post_type] ) )
-					$options['fields'][$post_type] = [];
+				if ( ! isset( $options['fields'][$posttype] ) )
+					$options['fields'][$posttype] = [];
 
-				foreach ( $this->post_type_all_fields( $post_type ) as $field => $args ) {
+				foreach ( $this->posttype_all_fields( $posttype ) as $field => $args ) {
 
-					if ( ! isset( $options['fields'][$post_type][$field] )
-						|| $options['fields'][$post_type][$field] != 'enabled' )
-							unset( $options['fields'][$post_type][$field] );
+					if ( ! isset( $options['fields'][$posttype][$field] )
+						|| $options['fields'][$posttype][$field] != 'enabled' )
+							unset( $options['fields'][$posttype][$field] );
 					else
-						$options['fields'][$post_type][$field] = TRUE;
+						$options['fields'][$posttype][$field] = TRUE;
 				}
 
-				if ( ! count( $options['fields'][$post_type] ) )
-					unset( $options['fields'][$post_type] );
+				if ( ! count( $options['fields'][$posttype] ) )
+					unset( $options['fields'][$posttype] );
 			}
 
 			if ( ! count( $options['fields'] ) )
@@ -1006,13 +1006,13 @@ class Module extends Base
 	}
 
 	// enabled fields for a post type
-	public function post_type_fields( $post_type = 'post', $js = FALSE )
+	public function post_type_fields( $posttype = 'post', $js = FALSE )
 	{
 		$fields = [];
 
-		if ( isset( $this->options->fields[$post_type] )
-			&& is_array( $this->options->fields[$post_type] ) )
-				foreach ( $this->options->fields[$post_type] as $field => $enabled )
+		if ( isset( $this->options->fields[$posttype] )
+			&& is_array( $this->options->fields[$posttype] ) )
+				foreach ( $this->options->fields[$posttype] as $field => $enabled )
 					if ( $js )
 						$fields[$field] = (bool) $enabled;
 					else if ( $enabled )
@@ -1022,17 +1022,17 @@ class Module extends Base
 	}
 
 	// enabled fields with args for a post type
-	public function post_type_field_types( $post_type = 'post' )
+	public function post_type_field_types( $posttype = 'post' )
 	{
 		global $gEditorialPostTypeFields;
 
-		if ( isset( $gEditorialPostTypeFields[$post_type] ) )
-			return $gEditorialPostTypeFields[$post_type];
+		if ( isset( $gEditorialPostTypeFields[$posttype] ) )
+			return $gEditorialPostTypeFields[$posttype];
 
 		$fields = [];
 
-		$all = $this->post_type_all_fields( $post_type );
-		$enabled = $this->post_type_fields( $post_type );
+		$all = $this->posttype_all_fields( $posttype );
+		$enabled = $this->post_type_fields( $posttype );
 
 		foreach ( $enabled as $i => $field ) {
 
@@ -1043,11 +1043,11 @@ class Module extends Base
 					? 'dbx' : 'box';
 
 			if ( ! isset( $args['icon'] ) )
-				$args['icon'] = $this->get_field_icon( $field, $post_type, $args );
+				$args['icon'] = $this->get_field_icon( $field, $posttype, $args );
 
 			$fields[$field] = self::atts( [
-				'title'       => $this->get_string( $field, $post_type, 'titles', $field ),
-				'description' => $this->get_string( $field, $post_type, 'descriptions' ),
+				'title'       => $this->get_string( $field, $posttype, 'titles', $field ),
+				'description' => $this->get_string( $field, $posttype, 'descriptions' ),
 				'icon'        => 'smiley',
 				'type'        => 'text',
 				'context'     => 'box',
@@ -1059,51 +1059,51 @@ class Module extends Base
 			], $args );
 		}
 
-		$gEditorialPostTypeFields[$post_type] = Arraay::multiSort( $fields, [
+		$gEditorialPostTypeFields[$posttype] = Arraay::multiSort( $fields, [
 			'group' => SORT_ASC,
 			'order' => SORT_ASC,
 		] );
 
-		return $gEditorialPostTypeFields[$post_type];
+		return $gEditorialPostTypeFields[$posttype];
 	}
 
 	// HELPER: for importer tools
-	public function post_type_fields_list( $post_type = 'post', $extra = [] )
+	public function post_type_fields_list( $posttype = 'post', $extra = [] )
 	{
 		$list = [];
 
-		foreach ( $this->post_type_fields( $post_type ) as $field )
-			$list[$field] = $this->get_string( $field, $post_type );
+		foreach ( $this->post_type_fields( $posttype ) as $field )
+			$list[$field] = $this->get_string( $field, $posttype );
 
 		foreach ( $extra as $key => $val )
-			$list[$key] = $this->get_string( $val, $post_type );
+			$list[$key] = $this->get_string( $val, $posttype );
 
 		return $list;
 	}
 
-	public function add_post_type_fields( $post_type, $fields = NULL, $type = 'meta', $append = TRUE )
+	public function add_post_type_fields( $posttype, $fields = NULL, $type = 'meta', $append = TRUE )
 	{
 		if ( is_null( $fields ) )
-			$fields = $this->fields[$post_type];
+			$fields = $this->fields[$posttype];
 
 		if ( empty( $fields ) )
 			return;
 
 		if ( $append )
-			$fields = array_merge( PostType::supports( $post_type, $type.'_fields' ), $fields );
+			$fields = array_merge( PostType::supports( $posttype, $type.'_fields' ), $fields );
 
-		add_post_type_support( $post_type, [ $type.'_fields' ], $fields );
+		add_post_type_support( $posttype, [ $type.'_fields' ], $fields );
 	}
 
-	public function post_type_all_fields( $post_type = 'post', $field_type = NULL )
+	public function posttype_all_fields( $posttype = 'post', $field_type = NULL )
 	{
-		return PostType::supports( $post_type, ( is_null( $field_type ) ? $this->field_type : $field_type ).'_fields' );
+		return PostType::supports( $posttype, ( is_null( $field_type ) ? $this->field_type : $field_type ).'_fields' );
 	}
 
-	public function get_string( $string, $post_type = 'post', $group = 'titles', $fallback = FALSE )
+	public function get_string( $string, $posttype = 'post', $group = 'titles', $fallback = FALSE )
 	{
-		if ( isset( $this->strings[$group][$post_type][$string] ) )
-			return $this->strings[$group][$post_type][$string];
+		if ( isset( $this->strings[$group][$posttype][$string] ) )
+			return $this->strings[$group][$posttype][$string];
 
 		if ( isset( $this->strings[$group]['post'][$string] ) )
 			return $this->strings[$group]['post'][$string];
@@ -1170,6 +1170,15 @@ class Module extends Base
 			return 'page';
 
 		return $default;
+	}
+
+	public function constants( $keys, $pre = [] )
+	{
+		foreach ( (array) $keys as $key )
+			if ( $constant = $this->constant( $key ) )
+				$pre = array_merge( $pre, $constant );
+
+		return $pre;
 	}
 
 	public function slug()
@@ -1596,7 +1605,7 @@ class Module extends Base
 		if ( ! gEditorial()->enabled( 'roles' ) )
 			return $default;
 
-		if ( ! in_array( $this->constant( $constant ), gEditorial()->roles->post_types() ) )
+		if ( ! in_array( $this->constant( $constant ), gEditorial()->roles->posttypes() ) )
 			return $default;
 
 		return gEditorial()->roles->constant( 'base_type' );
@@ -1607,7 +1616,7 @@ class Module extends Base
 		if ( is_null( $taxonomies ) )
 			$taxonomies = $this->taxonomies();
 
-		$post_type = $this->constant( $constant );
+		$posttype = $this->constant( $constant );
 		$cap_type  = $this->get_posttype_cap_type( $constant );
 
 		$args = self::recursiveParseArgs( $atts, [
@@ -1618,10 +1627,10 @@ class Module extends Base
 			'menu_icon'     => $this->get_posttype_icon( $constant ),
 			'menu_position' => 4,
 
-			'query_var'   => $this->constant( $constant.'_query_var', $post_type ),
+			'query_var'   => $this->constant( $constant.'_query_var', $posttype ),
 			'has_archive' => $this->constant( $constant.'_archive', FALSE ),
 			'rewrite'     => [
-				'slug'       => $this->constant( $constant.'_slug', $post_type ),
+				'slug'       => $this->constant( $constant.'_slug', $posttype ),
 				'with_front' => FALSE,
 				'feeds'      => TRUE,
 				'pages'      => TRUE,
@@ -1641,7 +1650,7 @@ class Module extends Base
 
 			// @SEE: https://core.trac.wordpress.org/ticket/39023
 			'show_in_rest' => TRUE,
-			'rest_base'    => $this->constant( $constant.'_rest', $this->constant( $constant.'_archive', $post_type ) ),
+			'rest_base'    => $this->constant( $constant.'_rest', $this->constant( $constant.'_archive', $posttype ) ),
 			// 'rest_controller_class' => 'WP_REST_Posts_Controller',
 
 			'can_export'       => TRUE,
@@ -1655,7 +1664,7 @@ class Module extends Base
 			// 'sptp_permalink_structure' => $this->constant( $constant.'_permalink', '/%post_id%' ),
 		] );
 
-		return register_post_type( $post_type, $args );
+		return register_post_type( $posttype, $args );
 	}
 
 	public function get_taxonomy_labels( $constant )
@@ -1704,7 +1713,7 @@ class Module extends Base
 		else
 			return $defaults;
 
-		if ( ! in_array( $posttype, gEditorial()->roles->post_types() ) )
+		if ( ! in_array( $posttype, gEditorial()->roles->posttypes() ) )
 			return $defaults;
 
 		$base = gEditorial()->roles->constant( 'base_type' );
@@ -1717,15 +1726,15 @@ class Module extends Base
 		];
 	}
 
-	public function register_taxonomy( $constant, $atts = [], $post_types = NULL, $caps = NULL )
+	public function register_taxonomy( $constant, $atts = [], $posttypes = NULL, $caps = NULL )
 	{
 		$taxonomy = $this->constant( $constant );
 
-		if ( is_null( $post_types ) )
-			$post_types = $this->post_types();
+		if ( is_null( $posttypes ) )
+			$posttypes = $this->posttypes();
 
-		else if ( ! is_array( $post_types ) )
-			$post_types = [ $this->constant( $post_types ) ];
+		else if ( ! is_array( $posttypes ) )
+			$posttypes = [ $this->constant( $posttypes ) ];
 
 		$args = self::recursiveParseArgs( $atts, [
 			'labels'                => $this->get_taxonomy_labels( $constant ),
@@ -1739,7 +1748,7 @@ class Module extends Base
 			'show_in_quick_edit'    => FALSE,
 			'show_in_nav_menus'     => FALSE,
 			'show_tagcloud'         => FALSE,
-			'capabilities'          => $this->get_taxonomy_caps( $caps, $post_types ),
+			'capabilities'          => $this->get_taxonomy_caps( $caps, $posttypes ),
 			'query_var'             => $this->constant( $constant.'_query', $taxonomy ),
 			'rewrite'               => [
 
@@ -1755,7 +1764,7 @@ class Module extends Base
 			// 'rest_controller_class' => 'WP_REST_Terms_Controller',
 		] );
 
-		return register_taxonomy( $taxonomy, $post_types, $args );
+		return register_taxonomy( $taxonomy, $posttypes, $args );
 	}
 
 	protected function get_post_updated_messages( $constant )
@@ -1768,35 +1777,35 @@ class Module extends Base
 		return [ $this->constant( $constant ) => Helper::generateBulkPostTypeMessages( $this->get_noop( $constant ), $bulk_counts ) ];
 	}
 
-	public function get_image_sizes( $post_type )
+	public function get_image_sizes( $posttype )
 	{
-		if ( ! isset( $this->image_sizes[$post_type] ) ) {
+		if ( ! isset( $this->image_sizes[$posttype] ) ) {
 
-			$sizes = $this->filters( $post_type.'_image_sizes', [] );
+			$sizes = $this->filters( $posttype.'_image_sizes', [] );
 
 			if ( FALSE === $sizes ) {
-				$this->image_sizes[$post_type] = []; // no sizes
+				$this->image_sizes[$posttype] = []; // no sizes
 
 			} else if ( count( $sizes ) ) {
-				$this->image_sizes[$post_type] = $sizes; // custom sizes
+				$this->image_sizes[$posttype] = $sizes; // custom sizes
 
 			} else {
 				foreach ( Helper::getWPImageSizes() as $size => $args )
-					$this->image_sizes[$post_type][$post_type.'-'.$size] = $args;
+					$this->image_sizes[$posttype][$posttype.'-'.$size] = $args;
 			}
 		}
 
-		return $this->image_sizes[$post_type];
+		return $this->image_sizes[$posttype];
 	}
 
 	public function get_image_size_key( $constant, $size = 'thumbnail' )
 	{
-		$post_type = $this->constant( $constant );
+		$posttype = $this->constant( $constant );
 
-		if ( isset( $this->image_sizes[$post_type][$post_type.'-'.$size] ) )
-			return $post_type.'-'.$size;
+		if ( isset( $this->image_sizes[$posttype][$posttype.'-'.$size] ) )
+			return $posttype.'-'.$size;
 
-		if ( isset( $this->image_sizes[$post_type]['post-'.$size] ) )
+		if ( isset( $this->image_sizes[$posttype]['post-'.$size] ) )
 			return 'post-'.$size;
 
 		return $size;
@@ -1808,12 +1817,12 @@ class Module extends Base
 		if ( ! $this->get_setting( 'thumbnail_support', FALSE ) )
 			return;
 
-		$post_type = $this->constant( $constant );
+		$posttype = $this->constant( $constant );
 
-		Media::themeThumbnails( [ $post_type ] );
+		Media::themeThumbnails( [ $posttype ] );
 
-		foreach ( $this->get_image_sizes( $post_type ) as $name => $size )
-			Media::registerImageSize( $name, array_merge( $size, [ 'p' => [ $post_type ] ] ) );
+		foreach ( $this->get_image_sizes( $posttype ) as $name => $size )
+			Media::registerImageSize( $name, array_merge( $size, [ 'p' => [ $posttype ] ] ) );
 	}
 
 	// WARNING: every script must have a .min copy
@@ -1952,14 +1961,14 @@ class Module extends Base
 
 	// FIXME: DEPRECATED
 	// CAUTION: tax must be hierarchical
-	public function add_meta_box_checklist_terms( $constant, $post_type, $role = NULL, $type = FALSE )
+	public function add_meta_box_checklist_terms( $constant, $posttype, $role = NULL, $type = FALSE )
 	{
 		$taxonomy = $this->constant( $constant );
 		$metabox  = $this->classs( $taxonomy );
 		$edit     = WordPress::getEditTaxLink( $taxonomy );
 
 		if ( $type )
-			$this->remove_meta_box( $constant, $post_type, $type );
+			$this->remove_meta_box( $constant, $posttype, $type );
 
 		add_meta_box( $metabox,
 			$this->get_meta_box_title( $constant, $edit, TRUE ),
@@ -2251,7 +2260,7 @@ class Module extends Base
 				'field'    => 'id',
 				'terms'    => [ $term_id ]
 			] ],
-			'post_type'   => $this->post_types(),
+			'post_type'   => $this->posttypes(),
 			'numberposts' => -1,
 		];
 
@@ -2400,12 +2409,12 @@ class Module extends Base
 	}
 
 	// @REF: https://github.com/scribu/wp-posts-to-posts/wiki/Connection-information
-	public function p2p_register( $constant, $post_types = NULL )
+	public function p2p_register( $constant, $posttypes = NULL )
 	{
-		if ( is_null( $post_types ) )
-			$post_types = $this->post_types();
+		if ( is_null( $posttypes ) )
+			$posttypes = $this->posttypes();
 
-		if ( empty( $post_types ) )
+		if ( empty( $posttypes ) )
 			return FALSE;
 
 		$to  = $this->constant( $constant );
@@ -2413,7 +2422,7 @@ class Module extends Base
 
 		$args = array_merge( [
 			'name'            => $p2p,
-			'from'            => $post_types,
+			'from'            => $posttypes,
 			'to'              => $to,
 			'can_create_post' => FALSE,
 			'admin_column'    => 'from', // 'any', 'from', 'to', FALSE
@@ -2425,17 +2434,17 @@ class Module extends Base
 
 		$hook = 'geditorial_'.$this->module->name.'_'.$to.'_p2p_args';
 
-		if ( $args = apply_filters( $hook, $args, $post_types ) )
+		if ( $args = apply_filters( $hook, $args, $posttypes ) )
 			if ( p2p_register_connection_type( $args ) )
 				$this->p2p = $p2p;
 	}
 
-	public function o2o_register( $constant, $post_types = NULL )
+	public function o2o_register( $constant, $posttypes = NULL )
 	{
-		if ( is_null( $post_types ) )
-			$post_types = $this->post_types();
+		if ( is_null( $posttypes ) )
+			$posttypes = $this->posttypes();
 
-		if ( empty( $post_types ) )
+		if ( empty( $posttypes ) )
 			return FALSE;
 
 		$to  = $this->constant( $constant );
@@ -2443,7 +2452,7 @@ class Module extends Base
 
 		$args = array_merge( [
 			'name'            => $o2o,
-			'from'            => $post_types,
+			'from'            => $posttypes,
 			'to'              => $to,
 			'can_create_post' => FALSE,
 			'admin_column'    => 'from', // 'any', 'from', 'to', FALSE
@@ -2455,7 +2464,7 @@ class Module extends Base
 
 		$hook = 'geditorial_'.$this->module->name.'_'.$to.'_o2o_args';
 
-		if ( $args = apply_filters( $hook, $args, $post_types ) )
+		if ( $args = apply_filters( $hook, $args, $posttypes ) )
 			if ( o2o_register_connection_type( $args ) )
 				$this->o2o = $o2o;
 	}
@@ -2525,7 +2534,7 @@ class Module extends Base
 		if ( empty( $this->cache_post_types ) )
 			$this->cache_post_types = PostType::get( 2 );
 
-		$post_types = array_unique( array_map( function( $r ){
+		$posttypes = array_unique( array_map( function( $r ){
 			return $r->post_type;
 		}, $p2p->items ) );
 
@@ -2543,12 +2552,12 @@ class Module extends Base
 
 			$list = [];
 
-			foreach ( $post_types as $post_type )
+			foreach ( $posttypes as $posttype )
 				$list[] = HTML::tag( 'a', [
-					'href'   => WordPress::getPostTypeEditLink( $post_type, 0, $args ),
+					'href'   => WordPress::getPostTypeEditLink( $posttype, 0, $args ),
 					'title'  => _x( 'View the connected list', 'Module: P2P', GEDITORIAL_TEXTDOMAIN ),
 					'target' => '_blank',
-				], $this->cache_post_types[$post_type] );
+				], $this->cache_post_types[$posttype] );
 
 			echo Helper::getJoined( $list, ' <span class="-posttypes">(', ')</span>' );
 
@@ -2609,7 +2618,7 @@ class Module extends Base
 			return FALSE;
 
 		if ( is_null( $posttypes ) )
-			$posttypes = $this->post_types();
+			$posttypes = $this->posttypes();
 
 		else if ( $posttypes && ! is_array( $posttypes ) )
 			$posttypes = $this->constant( $posttypes );
@@ -2644,7 +2653,7 @@ class Module extends Base
 	}
 
 	// DEFAULT FILTER
-	public function get_default_comment_status( $status, $post_type, $comment_type )
+	public function get_default_comment_status( $status, $posttype, $comment_type )
 	{
 		return $this->get_setting( 'comment_status', $status );
 	}
@@ -2678,7 +2687,7 @@ class Module extends Base
 	}
 
 	// DEFAULT FILTER
-	public function tweaks_taxonomy_info( $info, $object, $post_type )
+	public function tweaks_taxonomy_info( $info, $object, $posttype )
 	{
 		$icons = $this->get_module_icons();
 
@@ -2696,7 +2705,7 @@ class Module extends Base
 		return $info;
 	}
 
-	public function get_field_icon( $field, $post_type = 'post', $args = [] )
+	public function get_field_icon( $field, $posttype = 'post', $args = [] )
 	{
 		switch ( $field ) {
 			case 'ot': return 'arrow-up-alt2';
@@ -2761,7 +2770,7 @@ class Module extends Base
 	public function getTablePosts( $atts = [], $extra = [], $posttypes = NULL )
 	{
 		if ( is_null( $posttypes ) )
-			$posttypes = $this->post_types();
+			$posttypes = $this->posttypes();
 
 		$limit  = $this->limit_sub();
 		$paged  = self::paged();

@@ -126,7 +126,7 @@ class Today extends gEditorial\Module
 	{
 		parent::init();
 
-		$this->post_types_excluded = [ 'attachment', $this->constant( 'day_cpt' ) ];
+		$this->posttypes_excluded = [ 'attachment', $this->constant( 'day_cpt' ) ];
 
 		$this->register_post_type( 'day_cpt' );
 
@@ -141,7 +141,7 @@ class Today extends gEditorial\Module
 		} else {
 
 			if ( $this->get_setting( 'insert_theday' )
-				&& count( $this->post_types() ) ) {
+				&& count( $this->posttypes() ) ) {
 
 				add_action( 'gnetwork_themes_content_before',
 					[ $this, 'content_before' ],
@@ -161,7 +161,7 @@ class Today extends gEditorial\Module
 
 			$this->_save_meta_supported( $_REQUEST['post_type'] );
 
-		} else if ( $this->is_inline_save( $_REQUEST, $this->post_types() ) ) {
+		} else if ( $this->is_inline_save( $_REQUEST, $this->posttypes() ) ) {
 
 			$this->_edit_screen_supported( $_REQUEST['post_type'] );
 
@@ -190,7 +190,7 @@ class Today extends gEditorial\Module
 					'high'
 				);
 
-			} else if ( in_array( $screen->post_type, $this->post_types() ) ) {
+			} else if ( in_array( $screen->post_type, $this->posttypes() ) ) {
 
 				$this->_save_meta_supported( $screen->post_type );
 
@@ -216,7 +216,7 @@ class Today extends gEditorial\Module
 
 				$this->enqueue_asset_js( [], $screen );
 
-			} else if ( in_array( $screen->post_type, $this->post_types() ) ) {
+			} else if ( in_array( $screen->post_type, $this->posttypes() ) ) {
 
 				$this->_save_meta_supported( $screen->post_type );
 				$this->_edit_screen_supported( $screen->post_type );
@@ -228,16 +228,16 @@ class Today extends gEditorial\Module
 	}
 
 	// for main & supported
-	private function _edit_screen_supported( $post_type )
+	private function _edit_screen_supported( $posttype )
 	{
-		add_filter( 'manage_'.$post_type.'_posts_columns', [ $this, 'manage_posts_columns' ], 12 );
-		add_filter( 'manage_'.$post_type.'_posts_custom_column', [ $this, 'posts_custom_column' ], 10, 2 );
-		add_filter( 'manage_edit-'.$post_type.'_sortable_columns', [ $this, 'sortable_columns' ] );
+		add_filter( 'manage_'.$posttype.'_posts_columns', [ $this, 'manage_posts_columns' ], 12 );
+		add_filter( 'manage_'.$posttype.'_posts_custom_column', [ $this, 'posts_custom_column' ], 10, 2 );
+		add_filter( 'manage_edit-'.$posttype.'_sortable_columns', [ $this, 'sortable_columns' ] );
 
 		add_action( 'quick_edit_custom_box', [ $this, 'quick_edit_custom_box' ], 10, 2 );
 	}
 
-	private function _save_meta_supported( $post_type )
+	private function _save_meta_supported( $posttype )
 	{
 		add_action( 'save_post', [ $this, 'save_post_supported' ], 20, 3 );
 	}
@@ -295,7 +295,7 @@ class Today extends gEditorial\Module
 		}
 	}
 
-	public function quick_edit_custom_box( $column_name, $post_type )
+	public function quick_edit_custom_box( $column_name, $posttype )
 	{
 		if ( 'theday' != $column_name )
 			return FALSE;
@@ -303,7 +303,7 @@ class Today extends gEditorial\Module
 		echo '<div class="inline-edit-col geditorial-admin-wrap-quickedit -today">';
 
 			echo '<span class="title inline-edit-categories-label">';
-				echo $this->get_string( 'meta_box_title', $post_type, 'misc' );
+				echo $this->get_string( 'meta_box_title', $posttype, 'misc' );
 			echo '</span>';
 
 			ModuleHelper::theDaySelect( [], TRUE, '', $this->get_calendars() );
@@ -363,7 +363,7 @@ class Today extends gEditorial\Module
 
 			$this->actions( 'no_box', $post );
 
-			$posttypes = $this->post_types();
+			$posttypes = $this->posttypes();
 			$constants = $this->get_the_day_constants();
 
 			$the_day = ModuleHelper::getTheDayFromPost( $post, $this->default_calendar(), $constants );
@@ -420,7 +420,7 @@ class Today extends gEditorial\Module
 	public function save_post_supported( $post_id, $post, $update )
 	{
 		if ( $this->is_save_post( $post )
-			|| $this->is_save_post( $post, $this->post_types() ) ) {
+			|| $this->is_save_post( $post, $this->posttypes() ) ) {
 
 			if ( $this->nonce_verify( 'post_main' ) || $this->nonce_verify( 'post_raw' ) ) {
 
@@ -478,7 +478,7 @@ class Today extends gEditorial\Module
 
 	public function content_before( $content, $posttypes = NULL )
 	{
-		if ( ! $this->is_content_insert( $this->post_types() ) )
+		if ( ! $this->is_content_insert( $this->posttypes() ) )
 			return;
 
 		$the_day = ModuleHelper::getTheDayFromPost(
@@ -543,7 +543,7 @@ class Today extends gEditorial\Module
 	{
 		global $post;
 
-		$posttypes = $this->post_types();
+		$posttypes = $this->posttypes();
 
 		list( $posts, $pagination ) = ModuleHelper::getPostsConnected( [
 			'type'    => get_query_var( 'day_posttype', $posttypes ),
@@ -732,7 +732,7 @@ class Today extends gEditorial\Module
 
 		list( $posts, $pagination ) = $this->getTablePosts( $query );
 
-		$pagination['before'][] = Helper::tableFilterPostTypes( $this->list_post_types() );
+		$pagination['before'][] = Helper::tableFilterPostTypes( $this->list_posttypes() );
 
 		return HTML::tableList( [
 			'_cb'   => 'ID',
@@ -763,7 +763,7 @@ class Today extends gEditorial\Module
 		] );
 	}
 
-	private function get_importer_fields( $post_type = NULL )
+	private function get_importer_fields( $posttype = NULL )
 	{
 		return [
 			'today_cal'   => _x( 'Today: Calendar', 'Modules: Today: Import Field', GEDITORIAL_TEXTDOMAIN ),
@@ -773,20 +773,20 @@ class Today extends gEditorial\Module
 		];
 	}
 
-	public function importer_fields( $fields, $post_type )
+	public function importer_fields( $fields, $posttype )
 	{
-		if ( ! in_array( $post_type, $this->post_types() ) )
+		if ( ! in_array( $posttype, $this->posttypes() ) )
 			return $fields;
 
-		return array_merge( $fields, $this->get_importer_fields( $post_type ) );
+		return array_merge( $fields, $this->get_importer_fields( $posttype ) );
 	}
 
-	public function importer_prepare( $value, $post_type, $field, $raw )
+	public function importer_prepare( $value, $posttype, $field, $raw )
 	{
-		if ( ! in_array( $post_type, $this->post_types() ) )
+		if ( ! in_array( $posttype, $this->posttypes() ) )
 			return $value;
 
-		if ( ! in_array( $field, array_keys( $this->get_importer_fields( $post_type ) ) ) )
+		if ( ! in_array( $field, array_keys( $this->get_importer_fields( $posttype ) ) ) )
 			return $value;
 
 		switch ( $field ) {
@@ -802,7 +802,7 @@ class Today extends gEditorial\Module
 
 	public function importer_saved( $post, $data, $raw, $field_map, $attach_id )
 	{
-		if ( ! in_array( $post->post_type, $this->post_types() ) )
+		if ( ! in_array( $post->post_type, $this->posttypes() ) )
 			return;
 
 		$postmeta = [];

@@ -146,7 +146,7 @@ class Workflow extends gEditorial\Module
 				if ( ! $post = get_post( $args[0] ) )
 					return $caps;
 
-				if ( ! in_array( $post->post_type, $this->post_types() ) )
+				if ( ! in_array( $post->post_type, $this->posttypes() ) )
 					return $caps;
 
 				if ( ! in_array( $post->post_status, $this->get_setting( 'locking_statuses', [] ) ) )
@@ -170,7 +170,7 @@ class Workflow extends gEditorial\Module
 
 			$statuses = $this->get_statuses();
 
-			foreach ( $this->post_types() as $posttype ) {
+			foreach ( $this->posttypes() as $posttype ) {
 
 				$object = get_post_type_object( $posttype );
 
@@ -233,7 +233,7 @@ class Workflow extends gEditorial\Module
 			if ( 'edit-tags' == $screen->base )
 				$this->_edit_tags_screen( $screen->taxonomy );
 
-		} else if ( in_array( $screen->post_type, $this->post_types() ) ) {
+		} else if ( in_array( $screen->post_type, $this->posttypes() ) ) {
 
 			if ( 'post' == $screen->base ) {
 
@@ -288,7 +288,7 @@ class Workflow extends gEditorial\Module
 
 		$terms     = Taxonomy::getTerms( $this->constant( 'status_tax' ), FALSE, TRUE );
 		$admin     = User::isSuperAdmin();
-		$posttypes = $this->post_types();
+		$posttypes = $this->posttypes();
 
 		foreach ( $terms as $term ) {
 

@@ -244,21 +244,21 @@ class Event extends gEditorial\Module
 				}
 
 				$this->filter_true( 'disable_months_dropdown', 12 );
+				$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
 
 				$this->_edit_screen( $screen->post_type );
-				$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
 			}
 		}
 	}
 
-	private function _edit_screen( $post_type )
+	private function _edit_screen( $posttype )
 	{
 		if ( ! $this->get_setting( 'extra_metadata' ) )
 			return;
 
-		add_filter( 'manage_'.$post_type.'_posts_columns', [ $this, 'manage_posts_columns' ], 16 );
-		add_action( 'manage_'.$post_type.'_posts_custom_column', [ $this, 'posts_custom_column' ], 10, 2 );
-		add_filter( 'manage_edit-'.$post_type.'_sortable_columns', [ $this, 'sortable_columns' ] );
+		add_filter( 'manage_'.$posttype.'_posts_columns', [ $this, 'manage_posts_columns' ], 16 );
+		add_action( 'manage_'.$posttype.'_posts_custom_column', [ $this, 'posts_custom_column' ], 10, 2 );
+		add_filter( 'manage_edit-'.$posttype.'_sortable_columns', [ $this, 'sortable_columns' ] );
 	}
 
 	public function dashboard_glance_items( $items )
@@ -299,7 +299,7 @@ class Event extends gEditorial\Module
 		return $post_ID;
 	}
 
-	public function restrict_manage_posts( $post_type, $which )
+	public function restrict_manage_posts( $posttype, $which )
 	{
 		$this->do_restrict_manage_posts_taxes( 'event_cat' );
 	}
@@ -320,7 +320,7 @@ class Event extends gEditorial\Module
 		}
 	}
 
-	public function parse_query( $query )
+	public function parse_query( &$query )
 	{
 		$this->do_parse_query_taxes( $query, 'event_cat' );
 	}

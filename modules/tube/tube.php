@@ -156,7 +156,7 @@ class Tube extends gEditorial\Module
 	{
 		parent::init();
 
-		$this->post_types_excluded = [
+		$this->posttypes_excluded = [
 			'attachment',
 			$this->constant( 'video_cpt' ),
 			$this->constant( 'channel_cpt' ),

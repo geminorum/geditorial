@@ -82,7 +82,7 @@ class Drafts extends gEditorial\Module
 		if ( ! $this->get_setting( 'public_preview', FALSE ) )
 			return;
 
-		if ( in_array( $screen->post_type, $this->post_types() ) ) {
+		if ( in_array( $screen->post_type, $this->posttypes() ) ) {
 			if ( 'post' == $screen->base ) {
 
 				$this->action( 'post_submitbox_minor_actions', 1, 12 );
@@ -178,16 +178,16 @@ class Drafts extends gEditorial\Module
 		$all  = _x( 'View all %s drafts', 'Modules: Drafts', GEDITORIAL_TEXTDOMAIN );
 		$user = 'all' == $this->get_setting( 'summary_scope', 'all' ) ? 0 : get_current_user_id();
 
-		foreach ( $this->post_types() as $post_type ) {
+		foreach ( $this->posttypes() as $posttype ) {
 
-			$object = get_post_type_object( $post_type );
+			$object = get_post_type_object( $posttype );
 
 			if ( ! current_user_can( $object->cap->edit_posts ) )
 				continue;
 
 			$block = '';
 
-			foreach ( $this->get_drafts( $post_type, $user ) as $post ) {
+			foreach ( $this->get_drafts( $posttype, $user ) as $post ) {
 
 				$block.= '<li>'.Helper::getPostTitleRow( $post, 'edit', FALSE,
 					Helper::postModified( $post, TRUE ) ).'</li>';
@@ -199,7 +199,7 @@ class Drafts extends gEditorial\Module
 				continue; // FIXME: add new posttype link
 
 			$link = HTML::tag( 'a', [
-				'href'  => WordPress::getPostTypeEditLink( $post_type, $user, [ 'post_status' => 'draft' ] ),
+				'href'  => WordPress::getPostTypeEditLink( $posttype, $user, [ 'post_status' => 'draft' ] ),
 				'title' => sprintf( $all, $object->labels->singular_name ),
 			], HTML::escape( $object->labels->name ) );
 
@@ -209,10 +209,10 @@ class Drafts extends gEditorial\Module
 		return $html ? $html :'<div class="-empty"><p>'._x( '(none)', 'Modules: Drafts', GEDITORIAL_TEXTDOMAIN ).'</p></div>';
 	}
 
-	private function get_drafts( $post_type = 'post', $user = 0 )
+	private function get_drafts( $posttype = 'post', $user = 0 )
 	{
 		$args = [
-			'post_type'      => $post_type,
+			'post_type'      => $posttype,
 			'post_status'    => 'draft',
 			'posts_per_page' => $this->get_setting( 'max_posts', 25 ),
 			'order'          => 'DESC',

@@ -107,8 +107,8 @@ class Series extends gEditorial\Module
 			'show_admin_column' => TRUE,
 		] );
 
-		foreach ( $this->post_types() as $post_type )
-			$this->add_post_type_fields( $post_type, $this->fields[$this->constant( 'post_cpt' )], 'series' );
+		foreach ( $this->posttypes() as $posttype )
+			$this->add_post_type_fields( $posttype, $this->fields[$this->constant( 'post_cpt' )], 'series' );
 
 		if ( is_admin() )
 			$this->action( 'save_post', 3, 20 );
@@ -118,7 +118,7 @@ class Series extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
-		if ( in_array( $screen->post_type, $this->post_types() ) ) {
+		if ( in_array( $screen->post_type, $this->posttypes() ) ) {
 
 			if ( 'post' == $screen->base ) {
 
@@ -144,7 +144,7 @@ class Series extends gEditorial\Module
 
 	public function save_post( $post_id, $post, $update )
 	{
-		if ( ! $this->is_save_post( $post, $this->post_types() ) )
+		if ( ! $this->is_save_post( $post, $this->posttypes() ) )
 			return $post_id;
 
 		$postmeta = $this->sanitize_post_meta(
@@ -160,7 +160,7 @@ class Series extends gEditorial\Module
 		return $post_id;
 	}
 
-	private function sanitize_post_meta( $postmeta, $fields, $post_id, $post_type )
+	private function sanitize_post_meta( $postmeta, $fields, $post_id, $posttype )
 	{
 		if ( ! $this->nonce_verify( 'post_main' ) )
 			return $postmeta;
@@ -196,7 +196,7 @@ class Series extends gEditorial\Module
 
 						if ( isset( $_POST[$prefix.$field][$offset] )
 							&& strlen( $_POST[$prefix.$field][$offset] ) > 0
-							&& $this->get_string( $field, $post_type ) !== $_POST[$prefix.$field][$offset] )
+							&& $this->get_string( $field, $posttype ) !== $_POST[$prefix.$field][$offset] )
 								$postmeta[$pre_term][$field] = Helper::kses( $_POST[$prefix.$field][$offset], 'text' );
 
 						else if ( isset( $postmeta[$pre_term][$field] ) && isset( $_POST[$prefix.$field][$offset] ) )
@@ -206,7 +206,7 @@ class Series extends gEditorial\Module
 			}
 		}
 
-		return $this->filters( 'sanitize_post_meta', $postmeta, $fields, $post_id, $post_type );
+		return $this->filters( 'sanitize_post_meta', $postmeta, $fields, $post_id, $posttype );
 	}
 
 	public function do_meta_box_supported( $post, $box )
@@ -365,7 +365,7 @@ class Series extends gEditorial\Module
 				'item_cb'      => [ $this, 'series_shortcode_item_cb' ],
 				'order_cb'     => [ $this, 'series_shortcode_order_cb' ],
 				'orderby'      => 'order',
-				'posttypes'    => $this->post_types(),
+				'posttypes'    => $this->posttypes(),
 			], (array) $atts ),
 			$content,
 			$this->constant( 'series_shortcode' )

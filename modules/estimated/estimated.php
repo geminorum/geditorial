@@ -89,7 +89,7 @@ class Estimated extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
-		if ( in_array( $screen->post_type, $this->post_types() ) ) {
+		if ( in_array( $screen->post_type, $this->posttypes() ) ) {
 
 			if ( 'post' == $screen->base ) {
 
@@ -125,7 +125,7 @@ class Estimated extends gEditorial\Module
 
 	public function save_post_supported_cpt( $post_ID, $post, $update )
 	{
-		if ( ! $this->is_save_post( $post, $this->post_types() ) )
+		if ( ! $this->is_save_post( $post, $this->posttypes() ) )
 			return $post_ID;
 
 		$this->get_post_wordcount( $post_ID, TRUE );

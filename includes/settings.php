@@ -620,6 +620,19 @@ class Settings extends Core\Base
 		];
 	}
 
+	public static function getSetting_metabox_roles( $description = NULL )
+	{
+		return [
+			'field'       => 'metabox_roles',
+			'type'        => 'checkbox',
+			'title'       => _x( 'Meta Box Roles', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+			'description' => $description ?: '',
+			'default'     => [],
+			'exclude'     => [ 'administrator', 'subscriber' ],
+			'values'      => User::getAllRoleList(),
+		];
+	}
+
 	public static function getSetting_adminbar_roles( $description = NULL )
 	{
 		return [
@@ -1332,6 +1345,31 @@ class Settings extends Core\Base
 					'dir'         => $args['dir'],
 					'data'        => $args['data'],
 				] );
+
+			break;
+			case 'color':
+
+				if ( ! $args['field_class'] )
+					$args['field_class'] = [ 'small-text', 'color-text' ];
+
+				if ( ! $args['dir'] )
+					$args['dir'] = 'ltr';
+
+				echo HTML::tag( 'input', [
+					'type'        => 'text', // it's better to be `text`
+					'id'          => $id,
+					'name'        => $name,
+					'value'       => $value,
+					'class'       => $args['field_class'],
+					'placeholder' => $args['placeholder'],
+					'disabled'    => $args['disabled'],
+					'readonly'    => $args['readonly'],
+					'dir'         => $args['dir'],
+					'data'        => $args['data'],
+				] );
+
+				// CAUTION: module must enqueue `wp-color-picker` styles/scripts
+				$scripts[] = '$("#'.$id.'").wpColorPicker();';
 
 			break;
 			case 'email':

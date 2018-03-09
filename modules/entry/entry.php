@@ -93,7 +93,7 @@ class Entry extends gEditorial\Module
 	{
 		parent::init();
 
-		$this->post_types_excluded = [ 'attachment', $this->constant( 'entry_cpt' ) ];
+		$this->posttypes_excluded = [ 'attachment', $this->constant( 'entry_cpt' ) ];
 
 		$this->register_taxonomy( 'section_tax', [
 			'hierarchical'       => TRUE,
@@ -208,9 +208,9 @@ class Entry extends gEditorial\Module
 		}
 	}
 
-	private function _edit_screen( $post_type )
+	private function _edit_screen( $posttype )
 	{
-		add_filter( 'manage_'.$post_type.'_posts_columns', [ $this, 'manage_posts_columns' ] );
+		add_filter( 'manage_'.$posttype.'_posts_columns', [ $this, 'manage_posts_columns' ] );
 	}
 
 	public function dashboard_recent_drafts_query_args( $query_args )
@@ -224,7 +224,7 @@ class Entry extends gEditorial\Module
 		return $query_args;
 	}
 
-	public function restrict_manage_posts( $post_type, $which )
+	public function restrict_manage_posts( $posttype, $which )
 	{
 		$this->do_restrict_manage_posts_taxes( 'section_tax' );
 	}
@@ -244,7 +244,7 @@ class Entry extends gEditorial\Module
 		}
 	}
 
-	public function parse_query( $query )
+	public function parse_query( &$query )
 	{
 		$this->do_parse_query_taxes( $query, 'section_tax' );
 	}
