@@ -101,7 +101,7 @@ class Gallery extends gEditorial\Module
 
 	public function after_setup_theme()
 	{
-		$this->register_post_type_thumbnail( 'album_cpt' );
+		$this->register_posttype_thumbnail( 'album_cpt' );
 	}
 
 	public function init()
@@ -123,7 +123,7 @@ class Gallery extends gEditorial\Module
 			'show_in_quick_edit' => TRUE,
 		], [ 'attachments' ] );
 
-		$this->register_post_type( 'album_cpt' );
+		$this->register_posttype( 'album_cpt' );
 	}
 
 	public function current_screen( $screen )

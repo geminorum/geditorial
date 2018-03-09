@@ -118,7 +118,7 @@ class Team extends gEditorial\Module
 
 	public function after_setup_theme()
 	{
-		$this->register_post_type_thumbnail( 'member_cpt' );
+		$this->register_posttype_thumbnail( 'member_cpt' );
 	}
 
 	public function init()
@@ -132,7 +132,7 @@ class Team extends gEditorial\Module
 			'show_in_quick_edit' => TRUE,
 		], 'member_cpt' );
 
-		$this->register_post_type( 'member_cpt', [
+		$this->register_posttype( 'member_cpt', [
 			'menu_position'     => 65,
 			'show_in_admin_bar' => FALSE,
 		] );
@@ -175,7 +175,7 @@ class Team extends gEditorial\Module
 
 	public function meta_init()
 	{
-		$this->add_post_type_fields( $this->constant( 'member_cpt' ) );
+		$this->add_posttype_fields( $this->constant( 'member_cpt' ) );
 	}
 
 	public function dashboard_glance_items( $items )

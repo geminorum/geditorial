@@ -153,7 +153,7 @@ class Event extends gEditorial\Module
 
 	public function after_setup_theme()
 	{
-		$this->register_post_type_thumbnail( 'event_cpt' );
+		$this->register_posttype_thumbnail( 'event_cpt' );
 	}
 
 	public function init()
@@ -182,7 +182,7 @@ class Event extends gEditorial\Module
 				'show_ui' => FALSE,
 			], 'event_cpt' );
 
-		$this->register_post_type( 'event_cpt', [
+		$this->register_posttype( 'event_cpt', [
 			'hierarchical' => TRUE,
 			'meta_box_cb'  => NULL, // default meta box
 		] );

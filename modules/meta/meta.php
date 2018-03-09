@@ -168,7 +168,7 @@ class Meta extends gEditorial\Module
 
 		$list = array_diff( array_merge( $posttypes, $supported ), $excludes );
 
-		return $this->filters( 'support_post_types', $list );
+		return $this->filters( 'support_posttypes', $list );
 	}
 
 	public function before_settings( $module = FALSE )
@@ -199,9 +199,9 @@ class Meta extends gEditorial\Module
 
 		// default fields for custom post types
 		foreach ( $this->get_posttypes_support_meta() as $posttype )
-			$this->add_post_type_fields( $posttype, $this->fields['post'] );
+			$this->add_posttype_fields( $posttype, $this->fields['post'] );
 
-		$this->add_post_type_fields( 'page' );
+		$this->add_posttype_fields( 'page' );
 
 		if ( is_admin() ) {
 

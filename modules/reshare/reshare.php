@@ -76,7 +76,7 @@ class Reshare extends gEditorial\Module
 
 	public function after_setup_theme()
 	{
-		$this->register_post_type_thumbnail( 'reshare_cpt' );
+		$this->register_posttype_thumbnail( 'reshare_cpt' );
 	}
 
 	public function init()
@@ -90,7 +90,7 @@ class Reshare extends gEditorial\Module
 			'show_in_quick_edit' => TRUE,
 		], 'reshare_cpt' );
 
-		$this->register_post_type( 'reshare_cpt' );
+		$this->register_posttype( 'reshare_cpt' );
 	}
 
 	public function current_screen( $screen )

@@ -8,7 +8,11 @@ use geminorum\gEditorial\Core\HTML;
 class PostType extends Core\Base
 {
 
-	// EDITED: 12/25/2016, 1:27:21 PM
+	public static function object( $posttype )
+	{
+		return is_object( $posttype ) ? $posttype : get_post_type_object( $posttype );
+	}
+
 	public static function get( $mod = 0, $args = array( 'public' => TRUE ) )
 	{
 		$list = array();

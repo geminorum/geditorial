@@ -378,7 +378,7 @@ class MetaBox extends Core\Base
 
 	public static function fieldEmptyPostType( $posttype )
 	{
-		$object = is_object( $posttype ) ? $posttype : get_post_type_object( $posttype );
+		$object = PostType::object( $posttype );
 
 		$html = HTML::tag( 'a', [
 			'href'   => WordPress::getPostNewLink( $posttype ),
@@ -487,7 +487,7 @@ class MetaBox extends Core\Base
 		if ( is_null( $posttype ) )
 			$posttype = $post->post_type;
 
-		if ( $check && ! get_post_type_object( $posttype )->hierarchical )
+		if ( $check && ! PostType::object( $posttype )->hierarchical )
 			return;
 
 		$args = [
@@ -593,7 +593,7 @@ class MetaBox extends Core\Base
 		if ( ! $posts->publish )
 			return FALSE;
 
-		$object = get_post_type_object( $posttype );
+		$object = PostType::object( $posttype );
 
 		$class  = 'geditorial-glance-item -posttype -posttype-'.$posttype.' '.$extra_class;
 		$format = current_user_can( $object->cap->edit_posts )

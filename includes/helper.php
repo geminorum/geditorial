@@ -449,19 +449,18 @@ class Helper extends Core\Base
 
 	public static function getPostTypeIcon( $posttype, $fallback = 'admin-post' )
 	{
-		if ( ! is_object( $posttype ) )
-			$posttype = get_post_type_object( $posttype );
+		$object = PostType::object( $posttype );
 
-		if ( $posttype->menu_icon && is_string( $posttype->menu_icon ) ) {
+		if ( $object->menu_icon && is_string( $object->menu_icon ) ) {
 
-			if ( Text::has( $posttype->menu_icon, 'data:image/svg+xml;base64,' ) )
-				return Icon::wrapBase64( $posttype->menu_icon );
+			if ( Text::has( $object->menu_icon, 'data:image/svg+xml;base64,' ) )
+				return Icon::wrapBase64( $object->menu_icon );
 
 
-			if ( Text::has( $posttype->menu_icon, 'dashicons-' ) )
-				return HTML::getDashicon( str_ireplace( 'dashicons-', '', $posttype->menu_icon ) );
+			if ( Text::has( $object->menu_icon, 'dashicons-' ) )
+				return HTML::getDashicon( str_ireplace( 'dashicons-', '', $object->menu_icon ) );
 
-			return Icon::wrapURL( esc_url( $posttype->menu_icon ) );
+			return Icon::wrapURL( esc_url( $object->menu_icon ) );
 		}
 
 		return HTML::getDashicon( $fallback );

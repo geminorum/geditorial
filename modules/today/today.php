@@ -119,7 +119,7 @@ class Today extends gEditorial\Module
 
 	public function after_setup_theme()
 	{
-		$this->register_post_type_thumbnail( 'day_cpt' );
+		$this->register_posttype_thumbnail( 'day_cpt' );
 	}
 
 	public function init()
@@ -128,7 +128,7 @@ class Today extends gEditorial\Module
 
 		$this->posttypes_excluded = [ 'attachment', $this->constant( 'day_cpt' ) ];
 
-		$this->register_post_type( 'day_cpt' );
+		$this->register_posttype( 'day_cpt' );
 
 		if ( is_admin() ) {
 

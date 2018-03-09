@@ -9,6 +9,7 @@ use geminorum\gEditorial\Core\L10n;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\WordPress;
+use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\Taxonomy;
 use geminorum\gEditorial\WordPress\User;
 
@@ -172,7 +173,7 @@ class Workflow extends gEditorial\Module
 
 			foreach ( $this->posttypes() as $posttype ) {
 
-				$object = get_post_type_object( $posttype );
+				$object = PostType::object( $posttype );
 
 				if ( ! current_user_can( $object->cap->edit_others_posts ) )
 				// if ( ! current_user_can( $object->cap->edit_posts ) )

@@ -504,7 +504,7 @@ class Audit extends gEditorial\Module
 						$text = sprintf( '%2$s %1$s', $name, Number::format( $count ) );
 
 					if ( empty( $objects[$type] ) )
-						$objects[$type] = get_post_type_object( $type );
+						$objects[$type] = PostType::object( $type );
 
 					$class = 'geditorial-glance-item -audit -term -taxonomy-'.$tax.' -term-'.$term.'-'.$type.'-count';
 
@@ -542,7 +542,7 @@ class Audit extends gEditorial\Module
 					$text = sprintf( '%2$s %1$s', $this->get_string( 'show_option_none', 'audit_tax', 'misc' ), Number::format( $count ) );
 
 				if ( empty( $objects[$type] ) )
-					$objects[$type] = get_post_type_object( $type );
+					$objects[$type] = PostType::object( $type );
 
 				$class = 'geditorial-glance-item -audit -not-in -taxonomy-'.$tax.' -not-in-'.$type.'-count';
 

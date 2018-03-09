@@ -7,6 +7,7 @@ use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\WordPress;
+use geminorum\gEditorial\WordPress\PostType;
 
 class Today extends gEditorial\Helper
 {
@@ -433,7 +434,7 @@ class Today extends gEditorial\Helper
 
 		foreach ( $posttypes as $posttype ) {
 
-			$object = get_post_type_object( $posttype );
+			$object = PostType::object( $posttype );
 
 			if ( ! current_user_can( $object->cap->create_posts ) )
 				continue;
@@ -452,7 +453,7 @@ class Today extends gEditorial\Helper
 
 		if ( FALSE !== $the_post ) {
 
-			$object = get_post_type_object( self::constant( 'day_cpt', 'day' ) );
+			$object = PostType::object( self::constant( 'day_cpt', 'day' ) );
 
 			unset( $the_day['year'] );
 

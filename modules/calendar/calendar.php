@@ -104,7 +104,7 @@ class Calendar extends gEditorial\Module
 
 				parse_str( $post['data'], $data );
 
-				$object = get_post_type_object( $data['post_type'] );
+				$object = PostType::object( $data['post_type'] );
 
 				if ( ! current_user_can( $object->cap->create_posts ) )
 					Ajax::errorUserCant();
@@ -299,7 +299,7 @@ class Calendar extends gEditorial\Module
 
 		foreach ( $posttypes as $posttype ) {
 
-			$object = get_post_type_object( $posttype );
+			$object = PostType::object( $posttype );
 
 			if ( current_user_can( $object->cap->create_posts ) ) {
 

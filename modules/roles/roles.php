@@ -223,7 +223,7 @@ class Roles extends gEditorial\Module
 			|| 'read_'.$singular == $cap ) {
 
 			$post = get_post( $args[0] );
-			$type = get_post_type_object( $post->post_type );
+			$type = PostType::object( $post->post_type );
 			$caps = [];
 
 		} else {

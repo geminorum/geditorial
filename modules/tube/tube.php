@@ -148,8 +148,8 @@ class Tube extends gEditorial\Module
 
 	public function after_setup_theme()
 	{
-		$this->register_post_type_thumbnail( 'video_cpt' );
-		$this->register_post_type_thumbnail( 'channel_cpt' );
+		$this->register_posttype_thumbnail( 'video_cpt' );
+		$this->register_posttype_thumbnail( 'channel_cpt' );
 	}
 
 	public function init()
@@ -176,8 +176,8 @@ class Tube extends gEditorial\Module
 			'show_in_quick_edit' => TRUE,
 		], 'channel_cpt' );
 
-		$this->register_post_type( 'video_cpt' );
-		$this->register_post_type( 'channel_cpt', [
+		$this->register_posttype( 'video_cpt' );
+		$this->register_posttype( 'channel_cpt', [
 			'show_in_admin_bar' => FALSE,
 		] );
 
@@ -219,7 +219,7 @@ class Tube extends gEditorial\Module
 
 	public function meta_init()
 	{
-		$this->add_post_type_fields( $this->constant( 'video_cpt' ) );
+		$this->add_posttype_fields( $this->constant( 'video_cpt' ) );
 	}
 
 	public function dashboard_glance_items( $items )

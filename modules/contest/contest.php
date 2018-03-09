@@ -139,7 +139,7 @@ class Contest extends gEditorial\Module
 
 	public function after_setup_theme()
 	{
-		$this->register_post_type_thumbnail( 'contest_cpt' );
+		$this->register_posttype_thumbnail( 'contest_cpt' );
 	}
 
 	public function init()
@@ -176,11 +176,11 @@ class Contest extends gEditorial\Module
 			'show_in_quick_edit' => TRUE,
 		], 'apply_cpt' );
 
-		$this->register_post_type( 'contest_cpt', [
+		$this->register_posttype( 'contest_cpt', [
 			'hierarchical' => TRUE,
 		] );
 
-		$this->register_post_type( 'apply_cpt' );
+		$this->register_posttype( 'apply_cpt' );
 
 		if ( is_admin() )
 			return;
@@ -579,8 +579,8 @@ class Contest extends gEditorial\Module
 
 			$args = [ $this->constant( 'contest_tax' ) => $post->post_name ];
 
-			if ( empty( $this->all_post_types ) )
-				$this->all_post_types = PostType::get( 2 );
+			if ( empty( $this->cache_posttypes ) )
+				$this->cache_posttypes = PostType::get( 2 );
 
 			echo '<span class="-counted">'.$this->nooped_count( 'connected', $count ).'</span>';
 
@@ -591,7 +591,7 @@ class Contest extends gEditorial\Module
 					'href'   => WordPress::getPostTypeEditLink( $posttype, 0, $args ),
 					'title'  => _x( 'View the connected list', 'Modules: Contest', GEDITORIAL_TEXTDOMAIN ),
 					'target' => '_blank',
-				], $this->all_post_types[$posttype] );
+				], $this->cache_posttypes[$posttype] );
 
 			echo Helper::getJoined( $list, ' <span class="-posttypes">(', ')</span>' );
 

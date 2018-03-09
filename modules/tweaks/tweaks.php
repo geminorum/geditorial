@@ -368,7 +368,7 @@ class Tweaks extends gEditorial\Module
 	public function add_meta_boxes( $posttype, $post )
 	{
 		$screen = get_current_screen();
-		$object = get_post_type_object( $posttype );
+		$object = PostType::object( $posttype );
 
 		if ( in_array( $posttype, $this->get_setting( 'post_mainbox', [] ) ) ) {
 
@@ -883,7 +883,7 @@ class Tweaks extends gEditorial\Module
 		if ( $this->check_hidden_metabox( $box ) )
 			return;
 
-		$posttype = get_post_type_object( $post->post_type );
+		$posttype = PostType::object( $post->post_type );
 
 		echo $this->wrap_open( '-admin-metabox' );
 			$this->actions( 'mainbox', $post, $box );

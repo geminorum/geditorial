@@ -306,7 +306,7 @@ class Book extends gEditorial\Module
 
 	public function after_setup_theme()
 	{
-		$this->register_post_type_thumbnail( 'publication_cpt' );
+		$this->register_posttype_thumbnail( 'publication_cpt' );
 	}
 
 	public function p2p_init()
@@ -360,7 +360,7 @@ class Book extends gEditorial\Module
 			'show_in_quick_edit' => TRUE,
 		], 'publication_cpt' );
 
-		$this->register_post_type( 'publication_cpt' );
+		$this->register_posttype( 'publication_cpt' );
 
 		$this->register_shortcode( 'cover_shortcode' );
 
@@ -445,7 +445,7 @@ class Book extends gEditorial\Module
 			'meta_box_cb' => FALSE,
 		], 'publication_cpt' );
 
-		$this->add_post_type_fields( $this->constant( 'publication_cpt' ) );
+		$this->add_posttype_fields( $this->constant( 'publication_cpt' ) );
 	}
 
 	public function dashboard_glance_items( $items )

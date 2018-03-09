@@ -1081,7 +1081,7 @@ class Module extends Base
 		return $list;
 	}
 
-	public function add_post_type_fields( $posttype, $fields = NULL, $type = 'meta', $append = TRUE )
+	public function add_posttype_fields( $posttype, $fields = NULL, $type = 'meta', $append = TRUE )
 	{
 		if ( is_null( $fields ) )
 			$fields = $this->fields[$posttype];
@@ -1544,7 +1544,7 @@ class Module extends Base
 		setcookie( $this->cookie, '', time() - 3600, COOKIEPATH, COOKIE_DOMAIN, FALSE );
 	}
 
-	public function get_post_type_labels( $constant )
+	public function get_posttype_labels( $constant )
 	{
 		if ( ! empty( $this->strings['labels'][$constant] ) )
 			return $this->strings['labels'][$constant];
@@ -1570,7 +1570,7 @@ class Module extends Base
 		return $labels;
 	}
 
-	protected function get_post_type_supports( $constant )
+	protected function get_posttype_supports( $constant )
 	{
 		if ( isset( $this->options->settings[$constant.'_supports'] ) )
 			return $this->options->settings[$constant.'_supports'];
@@ -1611,7 +1611,7 @@ class Module extends Base
 		return gEditorial()->roles->constant( 'base_type' );
 	}
 
-	public function register_post_type( $constant, $atts = [], $taxonomies = [ 'post_tag' ] )
+	public function register_posttype( $constant, $atts = [], $taxonomies = [ 'post_tag' ] )
 	{
 		if ( is_null( $taxonomies ) )
 			$taxonomies = $this->taxonomies();
@@ -1621,8 +1621,8 @@ class Module extends Base
 
 		$args = self::recursiveParseArgs( $atts, [
 			'taxonomies'    => $taxonomies,
-			'labels'        => $this->get_post_type_labels( $constant ),
-			'supports'      => $this->get_post_type_supports( $constant ),
+			'labels'        => $this->get_posttype_labels( $constant ),
+			'supports'      => $this->get_posttype_supports( $constant ),
 			'description'   => isset( $this->strings['labels'][$constant]['description'] ) ? $this->strings['labels'][$constant]['description'] : '',
 			'menu_icon'     => $this->get_posttype_icon( $constant ),
 			'menu_position' => 4,
@@ -1812,7 +1812,7 @@ class Module extends Base
 	}
 
 	// use this on 'after_setup_theme'
-	public function register_post_type_thumbnail( $constant )
+	public function register_posttype_thumbnail( $constant )
 	{
 		if ( ! $this->get_setting( 'thumbnail_support', FALSE ) )
 			return;
@@ -1997,7 +1997,7 @@ class Module extends Base
 
 	public function add_meta_box_author( $constant, $callback = 'post_author_meta_box' )
 	{
-		$posttype = get_post_type_object( $this->constant( $constant ) );
+		$posttype = PostType::object( $this->constant( $constant ) );
 
 		if ( ! apply_filters( $this->base.'_module_metabox_author', TRUE, $posttype->name ) )
 			return;
@@ -2074,7 +2074,7 @@ class Module extends Base
 			return $title;
 
 		if ( is_null( $edit_cap ) )
-			$edit_cap = $this->caps['settings'];
+			$edit_cap = isset( $this->caps['settings'] ) ? $this->caps['settings'] : 'manage_options';
 
 		if ( TRUE === $edit_cap || current_user_can( $edit_cap ) ) {
 
@@ -2112,8 +2112,7 @@ class Module extends Base
 
 	public function get_meta_box_title_posttype( $constant, $url = NULL, $title = NULL )
 	{
-		$posttype = $this->constant( $constant );
-		$object   = get_post_type_object( $posttype );
+		$object = PostType::object( $this->constant( $constant ) );
 
 		if ( is_null( $title ) )
 			$title = $this->get_string( 'meta_box_title', $constant, 'misc', $object->labels->name );
@@ -2124,7 +2123,7 @@ class Module extends Base
 		if ( current_user_can( $object->cap->edit_others_posts ) ) {
 
 			if ( is_null( $url ) )
-				$url = WordPress::getPostTypeEditLink( $posttype );
+				$url = WordPress::getPostTypeEditLink( $object->name );
 
 			$action = $this->get_string( 'meta_box_action', $constant, 'misc', _x( 'Manage', 'Module: MetaBox Default Action', GEDITORIAL_TEXTDOMAIN ) );
 			$title.= ' <span class="postbox-title-action"><a href="'.esc_url( $url ).'" target="_blank">'.$action.'</a></span>';
@@ -2531,8 +2530,8 @@ class Module extends Base
 			$this->cache_column_icon = $this->get_column_icon( FALSE,
 				NULL, $this->strings['p2p'][$constant]['title']['to'] );
 
-		if ( empty( $this->cache_post_types ) )
-			$this->cache_post_types = PostType::get( 2 );
+		if ( empty( $this->cache_posttypes ) )
+			$this->cache_posttypes = PostType::get( 2 );
 
 		$posttypes = array_unique( array_map( function( $r ){
 			return $r->post_type;
@@ -2557,7 +2556,7 @@ class Module extends Base
 					'href'   => WordPress::getPostTypeEditLink( $posttype, 0, $args ),
 					'title'  => _x( 'View the connected list', 'Module: P2P', GEDITORIAL_TEXTDOMAIN ),
 					'target' => '_blank',
-				], $this->cache_post_types[$posttype] );
+				], $this->cache_posttypes[$posttype] );
 
 			echo Helper::getJoined( $list, ' <span class="-posttypes">(', ')</span>' );
 

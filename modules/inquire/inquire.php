@@ -5,6 +5,7 @@ defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Core\HTML;
+use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\User;
 // use geminorum\gEditorial\Templates\Inquire as ModuleTemplate;
 
@@ -118,7 +119,7 @@ class Inquire extends gEditorial\Module
 				'show_in_rest'        => FALSE,
 			];
 
-		$this->register_post_type( 'inquiry_cpt', $args );
+		$this->register_posttype( 'inquiry_cpt', $args );
 	}
 
 	// protected function get_module_templates()
@@ -157,7 +158,7 @@ class Inquire extends gEditorial\Module
 	// @REF: https://herbmiller.me/2014/09/21/wordpress-capabilities-restrict-add-new-allowing-edit/
 	public function admin_menu()
 	{
-		$posttype = get_post_type_object( $this->constant( 'inquiry_cpt' ) );
+		$posttype = PostType::object( $this->constant( 'inquiry_cpt' ) );
 		add_submenu_page( 'edit.php?post_type='.$posttype->name, '', '', $posttype->cap->edit_posts, $this->classs() );
 		$this->filter( 'add_menu_classes' );
 	}

@@ -9,6 +9,7 @@ use geminorum\gEditorial\Core\Arraay;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\URL;
 use geminorum\gEditorial\Core\WordPress;
+use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\Taxonomy;
 use geminorum\gEditorial\WordPress\Theme;
 
@@ -86,7 +87,7 @@ class Entry extends gEditorial\Module
 
 	public function after_setup_theme()
 	{
-		$this->register_post_type_thumbnail( 'entry_cpt' );
+		$this->register_posttype_thumbnail( 'entry_cpt' );
 	}
 
 	public function init()
@@ -101,7 +102,7 @@ class Entry extends gEditorial\Module
 			'show_in_nav_menus'  => TRUE,
 		], 'entry_cpt' );
 
-		$this->register_post_type( 'entry_cpt' );
+		$this->register_posttype( 'entry_cpt' );
 
 		$this->register_shortcode( 'section_shortcode' );
 
@@ -349,7 +350,7 @@ class Entry extends gEditorial\Module
 
 		} else {
 
-			$object = get_post_type_object( $posttype );
+			$object = PostType::object( $posttype );
 
 			Theme::resetQuery( [
 				'ID'         => 0,
@@ -401,7 +402,7 @@ class Entry extends gEditorial\Module
 
 	public function get_add_new( $title = FALSE )
 	{
-		$posttype = get_post_type_object( $this->constant( 'entry_cpt' ) );
+		$posttype = PostType::object( $this->constant( 'entry_cpt' ) );
 
 		if ( ! current_user_can( $posttype->cap->create_posts ) )
 			return '';

@@ -85,7 +85,7 @@ class Pitches extends gEditorial\Module
 
 	public function after_setup_theme()
 	{
-		$this->register_post_type_thumbnail( 'idea_cpt' );
+		$this->register_posttype_thumbnail( 'idea_cpt' );
 	}
 
 	public function init()
@@ -104,7 +104,7 @@ class Pitches extends gEditorial\Module
 			'show_in_quick_edit' => TRUE,
 		], 'idea_cpt' );
 
-		$this->register_post_type( 'idea_cpt' );
+		$this->register_posttype( 'idea_cpt' );
 	}
 
 	public function current_screen( $screen )

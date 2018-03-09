@@ -108,7 +108,7 @@ class Series extends gEditorial\Module
 		] );
 
 		foreach ( $this->posttypes() as $posttype )
-			$this->add_post_type_fields( $posttype, $this->fields[$this->constant( 'post_cpt' )], 'series' );
+			$this->add_posttype_fields( $posttype, $this->fields[$this->constant( 'post_cpt' )], 'series' );
 
 		if ( is_admin() )
 			$this->action( 'save_post', 3, 20 );

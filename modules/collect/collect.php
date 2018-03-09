@@ -184,7 +184,7 @@ class Collect extends gEditorial\Module
 
 	public function after_setup_theme()
 	{
-		$this->register_post_type_thumbnail( 'collection_cpt' );
+		$this->register_posttype_thumbnail( 'collection_cpt' );
 	}
 
 	public function init()
@@ -212,7 +212,7 @@ class Collect extends gEditorial\Module
 				'show_in_nav_menus'  => TRUE,
 			], $this->posttypes( 'collection_cpt' ) );
 
-		$this->register_post_type( 'collection_cpt', [
+		$this->register_posttype( 'collection_cpt', [
 			'hierarchical' => TRUE,
 			'rewrite'      => [
 				'feeds' => (bool) $this->get_setting( 'posttype_feeds', FALSE ),
@@ -352,8 +352,8 @@ class Collect extends gEditorial\Module
 
 	public function meta_init()
 	{
-		$this->add_post_type_fields( $this->constant( 'collection_cpt' ) );
-		$this->add_post_type_fields( $this->constant( 'post_cpt' ) );
+		$this->add_posttype_fields( $this->constant( 'collection_cpt' ) );
+		$this->add_posttype_fields( $this->constant( 'post_cpt' ) );
 	}
 
 	public function dashboard_glance_items( $items )
@@ -678,8 +678,8 @@ class Collect extends gEditorial\Module
 
 			$args = [ $this->constant( 'collection_tax' ) => $post->post_name ];
 
-			if ( empty( $this->all_post_types ) )
-				$this->all_post_types = PostType::get( 2 );
+			if ( empty( $this->cache_posttypes ) )
+				$this->cache_posttypes = PostType::get( 2 );
 
 			echo '<span class="-counted">'.$this->nooped_count( 'connected', $count ).'</span>';
 
@@ -690,7 +690,7 @@ class Collect extends gEditorial\Module
 					'href'   => WordPress::getPostTypeEditLink( $posttype, 0, $args ),
 					'title'  => _x( 'View the connected list', 'Modules: Collect', GEDITORIAL_TEXTDOMAIN ),
 					'target' => '_blank',
-				], $this->all_post_types[$posttype] );
+				], $this->cache_posttypes[$posttype] );
 
 			echo Helper::getJoined( $list, ' <span class="-posttypes">(', ')</span>' );
 

@@ -7,6 +7,7 @@ use geminorum\gEditorial\Ajax;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\WordPress;
+use geminorum\gEditorial\WordPress\PostType;
 
 class Drafts extends gEditorial\Module
 {
@@ -180,7 +181,7 @@ class Drafts extends gEditorial\Module
 
 		foreach ( $this->posttypes() as $posttype ) {
 
-			$object = get_post_type_object( $posttype );
+			$object = PostType::object( $posttype );
 
 			if ( ! current_user_can( $object->cap->edit_posts ) )
 				continue;

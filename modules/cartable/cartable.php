@@ -8,6 +8,7 @@ use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\WordPress;
+use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\Taxonomy;
 use geminorum\gEditorial\WordPress\User;
 
@@ -277,7 +278,7 @@ class Cartable extends gEditorial\Module
 		if ( isset( $_POST['post_type'] )
 			&& in_array( $_POST['post_type'], $this->posttypes() ) ) {
 
-			$posttype = get_post_type_object( $_POST['post_type'] );
+			$posttype = PostType::object( $_POST['post_type'] );
 
 			// override the cap
 			if ( $cap === $posttype->cap->edit_others_posts )
