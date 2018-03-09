@@ -4,6 +4,10 @@
 /// gEditorial Partials: Admin Settings ----------------------------------------
 
 .geditorial-admin-wrap {
+  body.iframe & {
+    margin: 0 10px 0 12px;
+  }
+
   p.submit {
     .button-primary:active {
       vertical-align: baseline;
@@ -63,16 +67,14 @@
     line-height: 1.5;
 
     @media only screen and (max-width: 650px) {
-      & {
-        float: none;
-        clear: both;
-        left: 0;
-        top: 0;
-        right: 0;
-        margin: 10px 0;
-        width: 100%;
-        max-width: 280px;
-      }
+      float: none;
+      clear: both;
+      left: 0;
+      top: 0;
+      right: 0;
+      margin: 10px 0;
+      width: 100%;
+      max-width: 280px;
     }
   }
 }

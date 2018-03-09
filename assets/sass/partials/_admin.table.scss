@@ -26,6 +26,14 @@ table.base-table-list {
       width: 200px;
     }
   }
+
+  .-cell {
+    .field-wrap-summary {
+      ul {
+        margin: 0;
+      }
+    }
+  }
 }
 
 

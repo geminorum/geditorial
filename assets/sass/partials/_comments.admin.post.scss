@@ -1,11 +1,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-/// Module: Activities: Admin Post ---------------------------------------------
+/// Module: Comments: Admin Post -----------------------------------------------
 
-#geditorial-activities.postbox {
+.geditorial-wrap.-admin-postbox.-comments-supported {
   .inside {
-    margin: 0;
+    margin: 0 !important;
     padding: 0;
 
     > p {
@@ -14,9 +14,8 @@
     }
   }
 
-  // div.-no-logs,
-  div.-add-log,
-  div.-manual-log {
+  div.-add-comment,
+  div.-form-comment {
     padding: 8px 5px;
 
     textarea {
@@ -32,28 +31,35 @@
     }
 
     .button-primary {
-      float: left;
+      float: right;
       margin: 0;
     }
   }
 
-  // div.-no-logs {
-  //   p {
-  //     color: $gray-light;
-  //     font-size: smaller;
-  //     margin: 0 4px;
-  //   }
-  // }
+  .-status {
+    color: $gray-light;
+    font-size: smaller;
+    margin-left: 2px;
+    padding: 0 4px;
+  }
 
-  div.-add-log {
-    span.-message {
-      color: $gray-light;
-      font-size: smaller;
-      padding: 0 4px;
+  .-message {
+    display: inline-block;
+
+    > div {
+      margin: 0 0 0 2px;
+      padding: 0 8px 4px 6px;
+      background-color: transparent;
+      box-shadow: none;
+
+      p {
+        margin: 0 !important;
+        line-height: 1.1;
+      }
     }
   }
 
-  div.-manual-log {
+  div.-form-comment {
     p {
       margin: 4px 0 0;
       // text-align: left;
@@ -61,7 +67,7 @@
   }
 
   td.column-primary {
-    div.-manual-log {
+    div.-form-comment {
       padding: 8px 0;
     }
   }
@@ -71,12 +77,16 @@
 
     border: 0 none;
 
+    tr {
+      // background-color: transparent;
+    }
+
     td {
       // vertical-align: top;
       padding: 4px 6px;
 
       p {
-        line-height: 1;
+        line-height: 1.5;
         margin: 0 0 6px;
 
         &:last-child {

@@ -26,6 +26,23 @@
       }
     }
 
+    &.field-wrap-desc {
+      color: $gray-light;
+
+      &:hover {
+        color: $gray-darker;
+      }
+
+      p {
+        margin: 0 0 .5em;
+        font-size: 0.89em;
+
+        &:last-of-type {
+          margin-bottom: 0;
+        }
+      }
+    }
+
     &.field-wrap-empty {
 
       margin-bottom: 0;
@@ -50,6 +67,15 @@
     &.field-wrap-inputtext {
       input {
         width: 100%;
+      }
+    }
+
+    &.field-wrap-inputcode {
+      input {
+        width: 100%;
+
+        /*rtl:ignore*/
+        direction: ltr;
       }
     }
 
@@ -118,6 +144,14 @@
             font-size: 22px;
             margin-top: 4px;
             margin-right: 4px;
+          }
+
+          .geditorial-icon svg {
+            width: 26px;
+            height: 26px;
+            margin-top: 2px;
+            padding-right: 4px;
+            vertical-align: top;
           }
         }
       }
@@ -249,6 +283,11 @@
             margin-bottom: 0;
           }
 
+          img.avatar {
+            float: right;
+            margin: 0 0 2px 2px;
+          }
+
           label {
             display: block;
           }
@@ -351,6 +390,14 @@
   &.closed {
     .toggle-indicator:before {
       content: "\f140";
+    }
+  }
+
+  .inside {
+    .-wrap.-excerpt {
+      p:last-of-type {
+        margin-bottom: 0;
+      }
     }
   }
 }

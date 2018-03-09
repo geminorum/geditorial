@@ -2,13 +2,12 @@
 @import "partials/base";
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-@import 'partials/drafts.adminbar.all';
+@import "partials/drafts.adminbar.all";
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
 #wp-admin-bar-geditorial {
-
   > a {
     padding: 0 5px !important;
   }
@@ -22,7 +21,7 @@
     display: inline;
     padding: 2px 5px;
     font-size: 10px;
-    font-weight: bold;
+    font-weight: 700;
     text-shadow: none;
   }
 
@@ -34,14 +33,12 @@
   }
 
   .ab-submenu .ab-item {
-
-    > .geditorial-spinner {
-
-    }
+    > .geditorial-spinner {}
   }
 
   li.-danger .ab-item {
     color: $brand-danger !important;
+
     &:hover {
       color: darken($brand-danger, 20%) !important;
     }
@@ -49,9 +46,7 @@
 }
 
 #wpadminbar {
-
   .geditorial-adminbar-node {
-
     > a.ab-item {
       position: relative;
 
@@ -66,7 +61,13 @@
     }
   }
 
-  .geditorial-adminbar-wrap {}
+  .geditorial-adminbar-wrap {
+    &.geditorial-audit {
+      .ab-empty-item {
+        font-size: smaller;
+      }
+    }
+  }
 
   .geditorial-adminbar-box-wrap {
 
@@ -82,12 +83,5 @@
     input[type="checkbox"] {
       background-color: #464b50;
     }
-  }
-}
-
-#wp-admin-bar-geditorial-audit-box {
-
-  .ab-empty-item {
-    font-size: smaller;
   }
 }

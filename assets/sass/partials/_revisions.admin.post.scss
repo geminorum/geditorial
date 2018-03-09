@@ -17,7 +17,7 @@
     color: #a00;
 
     &:hover {
-      color: red;
+      color: $brand-danger;
     }
   }
 
@@ -96,6 +96,18 @@ ul.post-revisions,
 
     &.-success {
       color: #79ba49;
+    }
+  }
+}
+
+// side column
+#postbox-container-1 {
+  ul.post-revisions {
+    li {
+      margin-bottom: 3px;
+      font-size: 0.89em;
+
+      // FIXME: must hide the user display name / time ago
     }
   }
 }

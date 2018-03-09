@@ -1,10 +1,17 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-/// Module: Activities: Admin All ----------------------------------------------
+/// gEditorial Partials: Listtable: Admin ALL ----------------------------------
 
-.geditorial-activity-box,
-.geditorial-admin-comments-box {
+.geditorial-listtable {
+  td > p {
+    margin: 0 0 0.6em !important;
+
+    &:last-of-type {
+      margin-bottom: 0;
+    }
+  }
+
   .-reply-action {
     display: none;
     transition: all 0.3s ease;
