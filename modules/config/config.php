@@ -442,6 +442,7 @@ class Config extends gEditorial\Module
 
 		$module = self::req( 'module', FALSE );
 
+		$this->settings_disable( $module );
 		$this->settings_reset( $module );
 		$this->settings_save( $module );
 
@@ -460,6 +461,24 @@ class Config extends gEditorial\Module
 			return;
 
 		$this->register_help_tabs();
+	}
+
+	public function settings_disable( $module = FALSE )
+	{
+		if ( ! isset( $_POST['disable'], $_POST['geditorial_module_name'] ) )
+			return FALSE;
+
+		if ( ! $module = gEditorial()->get_module_by( 'name', sanitize_key( $_POST['geditorial_module_name'] ) ) )
+			return FALSE;
+
+		if ( ! $this->nonce_verify( 'settings', NULL, $module->name ) )
+			self::cheatin();
+
+		if ( gEditorial()->update_module_option( $module->name, 'enabled', FALSE ) )
+			WordPress::redirectReferer( [ 'message' => 'disabled', 'module' => FALSE ] );
+
+		else
+			WordPress::redirectReferer( 'error' );
 	}
 
 	public function settings_reset( $module = FALSE )

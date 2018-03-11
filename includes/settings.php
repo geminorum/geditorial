@@ -739,8 +739,9 @@ class Settings extends Core\Base
 	{
 		return [
 			'resetting' => self::success( _x( 'Settings reset.', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
-			'optimized' => self::success( _x( 'Tables optimized.', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
 			'updated'   => self::success( _x( 'Settings updated.', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
+			'disabled'  => self::success( _x( 'Module disabled.', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
+			'optimized' => self::success( _x( 'Tables optimized.', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
 			'purged'    => self::success( _x( 'Data purged.', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
 			'maked'     => self::success( _x( 'File/Folder created.', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),
 			'mailed'    => self::success( _x( 'Mail sent successfully.', 'Settings: Message', GEDITORIAL_TEXTDOMAIN ) ),

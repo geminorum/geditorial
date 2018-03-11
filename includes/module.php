@@ -769,6 +769,7 @@ class Module extends Base
 	{
 		$this->register_button( 'submit', NULL, TRUE );
 		$this->register_button( 'reset', NULL, 'reset', TRUE );
+		$this->register_button( 'disable', _x( 'Disable Module', 'Module: Button', GEDITORIAL_TEXTDOMAIN ), 'danger' );
 
 		foreach ( $this->get_module_links() as $link )
 			if ( ! empty( $link['context'] ) && in_array( $link['context'], [ 'tools', 'reports', 'listtable' ] ) )
