@@ -67,11 +67,11 @@ class Config extends gEditorial\Module
 		);
 
 		$hook_tools = add_submenu_page(
-			( $can ? $this->base.'-settings' : 'index.php' ),
+			( $can ? $this->base.'-settings' : 'tools.php' ),
 			_x( 'Editorial Tools', 'Modules: Config: Menu Title', GEDITORIAL_TEXTDOMAIN ),
 			( $can
 				? _x( 'Tools', 'Modules: Config: Menu Title', GEDITORIAL_TEXTDOMAIN )
-				: _x( 'My Tools', 'Modules: Config: Menu Title', GEDITORIAL_TEXTDOMAIN )
+				: _x( 'Editorial Tools', 'Modules: Config: Menu Title', GEDITORIAL_TEXTDOMAIN )
 			),
 			$this->caps['tools'],
 			$this->base.'-tools',

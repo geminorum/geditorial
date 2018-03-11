@@ -57,9 +57,9 @@ class Settings extends Core\Base
 	}
 
 	// FIXME: MUST DEPRICATE: problem with dashboard
-	public static function toolsURL( $full = TRUE, $dashboard = FALSE )
+	public static function toolsURL( $full = TRUE, $tools_menu = FALSE )
 	{
-		$relative = $dashboard ? 'index.php?page='.self::TOOLS : 'admin.php?page='.self::TOOLS;
+		$relative = $tools_menu ? 'tools.php?page='.self::TOOLS : 'admin.php?page='.self::TOOLS;
 
 		if ( $full )
 			return get_admin_url( NULL, $relative );
