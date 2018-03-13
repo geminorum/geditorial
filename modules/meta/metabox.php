@@ -273,7 +273,7 @@ class Meta extends gEditorial\MetaBox
 		$html.= '<span class="screen-reader-text">'.esc_attr_x( 'Click to toggle', 'MetaBox', GEDITORIAL_TEXTDOMAIN ).'</span>';
 		$html.= '<span class="toggle-indicator" aria-hidden="true"></span></button>';
 		$html.= '<h2 class="hndle"><span>'.$title.'</span></h2><div class="inside">';
-		$html.= '<div class="geditorial-admin-wrap-textbox geditorial-wordcount-wrap">';
+		$html.= '<div class="geditorial-admin-wrap-textbox">';
 		$html.= '<div class="-wrap field-wrap field-wrap-textarea">';
 
 		$atts = [
@@ -302,8 +302,6 @@ class Meta extends gEditorial\MetaBox
 			$atts['data']['ortho'] = 'html';
 
 		$html.= HTML::tag( 'textarea', $atts, esc_textarea( self::getPostMeta( $post->ID, $field ) ) );
-		$html.= Helper::htmlWordCount( ( 'geditorial-meta-'.$field.( FALSE === $key ? '' : '-'.$key ) ), $post->post_type );
-
 		$html.= '</div></div></div></div>';
 
 		echo $html;

@@ -6,6 +6,7 @@ use geminorum\gEditorial;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Listtable;
 use geminorum\gEditorial\MetaBox;
+use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
@@ -155,6 +156,13 @@ class Tweaks extends gEditorial\Module
 					'values'      => $this->get_posttypes_support_mainbox(),
 				],
 				[
+					'field'       => 'post_excerpt',
+					'type'        => 'posttypes',
+					'title'       => _x( 'Advanced Excerpt', 'Modules: Tweaks: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Replaces the default Post Excerpt meta box with a superior editing experience.', 'Modules: Tweaks: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'values'      => $this->get_posttypes_support_excerpt(),
+				],
+				[
 					'field'       => 'category_search',
 					'title'       => _x( 'Category Search', 'Modules: Tweaks: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Replaces the category selector to include searching categories', 'Modules: Tweaks: Setting Description', GEDITORIAL_TEXTDOMAIN ),
@@ -163,11 +171,6 @@ class Tweaks extends gEditorial\Module
 					'field'       => 'checklist_tree',
 					'title'       => _x( 'Checklist Tree', 'Modules: Tweaks: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Preserves the category hierarchy on the post editing screen', 'Modules: Tweaks: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-				],
-				[
-					'field'       => 'excerpt_count',
-					'title'       => _x( 'Excerpt Count', 'Modules: Tweaks: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Display word count for excerpt textareas', 'Modules: Tweaks: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 				],
 			],
 			'_comments' => [
@@ -252,6 +255,23 @@ class Tweaks extends gEditorial\Module
 		return array_diff_key( $supported, array_flip( $excludes ) );
 	}
 
+	private function get_posttypes_support_excerpt()
+	{
+		$supported = get_post_types_by_support( 'excerpt' );
+		$posttypes = [];
+		$excludes  = [
+			'attachment',
+			'inquiry',
+		];
+
+		foreach ( PostType::get() as $posttype => $label )
+			if ( in_array( $posttype, $supported )
+				&& ! in_array( $posttype, $excludes ) )
+					$posttypes[$posttype] = $label;
+
+		return $posttypes;
+	}
+
 	public function init_ajax()
 	{
 		if ( $this->is_inline_save( $_REQUEST, $this->posttypes() ) )
@@ -272,9 +292,6 @@ class Tweaks extends gEditorial\Module
 
 				$enqueue = TRUE;
 			}
-
-			if ( $this->get_setting( 'excerpt_count', FALSE ) )
-				$enqueue = TRUE;
 
 			if ( $this->get_setting( 'category_search', FALSE ) )
 				$enqueue = TRUE;
@@ -389,11 +406,8 @@ class Tweaks extends gEditorial\Module
 			);
 		}
 
-		if ( $this->get_setting( 'excerpt_count', FALSE )
-			&& post_type_supports( $posttype, 'excerpt' ) ) {
-
-			add_filter( $this->base.'_module_metabox_excerpt', '__return_false' );
-			// remove_meta_box( 'postexcerpt', $screen, 'normal' );
+		if ( post_type_supports( $posttype, 'excerpt' )
+			&& in_array( $posttype, $this->get_setting( 'post_excerpt', [] ) ) ) {
 
 			add_meta_box( 'postexcerpt',
 				empty( $object->labels->excerpt_metabox ) ? __( 'Excerpt' ) : $object->labels->excerpt_metabox,
@@ -990,21 +1004,29 @@ class Tweaks extends gEditorial\Module
 		echo '</select><div>';
 	}
 
-	// @REF: `post_excerpt_meta_box()`
 	public function do_metabox_excerpt( $post, $box )
 	{
-		echo '<div class="geditorial-admin-wrap-textbox geditorial-wordcount-wrap">';
+		$settings = [
+			'media_buttons' => FALSE,
+			'textarea_rows' => 5,
+			'editor_class'   => 'editor-status-counts i18n-multilingual', // qtranslate-x
+			'teeny'         => TRUE,
+			'tinymce'       => FALSE,
+			'quicktags'     => [ 'buttons' => 'link,em,strong,li,ul,ol,code' ],
+		];
+
+		echo '<div class="geditorial-admin-wrap-textbox -wordcount-wrap">';
 
 			echo '<label class="screen-reader-text" for="excerpt">';
 				_e( 'Excerpt' );
 			echo '</label>';
 
-			echo '<textarea rows="1" cols="40" name="excerpt" id="excerpt">';
-				echo $post->post_excerpt; // textarea_escaped
-			echo '</textarea>';
+			wp_editor( html_entity_decode( $post->post_excerpt ), 'excerpt', $settings );
 
-			echo Helper::htmlWordCount( 'excerpt', $post->post_type );
+			echo Helper::editorStatusInfo( 'excerpt' );
 
 		echo '</div>';
+
+		Scripts::enqueue( 'all.wordcount', [ 'jquery', 'word-count', 'underscore' ] );
 	}
 }

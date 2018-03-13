@@ -1,10 +1,9 @@
-/* global jQuery, wp, gEditorial */
+/* global jQuery, gEditorial */
 
 jQuery(function ($) {
   var settings = $.extend({}, {
     checklist_tree: false,
-    category_search: false,
-    excerpt_count: false
+    category_search: false
   }, gEditorial.tweaks.settings);
 
   if (settings.checklist_tree) {
@@ -25,7 +24,6 @@ jQuery(function ($) {
     var $input = $('<input class="category-search" type="search" value="" placeholder="' + gEditorial.tweaks.strings.search_placeholder + '" title="' + gEditorial.tweaks.strings.search_title + '" />');
 
     $('.inside > div.categorydiv').each(function () {
-      // var $tax = $(this);
       var $row = $input.clone(true);
 
       $row.prependTo(this)
@@ -41,64 +39,5 @@ jQuery(function ($) {
         })
         .show();
     });
-  }
-
-  // FIXME: https://github.com/sheabunge/visual-term-description-editor/blob/master/js/wordcount.js
-  // FIXME: move this to Writing module
-  if (settings.excerpt_count) {
-    if (wp.utils) {
-      // var counter = new wp.utils.WordCounter();
-
-      $('div.geditorial-wordcount-wrap').each(function () {
-        var $content = $(this).find('textarea');
-        var $count = $(this).find('.geditorial-wordcount .-chars');
-        var prevCount = 0;
-        // var contentEditor;
-
-        $content.bind('keyup', function (e) {
-          var text = $(this).val();
-          // var count = counter.count(text);
-          // var count = text.split(" ").join("").length;
-          var count = text.trim().length;
-
-          if (count !== prevCount) {
-            $count.text(count);
-          }
-
-          prevCount = count;
-        });
-
-        $(this).find('.geditorial-wordcount').show();
-
-        // FIXME: check for max/min
-
-        // FIXME: use debounce
-
-        // function update() {
-        //   var text = $content.val(),
-        //     count = counter.count( text );
-        //
-        //   if ( count !== prevCount ) {
-        //     $count.text( count );
-        //   }
-        //
-        //   prevCount = count;
-        // }
-        //
-        // $( document ).on( 'tinymce-editor-init', function( event, editor ) {
-        //   if ( editor.id !== 'content' ) {
-        //     return;
-        //   }
-        //
-        //   contentEditor = editor;
-        //
-        //   editor.on( 'nodechange keyup', _.debounce( update, 1000 ) );
-        // } );
-        //
-        // $content.on( 'input keyup', _.debounce( update, 1000 ) );
-        //
-        // update();
-      });
-    }
   }
 });

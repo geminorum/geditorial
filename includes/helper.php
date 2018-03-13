@@ -742,18 +742,15 @@ class Helper extends Core\Base
 		return $wrap ? HTML::warning( $message, FALSE ) : $message;
 	}
 
-	// CAUTION: must wrap in `.geditorial-wordcount-wrap` along with the textarea
-	public static function htmlWordCount( $for = 'excerpt', $posttype = 'post', $data = [] )
+	public static function editorStatusInfo( $target = 'excerpt' )
 	{
-		$defaults = [
-			'min' => '0',
-			'max' => '0',
-		];
+		$html = '<div class="-wordcount hide-if-no-js" data-target="'.$target.'">';
+		$html.= sprintf( _x( 'Characters: %s', 'Helper', GEDITORIAL_TEXTDOMAIN ), '<span class="char-count">'.Number::format( '0' ).'</span>' );
+		$html.= ' | ';
+		$html.= sprintf( _x( 'Words: %s', 'Helper', GEDITORIAL_TEXTDOMAIN ), '<span class="word-count">'.Number::format( '0' ).'</span>' );
+		$html.= '</div>';
 
-		return HTML::tag( 'div', [
-			'class' => [ static::BASE.'-wordcount', 'hide-if-no-js' ],
-			'data'  => apply_filters( static::BASE.'_helper_wordcount_data', array_merge( $data, $defaults ), $for, $posttype ),
-		], sprintf( _x( 'Letter Count: %s', 'Helper', GEDITORIAL_TEXTDOMAIN ), '<span class="-chars">0</span>' ) );
+		echo HTML::wrap( $html, '-editor-status-info' );
 	}
 
 	public static function htmlCount( $count, $title_attr = NULL )

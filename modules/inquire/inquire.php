@@ -195,7 +195,7 @@ class Inquire extends gEditorial\Module
 	public function edit_form_after_title( $post )
 	{
 		echo $this->wrap_open( '-edit-form-after-title' );
-			MetaBox::fieldPostExcerpt( $post,
+			MetaBox::fieldPostExcerptEditor( $post,
 				$this->get_string( 'excerpt_metabox', 'inquiry_cpt', 'misc' ),
 				! $this->role_can( 'excerpt' )
 			);

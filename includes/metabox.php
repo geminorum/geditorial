@@ -509,7 +509,49 @@ class MetaBox extends Core\Base
 			echo HTML::wrap( $html, 'field-wrap field-wrap-select' );
 	}
 
-	public static function fieldPostExcerpt( $post, $title = '', $locked = FALSE )
+	public static function fieldPostExcerptEditor( $post, $title = NULL, $locked = FALSE )
+	{
+		$settings = [
+			'media_buttons' => FALSE,
+			'textarea_rows' => 5,
+			'editor_class'   => 'editor-status-counts i18n-multilingual', // qtranslate-x
+			'teeny'         => TRUE,
+			'tinymce'       => FALSE,
+			'quicktags'     => [ 'buttons' => 'link,em,strong,li,ul,ol,code' ],
+		];
+
+		if ( is_null( $title ) )
+			$title = __( 'Excerpt' );
+
+		$html = '<div id="postexcerpt" class="postbox '.static::BASE.'-wrap -admin-postbox">';
+		$html.= '<button type="button" class="handlediv button-link" aria-expanded="true">';
+		$html.= '<span class="screen-reader-text">'.esc_attr_x( 'Click to toggle', 'MetaBox', GEDITORIAL_TEXTDOMAIN ).'</span>';
+		$html.= '<span class="toggle-indicator" aria-hidden="true"></span></button>';
+		$html.= '<h2 class="hndle"><span>'.$title.'</span></h2><div class="inside">';
+		$html.= '<div class="'.static::BASE.'-admin-wrap-textbox -wordcount-wrap">';
+		$html.= '<div class="-wrap field-wrap field-wrap-textarea">';
+		$html.= '<label class="screen-reader-text" for="excerpt">'.$title.'</label>';
+
+		echo $html;
+
+		if ( $locked ) {
+
+			echo HTML::wrap( Text::autoP( $post->post_excerpt ), '-excerpt' );
+
+		} else {
+
+			wp_editor( html_entity_decode( $post->post_excerpt ), 'excerpt', $settings );
+
+			echo Helper::editorStatusInfo( 'excerpt' );
+
+			Scripts::enqueue( 'all.wordcount', [ 'jquery', 'word-count', 'underscore' ] );
+		}
+
+		echo '</div></div></div></div>';
+	}
+
+	// FIXME: deprecated
+	public static function fieldPostExcerpt( $post, $title = NULL, $locked = FALSE )
 	{
 		if ( is_null( $title ) )
 			$title = __( 'Excerpt' );
@@ -519,7 +561,7 @@ class MetaBox extends Core\Base
 		$html.= '<span class="screen-reader-text">'.esc_attr_x( 'Click to toggle', 'MetaBox', GEDITORIAL_TEXTDOMAIN ).'</span>';
 		$html.= '<span class="toggle-indicator" aria-hidden="true"></span></button>';
 		$html.= '<h2 class="hndle"><span>'.$title.'</span></h2><div class="inside">';
-		$html.= '<div class="'.static::BASE.'-admin-wrap-textbox '.static::BASE.'-wordcount-wrap">';
+		$html.= '<div class="'.static::BASE.'-admin-wrap-textbox">';
 		$html.= '<div class="-wrap field-wrap field-wrap-textarea">';
 		$html.= '<label class="screen-reader-text" for="excerpt">'.$title.'</label>';
 
@@ -533,9 +575,6 @@ class MetaBox extends Core\Base
 
 		if ( ! $locked )
 			$html.= '</textarea>';
-
-		if ( ! $locked )
-			$html.= Helper::htmlWordCount( 'excerpt', $post->post_type );
 
 		$html.= '</div></div></div></div>';
 
