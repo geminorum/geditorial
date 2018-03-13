@@ -104,7 +104,7 @@
         app.resetImage(this, event);
       });
 
-    $('#the-list').on('click', 'a.editinline', function (event) {
+    $('#the-list').on('click', '.editinline', function (event) {
       var tag = $(this).parents('tr').attr('id');
       app.inlineImage(tag, event);
       app.inlineColor(tag, event);

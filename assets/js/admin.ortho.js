@@ -6,7 +6,7 @@
   o.t = {
     text: '#titlewrap input, input#attachment_alt, input#tag-name, #edittag input#name, [data-' + m + '=\'text\']',
     markdown: '[data-' + m + '=\'markdown\']',
-    html: 'textarea#excerpt, textarea#attachment_caption, textarea#tag-description, #edittag textarea#description, [data-' + m + '=\'html\']'
+    html: 'textarea#excerpt:not(.wp-editor-area), textarea#attachment_caption, textarea#tag-description, #edittag textarea#description, [data-' + m + '=\'html\']'
   };
 
   o.i = {
@@ -15,7 +15,7 @@
   };
 
   o.s = $.extend({}, {
-    button_virastar: '<span class="dashicons dashicons-text">',
+    button_virastar: '<span class="dashicons dashicons-text"></span>',
     button_virastar_title: 'Apply Virastar!',
     qtag_virastar: 'Virastar!',
     qtag_virastar_title: 'Apply Virastar!',
@@ -157,7 +157,7 @@
         $(this).data(m, t)
           .addClass('target-' + m)
           .add($(o.b))
-        .wrapAll('<span class="' + m + '-input-wrap ' + m + '-input-' + t + '-wrap"></span>');
+          .wrapAll('<span class="' + m + '-input-wrap ' + m + '-input-' + t + '-wrap"></span>');
       });
 
       $('a.do-' + m).on('click', function (e) {
