@@ -163,6 +163,11 @@ class Tweaks extends gEditorial\Module
 					'values'      => $this->get_posttypes_support_excerpt(),
 				],
 				[
+					'field'       => 'after_title_excerpt',
+					'title'       => _x( 'Excerpt After Title', 'Modules: Tweaks: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Moves up advanced excerpt to after title field.', 'Modules: Tweaks: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+				],
+				[
 					'field'       => 'category_search',
 					'title'       => _x( 'Category Search', 'Modules: Tweaks: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Replaces the category selector to include searching categories', 'Modules: Tweaks: Setting Description', GEDITORIAL_TEXTDOMAIN ),
@@ -409,11 +414,15 @@ class Tweaks extends gEditorial\Module
 		if ( post_type_supports( $posttype, 'excerpt' )
 			&& in_array( $posttype, $this->get_setting( 'post_excerpt', [] ) ) ) {
 
+			// remove_meta_box( 'postexcerpt', $screen, 'normal' );
+
+			MetaBox::classEditorBox( $screen );
+
 			add_meta_box( 'postexcerpt',
 				empty( $object->labels->excerpt_metabox ) ? __( 'Excerpt' ) : $object->labels->excerpt_metabox,
 				[ $this, 'do_metabox_excerpt' ],
 				$screen,
-				'normal'
+				$this->get_setting( 'after_title_excerpt' ) ? 'after_title' : 'normal'
 			);
 		}
 	}
@@ -1006,27 +1015,6 @@ class Tweaks extends gEditorial\Module
 
 	public function do_metabox_excerpt( $post, $box )
 	{
-		$settings = [
-			'media_buttons' => FALSE,
-			'textarea_rows' => 5,
-			'editor_class'   => 'editor-status-counts i18n-multilingual', // qtranslate-x
-			'teeny'         => TRUE,
-			'tinymce'       => FALSE,
-			'quicktags'     => [ 'buttons' => 'link,em,strong,li,ul,ol,code' ],
-		];
-
-		echo '<div class="geditorial-admin-wrap-textbox -wordcount-wrap">';
-
-			echo '<label class="screen-reader-text" for="excerpt">';
-				_e( 'Excerpt' );
-			echo '</label>';
-
-			wp_editor( html_entity_decode( $post->post_excerpt ), 'excerpt', $settings );
-
-			echo Helper::editorStatusInfo( 'excerpt' );
-
-		echo '</div>';
-
-		Scripts::enqueue( 'all.wordcount', [ 'jquery', 'word-count', 'underscore' ] );
+		MetaBox::fieldEditorBox( $post->post_excerpt );
 	}
 }

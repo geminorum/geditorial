@@ -268,7 +268,7 @@ class Meta extends gEditorial\MetaBox
 		if ( is_null( $title ) )
 			$title = self::getString( $field, $post->post_type );
 
-		$html = '<div id="geditorial-meta-'.$field.'-wrap" class="postbox geditorial-wrap -admin-postbox geditorial-meta-field-'.$field.'">';
+		$html = '<div id="geditorial-meta-'.$field.'-wrap" class="postbox geditorial-wrap -admin-postbox -admin-postbox-manual geditorial-meta-field-'.$field.'">';
 		$html.= '<button type="button" class="handlediv button-link" aria-expanded="true">';
 		$html.= '<span class="screen-reader-text">'.esc_attr_x( 'Click to toggle', 'MetaBox', GEDITORIAL_TEXTDOMAIN ).'</span>';
 		$html.= '<span class="toggle-indicator" aria-hidden="true"></span></button>';

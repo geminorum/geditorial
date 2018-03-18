@@ -5,6 +5,7 @@ defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Core\HTML;
+use geminorum\gEditorial\Core\Text;
 use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\User;
 // use geminorum\gEditorial\Templates\Inquire as ModuleTemplate;
@@ -141,8 +142,16 @@ class Inquire extends gEditorial\Module
 				$this->filter( 'post_updated_messages' );
 
 				if ( post_type_supports( $screen->post_type, 'excerpt' ) ) {
+
 					remove_meta_box( 'postexcerpt', $screen, 'normal' );
-					$this->action( 'edit_form_after_title' );
+					MetaBox::classEditorBox( $screen, $this->classs( 'question' ) );
+
+					add_meta_box( $this->classs( 'question' ),
+						$this->get_string( 'excerpt_metabox', 'inquiry_cpt', 'misc' ),
+						[ $this, 'do_metabox_excerpt' ],
+						$screen,
+						'after_title'
+					);
 				}
 
 			} else if ( 'edit' == $screen->base ) {
@@ -192,13 +201,16 @@ class Inquire extends gEditorial\Module
 		return array_merge( $messages, $this->get_bulk_post_updated_messages( 'inquiry_cpt', $counts ) );
 	}
 
-	public function edit_form_after_title( $post )
+	public function do_metabox_excerpt( $post, $box )
 	{
-		echo $this->wrap_open( '-edit-form-after-title' );
-			MetaBox::fieldPostExcerptEditor( $post,
-				$this->get_string( 'excerpt_metabox', 'inquiry_cpt', 'misc' ),
-				! $this->role_can( 'excerpt' )
+		if ( $this->role_can( 'excerpt' ) )
+			MetaBox::fieldEditorBox(
+				$post->post_excerpt,
+				'excerpt',
+				$this->get_string( 'excerpt_metabox', 'inquiry_cpt', 'misc' )
 			);
-		echo '</div>';
+
+		else
+			echo HTML::wrap( Text::autoP( $post->post_excerpt ), '-excerpt' );
 	}
 }

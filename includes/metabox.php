@@ -4,7 +4,6 @@ defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
-use geminorum\gEditorial\Core\Text;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\Taxonomy;
@@ -509,76 +508,49 @@ class MetaBox extends Core\Base
 			echo HTML::wrap( $html, 'field-wrap field-wrap-select' );
 	}
 
-	public static function fieldPostExcerptEditor( $post, $title = NULL, $locked = FALSE )
+	public static function classEditorBox( $screen, $id = 'postexcerpt' )
 	{
-		$settings = [
+		add_filter( 'postbox_classes_'.$screen->id.'_'.$id, function( $classes ) {
+			return array_merge( $classes, [ static::BASE.'-wrap', '-admin-postbox', '-admin-postbox-editorbox' ] );
+		} );
+	}
+
+	public static function fieldEditorBox( $content = '', $id = 'excerpt', $title = NULL, $atts = [] )
+	{
+		$args = self::args( $atts, [
 			'media_buttons' => FALSE,
 			'textarea_rows' => 5,
-			'editor_class'   => 'editor-status-counts i18n-multilingual', // qtranslate-x
+			'editor_class'  => 'editor-status-counts i18n-multilingual', // qtranslate-x
 			'teeny'         => TRUE,
 			'tinymce'       => FALSE,
 			'quicktags'     => [ 'buttons' => 'link,em,strong,li,ul,ol,code' ],
-		];
+		] );
 
 		if ( is_null( $title ) )
 			$title = __( 'Excerpt' );
 
-		$html = '<div id="postexcerpt" class="postbox '.static::BASE.'-wrap -admin-postbox">';
-		$html.= '<button type="button" class="handlediv button-link" aria-expanded="true">';
-		$html.= '<span class="screen-reader-text">'.esc_attr_x( 'Click to toggle', 'MetaBox', GEDITORIAL_TEXTDOMAIN ).'</span>';
-		$html.= '<span class="toggle-indicator" aria-hidden="true"></span></button>';
-		$html.= '<h2 class="hndle"><span>'.$title.'</span></h2><div class="inside">';
-		$html.= '<div class="'.static::BASE.'-admin-wrap-textbox -wordcount-wrap">';
-		$html.= '<div class="-wrap field-wrap field-wrap-textarea">';
-		$html.= '<label class="screen-reader-text" for="excerpt">'.$title.'</label>';
+		echo '<div class="-wordcount-wrap">';
 
-		echo $html;
+			echo '<label class="screen-reader-text" for="'.$id.'">'.$title.'</label>';
 
-		if ( $locked ) {
+			wp_editor( html_entity_decode( $content ), $id, $args );
 
-			echo HTML::wrap( Text::autoP( $post->post_excerpt ), '-excerpt' );
+			echo self::editorStatusInfo( $id );
 
-		} else {
+		echo '</div>';
 
-			wp_editor( html_entity_decode( $post->post_excerpt ), 'excerpt', $settings );
-
-			echo Helper::editorStatusInfo( 'excerpt' );
-
-			Scripts::enqueue( 'all.wordcount', [ 'jquery', 'word-count', 'underscore' ] );
-		}
-
-		echo '</div></div></div></div>';
+		Scripts::enqueue( 'all.wordcount', [ 'jquery', 'word-count', 'underscore' ] );
 	}
 
-	// FIXME: deprecated
-	public static function fieldPostExcerpt( $post, $title = NULL, $locked = FALSE )
+	public static function editorStatusInfo( $target = 'excerpt' )
 	{
-		if ( is_null( $title ) )
-			$title = __( 'Excerpt' );
+		$html = '<div class="-wordcount hide-if-no-js" data-target="'.$target.'">';
+		$html.= sprintf( _x( 'Words: %s', 'MetaBox', GEDITORIAL_TEXTDOMAIN ), '<span class="word-count">'.Number::format( '0' ).'</span>' );
+		$html.= ' | ';
+		$html.= sprintf( _x( 'Chars: %s', 'MetaBox', GEDITORIAL_TEXTDOMAIN ), '<span class="char-count">'.Number::format( '0' ).'</span>' );
+		$html.= '</div>';
 
-		$html = '<div id="postexcerpt" class="postbox '.static::BASE.'-wrap -admin-postbox">';
-		$html.= '<button type="button" class="handlediv button-link" aria-expanded="true">';
-		$html.= '<span class="screen-reader-text">'.esc_attr_x( 'Click to toggle', 'MetaBox', GEDITORIAL_TEXTDOMAIN ).'</span>';
-		$html.= '<span class="toggle-indicator" aria-hidden="true"></span></button>';
-		$html.= '<h2 class="hndle"><span>'.$title.'</span></h2><div class="inside">';
-		$html.= '<div class="'.static::BASE.'-admin-wrap-textbox">';
-		$html.= '<div class="-wrap field-wrap field-wrap-textarea">';
-		$html.= '<label class="screen-reader-text" for="excerpt">'.$title.'</label>';
-
-		if ( ! $locked )
-			$html.= '<textarea rows="1" cols="40" name="excerpt" id="excerpt">';
-
-		if ( $locked )
-			$html.= HTML::wrap( Text::autoP( $post->post_excerpt ), '-excerpt' );
-		else
-			$html.= $post->post_excerpt; // textarea_escaped
-
-		if ( ! $locked )
-			$html.= '</textarea>';
-
-		$html.= '</div></div></div></div>';
-
-		echo $html;
+		echo HTML::wrap( $html, '-editor-status-info' );
 	}
 
 	// FIXME: finalize name/id

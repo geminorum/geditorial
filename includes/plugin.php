@@ -124,6 +124,7 @@ class Plugin
 
 	public function admin_init()
 	{
+		add_action( 'edit_form_after_title', [ $this, 'edit_form_after_title' ] );
 		add_action( 'admin_print_styles', [ $this, 'admin_print_styles' ] );
 		add_action( 'admin_print_footer_scripts', [ $this, 'footer_asset_config' ], 9 );
 	}
@@ -363,6 +364,12 @@ class Plugin
 			update_option( 'geditorial_options', $options, TRUE );
 
 		return $upgraded;
+	}
+
+	// @REF: https://wpartisan.me/?p=434
+	public function edit_form_after_title()
+	{
+		do_meta_boxes( get_current_screen(), 'after_title', $GLOBALS['post'] );
 	}
 
 	public function admin_print_styles()

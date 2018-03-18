@@ -742,17 +742,6 @@ class Helper extends Core\Base
 		return $wrap ? HTML::warning( $message, FALSE ) : $message;
 	}
 
-	public static function editorStatusInfo( $target = 'excerpt' )
-	{
-		$html = '<div class="-wordcount hide-if-no-js" data-target="'.$target.'">';
-		$html.= sprintf( _x( 'Characters: %s', 'Helper', GEDITORIAL_TEXTDOMAIN ), '<span class="char-count">'.Number::format( '0' ).'</span>' );
-		$html.= ' | ';
-		$html.= sprintf( _x( 'Words: %s', 'Helper', GEDITORIAL_TEXTDOMAIN ), '<span class="word-count">'.Number::format( '0' ).'</span>' );
-		$html.= '</div>';
-
-		echo HTML::wrap( $html, '-editor-status-info' );
-	}
-
 	public static function htmlCount( $count, $title_attr = NULL )
 	{
 		if ( is_null( $title_attr ) )
