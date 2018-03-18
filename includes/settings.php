@@ -150,6 +150,7 @@ class Settings extends Core\Base
 			'post-formats'    => _x( 'Post Formats', 'Settings: Option: PostType Support', GEDITORIAL_TEXTDOMAIN ),
 			'revisions'       => _x( 'Revisions', 'Settings: Option: PostType Support', GEDITORIAL_TEXTDOMAIN ),
 			'page-attributes' => _x( 'Post Attributes', 'Settings: Option: PostType Support', GEDITORIAL_TEXTDOMAIN ),
+			'amp'             => _x( 'Accelerated Mobile Pages', 'Settings: Option: PostType Support', GEDITORIAL_TEXTDOMAIN ),
 			'date-picker'     => _x( 'Persian Date: Date Picker', 'Settings: Option: PostType Support', GEDITORIAL_TEXTDOMAIN ),
 			'editorial-meta'  => _x( 'Editorial: Meta Fields', 'Settings: Option: PostType Support', GEDITORIAL_TEXTDOMAIN ),
 			'editorial-roles' => _x( 'Editorial: Custom Roles', 'Settings: Option: PostType Support', GEDITORIAL_TEXTDOMAIN ),

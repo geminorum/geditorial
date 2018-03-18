@@ -41,7 +41,7 @@ class Module extends Base
 	protected $partials        = [];
 	protected $partials_remote = [];
 
-	protected $posttypes_excluded = [ 'attachment', 'inbound_message' ];
+	protected $posttypes_excluded  = [ 'attachment', 'inbound_message' ];
 	protected $taxonomies_excluded = [];
 
 	protected $disable_no_customs    = FALSE; // not hooking module if has no posttypes/taxonomies
@@ -119,7 +119,7 @@ class Module extends Base
 			add_filter( 'geditorial_tinymce_strings', [ $this, 'tinymce_strings' ] );
 
 		if ( method_exists( $this, 'meta_init' ) )
-			add_action( 'geditorial_meta_init', [ $this, 'meta_init' ] );
+			add_action( 'geditorial_meta_init', [ $this, 'meta_init' ], 10, 2 );
 
 		add_action( 'after_setup_theme', [ $this, '_after_setup_theme' ], 1 );
 

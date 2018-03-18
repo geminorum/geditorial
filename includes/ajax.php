@@ -80,17 +80,14 @@ class Ajax extends Core\Base
 	public static function printJSConfig( $args, $object = 'gEditorial' )
 	{
 		$props = array_merge( $args, [
-			'_base'  => static::BASE,
-			'_url'   => esc_url_raw( admin_url( 'admin-ajax.php' ) ),
-			'_api'   => esc_url_raw( rest_url() ),
-			'_nonce' => wp_create_nonce( 'wp_rest' ),
-			'_dev'   => WordPress::isDev(),
+			'_base' => static::BASE,
+			'_url'  => esc_url_raw( admin_url( 'admin-ajax.php' ) ),
 		] );
 
 	?><script type="text/javascript">
 /* <![CDATA[ */
 	var <?php echo $object; ?> = <?php echo wp_json_encode( $props ); ?>;
-	<?php if ( $props['_dev'] ) {
+	<?php if ( WordPress::isDev() ) {
 		echo 'console.log("'.$object.'", '.$object.');'."\n";
 		echo "\t".'jQuery(document).on("gEditorialReady", function(e, module, app){console.log("'.$object.': "+module, app);});'."\n";
 	} ?>
