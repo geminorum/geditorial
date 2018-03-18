@@ -17,6 +17,8 @@ class Book extends gEditorial\Module
 
 	protected $partials = [ 'templates', 'helper', 'query' ];
 
+	protected $support_meta = FALSE;
+
 	public static function module()
 	{
 		return [
@@ -301,7 +303,9 @@ class Book extends gEditorial\Module
 	{
 		parent::default_buttons( $module );
 
-		$this->register_button( 'install_def_size_tax', _x( 'Install Default Sizes', 'Modules: Book: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
+		if ( $this->support_meta )
+			$this->register_button( 'install_def_size_tax',
+				_x( 'Install Default Sizes', 'Modules: Book: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
 	}
 
 	public function after_setup_theme()
@@ -320,6 +324,7 @@ class Book extends gEditorial\Module
 
 		if ( 'before' == $setting )
 			add_action( 'gnetwork_themes_content_before', [ $this, 'insert_content' ], 100 );
+
 		else if ( 'after' == $setting )
 			add_action( 'gnetwork_themes_content_after', [ $this, 'insert_content' ], 100 );
 	}
@@ -446,6 +451,8 @@ class Book extends gEditorial\Module
 		], 'publication_cpt' );
 
 		$this->add_posttype_fields( $this->constant( 'publication_cpt' ) );
+
+		$this->support_meta = TRUE;
 	}
 
 	public function dashboard_glance_items( $items )
