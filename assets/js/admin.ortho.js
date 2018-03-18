@@ -1,17 +1,24 @@
 /* global jQuery, QTags, gEditorial, Virastar */
 
-(function ($, p, m) {
+(function ($, p, module) {
   var o = {};
 
-  o.t = {
-    text: '#titlewrap input, input#attachment_alt, input#tag-name, #edittag input#name, [data-' + m + '=\'text\']',
-    markdown: '[data-' + m + '=\'markdown\']',
-    html: 'textarea#excerpt:not(.wp-editor-area), textarea#attachment_caption, textarea#tag-description, #edittag textarea#description, [data-' + m + '=\'html\']'
-  };
+  var app = {
 
-  o.i = {
-    number: '[data-' + m + '=\'number\']'
-    // currency: '[data-' + m + '=\'currency\']',
+    settings: $.extend({}, {
+      virastar_on_paste: false
+    }, p[module].settings),
+
+    types: {
+      text: '#titlewrap input, input#attachment_alt, input#tag-name, #edittag input#name, [data-' + module + '=\'text\']',
+      markdown: '[data-' + module + '=\'markdown\']',
+      html: 'textarea#excerpt:not(.wp-editor-area), textarea#attachment_caption, textarea#tag-description, #edittag textarea#description, [data-' + module + '=\'html\']'
+    },
+
+    inputs: {
+      number: '[data-' + module + '=\'number\']'
+      // currency: '[data-' + module + '=\'currency\']',
+    }
   };
 
   o.s = $.extend({}, {
@@ -27,12 +34,12 @@
     qtag_download_title: 'Download text as markdown',
     qtag_nbsp: 'nbsp',
     qtag_nbsp_title: 'Non-Breaking SPace'
-  }, p[m].strings);
+  }, p[module].strings);
 
-  o.b = '<a href="#" class="do-' + m + '" title="' + o.s['button_virastar_title'] + '" tabindex="-1">' + o.s['button_virastar'] + '</a>';
-  o.w = '<span class="' + m + '-input-wrap"></span>';
+  o.b = '<a href="#" class="do-' + module + '" title="' + o.s['button_virastar_title'] + '" tabindex="-1">' + o.s['button_virastar'] + '</a>';
+  o.w = '<span class="' + module + '-input-wrap"></span>';
 
-  o.o = p[m].virastar || {};
+  o.o = p[module].virastar || {};
 
   o.v = {
     text: new Virastar($.extend({}, o.o, {
@@ -107,7 +114,16 @@
     }
   };
 
+  // map quicktag buttons to targeted editor id
   o.q = {
+    nbsp: '',
+    virastar: '',
+    swapquotes: 'content',
+    mswordnotes: 'content',
+    download: 'content'
+  };
+
+  o.qu = {
     nbsp: function (e, c, ed) {
       QTags.insertContent('\n\n' + '&nbsp;' + '\n\n');
     },
@@ -152,38 +168,40 @@
   };
 
   $(function () {
-    for (var t in o.t) {
-      $(o.t[t]).each(function () {
-        $(this).data(m, t)
-          .addClass('target-' + m)
+    for (var t in app.types) {
+      $(app.types[t]).each(function () {
+        $(this).data(module, t)
+          .addClass('target-' + module)
           .add($(o.b))
-          .wrapAll('<span class="' + m + '-input-wrap ' + m + '-input-' + t + '-wrap"></span>');
+          .wrapAll('<span class="' + module + '-input-wrap ' + module + '-input-' + t + '-wrap"></span>');
       });
 
-      $('a.do-' + m).on('click', function (e) {
+      $('a.do-' + module).on('click', function (e) {
         e.preventDefault();
-        var t = $(this).closest('.' + m + '-input-wrap').find('.target-' + m);
-        t.val(o.v[t.data(m)].cleanup(t.val()));
+        var t = $(this).closest('.' + module + '-input-wrap').find('.target-' + module);
+        t.val(o.v[t.data(module)].cleanup(t.val()));
       });
 
-      $('.target-' + m).on('paste', function () {
-        var e = this;
-        setTimeout(function () {
-          var t = $(e);
-          t.val(o.v[t.data(m)].cleanup(t.val()));
-        }, 100);
-      });
+      if (app.settings.virastar_on_paste) {
+        $('.target-' + module).on('paste', function () {
+          var e = this;
+          setTimeout(function () {
+            var t = $(e);
+            t.val(o.v[t.data(module)].cleanup(t.val()));
+          }, 100);
+        });
+      }
     }
 
-    for (var i in o.i) {
-      $(o.i[i]).each(function () {
+    for (var i in app.inputs) {
+      $(app.inputs[i]).each(function () {
         o.n[i].call(this);
       });
     }
 
     if (typeof QTags !== 'undefined') {
       for (var b in o.q) {
-        QTags.addButton(b, o.s['qtag_' + b], o.q[b], '', '', o.s['qtag_' + b + '_title']);
+        QTags.addButton(b, o.s['qtag_' + b], o.qu[b], '', '', o.s['qtag_' + b + '_title'], 0, o.q[b]);
       }
     }
 
@@ -192,6 +210,6 @@
       document.post.title.focus();
     } catch (e) {}
 
-    $(document).trigger('gEditorialReady', [ m, o ]);
+    $(document).trigger('gEditorialReady', [ module, o ]);
   });
 }(jQuery, gEditorial, 'ortho'));

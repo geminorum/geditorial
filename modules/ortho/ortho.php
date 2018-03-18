@@ -106,16 +106,29 @@ class Ortho extends gEditorial\Module
 		return [
 			'posttypes_option'  => 'posttypes_option',
 			'taxonomies_option' => 'taxonomies_option',
-			'_general' => [
+			'_virastar' => [
 				[
-					'field'   => 'virastar_options',
-					'type'    => 'checkbox',
-					'title'   => _x( 'Virastar Options', 'Modules: Ortho: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'default' => array_keys( $virastar_options ),
-					'values'  => $virastar_options,
+					'field'       => 'virastar_options',
+					'type'        => 'checkbox',
+					'title'       => _x( 'Virastar Options', 'Modules: Ortho: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'For more information, please see the library documentations.', 'Modules: Ortho: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'default'     => array_keys( $virastar_options ),
+					'values'      => $virastar_options,
+				],
+				[
+					'field'       => 'virastar_on_paste',
+					'title'       => _x( 'Virastar on Paste', 'Modules: Ortho: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Applies Virastar to pasted texts on targeted inputs.', 'Modules: Ortho: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 				],
 			],
 		];
+	}
+
+	public function settings_section_virastar()
+	{
+		Settings::fieldSection(
+			_x( 'Virastar!', 'Modules: Ortho: Setting Section Title', GEDITORIAL_TEXTDOMAIN )
+		);
 	}
 
 	protected function get_global_strings()
@@ -160,7 +173,12 @@ class Ortho extends gEditorial\Module
 		$virastar = Scripts::registerPackage( 'virastar',
 			NULL, [], $this->virastar_version );
 
+		// cleanup
+		$settings = $this->options->settings;
+		unset( $settings['virastar_options'] );
+
 		$this->enqueue_asset_js( [
+			'settings' => $settings,
 			'strings'  => $this->strings['js'],
 			'virastar' => $this->negate_virastar_options(),
 		], NULL, [ 'jquery', $virastar ] );
