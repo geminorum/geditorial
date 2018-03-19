@@ -4,6 +4,7 @@ defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\Core\Arraay;
 use geminorum\gEditorial\Core\HTML;
@@ -86,6 +87,7 @@ class Today extends gEditorial\Module
 		return [
 			'misc' => [
 				'featured'            => _x( 'Cover Image', 'Modules: Today: Day CPT: Featured', GEDITORIAL_TEXTDOMAIN ),
+				'excerpt_metabox'     => _x( 'Summary', 'Modules: Today: Labels: Excerpt Box Title', GEDITORIAL_TEXTDOMAIN ),
 				'meta_box_title'      => _x( 'The Day', 'Modules: Today: Meta Box Title', GEDITORIAL_TEXTDOMAIN ),
 				'theday_column_title' => _x( 'Day', 'Modules: Today: Column Title', GEDITORIAL_TEXTDOMAIN ),
 			],
@@ -180,7 +182,7 @@ class Today extends gEditorial\Module
 				$this->_save_meta_supported( $screen->post_type );
 
 				$this->filter( 'post_updated_messages' );
-				$this->action( 'edit_form_advanced' );
+				$this->action( 'edit_form_after_editor' );
 
 				add_meta_box( $this->classs( 'supported' ),
 					$this->get_meta_box_title( 'day_cpt' ),
@@ -189,6 +191,19 @@ class Today extends gEditorial\Module
 					'side',
 					'high'
 				);
+
+				if ( post_type_supports( $screen->post_type, 'excerpt' ) ) {
+
+					remove_meta_box( 'postexcerpt', $screen, 'normal' );
+					MetaBox::classEditorBox( $screen, $this->classs( 'excerpt' ) );
+
+					add_meta_box( $this->classs( 'excerpt' ),
+						$this->get_string( 'excerpt_metabox', 'day_cpt', 'misc' ),
+						[ $this, 'do_metabox_excerpt' ],
+						$screen,
+						'after_title'
+					);
+				}
 
 			} else if ( in_array( $screen->post_type, $this->posttypes() ) ) {
 
@@ -274,6 +289,18 @@ class Today extends gEditorial\Module
 		$this->nonce_field( 'post_main' );
 	}
 
+	public function do_metabox_excerpt( $post, $box )
+	{
+		if ( $this->check_hidden_metabox( $box ) )
+			return;
+
+		MetaBox::fieldEditorBox(
+			$post->post_excerpt,
+			'excerpt',
+			$this->get_string( 'excerpt_metabox', 'day_cpt', 'misc' )
+		);
+	}
+
 	public function manage_posts_columns( $columns )
 	{
 		return Arraay::insert( $columns, [
@@ -354,7 +381,7 @@ class Today extends gEditorial\Module
 		], $this->get_the_day_constants() );
 	}
 
-	public function edit_form_advanced( $post )
+	public function edit_form_after_editor( $post )
 	{
 		if ( ! self::req( 'post' ) )
 			return HTML::desc( _x( 'You can connect posts to this day once you\'ve saved it for the first time.', 'Modules: Today', GEDITORIAL_TEXTDOMAIN ) );
