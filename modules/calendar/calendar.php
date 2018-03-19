@@ -7,6 +7,7 @@ use geminorum\gEditorial\Ajax;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Settings;
+use geminorum\gEditorial\Core\Arraay;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\WordPress;
@@ -61,8 +62,10 @@ class Calendar extends gEditorial\Module
 
 		// has no frontend
 
-		if ( $this->get_setting( 'admin_rowactions' ) )
+		if ( $this->get_setting( 'admin_rowactions' ) ) {
+			$this->filter( 'page_row_actions', 2 );
 			$this->filter( 'post_row_actions', 2 );
+		}
 	}
 
 	public function init_ajax()
@@ -141,6 +144,11 @@ class Calendar extends gEditorial\Module
 		$this->enqueue_asset_js( 'calendar', NULL, [ 'jquery', Scripts::pkgSortable() ] );
 	}
 
+	public function page_row_actions( $actions, $post )
+	{
+		return $this->post_row_actions( $actions, $post );
+	}
+
 	public function post_row_actions( $actions, $post )
 	{
 		if ( in_array( $post->post_status, [ 'trash', 'private', 'auto-draft' ] ) )
@@ -153,12 +161,14 @@ class Calendar extends gEditorial\Module
 			return $actions;
 
 		if ( $link = $this->get_calendar_link( $post ) )
-			$actions[$this->classs()] = HTML::tag( 'a', [
-				'href'   => $link,
-				'title'  => _x( 'View on Calendar', 'Modules: Calendar', GEDITORIAL_TEXTDOMAIN ),
-				'class'  => '-calendar',
-				'target' => '_blank',
-			], _x( 'Calendar', 'Modules: Calendar', GEDITORIAL_TEXTDOMAIN ) );
+			return Arraay::insert( $actions, [
+				$this->classs() => HTML::tag( 'a', [
+					'href'   => $link,
+					'title'  => _x( 'View on Calendar', 'Modules: Calendar', GEDITORIAL_TEXTDOMAIN ),
+					'class'  => '-calendar',
+					'target' => '_blank',
+				], _x( 'Calendar', 'Modules: Calendar', GEDITORIAL_TEXTDOMAIN ) ),
+			], 'view', 'before' );
 
 		return $actions;
 	}
