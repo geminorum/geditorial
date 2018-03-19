@@ -198,7 +198,6 @@ class Tube extends gEditorial\Module
 
 				$this->filter( 'get_default_comment_status', 3 );
 
-
 			} else if ( 'edit' == $screen->base ) {
 
 				$this->action_module( 'meta', 'column_row', 3, 12 );

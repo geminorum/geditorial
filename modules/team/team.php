@@ -9,8 +9,6 @@ use geminorum\gEditorial\Core\Third;
 class Team extends gEditorial\Module
 {
 
-	// FIXME: needs shortcode/widget
-
 	public static function module()
 	{
 		return [

@@ -267,6 +267,7 @@ class Tweaks extends gEditorial\Module
 		$excludes  = [
 			'attachment',
 			'inquiry',
+			'day',
 		];
 
 		foreach ( PostType::get() as $posttype => $label )
@@ -1015,6 +1016,9 @@ class Tweaks extends gEditorial\Module
 
 	public function do_metabox_excerpt( $post, $box )
 	{
+		if ( $this->check_hidden_metabox( $box ) )
+			return;
+
 		MetaBox::fieldEditorBox( $post->post_excerpt );
 	}
 }

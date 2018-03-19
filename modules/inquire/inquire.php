@@ -203,6 +203,9 @@ class Inquire extends gEditorial\Module
 
 	public function do_metabox_excerpt( $post, $box )
 	{
+		if ( $this->check_hidden_metabox( $box ) )
+			return;
+
 		if ( $this->role_can( 'excerpt' ) )
 			MetaBox::fieldEditorBox(
 				$post->post_excerpt,

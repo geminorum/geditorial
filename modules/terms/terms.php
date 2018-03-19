@@ -690,7 +690,7 @@ class Terms extends gEditorial\Module
 				$html.= '</ul></div>';
 
 			break;
-			default:
+			case 'color':
 
 				$html.= HTML::tag( 'input', [
 					'id'    => $this->classs( $field, 'id' ),
@@ -793,7 +793,7 @@ class Terms extends gEditorial\Module
 				] );
 
 			break;
-			case 'color':
+			default:
 				$html.= '<input type="text" class="ptitle" name="term-'.$field.'" value="" />';
 		}
 
