@@ -6,6 +6,7 @@ use geminorum\gEditorial;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\ShortCode;
+use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Core\Arraay;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
@@ -41,6 +42,10 @@ class Today extends gEditorial\Module
 					'title'       => _x( 'Fill The Day', 'Modules: Today: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Fills the current day info on newly drafted supported posttypes.', 'Modules: Today: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 				],
+			],
+			'_dashboard' => [
+				'adminmenu_roles',
+				'admin_rowactions',
 			],
 			'_frontend' => [
 				[
@@ -171,6 +176,71 @@ class Today extends gEditorial\Module
 		}
 	}
 
+	public function admin_menu()
+	{
+		$hook = add_submenu_page(
+			'index.php',
+			_x( 'Editorial Today', 'Modules: Today: Page Title', GEDITORIAL_TEXTDOMAIN ),
+			_x( 'My Today', 'Modules: Today: Menu Title', GEDITORIAL_TEXTDOMAIN ),
+			$this->role_can( 'adminmenu' ) ? 'read' : 'do_not_allow',
+			$this->get_adminmenu(),
+			[ $this, 'admin_today_page' ]
+		);
+
+		add_action( 'load-'.$hook, [ $this, 'admin_today_load' ] );
+	}
+
+	public function admin_today_load()
+	{
+		$this->register_help_tabs();
+		$this->actions( 'load', self::req( 'page', NULL ) );
+
+		$constants = $this->get_the_day_constants();
+
+		$this->the_day = ModuleHelper::getTheDayFromQuery( FALSE, $this->default_calendar(), $constants );
+
+		if ( 1 === count( $this->the_day ) )
+			$this->the_day = ModuleHelper::getTheDayFromToday( NULL, $this->the_day['cal'] );
+
+		$this->the_post = ModuleHelper::getDayPost( $this->the_day, $constants );
+
+		// $this->enqueue_asset_js();
+	}
+
+	public function admin_today_page()
+	{
+		Settings::wrapOpen( $this->key, $this->base, 'listtable' );
+
+			Settings::headerTitle( _x( 'Editorial Today', 'Modules: Today: Page Title', GEDITORIAL_TEXTDOMAIN ), FALSE );
+
+			echo '<div id="poststuff"><div id="post-body" class="metabox-holder columns-2">';
+				echo '<div id="postbox-container-2" class="postbox-container">';
+
+					$title = trim( ModuleHelper::titleTheDay( $this->the_day ), '[]' );
+
+					if ( ! empty( $this->the_post[0] ) )
+						$title = Helper::getPostTitle( $this->the_post[0] ).' ['.$title.']';
+
+					HTML::h3( $title );
+
+					$html = $this->the_day_content();
+					echo HTML::wrap( $html, $this->classs( 'today' ) );
+
+
+				echo '</div>';
+				echo '<div id="postbox-container-1" class="postbox-container">';
+
+					// self::dump( $this->the_day );
+					// self::dump( $this->the_post );
+
+				echo '</div>';
+			echo '</div></div>';
+
+
+			$this->settings_signature( 'listtable' );
+		Settings::wrapClose();
+	}
+
 	public function current_screen( $screen )
 	{
 		if ( 'post' == $screen->base ) {
@@ -225,6 +295,9 @@ class Today extends gEditorial\Module
 				$this->filter_true( 'disable_months_dropdown', 12 );
 				$this->filter( 'bulk_post_updated_messages', 2 );
 
+				if ( $this->get_setting( 'admin_rowactions' ) )
+					$this->filter( 'post_row_actions', 2 );
+
 				$this->_save_meta_supported( $screen->post_type );
 				$this->_edit_screen_supported( $screen->post_type );
 				$this->_admin_enabled();
@@ -232,6 +305,11 @@ class Today extends gEditorial\Module
 				$this->enqueue_asset_js( [], $screen );
 
 			} else if ( in_array( $screen->post_type, $this->posttypes() ) ) {
+
+				if ( $this->get_setting( 'admin_rowactions' ) ) {
+					$this->filter( 'page_row_actions', 2 );
+					$this->filter( 'post_row_actions', 2 );
+				}
 
 				$this->_save_meta_supported( $screen->post_type );
 				$this->_edit_screen_supported( $screen->post_type );
@@ -255,6 +333,46 @@ class Today extends gEditorial\Module
 	private function _save_meta_supported( $posttype )
 	{
 		add_action( 'save_post', [ $this, 'save_post_supported' ], 20, 3 );
+	}
+
+	public function page_row_actions( $actions, $post )
+	{
+		return $this->post_row_actions( $actions, $post );
+	}
+
+	public function post_row_actions( $actions, $post )
+	{
+		if ( in_array( $post->post_status, [ 'trash', 'private', 'auto-draft' ] ) )
+			return $actions;
+
+		if ( ! in_array( $post->post_type, $this->posttypes() )
+			&& $post->post_type != $this->constant( 'day_cpt' ) )
+				return $actions;
+
+		if ( $link = $this->get_today_admin_link( $post ) )
+			return Arraay::insert( $actions, [
+				$this->classs() => HTML::tag( 'a', [
+					'href'   => $link,
+					'title'  => _x( 'View on Today', 'Modules: Today', GEDITORIAL_TEXTDOMAIN ),
+					'class'  => '-today',
+					'target' => '_blank',
+				], _x( 'Today', 'Modules: Today', GEDITORIAL_TEXTDOMAIN ) ),
+			], 'view', 'before' );
+
+		return $actions;
+	}
+
+	private function get_today_admin_link( $post )
+	{
+		if ( ! $this->role_can( 'adminmenu' ) )
+			return FALSE;
+
+		$display_year = $post->post_type != $this->constant( 'day_cpt' );
+		$default_type = $this->default_calendar();
+
+		$the_day = ModuleHelper::getTheDayFromPost( $post, $default_type, $this->get_the_day_constants( $display_year ) );
+
+		return $this->get_adminmenu( FALSE, $the_day );
 	}
 
 	public function do_meta_box_supported( $post, $box )
@@ -566,7 +684,7 @@ class Today extends gEditorial\Module
 		return $template;
 	}
 
-	public function the_day_content( $content )
+	public function the_day_content( $content = '' )
 	{
 		global $post;
 
@@ -604,10 +722,13 @@ class Today extends gEditorial\Module
 			HTML::desc( _x( 'Nothing happened!', 'Modules: Today', GEDITORIAL_TEXTDOMAIN ) );
 		}
 
-		foreach ( $posttypes as $posttype )
-			$hiddens['post_type[]'] = $posttype;
+		if ( ! is_admin() ) {
 
-		echo $this->get_search_form( $hiddens );
+			foreach ( $posttypes as $posttype )
+				$hiddens['post_type[]'] = $posttype;
+
+			echo $this->get_search_form( $hiddens );
+		}
 
 		return HTML::wrap( ob_get_clean(), $this->classs( 'theday-content' ) );
 	}
