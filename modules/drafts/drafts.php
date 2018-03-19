@@ -92,8 +92,11 @@ class Drafts extends gEditorial\Module
 
 			} else if ( 'edit' == $screen->base ) {
 
-				if ( $this->get_setting( 'admin_rowactions' ) )
+				if ( $this->get_setting( 'admin_rowactions' ) ) {
+
+					$this->filter( 'page_row_actions', 2 );
 					$this->filter( 'post_row_actions', 2 );
+				}
 
 				$this->action_module( 'tweaks', 'column_attr', 1, 90 );
 			}
@@ -313,6 +316,11 @@ class Drafts extends gEditorial\Module
 				$posts = $wpdb->get_results( $wp_query->request );
 
 		return $posts;
+	}
+
+	public function page_row_actions( $actions, $post )
+	{
+		return $this->post_row_actions( $actions, $post );
 	}
 
 	public function post_row_actions( $actions, $post )
