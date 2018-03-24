@@ -3,7 +3,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 /// Module: Specs: Admin Post --------------------------------------------------
 
-.geditorial-admin-wrap-metabox.-specs, // FIXME: DEPRECATED
+// .geditorial-admin-wrap-metabox.-specs, // FIXME: DEPRECATED
 .geditorial-wrap.-admin-metabox.-specs {
   @include mainwrap();
   margin-top: 11px;
@@ -55,7 +55,7 @@
 
         .field-wrap {}
 
-        .field-wrap-textarea {
+        .-textarea {
           margin-bottom: 0;
         }
       }
@@ -66,9 +66,9 @@
     margin-bottom: 0;
 
     .dashicons,
-    .dashicons-before:before,
-    .field-wrap-inputtext,
-    .field-wrap-textarea {
+    .dashicons-before::before,
+    .field-wrap.-inputtext,
+    .field-wrap.-textarea {
       display: none;
     }
   }

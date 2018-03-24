@@ -24,6 +24,7 @@
 @import "partials/revisions.admin.post";
 @import "partials/tweaks.admin.post";
 @import "partials/workflow.admin.post";
+@import "partials/today.admin.post";
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 @import "partials/ortho.admin.all";
@@ -33,6 +34,15 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
+
+#after_title-sortables {
+  min-height: 10px; // to show the drop spot
+  margin: 10px 0 0;
+}
+
+#wp-content-editor-tools {
+  padding-top: 0 !important;
+}
 
 .geditorial-wrap.-edit-form-after-title,
 .geditorial-wrap.-admin-postbox.geditorial-meta-field-le {
@@ -53,7 +63,7 @@
 
 // Module: Meta
 .geditorial-admin-posttitle {
-  @extend %box-reset;
+  @include box-reset;
   font-size: 1.3em;
   padding: 3px 8px;
   width: 100%;
@@ -64,5 +74,11 @@
 
   &.geditorial-meta-field-st {
     margin: 2px 0 10px;
+  }
+}
+
+@media screen and (max-width: 782px) {
+  .geditorial-admin-wrap.-revisions .-purge {
+    float: left;
   }
 }

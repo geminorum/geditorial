@@ -3,7 +3,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 /// Module: Letter: Admin Post -------------------------------------------------
 
-.geditorial-admin-wrap-nobox.-letter {
+.geditorial-wrap.-admin-nobox.-letter {
   @include mainwrap;
 
   background-color: #fff;
@@ -59,7 +59,7 @@
   position: relative;
   margin-bottom: 5px;
 
-  &:before {
+  &::before {
     position: absolute;
   }
 

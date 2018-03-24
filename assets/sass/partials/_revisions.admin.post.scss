@@ -11,6 +11,7 @@
 // }
 
 .geditorial-admin-wrap.-revisions {
+  @include clearfix;
   padding: 10px;
   // text-align: left;
   .-purge {

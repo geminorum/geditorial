@@ -3,17 +3,17 @@
 ////////////////////////////////////////////////////////////////////////////////
 /// gEditorial Partials: Admin MetaBox -----------------------------------------
 
-.geditorial-admin-wrap-metabox, // FIXME: DEPRECATED
-.geditorial-wrap.-admin-metabox,
-.geditorial-admin-wrap-nobox,
-.geditorial-admin-wrap-textbox {
-  @include mainwrap();
-  margin-top: 12px;
+.geditorial-wrap {
+  &.-admin-nobox,
+  &.-admin-metabox {
+    @include mainwrap();
+    margin-top: 12px;
+  }
 
   .field-wrap {
     margin-bottom: 2px;
 
-    &.field-wrap-summary {
+    &.-summary {
       ol,
       ul {
         margin: 0;
@@ -26,7 +26,7 @@
       }
     }
 
-    &.field-wrap-desc {
+    &.-desc {
       color: $gray-light;
 
       &:hover {
@@ -43,8 +43,7 @@
       }
     }
 
-    &.field-wrap-empty {
-
+    &.-empty {
       margin-bottom: 0;
       padding: 4px 6px;
       font-size: 0.9em;
@@ -60,17 +59,15 @@
           text-decoration: underline;
         }
       }
-
-      span {}
     }
 
-    &.field-wrap-inputtext {
+    &.-inputtext {
       input {
         width: 100%;
       }
     }
 
-    &.field-wrap-inputcode {
+    &.-inputcode {
       input {
         width: 100%;
 
@@ -79,7 +76,7 @@
       }
     }
 
-    &.field-wrap-inputnumber {
+    &.-inputnumber {
       input {
         width: 32%;
 
@@ -88,20 +85,20 @@
       }
     }
 
-    &.field-wrap-inputtext-half {
+    &.-inputtext-half {
       input {
         width: 49%;
       }
     }
 
-    &.field-wrap-inputtext-date {
+    &.-inputtext-date {
       input {
         width: 32.5%;
         text-align: center;
       }
     }
 
-    &.field-wrap-textarea {
+    &.-textarea {
       textarea {
         display: block;
         width: 100%;
@@ -110,54 +107,84 @@
       }
     }
 
-    &.field-wrap-select {
+    &.-select {
       select {
         width: 100%;
       }
     }
 
-    &.field-wrap-buttons {
+    &.-buttons {
+      margin-bottom: -2px;
+
       .button, // DEPRECATED
       .-button {
         margin-bottom: 4px;
+      }
 
-        &.-button-danger {
-          color: $brand-danger;
+      .-button-danger {
+        color: $brand-danger;
 
-          &:hover,
-          .dashicons {
-            color: darken($brand-danger, 20%);
+        &:hover,
+        .dashicons {
+          color: darken($brand-danger, 20%);
+        }
+      }
+
+      .-button-full {
+        width: 100%;
+        padding-right: 7px;
+        padding-left: 7px;
+      }
+
+      .-button-icon {
+        padding-left: 5px;
+
+        .dashicons {
+          width: 22px !important;
+          height: 18px;
+          margin: 0 2px 0 -2px;
+          vertical-align: text-top;
+
+          &::before {
+            color: $gray-light;
+            font-size: 20px;
           }
         }
 
-        &.-button-full {
-          width: 100%;
-        }
+        .-iconsvg {
+          margin: 0 2px 0 -2px;
 
-        &.button-icon, // DEPRECATED
-        &.-button-icon {
-          padding-left: 3px;
-
-          .dashicons {
+          svg {
             width: 22px;
-            height: 22px;
-            font-size: 22px;
-            margin-top: 4px;
-            margin-right: 4px;
-          }
-
-          .geditorial-icon svg {
-            width: 26px;
-            height: 26px;
-            margin-top: 2px;
-            padding-right: 4px;
-            vertical-align: top;
+            height: 20px;
+            vertical-align: text-top;
+            color: $gray-light;
           }
         }
       }
+
+      // .-button-icon-OLD {
+      //   padding-left: 3px;
+      //
+      //   .dashicons {
+      //     width: 22px;
+      //     height: 22px;
+      //     font-size: 22px;
+      //     margin-top: 4px;
+      //     margin-right: 4px;
+      //   }
+      //
+      //   .geditorial-icon svg {
+      //     width: 26px;
+      //     height: 26px;
+      //     margin-top: 2px;
+      //     padding-right: 4px;
+      //     vertical-align: top;
+      //   }
+      // }
     }
 
-    &.field-wrap-image {
+    &.-image {
       img {
         max-width: 100%;
         max-height: 200px;
@@ -218,7 +245,6 @@
   }
 
   .field-wrap-list {
-
     background-color: #fdfdfd;
     border: solid 1px #ddd;
 
@@ -351,18 +377,30 @@
   }
 }
 
-.geditorial-admin-wrap-metabox, // FIXME: DEPRECATED
+// .geditorial-admin-wrap-metabox, // FIXME: DEPRECATED
 .geditorial-wrap.-admin-metabox {
   .field-wrap {
-    &.field-wrap-textarea {
+    &.-textarea {
       padding-left: 1px;
       margin-right: -1px;
     }
   }
 }
 
+// FIXME: DEPRECATED
+.geditorial-admin-wrap-textbox {
+  margin-top: 12px;
+
+  textarea {
+    display: block;
+    width: 100%;
+    margin: 0;
+    resize: vertical;
+  }
+}
+
 .geditorial-admin-dropbown {
-  @extend %box-reset;
+  @include box-reset;
   width: 100%;
 
   &.dropbown-ltr {
@@ -372,12 +410,12 @@
   }
 }
 
-.geditorial-wrap.-admin-postbox {
+.geditorial-wrap.-admin-postbox-manual {
   .handlediv.button-link {
     text-align: center;
   }
 
-  .toggle-indicator:before {
+  .toggle-indicator::before {
     content: "\f142";
     display: inline-block;
     font: 400 20px/1 dashicons;
@@ -388,7 +426,7 @@
   }
 
   &.closed {
-    .toggle-indicator:before {
+    .toggle-indicator::before {
       content: "\f140";
     }
   }
@@ -399,5 +437,29 @@
         margin-bottom: 0;
       }
     }
+  }
+}
+
+.geditorial-wrap.-admin-postbox-editorbox {
+  .inside {
+    margin: 0 !important;
+    padding: 0;
+  }
+
+  #excerpt {
+    margin: 0;
+    box-sizing: border-box;
+    border: none;
+  }
+
+  .wp-editor-container {
+    border: none;
+    margin-top: -1px;
+  }
+
+  .-editor-status-info {
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
   }
 }
