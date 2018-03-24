@@ -130,7 +130,7 @@ class Specs extends gEditorial\Module
 
 		$postmeta = $this->sanitize_post_meta(
 			$this->get_postmeta( $post_id ),
-			$this->post_type_fields( $post->post_type ),
+			$this->posttype_fields( $post->post_type ),
 			$post_id,
 			$post->post_type
 		);
@@ -295,7 +295,7 @@ class Specs extends gEditorial\Module
 		if ( ! Taxonomy::hasTerms( $tax ) )
 			return MetaBox::fieldEmptyTaxonomy( $tax );
 
-		$fields = $this->post_type_fields( $post->post_type );
+		$fields = $this->posttype_fields( $post->post_type );
 		$metas  = $this->get_postmeta( $post->ID, FALSE, [] );
 
 		$handle = '<span data-icon="dashicons" class="-handle dashicons dashicons-move" title="'._x( 'Sort me!', 'Modules: Specs: Sortable Handler', GEDITORIAL_TEXTDOMAIN ).'"></span>';
@@ -328,7 +328,7 @@ class Specs extends gEditorial\Module
 				'echo'             => 0,
 			] );
 
-			echo HTML::wrap( $html, 'field-wrap field-wrap-select' );
+			echo HTML::wrap( $html, 'field-wrap -select' );
 
 			echo '</div></div></li>';
 		}
@@ -360,7 +360,7 @@ class Specs extends gEditorial\Module
 					'echo'             => 0,
 				] );
 
-				echo HTML::wrap( $html, 'field-wrap field-wrap-select' );
+				echo HTML::wrap( $html, 'field-wrap -select' );
 
 		echo '</div></div></li></ul>';
 
@@ -382,7 +382,7 @@ class Specs extends gEditorial\Module
 				'placeholder' => $title,
 			], isset( $meta[$field] ) ? esc_textarea( $meta[$field] ) : '' );
 
-			echo HTML::wrap( $html, 'field-wrap field-wrap-textarea' );
+			echo HTML::wrap( $html, 'field-wrap -textarea' );
 		}
 
 		$field = 'spec_title';
@@ -399,7 +399,7 @@ class Specs extends gEditorial\Module
 				'autocomplete' => 'off',
 			] );
 
-			echo HTML::wrap( $html, 'field-wrap field-wrap-inputtext' );
+			echo HTML::wrap( $html, 'field-wrap -inputtext' );
 		}
 
 		echo '<input type="hidden" class="item-order" name="geditorial-specs-spec_order[]" value="'.$order.'" />';

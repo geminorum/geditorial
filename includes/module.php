@@ -99,7 +99,7 @@ class Module extends Base
 		$ui    = WordPress::mustRegisterUI( FALSE );
 
 		if ( $admin && $ui && $this->module->configure )
-			add_action( 'geditorial_settings_load', [ $this, 'register_settings' ] );
+			add_action( $this->base.'_settings_load', [ $this, 'register_settings' ] );
 
 		if ( $this->setup_disabled() )
 			return FALSE;
@@ -116,10 +116,10 @@ class Module extends Base
 			$this->action( 'widgets_init' );
 
 		if ( ! $ajax && method_exists( $this, 'tinymce_strings' ) )
-			add_filter( 'geditorial_tinymce_strings', [ $this, 'tinymce_strings' ] );
+			add_filter( $this->base.'_tinymce_strings', [ $this, 'tinymce_strings' ] );
 
 		if ( method_exists( $this, 'meta_init' ) )
-			add_action( 'geditorial_meta_init', [ $this, 'meta_init' ], 10, 2 );
+			add_action( $this->base.'_meta_init', [ $this, 'meta_init' ], 10, 2 );
 
 		add_action( 'after_setup_theme', [ $this, '_after_setup_theme' ], 1 );
 
@@ -129,7 +129,7 @@ class Module extends Base
 		$this->action( 'init', 0, $this->priority_init );
 
 		if ( $ui && method_exists( $this, 'adminbar_init' ) && $this->get_setting( 'adminbar_summary' ) )
-			add_action( 'geditorial_adminbar', [ $this, 'adminbar_init' ], $this->priority_adminbar_init, 2 );
+			add_action( $this->base.'_adminbar', [ $this, 'adminbar_init' ], $this->priority_adminbar_init, 2 );
 
 		if ( $admin ) {
 
@@ -155,10 +155,10 @@ class Module extends Base
 				$this->action( 'current_screen' );
 
 			if ( $ui && method_exists( $this, 'reports_settings' ) )
-				add_action( 'geditorial_reports_settings', [ $this, 'reports_settings' ] );
+				add_action( $this->base.'_reports_settings', [ $this, 'reports_settings' ] );
 
 			if ( $ui && method_exists( $this, 'tools_settings' ) )
-				add_action( 'geditorial_tools_settings', [ $this, 'tools_settings' ] );
+				add_action( $this->base.'_tools_settings', [ $this, 'tools_settings' ] );
 
 		} else {
 
@@ -646,7 +646,7 @@ class Module extends Base
 
 		foreach ( $this->posttypes() as $posttype ) {
 
-			$fields  = $this->posttype_all_fields( $posttype );
+			$fields  = $this->posttype_fields_all( $posttype );
 			$section = $posttype.'_fields';
 
 			if ( count( $fields ) ) {
@@ -911,7 +911,7 @@ class Module extends Base
 				if ( ! isset( $options['fields'][$posttype] ) )
 					$options['fields'][$posttype] = [];
 
-				foreach ( $this->posttype_all_fields( $posttype ) as $field => $args ) {
+				foreach ( $this->posttype_fields_all( $posttype ) as $field => $args ) {
 
 					if ( ! isset( $options['fields'][$posttype][$field] )
 						|| $options['fields'][$posttype][$field] != 'enabled' )
@@ -1006,34 +1006,56 @@ class Module extends Base
 		return [];
 	}
 
-	// enabled fields for a post type
-	public function post_type_fields( $posttype = 'post', $js = FALSE )
+	public function posttype_fields_all( $posttype = 'post', $field_type = NULL )
+	{
+		return PostType::supports( $posttype, ( is_null( $field_type ) ? $this->field_type : $field_type ).'_fields' );
+	}
+
+	public function posttype_fields_list( $posttype = 'post', $extra = [] )
+	{
+		$list = [];
+
+		foreach ( $this->posttype_fields( $posttype ) as $field )
+			$list[$field] = $this->get_string( $field, $posttype );
+
+		foreach ( $extra as $key => $val )
+			$list[$key] = $this->get_string( $val, $posttype );
+
+		return $list;
+	}
+
+	// enabled fields for a posttype
+	public function posttype_fields( $posttype = 'post', $js = FALSE )
 	{
 		$fields = [];
 
 		if ( isset( $this->options->fields[$posttype] )
-			&& is_array( $this->options->fields[$posttype] ) )
-				foreach ( $this->options->fields[$posttype] as $field => $enabled )
-					if ( $js )
-						$fields[$field] = (bool) $enabled;
-					else if ( $enabled )
-						$fields[] = $field;
+			&& is_array( $this->options->fields[$posttype] ) ) {
+
+			foreach ( $this->options->fields[$posttype] as $field => $enabled ) {
+
+				if ( $js )
+					$fields[$field] = (bool) $enabled;
+
+				else if ( $enabled )
+					$fields[] = $field;
+			}
+		}
 
 		return $fields;
 	}
 
 	// enabled fields with args for a post type
-	public function post_type_field_types( $posttype = 'post' )
+	public function posttype_field_types( $posttype = 'post', $field_type = NULL )
 	{
 		global $gEditorialPostTypeFields;
 
 		if ( isset( $gEditorialPostTypeFields[$posttype] ) )
 			return $gEditorialPostTypeFields[$posttype];
 
-		$fields = [];
-
-		$all = $this->posttype_all_fields( $posttype );
-		$enabled = $this->post_type_fields( $posttype );
+		$all     = $this->posttype_fields_all( $posttype, $field_type );
+		$enabled = $this->posttype_fields( $posttype );
+		$fields  = [];
 
 		foreach ( $enabled as $i => $field ) {
 
@@ -1068,20 +1090,6 @@ class Module extends Base
 		return $gEditorialPostTypeFields[$posttype];
 	}
 
-	// HELPER: for importer tools
-	public function post_type_fields_list( $posttype = 'post', $extra = [] )
-	{
-		$list = [];
-
-		foreach ( $this->post_type_fields( $posttype ) as $field )
-			$list[$field] = $this->get_string( $field, $posttype );
-
-		foreach ( $extra as $key => $val )
-			$list[$key] = $this->get_string( $val, $posttype );
-
-		return $list;
-	}
-
 	public function add_posttype_fields( $posttype, $fields = NULL, $type = 'meta', $append = TRUE )
 	{
 		if ( is_null( $fields ) )
@@ -1094,11 +1102,6 @@ class Module extends Base
 			$fields = array_merge( PostType::supports( $posttype, $type.'_fields' ), $fields );
 
 		add_post_type_support( $posttype, [ $type.'_fields' ], $fields );
-	}
-
-	public function posttype_all_fields( $posttype = 'post', $field_type = NULL )
-	{
-		return PostType::supports( $posttype, ( is_null( $field_type ) ? $this->field_type : $field_type ).'_fields' );
 	}
 
 	public function get_string( $string, $posttype = 'post', $group = 'titles', $fallback = FALSE )

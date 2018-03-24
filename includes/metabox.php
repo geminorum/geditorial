@@ -372,7 +372,7 @@ class MetaBox extends Core\Base
 		else
 			$html = '<span>'.$taxonomy->labels->not_found.'</span>';
 
-		echo HTML::wrap( $html, 'field-wrap field-wrap-empty' );
+		echo HTML::wrap( $html, 'field-wrap -empty' );
 	}
 
 	public static function fieldEmptyPostType( $posttype )
@@ -385,7 +385,7 @@ class MetaBox extends Core\Base
 			'target' => '_blank',
 		], $object->labels->not_found );
 
-		echo HTML::wrap( $html, 'field-wrap field-wrap-empty' );
+		echo HTML::wrap( $html, 'field-wrap -empty' );
 	}
 
 	public static function titleActionRefresh()
@@ -418,7 +418,7 @@ class MetaBox extends Core\Base
 			'title_with_meta'  => 'issue_number_line', // extra arg for the walker
 		] );
 
-		return $html ? HTML::wrap( $html, 'field-wrap field-wrap-select' ) : FALSE;
+		return $html ? HTML::wrap( $html, 'field-wrap -select' ) : FALSE;
 	}
 
 	public static function fieldPostMenuOrder( $post )
@@ -436,7 +436,7 @@ class MetaBox extends Core\Base
 			'data'        => [ 'ortho' => 'number' ],
 		] );
 
-		echo HTML::wrap( $html, 'field-wrap field-wrap-inputnumber' );
+		echo HTML::wrap( $html, 'field-wrap -inputnumber' );
 	}
 
 	// @REF: `post_slug_meta_box()`
@@ -454,7 +454,7 @@ class MetaBox extends Core\Base
 			'class'       => 'code-text',
 		] );
 
-		echo HTML::wrap( $html, 'field-wrap field-wrap-inputcode' );
+		echo HTML::wrap( $html, 'field-wrap -inputcode' );
 	}
 
 	// @REF: `post_author_meta_box()`
@@ -477,7 +477,7 @@ class MetaBox extends Core\Base
 
 		$html = '<label class="screen-reader-text" for="post_author_override">'.__( 'Author' ).'</label>'.$html;
 
-		echo HTML::wrap( $html, 'field-wrap field-wrap-select' );
+		echo HTML::wrap( $html, 'field-wrap -select' );
 	}
 
 	public static function fieldPostParent( $post, $check = TRUE, $posttype = NULL, $statuses = [ 'publish', 'future', 'draft' ] )
@@ -505,7 +505,7 @@ class MetaBox extends Core\Base
 		$html = wp_dropdown_pages( apply_filters( 'page_attributes_dropdown_pages_args', $args, $post ) );
 
 		if ( $html )
-			echo HTML::wrap( $html, 'field-wrap field-wrap-select' );
+			echo HTML::wrap( $html, 'field-wrap -select' );
 	}
 
 	public static function classEditorBox( $screen, $id = 'postexcerpt' )
@@ -590,7 +590,7 @@ class MetaBox extends Core\Base
 
 		if ( $terms )
 			echo HTML::tag( 'div', [
-				'class' => '-wrap field-wrap field-wrap-select',
+				'class' => '-wrap field-wrap -select',
 				'title' => $obj->labels->menu_name,
 			], $terms );
 		else

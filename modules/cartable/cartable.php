@@ -781,7 +781,7 @@ class Cartable extends gEditorial\Module
 		if ( ! $html )
 			$html.= '<li class="-row">'._x( 'This currently is <b>not</b> on any of your cartables.', 'Modules: Cartable', GEDITORIAL_TEXTDOMAIN ).'</li>';
 
-		return HTML::wrap( '<ul class="-rows">'.$html.'</ul>', 'field-wrap field-wrap-summary' );
+		return HTML::wrap( '<ul class="-rows">'.$html.'</ul>', 'field-wrap -summary' );
 	}
 
 	public function main_meta_box_users( $post, $box )

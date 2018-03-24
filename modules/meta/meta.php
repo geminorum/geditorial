@@ -16,7 +16,10 @@ use geminorum\gEditorial\Templates\Meta as ModuleTemplate;
 class Meta extends gEditorial\Module
 {
 	public $meta_key = '_gmeta';
+
 	protected $priority_init = 12;
+
+	protected $field_type = 'meta';
 
 	protected $partials = [ 'metabox', 'templates' ];
 
@@ -191,7 +194,7 @@ class Meta extends gEditorial\Module
 		$ct_tax_posttypes = [];
 
 		foreach ( $this->posttypes() as $posttype )
-			if ( in_array( 'ct', $this->post_type_fields( $posttype ) ) )
+			if ( in_array( 'ct', $this->posttype_fields( $posttype ) ) )
 				$ct_tax_posttypes[] = $posttype;
 
 		if ( count( $ct_tax_posttypes ) )
@@ -233,12 +236,12 @@ class Meta extends gEditorial\Module
 		if ( in_array( $screen->post_type, $this->posttypes() ) ) {
 
 			// bail if no fields enabled for this posttype
-			if ( ! count( $this->post_type_fields( $screen->post_type ) ) )
+			if ( ! count( $this->posttype_fields( $screen->post_type ) ) )
 				return;
 
 			if ( 'post' == $screen->base ) {
 
-				$fields   = $this->post_type_field_types( $screen->post_type );
+				$fields   = $this->posttype_field_types( $screen->post_type );
 				$contexts = Arraay::column( $fields, 'context' );
 				$metabox  = $this->classs( $screen->post_type );
 
@@ -282,9 +285,9 @@ class Meta extends gEditorial\Module
 
 				$this->action( 'save_post', 3 );
 
-				$localize = [ 'fields' => $this->post_type_fields( $screen->post_type, TRUE ) ];
+				$localize = [ 'fields' => $this->posttype_fields( $screen->post_type, TRUE ) ];
 
-				// foreach ( $this->post_type_fields( $screen->post_type ) as $field )
+				// foreach ( $this->posttype_fields( $screen->post_type ) as $field )
 				// 	$localize[$field] = $this->get_string( $field, $screen->post_type );
 
 				$this->enqueue_asset_js( $localize, $screen );
@@ -310,7 +313,7 @@ class Meta extends gEditorial\Module
 	public function do_meta_box( $post, $box, $fields = NULL, $context = 'box' )
 	{
 		if ( is_null( $fields ) )
-			$fields = $this->post_type_field_types( $post->post_type );
+			$fields = $this->posttype_field_types( $post->post_type );
 
 		foreach ( $fields as $field => $args ) {
 
@@ -362,7 +365,7 @@ class Meta extends gEditorial\Module
 		if ( ! empty( $box['args']['metabox'] ) && MetaBox::checkHidden( $box['args']['metabox'] ) )
 			return;
 
-		$fields = $this->post_type_field_types( $post->post_type );
+		$fields = $this->posttype_field_types( $post->post_type );
 
 		echo $this->wrap_open( '-admin-metabox' );
 
@@ -372,7 +375,7 @@ class Meta extends gEditorial\Module
 			do_action( 'geditorial_meta_do_meta_box', $post, $box, $fields, 'box' );
 
 		else
-			echo HTML::wrap( _x( 'No Meta Fields', 'Modules: Meta', GEDITORIAL_TEXTDOMAIN ), 'field-wrap field-wrap-empty' );
+			echo HTML::wrap( _x( 'No Meta Fields', 'Modules: Meta', GEDITORIAL_TEXTDOMAIN ), 'field-wrap -empty' );
 
 		do_action( 'geditorial_meta_box_after', $this->module, $post, $fields );
 
@@ -381,7 +384,7 @@ class Meta extends gEditorial\Module
 
 	public function default_meta_raw( $post )
 	{
-		$fields = $this->post_type_field_types( $post->post_type );
+		$fields = $this->posttype_field_types( $post->post_type );
 
 		if ( count( $fields ) ) {
 
@@ -417,7 +420,7 @@ class Meta extends gEditorial\Module
 			if ( ! current_user_can( $cap, $post_id ) )
 				return $postmeta;
 
-			$fields = $this->post_type_field_types( $posttype );
+			$fields = $this->posttype_field_types( $posttype );
 
 			if ( count( $fields ) ) {
 
@@ -504,7 +507,7 @@ class Meta extends gEditorial\Module
 		$this->set_meta( $post_id,
 			$this->sanitize_post_meta(
 				(array) $this->get_postmeta( $post->ID ),
-				$this->post_type_fields( $post->post_type ),
+				$this->posttype_fields( $post->post_type ),
 				$post->ID,
 				$post->post_type
 			)
@@ -520,7 +523,7 @@ class Meta extends gEditorial\Module
 
 	public function manage_posts_columns( $columns, $posttype )
 	{
-		if ( in_array( 'as', $this->post_type_fields( $posttype ) ) )
+		if ( in_array( 'as', $this->posttype_fields( $posttype ) ) )
 			unset( $columns['author'] );
 
 		return Arraay::insert( $columns, [
@@ -537,7 +540,7 @@ class Meta extends gEditorial\Module
 			return;
 
 		$meta    = (array) $this->get_postmeta( $post->ID );
-		$fields  = $this->post_type_field_types( $post->post_type );
+		$fields  = $this->posttype_field_types( $post->post_type );
 		$exclude = [ 'ot', 'st', 'highlight', 'as', 'ch', 'le', 'source_title', 'source_url' ];
 
 		echo '<div class="geditorial-admin-wrap-column -meta"><ul class="-rows">';
@@ -641,7 +644,7 @@ class Meta extends gEditorial\Module
 		if ( $this->hook() != $column_name )
 			return FALSE;
 
-		$fields = $this->post_type_fields( $posttype );
+		$fields = $this->posttype_fields( $posttype );
 
 		foreach ( [ 'ot', 'st', 'as' ] as $field ) {
 			if ( in_array( $field, $fields ) ) {
@@ -691,7 +694,7 @@ class Meta extends gEditorial\Module
 		if ( ! in_array( $post->post_type, $this->posttypes() ) )
 			return $display_name;
 
-		$fields = $this->post_type_fields( $post->post_type );
+		$fields = $this->posttype_fields( $post->post_type );
 
 		if ( ! in_array( 'as', $fields ) )
 			return $display_name;
@@ -747,7 +750,7 @@ class Meta extends gEditorial\Module
 			$this->do_settings_field( [
 				'type'         => 'select',
 				'field'        => 'custom_field_into',
-				'values'       => $this->post_type_fields_list( $args['custom_field_type'] ),
+				'values'       => $this->posttype_fields_list( $args['custom_field_type'] ),
 				'default'      => $args['custom_field_into'],
 				'option_group' => 'tools',
 			] );
@@ -921,7 +924,7 @@ class Meta extends gEditorial\Module
 	{
 		$fields = [];
 
-		foreach ( $this->post_type_field_types( $posttype ) as $field => $args )
+		foreach ( $this->posttype_field_types( $posttype ) as $field => $args )
 			$fields['meta_'.$field] = $object ? $args : sprintf( _x( 'Meta: %s', 'Modules: Meta: Import Field', GEDITORIAL_TEXTDOMAIN ), $args['title'] );
 
 		return $fields;

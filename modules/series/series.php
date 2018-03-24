@@ -149,7 +149,7 @@ class Series extends gEditorial\Module
 
 		$postmeta = $this->sanitize_post_meta(
 			$this->get_postmeta( $post_id ),
-			$this->post_type_fields( $post->post_type ),
+			$this->posttype_fields( $post->post_type ),
 			$post_id,
 			$post->post_type
 		);
@@ -231,7 +231,7 @@ class Series extends gEditorial\Module
 			return MetaBox::fieldEmptyTaxonomy( $tax );
 
 		$dropdowns = $posts = $map = [];
-		$fields    = $this->post_type_fields( $post->post_type );
+		$fields    = $this->posttype_fields( $post->post_type );
 		$i         = 1;
 
 		foreach ( $series as $the_term ) {
@@ -273,7 +273,7 @@ class Series extends gEditorial\Module
 
 				echo '<div class="field-wrap-group">';
 
-					echo HTML::wrap( $dropdown, 'field-wrap field-wrap-select' );
+					echo HTML::wrap( $dropdown, 'field-wrap -select' );
 
 					do_action( 'geditorial_series_meta_box_item', $counter, $map[$counter], $fields, $post );
 
@@ -312,7 +312,7 @@ class Series extends gEditorial\Module
 				],
 			] );
 
-			echo HTML::wrap( $html, 'field-wrap field-wrap-inputtext' );
+			echo HTML::wrap( $html, 'field-wrap -inputtext' );
 		}
 
 		$field = 'in_series_order';
@@ -330,7 +330,7 @@ class Series extends gEditorial\Module
 				'autocomplete' => 'off',
 			] );
 
-			echo HTML::wrap( $html, 'field-wrap field-wrap-inputtext' );
+			echo HTML::wrap( $html, 'field-wrap -inputtext' );
 		}
 
 		$field = 'in_series_desc';
@@ -350,7 +350,7 @@ class Series extends gEditorial\Module
 				],
 			], isset( $meta[$field] ) ? esc_textarea( $meta[$field] ) : '' );
 
-			echo HTML::wrap( $html, 'field-wrap field-wrap-textarea' );
+			echo HTML::wrap( $html, 'field-wrap -textarea' );
 		}
 	}
 

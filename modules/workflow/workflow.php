@@ -501,7 +501,7 @@ class Workflow extends gEditorial\Module
 			if ( ! $desc = get_term_field( 'description', $status->term_id, $this->constant( 'status_tax' ) ) )
 				continue;
 
-			$class = 'field-wrap field-wrap-desc misc-pub-section status-'.$status->name;
+			$class = 'field-wrap -desc misc-pub-section status-'.$status->name;
 
 			if ( $current != $status->name )
 				$class.= ' hidden';
@@ -524,7 +524,7 @@ class Workflow extends gEditorial\Module
 		if ( ! empty( $list[$current]->disabled ) )
 			echo '<input type="hidden" name="post_status" value="'.$current.'" />';
 
-		echo HTML::wrap( $label.$html, 'field-wrap field-wrap-select misc-pub-section' ).$info;
+		echo HTML::wrap( $label.$html, 'field-wrap -select misc-pub-section' ).$info;
 	}
 
 	public function do_time_publishing( $post, $current = '' )
@@ -533,7 +533,7 @@ class Workflow extends gEditorial\Module
 		$html.= date_i18n( __( 'M j, Y @ H:i' ), strtotime( $post->post_date ) );
 		$html.= '</span>';
 
-		echo HTML::wrap( $html, 'field-wrap field-wrap-select misc-pub-section curtime misc-pub-curtime' );
+		echo HTML::wrap( $html, 'field-wrap -select misc-pub-section curtime misc-pub-curtime' );
 
 		if ( $post->post_modified == $post->post_date )
 			return;
@@ -544,7 +544,7 @@ class Workflow extends gEditorial\Module
 			mysql2date( __( 'g:i a' ), $post->post_modified ) );
 		$html.= '</small>';
 
-		echo HTML::wrap( $html, 'field-wrap field-wrap-select misc-pub-section curtime misc-pub-curtime' );
+		echo HTML::wrap( $html, 'field-wrap -select misc-pub-section curtime misc-pub-curtime' );
 	}
 
 	public function do_major_publishing( $post, $current = '' )

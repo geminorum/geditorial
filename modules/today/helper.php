@@ -403,7 +403,7 @@ class Today extends gEditorial\Helper
 				'data'         => [ 'ortho' => 'number' ],
 			] );
 
-		echo HTML::wrap( $html, 'field-wrap '.( $year ? 'field-wrap-inputtext-date' : 'field-wrap-inputtext-half' ) );
+		echo HTML::wrap( $html, 'field-wrap '.( $year ? '-inputtext-date' : '-inputtext-half' ) );
 
 		$html = HTML::tag( 'option', [
 			'value' => '',
@@ -422,7 +422,7 @@ class Today extends gEditorial\Helper
 			'title' => _x( 'Calendar', 'Modules: Today: Meta Box Input', GEDITORIAL_TEXTDOMAIN ),
 		], $html );
 
-		echo HTML::wrap( $html, 'field-wrap field-wrap-select' );
+		echo HTML::wrap( $html, 'field-wrap -select' );
 	}
 
 	public static function theDayNewConnected( $posttypes, $the_day = [], $the_post = FALSE )
@@ -491,6 +491,6 @@ class Today extends gEditorial\Helper
 			}
 		}
 
-		echo HTML::wrap( $html, 'field-wrap field-wrap-buttons' );
+		echo HTML::wrap( $html, 'field-wrap -buttons' );
 	}
 }

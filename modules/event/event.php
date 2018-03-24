@@ -447,7 +447,7 @@ class Event extends gEditorial\Module
 			'placeholder' => _x( 'Time Start', 'Modules: Event: Meta Box Input Placeholder', GEDITORIAL_TEXTDOMAIN ),
 		] );
 
-		echo HTML::wrap( $html, 'field-wrap field-wrap-inputtext-half ltr' );
+		echo HTML::wrap( $html, 'field-wrap -inputtext-half ltr' );
 
 		$html = HTML::tag( 'input', [
 			'type'        => 'text',
@@ -469,7 +469,7 @@ class Event extends gEditorial\Module
 			'placeholder' => _x( 'Time End', 'Modules: Event: Meta Box Input Placeholder', GEDITORIAL_TEXTDOMAIN ),
 		] );
 
-		echo HTML::wrap( $html, 'field-wrap field-wrap-inputtext-half ltr' );
+		echo HTML::wrap( $html, 'field-wrap -inputtext-half ltr' );
 
 		if ( $this->get_setting( 'display_type', TRUE ) )
 			MetaBox::dropdownPostTaxonomy( $this->constant( 'type_tax' ), $post, FALSE, FALSE, '', $args['cal-type'] );

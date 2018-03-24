@@ -256,7 +256,7 @@ class Revisions extends gEditorial\Module
 
 			echo HTML::tag( 'a', [
 				'id'    => $this->hook( 'purge' ),
-				'class' => 'button button-small -purge',
+				'class' => 'button button-small -purge hide-if-no-js', // works with no js but need for style
 				'title' => _x( 'Purge all revisions', 'Modules: Revisions', GEDITORIAL_TEXTDOMAIN ),
 				'data'  => [ 'parent' => $post->ID ],
 				'href'  => WordPress::getAdminPostLink( $this->hook( 'purge' ), [
@@ -269,7 +269,7 @@ class Revisions extends gEditorial\Module
 
 			echo HTML::tag( 'a', [
 				'id'    => $this->hook( 'browse' ),
-				'class' => 'button b1utton-small -browse hide-if-no-js',
+				'class' => 'button button-small -browse hide-if-no-js',
 				'title' => _x( 'Browse all revisions', 'Modules: Revisions', GEDITORIAL_TEXTDOMAIN ),
 				'href'  => get_edit_post_link( $last ),
 			], sprintf( _x( 'Browse %s Revisions', 'Modules: Revisions', GEDITORIAL_TEXTDOMAIN ),
@@ -442,7 +442,7 @@ class Revisions extends gEditorial\Module
 		] );
 	}
 
-	// FIXME: better to user `getTablePosts()`
+	// FIXME: better to use `getTablePosts()`
 	protected function getPostArray()
 	{
 		global $wpdb;
@@ -453,7 +453,7 @@ class Revisions extends gEditorial\Module
 		$paged  = self::paged();
 		$offset = ( $paged - 1 ) * $limit;
 
-		// FIXME: must factor parent postype on the list
+		// TODO: factor postype parent
 
 		$ids = $wpdb->get_col( "
 			SELECT DISTINCT post_parent

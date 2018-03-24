@@ -504,7 +504,7 @@ class Today extends gEditorial\Module
 		if ( ! self::req( 'post' ) )
 			return HTML::desc( _x( 'You can connect posts to this day once you\'ve saved it for the first time.', 'Modules: Today', GEDITORIAL_TEXTDOMAIN ) );
 
-		echo '<div class="geditorial-admin-wrap-nobox">';
+		echo $this->wrap_open( '-admin-nobox' );
 
 			$this->actions( 'no_box', $post );
 
