@@ -256,7 +256,7 @@ class Today extends gEditorial\Module
 
 				add_meta_box( $this->classs( 'supported' ),
 					$this->get_meta_box_title( 'day_cpt' ),
-					[ $this, 'do_meta_box_supported' ],
+					[ $this, 'render_metabox_supported' ],
 					$screen,
 					'side',
 					'high'
@@ -281,7 +281,7 @@ class Today extends gEditorial\Module
 
 				add_meta_box( $this->classs( 'supported' ),
 					$this->get_meta_box_title(),
-					[ $this, 'do_meta_box_supported' ],
+					[ $this, 'render_metabox_supported' ],
 					$screen,
 					'side',
 					'high'
@@ -375,13 +375,13 @@ class Today extends gEditorial\Module
 		return $this->get_adminmenu( FALSE, $the_day );
 	}
 
-	public function do_meta_box_supported( $post, $box )
+	public function render_metabox_supported( $post, $box )
 	{
 		if ( $this->check_hidden_metabox( $box ) )
 			return;
 
 		echo $this->wrap_open( '-admin-metabox' );
-			$this->actions( 'meta_box', $post, $box );
+			$this->actions( 'render_metabox', $post, $box, NULL, 'box' );
 
 			$display_year = $post->post_type != $this->constant( 'day_cpt' );
 			$default_type = $this->default_calendar();
@@ -402,9 +402,8 @@ class Today extends gEditorial\Module
 			// TODO: conversion buttons
 			// FIXME: must check for duplicate day and gave a green light via js
 
+			$this->nonce_field( 'post_main' );
 		echo '</div>';
-
-		$this->nonce_field( 'post_main' );
 	}
 
 	public function do_metabox_excerpt( $post, $box )

@@ -258,7 +258,7 @@ class Collect extends gEditorial\Module
 				remove_meta_box( 'pageparentdiv', $screen, 'side' );
 				add_meta_box( $this->classs( 'main' ),
 					$this->get_meta_box_title( 'collection_cpt', FALSE ),
-					[ $this, 'do_meta_box_main' ],
+					[ $this, 'render_metabox_main' ],
 					$screen->post_type,
 					'side',
 					'high'
@@ -268,7 +268,7 @@ class Collect extends gEditorial\Module
 
 				add_meta_box( $this->classs( 'list' ),
 					$this->get_meta_box_title( 'collection_tax' ),
-					[ $this, 'do_meta_box_list' ],
+					[ $this, 'render_metabox_list' ],
 					$screen->post_type,
 					'advanced',
 					'low'
@@ -304,15 +304,12 @@ class Collect extends gEditorial\Module
 
 				add_meta_box( $this->classs( 'supported' ),
 					$this->get_meta_box_title_posttype( 'collection_cpt' ),
-					[ $this, 'do_meta_box_supported' ],
+					[ $this, 'render_metabox_supported' ],
 					$screen->post_type,
 					'side'
 				);
 
-				// internal actions:
-				add_action( 'geditorial_collect_supported_meta_box', [ $this, 'supported_meta_box' ], 5, 3 );
-
-				// TODO: add a thick-box to list the posts with this collection taxonomy
+				add_action( $this->hook( 'render_metabox_supported' ), [ $this, 'render_metabox' ], 10, 4 );
 
 			} else if ( 'edit' == $screen->base ) {
 
@@ -560,25 +557,23 @@ class Collect extends gEditorial\Module
 		echo '</div>';
 	}
 
-	public function do_meta_box_supported( $post, $box )
+	public function render_metabox_supported( $post, $box )
 	{
 		if ( $this->check_hidden_metabox( $box ) )
 			return;
 
 		echo $this->wrap_open( '-admin-metabox' );
+			$this->actions( 'render_metabox_supported', $post, $box, NULL, NULL );
 
-		$terms = Taxonomy::getTerms( $this->constant( 'collection_tax' ), $post->ID, TRUE );
-
-		do_action( 'geditorial_collect_supported_meta_box', $post, $box, $terms );
-
-		do_action( 'geditorial_meta_do_meta_box', $post, $box, NULL, 'collection' );
+			do_action( 'geditorial_meta_render_metabox', $post, $box, NULL, 'collection' );
 
 		echo '</div>';
 	}
 
-	public function supported_meta_box( $post, $box, $terms )
+	public function render_metabox( $post, $box, $fields = NULL, $context = 'box' )
 	{
-		$posttype = $this->constant( 'collection_cpt' );
+		$posttype  = $this->constant( 'collection_cpt' );
+		$terms     = Taxonomy::getTerms( $this->constant( 'collection_tax' ), $post->ID, TRUE );
 		$dropdowns = $excludes = [];
 
 		foreach ( $terms as $term ) {
@@ -602,38 +597,37 @@ class Collect extends gEditorial\Module
 			MetaBox::fieldEmptyPostType( $posttype );
 	}
 
-	public function do_meta_box_main( $post, $box )
+	public function render_metabox_main( $post, $box )
 	{
 		if ( $this->check_hidden_metabox( $box ) )
 			return;
 
 		echo $this->wrap_open( '-admin-metabox' );
+			$this->actions( 'render_metabox', $post, $box, NULL, 'box' );
 
-		$this->actions( 'main_meta_box', $post, $box );
+			do_action( 'geditorial_meta_render_metabox', $post, $box, NULL );
 
-		do_action( 'geditorial_meta_do_meta_box', $post, $box, NULL );
-
-		MetaBox::fieldPostMenuOrder( $post );
-		MetaBox::fieldPostParent( $post );
+			MetaBox::fieldPostMenuOrder( $post );
+			MetaBox::fieldPostParent( $post );
 
 		echo '</div>';
 	}
 
-	public function do_meta_box_list( $post, $box )
+	public function render_metabox_list( $post, $box )
 	{
 		if ( $this->check_hidden_metabox( $box ) )
 			return;
 
 		echo $this->wrap_open( '-admin-metabox' );
+			$this->actions( 'render_metabox_list', $post, $box, NULL, NULL );
 
-		$term = $this->get_linked_term( $post->ID, 'collection_cpt', 'collection_tax' );
+			$term = $this->get_linked_term( $post->ID, 'collection_cpt', 'collection_tax' );
 
-		$this->actions( 'list_meta_box', $post, $box, $term );
+			if ( $list = MetaBox::getTermPosts( $this->constant( 'collection_tax' ), $term, [], FALSE ) )
+				echo $list;
 
-		if ( $list = MetaBox::getTermPosts( $this->constant( 'collection_tax' ), $term, [], FALSE ) )
-			echo $list;
-		else
-			HTML::desc( _x( 'No items connected!', 'Modules: Collect', GEDITORIAL_TEXTDOMAIN ), FALSE, '-empty' );
+			else
+				HTML::desc( _x( 'No items connected!', 'Modules: Collect', GEDITORIAL_TEXTDOMAIN ), FALSE, '-empty' );
 
 		echo '</div>';
 	}

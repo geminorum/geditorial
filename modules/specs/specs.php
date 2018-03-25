@@ -18,8 +18,6 @@ class Specs extends gEditorial\Module
 
 	protected $disable_no_posttypes = TRUE;
 
-	protected $field_type = 'specs';
-
 	public static function module()
 	{
 		return [
@@ -109,7 +107,7 @@ class Specs extends gEditorial\Module
 
 			add_meta_box( $this->classs( 'supported' ),
 				$this->get_meta_box_title_tax( 'specs_tax' ),
-				[ $this, 'do_meta_box_supported' ],
+				[ $this, 'render_metabox_supported' ],
 				$screen,
 				'side',
 				'high'
@@ -117,9 +115,8 @@ class Specs extends gEditorial\Module
 
 			$this->enqueue_asset_js( [], $screen, [ 'jquery', Scripts::pkgSortable() ] );
 
-			// internal
-			add_action( 'geditorial_specs_meta_box', [ $this, 'geditorial_specs_meta_box' ], 5, 2 );
-			// add_action( 'geditorial_specs_meta_box_item', [ $this, 'geditorial_specs_meta_box_item' ], 5, 5 );
+			add_action( $this->hook( 'render_metabox' ), [ $this, 'render_metabox' ], 10, 4 );
+			// add_action( $this->hook( 'render_metabox_item' ), [ $this, 'render_metabox_item' ], 5, 5 );
 		}
 	}
 
@@ -274,29 +271,28 @@ class Specs extends gEditorial\Module
 		return $this->filters( 'sanitize_post_meta', $postmeta, $fields, $post_id, $posttype );
 	}
 
-	public function do_meta_box_supported( $post, $box )
+	public function render_metabox_supported( $post, $box )
 	{
 		if ( $this->check_hidden_metabox( $box ) )
 			return;
 
+		$fields = $this->posttype_fields( $post->post_type );
+
 		echo $this->wrap_open( '-admin-metabox' );
-
-		$terms = Taxonomy::getTerms( $this->constant( 'specs_tax' ), $post->ID, TRUE );
-		$this->actions( 'meta_box', $post, $terms );
-
+			$this->actions( 'render_metabox', $post, $box, $fields, NULL );
+			$this->actions( 'render_metabox_after', $post, $box, $fields, NULL );
 		echo '</div>';
 	}
 
-	// FIXME: convert into api and move up to MetaBox class
-	public function geditorial_specs_meta_box( $post, $the_terms )
+	public function render_metabox( $post, $box, $fields = NULL, $context = 'box' )
 	{
 		$tax = $this->constant( 'specs_tax' );
 
 		if ( ! Taxonomy::hasTerms( $tax ) )
 			return MetaBox::fieldEmptyTaxonomy( $tax );
 
-		$fields = $this->posttype_fields( $post->post_type );
-		$metas  = $this->get_postmeta( $post->ID, FALSE, [] );
+		$terms = Taxonomy::getTerms( $tax, $post->ID, TRUE );
+		$metas = $this->get_postmeta( $post->ID, FALSE, [] );
 
 		$handle = '<span data-icon="dashicons" class="-handle dashicons dashicons-move" title="'._x( 'Sort me!', 'Modules: Specs: Sortable Handler', GEDITORIAL_TEXTDOMAIN ).'"></span>';
 		$delete = '<span data-icon="dashicons" class="-delete dashicons dashicons-trash" title="'._x( 'Trash me!', 'Modules: Specs: Sortable Trash', GEDITORIAL_TEXTDOMAIN ).'"></span>';
@@ -307,18 +303,18 @@ class Specs extends gEditorial\Module
 			echo '<li><div class="item-head">';
 
 				echo $handle.'<span class="-excerpt">';
-					$title = ( isset( $meta['spec_title'] ) && $meta['spec_title'] ) ? $meta['spec_title'] : ( isset( $meta['spec_term_id'] ) && $meta['spec_term_id'] ? $the_terms[$meta['spec_term_id']]->name : _x( 'Unknown Field', 'Modules: Specs', GEDITORIAL_TEXTDOMAIN ) );
+					$title = ( isset( $meta['spec_title'] ) && $meta['spec_title'] ) ? $meta['spec_title'] : ( isset( $meta['spec_term_id'] ) && $meta['spec_term_id'] ? $terms[$meta['spec_term_id']]->name : _x( 'Unknown Field', 'Modules: Specs', GEDITORIAL_TEXTDOMAIN ) );
 					$title.= ( isset( $meta['spec_value'] ) && $meta['spec_value'] ? ': '.$meta['spec_value'] : '' );
 					echo Text::subStr( $title, 0, 28 );
 				echo '</span>'.$delete;
 
 			echo '</div><div class="item-body"><div class="field-wrap-group">';
 
-			$this->geditorial_specs_meta_box_item( $order, $fields, $post, $meta );
+			$this->render_metabox_item( $order, $fields, $post, $meta );
 
 			$html = wp_dropdown_categories( [
 				'taxonomy'         => $tax,
-				'selected'         => ( isset( $meta['spec_term_id'] ) ? $the_terms[$meta['spec_term_id']]->term_id : 0 ),
+				'selected'         => ( isset( $meta['spec_term_id'] ) ? $terms[$meta['spec_term_id']]->term_id : 0 ),
 				'show_option_none' => $this->get_string( 'show_option_none', $post->post_type, 'misc' ),
 				'name'             => 'geditorial-specs_term_id[]',
 				// 'id'               => 'geditorial-specs-terms-'.$order,
@@ -344,7 +340,7 @@ class Specs extends gEditorial\Module
 
 			echo '<div class="field-wrap-group">';
 
-				$this->geditorial_specs_meta_box_item( '-1', $fields, $post );
+				$this->render_metabox_item( '-1', $fields, $post );
 
 				// FIXME: we need custom for disabled options
 				$html = wp_dropdown_categories( [
@@ -364,11 +360,10 @@ class Specs extends gEditorial\Module
 
 		echo '</div></div></li></ul>';
 
-		$this->actions( 'box_after', $this->module, $post, $fields );
 		$this->nonce_field( 'post_main' );
 	}
 
-	public function geditorial_specs_meta_box_item( $order, $fields, $post, $meta = [] )
+	public function render_metabox_item( $order, $fields, $post, $meta = [] )
 	{
 		$field = 'spec_value';
 		if ( in_array( $field, $fields ) ) {

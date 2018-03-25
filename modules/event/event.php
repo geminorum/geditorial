@@ -160,6 +160,8 @@ class Event extends gEditorial\Module
 	{
 		parent::init();
 
+		$metadata = $this->get_setting( 'extra_metadata' );
+
 		$this->register_taxonomy( 'event_cat', [
 			'hierarchical'       => TRUE,
 			'meta_box_cb'        => NULL, // default meta box
@@ -177,7 +179,7 @@ class Event extends gEditorial\Module
 			'hierarchical' => TRUE,
 		], 'event_cpt' );
 
-		if ( $this->get_setting( 'extra_metadata' ) )
+		if ( $metadata )
 			$this->register_taxonomy( 'type_tax', [
 				'show_ui' => FALSE,
 			], 'event_cpt' );
@@ -221,7 +223,7 @@ class Event extends gEditorial\Module
 					remove_meta_box( 'pageparentdiv', $screen, 'side' );
 					add_meta_box( $this->classs( 'main' ),
 						$this->get_meta_box_title( 'event_cpt' ),
-						[ $this, 'do_meta_box_main' ],
+						[ $this, 'render_metabox_main' ],
 						$screen,
 						'side',
 						'high'
@@ -402,16 +404,17 @@ class Event extends gEditorial\Module
 		return array_merge( $messages, $this->get_bulk_post_updated_messages( 'event_cpt', $counts ) );
 	}
 
-	public function do_meta_box_main( $post, $box )
+	public function render_metabox_main( $post, $box )
 	{
 		if ( $this->check_hidden_metabox( $box ) )
 			return;
 
+		$fields = $this->get_posttype_fields( $post->post_type );
+
 		echo $this->wrap_open( '-admin-metabox' );
+			$this->actions( 'render_metabox', $post, $box, $fields, 'box' );
 
-			$this->actions( 'meta_box', $post, $box );
-
-			$this->render_box( $post );
+			$this->render_box( $post ); // FIXME: add to module actions
 
 		echo '</div>';
 	}

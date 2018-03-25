@@ -77,7 +77,7 @@ class Meta extends gEditorial\MetaBox
 			wp_set_object_terms( $post_id, NULL, $taxonomy, FALSE );
 	}
 
-	public static function fieldString( $field, $fields, $post, $ltr = FALSE, $title = NULL, $key = FALSE, $type = 'text' )
+	public static function legacy_fieldString( $field, $fields, $post, $ltr = FALSE, $title = NULL, $key = FALSE, $type = 'text' )
 	{
 		if ( ! in_array( $field, $fields ) )
 			return;
@@ -113,7 +113,7 @@ class Meta extends gEditorial\MetaBox
 		echo HTML::wrap( HTML::tag( 'input', $atts ), 'field-wrap -inputtext' );
 	}
 
-	public static function fieldNumber( $field, $fields, $post, $ltr = TRUE, $title = NULL, $key = FALSE, $type = 'number' )
+	public static function legacy_fieldNumber( $field, $fields, $post, $ltr = TRUE, $title = NULL, $key = FALSE, $type = 'number' )
 	{
 		if ( ! in_array( $field, $fields ) )
 			return;
@@ -148,7 +148,7 @@ class Meta extends gEditorial\MetaBox
 		echo HTML::wrap( HTML::tag( 'input', $atts ), 'field-wrap -inputnumber' );
 	}
 
-	public static function fieldTerm( $field, $fields, $post, $tax, $ltr = FALSE, $title = NULL, $key = FALSE, $type = 'term' )
+	public static function legacy_fieldTerm( $field, $fields, $post, $tax, $ltr = FALSE, $title = NULL, $key = FALSE, $type = 'term' )
 	{
 		if ( ! in_array( $field, $fields ) )
 			return;
@@ -179,7 +179,7 @@ class Meta extends gEditorial\MetaBox
 		echo '</div>';
 	}
 
-	public static function fieldTextarea( $field, $fields, $post, $ltr = FALSE, $title = NULL, $key = FALSE, $type = 'textarea' )
+	public static function legacy_fieldTextarea( $field, $fields, $post, $ltr = FALSE, $title = NULL, $key = FALSE, $type = 'textarea' )
 	{
 		if ( ! in_array( $field, $fields ) )
 			return;
@@ -220,7 +220,7 @@ class Meta extends gEditorial\MetaBox
 	}
 
 	// for meta fields before and after post title
-	public static function fieldTitle( $field, $fields, $post, $ltr = FALSE, $title = NULL, $key = FALSE, $type = 'title_after' )
+	public static function legacy_fieldTitle( $field, $fields, $post, $ltr = FALSE, $title = NULL, $key = FALSE, $type = 'title_after' )
 	{
 		if ( ! in_array( $field, $fields ) )
 			return;
@@ -260,7 +260,7 @@ class Meta extends gEditorial\MetaBox
 		echo HTML::tag( 'input', $atts );
 	}
 
-	public static function fieldBox( $field, $fields, $post, $ltr = FALSE, $title = NULL, $key = FALSE, $type = 'box' )
+	public static function legacy_fieldBox( $field, $fields, $post, $ltr = FALSE, $title = NULL, $key = FALSE, $type = 'box' )
 	{
 		if ( ! in_array( $field, $fields ) )
 			return;

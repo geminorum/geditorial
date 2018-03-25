@@ -244,7 +244,7 @@ class Workflow extends gEditorial\Module
 				remove_meta_box( 'submitdiv', $screen, 'side' );
 				add_meta_box( $this->classs( 'main' ),
 					$this->get_meta_box_title( $screen->post_type, $edit ),
-					[ $this, 'do_meta_box_main' ],
+					[ $this, 'render_metabox_main' ],
 					$screen->post_type,
 					'side',
 					'high'
@@ -369,7 +369,7 @@ class Workflow extends gEditorial\Module
 		return $states;
 	}
 
-	public function do_meta_box_main( $post, $box )
+	public function render_metabox_main( $post, $box )
 	{
 		if ( empty( $post->post_type ) )
 			return; // FIXME: add notice
@@ -378,42 +378,44 @@ class Workflow extends gEditorial\Module
 
 		if ( 'auto-draft' === $status )
 			$status = 'draft';
+
 		else if ( ! empty( $post->post_password ) )
 			$status = 'password';
 
-
 		echo $this->wrap_open( '-admin-metabox submitbox' );
-		// $this->actions( 'main_meta_box', $post, $box );
+			$this->actions( 'render_metabox', $post, $box, NULL, 'box' );
 
-		echo '<div id="minor-publishing">';
+			echo '<div id="minor-publishing">';
 
-			// Hidden submit button early on so that the browser chooses
-			// the right button when form is submitted with Return key
-			echo '<div style="display:none;">';
+				// Hidden submit button early on so that the browser chooses
+				// the right button when form is submitted with Return key
+				echo '<div style="display:none;">';
 
-				submit_button( __( 'Save' ), '', 'save' );
+					submit_button( __( 'Save' ), '', 'save' );
 
-			echo '</div><div id="minor-publishing-actions">';
+				echo '</div><div id="minor-publishing-actions">';
 
-				$this->do_minor_publishing( $post, $status );
+					$this->do_minor_publishing( $post, $status );
 
-			echo '</div><div class="clear"></div>';
-			echo '<div id="misc-publishing-actions">';
+				echo '</div><div class="clear"></div>';
+				echo '<div id="misc-publishing-actions">';
 
-				$this->do_status_publishing( $post, $status );
-				// $this->do_status_extra_attributes( $post, $status );
+					$this->do_status_publishing( $post, $status );
+					// $this->do_status_extra_attributes( $post, $status );
 
-				if ( $this->get_setting( 'action_time' ) )
-					$this->do_time_publishing( $post, $status );
+					if ( $this->get_setting( 'action_time' ) )
+						$this->do_time_publishing( $post, $status );
 
-			echo '</div><div class="clear"></div>';
+				echo '</div><div class="clear"></div>';
 
-		echo '</div>';
-		echo '<div id="major-publishing-actions">';
+			echo '</div>';
+			echo '<div id="major-publishing-actions">';
 
-			$this->do_major_publishing( $post, $status );
+				$this->do_major_publishing( $post, $status );
 
-		echo '<div class="clear"></div></div>';
+			echo '<div class="clear"></div></div>';
+
+			$this->actions( 'render_metabox_after', $post, $box, FALSE );
 		echo '</div>';
 	}
 

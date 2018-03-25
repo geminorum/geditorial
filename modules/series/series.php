@@ -17,8 +17,6 @@ class Series extends gEditorial\Module
 
 	protected $disable_no_posttypes = TRUE;
 
-	protected $field_type = 'series';
-
 	public static function module()
 	{
 		return [
@@ -124,14 +122,13 @@ class Series extends gEditorial\Module
 
 				add_meta_box( $this->classs( 'supported' ),
 					$this->get_meta_box_title_tax( 'series_tax' ),
-					[ $this, 'do_meta_box_supported' ],
+					[ $this, 'render_metabox_supported' ],
 					$screen->post_type,
 					'side'
 				);
 
-				// internal actions:
-				add_action( 'geditorial_series_meta_box', [ $this, 'geditorial_series_meta_box' ], 5, 3 );
-				add_action( 'geditorial_series_meta_box_item', [ $this, 'geditorial_series_meta_box_item' ], 5, 4 );
+				add_action( $this->hook( 'render_metabox' ), [ $this, 'render_metabox' ], 10, 4 );
+				add_action( $this->hook( 'render_metabox_item' ), [ $this, 'render_metabox_item' ], 5, 4 );
 
 			} else if ( 'edit' == $screen->base ) {
 
@@ -209,29 +206,29 @@ class Series extends gEditorial\Module
 		return $this->filters( 'sanitize_post_meta', $postmeta, $fields, $post_id, $posttype );
 	}
 
-	public function do_meta_box_supported( $post, $box )
+	// TODO: list other post in this series by the order and link to their edit pages
+	public function render_metabox_supported( $post, $box )
 	{
 		if ( $this->check_hidden_metabox( $box ) )
 			return;
 
+		$fields = $this->posttype_fields( $post->post_type );
+
 		echo $this->wrap_open( '-admin-metabox' );
-
-		$series = Taxonomy::getTerms( $this->constant( 'series_tax' ), $post->ID, TRUE );
-
-		do_action( 'geditorial_series_meta_box', $post, $box, $series );
-
+			$this->actions( 'render_metabox', $post, $box, $fields, 'box' );
+			$this->actions( 'render_metabox_after', $post, $box, $fields, 'box' );
 		echo '</div>';
 	}
 
-	public function geditorial_series_meta_box( $post, $box, $series )
+	public function render_metabox( $post, $box, $fields = NULL, $context = 'box' )
 	{
 		$tax = $this->constant( 'series_tax' );
 
 		if ( ! Taxonomy::hasTerms( $tax ) )
 			return MetaBox::fieldEmptyTaxonomy( $tax );
 
+		$series    = Taxonomy::getTerms( $tax, $post->ID, TRUE );
 		$dropdowns = $posts = $map = [];
-		$fields    = $this->posttype_fields( $post->post_type );
 		$i         = 1;
 
 		foreach ( $series as $the_term ) {
@@ -275,7 +272,7 @@ class Series extends gEditorial\Module
 
 					echo HTML::wrap( $dropdown, 'field-wrap -select' );
 
-					do_action( 'geditorial_series_meta_box_item', $counter, $map[$counter], $fields, $post );
+					$this->actions( 'render_metabox_item', $counter, $map[$counter], $fields, $post );
 
 					if ( $counter && $posts[$counter] )
 						echo $posts[$counter];
@@ -284,13 +281,10 @@ class Series extends gEditorial\Module
 			}
 		}
 
-		// TODO: list other post in this series by the order and link to their edit pages
-
-		$this->actions( 'box_after', $this->module, $post, $fields );
 		$this->nonce_field( 'post_main' );
 	}
 
-	public function geditorial_series_meta_box_item( $counter, $term_id, $fields, $post )
+	public function render_metabox_item( $counter, $term_id, $fields, $post )
 	{
 		$meta = ( $counter ? $this->get_postmeta( $post->ID, $term_id, [] ) : [] );
 

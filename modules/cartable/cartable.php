@@ -374,20 +374,20 @@ class Cartable extends gEditorial\Module
 
 				add_meta_box( $this->classs( 'main' ),
 					$this->get_meta_box_title( 'users', $this->get_adminmenu( FALSE ), TRUE ),
-					[ $this, 'do_meta_box_main' ],
+					[ $this, 'render_metabox_main' ],
 					$screen->post_type,
 					'side',
 					'high'
 				);
 
 				if ( $this->support_types )
-					add_action( $this->hook( 'main_meta_box' ), [ $this, 'main_meta_box_types' ], 10, 2 );
+					add_action( $this->hook( 'render_metabox' ), [ $this, 'render_metabox_types' ], 10, 2 );
 
 				if ( $this->support_groups )
-					add_action( $this->hook( 'main_meta_box' ), [ $this, 'main_meta_box_groups' ], 10, 2 );
+					add_action( $this->hook( 'render_metabox' ), [ $this, 'render_metabox_groups' ], 10, 2 );
 
 				if ( $this->support_users )
-					add_action( $this->hook( 'main_meta_box' ), [ $this, 'main_meta_box_users' ], 10, 2 );
+					add_action( $this->hook( 'render_metabox' ), [ $this, 'render_metabox_users' ], 10, 2 );
 			}
 		}
 	}
@@ -727,7 +727,7 @@ class Cartable extends gEditorial\Module
 		$this->tableCartableSummary( $term, $box['args']['context'] );
 	}
 
-	public function do_meta_box_main( $post, $box )
+	public function render_metabox_main( $post, $box )
 	{
 		if ( $this->check_hidden_metabox( $box ) )
 			return;
@@ -737,8 +737,8 @@ class Cartable extends gEditorial\Module
 			if ( 'auto-draft' == $post->post_status )
 				HTML::desc( _x( 'You can see cartable details, once you\'ve saved it for the first time.', 'Modules: Cartable', GEDITORIAL_TEXTDOMAIN ) );
 
-			else if ( has_action( $this->hook( 'main_meta_box' ) ) )
-				$this->actions( 'main_meta_box', $post, $box );
+			else if ( has_action( $this->hook( 'render_metabox' ) ) )
+				$this->actions( 'render_metabox', $post, $box, NULL, 'box' );
 
 			else
 				echo $this->metabox_summary( $post );
@@ -784,7 +784,7 @@ class Cartable extends gEditorial\Module
 		return HTML::wrap( '<ul class="-rows">'.$html.'</ul>', 'field-wrap -summary' );
 	}
 
-	public function main_meta_box_users( $post, $box )
+	public function render_metabox_users( $post, $box )
 	{
 		$users   = [];
 		$disable = ! $this->role_can( 'assign_user' );
@@ -819,7 +819,7 @@ class Cartable extends gEditorial\Module
 			echo $this->metabox_summary( $post, FALSE );
 	}
 
-	public function main_meta_box_groups( $post, $box )
+	public function render_metabox_groups( $post, $box )
 	{
 		$disable = ! $this->role_can( 'assign_group' );
 
@@ -832,7 +832,7 @@ class Cartable extends gEditorial\Module
 		] );
 	}
 
-	public function main_meta_box_types( $post, $box )
+	public function render_metabox_types( $post, $box )
 	{
 		$disable = ! $this->role_can( 'assign_type' );
 

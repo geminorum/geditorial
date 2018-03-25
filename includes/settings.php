@@ -582,6 +582,15 @@ class Settings extends Core\Base
 		];
 	}
 
+	public static function getSetting_extra_metadata( $description = NULL )
+	{
+		return [
+			'field'       => 'extra_metadata',
+			'title'       => _x( 'Metadata Support', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+			'description' => $description ?: '',
+		];
+	}
+
 	public static function getSetting_supported_roles( $description = NULL )
 	{
 		return [

@@ -19,8 +19,6 @@ class Meta extends gEditorial\Module
 
 	protected $priority_init = 12;
 
-	protected $field_type = 'meta';
-
 	protected $partials = [ 'metabox', 'templates' ];
 
 	protected $disable_no_posttypes = TRUE;
@@ -241,14 +239,14 @@ class Meta extends gEditorial\Module
 
 			if ( 'post' == $screen->base ) {
 
-				$fields   = $this->posttype_field_types( $screen->post_type );
+				$fields   = $this->get_posttype_fields( $screen->post_type );
 				$contexts = Arraay::column( $fields, 'context' );
 				$metabox  = $this->classs( $screen->post_type );
 
 				$box_callback = $this->filters( 'box_callback', in_array( 'box', $contexts ), $screen->post_type );
 
 				if ( TRUE === $box_callback )
-					$box_callback = [ $this, 'default_meta_box' ];
+					$box_callback = [ $this, 'render_metabox_main' ];
 
 				if ( $box_callback && is_callable( $box_callback ) )
 					add_meta_box( $metabox,
@@ -266,12 +264,12 @@ class Meta extends gEditorial\Module
 				$dbx_callback = $this->filters( 'dbx_callback', in_array( 'dbx', $contexts ), $screen->post_type );
 
 				if ( TRUE === $dbx_callback )
-					add_action( 'dbx_post_sidebar', [ $this, 'default_meta_raw' ], 10, 1 );
+					add_action( 'dbx_post_sidebar', [ $this, 'render_raw_default' ], 10, 1 );
 
 				else if ( $dbx_callback && is_callable( $dbx_callback ) )
 					add_action( 'dbx_post_sidebar', $dbx_callback, 10, 1 );
 
-				add_action( 'geditorial_meta_do_meta_box', [ $this, 'do_meta_box' ], 10, 4 );
+				add_action( 'geditorial_meta_render_metabox', [ $this, 'render_metabox' ], 10, 4 );
 
 			} else if ( 'edit' == $screen->base ) {
 
@@ -310,10 +308,10 @@ class Meta extends gEditorial\Module
 		add_action( $this->hook( 'column_row' ), [ $this, 'column_row_extra' ], 12, 3 );
 	}
 
-	public function do_meta_box( $post, $box, $fields = NULL, $context = 'box' )
+	public function render_metabox( $post, $box, $fields = NULL, $context = 'box' )
 	{
 		if ( is_null( $fields ) )
-			$fields = $this->posttype_field_types( $post->post_type );
+			$fields = $this->get_posttype_fields( $post->post_type );
 
 		foreach ( $fields as $field => $args ) {
 
@@ -324,67 +322,64 @@ class Meta extends gEditorial\Module
 
 				case 'text':
 
-					ModuleMetaBox::fieldString( $field, [ $field ], $post, $args['ltr'], $args['title'], FALSE, $args['type'] );
+					ModuleMetaBox::legacy_fieldString( $field, [ $field ], $post, $args['ltr'], $args['title'], FALSE, $args['type'] );
 
 				break;
 				case 'note':
 
-					ModuleMetaBox::fieldTextarea( $field, [ $field ], $post, $args['ltr'], $args['title'], FALSE, $args['type'] );
+					ModuleMetaBox::legacy_fieldTextarea( $field, [ $field ], $post, $args['ltr'], $args['title'], FALSE, $args['type'] );
 
 				break;
 				case 'code':
 				case 'link':
 
-					ModuleMetaBox::fieldString( $field, [ $field ], $post, TRUE, $args['title'], FALSE, $args['type'] );
+					ModuleMetaBox::legacy_fieldString( $field, [ $field ], $post, TRUE, $args['title'], FALSE, $args['type'] );
 
 				break;
 				case 'number':
 
-					ModuleMetaBox::fieldNumber( $field, [ $field ], $post, TRUE, $args['title'], FALSE, $args['type'] );
+					ModuleMetaBox::legacy_fieldNumber( $field, [ $field ], $post, TRUE, $args['title'], FALSE, $args['type'] );
 
 				break;
 				case 'textarea':
 
-					ModuleMetaBox::fieldTextarea( $field, [ $field ], $post, $args['ltr'], $args['title'], FALSE, $args['type'] );
+					ModuleMetaBox::legacy_fieldTextarea( $field, [ $field ], $post, $args['ltr'], $args['title'], FALSE, $args['type'] );
 
 				break;
 				case 'term':
 
 					if ( $args['tax'] )
-						ModuleMetaBox::fieldTerm( $field, [ $field ], $post, $args['tax'], $args['ltr'], $args['title'] );
+						ModuleMetaBox::legacy_fieldTerm( $field, [ $field ], $post, $args['tax'], $args['ltr'], $args['title'] );
 					else
-						ModuleMetaBox::fieldString( $field, [ $field ], $post, $args['ltr'], $args['title'], FALSE, $args['type'] );
+						ModuleMetaBox::legacy_fieldString( $field, [ $field ], $post, $args['ltr'], $args['title'], FALSE, $args['type'] );
 			}
 		}
 
 		$this->nonce_field( 'post_main' );
 	}
 
-	public function default_meta_box( $post, $box )
+	public function render_metabox_main( $post, $box )
 	{
 		if ( ! empty( $box['args']['metabox'] ) && MetaBox::checkHidden( $box['args']['metabox'] ) )
 			return;
 
-		$fields = $this->posttype_field_types( $post->post_type );
+		$fields = $this->get_posttype_fields( $post->post_type );
 
 		echo $this->wrap_open( '-admin-metabox' );
 
-		do_action( 'geditorial_meta_box_before', $this->module, $post, $fields );
+			if ( count( $fields ) )
+				$this->actions( 'render_metabox', $post, $box, $fields, 'box' );
 
-		if ( count( $fields ) )
-			do_action( 'geditorial_meta_do_meta_box', $post, $box, $fields, 'box' );
+			else
+				echo HTML::wrap( _x( 'No Meta Fields', 'Modules: Meta', GEDITORIAL_TEXTDOMAIN ), 'field-wrap -empty' );
 
-		else
-			echo HTML::wrap( _x( 'No Meta Fields', 'Modules: Meta', GEDITORIAL_TEXTDOMAIN ), 'field-wrap -empty' );
-
-		do_action( 'geditorial_meta_box_after', $this->module, $post, $fields );
-
+			$this->actions( 'render_metabox_after', $post, $box, $fields );
 		echo '</div>';
 	}
 
-	public function default_meta_raw( $post )
+	public function render_raw_default( $post )
 	{
-		$fields = $this->posttype_field_types( $post->post_type );
+		$fields = $this->get_posttype_fields( $post->post_type );
 
 		if ( count( $fields ) ) {
 
@@ -396,11 +391,11 @@ class Meta extends gEditorial\Module
 
 					case 'title_before':
 					case 'title_after':
-						ModuleMetaBox::fieldTitle( $field, [ $field ], $post, $args['ltr'], $args['title'], FALSE, $args['type'] );
+						ModuleMetaBox::legacy_fieldTitle( $field, [ $field ], $post, $args['ltr'], $args['title'], FALSE, $args['type'] );
 					break;
 
 					case 'box':
-						ModuleMetaBox::fieldBox( $field, [ $field ], $post, $args['ltr'], $args['title'] );
+						ModuleMetaBox::legacy_fieldBox( $field, [ $field ], $post, $args['ltr'], $args['title'] );
 					break;
 				}
 			}
@@ -420,7 +415,7 @@ class Meta extends gEditorial\Module
 			if ( ! current_user_can( $cap, $post_id ) )
 				return $postmeta;
 
-			$fields = $this->posttype_field_types( $posttype );
+			$fields = $this->get_posttype_fields( $posttype );
 
 			if ( count( $fields ) ) {
 
@@ -540,7 +535,7 @@ class Meta extends gEditorial\Module
 			return;
 
 		$meta    = (array) $this->get_postmeta( $post->ID );
-		$fields  = $this->posttype_field_types( $post->post_type );
+		$fields  = $this->get_posttype_fields( $post->post_type );
 		$exclude = [ 'ot', 'st', 'highlight', 'as', 'ch', 'le', 'source_title', 'source_url' ];
 
 		echo '<div class="geditorial-admin-wrap-column -meta"><ul class="-rows">';
@@ -924,7 +919,7 @@ class Meta extends gEditorial\Module
 	{
 		$fields = [];
 
-		foreach ( $this->posttype_field_types( $posttype ) as $field => $args )
+		foreach ( $this->get_posttype_fields( $posttype ) as $field => $args )
 			$fields['meta_'.$field] = $object ? $args : sprintf( _x( 'Meta: %s', 'Modules: Meta: Import Field', GEDITORIAL_TEXTDOMAIN ), $args['title'] );
 
 		return $fields;

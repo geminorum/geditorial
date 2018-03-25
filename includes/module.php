@@ -23,7 +23,6 @@ class Module extends Base
 	public $meta_key = '_ge';
 
 	protected $cookie     = 'geditorial';
-	protected $field_type = 'meta';
 	protected $icon_group = 'genericons-neue';
 
 	protected $priority_init              = 10;
@@ -679,6 +678,9 @@ class Module extends Base
 					if ( is_array( $atts ) )
 						$args = array_merge( $args, $atts );
 
+					if ( $args['field_title'] == $args['description'] )
+						unset( $args['description'] );
+
 					$args['title'] = '&nbsp;';
 
 					$this->add_settings_field( $args );
@@ -1006,9 +1008,9 @@ class Module extends Base
 		return [];
 	}
 
-	public function posttype_fields_all( $posttype = 'post', $field_type = NULL )
+	public function posttype_fields_all( $posttype = 'post', $module = NULL )
 	{
-		return PostType::supports( $posttype, ( is_null( $field_type ) ? $this->field_type : $field_type ).'_fields' );
+		return PostType::supports( $posttype, ( is_null( $module ) ? $this->module->name : $module ).'_fields' );
 	}
 
 	public function posttype_fields_list( $posttype = 'post', $extra = [] )
@@ -1045,15 +1047,15 @@ class Module extends Base
 		return $fields;
 	}
 
-	// enabled fields with args for a post type
-	public function posttype_field_types( $posttype = 'post', $field_type = NULL )
+	// this module enabled fields with args for a posttype
+	public function get_posttype_fields( $posttype = 'post' )
 	{
 		global $gEditorialPostTypeFields;
 
 		if ( isset( $gEditorialPostTypeFields[$posttype] ) )
 			return $gEditorialPostTypeFields[$posttype];
 
-		$all     = $this->posttype_fields_all( $posttype, $field_type );
+		$all     = $this->posttype_fields_all( $posttype );
 		$enabled = $this->posttype_fields( $posttype );
 		$fields  = [];
 
@@ -1078,7 +1080,7 @@ class Module extends Base
 				'ltr'         => FALSE,
 				'tax'         => FALSE,
 				'group'       => 'general',
-				'order'       => 10+$i,
+				'order'       => 10 + $i,
 			], $args );
 		}
 
@@ -2213,8 +2215,7 @@ class Module extends Base
 
 		update_post_meta( $post_id, '_'.$this->constant( $posttype_constant_key ).'_term_id', $term->term_id );
 
-		if ( function_exists( 'update_term_meta' ) )
-			update_term_meta( $term->term_id, $this->constant( $posttype_constant_key ).'_linked', $post_id );
+		update_term_meta( $term->term_id, $this->constant( $posttype_constant_key ).'_linked', $post_id );
 
 		return TRUE;
 	}
@@ -2230,8 +2231,7 @@ class Module extends Base
 		if ( $post_id )
 			delete_post_meta( $post_id, '_'.$this->constant( $posttype_constant_key ).'_term_id' );
 
-		if ( function_exists( 'delete_term_meta' ) )
-			delete_term_meta( $term->term_id, $this->constant( $posttype_constant_key ).'_linked' );
+		delete_term_meta( $term->term_id, $this->constant( $posttype_constant_key ).'_linked' );
 
 		return TRUE;
 	}
@@ -2241,10 +2241,7 @@ class Module extends Base
 		if ( ! $term = Taxonomy::getTerm( $term_or_id, $this->constant( $tax_constant_key ) ) )
 			return FALSE;
 
-		$post_id = FALSE;
-
-		if ( function_exists( 'get_term_meta' ) )
-			$post_id = get_term_meta( $term->term_id, $this->constant( $posttype_constant_key ).'_linked', TRUE );
+		$post_id = get_term_meta( $term->term_id, $this->constant( $posttype_constant_key ).'_linked', TRUE );
 
 		if ( ! $post_id && $check_slug )
 			$post_id = PostType::getIDbySlug( $term->slug, $this->constant( $posttype_constant_key ) );
