@@ -43,7 +43,7 @@ class Roles extends gEditorial\Module
 				],
 				[
 					'field'       => 'duplicate_roles',
-					'type'        => 'checkbox',
+					'type'        => 'checkboxes',
 					'title'       => _x( 'Duplicate Roles', 'Modules: Roles: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Roles to duplicate as Editorial Roles.', 'Modules: Roles: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 					'exclude'     => $exclude,

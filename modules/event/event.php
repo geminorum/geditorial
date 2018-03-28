@@ -218,7 +218,7 @@ class Event extends gEditorial\Module
 
 				if ( $startend ) {
 
-					$this->class_meta_box( $screen, 'main' );
+					$this->class_metabox( $screen, 'main' );
 
 					remove_meta_box( 'pageparentdiv', $screen, 'side' );
 					add_meta_box( $this->classs( 'main' ),

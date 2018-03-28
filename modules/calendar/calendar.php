@@ -44,7 +44,7 @@ class Calendar extends gEditorial\Module
 				'adminmenu_roles',
 				[
 					'field'       => 'noschedule_statuses',
-					'type'        => 'checkbox',
+					'type'        => 'checkboxes',
 					'title'       => _x( 'Non-Reschedulable Statuses', 'Modules: Calendar: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Posts in these statuses can <b>not</b> be rescheduled.', 'Modules: Calendar: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 					'default'     => [ 'publish', 'future', 'private' ],

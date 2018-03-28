@@ -80,7 +80,7 @@ class Cartable extends gEditorial\Module
 		if ( $this->support_users )
 			$settings['_roles'][] = [
 				'field'       => 'view_user_roles',
-				'type'        => 'checkbox',
+				'type'        => 'checkboxes',
 				'title'       => _x( 'View User Cartable', 'Modules: Cartable: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 				'description' => _x( 'Roles that can view user cartables.', 'Modules: Cartable: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 				'exclude'     => $exclude,
@@ -90,7 +90,7 @@ class Cartable extends gEditorial\Module
 		if ( $this->support_groups )
 			$settings['_roles'][] = [
 				'field'       => 'view_group_roles',
-				'type'        => 'checkbox',
+				'type'        => 'checkboxes',
 				'title'       => _x( 'View Group Cartable', 'Modules: Cartable: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 				'description' => _x( 'Roles that can view group cartables.', 'Modules: Cartable: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 				'exclude'     => $exclude,
@@ -100,7 +100,7 @@ class Cartable extends gEditorial\Module
 		if ( $this->support_types )
 			$settings['_roles'][] = [
 				'field'       => 'view_type_roles',
-				'type'        => 'checkbox',
+				'type'        => 'checkboxes',
 				'title'       => _x( 'View Type Cartable', 'Modules: Cartable: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 				'description' => _x( 'Roles that can view type cartables.', 'Modules: Cartable: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 				'exclude'     => $exclude,
@@ -110,7 +110,7 @@ class Cartable extends gEditorial\Module
 		if ( $this->support_users )
 			$settings['_roles'][] = [
 				'field'       => 'assign_user_roles',
-				'type'        => 'checkbox',
+				'type'        => 'checkboxes',
 				'title'       => _x( 'Assign User Cartables', 'Modules: Cartable: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 				'description' => _x( 'Roles that can assign user cartables.', 'Modules: Cartable: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 				'exclude'     => $exclude,
@@ -120,7 +120,7 @@ class Cartable extends gEditorial\Module
 		if ( $this->support_groups )
 			$settings['_roles'][] = [
 				'field'       => 'assign_group_roles',
-				'type'        => 'checkbox',
+				'type'        => 'checkboxes',
 				'title'       => _x( 'Assign Group Cartables', 'Modules: Cartable: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 				'description' => _x( 'Roles that can assign gorup cartables.', 'Modules: Cartable: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 				'exclude'     => $exclude,
@@ -130,7 +130,7 @@ class Cartable extends gEditorial\Module
 		if ( $this->support_types )
 			$settings['_roles'][] = [
 				'field'       => 'assign_type_roles',
-				'type'        => 'checkbox',
+				'type'        => 'checkboxes',
 				'title'       => _x( 'Assign Type Cartables', 'Modules: Cartable: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 				'description' => _x( 'Roles that can assign type cartables.', 'Modules: Cartable: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 				'exclude'     => $exclude,
@@ -140,7 +140,7 @@ class Cartable extends gEditorial\Module
 		if ( $this->support_groups )
 			$settings['_roles'][] = [
 				'field'       => 'restricted_roles',
-				'type'        => 'checkbox',
+				'type'        => 'checkboxes',
 				'title'       => _x( 'Restricted Groups', 'Modules: Cartable: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 				'description' => _x( 'Roles that restricted to their group users.', 'Modules: Cartable: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 				'exclude'     => $exclude,
@@ -370,7 +370,7 @@ class Cartable extends gEditorial\Module
 
 			} else if ( 'post' == $screen->base ) {
 
-				$this->class_meta_box( $screen, 'main' );
+				$this->class_metabox( $screen, 'main' );
 
 				add_meta_box( $this->classs( 'main' ),
 					$this->get_meta_box_title( 'users', $this->get_adminmenu( FALSE ), TRUE ),

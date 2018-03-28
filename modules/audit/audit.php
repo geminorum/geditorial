@@ -45,7 +45,7 @@ class Audit extends gEditorial\Module
 			'_roles' => [
 				[
 					'field'       => 'manage_roles',
-					'type'        => 'checkbox',
+					'type'        => 'checkboxes',
 					'title'       => _x( 'Manage Roles', 'Modules: Audit: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Roles that can Manage, Edit and Delete Audit Attributes.', 'Modules: Audit: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 					'exclude'     => $exclude,
@@ -53,7 +53,7 @@ class Audit extends gEditorial\Module
 				],
 				[
 					'field'       => 'assign_roles',
-					'type'        => 'checkbox',
+					'type'        => 'checkboxes',
 					'title'       => _x( 'Assign Roles', 'Modules: Audit: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Roles that can Assign Audit Attributes.', 'Modules: Audit: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 					'exclude'     => $exclude,
@@ -61,7 +61,7 @@ class Audit extends gEditorial\Module
 				],
 				[
 					'field'       => 'reports_roles',
-					'type'        => 'checkbox',
+					'type'        => 'checkboxes',
 					'title'       => _x( 'Reports Roles', 'Modules: Audit: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Roles that can see Audit Attributes Reports.', 'Modules: Audit: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 					'exclude'     => $exclude,
@@ -69,7 +69,7 @@ class Audit extends gEditorial\Module
 				],
 				[
 					'field'       => 'restricted_roles',
-					'type'        => 'checkbox',
+					'type'        => 'checkboxes',
 					'title'       => _x( 'Restricted Roles', 'Modules: Audit: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Roles that check for Audit Attributes visibility.', 'Modules: Audit: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 					'exclude'     => $exclude,
@@ -88,7 +88,7 @@ class Audit extends gEditorial\Module
 				],
 				[
 					'field'        => 'locking_terms',
-					'type'         => 'checkbox',
+					'type'         => 'checkboxes',
 					'title'        => _x( 'Locking Terms', 'Modules: Audit: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description'  => _x( 'Selected terms will lock editing the post to audit managers.', 'Modules: Audit: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 					'string_empty' => _x( 'There\'s no audit attributes available!', 'Modules: Audit: Setting', GEDITORIAL_TEXTDOMAIN ),

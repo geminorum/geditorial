@@ -205,7 +205,7 @@ class Contest extends gEditorial\Module
 				$this->filter( 'get_default_comment_status', 3 );
 
 				$this->filter_false( 'geditorial_meta_box_callback', 12 );
-				$this->class_meta_box( $screen, 'main' );
+				$this->class_metabox( $screen, 'main' );
 
 				remove_meta_box( 'pageparentdiv', $screen, 'side' );
 				add_meta_box( $this->classs( 'main' ),
@@ -216,7 +216,7 @@ class Contest extends gEditorial\Module
 					'high'
 				);
 
-				$this->class_meta_box( $screen, 'list' );
+				$this->class_metabox( $screen, 'list' );
 
 				add_meta_box( $this->classs( 'list' ),
 					$this->get_meta_box_title( 'contest_tax' ),
@@ -248,7 +248,7 @@ class Contest extends gEditorial\Module
 				if ( $screen->post_type == $this->constant( 'apply_cpt' ) )
 					add_filter( 'post_updated_messages', [ $this, 'post_updated_messages_supported' ] );
 
-				$this->class_meta_box( $screen, 'supported' );
+				$this->class_metabox( $screen, 'supported' );
 
 				remove_meta_box( 'pageparentdiv', $screen, 'side' );
 				add_meta_box( $this->classs( 'supported' ),

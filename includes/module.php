@@ -1153,12 +1153,6 @@ class Module extends Base
 		return $noop;
 	}
 
-	// NOT USED
-	public function nooped( $constant, $count )
-	{
-		return Helper::nooped( $count, $this->get_noop( $constant ) );
-	}
-
 	public function nooped_count( $constant, $count )
 	{
 		return sprintf( Helper::noopedCount( $count, $this->get_noop( $constant ) ), Number::format( $count ) );
@@ -2061,7 +2055,7 @@ class Module extends Base
 			remove_meta_box( 'submitdiv', $posttype, 'side' );
 	}
 
-	protected function class_meta_box( $screen, $context = 'main' )
+	protected function class_metabox( $screen, $context = 'main' )
 	{
 		add_filter( 'postbox_classes_'.$screen->id.'_'.$this->classs( $context ), function( $classes ) use ( $context ) {
 			return array_merge( $classes, [ $this->base.'-wrap', '-admin-postbox', '-'.$this->key, '-'.$this->key.'-'.$context ] );

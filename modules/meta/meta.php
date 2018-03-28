@@ -840,7 +840,7 @@ class Meta extends gEditorial\Module
 		}
 	}
 
-	protected function import_from_meta( $post_meta_key, $field, $limit = FALSE )
+	public function import_from_meta( $post_meta_key, $field, $limit = FALSE )
 	{
 		$rows = Database::getPostMetaRows( $post_meta_key, $limit );
 
@@ -850,7 +850,8 @@ class Meta extends gEditorial\Module
 		return count( $rows );
 	}
 
-	protected function import_to_meta( $meta, $post_id, $field, $form_key = NULL )
+	// used in gImporter
+	public function import_to_meta( $meta, $post_id, $field, $form_key = NULL )
 	{
 		$meta = (array) $this->filters( 'import_pre', $meta, $post_id, $field, $form_key );
 

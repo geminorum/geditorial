@@ -109,7 +109,7 @@ class Ortho extends gEditorial\Module
 			'_virastar' => [
 				[
 					'field'       => 'virastar_options',
-					'type'        => 'checkbox',
+					'type'        => 'checkboxes',
 					'title'       => _x( 'Virastar Options', 'Modules: Ortho: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'For more information, please see the library documentations.', 'Modules: Ortho: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 					'default'     => array_keys( $virastar_options ),
