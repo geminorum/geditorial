@@ -2,12 +2,12 @@
 
 /*
 Plugin Name: gEditorial
-Plugin URI: http://geminorum.ir/wordpress/geditorial
+Plugin URI: https://geminorum.ir/wordpress/geditorial
 Description: Our Editorial in WordPress
 Version: 3.14.0
 License: GPLv3+
 Author: geminorum
-Author URI: http://geminorum.ir/
+Author URI: https://geminorum.ir/
 Network: false
 Text Domain: geditorial
 Domain Path: /languages

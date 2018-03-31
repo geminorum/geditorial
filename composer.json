@@ -7,17 +7,17 @@
     "editorial",
     "meta"
   ],
-  "homepage": "http://geminorum.ir/wordpress/geditorial",
+  "homepage": "https://geminorum.ir/wordpress/geditorial",
   "authors": [{
     "name": "Nasser Rafie",
     "email": "contact@geminorum.ir",
-    "homepage": "http://geminorum.ir",
+    "homepage": "https://geminorum.ir",
     "role": "Developer"
   }],
   "support": {
-    "issues": "http://geminorum.ir/wordpress/geditorial/issues",
-    "wiki": "http://geminorum.ir/wordpress/geditorial/wiki",
-    "source": "http://geminorum.ir/wordpress/geditorial"
+    "issues": "https://github.com/geminorum/geditorial/issues",
+    "wiki": "https://github.com/geminorum/geditorial/wiki",
+    "source": "https://github.com/geminorum/geditorial"
   },
   "require": {
     "php": ">=5.4",
@@ -37,7 +37,7 @@
     "lawondyss/moment-php": "dev-master",
     "amirhabibzadeh/intl-carbon": "dev-master",
     "addwiki/mediawiki-api": "^0.5.1",
-    "nesbot/carbon": "^1.23",
+    "nesbot/carbon": "^1.25",
     "seboettg/citeproc-php": "^2"
   },
   "config": {
