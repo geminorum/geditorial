@@ -82,7 +82,7 @@ class Team extends gEditorial\Module
 				],
 				'personal_site' => [
 					'title'       => _x( 'Personal Site', 'Modules: Team: Field Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Enter this team member\'s URL (for example: http://geminorum.ir/).', 'Modules: Team: Field Description', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Enter this team member\'s URL (for example: https://geminorum.ir/).', 'Modules: Team: Field Description', GEDITORIAL_TEXTDOMAIN ),
 					'type'        => 'link',
 					'icon'        => 'admin-links',
 				],

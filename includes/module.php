@@ -821,7 +821,7 @@ class Module extends Base
 		if ( $check && $sidebox = method_exists( $this, 'settings_sidebox' ) )
 			$class.= ' has-sidebox';
 
-		echo '<form class="'.$class.'" method="post" action="">';
+		echo '<form enctype="multipart/form-data" class="'.$class.'" method="post" action="">';
 
 			$this->settings_fields( $sub, $action, $context );
 
@@ -1076,6 +1076,7 @@ class Module extends Base
 				'icon'        => 'smiley',
 				'type'        => 'text',
 				'context'     => 'box',
+				'values'      => [],
 				'repeat'      => FALSE,
 				'ltr'         => FALSE,
 				'tax'         => FALSE,
@@ -1455,9 +1456,15 @@ class Module extends Base
 
 	public function settings_id_name_cb( $args )
 	{
+		if ( $args['option_group'] )
+			return [
+				( $args['id_attr'] ? $args['id_attr'] : $args['option_base'].'-'.$args['option_group'].'-'.$args['field'] ),
+				( $args['name_attr'] ? $args['name_attr'] : $args['option_base'].'['.$args['option_group'].']['.$args['field'].']' ),
+			];
+
 		return [
-			( $args['id_attr'] ? $args['id_attr'] : $args['option_base'].'-'.$args['option_group'].'-'.$args['field'] ),
-			( $args['name_attr'] ? $args['name_attr'] : $args['option_base'].'['.$args['option_group'].']['.$args['field'].']' ),
+			( $args['id_attr'] ? $args['id_attr'] : $args['option_base'].'-'.$args['field'] ),
+			( $args['name_attr'] ? $args['name_attr'] : $args['option_base'].'['.$args['field'].']' ),
 		];
 	}
 

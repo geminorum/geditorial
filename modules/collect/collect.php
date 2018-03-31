@@ -19,10 +19,6 @@ class Collect extends gEditorial\Module
 
 	protected $partials = [ 'templates' ];
 
-	protected $caps = [
-		'tools' => 'edit_others_posts',
-	];
-
 	public static function module()
 	{
 		return [

@@ -1052,7 +1052,7 @@ class Settings extends Core\Base
 			echo 'You\'re using gEditorial <a href="https://github.com/geminorum/geditorial/releases/latest" target="_blank" title="Check for the latest version">v'.GEDITORIAL_VERSION.'</a>';
 		echo '</p>';
 
-		echo '<a href="http://geminorum.ir" title="it\'s a geminorum project"><img src="'
+		echo '<a href="https://geminorum.ir" title="it\'s a geminorum project"><img src="'
 			.GEDITORIAL_URL.'assets/images/itsageminorumproject-lightgrey.svg" alt="" /></a>';
 
 		echo '</div>';
@@ -1062,8 +1062,8 @@ class Settings extends Core\Base
 	{
 		echo '<div class="signature clear"><p>';
 			printf( _x( '<a href="%1$s">gEditorial</a> is a <a href="%2$s">geminorum</a> project.', 'Settings: Signature', GEDITORIAL_TEXTDOMAIN ),
-				'http://github.com/geminorum/geditorial',
-				'http://geminorum.ir/' );
+				'https://github.com/geminorum/geditorial',
+				'https://geminorum.ir/' );
 		echo '</p></div>';
 	}
 
@@ -1447,7 +1447,7 @@ class Settings extends Core\Base
 
 						echo '<p>'.HTML::tag( 'label', [
 							'for' => $id.( is_null( $args['none_value'] ) ? '' : '-'.$args['none_value'] ),
-						], $html.'&nbsp;'.HTML::escape( $args['none_title'] ) ).'</p>';
+						], $html.'&nbsp;'.$args['none_title'] ).'</p>';
 					}
 
 					foreach ( $args['values'] as $value_name => $value_title ) {
@@ -1500,7 +1500,7 @@ class Settings extends Core\Base
 
 						echo '<li>'.HTML::tag( 'label', [
 							'for' => $id.( is_null( $args['none_value'] ) ? '' : '-'.$args['none_value'] ),
-						], $html.'&nbsp;'.HTML::escape( $args['none_title'] ) ).'</li>';
+						], $html.'&nbsp;'.$args['none_title'] ).'</li>';
 					}
 
 					foreach ( $args['values'] as $value_name => $value_title ) {
@@ -1553,7 +1553,7 @@ class Settings extends Core\Base
 
 						echo '<p>'.HTML::tag( 'label', [
 							'for' => $id.( is_null( $args['none_value'] ) ? '' : '-'.$args['none_value'] ),
-						], $html.'&nbsp;'.HTML::escape( $args['none_title'] ) ).'</p>';
+						], $html.'&nbsp;'.$args['none_title'] ).'</p>';
 					}
 
 					foreach ( $args['values'] as $value_name => $value_title ) {
@@ -1683,7 +1683,7 @@ class Settings extends Core\Base
 
 					$html.= HTML::tag( 'option', [
 						'value' => $args['none_value'],
-					], HTML::escape( $args['none_title'] ) );
+					], $args['none_title'] );
 
 					$html.= walk_page_dropdown_tree( $pages, ( isset( $query['depth'] ) ? $query['depth'] : 0 ), $query );
 
@@ -1715,7 +1715,7 @@ class Settings extends Core\Base
 
 				$html.= HTML::tag( 'option', [
 					'value' => $args['none_value'],
-				], HTML::escape( $args['none_title'] ) );
+				], $args['none_title'] );
 
 				foreach ( $args['values'] as $value_name => $value_title ) {
 
@@ -1749,7 +1749,7 @@ class Settings extends Core\Base
 					$html.= HTML::tag( 'option', [
 						'value'    => is_null( $args['none_value'] ) ? FALSE : $args['none_value'],
 						'selected' => $value == $args['none_value'],
-					], HTML::escape( $args['none_title'] ) );
+					], $args['none_title'] );
 				}
 
 				foreach ( $args['values'] as $value_name => $value_title ) {
@@ -1819,11 +1819,12 @@ class Settings extends Core\Base
 				echo HTML::tag( 'input', [
 					'type'     => 'file',
 					'id'       => $id,
-					'name'     => $id,
+					'name'     => $name,
 					'class'    => HTML::attrClass( $args['field_class'], '-type-file' ),
 					'disabled' => $args['disabled'],
 					'dir'      => $args['dir'],
 					'data'     => $args['data'],
+					'accept'   => empty( $args['values'] ) ? FALSE : implode( ',', $args['values'] ),
 				] );
 
 			break;

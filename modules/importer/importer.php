@@ -6,6 +6,7 @@ use geminorum\gEditorial;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Core\Arraay;
+use geminorum\gEditorial\Core\File;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\WordPress;
@@ -74,7 +75,7 @@ class Importer extends gEditorial\Module
 			return FALSE;
 
 		// https://github.com/kzykhys/PHPCsvParser
-		$iterator = new \SplFileObject( wp_normalize_path( $file ) );
+		$iterator = new \SplFileObject( File::normalize( $file ) );
 		$parser   = new \KzykHys\CsvParser\CsvParser( $iterator, [ 'encoding' => 'UTF-8', 'limit' => 1 ] );
 		$items    = $parser->parse();
 
@@ -127,7 +128,7 @@ class Importer extends gEditorial\Module
 			return FALSE;
 
 		// https://github.com/kzykhys/PHPCsvParser
-		$iterator = new \SplFileObject( wp_normalize_path( $file ) );
+		$iterator = new \SplFileObject( File::normalize( $file ) );
 		$parser   = new \KzykHys\CsvParser\CsvParser( $iterator, [ 'encoding' => 'UTF-8' ] );
 		$items    = $parser->parse();
 
@@ -199,7 +200,7 @@ class Importer extends gEditorial\Module
 		$data = [];
 
 		// https://github.com/kzykhys/PHPCsvParser
-		$iterator = new \SplFileObject( wp_normalize_path( $file ) );
+		$iterator = new \SplFileObject( File::normalize( $file ) );
 
 		foreach ( $selected as $offset ) {
 
@@ -248,7 +249,7 @@ class Importer extends gEditorial\Module
 					$post_status    = $this->get_setting( 'post_status', 'pending' );
 					$comment_status = $this->get_setting( 'comment_status', 'closed' );
 
-					$iterator = new \SplFileObject( wp_normalize_path( $file ) );
+					$iterator = new \SplFileObject( File::normalize( $file ) );
 
 					foreach ( $selected as $offset ) {
 
