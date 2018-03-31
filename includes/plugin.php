@@ -85,14 +85,16 @@ class Plugin
 			'core/base',
 
 			'core/arraay',
+			'core/color',
 			'core/date',
+			'core/file',
 			'core/html',
 			'core/icon',
 			'core/http',
 			'core/l10n',
-			'core/third',
 			'core/number',
 			'core/text',
+			'core/third',
 			'core/url',
 			'core/wordpress',
 

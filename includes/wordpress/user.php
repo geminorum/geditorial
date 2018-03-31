@@ -9,7 +9,7 @@ use geminorum\gEditorial\Core\HTML;
 class User extends Core\Base
 {
 
-	public static function get( $all_fields = FALSE, $network = FALSE, $extra = array() )
+	public static function get( $all_fields = FALSE, $network = FALSE, $extra = array(), $rekey = 'ID' )
 	{
 		$users = get_users( array_merge( array(
 			'blog_id' => ( $network ? '' : $GLOBALS['blog_id'] ),
@@ -17,7 +17,7 @@ class User extends Core\Base
 			'fields'  => ( $all_fields ? 'all_with_meta' : 'all' ),
 		), $extra ) );
 
-		return Arraay::reKey( $users, 'ID' );
+		return Arraay::reKey( $users, $rekey );
 	}
 
 	public static function user( $field, $key = FALSE )

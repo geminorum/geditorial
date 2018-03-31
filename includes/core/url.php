@@ -108,9 +108,9 @@ class URL extends Base
 	public static function fromPath( $path, $base = ABSPATH )
 	{
 		return str_ireplace(
-			wp_normalize_path( $base ),
+			File::normalize( $base ),
 			self::trail( get_option( 'siteurl' ) ),
-			wp_normalize_path( $path )
+			File::normalize( $path )
 		);
 	}
 
