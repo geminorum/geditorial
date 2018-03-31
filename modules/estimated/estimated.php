@@ -93,7 +93,7 @@ class Estimated extends gEditorial\Module
 
 			if ( 'post' == $screen->base ) {
 
-				add_action( 'save_post', [ $this, 'save_post_supported_cpt' ], 20, 3 );
+				add_action( 'save_post_'.$screen->post_type, [ $this, 'store_metabox' ], 20, 3 );
 
 			} else if ( 'edit' == $screen->base ) {
 
@@ -123,14 +123,10 @@ class Estimated extends gEditorial\Module
 		}
 	}
 
-	public function save_post_supported_cpt( $post_ID, $post, $update )
+	public function store_metabox( $post_id, $post, $update, $context = 'box' )
 	{
-		if ( ! $this->is_save_post( $post, $this->posttypes() ) )
-			return $post_ID;
-
-		$this->get_post_wordcount( $post_ID, TRUE );
-
-		return $post_ID;
+		if ( $this->is_save_post( $post, $this->posttypes() ) )
+			$this->get_post_wordcount( $post_id, TRUE );
 	}
 
 	public function content_before( $content, $posttypes = NULL )

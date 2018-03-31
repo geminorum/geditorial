@@ -108,9 +108,6 @@ class Series extends gEditorial\Module
 		foreach ( $this->posttypes() as $posttype )
 			$this->add_posttype_fields( $posttype, $this->fields[$this->constant( 'post_cpt' )], 'series' );
 
-		if ( is_admin() )
-			$this->action( 'save_post', 3, 20 );
-
 		$this->register_shortcode( 'series_shortcode' );
 	}
 
@@ -127,6 +124,7 @@ class Series extends gEditorial\Module
 					'side'
 				);
 
+				add_action( 'save_post_'.$screen->post_type, [ $this, 'store_metabox' ], 20, 3 );
 				add_action( $this->hook( 'render_metabox' ), [ $this, 'render_metabox' ], 10, 4 );
 				add_action( $this->hook( 'render_metabox_item' ), [ $this, 'render_metabox_item' ], 5, 4 );
 
@@ -139,10 +137,10 @@ class Series extends gEditorial\Module
 		}
 	}
 
-	public function save_post( $post_id, $post, $update )
+	public function store_metabox( $post_id, $post, $update, $context = 'box' )
 	{
 		if ( ! $this->is_save_post( $post, $this->posttypes() ) )
-			return $post_id;
+			return;
 
 		$postmeta = $this->sanitize_post_meta(
 			$this->get_postmeta( $post_id ),
@@ -153,8 +151,6 @@ class Series extends gEditorial\Module
 
 		$this->set_meta( $post_id, $postmeta );
 		wp_cache_flush();
-
-		return $post_id;
 	}
 
 	private function sanitize_post_meta( $postmeta, $fields, $post_id, $posttype )

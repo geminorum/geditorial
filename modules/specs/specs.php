@@ -79,14 +79,6 @@ class Specs extends gEditorial\Module
 		];
 	}
 
-	protected function setup( $args = [] )
-	{
-		parent::setup();
-
-		if ( is_admin() )
-			$this->action( 'save_post', 3, 20 );
-	}
-
 	public function init()
 	{
 		parent::init();
@@ -115,15 +107,16 @@ class Specs extends gEditorial\Module
 
 			$this->enqueue_asset_js( [], $screen, [ 'jquery', Scripts::pkgSortable() ] );
 
+			add_action( 'save_post_'.$screen->post_type, [ $this, 'store_metabox' ], 20, 3 );
 			add_action( $this->hook( 'render_metabox' ), [ $this, 'render_metabox' ], 10, 4 );
 			// add_action( $this->hook( 'render_metabox_item' ), [ $this, 'render_metabox_item' ], 5, 5 );
 		}
 	}
 
-	public function save_post( $post_id, $post, $update )
+	public function store_metabox( $post_id, $post, $update, $context = 'box' )
 	{
 		if ( ! $this->is_save_post( $post, $this->posttypes() ) )
-			return $post_id;
+			return;
 
 		$postmeta = $this->sanitize_post_meta(
 			$this->get_postmeta( $post_id ),
@@ -134,8 +127,6 @@ class Specs extends gEditorial\Module
 
 		$this->set_meta( $post_id, $postmeta );
 		wp_cache_flush();
-
-		return $post_id;
 	}
 
 	// programatically sets specs for the post

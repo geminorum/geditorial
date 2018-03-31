@@ -225,7 +225,7 @@ class Meta extends gEditorial\Module
 		if ( $this->is_inline_save( $_REQUEST, $this->posttypes() ) ) {
 			$this->_edit_screen( $_REQUEST['post_type'] );
 			$this->_default_rows();
-			$this->action( 'save_post', 3 );
+			add_action( 'save_post_'.$screen->post_type, [ $this, 'store_metabox' ], 20, 3 );
 		}
 	}
 
@@ -281,14 +281,14 @@ class Meta extends gEditorial\Module
 			if ( 'post' == $screen->base
 				|| 'edit' == $screen->base ) {
 
-				$this->action( 'save_post', 3 );
-
 				$localize = [ 'fields' => $this->posttype_fields( $screen->post_type, TRUE ) ];
 
 				// foreach ( $this->posttype_fields( $screen->post_type ) as $field )
 				// 	$localize[$field] = $this->get_string( $field, $screen->post_type );
 
 				$this->enqueue_asset_js( $localize, $screen );
+
+				add_action( 'save_post_'.$screen->post_type, [ $this, 'store_metabox' ], 20, 3 );
 			}
 		}
 	}
@@ -491,10 +491,10 @@ class Meta extends gEditorial\Module
 		return [ $field ];
 	}
 
-	public function save_post( $post_id, $post, $update )
+	public function store_metabox( $post_id, $post, $update, $context = 'box' )
 	{
 		if ( ! $this->is_save_post( $post, $this->posttypes() ) )
-			return $post_id;
+			return;
 
 		// NOUNCES MUST CHECKED BY FILTERS
 		// CAPABILITIES MUST CHECKED BY FILTERS : if (current_user_can($post->cap->edit_post, $post_id))
@@ -507,8 +507,6 @@ class Meta extends gEditorial\Module
 				$post->post_type
 			)
 		);
-
-		return $post_id;
 	}
 
 	public function manage_pages_columns( $columns )

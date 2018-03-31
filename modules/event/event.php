@@ -214,8 +214,6 @@ class Event extends gEditorial\Module
 				$this->filter( 'post_updated_messages' );
 				$this->filter( 'get_default_comment_status', 3 );
 
-				add_action( 'save_post_'.$screen->post_type, [ $this, 'save_post_main_cpt' ], 20, 3 );
-
 				if ( $startend ) {
 
 					$this->class_metabox( $screen, 'main' );
@@ -289,16 +287,6 @@ class Event extends gEditorial\Module
 		echo $this->wrap_open( '-admin-metabox' );
 			MetaBox::checklistTerms( $post->ID, $box['args'] );
 		echo '</div>';
-	}
-
-	public function save_post_main_cpt( $post_ID, $post, $update )
-	{
-		if ( ! $this->is_save_post( $post, 'event_cpt' ) )
-			return $post_ID;
-
-		// FIXME: save the data!
-
-		return $post_ID;
 	}
 
 	public function restrict_manage_posts( $posttype, $which )

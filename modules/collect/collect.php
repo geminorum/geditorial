@@ -316,19 +316,16 @@ class Collect extends gEditorial\Module
 				$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
 			}
 
-			add_action( 'save_post', [ $this, 'save_post_supported_cpt' ], 20, 3 );
+			add_action( 'save_post_'.$screen->post_type, [ $this, 'store_metabox' ], 20, 3 );
 		}
 
 		if ( Settings::isDashboard( $screen ) )
 			$this->filter_module( 'calendar', 'post_row_title', 4, 12 );
-
-		// $size = apply_filters( 'admin_post_thumbnail_size', $size, $thumbnail_id, $post );
 	}
 
-	// FIXME: make this api
 	private function _sync_linked( $posttype )
 	{
-		add_action( 'save_post', [ $this, 'save_post_main_cpt' ], 20, 3 );
+		$this->action( 'save_post', 3, 20 );
 		$this->action( 'post_updated', 3, 20 );
 
 		$this->action( 'wp_trash_post' );
@@ -400,13 +397,13 @@ class Collect extends gEditorial\Module
 		] );
 	}
 
-	public function post_updated( $post_ID, $post_after, $post_before )
+	public function post_updated( $post_id, $post_after, $post_before )
 	{
 		if ( ! $this->is_save_post( $post_after, 'collection_cpt' ) )
-			return $post_ID;
+			return;
 
 		if ( 'trash' == $post_after->post_status )
-			return $post_ID;
+			return;
 
 		if ( empty( $post_before->post_name ) )
 			$post_before->post_name = sanitize_title( $post_before->post_title );
@@ -434,19 +431,17 @@ class Collect extends gEditorial\Module
 		}
 
 		if ( ! is_wp_error( $term ) )
-			$this->set_linked_term( $post_ID, $term['term_id'], 'collection_cpt', 'collection_tax' );
-
-		return $post_ID;
+			$this->set_linked_term( $post_id, $term['term_id'], 'collection_cpt', 'collection_tax' );
 	}
 
-	public function save_post_main_cpt( $post_ID, $post, $update )
+	public function save_post( $post_id, $post, $update )
 	{
 		// we handle updates on another action, see : post_updated()
 		if ( $update )
-			return $post_ID;
+			return;
 
 		if ( ! $this->is_save_post( $post ) )
-			return $post_ID;
+			return;
 
 		if ( empty( $post->post_name ) )
 			$post->post_name = sanitize_title( $post->post_title );
@@ -461,9 +456,7 @@ class Collect extends gEditorial\Module
 		$term = wp_insert_term( $post->post_title, $this->constant( 'collection_tax' ), $args );
 
 		if ( ! is_wp_error( $term ) )
-			$this->set_linked_term( $post_ID, $term['term_id'], 'collection_cpt', 'collection_tax' );
-
-		return $post_ID;
+			$this->set_linked_term( $post_id, $term['term_id'], 'collection_cpt', 'collection_tax' );
 	}
 
 	public function wp_trash_post( $post_id )
@@ -481,15 +474,15 @@ class Collect extends gEditorial\Module
 		$this->do_before_delete_post( $post_id, 'collection_cpt', 'collection_tax' );
 	}
 
-	public function save_post_supported_cpt( $post_ID, $post, $update )
+	public function store_metabox( $post_id, $post, $update, $context = 'box' )
 	{
 		if ( ! $this->is_save_post( $post, $this->posttypes() ) )
-			return $post_ID;
+			return;
 
 		$name = $this->classs( $this->constant( 'collection_cpt' ) );
 
 		if ( ! isset( $_POST[$name] ) )
-			return $post_ID;
+			return;
 
 		$terms = [];
 		$tax   = $this->constant( 'collection_tax' );
@@ -498,9 +491,7 @@ class Collect extends gEditorial\Module
 			if ( trim( $collection ) && $term = get_term_by( 'slug', $collection, $tax ) )
 				$terms[] = intval( $term->term_id );
 
-		wp_set_object_terms( $post_ID, ( count( $terms ) ? $terms : NULL ), $tax, FALSE );
-
-		return $post_ID;
+		wp_set_object_terms( $post_id, ( count( $terms ) ? $terms : NULL ), $tax, FALSE );
 	}
 
 	public function pre_get_posts( &$wp_query )
