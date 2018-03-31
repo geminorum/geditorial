@@ -6,18 +6,25 @@ use geminorum\gEditorial;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Listtable;
 use geminorum\gEditorial\Settings;
+use geminorum\gEditorial\Core\Arraay;
+use geminorum\gEditorial\Core\File;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\Third;
 use geminorum\gEditorial\Core\URL;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\Database;
+use geminorum\gEditorial\WordPress\Media;
 use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\Taxonomy;
 use geminorum\gEditorial\WordPress\User;
 
 class Users extends gEditorial\Module
 {
+
+	protected $caps = [
+		'tools' => 'edit_users',
+	];
 
 	public static function module()
 	{
@@ -521,6 +528,99 @@ class Users extends gEditorial\Module
 
 			echo '</td></tr>';
 			echo '</table>';
+		$this->settings_form_after( $uri, $sub );
+	}
+
+	public function tools_settings( $sub )
+	{
+		global $wpdb;
+
+		if ( $this->check_settings( $sub, 'tools' ) ) {
+
+			if ( ! empty( $_POST ) ) {
+
+				$this->nonce_check( 'tools', $sub );
+
+				if ( isset( $_POST['remap_post_authors'] ) ) {
+
+					$file = wp_import_handle_upload();
+
+					if ( isset( $file['error'] ) || empty( $file['file'] ) )
+						WordPress::redirectReferer( 'wrong' );
+
+					$count    = 0;
+					$blog_id  = get_current_blog_id();
+					$role     = get_option( 'default_role' );
+
+					$users    = User::get( TRUE, TRUE, [], 'user_email' );
+					$currents = $wpdb->get_results( "SELECT post_author as user, GROUP_CONCAT( ID ) as posts FROM {$wpdb->posts} GROUP BY post_author", ARRAY_A );
+
+					$iterator = new \SplFileObject( File::normalize( $file['file'] ) );
+					$parser   = new \KzykHys\CsvParser\CsvParser( $iterator, [ 'encoding' => 'UTF-8', 'limit' => 1 ] );
+					$header   = $parser->parse();
+					$parser   = new \KzykHys\CsvParser\CsvParser( $iterator, [ 'encoding' => 'UTF-8', 'offset' => 1, 'header' => $header[0] ] );
+					$old_map  = Arraay::reKey( $parser->parse(), 'ID' );
+
+					foreach ( $currents as $current ) {
+
+						if ( isset( $old_map[$current['user']] )
+							&& isset( $users[$old_map[$current['user']]['user_email']] ) ) {
+
+							$user  = $users[$old_map[$current['user']]['user_email']];
+							$query = $wpdb->prepare( "UPDATE {$wpdb->posts} SET post_author = %d WHERE ID IN ( ".trim( $current['posts'], ',' )." )", $user->ID );
+							$count+= $wpdb->query( $query );
+
+							if ( ! is_user_member_of_blog( $user->ID, $blog_id ) )
+								add_user_to_blog( $blog_id, $user->ID, $role );
+						}
+					}
+
+					WordPress::redirectReferer( [
+						'message'    => 'synced',
+						'count'      => $count,
+						'attachment' => $file['id'],
+					] );
+
+				} else {
+
+					WordPress::redirectReferer( 'huh' );
+				}
+			}
+		}
+	}
+
+	public function tools_sub( $uri, $sub )
+	{
+		$this->settings_form_before( $uri, $sub, 'bulk', 'tools', FALSE );
+
+			echo '<table class="form-table">';
+			echo '<tr><th scope="row">'._x( 'Re-Map Authors', 'Modules: Users', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
+
+			$wpupload = Media::upload();
+
+			if ( ! empty( $wpupload['error'] ) ) {
+
+				echo HTML::error( sprintf( _x( 'Before you can upload a file, you will need to fix the following error: %s', 'Modules: Users', GEDITORIAL_TEXTDOMAIN ), '<b>'.$wpupload['error'].'</b>' ), FALSE );
+
+			} else {
+
+				$this->do_settings_field( [
+					'type'      => 'file',
+					'field'     => 'import_users_file',
+					'name_attr' => 'import',
+					'values'    => [ '.csv' ],
+				] );
+
+				echo '<br />';
+
+				$size = File::formatSize( apply_filters( 'import_upload_size_limit', wp_max_upload_size() ) );
+				Settings::submitButton( 'remap_post_authors', _x( 'Upload and Re-Map', 'Modules: Users: Setting Button', GEDITORIAL_TEXTDOMAIN ), 'danger' );
+				HTML::desc( sprintf( _x( 'Checks for post authors and re-map them with current registered users. Maximum upload size: <b>%s</b>', 'Modules: Users', GEDITORIAL_TEXTDOMAIN ), $size ) );
+			}
+
+			echo '</td></tr>';
+			echo '</table>';
+
 		$this->settings_form_after( $uri, $sub );
 	}
 
