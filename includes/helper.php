@@ -1312,6 +1312,34 @@ class Helper extends Core\Base
 		return call_user_func_array( $callback, [ $year, $month, $format, $calendar_type ] );
 	}
 
+	public static function makeFromInput( $input, $calendar = 'gregorian', $timezone = NULL )
+	{
+		$callback = [ __NAMESPACE__.'\\Core\\Date', 'makeFromInput' ];
+
+		if ( is_callable( [ 'gPersianDateDate', 'makeFromInput' ] ) )
+			$callback = [ 'gPersianDateDate', 'makeFromInput' ];
+
+		// must be here, we can not pass NULL to gPersianDate
+		if ( is_null( $timezone ) )
+			$timezone = Date::currentTimeZone();
+
+		return call_user_func_array( $callback, [ $input, $calendar, $timezone ] );
+	}
+
+	public static function makeMySQLFromInput( $input, $format = NULL, $calendar_type = 'gregorian', $timezone = NULL )
+	{
+		$callback = [ __NAMESPACE__.'\\Core\\Date', 'makeMySQLFromInput' ];
+
+		if ( is_callable( [ 'gPersianDateDate', 'makeMySQLFromInput' ] ) )
+			$callback = [ 'gPersianDateDate', 'makeMySQLFromInput' ];
+
+		// must be here, we can not pass NULL to gPersianDate
+		if ( is_null( $timezone ) )
+			$timezone = Date::currentTimeZone();
+
+		return call_user_func_array( $callback, [ $input, $format, $calendar_type, $timezone ] );
+	}
+
 	// FIXME: find a better way!
 	public static function getMonths( $calendar_type = 'gregorian' )
 	{

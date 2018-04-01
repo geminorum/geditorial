@@ -535,7 +535,7 @@ class Module extends Base
 
 		return [
 			'field'       => $constant.'_supports',
-			'type'        => 'checkbox', // FIXME: add as setting type with `code` after title
+			'type'        => 'checkboxes', // FIXME: add as setting type with `code` after title
 			'title'       => sprintf( _x( '%s Supports', 'Module: Setting Title', GEDITORIAL_TEXTDOMAIN ), $singular ),
 			'description' => sprintf( _x( 'Support core and extra features for %s posttype.', 'Module: Setting Description', GEDITORIAL_TEXTDOMAIN ), $singular ),
 			'default'     => $defaults,

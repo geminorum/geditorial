@@ -1215,8 +1215,18 @@ class Settings extends Core\Base
 				$args['cap'] = 'manage_options';
 		}
 
-		if ( ! current_user_can( $args['cap'] ) )
+		if ( TRUE === $args['cap'] ) {
+
+			// do nothing!
+
+		} else if ( empty( $args['cap'] ) ) {
+
 			$args['type'] = 'noaccess';
+
+		} else if ( ! current_user_can( $args['cap'] ) ) {
+
+			$args['type'] = 'noaccess';
+		}
 
 		if ( $args['before'] )
 			echo $args['before'].'&nbsp;';
