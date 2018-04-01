@@ -63,6 +63,11 @@ class WordPress extends Base
 		return wp_doing_cron(); // @since WP 4.8.0
 	}
 
+	public static function isSSL()
+	{
+		return is_ssl();
+	}
+
 	public static function isCLI()
 	{
 		return defined( 'WP_CLI' ) && WP_CLI;

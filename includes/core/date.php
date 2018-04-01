@@ -16,6 +16,57 @@ class Date extends Base
 	const  MONTH_IN_SECONDS = 2592000;  //  30 * 24 * 60 * 60
 	const   YEAR_IN_SECONDS = 31536000; // 365 * 24 * 60 * 60
 
+	public static function currentTimeZone()
+	{
+		if ( $timezone = get_option( 'timezone_string' ) )
+			return $timezone;
+
+		return self::fromOffset( get_option( 'gmt_offset', '0' ) );
+	}
+
+	public static function fromOffset( $offset )
+	{
+		$timezones = [
+			'-12'  => 'Pacific/Kwajalein',
+			'-11'  => 'Pacific/Samoa',
+			'-10'  => 'Pacific/Honolulu',
+			'-9'   => 'America/Juneau',
+			'-8'   => 'America/Los_Angeles',
+			'-7'   => 'America/Denver',
+			'-6'   => 'America/Mexico_City',
+			'-5'   => 'America/New_York',
+			'-4'   => 'America/Caracas',
+			'-3.5' => 'America/St_Johns',
+			'-3'   => 'America/Argentina/Buenos_Aires',
+			'-2'   => 'Atlantic/Azores', // no cities here so just picking an hour ahead
+			'-1'   => 'Atlantic/Azores',
+			'0'    => 'Europe/London',
+			'1'    => 'Europe/Paris',
+			'2'    => 'Europe/Helsinki',
+			'3'    => 'Europe/Moscow',
+			'3.5'  => 'Asia/Tehran',
+			'4'    => 'Asia/Baku',
+			'4.5'  => 'Asia/Kabul',
+			'5'    => 'Asia/Karachi',
+			'5.5'  => 'Asia/Calcutta',
+			'6'    => 'Asia/Colombo',
+			'7'    => 'Asia/Bangkok',
+			'8'    => 'Asia/Singapore',
+			'9'    => 'Asia/Tokyo',
+			'9.5'  => 'Australia/Darwin',
+			'10'   => 'Pacific/Guam',
+			'11'   => 'Asia/Magadan',
+			'12'   => 'Asia/Kamchatka'
+		];
+
+		$offset = floatval( $offset );
+
+		if ( isset( $timezones[$offset] ) )
+			return $timezones[$offset];
+
+		return $timezones['0'];
+	}
+
 	// PHP >= 5.3
 	// @REF: https://wpartisan.me/tutorials/php-validate-check-dates
 	public static function check( $datetime, $format, $timezone )
@@ -52,6 +103,48 @@ class Date extends Base
 			$start->format( $format ),
 			$end->format( $format ),
 		);
+	}
+
+	public static function makeFromInput( $input, $calendar = 'gregorian', $timezone = NULL )
+	{
+		// FIXME: needs sanity checks
+		$parts = explode( '/', apply_filters( 'string_format_i18n_back', $input ) );
+
+		if ( is_null( $timezone ) )
+			$timezone = self::currentTimeZone();
+
+		return self::make( 0, 0, 0, $parts[1], $parts[2], $parts[0], $calendar, $timezone );
+	}
+
+	public static function makeMySQLFromInput( $input, $format = NULL, $calendar = 'gregorian', $timezone = NULL )
+	{
+		if ( is_null( $format ) )
+			$format = 'Y-m-d H:i:s';
+
+		if ( is_null( $timezone ) )
+			$timezone = self::currentTimeZone();
+
+		return date( $format, self::makeFromInput( $input, $calendar, $timezone ) );
+	}
+
+	public static function make( $hour, $minute, $second, $month, $day, $year, $calendar = 'gregorian', $timezone = NULL )
+	{
+		if ( is_null( $timezone ) )
+			$timezone = self::currentTimeZone();
+
+		$time = $year.'-'.sprintf( '%02d', $month ).'-'.sprintf( '%02d', $day ).' ';
+		$time.= sprintf( '%02d', $hour ).':'.sprintf( '%02d', $minute ).':'.sprintf( '%02d', $second );
+
+		try {
+
+			$datetime = new \DateTime( $time, new \DateTimeZone( $timezone ) );
+			return $datetime->format( 'U' );
+
+		} catch ( \Exception $e ) {
+
+			// echo $e->getMessage();
+			return FALSE;
+		}
 	}
 
 	// @SOURCE: `bp_core_get_iso8601_date()`
