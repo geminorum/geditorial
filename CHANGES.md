@@ -1,3 +1,68 @@
+### 3.15.0
+* main/plugin: iframe styles
+* main/ajax: js module container deprecated
+* main/listtable: :new: new main component
+* main/listtable: column helper moved
+* main/module: create posts cap for cpts
+* main/module: list posttypes based on show ui
+* main/module: passing box object to check for hidden
+* main/module: register help tabs on ui only
+* main/module: custom string for author/excerpt
+* main/module: correct callback for metabox checklist terms
+* main/module: auto hook add metaboxes
+* main/module: metabox tweaks
+* main/module: get default settings cap from module
+* main/module: rethinking save post hook
+* main/metabox: preserve hidden selected terms
+* main/metabox: hide empty lists on terms checklists
+* main/metabox: core filter for page attributes dropdown
+* main/metabox: glance helpers moved
+* main/settings: display threshold pre setting
+* main/setting: checkbox-panel field type
+* misc/walker/user: user avatar
+* module/audit: correct check for caps
+* module/audit: passing user into role checks
+* module/book: hide install sizes when no meta
+* module/calendar: better support for post row actions
+* module/cartable: support for type cartables
+* module/cartable: correct check for caps
+* module/cartable: passing user into role checks
+* module/cartable: correct caps for user/group terms
+* module/cartable: correct check for the current sub
+* module/cartable: checks user for group cartable pages
+* module/cartable: icons on metabox summary
+* module/cartable: user cartable as dashboard widget
+* module/cartable: group cartables as dashboard widgets
+* module/cartable: hiding group settings if not enabled
+* module/cartable: prevent access to other users
+* module/config: disable module button
+* module/config: using tools menu as parent when no access to settings
+* module/drafts: better support for post row actions
+* module/inquire: make public option
+* module/inquire: locked question roles
+* module/inquire: hack for users with no create posts cap
+* module/modified: optional status column on dashboard widget
+* module/ortho: optional on paste
+* module/roles: passing the actual grant into duplicated role
+* module/terms: correct taxonomy on ajax calls
+* module/terms: limit sortable columns
+* module/terms: correct input for color fields
+* module/today: initial admin dashboard
+* module/today: advanced excerpt editor
+* module/tweaks: :new: group metaboxes
+* module/tweaks: :new: advanced excerpt
+* module/tweaks: excerpt after title
+* module/tweaks: get page templates not available on ajax
+* module/users: :new: re-map post authors tool
+* module/views: :new: new module
+* module/workflow: fixed array column not working on objects
+* module/workflow: handling taxonomy columns on ajax calls
+* module/workflow: draft roles setting
+* module/workflow: time actions setting
+* module/workflow: hide disabled status setting
+* module/workflow: temporarily hiding inline/bulk edit action
+* module/workflow: display current status description
+
 ### 3.14.0
 * main/plugin: editorial user api
 * main/module: internal api for metabox class
