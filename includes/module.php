@@ -111,6 +111,9 @@ class Module extends Base
 		if ( method_exists( $this, 'o2o_init' ) )
 			$this->action( 'o2o_init' );
 
+		if ( method_exists( $this, 'wp_loaded' ) )
+			$this->action( 'wp_loaded' );
+
 		if ( method_exists( $this, 'widgets_init' ) )
 			$this->action( 'widgets_init' );
 
