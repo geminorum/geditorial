@@ -369,4 +369,80 @@ class Database extends Core\Base
 			do_action( 'edited_term_taxonomy', $term, $taxonomy );
 		}
 	}
+
+	// register a table with $wpdb
+	// @SOURCE: `scb_register_table()`
+	public static function registerTable( $key, $name = FALSE )
+	{
+		global $wpdb;
+
+		if ( ! $name )
+			$name = $key;
+
+		$wpdb->tables[] = $name;
+		$wpdb->$key = $wpdb->prefix.$name;
+	}
+
+	// runs the SQL query for installing/upgrading a table
+	// @SOURCE: `scb_install_table()`
+	public static function installTable( $key, $columns, $options = [] )
+	{
+		global $wpdb;
+
+		$full_table_name = $wpdb->$key;
+
+		if ( is_string( $options ) )
+			$options = [ 'upgrade_method' => $options ];
+
+		$options = self::args( $options, [
+			'upgrade_method' => 'dbDelta',
+			'table_options'  => '',
+		] );
+
+		$charset_collate = '';
+
+		if ( $wpdb->has_cap( 'collation' ) ) {
+
+			if ( ! empty( $wpdb->charset ) )
+				$charset_collate = "DEFAULT CHARACTER SET $wpdb->charset";
+
+			if ( ! empty( $wpdb->collate ) )
+				$charset_collate.= " COLLATE $wpdb->collate";
+		}
+
+		$table_options = $charset_collate.' '.$options['table_options'];
+
+		if ( 'dbDelta' == $options['upgrade_method'] ) {
+
+			require_once ABSPATH.'wp-admin/includes/upgrade.php';
+
+			dbDelta( "CREATE TABLE $full_table_name ( $columns ) $table_options" );
+
+			return;
+		}
+
+		if ( 'delete_first' == $options['upgrade_method'] )
+			$wpdb->query( "DROP TABLE IF EXISTS $full_table_name;" );
+
+		$wpdb->query( "CREATE TABLE IF NOT EXISTS $full_table_name ( $columns ) $table_options;" );
+	}
+
+	// runs the SQL query for uninstalling a table
+	// @SOURCE: `scb_uninstall_table()`
+	public static function uninstallTable( $key )
+	{
+		global $wpdb;
+
+		$wpdb->query( "DROP TABLE IF EXISTS ".$wpdb->$key );
+	}
+
+	// prepare an array for an IN statement
+	// @ SOURCE: `scbUtil::array_to_sql()`
+	public static function array2SQL( $values )
+	{
+		foreach ( $values as &$val )
+			$val = "'".esc_sql( trim( $val ) )."'";
+
+		return implode( ',', $values );
+	}
 }
