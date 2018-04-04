@@ -1624,9 +1624,9 @@ class Module extends Base
 			$taxonomies = $this->taxonomies();
 
 		$posttype = $this->constant( $constant );
-		$cap_type  = $this->get_posttype_cap_type( $constant );
+		$cap_type = $this->get_posttype_cap_type( $constant );
 
-		$args = self::recursiveParseArgs( $atts, [
+		$args = [
 			'taxonomies'    => $taxonomies,
 			'labels'        => $this->get_posttype_labels( $constant ),
 			'supports'      => $this->get_posttype_supports( $constant ),
@@ -1648,8 +1648,6 @@ class Module extends Base
 			'public'       => TRUE,
 			'show_ui'      => TRUE,
 
-			// @ALSO SEE: https://core.trac.wordpress.org/ticket/22895
-			'capabilities'    => [ 'create_posts' => is_array( $cap_type ) ? 'create_'.$cap_type[1] : 'create_'.$cap_type.'s' ],
 			'capability_type' => $cap_type,
 			'map_meta_cap'    => TRUE,
 
@@ -1669,9 +1667,13 @@ class Module extends Base
 			// only `%post_id%` and `%postname%`
 			// @SEE: https://github.com/torounit/simple-post-type-permalinks
 			// 'sptp_permalink_structure' => $this->constant( $constant.'_permalink', '/%post_id%' ),
-		] );
+		];
 
-		return register_post_type( $posttype, $args );
+		// @ALSO SEE: https://core.trac.wordpress.org/ticket/22895
+		if ( 'post' != $cap_type )
+			$args['capabilities'] = [ 'create_posts' => is_array( $cap_type ) ? 'create_'.$cap_type[1] : 'create_'.$cap_type.'s' ];
+
+		return register_post_type( $posttype, self::recursiveParseArgs( $atts, $args ) );
 	}
 
 	public function get_taxonomy_labels( $constant )
