@@ -262,4 +262,34 @@ class Arraay extends Base
 	{
 		return count( array_filter( array_keys( $array ), 'is_string' ) ) > 0;
 	}
+
+	// @REF: `wp_array_slice_assoc()`
+	public static function sliceKeys( $array, $keys )
+	{
+		$slice = array();
+
+		foreach ( $keys as $key )
+			if ( isset( $array[$key] ) )
+				$slice[$key] = $array[$key];
+
+		return $slice;
+	}
+
+	// splits a list into sets, grouped by the result of running each value through $callback
+	// @SOURCE: `scb_list_group_by()`
+	public static function groupBy( $list, $callback )
+	{
+		$groups = array();
+
+		foreach ( $list as $item ) {
+			$key = call_user_func( $callback, $item );
+
+			if ( NULL === $key )
+				continue;
+
+			$groups[$key][] = $item;
+		}
+
+		return $groups;
+	}
 }
