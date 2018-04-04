@@ -1486,20 +1486,20 @@ class Module extends Base
 		Settings::fieldType( $args, $this->scripts );
 	}
 
-	// FIXME: TEST THIS!
-	public function do_post_field( $atts = [], $post = NULL )
+	public function do_posttype_field( $atts = [], $post = NULL )
 	{
 		if ( ! $post = get_post( $post ) )
 			return;
 
 		$args = array_merge( [
-			'option_base'  => $this->base.'_'.$this->module->name,
-			'option_group' => 'meta',
+			'option_base'  => $this->hook(),
+			'option_group' => 'fields',
 			'id_name_cb'   => [ $this, 'settings_id_name_cb' ],
+			'cap'          => TRUE,
 		], $atts );
 
 		if ( ! array_key_exists( 'options', $args ) )
-			$args['options'] = $this->get_postmeta( $post->ID, FALSE, [] );
+			$args['options'] = get_post_meta( $post->ID ); //  $this->get_postmeta( $post->ID, FALSE, [] );
 
 		if ( empty( $args['cap'] ) )
 			$args['cap'] = empty( $this->caps[$args['option_group']] ) ? NULL : $this->caps[$args['option_group']];
@@ -1969,6 +1969,56 @@ class Module extends Base
 			return TRUE;
 
 		return $fallback;
+	}
+
+	// DEFAULT METHOD
+	public function render_metabox( $post, $box, $fields = NULL, $context = 'box' )
+	{
+		if ( is_null( $fields ) )
+			$fields = $this->get_posttype_fields( $post->post_type );
+
+		foreach ( $fields as $field => $args ) {
+
+			if ( $context != $args['context'] )
+				continue;
+
+			echo '<div class="-wrap field-wrap -setting-field" title="'.HTML::escape( $args['description'] ).'">';
+
+			$atts = [
+				'field'       => $this->constant( 'metakey_'.$field, $field ),
+				'type'        => $args['type'],
+				'title'       => $args['title'],
+				'placeholder' => $args['title'],
+				'values'      => $args['values'],
+			];
+
+			if ( 'checkbox' == $atts['type'] )
+				$atts['description'] = $atts['title'];
+
+			$this->do_posttype_field( $atts, $post );
+
+			echo '</div>';
+		}
+	}
+
+	// DEFAULT METHOD
+	// INTENDED HOOK: `save_post`, `save_post_[post_type]`
+	public function store_metabox( $post_id, $post, $update, $context = 'box' )
+	{
+		if ( ! $this->is_save_post( $post, $this->posttypes() ) )
+			return;
+
+		$fields = $this->get_posttype_fields( $post->post_type );
+
+		foreach ( $fields as $field => $args ) {
+
+			if ( $context != $args['context'] )
+				continue;
+
+			$key = $this->constant( 'metakey_'.$field, $field );
+
+			// FIXME: DO THE SAVINGS!
+		}
 	}
 
 	// FIXME: DEPRECATED
