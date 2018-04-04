@@ -136,17 +136,17 @@ class Plugin
 	private function require_plugin()
 	{
 		$this->files( [
-			'ajax',
-			'helper',
-			'listtable',
-			'scripts',
-			'metabox',
+			'Ajax',
+			'Helper',
+			'Listtable',
+			'Scripts',
+			'MetaBox',
 			'Relation',
-			'settings',
-			'template',
-			'shortcode',
-			'widget',
-			'module',
+			'Settings',
+			'Template',
+			'ShortCode',
+			'Widget',
+			'Module',
 		] );
 	}
 
@@ -161,8 +161,8 @@ class Plugin
 	{
 		load_plugin_textdomain( GEDITORIAL_TEXTDOMAIN, FALSE, 'geditorial/languages' );
 
-		// $this->require_core();
-		// $this->require_plugin();
+		$this->require_core();
+		$this->require_plugin();
 
 		foreach ( scandir( GEDITORIAL_DIR.'modules/' ) as $module ) {
 
@@ -170,7 +170,7 @@ class Plugin
 				continue;
 
 			if ( file_exists( GEDITORIAL_DIR.'modules/'.$module.'/'.$module.'.php' ) ) {
-				// include_once( GEDITORIAL_DIR.'modules/'.$module.'/'.$module.'.php' );
+				include_once( GEDITORIAL_DIR.'modules/'.$module.'/'.$module.'.php' );
 
 				if ( $class = Helper::moduleClass( $module ) )
 					$this->register_module( call_user_func( [ $class, 'module' ] ) );
@@ -191,7 +191,7 @@ class Plugin
 			}
 		}
 
-		Relation::setup();
+		// Relation::setup();
 	}
 
 	public function register_module( $args = [] )
