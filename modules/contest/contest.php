@@ -211,7 +211,7 @@ class Contest extends gEditorial\Module
 				add_meta_box( $this->classs( 'main' ),
 					$this->get_meta_box_title( 'contest_cpt', FALSE ),
 					[ $this, 'render_metabox_main' ],
-					$screen->post_type,
+					$screen,
 					'side',
 					'high'
 				);
@@ -221,7 +221,7 @@ class Contest extends gEditorial\Module
 				add_meta_box( $this->classs( 'list' ),
 					$this->get_meta_box_title( 'contest_tax' ),
 					[ $this, 'render_metabox_list' ],
-					$screen->post_type,
+					$screen,
 					'advanced',
 					'low'
 				);
@@ -254,7 +254,7 @@ class Contest extends gEditorial\Module
 				add_meta_box( $this->classs( 'supported' ),
 					$this->get_meta_box_title_posttype( 'contest_cpt' ),
 					[ $this, 'render_metabox_supported' ],
-					$screen->post_type,
+					$screen,
 					'side'
 				);
 

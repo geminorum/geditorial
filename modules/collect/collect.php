@@ -255,7 +255,7 @@ class Collect extends gEditorial\Module
 				add_meta_box( $this->classs( 'main' ),
 					$this->get_meta_box_title( 'collection_cpt', FALSE ),
 					[ $this, 'render_metabox_main' ],
-					$screen->post_type,
+					$screen,
 					'side',
 					'high'
 				);
@@ -265,7 +265,7 @@ class Collect extends gEditorial\Module
 				add_meta_box( $this->classs( 'list' ),
 					$this->get_meta_box_title( 'collection_tax' ),
 					[ $this, 'render_metabox_list' ],
-					$screen->post_type,
+					$screen,
 					'advanced',
 					'low'
 				);
@@ -301,7 +301,7 @@ class Collect extends gEditorial\Module
 				add_meta_box( $this->classs( 'supported' ),
 					$this->get_meta_box_title_posttype( 'collection_cpt' ),
 					[ $this, 'render_metabox_supported' ],
-					$screen->post_type,
+					$screen,
 					'side'
 				);
 

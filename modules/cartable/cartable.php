@@ -375,7 +375,7 @@ class Cartable extends gEditorial\Module
 				add_meta_box( $this->classs( 'main' ),
 					$this->get_meta_box_title( 'users', $this->get_adminmenu( FALSE ), TRUE ),
 					[ $this, 'render_metabox_main' ],
-					$screen->post_type,
+					$screen,
 					'side',
 					'high'
 				);

@@ -120,7 +120,7 @@ class Series extends gEditorial\Module
 				add_meta_box( $this->classs( 'supported' ),
 					$this->get_meta_box_title_tax( 'series_tax' ),
 					[ $this, 'render_metabox_supported' ],
-					$screen->post_type,
+					$screen,
 					'side'
 				);
 

@@ -329,10 +329,10 @@ class Users extends gEditorial\Module
 
 		$terms = get_terms( $this->constant( 'group_tax' ), [ 'hide_empty' => FALSE ] );
 
-		HTML::h2( _x( 'Group', 'Modules: Users', GEDITORIAL_TEXTDOMAIN ) );
+		HTML::h2( _x( 'Site Groups', 'Modules: Users', GEDITORIAL_TEXTDOMAIN ) );
 
 		echo '<table class="form-table">';
-			echo '<tr><th scope="row">'._x( 'Select Group', 'Modules: Users', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
+			echo '<tr><th scope="row">'._x( 'User Groups', 'Modules: Users', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
 
 			if ( ! empty( $terms ) ) {
 

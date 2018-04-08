@@ -64,7 +64,6 @@ class Module extends Base
 
 	protected $root_key = FALSE; // ROOT CONSTANT
 	protected $p2p      = FALSE; // P2P ENABLED/Connection Type
-	protected $o2o      = FALSE; // O2O ENABLED/Connection Type
 
 	protected $scripts_printed = FALSE;
 
@@ -107,9 +106,6 @@ class Module extends Base
 
 		if ( method_exists( $this, 'p2p_init' ) )
 			$this->action( 'p2p_init' );
-
-		if ( method_exists( $this, 'o2o_init' ) )
-			$this->action( 'o2o_init' );
 
 		if ( method_exists( $this, 'wp_loaded' ) )
 			$this->action( 'wp_loaded' );
@@ -2493,36 +2489,6 @@ class Module extends Base
 		if ( $args = apply_filters( $hook, $args, $posttypes ) )
 			if ( p2p_register_connection_type( $args ) )
 				$this->p2p = $p2p;
-	}
-
-	public function o2o_register( $constant, $posttypes = NULL )
-	{
-		if ( is_null( $posttypes ) )
-			$posttypes = $this->posttypes();
-
-		if ( empty( $posttypes ) )
-			return FALSE;
-
-		$to  = $this->constant( $constant );
-		$o2o = $this->constant( $constant.'_o2o' );
-
-		$args = array_merge( [
-			'name'            => $o2o,
-			'from'            => $posttypes,
-			'to'              => $to,
-			'can_create_post' => FALSE,
-			'admin_column'    => 'from', // 'any', 'from', 'to', FALSE
-			'admin_box'       => [
-				'show'    => 'from',
-				'context' => 'advanced',
-			],
-		], $this->strings['o2o'][$constant] );
-
-		$hook = 'geditorial_'.$this->module->name.'_'.$to.'_o2o_args';
-
-		if ( $args = apply_filters( $hook, $args, $posttypes ) )
-			if ( o2o_register_connection_type( $args ) )
-				$this->o2o = $o2o;
 	}
 
 	public function p2p_get_meta( $p2p_id, $meta_key, $before = '', $after = '', $args = [] )

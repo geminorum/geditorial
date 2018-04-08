@@ -245,7 +245,7 @@ class Workflow extends gEditorial\Module
 				add_meta_box( $this->classs( 'main' ),
 					$this->get_meta_box_title( $screen->post_type, $edit ),
 					[ $this, 'render_metabox_main' ],
-					$screen->post_type,
+					$screen,
 					'side',
 					'high'
 				);

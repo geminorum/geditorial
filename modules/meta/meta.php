@@ -252,7 +252,7 @@ class Meta extends gEditorial\Module
 					add_meta_box( $metabox,
 						$this->get_meta_box_title(),
 						$box_callback,
-						$screen->post_type,
+						$screen,
 						'side',
 						'high',
 						[

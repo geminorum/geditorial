@@ -253,7 +253,7 @@ class Magazine extends gEditorial\Module
 				add_meta_box( $this->classs( 'main' ),
 					$this->get_meta_box_title( 'issue_cpt', FALSE ),
 					[ $this, 'render_metabox_main' ],
-					$screen->post_type,
+					$screen,
 					'side',
 					'high'
 				);
@@ -263,7 +263,7 @@ class Magazine extends gEditorial\Module
 				add_meta_box( $this->classs( 'list' ),
 					$this->get_meta_box_title( 'issue_tax' ),
 					[ $this, 'render_metabox_list' ],
-					$screen->post_type,
+					$screen,
 					'advanced',
 					'low'
 				);
@@ -299,7 +299,7 @@ class Magazine extends gEditorial\Module
 				add_meta_box( $this->classs( 'supported' ),
 					$this->get_meta_box_title_posttype( 'issue_cpt' ),
 					[ $this, 'render_metabox_supported' ],
-					$screen->post_type,
+					$screen,
 					'side'
 				);
 
