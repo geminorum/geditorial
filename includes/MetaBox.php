@@ -51,9 +51,9 @@ class MetaBox extends Core\Base
 	// whereas non-hierarchical save by slugs
 	// WTF: because the core's not passing args into the waker!
 	// @REF: `post_categories_meta_box()`, `wp_terms_checklist()`
-	public static function checklistTerms( $post_id = 0, $atts = [] )
+	public static function checklistTerms( $object_id = 0, $atts = [], $terms = NULL )
 	{
-		$atts = apply_filters( 'wp_terms_checklist_args', $atts, $post_id );
+		$atts = apply_filters( 'wp_terms_checklist_args', $atts, $object_id );
 
 		$args = self::args( $atts, [
 			'taxonomy'             => NULL,
@@ -79,7 +79,11 @@ class MetaBox extends Core\Base
 		if ( $args['metabox'] && self::checkHidden( $args['metabox'] ) )
 			return;
 
-		if ( $args['descendants_and_self'] ) {
+		if ( ! is_null( $terms ) ) {
+
+			// FIXME: make sure it's a list of objects
+
+		} else if ( $args['descendants_and_self'] ) {
 
 			$childs = intval( $args['descendants_and_self'] );
 
@@ -95,7 +99,7 @@ class MetaBox extends Core\Base
 
 		} else {
 
-			$terms = Taxonomy::getTerms( $args['taxonomy'], FALSE, TRUE );
+			$terms = Taxonomy::getTerms( $args['taxonomy'], NULL, TRUE );
 		}
 
 		if ( ! count( $terms ) )
@@ -111,14 +115,15 @@ class MetaBox extends Core\Base
 			$walker = new Misc\Walker_Category_Checklist;
 
 		} else {
+
 			$walker = $args['walker'];
 		}
 
 		if ( is_array( $args['selected_cats'] ) )
 			$atts['selected_cats'] = $args['selected_cats'];
 
-		else if ( $post_id )
-			$atts['selected_cats'] = wp_get_object_terms( $post_id, $args['taxonomy'], [ 'fields' => 'ids' ] );
+		else if ( $object_id )
+			$atts['selected_cats'] = wp_get_object_terms( $object_id, $args['taxonomy'], [ 'fields' => 'ids' ] );
 
 		else
 			$atts['selected_cats'] = [];
