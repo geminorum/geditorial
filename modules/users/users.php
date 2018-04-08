@@ -5,6 +5,7 @@ defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Listtable;
+use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Core\Arraay;
 use geminorum\gEditorial\Core\File;
@@ -62,6 +63,11 @@ class Users extends gEditorial\Module
 					'title'       => _x( 'Author Restrictions', 'Modules: Users: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Enhance admin edit page for authors', 'Modules: Users: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 				],
+				[
+					'field'       => 'author_categories',
+					'title'       => _x( 'Author Categories', 'Modules: Users: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Limits each author to post just on selected categories.', 'Modules: Users: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+				],
 			],
 			'_reports' => [
 				'calendar_type',
@@ -77,6 +83,8 @@ class Users extends gEditorial\Module
 			'group_tax_slug' => 'users/group',
 			'type_tax'       => 'user_type',
 			'type_tax_slug'  => 'users/type',
+
+			'metakey_categories' => 'author_categories_',
 		];
 	}
 
@@ -124,6 +132,9 @@ class Users extends gEditorial\Module
 			// no need, we use slash in slug
 			// add_filter( 'sanitize_user', [ $this, 'sanitize_user' ] );
 		}
+
+		if ( $this->get_setting( 'author_categories' ) )
+			$this->filter( 'pre_option_default_category', 3 );
 	}
 
 	public function admin_menu()
@@ -149,7 +160,8 @@ class Users extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
-		$groups = $this->get_setting( 'user_groups', FALSE );
+		$groups     = $this->get_setting( 'user_groups' );
+		$categories = $this->get_setting( 'author_categories' );
 
 		if ( 'users' == $screen->base ) {
 
@@ -160,6 +172,21 @@ class Users extends gEditorial\Module
 
 			$this->action_module( 'tweaks', 'column_user', 1, 12 );
 
+		} else if ( $categories && 'post' == $screen->base && is_object_in_taxonomy( $screen->post_type, 'category' ) ) {
+
+			if ( current_user_can( 'edit_posts' )
+				&& ! current_user_can( 'edit_others_posts' ) ) {
+
+				remove_meta_box( 'categorydiv', $screen, 'side' );
+				add_meta_box( $this->classs( 'categories' ),
+					__( 'Categories' ),
+					[ $this, 'render_metabox_categories' ],
+					$screen,
+					'side',
+					'core'
+				);
+			}
+
 		} else if ( 'edit' == $screen->base && in_array( $screen->post_type, $this->posttypes() ) ) {
 
 			if ( $this->get_setting( 'admin_restrict', FALSE ) )
@@ -168,14 +195,21 @@ class Users extends gEditorial\Module
 			if ( $this->get_setting( 'author_restrict', FALSE ) )
 				$this->action( 'pre_get_posts' );
 
-		} else if ( $groups && ( 'profile' == $screen->base || 'user-edit' == $screen->base ) ) {
+			if ( $categories && is_object_in_taxonomy( $screen->post_type, 'category' ) ) {
+
+				if ( current_user_can( 'edit_posts' )
+					&& ! current_user_can( 'edit_others_posts' ) )
+						$this->_admin_enabled();
+			}
+
+		} else if ( ( $groups || $categories ) && ( 'profile' == $screen->base || 'user-edit' == $screen->base ) ) {
 
 			add_action( 'show_user_profile', [ $this, 'edit_user_profile' ], 5 );
 			add_action( 'edit_user_profile', [ $this, 'edit_user_profile' ], 5 );
 			add_action( 'personal_options_update', [ $this, 'edit_user_profile_update' ] );
 			add_action( 'edit_user_profile_update', [ $this, 'edit_user_profile_update' ] );
 
-		} else if ( $groups && $this->constant( 'group_tax' ) == $screen->taxonomy ) {
+		} else if ( ( $groups || $categories ) && $this->constant( 'group_tax' ) == $screen->taxonomy ) {
 
 			add_filter( 'parent_file', function(){
 				return 'users.php';
@@ -322,6 +356,19 @@ class Users extends gEditorial\Module
 
 	public function edit_user_profile( $user )
 	{
+		if ( $this->get_setting( 'user_groups' ) )
+			$this->render_user_groups( $user );
+
+		if ( $this->get_setting( 'author_categories' ) ) {
+
+			if ( user_can( $user, 'edit_posts' )
+				&& ! user_can( $user, 'edit_others_posts' ) )
+					$this->render_author_categories( $user );
+		}
+	}
+
+	private function render_user_groups( $user )
+	{
 		$tax = get_taxonomy( $this->constant( 'group_tax' ) );
 
 		if ( ! current_user_can( $tax->cap->assign_terms ) )
@@ -366,22 +413,127 @@ class Users extends gEditorial\Module
 		echo '</table>';
 	}
 
+	private function render_author_categories( $user )
+	{
+		$terms    = get_terms( 'category', [ 'hide_empty' => FALSE ] );
+		$default  = get_option( 'default_category' );
+		$selected = $this->get_user_catecories( $user->ID );
+
+		HTML::h2( _x( 'Site Categories', 'Modules: Users', GEDITORIAL_TEXTDOMAIN ) );
+		HTML::desc( _x( 'Restrict non editor users to post in selected categories only.', 'Modules: Users', GEDITORIAL_TEXTDOMAIN ) );
+
+		echo '<table class="form-table">';
+			echo '<tr><th scope="row">'._x( 'User Categories', 'Modules: Users', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
+
+			if ( ! empty( $terms ) ) {
+
+				echo '<div class="wp-tab-panel"><ul>';
+
+				foreach ( $terms as $term ) {
+
+					if ( $default == $term->term_id )
+						continue;
+
+					$html = HTML::tag( 'input', [
+						'type'    => 'checkbox',
+						'name'    => 'categories[]',
+						'id'      => 'categories-'.$term->slug,
+						'value'   => $term->term_id,
+						'checked' => in_array( $term->term_id, $selected ),
+					] );
+
+					echo '<li>'.HTML::tag( 'label', [
+						'for' => 'categories-'.$term->slug,
+					], $html.'&nbsp;'.HTML::escape( $term->name ) ).'</li>';
+				 }
+
+				echo '</ul></div>';
+
+				// passing empty value for clearing up
+				echo '<input type="hidden" name="categories[]" value="0" />';
+
+			} else {
+				_ex( 'There are no categories available.', 'Modules: Users', GEDITORIAL_TEXTDOMAIN );
+			}
+
+		echo '</td></tr>';
+		echo '</table>';
+	}
+
+	private function get_user_catecories( $user_id = NULL, $blog_id = NULL, $fallback = TRUE )
+	{
+		if ( is_null( $user_id ) )
+			$user_id = get_current_user_id();
+
+		if ( is_null( $blog_id ) )
+			$blog_id = get_current_blog_id();
+
+		$key = $this->constant( 'metakey_categories' ).$blog_id;
+
+		if ( $cats = get_user_meta( $user_id, $key, TRUE ) )
+			return (array) $cats;
+
+		return $fallback ? [ get_option( 'default_category' ) ] : [];
+	}
+
 	public function edit_user_profile_update( $user_id )
 	{
 		if ( ! current_user_can( 'edit_user', $user_id ) )
 			return FALSE;
 
-		$tax = get_taxonomy( $this->constant( 'group_tax' ) );
+		if ( isset( $_POST['groups'] ) ) {
 
-		if ( ! current_user_can( $tax->cap->assign_terms ) )
-			return FALSE;
+			$groups = get_taxonomy( $this->constant( 'group_tax' ) );
 
-		if ( ! isset( $_POST['groups'] ) )
+			if ( current_user_can( $groups->cap->assign_terms ) ) {
+
+				wp_set_object_terms( $user_id, array_filter( $_POST['groups'] ), $groups->name, FALSE );
+				clean_object_term_cache( $user_id, $this->constant( 'group_tax' ) );
+			}
+		}
+
+		if ( isset( $_POST['categories'] ) ) {
+
+			$key = $this->constant( 'metakey_categories' ).get_current_blog_id();
+			update_user_meta( $user_id, $key, array_filter( $_POST['categories'] ) );
+		}
+	}
+
+	public function pre_option_default_category( $false, $option, $default )
+	{
+		if ( current_user_can( 'edit_posts' )
+			&& ! current_user_can( 'edit_others_posts' ) ) {
+
+			$selected = $this->get_user_catecories( NULL, NULL, FALSE );
+
+			// only if user has one cat, otherwise fallback to default
+			if ( 1 === count( $selected ) )
+				return $selected[0];
+		}
+
+		return $false;
+	}
+
+	public function render_metabox_categories( $post, $box )
+	{
+		if ( $this->check_hidden_metabox( $box ) )
 			return;
 
-		wp_set_object_terms( $user_id, array_filter( $_POST['groups'] ), $tax->name, FALSE );
+		$terms = [];
 
-		clean_object_term_cache( $user_id, $this->constant( 'group_tax' ) );
+		foreach ( $this->get_user_catecories() as $selected )
+			$terms[] = Taxonomy::getTerm( $selected, 'category' );
+
+		echo $this->wrap_open( '-admin-metabox' );
+
+			MetaBox::checklistTerms( $post->ID, [
+				'taxonomy'          => 'category',
+				'edit'              => FALSE,
+				'selected_cats'     => 1 === count( $terms ) ? [ $terms[0]->term_id ] : FALSE,
+				'selected_preserve' => TRUE,
+			], $terms );
+
+		echo '</div>';
 	}
 
 	public function dashboard_widget_summary( $object, $box )
