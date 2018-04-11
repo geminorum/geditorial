@@ -274,18 +274,30 @@ class Users extends gEditorial\Module
 	{
 		$new = [];
 
-		foreach ( $columns as $column => $title )
-			if ( 'posts' == $column )
-				$new['counts'] = $this->get_column_title( 'counts', 'users' );
-			else
+		foreach ( $columns as $column => $title ) {
+
+			if ( 'posts' == $column ) {
+
+				$new[$this->classs( 'counts' )] = $this->get_column_title( 'counts', 'users' );
+
+			} else if ( 'geditorial-tweaks-id' == $column ) {
+
+				$new[$this->classs( 'counts' )] = $this->get_column_title( 'counts', 'users' );
+
 				$new[$column] = $title;
+
+			} else {
+
+				$new[$column] = $title;
+			}
+		}
 
 		return $new;
 	}
 
 	public function manage_users_custom_column( $output, $column_name, $user_id )
 	{
-		if ( 'counts' != $column_name )
+		if ( $this->classs( 'counts' ) != $column_name )
 			return $output;
 
 		if ( empty( $this->all_posttypes ) )
