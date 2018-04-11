@@ -200,6 +200,7 @@ class Tweaks extends gEditorial\Module
 				'order_column_title'    => _x( 'Order', 'Modules: Tweaks: Column Title', GEDITORIAL_TEXTDOMAIN ),
 				'user_column_title'     => _x( 'User', 'Modules: Tweaks: Column Title', GEDITORIAL_TEXTDOMAIN ),
 				'contacts_column_title' => _x( 'Contacts', 'Modules: Tweaks: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'id_column_title'       => _x( 'ID', 'Modules: Tweaks: Column Title', GEDITORIAL_TEXTDOMAIN ),
 			],
 			'js' => [
 				'search_title'       => _x( 'Type to filter by', 'Modules: Tweaks: Meta Box Search Title', GEDITORIAL_TEXTDOMAIN ),
@@ -621,12 +622,15 @@ class Tweaks extends gEditorial\Module
 
 				$new[$this->classs( 'contacts' )] = $this->get_column_title( 'contacts', 'users' );
 
+			} else if ( 'posts' == $key ) {
+
+				$new[$this->classs( 'id' )] = $this->get_column_title( 'id', 'users' );
+
 			} else if ( in_array( $key, [
 				'name',
 				'role',
 				'roles',
 				'md_multiple_roles_column',
-				'posts',
 			] ) ) {
 
 				// do nothing
@@ -659,6 +663,16 @@ class Tweaks extends gEditorial\Module
 			echo '</ul></div>';
 
 			$output.= ob_get_clean();
+
+		} else if ( $this->classs( 'id' ) == $column_name ) {
+
+			ob_start();
+
+			echo '<div class="geditorial-admin-wrap-column -tweaks -id">';
+				echo $user_id;
+			echo '</div>';
+
+			$output.= ob_get_clean();
 		}
 
 		return $output;
@@ -666,7 +680,10 @@ class Tweaks extends gEditorial\Module
 
 	public function manage_users_sortable_columns( $columns )
 	{
-		return array_merge( $columns, [ $this->classs( 'contacts' ) => 'email' ] );
+		return array_merge( $columns, [
+			$this->classs( 'contacts' ) => 'email',
+			$this->classs( 'id' )       => 'id',
+		] );
 	}
 
 	public function manage_comments_columns( $columns )
