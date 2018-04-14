@@ -4,16 +4,17 @@
 /// Module: Users: Admin: Users ------------------------------------------------
 
 .fixed {
-  th.column-counts {
-    width: 220px;
+  th.column-geditorial-users-counts {
+    width: 105px;
   }
 
-  .column-counts {
+  .column-geditorial-users-counts {
     table td {
-      padding: 0 0 2px;
+      padding: 0 0 2px !important;
 
       code {
         cursor: pointer;
+        display: inline !important;
       }
     }
   }

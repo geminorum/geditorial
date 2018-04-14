@@ -13,6 +13,20 @@
   .field-wrap {
     margin-bottom: 2px;
 
+    // for fields rendered by settings
+    &.-setting-field {
+      > p {
+        margin: 0;
+      }
+
+      > select,
+      > input[type="url"],
+      > input[type="email"],
+      > input[type="text"] {
+        width: 100%;
+      }
+    }
+
     &.-summary {
       ol,
       ul {

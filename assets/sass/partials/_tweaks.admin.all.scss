@@ -4,6 +4,19 @@
 /// Module: Tweaks: Admin All -------------------------------------------------
 
 .fixed {
+  td.column-geditorial-tweaks-id {
+    text-align: right;
+    font-size: 0.9em;
+
+    a {
+      color: inherit;
+
+      &:focus {
+        box-shadow: none !important;
+      }
+    }
+  }
+
   th.column-geditorial-tweaks-order {
     width: 50px;
   }
@@ -47,11 +60,6 @@
       margin-left: 0;
       margin-right: 7px;
     }
-  }
-
-  td.column-geditorial-tweaks-id {
-    text-align: right;
-    font-size: 0.9em;
   }
 }
 
