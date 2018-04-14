@@ -1,3 +1,14 @@
+### 3.15.1
+* assets/package: virastar updated to 0.13.0
+* main/main: using psr-4 autoload for core and main files
+* main/module: create posts only for mapped caps
+* main/metabox: passing terms to checklist box
+* module/meta: :warning: fixed posttype on ajax
+* module/tweaks: link id column to shortlinks
+* module/tweaks: support id on users tablelist
+* module/users: :new: author categories
+* module/users: support tweaks for counts columns
+
 ### 3.15.0
 * main/plugin: iframe styles
 * main/ajax: js module container deprecated
