@@ -243,7 +243,7 @@ class Config extends gEditorial\Module
 				}
 			}
 
-			add_action( 'geditorial_tools_sub_general', [ $this, 'tools_sub' ], 10, 2 );
+			add_action( 'geditorial_tools_sub_'.$sub, [ $this, 'tools_sub' ], 10, 2 );
 
 			$this->register_help_tabs();
 		}

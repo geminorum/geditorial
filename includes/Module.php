@@ -2460,7 +2460,7 @@ class Module extends Base
 		return ' '.$this->classs( 'enabled' ).$classes;
 	}
 
-	// @REF: https://github.com/scribu/wp-posts-to-posts/wiki/Connection-information
+	// @REF: https://github.com/scribu/wp-posts-to-posts/wiki
 	public function p2p_register( $constant, $posttypes = NULL )
 	{
 		if ( is_null( $posttypes ) )

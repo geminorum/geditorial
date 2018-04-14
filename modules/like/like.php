@@ -168,9 +168,7 @@ class Like extends gEditorial\Module
 					'title'  => Helper::humanTimeDiffRound( intval( $timestamp ) ).' &ndash; '.get_the_author_meta( 'display_name', $user_id ),
 					'parent' => $this->classs( 'users' ),
 					'href'   => $cap ? WordPress::getUserEditLink( $user_id ) : FALSE,
-					'meta'   => [
-						'title' => Helper::humanTimeAgo( intval( $timestamp ), current_time( 'timestamp', FALSE ) ),
-					],
+					'meta'   => [ 'title' => Helper::humanTimeAgo( intval( $timestamp ), current_time( 'timestamp', FALSE ) ) ],
 				];
 		}
 
@@ -188,10 +186,8 @@ class Like extends gEditorial\Module
 					'id'     => $this->classs( 'guest', $timestamp ),
 					'title'  => Helper::humanTimeDiffRound( intval( $timestamp ) ).' &ndash; '.$ip,
 					'parent' => $this->classs( 'guests' ),
-					'href'   => sprintf( 'http://freegeoip.net/?q=%s', $ip ),
-					'meta'   => [
-						'title' => Helper::humanTimeAgo( intval( $timestamp ), current_time( 'timestamp', FALSE ) ),
-					],
+					'href'   => sprintf( 'https://redirect.li/map/?ip=%s', $ip ),
+					'meta'   => [ 'title' => Helper::humanTimeAgo( intval( $timestamp ), current_time( 'timestamp', FALSE ) ) ],
 				];
 		}
 	}
