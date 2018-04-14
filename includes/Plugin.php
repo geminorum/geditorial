@@ -161,8 +161,8 @@ class Plugin
 	{
 		load_plugin_textdomain( GEDITORIAL_TEXTDOMAIN, FALSE, 'geditorial/languages' );
 
-		$this->require_core();
-		$this->require_plugin();
+		// $this->require_core();
+		// $this->require_plugin();
 
 		foreach ( scandir( GEDITORIAL_DIR.'modules/' ) as $module ) {
 
