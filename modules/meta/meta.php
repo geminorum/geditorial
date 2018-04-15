@@ -700,14 +700,14 @@ class Meta extends gEditorial\Module
 
 	public function tools_sub( $uri, $sub )
 	{
-		$args = $this->settings_form_req( [
+		$args = $this->get_current_form( [
 			'custom_field'       => '',
 			'custom_field_limit' => '',
 			'custom_field_type'  => 'post',
 			'custom_field_into'  => '',
 		], 'tools' );
 
-		$this->settings_form_before( $uri, $sub, 'bulk', 'tools', FALSE );
+		$this->render_form_start( $uri, $sub, 'bulk', 'tools', FALSE );
 
 			HTML::h3( _x( 'Meta Tools', 'Modules: Meta', GEDITORIAL_TEXTDOMAIN ) );
 
@@ -779,7 +779,7 @@ class Meta extends gEditorial\Module
 			echo '</td></tr>';
 			echo '</table>';
 
-		$this->settings_form_after( $uri, $sub );
+		$this->render_form_end( $uri, $sub );
 	}
 
 	public function tools_settings( $sub )
@@ -792,7 +792,7 @@ class Meta extends gEditorial\Module
 
 				if ( isset( $_POST['custom_fields_convert'] ) ) {
 
-					$post = $this->settings_form_req( [
+					$post = $this->get_current_form( [
 						'custom_field'       => FALSE,
 						'custom_field_into'  => FALSE,
 						'custom_field_limit' => '25',
@@ -816,7 +816,7 @@ class Meta extends gEditorial\Module
 
 				} else if ( isset( $_POST['custom_fields_delete'] ) ) {
 
-					$post = $this->settings_form_req( [
+					$post = $this->get_current_form( [
 						'custom_field'       => FALSE,
 						'custom_field_limit' => '',
 					], 'tools' );

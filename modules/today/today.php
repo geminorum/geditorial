@@ -209,7 +209,7 @@ class Today extends gEditorial\Module
 
 	public function admin_today_page()
 	{
-		Settings::wrapOpen( $this->key, $this->base, 'listtable' );
+		Settings::wrapOpen( $this->key, 'listtable' );
 
 			Settings::headerTitle( _x( 'Editorial Today', 'Modules: Today: Page Title', GEDITORIAL_TEXTDOMAIN ), FALSE );
 
@@ -862,11 +862,11 @@ class Today extends gEditorial\Module
 
 	public function tools_sub( $uri, $sub )
 	{
-		$this->settings_form_before( $uri, $sub, 'bulk', 'tools', FALSE );
+		$this->render_form_start( $uri, $sub, 'bulk', 'tools', FALSE );
 
 			$this->tableSummary();
 
-		$this->settings_form_after( $uri, $sub );
+		$this->render_form_end( $uri, $sub );
 	}
 
 	private function tableSummary()

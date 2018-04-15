@@ -571,7 +571,7 @@ class Users extends gEditorial\Module
 		if ( $user->user_email ) {
 			echo '<li class="-row -email">';
 				echo $this->get_column_icon( FALSE, 'email', _x( 'Email', 'Modules: Users: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
-				echo HTML::mailto( $user->user_email );
+				echo HTML::mailto( $user->user_email, NULL, FALSE );
 			echo '</li>';
 		}
 
@@ -635,13 +635,13 @@ class Users extends gEditorial\Module
 
 	public function reports_sub( $uri, $sub )
 	{
-		$args = $this->settings_form_req( [
+		$args = $this->get_current_form( [
 			'post_type'  => 'post',
 			'user_id'    => '0',
 			'year_month' => '',
 		], 'reports' );
 
-		$this->settings_form_before( $uri, $sub, 'bulk', 'reports', FALSE );
+		$this->render_form_start( $uri, $sub, 'bulk', 'reports', FALSE );
 
 			HTML::h3( _x( 'User Reports', 'Modules: Users', GEDITORIAL_TEXTDOMAIN ) );
 
@@ -692,7 +692,7 @@ class Users extends gEditorial\Module
 
 			echo '</td></tr>';
 			echo '</table>';
-		$this->settings_form_after( $uri, $sub );
+		$this->render_form_end( $uri, $sub );
 	}
 
 	public function tools_settings( $sub )
@@ -755,7 +755,7 @@ class Users extends gEditorial\Module
 
 	public function tools_sub( $uri, $sub )
 	{
-		$this->settings_form_before( $uri, $sub, 'bulk', 'tools', FALSE );
+		$this->render_form_start( $uri, $sub, 'bulk', 'tools', FALSE );
 
 			echo '<table class="form-table">';
 			echo '<tr><th scope="row">'._x( 'Re-Map Authors', 'Modules: Users', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
@@ -785,7 +785,7 @@ class Users extends gEditorial\Module
 			echo '</td></tr>';
 			echo '</table>';
 
-		$this->settings_form_after( $uri, $sub );
+		$this->render_form_end( $uri, $sub );
 	}
 
 	// FIXME: DRAFT : need styling / register the shortcode!!

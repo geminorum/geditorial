@@ -810,7 +810,7 @@ class Module extends Base
 		Settings::submitButton( $name, $text, $primary, $atts );
 	}
 
-	protected function settings_form_before( $uri, $sub = NULL, $action = 'update', $context = 'settings', $check = TRUE )
+	protected function render_form_start( $uri, $sub = NULL, $action = 'update', $context = 'settings', $check = TRUE )
 	{
 		if ( is_null( $sub ) )
 			$sub = $this->module->name;
@@ -831,12 +831,12 @@ class Module extends Base
 			}
 	}
 
-	protected function settings_form_after( $uri, $sub = NULL, $action = 'update', $context = 'settings', $check = TRUE )
+	protected function render_form_end( $uri, $sub = NULL, $action = 'update', $context = 'settings', $check = TRUE )
 	{
 		echo '</form>';
 	}
 
-	protected function settings_form_req( $defaults, $context = 'settings' )
+	protected function get_current_form( $defaults, $context = 'settings' )
 	{
 		$req = empty( $_REQUEST[$this->base.'_'.$this->module->name][$context] )
 			? []
@@ -1335,7 +1335,7 @@ class Module extends Base
 			$back  = Settings::settingsURL();
 		}
 
-		Settings::wrapOpen( $this->module->name, $this->base, 'settings' );
+		Settings::wrapOpen( $this->module->name );
 
 			Settings::headerTitle( $title, $back, NULL, $this->module->icon, $count, TRUE );
 			Settings::message();

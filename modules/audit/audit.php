@@ -597,11 +597,11 @@ class Audit extends gEditorial\Module
 		if ( empty( $terms ) )
 			return HTML::desc( _x( 'No reports available!', 'Modules: Audit', GEDITORIAL_TEXTDOMAIN ), TRUE, '-empty' );
 
-		$args = $this->settings_form_req( [
+		$args = $this->get_current_form( [
 			'user_id' => '0',
 		], 'reports' );
 
-		$this->settings_form_before( $uri, $sub, 'bulk', 'reports', FALSE );
+		$this->render_form_start( $uri, $sub, 'bulk', 'reports', FALSE );
 
 			HTML::h3( _x( 'Audit Reports', 'Modules: Audit', GEDITORIAL_TEXTDOMAIN ) );
 
@@ -631,6 +631,6 @@ class Audit extends gEditorial\Module
 			echo '</td></tr>';
 			echo '</table>';
 
-		$this->settings_form_after( $uri, $sub );
+		$this->render_form_end( $uri, $sub );
 	}
 }

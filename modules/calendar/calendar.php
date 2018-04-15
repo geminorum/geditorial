@@ -198,7 +198,7 @@ class Calendar extends gEditorial\Module
 		foreach ( $this->get_calendars() as $calendar => $calendar_title )
 			$calendars[add_query_arg( [ 'cal' => $calendar ], $args['caption_link'] )] = HTML::escape( $calendar_title );
 
-		Settings::wrapOpen( $this->key, $this->base, 'listtable' );
+		Settings::wrapOpen( $this->key, 'listtable' );
 
 			Settings::headerTitle( _x( 'Editorial Calendar', 'Modules: Calendar: Page Title', GEDITORIAL_TEXTDOMAIN ), $calendars );
 

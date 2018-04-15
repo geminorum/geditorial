@@ -133,7 +133,7 @@ class Config extends gEditorial\Module
 
 		$messages = apply_filters( 'geditorial_reports_messages', Settings::messages(), $sub );
 
-		Settings::wrapOpen( $sub, $this->base, 'reports' );
+		Settings::wrapOpen( $sub, 'reports' );
 
 			Settings::headerTitle( _x( 'Editorial Reports', 'Modules: Config: Page Title', GEDITORIAL_TEXTDOMAIN ) );
 			Settings::headerNav( $uri, $sub, $subs );
@@ -169,7 +169,7 @@ class Config extends gEditorial\Module
 
 		$messages = apply_filters( 'geditorial_tools_messages', Settings::messages(), $sub );
 
-		Settings::wrapOpen( $sub, $this->base, 'tools' );
+		Settings::wrapOpen( $sub, 'tools' );
 
 			Settings::headerTitle( _x( 'Editorial Tools', 'Modules: Config: Page Title', GEDITORIAL_TEXTDOMAIN ) );
 			Settings::headerNav( $uri, $sub, $subs );
@@ -209,7 +209,7 @@ class Config extends gEditorial\Module
 
 				$this->nonce_check( 'tools', $sub );
 
-				$post = $this->settings_form_req( [
+				$post = $this->get_current_form( [
 					'empty_module' => FALSE,
 				], 'tools' );
 
@@ -279,11 +279,11 @@ class Config extends gEditorial\Module
 		if ( ! $this->cuc( 'tools' ) )
 			self::cheatin();
 
-		$post = $this->settings_form_req( [
+		$post = $this->get_current_form( [
 			'empty_module' => 'meta',
 		], 'tools' );
 
-		$this->settings_form_before( $uri, $sub, 'bulk', 'tools', TRUE );
+		$this->render_form_start( $uri, $sub, 'bulk', 'tools', TRUE );
 
 			echo '<table class="form-table">';
 
@@ -330,7 +330,7 @@ class Config extends gEditorial\Module
 
 			echo '</td></tr></table>';
 
-		$this->settings_form_after( $uri, $sub );
+		$this->render_form_end( $uri, $sub );
 	}
 
 	public function settings_sidebox( $sub, $uri )

@@ -487,7 +487,7 @@ class Cartable extends gEditorial\Module
 			}
 		}
 
-		Settings::wrapOpen( $this->key, $this->base, 'listtable' );
+		Settings::wrapOpen( $this->key, 'listtable' );
 
 			Settings::headerTitle( _x( 'Editorial Cartable', 'Modules: Cartable: Page Title', GEDITORIAL_TEXTDOMAIN ), FALSE );
 

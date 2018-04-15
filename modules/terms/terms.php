@@ -866,7 +866,7 @@ class Terms extends gEditorial\Module
 
 				if ( isset( $_POST['orphaned_terms'] ) ) {
 
-					$post = $this->settings_form_req( [
+					$post = $this->get_current_form( [
 						'dead_tax' => FALSE,
 						'live_tax' => FALSE,
 					], 'tools' );
@@ -892,7 +892,7 @@ class Terms extends gEditorial\Module
 
 	public function tools_sub( $uri, $sub )
 	{
-		$this->settings_form_before( $uri, $sub, 'bulk', 'tools', FALSE );
+		$this->render_form_start( $uri, $sub, 'bulk', 'tools', FALSE );
 
 			HTML::h3( _x( 'Term Tools', 'Modules: Terms', GEDITORIAL_TEXTDOMAIN ) );
 
@@ -938,7 +938,7 @@ class Terms extends gEditorial\Module
 
 			echo '</table>';
 
-		$this->settings_form_after( $uri, $sub );
+		$this->render_form_end( $uri, $sub );
 	}
 
 	public function reports_settings( $sub )
@@ -985,11 +985,11 @@ class Terms extends gEditorial\Module
 
 	public function reports_sub_uncategorized( $uri, $sub )
 	{
-		$this->settings_form_before( $uri, $sub, 'bulk', 'reports', FALSE );
+		$this->render_form_start( $uri, $sub, 'bulk', 'reports', FALSE );
 
 			$this->tableUncategorized();
 
-		$this->settings_form_after( $uri, $sub );
+		$this->render_form_end( $uri, $sub );
 	}
 
 	private function tableUncategorized()

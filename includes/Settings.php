@@ -15,6 +15,7 @@ use geminorum\gEditorial\WordPress\User;
 class Settings extends Core\Base
 {
 
+	const BASE     = 'geditorial';
 	const REPORTS  = 'geditorial-reports';
 	const SETTINGS = 'geditorial-settings';
 	const TOOLS    = 'geditorial-tools';
@@ -661,9 +662,9 @@ class Settings extends Core\Base
 		return trim( self::req( 'sub', $default ) );
 	}
 
-	public static function wrapOpen( $sub = 'general', $base = 'geditorial', $page = 'settings' )
+	public static function wrapOpen( $sub, $context = 'settings' )
 	{
-		echo '<div id="'.$base.'-'.$page.'" class="wrap '.$base.'-admin-wrap '.$base.'-'.$page.' '.$base.'-'.$page.'-'.$sub.' sub-'.$sub.'">';
+		echo '<div id="'.static::BASE.'-'.$context.'" class="wrap '.static::BASE.'-admin-wrap '.static::BASE.'-'.$context.' '.static::BASE.'-'.$context.'-'.$sub.' sub-'.$sub.'">';
 	}
 
 	public static function wrapClose()

@@ -635,11 +635,11 @@ class Book extends gEditorial\Module
 
 	public function tools_sub( $uri, $sub )
 	{
-		$this->settings_form_before( $uri, $sub, 'bulk', 'tools', FALSE );
+		$this->render_form_start( $uri, $sub, 'bulk', 'tools', FALSE );
 
 			$this->tableSummary();
 
-		$this->settings_form_after( $uri, $sub );
+		$this->render_form_end( $uri, $sub );
 	}
 
 	// @REF: meta query: http://wordpress.stackexchange.com/a/246358/3687

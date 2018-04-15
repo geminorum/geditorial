@@ -323,7 +323,7 @@ class Importer extends gEditorial\Module
 
 	public function tools_sub( $uri, $sub )
 	{
-		$this->settings_form_before( $uri, $sub, 'bulk', 'tools', FALSE );
+		$this->render_form_start( $uri, $sub, 'bulk', 'tools', FALSE );
 
 		$selected  = self::req( '_cb', [] );
 		$field_map = self::req( 'field_map', [] );
@@ -409,7 +409,7 @@ class Importer extends gEditorial\Module
 
 		echo '</p>';
 
-		$this->settings_form_after( $uri, $sub );
+		$this->render_form_end( $uri, $sub );
 	}
 
 	public function get_importer_fields( $posttype = NULL )

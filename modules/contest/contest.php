@@ -587,7 +587,7 @@ class Contest extends gEditorial\Module
 
 	public function tools_sub( $uri, $sub )
 	{
-		$this->settings_form_before( $uri, $sub, 'bulk', 'tools', FALSE );
+		$this->render_form_start( $uri, $sub, 'bulk', 'tools', FALSE );
 
 			HTML::h3( _x( 'Contest Tools', 'Modules: Contest', GEDITORIAL_TEXTDOMAIN ) );
 
@@ -652,7 +652,7 @@ class Contest extends gEditorial\Module
 			echo '</td></tr>';
 			echo '</table>';
 
-		$this->settings_form_after( $uri, $sub );
+		$this->render_form_end( $uri, $sub );
 	}
 
 	public function tools_settings( $sub )
