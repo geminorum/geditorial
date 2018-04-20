@@ -339,11 +339,15 @@ class Entry extends gEditorial\Module
 
 		if ( is_404() ) {
 
+			// status_header( 404 );
+			// nocache_headers();
+
 			Theme::resetQuery( [
 				'ID'         => 0,
 				'post_title' => $this->get_title_from_query(),
 				'post_type'  => $posttype,
 				'is_single'  => TRUE,
+				'is_404'     => TRUE,
 			], [ $this, 'empty_content' ] );
 
 			$this->filter_append( 'post_class', 'empty-entry' );
