@@ -528,6 +528,16 @@ class Settings extends Core\Base
 		];
 	}
 
+	public static function getSetting_empty_content( $description = NULL )
+	{
+		return [
+			'field'       => 'empty_content',
+			'type'        => 'textarea-quicktags',
+			'title'       => _x( 'Empty Content', 'Setting: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+			'description' => $description ?: _x( 'Displays in empty content placeholder.', 'Setting: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+		];
+	}
+
 	public static function getSetting_display_searchform( $description = NULL )
 	{
 		return [

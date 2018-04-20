@@ -7,6 +7,7 @@ use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\Core\Arraay;
 use geminorum\gEditorial\Core\HTML;
+use geminorum\gEditorial\Core\Text;
 use geminorum\gEditorial\Core\URL;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\PostType;
@@ -42,6 +43,7 @@ class Entry extends gEditorial\Module
 				'after_content',
 			],
 			'_content' => [
+				'empty_content',
 				'display_searchform',
 			],
 			'_supports' => [
@@ -383,8 +385,9 @@ class Entry extends gEditorial\Module
 	public function empty_content( $content )
 	{
 		$title = $this->get_title_from_query();
+		$text  = $this->get_setting( 'empty_content', _x( 'There are no entry by this title. Search again or create one.', 'Modules: Entry', GEDITORIAL_TEXTDOMAIN ) );
 
-		$html = '<p>'._x( 'There are no entry by this title. Search again or create one.', 'Modules: Entry', GEDITORIAL_TEXTDOMAIN ).'</p>';
+		$html = Text::autoP( trim( $text ) );
 		$html.= $this->get_search_form( 'entry_cpt', $title );
 
 		if ( $add_new = $this->get_add_new( $title ) )
