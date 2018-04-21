@@ -218,7 +218,6 @@ class Event extends gEditorial\Module
 
 					$this->class_metabox( $screen, 'main' );
 
-					remove_meta_box( 'pageparentdiv', $screen, 'side' );
 					add_meta_box( $this->classs( 'main' ),
 						$this->get_meta_box_title( 'event_cpt' ),
 						[ $this, 'render_metabox_main' ],
@@ -464,8 +463,6 @@ class Event extends gEditorial\Module
 
 		if ( $this->get_setting( 'display_type', TRUE ) )
 			MetaBox::dropdownPostTaxonomy( $this->constant( 'type_tax' ), $post, FALSE, FALSE, '', $args['cal-type'] );
-
-		MetaBox::fieldPostParent( $post );
 	}
 
 	// https://github.com/devinsays/event-posts/blob/master/event-posts.php

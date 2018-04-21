@@ -571,7 +571,7 @@ class Users extends gEditorial\Module
 		if ( $user->user_email ) {
 			echo '<li class="-row -email">';
 				echo $this->get_column_icon( FALSE, 'email', _x( 'Email', 'Modules: Users: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
-				echo HTML::mailto( $user->user_email, NULL, FALSE );
+				echo HTML::mailto( $user->user_email );
 			echo '</li>';
 		}
 

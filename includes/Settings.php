@@ -188,7 +188,7 @@ class Settings extends Core\Base
 		printf( '<span class="-field-sep">&nbsp;&mdash; %s &mdash;&nbsp;</span>', $string );
 	}
 
-	public static function fieldSection( $title, $description = FALSE, $tag = 'h3' )
+	public static function fieldSection( $title, $description = FALSE, $tag = 'h2' )
 	{
 		echo HTML::tag( $tag, $title );
 

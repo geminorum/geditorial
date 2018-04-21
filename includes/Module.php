@@ -752,13 +752,13 @@ class Module extends Base
 		echo '<form class="'.$this->base.'-form -form -'.$this->module->name
 			.'" action="'.$this->get_module_url( 'settings' ).'" method="post">';
 
-			$this->settings_fields( $this->module->name );
+			$this->render_form_fields( $this->module->name );
 
 			Settings::moduleSections( $this->base.'_'.$this->module->name );
 
 			echo '<input id="geditorial_module_name" name="geditorial_module_name" type="hidden" value="'.HTML::escape( $this->module->name ).'" />';
 
-			$this->settings_buttons();
+			$this->render_form_buttons();
 
 		echo '</form>';
 
@@ -790,7 +790,7 @@ class Module extends Base
 		];
 	}
 
-	protected function settings_buttons( $module = FALSE, $wrap = '' )
+	protected function render_form_buttons( $module = FALSE, $wrap = '' )
 	{
 		if ( FALSE !== $wrap )
 			echo $this->wrap_open_buttons( $wrap );
@@ -800,14 +800,6 @@ class Module extends Base
 
 		if ( FALSE !== $wrap )
 			echo '</p>';
-	}
-
-	protected function submit_button( $name = '', $primary = FALSE, $text = NULL, $atts = [] )
-	{
-		if ( $name && is_null( $text ) )
-			$text = $this->get_string( $name, 'buttons', 'settings' );
-
-		Settings::submitButton( $name, $text, $primary, $atts );
 	}
 
 	protected function render_form_start( $uri, $sub = NULL, $action = 'update', $context = 'settings', $check = TRUE )
@@ -822,7 +814,7 @@ class Module extends Base
 
 		echo '<form enctype="multipart/form-data" class="'.$class.'" method="post" action="">';
 
-			$this->settings_fields( $sub, $action, $context );
+			$this->render_form_fields( $sub, $action, $context );
 
 			if ( $check && $sidebox ) {
 				echo '<div class="-sidebox -'.$this->module->name.' -sidebox-'.$sub.'">';
@@ -845,7 +837,7 @@ class Module extends Base
 		return self::atts( $defaults, $req );
 	}
 
-	protected function settings_fields( $sub, $action = 'update', $context = 'settings' )
+	protected function render_form_fields( $sub, $action = 'update', $context = 'settings' )
 	{
 		HTML::inputHidden( 'base', $this->base );
 		HTML::inputHidden( 'key', $this->key );

@@ -310,7 +310,7 @@ class Ortho extends gEditorial\Module
 		$this->render_form_start( $uri, $sub, 'bulk', 'reports', FALSE );
 
 			if ( $this->tableSummary() )
-				$this->settings_buttons();
+				$this->render_form_buttons();
 
 		$this->render_form_end( $uri, $sub );
 	}
