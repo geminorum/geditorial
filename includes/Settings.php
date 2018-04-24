@@ -895,11 +895,6 @@ class Settings extends Core\Base
 		return _x( 'huh?', 'Settings: Message', GEDITORIAL_TEXTDOMAIN );
 	}
 
-	public static function headerNav( $uri = '', $active = '', $subs = [], $prefix = 'nav-tab-', $tag = 'h3' )
-	{
-		return HTML::headerNav( $uri, $active, $subs, $prefix, $tag );
-	}
-
 	// @SOURCE: `add_settings_section()`
 	public static function addModuleSection( $page, $atts = [] )
 	{

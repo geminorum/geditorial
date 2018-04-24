@@ -136,7 +136,7 @@ class Config extends gEditorial\Module
 		Settings::wrapOpen( $sub, 'reports' );
 
 			Settings::headerTitle( _x( 'Editorial Reports', 'Modules: Config: Page Title', GEDITORIAL_TEXTDOMAIN ) );
-			Settings::headerNav( $uri, $sub, $subs );
+			HTML::headerNav( $uri, $sub, $subs );
 			Settings::message( $messages );
 
 			if ( file_exists( GEDITORIAL_DIR.'includes/settings/reports.'.$sub.'.php' ) )
@@ -172,7 +172,7 @@ class Config extends gEditorial\Module
 		Settings::wrapOpen( $sub, 'tools' );
 
 			Settings::headerTitle( _x( 'Editorial Tools', 'Modules: Config: Page Title', GEDITORIAL_TEXTDOMAIN ) );
-			Settings::headerNav( $uri, $sub, $subs );
+			HTML::headerNav( $uri, $sub, $subs );
 			Settings::message( $messages );
 
 			if ( file_exists( GEDITORIAL_DIR.'includes/settings/tools.'.$sub.'.php' ) )

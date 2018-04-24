@@ -505,7 +505,7 @@ class Cartable extends gEditorial\Module
 
 			if ( $current && count( $subs ) ) {
 
-				Settings::headerNav( $uri, self::req( 'sub', $sub ), $subs );
+				HTML::headerNav( $uri, self::req( 'sub', $sub ), $subs );
 
 				$this->tableCartable( $current, $context );
 
