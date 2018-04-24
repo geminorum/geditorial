@@ -241,17 +241,12 @@ class Module extends Base
 
 	protected function settings_help_tabs()
 	{
-		return Settings::settingsHelpContent( $this->module );
+		return Settings::helpContent( $this->module );
 	}
 
 	protected function settings_help_sidebar()
 	{
-		$html = '';
-
-		foreach ( $this->get_module_links() as $link )
-			$html.= '<li>'.HTML::link( $link['title'], $link['url'], TRUE ).'</li>';
-
-		return $html ? HTML::wrap( '<ul>'.$html.'</ul>', '-help-sidebar' ) : FALSE;
+		return Settings::helpSidebar( $this->get_module_links() );
 	}
 
 	protected function get_module_links()

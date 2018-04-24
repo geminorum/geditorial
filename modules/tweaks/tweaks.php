@@ -51,7 +51,7 @@ class Tweaks extends gEditorial\Module
 			],
 		];
 
-		return array_merge( $tabs, Settings::settingsHelpContent( $this->module ) );
+		return array_merge( $tabs, Settings::helpContent( $this->module ) );
 	}
 
 	protected function get_global_settings()

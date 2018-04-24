@@ -39,7 +39,7 @@ add_theme_support( \'featured-content\', [
 			],
 		];
 
-		return array_merge( $tabs, Settings::settingsHelpContent( $this->module ) );
+		return array_merge( $tabs, Settings::helpContent( $this->module ) );
 	}
 
 	public function settings_intro()

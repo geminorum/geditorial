@@ -1078,7 +1078,20 @@ class Settings extends Core\Base
 		echo '</p></div>';
 	}
 
-	public static function settingsHelpContent( $module = FALSE )
+	public static function helpSidebar( $list )
+	{
+		if ( ! is_array( $list ) )
+			return $list;
+
+		$html = '';
+
+		foreach ( $list as $link )
+			$html.= '<li>'.HTML::link( $link['title'], $link['url'], TRUE ).'</li>';
+
+		return $html ? HTML::wrap( '<ul>'.$html.'</ul>', '-help-sidebar' ) : FALSE;
+	}
+
+	public static function helpContent( $module = FALSE )
 	{
 		if ( ! function_exists( 'gnetwork_github' ) )
 			return [];

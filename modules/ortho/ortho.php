@@ -50,7 +50,7 @@ class Ortho extends gEditorial\Module
 			],
 		];
 
-		return array_merge( $tabs, Settings::settingsHelpContent( $this->module ) );
+		return array_merge( $tabs, Settings::helpContent( $this->module ) );
 	}
 
 	private function virastar_options()
