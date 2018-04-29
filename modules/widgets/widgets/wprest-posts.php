@@ -32,13 +32,14 @@ class WPRestPosts extends gEditorial\Widget
 
 		$context    = isset( $instance['context'] ) ? $instance['context'] : 'wprest-posts';
 		$number     = empty( $instance['number'] ) ? 10 : absint( $instance['number'] );
+		$endpoint   = empty( $instance['endpoint'] ) ? 'posts' : $instance['endpoint'];
 		$tags       = empty( $instance['tags'] ) ? FALSE : $instance['tags'];
 		$categories = empty( $instance['categories'] ) ? FALSE : $instance['categories'];
 		$extra      = empty( $instance['extra'] ) ? FALSE : $instance['extra'];
 		$empty      = empty( $instance['empty'] ) ? FALSE : $instance['empty'];
 
 		// @REF: https://developer.wordpress.org/rest-api/reference/posts/
-		$resource = URL::untrail( $instance['resource'] ).'/wp-json/wp/v2/posts/?per_page='.$number;
+		$resource = URL::untrail( $instance['resource'] ).'/wp-json/wp/v2/'.$endpoint.'/?per_page='.$number;
 
 		if ( $tags )
 			$resource.= '&tags='.$tags;
@@ -107,6 +108,7 @@ class WPRestPosts extends gEditorial\Widget
 		$this->form_title_link( $instance );
 
 		$this->form_custom_link( $instance, '', 'resource', _x( 'Resource URL:', 'Modules: Widgets: Widget: WP-REST Posts', GEDITORIAL_TEXTDOMAIN ) );
+		$this->form_custom_code( $instance, 'posts', 'endpoint', _x( 'Endpoint:', 'Modules: Widgets: Widget: WP-REST Posts', GEDITORIAL_TEXTDOMAIN ) );
 		$this->form_custom_code( $instance, '', 'tags', _x( 'Tag IDs:', 'Modules: Widgets: Widget: WP-REST Posts', GEDITORIAL_TEXTDOMAIN ) );
 		$this->form_custom_code( $instance, '', 'categories', _x( 'Category IDs:', 'Modules: Widgets: Widget: WP-REST Posts', GEDITORIAL_TEXTDOMAIN ) );
 		$this->form_custom_code( $instance, '', 'extra', _x( 'Extra Args:', 'Modules: Widgets: Widget: WP-REST Posts', GEDITORIAL_TEXTDOMAIN ) );
@@ -130,6 +132,7 @@ class WPRestPosts extends gEditorial\Widget
 		$instance['empty']      = wp_kses_post( $new['empty'] );
 
 		$instance['resource']   = esc_url( $new['resource'] );
+		$instance['endpoint']   = strip_tags( $new['endpoint'] );
 		$instance['tags']       = strip_tags( $new['tags'] );
 		$instance['categories'] = strip_tags( $new['categories'] );
 		$instance['extra']      = strip_tags( $new['extra'] );
