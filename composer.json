@@ -22,13 +22,14 @@
   "require": {
     "php": ">=5.4",
     "composer/installers": "^1.5",
+    "mustache/mustache": "^2.12",
     "kzykhys/php-csv-parser": "^1.4",
     "nicmart/string-template": "^0.1.1",
     "michelf/php-markdown": "^1.8",
     "league/html-to-markdown": "^4.6"
   },
   "require-dev": {
-    "mustache/mustache": "^2.12",
+    "nesbot/carbon": "^1.27",
     "evert/sitemap-php": "^1.2",
     "eluceo/ical": "^0.11.4",
     "johngrogg/ics-parser": "^2.1",
@@ -37,7 +38,6 @@
     "lawondyss/moment-php": "dev-master",
     "amirhabibzadeh/intl-carbon": "dev-master",
     "addwiki/mediawiki-api": "^0.5.1",
-    "nesbot/carbon": "^1.25",
     "seboettg/citeproc-php": "^2"
   },
   "config": {

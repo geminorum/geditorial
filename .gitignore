@@ -9,7 +9,7 @@
 /assets/css/*.css
 /assets/css/maps
 /assets/components
-/assets/views/cache
+/assets/views/cache/*.php
 /assets/packages/jquery
 /assets/vendor
 /node_modules
