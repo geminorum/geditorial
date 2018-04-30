@@ -66,6 +66,7 @@ class Plugin
 		add_action( 'wp_footer', [ $this, 'footer_asset_config' ], 1 );
 		add_action( 'wp_enqueue_scripts', [ $this, 'wp_enqueue_scripts' ] );
 		add_filter( 'template_include', [ $this, 'template_include' ], 98 ); // before gTheme
+		add_filter( 'the_content', [ $this, 'the_content' ], 998 );
 	}
 
 	public function files( $stack, $check = TRUE, $base = GEDITORIAL_DIR )
@@ -453,6 +454,35 @@ class Plugin
 			return GEDITORIAL_DIR.'includes/templates/'.$custom;
 
 		return $template;
+	}
+
+	public function the_content( $content )
+	{
+		if ( defined( 'GEDITORIAL_DISABLE_CONTENT_ACTIONS' )
+			&& GEDITORIAL_DISABLE_CONTENT_ACTIONS )
+				return $content;
+
+		$before = $after = '';
+
+		if ( has_action( static::BASE.'_content_before' ) ) {
+			ob_start();
+				do_action( static::BASE.'_content_before', $content );
+			$before = ob_get_clean();
+
+			if ( trim( $before ) )
+				$before = '<div class="'.static::BASE.'-wrap-actions content-before">'.$before.'</div>';
+		}
+
+		if ( has_action( static::BASE.'_content_after' ) ) {
+			ob_start();
+				do_action( static::BASE.'_content_after', $content );
+			$after = ob_get_clean();
+
+			if ( trim( $after ) )
+				$after = '<div class="'.static::BASE.'-wrap-actions content-after">'.$after.'</div>';
+		}
+
+		return $before.$content.$after;
 	}
 
 	public function get_header( $name = 'editorial' )
