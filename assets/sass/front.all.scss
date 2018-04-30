@@ -31,3 +31,22 @@
 //   &.-before {}
 //   &.-after {}
 // }
+
+.geditorial-wrap-actions {
+  &.content-before,
+  .-p2p.-before {
+    margin-bottom: 1.5em;
+  }
+
+  &.content-after,
+  .-p2p.-after {
+    margin-top: 1.5em;
+  }
+
+  .-p2p {
+    ul {
+      margin: 0;
+      list-style: none;
+    }
+  }
+}

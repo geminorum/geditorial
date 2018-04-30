@@ -8,13 +8,23 @@
     width: 105px;
   }
 
-  .column-geditorial-users-counts {
-    table td {
-      padding: 0 0 2px !important;
+  td.column-geditorial-users-counts {
+    padding-top: 4px;
 
-      code {
-        cursor: pointer;
-        display: inline !important;
+    table {
+      direction: ltr;
+
+      td {
+        padding: 0 0 2px !important;
+
+        code {
+          cursor: pointer;
+          display: inline !important;
+        }
+
+        &.-val {
+          text-align: right;
+        }
       }
     }
   }

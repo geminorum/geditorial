@@ -14,11 +14,11 @@
 
     ol,
     ul {
-      margin-bottom: 0;
+      margin: 0;
       list-style: none;
 
       li {
-        margin: 0 0 0.25em;
+        margin: 0 0 0.5em;
 
         a {
           text-decoration: none;
@@ -32,13 +32,12 @@
     }
 
     .-toc-title {
-      margin: 0;
+      margin: 0 0 0.5em;
       font-size: small;
     }
 
-    .-title {}
-
-    .-list {}
+    // .-title {}
+    // .-list {}
   }
 }
 
@@ -46,23 +45,8 @@
   clear: none;
 
   &:target {
-    animation: highlight 1s ease;
+    animation: anchorhighlight 1s ease;
   }
-}
-
-// show IDs for anchors
-h1[id]:hover a.anchorlink:before,
-h2[id]:hover a.anchorlink:before,
-h3[id]:hover a.anchorlink:before,
-h4[id]:hover a.anchorlink:before,
-h5[id]:hover a.anchorlink:before,
-h6[id]:hover a.anchorlink:before {
-  content: "\f103"; //dashicons-admin-links
-  color: #888;
-  font-size: smaller;
-  text-decoration: none;
-  box-shadow: none !important;
-  vertical-align: baseline;
 }
 
 a.anchorlink {
@@ -72,7 +56,25 @@ a.anchorlink {
   margin-left: 0.5em;
 }
 
-@keyframes highlight {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  &[id]:hover {
+    a.anchorlink::before {
+      content: "\f103"; // dashicons-admin-links
+      color: #888;
+      font-size: smaller;
+      text-decoration: none;
+      box-shadow: none !important;
+      vertical-align: baseline;
+    }
+  }
+}
+
+@keyframes anchorhighlight {
   from {
     background: $brand-warning;
   }
