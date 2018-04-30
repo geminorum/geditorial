@@ -1,4 +1,4 @@
-/* global jQuery, gEditorial, List */
+/* global List */
 
 jQuery(function ($) {
   var moduleList = new List('geditorial-settings', {

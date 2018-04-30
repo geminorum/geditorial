@@ -1,5 +1,3 @@
-/* global jQuery, gEditorial */
-
 (function ($, plugin, module) {
   var s = {
     action: plugin._base + '_' + module,

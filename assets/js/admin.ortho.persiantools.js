@@ -1,4 +1,4 @@
-/* global jQuery, QTags, gEditorial, persianTools */
+/* global QTags, persianTools */
 
 (function ($, p, m, s) {
   var o = {};

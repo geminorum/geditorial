@@ -1,4 +1,4 @@
-/* global jQuery, inlineEditPost, gEditorial */
+/* global inlineEditPost */
 
 (function ($) {
   $('#the-list').on('click', '.editinline', function () {

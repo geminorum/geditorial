@@ -1,5 +1,3 @@
-/* global jQuery, wp, gEditorial */
-
 (function ($, plugin, module) {
   var modal;
 

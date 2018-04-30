@@ -1,4 +1,4 @@
-/* global jQuery, QTags, gEditorial, Virastar */
+/* global QTags, Virastar */
 
 (function ($, p, module) {
   var o = {};

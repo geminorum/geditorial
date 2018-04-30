@@ -1,4 +1,4 @@
-/* global jQuery, tinymce */
+/* global tinymce */
 
 jQuery(function ($) {
   $("[data-meta-type='title_before']").each(function () {

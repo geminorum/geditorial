@@ -1,4 +1,4 @@
-/* global jQuery, inlineEditPost */
+/* global inlineEditPost */
 
 (function ($) {
   $('#the-list').on('click', '.editinline', function () {

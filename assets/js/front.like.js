@@ -1,5 +1,3 @@
-/* global jQuery, gEditorial */
-
 (function ($) {
   $(function () {
     var $like = $('.geditorial-wrap.-like');

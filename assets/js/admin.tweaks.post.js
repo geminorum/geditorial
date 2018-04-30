@@ -1,5 +1,3 @@
-/* global jQuery, gEditorial */
-
 jQuery(function ($) {
   var settings = $.extend({}, {
     checklist_tree: false,

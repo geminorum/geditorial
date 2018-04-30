@@ -1,4 +1,4 @@
-/* global jQuery, wp, _ */
+/* global _ */
 
 (function ($, counter) {
   function toPersian (n) {
