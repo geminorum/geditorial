@@ -1433,4 +1433,41 @@ class Helper extends Core\Base
 
 		return $the_day;
 	}
+
+	// @SEE: https://github.com/bobthecow/mustache.php/wiki
+	public static function getMustache( $base = GEDITORIAL_DIR )
+	{
+		global $gEditorialMustache;
+
+		if ( ! empty( $gEditorialMustache ) )
+			return $gEditorialMustache;
+
+		$gEditorialMustache = new \Mustache_Engine( [
+			'template_class_prefix' => '__gEditorial_',
+			'cache_file_mode'       => FS_CHMOD_FILE,
+			// 'cache'                 => $base.'assets/views/cache',
+			'cache'                 => get_temp_dir(),
+
+			'loader'          => new \Mustache_Loader_FilesystemLoader( $base.'assets/views' ),
+			'partials_loader' => new \Mustache_Loader_FilesystemLoader( $base.'assets/views/partials' ),
+			'escape'          => function( $value ) {
+				return htmlspecialchars( $value, ENT_COMPAT, 'UTF-8' );
+			},
+		] );
+
+		return $gEditorialMustache;
+	}
+
+	// @SEE: https://github.com/bobthecow/mustache.php/wiki/Mustache-Tags
+	public static function renderMustache( $part, $data = [], $echo = TRUE )
+	{
+		$mustache = self::getMustache();
+		$template = $mustache->loadTemplate( $part );
+		$html     = $template->render( $data );
+
+		if ( ! $echo )
+			return $html;
+
+		echo $html;
+	}
 }
