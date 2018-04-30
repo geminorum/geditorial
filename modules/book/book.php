@@ -320,13 +320,7 @@ class Book extends gEditorial\Module
 		if ( is_admin() )
 			return;
 
-		$setting = $this->get_setting( 'insert_content', 'none' );
-
-		if ( 'before' == $setting )
-			add_action( 'gnetwork_themes_content_before', [ $this, 'insert_content' ], 100 );
-
-		else if ( 'after' == $setting )
-			add_action( 'gnetwork_themes_content_after', [ $this, 'insert_content' ], 100 );
+		$this->hook_insert_content( 100 );
 	}
 
 	public function widgets_init()
@@ -369,20 +363,24 @@ class Book extends gEditorial\Module
 
 		$this->register_shortcode( 'cover_shortcode' );
 
-		if ( is_admin() ) {
+		if ( ! is_admin() )
+			return;
 
-			$this->filter_module( 'importer', 'fields', 2 );
-			$this->filter_module( 'importer', 'prepare', 4 );
-			$this->filter_module( 'importer', 'saved', 5 );
+		$this->filter_module( 'importer', 'fields', 2 );
+		$this->filter_module( 'importer', 'prepare', 4 );
+		$this->filter_module( 'importer', 'saved', 5 );
+	}
 
-		} else {
+	public function template_redirect()
+	{
+		if ( ! is_singular( $this->constant( 'publication_cpt' ) ) )
+			return;
 
-			if ( $this->get_setting( 'insert_cover' ) )
-				add_action( 'gnetwork_themes_content_before',
-					[ $this, 'content_before' ],
-					$this->get_setting( 'insert_priority', -50 )
-				);
-		}
+		if ( $this->get_setting( 'insert_cover' ) )
+			add_action( $this->base.'_content_before',
+				[ $this, 'insert_cover' ],
+				$this->get_setting( 'insert_priority', -50 )
+			);
 	}
 
 	public function current_screen( $screen )
@@ -541,7 +539,7 @@ class Book extends gEditorial\Module
 		);
 	}
 
-	public function insert_content( $content, $posttypes = NULL )
+	public function insert_content( $content )
 	{
 		if ( ! $this->is_content_insert( $this->posttypes( 'publication_cpt' ) ) )
 			return;
@@ -617,9 +615,9 @@ class Book extends gEditorial\Module
 		}
 	}
 
-	public function content_before( $content, $posttypes = NULL )
+	public function insert_cover( $content )
 	{
-		if ( ! $this->is_content_insert( 'publication_cpt' ) )
+		if ( ! $this->is_content_insert( FALSE ) )
 			return;
 
 		ModuleTemplate::postImage( [

@@ -350,26 +350,6 @@ class Settings extends Core\Base
 		];
 	}
 
-	public static function getSetting_insert_content_before( $description = NULL )
-	{
-		$args = self::getSetting_insert_content( $description );
-
-		$args['field'] = 'insert_content_before';
-		unset( $args['values'], $args['type'], $args['default'] );
-
-		return $args;
-	}
-
-	public static function getSetting_insert_content_after( $description = NULL )
-	{
-		$args = self::getSetting_insert_content( $description );
-
-		$args['field'] = 'insert_content_after';
-		unset( $args['values'], $args['type'], $args['default'] );
-
-		return $args;
-	}
-
 	public static function getSetting_insert_cover( $description = NULL )
 	{
 		return [

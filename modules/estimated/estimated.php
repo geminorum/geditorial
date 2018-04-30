@@ -14,8 +14,6 @@ class Estimated extends gEditorial\Module
 
 	protected $disable_no_posttypes = TRUE;
 
-	private $added = FALSE;
-
 	public static function module()
 	{
 		return [
@@ -69,22 +67,13 @@ class Estimated extends gEditorial\Module
 		];
 	}
 
-	public function init()
+	public function template_redirect()
 	{
-		parent::init();
-
-		if ( is_admin() )
+		if ( ! is_singular( $this->posttypes() ) )
 			return;
 
-		if ( 'none' != $this->get_setting( 'insert_content', 'none' ) )
-			$this->filter( 'the_content', 1, $this->get_setting( 'insert_priority', 22 ) );
-		else
-			add_action( 'gnetwork_themes_content_before', [ $this, 'content_before' ],
-				$this->get_setting( 'insert_priority', 60 ) );
-
-		$this->enqueue_styles();
-
-		// TODO: add shortcode
+		if ( $this->hook_insert_content( 22 ) )
+			$this->enqueue_styles(); // widget must add this itself!
 	}
 
 	public function current_screen( $screen )
@@ -129,12 +118,13 @@ class Estimated extends gEditorial\Module
 			$this->get_post_wordcount( $post_id, TRUE );
 	}
 
-	public function content_before( $content, $posttypes = NULL )
+	public function insert_content( $content )
 	{
-		if ( ! $this->is_content_insert( NULL ) )
+		if ( ! $this->is_content_insert( FALSE ) )
 			return;
 
-		$post = get_post();
+		if ( ! $post = get_post() )
+			return;
 
 		if ( ! $wordcount = get_post_meta( $post->ID, $this->meta_key, TRUE ) )
 			$wordcount = $this->get_post_wordcount( $post->ID, TRUE );
@@ -143,37 +133,9 @@ class Estimated extends gEditorial\Module
 			return;
 
 		$pref = $this->get_setting( 'prefix', _x( 'Estimated read time:', 'Modules: Estimated', GEDITORIAL_TEXTDOMAIN ) );
-		echo $this->wrap( ( $pref ? $pref.' ' : '' ).$this->get_time_estimated( $wordcount, TRUE ), '-before' );
-	}
+		$html = ( $pref ? $pref.' ' : '' ).$this->get_time_estimated( $wordcount, TRUE );
 
-	public function the_content( $content )
-	{
-		if ( $this->added )
-			return $content;
-
-		if ( ! $this->is_content_insert( NULL ) )
-			return $content;
-
-		$post = get_post();
-
-		if ( ! $wordcount = get_post_meta( $post->ID, $this->meta_key, TRUE ) )
-			$wordcount = $this->get_post_wordcount( $post->ID, TRUE );
-
-		if ( $this->get_setting( 'min_words', 250 ) > $wordcount ) {
-			$this->added = TRUE;
-			return $content;
-		}
-
-		$place = $this->get_setting( 'insert_content', 'none' );
-		$pref  = $this->get_setting( 'prefix', _x( 'Estimated read time:', 'Modules: Estimated', GEDITORIAL_TEXTDOMAIN ) );
-		$html  = $this->wrap( ( $pref ? $pref.' ' : '' ).$this->get_time_estimated( $wordcount, TRUE ), '-'.$place );
-
-		$this->added = TRUE;
-
-		if ( 'before' == $place )
-			return $html.$content;
-
-		return $content.$html;
+		echo $this->wrap( $html, '-before' );
 	}
 
 	protected function get_post_wordcount( $post_id, $update = FALSE )

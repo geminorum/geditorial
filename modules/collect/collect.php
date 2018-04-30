@@ -46,7 +46,7 @@ class Collect extends gEditorial\Module
 				'admin_restrict',
 			],
 			'_frontend' => [
-				'insert_poster',
+				'insert_cover',
 				'insert_priority',
 				'posttype_feeds',
 				'posttype_pages',
@@ -223,13 +223,36 @@ class Collect extends gEditorial\Module
 		if ( is_admin() )
 			return;
 
-		if ( $this->get_setting( 'insert_poster' ) )
-			add_action( 'gnetwork_themes_content_before',
-				[ $this, 'content_before' ],
-				$this->get_setting( 'insert_priority', -50 )
-			);
-
 		$this->filter( 'term_link', 3 );
+	}
+
+	public function template_redirect()
+	{
+		if ( is_tax( $this->constant( 'collection_tax' ) ) ) {
+
+			$term = get_queried_object();
+
+			if ( $post_id = $this->get_linked_post_id( $term, 'collection_cpt', 'collection_tax' ) )
+				WordPress::redirect( get_permalink( $post_id ), 301 );
+
+		} else if ( is_tax( $this->constant( 'group_tax' ) ) ) {
+
+			if ( $redirect = $this->get_setting( 'redirect_groups', FALSE ) )
+				WordPress::redirect( $redirect, 301 );
+
+		} else if ( is_post_type_archive( $this->constant( 'collection_cpt' ) ) ) {
+
+			if ( $redirect = $this->get_setting( 'redirect_archives', FALSE ) )
+				WordPress::redirect( $redirect, 301 );
+
+		} else if ( is_singular( $this->constant( 'collection_cpt' ) ) ) {
+
+			if ( $this->get_setting( 'insert_cover' ) )
+				add_action( $this->base.'_content_before',
+					[ $this, 'insert_cover' ],
+					$this->get_setting( 'insert_priority', -50 )
+				);
+		}
 	}
 
 	public function init_ajax()
@@ -365,30 +388,9 @@ class Collect extends gEditorial\Module
 		return $link;
 	}
 
-	public function template_redirect()
+	public function insert_cover( $content )
 	{
-		if ( is_tax( $this->constant( 'collection_tax' ) ) ) {
-
-			$term = get_queried_object();
-
-			if ( $post_id = $this->get_linked_post_id( $term, 'collection_cpt', 'collection_tax' ) )
-				WordPress::redirect( get_permalink( $post_id ), 301 );
-
-		} else if ( is_tax( $this->constant( 'group_tax' ) ) ) {
-
-			if ( $redirect = $this->get_setting( 'redirect_groups', FALSE ) )
-				WordPress::redirect( $redirect, 301 );
-
-		} else if ( is_post_type_archive( $this->constant( 'collection_cpt' ) ) ) {
-
-			if ( $redirect = $this->get_setting( 'redirect_archives', FALSE ) )
-				WordPress::redirect( $redirect, 301 );
-		}
-	}
-
-	public function content_before( $content, $posttypes = NULL )
-	{
-		if ( ! $this->is_content_insert( 'collection_cpt' ) )
+		if ( ! $this->is_content_insert( FALSE ) )
 			return;
 
 		ModuleTemplate::postImage( [

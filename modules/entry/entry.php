@@ -107,19 +107,32 @@ class Entry extends gEditorial\Module
 		$this->register_posttype( 'entry_cpt' );
 
 		$this->register_shortcode( 'section_shortcode' );
+	}
 
-		if ( is_admin() )
+	public function template_redirect()
+	{
+		if ( ! is_singular( $this->constant( 'entry_cpt' ) ) )
 			return;
 
 		$this->filter( 'redirect_canonical', 2 );
 
-		if ( $this->get_setting( 'before_content', FALSE ) )
-			add_action( 'gnetwork_themes_content_before', [ $this, 'content_before' ], 100 );
+		if ( $before = $this->get_setting( 'before_content' ) )
+			add_action( $this->base.'_content_before', function( $content ) use ( $before ) {
 
-		if ( $this->get_setting( 'after_content', FALSE ) )
-			add_action( 'gnetwork_themes_content_after', [ $this, 'content_after' ], 1 );
+				if ( $this->is_content_insert( FALSE ) )
+					echo $this->wrap( do_shortcode( $before ), '-before' );
 
-		if ( $this->get_setting( 'autolink_terms', FALSE ) )
+			}, 100 );
+
+		if ( $after = $this->get_setting( 'after_content' ) )
+			add_action( $this->base.'_content_after', function( $content ) use ( $after ) {
+
+				if ( $this->is_content_insert( FALSE ) )
+					echo $this->wrap( do_shortcode( $after ), '-after' );
+
+			}, 1 );
+
+		if ( $this->get_setting( 'autolink_terms' ) )
 			$this->filter( 'the_content', 1, 9 );
 	}
 
@@ -298,30 +311,17 @@ class Entry extends gEditorial\Module
 		echo '</div>';
 	}
 
-	public function content_before( $content, $posttypes = NULL )
-	{
-		parent::content_before( $content, 'entry_cpt' );
-	}
-
-	public function content_after( $content, $posttypes = NULL )
-	{
-		parent::content_after( $content, 'entry_cpt' );
-	}
-
 	// FIXME: pattern must ignore within links
 	public function the_content( $content )
 	{
-		if ( $this->is_content_insert( 'entry_cpt' ) ) {
+		if ( ! isset( $this->sections ) )
+			$this->sections = Taxonomy::prepTerms( $this->constant( 'section_tax' ) );
 
-			if ( ! isset( $this->sections ) )
-				$this->sections = Taxonomy::prepTerms( $this->constant( 'section_tax' ) );
-
-			foreach ( $this->sections as $section )
-				$content = preg_replace(
-					'/(?!<[^<>]*?)(?<![?.\/&])\b('.$section->name.')\b(?!:)(?![^<>]*?>)/imsu',
-					'<a href="'.$section->link.'" class="-entry-section">$1</a>',
-				$content );
-		}
+		foreach ( $this->sections as $section )
+			$content = preg_replace(
+				'/(?!<[^<>]*?)(?<![?.\/&])\b('.$section->name.')\b(?!:)(?![^<>]*?>)/imsu',
+				'<a href="'.$section->link.'" class="-entry-section">$1</a>',
+			$content );
 
 		return $content;
 	}
@@ -450,9 +450,6 @@ class Entry extends gEditorial\Module
 	// cleanup query arg added by markdown module
 	public function redirect_canonical( $redirect_url, $requested_url )
 	{
-		if ( is_singular( $this->constant( 'entry_cpt' ) ) )
-			return remove_query_arg( 'post_type', $redirect_url );
-
-		return $redirect_url;
+		return remove_query_arg( 'post_type', $redirect_url );
 	}
 }

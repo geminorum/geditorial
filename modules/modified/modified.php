@@ -85,19 +85,15 @@ class Modified extends gEditorial\Module
 		$this->register_shortcode( 'site_modified_shortcode' );
 
 		$this->filter( 'wp_nav_menu_items', 2 );
+	}
 
-		if ( is_admin() )
+	public function template_redirect()
+	{
+		if ( ! is_singular( $this->posttypes() ) )
 			return;
 
-		$insert = $this->get_setting( 'insert_content', 'none' );
-
-		if ( 'none' != $insert ) {
-
-			add_action( 'gnetwork_themes_content_'.$insert, [ $this, 'insert_content' ],
-				$this->get_setting( 'insert_priority', 30 ) );
-
-			$this->enqueue_styles();
-		}
+		if ( $this->hook_insert_content( 30 ) )
+			$this->enqueue_styles(); // widget must add this itself!
 	}
 
 	protected function dashboard_widgets()
@@ -147,7 +143,7 @@ class Modified extends gEditorial\Module
 
 	public function insert_content( $content )
 	{
-		if ( ! $this->is_content_insert( NULL, FALSE ) )
+		if ( ! $this->is_content_insert( FALSE, FALSE ) )
 			return;
 
 		if ( ! $modified = $this->get_post_modified() )

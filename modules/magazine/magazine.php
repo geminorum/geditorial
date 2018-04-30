@@ -221,13 +221,36 @@ class Magazine extends gEditorial\Module
 		if ( is_admin() )
 			return;
 
-		if ( $this->get_setting( 'insert_cover' ) )
-			add_action( 'gnetwork_themes_content_before',
-				[ $this, 'content_before' ],
-				$this->get_setting( 'insert_priority', -50 )
-			);
-
 		$this->filter( 'term_link', 3 );
+	}
+
+	public function template_redirect()
+	{
+		if ( is_tax( $this->constant( 'issue_tax' ) ) ) {
+
+			$term = get_queried_object();
+
+			if ( $post_id = $this->get_linked_post_id( $term, 'issue_cpt', 'issue_tax' ) )
+				WordPress::redirect( get_permalink( $post_id ), 301 );
+
+		} else if ( is_tax( $this->constant( 'span_tax' ) ) ) {
+
+			if ( $redirect = $this->get_setting( 'redirect_spans', FALSE ) )
+				WordPress::redirect( $redirect, 301 );
+
+		} else if ( is_post_type_archive( $this->constant( 'issue_cpt' ) ) ) {
+
+			if ( $redirect = $this->get_setting( 'redirect_archives', FALSE ) )
+				WordPress::redirect( $redirect, 301 );
+
+		} else if ( is_singular( $this->constant( 'issue_cpt' ) ) ) {
+
+			if ( $this->get_setting( 'insert_cover' ) )
+				add_action( $this->base.'_content_before',
+					[ $this, 'insert_cover' ],
+					$this->get_setting( 'insert_priority', -50 )
+				);
+		}
 	}
 
 	public function init_ajax()
@@ -363,30 +386,9 @@ class Magazine extends gEditorial\Module
 		return $link;
 	}
 
-	public function template_redirect()
+	public function insert_cover( $content )
 	{
-		if ( is_tax( $this->constant( 'issue_tax' ) ) ) {
-
-			$term = get_queried_object();
-
-			if ( $post_id = $this->get_linked_post_id( $term, 'issue_cpt', 'issue_tax' ) )
-				WordPress::redirect( get_permalink( $post_id ), 301 );
-
-		} else if ( is_tax( $this->constant( 'span_tax' ) ) ) {
-
-			if ( $redirect = $this->get_setting( 'redirect_spans', FALSE ) )
-				WordPress::redirect( $redirect, 301 );
-
-		} else if ( is_post_type_archive( $this->constant( 'issue_cpt' ) ) ) {
-
-			if ( $redirect = $this->get_setting( 'redirect_archives', FALSE ) )
-				WordPress::redirect( $redirect, 301 );
-		}
-	}
-
-	public function content_before( $content, $posttypes = NULL )
-	{
-		if ( ! $this->is_content_insert( 'issue_cpt' ) )
+		if ( ! $this->is_content_insert( FALSE ) )
 			return;
 
 		ModuleTemplate::postImage( [

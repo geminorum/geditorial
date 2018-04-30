@@ -2622,6 +2622,12 @@ class Module extends Base
 		if ( ! in_the_loop() )
 			return FALSE;
 
+		if ( $first_page && 1 != $GLOBALS['page'] )
+			return FALSE;
+
+		if ( FALSE === $posttypes )
+			return TRUE;
+
 		if ( is_null( $posttypes ) )
 			$posttypes = $this->posttypes();
 
@@ -2631,30 +2637,22 @@ class Module extends Base
 		if ( ! is_singular( $posttypes ) )
 			return FALSE;
 
-		if ( $first_page && 1 != $GLOBALS['page'] )
-			return FALSE;
-
 		return TRUE;
 	}
 
-	public function content_before( $content, $posttypes = NULL )
+	protected function hook_insert_content( $default_priority = 50 )
 	{
-		if ( FALSE !== $posttypes
-			&& ! $this->is_content_insert( $posttypes ) )
-				return;
+		$insert = $this->get_setting( 'insert_content', 'none' );
 
-		if ( $before = $this->get_setting( 'before_content', FALSE ) )
-			echo $this->wrap( do_shortcode( $before ), '-content-before' );
-	}
+		if ( 'none' == $insert )
+			return FALSE;
 
-	public function content_after( $content, $posttypes = NULL )
-	{
-		if ( FALSE !== $posttypes
-			&& ! $this->is_content_insert( $posttypes ) )
-				return;
+		add_action( $this->base.'_content_'.$insert,
+			[ $this, 'insert_content' ],
+			$this->get_setting( 'insert_priority', $default_priority )
+		);
 
-		if ( $after = $this->get_setting( 'after_content', FALSE ) )
-			echo $this->wrap( do_shortcode( $after ), '-content-after' );
+		return TRUE;
 	}
 
 	// DEFAULT FILTER

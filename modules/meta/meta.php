@@ -204,20 +204,24 @@ class Meta extends gEditorial\Module
 
 		$this->add_posttype_fields( 'page' );
 
-		if ( is_admin() ) {
+		if ( ! is_admin() )
+			return;
 
-			$this->filter_module( 'importer', 'fields', 2 );
-			$this->filter_module( 'importer', 'prepare', 4 );
-			$this->filter_module( 'importer', 'saved', 5 );
+		$this->filter_module( 'importer', 'fields', 2 );
+		$this->filter_module( 'importer', 'prepare', 4 );
+		$this->filter_module( 'importer', 'saved', 5 );
+	}
 
-		} else {
+	public function template_redirect()
+	{
+		if ( ! is_singular( $this->posttypes() ) )
+			return;
 
-			add_action( 'gnetwork_themes_content_before', [ $this, 'content_before' ], 50 );
-			add_action( 'gnetwork_themes_content_after', [ $this, 'content_after' ], 50 );
+		add_action( $this->base.'_content_before', [ $this, 'content_before' ], 50 );
+		add_action( $this->base.'_content_after', [ $this, 'content_after' ], 50 );
 
-			if ( $this->get_setting( 'overwrite_author', FALSE ) )
-				$this->filter( 'the_author', 1, 9 );
-		}
+		if ( $this->get_setting( 'overwrite_author', FALSE ) )
+			$this->filter( 'the_author', 1, 9 );
 	}
 
 	public function init_ajax()
@@ -652,9 +656,9 @@ class Meta extends gEditorial\Module
 		$this->nonce_field( 'post_raw' );
 	}
 
-	public function content_before( $content, $posttypes = NULL )
+	public function content_before( $content )
 	{
-		if ( ! $this->is_content_insert( NULL ) )
+		if ( ! $this->is_content_insert( FALSE ) )
 			return;
 
 		ModuleTemplate::metaLead( [
@@ -663,9 +667,9 @@ class Meta extends gEditorial\Module
 		] );
 	}
 
-	public function content_after( $content, $posttypes = NULL )
+	public function content_after( $content )
 	{
-		if ( ! $this->is_content_insert( NULL, FALSE ) )
+		if ( ! $this->is_content_insert( FALSE, FALSE ) )
 			return;
 
 		global $page, $pages;
@@ -684,12 +688,7 @@ class Meta extends gEditorial\Module
 		if ( ! $post = get_post() )
 			return $display_name;
 
-		if ( ! in_array( $post->post_type, $this->posttypes() ) )
-			return $display_name;
-
-		$fields = $this->posttype_fields( $post->post_type );
-
-		if ( ! in_array( 'as', $fields ) )
+		if ( ! in_array( 'as', $this->posttype_fields( $post->post_type ) ) )
 			return $display_name;
 
 		if ( $value = $this->get_postmeta( $post->ID, 'as', '' ) )

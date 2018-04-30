@@ -48,50 +48,41 @@ class Headings extends gEditorial\Module
 					'description' => _x( 'Threshold to Display ToC', 'Modules: Headings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 					'default'     => '2',
 				],
-				'insert_content_before',
+				'insert_content',
 				'insert_priority',
 			],
 			'posttypes_option' => 'posttypes_option',
 		];
 	}
 
-	public function init()
+	public function template_redirect()
 	{
-		parent::init();
-
-		if ( is_admin() )
+		if ( ! is_singular( $this->posttypes() ) )
 			return;
 
 		$this->filter( 'the_content' );
 
-		if ( $this->get_setting( 'insert_content_before', FALSE ) )
-			add_action( 'gnetwork_themes_content_before', [ $this, 'content_before' ],
-				$this->get_setting( 'insert_priority', -25 ) );
-
-		$this->enqueue_styles();
+		if ( $this->hook_insert_content( -25 ) )
+			$this->enqueue_styles(); // widget must add this itself!
 	}
 
 	public function the_content( $content )
 	{
-		if ( ! is_singular( $this->posttypes() ) || '' == $content )
+		if ( ! $content )
 			return $content;
 
-		// FIXME: temp: skip on paginated posts
-		global $pages;
-		if ( 1 != count( $pages ) )
+		if ( ! $this->is_content_insert( FALSE ) )
 			return $content;
 
-		// @SOURCE: [Add IDs to Header Tags](https://wordpress.org/plugins/add-ids-to-header-tags/)
+		// @SOURCE: https://wordpress.org/plugins/add-ids-to-header-tags/
 		// $pattern = '#(?P<full_tag><(?P<tag_name>h\d)(?P<tag_extra>[^>]*)>(?P<tag_contents>[^<]*)</h\d>)#';
-
 		$pattern = "/<h([0-9])(.*?)>(.*?)<\/h([0-9])>/imu";
+
 		return preg_replace_callback( $pattern, [ $this, 'toc_callback' ], $content );
 	}
 
 	public function toc_callback( $match )
 	{
-		global $page;
-
 		$title = trim( $match[3] );
 
 		if ( ! $title )
@@ -117,7 +108,7 @@ class Headings extends gEditorial\Module
 			'slug'  => $slug,
 			'title' => $title,
 			'niche' => $match[1],
-			'page'  => $page,
+			'page'  => $GLOBALS['page'],
 		];
 
 		$html = HTML::tag( 'a', [
@@ -134,21 +125,19 @@ class Headings extends gEditorial\Module
 		return $html;
 	}
 
-	public function content_before( $content, $posttypes = NULL )
+	public function insert_content( $content )
 	{
 		if ( empty( $this->toc ) )
 			return;
 
-		if ( ! $this->is_content_insert( NULL ) )
+		if ( ! $this->is_content_insert( FALSE ) )
 			return;
 
-		$this->render_headings( NULL, '-content-before' );
+		$this->render_headings( NULL, '-before' );
 	}
 
 	public function render_headings( $title = NULL, $class = '' )
 	{
-		global $page;
-
 		if ( count( $this->toc ) < $this->get_setting( 'min_headings', '2' ) )
 			return;
 
@@ -160,7 +149,7 @@ class Headings extends gEditorial\Module
 
 		foreach ( $this->toc as $heading ) {
 
-			if ( $page == $heading['page'] || 1 == $heading['page'] )
+			if ( $GLOBALS['page'] == $heading['page'] || 1 == $heading['page'] )
 				$heading['page'] = FALSE;
 
 			if ( ! $last || $heading['niche'] <= $last['niche'] ) {
@@ -184,7 +173,9 @@ class Headings extends gEditorial\Module
 
 				if ( FALSE === $item['page'] )
 					return HTML::link( $item['title'], '#'.$item['slug'] );
-				return rtrim( _wp_link_page( $item['page'] ), '">').'#'.$item['slug'].'">'.$item['title'].'</a>';
+
+				return rtrim( _wp_link_page( $item['page'] ), '">' )
+					.'#'.$item['slug'].'">'.$item['title'].'</a>';
 			} );
 
 		echo '</div>';

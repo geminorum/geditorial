@@ -137,26 +137,28 @@ class Today extends gEditorial\Module
 
 		$this->register_posttype( 'day_cpt' );
 
-		if ( is_admin() ) {
+		if ( ! is_admin() )
+			return;
 
-			$this->filter( 'the_title', 2, 8 );
+		$this->filter( 'the_title', 2, 8 );
 
-			$this->filter_module( 'importer', 'fields', 2 );
-			$this->filter_module( 'importer', 'prepare', 4 );
-			$this->filter_module( 'importer', 'saved', 5 );
+		$this->filter_module( 'importer', 'fields', 2 );
+		$this->filter_module( 'importer', 'prepare', 4 );
+		$this->filter_module( 'importer', 'saved', 5 );
+	}
 
-		} else {
+	public function template_redirect()
+	{
+		if ( ! is_singular( $this->posttypes() ) )
+			return;
 
-			if ( $this->get_setting( 'insert_theday' )
-				&& count( $this->posttypes() ) ) {
+		if ( $this->get_setting( 'insert_theday' ) ) {
+			add_action( $this->base.'_content_before',
+				[ $this, 'insert_theday' ],
+				$this->get_setting( 'insert_priority_theday', -20 )
+			);
 
-				add_action( 'gnetwork_themes_content_before',
-					[ $this, 'content_before' ],
-					$this->get_setting( 'insert_priority_theday', -20 )
-				);
-
-				$this->enqueue_styles(); // since no shortcode available yet!
-			}
+			$this->enqueue_styles(); // since no shortcode available yet!
 		}
 	}
 
@@ -622,9 +624,9 @@ class Today extends gEditorial\Module
 		return $title;
 	}
 
-	public function content_before( $content, $posttypes = NULL )
+	public function insert_theday( $content )
 	{
-		if ( ! $this->is_content_insert( $this->posttypes() ) )
+		if ( ! $this->is_content_insert( FALSE ) )
 			return;
 
 		$the_day = ModuleHelper::getTheDayFromPost(
