@@ -180,7 +180,8 @@ class Headings extends gEditorial\Module
 			if ( $title )
 				HTML::h3( $title, '-toc-title' );
 
-			HTML::menu( $tree, function(){
+			HTML::menu( $tree, function( $item ) {
+
 				if ( FALSE === $item['page'] )
 					return HTML::link( $item['title'], '#'.$item['slug'] );
 				return rtrim( _wp_link_page( $item['page'] ), '">').'#'.$item['slug'].'">'.$item['title'].'</a>';
