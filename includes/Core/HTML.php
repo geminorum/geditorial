@@ -15,9 +15,11 @@ class HTML extends Base
 		return self::tag( 'a', array( 'href' => $link, 'class' => '-link', 'target' => ( $target_blank ? '_blank' : FALSE ) ), $html );
 	}
 
-	public static function mailto( $email, $title = NULL )
+	public static function mailto( $email, $title = NULL, $wrap = FALSE )
 	{
-		return '<a class="-mailto" href="mailto:'.trim( $email ).'">'.( $title ? $title : trim( $email ) ).'</a>';
+		$title = $title ? $title : trim( $email );
+		$link  = '<a class="-mailto" href="mailto:'.trim( $email ).'">'.$title.'</a>';
+		return $wrap ? self::tag( $wrap, $link ) : $link;
 	}
 
 	public static function tel( $number, $title = FALSE, $content = NULL )
@@ -314,7 +316,7 @@ class HTML extends Base
 		) )."\n";
 	}
 
-	public static function headerNav( $uri = '', $active = '', $subs = array(), $prefix = 'nav-tab-', $tag = 'h3' )
+	public static function headerNav( $uri = '', $active = '', $subs = array(), $prefix = 'nav-tab', $wrap = 'h3', $item = FALSE )
 	{
 		if ( empty( $subs ) )
 			return '';
@@ -331,15 +333,22 @@ class HTML extends Base
 				$args  = array( 'sub' => $slug );
 			}
 
-			$html.= self::tag( 'a', array(
-				'class' => 'nav-tab '.$prefix.$slug.( $slug == $active ? ' nav-tab-active' : '' ),
-				'href'  => add_query_arg( $args, $uri ),
-			), $title );
+			$url   = add_query_arg( $args, $uri );
+			$class = $prefix.' '.$prefix.'-'.$slug.( $slug == $active ? ' '.$prefix.'-active -active' : '' );
+
+			if ( $item )
+				$html.= self::tag( $item, array( 'class' => $class ), self::link( $title, $url ) );
+			else
+				$html.= self::tag( 'a', array( 'class' => $class, 'href' => $url ), $title );
 		}
 
-		echo self::tag( $tag, array(
-			'class' => 'nav-tab-wrapper',
-		), $html );
+		if ( $wrap )
+			echo self::tag( $wrap, array(
+				'class' => $prefix.'-wrapper',
+			), $html );
+
+		else
+			echo $html;
 	}
 
 	public static function tabNav( $active = '', $subs = array(), $prefix = 'nav-tab-', $tag = 'div' )
