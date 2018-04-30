@@ -1639,10 +1639,8 @@ class Module extends Base
 
 			'register_meta_box_cb' => method_exists( $this, 'add_meta_box_cb_'.$constant ) ? [ $this, 'add_meta_box_cb_'.$constant ] : NULL,
 
-			// @SEE: https://core.trac.wordpress.org/ticket/39023
-			'show_in_rest' => TRUE,
+			'show_in_rest' => $this->get_setting( 'restapi_support', TRUE ),
 			'rest_base'    => $this->constant( $constant.'_rest', $this->constant( $constant.'_archive', $posttype ) ),
-			// 'rest_controller_class' => 'WP_REST_Posts_Controller',
 
 			'can_export'       => TRUE,
 			'delete_with_user' => FALSE,
@@ -1753,10 +1751,8 @@ class Module extends Base
 				'with_front' => FALSE,
 			],
 
-			// @SEE: https://core.trac.wordpress.org/ticket/39023
-			'show_in_rest' => TRUE,
+			'show_in_rest' => $this->get_setting( 'restapi_support', TRUE ),
 			'rest_base'    => $this->constant( $constant.'_rest', $taxonomy ),
-			// 'rest_controller_class' => 'WP_REST_Terms_Controller',
 		] );
 
 		return register_taxonomy( $taxonomy, $posttypes, $args );

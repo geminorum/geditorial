@@ -240,6 +240,16 @@ class Settings extends Core\Base
 		];
 	}
 
+	public static function getSetting_restapi_support( $description = NULL )
+	{
+		return [
+			'field'       => 'restapi_support',
+			'title'       => _x( 'REST API Support', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+			'description' => $description ?: '',
+			'default'     => '0',
+		];
+	}
+
 	public static function getSetting_multiple_instances( $description = NULL )
 	{
 		return [

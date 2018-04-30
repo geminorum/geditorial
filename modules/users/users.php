@@ -72,6 +72,9 @@ class Users extends gEditorial\Module
 			'_reports' => [
 				'calendar_type',
 			],
+			'_supports' => [
+				'restapi_support',
+			],
 			'posttypes_option' => 'posttypes_option',
 		];
 	}
