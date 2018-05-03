@@ -30,7 +30,9 @@ class Revisions extends gEditorial\Module
 			'desc'     => _x( 'Revision Management', 'Modules: Revisions', GEDITORIAL_TEXTDOMAIN ),
 			'icon'     => 'backup',
 			'frontend' => FALSE,
-			'disabled' => ! WP_POST_REVISIONS ? _x( 'Deactivated by Constant', 'Modules: Revisions', GEDITORIAL_TEXTDOMAIN ) : FALSE,
+			'disabled' => defined( 'WP_POST_REVISIONS' ) && ! WP_POST_REVISIONS
+				? _x( 'Deactivated by Constant', 'Modules: Revisions', GEDITORIAL_TEXTDOMAIN )
+				: FALSE,
 		];
 	}
 
