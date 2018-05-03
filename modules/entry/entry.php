@@ -341,8 +341,7 @@ class Entry extends gEditorial\Module
 
 		if ( is_404() ) {
 
-			// status_header( 404 );
-			// nocache_headers();
+			nocache_headers();
 
 			Theme::resetQuery( [
 				'ID'         => 0,
