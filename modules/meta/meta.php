@@ -524,13 +524,13 @@ class Meta extends gEditorial\Module
 			unset( $columns['author'] );
 
 		return Arraay::insert( $columns, [
-			$this->hook() => $this->get_column_title( 'meta', $posttype ),
+			$this->classs() => $this->get_column_title( 'meta', $posttype ),
 		], 'title', 'after' );
 	}
 
 	public function posts_custom_column( $column_name, $post_id )
 	{
-		if ( $this->hook() != $column_name )
+		if ( $this->classs() != $column_name )
 			return;
 
 		if ( ! $post = get_post( $post_id ) )

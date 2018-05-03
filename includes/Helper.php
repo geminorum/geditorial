@@ -1443,7 +1443,7 @@ class Helper extends Core\Base
 			return $gEditorialMustache;
 
 		$gEditorialMustache = new \Mustache_Engine( [
-			'template_class_prefix' => '__gEditorial_',
+			'template_class_prefix' => '__'.static::BASE.'_',
 			'cache_file_mode'       => FS_CHMOD_FILE,
 			// 'cache'                 => $base.'assets/views/cache',
 			'cache'                 => get_temp_dir(),
