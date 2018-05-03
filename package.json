@@ -18,7 +18,7 @@
   },
   "main": "gulpfile.js",
   "scripts": {
-    "build": "gulp build --type package",
+    "build": "gulp build",
     "gulp": "./node_modules/gulp/bin/gulp.js"
   },
   "devDependencies": {
@@ -43,9 +43,9 @@
     "gulp-smushit": "^1.2.0",
     "gulp-sourcemaps": "^2.6.4",
     "gulp-svgmin": "^1.2.4",
-    "gulp-tinypng-unlimited": "^1.0.2",
+    "gulp-tinypng-unlimited": "^1.0.3",
     "gulp-uglify": "^3.0.0",
-    "gulp-wp-pot": "^2.2.0",
+    "gulp-wp-pot": "^2.3.0",
     "gulp-zip": "^4.1.0",
     "js-yaml": "^3.11.0",
     "parse-changelog": "^1.0.2",
