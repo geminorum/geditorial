@@ -69,4 +69,50 @@ class Third extends Base
 
 		return HTTP::getJSON( $url );
 	}
+
+	// @API: https://developers.google.com/chart/infographics/docs/qr_codes
+	// @EXAMPLE: https://createqrcode.appspot.com/
+	// @SEE: https://github.com/endroid/QrCode
+	// @SEE: https://github.com/aferrandini/PHPQRCode
+	public static function getGoogleQRCode( $data, $atts = [] )
+	{
+		$args = self::atts( [
+			'tag'        => TRUE,
+			'size'       => 150,
+			'encoding'   => 'UTF-8',
+			'correction' => 'H', // 'L', 'M', 'Q', 'H'
+			'margin'     => 0,
+			'url'        => 'https://chart.googleapis.com/chart',
+		], $atts );
+
+		$src = add_query_arg( [
+			'cht'  => 'qr',
+			'chs'  => $args['size'].'x'.$args['size'],
+			'chl'  => urlencode( $data ),
+			'chld' => $args['correction'].'|'.$args['margin'],
+			'choe' => $args['encoding'],
+		], $args['url'] );
+
+		if ( ! $args['tag'] )
+			return $src;
+
+		return HTML::tag( 'img', [
+			'src'    => $src,
+			'width'  => $args['size'],
+			'height' => $args['size'],
+			'alt'    => strip_tags( $data ),
+		] );
+	}
+
+	// FIXME: hex color sanitize
+	public static function htmlThemeColor( $color )
+	{
+		if ( ! $color )
+			return;
+
+		echo '<meta name="theme-color" content="'.$color.'" />'."\n";
+		echo '<meta name="msapplication-navbutton-color" content="'.$color.'">'."\n";
+		echo '<meta name="apple-mobile-web-app-capable" content="yes">'."\n";
+		echo '<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">'."\n";
+	}
 }
