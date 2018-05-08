@@ -62,6 +62,25 @@ class Drafts extends gEditorial\Module
 		];
 	}
 
+	// @REF: https://core.trac.wordpress.org/ticket/43739
+	public function all_posttypes( $exclude = TRUE, $args = [ 'show_ui' => TRUE ] )
+	{
+		$posttypes = [];
+
+		foreach ( PostType::get( 0, $args ) as $posttype => $label ) {
+
+			if ( $exclude && in_array( $posttype, $this->posttypes_excluded ) )
+				continue;
+
+			if ( ! is_post_type_viewable( $posttype ) )
+				continue;
+
+			$posttypes[$posttype] = $label;
+		}
+
+		return $posttypes;
+	}
+
 	public function init()
 	{
 		parent::init();
@@ -84,6 +103,7 @@ class Drafts extends gEditorial\Module
 			return;
 
 		if ( in_array( $screen->post_type, $this->posttypes() ) ) {
+
 			if ( 'post' == $screen->base ) {
 
 				$this->action( 'post_submitbox_minor_actions', 1, 12 );
