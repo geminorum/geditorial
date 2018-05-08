@@ -78,7 +78,7 @@ class Scripts extends Core\Base
 		return 'jquery-colorbox';
 	}
 
-	public static function pkgAutosize( $ver = '4.0.0' )
+	public static function pkgAutosize( $ver = '4.0.2' )
 	{
 		$handle = static::BASE.'-autosize';
 
