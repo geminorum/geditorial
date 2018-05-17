@@ -499,7 +499,7 @@ class ShortCode extends Core\Base
 		if ( FALSE !== $cache )
 			return $cache;
 
-		// FIXME: back comp / DROP THIS
+		// FIXME: back-compat / DROP THIS
 		if ( 'page' == $args['orderby'] )
 			$args['orderby'] = 'order';
 

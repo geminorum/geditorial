@@ -1016,9 +1016,9 @@ class Tweaks extends gEditorial\Module
 
 		$template = empty( $post->page_template ) ? FALSE : $post->page_template;
 
-		echo '<div class="-wrap field-wrap -select">';
+		do_action( 'page_attributes_meta_box_template', $template, $post );
 
-			do_action( 'page_attributes_meta_box_template', $template, $post );
+		echo '<div class="-wrap field-wrap -select">';
 
 			echo '<select name="page_template" id="page_template">';
 

@@ -1463,7 +1463,8 @@ class Helper extends Core\Base
 	{
 		$mustache = self::getMustache();
 		$template = $mustache->loadTemplate( $part );
-		$html     = $template->render( $data );
+
+		$html = $template->render( $data );
 
 		if ( ! $echo )
 			return $html;

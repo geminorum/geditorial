@@ -101,7 +101,7 @@ class GCalEvents extends gEditorial\Widget
 	{
 		$instance = $old;
 
-		$instance['title']      = strip_tags( $new['title'] );
+		$instance['title']      = sanitize_text_field( $new['title'] );
 		$instance['title_link'] = strip_tags( $new['title_link'] );
 		$instance['context']    = strip_tags( $new['context'] );
 		$instance['class']      = strip_tags( $new['class'] );
