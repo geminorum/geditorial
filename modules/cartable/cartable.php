@@ -338,7 +338,7 @@ class Cartable extends gEditorial\Module
 
 				if ( $this->support_groups && $this->get_setting( 'map_cap_group' ) ) {
 
-					foreach( $this->get_groups( $post->ID ) as $group )
+					foreach ( $this->get_groups( $post->ID ) as $group )
 						if ( is_object_in_term( $user_id, $this->constant( 'group_ref' ), $group ) )
 							return [ 'read' ];
 				}
@@ -761,7 +761,7 @@ class Cartable extends gEditorial\Module
 		if ( $check_groups && $this->support_groups ) {
 			$groups = $this->get_groups( $post->ID );
 
-			foreach( $groups as $group ) {
+			foreach ( $groups as $group ) {
 
 				if ( is_object_in_term( $user->ID, $this->constant( 'group_ref' ), $group ) ) {
 

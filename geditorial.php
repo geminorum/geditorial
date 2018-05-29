@@ -46,7 +46,7 @@ if ( version_compare( GEDITORIAL_MIN_PHP, PHP_VERSION, '>=' ) ) {
 		return \geminorum\gEditorial\Plugin::instance();
 	}
 
-	// FIXME: back comp
+	// FIXME: back-compat
 	global $gEditorial;
 
 	$gEditorial = gEditorial();

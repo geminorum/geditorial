@@ -414,7 +414,7 @@ class Terms extends gEditorial\Module
 
 						$list = [];
 
-						foreach( (array) $meta as $role )
+						foreach ( (array) $meta as $role )
 							$list[] = '<span class="roles" data-roles="'.HTML::escape( $role ).'">'
 								.( empty( $this->all_roles[$role] )
 									? HTML::escape( $role )
@@ -453,7 +453,7 @@ class Terms extends gEditorial\Module
 
 						$list = [];
 
-						foreach( (array) $meta as $posttype )
+						foreach ( (array) $meta as $posttype )
 							$list[] = '<span class="posttypes" data-posttypes="'.HTML::escape( $posttype ).'">'
 								.( empty( $this->all_posttypes[$posttype] )
 									? HTML::escape( $posttype )
