@@ -38,8 +38,8 @@
     }
   }
 
-  button[type="submit"]:before {
-    font-family: dashicons;
+  button[type="submit"]::before {
+    font-family: dashicons, sans-serif;
     content: "\f179";
   }
 

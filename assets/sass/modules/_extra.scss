@@ -111,26 +111,6 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-/// Placeholders
-// They're a pain as you have to set the style in all the separate formats,
-// this sorts it for you.
-//
-// Just in case there are people how aren't used to using @content here is a usage example:
-// input, textarea {
-//   @include input-placeholder {
-//     color: $grey;
-//   }
-// }
-@mixin input-placeholder {
-  &.placeholder { @content; }
-  &:-moz-placeholder { @content; }
-  &::-moz-placeholder { @content; }
-  &:-ms-input-placeholder { @content; }
-  &::-webkit-input-placeholder { @content; }
-}
-
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
 /// Media queries
 // A massive time saver! You can just use pixel values but we have some
 // default breakpoints setup that work too, another time saver while

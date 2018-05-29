@@ -6,13 +6,13 @@
 .geditorial-comments-row-action {
   cursor: pointer;
 
-  &:after {
+  &::after {
     content: " | ";
     padding: 0 2px;
     color: #555;
   }
 
-  &:last-child:after {
+  &:last-child::after {
     content: "";
   }
 

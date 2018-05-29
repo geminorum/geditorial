@@ -38,7 +38,7 @@
       color: $gray-light;
     }
 
-    &.dashicons-before:before {
+    &.dashicons-before::before {
       font-size: 32px;
       width: 32px;
       height: 32px;

@@ -16,7 +16,7 @@
       font-weight: 700;
       color: #000;
 
-      &:before {
+      &::before {
         content: "";
         display: block;
         width: 100%;
@@ -129,7 +129,6 @@
   }
 
   .-slideInUp {
-    -webkit-animation-name: slideInUp;
     animation-name: slideInUp;
 
     &.-animated {

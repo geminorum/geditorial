@@ -127,6 +127,8 @@
       }
     }
 
+    &.-checkbox {}
+
     &.-buttons {
       margin-bottom: -2px;
 
@@ -432,7 +434,7 @@
   .toggle-indicator::before {
     content: "\f142";
     display: inline-block;
-    font: 400 20px/1 dashicons;
+    font: 400 20px/1 dashicons, sans-serif;
     speak: none;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;

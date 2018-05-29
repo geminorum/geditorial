@@ -20,7 +20,7 @@ ol.-sortable {
   li {
     position: relative;
 
-    &:before {
+    &::before {
       position: absolute;
     }
 
