@@ -5,6 +5,7 @@ defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\WordPress;
+use geminorum\gEditorial\WordPress\Database;
 use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\Taxonomy;
 use geminorum\gEditorial\WordPress\User;
@@ -604,9 +605,9 @@ class MetaBox extends Core\Base
 
 	public static function glancePosttype( $posttype, $noop, $extra_class = '' )
 	{
-		$posts = wp_count_posts( $posttype );
+		$posts = Database::countPostsByPosttype( $posttype );
 
-		if ( ! $posts->publish )
+		if ( ! $posts['publish'] )
 			return FALSE;
 
 		$object = PostType::object( $posttype );
@@ -617,8 +618,8 @@ class MetaBox extends Core\Base
 			: '<div class="'.$class.'">%1$s %2$s</div>';
 
 		return vsprintf( $format, [
-			Number::format( $posts->publish ),
-			Helper::noopedCount( $posts->publish, $noop ),
+			Number::format( $posts['publish'] ),
+			Helper::noopedCount( $posts['publish'], $noop ),
 			$posttype,
 		] );
 	}
