@@ -85,6 +85,25 @@
       }
     }
   },
+  "autoprefixer": {
+    "dev": {
+      "browsers": [
+        "last 2 versions",
+        "ie >= 9",
+        "Android >= 2.3",
+        "ios >= 7"
+      ]
+    },
+    "build": {
+      "browsers": [
+        "last 2 versions",
+        "ie >= 9",
+        "Android >= 2.3",
+        "ios >= 7"
+      ],
+      "cascade": false
+    }
+  },
   "constants": {
     "version": "GEDITORIAL_VERSION"
   },

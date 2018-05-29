@@ -2,6 +2,7 @@
   var gulp = require('gulp');
   var plugins = require('gulp-load-plugins')();
   var cssnano = require('cssnano');
+  var autoprefixer = require('autoprefixer');
   var rtlcss = require('rtlcss');
   var parseChangelog = require('parse-changelog');
   var prettyjson = require('prettyjson');
@@ -65,14 +66,13 @@
   });
 
   gulp.task('dev:sass', function () {
-    var processors = [
-      cssnano(config.cssnano.dev)
-      // TODO: add prefixer
-    ];
     return gulp.src(config.input.sass)
       // .pipe(plugins.sourcemaps.init())
       .pipe(plugins.sass.sync(config.sass).on('error', plugins.sass.logError))
-      .pipe(plugins.postcss(processors))
+      .pipe(plugins.postcss([
+        cssnano(config.cssnano.dev),
+        autoprefixer(config.autoprefixer.dev)
+      ]))
       // .pipe(plugins.sourcemaps.write(config.output.sourcemaps))
       .pipe(gulp.dest(config.output.css)).on('error', log.error)
       .pipe(plugins.postcss([rtlcss()]))
@@ -106,14 +106,13 @@
 
   // all styles / without livereload
   gulp.task('dev:styles', function () {
-    var processors = [
-      cssnano(config.cssnano.dev)
-      // TODO: add prefixer
-    ];
     return gulp.src(config.input.sass)
       // .pipe(plugins.sourcemaps.init())
       .pipe(plugins.sass.sync(config.sass).on('error', plugins.sass.logError))
-      .pipe(plugins.postcss(processors))
+      .pipe(plugins.postcss([
+        cssnano(config.cssnano.dev),
+        autoprefixer(config.autoprefixer.dev)
+      ]))
       .pipe(plugins.header(banner, {pkg: pkg}))
       // .pipe(plugins.sourcemaps.write(config.output.sourcemaps))
       .pipe(plugins.debug({title: 'Changed'}))
@@ -137,13 +136,12 @@
   });
 
   gulp.task('build:styles', function () {
-    var processors = [
-      cssnano(config.cssnano.build)
-      // TODO: add prefixer
-    ];
     return gulp.src(config.input.sass)
       .pipe(plugins.sass(config.sass).on('error', plugins.sass.logError))
-      .pipe(plugins.postcss(processors))
+      .pipe(plugins.postcss([
+        cssnano(config.cssnano.build),
+        autoprefixer(config.autoprefixer.build)
+      ]))
       .pipe(gulp.dest(config.output.css)).on('error', log.error)
       .pipe(plugins.postcss([rtlcss()]))
       .pipe(plugins.rename({suffix: '-rtl'}))
