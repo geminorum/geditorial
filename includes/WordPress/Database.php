@@ -66,7 +66,7 @@ class Database extends Core\Base
 		return $same_key ? Core\Arraay::sameKey( $taxonomies ) : $taxonomies;
 	}
 
-	// @SOURCE: [Custom Field Taxonomies](https://github.com/scribu/wp-custom-field-taxonomies)
+	// @REF: https://github.com/scribu/wp-custom-field-taxonomies
 	public static function getPostMetaRows( $meta_key, $limit = FALSE )
 	{
 		global $wpdb;
@@ -90,7 +90,7 @@ class Database extends Core\Base
 		return $wpdb->get_results( $query );
 	}
 
-	// @SOURCE: [Custom Field Taxonomies](https://github.com/scribu/wp-custom-field-taxonomies)
+	// @REF: https://github.com/scribu/wp-custom-field-taxonomies
 	public static function getPostMetaKeys( $same_key = FALSE )
 	{
 		global $wpdb;
@@ -106,7 +106,7 @@ class Database extends Core\Base
 		return $same_key ? Core\Arraay::sameKey( $meta_keys ) : $meta_keys;
 	}
 
-	// @SEE: delete_post_meta_by_key( 'related_posts' );
+	// @SEE: `delete_post_meta_by_key( 'related_posts' )`
 	public static function deletePostMeta( $meta_key, $limit = FALSE )
 	{
 		global $wpdb;
@@ -133,7 +133,6 @@ class Database extends Core\Base
 	}
 
 	// @REF: https://core.trac.wordpress.org/ticket/29181
-	// EDITED: 2/5/2017, 12:24:01 AM
 	public static function countPostsByNotTaxonomy( $taxonomy, $posttypes = array( 'post' ), $user_id = 0, $exclude_statuses = NULL )
 	{
 		$key = md5( 'not_'.$taxonomy.'_'.serialize( $posttypes ).'_'.$user_id );
@@ -172,8 +171,7 @@ class Database extends Core\Base
 		return $counts;
 	}
 
-	// ADOPTED FROM: `wp_count_posts()`
-	// EDITED: 2/5/2017, 12:23:40 AM
+	// @REF: `wp_count_posts()`
 	public static function countPostsByTaxonomy( $taxonomy, $posttypes = array( 'post' ), $user_id = 0, $exclude_statuses = NULL )
 	{
 		$key = md5( serialize( $taxonomy ).'_'.serialize( $posttypes ).'_'.$user_id );
@@ -220,8 +218,7 @@ class Database extends Core\Base
 		return $counts;
 	}
 
-	// EDITED: 10/28/2016, 10:06:17 AM
-	// ADOPTED FROM: wp_count_posts()
+	// @REF: `wp_count_posts()`
 	public static function countPostsByPosttype( $posttype = 'post', $user_id = 0, $period = array() )
 	{
 		global $wpdb;

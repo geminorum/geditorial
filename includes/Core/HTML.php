@@ -769,28 +769,36 @@ class HTML extends Base
 
 			foreach ( $array as $key => $val ) {
 
+				$val = maybe_unserialize( $val );
+
 				echo '<tr class="-row">';
 
 				if ( is_string( $key ) ) {
-					echo '<td class="-key" style=""><strong>'.$key.'</strong>';
+					echo '<td class="-key">';
+						echo '<strong>'.$key.'</strong>';
 						if ( $type ) echo '<br /><small>'.gettype( $val ).'</small>';
 					echo '</td>';
 				}
 
 				if ( is_array( $val ) || is_object( $val ) ) {
+
 					echo '<td class="-val -table">';
 					self::tableSide( $val, $type );
 
 				} else if ( is_null( $val ) ) {
+
 					echo '<td class="-val -not-table"><code>NULL</code>';
 
 				} else if ( is_bool( $val ) ) {
+
 					echo '<td class="-val -not-table"><code>'.( $val ? 'TRUE' : 'FALSE' ).'</code>';
 
 				} else if ( ! empty( $val ) ) {
+
 					echo '<td class="-val -not-table"><code>'.$val.'</code>';
 
 				} else {
+
 					echo '<td class="-val -not-table"><small class="-empty">EMPTY</small>';
 				}
 

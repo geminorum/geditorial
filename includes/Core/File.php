@@ -85,11 +85,11 @@ class File extends Base
 		);
 
 		if ( 0 === $bytes )
-			return number_format( 0, $decimals ).' B';
+			return '&#8206;'.number_format( 0, $decimals ).' B&#8207;';
 
 		foreach ( $quant as $unit => $mag )
 			if ( doubleval( $bytes ) >= $mag )
-				return number_format( $bytes / $mag, $decimals ).' '.$unit;
+				return '&#8206;'.number_format( $bytes / $mag, $decimals ).' '.$unit.'&#8207;';
 
 		return FALSE;
 	}
