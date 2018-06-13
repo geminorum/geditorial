@@ -239,9 +239,9 @@ class Widget extends \WP_Widget
 		if ( is_null( $label ) )
 			$label = _x( 'Custom HTML:', 'Widget Core', GEDITORIAL_TEXTDOMAIN );
 
-		echo '<p>'.HTML::tag( 'label', [
-			'for' => $this->get_field_id( $field ),
-		], $label );
+		echo '<p>';
+
+		HTML::label( $label, $this->get_field_id( $field ), FALSE );
 
 		echo HTML::tag( 'textarea', [
 			'rows'  => '3',
@@ -266,9 +266,7 @@ class Widget extends \WP_Widget
 			'value' => isset( $instance[$field] ) ? $instance[$field] : $default,
 		] );
 
-		echo '<p>'.HTML::tag( 'label', [
-			'for' => $this->get_field_id( $field ),
-		], $label.' '.$html ).'</p>';
+		HTML::label( $label.' '.$html, $this->get_field_id( $field ) );
 	}
 
 	public function form_context( $instance, $default = '', $field = 'context' )
@@ -282,9 +280,7 @@ class Widget extends \WP_Widget
 			'dir'   => 'ltr',
 		] );
 
-		echo '<p>'.HTML::tag( 'label', [
-			'for' => $this->get_field_id( $field ),
-		], _x( 'Context:', 'Widget Core', GEDITORIAL_TEXTDOMAIN ).$html ).'</p>';
+		HTML::label( _x( 'Context:', 'Widget Core', GEDITORIAL_TEXTDOMAIN ).$html, $this->get_field_id( $field ) );
 	}
 
 	public function form_class( $instance, $default = '', $field = 'class' )
@@ -298,9 +294,7 @@ class Widget extends \WP_Widget
 			'dir'   => 'ltr',
 		] );
 
-		echo '<p>'.HTML::tag( 'label', [
-			'for' => $this->get_field_id( $field ),
-		], _x( 'Class:', 'Widget Core', GEDITORIAL_TEXTDOMAIN ).$html ).'</p>';
+		HTML::label( _x( 'Class:', 'Widget Core', GEDITORIAL_TEXTDOMAIN ).$html, $this->get_field_id( $field ) );
 	}
 
 	public function form_post_type( $instance, $default = 'post', $field = 'post_type' )
@@ -320,9 +314,7 @@ class Widget extends \WP_Widget
 			'id'    => $this->get_field_id( $field ),
 		], $html );
 
-		echo '<p>'.HTML::tag( 'label', [
-			'for' => $this->get_field_id( $field ),
-		], _x( 'PostType:', 'Widget Core', GEDITORIAL_TEXTDOMAIN ).$html ).'</p>';
+		HTML::label( _x( 'PostType:', 'Widget Core', GEDITORIAL_TEXTDOMAIN ).$html, $this->get_field_id( $field ) );
 	}
 
 	public function form_taxonomy( $instance, $default = 'post_tag', $field = 'taxonomy', $posttype_field = 'post_type', $posttype_default = 'post' )
@@ -343,9 +335,7 @@ class Widget extends \WP_Widget
 			'id'    => $this->get_field_id( $field ),
 		], $html );
 
-		echo '<p>'.HTML::tag( 'label', [
-			'for' => $this->get_field_id( $field ),
-		], _x( 'Taxonomy:', 'Widget Core', GEDITORIAL_TEXTDOMAIN ).$html ).'</p>';
+		HTML::label( _x( 'Taxonomy:', 'Widget Core', GEDITORIAL_TEXTDOMAIN ).$html, $this->get_field_id( $field ) );
 	}
 
 	public function form_title( $instance, $default = '', $field = 'title' )
@@ -358,9 +348,7 @@ class Widget extends \WP_Widget
 			'value' => isset( $instance[$field] ) ? $instance[$field] : $default,
 		] );
 
-		echo '<p>'.HTML::tag( 'label', [
-			'for' => $this->get_field_id( $field ),
-		], _x( 'Title:', 'Widget Core', GEDITORIAL_TEXTDOMAIN ).$html ).'</p>';
+		HTML::label( _x( 'Title:', 'Widget Core', GEDITORIAL_TEXTDOMAIN ).$html, $this->get_field_id( $field ) );
 	}
 
 	public function form_title_link( $instance, $default = '', $field = 'title_link' )
@@ -374,9 +362,7 @@ class Widget extends \WP_Widget
 			'dir'   => 'ltr',
 		] );
 
-		echo '<p>'.HTML::tag( 'label', [
-			'for' => $this->get_field_id( $field ),
-		], _x( 'Title Link:', 'Widget Core', GEDITORIAL_TEXTDOMAIN ).$html ).'</p>';
+		HTML::label( _x( 'Title Link:', 'Widget Core', GEDITORIAL_TEXTDOMAIN ).$html, $this->get_field_id( $field ) );
 	}
 
 	public function form_custom_link( $instance, $default = '', $field = 'custom_link', $label = NULL )
@@ -393,9 +379,7 @@ class Widget extends \WP_Widget
 			'dir'   => 'ltr',
 		] );
 
-		echo '<p>'.HTML::tag( 'label', [
-			'for' => $this->get_field_id( $field ),
-		], $label.$html ).'</p>';
+		HTML::label( $label.$html, $this->get_field_id( $field ) );
 	}
 
 	public function form_custom_code( $instance, $default = '', $field = 'custom_code', $label = NULL )
@@ -412,9 +396,7 @@ class Widget extends \WP_Widget
 			'dir'   => 'ltr',
 		] );
 
-		echo '<p>'.HTML::tag( 'label', [
-			'for' => $this->get_field_id( $field ),
-		], $label.$html ).'</p>';
+		HTML::label( $label.$html, $this->get_field_id( $field ) );
 	}
 
 	public function form_custom_empty( $instance, $default = '', $field = 'empty', $label = NULL )
@@ -430,9 +412,7 @@ class Widget extends \WP_Widget
 			'value' => isset( $instance[$field] ) ? $instance[$field] : $default,
 		] );
 
-		echo '<p>'.HTML::tag( 'label', [
-			'for' => $this->get_field_id( $field ),
-		], $label.$html ).'</p>';
+		HTML::label( $label.$html, $this->get_field_id( $field ) );
 	}
 
 	public function form_avatar_size( $instance, $default = '32', $field = 'avatar_size' )
@@ -445,9 +425,7 @@ class Widget extends \WP_Widget
 			'value' => isset( $instance[$field] ) ? $instance[$field] : $default,
 		] );
 
-		echo '<p>'.HTML::tag( 'label', [
-			'for' => $this->get_field_id( $field ),
-		], _x( 'Avatar Size:', 'Widget Core', GEDITORIAL_TEXTDOMAIN ).$html ).'</p>';
+		HTML::label( _x( 'Avatar Size:', 'Widget Core', GEDITORIAL_TEXTDOMAIN ).$html, $this->get_field_id( $field ) );
 	}
 
 	public function form_image_size( $instance, $default = 'thumbnail', $field = 'image_size', $posttype = 'post' )
@@ -471,9 +449,7 @@ class Widget extends \WP_Widget
 				'id'    => $this->get_field_id( $field ),
 			], $html );
 
-			echo '<p>'.HTML::tag( 'label', [
-				'for' => $this->get_field_id( $field ),
-			], _x( 'Image Size:', 'Widget Core', GEDITORIAL_TEXTDOMAIN ).$html ).'</p>';
+			HTML::label( _x( 'Image Size:', 'Widget Core', GEDITORIAL_TEXTDOMAIN ).$html, $this->get_field_id( $field ) );
 
 		} else {
 			HTML::desc( _x( 'No Image Size Available!', 'Widget Core', GEDITORIAL_TEXTDOMAIN ) );
@@ -492,9 +468,7 @@ class Widget extends \WP_Widget
 			'checked' => isset( $instance[$field] ) ? $instance[$field] : $default,
 		] );
 
-		echo '<p>'.$html.'&nbsp;'.HTML::tag( 'label', [
-			'for' => $this->get_field_id( $field ),
-		], $label ).'</p>';
+		HTML::label( $html.'&nbsp;'.$label, $this->get_field_id( $field ) );
 	}
 
 	// only works on hierarchical
@@ -520,9 +494,7 @@ class Widget extends \WP_Widget
 		if ( ! $html )
 			$html = ' '.Plugin::na();
 
-		echo '<p>'.HTML::tag( 'label', [
-			'for' => $this->get_field_id( $field ),
-		], $label.$html ).'</p>';
+		HTML::label( $label.$html, $this->get_field_id( $field ) );
 	}
 
 	public function form_term_id( $instance, $default = '0', $field = 'term_id', $taxonomy_field = 'taxonomy', $taxonomy_default = 'post_tag' )
@@ -533,7 +505,7 @@ class Widget extends \WP_Widget
 		$html = HTML::tag( 'option', [
 			'value'    => '0',
 			'selected' => $term_id == '0',
-		], _x( '&mdash; Select &mdash;', 'Widget Core', GEDITORIAL_TEXTDOMAIN ) );
+		], Settings::showOptionNone() );
 
 		foreach ( get_terms( $taxonomy ) as $term )
 			$html.= HTML::tag( 'option', [
@@ -547,8 +519,6 @@ class Widget extends \WP_Widget
 			'id'    => $this->get_field_id( $field ),
 		], $html );
 
-		echo '<p>'.HTML::tag( 'label', [
-			'for' => $this->get_field_id( $field ),
-		], _x( 'Term:', 'Widget Core', GEDITORIAL_TEXTDOMAIN ).$html ).'</p>';
+		HTML::label( _x( 'Term:', 'Widget Core', GEDITORIAL_TEXTDOMAIN ).$html, $this->get_field_id( $field ) );
 	}
 }

@@ -410,9 +410,7 @@ class Users extends gEditorial\Module
 						'checked' => is_object_in_term( $user->ID, $this->constant( 'group_tax' ), $term ),
 					] );
 
-					echo '<li>'.HTML::tag( 'label', [
-						'for' => 'groups-'.$term->slug,
-					], $html.'&nbsp;'.HTML::escape( $term->name ) ).'</li>';
+					HTML::label( $html.'&nbsp;'.HTML::escape( $term->name ), 'groups-'.$term->slug, 'li' );
 				 }
 
 				echo '</ul></div>';
@@ -457,9 +455,7 @@ class Users extends gEditorial\Module
 						'checked' => in_array( $term->term_id, $selected ),
 					] );
 
-					echo '<li>'.HTML::tag( 'label', [
-						'for' => 'categories-'.$term->slug,
-					], $html.'&nbsp;'.HTML::escape( $term->name ) ).'</li>';
+					HTML::label( $html.'&nbsp;'.HTML::escape( $term->name ), 'categories-'.$term->slug, 'li' );
 				 }
 
 				echo '</ul></div>';

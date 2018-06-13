@@ -1028,7 +1028,7 @@ class Tweaks extends gEditorial\Module
 
 				page_template_dropdown( $template, $post->post_type );
 
-		echo '</select><div>';
+		echo '</select></div>';
 	}
 
 	public function do_metabox_excerpt( $post, $box )

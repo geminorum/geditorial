@@ -1309,9 +1309,7 @@ class Settings extends Core\Base
 
 						$html.= '&nbsp;<span class="-field-after">'.$value_title.'</span>';
 
-						echo '<p>'.HTML::tag( 'label', [
-							'for' => $id.'-'.$value_name,
-						], $html ).'</p>';
+						HTML::label( $html, $id.'-'.$value_name );
 					}
 
 				} else {
@@ -1439,14 +1437,13 @@ class Settings extends Core\Base
 					'data'     => $args['data'],
 				] );
 
-				echo '<p>'.HTML::tag( 'label', [
-					'for' => $id,
-				], $html.'&nbsp;'.$args['description'] ).'</p>';
+				HTML::label( $html.'&nbsp;'.$args['description'], $id );
 
 				$args['description'] = FALSE;
 
 			break;
 			case 'checkboxes':
+			case 'checkboxes-values':
 
 				if ( count( $args['values'] ) ) {
 
@@ -1464,9 +1461,9 @@ class Settings extends Core\Base
 							'dir'      => $args['dir'],
 						] );
 
-						echo '<p>'.HTML::tag( 'label', [
-							'for' => $id.( is_null( $args['none_value'] ) ? '' : '-'.$args['none_value'] ),
-						], $html.'&nbsp;'.$args['none_title'] ).'</p>';
+						$for = $id.( is_null( $args['none_value'] ) ? '' : '-'.$args['none_value'] );
+
+						HTML::label( $html.'&nbsp;'.$args['none_title'], $for );
 					}
 
 					foreach ( $args['values'] as $value_name => $value_title ) {
@@ -1486,9 +1483,12 @@ class Settings extends Core\Base
 							'dir'      => $args['dir'],
 						] );
 
-						echo '<p>'.HTML::tag( 'label', [
-							'for' => $id.'-'.$value_name,
-						], $html.'&nbsp;'.$value_title ).'</p>';
+						$html.= '&nbsp;'.HTML::escape( $value_title );
+
+						if ( 'checkboxes-values' == $args['type'] )
+							$html.= ' &mdash; <code>'.$value_name.'</code>';
+
+						HTML::label( $html, $id.'-'.$value_name );
 					}
 
 				} else if ( is_array( $args['values'] ) ) {
@@ -1517,9 +1517,9 @@ class Settings extends Core\Base
 							'dir'      => $args['dir'],
 						] );
 
-						echo '<li>'.HTML::tag( 'label', [
-							'for' => $id.( is_null( $args['none_value'] ) ? '' : '-'.$args['none_value'] ),
-						], $html.'&nbsp;'.$args['none_title'] ).'</li>';
+						$for = $id.( is_null( $args['none_value'] ) ? '' : '-'.$args['none_value'] );
+
+						HTML::label( $html.'&nbsp;'.$args['none_title'], $for, 'li' );
 					}
 
 					foreach ( $args['values'] as $value_name => $value_title ) {
@@ -1539,9 +1539,7 @@ class Settings extends Core\Base
 							'dir'      => $args['dir'],
 						] );
 
-						echo '<li>'.HTML::tag( 'label', [
-							'for' => $id.'-'.$value_name,
-						], $html.'&nbsp;'.$value_title ).'</li>';
+						HTML::label( $html.'&nbsp;'.$value_title, $id.'-'.$value_name, 'li' );
 					}
 
 					echo '</ul></div>';
@@ -1570,9 +1568,9 @@ class Settings extends Core\Base
 							'dir'      => $args['dir'],
 						] );
 
-						echo '<p>'.HTML::tag( 'label', [
-							'for' => $id.( is_null( $args['none_value'] ) ? '' : '-'.$args['none_value'] ),
-						], $html.'&nbsp;'.$args['none_title'] ).'</p>';
+						$for = $id.( is_null( $args['none_value'] ) ? '' : '-'.$args['none_value'] );
+
+						HTML::label( $html.'&nbsp;'.$args['none_title'], $for );
 					}
 
 					foreach ( $args['values'] as $value_name => $value_title ) {
@@ -1592,9 +1590,7 @@ class Settings extends Core\Base
 							'dir'      => $args['dir'],
 						] );
 
-						echo '<p>'.HTML::tag( 'label', [
-							'for' => $id.'-'.$value_name,
-						], $html.'&nbsp;'.$value_title ).'</p>';
+						HTML::label( $html.'&nbsp;'.$value_title, $id.'-'.$value_name );
 					}
 				}
 
@@ -1871,9 +1867,10 @@ class Settings extends Core\Base
 						'dir'      => $args['dir'],
 					] );
 
-					echo '<p>'.HTML::tag( 'label', [
-						'for' => $id.'-'.$value_name,
-					], $html.'&nbsp;'.HTML::escape( $value_title ) ).' &mdash; <code>'.$value_name.'</code>'.'</p>';
+					$html.= '&nbsp;'.HTML::escape( $value_title );
+					$html.= ' &mdash; <code>'.$value_name.'</code>';
+
+					HTML::label( $html, $id.'-'.$value_name );
 				}
 
 			break;
@@ -1899,9 +1896,10 @@ class Settings extends Core\Base
 						'dir'      => $args['dir'],
 					] );
 
-					echo '<p>'.HTML::tag( 'label', [
-						'for' => $id.'-'.$value_name,
-					], $html.'&nbsp;'.HTML::escape( $value_title ) ).' &mdash; <code>'.$value_name.'</code>'.'</p>';
+					$html.= '&nbsp;'.HTML::escape( $value_title );
+					$html.= ' &mdash; <code>'.$value_name.'</code>';
+
+					HTML::label( $html, $id.'-'.$value_name );
 				}
 
 			break;

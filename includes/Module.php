@@ -463,17 +463,19 @@ class Module extends Base
 			HTML::desc( $before );
 
 		foreach ( $this->all_posttypes() as $posttype => $label ) {
+
 			$html = HTML::tag( 'input', [
 				'type'    => 'checkbox',
 				'value'   => 'enabled',
 				'id'      => 'type-'.$posttype,
 				'name'    => $this->base.'_'.$this->module->name.'[post_types]['.$posttype.']',
-				'checked' => isset( $this->options->post_types[$posttype] ) && $this->options->post_types[$posttype],
+				'checked' => ! empty( $this->options->post_types[$posttype] ),
 			] );
 
-			echo '<p>'.HTML::tag( 'label', [
-				'for' => 'type-'.$posttype,
-			], $html.'&nbsp;'.HTML::escape( $label ).' &mdash; <code>'.$posttype.'</code>' ).'</p>';
+			$html.= '&nbsp;'.HTML::escape( $label );
+			$html.= ' &mdash; <code>'.$posttype.'</code>';
+
+			HTML::label( $html, 'type-'.$posttype );
 		}
 
 		if ( $after = $this->get_string( 'post_types_after', 'post', 'settings', NULL ) )
@@ -492,12 +494,13 @@ class Module extends Base
 				'value'   => 'enabled',
 				'id'      => 'tax-'.$taxonomy,
 				'name'    => $this->base.'_'.$this->module->name.'[taxonomies]['.$taxonomy.']',
-				'checked' => isset( $this->options->taxonomies[$taxonomy] ) && $this->options->taxonomies[$taxonomy],
+				'checked' => ! empty( $this->options->taxonomies[$taxonomy] ),
 			] );
 
-			echo '<p>'.HTML::tag( 'label', [
-				'for' => 'tax-'.$taxonomy,
-			], $html.'&nbsp;'.HTML::escape( $label ).' &mdash; <code>'.$taxonomy.'</code>' ).'</p>';
+			$html.= '&nbsp;'.HTML::escape( $label );
+			$html.= ' &mdash; <code>'.$taxonomy.'</code>';
+
+			HTML::label( $html, 'tax-'.$taxonomy );
 		}
 
 		if ( $after = $this->get_string( 'taxonomies_after', 'post', 'settings', NULL ) )
@@ -529,7 +532,7 @@ class Module extends Base
 
 		return [
 			'field'       => $constant.'_supports',
-			'type'        => 'checkboxes', // FIXME: add as setting type with `code` after title
+			'type'        => 'checkboxes-values',
 			'title'       => sprintf( _x( '%s Supports', 'Module: Setting Title', GEDITORIAL_TEXTDOMAIN ), $singular ),
 			'description' => sprintf( _x( 'Support core and extra features for %s posttype.', 'Module: Setting Description', GEDITORIAL_TEXTDOMAIN ), $singular ),
 			'default'     => $defaults,
@@ -715,12 +718,9 @@ class Module extends Base
 			'checked' => $value,
 		] );
 
-		echo '<div>'.HTML::tag( 'label', [
-			'for' => $id,
-		], $html.'&nbsp;'.$args['field_title'] );
-
-		HTML::desc( $args['description'] );
-
+		echo '<div>';
+			HTML::label( $html.'&nbsp;'.$args['field_title'], $id, FALSE );
+			HTML::desc( $args['description'] );
 		echo '</div>';
 	}
 
@@ -732,9 +732,9 @@ class Module extends Base
 			'id'    => $args['post_type'].'_fields_all',
 		] );
 
-		echo HTML::tag( 'label', [
-			'for' => $args['post_type'].'_fields_all',
-		], $html.'&nbsp;<span class="description">'._x( 'Select All Fields', 'Module', GEDITORIAL_TEXTDOMAIN ).'</span>' );
+		$html.= '&nbsp;<span class="description">'._x( 'Select All Fields', 'Module', GEDITORIAL_TEXTDOMAIN ).'</span>';
+
+		HTML::label( $html, $args['post_type'].'_fields_all', FALSE );
 	}
 
 	public function settings_fields_option_none( $args )
