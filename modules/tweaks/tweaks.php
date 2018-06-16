@@ -215,40 +215,36 @@ class Tweaks extends gEditorial\Module
 	private function get_posttypes_support_search_meta()
 	{
 		$supported = PostType::get( 0, [ 'show_ui' => TRUE ] );
-		$excludes  = [
-			'attachment',
-			'day',
-		];
+		$excluded  = Settings::posttypesExcluded( 'day' );
 
-		return array_diff_key( $supported, array_flip( $excludes ) );
+		return array_diff_key( $supported, array_flip( $excluded ) );
 	}
 
 	private function get_posttypes_support_order()
 	{
 		$supported = PostType::get( 0, [ 'show_ui' => TRUE ] );
-		$excludes  = [
+		$excluded  = Settings::posttypesExcluded( [
 			'publication',
-			'attachment',
 			'day',
 			'profile', // gPeople
-		];
+		] );
 
-		return array_diff_key( $supported, array_flip( $excludes ) );
+		return array_diff_key( $supported, array_flip( $excluded ) );
 	}
 
 	private function get_posttypes_support_thumbnail()
 	{
-		$supported = get_post_types_by_support( 'thumbnail' );
 		$posttypes = [];
-		$excludes  = [
+		$supported = get_post_types_by_support( 'thumbnail' );
+		$excluded  = Settings::posttypesExcluded( [
 			'attachment:audio',
 			'attachment:video',
 			'profile', // gPeople
-		];
+		] );
 
 		foreach ( PostType::get() as $posttype => $label )
 			if ( in_array( $posttype, $supported )
-				&& ! in_array( $posttype, $excludes ) )
+				&& ! in_array( $posttype, $excluded ) )
 					$posttypes[$posttype] = $label;
 
 		return $posttypes;
@@ -257,26 +253,23 @@ class Tweaks extends gEditorial\Module
 	private function get_posttypes_support_mainbox()
 	{
 		$supported = PostType::get( 0, [ 'show_ui' => TRUE ] );
-		$excludes  = [
-			'attachment',
-		];
+		$excluded  = Settings::posttypesExcluded();
 
-		return array_diff_key( $supported, array_flip( $excludes ) );
+		return array_diff_key( $supported, array_flip( $excluded ) );
 	}
 
 	private function get_posttypes_support_excerpt()
 	{
-		$supported = get_post_types_by_support( 'excerpt' );
 		$posttypes = [];
-		$excludes  = [
-			'attachment',
+		$supported = get_post_types_by_support( 'excerpt' );
+		$excluded  = Settings::posttypesExcluded( [
 			'inquiry',
 			'day',
-		];
+		] );
 
 		foreach ( PostType::get() as $posttype => $label )
 			if ( in_array( $posttype, $supported )
-				&& ! in_array( $posttype, $excludes ) )
+				&& ! in_array( $posttype, $excluded ) )
 					$posttypes[$posttype] = $label;
 
 		return $posttypes;
