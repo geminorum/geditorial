@@ -1604,7 +1604,7 @@ class Module extends Base
 		return gEditorial()->roles->constant( 'base_type' );
 	}
 
-	public function register_posttype( $constant, $atts = [], $taxonomies = [ 'post_tag' ] )
+	public function register_posttype( $constant, $atts = [], $taxonomies = [ 'post_tag' ], $gutenberg = FALSE )
 	{
 		if ( is_null( $taxonomies ) )
 			$taxonomies = $this->taxonomies();
@@ -1657,7 +1657,17 @@ class Module extends Base
 		if ( 'post' != $cap_type )
 			$args['capabilities'] = [ 'create_posts' => is_array( $cap_type ) ? 'create_'.$cap_type[1] : 'create_'.$cap_type.'s' ];
 
-		return register_post_type( $posttype, self::recursiveParseArgs( $atts, $args ) );
+		$object = register_post_type( $posttype, self::recursiveParseArgs( $atts, $args ) );
+
+		if ( is_wp_error( $object ) )
+			return FALSE;
+
+		if ( ! $gutenberg )
+			add_filter( 'gutenberg_can_edit_post_type', function( $edit, $type ) use( $posttype ) {
+				return $posttype === $type ? FALSE : $edit;
+			}, 12, 2 );
+
+		return $object;
 	}
 
 	public function get_taxonomy_labels( $constant )
@@ -1755,7 +1765,12 @@ class Module extends Base
 			'rest_base'    => $this->constant( $constant.'_rest', $taxonomy ),
 		] );
 
-		return register_taxonomy( $taxonomy, $posttypes, $args );
+		$object = register_taxonomy( $taxonomy, $posttypes, $args );
+
+		if ( is_wp_error( $object ) )
+			return FALSE;
+
+		return $object;
 	}
 
 	protected function get_post_updated_messages( $constant )
