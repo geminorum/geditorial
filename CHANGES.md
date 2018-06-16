@@ -414,7 +414,7 @@
 * main/settings: default setting for dashboard widgets
 * main/settings: default message for synced items
 * main/helper: more table pre columns/args
-* module/audit: adminbar node depricated
+* module/audit: adminbar node deprecated
 * module/book: p2p type name changed
 * module/config: missed module name check
 * module/like: adminbar summary of post
