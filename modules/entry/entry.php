@@ -5,6 +5,7 @@ defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\ShortCode;
+use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Core\Arraay;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Text;
@@ -87,6 +88,11 @@ class Entry extends gEditorial\Module
 		return $strings;
 	}
 
+	protected function posttypes_excluded()
+	{
+		return Settings::posttypesExcluded( $this->constant( 'entry_cpt' ) );
+	}
+
 	public function after_setup_theme()
 	{
 		$this->register_posttype_thumbnail( 'entry_cpt' );
@@ -95,8 +101,6 @@ class Entry extends gEditorial\Module
 	public function init()
 	{
 		parent::init();
-
-		$this->posttypes_excluded = [ 'attachment', $this->constant( 'entry_cpt' ) ];
 
 		$this->register_taxonomy( 'section_tax', [
 			'hierarchical'       => TRUE,

@@ -124,6 +124,11 @@ class Contest extends gEditorial\Module
 		return $strings;
 	}
 
+	protected function posttypes_excluded()
+	{
+		return Settings::posttypesExcluded( $this->constant( 'contest_cpt' ) );
+	}
+
 	public function before_settings( $module = FALSE )
 	{
 		if ( isset( $_POST['install_def_apply_status_tax'] ) )
@@ -145,8 +150,6 @@ class Contest extends gEditorial\Module
 	public function init()
 	{
 		parent::init();
-
-		$this->posttypes_excluded = [ 'attachment', $this->constant( 'contest_cpt' ) ];
 
 		$this->register_taxonomy( 'contest_cat', [
 			'hierarchical'       => TRUE,

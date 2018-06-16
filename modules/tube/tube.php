@@ -146,6 +146,14 @@ class Tube extends gEditorial\Module
 		];
 	}
 
+	protected function posttypes_excluded()
+	{
+		return Settings::posttypesExcluded( [
+			$this->constant( 'video_cpt' ),
+			$this->constant( 'channel_cpt' ),
+		] );
+	}
+
 	public function after_setup_theme()
 	{
 		$this->register_posttype_thumbnail( 'video_cpt' );
@@ -155,12 +163,6 @@ class Tube extends gEditorial\Module
 	public function init()
 	{
 		parent::init();
-
-		$this->posttypes_excluded = [
-			'attachment',
-			$this->constant( 'video_cpt' ),
-			$this->constant( 'channel_cpt' ),
-		];
 
 		$this->register_taxonomy( 'video_cat', [
 			'hierarchical'       => TRUE,

@@ -4,6 +4,7 @@ defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\Core\Arraay;
 use geminorum\gEditorial\Core\HTML;
@@ -25,24 +26,6 @@ class Alphabet extends gEditorial\Module
 
 	protected function get_global_settings()
 	{
-		$this->taxonomies_excluded = [
-			'system_tags',
-			'nav_menu',
-			'post_format',
-			'link_category',
-			'bp_member_type',
-			'bp_group_type',
-			'bp-email-type',
-			'ef_editorial_meta',
-			'following_users',
-			'ef_usergroup',
-			'post_status',
-			'rel_people',
-			'rel_post',
-			'affiliation',
-			'specs',
-		];
-
 		return [
 			'posttypes_option'  => 'posttypes_option',
 			'taxonomies_option' => 'taxonomies_option',
@@ -58,6 +41,27 @@ class Alphabet extends gEditorial\Module
 			'shortcode_posts' => 'alphabet-posts',
 			'shortcode_terms' => 'alphabet-terms',
 		];
+	}
+
+	protected function taxonomies_excluded()
+	{
+		return Settings::taxonomiesExcluded( [
+			'system_tags',
+			'nav_menu',
+			'post_format',
+			'link_category',
+			'bp_member_type',
+			'bp_group_type',
+			'bp-email-type',
+			'ef_editorial_meta',
+			'following_users',
+			'ef_usergroup',
+			'post_status',
+			'rel_people',
+			'rel_post',
+			'affiliation',
+			'specs',
+		] );
 	}
 
 	public function init()

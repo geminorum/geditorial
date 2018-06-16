@@ -34,25 +34,6 @@ class Terms extends gEditorial\Module
 
 	protected function get_global_settings()
 	{
-		$this->taxonomies_excluded = [
-			'system_tags',
-			'nav_menu',
-			'post_format',
-			'link_category',
-			'bp_member_type',
-			'bp_group_type',
-			'bp-email-type',
-			'ef_editorial_meta',
-			'ef_usergroup',
-			'post_status',
-			'rel_people',
-			'rel_post',
-			'cartable_user',
-			'cartable_group',
-			'follow_users',
-			'follow_groups',
-		];
-
 		return [
 			'_general' => [
 				[
@@ -160,16 +141,38 @@ class Terms extends gEditorial\Module
 		];
 	}
 
+	protected function taxonomies_excluded()
+	{
+		return Settings::taxonomiesExcluded( [
+			'system_tags',
+			'nav_menu',
+			'post_format',
+			'link_category',
+			'bp_member_type',
+			'bp_group_type',
+			'bp-email-type',
+			'ef_editorial_meta',
+			'ef_usergroup',
+			'post_status',
+			'rel_people',
+			'rel_post',
+			'cartable_user',
+			'cartable_group',
+			'follow_users',
+			'follow_groups',
+		] );
+	}
+
 	protected function get_taxonomies_support( $field )
 	{
 		$supported = Taxonomy::get();
-		$excludes  = $this->taxonomies_excluded;
+		$excluded  = $this->taxonomies_excluded();
 
 		switch ( $field ) {
-			case 'role': $excludes[] = 'audit_attribute'; break;
+			case 'role': $excluded[] = 'audit_attribute'; break;
 		}
 
-		return array_diff_key( $supported, array_flip( $excludes ) );
+		return array_diff_key( $supported, array_flip( $excluded ) );
 	}
 
 	public function init()

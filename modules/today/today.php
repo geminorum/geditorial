@@ -111,6 +111,11 @@ class Today extends gEditorial\Module
 		];
 	}
 
+	protected function posttypes_excluded()
+	{
+		return Settings::posttypesExcluded( $this->constant( 'day_cpt' ) );
+	}
+
 	public function setup( $args = [] )
 	{
 		parent::setup();
@@ -132,8 +137,6 @@ class Today extends gEditorial\Module
 	public function init()
 	{
 		parent::init();
-
-		$this->posttypes_excluded = [ 'attachment', $this->constant( 'day_cpt' ) ];
 
 		$this->register_posttype( 'day_cpt' );
 

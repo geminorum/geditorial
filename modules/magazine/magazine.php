@@ -176,6 +176,11 @@ class Magazine extends gEditorial\Module
 		];
 	}
 
+	protected function posttypes_excluded()
+	{
+		return Settings::posttypesExcluded( $this->constant( 'issue_cpt' ) );
+	}
+
 	public function after_setup_theme()
 	{
 		$this->register_posttype_thumbnail( 'issue_cpt' );
@@ -184,8 +189,6 @@ class Magazine extends gEditorial\Module
 	public function init()
 	{
 		parent::init();
-
-		$this->posttypes_excluded = [ 'attachment', $this->constant( 'issue_cpt' ) ];
 
 		$this->register_taxonomy( 'issue_tax', [
 			'show_ui'      => FALSE,

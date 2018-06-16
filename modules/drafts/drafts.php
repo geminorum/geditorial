@@ -65,20 +65,18 @@ class Drafts extends gEditorial\Module
 	// @REF: https://core.trac.wordpress.org/ticket/43739
 	public function all_posttypes( $exclude = TRUE, $args = [ 'show_ui' => TRUE ] )
 	{
-		$posttypes = [];
+		$posttypes = PostType::get( 0, $args );
+		$excluded  = $this->posttypes_excluded();
+		$viewables = [];
 
-		foreach ( PostType::get( 0, $args ) as $posttype => $label ) {
+		if( ! empty( $excluded ) )
+			$posttypes = array_diff_key( $posttypes, array_flip( $excluded ) );
 
-			if ( $exclude && in_array( $posttype, $this->posttypes_excluded ) )
-				continue;
+		foreach ( $posttypes as $posttype => $label )
+			if ( is_post_type_viewable( $posttype ) )
+				$viewables[$posttype] = $label;
 
-			if ( ! is_post_type_viewable( $posttype ) )
-				continue;
-
-			$posttypes[$posttype] = $label;
-		}
-
-		return $posttypes;
+		return $viewables;
 	}
 
 	public function init()

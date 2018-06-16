@@ -293,6 +293,11 @@ class Book extends gEditorial\Module
 		];
 	}
 
+	protected function posttypes_excluded()
+	{
+		return Settings::posttypesExcluded( $this->constant( 'publication_cpt' ) );
+	}
+
 	public function before_settings( $module = FALSE )
 	{
 		if ( isset( $_POST['install_def_size_tax'] ) )
@@ -333,8 +338,6 @@ class Book extends gEditorial\Module
 	public function init()
 	{
 		parent::init();
-
-		$this->posttypes_excluded = [ 'attachment', $this->constant( 'publication_cpt' ) ];
 
 		$this->register_taxonomy( 'subject_tax', [
 			'hierarchical' => TRUE,

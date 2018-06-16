@@ -4,6 +4,7 @@ defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\MetaBox;
+use geminorum\gEditorial\Settings;
 
 class Gallery extends gEditorial\Module
 {
@@ -86,6 +87,11 @@ class Gallery extends gEditorial\Module
 		return $strings;
 	}
 
+	protected function posttypes_excluded()
+	{
+		return Settings::posttypesExcluded( $this->constant( 'album_cpt' ) );
+	}
+
 	public function before_settings( $module = FALSE )
 	{
 		if ( isset( $_POST['install_def_album_cats'] ) )
@@ -107,8 +113,6 @@ class Gallery extends gEditorial\Module
 	public function init()
 	{
 		parent::init();
-
-		$this->posttypes_excluded = [ 'attachment', $this->constant( 'album_cpt' ) ];
 
 		$this->register_taxonomy( 'album_cat', [
 			'hierarchical'       => TRUE,

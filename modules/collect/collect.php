@@ -178,6 +178,11 @@ class Collect extends gEditorial\Module
 		];
 	}
 
+	protected function posttypes_excluded()
+	{
+		return Settings::posttypesExcluded( $this->constant( 'collection_cpt' ) );
+	}
+
 	public function after_setup_theme()
 	{
 		$this->register_posttype_thumbnail( 'collection_cpt' );
@@ -186,8 +191,6 @@ class Collect extends gEditorial\Module
 	public function init()
 	{
 		parent::init();
-
-		$this->posttypes_excluded = [ 'attachment', $this->constant( 'collection_cpt' ) ];
 
 		$this->register_taxonomy( 'collection_tax', [
 			'show_ui'      => FALSE,

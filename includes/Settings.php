@@ -158,6 +158,20 @@ class Settings extends Core\Base
 		];
 	}
 
+	public static function posttypesExcluded( $extra = [] )
+	{
+		return array_merge( [
+			'attachment',
+			'inbound_message',
+			'bp-email',
+		], (array) $extra );
+	}
+
+	public static function taxonomiesExcluded( $extra = [] )
+	{
+		return (array) $extra;
+	}
+
 	public static function showOptionNone( $string = NULL )
 	{
 		if ( $string )

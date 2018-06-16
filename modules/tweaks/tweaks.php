@@ -56,34 +56,6 @@ class Tweaks extends gEditorial\Module
 
 	protected function get_global_settings()
 	{
-		$this->taxonomies_excluded = [
-			'nav_menu',
-			'post_format',
-			'link_category',
-			'bp_member_type',
-			'bp_group_type',
-			'bp-email-type',
-			'ef_editorial_meta',
-			'following_users',
-			'ef_usergroup',
-			'post_status',
-			'flamingo_contact_tag',
-			'flamingo_inbound_channel',
-			'people',
-			'rel_people',
-			'rel_post',
-			'affiliation',
-			'entry_section',
-			'specs',
-			'label',
-			'user_group',
-			'cartable_user',
-			'cartable_group',
-			'follow_users',
-			'follow_groups',
-			'status',
-		];
-
 		return [
 			'posttypes_option'  => 'posttypes_option',
 			'taxonomies_option' => 'taxonomies_option',
@@ -207,6 +179,37 @@ class Tweaks extends gEditorial\Module
 				'search_placeholder' => _x( 'Search &hellip;', 'Modules: Tweaks: Meta Box Search Placeholder', GEDITORIAL_TEXTDOMAIN ),
 			],
 		];
+	}
+
+	protected function taxonomies_excluded()
+	{
+		return Settings::taxonomiesExcluded( [
+			'nav_menu',
+			'post_format',
+			'link_category',
+			'bp_member_type',
+			'bp_group_type',
+			'bp-email-type',
+			'ef_editorial_meta',
+			'following_users',
+			'ef_usergroup',
+			'post_status',
+			'flamingo_contact_tag',
+			'flamingo_inbound_channel',
+			'people',
+			'rel_people',
+			'rel_post',
+			'affiliation',
+			'entry_section',
+			'specs',
+			'label',
+			'user_group',
+			'cartable_user',
+			'cartable_group',
+			'follow_users',
+			'follow_groups',
+			'status',
+		] );
 	}
 
 	private function get_posttypes_support_search_meta()

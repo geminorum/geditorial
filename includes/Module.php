@@ -40,9 +40,6 @@ class Module extends Base
 	protected $partials        = [];
 	protected $partials_remote = [];
 
-	protected $posttypes_excluded  = [ 'attachment', 'inbound_message' ];
-	protected $taxonomies_excluded = [];
-
 	protected $disable_no_customs    = FALSE; // not hooking module if has no posttypes/taxonomies
 	protected $disable_no_posttypes  = FALSE; // not hooking module if has no posttypes
 	protected $disable_no_taxonomies = FALSE; // not hooking module if has no taxonomies
@@ -363,6 +360,11 @@ class Module extends Base
 		return TRUE;
 	}
 
+	protected function posttypes_excluded()
+	{
+		return Settings::posttypesExcluded();
+	}
+
 	// enabled post types for this module
 	public function posttypes( $posttypes = NULL )
 	{
@@ -374,24 +376,17 @@ class Module extends Base
 		else if ( ! is_array( $posttypes ) )
 			$posttypes = [ $this->constant( $posttypes ) ];
 
-		if ( isset( $this->options->post_types )
-			&& is_array( $this->options->post_types ) ) {
+		if ( empty( $this->options->post_types ) )
+			return $posttypes;
 
-				foreach ( $this->options->post_types as $posttype => $value ) {
+		$filtered = array_filter( $this->options->post_types );
 
-					if ( 'off' === $value )
-						$value = FALSE;
+		if ( ! $loaded )
+			return array_keys( $filtered );
 
-					if ( in_array( $posttype, $this->posttypes_excluded ) )
-						$value = FALSE;
-
-					if ( $loaded && ! post_type_exists( $posttype ) )
-						$value = FALSE;
-
-					if ( $value )
-						$posttypes[] = $posttype;
-				}
-		}
+		foreach ( $filtered as $posttype => $value )
+			if ( post_type_exists( $posttype ) )
+				$posttypes[] = $posttype;
 
 		return $posttypes;
 	}
@@ -415,46 +410,34 @@ class Module extends Base
 	public function all_posttypes( $exclude = TRUE, $args = [ 'show_ui' => TRUE ] )
 	{
 		$posttypes = PostType::get( 0, $args );
+		$excluded  = $this->posttypes_excluded();
 
-		if ( $exclude && count( $this->posttypes_excluded ) )
-			$posttypes = array_diff_key( $posttypes, array_flip( $this->posttypes_excluded ) );
+		return empty( $excluded )
+			? $posttypes
+			: array_diff_key( $posttypes, array_flip( $excluded ) );
+	}
 
-		return $posttypes;
+	protected function taxonomies_excluded()
+	{
+		return Settings::taxonomiesExcluded();
 	}
 
 	// enabled post types for this module
 	public function taxonomies()
 	{
-		$taxonomies = [];
-
-		if ( isset( $this->options->taxonomies )
-			&& is_array( $this->options->taxonomies ) ) {
-
-				foreach ( $this->options->taxonomies as $taxonomy => $value ) {
-
-					if ( 'off' === $value )
-						$value = FALSE;
-
-					// no need
-					// if ( in_array( $taxonomy, $this->taxonomies_excluded ) )
-					// 	$value = FALSE;
-
-					if ( $value )
-						$taxonomies[] = $taxonomy;
-				}
-		}
-
-		return $taxonomies;
+		return empty( $this->options->taxonomies )
+			? []
+			: array_keys( array_filter( $this->options->taxonomies ) );
 	}
 
 	public function all_taxonomies( $args = [] )
 	{
 		$taxonomies = Taxonomy::get( 0, $args );
+		$excluded   = $this->taxonomies_excluded();
 
-		if ( count( $this->taxonomies_excluded ) )
-			$taxonomies = array_diff_key( $taxonomies, array_flip( $this->taxonomies_excluded ) );
-
-		return $taxonomies;
+		return empty( $excluded )
+			? $taxonomies
+			: array_diff_key( $taxonomies, array_flip( $excluded ) );
 	}
 
 	public function settings_posttypes_option()

@@ -87,22 +87,6 @@ class Ortho extends gEditorial\Module
 	{
 		$virastar_options = $this->virastar_options();
 
-		$this->taxonomies_excluded = [
-			'system_tags',
-			'nav_menu',
-			'post_format',
-			'link_category',
-			'bp_member_type',
-			'bp_group_type',
-			'bp-email-type',
-			'ef_editorial_meta',
-			'following_users',
-			'ef_usergroup',
-			'post_status',
-			'rel_people',
-			'rel_post',
-		];
-
 		return [
 			'posttypes_option'  => 'posttypes_option',
 			'taxonomies_option' => 'taxonomies_option',
@@ -149,6 +133,25 @@ class Ortho extends gEditorial\Module
 				'qtag_nbsp_title'        => _x( 'Non-Breaking SPace', 'Modules: Ortho: Javascript String', GEDITORIAL_TEXTDOMAIN ),
 			],
 		];
+	}
+
+	protected function taxonomies_excluded()
+	{
+		return Settings::taxonomiesExcluded( [
+			'system_tags',
+			'nav_menu',
+			'post_format',
+			'link_category',
+			'bp_member_type',
+			'bp_group_type',
+			'bp-email-type',
+			'ef_editorial_meta',
+			'following_users',
+			'ef_usergroup',
+			'post_status',
+			'rel_people',
+			'rel_post',
+		] );
 	}
 
 	public function current_screen( $screen )
