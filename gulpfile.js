@@ -67,30 +67,16 @@
 
   gulp.task('dev:sass', function () {
     return gulp.src(config.input.sass)
-      // .pipe(plugins.sourcemaps.init())
+      .pipe(plugins.sourcemaps.init())
       .pipe(plugins.sass.sync(config.sass).on('error', plugins.sass.logError))
       .pipe(plugins.postcss([
         cssnano(config.cssnano.dev),
         autoprefixer(config.autoprefixer.dev)
       ]))
-      // .pipe(plugins.sourcemaps.write(config.output.sourcemaps))
+      .pipe(plugins.sourcemaps.write(config.output.sourcemaps))
       .pipe(gulp.dest(config.output.css)).on('error', log.error)
       .pipe(plugins.postcss([rtlcss()]))
       .pipe(plugins.rename({suffix: '-rtl'}))
-      .pipe(gulp.dest(config.output.css)).on('error', log.error)
-      .pipe(plugins.changedInPlace())
-      .pipe(plugins.debug({title: 'Changed'}))
-      .pipe(plugins.if(function (file) {
-        if (file.extname !== '.map') return true;
-      }, plugins.livereload()));
-  });
-
-  gulp.task('old:sass', function () {
-    return gulp.src(config.input.sass)
-      .pipe(plugins.sourcemaps.init())
-      .pipe(plugins.sass.sync(config.sass).on('error', plugins.sass.logError))
-      .pipe(plugins.cssnano(config.cssnano.dev))
-      .pipe(plugins.sourcemaps.write(config.output.sourcemaps))
       .pipe(gulp.dest(config.output.css)).on('error', log.error)
       .pipe(plugins.changedInPlace())
       .pipe(plugins.debug({title: 'Changed'}))
@@ -123,19 +109,7 @@
       .pipe(gulp.dest(config.output.css)).on('error', log.error);
   });
 
-  // all styles / without livereload
-  gulp.task('old:styles', function () {
-    return gulp.src(config.input.sass)
-      .pipe(plugins.sourcemaps.init())
-      .pipe(plugins.sass.sync(config.sass).on('error', plugins.sass.logError))
-      .pipe(plugins.cssnano(config.cssnano.dev))
-      .pipe(plugins.header(banner, {pkg: pkg}))
-      .pipe(plugins.sourcemaps.write(config.output.sourcemaps))
-      .pipe(plugins.debug({title: 'Changed'}))
-      .pipe(gulp.dest(config.output.css)).on('error', log.error);
-  });
-
-  gulp.task('build:styles', function () {
+  gulp.task('build:styles:old', function () {
     return gulp.src(config.input.sass)
       .pipe(plugins.sass(config.sass).on('error', plugins.sass.logError))
       .pipe(plugins.postcss([
@@ -148,11 +122,27 @@
       .pipe(gulp.dest(config.output.css)).on('error', log.error);
   });
 
-  gulp.task('old:build:styles', function () {
+  gulp.task('build:styles', function () {
     return gulp.src(config.input.sass)
       .pipe(plugins.sass(config.sass).on('error', plugins.sass.logError))
-      .pipe(plugins.cssnano(config.cssnano.build))
-      .pipe(gulp.dest(config.output.css));
+      .pipe(plugins.postcss([
+        cssnano(config.cssnano.build),
+        autoprefixer(config.autoprefixer.build)
+      ]))
+      .pipe(gulp.dest(config.output.css)).on('error', log.error);
+  });
+
+  // seperated because of stripping rtl directives in compression
+  gulp.task('build:rtl', function () {
+    return gulp.src(config.input.sass)
+      .pipe(plugins.sass(config.sass).on('error', plugins.sass.logError))
+      .pipe(plugins.postcss([
+        rtlcss(),
+        cssnano(config.cssnano.build),
+        autoprefixer(config.autoprefixer.build)
+      ]))
+      .pipe(plugins.rename({suffix: '-rtl'}))
+      .pipe(gulp.dest(config.output.css)).on('error', log.error);
   });
 
   gulp.task('build:scripts', function () {
@@ -184,7 +174,7 @@
   });
 
   gulp.task('build', gulp.series(
-    gulp.parallel('build:styles', 'build:scripts'),
+    gulp.parallel('build:styles', 'build:rtl', 'build:scripts'),
     'build:banner',
     'build:clean',
     'build:copy',
