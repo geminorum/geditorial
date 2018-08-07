@@ -82,7 +82,7 @@ class Scripts extends Core\Base
 	{
 		$handle = static::BASE.'-autosize';
 
-		wp_enqueue_script( $handle, '//cdn.jsdelivr.net/npm/autosize@'.$ver.'/dist/autosize.min.js', [], $ver, TRUE );
+		wp_enqueue_script( $handle, '//cdn.jsdelivr.net/npm/autosize@'.$ver.'/dist/autosize.min.js', [], NULL, TRUE );
 		wp_add_inline_script( $handle, "autosize(document.querySelectorAll('textarea'));" );
 
 		return $handle;

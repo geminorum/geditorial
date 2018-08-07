@@ -362,6 +362,8 @@ class Like extends gEditorial\Module
 				'orderby' => 'post_count',
 				'number'  => $this->get_setting( 'max_avatars', 12 ),
 				'fields'  => [ 'user_email', 'ID', 'display_name' ],
+
+				'count_total' => FALSE,
 			] );
 
 			if ( ! empty( $query->results ) ) {

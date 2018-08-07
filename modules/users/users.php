@@ -777,8 +777,9 @@ class Users extends gEditorial\Module
 				echo '<br />';
 
 				$size = File::formatSize( apply_filters( 'import_upload_size_limit', wp_max_upload_size() ) );
+
 				Settings::submitButton( 'remap_post_authors', _x( 'Upload and Re-Map', 'Modules: Users: Setting Button', GEDITORIAL_TEXTDOMAIN ), 'danger' );
-				HTML::desc( sprintf( _x( 'Checks for post authors and re-map them with current registered users. Maximum upload size: <b>%s</b>', 'Modules: Users', GEDITORIAL_TEXTDOMAIN ), $size ) );
+				HTML::desc( sprintf( _x( 'Checks for post authors and re-map them with current registered users. Maximum upload size: <b>%s</b>', 'Modules: Users', GEDITORIAL_TEXTDOMAIN ), HTML::wrapLTR( $size ) ) );
 			}
 
 			echo '</td></tr>';
