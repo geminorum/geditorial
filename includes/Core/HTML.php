@@ -30,7 +30,7 @@ class HTML extends Base
 		return '<a class="-tel" href="'.self::sanitizePhoneNumber( $number )
 				.'"'.( $title ? ' data-toggle="tooltip" title="'.self::escape( $title ).'"' : '' )
 				.' data-tel-number="'.self::escape( $number ).'">'
-				.'&#8206;'.$content.'&#8207;</a>';
+				.self::wrapLTR( $content ).'</a>';
 	}
 
 	public static function scroll( $html, $to, $title = '' )
@@ -60,6 +60,12 @@ class HTML extends Base
 		echo $block ? '<p class="description -description '.$class.'">'.$html.'</p>' : '<span class="description -description '.$class.'">'.$html.'</span>';
 	}
 
+	public static function label( $input, $for = FALSE, $wrap = 'p' )
+	{
+		$html = self::tag( 'label', [ 'for' => $for ], $input );
+		echo $wrap ? self::tag( $wrap, $html ) : $html;
+	}
+
 	public static function button( $html, $link = '#', $title = FALSE, $icon = FALSE, $data = array() )
 	{
 		$classes = array(
@@ -85,6 +91,11 @@ class HTML extends Base
 	public static function wrap( $html, $class = '', $block = TRUE )
 	{
 		return $block ? '<div class="-wrap '.$class.'">'.$html.'</div>' : '<span class="-wrap '.$class.'">'.$html.'</span>';
+	}
+
+	public static function wrapLTR( $content )
+	{
+		return '&#8206;'.$content.'&#8207;';
 	}
 
 	public static function preCode( $content, $rows = 1 )
@@ -847,7 +858,7 @@ class HTML extends Base
 			$value = self::joined( $value, '[', ']', ',', 'EMPTY ARRAY' );
 
 		else if ( is_object( $value ) )
-			$value = json_encode( $value );
+			$value = json_encode( $value, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES );
 
 		else if ( is_int( $value ) )
 			$value = $value;
