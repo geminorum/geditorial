@@ -100,7 +100,7 @@ class MetaBox extends Core\Base
 
 		} else {
 
-			$terms = Taxonomy::getTerms( $args['taxonomy'], NULL, TRUE );
+			$terms = Taxonomy::getTerms( $args['taxonomy'], FALSE, TRUE );
 		}
 
 		if ( ! count( $terms ) )
