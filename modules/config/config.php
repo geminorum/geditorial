@@ -12,6 +12,7 @@ use geminorum\gEditorial\Core\Text;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\Database;
 use geminorum\gEditorial\WordPress\User;
+use geminorum\gEditorial\O2O;
 
 class Config extends gEditorial\Module
 {
@@ -240,6 +241,27 @@ class Config extends gEditorial\Module
 								'count'   => count( $result ),
 							] );
 					}
+
+				} else if ( isset( $_POST['convert_connection_type'] ) ) {
+
+					if ( empty( $_POST['old_o2o_type'] )
+						|| empty( $_POST['new_o2o_type'] ) )
+							WordPress::redirectReferer( 'wrong' );
+
+					$result = O2O\API::convertConnection( $_POST['old_o2o_type'], $_POST['new_o2o_type'] );
+
+					if ( FALSE === $result )
+						WordPress::redirectReferer( 'wrong' );
+
+					else
+						WordPress::redirectReferer( [
+							'message' => 'converted',
+							'count'   => $count,
+						] );
+
+				} else {
+
+					WordPress::redirectReferer( 'huh' );
 				}
 			}
 
@@ -327,6 +349,42 @@ class Config extends gEditorial\Module
 					_x( 'Empty', 'Modules: Config: Setting Button', GEDITORIAL_TEXTDOMAIN ), 'danger', TRUE );
 
 				HTML::desc( _x( 'Deletes empty meta values. This solves common problems with imported posts.', 'Modules: Config', GEDITORIAL_TEXTDOMAIN ) );
+
+			echo '</td></tr>';
+
+			echo '<tr><th scope="row">'._x( 'Orphan Connections', 'Modules: Config', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
+
+			$counts = O2O\API::getConnectionCounts();
+
+			if ( empty( $counts ) ) {
+
+				HTML::desc( _x( 'No orphaned types found in the database.', 'Modules: Config', GEDITORIAL_TEXTDOMAIN ), TRUE, '-empty' );
+
+			} else {
+
+				$types = O2O\ConnectionTypeFactory::get_all_instances();
+
+				foreach ( $counts as $type => $count ) {
+
+					if ( O2O\API::type( $type ) )
+						continue;
+
+					echo '<code>'.$type.'</code> ('.$count.') ';
+
+					$this->do_settings_field( [
+						'type'         => 'select',
+						'field'        => 'new_o2o_type',
+						'values'       => array_keys( $types ),
+						// 'default'      => $post['empty_module'],
+						'option_group' => 'tools',
+					] );
+
+					echo '&nbsp;&nbsp;';
+
+					Settings::submitButton( 'convert_connection_type',
+						_x( 'Convert', 'Modules: Config: Setting Button', GEDITORIAL_TEXTDOMAIN ), 'danger', TRUE );
+				}
+			}
 
 			echo '</td></tr></table>';
 
