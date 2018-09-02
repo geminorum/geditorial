@@ -5,7 +5,9 @@
 
 .inside > div.categorydiv {
   input.category-search {
-    margin-top: 6px;
-    width: 99%;
+    box-sizing: border-box;
+    width: 100%;
+    margin: 6px 0 1px;
+    font-size: small;
   }
 }
