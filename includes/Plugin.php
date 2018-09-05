@@ -15,6 +15,7 @@ class Plugin
 
 	private $asset_styles   = FALSE;
 	private $asset_config   = FALSE;
+	private $asset_darkmode = 0;
 	private $asset_jsargs   = [];
 	private $asset_icons    = [];
 	private $editor_buttons = [];
@@ -154,6 +155,7 @@ class Plugin
 	public function admin_init()
 	{
 		add_action( 'edit_form_after_title', [ $this, 'edit_form_after_title' ] );
+		add_action( 'doing_dark_mode', [ $this, 'doing_dark_mode' ] );
 		add_action( 'admin_print_styles', [ $this, 'admin_print_styles' ] );
 		add_action( 'admin_print_footer_scripts', [ $this, 'footer_asset_config' ], 9 );
 	}
@@ -403,6 +405,12 @@ class Plugin
 		do_meta_boxes( get_current_screen(), 'after_title', $GLOBALS['post'] );
 	}
 
+	// @REF: https://github.com/danieltj27/Dark-Mode/wiki/Help:-Plugin-Compatibility-Guide
+	public function doing_dark_mode( $user_id )
+	{
+		$this->asset_darkmode = $user_id;
+	}
+
 	public function admin_print_styles()
 	{
 		$screen = get_current_screen();
@@ -435,6 +443,9 @@ class Plugin
 
 		if ( ! defined( 'GNETWORK_VERSION' ) )
 			Helper::linkStyleSheetAdmin( 'gnetwork' );
+
+		if ( $this->asset_darkmode )
+			Helper::linkStyleSheetAdmin( 'darkmode' );
 	}
 
 	public function mce_external_languages( $languages )
