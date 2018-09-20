@@ -81,77 +81,6 @@ class Plugin
 				require_once( $base.'includes/'.$path.'.php' );
 	}
 
-	private function require_core()
-	{
-		$this->files( [
-			'Core/Base',
-
-			'Core/Arraay',
-			'Core/Color',
-			'Core/Date',
-			'Core/File',
-			'Core/HTML',
-			'Core/Icon',
-			'Core/HTTP',
-			'Core/L10n',
-			'Core/Number',
-			'Core/Text',
-			'Core/Third',
-			'Core/URL',
-			'Core/WordPress',
-
-			'O2O/API',
-			'O2O/Utils',
-			'O2O/Exception',
-			'O2O/ConnectionTypeFactory',
-			'O2O/ConnectionType',
-			'O2O/DirectionStrategy',
-			'O2O/DirectedConnectionType',
-			'O2O/DeterminateConnectionType',
-			'O2O/IndeterminateConnectionType',
-			'O2O/IndeterminateDirectedConnectionType',
-			'O2O/ReciprocalConnectionType',
-			'O2O/Side',
-			'O2O/SidePost',
-			'O2O/SideAttachment',
-			'O2O/SideUser',
-			'O2O/Item',
-			'O2O/ItemAny',
-			'O2O/ItemPost',
-			'O2O/ItemAttachment',
-			'O2O/ItemUser',
-			'O2O/Query',
-			'O2O/ListItems',
-			'O2O/ListRenderer',
-
-			'WordPress/Database',
-			'WordPress/DBTable',
-			'WordPress/Media',
-			'WordPress/Module',
-			'WordPress/PostType',
-			'WordPress/Taxonomy',
-			'WordPress/Theme',
-			'WordPress/User',
-		] );
-	}
-
-	private function require_plugin()
-	{
-		$this->files( [
-			'Ajax',
-			'Helper',
-			'Listtable',
-			'Scripts',
-			'MetaBox',
-			'Relation',
-			'Settings',
-			'Template',
-			'ShortCode',
-			'Widget',
-			'Module',
-		] );
-	}
-
 	public function admin_init()
 	{
 		add_action( 'edit_form_after_title', [ $this, 'edit_form_after_title' ] );
@@ -163,9 +92,6 @@ class Plugin
 	public function plugins_loaded()
 	{
 		load_plugin_textdomain( GEDITORIAL_TEXTDOMAIN, FALSE, 'geditorial/languages' );
-
-		// $this->require_core();
-		// $this->require_plugin();
 
 		foreach ( scandir( GEDITORIAL_DIR.'modules/' ) as $module ) {
 

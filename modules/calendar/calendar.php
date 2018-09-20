@@ -399,14 +399,9 @@ class Calendar extends gEditorial\Module
 		// if the user desires that to be the behaviour, they can set the result
 		// of this filter to 'true' with how WordPress works internally,
 		// setting 'post_date_gmt' will set the timestamp
-		if ( $this->filters( 'set_timestamp', FALSE ) )
+		if ( $this->filters( 'set_timestamp', TRUE ) )
 			$data['post_date_gmt'] = date( 'Y-m-d', $timestamp )
 				.' '.date( 'H:i:s', strtotime( $post->post_date_gmt ) );
-
-		// self::__log( $post->post_date );
-		// self::__log( $data['post_date'] );
-		// self::__log( date( 'Y-m-d H:i:s', $timestamp ) );
-		// return FALSE;
 
 		// @SEE http://core.trac.wordpress.org/ticket/18362
 		if ( ! $update = $wpdb->update( $wpdb->posts, $data, [ 'ID' => $post->ID ] ) )
