@@ -272,7 +272,7 @@ class Calendar extends gEditorial\Module
 		if ( ! $post = get_post( $post ) )
 			return '';
 
-		$html = '<li data-day="'.$the_day.'"';
+		$html = '<li data-day="'.$the_day.'" data-status="'.$post->post_status.'"';
 
 		if ( $this->can_reschedule( $post ) && current_user_can( 'edit_post', $post->ID ) ) {
 
