@@ -127,6 +127,7 @@ class ShortCode extends Core\Base
 	{
 		$args = self::atts( [
 			'item_link'     => TRUE,
+			'item_text'     => NULL,  // callback or use %s for post title
 			'item_title'    => '', // use %s for post title
 			'item_title_cb' => FALSE,
 			'item_tag'      => 'li',
@@ -136,18 +137,33 @@ class ShortCode extends Core\Base
 			'item_after_cb' => FALSE,
 		], $atts );
 
-		$title = sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' );
+		$text = sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' );
+
+		if ( is_null( $args['item_text'] ) )
+			$title = $text;
+
+		else if ( $args['item_text'] && is_callable( $args['item_text'] ) )
+			$title = call_user_func_array( $args['item_text'], [ $term, $args, $text ] );
+
+		else if ( $args['item_text'] && Text::has( $args['item_text'], '%' ) )
+			$title = sprintf( $args['item_text'], $text );
+
+		else if ( $args['item_text'] )
+			$title = $args['item_text'];
+
+		else
+			$title = '';
 
 		if ( $term->count && $args['item_link'] )
 			$item = HTML::tag( 'a', [
 				'href'  => get_term_link( $term ),
-				'title' => $args['item_title'] ? sprintf( $args['item_title'], $title ) : FALSE,
+				'title' => $args['item_title'] ? sprintf( $args['item_title'], $text ) : FALSE,
 				'class' => '-link -tax-'.$term->taxonomy,
 			], $title );
 
 		else
 			$item = HTML::tag( 'span', [
-				'title' => $args['item_title'] ? sprintf( $args['item_title'], $title ) : FALSE,
+				'title' => $args['item_title'] ? sprintf( $args['item_title'], $text ) : FALSE,
 				'class' => $args['item_link'] ? '-no-link -empty -tax-'.$term->taxonomy : FALSE,
 			], $title );
 
@@ -231,6 +247,7 @@ class ShortCode extends Core\Base
 
 		$args = self::atts( [
 			'item_link'     => TRUE,
+			'item_text'     => NULL,  // callback or use %s for post title
 			'item_title'    => '', // use %s for post title
 			'item_title_cb' => FALSE,
 			'item_tag'      => 'li',
@@ -243,13 +260,30 @@ class ShortCode extends Core\Base
 			'order_sep'     => ' &ndash; ',
 		], $atts );
 
-		if ( $item = Helper::getPostTitle( $post, FALSE ) ) {
+		$text = Helper::getPostTitle( $post, FALSE );
+
+		if ( is_null( $args['item_text'] ) )
+			$item = $text;
+
+		else if ( $args['item_text'] && is_callable( $args['item_text'] ) )
+			$item = call_user_func_array( $args['item_text'], [ $post, $args, $text ] );
+
+		else if ( $args['item_text'] && Text::has( $args['item_text'], '%' ) )
+			$item = sprintf( $args['item_text'], $text );
+
+		else if ( $args['item_text'] )
+			$item = $args['item_text'];
+
+		else
+			$item = '';
+
+		if ( $item ) {
 
 			if ( $args['item_title_cb'] && is_callable( $args['item_title_cb'] ) )
-				$attr = call_user_func_array( $args['item_title_cb'], [ $post, $args, $item ] );
+				$attr = call_user_func_array( $args['item_title_cb'], [ $post, $args, $text ] );
 
 			else if ( $args['item_title'] )
-				$attr = sprintf( $args['item_title'], $item );
+				$attr = sprintf( $args['item_title'], $text );
 
 			else
 				$attr = FALSE;
@@ -313,6 +347,7 @@ class ShortCode extends Core\Base
 			'title_class'    => '-title',
 			'item_cb'        => FALSE,
 			'item_link'      => TRUE,
+			'item_text'      => NULL,  // callback or use %s for post title
 			'item_title'     => '', // use %s for post title
 			'item_title_cb'  => FALSE,
 			'item_tag'       => 'li',
