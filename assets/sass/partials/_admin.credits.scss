@@ -1,0 +1,32 @@
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+/// gEditorial Partials: Admin Credits -----------------------------------------
+
+.geditorial-admin-wrap {
+  .credits,
+  .signature {
+    text-align: right;
+    color: #777;
+
+    p {
+      font-size: 0.9em;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+
+      &:hover {
+        color: #333;
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .credits {
+
+    /*rtl:ignore*/
+    direction: ltr;
+  }
+}
