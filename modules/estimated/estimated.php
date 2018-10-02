@@ -126,16 +126,8 @@ class Estimated extends gEditorial\Module
 		if ( ! $post = get_post() )
 			return;
 
-		if ( ! $wordcount = get_post_meta( $post->ID, $this->meta_key, TRUE ) )
-			$wordcount = $this->get_post_wordcount( $post->ID, TRUE );
-
-		if ( $this->get_setting( 'min_words', 250 ) > $wordcount )
-			return;
-
-		$pref = $this->get_setting( 'prefix', _x( 'Estimated read time:', 'Modules: Estimated', GEDITORIAL_TEXTDOMAIN ) );
-		$html = ( $pref ? $pref.' ' : '' ).$this->get_time_estimated( $wordcount, TRUE );
-
-		echo $this->wrap( $html, '-before' );
+		if ( $html = $this->get_estimated( $post->ID ) )
+			echo $this->wrap( $html, '-before' );
 	}
 
 	protected function get_post_wordcount( $post_id, $update = FALSE )
@@ -157,6 +149,22 @@ class Estimated extends gEditorial\Module
 			update_post_meta( $post_id, $this->meta_key, $wordcount );
 
 		return $wordcount;
+	}
+
+	public function get_estimated( $post_id, $prefix = NULL )
+	{
+		if ( ! $wordcount = get_post_meta( $post_id, $this->meta_key, TRUE ) )
+			$wordcount = $this->get_post_wordcount( $post_id, TRUE );
+
+		if ( $this->get_setting( 'min_words', 250 ) > $wordcount )
+			return FALSE;
+
+		if ( is_null( $prefix ) )
+			$prefix = $this->get_setting( 'prefix', _x( 'Estimated read time:', 'Modules: Estimated', GEDITORIAL_TEXTDOMAIN ) );
+
+		$html = ( $prefix ? $prefix.' ' : '' ).$this->get_time_estimated( $wordcount, TRUE );
+
+		return $html;
 	}
 
 	protected function get_time_estimated( $wordcount = 0, $info = TRUE )
