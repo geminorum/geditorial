@@ -24,12 +24,11 @@ class Event extends gEditorial\Module
 	protected function get_global_settings()
 	{
 		return [
+			'_fields' => [
+				'extra_metadata' => _x( 'Specifies events based on the actual date and time.', 'Modules: Event: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+			],
+			'fields_option' => _x( 'Metadata Fields', 'Modules: Event: Settings', GEDITORIAL_TEXTDOMAIN ),
 			'_general' => [
-				[
-					'field'       => 'extra_metadata',
-					'title'       => _x( 'Start ~ End Support', 'Modules: Event: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Specifies events based on the actual date and time.', 'Modules: Event: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-				],
 				[
 					'field'       => 'display_type',
 					'title'       => _x( 'Display Calendar Type', 'Modules: Event: Setting Title', GEDITORIAL_TEXTDOMAIN ),
@@ -50,6 +49,49 @@ class Event extends gEditorial\Module
 		];
 	}
 
+	public function get_global_fields()
+	{
+		return [
+			$this->constant( 'event_cpt' ) => [
+				'event_start' => [
+					'title'       => _x( 'Event Start', 'Modules: Event: Fields', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Event Start', 'Modules: Event: Fields', GEDITORIAL_TEXTDOMAIN ),
+					'icon'        => 'calendar',
+					'type'        => 'datetime',
+				],
+				'event_end' => [
+					'title'       => _x( 'Event End', 'Modules: Event: Fields', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Event End', 'Modules: Event: Fields', GEDITORIAL_TEXTDOMAIN ),
+					'icon'        => 'calendar',
+					'type'        => 'datetime',
+				],
+				'event_allday' => [
+					'title'       => _x( 'Event All-Day', 'Modules: Event: Fields', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'All-day event', 'Modules: Event: Fields', GEDITORIAL_TEXTDOMAIN ),
+					'icon'        => 'calendar-alt',
+					'type'        => 'checkbox',
+				],
+				'event_repeat' => [
+					'title'       => _x( 'Event Repeat', 'Modules: Event: Fields', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Event Repeat', 'Modules: Event: Fields', GEDITORIAL_TEXTDOMAIN ),
+					'icon'        => 'update',
+					'type'        => 'select',
+					'values' => [
+						'0'    => _x( 'Never', 'Modules: Event: Fields', GEDITORIAL_TEXTDOMAIN ),
+						'10'   => _x( 'Weekly', 'Modules: Event: Fields', GEDITORIAL_TEXTDOMAIN ),
+						'100'  => _x( 'Monthly', 'Modules: Event: Fields', GEDITORIAL_TEXTDOMAIN ),
+						'1000' => _x( 'Yearly', 'Modules: Event: Fields', GEDITORIAL_TEXTDOMAIN ),
+					],
+				],
+				'event_expire' => [
+					'title'       => _x( 'Event Expire', 'Modules: Event: Fields', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Event Expire', 'Modules: Event: Fields', GEDITORIAL_TEXTDOMAIN ),
+					'icon'        => 'thumbs-down',
+				],
+			],
+		];
+	}
+
 	protected function get_global_constants()
 	{
 		return [
@@ -60,10 +102,12 @@ class Event extends gEditorial\Module
 			'type_tax'          => 'event_type',
 			'cal_tax'           => 'event_calendar',
 
-			'endpoint_ical'     => 'ics',
-			'metakey_startdate' => '_event_startdate',
-			'metakey_enddate'   => '_event_enddate',
-			'metakey_timezone'  => '_event_timezone',
+			'endpoint_ical'        => 'ics',
+			'metakey_event_start'  => '_event_datetime_start',
+			'metakey_event_end'    => '_event_datetime_end',
+			'metakey_event_allday' => '_event_allday',
+			'metakey_event_repeat' => '_event_repeat',
+			'metakey_event_expire' => '_event_expire',
 		];
 	}
 
@@ -129,6 +173,12 @@ class Event extends gEditorial\Module
 		return $strings;
 	}
 
+	// needed for fields options
+	public function posttypes( $posttypes = NULL )
+	{
+		return [ $this->constant( 'event_cpt' ) ];
+	}
+
 	public function before_settings( $module = FALSE )
 	{
 		if ( isset( $_POST['install_def_event_tag'] ) )
@@ -189,6 +239,9 @@ class Event extends gEditorial\Module
 			'meta_box_cb'  => NULL, // default meta box
 		] );
 
+		if ( $metadata )
+			$this->add_posttype_fields( $this->constant( 'event_cpt' ), NULL, $this->module->name );
+
 		add_rewrite_endpoint( $this->constant( 'endpoint_ical' ), EP_PAGES, 'ical' );
 
 		if ( is_admin() )
@@ -205,7 +258,7 @@ class Event extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
-		$startend = $this->get_setting( 'extra_metadata' );
+		$metadata = $this->get_setting( 'extra_metadata' );
 
 		if ( $screen->post_type == $this->constant( 'event_cpt' ) ) {
 
@@ -214,7 +267,7 @@ class Event extends gEditorial\Module
 				$this->filter( 'post_updated_messages' );
 				$this->filter( 'get_default_comment_status', 3 );
 
-				if ( $startend ) {
+				if ( $metadata ) {
 
 					$this->class_metabox( $screen, 'main' );
 
@@ -225,13 +278,16 @@ class Event extends gEditorial\Module
 						'side',
 						'high'
 					);
+
+					add_action( 'save_post_'.$screen->post_type, [ $this, 'store_metabox' ], 20, 3 );
+					add_action( $this->hook( 'render_metabox' ), [ $this, 'render_metabox' ], 10, 4 );
 				}
 
 			} else if ( 'edit' == $screen->base ) {
 
 				$this->filter( 'bulk_post_updated_messages', 2 );
 
-				if ( $startend ) {
+				if ( $metadata ) {
 
 					$this->action( 'restrict_manage_posts', 2, 12 );
 					$this->action( 'parse_query' );
@@ -401,7 +457,8 @@ class Event extends gEditorial\Module
 		echo $this->wrap_open( '-admin-metabox' );
 			$this->actions( 'render_metabox', $post, $box, $fields, 'box' );
 
-			$this->render_box( $post ); // FIXME: add to module actions
+			// old way metas
+			// $this->render_box( $post ); // FIXME: add to module actions
 
 		echo '</div>';
 	}
