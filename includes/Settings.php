@@ -695,7 +695,7 @@ class Settings extends Core\Base
 	}
 
 	// @REF: `get_admin_page_title()`
-	public static function headerTitle( $title = NULL, $back = NULL, $to = NULL, $icon = '', $count = FALSE, $search = FALSE )
+	public static function headerTitle( $title = NULL, $back = NULL, $to = NULL, $icon = '', $count = FALSE, $search = FALSE, $filters = FALSE )
 	{
 		$before = $class = '';
 
@@ -736,10 +736,23 @@ class Settings extends Core\Base
 		if ( $search )
 			echo HTML::tag( 'input', [
 				'type'        => 'search',
-				'class'       => [ 'settings-title-search', '-search', 'hide-if-no-js' ],
+				'class'       => [ 'settings-title-search', '-search', 'hide-if-no-js' ], // 'fuzzy-search' // fuzzy wont work persian
 				'placeholder' => _x( 'Search …', 'Settings: Search Placeholder', GEDITORIAL_TEXTDOMAIN ),
 				'autofocus'   => 'autofocus',
 			] );
+
+		if ( $filters ) {
+			echo '<div class="settings-title-filters">';
+				echo '<label>'._x( 'All', 'Settings', GEDITORIAL_TEXTDOMAIN );
+				echo ' <input type="radio" name="filter-status" data-filter="all" value="all" checked="checked" /></label> ';
+
+				echo '<label>'._x( 'Enabled', 'Settings', GEDITORIAL_TEXTDOMAIN );
+				echo ' <input type="radio" name="filter-status" data-filter="enabled" value="true" /></label> ';
+
+				echo '<label>'._x( 'Disabled', 'Settings', GEDITORIAL_TEXTDOMAIN );
+				echo ' <input type="radio" name="filter-status" data-filter="disabled" value="false" /></label>';
+			echo '</div>';
+		}
 
 		echo '<hr class="wp-header-end">';
 	}
@@ -1030,7 +1043,7 @@ class Settings extends Core\Base
 			], _x( 'Configure', 'Settings: Button', GEDITORIAL_TEXTDOMAIN ) );
 	}
 
-	public static function moduleInfo( $module, $tag = 'h3' )
+	public static function moduleInfo( $module, $enabled = FALSE, $tag = 'h3' )
 	{
 		HTML::h3( HTML::tag( 'a', [
 			'href'   => self::getModuleDocsURL( $module ),
@@ -1041,8 +1054,10 @@ class Settings extends Core\Base
 		if ( isset( $module->desc ) )
 			HTML::desc( $module->desc );
 
-		// key for search filter
-		echo '<span class="-module-key" style="display:none;">'.$module->name.'</span>';
+		// list.js filters
+		echo '<span class="-module-title" style="display:none;" aria-hidden="true">'.$module->title.'</span>';
+		echo '<span class="-module-key" style="display:none;" aria-hidden="true">'.$module->name.'</span>';
+		echo '<span class="status" data-do="enabled" style="display:none;" aria-hidden="true">'.( $enabled ? 'true' : 'false' ).'</span>';
 	}
 
 	public static function getModuleDocsURL( $module = FALSE )

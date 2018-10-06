@@ -1294,12 +1294,13 @@ class Module extends Base
 
 	public function settings_header()
 	{
-		$back = $count = $flush = FALSE;
+		$back = $count = $flush = $filters = FALSE;
 
 		if ( 'config' == $this->module->name ) {
-			$title = NULL;
-			$count = gEditorial()->count();
-			$flush = WordPress::maybeFlushRules();
+			$title   = NULL;
+			$count   = gEditorial()->count();
+			$flush   = WordPress::maybeFlushRules();
+			$filters = TRUE;
 		} else {
 			$title = sprintf( _x( 'Editorial: %s', 'Module', GEDITORIAL_TEXTDOMAIN ), $this->module->title );
 			$back  = Settings::settingsURL();
@@ -1307,7 +1308,7 @@ class Module extends Base
 
 		Settings::wrapOpen( $this->module->name );
 
-			Settings::headerTitle( $title, $back, NULL, $this->module->icon, $count, TRUE );
+			Settings::headerTitle( $title, $back, NULL, $this->module->icon, $count, TRUE, $filters );
 			Settings::message();
 
 			if ( $flush )

@@ -4,7 +4,7 @@ jQuery(function ($) {
   var moduleList = new List('geditorial-settings', {
     listClass: '-list',
     searchClass: '-search',
-    valueNames: [ '-title', '-description', '-th', '-module-key' ]
+    valueNames: [ '-title', '-description', '-th', '-module-key', '-module-title', 'status' ]
   });
 
   // https://github.com/javve/list.js/issues/366#issuecomment-274942284
@@ -17,6 +17,17 @@ jQuery(function ($) {
       var id = element.elm.id;
       $('#' + id).addClass('animated fadeIn');
     });
+  });
+
+  $('input[data-filter]').change(function () {
+    var val = this.value;
+    if (val === 'all') {
+      moduleList.filter();
+    } else {
+      moduleList.filter(function (item) {
+        return (item.values().status === val);
+      });
+    }
   });
 
   $('.fields-check-all').click(function (e) {
@@ -65,10 +76,12 @@ jQuery(function ($) {
             $box.addClass('-disabled').removeClass('-enabled');
             $box.find('[data-do="enable"]').show();
             $box.find('[data-do="configure"]').hide();
+            $box.find('[data-do="enabled"]').html('false');
           } else if (action === 'enable') {
             $box.addClass('-enabled').removeClass('-disabled');
             $box.find('[data-do="disable"]').show();
             $box.find('[data-do="configure"]').show();
+            $box.find('[data-do="enabled"]').html('true');
           }
         }
       }

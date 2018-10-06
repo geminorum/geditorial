@@ -473,7 +473,7 @@ class Config extends gEditorial\Module
 
 			echo Ajax::spinner();
 
-			Settings::moduleInfo( $module );
+			Settings::moduleInfo( $module, $enabled );
 
 			if ( FALSE === $module->disabled ) {
 
