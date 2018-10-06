@@ -167,7 +167,7 @@ class Estimated extends gEditorial\Module
 		return $html;
 	}
 
-	protected function get_time_estimated( $wordcount = 0, $info = TRUE )
+	public function get_time_estimated( $wordcount = 0, $info = TRUE )
 	{
 		$avgtime = $this->get_setting( 'average', 250 );
 		$minutes = floor( (int) $wordcount / (int) $avgtime );
