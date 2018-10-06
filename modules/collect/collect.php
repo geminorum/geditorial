@@ -71,17 +71,16 @@ class Collect extends gEditorial\Module
 	protected function get_global_constants()
 	{
 		return [
-			'collection_cpt'           => 'collection',
-			'collection_cpt_archive'   => 'collections',
-			'collection_cpt_permalink' => '/%postname%',
-			'collection_tax'           => 'collections',
-			'group_tax'                => 'collection_group',
-			'group_tax_slug'           => 'collection-group',
-			'part_tax'                 => 'collection_part',
-			'part_tax_slug'            => 'collection-part',
-			'collection_shortcode'     => 'collection',
-			'group_shortcode'          => 'collection-group',
-			'poster_shortcode'         => 'collection-poster',
+			'collection_cpt'         => 'collection',
+			'collection_cpt_archive' => 'collections',
+			'collection_tax'         => 'collections',
+			'group_tax'              => 'collection_group',
+			'group_tax_slug'         => 'collection-group',
+			'part_tax'               => 'collection_part',
+			'part_tax_slug'          => 'collection-part',
+			'collection_shortcode'   => 'collection',
+			'group_shortcode'        => 'collection-group',
+			'poster_shortcode'       => 'collection-poster',
 		];
 	}
 

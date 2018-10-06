@@ -77,13 +77,12 @@ class Today extends gEditorial\Module
 	protected function get_global_constants()
 	{
 		return [
-			'day_cpt'           => 'day',
-			'day_cpt_archive'   => 'days',
-			'day_cpt_permalink' => '/%postname%',
-			'metakey_cal'       => '_theday_cal',
-			'metakey_day'       => '_theday_day',
-			'metakey_month'     => '_theday_month',
-			'metakey_year'      => '_theday_year',
+			'day_cpt'         => 'day',
+			'day_cpt_archive' => 'days',
+			'metakey_cal'     => '_theday_cal',
+			'metakey_day'     => '_theday_day',
+			'metakey_month'   => '_theday_month',
+			'metakey_year'    => '_theday_year',
 		];
 	}
 

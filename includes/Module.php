@@ -1608,10 +1608,10 @@ class Module extends Base
 			'has_archive' => $this->constant( $constant.'_archive', FALSE ),
 			'rewrite'     => [
 				'slug'       => $this->constant( $constant.'_slug', $posttype ),
+				'ep_mask'    => $this->constant( $constant.'_endpoint', EP_PERMALINK | EP_PAGES ), // https://make.wordpress.org/plugins?p=29
 				'with_front' => FALSE,
 				'feeds'      => TRUE,
 				'pages'      => TRUE,
-				'ep_mask'    => EP_PERMALINK, // https://make.wordpress.org/plugins?p=29
 			],
 
 			'hierarchical' => FALSE,
@@ -1630,11 +1630,11 @@ class Module extends Base
 			'delete_with_user' => FALSE,
 
 			// @SEE: https://github.com/torounit/custom-post-type-permalinks
-			// 'cptp_permalink_structure' => $this->constant( $constant.'_permalink', '/%post_id%' ),
+			'cptp_permalink_structure' => $this->constant( $constant.'_permalink', FALSE ), // will lock the permalink
 
 			// only `%post_id%` and `%postname%`
 			// @SEE: https://github.com/torounit/simple-post-type-permalinks
-			// 'sptp_permalink_structure' => $this->constant( $constant.'_permalink', '/%post_id%' ),
+			'sptp_permalink_structure' => $this->constant( $constant.'_permalink', FALSE ), // will lock the permalink
 		];
 
 		// @ALSO SEE: https://core.trac.wordpress.org/ticket/22895
