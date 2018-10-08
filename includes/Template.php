@@ -25,6 +25,148 @@ class Template extends Core\Base
 		return [];
 	}
 
+	public static function getTermImageSrc( $size = NULL, $term_id = NULL )
+	{
+		if ( ! $term = Taxonomy::getTerm( $term_id ) )
+			return FALSE;
+
+		if ( ! $term_image_id = get_term_meta( $term->term_id, 'image', TRUE ) )
+			return FALSE;
+
+		if ( is_null( $size ) )
+			$size = 'thumbnail';
+
+		if ( ! $image = image_downsize( $term_image_id, $size ) )
+			return FALSE;
+
+		if ( isset( $image[0] ) )
+			return $image[0];
+
+		return FALSE;
+	}
+
+	public static function getTermImageTag( $atts = [] )
+	{
+		$html = FALSE;
+
+		$args = self::atts( [
+			'id'    => NULL,
+			'size'  => NULL,
+			'alt'   => FALSE,
+			'class' => '-term-image',
+		], $atts );
+
+		if ( $src = self::getTermImageSrc( $args['size'], $args['id'] ) )
+			$html = HTML::img( $src, apply_filters( 'get_image_tag_class', $args['class'], $args['id'], 'none', $args['size'] ), $args['alt'] );
+
+		return $html;
+	}
+
+	public static function termImageCallback( $image, $link, $args, $status, $title, $module )
+	{
+		if ( ! $image )
+			return $args['default'];
+
+		$html = $image;
+
+		if ( $title && $args['figure'] )
+			$html = '<figure>'.$html.'<figcaption>'.$title.'</figcaption></figure>';
+
+		if ( $link )
+			$html = '<a title="'.HTML::escape( $args['figure'] ? self::getTermField( 'title', $args['id'] ) : $title ).'" href="'.$link.'">'.$html.'</a>';
+
+		return '<div class="'.static::BASE.'-wrap'.( $module ? ' -'.$module : ' ' ).' -term-image-wrap">'.$html.'</div>';
+	}
+
+	public static function termImage( $atts = [], $module = NULL )
+	{
+		$html = '';
+
+		if ( is_null( $module ) && static::MODULE )
+			$module = static::MODULE;
+
+		$args = self::atts( [
+			'id'       => NULL,
+			'size'     => NULL,
+			'alt'      => FALSE,
+			'class'    => '-term-image',
+			'taxonomy' => '',
+			'link'     => 'archive',
+			'title'    => 'name',
+			'data'     => [ 'toggle' => 'tooltip' ],
+			'callback' => [ __CLASS__, 'termImageCallback' ],
+			'figure'   => FALSE,
+			'fallback' => FALSE,
+			'default'  => FALSE,
+			'before'   => '',
+			'after'    => '',
+			'echo'     => TRUE,
+		], $atts );
+
+		if ( FALSE === $args['id'] )
+			return $args['default'];
+
+		if ( ! $term = Taxonomy::getTerm( $args['id'], $args['taxonomy'] ) )
+			return $args['default'];
+
+		$args['id'] = $term->term_id;
+
+		$title     = self::getTermField( $args['title'], $term, FALSE );
+		$viewable  = Taxonomy::isViewable( $args['taxonomy'] );
+		$thumbnail = get_term_meta( $args['id'], 'image', TRUE );
+
+		if ( $args['link'] ) {
+
+			if ( 'archive' == $args['link'] )
+				$args['link'] = $viewable ? get_term_link( $args['id'], $args['taxonomy'] ) : FALSE;
+
+			else if ( 'attachment' == $args['link'] )
+				$args['link'] = ( $thumbnail && $viewable ) ? get_attachment_link( $thumbnail ) : FALSE;
+
+			else if ( 'url' == $args['link'] )
+				$args['link'] = ( $thumbnail && $viewable ) ? wp_get_attachment_url( $thumbnail ) : FALSE;
+		}
+
+		$image = self::getTermImageTag( $args );
+
+		if ( $args['callback'] && is_callable( $args['callback'] ) ) {
+
+			$html = call_user_func_array( $args['callback'], [ $image, $args['link'], $args, $viewable, $title, $module ] );
+
+		} else if ( $image ) {
+
+			$html = HTML::tag( ( $args['link'] ? 'a' : 'span' ), [
+				'href'  => $args['link'],
+				'title' => $title,
+				'data'  => $args['link'] ? $args['data'] : FALSE,
+			], $image );
+
+		} else if ( $args['fallback'] && $viewable ) {
+
+			$html = HTML::tag( 'a', [
+				'href'  => get_term_link( $args['id'], $args['taxonomy'] ),
+				'title' => $title,
+				'data'  => $args['data'],
+			], sanitize_term_field( 'name', $term->name, $args['id'], $args['taxonomy'], 'display' ) );
+		}
+
+		if ( $html ) {
+
+			$html = $args['before'].$html.$args['after'];
+
+			if ( ! $args['echo'] )
+				return $html;
+
+			echo $html;
+			return TRUE;
+		}
+
+		if ( $args['default'] )
+			return $args['before'].$args['default'].$args['after'];
+
+		return FALSE;
+	}
+
 	public static function getPostImageSrc( $size = NULL, $post_id = NULL )
 	{
 		if ( ! $post = get_post( $post_id ) )
@@ -224,13 +366,29 @@ class Template extends Core\Base
 		return FALSE;
 	}
 
-	public static function getPostField( $field = 'title', $id = NULL, $default = '' )
+	public static function getTermField( $field = 'name', $term = NULL, $default = '' )
+	{
+		if ( is_null( $term ) )
+			$term = Taxonomy::getTerm( $term );
+
+		if ( ! $term )
+			return $default;
+
+		if ( 'name' == $field )
+			return trim( strip_tags( sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' ) ) );
+
+		// TODO: get other meta fields
+
+		return $default;
+	}
+
+	public static function getPostField( $field = 'title', $post = NULL, $default = '' )
 	{
 		if ( 'title' == $field )
-			return trim( strip_tags( get_the_title( $id ) ) );
+			return trim( strip_tags( get_the_title( $post ) ) );
 
 		if ( $field )
-			return self::getMetaField( $field, [ 'id' => $id, 'default' => $default ] );
+			return self::getMetaField( $field, [ 'id' => $post, 'default' => $default ] );
 
 		return $default;
 	}
