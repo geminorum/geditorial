@@ -311,5 +311,4 @@ class Arraay extends Base
 
 		return $array;
 	}
-
 }

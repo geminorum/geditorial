@@ -64,7 +64,20 @@ class Taxonomy extends Core\Base
 		return $list;
 	}
 
-	public static function hasTerms( $taxonomy = 'category', $empty = TRUE )
+	// @REF: `is_post_type_viewable()`
+	public static function isViewable( $taxonomy )
+	{
+		if ( is_scalar( $taxonomy ) ) {
+
+			if ( ! $taxonomy = get_taxonomy( $taxonomy ) )
+				return FALSE;
+		}
+
+		return $taxonomy->publicly_queryable
+			|| ( $taxonomy->_builtin && $taxonomy->public );
+	}
+
+	public static function hasTerms( $taxonomy, $empty = TRUE )
 	{
 		$terms = get_terms( array(
 			'taxonomy'               => $taxonomy,
@@ -76,8 +89,27 @@ class Taxonomy extends Core\Base
 		return (bool) count( $terms );
 	}
 
-	public static function getTerm( $term_or_id, $taxonomy = 'category' )
+	public static function getTerm( $term_or_id, $taxonomy )
 	{
+		if ( ! $term_or_id ) {
+
+			if ( is_admin() )
+				return FALSE;
+
+			if ( 'category' == $taxonomy && ! is_category() )
+				return FALSE;
+
+			if ( 'post_tag' == $taxonomy && ! is_tag() )
+				return FALSE;
+
+			if ( ! in_array( $taxonomy, array( 'category', 'post_tag' ) )
+				&& ! is_tax( $taxonomy ) )
+					return FALSE;
+
+			if ( ! $term_or_id = get_queried_object() )
+				return FALSE;
+		}
+
 		if ( is_object( $term_or_id ) )
 			$term = $term_or_id;
 
@@ -93,7 +125,7 @@ class Taxonomy extends Core\Base
 		return $term;
 	}
 
-	public static function getTerms( $taxonomy = 'category', $object_id = FALSE, $object = FALSE, $key = 'term_id', $extra = array(), $post_object = TRUE )
+	public static function getTerms( $taxonomy, $object_id = FALSE, $object = FALSE, $key = 'term_id', $extra = array(), $post_object = TRUE )
 	{
 		if ( is_null( $object_id ) && empty( $extra ) ) {
 
@@ -148,7 +180,7 @@ class Taxonomy extends Core\Base
 	}
 
 	// @REF: https://developer.wordpress.org/?p=22286
-	public static function listTerms( $taxonomy = 'category', $fields = NULL, $extra = array() )
+	public static function listTerms( $taxonomy, $fields = NULL, $extra = array() )
 	{
 		$query = new \WP_Term_Query( array_merge( array(
 			'taxonomy'   => (array) $taxonomy,
@@ -177,7 +209,7 @@ class Taxonomy extends Core\Base
 		return $query->terms;
 	}
 
-	public static function prepTerms( $taxonomy = 'category', $extra = array(), $terms = NULL, $key = 'term_id', $object = TRUE )
+	public static function prepTerms( $taxonomy, $extra = array(), $terms = NULL, $key = 'term_id', $object = TRUE )
 	{
 		$new_terms = array();
 
@@ -245,7 +277,7 @@ class Taxonomy extends Core\Base
 		return '0';
 	}
 
-	public static function addTerm( $term, $taxonomy = 'category', $sanitize = TRUE )
+	public static function addTerm( $term, $taxonomy, $sanitize = TRUE )
 	{
 		if ( ! taxonomy_exists( $taxonomy ) )
 			return FALSE;
