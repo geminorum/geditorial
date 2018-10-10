@@ -10,9 +10,8 @@ class Terms extends gEditorial\Template
 
 	const MODULE = 'terms';
 
-	// FIXME: write and move it up!
 	public static function termImage( $atts = [], $module = NULL )
 	{
-		// Taxonomy::htmlFeaturedImage( $term_id, $size )
+		return parent::termImage( $atts, static::MODULE );
 	}
 }
