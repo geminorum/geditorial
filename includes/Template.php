@@ -70,11 +70,14 @@ class Template extends Core\Base
 
 		$html = $image;
 
-		if ( $title && $args['figure'] )
-			$html = '<figure>'.$html.'<figcaption>'.$title.'</figcaption></figure>';
-
 		if ( $link )
-			$html = '<a title="'.HTML::escape( $args['figure'] ? self::getTermField( 'title', $args['id'] ) : $title ).'" href="'.$link.'">'.$html.'</a>';
+			$html = '<a title="'.HTML::escape( $args['figure'] ? self::getTermField( 'title', $args['id'], $args['taxonomy'] ) : $title ).'" href="'.$link.'">'.$html.'</a>';
+
+		if ( $title && $args['figure'] )
+			$html = '<figure'.( TRUE === $args['figure'] ? '' : ' class="'.$args['figure'].'"' ).'>'.$html.'<figcaption>'.$title.'</figcaption></figure>';
+
+		if ( ! $args['wrap'] )
+			return $html;
 
 		return '<div class="'.static::BASE.'-wrap'.( $module ? ' -'.$module : ' ' ).' -term-image-wrap">'.$html.'</div>';
 	}
@@ -96,9 +99,10 @@ class Template extends Core\Base
 			'title'    => 'name',
 			'data'     => [ 'toggle' => 'tooltip' ],
 			'callback' => [ __CLASS__, 'termImageCallback' ],
-			'figure'   => FALSE,
+			'figure'   => FALSE, // or class of the figure
 			'fallback' => FALSE,
 			'default'  => FALSE,
+			'wrap'     => TRUE,
 			'before'   => '',
 			'after'    => '',
 			'echo'     => TRUE,
@@ -213,11 +217,14 @@ class Template extends Core\Base
 
 		$html = $image;
 
-		if ( $title && $args['figure'] )
-			$html = '<figure>'.$html.'<figcaption>'.$title.'</figcaption></figure>';
-
 		if ( $link )
 			$html = '<a title="'.HTML::escape( $args['figure'] ? self::getPostField( 'title', $args['id'] ) : $title ).'" href="'.$link.'">'.$html.'</a>';
+
+		if ( $title && $args['figure'] )
+			$html = '<figure'.( TRUE === $args['figure'] ? '' : ' class="'.$args['figure'].'"' ).'>'.$html.'<figcaption>'.$title.'</figcaption></figure>';
+
+		if ( ! $args['wrap'] )
+			return $html;
 
 		return '<div class="'.static::BASE.'-wrap'.( $module ? ' -'.$module : ' ' ).' -post-image-wrap">'.$html.'</div>';
 	}
@@ -239,9 +246,10 @@ class Template extends Core\Base
 			'title'    => 'title',
 			'data'     => [ 'toggle' => 'tooltip' ],
 			'callback' => [ __CLASS__, 'postImageCallback' ],
-			'figure'   => FALSE,
+			'figure'   => FALSE, // or class of the figure
 			'fallback' => FALSE,
 			'default'  => FALSE,
+			'wrap'     => TRUE,
 			'before'   => '',
 			'after'    => '',
 			'echo'     => TRUE,
