@@ -25,9 +25,9 @@ class Template extends Core\Base
 		return [];
 	}
 
-	public static function getTermImageSrc( $size = NULL, $term_id = NULL )
+	public static function getTermImageSrc( $size = NULL, $term_id = NULL, $taxonomy = '' )
 	{
-		if ( ! $term = Taxonomy::getTerm( $term_id ) )
+		if ( ! $term = Taxonomy::getTerm( $term_id, $taxonomy ) )
 			return FALSE;
 
 		if ( ! $term_image_id = get_term_meta( $term->term_id, 'image', TRUE ) )
@@ -50,13 +50,14 @@ class Template extends Core\Base
 		$html = FALSE;
 
 		$args = self::atts( [
-			'id'    => NULL,
-			'size'  => NULL,
-			'alt'   => FALSE,
-			'class' => '-term-image',
+			'id'       => NULL,
+			'taxonomy' => '',
+			'size'     => NULL,
+			'alt'      => FALSE,
+			'class'    => '-term-image',
 		], $atts );
 
-		if ( $src = self::getTermImageSrc( $args['size'], $args['id'] ) )
+		if ( $src = self::getTermImageSrc( $args['size'], $args['id'], $args['taxonomy'] ) )
 			$html = HTML::img( $src, apply_filters( 'get_image_tag_class', $args['class'], $args['id'], 'none', $args['size'] ), $args['alt'] );
 
 		return $html;
@@ -109,9 +110,10 @@ class Template extends Core\Base
 		if ( ! $term = Taxonomy::getTerm( $args['id'], $args['taxonomy'] ) )
 			return $args['default'];
 
-		$args['id'] = $term->term_id;
+		$args['id']       = $term->term_id;
+		$args['taxonomy'] = $term->taxonomy;
 
-		$title     = self::getTermField( $args['title'], $term, FALSE );
+		$title     = self::getTermField( $args['title'], $term, $args['taxonomy'], FALSE );
 		$viewable  = Taxonomy::isViewable( $args['taxonomy'] );
 		$thumbnail = get_term_meta( $args['id'], 'image', TRUE );
 
@@ -366,10 +368,10 @@ class Template extends Core\Base
 		return FALSE;
 	}
 
-	public static function getTermField( $field = 'name', $term = NULL, $default = '' )
+	public static function getTermField( $field = 'name', $term = NULL, $taxonomy = '', $default = '' )
 	{
 		if ( is_null( $term ) )
-			$term = Taxonomy::getTerm( $term );
+			$term = Taxonomy::getTerm( $term, $taxonomy );
 
 		if ( ! $term )
 			return $default;
