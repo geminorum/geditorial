@@ -394,7 +394,7 @@ class Entry extends gEditorial\Module
 		$html.= $this->get_search_form( 'entry_cpt', $title );
 
 		if ( $add_new = $this->get_add_new( $title ) )
-			$html.= '<p>'.$add_new.'</p>';
+			$html.= '<p class="-actions">'.$add_new.'</p>';
 
 		return HTML::wrap( $html, $this->classs( 'empty-content' ) );
 	}
@@ -405,7 +405,7 @@ class Entry extends gEditorial\Module
 		$html.= $this->get_search_form( 'entry_cpt' );
 
 		if ( $add_new = $this->get_add_new() )
-			$html.= '<p>'.$add_new.'</p>';
+			$html.= '<p class="-actions">'.$add_new.'</p>';
 
 		return HTML::wrap( $html, $this->classs( 'archive-content' ) );
 	}
@@ -417,12 +417,12 @@ class Entry extends gEditorial\Module
 		if ( ! current_user_can( $posttype->cap->create_posts ) )
 			return '';
 
-		return '<p>'.HTML::tag( 'a', [
+		return HTML::tag( 'a', [
 			'href'          => WordPress::getPostNewLink( $posttype->name, [ 'post_title' => $title ] ),
 			'class'         => [ 'button', '-add-posttype', '-add-posttype-'.$posttype->name ],
 			'target'        => '_blank',
 			'data-posttype' => $posttype->name,
-		], $posttype->labels->add_new_item ).'</p>';
+		], $posttype->labels->add_new_item );
 	}
 
 	public function section_shortcode( $atts = [], $content = NULL, $tag = '' )
