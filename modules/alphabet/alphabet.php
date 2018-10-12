@@ -140,7 +140,7 @@ class Alphabet extends gEditorial\Module
 					$title = Helper::getPostTitle( $post );
 					$link  = WordPress::getPostShortLink( $post->ID );
 
-					$html.= '<dt><span class="-title">'.HTML::link( $title, $link, TRUE ).'</span>';
+					$html.= '<dt><span class="-title">'.HTML::link( $title, $link ).'</span>';
 
 					if ( $args['comments'] && $post->comment_count )
 						$html.= '<span class="-comments-count">'.Helper::getCounted( $post->comment_count, '&nbsp;(%s)' ).'</span>';
@@ -241,7 +241,7 @@ class Alphabet extends gEditorial\Module
 					$title = Text::reFormatName( $title ); // no need
 					$link  = get_term_link( $term->term_id, $term->taxonomy );
 
-					$html.= '<dt><span class="-title">'.HTML::link( $title, $link, TRUE ).'</span>';
+					$html.= '<dt><span class="-title">'.HTML::link( $title, $link ).'</span>';
 
 					if ( $args['count'] && $term->count )
 						$html.= '<span class="-term-count">'.Helper::getCounted( $term->count, '&nbsp;(%s)' ).'</span>';

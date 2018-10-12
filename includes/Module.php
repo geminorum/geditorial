@@ -1917,14 +1917,15 @@ class Module extends Base
 		if ( $constant_or_hidden && ! is_array( $constant_or_hidden ) )
 			$constant_or_hidden = [ 'post_type[]' => $this->constant( $constant_or_hidden ) ];
 
-		if ( count( $constant_or_hidden ) ) {
-			$form = rtrim( $form, '</form>' );
-			foreach ( $constant_or_hidden as $name => $value )
-				$form.= '<input type="hidden" name="'.HTML::escape( $name ).'" value="'.HTML::escape( $value ).'" />';
-			$form.= '</form>';
-		}
+		if ( ! count( $constant_or_hidden ) )
+			return $form;
 
-		return $form;
+		$form = str_replace( '</form>', '', $form );
+
+		foreach ( $constant_or_hidden as $name => $value )
+			$form.= '<input type="hidden" name="'.HTML::escape( $name ).'" value="'.HTML::escape( $value ).'" />';
+
+		return $form.'</form>';
 	}
 
 	protected function role_can( $what = 'supported', $user_id = NULL, $fallback = FALSE, $admins = TRUE, $prefix = '_roles' )

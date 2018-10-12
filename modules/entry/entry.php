@@ -373,9 +373,14 @@ class Entry extends gEditorial\Module
 
 		$this->enqueue_styles();
 
-		defined( 'GNETWORK_DISABLE_CONTENT_ACTIONS' ) or define( 'GNETWORK_DISABLE_CONTENT_ACTIONS', TRUE );
+		defined( 'GNETWORK_DISABLE_CONTENT_ACTIONS' )
+			or define( 'GNETWORK_DISABLE_CONTENT_ACTIONS', TRUE );
+
+		defined( 'GEDITORIAL_DISABLE_CONTENT_ACTIONS' )
+			or define( 'GEDITORIAL_DISABLE_CONTENT_ACTIONS', TRUE );
 
 		// look again for template
+		// return get_singular_template();
 		return get_single_template();
 	}
 
