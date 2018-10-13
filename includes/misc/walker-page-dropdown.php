@@ -7,7 +7,7 @@ require_once( ABSPATH.WPINC.'/class-walker-page-dropdown.php' );
 class Walker_PageDropdown extends \Walker_PageDropdown
 {
 
-	public function start_el( &$output, $page, $depth = 0, $args = array(), $id = 0 )
+	public function start_el( &$output, $page, $depth = 0, $args = [], $id = 0 )
 	{
 		$pad = str_repeat( '&nbsp;', $depth * 3 );
 

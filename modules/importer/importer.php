@@ -270,7 +270,7 @@ class Importer extends gEditorial\Module
 							// 'ping_status'    => 'closed', //[ 'closed' | 'open' ] // Pingbacks or trackbacks allowed. Default is the option 'default_ping_status'.
 							// 'post_date'      => current_time( 'mysql' ), //[ Y-m-d H:i:s ] // The time post was made.
 							// 'post_parent'    => 0, // Sets the parent of the new post, if any. Default 0.
-							// 'tax_input'      => [], //[ array( <taxonomy> => <array | string> ) ] // For custom taxonomies. Default empty.
+							// 'tax_input'      => [], //[ [ <taxonomy> => <array | string> ] ] // For custom taxonomies. Default empty.
 
 							'post_type'      => $posttype,
 							'post_status'    => $post_status,

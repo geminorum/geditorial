@@ -11,7 +11,7 @@ class Utils extends Core\Base
 	public static function normalize( $items )
 	{
 		if ( ! is_array( $items ) )
-			$items = array( $items );
+			$items = [ $items ];
 
 		foreach ( $items as &$item ) {
 

@@ -46,9 +46,9 @@ abstract class Dropdown
 	protected static function get_qv()
 	{
 		if ( !isset( $_GET['o2o'] ) )
-			return array();
+			return [];
 
-		$args = array();
+		$args = [];
 
 		$tmp = reset( $_GET['o2o'] );
 
@@ -57,21 +57,21 @@ abstract class Dropdown
 		list( $args['connected_direction'], $args['connected_items'] ) = each( $tmp );
 
 		if ( !$args['connected_items'] )
-			return array();
+			return [];
 
 		return $args;
 	}
 
 	protected static function get_choices( $directed )
 	{
-		$extra_qv = array(
+		$extra_qv = [
 			'o2o:per_page' => -1,
 			'o2o:context'  => 'admin_dropdown'
-		);
+		];
 
 		$connected = $directed->get_connected( 'any', $extra_qv, 'abstract' );
 
-		$options = array();
+		$options = [];
 
 		foreach ( $connected->items as $item )
 			$options[ $item->get_id() ] = $item->get_title();

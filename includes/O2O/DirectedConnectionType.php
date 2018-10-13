@@ -221,7 +221,7 @@ class DirectedConnectionType
 
 	protected function has_connections( $item )
 	{
-		$extra_qv = array( 'o2o:per_page' => 1 );
+		$extra_qv = [ 'o2o:per_page' => 1 ];
 
 		$connections = $this->get_connected( $item, $extra_qv, 'abstract' );
 

@@ -79,7 +79,7 @@ class Widget extends \WP_Widget
 			delete_transient( $this->alt_option_name );
 
 		if ( FALSE === ( $cache = get_transient( $this->alt_option_name ) ) )
-			$cache = array();
+			$cache = [];
 
 		if ( ! isset( $args['widget_id'] ) )
 			$args['widget_id'] = $this->id;
