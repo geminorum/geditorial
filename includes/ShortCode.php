@@ -67,7 +67,7 @@ class ShortCode extends Core\Base
 			$attr = call_user_func_array( $args['title_title_cb'], [ $term, $atts ] );
 
 		else if ( $args['title_title'] )
-			$attr = sprintf( $args['title_title'], ( $args['title'] ? $args['title'] : '' ) );
+			$attr = sprintf( $args['title_title'], ( $args['title'] ?: '' ) );
 
 		else
 			$attr = FALSE;
@@ -211,7 +211,7 @@ class ShortCode extends Core\Base
 			$attr = call_user_func_array( $args['title_title_cb'], [ $post, $atts ] );
 
 		else if ( $args['title_title'] )
-			$attr = sprintf( $args['title_title'], ( $args['title'] ? $args['title'] : '' ) );
+			$attr = sprintf( $args['title_title'], ( $args['title'] ?: '' ) );
 
 		else
 			$attr = FALSE;
@@ -288,7 +288,7 @@ class ShortCode extends Core\Base
 			else
 				$attr = FALSE;
 
-			if ( 'publish' == $post->post_status && $args['item_link'] )
+			if ( $args['item_link'] && ( 'publish' == $post->post_status || 'attachment' == $post->post_type ) )
 				$item = HTML::tag( 'a', [
 					'href'  => get_permalink( $post ),
 					'title' => $attr,
@@ -363,7 +363,8 @@ class ShortCode extends Core\Base
 			'cover'          => FALSE, // must have thumbnail
 			'posttypes'      => $posttypes,
 			'future'         => 'on',
-			'orderby'        => 'date',
+			'mime_type'      => '', // only for attachments / like: `image`
+			'orderby'        => '', // empty for default
 			'order'          => 'ASC',
 			'order_cb'       => FALSE, // NULL for default order ( by meta, like mag )
 			'order_start'    => 'start', // meta field for ordering
@@ -396,7 +397,37 @@ class ShortCode extends Core\Base
 		if ( $args['item_cb'] && ! is_callable( $args['item_cb'] ) )
 			$args['item_cb'] = FALSE;
 
-		if ( 'all' == $args['id'] ) {
+		$query_args = [
+			'post_type'        => $args['posttypes'],
+			'orderby'          => 'date',
+			'order'            => $args['order'],
+			'posts_per_page'   => $args['limit'],
+			'suppress_filters' => TRUE,
+			'no_found_rows'    => TRUE,
+		];
+
+		if ( $args['orderby'] && 'order' != $args['orderby'] )
+			$query_args['orderby'] = $args['orderby'];
+
+		if ( 'on' == $args['future'] )
+			$query_args['post_status'] = [ 'publish', 'future', 'draft' ];
+		else
+			$query_args['post_status'] = [ 'publish' ];
+
+		if ( in_array( 'attachment', (array) $args['posttypes'] ) ) {
+
+			if ( $post = get_post( $args['id'] ) )
+				$query_args['post_parent'] = $post->ID;
+
+			if ( $args['mime_type'] )
+				$query_args['post_mime_type'] = $args['mime_type'];
+
+			if ( ! $args['orderby'] )
+				$query_args['orderby'] = 'menu_order';
+
+			$query_args['post_status'] = [ 'inherit' ];
+
+		} else if ( 'all' == $args['id'] ) {
 
 			// do nothing, will collect all posttype: e.g. all entries of all sections
 
@@ -405,7 +436,7 @@ class ShortCode extends Core\Base
 			if ( ! $term = get_term_by( 'id', $args['id'], $taxonomy ) )
 				return $content;
 
-			$tax_query = [ [
+			$query_args['tax_query'] = [ [
 				'taxonomy' => $taxonomy,
 				'terms'    => [ $term->term_id ],
 			] ];
@@ -415,7 +446,7 @@ class ShortCode extends Core\Base
 			if ( ! $term = get_term_by( 'slug', $args['slug'], $taxonomy ) )
 				return $content;
 
-			$tax_query = [ [
+			$query_args['tax_query'] = [ [
 				'taxonomy' => $taxonomy,
 				'terms'    => [ $term->term_id ],
 			] ];
@@ -425,7 +456,7 @@ class ShortCode extends Core\Base
 			if ( ! $term = get_queried_object() )
 				return $content;
 
-			$tax_query = [ [
+			$query_args['tax_query'] = [ [
 				'taxonomy' => $taxonomy,
 				'terms'    => [ $term->term_id ],
 			] ];
@@ -435,43 +466,25 @@ class ShortCode extends Core\Base
 			if ( ! $term = get_the_terms( NULL, $taxonomy ) )
 				return $content;
 
-			$tax_query = [ [
+			$query_args['tax_query'] = [ [
 				'taxonomy' => $taxonomy,
 				'terms'    => wp_list_pluck( $term, 'term_id' ),
 			] ];
 
 		} else {
+
 			return $content;
 		}
 
 		if ( $args['cover'] )
-			$meta_query = [ [
+			$query_args['meta_query'] = [ [
 				'key'     => '_thumbnail_id',
 				'compare' => 'EXISTS'
 			] ];
 
-		$args['title'] = self::termTitle( $term, $taxonomy, $args );
-
-		if ( 'on' == $args['future'] )
-			$post_status = [ 'publish', 'future', 'draft' ];
-		else
-			$post_status = [ 'publish' ];
-
-		$query_args = [
-			'tax_query'        => $tax_query,
-			'meta_query'       => $meta_query,
-			'posts_per_page'   => $args['limit'],
-			'orderby'          => $args['orderby'] == 'order' ? 'date' : $args['orderby'],
-			'order'            => $args['order'],
-			'post_type'        => $args['posttypes'],
-			'post_status'      => $post_status,
-			'suppress_filters' => TRUE,
-			'no_found_rows'    => TRUE,
-		];
-
 		$query = new \WP_Query;
-		$posts = $query->query( $query_args );
-		$count = count( $posts );
+		$items = $query->query( $query_args );
+		$count = count( $items );
 
 		if ( ! $count )
 			return $content;
@@ -479,27 +492,29 @@ class ShortCode extends Core\Base
 		if ( 1 == $count && is_singular( $args['posttypes'] ) )
 			return $content;
 
+		$args['title'] = self::termTitle( $term, $taxonomy, $args );
+
 		if ( $args['orderby'] == 'order' ) {
 
 			if ( $args['order_cb'] && is_callable( $args['order_cb'] ) )
-				$posts = call_user_func_array( $args['order_cb'], [ $posts, $args, $term ] );
+				$items = call_user_func_array( $args['order_cb'], [ $items, $args, $term ] );
 
 			else if ( is_null( $args['order_cb'] ) && $count > 1 )
-				$posts = Template::reorderPosts( $posts, $args['field_module'], $args['order_start'], $args['order_order'] );
+				$items = Template::reorderPosts( $items, $args['field_module'], $args['order_start'], $args['order_order'] );
 		}
 
-		foreach ( $posts as $post ) {
+		foreach ( $items as $item ) {
 
 			// caller must setup postdata
 			// REF: https://developer.wordpress.org/?p=2837#comment-874
-			// $GLOBALS['post'] = $post;
-			// setup_postdata( $post );
+			// $GLOBALS['post'] = $item;
+			// setup_postdata( $item );
 
 			if ( $args['item_cb'] )
-				$html.= call_user_func_array( $args['item_cb'], [ $post, $args, $term ] );
+				$html.= call_user_func_array( $args['item_cb'], [ $item, $args, $term ] );
 
 			else
-				$html.= self::postItem( $post, $args );
+				$html.= self::postItem( $item, $args );
 		}
 
 		if ( $args['list_tag'] )
