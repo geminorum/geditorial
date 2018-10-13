@@ -120,7 +120,7 @@ class Plugin
 			}
 		}
 
-		Relation::setup();
+		// Relation::setup();
 	}
 
 	public function register_module( $args = [] )
