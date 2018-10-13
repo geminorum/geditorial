@@ -580,10 +580,11 @@ class Book extends gEditorial\Module
 		return count( $posts ) ? $posts : FALSE;
 	}
 
+	// TODO: https://github.com/scribu/wp-posts-to-posts/wiki/Related-posts
 	public function list_p2p( $post = NULL, $class = '' )
 	{
-		if ( is_null( $post ) )
-			$post = get_post();
+		if ( ! $post = get_post( $post ) )
+			return;
 
 		$connected = new \WP_Query( [
 			'connected_type'  => $this->constant( 'publication_cpt_p2p' ),
@@ -608,8 +609,8 @@ class Book extends gEditorial\Module
 			while ( $connected->have_posts() ) {
 				$connected->the_post();
 
-				echo ShortCode::postItem( $post, [
-					'item_after' => $this->p2p_get_meta_row( 'publication_cpt', $post->p2p_id, ' &ndash; ', '' ),
+				echo ShortCode::postItem( $GLOBALS['post'], [
+					'item_after' => $this->p2p_get_meta_row( 'publication_cpt', $GLOBALS['post']->p2p_id, ' &ndash; ', '' ),
 				] );
 			}
 
