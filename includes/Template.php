@@ -588,7 +588,7 @@ class Template extends Core\Base
 				'href'  => $url,
 				'title' => $url ? $args['title_attr'] : FALSE,
 				'rel'   => $url ? 'nofollow' : 'source', // https://support.google.com/webmasters/answer/96569?hl=en
-				'data'  => $url ? array( 'toggle' => 'tooltip' ) : FALSE,
+				'data'  => $url && $args['title_attr'] ? [ 'toggle' => 'tooltip' ] : FALSE,
 			], $title ).$args['after'];
 		} else {
 			$html = $args['default'];
