@@ -384,15 +384,21 @@ class Entry extends gEditorial\Module
 		return get_single_template();
 	}
 
-	public function get_title_from_query()
+	public function get_title_from_query( $fallback = NULL )
 	{
-		return URL::prepTitleQuery( $GLOBALS['wp_query']->get( 'name' ) );
+		if ( $title = URL::prepTitleQuery( $GLOBALS['wp_query']->get( 'name' ) ) )
+			return $title;
+
+		if ( is_null( $fallback ) )
+			return _x( '[Untitled]', 'Modules: Entry', GEDITORIAL_TEXTDOMAIN );
+
+		return $fallback;
 	}
 
 	// TODO: link to search page with list other entries that linked to this title
 	public function empty_content( $content )
 	{
-		$title = $this->get_title_from_query();
+		$title = $this->get_title_from_query( '' );
 		$text  = $this->get_setting( 'empty_content', _x( 'There are no entry by this title. Search again or create one.', 'Modules: Entry', GEDITORIAL_TEXTDOMAIN ) );
 
 		$html = Text::autoP( trim( $text ) );
