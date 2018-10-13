@@ -8,8 +8,6 @@ use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Core\Arraay;
 use geminorum\gEditorial\Core\HTML;
-use geminorum\gEditorial\Core\Text;
-use geminorum\gEditorial\Core\URL;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\Taxonomy;
@@ -335,10 +333,10 @@ class Entry extends gEditorial\Module
 		if ( is_embed() || is_search() )
 			return $template;
 
-		if ( $this->constant( 'entry_cpt' ) != $GLOBALS['wp_query']->get( 'post_type' ) )
-			return $template;
-
 		$posttype = $this->constant( 'entry_cpt' );
+
+		if ( $posttype != $GLOBALS['wp_query']->get( 'post_type' ) )
+			return $template;
 
 		if ( ! is_404() && ! is_post_type_archive( $posttype ) )
 			return $template;
@@ -346,14 +344,15 @@ class Entry extends gEditorial\Module
 		if ( is_404() ) {
 
 			nocache_headers();
+			// WordPress::doNotCache();
 
 			Theme::resetQuery( [
 				'ID'         => 0,
-				'post_title' => $this->get_title_from_query(),
+				'post_title' => $this->template_get_title(),
 				'post_type'  => $posttype,
 				'is_single'  => TRUE,
 				'is_404'     => TRUE,
-			], [ $this, 'empty_content' ] );
+			], [ $this, 'template_empty_content' ] );
 
 			$this->filter_append( 'post_class', 'empty-entry' );
 
@@ -366,7 +365,8 @@ class Entry extends gEditorial\Module
 				'post_title' => $object->labels->all_items,
 				'post_type'  => $posttype,
 				'is_single'  => TRUE,
-			], [ $this, 'archive_content' ] );
+				'is_archive' => TRUE,
+			], [ $this, 'template_archive_content' ] );
 
 			$this->filter_append( 'post_class', 'archive-entry' );
 		}
@@ -384,56 +384,12 @@ class Entry extends gEditorial\Module
 		return get_single_template();
 	}
 
-	public function get_title_from_query( $fallback = NULL )
+	public function template_get_archive_content( $atts = [] )
 	{
-		if ( $title = URL::prepTitleQuery( $GLOBALS['wp_query']->get( 'name' ) ) )
-			return $title;
+		$html = $this->get_search_form( 'entry_cpt' );
+		$html.= $this->section_shortcode( [ 'id' => 'all' ] );
 
-		if ( is_null( $fallback ) )
-			return _x( '[Untitled]', 'Modules: Entry', GEDITORIAL_TEXTDOMAIN );
-
-		return $fallback;
-	}
-
-	// TODO: link to search page with list other entries that linked to this title
-	public function empty_content( $content )
-	{
-		$title = $this->get_title_from_query( '' );
-		$text  = $this->get_setting( 'empty_content', _x( 'There are no entry by this title. Search again or create one.', 'Modules: Entry', GEDITORIAL_TEXTDOMAIN ) );
-
-		$html = Text::autoP( trim( $text ) );
-		$html.= $this->get_search_form( 'entry_cpt', $title );
-
-		if ( $add_new = $this->get_add_new( $title ) )
-			$html.= '<p class="-actions">'.$add_new.'</p>';
-
-		return HTML::wrap( $html, $this->classs( 'empty-content' ) );
-	}
-
-	public function archive_content( $content )
-	{
-		$html = $this->section_shortcode( [ 'id' => 'all' ] );
-		$html.= $this->get_search_form( 'entry_cpt' );
-
-		if ( $add_new = $this->get_add_new() )
-			$html.= '<p class="-actions">'.$add_new.'</p>';
-
-		return HTML::wrap( $html, $this->classs( 'archive-content' ) );
-	}
-
-	public function get_add_new( $title = FALSE )
-	{
-		$posttype = PostType::object( $this->constant( 'entry_cpt' ) );
-
-		if ( ! current_user_can( $posttype->cap->create_posts ) )
-			return '';
-
-		return HTML::tag( 'a', [
-			'href'          => WordPress::getPostNewLink( $posttype->name, [ 'post_title' => $title ] ),
-			'class'         => [ 'button', '-add-posttype', '-add-posttype-'.$posttype->name ],
-			'target'        => '_blank',
-			'data-posttype' => $posttype->name,
-		], $posttype->labels->add_new_item );
+		return $html;
 	}
 
 	public function section_shortcode( $atts = [], $content = NULL, $tag = '' )

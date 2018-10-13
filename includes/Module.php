@@ -6,6 +6,8 @@ use geminorum\gEditorial\Core\Arraay;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Icon;
 use geminorum\gEditorial\Core\Number;
+use geminorum\gEditorial\Core\Text;
+use geminorum\gEditorial\Core\URL;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\Module as Base;
 use geminorum\gEditorial\WordPress\Media;
@@ -2847,5 +2849,69 @@ class Module extends Base
 		$query = new \WP_User_Query( $args );
 
 		return $query->get_results();
+	}
+
+	// DEFAULT METHOD: content for overrided empty page
+	public function template_get_title( $fallback = NULL )
+	{
+		if ( $title = URL::prepTitleQuery( $GLOBALS['wp_query']->get( 'name' ) ) )
+			return $title;
+
+		if ( is_null( $fallback ) )
+			return _x( '[Untitled]', 'Module: Template Title', GEDITORIAL_TEXTDOMAIN );
+
+		return $fallback;
+	}
+
+	// DEFAULT METHOD: content for overrided empty page
+	public function template_get_empty_content( $atts = [] )
+	{
+		$text = $this->get_setting( 'empty_content', _x( 'There are no content by this title. Search again or create one.', 'Module: Template Empty', GEDITORIAL_TEXTDOMAIN ) );
+		return Text::autoP( trim( $text ) );
+	}
+
+	// DEFAULT METHOD: content for overrided archive page
+	public function template_get_archive_content( $atts = [] )
+	{
+		return '';
+	}
+
+	// DEFAULT METHOD: button for overrided empty/archive page
+	public function template_get_add_new( $posttype, $title = FALSE, $label = NULL )
+	{
+		$object = PostType::object( $posttype );
+
+		if ( ! current_user_can( $object->cap->create_posts ) )
+			return '';
+
+		return HTML::tag( 'a', [
+			'href'          => WordPress::getPostNewLink( $object->name, [ 'post_title' => $title ] ),
+			'class'         => [ 'button', '-add-posttype', '-add-posttype-'.$object->name ],
+			'target'        => '_blank',
+			'data-posttype' => $object->name,
+		], $label ?: $object->labels->add_new_item );
+	}
+
+	// DEFAULT FILTER
+	public function template_empty_content( $content )
+	{
+		$post  = get_post();
+		$title = $this->template_get_title( '' );
+
+		$html = $this->template_get_empty_content();
+		$html.= $this->get_search_form( [ 'post_type[]' => $post->post_type ], $title );
+
+		// TODO: list other entries that linked to this title
+
+		if ( $add_new = $this->template_get_add_new( $post->post_type, $title ) )
+			$html.= '<p class="-actions">'.$add_new.'</p>';
+
+		return HTML::wrap( $html, $this->classs( 'empty-content' ) );
+	}
+
+	// DEFAULT FILTER
+	public function template_archive_content( $content )
+	{
+		return HTML::wrap( $this->template_get_archive_content(), $this->classs( 'archive-content' ) );
 	}
 }
