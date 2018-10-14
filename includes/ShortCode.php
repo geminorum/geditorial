@@ -266,12 +266,14 @@ class ShortCode extends Core\Base
 			'item_class'    => '-item',
 			'item_after'    => '',
 			'item_after_cb' => FALSE,
+			'item_download' => TRUE, // only for attachments
 			'order_before'  => FALSE,
 			'order_zeroise' => FALSE,
 			'order_sep'     => ' &ndash; ',
 		], $atts );
 
 		$text = Helper::getPostTitle( $post, FALSE );
+		$link = in_array( $post->post_status, [ 'publish', 'inherit' ] ) ? get_permalink( $post ) : '';
 
 		if ( is_null( $args['item_text'] ) )
 			$item = $text;
@@ -299,9 +301,18 @@ class ShortCode extends Core\Base
 			else
 				$attr = FALSE;
 
-			if ( $args['item_link'] && ( 'publish' == $post->post_status || 'attachment' == $post->post_type ) )
+			if ( $args['item_link'] && 'attachment' == $post->post_type && $args['item_download'] )
 				$item = HTML::tag( 'a', [
-					'href'  => get_permalink( $post ),
+					'href'     => wp_get_attachment_url( $post->ID ),
+					'download' => apply_filters( static::BASE.'_shortcode_attachement_download', basename( get_attached_file( $post->ID ) ), $post ),
+					'title'    => $attr,
+					'class'    => '-download',
+					'rel'      => 'attachment',
+				], $item );
+
+			else if ( $args['item_link'] && $link )
+				$item = HTML::tag( 'a', [
+					'href'  => $link,
 					'title' => $attr,
 					'class' => '-link -posttype-'.$post->post_type,
 				], $item );
@@ -326,8 +337,8 @@ class ShortCode extends Core\Base
 
 			if ( Text::has( $args['item_after'], '%' ) )
 				$args['item_after'] = sprintf( $args['item_after'],
-					apply_filters( 'the_title', $post->post_title, $post->ID ),
-					get_permalink( $post ),
+					$text,
+					$link,
 					Helper::prepDescription( $post->post_excerpt )
 					// FIXME: add post_content
 				);
@@ -366,6 +377,7 @@ class ShortCode extends Core\Base
 			'item_class'     => '-item',
 			'item_after'     => '',
 			'item_after_cb'  => FALSE,
+			'item_download'  => TRUE, // only for attachments
 			'order_before'   => FALSE,
 			'order_zeroise'  => FALSE,
 			'order_sep'      => ' &ndash; ',
