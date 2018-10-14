@@ -13,6 +13,7 @@ use geminorum\gEditorial\WordPress\Module as Base;
 use geminorum\gEditorial\WordPress\Media;
 use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\Taxonomy;
+use geminorum\gEditorial\WordPress\Theme;
 use geminorum\gEditorial\WordPress\User;
 
 class Module extends Base
@@ -2851,8 +2852,62 @@ class Module extends Base
 		return $query->get_results();
 	}
 
-	// DEFAULT METHOD: content for overrided empty page
-	public function template_get_title( $fallback = NULL )
+	protected function do_template_include( $template, $constant )
+	{
+		if ( is_embed() || is_search() )
+			return $template;
+
+		$posttype = $this->constant( $constant );
+
+		if ( $posttype != $GLOBALS['wp_query']->get( 'post_type' ) )
+			return $template;
+
+		if ( ! is_404() && ! is_post_type_archive( $posttype ) )
+			return $template;
+
+		if ( is_404() ) {
+
+			nocache_headers();
+			// WordPress::doNotCache();
+
+			Theme::resetQuery( [
+				'ID'         => 0,
+				'post_title' => $this->template_get_empty_title(),
+				'post_type'  => $posttype,
+				'is_single'  => TRUE,
+				'is_404'     => TRUE,
+			], [ $this, 'template_empty_content' ] );
+
+			$this->filter_append( 'post_class', 'empty-entry' );
+
+		} else {
+
+			Theme::resetQuery( [
+				'ID'         => 0,
+				'post_title' => $this->template_get_archive_title( $posttype ),
+				'post_type'  => $posttype,
+				'is_single'  => TRUE,
+				'is_archive' => TRUE,
+			], [ $this, 'template_archive_content' ] );
+
+			$this->filter_append( 'post_class', 'archive-entry' );
+		}
+
+		$this->enqueue_styles();
+
+		defined( 'GNETWORK_DISABLE_CONTENT_ACTIONS' )
+			or define( 'GNETWORK_DISABLE_CONTENT_ACTIONS', TRUE );
+
+		defined( 'GEDITORIAL_DISABLE_CONTENT_ACTIONS' )
+			or define( 'GEDITORIAL_DISABLE_CONTENT_ACTIONS', TRUE );
+
+		// look again for template
+		// return get_singular_template();
+		return get_single_template();
+	}
+
+	// DEFAULT METHOD: title for overrided empty page
+	public function template_get_empty_title( $fallback = NULL )
 	{
 		if ( $title = URL::prepTitleQuery( $GLOBALS['wp_query']->get( 'name' ) ) )
 			return $title;
@@ -2868,6 +2923,16 @@ class Module extends Base
 	{
 		$text = $this->get_setting( 'empty_content', _x( 'There are no content by this title. Search again or create one.', 'Module: Template Empty', GEDITORIAL_TEXTDOMAIN ) );
 		return Text::autoP( trim( $text ) );
+	}
+
+	// DEFAULT METHOD: title for overrided archive page
+	public function template_get_archive_title( $posttype )
+	{
+		if ( $title = $this->get_setting( 'archive_title', FALSE ) )
+			return $title;
+
+		$object = PostType::object( $posttype );
+		return $object->labels->all_items;
 	}
 
 	// DEFAULT METHOD: content for overrided archive page
@@ -2896,7 +2961,7 @@ class Module extends Base
 	public function template_empty_content( $content )
 	{
 		$post  = get_post();
-		$title = $this->template_get_title( '' );
+		$title = $this->template_get_empty_title( '' );
 
 		$html = $this->template_get_empty_content();
 		$html.= $this->get_search_form( [ 'post_type[]' => $post->post_type ], $title );
@@ -2906,12 +2971,12 @@ class Module extends Base
 		if ( $add_new = $this->template_get_add_new( $post->post_type, $title ) )
 			$html.= '<p class="-actions">'.$add_new.'</p>';
 
-		return HTML::wrap( $html, $this->classs( 'empty-content' ) );
+		return HTML::wrap( $html, $this->base.'-empty-content' );
 	}
 
 	// DEFAULT FILTER
 	public function template_archive_content( $content )
 	{
-		return HTML::wrap( $this->template_get_archive_content(), $this->classs( 'archive-content' ) );
+		return HTML::wrap( $this->template_get_archive_content(), $this->base.'-archive-content' );
 	}
 }

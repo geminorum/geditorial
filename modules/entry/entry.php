@@ -11,7 +11,6 @@ use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\Taxonomy;
-use geminorum\gEditorial\WordPress\Theme;
 
 class Entry extends gEditorial\Module
 {
@@ -42,8 +41,9 @@ class Entry extends gEditorial\Module
 				'after_content',
 			],
 			'_content' => [
-				'empty_content',
 				'display_searchform',
+				'empty_content',
+				'archive_title',
 			],
 			'_supports' => [
 				'comment_status',
@@ -330,60 +330,10 @@ class Entry extends gEditorial\Module
 
 	public function template_include( $template )
 	{
-		if ( is_embed() || is_search() )
-			return $template;
-
-		$posttype = $this->constant( 'entry_cpt' );
-
-		if ( $posttype != $GLOBALS['wp_query']->get( 'post_type' ) )
-			return $template;
-
-		if ( ! is_404() && ! is_post_type_archive( $posttype ) )
-			return $template;
-
-		if ( is_404() ) {
-
-			nocache_headers();
-			// WordPress::doNotCache();
-
-			Theme::resetQuery( [
-				'ID'         => 0,
-				'post_title' => $this->template_get_title(),
-				'post_type'  => $posttype,
-				'is_single'  => TRUE,
-				'is_404'     => TRUE,
-			], [ $this, 'template_empty_content' ] );
-
-			$this->filter_append( 'post_class', 'empty-entry' );
-
-		} else {
-
-			$object = PostType::object( $posttype );
-
-			Theme::resetQuery( [
-				'ID'         => 0,
-				'post_title' => $object->labels->all_items,
-				'post_type'  => $posttype,
-				'is_single'  => TRUE,
-				'is_archive' => TRUE,
-			], [ $this, 'template_archive_content' ] );
-
-			$this->filter_append( 'post_class', 'archive-entry' );
-		}
-
-		$this->enqueue_styles();
-
-		defined( 'GNETWORK_DISABLE_CONTENT_ACTIONS' )
-			or define( 'GNETWORK_DISABLE_CONTENT_ACTIONS', TRUE );
-
-		defined( 'GEDITORIAL_DISABLE_CONTENT_ACTIONS' )
-			or define( 'GEDITORIAL_DISABLE_CONTENT_ACTIONS', TRUE );
-
-		// look again for template
-		// return get_singular_template();
-		return get_single_template();
+		return $this->do_template_include( $template, 'entry_cpt' );
 	}
 
+	// TODO: use alphabet module for a-z list of all entries
 	public function template_get_archive_content( $atts = [] )
 	{
 		$html = $this->get_search_form( 'entry_cpt' );
