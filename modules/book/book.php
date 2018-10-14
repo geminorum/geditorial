@@ -85,6 +85,7 @@ class Book extends gEditorial\Module
 			'type_tax'                => 'publication_type',
 			'status_tax'              => 'publication_status',
 			'size_tax'                => 'publication_size',
+			'publications_shortcode'  => 'publications',
 			'cover_shortcode'         => 'publication-cover',
 			'metakey_import_id'       => 'book_publication_id',
 			'metakey_import_title'    => 'book_publication_title',
@@ -364,6 +365,7 @@ class Book extends gEditorial\Module
 
 		$this->register_posttype( 'publication_cpt' );
 
+		$this->register_shortcode( 'publications_shortcode' );
 		$this->register_shortcode( 'cover_shortcode' );
 
 		if ( ! is_admin() )
@@ -516,6 +518,48 @@ class Book extends gEditorial\Module
 		echo '</div>';
 	}
 
+	public function publications_shortcode( $atts = [], $content = NULL, $tag = '' )
+	{
+		return ShortCode::listPosts(
+			'connected',
+			$this->constant( 'publication_cpt' ),
+			'',
+			array_merge( [
+				'connection'    => $this->constant( 'publication_cpt_p2p' ),
+				'posttypes'     => $this->posttypes(),
+				'title_cb'      => [ $this, 'shortcode_title_cb' ],
+				'item_after_cb' => [ $this, 'shortcode_item_after_cb' ],
+				'title_anchor'  => 'publications',
+				'title_link'    => FALSE,
+			], (array) $atts ),
+			$content,
+			$this->constant( 'publications_shortcode' )
+		);
+	}
+
+	public function shortcode_title_cb( $post, $args, $text, $link )
+	{
+		if ( FALSE === $args['title'] )
+			return FALSE;
+
+		if ( $post->post_type == $this->constant( 'publication_cpt' ) ) {
+
+			if ( $title = $this->get_setting( 'p2p_title_from' ) )
+				return $title;
+
+		} else if ( $title = $this->get_setting( 'p2p_title_to' ) ) {
+
+			return $title;
+		}
+
+		return FALSE;
+	}
+
+	public function shortcode_item_after_cb( $post, $args, $item )
+	{
+		return $this->p2p_get_meta_row( 'publication_cpt', $post->p2p_id, ' &ndash; ', '' );
+	}
+
 	public function cover_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
 		$args = [
@@ -581,6 +625,7 @@ class Book extends gEditorial\Module
 	}
 
 	// TODO: https://github.com/scribu/wp-posts-to-posts/wiki/Related-posts
+	// FIXME: DEPRECATED: use `publications_shortcode()`
 	public function list_p2p( $post = NULL, $class = '' )
 	{
 		if ( ! $post = get_post( $post ) )
