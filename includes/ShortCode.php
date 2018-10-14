@@ -397,6 +397,7 @@ class ShortCode extends Core\Base
 			'posttypes'      => $posttypes,
 			'future'         => 'on',
 			'mime_type'      => '', // only for attachments / like: `image`
+			'connection'     => '', // only for o2o
 			'orderby'        => '', // empty for default
 			'order'          => 'ASC',
 			'order_cb'       => FALSE, // NULL for default order ( by meta, like mag )
@@ -412,6 +413,223 @@ class ShortCode extends Core\Base
 		];
 	}
 
+	// list: assigned: posts by terms
+	// list: associated: posts by meta
+	// list: connected: posts by o2o
+	// list: atteched: posts by inheritance
+	// list: alphabetized: posts by alphabet
+	public static function listPosts( $list, $posttype, $taxonomy, $atts = [], $content = NULL, $tag = '' )
+	{
+		$defs = self::getDefaults( $posttype, $taxonomy, [ $posttype ] );
+		$args = shortcode_atts( $defs, $atts, $tag );
+
+		if ( FALSE === $args['context'] )
+			return NULL;
+
+		$key   = md5( serialize( $args ) );
+		$cache = wp_cache_get( $key, $posttype );
+
+		if ( FALSE !== $cache )
+			return $cache;
+
+		$html = $ref = $post = $term = $parent = $skip = '';
+
+		if ( $args['item_cb'] && ! is_callable( $args['item_cb'] ) )
+			$args['item_cb'] = FALSE;
+
+		$query = [
+			'post_type'        => $args['posttypes'],
+			'orderby'          => 'date',
+			'order'            => $args['order'],
+			'posts_per_page'   => $args['limit'],
+			'suppress_filters' => TRUE,
+			'no_found_rows'    => TRUE,
+		];
+
+		// FIXME: back-compat / DROP THIS
+		if ( 'page' == $args['orderby'] )
+			$args['orderby'] = 'order';
+
+		if ( $args['orderby'] && 'order' != $args['orderby'] )
+			$query['orderby'] = $args['orderby'];
+
+		if ( 'on' == $args['future'] )
+			$query['post_status'] = [ 'publish', 'future', 'draft' ];
+		else
+			$query['post_status'] = [ 'publish' ];
+
+		if ( 'attached' == $list ) {
+
+			$query['post_type'] = 'attachment';
+			$query['post_status'] = [ 'inherit' ];
+
+			if ( $parent = get_post( $args['id'] ) )
+				$query['post_parent'] = $parent->ID;
+
+			if ( $args['mime_type'] )
+				$query['post_mime_type'] = $args['mime_type'];
+
+			if ( ! $args['orderby'] )
+				$query['orderby'] = 'menu_order';
+
+		} else if ( 'connected' == $list ) {
+
+			if ( ! $post = get_post( $args['id'] ) )
+				return $content;
+
+			$query['connected_type']  = $args['connection'];
+			$query['connected_items'] = $post;
+
+		} else if ( 'all' == $args['id'] ) {
+
+			// do nothing, will collect all posts in posttype
+
+		} else if ( $args['id'] ) {
+
+			if ( ! $taxonomy )
+				return $content;
+
+			if ( ! $term = get_term_by( 'id', $args['id'], $taxonomy ) )
+				return $content;
+
+			$query['tax_query'] = [ [
+				'taxonomy' => $term->taxonomy,
+				'terms'    => [ $term->term_id ],
+			] ];
+
+		} else if ( $args['slug'] ) {
+
+			if ( ! $taxonomy )
+				return $content;
+
+			if ( ! $term = get_term_by( 'slug', $args['slug'], $taxonomy ) )
+				return $content;
+
+			$query['tax_query'] = [ [
+				'taxonomy' => $term->taxonomy,
+				'terms'    => [ $term->term_id ],
+			] ];
+
+		} else if ( is_post_type_archive( $posttype ) ) {
+
+			// do nothing, will collect all posts in posttype
+
+		} else if ( is_tax( $taxonomy ) ) {
+
+			if ( ! $term = get_queried_object() )
+				return $content;
+
+			$query['tax_query'] = [ [
+				'taxonomy' => $term->taxonomy,
+				'terms'    => [ $term->term_id ],
+			] ];
+
+		} else if ( 'associated' == $list && is_singular( $posttype ) ) {
+
+			if ( ! $post = get_post() )
+				return $content;
+
+			if ( $term_id = get_post_meta( $post->ID, '_'.$posttype.'_term_id', TRUE ) )
+				$term = get_term_by( 'id', intval( $term_id ), $taxonomy );
+
+			else
+				$term = get_term_by( 'slug', $post->post_name, $taxonomy );
+
+			if ( ! $term )
+				return $content;
+
+			$tax_query = [ [
+				'taxonomy' => $taxonomy,
+				'terms'    => [ $term->term_id ],
+			] ];
+
+		} else if ( 'associated' == $list || ( 'assigned' == $list && is_singular( $posttype ) ) ) {
+
+			if ( ! $post = get_post() )
+				return $content;
+
+			if ( ! $term = get_the_terms( $post, $taxonomy ) )
+				return $content;
+
+			$query['tax_query'] = [ [
+				'taxonomy' => $taxonomy,
+				'terms'    => wp_list_pluck( $term, 'term_id' ),
+			] ];
+
+			$skip = TRUE; // maybe queried itself!
+
+		} else if ( 'assigned' == $list ) {
+
+			return $content;
+		}
+
+		$class = new \WP_Query;
+		$items = $class->query( $query );
+		$count = count( $items );
+
+		if ( ! $count || ( 1 == $count && $skip ) )
+			return $content;
+
+		if ( 'assigned' == $list ) {
+
+			$args['title'] = self::termTitle( $term, $taxonomy, $args );
+
+			$ref = $term;
+
+		} else if ( 'associated' == $list || 'connected' == $list ) {
+
+			$args['title'] = self::postTitle( $post, $args );
+
+			$ref = $post;
+
+		} else if ( 'attached' == $list ) {
+
+			$args['title'] = self::postTitle( $parent, $args );
+
+			$ref = $parent;
+		}
+
+		if ( $args['orderby'] == 'order' ) {
+
+			// calback may change items, so even if one item
+			if ( $args['order_cb'] && is_callable( $args['order_cb'] ) )
+				$items = call_user_func_array( $args['order_cb'], [ $items, $args, $ref ] );
+
+			else if ( is_null( $args['order_cb'] ) && $count > 1 )
+				$items = Template::reorderPosts( $items, $args['field_module'], $args['order_start'], $args['order_order'] );
+		}
+
+		foreach ( $items as $item ) {
+
+			// caller must setup postdata
+			// REF: https://developer.wordpress.org/?p=2837#comment-874
+			// $GLOBALS['post'] = $item;
+			// setup_postdata( $item );
+
+			if ( $args['item_cb'] )
+				$html.= call_user_func_array( $args['item_cb'], [ $item, $args, $ref ] );
+
+			else
+				$html.= self::postItem( $item, $args );
+		}
+
+		if ( $args['list_tag'] )
+			$html = HTML::tag( $args['list_tag'], [
+				'class' => $args['list_class'],
+			], $html );
+
+		if ( $args['title'] )
+			$html = $args['title'].$html;
+
+		$html = self::wrap( $html, $tag, $args );
+
+		// wp_reset_postdata();
+		wp_cache_set( $key, $html, $posttype );
+
+		return $html;
+	}
+
+	// FIXME: DEPRECATED: use `Shortcode::listPosts( 'assigned' )`
 	public static function getTermPosts( $posttype, $taxonomy, $atts = [], $content = NULL, $tag = '' )
 	{
 		$args = shortcode_atts( self::getDefaults( $posttype, $taxonomy, [ $posttype ] ), $atts, $tag );
@@ -566,6 +784,7 @@ class ShortCode extends Core\Base
 		return $html;
 	}
 
+	// FIXME: DEPRECATED: use `Shortcode::listPosts( 'associated' )`
 	public static function getAssocPosts( $posttype, $taxonomy, $atts = [], $content = NULL, $tag = '' )
 	{
 		$args = shortcode_atts( self::getDefaults( $posttype, $taxonomy ), $atts, $tag );
