@@ -43,6 +43,11 @@ class Book extends gEditorial\Module
 				'insert_cover',
 				'insert_priority',
 			],
+			'_content' => [
+				'display_searchform',
+				'empty_content',
+				'archive_title',
+			],
 			'_supports' => [
 				'comment_status',
 				'shortcode_support',
@@ -516,6 +521,20 @@ class Book extends gEditorial\Module
 		echo $this->wrap_open( '-admin-metabox' );
 			MetaBox::checklistTerms( $post->ID, $box['args'] );
 		echo '</div>';
+	}
+
+	public function template_include( $template )
+	{
+		return $this->do_template_include( $template, 'publication_cpt' );
+	}
+
+	// TODO: use alphabet module for a-z list of all publications
+	public function template_get_archive_content( $atts = [] )
+	{
+		$html = $this->get_search_form( 'publication_cpt' );
+		$html.= $this->publications_shortcode( [ 'title' => FALSE ] );
+
+		return $html;
 	}
 
 	public function publications_shortcode( $atts = [], $content = NULL, $tag = '' )
