@@ -4,6 +4,7 @@ defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\WordPress;
@@ -43,7 +44,24 @@ class Attachments extends gEditorial\Module
 				],
 			],
 			'posttypes_option' => 'posttypes_option',
+			'_supports' => [
+				'shortcode_support',
+			],
 		];
+	}
+
+	protected function get_global_constants()
+	{
+		return [
+			'attachments_shortcode' => 'attachments',
+		];
+	}
+
+	public function init()
+	{
+		parent::init();
+
+		$this->register_shortcode( 'attachments_shortcode' );
 	}
 
 	public function init_ajax()
@@ -161,6 +179,23 @@ class Attachments extends gEditorial\Module
 			}
 
 		echo '</li>';
+	}
+
+	public function attachments_shortcode( $atts = [], $content = NULL, $tag = '' )
+	{
+		return ShortCode::listPosts(
+			'attached',
+			'attachment',
+			'',
+			array_merge( [
+				'title'        => _x( 'Attachments', 'Modules: Attachments: Shortcode', GEDITORIAL_TEXTDOMAIN ),
+				'title_title'  => _x( 'Attachments of %s', 'Modules: Attachments: Shortcode', GEDITORIAL_TEXTDOMAIN ),
+				'title_anchor' => 'attachments',
+				'title_link'   => FALSE,
+			], (array) $atts ),
+			$content,
+			$this->constant( 'attachments_shortcode' )
+		);
 	}
 
 	public function reports_settings( $sub )
