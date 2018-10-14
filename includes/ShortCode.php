@@ -54,6 +54,7 @@ class ShortCode extends Core\Base
 
 		$args = self::atts( [
 			'title'          => NULL, // '<a href="%2$s">%1$s</a>', // FALSE to disable
+			'title_cb'       => FALSE, // callback for title
 			'title_link'     => NULL, // FALSE to disable
 			'title_title'    => '',
 			'title_title_cb' => FALSE, // callback for title attr
@@ -65,6 +66,9 @@ class ShortCode extends Core\Base
 
 		$text = sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' );
 		$link = get_term_link( $term, $term->taxonomy );
+
+		if ( $args['title_cb'] && is_callable( $args['title_cb'] ) )
+			$args['title'] = call_user_func_array( $args['title_cb'], [ $term, $atts, $text, $link ] );
 
 		if ( $args['title_title_cb'] && is_callable( $args['title_title_cb'] ) )
 			$attr = call_user_func_array( $args['title_title_cb'], [ $term, $atts, $text ] );
@@ -202,6 +206,7 @@ class ShortCode extends Core\Base
 	{
 		$args = self::atts( [
 			'title'          => NULL, // FALSE to disable
+			'title_cb'       => FALSE, // callback for title
 			'title_link'     => NULL, // FALSE to disable
 			'title_title'    => '',
 			'title_title_cb' => FALSE, // callback for title attr
@@ -211,6 +216,10 @@ class ShortCode extends Core\Base
 		], $atts );
 
 		$text = Helper::getPostTitle( $post, FALSE );
+		$link = $post && in_array( $post->post_status, [ 'publish', 'inherit' ] ) ? get_permalink( $post ) : '';
+
+		if ( $args['title_cb'] && is_callable( $args['title_cb'] ) )
+			$args['title'] = call_user_func_array( $args['title_cb'], [ $post, $atts, $text, $link ] );
 
 		if ( is_null( $args['title'] ) )
 			$args['title'] = $text;
@@ -230,7 +239,7 @@ class ShortCode extends Core\Base
 		if ( $args['title'] ) {
 			if ( is_null( $args['title_link'] ) && $post )
 				$args['title'] = HTML::tag( 'a', [
-					'href'  => get_permalink( $post ),
+					'href'  => $link,
 					'title' => $attr,
 				], $args['title'] );
 
@@ -361,6 +370,7 @@ class ShortCode extends Core\Base
 			'id'             => '',
 			'slug'           => '',
 			'title'          => NULL, // FALSE to disable
+			'title_cb'       => FALSE,
 			'title_link'     => NULL, // FALSE to disable
 			'title_title'    => _x( 'Permanent link', 'ShortCode: Title Attr', GEDITORIAL_TEXTDOMAIN ),
 			'title_title_cb' => FALSE, // callback for title attr
