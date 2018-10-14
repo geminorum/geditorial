@@ -63,34 +63,39 @@ class ShortCode extends Core\Base
 			'title_after'    => '', // '<div class="-desc">%3$s</div>',
 		], $atts );
 
+		$text = sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' );
+		$link = get_term_link( $term, $term->taxonomy );
+
 		if ( $args['title_title_cb'] && is_callable( $args['title_title_cb'] ) )
-			$attr = call_user_func_array( $args['title_title_cb'], [ $term, $atts ] );
+			$attr = call_user_func_array( $args['title_title_cb'], [ $term, $atts, $text ] );
 
 		else if ( $args['title_title'] )
-			$attr = sprintf( $args['title_title'], ( $args['title'] ?: '' ) );
+			$attr = sprintf( $args['title_title'], ( $text ?: '' ) );
 
 		else
 			$attr = FALSE;
 
 		if ( is_null( $args['title'] ) ) {
-			$args['title'] = $term ? sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' ) : FALSE;
 
-		} else if ( $args['title'] && $term && Text::has( $args['title'], '%' ) ) {
+			$args['title'] = $text;
+
+		} else if ( $args['title'] && Text::has( $args['title'], '%' ) ) {
 
 			$args['title'] = sprintf( $args['title'],
-				sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' ),
-				get_term_link( $term, $term->taxonomy ),
+				$text,
+				$link,
 				HTML::escape( trim( strip_tags( $term->description ) ) ),
-				( $attr ? $attr : '' )
+				( $attr ?: '' )
 			);
 
 			$args['title_link'] = FALSE;
 		}
 
 		if ( $args['title'] ) {
+
 			if ( is_null( $args['title_link'] ) && $term )
 				$args['title'] = HTML::tag( 'a', [
-					'href'  => get_term_link( $term, $term->taxonomy ),
+					'href'  => $link,
 					'title' => $attr,
 				], $args['title'] );
 
@@ -111,8 +116,8 @@ class ShortCode extends Core\Base
 
 			if ( $term && Text::has( $args['title_after'], '%' ) )
 				$args['title_after'] = sprintf( $args['title_after'],
-					sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' ),
-					get_term_link( $term, $term->taxonomy ),
+					$text,
+					$link,
 					Helper::prepDescription( $term->description )
 				);
 
@@ -138,6 +143,7 @@ class ShortCode extends Core\Base
 		], $atts );
 
 		$text = sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' );
+		$link = get_term_link( $term, $term->taxonomy );
 
 		if ( is_null( $args['item_text'] ) )
 			$title = $text;
@@ -156,7 +162,7 @@ class ShortCode extends Core\Base
 
 		if ( $term->count && $args['item_link'] )
 			$item = HTML::tag( 'a', [
-				'href'  => get_term_link( $term ),
+				'href'  => $link,
 				'title' => $args['item_title'] ? sprintf( $args['item_title'], $text ) : FALSE,
 				'class' => '-link -tax-'.$term->taxonomy,
 			], $title );
@@ -174,8 +180,8 @@ class ShortCode extends Core\Base
 
 			if ( Text::has( $args['item_after'], '%' ) )
 				$args['item_after'] = sprintf( $args['item_after'],
-					sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' ),
-					get_term_link( $term, $term->taxonomy ),
+					$text,
+					$link,
 					Helper::prepDescription( $term->description )
 				);
 
@@ -204,14 +210,19 @@ class ShortCode extends Core\Base
 			'title_class'    => '-title',
 		], $atts );
 
+		$text = Helper::getPostTitle( $post, FALSE );
+
 		if ( is_null( $args['title'] ) )
-			$args['title'] = $post ? Helper::getPostTitle( $post, FALSE ) : FALSE;
+			$args['title'] = $text;
+
+		else if ( $args['title'] && Text::has( $args['title'], '%' ) )
+			$args['title'] = sprintf( $args['title'], ( $text ?: '' ) );
 
 		if ( $args['title_title_cb'] && is_callable( $args['title_title_cb'] ) )
-			$attr = call_user_func_array( $args['title_title_cb'], [ $post, $atts ] );
+			$attr = call_user_func_array( $args['title_title_cb'], [ $post, $atts, $text ] );
 
 		else if ( $args['title_title'] )
-			$attr = sprintf( $args['title_title'], ( $args['title'] ?: '' ) );
+			$attr = sprintf( $args['title_title'], ( $text ?: '' ) );
 
 		else
 			$attr = FALSE;
@@ -340,7 +351,7 @@ class ShortCode extends Core\Base
 			'slug'           => '',
 			'title'          => NULL, // FALSE to disable
 			'title_link'     => NULL, // FALSE to disable
-			'title_title'    => _x( 'Permanent link', 'ShortCode: Term Title Attr', GEDITORIAL_TEXTDOMAIN ),
+			'title_title'    => _x( 'Permanent link', 'ShortCode: Title Attr', GEDITORIAL_TEXTDOMAIN ),
 			'title_title_cb' => FALSE, // callback for title attr
 			'title_tag'      => 'h3',
 			'title_anchor'   => $taxonomy.'-%2$s',
