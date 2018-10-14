@@ -474,11 +474,19 @@ class ShortCode extends Core\Base
 
 		} else if ( 'connected' == $list ) {
 
-			if ( ! $post = get_post( $args['id'] ) )
-				return $content;
+			if ( is_post_type_archive( $posttype ) ) {
 
-			$query['connected_type']  = $args['connection'];
-			$query['connected_items'] = $post;
+				$query['post_type'] = $posttype;
+
+			} else if ( $post = get_post( $args['id'] ) ) {
+
+				$query['connected_type']  = $args['connection'];
+				$query['connected_items'] = $post;
+
+			} else {
+
+				return $content;
+			}
 
 		} else if ( 'all' == $args['id'] ) {
 
@@ -512,7 +520,7 @@ class ShortCode extends Core\Base
 
 		} else if ( is_post_type_archive( $posttype ) ) {
 
-			// do nothing, will collect all posts in posttype
+			$query['post_type'] = $posttype;
 
 		} else if ( is_tax( $taxonomy ) ) {
 
