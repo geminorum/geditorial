@@ -542,6 +542,16 @@ class Settings extends Core\Base
 		];
 	}
 
+	public static function getSetting_archive_title( $description = NULL )
+	{
+		return [
+			'field'       => 'archive_title',
+			'type'        => 'text',
+			'title'       => _x( 'Archive Title', 'Setting: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+			'description' => $description ?: _x( 'Displays as archive title. Leave blank for default.', 'Setting: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+		];
+	}
+
 	public static function getSetting_display_searchform( $description = NULL )
 	{
 		return [
