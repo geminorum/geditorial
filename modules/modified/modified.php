@@ -129,7 +129,7 @@ class Modified extends gEditorial\Module
 		$columns = [ 'title' => Helper::tableColumnPostTitleSummary() ];
 
 		if ( $this->get_setting( 'dashboard_statuses', FALSE ) )
-			$columns['status'] = Helper::tableColumnPostStatus();
+			$columns['status'] = Helper::tableColumnPostStatusSummary();
 
 		if ( $this->get_setting( 'dashboard_authors', FALSE ) )
 			$columns['author'] = Helper::tableColumnPostAuthorSummary();
