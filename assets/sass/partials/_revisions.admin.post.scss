@@ -11,9 +11,11 @@
 // }
 
 .geditorial-admin-wrap.-revisions {
-  @include clearfix;
+  @include theme-clearfix;
+
   padding: 10px;
   // text-align: left;
+
   .-purge {
     color: #a00;
 

@@ -1,0 +1,33 @@
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+/// gEditorial Partials: Front: Template ---------------------------------------
+
+.hentry.empty-entry {
+  .entry-title,
+  .entry-title > a {
+    color: $brand-danger;
+
+    &:hover {
+      color: darken($brand-danger, 20%);
+    }
+  }
+}
+
+.-wrap.geditorial-empty-content,
+.-wrap.geditorial-archive-content {
+  color: $gray-light;
+
+  > p + form {
+    margin-top: 1rem;
+  }
+
+  form {
+    margin-bottom: 1rem;
+  }
+
+  p.-actions {
+    @include theme-clearfix;
+    text-indent: 0;
+  }
+}

@@ -5,7 +5,7 @@
 
 .geditorial-wrap.-like {
   @include mainwrap();
-  @include clearfix();
+  @include theme-clearfix;
 
   line-height: 30px;
 
