@@ -1,3 +1,42 @@
+### 3.15.2
+* main/plugin: content actions api
+* main/plugin: initial support for dark mode
+* main/module: optional support for rest
+* main/module: help tab/sidebar tweaks
+* main/module: refactoring before/after content actions
+* main/module: exclude posttypes from gutenberg by default
+* main/module: better exclusion for supported posttypes/taxonomies
+* main/module: permalink api revised
+* main/module: internal api for front-end empty/archive pages
+* main/metabox: using internal count posts
+* main/metabox: :warning: fixed no terms found
+* main/helper: initial mustache api
+* main/shortcode: next gen list of posts
+* main/shortcode: support for attachments
+* main/shortcode: better item/title callbacks
+* main/shortcode: callback for item text
+* main/shortcode: callback for post/term title 
+* main/shortcode: download links for attachments
+* main/settings: removed header nav wrapper
+* main/scripts: :up: autosize 4.0.2
+* main/template: term image api
+* module/attachments: attachments shortcode
+* module/book: front-end content overrides
+* module/book: publications shortcode
+* module/book: :warning: correct post for p2p connected list
+* module/config: filters for list.js
+* module/drafts: preview for viewable posttypes only
+* module/entry: correct status on 404s
+* module/entry: no cache headers on 404s
+* module/entry: custom empty message
+* module/entry: fallback title for empty content
+* module/estimated: extract logic for the output
+* module/revisions: :warning: check for defined `WP_POST_REVISIONS`
+* module/headings: fixed not passing item into callback
+* module/terms: term image template
+* module/tweaks: better exclusion of supported posttypes
+* module/widgets: wprest-posts: custom endpoint
+
 ### 3.15.1
 * assets/package: virastar updated to 0.13.0
 * main/main: using psr-4 autoload for core and main files
