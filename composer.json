@@ -21,16 +21,16 @@
   },
   "require": {
     "php": ">=5.5.10",
-    "composer/installers": "^1.5",
+    "composer/installers": "^1.6",
     "mustache/mustache": "^2.12",
     "kzykhys/php-csv-parser": "^1.4",
     "nicmart/string-template": "^0.1.1",
     "michelf/php-markdown": "^1.8",
-    "league/html-to-markdown": "^4.7",
+    "league/html-to-markdown": "^4.8",
     "rarst/wpdatetime": "^0.3.0"
   },
   "require-dev": {
-    "nesbot/carbon": "^1.33",
+    "nesbot/carbon": "^1.34",
     "evert/sitemap-php": "^1.2",
     "eluceo/ical": "^0.11.4",
     "johngrogg/ics-parser": "^2.1",
