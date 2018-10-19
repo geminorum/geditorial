@@ -148,7 +148,7 @@ class Alphabet extends gEditorial\Module
 					$html.= '</dt>';
 
 					if ( $args['excerpt'] && $post->post_excerpt )
-						$html.= '<dd class="-excerpt">'.wpautop( Helper::prepDescription( $post->post_excerpt ), FALSE ).'</dd>';
+						$html.= '<dd class="-excerpt">'.wpautop( Helper::prepDescription( $post->post_excerpt, TRUE, FALSE ), FALSE ).'</dd>';
 					else
 						$html.= '<dd class="-empty"></dd>';
 				}
@@ -249,7 +249,7 @@ class Alphabet extends gEditorial\Module
 					$html.= '</dt>';
 
 					if ( $args['description'] && $term->description )
-						$html.= '<dd class="-description">'.wpautop( Helper::prepDescription( $term->description ), FALSE ).'</dd>';
+						$html.= '<dd class="-description">'.wpautop( Helper::prepDescription( $term->description, TRUE, FALSE ), FALSE ).'</dd>';
 					else
 						$html.= '<dd class="-empty"></dd>';
 				}

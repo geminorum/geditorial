@@ -116,19 +116,19 @@ class Helper extends Core\Base
 		return $array;
 	}
 
-	public static function prepTitle( $text )
+	public static function prepTitle( $text, $post_id = 0 )
 	{
 		if ( ! $text )
 			return '';
 
-		$text = apply_filters( 'the_title', $text, 0 );
+		$text = apply_filters( 'the_title', $text, $post_id );
 		$text = apply_filters( 'string_format_i18n', $text );
 		$text = apply_filters( 'gnetwork_typography', $text );
 
 		return trim( $text );
 	}
 
-	public static function prepDescription( $text, $shortcode = TRUE )
+	public static function prepDescription( $text, $shortcode = TRUE, $autop = TRUE )
 	{
 		if ( ! $text )
 			return '';
@@ -139,7 +139,7 @@ class Helper extends Core\Base
 		$text = apply_filters( 'html_format_i18n', $text );
 		$text = apply_filters( 'gnetwork_typography', $text );
 
-		return wpautop( $text );
+		return $autop ? wpautop( $text ) : $text;
 	}
 
 	// @SOURCE: P2
@@ -622,7 +622,7 @@ class Helper extends Core\Base
 					], get_post_meta( $row->ID, '_wp_attached_file', TRUE ) );
 
 				if ( $excerpt && $row->post_excerpt )
-					$title.= wpautop( Helper::prepDescription( $row->post_excerpt ), FALSE );
+					$title.= wpautop( Helper::prepDescription( $row->post_excerpt, FALSE, FALSE ), FALSE );
 
 				return $title;
 			},
@@ -638,7 +638,7 @@ class Helper extends Core\Base
 			'title'    => _x( 'Excerpt', 'Helper: Table Column: Post Excerpt', GEDITORIAL_TEXTDOMAIN ),
 			'callback' => function( $value, $row, $column, $index ) {
 				return $row->post_excerpt
-					? wpautop( Helper::prepDescription( $row->post_excerpt ), FALSE )
+					? wpautop( Helper::prepDescription( $row->post_excerpt, FALSE, FALSE ), FALSE )
 					: '&mdash;';
 			},
 		];
