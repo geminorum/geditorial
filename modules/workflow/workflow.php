@@ -509,7 +509,7 @@ class Workflow extends gEditorial\Module
 				$class.= ' hidden';
 
 			// TODO: changes via js and `status-` class
-			$info.= HTML::wrap( Helper::prepDescription( $desc, FALSE ), $class  );
+			$info.= HTML::wrap( Helper::prepDescription( $desc, FALSE ), $class );
 		}
 
 		$html = HTML::tag( 'select', [

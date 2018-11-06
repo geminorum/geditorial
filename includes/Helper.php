@@ -70,14 +70,14 @@ class Helper extends Core\Base
 	}
 
 	// override to use plugin version
-	public static function linkStyleSheet( $url, $version = GEDITORIAL_VERSION, $media = FALSE )
+	public static function linkStyleSheet( $url, $version = GEDITORIAL_VERSION, $media = FALSE, $echo = TRUE )
 	{
-		HTML::linkStyleSheet( $url, $version, $media );
+		return HTML::linkStyleSheet( $url, $version, $media, $echo );
 	}
 
-	public static function linkStyleSheetAdmin( $page )
+	public static function linkStyleSheetAdmin( $page, $echo = TRUE )
 	{
-		HTML::linkStyleSheet( GEDITORIAL_URL.'assets/css/admin.'.$page.( is_rtl() ? '-rtl' : '' ).'.css', GEDITORIAL_VERSION );
+		return HTML::linkStyleSheet( GEDITORIAL_URL.'assets/css/admin.'.$page.( is_rtl() ? '-rtl' : '' ).'.css', GEDITORIAL_VERSION, 'all', $echo );
 	}
 
 	public static function kses( $text, $context = 'none', $allowed = NULL )

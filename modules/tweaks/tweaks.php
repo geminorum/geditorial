@@ -169,7 +169,7 @@ class Tweaks extends gEditorial\Module
 				'atts_column_title'     => _x( 'Attributes', 'Modules: Tweaks: Column Title', GEDITORIAL_TEXTDOMAIN ),
 				'id_column_title'       => _x( 'ID', 'Modules: Tweaks: Column Title', GEDITORIAL_TEXTDOMAIN ),
 				'thumb_column_title'    => _x( 'Featured', 'Modules: Tweaks: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				'order_column_title'    => _x( 'Order', 'Modules: Tweaks: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'order_column_title'    => _x( 'O', 'Modules: Tweaks: Column Title', GEDITORIAL_TEXTDOMAIN ),
 				'user_column_title'     => _x( 'User', 'Modules: Tweaks: Column Title', GEDITORIAL_TEXTDOMAIN ),
 				'contacts_column_title' => _x( 'Contacts', 'Modules: Tweaks: Column Title', GEDITORIAL_TEXTDOMAIN ),
 				'id_column_title'       => _x( 'ID', 'Modules: Tweaks: Column Title', GEDITORIAL_TEXTDOMAIN ),

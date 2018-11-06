@@ -164,6 +164,7 @@ class Settings extends Core\Base
 			'attachment',
 			'inbound_message',
 			'bp-email',
+			'wp_block',
 		], (array) $extra );
 	}
 

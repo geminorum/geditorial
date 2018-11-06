@@ -1591,7 +1591,7 @@ class Module extends Base
 		return gEditorial()->roles->constant( 'base_type' );
 	}
 
-	public function register_posttype( $constant, $atts = [], $taxonomies = [ 'post_tag' ], $gutenberg = FALSE )
+	public function register_posttype( $constant, $atts = [], $taxonomies = [ 'post_tag' ], $block_editor = FALSE )
 	{
 		if ( is_null( $taxonomies ) )
 			$taxonomies = $this->taxonomies();
@@ -1649,7 +1649,8 @@ class Module extends Base
 		if ( is_wp_error( $object ) )
 			return FALSE;
 
-		if ( ! $gutenberg )
+		if ( ! $block_editor )
+			// add_filter( 'use_block_editor_for_post_type', function( $edit, $type ) use( $posttype ) {
 			add_filter( 'gutenberg_can_edit_post_type', function( $edit, $type ) use( $posttype ) {
 				return $posttype === $type ? FALSE : $edit;
 			}, 12, 2 );
