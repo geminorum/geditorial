@@ -310,9 +310,9 @@ class WordPress extends Base
 
 	public static function getPostNewLink( $posttype, $extra = array() )
 	{
-		return add_query_arg( array_merge( array(
-			'post_type' => $posttype,
-		), $extra ), admin_url( 'post-new.php' ) );
+		$args = 'post' == $posttype ? array() : array( 'post_type' => $posttype );
+
+		return add_query_arg( array_merge( $args, $extra ), admin_url( 'post-new.php' ) );
 	}
 
 	public static function getPostAttachmentsLink( $post_id, $extra = array() )
@@ -337,12 +337,19 @@ class WordPress extends Base
 		return FALSE;
 	}
 
-	public static function getUserEditLink( $user_id, $extra = array() )
+	public static function getUserEditLink( $user_id, $extra = array(), $network = FALSE, $check = TRUE )
 	{
-		if ( current_user_can( 'edit_user', $user_id ) )
-			return add_query_arg( array_merge( array(
-				'user_id' => $user_id,
-			), $extra ), admin_url( 'user-edit.php' ) );
+		if ( ! $user_id )
+			return FALSE;
+
+		if ( $check && ! current_user_can( 'edit_user', $user_id ) )
+			return FALSE;
+
+		return add_query_arg( array_merge( array(
+			'user_id' => $user_id,
+		), $extra ), $network
+			? network_admin_url( 'user-edit.php' )
+			: admin_url( 'user-edit.php' ) );
 
 		return FALSE;
 	}
