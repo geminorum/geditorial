@@ -38,6 +38,11 @@ class Modified extends gEditorial\Module
 				'dashboard_count',
 			],
 			'_frontend' => [
+				[
+					'field'       => 'last_published',
+					'title'       => _x( 'Last Published', 'Modules: Modified: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Displays last published instead of modified date.', 'Modules: Modified: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+				],
 				'insert_content',
 				[
 					'field'       => 'insert_prefix',
@@ -262,7 +267,7 @@ class Modified extends gEditorial\Module
 		return ShortCode::wrap( $html, 'site-modified', $args, FALSE );
 	}
 
-	public function get_site_modified( $format = NULL, $posttypes = NULL )
+	public function get_site_modified( $format = NULL, $posttypes = NULL, $published = NULL )
 	{
 		global $wpdb;
 
@@ -278,24 +283,35 @@ class Modified extends gEditorial\Module
 		else if ( ! is_array( $posttypes ) )
 			$posttypes = [ $posttypes ];
 
+		if ( is_null( $published ) )
+			$published = $this->get_setting( 'last_published', FALSE );
+
+		if ( $published ) {
+			$date = 'post_date';
+			$gmt  = 'post_date_gmt';
+		} else {
+			$date = 'post_modified';
+			$gmt  = 'post_modified_gmt';
+		}
+
 		if ( count( $posttypes ) ) {
 
 			$query = "
-				SELECT post_modified, post_modified_gmt
+				SELECT {$date}, {$gmt}
 				FROM {$wpdb->posts}
 				WHERE post_status = 'publish'
 				AND post_type IN ( '".join( "', '", esc_sql( $posttypes ) )."' )
-				ORDER BY post_modified_gmt DESC
+				ORDER BY {$gmt} DESC
 				LIMIT 1
 			";
 
 		} else {
 
 			$query = "
-				SELECT post_modified, post_modified_gmt
+				SELECT {$date}, {$gmt}
 				FROM {$wpdb->posts}
 				WHERE post_status = 'publish'
-				ORDER BY post_modified_gmt DESC
+				ORDER BY {$gmt} DESC
 				LIMIT 1
 			";
 		}
@@ -303,11 +319,11 @@ class Modified extends gEditorial\Module
 		$results = $wpdb->get_results( $query );
 
 		if ( FALSE === $format )
-			return $results[0]->post_modified;
+			return $results[0]->{$date};
 
 		if ( TRUE === $format )
-			return [ $results[0]->post_modified, $results[0]->post_modified_gmt ];
+			return [ $results[0]->{$date}, $results[0]->{$gmt} ];
 
-		return date_i18n( $format, strtotime( $results[0]->post_modified ), FALSE );
+		return date_i18n( $format, strtotime( $results[0]->{$date} ), FALSE );
 	}
 }
