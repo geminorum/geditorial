@@ -90,6 +90,11 @@ class Modified extends gEditorial\Module
 		$this->register_shortcode( 'site_modified_shortcode' );
 
 		$this->filter( 'wp_nav_menu_items', 2 );
+
+		if ( ! is_admin() )
+			return;
+
+		add_action( 'gnetwork_navigation_help_placeholders', [ $this, 'help_placeholders' ], 10, 2 );
 	}
 
 	public function template_redirect()
@@ -230,6 +235,11 @@ class Modified extends gEditorial\Module
 			$this->site_modified = $this->get_site_modified();
 
 		return preg_replace( '%{SITE_LAST_MODIFIED}%', $this->site_modified, $items );
+	}
+
+	public function help_placeholders( $before, $after )
+	{
+		echo $before.'<code>{SITE_LAST_MODIFIED}</code>'.$after;
 	}
 
 	public function site_modified_shortcode( $atts = [], $content = NULL, $tag = '' )
