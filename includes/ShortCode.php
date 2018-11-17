@@ -141,7 +141,7 @@ class ShortCode extends Core\Base
 			'item_title_cb' => FALSE,
 			'item_tag'      => 'li',
 			'item_anchor'   => $term->taxonomy.'-%2$s',
-			'item_class'    => '-item',
+			'item_class'    => '-item do-sincethen',
 			'item_after'    => '',
 			'item_after_cb' => FALSE,
 		], $atts );
@@ -196,7 +196,7 @@ class ShortCode extends Core\Base
 			return $before.$title.$after;
 
 		return HTML::tag( $args['item_tag'], [
-			'id'    => sprintf( $args['item_anchor'], $term->term_id, $term->slug ),
+			'id'    => $args['item_anchor'] ? sprintf( $args['item_anchor'], $term->term_id, $term->slug ) : FALSE,
 			'class' => $args['item_class'],
 		], $before.$title.$after );
 	}
@@ -272,7 +272,7 @@ class ShortCode extends Core\Base
 			'item_title_cb' => FALSE,
 			'item_tag'      => 'li',
 			'item_anchor'   => $post->post_type.'-%2$s',
-			'item_class'    => '-item',
+			'item_class'    => '-item do-sincethen',
 			'item_after'    => '',
 			'item_after_cb' => FALSE,
 			'item_download' => TRUE, // only for attachments
@@ -359,8 +359,9 @@ class ShortCode extends Core\Base
 			return $before.$item.$after;
 
 		return HTML::tag( $args['item_tag'], [
-			'id'    => sprintf( $args['item_anchor'], $post->ID, $post->post_name ),
-			'class' => $args['item_class'],
+			'id'       => $args['item_anchor'] ? sprintf( $args['item_anchor'], $post->ID, $post->post_name ) : FALSE,
+			'class'    => $args['item_class'],
+			'datetime' => date( 'c', strtotime( $post->post_date_gmt ) ),
 		], $before.$item.$after );
 	}
 
@@ -384,7 +385,7 @@ class ShortCode extends Core\Base
 			'item_title_cb'  => FALSE,
 			'item_tag'       => 'li',
 			'item_anchor'    => $posttype.'-%2$s',
-			'item_class'     => '-item',
+			'item_class'    => '-item do-sincethen',
 			'item_after'     => '',
 			'item_after_cb'  => FALSE,
 			'item_download'  => TRUE, // only for attachments
