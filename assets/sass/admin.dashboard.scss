@@ -54,7 +54,13 @@
 
     .-cell-follow,
     .-cell-author {
-      @include link-colors($gray-light, null, $gray);
+      a {
+        color: $gray-light;
+
+        &:hover {
+          color: $gray;
+        }
+      }
     }
 
     .-cell-author,
