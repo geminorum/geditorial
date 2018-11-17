@@ -56,11 +56,9 @@
         "assets/components/persiantools/dist/persiantools.min.js"
       ],
       "mediaelement-plugins": {
-        "mapping": [
-          {
-            "assets/components/mediaelement-plugins/dist/source-chooser/**": "source-chooser"
-          }
-        ]
+        "mapping": [{
+          "assets/components/mediaelement-plugins/dist/source-chooser/**": "source-chooser"
+        }]
       }
     }
   }
