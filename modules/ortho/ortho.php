@@ -8,6 +8,7 @@ use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\WordPress;
+use geminorum\gEditorial\WordPress\PostType;
 
 use geminorum\gNetwork\Core\Orthography;
 
@@ -157,6 +158,9 @@ class Ortho extends gEditorial\Module
 	public function current_screen( $screen )
 	{
 		if ( 'post' == $screen->base ) {
+
+			if ( PostType::supportBlocks( $screen->post_type ) )
+				return;
 
 			if ( in_array( $screen->post_type, $this->posttypes() ) )
 				$this->enqueueVirastar();

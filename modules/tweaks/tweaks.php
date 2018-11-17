@@ -387,6 +387,9 @@ class Tweaks extends gEditorial\Module
 	// we use this hook to early control `current_screen` on other modules
 	public function add_meta_boxes( $posttype, $post )
 	{
+		if ( PostType::supportBlocks( $posttype ) )
+			return;
+
 		$screen = get_current_screen();
 		$object = PostType::object( $posttype );
 

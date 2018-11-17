@@ -1650,8 +1650,7 @@ class Module extends Base
 			return FALSE;
 
 		if ( ! $block_editor )
-			// add_filter( 'use_block_editor_for_post_type', function( $edit, $type ) use( $posttype ) {
-			add_filter( 'gutenberg_can_edit_post_type', function( $edit, $type ) use( $posttype ) {
+			add_filter( 'use_block_editor_for_post_type', function( $edit, $type ) use( $posttype ) {
 				return $posttype === $type ? FALSE : $edit;
 			}, 12, 2 );
 
@@ -2044,6 +2043,9 @@ class Module extends Base
 	{
 		$posttype = PostType::object( $this->constant( $constant ) );
 
+		if ( PostType::supportBlocks( $posttype->name ) )
+			return;
+
 		if ( ! apply_filters( $this->base.'_module_metabox_author', TRUE, $posttype->name ) )
 			return;
 
@@ -2062,6 +2064,9 @@ class Module extends Base
 	public function add_meta_box_excerpt( $constant, $callback = 'post_excerpt_meta_box' )
 	{
 		$posttype = $this->constant( $constant );
+
+		if ( PostType::supportBlocks( $posttype ) )
+			return;
 
 		if ( ! apply_filters( $this->base.'_module_metabox_excerpt', TRUE, $posttype ) )
 			return;

@@ -6,6 +6,7 @@ use geminorum\gEditorial\Core\Arraay;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Icon;
 use geminorum\gEditorial\Core\WordPress;
+use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\User;
 
 class Plugin
@@ -326,8 +327,12 @@ class Plugin
 	}
 
 	// @REF: https://wpartisan.me/?p=434
+	// @REF: https://core.trac.wordpress.org/ticket/45283
 	public function edit_form_after_title()
 	{
+		if ( PostType::supportBlocks( $GLOBALS['post']->post_type ) )
+			return;
+
 		do_meta_boxes( get_current_screen(), 'after_title', $GLOBALS['post'] );
 	}
 
