@@ -598,7 +598,18 @@ class Text extends Base
 		// http://php.net/manual/en/function.str-word-count.php#85579
 		// return preg_match_all( "/\\p{L}[\\p{L}\\p{Mn}\\p{Pd}'\\x{2019}]*/u", $html, $matches );
 
-		// http://php.net/manual/en/function.str-word-count.php#107363
+		/**
+		* This simple utf-8 word count function (it only counts)
+		* is a bit faster then the one with preg_match_all
+		* about 10x slower then the built-in str_word_count
+		*
+		* If you need the hyphen or other code points as word-characters
+		* just put them into the [brackets] like [^\p{L}\p{N}\'\-]
+		* If the pattern contains utf-8, utf8_encode() the pattern,
+		* as it is expected to be valid utf-8 (using the u modifier).
+		*
+		* @link http://php.net/manual/en/function.str-word-count.php#107363
+		**/
 		return count( preg_split( '~[^\p{L}\p{N}\']+~u', $html ) );
 	}
 

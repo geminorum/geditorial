@@ -187,4 +187,12 @@ class PostType extends Core\Base
 			),
 		), $image );
 	}
+
+	public static function supportBlocks( $posttype )
+	{
+		if ( ! function_exists( 'use_block_editor_for_post_type' ) )
+			return FALSE;
+
+		return use_block_editor_for_post_type( $posttype );
+	}
 }
