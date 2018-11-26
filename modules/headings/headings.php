@@ -89,7 +89,11 @@ class Headings extends gEditorial\Module
 			return $match[0];
 
 		if ( $match[2] )
-			$atts = HTML::getAtts( $match[2], [ 'id' => '' ] );
+			$atts = HTML::parseAtts( $match[2], [ 'id' => '', 'class' => '' ] );
+
+		if ( ! empty( $atts['class'] )
+			&& in_array( 'numeral-section-title', HTML::attrClass( $atts['class'] ) ) )
+				return $match[0];
 
 		if ( ! empty( $atts['id'] ) ) {
 			$slug = $atts['id'];
