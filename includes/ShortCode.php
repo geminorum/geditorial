@@ -140,7 +140,7 @@ class ShortCode extends Core\Base
 			'item_title'    => '', // use %s for post title
 			'item_title_cb' => FALSE,
 			'item_tag'      => 'li',
-			'item_anchor'   => $term->taxonomy.'-%2$s',
+			'item_anchor'   => FALSE, // $term->taxonomy.'-%2$s',
 			'item_class'    => '-item do-sincethen',
 			'item_after'    => '',
 			'item_after_cb' => FALSE,
@@ -271,7 +271,7 @@ class ShortCode extends Core\Base
 			'item_title'    => '', // use %s for post title
 			'item_title_cb' => FALSE,
 			'item_tag'      => 'li',
-			'item_anchor'   => $post->post_type.'-%2$s',
+			'item_anchor'   => FALSE, // $post->post_type.'-%2$s',
 			'item_class'    => '-item do-sincethen',
 			'item_after'    => '',
 			'item_after_cb' => FALSE,
@@ -384,7 +384,7 @@ class ShortCode extends Core\Base
 			'item_title'     => '', // use %s for post title
 			'item_title_cb'  => FALSE,
 			'item_tag'       => 'li',
-			'item_anchor'    => $posttype.'-%2$s',
+			'item_anchor'    => FALSE, // $posttype.'-%2$s',
 			'item_class'    => '-item do-sincethen',
 			'item_after'     => '',
 			'item_after_cb'  => FALSE,

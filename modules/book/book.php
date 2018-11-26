@@ -532,7 +532,7 @@ class Book extends gEditorial\Module
 	public function template_get_archive_content( $atts = [] )
 	{
 		$html = $this->get_search_form( 'publication_cpt' );
-		$html.= $this->publications_shortcode( [ 'title' => FALSE ] );
+		$html.= $this->publications_shortcode( [ 'title' => FALSE, 'wrap' => FALSE ] );
 
 		return $html;
 	}

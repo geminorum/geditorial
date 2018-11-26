@@ -337,7 +337,7 @@ class Entry extends gEditorial\Module
 	public function template_get_archive_content( $atts = [] )
 	{
 		$html = $this->get_search_form( 'entry_cpt' );
-		$html.= $this->section_shortcode( [ 'id' => 'all' ] );
+		$html.= $this->section_shortcode( [ 'id' => 'all', 'wrap' => FALSE ] );
 
 		return $html;
 	}
