@@ -361,7 +361,7 @@ class ShortCode extends Core\Base
 		return HTML::tag( $args['item_tag'], [
 			'id'       => $args['item_anchor'] ? sprintf( $args['item_anchor'], $post->ID, $post->post_name ) : FALSE,
 			'class'    => $args['item_class'],
-			'datetime' => date( 'c', strtotime( $post->post_date_gmt ) ),
+			'datetime' => 'publish' == $post->post_status ? date( 'c', strtotime( $post->post_date_gmt ) ) : FALSE,
 		], $before.$item.$after );
 	}
 
