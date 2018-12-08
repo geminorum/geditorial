@@ -1,3 +1,13 @@
+### 3.15.3
+* main/helper: better prep for title/desc
+* main/helper: more labels for posttypes
+* main/module: initial support for blocks
+* main/shortcode: datetime for published only
+* main/shortcodes: post item published datetime attr
+* module/headings: skip on numerial section titles
+* module/modified: help tab placeholders info
+* module/modified: last published date option
+
 ### 3.15.2
 * main/plugin: content actions api
 * main/plugin: initial support for dark mode
