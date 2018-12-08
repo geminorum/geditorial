@@ -93,14 +93,14 @@
   // all styles / without livereload
   gulp.task('dev:styles', function () {
     return gulp.src(config.input.sass)
-      .pipe(plugins.sourcemaps.init())
+      // .pipe(plugins.sourcemaps.init())
       .pipe(plugins.sass.sync(config.sass).on('error', plugins.sass.logError))
       .pipe(plugins.postcss([
         cssnano(config.cssnano.dev),
         autoprefixer(config.autoprefixer.dev)
       ]))
       .pipe(plugins.header(banner, { pkg: pkg }))
-      .pipe(plugins.sourcemaps.write(config.output.sourcemaps))
+      // .pipe(plugins.sourcemaps.write(config.output.sourcemaps))
       .pipe(plugins.debug({ title: 'Changed' }))
       .pipe(gulp.dest(config.output.css)).on('error', log.error)
       .pipe(plugins.postcss([rtlcss()]))
