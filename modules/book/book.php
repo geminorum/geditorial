@@ -308,6 +308,8 @@ class Book extends gEditorial\Module
 	{
 		if ( isset( $_POST['install_def_size_tax'] ) )
 			$this->insert_default_terms( 'size_tax' );
+
+		$this->help_tab_default_terms( 'size_tax' );
 	}
 
 	public function default_buttons( $module = FALSE )

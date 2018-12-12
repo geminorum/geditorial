@@ -176,6 +176,8 @@ class Meta extends gEditorial\Module
 	{
 		if ( isset( $_POST['install_def_ct_tax'] ) )
 			$this->insert_default_terms( 'ct_tax' );
+
+		$this->help_tab_default_terms( 'ct_tax' );
 	}
 
 	public function default_buttons( $module = FALSE )

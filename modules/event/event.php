@@ -189,6 +189,8 @@ class Event extends gEditorial\Module
 				Helper::getDefualtCalendars( TRUE ),
 				array_flip( $this->get_setting( 'calendar_list', [] ) )
 			) );
+
+		$this->help_tab_default_terms( 'event_tag' );
 	}
 
 	public function default_buttons( $module = FALSE )

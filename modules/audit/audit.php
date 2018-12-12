@@ -168,6 +168,8 @@ class Audit extends gEditorial\Module
 	{
 		if ( isset( $_POST['install_def_audit_tax'] ) )
 			$this->insert_default_terms( 'audit_tax' );
+
+		$this->help_tab_default_terms( 'audit_tax' );
 	}
 
 	public function default_buttons( $module = FALSE )

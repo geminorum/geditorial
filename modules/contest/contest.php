@@ -133,6 +133,8 @@ class Contest extends gEditorial\Module
 	{
 		if ( isset( $_POST['install_def_apply_status_tax'] ) )
 			$this->insert_default_terms( 'apply_status_tax' );
+
+		$this->help_tab_default_terms( 'apply_status_tax' );
 	}
 
 	public function default_buttons( $module = FALSE )

@@ -1159,6 +1159,22 @@ class Module extends Base
 		return str_replace( '_', '-', $this->module->name );
 	}
 
+	protected function help_tab_default_terms( $constant )
+	{
+		$tab = [
+			'id'    => $this->classs( 'help-default-terms', $this->constant( $constant ) ),
+			'title' => _x( 'Default Terms', 'Module', GEDITORIAL_TEXTDOMAIN ),
+		];
+
+		if ( ! empty( $this->strings['terms'][$constant] ) )
+			$tab['content'] = HTML::wrap( HTML::tableCode( $this->strings['terms'][$constant], TRUE ), '-info' );
+
+		else
+			$tab['content'] = HTML::wrap( _x( 'No Default Terms', 'Module', GEDITORIAL_TEXTDOMAIN ), '-info' );
+
+		get_current_screen()->add_help_tab( $tab );
+	}
+
 	protected function insert_default_terms( $constant, $terms = NULL )
 	{
 		if ( ! $this->nonce_verify( 'settings' ) )

@@ -96,6 +96,8 @@ class Gallery extends gEditorial\Module
 	{
 		if ( isset( $_POST['install_def_album_cats'] ) )
 			$this->insert_default_terms( 'album_cat' );
+
+		$this->help_tab_default_terms( 'album_cat' );
 	}
 
 	public function default_buttons( $module = FALSE )
