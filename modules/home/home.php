@@ -21,7 +21,7 @@ class Home extends gEditorial\Module
 		];
 	}
 
-	protected function settings_help_tabs()
+	protected function settings_help_tabs( $context = 'settings' )
 	{
 		$tabs = [
 			[
@@ -39,7 +39,7 @@ add_theme_support( \'featured-content\', [
 			],
 		];
 
-		return array_merge( $tabs, Settings::helpContent( $this->module ) );
+		return array_merge( $tabs, parent::settings_help_tabs( $context ) );
 	}
 
 	public function settings_intro()

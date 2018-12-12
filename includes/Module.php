@@ -239,12 +239,12 @@ class Module extends Base
 	protected function get_module_templates() { return []; }
 	protected function get_module_icons() { return []; }
 
-	protected function settings_help_tabs()
+	protected function settings_help_tabs( $context = 'settings' )
 	{
 		return Settings::helpContent( $this->module );
 	}
 
-	protected function settings_help_sidebar()
+	protected function settings_help_sidebar( $context = 'settings' )
 	{
 		return Settings::helpSidebar( $this->get_module_links() );
 	}
@@ -1199,7 +1199,7 @@ class Module extends Base
 
 		if ( 'settings' != $context ) {
 
-			$this->register_help_tabs();
+			$this->register_help_tabs( NULL, $context );
 
 			add_action( 'admin_print_footer_scripts', [ $this, 'settings_print_scripts' ], 99 );
 		}
@@ -1280,7 +1280,7 @@ class Module extends Base
 		add_action( 'admin_print_footer_scripts', [ $this, 'settings_print_scripts' ], 99 );
 	}
 
-	protected function register_help_tabs( $screen = NULL )
+	protected function register_help_tabs( $screen = NULL, $context = 'settings' )
 	{
 		if ( ! WordPress::mustRegisterUI( FALSE ) )
 			return;
@@ -1288,10 +1288,10 @@ class Module extends Base
 		if ( is_null( $screen ) )
 			$screen = get_current_screen();
 
-		foreach ( $this->settings_help_tabs() as $tab )
+		foreach ( $this->settings_help_tabs( $context ) as $tab )
 			$screen->add_help_tab( $tab );
 
-		if ( $sidebar = $this->settings_help_sidebar() )
+		if ( $sidebar = $this->settings_help_sidebar( $context ) )
 			$screen->set_help_sidebar( $sidebar );
 	}
 

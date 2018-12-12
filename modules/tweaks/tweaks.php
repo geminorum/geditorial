@@ -34,7 +34,7 @@ class Tweaks extends gEditorial\Module
 		];
 	}
 
-	protected function settings_help_tabs()
+	protected function settings_help_tabs( $context = 'settings' )
 	{
 		$tabs = [
 			[
@@ -51,7 +51,7 @@ class Tweaks extends gEditorial\Module
 			],
 		];
 
-		return array_merge( $tabs, Settings::helpContent( $this->module ) );
+		return array_merge( $tabs, parent::settings_help_tabs( $context ) );
 	}
 
 	protected function get_global_settings()
