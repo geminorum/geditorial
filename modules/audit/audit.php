@@ -158,6 +158,7 @@ class Audit extends gEditorial\Module
 				'initial-copy' => _x( 'Initial Copy', 'Modules: Audit: Audit Attributes Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
 				'unfinished'   => _x( 'Unfinished', 'Modules: Audit: Audit Attributes Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
 				'text-empty'   => _x( 'No Content', 'Modules: Audit: Audit Attributes Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
+				'imported'     => _x( 'Imported', 'Modules: Audit: Audit Attributes Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
 			],
 		];
 
@@ -636,5 +637,24 @@ class Audit extends gEditorial\Module
 			echo '</table>';
 
 		$this->render_form_end( $uri, $sub );
+	}
+
+	// API METHOD
+	public function set_terms( $post, $terms, $append = TRUE )
+	{
+		if ( ! $post = get_post( $post ) )
+			return FALSE;
+
+		if ( ! in_array( $post->post_type, $this->posttypes() ) )
+			return FALSE;
+
+		$result = wp_set_object_terms( $post->ID, $terms, $this->constant( 'audit_tax' ), $append );
+
+		if ( is_wp_error( $result ) )
+			return FALSE;
+
+		clean_object_term_cache( $post->ID, $this->constant( 'audit_tax' ) );
+
+		return TRUE;
 	}
 }

@@ -19,6 +19,8 @@ class Importer extends gEditorial\Module
 
 	protected $disable_no_posttypes = TRUE;
 
+	protected $default_audit_attribute = 'imported';
+
 	public $meta_key = '_geditorial_importer';
 
 	public static function module()
@@ -41,6 +43,12 @@ class Importer extends gEditorial\Module
 					'field'       => 'store_source_data',
 					'title'       => _x( 'Store Source Data', 'Modules: Importer: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Stores raw source data and attchment reference as meta for each imported item.', 'Modules: Importer: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+				],
+				[
+					'field'       => 'add_audit_attribute',
+					'title'       => _x( 'Add Audit Attribute', 'Modules: Importer: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => sprintf( _x( 'Appends %s audit attribute to each imported item.', 'Modules: Importer: Setting Description', GEDITORIAL_TEXTDOMAIN ), '<code>'.$this->default_audit_attribute.'</code>' ),
+					'disabled'    => ! gEditorial()->enabled( 'audit' ),
 				],
 			],
 			'_defaults' => [
@@ -448,6 +456,12 @@ class Importer extends gEditorial\Module
 		if ( $this->get_setting( 'store_source_data' ) ) {
 			update_post_meta( $post->ID, $this->constant( 'metakey_source_data' ), $raw );
 			update_post_meta( $post->ID, $this->constant( 'metakey_attach_id' ), $attach_id );
+		}
+
+		if ( $this->get_setting( 'add_audit_attribute' )
+			&& gEditorial()->enabled( 'audit' ) ) {
+
+			gEditorial()->audit->set_terms( $post, $this->default_audit_attribute );
 		}
 
 		if ( WordPress::isDev() )
