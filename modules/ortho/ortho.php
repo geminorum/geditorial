@@ -155,6 +155,17 @@ class Ortho extends gEditorial\Module
 		] );
 	}
 
+	public function init()
+	{
+		parent::init();
+
+		if ( ! is_admin() )
+			return;
+
+		if ( class_exists( 'geminorum\\gNetwork\\Core\\Orthography' ) )
+			$this->filter_module( 'importer', 'prepare', 4, 8 );
+	}
+
 	public function current_screen( $screen )
 	{
 		if ( 'post' == $screen->base ) {
@@ -216,6 +227,21 @@ class Ortho extends gEditorial\Module
 				$options[$option] = FALSE;
 
 		return $options;
+	}
+
+	public function importer_prepare( $value, $posttype, $field, $raw )
+	{
+		if ( ! in_array( $posttype, $this->posttypes() ) )
+			return $value;
+
+		switch ( $field ) {
+
+			case 'importer_post_title'  : return $this->cleanup_chars( trim( $value ), FALSE );
+			case 'importer_post_content': return $this->cleanup_chars( trim( $value ), TRUE );
+			case 'importer_post_excerpt': return $this->cleanup_chars( trim( $value ), TRUE );
+		}
+
+		return $value;
 	}
 
 	public function cleanup_post( $post )
