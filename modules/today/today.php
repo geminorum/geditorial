@@ -963,8 +963,9 @@ class Today extends gEditorial\Module
 		if ( ! in_array( $post->post_type, $this->posttypes() ) )
 			return;
 
-		$postmeta = [];
+		$default  = $this->default_calendar();
 		$fields   = array_keys( $this->get_importer_fields( $post->post_type ) );
+		$postmeta = [ 'cal' => $default ]; // `set_today_meta()` needs cal
 
 		foreach ( $field_map as $offset => $field ) {
 
@@ -977,7 +978,7 @@ class Today extends gEditorial\Module
 			$key = str_ireplace( 'today_', '', $field );
 
 			if ( 'cal' == $key )
-				$postmeta[$key] = Helper::sanitizeCalendar( $value, $this->default_calendar() );
+				$postmeta[$key] = Helper::sanitizeCalendar( $value, $default );
 			else
 				$postmeta[$key] = Number::intval( $value, FALSE );
 		}
