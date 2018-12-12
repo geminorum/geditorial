@@ -211,7 +211,7 @@ class Meta extends gEditorial\Module
 
 		$this->filter_module( 'importer', 'fields', 2 );
 		$this->filter_module( 'importer', 'prepare', 4 );
-		$this->filter_module( 'importer', 'saved', 5 );
+		$this->action_module( 'importer', 'saved', 5 );
 	}
 
 	public function template_redirect()
