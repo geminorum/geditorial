@@ -1,6 +1,6 @@
 <?php namespace geminorum\gEditorial\O2O;
 
-defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
+defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 // `P2P_Directed_Connection_Type`
 class DirectedConnectionType

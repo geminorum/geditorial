@@ -1,6 +1,6 @@
 <?php namespace geminorum\gEditorial\WordPress;
 
-defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
+defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Core\HTML;
@@ -188,6 +188,7 @@ class PostType extends Core\Base
 		), $image );
 	}
 
+	// @SEE: `use_block_editor_for_post()`
 	public static function supportBlocks( $posttype )
 	{
 		if ( ! function_exists( 'use_block_editor_for_post_type' ) )

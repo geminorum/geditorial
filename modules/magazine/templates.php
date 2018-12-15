@@ -1,6 +1,6 @@
 <?php namespace geminorum\gEditorial\Templates;
 
-defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
+defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core\WordPress;
@@ -70,7 +70,7 @@ class Magazine extends gEditorial\Template
 	// FIXME: DEPRECATED
 	public static function theIssueCover( $atts = [] )
 	{
-		self::__dep( 'gEditorialMagazineTemplates::theCover()' );
+		self::_dep( 'gEditorialMagazineTemplates::theCover()' );
 
 		if ( ! array_key_exists( 'id', $atts ) )
 			$atts['id'] = NULL;
@@ -81,7 +81,7 @@ class Magazine extends gEditorial\Template
 	// FIXME: DEPRECATED
 	public static function issueCover( $atts = [] )
 	{
-		self::__dep( 'gEditorialMagazineTemplates::cover()' );
+		self::_dep( 'gEditorialMagazineTemplates::cover()' );
 
 		if ( ! array_key_exists( 'id', $atts ) )
 			$atts['id'] = 'assoc';
@@ -95,7 +95,7 @@ class Magazine extends gEditorial\Template
 	// FIXME: DEPRECATED
 	public static function sanitize_field( $field )
 	{
-		self::__dep( 'gEditorialMagazineTemplates::sanitizeField()' );
+		self::_dep( 'gEditorialMagazineTemplates::sanitizeField()' );
 
 		if ( is_array( $field ) )
 			return $field;

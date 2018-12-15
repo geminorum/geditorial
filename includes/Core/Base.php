@@ -1,6 +1,6 @@
 <?php namespace geminorum\gEditorial\Core;
 
-defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
+defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 class Base
 {
@@ -77,13 +77,13 @@ class Base
 		wp_die( $message, 403 );
 	}
 
-	public static function __log_req()
+	public static function _log_req()
 	{
-		self::__log( $_REQUEST );
+		self::_log( $_REQUEST );
 	}
 
 	// INTERNAL
-	public static function __log()
+	public static function _log()
 	{
 		if ( defined( 'WP_DEBUG_LOG' ) && ! WP_DEBUG_LOG )
 			return;
@@ -98,7 +98,7 @@ class Base
 	}
 
 	// INTERNAL: used on anything deprecated
-	protected static function __dep( $note = '', $prefix = 'DEP: ', $offset = 1 )
+	protected static function _dep( $note = '', $prefix = 'DEP: ', $offset = 1 )
 	{
 		if ( defined( 'WP_DEBUG_LOG' ) && ! WP_DEBUG_LOG )
 			return;
@@ -135,16 +135,16 @@ class Base
 	protected static function __dev_dep( $note = '', $prefix = 'DEP: ', $offset = 2 )
 	{
 		if ( WordPress::isDev() )
-			self::__dep( $note, $prefix, $offset );
+			self::_dep( $note, $prefix, $offset );
 	}
 
 	// INTERNAL: used on functions deprecated
 	public static function __dev_func( $function, $version, $replacement = NULL )
 	{
 		if ( is_null( $replacement ) )
-			self::__log( sprintf( 'DEP: \'%1$s\' function, since %2$s with no alternative', $function, $version ) );
+			self::_log( sprintf( 'DEP: \'%1$s\' function, since %2$s with no alternative', $function, $version ) );
 		else
-			self::__log( sprintf( 'DEP: \'%1$s\' function, since %2$s, Use \'%3$s\'', $function, $version, $replacement ) );
+			self::_log( sprintf( 'DEP: \'%1$s\' function, since %2$s, Use \'%3$s\'', $function, $version, $replacement ) );
 	}
 
 	// @REF: `shortcode_atts()`

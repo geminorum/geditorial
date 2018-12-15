@@ -1,6 +1,6 @@
 <?php namespace geminorum\gEditorial\Modules;
 
-defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
+defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Helper;
@@ -247,7 +247,7 @@ class Importer extends gEditorial\Module
 					$count     = 0;
 					$selected  = self::req( '_cb', [] );
 					$field_map = self::req( 'field_map', [] );
-					$posttype = self::req( 'posttype', $this->get_setting( 'post_type', 'post' ) );
+					$posttype  = self::req( 'posttype', $this->get_setting( 'post_type', 'post' ) );
 					$attach_id = self::req( 'attach_id', FALSE );
 					$user_id   = self::req( 'user_id', gEditorial()->user( TRUE ) );
 
@@ -465,6 +465,6 @@ class Importer extends gEditorial\Module
 		}
 
 		if ( WordPress::isDev() )
-			self::__log( $post->ID, $data, $raw, $field_map, $attach_id );
+			self::_log( [ 'IMPORTED', $post->ID, $data, $raw, $field_map, $attach_id ] );
 	}
 }

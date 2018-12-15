@@ -1,4 +1,4 @@
-<?php defined( 'ABSPATH' ) or die( 'Restricted access' );
+<?php defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 /*
 Plugin Name: gEditorial
@@ -25,7 +25,7 @@ define( 'GEDITORIAL_DIR', plugin_dir_path( __FILE__ ) );
 define( 'GEDITORIAL_URL', plugin_dir_url( __FILE__ ) );
 define( 'GEDITORIAL_FILE', basename( GEDITORIAL_DIR ).'/'.basename( __FILE__ ) );
 
-defined( 'GEDITORIAL_TEXTDOMAIN' ) or define( 'GEDITORIAL_TEXTDOMAIN', 'geditorial' );
+defined( 'GEDITORIAL_TEXTDOMAIN' ) || define( 'GEDITORIAL_TEXTDOMAIN', 'geditorial' );
 
 if ( version_compare( GEDITORIAL_MIN_PHP, PHP_VERSION, '>=' ) ) {
 

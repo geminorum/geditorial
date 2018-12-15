@@ -1,6 +1,6 @@
 <?php namespace geminorum\gEditorial\Core;
 
-defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
+defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 class WordPress extends Base
 {
@@ -90,7 +90,7 @@ class WordPress extends Base
 
 	public static function doNotCache()
 	{
-		defined( 'DONOTCACHEPAGE' ) or define( 'DONOTCACHEPAGE', TRUE );
+		defined( 'DONOTCACHEPAGE' ) || define( 'DONOTCACHEPAGE', TRUE );
 	}
 
 	// TODO: use db query

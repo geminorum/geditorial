@@ -1,6 +1,6 @@
 <?php namespace geminorum\gEditorial\O2O;
 
-defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
+defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 // a dropdown above a list table in wp-admin
 abstract class Dropdown

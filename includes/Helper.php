@@ -1,6 +1,6 @@
 <?php namespace geminorum\gEditorial;
 
-defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
+defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core\Date;
 use geminorum\gEditorial\Core\HTML;
@@ -348,7 +348,7 @@ class Helper extends Core\Base
 				case 'revisions':
 
 					if ( ! $edit )
-						continue;
+						continue 2;
 
 					if ( $revision_id = PostType::getLastRevisionID( $post_id ) )
 						$list['revisions'] = HTML::tag( 'a', [
@@ -362,7 +362,7 @@ class Helper extends Core\Base
 				case 'edit':
 
 					if ( ! $edit )
-						continue;
+						continue 2;
 
 					$list['edit'] = HTML::tag( 'a', [
 						'href'   => WordPress::getPostEditLink( $post_id ),
@@ -484,7 +484,7 @@ class Helper extends Core\Base
 	// DEPRECATED
 	public static function getEditorialUserID( $fallback = FALSE )
 	{
-		self::__dep();
+		self::_dep();
 		return gEditorial()->user( $fallback );
 	}
 

@@ -1,6 +1,6 @@
 <?php namespace geminorum\gEditorial\Misc;
 
-defined( 'ABSPATH' ) or die( header( 'HTTP/1.0 403 Forbidden' ) );
+defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 require_once( ABSPATH.WPINC.'/class-walker-page-dropdown.php' );
 
