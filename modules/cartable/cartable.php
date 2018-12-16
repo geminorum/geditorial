@@ -729,7 +729,7 @@ class Cartable extends gEditorial\Module
 
 	public function render_metabox_main( $post, $box )
 	{
-		if ( $this->check_hidden_metabox( $box ) )
+		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
 			return;
 
 		echo $this->wrap_open( '-admin-metabox' );
@@ -810,6 +810,7 @@ class Cartable extends gEditorial\Module
 
 		$list = MetaBox::checklistUserTerms( $post->ID, [
 			'taxonomy'          => $this->constant( 'user_tax' ),
+			'posttype'          => $post->post_type,
 			'list_only'         => $disable,
 			'selected_only'     => $disable,
 			'selected_preserve' => TRUE,

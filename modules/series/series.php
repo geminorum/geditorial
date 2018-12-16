@@ -205,7 +205,7 @@ class Series extends gEditorial\Module
 	// TODO: list other post in this series by the order and link to their edit pages
 	public function render_metabox_supported( $post, $box )
 	{
-		if ( $this->check_hidden_metabox( $box ) )
+		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
 			return;
 
 		$fields = $this->posttype_fields( $post->post_type );

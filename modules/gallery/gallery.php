@@ -155,7 +155,7 @@ class Gallery extends gEditorial\Module
 
 	public function meta_box_cb_album_cat( $post, $box )
 	{
-		if ( $this->check_hidden_metabox( $box ) )
+		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
 			return;
 
 		echo $this->wrap_open( '-admin-metabox' );

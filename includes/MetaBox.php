@@ -31,8 +31,11 @@ class MetaBox extends Core\Base
 		return gEditorial()->{static::MODULE}->get_postmeta( $post_id, $field, $default, $key );
 	}
 
-	public static function checkHidden( $metabox_id, $after = '' )
+	public static function checkHidden( $metabox_id, $posttype = FALSE, $after = '' )
 	{
+		if ( $posttype && PostType::supportBlocks( $posttype ) )
+			return FALSE;
+
 		if ( ! in_array( $metabox_id, get_hidden_meta_boxes( get_current_screen() ) ) )
 			return FALSE;
 
@@ -58,7 +61,8 @@ class MetaBox extends Core\Base
 
 		$args = self::args( $atts, [
 			'taxonomy'             => NULL,
-			'metabox'              => NULL, // metabox id to check for disabled
+			'posttype'             => FALSE, // posttype to check for block editor
+			'metabox'              => NULL, // metabox id to check for hidden
 			'list_only'            => NULL,
 			'selected_only'        => NULL,
 			'selected_preserve'    => NULL, // keep hidden selected / NULL to check for assign cap
@@ -77,7 +81,7 @@ class MetaBox extends Core\Base
 		if ( ! $args['taxonomy'] )
 			return FALSE;
 
-		if ( $args['metabox'] && self::checkHidden( $args['metabox'] ) )
+		if ( $args['metabox'] && self::checkHidden( $args['metabox'], $args['posttype'] ) )
 			return;
 
 		if ( ! is_null( $terms ) ) {
@@ -201,6 +205,7 @@ class MetaBox extends Core\Base
 	{
 		$args = self::args( $atts, [
 			'taxonomy'          => NULL,
+			'posttype'          => FALSE, // to check for block editor
 			'metabox'           => NULL,
 			'edit'              => FALSE,
 			'role'              => NULL,
@@ -214,7 +219,7 @@ class MetaBox extends Core\Base
 		if ( ! $args['taxonomy'] )
 			return FALSE;
 
-		if ( $args['metabox'] && self::checkHidden( $args['metabox'] ) )
+		if ( $args['metabox'] && self::checkHidden( $args['metabox'], $args['posttype'] ) )
 			return FALSE;
 
 		$selected = $post_id ? Taxonomy::getTerms( $args['taxonomy'], $post_id, FALSE, 'slug' ) : [];

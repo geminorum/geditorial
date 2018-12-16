@@ -2047,7 +2047,7 @@ class Module extends Base
 
 	public function add_meta_box_checklist_terms_cb( $post, $box )
 	{
-		if ( $this->check_hidden_metabox( $box ) )
+		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
 			return;
 
 		echo $this->wrap_open( '-admin-metabox' );
@@ -2133,6 +2133,9 @@ class Module extends Base
 		if ( is_null( $title ) )
 			$title = $this->get_string( 'meta_box_title', $constant, 'misc', _x( 'Settings', 'Module: MetaBox Default Title', GEDITORIAL_TEXTDOMAIN ) );
 
+		// problems with block editor
+		return $title;
+
 		if ( $info = $this->get_string( 'meta_box_info', $constant, 'misc', NULL ) )
 			$title.= ' <span class="postbox-title-info" data-title="info" title="'.HTML::escape( $info ).'">'.HTML::getDashicon( 'editor-help' ).'</span>';
 
@@ -2165,6 +2168,9 @@ class Module extends Base
 		if ( $info = $this->get_string( 'meta_box_info', $constant, 'misc', NULL ) )
 			$title.= ' <span class="postbox-title-info" data-title="info" title="'.HTML::escape( $info ).'">'.HTML::getDashicon( 'info' ).'</span>';
 
+		// problems with block editor
+		return $title;
+
 		if ( is_null( $url ) )
 			$url = WordPress::getEditTaxLink( $taxonomy );
 
@@ -2182,6 +2188,9 @@ class Module extends Base
 
 		if ( is_null( $title ) )
 			$title = $this->get_string( 'meta_box_title', $constant, 'misc', $object->labels->name );
+
+		// problems with block editor
+			return $title;
 
 		if ( $info = $this->get_string( 'meta_box_info', $constant, 'misc', NULL ) )
 			$title.= ' <span class="postbox-title-info" data-title="info" title="'.HTML::escape( $info ).'">'.HTML::getDashicon( 'info' ).'</span>';
@@ -2838,9 +2847,9 @@ class Module extends Base
 	}
 
 	// checks to bail early if metabox/widget is hidden
-	protected function check_hidden_metabox( $box, $after = '' )
+	protected function check_hidden_metabox( $box, $posttype = FALSE, $after = '' )
 	{
-		return MetaBox::checkHidden( ( empty( $box['id'] ) ? $this->classs( $box ) : $box['id'] ), $after );
+		return MetaBox::checkHidden( ( empty( $box['id'] ) ? $this->classs( $box ) : $box['id'] ), $posttype, $after );
 	}
 
 	protected function get_blog_users( $fields = NULL, $list = FALSE, $admins = FALSE )

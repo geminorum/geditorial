@@ -366,7 +366,7 @@ class Meta extends gEditorial\Module
 
 	public function render_metabox_main( $post, $box )
 	{
-		if ( ! empty( $box['args']['metabox'] ) && MetaBox::checkHidden( $box['args']['metabox'] ) )
+		if ( ! empty( $box['args']['metabox'] ) && MetaBox::checkHidden( $box['args']['metabox'], $post->post_type ) )
 			return;
 
 		$fields = $this->get_posttype_fields( $post->post_type );

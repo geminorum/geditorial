@@ -264,7 +264,7 @@ class Specs extends gEditorial\Module
 
 	public function render_metabox_supported( $post, $box )
 	{
-		if ( $this->check_hidden_metabox( $box ) )
+		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
 			return;
 
 		$fields = $this->posttype_fields( $post->post_type );

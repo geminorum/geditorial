@@ -920,7 +920,7 @@ class Tweaks extends gEditorial\Module
 
 	public function do_metabox_mainbox( $post, $box )
 	{
-		if ( $this->check_hidden_metabox( $box ) )
+		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
 			return;
 
 		$posttype = PostType::object( $post->post_type );
@@ -1032,7 +1032,7 @@ class Tweaks extends gEditorial\Module
 
 	public function do_metabox_excerpt( $post, $box )
 	{
-		if ( $this->check_hidden_metabox( $box ) )
+		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
 			return;
 
 		MetaBox::fieldEditorBox( $post->post_excerpt );

@@ -331,7 +331,7 @@ class Contest extends gEditorial\Module
 
 	public function render_metabox_main( $post, $box )
 	{
-		if ( $this->check_hidden_metabox( $box ) )
+		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
 			return;
 
 		echo $this->wrap_open( '-admin-metabox' );
@@ -347,7 +347,7 @@ class Contest extends gEditorial\Module
 
 	public function render_metabox_list( $post, $box )
 	{
-		if ( $this->check_hidden_metabox( $box ) )
+		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
 			return;
 
 		echo $this->wrap_open( '-admin-metabox' );
@@ -366,7 +366,7 @@ class Contest extends gEditorial\Module
 
 	public function render_metabox_supported( $post, $box )
 	{
-		if ( $this->check_hidden_metabox( $box ) )
+		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
 			return;
 
 		echo $this->wrap_open( '-admin-metabox' );
@@ -408,7 +408,7 @@ class Contest extends gEditorial\Module
 
 	public function meta_box_cb_apply_status_tax( $post, $box )
 	{
-		if ( $this->check_hidden_metabox( $box ) )
+		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
 			return;
 
 		echo $this->wrap_open( '-admin-metabox' );
