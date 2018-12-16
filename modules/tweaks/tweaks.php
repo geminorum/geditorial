@@ -285,7 +285,8 @@ class Tweaks extends gEditorial\Module
 	{
 		$enqueue = FALSE;
 
-		if ( 'post' == $screen->base ) {
+		if ( 'post' == $screen->base
+			&& ! PostType::supportBlocks( $screen->post_type ) ) {
 
 			if ( $this->get_setting( 'checklist_tree', FALSE ) ) {
 
