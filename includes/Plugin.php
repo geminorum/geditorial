@@ -84,7 +84,7 @@ class Plugin
 
 	public function admin_init()
 	{
-		add_action( 'edit_form_after_title', [ $this, 'edit_form_after_title' ] );
+		add_action( 'add_meta_boxes', [ $this, 'add_meta_boxes' ], 9, 2 );
 		add_action( 'doing_dark_mode', [ $this, 'doing_dark_mode' ] );
 		add_action( 'admin_print_styles', [ $this, 'admin_print_styles' ] );
 		add_action( 'admin_print_footer_scripts', [ $this, 'footer_asset_config' ], 9 );
@@ -328,12 +328,17 @@ class Plugin
 
 	// @REF: https://wpartisan.me/?p=434
 	// @REF: https://core.trac.wordpress.org/ticket/45283
-	public function edit_form_after_title()
+	public function add_meta_boxes( $posttype, $post )
 	{
-		if ( PostType::supportBlocks( $GLOBALS['post']->post_type ) )
+		if ( PostType::supportBlocks( $posttype ) )
 			return;
 
-		do_meta_boxes( get_current_screen(), 'after_title', $GLOBALS['post'] );
+		add_action( 'edit_form_after_title', [ $this, 'edit_form_after_title' ] );
+	}
+
+	public function edit_form_after_title( $post )
+	{
+		do_meta_boxes( get_current_screen(), 'after_title', $post );
 	}
 
 	// @REF: https://github.com/danieltj27/Dark-Mode/wiki/Help:-Plugin-Compatibility-Guide
