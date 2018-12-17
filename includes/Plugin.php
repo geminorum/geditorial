@@ -92,10 +92,19 @@ class Plugin
 
 	public function plugins_loaded()
 	{
-		load_plugin_textdomain( GEDITORIAL_TEXTDOMAIN, FALSE, 'geditorial/languages' );
-
 		$path = GEDITORIAL_DIR.'modules/';
 
+		load_plugin_textdomain( GEDITORIAL_TEXTDOMAIN, FALSE, 'geditorial/languages' );
+
+		$this->register_modules( $path );
+		$this->load_options();
+		$this->init_modules( $path );
+
+		// Relation::setup();
+	}
+
+	private function register_modules( $path )
+	{
 		foreach ( scandir( $path ) as $module ) {
 
 			if ( in_array( $module, [ '.', '..' ] ) )
@@ -108,22 +117,6 @@ class Plugin
 					$this->register_module( call_user_func( [ $class, 'module' ] ) );
 			}
 		}
-
-		$this->load_module_options();
-
-		foreach ( $this->modules as $mod_name => &$module ) {
-
-			if ( ! isset( $this->options->{$mod_name} ) )
-				continue;
-
-			if ( $module->autoload || Helper::moduleEnabled( $this->options->{$mod_name} ) ) {
-
-				$class = $module->class;
-				$this->{$mod_name} = new $class( $module, $this->options->{$mod_name}, $path.$mod_name.'/' );
-			}
-		}
-
-		// Relation::setup();
 	}
 
 	public function register_module( $args = [] )
@@ -148,20 +141,36 @@ class Plugin
 		return TRUE;
 	}
 
-	private function load_module_options()
+	private function load_options()
 	{
-		$options = get_option( 'geditorial_options' );
+		$frontend = ! is_admin();
+		$options  = get_option( 'geditorial_options' );
 
 		foreach ( $this->modules as $mod_name => &$module ) {
 
 			// skip on the frontend?
-			if ( ! is_admin() && ! $module->frontend )
+			if ( $frontend && ! $module->frontend )
 				continue;
 
 			if ( ! isset( $options[$mod_name] ) || FALSE === $options[$mod_name] )
 				$this->options->{$mod_name} = new \stdClass;
 			else
 				$this->options->{$mod_name} = $options[$mod_name];
+		}
+	}
+
+	private function init_modules( $path )
+	{
+		foreach ( $this->modules as $mod_name => &$module ) {
+
+			if ( ! isset( $this->options->{$mod_name} ) )
+				continue;
+
+			if ( $module->autoload || Helper::moduleEnabled( $this->options->{$mod_name} ) ) {
+
+				$class = $module->class;
+				$this->{$mod_name} = new $class( $module, $this->options->{$mod_name}, $path.$mod_name.'/' );
+			}
 		}
 	}
 
