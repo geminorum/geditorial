@@ -13,7 +13,7 @@ use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\PostType;
 
-class Calendar extends gEditorial\Module
+class Schedule extends gEditorial\Module
 {
 
 	protected $disable_no_posttypes = TRUE;
@@ -25,12 +25,12 @@ class Calendar extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'     => 'calendar',
-			'title'    => _x( 'Calendar', 'Modules: Calendar', GEDITORIAL_TEXTDOMAIN ),
-			'desc'     => _x( 'Viewing Upcoming Content in a Customizable Calendar', 'Modules: Calendar', GEDITORIAL_TEXTDOMAIN ),
+			'name'     => 'schedule',
+			'title'    => _x( 'Schedule', 'Modules: Schedule', GEDITORIAL_TEXTDOMAIN ),
+			'desc'     => _x( 'Viewing and Schedule Content in a Customizable Calendar', 'Modules: Schedule', GEDITORIAL_TEXTDOMAIN ),
 			'icon'     => 'calendar-alt',
 			'frontend' => FALSE,
-			'disabled' => defined( 'GPERSIANDATE_VERSION' ) ? FALSE : _x( 'Needs gPersianDate', 'Modules: Calendar', GEDITORIAL_TEXTDOMAIN ),
+			'disabled' => defined( 'GPERSIANDATE_VERSION' ) ? FALSE : _x( 'Needs gPersianDate', 'Modules: Schedule', GEDITORIAL_TEXTDOMAIN ),
 		];
 	}
 
@@ -45,8 +45,8 @@ class Calendar extends gEditorial\Module
 				[
 					'field'       => 'noschedule_statuses',
 					'type'        => 'checkboxes',
-					'title'       => _x( 'Non-Reschedulable Statuses', 'Modules: Calendar: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Posts in these statuses can <b>not</b> be rescheduled.', 'Modules: Calendar: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Non-Reschedulable Statuses', 'Modules: Schedule: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Posts in these statuses can <b>not</b> be rescheduled.', 'Modules: Schedule: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 					'default'     => [ 'publish', 'future', 'private' ],
 					'exclude'     => [ 'trash', 'inherit', 'auto-draft' ],
 					'values'      => PostType::getStatuses(),
@@ -127,8 +127,8 @@ class Calendar extends gEditorial\Module
 	{
 		$hook = add_submenu_page(
 			'index.php',
-			_x( 'Editorial Calendar', 'Modules: Calendar: Page Title', GEDITORIAL_TEXTDOMAIN ),
-			_x( 'My Calendar', 'Modules: Calendar: Menu Title', GEDITORIAL_TEXTDOMAIN ),
+			_x( 'Editorial Calendar', 'Modules: Schedule: Page Title', GEDITORIAL_TEXTDOMAIN ),
+			_x( 'My Calendar', 'Modules: Schedule: Menu Title', GEDITORIAL_TEXTDOMAIN ),
 			$this->role_can( 'adminmenu' ) ? 'read' : 'do_not_allow',
 			$this->get_adminmenu(),
 			[ $this, 'admin_calendar_page' ]
@@ -164,10 +164,10 @@ class Calendar extends gEditorial\Module
 			return Arraay::insert( $actions, [
 				$this->classs() => HTML::tag( 'a', [
 					'href'   => $link,
-					'title'  => _x( 'View on Calendar', 'Modules: Calendar', GEDITORIAL_TEXTDOMAIN ),
+					'title'  => _x( 'View on Calendar', 'Modules: Schedule', GEDITORIAL_TEXTDOMAIN ),
 					'class'  => '-calendar',
 					'target' => '_blank',
-				], _x( 'Calendar', 'Modules: Calendar', GEDITORIAL_TEXTDOMAIN ) ),
+				], _x( 'Calendar', 'Modules: Schedule', GEDITORIAL_TEXTDOMAIN ) ),
 			], 'view', 'before' );
 
 		return $actions;
@@ -200,7 +200,7 @@ class Calendar extends gEditorial\Module
 
 		Settings::wrapOpen( $this->key, 'listtable' );
 
-			Settings::headerTitle( _x( 'Editorial Calendar', 'Modules: Calendar: Page Title', GEDITORIAL_TEXTDOMAIN ), $calendars );
+			Settings::headerTitle( _x( 'Editorial Calendar', 'Modules: Schedule: Page Title', GEDITORIAL_TEXTDOMAIN ), $calendars );
 
 			$html = HTML::wrap( '', '-messages' );
 			$html.= Helper::getCalendar( $cal, $args );
@@ -223,8 +223,8 @@ class Calendar extends gEditorial\Module
 		$html.= HTML::tag( 'input', [ 'type' => 'hidden', 'name' => 'date_cal', 'data-field' => 'cal', 'value' => $calendar ] );
 		$html.= HTML::tag( 'input', [ 'type' => 'hidden', 'name' => 'nonce', 'data-field' => 'nonce', 'value' => wp_create_nonce( $this->hook( 'add-new' ) ) ] );
 
-		$actions = HTML::button( HTML::getDashicon( 'yes '), '#', _x( 'Save', 'Modules: Calendar', GEDITORIAL_TEXTDOMAIN ), TRUE, [ 'action' => 'save' ] );
-		$actions.= HTML::button( HTML::getDashicon( 'no-alt '), '#', _x( 'Cancel', 'Modules: Calendar', GEDITORIAL_TEXTDOMAIN ), TRUE, [ 'action' => 'close' ] );
+		$actions = HTML::button( HTML::getDashicon( 'yes '), '#', _x( 'Save', 'Modules: Schedule', GEDITORIAL_TEXTDOMAIN ), TRUE, [ 'action' => 'save' ] );
+		$actions.= HTML::button( HTML::getDashicon( 'no-alt '), '#', _x( 'Cancel', 'Modules: Schedule', GEDITORIAL_TEXTDOMAIN ), TRUE, [ 'action' => 'close' ] );
 
 		$html.= HTML::wrap( $actions, '-actions' );
 
@@ -248,7 +248,7 @@ class Calendar extends gEditorial\Module
 		$html.= '<span class="-the-day-number">'.Number::format( $the_day ).'</span>';
 
 		if ( $today )
-			$html.= '<span class="-the-day-today">'._x( 'Today', 'Modules: Calendar', GEDITORIAL_TEXTDOMAIN ).'</span>';
+			$html.= '<span class="-the-day-today">'._x( 'Today', 'Modules: Schedule', GEDITORIAL_TEXTDOMAIN ).'</span>';
 
 		// must have sortable container
 		$html.= '<ol class="-sortable" data-day="'.$the_day.'">';
@@ -277,7 +277,7 @@ class Calendar extends gEditorial\Module
 		if ( $this->can_reschedule( $post ) && current_user_can( 'edit_post', $post->ID ) ) {
 
 			$html.= ' data-post="'.$post->ID.'" data-nonce="'.wp_create_nonce( $this->hook( $post->ID ) ).'">';
-			$html.= '<span class="-handle" title="'._x( 'Drag me!', 'Modules: Calendar: Sortable', GEDITORIAL_TEXTDOMAIN ).'">';
+			$html.= '<span class="-handle" title="'._x( 'Drag me!', 'Modules: Schedule: Sortable', GEDITORIAL_TEXTDOMAIN ).'">';
 
 		} else {
 
@@ -379,7 +379,7 @@ class Calendar extends gEditorial\Module
 			return FALSE;
 
 		if ( ! $this->can_reschedule( $post ) )
-			return _x( 'Updating the post date dynamically doesn\'t work for published content.', 'Modules: Calendar', GEDITORIAL_TEXTDOMAIN );
+			return _x( 'Updating the post date dynamically doesn\'t work for published content.', 'Modules: Schedule', GEDITORIAL_TEXTDOMAIN );
 
 		// persist the old hourstamp because we can't manipulate the exact time
 		// on the calendar bump the last modified timestamps too
@@ -398,7 +398,7 @@ class Calendar extends gEditorial\Module
 		);
 
 		if ( ! $timestamp )
-			return _x( 'Something is wrong with the new date.', 'Modules: Calendar', GEDITORIAL_TEXTDOMAIN );
+			return _x( 'Something is wrong with the new date.', 'Modules: Schedule', GEDITORIAL_TEXTDOMAIN );
 
 		$data = [
 			'post_date'         => date( 'Y-m-d', $timestamp ).' '.$old,

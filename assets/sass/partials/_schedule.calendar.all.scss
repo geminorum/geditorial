@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-/// Module: Calendar: Calendar All ---------------------------------------------
+/// Module: Schedule: Calendar All ---------------------------------------------
 
 $table-border-color: #e5e5e5 !default;
 $table-bg-accent: #f9f9f9 !default;
@@ -10,7 +10,7 @@ $padding-base-horizontal: 12px !default;
 $padding-small-vertical: 4px !default;
 $padding-small-horizontal: 8px !default;
 
-.geditorial-calendar-calendar {
+.geditorial-schedule-calendar {
 
   position: relative;
 
@@ -302,8 +302,7 @@ $padding-small-horizontal: 8px !default;
   }
 }
 
-#geditorial-calendar-add-new {
-
+#geditorial-schedule-add-new {
   box-sizing: border-box;
   position: absolute;
   top: 0;

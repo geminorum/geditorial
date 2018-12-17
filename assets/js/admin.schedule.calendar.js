@@ -187,4 +187,4 @@
 
     $(document).trigger('gEditorialReady', [ module, app ]);
   });
-}(jQuery, gEditorial, 'calendar'));
+}(jQuery, gEditorial, 'schedule'));
