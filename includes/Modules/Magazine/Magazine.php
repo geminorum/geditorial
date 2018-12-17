@@ -17,7 +17,7 @@ use geminorum\gEditorial\Templates\Magazine as ModuleTemplate;
 class Magazine extends gEditorial\Module
 {
 
-	protected $partials = [ 'templates' ];
+	protected $partials = [ 'Templates' ];
 
 	public static function module()
 	{
@@ -358,7 +358,7 @@ class Magazine extends gEditorial\Module
 
 	public function widgets_init()
 	{
-		$this->require_code( 'widgets' );
+		$this->require_code( 'Widgets' );
 
 		register_widget( '\\geminorum\\gEditorial\\Widgets\\Magazine\\IssueCover' );
 	}

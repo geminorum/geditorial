@@ -19,7 +19,7 @@ class Meta extends gEditorial\Module
 
 	protected $priority_init = 12;
 
-	protected $partials = [ 'metabox', 'templates' ];
+	protected $partials = [ 'Metabox', 'Templates' ];
 
 	protected $disable_no_posttypes = TRUE;
 

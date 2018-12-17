@@ -2215,8 +2215,6 @@ class Module extends Base
 
 	protected function require_code( $filenames = 'templates' )
 	{
-		$module = $this->slug();
-
 		foreach ( (array) $filenames as $filename )
 			require_once( $this->path.$filename.'.php' );
 	}

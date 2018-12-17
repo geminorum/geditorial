@@ -16,7 +16,7 @@ use geminorum\gEditorial\Helpers\Today as ModuleHelper;
 class Today extends gEditorial\Module
 {
 
-	protected $partials = [ 'helper' ];
+	protected $partials = [ 'Helper' ];
 	protected $the_day  = [];
 	protected $the_post = [];
 

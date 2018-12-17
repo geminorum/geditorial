@@ -19,7 +19,7 @@ use geminorum\gEditorial\Templates\Terms as ModuleTemplate;
 class Terms extends gEditorial\Module
 {
 
-	protected $partials  = [ 'templates' ];
+	protected $partials  = [ 'Templates' ];
 	protected $supported = [ 'order', 'image', 'author', 'color', 'role', 'roles', 'posttype', 'posttypes' ];
 
 	public static function module()

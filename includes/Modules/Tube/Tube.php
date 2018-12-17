@@ -14,7 +14,7 @@ use geminorum\gEditorial\Helpers\Tube as ModuleHelper;
 class Tube extends gEditorial\Module
 {
 
-	protected $partials = [ 'helper' ];
+	protected $partials = [ 'Helper' ];
 
 	public static function module()
 	{

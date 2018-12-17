@@ -52,7 +52,7 @@ class Plugin
 				return FALSE;
 		}
 
-		$this->path    = GEDITORIAL_DIR.'modules/';;
+		$this->path    = GEDITORIAL_DIR.'includes/Modules/';
 		$this->modules = new \stdClass();
 		$this->options = new \stdClass();
 

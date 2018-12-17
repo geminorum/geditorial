@@ -34,9 +34,9 @@ class Widgets extends gEditorial\Module
 	private function get_widgets()
 	{
 		return [
-			'custom-html'  => 'CustomHTML',
-			'gcal-events'  => 'GCalEvents',
-			'wprest-posts' => 'WPRestPosts',
+			'Custom-HTML'  => 'CustomHTML',
+			'GCal-Events'  => 'GCalEvents',
+			'WPRest-Posts' => 'WPRestPosts',
 		];
 	}
 

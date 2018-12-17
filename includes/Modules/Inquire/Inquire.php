@@ -13,7 +13,7 @@ use geminorum\gEditorial\WordPress\User;
 class Inquire extends gEditorial\Module
 {
 
-	// protected $partials = [ 'templates' ];
+	// protected $partials = [ 'Templates' ];
 
 	public static function module()
 	{

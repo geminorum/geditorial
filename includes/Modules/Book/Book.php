@@ -15,7 +15,7 @@ use geminorum\gEditorial\Templates\Book as ModuleTemplate;
 class Book extends gEditorial\Module
 {
 
-	protected $partials = [ 'templates', 'helper', 'query' ];
+	protected $partials = [ 'Templates', 'Helper', 'Query' ];
 
 	protected $support_meta = FALSE;
 
@@ -338,7 +338,7 @@ class Book extends gEditorial\Module
 
 	public function widgets_init()
 	{
-		$this->require_code( 'widgets' );
+		$this->require_code( 'Widgets' );
 
 		register_widget( '\\geminorum\\gEditorial\\Widgets\\Book\\PublicationCover' );
 	}

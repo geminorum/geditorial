@@ -17,7 +17,7 @@ use geminorum\gEditorial\Templates\Collect as ModuleTemplate;
 class Collect extends gEditorial\Module
 {
 
-	protected $partials = [ 'templates' ];
+	protected $partials = [ 'Templates' ];
 
 	public static function module()
 	{
@@ -360,7 +360,7 @@ class Collect extends gEditorial\Module
 
 	public function widgets_init()
 	{
-		$this->require_code( 'widgets' );
+		$this->require_code( 'Widgets' );
 
 		register_widget( '\\geminorum\\gEditorial\\Widgets\\Collect\\CollectionPoster' );
 	}
