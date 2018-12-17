@@ -127,23 +127,25 @@ class Taxonomy extends Core\Base
 
 	public static function getTerms( $taxonomy, $object_id = FALSE, $object = FALSE, $key = 'term_id', $extra = array(), $post_object = TRUE )
 	{
-		if ( is_null( $object_id ) && empty( $extra ) ) {
+		if ( FALSE === $object_id ) {
+
+			$id = FALSE;
+
+		} else if ( $post_object && ( $post = get_post( $object_id ) ) ) {
+
+			$id = $post->ID;
+
+		} else {
+
+			$id = intval( $object_id );
+		}
+
+		if ( $id ) {
 
 			// using cached terms, only for posts, when no extra args provided
-			$terms = get_the_terms( get_post(), $taxonomy );
-
-		} else if ( is_null( $object_id ) ) {
-
-			$terms = wp_get_object_terms( get_post()->ID, $taxonomy, $extra );
-
-		} else if ( FALSE !== $object_id && empty( $extra ) && $post_object ) {
-
-			// using cached terms, only for posts, when no extra args provided
-			$terms = get_the_terms( $object_id, $taxonomy );
-
-		} else if ( FALSE !== $object_id ) {
-
-			$terms = wp_get_object_terms( $object_id, $taxonomy, $extra );
+			$terms = $post_object && empty( $extra )
+				? get_the_terms( $id, $taxonomy )
+				: wp_get_object_terms( $id, $taxonomy, $extra );
 
 		} else {
 

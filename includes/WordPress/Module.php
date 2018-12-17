@@ -9,6 +9,7 @@ class Module extends Core\Base
 
 	protected $base = NULL;
 	protected $key  = NULL;
+	protected $path = NULL;
 	protected $blog = NULL;
 
 	public static function module() { return array(); }
