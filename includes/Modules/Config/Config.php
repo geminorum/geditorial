@@ -354,7 +354,7 @@ class Config extends gEditorial\Module
 
 			echo '<tr><th scope="row">'._x( 'Orphan Connections', 'Modules: Config', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
 
-			$counts = O2O\API::getConnectionCounts();
+			// $counts = O2O\API::getConnectionCounts();
 
 			if ( empty( $counts ) ) {
 
