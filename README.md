@@ -2,12 +2,12 @@
 
 Our Editorial in [WordPress](https://wordpress.org/)!
 
-[![Travis](https://img.shields.io/travis/geminorum/geditorial.svg?style=flat-square)](https://travis-ci.org/geminorum/geditorial)
-[![GitHub license](https://img.shields.io/badge/license-GPLv3+-blue.svg?style=flat-square)](https://raw.githubusercontent.com/geminorum/geditorial/master/LICENSE)
-[![GitHub releases](https://img.shields.io/github/release/geminorum/geditorial.svg?style=flat-square)](https://github.com/geminorum/geditorial/releases)
-[![GitHub issues](https://img.shields.io/github/issues/geminorum/geditorial.svg?style=flat-square)](https://github.com/geminorum/geditorial/issues)
-[![js-semistandard-style](https://img.shields.io/badge/code%20style-semistandard-brightgreen.svg?style=flat-square)](https://github.com/Flet/semistandard)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
+[![Travis](https://img.shields.io/travis/geminorum/geditorial.svg?style=for-the-badge)](https://travis-ci.org/geminorum/geditorial)
+[![GitHub releases](https://img.shields.io/github/release/geminorum/geditorial.svg?style=for-the-badge)](https://github.com/geminorum/geditorial/releases)
+[![GitHub issues](https://img.shields.io/github/issues/geminorum/geditorial.svg?style=for-the-badge)](https://github.com/geminorum/geditorial/issues)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=for-the-badge)](http://makeapullrequest.com)
+[![js-semistandard-style](https://img.shields.io/badge/code%20style-semistandard-brightgreen.svg?style=for-the-badge)](https://github.com/Flet/semistandard)
+[![GitHub license](https://img.shields.io/badge/license-GPLv3+-blue.svg?style=for-the-badge)](https://raw.githubusercontent.com/geminorum/geditorial/master/LICENSE)
 
 gEditorial is a fork in structure of [EditFlow](http://editflow.org/).
 

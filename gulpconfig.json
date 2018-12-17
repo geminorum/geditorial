@@ -39,7 +39,6 @@
       "./assets/views/**/*",
       "./assets/index.html",
       "./includes/**/*",
-      "./modules/**/*",
       "./languages/**/*",
       "!./languages/**/*.pot",
       "!./languages/**/*.po",
