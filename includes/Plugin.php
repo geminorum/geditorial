@@ -52,6 +52,7 @@ class Plugin
 				return FALSE;
 		}
 
+		$this->path    = GEDITORIAL_DIR.'modules/';;
 		$this->modules = new \stdClass();
 		$this->options = new \stdClass();
 
@@ -92,26 +93,24 @@ class Plugin
 
 	public function plugins_loaded()
 	{
-		$path = GEDITORIAL_DIR.'modules/';
-
 		load_plugin_textdomain( GEDITORIAL_TEXTDOMAIN, FALSE, 'geditorial/languages' );
 
-		$this->register_modules( $path );
+		$this->load_modules();
 		$this->load_options();
-		$this->init_modules( $path );
+		$this->init_modules();
 
 		// Relation::setup();
 	}
 
-	private function register_modules( $path )
+	private function load_modules()
 	{
-		foreach ( scandir( $path ) as $module ) {
+		foreach ( scandir( $this->path ) as $module ) {
 
 			if ( in_array( $module, [ '.', '..' ] ) )
 				continue;
 
-			if ( file_exists( $path.$module.'/'.$module.'.php' ) ) {
-				include_once( $path.$module.'/'.$module.'.php' );
+			if ( file_exists( $this->path.$module.'/'.$module.'.php' ) ) {
+				include_once( $this->path.$module.'/'.$module.'.php' );
 
 				if ( $class = Helper::moduleClass( $module ) )
 					$this->register_module( call_user_func( [ $class, 'module' ] ) );
@@ -159,7 +158,7 @@ class Plugin
 		}
 	}
 
-	private function init_modules( $path )
+	private function init_modules()
 	{
 		foreach ( $this->modules as $mod_name => &$module ) {
 
@@ -169,7 +168,7 @@ class Plugin
 			if ( $module->autoload || Helper::moduleEnabled( $this->options->{$mod_name} ) ) {
 
 				$class = $module->class;
-				$this->{$mod_name} = new $class( $module, $this->options->{$mod_name}, $path.$mod_name.'/' );
+				$this->{$mod_name} = new $class( $module, $this->options->{$mod_name}, $this->path.$mod_name.'/' );
 			}
 		}
 	}
