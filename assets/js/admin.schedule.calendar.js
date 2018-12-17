@@ -70,26 +70,23 @@
       });
     },
 
-    reorder: function ($sortable, post, nonce, day) {
+    reschedule: function ($sortable, post, nonce, day, month, year) {
       var $cal = $(s.cal);
       var $day = $('td[data-day="' + day + '"]');
-      var cal = $cal.data('calendar');
-      var year = $cal.data('year');
-      var month = $cal.data('month');
       var $theday = $day.find(s.theday);
-      var $messages = $(s.msg);
       var $spinner = $day.find(s.spinner);
+      var $messages = $(s.msg);
 
       $.ajax({
         url: plugin._url,
         method: 'POST',
         data: {
           action: s.action,
-          what: 'reorder',
+          what: 'reschedule',
           day: day,
-          month: month,
-          year: year,
-          cal: cal,
+          month: month || $cal.data('month'),
+          year: year || $cal.data('year'),
+          cal: $cal.data('calendar'),
           post_id: post,
           nonce: nonce
         },
@@ -144,9 +141,10 @@
       }
     });
 
-    var sortable = $('ol.-sortable').sortable({
+    var sortable = $('ol.-sortable, td.-next-prev').sortable({
       group: s.classs,
       handle: 'span.-handle',
+      containerSelector: 'ol, td',
       nested: false,
       delay: 200,
       tolerance: 6,
@@ -158,13 +156,26 @@
         var day = $($item).data('day');
         var theday = $(container.el).data('day');
 
-        if (day !== theday) {
-          app.reorder(sortable,
+        if (theday) {
+          if (day !== theday) {
+            app.reschedule(sortable,
+              $($item).data('post'),
+              $($item).data('nonce'),
+              theday
+            );
+
+            $($item).data('day', theday);
+          }
+        } else {
+          app.reschedule(sortable,
             $($item).data('post'),
             $($item).data('nonce'),
-            theday
+            1, // TODO: tell to find the first/last of the month
+            $(container.el).data('month'),
+            $(container.el).data('year')
           );
-          $($item).data('day', theday);
+
+          $($item).remove();
         }
 
         _super($item, container);
@@ -181,6 +192,7 @@
       afterMove: function ($placeholder, container, $closestItemOrContainer) {
         $('td', s.cal).removeClass('-dragged-here');
         $(container.el).parent('td').addClass('-dragged-here');
+        $(container.el).addClass('-dragged-here'); // for nex/prev month
       }
     // }).disableSelection();
     });

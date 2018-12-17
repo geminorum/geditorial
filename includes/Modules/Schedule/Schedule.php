@@ -78,9 +78,11 @@ class Schedule extends gEditorial\Module
 		$post = self::unslash( $_POST );
 		$what = empty( $post['what'] ) ? 'nothing': trim( $post['what'] );
 
+		// self::_log( [ $what, $post ] );
+
 		switch ( $what ) {
 
-			case 'reorder':
+			case 'reschedule':
 
 				if ( empty( $post['post_id'] ) )
 					Ajax::errorMessage();
@@ -380,6 +382,9 @@ class Schedule extends gEditorial\Module
 	private function reschedule_post( $post, $cal, $year, $month, $day )
 	{
 		global $wpdb;
+
+		if ( ! $cal || ! $year || ! $month || ! $day )
+			return FALSE;
 
 		if ( ! is_callable( 'gPersianDateDate', 'make' ) )
 			return FALSE;
