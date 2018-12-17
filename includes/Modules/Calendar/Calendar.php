@@ -383,14 +383,25 @@ class Calendar extends gEditorial\Module
 
 		// persist the old hourstamp because we can't manipulate the exact time
 		// on the calendar bump the last modified timestamps too
-		$old_time  = date( 'H:i:s', strtotime( $post->post_date ) );
-		$post_time = explode( ':', $old_time );
+		$old  = date( 'H:i:s', strtotime( $post->post_date ) );
+		$time = explode( ':', $old );
 
-		if ( ! $timestamp = \gPersianDateDate::make( $post_time[0], $post_time[1], $post_time[2], $month, $day, $year, $cal ) )
+		$timestamp = \gPersianDateDate::make(
+			$time[0],
+			$time[1],
+			$time[2],
+			$month,
+			$day,
+			$year,
+			$cal,
+			'UTC'
+		);
+
+		if ( ! $timestamp )
 			return _x( 'Something is wrong with the new date.', 'Modules: Calendar', GEDITORIAL_TEXTDOMAIN );
 
 		$data = [
-			'post_date'         => date( 'Y-m-d', $timestamp ).' '.$old_time,
+			'post_date'         => date( 'Y-m-d', $timestamp ).' '.$old,
 			'post_modified'     => current_time( 'mysql' ),
 			'post_modified_gmt' => current_time( 'mysql', 1 ),
 		];
@@ -403,8 +414,9 @@ class Calendar extends gEditorial\Module
 			$data['post_date_gmt'] = date( 'Y-m-d', $timestamp )
 				.' '.date( 'H:i:s', strtotime( $post->post_date_gmt ) );
 
-		// self::_log( [ $post->post_date, $post->post_modified, $post->post_modified_gmt, $post->post_date_gmt ] );
-		// self::_log( array_values( $data ) );
+		// self::_log( [ $month, $day, $year, $cal, $time ] );
+		// self::_log( [ $post->post_date, $post->post_date_gmt, $post->post_modified, $post->post_modified_gmt ] );
+		// self::_log( [ $data['post_date'], $data['post_date_gmt'], $data['post_modified'], $data['post_modified_gmt'] ] );
 
 		// @SEE http://core.trac.wordpress.org/ticket/18362
 		if ( ! $update = $wpdb->update( $wpdb->posts, $data, [ 'ID' => $post->ID ] ) )
