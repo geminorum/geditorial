@@ -67,10 +67,11 @@ class Module extends Base
 
 	protected $scripts_printed = FALSE;
 
-	public function __construct( &$module, &$options )
+	public function __construct( &$module, &$options, $path )
 	{
 		$this->base = 'geditorial';
 		$this->key  = $module->name;
+		$this->path = $path;
 
 		$this->module  = $module;
 		$this->options = $options;
@@ -2217,7 +2218,7 @@ class Module extends Base
 		$module = $this->slug();
 
 		foreach ( (array) $filenames as $filename )
-			require_once( GEDITORIAL_DIR.'modules/'.$module.'/'.$filename.'.php' );
+			require_once( $this->path.$module.'/'.$filename.'.php' );
 	}
 
 	public function is_current_posttype( $constant )

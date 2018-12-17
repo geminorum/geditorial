@@ -94,13 +94,15 @@ class Plugin
 	{
 		load_plugin_textdomain( GEDITORIAL_TEXTDOMAIN, FALSE, 'geditorial/languages' );
 
-		foreach ( scandir( GEDITORIAL_DIR.'modules/' ) as $module ) {
+		$path = GEDITORIAL_DIR.'modules/';
+
+		foreach ( scandir( $path ) as $module ) {
 
 			if ( in_array( $module, [ '.', '..' ] ) )
 				continue;
 
-			if ( file_exists( GEDITORIAL_DIR.'modules/'.$module.'/'.$module.'.php' ) ) {
-				include_once( GEDITORIAL_DIR.'modules/'.$module.'/'.$module.'.php' );
+			if ( file_exists( $path.$module.'/'.$module.'.php' ) ) {
+				include_once( $path.$module.'/'.$module.'.php' );
 
 				if ( $class = Helper::moduleClass( $module ) )
 					$this->register_module( call_user_func( [ $class, 'module' ] ) );
@@ -117,7 +119,7 @@ class Plugin
 			if ( $module->autoload || Helper::moduleEnabled( $this->options->{$mod_name} ) ) {
 
 				$class = $module->class;
-				$this->{$mod_name} = new $class( $module, $this->options->{$mod_name} );
+				$this->{$mod_name} = new $class( $module, $this->options->{$mod_name}, $path.$mod_name.'/' );
 			}
 		}
 
