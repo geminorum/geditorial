@@ -275,10 +275,14 @@ class Ortho extends gEditorial\Module
 		return (bool) wp_update_post( $data );
 	}
 
+	// FIXME
 	public function cleanup_chars( $string, $html = FALSE )
 	{
 		return Orthography::cleanupPersianChars( $string );
-		return $html ? Orthography::cleanupPersianHTML( $string ) : Orthography::cleanupPersian( $string );
+
+		return $html
+			? Orthography::cleanupPersianHTML( $string )
+			: Orthography::cleanupPersian( $string );
 	}
 
 	public function tools_settings( $sub )

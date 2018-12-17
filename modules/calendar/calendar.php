@@ -403,6 +403,9 @@ class Calendar extends gEditorial\Module
 			$data['post_date_gmt'] = date( 'Y-m-d', $timestamp )
 				.' '.date( 'H:i:s', strtotime( $post->post_date_gmt ) );
 
+		// self::_log( [ $post->post_date, $post->post_modified, $post->post_modified_gmt, $post->post_date_gmt ] );
+		// self::_log( array_values( $data ) );
+
 		// @SEE http://core.trac.wordpress.org/ticket/18362
 		if ( ! $update = $wpdb->update( $wpdb->posts, $data, [ 'ID' => $post->ID ] ) )
 			return FALSE;

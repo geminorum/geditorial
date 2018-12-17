@@ -7,9 +7,12 @@ use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Core\Arraay;
 use geminorum\gEditorial\Core\HTML;
+use geminorum\gEditorial\Templates\Event as ModuleTemplate;
 
 class Event extends gEditorial\Module
 {
+
+	// protected $partials = [ 'Templates' ];
 
 	public static function module()
 	{
@@ -206,6 +209,19 @@ class Event extends gEditorial\Module
 	public function after_setup_theme()
 	{
 		$this->register_posttype_thumbnail( 'event_cpt' );
+	}
+
+	public function widgets_init()
+	{
+		return; // FIXME
+
+		$this->require_code( [
+			'Widgets/Poster',
+			'Widgets/Currents',
+		] );
+
+		register_widget( '\\geminorum\\gEditorial\\Widgets\\Event\\Poster' );
+		register_widget( '\\geminorum\\gEditorial\\Widgets\\Event\\Currents' );
 	}
 
 	public function init()
