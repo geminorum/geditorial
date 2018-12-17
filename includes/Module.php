@@ -2091,7 +2091,7 @@ class Module extends Base
 		add_meta_box( 'postexcerpt', // same as core to override
 			$this->get_string( 'excerpt_metabox', $constant, 'misc', __( 'Excerpt' ) ),
 			$callback,
-			$posttype,
+			NULL,
 			'normal',
 			'high'
 		);
@@ -2218,7 +2218,7 @@ class Module extends Base
 		$module = $this->slug();
 
 		foreach ( (array) $filenames as $filename )
-			require_once( $this->path.$module.'/'.$filename.'.php' );
+			require_once( $this->path.$filename.'.php' );
 	}
 
 	public function is_current_posttype( $constant )
