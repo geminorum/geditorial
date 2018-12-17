@@ -193,14 +193,23 @@ class Schedule extends gEditorial\Module
 		if ( $month = self::req( 'month', FALSE ) )
 			$args['this_month'] = $month;
 
-		$calendars = [];
+		$calendars = $this->get_calendars();
 
-		foreach ( $this->get_calendars() as $calendar => $calendar_title )
-			$calendars[add_query_arg( [ 'cal' => $calendar ], $args['caption_link'] )] = HTML::escape( $calendar_title );
+		if ( count( $calendars ) > 1 ) {
+
+			$links = [];
+
+			foreach ( $calendars as $calendar => $calendar_title )
+				$links[add_query_arg( [ 'cal' => $calendar ], $args['caption_link'] )] = HTML::escape( $calendar_title );
+
+		} else {
+
+			$links = FALSE;
+		}
 
 		Settings::wrapOpen( $this->key, 'listtable' );
 
-			Settings::headerTitle( _x( 'Editorial Calendar', 'Modules: Schedule: Page Title', GEDITORIAL_TEXTDOMAIN ), $calendars );
+			Settings::headerTitle( _x( 'Editorial Calendar', 'Modules: Schedule: Page Title', GEDITORIAL_TEXTDOMAIN ), $links );
 
 			$html = HTML::wrap( '', '-messages' );
 			$html.= Helper::getCalendar( $cal, $args );
