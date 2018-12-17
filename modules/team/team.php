@@ -5,6 +5,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Third;
+use geminorum\gEditorial\O2O;
 
 class Team extends gEditorial\Module
 {
@@ -36,6 +37,8 @@ class Team extends gEditorial\Module
 			'member_cpt_archive' => 'team-members',
 			'member_cat'         => 'team_member_cat',
 			'member_cat_slug'    => 'team-member-category',
+
+			'o2o_name' => 'team_member_to_user',
 		];
 	}
 
@@ -134,6 +137,24 @@ class Team extends gEditorial\Module
 			'menu_position'     => 65,
 			'show_in_admin_bar' => FALSE,
 		] );
+	}
+
+	public function wp_loaded()
+	{
+		return; // FIXME
+
+		$name = $this->constant( 'o2o_name' );
+		$args = [
+			'name'          => $name,
+			'from'          => $this->constant( 'member_cpt' ),
+			'to'            => 'user',
+			'to_query_vars' => [
+				'role' => 'contributor' // FIXME: get setting fot this
+			],
+		];
+
+		if ( O2O\API::registerConnectionType( $args ) )
+			$this->o2o = $name;
 	}
 
 	public function current_screen( $screen )

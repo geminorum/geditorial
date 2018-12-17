@@ -4,6 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core\HTML;
+use geminorum\gEditorial\O2O;
 
 class Reshare extends gEditorial\Module
 {
@@ -24,6 +25,7 @@ class Reshare extends gEditorial\Module
 			'_general' => [
 				'comment_status',
 			],
+			'posttypes_option' => 'posttypes_option',
 			'_supports' => [
 				'thumbnail_support',
 				$this->settings_supports_option( 'reshare_cpt', [
@@ -49,6 +51,8 @@ class Reshare extends gEditorial\Module
 			'reshare_cpt_archive' => 'reshares',
 			'reshare_cat'         => 'reshare_cat',
 			'reshare_cat_slug'    => 'reshare-category',
+
+			'o2o_name' => 'reshares_to_posts',
 		];
 	}
 
@@ -91,6 +95,22 @@ class Reshare extends gEditorial\Module
 		], 'reshare_cpt' );
 
 		$this->register_posttype( 'reshare_cpt' );
+	}
+
+	public function wp_loaded()
+	{
+		return; // FIXME
+
+		$name = $this->constant( 'o2o_name' );
+		$args = [
+			'name'       => $name,
+			'from'       => $this->constant( 'reshare_cpt' ),
+			'to'         => $this->posttypes( 'reshare_cpt' ),
+			'reciprocal' => TRUE,
+		];
+
+		if ( O2O\API::registerConnectionType( $args ) )
+			$this->o2o = $name;
 	}
 
 	public function current_screen( $screen )
