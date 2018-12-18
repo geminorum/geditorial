@@ -98,7 +98,7 @@ class Schedule extends gEditorial\Module
 				if ( ! $this->can_reschedule( $target ) )
 					Ajax::errorMessage( _x( 'Updating the post date dynamically doesn\'t work for published content.', 'Modules: Schedule', GEDITORIAL_TEXTDOMAIN ) );
 
-				$result = Helper::reSchedulePost( $target, $post['cal'], $post['year'], $post['month'], $post['day'] );
+				$result = Helper::reSchedulePost( $target, $post );
 
 				if ( TRUE === $result )
 					Ajax::successMessage();

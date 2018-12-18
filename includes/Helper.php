@@ -1398,14 +1398,25 @@ class Helper extends Core\Base
 	// today and 'future' posts will be published if moved before today
 	// @REF: `handle_ajax_drag_and_drop()`
 	// FIXME: needs fallback
-	public static function reSchedulePost( $post, $cal, $year, $month, $day, $set_timestamp = TRUE )
+	public static function reSchedulePost( $post, $input, $calendar = FALSE, $set_timestamp = TRUE )
 	{
 		global $wpdb;
 
-		if ( ! $cal || ! $year || ! $month || ! $day )
+		if ( ! is_callable( 'gPersianDateDate', 'make' ) )
 			return FALSE;
 
-		if ( ! is_callable( 'gPersianDateDate', 'make' ) )
+		$the_day = self::atts( [
+			'cal'   => $calendar,
+			'year'  => NULL,
+			'month' => 1,
+			'day'   => 1,
+		], $input );
+
+		// fallback to current year
+		if ( is_null( $the_day['year'] ) && is_callable( 'gPersianDateDate', 'to' ) )
+			$the_day['year'] = \gPersianDateDate::to( 'Y', NULL, 'UTC', FALSE, FALSE, $the_day['cal'] );
+
+		if ( ! $the_day['cal'] || ! $the_day['year'] || ! $the_day['month'] || ! $the_day['day'] )
 			return FALSE;
 
 		if ( ! $post = get_post( $post ) )
@@ -1420,10 +1431,10 @@ class Helper extends Core\Base
 			$time[0],
 			$time[1],
 			$time[2],
-			$month,
-			$day,
-			$year,
-			$cal,
+			$the_day['month'],
+			$the_day['day'],
+			$the_day['year'],
+			$the_day['cal'],
 			'UTC'
 		);
 
