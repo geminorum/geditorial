@@ -853,7 +853,8 @@ class Terms extends gEditorial\Module
 
 		if ( $page == 'reports' )
 			return array_merge( $subs, [
-				'uncategorized' => _x( 'Uncategorized', 'Modules: Terms: Reports: Sub Title', GEDITORIAL_TEXTDOMAIN ),
+				$this->module->name => $this->module->title,
+				'uncategorized'     => _x( 'Uncategorized', 'Modules: Terms: Reports: Sub Title', GEDITORIAL_TEXTDOMAIN ),
 			] );
 		else
 			return array_merge( $subs, [ $this->module->name => $this->module->title ] );
@@ -946,7 +947,9 @@ class Terms extends gEditorial\Module
 
 	public function reports_settings( $sub )
 	{
-		if ( $this->check_settings( $sub, 'reports', 'uncategorized' ) ) {
+		if ( $this->check_settings( $sub, 'reports' ) ) {
+
+		} else if ( $this->check_settings( $sub, 'reports', 'uncategorized' ) ) {
 
 			if ( ! empty( $_POST ) ) {
 
@@ -984,6 +987,20 @@ class Terms extends gEditorial\Module
 	{
 		if ( 'uncategorized' == $sub )
 			return $this->reports_sub_uncategorized( $uri, $sub );
+
+		if ( $this->key == $sub )
+			return $this->reports_sub_default( $uri, $sub );
+	}
+
+	// FIXME
+	public function reports_sub_default( $uri, $sub )
+	{
+		$this->render_form_start( $uri, $sub, 'bulk', 'reports', FALSE );
+
+			HTML::h3( _x( 'Term Reports', 'Modules: Terms', GEDITORIAL_TEXTDOMAIN ) );
+			HTML::desc( _x( 'No reports available!', 'Modules: Terms', GEDITORIAL_TEXTDOMAIN ), TRUE, '-empty' );
+
+		$this->render_form_end( $uri, $sub );
 	}
 
 	public function reports_sub_uncategorized( $uri, $sub )
