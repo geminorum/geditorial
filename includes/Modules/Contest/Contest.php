@@ -590,74 +590,70 @@ class Contest extends gEditorial\Module
 		echo '</li>';
 	}
 
-	public function tools_sub( $uri, $sub )
+	protected function render_tools_html( $uri, $sub )
 	{
-		$this->render_form_start( $uri, $sub, 'bulk', 'tools', FALSE );
+		HTML::h3( _x( 'Contest Tools', 'Modules: Contest', GEDITORIAL_TEXTDOMAIN ) );
 
-			HTML::h3( _x( 'Contest Tools', 'Modules: Contest', GEDITORIAL_TEXTDOMAIN ) );
+		echo '<table class="form-table">';
 
-			echo '<table class="form-table">';
+		echo '<tr><th scope="row">'._x( 'From Terms', 'Modules: Contest', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
 
-			echo '<tr><th scope="row">'._x( 'From Terms', 'Modules: Contest', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
+		if ( ! empty( $_POST ) && isset( $_POST['contest_tax_check'] ) ) {
 
-			if ( ! empty( $_POST ) && isset( $_POST['contest_tax_check'] ) ) {
+			HTML::tableList( [
+				'_cb'     => 'term_id',
+				'term_id' => Helper::tableColumnTermID(),
+				'name'    => Helper::tableColumnTermName(),
+				'linked'   => [
+					'title' => _x( 'Linked Contest Post', 'Modules: Contest: Table Column', GEDITORIAL_TEXTDOMAIN ),
+					'callback' => function( $value, $row, $column, $index ){
 
-				HTML::tableList( [
-					'_cb'     => 'term_id',
-					'term_id' => Helper::tableColumnTermID(),
-					'name'    => Helper::tableColumnTermName(),
-					'linked'   => [
-						'title' => _x( 'Linked Contest Post', 'Modules: Contest: Table Column', GEDITORIAL_TEXTDOMAIN ),
-						'callback' => function( $value, $row, $column, $index ){
+						if ( $post_id = $this->get_linked_post_id( $row, 'contest_cpt', 'contest_tax', FALSE ) )
+							return Helper::getPostTitleRow( $post_id ).' &ndash; <small>'.$post_id.'</small>';
 
-							if ( $post_id = $this->get_linked_post_id( $row, 'contest_cpt', 'contest_tax', FALSE ) )
-								return Helper::getPostTitleRow( $post_id ).' &ndash; <small>'.$post_id.'</small>';
+						return '&mdash;';
+					},
+				],
+				'slugged'   => [
+					'title' => _x( 'Same Slug Contest Post', 'Modules: Contest: Table Column', GEDITORIAL_TEXTDOMAIN ),
+					'callback' => function( $value, $row, $column, $index ){
 
-							return '&mdash;';
-						},
-					],
-					'slugged'   => [
-						'title' => _x( 'Same Slug Contest Post', 'Modules: Contest: Table Column', GEDITORIAL_TEXTDOMAIN ),
-						'callback' => function( $value, $row, $column, $index ){
+						if ( $post_id = PostType::getIDbySlug( $row->slug, $this->constant( 'contest_cpt' ) ) )
+							return Helper::getPostTitleRow( $post_id ).' &ndash; <small>'.$post_id.'</small>';
 
-							if ( $post_id = PostType::getIDbySlug( $row->slug, $this->constant( 'contest_cpt' ) ) )
-								return Helper::getPostTitleRow( $post_id ).' &ndash; <small>'.$post_id.'</small>';
+						return '&mdash;';
+					},
+				],
+				'count' => [
+					'title'    => _x( 'Count', 'Modules: Contest: Table Column', GEDITORIAL_TEXTDOMAIN ),
+					'callback' => function( $value, $row, $column, $index ){
+						if ( $post_id = PostType::getIDbySlug( $row->slug, $this->constant( 'contest_cpt' ) ) )
+							return Number::format( $this->get_linked_posts( $post_id, 'contest_cpt', 'contest_tax', TRUE ) );
+						return Number::format( $row->count );
+					},
+				],
+				'description' => Helper::tableColumnTermDesc(),
+			], Taxonomy::getTerms( $this->constant( 'contest_tax' ), FALSE, TRUE ) );
 
-							return '&mdash;';
-						},
-					],
-					'count' => [
-						'title'    => _x( 'Count', 'Modules: Contest: Table Column', GEDITORIAL_TEXTDOMAIN ),
-						'callback' => function( $value, $row, $column, $index ){
-							if ( $post_id = PostType::getIDbySlug( $row->slug, $this->constant( 'contest_cpt' ) ) )
-								return Number::format( $this->get_linked_posts( $post_id, 'contest_cpt', 'contest_tax', TRUE ) );
-							return Number::format( $row->count );
-						},
-					],
-					'description' => Helper::tableColumnTermDesc(),
-				], Taxonomy::getTerms( $this->constant( 'contest_tax' ), FALSE, TRUE ) );
+			echo '<br />';
+		}
 
-				echo '<br />';
-			}
+		Settings::submitButton( 'contest_tax_check',
+			_x( 'Check Terms', 'Modules: Contest: Setting Button', GEDITORIAL_TEXTDOMAIN ), TRUE );
 
-			Settings::submitButton( 'contest_tax_check',
-				_x( 'Check Terms', 'Modules: Contest: Setting Button', GEDITORIAL_TEXTDOMAIN ), TRUE );
+		Settings::submitButton( 'contest_post_create',
+			_x( 'Create Contest Posts', 'Modules: Contest: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
 
-			Settings::submitButton( 'contest_post_create',
-				_x( 'Create Contest Posts', 'Modules: Contest: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
+		Settings::submitButton( 'contest_post_connect',
+			_x( 'Re-Connect Posts', 'Modules: Contest: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
 
-			Settings::submitButton( 'contest_post_connect',
-				_x( 'Re-Connect Posts', 'Modules: Contest: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
+		Settings::submitButton( 'contest_tax_delete',
+			_x( 'Delete Terms', 'Modules: Contest: Setting Button', GEDITORIAL_TEXTDOMAIN ), 'danger', TRUE );
 
-			Settings::submitButton( 'contest_tax_delete',
-				_x( 'Delete Terms', 'Modules: Contest: Setting Button', GEDITORIAL_TEXTDOMAIN ), 'danger', TRUE );
+		HTML::desc( _x( 'Check for contest terms and create corresponding contest posts.', 'Modules: Contest', GEDITORIAL_TEXTDOMAIN ) );
 
-			HTML::desc( _x( 'Check for contest terms and create corresponding contest posts.', 'Modules: Contest', GEDITORIAL_TEXTDOMAIN ) );
-
-			echo '</td></tr>';
-			echo '</table>';
-
-		$this->render_form_end( $uri, $sub );
+		echo '</td></tr>';
+		echo '</table>';
 	}
 
 	public function tools_settings( $sub )

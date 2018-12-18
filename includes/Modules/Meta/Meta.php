@@ -699,7 +699,7 @@ class Meta extends gEditorial\Module
 		return $display_name;
 	}
 
-	public function tools_sub( $uri, $sub )
+	protected function render_tools_html( $uri, $sub )
 	{
 		$args = $this->get_current_form( [
 			'custom_field'       => '',
@@ -708,79 +708,75 @@ class Meta extends gEditorial\Module
 			'custom_field_into'  => '',
 		], 'tools' );
 
-		$this->render_form_start( $uri, $sub, 'bulk', 'tools', FALSE );
+		HTML::h3( _x( 'Meta Tools', 'Modules: Meta', GEDITORIAL_TEXTDOMAIN ) );
 
-			HTML::h3( _x( 'Meta Tools', 'Modules: Meta', GEDITORIAL_TEXTDOMAIN ) );
+		echo '<table class="form-table">';
 
-			echo '<table class="form-table">';
+		echo '<tr><th scope="row">'._x( 'Import Custom Fields', 'Modules: Meta', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
 
-			echo '<tr><th scope="row">'._x( 'Import Custom Fields', 'Modules: Meta', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
+		$this->do_settings_field( [
+			'type'         => 'select',
+			'field'        => 'custom_field',
+			'values'       => Database::getPostMetaKeys( TRUE ),
+			'default'      => $args['custom_field'],
+			'option_group' => 'tools',
+		] );
 
-			$this->do_settings_field( [
-				'type'         => 'select',
-				'field'        => 'custom_field',
-				'values'       => Database::getPostMetaKeys( TRUE ),
-				'default'      => $args['custom_field'],
-				'option_group' => 'tools',
+		$this->do_settings_field( [
+			'type'         => 'text',
+			'field'        => 'custom_field_limit',
+			'default'      => $args['custom_field_limit'],
+			'option_group' => 'tools',
+			'field_class'  => 'small-text',
+			'placeholder'  => 'limit',
+		] );
+
+		$this->do_settings_field( [
+			'type'         => 'select',
+			'field'        => 'custom_field_type',
+			'values'       => $this->list_posttypes(),
+			'default'      => $args['custom_field_type'],
+			'option_group' => 'tools',
+		] );
+
+		$this->do_settings_field( [
+			'type'         => 'select',
+			'field'        => 'custom_field_into',
+			'values'       => $this->posttype_fields_list( $args['custom_field_type'] ),
+			'default'      => $args['custom_field_into'],
+			'option_group' => 'tools',
+		] );
+
+		echo '&nbsp;&nbsp;';
+
+		Settings::submitButton( 'custom_fields_check',
+			_x( 'Check', 'Modules: Meta: Setting Button', GEDITORIAL_TEXTDOMAIN ), TRUE );
+
+		Settings::submitButton( 'custom_fields_convert',
+			_x( 'Covert', 'Modules: Meta: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
+
+		Settings::submitButton( 'custom_fields_delete',
+			_x( 'Delete', 'Modules: Meta: Setting Button', GEDITORIAL_TEXTDOMAIN ), 'danger', TRUE );
+
+		HTML::desc( _x( 'Check for Custom Fields and import them into Meta', 'Modules: Meta', GEDITORIAL_TEXTDOMAIN ) );
+
+		if ( isset( $_POST['custom_fields_check'] )
+			&& $args['custom_field'] ) {
+
+			echo '<br />';
+			HTML::tableList( [
+				'post_id' => Helper::tableColumnPostID(),
+				'meta'    => 'Meta :'.$args['custom_field'],
+			], Database::getPostMetaRows(
+				stripslashes( $args['custom_field'] ),
+				stripslashes( $args['custom_field_limit'] )
+			), [
+				'empty' => HTML::warning( _x( 'No Meta Found!', 'Modules: Meta: Table Empty', GEDITORIAL_TEXTDOMAIN ), FALSE ),
 			] );
+		}
 
-			$this->do_settings_field( [
-				'type'         => 'text',
-				'field'        => 'custom_field_limit',
-				'default'      => $args['custom_field_limit'],
-				'option_group' => 'tools',
-				'field_class'  => 'small-text',
-				'placeholder'  => 'limit',
-			] );
-
-			$this->do_settings_field( [
-				'type'         => 'select',
-				'field'        => 'custom_field_type',
-				'values'       => $this->list_posttypes(),
-				'default'      => $args['custom_field_type'],
-				'option_group' => 'tools',
-			] );
-
-			$this->do_settings_field( [
-				'type'         => 'select',
-				'field'        => 'custom_field_into',
-				'values'       => $this->posttype_fields_list( $args['custom_field_type'] ),
-				'default'      => $args['custom_field_into'],
-				'option_group' => 'tools',
-			] );
-
-			echo '&nbsp;&nbsp;';
-
-			Settings::submitButton( 'custom_fields_check',
-				_x( 'Check', 'Modules: Meta: Setting Button', GEDITORIAL_TEXTDOMAIN ), TRUE );
-
-			Settings::submitButton( 'custom_fields_convert',
-				_x( 'Covert', 'Modules: Meta: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
-
-			Settings::submitButton( 'custom_fields_delete',
-				_x( 'Delete', 'Modules: Meta: Setting Button', GEDITORIAL_TEXTDOMAIN ), 'danger', TRUE );
-
-			HTML::desc( _x( 'Check for Custom Fields and import them into Meta', 'Modules: Meta', GEDITORIAL_TEXTDOMAIN ) );
-
-			if ( isset( $_POST['custom_fields_check'] )
-				&& $args['custom_field'] ) {
-
-				echo '<br />';
-				HTML::tableList( [
-					'post_id' => Helper::tableColumnPostID(),
-					'meta'    => 'Meta :'.$args['custom_field'],
-				], Database::getPostMetaRows(
-					stripslashes( $args['custom_field'] ),
-					stripslashes( $args['custom_field_limit'] )
-				), [
-					'empty' => HTML::warning( _x( 'No Meta Found!', 'Modules: Meta: Table Empty', GEDITORIAL_TEXTDOMAIN ), FALSE ),
-				] );
-			}
-
-			echo '</td></tr>';
-			echo '</table>';
-
-		$this->render_form_end( $uri, $sub );
+		echo '</td></tr>';
+		echo '</table>';
 	}
 
 	public function tools_settings( $sub )

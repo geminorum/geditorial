@@ -379,36 +379,32 @@ class Roles extends gEditorial\Module
 		}
 	}
 
-	public function tools_sub( $uri, $sub )
+	protected function render_tools_html( $uri, $sub )
 	{
-		$this->render_form_start( $uri, $sub, 'bulk', 'tools', FALSE );
+		HTML::h3( _x( 'Editorial Roles', 'Modules: Roles', GEDITORIAL_TEXTDOMAIN ) );
 
-			HTML::h3( _x( 'Editorial Roles', 'Modules: Roles', GEDITORIAL_TEXTDOMAIN ) );
+		echo '<table class="form-table">';
 
-			echo '<table class="form-table">';
+		echo '<tr><th scope="row">'._x( 'Current Roles', 'Modules: Roles', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
 
-			echo '<tr><th scope="row">'._x( 'Current Roles', 'Modules: Roles', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
+		Settings::submitButton( 'check_current_roles', _x( 'Check Roles', 'Modules: Roles: Setting Button', GEDITORIAL_TEXTDOMAIN ), TRUE );
+		Settings::submitButton( 'check_current_caps', _x( 'Check Capabilities', 'Modules: Roles: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
+		Settings::submitButton( 'duplicate_default_roles', _x( 'Duplicate Defaults', 'Modules: Roles: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
+		Settings::submitButton( 'add_defaults_to_editor', _x( 'Add Default Caps to Editors', 'Modules: Roles: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
+		Settings::submitButton( 'remove_duplicate_roles', _x( 'Remove Duplicates', 'Modules: Roles: Setting Button', GEDITORIAL_TEXTDOMAIN ), 'danger' );
 
-			Settings::submitButton( 'check_current_roles', _x( 'Check Roles', 'Modules: Roles: Setting Button', GEDITORIAL_TEXTDOMAIN ), TRUE );
-			Settings::submitButton( 'check_current_caps', _x( 'Check Capabilities', 'Modules: Roles: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
-			Settings::submitButton( 'duplicate_default_roles', _x( 'Duplicate Defaults', 'Modules: Roles: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
-			Settings::submitButton( 'add_defaults_to_editor', _x( 'Add Default Caps to Editors', 'Modules: Roles: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
-			Settings::submitButton( 'remove_duplicate_roles', _x( 'Remove Duplicates', 'Modules: Roles: Setting Button', GEDITORIAL_TEXTDOMAIN ), 'danger' );
+		if ( isset( $_POST['check_current_roles'] ) )
+			echo HTML::tableCode( User::getRoleList(), TRUE );
 
-			if ( isset( $_POST['check_current_roles'] ) )
-				echo HTML::tableCode( User::getRoleList(), TRUE );
-
-			if ( isset( $_POST['check_current_caps'] ) ) {
-				$prefix = $this->constant( 'base_prefix' );
-				foreach ( $this->get_setting( 'duplicate_roles', [] ) as $core ) {
-					$role = get_role( $prefix.$core );
-					echo HTML::tableCode( $role->capabilities, TRUE, $role->name );
-				}
+		if ( isset( $_POST['check_current_caps'] ) ) {
+			$prefix = $this->constant( 'base_prefix' );
+			foreach ( $this->get_setting( 'duplicate_roles', [] ) as $core ) {
+				$role = get_role( $prefix.$core );
+				echo HTML::tableCode( $role->capabilities, TRUE, $role->name );
 			}
+		}
 
-			echo '</td></tr>';
-			echo '</table>';
-
-		$this->render_form_end( $uri, $sub );
+		echo '</td></tr>';
+		echo '</table>';
 	}
 }

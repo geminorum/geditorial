@@ -866,19 +866,10 @@ class Today extends gEditorial\Module
 
 	public function tools_settings( $sub )
 	{
-		if ( $this->check_settings( $sub, 'tools' ) ) {}
+		$this->check_settings( $sub, 'tools' );
 	}
 
-	public function tools_sub( $uri, $sub )
-	{
-		$this->render_form_start( $uri, $sub, 'bulk', 'tools', FALSE );
-
-			$this->tableSummary();
-
-		$this->render_form_end( $uri, $sub );
-	}
-
-	private function tableSummary()
+	protected function render_tools_html( $uri, $sub )
 	{
 		$constants = $this->get_the_day_constants();
 		$query     = [ 'meta_query' => [ 'relation' => 'OR' ] ];

@@ -595,7 +595,7 @@ class Audit extends gEditorial\Module
 		$this->check_settings( $sub, 'reports' );
 	}
 
-	public function reports_sub( $uri, $sub )
+	protected function render_reports_html( $uri, $sub )
 	{
 		$terms = Taxonomy::getTerms( $this->constant( 'audit_tax' ), FALSE, TRUE, 'slug', [ 'hide_empty' => TRUE ] );
 
@@ -606,37 +606,33 @@ class Audit extends gEditorial\Module
 			'user_id' => '0',
 		], 'reports' );
 
-		$this->render_form_start( $uri, $sub, 'bulk', 'reports', FALSE );
+		HTML::h3( _x( 'Audit Reports', 'Modules: Audit', GEDITORIAL_TEXTDOMAIN ) );
 
-			HTML::h3( _x( 'Audit Reports', 'Modules: Audit', GEDITORIAL_TEXTDOMAIN ) );
+		echo '<table class="form-table">';
 
-			echo '<table class="form-table">';
+		echo '<tr><th scope="row">'._x( 'By User', 'Modules: Audit', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
 
-			echo '<tr><th scope="row">'._x( 'By User', 'Modules: Audit', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
+		$this->do_settings_field( [
+			'type'         => 'user',
+			'field'        => 'user_id',
+			'none_title'   => _x( 'All Users', 'Modules: Audit', GEDITORIAL_TEXTDOMAIN ),
+			'none_value'   => '0',
+			'default'      => $args['user_id'],
+			'option_group' => 'reports',
+			'cap'          => 'read',
+		] );
 
-			$this->do_settings_field( [
-				'type'         => 'user',
-				'field'        => 'user_id',
-				'none_title'   => _x( 'All Users', 'Modules: Audit', GEDITORIAL_TEXTDOMAIN ),
-				'none_value'   => '0',
-				'default'      => $args['user_id'],
-				'option_group' => 'reports',
-				'cap'          => 'read',
-			] );
+		echo '&nbsp;';
 
-			echo '&nbsp;';
+		Settings::submitButton( 'user_stats',
+			_x( 'Apply Filter', 'Modules: Audit: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
 
-			Settings::submitButton( 'user_stats',
-				_x( 'Apply Filter', 'Modules: Audit: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
+		// FIXME: style this!
+		if ( $summary = $this->get_summary( $this->posttypes(), $terms, ( $args['user_id'] ? 'current' : 'all' ), $args['user_id'] ) )
+			echo '<div><ul>'.$summary.'</ul></div>';
 
-			// FIXME: style this!
-			if ( $summary = $this->get_summary( $this->posttypes(), $terms, ( $args['user_id'] ? 'current' : 'all' ), $args['user_id'] ) )
-				echo '<div><ul>'.$summary.'</ul></div>';
-
-			echo '</td></tr>';
-			echo '</table>';
-
-		$this->render_form_end( $uri, $sub );
+		echo '</td></tr>';
+		echo '</table>';
 	}
 
 	// API METHOD

@@ -894,55 +894,51 @@ class Terms extends gEditorial\Module
 		}
 	}
 
-	public function tools_sub( $uri, $sub )
+	protected function render_tools_html( $uri, $sub )
 	{
-		$this->render_form_start( $uri, $sub, 'bulk', 'tools', FALSE );
+		HTML::h3( _x( 'Term Tools', 'Modules: Terms', GEDITORIAL_TEXTDOMAIN ) );
 
-			HTML::h3( _x( 'Term Tools', 'Modules: Terms', GEDITORIAL_TEXTDOMAIN ) );
+		echo '<table class="form-table">';
 
-			echo '<table class="form-table">';
+		$db_taxes   = Database::getTaxonomies( TRUE );
+		$live_taxes = Taxonomy::get( 6 );
+		$dead_taxes = array_diff_key( $db_taxes, $live_taxes );
 
-			$db_taxes   = Database::getTaxonomies( TRUE );
-			$live_taxes = Taxonomy::get( 6 );
-			$dead_taxes = array_diff_key( $db_taxes, $live_taxes );
+		if ( count( $dead_taxes ) ) {
 
-			if ( count( $dead_taxes ) ) {
+			echo '<tr><th scope="row">'._x( 'Orphaned Terms', 'Modules: Terms', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
 
-				echo '<tr><th scope="row">'._x( 'Orphaned Terms', 'Modules: Terms', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
+				$this->do_settings_field( [
+					'type'         => 'select',
+					'field'        => 'dead_tax',
+					'values'       => $dead_taxes,
+					'default'      => ( isset( $post['dead_tax'] ) ? $post['dead_tax'] : 'post_tag' ),
+					'option_group' => 'tools',
+				] );
 
-					$this->do_settings_field( [
-						'type'         => 'select',
-						'field'        => 'dead_tax',
-						'values'       => $dead_taxes,
-						'default'      => ( isset( $post['dead_tax'] ) ? $post['dead_tax'] : 'post_tag' ),
-						'option_group' => 'tools',
-					] );
+				$this->do_settings_field( [
+					'type'         => 'select',
+					'field'        => 'live_tax',
+					'values'       => $live_taxes,
+					'default'      => ( isset( $post['live_tax'] ) ? $post['live_tax'] : 'post_tag' ),
+					'option_group' => 'tools',
+				] );
 
-					$this->do_settings_field( [
-						'type'         => 'select',
-						'field'        => 'live_tax',
-						'values'       => $live_taxes,
-						'default'      => ( isset( $post['live_tax'] ) ? $post['live_tax'] : 'post_tag' ),
-						'option_group' => 'tools',
-					] );
+				echo '&nbsp;&nbsp;';
 
-					echo '&nbsp;&nbsp;';
+				Settings::submitButton( 'orphaned_terms',
+					_x( 'Convert', 'Modules: Terms: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
 
-					Settings::submitButton( 'orphaned_terms',
-						_x( 'Convert', 'Modules: Terms: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
+				HTML::desc( _x( 'Converts orphaned terms into currently registered taxonomies.', 'Modules: Terms', GEDITORIAL_TEXTDOMAIN ) );
 
-					HTML::desc( _x( 'Converts orphaned terms into currently registered taxonomies.', 'Modules: Terms', GEDITORIAL_TEXTDOMAIN ) );
+			echo '</td></tr>';
 
-				echo '</td></tr>';
+		} else {
 
-			} else {
+			HTML::desc( _x( 'Currently no tool available.', 'Modules: Terms', GEDITORIAL_TEXTDOMAIN ) );
+		}
 
-				HTML::desc( _x( 'Currently no tool available.', 'Modules: Terms', GEDITORIAL_TEXTDOMAIN ) );
-			}
-
-			echo '</table>';
-
-		$this->render_form_end( $uri, $sub );
+		echo '</table>';
 	}
 
 	public function reports_settings( $sub )
@@ -985,34 +981,30 @@ class Terms extends gEditorial\Module
 
 	public function reports_sub( $uri, $sub )
 	{
-		if ( 'uncategorized' == $sub )
-			return $this->reports_sub_uncategorized( $uri, $sub );
+		$this->render_form_start( $uri, $sub, 'bulk', 'reports', FALSE );
 
-		if ( $this->key == $sub )
-			return $this->reports_sub_default( $uri, $sub );
+		if ( $this->key == $sub ) {
+
+			if ( $this->render_reports_html( $uri, $sub ) )
+				$this->render_form_buttons();
+
+		} else if ( 'uncategorized' == $sub ) {
+
+			if ( $this->render_reports_uncategorized( $uri, $sub ) )
+				$this->render_form_buttons();
+		}
+
+		$this->render_form_end( $uri, $sub );
 	}
 
 	// FIXME
-	public function reports_sub_default( $uri, $sub )
+	public function render_reports_html( $uri, $sub )
 	{
-		$this->render_form_start( $uri, $sub, 'bulk', 'reports', FALSE );
-
-			HTML::h3( _x( 'Term Reports', 'Modules: Terms', GEDITORIAL_TEXTDOMAIN ) );
-			HTML::desc( _x( 'No reports available!', 'Modules: Terms', GEDITORIAL_TEXTDOMAIN ), TRUE, '-empty' );
-
-		$this->render_form_end( $uri, $sub );
+		HTML::h3( _x( 'Term Reports', 'Modules: Terms', GEDITORIAL_TEXTDOMAIN ) );
+		HTML::desc( _x( 'No reports available!', 'Modules: Terms', GEDITORIAL_TEXTDOMAIN ), TRUE, '-empty' );
 	}
 
-	public function reports_sub_uncategorized( $uri, $sub )
-	{
-		$this->render_form_start( $uri, $sub, 'bulk', 'reports', FALSE );
-
-			$this->tableUncategorized();
-
-		$this->render_form_end( $uri, $sub );
-	}
-
-	private function tableUncategorized()
+	protected function render_reports_uncategorized( $uri, $sub )
 	{
 		$query = [
 			'tax_query'        => [ [

@@ -762,81 +762,77 @@ class Collect extends gEditorial\Module
 		);
 	}
 
-	public function tools_sub( $uri, $sub )
+	protected function render_tools_html( $uri, $sub )
 	{
-		$this->render_form_start( $uri, $sub, 'bulk', 'tools', FALSE );
+		HTML::h3( _x( 'Collect Tools', 'Modules: Collect', GEDITORIAL_TEXTDOMAIN ) );
 
-			HTML::h3( _x( 'Collect Tools', 'Modules: Collect', GEDITORIAL_TEXTDOMAIN ) );
+		echo '<table class="form-table">';
+		echo '<tr><th scope="row">'._x( 'From Terms', 'Modules: Collect', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
+		echo $this->wrap_open_buttons( '-tools' );
 
-			echo '<table class="form-table">';
-			echo '<tr><th scope="row">'._x( 'From Terms', 'Modules: Collect', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
-			echo $this->wrap_open_buttons( '-tools' );
+		Settings::submitButton( 'collection_tax_check',
+			_x( 'Check Terms', 'Modules: Collect: Setting Button', GEDITORIAL_TEXTDOMAIN ), TRUE );
 
-			Settings::submitButton( 'collection_tax_check',
-				_x( 'Check Terms', 'Modules: Collect: Setting Button', GEDITORIAL_TEXTDOMAIN ), TRUE );
+		Settings::submitButton( 'collection_post_create',
+			_x( 'Create Collection Posts', 'Modules: Collect: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
 
-			Settings::submitButton( 'collection_post_create',
-				_x( 'Create Collection Posts', 'Modules: Collect: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
+		Settings::submitButton( 'collection_post_connect',
+			_x( 'Re-Connect Posts', 'Modules: Collect: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
 
-			Settings::submitButton( 'collection_post_connect',
-				_x( 'Re-Connect Posts', 'Modules: Collect: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
+		Settings::submitButton( 'collection_store_order',
+			_x( 'Store Orders', 'Modules: Collect: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
 
-			Settings::submitButton( 'collection_store_order',
-				_x( 'Store Orders', 'Modules: Collect: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
-
-			Settings::submitButton( 'collection_tax_delete',
-				_x( 'Delete Terms', 'Modules: Collect: Setting Button', GEDITORIAL_TEXTDOMAIN ), 'danger', TRUE );
+		Settings::submitButton( 'collection_tax_delete',
+			_x( 'Delete Terms', 'Modules: Collect: Setting Button', GEDITORIAL_TEXTDOMAIN ), 'danger', TRUE );
 
 
-			echo '</p>';
+		echo '</p>';
 
-			if ( ! empty( $_POST ) && isset( $_POST['collection_tax_check'] ) ) {
-				echo '<br />';
+		if ( ! empty( $_POST ) && isset( $_POST['collection_tax_check'] ) ) {
+			echo '<br />';
 
-				HTML::tableList( [
-					'_cb'     => 'term_id',
-					'term_id' => Helper::tableColumnTermID(),
-					'name'    => Helper::tableColumnTermName(),
-					'linked'   => [
-						'title'    => _x( 'Linked Collection Post', 'Modules: Collect: Table Column', GEDITORIAL_TEXTDOMAIN ),
-						'callback' => function( $value, $row, $column, $index ){
+			HTML::tableList( [
+				'_cb'     => 'term_id',
+				'term_id' => Helper::tableColumnTermID(),
+				'name'    => Helper::tableColumnTermName(),
+				'linked'   => [
+					'title'    => _x( 'Linked Collection Post', 'Modules: Collect: Table Column', GEDITORIAL_TEXTDOMAIN ),
+					'callback' => function( $value, $row, $column, $index ){
 
-							if ( $post_id = $this->get_linked_post_id( $row, 'collection_cpt', 'collection_tax', FALSE ) )
-								return Helper::getPostTitleRow( $post_id ).' &ndash; <small>'.$post_id.'</small>';
+						if ( $post_id = $this->get_linked_post_id( $row, 'collection_cpt', 'collection_tax', FALSE ) )
+							return Helper::getPostTitleRow( $post_id ).' &ndash; <small>'.$post_id.'</small>';
 
-							return '&mdash;';
-						},
-					],
-					'slugged'   => [
-						'title' => _x( 'Same Slug Collection Post', 'Modules: Collect: Table Column', GEDITORIAL_TEXTDOMAIN ),
-						'callback' => function( $value, $row, $column, $index ){
+						return '&mdash;';
+					},
+				],
+				'slugged'   => [
+					'title' => _x( 'Same Slug Collection Post', 'Modules: Collect: Table Column', GEDITORIAL_TEXTDOMAIN ),
+					'callback' => function( $value, $row, $column, $index ){
 
-							if ( $post_id = PostType::getIDbySlug( $row->slug, $this->constant( 'collection_cpt' ) ) )
-								return Helper::getPostTitleRow( $post_id ).' &ndash; <small>'.$post_id.'</small>';
+						if ( $post_id = PostType::getIDbySlug( $row->slug, $this->constant( 'collection_cpt' ) ) )
+							return Helper::getPostTitleRow( $post_id ).' &ndash; <small>'.$post_id.'</small>';
 
-							return '&mdash;';
-						},
-					],
-					'count' => [
-						'title'    => _x( 'Count', 'Modules: Collect: Table Column', GEDITORIAL_TEXTDOMAIN ),
-						'callback' => function( $value, $row, $column, $index ){
-							if ( $post_id = PostType::getIDbySlug( $row->slug, $this->constant( 'collection_cpt' ) ) )
-								return Number::format( $this->get_linked_posts( $post_id, 'collection_cpt', 'collection_tax', TRUE ) );
-							return Number::format( $row->count );
-						},
-					],
-					'description' => Helper::tableColumnTermDesc(),
-				], Taxonomy::getTerms( $this->constant( 'collection_tax' ), FALSE, TRUE ), [
-					'empty' => HTML::warning( _x( 'No Terms Found!', 'Modules: Collect: Table Empty', GEDITORIAL_TEXTDOMAIN ), FALSE ),
-				] );
-			}
+						return '&mdash;';
+					},
+				],
+				'count' => [
+					'title'    => _x( 'Count', 'Modules: Collect: Table Column', GEDITORIAL_TEXTDOMAIN ),
+					'callback' => function( $value, $row, $column, $index ){
+						if ( $post_id = PostType::getIDbySlug( $row->slug, $this->constant( 'collection_cpt' ) ) )
+							return Number::format( $this->get_linked_posts( $post_id, 'collection_cpt', 'collection_tax', TRUE ) );
+						return Number::format( $row->count );
+					},
+				],
+				'description' => Helper::tableColumnTermDesc(),
+			], Taxonomy::getTerms( $this->constant( 'collection_tax' ), FALSE, TRUE ), [
+				'empty' => HTML::warning( _x( 'No Terms Found!', 'Modules: Collect: Table Empty', GEDITORIAL_TEXTDOMAIN ), FALSE ),
+			] );
+		}
 
-			HTML::desc( _x( 'Check for collection terms and create corresponding collection posts.', 'Modules: Collect', GEDITORIAL_TEXTDOMAIN ) );
+		HTML::desc( _x( 'Check for collection terms and create corresponding collection posts.', 'Modules: Collect', GEDITORIAL_TEXTDOMAIN ) );
 
-			echo '</td></tr>';
-			echo '</table>';
-
-		$this->render_form_end( $uri, $sub );
+		echo '</td></tr>';
+		echo '</table>';
 	}
 
 	public function tools_settings( $sub )

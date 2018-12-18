@@ -293,21 +293,17 @@ class Ortho extends gEditorial\Module
 		}
 	}
 
-	public function tools_sub( $uri, $sub )
+	protected function render_tools_html( $uri, $sub )
 	{
-		$this->render_form_start( $uri, $sub, 'bulk', 'tools', FALSE );
+		HTML::h3( _x( 'Orthography Sandbox', 'Modules: Ortho', GEDITORIAL_TEXTDOMAIN ) );
 
-			HTML::h3( _x( 'Orthography Sandbox', 'Modules: Ortho', GEDITORIAL_TEXTDOMAIN ) );
-
-			$this->do_settings_field( [
-				'type'         => 'textarea-quicktags',
-				'field'        => 'sandbox',
-				'dir'          => 'rtl',
-				'field_class'  => [ 'large-text', 'textarea-autosize' ],
-				'option_group' => 'tools',
-			] );
-
-		$this->render_form_end( $uri, $sub );
+		$this->do_settings_field( [
+			'type'         => 'textarea-quicktags',
+			'field'        => 'sandbox',
+			'dir'          => 'rtl',
+			'field_class'  => [ 'large-text', 'textarea-autosize' ],
+			'option_group' => 'tools',
+		] );
 	}
 
 	public function reports_settings( $sub )
@@ -342,17 +338,7 @@ class Ortho extends gEditorial\Module
 		}
 	}
 
-	public function reports_sub( $uri, $sub )
-	{
-		$this->render_form_start( $uri, $sub, 'bulk', 'reports', FALSE );
-
-			if ( $this->tableSummary() )
-				$this->render_form_buttons();
-
-		$this->render_form_end( $uri, $sub );
-	}
-
-	private function tableSummary()
+	protected function render_reports_html( $uri, $sub )
 	{
 		$query = $extra = [];
 		$char  = self::req( 'char', 'none' );

@@ -763,81 +763,77 @@ class Magazine extends gEditorial\Module
 		);
 	}
 
-	public function tools_sub( $uri, $sub )
+	protected function render_tools_html( $uri, $sub )
 	{
-		$this->render_form_start( $uri, $sub, 'bulk', 'tools', FALSE );
+		HTML::h3( _x( 'Magazine Tools', 'Modules: Magazine', GEDITORIAL_TEXTDOMAIN ) );
 
-			HTML::h3( _x( 'Magazine Tools', 'Modules: Magazine', GEDITORIAL_TEXTDOMAIN ) );
+		echo '<table class="form-table">';
+		echo '<tr><th scope="row">'._x( 'From Terms', 'Modules: Magazine', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
+		echo $this->wrap_open_buttons( '-tools' );
 
-			echo '<table class="form-table">';
-			echo '<tr><th scope="row">'._x( 'From Terms', 'Modules: Magazine', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
-			echo $this->wrap_open_buttons( '-tools' );
+		Settings::submitButton( 'issue_tax_check',
+			_x( 'Check Terms', 'Modules: Magazine: Setting Button', GEDITORIAL_TEXTDOMAIN ), TRUE );
 
-			Settings::submitButton( 'issue_tax_check',
-				_x( 'Check Terms', 'Modules: Magazine: Setting Button', GEDITORIAL_TEXTDOMAIN ), TRUE );
+		Settings::submitButton( 'issue_post_create',
+			_x( 'Create Issue Posts', 'Modules: Magazine: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
 
-			Settings::submitButton( 'issue_post_create',
-				_x( 'Create Issue Posts', 'Modules: Magazine: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
+		Settings::submitButton( 'issue_post_connect',
+			_x( 'Re-Connect Posts', 'Modules: Magazine: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
 
-			Settings::submitButton( 'issue_post_connect',
-				_x( 'Re-Connect Posts', 'Modules: Magazine: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
+		Settings::submitButton( 'issue_store_order',
+			_x( 'Store Orders', 'Modules: Magazine: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
 
-			Settings::submitButton( 'issue_store_order',
-				_x( 'Store Orders', 'Modules: Magazine: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
-
-			Settings::submitButton( 'issue_tax_delete',
-				_x( 'Delete Terms', 'Modules: Magazine: Setting Button', GEDITORIAL_TEXTDOMAIN ), 'danger', TRUE );
+		Settings::submitButton( 'issue_tax_delete',
+			_x( 'Delete Terms', 'Modules: Magazine: Setting Button', GEDITORIAL_TEXTDOMAIN ), 'danger', TRUE );
 
 
-			echo '</p>';
+		echo '</p>';
 
-			if ( ! empty( $_POST ) && isset( $_POST['issue_tax_check'] ) ) {
-				echo '<br />';
+		if ( ! empty( $_POST ) && isset( $_POST['issue_tax_check'] ) ) {
+			echo '<br />';
 
-				HTML::tableList( [
-					'_cb'     => 'term_id',
-					'term_id' => Helper::tableColumnTermID(),
-					'name'    => Helper::tableColumnTermName(),
-					'linked'   => [
-						'title'    => _x( 'Linked Issue Post', 'Modules: Magazine: Table Column', GEDITORIAL_TEXTDOMAIN ),
-						'callback' => function( $value, $row, $column, $index ){
+			HTML::tableList( [
+				'_cb'     => 'term_id',
+				'term_id' => Helper::tableColumnTermID(),
+				'name'    => Helper::tableColumnTermName(),
+				'linked'   => [
+					'title'    => _x( 'Linked Issue Post', 'Modules: Magazine: Table Column', GEDITORIAL_TEXTDOMAIN ),
+					'callback' => function( $value, $row, $column, $index ){
 
-							if ( $post_id = $this->get_linked_post_id( $row, 'issue_cpt', 'issue_tax', FALSE ) )
-								return Helper::getPostTitleRow( $post_id ).' &ndash; <small>'.$post_id.'</small>';
+						if ( $post_id = $this->get_linked_post_id( $row, 'issue_cpt', 'issue_tax', FALSE ) )
+							return Helper::getPostTitleRow( $post_id ).' &ndash; <small>'.$post_id.'</small>';
 
-							return '&mdash;';
-						},
-					],
-					'slugged'   => [
-						'title' => _x( 'Same Slug Issue Post', 'Modules: Magazine: Table Column', GEDITORIAL_TEXTDOMAIN ),
-						'callback' => function( $value, $row, $column, $index ){
+						return '&mdash;';
+					},
+				],
+				'slugged'   => [
+					'title' => _x( 'Same Slug Issue Post', 'Modules: Magazine: Table Column', GEDITORIAL_TEXTDOMAIN ),
+					'callback' => function( $value, $row, $column, $index ){
 
-							if ( $post_id = PostType::getIDbySlug( $row->slug, $this->constant( 'issue_cpt' ) ) )
-								return Helper::getPostTitleRow( $post_id ).' &ndash; <small>'.$post_id.'</small>';
+						if ( $post_id = PostType::getIDbySlug( $row->slug, $this->constant( 'issue_cpt' ) ) )
+							return Helper::getPostTitleRow( $post_id ).' &ndash; <small>'.$post_id.'</small>';
 
-							return '&mdash;';
-						},
-					],
-					'count' => [
-						'title'    => _x( 'Count', 'Modules: Magazine: Table Column', GEDITORIAL_TEXTDOMAIN ),
-						'callback' => function( $value, $row, $column, $index ){
-							if ( $post_id = PostType::getIDbySlug( $row->slug, $this->constant( 'issue_cpt' ) ) )
-								return Number::format( $this->get_linked_posts( $post_id, 'issue_cpt', 'issue_tax', TRUE ) );
-							return Number::format( $row->count );
-						},
-					],
-					'description' => Helper::tableColumnTermDesc(),
-				], Taxonomy::getTerms( $this->constant( 'issue_tax' ), FALSE, TRUE ), [
-					'empty' => HTML::warning( _x( 'No Terms Found!', 'Modules: Magazine: Table Empty', GEDITORIAL_TEXTDOMAIN ), FALSE ),
-				] );
-			}
+						return '&mdash;';
+					},
+				],
+				'count' => [
+					'title'    => _x( 'Count', 'Modules: Magazine: Table Column', GEDITORIAL_TEXTDOMAIN ),
+					'callback' => function( $value, $row, $column, $index ){
+						if ( $post_id = PostType::getIDbySlug( $row->slug, $this->constant( 'issue_cpt' ) ) )
+							return Number::format( $this->get_linked_posts( $post_id, 'issue_cpt', 'issue_tax', TRUE ) );
+						return Number::format( $row->count );
+					},
+				],
+				'description' => Helper::tableColumnTermDesc(),
+			], Taxonomy::getTerms( $this->constant( 'issue_tax' ), FALSE, TRUE ), [
+				'empty' => HTML::warning( _x( 'No Terms Found!', 'Modules: Magazine: Table Empty', GEDITORIAL_TEXTDOMAIN ), FALSE ),
+			] );
+		}
 
-			HTML::desc( _x( 'Check for issue terms and create corresponding issue posts.', 'Modules: Magazine', GEDITORIAL_TEXTDOMAIN ) );
+		HTML::desc( _x( 'Check for issue terms and create corresponding issue posts.', 'Modules: Magazine', GEDITORIAL_TEXTDOMAIN ) );
 
-			echo '</td></tr>';
-			echo '</table>';
-
-		$this->render_form_end( $uri, $sub );
+		echo '</td></tr>';
+		echo '</table>';
 	}
 
 	public function tools_settings( $sub )

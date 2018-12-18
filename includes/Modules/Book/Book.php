@@ -698,20 +698,11 @@ class Book extends gEditorial\Module
 
 	public function tools_settings( $sub )
 	{
-		if ( $this->check_settings( $sub, 'tools' ) ) {}
+		$this->check_settings( $sub, 'tools' );
 	}
 
-	public function tools_sub( $uri, $sub )
-	{
-		$this->render_form_start( $uri, $sub, 'bulk', 'tools', FALSE );
-
-			$this->tableSummary();
-
-		$this->render_form_end( $uri, $sub );
-	}
-
-	// @REF: meta query: http://wordpress.stackexchange.com/a/246358/3687
-	private function tableSummary()
+	// @REF: http://wordpress.stackexchange.com/a/246358/3687
+	protected function render_tools_html( $uri, $sub )
 	{
 		$query = [
 			'meta_query' => [

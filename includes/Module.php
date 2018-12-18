@@ -810,6 +810,34 @@ class Module extends Base
 		echo '</form>';
 	}
 
+	// DEFAULT METHOD: tools sub html
+	public function tools_sub( $uri, $sub )
+	{
+		$this->render_form_start( $uri, $sub, 'bulk', 'tools', FALSE );
+
+			if ( $this->render_tools_html( $uri, $sub ) )
+				$this->render_form_buttons();
+
+		$this->render_form_end( $uri, $sub );
+	}
+
+	// DEFAULT METHOD: used for tools default sub html
+	protected function render_tools_html( $uri, $sub ) {}
+
+	// DEFAULT METHOD: reports sub html
+	public function reports_sub( $uri, $sub )
+	{
+		$this->render_form_start( $uri, $sub, 'bulk', 'reports', FALSE );
+
+			if ( $this->render_reports_html( $uri, $sub ) )
+				$this->render_form_buttons();
+
+		$this->render_form_end( $uri, $sub );
+	}
+
+	// DEFAULT METHOD: used for reports default sub html
+	protected function render_reports_html( $uri, $sub ) {}
+
 	protected function get_current_form( $defaults, $context = 'settings' )
 	{
 		$req = empty( $_REQUEST[$this->base.'_'.$this->module->name][$context] )

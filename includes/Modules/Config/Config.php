@@ -273,11 +273,8 @@ class Config extends gEditorial\Module
 		do_action( 'geditorial_tools_settings', $sub );
 	}
 
-	public function reports_sub( $uri, $sub )
+	protected function render_reports_html( $uri, $sub )
 	{
-		if ( 'general' != $sub )
-			return;
-
 		if ( ! $this->cuc( 'reports' ) )
 			self::cheatin();
 
@@ -285,18 +282,7 @@ class Config extends gEditorial\Module
 		HTML::desc( _x( 'No reports available!', 'Modules: Config', GEDITORIAL_TEXTDOMAIN ), TRUE, '-empty' );
 	}
 
-	public function tools_sub( $uri, $sub )
-	{
-		if ( 'general' == $sub )
-			return $this->tools_sub_general( $uri, $sub );
-
-		// TODO: sub for installing default terms for each module
-		// @SEE: https://make.wordpress.org/core/?p=20650
-		// if ( 'defaults' == $sub )
-		// 	return $this->tools_sub_defaults( $uri, $sub );
-	}
-
-	private function tools_sub_general( $uri, $sub )
+	protected function render_tools_html( $uri, $sub )
 	{
 		if ( ! $this->cuc( 'tools' ) )
 			self::cheatin();
@@ -305,90 +291,86 @@ class Config extends gEditorial\Module
 			'empty_module' => 'meta',
 		], 'tools' );
 
-		$this->render_form_start( $uri, $sub, 'bulk', 'tools', TRUE );
+		echo '<table class="form-table">';
 
-			echo '<table class="form-table">';
+		echo '<tr><th scope="row">'._x( 'Options', 'Modules: Config', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
 
-			echo '<tr><th scope="row">'._x( 'Options', 'Modules: Config', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
+			echo '<p>';
+				Settings::submitButton( 'upgrade_old_options',
+					_x( 'Upgrade Old Options', 'Modules: Config: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
 
-				echo '<p>';
-					Settings::submitButton( 'upgrade_old_options',
-						_x( 'Upgrade Old Options', 'Modules: Config: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
+				HTML::desc( _x( 'Checks for old options and upgrade them. Also deletes the old options.', 'Modules: Config', GEDITORIAL_TEXTDOMAIN ), FALSE );
+			echo '</p>';
 
-					HTML::desc( _x( 'Checks for old options and upgrade them. Also deletes the old options.', 'Modules: Config', GEDITORIAL_TEXTDOMAIN ), FALSE );
+			if ( User::isSuperAdmin() || WordPress::isDev() ) {
+				echo '<br /><p>';
+					Settings::submitButton( 'delete_all_options',
+						_x( 'Delete All Options', 'Modules: Config: Setting Button', GEDITORIAL_TEXTDOMAIN ), 'danger', TRUE );
+
+					HTML::desc( _x( 'Deletes all editorial options on current site', 'Modules: Config', GEDITORIAL_TEXTDOMAIN ), FALSE );
 				echo '</p>';
+			}
 
-				if ( User::isSuperAdmin() || WordPress::isDev() ) {
-					echo '<br /><p>';
-						Settings::submitButton( 'delete_all_options',
-							_x( 'Delete All Options', 'Modules: Config: Setting Button', GEDITORIAL_TEXTDOMAIN ), 'danger', TRUE );
+		echo '</td></tr></table>';
 
-						HTML::desc( _x( 'Deletes all editorial options on current site', 'Modules: Config', GEDITORIAL_TEXTDOMAIN ), FALSE );
-					echo '</p>';
-				}
+		HTML::h2( _x( 'Maintenance Tasks', 'Modules: Config', GEDITORIAL_TEXTDOMAIN ) );
 
-			echo '</td></tr></table>';
+		echo '<table class="form-table">';
 
-			HTML::h2( _x( 'Maintenance Tasks', 'Modules: Config', GEDITORIAL_TEXTDOMAIN ) );
+		echo '<tr><th scope="row">'._x( 'Empty Meta Fields', 'Modules: Config', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
 
-			echo '<table class="form-table">';
+			$this->do_settings_field( [
+				'type'         => 'select',
+				'field'        => 'empty_module',
+				'values'       => gEditorial()->list_modules(),
+				'default'      => $post['empty_module'],
+				'option_group' => 'tools',
+			] );
 
-			echo '<tr><th scope="row">'._x( 'Empty Meta Fields', 'Modules: Config', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
+			echo '&nbsp;&nbsp;';
+
+			Settings::submitButton( 'custom_fields_empty',
+				_x( 'Empty', 'Modules: Config: Setting Button', GEDITORIAL_TEXTDOMAIN ), 'danger', TRUE );
+
+			HTML::desc( _x( 'Deletes empty meta values. This solves common problems with imported posts.', 'Modules: Config', GEDITORIAL_TEXTDOMAIN ) );
+
+		echo '</td></tr>';
+
+		echo '<tr><th scope="row">'._x( 'Orphan Connections', 'Modules: Config', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
+
+		// $counts = O2O\API::getConnectionCounts();
+
+		if ( empty( $counts ) ) {
+
+			HTML::desc( _x( 'No orphaned types found in the database.', 'Modules: Config', GEDITORIAL_TEXTDOMAIN ), TRUE, '-empty' );
+
+		} else {
+
+			$types = O2O\ConnectionTypeFactory::get_all_instances();
+
+			foreach ( $counts as $type => $count ) {
+
+				if ( O2O\API::type( $type ) )
+					continue;
+
+				echo '<code>'.$type.'</code> ('.$count.') ';
 
 				$this->do_settings_field( [
 					'type'         => 'select',
-					'field'        => 'empty_module',
-					'values'       => gEditorial()->list_modules(),
-					'default'      => $post['empty_module'],
+					'field'        => 'new_o2o_type',
+					'values'       => array_keys( $types ),
+					// 'default'      => $post['empty_module'],
 					'option_group' => 'tools',
 				] );
 
 				echo '&nbsp;&nbsp;';
 
-				Settings::submitButton( 'custom_fields_empty',
-					_x( 'Empty', 'Modules: Config: Setting Button', GEDITORIAL_TEXTDOMAIN ), 'danger', TRUE );
-
-				HTML::desc( _x( 'Deletes empty meta values. This solves common problems with imported posts.', 'Modules: Config', GEDITORIAL_TEXTDOMAIN ) );
-
-			echo '</td></tr>';
-
-			echo '<tr><th scope="row">'._x( 'Orphan Connections', 'Modules: Config', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
-
-			// $counts = O2O\API::getConnectionCounts();
-
-			if ( empty( $counts ) ) {
-
-				HTML::desc( _x( 'No orphaned types found in the database.', 'Modules: Config', GEDITORIAL_TEXTDOMAIN ), TRUE, '-empty' );
-
-			} else {
-
-				$types = O2O\ConnectionTypeFactory::get_all_instances();
-
-				foreach ( $counts as $type => $count ) {
-
-					if ( O2O\API::type( $type ) )
-						continue;
-
-					echo '<code>'.$type.'</code> ('.$count.') ';
-
-					$this->do_settings_field( [
-						'type'         => 'select',
-						'field'        => 'new_o2o_type',
-						'values'       => array_keys( $types ),
-						// 'default'      => $post['empty_module'],
-						'option_group' => 'tools',
-					] );
-
-					echo '&nbsp;&nbsp;';
-
-					Settings::submitButton( 'convert_connection_type',
-						_x( 'Convert', 'Modules: Config: Setting Button', GEDITORIAL_TEXTDOMAIN ), 'danger', TRUE );
-				}
+				Settings::submitButton( 'convert_connection_type',
+					_x( 'Convert', 'Modules: Config: Setting Button', GEDITORIAL_TEXTDOMAIN ), 'danger', TRUE );
 			}
+		}
 
-			echo '</td></tr></table>';
-
-		$this->render_form_end( $uri, $sub );
+		echo '</td></tr></table>';
 	}
 
 	public function settings_sidebox( $sub, $uri )

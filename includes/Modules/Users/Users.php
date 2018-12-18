@@ -24,7 +24,8 @@ class Users extends gEditorial\Module
 {
 
 	protected $caps = [
-		'tools' => 'edit_users',
+		'tools'   => 'edit_users',
+		'reports' => 'edit_others_posts',
 	];
 
 	public static function module()
@@ -632,7 +633,7 @@ class Users extends gEditorial\Module
 		$this->check_settings( $sub, 'reports' );
 	}
 
-	public function reports_sub( $uri, $sub )
+	protected function render_reports_html( $uri, $sub )
 	{
 		$args = $this->get_current_form( [
 			'post_type'  => 'post',
@@ -640,58 +641,55 @@ class Users extends gEditorial\Module
 			'year_month' => '',
 		], 'reports' );
 
-		$this->render_form_start( $uri, $sub, 'bulk', 'reports', FALSE );
+		HTML::h3( _x( 'User Reports', 'Modules: Users', GEDITORIAL_TEXTDOMAIN ) );
 
-			HTML::h3( _x( 'User Reports', 'Modules: Users', GEDITORIAL_TEXTDOMAIN ) );
+		echo '<table class="form-table">';
 
-			echo '<table class="form-table">';
+		echo '<tr><th scope="row">'._x( 'By PostType', 'Modules: Users', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
 
-			echo '<tr><th scope="row">'._x( 'By PostType', 'Modules: Users', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
+		$this->do_settings_field( [
+			'type'         => 'select',
+			'field'        => 'post_type',
+			'values'       => PostType::get( 0, [ 'show_ui' => TRUE ] ),
+			'default'      => $args['post_type'],
+			'option_group' => 'reports',
+		] );
 
-			$this->do_settings_field( [
-				'type'         => 'select',
-				'field'        => 'post_type',
-				'values'       => PostType::get( 0, [ 'show_ui' => TRUE ] ),
-				'default'      => $args['post_type'],
-				'option_group' => 'reports',
-			] );
+		echo '&nbsp;';
 
-			echo '&nbsp;';
+		$this->do_settings_field( [
+			'type'         => 'user',
+			'field'        => 'user_id',
+			'none_title'   => _x( 'All Users', 'Modules: Users', GEDITORIAL_TEXTDOMAIN ),
+			'default'      => $args['user_id'],
+			'option_group' => 'reports',
+		] );
 
-			$this->do_settings_field( [
-				'type'         => 'user',
-				'field'        => 'user_id',
-				'none_title'   => _x( 'All Users', 'Modules: Users', GEDITORIAL_TEXTDOMAIN ),
-				'default'      => $args['user_id'],
-				'option_group' => 'reports',
-			] );
+		echo '&nbsp;';
 
-			echo '&nbsp;';
+		$this->do_settings_field( [
+			'type'         => 'select',
+			'field'        => 'year_month',
+			'none_title'   => _x( 'All Months', 'Modules: Users', GEDITORIAL_TEXTDOMAIN ),
+			'values'       => Helper::getPostTypeMonths( $this->default_calendar(), $args['post_type'], [], $args['user_id'] ),
+			'default'      => $args['year_month'],
+			'option_group' => 'reports',
+		] );
 
-			$this->do_settings_field( [
-				'type'         => 'select',
-				'field'        => 'year_month',
-				'none_title'   => _x( 'All Months', 'Modules: Users', GEDITORIAL_TEXTDOMAIN ),
-				'values'       => Helper::getPostTypeMonths( $this->default_calendar(), $args['post_type'], [], $args['user_id'] ),
-				'default'      => $args['year_month'],
-				'option_group' => 'reports',
-			] );
+		echo '&nbsp;';
 
-			echo '&nbsp;';
+		Settings::submitButton( 'posttype_stats',
+			_x( 'Query Stats', 'Modules: Users: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
 
-			Settings::submitButton( 'posttype_stats',
-				_x( 'Query Stats', 'Modules: Users: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
+		if ( ! empty( $_POST ) && isset( $_POST['posttype_stats'] ) ) {
 
-			if ( ! empty( $_POST ) && isset( $_POST['posttype_stats'] ) ) {
+			$period = $args['year_month'] ? Helper::monthFirstAndLast( $this->default_calendar(), substr( $args['year_month'], 0, 4 ), substr( $args['year_month'], 4, 2 ) ) : [];
 
-				$period = $args['year_month'] ? Helper::monthFirstAndLast( $this->default_calendar(), substr( $args['year_month'], 0, 4 ), substr( $args['year_month'], 4, 2 ) ) : [];
+			echo HTML::tableCode( Database::countPostsByPosttype( $args['post_type'], $args['user_id'], $period ) );
+		}
 
-				echo HTML::tableCode( Database::countPostsByPosttype( $args['post_type'], $args['user_id'], $period ) );
-			}
-
-			echo '</td></tr>';
-			echo '</table>';
-		$this->render_form_end( $uri, $sub );
+		echo '</td></tr>';
+		echo '</table>';
 	}
 
 	public function tools_settings( $sub )
@@ -752,40 +750,36 @@ class Users extends gEditorial\Module
 		}
 	}
 
-	public function tools_sub( $uri, $sub )
+	protected function render_tools_html( $uri, $sub )
 	{
-		$this->render_form_start( $uri, $sub, 'bulk', 'tools', FALSE );
+		echo '<table class="form-table">';
+		echo '<tr><th scope="row">'._x( 'Re-Map Authors', 'Modules: Users', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
 
-			echo '<table class="form-table">';
-			echo '<tr><th scope="row">'._x( 'Re-Map Authors', 'Modules: Users', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
+		$wpupload = Media::upload();
 
-			$wpupload = Media::upload();
+		if ( ! empty( $wpupload['error'] ) ) {
 
-			if ( ! empty( $wpupload['error'] ) ) {
+			echo HTML::error( sprintf( _x( 'Before you can upload a file, you will need to fix the following error: %s', 'Modules: Users', GEDITORIAL_TEXTDOMAIN ), '<b>'.$wpupload['error'].'</b>' ), FALSE );
 
-				echo HTML::error( sprintf( _x( 'Before you can upload a file, you will need to fix the following error: %s', 'Modules: Users', GEDITORIAL_TEXTDOMAIN ), '<b>'.$wpupload['error'].'</b>' ), FALSE );
+		} else {
 
-			} else {
+			$this->do_settings_field( [
+				'type'      => 'file',
+				'field'     => 'import_users_file',
+				'name_attr' => 'import',
+				'values'    => [ '.csv' ],
+			] );
 
-				$this->do_settings_field( [
-					'type'      => 'file',
-					'field'     => 'import_users_file',
-					'name_attr' => 'import',
-					'values'    => [ '.csv' ],
-				] );
+			echo '<br />';
 
-				echo '<br />';
+			$size = File::formatSize( apply_filters( 'import_upload_size_limit', wp_max_upload_size() ) );
 
-				$size = File::formatSize( apply_filters( 'import_upload_size_limit', wp_max_upload_size() ) );
+			Settings::submitButton( 'remap_post_authors', _x( 'Upload and Re-Map', 'Modules: Users: Setting Button', GEDITORIAL_TEXTDOMAIN ), 'danger' );
+			HTML::desc( sprintf( _x( 'Checks for post authors and re-map them with current registered users. Maximum upload size: <b>%s</b>', 'Modules: Users', GEDITORIAL_TEXTDOMAIN ), HTML::wrapLTR( $size ) ) );
+		}
 
-				Settings::submitButton( 'remap_post_authors', _x( 'Upload and Re-Map', 'Modules: Users: Setting Button', GEDITORIAL_TEXTDOMAIN ), 'danger' );
-				HTML::desc( sprintf( _x( 'Checks for post authors and re-map them with current registered users. Maximum upload size: <b>%s</b>', 'Modules: Users', GEDITORIAL_TEXTDOMAIN ), HTML::wrapLTR( $size ) ) );
-			}
-
-			echo '</td></tr>';
-			echo '</table>';
-
-		$this->render_form_end( $uri, $sub );
+		echo '</td></tr>';
+		echo '</table>';
 	}
 
 	// FIXME: DRAFT : need styling / register the shortcode!!

@@ -329,13 +329,11 @@ class Importer extends gEditorial\Module
 		}
 	}
 
-	public function tools_sub( $uri, $sub )
+	protected function render_tools_html( $uri, $sub )
 	{
-		$this->render_form_start( $uri, $sub, 'bulk', 'tools', FALSE );
-
 		$selected  = self::req( '_cb', [] );
 		$field_map = self::req( 'field_map', [] );
-		$posttype = self::req( 'posttype', $this->get_setting( 'post_type', 'post' ) );
+		$posttype  = self::req( 'posttype', $this->get_setting( 'post_type', 'post' ) );
 		$upload_id = self::req( 'upload_id', FALSE );
 		$attach_id = self::req( 'attach_id', FALSE );
 		$user_id   = self::req( 'user_id', gEditorial()->user( TRUE ) );
@@ -416,8 +414,6 @@ class Importer extends gEditorial\Module
 		}
 
 		echo '</p>';
-
-		$this->render_form_end( $uri, $sub );
 	}
 
 	public function get_importer_fields( $posttype = NULL )

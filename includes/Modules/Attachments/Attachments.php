@@ -206,16 +206,7 @@ class Attachments extends gEditorial\Module
 		}
 	}
 
-	public function reports_sub( $uri, $sub )
-	{
-		$this->render_form_start( $uri, $sub, 'bulk', 'reports', FALSE );
-
-			$this->tableSummary();
-
-		$this->render_form_end( $uri, $sub );
-	}
-
-	private function tableSummary()
+	protected function render_reports_html( $uri, $sub )
 	{
 		$query = $extra = [];
 
