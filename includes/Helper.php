@@ -1391,6 +1391,71 @@ class Helper extends Core\Base
 		return FALSE;
 	}
 
+	// - for post time, if the post is unpublished, the change sets the
+	// publication timestamp
+	// - if the post was published or scheduled for the future, the change will
+	// change the timestamp. 'publish' posts will become scheduled if moved past
+	// today and 'future' posts will be published if moved before today
+	// @REF: `handle_ajax_drag_and_drop()`
+	// FIXME: needs fallback
+	public static function reSchedulePost( $post, $cal, $year, $month, $day, $set_timestamp = TRUE )
+	{
+		global $wpdb;
+
+		if ( ! $cal || ! $year || ! $month || ! $day )
+			return FALSE;
+
+		if ( ! is_callable( 'gPersianDateDate', 'make' ) )
+			return FALSE;
+
+		if ( ! $post = get_post( $post ) )
+			return FALSE;
+
+		// persist the old hourstamp because we can't manipulate the exact time
+		// on the calendar bump the last modified timestamps too
+		$old  = date( 'H:i:s', strtotime( $post->post_date ) );
+		$time = explode( ':', $old );
+
+		$timestamp = \gPersianDateDate::make(
+			$time[0],
+			$time[1],
+			$time[2],
+			$month,
+			$day,
+			$year,
+			$cal,
+			'UTC'
+		);
+
+		if ( ! $timestamp )
+			return _x( 'Something is wrong with the new date.', 'Helper: Re-Schedule Post', GEDITORIAL_TEXTDOMAIN );
+
+		$data = [
+			'post_date'         => date( 'Y-m-d', $timestamp ).' '.$old,
+			'post_modified'     => current_time( 'mysql' ),
+			'post_modified_gmt' => current_time( 'mysql', 1 ),
+		];
+
+		// by default, changing a post on the calendar won't set the timestamp.
+		// if the user desires that to be the behaviour, they can set the result
+		// of this filter to 'true' with how WordPress works internally,
+		// setting 'post_date_gmt' will set the timestamp
+		if ( apply_filters( static::BASE.'_set_timestamp', $set_timestamp ) )
+			$data['post_date_gmt'] = date( 'Y-m-d', $timestamp ).' '.date( 'H:i:s', strtotime( $post->post_date_gmt ) );
+
+		// self::_log( [ $month, $day, $year, $cal, $time ] );
+		// self::_log( [ $post->post_date, $post->post_date_gmt, $post->post_modified, $post->post_modified_gmt ] );
+		// self::_log( [ $data['post_date'], $data['post_date_gmt'], $data['post_modified'], $data['post_modified_gmt'] ] );
+
+		// @SEE http://core.trac.wordpress.org/ticket/18362
+		if ( ! $update = $wpdb->update( $wpdb->posts, $data, [ 'ID' => $post->ID ] ) )
+			return FALSE;
+
+		clean_post_cache( $post->ID );
+
+		return TRUE;
+	}
+
 	// NOT USED
 	// returns array of post date in given cal
 	public static function getTheDayByPost( $post, $default_type = 'gregorian' )

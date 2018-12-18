@@ -92,13 +92,19 @@ class Schedule extends gEditorial\Module
 
 				Ajax::checkReferer( $this->hook( $post['post_id'] ) );
 
-				$result = $this->reschedule_post( $post['post_id'], $post['cal'], $post['year'], $post['month'], $post['day'] );
+				if ( ! $target = get_post( $post['post_id'] ) )
+					Ajax::errorMessage( _x( 'Post not found.', 'Modules: Schedule', GEDITORIAL_TEXTDOMAIN ) );
+
+				if ( ! $this->can_reschedule( $target ) )
+					Ajax::errorMessage( _x( 'Updating the post date dynamically doesn\'t work for published content.', 'Modules: Schedule', GEDITORIAL_TEXTDOMAIN ) );
+
+				$result = Helper::reSchedulePost( $target, $post['cal'], $post['year'], $post['month'], $post['day'] );
 
 				if ( TRUE === $result )
 					Ajax::successMessage();
 
 				if ( $result )
-					Ajax::errorMessage( $result );
+					Ajax::errorMessage( $result ?: NULL );
 
 				Ajax::errorMessage();
 
@@ -371,73 +377,5 @@ class Schedule extends gEditorial\Module
 	private function can_reschedule( $post )
 	{
 		return ! in_array( $post->post_status, $this->get_setting( 'noschedule_statuses', [ 'publish', 'future', 'private' ] ) );
-	}
-
-	// - for post time, if the post is unpublished, the change sets the
-	// publication timestamp
-	// - if the post was published or scheduled for the future, the change will
-	// change the timestamp. 'publish' posts will become scheduled if moved past
-	// today and 'future' posts will be published if moved before today
-	// @REF: `handle_ajax_drag_and_drop()`
-	private function reschedule_post( $post, $cal, $year, $month, $day )
-	{
-		global $wpdb;
-
-		if ( ! $cal || ! $year || ! $month || ! $day )
-			return FALSE;
-
-		if ( ! is_callable( 'gPersianDateDate', 'make' ) )
-			return FALSE;
-
-		if ( ! $post = get_post( $post ) )
-			return FALSE;
-
-		if ( ! $this->can_reschedule( $post ) )
-			return _x( 'Updating the post date dynamically doesn\'t work for published content.', 'Modules: Schedule', GEDITORIAL_TEXTDOMAIN );
-
-		// persist the old hourstamp because we can't manipulate the exact time
-		// on the calendar bump the last modified timestamps too
-		$old  = date( 'H:i:s', strtotime( $post->post_date ) );
-		$time = explode( ':', $old );
-
-		$timestamp = \gPersianDateDate::make(
-			$time[0],
-			$time[1],
-			$time[2],
-			$month,
-			$day,
-			$year,
-			$cal,
-			'UTC'
-		);
-
-		if ( ! $timestamp )
-			return _x( 'Something is wrong with the new date.', 'Modules: Schedule', GEDITORIAL_TEXTDOMAIN );
-
-		$data = [
-			'post_date'         => date( 'Y-m-d', $timestamp ).' '.$old,
-			'post_modified'     => current_time( 'mysql' ),
-			'post_modified_gmt' => current_time( 'mysql', 1 ),
-		];
-
-		// by default, changing a post on the calendar won't set the timestamp.
-		// if the user desires that to be the behaviour, they can set the result
-		// of this filter to 'true' with how WordPress works internally,
-		// setting 'post_date_gmt' will set the timestamp
-		if ( $this->filters( 'set_timestamp', TRUE ) )
-			$data['post_date_gmt'] = date( 'Y-m-d', $timestamp )
-				.' '.date( 'H:i:s', strtotime( $post->post_date_gmt ) );
-
-		// self::_log( [ $month, $day, $year, $cal, $time ] );
-		// self::_log( [ $post->post_date, $post->post_date_gmt, $post->post_modified, $post->post_modified_gmt ] );
-		// self::_log( [ $data['post_date'], $data['post_date_gmt'], $data['post_modified'], $data['post_modified_gmt'] ] );
-
-		// @SEE http://core.trac.wordpress.org/ticket/18362
-		if ( ! $update = $wpdb->update( $wpdb->posts, $data, [ 'ID' => $post->ID ] ) )
-			return FALSE;
-
-		clean_post_cache( $post->ID );
-
-		return TRUE;
 	}
 }
