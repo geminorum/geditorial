@@ -1204,10 +1204,11 @@ class Module extends Base
 		if ( ! $this->cuc( $context ) )
 			return FALSE;
 
-		add_filter( $this->base.'_'.$context.'_subs', [ $this, 'append_sub' ], 10, 2 );
-
 		if ( is_null( $key ) )
 			$key = $this->key;
+
+		if ( $key == $this->key )
+			add_filter( $this->base.'_'.$context.'_subs', [ $this, 'append_sub' ], 10, 2 );
 
 		if ( $key != $sub )
 			return FALSE;
