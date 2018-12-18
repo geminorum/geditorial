@@ -864,12 +864,12 @@ class Today extends gEditorial\Module
 		return array_merge( $new_rules, $rules );
 	}
 
-	public function tools_settings( $sub )
+	public function reports_settings( $sub )
 	{
-		$this->check_settings( $sub, 'tools' );
+		$this->check_settings( $sub, 'reports' );
 	}
 
-	protected function render_tools_html( $uri, $sub )
+	protected function render_reports_html( $uri, $sub )
 	{
 		$constants = $this->get_the_day_constants();
 		$query     = [ 'meta_query' => [ 'relation' => 'OR' ] ];
