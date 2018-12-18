@@ -860,12 +860,13 @@ class Module extends Base
 	}
 
 	// DEFAULT METHOD
-	public function append_sub( $subs, $context = 'settings' )
+	// `$extra` arg is for extending in modules
+	public function append_sub( $subs, $context = 'settings', $extra = [] )
 	{
 		if ( ! $this->cuc( $context ) )
 			return $subs;
 
-		return array_merge( $subs, [ $this->module->name => $this->module->title ] );
+		return array_merge( $subs, [ $this->module->name => $this->module->title ], $extra );
 	}
 
 	public function settings_validate( $options )

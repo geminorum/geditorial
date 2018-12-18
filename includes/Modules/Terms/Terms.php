@@ -846,18 +846,12 @@ class Terms extends gEditorial\Module
 		}
 	}
 
-	public function append_sub( $subs, $page = 'settings' )
+	public function append_sub( $subs, $context = 'settings', $extra = [] )
 	{
-		if ( ! $this->cuc( $page ) )
-			return $subs;
+		if ( 'reports' == $context )
+			$extra['uncategorized'] = _x( 'Uncategorized', 'Modules: Terms: Reports: Sub Title', GEDITORIAL_TEXTDOMAIN );
 
-		if ( $page == 'reports' )
-			return array_merge( $subs, [
-				$this->module->name => $this->module->title,
-				'uncategorized'     => _x( 'Uncategorized', 'Modules: Terms: Reports: Sub Title', GEDITORIAL_TEXTDOMAIN ),
-			] );
-		else
-			return array_merge( $subs, [ $this->module->name => $this->module->title ] );
+		return parent::append_sub( $subs, $context, $extra );
 	}
 
 	public function tools_settings( $sub )
