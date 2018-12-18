@@ -3,6 +3,7 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
+use geminorum\gEditorial\Datetime;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Listtable;
 use geminorum\gEditorial\MetaBox;
@@ -671,7 +672,7 @@ class Users extends gEditorial\Module
 			'type'         => 'select',
 			'field'        => 'year_month',
 			'none_title'   => _x( 'All Months', 'Modules: Users', GEDITORIAL_TEXTDOMAIN ),
-			'values'       => Helper::getPostTypeMonths( $this->default_calendar(), $args['post_type'], [], $args['user_id'] ),
+			'values'       => Datetime::getPostTypeMonths( $this->default_calendar(), $args['post_type'], [], $args['user_id'] ),
 			'default'      => $args['year_month'],
 			'option_group' => 'reports',
 		] );
@@ -683,7 +684,7 @@ class Users extends gEditorial\Module
 
 		if ( ! empty( $_POST ) && isset( $_POST['posttype_stats'] ) ) {
 
-			$period = $args['year_month'] ? Helper::monthFirstAndLast( $this->default_calendar(), substr( $args['year_month'], 0, 4 ), substr( $args['year_month'], 4, 2 ) ) : [];
+			$period = $args['year_month'] ? Datetime::monthFirstAndLast( $this->default_calendar(), substr( $args['year_month'], 0, 4 ), substr( $args['year_month'], 4, 2 ) ) : [];
 
 			echo HTML::tableCode( Database::countPostsByPosttype( $args['post_type'], $args['user_id'], $period ) );
 		}

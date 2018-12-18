@@ -592,7 +592,7 @@ class Settings extends Core\Base
 			'description' => $description ?: '',
 			'type'        => 'select',
 			'default'     => 'gregorian',
-			'values'      => Helper::getDefualtCalendars( TRUE ),
+			'values'      => Datetime::getDefualtCalendars( TRUE ),
 		];
 	}
 
@@ -604,7 +604,7 @@ class Settings extends Core\Base
 			'description' => $description ?: '',
 			'type'        => 'checkboxes',
 			'default'     => [ 'gregorian' ],
-			'values'      => Helper::getDefualtCalendars( TRUE ),
+			'values'      => Datetime::getDefualtCalendars( TRUE ),
 		];
 	}
 

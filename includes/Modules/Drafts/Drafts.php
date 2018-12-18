@@ -4,6 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Ajax;
+use geminorum\gEditorial\Datetime;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\WordPress;
@@ -212,7 +213,7 @@ class Drafts extends gEditorial\Module
 			foreach ( $this->get_drafts( $posttype, $user ) as $post ) {
 
 				$block.= '<li>'.Helper::getPostTitleRow( $post, 'edit', FALSE,
-					Helper::postModified( $post, TRUE ) ).'</li>';
+					Datetime::postModified( $post, TRUE ) ).'</li>';
 
 				// FIXME: add author suffix
 			}

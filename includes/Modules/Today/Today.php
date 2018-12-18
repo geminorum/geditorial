@@ -3,6 +3,7 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
+use geminorum\gEditorial\Datetime;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\ShortCode;
@@ -597,7 +598,7 @@ class Today extends gEditorial\Module
 				continue;
 
 			if ( 'cal' == $field )
-				$postmeta[$field] = Helper::sanitizeCalendar( $value, $this->default_calendar() );
+				$postmeta[$field] = Datetime::sanitizeCalendar( $value, $this->default_calendar() );
 			else
 				$postmeta[$field] = Number::intval( $value, FALSE );
 		}
@@ -943,7 +944,7 @@ class Today extends gEditorial\Module
 					foreach ( $query->query( $args ) as $post ) {
 
 						$the_day = ModuleHelper::getTheDayFromPost( $post, $default, $constants );
-						$result  = Helper::reSchedulePost( $post, $the_day );
+						$result  = Datetime::reSchedulePost( $post, $the_day );
 
 						if ( TRUE === $result )
 							$count++;
@@ -1006,7 +1007,7 @@ class Today extends gEditorial\Module
 
 		switch ( $field ) {
 
-			case 'today_cal': return Helper::sanitizeCalendar( trim( $value ), $this->default_calendar() );
+			case 'today_cal': return Datetime::sanitizeCalendar( trim( $value ), $this->default_calendar() );
 			case 'today_year':
 			case 'today_month':
 			case 'today_day': return Number::intval( trim( $value ), FALSE );
@@ -1035,7 +1036,7 @@ class Today extends gEditorial\Module
 			$key = str_ireplace( 'today_', '', $field );
 
 			if ( 'cal' == $key )
-				$postmeta[$key] = Helper::sanitizeCalendar( $value, $default );
+				$postmeta[$key] = Datetime::sanitizeCalendar( $value, $default );
 			else
 				$postmeta[$key] = Number::intval( $value, FALSE );
 		}

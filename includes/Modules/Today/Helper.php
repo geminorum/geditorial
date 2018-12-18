@@ -3,6 +3,7 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
+use geminorum\gEditorial\Datetime;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
@@ -69,10 +70,10 @@ class Today extends gEditorial\Helper
 			return $empty;
 
 		if ( empty( $gEditorialTodayCalendars ) )
-			$gEditorialTodayCalendars = Helper::getDefualtCalendars();
+			$gEditorialTodayCalendars = Datetime::getDefualtCalendars();
 
 		if ( ! isset( $gEditorialTodayMonths[$the_day['cal']] ) )
-			$gEditorialTodayMonths[$the_day['cal']] = Helper::getMonths( $the_day['cal'] );
+			$gEditorialTodayMonths[$the_day['cal']] = Datetime::getMonths( $the_day['cal'] );
 
 		$parts = [];
 
@@ -123,10 +124,10 @@ class Today extends gEditorial\Helper
 		} else {
 
 			if ( empty( $gEditorialTodayCalendars ) )
-				$gEditorialTodayCalendars = Helper::getDefualtCalendars();
+				$gEditorialTodayCalendars = Datetime::getDefualtCalendars();
 
 			if ( ! isset( $gEditorialTodayMonths[$the_day['cal']] ) )
-				$gEditorialTodayMonths[$the_day['cal']] = Helper::getMonths( $the_day['cal'] );
+				$gEditorialTodayMonths[$the_day['cal']] = Datetime::getMonths( $the_day['cal'] );
 
 			echo '<div class="-today -date-icon">';
 
@@ -231,7 +232,7 @@ class Today extends gEditorial\Helper
 
 		$the_day['cal'] = empty( $post_meta[$constants['cal']][0] ) ? self::req( 'cal', $default_type ) : $post_meta[$constants['cal']][0];
 
-		$post_date = parent::getTheDayByPost( $post, $the_day['cal'] );
+		$post_date = Datetime::getTheDayByPost( $post, $the_day['cal'] );
 
 		$the_day['day']   = empty( $post_meta[$constants['day']][0] ) ? self::req( 'day', $post_date['day'] ) : $post_meta[$constants['day']][0];
 		$the_day['month'] = empty( $post_meta[$constants['month']][0] ) ? self::req( 'month', $post_date['month'] ) : $post_meta[$constants['month']][0];
@@ -357,7 +358,7 @@ class Today extends gEditorial\Helper
 		], $atts );
 
 		if ( is_null( $calendars ) )
-			$calendars = self::getDefualtCalendars( TRUE );
+			$calendars = Datetime::getDefualtCalendars( TRUE );
 
 		$html = '';
 

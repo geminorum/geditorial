@@ -1943,7 +1943,7 @@ class Module extends Base
 	public function get_calendars( $default = [ 'gregorian' ], $filtered = TRUE )
 	{
 		$settings = $this->get_setting( 'calendar_list', $default );
-		$defaults = Helper::getDefualtCalendars( $filtered );
+		$defaults = Datetime::getDefualtCalendars( $filtered );
 		return array_intersect_key( $defaults, array_flip( $settings ) );
 	}
 

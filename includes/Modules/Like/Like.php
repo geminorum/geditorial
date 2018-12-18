@@ -4,6 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Ajax;
+use geminorum\gEditorial\Datetime;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Core\HTML;
@@ -165,10 +166,10 @@ class Like extends gEditorial\Module
 			foreach ( $users as $timestamp => $user_id )
 				$nodes[] = [
 					'id'     => $this->classs( 'user', $user_id ),
-					'title'  => Helper::humanTimeDiffRound( intval( $timestamp ) ).' &ndash; '.get_the_author_meta( 'display_name', $user_id ),
+					'title'  => Datetime::humanTimeDiffRound( intval( $timestamp ) ).' &ndash; '.get_the_author_meta( 'display_name', $user_id ),
 					'parent' => $this->classs( 'users' ),
 					'href'   => $cap ? WordPress::getUserEditLink( $user_id ) : FALSE,
-					'meta'   => [ 'title' => Helper::humanTimeAgo( intval( $timestamp ), current_time( 'timestamp', FALSE ) ) ],
+					'meta'   => [ 'title' => Datetime::humanTimeAgo( intval( $timestamp ), current_time( 'timestamp', FALSE ) ) ],
 				];
 		}
 
@@ -184,10 +185,10 @@ class Like extends gEditorial\Module
 			foreach ( $guests as $timestamp => $ip )
 				$nodes[] = [
 					'id'     => $this->classs( 'guest', $timestamp ),
-					'title'  => Helper::humanTimeDiffRound( intval( $timestamp ) ).' &ndash; '.$ip,
+					'title'  => Datetime::humanTimeDiffRound( intval( $timestamp ) ).' &ndash; '.$ip,
 					'parent' => $this->classs( 'guests' ),
 					'href'   => sprintf( 'https://redirect.li/map/?ip=%s', $ip ),
-					'meta'   => [ 'title' => Helper::humanTimeAgo( intval( $timestamp ), current_time( 'timestamp', FALSE ) ) ],
+					'meta'   => [ 'title' => Datetime::humanTimeAgo( intval( $timestamp ), current_time( 'timestamp', FALSE ) ) ],
 				];
 		}
 	}

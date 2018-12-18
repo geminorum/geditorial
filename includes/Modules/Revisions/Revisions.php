@@ -5,6 +5,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial;
 use geminorum\gEditorial\Ajax;
 use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Datetime;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\Text;
@@ -212,8 +213,8 @@ class Revisions extends gEditorial\Module
 		$parts['author'] = sprintf( '%1$s %2$s &ndash;', $author['avatar'], $author['name'] );
 
 		$time = strtotime( $revision->post_modified );
-		$parts['timediff'] = Helper::humanTimeDiffRound( $time, FALSE );
-		$parts['datetime'] = '('.Helper::dateFormat( $time, 'datetime' ).')';
+		$parts['timediff'] = Datetime::humanTimeDiffRound( $time, FALSE );
+		$parts['datetime'] = '('.Datetime::dateFormat( $time, 'datetime' ).')';
 
 		if ( $this->get_setting( 'revision_wordcount', FALSE ) )
 			$parts['wordcount'] = self::wordCount( $revision );
@@ -415,7 +416,7 @@ class Revisions extends gEditorial\Module
 
 						$block = '<input type="checkbox" name="_cb[]" value="'.$revision->ID.'" title="'.$revision->ID.'" />';
 						$block.= ' '.self::wordCount( $revision );
-						$block.= ' &ndash; '.Helper::humanTimeDiffRound( strtotime( $revision->post_modified ), FALSE );
+						$block.= ' &ndash; '.Datetime::humanTimeDiffRound( strtotime( $revision->post_modified ), FALSE );
 						$block.= ' &ndash; '.get_the_author_meta( 'display_name', $revision->post_author );
 
 						$html.= '<div>'.$block.'</div>';

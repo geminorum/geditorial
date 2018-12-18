@@ -4,6 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Ajax;
+use geminorum\gEditorial\Datetime;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Settings;
@@ -98,7 +99,7 @@ class Schedule extends gEditorial\Module
 				if ( ! $this->can_reschedule( $target ) )
 					Ajax::errorMessage( _x( 'Updating the post date dynamically doesn\'t work for published content.', 'Modules: Schedule', GEDITORIAL_TEXTDOMAIN ) );
 
-				$result = Helper::reSchedulePost( $target, $post );
+				$result = Datetime::reSchedulePost( $target, $post );
 
 				if ( TRUE === $result )
 					Ajax::successMessage();
@@ -220,7 +221,7 @@ class Schedule extends gEditorial\Module
 			Settings::headerTitle( _x( 'Editorial Calendar', 'Modules: Schedule: Page Title', GEDITORIAL_TEXTDOMAIN ), $links );
 
 			$html = HTML::wrap( '', '-messages' );
-			$html.= Helper::getCalendar( $cal, $args );
+			$html.= Datetime::getCalendar( $cal, $args );
 			$html.= $this->add_new_box( $cal );
 
 			echo '<div class="'.$this->classs( 'calendar' ).'" data-cal="'.$cal.'">'.$html.'</div>';

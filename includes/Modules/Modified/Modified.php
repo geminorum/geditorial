@@ -3,6 +3,7 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
+use geminorum\gEditorial\Datetime;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Settings;
@@ -169,7 +170,7 @@ class Modified extends gEditorial\Module
 	{
 		$args = shortcode_atts( [
 			'id'       => get_queried_object_id(),
-			'format'   => Helper::dateFormats( 'dateonly' ),
+			'format'   => Datetime::dateFormats( 'dateonly' ),
 			'title'    => 'timeago',
 			'round'    => FALSE,
 			'link'     => FALSE,
@@ -191,7 +192,7 @@ class Modified extends gEditorial\Module
 		if ( 'timeago' == $args['title'] )
 			$title = Scripts::enqueueTimeAgo()
 				? FALSE
-				: Helper::humanTimeDiffRound( $local, $args['round'] );
+				: Datetime::humanTimeDiffRound( $local, $args['round'] );
 		else
 			$title = $args['title'];
 
@@ -220,7 +221,7 @@ class Modified extends gEditorial\Module
 
 		if ( $gmt >= $publish + ( absint( $minutes ) * MINUTE_IN_SECONDS ) )
 			return $prefix.' '.Date::htmlDateTime( $local, $gmt, $format,
-					Helper::humanTimeDiffRound( $local, FALSE ) );
+					Datetime::humanTimeDiffRound( $local, FALSE ) );
 
 		return FALSE;
 	}
@@ -245,7 +246,7 @@ class Modified extends gEditorial\Module
 	public function site_modified_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
 		$args = shortcode_atts( [
-			'format'   => Helper::dateFormats( 'dateonly' ),
+			'format'   => Datetime::dateFormats( 'dateonly' ),
 			'title'    => 'timeago',
 			'round'    => FALSE,
 			'link'     => FALSE,
@@ -265,7 +266,7 @@ class Modified extends gEditorial\Module
 		if ( 'timeago' == $args['title'] )
 			$title = Scripts::enqueueTimeAgo()
 				? FALSE
-				: Helper::humanTimeDiffRound( $local, $args['round'] );
+				: Datetime::humanTimeDiffRound( $local, $args['round'] );
 		else
 			$title = $args['title'];
 

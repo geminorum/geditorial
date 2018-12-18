@@ -3,6 +3,7 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
+use geminorum\gEditorial\Datetime;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Core\Arraay;
@@ -189,7 +190,7 @@ class Event extends gEditorial\Module
 
 		else if ( isset( $_POST['install_def_type_tax'] ) )
 			$this->insert_default_terms( 'type_tax', array_intersect_key(
-				Helper::getDefualtCalendars( TRUE ),
+				Datetime::getDefualtCalendars( TRUE ),
 				array_flip( $this->get_setting( 'calendar_list', [] ) )
 			) );
 

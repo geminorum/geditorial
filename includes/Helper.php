@@ -2,7 +2,6 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
-use geminorum\gEditorial\Core\Date;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\HTTP;
 use geminorum\gEditorial\Core\Icon;
@@ -549,7 +548,7 @@ class Helper extends Core\Base
 		return [
 			'title'    => _x( 'Date', 'Helper: Table Column: Post Date', GEDITORIAL_TEXTDOMAIN ),
 			'callback' => function( $value, $row, $column, $index ){
-				return Helper::humanTimeDiffRound( strtotime( $row->post_date ) );
+				return Datetime::humanTimeDiffRound( strtotime( $row->post_date ) );
 			},
 		];
 	}
@@ -559,7 +558,7 @@ class Helper extends Core\Base
 		return [
 			'title'    => is_null( $title ) ? _x( 'On', 'Helper: Table Column: Post Date Modified', GEDITORIAL_TEXTDOMAIN ) : $title,
 			'callback' => function( $value, $row, $column, $index ){
-				return Helper::htmlHumanTime( $row->post_modified, TRUE );
+				return Datetime::htmlHumanTime( $row->post_modified, TRUE );
 			},
 		];
 	}
@@ -773,14 +772,14 @@ class Helper extends Core\Base
 		if ( ! ctype_digit( $timestamp ) )
 			$timestamp = strtotime( $timestamp );
 
-		$formats = self::dateFormats( FALSE );
+		$formats = Datetime::dateFormats( FALSE );
 
 		$html = '<span class="-date-date" title="'.HTML::escape( date_i18n( $formats['timeonly'], $timestamp ) );
 		$html.= '" data-time="'.date( 'c', $timestamp ).'">'.date_i18n( $formats['default'], $timestamp ).'</span>';
 
 		$html.= '&nbsp;(<span class="-date-diff" title="';
 		$html.= HTML::escape( date_i18n( $formats['fulltime'], $timestamp ) ).'">';
-		$html.= self::humanTimeDiff( $timestamp ).'</span>)';
+		$html.= Datetime::humanTimeDiff( $timestamp ).'</span>)';
 
 		return $class ? '<span class="'.$class.'">'.$html.'</span>' : $html;
 	}
@@ -788,10 +787,10 @@ class Helper extends Core\Base
 	public static function getModifiedEditRow( $post, $class = FALSE )
 	{
 		$timestamp = strtotime( $post->post_modified );
-		$formats   = self::dateFormats( FALSE );
+		$formats   = Datetime::dateFormats( FALSE );
 
 		$html = '<span class="-date-modified" title="'.HTML::escape( date_i18n( $formats['default'], $timestamp ) );
-		$html.='" data-time="'.date( 'c', $timestamp ).'">'.self::humanTimeDiff( $timestamp ).'</span>';
+		$html.='" data-time="'.date( 'c', $timestamp ).'">'.Datetime::humanTimeDiff( $timestamp ).'</span>';
 
 		$edit_last = get_post_meta( $post->ID, '_edit_last', TRUE );
 
@@ -799,233 +798,6 @@ class Helper extends Core\Base
 			$html.= '&nbsp;(<span class="-edit-last">'.WordPress::getAuthorEditHTML( $post->post_type, $edit_last ).'</span>)';
 
 		return $class ? '<span class="'.$class.'">'.$html.'</span>' : $html;
-	}
-
-	public static function htmlCurrent( $format = NULL, $class = FALSE, $title = FALSE )
-	{
-		return Date::htmlCurrent( ( is_null( $format ) ? self::dateFormats( 'datetime' ) : $format ), $class, $title );
-	}
-
-	public static function dateFormat( $timestamp, $context = 'default' )
-	{
-		if ( ! ctype_digit( $timestamp ) )
-			$timestamp = strtotime( $timestamp );
-
-		return date_i18n( self::dateFormats( $context ), $timestamp );
-	}
-
-	// @SEE: http://www.phpformatdate.com/
-	public static function dateFormats( $context = 'default' )
-	{
-		static $formats;
-
-		if ( empty( $formats ) )
-			$formats = apply_filters( 'custom_date_formats', [
-				'fulltime'  => _x( 'l, M j, Y @ H:i', 'Date Format', GEDITORIAL_TEXTDOMAIN ),
-				'datetime'  => _x( 'M j, Y @ G:i', 'Date Format', GEDITORIAL_TEXTDOMAIN ),
-				'dateonly'  => _x( 'l, F j, Y', 'Date Format', GEDITORIAL_TEXTDOMAIN ),
-				'timedate'  => _x( 'H:i - F j, Y', 'Date Format', GEDITORIAL_TEXTDOMAIN ),
-				'timeampm'  => _x( 'g:i a', 'Date Format', GEDITORIAL_TEXTDOMAIN ),
-				'timeonly'  => _x( 'H:i', 'Date Format', GEDITORIAL_TEXTDOMAIN ),
-				'monthday'  => _x( 'n/j', 'Date Format', GEDITORIAL_TEXTDOMAIN ),
-				'default'   => _x( 'm/d/Y', 'Date Format', GEDITORIAL_TEXTDOMAIN ),
-				'wordpress' => get_option( 'date_format' ),
-			] );
-
-		if ( FALSE === $context )
-			return $formats;
-
-		if ( isset( $formats[$context] ) )
-			return $formats[$context];
-
-		return $formats['default'];
-	}
-
-	public static function postModified( $post = NULL, $attr = FALSE )
-	{
-		if ( ! $post = get_post( $post ) )
-			return FALSE;
-
-		$gmt   = strtotime( $post->post_modified_gmt );
-		$local = strtotime( $post->post_modified );
-
-		$format = self::dateFormats( 'dateonly' );
-		$title  = _x( 'Last Modified on %s', 'Helper: Post Modified', GEDITORIAL_TEXTDOMAIN );
-
-		return $attr
-			? sprintf( $title, date_i18n( $format, $local ) )
-			: Date::htmlDateTime( $local, $gmt, $format, self::humanTimeDiffRound( $local, FALSE ) );
-	}
-
-	public static function htmlHumanTime( $timestamp, $flip = FALSE )
-	{
-		if ( ! ctype_digit( $timestamp ) )
-			$timestamp = strtotime( $timestamp );
-
-		$now = current_time( 'timestamp', FALSE );
-
-		if ( $flip )
-			return '<span class="-date-diff" title="'
-					.HTML::escape( self::dateFormat( $timestamp, 'fulltime' ) ).'">'
-					.self::humanTimeDiff( $timestamp, $now )
-				.'</span>';
-
-		return '<span class="-time" title="'
-			.HTML::escape( self::humanTimeAgo( $timestamp, $now ) ).'">'
-			.self::humanTimeDiffRound( $timestamp, NULL, self::dateFormats( 'default' ), $now )
-		.'</span>';
-	}
-
-	public static function humanTimeAgo( $from, $to = '' )
-	{
-		return sprintf( _x( '%s ago', 'Helper: Human Time Ago', GEDITORIAL_TEXTDOMAIN ), human_time_diff( $from, $to ) );
-	}
-
-	public static function humanTimeDiffRound( $local, $round = NULL, $format = NULL, $now = NULL )
-	{
-		if ( is_null( $now ) )
-			$now = current_time( 'timestamp', FALSE );
-
-		if ( FALSE === $round )
-			return self::humanTimeAgo( $local, $now );
-
-		if ( is_null( $round ) )
-			$round = Date::DAY_IN_SECONDS;
-
-		$diff = $now - $local;
-
-		if ( $diff > 0 && $diff < $round )
-			return self::humanTimeAgo( $local, $now );
-
-		if ( is_null( $format ) )
-			$format = self::dateFormats( 'default' );
-
-		return date_i18n( $format, $local, FALSE );
-	}
-
-	public static function humanTimeDiff( $timestamp, $now = '' )
-	{
-		static $strings = NULL;
-
-		if ( is_null( $strings ) )
-			$strings = [
-				'now'    => _x( 'Now', 'Helper: Human Time Diff', GEDITORIAL_TEXTDOMAIN ),
-				'_s_ago' => _x( '%s ago', 'Helper: Human Time Diff', GEDITORIAL_TEXTDOMAIN ),
-				'in__s'  => _x( 'in %s', 'Helper: Human Time Diff', GEDITORIAL_TEXTDOMAIN ),
-
-				'noop_minutes' => _nx_noop( '%s min', '%s mins', 'Helper: Human Time Diff: Noop', GEDITORIAL_TEXTDOMAIN ),
-				'noop_hours'   => _nx_noop( '%s hour', '%s hours', 'Helper: Human Time Diff: Noop', GEDITORIAL_TEXTDOMAIN ),
-				'noop_days'    => _nx_noop( '%s day', '%s days', 'Helper: Human Time Diff: Noop', GEDITORIAL_TEXTDOMAIN ),
-				'noop_weeks'   => _nx_noop( '%s week', '%s weeks', 'Helper: Human Time Diff: Noop', GEDITORIAL_TEXTDOMAIN ),
-				'noop_months'  => _nx_noop( '%s month', '%s months', 'Helper: Human Time Diff: Noop', GEDITORIAL_TEXTDOMAIN ),
-				'noop_years'   => _nx_noop( '%s year', '%s years', 'Helper: Human Time Diff: Noop', GEDITORIAL_TEXTDOMAIN ),
-			];
-
-		if ( empty( $now ) )
-			$now = current_time( 'timestamp', FALSE );
-
-		return Date::humanTimeDiff( $timestamp, $now, $strings );
-	}
-
-	public static function htmlFromSeconds( $seconds, $round = FALSE )
-	{
-		static $strings = NULL;
-
-		if ( is_null( $strings ) )
-			$strings = [
-				'sep' => _x( ', ', 'Helper: From Seconds: Seperator', GEDITORIAL_TEXTDOMAIN ),
-
-				'noop_seconds' => _nx_noop( '%s second', '%s seconds', 'Helper: From Seconds: Noop', GEDITORIAL_TEXTDOMAIN ),
-				'noop_minutes' => _nx_noop( '%s min', '%s mins', 'Helper: From Seconds: Noop', GEDITORIAL_TEXTDOMAIN ),
-				'noop_hours'   => _nx_noop( '%s hour', '%s hours', 'Helper: From Seconds: Noop', GEDITORIAL_TEXTDOMAIN ),
-				'noop_days'    => _nx_noop( '%s day', '%s days', 'Helper: From Seconds: Noop', GEDITORIAL_TEXTDOMAIN ),
-			];
-
-		return Date::htmlFromSeconds( $seconds, $round, $strings );
-	}
-
-	// not used yet!
-	public static function moment( $timestamp, $now = '' )
-	{
-		static $strings = NULL;
-
-		if ( is_null( $strings ) )
-			$strings = [
-				'now'            => _x( 'Now', 'Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
-				'just_now'       => _x( 'Just now', 'Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
-				'one_minute_ago' => _x( 'One minute ago', 'Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
-				'_s_minutes_ago' => _x( '%s minutes ago', 'Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
-				'one_hour_ago'   => _x( 'One hour ago', 'Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
-				'_s_hours_ago'   => _x( '%s hours ago', 'Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
-				'yesterday'      => _x( 'Yesterday', 'Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
-				'_s_days_ago'    => _x( '%s days ago', 'Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
-				'_s_weeks_ago'   => _x( '%s weeks ago', 'Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
-				'last_month'     => _x( 'Last month', 'Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
-				'last_year'      => _x( 'Last year', 'Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
-				'in_a_minute'    => _x( 'in a minute', 'Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
-				'in__s_minutes'  => _x( 'in %s minutes', 'Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
-				'in_an_hour'     => _x( 'in an hour', 'Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
-				'in__s_hours'    => _x( 'in %s hours', 'Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
-				'tomorrow'       => _x( 'Tomorrow', 'Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
-				'next_week'      => _x( 'next week', 'Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
-				'in__s_weeks'    => _x( 'in %s weeks', 'Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
-				'next_month'     => _x( 'next month', 'Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
-				'format_l'       => _x( 'l', 'Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
-				'format_f_y'     => _x( 'F Y', 'Helper: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
-			];
-
-		if ( empty( $now ) )
-			$now = current_time( 'timestamp', FALSE );
-
-		return Date::moment( $timestamp, $now, $strings );
-	}
-
-	// @REF: [Calendar Classes - ICU User Guide](http://userguide.icu-project.org/datetime/calendar)
-	public static function getDefualtCalendars( $filtered = FALSE )
-	{
-		$calendars = [
-			'gregorian'     => _x( 'Gregorian', 'Helper: Default Calendar Type', GEDITORIAL_TEXTDOMAIN ),
-			// 'japanese'      => _x( 'Japanese', 'Helper: Default Calendar Type', GEDITORIAL_TEXTDOMAIN ),
-			// 'buddhist'      => _x( 'Buddhist', 'Helper: Default Calendar Type', GEDITORIAL_TEXTDOMAIN ),
-			// 'chinese'       => _x( 'Chinese', 'Helper: Default Calendar Type', GEDITORIAL_TEXTDOMAIN ),
-			'persian'       => _x( 'Persian', 'Helper: Default Calendar Type', GEDITORIAL_TEXTDOMAIN ),
-			// 'indian'        => _x( 'Indian', 'Helper: Default Calendar Type', GEDITORIAL_TEXTDOMAIN ),
-			'islamic'       => _x( 'Islamic', 'Helper: Default Calendar Type', GEDITORIAL_TEXTDOMAIN ),
-			// 'islamic-civil' => _x( 'Islamic-Civil', 'Helper: Default Calendar Type', GEDITORIAL_TEXTDOMAIN ),
-			// 'coptic'        => _x( 'Coptic', 'Helper: Default Calendar Type', GEDITORIAL_TEXTDOMAIN ),
-			// 'ethiopic'      => _x( 'Ethiopic', 'Helper: Default Calendar Type', GEDITORIAL_TEXTDOMAIN ),
-		];
-
-		return $filtered ? apply_filters( static::BASE.'_default_calendars', $calendars ) : $calendars;
-	}
-
-	public static function sanitizeCalendar( $calendar, $default_type = 'gregorian' )
-	{
-		$calendars = self::getDefualtCalendars( FALSE );
-		$sanitized = $calendar;
-
-		if ( ! $calendar )
-			$sanitized = $default_type;
-
-		else if ( in_array( $calendar, [ 'Jalali', 'jalali', 'Persian', 'persian' ] ) )
-			$sanitized = 'persian';
-
-		else if ( in_array( $calendar, [ 'Hijri', 'hijri', 'Islamic', 'islamic' ] ) )
-			$sanitized = 'islamic';
-
-		else if ( in_array( $calendar, [ 'Gregorian', 'gregorian' ] ) )
-			$sanitized = 'gregorian';
-
-		else if ( in_array( $calendar, array_keys( $calendars ) ) )
-			$sanitized = $calendar;
-
-		else if ( $key = array_search( $calendar, $calendars ) )
-			$sanitized = $key;
-
-		else
-			$sanitized = $default_type;
-
-		return apply_filters( static::BASE.'_sanitize_calendar', $sanitized, $default_type, $calendar );
 	}
 
 	// @SOURCE: `translate_nooped_plural()`
@@ -1246,7 +1018,7 @@ class Helper extends Core\Base
 			$permalink = '';
 
 		$preview = $scheduled = $view = '';
-		$scheduled_date = self::dateFormat( $post->post_date, 'datetime' );
+		$scheduled_date = Datetime::dateFormat( $post->post_date, 'datetime' );
 
 		if ( is_post_type_viewable( $post_type_object ) ) {
 			$view      = ' '.HTML::link( $messages['view_post'], $permalink );
@@ -1294,225 +1066,6 @@ class Helper extends Core\Base
 			$messages[$key] = vsprintf( self::noopedCount( $counts[$key], $template ), $strings );
 
 		return $messages;
-	}
-
-	public static function getPostTypeMonths( $calendar_type, $posttype = 'post', $args = [], $user_id = 0 )
-	{
-		$callback = [ __NAMESPACE__.'\\WordPress\\Database', 'getPostTypeMonths' ];
-
-		if ( 'persian' == $calendar_type
-			&& is_callable( [ 'gPersianDateWordPress', 'getPostTypeMonths' ] ) )
-				$callback = [ 'gPersianDateWordPress', 'getPostTypeMonths' ];
-
-		return call_user_func_array( $callback, [ $posttype, $args, $user_id ] );
-	}
-
-	public static function monthFirstAndLast( $calendar_type, $year, $month, $format = 'Y-m-d H:i:s' )
-	{
-		$callback = [ __NAMESPACE__.'\\Core\\Date', 'monthFirstAndLast' ];
-
-		if ( is_callable( [ 'gPersianDateDate', 'monthFirstAndLast' ] ) )
-			$callback = [ 'gPersianDateDate', 'monthFirstAndLast' ];
-
-		return call_user_func_array( $callback, [ $year, $month, $format, $calendar_type ] );
-	}
-
-	public static function makeFromInput( $input, $calendar = 'gregorian', $timezone = NULL )
-	{
-		$callback = [ __NAMESPACE__.'\\Core\\Date', 'makeFromInput' ];
-
-		if ( is_callable( [ 'gPersianDateDate', 'makeFromInput' ] ) )
-			$callback = [ 'gPersianDateDate', 'makeFromInput' ];
-
-		// must be here, we can not pass NULL to gPersianDate
-		if ( is_null( $timezone ) )
-			$timezone = Date::currentTimeZone();
-
-		return call_user_func_array( $callback, [ $input, $calendar, $timezone ] );
-	}
-
-	public static function makeMySQLFromInput( $input, $format = NULL, $calendar_type = 'gregorian', $timezone = NULL )
-	{
-		$callback = [ __NAMESPACE__.'\\Core\\Date', 'makeMySQLFromInput' ];
-
-		if ( is_callable( [ 'gPersianDateDate', 'makeMySQLFromInput' ] ) )
-			$callback = [ 'gPersianDateDate', 'makeMySQLFromInput' ];
-
-		// must be here, we can not pass NULL to gPersianDate
-		if ( is_null( $timezone ) )
-			$timezone = Date::currentTimeZone();
-
-		return call_user_func_array( $callback, [ $input, $format, $calendar_type, $timezone ] );
-	}
-
-	// FIXME: find a better way!
-	public static function getMonths( $calendar_type = 'gregorian' )
-	{
-		if ( is_callable( [ 'gPersianDateStrings', 'month' ] ) ) {
-
-			$map = [
-				'gregorian' => 'Gregorian',
-				'persian'   => 'Jalali',
-				'islamic'   => 'Hijri',
-			];
-
-			if ( ! array_key_exists( $calendar_type, $map ) )
-				return [];
-
-			return \gPersianDateStrings::month( NULL, TRUE, $map[$calendar_type] );
-		}
-
-		global $wp_locale;
-
-		if ( 'gregorian' )
-			return $wp_locale->month;
-
-		return [];
-	}
-
-	public static function getCalendar( $calendar_type = 'gregorian', $args = [] )
-	{
-		if ( is_callable( [ 'gPersianDateCalendar', 'build' ] ) ) {
-
-			$map = [
-				'gregorian' => 'Gregorian',
-				'persian'   => 'Jalali',
-				'islamic'   => 'Hijri',
-			];
-
-			if ( ! array_key_exists( $calendar_type, $map ) )
-				return FALSE;
-
-			$args['calendar'] = $map[$calendar_type];
-
-			return \gPersianDateCalendar::build( $args );
-		}
-
-		return FALSE;
-	}
-
-	// - for post time, if the post is unpublished, the change sets the
-	// publication timestamp
-	// - if the post was published or scheduled for the future, the change will
-	// change the timestamp. 'publish' posts will become scheduled if moved past
-	// today and 'future' posts will be published if moved before today
-	// @REF: `handle_ajax_drag_and_drop()`
-	// FIXME: needs fallback
-	public static function reSchedulePost( $post, $input, $calendar = FALSE, $set_timestamp = TRUE )
-	{
-		global $wpdb;
-
-		if ( ! is_callable( 'gPersianDateDate', 'make' ) )
-			return FALSE;
-
-		$the_day = self::atts( [
-			'cal'   => $calendar,
-			'year'  => NULL,
-			'month' => 1,
-			'day'   => 1,
-		], $input );
-
-		// fallback to current year
-		if ( is_null( $the_day['year'] ) && is_callable( 'gPersianDateDate', 'to' ) )
-			$the_day['year'] = \gPersianDateDate::to( 'Y', NULL, 'UTC', FALSE, FALSE, $the_day['cal'] );
-
-		if ( ! $the_day['cal'] || ! $the_day['year'] || ! $the_day['month'] || ! $the_day['day'] )
-			return FALSE;
-
-		if ( ! $post = get_post( $post ) )
-			return FALSE;
-
-		// persist the old hourstamp because we can't manipulate the exact time
-		// on the calendar bump the last modified timestamps too
-		$old  = date( 'H:i:s', strtotime( $post->post_date ) );
-		$time = explode( ':', $old );
-
-		$timestamp = \gPersianDateDate::make(
-			$time[0],
-			$time[1],
-			$time[2],
-			$the_day['month'],
-			$the_day['day'],
-			$the_day['year'],
-			$the_day['cal'],
-			'UTC'
-		);
-
-		if ( ! $timestamp )
-			return _x( 'Something is wrong with the new date.', 'Helper: Re-Schedule Post', GEDITORIAL_TEXTDOMAIN );
-
-		$data = [
-			'post_date'         => date( 'Y-m-d', $timestamp ).' '.$old,
-			'post_modified'     => current_time( 'mysql' ),
-			'post_modified_gmt' => current_time( 'mysql', 1 ),
-		];
-
-		// by default, changing a post on the calendar won't set the timestamp.
-		// if the user desires that to be the behaviour, they can set the result
-		// of this filter to 'true' with how WordPress works internally,
-		// setting 'post_date_gmt' will set the timestamp
-		if ( apply_filters( static::BASE.'_set_timestamp', $set_timestamp ) )
-			$data['post_date_gmt'] = date( 'Y-m-d', $timestamp ).' '.date( 'H:i:s', strtotime( $post->post_date_gmt ) );
-
-		// self::_log( [ $month, $day, $year, $cal, $time ] );
-		// self::_log( [ $post->post_date, $post->post_date_gmt, $post->post_modified, $post->post_modified_gmt ] );
-		// self::_log( [ $data['post_date'], $data['post_date_gmt'], $data['post_modified'], $data['post_modified_gmt'] ] );
-
-		// @SEE http://core.trac.wordpress.org/ticket/18362
-		if ( ! $update = $wpdb->update( $wpdb->posts, $data, [ 'ID' => $post->ID ] ) )
-			return FALSE;
-
-		clean_post_cache( $post->ID );
-
-		return TRUE;
-	}
-
-	// NOT USED
-	// returns array of post date in given cal
-	public static function getTheDayByPost( $post, $default_type = 'gregorian' )
-	{
-		$the_day = [ 'cal' => 'gregorian' ];
-
-		// 'post_status' => 'auto-draft',
-
-		switch ( strtolower( $default_type ) ) {
-
-			case 'hijri':
-			case 'islamic':
-
-				$convertor = [ 'gPersianDateDateTime', 'toHijri' ];
-				$the_day['cal'] = 'hijri';
-
-			case 'jalali':
-			case 'persian':
-
-				$convertor = [ 'gPersianDateDateTime', 'toJalali' ];
-				$the_day['cal'] = 'jalali';
-
-			default:
-
-				if ( class_exists( 'gPersianDateDateTime' )
-					&& 'gregorian' != $the_day['cal'] ) {
-
-					list(
-						$the_day['year'],
-						$the_day['month'],
-						$the_day['day']
-					) = call_user_func_array( $convertor,
-						explode( '-', mysql2date( 'Y-n-j', $post->post_date, FALSE ) ) );
-
-				} else {
-
-					$the_day['cal'] = 'gregorian';
-					$the_day['day']   = mysql2date( 'j', $post->post_date, FALSE );
-					$the_day['month'] = mysql2date( 'n', $post->post_date, FALSE );
-					$the_day['year']  = mysql2date( 'Y', $post->post_date, FALSE );
-				}
-
-				// FIXME: add time
-		}
-
-		return $the_day;
 	}
 
 	// @SEE: https://github.com/bobthecow/mustache.php/wiki
