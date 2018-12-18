@@ -10,6 +10,7 @@ use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Core\Arraay;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
+use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\Theme;
 use geminorum\gEditorial\Helpers\Today as ModuleHelper;
 
@@ -864,6 +865,18 @@ class Today extends gEditorial\Module
 		return array_merge( $new_rules, $rules );
 	}
 
+	private function build_meta_query( $constants, $relation = 'OR' )
+	{
+		$query = [ 'meta_query' => [ 'relation' => $relation ] ];
+
+		foreach ( $constants as $field => $constant ) {
+			$query['meta_query'][$field.'_clause'] = [ 'key' => $constant, 'compare' => 'EXISTS' ];
+			$query['meta_query']['orderby'][$field.'_clause'] = 'ASC';
+		}
+
+		return $query;
+	}
+
 	public function reports_settings( $sub )
 	{
 		$this->check_settings( $sub, 'reports' );
@@ -872,12 +885,7 @@ class Today extends gEditorial\Module
 	protected function render_reports_html( $uri, $sub )
 	{
 		$constants = $this->get_the_day_constants();
-		$query     = [ 'meta_query' => [ 'relation' => 'OR' ] ];
-
-		foreach ( $constants as $field => $constant ) {
-			$query['meta_query'][$field.'_clause'] = [ 'key' => $constant, 'compare' => 'EXISTS' ];
-			$query['meta_query']['orderby'][$field.'_clause'] = 'ASC';
-		}
+		$query     = $this->build_meta_query( $constants );
 
 		list( $posts, $pagination ) = $this->getTablePosts( $query );
 
@@ -910,6 +918,64 @@ class Today extends gEditorial\Module
 			'empty'      => Helper::tableArgEmptyPosts(),
 			'pagination' => $pagination,
 		] );
+	}
+
+	public function tools_settings( $sub )
+	{
+		if ( $this->check_settings( $sub, 'tools' ) ) {
+			if ( ! empty( $_POST ) ) {
+
+				$this->nonce_check( 'tools', $sub );
+
+				if ( isset( $_POST['reschedule_by_day'] ) ) {
+
+					$default   = $this->default_calendar();
+					$constants = $this->get_the_day_constants();
+					$args      = $this->build_meta_query( $constants );
+
+					$args['posts_per_page']   = -1;
+					$args['post_type']        = self::req( 'posttype', $this->posttypes() );
+					$args['suppress_filters'] = TRUE;
+
+					$count = 0;
+					$query = new \WP_Query;
+
+					foreach ( $query->query( $args ) as $post ) {
+
+						$the_day = ModuleHelper::getTheDayFromPost( $post, $default, $constants );
+						$result  = Helper::reSchedulePost( $post, $the_day );
+
+						if ( TRUE === $result )
+							$count++;
+					}
+
+					WordPress::redirectReferer( [
+						'message' => 'scheduled',
+						'count'   => $count,
+					] );
+				}
+			}
+		}
+	}
+
+	protected function render_tools_html( $uri, $sub )
+	{
+		HTML::h3( _x( 'Today Tools', 'Modules: Today', GEDITORIAL_TEXTDOMAIN ) );
+		echo '<table class="form-table">';
+
+		echo '<tr><th scope="row">'._x( 'Re-schedule by Day', 'Modules: Today', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
+
+		echo HTML::dropdown( $this->list_posttypes(), [ 'name' => 'posttype' ] );
+
+		echo '&nbsp;&nbsp;';
+
+		Settings::submitButton( 'reschedule_by_day',
+			_x( 'Schedule', 'Modules: Today: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
+
+		HTML::desc( _x( 'Tries to re-set the date of posts based on it\'s day data.', 'Modules: Today', GEDITORIAL_TEXTDOMAIN ) );
+
+		echo '</td></tr>';
+		echo '</table>';
 	}
 
 	private function get_importer_fields( $posttype = NULL )
