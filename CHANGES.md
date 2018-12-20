@@ -1,3 +1,34 @@
+### 3.15.4
+* main/datetime: new main class
+* main/helper: better handling the day for reschedule
+* main/module: append subs once
+* main/module: default methods for reports/tools sub html
+* main/module: default terms as help tab
+* main/module: extending append sub method
+* main/module: passing context into help tab methods
+* main/module: skip metabox enhancements on block editor
+* main/plugin: avoid deprecated notice
+* main/plugin: module loading logic separated
+* main/plugin: passing path into module
+* main/plugin: path as prop of plugin
+* module/importer: correct hook for saved action
+* module/importer: default audit attribute
+* module/meta: prevent duplicate metabox on block editor
+* module/ortho: filtering the imported
+* module/revisions: disable on block editor
+* module/schedule: hide link for single cal
+* module/schedule: reneamed from calendar
+* module/schedule: reschedule makes time on utc
+* module/schedule: reschedule post method as helper
+* module/schedule: reschedule posts for nex/prev month
+* module/series: prevent duplicate metabox on block editor
+* module/terms: default reports sub
+* module/terms: summary of term meta on admin-bar
+* module/today: deafult cal on imported
+* module/today: moved summary to reports
+* module/today: reschedule by the day tool
+* module/tweaks: skip metabox scripts on block editor
+
 ### 3.15.3
 * main/helper: better prep for title/desc
 * main/helper: more labels for posttypes
