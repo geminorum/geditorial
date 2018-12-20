@@ -172,6 +172,10 @@ class Plugin
 				$this->{$mod_name} = new $class( $module, $this->options->{$mod_name}, $this->path.$module->folder.'/' );
 			}
 		}
+
+		// unload memory!
+		if ( ! is_admin() )
+			$this->modules = FALSE;
 	}
 
 	public function init_late()
@@ -205,6 +209,9 @@ class Plugin
 	// HELPER
 	public function get_module_by( $key, $value )
 	{
+		if ( empty( $this->modules ) )
+			return FALSE;
+
 		foreach ( $this->modules as $mod_name => &$module ) {
 
 			if ( $key == 'name' && $value == $mod_name )
@@ -225,7 +232,7 @@ class Plugin
 
 	public function count()
 	{
-		return count( get_object_vars( $this->modules ) );
+		return empty( $this->modules ) ? 0 : count( get_object_vars( $this->modules ) );
 	}
 
 	public function modules( $orderby = FALSE )
@@ -261,6 +268,9 @@ class Plugin
 	public function list_modules( $enabled_only = FALSE, $orderby = 'title' )
 	{
 		$list = [];
+
+		if ( empty( $this->modules ) )
+			return $list;
 
 		foreach ( $this->modules( $orderby ) as $module )
 			if ( ! $enabled_only || $this->enabled( $module->name ) )
@@ -300,6 +310,9 @@ class Plugin
 	{
 		$options = [];
 
+		if ( empty( $this->modules ) )
+			return $options;
+
 		foreach ( $this->modules as $name => $enabled )
 			$options[$name] = get_option( static::BASE.'_'.$name.'_options', '{{NO-OPTIONS}}' );
 
@@ -314,6 +327,9 @@ class Plugin
 		$options  = get_option( 'geditorial_options' );
 		$upgraded = [];
 		$update   = FALSE;
+
+		if ( empty( $this->modules ) )
+			return $upgraded;
 
 		foreach ( $this->modules as $mod_name => &$module ) {
 
