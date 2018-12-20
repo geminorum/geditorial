@@ -81,7 +81,8 @@ class Revisions extends gEditorial\Module
 		if ( in_array( $screen->post_type, $this->posttypes() ) ) {
 
 			if ( 'post' == $screen->base
-				&& $post = self::req( 'post', FALSE ) ) {
+				&& $post = self::req( 'post', FALSE )
+				&& ! PostType::supportBlocks( $screen->post_type ) ) {
 
 				$this->_admin_enabled();
 
