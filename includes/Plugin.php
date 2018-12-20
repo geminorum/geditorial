@@ -52,9 +52,9 @@ class Plugin
 				return FALSE;
 		}
 
-		$this->path    = GEDITORIAL_DIR.'includes/Modules/';
-		$this->modules = new \stdClass();
-		$this->options = new \stdClass();
+		$this->_path    = GEDITORIAL_DIR.'includes/Modules/';
+		$this->_modules = new \stdClass();
+		$this->_options = new \stdClass();
 
 		add_action( 'plugins_loaded', [ $this, 'plugins_loaded' ], 20 );
 		add_action( 'init', [ $this, 'init_late' ], 999 );
@@ -104,13 +104,13 @@ class Plugin
 
 	private function load_modules()
 	{
-		foreach ( scandir( $this->path ) as $module ) {
+		foreach ( scandir( $this->_path ) as $module ) {
 
 			if ( in_array( $module, [ '.', '..' ] ) )
 				continue;
 
-			if ( file_exists( $this->path.$module.'/'.$module.'.php' ) ) {
-				include_once( $this->path.$module.'/'.$module.'.php' );
+			if ( file_exists( $this->_path.$module.'/'.$module.'.php' ) ) {
+				include_once( $this->_path.$module.'/'.$module.'.php' );
 
 				if ( $class = Helper::moduleClass( $module ) )
 					$this->register_module( call_user_func( [ $class, 'module' ] ), $module );
@@ -136,7 +136,7 @@ class Plugin
 			'disabled'  => FALSE, // or string explaining why the module is not available
 		];
 
-		$this->modules->{$args['name']} = (object) array_merge( $defaults, $args );
+		$this->_modules->{$args['name']} = (object) array_merge( $defaults, $args );
 
 		return TRUE;
 	}
@@ -146,36 +146,38 @@ class Plugin
 		$frontend = ! is_admin();
 		$options  = get_option( 'geditorial_options' );
 
-		foreach ( $this->modules as $mod_name => &$module ) {
+		foreach ( $this->_modules as $mod_name => &$module ) {
 
 			// skip on the frontend?
 			if ( $frontend && ! $module->frontend )
 				continue;
 
 			if ( ! isset( $options[$mod_name] ) || FALSE === $options[$mod_name] )
-				$this->options->{$mod_name} = new \stdClass;
+				$this->_options->{$mod_name} = new \stdClass;
 			else
-				$this->options->{$mod_name} = $options[$mod_name];
+				$this->_options->{$mod_name} = $options[$mod_name];
 		}
 	}
 
 	private function init_modules()
 	{
-		foreach ( $this->modules as $mod_name => &$module ) {
+		foreach ( $this->_modules as $mod_name => &$module ) {
 
-			if ( ! isset( $this->options->{$mod_name} ) )
+			if ( ! isset( $this->_options->{$mod_name} ) )
 				continue;
 
-			if ( $module->autoload || Helper::moduleEnabled( $this->options->{$mod_name} ) ) {
+			if ( $module->autoload || Helper::moduleEnabled( $this->_options->{$mod_name} ) ) {
 
 				$class = $module->class;
-				$this->{$mod_name} = new $class( $module, $this->options->{$mod_name}, $this->path.$module->folder.'/' );
+				$this->{$mod_name} = new $class( $module, $this->_options->{$mod_name}, $this->_path.$module->folder.'/' );
 			}
 		}
 
-		// unload memory!
+		// unloading memory!
+		unset( $this->_path, $this->_options );
+
 		if ( ! is_admin() )
-			$this->modules = FALSE;
+			$this->_modules = FALSE;
 	}
 
 	public function init_late()
@@ -209,10 +211,10 @@ class Plugin
 	// HELPER
 	public function get_module_by( $key, $value )
 	{
-		if ( empty( $this->modules ) )
+		if ( empty( $this->_modules ) )
 			return FALSE;
 
-		foreach ( $this->modules as $mod_name => &$module ) {
+		foreach ( $this->_modules as $mod_name => &$module ) {
 
 			if ( $key == 'name' && $value == $mod_name )
 				return $module;
@@ -232,23 +234,23 @@ class Plugin
 
 	public function count()
 	{
-		return empty( $this->modules ) ? 0 : count( get_object_vars( $this->modules ) );
+		return empty( $this->_modules ) ? 0 : count( get_object_vars( $this->_modules ) );
 	}
 
 	public function modules( $orderby = FALSE )
 	{
-		if ( empty( $this->modules ) )
+		if ( empty( $this->_modules ) )
 			return [];
 
 		if ( FALSE === $orderby )
-			return (array) $this->modules;
+			return (array) $this->_modules;
 
 		$callback = [ __NAMESPACE__.'\\Modules\Alphabet', 'sort' ];
 
 		if ( ! is_callable( $callback ) || 'fa_IR' != get_locale() )
-			return wp_list_sort( (array) $this->modules, $orderby );
+			return wp_list_sort( (array) $this->_modules, $orderby );
 
-		return call_user_func_array( $callback, [ (array) $this->modules, $orderby ] );
+		return call_user_func_array( $callback, [ (array) $this->_modules, $orderby ] );
 	}
 
 	public function constant( $module, $key, $default = NULL )
@@ -269,7 +271,7 @@ class Plugin
 	{
 		$list = [];
 
-		if ( empty( $this->modules ) )
+		if ( empty( $this->_modules ) )
 			return $list;
 
 		foreach ( $this->modules( $orderby ) as $module )
@@ -310,10 +312,10 @@ class Plugin
 	{
 		$options = [];
 
-		if ( empty( $this->modules ) )
+		if ( empty( $this->_modules ) )
 			return $options;
 
-		foreach ( $this->modules as $name => $enabled )
+		foreach ( $this->_modules as $name => $enabled )
 			$options[$name] = get_option( static::BASE.'_'.$name.'_options', '{{NO-OPTIONS}}' );
 
 		$options['{{GLOBAL}}'] = get_option( 'geditorial_options', FALSE );
@@ -328,10 +330,10 @@ class Plugin
 		$upgraded = [];
 		$update   = FALSE;
 
-		if ( empty( $this->modules ) )
+		if ( empty( $this->_modules ) )
 			return $upgraded;
 
-		foreach ( $this->modules as $mod_name => &$module ) {
+		foreach ( $this->_modules as $mod_name => &$module ) {
 
 			$key = static::BASE.'_'.$mod_name.'_options';
 			$old = get_option( $key );
