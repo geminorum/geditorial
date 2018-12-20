@@ -198,7 +198,9 @@ class Meta extends gEditorial\Module
 				$ct_tax_posttypes[] = $posttype;
 
 		if ( count( $ct_tax_posttypes ) )
-			$this->register_taxonomy( 'ct_tax', [], $ct_tax_posttypes );
+			$this->register_taxonomy( 'ct_tax', [
+				'show_in_rest' => FALSE, // disables in block editor, temporarily!
+			], $ct_tax_posttypes );
 
 		// default fields for custom post types
 		foreach ( $this->get_posttypes_support_meta() as $posttype )
