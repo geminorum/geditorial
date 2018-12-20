@@ -805,7 +805,121 @@ class Terms extends gEditorial\Module
 
 	public function adminbar_init( &$nodes, $parent )
 	{
-		if ( is_admin() || ! is_singular() )
+		if ( is_admin() )
+			return;
+
+		if ( is_tax() || is_tag() || is_category() ) {
+
+			if ( ! $term = get_queried_object() )
+				return;
+
+			if ( ! current_user_can( 'assign_term', $term->term_id ) )
+				return;
+
+			$nodes[] = [
+				'id'     => $this->classs(),
+				'title'  => _x( 'Term Summary', 'Modules: Terms: Adminbar', GEDITORIAL_TEXTDOMAIN ),
+				'parent' => $parent,
+				'href'   => $this->get_module_url( 'reports', 'uncategorized' ),
+			];
+
+			$nodes[] = [
+				'id'     => $this->classs( 'count' ),
+				'title'  => _x( 'Post Count', 'Modules: Terms: Adminbar', GEDITORIAL_TEXTDOMAIN ).': '.Helper::getCounted( $term->count ),
+				'parent' => $this->classs(),
+				'href'   => FALSE, // TODO: link to reports summary of the term posts
+			];
+
+			// TODO: display `$term->parent`
+
+			if ( trim( $term->description ) ) {
+
+				$nodes[] = [
+					'id'     => $this->classs( 'desc' ),
+					'title'  => _x( 'Description', 'Modules: Terms: Adminbar', GEDITORIAL_TEXTDOMAIN ),
+					'parent' => $this->classs(),
+					'href'   => WordPress::getEditTaxLink( $term->taxonomy, $term->term_id ),
+				];
+
+				$nodes[] = [
+					'id'     => $this->classs( 'desc', 'html' ),
+					'parent' => $this->classs( 'desc' ),
+					'href'   => FALSE,
+					'meta'   => [
+						'html'  => Helper::prepDescription( $term->description ),
+						'class' => 'geditorial-adminbar-desc-wrap -wrap '.$this->classs(),
+					],
+				];
+
+			} else {
+
+				$nodes[] = [
+					'id'     => $this->classs( 'desc', 'empty' ),
+					'title'  => _x( 'Description', 'Modules: Terms: Adminbar', GEDITORIAL_TEXTDOMAIN ).': '.gEditorial\Plugin::na(),
+					'parent' => $this->classs(),
+					'href'   => WordPress::getEditTaxLink( $term->taxonomy, $term->term_id ),
+				];
+			}
+
+			foreach ( $this->get_supported( $term->taxonomy ) as $field ) {
+
+				$node = [
+					'id'     => $this->classs( $field ),
+					'parent' => $this->classs(),
+					'title' => sprintf( _x( 'Meta: %s', 'Modules: Terms: Adminbar', GEDITORIAL_TEXTDOMAIN ),
+						$this->get_string( $field, $term->taxonomy, 'titles', $field ) ),
+				];
+
+				$child = [
+					'id'     => $this->classs( $field, 'html' ),
+					'parent' => $node['id'],
+				];
+
+				switch ( $field ) {
+					case 'order':
+
+						$node['title'].= ': '.Helper::htmlOrder( get_term_meta( $term->term_id, $field, TRUE ) );
+
+					break;
+					case 'image':
+
+						$child['meta'] = [
+							'html' => Taxonomy::htmlFeaturedImage( $term->term_id, [ 45, 72 ] ),
+							'class' => 'geditorial-adminbar-image-wrap',
+						];
+
+					break;
+					case 'author':
+
+						if ( $meta = get_term_meta( $term->term_id, $field, TRUE ) )
+							$node['title'].= ': '.get_user_by( 'id', $meta )->display_name;
+						else
+							$node['title'].= ': '.gEditorial\Plugin::na();
+
+					break;
+					case 'color':
+
+						if ( $meta = get_term_meta( $term->term_id, $field, TRUE ) )
+							$node['title'].= ': '.'<i class="-color" style="background-color:'.HTML::escape( $meta ).'"></i>';
+						else
+							$node['title'].= ': '.gEditorial\Plugin::na();
+
+					// TODO: add the rest!
+
+					break;
+					default: $node['title'] = _x( 'Meta: Uknonwn', 'Modules: Terms: Adminbar', GEDITORIAL_TEXTDOMAIN ); break;
+				}
+
+				$nodes[] = $node;
+
+				if ( in_array( $field, [ 'image' ] ) )
+					$nodes[] = $child;
+			}
+
+			return;
+		}
+
+		if ( ! is_singular() )
 			return;
 
 		$post_id = get_queried_object_id();
