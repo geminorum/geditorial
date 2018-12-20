@@ -2244,7 +2244,7 @@ class Module extends Base
 		return $this->get_string( $column.'_column_title', $constant, 'misc', ( is_null( $fallback ) ? $column : $fallback ) );
 	}
 
-	protected function require_code( $filenames = 'templates' )
+	protected function require_code( $filenames = 'Templates' )
 	{
 		foreach ( (array) $filenames as $filename )
 			require_once( $this->path.$filename.'.php' );

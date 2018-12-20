@@ -46,7 +46,7 @@ class Widgets extends gEditorial\Module
 
 		foreach ( $this->get_widgets() as $file => $class ) {
 
-			$this->require_code( 'widgets/'.$file );
+			$this->require_code( 'Widgets/'.$file );
 
 			$widget = call_user_func( [ '\\geminorum\\gEditorial\\Widgets\\Widgets\\'.$class, 'setup' ] );
 
@@ -65,7 +65,7 @@ class Widgets extends gEditorial\Module
 			if ( ! in_array( $file, $widgets ) )
 				continue;
 
-			$this->require_code( 'widgets/'.$file );
+			$this->require_code( 'Widgets/'.$file );
 
 			register_widget( '\\geminorum\\gEditorial\\Widgets\\Widgets\\'.$class );
 		}
