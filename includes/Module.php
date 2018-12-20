@@ -3,6 +3,7 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core\Arraay;
+use geminorum\gEditorial\Core\File;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Icon;
 use geminorum\gEditorial\Core\Number;
@@ -71,7 +72,7 @@ class Module extends Base
 	{
 		$this->base = 'geditorial';
 		$this->key  = $module->name;
-		$this->path = $path;
+		$this->path = File::normalize( $path );
 
 		$this->module  = $module;
 		$this->options = $options;
