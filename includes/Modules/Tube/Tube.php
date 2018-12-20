@@ -31,9 +31,14 @@ class Tube extends gEditorial\Module
 		return [
 			'_general' => [
 				[
+					'field'       => 'video_channels',
+					'title'       => _x( 'Channels Support', 'Modules: Tube: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Supports channel post-type and related features.', 'Modules: Tube: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+				],
+				[
 					'field'       => 'video_toolbar',
 					'title'       => _x( 'Video Toolbar', 'Modules: Tube: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Display customized toolbar after player', 'Modules: Tube: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Displays customized toolbar after player.', 'Modules: Tube: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 				],
 			],
 			'_supports' => [
@@ -157,7 +162,9 @@ class Tube extends gEditorial\Module
 	public function after_setup_theme()
 	{
 		$this->register_posttype_thumbnail( 'video_cpt' );
-		$this->register_posttype_thumbnail( 'channel_cpt' );
+
+		if ( $this->get_setting( 'video_channels' ) )
+			$this->register_posttype_thumbnail( 'channel_cpt' );
 	}
 
 	public function init()
@@ -171,20 +178,24 @@ class Tube extends gEditorial\Module
 			'show_in_quick_edit' => TRUE,
 		], 'video_cpt' );
 
-		$this->register_taxonomy( 'channel_cat', [
-			'hierarchical'       => TRUE,
-			'meta_box_cb'        => NULL,
-			'show_admin_column'  => TRUE,
-			'show_in_quick_edit' => TRUE,
-		], 'channel_cpt' );
-
 		$this->register_posttype( 'video_cpt' );
-		$this->register_posttype( 'channel_cpt', [
-			'show_in_admin_bar' => FALSE,
-		] );
-
 		$this->register_shortcode( 'video_cat_shortcode' );
-		$this->register_shortcode( 'channel_cat_shortcode' );
+
+		if ( $this->get_setting( 'video_channels' ) ) {
+
+			$this->register_taxonomy( 'channel_cat', [
+				'hierarchical'       => TRUE,
+				'meta_box_cb'        => NULL,
+				'show_admin_column'  => TRUE,
+				'show_in_quick_edit' => TRUE,
+			], 'channel_cpt' );
+
+			$this->register_posttype( 'channel_cpt', [
+				'show_in_admin_bar' => FALSE,
+			] );
+
+			$this->register_shortcode( 'channel_cat_shortcode' );
+		}
 
 		if ( ! is_admin() && $this->get_setting( 'video_toolbar' ) ) {
 			$this->filter( 'wp_video_shortcode', 5 );
@@ -205,7 +216,8 @@ class Tube extends gEditorial\Module
 				$this->action_module( 'meta', 'column_row', 3, 12 );
 			}
 
-		} else if ( $screen->post_type == $this->constant( 'channel_cpt' ) ) {
+		} else if ( $screen->post_type == $this->constant( 'channel_cpt' )
+			&& $this->get_setting( 'video_channels' ) ) {
 
 			if ( 'post' == $screen->base ) {
 
@@ -228,8 +240,9 @@ class Tube extends gEditorial\Module
 		if ( $glance = $this->dashboard_glance_post( 'video_cpt' ) )
 			$items[] = $glance;
 
-		if ( $glance = $this->dashboard_glance_post( 'channel_cpt' ) )
-			$items[] = $glance;
+		if ( $this->get_setting( 'video_channels' )
+			&& ( $glance = $this->dashboard_glance_post( 'channel_cpt' ) ) )
+				$items[] = $glance;
 
 		return $items;
 	}
