@@ -17,8 +17,8 @@
   }
 
   span.-count {
-    background: #ddd;
-    color: #333;
+    background: $gray-lighter;
+    color: $gray-dark;
     margin: 0;
     border-radius: 10px;
 
@@ -27,6 +27,11 @@
     font-size: 10px;
     font-weight: 700;
     text-shadow: none;
+  }
+
+  code {
+    background: $gray-lighter;
+    color: $gray-dark;
   }
 
   // ajax responses
@@ -74,8 +79,7 @@
   }
 
   .geditorial-adminbar-box-wrap {
-
-    width: 200px;
+    width: 210px;
 
     ul {
       padding: 0 10px;
@@ -86,6 +90,39 @@
 
     input[type="checkbox"] {
       background-color: #464b50;
+    }
+  }
+
+  .geditorial-adminbar-desc-wrap,
+  .geditorial-adminbar-image-wrap {
+    .ab-item.ab-empty-item {
+      display: none;
+    }
+
+    width: 210px;
+    padding: 0 10px;
+    margin: 0;
+  }
+
+  .geditorial-adminbar-desc-wrap {
+    p {
+      height: auto;
+      white-space: normal;
+      line-height: 1.6;
+      font-size: smaller;
+    }
+  }
+
+  .geditorial-adminbar-image-wrap {
+    a {
+      height: auto;
+      padding: 0;
+      display: inline-block;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
     }
   }
 }

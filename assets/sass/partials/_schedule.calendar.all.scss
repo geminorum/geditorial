@@ -231,6 +231,13 @@ $padding-small-horizontal: 8px !default;
         height: auto;
         font-weight: 600;
 
+        // for the drop
+        > li {
+          list-style-type: none !important;
+          margin: 0;
+          padding: 0;
+        }
+
         > a {
           display: block;
           height: 100%;
