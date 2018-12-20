@@ -113,12 +113,12 @@ class Plugin
 				include_once( $this->path.$module.'/'.$module.'.php' );
 
 				if ( $class = Helper::moduleClass( $module ) )
-					$this->register_module( call_user_func( [ $class, 'module' ] ) );
+					$this->register_module( call_user_func( [ $class, 'module' ] ), $module );
 			}
 		}
 	}
 
-	public function register_module( $args = [] )
+	public function register_module( $args = [], $folder = FALSE )
 	{
 		if ( FALSE === $args )
 			return FALSE;
@@ -127,6 +127,7 @@ class Plugin
 			return FALSE;
 
 		$defaults = [
+			'folder'    => $folder,
 			'class'     => Helper::moduleClass( $args['name'], FALSE ),
 			'icon'      => 'screenoptions', // dashicon class / svg icon array
 			'configure' => TRUE,
@@ -168,7 +169,7 @@ class Plugin
 			if ( $module->autoload || Helper::moduleEnabled( $this->options->{$mod_name} ) ) {
 
 				$class = $module->class;
-				$this->{$mod_name} = new $class( $module, $this->options->{$mod_name}, $this->path.$mod_name.'/' );
+				$this->{$mod_name} = new $class( $module, $this->options->{$mod_name}, $this->path.$module->folder.'/' );
 			}
 		}
 	}
