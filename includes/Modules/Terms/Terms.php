@@ -114,8 +114,8 @@ class Terms extends gEditorial\Module
 				'posttypes' => _x( 'Posttypes', 'Modules: Terms: Titles', GEDITORIAL_TEXTDOMAIN ),
 			],
 			'descriptions' => [
-				'order'     => _x( 'Terms are usually ordered alphabetically, but you can choose your own order by entering a number (1 for first, etc.) in this field.', 'Modules: Terms: Descriptions', GEDITORIAL_TEXTDOMAIN ),
-				'image'     => _x( 'Assign terms a custom image to visually separate them from each other.', 'Modules: Terms: Descriptions', GEDITORIAL_TEXTDOMAIN ),
+				'order'     => _x( 'Terms are usually ordered alphabetically, but you can choose your own order by numbers.', 'Modules: Terms: Descriptions', GEDITORIAL_TEXTDOMAIN ),
+				'image'     => _x( 'Assign a custom image to visually separate terms from each other.', 'Modules: Terms: Descriptions', GEDITORIAL_TEXTDOMAIN ),
 				'author'    => _x( 'Set term author to help identify who created or owns each term.', 'Modules: Terms: Descriptions', GEDITORIAL_TEXTDOMAIN ),
 				'color'     => _x( 'Terms can have unique colors to help separate them from each other.', 'Modules: Terms: Descriptions', GEDITORIAL_TEXTDOMAIN ),
 				'role'      => _x( 'Terms can have unique role visibility to help separate them for user roles.', 'Modules: Terms: Descriptions', GEDITORIAL_TEXTDOMAIN ),
@@ -929,7 +929,7 @@ class Terms extends gEditorial\Module
 
 		$nodes[] = [
 			'id'     => $this->classs(),
-			'title'  => _x( 'Term Summary', 'Modules: Terms: Adminbar', GEDITORIAL_TEXTDOMAIN ),
+			'title'  => _x( 'Summary of Terms', 'Modules: Terms: Adminbar', GEDITORIAL_TEXTDOMAIN ),
 			'parent' => $parent,
 			'href'   => $this->get_module_url( 'reports', 'uncategorized' ),
 		];
