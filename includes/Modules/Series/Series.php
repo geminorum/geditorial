@@ -103,6 +103,7 @@ class Series extends gEditorial\Module
 
 		$this->register_taxonomy( 'series_tax', [
 			'show_admin_column' => TRUE,
+			'show_in_rest'      => FALSE, // disables in block editor, temporarily!
 		] );
 
 		foreach ( $this->posttypes() as $posttype )
