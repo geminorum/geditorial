@@ -140,14 +140,26 @@ class Config extends gEditorial\Module
 			HTML::headerNav( $uri, $sub, $subs );
 			Settings::message( $messages );
 
-			if ( file_exists( GEDITORIAL_DIR.'includes/settings/reports.'.$sub.'.php' ) )
-				require_once( GEDITORIAL_DIR.'includes/settings/reports.'.$sub.'.php' );
+			if ( 'overview' == $sub )
+				$this->reports_overview( $uri );
+
+			else if ( 'console' == $sub )
+				gEditorial()->files( 'Layouts/console.reports' );
+
+			else if ( has_action( $this->base.'_reports_sub_'.$sub ) )
+				do_action( $this->base.'_reports_sub_'.$sub, $uri, $sub );
+
 			else
-				do_action( 'geditorial_reports_sub_'.$sub, $uri, $sub );
+				Settings::cheatin();
 
 			$this->settings_signature( 'reports' );
 
 		Settings::wrapClose();
+	}
+
+	protected function reports_overview( $uri )
+	{
+		// summary of available tools
 	}
 
 	public function admin_tools_page()
@@ -176,14 +188,45 @@ class Config extends gEditorial\Module
 			HTML::headerNav( $uri, $sub, $subs );
 			Settings::message( $messages );
 
-			if ( file_exists( GEDITORIAL_DIR.'includes/settings/tools.'.$sub.'.php' ) )
-				require_once( GEDITORIAL_DIR.'includes/settings/tools.'.$sub.'.php' );
+			if ( 'overview' == $sub )
+				$this->tools_overview( $uri );
+
+			else if ( 'options' == $sub )
+				$this->tools_options( $uri );
+
+			else if ( 'console' == $sub )
+				gEditorial()->files( 'Layouts/console.tools' );
+
+			else if ( has_action( $this->base.'_tools_sub_'.$sub ) )
+				do_action( $this->base.'_tools_sub_'.$sub, $uri, $sub );
+
 			else
-				do_action( 'geditorial_tools_sub_'.$sub, $uri, $sub );
+				Settings::cheatin();
 
 			$this->settings_signature( 'tools' );
 
 		Settings::wrapClose();
+	}
+
+	protected function tools_overview( $uri )
+	{
+		if ( function_exists( 'gnetwork_update_notice' ) )
+			gnetwork_update_notice( GEDITORIAL_FILE );
+
+		if ( function_exists( 'gnetwork_github_readme' ) )
+			gnetwork_github_readme( 'geminorum/geditorial' );
+	}
+
+	protected function tools_options( $uri )
+	{
+		User::superAdminOnly();
+
+		echo '<br />';
+
+		if ( $options = get_option( 'geditorial_options' ) )
+			HTML::tableSide( $options );
+		else
+			HTML::desc( gEditorial\Plugin::na() );
 	}
 
 	public function admin_reports_load()
