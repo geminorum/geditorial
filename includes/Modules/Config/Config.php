@@ -130,9 +130,9 @@ class Config extends gEditorial\Module
 		if ( $can )
 			$subs['general'] = _x( 'General', 'Modules: Config: Reports Sub', GEDITORIAL_TEXTDOMAIN );
 
-		$subs = apply_filters( 'geditorial_reports_subs', $subs, 'reports' );
+		$subs = apply_filters( $this->base.'_reports_subs', $subs, 'reports' );
 
-		$messages = apply_filters( 'geditorial_reports_messages', Settings::messages(), $sub );
+		$messages = apply_filters( $this->base.'_reports_messages', Settings::messages(), $sub );
 
 		Settings::wrapOpen( $sub, 'reports' );
 
@@ -173,14 +173,14 @@ class Config extends gEditorial\Module
 		if ( $can )
 			$subs['general'] = _x( 'General', 'Modules: Config: Tools Sub', GEDITORIAL_TEXTDOMAIN );
 
-		$subs = apply_filters( 'geditorial_tools_subs', $subs, 'tools' );
+		$subs = apply_filters( $this->base.'_tools_subs', $subs, 'tools' );
 
 		if ( User::isSuperAdmin() ) {
 			$subs['options'] = _x( 'Options', 'Modules: Config: Tools Sub', GEDITORIAL_TEXTDOMAIN );
 			$subs['console'] = _x( 'Console', 'Modules: Config: Tools Sub', GEDITORIAL_TEXTDOMAIN );
 		}
 
-		$messages = apply_filters( 'geditorial_tools_messages', Settings::messages(), $sub );
+		$messages = apply_filters( $this->base.'_tools_messages', Settings::messages(), $sub );
 
 		Settings::wrapOpen( $sub, 'tools' );
 
@@ -235,12 +235,12 @@ class Config extends gEditorial\Module
 
 		if ( 'general' == $sub ) {
 
-			add_action( 'geditorial_reports_sub_general', [ $this, 'reports_sub' ], 10, 2 );
+			add_action( $this->base.'_reports_sub_general', [ $this, 'reports_sub' ], 10, 2 );
 
 			$this->register_help_tabs();
 		}
 
-		do_action( 'geditorial_reports_settings', $sub );
+		do_action( $this->base.'_reports_settings', $sub );
 	}
 
 	public function admin_tools_load()
@@ -308,12 +308,12 @@ class Config extends gEditorial\Module
 				}
 			}
 
-			add_action( 'geditorial_tools_sub_'.$sub, [ $this, 'tools_sub' ], 10, 2 );
+			add_action( $this->base.'_tools_sub_'.$sub, [ $this, 'tools_sub' ], 10, 2 );
 
 			$this->register_help_tabs();
 		}
 
-		do_action( 'geditorial_tools_settings', $sub );
+		do_action( $this->base.'_tools_settings', $sub );
 	}
 
 	protected function render_reports_html( $uri, $sub )
@@ -532,7 +532,7 @@ class Config extends gEditorial\Module
 		if ( $module )
 			$GLOBALS['submenu_file'] = $this->base.'-settings&module='.$module;
 
-		do_action( 'geditorial_settings_load', $module );
+		do_action( $this->base.'_settings_load', $module );
 
 		$this->enqueue_asset_js( [], NULL, [ 'jquery', Scripts::pkgListJS() ] );
 	}
