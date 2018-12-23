@@ -189,7 +189,8 @@ class ShortCode extends Core\Base
 					Helper::prepDescription( $term->description )
 				);
 
-			$item.= $args['item_after'];
+			if ( is_string( $args['item_after'] ) )
+				$item.= $args['item_after'];
 		}
 
 		if ( ! $args['item_tag'] )
@@ -352,7 +353,8 @@ class ShortCode extends Core\Base
 					// FIXME: add post_content
 				);
 
-			$item.= $args['item_after'];
+			if ( is_string( $args['item_after'] ) )
+				$item.= $args['item_after'];
 		}
 
 		if ( ! $args['item_tag'] )
