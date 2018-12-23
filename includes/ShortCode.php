@@ -378,6 +378,7 @@ class ShortCode extends Core\Base
 			'title_tag'      => 'h3',
 			'title_anchor'   => $taxonomy.'-%2$s',
 			'title_class'    => '-title',
+			'title_after'    => '',
 			'item_cb'        => FALSE,
 			'item_link'      => TRUE,
 			'item_text'      => NULL,  // callback or use %s for post title
