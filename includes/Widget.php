@@ -297,10 +297,16 @@ class Widget extends \WP_Widget
 		HTML::label( _x( 'Class:', 'Widget Core', GEDITORIAL_TEXTDOMAIN ).$html, $this->get_field_id( $field ) );
 	}
 
-	public function form_post_type( $instance, $default = 'post', $field = 'post_type' )
+	public function form_post_type( $instance, $default = 'post', $field = 'post_type', $any = TRUE )
 	{
 		$html = '';
 		$type = isset( $instance[$field] ) ? $instance[$field] : $default;
+
+		if ( $any )
+			$html.= HTML::tag( 'option', [
+				'value'    => 'any',
+				'selected' => $type == 'any',
+			], _x( '&ndash; (Any)', 'Widget Core', GEDITORIAL_TEXTDOMAIN ) );
 
 		foreach ( PostType::get() as $name => $title )
 			$html.= HTML::tag( 'option', [

@@ -18,7 +18,7 @@ class Taxonomy extends Core\Base
 	{
 		$list = array();
 
-		if ( FALSE === $object )
+		if ( FALSE === $object || 'any' == $object )
 			$objects = get_taxonomies( $args, 'objects' );
 		else
 			$objects = get_object_taxonomies( $object, 'objects' );
