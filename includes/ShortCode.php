@@ -137,6 +137,7 @@ class ShortCode extends Core\Base
 		$args = self::atts( [
 			'item_link'     => TRUE,
 			'item_text'     => NULL,  // callback or use %s for post title
+			'item_wrap'     => '', // use %s for item title / or html tag
 			'item_title'    => '', // use %s for post title
 			'item_title_cb' => FALSE,
 			'item_tag'      => 'li',
@@ -176,6 +177,12 @@ class ShortCode extends Core\Base
 				'title' => $args['item_title'] ? sprintf( $args['item_title'], $text ) : FALSE,
 				'class' => $args['item_link'] ? '-no-link -empty -tax-'.$term->taxonomy : FALSE,
 			], $title );
+
+		if ( $args['item_wrap'] && Text::has( $args['item_wrap'], '%' ) )
+			$item = sprintf( $args['item_wrap'], $item );
+
+		else if ( $args['item_wrap'] )
+			$item = HTML::tag( $args['item_wrap'], $item );
 
 		if ( $args['item_after_cb'] && is_callable( $args['item_after_cb'] ) ) {
 			$item.= call_user_func_array( $args['item_after_cb'], [ $term, $args, $item ] );
@@ -269,6 +276,7 @@ class ShortCode extends Core\Base
 		$args = self::atts( [
 			'item_link'     => TRUE,
 			'item_text'     => NULL,  // callback or use %s for post title
+			'item_wrap'     => '', // use %s for item title / or html tag
 			'item_title'    => '', // use %s for post title
 			'item_title_cb' => FALSE,
 			'item_tag'      => 'li',
@@ -333,6 +341,11 @@ class ShortCode extends Core\Base
 					'class' => $args['item_link'] ? '-no-link -future -posttype-'.$post->post_type : FALSE,
 				], $item );
 
+			if ( $args['item_wrap'] && Text::has( $args['item_wrap'], '%' ) )
+				$item = sprintf( $args['item_wrap'], $item );
+
+			else if ( $args['item_wrap'] )
+				$item = HTML::tag( $args['item_wrap'], $item );
 
 			if ( $args['order_before'] ) {
 				$order = $args['order_zeroise'] ? Number::zeroise( $post->menu_order, $args['order_zeroise'] ) : $post->menu_order;
@@ -384,11 +397,12 @@ class ShortCode extends Core\Base
 			'item_cb'        => FALSE,
 			'item_link'      => TRUE,
 			'item_text'      => NULL,  // callback or use %s for post title
+			'item_wrap'      => '', // use %s for item title / or html tag
 			'item_title'     => '', // use %s for post title
 			'item_title_cb'  => FALSE,
 			'item_tag'       => 'li',
 			'item_anchor'    => FALSE, // $posttype.'-%2$s',
-			'item_class'    => '-item do-sincethen',
+			'item_class'     => '-item do-sincethen',
 			'item_after'     => '',
 			'item_after_cb'  => FALSE,
 			'item_download'  => TRUE, // only for attachments
