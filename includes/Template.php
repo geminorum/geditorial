@@ -73,8 +73,19 @@ class Template extends Core\Base
 		if ( $link )
 			$html = '<a title="'.HTML::escape( $args['figure'] ? self::getTermField( 'title', $args['id'], $args['taxonomy'] ) : $title ).'" href="'.$link.'">'.$html.'</a>';
 
-		if ( $title && $args['figure'] )
-			$html = '<figure'.( TRUE === $args['figure'] ? '' : ' class="'.$args['figure'].'"' ).'>'.$html.'<figcaption>'.$title.'</figcaption></figure>';
+		if ( $title && $args['figure'] ) {
+
+			if ( TRUE === $args['caption_link'] && $link )
+				$caption = HTML::link( $title, $link );
+
+			else if ( $args['caption_link'] )
+				$caption = HTML::link( $title, $args['caption_link'] );
+
+			else
+				$caption = $title;
+
+			$html = '<figure'.( TRUE === $args['figure'] ? '' : ' class="'.$args['figure'].'"' ).'>'.$html.'<figcaption>'.$caption.'</figcaption></figure>';
+		}
 
 		if ( ! $args['wrap'] )
 			return $html;
@@ -90,22 +101,23 @@ class Template extends Core\Base
 			$module = static::MODULE;
 
 		$args = self::atts( [
-			'id'       => NULL,
-			'size'     => NULL,
-			'alt'      => FALSE,
-			'class'    => '-term-image',
-			'taxonomy' => '',
-			'link'     => 'archive',
-			'title'    => 'name',
-			'data'     => [ 'toggle' => 'tooltip' ],
-			'callback' => [ __CLASS__, 'termImageCallback' ],
-			'figure'   => FALSE, // or class of the figure
-			'fallback' => FALSE,
-			'default'  => FALSE,
-			'wrap'     => TRUE,
-			'before'   => '',
-			'after'    => '',
-			'echo'     => TRUE,
+			'id'           => NULL,
+			'size'         => NULL,
+			'alt'          => FALSE,
+			'class'        => '-term-image',
+			'taxonomy'     => '',
+			'link'         => 'archive',
+			'title'        => 'name',
+			'data'         => [ 'toggle' => 'tooltip' ],
+			'callback'     => [ __CLASS__, 'termImageCallback' ],
+			'figure'       => FALSE, // or class of the figure
+			'caption_link' => FALSE, // custom figcaption link / TRUE for default
+			'fallback'     => FALSE,
+			'default'      => FALSE,
+			'wrap'         => TRUE,
+			'before'       => '',
+			'after'        => '',
+			'echo'         => TRUE,
 		], $atts );
 
 		if ( FALSE === $args['id'] )
@@ -220,8 +232,19 @@ class Template extends Core\Base
 		if ( $link )
 			$html = '<a title="'.HTML::escape( $args['figure'] ? self::getPostField( 'title', $args['id'] ) : $title ).'" href="'.$link.'">'.$html.'</a>';
 
-		if ( $title && $args['figure'] )
-			$html = '<figure'.( TRUE === $args['figure'] ? '' : ' class="'.$args['figure'].'"' ).'>'.$html.'<figcaption>'.$title.'</figcaption></figure>';
+		if ( $title && $args['figure'] ) {
+
+			if ( TRUE === $args['caption_link'] && $link )
+				$caption = HTML::link( $title, $link );
+
+			else if ( $args['caption_link'] )
+				$caption = HTML::link( $title, $args['caption_link'] );
+
+			else
+				$caption = $title;
+
+			$html = '<figure'.( TRUE === $args['figure'] ? '' : ' class="'.$args['figure'].'"' ).'>'.$html.'<figcaption>'.$caption.'</figcaption></figure>';
+		}
 
 		if ( ! $args['wrap'] )
 			return $html;
@@ -237,22 +260,23 @@ class Template extends Core\Base
 			$module = static::MODULE;
 
 		$args = self::atts( [
-			'id'       => NULL,
-			'size'     => NULL,
-			'alt'      => FALSE,
-			'class'    => '-post-image',
-			'type'     => 'post',
-			'link'     => 'parent',
-			'title'    => 'title',
-			'data'     => [ 'toggle' => 'tooltip' ],
-			'callback' => [ __CLASS__, 'postImageCallback' ],
-			'figure'   => FALSE, // or class of the figure
-			'fallback' => FALSE,
-			'default'  => FALSE,
-			'wrap'     => TRUE,
-			'before'   => '',
-			'after'    => '',
-			'echo'     => TRUE,
+			'id'           => NULL,
+			'size'         => NULL,
+			'alt'          => FALSE,
+			'class'        => '-post-image',
+			'type'         => 'post',
+			'link'         => 'parent',
+			'title'        => 'title',
+			'data'         => [ 'toggle' => 'tooltip' ],
+			'callback'     => [ __CLASS__, 'postImageCallback' ],
+			'figure'       => FALSE, // or class of the figure
+			'caption_link' => FALSE, // custom figcaption link / TRUE for default
+			'fallback'     => FALSE,
+			'default'      => FALSE,
+			'wrap'         => TRUE,
+			'before'       => '',
+			'after'        => '',
+			'echo'         => TRUE,
 		], $atts );
 
 		if ( 'latest' == $args['id'] )
