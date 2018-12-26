@@ -351,12 +351,13 @@ class Series extends gEditorial\Module
 			'post',
 			$this->constant( 'series_tax' ),
 			array_merge( [
-				'title_after'  => '<div class="-desc">%3$s</div>',
-				'item_after'   => '<h6>%1$s</h6><div class="summary">%3$s</div>', // use meta data after
-				'item_cb'      => [ $this, 'series_shortcode_item_cb' ],
-				'order_cb'     => [ $this, 'series_shortcode_order_cb' ],
-				'orderby'      => 'order',
-				'posttypes'    => $this->posttypes(),
+				'title_after' => '<div class="-desc">%3$s</div>',
+				'item_wrap'   => 'h4',
+				'item_after'  => '<h6>%1$s</h6><div class="summary">%3$s</div>', // use meta data after
+				'item_cb'     => [ $this, 'series_shortcode_item_cb' ],
+				'order_cb'    => [ $this, 'series_shortcode_order_cb' ],
+				'orderby'     => 'order',
+				'posttypes'   => $this->posttypes(),
 			], (array) $atts ),
 			$content,
 			$this->constant( 'series_shortcode' )
