@@ -8,6 +8,7 @@ use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
+use geminorum\gEditorial\Core\Text;
 use geminorum\gEditorial\WordPress\Taxonomy;
 
 class Series extends gEditorial\Module
@@ -419,6 +420,9 @@ class Series extends gEditorial\Module
 				'#', // used for links
 				isset( $post->series_meta['in_series_desc'] )
 					? Helper::prepDescription( $post->series_meta['in_series_desc'] )
+					: '',
+				isset( $post->series_meta['in_series_desc'] )
+					? Text::trimChars( $post->series_meta['in_series_desc'] )
 					: ''
 			);
 		}

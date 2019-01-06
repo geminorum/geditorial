@@ -192,8 +192,9 @@ class ShortCode extends Core\Base
 			if ( Text::has( $args['item_after'], '%' ) )
 				$args['item_after'] = sprintf( $args['item_after'],
 					$text,
-					$link,
-					Helper::prepDescription( $term->description )
+					HTML::escapeURL( $link ),
+					Helper::prepDescription( $term->description ),
+					Text::trimChars( $term->description )
 				);
 
 			if ( is_string( $args['item_after'] ) )
@@ -361,8 +362,9 @@ class ShortCode extends Core\Base
 			if ( Text::has( $args['item_after'], '%' ) )
 				$args['item_after'] = sprintf( $args['item_after'],
 					$text,
-					$link,
-					Helper::prepDescription( $post->post_excerpt )
+					HTML::escapeURL( $link ),
+					Helper::prepDescription( $post->post_excerpt ),
+					Text::trimChars( $post->post_excerpt )
 					// FIXME: add post_content
 				);
 
