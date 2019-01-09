@@ -7,6 +7,7 @@ use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
+use geminorum\gEditorial\Core\URL;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\Media;
 
@@ -30,6 +31,20 @@ class Attachments extends gEditorial\Module
 		return [
 			'_frontend' => [
 				'adminbar_summary',
+				[
+					'field'       => 'rewrite_permalink',
+					'title'       => _x( 'Rewite Permalink', 'Modules: Attachments: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Changes default permalink into attachment id.', 'Modules: Attachments: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+				],
+				[
+					'field'       => 'prefix_permalink',
+					'type'        => 'text',
+					'title'       => _x( 'Prefix Permalink', 'Modules: Attachments: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Adds to the permalink of attachments, before id.', 'Modules: Attachments: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'field_class' => [ 'medium-text', 'code' ],
+					'placeholder' => 'media',
+					'dir'         => 'ltr',
+				],
 			],
 			'_editlist' => [
 				[
@@ -61,6 +76,11 @@ class Attachments extends gEditorial\Module
 	{
 		parent::init();
 
+		if ( $this->get_setting( 'rewrite_permalink' ) ) {
+			$this->add_rewrite_rule();
+			$this->filter( 'attachment_link', 2, 20 );
+		}
+
 		$this->register_shortcode( 'attachments_shortcode' );
 	}
 
@@ -76,6 +96,37 @@ class Attachments extends gEditorial\Module
 
 			$this->action_module( 'tweaks', 'column_attr', 1, 20 );
 		}
+	}
+
+	private function get_prefix_permalink()
+	{
+		$prefix = $this->get_setting( 'prefix_permalink' );
+		$prefix = $prefix ?: 'media';
+		return ltrim( rtrim( $prefix, '/' ), '/' );
+	}
+
+	private function add_rewrite_rule()
+	{
+		add_rewrite_rule(
+			'(.+)/'.$this->get_prefix_permalink().'/([0-9]{1,})/?$',
+			'index.php?attachment_id=$matches[2]',
+			'top'
+		);
+	}
+
+	// @REF: https://wordpress.stackexchange.com/a/187817
+	public function attachment_link( $link, $attachment_id )
+	{
+		if ( ! $attachment = get_post( $attachment_id ) )
+			return $link;
+
+		if ( empty( $attachment->post_parent ) )
+			return $link;
+
+		$prefix = $this->get_prefix_permalink();
+		$parent = get_permalink( $attachment->post_parent );
+
+		return URL::untrail( $parent ).'/'.$prefix.'/'.$attachment_id;
 	}
 
 	// @REF: http://wpbeg.in/2yZXJ2n
