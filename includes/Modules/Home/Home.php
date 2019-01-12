@@ -74,6 +74,7 @@ add_theme_support( \'featured-content\', [
 					'type'        => 'text',
 					'title'       => _x( 'Featured Term', 'Modules: Home: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Specify a term slug to use for theme-designated featured content area.', 'Modules: Home: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'field_class' => [ 'medium-text', 'code' ],
 					'placeholder' => 'featured-slug',
 					'dir'         => 'ltr',
 				],

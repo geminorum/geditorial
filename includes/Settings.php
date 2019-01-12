@@ -163,6 +163,7 @@ class Settings extends Core\Base
 		return array_merge( [
 			'attachment',
 			'inbound_message',
+			'amp_validated_url',
 			'bp-email',
 			'wp_block',
 		], (array) $extra );

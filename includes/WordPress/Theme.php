@@ -54,8 +54,8 @@ class Theme extends Core\Base
 			'menu_order'            => 0,
 			'pinged'                => '',
 			'to_ping'               => '',
-			'ping_status'           => $data->ping_status,
-			'comment_status'        => $data->comment_status,
+			'ping_status'           => isset( $data->ping_status ) ? $data->ping_status : 'closed',
+			'comment_status'        => isset( $data->comment_status ) ? $data->comment_status : 'closed',
 			'comment_count'         => 0,
 			'filter'                => 'raw',
 

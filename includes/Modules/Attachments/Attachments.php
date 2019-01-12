@@ -33,13 +33,13 @@ class Attachments extends gEditorial\Module
 				'adminbar_summary',
 				[
 					'field'       => 'rewrite_permalink',
-					'title'       => _x( 'Rewite Permalink', 'Modules: Attachments: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Changes default permalink into attachment id.', 'Modules: Attachments: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Rewite Permalinks', 'Modules: Attachments: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Changes default permalinks into attachment id.', 'Modules: Attachments: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 				],
 				[
 					'field'       => 'prefix_permalink',
 					'type'        => 'text',
-					'title'       => _x( 'Prefix Permalink', 'Modules: Attachments: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Prefix Permalinks', 'Modules: Attachments: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Adds to the permalink of attachments, before id.', 'Modules: Attachments: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 					'field_class' => [ 'medium-text', 'code' ],
 					'placeholder' => 'media',
