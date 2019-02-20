@@ -39,7 +39,7 @@ class Estimated extends gEditorial\Module
 					'field'       => 'prefix',
 					'type'        => 'text',
 					'title'       => _x( 'Content Prefix', 'Modules: Estimated: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'String before the estimated time on the content', 'Modules: Estimated: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Custom string before the estimated time on the content.', 'Modules: Estimated: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 					'default'     => _x( 'Estimated read time:', 'Modules: Estimated: Setting Default', GEDITORIAL_TEXTDOMAIN ),
 				],
 				[

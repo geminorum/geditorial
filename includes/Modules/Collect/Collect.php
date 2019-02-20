@@ -55,7 +55,7 @@ class Collect extends gEditorial\Module
 					'field'       => 'redirect_groups',
 					'type'        => 'url',
 					'title'       => _x( 'Redirect Groups', 'Modules: Collect: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Redirect all Group Archives to a URL', 'Modules: Collect: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Redirects all group archives to a URL.', 'Modules: Collect: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 					'placeholder' => 'http://example.com/archives/',
 				],
 			],

@@ -55,7 +55,7 @@ class Magazine extends gEditorial\Module
 					'field'       => 'redirect_spans',
 					'type'        => 'url',
 					'title'       => _x( 'Redirect Spans', 'Modules: Magazine: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Redirect all Span Archives to a URL', 'Modules: Magazine: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Redirects all span archives to a URL.', 'Modules: Magazine: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 					'placeholder' => 'http://example.com/archives/',
 				],
 			],

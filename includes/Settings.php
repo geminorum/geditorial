@@ -292,7 +292,7 @@ class Settings extends Core\Base
 			'field'       => 'rewrite_prefix',
 			'type'        => 'text',
 			'title'       => _x( 'URL Base Prefix', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'description' => $description ?: _x( 'String before the permalink structure', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+			'description' => $description ?: _x( 'Custom string before the perma-link structure.', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 			'default'     => '',
 			'dir'         => 'ltr',
 			'placeholder' => 'wiki',
@@ -305,7 +305,7 @@ class Settings extends Core\Base
 			'field'       => 'redirect_archives',
 			'type'        => 'url',
 			'title'       => _x( 'Redirect Archives', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'description' => $description ?: _x( 'Redirect Post Type Archives to a URL', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+			'description' => $description ?: _x( 'Redirects post-type archives to a URL.', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 			'placeholder' => 'http://example.com/archives/',
 		];
 	}
@@ -356,7 +356,7 @@ class Settings extends Core\Base
 			'field'       => 'insert_content',
 			'type'        => 'select',
 			'title'       => _x( 'Insert in Content', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'description' => $description ?: _x( 'Puts automatically in the content', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+			'description' => $description ?: _x( 'Outputs automatically in the content.', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 			'default'     => 'none',
 			'values'      => [
 				'none'   => _x( 'No', 'Settings: Setting Option', GEDITORIAL_TEXTDOMAIN ),
@@ -393,7 +393,7 @@ class Settings extends Core\Base
 			'field'       => 'before_content',
 			'type'        => 'textarea-quicktags',
 			'title'       => _x( 'Before Content', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'description' => $description ?: _x( 'Adds <code>HTML</code> to the start of all the supported posttypes', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+			'description' => $description ?: _x( 'Adds <code>HTML</code> before start of all the supported post-types.', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 		];
 	}
 
@@ -403,7 +403,7 @@ class Settings extends Core\Base
 			'field'       => 'after_content',
 			'type'        => 'textarea-quicktags',
 			'title'       => _x( 'After Content', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'description' => $description ?: _x( 'Adds <code>HTML</code> to the end of all the supported posttypes', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+			'description' => $description ?: _x( 'Adds <code>HTML</code> after end of all the supported post-types.', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 		];
 	}
 
@@ -412,7 +412,7 @@ class Settings extends Core\Base
 		return [
 			'field'       => 'admin_ordering',
 			'title'       => _x( 'Ordering', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'description' => $description ?: _x( 'Enhance item ordering on admin edit pages.', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+			'description' => $description ?: _x( 'Enhances item ordering on admin edit pages.', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 			'default'     => '1',
 		];
 	}
@@ -422,7 +422,7 @@ class Settings extends Core\Base
 		return [
 			'field'       => 'admin_restrict',
 			'title'       => _x( 'List Restrictions', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'description' => $description ?: _x( 'Enhance restrictions on admin edit pages.', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+			'description' => $description ?: _x( 'Enhances restrictions on admin edit pages.', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 		];
 	}
 
@@ -431,7 +431,7 @@ class Settings extends Core\Base
 		return [
 			'field'       => 'admin_bulkactions',
 			'title'       => _x( 'Bulk Actions', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'description' => $description ?: _x( 'Enhance bulk actions on admin edit pages.', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+			'description' => $description ?: _x( 'Enhances bulk actions on admin edit pages.', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 		];
 	}
 
@@ -440,7 +440,7 @@ class Settings extends Core\Base
 		return [
 			'field'       => 'admin_rowactions',
 			'title'       => _x( 'Row Actions', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'description' => $description ?: _x( 'Enhance row actions on admin edit pages.', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+			'description' => $description ?: _x( 'Enhances row actions on admin edit pages.', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 		];
 	}
 
@@ -449,7 +449,7 @@ class Settings extends Core\Base
 		return [
 			'field'       => 'adminbar_summary',
 			'title'       => _x( 'Adminbar Summary', 'Setting: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'description' => $description ?: _x( 'Summary for the current item as a node in adminbar', 'Setting: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+			'description' => $description ?: _x( 'Summary for the current item as a node in admin-bar.', 'Setting: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 		];
 	}
 
@@ -458,7 +458,7 @@ class Settings extends Core\Base
 		return [
 			'field'       => 'dashboard_widgets',
 			'title'       => _x( 'Dashboard Widgets', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'description' => $description ?: _x( 'Enhance admin dashboard with customized widgets', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+			'description' => $description ?: _x( 'Enhances admin dashboard with customized widgets.', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 		];
 	}
 
@@ -467,7 +467,7 @@ class Settings extends Core\Base
 		return [
 			'field'       => 'dashboard_authors',
 			'title'       => _x( 'Dashboard Authors', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'description' => $description ?: _x( 'Displays the author column on dashboard widget', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+			'description' => $description ?: _x( 'Displays author column on the dashboard widget.', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 		];
 	}
 
@@ -476,7 +476,7 @@ class Settings extends Core\Base
 		return [
 			'field'       => 'dashboard_statuses',
 			'title'       => _x( 'Dashboard Statuses', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'description' => $description ?: _x( 'Displays the status column on dashboard widget', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+			'description' => $description ?: _x( 'Displays status column on the dashboard widget.', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 		];
 	}
 
@@ -486,7 +486,7 @@ class Settings extends Core\Base
 			'field'       => 'dashboard_count',
 			'type'        => 'number',
 			'title'       => _x( 'Dashboard Count', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'description' => $description ?: _x( 'Total rows of items on dashboard widget', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+			'description' => $description ?: _x( 'Limits displaying rows of items on the dashboard widget.', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 			'default'     => 10,
 		];
 	}
@@ -512,7 +512,7 @@ class Settings extends Core\Base
 		return [
 			'field'       => 'count_not',
 			'title'       => _x( 'Count Not', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'description' => $description ?: _x( 'Count not affacted items in content summary', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+			'description' => $description ?: _x( 'Counts not affected items in the content summary.', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 		];
 	}
 
@@ -521,7 +521,7 @@ class Settings extends Core\Base
 		return [
 			'field'       => 'posttype_feeds',
 			'title'       => _x( 'Feeds', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'description' => $description ?: _x( 'Supporting feeds on the posttype', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+			'description' => $description ?: _x( 'Supports feeds for the supported post-types.', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 		];
 	}
 
@@ -530,7 +530,7 @@ class Settings extends Core\Base
 		return [
 			'field'       => 'posttype_pages',
 			'title'       => _x( 'Pages', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'description' => $description ?: _x( 'Supporting pagination on the posttype', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+			'description' => $description ?: _x( 'Supports pagination on the supported post-types.', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 		];
 	}
 
@@ -540,7 +540,7 @@ class Settings extends Core\Base
 			'field'       => 'empty_content',
 			'type'        => 'textarea-quicktags',
 			'title'       => _x( 'Empty Content', 'Setting: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'description' => $description ?: _x( 'Displays in empty content placeholder.', 'Setting: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+			'description' => $description ?: _x( 'Displays as empty content placeholder.', 'Setting: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 		];
 	}
 

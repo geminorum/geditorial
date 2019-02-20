@@ -49,7 +49,7 @@ class Modified extends gEditorial\Module
 					'field'       => 'insert_prefix',
 					'type'        => 'text',
 					'title'       => _x( 'Content Prefix', 'Modules: Modified: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'String before the modified time on the content.', 'Modules: Modified: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Custom string before the modified time on the content.', 'Modules: Modified: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 					'default'     => _x( 'Last modified on', 'Modules: Modified: Setting Default', GEDITORIAL_TEXTDOMAIN ),
 				],
 				[
