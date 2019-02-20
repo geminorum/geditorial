@@ -117,13 +117,13 @@ class URL extends Base
 	// check whether the given URL belongs to this site
 	public static function isLocal( $url, $domain = NULL )
 	{
-		return parse_url( $url, PHP_URL_HOST ) === parse_url( ( is_null( $domain ) ? home_url() : $domain ), PHP_URL_HOST );
+		return wp_parse_url( $url, PHP_URL_HOST ) === wp_parse_url( ( is_null( $domain ) ? home_url() : $domain ), PHP_URL_HOST );
 	}
 
 	// check whether the given URL is relative or not
 	public static function isRelative( $url )
 	{
-		$parsed = parse_url( $url );
+		$parsed = wp_parse_url( $url );
 		return empty( $parsed['host'] ) && empty( $parsed['scheme'] );
 	}
 
