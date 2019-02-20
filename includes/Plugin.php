@@ -113,12 +113,12 @@ class Plugin
 				include_once( $this->_path.$module.'/'.$module.'.php' );
 
 				if ( $class = Helper::moduleClass( $module ) )
-					$this->register_module( call_user_func( [ $class, 'module' ] ), $module );
+					$this->register_module( call_user_func( [ $class, 'module' ] ), $module, $class );
 			}
 		}
 	}
 
-	public function register_module( $args = [], $folder = FALSE )
+	public function register_module( $args = [], $folder = FALSE, $class = NULL )
 	{
 		if ( FALSE === $args )
 			return FALSE;
@@ -128,7 +128,7 @@ class Plugin
 
 		$defaults = [
 			'folder'    => $folder,
-			'class'     => Helper::moduleClass( $args['name'], FALSE ),
+			'class'     => $class ?: Helper::moduleClass( $args['name'], FALSE ),
 			'icon'      => 'screenoptions', // dashicon class / svg icon array
 			'configure' => TRUE,
 			'frontend'  => TRUE,  // whether or not the module should be loaded on the frontend
