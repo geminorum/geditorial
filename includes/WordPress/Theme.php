@@ -73,11 +73,19 @@ class Theme extends Core\Base
 		return $post;
 	}
 
-	// add_filter( 'post_link', [ '\geminorum\\gEditorial\\WordPress\\Theme', 'restPost_permalink' ], 1 );
-	// remove_filter( 'post_link', [ '\geminorum\\gEditorial\\WordPress\\Theme', 'restPost_permalink' ], 1 );
 	public static function restPost_permalink( $permalink )
 	{
 		return $GLOBALS['post']->link;
+	}
+
+	public static function restLoopBefore()
+	{
+		add_filter( 'post_link', [ __CLASS__, 'restPost_permalink' ], 1 );
+	}
+
+	public static function restLoopAfter()
+	{
+		remove_filter( 'post_link', [ __CLASS__, 'restPost_permalink' ], 1 );
 	}
 
 	// @SOURCE: `bp_set_theme_compat_active()`

@@ -68,7 +68,7 @@ class WPRestPosts extends gEditorial\Widget
 
 			echo '<ul>';
 
-			add_filter( 'post_link', [ '\geminorum\\gEditorial\\WordPress\\Theme', 'restPost_permalink' ], 1 );
+			Theme::restLoopBefore();
 
 			foreach ( $data as $item ) {
 
@@ -88,7 +88,7 @@ class WPRestPosts extends gEditorial\Widget
 				}
 			}
 
-			remove_filter( 'post_link', [ '\geminorum\\gEditorial\\WordPress\\Theme', 'restPost_permalink' ], 1 );
+			Theme::restLoopAfter();
 
 			wp_reset_postdata();
 
