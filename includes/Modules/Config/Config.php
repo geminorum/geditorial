@@ -38,11 +38,15 @@ class Config extends gEditorial\Module
 	{
 		parent::setup();
 
-		if ( is_admin() )
-			$this->filter( 'set-screen-option', 3 );
-
 		if ( WordPress::isAJAX() )
 			$this->_hook_ajax();
+
+		if ( ! is_admin() )
+			return;
+
+		$this->filter( 'set-screen-option', 3 );
+
+		add_filter( 'gnetwork_dashboard_pointers', [ $this, 'dashboard_pointers' ], -10 );
 	}
 
 	public function admin_menu()
@@ -117,6 +121,22 @@ class Config extends gEditorial\Module
 	public function set_screen_option( $false, $option, $value )
 	{
 		return Text::has( $option, $this->base ) ? $value : $false;
+	}
+
+	public function dashboard_pointers( $items )
+	{
+		if ( ! WordPress::maybeFlushRules() )
+			return $items;
+
+		$can = $this->cuc( 'settings' );
+
+		$items[] = HTML::tag( $can ? 'a' : 'span', [
+			'href'  => $can ? get_admin_url( NULL, 'options-permalink.php' ) : FALSE,
+			'title' => _x( 'You need to flush rewrite rules!', 'Module', GEDITORIAL_TEXTDOMAIN ),
+			'class' => '-flush-rules',
+		], _x( 'Flush Rewrite Rules', 'Modules: Config', GEDITORIAL_TEXTDOMAIN ) );
+
+		return $items;
 	}
 
 	public function admin_reports_page()
