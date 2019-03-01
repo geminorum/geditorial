@@ -1,7 +1,5 @@
-/* global define */
-
 /*!
-* Virastar - v0.13.0 - 2017-11-14
+* Virastar - v0.15.1 - 2019-03-01
 * https://github.com/juvee/virastar
 * Licensed: MIT
 */
@@ -32,6 +30,7 @@
   Virastar.prototype.parseOptions = function (options) {
     var defaults = {
       normalize_eol: true,
+      decode_htmlentities: true,
       fix_dashes: true,
       fix_three_dots: true,
       fix_english_quotes_pairs: true,
@@ -40,8 +39,8 @@
       cleanup_rlm: true,
       cleanup_zwnj: true,
       fix_spacing_for_braces_and_quotes: true,
-      fix_numbersArabic: true,
-      fix_numbersEnglish: true,
+      fix_arabic_numbers: true,
+      fix_english_numbers: true,
       fix_misc_non_persian_chars: true,
       fix_question_mark: true,
       skip_markdown_ordered_lists_numbers_conversion: true,
@@ -129,6 +128,13 @@
       text = text.replace(/(\r?\n)|(\r\n?)/g, '\n');
     }
 
+    // Converts all HTML characterSets into original characters
+    if (opts.decode_htmlentities) {
+      text = text.replace(/&#(\d+);/g, function (matched, dec) {
+        return String.fromCharCode(dec);
+      });
+    }
+
     // replace double dash to ndash and triple dash to mdash
     if (opts.fix_dashes) {
       text = text.replace(/-{3}/g, '—');
@@ -140,9 +146,6 @@
       text = text.replace(/\s*\.{3,}/g, '…');
     }
 
-    // swap incorrect English quotes pairs ”“ to “”
-    // text = text.replace(/(”)(.+?)(“)/g, '“$2”');
-
     // replace English quotes pairs with their Persian equivalent
     if (opts.fix_english_quotes_pairs) {
       text = text.replace(/(“)(.+?)(”)/g, '«$2»');
@@ -150,6 +153,8 @@
 
     // replace English quotes with their Persian equivalent
     if (opts.fix_english_quotes) {
+      text = text.replace(/&quot;/g, '"');
+      text = text.replace(/&apos;/g, '\'');
       text = text.replace(/(["'`]+)(.+?)(\1)/g, '«$2»');
     }
 
@@ -161,6 +166,7 @@
     // converting Right-to-left marks followed by persian characters to zero-width non-joiners (ZWNJ)
     if (opts.cleanup_rlm) {
       text = text.replace(/([^a-zA-Z\-_])(\u200F)/g, '$1\u200c');
+      // text = text.replace(/[\u202C\u202D]/g, '\u0020'); // props @zoghal
     }
 
     if (opts.cleanup_zwnj) {
@@ -185,15 +191,21 @@
       text = text.replace(/\s+\u200C|\u200C\s+/g, ' ');
     }
 
-    if (opts.fix_numbersArabic) {
+    if (opts.fix_arabic_numbers) {
       text = charBatchReplace(text, numbersArabic, numbersPersian);
     }
 
     // word tokenizer
-    text = text.replace(/(^|\s+)(\S+)(?=($|\s+))/g,
-      function (matched, leadings, word, trailings) {
+    text = text.replace(/(^|\s+)([[({"'“«]?)(\S+)([\])}"'”»]?)(?=($|\s+))/g,
+      function (matched, before, leadings, word, trailings, after) {
         // should not replace to Persian chars in english phrases
         if (word.match(/[a-zA-Z\-_]{2,}/g)) {
+          return matched;
+        }
+
+        // should not replace sprintf directives
+        // @source: https://stackoverflow.com/a/8915445/
+        if (word.match(/%(?:\d+\$)?[+-]?(?:[ 0]|'.{1})?-?\d*(?:\.\d+)?[bcdeEufFgGosxX]/g)) {
           return matched;
         }
 
@@ -203,11 +215,11 @@
         }
 
         // preserve markdown ordered lists numbers
-        if (opts.skip_markdown_ordered_lists_numbers_conversion && (matched + trailings).match(/(?:(?:\r?\n)|(?:\r\n?)|(?:^|\n))\d+\.\s/)) {
+        if (opts.skip_markdown_ordered_lists_numbers_conversion && (matched + trailings + after).match(/(?:(?:\r?\n)|(?:\r\n?)|(?:^|\n))\d+\.\s/)) {
           return matched;
         }
 
-        if (opts.fix_numbersEnglish) {
+        if (opts.fix_english_numbers) {
           matched = charBatchReplace(matched, numbersEnglish, numbersPersian);
         }
 
@@ -223,16 +235,28 @@
       }
     );
 
-    // put zwnj between word and prefix (mi* nemi*)
-    // there's a possible bug here: می and نمی could be separate nouns and not prefix
+    // put zwnj between word and prefix:
+    // - mi* nemi* bi*
+    // there's a possible bug here: prefixes could be separate nouns
     if (opts.fix_perfix_spacing) {
-      text = text.replace(/((\s+|^)ن?می)\u0020/g, '$1\u200C');
+      text = text.replace(/((\s|^)ن?می)\u0020/g, '$1\u200C');
+      text = text.replace(/((\s|^)بی)\u0020/g, '$1\u200C'); // props @zoghal
     }
 
-    // put zwnj between word and suffix (*tar *tarin *ha *haye)
-    // there's a possible bug here: های and تر could be separate nouns and not suffix
+    // put zwnj between word and suffix:
+    // - *am *at *ash *ei *eid *eem *and
+    // - *ha *haye
+    // - *tar *tari *tarin
+    // - *hayee *hayam *hayat *hayash *hayetan *hayeman *hayeshan
+    // there's a possible bug here: suffixs could be separate nouns
     if (opts.fix_suffix_spacing) {
-      text = text.replace(/\u0020(تر(ی(ن)?)?|ها(ی)?\s+)/g, '\u200C$1'); // in case you can not read it: \s+(tar(i(n)?)?|ha(ye)?)\s+
+      text = text.replace(/\u0020(ام|ات|اش|ای|اید|ایم|اند)\s/g, '\u200C$1'); // props @zoghal
+
+      // text = text.replace(/\u0020(تر(ی(ن)?)?|ها(ی)?\s)/g, '\u200C$1'); // in case you can not read it: \s+(tar(i(n)?)?|ha(ye)?)\s+
+      text = text.replace(/\u0020(ها(ی)?\s)/g, '\u200C$1');
+      text = text.replace(/\u0020(تر((ی)|(ین))?\s)/g, '\u200C$1');
+
+      text = text.replace(/\u0020(هایی|هایم|هایت|هایش|هایمان|هایتان|هایشان)\s/g, '\u200C$1'); // props @zoghal
     }
 
     if (opts.aggresive) {
@@ -241,11 +265,13 @@
         text = text.replace(/(!){2,}/g, '$1');
         text = text.replace(/(\u061F){2,}/g, '$1'); // \u061F = ؟
       }
+
       // replace kashidas to ndash in parenthetic
       if (opts.kashidas_as_parenthetic) {
         text = text.replace(/(\s)\u0640+/g, '$1–');
         text = text.replace(/\u0640+(\s)/g, '–$1');
       }
+
       // should remove all kashida between non-whitespace characters
       if (opts.cleanup_kashidas) {
         text = text.replace(/(\S)\u0640+(\S)/g, '$1$2');
@@ -262,8 +288,13 @@
 
       // : ; , . ! ? and their persian equivalents should have one space after and no space before
       text = text.replace(/[ \t\u200C]*([:;,؛،.؟!]{1})[ \t\u200C]*/g, '$1 ');
+
       // do not put space after colon that separates time parts
-      text = text.replace(/([۰-۹]+):\s+([۰-۹]+)/g, '$1:$2');
+      text = text.replace(/([0-9۰-۹]+):\s+([0-9۰-۹]+)/g, '$1:$2');
+
+      // do not put space after dots in numbers
+      text = text.replace(/([0-9۰-۹]+). ([0-9۰-۹]+)/g, '$1.$2');
+
       // should not put space between Persian question mark and exclamation mark
       text = text.replace(/(\u061F|!)\s(\u061F|!)/g, '$1$2'); // \u061F = ؟
 
@@ -314,6 +345,14 @@
         return html.shift();
       });
     }
+
+    return text;
+  };
+
+  // swap incorrect quotes pairs `»«` to `«»` and `”“` to `“”`
+  Virastar.prototype.swapQuotes = function (text, options) {
+    text = text.replace(/(»)(.+?)(«)/g, '«$2»');
+    text = text.replace(/(”)(.+?)(“)/g, '“$2”');
 
     return text;
   };
