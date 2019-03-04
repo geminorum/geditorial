@@ -1,3 +1,26 @@
+### 3.15.5
+* main/helper: count for empty dates on edit rows
+* main/module: normalize path
+* main/plugin: passing already class names
+* main/plugin: passing folder into module registeration
+* main/plugin: prevent overriding lists with modules
+* main/plugin: reduce memory usage on front
+* main/settings: word wrap for module desc
+* main/shortcode: check if item after is string
+* main/shortcode: missing prop for title after
+* main/shortcode: non-html desc for title attr option
+* main/shortcode: wrap for post/term items
+* main/template: caption link for image figures
+* main/widget: skip linking empty titles
+* module/attachments: custom permalinks with atachment ids
+* module/audit: hides audit tax from public view
+* module/config: flush rewrite rules on dashboard pointers
+* module/config: new layouts folder
+* module/ortho: :up: virastar to 0.15.1
+* module/series: correct order of args for item after
+* module/series: wrap post title with heading
+* module/tube: optional support for channels
+
 ### 3.15.4
 * main/datetime: new main class
 * main/helper: better handling the day for reschedule
