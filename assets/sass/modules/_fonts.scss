@@ -1,0 +1,25 @@
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+/// Modules: General: Fonts ----------------------------------------------------
+
+////////////////////////////////////////////////////////////////////////////////
+/// Native Fonts
+
+@mixin theme-fonts-core-native() {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Tahoma, Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+}
+
+@mixin theme-fonts-core-code() {
+  font-family: Consolas, Monaco, monospace;
+}
+
+@mixin theme-fonts-core-dashicons() {
+  font-family: dashicons; /* stylelint-disable-line font-family-no-missing-generic-family-keyword */
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+@mixin theme-fonts-unicoderange-Persian() {
+  unicode-range: u+0600-06ff, u+200c-200e, u+2010-2011, u+fb50-fdff, u+fe80-fefc;
+}
