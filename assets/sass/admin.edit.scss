@@ -32,6 +32,13 @@
     width: 16%;
   }
 
+  // Module: Event
+  .column-event_starts,
+  .column-event_ends {
+    width: 12%;
+    color: $gray-light;
+  }
+
   // Module: Magazine
   .column-taxonomy-issue_span {
     width: 72px;
@@ -46,6 +53,10 @@
   .wp-list-table tr {
 
     // columns before primary column must be hidden
+    td.column-event_starts,
+    th.column-event_starts,
+    td.column-event_ends,
+    th.column-event_ends,
     td.column-taxonomy-entry_section,
     th.column-taxonomy-entry_section {
       display: none !important;
@@ -53,6 +64,8 @@
 
     &.is-expanded {
       td.column-theday,
+      td.column-event_starts,
+      td.column-event_ends,
       td.column-taxonomy-entry_section,
       td.column-geditorial-tweaks-order,
       td.column-geditorial-tweaks-thumb {
