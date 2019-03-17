@@ -2834,12 +2834,12 @@ class Module extends Base
 		return gEditorial()->icon( $name, ( is_null( $group ) ? $this->icon_group : $group ) );
 	}
 
-	public function getTablePosts( $atts = [], $extra = [], $posttypes = NULL )
+	public function getTablePosts( $atts = [], $extra = [], $posttypes = NULL, $sub = NULL )
 	{
 		if ( is_null( $posttypes ) )
 			$posttypes = $this->posttypes();
 
-		$limit  = $this->limit_sub();
+		$limit  = $this->limit_sub( $sub );
 		$paged  = self::paged();
 		$offset = ( $paged - 1 ) * $limit;
 

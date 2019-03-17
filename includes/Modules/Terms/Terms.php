@@ -1165,7 +1165,7 @@ class Terms extends gEditorial\Module
 			] ],
 		];
 
-		list( $posts, $pagination ) = $this->getTablePosts( $query, [], 'any' );
+		list( $posts, $pagination ) = $this->getTablePosts( $query, [], 'any', 'uncategorized' );
 
 		$pagination['actions']['purge_unregistered']  = _x( 'Purge Unregistered', 'Modules: Terms: Table Action', GEDITORIAL_TEXTDOMAIN );
 		$pagination['actions']['clean_uncategorized'] = _x( 'Clean Uncategorized', 'Modules: Terms: Table Action', GEDITORIAL_TEXTDOMAIN );
