@@ -866,7 +866,7 @@ class Terms extends gEditorial\Module
 				$node = [
 					'id'     => $this->classs( $field ),
 					'parent' => $this->classs(),
-					'title' => sprintf( _x( 'Meta: %s', 'Modules: Terms: Adminbar', GEDITORIAL_TEXTDOMAIN ),
+					'title'  => sprintf( _x( 'Meta: %s', 'Modules: Terms: Adminbar', GEDITORIAL_TEXTDOMAIN ),
 						$this->get_string( $field, $term->taxonomy, 'titles', $field ) ),
 				];
 
@@ -884,7 +884,7 @@ class Terms extends gEditorial\Module
 					case 'image':
 
 						$child['meta'] = [
-							'html' => Taxonomy::htmlFeaturedImage( $term->term_id, [ 45, 72 ] ),
+							'html'  => Taxonomy::htmlFeaturedImage( $term->term_id, [ 45, 72 ] ),
 							'class' => 'geditorial-adminbar-image-wrap',
 						];
 
@@ -998,6 +998,8 @@ class Terms extends gEditorial\Module
 							] );
 					}
 				}
+
+				WordPress::redirectReferer( 'nochange' );
 			}
 		}
 	}
@@ -1059,28 +1061,69 @@ class Terms extends gEditorial\Module
 
 				$this->nonce_check( 'reports', $sub );
 
-				if ( 'cleanup_terms' == self::req( 'table_action' )
-					&& count( self::req( '_cb' ) ) ) {
+				if ( ! count( self::req( '_cb' ) ) )
+					WordPress::redirectReferer( 'nochange' );
 
-					$all   = Taxonomy::get();
-					$count = 0;
+				$count = 0;
+
+				if ( 'clean_uncategorized' == self::req( 'table_action' ) ) {
+
+					$uncategorized = get_option( 'default_category' );
 
 					foreach ( $_POST['_cb'] as $post_id ) {
 
-						$taxes = get_object_taxonomies( get_post( $post_id ) );
-						$diff  = array_diff_key( $all, array_flip( $taxes ) );
+						if ( ! $post = get_post( $post_id ) )
+							continue;
 
-						foreach ( $diff as $tax => $title )
-							wp_set_object_terms( $post_id, NULL, $tax );
+						if ( ! in_array( 'category', get_object_taxonomies( $post ) ) )
+							continue;
+
+						$terms = wp_get_object_terms( $post->ID, 'category', [ 'fields' => 'ids' ] );
+						$diff  = array_diff( $terms, [ $uncategorized ] );
+
+						if ( empty( $diff ) )
+							continue;
+
+						$results = wp_set_object_terms( $post->ID, $diff, 'category' );
+
+						if ( ! self::isError( $results ) )
+							$count++;
+					}
+
+					if ( $count )
+						WordPress::redirectReferer( [
+							'message' => 'cleaned',
+							'count'   => $count,
+						] );
+
+				} else if ( 'purge_unregistered' == self::req( 'table_action' ) ) {
+
+					$registered = Taxonomy::get();
+
+					foreach ( $_POST['_cb'] as $post_id ) {
+
+						if ( ! $post = get_post( $post_id ) )
+							continue;
+
+						$diff = array_diff_key( $registered, array_flip( get_object_taxonomies( $post ) ) );
+
+						if ( empty( $diff ) )
+							continue;
+
+						foreach ( $diff as $taxonomy => $title )
+							wp_set_object_terms( $post->ID, NULL, $taxonomy );
 
 						$count++;
 					}
 
-					WordPress::redirectReferer( [
-						'message' => 'cleaned',
-						'count'   => $count,
-					] );
+					if ( $count )
+						WordPress::redirectReferer( [
+							'message' => 'cleaned',
+							'count'   => $count,
+						] );
 				}
+
+				WordPress::redirectReferer( 'nochange' );
 			}
 
 			$this->screen_option( $sub );
@@ -1124,7 +1167,9 @@ class Terms extends gEditorial\Module
 
 		list( $posts, $pagination ) = $this->getTablePosts( $query, [], 'any' );
 
-		$pagination['actions']['cleanup_terms'] = _x( 'Cleanup Terms', 'Modules: Terms: Table Action', GEDITORIAL_TEXTDOMAIN );
+		$pagination['actions']['purge_unregistered']  = _x( 'Purge Unregistered', 'Modules: Terms: Table Action', GEDITORIAL_TEXTDOMAIN );
+		$pagination['actions']['clean_uncategorized'] = _x( 'Clean Uncategorized', 'Modules: Terms: Table Action', GEDITORIAL_TEXTDOMAIN );
+
 		$pagination['before'][] = Helper::tableFilterPostTypes();
 
 		return HTML::tableList( [
