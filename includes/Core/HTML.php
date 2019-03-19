@@ -17,7 +17,7 @@ class HTML extends Base
 
 	public static function mailto( $email, $title = NULL, $wrap = FALSE )
 	{
-		$title = $title ? $title : trim( $email );
+		$title = $title ? $title : self::wrapLTR( trim( $email ) );
 		$link  = '<a class="-mailto" href="mailto:'.trim( $email ).'">'.$title.'</a>';
 		return $wrap ? self::tag( $wrap, $link ) : $link;
 	}
@@ -302,6 +302,11 @@ class HTML extends Base
 	public static function sanitizePhoneNumber( $number )
 	{
 		return self::escapeURL( 'tel:'.str_replace( array( '(', ')', '-', '.', '|', ' ' ), '', $number ) );
+	}
+
+	public static function sanitizeSMSNumber( $number )
+	{
+		return self::escapeURL( 'sms:'.str_replace( array( '(', ')', '-', '.', '|', ' ' ), '', $number ) );
 	}
 
 	// FIXME: DEPRECATED
