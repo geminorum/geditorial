@@ -86,7 +86,7 @@ class Like extends gEditorial\Module
 
 	public function init_ajax()
 	{
-		$this->_hook_ajax( TRUE );
+		$this->_hook_ajax( NULL );
 	}
 
 	public function template_redirect()
