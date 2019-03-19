@@ -213,7 +213,7 @@ class Settings extends Core\Base
 
 	public static function infoP2P()
 	{
-		return _x( 'Connected via <code>P2P</code>', 'Settings: Setting Info', GEDITORIAL_TEXTDOMAIN );
+		return sprintf( _x( 'Connected via %s', 'Settings: Setting Info', GEDITORIAL_TEXTDOMAIN ), '<code>P2P</code>' );
 	}
 
 	public static function getSetting_editor_button( $description = NULL )
@@ -393,7 +393,7 @@ class Settings extends Core\Base
 			'field'       => 'before_content',
 			'type'        => 'textarea-quicktags',
 			'title'       => _x( 'Before Content', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'description' => $description ?: _x( 'Adds <code>HTML</code> before start of all the supported post-types.', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+			'description' => $description ?: sprintf( _x( 'Adds %s before start of all the supported post-types.', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ), '<code>HTML</code>' ),
 		];
 	}
 
@@ -403,7 +403,7 @@ class Settings extends Core\Base
 			'field'       => 'after_content',
 			'type'        => 'textarea-quicktags',
 			'title'       => _x( 'After Content', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-			'description' => $description ?: _x( 'Adds <code>HTML</code> after end of all the supported post-types.', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+			'description' => $description ?: sprintf( _x( 'Adds %s after end of all the supported post-types.', 'Settings: Setting Description', GEDITORIAL_TEXTDOMAIN ), '<code>HTML</code>' ),
 		];
 	}
 

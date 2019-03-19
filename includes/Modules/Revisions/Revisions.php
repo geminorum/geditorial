@@ -58,7 +58,7 @@ class Revisions extends gEditorial\Module
 					'field'       => 'revision_maxcount',
 					'type'        => 'number',
 					'title'       => _x( 'Revision Max Count', 'Modules: Revisions: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'The maximum number of revisions to save for each post. <code>-1</code> for every revision.', 'Modules: Revisions: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'description' => sprintf( _x( 'The maximum number of revisions to save for each post. %s for every revision.', 'Modules: Revisions: Setting Description', GEDITORIAL_TEXTDOMAIN ), '<code>-1</code>' ),
 					'default'     => '-1',
 					'min_attr'    => '-1',
 				],

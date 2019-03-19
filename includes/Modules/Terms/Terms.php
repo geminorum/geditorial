@@ -1149,7 +1149,7 @@ class Terms extends gEditorial\Module
 	}
 
 	// FIXME
-	public function render_reports_html( $uri, $sub )
+	protected function render_reports_html( $uri, $sub )
 	{
 		HTML::h3( _x( 'Term Reports', 'Modules: Terms', GEDITORIAL_TEXTDOMAIN ) );
 		HTML::desc( _x( 'No reports available!', 'Modules: Terms', GEDITORIAL_TEXTDOMAIN ), TRUE, '-empty' );
