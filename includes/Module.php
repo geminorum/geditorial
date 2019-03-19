@@ -2754,6 +2754,27 @@ class Module extends Base
 		Ajax::errorWhat();
 	}
 
+	protected function _hook_post( $auth = TRUE, $hook = NULL, $method = 'post' )
+	{
+		if ( ! is_admin() )
+			return;
+
+		if ( is_null( $hook ) )
+			$hook = $this->hook();
+
+		if ( is_null( $auth ) || TRUE === $auth )
+			add_action( 'admin_post_'.$hook, [ $this, $method ] );
+
+		if ( is_null( $auth ) || FALSE === $auth )
+			add_action( 'admin_post_nopriv_'.$hook, [ $this, $method ] );
+	}
+
+	// DEFAULT FILTER
+	public function post()
+	{
+		wp_die();
+	}
+
 	// DEFAULT FILTER
 	public function tweaks_taxonomy_info( $info, $object, $posttype )
 	{
