@@ -13,7 +13,7 @@
   var fs = require('fs');
 
   var pkg = require('./package.json');
-  var config = require('./gulpconfig.json');
+  var config = require('./gulp.config.json');
 
   var env = config.env;
   var banner = config.banner.join('\n');
