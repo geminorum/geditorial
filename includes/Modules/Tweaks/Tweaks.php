@@ -128,6 +128,13 @@ class Tweaks extends gEditorial\Module
 					'values'      => $this->get_posttypes_support_mainbox(),
 				],
 				[
+					'field'       => 'post_modified',
+					'type'        => 'posttypes',
+					'title'       => _x( 'Modified Action', 'Modules: Tweaks: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Displays last modified time as post misc action on publish metabox.', 'Modules: Tweaks: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'values'      => $this->get_posttypes_support_modified(),
+				],
+				[
 					'field'       => 'post_excerpt',
 					'type'        => 'posttypes',
 					'title'       => _x( 'Advanced Excerpt', 'Modules: Tweaks: Setting Title', GEDITORIAL_TEXTDOMAIN ),
@@ -258,6 +265,14 @@ class Tweaks extends gEditorial\Module
 		return array_diff_key( $supported, array_flip( $excluded ) );
 	}
 
+	private function get_posttypes_support_modified()
+	{
+		$supported = PostType::get( 0, [ 'show_ui' => TRUE ] );
+		$excluded  = Settings::posttypesExcluded();
+
+		return array_diff_key( $supported, array_flip( $excluded ) );
+	}
+
 	private function get_posttypes_support_excerpt()
 	{
 		$posttypes = [];
@@ -287,6 +302,9 @@ class Tweaks extends gEditorial\Module
 
 		if ( 'post' == $screen->base
 			&& ! PostType::supportBlocks( $screen->post_type ) ) {
+
+			if ( in_array( $screen->post_type, $this->get_setting( 'post_modified', [] ) ) )
+				$this->action( 'post_submitbox_misc_actions', 1, 1 );
 
 			if ( $this->get_setting( 'checklist_tree', FALSE ) ) {
 
@@ -1037,5 +1055,17 @@ class Tweaks extends gEditorial\Module
 			return;
 
 		MetaBox::fieldEditorBox( $post->post_excerpt );
+	}
+
+	public function post_submitbox_misc_actions( $post )
+	{
+		if (  $post->post_modified == $post->post_date )
+			return;
+
+		echo '<div class="-misc misc-pub-section misc-pub-modified">';
+			echo $this->get_column_icon( FALSE, 'edit', _x( 'Last Modified', 'Modules: Tweaks: Misc Action', GEDITORIAL_TEXTDOMAIN ) );
+			echo _x( 'Modified:', 'Modules: Tweaks: Misc Action', GEDITORIAL_TEXTDOMAIN );
+			echo ' '.Helper::getModifiedEditRow( $post, '-edit' );
+		echo '</div>';
 	}
 }
