@@ -8,14 +8,14 @@ class WordPress extends Base
 	public static function isMinWPv( $minimum_version )
 	{
 		self::_dep( 'WordPress::isWPcompatible()' );
-		return ( version_compare( get_bloginfo( 'version' ), $minimum_version ) >= 0 );
+		return ( version_compare( $GLOBALS['wp_version'], $minimum_version ) >= 0 );
 	}
 
 	// Checks compatibility with the current WordPress version.
 	// @REF: `wp_is_wp_compatible()`
 	public static function isWPcompatible( $required )
 	{
-		return empty( $required ) || version_compare( get_bloginfo( 'version' ), $required, '>=' );
+		return empty( $required ) || version_compare( $GLOBALS['wp_version'], $required, '>=' );
 	}
 
 	// Checks compatibility with the current PHP version.
@@ -39,6 +39,17 @@ class WordPress extends Base
 			return FALSE;
 
 		return TRUE;
+	}
+
+	// @REF: `vars.php`
+	public static function pageNow( $page = NULL )
+	{
+		$now = 'index.php';
+
+		if ( preg_match( '#([^/]+\.php)([?/].*?)?$#i', $_SERVER['PHP_SELF'], $matches ) )
+			$now = strtolower( $matches[1] );
+
+		return is_null( $page ) ? $now : ( $now == $page );
 	}
 
 	public static function isDebug()

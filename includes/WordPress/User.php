@@ -49,8 +49,16 @@ class User extends Core\Base
 		if ( 'none' == $cap || '0' == $cap )
 			return $none;
 
-		if ( 'read' != $cap && ! is_user_logged_in() )
+		if ( ! $logged_in = is_user_logged_in() )
 			return FALSE;
+
+		// network users
+		if ( '_logged_in' == $cap && $logged_in )
+			return TRUE;
+
+		// skip unnecessary
+		// if ( 'read' != $cap && ! $logged_in )
+		// 	return FALSE;
 
 		return current_user_can( $cap );
 	}

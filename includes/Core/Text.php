@@ -766,6 +766,8 @@ class Text extends Base
 		$output = '';
 
 		foreach ( $data as $fields ) {
+
+			// @SEE: https://github.com/parsecsv/parsecsv-for-php/issues/167
 			fputcsv( $handle, $fields );
 
 			$row = array();
