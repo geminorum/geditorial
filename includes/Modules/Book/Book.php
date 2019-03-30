@@ -661,14 +661,11 @@ class Book extends gEditorial\Module
 
 			echo $this->wrap_open( '-p2p '.$class );
 
-			if ( $post->post_type == $this->constant( 'publication_cpt' ) ) {
+			if ( $post->post_type == $this->constant( 'publication_cpt' ) )
+				HTML::h3( $this->get_setting( 'p2p_title_from' ), '-title -p2p-from' );
 
-				if ( $title = $this->get_setting( 'p2p_title_from' ) )
-					HTML::h3( $title, '-title -p2p-from' );
-
-			} else if ( $title = $this->get_setting( 'p2p_title_to' ) ) {
-				HTML::h3( $title, '-title -p2p-to' );
-			}
+			else
+				HTML::h3( $this->get_setting( 'p2p_title_to' ), '-title -p2p-to' );
 
 			echo '<ul>';
 

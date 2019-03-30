@@ -1300,7 +1300,7 @@ class Module extends Base
 					if ( is_array( $field ) )
 						$args = $field;
 
-					// passing as custom description
+					// passing as custom variable
 					else if ( is_string( $suffix ) && method_exists( __NAMESPACE__.'\\Settings', 'getSetting_'.$suffix ) )
 						$args = call_user_func_array( [ __NAMESPACE__.'\\Settings', 'getSetting_'.$suffix ], [ $field ] );
 

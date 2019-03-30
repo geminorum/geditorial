@@ -666,7 +666,7 @@ class Helper extends Core\Base
 				if ( isset( $column['args']['statuses'][$row->post_status] ) )
 					return $column['args']['statuses'][$row->post_status];
 
-				return '<code>'.$row->post_status.'</code>';
+				return HTML::tag( 'code', $row->post_status );
 			},
 		];
 	}
@@ -698,9 +698,11 @@ class Helper extends Core\Base
 			'args'     => [ 'taxonomies' => $taxonomies ],
 			'callback' => function( $value, $row, $column, $index ){
 				$html = '';
+
 				foreach ( $column['args']['taxonomies'] as $taxonomy => $object )
 					if ( $object->label ) // only public taxes
 						$html.= Helper::getTermsEditRow( $row, $object, '<div>'.$object->label.': ', '</div>' );
+
 				return $html;
 			},
 		];
@@ -784,7 +786,7 @@ class Helper extends Core\Base
 		$html.= HTML::escape( date_i18n( $formats['fulltime'], $timestamp ) ).'">';
 		$html.= Datetime::humanTimeDiff( $timestamp ).'</span>)';
 
-		return $class ? '<span class="'.$class.'">'.$html.'</span>' : $html;
+		return $class ? HTML::wrap( $html, $class, FALSE ) : $html;
 	}
 
 	public static function getModifiedEditRow( $post, $class = FALSE )
@@ -800,7 +802,7 @@ class Helper extends Core\Base
 		if ( $edit_last && $post->post_author != $edit_last )
 			$html.= '&nbsp;(<span class="-edit-last">'.WordPress::getAuthorEditHTML( $post->post_type, $edit_last ).'</span>)';
 
-		return $class ? '<span class="'.$class.'">'.$html.'</span>' : $html;
+		return $class ? HTML::wrap( $html, $class, FALSE ) : $html;
 	}
 
 	// @SOURCE: `translate_nooped_plural()`

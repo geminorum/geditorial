@@ -41,7 +41,7 @@ class Ortho extends gEditorial\Module
 				'id'       => $this->classs( 'virastar' ),
 				'title'    => _x( 'Virastar', 'Modules: Ortho: Help Tab Title', GEDITORIAL_TEXTDOMAIN ),
 				'content'  => sprintf( '<div class="-info"><p>Virastar is a Persian text cleaner.</p><p class="-from">Virastar v%s installed. For more information, Please see Virastar <a href="%s" target="_blank">home page</a> or <a href="%s" target="_blank">live demo</a>.</p></div>',
-					$this->virastar_version, 'https://github.com/juvee/virastar', 'http://juvee.github.io/virastar/' ),
+					$this->virastar_version, 'https://github.com/brothersincode/virastar', 'https://virastar.brothersincode.ir' ),
 			],
 			[
 				'id'       => $this->classs( 'persiantools' ),
