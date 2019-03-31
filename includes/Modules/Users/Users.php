@@ -265,7 +265,7 @@ class Users extends gEditorial\Module
 
 	public function pre_get_posts( &$wp_query )
 	{
- 		if ( ! $wp_query->is_admin )
+		if ( ! $wp_query->is_admin )
 			return;
 
 		if ( current_user_can( 'edit_others_posts' ) )

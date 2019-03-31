@@ -124,7 +124,7 @@ class Tweaks extends gEditorial\Module
 					'field'       => 'post_mainbox',
 					'type'        => 'posttypes',
 					'title'       => _x( 'Group Post-Boxes', 'Modules: Tweaks: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Group common post-boxes into one for simpler editing experience.', 'Modules: Tweaks: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Groups common post-boxes into one for simpler editing experience.', 'Modules: Tweaks: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 					'values'      => $this->get_posttypes_support_mainbox(),
 				],
 				[

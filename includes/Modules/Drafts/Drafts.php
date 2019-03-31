@@ -70,7 +70,7 @@ class Drafts extends gEditorial\Module
 		$excluded  = $this->posttypes_excluded();
 		$viewables = [];
 
-		if( ! empty( $excluded ) )
+		if ( ! empty( $excluded ) )
 			$posttypes = array_diff_key( $posttypes, array_flip( $excluded ) );
 
 		foreach ( $posttypes as $posttype => $label )
