@@ -3,6 +3,36 @@
 ////////////////////////////////////////////////////////////////////////////////
 /// gEditorial Partials: Admin MetaBox -----------------------------------------
 
+////////////////////////////////////////////////////////////////////////////////
+.-misc.misc-pub-section {
+  .-icon {
+    cursor: help;
+    margin: 0 4px 0 0;
+  }
+
+  span.dashicons {
+    color: #82878c; // #b4b9be;
+    width: 20px;
+    height: 20px;
+    font-size: 20px;
+    // vertical-align: middle;
+    vertical-align: text-top;
+    transition: all 0.3s ease;
+  }
+
+  &:hover {
+    .-icon span.dashicons {
+      color: $gray-dark;
+      transition: all 0.1s ease;
+    }
+  }
+
+  a:focus {
+    box-shadow: none;
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////
 .geditorial-wrap {
   &.-admin-nobox,
   &.-admin-metabox {
