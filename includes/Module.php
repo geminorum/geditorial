@@ -2950,6 +2950,10 @@ class Module extends Base
 
 		if ( is_404() ) {
 
+			// helps with 404 redirections
+			if ( ! is_user_logged_in() )
+				return $template;
+
 			nocache_headers();
 			// WordPress::doNotCache();
 
