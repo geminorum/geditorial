@@ -105,8 +105,11 @@ class Date extends Base
 		);
 	}
 
-	public static function makeFromInput( $input, $calendar = 'gregorian', $timezone = NULL )
+	public static function makeFromInput( $input, $calendar = 'gregorian', $timezone = NULL, $fallback = '' )
 	{
+		if ( empty( $input ) )
+			return $fallback;
+
 		// FIXME: needs sanity checks
 		$parts = explode( '/', apply_filters( 'string_format_i18n_back', $input ) );
 
@@ -116,8 +119,11 @@ class Date extends Base
 		return self::make( 0, 0, 0, $parts[1], $parts[2], $parts[0], $calendar, $timezone );
 	}
 
-	public static function makeMySQLFromInput( $input, $format = NULL, $calendar = 'gregorian', $timezone = NULL )
+	public static function makeMySQLFromInput( $input, $format = NULL, $calendar = 'gregorian', $timezone = NULL, $fallback = '' )
 	{
+		if ( empty( $input ) )
+			return $fallback;
+
 		if ( is_null( $format ) )
 			$format = 'Y-m-d H:i:s';
 
