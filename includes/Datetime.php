@@ -264,7 +264,7 @@ class Datetime extends Core\Base
 		return call_user_func_array( $callback, [ $year, $month, $format, $calendar_type ] );
 	}
 
-	public static function makeFromInput( $input, $calendar = 'gregorian', $timezone = NULL )
+	public static function makeFromInput( $input, $calendar = 'gregorian', $timezone = NULL, $fallback = '' )
 	{
 		$callback = [ __NAMESPACE__.'\\Core\\Date', 'makeFromInput' ];
 
@@ -275,10 +275,10 @@ class Datetime extends Core\Base
 		if ( is_null( $timezone ) )
 			$timezone = Date::currentTimeZone();
 
-		return call_user_func_array( $callback, [ $input, $calendar, $timezone ] );
+		return call_user_func_array( $callback, [ $input, $calendar, $timezone, $fallback ] );
 	}
 
-	public static function makeMySQLFromInput( $input, $format = NULL, $calendar_type = 'gregorian', $timezone = NULL )
+	public static function makeMySQLFromInput( $input, $format = NULL, $calendar_type = 'gregorian', $timezone = NULL, $fallback = NULL )
 	{
 		$callback = [ __NAMESPACE__.'\\Core\\Date', 'makeMySQLFromInput' ];
 
@@ -289,7 +289,7 @@ class Datetime extends Core\Base
 		if ( is_null( $timezone ) )
 			$timezone = Date::currentTimeZone();
 
-		return call_user_func_array( $callback, [ $input, $format, $calendar_type, $timezone ] );
+		return call_user_func_array( $callback, [ $input, $format, $calendar_type, $timezone, $fallback ] );
 	}
 
 	// FIXME: find a better way!
