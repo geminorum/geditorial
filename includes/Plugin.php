@@ -79,7 +79,7 @@ class Plugin
 			if ( ! $check )
 				require_once( $base.'includes/'.$path.'.php' );
 
-			else if ( file_exists( $base.'includes/'.$path.'.php' ) )
+			else if ( is_readable( $base.'includes/'.$path.'.php' ) )
 				require_once( $base.'includes/'.$path.'.php' );
 	}
 
