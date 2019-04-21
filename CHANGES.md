@@ -1,3 +1,12 @@
+###  3.15.6
+* main/datetime: passing fallback
+* main/module: 404 override for logged in only
+* main/module: hooking admin post actions
+* main/module: more control over hooking ajax
+* main/module: passing sub into table posts
+* module/terms: clean uncategorized terms
+* module/tweaks: modified as action on publish box
+
 ### 3.15.5
 * main/helper: count for empty dates on edit rows
 * main/module: normalize path
