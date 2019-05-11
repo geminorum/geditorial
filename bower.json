@@ -16,7 +16,7 @@
     "themicons": "cedaro/themicons",
     "gorbeh": "IKAcc/Gorbeh",
     "list.js": "latest",
-    "handsontable": "^0.37.0",
+    "handsontable": "^7.0.2",
     "medium-editor": "^5.23.3"
   },
   "devDependencies": {},

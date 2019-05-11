@@ -30,7 +30,7 @@
     "rarst/wpdatetime": "^0.3.0"
   },
   "require-dev": {
-    "nesbot/carbon": "^1.36",
+    "nesbot/carbon": "^1.37",
     "evert/sitemap-php": "^1.2",
     "eluceo/ical": "^0.11.4",
     "johngrogg/ics-parser": "^2.1",
