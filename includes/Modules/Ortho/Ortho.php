@@ -17,9 +17,9 @@ class Ortho extends gEditorial\Module
 
 	protected $disable_no_customs = TRUE;
 
-	private $virastar_version  = '0.15.1';
+	private $virastar_version      = '0.18.0';
 	private $persiantools_version  = '0.1.0';
-	private $virastar_enqueued = FALSE;
+	private $virastar_enqueued     = FALSE;
 	private $persiantools_enqueued = FALSE;
 
 	public static function module()
