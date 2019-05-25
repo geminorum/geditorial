@@ -152,13 +152,17 @@ class Specs extends gEditorial\Module
 				$terms[] = (int) $spec_terms[$spec['name']]->term_id;
 
 			} else if ( $create ) { // create new term object
+
 				if ( isset( $spec['title'] ) && $spec['title'] )
 					$new_term = wp_insert_term( $spec['title'], $this->constant( 'specs_tax' ), [ 'slug' => $spec['name'] ] );
+
 				else
 					$new_term = wp_insert_term( $spec['name'], $this->constant( 'specs_tax' ) );
 
 				if ( is_wp_error( $new_term ) ) {
+
 					$row['spec_title'] = Helper::kses( $spec['name'] );
+
 				} else {
 
 					//$spec_terms[$new_term['term_id']] = get_term_by( 'id', $new_term['term_id'], $this->constant( 'specs_tax' ) );
@@ -170,6 +174,7 @@ class Specs extends gEditorial\Module
 				}
 
 			} else {
+
 				$row['spec_title'] = Helper::kses( $spec['name'] );
 			}
 
@@ -178,6 +183,7 @@ class Specs extends gEditorial\Module
 
 			if ( isset( $spec['order'] ) && ! empty( $spec['order'] ) )
 				$row['spec_order'] = Number::intval( $spec['order'] ) + 100;
+
 			else
 				$row['spec_order'] = $counter + 100;
 

@@ -171,7 +171,9 @@ class Settings extends Core\Base
 
 	public static function taxonomiesExcluded( $extra = [] )
 	{
-		return (array) $extra;
+		return array_merge( [
+			'amp_validation_error',
+		], (array) $extra );
 	}
 
 	public static function showOptionNone( $string = NULL )

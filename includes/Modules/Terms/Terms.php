@@ -278,12 +278,13 @@ class Terms extends gEditorial\Module
 		add_filter( 'manage_'.$taxonomy.'_custom_column', [ $this, 'custom_column' ], 10, 3 );
 	}
 
+	// FALSE for all
 	private function get_supported( $taxonomy = FALSE )
 	{
 		$list = [];
 
 		foreach ( $this->supported as $field )
-			if ( ! $taxonomy || in_array( $taxonomy, $this->get_setting( 'term_'.$field, [] ) ) )
+			if ( FALSE === $taxonomy || in_array( $taxonomy, $this->get_setting( 'term_'.$field, [] ) ) )
 				$list[] = $field;
 
 		return $this->filters( 'supported_fields', $list, $taxonomy );
