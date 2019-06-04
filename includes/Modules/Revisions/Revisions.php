@@ -396,8 +396,11 @@ class Revisions extends gEditorial\Module
 	{
 		list( $posts, $pagination ) = $this->getPostArray();
 
+		$list = $this->list_posttypes();
+
 		$pagination['actions']['cleanup_revisions'] = _x( 'Cleanup Revisions', 'Modules: Revisions: Table Action', GEDITORIAL_TEXTDOMAIN );
-		$pagination['before'][] = Helper::tableFilterPostTypes( $this->list_posttypes() );
+		$pagination['before'][] = Helper::tableFilterPostTypes( $list );
+		$pagination['before'][] = Helper::tableFilterAuthors( $list );
 
 		return HTML::tableList( [
 			'_cb'   => 'ID',
@@ -442,18 +445,21 @@ class Revisions extends gEditorial\Module
 	{
 		global $wpdb;
 
+		$where  = '';
 		$extra  = [];
 		$limit  = $this->limit_sub();
 		$order  = self::order( 'asc' );
 		$paged  = self::paged();
 		$offset = ( $paged - 1 ) * $limit;
 
-		// TODO: factor postype parent
+		if ( $user = self::req( 'author' ) )
+			$where.= $wpdb->prepare( "AND post_author = %d", intval( $user ) );
 
 		$ids = $wpdb->get_col( "
 			SELECT DISTINCT post_parent
 			FROM {$wpdb->posts}
 			WHERE post_type = 'revision'
+			{$where}
 			ORDER BY post_parent {$order}
 		" );
 
