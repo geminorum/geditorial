@@ -538,6 +538,20 @@ class Helper extends Core\Base
 		] );
 	}
 
+	public static function tableFilterAuthors( $list = NULL, $name = 'author' )
+	{
+		return wp_dropdown_users( [
+			'echo'                    => FALSE,
+			'name'                    => $name,
+			'who'                     => 'authors',
+			'show'                    => 'display_name_with_login',
+			'selected'                => self::req( $name, 0 ),
+			'show_option_all'         => _x( 'All Authors', 'Helper: Table Filter', GEDITORIAL_TEXTDOMAIN ),
+			'option_none_value'       => 0,
+			'hide_if_only_one_author' => TRUE,
+		] );
+	}
+
 	public static function tableColumnPostID()
 	{
 		return _x( 'ID', 'Helper: Table Column: Post ID', GEDITORIAL_TEXTDOMAIN );
