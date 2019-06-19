@@ -2,9 +2,6 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
-use geminorum\gEditorial\Core\HTML;
-use geminorum\gEditorial\Core\WordPress;
-
 class Scripts extends Core\Base
 {
 

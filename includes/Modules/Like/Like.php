@@ -378,6 +378,8 @@ class Like extends gEditorial\Module
 
 			if ( ! empty( $query->results ) ) {
 				foreach ( $query->results as $user ) {
+
+					// FIXME: needs internal api
 					if ( function_exists( 'bp_core_get_userlink' ) ) {
 						$html.= '<li><a href="'.bp_core_get_user_domain( $user->ID ).'" title="'.bp_core_get_user_displayname( $user->ID ).'">'.get_avatar( $user->user_email, 40, '', 'avatar' ).'</a></li>';
 					} else {

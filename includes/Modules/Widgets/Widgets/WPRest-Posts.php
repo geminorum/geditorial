@@ -50,7 +50,7 @@ class WPRestPosts extends gEditorial\Widget
 		if ( $extra )
 			$resource.= '&'.$extra;
 
-		$data = HTTP::getJSON( $resource );
+		$data = HTTP::getJSON( $resource, [], FALSE );
 
 		if ( empty( $data ) && ! $empty )
 			return TRUE;

@@ -1550,16 +1550,19 @@ class Module extends Base
 		return gEditorial()->update_module_option( $this->module->name, $key, $value );
 	}
 
-	public function set_cookie( $array, $append = TRUE, $expire = '+ 365 day' )
+	public function set_cookie( $data, $append = TRUE, $expire = '+ 365 day' )
 	{
 		if ( $append ) {
+
 			$old = isset( $_COOKIE[$this->cookie] ) ? json_decode( self::unslash( $_COOKIE[$this->cookie] ) ) : [];
-			$new = wp_json_encode( self::recursiveParseArgs( $array, $old ) );
+			$new = wp_json_encode( self::recursiveParseArgs( $data, $old ) );
+
 		} else {
-			$new = wp_json_encode( $array );
+
+			$new = wp_json_encode( $data );
 		}
 
-		setcookie( $this->cookie, $new, strtotime( $expire ), COOKIEPATH, COOKIE_DOMAIN, FALSE );
+		return setcookie( $this->cookie, $new, strtotime( $expire ), COOKIEPATH, COOKIE_DOMAIN, FALSE );
 	}
 
 	public function get_cookie()
