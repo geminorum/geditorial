@@ -66,6 +66,7 @@ class Theme extends Core\Base
 		$post = new \WP_Post( (object) $dummy );
 
 		if ( $setup ) {
+			// @REF: https://developer.wordpress.org/?p=2837#comment-874
 			$GLOBALS['post'] = $post;
 			setup_postdata( $post );
 		}

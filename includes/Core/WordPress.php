@@ -52,6 +52,21 @@ class WordPress extends Base
 		return is_null( $page ) ? $now : ( $now == $page );
 	}
 
+	// @REF: https://make.wordpress.org/core/2019/04/17/block-editor-detection-improvements-in-5-2/
+	public static function isBlockEditor()
+	{
+		if ( ! function_exists( 'get_current_screen' ) )
+			return FALSE;
+
+		if ( ! $screen = get_current_screen() )
+			return FALSE;
+
+		if ( ! is_callable( [ $screen, 'is_block_editor' ] ) )
+			return FALSE;
+
+		return (bool) $screen->is_block_editor();
+	}
+
 	public static function isDebug()
 	{
 		if ( WP_DEBUG && WP_DEBUG_DISPLAY && ! self::isDev() )
