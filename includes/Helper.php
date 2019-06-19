@@ -473,13 +473,6 @@ class Helper extends Core\Base
 		return $ip;
 	}
 
-	public static function getTinyMceStrings( $locale )
-	{
-		$strings = apply_filters( static::BASE.'_tinymce_strings', [] );
-
-		return count( $strings ) ? 'tinyMCE.addI18n("'.$locale.'.'.static::BASE.'", '.wp_json_encode( $strings ).');'."\n" : '';
-	}
-
 	// DEPRECATED
 	public static function getEditorialUserID( $fallback = FALSE )
 	{

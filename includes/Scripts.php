@@ -62,6 +62,18 @@ class Scripts extends Core\Base
 		return call_user_func( $callback );
 	}
 
+	public static function enqueueColorPicker()
+	{
+		wp_enqueue_script( 'wp-color-picker' );
+		wp_enqueue_style( 'wp-color-picker' );
+	}
+
+	public static function enqueueThickBox()
+	{
+		if ( function_exists( 'add_thickbox' ) )
+			add_thickbox();
+	}
+
 	public static function registerColorBox( $ver = '1.6.4' )
 	{
 		wp_register_style( 'jquery-colorbox', GEDITORIAL_URL.'assets/css/admin.colorbox.css', [], $ver, 'screen' );
@@ -100,5 +112,12 @@ class Scripts extends Core\Base
 		return $enqueue
 			? self::enqueuePackage( 'listjs', 'list.js/list', [], $ver )
 			: self::registerPackage( 'listjs', 'list.js/list', [], $ver );
+	}
+
+	public static function getTinyMceStrings( $locale )
+	{
+		$strings = apply_filters( static::BASE.'_tinymce_strings', [] );
+
+		return count( $strings ) ? 'tinyMCE.addI18n("'.$locale.'.'.static::BASE.'", '.wp_json_encode( $strings ).');'."\n" : '';
 	}
 }

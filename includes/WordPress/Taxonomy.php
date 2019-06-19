@@ -403,6 +403,7 @@ class Taxonomy extends Core\Base
 	}
 
 	// must add `add_thickbox()` for thickbox
+	// @SEE: `Scripts::enqueueThickBox()`
 	public static function htmlFeaturedImage( $term_id, $size = 'thumbnail', $link = TRUE )
 	{
 		if ( ! $term_image_id = get_term_meta( $term_id, 'image', TRUE ) )

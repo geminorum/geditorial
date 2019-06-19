@@ -5,6 +5,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Listtable;
+use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Core\Arraay;
 use geminorum\gEditorial\Core\HTML;
@@ -215,11 +216,11 @@ class Terms extends gEditorial\Module
 
 				if ( 'image' == $field ) {
 
-					add_thickbox();
+					Scripts::enqueueThickBox();
 
 				} else if ( 'color' == $field ) {
-					wp_enqueue_script( 'wp-color-picker' );
-					wp_enqueue_style( 'wp-color-picker' );
+
+					Scripts::enqueueColorPicker();
 				}
 			}
 
@@ -250,12 +251,11 @@ class Terms extends gEditorial\Module
 
 				if ( 'image' == $field ) {
 
-					add_thickbox();
+					Scripts::enqueueThickBox();
 
 				} else if ( 'color' == $field ) {
 
-					wp_enqueue_script( 'wp-color-picker' );
-					wp_enqueue_style( 'wp-color-picker' );
+					Scripts::enqueueColorPicker();
 				}
 			}
 

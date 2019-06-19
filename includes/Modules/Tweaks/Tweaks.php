@@ -378,7 +378,7 @@ class Tweaks extends gEditorial\Module
 		// add_filter( 'list_table_primary_column', [ $this, 'list_table_primary_column' ], 10, 2 );
 
 		if ( ! WordPress::isAJAX() && in_array( $posttype, $this->get_setting( 'column_thumb', [] ) ) )
-			add_thickbox();
+			Scripts::enqueueThickBox();
 
 		// INTERNAL HOOKS
 		if ( $this->get_setting( 'group_taxonomies', FALSE ) )

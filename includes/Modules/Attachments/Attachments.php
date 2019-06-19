@@ -4,6 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
@@ -252,7 +253,7 @@ class Attachments extends gEditorial\Module
 	public function reports_settings( $sub )
 	{
 		if ( $this->check_settings( $sub, 'reports' ) ) {
-			add_thickbox();
+			Scripts::enqueueThickBox();
 			$this->screen_option( $sub );
 		}
 	}
