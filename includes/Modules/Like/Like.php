@@ -151,6 +151,7 @@ class Like extends gEditorial\Module
 
 		$users  = $this->get_postmeta( $this->post_id, FALSE, [], $this->meta_key.'_users' );
 		$guests = $this->get_postmeta( $this->post_id, FALSE, [], $this->meta_key.'_guests' );
+		// $total  = $this->get_postmeta( $this->post_id, FALSE, 0, $this->meta_key.'_total' ); // FIXME: display total
 
 		if ( count( $users ) ) {
 
@@ -265,41 +266,47 @@ class Like extends gEditorial\Module
 	{
 		$users  = $this->get_postmeta( $post_id, FALSE, [], $this->meta_key.'_users' );
 		$guests = $this->get_postmeta( $post_id, FALSE, [], $this->meta_key.'_guests' );
-		$count  = count( $users ) + count( $guests );
+		$total  = count( $users ) + count( $guests );
+		$cookie = $this->get_cookie();
 
 		if ( is_user_logged_in() ) {
+
 			$key = array_search( get_current_user_id(), $users );
+
 			if ( FALSE !== $key ) {
+
+				$total--;
 				unset( $users[$key] );
+
 				$this->set_meta( $post_id, $users, '_users' );
-				$count--;
+				$this->set_meta( $post_id, $total, '_total' );
 			}
 		}
 
-		$cookie = $this->get_cookie();
-		$key    = array_key_exists( $post_id, $cookie );
-		if ( $key ) {
+		if ( array_key_exists( $post_id, $cookie ) ) {
 
-			$timestamp = array_search( $cookie[$post_id], $guests );
-			if ( $timestamp ) {
+			if ( $timestamp = array_search( $cookie[$post_id], $guests ) ) {
+
+				$total--;
 				unset( $guests[$timestamp] );
+
 				$this->set_meta( $post_id, $guests, '_guests' );
-				$count--;
+				$this->set_meta( $post_id, $total, '_total' );
 			}
 
 			unset( $cookie[$post_id] );
-			$this->set_cookie( $cookie, FALSE );
 
+			$this->set_cookie( $cookie, FALSE );
 		}
 
-		return [ FALSE, $count ];
+		return [ FALSE, $total ];
 	}
 
 	public function like( $post_id )
 	{
 		$users     = $this->get_postmeta( $post_id, FALSE, [], $this->meta_key.'_users' );
 		$guests    = $this->get_postmeta( $post_id, FALSE, [], $this->meta_key.'_guests' );
-		$count     = count( $users ) + count( $guests );
+		$total     = count( $users ) + count( $guests );
 		$timestamp = current_time( 'timestamp' );
 
 		if ( is_user_logged_in() ) {
@@ -307,12 +314,15 @@ class Like extends gEditorial\Module
 			$user_id = get_current_user_id();
 
 			if ( ! array_search( $user_id, $users ) ) {
+
+				$total++;
 				$users[$timestamp] = $user_id;
+
 				$this->set_meta( $post_id, $users, '_users' );
-				$count++;
+				$this->set_meta( $post_id, $total, '_total' );
 			}
 
-			return [ TRUE, $count ];
+			return [ TRUE, $total ];
 
 		} else {
 
@@ -322,13 +332,15 @@ class Like extends gEditorial\Module
 			if ( ! array_key_exists( $post_id, $cookie )
 				&& ! array_search( $ip, $guests ) ) {
 
+				$total++;
 				$guests[$timestamp] = $ip;
+
 				$this->set_meta( $post_id, $guests, '_guests' );
+				$this->set_meta( $post_id, $total, '_total' );
 				$this->set_cookie( [ $post_id => $guests[$timestamp] ] );
-				$count++;
 			}
 
-			return [ TRUE, $count ];
+			return [ TRUE, $total ];
 		}
 	}
 
@@ -336,14 +348,11 @@ class Like extends gEditorial\Module
 	{
 		$users  = $this->get_postmeta( $post_id, FALSE, [], $this->meta_key.'_users' );
 		$guests = $this->get_postmeta( $post_id, FALSE, [], $this->meta_key.'_guests' );
-		$count  = count( $users ) + count( $guests );
+		$total  = count( $users ) + count( $guests );
 
-		if ( is_user_logged_in() ) {
-			return [ array_search( get_current_user_id(), $users ), $count ];
-		} else {
-			$cookie = $this->get_cookie();
-			return [ array_key_exists( $post_id, $cookie ), $count ];
-		}
+		return is_user_logged_in()
+			? [ array_search( get_current_user_id(), $users ), $total ]
+			: [ array_key_exists( $post_id, $this->get_cookie() ), $total ];
 	}
 
 	public function avatars( $post_id )
