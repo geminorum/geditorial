@@ -1172,6 +1172,7 @@ class Terms extends gEditorial\Module
 		$pagination['actions']['clean_uncategorized'] = _x( 'Clean Uncategorized', 'Modules: Terms: Table Action', GEDITORIAL_TEXTDOMAIN );
 
 		$pagination['before'][] = Helper::tableFilterPostTypes();
+		$pagination['before'][] = Helper::tableFilterAuthors();
 
 		return HTML::tableList( [
 			'_cb'   => 'ID',
@@ -1184,7 +1185,7 @@ class Terms extends gEditorial\Module
 			'navigation' => 'before',
 			'search'     => 'before',
 			'title'      => HTML::tag( 'h3', _x( 'Overview of Uncategorized Posts', 'Modules: Terms', GEDITORIAL_TEXTDOMAIN ) ),
-			'empty'      => Helper::tableArgEmptyPosts(),
+			'empty'      => $this->get_posttype_label( 'post', 'not_found' ),
 			'pagination' => $pagination,
 		] );
 	}

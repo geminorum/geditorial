@@ -72,6 +72,7 @@ class Shortcodes extends gEditorial\Module
 
 	protected function render_reports_html( $uri, $sub )
 	{
+		$list      = $this->list_posttypes();
 		$query     = $extra = [];
 		$shortcode = self::req( 'shortcode', 'none' );
 
@@ -90,7 +91,8 @@ class Shortcodes extends gEditorial\Module
 				'none_title' => _x( 'All Shortcodes', 'Modules: Shortcodes', GEDITORIAL_TEXTDOMAIN ),
 			] );
 
-		$pagination['before'][] = Helper::tableFilterPostTypes( $this->list_posttypes() );
+		$pagination['before'][] = Helper::tableFilterPostTypes( $list );
+		$pagination['before'][] = Helper::tableFilterAuthors( $list );
 
 		return HTML::tableList( [
 			'_cb'   => 'ID',
@@ -118,7 +120,7 @@ class Shortcodes extends gEditorial\Module
 			'navigation' => 'before',
 			'search'     => 'before',
 			'title'      => HTML::tag( 'h3', _x( 'Overview of Post Shortcodes', 'Modules: Shortcodes', GEDITORIAL_TEXTDOMAIN ) ),
-			'empty'      => Helper::tableArgEmptyPosts(),
+			'empty'      => $this->get_posttype_label( 'post', 'not_found' ),
 			'pagination' => $pagination,
 		] );
 	}

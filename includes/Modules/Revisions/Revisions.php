@@ -394,9 +394,9 @@ class Revisions extends gEditorial\Module
 
 	protected function render_reports_html( $uri, $sub )
 	{
-		list( $posts, $pagination ) = $this->getPostArray();
-
 		$list = $this->list_posttypes();
+
+		list( $posts, $pagination ) = $this->getPostArray();
 
 		$pagination['actions']['cleanup_revisions'] = _x( 'Cleanup Revisions', 'Modules: Revisions: Table Action', GEDITORIAL_TEXTDOMAIN );
 		$pagination['before'][] = Helper::tableFilterPostTypes( $list );
@@ -435,7 +435,7 @@ class Revisions extends gEditorial\Module
 			'navigation' => 'before',
 			'search'     => 'before',
 			'title'      => HTML::tag( 'h3', _x( 'Overview of Post Revisions', 'Modules: Revisions', GEDITORIAL_TEXTDOMAIN ) ),
-			'empty'      => Helper::tableArgEmptyPosts(),
+			'empty'      => _x( 'No post revisions found.', 'Modules: Revisions', GEDITORIAL_TEXTDOMAIN ),
 			'pagination' => $pagination,
 		] );
 	}

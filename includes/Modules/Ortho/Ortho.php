@@ -340,6 +340,7 @@ class Ortho extends gEditorial\Module
 
 	protected function render_reports_html( $uri, $sub )
 	{
+		$list  = $this->list_posttypes();
 		$query = $extra = [];
 		$char  = self::req( 'char', 'none' );
 
@@ -358,7 +359,8 @@ class Ortho extends gEditorial\Module
 			'none_title' => Settings::showOptionNone(),
 		] );
 
-		$pagination['before'][] = Helper::tableFilterPostTypes( $this->list_posttypes() );
+		$pagination['before'][] = Helper::tableFilterPostTypes( $list );
+		$pagination['before'][] = Helper::tableFilterAuthors( $list );
 
 		$columns = [
 			'_cb'     => 'ID',
@@ -376,7 +378,7 @@ class Ortho extends gEditorial\Module
 			'navigation' => 'before',
 			'search'     => 'before',
 			'title'      => HTML::tag( 'h3', _x( 'Overview of Post Orthography', 'Modules: Ortho', GEDITORIAL_TEXTDOMAIN ) ),
-			'empty'      => Helper::tableArgEmptyPosts(),
+			'empty'      => $this->get_posttype_label( 'post', 'not_found' ),
 			'pagination' => $pagination,
 		] );
 	}

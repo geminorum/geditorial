@@ -531,7 +531,7 @@ class Today extends gEditorial\Module
 				'title' => Helper::tableColumnPostTitle(),
 				'terms' => Helper::tableColumnPostTerms(),
 			], $posts, [
-				'empty' => Helper::tableArgEmptyPosts(),
+				'empty' => _x( 'No posts with day information found.', 'Modules: Today', GEDITORIAL_TEXTDOMAIN ),
 			] );
 
 		echo '</div>';
@@ -886,11 +886,13 @@ class Today extends gEditorial\Module
 	protected function render_reports_html( $uri, $sub )
 	{
 		$constants = $this->get_the_day_constants();
+		$list      = $this->list_posttypes();
 		$query     = $this->build_meta_query( $constants );
 
 		list( $posts, $pagination ) = $this->getTablePosts( $query );
 
-		$pagination['before'][] = Helper::tableFilterPostTypes( $this->list_posttypes() );
+		$pagination['before'][] = Helper::tableFilterPostTypes( $list );
+		$pagination['before'][] = Helper::tableFilterAuthors( $list );
 
 		return HTML::tableList( [
 			'_cb'   => 'ID',
@@ -916,7 +918,7 @@ class Today extends gEditorial\Module
 			'navigation' => 'before',
 			'search'     => 'before',
 			'title'      => HTML::tag( 'h3', _x( 'Overview of Post with Day Information', 'Modules: Today', GEDITORIAL_TEXTDOMAIN ) ),
-			'empty'      => Helper::tableArgEmptyPosts(),
+			'empty'      => _x( 'No posts with day information found.', 'Modules: Today', GEDITORIAL_TEXTDOMAIN ),
 			'pagination' => $pagination,
 		] );
 	}

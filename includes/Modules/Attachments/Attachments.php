@@ -261,10 +261,12 @@ class Attachments extends gEditorial\Module
 	protected function render_reports_html( $uri, $sub )
 	{
 		$query = $extra = [];
+		$list  = $this->list_posttypes();
 
 		list( $posts, $pagination ) = $this->getTablePosts( $query, $extra, 'attachment' );
 
-		// $pagination['before'][] = Helper::tableFilterPostTypes( $this->list_posttypes(), 'type_parent' );
+		// $pagination['before'][] = Helper::tableFilterPostTypes( $list, 'type_parent' ); // FIXME: no support for parent type yet!
+		$pagination['before'][] = Helper::tableFilterAuthors( $list );
 
 		$custom = [
 			// FIXME: must add ajax
@@ -328,7 +330,7 @@ class Attachments extends gEditorial\Module
 			'navigation' => 'before',
 			'search'     => 'before',
 			'title'      => HTML::tag( 'h3', _x( 'Overview of Attachments', 'Modules: Attachments', GEDITORIAL_TEXTDOMAIN ) ),
-			'empty'      => Helper::tableArgEmptyPosts(),
+			'empty'      => _x( 'No attachments found.', 'Modules: Attachments', GEDITORIAL_TEXTDOMAIN ),
 			'pagination' => $pagination,
 		] );
 	}

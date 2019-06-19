@@ -744,6 +744,7 @@ class Helper extends Core\Base
 		];
 	}
 
+	// FIXME: DEPRECATED
 	public static function tableArgEmptyPosts( $wrap = FALSE )
 	{
 		$message = _x( 'No posts found.', 'Helper: Table Arg: Empty Posts', GEDITORIAL_TEXTDOMAIN );

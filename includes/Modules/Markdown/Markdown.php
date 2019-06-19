@@ -469,13 +469,16 @@ class Markdown extends gEditorial\Module
 
 	protected function render_reports_html( $uri, $sub )
 	{
+		$list = $this->list_posttypes();
+
 		list( $posts, $pagination ) = $this->getTablePosts();
 
 		$pagination['actions']['convert_markdown'] = _x( 'Convert into Markdown', 'Modules: Markdown: Table Action', GEDITORIAL_TEXTDOMAIN );
 		$pagination['actions']['process_markdown'] = _x( 'Re-Process Markdown', 'Modules: Markdown: Table Action', GEDITORIAL_TEXTDOMAIN );
 		$pagination['actions']['cleanup_markdown'] = _x( 'Cleanup Markdown', 'Modules: Markdown: Table Action', GEDITORIAL_TEXTDOMAIN );
 		$pagination['actions']['discard_markdown'] = _x( 'Discard Markdown', 'Modules: Markdown: Table Action', GEDITORIAL_TEXTDOMAIN );
-		$pagination['before'][] = Helper::tableFilterPostTypes( $this->list_posttypes() );
+		$pagination['before'][] = Helper::tableFilterPostTypes( $list );
+		$pagination['before'][] = Helper::tableFilterAuthors( $list );
 
 		return HTML::tableList( [
 			'_cb'      => 'ID',
@@ -495,7 +498,7 @@ class Markdown extends gEditorial\Module
 			'navigation' => 'before',
 			'search'     => 'before',
 			'title'      => HTML::tag( 'h3', _x( 'Overview of Markdown Posts', 'Modules: Markdown', GEDITORIAL_TEXTDOMAIN ) ),
-			'empty'      => Helper::tableArgEmptyPosts(),
+			'empty'      => _x( 'No markdown posts found.', 'Modules: Markdown', GEDITORIAL_TEXTDOMAIN ),
 			'pagination' => $pagination,
 		] );
 	}

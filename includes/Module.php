@@ -1575,6 +1575,11 @@ class Module extends Base
 		setcookie( $this->cookie, '', time() - 3600, COOKIEPATH, COOKIE_DOMAIN, FALSE );
 	}
 
+	public function get_posttype_label( $constant, $label )
+	{
+		return PostType::object( $this->constant( $constant, $constant ) )->labels->{$label};
+	}
+
 	public function get_posttype_labels( $constant )
 	{
 		if ( ! empty( $this->strings['labels'][$constant] ) )

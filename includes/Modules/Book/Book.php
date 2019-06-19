@@ -763,7 +763,7 @@ class Book extends gEditorial\Module
 			'navigation' => 'before',
 			'search'     => 'before',
 			'title'      => HTML::tag( 'h3', _x( 'Overview of Meta Information about Related Publications', 'Modules: Book', GEDITORIAL_TEXTDOMAIN ) ),
-			'empty'      => Helper::tableArgEmptyPosts(),
+			'empty'      => $this->get_posttype_label( 'publication_cpt', 'not_found' ),
 			'pagination' => $pagination,
 		] );
 	}
