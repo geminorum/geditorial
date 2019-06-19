@@ -744,7 +744,7 @@ class Helper extends Core\Base
 		];
 	}
 
-	public static function tableArgEmptyPosts( $wrap = TRUE )
+	public static function tableArgEmptyPosts( $wrap = FALSE )
 	{
 		$message = _x( 'No posts found.', 'Helper: Table Arg: Empty Posts', GEDITORIAL_TEXTDOMAIN );
 		return $wrap ? HTML::warning( $message, FALSE ) : $message;

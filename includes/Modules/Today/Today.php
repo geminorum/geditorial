@@ -531,7 +531,7 @@ class Today extends gEditorial\Module
 				'title' => Helper::tableColumnPostTitle(),
 				'terms' => Helper::tableColumnPostTerms(),
 			], $posts, [
-				'empty' => Helper::tableArgEmptyPosts( FALSE ),
+				'empty' => Helper::tableArgEmptyPosts(),
 			] );
 
 		echo '</div>';

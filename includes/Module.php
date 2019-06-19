@@ -2881,6 +2881,9 @@ class Module extends Base
 		if ( ! empty( $_REQUEST['type'] ) )
 			$args['post_type'] = $extra['type'] = $_REQUEST['type'];
 
+		if ( ! empty( $_REQUEST['author'] ) )
+			$args['author'] = $extra['author'] = $_REQUEST['author'];
+
 		if ( ! empty( $_REQUEST['parent'] ) )
 			$args['post_parent'] = $extra['parent'] = $_REQUEST['parent'];
 

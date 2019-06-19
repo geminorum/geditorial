@@ -388,7 +388,7 @@ class Revisions extends gEditorial\Module
 			}
 
 			$this->screen_option( $sub );
-			$this->register_button( 'cleanup_revisions', _x( 'Cleanup Revisions', 'Modules: Revisions: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
+			// $this->register_button( 'cleanup_revisions', _x( 'Cleanup Revisions', 'Modules: Revisions: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
 		}
 	}
 
@@ -452,8 +452,10 @@ class Revisions extends gEditorial\Module
 		$paged  = self::paged();
 		$offset = ( $paged - 1 ) * $limit;
 
-		if ( $user = self::req( 'author' ) )
+		if ( $user = self::req( 'author' ) ) {
 			$where.= $wpdb->prepare( "AND post_author = %d", intval( $user ) );
+			$extra['author'] = $user;
+		}
 
 		$ids = $wpdb->get_col( "
 			SELECT DISTINCT post_parent

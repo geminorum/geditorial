@@ -148,7 +148,7 @@ class Modified extends gEditorial\Module
 		$columns['modified'] = Helper::tableColumnPostDateModified();
 
 		HTML::tableList( $columns, $query->query( $args ), [
-			'empty' => Helper::tableArgEmptyPosts( FALSE ),
+			'empty' => Helper::tableArgEmptyPosts(),
 		] );
 	}
 
