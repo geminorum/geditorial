@@ -827,14 +827,14 @@ class Terms extends gEditorial\Module
 				'id'     => $this->classs(),
 				'title'  => _x( 'Term Summary', 'Modules: Terms: Adminbar', GEDITORIAL_TEXTDOMAIN ),
 				'parent' => $parent,
-				'href'   => $this->get_module_url( 'reports', 'uncategorized' ),
+				'href'   => $this->get_module_url( 'reports' ),
 			];
 
 			$nodes[] = [
 				'id'     => $this->classs( 'count' ),
 				'title'  => _x( 'Post Count', 'Modules: Terms: Adminbar', GEDITORIAL_TEXTDOMAIN ).': '.Helper::getCounted( $term->count ),
 				'parent' => $this->classs(),
-				'href'   => FALSE, // TODO: link to reports summary of the term posts
+				'href'   => FALSE,
 			];
 
 			// TODO: display `$term->parent`
@@ -940,7 +940,7 @@ class Terms extends gEditorial\Module
 			'id'     => $this->classs(),
 			'title'  => _x( 'Summary of Terms', 'Modules: Terms: Adminbar', GEDITORIAL_TEXTDOMAIN ),
 			'parent' => $parent,
-			'href'   => $this->get_module_url( 'reports', 'uncategorized' ),
+			'href'   => $this->get_module_url( 'reports' ),
 		];
 
 		foreach ( $this->taxonomies() as $taxonomy ) {
@@ -967,14 +967,6 @@ class Terms extends gEditorial\Module
 					'href'   => get_term_link( $term ),
 				];
 		}
-	}
-
-	public function append_sub( $subs, $context = 'settings', $extra = [] )
-	{
-		if ( 'reports' == $context )
-			$extra['uncategorized'] = _x( 'Uncategorized', 'Modules: Terms: Reports: Sub Title', GEDITORIAL_TEXTDOMAIN );
-
-		return parent::append_sub( $subs, $context, $extra );
 	}
 
 	public function tools_settings( $sub )
@@ -1123,8 +1115,6 @@ class Terms extends gEditorial\Module
 	{
 		if ( $this->check_settings( $sub, 'reports' ) ) {
 
-		} else if ( $this->check_settings( $sub, 'reports', 'uncategorized' ) ) {
-
 			if ( ! empty( $_POST ) ) {
 
 				$this->nonce_check( 'reports', $sub );
@@ -1134,37 +1124,9 @@ class Terms extends gEditorial\Module
 
 				$count = 0;
 
-				if ( 'clean_uncategorized' == self::req( 'table_action' ) ) {
+				if ( 'purge_unregistered' == self::req( 'table_action' ) ) {
 
-					$uncategorized = get_option( 'default_category' );
-
-					foreach ( $_POST['_cb'] as $post_id ) {
-
-						if ( ! $post = get_post( $post_id ) )
-							continue;
-
-						if ( ! in_array( 'category', get_object_taxonomies( $post ) ) )
-							continue;
-
-						$terms = wp_get_object_terms( $post->ID, 'category', [ 'fields' => 'ids' ] );
-						$diff  = array_diff( $terms, [ $uncategorized ] );
-
-						if ( empty( $diff ) )
-							continue;
-
-						$results = wp_set_object_terms( $post->ID, $diff, 'category' );
-
-						if ( ! self::isError( $results ) )
-							$count++;
-					}
-
-					if ( $count )
-						WordPress::redirectReferer( [
-							'message' => 'cleaned',
-							'count'   => $count,
-						] );
-
-				} else if ( 'purge_unregistered' == self::req( 'table_action' ) ) {
+					// FIXME: only purges no longer attached taxes, not orphaned
 
 					$registered = Taxonomy::get();
 
@@ -1198,45 +1160,11 @@ class Terms extends gEditorial\Module
 		}
 	}
 
-	public function reports_sub( $uri, $sub )
-	{
-		$this->render_form_start( $uri, $sub, 'bulk', 'reports', FALSE );
-
-		if ( $this->key == $sub ) {
-
-			if ( $this->render_reports_html( $uri, $sub ) )
-				$this->render_form_buttons();
-
-		} else if ( 'uncategorized' == $sub ) {
-
-			if ( $this->render_reports_uncategorized( $uri, $sub ) )
-				$this->render_form_buttons();
-		}
-
-		$this->render_form_end( $uri, $sub );
-	}
-
-	// FIXME
 	protected function render_reports_html( $uri, $sub )
 	{
-		HTML::h3( _x( 'Term Reports', 'Modules: Terms', GEDITORIAL_TEXTDOMAIN ) );
-		HTML::desc( _x( 'No reports available!', 'Modules: Terms', GEDITORIAL_TEXTDOMAIN ), TRUE, '-empty' );
-	}
+		list( $posts, $pagination ) = $this->getTablePosts( [], [], 'any' );
 
-	protected function render_reports_uncategorized( $uri, $sub )
-	{
-		$query = [
-			'tax_query'        => [ [
-				'taxonomy' => 'category',
-				'field'    => 'term_id',
-				'terms'    => [ intval( get_option( 'default_category' ) ) ],
-			] ],
-		];
-
-		list( $posts, $pagination ) = $this->getTablePosts( $query, [], 'any', 'uncategorized' );
-
-		$pagination['actions']['purge_unregistered']  = _x( 'Purge Unregistered', 'Modules: Terms: Table Action', GEDITORIAL_TEXTDOMAIN );
-		$pagination['actions']['clean_uncategorized'] = _x( 'Clean Uncategorized', 'Modules: Terms: Table Action', GEDITORIAL_TEXTDOMAIN );
+		$pagination['actions']['purge_unregistered'] = _x( 'Purge Unregistered', 'Modules: Terms: Table Action', GEDITORIAL_TEXTDOMAIN );
 
 		$pagination['before'][] = Helper::tableFilterPostTypes();
 		$pagination['before'][] = Helper::tableFilterAuthors();
@@ -1248,10 +1176,23 @@ class Terms extends gEditorial\Module
 			'type'  => Helper::tableColumnPostType(),
 			'title' => Helper::tableColumnPostTitle(),
 			'terms' => Helper::tableColumnPostTerms(),
+			'raw' => [
+				'title'    => _x( 'Raw', 'Modules: Terms: Table Column', GEDITORIAL_TEXTDOMAIN ),
+				'callback' => function( $value, $row, $column, $index ){
+
+					$query = new \WP_Term_Query( [ 'object_ids' => $row->ID, 'get' => 'all' ] );
+					$list  = [];
+
+					foreach ( $query->terms as $term )
+						$list[] = '<span title="'.$term->taxonomy.'">'.$term->name.'</span>';
+
+					return Helper::getJoined( $list, '', '', '<span class="-empty">&mdash;</span>' );
+				},
+			],
 		], $posts, [
 			'navigation' => 'before',
 			'search'     => 'before',
-			'title'      => HTML::tag( 'h3', _x( 'Overview of Uncategorized Posts', 'Modules: Terms', GEDITORIAL_TEXTDOMAIN ) ),
+			'title'      => HTML::tag( 'h3', _x( 'Overview of Posts with Terms', 'Modules: Terms', GEDITORIAL_TEXTDOMAIN ) ),
 			'empty'      => $this->get_posttype_label( 'post', 'not_found' ),
 			'pagination' => $pagination,
 		] );
