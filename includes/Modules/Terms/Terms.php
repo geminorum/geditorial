@@ -890,8 +890,10 @@ class Terms extends gEditorial\Module
 					break;
 					case 'image':
 
+						$image = Taxonomy::htmlFeaturedImage( $term->term_id, [ 45, 72 ] );
+
 						$child['meta'] = [
-							'html'  => Taxonomy::htmlFeaturedImage( $term->term_id, [ 45, 72 ] ),
+							'html'  => $image ?: gEditorial()->na( FALSE ),
 							'class' => 'geditorial-adminbar-image-wrap',
 						];
 
