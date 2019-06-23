@@ -113,7 +113,7 @@ class Specs extends gEditorial\Module
 		}
 	}
 
-	public function store_metabox( $post_id, $post, $update, $context = 'box' )
+	public function store_metabox( $post_id, $post, $update, $context = 'main' )
 	{
 		if ( ! $this->is_save_post( $post, $this->posttypes() ) )
 			return;
@@ -281,7 +281,7 @@ class Specs extends gEditorial\Module
 		echo '</div>';
 	}
 
-	public function render_metabox( $post, $box, $fields = NULL, $context = 'box' )
+	public function render_metabox( $post, $box, $fields = NULL, $context = 'main' )
 	{
 		$tax = $this->constant( 'specs_tax' );
 

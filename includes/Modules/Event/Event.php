@@ -474,7 +474,7 @@ class Event extends gEditorial\Module
 		$fields = $this->get_posttype_fields( $post->post_type );
 
 		echo $this->wrap_open( '-admin-metabox' );
-			$this->actions( 'render_metabox', $post, $box, $fields, 'box' );
+			$this->actions( 'render_metabox', $post, $box, $fields, 'main' );
 
 			// old way metas
 			// $this->render_box( $post ); // FIXME: add to module actions

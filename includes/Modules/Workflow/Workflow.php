@@ -383,7 +383,7 @@ class Workflow extends gEditorial\Module
 			$status = 'password';
 
 		echo $this->wrap_open( '-admin-metabox submitbox' );
-			$this->actions( 'render_metabox', $post, $box, NULL, 'box' );
+			$this->actions( 'render_metabox', $post, $box, NULL, 'main' );
 
 			echo '<div id="minor-publishing">';
 

@@ -1069,7 +1069,7 @@ class Module extends Base
 			if ( ! isset( $args['context'] ) && isset( $args['type'] ) ) {
 
 				if ( in_array( $args['type'], [ 'postbox_legacy', 'title_before', 'title_after' ] ) )
-					$args['context'] = 'dbx';
+					$args['context'] = 'raw';
 			}
 
 			if ( ! isset( $args['icon'] ) )
@@ -1080,7 +1080,7 @@ class Module extends Base
 				'description' => $this->get_string( $field, $posttype, 'descriptions' ),
 				'icon'        => 'smiley',
 				'type'        => 'text',
-				'context'     => 'box',
+				'context'     => 'main',
 				'values'      => [],
 				'repeat'      => FALSE,
 				'ltr'         => FALSE,
@@ -2012,7 +2012,7 @@ class Module extends Base
 	}
 
 	// DEFAULT METHOD
-	public function render_metabox( $post, $box, $fields = NULL, $context = 'box' )
+	public function render_metabox( $post, $box, $fields = NULL, $context = 'main' )
 	{
 		if ( is_null( $fields ) )
 			$fields = $this->get_posttype_fields( $post->post_type );
@@ -2043,7 +2043,7 @@ class Module extends Base
 
 	// DEFAULT METHOD
 	// INTENDED HOOK: `save_post`, `save_post_[post_type]`
-	public function store_metabox( $post_id, $post, $update, $context = 'box' )
+	public function store_metabox( $post_id, $post, $update, $context = 'main' )
 	{
 		if ( ! $this->is_save_post( $post, $this->posttypes() ) )
 			return;

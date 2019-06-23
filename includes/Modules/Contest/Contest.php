@@ -335,7 +335,7 @@ class Contest extends gEditorial\Module
 			return;
 
 		echo $this->wrap_open( '-admin-metabox' );
-			$this->actions( 'render_metabox', $post, $box, NULL, 'box' );
+			$this->actions( 'render_metabox', $post, $box, NULL, 'main' );
 
 			do_action( 'geditorial_meta_render_metabox', $post, $box, NULL );
 
@@ -377,7 +377,7 @@ class Contest extends gEditorial\Module
 		echo '</div>';
 	}
 
-	public function render_metabox( $post, $box, $fields = NULL, $context = 'box' )
+	public function render_metabox( $post, $box, $fields = NULL, $context = 'main' )
 	{
 		MetaBox::fieldPostMenuOrder( $post );
 
@@ -498,7 +498,7 @@ class Contest extends gEditorial\Module
 			$this->set_linked_term( $post_id, $term['term_id'], 'contest_cpt', 'contest_tax' );
 	}
 
-	public function store_metabox( $post_id, $post, $update, $context = 'box' )
+	public function store_metabox( $post_id, $post, $update, $context = 'main' )
 	{
 		if ( ! $this->is_save_post( $post, $this->posttypes() ) )
 			return;

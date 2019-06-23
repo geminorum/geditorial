@@ -738,7 +738,7 @@ class Cartable extends gEditorial\Module
 				HTML::desc( _x( 'You can see cartable details, once you\'ve saved it for the first time.', 'Modules: Cartable', GEDITORIAL_TEXTDOMAIN ) );
 
 			else if ( has_action( $this->hook( 'render_metabox' ) ) )
-				$this->actions( 'render_metabox', $post, $box, NULL, 'box' );
+				$this->actions( 'render_metabox', $post, $box, NULL, 'main' );
 
 			else
 				echo $this->metabox_summary( $post );

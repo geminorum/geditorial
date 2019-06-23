@@ -387,7 +387,7 @@ class Today extends gEditorial\Module
 			return;
 
 		echo $this->wrap_open( '-admin-metabox' );
-			$this->actions( 'render_metabox', $post, $box, NULL, 'box' );
+			$this->actions( 'render_metabox', $post, $box, NULL, 'main' );
 
 			$display_year = $post->post_type != $this->constant( 'day_cpt' );
 			$default_type = $this->default_calendar();
@@ -567,7 +567,7 @@ class Today extends gEditorial\Module
 		}
 	}
 
-	public function store_metabox( $post_id, $post, $update, $context = 'box' )
+	public function store_metabox( $post_id, $post, $update, $context = 'main' )
 	{
 		if ( ! $this->is_save_post( $post ) )
 			return;

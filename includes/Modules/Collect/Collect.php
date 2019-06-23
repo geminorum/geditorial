@@ -478,7 +478,7 @@ class Collect extends gEditorial\Module
 		$this->do_before_delete_post( $post_id, 'collection_cpt', 'collection_tax' );
 	}
 
-	public function store_metabox( $post_id, $post, $update, $context = 'box' )
+	public function store_metabox( $post_id, $post, $update, $context = 'main' )
 	{
 		if ( ! $this->is_save_post( $post, $this->posttypes() ) )
 			return;
@@ -561,7 +561,7 @@ class Collect extends gEditorial\Module
 		echo '</div>';
 	}
 
-	public function render_metabox( $post, $box, $fields = NULL, $context = 'box' )
+	public function render_metabox( $post, $box, $fields = NULL, $context = 'main' )
 	{
 		$posttype  = $this->constant( 'collection_cpt' );
 		$terms     = Taxonomy::getTerms( $this->constant( 'collection_tax' ), $post->ID, TRUE );
@@ -594,7 +594,7 @@ class Collect extends gEditorial\Module
 			return;
 
 		echo $this->wrap_open( '-admin-metabox' );
-			$this->actions( 'render_metabox', $post, $box, NULL, 'box' );
+			$this->actions( 'render_metabox', $post, $box, NULL, 'main' );
 
 			do_action( 'geditorial_meta_render_metabox', $post, $box, NULL );
 

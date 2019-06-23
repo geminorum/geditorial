@@ -139,7 +139,7 @@ class Series extends gEditorial\Module
 		}
 	}
 
-	public function store_metabox( $post_id, $post, $update, $context = 'box' )
+	public function store_metabox( $post_id, $post, $update, $context = 'main' )
 	{
 		if ( ! $this->is_save_post( $post, $this->posttypes() ) )
 			return;
@@ -213,12 +213,12 @@ class Series extends gEditorial\Module
 		$fields = $this->posttype_fields( $post->post_type );
 
 		echo $this->wrap_open( '-admin-metabox' );
-			$this->actions( 'render_metabox', $post, $box, $fields, 'box' );
-			$this->actions( 'render_metabox_after', $post, $box, $fields, 'box' );
+			$this->actions( 'render_metabox', $post, $box, $fields, 'main' );
+			$this->actions( 'render_metabox_after', $post, $box, $fields, 'main' );
 		echo '</div>';
 	}
 
-	public function render_metabox( $post, $box, $fields = NULL, $context = 'box' )
+	public function render_metabox( $post, $box, $fields = NULL, $context = 'main' )
 	{
 		$tax = $this->constant( 'series_tax' );
 

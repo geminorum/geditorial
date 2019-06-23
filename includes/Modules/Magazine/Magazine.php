@@ -476,7 +476,7 @@ class Magazine extends gEditorial\Module
 		$this->do_before_delete_post( $post_id, 'issue_cpt', 'issue_tax' );
 	}
 
-	public function store_metabox( $post_id, $post, $update, $context = 'box' )
+	public function store_metabox( $post_id, $post, $update, $context = 'main' )
 	{
 		if ( ! $this->is_save_post( $post, $this->posttypes() ) )
 			return;
@@ -552,14 +552,14 @@ class Magazine extends gEditorial\Module
 			return;
 
 		echo $this->wrap_open( '-admin-metabox' );
-			$this->actions( 'render_metabox_supported', $post, $box, NULL, 'box' );
+			$this->actions( 'render_metabox_supported', $post, $box, NULL, 'main' );
 
 			do_action( 'geditorial_meta_render_metabox', $post, $box, NULL, 'issue' );
 
 		echo '</div>';
 	}
 
-	public function render_metabox( $post, $box, $fields = NULL, $context = 'box' )
+	public function render_metabox( $post, $box, $fields = NULL, $context = 'main' )
 	{
 		$terms     = Taxonomy::getTerms( $this->constant( 'issue_tax' ), $post->ID, TRUE );
 		$posttype  = $this->constant( 'issue_cpt' );
@@ -592,7 +592,7 @@ class Magazine extends gEditorial\Module
 			return;
 
 		echo $this->wrap_open( '-admin-metabox' );
-			$this->actions( 'render_metabox', $post, $box, NULL, 'box' );
+			$this->actions( 'render_metabox', $post, $box, NULL, 'main' );
 
 			do_action( 'geditorial_meta_render_metabox', $post, $box, NULL );
 
@@ -608,7 +608,7 @@ class Magazine extends gEditorial\Module
 			return;
 
 		echo $this->wrap_open( '-admin-metabox' );
-			$this->actions( 'render_metabox_list', $post, $box, NULL, 'box' );
+			$this->actions( 'render_metabox_list', $post, $box, NULL, 'main' );
 
 			$term = $this->get_linked_term( $post->ID, 'issue_cpt', 'issue_tax' );
 

@@ -251,15 +251,15 @@ class Meta extends gEditorial\Module
 				$contexts = Arraay::column( $fields, 'context' );
 				$metabox  = $this->classs( $screen->post_type );
 
-				$box_callback = $this->filters( 'box_callback', in_array( 'box', $contexts ), $screen->post_type );
+				$main_callback = $this->filters( 'box_callback', in_array( 'main', $contexts ), $screen->post_type );
 
-				if ( TRUE === $box_callback )
-					$box_callback = [ $this, 'render_metabox_main' ];
+				if ( TRUE === $main_callback )
+					$main_callback = [ $this, 'render_metabox_main' ];
 
-				if ( $box_callback && is_callable( $box_callback ) )
+				if ( $main_callback && is_callable( $main_callback ) )
 					add_meta_box( $metabox,
 						$this->get_meta_box_title(),
-						$box_callback,
+						$main_callback,
 						$screen,
 						'side',
 						'high',
@@ -269,13 +269,13 @@ class Meta extends gEditorial\Module
 						]
 					);
 
-				$dbx_callback = $this->filters( 'dbx_callback', in_array( 'dbx', $contexts ), $screen->post_type );
+				$raw_callback = $this->filters( 'raw_callback', in_array( 'raw', $contexts ), $screen->post_type );
 
-				if ( TRUE === $dbx_callback )
+				if ( TRUE === $raw_callback )
 					add_action( 'dbx_post_sidebar', [ $this, 'render_raw_default' ], 10, 1 );
 
-				else if ( $dbx_callback && is_callable( $dbx_callback ) )
-					add_action( 'dbx_post_sidebar', $dbx_callback, 10, 1 );
+				else if ( $raw_callback && is_callable( $raw_callback ) )
+					add_action( 'dbx_post_sidebar', $raw_callback, 10, 1 );
 
 				add_action( 'geditorial_meta_render_metabox', [ $this, 'render_metabox' ], 10, 4 );
 
@@ -316,7 +316,7 @@ class Meta extends gEditorial\Module
 		add_action( $this->hook( 'column_row' ), [ $this, 'column_row_extra' ], 12, 3 );
 	}
 
-	public function render_metabox( $post, $box, $fields = NULL, $context = 'box' )
+	public function render_metabox( $post, $box, $fields = NULL, $context = 'main' )
 	{
 		if ( is_null( $fields ) )
 			$fields = $this->get_posttype_fields( $post->post_type );
@@ -372,7 +372,7 @@ class Meta extends gEditorial\Module
 		echo $this->wrap_open( '-admin-metabox' );
 
 			if ( count( $fields ) )
-				$this->actions( 'render_metabox', $post, $box, $fields, 'box' );
+				$this->actions( 'render_metabox', $post, $box, $fields, 'main' );
 
 			else
 				echo HTML::wrap( _x( 'No Meta Fields', 'Modules: Meta', GEDITORIAL_TEXTDOMAIN ), 'field-wrap -empty' );
@@ -495,7 +495,7 @@ class Meta extends gEditorial\Module
 		return [ $field ];
 	}
 
-	public function store_metabox( $post_id, $post, $update, $context = 'box' )
+	public function store_metabox( $post_id, $post, $update, $context = 'main' )
 	{
 		if ( ! $this->is_save_post( $post, $this->posttypes() ) )
 			return;
