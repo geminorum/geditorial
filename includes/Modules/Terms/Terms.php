@@ -8,6 +8,7 @@ use geminorum\gEditorial\Listtable;
 use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Core\Arraay;
+use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\Database;
@@ -196,7 +197,12 @@ class Terms extends gEditorial\Module
 	{
 		$enqueue = FALSE;
 
-		if ( 'edit-tags' == $screen->base ) {
+		if ( 'dashboard' == $screen->base ) {
+
+			if ( current_user_can( 'edit_others_posts' ) )
+				add_filter( 'gnetwork_dashboard_pointers', [ $this, 'dashboard_pointers' ] );
+
+		} else if ( 'edit-tags' == $screen->base ) {
 
 			foreach ( $this->get_supported( $screen->taxonomy ) as $field ) {
 
@@ -1188,5 +1194,38 @@ class Terms extends gEditorial\Module
 			'empty'      => $this->get_posttype_label( 'post', 'not_found' ),
 			'pagination' => $pagination,
 		] );
+	}
+
+	// already cap checked!
+	public function dashboard_pointers( $items )
+	{
+		if ( ! $list = $this->get_uncategorized_count( TRUE ) )
+			return $items;
+
+		$noopd = _nx_noop( '%s Uncategorized Post', '%s Uncategorized Posts', 'Modules: Terms', GEDITORIAL_TEXTDOMAIN );
+
+		$items[] = HTML::tag( 'a', [
+			'href'  => add_query_arg( [ 'cat' => get_option( 'default_category' ) ], admin_url( 'edit.php' ) ),
+			'title' => _x( 'You need to assign categories to some posts!', 'Modules: Terms', GEDITORIAL_TEXTDOMAIN ),
+			'class' => '-uncategorized-count',
+		], sprintf( Helper::noopedCount( count( $list ), $noopd ), Number::format( count( $list ) ) ) );
+
+		return $items;
+	}
+
+	private function get_uncategorized_count( $lite = FALSE )
+	{
+		$args = [
+			'fields'         => $lite ? 'ids' : 'all',
+			'posts_per_page' => -1,
+			'tax_query'      => [ [
+				'taxonomy' => 'category',
+				'field'    => 'term_id',
+				'terms'    => [ intval( get_option( 'default_category' ) ) ],
+			] ],
+		];
+
+		$query = new \WP_Query;
+		return $query->query( $args );
 	}
 }
