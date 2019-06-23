@@ -983,7 +983,39 @@ class Terms extends gEditorial\Module
 
 				$this->nonce_check( 'tools', $sub );
 
-				if ( isset( $_POST['orphaned_terms'] ) ) {
+				$count = 0;
+
+				if ( isset( $_POST['clean_uncategorized'] ) && isset( $_POST['_cb'] ) ) {
+
+					$uncategorized = get_option( 'default_category' );
+
+					foreach ( $_POST['_cb'] as $post_id ) {
+
+						if ( ! $post = get_post( $post_id ) )
+							continue;
+
+						if ( ! in_array( 'category', get_object_taxonomies( $post ) ) )
+							continue;
+
+						$terms = wp_get_object_terms( $post->ID, 'category', [ 'fields' => 'ids' ] );
+						$diff  = array_diff( $terms, [ $uncategorized ] );
+
+						if ( empty( $diff ) )
+							continue;
+
+						$results = wp_set_object_terms( $post->ID, $diff, 'category' );
+
+						if ( ! self::isError( $results ) )
+							$count++;
+					}
+
+					if ( $count )
+						WordPress::redirectReferer( [
+							'message' => 'cleaned',
+							'count'   => $count,
+						] );
+
+				} else if ( isset( $_POST['orphaned_terms'] ) ) {
 
 					$post = $this->get_current_form( [
 						'dead_tax' => FALSE,
@@ -1011,15 +1043,18 @@ class Terms extends gEditorial\Module
 		}
 	}
 
+	// TODO: option to delete orphaned terms
 	protected function render_tools_html( $uri, $sub )
 	{
+		$available     = FALSE;
+		$uncategorized = $this->get_uncategorized_count();
+		$db_taxes      = Database::getTaxonomies( TRUE );
+		$live_taxes    = Taxonomy::get( 6 );
+		$dead_taxes    = array_diff_key( $db_taxes, $live_taxes );
+
 		HTML::h3( _x( 'Term Tools', 'Modules: Terms', GEDITORIAL_TEXTDOMAIN ) );
 
 		echo '<table class="form-table">';
-
-		$db_taxes   = Database::getTaxonomies( TRUE );
-		$live_taxes = Taxonomy::get( 6 );
-		$dead_taxes = array_diff_key( $db_taxes, $live_taxes );
 
 		if ( count( $dead_taxes ) ) {
 
@@ -1050,10 +1085,34 @@ class Terms extends gEditorial\Module
 
 			echo '</td></tr>';
 
-		} else {
-
-			HTML::desc( _x( 'Currently no tool available.', 'Modules: Terms', GEDITORIAL_TEXTDOMAIN ) );
+			$available = TRUE;
 		}
+
+		if ( count( $uncategorized ) ) {
+
+			echo '<tr><th scope="row">'._x( 'Uncategorized Posts', 'Modules: Terms', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
+
+			Settings::submitButton( 'clean_uncategorized',
+				_x( 'Cleanup Uncategorized', 'Modules: Terms: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
+
+			HTML::desc( _x( 'Checks for posts in uncategorized category and removes the unnecessaries.', 'Modules: Terms', GEDITORIAL_TEXTDOMAIN ) );
+
+			echo '<br />';
+
+			HTML::tableList( [
+				'_cb'   => 'ID',
+				'ID'    => Helper::tableColumnPostID(),
+				'title' => Helper::tableColumnPostTitle(),
+				'terms' => Helper::tableColumnPostTerms(),
+			], $uncategorized );
+
+			echo '</td></tr>';
+
+			$available = TRUE;
+		}
+
+		if ( ! $available )
+			HTML::desc( _x( 'Currently no tool available.', 'Modules: Terms', GEDITORIAL_TEXTDOMAIN ) );
 
 		echo '</table>';
 	}
