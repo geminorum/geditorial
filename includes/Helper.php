@@ -518,6 +518,7 @@ class Helper extends Core\Base
 		return $gEditorial_WPImageSizes;
 	}
 
+	// FIXME: must check for excludes from `Settings::posttypesExcluded()`
 	public static function tableFilterPostTypes( $list = NULL, $name = 'type' )
 	{
 		if ( is_null( $list ) )

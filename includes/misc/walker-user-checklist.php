@@ -15,6 +15,8 @@ class Walker_User_Checklist extends \Walker
 		$value = FALSE;
 
 		// FIXME: waiting for WP 5.0 to use `meta_box_sanitize_cb` in the user tax
+		// @REF: https://make.wordpress.org/core/2019/01/23/improved-taxonomy-metabox-sanitization-in-5-1/
+
 		// FIXME: alse the tax must change back to non-hierarchical
 		// $value = $user->user_login;
 

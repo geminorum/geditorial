@@ -131,7 +131,7 @@ class Config extends gEditorial\Module
 		$can = $this->cuc( 'settings' );
 
 		$items[] = HTML::tag( $can ? 'a' : 'span', [
-			'href'  => $can ? get_admin_url( NULL, 'options-permalink.php' ) : FALSE,
+			'href'  => $can ? get_admin_url( NULL, 'options-permalink.php' ) : FALSE, // needs `manage_options`
 			'title' => _x( 'You need to flush rewrite rules!', 'Module', GEDITORIAL_TEXTDOMAIN ),
 			'class' => '-flush-rules',
 		], _x( 'Flush Rewrite Rules', 'Modules: Config', GEDITORIAL_TEXTDOMAIN ) );

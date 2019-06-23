@@ -106,7 +106,7 @@ class GCalEvents extends gEditorial\Widget
 		$instance['title_link'] = strip_tags( $new['title_link'] );
 		$instance['context']    = strip_tags( $new['context'] );
 		$instance['class']      = strip_tags( $new['class'] );
-		$instance['empty']      = wp_kses_post( $new['empty'] );
+		$instance['empty']      = wp_kses_post( $new['empty'] ); // FIXME: use `Helper::kses()`
 
 		$instance['calendar_id']  = strip_tags( $new['calendar_id'] );
 		$instance['api_key']      = strip_tags( $new['api_key'] );

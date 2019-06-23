@@ -129,7 +129,7 @@ class WPRestPosts extends gEditorial\Widget
 		$instance['title_link'] = strip_tags( $new['title_link'] );
 		$instance['context']    = strip_tags( $new['context'] );
 		$instance['class']      = strip_tags( $new['class'] );
-		$instance['empty']      = wp_kses_post( $new['empty'] );
+		$instance['empty']      = wp_kses_post( $new['empty'] ); // FIXME: use `Helper::kses()`
 
 		$instance['resource']   = esc_url( $new['resource'] );
 		$instance['endpoint']   = strip_tags( $new['endpoint'] );

@@ -91,7 +91,7 @@ class CustomHTML extends gEditorial\Widget
 		if ( current_user_can( 'unfiltered_html' ) )
 			$instance['content'] = $new['content'];
 		else
-			$instance['content'] = wp_kses_post( $new['content'] );
+			$instance['content'] = wp_kses_post( $new['content'] ); // FIXME: use `Helper::kses()`
 
 		$instance['embeds']     = isset( $new['embeds'] );
 		$instance['shortcodes'] = isset( $new['shortcodes'] );
