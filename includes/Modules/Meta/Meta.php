@@ -139,7 +139,7 @@ class Meta extends gEditorial\Module
 			'post' => [
 				'ot' => [ 'type' => 'title_before' ],
 				'st' => [ 'type' => 'title_after' ],
-				'le' => [ 'type' => 'box' ],
+				'le' => [ 'type' => 'postbox_legacy' ],
 				'as' => [ 'type' => 'text' ],
 				'ct' => [
 					'type' => 'term',
@@ -333,11 +333,6 @@ class Meta extends gEditorial\Module
 					ModuleMetaBox::legacy_fieldString( $field, [ $field ], $post, $args['ltr'], $args['title'], FALSE, $args['type'] );
 
 				break;
-				case 'note':
-
-					ModuleMetaBox::legacy_fieldTextarea( $field, [ $field ], $post, $args['ltr'], $args['title'], FALSE, $args['type'] );
-
-				break;
 				case 'code':
 				case 'link':
 
@@ -349,6 +344,7 @@ class Meta extends gEditorial\Module
 					ModuleMetaBox::legacy_fieldNumber( $field, [ $field ], $post, TRUE, $args['title'], FALSE, $args['type'] );
 
 				break;
+				case 'note':
 				case 'textarea':
 
 					ModuleMetaBox::legacy_fieldTextarea( $field, [ $field ], $post, $args['ltr'], $args['title'], FALSE, $args['type'] );
@@ -402,7 +398,7 @@ class Meta extends gEditorial\Module
 						ModuleMetaBox::legacy_fieldTitle( $field, [ $field ], $post, $args['ltr'], $args['title'], FALSE, $args['type'] );
 					break;
 
-					case 'box':
+					case 'postbox_legacy':
 						ModuleMetaBox::legacy_fieldBox( $field, [ $field ], $post, $args['ltr'], $args['title'] );
 					break;
 				}
@@ -458,9 +454,9 @@ class Meta extends gEditorial\Module
 							ModuleMetaBox::setPostMetaField_String( $postmeta, $field );
 
 						break;
-						case 'textarea':
 						case 'note':
-						case 'box':
+						case 'textarea':
+						case 'postbox_legacy':
 
 							ModuleMetaBox::setPostMetaField_Text( $postmeta, $field );
 					}

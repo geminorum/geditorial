@@ -9,7 +9,7 @@ jQuery(function ($) {
     $(this).insertAfter('#titlewrap').show();
   });
 
-  $("[data-meta-type='box']").each(function () {
+  $("[data-meta-type='postbox_legacy']").each(function () {
     $(this).parents('div.postbox').appendTo('#titlediv');
   });
 

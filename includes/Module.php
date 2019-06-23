@@ -1066,9 +1066,11 @@ class Module extends Base
 
 			$args = isset( $all[$field] ) && is_array( $all[$field] ) ? $all[$field] : [];
 
-			if ( ! isset( $args['context'] ) && isset( $args['type'] ) )
-				$args['context'] = in_array( $args['type'], [ 'box', 'title_before', 'title_after' ] )
-					? 'dbx' : 'box';
+			if ( ! isset( $args['context'] ) && isset( $args['type'] ) ) {
+
+				if ( in_array( $args['type'], [ 'postbox_legacy', 'title_before', 'title_after' ] ) )
+					$args['context'] = 'dbx';
+			}
 
 			if ( ! isset( $args['icon'] ) )
 				$args['icon'] = $this->get_field_icon( $field, $posttype, $args );

@@ -260,7 +260,7 @@ class Meta extends gEditorial\MetaBox
 		echo HTML::tag( 'input', $atts );
 	}
 
-	public static function legacy_fieldBox( $field, $fields, $post, $ltr = FALSE, $title = NULL, $key = FALSE, $type = 'box' )
+	public static function legacy_fieldBox( $field, $fields, $post, $ltr = FALSE, $title = NULL, $key = FALSE, $type = 'postbox_legacy' )
 	{
 		if ( ! in_array( $field, $fields ) )
 			return;
