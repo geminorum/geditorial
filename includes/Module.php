@@ -2989,6 +2989,8 @@ class Module extends Base
 			], [ $this, 'template_archive_content' ] );
 
 			$this->filter_append( 'post_class', 'archive-entry' );
+			$this->filter( 'post_type_archive_title', 2 );
+			$this->filter( 'gtheme_navigation_crumb_archive', 2 );
 		}
 
 		$this->enqueue_styles();
@@ -3029,8 +3031,24 @@ class Module extends Base
 		if ( $title = $this->get_setting( 'archive_title', FALSE ) )
 			return $title;
 
-		$object = PostType::object( $posttype );
-		return $object->labels->all_items;
+		return PostType::object( $posttype )->labels->all_items;
+	}
+
+	// no need to check for posttype
+	public function post_type_archive_title( $name, $posttype )
+	{
+		if ( $title = $this->get_setting( 'archive_title', FALSE ) )
+			return $title;
+
+		return $name;
+	}
+
+	public function gtheme_navigation_crumb_archive( $crumb, $args )
+	{
+		if ( $title = $this->get_setting( 'archive_title', FALSE ) )
+			return $title;
+
+		return $crumb;
 	}
 
 	// DEFAULT METHOD: content for overrided archive page
