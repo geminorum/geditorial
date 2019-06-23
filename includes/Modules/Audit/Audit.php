@@ -620,7 +620,7 @@ class Audit extends gEditorial\Module
 			'none_value'   => '0',
 			'default'      => $args['user_id'],
 			'option_group' => 'reports',
-			'cap'          => 'read',
+			'cap'          => TRUE,
 		] );
 
 		echo '&nbsp;';
