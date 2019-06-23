@@ -1262,9 +1262,10 @@ class Terms extends gEditorial\Module
 			return $items;
 
 		$noopd = _nx_noop( '%s Uncategorized Post', '%s Uncategorized Posts', 'Modules: Terms', GEDITORIAL_TEXTDOMAIN );
+		$link  = $this->cuc( 'tools' ) ? $this->get_module_url( 'tools' ) : add_query_arg( [ 'cat' => get_option( 'default_category' ) ], admin_url( 'edit.php' ) );
 
 		$items[] = HTML::tag( 'a', [
-			'href'  => add_query_arg( [ 'cat' => get_option( 'default_category' ) ], admin_url( 'edit.php' ) ),
+			'href'  => $link,
 			'title' => _x( 'You need to assign categories to some posts!', 'Modules: Terms', GEDITORIAL_TEXTDOMAIN ),
 			'class' => '-uncategorized-count',
 		], sprintf( Helper::noopedCount( count( $list ), $noopd ), Number::format( count( $list ) ) ) );
