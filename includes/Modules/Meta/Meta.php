@@ -87,6 +87,7 @@ class Meta extends gEditorial\Module
 					'source_title' => _x( 'Source Title', 'Modules: Meta: Titles', GEDITORIAL_TEXTDOMAIN ),
 					'source_url'   => _x( 'Source URL', 'Modules: Meta: Titles', GEDITORIAL_TEXTDOMAIN ),
 					'highlight'    => _x( 'Highlight', 'Modules: Meta: Titles', GEDITORIAL_TEXTDOMAIN ),
+					'dashboard'    => _x( 'Dashboard', 'Modules: Meta: Titles', GEDITORIAL_TEXTDOMAIN ),
 				],
 				'author' => _x( 'Author', 'Modules: Meta: Titles', GEDITORIAL_TEXTDOMAIN ),
 				'source' => _x( 'Source', 'Modules: Meta: Titles', GEDITORIAL_TEXTDOMAIN ),
@@ -104,6 +105,7 @@ class Meta extends gEditorial\Module
 					'source_title' => _x( 'Original Title of Source Content', 'Modules: Meta: Descriptions', GEDITORIAL_TEXTDOMAIN ),
 					'source_url'   => _x( 'Full URL to the Source of the Content', 'Modules: Meta: Descriptions', GEDITORIAL_TEXTDOMAIN ),
 					'highlight'    => _x( 'A Short Note Highlighted About the Post', 'Modules: Meta: Descriptions', GEDITORIAL_TEXTDOMAIN ),
+					'dashboard'    => _x( 'Custom HTML Content on the Dashboard', 'Modules: Meta: Descriptions', GEDITORIAL_TEXTDOMAIN ),
 				],
 			],
 			'noops' => [
@@ -139,7 +141,7 @@ class Meta extends gEditorial\Module
 			'post' => [
 				'ot' => [ 'type' => 'title_before' ],
 				'st' => [ 'type' => 'title_after' ],
-				'le' => [ 'type' => 'postbox_legacy' ],
+				'le' => [ 'type' => 'postbox_html' ], // OLD: 'postbox_legacy'
 				'as' => [ 'type' => 'text' ],
 				'ct' => [
 					'type' => 'term',
@@ -150,6 +152,7 @@ class Meta extends gEditorial\Module
 				'source_title' => [ 'type' => 'text' ],
 				'source_url'   => [ 'type' => 'link' ],
 				'highlight'    => [ 'type' => 'note' ],
+				'dashboard'    => [ 'type' => 'postbox_tiny' ],
 			],
 			'page' => [
 				'ot' => [ 'type' => 'title_before' ],
@@ -276,6 +279,14 @@ class Meta extends gEditorial\Module
 
 				else if ( $raw_callback && is_callable( $raw_callback ) )
 					add_action( 'dbx_post_sidebar', $raw_callback, 10, 1 );
+
+				$lone_callback = $this->filters( 'lone_callback', in_array( 'lone', $contexts ), $screen->post_type );
+
+				if ( TRUE === $lone_callback )
+					call_user_func_array( [ $this, 'register_lone_default' ], [ $screen ] );
+
+				else if ( $lone_callback && is_callable( $lone_callback ) )
+					call_user_func_array( $lone_callback, [ $screen ] );
 
 				add_action( 'geditorial_meta_render_metabox', [ $this, 'render_metabox' ], 10, 4 );
 
@@ -409,6 +420,58 @@ class Meta extends gEditorial\Module
 		$this->nonce_field( 'post_raw' );
 	}
 
+	public function register_lone_default( $screen )
+	{
+		$fields = $this->get_posttype_fields( $screen->post_type );
+
+		if ( count( $fields ) ) {
+
+			foreach ( $fields as $field => $args ) {
+
+				switch ( $args['type'] ) {
+
+					case 'postbox_html':
+					case 'postbox_tiny':
+
+						$metabox = $this->classs( $screen->post_type, $field );
+
+						MetaBox::classEditorBox( $screen, $metabox );
+
+						add_meta_box( $metabox,
+							$args['title'],
+							[ $this, 'lone_postbox_html_callback' ],
+							$screen,
+							'after_title',
+							'high',
+							[
+								'posttype'   => $screen->post_type,
+								'metabox'    => $metabox,
+								'field_name' => $field,
+								'field_args' => $args,
+							]
+						);
+
+					break;
+				}
+			}
+		}
+	}
+
+	public function lone_postbox_html_callback( $post, $box )
+	{
+		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
+			return;
+
+		ModuleMetaBox::legacy_fieldEditorBox(
+			$box['args']['field_name'],
+			$post,
+			$box['args']['field_args']['ltr'],
+			$box['args']['field_args']['title'],
+			FALSE,
+			$box['args']['field_args']['type']
+		);
+	}
+
 	public function sanitize_post_meta( $postmeta, $fields, $post_id, $posttype )
 	{
 		if ( $this->nonce_verify( 'post_main' ) || $this->nonce_verify( 'post_raw' ) ) {
@@ -457,6 +520,7 @@ class Meta extends gEditorial\Module
 						case 'note':
 						case 'textarea':
 						case 'postbox_legacy':
+						case 'postbox_html':
 
 							ModuleMetaBox::setPostMetaField_Text( $postmeta, $field );
 					}

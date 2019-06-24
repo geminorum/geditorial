@@ -1070,6 +1070,9 @@ class Module extends Base
 
 				if ( in_array( $args['type'], [ 'postbox_legacy', 'title_before', 'title_after' ] ) )
 					$args['context'] = 'raw';
+
+				else if ( in_array( $args['type'], [ 'postbox_html', 'postbox_tiny' ] ) )
+					$args['context'] = 'lone';
 			}
 
 			if ( ! isset( $args['icon'] ) )

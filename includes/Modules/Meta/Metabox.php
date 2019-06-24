@@ -306,4 +306,20 @@ class Meta extends gEditorial\MetaBox
 
 		echo $html;
 	}
+
+	public static function legacy_fieldEditorBox( $field, $post, $ltr = FALSE, $title = NULL, $key = FALSE, $type = 'postbox_html' )
+	{
+		$id   = 'geditorial-meta-'.$field.( FALSE === $key ? '' : '-'.$key );
+		$atts = [
+			'textarea_name' => 'geditorial-meta-'.$field.( FALSE === $key ? '' : '['.$key.']' ),
+			'editor_class'  => 'editor-status-counts textarea-autosize geditorial-meta-field-'.$field.' geditorial-meta-type-'.$type,
+			'editor_css'    => apply_filters( 'geditorial_meta_'.$type.'_css', '', $type, $field, $post ),
+			'tinymce'       => 'postbox_tiny' == $type,
+		];
+
+		if ( is_null( $title ) )
+			$title = self::getString( $field, $post->post_type );
+
+		parent::fieldEditorBox( self::getPostMeta( $post->ID, $field ), $id, $title, $atts );
+	}
 }
