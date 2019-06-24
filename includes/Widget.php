@@ -497,8 +497,10 @@ class Widget extends \WP_Widget
 			'echo'             => FALSE,
 		] );
 
-		if ( ! $html )
+		if ( ! $html ) {
 			$html = ' '.Plugin::na();
+			HTML::inputHidden( $this->get_field_name( $field ), $page_id );
+		}
 
 		HTML::label( $label.$html, $this->get_field_id( $field ) );
 	}
