@@ -12,7 +12,7 @@
   ul.geditorial-specs-new {} // FOR JQUERY SELECTOR
 
   ol {
-    list-style: none;
+    list-style: none !important;
     margin: 0;
 
     li {

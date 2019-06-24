@@ -36,9 +36,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-#after_title-sortables {
-  min-height: 10px; // to show the drop spot
-  margin: 10px 0 0;
+#postbox-container-after-title {
+  float: none;
+
+  > .meta-box-sortables {
+    min-height: 10px; // to show the drop spot
+    margin: 10px 0 0;
+  }
 }
 
 #wp-content-editor-tools {
