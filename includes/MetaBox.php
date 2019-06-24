@@ -531,7 +531,7 @@ class MetaBox extends Core\Base
 		$args = self::args( $atts, [
 			'media_buttons' => FALSE,
 			'textarea_rows' => 5,
-			'editor_class'  => 'editor-status-counts i18n-multilingual', // qtranslate-x
+			'editor_class'  => 'editor-status-counts textarea-autosize i18n-multilingual', // qtranslate-x
 			'teeny'         => TRUE,
 			'tinymce'       => FALSE,
 			'quicktags'     => [ 'buttons' => 'link,em,strong,li,ul,ol,code' ],
