@@ -359,7 +359,7 @@ class Plugin
 	// @REF: https://core.trac.wordpress.org/ticket/45283
 	public function add_meta_boxes( $posttype, $post )
 	{
-		if ( PostType::supportBlocks( $posttype ) )
+		if ( PostType::supportBlocksByPost( $post ) )
 			return;
 
 		add_action( 'edit_form_after_title', [ $this, 'edit_form_after_title' ] );
