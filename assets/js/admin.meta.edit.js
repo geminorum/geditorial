@@ -1,14 +1,14 @@
 /* global inlineEditPost */
 
 (function ($) {
+  var fields = $.extend({}, {
+    ot: false,
+    st: false,
+    as: false
+  }, gEditorial.meta.fields);
+
   $('#the-list').on('click', '.editinline', function () {
     inlineEditPost.revert(); // revert Quick Edit menu so that it refreshes properly
-
-    var fields = $.extend({}, {
-      ot: false,
-      st: false,
-      as: false
-    }, gEditorial.meta.fields);
 
     var tagID = $(this).parents('tr').attr('id');
     var postTitleLabel = $(':input[name="post_title"]', '.inline-edit-row').parents('label');
