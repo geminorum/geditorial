@@ -554,38 +554,38 @@ class Collect extends gEditorial\Module
 			return;
 
 		echo $this->wrap_open( '-admin-metabox' );
+
+		if ( ! Taxonomy::hasTerms( $this->constant( 'collection_tax' ) ) ) {
+
+			MetaBox::fieldEmptyPostType( $this->constant( 'collection_cpt' ) );
+
+		} else {
+
 			$this->actions( 'render_metabox_supported', $post, $box, NULL, NULL );
 
 			do_action( 'geditorial_meta_render_metabox', $post, $box, NULL, 'collection' );
+		}
 
 		echo '</div>';
 	}
 
 	public function render_metabox( $post, $box, $fields = NULL, $context = 'main' )
 	{
+		$dropdowns = $excludes = [];
 		$posttype  = $this->constant( 'collection_cpt' );
 		$terms     = Taxonomy::getTerms( $this->constant( 'collection_tax' ), $post->ID, TRUE );
-		$dropdowns = $excludes = [];
 
 		foreach ( $terms as $term ) {
 			$dropdowns[$term->slug] = MetaBox::dropdownAssocPosts( $posttype, $term->slug, $this->classs() );
 			$excludes[] = $term->slug;
 		}
 
-		if ( empty( $terms ) || $this->get_setting( 'multiple_instances', FALSE ) )
+		if ( $this->get_setting( 'multiple_instances', FALSE ) )
 			$dropdowns[0] = MetaBox::dropdownAssocPosts( $posttype, '', $this->classs(), $excludes );
 
-		$empty = TRUE;
-
-		foreach ( $dropdowns as $term_slug => $dropdown ) {
-			if ( $dropdown ) {
+		foreach ( $dropdowns as $dropdown )
+			if ( $dropdown )
 				echo $dropdown;
-				$empty = FALSE;
-			}
-		}
-
-		if ( $empty )
-			MetaBox::fieldEmptyPostType( $posttype );
 	}
 
 	public function render_metabox_main( $post, $box )
