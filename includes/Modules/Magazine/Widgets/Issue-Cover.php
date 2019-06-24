@@ -1,4 +1,4 @@
-<?php namespace geminorum\gEditorial\Widgets\Magazine;
+<?php namespace geminorum\gEditorial\Magazine\Widgets;
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 

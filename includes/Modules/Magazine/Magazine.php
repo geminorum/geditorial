@@ -359,9 +359,9 @@ class Magazine extends gEditorial\Module
 
 	public function widgets_init()
 	{
-		$this->require_code( 'Widgets' );
+		$this->require_code( 'Widgets/Issue-Cover' );
 
-		register_widget( '\\geminorum\\gEditorial\\Widgets\\Magazine\\IssueCover' );
+		register_widget( '\\geminorum\\gEditorial\\Magazine\\Widgets\\IssueCover' );
 	}
 
 	public function meta_init()
