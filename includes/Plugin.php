@@ -367,7 +367,9 @@ class Plugin
 
 	public function edit_form_after_title( $post )
 	{
-		do_meta_boxes( get_current_screen(), 'after_title', $post );
+		echo '<div id="postbox-container-after-title" class="postbox-container">';
+			do_meta_boxes( get_current_screen(), 'after_title', $post );
+		echo '</div>';
 	}
 
 	// @REF: https://github.com/danieltj27/Dark-Mode/wiki/Help:-Plugin-Compatibility-Guide
