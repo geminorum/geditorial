@@ -638,7 +638,7 @@ class Meta extends gEditorial\Module
 
 	public function quick_edit_custom_box( $column_name, $posttype )
 	{
-		if ( $this->hook() != $column_name )
+		if ( $this->classs() != $column_name )
 			return FALSE;
 
 		$fields = $this->posttype_fields( $posttype );
