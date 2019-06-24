@@ -1,4 +1,4 @@
-<?php namespace geminorum\gEditorial\Widgets\Collect;
+<?php namespace geminorum\gEditorial\Collect\Widgets;
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
@@ -23,9 +23,8 @@ class CollectionPoster extends gEditorial\Widget
 
 	public function widget( $args, $instance )
 	{
-		if ( ! $instance['latest_collection']
-			&& ! $instance['page_id']
-			&& ! is_singular() )
+		if ( empty( $instance['latest_collection'] )
+			&& empty( $instance['page_id'] ) && ! is_singular() )
 				return;
 
 		if ( ! empty( $instance['latest_collection'] ) )

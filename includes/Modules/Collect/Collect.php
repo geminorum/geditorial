@@ -361,9 +361,9 @@ class Collect extends gEditorial\Module
 
 	public function widgets_init()
 	{
-		$this->require_code( 'Widgets' );
+		$this->require_code( 'Widgets/Collection-Poster' );
 
-		register_widget( '\\geminorum\\gEditorial\\Widgets\\Collect\\CollectionPoster' );
+		register_widget( '\\geminorum\\gEditorial\\Collect\\Widgets\\CollectionPoster' );
 	}
 
 	public function meta_init()
