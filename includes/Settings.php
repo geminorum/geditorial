@@ -229,6 +229,16 @@ class Settings extends Core\Base
 		];
 	}
 
+	public static function getSetting_widget_support( $description = NULL )
+	{
+		return [
+			'field'       => 'widget_support',
+			'title'       => _x( 'Default Widgets', 'Settings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+			'description' => $description ?: '',
+			'default'     => '0',
+		];
+	}
+
 	public static function getSetting_shortcode_support( $description = NULL )
 	{
 		return [

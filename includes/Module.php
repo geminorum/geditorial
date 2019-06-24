@@ -112,7 +112,7 @@ class Module extends Base
 		if ( method_exists( $this, 'wp_loaded' ) )
 			$this->action( 'wp_loaded' );
 
-		if ( method_exists( $this, 'widgets_init' ) )
+		if ( method_exists( $this, 'widgets_init' ) && $this->get_setting( 'widget_support' ) )
 			$this->action( 'widgets_init' );
 
 		if ( ! $ajax && method_exists( $this, 'tinymce_strings' ) )

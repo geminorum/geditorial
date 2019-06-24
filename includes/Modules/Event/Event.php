@@ -47,6 +47,7 @@ class Event extends gEditorial\Module
 			],
 			'_supports' => [
 				'comment_status',
+				'widget_support',
 				'thumbnail_support',
 				$this->settings_supports_option( 'event_cpt', TRUE ),
 			],

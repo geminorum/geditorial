@@ -56,6 +56,14 @@ class Widgets extends gEditorial\Module
 		return $list;
 	}
 
+	protected function setup( $args = [] )
+	{
+		parent::setup( $args );
+
+		// override checks!
+		$this->action( 'widgets_init' );
+	}
+
 	public function widgets_init()
 	{
 		$widgets = $this->get_setting( 'widgets', [] );

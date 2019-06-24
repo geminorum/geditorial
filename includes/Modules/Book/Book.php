@@ -50,6 +50,7 @@ class Book extends gEditorial\Module
 			],
 			'_supports' => [
 				'comment_status',
+				'widget_support',
 				'shortcode_support',
 				'thumbnail_support',
 				$this->settings_supports_option( 'publication_cpt', TRUE ),
