@@ -339,9 +339,9 @@ class Book extends gEditorial\Module
 
 	public function widgets_init()
 	{
-		$this->require_code( 'Widgets' );
+		$this->require_code( 'Widgets/Publication-Cover' );
 
-		register_widget( '\\geminorum\\gEditorial\\Widgets\\Book\\PublicationCover' );
+		register_widget( '\\geminorum\\gEditorial\\Book\\Widgets\\PublicationCover' );
 	}
 
 	public function init()
