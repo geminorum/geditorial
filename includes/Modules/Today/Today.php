@@ -524,12 +524,14 @@ class Today extends gEditorial\Module
 				'all'     => TRUE,
 			], $constants );
 
-			ModuleHelper::theDayNewConnected( $posttypes, $the_day );
+			if ( $buttons = ModuleHelper::theDayNewConnected( $posttypes, $the_day ) )
+				echo $buttons.'<br />';
 
 			HTML::tableList( [
-				'type'  => Helper::tableColumnPostType(),
+				'_cb'   => 'ID',
 				'title' => Helper::tableColumnPostTitle(),
 				'terms' => Helper::tableColumnPostTerms(),
+				'type'  => Helper::tableColumnPostType(),
 			], $posts, [
 				'empty' => _x( 'No posts with day information found.', 'Modules: Today', GEDITORIAL_TEXTDOMAIN ),
 			] );
@@ -721,7 +723,10 @@ class Today extends gEditorial\Module
 		// TODO: next/prev day buttons
 		// TODO: next/perv month button
 
-		ModuleHelper::theDayNewConnected( $posttypes, $this->the_day, ( empty( $this->the_post[0] ) ? TRUE : $this->the_post[0]->ID ) );
+		$buttons = ModuleHelper::theDayNewConnected( $posttypes, $this->the_day, ( empty( $this->the_post[0] ) ? TRUE : $this->the_post[0]->ID ) );
+
+		if ( $buttons )
+			echo $buttons.'<br />';
 
 		if ( count( $posts ) ) {
 
@@ -731,6 +736,7 @@ class Today extends gEditorial\Module
 			echo '</ul>';
 
 		} else {
+
 			HTML::desc( _x( 'Nothing happened!', 'Modules: Today', GEDITORIAL_TEXTDOMAIN ) );
 		}
 

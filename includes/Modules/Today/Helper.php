@@ -492,6 +492,6 @@ class Today extends gEditorial\Helper
 			}
 		}
 
-		echo HTML::wrap( $html, 'field-wrap -buttons' );
+		return HTML::wrap( $html, 'field-wrap -buttons' );
 	}
 }
