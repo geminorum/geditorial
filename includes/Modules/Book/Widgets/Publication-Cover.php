@@ -23,9 +23,8 @@ class PublicationCover extends gEditorial\Widget
 
 	public function widget( $args, $instance )
 	{
-		if ( ! $instance['page_id']
-			&& ! is_singular() )
-				return;
+		if ( empty( $instance['page_id'] ) && ! is_singular() )
+			return;
 
 		if ( ! empty( $instance['page_id'] ) )
 			$prefix = '_publication_'.$instance['page_id'];

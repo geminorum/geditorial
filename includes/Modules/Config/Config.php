@@ -36,7 +36,7 @@ class Config extends gEditorial\Module
 
 	protected function setup( $args = [] )
 	{
-		parent::setup();
+		parent::setup( $args );
 
 		if ( WordPress::isAJAX() )
 			$this->_hook_ajax();

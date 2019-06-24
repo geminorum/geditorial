@@ -222,8 +222,8 @@ class Event extends gEditorial\Module
 			'Widgets/Currents',
 		] );
 
-		register_widget( '\\geminorum\\gEditorial\\Widgets\\Event\\Poster' );
-		register_widget( '\\geminorum\\gEditorial\\Widgets\\Event\\Currents' );
+		register_widget( '\\geminorum\\gEditorial\\Event\\Widgets\\Poster' );
+		register_widget( '\\geminorum\\gEditorial\\Event\\Widgets\\Currents' );
 	}
 
 	public function init()
