@@ -283,34 +283,48 @@ class Specs extends gEditorial\Module
 
 	public function render_metabox( $post, $box, $fields = NULL, $context = 'main' )
 	{
-		$tax = $this->constant( 'specs_tax' );
+		$taxonomy = $this->constant( 'specs_tax' );
 
-		if ( ! Taxonomy::hasTerms( $tax ) )
-			return MetaBox::fieldEmptyTaxonomy( $tax );
+		if ( ! Taxonomy::hasTerms( $taxonomy ) )
+			return MetaBox::fieldEmptyTaxonomy( $taxonomy );
 
-		$terms = Taxonomy::getTerms( $tax, $post->ID, TRUE );
+		$terms = Taxonomy::getTerms( $taxonomy, $post->ID, TRUE );
 		$metas = $this->get_postmeta( $post->ID, FALSE, [] );
 
-		$handle = '<span data-icon="dashicons" class="-handle dashicons dashicons-move" title="'._x( 'Sort me!', 'Modules: Specs: Sortable Handler', GEDITORIAL_TEXTDOMAIN ).'"></span>';
-		$delete = '<span data-icon="dashicons" class="-delete dashicons dashicons-trash" title="'._x( 'Trash me!', 'Modules: Specs: Sortable Trash', GEDITORIAL_TEXTDOMAIN ).'"></span>';
+		$handle = sprintf( '<span data-icon="dashicons" class="-handle dashicons dashicons-move" title="%s"></span>',
+			_x( 'Sort me!', 'Modules: Specs: Sortable Handler', GEDITORIAL_TEXTDOMAIN ) );
+
+		$delete = sprintf( '<span data-icon="dashicons" class="-delete dashicons dashicons-trash" title="%s"></span>',
+			_x( 'Trash me!', 'Modules: Specs: Sortable Trash', GEDITORIAL_TEXTDOMAIN ) );
 
 		echo '<ol class="geditorial-specs-list -sortable">';
+
 		foreach ( $metas as $order => $meta ) {
 
 			echo '<li><div class="item-head">';
-
 				echo $handle.'<span class="-excerpt">';
-					$title = ( isset( $meta['spec_title'] ) && $meta['spec_title'] ) ? $meta['spec_title'] : ( isset( $meta['spec_term_id'] ) && $meta['spec_term_id'] ? $terms[$meta['spec_term_id']]->name : _x( 'Unknown Field', 'Modules: Specs', GEDITORIAL_TEXTDOMAIN ) );
-					$title.= ( isset( $meta['spec_value'] ) && $meta['spec_value'] ? ': '.$meta['spec_value'] : '' );
-					echo Text::subStr( $title, 0, 28 );
-				echo '</span>'.$delete;
 
+					if ( ! empty( $meta['spec_title'] ) )
+						$title = $meta['spec_title'];
+
+					else if ( ! empty( $meta['spec_term_id'] ) )
+						$title = $terms[$meta['spec_term_id']]->name;
+
+					else
+						$title = _x( 'Unknown Field', 'Modules: Specs', GEDITORIAL_TEXTDOMAIN );
+
+					if ( ! empty( $meta['spec_value'] ) )
+						$title.= sprintf( ': %s', $meta['spec_value'] );
+
+					echo Text::subStr( $title, 0, 28 );
+
+				echo '</span>'.$delete;
 			echo '</div><div class="item-body"><div class="field-wrap-group">';
 
 			$this->render_metabox_item( $order, $fields, $post, $meta );
 
 			$html = wp_dropdown_categories( [
-				'taxonomy'         => $tax,
+				'taxonomy'         => $taxonomy,
 				'selected'         => ( isset( $meta['spec_term_id'] ) ? $terms[$meta['spec_term_id']]->term_id : 0 ),
 				'show_option_none' => $this->get_string( 'show_option_none', $post->post_type, 'misc' ),
 				'name'             => 'geditorial-specs_term_id[]',
@@ -341,7 +355,7 @@ class Specs extends gEditorial\Module
 
 				// FIXME: we need custom for disabled options
 				$html = wp_dropdown_categories( [
-					'taxonomy'         => $tax,
+					'taxonomy'         => $taxonomy,
 					'selected'         => 0,
 					'show_option_none' => $this->get_string( 'show_option_none', $post->post_type, 'misc' ),
 					'name'             => 'geditorial-specs_term_id[]',

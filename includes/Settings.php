@@ -164,6 +164,7 @@ class Settings extends Core\Base
 			'attachment',
 			'inbound_message',
 			'amp_validated_url',
+			'guest-author', // Co-Authors Plus
 			'bp-email',
 			'wp_block',
 		], (array) $extra );

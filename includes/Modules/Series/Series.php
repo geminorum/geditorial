@@ -220,19 +220,20 @@ class Series extends gEditorial\Module
 
 	public function render_metabox( $post, $box, $fields = NULL, $context = 'main' )
 	{
-		$tax = $this->constant( 'series_tax' );
+		$taxonomy = $this->constant( 'series_tax' );
 
-		if ( ! Taxonomy::hasTerms( $tax ) )
-			return MetaBox::fieldEmptyTaxonomy( $tax );
+		if ( ! Taxonomy::hasTerms( $taxonomy ) )
+			return MetaBox::fieldEmptyTaxonomy( $taxonomy );
 
-		$series    = Taxonomy::getTerms( $tax, $post->ID, TRUE );
-		$dropdowns = $posts = $map = [];
-		$i         = 1;
+		$terms = Taxonomy::getTerms( $taxonomy, $post->ID, TRUE );
+		$posts = $dropdowns = $map = [];
+		$i     = 1;
 
-		foreach ( $series as $the_term ) {
+		foreach ( $terms as $term ) {
+
 			$dropdowns[$i] = wp_dropdown_categories( [
-				'taxonomy'         => $tax,
-				'selected'         => $the_term->term_id,
+				'taxonomy'         => $taxonomy,
+				'selected'         => $term->term_id,
 				'show_option_none' => $this->get_string( 'show_option_none', 'post', 'misc' ),
 				'name'             => 'geditorial-series-terms['.$i.']',
 				'id'               => 'geditorial_series_terms-'.$i,
@@ -242,14 +243,15 @@ class Series extends gEditorial\Module
 				'echo'             => 0,
 			] );
 
-			$posts[$i] = MetaBox::getTermPosts( $tax, $the_term, [ $post->ID ] );
-			$map[$i]   = $the_term->term_id;
+			$posts[$i] = MetaBox::getTermPosts( $taxonomy, $term, [ $post->ID ] );
+			$map[$i]   = $term->term_id;
 			$i++;
 		}
 
-		if ( $this->get_setting( 'multiple_instances', FALSE ) || empty( $series ) )
+		if ( empty( $terms ) || $this->get_setting( 'multiple_instances', FALSE ) ) {
+
 			$dropdowns[0] = wp_dropdown_categories( [
-				'taxonomy'         => $tax,
+				'taxonomy'         => $taxonomy,
 				'selected'         => 0,
 				'show_option_none' => $this->get_string( 'show_option_none', 'post', 'misc' ),
 				'name'             => 'geditorial-series-terms[0]',
@@ -260,20 +262,22 @@ class Series extends gEditorial\Module
 				'echo'             => 0,
 				'exclude'          => $map,
 			] );
+		}
 
 		$map[0] = FALSE;
 
-		foreach ( $dropdowns as $counter => $dropdown ) {
+		foreach ( $dropdowns as $index => $dropdown ) {
+
 			if ( $dropdown ) {
 
 				echo '<div class="field-wrap-group">';
 
 					echo HTML::wrap( $dropdown, 'field-wrap -select' );
 
-					$this->actions( 'render_metabox_item', $counter, $map[$counter], $fields, $post );
+					$this->actions( 'render_metabox_item', $index, $map[$index], $fields, $post );
 
-					if ( $counter && $posts[$counter] )
-						echo $posts[$counter];
+					if ( $index && $posts[$index] )
+						echo $posts[$index];
 
 				echo '</div>';
 			}
