@@ -189,7 +189,14 @@ class PostType extends Core\Base
 		), $image );
 	}
 
-	// @SEE: `use_block_editor_for_post()`
+	public static function supportBlocksByPost( $post )
+	{
+		if ( ! function_exists( 'use_block_editor_for_post' ) )
+			return FALSE;
+
+		return use_block_editor_for_post( $post );
+	}
+
 	public static function supportBlocks( $posttype )
 	{
 		if ( ! function_exists( 'use_block_editor_for_post_type' ) )
