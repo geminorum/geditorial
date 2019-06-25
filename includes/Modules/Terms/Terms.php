@@ -369,25 +369,25 @@ class Terms extends gEditorial\Module
 		if ( ! $taxonomy = self::req( 'taxonomy' ) )
 			return;
 
-		$html = '';
-		$meta = '';
-
 		foreach ( $this->get_supported( $taxonomy ) as $field ) {
 
 			if ( $this->classs( $field ) != $column )
 				continue;
 
+			$html = $meta = '';
+
 			switch ( $field ) {
 				case 'order':
 
-					$html = Listtable::columnOrder( get_term_meta( $term_id, 'order', TRUE ) );
+					$html = Listtable::columnOrder( get_term_meta( $term_id, $field, TRUE ) );
 
 				break;
 				case 'tagline':
 
 					if ( $meta = get_term_meta( $term_id, $field, TRUE ) ) {
 
-						$html = '<span class="'.$field.'" data-'.$field.'="'.$meta.'">'.Helper::prepTitle( $meta ).'</span>';
+						$html = '<span class="'.$field.'" data-'.$field.'="'.HTML::escape( $meta ).'">'
+							.Helper::prepTitle( $meta ).'</span>';
 
 					} else {
 
@@ -406,20 +406,20 @@ class Terms extends gEditorial\Module
 				break;
 				case 'author':
 
-					if ( $meta = get_term_meta( $term_id, 'author', TRUE ) ) {
+					if ( $meta = get_term_meta( $term_id, $field, TRUE ) ) {
 
 						$user = get_user_by( 'id', $meta );
-						$html = '<span class="author" data-author="'.$meta.'">'.$user->display_name.'</span>';
+						$html = '<span class="'.$field.'" data-'.$field.'="'.$meta.'">'.$user->display_name.'</span>';
 
 					} else {
-						$html = $this->field_empty( 'author' );
+						$html = $this->field_empty( $field );
 					}
 
 				break;
 				case 'color':
 
-					if ( $meta = get_term_meta( $term_id, 'color', TRUE ) )
-						$html = '<i class="-color" data-color="'.HTML::escape( $meta )
+					if ( $meta = get_term_meta( $term_id, $field, TRUE ) )
+						$html = '<i class="-color" data-'.$field.'="'.HTML::escape( $meta )
 							.'" style="background-color:'.HTML::escape( $meta ).'"></i>';
 
 				break;
@@ -428,8 +428,8 @@ class Terms extends gEditorial\Module
 					if ( empty( $this->all_roles ) )
 						$this->all_roles = User::getAllRoleList();
 
-					if ( $meta = get_term_meta( $term_id, 'role', TRUE ) )
-						$html = '<span class="role" data-role="'.HTML::escape( $meta ).'">'
+					if ( $meta = get_term_meta( $term_id, $field, TRUE ) )
+						$html = '<span class="'.$field.'" data-'.$field.'="'.HTML::escape( $meta ).'">'
 							.( empty( $this->all_roles[$meta] )
 								? HTML::escape( $meta )
 								: $this->all_roles[$meta] )
@@ -444,12 +444,12 @@ class Terms extends gEditorial\Module
 					if ( empty( $this->all_roles ) )
 						$this->all_roles = User::getAllRoleList();
 
-					if ( $meta = get_term_meta( $term_id, 'roles', TRUE ) ) {
+					if ( $meta = get_term_meta( $term_id, $field, TRUE ) ) {
 
 						$list = [];
 
 						foreach ( (array) $meta as $role )
-							$list[] = '<span class="roles" data-roles="'.HTML::escape( $role ).'">'
+							$list[] = '<span class="'.$field.'" data-'.$field.'="'.HTML::escape( $role ).'">'
 								.( empty( $this->all_roles[$role] )
 									? HTML::escape( $role )
 									: $this->all_roles[$role] )
@@ -458,7 +458,7 @@ class Terms extends gEditorial\Module
 						$html = Helper::getJoined( $list );
 
 					} else {
-						$html = $this->field_empty( 'roles' );
+						$html = $this->field_empty( $field );
 					}
 
 				break;
@@ -467,15 +467,15 @@ class Terms extends gEditorial\Module
 					if ( empty( $this->all_posttypes ) )
 						$this->all_posttypes = PostType::get( 2 );
 
-					if ( $meta = get_term_meta( $term_id, 'posttype', TRUE ) )
-						$html = '<span class="posttype" data-posttype="'.HTML::escape( $meta ).'">'
+					if ( $meta = get_term_meta( $term_id, $field, TRUE ) )
+						$html = '<span class="'.$field.'" data-'.$field.'="'.HTML::escape( $meta ).'">'
 							.( empty( $this->all_posttypes[$meta] )
 								? HTML::escape( $meta )
 								: $this->all_posttypes[$meta] )
 							.'</span>';
 
 					else
-						$html = $this->field_empty( 'posttype' );
+						$html = $this->field_empty( $field );
 
 				break;
 				case 'posttypes':
@@ -483,12 +483,12 @@ class Terms extends gEditorial\Module
 					if ( empty( $this->all_posttypes ) )
 						$this->all_posttypes = PostType::get( 2 );
 
-					if ( $meta = get_term_meta( $term_id, 'posttypes', TRUE ) ) {
+					if ( $meta = get_term_meta( $term_id, $field, TRUE ) ) {
 
 						$list = [];
 
 						foreach ( (array) $meta as $posttype )
-							$list[] = '<span class="posttypes" data-posttypes="'.HTML::escape( $posttype ).'">'
+							$list[] = '<span class="'.$field.'" data-'.$field.'="'.HTML::escape( $posttype ).'">'
 								.( empty( $this->all_posttypes[$posttype] )
 									? HTML::escape( $posttype )
 									: $this->all_posttypes[$posttype] )
@@ -497,7 +497,7 @@ class Terms extends gEditorial\Module
 						$html = Helper::getJoined( $list );
 
 					} else {
-						$html = $this->field_empty( 'posttypes' );
+						$html = $this->field_empty( $field );
 					}
 			}
 
