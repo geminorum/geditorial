@@ -75,13 +75,18 @@
     },
 
     inlineColor: function (tag, event) {
-      var value = $('td.geditorial-terms-color i', '#' + tag).attr('data-color');
+      var value = $('td.' + s.classs + '-color i', '#' + tag).attr('data-color');
       $(':input[name="term-color"]', '.inline-edit-row').val(value);
     },
 
     inlineOrder: function (tag, event) {
-      var value = $('td.geditorial-terms-order span.order', '#' + tag).attr('data-order');
+      var value = $('td.' + s.classs + '-order span.order', '#' + tag).attr('data-order');
       $(':input[name="term-order"]', '.inline-edit-row').val(value);
+    },
+
+    inlineText: function (field, tag, event) {
+      var value = $('td.' + s.classs + '-' + field + ' span.' + field, '#' + tag).attr('data-' + field);
+      $(':input[name="term-' + field + '"]', '.inline-edit-row').val(value);
     },
 
     inlineSelect: function (field, tag, event) {
@@ -107,6 +112,7 @@
       app.inlineImage(tag, event);
       app.inlineColor(tag, event);
       app.inlineOrder(tag, event);
+      app.inlineText('tagline', tag, event);
       app.inlineSelect('author', tag, event);
       app.inlineSelect('role', tag, event);
       app.inlineSelect('posttype', tag, event);
