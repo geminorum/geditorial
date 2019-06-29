@@ -419,8 +419,8 @@ class Cartable extends gEditorial\Module
 
 			add_submenu_page(
 				'index.php',
-				_x( 'Editorial Cartable', 'Modules: Cartable: Page Title', GEDITORIAL_TEXTDOMAIN ),
-				_x( 'My Cartable', 'Modules: Cartable: Menu Title', GEDITORIAL_TEXTDOMAIN ),
+				_x( 'Editorial Cartables', 'Modules: Cartable: Page Title', GEDITORIAL_TEXTDOMAIN ),
+				_x( 'My Cartables', 'Modules: Cartable: Menu Title', GEDITORIAL_TEXTDOMAIN ),
 				'read',
 				$this->get_adminmenu(),
 				[ $this, 'admin_cartable_page' ]
@@ -489,7 +489,7 @@ class Cartable extends gEditorial\Module
 
 		Settings::wrapOpen( $this->key, 'listtable' );
 
-			Settings::headerTitle( _x( 'Editorial Cartable', 'Modules: Cartable: Page Title', GEDITORIAL_TEXTDOMAIN ), FALSE );
+			Settings::headerTitle( _x( 'Editorial Cartables', 'Modules: Cartable: Page Title', GEDITORIAL_TEXTDOMAIN ), FALSE );
 
 			$context = self::req( 'context', $context );
 			$slug    = 'user' == $context ? $slug : self::req( 'slug', $slug ); // prevents access to other users
@@ -581,7 +581,7 @@ class Cartable extends gEditorial\Module
 
 		if ( $this->support_users && $this->role_can( 'view_user', $user_id ) ) {
 
-			$title = _x( 'Your Cartable', 'Modules: Cartable: Dashboard Widget Title', GEDITORIAL_TEXTDOMAIN );
+			$title = _x( 'Your Personal Cartable', 'Modules: Cartable: Dashboard Widget Title', GEDITORIAL_TEXTDOMAIN );
 			$title.= ' <span class="postbox-title-action"><a href="'.esc_url( $this->get_adminmenu( FALSE ) ).'"';
 			$title.= ' title="'._x( 'Click to view all items in this cartable', 'Modules: Cartable: Dashboard Widget Title Action', GEDITORIAL_TEXTDOMAIN ).'">';
 			$title.= _x( 'All Items', 'Modules: Cartable: Dashboard Widget Title Action', GEDITORIAL_TEXTDOMAIN ).'</a></span>';

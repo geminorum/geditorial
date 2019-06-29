@@ -93,7 +93,7 @@ class Estimated extends gEditorial\Module
 
 	public function tweaks_column_attr( $post )
 	{
-		if ( $wordcount = get_post_meta( $post->ID, $this->meta_key, TRUE ) ) {
+		if ( $wordcount = $this->get_postmeta( $post->ID ) ) {
 
 			echo '<li class="-row -estimated -wordcount">';
 
@@ -153,7 +153,7 @@ class Estimated extends gEditorial\Module
 
 	public function get_estimated( $post_id, $prefix = NULL )
 	{
-		if ( ! $wordcount = get_post_meta( $post_id, $this->meta_key, TRUE ) )
+		if ( ! $wordcount = $this->get_postmeta( $post_id ) )
 			$wordcount = $this->get_post_wordcount( $post_id, TRUE );
 
 		if ( $this->get_setting( 'min_words', 250 ) > $wordcount )

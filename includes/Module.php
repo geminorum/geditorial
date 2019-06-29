@@ -1692,6 +1692,7 @@ class Module extends Base
 
 			'can_export'       => TRUE,
 			'delete_with_user' => FALSE,
+			// 'exclude_from_search' => FALSE,
 
 			// @SEE: https://github.com/torounit/custom-post-type-permalinks
 			'cptp_permalink_structure' => $this->constant( $constant.'_permalink', FALSE ), // will lock the permalink
@@ -2001,6 +2002,9 @@ class Module extends Base
 			return $fallback;
 
 		$setting = $this->get_setting( $what.$prefix, [] );
+
+		if ( empty( $setting ) && ! $admins )
+			return $fallback;
 
 		if ( $admins )
 			$setting = array_merge( $setting, [ 'administrator' ] );

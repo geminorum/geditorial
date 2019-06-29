@@ -87,7 +87,7 @@ class Importer extends gEditorial\Module
 		$parser   = new \KzykHys\CsvParser\CsvParser( $iterator, [ 'encoding' => 'UTF-8', 'limit' => 1 ] );
 		$items    = $parser->parse();
 
-		$map    = $this->get_postmeta( $id, FALSE, [], $this->meta_key.'_map' );
+		$map    = $this->get_postmeta( $id, FALSE, [] );
 		$fields = $this->get_importer_fields( $posttype );
 
 		echo '<table class="base-table-raw"><tbody>';
@@ -181,15 +181,15 @@ class Importer extends gEditorial\Module
 		];
 
 		HTML::tableList( $pre + $columns, $data, [
-			'map'      => $selected,
-			'check'    => [ $this, 'form_table_check' ],
-			'callback' => [ $this, 'form_table_callback' ],
-			'extra'    => [ 'post_type' => $posttype ],
-			'title'    => HTML::tag( 'h3', Helper::getCounted( count( $data ), _x( '%s Records Found', 'Modules: Importer', GEDITORIAL_TEXTDOMAIN ) ) ),
+			'map'       => $selected,
+			'row_check' => [ $this, 'form_table_row_check' ],
+			'callback'  => [ $this, 'form_table_callback' ],
+			'extra'     => [ 'post_type' => $posttype ],
+			'title'     => HTML::tag( 'h3', Helper::getCounted( count( $data ), _x( '%s Records Found', 'Modules: Importer', GEDITORIAL_TEXTDOMAIN ) ) ),
 		] );
 	}
 
-	public function form_table_check( $row, $index, $args )
+	public function form_table_row_check( $row, $index, $args )
 	{
 		return count( $row ) > 1; // empty rows have one empty cells
 	}

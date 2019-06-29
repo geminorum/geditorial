@@ -821,8 +821,10 @@ class Magazine extends gEditorial\Module
 				'count' => [
 					'title'    => _x( 'Count', 'Modules: Magazine: Table Column', GEDITORIAL_TEXTDOMAIN ),
 					'callback' => function( $value, $row, $column, $index ){
+
 						if ( $post_id = PostType::getIDbySlug( $row->slug, $this->constant( 'issue_cpt' ) ) )
 							return Number::format( $this->get_linked_posts( $post_id, 'issue_cpt', 'issue_tax', TRUE ) );
+
 						return Number::format( $row->count );
 					},
 				],
