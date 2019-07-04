@@ -237,7 +237,7 @@ class WordPress extends Base
 			'post_title'   => $term->name,
 			'post_name'    => $term->slug,
 			'post_content' => $term->description,
-			'post_status'  => 'draft',
+			'post_status'  => 'pending',
 			'post_author'  => $user_id ? $user_id : get_current_user_id(),
 			'post_type'    => $posttype,
 		);
