@@ -15,7 +15,7 @@ class Reshare extends gEditorial\Module
 			'name'  => 'reshare',
 			'title' => _x( 'Reshare', 'Modules: Reshare', GEDITORIAL_TEXTDOMAIN ),
 			'desc'  => _x( 'Contents from Other Sources', 'Modules: Reshare', GEDITORIAL_TEXTDOMAIN ),
-			'icon'  => 'external',
+			'icon'  => 'share-alt',
 		];
 	}
 

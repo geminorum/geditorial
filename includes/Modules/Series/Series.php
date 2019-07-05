@@ -71,9 +71,9 @@ class Series extends gEditorial\Module
 			],
 			'descriptions' => [
 				'post' => [
-					'in_series_title' => _x( 'In Series Title', 'Modules: Series', GEDITORIAL_TEXTDOMAIN ),
-					'in_series_order' => _x( 'In Series Order', 'Modules: Series', GEDITORIAL_TEXTDOMAIN ),
-					'in_series_desc'  => _x( 'In Series Description', 'Modules: Series', GEDITORIAL_TEXTDOMAIN ),
+					'in_series_title' => _x( 'In Serie Title', 'Modules: Series', GEDITORIAL_TEXTDOMAIN ),
+					'in_series_order' => _x( 'In Serie Order', 'Modules: Series', GEDITORIAL_TEXTDOMAIN ),
+					'in_series_desc'  => _x( 'In Serie Description', 'Modules: Series', GEDITORIAL_TEXTDOMAIN ),
 				],
 			],
 			'misc' => [
@@ -82,7 +82,7 @@ class Series extends gEditorial\Module
 				'show_option_none'    => _x( '&mdash; Choose a Series &mdash;', 'Modules: Series', GEDITORIAL_TEXTDOMAIN ),
 			],
 			'noops' => [
-				'series_tax' => _nx_noop( 'Series', 'Series', 'Modules: Series: Noop', GEDITORIAL_TEXTDOMAIN ),
+				'series_tax' => _nx_noop( 'Serie', 'Series', 'Modules: Series: Noop', GEDITORIAL_TEXTDOMAIN ),
 			],
 		];
 	}
