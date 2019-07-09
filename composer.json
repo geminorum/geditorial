@@ -20,7 +20,7 @@
     "source": "https://github.com/geminorum/geditorial"
   },
   "require": {
-    "php": ">=5.5.10",
+    "php": ">=5.6.20",
     "composer/installers": "^1.6",
     "mustache/mustache": "^2.12",
     "kzykhys/php-csv-parser": "^1.4",
@@ -30,7 +30,7 @@
     "rarst/wpdatetime": "^0.3.0"
   },
   "require-dev": {
-    "nesbot/carbon": "^1.37",
+    "nesbot/carbon": "^1.39",
     "evert/sitemap-php": "^1.2",
     "eluceo/ical": "^0.11.4",
     "johngrogg/ics-parser": "^2.1",
@@ -45,7 +45,7 @@
     "vendor-dir": "assets/vendor",
     "vendor/bin": "assets/bin",
     "platform": {
-      "php": "5.6.37"
+      "php": "5.6.20"
     }
   },
   "autoload": {
