@@ -225,7 +225,8 @@ class ShortCode extends Core\Base
 		], $atts );
 
 		$text = Helper::getPostTitle( $post, FALSE );
-		$link = $post && in_array( $post->post_status, [ 'publish', 'inherit' ] ) ? get_permalink( $post ) : '';
+		$link = $post && in_array( $post->post_status, [ 'publish', 'inherit' ] )
+			? apply_filters( 'the_permalink', get_permalink( $post ), $post ) : '';
 
 		if ( $args['title_cb'] && is_callable( $args['title_cb'] ) )
 			$args['title'] = call_user_func_array( $args['title_cb'], [ $post, $atts, $text, $link ] );
@@ -292,7 +293,8 @@ class ShortCode extends Core\Base
 		], $atts );
 
 		$text = Helper::getPostTitle( $post, FALSE );
-		$link = in_array( $post->post_status, [ 'publish', 'inherit' ] ) ? get_permalink( $post ) : '';
+		$link = in_array( $post->post_status, [ 'publish', 'inherit' ] )
+			? apply_filters( 'the_permalink', get_permalink( $post ), $post ) : '';
 
 		if ( is_null( $args['item_text'] ) )
 			$item = $text;

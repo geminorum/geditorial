@@ -297,16 +297,14 @@ class Template extends Core\Base
 		if ( ! $post = get_post( $args['id'] ) )
 			return $args['default'];
 
-		$args['id'] = $post->ID;
-
-		$title     = self::getPostField( $args['title'], $args['id'], FALSE );
-		$status    = get_post_status( $args['id'] );
-		$thumbnail = get_post_meta( $args['id'], '_thumbnail_id', TRUE );
+		$title     = self::getPostField( $args['title'], $post->ID, FALSE );
+		$status    = get_post_status( $post );
+		$thumbnail = get_post_meta( $post->ID, '_thumbnail_id', TRUE );
 
 		if ( $args['link'] ) {
 
 			if ( 'parent' == $args['link'] )
-				$args['link'] = 'publish' == $status ? get_permalink( $args['id'] ) : FALSE;
+				$args['link'] = 'publish' == $status ? apply_filters( 'the_permalink', get_permalink( $post ), $post ) : FALSE;
 
 			else if ( 'attachment' == $args['link'] )
 				$args['link'] = ( $thumbnail && 'publish' == $status ) ? get_attachment_link( $thumbnail ) : FALSE;
@@ -332,10 +330,10 @@ class Template extends Core\Base
 		} else if ( $args['fallback'] && 'publish' == $status ) {
 
 			$html = HTML::tag( 'a', [
-				'href'  => get_permalink( $args['id'] ),
+				'href'  => apply_filters( 'the_permalink', get_permalink( $post ), $post ),
 				'title' => $title,
 				'data'  => $args['data'],
-			], get_the_title( $args['id'] ) );
+			], get_the_title( $post ) );
 		}
 
 		if ( $html ) {
