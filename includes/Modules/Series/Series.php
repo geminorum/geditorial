@@ -39,6 +39,9 @@ class Series extends gEditorial\Module
 			'_supports' => [
 				'shortcode_support',
 			],
+			'_editlist' => [
+				'admin_restrict',
+			],
 		];
 	}
 
@@ -135,8 +138,16 @@ class Series extends gEditorial\Module
 				$this->_admin_enabled();
 
 				$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
+
+				if ( $this->get_setting( 'admin_restrict' ) )
+					$this->action( 'restrict_manage_posts', 2, 12 );
 			}
 		}
+	}
+
+	public function restrict_manage_posts( $posttype, $which )
+	{
+		$this->do_restrict_manage_posts_taxes( 'series_tax' );
 	}
 
 	public function store_metabox( $post_id, $post, $update, $context = 'main' )
