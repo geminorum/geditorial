@@ -369,7 +369,7 @@ class Series extends gEditorial\Module
 			array_merge( [
 				'title_after' => '<div class="-desc">%3$s</div>',
 				'item_wrap'   => 'h4',
-				'item_after'  => '<h6>%1$s</h6><div class="summary">%3$s</div>', // use meta data after
+				'item_after'  => TRUE, // see the callback
 				'item_cb'     => [ $this, 'series_shortcode_item_cb' ],
 				'order_cb'    => [ $this, 'series_shortcode_order_cb' ],
 				'orderby'     => 'order',
@@ -421,25 +421,24 @@ class Series extends gEditorial\Module
 
 	public function series_shortcode_item_cb( $post, $args, $term )
 	{
-		if ( TRUE === $args['item_after'] )
-			$args['item_after'] = '<h6>%1$s</h6><div class="summary">%3$s</div>';
+		if ( ! empty( $post->series_meta ) ) {
 
-		if ( isset( $post->series_meta )
-			&& ( isset( $post->series_meta['in_series_title'] )
-				|| isset( $post->series_meta['in_series_desc'] ) ) ) {
+			if ( TRUE === $args['item_after'] )
+				$args['item_after'] = '<h6>%1$s</h6><div class="summary">%3$s</div>';
 
-			$args['item_after'] = sprintf( $args['item_after'],
-				isset( $post->series_meta['in_series_title'] )
-					? Helper::prepTitle( $post->series_meta['in_series_title'], $post->ID )
-					: '',
-				'#', // used for links
-				isset( $post->series_meta['in_series_desc'] )
-					? Helper::prepDescription( $post->series_meta['in_series_desc'] )
-					: '',
-				isset( $post->series_meta['in_series_desc'] )
-					? Text::trimChars( $post->series_meta['in_series_desc'] )
-					: ''
-			);
+			$title = empty( $post->series_meta['in_series_title'] )
+				? '' // no need to duplicate title
+				: Helper::prepTitle( $post->series_meta['in_series_title'], $post->ID );
+
+			$desc = empty( $post->series_meta['in_series_desc'] )
+				? '' // no need to use excerpt as desc
+				: Helper::prepDescription( $post->series_meta['in_series_desc'] );
+
+			$args['item_after'] = sprintf( $args['item_after'], $title, '%2$s', $desc, '%4$s' );
+
+		} else if ( TRUE === $args['item_after'] ) {
+
+			$args['item_after'] = '';
 		}
 
 		return ShortCode::postItem( $post, $args );
