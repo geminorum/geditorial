@@ -22,7 +22,7 @@ class Terms extends gEditorial\Module
 {
 
 	protected $partials  = [ 'Templates' ];
-	protected $supported = [ 'order', 'tagline', 'image', 'author', 'color', 'role', 'roles', 'posttype', 'posttypes' ];
+	protected $supported = [ 'order', 'tagline', 'contact', 'image', 'author', 'color', 'role', 'roles', 'posttype', 'posttypes' ];
 
 	public static function module()
 	{
@@ -51,6 +51,13 @@ class Terms extends gEditorial\Module
 					'title'       => _x( 'Term Tagline', 'Modules: Terms: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Supports tagline for terms in the selected taxonomies.', 'Modules: Terms: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 					'values'      => $this->get_taxonomies_support( 'tagline' ),
+				],
+				[
+					'field'       => 'term_contact',
+					'type'        => 'taxonomies',
+					'title'       => _x( 'Term Tagline', 'Modules: Terms: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'description' => _x( 'Supports contact for terms in the selected taxonomies.', 'Modules: Terms: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'values'      => $this->get_taxonomies_support( 'contact' ),
 				],
 				[
 					'field'       => 'term_image',
@@ -115,6 +122,7 @@ class Terms extends gEditorial\Module
 			'titles' => [
 				'order'     => _x( 'Order', 'Modules: Terms: Titles', GEDITORIAL_TEXTDOMAIN ),
 				'tagline'   => _x( 'Tagline', 'Modules: Terms: Titles', GEDITORIAL_TEXTDOMAIN ),
+				'contact'   => _x( 'Contact', 'Modules: Terms: Titles', GEDITORIAL_TEXTDOMAIN ),
 				'image'     => _x( 'Image', 'Modules: Terms: Titles', GEDITORIAL_TEXTDOMAIN ),
 				'author'    => _x( 'Author', 'Modules: Terms: Titles', GEDITORIAL_TEXTDOMAIN ),
 				'color'     => _x( 'Color', 'Modules: Terms: Titles', GEDITORIAL_TEXTDOMAIN ),
@@ -126,6 +134,7 @@ class Terms extends gEditorial\Module
 			'descriptions' => [
 				'order'     => _x( 'Terms are usually ordered alphabetically, but you can choose your own order by numbers.', 'Modules: Terms: Descriptions', GEDITORIAL_TEXTDOMAIN ),
 				'tagline'   => _x( 'Give more information about the term in a short, bite-size phrase.', 'Modules: Terms: Descriptions', GEDITORIAL_TEXTDOMAIN ),
+				'contact'   => _x( 'Adds a way to contact someone about the term, by url, email or phone.', 'Modules: Terms: Descriptions', GEDITORIAL_TEXTDOMAIN ),
 				'image'     => _x( 'Assign a custom image to visually separate terms from each other.', 'Modules: Terms: Descriptions', GEDITORIAL_TEXTDOMAIN ),
 				'author'    => _x( 'Set term author to help identify who created or owns each term.', 'Modules: Terms: Descriptions', GEDITORIAL_TEXTDOMAIN ),
 				'color'     => _x( 'Terms can have unique colors to help separate them from each other.', 'Modules: Terms: Descriptions', GEDITORIAL_TEXTDOMAIN ),
@@ -137,6 +146,7 @@ class Terms extends gEditorial\Module
 			'misc' => [
 				'order_column_title'     => _x( 'O', 'Modules: Terms: Column Title', GEDITORIAL_TEXTDOMAIN ),
 				'tagline_column_title'   => _x( 'Tagline', 'Modules: Terms: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'contact_column_title'   => _x( 'Contact', 'Modules: Terms: Column Title', GEDITORIAL_TEXTDOMAIN ),
 				'image_column_title'     => _x( 'Image', 'Modules: Terms: Column Title', GEDITORIAL_TEXTDOMAIN ),
 				'author_column_title'    => _x( 'Author', 'Modules: Terms: Column Title', GEDITORIAL_TEXTDOMAIN ),
 				'color_column_title'     => _x( 'C', 'Modules: Terms: Column Title', GEDITORIAL_TEXTDOMAIN ),
@@ -324,6 +334,7 @@ class Terms extends gEditorial\Module
 
 			break;
 			case 'tagline':
+			case 'contact':
 			default:
 				$position = [ 'name', 'after' ];
 		}
@@ -358,7 +369,7 @@ class Terms extends gEditorial\Module
 			return $columns;
 
 		foreach ( $this->get_supported( $taxonomy ) as $field )
-			if ( ! in_array( $field, [ 'tagline', 'image', 'roles', 'posttypes' ] ) )
+			if ( ! in_array( $field, [ 'tagline', 'contact', 'image', 'roles', 'posttypes' ] ) )
 				$columns[$this->classs( $field )] = 'meta_'.$field;
 
 		return $columns;
@@ -388,6 +399,19 @@ class Terms extends gEditorial\Module
 
 						$html = '<span class="'.$field.'" data-'.$field.'="'.HTML::escape( $meta ).'">'
 							.Helper::prepTitle( $meta ).'</span>';
+
+					} else {
+
+						$html = $this->field_empty( $field, '' );
+					}
+
+				break;
+				case 'contact':
+
+					if ( $meta = get_term_meta( $term_id, $field, TRUE ) ) {
+
+						$html = '<span class="'.$field.'" data-'.$field.'="'.HTML::escape( $meta ).'">'
+							.Helper::prepContact( $meta ).'</span>';
 
 					} else {
 
@@ -746,6 +770,18 @@ class Terms extends gEditorial\Module
 				] );
 
 			break;
+			case 'contact':
+
+				$html.= HTML::tag( 'input', [
+					'id'    => $this->classs( $field, 'id' ),
+					'name'  => 'term-'.$field,
+					'type'  => 'text',
+					'value' => empty( $meta ) ? '' : $meta,
+					'class' => [ 'code' ],
+					'data'  => [ 'ortho' => 'code' ],
+				] );
+
+			break;
 			default:
 
 				$html.= HTML::tag( 'input', [
@@ -835,6 +871,17 @@ class Terms extends gEditorial\Module
 					'name'       => 'term-'.$field,
 					'selected'   => '0',
 					'none_title' => Settings::showOptionNone(),
+				] );
+
+			break;
+			case 'contact':
+
+				$html.= HTML::tag( 'input', [
+					'name'  => 'term-'.$field,
+					'type'  => 'text',
+					'value' => '',
+					'class' => [ 'ptitle', 'code' ],
+					'data'  => [ 'ortho' => 'code' ],
 				] );
 
 			break;
@@ -954,6 +1001,14 @@ class Terms extends gEditorial\Module
 
 						if ( $meta = get_term_meta( $term->term_id, $field, TRUE ) )
 							$node['title'].= ': '.Helper::prepTitle( $meta );
+						else
+							$node['title'].= ': '.gEditorial\Plugin::na();
+
+					break;
+					case 'contact':
+
+						if ( $meta = get_term_meta( $term->term_id, $field, TRUE ) )
+							$node['title'].= ': '.Helper::prepContact( $meta );
 						else
 							$node['title'].= ': '.gEditorial\Plugin::na();
 
