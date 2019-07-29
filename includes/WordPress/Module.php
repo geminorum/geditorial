@@ -27,7 +27,7 @@ class Module extends Core\Base
 
 	protected static function sanitize_hook( $hook )
 	{
-		return trim( str_ireplace( [ '-', '.' ], '_', $hook ) );
+		return trim( str_ireplace( [ '-', '.', '/' ], '_', $hook ) );
 	}
 
 	protected static function sanitize_base( $hook )
@@ -136,6 +136,14 @@ class Module extends Core\Base
 	{
 		add_filter( $hook, function( $first ){
 			return 0;
+		}, $priority, 1 );
+	}
+
+	// USAGE: $this->filter_empty_array( 'option_blog_public' );
+	protected function filter_empty_array( $hook, $priority = 10 )
+	{
+		add_filter( $hook, function( $first ){
+			return [];
 		}, $priority, 1 );
 	}
 
