@@ -73,16 +73,19 @@ class Template extends Core\Base
 		if ( $link )
 			$html = '<a title="'.HTML::escape( $args['figure'] ? self::getTermField( 'title', $args['id'], $args['taxonomy'] ) : $title ).'" href="'.$link.'">'.$html.'</a>';
 
+		// enable custom caption
+		if ( FALSE === $args['figure'] && $args['caption_text'] )
+			$args['figure'] = TRUE;
+
 		if ( $title && $args['figure'] ) {
 
+			$caption = $args['caption_text'] ?: $title;
+
 			if ( TRUE === $args['caption_link'] && $link )
-				$caption = HTML::link( $title, $link );
+				$caption = HTML::link( $caption, $link );
 
 			else if ( $args['caption_link'] )
-				$caption = HTML::link( $title, $args['caption_link'] );
-
-			else
-				$caption = $title;
+				$caption = HTML::link( $caption, $args['caption_link'] );
 
 			$html = '<figure'.( TRUE === $args['figure'] ? '' : ' class="'.$args['figure'].'"' ).'>'.$html.'<figcaption>'.$caption.'</figcaption></figure>';
 		}
@@ -111,6 +114,7 @@ class Template extends Core\Base
 			'data'         => [ 'toggle' => 'tooltip' ],
 			'callback'     => [ __CLASS__, 'termImageCallback' ],
 			'figure'       => FALSE, // or class of the figure
+			'caption_text' => FALSE, // custom figcaption text
 			'caption_link' => FALSE, // custom figcaption link / TRUE for default
 			'fallback'     => FALSE,
 			'default'      => FALSE,
