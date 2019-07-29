@@ -7,6 +7,7 @@ use geminorum\gEditorial\Core\HTTP;
 use geminorum\gEditorial\Core\Icon;
 use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\Text;
+use geminorum\gEditorial\Core\URL;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\Taxonomy;
@@ -139,6 +140,23 @@ class Helper extends Core\Base
 		$text = apply_filters( 'gnetwork_typography', $text );
 
 		return $autop ? wpautop( $text ) : $text;
+	}
+
+	public static function prepContact( $value, $title = NULL )
+	{
+		if ( is_email( $value ) )
+			$prepared = HTML::mailto( $value, $title );
+
+		else if ( URL::isValid( $value ) )
+			$prepared = HTML::link( $title, URL::untrail( $value ) );
+
+		else if ( is_numeric( str_ireplace( [ '+', '-', '.' ], '', $value ) ) )
+			$prepared = HTML::tel( $value, FALSE, $title );
+
+		else
+			$prepared = HTML::escape( $value );
+
+		return apply_filters( static::BASE.'_prep_contact', $prepared, $value, $title );
 	}
 
 	// @SOURCE: P2
