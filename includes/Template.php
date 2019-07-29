@@ -103,7 +103,7 @@ class Template extends Core\Base
 		$args = self::atts( [
 			'id'           => NULL,
 			'size'         => NULL,
-			'alt'          => FALSE,
+			'alt'          => NULL, // null for $args['title']
 			'class'        => '-term-image',
 			'taxonomy'     => '',
 			'link'         => 'archive',
@@ -144,6 +144,9 @@ class Template extends Core\Base
 			else if ( 'url' == $args['link'] )
 				$args['link'] = ( $thumbnail && $viewable ) ? wp_get_attachment_url( $thumbnail ) : FALSE;
 		}
+
+		if ( is_null( $args['alt'] ) )
+			$args['alt'] = $title;
 
 		$image = self::getTermImageTag( $args );
 
