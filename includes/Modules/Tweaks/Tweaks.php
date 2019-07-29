@@ -420,7 +420,7 @@ class Tweaks extends gEditorial\Module
 			remove_meta_box( 'authordiv', $screen, 'normal' );
 			remove_meta_box( 'slugdiv', $screen, 'normal' );
 
-			add_filter( $this->base.'_module_metabox_author', '__return_false' );
+			$this->filter_false( $this->base.'_module_metabox_author' );
 
 			add_meta_box( $this->classs( 'mainbox' ),
 				$object->labels->attributes,

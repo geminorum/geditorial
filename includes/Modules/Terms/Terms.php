@@ -55,7 +55,7 @@ class Terms extends gEditorial\Module
 				[
 					'field'       => 'term_contact',
 					'type'        => 'taxonomies',
-					'title'       => _x( 'Term Tagline', 'Modules: Terms: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Term Contact', 'Modules: Terms: Setting Title', GEDITORIAL_TEXTDOMAIN ),
 					'description' => _x( 'Supports contact for terms in the selected taxonomies.', 'Modules: Terms: Setting Description', GEDITORIAL_TEXTDOMAIN ),
 					'values'      => $this->get_taxonomies_support( 'contact' ),
 				],
