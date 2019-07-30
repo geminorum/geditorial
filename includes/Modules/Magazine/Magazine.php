@@ -856,6 +856,21 @@ class Magazine extends gEditorial\Module
 					] );
 
 				} else if ( isset( $_POST['_cb'] )
+					&& isset( $_POST['issue_empty_desc'] ) ) {
+
+					$args  = [ 'description' => '' ];
+					$count = 0;
+
+					foreach ( $_POST['_cb'] as $term_id )
+						if ( wp_update_term( $term_id, $this->constant( 'issue_tax' ), $args ) )
+							$count++;
+
+					WordPress::redirectReferer( [
+						'message' => 'purged',
+						'count'   => $count,
+					] );
+
+				} else if ( isset( $_POST['_cb'] )
 					&& isset( $_POST['issue_post_connect'] ) ) {
 
 					$terms = Taxonomy::getTerms( $this->constant( 'issue_tax' ), FALSE, TRUE );
@@ -987,6 +1002,9 @@ class Magazine extends gEditorial\Module
 
 		Settings::submitButton( 'issue_store_order',
 			_x( 'Store Orders', 'Modules: Magazine: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
+
+		Settings::submitButton( 'issue_empty_desc',
+			_x( 'Empty Term Descriptions', 'Modules: Magazine: Setting Button', GEDITORIAL_TEXTDOMAIN ), 'danger', TRUE );
 
 		Settings::submitButton( 'issue_tax_delete',
 			_x( 'Delete Terms', 'Modules: Magazine: Setting Button', GEDITORIAL_TEXTDOMAIN ), 'danger', TRUE );
