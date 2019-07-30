@@ -13,21 +13,4 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-.geditorial-wrap.-admin-widgetform {
-  @include mainwrap();
-  margin-bottom: 2em;
-
-  p {
-    select {
-      width: 100%;
-    }
-  }
-
-  > .-group {
-    margin: 1em 0;
-
-    p {
-      margin: 0;
-    }
-  }
-}
+// @SEE: gNetwork: `_admin.widgets.scss`

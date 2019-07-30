@@ -29,12 +29,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 .inside ul.-pointers li {
 
-  // Config Module
-  .-flush-rules::before {
-    color: $brand-danger !important;
-    content: "\f225" !important;
-  }
-
   // Terms Module
   .-uncategorized-count::before {
     color: $brand-warning !important;
