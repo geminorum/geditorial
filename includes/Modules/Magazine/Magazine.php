@@ -5,6 +5,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\MetaBox;
+use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\Core\HTML;
@@ -818,6 +819,26 @@ class Magazine extends gEditorial\Module
 						return '&mdash;';
 					},
 				],
+				'thumb_image' => [
+					'title'    => _x( 'Thumbnail Image', 'Modules: Magazine: Table Column', GEDITORIAL_TEXTDOMAIN ),
+					'class'    => 'thumb-column',
+					'callback' => function( $value, $row, $column, $index ){
+						$html = '';
+
+						if ( $post_id = $this->get_linked_post_id( $row, 'issue_cpt', 'issue_tax', FALSE ) )
+							$html = PostType::htmlFeaturedImage( $post_id, [ 45, 72 ] );
+
+						return $html ?: '&mdash;';
+					},
+				],
+				'term_image' => [
+					'title'    => _x( 'Term Image', 'Modules: Magazine: Table Column', GEDITORIAL_TEXTDOMAIN ),
+					'class'    => 'thumb-column',
+					'callback' => function( $value, $row, $column, $index ){
+						$html = Taxonomy::htmlFeaturedImage( $row->term_id, [ 45, 72 ] );
+						return $html ?: '&mdash;';
+					},
+				],
 				'count' => [
 					'title'    => _x( 'Count', 'Modules: Magazine: Table Column', GEDITORIAL_TEXTDOMAIN ),
 					'callback' => function( $value, $row, $column, $index ){
@@ -951,5 +972,7 @@ class Magazine extends gEditorial\Module
 				}
 			}
 		}
+
+		Scripts::enqueueThickBox();
 	}
 }
