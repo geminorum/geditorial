@@ -130,10 +130,11 @@ class Widget extends \WP_Widget
 		return FALSE;
 	}
 
-	public function before_widget( $args, $instance, $echo = TRUE )
+	public function before_widget( $args, $instance, $extra_class = '', $echo = TRUE )
 	{
 		$classes = isset( $instance['context'] ) && $instance['context'] ? 'context-'.sanitize_html_class( $instance['context'], 'general' ).' ' : '';
 		$classes.= isset( $instance['class'] ) && $instance['class'] ? $instance['class'].' ' : '';
+		$classes.= $extra_class.' ';
 
 		$html = preg_replace( '%{GEDITORIAL_WIDGET_CLASSNAME}%', $classes, $args['before_widget'] );
 
@@ -211,7 +212,7 @@ class Widget extends \WP_Widget
 
 	public function before_form( $instance, $echo = TRUE )
 	{
-		$classes = [ static::BASE.'wrap', '-admin-widgetform' ];
+		$classes = [ static::BASE.'-wrap', '-wrap', '-admin-widgetform' ];
 
 		if ( static::MODULE )
 			$classes[] = '-'.static::MODULE;
@@ -323,11 +324,16 @@ class Widget extends \WP_Widget
 		HTML::label( _x( 'PostType:', 'Widget Core', GEDITORIAL_TEXTDOMAIN ).$html, $this->get_field_id( $field ) );
 	}
 
-	public function form_taxonomy( $instance, $default = 'post_tag', $field = 'taxonomy', $posttype_field = 'post_type', $posttype_default = 'post' )
+	public function form_taxonomy( $instance, $default = 'all', $field = 'taxonomy', $posttype_field = 'post_type', $posttype_default = 'any', $option_all = 'all' )
 	{
 		$html = '';
 		$type = isset( $instance[$posttype_field] ) ? $instance[$posttype_field] : $posttype_default;
 		$tax  = isset( $instance[$field] ) ? $instance[$field] : $default;
+
+		if ( $option_all )
+			$html.= HTML::tag( 'option', [
+				'value' => $option_all,
+			], _x( '&mdash; All Taxonomies &mdash;', 'Widget Core', GEDITORIAL_TEXTDOMAIN ) );
 
 		foreach ( Taxonomy::get( 0, [], $type ) as $name => $title )
 			$html.= HTML::tag( 'option', [
