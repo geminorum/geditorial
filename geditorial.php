@@ -12,7 +12,6 @@ Network: false
 Text Domain: geditorial
 Domain Path: /languages
 RepoGitHub: geminorum/geditorial
-GitHub URI: https://github.com/geminorum/geditorial
 GitHub Plugin URI: https://github.com/geminorum/geditorial
 Release Asset: true
 Requires WP: 4.9
