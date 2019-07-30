@@ -664,7 +664,7 @@ class Helper extends Core\Base
 			'callback' => function( $value, $row, $column, $index ) {
 				return $row->post_excerpt
 					? wpautop( Helper::prepDescription( $row->post_excerpt, FALSE, FALSE ), FALSE )
-					: '&mdash;';
+					: Helper::htmlEmpty();
 			},
 		];
 	}
@@ -709,7 +709,7 @@ class Helper extends Core\Base
 				if ( $author_data = get_user_by( 'id', $row->post_author ) )
 					return HTML::escape( $author_data->display_name );
 
-				return '<span class="-empty">&mdash;</span>';
+				return self::htmlEmpty();
 			},
 		];
 	}
@@ -770,17 +770,21 @@ class Helper extends Core\Base
 		return $wrap ? HTML::warning( $message, FALSE ) : $message;
 	}
 
+	public static function htmlEmpty( $class = '', $title_attr = NULL )
+	{
+		return is_null( $title_attr )
+			? '<span class="-empty '.$class.'">&mdash;</span>'
+			: sprintf( '<span title="%s" class="-empty '.$class.'">&mdash;</span>', $title_attr );
+	}
+
 	public static function htmlCount( $count, $title_attr = NULL )
 	{
 		if ( is_null( $title_attr ) )
 			$title_attr = _x( 'No Count', 'Helper: No Count Title Attribute', GEDITORIAL_TEXTDOMAIN );
 
-		if ( $count )
-			$html = Number::format( $count );
-		else
-			$html = sprintf( '<span title="%s" class="column-count-empty -empty">&mdash;</span>', $title_attr );
-
-		return $html;
+		return $count
+			? Number::format( $count )
+			: self::htmlEmpty( 'column-count-empty', $title_attr );
 	}
 
 	public static function htmlOrder( $order, $title_attr = NULL )
@@ -799,7 +803,7 @@ class Helper extends Core\Base
 	public static function getDateEditRow( $timestamp, $class = FALSE )
 	{
 		if ( empty( $timestamp ) )
-			return '<span class="-empty">&mdash;</span>';
+			return self::htmlEmpty();
 
 		if ( ! ctype_digit( $timestamp ) )
 			$timestamp = strtotime( $timestamp );

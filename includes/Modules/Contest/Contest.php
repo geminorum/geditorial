@@ -612,7 +612,7 @@ class Contest extends gEditorial\Module
 						if ( $post_id = $this->get_linked_post_id( $row, 'contest_cpt', 'contest_tax', FALSE ) )
 							return Helper::getPostTitleRow( $post_id ).' &ndash; <small>'.$post_id.'</small>';
 
-						return '&mdash;';
+						return Helper::htmlEmpty();
 					},
 				],
 				'slugged'   => [
@@ -622,7 +622,7 @@ class Contest extends gEditorial\Module
 						if ( $post_id = PostType::getIDbySlug( $row->slug, $this->constant( 'contest_cpt' ) ) )
 							return Helper::getPostTitleRow( $post_id ).' &ndash; <small>'.$post_id.'</small>';
 
-						return '&mdash;';
+						return Helper::htmlEmpty();
 					},
 				],
 				'count' => [

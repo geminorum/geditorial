@@ -229,7 +229,7 @@ class Drafts extends gEditorial\Module
 			$html.= '<div class="-block"><h3>'.$link.'</h3><ul>'.$block.'</ul></div>';
 		}
 
-		return $html ? $html :'<div class="-empty"><p>'._x( '(none)', 'Modules: Drafts', GEDITORIAL_TEXTDOMAIN ).'</p></div>';
+		return $html ?:'<div class="-empty"><p>'._x( '(none)', 'Modules: Drafts', GEDITORIAL_TEXTDOMAIN ).'</p></div>';
 	}
 
 	private function get_drafts( $posttype = 'post', $user = 0 )

@@ -920,7 +920,7 @@ class Magazine extends gEditorial\Module
 					if ( $post_id = $this->get_linked_post_id( $row, 'issue_cpt', 'issue_tax', FALSE ) )
 						return Helper::getPostTitleRow( $post_id ).' &ndash; <small>'.$post_id.'</small>';
 
-					return '&mdash;';
+					return Helper::htmlEmpty();
 				},
 			],
 			'slugged' => [
@@ -930,7 +930,7 @@ class Magazine extends gEditorial\Module
 					if ( $post_id = PostType::getIDbySlug( $row->slug, $this->constant( 'issue_cpt' ) ) )
 						return Helper::getPostTitleRow( $post_id ).' &ndash; <small>'.$post_id.'</small>';
 
-					return '&mdash;';
+					return Helper::htmlEmpty();
 				},
 			],
 			'count' => [
@@ -953,7 +953,7 @@ class Magazine extends gEditorial\Module
 					if ( $post_id = $this->get_linked_post_id( $row, 'issue_cpt', 'issue_tax', FALSE ) )
 						$html = PostType::htmlFeaturedImage( $post_id, [ 45, 72 ] );
 
-					return $html ?: '&mdash;';
+					return $html ?: Helper::htmlEmpty();
 				},
 			],
 			'term_image' => [
@@ -961,7 +961,7 @@ class Magazine extends gEditorial\Module
 				'class'    => 'image-column',
 				'callback' => function( $value, $row, $column, $index ){
 					$html = Taxonomy::htmlFeaturedImage( $row->term_id, [ 45, 72 ] );
-					return $html ?: '&mdash;';
+					return $html ?: Helper::htmlEmpty();
 				},
 			],
 		], Taxonomy::getTerms( $this->constant( 'issue_tax' ), FALSE, TRUE ), [

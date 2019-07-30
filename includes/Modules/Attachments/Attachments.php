@@ -285,7 +285,7 @@ class Attachments extends gEditorial\Module
 					if ( $custom = Media::isCustom( $row->ID ) )
 						return strtoupper( str_replace( '_', ' ', $custom ) );
 
-					return '&mdash;';
+					return Helper::htmlEmpty();
 				},
 			],
 			'title' => Helper::tableColumnPostTitle( NULL, TRUE, $custom ),
@@ -295,7 +295,7 @@ class Attachments extends gEditorial\Module
 				'callback' => function( $value, $row, $column, $index ){
 
 					if ( ! $meta = wp_get_attachment_metadata( $row->ID ) )
-						return '&mdash;';
+						return Helper::htmlEmpty();
 
 					$sizes = [];
 
@@ -315,7 +315,7 @@ class Attachments extends gEditorial\Module
 				'callback' => function( $value, $row, $column, $index ){
 
 					if ( ! $meta = wp_get_attachment_metadata( $row->ID ) )
-						return '&mdash;';
+						return Helper::htmlEmpty();
 
 					if ( wp_attachment_is( 'audio', $row->ID ) )
 						return HTML::tableCode( $meta );
@@ -323,7 +323,7 @@ class Attachments extends gEditorial\Module
 					if ( isset( $meta['image_meta'] ) )
 						return HTML::tableCode( $meta['image_meta'] );
 
-					return '&mdash;';
+					return Helper::htmlEmpty();
 				},
 			],
 		], $posts, [

@@ -415,7 +415,7 @@ class Revisions extends gEditorial\Module
 					$html = '';
 
 					if ( ! $revisions = wp_get_post_revisions( $row->ID ) )
-						return '&mdash;';
+						return Helper::htmlEmpty();
 
 					foreach ( $revisions as $revision ) {
 

@@ -740,7 +740,7 @@ class Book extends gEditorial\Module
 						if ( $meta = get_post_meta( $row->ID, $key, TRUE ) )
 							$html.= '<div><b>'.$title.'</b>: '.$meta.'</div>';
 
-					return $html ? $html : '&mdash;';
+					return $html ?: Helper::htmlEmpty();
 				},
 			],
 			'related' => [
@@ -757,7 +757,7 @@ class Book extends gEditorial\Module
 						foreach ( (array) PostType::getIDsByTitle( $title, [ 'post_type' => $column['args']['type'] ] ) as $post_id )
 							$html.= '<div><b>'._x( 'By Title', 'Modules: Book', GEDITORIAL_TEXTDOMAIN ).'</b>: '.Helper::getPostTitleRow( $post_id ).'</div>';
 
-					return $html ? $html : '&mdash;';
+					return $html ?: Helper::htmlEmpty();
 				},
 			],
 		], $posts, [

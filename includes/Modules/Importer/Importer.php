@@ -160,15 +160,15 @@ class Importer extends gEditorial\Module
 				'args'     => [ 'map' => $selected ],
 				'callback' => function( $value, $row, $column, $index ){
 					if ( ! array_key_exists( 'importer_post_title', $column['args']['map'] ) )
-						return '&mdash;';
+						return Helper::htmlEmpty();
 
 					if ( ! $title = trim( $row[$column['args']['map']['importer_post_title']] ) )
-						return '&mdash;';
+						return Helper::htmlEmpty();
 
 					$posts = PostType::getIDsByTitle( $title );
 
 					if ( empty( $posts ) )
-						return '&mdash;';
+						return Helper::htmlEmpty();
 
 					$html = '<div class="-danger">'._x( 'Similar to Title:', 'Modules: Importer: Table Column', GEDITORIAL_TEXTDOMAIN );
 

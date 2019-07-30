@@ -1280,12 +1280,16 @@ class Terms extends gEditorial\Module
 				'callback' => function( $value, $row, $column, $index ){
 
 					$query = new \WP_Term_Query( [ 'object_ids' => $row->ID, 'get' => 'all' ] );
-					$list  = [];
+
+					if ( empty( $query->terms ) )
+						return Helper::htmlEmpty();
+
+					$list = [];
 
 					foreach ( $query->terms as $term )
 						$list[] = '<span title="'.$term->taxonomy.'">'.$term->name.'</span>';
 
-					return Helper::getJoined( $list, '', '', '<span class="-empty">&mdash;</span>' );
+					return Helper::getJoined( $list );
 				},
 			],
 		], $posts, [

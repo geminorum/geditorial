@@ -804,7 +804,7 @@ class Collect extends gEditorial\Module
 						if ( $post_id = $this->get_linked_post_id( $row, 'collection_cpt', 'collection_tax', FALSE ) )
 							return Helper::getPostTitleRow( $post_id ).' &ndash; <small>'.$post_id.'</small>';
 
-						return '&mdash;';
+						return Helper::htmlEmpty();
 					},
 				],
 				'slugged'   => [
@@ -814,7 +814,7 @@ class Collect extends gEditorial\Module
 						if ( $post_id = PostType::getIDbySlug( $row->slug, $this->constant( 'collection_cpt' ) ) )
 							return Helper::getPostTitleRow( $post_id ).' &ndash; <small>'.$post_id.'</small>';
 
-						return '&mdash;';
+						return Helper::htmlEmpty();
 					},
 				],
 				'count' => [
