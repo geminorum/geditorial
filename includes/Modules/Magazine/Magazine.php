@@ -803,6 +803,31 @@ class Magazine extends gEditorial\Module
 					] );
 
 				} else if ( isset( $_POST['_cb'] )
+					&& isset( $_POST['issue_resync_images'] ) ) {
+
+					$meta_key = $this->constant( 'metakey_term_image', 'image' );
+					$count    = 0;
+
+					foreach ( $_POST['_cb'] as $term_id ) {
+
+						if ( ! $post_id = $this->get_linked_post_id( $term_id, 'issue_cpt', 'issue_tax' ) )
+							continue;
+
+						if ( $thumbnail = get_post_thumbnail_id( $post_id ) )
+							update_term_meta( $term_id, $meta_key, $thumbnail );
+
+						else
+							delete_term_meta( $term_id, $meta_key );
+
+						$count++;
+					}
+
+					WordPress::redirectReferer( [
+						'message' => 'synced',
+						'count'   => $count,
+					] );
+
+				} else if ( isset( $_POST['_cb'] )
 					&& ( isset( $_POST['issue_store_order'] )
 						|| isset( $_POST['issue_store_start'] ) ) ) {
 
@@ -956,6 +981,9 @@ class Magazine extends gEditorial\Module
 
 		Settings::submitButton( 'issue_post_connect',
 			_x( 'Re-Connect Posts', 'Modules: Magazine: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
+
+		Settings::submitButton( 'issue_resync_images',
+			_x( 'Sync Images', 'Modules: Magazine: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
 
 		Settings::submitButton( 'issue_store_order',
 			_x( 'Store Orders', 'Modules: Magazine: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
