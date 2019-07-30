@@ -2333,6 +2333,17 @@ class Module extends Base
 
 		update_term_meta( $term->term_id, $this->constant( $posttype_constant_key ).'_linked', $post_id );
 
+		if ( $this->get_setting( 'thumbnail_support' ) ) {
+
+			$meta_key = $this->constant( 'metakey_term_image', 'image' );
+
+			if ( $thumbnail = get_post_thumbnail_id( $post_id ) )
+				update_term_meta( $term->term_id, $meta_key, $thumbnail );
+
+			else
+				delete_term_meta( $term->term_id, $meta_key );
+		}
+
 		return TRUE;
 	}
 
@@ -2348,6 +2359,16 @@ class Module extends Base
 			delete_post_meta( $post_id, '_'.$this->constant( $posttype_constant_key ).'_term_id' );
 
 		delete_term_meta( $term->term_id, $this->constant( $posttype_constant_key ).'_linked' );
+
+		if ( $this->get_setting( 'thumbnail_support' ) ) {
+
+			$meta_key  = $this->constant( 'metakey_term_image', 'image' );
+			$stored    = get_term_meta( $term->term_id, $meta_key, TRUE );
+			$thumbnail = get_post_thumbnail_id( $post_id );
+
+			if ( $stored && $thumbnail && $thumbnail == $stored )
+				delete_term_meta( $term->term_id, $meta_key );
+		}
 
 		return TRUE;
 	}
