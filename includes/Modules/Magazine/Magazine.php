@@ -765,100 +765,6 @@ class Magazine extends gEditorial\Module
 		);
 	}
 
-	protected function render_tools_html( $uri, $sub )
-	{
-		HTML::h3( _x( 'Magazine Tools', 'Modules: Magazine', GEDITORIAL_TEXTDOMAIN ) );
-
-		echo '<table class="form-table">';
-		echo '<tr><th scope="row">'._x( 'From Terms', 'Modules: Magazine', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
-		echo $this->wrap_open_buttons( '-tools' );
-
-		Settings::submitButton( 'issue_tax_check',
-			_x( 'Check Terms', 'Modules: Magazine: Setting Button', GEDITORIAL_TEXTDOMAIN ), TRUE );
-
-		Settings::submitButton( 'issue_post_create',
-			_x( 'Create Issue Posts', 'Modules: Magazine: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
-
-		Settings::submitButton( 'issue_post_connect',
-			_x( 'Re-Connect Posts', 'Modules: Magazine: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
-
-		Settings::submitButton( 'issue_store_order',
-			_x( 'Store Orders', 'Modules: Magazine: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
-
-		Settings::submitButton( 'issue_tax_delete',
-			_x( 'Delete Terms', 'Modules: Magazine: Setting Button', GEDITORIAL_TEXTDOMAIN ), 'danger', TRUE );
-
-		echo '</p>';
-
-		HTML::desc( _x( 'Check for issue terms and create corresponding issue posts.', 'Modules: Magazine', GEDITORIAL_TEXTDOMAIN ) );
-
-		if ( ! empty( $_POST ) && isset( $_POST['issue_tax_check'] ) ) {
-			echo '<br />';
-
-			HTML::tableList( [
-				'_cb'     => 'term_id',
-				'term_id' => Helper::tableColumnTermID(),
-				'name'    => Helper::tableColumnTermName(),
-				'linked'   => [
-					'title'    => _x( 'Linked Issue Post', 'Modules: Magazine: Table Column', GEDITORIAL_TEXTDOMAIN ),
-					'callback' => function( $value, $row, $column, $index ){
-
-						if ( $post_id = $this->get_linked_post_id( $row, 'issue_cpt', 'issue_tax', FALSE ) )
-							return Helper::getPostTitleRow( $post_id ).' &ndash; <small>'.$post_id.'</small>';
-
-						return '&mdash;';
-					},
-				],
-				'slugged'   => [
-					'title' => _x( 'Same Slug Issue Post', 'Modules: Magazine: Table Column', GEDITORIAL_TEXTDOMAIN ),
-					'callback' => function( $value, $row, $column, $index ){
-
-						if ( $post_id = PostType::getIDbySlug( $row->slug, $this->constant( 'issue_cpt' ) ) )
-							return Helper::getPostTitleRow( $post_id ).' &ndash; <small>'.$post_id.'</small>';
-
-						return '&mdash;';
-					},
-				],
-				'thumb_image' => [
-					'title'    => _x( 'Thumbnail Image', 'Modules: Magazine: Table Column', GEDITORIAL_TEXTDOMAIN ),
-					'class'    => 'thumb-column',
-					'callback' => function( $value, $row, $column, $index ){
-						$html = '';
-
-						if ( $post_id = $this->get_linked_post_id( $row, 'issue_cpt', 'issue_tax', FALSE ) )
-							$html = PostType::htmlFeaturedImage( $post_id, [ 45, 72 ] );
-
-						return $html ?: '&mdash;';
-					},
-				],
-				'term_image' => [
-					'title'    => _x( 'Term Image', 'Modules: Magazine: Table Column', GEDITORIAL_TEXTDOMAIN ),
-					'class'    => 'thumb-column',
-					'callback' => function( $value, $row, $column, $index ){
-						$html = Taxonomy::htmlFeaturedImage( $row->term_id, [ 45, 72 ] );
-						return $html ?: '&mdash;';
-					},
-				],
-				'count' => [
-					'title'    => _x( 'Count', 'Modules: Magazine: Table Column', GEDITORIAL_TEXTDOMAIN ),
-					'callback' => function( $value, $row, $column, $index ){
-
-						if ( $post_id = PostType::getIDbySlug( $row->slug, $this->constant( 'issue_cpt' ) ) )
-							return Number::format( $this->get_linked_posts( $post_id, 'issue_cpt', 'issue_tax', TRUE ) );
-
-						return Number::format( $row->count );
-					},
-				],
-				'description' => Helper::tableColumnTermDesc(),
-			], Taxonomy::getTerms( $this->constant( 'issue_tax' ), FALSE, TRUE ), [
-				'empty' => HTML::warning( _x( 'No Terms Found!', 'Modules: Magazine: Table Empty', GEDITORIAL_TEXTDOMAIN ), FALSE ),
-			] );
-		}
-
-		echo '</td></tr>';
-		echo '</table>';
-	}
-
 	public function tools_settings( $sub )
 	{
 		if ( $this->check_settings( $sub, 'tools' ) ) {
@@ -974,5 +880,89 @@ class Magazine extends gEditorial\Module
 		}
 
 		Scripts::enqueueThickBox();
+	}
+
+	protected function render_tools_html( $uri, $sub )
+	{
+		HTML::tableList( [
+			'_cb'     => 'term_id',
+			// 'term_id' => Helper::tableColumnTermID(),
+			'name'    => Helper::tableColumnTermName(),
+			'linked'  => [
+				'title'    => _x( 'Linked Issue Post', 'Modules: Magazine: Table Column', GEDITORIAL_TEXTDOMAIN ),
+				'callback' => function( $value, $row, $column, $index ){
+
+					if ( $post_id = $this->get_linked_post_id( $row, 'issue_cpt', 'issue_tax', FALSE ) )
+						return Helper::getPostTitleRow( $post_id ).' &ndash; <small>'.$post_id.'</small>';
+
+					return '&mdash;';
+				},
+			],
+			'slugged' => [
+				'title'    => _x( 'Same Slug Issue Post', 'Modules: Magazine: Table Column', GEDITORIAL_TEXTDOMAIN ),
+				'callback' => function( $value, $row, $column, $index ){
+
+					if ( $post_id = PostType::getIDbySlug( $row->slug, $this->constant( 'issue_cpt' ) ) )
+						return Helper::getPostTitleRow( $post_id ).' &ndash; <small>'.$post_id.'</small>';
+
+					return '&mdash;';
+				},
+			],
+			'count' => [
+				'title'    => _x( 'Count', 'Modules: Magazine: Table Column', GEDITORIAL_TEXTDOMAIN ),
+				'callback' => function( $value, $row, $column, $index ){
+
+					if ( $post_id = PostType::getIDbySlug( $row->slug, $this->constant( 'issue_cpt' ) ) )
+						return Number::format( $this->get_linked_posts( $post_id, 'issue_cpt', 'issue_tax', TRUE ) );
+
+					return Number::format( $row->count );
+				},
+			],
+			'description' => Helper::tableColumnTermDesc(),
+			'thumb_image' => [
+				'title'    => _x( 'Thumbnail', 'Modules: Magazine: Table Column', GEDITORIAL_TEXTDOMAIN ),
+				'class'    => 'image-column',
+				'callback' => function( $value, $row, $column, $index ){
+					$html = '';
+
+					if ( $post_id = $this->get_linked_post_id( $row, 'issue_cpt', 'issue_tax', FALSE ) )
+						$html = PostType::htmlFeaturedImage( $post_id, [ 45, 72 ] );
+
+					return $html ?: '&mdash;';
+				},
+			],
+			'term_image' => [
+				'title'    => _x( 'Image', 'Modules: Magazine: Table Column', GEDITORIAL_TEXTDOMAIN ),
+				'class'    => 'image-column',
+				'callback' => function( $value, $row, $column, $index ){
+					$html = Taxonomy::htmlFeaturedImage( $row->term_id, [ 45, 72 ] );
+					return $html ?: '&mdash;';
+				},
+			],
+		], Taxonomy::getTerms( $this->constant( 'issue_tax' ), FALSE, TRUE ), [
+			'title' => HTML::tag( 'h3', _x( 'Magazine Tools', 'Modules: Magazine', GEDITORIAL_TEXTDOMAIN ) ),
+			'empty' => _x( 'No Terms Found!', 'Modules: Magazine: Table Empty', GEDITORIAL_TEXTDOMAIN ),
+			'after' => [ $this, 'table_list_after' ],
+		] );
+	}
+
+	public function table_list_after( $columns, $data, $args )
+	{
+		HTML::desc( _x( 'Check for issue terms and create corresponding issue posts.', 'Modules: Magazine', GEDITORIAL_TEXTDOMAIN ) );
+		echo $this->wrap_open_buttons( '-tools' );
+
+		Settings::submitButton( 'issue_post_create',
+			_x( 'Create Issue Posts', 'Modules: Magazine: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
+
+		Settings::submitButton( 'issue_post_connect',
+			_x( 'Re-Connect Posts', 'Modules: Magazine: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
+
+		Settings::submitButton( 'issue_store_order',
+			_x( 'Store Orders', 'Modules: Magazine: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
+
+		Settings::submitButton( 'issue_tax_delete',
+			_x( 'Delete Terms', 'Modules: Magazine: Setting Button', GEDITORIAL_TEXTDOMAIN ), 'danger', TRUE );
+
+		echo '</p>';
 	}
 }
