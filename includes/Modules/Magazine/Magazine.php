@@ -828,6 +828,28 @@ class Magazine extends gEditorial\Module
 					] );
 
 				} else if ( isset( $_POST['_cb'] )
+					&& isset( $_POST['issue_resync_desc'] ) ) {
+
+					$count = 0;
+
+					foreach ( $_POST['_cb'] as $term_id ) {
+
+						if ( ! $post_id = $this->get_linked_post_id( $term_id, 'issue_cpt', 'issue_tax' ) )
+							continue;
+
+						if ( ! $post = get_post( $post_id ) )
+							continue;
+
+						if ( wp_update_term( $term_id, $this->constant( 'issue_tax' ), [ 'description' => $post->post_excerpt ] ) )
+							$count++;
+					}
+
+					WordPress::redirectReferer( [
+						'message' => 'synced',
+						'count'   => $count,
+					] );
+
+				} else if ( isset( $_POST['_cb'] )
 					&& ( isset( $_POST['issue_store_order'] )
 						|| isset( $_POST['issue_store_start'] ) ) ) {
 
@@ -958,7 +980,32 @@ class Magazine extends gEditorial\Module
 					return Number::format( $row->count );
 				},
 			],
-			'description' => Helper::tableColumnTermDesc(),
+			'description' => [
+				'title'    => _x( 'Desc. / Exce.', 'Modules: Magazine: Table Column', GEDITORIAL_TEXTDOMAIN ),
+				'class'    => 'html-column',
+				'callback' => function( $value, $row, $column, $index ){
+
+					if ( empty( $row->description ) )
+						$html = Helper::htmlEmpty();
+					else
+						$html = Helper::prepDescription( $row->description );
+
+					if ( $post_id = $this->get_linked_post_id( $row, 'issue_cpt', 'issue_tax', FALSE ) ) {
+
+						$html.= '<hr />';
+
+						if ( ! $post = get_post( $post_id ) )
+							return $html.gEditorial()->na();
+
+						if ( empty( $post->post_excerpt ) )
+							$html.= Helper::htmlEmpty();
+						else
+							$html.= Helper::prepDescription( $post->post_excerpt );
+					}
+
+					return $html;
+				},
+			],
 			'thumb_image' => [
 				'title'    => _x( 'Thumbnail', 'Modules: Magazine: Table Column', GEDITORIAL_TEXTDOMAIN ),
 				'class'    => 'image-column',
@@ -999,6 +1046,9 @@ class Magazine extends gEditorial\Module
 
 		Settings::submitButton( 'issue_resync_images',
 			_x( 'Sync Images', 'Modules: Magazine: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
+
+		Settings::submitButton( 'issue_resync_desc',
+			_x( 'Sync Descriptions', 'Modules: Magazine: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
 
 		Settings::submitButton( 'issue_store_order',
 			_x( 'Store Orders', 'Modules: Magazine: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
