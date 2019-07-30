@@ -2336,13 +2336,13 @@ class Module extends Base
 		return TRUE;
 	}
 
-	public function rev_linked_term( $post_id, $term_or_id, $posttype_constant_key, $tax_constant_key )
+	public function remove_linked_term( $post_id, $term_or_id, $posttype_constant_key, $tax_constant_key )
 	{
 		if ( ! $term = Taxonomy::getTerm( $term_or_id, $this->constant( $tax_constant_key ) ) )
 			return FALSE;
 
 		if ( ! $post_id )
-			$post_id = $this->get_linked_post_id( $term, 'issue_cpt', 'issue_tax' );
+			$post_id = $this->get_linked_post_id( $term, $posttype_constant_key, $tax_constant_key );
 
 		if ( $post_id )
 			delete_post_meta( $post_id, '_'.$this->constant( $posttype_constant_key ).'_term_id' );

@@ -935,7 +935,7 @@ class Magazine extends gEditorial\Module
 
 					foreach ( $_POST['_cb'] as $term_id ) {
 
-						if ( $this->rev_linked_term( NULL, $term_id, 'issue_cpt', 'issue_tax' ) ) {
+						if ( $this->remove_linked_term( NULL, $term_id, 'issue_cpt', 'issue_tax' ) ) {
 
 							$deleted = wp_delete_term( $term_id, $this->constant( 'issue_tax' ) );
 

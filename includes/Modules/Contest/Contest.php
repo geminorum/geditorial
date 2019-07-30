@@ -725,7 +725,7 @@ class Contest extends gEditorial\Module
 
 					foreach ( $_POST['_cb'] as $term_id ) {
 
-						if ( $this->rev_linked_term( NULL, $term_id, 'contest_cpt', 'contest_tax' ) ) {
+						if ( $this->remove_linked_term( NULL, $term_id, 'contest_cpt', 'contest_tax' ) ) {
 
 							$deleted = wp_delete_term( $term_id, $this->constant( 'contest_tax' ) );
 

@@ -933,7 +933,7 @@ class Collect extends gEditorial\Module
 
 					foreach ( $_POST['_cb'] as $term_id ) {
 
-						if ( $this->rev_linked_term( NULL, $term_id, 'collection_cpt', 'collection_tax' ) ) {
+						if ( $this->remove_linked_term( NULL, $term_id, 'collection_cpt', 'collection_tax' ) ) {
 
 							$deleted = wp_delete_term( $term_id, $this->constant( 'collection_tax' ) );
 
