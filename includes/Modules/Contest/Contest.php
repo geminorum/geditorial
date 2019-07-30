@@ -590,6 +590,7 @@ class Contest extends gEditorial\Module
 		echo '</li>';
 	}
 
+	// FIXME: update from magazine module
 	protected function render_tools_html( $uri, $sub )
 	{
 		HTML::h3( _x( 'Contest Tools', 'Modules: Contest', GEDITORIAL_TEXTDOMAIN ) );
@@ -675,7 +676,7 @@ class Contest extends gEditorial\Module
 						if ( ! isset( $terms[$term_id] ) )
 							continue;
 
-						$post_id = PostType::getIDbySlug( $terms[$term_id]->slug, $this->constant( 'contest_cpt' ) ) ;
+						$post_id = PostType::getIDbySlug( $terms[$term_id]->slug, $this->constant( 'contest_cpt' ) );
 
 						if ( FALSE !== $post_id )
 							continue;
@@ -704,7 +705,7 @@ class Contest extends gEditorial\Module
 						if ( ! isset( $terms[$term_id] ) )
 							continue;
 
-						$post_id = PostType::getIDbySlug( $terms[$term_id]->slug, $this->constant( 'contest_cpt' ) ) ;
+						$post_id = PostType::getIDbySlug( $terms[$term_id]->slug, $this->constant( 'contest_cpt' ) );
 
 						if ( FALSE === $post_id )
 							continue;

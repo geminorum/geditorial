@@ -763,6 +763,7 @@ class Collect extends gEditorial\Module
 		);
 	}
 
+	// FIXME: update from magazine module
 	protected function render_tools_html( $uri, $sub )
 	{
 		HTML::h3( _x( 'Collect Tools', 'Modules: Collect', GEDITORIAL_TEXTDOMAIN ) );
@@ -855,7 +856,7 @@ class Collect extends gEditorial\Module
 						if ( ! isset( $terms[$term_id] ) )
 							continue;
 
-						$post_id = PostType::getIDbySlug( $terms[$term_id]->slug, $this->constant( 'collection_cpt' ) ) ;
+						$post_id = PostType::getIDbySlug( $terms[$term_id]->slug, $this->constant( 'collection_cpt' ) );
 
 						if ( FALSE !== $post_id )
 							continue;
@@ -912,7 +913,7 @@ class Collect extends gEditorial\Module
 						if ( ! isset( $terms[$term_id] ) )
 							continue;
 
-						$post_id = PostType::getIDbySlug( $terms[$term_id]->slug, $this->constant( 'collection_cpt' ) ) ;
+						$post_id = PostType::getIDbySlug( $terms[$term_id]->slug, $this->constant( 'collection_cpt' ) );
 
 						if ( FALSE === $post_id )
 							continue;

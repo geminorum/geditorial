@@ -784,7 +784,7 @@ class Magazine extends gEditorial\Module
 						if ( ! isset( $terms[$term_id] ) )
 							continue;
 
-						$post_id = PostType::getIDbySlug( $terms[$term_id]->slug, $this->constant( 'issue_cpt' ) ) ;
+						$post_id = PostType::getIDbySlug( $terms[$term_id]->slug, $this->constant( 'issue_cpt' ) );
 
 						if ( FALSE !== $post_id )
 							continue;
@@ -866,7 +866,7 @@ class Magazine extends gEditorial\Module
 						if ( ! isset( $terms[$term_id] ) )
 							continue;
 
-						$post_id = PostType::getIDbySlug( $terms[$term_id]->slug, $this->constant( 'issue_cpt' ) ) ;
+						$post_id = PostType::getIDbySlug( $terms[$term_id]->slug, $this->constant( 'issue_cpt' ) );
 
 						if ( FALSE === $post_id )
 							continue;
