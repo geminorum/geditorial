@@ -205,6 +205,9 @@ class Terms extends gEditorial\Module
 		if ( is_admin() ) {
 			add_action( 'create_term', [ $this, 'edit_term' ], 10, 3 );
 			add_action( 'edit_term', [ $this, 'edit_term' ], 10, 3 );
+
+			add_filter( 'gnetwork_taxonomy_bulk_actions', [ $this, 'taxonomy_bulk_actions' ], 14, 2 );
+			add_filter( 'gnetwork_taxonomy_bulk_callback', [ $this, 'taxonomy_bulk_callback' ], 14, 3 );
 		}
 	}
 
@@ -1299,6 +1302,67 @@ class Terms extends gEditorial\Module
 			'empty'      => $this->get_posttype_label( 'post', 'not_found' ),
 			'pagination' => $pagination,
 		] );
+	}
+
+	public function taxonomy_bulk_actions( $actions, $taxonomy )
+	{
+		$additions = [];
+		$supported = $this->get_supported( $taxonomy );
+
+		if ( in_array( 'image', $supported ) )
+			$additions['sync_image_titles'] = _x( 'Sync Image Titles', 'Modules: Terms: Bulk Actions', GEDITORIAL_TEXTDOMAIN );
+
+		return array_merge( $actions, $additions );
+	}
+
+	public function taxonomy_bulk_callback( $callback, $action, $taxonomy )
+	{
+		$actions = [
+			'sync_image_titles',
+		];
+
+		return in_array( $action, $actions )
+			? [ $this, 'bulk_action_'.$action ]
+			: $callback;
+	}
+
+	public function bulk_action_sync_image_titles( $term_ids, $taxonomy, $action )
+	{
+		if ( ! in_array( 'image', $this->get_supported( $taxonomy ) ) )
+			return FALSE;
+
+		$count = 0;
+
+		foreach ( $term_ids as $term_id ) {
+
+			$term = get_term( intval( $term_id ), $taxonomy );
+
+			if ( self::isError( $term ) )
+				continue;
+
+			if ( ! $attachment_id = get_term_meta( intval( $term->term_id ), 'image', TRUE ) )
+				continue;
+
+			if ( ! wp_attachment_is_image( $attachment_id ) )
+				continue;
+
+			$name = $this->filters( 'sanitize_name', $term->name, $term, $action );
+			$desc = $this->filters( 'sanitize_description', $term->description, $term, $action );
+
+			update_post_meta( $attachment_id, '_wp_attachment_image_alt', $name );
+
+			$updated = wp_update_post( [
+				'ID'           => $attachment_id,
+				'post_title'   => $name, // image title
+				'post_excerpt' => $name, // image caption (excerpt) // TODO: MAYBE: use 'tagline' data
+				'post_content' => $desc, // image description (content)
+			], TRUE );
+
+			if ( ! self::isError( $updated ) )
+				$count++;
+		}
+
+		return TRUE;
 	}
 
 	// already cap checked!
