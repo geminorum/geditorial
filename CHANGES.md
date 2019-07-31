@@ -1,3 +1,53 @@
+### 3.15.7
+* main/helper: author filter for tables
+* main/helper: html empty method
+* main/helper: prep contact method
+* main/metabox: autosize for editor postbox
+* main/module: better handling author on table lists
+* main/module: better handling filters on table lists
+* main/module: check for setting before init widgets
+* main/module: custom archive title on more filters
+* main/module: rename remove linked term
+* main/module: store thumbnail as term image on linked terms
+* main/plugin: check for block editor by post
+* main/plugin: wrapping metaboxes in container
+* main/scripts: more helpers
+* main/template: custom caption text for term images
+* main/template: fallback for alt on term image
+* main/widget: hidden default field for n/a
+* module/audit: skip cap check on reports dropdown
+* module/book: better namespace for widgets
+* module/collect: bail metabox if no collection
+* module/collect: better namespace for widgets
+* module/contest: bail metabox if no contest
+* module/like: store total counts
+* module/magazine: bail metabox if no issue
+* module/magazine: better namespace for widgets
+* module/magazine: empty term desc on tools table
+* module/magazine: rethinking tools table
+* module/magazine: sync desc on tools table
+* module/magazine: sync images on tools table
+* module/magazine: thumbnail/image on tools table
+* module/meta: :new: meta field types
+* module/meta: :warning: quick edit posts fixed
+* module/meta: avoid repeating extend
+* module/meta: rename old meta types
+* module/meta: rename old meta types
+* module/ortho: :up: Virastar v0.18.0
+* module/revision: filter by authors on revision reports
+* module/series: better callback for series with no meta
+* module/series: support admin restrict dropdown
+* module/terms: :new: contact field
+* module/terms: :new: tagline field
+* module/terms: better contact column
+* module/terms: bulk sync image titles based on linked term
+* module/terms: cleanup uncategorized tool
+* module/terms: merging report menus
+* module/terms: n/a for image meta on toolbar summary
+* module/terms: pointers links to cleanup tool
+* module/terms: save contact fileds on ajax
+* module/terms: uncategorized count as pointers
+
 ###  3.15.6
 * main/datetime: passing fallback
 * main/module: 404 override for logged in only
