@@ -144,17 +144,17 @@ class Terms extends gEditorial\Module
 				'posttypes' => _x( 'Terms can have unique posttypes visibility to help separate them on editing.', 'Modules: Terms: Descriptions', GEDITORIAL_TEXTDOMAIN ),
 			],
 			'misc' => [
-				'order_column_title'     => _x( 'O', 'Modules: Terms: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				'tagline_column_title'   => _x( 'Tagline', 'Modules: Terms: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				'contact_column_title'   => _x( 'Contact', 'Modules: Terms: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				'image_column_title'     => _x( 'Image', 'Modules: Terms: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				'author_column_title'    => _x( 'Author', 'Modules: Terms: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				'color_column_title'     => _x( 'C', 'Modules: Terms: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				'role_column_title'      => _x( 'Role', 'Modules: Terms: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				'roles_column_title'     => _x( 'Roles', 'Modules: Terms: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				'posttype_column_title'  => _x( 'Posttype', 'Modules: Terms: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				'posttypes_column_title' => _x( 'Posttypes', 'Modules: Terms: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				'posts_column_title'     => _x( 'P', 'Modules: Terms: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'order_column_title'     => _x( 'O', 'Modules: Terms: Column Title: Order', GEDITORIAL_TEXTDOMAIN ),
+				'tagline_column_title'   => _x( 'Tagline', 'Modules: Terms: Column Title: Tagline', GEDITORIAL_TEXTDOMAIN ),
+				'contact_column_title'   => _x( 'C', 'Modules: Terms: Column Title: Contact', GEDITORIAL_TEXTDOMAIN ),
+				'image_column_title'     => _x( 'Image', 'Modules: Terms: Column Title: Image', GEDITORIAL_TEXTDOMAIN ),
+				'author_column_title'    => _x( 'Author', 'Modules: Terms: Column Title: Author', GEDITORIAL_TEXTDOMAIN ),
+				'color_column_title'     => _x( 'C', 'Modules: Terms: Column Title: Color', GEDITORIAL_TEXTDOMAIN ),
+				'role_column_title'      => _x( 'Role', 'Modules: Terms: Column Title: Role', GEDITORIAL_TEXTDOMAIN ),
+				'roles_column_title'     => _x( 'Roles', 'Modules: Terms: Column Title: Roles', GEDITORIAL_TEXTDOMAIN ),
+				'posttype_column_title'  => _x( 'Posttype', 'Modules: Terms: Column Title: Posttype', GEDITORIAL_TEXTDOMAIN ),
+				'posttypes_column_title' => _x( 'Posttypes', 'Modules: Terms: Column Title: Posttypes', GEDITORIAL_TEXTDOMAIN ),
+				'posts_column_title'     => _x( 'P', 'Modules: Terms: Column Title: Posts', GEDITORIAL_TEXTDOMAIN ),
 			],
 			'js' => [
 				'modal_title'  => _x( 'Choose an Image', 'Modules: Terms: Javascript String', GEDITORIAL_TEXTDOMAIN ),
@@ -413,8 +413,9 @@ class Terms extends gEditorial\Module
 
 					if ( $meta = get_term_meta( $term_id, $field, TRUE ) ) {
 
-						$html = '<span class="'.$field.'" data-'.$field.'="'.HTML::escape( $meta ).'">'
-							.Helper::prepContact( $meta ).'</span>';
+						$html = '<span class="'.$field.'" data-'.$field.'="'.HTML::escape( $meta )
+							.'" title="'.HTML::wrapLTR( HTML::escape( $meta ) ).'">'
+							.Helper::prepContact( $meta, HTML::getDashicon( 'phone' ) ).'</span>';
 
 					} else {
 
