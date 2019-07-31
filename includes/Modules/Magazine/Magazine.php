@@ -714,6 +714,7 @@ class Magazine extends gEditorial\Module
 		return $title.' – '.Helper::getPostTitle( $issue );
 	}
 
+	// TODO: migrate to `Shortcode::listPosts( 'associated' );`
 	public function issue_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
 		return ShortCode::getAssocPosts(

@@ -30,7 +30,7 @@ if ( version_compare( GEDITORIAL_MIN_PHP, phpversion(), '>=' ) ) {
 
 	if ( is_admin() ) {
 		echo '<div class="notice notice-warning notice-alt is-dismissible"><p dir="ltr">';
-			printf( '<b>gEditorial</b> requires PHP %s or higher. Please contact your hosting provider to update your site.', GEDITORIAL_MIN_PHP ) ;
+			printf( '<b>gEditorial</b> requires PHP %s or higher. Please contact your hosting provider to update your site.', GEDITORIAL_MIN_PHP );
 		echo '</p></div>';
 	}
 
@@ -54,7 +54,7 @@ if ( version_compare( GEDITORIAL_MIN_PHP, phpversion(), '>=' ) ) {
 
 	add_action( 'admin_notices', function(){
 		echo '<div class="notice notice-warning notice-alt is-dismissible"><p>';
-			printf( '<b>gEditorial</b> is not installed correctly. go grab the latest package <a href="%s" target="_blank">here</a>.', 'https://github.com/geminorum/geditorial/releases/latest' ) ;
+			printf( '<b>gEditorial</b> is not installed correctly. go grab the latest package <a href="%s" target="_blank">here</a>.', 'https://github.com/geminorum/geditorial/releases/latest' );
 		echo '</p></div>';
 	} );
 }

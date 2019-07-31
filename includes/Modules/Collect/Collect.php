@@ -713,6 +713,7 @@ class Collect extends gEditorial\Module
 		return $title.' – '.Helper::getPostTitle( $collection );
 	}
 
+	// TODO: migrate to `Shortcode::listPosts( 'associated' );`
 	public function collection_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
 		return ShortCode::getAssocPosts(
