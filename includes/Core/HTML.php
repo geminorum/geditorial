@@ -488,16 +488,17 @@ class HTML extends Base
 		else
 			echo '<div>';
 
+		if ( $args['before'] && is_callable( $args['before'] ) ) {
+
+			echo '<div class="base-table-navigation -callable">';
+				call_user_func_array( $args['before'], array( $columns, $data, $args ) );
+			echo '</div>';
+		}
+
 		if ( 'before' == $args['navigation'] ) {
 
 			echo '<div class="base-table-navigation -pagination">';
 				self::tableNavigation( $args['pagination'] );
-			echo '</div>';
-
-		} if ( $args['before'] && is_callable( $args['before'] ) ) {
-
-			echo '<div class="base-table-navigation -callable">';
-				call_user_func_array( $args['before'], array( $columns, $data, $args ) );
 			echo '</div>';
 		}
 
@@ -658,8 +659,9 @@ class HTML extends Base
 			echo '<div class="base-table-navigation -pagination">';
 				self::tableNavigation( $args['pagination'] );
 			echo '</div>';
+		}
 
-		} if ( $args['after'] && is_callable( $args['after'] ) ) {
+		if ( $args['after'] && is_callable( $args['after'] ) ) {
 
 			echo '<div class="base-table-navigation -callable">';
 				call_user_func_array( $args['after'], array( $columns, $data, $args ) );
