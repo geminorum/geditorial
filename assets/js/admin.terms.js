@@ -113,6 +113,7 @@
       app.inlineColor(tag, event);
       app.inlineOrder(tag, event);
       app.inlineText('tagline', tag, event);
+      app.inlineText('contact', tag, event);
       app.inlineSelect('author', tag, event);
       app.inlineSelect('role', tag, event);
       app.inlineSelect('posttype', tag, event);
