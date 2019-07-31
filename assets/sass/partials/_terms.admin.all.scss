@@ -21,6 +21,10 @@ body.geditorial-terms-enabled {
       width: 55px;
     }
 
+    th.column-geditorial-terms-contact {
+      width: 22px;
+    }
+
     .column-geditorial-terms-author,
     .column-geditorial-terms-role,
     .column-geditorial-terms-posttype {
@@ -29,6 +33,27 @@ body.geditorial-terms-enabled {
 
     .column-geditorial-terms-color {
       width: 45px;
+    }
+
+    td.column-geditorial-terms-contact {
+      > span.contact,
+      > span.contact a {
+        color: $gray;
+
+        &:hover {
+          color: $gray-darker;
+          text-decoration: none;
+        }
+      }
+
+      .geditorial-icon svg,
+      .geditorial-icon img,
+      .dashicons {
+        font-size: 18px;
+        width: 18px;
+        height: 18px;
+        vertical-align: middle;
+      }
     }
 
     td.column-geditorial-terms-image {
