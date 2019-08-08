@@ -238,7 +238,7 @@ class Alphabet extends gEditorial\Module
 				} else {
 
 					$title = sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' );
-					$title = Text::reFormatName( $title ); // no need
+					// $title = Text::reFormatName( $title ); // no need on front
 					$link  = get_term_link( $term->term_id, $term->taxonomy );
 
 					$html.= '<dt><span class="-title">'.HTML::link( $title, $link ).'</span>';

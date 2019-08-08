@@ -271,6 +271,7 @@ class Statuses extends gEditorial\Module
 			return;
 
 		$args = [
+			'taxonomy'        => $this->constant( 'status_tax' ),
 			'hide_empty'      => FALSE,
 			'suppress_filter' => TRUE,
 			'meta_query'      => [ [
@@ -281,7 +282,7 @@ class Statuses extends gEditorial\Module
 		];
 
 		// FIXME: use `WP_Term_Query` directly
-		$terms = get_terms( $this->constant( 'status_tax' ), $args );
+		$terms = get_terms( $args );
 
 		if ( empty( $terms ) )
 			return;

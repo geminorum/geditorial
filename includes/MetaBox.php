@@ -92,7 +92,8 @@ class MetaBox extends Core\Base
 
 			$childs = intval( $args['descendants_and_self'] );
 
-			$terms = (array) get_terms( $args['taxonomy'], [
+			$terms = (array) get_terms( [
+				'taxonomy'     => $args['taxonomy'],
 				'child_of'     => $childs,
 				'hierarchical' => 0,
 				'hide_empty'   => 0,
@@ -140,7 +141,8 @@ class MetaBox extends Core\Base
 			$atts['popular_cats'] = $args['popular_cats'];
 
 		else
-			$atts['popular_cats'] = get_terms( $args['taxonomy'], [
+			$atts['popular_cats'] = get_terms( [
+				'taxonomy'     => $args['taxonomy'],
 				'fields'       => 'ids',
 				'orderby'      => 'count',
 				'order'        => 'DESC',

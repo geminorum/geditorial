@@ -391,7 +391,7 @@ class Users extends gEditorial\Module
 		if ( ! current_user_can( $tax->cap->assign_terms ) )
 			return;
 
-		$terms = get_terms( $this->constant( 'group_tax' ), [ 'hide_empty' => FALSE ] );
+		$terms = get_terms( [ 'taxonomy' => $this->constant( 'group_tax' ), 'hide_empty' => FALSE ] );
 
 		HTML::h2( _x( 'Site Groups', 'Modules: Users', GEDITORIAL_TEXTDOMAIN ) );
 
@@ -430,7 +430,7 @@ class Users extends gEditorial\Module
 
 	private function render_author_categories( $user )
 	{
-		$terms    = get_terms( 'category', [ 'hide_empty' => FALSE ] );
+		$terms    = get_terms( [ 'taxonomy' => 'category', 'hide_empty' => FALSE ] );
 		$default  = get_option( 'default_category' );
 		$selected = $this->get_user_catecories( $user->ID );
 
