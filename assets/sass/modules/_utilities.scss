@@ -29,22 +29,21 @@
   }
 }
 
+// DEPRECATED
 @mixin box-reset() {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
+  @warn "Theme Utilities: box-reset() DEPRECATED: use box-sizing: border-box;";
+
   box-sizing: border-box;
 }
 
 @mixin mainwrap() {
-  @include box-reset;
+  box-sizing: border-box;
 
   *,
   *::after,
   *::before,
   &::after,
   &::before {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
     box-sizing: border-box;
   }
 
@@ -62,9 +61,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
+// DEPRECATED
 // @REF: https://is.gd/dKY3LN
 // @include vendor-prefix(hyphens, auto);
 @mixin vendor-prefix($name, $argument) {
+  @warn "Theme Utilities: vendor-prefix() DEPRECATED";
+
   -webkit-#{$name}: #{$argument};
   -ms-#{$name}: #{$argument};
   -moz-#{$name}: #{$argument};

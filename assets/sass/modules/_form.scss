@@ -13,12 +13,12 @@
 
   // WebKit, Blink, Edge
   ::-webkit-input-placeholder {
-      @content;
+    @content;
   }
 
   // Mozilla Firefox 4 to 18
   :-moz-placeholder {
-     @content;
+    @content;
   }
 
   // Mozilla Firefox 19+
@@ -28,7 +28,7 @@
 
   // Internet Explorer 10-11
   :-ms-input-placeholder {
-     @content;
+    @content;
   }
 }
 
@@ -85,34 +85,34 @@
     vertical-align: middle;
     width: 16px;
     min-width: 16px;
-    -webkit-appearance: none;
-    box-shadow: inset 0 1px 2px rgba( 0, 0, 0, 0.1 );
+    appearance: none;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
     transition: .05s border-color ease-in-out;
   }
 
-  input[type="radio"]:checked + label:before {
+  input[type="radio"]:checked + label::before {
     color: #82878c;
   }
 
-  input[type="checkbox"]:checked:before,
-  input[type="radio"]:checked:before {
+  input[type="checkbox"]:checked::before,
+  input[type="radio"]:checked::before {
     float: left;
     display: inline-block;
     vertical-align: middle;
     width: 16px;
-    font: normal 21px/1 dashicons; // FIXME: needs SVG
+    font: 400 21px/1 dashicons, sans-serif; // FIXME: needs SVG
     speak: none;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
-  input[type="checkbox"]:checked:before {
+  input[type="checkbox"]:checked::before {
     content: "\f147"; // FIXME: needs SVG
     margin: -2px 0 0 -2px;
     color: #1e8cbe;
   }
 
-  input[type="radio"]:checked:before {
+  input[type="radio"]:checked::before {
     content: "\2022"; // FIXME: needs SVG
     text-indent: -9999px;
     border-radius: 50px;

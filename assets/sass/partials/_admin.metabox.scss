@@ -281,8 +281,10 @@
     }
   }
 
-  .field-wrap-list,
-  .field-wrap-listjs {
+  .field-wrap-list, // DEPRECATED
+  .field-wrap-listjs, // DEPRECATED
+  .field-wrap.-listjs,
+  .field-wrap.-list {
     margin-bottom: 12px;
 
     &:last-of-type {
@@ -290,7 +292,8 @@
     }
   }
 
-  .field-wrap-list {
+  .field-wrap-list, // DEPRECATED
+  .field-wrap.-list {
     background-color: #fdfdfd;
     border: solid 1px #ddd;
 
@@ -312,11 +315,17 @@
     }
 
     h4 {
-      font-size: 0.89em;
+      font-size: 0.9em;
       margin: 0 4px;
-      padding: 0;
-      font-weight: 400;
+      padding: 0 0 5px 0;
+      font-weight: 600;
       font-family: inherit;
+      text-align: center;
+      border-bottom: 1px dotted #e5e5e5;
+
+      a {
+        color: inherit;
+      }
     }
 
     .-selected {
@@ -329,13 +338,11 @@
 
     ol,
     ul {
-
       max-height: 240px;
       overflow: auto;
 
       margin: 0;
       padding: 0;
-      list-style-position: inside;
 
       li {
         margin: 4px 6px 6px;
@@ -382,9 +389,9 @@
     }
 
     ol {
-      body.locale-fa-ir & {
-        list-style-type: -moz-persian;
-        list-style-type: persian;
+      li {
+        font-size: smaller;
+        margin-left: 16px;
       }
     }
 
@@ -446,7 +453,7 @@
 }
 
 .geditorial-admin-dropbown {
-  @include box-reset;
+  box-sizing: border-box;
   width: 100%;
 
   &.dropbown-ltr {

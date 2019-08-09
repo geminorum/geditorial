@@ -69,7 +69,7 @@
 
 // Module: Meta
 .geditorial-admin-posttitle {
-  @include box-reset;
+  box-sizing: border-box;
   font-size: 1.3em;
   padding: 3px 8px;
   width: 100%;

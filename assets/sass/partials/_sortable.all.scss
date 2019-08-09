@@ -28,15 +28,10 @@ ol.-sortable {
 
     .-handle,
     .-delete {
-      cursor: move;
-      cursor: -webkit-grab;
-      cursor: -moz-grab;
       cursor: grab;
 
       body.dragging & {
         // &:active {
-        cursor: -webkit-grabbing;
-        cursor: -moz-grabbing;
         cursor: grabbing;
       }
     }
