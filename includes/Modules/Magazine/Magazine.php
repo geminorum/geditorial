@@ -614,7 +614,7 @@ class Magazine extends gEditorial\Module
 
 			$term = $this->get_linked_term( $post->ID, 'issue_cpt', 'issue_tax' );
 
-			if ( $list = MetaBox::getTermPosts( $this->constant( 'issue_tax' ), $term, [], FALSE ) )
+			if ( $list = MetaBox::getTermPosts( $this->constant( 'issue_tax' ), $term ) )
 				echo $list;
 
 			else

@@ -254,7 +254,7 @@ class Series extends gEditorial\Module
 				'echo'             => 0,
 			] );
 
-			$posts[$i] = MetaBox::getTermPosts( $taxonomy, $term, [ $post->ID ] );
+			$posts[$i] = MetaBox::getTermPosts( $taxonomy, $term, TRUE, $post->ID );
 			$map[$i]   = $term->term_id;
 			$i++;
 		}

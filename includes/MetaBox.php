@@ -193,7 +193,7 @@ class MetaBox extends Core\Base
 			$hidden.= '<input type="hidden" name="'.$args['name'].'['.$tax->name.'][]" value="0" />';
 
 		if ( $html )
-			$html = HTML::wrap( '<ul>'.$html.'</ul>', 'field-wrap field-wrap-list' );
+			$html = HTML::wrap( '<ul>'.$html.'</ul>', 'field-wrap -list' );
 
 		$html.= $hidden;
 
@@ -298,7 +298,7 @@ class MetaBox extends Core\Base
 			return FALSE;
 		}
 
-		$html.= HTML::wrap( '<ul class="-list">'.$list.'</ul>', 'field-wrap field-wrap-list' );
+		$html.= HTML::wrap( '<ul>'.$list.'</ul>', 'field-wrap -list' );
 
 		// allows for an empty term set to be sent. 0 is an invalid Term ID
 		// and will be ignored by empty() checks
@@ -306,7 +306,7 @@ class MetaBox extends Core\Base
 			$hidden.= '<input type="hidden" name="'.$args['name'].'['.$args['taxonomy'].'][]" value="0" />';
 
 		// ListJS needs the wrap!
-		echo '<div id="'.$id.'" class="field-wrap-listjs">'.$html.'</div>';
+		echo '<div id="'.$id.'" class="field-wrap -listjs">'.$html.'</div>';
 		echo $hidden;
 
 		if ( $form ) {
@@ -324,7 +324,7 @@ class MetaBox extends Core\Base
 		return TRUE;
 	}
 
-	public static function getTermPosts( $taxonomy, $term_or_id, $exclude = [], $title = TRUE )
+	public static function getTermPosts( $taxonomy, $term_or_id, $title = FALSE, $current = FALSE, $exclude = [] )
 	{
 		if ( ! $term_or_id || is_wp_error( $term_or_id ) )
 			return '';
@@ -353,15 +353,18 @@ class MetaBox extends Core\Base
 		$html     = '';
 		$statuses = PostType::getStatuses();
 
-		if ( $title )
-			$html.= '<h4>'.Helper::getTermTitleRow( $term ).'</h4>';
+		if ( TRUE === $title )
+			$html.= HTML::tag( 'h4', Helper::getTermTitleRow( $term ) );
+
+		else if ( $title )
+			$html.= HTML::tag( 'h4', $title );
 
 		$html.= '<ol>';
 
 		foreach ( $posts as $post )
-			$html.= '<li>'.Helper::getPostTitleRow( $post, 'edit', $statuses ).'</li>';
+			$html.= '<li>'.Helper::getPostTitleRow( $post, ( $post->ID == $current ? FALSE : 'edit' ), $statuses ).'</li>';
 
-		return HTML::wrap( $html.'</ol>', 'field-wrap field-wrap-list' );
+		return HTML::wrap( $html.'</ol>', 'field-wrap -list' );
 	}
 
 	public static function fieldEmptyTaxonomy( $taxonomy, $edit = NULL )

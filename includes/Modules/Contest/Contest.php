@@ -355,7 +355,7 @@ class Contest extends gEditorial\Module
 
 			$term = $this->get_linked_term( $post->ID, 'contest_cpt', 'contest_tax' );
 
-			if ( $list = MetaBox::getTermPosts( $this->constant( 'contest_tax' ), $term, [], FALSE ) )
+			if ( $list = MetaBox::getTermPosts( $this->constant( 'contest_tax' ), $term ) )
 				echo $list;
 
 			else
