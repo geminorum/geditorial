@@ -59,7 +59,7 @@ class Meta extends gEditorial\Template
 	// USE: self::metaField()
 	public static function meta( $fields, $before = '', $after = '', $filter = FALSE, $post_id = NULL, $args = [] )
 	{
-		self::__dev_dep( 'gEditorialMetaTemplates::metaField()' );
+		self::_dev_dep( 'gEditorialMetaTemplates::metaField()' );
 
 		global $post;
 
@@ -94,7 +94,7 @@ class Meta extends gEditorial\Template
 	// USE: self::getMetaField()
 	public static function get_meta( $fields, $atts = [] )
 	{
-		self::__dev_dep( 'gEditorialMetaTemplates::getMetaField()' );
+		self::_dev_dep( 'gEditorialMetaTemplates::getMetaField()' );
 
 		global $post;
 
@@ -117,7 +117,7 @@ class Meta extends gEditorial\Template
 	// USE: self::metaLead()
 	public static function gmeta_lead( $before = '', $after = '', $filter = FALSE, $args = [] )
 	{
-		self::__dev_dep( 'gEditorialMetaTemplates::metaLead()' );
+		self::_dev_dep( 'gEditorialMetaTemplates::metaLead()' );
 
 		$meta = self::get_meta( 'le', array_merge( [ 'id' => FALSE, 'def' => FALSE ], $args ) );
 
@@ -142,7 +142,7 @@ class Meta extends gEditorial\Template
 	// USE: self::metaAuthor()
 	public static function gmeta_author( $before = '', $after = '', $filter = FALSE, $args = [] )
 	{
-		self::__dev_dep( 'gEditorialMetaTemplates::metaAuthor()' );
+		self::_dev_dep( 'gEditorialMetaTemplates::metaAuthor()' );
 
 		$meta = self::get_meta( 'as', array_merge( [ 'id' => FALSE, 'def' => FALSE ], $args ) );
 
@@ -270,7 +270,7 @@ class Meta extends gEditorial\Template
 	// FIXME: DEPRECATED / USE: gEditorialMetaTemplates::metaLabel()
 	public static function gmeta_label( $b = '', $a = '', $filter = FALSE, $args = [] )
 	{
-		self::__dev_dep( 'gEditorialMetaTemplates::metaLabel()' );
+		self::_dev_dep( 'gEditorialMetaTemplates::metaLabel()' );
 
 		global $post;
 

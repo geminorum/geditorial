@@ -662,6 +662,8 @@ class ShortCode extends Core\Base
 	// FIXME: DEPRECATED: use `Shortcode::listPosts( 'assigned' )`
 	public static function getTermPosts( $posttype, $taxonomy, $atts = [], $content = NULL, $tag = '' )
 	{
+		self::_dev_dep( 'ShortCode::listPosts()' );
+
 		$args = shortcode_atts( self::getDefaults( $posttype, $taxonomy, [ $posttype ] ), $atts, $tag );
 
 		if ( FALSE === $args['context'] )
@@ -817,6 +819,8 @@ class ShortCode extends Core\Base
 	// FIXME: DEPRECATED: use `Shortcode::listPosts( 'associated' )`
 	public static function getAssocPosts( $posttype, $taxonomy, $atts = [], $content = NULL, $tag = '' )
 	{
+		self::_dev_dep( 'ShortCode::listPosts()' );
+
 		$args = shortcode_atts( self::getDefaults( $posttype, $taxonomy ), $atts, $tag );
 
 		if ( FALSE === $args['context'] )

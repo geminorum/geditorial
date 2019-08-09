@@ -132,14 +132,14 @@ class Base
 	}
 
 	// INTERNAL: used on anything deprecated : only on dev mode
-	protected static function __dev_dep( $note = '', $prefix = 'DEP: ', $offset = 2 )
+	protected static function _dev_dep( $note = '', $prefix = 'DEP: ', $offset = 2 )
 	{
 		if ( WordPress::isDev() )
 			self::_dep( $note, $prefix, $offset );
 	}
 
 	// INTERNAL: used on functions deprecated
-	public static function __dev_func( $function, $version, $replacement = NULL )
+	public static function _dev_func( $function, $version, $replacement = NULL )
 	{
 		if ( is_null( $replacement ) )
 			self::_log( sprintf( 'DEP: \'%1$s\' function, since %2$s with no alternative', $function, $version ) );
