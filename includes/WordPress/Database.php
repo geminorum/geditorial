@@ -180,7 +180,7 @@ class Database extends Core\Base
 		if ( FALSE !== $counts )
 			return $counts;
 
-		$terms = is_array( $taxonomy ) ? $taxonomy : get_terms( $taxonomy );
+		$terms = is_array( $taxonomy ) ? $taxonomy : get_terms( [ 'taxonomy' => $taxonomy ] );
 
 		if ( empty( $terms ) )
 			return array();

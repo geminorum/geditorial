@@ -310,13 +310,15 @@ class WordPress extends Base
 		), $extra ), admin_url( $base ) );
 	}
 
-	// @SEE: get_search_link()
-	public static function getSearchLink( $query = FALSE )
+	public static function getSearchLink( $query = FALSE, $url = FALSE )
 	{
+		if ( $url )
+			return $query ? add_query_arg( $query_id, urlencode( $query ), $url ) : $url;
+
 		if ( defined( 'GNETWORK_SEARCH_REDIRECT' ) && GNETWORK_SEARCH_REDIRECT )
 			return $query ? add_query_arg( GNETWORK_SEARCH_QUERYID, urlencode( $query ), GNETWORK_SEARCH_URL ) : GNETWORK_SEARCH_URL;
 
-		return $query ? add_query_arg( 's', urlencode( $query ), get_option( 'home' ) ) : get_option( 'home' );
+		return get_search_link( $query );
 	}
 
 	// @REF: get_edit_term_link()

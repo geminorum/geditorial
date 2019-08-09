@@ -551,6 +551,15 @@ class Text extends Base
 		return $code;
 	}
 
+	// count str_length in UTF-8 string
+	// @REF: https://www.php.net/manual/en/function.preg-match-all.php#81559
+	// [:print:] - printing characters, including space
+	// \pL - UTF-8 Letter
+	public static function utf8Len( $string )
+	{
+		return preg_match_all( '/[[:print:]\pL]/u', $string, $$matches );
+	}
+
 	public static function wordCountUTF8( $html, $normalize = TRUE )
 	{
 		if ( ! $html )
@@ -649,13 +658,35 @@ class Text extends Base
 	}
 
 	// @SOURCE: http://php.net/manual/en/function.preg-replace-callback.php#91950
-	// USAGE: echo replaceWords( $list, $str, function($v) { return "<strong>{$v}</strong>"; });
-	public static function replaceWords( $list, $line, $callback )
+	// USAGE: echo Text::replaceWords( $words, $string, function( $matched ) { return "<strong>{$matched}</strong>"; });
+	public static function replaceWords( $words, $string, $callback, $skip_links = TRUE )
 	{
-		$patterns = '/(^|[^\\w\\-])('.implode( '|', array_map( 'preg_quote', $list ) ).')($|[^\\w\\-])/mi';
-		return preg_replace_callback( $patterns, function( $v ) use ( $callback ) {
-			return $v[1].$callback($v[2]).$v[3];
-		}, $line );
+		$pattern = '(^|[^\\w\\-])('.implode( '|', array_map( 'preg_quote', $words ) ).')($|[^\\w\\-])';
+
+		if ( $skip_links )
+			$pattern = '<a[^>]*>.*?<\/a\s*>(*SKIP)(*FAIL)|'.$pattern;
+
+		return preg_replace_callback( '/'.$pattern.'/miu', function( $matched ) use ( $callback ) {
+			return $matched[1].call_user_func( $callback, $matched[2] ).$matched[3];
+		}, $string );
+	}
+
+	// USAGE: echo Text::replaceSymbols( [ '#', '$' ], $string, function( $matched, $string ) { return "<strong>{$matched}</strong>"; });
+	public static function replaceSymbols( $symbols, $string, $callback, $skip_links = TRUE )
+	{
+		return preg_replace_callback( self::replaceSymbolsPattern( implode( (array) $symbols, ',' ), $skip_links ), function ( $matches ) use ( $callback ) {
+			return call_user_func( $callback, $matches[0], $matches[1] );
+		}, $string );
+	}
+
+	// @REF: https://stackoverflow.com/a/381001/
+	// @REF: https://stackoverflow.com/a/311904/
+	public static function replaceSymbolsPattern( $symbols, $skip_links = TRUE )
+	{
+		return $skip_links
+			// ? "/<a[^>]*>.*?<\/a\s*>(*SKIP)(*FAIL)|[{$symbols}]+([a-zA-Z0-9-_\.\w\p{L}\p{N}\p{Pd}{$symbols}]+)\b/u"
+			? "/<a[^>]*>.*?<\/a\s*>(*SKIP)(*FAIL)|#(?:\d+|[xX][a-f\d]+)(*SKIP)(*FAIL)|[{$symbols}]+([a-zA-Z0-9-_\.\w\p{L}\p{N}\p{Pd}{$symbols}]+)\b/u"
+			: "/[{$symbols}]+([a-zA-Z0-9-_\.\w\p{L}\p{N}\p{Pd}{$symbols}]+)\b/u";
 	}
 
 	// @SOURCE: http://snipplr.com/view/3618/
