@@ -3,6 +3,7 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\WordPress\Database;
+use geminorum\gEditorial\O2O;
 
 class Relation extends Core\Base
 {
@@ -210,12 +211,18 @@ class Relation extends Core\Base
 	}
 
 	// @REF: https://github.com/JiveDig/restful-p2p
+	// @REF: https://developer.wordpress.org/rest-api/extending-the-rest-api/adding-custom-endpoints/
 	public static function rest_api_init()
 	{
-		register_rest_route( static::BASE.'-o2o/v1', '/connect/', [
+		register_rest_route( static::BASE.'-o2o/v1', '/connect/(?P<name>[a-zA-Z0-9-_]+)/(?P<from>\d+)/(?P<to>\d+)', [
 			'methods'  => 'POST',
 			'callback' => [ __CLASS__, 'rest_connect' ],
 			'args'     => [
+				'name' => [
+					'validate_callback' => function( $param, $request, $key ) {
+						return TRUE; // FIXME
+					}
+				],
 				'from' => [
 					'validate_callback' => function( $param, $request, $key ) {
 						return is_numeric( $param );
@@ -227,12 +234,20 @@ class Relation extends Core\Base
 					}
 				],
 			],
+			'permission_callback' => function ( $request ) {
+				return current_user_can( 'edit_post', intval( $request['to'] ) );
+			},
 		] );
 
-		register_rest_route( static::BASE.'-o2o/v1', '/disconnect/', [
+		register_rest_route( static::BASE.'-o2o/v1', '/disconnect/(?P<name>[a-zA-Z0-9-_]+)/(?P<from>\d+)/(?P<to>\d+)', [
 			'methods'  => 'POST',
 			'callback' => [ __CLASS__, 'rest_disconnect' ],
 			'args'     => [
+				'name' => [
+					'validate_callback' => function( $param, $request, $key ) {
+						return TRUE; // FIXME
+					}
+				],
 				'from' => [
 					'validate_callback' => function( $param, $request, $key ) {
 						return is_numeric( $param );
@@ -244,27 +259,30 @@ class Relation extends Core\Base
 					}
 				],
 			],
+			'permission_callback' => function ( $request ) {
+				return current_user_can( 'edit_post', intval( $request['to'] ) );
+			},
 		] );
 	}
 
-	public static function rest_connect( $data )
+	public static function rest_connect( $request )
 	{
-		$type = API::type( $data['name'] );
-		// $meta = [ 'date' => current_time( 'mysql' ) ];
-		$o2o  = $type->connect( $data['from'], $data['to'] );
+		if ( ! $type = O2O\API::type( $request['name'] ) )
+			return new \WP_Error( 'no_connection_type', _x( 'No connection type found!', 'Relation: REST', GEDITORIAL_TEXTDOMAIN ), [ 'status' => 404 ] );
 
-		return is_wp_error( $o2o )
-			? [ 'success' => FALSE, 'message' => $o2o->get_error_message() ]
-			: [ 'success' => TRUE ];
+		// $meta = [ 'date' => current_time( 'mysql' ) ];
+		$o2o = $type->connect( $request['from'], $request['to'] );
+
+		return is_wp_error( $o2o ) ? $o2o : TRUE;
 	}
 
-	public static function rest_disconnect( $data )
+	public static function rest_disconnect( $request )
 	{
-		$type = API::type( $data['name'] );
-		$o2o  = $type->disconnect( $data['from'], $data['to'] );
+		if ( ! $type = O2O\API::type( $request['name'] ) )
+			return new \WP_Error( 'no_connection_type', _x( 'No connection type found!', 'Relation: REST', GEDITORIAL_TEXTDOMAIN ), [ 'status' => 404 ] );
 
-		return is_wp_error( $o2o )
-			? [ 'success' => FALSE, 'message' => $o2o->get_error_message() ]
-			: [ 'success' => TRUE ];
+		$o2o = $type->disconnect( $request['from'], $request['to'] );
+
+		return is_wp_error( $o2o ) ? $o2o : TRUE;
 	}
 }
