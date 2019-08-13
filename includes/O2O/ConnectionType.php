@@ -128,9 +128,7 @@ class ConnectionType extends Core\Base
 		// replace the first argument with the normalized one, to avoid having to do it again
 		list( $direction, $args[0] ) = $r;
 
-		$directed = $this->set_direction( $direction );
-
-		return call_user_func_array( [ __NAMESPACE__.'\\'.$directed, $method ], $args );
+		return call_user_func_array( [ $this->set_direction( $direction ), $method ], $args );
 	}
 
 	public function set_direction( $direction, $instantiate = TRUE )

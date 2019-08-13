@@ -161,7 +161,7 @@ class DirectedConnectionType
 		if ( 'one' == $this->get( 'current', 'cardinality' ) )
 			$to_check = 'any';
 
-		else if ( !$this->duplicate_connections )
+		else if ( ! $this->duplicate_connections )
 			$to_check = $item;
 
 		else
@@ -193,11 +193,13 @@ class DirectedConnectionType
 			return new \WP_Error( 'duplicate_connection', 'Duplicate connections are not allowed.' );
 
 		if ( 'one' == $this->get( 'opposite', 'cardinality' ) ) {
+
 			if ( $this->has_connections( $from ) )
 				return new \WP_Error( 'cardinality_opposite', 'Cardinality problem (opposite).' );
 		}
 
 		if ( 'one' == $this->get( 'current', 'cardinality' ) ) {
+
 			if ( $this->flip_direction()->has_connections( $to ) )
 				return new \WP_Error( 'cardinality_current', 'Cardinality problem (current).' );
 		}
@@ -208,12 +210,11 @@ class DirectedConnectionType
 			'meta' => array_merge( $meta, $this->data )
 		] );
 
-		// Store additional default values
+		// store additional default values
 		foreach ( $this->fields as $key => $args ) {
 			// (array) null == []
 			foreach ( (array) $this->get_default( $args, $o2o_id ) as $default_value )
 				API::addMeta( $o2o_id, $key, $default_value );
-
 		}
 
 		return $o2o_id;
@@ -233,8 +234,8 @@ class DirectedConnectionType
 		if ( isset( $args['default_cb'] ) )
 			return call_user_func( $args['default_cb'], API::getConnection( $o2o_id ), $this->direction );
 
-		if ( !isset( $args['default'] ) )
-			return null;
+		if ( ! isset( $args['default'] ) )
+			return NULL;
 
 		return $args['default'];
 	}
@@ -260,7 +261,7 @@ class DirectedConnectionType
 		] ) );
 	}
 
-	// Transforms $this->getConnections( ... )
+	// transforms $this->getConnections( ... )
 	// into API::getConnections( $this->name, ... ) etc.
 	public function __call( $method, $argv )
 	{

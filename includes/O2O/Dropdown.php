@@ -45,18 +45,17 @@ abstract class Dropdown
 
 	protected static function get_qv()
 	{
-		if ( !isset( $_GET['o2o'] ) )
+		if ( ! isset( $_GET['o2o'] ) )
 			return [];
 
 		$args = [];
-
-		$tmp = reset( $_GET['o2o'] );
+		$tmp  = reset( $_GET['o2o'] );
 
 		$args['connected_type'] = key( $_GET['o2o'] );
 
 		list( $args['connected_direction'], $args['connected_items'] ) = each( $tmp );
 
-		if ( !$args['connected_items'] )
+		if ( ! $args['connected_items'] )
 			return [];
 
 		return $args;

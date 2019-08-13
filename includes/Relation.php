@@ -107,7 +107,7 @@ class Relation extends Core\Base
 	// pre-populates the o2o meta cache to decrease the number of queries
 	public static function cache_o2o_meta( $the_posts, $wp_query )
 	{
-		if ( isset( $wp_query->_o2o_query ) && !empty( $the_posts ) )
+		if ( isset( $wp_query->_o2o_query ) && ! empty( $the_posts ) )
 			update_meta_cache( 'o2o', wp_list_pluck( $the_posts, 'o2o_id' ) );
 
 		return $the_posts;

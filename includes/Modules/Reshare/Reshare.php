@@ -3,6 +3,7 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
+use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\O2O;
 
@@ -76,6 +77,11 @@ class Reshare extends gEditorial\Module
 				'reshare_cat' => _nx_noop( 'Reshare Category', 'Reshare Categories', 'Modules: Reshare: Noop', GEDITORIAL_TEXTDOMAIN ),
 			],
 		];
+	}
+
+	protected function posttypes_excluded()
+	{
+		return Settings::posttypesExcluded( $this->constant( 'reshare_cpt' ) );
 	}
 
 	public function after_setup_theme()

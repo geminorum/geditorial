@@ -387,18 +387,22 @@ class Config extends gEditorial\Module
 
 		if ( empty( $counts ) ) {
 
-			HTML::desc( _x( 'No orphaned types found in the database.', 'Modules: Config', GEDITORIAL_TEXTDOMAIN ), TRUE, '-empty' );
+			HTML::desc( _x( 'No connection types found.', 'Modules: Config', GEDITORIAL_TEXTDOMAIN ), TRUE, '-empty' );
 
 		} else {
 
 			$types = O2O\ConnectionTypeFactory::get_all_instances();
+			$empty = TRUE;
 
 			foreach ( $counts as $type => $count ) {
 
 				if ( O2O\API::type( $type ) )
 					continue;
 
-				echo '<code>'.$type.'</code> ('.$count.') ';
+				$empty = FALSE;
+
+				echo HTML::wrapLTR( '<code>'.$type.'</code>' );
+				echo ' &mdash; ('.Helper::getCounted( $count ).') &mdash; ';
 
 				$this->do_settings_field( [
 					'type'         => 'select',
@@ -413,6 +417,9 @@ class Config extends gEditorial\Module
 				Settings::submitButton( 'convert_connection_type',
 					_x( 'Convert', 'Modules: Config: Setting Button', GEDITORIAL_TEXTDOMAIN ), 'danger', TRUE );
 			}
+
+			if ( $empty )
+				HTML::desc( _x( 'No orphaned connection types found in the database.', 'Modules: Config', GEDITORIAL_TEXTDOMAIN ), TRUE, '-empty' );
 		}
 
 		echo '</td></tr></table>';

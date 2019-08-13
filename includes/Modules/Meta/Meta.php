@@ -98,7 +98,7 @@ class Meta extends gEditorial\Module
 					'st'          => _x( 'String to place under the post title', 'Modules: Meta: Descriptions', GEDITORIAL_TEXTDOMAIN ),
 					'as'          => _x( 'String to override the post author', 'Modules: Meta: Descriptions', GEDITORIAL_TEXTDOMAIN ),
 					'le'          => _x( 'Editorial paragraph presented before post content', 'Modules: Meta: Descriptions', GEDITORIAL_TEXTDOMAIN ),
-					'ch'          => _x( 'String to reperesent that the post is on a column or section', 'Modules: Meta: Descriptions', GEDITORIAL_TEXTDOMAIN ),
+					'ch'          => _x( 'String to represent that the post is part of a column or a section', 'Modules: Meta: Descriptions', GEDITORIAL_TEXTDOMAIN ),
 					'ct'          => _x( 'Taxonomy for better categorizing columns', 'Modules: Meta: Descriptions', GEDITORIAL_TEXTDOMAIN ),
 					'ch_override' => _x( 'Column Header Override', 'Modules: Meta: Descriptions', GEDITORIAL_TEXTDOMAIN ),
 
