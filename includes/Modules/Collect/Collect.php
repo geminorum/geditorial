@@ -581,8 +581,8 @@ class Collect extends gEditorial\Module
 			$excludes[] = $term->slug;
 		}
 
-		if ( $this->get_setting( 'multiple_instances', FALSE ) )
-			$dropdowns[0] = MetaBox::dropdownAssocPosts( $posttype, '', $this->classs(), $excludes );
+		if ( empty( $dropdowns ) || $this->get_setting( 'multiple_instances' ) )
+			$dropdowns[0] = MetaBox::dropdownAssocPosts( $posttype, '0', $this->classs(), $excludes );
 
 		foreach ( $dropdowns as $dropdown )
 			if ( $dropdown )
