@@ -1313,6 +1313,9 @@ class Terms extends gEditorial\Module
 		if ( in_array( 'image', $supported ) )
 			$additions['sync_image_titles'] = _x( 'Sync Image Titles', 'Modules: Terms: Bulk Actions', GEDITORIAL_TEXTDOMAIN );
 
+		if ( in_array( 'tagline', $supported ) )
+			$additions['move_tagline_to_desc'] = _x( 'Move Tagline to Description', 'Modules: Terms: Bulk Actions', GEDITORIAL_TEXTDOMAIN );
+
 		return array_merge( $actions, $additions );
 	}
 
@@ -1320,6 +1323,7 @@ class Terms extends gEditorial\Module
 	{
 		$actions = [
 			'sync_image_titles',
+			'move_tagline_to_desc',
 		];
 
 		return in_array( $action, $actions )
@@ -1360,6 +1364,40 @@ class Terms extends gEditorial\Module
 			], TRUE );
 
 			if ( ! self::isError( $updated ) )
+				$count++;
+		}
+
+		return TRUE;
+	}
+
+	public function bulk_action_move_tagline_to_desc( $term_ids, $taxonomy, $action )
+	{
+		if ( ! in_array( 'tagline', $this->get_supported( $taxonomy ) ) )
+			return FALSE;
+
+		$count = 0;
+
+		foreach ( $term_ids as $term_id ) {
+
+			$term = get_term( intval( $term_id ), $taxonomy );
+
+			if ( self::isError( $term ) )
+				continue;
+
+			if ( ! $meta = get_term_meta( $term->term_id, 'tagline', TRUE ) )
+				continue;
+
+			if ( ! empty( $taxonomy->description ) )
+				$meta.= "\n\n".trim( $taxonomy->description );
+
+			$updated = wp_update_term( $term->term_id, $term->taxonomy, [
+				'description' => $this->filters( 'sanitize_description', trim( $meta ), $term, $action ),
+			] );
+
+			if ( self::isError( $updated ) )
+				continue;
+
+			if ( delete_term_meta( $term->term_id, 'tagline' ) )
 				$count++;
 		}
 
