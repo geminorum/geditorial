@@ -1345,14 +1345,14 @@ class Terms extends gEditorial\Module
 			if ( self::isError( $term ) )
 				continue;
 
-			if ( ! $attachment_id = get_term_meta( intval( $term->term_id ), 'image', TRUE ) )
+			if ( ! $attachment_id = get_term_meta( $term->term_id, 'image', TRUE ) )
 				continue;
 
 			if ( ! wp_attachment_is_image( $attachment_id ) )
 				continue;
 
-			$name = $this->filters( 'sanitize_name', $term->name, $term, $action );
-			$desc = $this->filters( 'sanitize_description', $term->description, $term, $action );
+			$name = $this->filters( 'sanitize_name', trim( $term->name ), $term, $action );
+			$desc = $this->filters( 'sanitize_description', trim( $term->description ), $term, $action );
 
 			update_post_meta( $attachment_id, '_wp_attachment_image_alt', $name );
 
