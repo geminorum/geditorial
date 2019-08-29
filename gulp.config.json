@@ -103,7 +103,7 @@
   },
   "pot": {
     "package": "gEditorial",
-    "domain": "GEDITORIAL_TEXTDOMAIN",
+    "domain": "geditorial",
     "metadataFile": "geditorial.php",
     "bugReport": "https://github.com/geminorum/geditorial/issues",
     "commentKeyword": "translators:",
@@ -113,7 +113,7 @@
   },
   "textdomain": {
     "force": true,
-    "text_domain": "GEDITORIAL_TEXTDOMAIN",
+    "text_domain": "geditorial",
     "keywords": [
       "__:1,2d",
       "_e:1,2d",
