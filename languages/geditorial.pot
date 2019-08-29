@@ -805,57 +805,57 @@ msgctxt "MetaBox: Refresh Link"
 msgid "Please refresh the page to generate the data."
 msgstr ""
 
-#: includes/MetaBox.php:253
+#: includes/MetaBox.php:255
 msgctxt "MetaBox: Checklist"
 msgid "Search …"
 msgstr ""
 
-#: includes/MetaBox.php:260
+#: includes/MetaBox.php:262
 msgctxt "MetaBox: Checklist"
 msgid "Sort by name"
 msgstr ""
 
-#: includes/MetaBox.php:405
+#: includes/MetaBox.php:410
 msgctxt "MetaBox: Title Action"
 msgid "Click to refresh the content"
 msgstr ""
 
-#: includes/MetaBox.php:406
+#: includes/MetaBox.php:411
 msgctxt "MetaBox: Title Action"
 msgid "Refresh"
 msgstr ""
 
-#: includes/MetaBox.php:444
+#: includes/MetaBox.php:449
 msgctxt "MetaBox: Title Attr"
 msgid "Order"
 msgstr ""
 
-#: includes/MetaBox.php:445
+#: includes/MetaBox.php:450
 msgctxt "MetaBox: Placeholder"
 msgid "Order"
 msgstr ""
 
-#: includes/MetaBox.php:463
+#: includes/MetaBox.php:468
 msgctxt "MetaBox: Title Attr"
 msgid "Slug"
 msgstr ""
 
-#: includes/MetaBox.php:464
+#: includes/MetaBox.php:469
 msgctxt "MetaBox: Placeholder"
 msgid "Slug"
 msgstr ""
 
-#: includes/MetaBox.php:508
+#: includes/MetaBox.php:513
 msgctxt "MetaBox: Parent Dropdown: Select Option None"
 msgid "&mdash; no parent &mdash;"
 msgstr ""
 
-#: includes/MetaBox.php:559
+#: includes/MetaBox.php:564
 msgctxt "MetaBox"
 msgid "Words: %s"
 msgstr ""
 
-#: includes/MetaBox.php:561
+#: includes/MetaBox.php:566
 msgctxt "MetaBox"
 msgid "Chars: %s"
 msgstr ""
@@ -2757,47 +2757,47 @@ msgctxt "Modules: Comments"
 msgid "You can add editorial comments to a post once you've saved it for the first time."
 msgstr ""
 
-#: includes/Modules/Comments/Listtable.php:35
+#: includes/Modules/Comments/Listtable.php:36
 msgctxt "Modules: Comments"
 msgid "No comments found."
 msgstr ""
 
-#: includes/Modules/Comments/Listtable.php:68
+#: includes/Modules/Comments/Listtable.php:69
 msgctxt "Modules: Comments: Action Title"
 msgid "Delete Permanently"
 msgstr ""
 
-#: includes/Modules/Comments/Listtable.php:99
+#: includes/Modules/Comments/Listtable.php:100
 msgctxt "Modules: Comments: Column Title"
 msgid "In reply to %s."
 msgstr ""
 
-#: includes/Modules/Comments/Listtable.php:106
+#: includes/Modules/Comments/Listtable.php:107
 msgctxt "Modules: Comments: Column Title"
 msgid "Reply"
 msgstr ""
 
-#: includes/Modules/Comments/Listtable.php:149, includes/Modules/Comments/Listtable.php:289
+#: includes/Modules/Comments/Listtable.php:150, includes/Modules/Comments/Listtable.php:290
 msgctxt "Modules: Comments: Column Title"
 msgid "User"
 msgstr ""
 
-#: includes/Modules/Comments/Listtable.php:152
+#: includes/Modules/Comments/Listtable.php:153
 msgctxt "Modules: Comments: Column Title"
 msgid "About"
 msgstr ""
 
-#: includes/Modules/Comments/Listtable.php:154, includes/Modules/Comments/Listtable.php:291
+#: includes/Modules/Comments/Listtable.php:155, includes/Modules/Comments/Listtable.php:292
 msgctxt "Modules: Comments: Column Title"
 msgid "Details"
 msgstr ""
 
-#: includes/Modules/Comments/Listtable.php:155
+#: includes/Modules/Comments/Listtable.php:156
 msgctxt "Modules: Comments: Column Title"
 msgid "When"
 msgstr ""
 
-#: includes/Modules/Comments/Listtable.php:290
+#: includes/Modules/Comments/Listtable.php:291
 msgctxt "Modules: Comments: Column Title"
 msgid "On"
 msgstr ""
@@ -2934,50 +2934,55 @@ msgstr ""
 
 #: includes/Modules/Config/Config.php:390
 msgctxt "Modules: Config"
-msgid "No orphaned types found in the database."
+msgid "No connection types found."
 msgstr ""
 
-#: includes/Modules/Config/Config.php:414
+#: includes/Modules/Config/Config.php:418
 msgctxt "Modules: Config: Setting Button"
 msgid "Convert"
 msgstr ""
 
-#: includes/Modules/Config/Config.php:428
+#: includes/Modules/Config/Config.php:422
+msgctxt "Modules: Config"
+msgid "No orphaned connection types found in the database."
+msgstr ""
+
+#: includes/Modules/Config/Config.php:435
 msgctxt "Modules: Config"
 msgid "Editorial Site User Is %s"
 msgstr ""
 
-#: includes/Modules/Config/Config.php:431
+#: includes/Modules/Config/Config.php:438
 msgctxt "Modules: Config"
 msgid "No Editorial Site User available!"
 msgstr ""
 
-#: includes/Modules/Config/Config.php:450
+#: includes/Modules/Config/Config.php:457
 msgctxt "Modules: Config: Ajax Notice"
 msgid "No action or name!"
 msgstr ""
 
-#: includes/Modules/Config/Config.php:453
+#: includes/Modules/Config/Config.php:460
 msgctxt "Modules: Config: Ajax Notice"
 msgid "Cannot find the module!"
 msgstr ""
 
-#: includes/Modules/Config/Config.php:458
+#: includes/Modules/Config/Config.php:465
 msgctxt "Modules: Config: Ajax Notice"
 msgid "Module state succesfully changed."
 msgstr ""
 
-#: includes/Modules/Config/Config.php:460
+#: includes/Modules/Config/Config.php:467
 msgctxt "Modules: Config: Ajax Notice"
 msgid "Cannot change module state!"
 msgstr ""
 
-#: includes/Modules/Config/Config.php:472
+#: includes/Modules/Config/Config.php:479
 msgctxt "Modules: Config: Page Notice"
 msgid "Not a registered Editorial module."
 msgstr ""
 
-#: includes/Modules/Config/Config.php:475
+#: includes/Modules/Config/Config.php:482
 msgctxt "Modules: Config: Page Notice"
 msgid "Module not enabled. Please enable it from the Editorial settings page."
 msgstr ""
@@ -5313,7 +5318,7 @@ msgstr ""
 
 #: includes/Modules/Meta/Meta.php:101
 msgctxt "Modules: Meta: Descriptions"
-msgid "String to reperesent that the post is on a column or section"
+msgid "String to represent that the post is part of a column or a section"
 msgstr ""
 
 #: includes/Modules/Meta/Meta.php:102
@@ -5869,29 +5874,29 @@ msgctxt "Modules: Rating"
 msgid "Quality Assessment of Contents"
 msgstr ""
 
-#: includes/Modules/Reshare/Reshare.php:16
+#: includes/Modules/Reshare/Reshare.php:17
 msgctxt "Modules: Reshare"
 msgid "Reshare"
 msgstr ""
 
-#: includes/Modules/Reshare/Reshare.php:17
+#: includes/Modules/Reshare/Reshare.php:18
 msgctxt "Modules: Reshare"
 msgid "Contents from Other Sources"
 msgstr ""
 
-#: includes/Modules/Reshare/Reshare.php:72
+#: includes/Modules/Reshare/Reshare.php:73
 msgctxt "Modules: Reshare: Column Title"
 msgid "Reshare Categories"
 msgstr ""
 
-#: includes/Modules/Reshare/Reshare.php:75
+#: includes/Modules/Reshare/Reshare.php:76
 msgctxt "Modules: Reshare: Noop"
 msgid "Reshare"
 msgid_plural "Reshares"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/Modules/Reshare/Reshare.php:76
+#: includes/Modules/Reshare/Reshare.php:77
 msgctxt "Modules: Reshare: Noop"
 msgid "Reshare Category"
 msgid_plural "Reshare Categories"
@@ -6811,120 +6816,120 @@ msgctxt "Modules: Tables"
 msgid "Table Managment and Spreadsheet Editor"
 msgstr ""
 
-#: includes/Modules/Tables/Tables.php:58
+#: includes/Modules/Tables/Tables.php:57
 msgctxt "Modules: Tables: Noop"
 msgid "Table"
 msgid_plural "Tables"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/Modules/Tables/Tables.php:59
+#: includes/Modules/Tables/Tables.php:58
 msgctxt "Modules: Tables: Noop"
 msgid "Table Category"
 msgid_plural "Table Categories"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/Modules/Team/Team.php:17
+#: includes/Modules/Team/Team.php:18
 msgctxt "Modules: Team"
 msgid "Team"
 msgstr ""
 
-#: includes/Modules/Team/Team.php:18
+#: includes/Modules/Team/Team.php:19
 msgctxt "Modules: Team"
 msgid "Profiles for Editorial Teams"
 msgstr ""
 
-#: includes/Modules/Team/Team.php:59
+#: includes/Modules/Team/Team.php:60
 msgctxt "Modules: Team: Menu Name"
 msgid "Team Members"
 msgstr ""
 
-#: includes/Modules/Team/Team.php:61
+#: includes/Modules/Team/Team.php:62
 msgctxt "Modules: Team: Column Title"
 msgid "Team Member Categories"
 msgstr ""
 
-#: includes/Modules/Team/Team.php:64
+#: includes/Modules/Team/Team.php:65
 msgctxt "Modules: Team: Noop"
 msgid "Team Member"
 msgid_plural "Team Members"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/Modules/Team/Team.php:65
+#: includes/Modules/Team/Team.php:66
 msgctxt "Modules: Team: Noop"
 msgid "Team Member Category"
 msgid_plural "Team Member Categories"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/Modules/Team/Team.php:75
+#: includes/Modules/Team/Team.php:76
 msgctxt "Modules: Team: Field Title"
 msgid "Role"
 msgstr ""
 
-#: includes/Modules/Team/Team.php:76
+#: includes/Modules/Team/Team.php:77
 msgctxt "Modules: Team: Field Description"
 msgid "Enter a byline for the team member (for example: \"Director of Production\")."
 msgstr ""
 
-#: includes/Modules/Team/Team.php:81
+#: includes/Modules/Team/Team.php:82
 msgctxt "Modules: Team: Field Title"
 msgid "Gravatar E-mail Address"
 msgstr ""
 
-#: includes/Modules/Team/Team.php:82
+#: includes/Modules/Team/Team.php:83
 msgctxt "Modules: Team: Field Description"
 msgid "Enter an e-mail address, to use a Gravatar, instead of using the \"Featured Image\"."
 msgstr ""
 
-#: includes/Modules/Team/Team.php:87
+#: includes/Modules/Team/Team.php:88
 msgctxt "Modules: Team: Field Title"
 msgid "Personal Site"
 msgstr ""
 
-#: includes/Modules/Team/Team.php:88
+#: includes/Modules/Team/Team.php:89
 msgctxt "Modules: Team: Field Description"
 msgid "Enter this team member's URL (for example: https://geminorum.ir/)."
 msgstr ""
 
-#: includes/Modules/Team/Team.php:93
+#: includes/Modules/Team/Team.php:94
 msgctxt "Modules: Team: Field Title"
 msgid "Contact E-mail Address"
 msgstr ""
 
-#: includes/Modules/Team/Team.php:94
+#: includes/Modules/Team/Team.php:95
 msgctxt "Modules: Team: Field Description"
 msgid "Enter a contact email address for this team member to be displayed as a link on the frontend."
 msgstr ""
 
-#: includes/Modules/Team/Team.php:99
+#: includes/Modules/Team/Team.php:100
 msgctxt "Modules: Team: Field Title"
 msgid "Telephone Number"
 msgstr ""
 
-#: includes/Modules/Team/Team.php:100
+#: includes/Modules/Team/Team.php:101
 msgctxt "Modules: Team: Field Description"
 msgid "Enter a telephone number for this team member to be displayed as a link on the frontend."
 msgstr ""
 
-#: includes/Modules/Team/Team.php:105
+#: includes/Modules/Team/Team.php:106
 msgctxt "Modules: Team: Field Title"
 msgid "Twitter Username"
 msgstr ""
 
-#: includes/Modules/Team/Team.php:106
+#: includes/Modules/Team/Team.php:107
 msgctxt "Modules: Team: Field Description"
 msgid "Enter this team member's Twitter username without the @ (for example: geminorumir)."
 msgstr ""
 
-#: includes/Modules/Team/Team.php:111
+#: includes/Modules/Team/Team.php:112
 msgctxt "Modules: Team: Field Title"
 msgid "Network Username"
 msgstr ""
 
-#: includes/Modules/Team/Team.php:112
+#: includes/Modules/Team/Team.php:113
 msgctxt "Modules: Team: Field Description"
 msgid "Map this team member to a user on this site."
 msgstr ""
@@ -7304,14 +7309,19 @@ msgctxt "Modules: Terms: Bulk Actions"
 msgid "Sync Image Titles"
 msgstr ""
 
-#: includes/Modules/Terms/Terms.php:1375
+#: includes/Modules/Terms/Terms.php:1317
+msgctxt "Modules: Terms: Bulk Actions"
+msgid "Move Tagline to Description"
+msgstr ""
+
+#: includes/Modules/Terms/Terms.php:1413
 msgctxt "Modules: Terms"
 msgid "%s Uncategorized Post"
 msgid_plural "%s Uncategorized Posts"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/Modules/Terms/Terms.php:1380
+#: includes/Modules/Terms/Terms.php:1418
 msgctxt "Modules: Terms"
 msgid "You need to assign categories to some posts!"
 msgstr ""
@@ -8305,91 +8315,91 @@ msgctxt "Modules: Users"
 msgid "Checks for post authors and re-map them with current registered users. Maximum upload size: <b>%s</b>"
 msgstr ""
 
-#: includes/Modules/Venue/Venue.php:20
+#: includes/Modules/Venue/Venue.php:21
 msgctxt "Modules: Venue"
 msgid "Venue"
 msgstr ""
 
-#: includes/Modules/Venue/Venue.php:21
+#: includes/Modules/Venue/Venue.php:22
 msgctxt "Modules: Venue"
 msgid "Place Listings"
 msgstr ""
 
-#: includes/Modules/Venue/Venue.php:31
+#: includes/Modules/Venue/Venue.php:32
 msgctxt "Modules: Venue: Setting Description"
 msgid "Specifies location based on the actual latitude and longitude."
 msgstr ""
 
-#: includes/Modules/Venue/Venue.php:80
+#: includes/Modules/Venue/Venue.php:81
 msgctxt "Modules: Venue: Column Title"
 msgid "Venue"
 msgstr ""
 
-#: includes/Modules/Venue/Venue.php:83
+#: includes/Modules/Venue/Venue.php:84
 msgctxt "Modules: Venue: Column Title"
 msgid "Place Categories"
 msgstr ""
 
-#: includes/Modules/Venue/Venue.php:87, includes/Modules/Venue/Venue.php:88
+#: includes/Modules/Venue/Venue.php:88, includes/Modules/Venue/Venue.php:89
 msgctxt "Modules: Venue: Noop"
 msgid "Place"
 msgid_plural "Places"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/Modules/Venue/Venue.php:89
+#: includes/Modules/Venue/Venue.php:90
 msgctxt "Modules: Venue: Noop"
 msgid "Place Category"
 msgid_plural "Place Categories"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/Modules/Venue/Venue.php:94
+#: includes/Modules/Venue/Venue.php:95
 msgctxt "Modules: Venue: O2O"
 msgid "Connected Places"
 msgstr ""
 
-#: includes/Modules/Venue/Venue.php:95
+#: includes/Modules/Venue/Venue.php:96
 msgctxt "Modules: Venue: O2O"
 msgid "Connected Posts"
 msgstr ""
 
-#: includes/Modules/Venue/Venue.php:107
+#: includes/Modules/Venue/Venue.php:108
 msgctxt "Modules: Venue: Field Title"
 msgid "Full Title"
 msgstr ""
 
-#: includes/Modules/Venue/Venue.php:108
+#: includes/Modules/Venue/Venue.php:109
 msgctxt "Modules: Venue: Field Description"
 msgid "Full title of the location"
 msgstr ""
 
-#: includes/Modules/Venue/Venue.php:113
+#: includes/Modules/Venue/Venue.php:114
 msgctxt "Modules: Venue: Field Title"
 msgid "Latitude"
 msgstr ""
 
-#: includes/Modules/Venue/Venue.php:114
+#: includes/Modules/Venue/Venue.php:115
 msgctxt "Modules: Venue: Field Description"
 msgid "The latitude (in decimal notation) for this location."
 msgstr ""
 
-#: includes/Modules/Venue/Venue.php:118
+#: includes/Modules/Venue/Venue.php:119
 msgctxt "Modules: Venue: Field Title"
 msgid "Longitude"
 msgstr ""
 
-#: includes/Modules/Venue/Venue.php:119
+#: includes/Modules/Venue/Venue.php:120
 msgctxt "Modules: Venue: Field Description"
 msgid "The longitude (in decimal notation) for this location."
 msgstr ""
 
-#: includes/Modules/Venue/Venue.php:123
+#: includes/Modules/Venue/Venue.php:124
 msgctxt "Modules: Venue: Field Title"
 msgid "Street Address"
 msgstr ""
 
-#: includes/Modules/Venue/Venue.php:124
+#: includes/Modules/Venue/Venue.php:125
 msgctxt "Modules: Venue: Field Description"
 msgid "Full street address, including city, state etc."
 msgstr ""
@@ -8684,17 +8694,22 @@ msgctxt "O2O"
 msgid "No users found."
 msgstr ""
 
-#: includes/Plugin.php:584
+#: includes/Plugin.php:585
 msgctxt "Plugin: Main: Adminbar Node"
 msgid "Editorial"
 msgstr ""
 
-#: includes/Plugin.php:613
+#: includes/Plugin.php:614
 msgid "N/A"
 msgstr ""
 
-#: includes/Plugin.php:614
+#: includes/Plugin.php:615
 msgid "Not Available"
+msgstr ""
+
+#: includes/Relation.php:271, includes/Relation.php:282
+msgctxt "Relation: REST"
+msgid "No connection type found!"
 msgstr ""
 
 #: includes/Settings.php:127
