@@ -22,8 +22,8 @@ class Specs extends gEditorial\Module
 	{
 		return [
 			'name'  => 'specs',
-			'title' => _x( 'Specifications', 'Modules: Specs', GEDITORIAL_TEXTDOMAIN ),
-			'desc'  => _x( 'Post Specifications', 'Modules: Specs', GEDITORIAL_TEXTDOMAIN ),
+			'title' => _x( 'Specifications', 'Modules: Specs', 'geditorial' ),
+			'desc'  => _x( 'Post Specifications', 'Modules: Specs', 'geditorial' ),
 			'icon'  => 'editor-ul',
 		];
 	}
@@ -49,21 +49,21 @@ class Specs extends gEditorial\Module
 	{
 		return [
 			'titles' => [
-				'spec_title' => _x( 'Title', 'Modules: Specs', GEDITORIAL_TEXTDOMAIN ),
-				'spec_order' => _x( 'Order', 'Modules: Specs', GEDITORIAL_TEXTDOMAIN ),
-				'spec_value' => _x( 'Description', 'Modules: Specs', GEDITORIAL_TEXTDOMAIN ),
+				'spec_title' => _x( 'Title', 'Modules: Specs', 'geditorial' ),
+				'spec_order' => _x( 'Order', 'Modules: Specs', 'geditorial' ),
+				'spec_value' => _x( 'Description', 'Modules: Specs', 'geditorial' ),
 			],
 			'descriptions' => [
-				'spec_title' => _x( 'In Specifications Title', 'Modules: Specs', GEDITORIAL_TEXTDOMAIN ),
-				'spec_order' => _x( 'In Specifications Order', 'Modules: Specs', GEDITORIAL_TEXTDOMAIN ),
-				'spec_value' => _x( 'In Specifications Description', 'Modules: Specs', GEDITORIAL_TEXTDOMAIN ),
+				'spec_title' => _x( 'In Specifications Title', 'Modules: Specs', 'geditorial' ),
+				'spec_order' => _x( 'In Specifications Order', 'Modules: Specs', 'geditorial' ),
+				'spec_value' => _x( 'In Specifications Description', 'Modules: Specs', 'geditorial' ),
 			],
 			'misc' => [
-				'column_title'     => _x( 'Specifications', 'Modules: Specs: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				'show_option_none' => _x( '&mdash; Choose a Specification &mdash;', 'Modules: Specs', GEDITORIAL_TEXTDOMAIN ),
+				'column_title'     => _x( 'Specifications', 'Modules: Specs: Column Title', 'geditorial' ),
+				'show_option_none' => _x( '&mdash; Choose a Specification &mdash;', 'Modules: Specs', 'geditorial' ),
 			],
 			'noops' => [
-				'specs_tax' => _nx_noop( 'Specification', 'Specifications', 'Modules: Specs: Noop', GEDITORIAL_TEXTDOMAIN ),
+				'specs_tax' => _nx_noop( 'Specification', 'Specifications', 'Modules: Specs: Noop', 'geditorial' ),
 			],
 		];
 	}
@@ -292,10 +292,10 @@ class Specs extends gEditorial\Module
 		$metas = $this->get_postmeta( $post->ID, FALSE, [] );
 
 		$handle = sprintf( '<span data-icon="dashicons" class="-handle dashicons dashicons-move" title="%s"></span>',
-			_x( 'Sort me!', 'Modules: Specs: Sortable Handler', GEDITORIAL_TEXTDOMAIN ) );
+			_x( 'Sort me!', 'Modules: Specs: Sortable Handler', 'geditorial' ) );
 
 		$delete = sprintf( '<span data-icon="dashicons" class="-delete dashicons dashicons-trash" title="%s"></span>',
-			_x( 'Trash me!', 'Modules: Specs: Sortable Trash', GEDITORIAL_TEXTDOMAIN ) );
+			_x( 'Trash me!', 'Modules: Specs: Sortable Trash', 'geditorial' ) );
 
 		echo '<ol class="geditorial-specs-list -sortable">';
 
@@ -311,7 +311,7 @@ class Specs extends gEditorial\Module
 						$title = $terms[$meta['spec_term_id']]->name;
 
 					else
-						$title = _x( 'Unknown Field', 'Modules: Specs', GEDITORIAL_TEXTDOMAIN );
+						$title = _x( 'Unknown Field', 'Modules: Specs', 'geditorial' );
 
 					if ( ! empty( $meta['spec_value'] ) )
 						$title.= sprintf( ': %s', $meta['spec_value'] );
@@ -447,7 +447,7 @@ class Specs extends gEditorial\Module
 		$html.= '<table class="table table-striped geditorial-specs">';
 		foreach ( $metas as $order => $meta ) {
 			$html.= '<tr><td>';
-				$html.= ( isset( $meta['spec_title'] ) && $meta['spec_title'] ) ? $meta['spec_title'] : ( isset( $meta['spec_term_id'] ) && $meta['spec_term_id'] ? $the_terms[$meta['spec_term_id']]->name : _x( 'Unknown Field', 'Modules: Specs', GEDITORIAL_TEXTDOMAIN ) );
+				$html.= ( isset( $meta['spec_title'] ) && $meta['spec_title'] ) ? $meta['spec_title'] : ( isset( $meta['spec_term_id'] ) && $meta['spec_term_id'] ? $the_terms[$meta['spec_term_id']]->name : _x( 'Unknown Field', 'Modules: Specs', 'geditorial' ) );
 			$html.= '</td><td>';
 				// FIXME: add filter for each spec
 				$html.= isset( $meta['spec_value'] ) ? $meta['spec_value'] : '';

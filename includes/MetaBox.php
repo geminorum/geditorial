@@ -42,7 +42,7 @@ class MetaBox extends Core\Base
 		echo HTML::tag( 'a', [
 			'href'  => add_query_arg( 'flush', '' ),
 			'class' => [ '-description', '-refresh' ],
-		], _x( 'Please refresh the page to generate the data.', 'MetaBox: Refresh Link', GEDITORIAL_TEXTDOMAIN ) );
+		], _x( 'Please refresh the page to generate the data.', 'MetaBox: Refresh Link', 'geditorial' ) );
 
 		echo $after;
 
@@ -252,14 +252,14 @@ class MetaBox extends Core\Base
 			$form.= HTML::tag( 'input', [
 				'type'        => 'search',
 				'class'       => [ '-search', 'hide-if-no-js' ],
-				'placeholder' => _x( 'Search …', 'MetaBox: Checklist', GEDITORIAL_TEXTDOMAIN ),
+				'placeholder' => _x( 'Search …', 'MetaBox: Checklist', 'geditorial' ),
 			] );
 
 			$form.= HTML::tag( 'button', [
 				'type'  => 'button',
 				'class' => [ '-button', 'button', 'button-small', '-sort', 'hide-if-no-js' ],
 				'data'  => [ 'sort' => '-name' ],
-				'title' => _x( 'Sort by name', 'MetaBox: Checklist', GEDITORIAL_TEXTDOMAIN ),
+				'title' => _x( 'Sort by name', 'MetaBox: Checklist', 'geditorial' ),
 			], HTML::getDashicon( 'sort' ) );
 
 			$html.= HTML::wrap( $form, 'field-wrap field-wrap-filter' );
@@ -407,8 +407,8 @@ class MetaBox extends Core\Base
 	public static function titleActionRefresh()
 	{
 		$html = ' <span class="postbox-title-action"><a href="'.esc_url( add_query_arg( 'flush', '' ) ).'"';
-		$html.= ' title="'._x( 'Click to refresh the content', 'MetaBox: Title Action', GEDITORIAL_TEXTDOMAIN ).'">';
-		$html.= _x( 'Refresh', 'MetaBox: Title Action', GEDITORIAL_TEXTDOMAIN ).'</a></span>';
+		$html.= ' title="'._x( 'Click to refresh the content', 'MetaBox: Title Action', 'geditorial' ).'">';
+		$html.= _x( 'Refresh', 'MetaBox: Title Action', 'geditorial' ).'</a></span>';
 
 		return $html;
 	}
@@ -446,8 +446,8 @@ class MetaBox extends Core\Base
 			'name'        => 'menu_order',
 			'id'          => 'menu_order',
 			'value'       => $post->menu_order,
-			'title'       => _x( 'Order', 'MetaBox: Title Attr', GEDITORIAL_TEXTDOMAIN ),
-			'placeholder' => _x( 'Order', 'MetaBox: Placeholder', GEDITORIAL_TEXTDOMAIN ),
+			'title'       => _x( 'Order', 'MetaBox: Title Attr', 'geditorial' ),
+			'placeholder' => _x( 'Order', 'MetaBox: Placeholder', 'geditorial' ),
 			'class'       => 'small-text',
 			'data'        => [ 'ortho' => 'number' ],
 		] );
@@ -465,8 +465,8 @@ class MetaBox extends Core\Base
 			'name'        => 'post_name',
 			'id'          => 'post_name',
 			'value'       => apply_filters( 'editable_slug', $post->post_name, $post ),
-			'title'       => _x( 'Slug', 'MetaBox: Title Attr', GEDITORIAL_TEXTDOMAIN ),
-			'placeholder' => _x( 'Slug', 'MetaBox: Placeholder', GEDITORIAL_TEXTDOMAIN ),
+			'title'       => _x( 'Slug', 'MetaBox: Title Attr', 'geditorial' ),
+			'placeholder' => _x( 'Slug', 'MetaBox: Placeholder', 'geditorial' ),
 			'class'       => 'code-text',
 		] );
 
@@ -510,7 +510,7 @@ class MetaBox extends Core\Base
 			'selected'         => $post->post_parent,
 			'name'             => 'parent_id',
 			'class'            => static::BASE.'-admin-dropbown',
-			'show_option_none' => _x( '&mdash; no parent &mdash;', 'MetaBox: Parent Dropdown: Select Option None', GEDITORIAL_TEXTDOMAIN ),
+			'show_option_none' => _x( '&mdash; no parent &mdash;', 'MetaBox: Parent Dropdown: Select Option None', 'geditorial' ),
 			'sort_column'      => 'menu_order, post_title',
 			'sort_order'       => 'desc',
 			'post_status'      => $statuses,
@@ -561,9 +561,11 @@ class MetaBox extends Core\Base
 	public static function editorStatusInfo( $target = 'excerpt' )
 	{
 		$html = '<div class="-wordcount hide-if-no-js" data-target="'.$target.'">';
-		$html.= sprintf( _x( 'Words: %s', 'MetaBox', GEDITORIAL_TEXTDOMAIN ), '<span class="word-count">'.Number::format( '0' ).'</span>' );
+		/* translators: %s: words count */
+		$html.= sprintf( _x( 'Words: %s', 'MetaBox', 'geditorial' ), '<span class="word-count">'.Number::format( '0' ).'</span>' );
 		$html.= ' | ';
-		$html.= sprintf( _x( 'Chars: %s', 'MetaBox', GEDITORIAL_TEXTDOMAIN ), '<span class="char-count">'.Number::format( '0' ).'</span>' );
+		/* translators: %s: chars count */
+		$html.= sprintf( _x( 'Chars: %s', 'MetaBox', 'geditorial' ), '<span class="char-count">'.Number::format( '0' ).'</span>' );
 		$html.= '</div>';
 
 		echo HTML::wrap( $html, '-editor-status-info' );

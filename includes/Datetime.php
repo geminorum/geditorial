@@ -36,14 +36,14 @@ class Datetime extends Core\Base
 
 		if ( empty( $formats ) )
 			$formats = apply_filters( 'custom_date_formats', [
-				'fulltime'  => _x( 'l, M j, Y @ H:i', 'Date Format', GEDITORIAL_TEXTDOMAIN ),
-				'datetime'  => _x( 'M j, Y @ G:i', 'Date Format', GEDITORIAL_TEXTDOMAIN ),
-				'dateonly'  => _x( 'l, F j, Y', 'Date Format', GEDITORIAL_TEXTDOMAIN ),
-				'timedate'  => _x( 'H:i - F j, Y', 'Date Format', GEDITORIAL_TEXTDOMAIN ),
-				'timeampm'  => _x( 'g:i a', 'Date Format', GEDITORIAL_TEXTDOMAIN ),
-				'timeonly'  => _x( 'H:i', 'Date Format', GEDITORIAL_TEXTDOMAIN ),
-				'monthday'  => _x( 'n/j', 'Date Format', GEDITORIAL_TEXTDOMAIN ),
-				'default'   => _x( 'm/d/Y', 'Date Format', GEDITORIAL_TEXTDOMAIN ),
+				'fulltime'  => _x( 'l, M j, Y @ H:i', 'Date Format', 'geditorial' ),
+				'datetime'  => _x( 'M j, Y @ G:i', 'Date Format', 'geditorial' ),
+				'dateonly'  => _x( 'l, F j, Y', 'Date Format', 'geditorial' ),
+				'timedate'  => _x( 'H:i - F j, Y', 'Date Format', 'geditorial' ),
+				'timeampm'  => _x( 'g:i a', 'Date Format', 'geditorial' ),
+				'timeonly'  => _x( 'H:i', 'Date Format', 'geditorial' ),
+				'monthday'  => _x( 'n/j', 'Date Format', 'geditorial' ),
+				'default'   => _x( 'm/d/Y', 'Date Format', 'geditorial' ),
 				'wordpress' => get_option( 'date_format' ),
 			] );
 
@@ -65,7 +65,8 @@ class Datetime extends Core\Base
 		$local = strtotime( $post->post_modified );
 
 		$format = self::dateFormats( 'dateonly' );
-		$title  = _x( 'Last Modified on %s', 'Datetime: Post Modified', GEDITORIAL_TEXTDOMAIN );
+		/* translators: %s: date string */
+		$title  = _x( 'Last Modified on %s', 'Datetime: Post Modified', 'geditorial' );
 
 		return $attr
 			? sprintf( $title, date_i18n( $format, $local ) )
@@ -93,7 +94,8 @@ class Datetime extends Core\Base
 
 	public static function humanTimeAgo( $from, $to = '' )
 	{
-		return sprintf( _x( '%s ago', 'Datetime: Human Time Ago', GEDITORIAL_TEXTDOMAIN ), human_time_diff( $from, $to ) );
+		/* translators: %s: time string */
+		return sprintf( _x( '%s ago', 'Datetime: Human Time Ago', 'geditorial' ), human_time_diff( $from, $to ) );
 	}
 
 	public static function humanTimeDiffRound( $local, $round = NULL, $format = NULL, $now = NULL )
@@ -124,16 +126,24 @@ class Datetime extends Core\Base
 
 		if ( is_null( $strings ) )
 			$strings = [
-				'now'    => _x( 'Now', 'Datetime: Human Time Diff', GEDITORIAL_TEXTDOMAIN ),
-				'_s_ago' => _x( '%s ago', 'Datetime: Human Time Diff', GEDITORIAL_TEXTDOMAIN ),
-				'in__s'  => _x( 'in %s', 'Datetime: Human Time Diff', GEDITORIAL_TEXTDOMAIN ),
+				'now'    => _x( 'Now', 'Datetime: Human Time Diff', 'geditorial' ),
+				/* translators: %s: time string */
+				'_s_ago' => _x( '%s ago', 'Datetime: Human Time Diff', 'geditorial' ),
+				/* translators: %s: time string */
+				'in__s'  => _x( 'in %s', 'Datetime: Human Time Diff', 'geditorial' ),
 
-				'noop_minutes' => _nx_noop( '%s min', '%s mins', 'Datetime: Human Time Diff: Noop', GEDITORIAL_TEXTDOMAIN ),
-				'noop_hours'   => _nx_noop( '%s hour', '%s hours', 'Datetime: Human Time Diff: Noop', GEDITORIAL_TEXTDOMAIN ),
-				'noop_days'    => _nx_noop( '%s day', '%s days', 'Datetime: Human Time Diff: Noop', GEDITORIAL_TEXTDOMAIN ),
-				'noop_weeks'   => _nx_noop( '%s week', '%s weeks', 'Datetime: Human Time Diff: Noop', GEDITORIAL_TEXTDOMAIN ),
-				'noop_months'  => _nx_noop( '%s month', '%s months', 'Datetime: Human Time Diff: Noop', GEDITORIAL_TEXTDOMAIN ),
-				'noop_years'   => _nx_noop( '%s year', '%s years', 'Datetime: Human Time Diff: Noop', GEDITORIAL_TEXTDOMAIN ),
+				/* translators: %s: number of minutes */
+				'noop_minutes' => _nx_noop( '%s min', '%s mins', 'Datetime: Human Time Diff: Noop', 'geditorial' ),
+				/* translators: %s: number of hours */
+				'noop_hours'   => _nx_noop( '%s hour', '%s hours', 'Datetime: Human Time Diff: Noop', 'geditorial' ),
+				/* translators: %s: number of days */
+				'noop_days'    => _nx_noop( '%s day', '%s days', 'Datetime: Human Time Diff: Noop', 'geditorial' ),
+				/* translators: %s: number of weeks */
+				'noop_weeks'   => _nx_noop( '%s week', '%s weeks', 'Datetime: Human Time Diff: Noop', 'geditorial' ),
+				/* translators: %s: number of months */
+				'noop_months'  => _nx_noop( '%s month', '%s months', 'Datetime: Human Time Diff: Noop', 'geditorial' ),
+				/* translators: %s: number of years */
+				'noop_years'   => _nx_noop( '%s year', '%s years', 'Datetime: Human Time Diff: Noop', 'geditorial' ),
 			];
 
 		if ( empty( $now ) )
@@ -148,12 +158,16 @@ class Datetime extends Core\Base
 
 		if ( is_null( $strings ) )
 			$strings = [
-				'sep' => _x( ', ', 'Datetime: From Seconds: Seperator', GEDITORIAL_TEXTDOMAIN ),
+				'sep' => _x( ', ', 'Datetime: From Seconds: Seperator', 'geditorial' ),
 
-				'noop_seconds' => _nx_noop( '%s second', '%s seconds', 'Datetime: From Seconds: Noop', GEDITORIAL_TEXTDOMAIN ),
-				'noop_minutes' => _nx_noop( '%s min', '%s mins', 'Datetime: From Seconds: Noop', GEDITORIAL_TEXTDOMAIN ),
-				'noop_hours'   => _nx_noop( '%s hour', '%s hours', 'Datetime: From Seconds: Noop', GEDITORIAL_TEXTDOMAIN ),
-				'noop_days'    => _nx_noop( '%s day', '%s days', 'Datetime: From Seconds: Noop', GEDITORIAL_TEXTDOMAIN ),
+				/* translators: %s: number of seconds */
+				'noop_seconds' => _nx_noop( '%s second', '%s seconds', 'Datetime: From Seconds: Noop', 'geditorial' ),
+				/* translators: %s: number of minutes */
+				'noop_minutes' => _nx_noop( '%s min', '%s mins', 'Datetime: From Seconds: Noop', 'geditorial' ),
+				/* translators: %s: number of hours */
+				'noop_hours'   => _nx_noop( '%s hour', '%s hours', 'Datetime: From Seconds: Noop', 'geditorial' ),
+				/* translators: %s: number of days */
+				'noop_days'    => _nx_noop( '%s day', '%s days', 'Datetime: From Seconds: Noop', 'geditorial' ),
 			];
 
 		return Date::htmlFromSeconds( $seconds, $round, $strings );
@@ -166,27 +180,34 @@ class Datetime extends Core\Base
 
 		if ( is_null( $strings ) )
 			$strings = [
-				'now'            => _x( 'Now', 'Datetime: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
-				'just_now'       => _x( 'Just now', 'Datetime: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
-				'one_minute_ago' => _x( 'One minute ago', 'Datetime: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
-				'_s_minutes_ago' => _x( '%s minutes ago', 'Datetime: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
-				'one_hour_ago'   => _x( 'One hour ago', 'Datetime: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
-				'_s_hours_ago'   => _x( '%s hours ago', 'Datetime: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
-				'yesterday'      => _x( 'Yesterday', 'Datetime: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
-				'_s_days_ago'    => _x( '%s days ago', 'Datetime: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
-				'_s_weeks_ago'   => _x( '%s weeks ago', 'Datetime: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
-				'last_month'     => _x( 'Last month', 'Datetime: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
-				'last_year'      => _x( 'Last year', 'Datetime: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
-				'in_a_minute'    => _x( 'in a minute', 'Datetime: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
-				'in__s_minutes'  => _x( 'in %s minutes', 'Datetime: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
-				'in_an_hour'     => _x( 'in an hour', 'Datetime: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
-				'in__s_hours'    => _x( 'in %s hours', 'Datetime: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
-				'tomorrow'       => _x( 'Tomorrow', 'Datetime: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
-				'next_week'      => _x( 'next week', 'Datetime: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
-				'in__s_weeks'    => _x( 'in %s weeks', 'Datetime: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
-				'next_month'     => _x( 'next month', 'Datetime: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
-				'format_l'       => _x( 'l', 'Datetime: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
-				'format_f_y'     => _x( 'F Y', 'Datetime: Date: Moment', GEDITORIAL_TEXTDOMAIN ),
+				'now'            => _x( 'Now', 'Datetime: Date: Moment', 'geditorial' ),
+				'just_now'       => _x( 'Just now', 'Datetime: Date: Moment', 'geditorial' ),
+				'one_minute_ago' => _x( 'One minute ago', 'Datetime: Date: Moment', 'geditorial' ),
+				/* translators: %s: number of minutes */
+				'_s_minutes_ago' => _x( '%s minutes ago', 'Datetime: Date: Moment', 'geditorial' ),
+				'one_hour_ago'   => _x( 'One hour ago', 'Datetime: Date: Moment', 'geditorial' ),
+				/* translators: %s: number of hours */
+				'_s_hours_ago'   => _x( '%s hours ago', 'Datetime: Date: Moment', 'geditorial' ),
+				'yesterday'      => _x( 'Yesterday', 'Datetime: Date: Moment', 'geditorial' ),
+				/* translators: %s: number of days */
+				'_s_days_ago'    => _x( '%s days ago', 'Datetime: Date: Moment', 'geditorial' ),
+				/* translators: %s: number of weeks */
+				'_s_weeks_ago'   => _x( '%s weeks ago', 'Datetime: Date: Moment', 'geditorial' ),
+				'last_month'     => _x( 'Last month', 'Datetime: Date: Moment', 'geditorial' ),
+				'last_year'      => _x( 'Last year', 'Datetime: Date: Moment', 'geditorial' ),
+				'in_a_minute'    => _x( 'in a minute', 'Datetime: Date: Moment', 'geditorial' ),
+				/* translators: %s: number of minutes */
+				'in__s_minutes'  => _x( 'in %s minutes', 'Datetime: Date: Moment', 'geditorial' ),
+				'in_an_hour'     => _x( 'in an hour', 'Datetime: Date: Moment', 'geditorial' ),
+				/* translators: %s: number of hours */
+				'in__s_hours'    => _x( 'in %s hours', 'Datetime: Date: Moment', 'geditorial' ),
+				'tomorrow'       => _x( 'Tomorrow', 'Datetime: Date: Moment', 'geditorial' ),
+				'next_week'      => _x( 'next week', 'Datetime: Date: Moment', 'geditorial' ),
+				/* translators: %s: number of weeks */
+				'in__s_weeks'    => _x( 'in %s weeks', 'Datetime: Date: Moment', 'geditorial' ),
+				'next_month'     => _x( 'next month', 'Datetime: Date: Moment', 'geditorial' ),
+				'format_l'       => _x( 'l', 'Datetime: Date: Moment', 'geditorial' ),
+				'format_f_y'     => _x( 'F Y', 'Datetime: Date: Moment', 'geditorial' ),
 			];
 
 		if ( empty( $now ) )
@@ -199,16 +220,16 @@ class Datetime extends Core\Base
 	public static function getDefualtCalendars( $filtered = FALSE )
 	{
 		$calendars = [
-			'gregorian'     => _x( 'Gregorian', 'Datetime: Default Calendar Type', GEDITORIAL_TEXTDOMAIN ),
-			// 'japanese'      => _x( 'Japanese', 'Datetime: Default Calendar Type', GEDITORIAL_TEXTDOMAIN ),
-			// 'buddhist'      => _x( 'Buddhist', 'Datetime: Default Calendar Type', GEDITORIAL_TEXTDOMAIN ),
-			// 'chinese'       => _x( 'Chinese', 'Datetime: Default Calendar Type', GEDITORIAL_TEXTDOMAIN ),
-			'persian'       => _x( 'Persian', 'Datetime: Default Calendar Type', GEDITORIAL_TEXTDOMAIN ),
-			// 'indian'        => _x( 'Indian', 'Datetime: Default Calendar Type', GEDITORIAL_TEXTDOMAIN ),
-			'islamic'       => _x( 'Islamic', 'Datetime: Default Calendar Type', GEDITORIAL_TEXTDOMAIN ),
-			// 'islamic-civil' => _x( 'Islamic-Civil', 'Datetime: Default Calendar Type', GEDITORIAL_TEXTDOMAIN ),
-			// 'coptic'        => _x( 'Coptic', 'Datetime: Default Calendar Type', GEDITORIAL_TEXTDOMAIN ),
-			// 'ethiopic'      => _x( 'Ethiopic', 'Datetime: Default Calendar Type', GEDITORIAL_TEXTDOMAIN ),
+			'gregorian'     => _x( 'Gregorian', 'Datetime: Default Calendar Type', 'geditorial' ),
+			// 'japanese'      => _x( 'Japanese', 'Datetime: Default Calendar Type', 'geditorial' ),
+			// 'buddhist'      => _x( 'Buddhist', 'Datetime: Default Calendar Type', 'geditorial' ),
+			// 'chinese'       => _x( 'Chinese', 'Datetime: Default Calendar Type', 'geditorial' ),
+			'persian'       => _x( 'Persian', 'Datetime: Default Calendar Type', 'geditorial' ),
+			// 'indian'        => _x( 'Indian', 'Datetime: Default Calendar Type', 'geditorial' ),
+			'islamic'       => _x( 'Islamic', 'Datetime: Default Calendar Type', 'geditorial' ),
+			// 'islamic-civil' => _x( 'Islamic-Civil', 'Datetime: Default Calendar Type', 'geditorial' ),
+			// 'coptic'        => _x( 'Coptic', 'Datetime: Default Calendar Type', 'geditorial' ),
+			// 'ethiopic'      => _x( 'Ethiopic', 'Datetime: Default Calendar Type', 'geditorial' ),
 		];
 
 		return $filtered ? apply_filters( static::BASE.'_default_calendars', $calendars ) : $calendars;
@@ -386,7 +407,7 @@ class Datetime extends Core\Base
 		);
 
 		if ( ! $timestamp )
-			return _x( 'Something is wrong with the new date.', 'Datetime: Re-Schedule Post', GEDITORIAL_TEXTDOMAIN );
+			return _x( 'Something is wrong with the new date.', 'Datetime: Re-Schedule Post', 'geditorial' );
 
 		$data = [
 			'post_date'         => date( 'Y-m-d', $timestamp ).' '.$old,

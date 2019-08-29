@@ -13,8 +13,8 @@ class Gallery extends gEditorial\Module
 	{
 		return [
 			'name'  => 'gallery',
-			'title' => _x( 'Gallery', 'Modules: Gallery', GEDITORIAL_TEXTDOMAIN ),
-			'desc'  => _x( 'Photo Directory', 'Modules: Gallery', GEDITORIAL_TEXTDOMAIN ),
+			'title' => _x( 'Gallery', 'Modules: Gallery', 'geditorial' ),
+			'desc'  => _x( 'Photo Directory', 'Modules: Gallery', 'geditorial' ),
 			'icon'  => 'format-gallery',
 		];
 	}
@@ -58,9 +58,9 @@ class Gallery extends gEditorial\Module
 	{
 		$strings = [
 			'noops' => [
-				'album_cpt' => _nx_noop( 'Photo Album', 'Photo Albums', 'Modules: Gallery: Noop', GEDITORIAL_TEXTDOMAIN ),
-				'album_cat' => _nx_noop( 'Album Gallery', 'Album Galleries', 'Modules: Gallery: Noop', GEDITORIAL_TEXTDOMAIN ),
-				'photo_tag' => _nx_noop( 'Photo Tag', 'Photo Tags', 'Modules: Gallery: Noop', GEDITORIAL_TEXTDOMAIN ),
+				'album_cpt' => _nx_noop( 'Photo Album', 'Photo Albums', 'Modules: Gallery: Noop', 'geditorial' ),
+				'album_cat' => _nx_noop( 'Album Gallery', 'Album Galleries', 'Modules: Gallery: Noop', 'geditorial' ),
+				'photo_tag' => _nx_noop( 'Photo Tag', 'Photo Tags', 'Modules: Gallery: Noop', 'geditorial' ),
 			],
 		];
 
@@ -69,14 +69,14 @@ class Gallery extends gEditorial\Module
 
 		$strings['misc'] = [
 			'album_cpt' => [
-				'menu_name' => _x( 'Gallery', 'Modules: Gallery: Photo Album CPT Labels: Menu Name', GEDITORIAL_TEXTDOMAIN ),
-				'featured'  => _x( 'Featured Photo', 'Modules: Gallery: Photo Album CPT: Featured', GEDITORIAL_TEXTDOMAIN ),
+				'menu_name' => _x( 'Gallery', 'Modules: Gallery: Photo Album CPT Labels: Menu Name', 'geditorial' ),
+				'featured'  => _x( 'Featured Photo', 'Modules: Gallery: Photo Album CPT: Featured', 'geditorial' ),
 			],
 			'album_cat' => [
-				'tweaks_column_title' => _x( 'Album Galleries', 'Modules: Gallery: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'tweaks_column_title' => _x( 'Album Galleries', 'Modules: Gallery: Column Title', 'geditorial' ),
 			],
 			'photo_tag' => [
-				'tweaks_column_title' => _x( 'Photo Tags', 'Modules: Gallery: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'tweaks_column_title' => _x( 'Photo Tags', 'Modules: Gallery: Column Title', 'geditorial' ),
 			],
 		];
 
@@ -104,7 +104,7 @@ class Gallery extends gEditorial\Module
 	{
 		parent::default_buttons( $module );
 
-		$this->register_button( 'install_def_album_cats', _x( 'Install Default Album Cats', 'Modules: Gallery: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
+		$this->register_button( 'install_def_album_cats', _x( 'Install Default Album Cats', 'Modules: Gallery: Setting Button', 'geditorial' ) );
 	}
 
 	public function after_setup_theme()

@@ -59,7 +59,7 @@ class Listtable extends Core\Base
 		} else {
 
 			if ( is_null( $title_attr ) )
-				$title_attr = _x( 'No Term', 'Listtable: No Count Term Attribute', GEDITORIAL_TEXTDOMAIN );
+				$title_attr = _x( 'No Term', 'Listtable: No Count Term Attribute', 'geditorial' );
 
 			return sprintf( '<span title="%s" class="column-term-empty">&mdash;</span>', $title_attr );
 		}

@@ -22,8 +22,8 @@ class Series extends gEditorial\Module
 	{
 		return [
 			'name'  => 'series',
-			'title' => _x( 'Series', 'Modules: Series', GEDITORIAL_TEXTDOMAIN ),
-			'desc'  => _x( 'List Posts in Series', 'Modules: Series', GEDITORIAL_TEXTDOMAIN ),
+			'title' => _x( 'Series', 'Modules: Series', 'geditorial' ),
+			'desc'  => _x( 'List Posts in Series', 'Modules: Series', 'geditorial' ),
 			'icon'  => 'editor-ol',
 		];
 	}
@@ -67,25 +67,25 @@ class Series extends gEditorial\Module
 		return [
 			'titles' => [
 				'post' => [
-					'in_series_title' => _x( 'Title', 'Modules: Series', GEDITORIAL_TEXTDOMAIN ),
-					'in_series_order' => _x( 'Order', 'Modules: Series', GEDITORIAL_TEXTDOMAIN ),
-					'in_series_desc'  => _x( 'Description', 'Modules: Series', GEDITORIAL_TEXTDOMAIN ),
+					'in_series_title' => _x( 'Title', 'Modules: Series', 'geditorial' ),
+					'in_series_order' => _x( 'Order', 'Modules: Series', 'geditorial' ),
+					'in_series_desc'  => _x( 'Description', 'Modules: Series', 'geditorial' ),
 				],
 			],
 			'descriptions' => [
 				'post' => [
-					'in_series_title' => _x( 'In Serie Title', 'Modules: Series', GEDITORIAL_TEXTDOMAIN ),
-					'in_series_order' => _x( 'In Serie Order', 'Modules: Series', GEDITORIAL_TEXTDOMAIN ),
-					'in_series_desc'  => _x( 'In Serie Description', 'Modules: Series', GEDITORIAL_TEXTDOMAIN ),
+					'in_series_title' => _x( 'In Serie Title', 'Modules: Series', 'geditorial' ),
+					'in_series_order' => _x( 'In Serie Order', 'Modules: Series', 'geditorial' ),
+					'in_series_desc'  => _x( 'In Serie Description', 'Modules: Series', 'geditorial' ),
 				],
 			],
 			'misc' => [
-				'column_title'        => _x( 'Series', 'Modules: Series: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				'tweaks_column_title' => _x( 'Series', 'Modules: Series: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				'show_option_none'    => _x( '&mdash; Choose a Series &mdash;', 'Modules: Series', GEDITORIAL_TEXTDOMAIN ),
+				'column_title'        => _x( 'Series', 'Modules: Series: Column Title', 'geditorial' ),
+				'tweaks_column_title' => _x( 'Series', 'Modules: Series: Column Title', 'geditorial' ),
+				'show_option_none'    => _x( '&mdash; Choose a Series &mdash;', 'Modules: Series', 'geditorial' ),
 			],
 			'noops' => [
-				'series_tax' => _nx_noop( 'Serie', 'Series', 'Modules: Series: Noop', GEDITORIAL_TEXTDOMAIN ),
+				'series_tax' => _nx_noop( 'Serie', 'Series', 'Modules: Series: Noop', 'geditorial' ),
 			],
 		];
 	}

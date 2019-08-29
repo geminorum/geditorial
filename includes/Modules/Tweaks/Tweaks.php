@@ -27,8 +27,8 @@ class Tweaks extends gEditorial\Module
 	{
 		return [
 			'name'     => 'tweaks',
-			'title'    => _x( 'Tweaks', 'Modules: Tweaks', GEDITORIAL_TEXTDOMAIN ),
-			'desc'     => _x( 'Admin UI Enhancement', 'Modules: Tweaks', GEDITORIAL_TEXTDOMAIN ),
+			'title'    => _x( 'Tweaks', 'Modules: Tweaks', 'geditorial' ),
+			'desc'     => _x( 'Admin UI Enhancement', 'Modules: Tweaks', 'geditorial' ),
 			'icon'     => 'admin-tools',
 			'frontend' => FALSE,
 		];
@@ -39,13 +39,13 @@ class Tweaks extends gEditorial\Module
 		$tabs = [
 			[
 				'id'      => $this->classs( 'category-search' ),
-				'title'   => _x( 'Category Search', 'Modules: Tweaks: Help Tab Title', GEDITORIAL_TEXTDOMAIN ),
+				'title'   => _x( 'Category Search', 'Modules: Tweaks: Help Tab Title', 'geditorial' ),
 				'content' => '<div class="-info"><p>Makes it quick and easy for writers to select categories related to what they are writing. As they type in the search box, categories will be shown and hidden in real time, allowing them to easily select what is relevant to their content without having to scroll through possibly hundreds of categories.</p>
 <p class="-from">Adopted from: <a href="https://wordpress.org/plugins/searchable-categories/" target="_blank">Searchable Categories</a> by <a href="http://ididntbreak.it" target="_blank">Jason Corradino</a></p></div>',
 			],
 			[
 				'id'      => $this->classs( 'checklist-tree' ),
-				'title'   => _x( 'Checklist Tree', 'Modules: Tweaks: Help Tab Title', GEDITORIAL_TEXTDOMAIN ),
+				'title'   => _x( 'Checklist Tree', 'Modules: Tweaks: Help Tab Title', 'geditorial' ),
 				'content' => '<div class="-info"><p>If you\'ve ever used categories extensively, you will have noticed that after you save a post, the checked categories appear on top of all the other ones. This can be useful if you have a lot of categories, since you don’t have to scroll. Unfortunately, this behaviour has a serious side-effect: it breaks the hierarchy. If you have deeply nested categories that don’t make sense out of context, this will completely screw you over.</p>
 <p class="-from">Adopted from: <a href="https://wordpress.org/plugins/category-checklist-tree/" target="_blank">Category Checklist Tree</a> by <a href="http://scribu.net/wordpress/category-checklist-tree" target="_blank">scribu</a></p></div>',
 			],
@@ -62,60 +62,60 @@ class Tweaks extends gEditorial\Module
 			'_editlist' => [
 				[
 					'field'       => 'group_taxonomies',
-					'title'       => _x( 'Group Taxonomies', 'Modules: Tweaks: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Group selected taxonomies on selected post type edit pages', 'Modules: Tweaks: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Group Taxonomies', 'Modules: Tweaks: Setting Title', 'geditorial' ),
+					'description' => _x( 'Group selected taxonomies on selected post type edit pages', 'Modules: Tweaks: Setting Description', 'geditorial' ),
 				],
 				[
 					'field'       => 'group_attributes',
-					'title'       => _x( 'Group Attributes', 'Modules: Tweaks: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Group post attributes on selected post type edit pages', 'Modules: Tweaks: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Group Attributes', 'Modules: Tweaks: Setting Title', 'geditorial' ),
+					'description' => _x( 'Group post attributes on selected post type edit pages', 'Modules: Tweaks: Setting Description', 'geditorial' ),
 				],
 				[
 					'field'       => 'author_attribute',
-					'title'       => _x( 'Author Attribute', 'Modules: Tweaks: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Displays author name as post type attribute', 'Modules: Tweaks: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Author Attribute', 'Modules: Tweaks: Setting Title', 'geditorial' ),
+					'description' => _x( 'Displays author name as post type attribute', 'Modules: Tweaks: Setting Description', 'geditorial' ),
 				],
 				[
 					'field'       => 'slug_attribute',
-					'title'       => _x( 'Slug Attribute', 'Modules: Tweaks: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Displays post name as post type attribute.', 'Modules: Tweaks: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Slug Attribute', 'Modules: Tweaks: Setting Title', 'geditorial' ),
+					'description' => _x( 'Displays post name as post type attribute.', 'Modules: Tweaks: Setting Description', 'geditorial' ),
 				],
 				[
 					'field'       => 'page_template',
-					'title'       => _x( 'Page Template', 'Modules: Tweaks: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Displays the template used for the post.', 'Modules: Tweaks: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Page Template', 'Modules: Tweaks: Setting Title', 'geditorial' ),
+					'description' => _x( 'Displays the template used for the post.', 'Modules: Tweaks: Setting Description', 'geditorial' ),
 				],
 				[
 					'field'       => 'comment_status',
-					'title'       => _x( 'Comment Status', 'Modules: Tweaks: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Displays only the closed comment status for the post.', 'Modules: Tweaks: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Comment Status', 'Modules: Tweaks: Setting Title', 'geditorial' ),
+					'description' => _x( 'Displays only the closed comment status for the post.', 'Modules: Tweaks: Setting Description', 'geditorial' ),
 				],
 				[
 					'field'       => 'search_meta',
 					'type'        => 'posttypes',
-					'title'       => _x( 'Search Meta', 'Modules: Tweaks: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Extends admin search to include custom fields.', 'Modules: Tweaks: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Search Meta', 'Modules: Tweaks: Setting Title', 'geditorial' ),
+					'description' => _x( 'Extends admin search to include custom fields.', 'Modules: Tweaks: Setting Description', 'geditorial' ),
 					'values'      => $this->get_posttypes_support_search_meta(),
 				],
 			],
 			'_columns' => [
 				[
 					'field'       => 'column_id',
-					'title'       => _x( 'ID Column', 'Modules: Tweaks: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Displays ID Column on the post list table.', 'Modules: Tweaks: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'ID Column', 'Modules: Tweaks: Setting Title', 'geditorial' ),
+					'description' => _x( 'Displays ID Column on the post list table.', 'Modules: Tweaks: Setting Description', 'geditorial' ),
 				],
 				[
 					'field'       => 'column_order',
 					'type'        => 'posttypes',
-					'title'       => _x( 'Order Column', 'Modules: Tweaks: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Displays Order Column on the post list table.', 'Modules: Tweaks: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Order Column', 'Modules: Tweaks: Setting Title', 'geditorial' ),
+					'description' => _x( 'Displays Order Column on the post list table.', 'Modules: Tweaks: Setting Description', 'geditorial' ),
 					'values'      => $this->get_posttypes_support_order(),
 				],
 				[
 					'field'       => 'column_thumb',
 					'type'        => 'posttypes',
-					'title'       => _x( 'Thumbnail Column', 'Modules: Tweaks: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Displays Thumbnail Column on the post list table.', 'Modules: Tweaks: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Thumbnail Column', 'Modules: Tweaks: Setting Title', 'geditorial' ),
+					'description' => _x( 'Displays Thumbnail Column on the post list table.', 'Modules: Tweaks: Setting Description', 'geditorial' ),
 					'values'      => $this->get_posttypes_support_thumbnail(),
 				],
 			],
@@ -123,45 +123,45 @@ class Tweaks extends gEditorial\Module
 				[
 					'field'       => 'post_mainbox',
 					'type'        => 'posttypes',
-					'title'       => _x( 'Group Post-Boxes', 'Modules: Tweaks: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Groups common post-boxes into one for simpler editing experience.', 'Modules: Tweaks: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Group Post-Boxes', 'Modules: Tweaks: Setting Title', 'geditorial' ),
+					'description' => _x( 'Groups common post-boxes into one for simpler editing experience.', 'Modules: Tweaks: Setting Description', 'geditorial' ),
 					'values'      => $this->get_posttypes_support_mainbox(),
 				],
 				[
 					'field'       => 'post_modified',
 					'type'        => 'posttypes',
-					'title'       => _x( 'Modified Action', 'Modules: Tweaks: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Displays last modified time as post misc action on publish metabox.', 'Modules: Tweaks: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Modified Action', 'Modules: Tweaks: Setting Title', 'geditorial' ),
+					'description' => _x( 'Displays last modified time as post misc action on publish metabox.', 'Modules: Tweaks: Setting Description', 'geditorial' ),
 					'values'      => $this->get_posttypes_support_modified(),
 				],
 				[
 					'field'       => 'post_excerpt',
 					'type'        => 'posttypes',
-					'title'       => _x( 'Advanced Excerpt', 'Modules: Tweaks: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Replaces the default Post Excerpt meta box with a superior editing experience.', 'Modules: Tweaks: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Advanced Excerpt', 'Modules: Tweaks: Setting Title', 'geditorial' ),
+					'description' => _x( 'Replaces the default Post Excerpt meta box with a superior editing experience.', 'Modules: Tweaks: Setting Description', 'geditorial' ),
 					'values'      => $this->get_posttypes_support_excerpt(),
 				],
 				[
 					'field'       => 'after_title_excerpt',
-					'title'       => _x( 'Excerpt After Title', 'Modules: Tweaks: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Moves up advanced excerpt to after title field.', 'Modules: Tweaks: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Excerpt After Title', 'Modules: Tweaks: Setting Title', 'geditorial' ),
+					'description' => _x( 'Moves up advanced excerpt to after title field.', 'Modules: Tweaks: Setting Description', 'geditorial' ),
 				],
 				[
 					'field'       => 'category_search',
-					'title'       => _x( 'Category Search', 'Modules: Tweaks: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Replaces the category selector to include searching categories', 'Modules: Tweaks: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Category Search', 'Modules: Tweaks: Setting Title', 'geditorial' ),
+					'description' => _x( 'Replaces the category selector to include searching categories', 'Modules: Tweaks: Setting Description', 'geditorial' ),
 				],
 				[
 					'field'       => 'checklist_tree',
-					'title'       => _x( 'Checklist Tree', 'Modules: Tweaks: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Preserves the category hierarchy on the post editing screen', 'Modules: Tweaks: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Checklist Tree', 'Modules: Tweaks: Setting Title', 'geditorial' ),
+					'description' => _x( 'Preserves the category hierarchy on the post editing screen', 'Modules: Tweaks: Setting Description', 'geditorial' ),
 				],
 			],
 			'_comments' => [
 				[
 					'field'       => 'comments_user',
-					'title'       => _x( 'Comments User Column', 'Modules: Tweaks: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Displays a logged-in comment author\'s site display name on the comments admin', 'Modules: Tweaks: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Comments User Column', 'Modules: Tweaks: Setting Title', 'geditorial' ),
+					'description' => _x( 'Displays a logged-in comment author\'s site display name on the comments admin', 'Modules: Tweaks: Setting Description', 'geditorial' ),
 				],
 			],
 		];
@@ -171,19 +171,19 @@ class Tweaks extends gEditorial\Module
 	{
 		return [
 			'misc' => [
-				'title_column_title'    => _x( 'Title', 'Modules: Tweaks: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				'rows_column_title'     => _x( 'Extra', 'Modules: Tweaks: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				'atts_column_title'     => _x( 'Attributes', 'Modules: Tweaks: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				'id_column_title'       => _x( 'ID', 'Modules: Tweaks: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				'thumb_column_title'    => _x( 'Featured', 'Modules: Tweaks: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				'order_column_title'    => _x( 'O', 'Modules: Tweaks: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				'user_column_title'     => _x( 'User', 'Modules: Tweaks: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				'contacts_column_title' => _x( 'Contacts', 'Modules: Tweaks: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				'id_column_title'       => _x( 'ID', 'Modules: Tweaks: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'title_column_title'    => _x( 'Title', 'Modules: Tweaks: Column Title', 'geditorial' ),
+				'rows_column_title'     => _x( 'Extra', 'Modules: Tweaks: Column Title', 'geditorial' ),
+				'atts_column_title'     => _x( 'Attributes', 'Modules: Tweaks: Column Title', 'geditorial' ),
+				'id_column_title'       => _x( 'ID', 'Modules: Tweaks: Column Title', 'geditorial' ),
+				'thumb_column_title'    => _x( 'Featured', 'Modules: Tweaks: Column Title', 'geditorial' ),
+				'order_column_title'    => _x( 'O', 'Modules: Tweaks: Column Title', 'geditorial' ),
+				'user_column_title'     => _x( 'User', 'Modules: Tweaks: Column Title', 'geditorial' ),
+				'contacts_column_title' => _x( 'Contacts', 'Modules: Tweaks: Column Title', 'geditorial' ),
+				'id_column_title'       => _x( 'ID', 'Modules: Tweaks: Column Title', 'geditorial' ),
 			],
 			'js' => [
-				'search_title'       => _x( 'Type to filter by', 'Modules: Tweaks: Meta Box Search Title', GEDITORIAL_TEXTDOMAIN ),
-				'search_placeholder' => _x( 'Search &hellip;', 'Modules: Tweaks: Meta Box Search Placeholder', GEDITORIAL_TEXTDOMAIN ),
+				'search_title'       => _x( 'Type to filter by', 'Modules: Tweaks: Meta Box Search Title', 'geditorial' ),
+				'search_placeholder' => _x( 'Search &hellip;', 'Modules: Tweaks: Meta Box Search Placeholder', 'geditorial' ),
 			],
 		];
 	}
@@ -781,7 +781,7 @@ class Tweaks extends gEditorial\Module
 
 			echo '<li class="-row tweaks-page-template">';
 
-				echo $this->get_column_icon( FALSE, 'admin-page', _x( 'Page Template', 'Modules: Tweaks: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
+				echo $this->get_column_icon( FALSE, 'admin-page', _x( 'Page Template', 'Modules: Tweaks: Row Icon Title', 'geditorial' ) );
 
 				if ( ! empty( $this->page_templates[$post->post_type][$post->page_template] ) )
 					echo '<span title="'.HTML::escape( $post->page_template ).'">'
@@ -802,18 +802,19 @@ class Tweaks extends gEditorial\Module
 
 			$link = add_query_arg( [ 'p' => $post->ID ], admin_url( 'edit-comments.php' ) );
 
-			echo $this->get_column_icon( $link, 'welcome-comments', _x( 'Comment Status', 'Modules: Tweaks: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
+			echo $this->get_column_icon( $link, 'welcome-comments', _x( 'Comment Status', 'Modules: Tweaks: Row Icon Title', 'geditorial' ) );
 
 			if ( 'closed' == $post->comment_status )
-				$status = _x( 'Closed', 'Modules: Tweaks: Comment Status', GEDITORIAL_TEXTDOMAIN );
+				$status = _x( 'Closed', 'Modules: Tweaks: Comment Status', 'geditorial' );
 
 			else if ( 'open' == $post->comment_status && ! $filtered )
-				$status = _x( 'Closed for Old Posts', 'Modules: Tweaks: Comment Status', GEDITORIAL_TEXTDOMAIN );
+				$status = _x( 'Closed for Old Posts', 'Modules: Tweaks: Comment Status', 'geditorial' );
 
 			else
 				$status = $post->comment_status;
 
-			printf( _x( 'Comments are %s', 'Modules: Tweaks: Comment Status', GEDITORIAL_TEXTDOMAIN ), $status );
+			/* translators: %s: status */
+			printf( _x( 'Comments are %s', 'Modules: Tweaks: Comment Status', 'geditorial' ), $status );
 
 		echo '</li>';
 	}
@@ -827,7 +828,7 @@ class Tweaks extends gEditorial\Module
 			return;
 
 		echo '<li class="-row tweaks-default-atts -post-author -post-author-'.$post->post_author.'">';
-			echo $this->get_column_icon( FALSE, 'admin-users', _x( 'Author', 'Modules: Tweaks: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
+			echo $this->get_column_icon( FALSE, 'admin-users', _x( 'Author', 'Modules: Tweaks: Row Icon Title', 'geditorial' ) );
 			echo '<span class="-author">'.WordPress::getAuthorEditHTML( $post->post_type, $post->post_author ).'</span>';
 		echo '</li>';
 	}
@@ -838,7 +839,7 @@ class Tweaks extends gEditorial\Module
 			return;
 
 		echo '<li class="-row tweaks-default-atts -post-name">';
-			echo $this->get_column_icon( FALSE, 'admin-links', _x( 'Post Slug', 'Modules: Tweaks: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
+			echo $this->get_column_icon( FALSE, 'admin-links', _x( 'Post Slug', 'Modules: Tweaks: Row Icon Title', 'geditorial' ) );
 			echo '<code>'.urldecode( $post->post_name ).'</code>';
 		echo '</li>';
 	}
@@ -858,11 +859,11 @@ class Tweaks extends gEditorial\Module
 			$time_diff = time() - get_post_time( 'G', TRUE, $post );
 
 			if ( $time_diff > 0 )
-				$status = '<strong class="error-message">'._x( 'Missed schedule', 'Modules: Tweaks: Attr: Status', GEDITORIAL_TEXTDOMAIN ).'</strong>';
+				$status = '<strong class="error-message">'._x( 'Missed schedule', 'Modules: Tweaks: Attr: Status', 'geditorial' ).'</strong>';
 		}
 
 		echo '<li class="-row tweaks-default-atts -post-status -post-status-'.$post->post_status.'">';
-			echo $this->get_column_icon( FALSE, 'post-status', _x( 'Status', 'Modules: Tweaks: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
+			echo $this->get_column_icon( FALSE, 'post-status', _x( 'Status', 'Modules: Tweaks: Row Icon Title', 'geditorial' ) );
 			echo '<span class="-status" title="'.$post->post_status.'">'.$status.'</span>';
 		echo '</li>';
 	}
@@ -870,7 +871,7 @@ class Tweaks extends gEditorial\Module
 	public function column_attr_default( $post )
 	{
 		echo '<li class="-row tweaks-default-atts -post-date">';
-			echo $this->get_column_icon( FALSE, 'calendar-alt', _x( 'Publish Date', 'Modules: Tweaks: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
+			echo $this->get_column_icon( FALSE, 'calendar-alt', _x( 'Publish Date', 'Modules: Tweaks: Row Icon Title', 'geditorial' ) );
 			echo Helper::getDateEditRow( $post->post_date, '-date' );
 		echo '</li>';
 
@@ -878,7 +879,7 @@ class Tweaks extends gEditorial\Module
 			&& current_user_can( 'edit_post', $post->ID ) ) {
 
 			echo '<li class="-row tweaks-default-atts -post-modified">';
-				echo $this->get_column_icon( FALSE, 'edit', _x( 'Last Edit', 'Modules: Tweaks: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
+				echo $this->get_column_icon( FALSE, 'edit', _x( 'Last Edit', 'Modules: Tweaks: Row Icon Title', 'geditorial' ) );
 				echo Helper::getModifiedEditRow( $post, '-edit' );
 			echo '</li>';
 		}
@@ -888,12 +889,12 @@ class Tweaks extends gEditorial\Module
 	{
 		if ( $user->first_name || $user->last_name ) {
 			echo '<li class="-row tweaks-user-atts -name">';
-				echo $this->get_column_icon( FALSE, 'nametag', _x( 'Name', 'Modules: Tweaks: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
+				echo $this->get_column_icon( FALSE, 'nametag', _x( 'Name', 'Modules: Tweaks: Row Icon Title', 'geditorial' ) );
 				echo "$user->first_name $user->last_name";
 			echo '</li>';
 		}
 
-		$role = $this->get_column_icon( FALSE, 'businessman', _x( 'Roles', 'Modules: Tweaks: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
+		$role = $this->get_column_icon( FALSE, 'businessman', _x( 'Roles', 'Modules: Tweaks: Row Icon Title', 'geditorial' ) );
 		echo Helper::getJoined( User::getRoleList( $user ), '<li class="-row tweaks-user-atts -roles">'.$role, '</li>' );
 	}
 
@@ -901,7 +902,7 @@ class Tweaks extends gEditorial\Module
 	{
 		if ( $user->user_email ) {
 			echo '<li class="-row tweaks-user-contacts -email">';
-				echo $this->get_column_icon( FALSE, 'email', _x( 'Email', 'Modules: Tweaks: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
+				echo $this->get_column_icon( FALSE, 'email', _x( 'Email', 'Modules: Tweaks: Row Icon Title', 'geditorial' ) );
 				echo HTML::mailto( $user->user_email );
 			echo '</li>';
 		}
@@ -1019,8 +1020,9 @@ class Tweaks extends gEditorial\Module
 		checked( $post->ping_status, 'open' );
 		echo ' /> ';
 		printf(
-			_x( 'Allow <a href="%s">trackbacks and pingbacks</a>', 'Modules: Tweaks: MainBox', GEDITORIAL_TEXTDOMAIN ),
-			__( 'https://codex.wordpress.org/Introduction_to_Blogging#Managing_Comments' )
+			/* translators: %s: codex url */
+			_x( 'Allow <a href="%s">trackbacks and pingbacks</a>', 'Modules: Tweaks: MainBox', 'geditorial' ),
+			__( 'https://wordpress.org/support/article/introduction-to-blogging/#managing-comments' )
 		);
 		echo '</label>';
 
@@ -1063,8 +1065,8 @@ class Tweaks extends gEditorial\Module
 			return;
 
 		echo '<div class="-misc misc-pub-section misc-pub-modified">';
-			echo $this->get_column_icon( FALSE, 'edit', _x( 'Last Modified', 'Modules: Tweaks: Misc Action', GEDITORIAL_TEXTDOMAIN ) );
-			echo _x( 'Modified:', 'Modules: Tweaks: Misc Action', GEDITORIAL_TEXTDOMAIN );
+			echo $this->get_column_icon( FALSE, 'edit', _x( 'Last Modified', 'Modules: Tweaks: Misc Action', 'geditorial' ) );
+			echo _x( 'Modified:', 'Modules: Tweaks: Misc Action', 'geditorial' );
 			echo ' '.Helper::getModifiedEditRow( $post, '-edit' );
 		echo '</div>';
 	}

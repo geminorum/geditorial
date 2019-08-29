@@ -16,8 +16,8 @@ class Shortcodes extends gEditorial\Module
 	{
 		return [
 			'name'  => 'shortcodes',
-			'title' => _x( 'Shortcodes', 'Modules: Shortcodes', GEDITORIAL_TEXTDOMAIN ),
-			'desc'  => _x( 'Shortcode Tools', 'Modules: Shortcodes', GEDITORIAL_TEXTDOMAIN ),
+			'title' => _x( 'Shortcodes', 'Modules: Shortcodes', 'geditorial' ),
+			'desc'  => _x( 'Shortcode Tools', 'Modules: Shortcodes', 'geditorial' ),
 			'icon'  => 'media-code',
 		];
 	}
@@ -50,7 +50,7 @@ class Shortcodes extends gEditorial\Module
 
 		$nodes[] = [
 			'id'     => $this->classs(),
-			'title'  => _x( 'Shortcodes', 'Modules: Shortcodes: Adminbar', GEDITORIAL_TEXTDOMAIN ),
+			'title'  => _x( 'Shortcodes', 'Modules: Shortcodes: Adminbar', 'geditorial' ),
 			'parent' => $parent,
 			'href'   => $this->get_module_url(),
 		];
@@ -88,7 +88,7 @@ class Shortcodes extends gEditorial\Module
 				'name'       => 'shortcode',
 				'selected'   => self::req( 'shortcode', 'none' ),
 				'none_value' => 'none',
-				'none_title' => _x( 'All Shortcodes', 'Modules: Shortcodes', GEDITORIAL_TEXTDOMAIN ),
+				'none_title' => _x( 'All Shortcodes', 'Modules: Shortcodes', 'geditorial' ),
 			] );
 
 		$pagination['before'][] = Helper::tableFilterPostTypes( $list );
@@ -101,7 +101,7 @@ class Shortcodes extends gEditorial\Module
 			'type'  => Helper::tableColumnPostType(),
 			'title' => Helper::tableColumnPostTitle(),
 			'shortcodes' => [
-				'title'    => _x( 'Shortcodes', 'Modules: Shortcodes: Table Column', GEDITORIAL_TEXTDOMAIN ),
+				'title'    => _x( 'Shortcodes', 'Modules: Shortcodes: Table Column', 'geditorial' ),
 				'args'     => [ 'regex' => get_shortcode_regex() ],
 				'callback' => function( $value, $row, $column, $index ){
 
@@ -119,7 +119,7 @@ class Shortcodes extends gEditorial\Module
 		], $posts, [
 			'navigation' => 'before',
 			'search'     => 'before',
-			'title'      => HTML::tag( 'h3', _x( 'Overview of Post Shortcodes', 'Modules: Shortcodes', GEDITORIAL_TEXTDOMAIN ) ),
+			'title'      => HTML::tag( 'h3', _x( 'Overview of Post Shortcodes', 'Modules: Shortcodes', 'geditorial' ) ),
 			'empty'      => $this->get_posttype_label( 'post', 'not_found' ),
 			'pagination' => $pagination,
 		] );

@@ -31,8 +31,8 @@ class Meta extends gEditorial\Module
 	{
 		return [
 			'name'  => 'meta',
-			'title' => _x( 'Meta', 'Modules: Meta', GEDITORIAL_TEXTDOMAIN ),
-			'desc'  => _x( 'Curated Metadata', 'Modules: Meta', GEDITORIAL_TEXTDOMAIN ),
+			'title' => _x( 'Meta', 'Modules: Meta', 'geditorial' ),
+			'desc'  => _x( 'Curated Metadata', 'Modules: Meta', 'geditorial' ),
 			'icon'  => 'tag',
 		];
 	}
@@ -45,20 +45,20 @@ class Meta extends gEditorial\Module
 			'_general' => [
 				[
 					'field'       => 'author_row',
-					'title'       => _x( 'Author Meta Row', 'Modules: Meta: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Displays author display name as meta row', 'Modules: Meta: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Author Meta Row', 'Modules: Meta: Setting Title', 'geditorial' ),
+					'description' => _x( 'Displays author display name as meta row', 'Modules: Meta: Setting Description', 'geditorial' ),
 				],
 				[
 					'field'       => 'overwrite_author',
-					'title'       => _x( 'Overwrite Author', 'Modules: Meta: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Replace author display name with author meta data.', 'Modules: Meta: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Overwrite Author', 'Modules: Meta: Setting Title', 'geditorial' ),
+					'description' => _x( 'Replace author display name with author meta data.', 'Modules: Meta: Setting Description', 'geditorial' ),
 				],
 				[
 					'field'       => 'before_source',
 					'type'        => 'text',
-					'title'       => _x( 'Before Source', 'Modules: Meta: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Default text before the source link', 'Modules: Meta: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-					'default'     => _x( 'Source:', 'Modules: Meta: Setting Default', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Before Source', 'Modules: Meta: Setting Title', 'geditorial' ),
+					'description' => _x( 'Default text before the source link', 'Modules: Meta: Setting Description', 'geditorial' ),
+					'default'     => _x( 'Source:', 'Modules: Meta: Setting Default', 'geditorial' ),
 				],
 			],
 		];
@@ -76,40 +76,40 @@ class Meta extends gEditorial\Module
 		$strings = [
 			'titles' => [
 				'post' => [
-					'ot'          => _x( 'OverTitle', 'Modules: Meta: Titles', GEDITORIAL_TEXTDOMAIN ),
-					'st'          => _x( 'SubTitle', 'Modules: Meta: Titles', GEDITORIAL_TEXTDOMAIN ),
-					'as'          => _x( 'Byline', 'Modules: Meta: Titles', GEDITORIAL_TEXTDOMAIN ),
-					'le'          => _x( 'Lead', 'Modules: Meta: Titles', GEDITORIAL_TEXTDOMAIN ),
-					'ch'          => _x( 'Column Header', 'Modules: Meta: Titles', GEDITORIAL_TEXTDOMAIN ),
-					'ct'          => _x( 'Column Header Taxonomy', 'Modules: Meta: Titles', GEDITORIAL_TEXTDOMAIN ),
-					'ch_override' => _x( 'Column Header Override', 'Modules: Meta: Titles', GEDITORIAL_TEXTDOMAIN ),
+					'ot'          => _x( 'OverTitle', 'Modules: Meta: Titles', 'geditorial' ),
+					'st'          => _x( 'SubTitle', 'Modules: Meta: Titles', 'geditorial' ),
+					'as'          => _x( 'Byline', 'Modules: Meta: Titles', 'geditorial' ),
+					'le'          => _x( 'Lead', 'Modules: Meta: Titles', 'geditorial' ),
+					'ch'          => _x( 'Column Header', 'Modules: Meta: Titles', 'geditorial' ),
+					'ct'          => _x( 'Column Header Taxonomy', 'Modules: Meta: Titles', 'geditorial' ),
+					'ch_override' => _x( 'Column Header Override', 'Modules: Meta: Titles', 'geditorial' ),
 
-					'source_title' => _x( 'Source Title', 'Modules: Meta: Titles', GEDITORIAL_TEXTDOMAIN ),
-					'source_url'   => _x( 'Source URL', 'Modules: Meta: Titles', GEDITORIAL_TEXTDOMAIN ),
-					'highlight'    => _x( 'Highlight', 'Modules: Meta: Titles', GEDITORIAL_TEXTDOMAIN ),
-					'dashboard'    => _x( 'Dashboard', 'Modules: Meta: Titles', GEDITORIAL_TEXTDOMAIN ),
+					'source_title' => _x( 'Source Title', 'Modules: Meta: Titles', 'geditorial' ),
+					'source_url'   => _x( 'Source URL', 'Modules: Meta: Titles', 'geditorial' ),
+					'highlight'    => _x( 'Highlight', 'Modules: Meta: Titles', 'geditorial' ),
+					'dashboard'    => _x( 'Dashboard', 'Modules: Meta: Titles', 'geditorial' ),
 				],
-				'author' => _x( 'Author', 'Modules: Meta: Titles', GEDITORIAL_TEXTDOMAIN ),
-				'source' => _x( 'Source', 'Modules: Meta: Titles', GEDITORIAL_TEXTDOMAIN ),
+				'author' => _x( 'Author', 'Modules: Meta: Titles', 'geditorial' ),
+				'source' => _x( 'Source', 'Modules: Meta: Titles', 'geditorial' ),
 			],
 			'descriptions' => [
 				'post' => [
-					'ot'          => _x( 'String to place over the post title', 'Modules: Meta: Descriptions', GEDITORIAL_TEXTDOMAIN ),
-					'st'          => _x( 'String to place under the post title', 'Modules: Meta: Descriptions', GEDITORIAL_TEXTDOMAIN ),
-					'as'          => _x( 'String to override the post author', 'Modules: Meta: Descriptions', GEDITORIAL_TEXTDOMAIN ),
-					'le'          => _x( 'Editorial paragraph presented before post content', 'Modules: Meta: Descriptions', GEDITORIAL_TEXTDOMAIN ),
-					'ch'          => _x( 'String to represent that the post is part of a column or a section', 'Modules: Meta: Descriptions', GEDITORIAL_TEXTDOMAIN ),
-					'ct'          => _x( 'Taxonomy for better categorizing columns', 'Modules: Meta: Descriptions', GEDITORIAL_TEXTDOMAIN ),
-					'ch_override' => _x( 'Column Header Override', 'Modules: Meta: Descriptions', GEDITORIAL_TEXTDOMAIN ),
+					'ot'          => _x( 'String to place over the post title', 'Modules: Meta: Descriptions', 'geditorial' ),
+					'st'          => _x( 'String to place under the post title', 'Modules: Meta: Descriptions', 'geditorial' ),
+					'as'          => _x( 'String to override the post author', 'Modules: Meta: Descriptions', 'geditorial' ),
+					'le'          => _x( 'Editorial paragraph presented before post content', 'Modules: Meta: Descriptions', 'geditorial' ),
+					'ch'          => _x( 'String to represent that the post is part of a column or a section', 'Modules: Meta: Descriptions', 'geditorial' ),
+					'ct'          => _x( 'Taxonomy for better categorizing columns', 'Modules: Meta: Descriptions', 'geditorial' ),
+					'ch_override' => _x( 'Column Header Override', 'Modules: Meta: Descriptions', 'geditorial' ),
 
-					'source_title' => _x( 'Original Title of Source Content', 'Modules: Meta: Descriptions', GEDITORIAL_TEXTDOMAIN ),
-					'source_url'   => _x( 'Full URL to the Source of the Content', 'Modules: Meta: Descriptions', GEDITORIAL_TEXTDOMAIN ),
-					'highlight'    => _x( 'A Short Note Highlighted About the Post', 'Modules: Meta: Descriptions', GEDITORIAL_TEXTDOMAIN ),
-					'dashboard'    => _x( 'Custom HTML Content on the Dashboard', 'Modules: Meta: Descriptions', GEDITORIAL_TEXTDOMAIN ),
+					'source_title' => _x( 'Original Title of Source Content', 'Modules: Meta: Descriptions', 'geditorial' ),
+					'source_url'   => _x( 'Full URL to the Source of the Content', 'Modules: Meta: Descriptions', 'geditorial' ),
+					'highlight'    => _x( 'A Short Note Highlighted About the Post', 'Modules: Meta: Descriptions', 'geditorial' ),
+					'dashboard'    => _x( 'Custom HTML Content on the Dashboard', 'Modules: Meta: Descriptions', 'geditorial' ),
 				],
 			],
 			'noops' => [
-				'ct_tax' => _nx_noop( 'Column Header', 'Column Headers', 'Modules: Meta: Noop', GEDITORIAL_TEXTDOMAIN ),
+				'ct_tax' => _nx_noop( 'Column Header', 'Column Headers', 'Modules: Meta: Noop', 'geditorial' ),
 			],
 		];
 
@@ -117,18 +117,18 @@ class Meta extends gEditorial\Module
 			return $strings;
 
 		$strings['misc'] = [
-			'meta_column_title'   => _x( 'Metadata', 'Modules: Meta: Column Title', GEDITORIAL_TEXTDOMAIN ),
-			'author_column_title' => _x( 'Author', 'Modules: Meta: Column Title', GEDITORIAL_TEXTDOMAIN ),
-			'meta_box_title'      => _x( 'Metadata', 'Modules: Meta: Meta Box Title', GEDITORIAL_TEXTDOMAIN ),
-			'meta_box_action'     => _x( 'Configure', 'Modules: Meta: Meta Box Action Title', GEDITORIAL_TEXTDOMAIN ),
+			'meta_column_title'   => _x( 'Metadata', 'Modules: Meta: Column Title', 'geditorial' ),
+			'author_column_title' => _x( 'Author', 'Modules: Meta: Column Title', 'geditorial' ),
+			'meta_box_title'      => _x( 'Metadata', 'Modules: Meta: Meta Box Title', 'geditorial' ),
+			'meta_box_action'     => _x( 'Configure', 'Modules: Meta: Meta Box Action Title', 'geditorial' ),
 		];
 
 		$strings['terms'] = [
 			'ct_tax' => [
-				'introduction' => _x( 'Introduction', 'Modules: Meta: Column Headers Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
-				'interview'    => _x( 'Interview', 'Modules: Meta: Column Headers Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
-				'review'       => _x( 'Review', 'Modules: Meta: Column Headers Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
-				'report'       => _x( 'Report', 'Modules: Meta: Column Headers Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
+				'introduction' => _x( 'Introduction', 'Modules: Meta: Column Headers Tax Defaults', 'geditorial' ),
+				'interview'    => _x( 'Interview', 'Modules: Meta: Column Headers Tax Defaults', 'geditorial' ),
+				'review'       => _x( 'Review', 'Modules: Meta: Column Headers Tax Defaults', 'geditorial' ),
+				'report'       => _x( 'Report', 'Modules: Meta: Column Headers Tax Defaults', 'geditorial' ),
 			],
 		];
 
@@ -187,7 +187,7 @@ class Meta extends gEditorial\Module
 	{
 		parent::default_buttons( $module );
 
-		$this->register_button( 'install_def_ct_tax', _x( 'Install Default Column Headers', 'Modules: Meta: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
+		$this->register_button( 'install_def_ct_tax', _x( 'Install Default Column Headers', 'Modules: Meta: Setting Button', 'geditorial' ) );
 	}
 
 	public function init()
@@ -386,7 +386,7 @@ class Meta extends gEditorial\Module
 				$this->actions( 'render_metabox', $post, $box, $fields, 'main' );
 
 			else
-				echo HTML::wrap( _x( 'No Meta Fields', 'Modules: Meta', GEDITORIAL_TEXTDOMAIN ), 'field-wrap -empty' );
+				echo HTML::wrap( _x( 'No Meta Fields', 'Modules: Meta', 'geditorial' ), 'field-wrap -empty' );
 
 			$this->actions( 'render_metabox_after', $post, $box, $fields );
 		echo '</div>';
@@ -770,11 +770,11 @@ class Meta extends gEditorial\Module
 			'custom_field_into'  => '',
 		], 'tools' );
 
-		HTML::h3( _x( 'Meta Tools', 'Modules: Meta', GEDITORIAL_TEXTDOMAIN ) );
+		HTML::h3( _x( 'Meta Tools', 'Modules: Meta', 'geditorial' ) );
 
 		echo '<table class="form-table">';
 
-		echo '<tr><th scope="row">'._x( 'Import Custom Fields', 'Modules: Meta', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
+		echo '<tr><th scope="row">'._x( 'Import Custom Fields', 'Modules: Meta', 'geditorial' ).'</th><td>';
 
 		$this->do_settings_field( [
 			'type'         => 'select',
@@ -812,15 +812,15 @@ class Meta extends gEditorial\Module
 		echo '&nbsp;&nbsp;';
 
 		Settings::submitButton( 'custom_fields_check',
-			_x( 'Check', 'Modules: Meta: Setting Button', GEDITORIAL_TEXTDOMAIN ), TRUE );
+			_x( 'Check', 'Modules: Meta: Setting Button', 'geditorial' ), TRUE );
 
 		Settings::submitButton( 'custom_fields_convert',
-			_x( 'Covert', 'Modules: Meta: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
+			_x( 'Covert', 'Modules: Meta: Setting Button', 'geditorial' ) );
 
 		Settings::submitButton( 'custom_fields_delete',
-			_x( 'Delete', 'Modules: Meta: Setting Button', GEDITORIAL_TEXTDOMAIN ), 'danger', TRUE );
+			_x( 'Delete', 'Modules: Meta: Setting Button', 'geditorial' ), 'danger', TRUE );
 
-		HTML::desc( _x( 'Check for Custom Fields and import them into Meta', 'Modules: Meta', GEDITORIAL_TEXTDOMAIN ) );
+		HTML::desc( _x( 'Check for Custom Fields and import them into Meta', 'Modules: Meta', 'geditorial' ) );
 
 		if ( isset( $_POST['custom_fields_check'] )
 			&& $args['custom_field'] ) {
@@ -833,7 +833,7 @@ class Meta extends gEditorial\Module
 				stripslashes( $args['custom_field'] ),
 				stripslashes( $args['custom_field_limit'] )
 			), [
-				'empty' => HTML::warning( _x( 'No Meta Found!', 'Modules: Meta: Table Empty', GEDITORIAL_TEXTDOMAIN ), FALSE ),
+				'empty' => HTML::warning( _x( 'No Meta Found!', 'Modules: Meta: Table Empty', 'geditorial' ), FALSE ),
 			] );
 		}
 
@@ -978,7 +978,8 @@ class Meta extends gEditorial\Module
 		$fields = [];
 
 		foreach ( $this->get_posttype_fields( $posttype ) as $field => $args )
-			$fields['meta_'.$field] = $object ? $args : sprintf( _x( 'Meta: %s', 'Modules: Meta: Import Field', GEDITORIAL_TEXTDOMAIN ), $args['title'] );
+			/* translators: %s: title */
+			$fields['meta_'.$field] = $object ? $args : sprintf( _x( 'Meta: %s', 'Modules: Meta: Import Field', 'geditorial' ), $args['title'] );
 
 		return $fields;
 	}

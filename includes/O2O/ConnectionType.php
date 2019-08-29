@@ -91,7 +91,7 @@ class ConnectionType extends Core\Base
 	private function expand_labels( $additional_labels, $key )
 	{
 		$labels = clone $this->side[$key]->get_labels();
-		$labels->create = _x( 'Create connections', 'O2O', GEDITORIAL_TEXTDOMAIN );
+		$labels->create = _x( 'Create connections', 'O2O', 'geditorial' );
 
 		foreach ( $additional_labels[$key] as $key => $var )
 			$labels->$key = $var;
@@ -109,7 +109,8 @@ class ConnectionType extends Core\Base
 
 		$other_key = 'from' == $key ? 'to' : 'from';
 
-		return sprintf( _x( 'Connected %s', 'O2O', GEDITORIAL_TEXTDOMAIN ),
+		/* translators: %s: title */
+		return sprintf( _x( 'Connected %s', 'O2O', 'geditorial' ),
 			$this->side[ $other_key ]->get_title() );
 	}
 

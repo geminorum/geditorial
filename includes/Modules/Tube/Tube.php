@@ -20,8 +20,8 @@ class Tube extends gEditorial\Module
 	{
 		return [
 			'name'  => 'tube',
-			'title' => _x( 'Tube', 'Modules: Tube', GEDITORIAL_TEXTDOMAIN ),
-			'desc'  => _x( 'Video Clip Managment', 'Modules: Tube', GEDITORIAL_TEXTDOMAIN ),
+			'title' => _x( 'Tube', 'Modules: Tube', 'geditorial' ),
+			'desc'  => _x( 'Video Clip Managment', 'Modules: Tube', 'geditorial' ),
 			'icon'  => 'video-alt2',
 		];
 	}
@@ -32,13 +32,13 @@ class Tube extends gEditorial\Module
 			'_general' => [
 				[
 					'field'       => 'video_channels',
-					'title'       => _x( 'Channels Support', 'Modules: Tube: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Supports channel post-type and related features.', 'Modules: Tube: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Channels Support', 'Modules: Tube: Setting Title', 'geditorial' ),
+					'description' => _x( 'Supports channel post-type and related features.', 'Modules: Tube: Setting Description', 'geditorial' ),
 				],
 				[
 					'field'       => 'video_toolbar',
-					'title'       => _x( 'Video Toolbar', 'Modules: Tube: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Displays customized toolbar after player.', 'Modules: Tube: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Video Toolbar', 'Modules: Tube: Setting Title', 'geditorial' ),
+					'description' => _x( 'Displays customized toolbar after player.', 'Modules: Tube: Setting Description', 'geditorial' ),
 				],
 			],
 			'_supports' => [
@@ -89,30 +89,30 @@ class Tube extends gEditorial\Module
 	{
 		$strings = [
 			'noops' => [
-				'video_cpt'   => _nx_noop( 'Video', 'Videos', 'Modules: Tube: Noop', GEDITORIAL_TEXTDOMAIN ),
-				'video_cat'   => _nx_noop( 'Video Category', 'Video Categories', 'Modules: Tube: Noop', GEDITORIAL_TEXTDOMAIN ),
-				'channel_cpt' => _nx_noop( 'Channel', 'Channels', 'Modules: Tube: Noop', GEDITORIAL_TEXTDOMAIN ),
-				'channel_cat' => _nx_noop( 'Channel Category', 'Channel Categories', 'Modules: Tube: Noop', GEDITORIAL_TEXTDOMAIN ),
+				'video_cpt'   => _nx_noop( 'Video', 'Videos', 'Modules: Tube: Noop', 'geditorial' ),
+				'video_cat'   => _nx_noop( 'Video Category', 'Video Categories', 'Modules: Tube: Noop', 'geditorial' ),
+				'channel_cpt' => _nx_noop( 'Channel', 'Channels', 'Modules: Tube: Noop', 'geditorial' ),
+				'channel_cat' => _nx_noop( 'Channel Category', 'Channel Categories', 'Modules: Tube: Noop', 'geditorial' ),
 			],
 		];
 
 		if ( ! is_admin() )
 			return $strings;
 
-		$strings['misc']['video_cat']['tweaks_column_title']   = _x( 'Video Categories', 'Modules: Tube: Column Title', GEDITORIAL_TEXTDOMAIN );
-		$strings['misc']['channel_cat']['tweaks_column_title'] = _x( 'Channel Categories', 'Modules: Tube: Column Title', GEDITORIAL_TEXTDOMAIN );
+		$strings['misc']['video_cat']['tweaks_column_title']   = _x( 'Video Categories', 'Modules: Tube: Column Title', 'geditorial' );
+		$strings['misc']['channel_cat']['tweaks_column_title'] = _x( 'Channel Categories', 'Modules: Tube: Column Title', 'geditorial' );
 
 		$strings['p2p'] = [
 			'video_cpt' => [
 				'title' => [
-					'from' => _x( 'Connected Videos', 'Modules: Tube: O2O', GEDITORIAL_TEXTDOMAIN ),
-					'to'   => _x( 'Connected Posts', 'Modules: Tube: O2O', GEDITORIAL_TEXTDOMAIN ),
+					'from' => _x( 'Connected Videos', 'Modules: Tube: O2O', 'geditorial' ),
+					'to'   => _x( 'Connected Posts', 'Modules: Tube: O2O', 'geditorial' ),
 				],
 			],
 			'channel_cpt' => [
 				'title' => [
-					'from' => _x( 'Connected Channels', 'Modules: Tube: O2O', GEDITORIAL_TEXTDOMAIN ),
-					'to'   => _x( 'Connected Videos', 'Modules: Tube: O2O', GEDITORIAL_TEXTDOMAIN ),
+					'from' => _x( 'Connected Channels', 'Modules: Tube: O2O', 'geditorial' ),
+					'to'   => _x( 'Connected Videos', 'Modules: Tube: O2O', 'geditorial' ),
 				],
 			],
 		];
@@ -129,18 +129,18 @@ class Tube extends gEditorial\Module
 				'st' => [ 'type' => 'title_after' ],
 
 				'featured_people' => [
-					'title'       => _x( 'Featured People', 'Modules: Tube: Field Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Featured People', 'Modules: Tube: Field Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Featured People', 'Modules: Tube: Field Title', 'geditorial' ),
+					'description' => _x( 'Featured People', 'Modules: Tube: Field Description', 'geditorial' ),
 					'icon'        => 'groups',
 				],
 				'creation_date' => [
-					'title'       => _x( 'Creation Date', 'Modules: Tube: Field Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Creation Date', 'Modules: Tube: Field Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Creation Date', 'Modules: Tube: Field Title', 'geditorial' ),
+					'description' => _x( 'Creation Date', 'Modules: Tube: Field Description', 'geditorial' ),
 					'icon'        => 'calendar-alt',
 				],
 				'video_duration' => [
-					'title'       => _x( 'Video Duration', 'Modules: Tube: Field Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Video Duration', 'Modules: Tube: Field Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Video Duration', 'Modules: Tube: Field Title', 'geditorial' ),
+					'description' => _x( 'Video Duration', 'Modules: Tube: Field Description', 'geditorial' ),
 					'icon'        => 'backup',
 				],
 
@@ -271,72 +271,72 @@ class Tube extends gEditorial\Module
 		if ( ! empty( $attr['date'] ) )
 			$html.= HTML::tag( 'button', [
 				'class' => [ '-button', 'btn', 'btn-default', 'btn-xs' ],
-				'title' => _x( 'The date of this video', 'Modules: Tube: Button', GEDITORIAL_TEXTDOMAIN ),
+				'title' => _x( 'The date of this video', 'Modules: Tube: Button', 'geditorial' ),
 			], $this->icon( 'calendar', 'gridicons' ).' '.$attr['date'] );
 
 		if ( ! empty( $attr['time'] ) )
 			$html.= HTML::tag( 'button', [
 				'class' => [ '-button', 'btn', 'btn-default', 'btn-xs' ],
-				'title' => _x( 'Total time of this video', 'Modules: Tube: Button', GEDITORIAL_TEXTDOMAIN ),
+				'title' => _x( 'Total time of this video', 'Modules: Tube: Button', 'geditorial' ),
 			], $this->icon( 'time' ).' '.Number::format( $attr['time'] ) );
 
 		if ( ! empty( $attr['src'] ) )
 			$html.= HTML::tag( 'a', [
 				'href'  => $attr['src'],
 				'class' => [ '-button', 'btn', 'btn-default', 'btn-xs' ],
-				'title' => _x( 'Download this video', 'Modules: Tube: Button', GEDITORIAL_TEXTDOMAIN ),
-			], $this->icon( 'download' ).' '._x( 'Download', 'Modules: Tube: Button', GEDITORIAL_TEXTDOMAIN ) );
+				'title' => _x( 'Download this video', 'Modules: Tube: Button', 'geditorial' ),
+			], $this->icon( 'download' ).' '._x( 'Download', 'Modules: Tube: Button', 'geditorial' ) );
 
 		if ( ! empty( $attr['youtube'] ) )
 			$html.= HTML::tag( 'a', [
 				'href'   => $attr['youtube'],
 				'class'  => [ '-button', 'btn', 'btn-default', 'btn-xs' ],
-				'title'  => _x( 'View this video on YouTube', 'Modules: Tube: Button', GEDITORIAL_TEXTDOMAIN ),
+				'title'  => _x( 'View this video on YouTube', 'Modules: Tube: Button', 'geditorial' ),
 				'target' => '_blank',
-			], $this->icon( 'youtube', 'social-logos' ).' '._x( 'YouTube', 'Modules: Tube: Button', GEDITORIAL_TEXTDOMAIN ) );
+			], $this->icon( 'youtube', 'social-logos' ).' '._x( 'YouTube', 'Modules: Tube: Button', 'geditorial' ) );
 
 		if ( ! empty( $attr['aparat'] ) )
 			$html.= HTML::tag( 'a', [
 				'href'   => $attr['aparat'],
 				'class'  => [ '-button', 'btn', 'btn-default', 'btn-xs' ],
-				'title'  => _x( 'View this video on Aparat', 'Modules: Tube: Button', GEDITORIAL_TEXTDOMAIN ),
+				'title'  => _x( 'View this video on Aparat', 'Modules: Tube: Button', 'geditorial' ),
 				'target' => '_blank',
-			], $this->icon( 'aparat', 'gorbeh' ).' '._x( 'Aparat', 'Modules: Tube: Button', GEDITORIAL_TEXTDOMAIN ) );
+			], $this->icon( 'aparat', 'gorbeh' ).' '._x( 'Aparat', 'Modules: Tube: Button', 'geditorial' ) );
 
 		$link = empty( $attr['shortlink'] ) ? WordPress::getPostShortLink( $post_id ) : $attr['shortlink'];
 
 		$html.= HTML::tag( 'a', [
 			'href'   => $link,
 			'class'  => [ '-button', 'btn', 'btn-default', 'btn-xs' ],
-			'title'  => _x( 'Shortlink to this video', 'Modules: Tube: Button', GEDITORIAL_TEXTDOMAIN ),
+			'title'  => _x( 'Shortlink to this video', 'Modules: Tube: Button', 'geditorial' ),
 			'target' => '_blank',
-		], $this->icon( 'link' ).' '._x( 'Shortlink', 'Modules: Tube: Button', GEDITORIAL_TEXTDOMAIN ) );
+		], $this->icon( 'link' ).' '._x( 'Shortlink', 'Modules: Tube: Button', 'geditorial' ) );
 
 		$html.= HTML::tag( 'a', [
 			'href'   => sprintf( 'https://telegram.me/share/url?url=%s', urlencode( $link ) ),
 			'class'  => [ '-button', 'btn', 'btn-default', 'btn-xs', '-button-icon' ],
-			'title'  => _x( 'Share this video', 'Modules: Tube: Button', GEDITORIAL_TEXTDOMAIN ),
+			'title'  => _x( 'Share this video', 'Modules: Tube: Button', 'geditorial' ),
 			'target' => '_blank',
 		], $this->icon( 'telegram', 'social-logos' ) );
 
 		$html.= HTML::tag( 'a', [
 			'href'   => sprintf( 'https://twitter.com/intent/tweet?url=%s', urlencode( $link ) ),
 			'class'  => [ '-button', 'btn', 'btn-default', 'btn-xs', '-button-icon' ],
-			'title'  => _x( 'Share this video', 'Modules: Tube: Button', GEDITORIAL_TEXTDOMAIN ),
+			'title'  => _x( 'Share this video', 'Modules: Tube: Button', 'geditorial' ),
 			'target' => '_blank',
 		], $this->icon( 'twitter-alt', 'social-logos' ) );
 
 		$html.= HTML::tag( 'a', [
 			'href'   => sprintf( 'https://plus.google.com/share?url=%s', urlencode( $link ) ),
 			'class'  => [ '-button', 'btn', 'btn-default', 'btn-xs', '-button-icon' ],
-			'title'  => _x( 'Share this video', 'Modules: Tube: Button', GEDITORIAL_TEXTDOMAIN ),
+			'title'  => _x( 'Share this video', 'Modules: Tube: Button', 'geditorial' ),
 			'target' => '_blank',
 		], $this->icon( 'google-plus-alt', 'social-logos' ) );
 
 		$html.= HTML::tag( 'a', [
 			'href'   => sprintf( 'https://www.facebook.com/sharer/sharer.php?u=%s', urlencode( $link ) ),
 			'class'  => [ '-button', 'btn', 'btn-default', 'btn-xs', '-button-icon' ],
-			'title'  => _x( 'Share this video', 'Modules: Tube: Button', GEDITORIAL_TEXTDOMAIN ),
+			'title'  => _x( 'Share this video', 'Modules: Tube: Button', 'geditorial' ),
 			'target' => '_blank',
 		], $this->icon( 'facebook', 'social-logos' ) );
 

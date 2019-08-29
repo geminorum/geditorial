@@ -16,8 +16,8 @@ class CollectionPoster extends gEditorial\Widget
 			'module' => 'collect',
 			'name'   => 'collect_collection_poster',
 			'class'  => 'collect-collection-poster',
-			'title'  => _x( 'Editorial: Collection Poster', 'Modules: Collect: Widget Title', GEDITORIAL_TEXTDOMAIN ),
-			'desc'   => _x( 'Displays latest, selected, connected or current collection poster.', 'Modules: Collect: Widget Description', GEDITORIAL_TEXTDOMAIN ),
+			'title'  => _x( 'Editorial: Collection Poster', 'Modules: Collect: Widget Title', 'geditorial' ),
+			'desc'   => _x( 'Displays latest, selected, connected or current collection poster.', 'Modules: Collect: Widget Description', 'geditorial' ),
 		];
 	}
 
@@ -92,12 +92,12 @@ class CollectionPoster extends gEditorial\Widget
 		$this->form_title( $instance );
 		$this->form_title_link( $instance );
 
-		$this->form_page_id( $instance, '0', 'page_id', 'posttype', $cpt, _x( 'The Collection:', 'Modules: Collect: Widget: Collection Poster', GEDITORIAL_TEXTDOMAIN ) );
+		$this->form_page_id( $instance, '0', 'page_id', 'posttype', $cpt, _x( 'The Collection:', 'Modules: Collect: Widget: Collection Poster', 'geditorial' ) );
 		$this->form_image_size( $instance, $cpt.'-thumbnail', 'image_size', $cpt );
 
-		$this->form_checkbox( $instance, FALSE, 'latest_collection', _x( 'Always the latest collection', 'Modules: Collect: Widget: Collection Poster', GEDITORIAL_TEXTDOMAIN ) );
-		$this->form_checkbox( $instance, TRUE, 'number_line', _x( 'Display the Number Meta', 'Modules: Collect: Widget: Collection Poster', GEDITORIAL_TEXTDOMAIN ) );
-		$this->form_checkbox( $instance, TRUE, 'link_collection', _x( 'Link to the collection', 'Modules: Collect: Widget: Collection Poster', GEDITORIAL_TEXTDOMAIN ) );
+		$this->form_checkbox( $instance, FALSE, 'latest_collection', _x( 'Always the latest collection', 'Modules: Collect: Widget: Collection Poster', 'geditorial' ) );
+		$this->form_checkbox( $instance, TRUE, 'number_line', _x( 'Display the Number Meta', 'Modules: Collect: Widget: Collection Poster', 'geditorial' ) );
+		$this->form_checkbox( $instance, TRUE, 'link_collection', _x( 'Link to the collection', 'Modules: Collect: Widget: Collection Poster', 'geditorial' ) );
 		$this->form_custom_link( $instance );
 
 		$this->form_context( $instance );

@@ -26,8 +26,8 @@ class Like extends gEditorial\Module
 	{
 		return [
 			'name'  => 'like',
-			'title' => _x( 'Like', 'Modules: Like', GEDITORIAL_TEXTDOMAIN ),
-			'desc'  => _x( 'Like Button for Guests and Users', 'Modules: Like', GEDITORIAL_TEXTDOMAIN ),
+			'title' => _x( 'Like', 'Modules: Like', 'geditorial' ),
+			'desc'  => _x( 'Like Button for Guests and Users', 'Modules: Like', 'geditorial' ),
 			'icon'  => 'heart',
 		];
 	}
@@ -40,14 +40,14 @@ class Like extends gEditorial\Module
 				'adminbar_summary',
 				[
 					'field'       => 'display_avatars',
-					'title'       => _x( 'Display Avatars', 'Modules: Like: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Displays avatars next to the like button.', 'Modules: Like: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Display Avatars', 'Modules: Like: Setting Title', 'geditorial' ),
+					'description' => _x( 'Displays avatars next to the like button.', 'Modules: Like: Setting Description', 'geditorial' ),
 				],
 				[
 					'field'       => 'max_avatars',
 					'type'        => 'number',
-					'title'       => _x( 'Max Avatars', 'Modules: Like: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Maximum number of avatars to display.', 'Modules: Like: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Max Avatars', 'Modules: Like: Setting Title', 'geditorial' ),
+					'description' => _x( 'Maximum number of avatars to display.', 'Modules: Like: Setting Description', 'geditorial' ),
 					'default'     => 12,
 				],
 			],
@@ -55,23 +55,23 @@ class Like extends gEditorial\Module
 				[
 					'field'       => 'string_loading',
 					'type'        => 'text',
-					'title'       => _x( 'Loading Title', 'Modules: Like: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Title attribute of the like button.', 'Modules: Like: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-					'default'     => _x( 'Loading &hellip;', 'Modules: Like', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Loading Title', 'Modules: Like: Setting Title', 'geditorial' ),
+					'description' => _x( 'Title attribute of the like button.', 'Modules: Like: Setting Description', 'geditorial' ),
+					'default'     => _x( 'Loading &hellip;', 'Modules: Like', 'geditorial' ),
 				],
 				[
 					'field'       => 'string_like',
 					'type'        => 'text',
-					'title'       => _x( 'Like Title', 'Modules: Like: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Title attribute of the like button.', 'Modules: Like: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-					'default'     => _x( 'Like', 'Modules: Like', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Like Title', 'Modules: Like: Setting Title', 'geditorial' ),
+					'description' => _x( 'Title attribute of the like button.', 'Modules: Like: Setting Description', 'geditorial' ),
+					'default'     => _x( 'Like', 'Modules: Like', 'geditorial' ),
 				],
 				[
 					'field'       => 'string_unlike',
 					'type'        => 'text',
-					'title'       => _x( 'Unlike Title', 'Modules: Like: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Title attribute of the like button.', 'Modules: Like: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-					'default'     => _x( 'Unlike', 'Modules: Like', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Unlike Title', 'Modules: Like: Setting Title', 'geditorial' ),
+					'description' => _x( 'Title attribute of the like button.', 'Modules: Like: Setting Description', 'geditorial' ),
+					'default'     => _x( 'Unlike', 'Modules: Like', 'geditorial' ),
 				],
 			],
 		];
@@ -119,7 +119,7 @@ class Like extends gEditorial\Module
 
 		$avatars = $this->get_setting( 'display_avatars', FALSE );
 
-		$title = $this->get_setting( 'string_loading', _x( 'Loading &hellip;', 'Modules: Like', GEDITORIAL_TEXTDOMAIN ) );
+		$title = $this->get_setting( 'string_loading', _x( 'Loading &hellip;', 'Modules: Like', 'geditorial' ) );
 		$title = $this->filters( 'loading', $title, $post );
 
 		$html  = '<div class="geditorial-wrap -like" style="display:none;" data-avatars="'.( $avatars ? 'true' : 'false' ).'">';
@@ -159,7 +159,8 @@ class Like extends gEditorial\Module
 
 			$nodes[] = [
 				'id'     => $this->classs( 'users' ),
-				'title'  => Helper::getCounted( count( $users ), _x( 'Like Summary: Users %s', 'Modules: Like: Adminbar', GEDITORIAL_TEXTDOMAIN ) ),
+				/* translators: %s: count placeholder */
+				'title'  => Helper::getCounted( count( $users ), _x( 'Like Summary: Users %s', 'Modules: Like: Adminbar', 'geditorial' ) ),
 				'parent' => $parent,
 				'href'   => $this->get_module_url(),
 			];
@@ -178,7 +179,8 @@ class Like extends gEditorial\Module
 
 			$nodes[] = [
 				'id'     => $this->classs( 'guests' ),
-				'title'  => Helper::getCounted( count( $guests ), _x( 'Like Summary: Guests %s', 'Modules: Like: Adminbar', GEDITORIAL_TEXTDOMAIN ) ),
+				/* translators: %s: count placeholder */
+				'title'  => Helper::getCounted( count( $guests ), _x( 'Like Summary: Guests %s', 'Modules: Like: Adminbar', 'geditorial' ) ),
 				'parent' => $parent,
 				'href'   => $this->get_module_url(),
 			];
@@ -255,9 +257,9 @@ class Like extends gEditorial\Module
 	public function title( $liked, $post_id = NULL )
 	{
 		if ( $liked )
-			$title = $this->get_setting( 'string_unlike', _x( 'Unlike', 'Modules: Like', GEDITORIAL_TEXTDOMAIN ) );
+			$title = $this->get_setting( 'string_unlike', _x( 'Unlike', 'Modules: Like', 'geditorial' ) );
 		else
-			$title = $this->get_setting( 'string_like', _x( 'Like', 'Modules: Like', GEDITORIAL_TEXTDOMAIN ) );
+			$title = $this->get_setting( 'string_like', _x( 'Like', 'Modules: Like', 'geditorial' ) );
 
 		return $this->filters( 'title', $title, $liked, $post_id );
 	}

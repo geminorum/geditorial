@@ -19,8 +19,8 @@ class Event extends gEditorial\Module
 	{
 		return [
 			'name'  => 'event',
-			'title' => _x( 'Event', 'Modules: Event', GEDITORIAL_TEXTDOMAIN ),
-			'desc'  => _x( 'Integrated Events', 'Modules: Event', GEDITORIAL_TEXTDOMAIN ),
+			'title' => _x( 'Event', 'Modules: Event', 'geditorial' ),
+			'desc'  => _x( 'Integrated Events', 'Modules: Event', 'geditorial' ),
 			'icon'  => 'calendar-alt',
 		];
 	}
@@ -29,14 +29,14 @@ class Event extends gEditorial\Module
 	{
 		return [
 			'_fields' => [
-				'extra_metadata' => _x( 'Specifies events based on the actual date and time.', 'Modules: Event: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+				'extra_metadata' => _x( 'Specifies events based on the actual date and time.', 'Modules: Event: Setting Description', 'geditorial' ),
 			],
-			'fields_option' => _x( 'Metadata Fields', 'Modules: Event: Settings', GEDITORIAL_TEXTDOMAIN ),
+			'fields_option' => _x( 'Metadata Fields', 'Modules: Event: Settings', 'geditorial' ),
 			'_general' => [
 				[
 					'field'       => 'display_type',
-					'title'       => _x( 'Display Calendar Type', 'Modules: Event: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'For each event you can select the calendar type. Or else select default below.', 'Modules: Event: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Display Calendar Type', 'Modules: Event: Setting Title', 'geditorial' ),
+					'description' => _x( 'For each event you can select the calendar type. Or else select default below.', 'Modules: Event: Setting Description', 'geditorial' ),
 					'default'     => '1',
 				],
 				'calendar_type',
@@ -59,38 +59,38 @@ class Event extends gEditorial\Module
 		return [
 			$this->constant( 'event_cpt' ) => [
 				'event_start' => [
-					'title'       => _x( 'Event Start', 'Modules: Event: Fields', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Event Start', 'Modules: Event: Fields', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Event Start', 'Modules: Event: Fields', 'geditorial' ),
+					'description' => _x( 'Event Start', 'Modules: Event: Fields', 'geditorial' ),
 					'icon'        => 'calendar',
 					'type'        => 'datetime',
 				],
 				'event_end' => [
-					'title'       => _x( 'Event End', 'Modules: Event: Fields', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Event End', 'Modules: Event: Fields', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Event End', 'Modules: Event: Fields', 'geditorial' ),
+					'description' => _x( 'Event End', 'Modules: Event: Fields', 'geditorial' ),
 					'icon'        => 'calendar',
 					'type'        => 'datetime',
 				],
 				'event_allday' => [
-					'title'       => _x( 'Event All-Day', 'Modules: Event: Fields', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'All-day event', 'Modules: Event: Fields', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Event All-Day', 'Modules: Event: Fields', 'geditorial' ),
+					'description' => _x( 'All-day event', 'Modules: Event: Fields', 'geditorial' ),
 					'icon'        => 'calendar-alt',
 					'type'        => 'checkbox',
 				],
 				'event_repeat' => [
-					'title'       => _x( 'Event Repeat', 'Modules: Event: Fields', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Event Repeat', 'Modules: Event: Fields', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Event Repeat', 'Modules: Event: Fields', 'geditorial' ),
+					'description' => _x( 'Event Repeat', 'Modules: Event: Fields', 'geditorial' ),
 					'icon'        => 'update',
 					'type'        => 'select',
 					'values' => [
-						'0'    => _x( 'Never', 'Modules: Event: Fields', GEDITORIAL_TEXTDOMAIN ),
-						'10'   => _x( 'Weekly', 'Modules: Event: Fields', GEDITORIAL_TEXTDOMAIN ),
-						'100'  => _x( 'Monthly', 'Modules: Event: Fields', GEDITORIAL_TEXTDOMAIN ),
-						'1000' => _x( 'Yearly', 'Modules: Event: Fields', GEDITORIAL_TEXTDOMAIN ),
+						'0'    => _x( 'Never', 'Modules: Event: Fields', 'geditorial' ),
+						'10'   => _x( 'Weekly', 'Modules: Event: Fields', 'geditorial' ),
+						'100'  => _x( 'Monthly', 'Modules: Event: Fields', 'geditorial' ),
+						'1000' => _x( 'Yearly', 'Modules: Event: Fields', 'geditorial' ),
 					],
 				],
 				'event_expire' => [
-					'title'       => _x( 'Event Expire', 'Modules: Event: Fields', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Event Expire', 'Modules: Event: Fields', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Event Expire', 'Modules: Event: Fields', 'geditorial' ),
+					'description' => _x( 'Event Expire', 'Modules: Event: Fields', 'geditorial' ),
 					'icon'        => 'thumbs-down',
 				],
 			],
@@ -131,14 +131,14 @@ class Event extends gEditorial\Module
 	{
 		$strings = [
 			'noops' => [
-				'event_cpt' => _nx_noop( 'Event', 'Events', 'Modules: Event: Noop', GEDITORIAL_TEXTDOMAIN ),
-				'event_tag' => _nx_noop( 'Event Type', 'Event Types', 'Modules: Event: Noop', GEDITORIAL_TEXTDOMAIN ),
-				'event_cat' => _nx_noop( 'Event Category', 'Event Categories', 'Modules: Event: Noop', GEDITORIAL_TEXTDOMAIN ),
-				'cal_tax'   => _nx_noop( 'Event Calendar', 'Event Calendars', 'Modules: Event: Noop', GEDITORIAL_TEXTDOMAIN ),
+				'event_cpt' => _nx_noop( 'Event', 'Events', 'Modules: Event: Noop', 'geditorial' ),
+				'event_tag' => _nx_noop( 'Event Type', 'Event Types', 'Modules: Event: Noop', 'geditorial' ),
+				'event_cat' => _nx_noop( 'Event Category', 'Event Categories', 'Modules: Event: Noop', 'geditorial' ),
+				'cal_tax'   => _nx_noop( 'Event Calendar', 'Event Calendars', 'Modules: Event: Noop', 'geditorial' ),
 			],
 			'labels' => [
 				'type_tax' => [
-					'name' => _x( 'Calendar Types', 'Modules: Event: Calendar Type Tax Labels: Name', GEDITORIAL_TEXTDOMAIN ),
+					'name' => _x( 'Calendar Types', 'Modules: Event: Calendar Type Tax Labels: Name', 'geditorial' ),
 				],
 			],
 		];
@@ -148,30 +148,30 @@ class Event extends gEditorial\Module
 
 		$strings['misc'] = [
 			'event_cpt' => [
-				'featured'                  => _x( 'Poster Image', 'Modules: Event: Event CPT: Featured', GEDITORIAL_TEXTDOMAIN ),
-				'meta_box_title'            => _x( 'Date & Times', 'Modules: Event: Event CPT: Meta Box Title', GEDITORIAL_TEXTDOMAIN ),
-				'event_starts_column_title' => _x( 'Starts', 'Modules: Event: Column Title', GEDITORIAL_TEXTDOMAIN ),
-				'event_ends_column_title'   => _x( 'Ends', 'Modules: Event: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'featured'                  => _x( 'Poster Image', 'Modules: Event: Event CPT: Featured', 'geditorial' ),
+				'meta_box_title'            => _x( 'Date & Times', 'Modules: Event: Event CPT: Meta Box Title', 'geditorial' ),
+				'event_starts_column_title' => _x( 'Starts', 'Modules: Event: Column Title', 'geditorial' ),
+				'event_ends_column_title'   => _x( 'Ends', 'Modules: Event: Column Title', 'geditorial' ),
 			],
 			'event_tag' => [
-				'menu_name'           => _x( 'Types', 'Modules: Event: Event Types Tax Labels: Menu Name', GEDITORIAL_TEXTDOMAIN ),
-				'meta_box_title'      => _x( 'Event Types', 'Modules: Event: Meta Box Title', GEDITORIAL_TEXTDOMAIN ),
-				'tweaks_column_title' => _x( 'Event Types', 'Modules: Event: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'menu_name'           => _x( 'Types', 'Modules: Event: Event Types Tax Labels: Menu Name', 'geditorial' ),
+				'meta_box_title'      => _x( 'Event Types', 'Modules: Event: Meta Box Title', 'geditorial' ),
+				'tweaks_column_title' => _x( 'Event Types', 'Modules: Event: Column Title', 'geditorial' ),
 			],
 			'cal_tax' => [
-				'menu_name'           => _x( 'Calendars', 'Modules: Event: Event Calendars Tax Labels: Menu Name', GEDITORIAL_TEXTDOMAIN ),
-				'meta_box_title'      => _x( 'Event Calendars', 'Modules: Event: Meta Box Title', GEDITORIAL_TEXTDOMAIN ),
-				'tweaks_column_title' => _x( 'Event Calendars', 'Modules: Event: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'menu_name'           => _x( 'Calendars', 'Modules: Event: Event Calendars Tax Labels: Menu Name', 'geditorial' ),
+				'meta_box_title'      => _x( 'Event Calendars', 'Modules: Event: Meta Box Title', 'geditorial' ),
+				'tweaks_column_title' => _x( 'Event Calendars', 'Modules: Event: Column Title', 'geditorial' ),
 			],
 		];
 
 		$strings['terms'] = [
 			'event_tag' => [
-				'holiday' => _x( 'Holiday', 'Modules: Event: Event Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
-				'birth'   => _x( 'Birth', 'Modules: Event: Event Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
-				'death'   => _x( 'Death', 'Modules: Event: Event Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
-				'start'   => _x( 'Start', 'Modules: Event: Event Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
-				'end'     => _x( 'End', 'Modules: Event: Event Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
+				'holiday' => _x( 'Holiday', 'Modules: Event: Event Tax Defaults', 'geditorial' ),
+				'birth'   => _x( 'Birth', 'Modules: Event: Event Tax Defaults', 'geditorial' ),
+				'death'   => _x( 'Death', 'Modules: Event: Event Tax Defaults', 'geditorial' ),
+				'start'   => _x( 'Start', 'Modules: Event: Event Tax Defaults', 'geditorial' ),
+				'end'     => _x( 'End', 'Modules: Event: Event Tax Defaults', 'geditorial' ),
 			],
 		];
 
@@ -202,10 +202,10 @@ class Event extends gEditorial\Module
 	{
 		parent::default_buttons( $module );
 
-		$this->register_button( 'install_def_event_tag', _x( 'Install Default Event Types', 'Modules: Event: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
+		$this->register_button( 'install_def_event_tag', _x( 'Install Default Event Types', 'Modules: Event: Setting Button', 'geditorial' ) );
 
 		if ( $this->get_setting( 'extra_metadata' ) )
-			$this->register_button( 'install_def_type_tax', _x( 'Install Default Calendar Types', 'Modules: Event: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
+			$this->register_button( 'install_def_type_tax', _x( 'Install Default Calendar Types', 'Modules: Event: Setting Button', 'geditorial' ) );
 	}
 
 	public function after_setup_theme()
@@ -410,8 +410,8 @@ class Event extends gEditorial\Module
 			// @$enddate = date( "F j, Y", $event_meta[$this->constant( 'metakey_enddate' )][0] );
 			// echo $startdate . '<br /><em>' . $enddate . '</em>';
 
-			// echo date_i18n( _x( 'F j, Y', 'Modules: Event', GEDITORIAL_TEXTDOMAIN ), strtotime( $event_meta[$this->constant( 'metakey_startdate' )][0] ) )
-			// 	.'<br /><em>'.date_i18n( _x( 'F j, Y', 'Modules: Event', GEDITORIAL_TEXTDOMAIN ), strtotime( $event_meta[$this->constant( 'metakey_enddate' )][0] ) );
+			// echo date_i18n( _x( 'F j, Y', 'Modules: Event', 'geditorial' ), strtotime( $event_meta[$this->constant( 'metakey_startdate' )][0] ) )
+			// 	.'<br /><em>'.date_i18n( _x( 'F j, Y', 'Modules: Event', 'geditorial' ), strtotime( $event_meta[$this->constant( 'metakey_enddate' )][0] ) );
 
 			echo '&mdash;';
 
@@ -500,8 +500,8 @@ class Event extends gEditorial\Module
 			'name'        => 'geditorial-event-date-start',
 			'id'          => 'geditorial-event-date-start',
 			'value'       => $args['date-start'],
-			'title'       => _x( 'Date Start', 'Modules: Event: Meta Box Input', GEDITORIAL_TEXTDOMAIN ),
-			'placeholder' => _x( 'Date Start', 'Modules: Event: Meta Box Input Placeholder', GEDITORIAL_TEXTDOMAIN ),
+			'title'       => _x( 'Date Start', 'Modules: Event: Meta Box Input', 'geditorial' ),
+			'placeholder' => _x( 'Date Start', 'Modules: Event: Meta Box Input Placeholder', 'geditorial' ),
 		] );
 
 		$html.= HTML::tag( 'input', [
@@ -510,8 +510,8 @@ class Event extends gEditorial\Module
 			'name'        => 'geditorial-event-time-start',
 			'id'          => 'geditorial-event-time-start',
 			'value'       => $args['time-start'],
-			'title'       => _x( 'Time Start', 'Modules: Event: Meta Box Input', GEDITORIAL_TEXTDOMAIN ),
-			'placeholder' => _x( 'Time Start', 'Modules: Event: Meta Box Input Placeholder', GEDITORIAL_TEXTDOMAIN ),
+			'title'       => _x( 'Time Start', 'Modules: Event: Meta Box Input', 'geditorial' ),
+			'placeholder' => _x( 'Time Start', 'Modules: Event: Meta Box Input Placeholder', 'geditorial' ),
 		] );
 
 		echo HTML::wrap( $html, 'field-wrap -inputtext-half ltr' );
@@ -522,8 +522,8 @@ class Event extends gEditorial\Module
 			'name'        => 'geditorial-event-date-end',
 			'id'          => 'geditorial-event-date-end',
 			'value'       => $args['date-end'],
-			'title'       => _x( 'Date End', 'Modules: Event: Meta Box Input', GEDITORIAL_TEXTDOMAIN ),
-			'placeholder' => _x( 'Date End', 'Modules: Event: Meta Box Input Placeholder', GEDITORIAL_TEXTDOMAIN ),
+			'title'       => _x( 'Date End', 'Modules: Event: Meta Box Input', 'geditorial' ),
+			'placeholder' => _x( 'Date End', 'Modules: Event: Meta Box Input Placeholder', 'geditorial' ),
 		] );
 
 		$html.= HTML::tag( 'input', [
@@ -532,8 +532,8 @@ class Event extends gEditorial\Module
 			'name'        => 'geditorial-event-time-end',
 			'id'          => 'geditorial-event-time-end',
 			'value'       => $args['time-end'],
-			'title'       => _x( 'Time End', 'Modules: Event: Meta Box Input', GEDITORIAL_TEXTDOMAIN ),
-			'placeholder' => _x( 'Time End', 'Modules: Event: Meta Box Input Placeholder', GEDITORIAL_TEXTDOMAIN ),
+			'title'       => _x( 'Time End', 'Modules: Event: Meta Box Input', 'geditorial' ),
+			'placeholder' => _x( 'Time End', 'Modules: Event: Meta Box Input Placeholder', 'geditorial' ),
 		] );
 
 		echo HTML::wrap( $html, 'field-wrap -inputtext-half ltr' );

@@ -14,8 +14,8 @@ class Reshare extends gEditorial\Module
 	{
 		return [
 			'name'  => 'reshare',
-			'title' => _x( 'Reshare', 'Modules: Reshare', GEDITORIAL_TEXTDOMAIN ),
-			'desc'  => _x( 'Contents from Other Sources', 'Modules: Reshare', GEDITORIAL_TEXTDOMAIN ),
+			'title' => _x( 'Reshare', 'Modules: Reshare', 'geditorial' ),
+			'desc'  => _x( 'Contents from Other Sources', 'Modules: Reshare', 'geditorial' ),
 			'icon'  => 'share-alt',
 		];
 	}
@@ -70,11 +70,11 @@ class Reshare extends gEditorial\Module
 	{
 		return [
 			'misc' => [
-				'tweaks_column_title' => _x( 'Reshare Categories', 'Modules: Reshare: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'tweaks_column_title' => _x( 'Reshare Categories', 'Modules: Reshare: Column Title', 'geditorial' ),
 			],
 			'noops' => [
-				'reshare_cpt' => _nx_noop( 'Reshare', 'Reshares', 'Modules: Reshare: Noop', GEDITORIAL_TEXTDOMAIN ),
-				'reshare_cat' => _nx_noop( 'Reshare Category', 'Reshare Categories', 'Modules: Reshare: Noop', GEDITORIAL_TEXTDOMAIN ),
+				'reshare_cpt' => _nx_noop( 'Reshare', 'Reshares', 'Modules: Reshare: Noop', 'geditorial' ),
+				'reshare_cat' => _nx_noop( 'Reshare Category', 'Reshare Categories', 'Modules: Reshare: Noop', 'geditorial' ),
 			],
 		];
 	}

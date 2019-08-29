@@ -93,7 +93,7 @@ class Plugin
 
 	public function plugins_loaded()
 	{
-		load_plugin_textdomain( GEDITORIAL_TEXTDOMAIN, FALSE, 'geditorial/languages' );
+		load_plugin_textdomain( 'geditorial', FALSE, 'geditorial/languages' );
 
 		$this->load_modules();
 		$this->load_options();
@@ -581,7 +581,7 @@ class Plugin
 				'title'  => Helper::getAdminBarIcon(),
 				// 'parent' => 'top-secondary',
 				'href'   => $link,
-				'meta'   => [ 'title' => _x( 'Editorial', 'Plugin: Main: Adminbar Node', GEDITORIAL_TEXTDOMAIN ) ],
+				'meta'   => [ 'title' => _x( 'Editorial', 'Plugin: Main: Adminbar Node', 'geditorial' ) ],
 			] );
 		}
 
@@ -610,7 +610,7 @@ class Plugin
 
 	public static function na( $wrap = 'code' )
 	{
-		$na = __( 'N/A', GEDITORIAL_TEXTDOMAIN );
-		return $wrap ? HTML::tag( $wrap, [ 'title' => __( 'Not Available', GEDITORIAL_TEXTDOMAIN ) ], $na ) : $na;
+		$na = __( 'N/A', 'geditorial' );
+		return $wrap ? HTML::tag( $wrap, [ 'title' => __( 'Not Available', 'geditorial' ) ], $na ) : $na;
 	}
 }

@@ -26,8 +26,8 @@ class Today extends gEditorial\Module
 	{
 		return [
 			'name'  => 'today',
-			'title' => _x( 'Today', 'Modules: Today', GEDITORIAL_TEXTDOMAIN ),
-			'desc'  => _x( 'The day in History', 'Modules: Today', GEDITORIAL_TEXTDOMAIN ),
+			'title' => _x( 'Today', 'Modules: Today', 'geditorial' ),
+			'desc'  => _x( 'The day in History', 'Modules: Today', 'geditorial' ),
 			'icon'  => 'calendar-alt',
 		];
 	}
@@ -41,8 +41,8 @@ class Today extends gEditorial\Module
 				'calendar_list',
 				[
 					'field'       => 'today_in_draft',
-					'title'       => _x( 'Fill The Day', 'Modules: Today: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Fills the current day info on newly drafted supported posttypes.', 'Modules: Today: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Fill The Day', 'Modules: Today: Setting Title', 'geditorial' ),
+					'description' => _x( 'Fills the current day info on newly drafted supported posttypes.', 'Modules: Today: Setting Description', 'geditorial' ),
 				],
 			],
 			'_dashboard' => [
@@ -52,16 +52,16 @@ class Today extends gEditorial\Module
 			'_frontend' => [
 				[
 					'field'       => 'insert_theday',
-					'title'       => _x( 'Insert The Day', 'Modules: Today: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Displays the day info for supported posttypes.', 'Modules: Today: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Insert The Day', 'Modules: Today: Setting Title', 'geditorial' ),
+					'description' => _x( 'Displays the day info for supported posttypes.', 'Modules: Today: Setting Description', 'geditorial' ),
 				],
 				$this->settings_insert_priority_option( -20, 'theday' ),
 			],
 			'_content' => [
 				[
 					'field'       => 'override_frontpage',
-					'title'       => _x( 'Override Front-Page', 'Modules: Today: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Displays today list of connected posts on front-page.', 'Modules: Today: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Override Front-Page', 'Modules: Today: Setting Title', 'geditorial' ),
+					'description' => _x( 'Displays today list of connected posts on front-page.', 'Modules: Today: Setting Description', 'geditorial' ),
 				],
 				'display_searchform',
 			],
@@ -92,13 +92,13 @@ class Today extends gEditorial\Module
 	{
 		return [
 			'misc' => [
-				'featured'            => _x( 'Cover Image', 'Modules: Today: Day CPT: Featured', GEDITORIAL_TEXTDOMAIN ),
-				'excerpt_metabox'     => _x( 'Summary', 'Modules: Today: Labels: Excerpt Box Title', GEDITORIAL_TEXTDOMAIN ),
-				'meta_box_title'      => _x( 'The Day', 'Modules: Today: Meta Box Title', GEDITORIAL_TEXTDOMAIN ),
-				'theday_column_title' => _x( 'Day', 'Modules: Today: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'featured'            => _x( 'Cover Image', 'Modules: Today: Day CPT: Featured', 'geditorial' ),
+				'excerpt_metabox'     => _x( 'Summary', 'Modules: Today: Labels: Excerpt Box Title', 'geditorial' ),
+				'meta_box_title'      => _x( 'The Day', 'Modules: Today: Meta Box Title', 'geditorial' ),
+				'theday_column_title' => _x( 'Day', 'Modules: Today: Column Title', 'geditorial' ),
 			],
 			'noops' => [
-				'day_cpt' => _nx_noop( 'Day', 'Days', 'Modules: Today: Noop', GEDITORIAL_TEXTDOMAIN ),
+				'day_cpt' => _nx_noop( 'Day', 'Days', 'Modules: Today: Noop', 'geditorial' ),
 			],
 		];
 	}
@@ -107,7 +107,7 @@ class Today extends gEditorial\Module
 	{
 		return [
 			'page_cpt' => [
-				'frontpage' => _x( 'Editorial: Today: Front-page', 'Modules: Today', GEDITORIAL_TEXTDOMAIN ),
+				'frontpage' => _x( 'Editorial: Today: Front-page', 'Modules: Today', 'geditorial' ),
 			],
 		];
 	}
@@ -186,8 +186,8 @@ class Today extends gEditorial\Module
 	{
 		$hook = add_submenu_page(
 			'index.php',
-			_x( 'Editorial Today', 'Modules: Today: Page Title', GEDITORIAL_TEXTDOMAIN ),
-			_x( 'My Today', 'Modules: Today: Menu Title', GEDITORIAL_TEXTDOMAIN ),
+			_x( 'Editorial Today', 'Modules: Today: Page Title', 'geditorial' ),
+			_x( 'My Today', 'Modules: Today: Menu Title', 'geditorial' ),
 			$this->role_can( 'adminmenu' ) ? 'read' : 'do_not_allow',
 			$this->get_adminmenu(),
 			[ $this, 'admin_today_page' ]
@@ -217,7 +217,7 @@ class Today extends gEditorial\Module
 	{
 		Settings::wrapOpen( $this->key, 'listtable' );
 
-			Settings::headerTitle( _x( 'Editorial Today', 'Modules: Today: Page Title', GEDITORIAL_TEXTDOMAIN ), FALSE );
+			Settings::headerTitle( _x( 'Editorial Today', 'Modules: Today: Page Title', 'geditorial' ), FALSE );
 
 			echo '<div id="poststuff"><div id="post-body" class="metabox-holder columns-2">';
 				echo '<div id="postbox-container-2" class="postbox-container">';
@@ -359,10 +359,10 @@ class Today extends gEditorial\Module
 			return Arraay::insert( $actions, [
 				$this->classs() => HTML::tag( 'a', [
 					'href'   => $link,
-					'title'  => _x( 'View on Today', 'Modules: Today', GEDITORIAL_TEXTDOMAIN ),
+					'title'  => _x( 'View on Today', 'Modules: Today', 'geditorial' ),
 					'class'  => '-today',
 					'target' => '_blank',
-				], _x( 'Today', 'Modules: Today', GEDITORIAL_TEXTDOMAIN ) ),
+				], _x( 'Today', 'Modules: Today', 'geditorial' ) ),
 			], 'view', 'before' );
 
 		return $actions;
@@ -507,7 +507,7 @@ class Today extends gEditorial\Module
 	public function edit_form_after_editor( $post )
 	{
 		if ( ! self::req( 'post' ) )
-			return HTML::desc( _x( 'You can connect posts to this day once you\'ve saved it for the first time.', 'Modules: Today', GEDITORIAL_TEXTDOMAIN ) );
+			return HTML::desc( _x( 'You can connect posts to this day once you\'ve saved it for the first time.', 'Modules: Today', 'geditorial' ) );
 
 		echo $this->wrap_open( '-admin-nobox' );
 
@@ -533,7 +533,7 @@ class Today extends gEditorial\Module
 				'terms' => Helper::tableColumnPostTerms(),
 				'type'  => Helper::tableColumnPostType(),
 			], $posts, [
-				'empty' => _x( 'No posts with day information found.', 'Modules: Today', GEDITORIAL_TEXTDOMAIN ),
+				'empty' => _x( 'No posts with day information found.', 'Modules: Today', 'geditorial' ),
 			] );
 
 		echo '</div>';
@@ -737,7 +737,7 @@ class Today extends gEditorial\Module
 
 		} else {
 
-			HTML::desc( _x( 'Nothing happened!', 'Modules: Today', GEDITORIAL_TEXTDOMAIN ) );
+			HTML::desc( _x( 'Nothing happened!', 'Modules: Today', 'geditorial' ) );
 		}
 
 		if ( ! is_admin() ) {
@@ -907,7 +907,7 @@ class Today extends gEditorial\Module
 			'type'  => Helper::tableColumnPostType(),
 			'title' => Helper::tableColumnPostTitle(),
 			'theday' => [
-				'title'    => _x( 'The Day', 'Modules: Today: Table Column', GEDITORIAL_TEXTDOMAIN ),
+				'title'    => _x( 'The Day', 'Modules: Today: Table Column', 'geditorial' ),
 				'args'     => [
 					'constants'    => $constants,
 					'default_type' => $this->default_calendar(),
@@ -923,8 +923,8 @@ class Today extends gEditorial\Module
 		], $posts, [
 			'navigation' => 'before',
 			'search'     => 'before',
-			'title'      => HTML::tag( 'h3', _x( 'Overview of Post with Day Information', 'Modules: Today', GEDITORIAL_TEXTDOMAIN ) ),
-			'empty'      => _x( 'No posts with day information found.', 'Modules: Today', GEDITORIAL_TEXTDOMAIN ),
+			'title'      => HTML::tag( 'h3', _x( 'Overview of Post with Day Information', 'Modules: Today', 'geditorial' ) ),
+			'empty'      => _x( 'No posts with day information found.', 'Modules: Today', 'geditorial' ),
 			'pagination' => $pagination,
 		] );
 	}
@@ -969,19 +969,19 @@ class Today extends gEditorial\Module
 
 	protected function render_tools_html( $uri, $sub )
 	{
-		HTML::h3( _x( 'Today Tools', 'Modules: Today', GEDITORIAL_TEXTDOMAIN ) );
+		HTML::h3( _x( 'Today Tools', 'Modules: Today', 'geditorial' ) );
 		echo '<table class="form-table">';
 
-		echo '<tr><th scope="row">'._x( 'Re-schedule by Day', 'Modules: Today', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
+		echo '<tr><th scope="row">'._x( 'Re-schedule by Day', 'Modules: Today', 'geditorial' ).'</th><td>';
 
 		echo HTML::dropdown( $this->list_posttypes(), [ 'name' => 'posttype' ] );
 
 		echo '&nbsp;&nbsp;';
 
 		Settings::submitButton( 'reschedule_by_day',
-			_x( 'Schedule', 'Modules: Today: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
+			_x( 'Schedule', 'Modules: Today: Setting Button', 'geditorial' ) );
 
-		HTML::desc( _x( 'Tries to re-set the date of posts based on it\'s day data.', 'Modules: Today', GEDITORIAL_TEXTDOMAIN ) );
+		HTML::desc( _x( 'Tries to re-set the date of posts based on it\'s day data.', 'Modules: Today', 'geditorial' ) );
 
 		echo '</td></tr>';
 		echo '</table>';
@@ -990,10 +990,10 @@ class Today extends gEditorial\Module
 	private function get_importer_fields( $posttype = NULL )
 	{
 		return [
-			'today_cal'   => _x( 'Today: Calendar', 'Modules: Today: Import Field', GEDITORIAL_TEXTDOMAIN ),
-			'today_year'  => _x( 'Today: Year', 'Modules: Today: Import Field', GEDITORIAL_TEXTDOMAIN ),
-			'today_month' => _x( 'Today: Month', 'Modules: Today: Import Field', GEDITORIAL_TEXTDOMAIN ),
-			'today_day'   => _x( 'Today: Day', 'Modules: Today: Import Field', GEDITORIAL_TEXTDOMAIN ),
+			'today_cal'   => _x( 'Today: Calendar', 'Modules: Today: Import Field', 'geditorial' ),
+			'today_year'  => _x( 'Today: Year', 'Modules: Today: Import Field', 'geditorial' ),
+			'today_month' => _x( 'Today: Month', 'Modules: Today: Import Field', 'geditorial' ),
+			'today_day'   => _x( 'Today: Day', 'Modules: Today: Import Field', 'geditorial' ),
 		];
 	}
 

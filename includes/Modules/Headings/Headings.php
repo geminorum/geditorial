@@ -17,8 +17,8 @@ class Headings extends gEditorial\Module
 	{
 		return [
 			'name'  => 'headings',
-			'title' => _x( 'Headings', 'Modules: Headings', GEDITORIAL_TEXTDOMAIN ),
-			'desc'  => _x( 'Table of Contents', 'Modules: Headings', GEDITORIAL_TEXTDOMAIN ),
+			'title' => _x( 'Headings', 'Modules: Headings', 'geditorial' ),
+			'desc'  => _x( 'Table of Contents', 'Modules: Headings', 'geditorial' ),
 			'icon'  => 'tablet',
 		];
 	}
@@ -30,22 +30,22 @@ class Headings extends gEditorial\Module
 				[
 					'field'       => 'toc_title',
 					'type'        => 'text',
-					'title'       => _x( 'ToC Title', 'Modules: Headings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Default text on the ToC box', 'Modules: Headings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-					'default'     => _x( 'Table of Contents', 'Modules: Headings: Setting Default', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'ToC Title', 'Modules: Headings: Setting Title', 'geditorial' ),
+					'description' => _x( 'Default text on the ToC box', 'Modules: Headings: Setting Description', 'geditorial' ),
+					'default'     => _x( 'Table of Contents', 'Modules: Headings: Setting Default', 'geditorial' ),
 				],
 				[
 					'field'       => 'anchor_title',
 					'type'        => 'text',
-					'title'       => _x( 'Anchor Title', 'Modules: Headings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Default text on the anchor link', 'Modules: Headings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-					'default'     => _x( 'Permalink to this title', 'Modules: Headings: Setting Default', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Anchor Title', 'Modules: Headings: Setting Title', 'geditorial' ),
+					'description' => _x( 'Default text on the anchor link', 'Modules: Headings: Setting Description', 'geditorial' ),
+					'default'     => _x( 'Permalink to this title', 'Modules: Headings: Setting Default', 'geditorial' ),
 				],
 				[
 					'field'       => 'min_headings',
 					'type'        => 'number',
-					'title'       => _x( 'Minimum Headings', 'Modules: Headings: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Threshold to Display ToC', 'Modules: Headings: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Minimum Headings', 'Modules: Headings: Setting Title', 'geditorial' ),
+					'description' => _x( 'Threshold to Display ToC', 'Modules: Headings: Setting Description', 'geditorial' ),
 					'default'     => '2',
 				],
 				'insert_content',

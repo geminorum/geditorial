@@ -199,7 +199,7 @@ class Helper extends Core\Base
 	public static function getJoined( $items, $before = '', $after = '', $empty = '' )
 	{
 		if ( count( $items ) )
-			return $before.join( _x( ', ', 'Helper: Item Seperator', GEDITORIAL_TEXTDOMAIN ), $items ).$after;
+			return $before.join( _x( ', ', 'Helper: Item Seperator', 'geditorial' ), $items ).$after;
 
 		return $empty;
 	}
@@ -271,7 +271,7 @@ class Helper extends Core\Base
 			return '';
 
 		if ( is_null( $fallback ) )
-			return _x( '(untitled)', 'Helper: Post Title', GEDITORIAL_TEXTDOMAIN );
+			return _x( '(untitled)', 'Helper: Post Title', 'geditorial' );
 
 		return $fallback;
 	}
@@ -315,7 +315,7 @@ class Helper extends Core\Base
 				'href'   => WordPress::getPostEditLink( $post->ID ),
 				'class'  => '-link -row-link -row-link-edit',
 				'target' => '_blank',
-				'title'  => is_null( $title_attr ) ? _x( 'Edit', 'Helper: Row Action', GEDITORIAL_TEXTDOMAIN ) : $title_attr,
+				'title'  => is_null( $title_attr ) ? _x( 'Edit', 'Helper: Row Action', 'geditorial' ) : $title_attr,
 			], HTML::escape( $title ) ).$after;
 
 		if ( 'view' == $link && ! $edit && 'publish' != get_post_status( $post ) )
@@ -329,7 +329,7 @@ class Helper extends Core\Base
 				'href'   => WordPress::getPostShortLink( $post->ID ),
 				'class'  => '-link -row-link -row-link-view',
 				'target' => '_blank',
-				'title'  => is_null( $title_attr ) ? _x( 'View', 'Helper: Row Action', GEDITORIAL_TEXTDOMAIN ) : $title_attr,
+				'title'  => is_null( $title_attr ) ? _x( 'View', 'Helper: Row Action', 'geditorial' ) : $title_attr,
 			], HTML::escape( $title ) ).$after;
 
 		return HTML::tag( 'a', [
@@ -360,7 +360,7 @@ class Helper extends Core\Base
 							'class'  => '-link -row-link -row-link-attached',
 							'data'   => [ 'id' => $post_id, 'row' => 'attached' ],
 							'target' => '_blank',
-						], _x( 'Attached', 'Helper: Row Action', GEDITORIAL_TEXTDOMAIN ) );
+						], _x( 'Attached', 'Helper: Row Action', 'geditorial' ) );
 
 				case 'revisions':
 
@@ -373,7 +373,7 @@ class Helper extends Core\Base
 							'class'  => '-link -row-link -row-link-revisions',
 							'data'   => [ 'id' => $post_id, 'row' => 'revisions' ],
 							'target' => '_blank',
-						], _x( 'Revisions', 'Helper: Row Action', GEDITORIAL_TEXTDOMAIN ) );
+						], _x( 'Revisions', 'Helper: Row Action', 'geditorial' ) );
 
 				break;
 				case 'edit':
@@ -386,7 +386,7 @@ class Helper extends Core\Base
 						'class'  => '-link -row-link -row-link-edit',
 						'data'   => [ 'id' => $post_id, 'row' => 'edit' ],
 						'target' => '_blank',
-					], _x( 'Edit', 'Helper: Row Action', GEDITORIAL_TEXTDOMAIN ) );
+					], _x( 'Edit', 'Helper: Row Action', 'geditorial' ) );
 
 				break;
 				case 'view':
@@ -396,7 +396,7 @@ class Helper extends Core\Base
 						'class'  => '-link -row-link -row-link-view',
 						'data'   => [ 'id' => $post_id, 'row' => 'view' ],
 						'target' => '_blank',
-					], _x( 'View', 'Helper: Row Action', GEDITORIAL_TEXTDOMAIN ) );
+					], _x( 'View', 'Helper: Row Action', 'geditorial' ) );
 			}
 		}
 
@@ -433,7 +433,7 @@ class Helper extends Core\Base
 				'href'   => get_term_link( $term->term_id, $term->taxonomy ),
 				'class'  => '-link -row-link -row-link-view',
 				'target' => '_blank',
-				'title'  => _x( 'View', 'Helper: Row Action', GEDITORIAL_TEXTDOMAIN ),
+				'title'  => _x( 'View', 'Helper: Row Action', 'geditorial' ),
 			], HTML::escape( $title ) );
 
 		return HTML::tag( 'a', [
@@ -508,25 +508,25 @@ class Helper extends Core\Base
 
 		$gEditorial_WPImageSizes = [
 			'thumbnail' => [
-				'n' => _x( 'Thumbnail', 'Helper', GEDITORIAL_TEXTDOMAIN ),
+				'n' => _x( 'Thumbnail', 'Helper', 'geditorial' ),
 				'w' => get_option( 'thumbnail_size_w' ),
 				'h' => get_option( 'thumbnail_size_h' ),
 				'c' => get_option( 'thumbnail_crop' ),
 			],
 			'medium' => [
-				'n' => _x( 'Medium', 'Helper', GEDITORIAL_TEXTDOMAIN ),
+				'n' => _x( 'Medium', 'Helper', 'geditorial' ),
 				'w' => get_option( 'medium_size_w' ),
 				'h' => get_option( 'medium_size_h' ),
 				'c' => 0,
 			],
 			// 'medium_large' => [
-			// 	'n' => _x( 'Medium Large', 'Helper', GEDITORIAL_TEXTDOMAIN ),
+			// 	'n' => _x( 'Medium Large', 'Helper', 'geditorial' ),
 			// 	'w' => get_option( 'medium_large_size_w' ),
 			// 	'h' => get_option( 'medium_large_size_h' ),
 			// 	'c' => 0,
 			// ],
 			'large' => [
-				'n' => _x( 'Large', 'Helper', GEDITORIAL_TEXTDOMAIN ),
+				'n' => _x( 'Large', 'Helper', 'geditorial' ),
 				'w' => get_option( 'large_size_w' ),
 				'h' => get_option( 'large_size_h' ),
 				'c' => 0,
@@ -546,7 +546,7 @@ class Helper extends Core\Base
 			'name'       => $name,
 			'selected'   => self::req( $name, 'any' ),
 			'none_value' => 'any',
-			'none_title' => _x( 'All PostTypes', 'Helper: Table Filter', GEDITORIAL_TEXTDOMAIN ),
+			'none_title' => _x( 'All PostTypes', 'Helper: Table Filter', 'geditorial' ),
 		] );
 	}
 
@@ -558,7 +558,7 @@ class Helper extends Core\Base
 			'who'                     => 'authors',
 			'show'                    => 'display_name_with_login',
 			'selected'                => self::req( $name, 0 ),
-			'show_option_all'         => _x( 'All Authors', 'Helper: Table Filter', GEDITORIAL_TEXTDOMAIN ),
+			'show_option_all'         => _x( 'All Authors', 'Helper: Table Filter', 'geditorial' ),
 			'option_none_value'       => 0,
 			'hide_if_only_one_author' => TRUE,
 		] );
@@ -566,13 +566,13 @@ class Helper extends Core\Base
 
 	public static function tableColumnPostID()
 	{
-		return _x( 'ID', 'Helper: Table Column: Post ID', GEDITORIAL_TEXTDOMAIN );
+		return _x( 'ID', 'Helper: Table Column: Post ID', 'geditorial' );
 	}
 
 	public static function tableColumnPostDate()
 	{
 		return [
-			'title'    => _x( 'Date', 'Helper: Table Column: Post Date', GEDITORIAL_TEXTDOMAIN ),
+			'title'    => _x( 'Date', 'Helper: Table Column: Post Date', 'geditorial' ),
 			'callback' => function( $value, $row, $column, $index ){
 				return Datetime::humanTimeDiffRound( strtotime( $row->post_date ) );
 			},
@@ -582,7 +582,7 @@ class Helper extends Core\Base
 	public static function tableColumnPostDateModified( $title = NULL )
 	{
 		return [
-			'title'    => is_null( $title ) ? _x( 'On', 'Helper: Table Column: Post Date Modified', GEDITORIAL_TEXTDOMAIN ) : $title,
+			'title'    => is_null( $title ) ? _x( 'On', 'Helper: Table Column: Post Date Modified', 'geditorial' ) : $title,
 			'callback' => function( $value, $row, $column, $index ){
 				return Datetime::htmlHumanTime( $row->post_modified, TRUE );
 			},
@@ -592,7 +592,7 @@ class Helper extends Core\Base
 	public static function tableColumnPostType()
 	{
 		return [
-			'title'    => _x( 'Type', 'Helper: Table Column: Post Type', GEDITORIAL_TEXTDOMAIN ),
+			'title'    => _x( 'Type', 'Helper: Table Column: Post Type', 'geditorial' ),
 			'args'     => [ 'types' => PostType::get( 2 ) ],
 			'callback' => function( $value, $row, $column, $index ){
 				return isset( $column['args']['types'][$row->post_type] )
@@ -605,7 +605,7 @@ class Helper extends Core\Base
 	public static function tableColumnPostMime()
 	{
 		return [
-			'title'    => _x( 'Mime', 'Helper: Table Column: Post Mime', GEDITORIAL_TEXTDOMAIN ),
+			'title'    => _x( 'Mime', 'Helper: Table Column: Post Mime', 'geditorial' ),
 			'args'     => [ 'mime_types' => wp_get_mime_types() ],
 			'callback' => function( $value, $row, $column, $index ){
 				if ( $ext = Helper::getExtension( $row->post_mime_type, $column['args']['mime_types'] ) )
@@ -619,7 +619,7 @@ class Helper extends Core\Base
 	public static function tableColumnPostTitle( $actions = NULL, $excerpt = FALSE, $custom = [] )
 	{
 		return [
-			'title'    => _x( 'Title', 'Helper: Table Column: Post Title', GEDITORIAL_TEXTDOMAIN ),
+			'title'    => _x( 'Title', 'Helper: Table Column: Post Title', 'geditorial' ),
 			'args'     => [ 'statuses' => PostType::getStatuses() ],
 			'callback' => function( $value, $row, $column, $index ) use( $excerpt ){
 
@@ -660,7 +660,7 @@ class Helper extends Core\Base
 	public static function tableColumnPostExcerpt()
 	{
 		return [
-			'title'    => _x( 'Excerpt', 'Helper: Table Column: Post Excerpt', GEDITORIAL_TEXTDOMAIN ),
+			'title'    => _x( 'Excerpt', 'Helper: Table Column: Post Excerpt', 'geditorial' ),
 			'callback' => function( $value, $row, $column, $index ) {
 				return $row->post_excerpt
 					? wpautop( Helper::prepDescription( $row->post_excerpt, FALSE, FALSE ), FALSE )
@@ -672,7 +672,7 @@ class Helper extends Core\Base
 	public static function tableColumnPostTitleSummary()
 	{
 		return [
-			'title'    => _x( 'Title', 'Helper: Table Column: Post Title', GEDITORIAL_TEXTDOMAIN ),
+			'title'    => _x( 'Title', 'Helper: Table Column: Post Title', 'geditorial' ),
 			'callback' => function( $value, $row, $column, $index ){
 				return Helper::getPostTitleRow( $row, 'edit' );
 			},
@@ -682,7 +682,7 @@ class Helper extends Core\Base
 	public static function tableColumnPostStatusSummary()
 	{
 		return [
-			'title'    => _x( 'Status', 'Helper: Table Column: Post Title', GEDITORIAL_TEXTDOMAIN ),
+			'title'    => _x( 'Status', 'Helper: Table Column: Post Title', 'geditorial' ),
 			'args'     => [ 'statuses' => PostType::getStatuses() ],
 			'callback' => function( $value, $row, $column, $index ){
 
@@ -700,7 +700,7 @@ class Helper extends Core\Base
 	public static function tableColumnPostAuthorSummary()
 	{
 		return [
-			'title'    => _x( 'Author', 'Helper: Table Column: Post Author', GEDITORIAL_TEXTDOMAIN ),
+			'title'    => _x( 'Author', 'Helper: Table Column: Post Author', 'geditorial' ),
 			'callback' => function( $value, $row, $column, $index ){
 
 				if ( current_user_can( 'edit_post', $row->ID ) )
@@ -720,7 +720,7 @@ class Helper extends Core\Base
 			$taxonomies = Taxonomy::get( 4 );
 
 		return [
-			'title'    => _x( 'Terms', 'Helper: Table Column: Post Terms', GEDITORIAL_TEXTDOMAIN ),
+			'title'    => _x( 'Terms', 'Helper: Table Column: Post Terms', 'geditorial' ),
 			'args'     => [ 'taxonomies' => $taxonomies ],
 			'callback' => function( $value, $row, $column, $index ){
 				$html = '';
@@ -736,13 +736,13 @@ class Helper extends Core\Base
 
 	public static function tableColumnTermID()
 	{
-		return _x( 'ID', 'Helper: Table Column: Term ID', GEDITORIAL_TEXTDOMAIN );
+		return _x( 'ID', 'Helper: Table Column: Term ID', 'geditorial' );
 	}
 
 	public static function tableColumnTermName()
 	{
 		return [
-			'title'    => _x( 'Name', 'Helper: Table Column: Term Name', GEDITORIAL_TEXTDOMAIN ),
+			'title'    => _x( 'Name', 'Helper: Table Column: Term Name', 'geditorial' ),
 			'callback' => function( $value, $row, $column, $index ){
 				return Helper::getTermTitleRow( $row );
 			},
@@ -751,13 +751,13 @@ class Helper extends Core\Base
 
 	public static function tableColumnTermSlug()
 	{
-		return _x( 'Slug', 'Helper: Table Column: Term Slug', GEDITORIAL_TEXTDOMAIN );
+		return _x( 'Slug', 'Helper: Table Column: Term Slug', 'geditorial' );
 	}
 
 	public static function tableColumnTermDesc()
 	{
 		return [
-			'title'    => _x( 'Description', 'Helper: Table Column: Term Desc', GEDITORIAL_TEXTDOMAIN ),
+			'title'    => _x( 'Description', 'Helper: Table Column: Term Desc', 'geditorial' ),
 			'callback' => 'wpautop',
 			'class'    => 'description',
 		];
@@ -766,7 +766,7 @@ class Helper extends Core\Base
 	// FIXME: DEPRECATED
 	public static function tableArgEmptyPosts( $wrap = FALSE )
 	{
-		$message = _x( 'No posts found.', 'Helper: Table Arg: Empty Posts', GEDITORIAL_TEXTDOMAIN );
+		$message = _x( 'No posts found.', 'Helper: Table Arg: Empty Posts', 'geditorial' );
 		return $wrap ? HTML::warning( $message, FALSE ) : $message;
 	}
 
@@ -780,7 +780,7 @@ class Helper extends Core\Base
 	public static function htmlCount( $count, $title_attr = NULL )
 	{
 		if ( is_null( $title_attr ) )
-			$title_attr = _x( 'No Count', 'Helper: No Count Title Attribute', GEDITORIAL_TEXTDOMAIN );
+			$title_attr = _x( 'No Count', 'Helper: No Count Title Attribute', 'geditorial' );
 
 		return $count
 			? Number::format( $count )
@@ -790,7 +790,7 @@ class Helper extends Core\Base
 	public static function htmlOrder( $order, $title_attr = NULL )
 	{
 		if ( is_null( $title_attr ) )
-			$title_attr = _x( 'No Order', 'Helper: No Order Title Attribute', GEDITORIAL_TEXTDOMAIN );
+			$title_attr = _x( 'No Order', 'Helper: No Order Title Attribute', 'geditorial' );
 
 		if ( $order )
 			$html = Number::format( $order );
@@ -840,7 +840,7 @@ class Helper extends Core\Base
 	public static function nooped( $count, $nooped )
 	{
 		if ( ! empty( $nooped['domain'] ) )
-			$nooped['domain'] = GEDITORIAL_TEXTDOMAIN;
+			$nooped['domain'] = 'geditorial';
 
 		if ( ! array_key_exists( 'domain', $nooped ) )
 			return _n( $nooped['singular'], $nooped['plural'], $count );
@@ -854,12 +854,9 @@ class Helper extends Core\Base
 
 	public static function noopedCount( $count, $nooped )
 	{
-		$rule = _x( '%2$s', 'Helper: Nooped Count', GEDITORIAL_TEXTDOMAIN );
-
-		$singular = self::nooped( 1, $nooped );
-		$plural   = self::nooped( $count, $nooped );
-
-		return sprintf( $rule, $singular, $plural );
+		/* translators: %1$s: singular, %2$s: plural */
+		return sprintf( _x( '%2$s', 'Helper: Nooped Count', 'geditorial' ),
+			self::nooped( 1, $nooped ), self::nooped( $count, $nooped ) );
 	}
 
 	private static function getStringsFromName( $name )
@@ -907,40 +904,69 @@ class Helper extends Core\Base
 	public static function generatePostTypeLabels( $name, $featured = FALSE, $pre = [] )
 	{
 		$name_templates = [
-			'name'                     => _x( '%1$s', 'Helper: CPT Generator: Name', GEDITORIAL_TEXTDOMAIN ),
-			// 'menu_name'                => _x( '%1$s', 'Helper: CPT Generator: Menu Name', GEDITORIAL_TEXTDOMAIN ),
-			// 'description'              => _x( '%1$s', 'Helper: CPT Generator: Description', GEDITORIAL_TEXTDOMAIN ),
-			'singular_name'            => _x( '%2$s', 'Helper: CPT Generator: Singular Name', GEDITORIAL_TEXTDOMAIN ),
-			'add_new'                  => _x( 'Add New', 'Helper: CPT Generator', GEDITORIAL_TEXTDOMAIN ),
-			'add_new_item'             => _x( 'Add New %2$s', 'Helper: CPT Generator', GEDITORIAL_TEXTDOMAIN ),
-			'edit_item'                => _x( 'Edit %2$s', 'Helper: CPT Generator', GEDITORIAL_TEXTDOMAIN ),
-			'new_item'                 => _x( 'New %2$s', 'Helper: CPT Generator', GEDITORIAL_TEXTDOMAIN ),
-			'view_item'                => _x( 'View %2$s', 'Helper: CPT Generator', GEDITORIAL_TEXTDOMAIN ),
-			'view_items'               => _x( 'View %1$s', 'Helper: CPT Generator', GEDITORIAL_TEXTDOMAIN ),
-			'search_items'             => _x( 'Search %1$s', 'Helper: CPT Generator', GEDITORIAL_TEXTDOMAIN ),
-			'not_found'                => _x( 'No %3$s found.', 'Helper: CPT Generator', GEDITORIAL_TEXTDOMAIN ),
-			'not_found_in_trash'       => _x( 'No %3$s found in Trash.', 'Helper: CPT Generator', GEDITORIAL_TEXTDOMAIN ),
-			'parent_item_colon'        => _x( 'Parent %2$s:', 'Helper: CPT Generator', GEDITORIAL_TEXTDOMAIN ),
-			'all_items'                => _x( 'All %1$s', 'Helper: CPT Generator', GEDITORIAL_TEXTDOMAIN ),
-			'archives'                 => _x( '%2$s Archives', 'Helper: CPT Generator', GEDITORIAL_TEXTDOMAIN ),
-			'attributes'               => _x( '%2$s Attributes', 'Helper: CPT Generator', GEDITORIAL_TEXTDOMAIN ),
-			'insert_into_item'         => _x( 'Insert into %4$s', 'Helper: CPT Generator', GEDITORIAL_TEXTDOMAIN ),
-			'uploaded_to_this_item'    => _x( 'Uploaded to this %4$s', 'Helper: CPT Generator', GEDITORIAL_TEXTDOMAIN ),
-			'filter_items_list'        => _x( 'Filter %3$s list', 'Helper: CPT Generator', GEDITORIAL_TEXTDOMAIN ),
-			'items_list_navigation'    => _x( '%1$s list navigation', 'Helper: CPT Generator', GEDITORIAL_TEXTDOMAIN ),
-			'items_list'               => _x( '%1$s list', 'Helper: CPT Generator', GEDITORIAL_TEXTDOMAIN ),
-			'item_published'           => _x( '%2$s published.', 'Helper: CPT Generator', GEDITORIAL_TEXTDOMAIN ),
-			'item_published_privately' => _x( '%2$s published privately.', 'Helper: CPT Generator', GEDITORIAL_TEXTDOMAIN ),
-			'item_reverted_to_draft'   => _x( '%2$s reverted to draft.', 'Helper: CPT Generator', GEDITORIAL_TEXTDOMAIN ),
-			'item_scheduled'           => _x( '%2$s scheduled.', 'Helper: CPT Generator', GEDITORIAL_TEXTDOMAIN ),
-			'item_updated'             => _x( '%2$s updated.', 'Helper: CPT Generator', GEDITORIAL_TEXTDOMAIN ),
+			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
+			'name'                     => _x( '%1$s', 'Helper: CPT Generator: Name', 'geditorial' ),
+			// 'menu_name'                => _x( '%1$s', 'Helper: CPT Generator: Menu Name', 'geditorial' ),
+			// 'description'              => _x( '%1$s', 'Helper: CPT Generator: Description', 'geditorial' ),
+			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
+			'singular_name'            => _x( '%2$s', 'Helper: CPT Generator: Singular Name', 'geditorial' ),
+			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
+			'add_new'                  => _x( 'Add New', 'Helper: CPT Generator', 'geditorial' ),
+			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
+			'add_new_item'             => _x( 'Add New %2$s', 'Helper: CPT Generator', 'geditorial' ),
+			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
+			'edit_item'                => _x( 'Edit %2$s', 'Helper: CPT Generator', 'geditorial' ),
+			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
+			'new_item'                 => _x( 'New %2$s', 'Helper: CPT Generator', 'geditorial' ),
+			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
+			'view_item'                => _x( 'View %2$s', 'Helper: CPT Generator', 'geditorial' ),
+			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
+			'view_items'               => _x( 'View %1$s', 'Helper: CPT Generator', 'geditorial' ),
+			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
+			'search_items'             => _x( 'Search %1$s', 'Helper: CPT Generator', 'geditorial' ),
+			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
+			'not_found'                => _x( 'No %3$s found.', 'Helper: CPT Generator', 'geditorial' ),
+			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
+			'not_found_in_trash'       => _x( 'No %3$s found in Trash.', 'Helper: CPT Generator', 'geditorial' ),
+			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
+			'parent_item_colon'        => _x( 'Parent %2$s:', 'Helper: CPT Generator', 'geditorial' ),
+			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
+			'all_items'                => _x( 'All %1$s', 'Helper: CPT Generator', 'geditorial' ),
+			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
+			'archives'                 => _x( '%2$s Archives', 'Helper: CPT Generator', 'geditorial' ),
+			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
+			'attributes'               => _x( '%2$s Attributes', 'Helper: CPT Generator', 'geditorial' ),
+			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
+			'insert_into_item'         => _x( 'Insert into %4$s', 'Helper: CPT Generator', 'geditorial' ),
+			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
+			'uploaded_to_this_item'    => _x( 'Uploaded to this %4$s', 'Helper: CPT Generator', 'geditorial' ),
+			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
+			'filter_items_list'        => _x( 'Filter %3$s list', 'Helper: CPT Generator', 'geditorial' ),
+			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
+			'items_list_navigation'    => _x( '%1$s list navigation', 'Helper: CPT Generator', 'geditorial' ),
+			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
+			'items_list'               => _x( '%1$s list', 'Helper: CPT Generator', 'geditorial' ),
+			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
+			'item_published'           => _x( '%2$s published.', 'Helper: CPT Generator', 'geditorial' ),
+			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
+			'item_published_privately' => _x( '%2$s published privately.', 'Helper: CPT Generator', 'geditorial' ),
+			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
+			'item_reverted_to_draft'   => _x( '%2$s reverted to draft.', 'Helper: CPT Generator', 'geditorial' ),
+			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
+			'item_scheduled'           => _x( '%2$s scheduled.', 'Helper: CPT Generator', 'geditorial' ),
+			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
+			'item_updated'             => _x( '%2$s updated.', 'Helper: CPT Generator', 'geditorial' ),
 		];
 
 		$featured_templates = [
-			'featured_image'        => _x( '%1$s', 'Helper: CPT Generator: Featured', GEDITORIAL_TEXTDOMAIN ),
-			'set_featured_image'    => _x( 'Set %2$s', 'Helper: CPT Generator: Featured', GEDITORIAL_TEXTDOMAIN ),
-			'remove_featured_image' => _x( 'Remove %2$s', 'Helper: CPT Generator: Featured', GEDITORIAL_TEXTDOMAIN ),
-			'use_featured_image'    => _x( 'Use as %2$s', 'Helper: CPT Generator: Featured', GEDITORIAL_TEXTDOMAIN ),
+			/* translators: %1$s: featured camel case, %2$s: featured lower case */
+			'featured_image'        => _x( '%1$s', 'Helper: CPT Generator: Featured', 'geditorial' ),
+			/* translators: %1$s: featured camel case, %2$s: featured lower case */
+			'set_featured_image'    => _x( 'Set %2$s', 'Helper: CPT Generator: Featured', 'geditorial' ),
+			/* translators: %1$s: featured camel case, %2$s: featured lower case */
+			'remove_featured_image' => _x( 'Remove %2$s', 'Helper: CPT Generator: Featured', 'geditorial' ),
+			/* translators: %1$s: featured camel case, %2$s: featured lower case */
+			'use_featured_image'    => _x( 'Use as %2$s', 'Helper: CPT Generator: Featured', 'geditorial' ),
 		];
 
 		$strings = self::getStringsFromName( $name );
@@ -982,27 +1008,47 @@ class Helper extends Core\Base
 	public static function generateTaxonomyLabels( $name, $pre = [] )
 	{
 		$templates = [
-			'name'                       => _x( '%1$s', 'Helper: Tax Generator: Name', GEDITORIAL_TEXTDOMAIN ),
-			// 'menu_name'                  => _x( '%1$s', 'Helper: Tax Generator: Menu Name', GEDITORIAL_TEXTDOMAIN ),
-			'singular_name'              => _x( '%2$s', 'Helper: Tax Generator: Singular Name', GEDITORIAL_TEXTDOMAIN ),
-			'search_items'               => _x( 'Search %1$s', 'Helper: Tax Generator', GEDITORIAL_TEXTDOMAIN ),
-			'popular_items'              => NULL, // _x( 'Popular %1$s', 'Helper: Tax Generator', GEDITORIAL_TEXTDOMAIN ),
-			'all_items'                  => _x( 'All %1$s', 'Helper: Tax Generator', GEDITORIAL_TEXTDOMAIN ),
-			'parent_item'                => _x( 'Parent %2$s', 'Helper: Tax Generator', GEDITORIAL_TEXTDOMAIN ),
-			'parent_item_colon'          => _x( 'Parent %2$s:', 'Helper: Tax Generator', GEDITORIAL_TEXTDOMAIN ),
-			'edit_item'                  => _x( 'Edit %2$s', 'Helper: Tax Generator', GEDITORIAL_TEXTDOMAIN ),
-			'view_item'                  => _x( 'View %2$s', 'Helper: Tax Generator', GEDITORIAL_TEXTDOMAIN ),
-			'update_item'                => _x( 'Update %2$s', 'Helper: Tax Generator', GEDITORIAL_TEXTDOMAIN ),
-			'add_new_item'               => _x( 'Add New %2$s', 'Helper: Tax Generator', GEDITORIAL_TEXTDOMAIN ),
-			'new_item_name'              => _x( 'New %2$s Name', 'Helper: Tax Generator', GEDITORIAL_TEXTDOMAIN ),
-			'separate_items_with_commas' => _x( 'Separate %3$s with commas', 'Helper: Tax Generator', GEDITORIAL_TEXTDOMAIN ),
-			'add_or_remove_items'        => _x( 'Add or remove %3$s', 'Helper: Tax Generator', GEDITORIAL_TEXTDOMAIN ),
-			'choose_from_most_used'      => _x( 'Choose from the most used %3$s', 'Helper: Tax Generator', GEDITORIAL_TEXTDOMAIN ),
-			'not_found'                  => _x( 'No %3$s found.', 'Helper: Tax Generator', GEDITORIAL_TEXTDOMAIN ),
-			'no_terms'                   => _x( 'No %3$s', 'Helper: Tax Generator', GEDITORIAL_TEXTDOMAIN ),
-			'items_list_navigation'      => _x( '%1$s list navigation', 'Helper: Tax Generator', GEDITORIAL_TEXTDOMAIN ),
-			'items_list'                 => _x( '%1$s list', 'Helper: Tax Generator', GEDITORIAL_TEXTDOMAIN ),
-			'back_to_items'              => _x( '&larr; Back to %1$s', 'Helper: Tax Generator', GEDITORIAL_TEXTDOMAIN ),
+			/* translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder */
+			'name'                       => _x( '%1$s', 'Helper: Tax Generator: Name', 'geditorial' ),
+			/* translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder */
+			// 'menu_name'                  => _x( '%1$s', 'Helper: Tax Generator: Menu Name', 'geditorial' ),
+			/* translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder */
+			'singular_name'              => _x( '%2$s', 'Helper: Tax Generator: Singular Name', 'geditorial' ),
+			/* translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder */
+			'search_items'               => _x( 'Search %1$s', 'Helper: Tax Generator', 'geditorial' ),
+			'popular_items'              => NULL, // _x( 'Popular %1$s', 'Helper: Tax Generator', 'geditorial' ),
+			/* translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder */
+			'all_items'                  => _x( 'All %1$s', 'Helper: Tax Generator', 'geditorial' ),
+			/* translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder */
+			'parent_item'                => _x( 'Parent %2$s', 'Helper: Tax Generator', 'geditorial' ),
+			/* translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder */
+			'parent_item_colon'          => _x( 'Parent %2$s:', 'Helper: Tax Generator', 'geditorial' ),
+			/* translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder */
+			'edit_item'                  => _x( 'Edit %2$s', 'Helper: Tax Generator', 'geditorial' ),
+			/* translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder */
+			'view_item'                  => _x( 'View %2$s', 'Helper: Tax Generator', 'geditorial' ),
+			/* translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder */
+			'update_item'                => _x( 'Update %2$s', 'Helper: Tax Generator', 'geditorial' ),
+			/* translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder */
+			'add_new_item'               => _x( 'Add New %2$s', 'Helper: Tax Generator', 'geditorial' ),
+			/* translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder */
+			'new_item_name'              => _x( 'New %2$s Name', 'Helper: Tax Generator', 'geditorial' ),
+			/* translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder */
+			'separate_items_with_commas' => _x( 'Separate %3$s with commas', 'Helper: Tax Generator', 'geditorial' ),
+			/* translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder */
+			'add_or_remove_items'        => _x( 'Add or remove %3$s', 'Helper: Tax Generator', 'geditorial' ),
+			/* translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder */
+			'choose_from_most_used'      => _x( 'Choose from the most used %3$s', 'Helper: Tax Generator', 'geditorial' ),
+			/* translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder */
+			'not_found'                  => _x( 'No %3$s found.', 'Helper: Tax Generator', 'geditorial' ),
+			/* translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder */
+			'no_terms'                   => _x( 'No %3$s', 'Helper: Tax Generator', 'geditorial' ),
+			/* translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder */
+			'items_list_navigation'      => _x( '%1$s list navigation', 'Helper: Tax Generator', 'geditorial' ),
+			/* translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder */
+			'items_list'                 => _x( '%1$s list', 'Helper: Tax Generator', 'geditorial' ),
+			/* translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder */
+			'back_to_items'              => _x( '&larr; Back to %1$s', 'Helper: Tax Generator', 'geditorial' ),
 		];
 
 		$strings = self::getStringsFromName( $name );
@@ -1014,7 +1060,7 @@ class Helper extends Core\Base
 			$pre['menu_name'] = $strings[0];
 
 		if ( ! array_key_exists( 'most_used', $pre ) )
-			$pre['most_used'] = vsprintf( _x( 'Most Used', 'Helper: Tax Generator', GEDITORIAL_TEXTDOMAIN ), $strings );
+			$pre['most_used'] = vsprintf( _x( 'Most Used', 'Helper: Tax Generator', 'geditorial' ), $strings );
 
 		return $pre;
 	}
@@ -1031,17 +1077,28 @@ class Helper extends Core\Base
 		global $post_type_object, $post, $post_ID;
 
 		$templates = [
-			'view_post'                      => _x( 'View %4$s', 'Helper: PostType Message Generator', GEDITORIAL_TEXTDOMAIN ),
-			'preview_post'                   => _x( 'Preview %4$s', 'Helper: PostType Message Generator', GEDITORIAL_TEXTDOMAIN ),
-			'post_updated'                   => _x( '%2$s updated.', 'Helper: PostType Message Generator', GEDITORIAL_TEXTDOMAIN ),
-			'custom_field_updated'           => _x( 'Custom field updated.', 'Helper: PostType Message Generator', GEDITORIAL_TEXTDOMAIN ),
-			'custom_field_deleted'           => _x( 'Custom field deleted.', 'Helper: PostType Message Generator', GEDITORIAL_TEXTDOMAIN ),
-			'post_restored_to_revision_from' => _x( '%2$s restored to revision from %5$s.', 'Helper: PostType Message Generator', GEDITORIAL_TEXTDOMAIN ),
-			'post_published'                 => _x( '%2$s published.', 'Helper: PostType Message Generator', GEDITORIAL_TEXTDOMAIN ),
-			'post_saved'                     => _x( '%2$s saved.' , 'Helper: PostType Message Generator', GEDITORIAL_TEXTDOMAIN ),
-			'post_submitted'                 => _x( '%2$s submitted.', 'Helper: PostType Message Generator', GEDITORIAL_TEXTDOMAIN ),
-			'post_scheduled_for'             => _x( '%2$s scheduled for: %5$s.', 'Helper: PostType Message Generator', GEDITORIAL_TEXTDOMAIN ),
-			'post_draft_updated'             => _x( '%2$s draft updated.', 'Helper: PostType Message Generator', GEDITORIAL_TEXTDOMAIN ),
+			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
+			'view_post'                      => _x( 'View %4$s', 'Helper: PostType Message Generator', 'geditorial' ),
+			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
+			'preview_post'                   => _x( 'Preview %4$s', 'Helper: PostType Message Generator', 'geditorial' ),
+			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
+			'post_updated'                   => _x( '%2$s updated.', 'Helper: PostType Message Generator', 'geditorial' ),
+			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
+			'custom_field_updated'           => _x( 'Custom field updated.', 'Helper: PostType Message Generator', 'geditorial' ),
+			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
+			'custom_field_deleted'           => _x( 'Custom field deleted.', 'Helper: PostType Message Generator', 'geditorial' ),
+			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
+			'post_restored_to_revision_from' => _x( '%2$s restored to revision from %5$s.', 'Helper: PostType Message Generator', 'geditorial' ),
+			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
+			'post_published'                 => _x( '%2$s published.', 'Helper: PostType Message Generator', 'geditorial' ),
+			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
+			'post_saved'                     => _x( '%2$s saved.' , 'Helper: PostType Message Generator', 'geditorial' ),
+			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
+			'post_submitted'                 => _x( '%2$s submitted.', 'Helper: PostType Message Generator', 'geditorial' ),
+			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
+			'post_scheduled_for'             => _x( '%2$s scheduled for: %5$s.', 'Helper: PostType Message Generator', 'geditorial' ),
+			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
+			'post_draft_updated'             => _x( '%2$s draft updated.', 'Helper: PostType Message Generator', 'geditorial' ),
 		];
 
 		$messages = [];
@@ -1087,11 +1144,16 @@ class Helper extends Core\Base
 	public static function generateBulkPostTypeMessages( $name, $counts )
 	{
 		$templates = [
-			'updated'   => _nx_noop( '%5$s %4$s updated.', '%5$s %3$s updated.', 'Helper: Bulk PostType Message Generator', GEDITORIAL_TEXTDOMAIN ),
-			'locked'    => _nx_noop( '%5$s %4$s not updated, somebody is editing it.', '%5$s %3$s not updated, somebody is editing them.', 'Helper: Bulk PostType Message Generator', GEDITORIAL_TEXTDOMAIN ),
-			'deleted'   => _nx_noop( '%5$s %4$s permanently deleted.', '%5$s %3$s permanently deleted.', 'Helper: Bulk PostType Message Generator', GEDITORIAL_TEXTDOMAIN ),
-			'trashed'   => _nx_noop( '%5$s %4$s moved to the Trash.', '%5$s %3$s moved to the Trash.', 'Helper: Bulk PostType Message Generator', GEDITORIAL_TEXTDOMAIN ),
-			'untrashed' => _nx_noop( '%5$s %4$s restored from the Trash.', '%5$s %3$s restored from the Trash.', 'Helper: Bulk PostType Message Generator', GEDITORIAL_TEXTDOMAIN ),
+			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
+			'updated'   => _nx_noop( '%5$s %4$s updated.', '%5$s %3$s updated.', 'Helper: Bulk PostType Message Generator', 'geditorial' ),
+			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
+			'locked'    => _nx_noop( '%5$s %4$s not updated, somebody is editing it.', '%5$s %3$s not updated, somebody is editing them.', 'Helper: Bulk PostType Message Generator', 'geditorial' ),
+			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
+			'deleted'   => _nx_noop( '%5$s %4$s permanently deleted.', '%5$s %3$s permanently deleted.', 'Helper: Bulk PostType Message Generator', 'geditorial' ),
+			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
+			'trashed'   => _nx_noop( '%5$s %4$s moved to the Trash.', '%5$s %3$s moved to the Trash.', 'Helper: Bulk PostType Message Generator', 'geditorial' ),
+			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
+			'untrashed' => _nx_noop( '%5$s %4$s restored from the Trash.', '%5$s %3$s restored from the Trash.', 'Helper: Bulk PostType Message Generator', 'geditorial' ),
 		];
 
 		$messages = [];

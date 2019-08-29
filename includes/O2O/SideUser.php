@@ -20,7 +20,7 @@ class SideUser extends Side
 
 	public function get_desc()
 	{
-		return _x( 'Users', 'O2O', GEDITORIAL_TEXTDOMAIN );
+		return _x( 'Users', 'O2O', 'geditorial' );
 	}
 
 	public function get_title()
@@ -31,9 +31,9 @@ class SideUser extends Side
 	public function get_labels()
 	{
 		return (object) [
-			'singular_name' => _x( 'User', 'O2O', GEDITORIAL_TEXTDOMAIN ),
-			'search_items'  => _x( 'Search Users', 'O2O', GEDITORIAL_TEXTDOMAIN ),
-			'not_found'     => _x( 'No users found.', 'O2O', GEDITORIAL_TEXTDOMAIN ),
+			'singular_name' => _x( 'User', 'O2O', 'geditorial' ),
+			'search_items'  => _x( 'Search Users', 'O2O', 'geditorial' ),
+			'not_found'     => _x( 'No users found.', 'O2O', 'geditorial' ),
 		];
 	}
 

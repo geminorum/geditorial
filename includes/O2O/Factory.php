@@ -92,8 +92,8 @@ abstract class Factory
 		];
 
 		if ( count( $directions ) > 1 && $title['from'] == $title['to'] ) {
-			$title['from'] .= _x( ' (from)', 'O2O', GEDITORIAL_TEXTDOMAIN );
-			$title['to']   .= _x( ' (to)', 'O2O', GEDITORIAL_TEXTDOMAIN );
+			$title['from'] .= _x( ' (from)', 'O2O', 'geditorial' );
+			$title['to']   .= _x( ' (to)', 'O2O', 'geditorial' );
 		}
 
 		return $title;

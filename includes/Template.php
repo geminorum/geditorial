@@ -540,7 +540,8 @@ class Template extends Core\Base
 			$args['link'] = WordPress::getSearchLink( $meta );
 
 			if ( is_null( $args['description'] ) )
-				$args['description'] = sprintf( _x( 'Search for %s', 'Template: Search Link Title Attr', GEDITORIAL_TEXTDOMAIN ), $meta );
+				/* translators: %s: search query */
+				$args['description'] = sprintf( _x( 'Search for %s', 'Template: Search Link Title Attr', 'geditorial' ), $meta );
 		}
 
 		$html = $args['image'] ? HTML::img( $args['image'], '-label-image', $meta ) : $meta;
@@ -589,8 +590,8 @@ class Template extends Core\Base
 			'after'         => '',
 			'echo'          => TRUE,
 			'title_field'   => 'source_title',
-			'title_default' => _x( 'External Source', 'Template: Meta Link Default Title', GEDITORIAL_TEXTDOMAIN ),
-			'title_attr'    => _x( 'Visit external source', 'Template: Meta Link Default Title Attr', GEDITORIAL_TEXTDOMAIN ),
+			'title_default' => _x( 'External Source', 'Template: Meta Link Default Title', 'geditorial' ),
+			'title_attr'    => _x( 'Visit external source', 'Template: Meta Link Default Title Attr', 'geditorial' ),
 			'url_field'     => 'source_url',
 			'url_default'   => FALSE,
 		], $atts );

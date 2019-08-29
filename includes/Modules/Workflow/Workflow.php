@@ -22,8 +22,8 @@ class Workflow extends gEditorial\Module
 	{
 		return [
 			'name'  => 'workflow',
-			'title' => _x( 'Workflow', 'Modules: Workflow', GEDITORIAL_TEXTDOMAIN ),
-			'desc'  => _x( 'Customized Workflow of Contents', 'Modules: Workflow', GEDITORIAL_TEXTDOMAIN ),
+			'title' => _x( 'Workflow', 'Modules: Workflow', 'geditorial' ),
+			'desc'  => _x( 'Customized Workflow of Contents', 'Modules: Workflow', 'geditorial' ),
 			'icon'  => 'clipboard',
 		];
 	}
@@ -38,19 +38,19 @@ class Workflow extends gEditorial\Module
 			'_editpost' => [
 				[
 					'field'       => 'hide_disabled',
-					'title'       => _x( 'Hide Disabled', 'Modules: Workflow: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Hides statuses disabled for each role on the dropdown.', 'Modules: Workflow: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Hide Disabled', 'Modules: Workflow: Setting Title', 'geditorial' ),
+					'description' => _x( 'Hides statuses disabled for each role on the dropdown.', 'Modules: Workflow: Setting Description', 'geditorial' ),
 				],
 				[
 					'field'       => 'action_time',
-					'title'       => _x( 'Time Action', 'Modules: Workflow: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Displays time action on the workflow meta-box.', 'Modules: Workflow: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Time Action', 'Modules: Workflow: Setting Title', 'geditorial' ),
+					'description' => _x( 'Displays time action on the workflow meta-box.', 'Modules: Workflow: Setting Description', 'geditorial' ),
 				],
 				[
 					'field'       => 'draft_roles',
 					'type'        => 'checkbox-panel',
-					'title'       => _x( 'Draft Roles', 'Modules: Cartable: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Roles that can rollback to Draft status.', 'Modules: Cartable: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Draft Roles', 'Modules: Cartable: Setting Title', 'geditorial' ),
+					'description' => _x( 'Roles that can rollback to Draft status.', 'Modules: Cartable: Setting Description', 'geditorial' ),
 					'exclude'     => $exclude,
 					'values'      => $roles,
 				],
@@ -58,20 +58,20 @@ class Workflow extends gEditorial\Module
 			'_editlist' => [
 				[
 					'field'       => 'status_menus',
-					'title'       => _x( 'Status Menu', 'Modules: Workflow: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Adds status links to the admin submenus for each supported posttype.', 'Modules: Workflow: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Status Menu', 'Modules: Workflow: Setting Title', 'geditorial' ),
+					'description' => _x( 'Adds status links to the admin submenus for each supported posttype.', 'Modules: Workflow: Setting Description', 'geditorial' ),
 				],
 				[
 					'field'       => 'display_states',
-					'title'       => _x( 'Display States', 'Modules: Workflow: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Appends current status to the end of the title.', 'Modules: Workflow: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Display States', 'Modules: Workflow: Setting Title', 'geditorial' ),
+					'description' => _x( 'Appends current status to the end of the title.', 'Modules: Workflow: Setting Description', 'geditorial' ),
 				],
 				[
 					'field'        => 'locking_statuses',
 					'type'         => 'checkbox-panel',
-					'title'        => _x( 'Locking Statuses', 'Modules: Workflow: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description'  => _x( 'Selected statuses will lock editing the post to their assigned roles.', 'Modules: Workflow: Setting Description', GEDITORIAL_TEXTDOMAIN ),
-					'string_empty' => _x( 'There\'s no status available!', 'Modules: Workflow: Setting', GEDITORIAL_TEXTDOMAIN ),
+					'title'        => _x( 'Locking Statuses', 'Modules: Workflow: Setting Title', 'geditorial' ),
+					'description'  => _x( 'Selected statuses will lock editing the post to their assigned roles.', 'Modules: Workflow: Setting Description', 'geditorial' ),
+					'string_empty' => _x( 'There\'s no status available!', 'Modules: Workflow: Setting', 'geditorial' ),
 					'values'       => wp_list_pluck( $this->get_statuses(), 'label', 'name' ),
 				],
 			],
@@ -91,7 +91,7 @@ class Workflow extends gEditorial\Module
 	{
 		return [
 			'misc' => [
-				'meta_box_title' => _x( 'Workflow', 'Modules: Workflow: Meta Box Title', GEDITORIAL_TEXTDOMAIN ),
+				'meta_box_title' => _x( 'Workflow', 'Modules: Workflow: Meta Box Title', 'geditorial' ),
 			],
 		];
 	}
@@ -104,7 +104,7 @@ class Workflow extends gEditorial\Module
 			$this->constant( 'status_tax' ),
 			[],
 			[
-				'label'        => _x( 'Statuses', 'Modules: Workflow', GEDITORIAL_TEXTDOMAIN ),
+				'label'        => _x( 'Statuses', 'Modules: Workflow', 'geditorial' ),
 				'show_ui'      => $this->cuc( 'settings' ),
 				'public'       => FALSE,
 				'meta_box_cb'  => FALSE,

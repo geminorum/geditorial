@@ -15,8 +15,8 @@ class Team extends gEditorial\Module
 	{
 		return [
 			'name'  => 'team',
-			'title' => _x( 'Team', 'Modules: Team', GEDITORIAL_TEXTDOMAIN ),
-			'desc'  => _x( 'Profiles for Editorial Teams', 'Modules: Team', GEDITORIAL_TEXTDOMAIN ),
+			'title' => _x( 'Team', 'Modules: Team', 'geditorial' ),
+			'desc'  => _x( 'Profiles for Editorial Teams', 'Modules: Team', 'geditorial' ),
 			'icon'  => 'groups',
 		];
 	}
@@ -57,13 +57,13 @@ class Team extends gEditorial\Module
 		return [
 			'misc' => [
 				'member_cpt' => [
-					'menu_name' => _x( 'Team Members', 'Modules: Team: Menu Name', GEDITORIAL_TEXTDOMAIN ),
+					'menu_name' => _x( 'Team Members', 'Modules: Team: Menu Name', 'geditorial' ),
 				],
-				'tweaks_column_title' => _x( 'Team Member Categories', 'Modules: Team: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'tweaks_column_title' => _x( 'Team Member Categories', 'Modules: Team: Column Title', 'geditorial' ),
 			],
 			'noops' => [
-				'member_cpt' => _nx_noop( 'Team Member', 'Team Members', 'Modules: Team: Noop', GEDITORIAL_TEXTDOMAIN ),
-				'member_cat' => _nx_noop( 'Team Member Category', 'Team Member Categories', 'Modules: Team: Noop', GEDITORIAL_TEXTDOMAIN ),
+				'member_cpt' => _nx_noop( 'Team Member', 'Team Members', 'Modules: Team: Noop', 'geditorial' ),
+				'member_cat' => _nx_noop( 'Team Member Category', 'Team Member Categories', 'Modules: Team: Noop', 'geditorial' ),
 			],
 		];
 	}
@@ -73,44 +73,44 @@ class Team extends gEditorial\Module
 		return [
 			$this->constant( 'member_cpt' ) => [
 				'team_role' => [
-					'title'       => _x( 'Role', 'Modules: Team: Field Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Enter a byline for the team member (for example: "Director of Production").', 'Modules: Team: Field Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Role', 'Modules: Team: Field Title', 'geditorial' ),
+					'description' => _x( 'Enter a byline for the team member (for example: "Director of Production").', 'Modules: Team: Field Description', 'geditorial' ),
 					'type'        => 'title_after',
 					'icon'        => 'businessman',
 				],
 				'email_gravatar' => [
-					'title'       => _x( 'Gravatar E-mail Address', 'Modules: Team: Field Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Enter an e-mail address, to use a Gravatar, instead of using the "Featured Image".', 'Modules: Team: Field Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Gravatar E-mail Address', 'Modules: Team: Field Title', 'geditorial' ),
+					'description' => _x( 'Enter an e-mail address, to use a Gravatar, instead of using the "Featured Image".', 'Modules: Team: Field Description', 'geditorial' ),
 					'type'        => 'code',
 					'icon'        => 'admin-users',
 				],
 				'personal_site' => [
-					'title'       => _x( 'Personal Site', 'Modules: Team: Field Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Enter this team member\'s URL (for example: https://geminorum.ir/).', 'Modules: Team: Field Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Personal Site', 'Modules: Team: Field Title', 'geditorial' ),
+					'description' => _x( 'Enter this team member\'s URL (for example: https://geminorum.ir/).', 'Modules: Team: Field Description', 'geditorial' ),
 					'type'        => 'link',
 					'icon'        => 'admin-links',
 				],
 				'email_contact' => [
-					'title'       => _x( 'Contact E-mail Address', 'Modules: Team: Field Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Enter a contact email address for this team member to be displayed as a link on the frontend.', 'Modules: Team: Field Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Contact E-mail Address', 'Modules: Team: Field Title', 'geditorial' ),
+					'description' => _x( 'Enter a contact email address for this team member to be displayed as a link on the frontend.', 'Modules: Team: Field Description', 'geditorial' ),
 					'type'        => 'code',
 					'icon'        => 'email',
 				],
 				'phone' => [
-					'title'       => _x( 'Telephone Number', 'Modules: Team: Field Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Enter a telephone number for this team member to be displayed as a link on the frontend.', 'Modules: Team: Field Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Telephone Number', 'Modules: Team: Field Title', 'geditorial' ),
+					'description' => _x( 'Enter a telephone number for this team member to be displayed as a link on the frontend.', 'Modules: Team: Field Description', 'geditorial' ),
 					'type'        => 'code',
 					'icon'        => 'phone',
 				],
 				'twitter' => [
-					'title'       => _x( 'Twitter Username', 'Modules: Team: Field Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Enter this team member\'s Twitter username without the @ (for example: geminorumir).', 'Modules: Team: Field Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Twitter Username', 'Modules: Team: Field Title', 'geditorial' ),
+					'description' => _x( 'Enter this team member\'s Twitter username without the @ (for example: geminorumir).', 'Modules: Team: Field Description', 'geditorial' ),
 					'type'        => 'code',
 					'icon'        => 'twitter',
 				],
 				'username' => [
-					'title'       => _x( 'Network Username', 'Modules: Team: Field Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Map this team member to a user on this site.', 'Modules: Team: Field Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Network Username', 'Modules: Team: Field Title', 'geditorial' ),
+					'description' => _x( 'Map this team member to a user on this site.', 'Modules: Team: Field Description', 'geditorial' ),
 					'type'        => 'code',
 					'icon'        => 'nametag',
 				],

@@ -19,15 +19,15 @@ class Views extends gEditorial\Module
 	{
 		return [
 			'name'  => 'views',
-			'title' => _x( 'Views', 'Modules: Views', GEDITORIAL_TEXTDOMAIN ),
-			'desc'  => _x( 'Customized Page Views', 'Modules: Views', GEDITORIAL_TEXTDOMAIN ),
+			'title' => _x( 'Views', 'Modules: Views', 'geditorial' ),
+			'desc'  => _x( 'Customized Page Views', 'Modules: Views', 'geditorial' ),
 			'icon'  => 'admin-views',
 		];
 	}
 
 	public function settings_intro()
 	{
-		HTML::desc( _x( 'Note that the logget-out users count by default.', 'Modules: Views', GEDITORIAL_TEXTDOMAIN ) );
+		HTML::desc( _x( 'Note that the logget-out users count by default.', 'Modules: Views', 'geditorial' ) );
 	}
 
 	protected function get_global_settings()
@@ -44,7 +44,7 @@ class Views extends gEditorial\Module
 	private function events()
 	{
 		return [
-			'entryview' => _x( 'Entry Views', 'Modules: Views: Event', GEDITORIAL_TEXTDOMAIN ),
+			'entryview' => _x( 'Entry Views', 'Modules: Views: Event', 'geditorial' ),
 		];
 	}
 
@@ -65,7 +65,7 @@ class Views extends gEditorial\Module
 
 		$nodes[] = [
 			'id'     => $this->classs(),
-			'title'  => _x( 'View Summary', 'Modules: Views: Adminbar', GEDITORIAL_TEXTDOMAIN ),
+			'title'  => _x( 'View Summary', 'Modules: Views: Adminbar', 'geditorial' ),
 			'parent' => $parent,
 			'href'   => $this->get_module_url( 'reports', NULL, [ 'id' => $post_id ] ),
 		];

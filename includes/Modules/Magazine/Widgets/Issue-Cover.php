@@ -16,8 +16,8 @@ class IssueCover extends gEditorial\Widget
 			'module' => 'magazine',
 			'name'   => 'magazine_issue_cover',
 			'class'  => 'magazine-issue-cover',
-			'title'  => _x( 'Editorial: Issue Cover', 'Modules: Magazine: Widget Title', GEDITORIAL_TEXTDOMAIN ),
-			'desc'   => _x( 'Displays latest, selected, connected or current issue cover.', 'Modules: Magazine: Widget Description', GEDITORIAL_TEXTDOMAIN ),
+			'title'  => _x( 'Editorial: Issue Cover', 'Modules: Magazine: Widget Title', 'geditorial' ),
+			'desc'   => _x( 'Displays latest, selected, connected or current issue cover.', 'Modules: Magazine: Widget Description', 'geditorial' ),
 		];
 	}
 
@@ -93,12 +93,12 @@ class IssueCover extends gEditorial\Widget
 		$this->form_title( $instance );
 		$this->form_title_link( $instance );
 
-		$this->form_page_id( $instance, '0', 'page_id', 'posttype', $cpt, _x( 'The Issue:', 'Modules: Magazine: Widget: Issue Cover', GEDITORIAL_TEXTDOMAIN ) );
+		$this->form_page_id( $instance, '0', 'page_id', 'posttype', $cpt, _x( 'The Issue:', 'Modules: Magazine: Widget: Issue Cover', 'geditorial' ) );
 		$this->form_image_size( $instance, $cpt.'-thumbnail', 'image_size', $cpt );
 
-		$this->form_checkbox( $instance, FALSE, 'latest_issue', _x( 'Always the latest issue', 'Modules: Magazine: Widget: Issue Cover', GEDITORIAL_TEXTDOMAIN ) );
-		$this->form_checkbox( $instance, TRUE, 'number_line', _x( 'Display the Number Meta', 'Modules: Magazine: Widget: Issue Cover', GEDITORIAL_TEXTDOMAIN ) );
-		$this->form_checkbox( $instance, TRUE, 'link_issue', _x( 'Link to the issue', 'Modules: Magazine: Widget: Issue Cover', GEDITORIAL_TEXTDOMAIN ) );
+		$this->form_checkbox( $instance, FALSE, 'latest_issue', _x( 'Always the latest issue', 'Modules: Magazine: Widget: Issue Cover', 'geditorial' ) );
+		$this->form_checkbox( $instance, TRUE, 'number_line', _x( 'Display the Number Meta', 'Modules: Magazine: Widget: Issue Cover', 'geditorial' ) );
+		$this->form_checkbox( $instance, TRUE, 'link_issue', _x( 'Link to the issue', 'Modules: Magazine: Widget: Issue Cover', 'geditorial' ) );
 		$this->form_custom_link( $instance );
 
 		$this->form_context( $instance );

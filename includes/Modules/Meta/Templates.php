@@ -177,7 +177,7 @@ class Meta extends gEditorial\Template
 			'echo'          => isset( $atts['e'] ) ? $atts['e'] : TRUE,
 			'default'       => isset( $atts['def'] ) ? $atts['def'] : FALSE,
 			'title_meta'    => FALSE, // meta key for title of the link
-			'title_default' => _x( 'External Source', 'Modules: Meta: Meta Link Default Title', GEDITORIAL_TEXTDOMAIN ), // default val for title of the link
+			'title_default' => _x( 'External Source', 'Modules: Meta: Meta Link Default Title', 'geditorial' ), // default val for title of the link
 			'url_meta'      => 'es', // meta key for URL of the link
 			'url_default'   => FALSE, // default val for URL of the link
 			'desc'          => NULL, // FALSE to disable
@@ -280,7 +280,8 @@ class Meta extends gEditorial\Template
 		$term  = Taxonomy::theTerm( $tax, $id, TRUE );
 		$title = self::get_meta( 'ch', [ 'id' => $id, 'def' => FALSE ] );
 		$link  = $term ? get_term_link( $term, $tax ) : ( $title ? get_option( 'home' ).'/?s='.urlencode( $title ) : FALSE );
-		$desc  = $term ? $term->name.( $term->description ? strip_tags( ' :: '.$term->description ) : '' ) : sprintf( apply_filters( 'gmeta_search_link_title_attr', _x( 'Search %1$s for %2$s', 'Modules: Meta', GEDITORIAL_TEXTDOMAIN ) ), get_bloginfo( 'name' ), $title );
+		/* translators: %1$s: site name, %2$s: search query */
+		$desc  = $term ? $term->name.( $term->description ? strip_tags( ' :: '.$term->description ) : '' ) : sprintf( apply_filters( 'gmeta_search_link_title_attr', _x( 'Search %1$s for %2$s', 'Modules: Meta', 'geditorial' ) ), get_bloginfo( 'name' ), $title );
 
 		if ( $term || $title ) {
 			@$value = $title ? $title : $term->name;

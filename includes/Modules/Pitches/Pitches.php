@@ -12,8 +12,8 @@ class Pitches extends gEditorial\Module
 	{
 		return [
 			'name'     => 'pitches',
-			'title'    => _x( 'Pitches', 'Modules: Pitches', GEDITORIAL_TEXTDOMAIN ),
-			'desc'     => _x( 'Keep Track of Ideas', 'Modules: Pitches', GEDITORIAL_TEXTDOMAIN ),
+			'title'    => _x( 'Pitches', 'Modules: Pitches', 'geditorial' ),
+			'desc'     => _x( 'Keep Track of Ideas', 'Modules: Pitches', 'geditorial' ),
 			'icon'     => 'lightbulb',
 			'frontend' => FALSE,
 		];
@@ -62,9 +62,9 @@ class Pitches extends gEditorial\Module
 	{
 		$strings = [
 			'noops' => [
-				'idea_cpt' => _nx_noop( 'Idea', 'Ideas', 'Modules: Pitches: Noop', GEDITORIAL_TEXTDOMAIN ),
-				'idea_cat' => _nx_noop( 'Idea Category', 'Idea Categories', 'Modules: Pitches: Noop', GEDITORIAL_TEXTDOMAIN ),
-				'pool_tax' => _nx_noop( 'Idea Pool', 'Idea Pools', 'Modules: Pitches: Noop', GEDITORIAL_TEXTDOMAIN ),
+				'idea_cpt' => _nx_noop( 'Idea', 'Ideas', 'Modules: Pitches: Noop', 'geditorial' ),
+				'idea_cat' => _nx_noop( 'Idea Category', 'Idea Categories', 'Modules: Pitches: Noop', 'geditorial' ),
+				'pool_tax' => _nx_noop( 'Idea Pool', 'Idea Pools', 'Modules: Pitches: Noop', 'geditorial' ),
 			],
 		];
 
@@ -73,10 +73,10 @@ class Pitches extends gEditorial\Module
 
 		$strings['misc'] = [
 			'idea_cat' => [
-				'tweaks_column_title' => _x( 'Idea Categories', 'Modules: Pitches: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'tweaks_column_title' => _x( 'Idea Categories', 'Modules: Pitches: Column Title', 'geditorial' ),
 			],
 			'pool_tax' => [
-				'tweaks_column_title' => _x( 'Idea Pools', 'Modules: Pitches: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'tweaks_column_title' => _x( 'Idea Pools', 'Modules: Pitches: Column Title', 'geditorial' ),
 			],
 		];
 

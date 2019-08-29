@@ -16,8 +16,8 @@ class PublicationCover extends gEditorial\Widget
 			'module' => 'book',
 			'name'   => 'book_publication_cover',
 			'class'  => 'book-publication-cover',
-			'title'  => _x( 'Editorial: Publication Cover', 'Modules: Book: Widget Title', GEDITORIAL_TEXTDOMAIN ),
-			'desc'   => _x( 'Displays selected, connected or current publication cover.', 'Modules: Book: Widget Description', GEDITORIAL_TEXTDOMAIN ),
+			'title'  => _x( 'Editorial: Publication Cover', 'Modules: Book: Widget Title', 'geditorial' ),
+			'desc'   => _x( 'Displays selected, connected or current publication cover.', 'Modules: Book: Widget Description', 'geditorial' ),
 		];
 	}
 
@@ -84,10 +84,10 @@ class PublicationCover extends gEditorial\Widget
 		$this->form_title( $instance );
 		$this->form_title_link( $instance );
 
-		$this->form_page_id( $instance, '0', 'page_id', 'posttype', $cpt, _x( 'The Publication:', 'Modules: Book: Widget: Publication Cover', GEDITORIAL_TEXTDOMAIN ) );
+		$this->form_page_id( $instance, '0', 'page_id', 'posttype', $cpt, _x( 'The Publication:', 'Modules: Book: Widget: Publication Cover', 'geditorial' ) );
 		$this->form_image_size( $instance, $cpt.'-thumbnail', 'image_size', $cpt );
 
-		$this->form_checkbox( $instance, TRUE, 'link_publication', _x( 'Link to the publication', 'Modules: Book: Widget: Publication Cover', GEDITORIAL_TEXTDOMAIN ) );
+		$this->form_checkbox( $instance, TRUE, 'link_publication', _x( 'Link to the publication', 'Modules: Book: Widget: Publication Cover', 'geditorial' ) );
 		$this->form_custom_link( $instance );
 
 		$this->form_context( $instance );

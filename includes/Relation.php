@@ -268,7 +268,7 @@ class Relation extends Core\Base
 	public static function rest_connect( $request )
 	{
 		if ( ! $type = O2O\API::type( $request['name'] ) )
-			return new \WP_Error( 'no_connection_type', _x( 'No connection type found!', 'Relation: REST', GEDITORIAL_TEXTDOMAIN ), [ 'status' => 404 ] );
+			return new \WP_Error( 'no_connection_type', _x( 'No connection type found!', 'Relation: REST', 'geditorial' ), [ 'status' => 404 ] );
 
 		// $meta = [ 'date' => current_time( 'mysql' ) ];
 		$o2o = $type->connect( $request['from'], $request['to'] );
@@ -279,7 +279,7 @@ class Relation extends Core\Base
 	public static function rest_disconnect( $request )
 	{
 		if ( ! $type = O2O\API::type( $request['name'] ) )
-			return new \WP_Error( 'no_connection_type', _x( 'No connection type found!', 'Relation: REST', GEDITORIAL_TEXTDOMAIN ), [ 'status' => 404 ] );
+			return new \WP_Error( 'no_connection_type', _x( 'No connection type found!', 'Relation: REST', 'geditorial' ), [ 'status' => 404 ] );
 
 		$o2o = $type->disconnect( $request['from'], $request['to'] );
 

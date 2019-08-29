@@ -21,8 +21,8 @@ class Attachments extends gEditorial\Module
 	{
 		return [
 			'name'  => 'attachments',
-			'title' => _x( 'Attachments', 'Modules: Attachments', GEDITORIAL_TEXTDOMAIN ),
-			'desc'  => _x( 'Attachment Management', 'Modules: Attachments', GEDITORIAL_TEXTDOMAIN ),
+			'title' => _x( 'Attachments', 'Modules: Attachments', 'geditorial' ),
+			'desc'  => _x( 'Attachment Management', 'Modules: Attachments', 'geditorial' ),
 			'icon'  => 'paperclip',
 		];
 	}
@@ -34,14 +34,14 @@ class Attachments extends gEditorial\Module
 				'adminbar_summary',
 				[
 					'field'       => 'rewrite_permalink',
-					'title'       => _x( 'Rewite Permalinks', 'Modules: Attachments: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Changes default permalinks into attachment id.', 'Modules: Attachments: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Rewite Permalinks', 'Modules: Attachments: Setting Title', 'geditorial' ),
+					'description' => _x( 'Changes default permalinks into attachment id.', 'Modules: Attachments: Setting Description', 'geditorial' ),
 				],
 				[
 					'field'       => 'prefix_permalink',
 					'type'        => 'text',
-					'title'       => _x( 'Prefix Permalinks', 'Modules: Attachments: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Adds to the permalink of attachments, before id.', 'Modules: Attachments: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Prefix Permalinks', 'Modules: Attachments: Setting Title', 'geditorial' ),
+					'description' => _x( 'Adds to the permalink of attachments, before id.', 'Modules: Attachments: Setting Description', 'geditorial' ),
 					'field_class' => [ 'medium-text', 'code' ],
 					'placeholder' => 'media',
 					'dir'         => 'ltr',
@@ -50,13 +50,13 @@ class Attachments extends gEditorial\Module
 			'_editlist' => [
 				[
 					'field'       => 'attachment_count',
-					'title'       => _x( 'Attachment Count', 'Modules: Attachments: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Displays attachment summary of the post.', 'Modules: Attachments: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Attachment Count', 'Modules: Attachments: Setting Title', 'geditorial' ),
+					'description' => _x( 'Displays attachment summary of the post.', 'Modules: Attachments: Setting Description', 'geditorial' ),
 				],
 				[
 					'field'       => 'restrict_library',
-					'title'       => _x( 'Restrict Library', 'Modules: Attachments: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Restricts Media Library access to user’s own uploads.', 'Modules: Attachments: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Restrict Library', 'Modules: Attachments: Setting Title', 'geditorial' ),
+					'description' => _x( 'Restricts Media Library access to user’s own uploads.', 'Modules: Attachments: Setting Description', 'geditorial' ),
 				],
 			],
 			'posttypes_option' => 'posttypes_option',
@@ -158,7 +158,7 @@ class Attachments extends gEditorial\Module
 
 		$nodes[] = [
 			'id'     => $this->classs(),
-			'title'  => _x( 'Attachment Summary', 'Modules: Attachments: Adminbar', GEDITORIAL_TEXTDOMAIN ),
+			'title'  => _x( 'Attachment Summary', 'Modules: Attachments: Adminbar', 'geditorial' ),
 			'parent' => $parent,
 			'href'   => WordPress::getPostAttachmentsLink( $post_id ),
 		];
@@ -206,14 +206,15 @@ class Attachments extends gEditorial\Module
 
 		echo '<li class="-row tweaks-attachment-count">';
 
-			echo $this->get_column_icon( FALSE, 'images-alt2', _x( 'Attachments', 'Modules: Attachments: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
+			echo $this->get_column_icon( FALSE, 'images-alt2', _x( 'Attachments', 'Modules: Attachments: Row Icon Title', 'geditorial' ) );
 
-			$title = sprintf( _nx( '%s Attachment', '%s Attachments', $count, 'Modules: Attachments', GEDITORIAL_TEXTDOMAIN ), Number::format( $count ) );
+			/* translators: %s: attachments count */
+			$title = sprintf( _nx( '%s Attachment', '%s Attachments', $count, 'Modules: Attachments', 'geditorial' ), Number::format( $count ) );
 
 			if ( current_user_can( 'upload_files' ) )
 				echo HTML::tag( 'a', [
 					'href'   => WordPress::getPostAttachmentsLink( $post->ID ),
-					'title'  => _x( 'View the list of attachments', 'Modules: Attachments', GEDITORIAL_TEXTDOMAIN ),
+					'title'  => _x( 'View the list of attachments', 'Modules: Attachments', 'geditorial' ),
 					'target' => '_blank',
 				], $title );
 			else
@@ -240,8 +241,9 @@ class Attachments extends gEditorial\Module
 			'attachment',
 			'',
 			array_merge( [
-				'title'        => _x( 'Attachments', 'Modules: Attachments: Shortcode', GEDITORIAL_TEXTDOMAIN ),
-				'title_title'  => _x( 'Attachments of %s', 'Modules: Attachments: Shortcode', GEDITORIAL_TEXTDOMAIN ),
+				'title'        => _x( 'Attachments', 'Modules: Attachments: Shortcode', 'geditorial' ),
+				/* translators: %s: attachment parent title */
+				'title_title'  => _x( 'Attachments of %s', 'Modules: Attachments: Shortcode', 'geditorial' ),
 				'title_anchor' => 'attachments',
 				'title_link'   => FALSE,
 			], (array) $atts ),
@@ -270,7 +272,7 @@ class Attachments extends gEditorial\Module
 
 		$custom = [
 			// FIXME: must add ajax
-			// 'override-name' => HTML::link( _x( 'Override Name', 'Modules: Attachments: Table Action', GEDITORIAL_TEXTDOMAIN ) ),
+			// 'override-name' => HTML::link( _x( 'Override Name', 'Modules: Attachments: Table Action', 'geditorial' ) ),
 		];
 
 		return HTML::tableList( [
@@ -279,7 +281,7 @@ class Attachments extends gEditorial\Module
 			'date'   => Helper::tableColumnPostDate(),
 			'mime'   => Helper::tableColumnPostMime(),
 			'custom' => [
-				'title'    => _x( 'Custom', 'Modules: Attachments: Table Column', GEDITORIAL_TEXTDOMAIN ),
+				'title'    => _x( 'Custom', 'Modules: Attachments: Table Column', 'geditorial' ),
 				'class'    => '-attachment-custom',
 				'callback' => function( $value, $row, $column, $index ){
 					if ( $custom = Media::isCustom( $row->ID ) )
@@ -290,7 +292,7 @@ class Attachments extends gEditorial\Module
 			],
 			'title' => Helper::tableColumnPostTitle( NULL, TRUE, $custom ),
 			'sizes' => [
-				'title'    => _x( 'Sizes', 'Modules: Attachments: Table Column', GEDITORIAL_TEXTDOMAIN ),
+				'title'    => _x( 'Sizes', 'Modules: Attachments: Table Column', 'geditorial' ),
 				'class'    => '-attachment-sizes -has-table -has-table-ltr',
 				'callback' => function( $value, $row, $column, $index ){
 
@@ -310,7 +312,7 @@ class Attachments extends gEditorial\Module
 				},
 			],
 			'meta' => [
-				'title'    => _x( 'Meta', 'Modules: Attachments: Table Column', GEDITORIAL_TEXTDOMAIN ),
+				'title'    => _x( 'Meta', 'Modules: Attachments: Table Column', 'geditorial' ),
 				'class'    => '-attachment-meta -has-table -has-table-ltr',
 				'callback' => function( $value, $row, $column, $index ){
 
@@ -329,8 +331,8 @@ class Attachments extends gEditorial\Module
 		], $posts, [
 			'navigation' => 'before',
 			'search'     => 'before',
-			'title'      => HTML::tag( 'h3', _x( 'Overview of Attachments', 'Modules: Attachments', GEDITORIAL_TEXTDOMAIN ) ),
-			'empty'      => _x( 'No attachments found.', 'Modules: Attachments', GEDITORIAL_TEXTDOMAIN ),
+			'title'      => HTML::tag( 'h3', _x( 'Overview of Attachments', 'Modules: Attachments', 'geditorial' ) ),
+			'empty'      => _x( 'No attachments found.', 'Modules: Attachments', 'geditorial' ),
 			'pagination' => $pagination,
 		] );
 	}

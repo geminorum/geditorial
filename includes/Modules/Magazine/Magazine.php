@@ -24,8 +24,8 @@ class Magazine extends gEditorial\Module
 	{
 		return [
 			'name'  => 'magazine',
-			'title' => _x( 'Magazine', 'Modules: Magazine', GEDITORIAL_TEXTDOMAIN ),
-			'desc'  => _x( 'Magazine Issue Management', 'Modules: Magazine', GEDITORIAL_TEXTDOMAIN ),
+			'title' => _x( 'Magazine', 'Modules: Magazine', 'geditorial' ),
+			'desc'  => _x( 'Magazine Issue Management', 'Modules: Magazine', 'geditorial' ),
 			'icon'  => 'book',
 		];
 	}
@@ -37,8 +37,8 @@ class Magazine extends gEditorial\Module
 				'multiple_instances',
 				[
 					'field'       => 'issue_sections',
-					'title'       => _x( 'Issue Sections', 'Modules: Magazine: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Section taxonomy for issues and supported posttypes.', 'Modules: Magazine: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Issue Sections', 'Modules: Magazine: Setting Title', 'geditorial' ),
+					'description' => _x( 'Section taxonomy for issues and supported posttypes.', 'Modules: Magazine: Setting Description', 'geditorial' ),
 				],
 				'comment_status',
 			],
@@ -55,8 +55,8 @@ class Magazine extends gEditorial\Module
 				[
 					'field'       => 'redirect_spans',
 					'type'        => 'url',
-					'title'       => _x( 'Redirect Spans', 'Modules: Magazine: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Redirects all span archives to a URL.', 'Modules: Magazine: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Redirect Spans', 'Modules: Magazine: Setting Title', 'geditorial' ),
+					'description' => _x( 'Redirects all span archives to a URL.', 'Modules: Magazine: Setting Description', 'geditorial' ),
 					'placeholder' => 'http://example.com/archives/',
 				],
 			],
@@ -101,10 +101,10 @@ class Magazine extends gEditorial\Module
 	{
 		$strings = [
 			'noops' => [
-				'issue_cpt'   => _nx_noop( 'Issue', 'Issues', 'Modules: Magazine: Noop', GEDITORIAL_TEXTDOMAIN ),
-				'issue_tax'   => _nx_noop( 'Issue', 'Issues', 'Modules: Magazine: Noop', GEDITORIAL_TEXTDOMAIN ),
-				'span_tax'    => _nx_noop( 'Span', 'Spans', 'Modules: Magazine: Noop', GEDITORIAL_TEXTDOMAIN ),
-				'section_tax' => _nx_noop( 'Section', 'Sections', 'Modules: Magazine: Noop', GEDITORIAL_TEXTDOMAIN ),
+				'issue_cpt'   => _nx_noop( 'Issue', 'Issues', 'Modules: Magazine: Noop', 'geditorial' ),
+				'issue_tax'   => _nx_noop( 'Issue', 'Issues', 'Modules: Magazine: Noop', 'geditorial' ),
+				'span_tax'    => _nx_noop( 'Span', 'Spans', 'Modules: Magazine: Noop', 'geditorial' ),
+				'section_tax' => _nx_noop( 'Section', 'Sections', 'Modules: Magazine: Noop', 'geditorial' ),
 			],
 		];
 
@@ -113,22 +113,22 @@ class Magazine extends gEditorial\Module
 
 		$strings['misc'] = [
 			'issue_cpt' => [
-				'featured' => _x( 'Cover Image', 'Modules: Magazine: Issue CPT: Featured', GEDITORIAL_TEXTDOMAIN ),
+				'featured' => _x( 'Cover Image', 'Modules: Magazine: Issue CPT: Featured', 'geditorial' ),
 			],
 			'issue_tax' => [
-				'meta_box_title' => _x( 'In This Issue', 'Modules: Magazine: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
+				'meta_box_title' => _x( 'In This Issue', 'Modules: Magazine: MetaBox Title', 'geditorial' ),
 			],
 			'span_tax' => [
-				'meta_box_title'      => _x( 'Spans', 'Modules: Magazine: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
-				'tweaks_column_title' => _x( 'Issue Spans', 'Modules: Magazine: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'meta_box_title'      => _x( 'Spans', 'Modules: Magazine: MetaBox Title', 'geditorial' ),
+				'tweaks_column_title' => _x( 'Issue Spans', 'Modules: Magazine: Column Title', 'geditorial' ),
 			],
 			'section_tax' => [
-				'meta_box_title'      => _x( 'Sections', 'Modules: Magazine: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
-				'tweaks_column_title' => _x( 'Issue Sections', 'Modules: Magazine: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'meta_box_title'      => _x( 'Sections', 'Modules: Magazine: MetaBox Title', 'geditorial' ),
+				'tweaks_column_title' => _x( 'Issue Sections', 'Modules: Magazine: Column Title', 'geditorial' ),
 			],
-			'meta_box_title'         => _x( 'The Issue', 'Modules: Magazine: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
-			'tweaks_column_title'    => _x( 'Issues', 'Modules: Magazine: Column Title', GEDITORIAL_TEXTDOMAIN ),
-			'connected_column_title' => _x( 'Connected Items', 'Modules: Magazine: Column Title', GEDITORIAL_TEXTDOMAIN ),
+			'meta_box_title'         => _x( 'The Issue', 'Modules: Magazine: MetaBox Title', 'geditorial' ),
+			'tweaks_column_title'    => _x( 'Issues', 'Modules: Magazine: Column Title', 'geditorial' ),
+			'connected_column_title' => _x( 'Connected Items', 'Modules: Magazine: Column Title', 'geditorial' ),
 		];
 
 		return $strings;
@@ -142,34 +142,34 @@ class Magazine extends gEditorial\Module
 				'st' => [ 'type' => 'title_after' ],
 
 				'issue_number_line' => [
-					'title'       => _x( 'Number Line', 'Modules: Magazine: Field Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'The issue number line', 'Modules: Magazine: Field Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Number Line', 'Modules: Magazine: Field Title', 'geditorial' ),
+					'description' => _x( 'The issue number line', 'Modules: Magazine: Field Description', 'geditorial' ),
 					'icon'        => 'menu',
 				],
 				'issue_total_pages' => [
-					'title'       => _x( 'Total Pages', 'Modules: Magazine: Field Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'The issue total pages', 'Modules: Magazine: Field Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Total Pages', 'Modules: Magazine: Field Title', 'geditorial' ),
+					'description' => _x( 'The issue total pages', 'Modules: Magazine: Field Description', 'geditorial' ),
 					'icon'        => 'admin-page',
 				],
 			],
 			'post' => [
 				'in_issue_order' => [
-					'title'       => _x( 'Order', 'Modules: Magazine: Field Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Post order in issue list', 'Modules: Magazine: Field Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Order', 'Modules: Magazine: Field Title', 'geditorial' ),
+					'description' => _x( 'Post order in issue list', 'Modules: Magazine: Field Description', 'geditorial' ),
 					'type'        => 'number',
 					'context'     => 'issue',
 					'icon'        => 'sort',
 				],
 				'in_issue_page_start' => [
-					'title'       => _x( 'Page Start', 'Modules: Magazine: Field Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Post start page on issue (printed)', 'Modules: Magazine: Field Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Page Start', 'Modules: Magazine: Field Title', 'geditorial' ),
+					'description' => _x( 'Post start page on issue (printed)', 'Modules: Magazine: Field Description', 'geditorial' ),
 					'type'        => 'number',
 					'context'     => 'issue',
 					'icon'        => 'media-default',
 				],
 				'in_issue_pages' => [
-					'title'       => _x( 'Total Pages', 'Modules: Magazine: Field Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Post total pages on issue (printed)', 'Modules: Magazine: Field Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Total Pages', 'Modules: Magazine: Field Title', 'geditorial' ),
+					'description' => _x( 'Post total pages on issue (printed)', 'Modules: Magazine: Field Description', 'geditorial' ),
 					'context'     => 'issue',
 					'icon'        => 'admin-page',
 				],
@@ -618,7 +618,7 @@ class Magazine extends gEditorial\Module
 				echo $list;
 
 			else
-				HTML::desc( _x( 'No items connected!', 'Modules: Magazine', GEDITORIAL_TEXTDOMAIN ), FALSE, '-empty' );
+				HTML::desc( _x( 'No items connected!', 'Modules: Magazine', 'geditorial' ), FALSE, '-empty' );
 
 		echo '</div>';
 	}
@@ -673,7 +673,7 @@ class Magazine extends gEditorial\Module
 			foreach ( $posttypes as $posttype )
 				$list[] = HTML::tag( 'a', [
 					'href'   => WordPress::getPostTypeEditLink( $posttype, 0, $args ),
-					'title'  => _x( 'View the connected list', 'Modules: Magazine', GEDITORIAL_TEXTDOMAIN ),
+					'title'  => _x( 'View the connected list', 'Modules: Magazine', 'geditorial' ),
 					'target' => '_blank',
 				], $this->cache_posttypes[$posttype] );
 
@@ -685,9 +685,12 @@ class Magazine extends gEditorial\Module
 	public function display_meta( $value, $key = NULL, $field = [] )
 	{
 		switch ( $key ) {
-			case 'in_issue_order'      : return Helper::getCounted( $value, _x( 'Order in Issue: %s', 'Modules: Magazine: Display', GEDITORIAL_TEXTDOMAIN ) );
-			case 'in_issue_page_start' : return Helper::getCounted( $value, _x( 'Page in Issue: %s', 'Modules: Magazine: Display', GEDITORIAL_TEXTDOMAIN ) );
-			case 'in_issue_pages'      : return Helper::getCounted( $value, _x( 'Total Pages: %s', 'Modules: Magazine: Display', GEDITORIAL_TEXTDOMAIN ) );
+			/* translators: %s: order */
+			case 'in_issue_order'      : return Helper::getCounted( $value, _x( 'Order in Issue: %s', 'Modules: Magazine: Display', 'geditorial' ) );
+			/* translators: %s: page */
+			case 'in_issue_page_start' : return Helper::getCounted( $value, _x( 'Page in Issue: %s', 'Modules: Magazine: Display', 'geditorial' ) );
+			/* translators: %s: total count */
+			case 'in_issue_pages'      : return Helper::getCounted( $value, _x( 'Total Pages: %s', 'Modules: Magazine: Display', 'geditorial' ) );
 		}
 
 		return HTML::escape( $value );
@@ -952,7 +955,7 @@ class Magazine extends gEditorial\Module
 			// 'term_id' => Helper::tableColumnTermID(),
 			'name'    => Helper::tableColumnTermName(),
 			'linked'  => [
-				'title'    => _x( 'Linked Issue Post', 'Modules: Magazine: Table Column', GEDITORIAL_TEXTDOMAIN ),
+				'title'    => _x( 'Linked Issue Post', 'Modules: Magazine: Table Column', 'geditorial' ),
 				'callback' => function( $value, $row, $column, $index ){
 
 					if ( $post_id = $this->get_linked_post_id( $row, 'issue_cpt', 'issue_tax', FALSE ) )
@@ -962,7 +965,7 @@ class Magazine extends gEditorial\Module
 				},
 			],
 			'slugged' => [
-				'title'    => _x( 'Same Slug Issue Post', 'Modules: Magazine: Table Column', GEDITORIAL_TEXTDOMAIN ),
+				'title'    => _x( 'Same Slug Issue Post', 'Modules: Magazine: Table Column', 'geditorial' ),
 				'callback' => function( $value, $row, $column, $index ){
 
 					if ( $post_id = PostType::getIDbySlug( $row->slug, $this->constant( 'issue_cpt' ) ) )
@@ -972,7 +975,7 @@ class Magazine extends gEditorial\Module
 				},
 			],
 			'count' => [
-				'title'    => _x( 'Count', 'Modules: Magazine: Table Column', GEDITORIAL_TEXTDOMAIN ),
+				'title'    => _x( 'Count', 'Modules: Magazine: Table Column', 'geditorial' ),
 				'callback' => function( $value, $row, $column, $index ){
 
 					if ( $post_id = PostType::getIDbySlug( $row->slug, $this->constant( 'issue_cpt' ) ) )
@@ -982,7 +985,7 @@ class Magazine extends gEditorial\Module
 				},
 			],
 			'description' => [
-				'title'    => _x( 'Desc. / Exce.', 'Modules: Magazine: Table Column', GEDITORIAL_TEXTDOMAIN ),
+				'title'    => _x( 'Desc. / Exce.', 'Modules: Magazine: Table Column', 'geditorial' ),
 				'class'    => 'html-column',
 				'callback' => function( $value, $row, $column, $index ){
 
@@ -1008,7 +1011,7 @@ class Magazine extends gEditorial\Module
 				},
 			],
 			'thumb_image' => [
-				'title'    => _x( 'Thumbnail', 'Modules: Magazine: Table Column', GEDITORIAL_TEXTDOMAIN ),
+				'title'    => _x( 'Thumbnail', 'Modules: Magazine: Table Column', 'geditorial' ),
 				'class'    => 'image-column',
 				'callback' => function( $value, $row, $column, $index ){
 					$html = '';
@@ -1020,7 +1023,7 @@ class Magazine extends gEditorial\Module
 				},
 			],
 			'term_image' => [
-				'title'    => _x( 'Image', 'Modules: Magazine: Table Column', GEDITORIAL_TEXTDOMAIN ),
+				'title'    => _x( 'Image', 'Modules: Magazine: Table Column', 'geditorial' ),
 				'class'    => 'image-column',
 				'callback' => function( $value, $row, $column, $index ){
 					$html = Taxonomy::htmlFeaturedImage( $row->term_id, [ 45, 72 ] );
@@ -1028,37 +1031,37 @@ class Magazine extends gEditorial\Module
 				},
 			],
 		], Taxonomy::getTerms( $this->constant( 'issue_tax' ), FALSE, TRUE ), [
-			'title' => HTML::tag( 'h3', _x( 'Magazine Tools', 'Modules: Magazine', GEDITORIAL_TEXTDOMAIN ) ),
-			'empty' => _x( 'No Terms Found!', 'Modules: Magazine: Table Empty', GEDITORIAL_TEXTDOMAIN ),
+			'title' => HTML::tag( 'h3', _x( 'Magazine Tools', 'Modules: Magazine', 'geditorial' ) ),
+			'empty' => _x( 'No Terms Found!', 'Modules: Magazine: Table Empty', 'geditorial' ),
 			'after' => [ $this, 'table_list_after' ],
 		] );
 	}
 
 	public function table_list_after( $columns, $data, $args )
 	{
-		HTML::desc( _x( 'Check for issue terms and create corresponding issue posts.', 'Modules: Magazine', GEDITORIAL_TEXTDOMAIN ) );
+		HTML::desc( _x( 'Check for issue terms and create corresponding issue posts.', 'Modules: Magazine', 'geditorial' ) );
 		echo $this->wrap_open_buttons( '-tools' );
 
 		Settings::submitButton( 'issue_post_create',
-			_x( 'Create Issue Posts', 'Modules: Magazine: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
+			_x( 'Create Issue Posts', 'Modules: Magazine: Setting Button', 'geditorial' ) );
 
 		Settings::submitButton( 'issue_post_connect',
-			_x( 'Re-Connect Posts', 'Modules: Magazine: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
+			_x( 'Re-Connect Posts', 'Modules: Magazine: Setting Button', 'geditorial' ) );
 
 		Settings::submitButton( 'issue_resync_images',
-			_x( 'Sync Images', 'Modules: Magazine: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
+			_x( 'Sync Images', 'Modules: Magazine: Setting Button', 'geditorial' ) );
 
 		Settings::submitButton( 'issue_resync_desc',
-			_x( 'Sync Descriptions', 'Modules: Magazine: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
+			_x( 'Sync Descriptions', 'Modules: Magazine: Setting Button', 'geditorial' ) );
 
 		Settings::submitButton( 'issue_store_order',
-			_x( 'Store Orders', 'Modules: Magazine: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
+			_x( 'Store Orders', 'Modules: Magazine: Setting Button', 'geditorial' ) );
 
 		Settings::submitButton( 'issue_empty_desc',
-			_x( 'Empty Term Descriptions', 'Modules: Magazine: Setting Button', GEDITORIAL_TEXTDOMAIN ), 'danger', TRUE );
+			_x( 'Empty Term Descriptions', 'Modules: Magazine: Setting Button', 'geditorial' ), 'danger', TRUE );
 
 		Settings::submitButton( 'issue_tax_delete',
-			_x( 'Delete Terms', 'Modules: Magazine: Setting Button', GEDITORIAL_TEXTDOMAIN ), 'danger', TRUE );
+			_x( 'Delete Terms', 'Modules: Magazine: Setting Button', 'geditorial' ), 'danger', TRUE );
 
 		echo '</p>';
 	}

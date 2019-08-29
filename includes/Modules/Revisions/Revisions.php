@@ -28,12 +28,12 @@ class Revisions extends gEditorial\Module
 	{
 		return [
 			'name'     => 'revisions',
-			'title'    => _x( 'Revisions', 'Modules: Revisions', GEDITORIAL_TEXTDOMAIN ),
-			'desc'     => _x( 'Revision Management', 'Modules: Revisions', GEDITORIAL_TEXTDOMAIN ),
+			'title'    => _x( 'Revisions', 'Modules: Revisions', 'geditorial' ),
+			'desc'     => _x( 'Revision Management', 'Modules: Revisions', 'geditorial' ),
 			'icon'     => 'backup',
 			'frontend' => FALSE,
 			'disabled' => defined( 'WP_POST_REVISIONS' ) && ! WP_POST_REVISIONS
-				? _x( 'Deactivated by Constant', 'Modules: Revisions', GEDITORIAL_TEXTDOMAIN )
+				? _x( 'Deactivated by Constant', 'Modules: Revisions', 'geditorial' )
 				: FALSE,
 		];
 	}
@@ -46,19 +46,20 @@ class Revisions extends gEditorial\Module
 				'admin_bulkactions',
 				[
 					'field'       => 'revision_summary',
-					'title'       => _x( 'Revision Count', 'Modules: Revisions: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Displays revision summary of the post on the attributes column', 'Modules: Revisions: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Revision Count', 'Modules: Revisions: Setting Title', 'geditorial' ),
+					'description' => _x( 'Displays revision summary of the post on the attributes column', 'Modules: Revisions: Setting Description', 'geditorial' ),
 				],
 				[
 					'field'       => 'revision_wordcount',
-					'title'       => _x( 'Revision Word Count', 'Modules: Revisions: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Displays revision word count of the post title, content and excerpt', 'Modules: Revisions: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Revision Word Count', 'Modules: Revisions: Setting Title', 'geditorial' ),
+					'description' => _x( 'Displays revision word count of the post title, content and excerpt', 'Modules: Revisions: Setting Description', 'geditorial' ),
 				],
 				[
 					'field'       => 'revision_maxcount',
 					'type'        => 'number',
-					'title'       => _x( 'Revision Max Count', 'Modules: Revisions: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => sprintf( _x( 'The maximum number of revisions to save for each post. %s for every revision.', 'Modules: Revisions: Setting Description', GEDITORIAL_TEXTDOMAIN ), '<code>-1</code>' ),
+					'title'       => _x( 'Revision Max Count', 'Modules: Revisions: Setting Title', 'geditorial' ),
+					/* translators: %s: code placeholder */
+					'description' => sprintf( _x( 'The maximum number of revisions to save for each post. %s for every revision.', 'Modules: Revisions: Setting Description', 'geditorial' ), '<code>-1</code>' ),
 					'default'     => '-1',
 					'min_attr'    => '-1',
 				],
@@ -110,7 +111,7 @@ class Revisions extends gEditorial\Module
 
 	public function bulk_actions( $actions )
 	{
-		return array_merge( $actions, [ 'purgerevisions' => _x( 'Purge Revisions', 'Modules: Revisions: Bulk Action', GEDITORIAL_TEXTDOMAIN ) ] );
+		return array_merge( $actions, [ 'purgerevisions' => _x( 'Purge Revisions', 'Modules: Revisions: Bulk Action', 'geditorial' ) ] );
 	}
 
 	public function handle_bulk_actions( $redirect_to, $doaction, $post_ids )
@@ -137,7 +138,8 @@ class Revisions extends gEditorial\Module
 
 		$_SERVER['REQUEST_URI'] = remove_query_arg( $this->hook( 'purged' ), $_SERVER['REQUEST_URI'] );
 
-		$message = _x( '%s items(s) revisions purged!', 'Modules: Revisions: Message', GEDITORIAL_TEXTDOMAIN );
+		/* translators: %s: revisions count */
+		$message = _x( '%s items(s) revisions purged!', 'Modules: Revisions: Message', 'geditorial' );
 		echo HTML::success( sprintf( $message, Number::format( $purged ) ) );
 	}
 
@@ -160,14 +162,15 @@ class Revisions extends gEditorial\Module
 
 				echo '<li class="-row -revisions -count">';
 
-					echo $this->get_column_icon( FALSE, 'backup', _x( 'Revisions', 'Modules: Revisions: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
+					echo $this->get_column_icon( FALSE, 'backup', _x( 'Revisions', 'Modules: Revisions: Row Icon Title', 'geditorial' ) );
 
-					$title = sprintf( _nx( '%s Revision', '%s Revisions', $count, 'Modules: Revisions', GEDITORIAL_TEXTDOMAIN ), Number::format( $count ) );
+					/* translators: %s: revisions count */
+					$title = sprintf( _nx( '%s Revision', '%s Revisions', $count, 'Modules: Revisions', 'geditorial' ), Number::format( $count ) );
 
 					if ( current_user_can( 'edit_post', $last ) )
 						echo HTML::tag( 'a', [
 							'href'   => get_edit_post_link( $last ),
-							'title'  => _x( 'View the last revision', 'Modules: Revisions', GEDITORIAL_TEXTDOMAIN ),
+							'title'  => _x( 'View the last revision', 'Modules: Revisions', 'geditorial' ),
 							'target' => '_blank',
 						], $title );
 					else
@@ -202,7 +205,7 @@ class Revisions extends gEditorial\Module
 			Helper::htmlCount( $title ),
 			Helper::htmlCount( $content ),
 			Helper::htmlCount( $excerpt ),
-			_x( 'Title/Content/Excerpt Word Count', 'Modules: Revisions', GEDITORIAL_TEXTDOMAIN ),
+			_x( 'Title/Content/Excerpt Word Count', 'Modules: Revisions', 'geditorial' ),
 		] );
 	}
 
@@ -222,21 +225,21 @@ class Revisions extends gEditorial\Module
 			$parts['wordcount'] = self::wordCount( $revision );
 
 		if ( ! wp_is_post_revision( $revision ) ) {
-			$parts['current'] = _x( '[Current]', 'Modules: Revisions', GEDITORIAL_TEXTDOMAIN );
+			$parts['current'] = _x( '[Current]', 'Modules: Revisions', 'geditorial' );
 			$link = FALSE;
 		} else if ( wp_is_post_autosave( $revision ) ) {
 			$autosave = TRUE;
 		}
 
 		if ( $link && current_user_can( 'edit_post', $revision->ID ) ) {
-			$parts['edit']   = sprintf( '<a class="button button-small" href="%1$s">%2$s %3$s</a>', get_edit_post_link( $revision->ID ), HTML::getDashicon( 'backup' ), _x( 'Browse', 'Modules: Revisions', GEDITORIAL_TEXTDOMAIN ) );
-			$parts['delete'] = sprintf( '<a class="button button-small -delete" href="#" data-id="%1$s" data-parent="%2$s">%3$s %4$s</a>', $revision->ID, $revision->post_parent, HTML::getDashicon( 'trash' ), _x( 'Delete', 'Modules: Revisions', GEDITORIAL_TEXTDOMAIN ) );
+			$parts['edit']   = sprintf( '<a class="button button-small" href="%1$s">%2$s %3$s</a>', get_edit_post_link( $revision->ID ), HTML::getDashicon( 'backup' ), _x( 'Browse', 'Modules: Revisions', 'geditorial' ) );
+			$parts['delete'] = sprintf( '<a class="button button-small -delete" href="#" data-id="%1$s" data-parent="%2$s">%3$s %4$s</a>', $revision->ID, $revision->post_parent, HTML::getDashicon( 'trash' ), _x( 'Delete', 'Modules: Revisions', 'geditorial' ) );
 		} else {
 			$link = FALSE;
 		}
 
 		if ( $autosave )
-			$parts['autosave'] = _x( '[Autosave]', 'Modules: Revisions', GEDITORIAL_TEXTDOMAIN );
+			$parts['autosave'] = _x( '[Autosave]', 'Modules: Revisions', 'geditorial' );
 
 		if ( $link )
 			$parts['loading'] = Ajax::spinner();
@@ -262,22 +265,23 @@ class Revisions extends gEditorial\Module
 			echo HTML::tag( 'a', [
 				'id'    => $this->hook( 'purge' ),
 				'class' => 'button button-small -purge hide-if-no-js', // works with no js but need for style
-				'title' => _x( 'Purge all revisions', 'Modules: Revisions', GEDITORIAL_TEXTDOMAIN ),
+				'title' => _x( 'Purge all revisions', 'Modules: Revisions', 'geditorial' ),
 				'data'  => [ 'parent' => $post->ID ],
 				'href'  => WordPress::getAdminPostLink( $this->hook( 'purge' ), [
 					'post_id'  => $post->ID,
 					'_wpnonce' => $this->nonce_create( 'purge_'.$post->ID ),
 				] ),
-			], _x( 'Purge Revisions', 'Modules: Revisions', GEDITORIAL_TEXTDOMAIN ) );
+			], _x( 'Purge Revisions', 'Modules: Revisions', 'geditorial' ) );
 
 			echo Ajax::spinner();
 
 			echo HTML::tag( 'a', [
 				'id'    => $this->hook( 'browse' ),
 				'class' => 'button button-small -browse hide-if-no-js',
-				'title' => _x( 'Browse all revisions', 'Modules: Revisions', GEDITORIAL_TEXTDOMAIN ),
+				'title' => _x( 'Browse all revisions', 'Modules: Revisions', 'geditorial' ),
 				'href'  => get_edit_post_link( $last ),
-			], sprintf( _x( 'Browse %s Revisions', 'Modules: Revisions', GEDITORIAL_TEXTDOMAIN ),
+			/* translators: %s: revisions count */
+			], sprintf( _x( 'Browse %s Revisions', 'Modules: Revisions', 'geditorial' ),
 				'<b>'.Number::format( $count ).'</b>' ) );
 
 		echo '</div>';
@@ -388,7 +392,7 @@ class Revisions extends gEditorial\Module
 			}
 
 			$this->screen_option( $sub );
-			// $this->register_button( 'cleanup_revisions', _x( 'Cleanup Revisions', 'Modules: Revisions: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
+			// $this->register_button( 'cleanup_revisions', _x( 'Cleanup Revisions', 'Modules: Revisions: Setting Button', 'geditorial' ) );
 		}
 	}
 
@@ -398,7 +402,7 @@ class Revisions extends gEditorial\Module
 
 		list( $posts, $pagination ) = $this->getPostArray();
 
-		$pagination['actions']['cleanup_revisions'] = _x( 'Cleanup Revisions', 'Modules: Revisions: Table Action', GEDITORIAL_TEXTDOMAIN );
+		$pagination['actions']['cleanup_revisions'] = _x( 'Cleanup Revisions', 'Modules: Revisions: Table Action', 'geditorial' );
 		$pagination['before'][] = Helper::tableFilterPostTypes( $list );
 		$pagination['before'][] = Helper::tableFilterAuthors( $list );
 
@@ -409,7 +413,7 @@ class Revisions extends gEditorial\Module
 			'type'  => Helper::tableColumnPostType(),
 			'title' => Helper::tableColumnPostTitle( [ 'edit', 'view', 'revisions' ] ),
 			'revisons' => [
-				'title'    => _x( 'Revisions', 'Modules: Revisions: Table Column', GEDITORIAL_TEXTDOMAIN ),
+				'title'    => _x( 'Revisions', 'Modules: Revisions: Table Column', 'geditorial' ),
 				'callback' => function( $value, $row, $column, $index ){
 
 					$html = '';
@@ -434,8 +438,8 @@ class Revisions extends gEditorial\Module
 		], $posts, [
 			'navigation' => 'before',
 			'search'     => 'before',
-			'title'      => HTML::tag( 'h3', _x( 'Overview of Post Revisions', 'Modules: Revisions', GEDITORIAL_TEXTDOMAIN ) ),
-			'empty'      => _x( 'No post revisions found.', 'Modules: Revisions', GEDITORIAL_TEXTDOMAIN ),
+			'title'      => HTML::tag( 'h3', _x( 'Overview of Post Revisions', 'Modules: Revisions', 'geditorial' ) ),
+			'empty'      => _x( 'No post revisions found.', 'Modules: Revisions', 'geditorial' ),
 			'pagination' => $pagination,
 		] );
 	}

@@ -19,8 +19,8 @@ class Contest extends gEditorial\Module
 	{
 		return [
 			'name'  => 'contest',
-			'title' => _x( 'Contest', 'Modules: Contest', GEDITORIAL_TEXTDOMAIN ),
-			'desc'  => _x( 'Contest Management', 'Modules: Contest', GEDITORIAL_TEXTDOMAIN ),
+			'title' => _x( 'Contest', 'Modules: Contest', 'geditorial' ),
+			'desc'  => _x( 'Contest Management', 'Modules: Contest', 'geditorial' ),
 			'icon'  => 'megaphone',
 		];
 	}
@@ -82,12 +82,12 @@ class Contest extends gEditorial\Module
 	{
 		$strings = [
 			'noops' => [
-				'contest_cpt'      => _nx_noop( 'Contest', 'Contests', 'Modules: Contest: Noop', GEDITORIAL_TEXTDOMAIN ),
-				'contest_tax'      => _nx_noop( 'Contest', 'Contests', 'Modules: Contest: Noop', GEDITORIAL_TEXTDOMAIN ),
-				'contest_cat'      => _nx_noop( 'Contest Category', 'Contest Categories', 'Modules: Contest: Noop', GEDITORIAL_TEXTDOMAIN ),
-				'apply_cpt'        => _nx_noop( 'Apply', 'Applies', 'Modules: Contest: Noop', GEDITORIAL_TEXTDOMAIN ),
-				'apply_cat'        => _nx_noop( 'Apply Category', 'Apply Categories', 'Modules: Contest: Noop', GEDITORIAL_TEXTDOMAIN ),
-				'apply_status_tax' => _nx_noop( 'Apply Status', 'Apply Statuses', 'Modules: Contest: Noop', GEDITORIAL_TEXTDOMAIN ),
+				'contest_cpt'      => _nx_noop( 'Contest', 'Contests', 'Modules: Contest: Noop', 'geditorial' ),
+				'contest_tax'      => _nx_noop( 'Contest', 'Contests', 'Modules: Contest: Noop', 'geditorial' ),
+				'contest_cat'      => _nx_noop( 'Contest Category', 'Contest Categories', 'Modules: Contest: Noop', 'geditorial' ),
+				'apply_cpt'        => _nx_noop( 'Apply', 'Applies', 'Modules: Contest: Noop', 'geditorial' ),
+				'apply_cat'        => _nx_noop( 'Apply Category', 'Apply Categories', 'Modules: Contest: Noop', 'geditorial' ),
+				'apply_status_tax' => _nx_noop( 'Apply Status', 'Apply Statuses', 'Modules: Contest: Noop', 'geditorial' ),
 			],
 		];
 
@@ -96,28 +96,28 @@ class Contest extends gEditorial\Module
 
 		$strings['misc'] = [
 			'contest_cpt' => [
-				'meta_box_title'        => _x( 'Metadata', 'Modules: Contest: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
-				'cover_box_title'       => _x( 'Poster', 'Modules: Contest: CoverBox Title', GEDITORIAL_TEXTDOMAIN ),
-				'children_column_title' => _x( 'Applies', 'Modules: Contest: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'meta_box_title'        => _x( 'Metadata', 'Modules: Contest: MetaBox Title', 'geditorial' ),
+				'cover_box_title'       => _x( 'Poster', 'Modules: Contest: CoverBox Title', 'geditorial' ),
+				'children_column_title' => _x( 'Applies', 'Modules: Contest: Column Title', 'geditorial' ),
 			],
 			'contest_cat' => [
-				'tweaks_column_title' => _x( 'Contest Categories', 'Modules: Contest: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'tweaks_column_title' => _x( 'Contest Categories', 'Modules: Contest: Column Title', 'geditorial' ),
 			],
 			'apply_cat' => [
-				'tweaks_column_title' => _x( 'Apply Categories', 'Modules: Contest: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'tweaks_column_title' => _x( 'Apply Categories', 'Modules: Contest: Column Title', 'geditorial' ),
 			],
 			'apply_status_tax' => [
-				'meta_box_title'      => _x( 'Apply Statuses', 'Modules: Contest: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
-				'tweaks_column_title' => _x( 'Apply Statuses', 'Modules: Contest: Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'meta_box_title'      => _x( 'Apply Statuses', 'Modules: Contest: MetaBox Title', 'geditorial' ),
+				'tweaks_column_title' => _x( 'Apply Statuses', 'Modules: Contest: Column Title', 'geditorial' ),
 			],
-			'meta_box_title'      => _x( 'Contests', 'Modules: Contest: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
-			'tweaks_column_title' => _x( 'Contests', 'Modules: Contest: Column Title', GEDITORIAL_TEXTDOMAIN ),
+			'meta_box_title'      => _x( 'Contests', 'Modules: Contest: MetaBox Title', 'geditorial' ),
+			'tweaks_column_title' => _x( 'Contests', 'Modules: Contest: Column Title', 'geditorial' ),
 		];
 
 		$strings['terms'] = [
 			'apply_status_tax' => [
-				'approved' => _x( 'Approved', 'Modules: Contest: Apply Statuses Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
-				'pending'  => _x( 'Pending', 'Modules: Contest: Apply Statuses Tax Defaults', GEDITORIAL_TEXTDOMAIN ),
+				'approved' => _x( 'Approved', 'Modules: Contest: Apply Statuses Tax Defaults', 'geditorial' ),
+				'pending'  => _x( 'Pending', 'Modules: Contest: Apply Statuses Tax Defaults', 'geditorial' ),
 			],
 		];
 
@@ -141,7 +141,7 @@ class Contest extends gEditorial\Module
 	{
 		parent::default_buttons( $module );
 
-		$this->register_button( 'install_def_apply_status_tax', _x( 'Install Default Apply Statuses', 'Modules: Contest: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
+		$this->register_button( 'install_def_apply_status_tax', _x( 'Install Default Apply Statuses', 'Modules: Contest: Setting Button', 'geditorial' ) );
 	}
 
 	public function after_setup_theme()
@@ -359,7 +359,7 @@ class Contest extends gEditorial\Module
 				echo $list;
 
 			else
-				HTML::desc( _x( 'No items connected!', 'Modules: Contest', GEDITORIAL_TEXTDOMAIN ), FALSE, '-empty' );
+				HTML::desc( _x( 'No items connected!', 'Modules: Contest', 'geditorial' ), FALSE, '-empty' );
 
 		echo '</div>';
 	}
@@ -581,7 +581,7 @@ class Contest extends gEditorial\Module
 			foreach ( $posttypes as $posttype )
 				$list[] = HTML::tag( 'a', [
 					'href'   => WordPress::getPostTypeEditLink( $posttype, 0, $args ),
-					'title'  => _x( 'View the connected list', 'Modules: Contest', GEDITORIAL_TEXTDOMAIN ),
+					'title'  => _x( 'View the connected list', 'Modules: Contest', 'geditorial' ),
 					'target' => '_blank',
 				], $this->cache_posttypes[$posttype] );
 
@@ -593,11 +593,11 @@ class Contest extends gEditorial\Module
 	// FIXME: update from magazine module
 	protected function render_tools_html( $uri, $sub )
 	{
-		HTML::h3( _x( 'Contest Tools', 'Modules: Contest', GEDITORIAL_TEXTDOMAIN ) );
+		HTML::h3( _x( 'Contest Tools', 'Modules: Contest', 'geditorial' ) );
 
 		echo '<table class="form-table">';
 
-		echo '<tr><th scope="row">'._x( 'From Terms', 'Modules: Contest', GEDITORIAL_TEXTDOMAIN ).'</th><td>';
+		echo '<tr><th scope="row">'._x( 'From Terms', 'Modules: Contest', 'geditorial' ).'</th><td>';
 
 		if ( ! empty( $_POST ) && isset( $_POST['contest_tax_check'] ) ) {
 
@@ -606,7 +606,7 @@ class Contest extends gEditorial\Module
 				'term_id' => Helper::tableColumnTermID(),
 				'name'    => Helper::tableColumnTermName(),
 				'linked'   => [
-					'title' => _x( 'Linked Contest Post', 'Modules: Contest: Table Column', GEDITORIAL_TEXTDOMAIN ),
+					'title' => _x( 'Linked Contest Post', 'Modules: Contest: Table Column', 'geditorial' ),
 					'callback' => function( $value, $row, $column, $index ){
 
 						if ( $post_id = $this->get_linked_post_id( $row, 'contest_cpt', 'contest_tax', FALSE ) )
@@ -616,7 +616,7 @@ class Contest extends gEditorial\Module
 					},
 				],
 				'slugged'   => [
-					'title' => _x( 'Same Slug Contest Post', 'Modules: Contest: Table Column', GEDITORIAL_TEXTDOMAIN ),
+					'title' => _x( 'Same Slug Contest Post', 'Modules: Contest: Table Column', 'geditorial' ),
 					'callback' => function( $value, $row, $column, $index ){
 
 						if ( $post_id = PostType::getIDbySlug( $row->slug, $this->constant( 'contest_cpt' ) ) )
@@ -626,7 +626,7 @@ class Contest extends gEditorial\Module
 					},
 				],
 				'count' => [
-					'title'    => _x( 'Count', 'Modules: Contest: Table Column', GEDITORIAL_TEXTDOMAIN ),
+					'title'    => _x( 'Count', 'Modules: Contest: Table Column', 'geditorial' ),
 					'callback' => function( $value, $row, $column, $index ){
 						if ( $post_id = PostType::getIDbySlug( $row->slug, $this->constant( 'contest_cpt' ) ) )
 							return Number::format( $this->get_linked_posts( $post_id, 'contest_cpt', 'contest_tax', TRUE ) );
@@ -640,18 +640,18 @@ class Contest extends gEditorial\Module
 		}
 
 		Settings::submitButton( 'contest_tax_check',
-			_x( 'Check Terms', 'Modules: Contest: Setting Button', GEDITORIAL_TEXTDOMAIN ), TRUE );
+			_x( 'Check Terms', 'Modules: Contest: Setting Button', 'geditorial' ), TRUE );
 
 		Settings::submitButton( 'contest_post_create',
-			_x( 'Create Contest Posts', 'Modules: Contest: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
+			_x( 'Create Contest Posts', 'Modules: Contest: Setting Button', 'geditorial' ) );
 
 		Settings::submitButton( 'contest_post_connect',
-			_x( 'Re-Connect Posts', 'Modules: Contest: Setting Button', GEDITORIAL_TEXTDOMAIN ) );
+			_x( 'Re-Connect Posts', 'Modules: Contest: Setting Button', 'geditorial' ) );
 
 		Settings::submitButton( 'contest_tax_delete',
-			_x( 'Delete Terms', 'Modules: Contest: Setting Button', GEDITORIAL_TEXTDOMAIN ), 'danger', TRUE );
+			_x( 'Delete Terms', 'Modules: Contest: Setting Button', 'geditorial' ), 'danger', TRUE );
 
-		HTML::desc( _x( 'Check for contest terms and create corresponding contest posts.', 'Modules: Contest', GEDITORIAL_TEXTDOMAIN ) );
+		HTML::desc( _x( 'Check for contest terms and create corresponding contest posts.', 'Modules: Contest', 'geditorial' ) );
 
 		echo '</td></tr>';
 		echo '</table>';

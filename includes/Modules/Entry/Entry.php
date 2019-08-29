@@ -21,8 +21,8 @@ class Entry extends gEditorial\Module
 	{
 		return [
 			'name'  => 'entry',
-			'title' => _x( 'Entry', 'Modules: Entry', GEDITORIAL_TEXTDOMAIN ),
-			'desc'  => _x( 'Wiki-like Posts Entries', 'Modules: Entry', GEDITORIAL_TEXTDOMAIN ),
+			'title' => _x( 'Entry', 'Modules: Entry', 'geditorial' ),
+			'desc'  => _x( 'Wiki-like Posts Entries', 'Modules: Entry', 'geditorial' ),
 			'icon'  => 'media-document',
 		];
 	}
@@ -69,8 +69,8 @@ class Entry extends gEditorial\Module
 	{
 		$strings = [
 			'noops' => [
-				'entry_cpt'   => _nx_noop( 'Entry', 'Entries', 'Modules: Entry: Noop', GEDITORIAL_TEXTDOMAIN ),
-				'section_tax' => _nx_noop( 'Section', 'Sections', 'Modules: Entry: Noop', GEDITORIAL_TEXTDOMAIN ),
+				'entry_cpt'   => _nx_noop( 'Entry', 'Entries', 'Modules: Entry: Noop', 'geditorial' ),
+				'section_tax' => _nx_noop( 'Section', 'Sections', 'Modules: Entry: Noop', 'geditorial' ),
 			],
 		];
 
@@ -78,9 +78,9 @@ class Entry extends gEditorial\Module
 			return $strings;
 
 		$strings['misc'] = [
-			'featured'             => _x( 'Cover Image', 'Modules: Entry: Entry CPT: Featured', GEDITORIAL_TEXTDOMAIN ),
-			'meta_box_title'       => _x( 'Entry', 'Modules: Entry: Meta Box Title', GEDITORIAL_TEXTDOMAIN ),
-			'section_column_title' => _x( 'Section', 'Modules: Entry: Column Title', GEDITORIAL_TEXTDOMAIN ),
+			'featured'             => _x( 'Cover Image', 'Modules: Entry: Entry CPT: Featured', 'geditorial' ),
+			'meta_box_title'       => _x( 'Entry', 'Modules: Entry: Meta Box Title', 'geditorial' ),
+			'section_column_title' => _x( 'Section', 'Modules: Entry: Column Title', 'geditorial' ),
 		];
 
 		return $strings;
@@ -161,7 +161,7 @@ class Entry extends gEditorial\Module
 
 		$nodes[] = [
 			'id'     => $this->classs(),
-			'title'  => _x( 'Entry Sections', 'Modules: Entry: Adminbar', GEDITORIAL_TEXTDOMAIN ),
+			'title'  => _x( 'Entry Sections', 'Modules: Entry: Adminbar', 'geditorial' ),
 			'parent' => $parent,
 			'href'   => get_post_type_archive_link( $this->constant( 'entry_cpt' ) ),
 		];
@@ -178,11 +178,11 @@ class Entry extends gEditorial\Module
 	public function register_shortcode_ui()
 	{
 		shortcode_ui_register_for_shortcode( $this->constant( 'section_shortcode' ), [
-			'label'         => HTML::escape( _x( 'Entry Section', 'Modules: Entry: UI: Label', GEDITORIAL_TEXTDOMAIN ) ),
+			'label'         => HTML::escape( _x( 'Entry Section', 'Modules: Entry: UI: Label', 'geditorial' ) ),
 			'listItemImage' => $this->get_posttype_icon( 'entry_cpt' ),
 			'attrs'         => [
 				[
-				'label'    => HTML::escape( _x( 'Section', 'Modules: Entry: UI: Label', GEDITORIAL_TEXTDOMAIN ) ),
+				'label'    => HTML::escape( _x( 'Section', 'Modules: Entry: UI: Label', 'geditorial' ) ),
 				'attr'     => 'id',
 				'type'     => 'term_select',
 				'taxonomy' => $this->constant( 'section_tax' ),

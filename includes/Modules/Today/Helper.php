@@ -371,8 +371,8 @@ class Today extends gEditorial\Helper
 			'name'         => 'geditorial-today-date-day',
 			'id'           => 'geditorial-today-date-day',
 			'value'        => $args['day'],
-			'title'        => _x( 'Day', 'Modules: Today: Meta Box Input', GEDITORIAL_TEXTDOMAIN ),
-			'placeholder'  => _x( 'Day', 'Modules: Today: Meta Box Input Placeholder', GEDITORIAL_TEXTDOMAIN ),
+			'title'        => _x( 'Day', 'Modules: Today: Meta Box Input', 'geditorial' ),
+			'placeholder'  => _x( 'Day', 'Modules: Today: Meta Box Input Placeholder', 'geditorial' ),
 			'data'         => [ 'ortho' => 'number' ],
 		] );
 
@@ -385,8 +385,8 @@ class Today extends gEditorial\Helper
 			'name'         => 'geditorial-today-date-month',
 			'id'           => 'geditorial-today-date-month',
 			'value'        => $args['month'],
-			'title'        => _x( 'Month', 'Modules: Today: Meta Box Input', GEDITORIAL_TEXTDOMAIN ),
-			'placeholder'  => _x( 'Month', 'Modules: Today: Meta Box Input Placeholder', GEDITORIAL_TEXTDOMAIN ),
+			'title'        => _x( 'Month', 'Modules: Today: Meta Box Input', 'geditorial' ),
+			'placeholder'  => _x( 'Month', 'Modules: Today: Meta Box Input Placeholder', 'geditorial' ),
 			'data'         => [ 'ortho' => 'number' ],
 		] );
 
@@ -398,8 +398,8 @@ class Today extends gEditorial\Helper
 				'name'         => 'geditorial-today-date-year',
 				'id'           => 'geditorial-today-date-year',
 				'value'        => $year ? $args['year'] : '',
-				'title'        => _x( 'Year', 'Modules: Today: Meta Box Input', GEDITORIAL_TEXTDOMAIN ),
-				'placeholder'  => _x( 'Year', 'Modules: Today: Meta Box Input Placeholder', GEDITORIAL_TEXTDOMAIN ),
+				'title'        => _x( 'Year', 'Modules: Today: Meta Box Input', 'geditorial' ),
+				'placeholder'  => _x( 'Year', 'Modules: Today: Meta Box Input Placeholder', 'geditorial' ),
 				'disabled'     => ! $year,
 				'data'         => [ 'ortho' => 'number' ],
 			] );
@@ -408,7 +408,7 @@ class Today extends gEditorial\Helper
 
 		$html = HTML::tag( 'option', [
 			'value' => '',
-		], _x( '&mdash; Select Calendar &mdash;', 'Modules: Today: Meta Box Input Option None', GEDITORIAL_TEXTDOMAIN ) );
+		], _x( '&mdash; Select Calendar &mdash;', 'Modules: Today: Meta Box Input Option None', 'geditorial' ) );
 
 		foreach ( $calendars as $name => $title )
 			$html.= HTML::tag( 'option', [
@@ -420,7 +420,7 @@ class Today extends gEditorial\Helper
 			'class' => '-cal',
 			'name'  => 'geditorial-today-date-cal',
 			'id'    => 'geditorial-today-date-cal',
-			'title' => _x( 'Calendar', 'Modules: Today: Meta Box Input', GEDITORIAL_TEXTDOMAIN ),
+			'title' => _x( 'Calendar', 'Modules: Today: Meta Box Input', 'geditorial' ),
 		], $html );
 
 		echo HTML::wrap( $html, 'field-wrap -select' );
@@ -447,7 +447,8 @@ class Today extends gEditorial\Helper
 
 			$html.= HTML::button( $title,
 				WordPress::getPostNewLink( $object->name, $the_day ),
-				sprintf( _x( 'New %s connected to this day', 'Modules: Today', GEDITORIAL_TEXTDOMAIN ), $object->labels->singular_name ),
+				/* translators: %s: singular name */
+				sprintf( _x( 'New %s connected to this day', 'Modules: Today', 'geditorial' ), $object->labels->singular_name ),
 				is_admin()
 			).' ';
 		}
@@ -469,7 +470,7 @@ class Today extends gEditorial\Helper
 
 					$html.= HTML::button( $title,
 						WordPress::getPostNewLink( $object->name, $the_day ),
-						_x( 'New Day!', 'Modules: Today', GEDITORIAL_TEXTDOMAIN ),
+						_x( 'New Day!', 'Modules: Today', 'geditorial' ),
 						is_admin()
 					);
 				}
@@ -485,7 +486,7 @@ class Today extends gEditorial\Helper
 
 					$html.= HTML::button( $title,
 						WordPress::getPostEditLink( $the_post ),
-						_x( 'Edit Day!', 'Modules: Today', GEDITORIAL_TEXTDOMAIN ),
+						_x( 'Edit Day!', 'Modules: Today', 'geditorial' ),
 						is_admin()
 					);
 				}

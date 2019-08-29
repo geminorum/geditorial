@@ -15,8 +15,8 @@ class CustomHTML extends gEditorial\Widget
 			'module' => 'widgets',
 			'name'   => 'custom_html',
 			'class'  => 'custom-html',
-			'title'  => _x( 'Editorial: Custom HTML', 'Modules: Widgets: Widget Title', GEDITORIAL_TEXTDOMAIN ),
-			'desc'   => _x( 'Displays arbitrary HTML code with support for shortcodes and embeds.', 'Modules: Widgets: Widget Description', GEDITORIAL_TEXTDOMAIN ),
+			'title'  => _x( 'Editorial: Custom HTML', 'Modules: Widgets: Widget Title', 'geditorial' ),
+			'desc'   => _x( 'Displays arbitrary HTML code with support for shortcodes and embeds.', 'Modules: Widgets: Widget Description', 'geditorial' ),
 		];
 	}
 
@@ -69,11 +69,11 @@ class CustomHTML extends gEditorial\Widget
 
 		echo '<div class="-group">';
 
-		$this->form_checkbox( $instance, FALSE, 'embeds', _x( 'Process Embeds', 'Modules: Widgets: Widget: Custom HTML', GEDITORIAL_TEXTDOMAIN ) );
-		$this->form_checkbox( $instance, FALSE, 'shortcodes', _x( 'Process Shortcodes', 'Modules: Widgets: Widget: Custom HTML', GEDITORIAL_TEXTDOMAIN ) );
-		$this->form_checkbox( $instance, FALSE, 'filters', _x( 'Process Filters', 'Modules: Widgets: Widget: Custom HTML', GEDITORIAL_TEXTDOMAIN ) );
-		$this->form_checkbox( $instance, FALSE, 'legacy', _x( 'Process Filters (Legacy)', 'Modules: Widgets: Widget: Custom HTML', GEDITORIAL_TEXTDOMAIN ) );
-		$this->form_checkbox( $instance, FALSE, 'autop', _x( 'Automatic Paragraphs', 'Modules: Widgets: Widget: Custom HTML', GEDITORIAL_TEXTDOMAIN ) );
+		$this->form_checkbox( $instance, FALSE, 'embeds', _x( 'Process Embeds', 'Modules: Widgets: Widget: Custom HTML', 'geditorial' ) );
+		$this->form_checkbox( $instance, FALSE, 'shortcodes', _x( 'Process Shortcodes', 'Modules: Widgets: Widget: Custom HTML', 'geditorial' ) );
+		$this->form_checkbox( $instance, FALSE, 'filters', _x( 'Process Filters', 'Modules: Widgets: Widget: Custom HTML', 'geditorial' ) );
+		$this->form_checkbox( $instance, FALSE, 'legacy', _x( 'Process Filters (Legacy)', 'Modules: Widgets: Widget: Custom HTML', 'geditorial' ) );
+		$this->form_checkbox( $instance, FALSE, 'autop', _x( 'Automatic Paragraphs', 'Modules: Widgets: Widget: Custom HTML', 'geditorial' ) );
 
 		echo '</div>';
 

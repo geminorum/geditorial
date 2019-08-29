@@ -35,7 +35,7 @@ class DropdownUser extends DropdownPost
 			html( 'input', [
 				'type'  => 'submit',
 				'class' => 'button',
-				'value' => _x( 'Filter', 'O2O', GEDITORIAL_TEXTDOMAIN ),
+				'value' => _x( 'Filter', 'O2O', 'geditorial' ),
 			] )
 		);
 	}

@@ -18,8 +18,8 @@ class Alphabet extends gEditorial\Module
 	{
 		return [
 			'name'  => 'alphabet',
-			'title' => _x( 'Alphabet', 'Modules: Alphabet', GEDITORIAL_TEXTDOMAIN ),
-			'desc'  => _x( 'A to Z Lists for Post Types, Taxonomies and Users', 'Modules: Alphabet', GEDITORIAL_TEXTDOMAIN ),
+			'title' => _x( 'Alphabet', 'Modules: Alphabet', 'geditorial' ),
+			'desc'  => _x( 'A to Z Lists for Post Types, Taxonomies and Users', 'Modules: Alphabet', 'geditorial' ),
 			'icon'  => 'editor-textcolor',
 		];
 	}

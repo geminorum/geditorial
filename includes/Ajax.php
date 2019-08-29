@@ -34,7 +34,7 @@ class Ajax extends Core\Base
 	public static function successMessage( $message = NULL )
 	{
 		if ( is_null( $message ) )
-			$message = _x( 'Succesful!', 'Ajax: Ajax Notice', GEDITORIAL_TEXTDOMAIN );
+			$message = _x( 'Succesful!', 'Ajax: Ajax Notice', 'geditorial' );
 
 		if ( $message )
 			self::success( HTML::success( $message ) );
@@ -50,7 +50,7 @@ class Ajax extends Core\Base
 	public static function errorMessage( $message = NULL )
 	{
 		if ( is_null( $message ) )
-			$message = _x( 'Error!', 'Ajax: Ajax Notice', GEDITORIAL_TEXTDOMAIN );
+			$message = _x( 'Error!', 'Ajax: Ajax Notice', 'geditorial' );
 
 		if ( $message )
 			self::error( HTML::error( $message ) );
@@ -60,12 +60,12 @@ class Ajax extends Core\Base
 
 	public static function errorUserCant()
 	{
-		self::errorMessage( _x( 'You\'re not authorized!', 'Ajax: Ajax Notice', GEDITORIAL_TEXTDOMAIN ) );
+		self::errorMessage( _x( 'You\'re not authorized!', 'Ajax: Ajax Notice', 'geditorial' ) );
 	}
 
 	public static function errorWhat()
 	{
-		self::errorMessage( _x( 'What?!', 'Ajax: Ajax Notice', GEDITORIAL_TEXTDOMAIN ) );
+		self::errorMessage( _x( 'What?!', 'Ajax: Ajax Notice', 'geditorial' ) );
 	}
 
 	// @REF: https://make.wordpress.org/core/?p=12799

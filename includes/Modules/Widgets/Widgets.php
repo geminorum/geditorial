@@ -11,8 +11,8 @@ class Widgets extends gEditorial\Module
 	{
 		return [
 			'name'  => 'widgets',
-			'title' => _x( 'Widgets', 'Modules: Widgets', GEDITORIAL_TEXTDOMAIN ),
-			'desc'  => _x( 'Carefully Customized Widgets', 'Modules: Widgets', GEDITORIAL_TEXTDOMAIN ),
+			'title' => _x( 'Widgets', 'Modules: Widgets', 'geditorial' ),
+			'desc'  => _x( 'Carefully Customized Widgets', 'Modules: Widgets', 'geditorial' ),
 			'icon'  => 'welcome-widgets-menus',
 		];
 	}
@@ -23,7 +23,7 @@ class Widgets extends gEditorial\Module
 			'_general' => [
 				[
 					'field'  => 'widgets',
-					'title'  => _x( 'Widgets', 'Modules: Widgets: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+					'title'  => _x( 'Widgets', 'Modules: Widgets: Setting Title', 'geditorial' ),
 					'type'   => 'checkboxes',
 					'values' => $this->list_widgets(),
 				]

@@ -263,7 +263,8 @@ class Module extends Base
 					'sub'     => $this->key,
 					'text'    => $this->module->title,
 					'url'     => $list,
-					'title'   => sprintf( _x( '%s', 'Module: Extra Link: Listtable', GEDITORIAL_TEXTDOMAIN ), $this->module->title ),
+					/* translators: %s: module title */
+					'title'   => sprintf( _x( '%s', 'Module: Extra Link: Listtable', 'geditorial' ), $this->module->title ),
 				];
 
 		if ( method_exists( $this, 'reports_settings' ) && ! Settings::isReports( $screen ) )
@@ -273,7 +274,8 @@ class Module extends Base
 					'sub'     => $sub,
 					'text'    => $title,
 					'url'     => $this->get_module_url( 'reports', $sub ),
-					'title'   => sprintf( _x( '%s Reports', 'Module: Extra Link: Reports', GEDITORIAL_TEXTDOMAIN ), $title ),
+					/* translators: %s: sub title */
+					'title'   => sprintf( _x( '%s Reports', 'Module: Extra Link: Reports', 'geditorial' ), $title ),
 				];
 
 		if ( method_exists( $this, 'tools_settings' ) && ! Settings::isTools( $screen ) )
@@ -283,7 +285,8 @@ class Module extends Base
 					'sub'     => $sub,
 					'text'    => $title,
 					'url'     => $this->get_module_url( 'tools', $sub ),
-					'title'   => sprintf( _x( '%s Tools', 'Module: Extra Link: Tools', GEDITORIAL_TEXTDOMAIN ), $title ),
+					/* translators: %s: sub title */
+					'title'   => sprintf( _x( '%s Tools', 'Module: Extra Link: Tools', 'geditorial' ), $title ),
 				];
 
 		if ( isset( $this->caps['settings'] ) && ! Settings::isSettings( $screen ) && $this->cuc( 'settings' ) )
@@ -292,7 +295,8 @@ class Module extends Base
 				'sub'     => $this->key,
 				'text'    => $this->module->title,
 				'url'     => $this->get_module_url( 'settings' ),
-				'title'   => sprintf( _x( '%s Settings', 'Module: Extra Link: Settings', GEDITORIAL_TEXTDOMAIN ), $this->module->title ),
+				/* translators: %s: module title */
+				'title'   => sprintf( _x( '%s Settings', 'Module: Extra Link: Settings', 'geditorial' ), $this->module->title ),
 			];
 
 		if ( $docs = $this->get_module_url( 'docs' ) )
@@ -301,16 +305,17 @@ class Module extends Base
 				'sub'     => $this->key,
 				'text'    => $this->module->title,
 				'url'     => $docs,
-				'title'   => sprintf( _x( '%s Documentation', 'Module: Extra Link: Documentation', GEDITORIAL_TEXTDOMAIN ), $this->module->title ),
+				/* translators: %s: module title */
+				'title'   => sprintf( _x( '%s Documentation', 'Module: Extra Link: Documentation', 'geditorial' ), $this->module->title ),
 			];
 
 		if ( 'config' != $this->module->name )
 			$links[] = [
 				'context' => 'docs',
 				'sub'     => FALSE,
-				'text'    => _x( 'Editorial Documentation', 'Module: Extra Link: Documentation', GEDITORIAL_TEXTDOMAIN ),
+				'text'    => _x( 'Editorial Documentation', 'Module: Extra Link: Documentation', 'geditorial' ),
 				'url'     => Settings::getModuleDocsURL( FALSE ),
-				'title'   => _x( 'Editorial Documentation', 'Module: Extra Link: Documentation', GEDITORIAL_TEXTDOMAIN ),
+				'title'   => _x( 'Editorial Documentation', 'Module: Extra Link: Documentation', 'geditorial' ),
 			];
 
 		return $links;
@@ -402,7 +407,7 @@ class Module extends Base
 			$pre = [];
 
 		else if ( TRUE === $pre )
-			$pre = [ 'all' => _x( 'All PostTypes', 'Module', GEDITORIAL_TEXTDOMAIN ) ];
+			$pre = [ 'all' => _x( 'All PostTypes', 'Module', 'geditorial' ) ];
 
 		$all = PostType::get( 0, $args );
 
@@ -521,8 +526,10 @@ class Module extends Base
 		return [
 			'field'       => $constant.'_supports',
 			'type'        => 'checkboxes-values',
-			'title'       => sprintf( _x( '%s Supports', 'Module: Setting Title', GEDITORIAL_TEXTDOMAIN ), $singular ),
-			'description' => sprintf( _x( 'Support core and extra features for %s posttype.', 'Module: Setting Description', GEDITORIAL_TEXTDOMAIN ), $singular ),
+			/* translators: %s: singular posttype name */
+			'title'       => sprintf( _x( '%s Supports', 'Module: Setting Title', 'geditorial' ), $singular ),
+			/* translators: %s: singular posttype name */
+			'description' => sprintf( _x( 'Support core and extra features for %s posttype.', 'Module: Setting Description', 'geditorial' ), $singular ),
 			'default'     => $defaults,
 			'values'      => $supports,
 		];
@@ -533,7 +540,7 @@ class Module extends Base
 		return [
 			'field'   => 'insert_priority'.( $prefix ? '_'.$prefix : '' ),
 			'type'    => 'priority',
-			'title'   => _x( 'Insert Priority', 'Module: Setting Title', GEDITORIAL_TEXTDOMAIN ),
+			'title'   => _x( 'Insert Priority', 'Module: Setting Title', 'geditorial' ),
 			'default' => $default,
 		];
 	}
@@ -583,7 +590,7 @@ class Module extends Base
 	{
 		if ( is_null( $title ) )
 			$title = $this->get_string( 'post_types_title', 'post', 'settings',
-				_x( 'Enable for Post Types', 'Module', GEDITORIAL_TEXTDOMAIN ) );
+				_x( 'Enable for Post Types', 'Module', 'geditorial' ) );
 
 		$option = $this->base.'_'.$this->module->name;
 
@@ -604,7 +611,7 @@ class Module extends Base
 	{
 		if ( is_null( $title ) )
 			$title = $this->get_string( 'taxonomies_title', 'post', 'settings',
-				_x( 'Enable for Taxonomies', 'Module', GEDITORIAL_TEXTDOMAIN ) );
+				_x( 'Enable for Taxonomies', 'Module', 'geditorial' ) );
 
 		$option = $this->base.'_'.$this->module->name;
 
@@ -624,7 +631,8 @@ class Module extends Base
 	public function register_settings_fields_option( $title = NULL )
 	{
 		if ( is_null( $title ) )
-			$title = _x( 'Fields for %s', 'Module', GEDITORIAL_TEXTDOMAIN );
+			/* translators: %s: posttype */
+			$title = _x( 'Fields for %s', 'Module', 'geditorial' );
 
 		$all = $this->all_posttypes();
 
@@ -720,14 +728,14 @@ class Module extends Base
 			'id'    => $args['post_type'].'_fields_all',
 		] );
 
-		$html.= '&nbsp;<span class="description">'._x( 'Select All Fields', 'Module', GEDITORIAL_TEXTDOMAIN ).'</span>';
+		$html.= '&nbsp;<span class="description">'._x( 'Select All Fields', 'Module', 'geditorial' ).'</span>';
 
 		HTML::label( $html, $args['post_type'].'_fields_all', FALSE );
 	}
 
 	public function settings_fields_option_none( $args )
 	{
-		Settings::moduleSectionEmpty( _x( 'No fields supported', 'Module', GEDITORIAL_TEXTDOMAIN ) );
+		Settings::moduleSectionEmpty( _x( 'No fields supported', 'Module', 'geditorial' ) );
 	}
 
 	public function settings_from()
@@ -753,7 +761,7 @@ class Module extends Base
 	{
 		$this->register_button( 'submit', NULL, TRUE );
 		$this->register_button( 'reset', NULL, 'reset', TRUE );
-		$this->register_button( 'disable', _x( 'Disable Module', 'Module: Button', GEDITORIAL_TEXTDOMAIN ), 'danger' );
+		$this->register_button( 'disable', _x( 'Disable Module', 'Module: Button', 'geditorial' ), 'danger' );
 
 		foreach ( $this->get_module_links() as $link )
 			if ( ! empty( $link['context'] ) && in_array( $link['context'], [ 'tools', 'reports', 'listtable' ] ) )
@@ -1138,19 +1146,22 @@ class Module extends Base
 			return $this->strings['noops'][$constant];
 
 		if ( 'post' == $constant )
-			return _nx_noop( '%s Post', '%s Posts', 'Module: Noop', GEDITORIAL_TEXTDOMAIN );
+			/* translators: %s: posts count */
+			return _nx_noop( '%s Post', '%s Posts', 'Module: Noop', 'geditorial' );
 
 		if ( 'connected' == $constant )
-			return _nx_noop( '%s Item Connected', '%s Items Connected', 'Module: Noop', GEDITORIAL_TEXTDOMAIN );
+			/* translators: %s: items count */
+			return _nx_noop( '%s Item Connected', '%s Items Connected', 'Module: Noop', 'geditorial' );
 
 		if ( 'word' == $constant )
-			return _nx_noop( '%s Word', '%s Words', 'Module: Noop', GEDITORIAL_TEXTDOMAIN );
+			/* translators: %s: words count */
+			return _nx_noop( '%s Word', '%s Words', 'Module: Noop', 'geditorial' );
 
 		$noop = [
 			'plural'   => $constant,
 			'singular' => $constant,
 			// 'context'  => ucwords( $module->name ).' Module: Noop', // no need
-			'domain'   => GEDITORIAL_TEXTDOMAIN,
+			'domain'   => 'geditorial',
 		];
 
 		if ( ! empty( $this->strings['labels'][$constant]['name'] ) )
@@ -1199,14 +1210,14 @@ class Module extends Base
 	{
 		$tab = [
 			'id'    => $this->classs( 'help-default-terms', $this->constant( $constant ) ),
-			'title' => _x( 'Default Terms', 'Module', GEDITORIAL_TEXTDOMAIN ),
+			'title' => _x( 'Default Terms', 'Module', 'geditorial' ),
 		];
 
 		if ( ! empty( $this->strings['terms'][$constant] ) )
 			$tab['content'] = HTML::wrap( HTML::tableCode( $this->strings['terms'][$constant], TRUE ), '-info' );
 
 		else
-			$tab['content'] = HTML::wrap( _x( 'No Default Terms', 'Module', GEDITORIAL_TEXTDOMAIN ), '-info' );
+			$tab['content'] = HTML::wrap( _x( 'No Default Terms', 'Module', 'geditorial' ), '-info' );
 
 		get_current_screen()->add_help_tab( $tab );
 	}
@@ -1358,7 +1369,8 @@ class Module extends Base
 			$flush   = WordPress::maybeFlushRules();
 			$filters = TRUE;
 		} else {
-			$title = sprintf( _x( 'Editorial: %s', 'Module', GEDITORIAL_TEXTDOMAIN ), $this->module->title );
+			/* translators: %s: module title */
+			$title = sprintf( _x( 'Editorial: %s', 'Module', 'geditorial' ), $this->module->title );
 			$back  = Settings::settingsURL();
 		}
 
@@ -1368,7 +1380,7 @@ class Module extends Base
 			Settings::message();
 
 			if ( $flush )
-				echo HTML::warning( _x( 'You need to flush rewrite rules!', 'Module', GEDITORIAL_TEXTDOMAIN ), FALSE );
+				echo HTML::warning( _x( 'You need to flush rewrite rules!', 'Module', 'geditorial' ), FALSE );
 
 			echo '<div class="-header">';
 
@@ -1398,64 +1410,64 @@ class Module extends Base
 	public function settings_section_defaults()
 	{
 		Settings::fieldSection(
-			_x( 'Defaults', 'Module: Setting Section Title', GEDITORIAL_TEXTDOMAIN )
+			_x( 'Defaults', 'Module: Setting Section Title', 'geditorial' )
 		);
 	}
 
 	public function settings_section_frontend()
 	{
 		Settings::fieldSection(
-			_x( 'Front-end', 'Module: Setting Section Title', GEDITORIAL_TEXTDOMAIN )
+			_x( 'Front-end', 'Module: Setting Section Title', 'geditorial' )
 		);
 	}
 
 	public function settings_section_content()
 	{
 		Settings::fieldSection(
-			_x( 'Generated Contents', 'Module: Setting Section Title', GEDITORIAL_TEXTDOMAIN )
+			_x( 'Generated Contents', 'Module: Setting Section Title', 'geditorial' )
 		);
 	}
 
 	public function settings_section_dashboard()
 	{
 		Settings::fieldSection(
-			_x( 'Admin Dashboard', 'Module: Setting Section Title', GEDITORIAL_TEXTDOMAIN )
+			_x( 'Admin Dashboard', 'Module: Setting Section Title', 'geditorial' )
 		);
 	}
 
 	public function settings_section_editlist()
 	{
 		Settings::fieldSection(
-			_x( 'Admin Edit List', 'Module: Setting Section Title', GEDITORIAL_TEXTDOMAIN )
+			_x( 'Admin Edit List', 'Module: Setting Section Title', 'geditorial' )
 		);
 	}
 
 	public function settings_section_columns()
 	{
 		Settings::fieldSection(
-			_x( 'Admin List Columns', 'Module: Setting Section Title', GEDITORIAL_TEXTDOMAIN )
+			_x( 'Admin List Columns', 'Module: Setting Section Title', 'geditorial' )
 		);
 	}
 
 	public function settings_section_editpost()
 	{
 		Settings::fieldSection(
-			_x( 'Admin Edit Post', 'Module: Setting Section Title', GEDITORIAL_TEXTDOMAIN )
+			_x( 'Admin Edit Post', 'Module: Setting Section Title', 'geditorial' )
 		);
 	}
 
 	public function settings_section_comments()
 	{
 		Settings::fieldSection(
-			_x( 'Admin Comment List', 'Module: Setting Section Title', GEDITORIAL_TEXTDOMAIN )
+			_x( 'Admin Comment List', 'Module: Setting Section Title', 'geditorial' )
 		);
 	}
 
 	public function settings_section_roles()
 	{
 		Settings::fieldSection(
-			_x( 'Accessibility', 'Module: Setting Section Title', GEDITORIAL_TEXTDOMAIN ),
-			_x( 'Though Administrators have it all!', 'Module: Setting Section Description', GEDITORIAL_TEXTDOMAIN )
+			_x( 'Accessibility', 'Module: Setting Section Title', 'geditorial' ),
+			_x( 'Though Administrators have it all!', 'Module: Setting Section Description', 'geditorial' )
 		);
 	}
 
@@ -2180,7 +2192,7 @@ class Module extends Base
 	public function get_meta_box_title( $constant = 'post', $url = NULL, $edit_cap = NULL, $title = NULL )
 	{
 		if ( is_null( $title ) )
-			$title = $this->get_string( 'meta_box_title', $constant, 'misc', _x( 'Settings', 'Module: MetaBox Default Title', GEDITORIAL_TEXTDOMAIN ) );
+			$title = $this->get_string( 'meta_box_title', $constant, 'misc', _x( 'Settings', 'Module: MetaBox Default Title', 'geditorial' ) );
 
 		// problems with block editor
 		return $title;
@@ -2199,7 +2211,7 @@ class Module extends Base
 			if ( is_null( $url ) )
 				$url = $this->get_module_url( 'settings' );
 
-			$action = $this->get_string( 'meta_box_action', $constant, 'misc', _x( 'Configure', 'Module: MetaBox Default Action', GEDITORIAL_TEXTDOMAIN ) );
+			$action = $this->get_string( 'meta_box_action', $constant, 'misc', _x( 'Configure', 'Module: MetaBox Default Action', 'geditorial' ) );
 			$title.= ' <span class="postbox-title-action"><a href="'.esc_url( $url ).'" target="_blank">'.$action.'</a></span>';
 		}
 
@@ -2224,7 +2236,7 @@ class Module extends Base
 			$url = WordPress::getEditTaxLink( $taxonomy );
 
 		if ( $url ) {
-			$action = $this->get_string( 'meta_box_action', $constant, 'misc', _x( 'Manage', 'Module: MetaBox Default Action', GEDITORIAL_TEXTDOMAIN ) );
+			$action = $this->get_string( 'meta_box_action', $constant, 'misc', _x( 'Manage', 'Module: MetaBox Default Action', 'geditorial' ) );
 			$title.= ' <span class="postbox-title-action"><a href="'.esc_url( $url ).'" target="_blank">'.$action.'</a></span>';
 		}
 
@@ -2249,7 +2261,7 @@ class Module extends Base
 			if ( is_null( $url ) )
 				$url = WordPress::getPostTypeEditLink( $object->name );
 
-			$action = $this->get_string( 'meta_box_action', $constant, 'misc', _x( 'Manage', 'Module: MetaBox Default Action', GEDITORIAL_TEXTDOMAIN ) );
+			$action = $this->get_string( 'meta_box_action', $constant, 'misc', _x( 'Manage', 'Module: MetaBox Default Action', 'geditorial' ) );
 			$title.= ' <span class="postbox-title-action"><a href="'.esc_url( $url ).'" target="_blank">'.$action.'</a></span>';
 		}
 
@@ -2662,7 +2674,7 @@ class Module extends Base
 			foreach ( $posttypes as $posttype )
 				$list[] = HTML::tag( 'a', [
 					'href'   => WordPress::getPostTypeEditLink( $posttype, 0, $args ),
-					'title'  => _x( 'View the connected list', 'Module: P2P', GEDITORIAL_TEXTDOMAIN ),
+					'title'  => _x( 'View the connected list', 'Module: P2P', 'geditorial' ),
 					'target' => '_blank',
 				], $this->cache_posttypes[$posttype] );
 
@@ -2702,7 +2714,7 @@ class Module extends Base
 
 				echo HTML::tag( 'a', [
 					'href'   => WordPress::getPostTypeEditLink( $post->post_type, 0, $args ),
-					'title'  => _x( 'View all connected', 'Module: P2P', GEDITORIAL_TEXTDOMAIN ),
+					'title'  => _x( 'View all connected', 'Module: P2P', 'geditorial' ),
 					'target' => '_blank',
 				], Helper::trimChars( $item->get_title(), 85 ) );
 
@@ -3043,7 +3055,7 @@ class Module extends Base
 			return $title;
 
 		if ( is_null( $fallback ) )
-			return _x( '[Untitled]', 'Module: Template Title', GEDITORIAL_TEXTDOMAIN );
+			return _x( '[Untitled]', 'Module: Template Title', 'geditorial' );
 
 		return $fallback;
 	}
@@ -3051,7 +3063,7 @@ class Module extends Base
 	// DEFAULT METHOD: content for overrided empty page
 	public function template_get_empty_content( $atts = [] )
 	{
-		$text = $this->get_setting( 'empty_content', _x( 'There are no content by this title. Search again or create one.', 'Module: Template Empty', GEDITORIAL_TEXTDOMAIN ) );
+		$text = $this->get_setting( 'empty_content', _x( 'There are no content by this title. Search again or create one.', 'Module: Template Empty', 'geditorial' ) );
 		return Text::autoP( trim( $text ) );
 	}
 

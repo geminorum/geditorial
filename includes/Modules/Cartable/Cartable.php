@@ -27,8 +27,8 @@ class Cartable extends gEditorial\Module
 	{
 		return [
 			'name'     => 'cartable',
-			'title'    => _x( 'Cartable', 'Modules: Cartable', GEDITORIAL_TEXTDOMAIN ),
-			'desc'     => _x( 'Customized Content Folders', 'Modules: Cartable', GEDITORIAL_TEXTDOMAIN ),
+			'title'    => _x( 'Cartable', 'Modules: Cartable', 'geditorial' ),
+			'desc'     => _x( 'Customized Content Folders', 'Modules: Cartable', 'geditorial' ),
 			'icon'     => 'portfolio',
 			'frontend' => FALSE,
 		];
@@ -44,18 +44,18 @@ class Cartable extends gEditorial\Module
 			'_general' => [
 				[
 					'field'       => 'support_users',
-					'title'       => _x( 'User Cartables', 'Modules: Cartable: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Enables cartables based on registered users.', 'Modules: Cartable: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'User Cartables', 'Modules: Cartable: Setting Title', 'geditorial' ),
+					'description' => _x( 'Enables cartables based on registered users.', 'Modules: Cartable: Setting Description', 'geditorial' ),
 				],
 				[
 					'field'       => 'support_groups',
-					'title'       => _x( 'Group Cartables', 'Modules: Cartable: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Enables cartables based on custom groups. Needs <i>Users</i> module.', 'Modules: Cartable: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Group Cartables', 'Modules: Cartable: Setting Title', 'geditorial' ),
+					'description' => _x( 'Enables cartables based on custom groups. Needs <i>Users</i> module.', 'Modules: Cartable: Setting Description', 'geditorial' ),
 				],
 				[
 					'field'       => 'support_types',
-					'title'       => _x( 'Type Cartables', 'Modules: Cartable: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-					'description' => _x( 'Enables cartables based on custom types.', 'Modules: Cartable: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+					'title'       => _x( 'Type Cartables', 'Modules: Cartable: Setting Title', 'geditorial' ),
+					'description' => _x( 'Enables cartables based on custom types.', 'Modules: Cartable: Setting Description', 'geditorial' ),
 				],
 			],
 		];
@@ -63,26 +63,26 @@ class Cartable extends gEditorial\Module
 		if ( $this->support_users )
 			$settings['_roles'][] = [
 				'field'       => 'map_cap_user',
-				'title'       => _x( 'Map User Capabilities', 'Modules: Cartable: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-				'description' => _x( 'Gives access to edit posts based on user cartables.', 'Modules: Cartable: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+				'title'       => _x( 'Map User Capabilities', 'Modules: Cartable: Setting Title', 'geditorial' ),
+				'description' => _x( 'Gives access to edit posts based on user cartables.', 'Modules: Cartable: Setting Description', 'geditorial' ),
 			];
 
 		if ( $this->support_groups )
 			$settings['_roles'][] = [
 				'field'       => 'map_cap_group',
-				'title'       => _x( 'Map Group Capabilities', 'Modules: Cartable: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-				'description' => _x( 'Gives access to edit posts based on group cartables.', 'Modules: Cartable: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+				'title'       => _x( 'Map Group Capabilities', 'Modules: Cartable: Setting Title', 'geditorial' ),
+				'description' => _x( 'Gives access to edit posts based on group cartables.', 'Modules: Cartable: Setting Description', 'geditorial' ),
 			];
 
 		if ( $this->support_users )
-			$settings['_roles']['excluded_roles'] = _x( 'Roles that excluded from cartables.', 'Modules: Cartable: Setting Description', GEDITORIAL_TEXTDOMAIN );
+			$settings['_roles']['excluded_roles'] = _x( 'Roles that excluded from cartables.', 'Modules: Cartable: Setting Description', 'geditorial' );
 
 		if ( $this->support_users )
 			$settings['_roles'][] = [
 				'field'       => 'view_user_roles',
 				'type'        => 'checkboxes',
-				'title'       => _x( 'View User Cartable', 'Modules: Cartable: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-				'description' => _x( 'Roles that can view user cartables.', 'Modules: Cartable: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+				'title'       => _x( 'View User Cartable', 'Modules: Cartable: Setting Title', 'geditorial' ),
+				'description' => _x( 'Roles that can view user cartables.', 'Modules: Cartable: Setting Description', 'geditorial' ),
 				'exclude'     => $exclude,
 				'values'      => $roles,
 			];
@@ -91,8 +91,8 @@ class Cartable extends gEditorial\Module
 			$settings['_roles'][] = [
 				'field'       => 'view_group_roles',
 				'type'        => 'checkboxes',
-				'title'       => _x( 'View Group Cartable', 'Modules: Cartable: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-				'description' => _x( 'Roles that can view group cartables.', 'Modules: Cartable: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+				'title'       => _x( 'View Group Cartable', 'Modules: Cartable: Setting Title', 'geditorial' ),
+				'description' => _x( 'Roles that can view group cartables.', 'Modules: Cartable: Setting Description', 'geditorial' ),
 				'exclude'     => $exclude,
 				'values'      => $roles,
 			];
@@ -101,8 +101,8 @@ class Cartable extends gEditorial\Module
 			$settings['_roles'][] = [
 				'field'       => 'view_type_roles',
 				'type'        => 'checkboxes',
-				'title'       => _x( 'View Type Cartable', 'Modules: Cartable: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-				'description' => _x( 'Roles that can view type cartables.', 'Modules: Cartable: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+				'title'       => _x( 'View Type Cartable', 'Modules: Cartable: Setting Title', 'geditorial' ),
+				'description' => _x( 'Roles that can view type cartables.', 'Modules: Cartable: Setting Description', 'geditorial' ),
 				'exclude'     => $exclude,
 				'values'      => $roles,
 			];
@@ -111,8 +111,8 @@ class Cartable extends gEditorial\Module
 			$settings['_roles'][] = [
 				'field'       => 'assign_user_roles',
 				'type'        => 'checkboxes',
-				'title'       => _x( 'Assign User Cartables', 'Modules: Cartable: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-				'description' => _x( 'Roles that can assign user cartables.', 'Modules: Cartable: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+				'title'       => _x( 'Assign User Cartables', 'Modules: Cartable: Setting Title', 'geditorial' ),
+				'description' => _x( 'Roles that can assign user cartables.', 'Modules: Cartable: Setting Description', 'geditorial' ),
 				'exclude'     => $exclude,
 				'values'      => $roles,
 			];
@@ -121,8 +121,8 @@ class Cartable extends gEditorial\Module
 			$settings['_roles'][] = [
 				'field'       => 'assign_group_roles',
 				'type'        => 'checkboxes',
-				'title'       => _x( 'Assign Group Cartables', 'Modules: Cartable: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-				'description' => _x( 'Roles that can assign gorup cartables.', 'Modules: Cartable: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+				'title'       => _x( 'Assign Group Cartables', 'Modules: Cartable: Setting Title', 'geditorial' ),
+				'description' => _x( 'Roles that can assign gorup cartables.', 'Modules: Cartable: Setting Description', 'geditorial' ),
 				'exclude'     => $exclude,
 				'values'      => $roles,
 			];
@@ -131,8 +131,8 @@ class Cartable extends gEditorial\Module
 			$settings['_roles'][] = [
 				'field'       => 'assign_type_roles',
 				'type'        => 'checkboxes',
-				'title'       => _x( 'Assign Type Cartables', 'Modules: Cartable: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-				'description' => _x( 'Roles that can assign type cartables.', 'Modules: Cartable: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+				'title'       => _x( 'Assign Type Cartables', 'Modules: Cartable: Setting Title', 'geditorial' ),
+				'description' => _x( 'Roles that can assign type cartables.', 'Modules: Cartable: Setting Description', 'geditorial' ),
 				'exclude'     => $exclude,
 				'values'      => $roles,
 			];
@@ -141,14 +141,14 @@ class Cartable extends gEditorial\Module
 			$settings['_roles'][] = [
 				'field'       => 'restricted_roles',
 				'type'        => 'checkboxes',
-				'title'       => _x( 'Restricted Groups', 'Modules: Cartable: Setting Title', GEDITORIAL_TEXTDOMAIN ),
-				'description' => _x( 'Roles that restricted to their group users.', 'Modules: Cartable: Setting Description', GEDITORIAL_TEXTDOMAIN ),
+				'title'       => _x( 'Restricted Groups', 'Modules: Cartable: Setting Title', 'geditorial' ),
+				'description' => _x( 'Roles that restricted to their group users.', 'Modules: Cartable: Setting Description', 'geditorial' ),
 				'exclude'     => $exclude,
 				'values'      => $roles,
 			];
 
 		if ( $this->support_users )
-			$settings['_editpost']['display_threshold'] = _x( 'Maximum number of users to display the search box.', 'Modules: Cartable: Setting Description', GEDITORIAL_TEXTDOMAIN );
+			$settings['_editpost']['display_threshold'] = _x( 'Maximum number of users to display the search box.', 'Modules: Cartable: Setting Description', 'geditorial' );
 
 		$settings['_dashboard'] = [
 			'dashboard_widgets',
@@ -174,14 +174,14 @@ class Cartable extends gEditorial\Module
 	{
 		return [
 			'misc' => [
-				'meta_box_title'  => _x( 'Cartable', 'Modules: Cartable: MetaBox Title', GEDITORIAL_TEXTDOMAIN ),
-				'meta_box_action' => _x( 'View All', 'Modules: Cartable: MetaBox Action', GEDITORIAL_TEXTDOMAIN ),
+				'meta_box_title'  => _x( 'Cartable', 'Modules: Cartable: MetaBox Title', 'geditorial' ),
+				'meta_box_action' => _x( 'View All', 'Modules: Cartable: MetaBox Action', 'geditorial' ),
 			],
 			'noops' => [
-				'type_tax' => _nx_noop( 'Cartable Type', 'Cartable Types', 'Modules: Cartable: Noop', GEDITORIAL_TEXTDOMAIN ),
+				'type_tax' => _nx_noop( 'Cartable Type', 'Cartable Types', 'Modules: Cartable: Noop', 'geditorial' ),
 			],
 			'settings' => [
-				'sync_terms' => _x( 'Sync Users & Groups', 'Modules: Cartable: Setting Button', GEDITORIAL_TEXTDOMAIN ),
+				'sync_terms' => _x( 'Sync Users & Groups', 'Modules: Cartable: Setting Button', 'geditorial' ),
 			],
 		];
 	}
@@ -419,8 +419,8 @@ class Cartable extends gEditorial\Module
 
 			add_submenu_page(
 				'index.php',
-				_x( 'Editorial Cartables', 'Modules: Cartable: Page Title', GEDITORIAL_TEXTDOMAIN ),
-				_x( 'My Cartables', 'Modules: Cartable: Menu Title', GEDITORIAL_TEXTDOMAIN ),
+				_x( 'Editorial Cartables', 'Modules: Cartable: Page Title', 'geditorial' ),
+				_x( 'My Cartables', 'Modules: Cartable: Menu Title', 'geditorial' ),
 				'read',
 				$this->get_adminmenu(),
 				[ $this, 'admin_cartable_page' ]
@@ -442,7 +442,7 @@ class Cartable extends gEditorial\Module
 			$slug    = $user->user_login;
 			$context = 'user';
 
-			$subs['personal'] = _x( 'Personal', 'Modules: Cartable', GEDITORIAL_TEXTDOMAIN );
+			$subs['personal'] = _x( 'Personal', 'Modules: Cartable', 'geditorial' );
 		}
 
 		if ( $this->support_groups && $this->role_can( 'view_group', $user->ID ) ) {
@@ -489,7 +489,7 @@ class Cartable extends gEditorial\Module
 
 		Settings::wrapOpen( $this->key, 'listtable' );
 
-			Settings::headerTitle( _x( 'Editorial Cartables', 'Modules: Cartable: Page Title', GEDITORIAL_TEXTDOMAIN ), FALSE );
+			Settings::headerTitle( _x( 'Editorial Cartables', 'Modules: Cartable: Page Title', 'geditorial' ), FALSE );
 
 			$context = self::req( 'context', $context );
 			$slug    = 'user' == $context ? $slug : self::req( 'slug', $slug ); // prevents access to other users
@@ -511,7 +511,7 @@ class Cartable extends gEditorial\Module
 
 			} else {
 
-				HTML::desc( _x( 'Something\'s wrong!', 'Modules: Cartable', GEDITORIAL_TEXTDOMAIN ), FALSE, '-empty' );
+				HTML::desc( _x( 'Something\'s wrong!', 'Modules: Cartable', 'geditorial' ), FALSE, '-empty' );
 			}
 
 			$this->settings_signature( 'listtable' );
@@ -525,7 +525,7 @@ class Cartable extends gEditorial\Module
 
 		echo '<li class="-row -cartable-user">';
 
-			echo $this->get_column_icon( FALSE, 'portfolio', _x( 'User Cartables', 'Modules: Cartable: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
+			echo $this->get_column_icon( FALSE, 'portfolio', _x( 'User Cartables', 'Modules: Cartable: Row Icon Title', 'geditorial' ) );
 
 			$list = [];
 
@@ -544,7 +544,7 @@ class Cartable extends gEditorial\Module
 
 		echo '<li class="-row -cartable-user">';
 
-			echo $this->get_column_icon( FALSE, 'groups', _x( 'Group Cartables', 'Modules: Cartable: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
+			echo $this->get_column_icon( FALSE, 'groups', _x( 'Group Cartables', 'Modules: Cartable: Row Icon Title', 'geditorial' ) );
 
 			$list = [];
 
@@ -563,7 +563,7 @@ class Cartable extends gEditorial\Module
 
 		echo '<li class="-row -cartable-type">';
 
-			echo $this->get_column_icon( FALSE, 'portfolio', _x( 'Type Cartables', 'Modules: Cartable: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) );
+			echo $this->get_column_icon( FALSE, 'portfolio', _x( 'Type Cartables', 'Modules: Cartable: Row Icon Title', 'geditorial' ) );
 
 			$list = [];
 
@@ -581,10 +581,10 @@ class Cartable extends gEditorial\Module
 
 		if ( $this->support_users && $this->role_can( 'view_user', $user_id ) ) {
 
-			$title = _x( 'Your Personal Cartable', 'Modules: Cartable: Dashboard Widget Title', GEDITORIAL_TEXTDOMAIN );
+			$title = _x( 'Your Personal Cartable', 'Modules: Cartable: Dashboard Widget Title', 'geditorial' );
 			$title.= ' <span class="postbox-title-action"><a href="'.esc_url( $this->get_adminmenu( FALSE ) ).'"';
-			$title.= ' title="'._x( 'Click to view all items in this cartable', 'Modules: Cartable: Dashboard Widget Title Action', GEDITORIAL_TEXTDOMAIN ).'">';
-			$title.= _x( 'All Items', 'Modules: Cartable: Dashboard Widget Title Action', GEDITORIAL_TEXTDOMAIN ).'</a></span>';
+			$title.= ' title="'._x( 'Click to view all items in this cartable', 'Modules: Cartable: Dashboard Widget Title Action', 'geditorial' ).'">';
+			$title.= _x( 'All Items', 'Modules: Cartable: Dashboard Widget Title Action', 'geditorial' ).'</a></span>';
 
 			wp_add_dashboard_widget(
 				$this->classs( 'user-cartable' ),
@@ -601,10 +601,11 @@ class Cartable extends gEditorial\Module
 
 				$url = $this->get_adminmenu( FALSE, [ 'context' => 'group', 'slug' => $term->slug, 'sub' => 'group-'.$term->slug ] );
 
-				$title = sprintf( _x( 'Cartable: %s', 'Modules: Cartable: Dashboard Widget Title', GEDITORIAL_TEXTDOMAIN ), $term->name );
+				/* translators: %s: term name placeholder */
+				$title = sprintf( _x( 'Cartable: %s', 'Modules: Cartable: Dashboard Widget Title', 'geditorial' ), $term->name );
 				$title.= ' <span class="postbox-title-action"><a href="'.esc_url( $url ).'"';
-				$title.= ' title="'._x( 'Click to view all items in this cartable', 'Modules: Cartable: Dashboard Widget Title Action', GEDITORIAL_TEXTDOMAIN ).'">';
-				$title.= _x( 'All Items', 'Modules: Cartable: Dashboard Widget Title Action', GEDITORIAL_TEXTDOMAIN ).'</a></span>';
+				$title.= ' title="'._x( 'Click to view all items in this cartable', 'Modules: Cartable: Dashboard Widget Title Action', 'geditorial' ).'">';
+				$title.= _x( 'All Items', 'Modules: Cartable: Dashboard Widget Title Action', 'geditorial' ).'</a></span>';
 
 				wp_add_dashboard_widget(
 					$this->classs( 'group-cartable', $term->slug ),
@@ -622,10 +623,11 @@ class Cartable extends gEditorial\Module
 
 				$url = $this->get_adminmenu( FALSE, [ 'context' => 'type', 'slug' => $term->slug, 'sub' => 'type-'.$term->slug ] );
 
-				$title = sprintf( _x( 'Cartable: %s', 'Modules: Cartable: Dashboard Widget Title', GEDITORIAL_TEXTDOMAIN ), $term->name );
+				/* translators: %s: term name placeholder */
+				$title = sprintf( _x( 'Cartable: %s', 'Modules: Cartable: Dashboard Widget Title', 'geditorial' ), $term->name );
 				$title.= ' <span class="postbox-title-action"><a href="'.esc_url( $url ).'"';
-				$title.= ' title="'._x( 'Click to view all items in this cartable', 'Modules: Cartable: Dashboard Widget Title Action', GEDITORIAL_TEXTDOMAIN ).'">';
-				$title.= _x( 'All Items', 'Modules: Cartable: Dashboard Widget Title Action', GEDITORIAL_TEXTDOMAIN ).'</a></span>';
+				$title.= ' title="'._x( 'Click to view all items in this cartable', 'Modules: Cartable: Dashboard Widget Title Action', 'geditorial' ).'">';
+				$title.= _x( 'All Items', 'Modules: Cartable: Dashboard Widget Title Action', 'geditorial' ).'</a></span>';
 
 				wp_add_dashboard_widget(
 					$this->classs( 'type-cartable', $term->slug ),
@@ -722,7 +724,7 @@ class Cartable extends gEditorial\Module
 			return;
 
 		if ( ! $term = Taxonomy::getTerm( $box['args']['slug'], $this->constant( $box['args']['context'].'_tax' ) ) )
-			return HTML::desc( _x( 'Something\'s wrong!', 'Modules: Cartable', GEDITORIAL_TEXTDOMAIN ), FALSE, '-empty' );
+			return HTML::desc( _x( 'Something\'s wrong!', 'Modules: Cartable', 'geditorial' ), FALSE, '-empty' );
 
 		$this->tableCartableSummary( $term, $box['args']['context'] );
 	}
@@ -735,7 +737,7 @@ class Cartable extends gEditorial\Module
 		echo $this->wrap_open( '-admin-metabox' );
 
 			if ( 'auto-draft' == $post->post_status )
-				HTML::desc( _x( 'You can see cartable details, once you\'ve saved it for the first time.', 'Modules: Cartable', GEDITORIAL_TEXTDOMAIN ) );
+				HTML::desc( _x( 'You can see cartable details, once you\'ve saved it for the first time.', 'Modules: Cartable', 'geditorial' ) );
 
 			else if ( has_action( $this->hook( 'render_metabox' ) ) )
 				$this->actions( 'render_metabox', $post, $box, NULL, 'main' );
@@ -754,8 +756,8 @@ class Cartable extends gEditorial\Module
 
 		if ( in_array( $user->user_login, $users ) )
 			$html.= '<li class="-row">'
-				.$this->get_column_icon( FALSE, 'portfolio', _x( 'User Cartables', 'Modules: Cartable: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) )
-				._x( 'This currently is on your cartable.', 'Modules: Cartable', GEDITORIAL_TEXTDOMAIN )
+				.$this->get_column_icon( FALSE, 'portfolio', _x( 'User Cartables', 'Modules: Cartable: Row Icon Title', 'geditorial' ) )
+				._x( 'This currently is on your cartable.', 'Modules: Cartable', 'geditorial' )
 				.'</li>';
 
 		if ( $check_groups && $this->support_groups ) {
@@ -766,8 +768,8 @@ class Cartable extends gEditorial\Module
 				if ( is_object_in_term( $user->ID, $this->constant( 'group_ref' ), $group ) ) {
 
 					$html.= '<li class="-row">'
-						.$this->get_column_icon( FALSE, 'groups', _x( 'Group Cartables', 'Modules: Cartable: Row Icon Title', GEDITORIAL_TEXTDOMAIN ) )
-						._x( 'This currently is on your group cartable.', 'Modules: Cartable', GEDITORIAL_TEXTDOMAIN )
+						.$this->get_column_icon( FALSE, 'groups', _x( 'Group Cartables', 'Modules: Cartable: Row Icon Title', 'geditorial' ) )
+						._x( 'This currently is on your group cartable.', 'Modules: Cartable', 'geditorial' )
 						.'</li>';
 
 					break;
@@ -779,7 +781,7 @@ class Cartable extends gEditorial\Module
 			return $html;
 
 		if ( ! $html )
-			$html.= '<li class="-row">'._x( 'This currently is <b>not</b> on any of your cartables.', 'Modules: Cartable', GEDITORIAL_TEXTDOMAIN ).'</li>';
+			$html.= '<li class="-row">'._x( 'This currently is <b>not</b> on any of your cartables.', 'Modules: Cartable', 'geditorial' ).'</li>';
 
 		return HTML::wrap( '<ul class="-rows">'.$html.'</ul>', 'field-wrap -summary' );
 	}
@@ -872,9 +874,10 @@ class Cartable extends gEditorial\Module
 	private function tableCartable( $term, $context = 'user' )
 	{
 		if ( 'user' == $context )
-			$title = _x( 'Your Cartable', 'Modules: Cartable: Page Title', GEDITORIAL_TEXTDOMAIN );
+			$title = _x( 'Your Cartable', 'Modules: Cartable: Page Title', 'geditorial' );
 		else
-			$title = sprintf( _x( 'Cartable: %s', 'Modules: Cartable: Menu Title', GEDITORIAL_TEXTDOMAIN ), $term->name );
+		/* translators: %s: term name placeholder */
+			$title = sprintf( _x( 'Cartable: %s', 'Modules: Cartable: Menu Title', 'geditorial' ), $term->name );
 
 		HTML::h3( $title );
 
@@ -888,7 +891,7 @@ class Cartable extends gEditorial\Module
 
 		list( $posts, $pagination ) = $this->getTablePosts( $query );
 
-		$pagination['actions']['empty_cartable'] = _x( 'Empty Cartable', 'Modules: Cartable: Table Action', GEDITORIAL_TEXTDOMAIN );
+		$pagination['actions']['empty_cartable'] = _x( 'Empty Cartable', 'Modules: Cartable: Table Action', 'geditorial' );
 		$pagination['before'][] = Helper::tableFilterPostTypes( $this->list_posttypes() );
 
 		return HTML::tableList( [
@@ -899,7 +902,7 @@ class Cartable extends gEditorial\Module
 			'title' => Helper::tableColumnPostTitle(),
 			'terms' => Helper::tableColumnPostTerms( Taxonomy::get( 4, [ 'public' => TRUE ] ) ),
 			'cartable' => [
-				'title'    => _x( 'Cartable', 'Modules: Cartable: Table Column Title', GEDITORIAL_TEXTDOMAIN ),
+				'title'    => _x( 'Cartable', 'Modules: Cartable: Table Column Title', 'geditorial' ),
 				'callback' => function( $value, $row, $column, $index ){
 					return $this->metabox_summary( $row );
 				},
@@ -907,7 +910,7 @@ class Cartable extends gEditorial\Module
 		], $posts, [
 			'navigation' => 'before',
 			'search'     => 'before',
-			'empty'      => _x( 'The cartable is empty!', 'Modules: Cartable', GEDITORIAL_TEXTDOMAIN ),
+			'empty'      => _x( 'The cartable is empty!', 'Modules: Cartable', 'geditorial' ),
 			'pagination' => $pagination,
 		] );
 	}
@@ -949,7 +952,7 @@ class Cartable extends gEditorial\Module
 		$columns['modified'] = Helper::tableColumnPostDateModified();
 
 		HTML::tableList( $columns, $query->query( $args ), [
-			'empty' => _x( 'The cartable is empty!', 'Modules: Cartable', GEDITORIAL_TEXTDOMAIN ),
+			'empty' => _x( 'The cartable is empty!', 'Modules: Cartable', 'geditorial' ),
 		] );
 	}
 }
