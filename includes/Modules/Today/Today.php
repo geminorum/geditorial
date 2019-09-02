@@ -171,9 +171,6 @@ class Today extends gEditorial\Module
 
 	public function init_ajax()
 	{
-		if ( ! $this->get_setting( 'admin_columns' ) )
-			return;
-
 		if ( $this->is_inline_save( $_REQUEST, 'day_cpt' ) ) {
 
 			$this->_edit_screen_supported( $_REQUEST['post_type'] );
@@ -181,6 +178,9 @@ class Today extends gEditorial\Module
 			$this->_save_meta_supported( $_REQUEST['post_type'] );
 
 		} else if ( $this->is_inline_save( $_REQUEST, $this->posttypes() ) ) {
+
+			if ( ! $this->get_setting( 'admin_columns' ) )
+				return;
 
 			$this->_edit_screen_supported( $_REQUEST['post_type'] );
 
