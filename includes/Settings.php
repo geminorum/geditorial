@@ -444,6 +444,15 @@ class Settings extends Core\Base
 		];
 	}
 
+	public static function getSetting_admin_columns( $description = NULL )
+	{
+		return [
+			'field'       => 'admin_columns',
+			'title'       => _x( 'List Columns', 'Settings: Setting Title', 'geditorial' ),
+			'description' => $description ?: _x( 'Enhances columns on admin edit pages.', 'Settings: Setting Description', 'geditorial' ),
+		];
+	}
+
 	public static function getSetting_admin_bulkactions( $description = NULL )
 	{
 		return [
