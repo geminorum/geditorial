@@ -49,6 +49,9 @@ class Today extends gEditorial\Module
 				'adminmenu_roles',
 				'admin_rowactions',
 			],
+			'_editlist' => [
+				'admin_columns' => _x( 'Displays today column on edit list for supported posttypes.', 'Modules: Today: Settings', 'geditorial' ),
+			],
 			'_frontend' => [
 				[
 					'field'       => 'insert_theday',
@@ -168,6 +171,9 @@ class Today extends gEditorial\Module
 
 	public function init_ajax()
 	{
+		if ( ! $this->get_setting( 'admin_columns' ) )
+			return;
+
 		if ( $this->is_inline_save( $_REQUEST, 'day_cpt' ) ) {
 
 			$this->_edit_screen_supported( $_REQUEST['post_type'] );
@@ -313,15 +319,19 @@ class Today extends gEditorial\Module
 			} else if ( in_array( $screen->post_type, $this->posttypes() ) ) {
 
 				if ( $this->get_setting( 'admin_rowactions' ) ) {
+
 					$this->filter( 'page_row_actions', 2 );
 					$this->filter( 'post_row_actions', 2 );
 				}
 
-				$this->_save_meta_supported( $screen->post_type );
-				$this->_edit_screen_supported( $screen->post_type );
-				$this->_admin_enabled();
+				if ( $this->get_setting( 'admin_columns' ) ) {
 
-				$this->enqueue_asset_js( [], $screen );
+					$this->_save_meta_supported( $screen->post_type );
+					$this->_edit_screen_supported( $screen->post_type );
+					$this->_admin_enabled();
+
+					$this->enqueue_asset_js( [], $screen );
+				}
 			}
 		}
 	}
