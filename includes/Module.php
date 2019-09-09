@@ -2512,6 +2512,17 @@ class Module extends Base
 		return $pieces;
 	}
 
+	protected function do_restrict_manage_posts_authors( $posttype )
+	{
+		$extra = [];
+		$all   = $this->get_string( 'show_option_all', $posttype, 'misc', NULL );
+
+		if ( ! is_null( $all ) )
+			$extra['show_option_all'] = $all;
+
+		Listtable::restrictByAuthor( $GLOBALS['wp_query']->get( 'author' ) ?: 0, 'author', $extra );
+	}
+
 	protected function dashboard_glance_post( $constant )
 	{
 		return MetaBox::glancePosttype(

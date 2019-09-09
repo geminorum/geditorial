@@ -107,7 +107,6 @@ class Users extends gEditorial\Module
 					'users_column_title' => _x( 'Users', 'Modules: Users: Column Title', 'geditorial' ),
 					'menu_name'          => _x( 'Types', 'Modules: Users: User Type Tax Labels: Menu Name', 'geditorial' ),
 				],
-				'show_option_all'     => _x( 'All authors', 'Modules: Users: Show Option All', 'geditorial' ),
 				'counts_column_title' => _x( 'Summary', 'Modules: Users: Column Title', 'geditorial' ),
 			],
 			'noops' => [
@@ -250,17 +249,7 @@ class Users extends gEditorial\Module
 
 	public function restrict_manage_posts( $posttype, $which )
 	{
-		global $wp_query;
-
-		wp_dropdown_users( [
-			'name'                    => 'author',
-			'who'                     => 'authors',
-			'show'                    => 'display_name_with_login',
-			'selected'                => $wp_query->get( 'author' ) ? $wp_query->get( 'author' ) : 0,
-			'show_option_all'         => $this->get_string( 'show_option_all', get_query_var( 'post_type', 'post' ), 'misc' ),
-			'option_none_value'       => 0,
-			'hide_if_only_one_author' => TRUE,
-		] );
+		$this->do_restrict_manage_posts_authors( $posttype );
 	}
 
 	public function pre_get_posts( &$wp_query )
