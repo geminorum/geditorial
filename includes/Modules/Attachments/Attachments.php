@@ -53,6 +53,7 @@ class Attachments extends gEditorial\Module
 					'title'       => _x( 'Attachment Count', 'Modules: Attachments: Setting Title', 'geditorial' ),
 					'description' => _x( 'Displays attachment summary of the post.', 'Modules: Attachments: Setting Description', 'geditorial' ),
 				],
+				'admin_restrict' => _x( 'Enhances author restrictions on media library list view.', 'Modules: Attachments: Setting Description', 'geditorial' ),
 				[
 					'field'       => 'restrict_library',
 					'title'       => _x( 'Restrict Library', 'Modules: Attachments: Setting Title', 'geditorial' ),
@@ -96,7 +97,17 @@ class Attachments extends gEditorial\Module
 		if ( 'edit' == $screen->base && in_array( $screen->post_type, $this->posttypes() ) ) {
 
 			$this->action_module( 'tweaks', 'column_attr', 1, 20 );
+
+		} else if ( 'upload' == $screen->base ) {
+
+			if ( $this->get_setting( 'admin_restrict', FALSE ) )
+				$this->action( 'restrict_manage_posts', 2, 12 );
 		}
+	}
+
+	public function restrict_manage_posts( $posttype, $which )
+	{
+		$this->do_restrict_manage_posts_authors( $posttype );
 	}
 
 	private function get_prefix_permalink()
