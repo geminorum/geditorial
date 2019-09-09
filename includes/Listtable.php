@@ -165,4 +165,20 @@ SQL;
 			'walker'           => new Misc\Walker_PageDropdown(),
 		] );
 	}
+
+	public static function restrictByAuthor( $selected = 0, $name = 'author', $extra = [] )
+	{
+		return wp_dropdown_users( array_merge( [
+			'name'     => $name,
+			'selected' => $selected,
+			'who'      => 'authors',
+			'show'     => 'display_name_with_login',
+
+			'show_option_all'   => _x( 'All Authors', 'Listtable: Show Option All', 'geditorial' ),
+			'option_none_value' => 0,
+
+			'hide_if_only_one_author' => TRUE,
+			'include_selected'        => TRUE,
+		], $extra ) );
+	}
 }

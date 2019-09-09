@@ -552,16 +552,7 @@ class Helper extends Core\Base
 
 	public static function tableFilterAuthors( $list = NULL, $name = 'author' )
 	{
-		return wp_dropdown_users( [
-			'echo'                    => FALSE,
-			'name'                    => $name,
-			'who'                     => 'authors',
-			'show'                    => 'display_name_with_login',
-			'selected'                => self::req( $name, 0 ),
-			'show_option_all'         => _x( 'All Authors', 'Helper: Table Filter', 'geditorial' ),
-			'option_none_value'       => 0,
-			'hide_if_only_one_author' => TRUE,
-		] );
+		return Listtable::restrictByAuthor( self::req( $name, 0 ), $name, [ 'echo' => FALSE ] );
 	}
 
 	public static function tableColumnPostID()

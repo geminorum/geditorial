@@ -476,24 +476,20 @@ class MetaBox extends Core\Base
 	// @REF: `post_author_meta_box()`
 	public static function fieldPostAuthor( $post )
 	{
-		global $user_ID;
+		$selected = empty( $post->ID ) ? $GLOBALS['user_ID'] : $post->post_author;
 
-		$args = [
-			'who'              => 'authors',
-			'name'             => 'post_author_override',
-			'selected'         => empty( $post->ID ) ? $user_ID : $post->post_author,
-			'include_selected' => TRUE,
-			'show'             => 'display_name_with_login',
-			'class'            => static::BASE.'-admin-dropbown',
-			'echo'             => 0,
-		];
+		$html = Listtable::restrictByAuthor( $selected, 'post_author_override', [
+			'echo'            => FALSE,
+			'class'           => static::BASE.'-admin-dropbown',
+			'show_option_all' => '',
+		] );
 
-		if ( ! $html = wp_dropdown_users( $args ) )
+		if ( empty( $html ) )
 			return;
 
-		$html = '<label class="screen-reader-text" for="post_author_override">'.__( 'Author' ).'</label>'.$html;
+		$label = '<label class="screen-reader-text" for="post_author_override">'.__( 'Author' ).'</label>';
 
-		echo HTML::wrap( $html, 'field-wrap -select' );
+		echo HTML::wrap( $label.$html, 'field-wrap -select' );
 	}
 
 	public static function fieldPostParent( $post, $check = TRUE, $posttype = NULL, $statuses = [ 'publish', 'future', 'draft' ] )

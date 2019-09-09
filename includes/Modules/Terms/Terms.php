@@ -677,14 +677,9 @@ class Terms extends gEditorial\Module
 				if ( empty( $meta ) && FALSE === $term )
 					$meta = get_current_user_id();
 
-				$html.= wp_dropdown_users( [
-					'name'              => 'term-'.$field,
-					'who'               => 'authors',
-					'show'              => 'display_name_with_login',
-					'selected'          => empty( $meta ) ? '0' : $meta,
-					'show_option_all'   => Settings::showOptionNone(),
-					'option_none_value' => 0,
-					'echo'              => 0,
+				$html.= Listtable::restrictByAuthor( empty( $meta ) ? '0' : $meta, 'term-'.$field, [
+					'echo'            => FALSE,
+					'show_option_all' => Settings::showOptionNone(),
 				] );
 
 			break;
@@ -839,13 +834,9 @@ class Terms extends gEditorial\Module
 			break;
 			case 'author':
 
-				$html.= wp_dropdown_users( [
-					'name'              => 'term-'.$field,
-					'who'               => 'authors',
-					'show'              => 'display_name_with_login',
-					'show_option_all'   => Settings::showOptionNone(),
-					'option_none_value' => 0,
-					'echo'              => 0,
+				$html.= Listtable::restrictByAuthor( 0, 'term-'.$field, [
+					'echo'            => FALSE,
+					'show_option_all' => Settings::showOptionNone(),
 				] );
 
 			break;
