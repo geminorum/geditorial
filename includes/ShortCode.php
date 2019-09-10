@@ -21,12 +21,13 @@ class ShortCode extends Core\Base
 			return $html;
 
 		$before = empty( $args['before'] ) ? '' : $args['before'];
-		$after  = empty( $args['after'] ) ? '' : $args['after'];
+		$after  = empty( $args['after'] )  ? '' : $args['after'];
 
 		if ( empty( $args['wrap'] ) )
 			return $before.$html.$after;
 
 		$classes = [ '-wrap', static::BASE.'-wrap-shortcode' ];
+		$wrap    = TRUE === $args['wrap'] ? ( $block ? 'div' : 'span' ) : $args['wrap'];
 
 		if ( $suffix )
 			$classes[] = 'shortcode-'.$suffix;
@@ -35,12 +36,12 @@ class ShortCode extends Core\Base
 			$classes[] = 'context-'.$args['context'];
 
 		if ( ! empty( $args['class'] ) )
-			$classes[] = $args['class'];
+			$classes = HTML::attrClass( $classes, $args['class'] );
 
 		if ( $after )
-			return $before.HTML::tag( $block ? 'div' : 'span', array_merge( [ 'class' => $classes ], $extra ), $html ).$after;
+			return $before.HTML::tag( $wrap, array_merge( [ 'class' => $classes ], $extra ), $html ).$after;
 
-		return HTML::tag( $block ? 'div' : 'span', array_merge( [ 'class' => $classes ], $extra ), $before.$html );
+		return HTML::tag( $wrap, array_merge( [ 'class' => $classes ], $extra ), $before.$html );
 	}
 
 	// term as title of the list

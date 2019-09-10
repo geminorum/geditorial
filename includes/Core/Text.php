@@ -234,13 +234,9 @@ class Text extends Base
 		return FALSE;
 	}
 
-	/**
-	 * TODO: SEE:
-	 * https://github.com/GaryJones/Simple-PHP-CSS-Minification/
-	 * [Finding Comments in Source Code Using Regular Expressions – Stephen Ostermiller](http://blog.ostermiller.org/find-comment)
-	 *
-	 * @REF: http://www.catswhocode.com/blog/3-ways-to-compress-css-files-using-php
-	 */
+	// @SEE: https://github.com/GaryJones/Simple-PHP-CSS-Minification/
+	// @SEE: http://blog.ostermiller.org/find-comment
+	// @REF: http://www.catswhocode.com/blog/3-ways-to-compress-css-files-using-php
 	public static function minifyCSS( $buffer )
 	{
 		$buffer = preg_replace( '!/\*[^*]*\*+([^/][^*]*\*+)*/!', '', $buffer ); // comments
@@ -674,7 +670,7 @@ class Text extends Base
 	// USAGE: echo Text::replaceSymbols( [ '#', '$' ], $string, function( $matched, $string ) { return "<strong>{$matched}</strong>"; });
 	public static function replaceSymbols( $symbols, $string, $callback, $skip_links = TRUE )
 	{
-		return preg_replace_callback( self::replaceSymbolsPattern( implode( (array) $symbols, ',' ), $skip_links ), function ( $matches ) use ( $callback ) {
+		return preg_replace_callback( self::replaceSymbolsPattern( implode( ',', (array) $symbols ), $skip_links ), function ( $matches ) use ( $callback ) {
 			return call_user_func( $callback, $matches[0], $matches[1] );
 		}, $string );
 	}
@@ -781,7 +777,7 @@ class Text extends Base
 				continue;
 
 			$unescaped['{{{'.$token.'}}}'] = $value;
-			$escaped['{{'.$token.'}}'] = self::utf8SpecialChars( $value, ENT_QUOTES );
+			$escaped['{{'.$token.'}}']     = self::utf8SpecialChars( $value, ENT_QUOTES );
 		}
 
 		$string = strtr( $string, $unescaped );  // do first
@@ -844,5 +840,28 @@ class Text extends Base
 		echo $contents;
 
 		exit();
+	}
+
+	// USAGE: `Text::correctMixedEncoding('Ù…Ø­ØªÙˆØ§ÛŒ Ù…ÛŒÚ©Ø³ Ø´Ø¯Ù‡ و بخش سالم');`
+	// @REF: https://stackoverflow.com/questions/48948340/mixed-encoding-and-make-everything-utf-8
+	// @REF: https://gist.github.com/man4toman/029f43b802f4ee52d5fab2526cdd3cbd
+	// @SEE: https://gist.github.com/man4toman/f69a8bbf0c51b77f4202af7f2c0e7754
+	// @SEE: https://github.com/neitanod/forceutf8
+	public static function correctMixedEncoding( $string )
+	{
+		return preg_replace_callback(
+			'/\\P{Arabic}+/u',
+			function( $matches ) {
+				return iconv( 'UTF-8', 'ISO-8859-1', $matches[0] );
+			},
+			hex2bin( bin2hex( $string ) )
+		);
+	}
+
+	// FIXME: address the other attrs
+	// @REF: https://gist.github.com/man4toman/a645c4022f741c879110d09834f73d12
+	public static function unlinkify( $string )
+	{
+		return preg_replace( '/<a href=\"(.*?)\">(.*?)<\/a>/', "\\2", $string );
 	}
 }

@@ -3,6 +3,7 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Core\HTML;
 
 class Module extends Core\Base
 {
@@ -269,21 +270,38 @@ class Module extends Core\Base
 	protected function wrap( $html, $class = '', $block = TRUE, $id = FALSE, $hide = FALSE )
 	{
 		return $block
-			? '<div class="-wrap '.$this->base.'-wrap -'.$this->key.' '.$class.'"'.( $id ? ' id="'.$id.'"' : '' ).( $hide ? ' style="display:none"' : '' ).'>'.$html.'</div>'
-			: '<span class="-wrap '.$this->base.'-wrap -'.$this->key.' '.$class.'"'.( $id ? ' id="'.$id.'"' : '' ).( $hide ? ' style="display:none"' : '' ).'>'.$html.'</span>';
+			? '<div class="'.HTML::prepClass( '-wrap', $this->base.'-wrap', '-'.$this->key, $class ).'"'
+				.( $id ? ' id="'.$id.'"' : '' )
+				.( $hide ? ' style="display:none"' : '' )
+				.'>'.$html.'</div>'
+
+			: '<span class="'.HTML::prepClass( '-wrap', $this->base.'-wrap', '-'.$this->key, $class ).'"'
+				.( $id ? ' id="'.$id.'"' : '' )
+				.( $hide ? ' style="display:none"' : '' )
+				.'>'.$html.'</span>';
 	}
 
 	protected function wrap_open( $class = '', $block = TRUE, $id = FALSE, $hide = FALSE )
 	{
 		return $block
-			? '<div class="-wrap '.$this->base.'-wrap -'.$this->key.' '.$class.'"'.( $id ? ' id="'.$id.'"' : '' ).( $hide ? ' style="display:none"' : '' ).'>'
-			: '<span class="-wrap '.$this->base.'-wrap -'.$this->key.' '.$class.'"'.( $id ? ' id="'.$id.'"' : '' ).( $hide ? ' style="display:none"' : '' ).'>';
+			? '<div class="'.HTML::prepClass( '-wrap', $this->base.'-wrap', '-'.$this->key, $class ).'"'
+				.( $id ? ' id="'.$id.'"' : '' )
+				.( $hide ? ' style="display:none"' : '' ).'>'
+
+			: '<span class="'.HTML::prepClass( '-wrap', $this->base.'-wrap', '-'.$this->key, $class ).'"'
+				.( $id ? ' id="'.$id.'"' : '' )
+				.( $hide ? ' style="display:none"' : '' ).'>';
 	}
 
 	protected function wrap_open_buttons( $class = '', $block = TRUE, $id = FALSE, $hide = FALSE )
 	{
 		return $block
-			? '<p class="submit '.$this->base.'-wrap -wrap-buttons -'.$this->key.' '.$class.'"'.( $id ? ' id="'.$id.'"' : '' ).( $hide ? ' style="display:none"' : '' ).'>'
-			: '<span class="submit '.$this->base.'-wrap -wrap-buttons -'.$this->key.' '.$class.'"'.( $id ? ' id="'.$id.'"' : '' ).( $hide ? ' style="display:none"' : '' ).'>';
+			? '<p class="'.HTML::prepClass( 'submit', $this->base.'-wrap', '-wrap-buttons', '-'.$this->key, $class ).'"'
+				.( $id ? ' id="'.$id.'"' : '' )
+				.( $hide ? ' style="display:none"' : '' ).'>'
+
+			: '<span class="'.HTML::prepClass( 'submit', $this->base.'-wrap', '-wrap-buttons', '-'.$this->key, $class ).'"'
+				.( $id ? ' id="'.$id.'"' : '' )
+				.( $hide ? ' style="display:none"' : '' ).'>';
 	}
 }
