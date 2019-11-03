@@ -435,7 +435,7 @@ class Audit extends gEditorial\Module
 		$suffix = 'all' == $scope ? 'all' : get_current_user_id();
 		$key    = $this->hash( 'widgetsummary', $scope, $suffix );
 
-		if ( WordPress::isFlush() )
+		if ( WordPress::isFlush( 'read' ) )
 			delete_transient( $key );
 
 		if ( FALSE === ( $html = get_transient( $key ) ) ) {
