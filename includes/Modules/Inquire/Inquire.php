@@ -214,6 +214,6 @@ class Inquire extends gEditorial\Module
 			);
 
 		else
-			echo HTML::wrap( Text::autoP( $post->post_excerpt ), '-excerpt' );
+			echo HTML::wrap( Text::autoP( $post->post_excerpt ), '-excerpt -readonly' );
 	}
 }
