@@ -152,18 +152,19 @@ class User extends Core\Base
 		return $role ? in_array( $role, $roles ) : $roles;
 	}
 
-	public static function getAllRoleList( $object = FALSE )
+	public static function getAllRoleList( $filtered = TRUE, $object = FALSE )
 	{
-		$roles = $object ? new stdClass : array();
+		$roles = $filtered ? get_editable_roles() : wp_roles()->roles;
+		$list  = $object ? new stdClass : array();
 
-		foreach ( get_editable_roles() as $role_name => $role )
+		foreach ( $roles as $role_name => $role )
 
 			if ( $object )
-				$roles->{$role_name} = translate_user_role( $role['name'] );
+				$list->{$role_name} = translate_user_role( $role['name'] );
 
 			else
-				$roles[$role_name] = translate_user_role( $role['name'] );
+				$list[$role_name] = translate_user_role( $role['name'] );
 
-		return $roles;
+		return $list;
 	}
 }

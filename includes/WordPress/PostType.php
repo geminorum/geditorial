@@ -165,10 +165,11 @@ class PostType extends Core\Base
 			return '';
 
 		$image = HTML::tag( 'img', array(
-			'src'   => $post_thumbnail_img[0],
-			'class' => '-featured',
-			'alt'   => '',
-			'data'  => array(
+			'src'     => $post_thumbnail_img[0],
+			'alt'     => '',
+			'class'   => '-featured',
+			'loading' => 'lazy',
+			'data'    => array(
 				'post'       => $post_id,
 				'attachment' => $post_thumbnail_id,
 			),

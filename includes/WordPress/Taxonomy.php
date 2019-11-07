@@ -413,10 +413,11 @@ class Taxonomy extends Core\Base
 			return '';
 
 		$image = HTML::tag( 'img', array(
-			'src'   => $term_thumbnail_img[0],
-			'class' => '-featured',
-			'alt'   => '',
-			'data'  => array(
+			'src'     => $term_thumbnail_img[0],
+			'alt'     => '',
+			'class'   => '-featured',
+			'loading' => 'lazy',
+			'data'    => array(
 				'term'       => $term_id,
 				'attachment' => $term_image_id,
 			),

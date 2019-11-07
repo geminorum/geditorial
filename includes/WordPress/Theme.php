@@ -25,6 +25,7 @@ class Theme extends Core\Base
 			return $templates;
 
 		do_action( "get_template_part_{$slug}", $slug, $name, $templates );
+		do_action( 'get_template_part', $slug, $name, $templates );
 
 		locate_template( $templates, TRUE, FALSE );
 
