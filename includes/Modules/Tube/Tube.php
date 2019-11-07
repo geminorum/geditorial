@@ -327,13 +327,6 @@ class Tube extends gEditorial\Module
 		], $this->icon( 'twitter-alt', 'social-logos' ) );
 
 		$html.= HTML::tag( 'a', [
-			'href'   => sprintf( 'https://plus.google.com/share?url=%s', urlencode( $link ) ),
-			'class'  => [ '-button', 'btn', 'btn-default', 'btn-xs', '-button-icon' ],
-			'title'  => _x( 'Share this video', 'Modules: Tube: Button', 'geditorial' ),
-			'target' => '_blank',
-		], $this->icon( 'google-plus-alt', 'social-logos' ) );
-
-		$html.= HTML::tag( 'a', [
 			'href'   => sprintf( 'https://www.facebook.com/sharer/sharer.php?u=%s', urlencode( $link ) ),
 			'class'  => [ '-button', 'btn', 'btn-default', 'btn-xs', '-button-icon' ],
 			'title'  => _x( 'Share this video', 'Modules: Tube: Button', 'geditorial' ),

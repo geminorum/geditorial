@@ -244,7 +244,7 @@ class Revisions extends gEditorial\Module
 		if ( $link )
 			$parts['loading'] = Ajax::spinner();
 
-		return sprintf( '<span class="geditorial-admin-wrap-inline -revisions">%s</span>', implode( $parts, ' ' ) );
+		return sprintf( '<span class="geditorial-admin-wrap-inline -revisions">%s</span>', implode( ' ', $parts ) );
 	}
 
 	public function post_submitbox_misc_actions( $post )

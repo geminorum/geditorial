@@ -9,6 +9,7 @@ use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Core\HTML;
+use geminorum\gEditorial\Core\Icon;
 use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\Third;
 use geminorum\gEditorial\Core\URL;
@@ -912,15 +913,8 @@ class Tweaks extends gEditorial\Module
 			if ( ! $meta = get_user_meta( $user->ID, $method, TRUE ) )
 				continue;
 
-			if ( in_array( $method, [ 'twitter', 'facebook', 'googleplus' ] ) )
-				$icon = $method;
-			else if ( in_array( $method, [ 'mobile', 'phone' ] ) )
-				$icon = 'phone';
-			else
-				$icon = 'email-alt';
-
 			echo '<li class="-row tweaks-user-contacts -contact-'.$method.'">';
-				echo $this->get_column_icon( FALSE, $icon, $title );
+				echo $this->get_column_icon( FALSE, Icon::guess( $method, 'email-alt' ), $title );
 				echo $this->display_meta( $meta, $method );
 			echo '</li>';
 		}
@@ -931,8 +925,9 @@ class Tweaks extends gEditorial\Module
 		switch ( $key ) {
 			case 'mobile'    : return HTML::tel( $value );
 			case 'twitter'   : return Third::htmlTwitterIntent( $value, TRUE );
-			case 'googleplus': return HTML::link( URL::prepTitle( $value ), $value );
 			case 'facebook'  : return HTML::link( URL::prepTitle( $value ), $value );
+			case 'instagram' : return Third::htmlHandle( $value, 'https://instagram.com/' );
+			case 'telegram'  : return Third::htmlHandle( $value, 'https://t.me/' );
 		}
 
 		return HTML::escape( $value );
