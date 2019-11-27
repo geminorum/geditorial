@@ -332,8 +332,10 @@ class Audit extends gEditorial\Module
 		if ( is_admin() || ! is_singular( $this->posttypes() ) )
 			return;
 
-		$post_id = get_queried_object_id();
-		$classs  = $this->classs();
+		$post_id  = get_queried_object_id();
+		$classs   = $this->classs();
+		$taxonomy = $this->constant( 'audit_tax' );
+		$terms    = [];
 
 		if ( $this->role_can( 'reports' )
 			|| current_user_can( 'edit_post', $post_id ) ) {
@@ -345,7 +347,7 @@ class Audit extends gEditorial\Module
 				'href'   => $this->get_module_url(),
 			];
 
-			if ( $terms = Taxonomy::getTerms( $this->constant( 'audit_tax' ), $post_id, TRUE ) )
+			if ( $terms = Taxonomy::getTerms( $taxonomy, $post_id, TRUE ) )
 				foreach ( $terms as $term )
 					$nodes[] = [
 						'id'     => $this->classs( 'attribute', $term->term_id ),
@@ -365,6 +367,9 @@ class Audit extends gEditorial\Module
 		}
 
 		if ( ! $this->role_can( 'assign' ) )
+			return;
+
+		if ( empty( $terms ) && ! Taxonomy::hasTerms( $taxonomy ) )
 			return;
 
 		$this->action( 'admin_bar_menu', 1, 699 );
