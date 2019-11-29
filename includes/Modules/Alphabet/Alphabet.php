@@ -75,16 +75,20 @@ class Alphabet extends gEditorial\Module
 	public function shortcode_posts( $atts = [], $content = NULL, $tag = '' )
 	{
 		$args = shortcode_atts( [
-			'locale'    => get_locale(),
-			'post_type' => $this->posttypes(),
-			'comments'  => FALSE,
-			'excerpt'   => FALSE,
-			'item_cb'   => FALSE,
-			'context'   => NULL,
-			'wrap'      => TRUE,
-			'before'    => '',
-			'after'     => '',
-			'class'     => '',
+			'locale'     => get_locale(),
+			'post_type'  => $this->posttypes(),
+			'comments'   => FALSE,
+			'excerpt'    => FALSE,
+			'list_tag'   => 'dl',
+			'term_tag'   => 'dt',
+			'desc_tag'   => 'dd',
+			'heading_cb' => FALSE,
+			'item_cb'    => FALSE,
+			'context'    => NULL,
+			'wrap'       => TRUE,
+			'before'     => '',
+			'after'      => '',
+			'class'      => '',
 		], $atts, $tag );
 
 		if ( FALSE === $args['context'] )
@@ -114,6 +118,9 @@ class Alphabet extends gEditorial\Module
 			$alphabet = self::getAlphabet( $args['locale'] );
 			$keys     = array_flip( Arraay::column( $alphabet, 'letter', 'key' ) );
 
+			if ( $args['heading_cb'] && ! is_callable( $args['heading_cb'] ) )
+				$args['heading_cb'] = FALSE;
+
 			if ( $args['item_cb'] && ! is_callable( $args['item_cb'] ) )
 				$args['item_cb'] = FALSE;
 
@@ -123,10 +130,19 @@ class Alphabet extends gEditorial\Module
 
 				if ( $current != $letter ) {
 
-					$html.= ( count( $actives ) ? '</dl><div class="clearfix"></div></li>' : '' );
+					$id = isset( $keys[$letter] ) ? $keys[$letter] : $letter;
 
-					$html.= '<li id="'.( isset( $keys[$letter] ) ? $keys[$letter] : $letter ).'">';
-					$html.= '<h4 class="-heading">'.$letter.'</h4><dl'.( $args['excerpt'] ? ' class="dl-horizontal"' : '' ).'>';
+					if ( $args['heading_cb'] ) {
+
+						$html.= call_user_func_array( $args['heading_cb'], [ $letter, $id, $args ] );
+
+					} else {
+
+						$html.= ( count( $actives ) ? '</'.$args['list_tag'].'><div class="clearfix"></div></li>' : '' );
+
+						$html.= '<li id="'.$id.'"><h4 class="-heading">'.$letter.'</h4>';
+						$html.= '<'.$args['list_tag'].( $args['excerpt'] ? ' class="dl-horizontal"' : '' ).'>';
+					}
 
 					$actives[] = $current = $letter;
 				}
@@ -140,21 +156,24 @@ class Alphabet extends gEditorial\Module
 					$title = Helper::getPostTitle( $post );
 					$link  = WordPress::getPostShortLink( $post->ID );
 
-					$html.= '<dt><span class="-title">'.HTML::link( $title, $link ).'</span>';
+					$html.= '<'.$args['term_tag'].'><span class="-title">'.HTML::link( $title, $link ).'</span>';
 
 					if ( $args['comments'] && $post->comment_count )
 						$html.= '<span class="-comments-count">'.Helper::getCounted( $post->comment_count, '&nbsp;(%s)' ).'</span>';
 
-					$html.= '</dt>';
+					$html.= '</'.$args['term_tag'].'>';
 
 					if ( $args['excerpt'] && $post->post_excerpt )
-						$html.= '<dd class="-excerpt">'.wpautop( Helper::prepDescription( $post->post_excerpt, TRUE, FALSE ), FALSE ).'</dd>';
+						$html.= '<'.$args['desc_tag'].' class="-excerpt">'
+							.wpautop( Helper::prepDescription( $post->post_excerpt, TRUE, FALSE ), FALSE )
+							.'</'.$args['desc_tag'].'>';
+
 					else
-						$html.= '<dd class="-empty"></dd>';
+						$html.= '<'.$args['desc_tag'].' class="-empty"></'.$args['desc_tag'].'>';
 				}
 			}
 
-			$html.= '</dl><div class="clearfix"></div></li>';
+			$html.= '</'.$args['list_tag'].'><div class="clearfix"></div></li>';
 
 			foreach ( $alphabet as $key => $info )
 				$list.= '<li>'.(
@@ -164,7 +183,9 @@ class Alphabet extends gEditorial\Module
 				).'</li>';
 
 			$fields = '<input class="-search" type="search" style="display:none;" />';
-			$html   = '<ul class="list-inline -letters">'.$list.'</ul>'.$fields.'<ul class="list-unstyled -definitions">'.$html.'</ul>';
+
+			$html = '<ul class="list-inline -letters">'.$list.'</ul>'
+				.$fields.'<ul class="list-unstyled -definitions">'.$html.'</ul>';
 
 			$html = ShortCode::wrap( $html, $this->constant( 'shortcode_posts' ), $args );
 			$html = Text::minifyHTML( $html );
@@ -182,6 +203,10 @@ class Alphabet extends gEditorial\Module
 			'taxonomy'    => $this->taxonomies(),
 			'description' => FALSE,
 			'count'       => FALSE,
+			'list_tag'    => 'dl',
+			'term_tag'    => 'dt',
+			'desc_tag'    => 'dd',
+			'heading_cb'  => FALSE,
 			'item_cb'     => FALSE,
 			'context'     => NULL,
 			'wrap'        => TRUE,
@@ -214,6 +239,9 @@ class Alphabet extends gEditorial\Module
 			$alphabet = self::getAlphabet( $args['locale'] );
 			$keys     = array_flip( Arraay::column( $alphabet, 'letter', 'key' ) );
 
+			if ( $args['heading_cb'] && ! is_callable( $args['heading_cb'] ) )
+				$args['heading_cb'] = FALSE;
+
 			if ( $args['item_cb'] && ! is_callable( $args['item_cb'] ) )
 				$args['item_cb'] = FALSE;
 
@@ -223,10 +251,19 @@ class Alphabet extends gEditorial\Module
 
 				if ( $current != $letter ) {
 
-					$html.= ( count( $actives ) ? '</dl><div class="clearfix"></div></li>' : '' );
+					$id = isset( $keys[$letter] ) ? $keys[$letter] : $letter;
 
-					$html.= '<li id="'.( isset( $keys[$letter] ) ? $keys[$letter] : $letter ).'">';
-					$html.= '<h4 class="-heading">'.$letter.'</h4><dl'.( $args['description'] ? ' class="dl-horizontal"' : '' ).'>';
+					if ( $args['heading_cb'] ) {
+
+						$html.= call_user_func_array( $args['heading_cb'], [ $letter, $id, $args ] );
+
+					} else {
+
+						$html.= ( count( $actives ) ? '</'.$args['list_tag'].'><div class="clearfix"></div></li>' : '' );
+
+						$html.= '<li id="'.$id.'"><h4 class="-heading">'.$letter.'</h4>';
+						$html.= '<'.$args['list_tag'].( $args['description'] ? ' class="dl-horizontal"' : '' ).'>';
+					}
 
 					$actives[] = $current = $letter;
 				}
@@ -241,21 +278,24 @@ class Alphabet extends gEditorial\Module
 					// $title = Text::reFormatName( $title ); // no need on front
 					$link  = get_term_link( $term->term_id, $term->taxonomy );
 
-					$html.= '<dt><span class="-title">'.HTML::link( $title, $link ).'</span>';
+					$html.= '<'.$args['term_tag'].'><span class="-title">'.HTML::link( $title, $link ).'</span>';
 
 					if ( $args['count'] && $term->count )
 						$html.= '<span class="-term-count">'.Helper::getCounted( $term->count, '&nbsp;(%s)' ).'</span>';
 
-					$html.= '</dt>';
+					$html.= '</'.$args['term_tag'].'>';
 
 					if ( $args['description'] && $term->description )
-						$html.= '<dd class="-description">'.wpautop( Helper::prepDescription( $term->description, TRUE, FALSE ), FALSE ).'</dd>';
+						$html.= '<'.$args['desc_tag'].' class="-description">'
+							.wpautop( Helper::prepDescription( $term->description, TRUE, FALSE ), FALSE )
+							.'</'.$args['desc_tag'].'>';
+
 					else
-						$html.= '<dd class="-empty"></dd>';
+						$html.= '<'.$args['desc_tag'].' class="-empty"></'.$args['desc_tag'].'>';
 				}
 			}
 
-			$html.= '</dl><div class="clearfix"></div></li>';
+			$html.= '</'.$args['list_tag'].'><div class="clearfix"></div></li>';
 
 			foreach ( $alphabet as $key => $info )
 				$list.= '<li>'.(
@@ -266,7 +306,8 @@ class Alphabet extends gEditorial\Module
 
 			$fields = '<input class="-search" type="search" style="display:none;" />';
 
-			$html = '<ul class="list-inline -letters">'.$list.'</ul>'.$fields.'<ul class="list-unstyled -definitions">'.$html.'</ul>';
+			$html = '<ul class="list-inline -letters">'.$list.'</ul>'
+				.$fields.'<ul class="list-unstyled -definitions">'.$html.'</ul>';
 
 			$html = ShortCode::wrap( $html, $this->constant( 'shortcode_terms' ), $args );
 			$html = Text::minifyHTML( $html );
