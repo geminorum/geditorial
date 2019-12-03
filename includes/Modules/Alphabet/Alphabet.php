@@ -169,7 +169,7 @@ class Alphabet extends gEditorial\Module
 							.wpautop( Helper::prepDescription( $post->post_excerpt, TRUE, FALSE ), FALSE )
 							.'</'.$args['desc_tag'].'>';
 
-					else
+					else if ( 'dd' == $args['desc_tag'] && $args['excerpt'] )
 						$html.= '<'.$args['desc_tag'].' class="-empty"></'.$args['desc_tag'].'>';
 				}
 			}
@@ -292,7 +292,7 @@ class Alphabet extends gEditorial\Module
 							.wpautop( Helper::prepDescription( $term->description, TRUE, FALSE ), FALSE )
 							.'</'.$args['desc_tag'].'>';
 
-					else
+					else if ( 'dd' == $args['desc_tag'] && $args['description'] )
 						$html.= '<'.$args['desc_tag'].' class="-empty"></'.$args['desc_tag'].'>';
 				}
 			}
