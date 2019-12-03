@@ -75,20 +75,21 @@ class Alphabet extends gEditorial\Module
 	public function shortcode_posts( $atts = [], $content = NULL, $tag = '' )
 	{
 		$args = shortcode_atts( [
-			'locale'     => get_locale(),
-			'post_type'  => $this->posttypes(),
-			'comments'   => FALSE,
-			'excerpt'    => FALSE,
-			'list_tag'   => 'dl',
-			'term_tag'   => 'dt',
-			'desc_tag'   => 'dd',
-			'heading_cb' => FALSE,
-			'item_cb'    => FALSE,
-			'context'    => NULL,
-			'wrap'       => TRUE,
-			'before'     => '',
-			'after'      => '',
-			'class'      => '',
+			'locale'            => get_locale(),
+			'post_type'         => $this->posttypes(),
+			'comments'          => FALSE,
+			'comments_template' => '&nbsp;(%s)',
+			'excerpt'           => FALSE,
+			'list_tag'          => 'dl',
+			'term_tag'          => 'dt',
+			'desc_tag'          => 'dd',
+			'heading_cb'        => FALSE,
+			'item_cb'           => FALSE,
+			'context'           => NULL,
+			'wrap'              => TRUE,
+			'before'            => '',
+			'after'             => '',
+			'class'             => '',
 		], $atts, $tag );
 
 		if ( FALSE === $args['context'] )
@@ -159,7 +160,7 @@ class Alphabet extends gEditorial\Module
 					$html.= '<'.$args['term_tag'].'><span class="-title">'.HTML::link( $title, $link ).'</span>';
 
 					if ( $args['comments'] && $post->comment_count )
-						$html.= '<span class="-comments-count">'.Helper::getCounted( $post->comment_count, '&nbsp;(%s)' ).'</span>';
+						$html.= '<span class="-comments-count">'.Helper::getCounted( $post->comment_count, $args['comments_template'] ).'</span>';
 
 					$html.= '</'.$args['term_tag'].'>';
 
@@ -199,20 +200,21 @@ class Alphabet extends gEditorial\Module
 	public function shortcode_terms( $atts = [], $content = NULL, $tag = '' )
 	{
 		$args = shortcode_atts( [
-			'locale'      => get_locale(),
-			'taxonomy'    => $this->taxonomies(),
-			'description' => FALSE,
-			'count'       => FALSE,
-			'list_tag'    => 'dl',
-			'term_tag'    => 'dt',
-			'desc_tag'    => 'dd',
-			'heading_cb'  => FALSE,
-			'item_cb'     => FALSE,
-			'context'     => NULL,
-			'wrap'        => TRUE,
-			'before'      => '',
-			'after'       => '',
-			'class'       => '',
+			'locale'         => get_locale(),
+			'taxonomy'       => $this->taxonomies(),
+			'description'    => FALSE,
+			'count'          => FALSE,
+			'count_template' => '&nbsp;(%s)',
+			'list_tag'       => 'dl',
+			'term_tag'       => 'dt',
+			'desc_tag'       => 'dd',
+			'heading_cb'     => FALSE,
+			'item_cb'        => FALSE,
+			'context'        => NULL,
+			'wrap'           => TRUE,
+			'before'         => '',
+			'after'          => '',
+			'class'          => '',
 		], $atts, $tag );
 
 		if ( FALSE === $args['context'] )
@@ -281,7 +283,7 @@ class Alphabet extends gEditorial\Module
 					$html.= '<'.$args['term_tag'].'><span class="-title">'.HTML::link( $title, $link ).'</span>';
 
 					if ( $args['count'] && $term->count )
-						$html.= '<span class="-term-count">'.Helper::getCounted( $term->count, '&nbsp;(%s)' ).'</span>';
+						$html.= '<span class="-term-count">'.Helper::getCounted( $term->count, $args['count_template'] ).'</span>';
 
 					$html.= '</'.$args['term_tag'].'>';
 
