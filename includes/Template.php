@@ -79,7 +79,7 @@ class Template extends Core\Base
 
 		if ( $title && $args['figure'] ) {
 
-			$caption = $args['caption_text'] ?: $title;
+			$caption = trim( ( $args['caption_text'] ?: $title ) );
 
 			if ( TRUE === $args['caption_link'] && $link )
 				$caption = HTML::link( $caption, $link );

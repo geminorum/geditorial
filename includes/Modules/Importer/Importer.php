@@ -28,7 +28,7 @@ class Importer extends gEditorial\Module
 		return [
 			'name'     => 'importer',
 			'title'    => _x( 'Importer', 'Modules: Importer', 'geditorial' ),
-			'desc'     => _x( 'Import and Export Tools', 'Modules: Importer', 'geditorial' ),
+			'desc'     => _x( 'Data Import Tools', 'Modules: Importer', 'geditorial' ),
 			'icon'     => 'upload',
 			'frontend' => FALSE,
 		];
@@ -72,7 +72,7 @@ class Importer extends gEditorial\Module
 	{
 		return [
 			'js' => [
-				'modal_title' => _x( 'Choose a Datasheet', 'Modules: Importer: Javascript String', 'geditorial' ),
+				'modal_title'  => _x( 'Choose a Datasheet', 'Modules: Importer: Javascript String', 'geditorial' ),
 				'modal_button' => _x( 'Select as Source', 'Modules: Importer: Javascript String', 'geditorial' ),
 			],
 		];
@@ -86,8 +86,8 @@ class Importer extends gEditorial\Module
 		// https://github.com/kzykhys/PHPCsvParser
 		$iterator = new \SplFileObject( File::normalize( $file ) );
 		$parser   = new \KzykHys\CsvParser\CsvParser( $iterator, [ 'encoding' => 'UTF-8', 'limit' => 1 ] );
-		$items    = $parser->parse();
 
+		$items  = $parser->parse();
 		$map    = $this->get_postmeta( $id, FALSE, [] );
 		$fields = $this->get_importer_fields( $posttype );
 
@@ -139,13 +139,13 @@ class Importer extends gEditorial\Module
 		// https://github.com/kzykhys/PHPCsvParser
 		$iterator = new \SplFileObject( File::normalize( $file ) );
 		$parser   = new \KzykHys\CsvParser\CsvParser( $iterator, [ 'encoding' => 'UTF-8' ] );
-		$items    = $parser->parse();
+
+		$items = $parser->parse();
 
 		unset( $iterator, $parser, $items[0] );
 
-		$this->data_table( $items, $map, $posttype );
-
 		$this->set_meta( $id, $map, '_map' );
+		$this->data_table( $items, $map, $posttype );
 	}
 
 	private function data_table( $data, $map = [], $posttype = 'post' )
@@ -412,6 +412,9 @@ class Importer extends gEditorial\Module
 			HTML::desc( _x( 'Upload or select a CSV file, post-type and user to map the import.', 'Modules: Importer', 'geditorial' ), FALSE );
 
 		} else {
+
+			echo $this->wrap_open_buttons();
+
 			HTML::desc( _x( 'Imports are not supported for any of the post-types!', 'Modules: Importer', 'geditorial' ), FALSE );
 		}
 

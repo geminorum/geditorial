@@ -845,9 +845,10 @@ class Helper extends Core\Base
 
 	public static function noopedCount( $count, $nooped )
 	{
-		/* translators: %1$s: singular, %2$s: plural */
-		return sprintf( _x( '%2$s', 'Helper: Nooped Count', 'geditorial' ),
-			self::nooped( 1, $nooped ), self::nooped( $count, $nooped ) );
+		/* translators: singular/plural */
+		return 'plural' == _x( 'plural', 'Helper: Nooped Count', 'geditorial' )
+			? self::nooped( $count, $nooped )
+			: self::nooped( 1, $nooped );
 	}
 
 	private static function getStringsFromName( $name )

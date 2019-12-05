@@ -447,7 +447,7 @@ class ShortCode extends Core\Base
 	// list: assigned: posts by terms
 	// list: associated: posts by meta
 	// list: connected: posts by o2o
-	// list: atteched: posts by inheritance
+	// list: attached: posts by inheritance
 	// list: alphabetized: posts by alphabet
 	public static function listPosts( $list, $posttype, $taxonomy, $atts = [], $content = NULL, $tag = '' )
 	{

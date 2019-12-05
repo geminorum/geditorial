@@ -133,10 +133,10 @@ class Terms extends gEditorial\Module
 			],
 			'descriptions' => [
 				'order'     => _x( 'Terms are usually ordered alphabetically, but you can choose your own order by numbers.', 'Modules: Terms: Descriptions', 'geditorial' ),
-				'tagline'   => _x( 'Give more information about the term in a short, bite-size phrase.', 'Modules: Terms: Descriptions', 'geditorial' ),
+				'tagline'   => _x( 'Gives more information about the term in a short phrase.', 'Modules: Terms: Descriptions', 'geditorial' ),
 				'contact'   => _x( 'Adds a way to contact someone about the term, by url, email or phone.', 'Modules: Terms: Descriptions', 'geditorial' ),
-				'image'     => _x( 'Assign a custom image to visually separate terms from each other.', 'Modules: Terms: Descriptions', 'geditorial' ),
-				'author'    => _x( 'Set term author to help identify who created or owns each term.', 'Modules: Terms: Descriptions', 'geditorial' ),
+				'image'     => _x( 'Assigns a custom image to visually separate terms from each other.', 'Modules: Terms: Descriptions', 'geditorial' ),
+				'author'    => _x( 'Sets a user as term author to help identify who created or owns each term.', 'Modules: Terms: Descriptions', 'geditorial' ),
 				'color'     => _x( 'Terms can have unique colors to help separate them from each other.', 'Modules: Terms: Descriptions', 'geditorial' ),
 				'role'      => _x( 'Terms can have unique role visibility to help separate them for user roles.', 'Modules: Terms: Descriptions', 'geditorial' ),
 				'roles'     => _x( 'Terms can have unique roles visibility to help separate them for user roles.', 'Modules: Terms: Descriptions', 'geditorial' ),

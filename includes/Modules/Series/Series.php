@@ -335,6 +335,7 @@ class Series extends gEditorial\Module
 				'title'        => $title,
 				'placeholder'  => $title,
 				'autocomplete' => 'off',
+				'data'         => [ 'ortho' => 'number' ],
 			] );
 
 			echo HTML::wrap( $html, 'field-wrap -inputtext' );
