@@ -2,6 +2,7 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
+use geminorum\gEditorial\Core\File;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\Text;
@@ -288,6 +289,7 @@ class ShortCode extends Core\Base
 			'item_after'    => '',
 			'item_after_cb' => FALSE,
 			'item_download' => TRUE, // only for attachments
+			'item_size'     => TRUE, // only for attachments
 			'order_before'  => FALSE,
 			'order_zeroise' => FALSE,
 			'order_sep'     => ' &ndash; ',
@@ -357,6 +359,11 @@ class ShortCode extends Core\Base
 			}
 		}
 
+		if ( 'attachment' == $post->post_type && $args['item_size'] ) {
+			$size = TRUE === $args['item_size'] ? '&nbsp;<span class="-filesize">(%s)</span>' : $args['item_size'];
+			$item.= sprintf( $size, HTML::wrapLTR( File::formatSize( filesize( get_attached_file( $post->ID ) ), 2 ) ) );
+		}
+
 		if ( $args['item_after_cb'] && is_callable( $args['item_after_cb'] ) ) {
 			$item.= call_user_func_array( $args['item_after_cb'], [ $post, $args, $item ] );
 
@@ -411,6 +418,7 @@ class ShortCode extends Core\Base
 			'item_after'     => '',
 			'item_after_cb'  => FALSE,
 			'item_download'  => TRUE, // only for attachments
+			'item_size'      => TRUE, // only for attachments
 			'order_before'   => FALSE,
 			'order_zeroise'  => FALSE,
 			'order_sep'      => ' &ndash; ',
