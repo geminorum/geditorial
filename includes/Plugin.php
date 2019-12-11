@@ -486,8 +486,10 @@ class Plugin
 
 	public function wp_enqueue_scripts()
 	{
-		if ( count( $this->adminbar_nodes ) && is_admin_bar_showing() )
-			wp_enqueue_style( 'geditorial-adminbar', GEDITORIAL_URL.'assets/css/adminbar.all'.( is_rtl() ? '-rtl' : '' ).'.css', [], GEDITORIAL_VERSION );
+		if ( count( $this->adminbar_nodes ) && is_admin_bar_showing() ) {
+			wp_enqueue_style( static::BASE.'-adminbar', GEDITORIAL_URL.'assets/css/adminbar.all.css', [], GEDITORIAL_VERSION );
+			wp_style_add_data( static::BASE.'-adminbar', 'rtl', 'replace' );
+		}
 
 		if ( ! $this->asset_styles )
 			return;
@@ -495,7 +497,8 @@ class Plugin
 		if ( defined( 'GEDITORIAL_DISABLE_FRONT_STYLES' ) && GEDITORIAL_DISABLE_FRONT_STYLES )
 			return;
 
-		wp_enqueue_style( 'geditorial-front', GEDITORIAL_URL.'assets/css/front.all'.( is_rtl() ? '-rtl' : '' ).'.css', [], GEDITORIAL_VERSION );
+		wp_enqueue_style( static::BASE.'-front', GEDITORIAL_URL.'assets/css/front.all.css', [], GEDITORIAL_VERSION );
+		wp_style_add_data( static::BASE.'-front', 'rtl', 'replace' );
 	}
 
 	public function enqueue_asset_config( $args = [], $module = NULL )
