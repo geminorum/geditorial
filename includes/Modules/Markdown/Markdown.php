@@ -407,13 +407,13 @@ class Markdown extends gEditorial\Module
 	{
 		if ( $this->check_settings( $sub, 'reports' ) ) {
 
-			if ( ! empty( $_POST ) && isset( $_POST['_cb'] ) && count( $_POST['_cb'] ) ) {
+			if ( ! empty( $_POST ) ) {
 
 				$this->nonce_check( 'reports', $sub );
 
 				$count = 0;
 
-				if ( isset( $_POST['convert_markdown'] ) ) {
+				if ( $this->current_action( 'convert_markdown', TRUE ) ) {
 
 					foreach ( $_POST['_cb'] as $post_id )
 						if ( $this->convert_post( $post_id ) )
@@ -425,7 +425,7 @@ class Markdown extends gEditorial\Module
 							'count'   => $count,
 						] );
 
-				} else if ( isset( $_POST['process_markdown'] ) ) {
+				} else if ( $this->current_action( 'process_markdown', TRUE ) ) {
 
 					foreach ( $_POST['_cb'] as $post_id )
 						if ( $this->process_post( $post_id ) )
@@ -437,7 +437,7 @@ class Markdown extends gEditorial\Module
 							'count'   => $count,
 						] );
 
-				} else if ( isset( $_POST['cleanup_markdown'] ) ) {
+				} else if ( $this->current_action( 'cleanup_markdown', TRUE ) ) {
 
 					foreach ( $_POST['_cb'] as $post_id )
 						if ( $this->cleanup_post( $post_id ) )
@@ -449,7 +449,7 @@ class Markdown extends gEditorial\Module
 							'count'   => $count,
 						] );
 
-				} else if ( isset( $_POST['discard_markdown'] ) ) {
+				} else if ( $this->current_action( 'discard_markdown', TRUE ) ) {
 
 					foreach ( $_POST['_cb'] as $post_id )
 						if ( $this->discard_post( $post_id ) )

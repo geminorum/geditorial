@@ -688,7 +688,7 @@ class Users extends gEditorial\Module
 
 				$this->nonce_check( 'tools', $sub );
 
-				if ( isset( $_POST['remap_post_authors'] ) ) {
+				if ( $this->current_action( 'remap_post_authors' ) ) {
 
 					$file = wp_import_handle_upload();
 

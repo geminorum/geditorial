@@ -259,7 +259,7 @@ class Config extends gEditorial\Module
 					'empty_module' => FALSE,
 				], 'tools' );
 
-				if ( isset( $_POST['upgrade_old_options'] ) ) {
+				if ( $this->current_action( 'upgrade_old_options' ) ) {
 
 					$result = gEditorial()->upgrade_old_options();
 
@@ -269,12 +269,12 @@ class Config extends gEditorial\Module
 							'count'   => count( $result ),
 						] );
 
-				} else if ( isset( $_POST['delete_all_options'] ) ) {
+				} else if ( $this->current_action( 'delete_all_options' ) ) {
 
 					if ( delete_option( 'geditorial_options' ) )
 						WordPress::redirectReferer( 'purged' );
 
-				} else if ( isset( $_POST['custom_fields_empty'] ) ) {
+				} else if ( $this->current_action( 'custom_fields_empty' ) ) {
 
 					if ( $post['empty_module'] && isset( gEditorial()->{$post['empty_module']}->meta_key ) ) {
 
@@ -287,7 +287,7 @@ class Config extends gEditorial\Module
 							] );
 					}
 
-				} else if ( isset( $_POST['convert_connection_type'] ) ) {
+				} else if ( $this->current_action( 'convert_connection_type' ) ) {
 
 					if ( empty( $_POST['old_o2o_type'] )
 						|| empty( $_POST['new_o2o_type'] ) )

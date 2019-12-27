@@ -847,8 +847,7 @@ class Collect extends gEditorial\Module
 
 				$this->nonce_check( 'tools', $sub );
 
-				if ( isset( $_POST['_cb'] )
-					&& isset( $_POST['collection_post_create'] ) ) {
+				if ( $this->current_action( 'collection_post_create', TRUE ) ) {
 
 					$terms = Taxonomy::getTerms( $this->constant( 'collection_tax' ), FALSE, TRUE );
 					$posts = [];
@@ -876,9 +875,8 @@ class Collect extends gEditorial\Module
 						'count'   => count( $posts ),
 					] );
 
-				} else if ( isset( $_POST['_cb'] )
-					&& ( isset( $_POST['collection_store_order'] )
-						|| isset( $_POST['collection_store_start'] ) ) ) {
+				} else if ( $this->current_action( 'collection_store_order', TRUE )
+					|| $this->current_action( 'collection_store_start', TRUE ) ) {
 
 					$meta_key = isset( $_POST['collection_store_order'] ) ? 'in_collection_order' : 'in_collection_page_start';
 					$count = 0;
@@ -904,8 +902,7 @@ class Collect extends gEditorial\Module
 						'count'   => $count,
 					] );
 
-				} else if ( isset( $_POST['_cb'] )
-					&& isset( $_POST['collection_post_connect'] ) ) {
+				} else if ( $this->current_action( 'collection_post_connect', TRUE ) ) {
 
 					$terms = Taxonomy::getTerms( $this->constant( 'collection_tax' ), FALSE, TRUE );
 					$count = 0;
@@ -929,8 +926,7 @@ class Collect extends gEditorial\Module
 						'count'   => $count,
 					] );
 
-				} else if ( isset( $_POST['_cb'] )
-					&& isset( $_POST['collection_tax_delete'] ) ) {
+				} else if ( $this->current_action( 'collection_tax_delete', TRUE ) ) {
 
 					$count = 0;
 

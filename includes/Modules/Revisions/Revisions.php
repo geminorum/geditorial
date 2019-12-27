@@ -369,9 +369,7 @@ class Revisions extends gEditorial\Module
 
 				$this->nonce_check( 'reports', $sub );
 
-				if ( isset( $_POST['cleanup_revisions'] )
-					&& isset( $_POST['_cb'] )
-					&& count( $_POST['_cb'] ) ) {
+				if ( $this->current_action( 'cleanup_revisions', TRUE ) ) {
 
 					$count = 0;
 

@@ -1075,7 +1075,7 @@ class Terms extends gEditorial\Module
 
 				$count = 0;
 
-				if ( isset( $_POST['clean_uncategorized'] ) && isset( $_POST['_cb'] ) ) {
+				if ( $this->current_action( 'clean_uncategorized', TRUE ) ) {
 
 					$uncategorized = get_option( 'default_category' );
 
@@ -1105,7 +1105,7 @@ class Terms extends gEditorial\Module
 							'count'   => $count,
 						] );
 
-				} else if ( isset( $_POST['orphaned_terms'] ) ) {
+				} else if ( $this->current_action( 'orphaned_terms' ) ) {
 
 					$post = $this->get_current_form( [
 						'dead_tax' => FALSE,
@@ -1215,15 +1215,11 @@ class Terms extends gEditorial\Module
 
 				$this->nonce_check( 'reports', $sub );
 
-				if ( ! count( self::req( '_cb' ) ) )
-					WordPress::redirectReferer( 'nochange' );
-
-				$count = 0;
-
-				if ( 'purge_unregistered' == self::req( 'table_action' ) ) {
+				if ( $this->current_action( 'purge_unregistered', TRUE ) ) {
 
 					// FIXME: only purges no longer attached taxes, not orphaned
 
+					$count      = 0;
 					$registered = Taxonomy::get();
 
 					foreach ( $_POST['_cb'] as $post_id ) {

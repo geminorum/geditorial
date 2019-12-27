@@ -777,8 +777,7 @@ class Magazine extends gEditorial\Module
 
 				$this->nonce_check( 'tools', $sub );
 
-				if ( isset( $_POST['_cb'] )
-					&& isset( $_POST['issue_post_create'] ) ) {
+				if ( $this->current_action( 'issue_post_create', TRUE ) ) {
 
 					$terms = Taxonomy::getTerms( $this->constant( 'issue_tax' ), FALSE, TRUE );
 					$posts = [];
@@ -806,8 +805,7 @@ class Magazine extends gEditorial\Module
 						'count'   => count( $posts ),
 					] );
 
-				} else if ( isset( $_POST['_cb'] )
-					&& isset( $_POST['issue_resync_images'] ) ) {
+				} else if ( $this->current_action( 'issue_resync_images', TRUE ) ) {
 
 					$meta_key = $this->constant( 'metakey_term_image', 'image' );
 					$count    = 0;
@@ -831,8 +829,7 @@ class Magazine extends gEditorial\Module
 						'count'   => $count,
 					] );
 
-				} else if ( isset( $_POST['_cb'] )
-					&& isset( $_POST['issue_resync_desc'] ) ) {
+				} else if ( $this->current_action( 'issue_resync_desc', TRUE ) ) {
 
 					$count = 0;
 
@@ -853,9 +850,8 @@ class Magazine extends gEditorial\Module
 						'count'   => $count,
 					] );
 
-				} else if ( isset( $_POST['_cb'] )
-					&& ( isset( $_POST['issue_store_order'] )
-						|| isset( $_POST['issue_store_start'] ) ) ) {
+				} else if ( $this->current_action( 'issue_store_order', TRUE )
+					|| $this->current_action( 'issue_store_start', TRUE ) ) {
 
 					$meta_key = isset( $_POST['issue_store_order'] ) ? 'in_issue_order' : 'in_issue_page_start';
 					$count = 0;
@@ -881,8 +877,7 @@ class Magazine extends gEditorial\Module
 						'count'   => $count,
 					] );
 
-				} else if ( isset( $_POST['_cb'] )
-					&& isset( $_POST['issue_empty_desc'] ) ) {
+				} else if ( $this->current_action( 'issue_empty_desc', TRUE ) ) {
 
 					$args  = [ 'description' => '' ];
 					$count = 0;
@@ -896,8 +891,7 @@ class Magazine extends gEditorial\Module
 						'count'   => $count,
 					] );
 
-				} else if ( isset( $_POST['_cb'] )
-					&& isset( $_POST['issue_post_connect'] ) ) {
+				} else if ( $this->current_action( 'issue_post_connect', TRUE ) ) {
 
 					$terms = Taxonomy::getTerms( $this->constant( 'issue_tax' ), FALSE, TRUE );
 					$count = 0;
@@ -921,8 +915,7 @@ class Magazine extends gEditorial\Module
 						'count'   => $count,
 					] );
 
-				} else if ( isset( $_POST['_cb'] )
-					&& isset( $_POST['issue_tax_delete'] ) ) {
+				} else if ( $this->current_action( 'issue_tax_delete', TRUE ) ) {
 
 					$count = 0;
 

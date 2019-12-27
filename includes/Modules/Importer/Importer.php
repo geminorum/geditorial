@@ -244,7 +244,7 @@ class Importer extends gEditorial\Module
 
 				$this->nonce_check( 'tools', $sub );
 
-				if ( isset( $_POST['csv_import'] ) ) {
+				if ( $this->current_action( 'csv_import' ) ) {
 
 					$count     = 0;
 					$selected  = self::req( '_cb', [] );

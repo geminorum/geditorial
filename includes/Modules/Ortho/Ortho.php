@@ -317,9 +317,7 @@ class Ortho extends gEditorial\Module
 
 				$this->nonce_check( 'reports', $sub );
 
-				if ( isset( $_POST['cleanup_chars'] )
-					&& isset( $_POST['_cb'] )
-					&& count( $_POST['_cb'] ) ) {
+				if ( $this->current_action( 'cleanup_chars', TRUE ) ) {
 
 					$count = 0;
 

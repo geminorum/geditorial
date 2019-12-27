@@ -849,7 +849,7 @@ class Meta extends gEditorial\Module
 
 				$this->nonce_check( 'tools', $sub );
 
-				if ( isset( $_POST['custom_fields_convert'] ) ) {
+				if ( $this->current_action( 'custom_fields_convert' ) ) {
 
 					$post = $this->get_current_form( [
 						'custom_field'       => FALSE,
@@ -873,7 +873,7 @@ class Meta extends gEditorial\Module
 							'count'   => count( $result ),
 						] );
 
-				} else if ( isset( $_POST['custom_fields_delete'] ) ) {
+				} else if ( $this->current_action( 'custom_fields_delete' ) ) {
 
 					$post = $this->get_current_form( [
 						'custom_field'       => FALSE,

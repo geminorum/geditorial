@@ -665,8 +665,7 @@ class Contest extends gEditorial\Module
 
 				$this->nonce_check( 'tools', $sub );
 
-				if ( isset( $_POST['_cb'] )
-					&& isset( $_POST['contest_post_create'] ) ) {
+				if ( $this->current_action( 'contest_post_create', TRUE ) ) {
 
 					$terms = Taxonomy::getTerms( $this->constant( 'contest_tax' ), FALSE, TRUE );
 					$posts = [];
@@ -694,8 +693,7 @@ class Contest extends gEditorial\Module
 						'count'   => count( $posts ),
 					] );
 
-				} else if ( isset( $_POST['_cb'] )
-					&& isset( $_POST['contest_post_connect'] ) ) {
+				} else if ( $this->current_action( 'contest_post_connect', TRUE ) ) {
 
 					$terms = Taxonomy::getTerms( $this->constant( 'contest_tax' ), FALSE, TRUE );
 					$count = 0;
@@ -719,8 +717,7 @@ class Contest extends gEditorial\Module
 						'count'   => $count,
 					] );
 
-				} else if ( isset( $_POST['_cb'] )
-					&& isset( $_POST['contest_tax_delete'] ) ) {
+				} else if ( $this->current_action( 'contest_tax_delete', TRUE ) ) {
 
 					$count = 0;
 

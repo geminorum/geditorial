@@ -369,13 +369,16 @@ class Roles extends gEditorial\Module
 
 				$this->nonce_check( 'tools', $sub );
 
-				if ( isset( $_POST['duplicate_default_roles'] ) ) {
+				if ( $this->current_action( 'duplicate_default_roles' ) ) {
+
 					$this->duplicate_default_roles();
 
-				} else if ( isset( $_POST['add_defaults_to_editor'] ) ) {
+				} else if ( $this->current_action( 'add_defaults_to_editor' ) ) {
+
 					$this->add_default_caps( 'editor' );
 
-				} else if ( isset( $_POST['remove_duplicate_roles'] ) ) {
+				} else if ( $this->current_action( 'remove_duplicate_roles' ) ) {
+
 					$this->remove_duplicate_roles();
 				}
 			}
