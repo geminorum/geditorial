@@ -36,6 +36,14 @@ class Meta extends gEditorial\Template
 		return self::metaField( 'lead', $atts );
 	}
 
+	public static function metaHighlight( $atts = [] )
+	{
+		if ( ! array_key_exists( 'filter', $atts ) )
+			$atts['filter'] = [ 'geminorum\\gEditorial\\Helper', 'prepDescription' ];
+
+		return self::metaField( 'highlight', $atts );
+	}
+
 	// FIXME: DEPRECATED
 	// USE: self::sanitizeField()
 	public static function sanitize_field( $field )
