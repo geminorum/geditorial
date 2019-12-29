@@ -683,7 +683,6 @@ class Users extends gEditorial\Module
 		global $wpdb;
 
 		if ( $this->check_settings( $sub, 'tools' ) ) {
-
 			if ( ! empty( $_POST ) ) {
 
 				$this->nonce_check( 'tools', $sub );

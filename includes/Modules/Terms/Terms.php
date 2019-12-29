@@ -1210,14 +1210,13 @@ class Terms extends gEditorial\Module
 	public function reports_settings( $sub )
 	{
 		if ( $this->check_settings( $sub, 'reports' ) ) {
-
 			if ( ! empty( $_POST ) ) {
 
 				$this->nonce_check( 'reports', $sub );
 
 				if ( $this->current_action( 'purge_unregistered', TRUE ) ) {
 
-					// FIXME: only purges no longer attached taxes, not orphaned
+					// FIXME: only purges no-longer-attached taxes, not orphaned
 
 					$count      = 0;
 					$registered = Taxonomy::get();
