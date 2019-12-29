@@ -224,7 +224,7 @@ class Schedule extends gEditorial\Module
 			$html.= Datetime::getCalendar( $cal, $args );
 			$html.= $this->add_new_box( $cal );
 
-			echo '<div class="'.$this->classs( 'calendar' ).'" data-cal="'.$cal.'">'.$html.'</div>';
+			echo '<div class="'.HTML::prepClass( $this->classs( 'calendar' ) ).'" data-cal="'.$cal.'">'.$html.'</div>';
 
 			$this->settings_signature( 'listtable' );
 		Settings::wrapClose();

@@ -87,13 +87,13 @@ class Template extends Core\Base
 			else if ( $args['caption_link'] )
 				$caption = HTML::link( $caption, $args['caption_link'] );
 
-			$html = '<figure'.( TRUE === $args['figure'] ? '' : ' class="'.$args['figure'].'"' ).'>'.$html.'<figcaption>'.$caption.'</figcaption></figure>';
+			$html = '<figure'.( TRUE === $args['figure'] ? '' : ' class="'.HTML::prepClass( $args['figure'] ).'"' ).'>'.$html.'<figcaption>'.$caption.'</figcaption></figure>';
 		}
 
 		if ( ! $args['wrap'] )
 			return $html;
 
-		return '<div class="'.static::BASE.'-wrap'.( $module ? ' -'.$module : ' ' ).' -term-image-wrap">'.$html.'</div>';
+		return '<div class="'.HTML::prepClass( static::BASE.'-wrap', ( $module ? '-'.$module : '' ), '-term-image-wrap' ).'">'.$html.'</div>';
 	}
 
 	public static function termImage( $atts = [], $module = NULL )
@@ -250,13 +250,13 @@ class Template extends Core\Base
 			else
 				$caption = $title;
 
-			$html = '<figure'.( TRUE === $args['figure'] ? '' : ' class="'.$args['figure'].'"' ).'>'.$html.'<figcaption>'.$caption.'</figcaption></figure>';
+			$html = '<figure'.( TRUE === $args['figure'] ? '' : ' class="'.HTML::prepClass( $args['figure'] ).'"' ).'>'.$html.'<figcaption>'.$caption.'</figcaption></figure>';
 		}
 
 		if ( ! $args['wrap'] )
 			return $html;
 
-		return '<div class="'.static::BASE.'-wrap'.( $module ? ' -'.$module : ' ' ).' -post-image-wrap">'.$html.'</div>';
+		return '<div class="'.HTML::prepClass( static::BASE.'-wrap', ( $module ? '-'.$module : '' ), '-post-image-wrap' ).'">'.$html.'</div>';
 	}
 
 	public static function postImage( $atts = [], $module = NULL )

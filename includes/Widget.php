@@ -217,7 +217,7 @@ class Widget extends \WP_Widget
 		if ( static::MODULE )
 			$classes[] = '-'.static::MODULE;
 
-		$html = '<div class="'.join( ' ', $classes ).'">';
+		$html = '<div class="'.HTML::prepClass( $classes ).'">';
 
 		if ( ! $echo )
 			return $html;

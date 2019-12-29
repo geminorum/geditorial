@@ -620,7 +620,7 @@ class MetaBox extends Core\Base
 
 		$object = PostType::object( $posttype );
 
-		$class  = 'geditorial-glance-item -posttype -posttype-'.$posttype.' '.$extra_class;
+		$class  = HTML::prepClass( 'geditorial-glance-item', '-posttype', '-posttype-'.$posttype, $extra_class );
 		$format = current_user_can( $object->cap->edit_posts )
 			? '<a class="'.$class.'" href="edit.php?post_type=%3$s">%1$s %2$s</a>'
 			: '<div class="'.$class.'">%1$s %2$s</div>';
@@ -639,7 +639,7 @@ class MetaBox extends Core\Base
 
 		$object = get_taxonomy( $taxonomy );
 
-		$class  = 'geditorial-glance-item -tax -taxonomy-'.$taxonomy.' '.$extra_class;
+		$class  = HTML::prepClass( 'geditorial-glance-item', '-tax', '-taxonomy-'.$taxonomy, $extra_class );
 		$format = current_user_can( $object->cap->manage_terms )
 			? '<a class="'.$class.'" href="edit-tags.php?taxonomy=%3$s">%1$s %2$s</a>'
 			: '<div class="'.$class.'">%1$s %2$s</div>';

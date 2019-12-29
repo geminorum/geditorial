@@ -712,7 +712,7 @@ class Meta extends gEditorial\Module
 				$selector = 'geditorial-meta-'.$field;
 				echo '<label class="'.$selector.'">';
 					echo '<span class="title">'.$this->get_string( $field, $posttype ).'</span>';
-					echo '<span class="input-text-wrap"><input type="text" name="'.$selector.'" class="'.$selector.'" value=""></span>';
+					echo '<span class="input-text-wrap"><input type="text" name="'.$selector.'" class="'.HTML::prepClass( $selector ).'" value=""></span>';
 				echo '</label>';
 			}
 		}

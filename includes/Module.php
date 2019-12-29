@@ -806,17 +806,22 @@ class Module extends Base
 		if ( is_null( $sub ) )
 			$sub = $this->module->name;
 
-		$class = $this->base.'-form -form -'.$this->module->name.' -sub-'.$sub;
+		$class = [
+			$this->base.'-form',
+			'-form',
+			'-'.$this->module->name,
+			'-sub-'.$sub,
+		];
 
 		if ( $check && $sidebox = method_exists( $this, 'settings_sidebox' ) )
-			$class.= ' has-sidebox';
+			$class[] = 'has-sidebox';
 
-		echo '<form enctype="multipart/form-data" class="'.$class.'" method="post" action="">';
+		echo '<form enctype="multipart/form-data" class="'.HTML::prepClass( $class ).'" method="post" action="">';
 
 			$this->render_form_fields( $sub, $action, $context );
 
 			if ( $check && $sidebox ) {
-				echo '<div class="-sidebox -'.$this->module->name.' -sidebox-'.$sub.'">';
+				echo '<div class="'.HTML::prepClass( '-sidebox', '-'.$this->module->name, '-sidebox-'.$sub ).'">';
 					$this->settings_sidebox( $sub, $uri, $context );
 				echo '</div>';
 			}

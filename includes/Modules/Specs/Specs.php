@@ -503,7 +503,7 @@ class Specs extends gEditorial\Module
 			if ( $args['title'] )
 				$output = '<'.$args['title_tag'].' class="post-specs-wrap-title">'.$args['title'].'</'.$args['title_tag'].'>'.$output;
 			if ( ! is_null( $args['context'] ) )
-				$output = '<div class="multiple-specs-'.sanitize_html_class( $args['context'], 'general' ).'">'.$output.'</div>';
+				$output = '<div class="'.HTML::prepClass( 'multiple-specs-'.$args['context'] ).'">'.$output.'</div>';
 			return $args['before'].$output.$args['after'];
 		}
 

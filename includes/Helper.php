@@ -765,7 +765,7 @@ class Helper extends Core\Base
 	{
 		return is_null( $title_attr )
 			? '<span class="-empty '.$class.'">&mdash;</span>'
-			: sprintf( '<span title="%s" class="-empty '.$class.'">&mdash;</span>', $title_attr );
+			: sprintf( '<span title="%s" class="'.HTML::prepClass( '-empty', $class ).'">&mdash;</span>', $title_attr );
 	}
 
 	public static function htmlCount( $count, $title_attr = NULL )
