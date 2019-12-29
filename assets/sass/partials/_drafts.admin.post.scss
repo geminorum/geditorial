@@ -14,7 +14,11 @@ body.geditorial-drafts-enabled {}
     margin-top: 2px;
   }
 
-  input {
+  input.-link {
+    /*rtl:ignore*/
+    direction: ltr;
+    /*rtl:ignore*/
+    text-align: left;
     margin-bottom: 10px;
   }
 }

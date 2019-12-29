@@ -43,6 +43,11 @@
   .field-wrap {
     margin-bottom: 2px;
 
+    input[dir="ltr"]::placeholder {
+      direction: ltr;
+      text-align: left; // for firefox
+    }
+
     // for fields rendered by settings
     &.-setting-field {
       > p {
