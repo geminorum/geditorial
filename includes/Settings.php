@@ -1774,6 +1774,48 @@ class Settings extends Core\Base
 					$scripts[] = 'quicktags({id:"'.$id.'",buttons:"'.implode( ',', $args['values'] ).'"});';
 
 					wp_enqueue_script( 'quicktags' );
+
+				} else if ( 'textarea-quicktags-tokens' == $args['type'] ) {
+
+					$args['field_class'] = HTML::attrClass( $args['field_class'], 'textarea-quicktags', 'code' );
+
+					if ( ! $args['dir'] && HTML::rtl() )
+						$args['field_class'][] = 'quicktags-rtl';
+
+					if ( ! $args['values'] )
+						$args['values'] = [
+							'subject',
+							'content',
+							'topic',
+							'site',
+							'domain',
+							'url',
+							'display_name',
+							'email',
+							'useragent',
+						];
+
+					$scripts[] = 'quicktags({id:"'.$id.'",buttons:"_none"});';
+
+					foreach ( $args['values'] as $button )
+						$scripts[] = 'QTags.addButton("token_'.$button.'","'.$button.'","{{'.$button.'}}","","","",0,"'.$id.'");';
+
+					wp_enqueue_script( 'quicktags' );
+
+				} else if ( 'textarea-code-editor' == $args['type'] ) {
+
+					// @SEE: `wp_get_code_editor_settings()`
+					if ( ! $args['values'] )
+						$args['values'] = [
+							'lineNumbers'  => TRUE,
+							'lineWrapping' => TRUE,
+							'mode'         => 'htmlmixed',
+						];
+
+					// CAUTION: module must enqueue `code-editor` styles/scripts
+					// @SEE: `Scripts::enqueueCodeEditor()`
+					$scripts[] = sprintf( 'wp.CodeMirror.fromTextArea(document.getElementById("%s"), %s);',
+						$id, wp_json_encode( $args['values'] ) );
 				}
 
 				echo HTML::tag( 'textarea', [
