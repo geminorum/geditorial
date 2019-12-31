@@ -1,3 +1,27 @@
+### 3.15.8
+* main/listtable: restrict by author helper
+* main/metabox: :warning: display empty term select
+* main/metabox: refresh field list styles
+* main/module: current action helper
+* main/module: restrict posts by author
+* main/plugin: proper way to add rtl data for styles
+* main/relation: initial rest endpoints
+* main/settings: admin column setting helper
+* main/settings: custom wrap tags in field types
+* main/settings: textarea filed type for tokens/code editor
+* main/shortcode: item size on list posts
+* module/alphabet: count template
+* module/alphabet: hide empty desc on non dd tags
+* module/alphabet: more options on shortcodes
+* module/attachment: restrict media by authors on list view
+* module/audit: inline wrap for non-linked on summary
+* module/audit: refresh summery cap
+* module/audit: skip adminbar for no terms
+* module/inquire: style for readonly excerpts
+* module/meta: highlight field template helper
+* module/terms: :new: action: move tagline to desc
+* module/today: disable column on edit list
+
 ### 3.15.7
 * main/helper: author filter for tables
 * main/helper: html empty method
