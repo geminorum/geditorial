@@ -1,6 +1,6 @@
 /* global QTags, persianTools */
 
-(function ($, p, m, s) {
+(function ($, p, module, s) {
   var o = {};
 
   o.s = $.extend({}, {
@@ -8,7 +8,7 @@
     qtag_orthography_title: 'Apply Orthography!',
     qtag_tostandard: 'Standard!',
     qtag_tostandard_title: 'To Standard!'
-  // }, p[m].strings || {} );
+  // }, p[module].strings || {} );
   }, {});
 
   o.u = {
@@ -79,6 +79,6 @@
       }
     }
 
-    $(document).trigger('gEditorialReady', [ m, o, s ]);
+    $(document).trigger('gEditorialReady', [module, o, s]);
   });
 }(jQuery, gEditorial, 'ortho', 'persiantools'));

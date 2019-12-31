@@ -84,6 +84,6 @@
     // }).disableSelection();
     });
 
-    $(document).trigger('gEditorialReady', [ module, app ]);
+    $(document).trigger('gEditorialReady', [module, app]);
   });
 }(jQuery, gEditorial, 'specs'));

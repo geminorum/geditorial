@@ -18,8 +18,8 @@
 
       if (!modal) {
         modal = wp.media({
-          title: this.strings['modal_title'],
-          button: { text: this.strings['modal_button'] },
+          title: this.strings.modal_title,
+          button: { text: this.strings.modal_button },
           library: { type: 'image' },
           multiple: false
         });
@@ -131,6 +131,6 @@
       $('#' + s.classs + '-color-id').wpColorPicker();
     }
 
-    $(document).trigger('gEditorialReady', [ module, app ]);
+    $(document).trigger('gEditorialReady', [module, app]);
   });
 }(jQuery, gEditorial, 'terms'));

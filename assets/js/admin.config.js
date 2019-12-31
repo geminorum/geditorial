@@ -4,7 +4,7 @@ jQuery(function ($) {
   var moduleList = new List('geditorial-settings', {
     listClass: '-list',
     searchClass: '-search',
-    valueNames: [ '-title', '-description', '-th', '-module-key', '-module-title', 'status' ]
+    valueNames: ['-title', '-description', '-th', '-module-key', '-module-title', 'status']
   });
 
   // https://github.com/javve/list.js/issues/366#issuecomment-274942284
@@ -55,7 +55,7 @@ jQuery(function ($) {
         what: 'state',
         name: module,
         doing: action,
-        nonce: gEditorial['config']._nonce
+        nonce: gEditorial.config._nonce
       },
       beforeSend: function (xhr) {
         $box.addClass('-spinning');

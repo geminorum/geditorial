@@ -49,6 +49,6 @@
       app.action(this);
     });
 
-    $(document).trigger('gEditorialReady', [ module, app ]);
+    $(document).trigger('gEditorialReady', [module, app]);
   });
 }(jQuery, gEditorial, 'drafts'));

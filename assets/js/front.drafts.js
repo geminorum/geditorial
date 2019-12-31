@@ -16,7 +16,7 @@
           $(this).hide();
         });
       } else {
-        $(s.wrap).css({height: 'auto'}).slideDown();
+        $(s.wrap).css({ height: 'auto' }).slideDown();
       }
     },
 
@@ -59,6 +59,6 @@
       e.preventDefault();
       app.populate();
     });
-    $(document).trigger('gEditorialReady', [ module, app ]);
+    $(document).trigger('gEditorialReady', [module, app]);
   });
 }(jQuery, gEditorial, 'drafts'));

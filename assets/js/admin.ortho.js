@@ -16,7 +16,9 @@
     },
 
     inputs: {
-      number: '[data-' + module + '=\'number\']'
+      number: '[data-' + module + '=\'number\']',
+      code: '[data-' + module + '=\'code\']',
+      color: '[data-' + module + '=\'color\']'
       // currency: '[data-' + module + '=\'currency\']',
     }
   };
@@ -36,7 +38,7 @@
     qtag_nbsp_title: 'Non-Breaking SPace'
   }, p[module].strings);
 
-  o.b = '<a href="#" class="do-' + module + '" title="' + o.s['button_virastar_title'] + '" tabindex="-1">' + o.s['button_virastar'] + '</a>';
+  o.b = '<a href="#" class="do-' + module + '" title="' + o.s.button_virastar_title + '" tabindex="-1">' + o.s.button_virastar + '</a>';
   o.w = '<span class="' + module + '-input-wrap"></span>';
 
   o.o = p[module].virastar || {};
@@ -68,7 +70,9 @@
       $i.change(function () {
         $i.val(o.u.tE($i.val()).replace(/[^\d.-]/g, '').trim());
       });
-    }
+    },
+    code: function () {},
+    color: function () {}
     // currency: function(){}, // @SEE: https://github.com/habibpour/rial.js
   };
 
@@ -130,9 +134,9 @@
     virastar: function (e, c, ed) {
       var s = c.value.substring(c.selectionStart, c.selectionEnd);
       if (s !== '') {
-        QTags.insertContent(o.v['html'].cleanup(s));
+        QTags.insertContent(o.v.html.cleanup(s));
       } else {
-        $(c).val(o.v['html'].cleanup($(c).val()));
+        $(c).val(o.v.html.cleanup($(c).val()));
       }
     },
     swapquotes: function (e, c, ed) {
@@ -210,6 +214,6 @@
       document.post.title.focus();
     } catch (e) {}
 
-    $(document).trigger('gEditorialReady', [ module, o ]);
+    $(document).trigger('gEditorialReady', [module, o]);
   });
 }(jQuery, gEditorial, 'ortho'));
