@@ -23,7 +23,7 @@ class Walker_PageDropdown extends \Walker_PageDropdown
 
 		$title = $page->post_title;
 
-		if ( ! empty( $args['title_with_meta'] ) // FIXME: must sanitize meta field name
+		if ( ! empty( $args['title_with_meta'] && gEditorial()->enabled( 'meta' ) ) // FIXME: must sanitize meta field name
 			&& ( $meta = gEditorial()->meta->get_postmeta( $page->ID, $args['title_with_meta'], FALSE ) ) )
 				$title = $meta;
 
