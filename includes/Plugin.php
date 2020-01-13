@@ -203,7 +203,8 @@ class Plugin
 	public function mce_external_plugins( $plugin_array )
 	{
 		foreach ( $this->editor_buttons as $plugin => $filepath )
-			$plugin_array[$plugin] = $filepath;
+			if ( $filepath )
+				$plugin_array[$plugin] = $filepath;
 
 		return $plugin_array;
 	}

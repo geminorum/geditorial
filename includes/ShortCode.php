@@ -351,7 +351,7 @@ class ShortCode extends Core\Base
 			else
 				$item = HTML::tag( 'span', [
 					'title' => $attr,
-					'class' => $args['item_link'] ? '-no-link -future -posttype-'.$post->post_type : FALSE,
+					'class' => $args['item_link'] ? '-no-link -future -posttype-'.$post->post_type : '-no-link',
 				], $item );
 
 			if ( $args['item_wrap'] && Text::has( $args['item_wrap'], '%' ) )

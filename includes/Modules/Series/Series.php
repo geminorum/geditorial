@@ -364,7 +364,7 @@ class Series extends gEditorial\Module
 
 	public function series_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
-		return ShortCode::getTermPosts(
+		return Shortcode::listPosts( 'assigned',
 			'post',
 			$this->constant( 'series_tax' ),
 			array_merge( [
