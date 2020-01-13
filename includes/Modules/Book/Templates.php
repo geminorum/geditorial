@@ -13,8 +13,11 @@ class Book extends gEditorial\Template
 	// FIXME: DRAFT / NOT USED
 	public static function summary( $atts = [] )
 	{
+		if ( ! gEditorial()->enabled( 'meta' ) )
+			return;
+
 		$posttype = self::constant( 'publication_cpt', 'publication' );
-		$fields = gEditorial()->meta->posttype_fields_all( $posttype );
+		$fields   = gEditorial()->meta->posttype_fields_all( $posttype );
 
 		$rows = [];
 

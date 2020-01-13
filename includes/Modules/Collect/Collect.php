@@ -878,6 +878,9 @@ class Collect extends gEditorial\Module
 				} else if ( $this->current_action( 'collection_store_order', TRUE )
 					|| $this->current_action( 'collection_store_start', TRUE ) ) {
 
+					if ( ! gEditorial()->enabled( 'meta' ) )
+						WordPress::redirectReferer( 'wrong' );
+
 					$meta_key = isset( $_POST['collection_store_order'] ) ? 'in_collection_order' : 'in_collection_page_start';
 					$count = 0;
 

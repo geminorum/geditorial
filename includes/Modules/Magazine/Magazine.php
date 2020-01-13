@@ -853,6 +853,9 @@ class Magazine extends gEditorial\Module
 				} else if ( $this->current_action( 'issue_store_order', TRUE )
 					|| $this->current_action( 'issue_store_start', TRUE ) ) {
 
+					if ( ! gEditorial()->enabled( 'meta' ) )
+						WordPress::redirectReferer( 'wrong' );
+
 					$meta_key = isset( $_POST['issue_store_order'] ) ? 'in_issue_order' : 'in_issue_page_start';
 					$count = 0;
 
