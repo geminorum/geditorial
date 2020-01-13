@@ -325,6 +325,13 @@ class ShortCode extends Core\Base
 			else
 				$attr = FALSE;
 
+			if ( TRUE === $args['item_link'] ) {
+
+				// avoid linking to the same page
+				if ( is_singular() && ( $current = get_post() ) )
+					$args['item_link'] = $current->ID !== $post->ID;
+			}
+
 			if ( $args['item_link'] && 'attachment' == $post->post_type && $args['item_download'] )
 				$item = HTML::tag( 'a', [
 					'href'     => wp_get_attachment_url( $post->ID ),
