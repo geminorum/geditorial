@@ -140,18 +140,17 @@ class Like extends gEditorial\Module
 
 	public function adminbar_init( &$nodes, $parent )
 	{
-		if ( ! $this->post_id )
-			return;
-
 		if ( is_admin() || ! is_singular( $this->posttypes() ) )
 			return;
 
-		if ( ! current_user_can( 'edit_post', $this->post_id ) )
+		$post_id = get_queried_object_id();
+
+		if ( ! current_user_can( 'edit_post', $post_id ) )
 			return;
 
-		$users  = $this->get_postmeta( $this->post_id, FALSE, [], $this->meta_key.'_users' );
-		$guests = $this->get_postmeta( $this->post_id, FALSE, [], $this->meta_key.'_guests' );
-		// $total  = $this->get_postmeta( $this->post_id, FALSE, 0, $this->meta_key.'_total' ); // FIXME: display total
+		$users  = $this->get_postmeta( $post_id, FALSE, [], $this->meta_key.'_users' );
+		$guests = $this->get_postmeta( $post_id, FALSE, [], $this->meta_key.'_guests' );
+		// $total  = $this->get_postmeta( $post_id, FALSE, 0, $this->meta_key.'_total' ); // FIXME: display total
 
 		if ( count( $users ) ) {
 
