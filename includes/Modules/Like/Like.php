@@ -406,6 +406,17 @@ class Like extends gEditorial\Module
 		return $html;
 	}
 
+	private function sync_counts( $post_id )
+	{
+		$users  = $this->get_postmeta( $post_id, FALSE, [], $this->meta_key.'_users' );
+		$guests = $this->get_postmeta( $post_id, FALSE, [], $this->meta_key.'_guests' );
+		$total  = count( $users ) + count( $guests );
+
+		$this->set_meta( $post_id, $total, '_total' );
+
+		return $total;
+	}
+
 	public function tweaks_column_attr( $post )
 	{
 		if ( ! current_user_can( 'edit_post', $post->ID ) )
@@ -438,5 +449,119 @@ class Like extends gEditorial\Module
 			echo Helper::getJoined( $list, ' <span class="-like-counts">(', ')</span>' );
 
 		echo '</li>';
+	}
+
+	public function reports_settings( $sub )
+	{
+		if ( $this->check_settings( $sub, 'reports' ) ) {
+
+			if ( ! empty( $_POST ) ) {
+
+				$this->nonce_check( 'reports', $sub );
+
+				if ( $this->current_action( 'sync_counts_all' ) ) {
+
+					$count = 0;
+					$query = new \WP_Query;
+
+					$posts = $query->query( [
+						'fields'                 => 'ids',
+						'post_type'              => $this->posttypes(),
+						'post_status'            => 'any',
+						'posts_per_page'         => -1,
+						'suppress_filters'       => TRUE,
+						'update_post_meta_cache' => FALSE,
+						'update_post_term_cache' => FALSE,
+						'lazy_load_term_meta'    => FALSE,
+					] );
+
+					foreach ( $posts as $post_id ) {
+						$this->sync_counts( $post_id );
+						$count++;
+					}
+
+					WordPress::redirectReferer( [
+						'message' => 'synced',
+						'count'   => $count,
+					] );
+
+				} else if ( $this->current_action( 'sync_counts', TRUE ) ) {
+
+					$count = 0;
+
+					foreach ( $_POST['_cb'] as $post_id ) {
+
+						$this->sync_counts( $post_id );
+						$count++;
+					}
+
+					WordPress::redirectReferer( [
+						'message' => 'synced',
+						'count'   => $count,
+					] );
+				}
+			}
+
+			$this->screen_option( $sub );
+		}
+	}
+
+	protected function render_reports_html( $uri, $sub )
+	{
+		$list  = $this->list_posttypes();
+		$query = [
+			'meta_key' => $this->meta_key.'_total',
+			'orderby'  => 'meta_value_num',
+			'order'    => 'DESC',
+		];
+
+		list( $posts, $pagination ) = $this->getTablePosts( $query );
+
+		$pagination['actions']['sync_counts']     = _x( 'Sync Counts', 'Modules: Like: Table Action', 'geditorial' );
+		$pagination['actions']['sync_counts_all'] = _x( 'Sync All Counts', 'Modules: Like: Table Action', 'geditorial' );
+
+		$pagination['before'][] = Helper::tableFilterPostTypes( $list );
+		$pagination['before'][] = Helper::tableFilterAuthors( $list );
+
+		return HTML::tableList( [
+			'_cb'   => 'ID',
+			'ID'    => Helper::tableColumnPostID(),
+			'date'  => Helper::tableColumnPostDate(),
+			'type'  => Helper::tableColumnPostType(),
+			'title' => Helper::tableColumnPostTitle(),
+			'total' => [
+				'title'    => _x( 'Total', 'Modules: Like: Table Column', 'geditorial' ),
+				'callback' => function( $value, $row, $column, $index ){
+					return Helper::htmlCount( $this->get_postmeta( $row->ID, FALSE, 0, $this->meta_key.'_total' ) );
+				},
+			],
+			'guests' => [
+				'title'    => _x( 'Guests', 'Modules: Like: Table Column', 'geditorial' ),
+				'callback' => function( $value, $row, $column, $index ){
+					$guests = $this->get_postmeta( $row->ID, FALSE, [], $this->meta_key.'_guests' );
+					return Helper::htmlCount( count( $guests ) );
+				},
+			],
+			'users' => [
+				'title'    => _x( 'Users', 'Modules: Like: Table Column', 'geditorial' ),
+				'callback' => function( $value, $row, $column, $index ){
+					$users = $this->get_postmeta( $row->ID, FALSE, [], $this->meta_key.'_users' );
+					return Helper::htmlCount( count( $users ) );
+				},
+			],
+			'avatars' => [
+				'title'    => _x( 'Avatars', 'Modules: Like: Table Column', 'geditorial' ),
+				'callback' => function( $value, $row, $column, $index ){
+					$html = $this->avatars( $row->ID );
+					return $html ? HTML::tag( 'ul', $html ) : Helper::htmlEmpty();
+				},
+			],
+		], $posts, [
+			'navigation' => 'before',
+			'search'     => 'before',
+			'title'      => HTML::tag( 'h3', _x( 'Overview of Post Likes', 'Modules: Like', 'geditorial' ) ),
+			'empty'      => $this->get_posttype_label( 'post', 'not_found' ),
+			'pagination' => $pagination,
+		] );
 	}
 }
