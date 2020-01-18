@@ -12,7 +12,8 @@ class Estimated extends gEditorial\Module
 
 	public $meta_key = '_ge_estimated';
 
-	protected $disable_no_posttypes = TRUE;
+	protected $disable_no_posttypes   = TRUE;
+	protected $priority_adminbar_init = 90;
 
 	public static function module()
 	{
@@ -62,6 +63,7 @@ class Estimated extends gEditorial\Module
 					'description' => _x( 'And above this number of words will show the notice', 'Modules: Estimated: Setting Description', 'geditorial' ),
 					'default'     => 1000,
 				],
+				'adminbar_summary',
 			],
 			'posttypes_option' => 'posttypes_option',
 		];
@@ -109,6 +111,39 @@ class Estimated extends gEditorial\Module
 					.')</span>';
 
 			echo '</li>';
+		}
+	}
+
+	public function adminbar_init( &$nodes, $parent )
+	{
+		if ( is_admin() || ! is_singular( $this->posttypes() ) )
+			return;
+
+		$post_id = get_queried_object_id();
+
+		if ( ! current_user_can( 'edit_post', $post_id ) )
+			return;
+
+		if ( $wordcount = $this->get_postmeta( $post_id ) ) {
+
+			$html = '<span class="-wordcount">'
+				.$this->nooped_count( 'word', $wordcount )
+				.'</span>';
+
+			$html.= ' <span class="-estimated-time">('
+				.$this->get_time_estimated( $wordcount, FALSE )
+				.')</span>';
+
+			$avgtime = $this->get_setting( 'average', 250 );
+			$title   = sprintf( _x( 'If you try to read %s words per minute', 'Modules: Estimated', 'geditorial' ), Number::format( $avgtime ) );
+
+			$nodes[] = [
+				'id'     => $this->classs(),
+				'title'  => $html,
+				'parent' => $parent,
+				'href'   => FALSE, // $this->get_module_url(),
+				'meta'   => [ 'title' => $title ],
+			];
 		}
 	}
 
