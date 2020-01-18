@@ -51,6 +51,13 @@ class Like extends gEditorial\Module
 					'default'     => 12,
 				],
 			],
+			'_editlist' => [
+				[
+					'field'       => 'like_count',
+					'title'       => _x( 'Like Count', 'Modules: Like: Setting Title', 'geditorial' ),
+					'description' => _x( 'Displays likes summary of the post.', 'Modules: Like: Setting Description', 'geditorial' ),
+				],
+			],
 			'_strings' => [
 				[
 					'field'       => 'string_loading',
@@ -87,6 +94,16 @@ class Like extends gEditorial\Module
 	public function init_ajax()
 	{
 		$this->_hook_ajax( NULL );
+	}
+
+	public function current_screen( $screen )
+	{
+		if ( 'edit' == $screen->base
+			&& in_array( $screen->post_type, $this->posttypes() ) ) {
+
+			if ( $this->get_setting( 'like_count' ) )
+				$this->action_module( 'tweaks', 'column_attr', 1, 50 );
+		}
 	}
 
 	public function template_redirect()
@@ -391,5 +408,39 @@ class Like extends gEditorial\Module
 		}
 
 		return $html;
+	}
+
+	public function tweaks_column_attr( $post )
+	{
+		if ( ! current_user_can( 'edit_post', $post->ID ) )
+			return;
+
+		$total = $this->get_postmeta( $post->ID, FALSE, 0, $this->meta_key.'_total' );
+
+		if ( empty( $total ) )
+			return;
+
+		echo '<li class="-row tweaks-like-count">';
+
+			echo $this->get_column_icon( FALSE, 'heart', _x( 'Likes', 'Modules: Like: Row Icon Title', 'geditorial' ) );
+
+			/* translators: %s: likes count */
+			printf( _nx( '%s Like', '%s Likes', $total, 'Modules: Like', 'geditorial' ), Number::format( $total ) );
+
+			$list   = [];
+			$users  = $this->get_postmeta( $post->ID, FALSE, [], $this->meta_key.'_users' );
+			$guests = $this->get_postmeta( $post->ID, FALSE, [], $this->meta_key.'_guests' );
+
+			if ( ! empty( $users ) )
+				/* translators: %s: users count */
+				$list[] = sprintf( _nx( '%s User', '%s Users', count( $users ), 'Modules: Like', 'geditorial' ), Number::format( count( $users ) ) );
+
+			if ( ! empty( $guests ) )
+				/* translators: %s: guests count */
+				$list[] = sprintf( _nx( '%s Guest', '%s Guests', count( $guests ), 'Modules: Like', 'geditorial' ), Number::format( count( $guests ) ) );
+
+			echo Helper::getJoined( $list, ' <span class="-like-counts">(', ')</span>' );
+
+		echo '</li>';
 	}
 }
