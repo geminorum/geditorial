@@ -231,7 +231,7 @@ class Like extends gEditorial\Module
 					'add'     => $check ? 'unlike' : 'dolike',
 					'nonce'   => wp_create_nonce( 'geditorial_like_ajax-'.$post['id'] ),
 					'count'   => Number::format( $count ),
-					'avatars' => $this->avatars( $post['id'] ),
+					'avatars' => $this->get_setting( 'display_avatars' ) ? $this->avatars( $post['id'] ) : '',
 				] );
 
 			break;
@@ -247,7 +247,7 @@ class Like extends gEditorial\Module
 					'remove'  => 'dolike',
 					'add'     => 'unlike',
 					'count'   => Number::format( $count ),
-					'avatars' => $this->avatars( $post['id'] ),
+					'avatars' => $this->get_setting( 'display_avatars' ) ? $this->avatars( $post['id'] ) : '',
 				] );
 
 			break;
@@ -263,7 +263,7 @@ class Like extends gEditorial\Module
 					'remove'  => 'unlike',
 					'add'     => 'dolike',
 					'count'   => Number::format( $count ),
-					'avatars' => $this->avatars( $post['id'] ),
+					'avatars' => $this->get_setting( 'display_avatars' ) ? $this->avatars( $post['id'] ) : '',
 				] );
 		}
 
@@ -375,11 +375,7 @@ class Like extends gEditorial\Module
 
 	public function avatars( $post_id )
 	{
-		$html = '';
-
-		if ( ! $this->get_setting( 'display_avatars', FALSE ) )
-			return $html;
-
+		$html  = '';
 		$users = $this->get_postmeta( $post_id, FALSE, [], $this->meta_key.'_users' );
 
 		if ( count( $users ) ) {
