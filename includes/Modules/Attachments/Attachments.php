@@ -6,11 +6,13 @@ use geminorum\gEditorial;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\ShortCode;
+use geminorum\gEditorial\Core\File;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\URL;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\Media;
+use geminorum\gEditorial\WordPress\PostType;
 
 class Attachments extends gEditorial\Module
 {
@@ -302,7 +304,19 @@ class Attachments extends gEditorial\Module
 					return Helper::htmlEmpty();
 				},
 			],
-			'title' => Helper::tableColumnPostTitle( NULL, TRUE, $custom ),
+			'title'  => Helper::tableColumnPostTitle( NULL, TRUE, $custom ),
+			'search' => [
+				'title'    => _x( 'Search', 'Modules: Attachments: Table Column', 'geditorial' ),
+				'class'    => '-attachment-search -has-list',
+				'callback' => function( $value, $row, $column, $index ){
+					$list = [];
+
+					foreach ( $this->search_attachment( $row->ID ) as $post_id )
+						$list[] = Helper::getPostTitleRow( $post_id );
+
+					return $list ? HTML::renderList( $list ) : Helper::htmlEmpty();
+				},
+			],
 			'sizes' => [
 				'title'    => _x( 'Sizes', 'Modules: Attachments: Table Column', 'geditorial' ),
 				'class'    => '-attachment-sizes -has-table -has-table-ltr',
@@ -347,5 +361,16 @@ class Attachments extends gEditorial\Module
 			'empty'      => _x( 'No attachments found.', 'Modules: Attachments', 'geditorial' ),
 			'pagination' => $pagination,
 		] );
+	}
+
+	public function search_attachment( $attachment_id )
+	{
+		if ( ! $file = get_post_meta( $attachment_id, '_wp_attached_file', TRUE ) )
+			return [];
+
+		$filetype = wp_check_filetype( File::basename( $file ) );
+		$pathfile = File::join( dirname( $file ), File::basename( $file, '.'.$filetype['ext'] ) );
+
+		return PostType::getIDsBySearch( $pathfile );
 	}
 }
