@@ -578,7 +578,7 @@ class Module extends Base
 	{
 		global $gEditorialPostMeta;
 
-		if ( $postmeta && count( $postmeta ) )
+		if ( $postmeta && ! empty( $postmeta ) )
 			update_post_meta( $post_id, $this->meta_key.$key_suffix, $postmeta );
 		else
 			delete_post_meta( $post_id, $this->meta_key.$key_suffix );
@@ -1473,6 +1473,13 @@ class Module extends Base
 	{
 		Settings::fieldSection(
 			_x( 'Admin Comment List', 'Module: Setting Section Title', 'geditorial' )
+		);
+	}
+
+	public function settings_section_strings()
+	{
+		Settings::fieldSection(
+			_x( 'Custom Strings', 'Module: Setting Section Title', 'geditorial' )
 		);
 	}
 
