@@ -278,7 +278,7 @@ class Tube extends gEditorial\Module
 			$html.= HTML::tag( 'button', [
 				'class' => [ '-button', 'btn', 'btn-default', 'btn-xs' ],
 				'title' => _x( 'Total time of this video', 'Modules: Tube: Button', 'geditorial' ),
-			], $this->icon( 'time' ).' '.Number::format( $attr['time'] ) );
+			], $this->icon( 'time' ).' '.Number::localize( $attr['time'] ) );
 
 		if ( ! empty( $attr['src'] ) )
 			$html.= HTML::tag( 'a', [

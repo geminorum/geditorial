@@ -1668,7 +1668,7 @@ class Module extends Base
 		else if ( $icon )
 			$icon = 'dashicons-'.$icon;
 
-		return $icon ? $icon : 'dashicons-'.$default;
+		return $icon ?: 'dashicons-'.$default;
 	}
 
 	public function get_posttype_cap_type( $constant )

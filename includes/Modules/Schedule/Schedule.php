@@ -263,7 +263,7 @@ class Schedule extends gEditorial\Module
 		$cal = self::req( 'cal', $this->default_calendar() );
 
 		$html = Ajax::spinner();
-		$html.= '<span class="-the-day-number">'.Number::format( $the_day ).'</span>';
+		$html.= '<span class="-the-day-number">'.Number::localize( $the_day ).'</span>';
 
 		if ( $today )
 			$html.= '<span class="-the-day-today">'._x( 'Today', 'Modules: Schedule', 'geditorial' ).'</span>';
@@ -308,7 +308,7 @@ class Schedule extends gEditorial\Module
 		if ( ! isset( $this->posttype_icons[$post->post_type] ) )
 			$this->posttype_icons[$post->post_type] = Helper::getPostTypeIcon( $post->post_type );
 
-		$title = Number::format( date( 'H:i', strtotime( $post->post_date ) ) );
+		$title = Number::localize( date( 'H:i', strtotime( $post->post_date ) ) );
 
 		if ( $author = get_user_by( 'id', $post->post_author ) )
 			$title = $author->display_name.' – '.$title;

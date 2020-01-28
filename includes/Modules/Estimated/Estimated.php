@@ -211,7 +211,7 @@ class Estimated extends gEditorial\Module
 			$estimated = _x( 'less than 1 minute', 'Modules: Estimated', 'geditorial' );
 		else
 			/* translators: %s: number of minutes */
-			$estimated = sprintf( _nx( '%s minute', '%s minutes', $minutes, 'Modules: Estimated', 'geditorial' ), Number::format( $minutes ) );
+			$estimated = sprintf( _nx( '%s minute', '%s minutes', $minutes, 'Modules: Estimated', 'geditorial' ), Number::localize( $minutes ) );
 
 		if ( $info )
 			return '<span data-toggle="tooltip" title="'.HTML::escape(

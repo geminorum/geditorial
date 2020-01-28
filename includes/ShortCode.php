@@ -362,7 +362,7 @@ class ShortCode extends Core\Base
 
 			if ( $args['order_before'] ) {
 				$order = $args['order_zeroise'] ? Number::zeroise( $post->menu_order, $args['order_zeroise'] ) : $post->menu_order;
-				$item = Number::format( $order ).( $args['order_sep'] ? $args['order_sep'] : '' ).$item;
+				$item = Number::localize( $order ).( $args['order_sep'] ? $args['order_sep'] : '' ).$item;
 			}
 		}
 

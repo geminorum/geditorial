@@ -784,7 +784,7 @@ class Helper extends Core\Base
 			$title_attr = _x( 'No Order', 'Helper: No Order Title Attribute', 'geditorial' );
 
 		if ( $order )
-			$html = Number::format( $order );
+			$html = Number::localize( $order );
 		else
 			$html = sprintf( '<span title="%s" class="column-order-empty -empty">&mdash;</span>', $title_attr );
 

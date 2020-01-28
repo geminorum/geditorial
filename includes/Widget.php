@@ -187,7 +187,7 @@ class Widget extends \WP_Widget
 
 		if ( count( $sizes ) ) {
 			foreach ( $sizes as $name => $size ) {
-				$images[$name] = $size['n'].' ('.Number::format( $size['w'] ).'&nbsp;&times;&nbsp;'.Number::format( $size['h'] ).')';
+				$images[$name] = $size['n'].' ('.Number::localize( $size['w'] ).'&nbsp;&times;&nbsp;'.Number::localize( $size['h'] ).')';
 			}
 		} else {
 
@@ -196,13 +196,13 @@ class Widget extends \WP_Widget
 			if ( count( $sizes ) ) {
 				foreach ( $sizes as $name => $size )
 					$images[$name] = ( isset( $size['title'] ) ? $size['title'] : $name )
-						.' ('.Number::format( $size['width'] )
+						.' ('.Number::localize( $size['width'] )
 						.'&nbsp;&times;&nbsp;'
-						.Number::format( $size['height'] ).')';
+						.Number::localize( $size['height'] ).')';
 
 			} else {
 				// foreach ( Helper::getWPImageSizes() as $name => $size ) {
-				// 	$images[$posttype.'-'.$name] = $size['n'].' ('.Number::format( $size['w'] ).'&nbsp;&times;&nbsp;'.Number::format( $size['h'] ).')';
+				// 	$images[$posttype.'-'.$name] = $size['n'].' ('.Number::localize( $size['w'] ).'&nbsp;&times;&nbsp;'.Number::localize( $size['h'] ).')';
 				// }
 			}
 		}

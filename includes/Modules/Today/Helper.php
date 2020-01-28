@@ -78,7 +78,7 @@ class Today extends gEditorial\Helper
 		$parts = [];
 
 		if ( $the_day['day'] )
-			$parts['day'] = Number::format( $the_day['day'] );
+			$parts['day'] = Number::localize( $the_day['day'] );
 
 		if ( $the_day['month'] ) {
 
@@ -92,7 +92,7 @@ class Today extends gEditorial\Helper
 		}
 
 		if ( $the_day['year'] )
-			$parts['year'] = Number::format( $the_day['year'] );
+			$parts['year'] = Number::localize( $the_day['year'] );
 
 		if ( empty( $parts ) )
 			return $empty;
@@ -134,7 +134,7 @@ class Today extends gEditorial\Helper
 				if ( $the_day['day'] )
 					echo '<span class="-day" data-day="'.HTML::escape( $the_day['day'] )
 						.'"><a target="_blank" href="'.self::getTheDayLink( $stored, 'day' )
-						.'">'.Number::format( $the_day['day'] ).'</a></span>';
+						.'">'.Number::localize( $the_day['day'] ).'</a></span>';
 
 				if ( $the_day['month'] ) {
 
@@ -152,7 +152,7 @@ class Today extends gEditorial\Helper
 				if ( $the_day['year'] )
 					echo '<span class="-year" data-year="'.HTML::escape( $the_day['year'] )
 						.'"><a target="_blank" href="'.self::getTheDayLink( $stored, 'year' )
-						.'">'.Number::format( $the_day['year'] ).'</a></span>';
+						.'">'.Number::localize( $the_day['year'] ).'</a></span>';
 
 				if ( $the_day['cal'] )
 					echo '<span class="-cal" data-cal="'.HTML::escape( $the_day['cal'] )
