@@ -181,18 +181,18 @@ class Settings extends Core\Base
 	{
 		if ( $string )
 			/* translators: %s: options */
-			return sprintf( _x( '&mdash; Select %s &mdash;', 'Settings: Dropdown Select Option None', 'geditorial' ), $string );
+			return sprintf( _x( '&ndash; Select %s &ndash;', 'Settings: Dropdown Select Option None', 'geditorial' ), $string );
 
-		return _x( '&mdash; Select &mdash;', 'Settings: Dropdown Select Option None', 'geditorial' );
+		return _x( '&ndash; Select &ndash;', 'Settings: Dropdown Select Option None', 'geditorial' );
 	}
 
 	public static function showOptionAll( $string = NULL )
 	{
 		if ( $string )
 			/* translators: %s: options */
-			return sprintf( _x( '&mdash; All %s &mdash;', 'Settings: Dropdown Select Option All', 'geditorial' ), $string );
+			return sprintf( _x( '&ndash; All %s &ndash;', 'Settings: Dropdown Select Option All', 'geditorial' ), $string );
 
-		return _x( '&mdash; All &mdash;', 'Settings: Dropdown Select Option All', 'geditorial' );
+		return _x( '&ndash; All &ndash;', 'Settings: Dropdown Select Option All', 'geditorial' );
 	}
 
 	public static function fieldSeparate( $string = 'from' )

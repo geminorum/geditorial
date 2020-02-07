@@ -506,7 +506,7 @@ class MetaBox extends Core\Base
 			'selected'         => $post->post_parent,
 			'name'             => 'parent_id',
 			'class'            => static::BASE.'-admin-dropbown',
-			'show_option_none' => _x( '&mdash; no parent &mdash;', 'MetaBox: Parent Dropdown: Select Option None', 'geditorial' ),
+			'show_option_none' => _x( '&ndash; no parent &ndash;', 'MetaBox: Parent Dropdown: Select Option None', 'geditorial' ),
 			'sort_column'      => 'menu_order, post_title',
 			'sort_order'       => 'desc',
 			'post_status'      => $statuses,

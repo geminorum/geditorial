@@ -333,7 +333,7 @@ class Widget extends \WP_Widget
 		if ( $option_all )
 			$html.= HTML::tag( 'option', [
 				'value' => $option_all,
-			], _x( '&mdash; All Taxonomies &mdash;', 'Widget Core', 'geditorial' ) );
+			], _x( '&ndash; All Taxonomies &ndash;', 'Widget Core', 'geditorial' ) );
 
 		foreach ( Taxonomy::get( 0, [], $type ) as $name => $title )
 			$html.= HTML::tag( 'option', [

@@ -408,7 +408,7 @@ class Today extends gEditorial\Helper
 
 		$html = HTML::tag( 'option', [
 			'value' => '',
-		], _x( '&mdash; Select Calendar &mdash;', 'Modules: Today: Meta Box Input Option None', 'geditorial' ) );
+		], _x( '&ndash; Select Calendar &ndash;', 'Modules: Today: Meta Box Input Option None', 'geditorial' ) );
 
 		foreach ( $calendars as $name => $title )
 			$html.= HTML::tag( 'option', [

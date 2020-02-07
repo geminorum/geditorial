@@ -60,7 +60,7 @@ class Specs extends gEditorial\Module
 			],
 			'misc' => [
 				'column_title'     => _x( 'Specifications', 'Modules: Specs: Column Title', 'geditorial' ),
-				'show_option_none' => _x( '&mdash; Choose a Specification &mdash;', 'Modules: Specs', 'geditorial' ),
+				'show_option_none' => _x( '&ndash; Choose a Specification &ndash;', 'Modules: Specs', 'geditorial' ),
 			],
 			'noops' => [
 				'specs_tax' => _nx_noop( 'Specification', 'Specifications', 'Modules: Specs: Noop', 'geditorial' ),
