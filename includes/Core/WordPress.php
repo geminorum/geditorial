@@ -42,6 +42,7 @@ class WordPress extends Base
 	}
 
 	// @REF: `vars.php`
+	// TODO: support arrays
 	public static function pageNow( $page = NULL )
 	{
 		$now = 'index.php';
@@ -50,6 +51,12 @@ class WordPress extends Base
 			$now = strtolower( $matches[1] );
 
 		return is_null( $page ) ? $now : ( $now == $page );
+	}
+
+	// @REF: https://core.trac.wordpress.org/ticket/19898
+	public static function isLogin()
+	{
+		return Text::has( self::loginURL(), $_SERVER['SCRIPT_NAME'] );
 	}
 
 	// @REF: https://make.wordpress.org/core/2019/04/17/block-editor-detection-improvements-in-5-2/

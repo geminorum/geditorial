@@ -356,10 +356,11 @@ class HTML extends Base
 	// ANCESTOR: tag_escape()
 	public static function sanitizeTag( $tag )
 	{
-		return strtolower( preg_replace('/[^a-zA-Z0-9_:]/', '', $tag ) );
+		return preg_replace( '/[^a-zA-Z0-9_:]/', '', $tag );
 	}
 
-	// @SOURCE: http://www.billerickson.net/code/phone-number-url/
+	// @REF: https://www.billerickson.net/code/phone-number-url/
+	// @SEE: https://www.iana.org/assignments/uri-schemes/uri-schemes.xhtml
 	public static function sanitizePhoneNumber( $number )
 	{
 		return self::escapeURL( 'tel:'.str_replace( array( '(', ')', '-', '.', '|', ' ' ), '', $number ) );
@@ -389,6 +390,137 @@ class HTML extends Base
 		}
 
 		return $expecting;
+	}
+
+	public static function listCode( $array, $row = NULL, $first = FALSE )
+	{
+		if ( ! $array )
+			return '';
+
+		$html = '<ul class="base-list-code">';
+
+		if ( is_null( $row ) )
+			$row = '<code title="%2$s">%1$s</code>';
+
+		if ( $first )
+			$html.= '<li class="-first">'.$first.'</li>';
+
+		foreach ( (array) $array as $key => $value )
+			$html.= '<li>'.sprintf( $row, $key, self::sanitizeDisplay( $value ) ).'</li>';
+
+		return $html.'</ul>';
+	}
+
+	public static function tableCode( $array, $reverse = FALSE, $caption = FALSE )
+	{
+		if ( ! $array )
+			return '';
+
+		if ( $reverse )
+			$row = '<tr><td class="-val"><code>%1$s</code></td><td class="-var" valign="top">%2$s</td></tr>';
+		else
+			$row = '<tr><td class="-var" valign="top">%1$s</td><td class="-val"><code>%2$s</code></td></tr>';
+
+		$html = '<table class="base-table-code'.( $reverse ? ' -reverse' : '' ).'">';
+
+		if ( FALSE !== $caption )
+			$html.= '<caption>'.$caption.'</caption>';
+
+		$html.= '<tbody>';
+
+		foreach ( (array) $array as $key => $value )
+			$html.= sprintf( $row, $key, self::sanitizeDisplay( $value ) );
+
+		return $html.'</tbody></table>';
+	}
+
+	public static function sanitizeDisplay( $value )
+	{
+		if ( is_null( $value ) )
+			$value = 'NULL';
+
+		else if ( is_bool( $value ) )
+			$value = $value ? 'TRUE' : 'FALSE';
+
+		else if ( is_array( $value ) )
+			$value = self::joined( $value, '[', ']', ',', 'EMPTY ARRAY' );
+
+		else if ( is_object( $value ) )
+			$value = json_encode( $value, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES );
+
+		else if ( is_int( $value ) )
+			$value = $value;
+
+		else if ( empty( $value ) )
+			$value = 'EMPTY';
+
+		else
+			$value = nl2br( trim( $value ) );
+
+		return $value;
+	}
+
+	// FIXME: WTF: not wrapping the child table!!
+	// FIXME: DRAFT: needs styling
+	public static function tableSideWrap( $array, $title = FALSE )
+	{
+		echo '<table class="widefat fixed base-table-side-wrap">';
+			if ( $title )
+				echo '<thead><tr><th>'.$title.'</th></tr></thead>';
+			echo '<tbody>';
+			self::tableSide( $array );
+		echo '</tbody></table>';
+	}
+
+	public static function tableSide( $array, $type = TRUE )
+	{
+		echo '<table class="base-table-side">';
+
+		if ( ! empty( $array ) ) {
+
+			foreach ( $array as $key => $val ) {
+
+				$val = maybe_unserialize( $val );
+
+				echo '<tr class="-row">';
+
+				if ( is_string( $key ) ) {
+					echo '<td class="-key">';
+						echo '<strong>'.$key.'</strong>';
+						if ( $type ) echo '<br /><small>'.gettype( $val ).'</small>';
+					echo '</td>';
+				}
+
+				if ( is_array( $val ) || is_object( $val ) ) {
+
+					echo '<td class="-val -table">';
+					self::tableSide( $val, $type );
+
+				} else if ( is_null( $val ) ) {
+
+					echo '<td class="-val -not-table"><code>NULL</code>';
+
+				} else if ( is_bool( $val ) ) {
+
+					echo '<td class="-val -not-table"><code>'.( $val ? 'TRUE' : 'FALSE' ).'</code>';
+
+				} else if ( ! empty( $val ) ) {
+
+					echo '<td class="-val -not-table"><code>'.$val.'</code>';
+
+				} else {
+
+					echo '<td class="-val -not-table"><small class="-empty">EMPTY</small>';
+				}
+
+				echo '</td></tr>';
+			}
+
+		} else {
+			echo '<tr class="-row"><td class="-val -not-table"><small class="-empty">EMPTY</small></td></tr>';
+		}
+
+		echo '</table>';
 	}
 
 	public static function linkStyleSheet( $url, $version = NULL, $media = 'all', $echo = TRUE )
@@ -465,31 +597,87 @@ class HTML extends Base
 		), $html );
 	}
 
-	// @REF: https://codex.wordpress.org/Plugin_API/Action_Reference/admin_notices
-	// CLASSES: notice-error, notice-warning, notice-success, notice-info, is-dismissible, fade, inline
-	public static function notice( $notice, $class = 'notice-success fade inline', $dismissible = TRUE )
+	// @REF: https://make.wordpress.org/core/2019/04/02/admin-tabs-semantic-improvements-in-5-2/
+	public static function tabsList( $tabs, $atts = array() )
 	{
-		return sprintf( '<div class="notice %s%s -notice">%s</div>', $class, ( $dismissible ? ' is-dismissible' : '' ), Text::autoP( $notice ) );
-	}
+		if ( empty( $tabs ) )
+			return FALSE;
 
-	public static function error( $notice, $dismissible = TRUE, $extra = '' )
-	{
-		return self::notice( $notice, 'notice-error fade inline '.self::prepClass( $extra ), $dismissible );
-	}
+		$args = self::atts( array(
+			'active' => NULL, // TRUE forces first tab active
+			'title'  => FALSE,
+			'class'  => FALSE,
+			'prefix' => 'nav-tab',
+			'nav'    => 'h3',
+		), $atts );
 
-	public static function success( $notice, $dismissible = TRUE, $extra = '' )
-	{
-		return self::notice( $notice, 'notice-success fade inline '.self::prepClass( $extra ), $dismissible );
-	}
+		if ( TRUE === $args['active'] ) {
 
-	public static function warning( $notice, $dismissible = TRUE, $extra = '' )
-	{
-		return self::notice( $notice, 'notice-warning fade inline '.self::prepClass( $extra ), $dismissible );
-	}
+			$args['active'] = array_keys( $tabs )[0];
 
-	public static function info( $notice, $dismissible = TRUE, $extra = '' )
-	{
-		return self::notice( $notice, 'notice-info fade inline '.self::prepClass( $extra ), $dismissible );
+		} else if ( ! $args['active'] ) {
+
+			$actives = @wp_list_pluck( $tabs, 'active' );
+			$args['active'] = array_keys( ( count( $actives ) ? $actives : $tabs ) )[0];
+		}
+
+		$navs = $contents = '';
+
+		foreach ( $tabs as $tab => $tab_atts ) {
+
+			$tab_args = self::atts( array(
+				// 'active'  => FALSE, // not needed here, just for reference
+				'title'   => $tab,
+				'link'    => '#'.$tab,
+				'cb'      => FALSE,
+				'content' => '',
+			), $tab_atts );
+
+			$navs.= self::tag( 'a', array(
+				'href'  => $tab_args['link'],
+				'class' => $args['prefix'].' -nav'.( $tab == $args['active'] ? ' '.$args['prefix'].'-active -active' : '' ),
+				'data'  => array( 'tab' => $tab, 'toggle' => 'tab' ),
+			), $tab_args['title'] );
+
+			$content = '';
+
+			if ( $tab_args['cb'] && is_callable( $tab_args['cb'] ) ) {
+
+				ob_start();
+					call_user_func_array( $tab_args['cb'], array( $tab, $tab_args, $args ) );
+				$content.= ob_get_clean();
+
+			} else if ( $tab_args['content'] ) {
+
+				$content = $tab_args['content'];
+			}
+
+			if ( $content ) {
+
+				$contents.= self::tag( 'div', array(
+					'class' => $args['prefix'].'-content'.( $tab == $args['active'] ? ' '.$args['prefix'].'-content-active -active' : '' ).' -content',
+					'data'  => array( 'tab' => $tab ),
+				), $content );
+			}
+		}
+
+		if ( isset( $args['title'] ) && $args['title'] )
+			echo $args['title'];
+
+		$navs = self::tag( $args['nav'], array(
+			'class' => $args['prefix'].'-wrapper -wrapper',
+		), $navs );
+
+		echo self::tag( 'div', array(
+			'class' => array(
+				'base-tabs-list',
+				'-base',
+				$args['prefix'].'-base',
+				$args['class'],
+			),
+		), $navs.$contents );
+
+		return TRUE;
 	}
 
 	public static function tableList( $columns, $data = array(), $atts = array() )
@@ -502,7 +690,7 @@ class HTML extends Base
 			'title'      => NULL,
 			'before'     => FALSE,
 			'after'      => FALSE,
-			'row_check'  => FALSE, // call back to check each row
+			'row_check'  => FALSE, // call back to check each row display
 			'row_class'  => FALSE, // call back to filter each row class
 			'callback'   => FALSE, // for all cells
 			'sanitize'   => TRUE, // using sanitizeDisplay()
@@ -738,6 +926,7 @@ class HTML extends Base
 		echo $html;
 	}
 
+	// FIXME: must use internal `add_query_arg()` and remove `message`/`count` args
 	public static function tableNavigation( $pagination = array() )
 	{
 		$args = self::atts( array(
@@ -819,15 +1008,15 @@ class HTML extends Base
 				echo '<span class="-previous -span button -icon" disabled="disabled">'.$icons['previous'].'</span>';
 			} else {
 				echo self::tag( 'a', array(
-					'href'  => add_query_arg( array(
+					'href' => add_query_arg( array_merge( $args['extra'], array(
 						'paged' => FALSE,
 						'limit' => $args['limit'],
-					) ),
+					) ) ),
 					'class' => '-first -link button -icon',
 				), $icons['first'] );
 				echo '&nbsp;';
 				echo self::tag( 'a', array(
-					'href'  => add_query_arg( array_merge( $args['extra'], array(
+					'href' => add_query_arg( array_merge( $args['extra'], array(
 						'paged' => $args['previous'],
 						'limit' => $args['limit'],
 					) ) ),
@@ -837,7 +1026,7 @@ class HTML extends Base
 
 			echo '&nbsp;';
 			echo self::tag( 'a', array(
-				'href'  => add_query_arg( array_merge( $args['extra'], array(
+				'href' => add_query_arg( array_merge( $args['extra'], array(
 					'paged' => $args['paged'],
 					'limit' => $args['limit'],
 				) ) ),
@@ -851,7 +1040,7 @@ class HTML extends Base
 				echo '<span class="-next -span button -icon" disabled="disabled">'.$icons['next'].'</span>';
 			} else {
 				echo self::tag( 'a', array(
-					'href'  => add_query_arg( array_merge( $args['extra'], array(
+					'href' => add_query_arg( array_merge( $args['extra'], array(
 						'paged' => $args['next'],
 						'limit' => $args['limit'],
 					) ) ),
@@ -859,7 +1048,7 @@ class HTML extends Base
 				), $icons['next'] );
 				echo '&nbsp;';
 				echo self::tag( 'a', array(
-					'href'  => add_query_arg( array_merge( $args['extra'], array(
+					'href' => add_query_arg( array_merge( $args['extra'], array(
 						'paged' => $args['pages'],
 						'limit' => $args['limit'],
 					) ) ),
@@ -893,106 +1082,6 @@ class HTML extends Base
 		}
 
 		return $pagination;
-	}
-
-	public static function tableSide( $array, $type = TRUE )
-	{
-		echo '<table class="base-table-side">';
-
-		if ( ! empty( $array ) ) {
-
-			foreach ( $array as $key => $val ) {
-
-				$val = maybe_unserialize( $val );
-
-				echo '<tr class="-row">';
-
-				if ( is_string( $key ) ) {
-					echo '<td class="-key">';
-						echo '<strong>'.$key.'</strong>';
-						if ( $type ) echo '<br /><small>'.gettype( $val ).'</small>';
-					echo '</td>';
-				}
-
-				if ( is_array( $val ) || is_object( $val ) ) {
-
-					echo '<td class="-val -table">';
-					self::tableSide( $val, $type );
-
-				} else if ( is_null( $val ) ) {
-
-					echo '<td class="-val -not-table"><code>NULL</code>';
-
-				} else if ( is_bool( $val ) ) {
-
-					echo '<td class="-val -not-table"><code>'.( $val ? 'TRUE' : 'FALSE' ).'</code>';
-
-				} else if ( ! empty( $val ) ) {
-
-					echo '<td class="-val -not-table"><code>'.$val.'</code>';
-
-				} else {
-
-					echo '<td class="-val -not-table"><small class="-empty">EMPTY</small>';
-				}
-
-				echo '</td></tr>';
-			}
-
-		} else {
-			echo '<tr class="-row"><td class="-val -not-table"><small class="-empty">EMPTY</small></td></tr>';
-		}
-
-		echo '</table>';
-	}
-
-	public static function tableCode( $array, $reverse = FALSE, $caption = FALSE )
-	{
-		if ( ! $array )
-			return '';
-
-		if ( $reverse )
-			$row = '<tr><td class="-val"><code>%1$s</code></td><td class="-var" valign="top">%2$s</td></tr>';
-		else
-			$row = '<tr><td class="-var" valign="top">%1$s</td><td class="-val"><code>%2$s</code></td></tr>';
-
-		$html = '<table class="base-table-code'.( $reverse ? ' -reverse' : '' ).'">';
-
-		if ( $caption )
-			$html.= '<caption>'.$caption.'</caption>';
-
-		$html.= '<tbody>';
-
-		foreach ( (array) $array as $key => $value )
-			$html.= sprintf( $row, $key, self::sanitizeDisplay( $value ) );
-
-		return $html.'</tbody></table>';
-	}
-
-	public static function sanitizeDisplay( $value )
-	{
-		if ( is_null( $value ) )
-			$value = 'NULL';
-
-		else if ( is_bool( $value ) )
-			$value = $value ? 'TRUE' : 'FALSE';
-
-		else if ( is_array( $value ) )
-			$value = self::joined( $value, '[', ']', ',', 'EMPTY ARRAY' );
-
-		else if ( is_object( $value ) )
-			$value = json_encode( $value, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES );
-
-		else if ( is_int( $value ) )
-			$value = $value;
-
-		else if ( empty( $value ) )
-			$value = 'EMPTY';
-
-		else
-			$value = nl2br( trim( $value ) );
-
-		return $value;
 	}
 
 	public static function menu( $menu, $callback = FALSE, $list = 'ul', $children = 'children' )
@@ -1049,6 +1138,33 @@ class HTML extends Base
 			return $script;
 
 		echo $script;
+	}
+
+	// @REF: https://codex.wordpress.org/Plugin_API/Action_Reference/admin_notices
+	// CLASSES: notice-error, notice-warning, notice-success, notice-info, is-dismissible, fade, inline
+	public static function notice( $notice, $class = 'notice-success fade inline', $dismissible = TRUE )
+	{
+		return sprintf( '<div class="notice %s%s -notice">%s</div>', $class, ( $dismissible ? ' is-dismissible' : '' ), Text::autoP( $notice ) );
+	}
+
+	public static function error( $notice, $dismissible = TRUE, $extra = '' )
+	{
+		return self::notice( $notice, 'notice-error fade inline '.self::prepClass( $extra ), $dismissible );
+	}
+
+	public static function success( $notice, $dismissible = TRUE, $extra = '' )
+	{
+		return self::notice( $notice, 'notice-success fade inline '.self::prepClass( $extra ), $dismissible );
+	}
+
+	public static function warning( $notice, $dismissible = TRUE, $extra = '' )
+	{
+		return self::notice( $notice, 'notice-warning fade inline '.self::prepClass( $extra ), $dismissible );
+	}
+
+	public static function info( $notice, $dismissible = TRUE, $extra = '' )
+	{
+		return self::notice( $notice, 'notice-info fade inline '.self::prepClass( $extra ), $dismissible );
 	}
 
 	// @REF: https://developer.wordpress.org/resource/dashicons/

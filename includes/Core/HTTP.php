@@ -159,7 +159,7 @@ class HTTP extends Base
 		return FALSE;
 	}
 
-	public static function postJSON( $body, $url, $atts = array(), $assoc = FALSE )
+	public static function postJSON( $body, $url, $atts = array(), $assoc = TRUE )
 	{
 		$args = self::recursiveParseArgs( $atts, array(
 			'body'    => $body,
@@ -257,10 +257,7 @@ class HTTP extends Base
 
 		$ip = self::normalizeIP( $ip );
 
-		if ( $pad )
-			return str_pad( $ip, 15, ' ', STR_PAD_LEFT );
-
-		return $ip;
+		return $pad ? str_pad( $ip, 15, ' ', STR_PAD_LEFT ) : $ip;
 	}
 
 	public static function normalizeIP( $ip )

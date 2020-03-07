@@ -109,6 +109,7 @@ class Base
 
 		if ( isset( $trace[$offset]['object'] ) )
 			$log.= get_class( $trace[$offset]['object'] ).'::';
+
 		else if ( isset( $trace[$offset]['class'] ) )
 			$log.= $trace[$offset]['class'].'::';
 
@@ -117,11 +118,15 @@ class Base
 		$offset++;
 
 		if ( isset( $trace[$offset]['function'] ) ) {
+
 			$log.= '|FROM: ';
+
 			if ( isset( $trace[$offset]['object'] ) )
 				$log.= get_class( $trace[$offset]['object'] ).'::';
+
 			else if ( isset( $trace[$offset]['class'] ) )
 				$log.= $trace[$offset]['class'].'::';
+
 			$log.= $trace[$offset]['function'].'()';
 		}
 

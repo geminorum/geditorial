@@ -240,7 +240,7 @@ class Arraay extends Base
 			$tmp = array();
 
 			foreach ( $arr as $ar )
-				$tmp[key($ar)] = current( $ar );
+				$tmp[key( $ar )] = current( $ar );
 
 			$arr = $tmp;
 		}
