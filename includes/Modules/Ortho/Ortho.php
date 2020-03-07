@@ -359,6 +359,7 @@ class Ortho extends gEditorial\Module
 
 		$pagination['before'][] = Helper::tableFilterPostTypes( $list );
 		$pagination['before'][] = Helper::tableFilterAuthors( $list );
+		$pagination['before'][] = Helper::tableFilterSearch( $list );
 
 		$columns = [
 			'_cb'     => 'ID',

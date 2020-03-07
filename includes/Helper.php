@@ -555,6 +555,17 @@ class Helper extends Core\Base
 		return Listtable::restrictByAuthor( self::req( $name, 0 ), $name, [ 'echo' => FALSE ] );
 	}
 
+	public static function tableFilterSearch( $list = NULL, $name = 's' )
+	{
+		return HTML::tag( 'input', [
+			'type'        => 'search',
+			'name'        => $name,
+			'value'       => self::req( $name, '' ),
+			'class'       => '-search',
+			'placeholder' => _x( 'Search', 'Helper: Table Filter', 'geditorial' ),
+		] );
+	}
+
 	public static function tableColumnPostID()
 	{
 		return _x( 'ID', 'Helper: Table Column: Post ID', 'geditorial' );

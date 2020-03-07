@@ -731,6 +731,7 @@ class Book extends gEditorial\Module
 		list( $posts, $pagination ) = $this->getTablePosts( $query );
 
 		$pagination['before'][] = Helper::tableFilterPostTypes( $this->list_posttypes() );
+		$pagination['before'][] = Helper::tableFilterSearch( $list );
 
 		return HTML::tableList( [
 			'_cb'   => 'ID',

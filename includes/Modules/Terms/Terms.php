@@ -1259,6 +1259,7 @@ class Terms extends gEditorial\Module
 
 		$pagination['before'][] = Helper::tableFilterPostTypes();
 		$pagination['before'][] = Helper::tableFilterAuthors();
+		$pagination['before'][] = Helper::tableFilterSearch();
 
 		return HTML::tableList( [
 			'_cb'   => 'ID',

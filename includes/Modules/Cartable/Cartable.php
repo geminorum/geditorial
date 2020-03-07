@@ -881,6 +881,7 @@ class Cartable extends gEditorial\Module
 
 		HTML::h3( $title );
 
+		$list  = $this->list_posttypes();
 		$query = [
 			'tax_query'      => [ [
 				'taxonomy' => $this->constant( $context.'_tax' ),
@@ -892,7 +893,8 @@ class Cartable extends gEditorial\Module
 		list( $posts, $pagination ) = $this->getTablePosts( $query );
 
 		$pagination['actions']['empty_cartable'] = _x( 'Empty Cartable', 'Modules: Cartable: Table Action', 'geditorial' );
-		$pagination['before'][] = Helper::tableFilterPostTypes( $this->list_posttypes() );
+		$pagination['before'][] = Helper::tableFilterPostTypes( $list );
+		$pagination['before'][] = Helper::tableFilterSearch( $list );
 
 		return HTML::tableList( [
 			'_cb'   => 'ID',

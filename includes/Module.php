@@ -2956,6 +2956,9 @@ class Module extends Base
 			'suppress_filters' => TRUE,
 		], $atts );
 
+		if ( ! empty( $_REQUEST['s'] ) )
+			$args['s'] = $extra['s'] = $_REQUEST['s'];
+
 		if ( ! empty( $_REQUEST['id'] ) )
 			$args['post__in'] = explode( ',', maybe_unserialize( $_REQUEST['id'] ) );
 

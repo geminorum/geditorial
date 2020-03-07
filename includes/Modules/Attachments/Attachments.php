@@ -283,6 +283,7 @@ class Attachments extends gEditorial\Module
 
 		// $pagination['before'][] = Helper::tableFilterPostTypes( $list, 'type_parent' ); // FIXME: no support for parent type yet!
 		$pagination['before'][] = Helper::tableFilterAuthors( $list );
+		$pagination['before'][] = Helper::tableFilterSearch( $list );
 
 		$custom = [
 			// FIXME: must add ajax

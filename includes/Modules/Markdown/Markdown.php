@@ -479,6 +479,7 @@ class Markdown extends gEditorial\Module
 		$pagination['actions']['discard_markdown'] = _x( 'Discard Markdown', 'Modules: Markdown: Table Action', 'geditorial' );
 		$pagination['before'][] = Helper::tableFilterPostTypes( $list );
 		$pagination['before'][] = Helper::tableFilterAuthors( $list );
+		$pagination['before'][] = Helper::tableFilterSearch( $list );
 
 		return HTML::tableList( [
 			'_cb'      => 'ID',
