@@ -63,14 +63,14 @@
     "js-yaml": "^3.13.1",
     "parse-changelog": "^1.0.2",
     "prettyjson": "^1.2.1",
-    "rtlcss": "^2.4.1",
+    "rtlcss": "^2.5.0",
     "semistandard": "^14.2.0",
-    "stylelint": "^13.0.0",
+    "stylelint": "^13.2.1",
     "stylelint-config-wordpress": "^16.0.0",
     "xtend": "^4.0.2"
   },
   "optionalDependencies": {
-    "virastar": "^0.19.0"
+    "virastar": "^0.19.1"
   },
   "semistandard": {
     "ignore": [
