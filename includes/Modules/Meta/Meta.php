@@ -154,7 +154,7 @@ class Meta extends gEditorial\Module
 				'source_title' => [ 'type' => 'text' ],
 				'source_url'   => [ 'type' => 'link' ],
 				'highlight'    => [ 'type' => 'note' ],
-				'dashboard'    => [ 'type' => 'postbox_tiny' ],
+				'dashboard'    => [ 'type' => 'postbox_html' ], // or 'postbox_tiny'
 				'abstract'     => [ 'type' => 'postbox_html' ], // or 'postbox_tiny'
 			],
 			'page' => [
