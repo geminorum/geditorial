@@ -88,6 +88,7 @@ class Meta extends gEditorial\Module
 					'source_url'   => _x( 'Source URL', 'Modules: Meta: Titles', 'geditorial' ),
 					'highlight'    => _x( 'Highlight', 'Modules: Meta: Titles', 'geditorial' ),
 					'dashboard'    => _x( 'Dashboard', 'Modules: Meta: Titles', 'geditorial' ),
+					'abstract'     => _x( 'Abstract', 'Modules: Meta: Titles', 'geditorial' ),
 				],
 				'author' => _x( 'Author', 'Modules: Meta: Titles', 'geditorial' ),
 				'source' => _x( 'Source', 'Modules: Meta: Titles', 'geditorial' ),
@@ -106,6 +107,7 @@ class Meta extends gEditorial\Module
 					'source_url'   => _x( 'Full URL to the Source of the Content', 'Modules: Meta: Descriptions', 'geditorial' ),
 					'highlight'    => _x( 'A Short Note Highlighted About the Post', 'Modules: Meta: Descriptions', 'geditorial' ),
 					'dashboard'    => _x( 'Custom HTML Content on the Dashboard', 'Modules: Meta: Descriptions', 'geditorial' ),
+					'abstract'     => _x( 'A summary of the content', 'Modules: Meta: Descriptions', 'geditorial' ),
 				],
 			],
 			'noops' => [
@@ -153,6 +155,7 @@ class Meta extends gEditorial\Module
 				'source_url'   => [ 'type' => 'link' ],
 				'highlight'    => [ 'type' => 'note' ],
 				'dashboard'    => [ 'type' => 'postbox_tiny' ],
+				'abstract'     => [ 'type' => 'postbox_html' ], // or 'postbox_tiny'
 			],
 			'page' => [
 				'ot' => [ 'type' => 'title_before' ],
@@ -602,7 +605,7 @@ class Meta extends gEditorial\Module
 
 		$meta    = (array) $this->get_postmeta( $post->ID );
 		$fields  = $this->get_posttype_fields( $post->post_type );
-		$exclude = [ 'ot', 'st', 'highlight', 'as', 'ch', 'le', 'source_title', 'source_url' ];
+		$exclude = [ 'ot', 'st', 'highlight', 'as', 'ch', 'le', 'source_title', 'source_url', 'abstract' ];
 
 		echo '<div class="geditorial-admin-wrap-column -meta"><ul class="-rows">';
 			$this->actions( 'column_row', $post, $fields, array_diff_key( $meta, array_flip( $exclude ) ) );
