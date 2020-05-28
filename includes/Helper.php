@@ -187,6 +187,9 @@ class Helper extends Core\Base
 
 	public static function isEmptyString( $string, $empties = NULL )
 	{
+		if ( ! is_string( $string ) )
+			return FALSE;
+
 		$trimmed = trim( $string );
 
 		if ( '' === $trimmed )
