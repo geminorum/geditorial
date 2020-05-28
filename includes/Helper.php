@@ -185,6 +185,28 @@ class Helper extends Core\Base
 		return Text::trimChars( $text, $length, $append );
 	}
 
+	public static function isEmptyString( $string, $empties = NULL )
+	{
+		$trimmed = trim( $string );
+
+		if ( '' === $trimmed )
+			return TRUE;
+
+		if ( is_null( $empties ) )
+			$empties = [
+				'.', '..', '...',
+				'-', '--', '---',
+				'–', '––', '–––',
+				'—', '——', '———',
+			];
+
+		foreach ( (array) $empties as $empty )
+			if ( $empty === $trimmed )
+				return TRUE;
+
+		return FALSE;
+	}
+
 	public static function getSeperated( $string, $delimiters = NULL, $delimiter = '|' )
 	{
 		if ( is_array( $string ) )
