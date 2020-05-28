@@ -163,7 +163,7 @@ class Importer extends gEditorial\Module
 			'_cb' => '_index',
 			'_check_column' => [
 				'title'    => _x( '[Checks]', 'Modules: Importer: Table Column', 'geditorial' ),
-				'args'     => [ 'map' => $selected, 'taxonomies' => $taxonomies ],
+				'args'     => [ 'map' => $selected ],
 				'callback' => function( $value, $row, $column, $index ){
 					if ( ! array_key_exists( 'importer_post_title', $column['args']['map'] ) )
 						return Helper::htmlEmpty();
@@ -190,7 +190,7 @@ class Importer extends gEditorial\Module
 			'map'       => $selected,
 			'row_check' => [ $this, 'form_table_row_check' ],
 			'callback'  => [ $this, 'form_table_callback' ],
-			'extra'     => [ 'post_type' => $posttype ],
+			'extra'     => [ 'post_type' => $posttype, 'taxonomies' => $taxonomies ],
 			/* translators: %s: count placeholder */
 			'title'     => HTML::tag( 'h3', Helper::getCounted( count( $data ), _x( '%s Records Found', 'Modules: Importer', 'geditorial' ) ) ),
 		] );
@@ -203,7 +203,15 @@ class Importer extends gEditorial\Module
 
 	public function form_table_callback( $value, $row, $column, $index, $key, $args )
 	{
-		return HTML::sanitizeDisplay( $this->filters( 'prepare', $value, $args['extra']['post_type'], array_search( $key, $args['map'] ), $row, $args['taxonomies'] ) );
+		$filtered = $this->filters( 'prepare', $value, $args['extra']['post_type'], array_search( $key, $args['map'] ), $row, $args['extra']['taxonomies'] );
+
+		if ( FALSE === $filtered )
+			$filtered = gEditorial()->na();
+
+		else if ( Helper::isEmptyString( $filtered ) )
+			$filtered = '';
+
+		return HTML::sanitizeDisplay( $filtered );
 	}
 
 	// no need / not used
@@ -307,12 +315,12 @@ class Importer extends gEditorial\Module
 
 							switch ( $field ) {
 
+								case 'importer_old_id': $data['meta_input'][$this->constant( 'metakey_old_id' )] = $value; break;
+
 								case 'importer_menu_order': $data['menu_order'] = $value; break;
 								case 'importer_post_title': $data['post_title'] = $value; break;
 								case 'importer_post_content': $data['post_content'] = $value; break;
 								case 'importer_post_excerpt': $data['post_excerpt'] = $value; break;
-
-								case 'importer_old_id': $data['meta_input'][$this->constant( 'metakey_old_id' )] = $value; break;
 							}
 
 							foreach ( $taxonomies as $taxonomy => $label ) {
@@ -447,15 +455,14 @@ class Importer extends gEditorial\Module
 	{
 		$fields = [
 			'none'                  => Settings::showOptionNone(),
+			'importer_old_id'       => _x( 'Extra: Old ID', 'Modules: Importer: Post Field', 'geditorial' ),
 			'importer_menu_order'   => _x( 'Menu Order', 'Modules: Importer: Post Field', 'geditorial' ),
 			'importer_post_title'   => _x( 'Post Title', 'Modules: Importer: Post Field', 'geditorial' ),
 			'importer_post_content' => _x( 'Post Content', 'Modules: Importer: Post Field', 'geditorial' ),
 			'importer_post_excerpt' => _x( 'Post Excerpt', 'Modules: Importer: Post Field', 'geditorial' ),
-
-			'importer_old_id'       => _x( 'Extra: Old ID', 'Modules: Importer: Post Field', 'geditorial' ),
 		];
 
-		foreach ( $taxonomies as $taxonomy => $label )
+		foreach ( (array) $taxonomies as $taxonomy => $label )
 			/* translators: %s: taxonomy name placeholder */
 			$fields['importer_tax_'.$taxonomy] = sprintf( _x( 'Taxonomy: %s', 'Modules: Importer: Post Field', 'geditorial' ), $label );
 
@@ -474,7 +481,7 @@ class Importer extends gEditorial\Module
 			case 'importer_old_id': return Number::intval( $value );
 		}
 
-		foreach ( $taxonomies as $taxonomy => $label )
+		foreach ( (array) $taxonomies as $taxonomy => $label )
 			if ( $field == 'importer_tax_'.$taxonomy )
 				return array_filter( Helper::ksesArray( Helper::getSeperated( $value ) ) );
 
