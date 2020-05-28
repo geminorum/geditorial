@@ -90,7 +90,7 @@ class Importer extends gEditorial\Module
 		$parser   = new \KzykHys\CsvParser\CsvParser( $iterator, [ 'encoding' => 'UTF-8', 'limit' => 1 ] );
 
 		$items = $parser->parse();
-		$map   = $this->get_postmeta( $id, FALSE, [] );
+		$map   = $this->get_postmeta( $id, FALSE, [], $this->meta_key.'_map' );
 
 		$taxonomies = Taxonomy::get( 2, [], $posttype );
 		$fields     = $this->get_importer_fields( $posttype, $taxonomies );
