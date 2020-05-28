@@ -215,7 +215,9 @@ class Helper extends Core\Base
 		if ( is_null( $delimiters ) )
 			$delimiters = [ '/', '،', '؛', ';', ',' ];
 
-		return explode( $delimiter, str_ireplace( $delimiters, $delimiter, $string ) );
+		$string = str_ireplace( $delimiters, $delimiter, $string );
+
+		return array_unique( array_filter( explode( $delimiter, $string ), 'trim' ) );
 	}
 
 	public static function getJoined( $items, $before = '', $after = '', $empty = '' )
