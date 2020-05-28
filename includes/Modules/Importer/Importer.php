@@ -295,6 +295,10 @@ class Importer extends gEditorial\Module
 
 							$value = $this->filters( 'prepare', $raw[$key], $posttype, $field, $raw, $taxonomies );
 
+							// filter bail-out!
+							if ( FALSE === $value )
+								continue;
+
 							switch ( $field ) {
 
 								case 'importer_menu_order': $data['menu_order'] = $value; break;
