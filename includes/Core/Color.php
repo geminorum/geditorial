@@ -5,6 +5,15 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 class Color extends Base
 {
 
+	// @REF: `rest_parse_hex_color()`
+	public static function validHex( $color )
+	{
+		if ( ! preg_match( '/^#([A-Fa-f0-9]{3}){1,2}$/', $color, $matches ) )
+			return FALSE;
+
+		return $color;
+	}
+
 	// https://github.com/mikeemoo/ColorJizz-PHP
 	// https://github.com/mexitek/phpColors
 
