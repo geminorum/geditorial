@@ -89,9 +89,11 @@ class Importer extends gEditorial\Module
 		$iterator = new \SplFileObject( File::normalize( $file ) );
 		$parser   = new \KzykHys\CsvParser\CsvParser( $iterator, [ 'encoding' => 'UTF-8', 'limit' => 1 ] );
 
-		$items  = $parser->parse();
-		$map    = $this->get_postmeta( $id, FALSE, [] );
-		$fields = $this->get_importer_fields( $posttype );
+		$items = $parser->parse();
+		$map   = $this->get_postmeta( $id, FALSE, [] );
+
+		$taxonomies = Taxonomy::get( 2, [], $posttype );
+		$fields     = $this->get_importer_fields( $posttype, $taxonomies );
 
 		echo '<table class="base-table-raw"><tbody>';
 
@@ -152,15 +154,16 @@ class Importer extends gEditorial\Module
 
 	private function data_table( $data, $map = [], $posttype = 'post' )
 	{
-		$fields   = $this->get_importer_fields( $posttype );
-		$selected = array_flip( Arraay::stripByValue( $map, 'none' ) );
-		$columns  = array_intersect_key( $fields, $selected );
+		$taxonomies = Taxonomy::get( 2, [], $posttype );
+		$fields     = $this->get_importer_fields( $posttype, $taxonomies );
+		$selected   = array_flip( Arraay::stripByValue( $map, 'none' ) );
+		$columns    = array_intersect_key( $fields, $selected );
 
 		$pre = [
 			'_cb' => '_index',
 			'_check_column' => [
 				'title'    => _x( '[Checks]', 'Modules: Importer: Table Column', 'geditorial' ),
-				'args'     => [ 'map' => $selected ],
+				'args'     => [ 'map' => $selected, 'taxonomies' => $taxonomies ],
 				'callback' => function( $value, $row, $column, $index ){
 					if ( ! array_key_exists( 'importer_post_title', $column['args']['map'] ) )
 						return Helper::htmlEmpty();
@@ -200,7 +203,7 @@ class Importer extends gEditorial\Module
 
 	public function form_table_callback( $value, $row, $column, $index, $key, $args )
 	{
-		return HTML::sanitizeDisplay( $this->filters( 'prepare', $value, $args['extra']['post_type'], array_search( $key, $args['map'] ), $row ) );
+		return HTML::sanitizeDisplay( $this->filters( 'prepare', $value, $args['extra']['post_type'], array_search( $key, $args['map'] ), $row, $args['taxonomies'] ) );
 	}
 
 	// no need / not used
@@ -440,7 +443,7 @@ class Importer extends gEditorial\Module
 		echo '</p>';
 	}
 
-	public function get_importer_fields( $posttype = NULL )
+	public function get_importer_fields( $posttype = NULL, $taxonomies = [] )
 	{
 		$fields = [
 			'none'                  => Settings::showOptionNone(),
@@ -452,10 +455,9 @@ class Importer extends gEditorial\Module
 			'importer_old_id'       => _x( 'Extra: Old ID', 'Modules: Importer: Post Field', 'geditorial' ),
 		];
 
-		if ( $posttype )
-			foreach ( Taxonomy::get( 2, [], $posttype ) as $taxonomy => $label )
-				/* translators: %s: taxonomy name placeholder */
-				$fields['importer_tax_'.$taxonomy] = sprintf( _x( 'Taxonomy: %s', 'Modules: Importer: Post Field', 'geditorial' ), $label );
+		foreach ( $taxonomies as $taxonomy => $label )
+			/* translators: %s: taxonomy name placeholder */
+			$fields['importer_tax_'.$taxonomy] = sprintf( _x( 'Taxonomy: %s', 'Modules: Importer: Post Field', 'geditorial' ), $label );
 
 		return $this->filters( 'fields', $fields, $posttype );
 	}
