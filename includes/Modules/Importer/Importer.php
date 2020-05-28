@@ -299,6 +299,9 @@ class Importer extends gEditorial\Module
 							if ( FALSE === $value )
 								continue;
 
+							if ( Helper::isEmptyString( $value ) )
+								continue;
+
 							switch ( $field ) {
 
 								case 'importer_menu_order': $data['menu_order'] = $value; break;
