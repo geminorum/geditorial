@@ -12,6 +12,7 @@ use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\Media;
 use geminorum\gEditorial\WordPress\PostType;
+use geminorum\gEditorial\WordPress\Taxonomy;
 use geminorum\gEditorial\WordPress\User;
 
 class Importer extends gEditorial\Module
@@ -237,7 +238,7 @@ class Importer extends gEditorial\Module
 	{
 		if ( $this->check_settings( $sub, 'tools' ) ) {
 
-			add_filter( $this->hook( 'prepare' ), [ $this, 'importer_prepare' ], 9, 4 );
+			add_filter( $this->hook( 'prepare' ), [ $this, 'importer_prepare' ], 9, 5 );
 			add_action( $this->hook( 'saved' ), [ $this, 'importer_saved' ], 9, 5 );
 
 			if ( ! empty( $_POST ) ) {
@@ -258,6 +259,7 @@ class Importer extends gEditorial\Module
 
 					$post_status    = $this->get_setting( 'post_status', 'pending' );
 					$comment_status = $this->get_setting( 'comment_status', 'closed' );
+					$taxonomies     = Taxonomy::get( 2, [], $posttype );
 
 					$iterator = new \SplFileObject( File::normalize( $file ) );
 
@@ -290,7 +292,7 @@ class Importer extends gEditorial\Module
 
 						foreach ( $field_map as $key => $field )	{
 
-							$value = $this->filters( 'prepare', $raw[$key], $posttype, $field, $raw );
+							$value = $this->filters( 'prepare', $raw[$key], $posttype, $field, $raw, $taxonomies );
 
 							switch ( $field ) {
 
@@ -299,8 +301,16 @@ class Importer extends gEditorial\Module
 								case 'importer_post_content': $data['post_content'] = $value; break;
 								case 'importer_post_excerpt': $data['post_excerpt'] = $value; break;
 
-								case 'importer_post_cats': $data['tax_input']['category'] = (array) $value; break;
-								case 'importer_post_tags': $data['tax_input']['post_tag'] = (array) $value; break;
+							}
+
+							foreach ( $taxonomies as $taxonomy => $label ) {
+
+								if ( $field != 'importer_tax_'.$taxonomy )
+									continue;
+
+								$data['tax_input'][$taxonomy] = (array) $value;
+
+								break;
 							}
 						}
 
@@ -423,20 +433,22 @@ class Importer extends gEditorial\Module
 
 	public function get_importer_fields( $posttype = NULL )
 	{
-		return $this->filters( 'fields', [
+		$fields = [
 			'none'                  => Settings::showOptionNone(),
 			'importer_menu_order'   => _x( 'Menu Order', 'Modules: Importer: Post Field', 'geditorial' ),
 			'importer_post_title'   => _x( 'Post Title', 'Modules: Importer: Post Field', 'geditorial' ),
 			'importer_post_content' => _x( 'Post Content', 'Modules: Importer: Post Field', 'geditorial' ),
 			'importer_post_excerpt' => _x( 'Post Excerpt', 'Modules: Importer: Post Field', 'geditorial' ),
-			'importer_post_cats'    => _x( 'Post Category', 'Modules: Importer: Post Field', 'geditorial' ),
-			'importer_post_tags'    => _x( 'Post Tags', 'Modules: Importer: Post Field', 'geditorial' ),
-			// 'importer_post_author'  => _x( 'Post Author', 'Modules: Importer: Post Field', 'geditorial' ),
-			// 'importer_post_status'  => _x( 'Post Status', 'Modules: Importer: Post Field', 'geditorial' ),
-		], $posttype );
+		];
+
+		if ( $posttype )
+			foreach ( Taxonomy::get( 2, [], $posttype ) as $taxonomy => $label )
+				$fields['importer_tax_'.$taxonomy] = sprintf( _x( 'Taxonomy: %s', 'Modules: Importer: Post Field', 'geditorial' ), $label );
+
+		return $this->filters( 'fields', $fields, $posttype );
 	}
 
-	public function importer_prepare( $value, $posttype, $field, $raw )
+	public function importer_prepare( $value, $posttype, $field, $raw, $taxonomies )
 	{
 		switch ( $field ) {
 
@@ -445,9 +457,11 @@ class Importer extends gEditorial\Module
 			case 'importer_post_content': return Helper::kses( $value, 'html' );
 			case 'importer_post_excerpt': return Helper::kses( $value, 'text' );
 
-			case 'importer_post_cats': return array_filter( Helper::ksesArray( Helper::getSeperated( $value ) ) );
-			case 'importer_post_tags': return array_filter( Helper::ksesArray( Helper::getSeperated( $value ) ) );
 		}
+
+		foreach ( $taxonomies as $taxonomy => $label )
+			if ( $field == 'importer_tax_'.$taxonomy )
+				return array_filter( Helper::ksesArray( Helper::getSeperated( $value ) ) );
 
 		return $value;
 	}
