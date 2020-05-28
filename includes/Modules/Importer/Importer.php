@@ -66,6 +66,7 @@ class Importer extends gEditorial\Module
 		return [
 			'metakey_source_data' => '_importer_source_data',
 			'metakey_attach_id'   => '_importer_attachment_id',
+			'metakey_old_id'      => '_importer_old_id',
 		];
 	}
 
@@ -301,6 +302,7 @@ class Importer extends gEditorial\Module
 								case 'importer_post_content': $data['post_content'] = $value; break;
 								case 'importer_post_excerpt': $data['post_excerpt'] = $value; break;
 
+								case 'importer_old_id': $data['meta_input'][$this->constant( 'metakey_old_id' )] = $value; break;
 							}
 
 							foreach ( $taxonomies as $taxonomy => $label ) {
@@ -439,6 +441,8 @@ class Importer extends gEditorial\Module
 			'importer_post_title'   => _x( 'Post Title', 'Modules: Importer: Post Field', 'geditorial' ),
 			'importer_post_content' => _x( 'Post Content', 'Modules: Importer: Post Field', 'geditorial' ),
 			'importer_post_excerpt' => _x( 'Post Excerpt', 'Modules: Importer: Post Field', 'geditorial' ),
+
+			'importer_old_id'       => _x( 'Extra: Old ID', 'Modules: Importer: Post Field', 'geditorial' ),
 		];
 
 		if ( $posttype )
@@ -457,6 +461,7 @@ class Importer extends gEditorial\Module
 			case 'importer_post_content': return Helper::kses( $value, 'html' );
 			case 'importer_post_excerpt': return Helper::kses( $value, 'text' );
 
+			case 'importer_old_id': return Number::intval( $value );
 		}
 
 		foreach ( $taxonomies as $taxonomy => $label )
