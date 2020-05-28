@@ -659,11 +659,13 @@ class Module extends Base
 
 				foreach ( $fields as $field => $atts ) {
 
+					$field_title = isset( $atts['title'] ) ? $atts['title'] : $this->get_string( $field, $posttype );
+
 					$args = [
 						'field'       => $field,
 						'post_type'   => $posttype,
 						'section'     => $section,
-						'field_title' => isset( $atts['title'] ) ? $atts['title'] : $this->get_string( $field, $posttype ),
+						'field_title' => sprintf( '%s &mdash; <code>%s</code>', $field_title, $field ),
 						'description' => isset( $atts['description'] ) ? $atts['description'] : $this->get_string( $field, $posttype, 'descriptions' ),
 						'callback'    => [ $this, 'settings_fields_option' ],
 					];
