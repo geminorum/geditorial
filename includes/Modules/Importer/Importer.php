@@ -87,7 +87,7 @@ class Importer extends gEditorial\Module
 
 		// https://github.com/kzykhys/PHPCsvParser
 		$iterator = new \SplFileObject( File::normalize( $file ) );
-		$parser   = new \KzykHys\CsvParser\CsvParser( $iterator, [ 'encoding' => 'UTF-8', 'limit' => 1 ] );
+		$parser   = new \KzykHys\CsvParser\CsvParser( $iterator, [ 'encoding' => 'UTF-8', 'limit' => 2 ] );
 
 		$items = $parser->parse();
 		$map   = $this->get_postmeta( $id, FALSE, [], $this->meta_key.'_map' );
@@ -97,15 +97,27 @@ class Importer extends gEditorial\Module
 
 		echo '<table class="base-table-raw"><tbody>';
 
-		foreach ( $items[0] as $key => $title )
+		foreach ( $items[0] as $key => $title ) {
+
 			echo '<tr><td class="-val"><code>'
 				.HTML::escape( $title )
-			.'</td><td></code>'
+			.'</code></td><td class="-sep">';
+
+				Settings::fieldSeparate( 'into' );
+
+			echo '</td><td>'
 				.HTML::dropdown( $fields, [
 					'selected' => array_key_exists( $key, $map ) ? $map[$key] : 'none',
 					'name'     => 'field_map['.$key.']',
 				] )
-			.'</td></tr>';
+			.'</td><td><td class="-sep">';
+
+				Settings::fieldSeparate( 'ex' );
+
+			echo '</td><td class="-val"><code>'
+				.HTML::sanitizeDisplay( $items[1][$key] )
+			.'</code></td></tr>';
+		}
 
 		echo '</tbody></table>';
 	}
