@@ -419,7 +419,7 @@ class Like extends gEditorial\Module
 
 	public function tweaks_column_attr( $post )
 	{
-		if ( ! current_user_can( 'edit_post', $post->ID ) )
+		if ( ! current_user_can( 'read_post', $post->ID ) )
 			return;
 
 		$total = $this->get_postmeta( $post->ID, FALSE, 0, $this->meta_key.'_total' );

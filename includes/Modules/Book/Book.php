@@ -710,6 +710,7 @@ class Book extends gEditorial\Module
 	// @REF: http://wordpress.stackexchange.com/a/246358/3687
 	protected function render_tools_html( $uri, $sub )
 	{
+		$list  = $this->list_posttypes();
 		$query = [
 			'meta_query' => [
 				'relation'         => 'OR',
@@ -728,9 +729,9 @@ class Book extends gEditorial\Module
 			],
 		];
 
-		list( $posts, $pagination ) = $this->getTablePosts( $query );
+		list( $posts, $pagination ) = $this->getTablePosts( $query, [], $list );
 
-		$pagination['before'][] = Helper::tableFilterPostTypes( $this->list_posttypes() );
+		$pagination['before'][] = Helper::tableFilterPostTypes( $list );
 		$pagination['before'][] = Helper::tableFilterSearch( $list );
 
 		return HTML::tableList( [

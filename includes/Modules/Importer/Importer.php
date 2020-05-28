@@ -454,6 +454,7 @@ class Importer extends gEditorial\Module
 
 		if ( $posttype )
 			foreach ( Taxonomy::get( 2, [], $posttype ) as $taxonomy => $label )
+				/* translators: %s: taxonomy name placeholder */
 				$fields['importer_tax_'.$taxonomy] = sprintf( _x( 'Taxonomy: %s', 'Modules: Importer: Post Field', 'geditorial' ), $label );
 
 		return $this->filters( 'fields', $fields, $posttype );

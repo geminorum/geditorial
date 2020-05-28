@@ -628,11 +628,11 @@ class Module extends Base
 		);
 	}
 
-	public function register_settings_fields_option( $title = NULL )
+	public function register_settings_fields_option( $section_title = NULL )
 	{
-		if ( is_null( $title ) )
+		if ( is_null( $section_title ) )
 			/* translators: %s: posttype */
-			$title = _x( 'Fields for %s', 'Module', 'geditorial' );
+			$section_title = _x( 'Fields for %s', 'Module', 'geditorial' );
 
 		$all = $this->all_posttypes();
 
@@ -645,7 +645,7 @@ class Module extends Base
 
 				Settings::addModuleSection( $this->base.'_'.$this->module->name, [
 					'id'            => $section,
-					'title'         => sprintf( $title, $all[$posttype] ),
+					'title'         => sprintf( $section_title, $all[$posttype] ),
 					'section_class' => 'fields_option_section fields_option-'.$posttype,
 				] );
 
@@ -685,7 +685,7 @@ class Module extends Base
 
 				Settings::addModuleSection( $this->base.'_'.$this->module->name, [
 					'id'            => $section,
-					'title'         => sprintf( $title, $all[$posttype] ),
+					'title'         => sprintf( $section_title, $all[$posttype] ),
 					'callback'      => [ $this, 'settings_fields_option_none' ],
 					'section_class' => 'fields_option_section fields_option_none',
 				] );
@@ -2572,8 +2572,8 @@ class Module extends Base
 			$title = $this->get_string( 'column_icon_title', $posttype, 'misc', '' );
 
 		return HTML::tag( ( $link ? 'a' : 'span' ), [
-			'href'   => $link ? $link : FALSE,
-			'title'  => $title ? $title : FALSE,
+			'href'   => $link ?: FALSE,
+			'title'  => $title ?: FALSE,
 			'class'  => [ '-icon', ( $link ? '-link' : '-info' ) ],
 			'target' => $link ? '_blank' : FALSE,
 		], Helper::getIcon( $icon ) );
