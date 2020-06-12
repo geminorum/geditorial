@@ -20,7 +20,7 @@ class Config extends gEditorial\Module
 	protected $caps = [
 		'reports'  => 'publish_posts',
 		'settings' => 'manage_options',
-		'tools'    => 'edit_others_posts',
+		'tools'    => 'edit_posts',
 	];
 
 	public static function module()

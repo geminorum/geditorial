@@ -200,6 +200,8 @@ class Settings extends Core\Base
 		switch ( $string ) {
 			case 'from': $string = _x( 'from', 'Settings: Field Separate', 'geditorial' ); break;
 			case 'into': $string = _x( 'into', 'Settings: Field Separate', 'geditorial' ); break;
+			case 'like': $string = _x( 'like', 'Settings: Field Separate', 'geditorial' ); break;
+			case 'ex'  : $string = _x( 'ex', 'Settings: Field Separate', 'geditorial' );   break;
 			case 'in'  : $string = _x( 'in', 'Settings: Field Separate', 'geditorial' );   break;
 			case 'to'  : $string = _x( 'to', 'Settings: Field Separate', 'geditorial' );   break;
 			case 'as'  : $string = _x( 'as', 'Settings: Field Separate', 'geditorial' );   break;
