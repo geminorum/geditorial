@@ -284,9 +284,34 @@ class Helper extends Core\Base
 		echo self::getJoined( $list, $before, $after );
 	}
 
+	// simplified `get_post()`
+	public static function getPost( $post = NULL, $output = OBJECT, $filter = 'raw' )
+	{
+		if ( $post instanceof \WP_Post )
+			return $post;
+
+		return get_post( $post, $output, $filter );
+	}
+
+	public static function getPostLink( $post, $fallback = NULL, $statuses = NULL )
+	{
+		if ( ! $post = self::getPost( $post ) )
+			return FALSE;
+
+		$status = get_post_status( $post );
+
+		if ( is_null( $statuses ) )
+			$statuses = [ 'publish', 'inherit' ]; // MAYBE: `apply_filters()`
+
+		if ( ! in_array( $status, (array) $statuses, TRUE ) )
+			return $fallback;
+
+		return apply_filters( 'the_permalink', get_permalink( $post ), $post );
+	}
+
 	public static function getPostTitle( $post, $fallback = NULL )
 	{
-		if ( ! $post = get_post( $post ) )
+		if ( ! $post = self::getPost( $post ) )
 			return Plugin::na( FALSE );
 
 		$title = apply_filters( 'the_title', $post->post_title, $post->ID );
@@ -305,7 +330,7 @@ class Helper extends Core\Base
 
 	public static function getPostTitleRow( $post, $link = 'edit', $status = FALSE, $title_attr = NULL )
 	{
-		if ( ! $post = get_post( $post ) )
+		if ( ! $post = self::getPost( $post ) )
 			return Plugin::na( FALSE );
 
 		$title = self::getPostTitle( $post );

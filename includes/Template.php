@@ -311,13 +311,13 @@ class Template extends Core\Base
 		if ( $args['link'] ) {
 
 			if ( 'parent' == $args['link'] )
-				$args['link'] = 'publish' == $status ? apply_filters( 'the_permalink', get_permalink( $post ), $post ) : FALSE;
+				$args['link'] = in_array( $status, [ 'publish', 'inherit' ] ) ? apply_filters( 'the_permalink', get_permalink( $post ), $post ) : FALSE;
 
 			else if ( 'attachment' == $args['link'] )
-				$args['link'] = ( $thumbnail && 'publish' == $status ) ? get_attachment_link( $thumbnail ) : FALSE;
+				$args['link'] = ( $thumbnail && in_array( $status, [ 'publish', 'inherit' ] ) ) ? get_attachment_link( $thumbnail ) : FALSE;
 
 			else if ( 'url' == $args['link'] )
-				$args['link'] = ( $thumbnail && 'publish' == $status ) ? wp_get_attachment_url( $thumbnail ) : FALSE;
+				$args['link'] = ( $thumbnail && in_array( $status, [ 'publish', 'inherit' ] ) ) ? wp_get_attachment_url( $thumbnail ) : FALSE;
 		}
 
 		$image = self::getPostImageTag( $args );
@@ -334,7 +334,7 @@ class Template extends Core\Base
 				'data'  => $args['link'] ? $args['data'] : FALSE,
 			], $image );
 
-		} else if ( $args['fallback'] && 'publish' == $status ) {
+		} else if ( $args['fallback'] && in_array( $status, [ 'publish', 'inherit' ] ) ) {
 
 			$html = HTML::tag( 'a', [
 				'href'  => apply_filters( 'the_permalink', get_permalink( $post ), $post ),
