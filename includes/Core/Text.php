@@ -838,7 +838,7 @@ class Text extends Base
 
 		echo $contents;
 
-		exit();
+		exit;
 	}
 
 	// USAGE: `Text::correctMixedEncoding('Ù…Ø­ØªÙˆØ§ÛŒ Ù…ÛŒÚ©Ø³ Ø´Ø¯Ù‡ و بخش سالم');`

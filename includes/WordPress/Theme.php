@@ -140,16 +140,21 @@ class Theme extends Core\Base
 
 		} else {
 
+			// to better support MySQL 8 and higher,
+			// which is dropping support for `NO_ZERO_DATES`
+			// @REF: `bbp_get_empty_datetime()`
+			$date = '0000-00-00 00:00:00';
+
 			$dummy = self::atts( array(
 				'ID'                    => -9999,
 				'post_status'           => 'publish',
 				'post_author'           => 0,
 				'post_parent'           => 0,
 				'post_type'             => 'page',
-				'post_date'             => 0,
-				'post_date_gmt'         => 0,
-				'post_modified'         => 0,
-				'post_modified_gmt'     => 0,
+				'post_date'             => $date,
+				'post_date_gmt'         => $date,
+				'post_modified'         => $date,
+				'post_modified_gmt'     => $date,
 				'post_content'          => '',
 				'post_title'            => '',
 				'post_excerpt'          => '',
