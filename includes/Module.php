@@ -3071,6 +3071,9 @@ class Module extends Base
 			$this->filter( 'gtheme_navigation_crumb_archive', 2 );
 		}
 
+		$this->filter_empty_string( 'previous_post_link' );
+		$this->filter_empty_string( 'next_post_link' );
+
 		$this->enqueue_styles();
 
 		defined( 'GNETWORK_DISABLE_CONTENT_ACTIONS' )
