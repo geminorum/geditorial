@@ -232,10 +232,7 @@ class Modified extends gEditorial\Module
 		if ( ! Text::has( $items, '{SITE_LAST_MODIFIED}' ) )
 			return $items;
 
-		if ( ! isset( $this->site_modified ) )
-			$this->site_modified = $this->get_site_modified();
-
-		return preg_replace( '%{SITE_LAST_MODIFIED}%', $this->site_modified, $items );
+		return preg_replace( '%{SITE_LAST_MODIFIED}%', $this->get_site_modified() ?: '', $items );
 	}
 
 	public function help_placeholders( $before, $after )
@@ -259,7 +256,9 @@ class Modified extends gEditorial\Module
 		if ( FALSE === $args['context'] )
 			return NULL;
 
-		$site  = $this->get_site_modified( TRUE );
+		if ( FALSE === ( $site = $this->get_site_modified( TRUE ) ) )
+			return NULL;
+
 		$gmt   = strtotime( $site[1] );
 		$local = strtotime( $site[0] );
 
@@ -327,7 +326,8 @@ class Modified extends gEditorial\Module
 			";
 		}
 
-		$results = $wpdb->get_results( $query );
+		if ( ! $results = $wpdb->get_results( $query ) )
+			return FALSE;
 
 		if ( FALSE === $format )
 			return $results[0]->{$date};
