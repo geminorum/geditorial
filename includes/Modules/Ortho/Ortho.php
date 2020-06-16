@@ -271,6 +271,7 @@ class Ortho extends gEditorial\Module
 			case 'importer_post_title'  : return $this->cleanup_chars( trim( $value ), FALSE );
 			case 'importer_post_content': return $this->cleanup_chars( trim( $value ), TRUE );
 			case 'importer_post_excerpt': return $this->cleanup_chars( trim( $value ), TRUE );
+			case 'importer_custom_meta' : return $this->cleanup_chars( trim( $value ), FALSE );
 		}
 
 		return $value;
