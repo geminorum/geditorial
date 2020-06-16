@@ -477,57 +477,57 @@ class Meta extends gEditorial\Module
 
 	public function sanitize_post_meta( $postmeta, $fields, $post_id, $posttype )
 	{
-		if ( $this->nonce_verify( 'post_main' ) || $this->nonce_verify( 'post_raw' ) ) {
+		if ( ! count( $fields ) )
+			return $postmeta;
 
-			$post = get_post( $post_id );
-			$cap  = empty( $post->cap->edit_post ) ? 'edit_post' : $post->cap->edit_post;
+		if ( ! $post = Helper::getPost( $post ) )
+			return $postmeta;
 
-			if ( ! current_user_can( $cap, $post_id ) )
-				return $postmeta;
+		if ( ! $this->nonce_verify( 'post_main' ) && ! $this->nonce_verify( 'post_raw' ) )
+			return $postmeta;
 
-			$fields = $this->get_posttype_fields( $posttype );
+		$cap = empty( $post->cap->edit_post ) ? 'edit_post' : $post->cap->edit_post;
 
-			if ( count( $fields ) ) {
+		if ( ! current_user_can( $cap, $post_id ) )
+			return $postmeta;
 
-				foreach ( $fields as $field => $args ) {
+		foreach ( $fields as $field => $args ) {
 
-					switch ( $args['type'] ) {
+			switch ( $args['type'] ) {
 
-						case 'term':
+				case 'term':
 
-							ModuleMetaBox::setPostMetaField_Term( $post_id, $field, $args['tax'] );
+					ModuleMetaBox::setPostMetaField_Term( $post->ID, $field, $args['tax'] );
 
-						break;
-						case 'link':
+				break;
+				case 'link':
 
-							ModuleMetaBox::setPostMetaField_URL( $postmeta, $field );
+					ModuleMetaBox::setPostMetaField_URL( $postmeta, $field );
 
-						break;
-						case 'code':
+				break;
+				case 'code':
 
-							ModuleMetaBox::setPostMetaField_Code( $postmeta, $field );
+					ModuleMetaBox::setPostMetaField_Code( $postmeta, $field );
 
-						break;
-						case 'number':
+				break;
+				case 'number':
 
-							ModuleMetaBox::setPostMetaField_Number( $postmeta, $field );
+					ModuleMetaBox::setPostMetaField_Number( $postmeta, $field );
 
-						break;
-						case 'text':
-						case 'title_before':
-						case 'title_after':
+				break;
+				case 'text':
+				case 'title_before':
+				case 'title_after':
 
-							ModuleMetaBox::setPostMetaField_String( $postmeta, $field );
+					ModuleMetaBox::setPostMetaField_String( $postmeta, $field );
 
-						break;
-						case 'note':
-						case 'textarea':
-						case 'postbox_legacy':
-						case 'postbox_html':
+				break;
+				case 'note':
+				case 'textarea':
+				case 'postbox_legacy':
+				case 'postbox_html':
 
-							ModuleMetaBox::setPostMetaField_Text( $postmeta, $field );
-					}
-				}
+					ModuleMetaBox::setPostMetaField_Text( $postmeta, $field );
 			}
 		}
 
@@ -573,7 +573,7 @@ class Meta extends gEditorial\Module
 		$this->set_meta( $post_id,
 			$this->sanitize_post_meta(
 				(array) $this->get_postmeta( $post->ID ),
-				$this->posttype_fields( $post->post_type ),
+				$this->get_posttype_fields( $post->post_type ),
 				$post->ID,
 				$post->post_type
 			)
