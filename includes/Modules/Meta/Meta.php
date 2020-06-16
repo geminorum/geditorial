@@ -475,7 +475,7 @@ class Meta extends gEditorial\Module
 		);
 	}
 
-	public function sanitize_post_meta( $postmeta, $fields, $post_id, $posttype )
+	public function sanitize_post_meta( $postmeta, $fields, $post )
 	{
 		if ( ! count( $fields ) )
 			return $postmeta;
@@ -488,7 +488,8 @@ class Meta extends gEditorial\Module
 
 		$cap = empty( $post->cap->edit_post ) ? 'edit_post' : $post->cap->edit_post;
 
-		if ( ! current_user_can( $cap, $post_id ) )
+		// MAYBE: check for `edit_post_meta` cap
+		if ( ! current_user_can( $cap, $post->ID ) )
 			return $postmeta;
 
 		foreach ( $fields as $field => $args ) {
@@ -574,8 +575,7 @@ class Meta extends gEditorial\Module
 			$this->sanitize_post_meta(
 				(array) $this->get_postmeta( $post->ID ),
 				$this->get_posttype_fields( $post->post_type ),
-				$post->ID,
-				$post->post_type
+				$post
 			)
 		);
 	}
