@@ -5,12 +5,15 @@
 
 .geditorial-wrap.-headings {
   &.-toc-box {
-    background: $gray-lighter;
     float: right;
-    font-size: 0.8em;
     width: 40%;
+    max-width: calc(320px + 1em);
+
     padding: 1em 1.2em;
     margin: 0 0 0.5em 0.5em;
+
+    background: $gray-lighter;
+    font-size: 0.8em;
 
     ol,
     ul {

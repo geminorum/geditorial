@@ -1,0 +1,72 @@
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+/// gEditorial Partials: Like Admin ALL ----------------------------------------
+
+////////////////////////////////////////////////////////////////////////////////
+.wrap.geditorial-reports.sub-like {
+  table.base-table-list {
+    .-column-total,
+    .-column-users,
+    .-column-guests {
+      width: 60px;
+    }
+
+    .-column-avatars {}
+
+    .-cell-avatars {
+      ul {
+        margin: 0;
+        padding: 0;
+        float: left;
+        list-style: none;
+
+        li {
+          display: inline-block;
+          padding: 0;
+          margin: 0;
+
+          + li {
+            margin-left: 4px;
+          }
+        }
+      }
+    }
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+.sdfsdsdf {
+  ul.like {
+    margin: 0 0 0 6px;
+    padding: 0;
+    float: left;
+
+    li {
+      display: inline-block;
+      padding: 0;
+      margin: 0 4px 0 0;
+
+      a {
+        display: inline-block;
+        outline: 0 none;
+
+        border: 1px solid $gray-lighter;
+        border-radius: 3px;
+
+        &:hover {
+          border: 1px solid $gray-light;
+          text-decoration: none;
+        }
+
+        img {
+          max-width: 30px;
+          max-height: 30px;
+          display: inline-block;
+          border-radius: 2px;
+          padding: 0;
+        }
+      }
+    }
+  }
+}

@@ -41,6 +41,8 @@
   &.ortho-input-markdown-wrap {}
 
   &.ortho-input-html-wrap {
+    display: block;
+
     .do-ortho {
       right: 14px;
       top: 2px;
@@ -59,7 +61,6 @@
     top: -2px;
   }
 
-  // .geditorial-admin-wrap-metabox & textarea + a.do-ortho, // DEPRECATED
   .geditorial-wrap.-admin-metabox & textarea + a.do-ortho {
     // textarea[data-meta-type="note"] + a.do-ortho {
     right: 2px;
