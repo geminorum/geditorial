@@ -8,6 +8,7 @@ use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Core\Arraay;
 use geminorum\gEditorial\Core\HTML;
+use geminorum\gEditorial\Core\Text;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\Taxonomy;
@@ -313,19 +314,17 @@ class Entry extends gEditorial\Module
 		echo '</div>';
 	}
 
-	// FIXME: pattern must ignore within links
 	public function the_content( $content )
 	{
-		if ( ! isset( $this->sections ) )
-			$this->sections = Taxonomy::prepTerms( $this->constant( 'section_tax' ) );
+		$sections = Taxonomy::prepTerms( $this->constant( 'section_tax' ), [], NULL, 'name' );
 
-		foreach ( $this->sections as $section )
-			$content = preg_replace(
-				'/(?!<[^<>]*?)(?<![?.\/&])\b('.$section->name.')\b(?!:)(?![^<>]*?>)/imsu',
-				'<a href="'.$section->link.'" class="-entry-section">$1</a>',
-			$content );
-
-		return $content;
+		return Text::replaceWords( wp_list_pluck( $sections, 'name' ), $content, function( $matched ) use ( $sections ) {
+			return HTML::tag( 'a', [
+				'href'  => $sections[$matched]->link,
+				'class' => '-entry-section',
+				'data'  => [ 'desc' => trim( strip_tags( $sections[$matched]->description ) ) ],
+			], $matched );
+		} );
 	}
 
 	public function template_include( $template )
