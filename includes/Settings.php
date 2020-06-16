@@ -384,6 +384,15 @@ class Settings extends Core\Base
 		];
 	}
 
+	public static function getSetting_insert_content_enabled( $description = NULL )
+	{
+		return array_merge( self:: getSetting_insert_content( $description ), [
+			'type'    => 'enabled',
+			'values'  => [],
+			'default' => '',
+		] );
+	}
+
 	public static function getSetting_insert_cover( $description = NULL )
 	{
 		return [

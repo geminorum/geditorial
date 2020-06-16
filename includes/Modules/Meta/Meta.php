@@ -43,6 +43,7 @@ class Meta extends gEditorial\Module
 			'posttypes_option' => 'posttypes_option',
 			'fields_option'    => 'fields_option',
 			'_general' => [
+				'insert_content_enabled',
 				[
 					'field'       => 'author_row',
 					'title'       => _x( 'Author Meta Row', 'Modules: Meta: Setting Title', 'geditorial' ),
@@ -227,8 +228,10 @@ class Meta extends gEditorial\Module
 		if ( ! is_singular( $this->posttypes() ) )
 			return;
 
-		add_action( $this->base.'_content_before', [ $this, 'content_before' ], 50 );
-		add_action( $this->base.'_content_after', [ $this, 'content_after' ], 50 );
+		if ( $this->get_setting( 'insert_content_enabled' ) ) {
+			add_action( $this->base.'_content_before', [ $this, 'content_before' ], 50 );
+			add_action( $this->base.'_content_after', [ $this, 'content_after' ], 50 );
+		}
 
 		if ( $this->get_setting( 'overwrite_author', FALSE ) )
 			$this->filter( 'the_author', 1, 9 );
