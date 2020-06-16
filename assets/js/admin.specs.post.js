@@ -45,7 +45,7 @@
       $(element).find(':selected').prop('disabled', true);
 
       row.find('select.item-dropdown-new').removeClass('item-dropdown-new');
-      row.find('span.item-excerpt').html($(element).find(':selected').text());
+      row.find('span.-excerpt').html($(element).find(':selected').text());
       row.find('select.item-dropdown option[value="-1"]').remove();
       row.find('select.item-dropdown option[value="' + selectedVal + '"]').selected = true;
 
@@ -56,7 +56,6 @@
 
       this.reOrder();
     }
-
   };
 
   $(function () {
