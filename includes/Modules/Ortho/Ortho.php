@@ -7,6 +7,7 @@ use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Core\HTML;
+use geminorum\gEditorial\Core\Text;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\PostType;
 
@@ -17,7 +18,7 @@ class Ortho extends gEditorial\Module
 
 	protected $disable_no_customs = TRUE;
 
-	private $virastar_version      = '0.18.0';
+	private $virastar_version      = '0.21.0';
 	private $persiantools_version  = '0.1.0';
 	private $virastar_enqueued     = FALSE;
 	private $persiantools_enqueued = FALSE;
@@ -57,31 +58,63 @@ class Ortho extends gEditorial\Module
 	private function virastar_options()
 	{
 		return [
-			// 'normalize_eol'                                  => _x( 'replace Windows end of lines with Unix EOL (<code>&#92;&#110;</code>)', 'Modules: Ortho: Setting Option', 'geditorial' ),
-			'fix_dashes'                                     => _x( 'replace double dash to ndash and triple dash to mdash', 'Modules: Ortho: Setting Option', 'geditorial' ),
-			'fix_three_dots'                                 => _x( 'replace three dots with ellipsis', 'Modules: Ortho: Setting Option', 'geditorial' ),
-			'fix_english_quotes_pairs'                       => _x( 'replace English quotes pairs (<code>&#8220;&#8221;</code>) with their Persian equivalent (<code>&#171;&#187;</code>)', 'Modules: Ortho: Setting Option', 'geditorial' ),
-			'fix_english_quotes'                             => _x( 'replace English quotes, commas and semicolons with their Persian equivalent', 'Modules: Ortho: Setting Option', 'geditorial' ),
-			'fix_hamzeh'                                     => _x( 'convert <code>&#1607;&#8204;&#1740;</code> to <code>&#1607;&#1620;</code>', 'Modules: Ortho: Setting Option', 'geditorial' ),
-			'cleanup_zwnj'                                   => _x( 'cleanup Zero-Width-Non-Joiners', 'Modules: Ortho: Setting Option', 'geditorial' ),
-			'fix_spacing_for_braces_and_quotes'              => _x( 'fix spacing for <code>()</code> <code>[]</code> <code>{}</code> <code>&#8220;&#8221;</code> <code>&#171;&#187;</code> (one space outside, no space inside), correct <code>:;,.?!</code> spacing (one space after and no space before)', 'Modules: Ortho: Setting Option', 'geditorial' ),
-			'fix_arabic_numbers'                             => _x( 'replace Arabic numbers with their Persian equivalent', 'Modules: Ortho: Setting Option', 'geditorial' ),
-			'fix_english_numbers'                            => _x( 'replace English numbers with their Persian equivalent', 'Modules: Ortho: Setting Option', 'geditorial' ),
-			'fix_misc_non_persian_chars'                     => _x( 'replace Arabic kaf and Yeh with its Persian equivalent', 'Modules: Ortho: Setting Option', 'geditorial' ),
-			// 'skip_markdown_ordered_lists_numbers_conversion' => _x( 'skip converting English numbers of ordered lists in markdown', 'Modules: Ortho: Setting Option', 'geditorial' ),
-			'fix_question_mark'                              => _x( 'replace question marks with its Persian equivalent', 'Modules: Ortho: Setting Option', 'geditorial' ),
-			'fix_perfix_spacing'                             => _x( 'put zwnj between word and prefix (mi* nemi*)', 'Modules: Ortho: Setting Option', 'geditorial' ),
-			'fix_suffix_spacing'                             => _x( 'put zwnj between word and suffix (*tar *tarin *ha *haye)', 'Modules: Ortho: Setting Option', 'geditorial' ),
-			'kashidas_as_parenthetic'                        => _x( 'replace kashidas to ndash in parenthetic', 'Modules: Ortho: Setting Option', 'geditorial' ),
-			'cleanup_kashidas'                               => _x( 'remove all kashidas', 'Modules: Ortho: Setting Option', 'geditorial' ),
-			'cleanup_extra_marks'                            => _x( 'replace more than one <code>!</code> or <code>?</code> mark with just one', 'Modules: Ortho: Setting Option', 'geditorial' ),
-			// 'cleanup_spacing'                                => _x( 'replace more than one space with just a single one', 'Modules: Ortho: Setting Option', 'geditorial' ),
-			// 'cleanup_begin_and_end'                          => _x( 'remove spaces, tabs, and new lines from the beginning and end of text', 'Modules: Ortho: Setting Option', 'geditorial' ),
-			// 'preserve_HTML'                                  => _x( 'preserve all HTML tags', 'Modules: Ortho: Setting Option', 'geditorial' ),
-			// 'preserve_URIs'                                  => _x( 'preserve all URI links in the text', 'Modules: Ortho: Setting Option', 'geditorial' ),
-			// 'preserve_brackets'                              => _x( 'preserve strings inside square brackets (<code>[]</code>)', 'Modules: Ortho: Setting Option', 'geditorial' ),
-			// 'preserve_braces'                                => _x( 'preserve strings inside curly braces (<code>{}</code>)', 'Modules: Ortho: Setting Option', 'geditorial' ),
+			// 'cleanup_begin_and_end'                          => TRUE,
+			'cleanup_extra_marks'                            => TRUE,
+			'cleanup_kashidas'                               => TRUE,
+			'cleanup_line_breaks'                            => TRUE,
+			'cleanup_rlm'                                    => TRUE,
+			'cleanup_spacing'                                => TRUE,
+			'cleanup_zwnj'                                   => TRUE,
+			'decode_htmlentities'                            => TRUE,
+			'fix_arabic_numbers'                             => TRUE,
+			'fix_dashes'                                     => TRUE,
+			'fix_diacritics'                                 => TRUE,
+			'fix_english_numbers'                            => TRUE,
+			'fix_english_quotes_pairs'                       => TRUE,
+			'fix_english_quotes'                             => TRUE,
+			'fix_hamzeh'                                     => TRUE,
+			'fix_hamzeh_arabic'                              => FALSE,
+			'fix_misc_non_persian_chars'                     => TRUE,
+			'fix_misc_spacing'                               => TRUE,
+			'fix_numeral_symbols'                            => TRUE,
+			'fix_perfix_spacing'                             => TRUE,
+			'fix_persian_glyphs'                             => TRUE,
+			'fix_punctuations'                               => TRUE,
+			'fix_question_mark'                              => TRUE,
+			'fix_spacing_for_braces_and_quotes'              => TRUE,
+			'fix_spacing_for_punctuations'                   => TRUE,
+			'fix_suffix_misc'                                => TRUE,
+			'fix_suffix_spacing'                             => TRUE,
+			'fix_three_dots'                                 => TRUE,
+			'kashidas_as_parenthetic'                        => TRUE,
+			// 'markdown_normalize_braces'                      => TRUE,
+			// 'markdown_normalize_lists'                       => TRUE,
+			'normalize_dates'                                => TRUE,
+			'normalize_ellipsis'                             => TRUE,
+			// 'normalize_eol'                                  => TRUE,
+			// 'preserve_braces'                                => FALSE,
+			// 'preserve_brackets'                              => FALSE,
+			// 'preserve_comments'                              => TRUE,
+			// 'preserve_entities'                              => TRUE,
+			// 'preserve_frontmatter'                           => TRUE,
+			// 'preserve_HTML'                                  => TRUE,
+			'preserve_nbsps'                                 => TRUE,
+			// 'preserve_URIs'                                  => TRUE,
+			// 'remove_diacritics'                              => FALSE,
+			// 'skip_markdown_ordered_lists_numbers_conversion' => FALSE,
 		];
+	}
+
+	private static function keyLabels( $keys )
+	{
+		$list  = [];
+		$words = [ 'nbsp', 'html', 'eol', 'rlm', 'zwnj', 'uri' ];
+		$upper = array_map( 'strtoupper', $words );
+
+		foreach ( (array) $keys as $key )
+			$list[$key] = str_ireplace( $words, $upper, Text::titleCase( str_replace( '_', ' ', $key ) ) );
+
+		return $list;
 	}
 
 	protected function get_global_settings()
@@ -97,8 +130,8 @@ class Ortho extends gEditorial\Module
 					'type'        => 'checkboxes',
 					'title'       => _x( 'Virastar Options', 'Modules: Ortho: Setting Title', 'geditorial' ),
 					'description' => _x( 'For more information, please see the library documentations.', 'Modules: Ortho: Setting Description', 'geditorial' ),
-					'default'     => array_keys( $virastar_options ),
-					'values'      => $virastar_options,
+					'default'     => array_keys( array_filter( $virastar_options ) ),
+					'values'      => self::keyLabels( array_keys( $virastar_options ) ),
 				],
 				[
 					'field'       => 'virastar_on_paste',
@@ -198,7 +231,7 @@ class Ortho extends gEditorial\Module
 		$this->enqueue_asset_js( [
 			'settings' => $settings,
 			'strings'  => $this->strings['js'],
-			'virastar' => $this->negate_virastar_options(),
+			'virastar' => $this->prepare_virastar_options(),
 		], NULL, [ 'jquery', $virastar ] );
 
 		$this->virastar_enqueued = TRUE;
@@ -217,14 +250,13 @@ class Ortho extends gEditorial\Module
 		$this->persiantools_enqueued = TRUE;
 	}
 
-	private function negate_virastar_options()
+	private function prepare_virastar_options()
 	{
-		$saved   = array_values( $this->get_setting( 'virastar_options', [] ) );
+		$saved   = $this->get_setting( 'virastar_options', [] );
 		$options = [];
 
 		foreach ( array_keys( $this->virastar_options() ) as $option )
-			if ( ! in_array( $option, $saved ) )
-				$options[$option] = FALSE;
+			$options[$option] = (bool) in_array( $option, $saved );
 
 		return $options;
 	}
