@@ -116,6 +116,9 @@ class Config extends gEditorial\Module
 	}
 
 	// lets our screen options passing through
+	// @since WP 5.4.2 Only applied to options ending with '_page',
+	// or the 'layout_columns' option
+	// @REF: https://core.trac.wordpress.org/changeset/47951
 	public function set_screen_option( $false, $option, $value )
 	{
 		return Text::has( $option, $this->base ) ? $value : $false;

@@ -263,7 +263,7 @@ class Ortho extends gEditorial\Module
 
 	public function importer_prepare( $value, $posttype, $field, $raw )
 	{
-		if ( ! in_array( $posttype, $this->posttypes() ) )
+		if ( ! $this->posttype_supported( $posttype ) )
 			return $value;
 
 		switch ( $field ) {
@@ -282,8 +282,8 @@ class Ortho extends gEditorial\Module
 		if ( ! $post = get_post( $post ) )
 			return FALSE;
 
-		$data   = [];
 		$update = FALSE;
+		$data   = [];
 		$fields = [
 			'post_title'   => FALSE,
 			// 'post_content' => TRUE, // working but wait for more tests!

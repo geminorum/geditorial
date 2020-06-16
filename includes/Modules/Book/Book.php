@@ -789,28 +789,30 @@ class Book extends gEditorial\Module
 
 	private function get_importer_fields( $posttype = NULL )
 	{
-		return [
-			'book_publication_id'    => _x( 'Book: Publication ID', 'Modules: Book: Import Field', 'geditorial' ),
-			'book_publication_title' => _x( 'Book: Publication Title', 'Modules: Book: Import Field', 'geditorial' ),
-			'book_publication_ref'   => _x( 'Book: Publication Ref (P2P)', 'Modules: Book: Import Field', 'geditorial' ),
-			'book_publication_desc'  => _x( 'Book: Publication Desc (P2P)', 'Modules: Book: Import Field', 'geditorial' ),
-		];
+		if ( $posttype == $this->constant( 'publication_cpt' ) )
+			return [];
+
+		if ( $this->posttype_supported( $posttype ) )
+			return [
+				'book_publication_id'    => _x( 'Book: Publication ID', 'Modules: Book: Import Field', 'geditorial' ),
+				'book_publication_title' => _x( 'Book: Publication Title', 'Modules: Book: Import Field', 'geditorial' ),
+				'book_publication_ref'   => _x( 'Book: Publication Ref (P2P)', 'Modules: Book: Import Field', 'geditorial' ),
+				'book_publication_desc'  => _x( 'Book: Publication Desc (P2P)', 'Modules: Book: Import Field', 'geditorial' ),
+			];
+
+		return [];
 	}
 
 	public function importer_fields( $fields, $posttype )
 	{
-		if ( ! in_array( $posttype, $this->posttypes() ) )
-			return $fields;
-
 		return array_merge( $fields, $this->get_importer_fields( $posttype ) );
 	}
 
 	public function importer_prepare( $value, $posttype, $field, $raw )
 	{
-		if ( ! in_array( $posttype, $this->posttypes() ) )
-			return $value;
+		$fields = array_keys( $this->get_importer_fields( $posttype ) );
 
-		if ( ! in_array( $field, array_keys( $this->get_importer_fields( $posttype ) ) ) )
+		if ( ! in_array( $field, $fields ) )
 			return $value;
 
 		return Helper::kses( $value, 'none' );
@@ -818,7 +820,7 @@ class Book extends gEditorial\Module
 
 	public function importer_saved( $post, $data, $raw, $field_map, $attach_id )
 	{
-		if ( ! in_array( $post->post_type, $this->posttypes() ) )
+		if ( ! $this->posttype_supported( $post->post_type ) )
 			return;
 
 		$fields = array_keys( $this->get_importer_fields( $post->post_type ) );

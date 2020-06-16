@@ -579,6 +579,7 @@ class Settings extends Core\Base
 			'type'        => 'textarea-quicktags',
 			'title'       => _x( 'Empty Content', 'Setting: Setting Title', 'geditorial' ),
 			'description' => $description ?: _x( 'Displays as empty content placeholder.', 'Setting: Setting Description', 'geditorial' ),
+			'default'     => _x( 'There are no content by this title. Search again or create one.', 'Setting: Setting Default', 'geditorial' ),
 		];
 	}
 

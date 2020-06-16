@@ -3100,8 +3100,10 @@ class Module extends Base
 	// DEFAULT METHOD: content for overrided empty page
 	public function template_get_empty_content( $atts = [] )
 	{
-		$text = $this->get_setting( 'empty_content', _x( 'There are no content by this title. Search again or create one.', 'Module: Template Empty', 'geditorial' ) );
-		return Text::autoP( trim( $text ) );
+		if ( $content = $this->get_setting( 'empty_content' ) )
+			return Text::autoP( trim( $content ) );
+
+		return '';
 	}
 
 	// DEFAULT METHOD: title for overrided archive page
