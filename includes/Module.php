@@ -378,8 +378,6 @@ class Module extends Base
 	// enabled post types for this module
 	public function posttypes( $posttypes = NULL )
 	{
-		$loaded = did_action( 'wp_loaded' );
-
 		if ( is_null( $posttypes ) )
 			$posttypes = [];
 
@@ -389,16 +387,16 @@ class Module extends Base
 		if ( empty( $this->options->post_types ) )
 			return $posttypes;
 
-		$filtered = array_filter( $this->options->post_types );
+		$enabled = array_keys( array_filter( $this->options->post_types ) );
 
-		if ( ! $loaded )
-			return array_keys( $filtered );
+		return did_action( 'wp_loaded' )
+			? array_filter( $enabled, 'post_type_exists' )
+			: $enabled;
+	}
 
-		foreach ( $filtered as $posttype => $value )
-			if ( post_type_exists( $posttype ) )
-				$posttypes[] = $posttype;
-
-		return $posttypes;
+	public function posttype_supported( $posttype )
+	{
+		return in_array( $posttype, $this->posttypes(), TRUE );
 	}
 
 	public function list_posttypes( $pre = NULL, $posttypes = NULL, $args = [ 'show_ui' => TRUE ] )
