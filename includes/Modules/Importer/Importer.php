@@ -329,6 +329,13 @@ class Importer extends gEditorial\Module
 
 								case 'importer_old_id': $data['meta_input'][$this->constant( 'metakey_old_id' )] = $value; break;
 
+								case 'importer_custom_meta':
+
+									if ( $custom_metakey = $this->filters( 'custom_metakey', $key, $posttype, $field, $raw, $taxonomies ) )
+										$data['meta_input'][$custom_metakey] = $value;
+
+								break;
+
 								case 'importer_menu_order': $data['menu_order'] = $value; break;
 								case 'importer_post_title': $data['post_title'] = $value; break;
 								case 'importer_post_content': $data['post_content'] = $value; break;
@@ -468,6 +475,7 @@ class Importer extends gEditorial\Module
 		$fields = [
 			'none'                  => Settings::showOptionNone(),
 			'importer_old_id'       => _x( 'Extra: Old ID', 'Modules: Importer: Post Field', 'geditorial' ),
+			'importer_custom_meta'  => _x( 'Extra: Custom Meta', 'Modules: Importer: Post Field', 'geditorial' ),
 			'importer_menu_order'   => _x( 'Menu Order', 'Modules: Importer: Post Field', 'geditorial' ),
 			'importer_post_title'   => _x( 'Post Title', 'Modules: Importer: Post Field', 'geditorial' ),
 			'importer_post_content' => _x( 'Post Content', 'Modules: Importer: Post Field', 'geditorial' ),
@@ -491,6 +499,7 @@ class Importer extends gEditorial\Module
 			case 'importer_post_excerpt': return Helper::kses( $value, 'text' );
 
 			case 'importer_old_id': return Number::intval( $value );
+			case 'importer_custom_meta': return Helper::kses( $value, 'text' );
 		}
 
 		foreach ( (array) $taxonomies as $taxonomy => $label )
