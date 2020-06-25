@@ -1124,7 +1124,7 @@ class Settings extends Core\Base
 		], $module->title ), '-title' );
 
 		if ( isset( $module->desc ) )
-			HTML::desc( Text::wordWrap( $module->desc ) );
+			HTML::desc( $module->desc );
 
 		// list.js filters
 		echo '<span class="-module-title" style="display:none;" aria-hidden="true">'.$module->title.'</span>';

@@ -429,7 +429,7 @@ class Book extends gEditorial\Module
 			}
 
 		} else if ( $this->p2p && 'edit' == $screen->base
-			&& in_array( $screen->post_type, $this->posttypes() ) ) {
+			&& $this->posttype_supported( $screen->post_type ) ) {
 
 			$this->action_module( 'tweaks', 'column_row', 1, -25, 'p2p_from' );
 		}
@@ -629,7 +629,7 @@ class Book extends gEditorial\Module
 		if ( ! $post = get_post( $post ) )
 			return FALSE;
 
-		if ( ! in_array( $post->post_type, $this->posttypes() ) )
+		if ( ! $this->posttype_supported( $post->post_type ) )
 			return FALSE;
 
 		$posts = [];

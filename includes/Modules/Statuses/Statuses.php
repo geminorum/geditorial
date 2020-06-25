@@ -245,7 +245,7 @@ class Statuses extends gEditorial\Module
 			if ( 'edit-tags' == $screen->base )
 				add_filter( 'manage_edit-'.$this->constant( 'status_tax' ).'_columns', [ $this, 'manage_columns' ] );
 
-		} else if ( in_array( $screen->post_type, $this->posttypes() ) ) {
+		} else if ( $this->posttype_supported( $screen->post_type ) ) {
 
 			if ( 'post' == $screen->base ) {
 
@@ -273,10 +273,7 @@ class Statuses extends gEditorial\Module
 		if ( $status = $wp_query->get( 'post_status' ) )
 			return;
 
-		if ( ! $posttype = $wp_query->get( 'post_type' ) )
-			return;
-
-		if ( ! in_array( $posttype, $this->posttypes() ) )
+		if ( ! $this->posttype_supported( $wp_query->get( 'post_type' ) ) )
 			return;
 
 		$args = [
@@ -316,7 +313,7 @@ class Statuses extends gEditorial\Module
 		if ( in_array( $data['post_status'], [ 'trash', 'private', 'auto-draft' ] ) )
 			return $data;
 
-		if ( ! in_array( $data['post_type'], $this->posttypes() ) )
+		if ( ! $this->posttype_supported( $data['post_type'] ) )
 			return $data;
 
 		if ( empty( $postarr['original_post_status'] ) ) {
@@ -371,7 +368,7 @@ class Statuses extends gEditorial\Module
 		if ( ! $wp_query->is_main_query() )
 			return;
 
-		if ( in_array( $wp_query->get( 'post_type', 'post' ), $this->posttypes() ) )
+		if ( $this->posttype_supported( $wp_query->get( 'post_type', 'post' ) ) )
 			$wp_query->set( 'post_status', 'publish' ); // FIXME: add settings for this
 	}
 }

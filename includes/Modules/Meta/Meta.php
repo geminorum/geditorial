@@ -248,7 +248,7 @@ class Meta extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
-		if ( in_array( $screen->post_type, $this->posttypes() ) ) {
+		if ( $this->posttype_supported( $screen->post_type ) ) {
 
 			// bail if no fields enabled for this posttype
 			if ( ! count( $this->posttype_fields( $screen->post_type ) ) )
@@ -992,7 +992,7 @@ class Meta extends gEditorial\Module
 
 	public function importer_fields( $fields, $posttype )
 	{
-		if ( ! in_array( $posttype, $this->posttypes() ) )
+		if ( ! $this->posttype_supported( $posttype ) )
 			return $fields;
 
 		return array_merge( $fields, $this->get_importer_fields( $posttype ) );
@@ -1000,7 +1000,7 @@ class Meta extends gEditorial\Module
 
 	public function importer_prepare( $value, $posttype, $field, $raw )
 	{
-		if ( ! in_array( $posttype, $this->posttypes() ) )
+		if ( ! $this->posttype_supported( $posttype ) )
 			return $value;
 
 		$fields = $this->get_importer_fields( $posttype, TRUE );
@@ -1014,7 +1014,7 @@ class Meta extends gEditorial\Module
 
 	public function importer_saved( $post, $data, $raw, $field_map, $attach_id )
 	{
-		if ( ! in_array( $post->post_type, $this->posttypes() ) )
+		if ( ! $this->posttype_supported( $post->post_type ) )
 			return;
 
 		$fields = array_keys( $this->get_importer_fields( $post->post_type ) );

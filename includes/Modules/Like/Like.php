@@ -99,7 +99,7 @@ class Like extends gEditorial\Module
 	public function current_screen( $screen )
 	{
 		if ( 'edit' == $screen->base
-			&& in_array( $screen->post_type, $this->posttypes() ) ) {
+			&& $this->posttype_supported( $screen->post_type ) ) {
 
 			if ( $this->get_setting( 'like_count' ) )
 				$this->action_module( 'tweaks', 'column_attr', 1, 50 );

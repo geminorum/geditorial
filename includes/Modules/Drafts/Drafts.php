@@ -101,7 +101,7 @@ class Drafts extends gEditorial\Module
 		if ( ! $this->get_setting( 'public_preview', FALSE ) )
 			return;
 
-		if ( in_array( $screen->post_type, $this->posttypes() ) ) {
+		if ( $this->posttype_supported( $screen->post_type ) ) {
 
 			if ( 'post' == $screen->base ) {
 

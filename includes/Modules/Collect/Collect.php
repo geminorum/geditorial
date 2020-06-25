@@ -318,7 +318,7 @@ class Collect extends gEditorial\Module
 				$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
 			}
 
-		} else if ( in_array( $screen->post_type, $this->posttypes() ) ) {
+		} else if ( $this->posttype_supported( $screen->post_type ) ) {
 
 			if ( 'post' == $screen->base ) {
 
@@ -705,7 +705,7 @@ class Collect extends gEditorial\Module
 
 	public function calendar_post_row_title( $title, $post, $the_day, $calendar_args )
 	{
-		if ( ! in_array( $post->post_type, $this->posttypes() ) )
+		if ( ! $this->posttype_supported( $post->post_type ) )
 			return $title;
 
 		if ( ! $collection = $this->get_assoc_post( $post->ID, TRUE ) )

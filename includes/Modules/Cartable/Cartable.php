@@ -276,7 +276,7 @@ class Cartable extends gEditorial\Module
 	{
 		// hack to bypass the dumb `_wp_translate_postdata()`
 		if ( isset( $_POST['post_type'] )
-			&& in_array( $_POST['post_type'], $this->posttypes() ) ) {
+			&& $this->posttype_supported( $_POST['post_type'] ) ) {
 
 			$posttype = PostType::object( $_POST['post_type'] );
 
@@ -325,7 +325,7 @@ class Cartable extends gEditorial\Module
 				if ( ! $post = get_post( $args[0] ) )
 					return $caps;
 
-				if ( ! in_array( $post->post_type, $this->posttypes() ) )
+				if ( ! $this->posttype_supported( $post->post_type ) )
 					return $caps;
 
 				if ( $this->support_users && $this->get_setting( 'map_cap_user' ) ) {
@@ -355,7 +355,7 @@ class Cartable extends gEditorial\Module
 				return 'options-general.php';
 			} );
 
-		} else if ( in_array( $screen->post_type, $this->posttypes() ) ) {
+		} else if ( $this->posttype_supported( $screen->post_type ) ) {
 
 			if ( 'edit' == $screen->base ) {
 

@@ -160,10 +160,10 @@ class Schedule extends gEditorial\Module
 
 	public function post_row_actions( $actions, $post )
 	{
-		if ( in_array( $post->post_status, [ 'trash', 'private', 'auto-draft' ] ) )
+		if ( in_array( $post->post_status, [ 'trash', 'private', 'auto-draft' ], TRUE ) )
 			return $actions;
 
-		if ( ! in_array( $post->post_type, $this->posttypes() ) )
+		if ( ! $this->posttype_supported( $post->post_type ) )
 			return $actions;
 
 		if ( ! current_user_can( 'edit_post', $post->ID ) )

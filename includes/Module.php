@@ -396,7 +396,7 @@ class Module extends Base
 
 	public function posttype_supported( $posttype )
 	{
-		return in_array( $posttype, $this->posttypes(), TRUE );
+		return $posttype && in_array( $posttype, $this->posttypes(), TRUE );
 	}
 
 	public function list_posttypes( $pre = NULL, $posttypes = NULL, $args = [ 'show_ui' => TRUE ] )

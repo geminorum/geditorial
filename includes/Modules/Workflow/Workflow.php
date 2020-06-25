@@ -147,7 +147,7 @@ class Workflow extends gEditorial\Module
 				if ( ! $post = get_post( $args[0] ) )
 					return $caps;
 
-				if ( ! in_array( $post->post_type, $this->posttypes() ) )
+				if ( ! $this->posttype_supported( $post->post_type ) )
 					return $caps;
 
 				if ( ! in_array( $post->post_status, $this->get_setting( 'locking_statuses', [] ) ) )
@@ -234,7 +234,7 @@ class Workflow extends gEditorial\Module
 			if ( 'edit-tags' == $screen->base )
 				$this->_edit_tags_screen( $screen->taxonomy );
 
-		} else if ( in_array( $screen->post_type, $this->posttypes() ) ) {
+		} else if ( $this->posttype_supported( $screen->post_type ) ) {
 
 			if ( 'post' == $screen->base ) {
 

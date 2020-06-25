@@ -278,7 +278,7 @@ class Audit extends gEditorial\Module
 				if ( ! $post = get_post( $args[0] ) )
 					return $caps;
 
-				if ( ! in_array( $post->post_type, $this->posttypes() ) )
+				if ( ! $this->posttype_supported( $post->post_type ) )
 					return $caps;
 
 				foreach ( $locking as $term_id )
@@ -400,7 +400,7 @@ class Audit extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
-		if ( in_array( $screen->post_type, $this->posttypes() ) ) {
+		if ( $this->posttype_supported( $screen->post_type ) ) {
 
 			if ( 'edit' == $screen->base ) {
 
@@ -647,7 +647,7 @@ class Audit extends gEditorial\Module
 		if ( ! $post = get_post( $post ) )
 			return FALSE;
 
-		if ( ! in_array( $post->post_type, $this->posttypes() ) )
+		if ( ! $this->posttype_supported( $post->post_type ) )
 			return FALSE;
 
 		$result = wp_set_object_terms( $post->ID, $terms, $this->constant( 'audit_tax' ), $append );

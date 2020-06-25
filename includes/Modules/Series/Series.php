@@ -118,7 +118,7 @@ class Series extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
-		if ( in_array( $screen->post_type, $this->posttypes() ) ) {
+		if ( $this->posttype_supported( $screen->post_type ) ) {
 
 			if ( 'post' == $screen->base ) {
 

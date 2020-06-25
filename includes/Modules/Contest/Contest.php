@@ -246,7 +246,7 @@ class Contest extends gEditorial\Module
 				$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
 			}
 
-		} else if ( in_array( $screen->post_type, $this->posttypes() ) ) {
+		} else if ( $this->posttype_supported( $screen->post_type ) ) {
 
 			if ( 'post' == $screen->base ) {
 

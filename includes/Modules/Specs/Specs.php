@@ -95,7 +95,7 @@ class Specs extends gEditorial\Module
 	public function current_screen( $screen )
 	{
 		if ( 'post' == $screen->base
-			&& in_array( $screen->post_type, $this->posttypes() ) ) {
+			&& $this->posttype_supported( $screen->post_type ) ) {
 
 			add_meta_box( $this->classs( 'supported' ),
 				$this->get_meta_box_title_tax( 'specs_tax' ),

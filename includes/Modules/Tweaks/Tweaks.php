@@ -327,7 +327,7 @@ class Tweaks extends gEditorial\Module
 
 		} else if ( 'edit' == $screen->base ) {
 
-			if ( in_array( $screen->post_type, $this->posttypes() ) ) {
+			if ( $this->posttype_supported( $screen->post_type ) ) {
 				$this->_admin_enabled();
 				$this->_edit_screen( $screen->post_type );
 			}

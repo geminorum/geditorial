@@ -206,7 +206,7 @@ class Ortho extends gEditorial\Module
 			if ( PostType::supportBlocks( $screen->post_type ) )
 				return;
 
-			if ( in_array( $screen->post_type, $this->posttypes() ) )
+			if ( $this->posttype_supported( $screen->post_type ) )
 				$this->enqueueVirastar();
 
 		} else if ( 'edit-tags' == $screen->base || 'term' == $screen->base ) {

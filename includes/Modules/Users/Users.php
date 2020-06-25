@@ -177,7 +177,8 @@ class Users extends gEditorial\Module
 
 			$this->action_module( 'tweaks', 'column_user', 1, 12 );
 
-		} else if ( $categories && 'post' == $screen->base && is_object_in_taxonomy( $screen->post_type, 'category' ) ) {
+		} else if ( $categories && 'post' == $screen->base
+			&& is_object_in_taxonomy( $screen->post_type, 'category' ) ) {
 
 			if ( current_user_can( 'edit_posts' )
 				&& ! current_user_can( 'edit_others_posts' ) ) {
@@ -192,7 +193,8 @@ class Users extends gEditorial\Module
 				);
 			}
 
-		} else if ( 'edit' == $screen->base && in_array( $screen->post_type, $this->posttypes() ) ) {
+		} else if ( 'edit' == $screen->base
+			&& $this->posttype_supported( $screen->post_type ) ) {
 
 			if ( $this->get_setting( 'admin_restrict', FALSE ) )
 				$this->action( 'restrict_manage_posts', 2, 12 );
@@ -207,14 +209,16 @@ class Users extends gEditorial\Module
 						$this->_admin_enabled();
 			}
 
-		} else if ( ( $groups || $categories ) && ( 'profile' == $screen->base || 'user-edit' == $screen->base ) ) {
+		} else if ( ( $groups || $categories )
+			&& ( 'profile' == $screen->base || 'user-edit' == $screen->base ) ) {
 
 			add_action( 'show_user_profile', [ $this, 'edit_user_profile' ], 5 );
 			add_action( 'edit_user_profile', [ $this, 'edit_user_profile' ], 5 );
 			add_action( 'personal_options_update', [ $this, 'edit_user_profile_update' ] );
 			add_action( 'edit_user_profile_update', [ $this, 'edit_user_profile_update' ] );
 
-		} else if ( ( $groups || $categories ) && $this->constant( 'group_tax' ) == $screen->taxonomy ) {
+		} else if ( ( $groups || $categories )
+			&& $this->constant( 'group_tax' ) == $screen->taxonomy ) {
 
 			add_filter( 'parent_file', function(){
 				return 'users.php';
@@ -588,7 +592,7 @@ class Users extends gEditorial\Module
 			echo '<li class="-row -registered">';
 				echo $this->get_column_icon( FALSE, 'calendar', _x( 'Registered', 'Modules: Users: Row Icon Title', 'geditorial' ) );
 				/* translators: %s: date */
-				echo sprintf( _x( 'Registered on %s', 'Modules: Users', 'geditorial' ),
+				printf( _x( 'Registered on %s', 'Modules: Users', 'geditorial' ),
 					Helper::getDateEditRow( $user->user_registered, '-registered' ) );
 			echo '</li>';
 		}

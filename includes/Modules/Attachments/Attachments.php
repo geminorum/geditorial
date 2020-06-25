@@ -96,7 +96,7 @@ class Attachments extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
-		if ( 'edit' == $screen->base && in_array( $screen->post_type, $this->posttypes() ) ) {
+		if ( 'edit' == $screen->base && $this->posttype_supported( $screen->post_type ) ) {
 
 			if ( $this->get_setting( 'attachment_count' ) )
 				$this->action_module( 'tweaks', 'column_attr', 1, 20 );

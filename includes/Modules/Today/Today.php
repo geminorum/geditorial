@@ -287,7 +287,7 @@ class Today extends gEditorial\Module
 					);
 				}
 
-			} else if ( in_array( $screen->post_type, $this->posttypes() ) ) {
+			} else if ( $this->posttype_supported( $screen->post_type ) ) {
 
 				$this->_save_meta_supported( $screen->post_type );
 
@@ -316,7 +316,7 @@ class Today extends gEditorial\Module
 
 				$this->enqueue_asset_js( [], $screen );
 
-			} else if ( in_array( $screen->post_type, $this->posttypes() ) ) {
+			} else if ( $this->posttype_supported( $screen->post_type ) ) {
 
 				if ( $this->get_setting( 'admin_rowactions' ) ) {
 
@@ -361,7 +361,7 @@ class Today extends gEditorial\Module
 		if ( in_array( $post->post_status, [ 'trash', 'private', 'auto-draft' ] ) )
 			return $actions;
 
-		if ( ! in_array( $post->post_type, $this->posttypes() )
+		if ( ! $this->posttype_supported( $post->post_type )
 			&& $post->post_type != $this->constant( 'day_cpt' ) )
 				return $actions;
 
@@ -588,7 +588,7 @@ class Today extends gEditorial\Module
 		if ( ! array_key_exists( 'geditorial-today-date-cal', $_POST ) )
 			return;
 
-		if ( ! in_array( $post->post_type, $this->posttypes() )
+		if ( ! $this->posttype_supported( $post->post_type )
 			&& $this->constant( 'day_cpt' ) != $post->post_type )
 				return;
 
@@ -1010,7 +1010,7 @@ class Today extends gEditorial\Module
 
 	public function importer_fields( $fields, $posttype )
 	{
-		if ( ! in_array( $posttype, $this->posttypes() ) )
+		if ( ! $this->posttype_supported( $posttype ) )
 			return $fields;
 
 		return array_merge( $fields, $this->get_importer_fields( $posttype ) );
@@ -1018,7 +1018,7 @@ class Today extends gEditorial\Module
 
 	public function importer_prepare( $value, $posttype, $field, $raw )
 	{
-		if ( ! in_array( $posttype, $this->posttypes() ) )
+		if ( ! $this->posttype_supported( $posttype ) )
 			return $value;
 
 		if ( ! in_array( $field, array_keys( $this->get_importer_fields( $posttype ) ) ) )
@@ -1037,7 +1037,7 @@ class Today extends gEditorial\Module
 
 	public function importer_saved( $post, $data, $raw, $field_map, $attach_id )
 	{
-		if ( ! in_array( $post->post_type, $this->posttypes() ) )
+		if ( ! $this->posttype_supported( $post->post_type ) )
 			return;
 
 		$default  = $this->default_calendar();
