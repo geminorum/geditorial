@@ -58,9 +58,9 @@ class Gallery extends gEditorial\Module
 	{
 		$strings = [
 			'noops' => [
-				'album_cpt' => _nx_noop( 'Photo Album', 'Photo Albums', 'Modules: Gallery: Noop', 'geditorial' ),
-				'album_cat' => _nx_noop( 'Album Gallery', 'Album Galleries', 'Modules: Gallery: Noop', 'geditorial' ),
-				'photo_tag' => _nx_noop( 'Photo Tag', 'Photo Tags', 'Modules: Gallery: Noop', 'geditorial' ),
+				'album_cpt' => _nx_noop( 'Photo Album', 'Photo Albums', 'Noop', 'geditorial-gallery' ),
+				'album_cat' => _nx_noop( 'Album Gallery', 'Album Galleries', 'Noop', 'geditorial-gallery' ),
+				'photo_tag' => _nx_noop( 'Photo Tag', 'Photo Tags', 'Noop', 'geditorial-gallery' ),
 			],
 		];
 
@@ -69,14 +69,14 @@ class Gallery extends gEditorial\Module
 
 		$strings['misc'] = [
 			'album_cpt' => [
-				'menu_name' => _x( 'Gallery', 'Modules: Gallery: Photo Album CPT Labels: Menu Name', 'geditorial' ),
-				'featured'  => _x( 'Featured Photo', 'Modules: Gallery: Photo Album CPT: Featured', 'geditorial' ),
+				'menu_name' => _x( 'Gallery', 'Photo Album CPT Labels: Menu Name', 'geditorial-gallery' ),
+				'featured'  => _x( 'Featured Photo', 'Photo Album CPT: Featured', 'geditorial-gallery' ),
 			],
 			'album_cat' => [
-				'tweaks_column_title' => _x( 'Album Galleries', 'Modules: Gallery: Column Title', 'geditorial' ),
+				'tweaks_column_title' => _x( 'Album Galleries', 'Column Title', 'geditorial-gallery' ),
 			],
 			'photo_tag' => [
-				'tweaks_column_title' => _x( 'Photo Tags', 'Modules: Gallery: Column Title', 'geditorial' ),
+				'tweaks_column_title' => _x( 'Photo Tags', 'Column Title', 'geditorial-gallery' ),
 			],
 		];
 
@@ -104,7 +104,7 @@ class Gallery extends gEditorial\Module
 	{
 		parent::default_buttons( $module );
 
-		$this->register_button( 'install_def_album_cats', _x( 'Install Default Album Cats', 'Modules: Gallery: Setting Button', 'geditorial' ) );
+		$this->register_button( 'install_def_album_cats', _x( 'Install Default Album Cats', 'Button', 'geditorial-gallery' ) );
 	}
 
 	public function after_setup_theme()
