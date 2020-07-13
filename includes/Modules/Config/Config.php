@@ -53,8 +53,8 @@ class Config extends gEditorial\Module
 
 		$hook_reports = add_submenu_page(
 			'index.php',
-			_x( 'Editorial Reports', 'Modules: Config: Menu Title', 'geditorial' ),
-			_x( 'My Reports', 'Modules: Config: Menu Title', 'geditorial' ),
+			_x( 'Editorial Reports', 'Menu Title', 'geditorial-config' ),
+			_x( 'My Reports', 'Menu Title', 'geditorial-config' ),
 			$this->caps['reports'],
 			$this->base.'-reports',
 			[ $this, 'admin_reports_page' ]
@@ -71,10 +71,10 @@ class Config extends gEditorial\Module
 
 		$hook_tools = add_submenu_page(
 			( $can ? $this->base.'-settings' : 'tools.php' ),
-			_x( 'Editorial Tools', 'Modules: Config: Menu Title', 'geditorial' ),
+			_x( 'Editorial Tools', 'Menu Title', 'geditorial-config' ),
 			( $can
-				? _x( 'Tools', 'Modules: Config: Menu Title', 'geditorial' )
-				: _x( 'Editorial Tools', 'Modules: Config: Menu Title', 'geditorial' )
+				? _x( 'Tools', 'Menu Title', 'geditorial-config' )
+				: _x( 'Editorial Tools', 'Menu Title', 'geditorial-config' )
 			),
 			$this->caps['tools'],
 			$this->base.'-tools',
@@ -130,10 +130,10 @@ class Config extends gEditorial\Module
 		$uri = Settings::reportsURL( FALSE, ! $can );
 		$sub = Settings::sub();
 
-		$subs = [ 'overview' => _x( 'Overview', 'Modules: Config: Reports Sub', 'geditorial' ) ];
+		$subs = [ 'overview' => _x( 'Overview', 'Reports Sub', 'geditorial-config' ) ];
 
 		if ( $can )
-			$subs['general'] = _x( 'General', 'Modules: Config: Reports Sub', 'geditorial' );
+			$subs['general'] = _x( 'General', 'Reports Sub', 'geditorial-config' );
 
 		$subs = apply_filters( $this->base.'_reports_subs', $subs, 'reports' );
 
@@ -141,7 +141,7 @@ class Config extends gEditorial\Module
 
 		Settings::wrapOpen( $sub, 'reports' );
 
-			Settings::headerTitle( _x( 'Editorial Reports', 'Modules: Config: Page Title', 'geditorial' ) );
+			Settings::headerTitle( _x( 'Editorial Reports', 'Page Title', 'geditorial-config' ) );
 			HTML::headerNav( $uri, $sub, $subs );
 			Settings::message( $messages );
 
@@ -173,23 +173,23 @@ class Config extends gEditorial\Module
 		$uri = Settings::toolsURL( FALSE, ! $can );
 		$sub = Settings::sub( ( $can ? 'general' : 'overview' ) );
 
-		$subs = [ 'overview' => _x( 'Overview', 'Modules: Config: Tools Sub', 'geditorial' ) ];
+		$subs = [ 'overview' => _x( 'Overview', 'Tools Sub', 'geditorial-config' ) ];
 
 		if ( $can )
-			$subs['general'] = _x( 'General', 'Modules: Config: Tools Sub', 'geditorial' );
+			$subs['general'] = _x( 'General', 'Tools Sub', 'geditorial-config' );
 
 		$subs = apply_filters( $this->base.'_tools_subs', $subs, 'tools' );
 
 		if ( User::isSuperAdmin() ) {
-			$subs['options'] = _x( 'Options', 'Modules: Config: Tools Sub', 'geditorial' );
-			$subs['console'] = _x( 'Console', 'Modules: Config: Tools Sub', 'geditorial' );
+			$subs['options'] = _x( 'Options', 'Tools Sub', 'geditorial-config' );
+			$subs['console'] = _x( 'Console', 'Tools Sub', 'geditorial-config' );
 		}
 
 		$messages = apply_filters( $this->base.'_tools_messages', Settings::messages(), $sub );
 
 		Settings::wrapOpen( $sub, 'tools' );
 
-			Settings::headerTitle( _x( 'Editorial Tools', 'Modules: Config: Page Title', 'geditorial' ) );
+			Settings::headerTitle( _x( 'Editorial Tools', 'Page Title', 'geditorial-config' ) );
 			HTML::headerNav( $uri, $sub, $subs );
 			Settings::message( $messages );
 
@@ -326,8 +326,8 @@ class Config extends gEditorial\Module
 		if ( ! $this->cuc( 'reports' ) )
 			self::cheatin();
 
-		HTML::h3( _x( 'General Editorial Reports', 'Modules: Config', 'geditorial' ) );
-		HTML::desc( _x( 'No reports available!', 'Modules: Config', 'geditorial' ), TRUE, '-empty' );
+		HTML::h3( _x( 'General Editorial Reports', 'Header', 'geditorial-config' ) );
+		HTML::desc( _x( 'No reports available!', 'Message', 'geditorial-config' ), TRUE, '-empty' );
 	}
 
 	protected function render_tools_html( $uri, $sub )
@@ -341,31 +341,31 @@ class Config extends gEditorial\Module
 
 		echo '<table class="form-table">';
 
-		echo '<tr><th scope="row">'._x( 'Options', 'Modules: Config', 'geditorial' ).'</th><td>';
+		echo '<tr><th scope="row">'._x( 'Options', 'Tools', 'geditorial-config' ).'</th><td>';
 
 			echo '<p>';
 				Settings::submitButton( 'upgrade_old_options',
-					_x( 'Upgrade Old Options', 'Modules: Config: Setting Button', 'geditorial' ) );
+					_x( 'Upgrade Old Options', 'Button', 'geditorial-config' ) );
 
-				HTML::desc( _x( 'Checks for old options and upgrade them. Also deletes the old options.', 'Modules: Config', 'geditorial' ), FALSE );
+				HTML::desc( _x( 'Checks for old options and upgrade them. Also deletes the old options.', 'Tools: Message', 'geditorial-config' ), FALSE );
 			echo '</p>';
 
 			if ( User::isSuperAdmin() || WordPress::isDev() ) {
 				echo '<br /><p>';
 					Settings::submitButton( 'delete_all_options',
-						_x( 'Delete All Options', 'Modules: Config: Setting Button', 'geditorial' ), 'danger', TRUE );
+						_x( 'Delete All Options', 'Button', 'geditorial-config' ), 'danger', TRUE );
 
-					HTML::desc( _x( 'Deletes all editorial options on current site', 'Modules: Config', 'geditorial' ), FALSE );
+					HTML::desc( _x( 'Deletes all editorial options on current site', 'Tools: Message', 'geditorial-config' ), FALSE );
 				echo '</p>';
 			}
 
 		echo '</td></tr></table>';
 
-		HTML::h2( _x( 'Maintenance Tasks', 'Modules: Config', 'geditorial' ) );
+		HTML::h2( _x( 'Maintenance Tasks', 'Tools: Header', 'geditorial-config' ) );
 
 		echo '<table class="form-table">';
 
-		echo '<tr><th scope="row">'._x( 'Empty Meta Fields', 'Modules: Config', 'geditorial' ).'</th><td>';
+		echo '<tr><th scope="row">'._x( 'Empty Meta Fields', 'Tools', 'geditorial-config' ).'</th><td>';
 
 			$this->do_settings_field( [
 				'type'         => 'select',
@@ -378,19 +378,19 @@ class Config extends gEditorial\Module
 			echo '&nbsp;&nbsp;';
 
 			Settings::submitButton( 'custom_fields_empty',
-				_x( 'Empty', 'Modules: Config: Setting Button', 'geditorial' ), 'danger', TRUE );
+				_x( 'Empty', 'Button', 'geditorial-config' ), 'danger', TRUE );
 
-			HTML::desc( _x( 'Deletes empty meta values. This solves common problems with imported posts.', 'Modules: Config', 'geditorial' ) );
+			HTML::desc( _x( 'Deletes empty meta values. This solves common problems with imported posts.', 'Tools: Message', 'geditorial-config' ) );
 
 		echo '</td></tr>';
 
-		echo '<tr><th scope="row">'._x( 'Orphan Connections', 'Modules: Config', 'geditorial' ).'</th><td>';
+		echo '<tr><th scope="row">'._x( 'Orphan Connections', 'Tools', 'geditorial-config' ).'</th><td>';
 
 		// $counts = O2O\API::getConnectionCounts();
 
 		if ( empty( $counts ) ) {
 
-			HTML::desc( _x( 'No connection types found.', 'Modules: Config', 'geditorial' ), TRUE, '-empty' );
+			HTML::desc( _x( 'No connection types found.', 'Tools: Message', 'geditorial-config' ), TRUE, '-empty' );
 
 		} else {
 
@@ -418,11 +418,11 @@ class Config extends gEditorial\Module
 				echo '&nbsp;&nbsp;';
 
 				Settings::submitButton( 'convert_connection_type',
-					_x( 'Convert', 'Modules: Config: Setting Button', 'geditorial' ), 'danger', TRUE );
+					_x( 'Convert', 'Button', 'geditorial-config' ), 'danger', TRUE );
 			}
 
 			if ( $empty )
-				HTML::desc( _x( 'No orphaned connection types found in the database.', 'Modules: Config', 'geditorial' ), TRUE, '-empty' );
+				HTML::desc( _x( 'No orphaned connection types found in the database.', 'Tools: Message', 'geditorial-config' ), TRUE, '-empty' );
 		}
 
 		echo '</td></tr></table>';
@@ -436,12 +436,12 @@ class Config extends gEditorial\Module
 			$edit = WordPress::getUserEditLink( $user );
 
 			/* translators: %s: user link placeholder */
-			HTML::desc( sprintf( _x( 'Editorial Site User Is %s', 'Modules: Config', 'geditorial' ),
+			HTML::desc( sprintf( _x( 'Editorial Site User Is %s', 'Sidebox: Message', 'geditorial-config' ),
 				$edit ? HTML::link( $name, $edit, TRUE ) : $name ) );
 
 		} else {
 
-			HTML::desc( _x( 'No Editorial Site User available!', 'Modules: Config', 'geditorial' ), TRUE, '-empty' );
+			HTML::desc( _x( 'No Editorial Site User available!', 'Sidebox: Message', 'geditorial-config' ), TRUE, '-empty' );
 		}
 	}
 
@@ -460,17 +460,17 @@ class Config extends gEditorial\Module
 				Ajax::checkReferer( $this->hook() );
 
 				if ( ! isset( $_POST['doing'], $_POST['name'] ) )
-					Ajax::errorMessage( _x( 'No action or name!', 'Modules: Config: Ajax Notice', 'geditorial' ) );
+					Ajax::errorMessage( _x( 'No action or name!', 'Ajax Notice', 'geditorial-config' ) );
 
 				if ( ! $module = gEditorial()->get_module_by( 'name', sanitize_key( $_POST['name'] ) ) )
-					Ajax::errorMessage( _x( 'Cannot find the module!', 'Modules: Config: Ajax Notice', 'geditorial' ) );
+					Ajax::errorMessage( _x( 'Cannot find the module!', 'Ajax Notice', 'geditorial-config' ) );
 
 				$enabled = 'enable' == sanitize_key( $_POST['doing'] ) ? TRUE : FALSE;
 
 				if ( gEditorial()->update_module_option( $module->name, 'enabled', $enabled ) )
-					Ajax::successMessage( _x( 'Module state succesfully changed.', 'Modules: Config: Ajax Notice', 'geditorial' ) );
+					Ajax::successMessage( _x( 'Module state succesfully changed.', 'Ajax Notice', 'geditorial-config' ) );
 				else
-					Ajax::errorMessage( _x( 'Cannot change module state!', 'Modules: Config: Ajax Notice', 'geditorial' ) );
+					Ajax::errorMessage( _x( 'Cannot change module state!', 'Ajax Notice', 'geditorial-config' ) );
 		}
 
 		Ajax::errorWhat();
@@ -482,10 +482,10 @@ class Config extends gEditorial\Module
 			$module = $this->module;
 
 		else if ( ! $module = gEditorial()->get_module_by( 'name', $key ) )
-			return Settings::wrapError( HTML::warning( _x( 'Not a registered Editorial module.', 'Modules: Config: Page Notice', 'geditorial' ), FALSE ) );
+			return Settings::wrapError( HTML::warning( _x( 'Not a registered Editorial module.', 'Page Notice', 'geditorial-config' ), FALSE ) );
 
 		if ( ! gEditorial()->enabled( $module->name ) )
-			return Settings::wrapError( HTML::warning( _x( 'Module not enabled. Please enable it from the Editorial settings page.', 'Modules: Config: Page Notice', 'geditorial' ), FALSE ) );
+			return Settings::wrapError( HTML::warning( _x( 'Module not enabled. Please enable it from the Editorial settings page.', 'Page Notice', 'geditorial-config' ), FALSE ) );
 
 		$plugin = gEditorial();
 

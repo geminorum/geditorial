@@ -1,0 +1,190 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Config 3.15.8\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues/\n"
+"Last-Translator: NULL\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2020-07-13T20:13:28+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.4.0\n"
+"X-Domain: geditorial-config\n"
+
+#: Config.php:56
+msgctxt "Menu Title"
+msgid "Editorial Reports"
+msgstr ""
+
+#: Config.php:57
+msgctxt "Menu Title"
+msgid "My Reports"
+msgstr ""
+
+#: Config.php:74
+#: Config.php:77
+msgctxt "Menu Title"
+msgid "Editorial Tools"
+msgstr ""
+
+#: Config.php:76
+msgctxt "Menu Title"
+msgid "Tools"
+msgstr ""
+
+#: Config.php:133
+msgctxt "Reports Sub"
+msgid "Overview"
+msgstr ""
+
+#: Config.php:136
+msgctxt "Reports Sub"
+msgid "General"
+msgstr ""
+
+#: Config.php:144
+msgctxt "Page Title"
+msgid "Editorial Reports"
+msgstr ""
+
+#: Config.php:176
+msgctxt "Tools Sub"
+msgid "Overview"
+msgstr ""
+
+#: Config.php:179
+msgctxt "Tools Sub"
+msgid "General"
+msgstr ""
+
+#: Config.php:184
+msgctxt "Tools Sub"
+msgid "Options"
+msgstr ""
+
+#: Config.php:185
+msgctxt "Tools Sub"
+msgid "Console"
+msgstr ""
+
+#: Config.php:192
+msgctxt "Page Title"
+msgid "Editorial Tools"
+msgstr ""
+
+#: Config.php:329
+msgctxt "Header"
+msgid "General Editorial Reports"
+msgstr ""
+
+#: Config.php:330
+msgctxt "Message"
+msgid "No reports available!"
+msgstr ""
+
+#: Config.php:344
+msgctxt "Tools"
+msgid "Options"
+msgstr ""
+
+#: Config.php:348
+msgctxt "Button"
+msgid "Upgrade Old Options"
+msgstr ""
+
+#: Config.php:350
+msgctxt "Tools: Message"
+msgid "Checks for old options and upgrade them. Also deletes the old options."
+msgstr ""
+
+#: Config.php:356
+msgctxt "Button"
+msgid "Delete All Options"
+msgstr ""
+
+#: Config.php:358
+msgctxt "Tools: Message"
+msgid "Deletes all editorial options on current site"
+msgstr ""
+
+#: Config.php:364
+msgctxt "Tools: Header"
+msgid "Maintenance Tasks"
+msgstr ""
+
+#: Config.php:368
+msgctxt "Tools"
+msgid "Empty Meta Fields"
+msgstr ""
+
+#: Config.php:381
+msgctxt "Button"
+msgid "Empty"
+msgstr ""
+
+#: Config.php:383
+msgctxt "Tools: Message"
+msgid "Deletes empty meta values. This solves common problems with imported posts."
+msgstr ""
+
+#: Config.php:387
+msgctxt "Tools"
+msgid "Orphan Connections"
+msgstr ""
+
+#: Config.php:393
+msgctxt "Tools: Message"
+msgid "No connection types found."
+msgstr ""
+
+#: Config.php:421
+msgctxt "Button"
+msgid "Convert"
+msgstr ""
+
+#: Config.php:425
+msgctxt "Tools: Message"
+msgid "No orphaned connection types found in the database."
+msgstr ""
+
+#. translators: %s: user link placeholder
+#: Config.php:439
+msgctxt "Sidebox: Message"
+msgid "Editorial Site User Is %s"
+msgstr ""
+
+#: Config.php:444
+msgctxt "Sidebox: Message"
+msgid "No Editorial Site User available!"
+msgstr ""
+
+#: Config.php:463
+msgctxt "Ajax Notice"
+msgid "No action or name!"
+msgstr ""
+
+#: Config.php:466
+msgctxt "Ajax Notice"
+msgid "Cannot find the module!"
+msgstr ""
+
+#: Config.php:471
+msgctxt "Ajax Notice"
+msgid "Module state succesfully changed."
+msgstr ""
+
+#: Config.php:473
+msgctxt "Ajax Notice"
+msgid "Cannot change module state!"
+msgstr ""
+
+#: Config.php:485
+msgctxt "Page Notice"
+msgid "Not a registered Editorial module."
+msgstr ""
+
+#: Config.php:488
+msgctxt "Page Notice"
+msgid "Module not enabled. Please enable it from the Editorial settings page."
+msgstr ""
