@@ -1,5 +1,6 @@
 {
   "input": {
+    "modules": "./includes/Modules/*",
     "php": [
       "./**/*.php",
       "!./assets{,/**}"
@@ -100,6 +101,36 @@
   },
   "constants": {
     "version": "GEDITORIAL_VERSION"
+  },
+  "i18n": {
+    "plugin": {
+      "exclude": [
+        ".temp",
+        ".github",
+        "assets/vendor",
+        "assets/components",
+        "assets/js/vendor",
+        "assets/packages",
+        "assets/blocks/**/src",
+        "includes/Modules/**/.temp",
+        "gulpfile.js"
+      ],
+      "comment": "",
+      "headers": {
+        "Last-Translator": "NULL",
+        "Language-Team": "NULL",
+        "Report-Msgid-Bugs-To": "https://github.com/geminorum/geditorial/issues/"
+      }
+    },
+    "modules": {
+      "exclude": ".temp",
+      "comment": "",
+      "headers": {
+        "Last-Translator": "NULL",
+        "Language-Team": "NULL",
+        "Report-Msgid-Bugs-To": "https://github.com/geminorum/geditorial/issues/"
+      }
+    }
   },
   "pot": {
     "package": "gEditorial",

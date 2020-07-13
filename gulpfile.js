@@ -11,6 +11,8 @@
   var log = require('fancy-log');
   var del = require('del');
   var fs = require('fs');
+  var exec = require('child_process').exec;
+  var path = require('path');
 
   var pkg = require('./package.json');
   var config = require('./gulp.config.json');
@@ -22,7 +24,7 @@
   var patch = /--patch/.test(process.argv.slice(2)); // bump a patch?
 
   try {
-    env = extend(config.env, yaml.safeLoad(fs.readFileSync('./environment.yml', { encoding: 'utf-8' }), { 'json': true }));
+    env = extend(config.env, yaml.safeLoad(fs.readFileSync('./environment.yml', { encoding: 'utf-8' }), { json: true }));
   } catch (e) {
     log.warn('no environment.yml loaded!');
   }
@@ -54,6 +56,46 @@
       .pipe(plugins.smushit())
       .pipe(gulp.dest(config.output.images));
   });
+
+  function i18nExtra (config) {
+    return '--exclude="' + config.exclude.toString() + '"' +
+          ' --file-comment="' + config.comment.toString() + '"' +
+          ' --headers=\'' + JSON.stringify(config.headers) + '\'' +
+          ' --skip-plugins --skip-themes --skip-packages';
+  }
+
+  gulp.task('i18n:plugin', function (cb) {
+    exec('wp i18n make-pot . ' + i18nExtra(config.i18n.plugin), function (err, stdout, stderr) {
+      if (stdout) {
+        log.info('WP-CLI:');
+        console.log(stdout);
+      }
+      if (stderr) {
+        log.error('Errors:');
+        console.log(stderr);
+      }
+      cb(err);
+    });
+  });
+
+  gulp.task('i18n:modules', function () {
+    var extra = i18nExtra(config.i18n.modules);
+
+    return gulp.src(config.input.modules)
+      .pipe(plugins.exec(function (file) {
+        var folder = file.path.split(path.sep).pop();
+        var module = folder.toLowerCase();
+        log.info('Make pot for Module: ' + folder);
+        return 'wp i18n make-pot ' + file.path +
+          ' ./languages/' + folder + '/' + module + '.pot' +
+          ' --domain=' + pkg.name + '-' + module +
+          ' --subtract=./languages/' + pkg.name + '.pot' +
+          ' --package-name="' + pkg.productName + ' ' + folder + ' ' + pkg.version + '" ' +
+          extra;
+      }));
+  });
+
+  gulp.task('i18n', gulp.series('i18n:plugin', 'i18n:modules'));
 
   gulp.task('pot', function () {
     return gulp.src(config.input.php)
@@ -142,13 +184,13 @@
   });
 
   gulp.task('build:banner', function () {
-    return gulp.src(config.input.banner, { 'base': '.' })
+    return gulp.src(config.input.banner, { base: '.' })
       .pipe(plugins.header(banner, { pkg: pkg }))
       .pipe(gulp.dest('.'));
   });
 
   gulp.task('build:copy', function () {
-    return gulp.src(config.input.final, { 'base': '.' })
+    return gulp.src(config.input.final, { base: '.' })
       .pipe(gulp.dest(config.output.ready + pkg.name));
   });
 
