@@ -161,6 +161,8 @@ class Plugin
 
 	private function init_modules()
 	{
+		$locale = apply_filters( 'plugin_locale', determine_locale(), static::BASE );
+
 		foreach ( $this->_modules as $mod_name => &$module ) {
 
 			if ( ! isset( $this->_options->{$mod_name} ) )
@@ -170,6 +172,8 @@ class Plugin
 
 				$class = $module->class;
 				$this->{$mod_name} = new $class( $module, $this->_options->{$mod_name}, $this->_path.$module->folder.'/' );
+
+				load_textdomain( static::BASE.'-'.$mod_name, GEDITORIAL_DIR."languages/{$module->folder}/{$locale}.mo" );
 			}
 		}
 
