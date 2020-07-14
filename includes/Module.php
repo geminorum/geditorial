@@ -68,11 +68,11 @@ class Module extends Base
 
 	protected $scripts_printed = FALSE;
 
-	public function __construct( &$module, &$options, $path )
+	public function __construct( &$module, &$options, $root )
 	{
 		$this->base = 'geditorial';
 		$this->key  = $module->name;
-		$this->path = File::normalize( $path );
+		$this->path = File::normalize( $root.$module->folder.'/' );
 
 		$this->module  = $module;
 		$this->options = $options;
