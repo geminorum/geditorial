@@ -1,0 +1,110 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Connected 3.15.8\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues/\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2020-07-14T21:27:06+00:00\n"
+"PO-Revision-Date: 2020-07-15 02:17+0430\n"
+"X-Generator: Poedit 2.3.1\n"
+"X-Domain: geditorial-connected\n"
+"Last-Translator: geminorum <contact@geminorum.ir>\n"
+"Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
+"Language: fa_IR\n"
+
+#: Connected.php:30
+msgctxt "Settings"
+msgid "Admin Column"
+msgstr ""
+
+#: Connected.php:31
+msgctxt "Settings"
+msgid "Displays connected column on admin list screen."
+msgstr ""
+
+#: Connected.php:35
+msgctxt "Setting Title"
+msgid "Admin Box Context"
+msgstr ""
+
+#: Connected.php:36
+msgctxt "Settings"
+msgid "Where to display the connected box on admin post edit screen."
+msgstr ""
+
+#: Connected.php:38
+msgctxt "Settings"
+msgid "Normal"
+msgstr ""
+
+#: Connected.php:39
+msgctxt "Settings"
+msgid "Advanced"
+msgstr ""
+
+#: Connected.php:44
+msgctxt "Settings"
+msgid "Duplicate Connections"
+msgstr ""
+
+#: Connected.php:45
+msgctxt "Settings"
+msgid "Displays multiple connections between connecties."
+msgstr ""
+
+#: Connected.php:49
+msgctxt "Settings"
+msgid "Description Field"
+msgstr ""
+
+#: Connected.php:50
+msgctxt "Settings"
+msgid "Displays description field on connected metabox."
+msgstr ""
+
+#: Connected.php:55
+msgctxt "Settings"
+msgid "Description Title"
+msgstr ""
+
+#: Connected.php:56
+msgctxt "Settings"
+msgid "Appears as description column title on connected metabox."
+msgstr ""
+
+#: Connected.php:57
+msgctxt "Settings"
+msgid "Description"
+msgstr ""
+
+#: Connected.php:89
+msgctxt "Metabox Title"
+msgid "Connected"
+msgstr "مرتبط"
+
+#: Connected.php:91
+msgctxt "Label"
+msgid "Connectie"
+msgstr "مربوط"
+
+#: Connected.php:92
+msgctxt "Label"
+msgid "Search Connecties"
+msgstr "جست‌وجوی مرتبط‌ها"
+
+#: Connected.php:93
+msgctxt "Label"
+msgid "No Connecties found."
+msgstr "ارتباطی پیدا نشد."
+
+#: Connected.php:94
+msgctxt "Label"
+msgid "Connect to a connectie"
+msgstr "مرتبط کنید"
+
+#: Connected.php:100
+msgctxt "Field Title"
+msgid "Description"
+msgstr "توضیحات"
