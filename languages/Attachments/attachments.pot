@@ -1,0 +1,122 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Attachments 3.15.8\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues/\n"
+"Last-Translator: NULL\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2020-07-14T19:59:45+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.4.0\n"
+"X-Domain: geditorial-attachments\n"
+
+#: Attachments.php:39
+msgctxt "Setting Title"
+msgid "Rewite Permalinks"
+msgstr ""
+
+#: Attachments.php:40
+msgctxt "Setting Description"
+msgid "Changes default permalinks into attachment id."
+msgstr ""
+
+#: Attachments.php:45
+msgctxt "Setting Title"
+msgid "Prefix Permalinks"
+msgstr ""
+
+#: Attachments.php:46
+msgctxt "Setting Description"
+msgid "Adds to the permalink of attachments, before id."
+msgstr ""
+
+#: Attachments.php:55
+msgctxt "Setting Title"
+msgid "Attachment Count"
+msgstr ""
+
+#: Attachments.php:56
+msgctxt "Setting Description"
+msgid "Displays attachment summary of the post."
+msgstr ""
+
+#: Attachments.php:58
+msgctxt "Setting Description"
+msgid "Enhances author restrictions on media library list view."
+msgstr ""
+
+#: Attachments.php:61
+msgctxt "Setting Title"
+msgid "Restrict Library"
+msgstr ""
+
+#: Attachments.php:62
+msgctxt "Setting Description"
+msgid "Restricts Media Library access to user's own uploads."
+msgstr ""
+
+#: Attachments.php:175
+msgctxt "Adminbar"
+msgid "Attachment Summary"
+msgstr ""
+
+#: Attachments.php:223
+msgctxt "Row Icon Title"
+msgid "Attachments"
+msgstr ""
+
+#. translators: %s: attachments count
+#: Attachments.php:226
+msgctxt "Noop"
+msgid "%s Attachment"
+msgid_plural "%s Attachments"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Attachments.php:231
+msgctxt "Title Attr"
+msgid "View the list of attachments"
+msgstr ""
+
+#: Attachments.php:258
+msgctxt "Shortcode"
+msgid "Attachments"
+msgstr ""
+
+#. translators: %s: attachment parent title
+#: Attachments.php:260
+msgctxt "Shortcode"
+msgid "Attachments of %s"
+msgstr ""
+
+#: Attachments.php:299
+msgctxt "Table Column"
+msgid "Custom"
+msgstr ""
+
+#: Attachments.php:310
+msgctxt "Table Column"
+msgid "Search"
+msgstr ""
+
+#: Attachments.php:322
+msgctxt "Table Column"
+msgid "Sizes"
+msgstr ""
+
+#: Attachments.php:342
+msgctxt "Table Column"
+msgid "Meta"
+msgstr ""
+
+#: Attachments.php:361
+msgctxt "Header"
+msgid "Overview of Attachments"
+msgstr ""
+
+#: Attachments.php:362
+msgctxt "Message"
+msgid "No attachments found."
+msgstr ""
