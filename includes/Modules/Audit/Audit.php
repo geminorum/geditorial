@@ -46,52 +46,52 @@ class Audit extends gEditorial\Module
 				[
 					'field'       => 'manage_roles',
 					'type'        => 'checkboxes',
-					'title'       => _x( 'Manage Roles', 'Modules: Audit: Setting Title', 'geditorial' ),
-					'description' => _x( 'Roles that can Manage, Edit and Delete Audit Attributes.', 'Modules: Audit: Setting Description', 'geditorial' ),
+					'title'       => _x( 'Manage Roles', 'Setting Title', 'geditorial-audit' ),
+					'description' => _x( 'Roles that can Manage, Edit and Delete Audit Attributes.', 'Setting Description', 'geditorial-audit' ),
 					'exclude'     => $exclude,
 					'values'      => $roles,
 				],
 				[
 					'field'       => 'assign_roles',
 					'type'        => 'checkboxes',
-					'title'       => _x( 'Assign Roles', 'Modules: Audit: Setting Title', 'geditorial' ),
-					'description' => _x( 'Roles that can Assign Audit Attributes.', 'Modules: Audit: Setting Description', 'geditorial' ),
+					'title'       => _x( 'Assign Roles', 'Setting Title', 'geditorial-audit' ),
+					'description' => _x( 'Roles that can Assign Audit Attributes.', 'Setting Description', 'geditorial-audit' ),
 					'exclude'     => $exclude,
 					'values'      => $roles,
 				],
 				[
 					'field'       => 'reports_roles',
 					'type'        => 'checkboxes',
-					'title'       => _x( 'Reports Roles', 'Modules: Audit: Setting Title', 'geditorial' ),
-					'description' => _x( 'Roles that can see Audit Attributes Reports.', 'Modules: Audit: Setting Description', 'geditorial' ),
+					'title'       => _x( 'Reports Roles', 'Setting Title', 'geditorial-audit' ),
+					'description' => _x( 'Roles that can see Audit Attributes Reports.', 'Setting Description', 'geditorial-audit' ),
 					'exclude'     => $exclude,
 					'values'      => $roles,
 				],
 				[
 					'field'       => 'restricted_roles',
 					'type'        => 'checkboxes',
-					'title'       => _x( 'Restricted Roles', 'Modules: Audit: Setting Title', 'geditorial' ),
-					'description' => _x( 'Roles that check for Audit Attributes visibility.', 'Modules: Audit: Setting Description', 'geditorial' ),
+					'title'       => _x( 'Restricted Roles', 'Setting Title', 'geditorial-audit' ),
+					'description' => _x( 'Roles that check for Audit Attributes visibility.', 'Setting Description', 'geditorial-audit' ),
 					'exclude'     => $exclude,
 					'values'      => $roles,
 				],
 				[
 					'field'       => 'restricted',
 					'type'        => 'select',
-					'title'       => _x( 'Restricted Terms', 'Modules: Audit: Setting Title', 'geditorial' ),
-					'description' => _x( 'Handles visibility of each term based on meta values.', 'Modules: Audit: Setting Description', 'geditorial' ),
+					'title'       => _x( 'Restricted Terms', 'Setting Title', 'geditorial-audit' ),
+					'description' => _x( 'Handles visibility of each term based on meta values.', 'Setting Description', 'geditorial-audit' ),
 					'default'     => 'disabled',
 					'values'      => [
-						'disabled' => _x( 'Disabled', 'Modules: Audit: Setting Option', 'geditorial' ),
-						'hidden'   => _x( 'Hidden', 'Modules: Audit: Setting Option', 'geditorial' ),
+						'disabled' => _x( 'Disabled', 'Setting Option', 'geditorial-audit' ),
+						'hidden'   => _x( 'Hidden', 'Setting Option', 'geditorial-audit' ),
 					],
 				],
 				[
 					'field'        => 'locking_terms',
 					'type'         => 'checkboxes',
-					'title'        => _x( 'Locking Terms', 'Modules: Audit: Setting Title', 'geditorial' ),
-					'description'  => _x( 'Selected terms will lock editing the post to audit managers.', 'Modules: Audit: Setting Description', 'geditorial' ),
-					'string_empty' => _x( 'There\'s no audit attributes available!', 'Modules: Audit: Setting', 'geditorial' ),
+					'title'        => _x( 'Locking Terms', 'Setting Title', 'geditorial-audit' ),
+					'description'  => _x( 'Selected terms will lock editing the post to audit managers.', 'Setting Description', 'geditorial-audit' ),
+					'string_empty' => _x( 'There\'s no audit attributes available!', 'Setting', 'geditorial-audit' ),
 					'values'       => Taxonomy::listTerms( $this->constant( 'audit_tax' ) ),
 				],
 			],
@@ -100,8 +100,8 @@ class Audit extends gEditorial\Module
 				'summary_scope',
 				[
 					'field'       => 'summary_drafts',
-					'title'       => _x( 'Include Drafts', 'Modules: Audit: Setting Title', 'geditorial' ),
-					'description' => _x( 'Include drafted items in the content summary.', 'Modules: Audit: Setting Description', 'geditorial' ),
+					'title'       => _x( 'Include Drafts', 'Setting Title', 'geditorial-audit' ),
+					'description' => _x( 'Include drafted items in the content summary.', 'Setting Description', 'geditorial-audit' ),
 				],
 				'count_not',
 			],
@@ -134,13 +134,13 @@ class Audit extends gEditorial\Module
 	{
 		$strings = [
 			'noops' => [
-				'audit_tax' => _nx_noop( 'Audit Attribute', 'Audit Attributes', 'Modules: Audit: Noop', 'geditorial' ),
+				'audit_tax' => _nx_noop( 'Audit Attribute', 'Audit Attributes', 'Noop', 'geditorial-audit' ),
 			],
 			'misc' => [
-				'menu_name'           => _x( 'Audit', 'Modules: Audit: Audit Attributes Tax Labels: Menu Name', 'geditorial' ),
-				'tweaks_column_title' => _x( 'Audit Attributes', 'Modules: Audit: Column Title', 'geditorial' ),
-				'show_option_all'     => _x( 'Audit', 'Modules: Audit: Show Option All', 'geditorial' ),
-				'show_option_none'    => _x( '(Not audited)', 'Modules: Audit: Show Option All', 'geditorial' ),
+				'menu_name'           => _x( 'Audit', 'Audit Attributes Tax Labels: Menu Name', 'geditorial-audit' ),
+				'tweaks_column_title' => _x( 'Audit Attributes', 'Column Title', 'geditorial-audit' ),
+				'show_option_all'     => _x( 'Audit', 'Show Option All', 'geditorial-audit' ),
+				'show_option_none'    => _x( '(Not audited)', 'Show Option All', 'geditorial-audit' ),
 			],
 		];
 
@@ -149,16 +149,16 @@ class Audit extends gEditorial\Module
 
 		$strings['terms'] = [
 			'audit_tax' => [
-				'audited'      => _x( 'Audited', 'Modules: Audit: Audit Attributes Tax Defaults', 'geditorial' ),
-				'outdated'     => _x( 'Outdated', 'Modules: Audit: Audit Attributes Tax Defaults', 'geditorial' ),
-				'redundant'    => _x( 'Redundant', 'Modules: Audit: Audit Attributes Tax Defaults', 'geditorial' ),
-				'review-seo'   => _x( 'Review SEO', 'Modules: Audit: Audit Attributes Tax Defaults', 'geditorial' ),
-				'review-style' => _x( 'Review Style', 'Modules: Audit: Audit Attributes Tax Defaults', 'geditorial' ),
-				'trivial'      => _x( 'Trivial', 'Modules: Audit: Audit Attributes Tax Defaults', 'geditorial' ),
-				'initial-copy' => _x( 'Initial Copy', 'Modules: Audit: Audit Attributes Tax Defaults', 'geditorial' ),
-				'unfinished'   => _x( 'Unfinished', 'Modules: Audit: Audit Attributes Tax Defaults', 'geditorial' ),
-				'text-empty'   => _x( 'No Content', 'Modules: Audit: Audit Attributes Tax Defaults', 'geditorial' ),
-				'imported'     => _x( 'Imported', 'Modules: Audit: Audit Attributes Tax Defaults', 'geditorial' ),
+				'audited'      => _x( 'Audited', 'Audit Attributes Tax Defaults', 'geditorial-audit' ),
+				'outdated'     => _x( 'Outdated', 'Audit Attributes Tax Defaults', 'geditorial-audit' ),
+				'redundant'    => _x( 'Redundant', 'Audit Attributes Tax Defaults', 'geditorial-audit' ),
+				'review-seo'   => _x( 'Review SEO', 'Audit Attributes Tax Defaults', 'geditorial-audit' ),
+				'review-style' => _x( 'Review Style', 'Audit Attributes Tax Defaults', 'geditorial-audit' ),
+				'trivial'      => _x( 'Trivial', 'Audit Attributes Tax Defaults', 'geditorial-audit' ),
+				'initial-copy' => _x( 'Initial Copy', 'Audit Attributes Tax Defaults', 'geditorial-audit' ),
+				'unfinished'   => _x( 'Unfinished', 'Audit Attributes Tax Defaults', 'geditorial-audit' ),
+				'text-empty'   => _x( 'No Content', 'Audit Attributes Tax Defaults', 'geditorial-audit' ),
+				'imported'     => _x( 'Imported', 'Audit Attributes Tax Defaults', 'geditorial-audit' ),
 			],
 		];
 
@@ -177,7 +177,7 @@ class Audit extends gEditorial\Module
 	{
 		parent::default_buttons( $module );
 
-		$this->register_button( 'install_def_audit_tax', _x( 'Install Default Attributes', 'Modules: Audit: Setting Button', 'geditorial' ) );
+		$this->register_button( 'install_def_audit_tax', _x( 'Install Default Attributes', 'Button', 'geditorial-audit' ) );
 	}
 
 	public function init()
@@ -342,7 +342,7 @@ class Audit extends gEditorial\Module
 
 			$nodes[] = [
 				'id'     => $classs,
-				'title'  => _x( 'Audit Attributes', 'Modules: Audit: Adminbar', 'geditorial' ),
+				'title'  => _x( 'Audit Attributes', 'Adminbar', 'geditorial-audit' ),
 				'parent' => $parent,
 				'href'   => $this->get_module_url(),
 			];
@@ -386,14 +386,14 @@ class Audit extends gEditorial\Module
 		$wp_admin_bar->add_node( [
 			'id'    => $this->classs( 'attributes' ),
 			'href'  => $this->get_module_url(),
-			'title' => _x( 'Auditing', 'Modules: Audit: Adminbar', 'geditorial' ).Ajax::spinner(),
+			'title' => _x( 'Auditing', 'Adminbar: Title Attr', 'geditorial-audit' ).Ajax::spinner(),
 			'meta'  => [ 'class' => 'geditorial-adminbar-node -action '.$this->classs() ],
 		] );
 
 		$wp_admin_bar->add_node( [
 			'id'     => $this->classs( 'box' ),
 			'parent' => $this->classs( 'attributes' ),
-			'title'  => _x( 'Click to load attributes &hellip;', 'Modules: Audit: Adminbar', 'geditorial' ),
+			'title'  => _x( 'Click to load attributes &hellip;', 'Adminbar: Title Attr', 'geditorial-audit' ),
 			'meta'   => [ 'class' => 'geditorial-adminbar-wrap -wrap '.$this->classs() ],
 		] );
 	}
@@ -420,8 +420,8 @@ class Audit extends gEditorial\Module
 			return;
 
 		$title = 'current' == $this->get_setting( 'summary_scope', 'all' )
-			? _x( 'Your Audit Summary', 'Modules: Audit: Dashboard Widget Title', 'geditorial' )
-			: _x( 'Editorial Audit Summary', 'Modules: Audit: Dashboard Widget Title', 'geditorial' );
+			? _x( 'Your Audit Summary', 'Dashboard Widget Title', 'geditorial-audit' )
+			: _x( 'Editorial Audit Summary', 'Dashboard Widget Title', 'geditorial-audit' );
 
 		$title.= MetaBox::titleActionRefresh();
 
@@ -457,7 +457,7 @@ class Audit extends gEditorial\Module
 
 			} else {
 
-				HTML::desc( _x( 'No reports available!', 'Modules: Audit', 'geditorial' ), FALSE, '-empty' );
+				HTML::desc( _x( 'No reports available!', 'Message', 'geditorial-audit' ), FALSE, '-empty' );
 			}
 		}
 
@@ -606,22 +606,22 @@ class Audit extends gEditorial\Module
 		$terms = Taxonomy::getTerms( $this->constant( 'audit_tax' ), FALSE, TRUE, 'slug', [ 'hide_empty' => TRUE ] );
 
 		if ( empty( $terms ) )
-			return HTML::desc( _x( 'No reports available!', 'Modules: Audit', 'geditorial' ), TRUE, '-empty' );
+			return HTML::desc( _x( 'No reports available!', 'Message', 'geditorial-audit' ), TRUE, '-empty' );
 
 		$args = $this->get_current_form( [
 			'user_id' => '0',
 		], 'reports' );
 
-		HTML::h3( _x( 'Audit Reports', 'Modules: Audit', 'geditorial' ) );
+		HTML::h3( _x( 'Audit Reports', 'Header', 'geditorial-audit' ) );
 
 		echo '<table class="form-table">';
 
-		echo '<tr><th scope="row">'._x( 'By User', 'Modules: Audit', 'geditorial' ).'</th><td>';
+		echo '<tr><th scope="row">'._x( 'By User', 'Reports', 'geditorial-audit' ).'</th><td>';
 
 		$this->do_settings_field( [
 			'type'         => 'user',
 			'field'        => 'user_id',
-			'none_title'   => _x( 'All Users', 'Modules: Audit', 'geditorial' ),
+			'none_title'   => _x( 'All Users', 'None', 'geditorial-audit' ),
 			'none_value'   => '0',
 			'default'      => $args['user_id'],
 			'option_group' => 'reports',
@@ -630,8 +630,7 @@ class Audit extends gEditorial\Module
 
 		echo '&nbsp;';
 
-		Settings::submitButton( 'user_stats',
-			_x( 'Apply Filter', 'Modules: Audit: Setting Button', 'geditorial' ) );
+		Settings::submitButton( 'user_stats', _x( 'Apply Filter', 'Button', 'geditorial-audit' ) );
 
 		// FIXME: style this!
 		if ( $summary = $this->get_summary( $this->posttypes(), $terms, ( $args['user_id'] ? 'current' : 'all' ), $args['user_id'] ) )
