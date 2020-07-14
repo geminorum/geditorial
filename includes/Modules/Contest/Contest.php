@@ -82,12 +82,12 @@ class Contest extends gEditorial\Module
 	{
 		$strings = [
 			'noops' => [
-				'contest_cpt'      => _nx_noop( 'Contest', 'Contests', 'Modules: Contest: Noop', 'geditorial' ),
-				'contest_tax'      => _nx_noop( 'Contest', 'Contests', 'Modules: Contest: Noop', 'geditorial' ),
-				'contest_cat'      => _nx_noop( 'Contest Category', 'Contest Categories', 'Modules: Contest: Noop', 'geditorial' ),
-				'apply_cpt'        => _nx_noop( 'Apply', 'Applies', 'Modules: Contest: Noop', 'geditorial' ),
-				'apply_cat'        => _nx_noop( 'Apply Category', 'Apply Categories', 'Modules: Contest: Noop', 'geditorial' ),
-				'apply_status_tax' => _nx_noop( 'Apply Status', 'Apply Statuses', 'Modules: Contest: Noop', 'geditorial' ),
+				'contest_cpt'      => _nx_noop( 'Contest', 'Contests', 'Noop', 'geditorial-contest' ),
+				'contest_tax'      => _nx_noop( 'Contest', 'Contests', 'Noop', 'geditorial-contest' ),
+				'contest_cat'      => _nx_noop( 'Contest Category', 'Contest Categories', 'Noop', 'geditorial-contest' ),
+				'apply_cpt'        => _nx_noop( 'Apply', 'Applies', 'Noop', 'geditorial-contest' ),
+				'apply_cat'        => _nx_noop( 'Apply Category', 'Apply Categories', 'Noop', 'geditorial-contest' ),
+				'apply_status_tax' => _nx_noop( 'Apply Status', 'Apply Statuses', 'Noop', 'geditorial-contest' ),
 			],
 		];
 
@@ -96,28 +96,28 @@ class Contest extends gEditorial\Module
 
 		$strings['misc'] = [
 			'contest_cpt' => [
-				'meta_box_title'        => _x( 'Metadata', 'Modules: Contest: MetaBox Title', 'geditorial' ),
-				'cover_box_title'       => _x( 'Poster', 'Modules: Contest: CoverBox Title', 'geditorial' ),
-				'children_column_title' => _x( 'Applies', 'Modules: Contest: Column Title', 'geditorial' ),
+				'meta_box_title'        => _x( 'Metadata', 'MetaBox Title', 'geditorial-contest' ),
+				'cover_box_title'       => _x( 'Poster', 'CoverBox Title', 'geditorial-contest' ),
+				'children_column_title' => _x( 'Applies', 'Column Title', 'geditorial-contest' ),
 			],
 			'contest_cat' => [
-				'tweaks_column_title' => _x( 'Contest Categories', 'Modules: Contest: Column Title', 'geditorial' ),
+				'tweaks_column_title' => _x( 'Contest Categories', 'Column Title', 'geditorial-contest' ),
 			],
 			'apply_cat' => [
-				'tweaks_column_title' => _x( 'Apply Categories', 'Modules: Contest: Column Title', 'geditorial' ),
+				'tweaks_column_title' => _x( 'Apply Categories', 'Column Title', 'geditorial-contest' ),
 			],
 			'apply_status_tax' => [
-				'meta_box_title'      => _x( 'Apply Statuses', 'Modules: Contest: MetaBox Title', 'geditorial' ),
-				'tweaks_column_title' => _x( 'Apply Statuses', 'Modules: Contest: Column Title', 'geditorial' ),
+				'meta_box_title'      => _x( 'Apply Statuses', 'MetaBox Title', 'geditorial-contest' ),
+				'tweaks_column_title' => _x( 'Apply Statuses', 'Column Title', 'geditorial-contest' ),
 			],
-			'meta_box_title'      => _x( 'Contests', 'Modules: Contest: MetaBox Title', 'geditorial' ),
-			'tweaks_column_title' => _x( 'Contests', 'Modules: Contest: Column Title', 'geditorial' ),
+			'meta_box_title'      => _x( 'Contests', 'MetaBox Title', 'geditorial-contest' ),
+			'tweaks_column_title' => _x( 'Contests', 'Column Title', 'geditorial-contest' ),
 		];
 
 		$strings['terms'] = [
 			'apply_status_tax' => [
-				'approved' => _x( 'Approved', 'Modules: Contest: Apply Statuses Tax Defaults', 'geditorial' ),
-				'pending'  => _x( 'Pending', 'Modules: Contest: Apply Statuses Tax Defaults', 'geditorial' ),
+				'approved' => _x( 'Approved', 'Apply Statuses Tax Defaults', 'geditorial-contest' ),
+				'pending'  => _x( 'Pending', 'Apply Statuses Tax Defaults', 'geditorial-contest' ),
 			],
 		];
 
@@ -141,7 +141,7 @@ class Contest extends gEditorial\Module
 	{
 		parent::default_buttons( $module );
 
-		$this->register_button( 'install_def_apply_status_tax', _x( 'Install Default Apply Statuses', 'Modules: Contest: Setting Button', 'geditorial' ) );
+		$this->register_button( 'install_def_apply_status_tax', _x( 'Install Default Apply Statuses', 'Button', 'geditorial-contest' ) );
 	}
 
 	public function after_setup_theme()
@@ -359,7 +359,7 @@ class Contest extends gEditorial\Module
 				echo $list;
 
 			else
-				HTML::desc( _x( 'No items connected!', 'Modules: Contest', 'geditorial' ), FALSE, '-empty' );
+				HTML::desc( _x( 'No items connected!', 'Message', 'geditorial-contest' ), FALSE, '-empty' );
 
 		echo '</div>';
 	}
@@ -581,7 +581,7 @@ class Contest extends gEditorial\Module
 			foreach ( $posttypes as $posttype )
 				$list[] = HTML::tag( 'a', [
 					'href'   => WordPress::getPostTypeEditLink( $posttype, 0, $args ),
-					'title'  => _x( 'View the connected list', 'Modules: Contest', 'geditorial' ),
+					'title'  => _x( 'View the connected list', 'Title Attr', 'geditorial-contest' ),
 					'target' => '_blank',
 				], $this->cache_posttypes[$posttype] );
 
@@ -593,11 +593,11 @@ class Contest extends gEditorial\Module
 	// FIXME: update from magazine module
 	protected function render_tools_html( $uri, $sub )
 	{
-		HTML::h3( _x( 'Contest Tools', 'Modules: Contest', 'geditorial' ) );
+		HTML::h3( _x( 'Contest Tools', 'Header', 'geditorial-contest' ) );
 
 		echo '<table class="form-table">';
 
-		echo '<tr><th scope="row">'._x( 'From Terms', 'Modules: Contest', 'geditorial' ).'</th><td>';
+		echo '<tr><th scope="row">'._x( 'From Terms', 'Tools', 'geditorial-contest' ).'</th><td>';
 
 		if ( ! empty( $_POST ) && isset( $_POST['contest_tax_check'] ) ) {
 
@@ -606,7 +606,7 @@ class Contest extends gEditorial\Module
 				'term_id' => Helper::tableColumnTermID(),
 				'name'    => Helper::tableColumnTermName(),
 				'linked'   => [
-					'title' => _x( 'Linked Contest Post', 'Modules: Contest: Table Column', 'geditorial' ),
+					'title' => _x( 'Linked Contest Post', 'Table Column', 'geditorial-contest' ),
 					'callback' => function( $value, $row, $column, $index ){
 
 						if ( $post_id = $this->get_linked_post_id( $row, 'contest_cpt', 'contest_tax', FALSE ) )
@@ -616,7 +616,7 @@ class Contest extends gEditorial\Module
 					},
 				],
 				'slugged'   => [
-					'title' => _x( 'Same Slug Contest Post', 'Modules: Contest: Table Column', 'geditorial' ),
+					'title' => _x( 'Same Slug Contest Post', 'Table Column', 'geditorial-contest' ),
 					'callback' => function( $value, $row, $column, $index ){
 
 						if ( $post_id = PostType::getIDbySlug( $row->slug, $this->constant( 'contest_cpt' ) ) )
@@ -626,7 +626,7 @@ class Contest extends gEditorial\Module
 					},
 				],
 				'count' => [
-					'title'    => _x( 'Count', 'Modules: Contest: Table Column', 'geditorial' ),
+					'title'    => _x( 'Count', 'Table Column', 'geditorial-contest' ),
 					'callback' => function( $value, $row, $column, $index ){
 						if ( $post_id = PostType::getIDbySlug( $row->slug, $this->constant( 'contest_cpt' ) ) )
 							return Number::format( $this->get_linked_posts( $post_id, 'contest_cpt', 'contest_tax', TRUE ) );
@@ -640,18 +640,18 @@ class Contest extends gEditorial\Module
 		}
 
 		Settings::submitButton( 'contest_tax_check',
-			_x( 'Check Terms', 'Modules: Contest: Setting Button', 'geditorial' ), TRUE );
+			_x( 'Check Terms', 'Button', 'geditorial-contest' ), TRUE );
 
 		Settings::submitButton( 'contest_post_create',
-			_x( 'Create Contest Posts', 'Modules: Contest: Setting Button', 'geditorial' ) );
+			_x( 'Create Contest Posts', 'Button', 'geditorial-contest' ) );
 
 		Settings::submitButton( 'contest_post_connect',
-			_x( 'Re-Connect Posts', 'Modules: Contest: Setting Button', 'geditorial' ) );
+			_x( 'Re-Connect Posts', 'Button', 'geditorial-contest' ) );
 
 		Settings::submitButton( 'contest_tax_delete',
-			_x( 'Delete Terms', 'Modules: Contest: Setting Button', 'geditorial' ), 'danger', TRUE );
+			_x( 'Delete Terms', 'Button', 'geditorial-contest' ), 'danger', TRUE );
 
-		HTML::desc( _x( 'Check for contest terms and create corresponding contest posts.', 'Modules: Contest', 'geditorial' ) );
+		HTML::desc( _x( 'Check for contest terms and create corresponding contest posts.', 'Message', 'geditorial-contest' ) );
 
 		echo '</td></tr>';
 		echo '</table>';
