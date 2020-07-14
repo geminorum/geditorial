@@ -36,8 +36,8 @@ class Collect extends gEditorial\Module
 				'multiple_instances',
 				[
 					'field'       => 'collection_parts',
-					'title'       => _x( 'Collection Parts', 'Modules: Collect: Setting Title', 'geditorial' ),
-					'description' => _x( 'Partition taxonomy for collections and supported posttypes.', 'Modules: Collect: Setting Description', 'geditorial' ),
+					'title'       => _x( 'Collection Parts', 'Setting Title', 'geditorial-collect' ),
+					'description' => _x( 'Partition taxonomy for collections and supported posttypes.', 'Setting Description', 'geditorial-collect' ),
 				],
 				'comment_status',
 			],
@@ -54,8 +54,8 @@ class Collect extends gEditorial\Module
 				[
 					'field'       => 'redirect_groups',
 					'type'        => 'url',
-					'title'       => _x( 'Redirect Groups', 'Modules: Collect: Setting Title', 'geditorial' ),
-					'description' => _x( 'Redirects all group archives to a URL.', 'Modules: Collect: Setting Description', 'geditorial' ),
+					'title'       => _x( 'Redirect Groups', 'Setting Title', 'geditorial-collect' ),
+					'description' => _x( 'Redirects all group archives to a URL.', 'Setting Description', 'geditorial-collect' ),
 					'placeholder' => 'http://example.com/archives/',
 				],
 			],
@@ -100,10 +100,10 @@ class Collect extends gEditorial\Module
 	{
 		$strings = [
 			'noops' => [
-				'collection_cpt' => _nx_noop( 'Collection', 'Collections', 'Modules: Collect: Noop', 'geditorial' ),
-				'collection_tax' => _nx_noop( 'Collection', 'Collections', 'Modules: Collect: Noop', 'geditorial' ),
-				'group_tax'      => _nx_noop( 'Group', 'Groups', 'Modules: Collect: Noop', 'geditorial' ),
-				'part_tax'       => _nx_noop( 'Part', 'Parts', 'Modules: Collect: Noop', 'geditorial' ),
+				'collection_cpt' => _nx_noop( 'Collection', 'Collections', 'Noop', 'geditorial-collect' ),
+				'collection_tax' => _nx_noop( 'Collection', 'Collections', 'Noop', 'geditorial-collect' ),
+				'group_tax'      => _nx_noop( 'Group', 'Groups', 'Noop', 'geditorial-collect' ),
+				'part_tax'       => _nx_noop( 'Part', 'Parts', 'Noop', 'geditorial-collect' ),
 			],
 		];
 
@@ -112,22 +112,22 @@ class Collect extends gEditorial\Module
 
 		$strings['misc'] = [
 			'collection_cpt' => [
-				'featured' => _x( 'Poster Image', 'Modules: Collect: Collection CPT: Featured', 'geditorial' ),
+				'featured' => _x( 'Poster Image', 'Collection CPT: Featured', 'geditorial-collect' ),
 			],
 			'collection_tax' => [
-				'meta_box_title' => _x( 'In This Collection', 'Modules: Collect: MetaBox Title', 'geditorial' ),
+				'meta_box_title' => _x( 'In This Collection', 'MetaBox Title', 'geditorial-collect' ),
 			],
 			'group_tax' => [
-				'meta_box_title'      => _x( 'Groups', 'Modules: Collect: MetaBox Title', 'geditorial' ),
-				'tweaks_column_title' => _x( 'Collection Groups', 'Modules: Collect: Column Title', 'geditorial' ),
+				'meta_box_title'      => _x( 'Groups', 'MetaBox Title', 'geditorial-collect' ),
+				'tweaks_column_title' => _x( 'Collection Groups', 'Column Title', 'geditorial-collect' ),
 			],
 			'part_tax' => [
-				'meta_box_title'      => _x( 'Parts', 'Modules: Collect: MetaBox Title', 'geditorial' ),
-				'tweaks_column_title' => _x( 'Collection Parts', 'Modules: Collect: Column Title', 'geditorial' ),
+				'meta_box_title'      => _x( 'Parts', 'MetaBox Title', 'geditorial-collect' ),
+				'tweaks_column_title' => _x( 'Collection Parts', 'Column Title', 'geditorial-collect' ),
 			],
-			'meta_box_title'         => _x( 'The Collection', 'Modules: Collect: MetaBox Title', 'geditorial' ),
-			'tweaks_column_title'    => _x( 'Collections', 'Modules: Collect: Column Title', 'geditorial' ),
-			'connected_column_title' => _x( 'Connected Items', 'Modules: Collect: Column Title', 'geditorial' ),
+			'meta_box_title'         => _x( 'The Collection', 'MetaBox Title', 'geditorial-collect' ),
+			'tweaks_column_title'    => _x( 'Collections', 'Column Title', 'geditorial-collect' ),
+			'connected_column_title' => _x( 'Connected Items', 'Column Title', 'geditorial-collect' ),
 		];
 
 		return $strings;
@@ -141,37 +141,37 @@ class Collect extends gEditorial\Module
 				'st' => [ 'type' => 'title_after' ],
 
 				'number' => [
-					'title'       => _x( 'Number Line', 'Modules: Collect: Field Title', 'geditorial' ),
-					'description' => _x( 'The collection number line', 'Modules: Collect: Field Description', 'geditorial' ),
+					'title'       => _x( 'Number Line', 'Field Title', 'geditorial-collect' ),
+					'description' => _x( 'The collection number line', 'Field Description', 'geditorial-collect' ),
 					'icon'        => 'menu',
 				],
 				'total_items' => [
-					'title'       => _x( 'Total Items', 'Modules: Collect: Field Title', 'geditorial' ),
-					'description' => _x( 'The collection total items', 'Modules: Collect: Field Description', 'geditorial' ),
+					'title'       => _x( 'Total Items', 'Field Title', 'geditorial-collect' ),
+					'description' => _x( 'The collection total items', 'Field Description', 'geditorial-collect' ),
 					'icon'        => 'admin-page',
 				],
 			],
 			'post' => [
 				'in_collection_order' => [
-					'title'       => _x( 'Order', 'Modules: Collect: Field Title', 'geditorial' ),
-					'description' => _x( 'Post order in the collection', 'Modules: Collect: Field Description', 'geditorial' ),
+					'title'       => _x( 'Order', 'Field Title', 'geditorial-collect' ),
+					'description' => _x( 'Post order in the collection', 'Field Description', 'geditorial-collect' ),
 					'type'        => 'number',
 					'context'     => 'collection',
 					'icon'        => 'sort',
 				],
 				'in_collection_title' => [
-					'title'       => _x( 'Title', 'Modules: Collect: Field Title', 'geditorial' ),
-					'description' => _x( 'Override post title in the collection', 'Modules: Collect: Field Description', 'geditorial' ),
+					'title'       => _x( 'Title', 'Field Title', 'geditorial-collect' ),
+					'description' => _x( 'Override post title in the collection', 'Field Description', 'geditorial-collect' ),
 					'context'     => 'collection',
 				],
 				'in_collection_subtitle' => [
-					'title'       => _x( 'Subtitle', 'Modules: Collect: Field Title', 'geditorial' ),
-					'description' => _x( 'Post subtitle in the collection', 'Modules: Collect: Field Description', 'geditorial' ),
+					'title'       => _x( 'Subtitle', 'Field Title', 'geditorial-collect' ),
+					'description' => _x( 'Post subtitle in the collection', 'Field Description', 'geditorial-collect' ),
 					'context'     => 'collection',
 				],
 				'in_collection_collaborator' => [
-					'title'       => _x( 'Collaborator', 'Modules: Collect: Field Title', 'geditorial' ),
-					'description' => _x( 'Post collaborator in the collection', 'Modules: Collect: Field Description', 'geditorial' ),
+					'title'       => _x( 'Collaborator', 'Field Title', 'geditorial-collect' ),
+					'description' => _x( 'Post collaborator in the collection', 'Field Description', 'geditorial-collect' ),
 					'context'     => 'collection',
 				],
 			],
@@ -619,7 +619,7 @@ class Collect extends gEditorial\Module
 				echo $list;
 
 			else
-				HTML::desc( _x( 'No items connected!', 'Modules: Collect', 'geditorial' ), FALSE, '-empty' );
+				HTML::desc( _x( 'No items connected!', 'Message', 'geditorial-collect' ), FALSE, '-empty' );
 
 		echo '</div>';
 	}
@@ -674,7 +674,7 @@ class Collect extends gEditorial\Module
 			foreach ( $posttypes as $posttype )
 				$list[] = HTML::tag( 'a', [
 					'href'   => WordPress::getPostTypeEditLink( $posttype, 0, $args ),
-					'title'  => _x( 'View the connected list', 'Modules: Collect', 'geditorial' ),
+					'title'  => _x( 'View the connected list', 'Title Attr', 'geditorial-collect' ),
 					'target' => '_blank',
 				], $this->cache_posttypes[$posttype] );
 
@@ -687,7 +687,7 @@ class Collect extends gEditorial\Module
 	{
 		switch ( $key ) {
 			/* translators: %s: count placeholder */
-			case 'in_collection_order': return Helper::getCounted( $value, _x( 'Order in Collection: %s', 'Modules: Collect: Display', 'geditorial' ) );
+			case 'in_collection_order': return Helper::getCounted( $value, _x( 'Order in Collection: %s', 'Display', 'geditorial-collect' ) );
 		}
 
 		return HTML::escape( $value );
@@ -768,26 +768,26 @@ class Collect extends gEditorial\Module
 	// FIXME: update from magazine module
 	protected function render_tools_html( $uri, $sub )
 	{
-		HTML::h3( _x( 'Collect Tools', 'Modules: Collect', 'geditorial' ) );
+		HTML::h3( _x( 'Collect Tools', 'Header', 'geditorial-collect' ) );
 
 		echo '<table class="form-table">';
-		echo '<tr><th scope="row">'._x( 'From Terms', 'Modules: Collect', 'geditorial' ).'</th><td>';
+		echo '<tr><th scope="row">'._x( 'From Terms', 'Tools', 'geditorial-collect' ).'</th><td>';
 		echo $this->wrap_open_buttons( '-tools' );
 
 		Settings::submitButton( 'collection_tax_check',
-			_x( 'Check Terms', 'Modules: Collect: Setting Button', 'geditorial' ), TRUE );
+			_x( 'Check Terms', 'Button', 'geditorial-collect' ), TRUE );
 
 		Settings::submitButton( 'collection_post_create',
-			_x( 'Create Collection Posts', 'Modules: Collect: Setting Button', 'geditorial' ) );
+			_x( 'Create Collection Posts', 'Button', 'geditorial-collect' ) );
 
 		Settings::submitButton( 'collection_post_connect',
-			_x( 'Re-Connect Posts', 'Modules: Collect: Setting Button', 'geditorial' ) );
+			_x( 'Re-Connect Posts', 'Button', 'geditorial-collect' ) );
 
 		Settings::submitButton( 'collection_store_order',
-			_x( 'Store Orders', 'Modules: Collect: Setting Button', 'geditorial' ) );
+			_x( 'Store Orders', 'Button', 'geditorial-collect' ) );
 
 		Settings::submitButton( 'collection_tax_delete',
-			_x( 'Delete Terms', 'Modules: Collect: Setting Button', 'geditorial' ), 'danger', TRUE );
+			_x( 'Delete Terms', 'Button', 'geditorial-collect' ), 'danger', TRUE );
 
 
 		echo '</p>';
@@ -800,7 +800,7 @@ class Collect extends gEditorial\Module
 				'term_id' => Helper::tableColumnTermID(),
 				'name'    => Helper::tableColumnTermName(),
 				'linked'   => [
-					'title'    => _x( 'Linked Collection Post', 'Modules: Collect: Table Column', 'geditorial' ),
+					'title'    => _x( 'Linked Collection Post', 'Table Column', 'geditorial-collect' ),
 					'callback' => function( $value, $row, $column, $index ){
 
 						if ( $post_id = $this->get_linked_post_id( $row, 'collection_cpt', 'collection_tax', FALSE ) )
@@ -810,7 +810,7 @@ class Collect extends gEditorial\Module
 					},
 				],
 				'slugged'   => [
-					'title' => _x( 'Same Slug Collection Post', 'Modules: Collect: Table Column', 'geditorial' ),
+					'title' => _x( 'Same Slug Collection Post', 'Table Column', 'geditorial-collect' ),
 					'callback' => function( $value, $row, $column, $index ){
 
 						if ( $post_id = PostType::getIDbySlug( $row->slug, $this->constant( 'collection_cpt' ) ) )
@@ -820,7 +820,7 @@ class Collect extends gEditorial\Module
 					},
 				],
 				'count' => [
-					'title'    => _x( 'Count', 'Modules: Collect: Table Column', 'geditorial' ),
+					'title'    => _x( 'Count', 'Table Column', 'geditorial-collect' ),
 					'callback' => function( $value, $row, $column, $index ){
 						if ( $post_id = PostType::getIDbySlug( $row->slug, $this->constant( 'collection_cpt' ) ) )
 							return Number::format( $this->get_linked_posts( $post_id, 'collection_cpt', 'collection_tax', TRUE ) );
@@ -829,11 +829,11 @@ class Collect extends gEditorial\Module
 				],
 				'description' => Helper::tableColumnTermDesc(),
 			], Taxonomy::getTerms( $this->constant( 'collection_tax' ), FALSE, TRUE ), [
-				'empty' => HTML::warning( _x( 'No Terms Found!', 'Modules: Collect: Table Empty', 'geditorial' ), FALSE ),
+				'empty' => HTML::warning( _x( 'No Terms Found!', 'Table Empty', 'geditorial-collect' ), FALSE ),
 			] );
 		}
 
-		HTML::desc( _x( 'Check for collection terms and create corresponding collection posts.', 'Modules: Collect', 'geditorial' ) );
+		HTML::desc( _x( 'Check for collection terms and create corresponding collection posts.', 'Message', 'geditorial-collect' ) );
 
 		echo '</td></tr>';
 		echo '</table>';
