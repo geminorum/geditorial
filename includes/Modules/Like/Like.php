@@ -40,45 +40,45 @@ class Like extends gEditorial\Module
 				'adminbar_summary',
 				[
 					'field'       => 'display_avatars',
-					'title'       => _x( 'Display Avatars', 'Modules: Like: Setting Title', 'geditorial' ),
-					'description' => _x( 'Displays avatars next to the like button.', 'Modules: Like: Setting Description', 'geditorial' ),
+					'title'       => _x( 'Display Avatars', 'Setting Title', 'geditorial-like' ),
+					'description' => _x( 'Displays avatars next to the like button.', 'Setting Description', 'geditorial-like' ),
 				],
 				[
 					'field'       => 'max_avatars',
 					'type'        => 'number',
-					'title'       => _x( 'Max Avatars', 'Modules: Like: Setting Title', 'geditorial' ),
-					'description' => _x( 'Maximum number of avatars to display.', 'Modules: Like: Setting Description', 'geditorial' ),
+					'title'       => _x( 'Max Avatars', 'Setting Title', 'geditorial-like' ),
+					'description' => _x( 'Maximum number of avatars to display.', 'Setting Description', 'geditorial-like' ),
 					'default'     => 12,
 				],
 			],
 			'_editlist' => [
 				[
 					'field'       => 'like_count',
-					'title'       => _x( 'Like Count', 'Modules: Like: Setting Title', 'geditorial' ),
-					'description' => _x( 'Displays likes summary of the post.', 'Modules: Like: Setting Description', 'geditorial' ),
+					'title'       => _x( 'Like Count', 'Setting Title', 'geditorial-like' ),
+					'description' => _x( 'Displays likes summary of the post.', 'Setting Description', 'geditorial-like' ),
 				],
 			],
 			'_strings' => [
 				[
 					'field'       => 'string_loading',
 					'type'        => 'text',
-					'title'       => _x( 'Loading Title', 'Modules: Like: Setting Title', 'geditorial' ),
-					'description' => _x( 'Title attribute of the like button.', 'Modules: Like: Setting Description', 'geditorial' ),
-					'default'     => _x( 'Loading &hellip;', 'Modules: Like', 'geditorial' ),
+					'title'       => _x( 'Loading Title', 'Setting Title', 'geditorial-like' ),
+					'description' => _x( 'Title attribute of the like button.', 'Setting Description', 'geditorial-like' ),
+					'default'     => _x( 'Loading &hellip;', 'Setting Default', 'geditorial-like' ),
 				],
 				[
 					'field'       => 'string_like',
 					'type'        => 'text',
-					'title'       => _x( 'Like Title', 'Modules: Like: Setting Title', 'geditorial' ),
-					'description' => _x( 'Title attribute of the like button.', 'Modules: Like: Setting Description', 'geditorial' ),
-					'default'     => _x( 'Like', 'Modules: Like', 'geditorial' ),
+					'title'       => _x( 'Like Title', 'Setting Title', 'geditorial-like' ),
+					'description' => _x( 'Title attribute of the like button.', 'Setting Description', 'geditorial-like' ),
+					'default'     => _x( 'Like', 'Setting Default', 'geditorial-like' ),
 				],
 				[
 					'field'       => 'string_unlike',
 					'type'        => 'text',
-					'title'       => _x( 'Unlike Title', 'Modules: Like: Setting Title', 'geditorial' ),
-					'description' => _x( 'Title attribute of the like button.', 'Modules: Like: Setting Description', 'geditorial' ),
-					'default'     => _x( 'Unlike', 'Modules: Like', 'geditorial' ),
+					'title'       => _x( 'Unlike Title', 'Setting Title', 'geditorial-like' ),
+					'description' => _x( 'Title attribute of the like button.', 'Setting Description', 'geditorial-like' ),
+					'default'     => _x( 'Unlike', 'Setting Default', 'geditorial-like' ),
 				],
 			],
 		];
@@ -136,7 +136,7 @@ class Like extends gEditorial\Module
 
 		$avatars = $this->get_setting( 'display_avatars', FALSE );
 
-		$title = $this->get_setting( 'string_loading', _x( 'Loading &hellip;', 'Modules: Like', 'geditorial' ) );
+		$title = $this->get_setting( 'string_loading', _x( 'Loading &hellip;', 'Setting Default', 'geditorial-like' ) );
 		$title = $this->filters( 'loading', $title, $post );
 
 		$html  = '<div class="geditorial-wrap -like" style="display:none;" data-avatars="'.( $avatars ? 'true' : 'false' ).'">';
@@ -176,7 +176,7 @@ class Like extends gEditorial\Module
 			$nodes[] = [
 				'id'     => $this->classs( 'users' ),
 				/* translators: %s: count placeholder */
-				'title'  => Helper::getCounted( count( $users ), _x( 'Like Summary: Users %s', 'Modules: Like: Adminbar', 'geditorial' ) ),
+				'title'  => Helper::getCounted( count( $users ), _x( 'Like Summary: Users %s', 'Adminbar', 'geditorial-like' ) ),
 				'parent' => $parent,
 				'href'   => $this->get_module_url(),
 			];
@@ -196,7 +196,7 @@ class Like extends gEditorial\Module
 			$nodes[] = [
 				'id'     => $this->classs( 'guests' ),
 				/* translators: %s: count placeholder */
-				'title'  => Helper::getCounted( count( $guests ), _x( 'Like Summary: Guests %s', 'Modules: Like: Adminbar', 'geditorial' ) ),
+				'title'  => Helper::getCounted( count( $guests ), _x( 'Like Summary: Guests %s', 'Adminbar', 'geditorial-like' ) ),
 				'parent' => $parent,
 				'href'   => $this->get_module_url(),
 			];
@@ -273,9 +273,9 @@ class Like extends gEditorial\Module
 	public function title( $liked, $post_id = NULL )
 	{
 		if ( $liked )
-			$title = $this->get_setting( 'string_unlike', _x( 'Unlike', 'Modules: Like', 'geditorial' ) );
+			$title = $this->get_setting( 'string_unlike', _x( 'Unlike', 'Setting Default', 'geditorial-like' ) );
 		else
-			$title = $this->get_setting( 'string_like', _x( 'Like', 'Modules: Like', 'geditorial' ) );
+			$title = $this->get_setting( 'string_like', _x( 'Like', 'Setting Default', 'geditorial-like' ) );
 
 		return $this->filters( 'title', $title, $liked, $post_id );
 	}
@@ -429,10 +429,10 @@ class Like extends gEditorial\Module
 
 		echo '<li class="-row tweaks-like-count">';
 
-			echo $this->get_column_icon( FALSE, 'heart', _x( 'Likes', 'Modules: Like: Row Icon Title', 'geditorial' ) );
+			echo $this->get_column_icon( FALSE, 'heart', _x( 'Likes', 'Row Icon Title', 'geditorial-like' ) );
 
 			/* translators: %s: likes count */
-			printf( _nx( '%s Like', '%s Likes', $total, 'Modules: Like', 'geditorial' ), Number::format( $total ) );
+			printf( _nx( '%s Like', '%s Likes', $total, 'Noop', 'geditorial-like' ), Number::format( $total ) );
 
 			$list   = [];
 			$users  = $this->get_postmeta( $post->ID, FALSE, [], $this->meta_key.'_users' );
@@ -440,11 +440,11 @@ class Like extends gEditorial\Module
 
 			if ( ! empty( $users ) )
 				/* translators: %s: users count */
-				$list[] = sprintf( _nx( '%s User', '%s Users', count( $users ), 'Modules: Like', 'geditorial' ), Number::format( count( $users ) ) );
+				$list[] = sprintf( _nx( '%s User', '%s Users', count( $users ), 'Noop', 'geditorial-like' ), Number::format( count( $users ) ) );
 
 			if ( ! empty( $guests ) )
 				/* translators: %s: guests count */
-				$list[] = sprintf( _nx( '%s Guest', '%s Guests', count( $guests ), 'Modules: Like', 'geditorial' ), Number::format( count( $guests ) ) );
+				$list[] = sprintf( _nx( '%s Guest', '%s Guests', count( $guests ), 'Noop', 'geditorial-like' ), Number::format( count( $guests ) ) );
 
 			echo Helper::getJoined( $list, ' <span class="-like-counts">(', ')</span>' );
 
@@ -517,8 +517,8 @@ class Like extends gEditorial\Module
 
 		list( $posts, $pagination ) = $this->getTablePosts( $query );
 
-		$pagination['actions']['sync_counts']     = _x( 'Sync Counts', 'Modules: Like: Table Action', 'geditorial' );
-		$pagination['actions']['sync_counts_all'] = _x( 'Sync All Counts', 'Modules: Like: Table Action', 'geditorial' );
+		$pagination['actions']['sync_counts']     = _x( 'Sync Counts', 'Table Action', 'geditorial-like' );
+		$pagination['actions']['sync_counts_all'] = _x( 'Sync All Counts', 'Table Action', 'geditorial-like' );
 
 		$pagination['before'][] = Helper::tableFilterPostTypes( $list );
 		$pagination['before'][] = Helper::tableFilterAuthors( $list );
@@ -531,27 +531,27 @@ class Like extends gEditorial\Module
 			'type'  => Helper::tableColumnPostType(),
 			'title' => Helper::tableColumnPostTitle(),
 			'total' => [
-				'title'    => _x( 'Total', 'Modules: Like: Table Column', 'geditorial' ),
+				'title'    => _x( 'Total', 'Table Column', 'geditorial-like' ),
 				'callback' => function( $value, $row, $column, $index ){
 					return Helper::htmlCount( $this->get_postmeta( $row->ID, FALSE, 0, $this->meta_key.'_total' ) );
 				},
 			],
 			'guests' => [
-				'title'    => _x( 'Guests', 'Modules: Like: Table Column', 'geditorial' ),
+				'title'    => _x( 'Guests', 'Table Column', 'geditorial-like' ),
 				'callback' => function( $value, $row, $column, $index ){
 					$guests = $this->get_postmeta( $row->ID, FALSE, [], $this->meta_key.'_guests' );
 					return Helper::htmlCount( count( $guests ) );
 				},
 			],
 			'users' => [
-				'title'    => _x( 'Users', 'Modules: Like: Table Column', 'geditorial' ),
+				'title'    => _x( 'Users', 'Table Column', 'geditorial-like' ),
 				'callback' => function( $value, $row, $column, $index ){
 					$users = $this->get_postmeta( $row->ID, FALSE, [], $this->meta_key.'_users' );
 					return Helper::htmlCount( count( $users ) );
 				},
 			],
 			'avatars' => [
-				'title'    => _x( 'Avatars', 'Modules: Like: Table Column', 'geditorial' ),
+				'title'    => _x( 'Avatars', 'Table Column', 'geditorial-like' ),
 				'callback' => function( $value, $row, $column, $index ){
 					$html = $this->avatars( $row->ID );
 					return $html ? HTML::tag( 'ul', $html ) : Helper::htmlEmpty();
@@ -560,7 +560,7 @@ class Like extends gEditorial\Module
 		], $posts, [
 			'navigation' => 'before',
 			'search'     => 'before',
-			'title'      => HTML::tag( 'h3', _x( 'Overview of Post Likes', 'Modules: Like', 'geditorial' ) ),
+			'title'      => HTML::tag( 'h3', _x( 'Overview of Post Likes', 'Header', 'geditorial-like' ) ),
 			'empty'      => $this->get_posttype_label( 'post', 'not_found' ),
 			'pagination' => $pagination,
 		] );
