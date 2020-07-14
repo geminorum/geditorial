@@ -48,6 +48,8 @@ class Module extends Base
 	protected $disable_no_posttypes  = FALSE; // not hooking module if has no posttypes
 	protected $disable_no_taxonomies = FALSE; // not hooking module if has no taxonomies
 
+	protected $textdomain_frontend = TRUE; // loading textdomain on frontend
+
 	protected $image_sizes  = [];
 	protected $kses_allowed = [];
 
@@ -68,7 +70,7 @@ class Module extends Base
 
 	protected $scripts_printed = FALSE;
 
-	public function __construct( &$module, &$options, $root )
+	public function __construct( &$module, &$options, $root, $locale = NULL )
 	{
 		$this->base = 'geditorial';
 		$this->key  = $module->name;
@@ -80,11 +82,24 @@ class Module extends Base
 		if ( FALSE !== $module->disabled )
 			return;
 
+		$this->setup_textdomain( $locale );
+
 		if ( $this->remote() )
 			$this->setup_remote();
 
 		else
 			$this->setup();
+	}
+
+	protected function setup_textdomain( $locale = NULL )
+	{
+		if ( ! $this->textdomain_frontend && ! is_admin() )
+			return FALSE;
+
+		if ( is_null( $locale ) )
+			$locale = apply_filters( 'plugin_locale', determine_locale(), $this->base );
+
+		load_textdomain( $this->base.'-'.$this->module->name, GEDITORIAL_DIR."languages/{$this->module->folder}/{$locale}.mo" );
 	}
 
 	protected function setup_remote( $args = [] )

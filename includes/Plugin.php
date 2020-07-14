@@ -171,9 +171,7 @@ class Plugin
 			if ( $module->autoload || Helper::moduleEnabled( $this->_options->{$mod_name} ) ) {
 
 				$class = $module->class;
-				$this->{$mod_name} = new $class( $module, $this->_options->{$mod_name}, $this->_path );
-
-				load_textdomain( static::BASE.'-'.$mod_name, GEDITORIAL_DIR."languages/{$module->folder}/{$locale}.mo" );
+				$this->{$mod_name} = new $class( $module, $this->_options->{$mod_name}, $this->_path, $locale );
 			}
 		}
 
