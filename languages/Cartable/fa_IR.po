@@ -1,0 +1,269 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Cartable 3.15.8\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues/\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2020-07-14T21:27:02+00:00\n"
+"PO-Revision-Date: 2020-07-15 02:09+0430\n"
+"X-Generator: Poedit 2.3.1\n"
+"X-Domain: geditorial-cartable\n"
+"Last-Translator: geminorum <contact@geminorum.ir>\n"
+"Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
+"Language: fa_IR\n"
+
+#: Cartable.php:47
+msgctxt "Setting Title"
+msgid "User Cartables"
+msgstr "کارپوشه‌های کاربری"
+
+#: Cartable.php:48
+msgctxt "Setting Description"
+msgid "Enables cartables based on registered users."
+msgstr ""
+
+#: Cartable.php:52
+msgctxt "Setting Title"
+msgid "Group Cartables"
+msgstr "کارپوشه‌های گروهی"
+
+#: Cartable.php:53
+msgctxt "Setting Description"
+msgid "Enables cartables based on custom groups. Needs <i>Users</i> module."
+msgstr ""
+
+#: Cartable.php:57
+msgctxt "Setting Title"
+msgid "Type Cartables"
+msgstr "کارپوشه‌های نوعی"
+
+#: Cartable.php:58
+msgctxt "Setting Description"
+msgid "Enables cartables based on custom types."
+msgstr ""
+
+#: Cartable.php:66
+msgctxt "Setting Title"
+msgid "Map User Capabilities"
+msgstr ""
+
+#: Cartable.php:67
+msgctxt "Setting Description"
+msgid "Gives access to edit posts based on user cartables."
+msgstr ""
+
+#: Cartable.php:73
+msgctxt "Setting Title"
+msgid "Map Group Capabilities"
+msgstr ""
+
+#: Cartable.php:74
+msgctxt "Setting Description"
+msgid "Gives access to edit posts based on group cartables."
+msgstr ""
+
+#: Cartable.php:78
+msgctxt "Setting Description"
+msgid "Roles that excluded from cartables."
+msgstr ""
+
+#: Cartable.php:84
+msgctxt "Setting Title"
+msgid "View User Cartable"
+msgstr ""
+
+#: Cartable.php:85
+msgctxt "Setting Description"
+msgid "Roles that can view user cartables."
+msgstr ""
+
+#: Cartable.php:94
+msgctxt "Setting Title"
+msgid "View Group Cartable"
+msgstr ""
+
+#: Cartable.php:95
+msgctxt "Setting Description"
+msgid "Roles that can view group cartables."
+msgstr ""
+
+#: Cartable.php:104
+msgctxt "Setting Title"
+msgid "View Type Cartable"
+msgstr ""
+
+#: Cartable.php:105
+msgctxt "Setting Description"
+msgid "Roles that can view type cartables."
+msgstr ""
+
+#: Cartable.php:114
+msgctxt "Setting Title"
+msgid "Assign User Cartables"
+msgstr ""
+
+#: Cartable.php:115
+msgctxt "Setting Description"
+msgid "Roles that can assign user cartables."
+msgstr ""
+
+#: Cartable.php:124
+msgctxt "Setting Title"
+msgid "Assign Group Cartables"
+msgstr ""
+
+#: Cartable.php:125
+msgctxt "Setting Description"
+msgid "Roles that can assign gorup cartables."
+msgstr ""
+
+#: Cartable.php:134
+msgctxt "Setting Title"
+msgid "Assign Type Cartables"
+msgstr ""
+
+#: Cartable.php:135
+msgctxt "Setting Description"
+msgid "Roles that can assign type cartables."
+msgstr ""
+
+#: Cartable.php:144
+msgctxt "Setting Title"
+msgid "Restricted Groups"
+msgstr ""
+
+#: Cartable.php:145
+msgctxt "Setting Description"
+msgid "Roles that restricted to their group users."
+msgstr ""
+
+#: Cartable.php:151
+msgctxt "Setting Description"
+msgid "Maximum number of users to display the search box."
+msgstr ""
+
+#: Cartable.php:177
+msgctxt "MetaBox Title"
+msgid "Cartable"
+msgstr "کارپوشه"
+
+#: Cartable.php:178
+msgctxt "MetaBox Action"
+msgid "View All"
+msgstr "دیدن همه"
+
+#: Cartable.php:181
+msgctxt "Noop"
+msgid "Cartable Type"
+msgid_plural "Cartable Types"
+msgstr[0] "کارپوشه‌های نوعی"
+msgstr[1] "کارپوشه نوعی"
+
+#: Cartable.php:184
+msgctxt "Setting Button"
+msgid "Sync Users & Groups"
+msgstr "همگام‌سازی گروه‌ها و کاربران"
+
+#: Cartable.php:422 Cartable.php:492
+msgctxt "Page Title"
+msgid "Editorial Cartables"
+msgstr "کارپوشه‌های تحریریه"
+
+#: Cartable.php:423
+msgctxt "Menu Title"
+msgid "My Cartables"
+msgstr "کارپوشه‌های من"
+
+#: Cartable.php:445
+msgctxt "Sub"
+msgid "Personal"
+msgstr "شخصی"
+
+#: Cartable.php:514 Cartable.php:727
+msgctxt "Message"
+msgid "Something's wrong!"
+msgstr "انگار چیزی اشتباه است!"
+
+#: Cartable.php:528 Cartable.php:759
+msgctxt "Row Icon Title"
+msgid "User Cartables"
+msgstr "کارپوشه‌های کاربری"
+
+#: Cartable.php:547 Cartable.php:771
+msgctxt "Row Icon Title"
+msgid "Group Cartables"
+msgstr "کارپوشه‌های گروهی"
+
+#: Cartable.php:566
+msgctxt "Row Icon Title"
+msgid "Type Cartables"
+msgstr "کارپوشه‌های نوعی"
+
+#: Cartable.php:584
+msgctxt "Dashboard Widget Title"
+msgid "Your Personal Cartable"
+msgstr "کارپوشه شخصی شما"
+
+#: Cartable.php:586 Cartable.php:607 Cartable.php:629
+msgctxt "Dashboard Widget Title Action"
+msgid "Click to view all items in this cartable"
+msgstr "برای دیدن همه موارد این کارپوشه کلیک کنید"
+
+#: Cartable.php:587 Cartable.php:608 Cartable.php:630
+msgctxt "Dashboard Widget Title Action"
+msgid "All Items"
+msgstr "همه موارد"
+
+#. translators: %s: term name placeholder
+#: Cartable.php:605 Cartable.php:627
+msgctxt "Dashboard Widget Title"
+msgid "Cartable: %s"
+msgstr "کارپوشه: %s"
+
+#: Cartable.php:740
+msgctxt "Message"
+msgid "You can see cartable details, once you've saved it for the first time."
+msgstr "بعد از ذخیرهٔ اولیه، می‌توانید جزئیات کارپوشه را ببینید."
+
+#: Cartable.php:760
+msgctxt "Message"
+msgid "This currently is on your cartable."
+msgstr "هم‌اکنون روی کارپوشه شماست."
+
+#: Cartable.php:772
+msgctxt "Message"
+msgid "This currently is on your group cartable."
+msgstr "هم‌اکنون روی کارپوشه گروه شماست."
+
+#: Cartable.php:784
+msgctxt "Message"
+msgid "This currently is <b>not</b> on any of your cartables."
+msgstr "هم‌اکنون روی هیچ‌کدام از کارپوشه‌های شما <b>نیست</b>."
+
+#: Cartable.php:877
+msgctxt "Page Title"
+msgid "Your Cartable"
+msgstr "کارپوشه شما"
+
+#. translators: %s: term name placeholder
+#: Cartable.php:880
+msgctxt "Menu Title"
+msgid "Cartable: %s"
+msgstr "کارپوشه: %s"
+
+#: Cartable.php:895
+msgctxt "Table Action"
+msgid "Empty Cartable"
+msgstr "تخلیه کارپوشه"
+
+#: Cartable.php:907
+msgctxt "Table Column Title"
+msgid "Cartable"
+msgstr "کارپوشه"
+
+#: Cartable.php:915 Cartable.php:957
+msgctxt "Message"
+msgid "The cartable is empty!"
+msgstr "کارپوشه خالی است!"
