@@ -9,6 +9,8 @@ use geminorum\gEditorial\Core\HTML;
 class Home extends gEditorial\Module
 {
 
+	protected $textdomain_frontend = FALSE;
+
 	private $featured = [];
 
 	public static function module()
@@ -26,7 +28,7 @@ class Home extends gEditorial\Module
 		$tabs = [
 			[
 				'id'      => $this->classs( 'featured-content' ),
-				'title'   => _x( 'Featured Content', 'Modules: Home: Help Tab Title', 'geditorial' ),
+				'title'   => _x( 'Featured Content', 'Help Tab Title', 'geditorial-home' ),
 				'content' => '<div class="-info"><p>Featured Content allows users to spotlight their posts and have them uniquely displayed by a theme. The content is intended to be displayed on a blog’s front page; by using the module consistently in this manner, users are given a reliable Featured Content experience on which they can rely even when switching themes.</p>
 <code><pre>
 add_theme_support( \'featured-content\', [
@@ -45,15 +47,15 @@ add_theme_support( \'featured-content\', [
 	public function settings_intro()
 	{
 		if ( get_theme_support( 'featured-content' ) )
-			echo HTML::info( _x( 'Current theme supports Featured Contents', 'Modules: Home: Setting Section Notice', 'geditorial' ), FALSE );
+			echo HTML::info( _x( 'Current theme supports Featured Contents', 'Setting Section Notice', 'geditorial-home' ), FALSE );
 		else
-			echo HTML::warning( _x( 'Current theme does not support Featured Contents', 'Modules: Home: Setting Section Notice', 'geditorial' ), FALSE );
+			echo HTML::warning( _x( 'Current theme does not support Featured Contents', 'Setting Section Notice', 'geditorial-home' ), FALSE );
 	}
 
 	public function settings_section_featured()
 	{
 		Settings::fieldSection(
-			_x( 'Featured Content', 'Modules: Home: Setting Section Title', 'geditorial' )
+			_x( 'Featured Content', 'Setting Section Title', 'geditorial-home' )
 		);
 	}
 
@@ -64,16 +66,16 @@ add_theme_support( \'featured-content\', [
 			'_general' => [
 				[
 					'field'       => 'posttypes_feed',
-					'title'       => _x( 'Posttypes on Feeds', 'Modules: Home: Setting Title', 'geditorial' ),
-					'description' => _x( 'Appears supported posttypes also on the main site feeds.', 'Modules: Home: Setting Description', 'geditorial' ),
+					'title'       => _x( 'Posttypes on Feeds', 'Setting Title', 'geditorial-home' ),
+					'description' => _x( 'Appears supported posttypes also on the main site feeds.', 'Setting Description', 'geditorial-home' ),
 				],
 			],
 			'_featured' => [
 				[
 					'field'       => 'featured_term',
 					'type'        => 'text',
-					'title'       => _x( 'Featured Term', 'Modules: Home: Setting Title', 'geditorial' ),
-					'description' => _x( 'Specify a term slug to use for theme-designated featured content area.', 'Modules: Home: Setting Description', 'geditorial' ),
+					'title'       => _x( 'Featured Term', 'Setting Title', 'geditorial-home' ),
+					'description' => _x( 'Specify a term slug to use for theme-designated featured content area.', 'Setting Description', 'geditorial-home' ),
 					'field_class' => [ 'medium-text', 'code' ],
 					'placeholder' => 'featured-slug',
 					'dir'         => 'ltr',
@@ -81,19 +83,19 @@ add_theme_support( \'featured-content\', [
 				[
 					'field'       => 'featured_max',
 					'type'        => 'number',
-					'title'       => _x( 'Featured Max Count', 'Modules: Home: Setting Title', 'geditorial' ),
-					'description' => _x( 'The maximum number of posts that a Featured Content area can contain.', 'Modules: Home: Setting Description', 'geditorial' ),
+					'title'       => _x( 'Featured Max Count', 'Setting Title', 'geditorial-home' ),
+					'description' => _x( 'The maximum number of posts that a Featured Content area can contain.', 'Setting Description', 'geditorial-home' ),
 					'default'     => 15,
 				],
 				[
 					'field'       => 'featured_exclude',
-					'title'       => _x( 'Exclude Featured Posts', 'Modules: Home: Setting Title', 'geditorial' ),
-					'description' => _x( 'Exclude featured contents on the main query.', 'Modules: Home: Setting Description', 'geditorial' ),
+					'title'       => _x( 'Exclude Featured Posts', 'Setting Title', 'geditorial-home' ),
+					'description' => _x( 'Exclude featured contents on the main query.', 'Setting Description', 'geditorial-home' ),
 				],
 				[
 					'field'       => 'featured_hide',
-					'title'       => _x( 'Hide Featured Term', 'Modules: Home: Setting Title', 'geditorial' ),
-					'description' => _x( 'Hide the term on the front-end.', 'Modules: Home: Setting Description', 'geditorial' ),
+					'title'       => _x( 'Hide Featured Term', 'Setting Title', 'geditorial-home' ),
+					'description' => _x( 'Hide the term on the front-end.', 'Setting Description', 'geditorial-home' ),
 				],
 			],
 		];
@@ -110,8 +112,8 @@ add_theme_support( \'featured-content\', [
 	{
 		return [
 			'settings' => [
-				'post_types_title' => _x( 'Front-end Posttypes', 'Modules: Home: Setting Info', 'geditorial' ),
-				'post_types_after' => _x( 'Will include in front-end main query.', 'Modules: Home: Setting Info', 'geditorial' ),
+				'post_types_title' => _x( 'Front-end Posttypes', 'Setting Info', 'geditorial-home' ),
+				'post_types_after' => _x( 'Will include in front-end main query.', 'Setting Info', 'geditorial-home' ),
 			],
 		];
 	}

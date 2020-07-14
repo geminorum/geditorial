@@ -1,0 +1,95 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Home 3.15.8\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues/\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2020-07-14T19:10:42+00:00\n"
+"PO-Revision-Date: 2020-07-14 23:43+0430\n"
+"X-Generator: Poedit 2.3.1\n"
+"X-Domain: geditorial-home\n"
+"Last-Translator: geminorum <contact@geminorum.ir>\n"
+"Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
+"Language: fa_IR\n"
+
+#: Home.php:31
+msgctxt "Help Tab Title"
+msgid "Featured Content"
+msgstr "محتوای برگزیده"
+
+#: Home.php:50
+msgctxt "Setting Section Notice"
+msgid "Current theme supports Featured Contents"
+msgstr "پوسته کنونی، امکان نمایش محتوای برگزیده را پشتیبانی می‌کند"
+
+#: Home.php:52
+msgctxt "Setting Section Notice"
+msgid "Current theme does not support Featured Contents"
+msgstr "پوسته کنونی، امکان نمایش محتوای برگزیده را پشتیبانی نمی‌کند"
+
+#: Home.php:58
+msgctxt "Setting Section Title"
+msgid "Featured Content"
+msgstr "محتوای برگزیده"
+
+#: Home.php:69
+msgctxt "Setting Title"
+msgid "Posttypes on Feeds"
+msgstr "نوع‌نوشته‌ها در خوراک‌ها"
+
+#: Home.php:70
+msgctxt "Setting Description"
+msgid "Appears supported posttypes also on the main site feeds."
+msgstr ""
+
+#: Home.php:77
+msgctxt "Setting Title"
+msgid "Featured Term"
+msgstr "رده برگزیده‌ها"
+
+#: Home.php:78
+msgctxt "Setting Description"
+msgid "Specify a term slug to use for theme-designated featured content area."
+msgstr ""
+
+#: Home.php:86
+msgctxt "Setting Title"
+msgid "Featured Max Count"
+msgstr "بیشینه شمار برگزیده‌ها"
+
+#: Home.php:87
+msgctxt "Setting Description"
+msgid "The maximum number of posts that a Featured Content area can contain."
+msgstr ""
+
+#: Home.php:92
+msgctxt "Setting Title"
+msgid "Exclude Featured Posts"
+msgstr "عدم نمایش نوشته‌های برگزیده"
+
+#: Home.php:93
+msgctxt "Setting Description"
+msgid "Exclude featured contents on the main query."
+msgstr ""
+
+#: Home.php:97
+msgctxt "Setting Title"
+msgid "Hide Featured Term"
+msgstr "پنهان‌سازی رده برگزیده‌ها"
+
+#: Home.php:98
+msgctxt "Setting Description"
+msgid "Hide the term on the front-end."
+msgstr ""
+
+#: Home.php:115
+msgctxt "Setting Info"
+msgid "Front-end Posttypes"
+msgstr ""
+
+#: Home.php:116
+msgctxt "Setting Info"
+msgid "Will include in front-end main query."
+msgstr ""
