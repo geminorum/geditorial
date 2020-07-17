@@ -32,13 +32,13 @@ class Tube extends gEditorial\Module
 			'_general' => [
 				[
 					'field'       => 'video_channels',
-					'title'       => _x( 'Channels Support', 'Modules: Tube: Setting Title', 'geditorial' ),
-					'description' => _x( 'Supports channel post-type and related features.', 'Modules: Tube: Setting Description', 'geditorial' ),
+					'title'       => _x( 'Channels Support', 'Setting Title', 'geditorial-tube' ),
+					'description' => _x( 'Supports channel post-type and related features.', 'Setting Description', 'geditorial-tube' ),
 				],
 				[
 					'field'       => 'video_toolbar',
-					'title'       => _x( 'Video Toolbar', 'Modules: Tube: Setting Title', 'geditorial' ),
-					'description' => _x( 'Displays customized toolbar after player.', 'Modules: Tube: Setting Description', 'geditorial' ),
+					'title'       => _x( 'Video Toolbar', 'Setting Title', 'geditorial-tube' ),
+					'description' => _x( 'Displays customized toolbar after player.', 'Setting Description', 'geditorial-tube' ),
 				],
 			],
 			'_supports' => [
@@ -89,30 +89,30 @@ class Tube extends gEditorial\Module
 	{
 		$strings = [
 			'noops' => [
-				'video_cpt'   => _nx_noop( 'Video', 'Videos', 'Modules: Tube: Noop', 'geditorial' ),
-				'video_cat'   => _nx_noop( 'Video Category', 'Video Categories', 'Modules: Tube: Noop', 'geditorial' ),
-				'channel_cpt' => _nx_noop( 'Channel', 'Channels', 'Modules: Tube: Noop', 'geditorial' ),
-				'channel_cat' => _nx_noop( 'Channel Category', 'Channel Categories', 'Modules: Tube: Noop', 'geditorial' ),
+				'video_cpt'   => _nx_noop( 'Video', 'Videos', 'Noop', 'geditorial-tube' ),
+				'video_cat'   => _nx_noop( 'Video Category', 'Video Categories', 'Noop', 'geditorial-tube' ),
+				'channel_cpt' => _nx_noop( 'Channel', 'Channels', 'Noop', 'geditorial-tube' ),
+				'channel_cat' => _nx_noop( 'Channel Category', 'Channel Categories', 'Noop', 'geditorial-tube' ),
 			],
 		];
 
 		if ( ! is_admin() )
 			return $strings;
 
-		$strings['misc']['video_cat']['tweaks_column_title']   = _x( 'Video Categories', 'Modules: Tube: Column Title', 'geditorial' );
-		$strings['misc']['channel_cat']['tweaks_column_title'] = _x( 'Channel Categories', 'Modules: Tube: Column Title', 'geditorial' );
+		$strings['misc']['video_cat']['tweaks_column_title']   = _x( 'Video Categories', 'Column Title', 'geditorial-tube' );
+		$strings['misc']['channel_cat']['tweaks_column_title'] = _x( 'Channel Categories', 'Column Title', 'geditorial-tube' );
 
 		$strings['p2p'] = [
 			'video_cpt' => [
 				'title' => [
-					'from' => _x( 'Connected Videos', 'Modules: Tube: O2O', 'geditorial' ),
-					'to'   => _x( 'Connected Posts', 'Modules: Tube: O2O', 'geditorial' ),
+					'from' => _x( 'Connected Videos', 'O2O', 'geditorial-tube' ),
+					'to'   => _x( 'Connected Posts', 'O2O', 'geditorial-tube' ),
 				],
 			],
 			'channel_cpt' => [
 				'title' => [
-					'from' => _x( 'Connected Channels', 'Modules: Tube: O2O', 'geditorial' ),
-					'to'   => _x( 'Connected Videos', 'Modules: Tube: O2O', 'geditorial' ),
+					'from' => _x( 'Connected Channels', 'O2O', 'geditorial-tube' ),
+					'to'   => _x( 'Connected Videos', 'O2O', 'geditorial-tube' ),
 				],
 			],
 		];
@@ -129,18 +129,18 @@ class Tube extends gEditorial\Module
 				'st' => [ 'type' => 'title_after' ],
 
 				'featured_people' => [
-					'title'       => _x( 'Featured People', 'Modules: Tube: Field Title', 'geditorial' ),
-					'description' => _x( 'Featured People', 'Modules: Tube: Field Description', 'geditorial' ),
+					'title'       => _x( 'Featured People', 'Field Title', 'geditorial-tube' ),
+					'description' => _x( 'Featured People', 'Field Description', 'geditorial-tube' ),
 					'icon'        => 'groups',
 				],
 				'creation_date' => [
-					'title'       => _x( 'Creation Date', 'Modules: Tube: Field Title', 'geditorial' ),
-					'description' => _x( 'Creation Date', 'Modules: Tube: Field Description', 'geditorial' ),
+					'title'       => _x( 'Creation Date', 'Field Title', 'geditorial-tube' ),
+					'description' => _x( 'Creation Date', 'Field Description', 'geditorial-tube' ),
 					'icon'        => 'calendar-alt',
 				],
 				'video_duration' => [
-					'title'       => _x( 'Video Duration', 'Modules: Tube: Field Title', 'geditorial' ),
-					'description' => _x( 'Video Duration', 'Modules: Tube: Field Description', 'geditorial' ),
+					'title'       => _x( 'Video Duration', 'Field Title', 'geditorial-tube' ),
+					'description' => _x( 'Video Duration', 'Field Description', 'geditorial-tube' ),
 					'icon'        => 'backup',
 				],
 
@@ -271,65 +271,65 @@ class Tube extends gEditorial\Module
 		if ( ! empty( $attr['date'] ) )
 			$html.= HTML::tag( 'button', [
 				'class' => [ '-button', 'btn', 'btn-default', 'btn-xs' ],
-				'title' => _x( 'The date of this video', 'Modules: Tube: Button', 'geditorial' ),
+				'title' => _x( 'The date of this video', 'Button', 'geditorial-tube' ),
 			], $this->icon( 'calendar', 'gridicons' ).' '.$attr['date'] );
 
 		if ( ! empty( $attr['time'] ) )
 			$html.= HTML::tag( 'button', [
 				'class' => [ '-button', 'btn', 'btn-default', 'btn-xs' ],
-				'title' => _x( 'Total time of this video', 'Modules: Tube: Button', 'geditorial' ),
+				'title' => _x( 'Total time of this video', 'Button', 'geditorial-tube' ),
 			], $this->icon( 'time' ).' '.Number::localize( $attr['time'] ) );
 
 		if ( ! empty( $attr['src'] ) )
 			$html.= HTML::tag( 'a', [
 				'href'  => $attr['src'],
 				'class' => [ '-button', 'btn', 'btn-default', 'btn-xs' ],
-				'title' => _x( 'Download this video', 'Modules: Tube: Button', 'geditorial' ),
-			], $this->icon( 'download' ).' '._x( 'Download', 'Modules: Tube: Button', 'geditorial' ) );
+				'title' => _x( 'Download this video', 'Button', 'geditorial-tube' ),
+			], $this->icon( 'download' ).' '._x( 'Download', 'Button', 'geditorial-tube' ) );
 
 		if ( ! empty( $attr['youtube'] ) )
 			$html.= HTML::tag( 'a', [
 				'href'   => $attr['youtube'],
 				'class'  => [ '-button', 'btn', 'btn-default', 'btn-xs' ],
-				'title'  => _x( 'View this video on YouTube', 'Modules: Tube: Button', 'geditorial' ),
+				'title'  => _x( 'View this video on YouTube', 'Button', 'geditorial-tube' ),
 				'target' => '_blank',
-			], $this->icon( 'youtube', 'social-logos' ).' '._x( 'YouTube', 'Modules: Tube: Button', 'geditorial' ) );
+			], $this->icon( 'youtube', 'social-logos' ).' '._x( 'YouTube', 'Button', 'geditorial-tube' ) );
 
 		if ( ! empty( $attr['aparat'] ) )
 			$html.= HTML::tag( 'a', [
 				'href'   => $attr['aparat'],
 				'class'  => [ '-button', 'btn', 'btn-default', 'btn-xs' ],
-				'title'  => _x( 'View this video on Aparat', 'Modules: Tube: Button', 'geditorial' ),
+				'title'  => _x( 'View this video on Aparat', 'Button', 'geditorial-tube' ),
 				'target' => '_blank',
-			], $this->icon( 'aparat', 'gorbeh' ).' '._x( 'Aparat', 'Modules: Tube: Button', 'geditorial' ) );
+			], $this->icon( 'aparat', 'gorbeh' ).' '._x( 'Aparat', 'Button', 'geditorial-tube' ) );
 
 		$link = empty( $attr['shortlink'] ) ? WordPress::getPostShortLink( $post_id ) : $attr['shortlink'];
 
 		$html.= HTML::tag( 'a', [
 			'href'   => $link,
 			'class'  => [ '-button', 'btn', 'btn-default', 'btn-xs' ],
-			'title'  => _x( 'Shortlink to this video', 'Modules: Tube: Button', 'geditorial' ),
+			'title'  => _x( 'Shortlink to this video', 'Button', 'geditorial-tube' ),
 			'target' => '_blank',
-		], $this->icon( 'link' ).' '._x( 'Shortlink', 'Modules: Tube: Button', 'geditorial' ) );
+		], $this->icon( 'link' ).' '._x( 'Shortlink', 'Button', 'geditorial-tube' ) );
 
 		$html.= HTML::tag( 'a', [
 			'href'   => sprintf( 'https://telegram.me/share/url?url=%s', urlencode( $link ) ),
 			'class'  => [ '-button', 'btn', 'btn-default', 'btn-xs', '-button-icon' ],
-			'title'  => _x( 'Share this video', 'Modules: Tube: Button', 'geditorial' ),
+			'title'  => _x( 'Share this video', 'Button', 'geditorial-tube' ),
 			'target' => '_blank',
 		], $this->icon( 'telegram', 'social-logos' ) );
 
 		$html.= HTML::tag( 'a', [
 			'href'   => sprintf( 'https://twitter.com/intent/tweet?url=%s', urlencode( $link ) ),
 			'class'  => [ '-button', 'btn', 'btn-default', 'btn-xs', '-button-icon' ],
-			'title'  => _x( 'Share this video', 'Modules: Tube: Button', 'geditorial' ),
+			'title'  => _x( 'Share this video', 'Button', 'geditorial-tube' ),
 			'target' => '_blank',
 		], $this->icon( 'twitter-alt', 'social-logos' ) );
 
 		$html.= HTML::tag( 'a', [
 			'href'   => sprintf( 'https://www.facebook.com/sharer/sharer.php?u=%s', urlencode( $link ) ),
 			'class'  => [ '-button', 'btn', 'btn-default', 'btn-xs', '-button-icon' ],
-			'title'  => _x( 'Share this video', 'Modules: Tube: Button', 'geditorial' ),
+			'title'  => _x( 'Share this video', 'Button', 'geditorial-tube' ),
 			'target' => '_blank',
 		], $this->icon( 'facebook', 'social-logos' ) );
 
