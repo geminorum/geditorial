@@ -1,0 +1,58 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Entry 3.15.8\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Last-Translator: NULL\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2020-07-17T11:48:13+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.4.0\n"
+"X-Poedit-Basepath: ../../includes/Modules/Entry\n"
+"X-Domain: geditorial-entry\n"
+
+#: Entry.php:73
+msgctxt "Noop"
+msgid "Entry"
+msgid_plural "Entries"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Entry.php:74
+msgctxt "Noop"
+msgid "Section"
+msgid_plural "Sections"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Entry.php:82
+msgctxt "Entry CPT: Featured"
+msgid "Cover Image"
+msgstr ""
+
+#: Entry.php:83
+msgctxt "Meta Box Title"
+msgid "Entry"
+msgstr ""
+
+#: Entry.php:84
+msgctxt "Column Title"
+msgid "Section"
+msgstr ""
+
+#: Entry.php:165
+msgctxt "Adminbar"
+msgid "Entry Sections"
+msgstr ""
+
+#: Entry.php:182
+msgctxt "UI: Label"
+msgid "Entry Section"
+msgstr ""
+
+#: Entry.php:186
+msgctxt "UI: Label"
+msgid "Section"
+msgstr ""

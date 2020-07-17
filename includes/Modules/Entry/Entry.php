@@ -70,8 +70,8 @@ class Entry extends gEditorial\Module
 	{
 		$strings = [
 			'noops' => [
-				'entry_cpt'   => _nx_noop( 'Entry', 'Entries', 'Modules: Entry: Noop', 'geditorial' ),
-				'section_tax' => _nx_noop( 'Section', 'Sections', 'Modules: Entry: Noop', 'geditorial' ),
+				'entry_cpt'   => _nx_noop( 'Entry', 'Entries', 'Noop', 'geditorial-entry' ),
+				'section_tax' => _nx_noop( 'Section', 'Sections', 'Noop', 'geditorial-entry' ),
 			],
 		];
 
@@ -79,9 +79,9 @@ class Entry extends gEditorial\Module
 			return $strings;
 
 		$strings['misc'] = [
-			'featured'             => _x( 'Cover Image', 'Modules: Entry: Entry CPT: Featured', 'geditorial' ),
-			'meta_box_title'       => _x( 'Entry', 'Modules: Entry: Meta Box Title', 'geditorial' ),
-			'section_column_title' => _x( 'Section', 'Modules: Entry: Column Title', 'geditorial' ),
+			'featured'             => _x( 'Cover Image', 'Entry CPT: Featured', 'geditorial-entry' ),
+			'meta_box_title'       => _x( 'Entry', 'Meta Box Title', 'geditorial-entry' ),
+			'section_column_title' => _x( 'Section', 'Column Title', 'geditorial-entry' ),
 		];
 
 		return $strings;
@@ -162,7 +162,7 @@ class Entry extends gEditorial\Module
 
 		$nodes[] = [
 			'id'     => $this->classs(),
-			'title'  => _x( 'Entry Sections', 'Modules: Entry: Adminbar', 'geditorial' ),
+			'title'  => _x( 'Entry Sections', 'Adminbar', 'geditorial-entry' ),
 			'parent' => $parent,
 			'href'   => get_post_type_archive_link( $this->constant( 'entry_cpt' ) ),
 		];
@@ -179,11 +179,11 @@ class Entry extends gEditorial\Module
 	public function register_shortcode_ui()
 	{
 		shortcode_ui_register_for_shortcode( $this->constant( 'section_shortcode' ), [
-			'label'         => HTML::escape( _x( 'Entry Section', 'Modules: Entry: UI: Label', 'geditorial' ) ),
+			'label'         => HTML::escape( _x( 'Entry Section', 'UI: Label', 'geditorial-entry' ) ),
 			'listItemImage' => $this->get_posttype_icon( 'entry_cpt' ),
 			'attrs'         => [
 				[
-				'label'    => HTML::escape( _x( 'Section', 'Modules: Entry: UI: Label', 'geditorial' ) ),
+				'label'    => HTML::escape( _x( 'Section', 'UI: Label', 'geditorial-entry' ) ),
 				'attr'     => 'id',
 				'type'     => 'term_select',
 				'taxonomy' => $this->constant( 'section_tax' ),
