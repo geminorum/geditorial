@@ -1,0 +1,47 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Pitches 3.15.8\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2020-07-17T09:26:17+00:00\n"
+"PO-Revision-Date: 2020-07-17 14:05+0430\n"
+"X-Generator: Poedit 2.3.1\n"
+"X-Poedit-Basepath: ../../includes/Modules/Pitches\n"
+"X-Domain: geditorial-pitches\n"
+"Last-Translator: geminorum <contact@geminorum.ir>\n"
+"Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
+"Language: fa_IR\n"
+
+#: Pitches.php:65
+msgctxt "Noop"
+msgid "Idea"
+msgid_plural "Ideas"
+msgstr[0] "ایده‌ها"
+msgstr[1] "ایده"
+
+#: Pitches.php:66
+msgctxt "Noop"
+msgid "Idea Category"
+msgid_plural "Idea Categories"
+msgstr[0] "دسته‌های ایده"
+msgstr[1] "دسته ایده"
+
+#: Pitches.php:67
+msgctxt "Noop"
+msgid "Idea Pool"
+msgid_plural "Idea Pools"
+msgstr[0] "استخرهای ایده"
+msgstr[1] "استخر ایده"
+
+#: Pitches.php:76
+msgctxt "Column Title"
+msgid "Idea Categories"
+msgstr "دسته‌های ایده"
+
+#: Pitches.php:79
+msgctxt "Column Title"
+msgid "Idea Pools"
+msgstr "استخرهای ایده"
