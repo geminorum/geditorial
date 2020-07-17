@@ -36,8 +36,8 @@ class Markdown extends gEditorial\Module
 			'_general' => [
 				[
 					'field'       => 'wiki_linking',
-					'title'       => _x( 'Wiki Linking', 'Modules: Markdown: Setting Title', 'geditorial' ),
-					'description' => _x( 'Converts wiki like markup to internal links.', 'Modules: Markdown: Setting Description', 'geditorial' ),
+					'title'       => _x( 'Wiki Linking', 'Setting Title', 'geditorial-markdown' ),
+					'description' => _x( 'Converts wiki like markup to internal links.', 'Setting Description', 'geditorial-markdown' ),
 				],
 			],
 			'_frontend' => [
@@ -92,7 +92,7 @@ class Markdown extends gEditorial\Module
 		$nodes[] = [
 			'id'     => $classs,
 			'parent' => $parent,
-			'title'  => _x( 'Markdown Summary', 'Modules: Markdown: Adminbar', 'geditorial' ),
+			'title'  => _x( 'Markdown Summary', 'Adminbar', 'geditorial-markdown' ),
 			'href'   => $this->get_module_url(),
 		];
 
@@ -101,7 +101,7 @@ class Markdown extends gEditorial\Module
 			$nodes[] = [
 				'id'     => $this->classs( 'convert' ),
 				'parent' => $classs,
-				'title'  => _x( 'Markdown Convert', 'Modules: Markdown: Adminbar', 'geditorial' ).Ajax::spinner(),
+				'title'  => _x( 'Markdown Convert', 'Adminbar', 'geditorial-markdown' ).Ajax::spinner(),
 				'href'   => '#',
 				'meta'   => [ 'rel' => 'convert', 'class' => '-action '.$classs ],
 			];
@@ -111,7 +111,7 @@ class Markdown extends gEditorial\Module
 			$nodes[] = [
 				'id'     => $this->classs( 'process' ),
 				'parent' => $classs,
-				'title'  => _x( 'Markdown Process', 'Modules: Markdown: Adminbar', 'geditorial' ).Ajax::spinner(),
+				'title'  => _x( 'Markdown Process', 'Adminbar', 'geditorial-markdown' ).Ajax::spinner(),
 				'href'   => '#',
 				'meta'   => [ 'rel' => 'process', 'class' => '-action '.$classs ],
 			];
@@ -119,7 +119,7 @@ class Markdown extends gEditorial\Module
 			$nodes[] = [
 				'id'     => $this->classs( 'cleanup' ),
 				'parent' => $classs,
-				'title'  => _x( 'Markdown Cleanup', 'Modules: Markdown: Adminbar', 'geditorial' ).Ajax::spinner(),
+				'title'  => _x( 'Markdown Cleanup', 'Adminbar', 'geditorial-markdown' ).Ajax::spinner(),
 				'href'   => '#',
 				'meta'   => [ 'rel' => 'cleanup', 'class' => '-action '.$classs ],
 			];
@@ -127,7 +127,7 @@ class Markdown extends gEditorial\Module
 			$nodes[] = [
 				'id'     => $this->classs( 'discard' ),
 				'parent' => $classs,
-				'title'  => _x( 'Markdown Discard', 'Modules: Markdown: Adminbar', 'geditorial' ).Ajax::spinner(),
+				'title'  => _x( 'Markdown Discard', 'Adminbar', 'geditorial-markdown' ).Ajax::spinner(),
 				'href'   => '#',
 				'meta'   => [ 'rel' => 'discard', 'class' => '-action -danger '.$classs ],
 			];
@@ -157,7 +157,7 @@ class Markdown extends gEditorial\Module
 			case 'process':
 
 				if ( ! $this->process_post( $post['post_id'] ) )
-					Ajax::errorMessage( _x( 'Unable process Makrdown content into HTML. Please try again.', 'Modules: Markdown', 'geditorial' ) );
+					Ajax::errorMessage( _x( 'Unable process Makrdown content into HTML. Please try again.', 'Message', 'geditorial-markdown' ) );
 
 				Ajax::successMessage();
 
@@ -165,7 +165,7 @@ class Markdown extends gEditorial\Module
 			case 'convert':
 
 				if ( ! $this->convert_post( $post['post_id'] ) )
-					Ajax::errorMessage( _x( 'Unable convert content into Makrdown. Please try again.', 'Modules: Markdown', 'geditorial' ) );
+					Ajax::errorMessage( _x( 'Unable convert content into Makrdown. Please try again.', 'Message', 'geditorial-markdown' ) );
 
 				Ajax::successMessage();
 
@@ -174,7 +174,7 @@ class Markdown extends gEditorial\Module
 
 
 				if ( ! $this->cleanup_post( $post['post_id'] ) )
-					Ajax::errorMessage( _x( 'Unable cleanup Makrdown content. Please try again.', 'Modules: Markdown', 'geditorial' ) );
+					Ajax::errorMessage( _x( 'Unable cleanup Makrdown content. Please try again.', 'Message', 'geditorial-markdown' ) );
 
 				Ajax::successMessage();
 
@@ -182,7 +182,7 @@ class Markdown extends gEditorial\Module
 			case 'discard':
 
 				if ( ! $this->discard_post( $post['post_id'] ) )
-					Ajax::errorMessage( _x( 'Unable discard Makrdown content back into HTML. Please try again.', 'Modules: Markdown', 'geditorial' ) );
+					Ajax::errorMessage( _x( 'Unable discard Makrdown content back into HTML. Please try again.', 'Message', 'geditorial-markdown' ) );
 
 				Ajax::successMessage();
 		}
@@ -474,10 +474,10 @@ class Markdown extends gEditorial\Module
 
 		list( $posts, $pagination ) = $this->getTablePosts();
 
-		$pagination['actions']['convert_markdown'] = _x( 'Convert into Markdown', 'Modules: Markdown: Table Action', 'geditorial' );
-		$pagination['actions']['process_markdown'] = _x( 'Re-Process Markdown', 'Modules: Markdown: Table Action', 'geditorial' );
-		$pagination['actions']['cleanup_markdown'] = _x( 'Cleanup Markdown', 'Modules: Markdown: Table Action', 'geditorial' );
-		$pagination['actions']['discard_markdown'] = _x( 'Discard Markdown', 'Modules: Markdown: Table Action', 'geditorial' );
+		$pagination['actions']['convert_markdown'] = _x( 'Convert into Markdown', 'Table Action', 'geditorial-markdown' );
+		$pagination['actions']['process_markdown'] = _x( 'Re-Process Markdown', 'Table Action', 'geditorial-markdown' );
+		$pagination['actions']['cleanup_markdown'] = _x( 'Cleanup Markdown', 'Table Action', 'geditorial-markdown' );
+		$pagination['actions']['discard_markdown'] = _x( 'Discard Markdown', 'Table Action', 'geditorial-markdown' );
 		$pagination['before'][] = Helper::tableFilterPostTypes( $list );
 		$pagination['before'][] = Helper::tableFilterAuthors( $list );
 		$pagination['before'][] = Helper::tableFilterSearch( $list );
@@ -488,7 +488,7 @@ class Markdown extends gEditorial\Module
 			'date'     => Helper::tableColumnPostDate(),
 			'type'     => Helper::tableColumnPostType(),
 			'markdown' => [
-				'title'    => _x( 'Markdown', 'Modules: Markdown: Table Column', 'geditorial' ),
+				'title'    => _x( 'Markdown', 'Table Column', 'geditorial-markdown' ),
 				'class'    => [ '-icon-column' ],
 				'callback' => function( $value, $row, $column, $index ){
 					return $this->is_markdown( $row->ID ) ? Helper::getIcon( $this->module->icon ) : '';
@@ -499,8 +499,8 @@ class Markdown extends gEditorial\Module
 		], $posts, [
 			'navigation' => 'before',
 			'search'     => 'before',
-			'title'      => HTML::tag( 'h3', _x( 'Overview of Markdown Posts', 'Modules: Markdown', 'geditorial' ) ),
-			'empty'      => _x( 'No markdown posts found.', 'Modules: Markdown', 'geditorial' ),
+			'title'      => HTML::tag( 'h3', _x( 'Overview of Markdown Posts', 'Header', 'geditorial-markdown' ) ),
+			'empty'      => _x( 'No markdown posts found.', 'Message', 'geditorial-markdown' ),
 			'pagination' => $pagination,
 		] );
 	}
