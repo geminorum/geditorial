@@ -39,21 +39,21 @@ class Statuses extends gEditorial\Module
 			'_general' => [
 				[
 					'field'       => 'status_menus',
-					'title'       => _x( 'Status Menu', 'Modules: Statuses: Setting Title', 'geditorial' ),
-					'description' => _x( 'Adds status links to the admin submenus for each supported posttype.', 'Modules: Statuses: Setting Description', 'geditorial' ),
+					'title'       => _x( 'Status Menu', 'Setting Title', 'geditorial-statuses' ),
+					'description' => _x( 'Adds status links to the admin submenus for each supported posttype.', 'Setting Description', 'geditorial-statuses' ),
 				],
 				// [
 				// 	'field'       => 'status_restrict',
-				// 	'title'       => _x( 'Restrict by Status', 'Modules: Statuses: Setting Title', 'geditorial' ),
-				// 	'description' => _x( 'Filters default status of posts based on status role meta.', 'Modules: Statuses: Setting Description', 'geditorial' ),
+				// 	'title'       => _x( 'Restrict by Status', 'Setting Title', 'geditorial-statuses' ),
+				// 	'description' => _x( 'Filters default status of posts based on status role meta.', 'Setting Description', 'geditorial-statuses' ),
 				// ],
 				[
 					'field' => 'map_status_roles',
-					'title' => _x( 'Map Status Roles', 'Modules: Statuses: Setting Title', 'geditorial' ),
+					'title' => _x( 'Map Status Roles', 'Setting Title', 'geditorial-statuses' ),
 				],
 				[
 					'field'   => 'default_status',
-					'title'   => _x( 'Default Status', 'Modules: Statuses: Setting Title', 'geditorial' ),
+					'title'   => _x( 'Default Status', 'Setting Title', 'geditorial-statuses' ),
 					'type'    => 'select',
 					'default' => 'draft',
 					'values'  => [ 'draft' => __( 'Draft' ) ] + wp_list_pluck( $statuses, 'name', 'slug' ),
@@ -66,9 +66,9 @@ class Statuses extends gEditorial\Module
 				'field'       => 'status_roles_'.$status->term_id,
 				'type'        => 'checkboxes',
 				/* translators: %s: status name */
-				'title'       => sprintf( _x( 'Roles for %s', 'Modules: Statuses: Setting Title', 'geditorial' ), $status->name ),
+				'title'       => sprintf( _x( 'Roles for %s', 'Setting Title', 'geditorial-statuses' ), $status->name ),
 				/* translators: %s: status name */
-				'description' => sprintf( _x( 'The <b>%s</b> status will be visibile to the selected roles.', 'Modules: Statuses: Setting Description', 'geditorial' ), $status->name ),
+				'description' => sprintf( _x( 'The <b>%s</b> status will be visibile to the selected roles.', 'Setting Description', 'geditorial-statuses' ), $status->name ),
 				'exclude'     => $exclude,
 				'values'      => $roles,
 			];
@@ -91,7 +91,7 @@ class Statuses extends gEditorial\Module
 			$this->constant( 'status_tax' ),
 			[],
 			[
-				'label'        => _x( 'Statuses', 'Modules: Statuses', 'geditorial' ),
+				'label'        => _x( 'Statuses', 'Taxonomy Label', 'geditorial-statuses' ),
 				'show_ui'      => $this->cuc( 'settings' ),
 				'public'       => FALSE,
 				'meta_box_cb'  => FALSE,
@@ -135,19 +135,19 @@ class Statuses extends gEditorial\Module
 					'inline_dropdown'  => $status->name,
 
 					/* translators: %s: status name */
-					'metabox_submit'     => sprintf( _x( 'Submit: %s', 'Modules: Statuses: Metabox Submit', 'geditorial' ), $status->name ),
+					'metabox_submit'     => sprintf( _x( 'Submit: %s', 'Metabox Submit', 'geditorial-statuses' ), $status->name ),
 					/* translators: %s: status name */
-					'metabox_save_on'    => sprintf( _x( 'Save as %s on:', 'Modules: Statuses: Metabox Save On', 'geditorial' ), $status->name ),
+					'metabox_save_on'    => sprintf( _x( 'Save as %s on:', 'Metabox Save On', 'geditorial-statuses' ), $status->name ),
 					/* translators: %1$s: status name, %2$s: time placeholder */
-					'metabox_save_date'  => sprintf( _x( 'Save as %1$s on: %2$s', 'Modules: Statuses: Metabox Save Date', 'geditorial' ), $status->name, '<b>%1$s</b>' ),
+					'metabox_save_date'  => sprintf( _x( 'Save as %1$s on: %2$s', 'Metabox Save Date', 'geditorial-statuses' ), $status->name, '<b>%1$s</b>' ),
 					/* translators: %s: status name */
-					'metabox_saved_on'   => sprintf( _x( 'Saved as %s on:', 'Modules: Statuses: Metabox Saved On', 'geditorial' ), $status->name ),
+					'metabox_saved_on'   => sprintf( _x( 'Saved as %s on:', 'Metabox Saved On', 'geditorial-statuses' ), $status->name ),
 					/* translators: %1$s: status name, %2$s: time placeholder */
-					'metabox_saved_date' => sprintf( _x( 'Saved as %1$s on: %2$s', 'Modules: Statuses: Metabox Saved Date', 'geditorial' ), $status->name, '<b>%1$s</b>' ),
+					'metabox_saved_date' => sprintf( _x( 'Saved as %1$s on: %2$s', 'Metabox Saved Date', 'geditorial-statuses' ), $status->name, '<b>%1$s</b>' ),
 					/* translators: %s: status name */
-					'metabox_save_now'   => sprintf( _x( 'Save as %s <b>now</b>', 'Modules: Statuses: Metabox Saved On', 'geditorial' ), $status->name ),
+					'metabox_save_now'   => sprintf( _x( 'Save as %s <b>now</b>', 'Metabox Saved On', 'geditorial-statuses' ), $status->name ),
 					/* translators: %s: time placeholder */
-					// 'metabox_save_later' => sprintf( _x( 'Schedule for: %s', 'Modules: Statuses: Metabox Saved On', 'geditorial' ), '<b>%1$s</b>' ),
+					// 'metabox_save_later' => sprintf( _x( 'Schedule for: %s', 'Metabox Saved On', 'geditorial-statuses' ), '<b>%1$s</b>' ),
 				],
 			];
 
