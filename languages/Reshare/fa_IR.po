@@ -1,0 +1,35 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Reshare 3.15.8\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2020-07-17T09:26:20+00:00\n"
+"PO-Revision-Date: 2020-07-17 14:04+0430\n"
+"X-Generator: Poedit 2.3.1\n"
+"X-Poedit-Basepath: ../../includes/Modules/Reshare\n"
+"X-Domain: geditorial-reshare\n"
+"Last-Translator: geminorum <contact@geminorum.ir>\n"
+"Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
+"Language: fa_IR\n"
+
+#: Reshare.php:73
+msgctxt "Column Title"
+msgid "Reshare Categories"
+msgstr "دسته‌های بازنشر"
+
+#: Reshare.php:76
+msgctxt "Noop"
+msgid "Reshare"
+msgid_plural "Reshares"
+msgstr[0] "بازنشرها"
+msgstr[1] "بازنشر"
+
+#: Reshare.php:77
+msgctxt "Noop"
+msgid "Reshare Category"
+msgid_plural "Reshare Categories"
+msgstr[0] "دسته‌های بازنشر"
+msgstr[1] "دسته بازنشر"

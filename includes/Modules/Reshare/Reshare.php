@@ -70,11 +70,11 @@ class Reshare extends gEditorial\Module
 	{
 		return [
 			'misc' => [
-				'tweaks_column_title' => _x( 'Reshare Categories', 'Modules: Reshare: Column Title', 'geditorial' ),
+				'tweaks_column_title' => _x( 'Reshare Categories', 'Column Title', 'geditorial-reshare' ),
 			],
 			'noops' => [
-				'reshare_cpt' => _nx_noop( 'Reshare', 'Reshares', 'Modules: Reshare: Noop', 'geditorial' ),
-				'reshare_cat' => _nx_noop( 'Reshare Category', 'Reshare Categories', 'Modules: Reshare: Noop', 'geditorial' ),
+				'reshare_cpt' => _nx_noop( 'Reshare', 'Reshares', 'Noop', 'geditorial-reshare' ),
+				'reshare_cat' => _nx_noop( 'Reshare Category', 'Reshare Categories', 'Noop', 'geditorial-reshare' ),
 			],
 		];
 	}
