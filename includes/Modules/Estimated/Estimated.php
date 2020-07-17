@@ -32,26 +32,26 @@ class Estimated extends gEditorial\Module
 				[
 					'field'       => 'average',
 					'type'        => 'number',
-					'title'       => _x( 'Reading Time', 'Modules: Estimated: Setting Title', 'geditorial' ),
-					'description' => _x( 'Average words per minute', 'Modules: Estimated: Setting Description', 'geditorial' ),
+					'title'       => _x( 'Reading Time', 'Setting Title', 'geditorial-estimated' ),
+					'description' => _x( 'Average words per minute', 'Setting Description', 'geditorial-estimated' ),
 					'default'     => 250,
 				],
 				[
 					'field'       => 'prefix',
 					'type'        => 'text',
-					'title'       => _x( 'Content Prefix', 'Modules: Estimated: Setting Title', 'geditorial' ),
-					'description' => _x( 'Custom string before the estimated time on the content.', 'Modules: Estimated: Setting Description', 'geditorial' ),
-					'default'     => _x( 'Estimated read time:', 'Modules: Estimated: Setting Default', 'geditorial' ),
+					'title'       => _x( 'Content Prefix', 'Setting Title', 'geditorial-estimated' ),
+					'description' => _x( 'Custom string before the estimated time on the content.', 'Setting Description', 'geditorial-estimated' ),
+					'default'     => _x( 'Estimated read time:', 'Setting Default', 'geditorial-estimated' ),
 				],
 				[
 					'field'       => 'teaser',
 					'type'        => 'select',
-					'title'       => _x( 'Content Teaser', 'Modules: Estimated: Setting Title', 'geditorial' ),
-					'description' => _x( 'Calculate teaser text along with rest of the content', 'Modules: Estimated: Setting Description', 'geditorial' ),
+					'title'       => _x( 'Content Teaser', 'Setting Title', 'geditorial-estimated' ),
+					'description' => _x( 'Calculate teaser text along with rest of the content', 'Setting Description', 'geditorial-estimated' ),
 					'default'     => 'include',
 					'values'      => [
-						'ignore'  => _x( 'Ignore', 'Modules: Estimated: Content Teaser Option', 'geditorial' ),
-						'include' => _x( 'Include', 'Modules: Estimated: Content Teaser Option', 'geditorial' ),
+						'ignore'  => _x( 'Ignore', 'Content Teaser Option', 'geditorial-estimated' ),
+						'include' => _x( 'Include', 'Content Teaser Option', 'geditorial-estimated' ),
 					],
 				],
 				'insert_content',
@@ -59,8 +59,8 @@ class Estimated extends gEditorial\Module
 				[
 					'field'       => 'min_words',
 					'type'        => 'number',
-					'title'       => _x( 'Minimum Words', 'Modules: Estimated: Setting Title', 'geditorial' ),
-					'description' => _x( 'And above this number of words will show the notice', 'Modules: Estimated: Setting Description', 'geditorial' ),
+					'title'       => _x( 'Minimum Words', 'Setting Title', 'geditorial-estimated' ),
+					'description' => _x( 'And above this number of words will show the notice', 'Setting Description', 'geditorial-estimated' ),
 					'default'     => 1000,
 				],
 				'adminbar_summary',
@@ -99,10 +99,10 @@ class Estimated extends gEditorial\Module
 
 			echo '<li class="-row -estimated -wordcount">';
 
-				echo $this->get_column_icon( FALSE, NULL, _x( 'Estimated Time', 'Modules: Estimated: Row Icon Title', 'geditorial' ) );
+				echo $this->get_column_icon( FALSE, NULL, _x( 'Estimated Time', 'Row Icon Title', 'geditorial-estimated' ) );
 
 				echo '<span class="-wordcount" title="'
-					.esc_attr_x( 'Word Count', 'Modules: Estimated: Row Title', 'geditorial' ).'">'
+					.esc_attr_x( 'Word Count', 'Row Title', 'geditorial-estimated' ).'">'
 					.$this->nooped_count( 'word', $wordcount )
 					.'</span>';
 
@@ -135,7 +135,7 @@ class Estimated extends gEditorial\Module
 				.')</span>';
 
 			$avgtime = $this->get_setting( 'average', 250 );
-			$title   = sprintf( _x( 'If you try to read %s words per minute', 'Modules: Estimated', 'geditorial' ), Number::format( $avgtime ) );
+			$title   = sprintf( _x( 'If you try to read %s words per minute', 'Title Attr', 'geditorial-estimated' ), Number::format( $avgtime ) );
 
 			$nodes[] = [
 				'id'     => $this->classs(),
@@ -195,7 +195,7 @@ class Estimated extends gEditorial\Module
 			return FALSE;
 
 		if ( is_null( $prefix ) )
-			$prefix = $this->get_setting( 'prefix', _x( 'Estimated read time:', 'Modules: Estimated', 'geditorial' ) );
+			$prefix = $this->get_setting( 'prefix', _x( 'Estimated read time:', 'Setting Default', 'geditorial-estimated' ) );
 
 		$html = ( $prefix ? $prefix.' ' : '' ).$this->get_time_estimated( $wordcount, TRUE );
 
@@ -208,15 +208,15 @@ class Estimated extends gEditorial\Module
 		$minutes = floor( (int) $wordcount / (int) $avgtime );
 
 		if ( $minutes < 1 )
-			$estimated = _x( 'less than 1 minute', 'Modules: Estimated', 'geditorial' );
+			$estimated = __( 'less than 1 minute', 'geditorial-estimated' );
 		else
 			/* translators: %s: number of minutes */
-			$estimated = sprintf( _nx( '%s minute', '%s minutes', $minutes, 'Modules: Estimated', 'geditorial' ), Number::localize( $minutes ) );
+			$estimated = sprintf( _n( '%s minute', '%s minutes', $minutes, 'geditorial-estimated' ), Number::localize( $minutes ) );
 
 		if ( $info )
 			return '<span data-toggle="tooltip" title="'.HTML::escape(
 				/* translators: %s: words count */
-				sprintf( _x( 'If you try to read %s words per minute', 'Modules: Estimated', 'geditorial' ),
+				sprintf( _x( 'If you try to read %s words per minute', 'Title Attr', 'geditorial-estimated' ),
 				Number::format( $avgtime ) ) )
 				.'">'.$estimated.'</span>';
 
