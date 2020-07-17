@@ -38,19 +38,19 @@ class Workflow extends gEditorial\Module
 			'_editpost' => [
 				[
 					'field'       => 'hide_disabled',
-					'title'       => _x( 'Hide Disabled', 'Modules: Workflow: Setting Title', 'geditorial' ),
-					'description' => _x( 'Hides statuses disabled for each role on the dropdown.', 'Modules: Workflow: Setting Description', 'geditorial' ),
+					'title'       => _x( 'Hide Disabled', 'Setting Title', 'geditorial-workflow' ),
+					'description' => _x( 'Hides statuses disabled for each role on the dropdown.', 'Setting Description', 'geditorial-workflow' ),
 				],
 				[
 					'field'       => 'action_time',
-					'title'       => _x( 'Time Action', 'Modules: Workflow: Setting Title', 'geditorial' ),
-					'description' => _x( 'Displays time action on the workflow meta-box.', 'Modules: Workflow: Setting Description', 'geditorial' ),
+					'title'       => _x( 'Time Action', 'Setting Title', 'geditorial-workflow' ),
+					'description' => _x( 'Displays time action on the workflow meta-box.', 'Setting Description', 'geditorial-workflow' ),
 				],
 				[
 					'field'       => 'draft_roles',
 					'type'        => 'checkbox-panel',
-					'title'       => _x( 'Draft Roles', 'Modules: Cartable: Setting Title', 'geditorial' ),
-					'description' => _x( 'Roles that can rollback to Draft status.', 'Modules: Cartable: Setting Description', 'geditorial' ),
+					'title'       => _x( 'Draft Roles', 'Setting Title', 'geditorial-workflow' ),
+					'description' => _x( 'Roles that can rollback to Draft status.', 'Setting Description', 'geditorial-workflow' ),
 					'exclude'     => $exclude,
 					'values'      => $roles,
 				],
@@ -58,20 +58,20 @@ class Workflow extends gEditorial\Module
 			'_editlist' => [
 				[
 					'field'       => 'status_menus',
-					'title'       => _x( 'Status Menu', 'Modules: Workflow: Setting Title', 'geditorial' ),
-					'description' => _x( 'Adds status links to the admin submenus for each supported posttype.', 'Modules: Workflow: Setting Description', 'geditorial' ),
+					'title'       => _x( 'Status Menu', 'Setting Title', 'geditorial-workflow' ),
+					'description' => _x( 'Adds status links to the admin submenus for each supported posttype.', 'Setting Description', 'geditorial-workflow' ),
 				],
 				[
 					'field'       => 'display_states',
-					'title'       => _x( 'Display States', 'Modules: Workflow: Setting Title', 'geditorial' ),
-					'description' => _x( 'Appends current status to the end of the title.', 'Modules: Workflow: Setting Description', 'geditorial' ),
+					'title'       => _x( 'Display States', 'Setting Title', 'geditorial-workflow' ),
+					'description' => _x( 'Appends current status to the end of the title.', 'Setting Description', 'geditorial-workflow' ),
 				],
 				[
 					'field'        => 'locking_statuses',
 					'type'         => 'checkbox-panel',
-					'title'        => _x( 'Locking Statuses', 'Modules: Workflow: Setting Title', 'geditorial' ),
-					'description'  => _x( 'Selected statuses will lock editing the post to their assigned roles.', 'Modules: Workflow: Setting Description', 'geditorial' ),
-					'string_empty' => _x( 'There\'s no status available!', 'Modules: Workflow: Setting', 'geditorial' ),
+					'title'        => _x( 'Locking Statuses', 'Setting Title', 'geditorial-workflow' ),
+					'description'  => _x( 'Selected statuses will lock editing the post to their assigned roles.', 'Setting Description', 'geditorial-workflow' ),
+					'string_empty' => _x( 'There\'s no status available!', 'Setting', 'geditorial-workflow' ),
 					'values'       => wp_list_pluck( $this->get_statuses(), 'label', 'name' ),
 				],
 			],
@@ -91,7 +91,7 @@ class Workflow extends gEditorial\Module
 	{
 		return [
 			'misc' => [
-				'meta_box_title' => _x( 'Workflow', 'Modules: Workflow: Meta Box Title', 'geditorial' ),
+				'meta_box_title' => _x( 'Workflow', 'Meta Box Title', 'geditorial-workflow' ),
 			],
 		];
 	}
@@ -104,7 +104,7 @@ class Workflow extends gEditorial\Module
 			$this->constant( 'status_tax' ),
 			[],
 			[
-				'label'        => _x( 'Statuses', 'Modules: Workflow', 'geditorial' ),
+				'label'        => _x( 'Statuses', 'Taxonomy Label', 'geditorial-workflow' ),
 				'show_ui'      => $this->cuc( 'settings' ),
 				'public'       => FALSE,
 				'meta_box_cb'  => FALSE,

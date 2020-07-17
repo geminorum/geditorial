@@ -1,0 +1,89 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Workflow 3.15.8\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Last-Translator: NULL\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2020-07-17T11:48:58+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.4.0\n"
+"X-Poedit-Basepath: ../../includes/Modules/Workflow\n"
+"X-Domain: geditorial-workflow\n"
+
+#: Workflow.php:41
+msgctxt "Setting Title"
+msgid "Hide Disabled"
+msgstr ""
+
+#: Workflow.php:42
+msgctxt "Setting Description"
+msgid "Hides statuses disabled for each role on the dropdown."
+msgstr ""
+
+#: Workflow.php:46
+msgctxt "Setting Title"
+msgid "Time Action"
+msgstr ""
+
+#: Workflow.php:47
+msgctxt "Setting Description"
+msgid "Displays time action on the workflow meta-box."
+msgstr ""
+
+#: Workflow.php:52
+msgctxt "Setting Title"
+msgid "Draft Roles"
+msgstr ""
+
+#: Workflow.php:53
+msgctxt "Setting Description"
+msgid "Roles that can rollback to Draft status."
+msgstr ""
+
+#: Workflow.php:61
+msgctxt "Setting Title"
+msgid "Status Menu"
+msgstr ""
+
+#: Workflow.php:62
+msgctxt "Setting Description"
+msgid "Adds status links to the admin submenus for each supported posttype."
+msgstr ""
+
+#: Workflow.php:66
+msgctxt "Setting Title"
+msgid "Display States"
+msgstr ""
+
+#: Workflow.php:67
+msgctxt "Setting Description"
+msgid "Appends current status to the end of the title."
+msgstr ""
+
+#: Workflow.php:72
+msgctxt "Setting Title"
+msgid "Locking Statuses"
+msgstr ""
+
+#: Workflow.php:73
+msgctxt "Setting Description"
+msgid "Selected statuses will lock editing the post to their assigned roles."
+msgstr ""
+
+#: Workflow.php:74
+msgctxt "Setting"
+msgid "There's no status available!"
+msgstr ""
+
+#: Workflow.php:94
+msgctxt "Meta Box Title"
+msgid "Workflow"
+msgstr ""
+
+#: Workflow.php:107
+msgctxt "Taxonomy Label"
+msgid "Statuses"
+msgstr ""
