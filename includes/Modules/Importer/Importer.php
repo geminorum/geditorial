@@ -42,14 +42,14 @@ class Importer extends gEditorial\Module
 			'_general' => [
 				[
 					'field'       => 'store_source_data',
-					'title'       => _x( 'Store Source Data', 'Modules: Importer: Setting Title', 'geditorial' ),
-					'description' => _x( 'Stores raw source data and attchment reference as meta for each imported item.', 'Modules: Importer: Setting Description', 'geditorial' ),
+					'title'       => _x( 'Store Source Data', 'Setting Title', 'geditorial-importer' ),
+					'description' => _x( 'Stores raw source data and attchment reference as meta for each imported item.', 'Setting Description', 'geditorial-importer' ),
 				],
 				[
 					'field'       => 'add_audit_attribute',
-					'title'       => _x( 'Add Audit Attribute', 'Modules: Importer: Setting Title', 'geditorial' ),
+					'title'       => _x( 'Add Audit Attribute', 'Setting Title', 'geditorial-importer' ),
 					/* translators: %s: default term placeholder */
-					'description' => sprintf( _x( 'Appends %s audit attribute to each imported item.', 'Modules: Importer: Setting Description', 'geditorial' ), '<code>'.$this->default_audit_attribute.'</code>' ),
+					'description' => sprintf( _x( 'Appends %s audit attribute to each imported item.', 'Setting Description', 'geditorial-importer' ), '<code>'.$this->default_audit_attribute.'</code>' ),
 					'disabled'    => ! gEditorial()->enabled( 'audit' ),
 				],
 			],
@@ -74,8 +74,8 @@ class Importer extends gEditorial\Module
 	{
 		return [
 			'js' => [
-				'modal_title'  => _x( 'Choose a Datasheet', 'Modules: Importer: Javascript String', 'geditorial' ),
-				'modal_button' => _x( 'Select as Source', 'Modules: Importer: Javascript String', 'geditorial' ),
+				'modal_title'  => _x( 'Choose a Datasheet', 'Javascript String', 'geditorial-importer' ),
+				'modal_button' => _x( 'Select as Source', 'Javascript String', 'geditorial-importer' ),
 			],
 		];
 	}
@@ -124,7 +124,7 @@ class Importer extends gEditorial\Module
 
 	protected function from_attached( $id = 0, $posttype = 'post', $user_id = NULL )
 	{
-		echo '<input id="upload_csv_button" class="button" value="'._x( 'Upload', 'Modules: Importer: Button', 'geditorial' ).'" type="button" />';
+		echo '<input id="upload_csv_button" class="button" value="'._x( 'Upload', 'Button', 'geditorial-importer' ).'" type="button" />';
 		echo '<input id="upload_attach_id" type="hidden" name="upload_id" value="" />';
 
 		Settings::fieldSeparate( 'or' );
@@ -174,7 +174,7 @@ class Importer extends gEditorial\Module
 		$pre = [
 			'_cb' => '_index',
 			'_check_column' => [
-				'title'    => _x( '[Checks]', 'Modules: Importer: Table Column', 'geditorial' ),
+				'title'    => _x( '[Checks]', 'Table Column', 'geditorial-importer' ),
 				'args'     => [ 'map' => $selected ],
 				'callback' => function( $value, $row, $column, $index ){
 					if ( ! array_key_exists( 'importer_post_title', $column['args']['map'] ) )
@@ -188,7 +188,7 @@ class Importer extends gEditorial\Module
 					if ( empty( $posts ) )
 						return Helper::htmlEmpty();
 
-					$html = '<div class="-danger">'._x( 'Similar to Title:', 'Modules: Importer: Table Column', 'geditorial' );
+					$html = '<div class="-danger">'._x( 'Similar to Title:', 'Table Column', 'geditorial-importer' );
 
 					foreach ( $posts as $post_id )
 						$html.= '<br />'.Helper::getPostTitleRow( $post_id ).' <code>'.$post_id.'</code>';
@@ -204,7 +204,7 @@ class Importer extends gEditorial\Module
 			'callback'  => [ $this, 'form_table_callback' ],
 			'extra'     => [ 'post_type' => $posttype, 'taxonomies' => $taxonomies ],
 			/* translators: %s: count placeholder */
-			'title'     => HTML::tag( 'h3', Helper::getCounted( count( $data ), _x( '%s Records Found', 'Modules: Importer', 'geditorial' ) ) ),
+			'title'     => HTML::tag( 'h3', Helper::getCounted( count( $data ), _x( '%s Records Found', 'Header', 'geditorial-importer' ) ) ),
 		] );
 	}
 
@@ -406,9 +406,9 @@ class Importer extends gEditorial\Module
 			echo $this->wrap_open_buttons();
 
 			Settings::submitButton( 'csv_import',
-				_x( 'Step 4: Import', 'Modules: Importer: Setting Button', 'geditorial' ), TRUE );
+				_x( 'Step 4: Import', 'Button', 'geditorial-importer' ), TRUE );
 
-			HTML::desc( _x( 'Check processed records and import, finally.', 'Modules: Importer', 'geditorial' ), FALSE );
+			HTML::desc( _x( 'Check processed records and import, finally.', 'Message', 'geditorial-importer' ), FALSE );
 
 		} else if ( isset( $_POST['csv_step_three'] ) && $attach_id ) {
 
@@ -422,17 +422,17 @@ class Importer extends gEditorial\Module
 			echo $this->wrap_open_buttons();
 
 			// Settings::submitButton( 'csv_step_four',
-			// 	_x( 'Step 3: Select', 'Modules: Importer: Setting Button', 'geditorial' ), TRUE );
+			// 	_x( 'Step 3: Select', 'Button', 'geditorial-importer' ), TRUE );
 
-			// HTML::desc( _x( 'Select records to check the process.', 'Modules: Importer', 'geditorial' ), FALSE );
+			// HTML::desc( _x( 'Select records to check the process.', 'Message', 'geditorial-importer' ), FALSE );
 
-			Settings::submitButton( 'csv_import', _x( 'Import', 'Modules: Importer: Setting Button', 'geditorial' ), TRUE );
+			Settings::submitButton( 'csv_import', _x( 'Import', 'Button', 'geditorial-importer' ), TRUE );
 
-			HTML::desc( _x( 'Select records to finally import.', 'Modules: Importer', 'geditorial' ), FALSE );
+			HTML::desc( _x( 'Select records to finally import.', 'Message', 'geditorial-importer' ), FALSE );
 
 		} else if ( isset( $_POST['csv_step_two'] ) && $attach_id ) {
 
-			HTML::h3( _x( 'Map the Importer', 'Modules: Importer', 'geditorial' ) );
+			HTML::h3( _x( 'Map the Importer', 'Header', 'geditorial-importer' ) );
 
 			HTML::inputHidden( 'posttype', $posttype );
 			HTML::inputHidden( 'attach_id', $attach_id );
@@ -443,28 +443,28 @@ class Importer extends gEditorial\Module
 			echo $this->wrap_open_buttons();
 
 			Settings::submitButton( 'csv_step_three',
-				_x( 'Step 2: Map', 'Modules: Importer: Setting Button', 'geditorial' ), TRUE );
+				_x( 'Step 2: Map', 'Button', 'geditorial-importer' ), TRUE );
 
-			HTML::desc( _x( 'Map the file fields to the post-type fields.', 'Modules: Importer', 'geditorial' ), FALSE );
+			HTML::desc( _x( 'Map the file fields to the post-type fields.', 'Message', 'geditorial-importer' ), FALSE );
 
 		} else if ( count( $this->posttypes() ) ) {
 
-			HTML::h3( _x( 'Importer Tools', 'Modules: Importer', 'geditorial' ) );
+			HTML::h3( _x( 'Importer Tools', 'Header', 'geditorial-importer' ) );
 
 			$this->from_attached( 0, $posttype );
 
 			echo $this->wrap_open_buttons();
 
 			Settings::submitButton( 'csv_step_two',
-				_x( 'Step 1: Attachment', 'Modules: Importer: Setting Button', 'geditorial' ), TRUE );
+				_x( 'Step 1: Attachment', 'Button', 'geditorial-importer' ), TRUE );
 
-			HTML::desc( _x( 'Upload or select a CSV file, post-type and user to map the import.', 'Modules: Importer', 'geditorial' ), FALSE );
+			HTML::desc( _x( 'Upload or select a CSV file, post-type and user to map the import.', 'Message', 'geditorial-importer' ), FALSE );
 
 		} else {
 
 			echo $this->wrap_open_buttons();
 
-			HTML::desc( _x( 'Imports are not supported for any of the post-types!', 'Modules: Importer', 'geditorial' ), FALSE );
+			HTML::desc( _x( 'Imports are not supported for any of the post-types!', 'Message', 'geditorial-importer' ), FALSE );
 		}
 
 		echo '</p>';
@@ -474,17 +474,17 @@ class Importer extends gEditorial\Module
 	{
 		$fields = [
 			'none'                  => Settings::showOptionNone(),
-			'importer_old_id'       => _x( 'Extra: Old ID', 'Modules: Importer: Post Field', 'geditorial' ),
-			'importer_custom_meta'  => _x( 'Extra: Custom Meta', 'Modules: Importer: Post Field', 'geditorial' ),
-			'importer_menu_order'   => _x( 'Menu Order', 'Modules: Importer: Post Field', 'geditorial' ),
-			'importer_post_title'   => _x( 'Post Title', 'Modules: Importer: Post Field', 'geditorial' ),
-			'importer_post_content' => _x( 'Post Content', 'Modules: Importer: Post Field', 'geditorial' ),
-			'importer_post_excerpt' => _x( 'Post Excerpt', 'Modules: Importer: Post Field', 'geditorial' ),
+			'importer_old_id'       => _x( 'Extra: Old ID', 'Post Field', 'geditorial-importer' ),
+			'importer_custom_meta'  => _x( 'Extra: Custom Meta', 'Post Field', 'geditorial-importer' ),
+			'importer_menu_order'   => _x( 'Menu Order', 'Post Field', 'geditorial-importer' ),
+			'importer_post_title'   => _x( 'Post Title', 'Post Field', 'geditorial-importer' ),
+			'importer_post_content' => _x( 'Post Content', 'Post Field', 'geditorial-importer' ),
+			'importer_post_excerpt' => _x( 'Post Excerpt', 'Post Field', 'geditorial-importer' ),
 		];
 
 		foreach ( (array) $taxonomies as $taxonomy => $label )
 			/* translators: %s: taxonomy name placeholder */
-			$fields['importer_tax_'.$taxonomy] = sprintf( _x( 'Taxonomy: %s', 'Modules: Importer: Post Field', 'geditorial' ), $label );
+			$fields['importer_tax_'.$taxonomy] = sprintf( _x( 'Taxonomy: %s', 'Post Field', 'geditorial-importer' ), $label );
 
 		return $this->filters( 'fields', $fields, $posttype );
 	}

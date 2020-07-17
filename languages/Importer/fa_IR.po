@@ -1,0 +1,163 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Importer 3.15.8\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2020-07-17T10:40:33+00:00\n"
+"PO-Revision-Date: 2020-07-17 15:17+0430\n"
+"X-Generator: Poedit 2.3.1\n"
+"X-Poedit-Basepath: ../../includes/Modules/Importer\n"
+"X-Domain: geditorial-importer\n"
+"Last-Translator: geminorum <contact@geminorum.ir>\n"
+"Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
+"Language: fa_IR\n"
+
+#: Importer.php:45
+msgctxt "Setting Title"
+msgid "Store Source Data"
+msgstr "ذخیره دیتای منبع"
+
+#: Importer.php:46
+msgctxt "Setting Description"
+msgid ""
+"Stores raw source data and attchment reference as meta for each imported "
+"item."
+msgstr ""
+
+#: Importer.php:50
+msgctxt "Setting Title"
+msgid "Add Audit Attribute"
+msgstr "افزودن برچسب بازبینی"
+
+#. translators: %s: default term placeholder
+#: Importer.php:52
+msgctxt "Setting Description"
+msgid "Appends %s audit attribute to each imported item."
+msgstr ""
+
+#: Importer.php:77
+msgctxt "Javascript String"
+msgid "Choose a Datasheet"
+msgstr "یک صفحه‌گسترده انتخاب کنید"
+
+#: Importer.php:78
+msgctxt "Javascript String"
+msgid "Select as Source"
+msgstr "انتخاب به عنوان منبع"
+
+#: Importer.php:127
+msgctxt "Button"
+msgid "Upload"
+msgstr "بارگذاری"
+
+#: Importer.php:177
+msgctxt "Table Column"
+msgid "[Checks]"
+msgstr "[بررسی‌ها]"
+
+#: Importer.php:191
+msgctxt "Table Column"
+msgid "Similar to Title:"
+msgstr "عناوین مشابه:"
+
+#. translators: %s: count placeholder
+#: Importer.php:207
+msgctxt "Header"
+msgid "%s Records Found"
+msgstr "%s مورد پیدا شد"
+
+#: Importer.php:409
+msgctxt "Button"
+msgid "Step 4: Import"
+msgstr "قدم ۴: درون‌ریزی"
+
+#: Importer.php:411
+msgctxt "Message"
+msgid "Check processed records and import, finally."
+msgstr "موارد پردازش‌شده برای درون‌ریزی نهایی را بررسی کنید."
+
+#: Importer.php:429
+msgctxt "Button"
+msgid "Import"
+msgstr "درون‌ریزی"
+
+#: Importer.php:431
+msgctxt "Message"
+msgid "Select records to finally import."
+msgstr "موارد نهایی برای درون‌ریزی را انتخاب کنید."
+
+#: Importer.php:435
+msgctxt "Header"
+msgid "Map the Importer"
+msgstr "نقشه درون‌ریزی را ترسیم کنید"
+
+#: Importer.php:446
+msgctxt "Button"
+msgid "Step 2: Map"
+msgstr "قدم ۲: نقشه"
+
+#: Importer.php:448
+msgctxt "Message"
+msgid "Map the file fields to the post-type fields."
+msgstr "نقشه فیلد‌های پرونده به فیلد‌های نوع‌نوشته را ترسیم کنید."
+
+#: Importer.php:452
+msgctxt "Header"
+msgid "Importer Tools"
+msgstr "ابزارهای درون‌ریزی"
+
+#: Importer.php:459
+msgctxt "Button"
+msgid "Step 1: Attachment"
+msgstr "قدم ۱: پیوست"
+
+#: Importer.php:461
+msgctxt "Message"
+msgid "Upload or select a CSV file, post-type and user to map the import."
+msgstr ""
+"یک پرونده CSV را بارگیری و یا انتخاب کنید، تا همراه با نوع‌نوشته و کاربر "
+"در ترسیم نقشه درون‌ریزی استفاده شود."
+
+#: Importer.php:467
+msgctxt "Message"
+msgid "Imports are not supported for any of the post-types!"
+msgstr "درون‌ریزی در هیچ نوع‌نوشته‌ای پشتیبانی نمی‌شود!"
+
+#: Importer.php:477
+msgctxt "Post Field"
+msgid "Extra: Old ID"
+msgstr "افزوده: شناسه قدیمی"
+
+#: Importer.php:478
+msgctxt "Post Field"
+msgid "Extra: Custom Meta"
+msgstr "افزوده: متای سفارشی"
+
+#: Importer.php:479
+msgctxt "Post Field"
+msgid "Menu Order"
+msgstr "چینش منو (Menu Order)"
+
+#: Importer.php:480
+msgctxt "Post Field"
+msgid "Post Title"
+msgstr "عنوان نوشته (Post Title)"
+
+#: Importer.php:481
+msgctxt "Post Field"
+msgid "Post Content"
+msgstr "متن نوشته (Post Content)"
+
+#: Importer.php:482
+msgctxt "Post Field"
+msgid "Post Excerpt"
+msgstr "چکیده نوشته (Post Excerpt)"
+
+#. translators: %s: taxonomy name placeholder
+#: Importer.php:487
+msgctxt "Post Field"
+msgid "Taxonomy: %s"
+msgstr "رده‌بندی: %s"

@@ -1,0 +1,157 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Importer 3.15.8\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Last-Translator: NULL\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2020-07-17T10:40:33+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.4.0\n"
+"X-Poedit-Basepath: ../../includes/Modules/Importer\n"
+"X-Domain: geditorial-importer\n"
+
+#: Importer.php:45
+msgctxt "Setting Title"
+msgid "Store Source Data"
+msgstr ""
+
+#: Importer.php:46
+msgctxt "Setting Description"
+msgid "Stores raw source data and attchment reference as meta for each imported item."
+msgstr ""
+
+#: Importer.php:50
+msgctxt "Setting Title"
+msgid "Add Audit Attribute"
+msgstr ""
+
+#. translators: %s: default term placeholder
+#: Importer.php:52
+msgctxt "Setting Description"
+msgid "Appends %s audit attribute to each imported item."
+msgstr ""
+
+#: Importer.php:77
+msgctxt "Javascript String"
+msgid "Choose a Datasheet"
+msgstr ""
+
+#: Importer.php:78
+msgctxt "Javascript String"
+msgid "Select as Source"
+msgstr ""
+
+#: Importer.php:127
+msgctxt "Button"
+msgid "Upload"
+msgstr ""
+
+#: Importer.php:177
+msgctxt "Table Column"
+msgid "[Checks]"
+msgstr ""
+
+#: Importer.php:191
+msgctxt "Table Column"
+msgid "Similar to Title:"
+msgstr ""
+
+#. translators: %s: count placeholder
+#: Importer.php:207
+msgctxt "Header"
+msgid "%s Records Found"
+msgstr ""
+
+#: Importer.php:409
+msgctxt "Button"
+msgid "Step 4: Import"
+msgstr ""
+
+#: Importer.php:411
+msgctxt "Message"
+msgid "Check processed records and import, finally."
+msgstr ""
+
+#: Importer.php:429
+msgctxt "Button"
+msgid "Import"
+msgstr ""
+
+#: Importer.php:431
+msgctxt "Message"
+msgid "Select records to finally import."
+msgstr ""
+
+#: Importer.php:435
+msgctxt "Header"
+msgid "Map the Importer"
+msgstr ""
+
+#: Importer.php:446
+msgctxt "Button"
+msgid "Step 2: Map"
+msgstr ""
+
+#: Importer.php:448
+msgctxt "Message"
+msgid "Map the file fields to the post-type fields."
+msgstr ""
+
+#: Importer.php:452
+msgctxt "Header"
+msgid "Importer Tools"
+msgstr ""
+
+#: Importer.php:459
+msgctxt "Button"
+msgid "Step 1: Attachment"
+msgstr ""
+
+#: Importer.php:461
+msgctxt "Message"
+msgid "Upload or select a CSV file, post-type and user to map the import."
+msgstr ""
+
+#: Importer.php:467
+msgctxt "Message"
+msgid "Imports are not supported for any of the post-types!"
+msgstr ""
+
+#: Importer.php:477
+msgctxt "Post Field"
+msgid "Extra: Old ID"
+msgstr ""
+
+#: Importer.php:478
+msgctxt "Post Field"
+msgid "Extra: Custom Meta"
+msgstr ""
+
+#: Importer.php:479
+msgctxt "Post Field"
+msgid "Menu Order"
+msgstr ""
+
+#: Importer.php:480
+msgctxt "Post Field"
+msgid "Post Title"
+msgstr ""
+
+#: Importer.php:481
+msgctxt "Post Field"
+msgid "Post Content"
+msgstr ""
+
+#: Importer.php:482
+msgctxt "Post Field"
+msgid "Post Excerpt"
+msgstr ""
+
+#. translators: %s: taxonomy name placeholder
+#: Importer.php:487
+msgctxt "Post Field"
+msgid "Taxonomy: %s"
+msgstr ""
