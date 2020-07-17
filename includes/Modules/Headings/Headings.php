@@ -9,6 +9,7 @@ class Headings extends gEditorial\Module
 {
 
 	protected $disable_no_posttypes = TRUE;
+	protected $textdomain_frontend  = FALSE;
 
 	private $anchors  = [];
 	private $toc      = [];
@@ -30,22 +31,22 @@ class Headings extends gEditorial\Module
 				[
 					'field'       => 'toc_title',
 					'type'        => 'text',
-					'title'       => _x( 'ToC Title', 'Modules: Headings: Setting Title', 'geditorial' ),
-					'description' => _x( 'Default text on the ToC box', 'Modules: Headings: Setting Description', 'geditorial' ),
-					'default'     => _x( 'Table of Contents', 'Modules: Headings: Setting Default', 'geditorial' ),
+					'title'       => _x( 'ToC Title', 'Setting Title', 'geditorial-headings' ),
+					'description' => _x( 'Default text on the ToC box', 'Setting Description', 'geditorial-headings' ),
+					'default'     => _x( 'Table of Contents', 'Setting Default', 'geditorial-headings' ),
 				],
 				[
 					'field'       => 'anchor_title',
 					'type'        => 'text',
-					'title'       => _x( 'Anchor Title', 'Modules: Headings: Setting Title', 'geditorial' ),
-					'description' => _x( 'Default text on the anchor link', 'Modules: Headings: Setting Description', 'geditorial' ),
-					'default'     => _x( 'Permalink to this title', 'Modules: Headings: Setting Default', 'geditorial' ),
+					'title'       => _x( 'Anchor Title', 'Setting Title', 'geditorial-headings' ),
+					'description' => _x( 'Default text on the anchor link', 'Setting Description', 'geditorial-headings' ),
+					'default'     => _x( 'Permalink to this title', 'Setting Default', 'geditorial-headings' ),
 				],
 				[
 					'field'       => 'min_headings',
 					'type'        => 'number',
-					'title'       => _x( 'Minimum Headings', 'Modules: Headings: Setting Title', 'geditorial' ),
-					'description' => _x( 'Threshold to Display ToC', 'Modules: Headings: Setting Description', 'geditorial' ),
+					'title'       => _x( 'Minimum Headings', 'Setting Title', 'geditorial-headings' ),
+					'description' => _x( 'Threshold to Display ToC', 'Setting Description', 'geditorial-headings' ),
 					'default'     => '2',
 				],
 				'insert_content',
