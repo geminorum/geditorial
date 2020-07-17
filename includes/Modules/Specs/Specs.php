@@ -49,21 +49,21 @@ class Specs extends gEditorial\Module
 	{
 		return [
 			'titles' => [
-				'spec_title' => _x( 'Title', 'Modules: Specs', 'geditorial' ),
-				'spec_order' => _x( 'Order', 'Modules: Specs', 'geditorial' ),
-				'spec_value' => _x( 'Description', 'Modules: Specs', 'geditorial' ),
+				'spec_title' => _x( 'Title', 'Strings: Title', 'geditorial-specs' ),
+				'spec_order' => _x( 'Order', 'Strings: Title', 'geditorial-specs' ),
+				'spec_value' => _x( 'Description', 'Strings: Title', 'geditorial-specs' ),
 			],
 			'descriptions' => [
-				'spec_title' => _x( 'In Specifications Title', 'Modules: Specs', 'geditorial' ),
-				'spec_order' => _x( 'In Specifications Order', 'Modules: Specs', 'geditorial' ),
-				'spec_value' => _x( 'In Specifications Description', 'Modules: Specs', 'geditorial' ),
+				'spec_title' => _x( 'In Specifications Title', 'Strings: Description', 'geditorial-specs' ),
+				'spec_order' => _x( 'In Specifications Order', 'Strings: Description', 'geditorial-specs' ),
+				'spec_value' => _x( 'In Specifications Description', 'Strings: Description', 'geditorial-specs' ),
 			],
 			'misc' => [
-				'column_title'     => _x( 'Specifications', 'Modules: Specs: Column Title', 'geditorial' ),
-				'show_option_none' => _x( '&ndash; Choose a Specification &ndash;', 'Modules: Specs', 'geditorial' ),
+				'column_title'     => _x( 'Specifications', 'Column Title', 'geditorial-specs' ),
+				'show_option_none' => _x( '&ndash; Choose a Specification &ndash;', 'Show Option None', 'geditorial-specs' ),
 			],
 			'noops' => [
-				'specs_tax' => _nx_noop( 'Specification', 'Specifications', 'Modules: Specs: Noop', 'geditorial' ),
+				'specs_tax' => _nx_noop( 'Specification', 'Specifications', 'Noop', 'geditorial-specs' ),
 			],
 		];
 	}
@@ -292,10 +292,10 @@ class Specs extends gEditorial\Module
 		$metas = $this->get_postmeta( $post->ID, FALSE, [] );
 
 		$handle = sprintf( '<span data-icon="dashicons" class="-handle dashicons dashicons-move" title="%s"></span>',
-			_x( 'Sort me!', 'Modules: Specs: Sortable Handler', 'geditorial' ) );
+			_x( 'Sort me!', 'Sortable Handler', 'geditorial-specs' ) );
 
 		$delete = sprintf( '<span data-icon="dashicons" class="-delete dashicons dashicons-trash" title="%s"></span>',
-			_x( 'Trash me!', 'Modules: Specs: Sortable Trash', 'geditorial' ) );
+			_x( 'Trash me!', 'Sortable Trash', 'geditorial-specs' ) );
 
 		echo '<ol class="geditorial-specs-list -sortable">';
 
@@ -311,7 +311,7 @@ class Specs extends gEditorial\Module
 						$title = $terms[$meta['spec_term_id']]->name;
 
 					else
-						$title = _x( 'Unknown Field', 'Modules: Specs', 'geditorial' );
+						$title = _x( 'Unknown Field', 'Modules: Specs', 'geditorial-specs' );
 
 					if ( ! empty( $meta['spec_value'] ) )
 						$title.= sprintf( ': %s', $meta['spec_value'] );
@@ -447,7 +447,7 @@ class Specs extends gEditorial\Module
 		$html.= '<table class="table table-striped geditorial-specs">';
 		foreach ( $metas as $order => $meta ) {
 			$html.= '<tr><td>';
-				$html.= ( isset( $meta['spec_title'] ) && $meta['spec_title'] ) ? $meta['spec_title'] : ( isset( $meta['spec_term_id'] ) && $meta['spec_term_id'] ? $the_terms[$meta['spec_term_id']]->name : _x( 'Unknown Field', 'Modules: Specs', 'geditorial' ) );
+				$html.= ( isset( $meta['spec_title'] ) && $meta['spec_title'] ) ? $meta['spec_title'] : ( isset( $meta['spec_term_id'] ) && $meta['spec_term_id'] ? $the_terms[$meta['spec_term_id']]->name : _x( 'Unknown Field', 'Modules: Specs', 'geditorial-specs' ) );
 			$html.= '</td><td>';
 				// FIXME: add filter for each spec
 				$html.= isset( $meta['spec_value'] ) ? $meta['spec_value'] : '';

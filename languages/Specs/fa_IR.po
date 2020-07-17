@@ -1,0 +1,63 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Specs 3.15.8\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2020-07-17T09:09:03+00:00\n"
+"PO-Revision-Date: 2020-07-17 13:51+0430\n"
+"X-Generator: Poedit 2.3.1\n"
+"X-Poedit-Basepath: ../../includes/Modules/Specs\n"
+"X-Domain: geditorial-specs\n"
+"Last-Translator: geminorum <contact@geminorum.ir>\n"
+"Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
+"Language: fa_IR\n"
+
+#: Specs.php:57
+msgctxt "Strings: Description"
+msgid "In Specifications Title"
+msgstr "عنوان در مشخصات"
+
+#: Specs.php:58
+msgctxt "Strings: Description"
+msgid "In Specifications Order"
+msgstr "چینش در مشخصات"
+
+#: Specs.php:59
+msgctxt "Strings: Description"
+msgid "In Specifications Description"
+msgstr "توضیحات در مشخصات"
+
+#: Specs.php:62
+msgctxt "Column Title"
+msgid "Specifications"
+msgstr "ویژگی‌ها"
+
+#: Specs.php:63
+msgctxt "Show Option None"
+msgid "&ndash; Choose a Specification &ndash;"
+msgstr "&ndash; انتخاب کنید &ndash;"
+
+#: Specs.php:66
+msgctxt "Noop"
+msgid "Specification"
+msgid_plural "Specifications"
+msgstr[0] "ویژگی‌ها"
+msgstr[1] "ویژگی"
+
+#: Specs.php:295
+msgctxt "Sortable Handler"
+msgid "Sort me!"
+msgstr "مرتب کن!"
+
+#: Specs.php:298
+msgctxt "Sortable Trash"
+msgid "Trash me!"
+msgstr "حذف کن!"
+
+#: Specs.php:314 Specs.php:450
+msgctxt "Modules: Specs"
+msgid "Unknown Field"
+msgstr "فیلد ناشناخته"
