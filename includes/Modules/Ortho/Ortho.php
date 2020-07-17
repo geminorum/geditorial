@@ -40,13 +40,13 @@ class Ortho extends gEditorial\Module
 		$tabs = [
 			[
 				'id'       => $this->classs( 'virastar' ),
-				'title'    => _x( 'Virastar', 'Modules: Ortho: Help Tab Title', 'geditorial' ),
+				'title'    => _x( 'Virastar', 'Help Tab Title', 'geditorial-ortho' ),
 				'content'  => sprintf( '<div class="-info"><p>Virastar is a Persian text cleaner.</p><p class="-from">Virastar v%s installed. For more information, Please see Virastar <a href="%s" target="_blank">home page</a> or <a href="%s" target="_blank">live demo</a>.</p></div>',
 					$this->virastar_version, 'https://github.com/brothersincode/virastar', 'https://virastar.brothersincode.ir' ),
 			],
 			[
 				'id'       => $this->classs( 'persiantools' ),
-				'title'    => _x( 'PersianTools', 'Modules: Ortho: Help Tab Title', 'geditorial' ),
+				'title'    => _x( 'PersianTools', 'Help Tab Title', 'geditorial-ortho' ),
 				'content'  => sprintf( '<div class="-info"><p>PersianTools is a Persian text library.</p><p class="-from">PersianTools v%s installed. For more information, Please see PersianTools <a href="%s" target="_blank">home page</a>.</p></div>',
 					$this->persiantools_version, 'https://github.com/Bersam/persiantools' ),
 			],
@@ -128,15 +128,15 @@ class Ortho extends gEditorial\Module
 				[
 					'field'       => 'virastar_options',
 					'type'        => 'checkboxes',
-					'title'       => _x( 'Virastar Options', 'Modules: Ortho: Setting Title', 'geditorial' ),
-					'description' => _x( 'For more information, please see the library documentations.', 'Modules: Ortho: Setting Description', 'geditorial' ),
+					'title'       => _x( 'Virastar Options', 'Setting Title', 'geditorial-ortho' ),
+					'description' => _x( 'For more information, please see the library documentations.', 'Setting Description', 'geditorial-ortho' ),
 					'default'     => array_keys( array_filter( $virastar_options ) ),
 					'values'      => self::keyLabels( array_keys( $virastar_options ) ),
 				],
 				[
 					'field'       => 'virastar_on_paste',
-					'title'       => _x( 'Virastar on Paste', 'Modules: Ortho: Setting Title', 'geditorial' ),
-					'description' => _x( 'Applies Virastar to pasted texts on targeted inputs.', 'Modules: Ortho: Setting Description', 'geditorial' ),
+					'title'       => _x( 'Virastar on Paste', 'Setting Title', 'geditorial-ortho' ),
+					'description' => _x( 'Applies Virastar to pasted texts on targeted inputs.', 'Setting Description', 'geditorial-ortho' ),
 				],
 			],
 		];
@@ -145,7 +145,7 @@ class Ortho extends gEditorial\Module
 	public function settings_section_virastar()
 	{
 		Settings::fieldSection(
-			_x( 'Virastar!', 'Modules: Ortho: Setting Section Title', 'geditorial' )
+			_x( 'Virastar!', 'Setting Section Title', 'geditorial-ortho' )
 		);
 	}
 
@@ -154,17 +154,17 @@ class Ortho extends gEditorial\Module
 		return [
 			'js' => [
 				// 'button_virastar'        => HTML::getDashicon( 'text' ),
-				'button_virastar_title'  => _x( 'Apply Virastar!', 'Modules: Ortho: Javascript String', 'geditorial' ),
-				'qtag_virastar'          => _x( 'Virastar!', 'Modules: Ortho: Javascript String', 'geditorial' ),
-				'qtag_virastar_title'    => _x( 'Apply Virastar!', 'Modules: Ortho: Javascript String', 'geditorial' ),
-				'qtag_swapquotes'        => _x( 'Swap Quotes', 'Modules: Ortho: Javascript String', 'geditorial' ),
-				'qtag_swapquotes_title'  => _x( 'Swap Not-Correct Quotes', 'Modules: Ortho: Javascript String', 'geditorial' ),
-				'qtag_mswordnotes'       => _x( 'Word Footnotes', 'Modules: Ortho: Javascript String', 'geditorial' ),
-				'qtag_mswordnotes_title' => _x( 'MS Word Footnotes to WordPress [ref]', 'Modules: Ortho: Javascript String', 'geditorial' ),
-				'qtag_download'          => _x( 'Download', 'Modules: Ortho: Javascript String', 'geditorial' ),
-				'qtag_download_title'    => _x( 'Download text as markdown', 'Modules: Ortho: Javascript String', 'geditorial' ),
-				'qtag_nbsp'              => _x( 'nbsp', 'Modules: Ortho: Javascript String', 'geditorial' ),
-				'qtag_nbsp_title'        => _x( 'Non-Breaking SPace', 'Modules: Ortho: Javascript String', 'geditorial' ),
+				'button_virastar_title'  => _x( 'Apply Virastar!', 'Javascript String', 'geditorial-ortho' ),
+				'qtag_virastar'          => _x( 'Virastar!', 'Javascript String', 'geditorial-ortho' ),
+				'qtag_virastar_title'    => _x( 'Apply Virastar!', 'Javascript String', 'geditorial-ortho' ),
+				'qtag_swapquotes'        => _x( 'Swap Quotes', 'Javascript String', 'geditorial-ortho' ),
+				'qtag_swapquotes_title'  => _x( 'Swap Not-Correct Quotes', 'Javascript String', 'geditorial-ortho' ),
+				'qtag_mswordnotes'       => _x( 'Word Footnotes', 'Javascript String', 'geditorial-ortho' ),
+				'qtag_mswordnotes_title' => _x( 'MS Word Footnotes to WordPress [ref]', 'Javascript String', 'geditorial-ortho' ),
+				'qtag_download'          => _x( 'Download', 'Javascript String', 'geditorial-ortho' ),
+				'qtag_download_title'    => _x( 'Download text as markdown', 'Javascript String', 'geditorial-ortho' ),
+				'qtag_nbsp'              => _x( 'nbsp', 'Javascript String', 'geditorial-ortho' ),
+				'qtag_nbsp_title'        => _x( 'Non-Breaking SPace', 'Javascript String', 'geditorial-ortho' ),
 			],
 		];
 	}
@@ -328,7 +328,7 @@ class Ortho extends gEditorial\Module
 
 	protected function render_tools_html( $uri, $sub )
 	{
-		HTML::h3( _x( 'Orthography Sandbox', 'Modules: Ortho', 'geditorial' ) );
+		HTML::h3( _x( 'Orthography Sandbox', 'Header', 'geditorial-ortho' ) );
 
 		$this->do_settings_field( [
 			'type'         => 'textarea-quicktags',
@@ -365,7 +365,7 @@ class Ortho extends gEditorial\Module
 			}
 
 			$this->screen_option( $sub );
-			$this->register_button( 'cleanup_chars', _x( 'Cleanup Chars', 'Modules: Ortho: Setting Button', 'geditorial' ), TRUE );
+			$this->register_button( 'cleanup_chars', _x( 'Cleanup Chars', 'Button', 'geditorial-ortho' ), TRUE );
 		}
 	}
 
@@ -381,8 +381,8 @@ class Ortho extends gEditorial\Module
 		list( $posts, $pagination ) = $this->getTablePosts( $query, $extra );
 
 		$pagination['before'][] = HTML::dropdown( [
-			'ي' => _x( 'Arabic Letter Yeh U+064A', 'Modules: Ortho', 'geditorial' ),
-			'ك' => _x( 'Arabic Letter Kaf U+0643', 'Modules: Ortho', 'geditorial' ),
+			'ي' => _x( 'Arabic Letter Yeh U+064A', 'Char Title', 'geditorial-ortho' ),
+			'ك' => _x( 'Arabic Letter Kaf U+0643', 'Char Title', 'geditorial-ortho' ),
 		], [
 			'name'       => 'char',
 			'selected'   => self::req( 'char', 'none' ),
@@ -409,7 +409,7 @@ class Ortho extends gEditorial\Module
 		return HTML::tableList( $columns, $posts, [
 			'navigation' => 'before',
 			'search'     => 'before',
-			'title'      => HTML::tag( 'h3', _x( 'Overview of Post Orthography', 'Modules: Ortho', 'geditorial' ) ),
+			'title'      => HTML::tag( 'h3', _x( 'Overview of Post Orthography', 'Header', 'geditorial-ortho' ) ),
 			'empty'      => $this->get_posttype_label( 'post', 'not_found' ),
 			'pagination' => $pagination,
 		] );
