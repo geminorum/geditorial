@@ -27,7 +27,7 @@ class Views extends gEditorial\Module
 
 	public function settings_intro()
 	{
-		HTML::desc( _x( 'Note that the logget-out users count by default.', 'Modules: Views', 'geditorial' ) );
+		HTML::desc( _x( 'Note that the logget-out users count by default.', 'Message', 'geditorial-views' ) );
 	}
 
 	protected function get_global_settings()
@@ -44,7 +44,7 @@ class Views extends gEditorial\Module
 	private function events()
 	{
 		return [
-			'entryview' => _x( 'Entry Views', 'Modules: Views: Event', 'geditorial' ),
+			'entryview' => _x( 'Entry Views', 'Event Name', 'geditorial-views' ),
 		];
 	}
 
@@ -65,7 +65,7 @@ class Views extends gEditorial\Module
 
 		$nodes[] = [
 			'id'     => $this->classs(),
-			'title'  => _x( 'View Summary', 'Modules: Views: Adminbar', 'geditorial' ),
+			'title'  => _x( 'View Summary', 'Title Attr', 'geditorial-views' ),
 			'parent' => $parent,
 			'href'   => $this->get_module_url( 'reports', NULL, [ 'id' => $post_id ] ),
 		];
