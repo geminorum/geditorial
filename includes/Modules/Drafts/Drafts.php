@@ -32,24 +32,24 @@ class Drafts extends gEditorial\Module
 			'_general' => [
 				[
 					'field'       => 'public_preview',
-					'title'       => _x( 'Public Preview', 'Modules: Drafts: Setting Title', 'geditorial' ),
-					'description' => _x( 'Provides a secret link to non-logged in users to view post drafts.', 'Modules: Drafts: Setting Description', 'geditorial' ),
+					'title'       => _x( 'Public Preview', 'Setting Title', 'geditorial-drafts' ),
+					'description' => _x( 'Provides a secret link to non-logged in users to view post drafts.', 'Setting Description', 'geditorial-drafts' ),
 				],
 				'admin_rowactions',
 			],
 			'_frontend' => [
 				[
 					'field'       => 'adminbar_summary',
-					'title'       => _x( 'Adminbar Summary', 'Modules: Drafts: Setting Title', 'geditorial' ),
-					'description' => _x( 'Summary for the current item as a node in adminbar', 'Modules: Drafts: Setting Description', 'geditorial' ),
+					'title'       => _x( 'Adminbar Summary', 'Setting Title', 'geditorial-drafts' ),
+					'description' => _x( 'Summary for the current item as a node in adminbar', 'Setting Description', 'geditorial-drafts' ),
 				],
 				'summary_scope',
 				'adminbar_roles',
 				[
 					'field'       => 'max_posts',
 					'type'        => 'number',
-					'title'       => _x( 'Max Posts', 'Modules: Drafts: Setting Title', 'geditorial' ),
-					'description' => _x( 'Maximum number of posts for each post-type.', 'Modules: Drafts: Setting Description', 'geditorial' ),
+					'title'       => _x( 'Max Posts', 'Setting Title', 'geditorial-drafts' ),
+					'description' => _x( 'Maximum number of posts for each post-type.', 'Setting Description', 'geditorial-drafts' ),
 					'default'     => 25,
 				],
 			],
@@ -133,7 +133,7 @@ class Drafts extends gEditorial\Module
 		$nodes[] = [
 			'id'    => $this->classs(),
 			'href'  => '#',
-			'title' => _x( 'Drafts', 'Modules: Drafts: Adminbar', 'geditorial' ).Ajax::spinner(),
+			'title' => _x( 'Drafts', 'Adminbar', 'geditorial-drafts' ).Ajax::spinner(),
 			'meta'  => [ 'class' => 'geditorial-adminbar-node '.$this->classs() ],
 		];
 
@@ -160,7 +160,7 @@ class Drafts extends gEditorial\Module
 					self::cheatin();
 
 				if ( ! $this->make_private( $post['post_id'] ) )
-					Ajax::errorMessage( _x( 'Unable to make preview private. Please try again.', 'Modules: Drafts', 'geditorial' ) );
+					Ajax::errorMessage( __( 'Unable to make preview private. Please try again.', 'geditorial-drafts' ) );
 
 				Ajax::success();
 
@@ -177,7 +177,7 @@ class Drafts extends gEditorial\Module
 					self::cheatin();
 
 				if ( ! $link = $this->make_public( $post['post_id'] ) )
-					Ajax::errorMessage( _x( 'Unable to make preview public. Please try again.', 'Modules: Drafts', 'geditorial' ) );
+					Ajax::errorMessage( __( 'Unable to make preview public. Please try again.', 'geditorial-drafts' ) );
 
 				Ajax::success( $link );
 
@@ -199,7 +199,7 @@ class Drafts extends gEditorial\Module
 	{
 		$html = '';
 		/* translators: %s: drafts count */
-		$all  = _x( 'View all %s drafts', 'Modules: Drafts', 'geditorial' );
+		$all  = _x( 'View all %s drafts', 'Header', 'geditorial-drafts' );
 		$user = 'all' == $this->get_setting( 'summary_scope', 'all' ) ? 0 : get_current_user_id();
 
 		foreach ( $this->posttypes() as $posttype ) {
@@ -230,7 +230,7 @@ class Drafts extends gEditorial\Module
 			$html.= '<div class="-block"><h3>'.$link.'</h3><ul>'.$block.'</ul></div>';
 		}
 
-		return $html ?:'<div class="-empty"><p>'._x( '(none)', 'Modules: Drafts', 'geditorial' ).'</p></div>';
+		return $html ?:'<div class="-empty"><p>'._x( '(none)', 'Empty', 'geditorial-drafts' ).'</p></div>';
 	}
 
 	private function get_drafts( $posttype = 'post', $user = 0 )
@@ -282,7 +282,7 @@ class Drafts extends gEditorial\Module
 				'action' => 'public',
 				'nonce'  => $nonce,
 			],
-		], _x( 'Make Preview Public', 'Modules: Drafts', 'geditorial' ) );
+		], _x( 'Make Preview Public', 'Button', 'geditorial-drafts' ) );
 
 		echo HTML::tag( 'a', [
 			'href'  => '#',
@@ -293,7 +293,7 @@ class Drafts extends gEditorial\Module
 				'action' => 'private',
 				'nonce'  => $nonce,
 			],
-		], _x( 'Make Preview Private', 'Modules: Drafts', 'geditorial' ) );
+		], _x( 'Make Preview Private', 'Button', 'geditorial-drafts' ) );
 
 		echo '</div>';
 	}
@@ -352,7 +352,7 @@ class Drafts extends gEditorial\Module
 
 		if ( $this->is_public( $post->ID ) )
 			$actions['public_link'] = HTML::link(
-				_x( 'Public Preview', 'Modules: Drafts', 'geditorial' ),
+				_x( 'Public Preview', 'Action', 'geditorial-drafts' ),
 				$this->get_preview_url( $post->ID )
 			);
 
@@ -367,13 +367,13 @@ class Drafts extends gEditorial\Module
 		$link = $this->get_preview_url( $post->ID );
 
 		echo '<li class="-row -drafts -preview-link">';
-			echo $this->get_column_icon( FALSE, 'welcome-view-site', _x( 'Preview', 'Modules: Drafts: Row Icon Title', 'geditorial' ) );
+			echo $this->get_column_icon( FALSE, 'welcome-view-site', _x( 'Preview', 'Row Icon Title', 'geditorial-drafts' ) );
 
 			echo HTML::tag( 'a', [
 				'href'   => $link,
 				'class'  => '-link',
 				'target' => '_blank',
-			], _x( 'Has public preview link', 'Modules: Drafts', 'geditorial' ) );
+			], _x( 'Has public preview link', 'Row', 'geditorial-drafts' ) );
 
 		echo '</li>';
 	}
