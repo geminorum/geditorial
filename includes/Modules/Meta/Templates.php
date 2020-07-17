@@ -185,7 +185,7 @@ class Meta extends gEditorial\Template
 			'echo'          => isset( $atts['e'] ) ? $atts['e'] : TRUE,
 			'default'       => isset( $atts['def'] ) ? $atts['def'] : FALSE,
 			'title_meta'    => FALSE, // meta key for title of the link
-			'title_default' => _x( 'External Source', 'Modules: Meta: Meta Link Default Title', 'geditorial' ), // default val for title of the link
+			'title_default' => _x( 'External Source', 'Title Attr', 'geditorial-meta' ), // default val for title of the link
 			'url_meta'      => 'es', // meta key for URL of the link
 			'url_default'   => FALSE, // default val for URL of the link
 			'desc'          => NULL, // FALSE to disable
@@ -289,7 +289,7 @@ class Meta extends gEditorial\Template
 		$title = self::get_meta( 'ch', [ 'id' => $id, 'def' => FALSE ] );
 		$link  = $term ? get_term_link( $term, $tax ) : ( $title ? get_option( 'home' ).'/?s='.urlencode( $title ) : FALSE );
 		/* translators: %1$s: site name, %2$s: search query */
-		$desc  = $term ? $term->name.( $term->description ? strip_tags( ' :: '.$term->description ) : '' ) : sprintf( apply_filters( 'gmeta_search_link_title_attr', _x( 'Search %1$s for %2$s', 'Modules: Meta', 'geditorial' ) ), get_bloginfo( 'name' ), $title );
+		$desc  = $term ? $term->name.( $term->description ? strip_tags( ' :: '.$term->description ) : '' ) : sprintf( apply_filters( 'gmeta_search_link_title_attr', _x( 'Search %1$s for %2$s', 'Title Attr', 'geditorial-meta' ) ), get_bloginfo( 'name' ), $title );
 
 		if ( $term || $title ) {
 			@$value = $title ? $title : $term->name;
