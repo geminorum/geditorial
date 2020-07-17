@@ -41,71 +41,71 @@ class Terms extends gEditorial\Module
 				[
 					'field'       => 'term_order',
 					'type'        => 'taxonomies',
-					'title'       => _x( 'Term Order', 'Modules: Terms: Setting Title', 'geditorial' ),
-					'description' => _x( 'Supports order for terms in the selected taxonomies.', 'Modules: Terms: Setting Description', 'geditorial' ),
+					'title'       => _x( 'Term Order', 'Setting Title', 'geditorial-terms' ),
+					'description' => _x( 'Supports order for terms in the selected taxonomies.', 'Setting Description', 'geditorial-terms' ),
 					'values'      => $this->get_taxonomies_support( 'order' ),
 				],
 				[
 					'field'       => 'term_tagline',
 					'type'        => 'taxonomies',
-					'title'       => _x( 'Term Tagline', 'Modules: Terms: Setting Title', 'geditorial' ),
-					'description' => _x( 'Supports tagline for terms in the selected taxonomies.', 'Modules: Terms: Setting Description', 'geditorial' ),
+					'title'       => _x( 'Term Tagline', 'Setting Title', 'geditorial-terms' ),
+					'description' => _x( 'Supports tagline for terms in the selected taxonomies.', 'Setting Description', 'geditorial-terms' ),
 					'values'      => $this->get_taxonomies_support( 'tagline' ),
 				],
 				[
 					'field'       => 'term_contact',
 					'type'        => 'taxonomies',
-					'title'       => _x( 'Term Contact', 'Modules: Terms: Setting Title', 'geditorial' ),
-					'description' => _x( 'Supports contact for terms in the selected taxonomies.', 'Modules: Terms: Setting Description', 'geditorial' ),
+					'title'       => _x( 'Term Contact', 'Setting Title', 'geditorial-terms' ),
+					'description' => _x( 'Supports contact for terms in the selected taxonomies.', 'Setting Description', 'geditorial-terms' ),
 					'values'      => $this->get_taxonomies_support( 'contact' ),
 				],
 				[
 					'field'       => 'term_image',
 					'type'        => 'taxonomies',
-					'title'       => _x( 'Term Image', 'Modules: Terms: Setting Title', 'geditorial' ),
-					'description' => _x( 'Supports image for terms in the selected taxonomies.', 'Modules: Terms: Setting Description', 'geditorial' ),
+					'title'       => _x( 'Term Image', 'Setting Title', 'geditorial-terms' ),
+					'description' => _x( 'Supports image for terms in the selected taxonomies.', 'Setting Description', 'geditorial-terms' ),
 					'values'      => $this->get_taxonomies_support( 'image' ),
 				],
 				[
 					'field'       => 'term_author',
 					'type'        => 'taxonomies',
-					'title'       => _x( 'Term Author', 'Modules: Terms: Setting Title', 'geditorial' ),
-					'description' => _x( 'Supports author for terms in the selected taxonomies.', 'Modules: Terms: Setting Description', 'geditorial' ),
+					'title'       => _x( 'Term Author', 'Setting Title', 'geditorial-terms' ),
+					'description' => _x( 'Supports author for terms in the selected taxonomies.', 'Setting Description', 'geditorial-terms' ),
 					'values'      => $this->get_taxonomies_support( 'author' ),
 				],
 				[
 					'field'       => 'term_color',
 					'type'        => 'taxonomies',
-					'title'       => _x( 'Term Color', 'Modules: Terms: Setting Title', 'geditorial' ),
-					'description' => _x( 'Supports color for terms in the selected taxonomies.', 'Modules: Terms: Setting Description', 'geditorial' ),
+					'title'       => _x( 'Term Color', 'Setting Title', 'geditorial-terms' ),
+					'description' => _x( 'Supports color for terms in the selected taxonomies.', 'Setting Description', 'geditorial-terms' ),
 					'values'      => $this->get_taxonomies_support( 'color' ),
 				],
 				[
 					'field'       => 'term_role',
 					'type'        => 'taxonomies',
-					'title'       => _x( 'Term Role', 'Modules: Terms: Setting Title', 'geditorial' ),
-					'description' => _x( 'Supports user role for terms in the selected taxonomies.', 'Modules: Terms: Setting Description', 'geditorial' ),
+					'title'       => _x( 'Term Role', 'Setting Title', 'geditorial-terms' ),
+					'description' => _x( 'Supports user role for terms in the selected taxonomies.', 'Setting Description', 'geditorial-terms' ),
 					'values'      => $this->get_taxonomies_support( 'role' ),
 				],
 				[
 					'field'       => 'term_roles',
 					'type'        => 'taxonomies',
-					'title'       => _x( 'Term Roles', 'Modules: Terms: Setting Title', 'geditorial' ),
-					'description' => _x( 'Supports multiple user roles for terms in the selected taxonomies.', 'Modules: Terms: Setting Description', 'geditorial' ),
+					'title'       => _x( 'Term Roles', 'Setting Title', 'geditorial-terms' ),
+					'description' => _x( 'Supports multiple user roles for terms in the selected taxonomies.', 'Setting Description', 'geditorial-terms' ),
 					'values'      => $this->get_taxonomies_support( 'roles' ),
 				],
 				[
 					'field'       => 'term_posttype',
 					'type'        => 'taxonomies',
-					'title'       => _x( 'Term Posttype', 'Modules: Terms: Setting Title', 'geditorial' ),
-					'description' => _x( 'Supports posttype for terms in the selected taxonomies.', 'Modules: Terms: Setting Description', 'geditorial' ),
+					'title'       => _x( 'Term Posttype', 'Setting Title', 'geditorial-terms' ),
+					'description' => _x( 'Supports posttype for terms in the selected taxonomies.', 'Setting Description', 'geditorial-terms' ),
 					'values'      => $this->get_taxonomies_support( 'posttype' ),
 				],
 				[
 					'field'       => 'term_posttypes',
 					'type'        => 'taxonomies',
-					'title'       => _x( 'Term Posttypes', 'Modules: Terms: Setting Title', 'geditorial' ),
-					'description' => _x( 'Supports multiple posttypes for terms in the selected taxonomies.', 'Modules: Terms: Setting Description', 'geditorial' ),
+					'title'       => _x( 'Term Posttypes', 'Setting Title', 'geditorial-terms' ),
+					'description' => _x( 'Supports multiple posttypes for terms in the selected taxonomies.', 'Setting Description', 'geditorial-terms' ),
 					'values'      => $this->get_taxonomies_support( 'posttypes' ),
 				],
 			],
@@ -120,45 +120,45 @@ class Terms extends gEditorial\Module
 	{
 		return [
 			'titles' => [
-				'order'     => _x( 'Order', 'Modules: Terms: Titles', 'geditorial' ),
-				'tagline'   => _x( 'Tagline', 'Modules: Terms: Titles', 'geditorial' ),
-				'contact'   => _x( 'Contact', 'Modules: Terms: Titles', 'geditorial' ),
-				'image'     => _x( 'Image', 'Modules: Terms: Titles', 'geditorial' ),
-				'author'    => _x( 'Author', 'Modules: Terms: Titles', 'geditorial' ),
-				'color'     => _x( 'Color', 'Modules: Terms: Titles', 'geditorial' ),
-				'role'      => _x( 'Role', 'Modules: Terms: Titles', 'geditorial' ),
-				'posttype'  => _x( 'Posttype', 'Modules: Terms: Titles', 'geditorial' ),
-				'roles'     => _x( 'Roles', 'Modules: Terms: Titles', 'geditorial' ),
-				'posttypes' => _x( 'Posttypes', 'Modules: Terms: Titles', 'geditorial' ),
+				'order'     => _x( 'Order', 'Titles', 'geditorial-terms' ),
+				'tagline'   => _x( 'Tagline', 'Titles', 'geditorial-terms' ),
+				'contact'   => _x( 'Contact', 'Titles', 'geditorial-terms' ),
+				'image'     => _x( 'Image', 'Titles', 'geditorial-terms' ),
+				'author'    => _x( 'Author', 'Titles', 'geditorial-terms' ),
+				'color'     => _x( 'Color', 'Titles', 'geditorial-terms' ),
+				'role'      => _x( 'Role', 'Titles', 'geditorial-terms' ),
+				'posttype'  => _x( 'Posttype', 'Titles', 'geditorial-terms' ),
+				'roles'     => _x( 'Roles', 'Titles', 'geditorial-terms' ),
+				'posttypes' => _x( 'Posttypes', 'Titles', 'geditorial-terms' ),
 			],
 			'descriptions' => [
-				'order'     => _x( 'Terms are usually ordered alphabetically, but you can choose your own order by numbers.', 'Modules: Terms: Descriptions', 'geditorial' ),
-				'tagline'   => _x( 'Gives more information about the term in a short phrase.', 'Modules: Terms: Descriptions', 'geditorial' ),
-				'contact'   => _x( 'Adds a way to contact someone about the term, by url, email or phone.', 'Modules: Terms: Descriptions', 'geditorial' ),
-				'image'     => _x( 'Assigns a custom image to visually separate terms from each other.', 'Modules: Terms: Descriptions', 'geditorial' ),
-				'author'    => _x( 'Sets a user as term author to help identify who created or owns each term.', 'Modules: Terms: Descriptions', 'geditorial' ),
-				'color'     => _x( 'Terms can have unique colors to help separate them from each other.', 'Modules: Terms: Descriptions', 'geditorial' ),
-				'role'      => _x( 'Terms can have unique role visibility to help separate them for user roles.', 'Modules: Terms: Descriptions', 'geditorial' ),
-				'roles'     => _x( 'Terms can have unique roles visibility to help separate them for user roles.', 'Modules: Terms: Descriptions', 'geditorial' ),
-				'posttype'  => _x( 'Terms can have unique posttype visibility to help separate them on editing.', 'Modules: Terms: Descriptions', 'geditorial' ),
-				'posttypes' => _x( 'Terms can have unique posttypes visibility to help separate them on editing.', 'Modules: Terms: Descriptions', 'geditorial' ),
+				'order'     => _x( 'Terms are usually ordered alphabetically, but you can choose your own order by numbers.', 'Descriptions', 'geditorial-terms' ),
+				'tagline'   => _x( 'Gives more information about the term in a short phrase.', 'Descriptions', 'geditorial-terms' ),
+				'contact'   => _x( 'Adds a way to contact someone about the term, by url, email or phone.', 'Descriptions', 'geditorial-terms' ),
+				'image'     => _x( 'Assigns a custom image to visually separate terms from each other.', 'Descriptions', 'geditorial-terms' ),
+				'author'    => _x( 'Sets a user as term author to help identify who created or owns each term.', 'Descriptions', 'geditorial-terms' ),
+				'color'     => _x( 'Terms can have unique colors to help separate them from each other.', 'Descriptions', 'geditorial-terms' ),
+				'role'      => _x( 'Terms can have unique role visibility to help separate them for user roles.', 'Descriptions', 'geditorial-terms' ),
+				'roles'     => _x( 'Terms can have unique roles visibility to help separate them for user roles.', 'Descriptions', 'geditorial-terms' ),
+				'posttype'  => _x( 'Terms can have unique posttype visibility to help separate them on editing.', 'Descriptions', 'geditorial-terms' ),
+				'posttypes' => _x( 'Terms can have unique posttypes visibility to help separate them on editing.', 'Descriptions', 'geditorial-terms' ),
 			],
 			'misc' => [
-				'order_column_title'     => _x( 'O', 'Modules: Terms: Column Title: Order', 'geditorial' ),
-				'tagline_column_title'   => _x( 'Tagline', 'Modules: Terms: Column Title: Tagline', 'geditorial' ),
-				'contact_column_title'   => _x( 'C', 'Modules: Terms: Column Title: Contact', 'geditorial' ),
-				'image_column_title'     => _x( 'Image', 'Modules: Terms: Column Title: Image', 'geditorial' ),
-				'author_column_title'    => _x( 'Author', 'Modules: Terms: Column Title: Author', 'geditorial' ),
-				'color_column_title'     => _x( 'C', 'Modules: Terms: Column Title: Color', 'geditorial' ),
-				'role_column_title'      => _x( 'Role', 'Modules: Terms: Column Title: Role', 'geditorial' ),
-				'roles_column_title'     => _x( 'Roles', 'Modules: Terms: Column Title: Roles', 'geditorial' ),
-				'posttype_column_title'  => _x( 'Posttype', 'Modules: Terms: Column Title: Posttype', 'geditorial' ),
-				'posttypes_column_title' => _x( 'Posttypes', 'Modules: Terms: Column Title: Posttypes', 'geditorial' ),
-				'posts_column_title'     => _x( 'P', 'Modules: Terms: Column Title: Posts', 'geditorial' ),
+				'order_column_title'     => _x( 'O', 'Column Title: Order', 'geditorial-terms' ),
+				'tagline_column_title'   => _x( 'Tagline', 'Column Title: Tagline', 'geditorial-terms' ),
+				'contact_column_title'   => _x( 'C', 'Column Title: Contact', 'geditorial-terms' ),
+				'image_column_title'     => _x( 'Image', 'Column Title: Image', 'geditorial-terms' ),
+				'author_column_title'    => _x( 'Author', 'Column Title: Author', 'geditorial-terms' ),
+				'color_column_title'     => _x( 'C', 'Column Title: Color', 'geditorial-terms' ),
+				'role_column_title'      => _x( 'Role', 'Column Title: Role', 'geditorial-terms' ),
+				'roles_column_title'     => _x( 'Roles', 'Column Title: Roles', 'geditorial-terms' ),
+				'posttype_column_title'  => _x( 'Posttype', 'Column Title: Posttype', 'geditorial-terms' ),
+				'posttypes_column_title' => _x( 'Posttypes', 'Column Title: Posttypes', 'geditorial-terms' ),
+				'posts_column_title'     => _x( 'P', 'Column Title: Posts', 'geditorial-terms' ),
 			],
 			'js' => [
-				'modal_title'  => _x( 'Choose an Image', 'Modules: Terms: Javascript String', 'geditorial' ),
-				'modal_button' => _x( 'Set as image', 'Modules: Terms: Javascript String', 'geditorial' ),
+				'modal_title'  => _x( 'Choose an Image', 'Javascript String', 'geditorial-terms' ),
+				'modal_button' => _x( 'Set as image', 'Javascript String', 'geditorial-terms' ),
 			],
 		];
 	}
@@ -652,12 +652,12 @@ class Terms extends gEditorial\Module
 
 				$html.= HTML::tag( 'a', [
 					'class' => [ 'button', 'button-small', 'button-secondary', '-modal' ],
-				], _x( 'Choose', 'Modules: Terms: Button', 'geditorial' ) );
+				], _x( 'Choose', 'Button', 'geditorial-terms' ) );
 
 				$html.= '&nbsp;'.HTML::tag( 'a', [
 					'class' => [ 'button', 'button-small', 'button-link-delete', '-remove' ],
 					'style' => empty( $meta ) ? 'display:none' : FALSE,
-				], _x( 'Remove', 'Modules: Terms: Button', 'geditorial' ) );
+				], _x( 'Remove', 'Button', 'geditorial-terms' ) );
 
 			break;
 			case 'order':
@@ -807,13 +807,13 @@ class Terms extends gEditorial\Module
 
 				$html.= HTML::tag( 'button', [
 					'class' => [ 'button', 'button-small', 'button-secondary', '-modal', '-quick' ],
-				], _x( 'Choose', 'Modules: Terms: Button', 'geditorial' ) );
+				], _x( 'Choose', 'Button', 'geditorial-terms' ) );
 
 				$html.= '&nbsp;'.HTML::tag( 'a', [
 					'href'  => '',
 					'class' => [ 'button', 'button-small', 'button-link-delete', '-remove', '-quick' ],
 					'style' => 'display:none',
-				], _x( 'Remove', 'Modules: Terms: Button', 'geditorial' ) ).'&nbsp;';
+				], _x( 'Remove', 'Button', 'geditorial-terms' ) ).'&nbsp;';
 
 				$html.= HTML::tag( 'img', [
 					// 'src'   => '',
@@ -904,14 +904,14 @@ class Terms extends gEditorial\Module
 
 			$nodes[] = [
 				'id'     => $this->classs(),
-				'title'  => _x( 'Term Summary', 'Modules: Terms: Adminbar', 'geditorial' ),
+				'title'  => _x( 'Term Summary', 'Adminbar', 'geditorial-terms' ),
 				'parent' => $parent,
 				'href'   => $this->get_module_url( 'reports' ),
 			];
 
 			$nodes[] = [
 				'id'     => $this->classs( 'count' ),
-				'title'  => _x( 'Post Count', 'Modules: Terms: Adminbar', 'geditorial' ).': '.Helper::getCounted( $term->count ),
+				'title'  => _x( 'Post Count', 'Adminbar', 'geditorial-terms' ).': '.Helper::getCounted( $term->count ),
 				'parent' => $this->classs(),
 				'href'   => FALSE,
 			];
@@ -922,7 +922,7 @@ class Terms extends gEditorial\Module
 
 				$nodes[] = [
 					'id'     => $this->classs( 'desc' ),
-					'title'  => _x( 'Description', 'Modules: Terms: Adminbar', 'geditorial' ),
+					'title'  => _x( 'Description', 'Adminbar', 'geditorial-terms' ),
 					'parent' => $this->classs(),
 					'href'   => WordPress::getEditTaxLink( $term->taxonomy, $term->term_id ),
 				];
@@ -941,7 +941,7 @@ class Terms extends gEditorial\Module
 
 				$nodes[] = [
 					'id'     => $this->classs( 'desc', 'empty' ),
-					'title'  => _x( 'Description', 'Modules: Terms: Adminbar', 'geditorial' ).': '.gEditorial\Plugin::na(),
+					'title'  => _x( 'Description', 'Adminbar', 'geditorial-terms' ).': '.gEditorial\Plugin::na(),
 					'parent' => $this->classs(),
 					'href'   => WordPress::getEditTaxLink( $term->taxonomy, $term->term_id ),
 				];
@@ -953,7 +953,7 @@ class Terms extends gEditorial\Module
 					'id'     => $this->classs( $field ),
 					'parent' => $this->classs(),
 					/* translators: %s: meta title */
-					'title'  => sprintf( _x( 'Meta: %s', 'Modules: Terms: Adminbar', 'geditorial' ),
+					'title'  => sprintf( _x( 'Meta: %s', 'Adminbar', 'geditorial-terms' ),
 						$this->get_string( $field, $term->taxonomy, 'titles', $field ) ),
 				];
 
@@ -1012,7 +1012,7 @@ class Terms extends gEditorial\Module
 					// TODO: add the rest!
 
 					break;
-					default: $node['title'] = _x( 'Meta: Uknonwn', 'Modules: Terms: Adminbar', 'geditorial' ); break;
+					default: $node['title'] = _x( 'Meta: Uknonwn', 'Adminbar', 'geditorial-terms' ); break;
 				}
 
 				$nodes[] = $node;
@@ -1034,7 +1034,7 @@ class Terms extends gEditorial\Module
 
 		$nodes[] = [
 			'id'     => $this->classs(),
-			'title'  => _x( 'Summary of Terms', 'Modules: Terms: Adminbar', 'geditorial' ),
+			'title'  => _x( 'Summary of Terms', 'Adminbar', 'geditorial-terms' ),
 			'parent' => $parent,
 			'href'   => $this->get_module_url( 'reports' ),
 		];
@@ -1142,13 +1142,13 @@ class Terms extends gEditorial\Module
 		$live_taxes    = Taxonomy::get( 6 );
 		$dead_taxes    = array_diff_key( $db_taxes, $live_taxes );
 
-		HTML::h3( _x( 'Term Tools', 'Modules: Terms', 'geditorial' ) );
+		HTML::h3( _x( 'Term Tools', 'Header', 'geditorial-terms' ) );
 
 		echo '<table class="form-table">';
 
 		if ( count( $dead_taxes ) ) {
 
-			echo '<tr><th scope="row">'._x( 'Orphaned Terms', 'Modules: Terms', 'geditorial' ).'</th><td>';
+			echo '<tr><th scope="row">'._x( 'Orphaned Terms', 'Tools', 'geditorial-terms' ).'</th><td>';
 
 				$this->do_settings_field( [
 					'type'         => 'select',
@@ -1168,10 +1168,9 @@ class Terms extends gEditorial\Module
 
 				echo '&nbsp;&nbsp;';
 
-				Settings::submitButton( 'orphaned_terms',
-					_x( 'Convert', 'Modules: Terms: Setting Button', 'geditorial' ) );
+				Settings::submitButton( 'orphaned_terms', _x( 'Convert', 'Button', 'geditorial-terms' ) );
 
-				HTML::desc( _x( 'Converts orphaned terms into currently registered taxonomies.', 'Modules: Terms', 'geditorial' ) );
+				HTML::desc( _x( 'Converts orphaned terms into currently registered taxonomies.', 'Message', 'geditorial-terms' ) );
 
 			echo '</td></tr>';
 
@@ -1180,12 +1179,11 @@ class Terms extends gEditorial\Module
 
 		if ( count( $uncategorized ) ) {
 
-			echo '<tr><th scope="row">'._x( 'Uncategorized Posts', 'Modules: Terms', 'geditorial' ).'</th><td>';
+			echo '<tr><th scope="row">'._x( 'Uncategorized Posts', 'Tools', 'geditorial-terms' ).'</th><td>';
 
-			Settings::submitButton( 'clean_uncategorized',
-				_x( 'Cleanup Uncategorized', 'Modules: Terms: Setting Button', 'geditorial' ) );
+			Settings::submitButton( 'clean_uncategorized', _x( 'Cleanup Uncategorized', 'Button', 'geditorial-terms' ) );
 
-			HTML::desc( _x( 'Checks for posts in uncategorized category and removes the unnecessaries.', 'Modules: Terms', 'geditorial' ) );
+			HTML::desc( _x( 'Checks for posts in uncategorized category and removes the unnecessaries.', 'Message', 'geditorial-terms' ) );
 
 			echo '<br />';
 
@@ -1202,7 +1200,7 @@ class Terms extends gEditorial\Module
 		}
 
 		if ( ! $available )
-			HTML::desc( _x( 'Currently no tool available.', 'Modules: Terms', 'geditorial' ) );
+			HTML::desc( _x( 'Currently no tool available.', 'Message', 'geditorial-terms' ) );
 
 		echo '</table>';
 	}
@@ -1255,7 +1253,7 @@ class Terms extends gEditorial\Module
 	{
 		list( $posts, $pagination ) = $this->getTablePosts( [], [], 'any' );
 
-		$pagination['actions']['purge_unregistered'] = _x( 'Purge Unregistered', 'Modules: Terms: Table Action', 'geditorial' );
+		$pagination['actions']['purge_unregistered'] = _x( 'Purge Unregistered', 'Table Action', 'geditorial-terms' );
 
 		$pagination['before'][] = Helper::tableFilterPostTypes();
 		$pagination['before'][] = Helper::tableFilterAuthors();
@@ -1269,7 +1267,7 @@ class Terms extends gEditorial\Module
 			'title' => Helper::tableColumnPostTitle(),
 			'terms' => Helper::tableColumnPostTerms(),
 			'raw' => [
-				'title'    => _x( 'Raw', 'Modules: Terms: Table Column', 'geditorial' ),
+				'title'    => _x( 'Raw', 'Table Column', 'geditorial-terms' ),
 				'callback' => function( $value, $row, $column, $index ){
 
 					$query = new \WP_Term_Query( [ 'object_ids' => $row->ID, 'get' => 'all' ] );
@@ -1288,7 +1286,7 @@ class Terms extends gEditorial\Module
 		], $posts, [
 			'navigation' => 'before',
 			'search'     => 'before',
-			'title'      => HTML::tag( 'h3', _x( 'Overview of Posts with Terms', 'Modules: Terms', 'geditorial' ) ),
+			'title'      => HTML::tag( 'h3', _x( 'Overview of Posts with Terms', 'Header', 'geditorial-terms' ) ),
 			'empty'      => $this->get_posttype_label( 'post', 'not_found' ),
 			'pagination' => $pagination,
 		] );
@@ -1300,10 +1298,10 @@ class Terms extends gEditorial\Module
 		$supported = $this->get_supported( $taxonomy );
 
 		if ( in_array( 'image', $supported ) )
-			$additions['sync_image_titles'] = _x( 'Sync Image Titles', 'Modules: Terms: Bulk Actions', 'geditorial' );
+			$additions['sync_image_titles'] = _x( 'Sync Image Titles', 'Bulk Actions', 'geditorial-terms' );
 
 		if ( in_array( 'tagline', $supported ) )
-			$additions['move_tagline_to_desc'] = _x( 'Move Tagline to Description', 'Modules: Terms: Bulk Actions', 'geditorial' );
+			$additions['move_tagline_to_desc'] = _x( 'Move Tagline to Description', 'Bulk Actions', 'geditorial-terms' );
 
 		return array_merge( $actions, $additions );
 	}
@@ -1400,12 +1398,12 @@ class Terms extends gEditorial\Module
 			return $items;
 
 		/* translators: %s: posts count */
-		$noopd = _nx_noop( '%s Uncategorized Post', '%s Uncategorized Posts', 'Modules: Terms', 'geditorial' );
+		$noopd = _nx_noop( '%s Uncategorized Post', '%s Uncategorized Posts', 'Noop', 'geditorial-terms' );
 		$link  = $this->cuc( 'tools' ) ? $this->get_module_url( 'tools' ) : add_query_arg( [ 'cat' => get_option( 'default_category' ) ], admin_url( 'edit.php' ) );
 
 		$items[] = HTML::tag( 'a', [
 			'href'  => $link,
-			'title' => _x( 'You need to assign categories to some posts!', 'Modules: Terms', 'geditorial' ),
+			'title' => _x( 'You need to assign categories to some posts!', 'Title Attr', 'geditorial-terms' ),
 			'class' => '-uncategorized-count',
 		], sprintf( Helper::noopedCount( count( $list ), $noopd ), Number::format( count( $list ) ) ) );
 
