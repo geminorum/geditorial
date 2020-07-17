@@ -1,0 +1,56 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Inquire 3.15.8\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Last-Translator: NULL\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2020-07-17T11:48:23+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.4.0\n"
+"X-Poedit-Basepath: ../../includes/Modules/Inquire\n"
+"X-Domain: geditorial-inquire\n"
+
+#: Inquire.php:38
+msgctxt "Setting Title"
+msgid "Question Roles"
+msgstr ""
+
+#: Inquire.php:39
+msgctxt "Setting Description"
+msgid "Roles that can change the question."
+msgstr ""
+
+#: Inquire.php:47
+msgctxt "Setting Title"
+msgid "Make Public"
+msgstr ""
+
+#: Inquire.php:48
+msgctxt "Setting Description"
+msgid "Displays Inquiries on the front-end."
+msgstr ""
+
+#: Inquire.php:81
+msgctxt "Noop"
+msgid "Inquiry"
+msgid_plural "Inquiries"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Inquire.php:87
+msgctxt "Labels: Menu Name"
+msgid "Inquiries"
+msgstr ""
+
+#: Inquire.php:88
+msgctxt "Labels: Excerpt Box Title"
+msgid "Question"
+msgstr ""
+
+#: Inquire.php:191
+msgctxt "Placeholder"
+msgid "Enter question title here"
+msgstr ""

@@ -35,8 +35,8 @@ class Inquire extends gEditorial\Module
 				[
 					'field'       => 'excerpt_roles',
 					'type'        => 'checkbox-panel',
-					'title'       => _x( 'Question Roles', 'Modules: Inquire: Setting Title', 'geditorial' ),
-					'description' => _x( 'Roles that can change the question.', 'Modules: Inquire: Setting Description', 'geditorial' ),
+					'title'       => _x( 'Question Roles', 'Setting Title', 'geditorial-inquire' ),
+					'description' => _x( 'Roles that can change the question.', 'Setting Description', 'geditorial-inquire' ),
 					'exclude'     => $exclude,
 					'values'      => $roles,
 				],
@@ -44,8 +44,8 @@ class Inquire extends gEditorial\Module
 			'_supports' => [
 				[
 					'field'       => 'make_public',
-					'title'       => _x( 'Make Public', 'Modules: Inquire: Setting Title', 'geditorial' ),
-					'description' => _x( 'Displays Inquiries on the front-end.', 'Modules: Inquire: Setting Description', 'geditorial' ),
+					'title'       => _x( 'Make Public', 'Setting Title', 'geditorial-inquire' ),
+					'description' => _x( 'Displays Inquiries on the front-end.', 'Setting Description', 'geditorial-inquire' ),
 				],
 				$this->settings_supports_option( 'inquiry_cpt', TRUE ),
 			],
@@ -78,14 +78,14 @@ class Inquire extends gEditorial\Module
 	{
 		return [
 			'noops' => [
-				'inquiry_cpt'  => _nx_noop( 'Inquiry', 'Inquiries', 'Modules: Inquire: Noop', 'geditorial' ),
-				// 'status_tax'   => _nx_noop( 'Inquiry Status', 'Inquiry Statuses', 'Modules: Inquire: Noop', 'geditorial' ),
-				// 'priority_tax' => _nx_noop( 'Inquiry Priority', 'Idea Priorities', 'Modules: Inquire: Noop', 'geditorial' ),
+				'inquiry_cpt'  => _nx_noop( 'Inquiry', 'Inquiries', 'Noop', 'geditorial-inquire' ),
+				// 'status_tax'   => _nx_noop( 'Inquiry Status', 'Inquiry Statuses', 'Noop', 'geditorial-inquire' ),
+				// 'priority_tax' => _nx_noop( 'Inquiry Priority', 'Idea Priorities', 'Noop', 'geditorial-inquire' ),
 			],
 			'misc' => [
 				'inquiry_cpt' => [
-					'menu_name'       => _x( 'Inquiries', 'Modules: Inquire: Labels: Menu Name', 'geditorial' ),
-					'excerpt_metabox' => _x( 'Question', 'Modules: Inquire: Labels: Excerpt Box Title', 'geditorial' ),
+					'menu_name'       => _x( 'Inquiries', 'Labels: Menu Name', 'geditorial-inquire' ),
+					'excerpt_metabox' => _x( 'Question', 'Labels: Excerpt Box Title', 'geditorial-inquire' ),
 				],
 			],
 		];
@@ -127,7 +127,7 @@ class Inquire extends gEditorial\Module
 	// {
 	// 	return [
 	// 		'page_cpt' => [
-	// 			'main' => _x( 'Editorial: Inquire: Dashboard', 'Modules: Inquire', 'geditorial' ),
+	// 			'main' => _x( 'Editorial: Inquire: Dashboard', 'Template Title', 'geditorial-inquire' ),
 	// 		],
 	// 	];
 	// }
@@ -188,7 +188,7 @@ class Inquire extends gEditorial\Module
 
 	public function enter_title_here( $title, $post )
 	{
-		return _x( 'Enter question title here', 'Modules: Inquire', 'geditorial' );
+		return _x( 'Enter question title here', 'Placeholder', 'geditorial-inquire' );
 	}
 
 	public function post_updated_messages( $messages )
