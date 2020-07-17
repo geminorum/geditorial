@@ -15,8 +15,8 @@ class CustomHTML extends gEditorial\Widget
 			'module' => 'widgets',
 			'name'   => 'custom_html',
 			'class'  => 'custom-html',
-			'title'  => _x( 'Editorial: Custom HTML', 'Modules: Widgets: Widget Title', 'geditorial' ),
-			'desc'   => _x( 'Displays arbitrary HTML code with support for shortcodes and embeds.', 'Modules: Widgets: Widget Description', 'geditorial' ),
+			'title'  => _x( 'Editorial: Custom HTML', 'Widget Title', 'geditorial-widgets' ),
+			'desc'   => _x( 'Displays arbitrary HTML code with support for shortcodes and embeds.', 'Widget Description', 'geditorial-widgets' ),
 		];
 	}
 
@@ -69,11 +69,11 @@ class CustomHTML extends gEditorial\Widget
 
 		echo '<div class="-group">';
 
-		$this->form_checkbox( $instance, FALSE, 'embeds', _x( 'Process Embeds', 'Modules: Widgets: Widget: Custom HTML', 'geditorial' ) );
-		$this->form_checkbox( $instance, FALSE, 'shortcodes', _x( 'Process Shortcodes', 'Modules: Widgets: Widget: Custom HTML', 'geditorial' ) );
-		$this->form_checkbox( $instance, FALSE, 'filters', _x( 'Process Filters', 'Modules: Widgets: Widget: Custom HTML', 'geditorial' ) );
-		$this->form_checkbox( $instance, FALSE, 'legacy', _x( 'Process Filters (Legacy)', 'Modules: Widgets: Widget: Custom HTML', 'geditorial' ) );
-		$this->form_checkbox( $instance, FALSE, 'autop', _x( 'Automatic Paragraphs', 'Modules: Widgets: Widget: Custom HTML', 'geditorial' ) );
+		$this->form_checkbox( $instance, FALSE, 'embeds', _x( 'Process Embeds', 'Widget: Custom HTML', 'geditorial-widgets' ) );
+		$this->form_checkbox( $instance, FALSE, 'shortcodes', _x( 'Process Shortcodes', 'Widget: Custom HTML', 'geditorial-widgets' ) );
+		$this->form_checkbox( $instance, FALSE, 'filters', _x( 'Process Filters', 'Widget: Custom HTML', 'geditorial-widgets' ) );
+		$this->form_checkbox( $instance, FALSE, 'legacy', _x( 'Process Filters (Legacy)', 'Widget: Custom HTML', 'geditorial-widgets' ) );
+		$this->form_checkbox( $instance, FALSE, 'autop', _x( 'Automatic Paragraphs', 'Widget: Custom HTML', 'geditorial-widgets' ) );
 
 		echo '</div>';
 

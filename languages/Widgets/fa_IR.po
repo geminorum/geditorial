@@ -1,0 +1,142 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Widgets 3.15.8\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"POT-Creation-Date: 2020-07-17T10:41:07+00:00\n"
+"PO-Revision-Date: 2020-07-17 16:17+0430\n"
+"Last-Translator: geminorum <contact@geminorum.ir>\n"
+"Language-Team: NULL\n"
+"Language: fa_IR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.3.1\n"
+"X-Domain: geditorial-widgets\n"
+"Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
+"X-Poedit-Basepath: ../../includes/Modules/Widgets\n"
+
+#: Widgets.php:26
+msgctxt "Setting Title"
+msgid "Widgets"
+msgstr "ابزارک‌ها"
+
+#: Widgets/Custom-HTML.php:18
+msgctxt "Widget Title"
+msgid "Editorial: Custom HTML"
+msgstr "تحریریه: متن سفارشی"
+
+#: Widgets/Custom-HTML.php:19
+msgctxt "Widget Description"
+msgid "Displays arbitrary HTML code with support for shortcodes and embeds."
+msgstr "نمایش کد HTML دلخواه، همراه با پشتیبانی از شورت‌کدها و جاسازها."
+
+#: Widgets/Custom-HTML.php:72
+msgctxt "Widget: Custom HTML"
+msgid "Process Embeds"
+msgstr "پردازش جاسازها"
+
+#: Widgets/Custom-HTML.php:73
+msgctxt "Widget: Custom HTML"
+msgid "Process Shortcodes"
+msgstr "پردازش شورت‌کدها"
+
+#: Widgets/Custom-HTML.php:74
+msgctxt "Widget: Custom HTML"
+msgid "Process Filters"
+msgstr "پردازش فیلترها"
+
+#: Widgets/Custom-HTML.php:75
+msgctxt "Widget: Custom HTML"
+msgid "Process Filters (Legacy)"
+msgstr "پردازش فیلترها (قدیمی)"
+
+#: Widgets/Custom-HTML.php:76
+msgctxt "Widget: Custom HTML"
+msgid "Automatic Paragraphs"
+msgstr "بندهای خودکار"
+
+#: Widgets/GCal-Events.php:23
+msgctxt "Widget Title"
+msgid "Editorial: Google Calendar"
+msgstr "تحریریه: تقویم گوگل"
+
+#: Widgets/GCal-Events.php:24
+msgctxt "Widget Description"
+msgid "Displays list of events from a public Google Calendar."
+msgstr "نمایش فهرست رویدادها از یک تقویم گوگل عمومی."
+
+#: Widgets/GCal-Events.php:85
+msgctxt "Widget: Google Calendar"
+msgid "Calendar ID:"
+msgstr "شناسه تقویم:"
+
+#: Widgets/GCal-Events.php:86
+msgctxt "Widget: Google Calendar"
+msgid "Your API key:"
+msgstr "کلید API شما:"
+
+#. translators: %s: documents url
+#: Widgets/GCal-Events.php:89
+msgctxt "Widget: Google Calendar"
+msgid "Get your API key <a href=\"%s\" target=\"_blank\">here</a>."
+msgstr "کلید API خود را از <a href=\"%s\" target=\"_blank\">اینجا</a> دریافت کنید."
+
+#: Widgets/GCal-Events.php:91
+msgctxt "Widget: Google Calendar"
+msgid "Start from (YYYY-MM-DD):"
+msgstr "شروع از (YYYY-MM-DD):"
+
+#: Widgets/GCal-Events.php:92
+msgctxt "Widget: Google Calendar"
+msgid "Max results:"
+msgstr "حداکثر رویدادها:"
+
+#: Widgets/GCal-Events.php:93
+msgctxt "Widget: Google Calendar"
+msgid "Display Time"
+msgstr "نمایش زمان"
+
+#: Widgets/GCal-Events.php:95
+msgctxt "Widget: Google Calendar"
+msgid "No events scheduled."
+msgstr "رویدادی زمان‌بندی نشده است."
+
+#: Widgets/WPRest-Posts.php:23
+msgctxt "Widget Title"
+msgid "Editorial: WP-REST Posts"
+msgstr "تحریریه: نوشته‌های وردپرس"
+
+#: Widgets/WPRest-Posts.php:24
+msgctxt "Widget Description"
+msgid "Displays list of posts from a public WordPress site."
+msgstr "نمایش فهرست نوشته‌ها از یک سایت وردپرس عمومی."
+
+#: Widgets/WPRest-Posts.php:110
+msgctxt "Widget: WP-REST Posts"
+msgid "Resource URL:"
+msgstr "نشانی منبع:"
+
+#: Widgets/WPRest-Posts.php:111
+msgctxt "Widget: WP-REST Posts"
+msgid "Endpoint:"
+msgstr "پایانه:"
+
+#: Widgets/WPRest-Posts.php:112
+msgctxt "Widget: WP-REST Posts"
+msgid "Tag IDs:"
+msgstr "شناسه برچسب‌ها:"
+
+#: Widgets/WPRest-Posts.php:113
+msgctxt "Widget: WP-REST Posts"
+msgid "Category IDs:"
+msgstr "شناسه دسته‌ها:"
+
+#: Widgets/WPRest-Posts.php:114
+msgctxt "Widget: WP-REST Posts"
+msgid "Extra Args:"
+msgstr "آرگیومنت‌های افزوده:"
+
+#: Widgets/WPRest-Posts.php:117
+msgctxt "Widget: WP-REST Posts"
+msgid "No posts!"
+msgstr "خبری نیست!"

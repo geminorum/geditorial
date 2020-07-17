@@ -1,0 +1,140 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Widgets 3.15.8\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Last-Translator: NULL\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2020-07-17T11:48:57+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.4.0\n"
+"X-Poedit-Basepath: ../../includes/Modules/Widgets\n"
+"X-Domain: geditorial-widgets\n"
+
+#: Widgets.php:26
+msgctxt "Setting Title"
+msgid "Widgets"
+msgstr ""
+
+#: Widgets/Custom-HTML.php:18
+msgctxt "Widget Title"
+msgid "Editorial: Custom HTML"
+msgstr ""
+
+#: Widgets/Custom-HTML.php:19
+msgctxt "Widget Description"
+msgid "Displays arbitrary HTML code with support for shortcodes and embeds."
+msgstr ""
+
+#: Widgets/Custom-HTML.php:72
+msgctxt "Widget: Custom HTML"
+msgid "Process Embeds"
+msgstr ""
+
+#: Widgets/Custom-HTML.php:73
+msgctxt "Widget: Custom HTML"
+msgid "Process Shortcodes"
+msgstr ""
+
+#: Widgets/Custom-HTML.php:74
+msgctxt "Widget: Custom HTML"
+msgid "Process Filters"
+msgstr ""
+
+#: Widgets/Custom-HTML.php:75
+msgctxt "Widget: Custom HTML"
+msgid "Process Filters (Legacy)"
+msgstr ""
+
+#: Widgets/Custom-HTML.php:76
+msgctxt "Widget: Custom HTML"
+msgid "Automatic Paragraphs"
+msgstr ""
+
+#: Widgets/GCal-Events.php:23
+msgctxt "Widget Title"
+msgid "Editorial: Google Calendar"
+msgstr ""
+
+#: Widgets/GCal-Events.php:24
+msgctxt "Widget Description"
+msgid "Displays list of events from a public Google Calendar."
+msgstr ""
+
+#: Widgets/GCal-Events.php:85
+msgctxt "Widget: Google Calendar"
+msgid "Calendar ID:"
+msgstr ""
+
+#: Widgets/GCal-Events.php:86
+msgctxt "Widget: Google Calendar"
+msgid "Your API key:"
+msgstr ""
+
+#. translators: %s: documents url
+#: Widgets/GCal-Events.php:89
+msgctxt "Widget: Google Calendar"
+msgid "Get your API key <a href=\"%s\" target=\"_blank\">here</a>."
+msgstr ""
+
+#: Widgets/GCal-Events.php:91
+msgctxt "Widget: Google Calendar"
+msgid "Start from (YYYY-MM-DD):"
+msgstr ""
+
+#: Widgets/GCal-Events.php:92
+msgctxt "Widget: Google Calendar"
+msgid "Max results:"
+msgstr ""
+
+#: Widgets/GCal-Events.php:93
+msgctxt "Widget: Google Calendar"
+msgid "Display Time"
+msgstr ""
+
+#: Widgets/GCal-Events.php:95
+msgctxt "Widget: Google Calendar"
+msgid "No events scheduled."
+msgstr ""
+
+#: Widgets/WPRest-Posts.php:23
+msgctxt "Widget Title"
+msgid "Editorial: WP-REST Posts"
+msgstr ""
+
+#: Widgets/WPRest-Posts.php:24
+msgctxt "Widget Description"
+msgid "Displays list of posts from a public WordPress site."
+msgstr ""
+
+#: Widgets/WPRest-Posts.php:110
+msgctxt "Widget: WP-REST Posts"
+msgid "Resource URL:"
+msgstr ""
+
+#: Widgets/WPRest-Posts.php:111
+msgctxt "Widget: WP-REST Posts"
+msgid "Endpoint:"
+msgstr ""
+
+#: Widgets/WPRest-Posts.php:112
+msgctxt "Widget: WP-REST Posts"
+msgid "Tag IDs:"
+msgstr ""
+
+#: Widgets/WPRest-Posts.php:113
+msgctxt "Widget: WP-REST Posts"
+msgid "Category IDs:"
+msgstr ""
+
+#: Widgets/WPRest-Posts.php:114
+msgctxt "Widget: WP-REST Posts"
+msgid "Extra Args:"
+msgstr ""
+
+#: Widgets/WPRest-Posts.php:117
+msgctxt "Widget: WP-REST Posts"
+msgid "No posts!"
+msgstr ""

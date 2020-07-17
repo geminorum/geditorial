@@ -20,8 +20,8 @@ class GCalEvents extends gEditorial\Widget
 			'module' => 'widgets',
 			'name'   => 'gcal_events',
 			'class'  => 'gcal-events',
-			'title'  => _x( 'Editorial: Google Calendar', 'Modules: Widgets: Widget Title', 'geditorial' ),
-			'desc'   => _x( 'Displays list of events from a public Google Calendar.', 'Modules: Widgets: Widget Description', 'geditorial' ),
+			'title'  => _x( 'Editorial: Google Calendar', 'Widget Title', 'geditorial-widgets' ),
+			'desc'   => _x( 'Displays list of events from a public Google Calendar.', 'Widget Description', 'geditorial-widgets' ),
 		];
 	}
 
@@ -82,17 +82,17 @@ class GCalEvents extends gEditorial\Widget
 		$this->form_title( $instance );
 		$this->form_title_link( $instance );
 
-		$this->form_custom_code( $instance, '', 'calendar_id', _x( 'Calendar ID:', 'Modules: Widgets: Widget: Google Calendar', 'geditorial' ) );
-		$this->form_custom_code( $instance, '', 'api_key', _x( 'Your API key:', 'Modules: Widgets: Widget: Google Calendar', 'geditorial' ) );
+		$this->form_custom_code( $instance, '', 'calendar_id', _x( 'Calendar ID:', 'Widget: Google Calendar', 'geditorial-widgets' ) );
+		$this->form_custom_code( $instance, '', 'api_key', _x( 'Your API key:', 'Widget: Google Calendar', 'geditorial-widgets' ) );
 
 		/* translators: %s: documents url */
-		HTML::desc( sprintf( _x( 'Get your API key <a href="%s" target="_blank">here</a>.', 'Modules: Widgets: Widget: Google Calendar', 'geditorial' ), 'https://console.developers.google.com/' ) );
+		HTML::desc( sprintf( _x( 'Get your API key <a href="%s" target="_blank">here</a>.', 'Widget: Google Calendar', 'geditorial-widgets' ), 'https://console.developers.google.com/' ) );
 
-		$this->form_custom_code( $instance, '', 'time_min', _x( 'Start from (YYYY-MM-DD):', 'Modules: Widgets: Widget: Google Calendar', 'geditorial' ) );
-		$this->form_number( $instance, 5, 'max_results', _x( 'Max results:', 'Modules: Widgets: Widget: Google Calendar', 'geditorial' ) );
-		$this->form_checkbox( $instance, FALSE, 'display_time', _x( 'Display Time', 'Modules: Widgets: Widget: Google Calendar', 'geditorial' ) );
+		$this->form_custom_code( $instance, '', 'time_min', _x( 'Start from (YYYY-MM-DD):', 'Widget: Google Calendar', 'geditorial-widgets' ) );
+		$this->form_number( $instance, 5, 'max_results', _x( 'Max results:', 'Widget: Google Calendar', 'geditorial-widgets' ) );
+		$this->form_checkbox( $instance, FALSE, 'display_time', _x( 'Display Time', 'Widget: Google Calendar', 'geditorial-widgets' ) );
 
-		$this->form_custom_empty( $instance, _x( 'No events scheduled.', 'Modules: Widgets: Widget: Google Calendar', 'geditorial' ) );
+		$this->form_custom_empty( $instance, _x( 'No events scheduled.', 'Widget: Google Calendar', 'geditorial-widgets' ) );
 		$this->form_context( $instance );
 		$this->form_class( $instance );
 

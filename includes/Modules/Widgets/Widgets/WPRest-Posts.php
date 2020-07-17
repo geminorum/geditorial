@@ -20,8 +20,8 @@ class WPRestPosts extends gEditorial\Widget
 			'module' => 'widgets',
 			'name'   => 'wprest_posts',
 			'class'  => 'wprest-posts',
-			'title'  => _x( 'Editorial: WP-REST Posts', 'Modules: Widgets: Widget Title', 'geditorial' ),
-			'desc'   => _x( 'Displays list of posts from a public WordPress site.', 'Modules: Widgets: Widget Description', 'geditorial' ),
+			'title'  => _x( 'Editorial: WP-REST Posts', 'Widget Title', 'geditorial-widgets' ),
+			'desc'   => _x( 'Displays list of posts from a public WordPress site.', 'Widget Description', 'geditorial-widgets' ),
 		];
 	}
 
@@ -107,14 +107,14 @@ class WPRestPosts extends gEditorial\Widget
 		$this->form_title( $instance );
 		$this->form_title_link( $instance );
 
-		$this->form_custom_link( $instance, '', 'resource', _x( 'Resource URL:', 'Modules: Widgets: Widget: WP-REST Posts', 'geditorial' ) );
-		$this->form_custom_code( $instance, 'posts', 'endpoint', _x( 'Endpoint:', 'Modules: Widgets: Widget: WP-REST Posts', 'geditorial' ) );
-		$this->form_custom_code( $instance, '', 'tags', _x( 'Tag IDs:', 'Modules: Widgets: Widget: WP-REST Posts', 'geditorial' ) );
-		$this->form_custom_code( $instance, '', 'categories', _x( 'Category IDs:', 'Modules: Widgets: Widget: WP-REST Posts', 'geditorial' ) );
-		$this->form_custom_code( $instance, '', 'extra', _x( 'Extra Args:', 'Modules: Widgets: Widget: WP-REST Posts', 'geditorial' ) );
+		$this->form_custom_link( $instance, '', 'resource', _x( 'Resource URL:', 'Widget: WP-REST Posts', 'geditorial-widgets' ) );
+		$this->form_custom_code( $instance, 'posts', 'endpoint', _x( 'Endpoint:', 'Widget: WP-REST Posts', 'geditorial-widgets' ) );
+		$this->form_custom_code( $instance, '', 'tags', _x( 'Tag IDs:', 'Widget: WP-REST Posts', 'geditorial-widgets' ) );
+		$this->form_custom_code( $instance, '', 'categories', _x( 'Category IDs:', 'Widget: WP-REST Posts', 'geditorial-widgets' ) );
+		$this->form_custom_code( $instance, '', 'extra', _x( 'Extra Args:', 'Widget: WP-REST Posts', 'geditorial-widgets' ) );
 		$this->form_number( $instance );
 
-		$this->form_custom_empty( $instance, _x( 'No posts!', 'Modules: Widgets: Widget: WP-REST Posts', 'geditorial' ) );
+		$this->form_custom_empty( $instance, _x( 'No posts!', 'Widget: WP-REST Posts', 'geditorial-widgets' ) );
 		$this->form_context( $instance );
 		$this->form_class( $instance );
 
