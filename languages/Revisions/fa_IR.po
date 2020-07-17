@@ -1,0 +1,142 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Revisions 3.15.8\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2020-07-17T09:26:22+00:00\n"
+"PO-Revision-Date: 2020-07-17 14:03+0430\n"
+"X-Generator: Poedit 2.3.1\n"
+"X-Poedit-Basepath: ../../includes/Modules/Revisions\n"
+"X-Domain: geditorial-revisions\n"
+"Last-Translator: geminorum <contact@geminorum.ir>\n"
+"Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
+"Language: fa_IR\n"
+
+#: Revisions.php:50
+msgctxt "Setting Title"
+msgid "Revision Count"
+msgstr "شمارش رونوشت‌ها"
+
+#: Revisions.php:51
+msgctxt "Setting Description"
+msgid "Displays revision summary of the post on the attributes column"
+msgstr ""
+
+#: Revisions.php:55
+msgctxt "Setting Title"
+msgid "Revision Word Count"
+msgstr "شمارش واژه‌های رونوشت‌ها"
+
+#: Revisions.php:56
+msgctxt "Setting Description"
+msgid "Displays revision word count of the post title, content and excerpt"
+msgstr ""
+
+#: Revisions.php:61
+msgctxt "Setting Title"
+msgid "Revision Max Count"
+msgstr "بیشترین تعداد رونوشت‌ها"
+
+#. translators: %s: code placeholder
+#: Revisions.php:63
+msgctxt "Setting Description"
+msgid "The maximum number of revisions to save for each post. %s for every revision."
+msgstr ""
+
+#: Revisions.php:115
+msgctxt "Bulk Action"
+msgid "Purge Revisions"
+msgstr "پاک‌سازی رونوشت‌ها"
+
+#. translators: %s: revisions count
+#: Revisions.php:143
+msgctxt "Message"
+msgid "%s items(s) revisions purged!"
+msgstr "رونوشت‌های %s مورد پاک‌سازی شد!"
+
+#: Revisions.php:166
+msgctxt "Row Icon Title"
+msgid "Revisions"
+msgstr "رونوشت‌ها"
+
+#. translators: %s: revisions count
+#: Revisions.php:169
+msgctxt "Row"
+msgid "%s Revision"
+msgid_plural "%s Revisions"
+msgstr[0] "%s رونوشت"
+msgstr[1] "%s رونوشت"
+
+#: Revisions.php:174
+msgctxt "Title Attr"
+msgid "View the last revision"
+msgstr "نمایش آخرین رونوشت"
+
+#: Revisions.php:209
+msgctxt "Title Attr"
+msgid "Title/Content/Excerpt Word Count"
+msgstr "شمار واژه‌های عنوان/متن/چکیده"
+
+#: Revisions.php:229
+msgctxt "Indicator"
+msgid "[Current]"
+msgstr "[کنونی]"
+
+#: Revisions.php:236
+msgctxt "Title Attr"
+msgid "Browse"
+msgstr "کاوش"
+
+#: Revisions.php:237
+msgctxt "Title Attr"
+msgid "Delete"
+msgstr "حذف"
+
+#: Revisions.php:243
+msgctxt "Indicator"
+msgid "[Autosave]"
+msgstr "[ذخیره خودکار]"
+
+#: Revisions.php:269
+msgctxt "Title Attr"
+msgid "Purge all revisions"
+msgstr "پاک‌سازی همهٔ رونوشت‌ها"
+
+#: Revisions.php:275
+msgctxt "Button"
+msgid "Purge Revisions"
+msgstr "پاک‌سازی رونوشت‌ها"
+
+#: Revisions.php:282
+msgctxt "Title Attr"
+msgid "Browse all revisions"
+msgstr "کاووش در رونوشت‌ها"
+
+#. translators: %s: revisions count
+#: Revisions.php:285
+msgctxt "Button"
+msgid "Browse %s Revisions"
+msgstr "کاوش %s رونوشت"
+
+#: Revisions.php:404
+msgctxt "Table Action"
+msgid "Cleanup Revisions"
+msgstr "پاک‌سازی رونوشت‌ها"
+
+#: Revisions.php:415
+msgctxt "Table Column"
+msgid "Revisions"
+msgstr "رونوشت‌ها"
+
+#: Revisions.php:440
+msgctxt "Header"
+msgid "Overview of Post Revisions"
+msgstr "مروری بر رونوشت‌ها از نوشته‌ها"
+
+#: Revisions.php:441
+msgctxt "Message"
+msgid "No post revisions found."
+msgstr "نوشته‌ای با رونوشت پیدا نشد."
