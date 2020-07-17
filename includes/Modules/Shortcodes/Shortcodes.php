@@ -11,6 +11,7 @@ class Shortcodes extends gEditorial\Module
 {
 
 	protected $disable_no_posttypes = TRUE;
+	protected $textdomain_frontend  = FALSE;
 
 	public static function module()
 	{
@@ -50,7 +51,7 @@ class Shortcodes extends gEditorial\Module
 
 		$nodes[] = [
 			'id'     => $this->classs(),
-			'title'  => _x( 'Shortcodes', 'Modules: Shortcodes: Adminbar', 'geditorial' ),
+			'title'  => _x( 'Shortcodes', 'Title Attr', 'geditorial-shortcodes' ),
 			'parent' => $parent,
 			'href'   => $this->get_module_url(),
 		];
@@ -88,7 +89,7 @@ class Shortcodes extends gEditorial\Module
 				'name'       => 'shortcode',
 				'selected'   => self::req( 'shortcode', 'none' ),
 				'none_value' => 'none',
-				'none_title' => _x( 'All Shortcodes', 'Modules: Shortcodes', 'geditorial' ),
+				'none_title' => _x( 'All Shortcodes', 'None Title', 'geditorial-shortcodes' ),
 			] );
 
 		$pagination['before'][] = Helper::tableFilterPostTypes( $list );
@@ -102,7 +103,7 @@ class Shortcodes extends gEditorial\Module
 			'type'  => Helper::tableColumnPostType(),
 			'title' => Helper::tableColumnPostTitle(),
 			'shortcodes' => [
-				'title'    => _x( 'Shortcodes', 'Modules: Shortcodes: Table Column', 'geditorial' ),
+				'title'    => _x( 'Shortcodes', 'Table Column', 'geditorial-shortcodes' ),
 				'args'     => [ 'regex' => get_shortcode_regex() ],
 				'callback' => function( $value, $row, $column, $index ){
 
@@ -120,7 +121,7 @@ class Shortcodes extends gEditorial\Module
 		], $posts, [
 			'navigation' => 'before',
 			'search'     => 'before',
-			'title'      => HTML::tag( 'h3', _x( 'Overview of Post Shortcodes', 'Modules: Shortcodes', 'geditorial' ) ),
+			'title'      => HTML::tag( 'h3', _x( 'Overview of Post Shortcodes', 'Header', 'geditorial-shortcodes' ) ),
 			'empty'      => $this->get_posttype_label( 'post', 'not_found' ),
 			'pagination' => $pagination,
 		] );
