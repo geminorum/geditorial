@@ -1,0 +1,64 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Modified 3.15.8\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Last-Translator: NULL\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2020-07-17T11:48:28+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.4.0\n"
+"X-Poedit-Basepath: ../../includes/Modules/Modified\n"
+"X-Domain: geditorial-modified\n"
+
+#: Modified.php:44
+msgctxt "Setting Title"
+msgid "Last Published"
+msgstr ""
+
+#: Modified.php:45
+msgctxt "Setting Description"
+msgid "Displays last published instead of modified date."
+msgstr ""
+
+#: Modified.php:51
+msgctxt "Setting Title"
+msgid "Content Prefix"
+msgstr ""
+
+#: Modified.php:52
+msgctxt "Setting Description"
+msgid "Custom string before the modified time on the content."
+msgstr ""
+
+#: Modified.php:53
+msgctxt "Setting Default"
+msgid "Last modified on"
+msgstr ""
+
+#: Modified.php:58
+msgctxt "Setting Title"
+msgid "Insert Format"
+msgstr ""
+
+#: Modified.php:59
+msgctxt "Setting Description"
+msgid "Displays the date in this format on the content."
+msgstr ""
+
+#: Modified.php:66
+msgctxt "Setting Title"
+msgid "Display After"
+msgstr ""
+
+#: Modified.php:67
+msgctxt "Setting Description"
+msgid "Skips displaying modified since the original content published time."
+msgstr ""
+
+#: Modified.php:113
+msgctxt "Dashboard Widget Title"
+msgid "Latest Changes"
+msgstr ""

@@ -41,30 +41,30 @@ class Modified extends gEditorial\Module
 			'_frontend' => [
 				[
 					'field'       => 'last_published',
-					'title'       => _x( 'Last Published', 'Modules: Modified: Setting Title', 'geditorial' ),
-					'description' => _x( 'Displays last published instead of modified date.', 'Modules: Modified: Setting Description', 'geditorial' ),
+					'title'       => _x( 'Last Published', 'Setting Title', 'geditorial-modified' ),
+					'description' => _x( 'Displays last published instead of modified date.', 'Setting Description', 'geditorial-modified' ),
 				],
 				'insert_content',
 				[
 					'field'       => 'insert_prefix',
 					'type'        => 'text',
-					'title'       => _x( 'Content Prefix', 'Modules: Modified: Setting Title', 'geditorial' ),
-					'description' => _x( 'Custom string before the modified time on the content.', 'Modules: Modified: Setting Description', 'geditorial' ),
-					'default'     => _x( 'Last modified on', 'Modules: Modified: Setting Default', 'geditorial' ),
+					'title'       => _x( 'Content Prefix', 'Setting Title', 'geditorial-modified' ),
+					'description' => _x( 'Custom string before the modified time on the content.', 'Setting Description', 'geditorial-modified' ),
+					'default'     => _x( 'Last modified on', 'Setting Default', 'geditorial-modified' ),
 				],
 				[
 					'field'       => 'insert_format',
 					'type'        => 'text',
-					'title'       => _x( 'Insert Format', 'Modules: Modified: Setting Title', 'geditorial' ),
-					'description' => _x( 'Displays the date in this format on the content.', 'Modules: Modified: Setting Description', 'geditorial' ),
+					'title'       => _x( 'Insert Format', 'Setting Title', 'geditorial-modified' ),
+					'description' => _x( 'Displays the date in this format on the content.', 'Setting Description', 'geditorial-modified' ),
 					'default'     => get_option( 'date_format' ), // TODO: add new setting type to select format
 				],
 				'insert_priority',
 				[
 					'field'       => 'display_after',
 					'type'        => 'select',
-					'title'       => _x( 'Display After', 'Modules: Modified: Setting Title', 'geditorial' ),
-					'description' => _x( 'Skips displaying modified since the original content published time.', 'Modules: Modified: Setting Description', 'geditorial' ),
+					'title'       => _x( 'Display After', 'Setting Title', 'geditorial-modified' ),
+					'description' => _x( 'Skips displaying modified since the original content published time.', 'Setting Description', 'geditorial-modified' ),
 					'default'     => '60',
 					'values'      => Settings::minutesOptions(),
 				],
@@ -110,7 +110,7 @@ class Modified extends gEditorial\Module
 	protected function dashboard_widgets()
 	{
 		wp_add_dashboard_widget( $this->classs( 'summary' ),
-			_x( 'Latest Changes', 'Modules: Modified: Dashboard Widget Title', 'geditorial' ),
+			_x( 'Latest Changes', 'Dashboard Widget Title', 'geditorial-modified' ),
 			[ $this, 'dashboard_widget_summary' ]
 		);
 	}
