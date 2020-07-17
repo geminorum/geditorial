@@ -1,0 +1,62 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Series 3.15.8\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Last-Translator: NULL\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2020-07-17T11:48:41+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.4.0\n"
+"X-Poedit-Basepath: ../../includes/Modules/Series\n"
+"X-Domain: geditorial-series\n"
+
+#: Series.php:70
+msgctxt "Strings: Title"
+msgid "Title"
+msgstr ""
+
+#: Series.php:71
+msgctxt "Strings: Title"
+msgid "Order"
+msgstr ""
+
+#: Series.php:72
+msgctxt "Strings: Title"
+msgid "Description"
+msgstr ""
+
+#: Series.php:77
+msgctxt "Strings: Description"
+msgid "In Serie Title"
+msgstr ""
+
+#: Series.php:78
+msgctxt "Strings: Description"
+msgid "In Serie Order"
+msgstr ""
+
+#: Series.php:79
+msgctxt "Strings: Description"
+msgid "In Serie Description"
+msgstr ""
+
+#: Series.php:83
+#: Series.php:84
+msgctxt "Column Title"
+msgid "Series"
+msgstr ""
+
+#: Series.php:85
+msgctxt "Show Option None"
+msgid "&ndash; Choose a Series &ndash;"
+msgstr ""
+
+#: Series.php:88
+msgctxt "Noop"
+msgid "Serie"
+msgid_plural "Series"
+msgstr[0] ""
+msgstr[1] ""
