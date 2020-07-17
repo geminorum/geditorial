@@ -46,8 +46,8 @@ class Schedule extends gEditorial\Module
 				[
 					'field'       => 'noschedule_statuses',
 					'type'        => 'checkboxes',
-					'title'       => _x( 'Non-Reschedulable Statuses', 'Modules: Schedule: Setting Title', 'geditorial' ),
-					'description' => _x( 'Posts in these statuses can <b>not</b> be rescheduled.', 'Modules: Schedule: Setting Description', 'geditorial' ),
+					'title'       => _x( 'Non-Reschedulable Statuses', 'Setting Title', 'geditorial-schedule' ),
+					'description' => _x( 'Posts in these statuses can <b>not</b> be rescheduled.', 'Setting Description', 'geditorial-schedule' ),
 					'default'     => [ 'publish', 'future', 'private' ],
 					'exclude'     => [ 'trash', 'inherit', 'auto-draft' ],
 					'values'      => PostType::getStatuses(),
@@ -94,10 +94,10 @@ class Schedule extends gEditorial\Module
 				Ajax::checkReferer( $this->hook( $post['post_id'] ) );
 
 				if ( ! $target = get_post( $post['post_id'] ) )
-					Ajax::errorMessage( _x( 'Post not found.', 'Modules: Schedule', 'geditorial' ) );
+					Ajax::errorMessage( _x( 'Post not found.', 'Message', 'geditorial-schedule' ) );
 
 				if ( ! $this->can_reschedule( $target ) )
-					Ajax::errorMessage( _x( 'Updating the post date dynamically doesn\'t work for published content.', 'Modules: Schedule', 'geditorial' ) );
+					Ajax::errorMessage( _x( 'Updating the post date dynamically doesn\'t work for published content.', 'Message', 'geditorial-schedule' ) );
 
 				$result = Datetime::reSchedulePost( $target, $post );
 
@@ -136,8 +136,8 @@ class Schedule extends gEditorial\Module
 	{
 		$hook = add_submenu_page(
 			'index.php',
-			_x( 'Editorial Calendar', 'Modules: Schedule: Page Title', 'geditorial' ),
-			_x( 'My Calendar', 'Modules: Schedule: Menu Title', 'geditorial' ),
+			_x( 'Editorial Calendar', 'Page Title', 'geditorial-schedule' ),
+			_x( 'My Calendar', 'Menu Title', 'geditorial-schedule' ),
 			$this->role_can( 'adminmenu' ) ? 'read' : 'do_not_allow',
 			$this->get_adminmenu(),
 			[ $this, 'admin_calendar_page' ]
@@ -173,10 +173,10 @@ class Schedule extends gEditorial\Module
 			return Arraay::insert( $actions, [
 				$this->classs() => HTML::tag( 'a', [
 					'href'   => $link,
-					'title'  => _x( 'View on Calendar', 'Modules: Schedule', 'geditorial' ),
+					'title'  => _x( 'View on Calendar', 'Title Attr', 'geditorial-schedule' ),
 					'class'  => '-calendar',
 					'target' => '_blank',
-				], _x( 'Calendar', 'Modules: Schedule', 'geditorial' ) ),
+				], _x( 'Calendar', 'Action', 'geditorial-schedule' ) ),
 			], 'view', 'before' );
 
 		return $actions;
@@ -218,7 +218,7 @@ class Schedule extends gEditorial\Module
 
 		Settings::wrapOpen( $this->key, 'listtable' );
 
-			Settings::headerTitle( _x( 'Editorial Calendar', 'Modules: Schedule: Page Title', 'geditorial' ), $links );
+			Settings::headerTitle( _x( 'Editorial Calendar', 'Page Title', 'geditorial-schedule' ), $links );
 
 			$html = HTML::wrap( '', '-messages' );
 			$html.= Datetime::getCalendar( $cal, $args );
@@ -241,8 +241,8 @@ class Schedule extends gEditorial\Module
 		$html.= HTML::tag( 'input', [ 'type' => 'hidden', 'name' => 'date_cal', 'data-field' => 'cal', 'value' => $calendar ] );
 		$html.= HTML::tag( 'input', [ 'type' => 'hidden', 'name' => 'nonce', 'data-field' => 'nonce', 'value' => wp_create_nonce( $this->hook( 'add-new' ) ) ] );
 
-		$actions = HTML::button( HTML::getDashicon( 'yes '), '#', _x( 'Save', 'Modules: Schedule', 'geditorial' ), TRUE, [ 'action' => 'save' ] );
-		$actions.= HTML::button( HTML::getDashicon( 'no-alt '), '#', _x( 'Cancel', 'Modules: Schedule', 'geditorial' ), TRUE, [ 'action' => 'close' ] );
+		$actions = HTML::button( HTML::getDashicon( 'yes '), '#', _x( 'Save', 'Title Attr', 'geditorial-schedule' ), TRUE, [ 'action' => 'save' ] );
+		$actions.= HTML::button( HTML::getDashicon( 'no-alt '), '#', _x( 'Cancel', 'Title Attr', 'geditorial-schedule' ), TRUE, [ 'action' => 'close' ] );
 
 		$html.= HTML::wrap( $actions, '-actions' );
 
@@ -266,7 +266,7 @@ class Schedule extends gEditorial\Module
 		$html.= '<span class="-the-day-number">'.Number::localize( $the_day ).'</span>';
 
 		if ( $today )
-			$html.= '<span class="-the-day-today">'._x( 'Today', 'Modules: Schedule', 'geditorial' ).'</span>';
+			$html.= '<span class="-the-day-today">'._x( 'Today', 'Indicator', 'geditorial-schedule' ).'</span>';
 
 		// must have sortable container
 		$html.= '<ol class="-sortable" data-day="'.$the_day.'">';
@@ -295,7 +295,7 @@ class Schedule extends gEditorial\Module
 		if ( $this->can_reschedule( $post ) && current_user_can( 'edit_post', $post->ID ) ) {
 
 			$html.= ' data-post="'.$post->ID.'" data-nonce="'.wp_create_nonce( $this->hook( $post->ID ) ).'">';
-			$html.= '<span class="-handle" title="'._x( 'Drag me!', 'Modules: Schedule: Sortable', 'geditorial' ).'">';
+			$html.= '<span class="-handle" title="'._x( 'Drag me!', 'Sortable', 'geditorial-schedule' ).'">';
 
 		} else {
 
