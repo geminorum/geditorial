@@ -46,30 +46,30 @@ class Users extends gEditorial\Module
 			'_general' => [
 				[
 					'field'       => 'posttype_counts',
-					'title'       => _x( 'Posttype Counts', 'Modules: Users: Setting Title', 'geditorial' ),
-					'description' => _x( 'Displays posttype count for each user', 'Modules: Users: Setting Description', 'geditorial' ),
+					'title'       => _x( 'Posttype Counts', 'Setting Title', 'geditorial-users' ),
+					'description' => _x( 'Displays posttype count for each user', 'Setting Description', 'geditorial-users' ),
 				],
 				[
 					'field'       => 'user_groups',
-					'title'       => _x( 'User Groups', 'Modules: Users: Setting Title', 'geditorial' ),
-					'description' => _x( 'Taxonomy for organizing users in groups', 'Modules: Users: Setting Description', 'geditorial' ),
+					'title'       => _x( 'User Groups', 'Setting Title', 'geditorial-users' ),
+					'description' => _x( 'Taxonomy for organizing users in groups', 'Setting Description', 'geditorial-users' ),
 				],
 				[
 					'field'       => 'user_types',
-					'title'       => _x( 'User Types', 'Modules: Users: Setting Title', 'geditorial' ),
-					'description' => _x( 'Taxonomy for organizing users in types', 'Modules: Users: Setting Description', 'geditorial' ),
+					'title'       => _x( 'User Types', 'Setting Title', 'geditorial-users' ),
+					'description' => _x( 'Taxonomy for organizing users in types', 'Setting Description', 'geditorial-users' ),
 				],
 				'dashboard_widgets',
 				'admin_restrict',
 				[
 					'field'       => 'author_restrict',
-					'title'       => _x( 'Author Restrictions', 'Modules: Users: Setting Title', 'geditorial' ),
-					'description' => _x( 'Enhance admin edit page for authors', 'Modules: Users: Setting Description', 'geditorial' ),
+					'title'       => _x( 'Author Restrictions', 'Setting Title', 'geditorial-users' ),
+					'description' => _x( 'Enhance admin edit page for authors', 'Setting Description', 'geditorial-users' ),
 				],
 				[
 					'field'       => 'author_categories',
-					'title'       => _x( 'Author Categories', 'Modules: Users: Setting Title', 'geditorial' ),
-					'description' => _x( 'Limits each author to post just on selected categories.', 'Modules: Users: Setting Description', 'geditorial' ),
+					'title'       => _x( 'Author Categories', 'Setting Title', 'geditorial-users' ),
+					'description' => _x( 'Limits each author to post just on selected categories.', 'Setting Description', 'geditorial-users' ),
 				],
 			],
 			'_reports' => [
@@ -99,20 +99,20 @@ class Users extends gEditorial\Module
 		return [
 			'misc' => [
 				'group_tax' => [
-					'show_option_all'    => _x( 'All user groups', 'Modules: Users: Show Option All', 'geditorial' ),
-					'users_column_title' => _x( 'Users', 'Modules: Users: Column Title', 'geditorial' ),
-					'menu_name'          => _x( 'Groups', 'Modules: Users: User Group Tax Labels: Menu Name', 'geditorial' ),
+					'show_option_all'    => _x( 'All user groups', 'Show Option All', 'geditorial-users' ),
+					'users_column_title' => _x( 'Users', 'Column Title', 'geditorial-users' ),
+					'menu_name'          => _x( 'Groups', 'User Group Tax Labels: Menu Name', 'geditorial-users' ),
 				],
 				'type_tax' => [
-					'show_option_all'    => _x( 'All user types', 'Modules: Users: Show Option All', 'geditorial' ),
-					'users_column_title' => _x( 'Users', 'Modules: Users: Column Title', 'geditorial' ),
-					'menu_name'          => _x( 'Types', 'Modules: Users: User Type Tax Labels: Menu Name', 'geditorial' ),
+					'show_option_all'    => _x( 'All user types', 'Show Option All', 'geditorial-users' ),
+					'users_column_title' => _x( 'Users', 'Column Title', 'geditorial-users' ),
+					'menu_name'          => _x( 'Types', 'User Type Tax Labels: Menu Name', 'geditorial-users' ),
 				],
-				'counts_column_title' => _x( 'Summary', 'Modules: Users: Column Title', 'geditorial' ),
+				'counts_column_title' => _x( 'Summary', 'Column Title', 'geditorial-users' ),
 			],
 			'noops' => [
-				'group_tax' => _nx_noop( 'User Group', 'User Groups', 'Modules: Users: Noop', 'geditorial' ),
-				'type_tax'  => _nx_noop( 'User Type', 'User Types', 'Modules: Users: Noop', 'geditorial' ),
+				'group_tax' => _nx_noop( 'User Group', 'User Groups', 'Noop', 'geditorial-users' ),
+				'type_tax'  => _nx_noop( 'User Type', 'User Types', 'Noop', 'geditorial-users' ),
 			],
 		];
 	}
@@ -244,10 +244,10 @@ class Users extends gEditorial\Module
 
 	protected function dashboard_widgets()
 	{
-		$title = _x( 'Your Profile', 'Modules: Users: Dashboard Widget Title', 'geditorial' );
+		$title = _x( 'Your Profile', 'Dashboard Widget Title', 'geditorial-users' );
 		$title.= ' <span class="postbox-title-action"><a href="'.esc_url( admin_url( 'profile.php' )  ).'"';
-		$title.= ' title="'._x( 'Edit your profile', 'Modules: Users: Dashboard Widget Action', 'geditorial' ).'">';
-		$title.= _x( 'Edit', 'Modules: Users: Dashboard Widget Action', 'geditorial' ).'</a></span>';
+		$title.= ' title="'._x( 'Edit your profile', 'Dashboard Widget Action', 'geditorial-users' ).'">';
+		$title.= _x( 'Edit', 'Dashboard Widget Action', 'geditorial-users' ).'</a></span>';
 
 		wp_add_dashboard_widget( $this->classs( 'profile-summary' ), $title, [ $this, 'dashboard_widget_summary' ] );
 	}
@@ -331,7 +331,7 @@ class Users extends gEditorial\Module
 				foreach ( $terms as $term ) {
 
 					echo '<li class="-row -groups">';
-						echo $this->get_column_icon( FALSE, 'networking', _x( 'Group', 'Modules: Users: Row Icon Title', 'geditorial' ) );
+						echo $this->get_column_icon( FALSE, 'networking', _x( 'Group', 'Row Icon Title', 'geditorial-users' ) );
 						echo sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' );
 					echo '</li>';
 				}
@@ -345,7 +345,7 @@ class Users extends gEditorial\Module
 				foreach ( $terms as $term ) {
 
 					echo '<li class="-row -types">';
-						echo $this->get_column_icon( FALSE, 'networking', _x( 'Type', 'Modules: Users: Row Icon Title', 'geditorial' ) );
+						echo $this->get_column_icon( FALSE, 'networking', _x( 'Type', 'Row Icon Title', 'geditorial-users' ) );
 						echo sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' );
 					echo '</li>';
 				}
@@ -387,10 +387,10 @@ class Users extends gEditorial\Module
 
 		$terms = get_terms( [ 'taxonomy' => $this->constant( 'group_tax' ), 'hide_empty' => FALSE ] );
 
-		HTML::h2( _x( 'Site Groups', 'Modules: Users', 'geditorial' ) );
+		HTML::h2( _x( 'Site Groups', 'Header', 'geditorial-users' ) );
 
 		echo '<table class="form-table">';
-			echo '<tr><th scope="row">'._x( 'User Groups', 'Modules: Users', 'geditorial' ).'</th><td>';
+			echo '<tr><th scope="row">'._x( 'User Groups', 'Header', 'geditorial-users' ).'</th><td>';
 
 			if ( ! empty( $terms ) ) {
 
@@ -415,7 +415,7 @@ class Users extends gEditorial\Module
 				echo '<input type="hidden" name="groups[]" value="0" />';
 
 			} else {
-				_ex( 'There are no groups available.', 'Modules: Users', 'geditorial' );
+				_ex( 'There are no groups available.', 'Message', 'geditorial-users' );
 			}
 
 		echo '</td></tr>';
@@ -428,11 +428,11 @@ class Users extends gEditorial\Module
 		$default  = get_option( 'default_category' );
 		$selected = $this->get_user_catecories( $user->ID );
 
-		HTML::h2( _x( 'Site Categories', 'Modules: Users', 'geditorial' ) );
-		HTML::desc( _x( 'Restrict non editor users to post in selected categories only.', 'Modules: Users', 'geditorial' ) );
+		HTML::h2( _x( 'Site Categories', 'Header', 'geditorial-users' ) );
+		HTML::desc( _x( 'Restrict non editor users to post in selected categories only.', 'Message', 'geditorial-users' ) );
 
 		echo '<table class="form-table">';
-			echo '<tr><th scope="row">'._x( 'User Categories', 'Modules: Users', 'geditorial' ).'</th><td>';
+			echo '<tr><th scope="row">'._x( 'User Categories', 'Header', 'geditorial-users' ).'</th><td>';
 
 			if ( ! empty( $terms ) ) {
 
@@ -460,7 +460,7 @@ class Users extends gEditorial\Module
 				echo '<input type="hidden" name="categories[]" value="0" />';
 
 			} else {
-				_ex( 'There are no categories available.', 'Modules: Users', 'geditorial' );
+				_ex( 'There are no categories available.', 'Message', 'geditorial-users' );
 			}
 
 		echo '</td></tr>';
@@ -558,21 +558,21 @@ class Users extends gEditorial\Module
 
 		if ( $user->first_name || $user->last_name ) {
 			echo '<li class="-row -name">';
-				echo $this->get_column_icon( FALSE, 'nametag', _x( 'Name', 'Modules: Users: Row Icon Title', 'geditorial' ) );
+				echo $this->get_column_icon( FALSE, 'nametag', _x( 'Name', 'Row Icon Title', 'geditorial-users' ) );
 				echo "$user->first_name $user->last_name";
 			echo '</li>';
 		}
 
 		if ( $user->user_email ) {
 			echo '<li class="-row -email">';
-				echo $this->get_column_icon( FALSE, 'email', _x( 'Email', 'Modules: Users: Row Icon Title', 'geditorial' ) );
+				echo $this->get_column_icon( FALSE, 'email', _x( 'Email', 'Row Icon Title', 'geditorial-users' ) );
 				echo HTML::mailto( $user->user_email );
 			echo '</li>';
 		}
 
 		if ( $user->user_url ) {
 			echo '<li class="-row -url">';
-				echo $this->get_column_icon( FALSE, 'admin-links', _x( 'URL', 'Modules: Users: Row Icon Title', 'geditorial' ) );
+				echo $this->get_column_icon( FALSE, 'admin-links', _x( 'URL', 'Row Icon Title', 'geditorial-users' ) );
 				echo HTML::link( URL::prepTitle( $user->user_url ), $user->user_url );
 			echo '</li>';
 		}
@@ -590,14 +590,14 @@ class Users extends gEditorial\Module
 
 		if ( $user->user_registered ) {
 			echo '<li class="-row -registered">';
-				echo $this->get_column_icon( FALSE, 'calendar', _x( 'Registered', 'Modules: Users: Row Icon Title', 'geditorial' ) );
+				echo $this->get_column_icon( FALSE, 'calendar', _x( 'Registered', 'Row Icon Title', 'geditorial-users' ) );
 				/* translators: %s: date */
-				printf( _x( 'Registered on %s', 'Modules: Users', 'geditorial' ),
+				printf( _x( 'Registered on %s', 'Row', 'geditorial-users' ),
 					Helper::getDateEditRow( $user->user_registered, '-registered' ) );
 			echo '</li>';
 		}
 
-		$role = $this->get_column_icon( FALSE, 'businessman', _x( 'Roles', 'Modules: Users: Row Icon Title', 'geditorial' ) );
+		$role = $this->get_column_icon( FALSE, 'businessman', _x( 'Roles', 'Row Icon Title', 'geditorial-users' ) );
 		echo Helper::getJoined( User::getRoleList( $user ), '<li class="-row -roles">'.$role, '</li>' );
 
 		$this->tweaks_column_user( $user );
@@ -631,11 +631,11 @@ class Users extends gEditorial\Module
 			'year_month' => '',
 		], 'reports' );
 
-		HTML::h3( _x( 'User Reports', 'Modules: Users', 'geditorial' ) );
+		HTML::h3( _x( 'User Reports', 'Header', 'geditorial-users' ) );
 
 		echo '<table class="form-table">';
 
-		echo '<tr><th scope="row">'._x( 'By PostType', 'Modules: Users', 'geditorial' ).'</th><td>';
+		echo '<tr><th scope="row">'._x( 'By PostType', 'Header', 'geditorial-users' ).'</th><td>';
 
 		$this->do_settings_field( [
 			'type'         => 'select',
@@ -650,7 +650,7 @@ class Users extends gEditorial\Module
 		$this->do_settings_field( [
 			'type'         => 'user',
 			'field'        => 'user_id',
-			'none_title'   => _x( 'All Users', 'Modules: Users', 'geditorial' ),
+			'none_title'   => _x( 'All Users', 'None Title', 'geditorial-users' ),
 			'default'      => $args['user_id'],
 			'option_group' => 'reports',
 		] );
@@ -660,7 +660,7 @@ class Users extends gEditorial\Module
 		$this->do_settings_field( [
 			'type'         => 'select',
 			'field'        => 'year_month',
-			'none_title'   => _x( 'All Months', 'Modules: Users', 'geditorial' ),
+			'none_title'   => _x( 'All Months', 'None Title', 'geditorial-users' ),
 			'values'       => Datetime::getPostTypeMonths( $this->default_calendar(), $args['post_type'], [], $args['user_id'] ),
 			'default'      => $args['year_month'],
 			'option_group' => 'reports',
@@ -668,8 +668,7 @@ class Users extends gEditorial\Module
 
 		echo '&nbsp;';
 
-		Settings::submitButton( 'posttype_stats',
-			_x( 'Query Stats', 'Modules: Users: Setting Button', 'geditorial' ) );
+		Settings::submitButton( 'posttype_stats', _x( 'Query Stats', 'Button', 'geditorial-users' ) );
 
 		if ( ! empty( $_POST ) && isset( $_POST['posttype_stats'] ) ) {
 
@@ -742,14 +741,14 @@ class Users extends gEditorial\Module
 	protected function render_tools_html( $uri, $sub )
 	{
 		echo '<table class="form-table">';
-		echo '<tr><th scope="row">'._x( 'Re-Map Authors', 'Modules: Users', 'geditorial' ).'</th><td>';
+		echo '<tr><th scope="row">'._x( 'Re-Map Authors', 'Header', 'geditorial-users' ).'</th><td>';
 
 		$wpupload = Media::upload();
 
 		if ( ! empty( $wpupload['error'] ) ) {
 
 			/* translators: %s: error */
-			echo HTML::error( sprintf( _x( 'Before you can upload a file, you will need to fix the following error: %s', 'Modules: Users', 'geditorial' ), '<b>'.$wpupload['error'].'</b>' ), FALSE );
+			echo HTML::error( sprintf( _x( 'Before you can upload a file, you will need to fix the following error: %s', 'Message', 'geditorial-users' ), '<b>'.$wpupload['error'].'</b>' ), FALSE );
 
 		} else {
 
@@ -764,9 +763,9 @@ class Users extends gEditorial\Module
 
 			$size = File::formatSize( apply_filters( 'import_upload_size_limit', wp_max_upload_size() ) );
 
-			Settings::submitButton( 'remap_post_authors', _x( 'Upload and Re-Map', 'Modules: Users: Setting Button', 'geditorial' ), 'danger' );
+			Settings::submitButton( 'remap_post_authors', _x( 'Upload and Re-Map', 'Button', 'geditorial-users' ), 'danger' );
 			/* translators: %s: size */
-			HTML::desc( sprintf( _x( 'Checks for post authors and re-map them with current registered users. Maximum upload size: <b>%s</b>', 'Modules: Users', 'geditorial' ), HTML::wrapLTR( $size ) ) );
+			HTML::desc( sprintf( _x( 'Checks for post authors and re-map them with current registered users. Maximum upload size: <b>%s</b>', 'Message', 'geditorial-users' ), HTML::wrapLTR( $size ) ) );
 		}
 
 		echo '</td></tr>';
