@@ -134,13 +134,13 @@ class Audit extends gEditorial\Module
 	{
 		$strings = [
 			'noops' => [
-				'audit_tax' => _nx_noop( 'Audit Attribute', 'Audit Attributes', 'Noop', 'geditorial-audit' ),
+				'audit_tax' => _n_noop( 'Audit Attribute', 'Audit Attributes', 'geditorial-audit' ),
 			],
 			'misc' => [
-				'menu_name'           => _x( 'Audit', 'Audit Attributes Tax Labels: Menu Name', 'geditorial-audit' ),
+				'menu_name'           => _x( 'Audit', 'Taxonomy Menu', 'geditorial-audit' ),
 				'tweaks_column_title' => _x( 'Audit Attributes', 'Column Title', 'geditorial-audit' ),
 				'show_option_all'     => _x( 'Audit', 'Show Option All', 'geditorial-audit' ),
-				'show_option_none'    => _x( '(Not audited)', 'Show Option All', 'geditorial-audit' ),
+				'show_option_none'    => _x( '(Not audited)', 'Show Option None', 'geditorial-audit' ),
 			],
 		];
 
@@ -149,16 +149,16 @@ class Audit extends gEditorial\Module
 
 		$strings['terms'] = [
 			'audit_tax' => [
-				'audited'      => _x( 'Audited', 'Audit Attributes Tax Defaults', 'geditorial-audit' ),
-				'outdated'     => _x( 'Outdated', 'Audit Attributes Tax Defaults', 'geditorial-audit' ),
-				'redundant'    => _x( 'Redundant', 'Audit Attributes Tax Defaults', 'geditorial-audit' ),
-				'review-seo'   => _x( 'Review SEO', 'Audit Attributes Tax Defaults', 'geditorial-audit' ),
-				'review-style' => _x( 'Review Style', 'Audit Attributes Tax Defaults', 'geditorial-audit' ),
-				'trivial'      => _x( 'Trivial', 'Audit Attributes Tax Defaults', 'geditorial-audit' ),
-				'initial-copy' => _x( 'Initial Copy', 'Audit Attributes Tax Defaults', 'geditorial-audit' ),
-				'unfinished'   => _x( 'Unfinished', 'Audit Attributes Tax Defaults', 'geditorial-audit' ),
-				'text-empty'   => _x( 'No Content', 'Audit Attributes Tax Defaults', 'geditorial-audit' ),
-				'imported'     => _x( 'Imported', 'Audit Attributes Tax Defaults', 'geditorial-audit' ),
+				'audited'      => _x( 'Audited', 'Default Term', 'geditorial-audit' ),
+				'outdated'     => _x( 'Outdated', 'Default Term', 'geditorial-audit' ),
+				'redundant'    => _x( 'Redundant', 'Default Term', 'geditorial-audit' ),
+				'review-seo'   => _x( 'Review SEO', 'Default Term', 'geditorial-audit' ),
+				'review-style' => _x( 'Review Style', 'Default Term', 'geditorial-audit' ),
+				'trivial'      => _x( 'Trivial', 'Default Term', 'geditorial-audit' ),
+				'initial-copy' => _x( 'Initial Copy', 'Default Term', 'geditorial-audit' ),
+				'unfinished'   => _x( 'Unfinished', 'Default Term', 'geditorial-audit' ),
+				'text-empty'   => _x( 'No Content', 'Default Term', 'geditorial-audit' ),
+				'imported'     => _x( 'Imported', 'Default Term', 'geditorial-audit' ),
 			],
 		];
 

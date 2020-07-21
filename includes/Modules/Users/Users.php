@@ -99,20 +99,20 @@ class Users extends gEditorial\Module
 		return [
 			'misc' => [
 				'group_tax' => [
-					'show_option_all'    => _x( 'All user groups', 'Show Option All', 'geditorial-users' ),
+					'menu_name'          => _x( 'Groups', 'Taxonomy Menu', 'geditorial-users' ),
 					'users_column_title' => _x( 'Users', 'Column Title', 'geditorial-users' ),
-					'menu_name'          => _x( 'Groups', 'User Group Tax Labels: Menu Name', 'geditorial-users' ),
+					'show_option_all'    => _x( 'All user groups', 'Show Option All', 'geditorial-users' ),
 				],
 				'type_tax' => [
-					'show_option_all'    => _x( 'All user types', 'Show Option All', 'geditorial-users' ),
+					'menu_name'          => _x( 'Types', 'Taxonomy Menu', 'geditorial-users' ),
 					'users_column_title' => _x( 'Users', 'Column Title', 'geditorial-users' ),
-					'menu_name'          => _x( 'Types', 'User Type Tax Labels: Menu Name', 'geditorial-users' ),
+					'show_option_all'    => _x( 'All user types', 'Show Option All', 'geditorial-users' ),
 				],
 				'counts_column_title' => _x( 'Summary', 'Column Title', 'geditorial-users' ),
 			],
 			'noops' => [
-				'group_tax' => _nx_noop( 'User Group', 'User Groups', 'Noop', 'geditorial-users' ),
-				'type_tax'  => _nx_noop( 'User Type', 'User Types', 'Noop', 'geditorial-users' ),
+				'group_tax' => _n_noop( 'User Group', 'User Groups', 'geditorial-users' ),
+				'type_tax'  => _n_noop( 'User Type', 'User Types', 'geditorial-users' ),
 			],
 		];
 	}

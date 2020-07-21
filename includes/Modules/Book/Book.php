@@ -119,13 +119,13 @@ class Book extends gEditorial\Module
 	{
 		$strings = [
 			'noops' => [
-				'publication_cpt' => _nx_noop( 'Publication', 'Publications', 'Noop', 'geditorial-book' ),
-				'subject_tax'     => _nx_noop( 'Subject', 'Subjects', 'Noop', 'geditorial-book' ),
-				'library_tax'     => _nx_noop( 'Library', 'Libraries', 'Noop', 'geditorial-book' ),
-				'publisher_tax'   => _nx_noop( 'Publisher', 'Publishers', 'Noop', 'geditorial-book' ),
-				'type_tax'        => _nx_noop( 'Publication Type', 'Publication Types', 'Noop', 'geditorial-book' ),
-				'status_tax'      => _nx_noop( 'Publication Status', 'Publication Statuses', 'Noop', 'geditorial-book' ),
-				'size_tax'        => _nx_noop( 'Publication Size', 'Publication Sizes', 'Noop', 'geditorial-book' ),
+				'publication_cpt' => _n_noop( 'Publication', 'Publications', 'geditorial-book' ),
+				'subject_tax'     => _n_noop( 'Subject', 'Subjects', 'geditorial-book' ),
+				'library_tax'     => _n_noop( 'Library', 'Libraries', 'geditorial-book' ),
+				'publisher_tax'   => _n_noop( 'Publisher', 'Publishers', 'geditorial-book' ),
+				'type_tax'        => _n_noop( 'Publication Type', 'Publication Types', 'geditorial-book' ),
+				'status_tax'      => _n_noop( 'Publication Status', 'Publication Statuses', 'geditorial-book' ),
+				'size_tax'        => _n_noop( 'Publication Size', 'Publication Sizes', 'geditorial-book' ),
 			],
 			'p2p' => [
 				'publication_cpt' => [
@@ -162,7 +162,7 @@ class Book extends gEditorial\Module
 
 		$strings['misc'] = [
 			'publication_cpt' => [
-				'featured'           => _x( 'Cover Image', 'Publication CPT: Featured', 'geditorial-book' ),
+				'featured'           => _x( 'Cover Image', 'Posttype Featured', 'geditorial-book' ),
 				'meta_box_title'     => _x( 'Metadata', 'MetaBox Title', 'geditorial-book' ),
 				'author_metabox'     => _x( 'Curator', 'MetaBox Title', 'geditorial-book' ),
 				'excerpt_metabox'    => _x( 'Summary', 'MetaBox Title', 'geditorial-book' ),

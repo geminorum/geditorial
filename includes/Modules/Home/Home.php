@@ -67,7 +67,7 @@ add_theme_support( \'featured-content\', [
 				[
 					'field'       => 'posttypes_feed',
 					'title'       => _x( 'Posttypes on Feeds', 'Setting Title', 'geditorial-home' ),
-					'description' => _x( 'Appears supported posttypes also on the main site feeds.', 'Setting Description', 'geditorial-home' ),
+					'description' => _x( 'Whether to appear supported posttypes on the main feeds of the site.', 'Setting Description', 'geditorial-home' ),
 				],
 			],
 			'_featured' => [

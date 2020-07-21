@@ -78,14 +78,14 @@ class Inquire extends gEditorial\Module
 	{
 		return [
 			'noops' => [
-				'inquiry_cpt'  => _nx_noop( 'Inquiry', 'Inquiries', 'Noop', 'geditorial-inquire' ),
-				// 'status_tax'   => _nx_noop( 'Inquiry Status', 'Inquiry Statuses', 'Noop', 'geditorial-inquire' ),
-				// 'priority_tax' => _nx_noop( 'Inquiry Priority', 'Idea Priorities', 'Noop', 'geditorial-inquire' ),
+				'inquiry_cpt'  => _n_noop( 'Inquiry', 'Inquiries', 'geditorial-inquire' ),
+				// 'status_tax'   => _n_noop( 'Inquiry Status', 'Inquiry Statuses', 'geditorial-inquire' ),
+				// 'priority_tax' => _n_noop( 'Inquiry Priority', 'Idea Priorities', 'geditorial-inquire' ),
 			],
 			'misc' => [
 				'inquiry_cpt' => [
-					'menu_name'       => _x( 'Inquiries', 'Labels: Menu Name', 'geditorial-inquire' ),
-					'excerpt_metabox' => _x( 'Question', 'Labels: Excerpt Box Title', 'geditorial-inquire' ),
+					'menu_name'       => _x( 'Inquiries', 'Posttype Menu', 'geditorial-inquire' ),
+					'excerpt_metabox' => _x( 'Question', 'MetaBox Title', 'geditorial-inquire' ),
 				],
 			],
 		];

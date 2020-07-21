@@ -95,9 +95,9 @@ class Today extends gEditorial\Module
 	{
 		return [
 			'misc' => [
-				'featured'            => _x( 'Cover Image', 'Day CPT: Featured', 'geditorial-today' ),
-				'excerpt_metabox'     => _x( 'Summary', 'Labels: Excerpt Box Title', 'geditorial-today' ),
-				'meta_box_title'      => _x( 'The Day', 'Meta Box Title', 'geditorial-today' ),
+				'featured'            => _x( 'Cover Image', 'Posttype Featured', 'geditorial-today' ),
+				'excerpt_metabox'     => _x( 'Summary', 'MetaBox Title', 'geditorial-today' ),
+				'meta_box_title'      => _x( 'The Day', 'MetaBox Title', 'geditorial-today' ),
 				'theday_column_title' => _x( 'Day', 'Column Title', 'geditorial-today' ),
 			],
 			'noops' => [

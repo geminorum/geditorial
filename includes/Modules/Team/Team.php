@@ -57,13 +57,13 @@ class Team extends gEditorial\Module
 		return [
 			'misc' => [
 				'member_cpt' => [
-					'menu_name' => _x( 'Team Members', 'Menu Name', 'geditorial-team' ),
+					'menu_name' => _x( 'Team Members', 'Posttype Menu', 'geditorial-team' ),
 				],
 				'tweaks_column_title' => _x( 'Team Member Categories', 'Column Title', 'geditorial-team' ),
 			],
 			'noops' => [
-				'member_cpt' => _nx_noop( 'Team Member', 'Team Members', 'Noop', 'geditorial-team' ),
-				'member_cat' => _nx_noop( 'Team Member Category', 'Team Member Categories', 'Noop', 'geditorial-team' ),
+				'member_cpt' => _n_noop( 'Team Member', 'Team Members', 'geditorial-team' ),
+				'member_cat' => _n_noop( 'Team Member Category', 'Team Member Categories', 'geditorial-team' ),
 			],
 		];
 	}

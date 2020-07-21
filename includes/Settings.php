@@ -264,16 +264,6 @@ class Settings extends Core\Base
 		];
 	}
 
-	public static function getSetting_markdown_support( $description = NULL )
-	{
-		return [
-			'field'       => 'markdown_support',
-			'title'       => _x( 'Markdown Support', 'Settings: Setting Title', 'geditorial' ),
-			'description' => $description ?: '',
-			'default'     => '0',
-		];
-	}
-
 	public static function getSetting_restapi_support( $description = NULL )
 	{
 		return [
@@ -291,40 +281,6 @@ class Settings extends Core\Base
 			'title'       => _x( 'Multiple Instances', 'Settings: Setting Title', 'geditorial' ),
 			'description' => $description ?: '',
 			'default'     => '0',
-		];
-	}
-
-	public static function getSetting_autolink_terms( $description = NULL )
-	{
-		return [
-			'field'       => 'autolink_terms',
-			'title'       => _x( 'Auto-link Terms', 'Settings: Setting Title', 'geditorial' ),
-			'description' => $description ?: _x( 'Tries to link the term titles in the content.', 'Settings: Setting Description', 'geditorial' ),
-			'default'     => '0',
-		];
-	}
-
-	public static function getSetting_rewrite_prefix( $description = NULL )
-	{
-		return [
-			'field'       => 'rewrite_prefix',
-			'type'        => 'text',
-			'title'       => _x( 'URL Base Prefix', 'Settings: Setting Title', 'geditorial' ),
-			'description' => $description ?: _x( 'Custom string before the perma-link structure.', 'Settings: Setting Description', 'geditorial' ),
-			'default'     => '',
-			'dir'         => 'ltr',
-			'placeholder' => 'wiki',
-		];
-	}
-
-	public static function getSetting_redirect_archives( $description = NULL )
-	{
-		return [
-			'field'       => 'redirect_archives',
-			'type'        => 'url',
-			'title'       => _x( 'Redirect Archives', 'Settings: Setting Title', 'geditorial' ),
-			'description' => $description ?: _x( 'Redirects post-type archives to a URL.', 'Settings: Setting Description', 'geditorial' ),
-			'placeholder' => 'http://example.com/archives/',
 		];
 	}
 

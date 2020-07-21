@@ -37,7 +37,11 @@ class Entry extends gEditorial\Module
 			],
 			'_frontend' => [
 				'adminbar_summary',
-				'autolink_terms',
+				[
+					'field'       => 'autolink_terms',
+					'title'       => _x( 'Auto-link Sections', 'Settings', 'geditorial-entry' ),
+					'description' => _x( 'Tries to linkify the section titles in the entry content.', 'Settings', 'geditorial-entry' ),
+				],
 				'before_content',
 				'after_content',
 			],
@@ -70,8 +74,8 @@ class Entry extends gEditorial\Module
 	{
 		$strings = [
 			'noops' => [
-				'entry_cpt'   => _nx_noop( 'Entry', 'Entries', 'Noop', 'geditorial-entry' ),
-				'section_tax' => _nx_noop( 'Section', 'Sections', 'Noop', 'geditorial-entry' ),
+				'entry_cpt'   => _n_noop( 'Entry', 'Entries', 'geditorial-entry' ),
+				'section_tax' => _n_noop( 'Section', 'Sections', 'geditorial-entry' ),
 			],
 		];
 
@@ -79,8 +83,8 @@ class Entry extends gEditorial\Module
 			return $strings;
 
 		$strings['misc'] = [
-			'featured'             => _x( 'Cover Image', 'Entry CPT: Featured', 'geditorial-entry' ),
-			'meta_box_title'       => _x( 'Entry', 'Meta Box Title', 'geditorial-entry' ),
+			'featured'             => _x( 'Cover Image', 'Posttype Featured', 'geditorial-entry' ),
+			'meta_box_title'       => _x( 'Entry', 'MetaBox Title', 'geditorial-entry' ),
 			'section_column_title' => _x( 'Section', 'Column Title', 'geditorial-entry' ),
 		];
 

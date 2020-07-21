@@ -36,7 +36,7 @@ class Attachments extends gEditorial\Module
 				'adminbar_summary',
 				[
 					'field'       => 'rewrite_permalink',
-					'title'       => _x( 'Rewite Permalinks', 'Setting Title', 'geditorial-attachments' ),
+					'title'       => _x( 'Rewrite Permalinks', 'Setting Title', 'geditorial-attachments' ),
 					'description' => _x( 'Changes default permalinks into attachment id.', 'Setting Description', 'geditorial-attachments' ),
 				],
 				[

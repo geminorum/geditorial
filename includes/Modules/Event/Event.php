@@ -131,14 +131,14 @@ class Event extends gEditorial\Module
 	{
 		$strings = [
 			'noops' => [
-				'event_cpt' => _nx_noop( 'Event', 'Events', 'Noop', 'geditorial-event' ),
-				'event_tag' => _nx_noop( 'Event Type', 'Event Types', 'Noop', 'geditorial-event' ),
-				'event_cat' => _nx_noop( 'Event Category', 'Event Categories', 'Noop', 'geditorial-event' ),
-				'cal_tax'   => _nx_noop( 'Event Calendar', 'Event Calendars', 'Noop', 'geditorial-event' ),
+				'event_cpt' => _n_noop( 'Event', 'Events', 'geditorial-event' ),
+				'event_tag' => _n_noop( 'Event Type', 'Event Types', 'geditorial-event' ),
+				'event_cat' => _n_noop( 'Event Category', 'Event Categories', 'geditorial-event' ),
+				'cal_tax'   => _n_noop( 'Event Calendar', 'Event Calendars', 'geditorial-event' ),
 			],
 			'labels' => [
 				'type_tax' => [
-					'name' => _x( 'Calendar Types', 'Calendar Type Tax Labels: Name', 'geditorial-event' ),
+					'name' => _x( 'Calendar Types', 'Taxonomy Label', 'geditorial-event' ),
 				],
 			],
 		];
@@ -148,30 +148,30 @@ class Event extends gEditorial\Module
 
 		$strings['misc'] = [
 			'event_cpt' => [
-				'featured'                  => _x( 'Poster Image', 'Event CPT: Featured', 'geditorial-event' ),
-				'meta_box_title'            => _x( 'Date & Times', 'Event CPT: Meta Box Title', 'geditorial-event' ),
+				'featured'                  => _x( 'Poster Image', 'Posttype Featured', 'geditorial-event' ),
+				'meta_box_title'            => _x( 'Date & Times', 'MetaBox Title', 'geditorial-event' ),
 				'event_starts_column_title' => _x( 'Starts', 'Column Title', 'geditorial-event' ),
 				'event_ends_column_title'   => _x( 'Ends', 'Column Title', 'geditorial-event' ),
 			],
 			'event_tag' => [
-				'menu_name'           => _x( 'Types', 'Event Types Tax Labels: Menu Name', 'geditorial-event' ),
-				'meta_box_title'      => _x( 'Event Types', 'Meta Box Title', 'geditorial-event' ),
+				'menu_name'           => _x( 'Types', 'Taxonomy Menu', 'geditorial-event' ),
+				'meta_box_title'      => _x( 'Event Types', 'MetaBox Title', 'geditorial-event' ),
 				'tweaks_column_title' => _x( 'Event Types', 'Column Title', 'geditorial-event' ),
 			],
 			'cal_tax' => [
-				'menu_name'           => _x( 'Calendars', 'Event Calendars Tax Labels: Menu Name', 'geditorial-event' ),
-				'meta_box_title'      => _x( 'Event Calendars', 'Meta Box Title', 'geditorial-event' ),
+				'menu_name'           => _x( 'Calendars', 'Taxonomy Menu', 'geditorial-event' ),
+				'meta_box_title'      => _x( 'Event Calendars', 'MetaBox Title', 'geditorial-event' ),
 				'tweaks_column_title' => _x( 'Event Calendars', 'Column Title', 'geditorial-event' ),
 			],
 		];
 
 		$strings['terms'] = [
 			'event_tag' => [
-				'holiday' => _x( 'Holiday', 'Event Tax Defaults', 'geditorial-event' ),
-				'birth'   => _x( 'Birth', 'Event Tax Defaults', 'geditorial-event' ),
-				'death'   => _x( 'Death', 'Event Tax Defaults', 'geditorial-event' ),
-				'start'   => _x( 'Start', 'Event Tax Defaults', 'geditorial-event' ),
-				'end'     => _x( 'End', 'Event Tax Defaults', 'geditorial-event' ),
+				'holiday' => _x( 'Holiday', 'Default Term', 'geditorial-event' ),
+				'birth'   => _x( 'Birth', 'Default Term', 'geditorial-event' ),
+				'death'   => _x( 'Death', 'Default Term', 'geditorial-event' ),
+				'start'   => _x( 'Start', 'Default Term', 'geditorial-event' ),
+				'end'     => _x( 'End', 'Default Term', 'geditorial-event' ),
 			],
 		];
 

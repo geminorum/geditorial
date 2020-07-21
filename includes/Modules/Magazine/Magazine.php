@@ -10,6 +10,7 @@ use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
+use geminorum\gEditorial\Core\URL;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\Taxonomy;
@@ -37,8 +38,8 @@ class Magazine extends gEditorial\Module
 				'multiple_instances',
 				[
 					'field'       => 'issue_sections',
-					'title'       => _x( 'Issue Sections', 'Setting Title', 'geditorial-magazine' ),
-					'description' => _x( 'Section taxonomy for issues and supported posttypes.', 'Setting Description', 'geditorial-magazine' ),
+					'title'       => _x( 'Issue Sections', 'Settings', 'geditorial-magazine' ),
+					'description' => _x( 'Section taxonomy for the issues and supported post-types.', 'Settings', 'geditorial-magazine' ),
 				],
 				'comment_status',
 			],
@@ -51,13 +52,19 @@ class Magazine extends gEditorial\Module
 				'insert_priority',
 				'posttype_feeds',
 				'posttype_pages',
-				'redirect_archives',
+				[
+					'field'       => 'redirect_archives',
+					'type'        => 'url',
+					'title'       => _x( 'Redirect Archives', 'Settings', 'geditorial-magazine' ),
+					'description' => _x( 'Redirects issue archives to this URL. Leave empty to disable.', 'Settings', 'geditorial-magazine' ),
+					'placeholder' => URL::trail( get_option( 'home' ) ).'archives',
+				],
 				[
 					'field'       => 'redirect_spans',
 					'type'        => 'url',
-					'title'       => _x( 'Redirect Spans', 'Setting Title', 'geditorial-magazine' ),
-					'description' => _x( 'Redirects all span archives to a URL.', 'Setting Description', 'geditorial-magazine' ),
-					'placeholder' => 'http://example.com/archives/',
+					'title'       => _x( 'Redirect Spans', 'Settings', 'geditorial-magazine' ),
+					'description' => _x( 'Redirects all span archives to this URL. Leave empty to disable.', 'Settings', 'geditorial-magazine' ),
+					'placeholder' => URL::trail( get_option( 'home' ) ).'archives',
 				],
 			],
 			'posttypes_option' => 'posttypes_option',
@@ -101,10 +108,10 @@ class Magazine extends gEditorial\Module
 	{
 		$strings = [
 			'noops' => [
-				'issue_cpt'   => _nx_noop( 'Issue', 'Issues', 'Noop', 'geditorial-magazine' ),
-				'issue_tax'   => _nx_noop( 'Issue', 'Issues', 'Noop', 'geditorial-magazine' ),
-				'span_tax'    => _nx_noop( 'Span', 'Spans', 'Noop', 'geditorial-magazine' ),
-				'section_tax' => _nx_noop( 'Section', 'Sections', 'Noop', 'geditorial-magazine' ),
+				'issue_cpt'   => _n_noop( 'Issue', 'Issues', 'geditorial-magazine' ),
+				'issue_tax'   => _n_noop( 'Issue', 'Issues', 'geditorial-magazine' ),
+				'span_tax'    => _n_noop( 'Span', 'Spans', 'geditorial-magazine' ),
+				'section_tax' => _n_noop( 'Section', 'Sections', 'geditorial-magazine' ),
 			],
 		];
 
@@ -113,7 +120,7 @@ class Magazine extends gEditorial\Module
 
 		$strings['misc'] = [
 			'issue_cpt' => [
-				'featured' => _x( 'Cover Image', 'Issue CPT: Featured', 'geditorial-magazine' ),
+				'featured' => _x( 'Cover Image', 'Posttype Featured', 'geditorial-magazine' ),
 			],
 			'issue_tax' => [
 				'meta_box_title' => _x( 'In This Issue', 'MetaBox Title', 'geditorial-magazine' ),

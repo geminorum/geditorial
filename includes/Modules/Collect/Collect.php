@@ -9,6 +9,7 @@ use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
+use geminorum\gEditorial\Core\URL;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\Taxonomy;
@@ -36,8 +37,8 @@ class Collect extends gEditorial\Module
 				'multiple_instances',
 				[
 					'field'       => 'collection_parts',
-					'title'       => _x( 'Collection Parts', 'Setting Title', 'geditorial-collect' ),
-					'description' => _x( 'Partition taxonomy for collections and supported posttypes.', 'Setting Description', 'geditorial-collect' ),
+					'title'       => _x( 'Collection Parts', 'Settings', 'geditorial-collect' ),
+					'description' => _x( 'Partition taxonomy for the collections and supported post-types.', 'Settings', 'geditorial-collect' ),
 				],
 				'comment_status',
 			],
@@ -50,13 +51,19 @@ class Collect extends gEditorial\Module
 				'insert_priority',
 				'posttype_feeds',
 				'posttype_pages',
-				'redirect_archives',
+				[
+					'field'       => 'redirect_archives',
+					'type'        => 'url',
+					'title'       => _x( 'Redirect Archives', 'Settings', 'geditorial-collect' ),
+					'description' => _x( 'Redirects collection archives to this URL. Leave empty to disable.', 'Settings', 'geditorial-collect' ),
+					'placeholder' => URL::trail( get_option( 'home' ) ).'archives',
+				],
 				[
 					'field'       => 'redirect_groups',
 					'type'        => 'url',
-					'title'       => _x( 'Redirect Groups', 'Setting Title', 'geditorial-collect' ),
-					'description' => _x( 'Redirects all group archives to a URL.', 'Setting Description', 'geditorial-collect' ),
-					'placeholder' => 'http://example.com/archives/',
+					'title'       => _x( 'Redirect Groups', 'Settings', 'geditorial-collect' ),
+					'description' => _x( 'Redirects all group archives to this URL. Leave empty to disable.', 'Settings', 'geditorial-collect' ),
+					'placeholder' => URL::trail( get_option( 'home' ) ).'archives',
 				],
 			],
 			'posttypes_option' => 'posttypes_option',
@@ -100,10 +107,10 @@ class Collect extends gEditorial\Module
 	{
 		$strings = [
 			'noops' => [
-				'collection_cpt' => _nx_noop( 'Collection', 'Collections', 'Noop', 'geditorial-collect' ),
-				'collection_tax' => _nx_noop( 'Collection', 'Collections', 'Noop', 'geditorial-collect' ),
-				'group_tax'      => _nx_noop( 'Group', 'Groups', 'Noop', 'geditorial-collect' ),
-				'part_tax'       => _nx_noop( 'Part', 'Parts', 'Noop', 'geditorial-collect' ),
+				'collection_cpt' => _n_noop( 'Collection', 'Collections', 'geditorial-collect' ),
+				'collection_tax' => _n_noop( 'Collection', 'Collections', 'geditorial-collect' ),
+				'group_tax'      => _n_noop( 'Group', 'Groups', 'geditorial-collect' ),
+				'part_tax'       => _n_noop( 'Part', 'Parts', 'geditorial-collect' ),
 			],
 		];
 
@@ -112,7 +119,7 @@ class Collect extends gEditorial\Module
 
 		$strings['misc'] = [
 			'collection_cpt' => [
-				'featured' => _x( 'Poster Image', 'Collection CPT: Featured', 'geditorial-collect' ),
+				'featured' => _x( 'Poster Image', 'Posttype Featured', 'geditorial-collect' ),
 			],
 			'collection_tax' => [
 				'meta_box_title' => _x( 'In This Collection', 'MetaBox Title', 'geditorial-collect' ),

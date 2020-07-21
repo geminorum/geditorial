@@ -58,9 +58,9 @@ class Gallery extends gEditorial\Module
 	{
 		$strings = [
 			'noops' => [
-				'album_cpt' => _nx_noop( 'Photo Album', 'Photo Albums', 'Noop', 'geditorial-gallery' ),
-				'album_cat' => _nx_noop( 'Album Gallery', 'Album Galleries', 'Noop', 'geditorial-gallery' ),
-				'photo_tag' => _nx_noop( 'Photo Tag', 'Photo Tags', 'Noop', 'geditorial-gallery' ),
+				'album_cpt' => _n_noop( 'Photo Album', 'Photo Albums', 'geditorial-gallery' ),
+				'album_cat' => _n_noop( 'Album Gallery', 'Album Galleries', 'geditorial-gallery' ),
+				'photo_tag' => _n_noop( 'Photo Tag', 'Photo Tags', 'geditorial-gallery' ),
 			],
 		];
 
@@ -69,8 +69,8 @@ class Gallery extends gEditorial\Module
 
 		$strings['misc'] = [
 			'album_cpt' => [
-				'menu_name' => _x( 'Gallery', 'Photo Album CPT Labels: Menu Name', 'geditorial-gallery' ),
-				'featured'  => _x( 'Featured Photo', 'Photo Album CPT: Featured', 'geditorial-gallery' ),
+				'menu_name' => _x( 'Gallery', 'Posttype Menu', 'geditorial-gallery' ),
+				'featured'  => _x( 'Featured Photo', 'Posttype Featured', 'geditorial-gallery' ),
 			],
 			'album_cat' => [
 				'tweaks_column_title' => _x( 'Album Galleries', 'Column Title', 'geditorial-gallery' ),

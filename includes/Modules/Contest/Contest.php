@@ -8,6 +8,7 @@ use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
+use geminorum\gEditorial\Core\URL;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\Taxonomy;
@@ -37,7 +38,13 @@ class Contest extends gEditorial\Module
 				'admin_restrict',
 			],
 			'_frontend' => [
-				'redirect_archives',
+				[
+					'field'       => 'redirect_archives',
+					'type'        => 'url',
+					'title'       => _x( 'Redirect Archives', 'Settings', 'geditorial-contest' ),
+					'description' => _x( 'Redirects contest and apply archives to this URL. Leave empty to disable.', 'Settings', 'geditorial-contest' ),
+					'placeholder' => URL::trail( get_option( 'home' ) ).'archives',
+				],
 			],
 			'posttypes_option' => 'posttypes_option',
 			'_supports' => [
@@ -82,12 +89,12 @@ class Contest extends gEditorial\Module
 	{
 		$strings = [
 			'noops' => [
-				'contest_cpt'      => _nx_noop( 'Contest', 'Contests', 'Noop', 'geditorial-contest' ),
-				'contest_tax'      => _nx_noop( 'Contest', 'Contests', 'Noop', 'geditorial-contest' ),
-				'contest_cat'      => _nx_noop( 'Contest Category', 'Contest Categories', 'Noop', 'geditorial-contest' ),
-				'apply_cpt'        => _nx_noop( 'Apply', 'Applies', 'Noop', 'geditorial-contest' ),
-				'apply_cat'        => _nx_noop( 'Apply Category', 'Apply Categories', 'Noop', 'geditorial-contest' ),
-				'apply_status_tax' => _nx_noop( 'Apply Status', 'Apply Statuses', 'Noop', 'geditorial-contest' ),
+				'contest_cpt'      => _n_noop( 'Contest', 'Contests', 'geditorial-contest' ),
+				'contest_tax'      => _n_noop( 'Contest', 'Contests', 'geditorial-contest' ),
+				'contest_cat'      => _n_noop( 'Contest Category', 'Contest Categories', 'geditorial-contest' ),
+				'apply_cpt'        => _n_noop( 'Apply', 'Applies', 'geditorial-contest' ),
+				'apply_cat'        => _n_noop( 'Apply Category', 'Apply Categories', 'geditorial-contest' ),
+				'apply_status_tax' => _n_noop( 'Apply Status', 'Apply Statuses', 'geditorial-contest' ),
 			],
 		];
 
@@ -96,8 +103,8 @@ class Contest extends gEditorial\Module
 
 		$strings['misc'] = [
 			'contest_cpt' => [
+				'featured'              => _x( 'Poster Image', 'Posttype Featured', 'geditorial-contest' ),
 				'meta_box_title'        => _x( 'Metadata', 'MetaBox Title', 'geditorial-contest' ),
-				'cover_box_title'       => _x( 'Poster', 'CoverBox Title', 'geditorial-contest' ),
 				'children_column_title' => _x( 'Applies', 'Column Title', 'geditorial-contest' ),
 			],
 			'contest_cat' => [
@@ -116,8 +123,8 @@ class Contest extends gEditorial\Module
 
 		$strings['terms'] = [
 			'apply_status_tax' => [
-				'approved' => _x( 'Approved', 'Apply Statuses Tax Defaults', 'geditorial-contest' ),
-				'pending'  => _x( 'Pending', 'Apply Statuses Tax Defaults', 'geditorial-contest' ),
+				'approved' => _x( 'Approved', 'Default Term', 'geditorial-contest' ),
+				'pending'  => _x( 'Pending', 'Default Term', 'geditorial-contest' ),
 			],
 		];
 

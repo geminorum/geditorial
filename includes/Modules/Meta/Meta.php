@@ -112,7 +112,7 @@ class Meta extends gEditorial\Module
 				],
 			],
 			'noops' => [
-				'ct_tax' => _nx_noop( 'Column Header', 'Column Headers', 'Noop', 'geditorial-meta' ),
+				'ct_tax' => _n_noop( 'Column Header', 'Column Headers', 'geditorial-meta' ),
 			],
 		];
 
@@ -128,10 +128,10 @@ class Meta extends gEditorial\Module
 
 		$strings['terms'] = [
 			'ct_tax' => [
-				'introduction' => _x( 'Introduction', 'Column Headers Tax Defaults', 'geditorial-meta' ),
-				'interview'    => _x( 'Interview', 'Column Headers Tax Defaults', 'geditorial-meta' ),
-				'review'       => _x( 'Review', 'Column Headers Tax Defaults', 'geditorial-meta' ),
-				'report'       => _x( 'Report', 'Column Headers Tax Defaults', 'geditorial-meta' ),
+				'introduction' => _x( 'Introduction', 'Default Term', 'geditorial-meta' ),
+				'interview'    => _x( 'Interview', 'Default Term', 'geditorial-meta' ),
+				'review'       => _x( 'Review', 'Default Term', 'geditorial-meta' ),
+				'report'       => _x( 'Report', 'Default Term', 'geditorial-meta' ),
 			],
 		];
 
