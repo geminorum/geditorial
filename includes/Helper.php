@@ -893,10 +893,10 @@ class Helper extends Core\Base
 	// @SOURCE: `translate_nooped_plural()`
 	public static function nooped( $count, $nooped )
 	{
-		if ( ! empty( $nooped['domain'] ) )
+		if ( ! array_key_exists( 'domain', $nooped ) )
 			$nooped['domain'] = 'geditorial';
 
-		if ( ! array_key_exists( 'domain', $nooped ) )
+		if ( empty( $nooped['domain'] ) )
 			return _n( $nooped['singular'], $nooped['plural'], $count );
 
 		else if ( empty( $nooped['context'] ) )
