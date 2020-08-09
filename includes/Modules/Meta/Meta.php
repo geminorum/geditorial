@@ -85,6 +85,7 @@ class Meta extends gEditorial\Module
 					'ct'          => _x( 'Column Header Taxonomy', 'Titles', 'geditorial-meta' ),
 					'ch_override' => _x( 'Column Header Override', 'Titles', 'geditorial-meta' ),
 
+					'published'    => _x( 'Published', 'Titles', 'geditorial-meta' ),
 					'source_title' => _x( 'Source Title', 'Titles', 'geditorial-meta' ),
 					'source_url'   => _x( 'Source URL', 'Titles', 'geditorial-meta' ),
 					'highlight'    => _x( 'Highlight', 'Titles', 'geditorial-meta' ),
@@ -104,6 +105,7 @@ class Meta extends gEditorial\Module
 					'ct'          => _x( 'Taxonomy for better categorizing columns', 'Descriptions', 'geditorial-meta' ),
 					'ch_override' => _x( 'Column Header Override', 'Descriptions', 'geditorial-meta' ),
 
+					'published'    => _x( 'Original date of publish', 'Descriptions', 'geditorial-meta' ),
 					'source_title' => _x( 'Original Title of Source Content', 'Descriptions', 'geditorial-meta' ),
 					'source_url'   => _x( 'Full URL to the Source of the Content', 'Descriptions', 'geditorial-meta' ),
 					'highlight'    => _x( 'A Short Note Highlighted About the Post', 'Descriptions', 'geditorial-meta' ),
@@ -152,6 +154,7 @@ class Meta extends gEditorial\Module
 				],
 				'ch' => [ 'type' => 'text' ],
 
+				'published'    => [ 'type' => 'text' ],
 				'source_title' => [ 'type' => 'text' ],
 				'source_url'   => [ 'type' => 'link' ],
 				'highlight'    => [ 'type' => 'note' ],
@@ -608,7 +611,7 @@ class Meta extends gEditorial\Module
 
 		$meta    = (array) $this->get_postmeta( $post->ID );
 		$fields  = $this->get_posttype_fields( $post->post_type );
-		$exclude = [ 'ot', 'st', 'highlight', 'as', 'ch', 'le', 'source_title', 'source_url', 'abstract' ];
+		$exclude = [ 'ot', 'st', 'highlight', 'as', 'ch', 'le', 'published', 'source_title', 'source_url', 'abstract' ];
 
 		echo '<div class="geditorial-admin-wrap-column -meta"><ul class="-rows">';
 			$this->actions( 'column_row', $post, $fields, array_diff_key( $meta, array_flip( $exclude ) ) );
