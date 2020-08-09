@@ -8,13 +8,13 @@ use geminorum\gEditorial\Core;
 class Media extends Core\Base
 {
 
-	// FIXME: get title if html is empty
-	public static function htmlAttachmentShortLink( $id, $html )
+	// TODO: get title if html is empty
+	public static function htmlAttachmentShortLink( $id, $html, $extra = '', $rel = 'attachment' )
 	{
 		return HTML::tag( 'a', [
 			'href'  => WordPress::getPostShortLink( $id ),
-			'rel'   => 'attachment',
-			'class' => '-attachment',
+			'rel'   => $rel,
+			'class' => HTML::attrClass( $extra, '-attachment' ),
 			'data'  => [ 'id' => $id ],
 		], $html );
 	}
