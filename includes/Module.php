@@ -175,6 +175,9 @@ class Module extends Base
 			if ( $ui && method_exists( $this, 'tools_settings' ) )
 				add_action( $this->base.'_tools_settings', [ $this, 'tools_settings' ] );
 
+			if ( $ui && method_exists( $this, 'tool_box_content' ) )
+				$this->action( 'tool_box' );
+
 		} else {
 
 			if ( $ui && method_exists( $this, 'template_redirect' ) )
@@ -3190,5 +3193,34 @@ class Module extends Base
 	public function template_archive_content( $content )
 	{
 		return HTML::wrap( $this->template_get_archive_content(), $this->base.'-archive-content' );
+	}
+
+	public function tool_box()
+	{
+		echo $this->wrap_open( [ 'card', '-toolbox-card' ] );
+			$this->tool_box_title();
+
+			if ( FALSE !== $this->tool_box_content() ) {
+
+				$links = [];
+				foreach( $this->get_module_links() as $link )
+					$links[] = HTML::tag( 'a' , [
+						'href'  => $link['url'],
+						'class' => [ 'button', '-button' ],
+					], $link['title'] );
+
+				echo HTML::wrap( HTML::renderList( $links ), '-toolbox-links' );
+			}
+
+		echo '</div>';
+	}
+
+	// DEFAULT CALLBACK: use in module for descriptions
+	// protected function tool_box_content() {}
+
+	// DEFAULT CALLBACK
+	protected function tool_box_title()
+	{
+		HTML::h2( sprintf( _x( 'Editorial: %s', 'Module', 'geditorial' ), $this->module->title ), 'title' );
 	}
 }
