@@ -57,35 +57,54 @@ class Inquire extends gEditorial\Module
 		return [
 			'inquiry_cpt'         => 'inquiry',
 			'inquiry_cpt_archive' => 'inquiries',
-			// 'status_tax'          => 'inquire_status',
-			// 'status_tax_slug'     => 'inquire-status',
-			// 'priority_tax'        => 'inquire_priority',
-			// 'priority_tax_slug'   => 'inquire-priority',
+			'subject_tax'         => 'inquiry_subject',
+			'subject_tax_slug'    => 'inquiry-subject',
+			'status_tax'          => 'inquire_status',
+			'status_tax_slug'     => 'inquire-status',
+			'priority_tax'        => 'inquire_priority',
+			'priority_tax_slug'   => 'inquire-priority',
 		];
 	}
 
-	// protected function get_module_icons()
-	// {
-	// 	return [
-	// 		'taxonomies' => [
-	// 			'status_tax'   => NULL,
-	// 			'priority_tax' => 'clipboard',
-	// 		],
-	// 	];
-	// }
+	protected function get_module_icons()
+	{
+		return [
+			'taxonomies' => [
+				'subject_tax'  => NULL,
+				'status_tax'   => 'tag',
+				'priority_tax' => 'clipboard',
+			],
+		];
+	}
 
 	protected function get_global_strings()
 	{
 		return [
 			'noops' => [
 				'inquiry_cpt'  => _n_noop( 'Inquiry', 'Inquiries', 'geditorial-inquire' ),
-				// 'status_tax'   => _n_noop( 'Inquiry Status', 'Inquiry Statuses', 'geditorial-inquire' ),
-				// 'priority_tax' => _n_noop( 'Inquiry Priority', 'Idea Priorities', 'geditorial-inquire' ),
+				'subject_tax'  => _n_noop( 'Inquiry Subject', 'Inquiry Subjects', 'geditorial-inquire' ),
+				'status_tax'   => _n_noop( 'Inquiry Status', 'Inquiry Statuses', 'geditorial-inquire' ),
+				'priority_tax' => _n_noop( 'Inquiry Priority', 'Inquiry Priorities', 'geditorial-inquire' ),
 			],
 			'misc' => [
 				'inquiry_cpt' => [
 					'menu_name'       => _x( 'Inquiries', 'Posttype Menu', 'geditorial-inquire' ),
 					'excerpt_metabox' => _x( 'Question', 'MetaBox Title', 'geditorial-inquire' ),
+				],
+				'subject_tax' => [
+					'menu_name'           => _x( 'Subjects', 'Menu Title', 'geditorial-inquire' ),
+					'meta_box_title'      => _x( 'Subject', 'MetaBox Title', 'geditorial-inquire' ),
+					'tweaks_column_title' => _x( 'Inquiry Subject', 'Column Title', 'geditorial-inquire' ),
+				],
+				'status_tax' => [
+					'menu_name'           => _x( 'Statuses', 'Menu Title', 'geditorial-inquire' ),
+					'meta_box_title'      => _x( 'Status', 'MetaBox Title', 'geditorial-inquire' ),
+					'tweaks_column_title' => _x( 'Inquiry Status', 'Column Title', 'geditorial-inquire' ),
+				],
+				'priority_tax' => [
+					'menu_name'           => _x( 'Priorities', 'Menu Title', 'geditorial-inquire' ),
+					'meta_box_title'      => _x( 'Priority', 'MetaBox Title', 'geditorial-inquire' ),
+					'tweaks_column_title' => _x( 'Inquiry Priority', 'Column Title', 'geditorial-inquire' ),
 				],
 			],
 		];
@@ -95,17 +114,20 @@ class Inquire extends gEditorial\Module
 	{
 		parent::init();
 
-		// $posttypes = [ $this->constant( 'inquiry_cpt' ) ];
+		$this->register_taxonomy( 'subject_tax', [
+			'hierarchical' => TRUE,
+			'meta_box_cb'  => NULL, // default meta box
+		], 'inquiry_cpt' );
 
-		// $this->register_taxonomy( 'status_tax', [
-		// 	'show_admin_column'  => TRUE,
-		// 	'show_in_quick_edit' => TRUE,
-		// ], $posttypes );
+		$this->register_taxonomy( 'status_tax', [
+			'show_admin_column'  => TRUE,
+			'show_in_quick_edit' => TRUE,
+		], 'inquiry_cpt' );
 
-		// $this->register_taxonomy( 'priority_tax', [
-		// 	'show_admin_column'  => TRUE,
-		// 	'show_in_quick_edit' => TRUE,
-		// ], $posttypes );
+		$this->register_taxonomy( 'priority_tax', [
+			'show_admin_column'  => TRUE,
+			'show_in_quick_edit' => TRUE,
+		], 'inquiry_cpt' );
 
 		$args = [];
 
@@ -157,6 +179,8 @@ class Inquire extends gEditorial\Module
 			} else if ( 'edit' == $screen->base ) {
 
 				$this->filter( 'bulk_post_updated_messages', 2 );
+				$this->action( 'restrict_manage_posts', 2, 12 );
+				$this->action( 'parse_query' );
 			}
 		}
 	}
@@ -199,6 +223,24 @@ class Inquire extends gEditorial\Module
 	public function bulk_post_updated_messages( $messages, $counts )
 	{
 		return array_merge( $messages, $this->get_bulk_post_updated_messages( 'inquiry_cpt', $counts ) );
+	}
+
+	public function restrict_manage_posts( $posttype, $which )
+	{
+		$this->do_restrict_manage_posts_taxes( [
+			'subject_tax',
+			'status_tax',
+			'priority_tax',
+		] );
+	}
+
+	public function parse_query( &$query )
+	{
+		$this->do_parse_query_taxes( $query, [
+			'subject_tax',
+			'status_tax',
+			'priority_tax',
+		] );
 	}
 
 	public function do_metabox_excerpt( $post, $box )
