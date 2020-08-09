@@ -1737,9 +1737,9 @@ class Module extends Base
 			'show_in_rest' => $this->get_setting( 'restapi_support', TRUE ),
 			'rest_base'    => $this->constant( $constant.'_rest', $this->constant( $constant.'_archive', $posttype ) ),
 
-			'can_export'       => TRUE,
-			'delete_with_user' => FALSE,
-			// 'exclude_from_search' => FALSE,
+			'can_export'          => TRUE,
+			'delete_with_user'    => FALSE,
+			'exclude_from_search' => $this->get_setting( $constant.'_exclude_search', FALSE ),
 
 			// @SEE: https://github.com/torounit/custom-post-type-permalinks
 			'cptp_permalink_structure' => $this->constant( $constant.'_permalink', FALSE ), // will lock the permalink
