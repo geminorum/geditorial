@@ -110,6 +110,9 @@ class Contest extends gEditorial\Module
 			'contest_cat' => [
 				'tweaks_column_title' => _x( 'Contest Categories', 'Column Title', 'geditorial-contest' ),
 			],
+			'apply_cpt' => [
+				'meta_box_title' => _x( 'Contest', 'MetaBox Title', 'geditorial-contest' ),
+			],
 			'apply_cat' => [
 				'tweaks_column_title' => _x( 'Apply Categories', 'Column Title', 'geditorial-contest' ),
 			],
@@ -264,7 +267,7 @@ class Contest extends gEditorial\Module
 
 				remove_meta_box( 'pageparentdiv', $screen, 'side' );
 				add_meta_box( $this->classs( 'supported' ),
-					$this->get_meta_box_title_posttype( 'contest_cpt' ),
+					$this->get_meta_box_title( 'apply_cpt' ),
 					[ $this, 'render_metabox_supported' ],
 					$screen,
 					'side'
@@ -394,8 +397,6 @@ class Contest extends gEditorial\Module
 
 	public function render_metabox( $post, $box, $fields = NULL, $context = 'main' )
 	{
-		MetaBox::fieldPostMenuOrder( $post );
-
 		$dropdowns = $excludes = [];
 		$posttype  = $this->constant( 'contest_cpt' );
 		$terms     = Taxonomy::getTerms( $this->constant( 'contest_tax' ), $post->ID, TRUE );
@@ -409,8 +410,9 @@ class Contest extends gEditorial\Module
 			$dropdowns[0] = MetaBox::dropdownAssocPosts( $posttype, '0', $this->classs(), $excludes );
 
 		foreach ( $dropdowns as $dropdown )
-			if ( $dropdown )
-				echo $dropdown;
+			echo $dropdown ?: '';
+
+		MetaBox::fieldPostMenuOrder( $post );
 	}
 
 	public function meta_box_cb_apply_status_tax( $post, $box )
@@ -518,8 +520,8 @@ class Contest extends gEditorial\Module
 		$terms = [];
 		$tax   = $this->constant( 'contest_tax' );
 
-		foreach ( (array) $_POST[$name] as $issue )
-			if ( trim( $issue ) && $term = get_term_by( 'slug', $issue, $tax ) )
+		foreach ( (array) $_POST[$name] as $contest )
+			if ( trim( $contest ) && $term = get_term_by( 'slug', $contest, $tax ) )
 				$terms[] = intval( $term->term_id );
 
 		wp_set_object_terms( $post_id, ( count( $terms ) ? $terms : NULL ), $tax, FALSE );

@@ -196,7 +196,7 @@ class Inquire extends gEditorial\Module
 		$this->filter( 'add_menu_classes' );
 	}
 
-	public function add_menu_classes ($menu)
+	public function add_menu_classes( $menu )
 	{
 		remove_submenu_page( 'edit.php?post_type='.$this->constant( 'inquiry_cpt' ), $this->classs() );
 		return $menu;

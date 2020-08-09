@@ -831,14 +831,14 @@ class Helper extends Core\Base
 			: sprintf( '<span title="%s" class="'.HTML::prepClass( '-empty', $class ).'">&mdash;</span>', $title_attr );
 	}
 
-	public static function htmlCount( $count, $title_attr = NULL )
+	public static function htmlCount( $count, $title_attr = NULL, $empty = NULL )
 	{
 		if ( is_null( $title_attr ) )
 			$title_attr = _x( 'No Count', 'Helper: No Count Title Attribute', 'geditorial' );
 
 		return $count
 			? Number::format( $count )
-			: self::htmlEmpty( 'column-count-empty', $title_attr );
+			: ( is_null( $empty ) ? self::htmlEmpty( 'column-count-empty', $title_attr ) : $empty );
 	}
 
 	public static function htmlOrder( $order, $title_attr = NULL )

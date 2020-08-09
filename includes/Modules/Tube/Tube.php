@@ -144,6 +144,7 @@ class Tube extends gEditorial\Module
 					'icon'        => 'backup',
 				],
 
+				'published'    => [ 'type' => 'text' ],
 				'source_title' => [ 'type' => 'text' ],
 				'source_url'   => [ 'type' => 'link' ],
 				'highlight'    => [ 'type' => 'note' ],

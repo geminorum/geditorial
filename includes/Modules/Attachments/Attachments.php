@@ -285,9 +285,14 @@ class Attachments extends gEditorial\Module
 		$pagination['before'][] = Helper::tableFilterAuthors( $list );
 		$pagination['before'][] = Helper::tableFilterSearch( $list );
 
-		$custom = [
+		$actions = [
 			// FIXME: must add ajax
 			// 'override-name' => HTML::link( _x( 'Override Name', 'Table Action', 'geditorial-attachments' ) ),
+
+			// empty meta
+			// remove thumbnails
+			// rename filenames
+			// move filenames
 		];
 
 		return HTML::tableList( [
@@ -305,7 +310,7 @@ class Attachments extends gEditorial\Module
 					return Helper::htmlEmpty();
 				},
 			],
-			'title'  => Helper::tableColumnPostTitle( NULL, TRUE, $custom ),
+			'title'  => Helper::tableColumnPostTitle( NULL, TRUE, $actions ),
 			'search' => [
 				'title'    => _x( 'Search', 'Table Column', 'geditorial-attachments' ),
 				'class'    => '-attachment-search -has-list',
