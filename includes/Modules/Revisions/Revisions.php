@@ -198,14 +198,10 @@ class Revisions extends gEditorial\Module
 
 	public static function wordCount( $revision )
 	{
-		$title   = Text::wordCountUTF8( $revision->post_title );
-		$content = Text::wordCountUTF8( $revision->post_content );
-		$excerpt = Text::wordCountUTF8( $revision->post_excerpt );
-
-		return vsprintf( '[<span class="-wordcount" title="%4$s">%1$s &ndash; %2$s &ndash; %3$s</span>]', [
-			Helper::htmlCount( $title ),
-			Helper::htmlCount( $content ),
-			Helper::htmlCount( $excerpt ),
+		return vsprintf( '[<span class="-wordcount" title="%4$s">%1$s/%2$s/%3$s</span>]', [
+			Helper::htmlCount( Text::wordCountUTF8( $revision->post_title ), NULL, '&ndash;' ),
+			Helper::htmlCount( Text::wordCountUTF8( $revision->post_content ), NULL, '&ndash;' ),
+			Helper::htmlCount( Text::wordCountUTF8( $revision->post_excerpt ), NULL, '&ndash;' ),
 			_x( 'Title/Content/Excerpt Word Count', 'Title Attr', 'geditorial-revisions' ),
 		] );
 	}
@@ -219,8 +215,10 @@ class Revisions extends gEditorial\Module
 		$parts['author'] = sprintf( '%1$s %2$s &ndash;', $author['avatar'], $author['name'] );
 
 		$time = strtotime( $revision->post_modified );
-		$parts['timediff'] = Datetime::humanTimeDiffRound( $time, FALSE );
-		$parts['datetime'] = '('.Datetime::dateFormat( $time, 'datetime' ).')';
+		$date = Datetime::dateFormat( $time, 'datetime' );
+
+		$parts['timediff'] = sprintf( '<span class="-timediff" title="%2$s">%1$s</span>', Datetime::humanTimeDiffRound( $time, FALSE ), $date );
+		$parts['datetime'] = sprintf( '<span class="-datetime">(<small>%s</small>)</span>', $date );
 
 		if ( $this->get_setting( 'revision_wordcount', FALSE ) )
 			$parts['wordcount'] = self::wordCount( $revision );
@@ -233,8 +231,8 @@ class Revisions extends gEditorial\Module
 		}
 
 		if ( $link && current_user_can( 'edit_post', $revision->ID ) ) {
-			$parts['edit']   = sprintf( '<a class="button button-small" href="%1$s">%2$s %3$s</a>', get_edit_post_link( $revision->ID ), HTML::getDashicon( 'backup' ), _x( 'Browse', 'Title Attr', 'geditorial-revisions' ) );
-			$parts['delete'] = sprintf( '<a class="button button-small -delete" href="#" data-id="%1$s" data-parent="%2$s">%3$s %4$s</a>', $revision->ID, $revision->post_parent, HTML::getDashicon( 'trash' ), _x( 'Delete', 'Title Attr', 'geditorial-revisions' ) );
+			$parts['edit']   = sprintf( '<a class="button button-small" href="%1$s" title="%3$s">%2$s<span class="-text"> %3$s</span></a>', get_edit_post_link( $revision->ID ), HTML::getDashicon( 'backup' ), _x( 'Browse', 'Title Attr', 'geditorial-revisions' ) );
+			$parts['delete'] = sprintf( '<a class="button button-small -delete" href="#" data-id="%1$s" data-parent="%2$s" title="%4$s">%3$s<span class="-text"> %4$s</span></a>', $revision->ID, $revision->post_parent, HTML::getDashicon( 'trash' ), _x( 'Delete', 'Title Attr', 'geditorial-revisions' ) );
 		} else {
 			$link = FALSE;
 		}
