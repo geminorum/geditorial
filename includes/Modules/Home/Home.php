@@ -69,6 +69,13 @@ add_theme_support( \'featured-content\', [
 					'title'       => _x( 'Posttypes on Feeds', 'Setting Title', 'geditorial-home' ),
 					'description' => _x( 'Whether to appear supported posttypes on the main feeds of the site.', 'Setting Description', 'geditorial-home' ),
 				],
+				[
+					'field'       => 'exclude_search',
+					'type'        => 'posttypes',
+					'title'       => _x( 'Exclude from Search', 'Setting Title', 'geditorial-home' ),
+					'description' => _x( 'Excludes selected posttypes from the search results.', 'Setting Description', 'geditorial-home' ),
+					'default'     => get_post_types( [ 'exclude_from_search' => TRUE ] ),
+				],
 			],
 			'_featured' => [
 				[
@@ -204,20 +211,23 @@ add_theme_support( \'featured-content\', [
 			return;
 
 		$posttypes = $this->posttypes();
+		$excluded  = $this->get_setting( 'exclude_search', [] );
 
-		if ( count( $posttypes ) ) {
+		if ( count( $posttypes )
+			&& ( $wp_query->is_home()
+				|| ( empty( $wp_query->query_vars['post_type'] )
+					&& ( $wp_query->is_archive() || $wp_query->is_feed() ) ) ) ) {
 
-			if ( $wp_query->is_home() )
-				$wp_query->set( 'post_type', $posttypes );
+			$wp_query->set( 'post_type', $posttypes );
+		}
 
-			else if ( $wp_query->is_search() && empty( $wp_query->query_vars['post_type'] ) )
-				$wp_query->set( 'post_type', $posttypes );
+		// @REF: https://stackoverflow.com/a/46373132
+		if ( count( $excluded ) && $wp_query->is_search() && empty( $wp_query->query_vars['post_type'] ) ) {
 
-			else if ( $wp_query->is_archive() && empty( $wp_query->query_vars['post_type'] ) )
-				$wp_query->set( 'post_type', $posttypes );
+			$diff = array_diff( get_post_types( [ 'exclude_from_search' => FALSE ] ), $excluded );
 
-			else if ( $wp_query->is_feed() && empty( $wp_query->query_vars['post_type'] ) )
-				$wp_query->set( 'post_type', $posttypes );
+			if ( count( $diff ) )
+				$wp_query->set( 'post_type', $diff );
 		}
 
 		if ( $wp_query->is_home()
