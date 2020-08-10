@@ -80,6 +80,11 @@ class Importer extends gEditorial\Module
 		];
 	}
 
+	protected function tool_box_content()
+	{
+		HTML::desc( _x( 'Helps with Importing contents from CSV files into any post-type, with meta support.', 'Tool Box', 'geditorial-importer' ) );
+	}
+
 	protected function form_map( $id, $posttype = 'post' )
 	{
 		if ( ! $file = get_attached_file( $id ) )

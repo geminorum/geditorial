@@ -153,13 +153,18 @@ class Event extends gEditorial\Module
 				'event_starts_column_title' => _x( 'Starts', 'Column Title', 'geditorial-event' ),
 				'event_ends_column_title'   => _x( 'Ends', 'Column Title', 'geditorial-event' ),
 			],
+			'event_cat' => [
+				'menu_name'           => _x( 'Categories', 'Menu Title', 'geditorial-event' ),
+				'meta_box_title'      => _x( 'Event Categories', 'MetaBox Title', 'geditorial-event' ),
+				'tweaks_column_title' => _x( 'Event Categories', 'Column Title', 'geditorial-event' ),
+			],
 			'event_tag' => [
-				'menu_name'           => _x( 'Types', 'Taxonomy Menu', 'geditorial-event' ),
+				'menu_name'           => _x( 'Types', 'Menu Title', 'geditorial-event' ),
 				'meta_box_title'      => _x( 'Event Types', 'MetaBox Title', 'geditorial-event' ),
 				'tweaks_column_title' => _x( 'Event Types', 'Column Title', 'geditorial-event' ),
 			],
 			'cal_tax' => [
-				'menu_name'           => _x( 'Calendars', 'Taxonomy Menu', 'geditorial-event' ),
+				'menu_name'           => _x( 'Calendars', 'Menu Title', 'geditorial-event' ),
 				'meta_box_title'      => _x( 'Event Calendars', 'MetaBox Title', 'geditorial-event' ),
 				'tweaks_column_title' => _x( 'Event Calendars', 'Column Title', 'geditorial-event' ),
 			],
