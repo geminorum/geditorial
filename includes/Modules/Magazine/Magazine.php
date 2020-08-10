@@ -158,6 +158,9 @@ class Magazine extends gEditorial\Module
 					'description' => _x( 'The issue total pages', 'Field Description', 'geditorial-magazine' ),
 					'icon'        => 'admin-page',
 				],
+
+				'source_title' => [ 'type' => 'text' ],
+				'source_url'   => [ 'type' => 'link' ],
 			],
 			'post' => [
 				'in_issue_order' => [
