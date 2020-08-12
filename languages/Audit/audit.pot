@@ -1,15 +1,16 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gEditorial Audit 3.15.8\n"
-"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues/\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "Last-Translator: NULL\n"
 "Language-Team: NULL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2020-07-14T19:59:47+00:00\n"
+"POT-Creation-Date: 2020-08-12T10:03:46+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.4.0\n"
+"X-Poedit-Basepath: ../../includes/Modules/Audit\n"
 "X-Domain: geditorial-audit\n"
 
 #: Audit.php:49
@@ -98,14 +99,13 @@ msgid "Include drafted items in the content summary."
 msgstr ""
 
 #: Audit.php:137
-msgctxt "Noop"
 msgid "Audit Attribute"
 msgid_plural "Audit Attributes"
 msgstr[0] ""
 msgstr[1] ""
 
 #: Audit.php:140
-msgctxt "Audit Attributes Tax Labels: Menu Name"
+msgctxt "Taxonomy Menu"
 msgid "Audit"
 msgstr ""
 
@@ -120,57 +120,57 @@ msgid "Audit"
 msgstr ""
 
 #: Audit.php:143
-msgctxt "Show Option All"
+msgctxt "Show Option None"
 msgid "(Not audited)"
 msgstr ""
 
 #: Audit.php:152
-msgctxt "Audit Attributes Tax Defaults"
+msgctxt "Default Term"
 msgid "Audited"
 msgstr ""
 
 #: Audit.php:153
-msgctxt "Audit Attributes Tax Defaults"
+msgctxt "Default Term"
 msgid "Outdated"
 msgstr ""
 
 #: Audit.php:154
-msgctxt "Audit Attributes Tax Defaults"
+msgctxt "Default Term"
 msgid "Redundant"
 msgstr ""
 
 #: Audit.php:155
-msgctxt "Audit Attributes Tax Defaults"
+msgctxt "Default Term"
 msgid "Review SEO"
 msgstr ""
 
 #: Audit.php:156
-msgctxt "Audit Attributes Tax Defaults"
+msgctxt "Default Term"
 msgid "Review Style"
 msgstr ""
 
 #: Audit.php:157
-msgctxt "Audit Attributes Tax Defaults"
+msgctxt "Default Term"
 msgid "Trivial"
 msgstr ""
 
 #: Audit.php:158
-msgctxt "Audit Attributes Tax Defaults"
+msgctxt "Default Term"
 msgid "Initial Copy"
 msgstr ""
 
 #: Audit.php:159
-msgctxt "Audit Attributes Tax Defaults"
+msgctxt "Default Term"
 msgid "Unfinished"
 msgstr ""
 
 #: Audit.php:160
-msgctxt "Audit Attributes Tax Defaults"
+msgctxt "Default Term"
 msgid "No Content"
 msgstr ""
 
 #: Audit.php:161
-msgctxt "Audit Attributes Tax Defaults"
+msgctxt "Default Term"
 msgid "Imported"
 msgstr ""
 

@@ -2,18 +2,33 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gEditorial Specs 3.15.8\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"POT-Creation-Date: 2020-08-09T22:11:56+00:00\n"
+"PO-Revision-Date: 2020-08-11 03:32+0430\n"
+"Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
+"Language: fa_IR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2020-07-17T09:09:03+00:00\n"
-"PO-Revision-Date: 2020-07-17 13:51+0430\n"
-"X-Generator: Poedit 2.3.1\n"
+"X-Generator: Poedit 2.4\n"
 "X-Poedit-Basepath: ../../includes/Modules/Specs\n"
 "X-Domain: geditorial-specs\n"
-"Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"Language: fa_IR\n"
+
+#: Specs.php:52
+msgctxt "Strings: Title"
+msgid "Title"
+msgstr "عنوان"
+
+#: Specs.php:53
+msgctxt "Strings: Title"
+msgid "Order"
+msgstr "چینش"
+
+#: Specs.php:54
+msgctxt "Strings: Title"
+msgid "Description"
+msgstr "توضیحات"
 
 #: Specs.php:57
 msgctxt "Strings: Description"

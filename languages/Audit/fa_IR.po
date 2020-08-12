@@ -1,18 +1,19 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gEditorial Audit 3.15.8\n"
-"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues/\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"POT-Creation-Date: 2020-07-17T14:31:36+00:00\n"
+"PO-Revision-Date: 2020-07-21 18:39+0430\n"
+"Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
+"Language: fa_IR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2020-07-14T19:59:47+00:00\n"
-"PO-Revision-Date: 2020-07-15 00:42+0430\n"
 "X-Generator: Poedit 2.3.1\n"
 "X-Domain: geditorial-audit\n"
-"Last-Translator: geminorum <contact@geminorum.ir>\n"
+"X-Poedit-Basepath: ../../includes/Modules/Audit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"Language: fa_IR\n"
 
 #: Audit.php:49
 msgctxt "Setting Title"
@@ -100,14 +101,13 @@ msgid "Include drafted items in the content summary."
 msgstr "پیش‌نویس‌ها را در گزارش بازبینی شامل میکند."
 
 #: Audit.php:137
-msgctxt "Noop"
 msgid "Audit Attribute"
 msgid_plural "Audit Attributes"
 msgstr[0] "برچسب بازبینی"
-msgstr[1] ""
+msgstr[1] "برچسب‌های بازبینی"
 
 #: Audit.php:140
-msgctxt "Audit Attributes Tax Labels: Menu Name"
+msgctxt "Taxonomy Menu"
 msgid "Audit"
 msgstr "بازبینی"
 
@@ -122,57 +122,57 @@ msgid "Audit"
 msgstr "بازبینی"
 
 #: Audit.php:143
-msgctxt "Show Option All"
+msgctxt "Show Option None"
 msgid "(Not audited)"
 msgstr "(بازبینی‌نشده)"
 
 #: Audit.php:152
-msgctxt "Audit Attributes Tax Defaults"
+msgctxt "Default Term"
 msgid "Audited"
 msgstr "تکمیل"
 
 #: Audit.php:153
-msgctxt "Audit Attributes Tax Defaults"
+msgctxt "Default Term"
 msgid "Outdated"
 msgstr "منسوخ"
 
 #: Audit.php:154
-msgctxt "Audit Attributes Tax Defaults"
+msgctxt "Default Term"
 msgid "Redundant"
 msgstr "نالازم"
 
 #: Audit.php:155
-msgctxt "Audit Attributes Tax Defaults"
+msgctxt "Default Term"
 msgid "Review SEO"
 msgstr "سئو بازبینی شود"
 
 #: Audit.php:156
-msgctxt "Audit Attributes Tax Defaults"
+msgctxt "Default Term"
 msgid "Review Style"
 msgstr "چینش بازبینی شود"
 
 #: Audit.php:157
-msgctxt "Audit Attributes Tax Defaults"
+msgctxt "Default Term"
 msgid "Trivial"
 msgstr "کم‌اهمیت"
 
 #: Audit.php:158
-msgctxt "Audit Attributes Tax Defaults"
+msgctxt "Default Term"
 msgid "Initial Copy"
 msgstr "کپی اولیه"
 
 #: Audit.php:159
-msgctxt "Audit Attributes Tax Defaults"
+msgctxt "Default Term"
 msgid "Unfinished"
 msgstr "ناتمام"
 
 #: Audit.php:160
-msgctxt "Audit Attributes Tax Defaults"
+msgctxt "Default Term"
 msgid "No Content"
 msgstr "بدون متن"
 
 #: Audit.php:161
-msgctxt "Audit Attributes Tax Defaults"
+msgctxt "Default Term"
 msgid "Imported"
 msgstr "درون‌ریزی‌شده"
 
@@ -230,3 +230,7 @@ msgstr "همهٔ کاربران"
 msgctxt "Button"
 msgid "Apply Filter"
 msgstr "اعمال پالایه"
+
+#~ msgctxt "Show Option All"
+#~ msgid "(Not audited)"
+#~ msgstr "(بازبینی‌نشده)"

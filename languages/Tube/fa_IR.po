@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gEditorial Tube 3.15.8\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
-"POT-Creation-Date: 2020-07-17T10:41:03+00:00\n"
-"PO-Revision-Date: 2020-07-17 16:15+0430\n"
+"POT-Creation-Date: 2020-07-21T18:55:17+00:00\n"
+"PO-Revision-Date: 2020-07-22 13:55+0430\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -118,57 +118,57 @@ msgctxt "Field Description"
 msgid "Video Duration"
 msgstr "مدت‌زمان ویدئو"
 
-#: Tube.php:274
+#: Tube.php:275
 msgctxt "Button"
 msgid "The date of this video"
 msgstr "تاریخ این ویدئو"
 
-#: Tube.php:280
+#: Tube.php:281
 msgctxt "Button"
 msgid "Total time of this video"
 msgstr "مجموع مدت زمان این ویدئو"
 
-#: Tube.php:287
+#: Tube.php:288
 msgctxt "Button"
 msgid "Download this video"
 msgstr "دریافت این ویدئو"
 
-#: Tube.php:288
+#: Tube.php:289
 msgctxt "Button"
 msgid "Download"
 msgstr "دریافت"
 
-#: Tube.php:294
+#: Tube.php:295
 msgctxt "Button"
 msgid "View this video on YouTube"
 msgstr "نمایش این ویدئو در یوتوب"
 
-#: Tube.php:296
+#: Tube.php:297
 msgctxt "Button"
 msgid "YouTube"
 msgstr "یوتوب"
 
-#: Tube.php:302
+#: Tube.php:303
 msgctxt "Button"
 msgid "View this video on Aparat"
 msgstr "نمایش این ویدئو در آپارات"
 
-#: Tube.php:304
+#: Tube.php:305
 msgctxt "Button"
 msgid "Aparat"
 msgstr "آپارات"
 
-#: Tube.php:311
+#: Tube.php:312
 msgctxt "Button"
 msgid "Shortlink to this video"
 msgstr "پیوند کوتاه به این ویدئو"
 
-#: Tube.php:313
+#: Tube.php:314
 msgctxt "Button"
 msgid "Shortlink"
 msgstr "پیوند کوتاه"
 
-#: Tube.php:318 Tube.php:325 Tube.php:332
+#: Tube.php:319 Tube.php:326 Tube.php:333
 msgctxt "Button"
 msgid "Share this video"
 msgstr "همخوان کنید"

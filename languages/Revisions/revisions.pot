@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2020-07-17T11:48:39+00:00\n"
+"POT-Creation-Date: 2020-08-12T10:04:19+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.4.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Revisions\n"
@@ -73,68 +73,68 @@ msgctxt "Title Attr"
 msgid "View the last revision"
 msgstr ""
 
-#: Revisions.php:209
+#: Revisions.php:205
 msgctxt "Title Attr"
 msgid "Title/Content/Excerpt Word Count"
 msgstr ""
 
-#: Revisions.php:229
+#: Revisions.php:227
 msgctxt "Indicator"
 msgid "[Current]"
 msgstr ""
 
-#: Revisions.php:236
+#: Revisions.php:234
 msgctxt "Title Attr"
 msgid "Browse"
 msgstr ""
 
-#: Revisions.php:237
+#: Revisions.php:235
 msgctxt "Title Attr"
 msgid "Delete"
 msgstr ""
 
-#: Revisions.php:243
+#: Revisions.php:241
 msgctxt "Indicator"
 msgid "[Autosave]"
 msgstr ""
 
-#: Revisions.php:269
+#: Revisions.php:267
 msgctxt "Title Attr"
 msgid "Purge all revisions"
 msgstr ""
 
-#: Revisions.php:275
+#: Revisions.php:273
 msgctxt "Button"
 msgid "Purge Revisions"
 msgstr ""
 
-#: Revisions.php:282
+#: Revisions.php:280
 msgctxt "Title Attr"
 msgid "Browse all revisions"
 msgstr ""
 
 #. translators: %s: revisions count
-#: Revisions.php:285
+#: Revisions.php:283
 msgctxt "Button"
 msgid "Browse %s Revisions"
 msgstr ""
 
-#: Revisions.php:404
+#: Revisions.php:402
 msgctxt "Table Action"
 msgid "Cleanup Revisions"
 msgstr ""
 
-#: Revisions.php:415
+#: Revisions.php:413
 msgctxt "Table Column"
 msgid "Revisions"
 msgstr ""
 
-#: Revisions.php:440
+#: Revisions.php:438
 msgctxt "Header"
 msgid "Overview of Post Revisions"
 msgstr ""
 
-#: Revisions.php:441
+#: Revisions.php:439
 msgctxt "Message"
 msgid "No post revisions found."
 msgstr ""

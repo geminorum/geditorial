@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gEditorial Users 3.15.8\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
-"POT-Creation-Date: 2020-07-17T10:41:05+00:00\n"
-"PO-Revision-Date: 2020-07-17 16:16+0430\n"
+"POT-Creation-Date: 2020-07-21T18:55:18+00:00\n"
+"PO-Revision-Date: 2020-07-22 13:55+0430\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -66,9 +66,9 @@ msgid "Limits each author to post just on selected categories."
 msgstr ""
 
 #: Users.php:102
-msgctxt "Show Option All"
-msgid "All user groups"
-msgstr "همهٔ گروه‌های کاربری"
+msgctxt "Taxonomy Menu"
+msgid "Groups"
+msgstr "گروه‌‌ها"
 
 #: Users.php:103 Users.php:108
 msgctxt "Column Title"
@@ -76,19 +76,19 @@ msgid "Users"
 msgstr "کاربران"
 
 #: Users.php:104
-msgctxt "User Group Tax Labels: Menu Name"
-msgid "Groups"
-msgstr "گروه‌‌ها"
+msgctxt "Show Option All"
+msgid "All user groups"
+msgstr "همهٔ گروه‌های کاربری"
 
 #: Users.php:107
+msgctxt "Taxonomy Menu"
+msgid "Types"
+msgstr "انواع"
+
+#: Users.php:109
 msgctxt "Show Option All"
 msgid "All user types"
 msgstr "همهٔ انواع کاربری"
-
-#: Users.php:109
-msgctxt "User Type Tax Labels: Menu Name"
-msgid "Types"
-msgstr "انواع"
 
 #: Users.php:111
 msgctxt "Column Title"
@@ -96,14 +96,12 @@ msgid "Summary"
 msgstr "خلاصه"
 
 #: Users.php:114
-msgctxt "Noop"
 msgid "User Group"
 msgid_plural "User Groups"
 msgstr[0] "گروه کاربری"
 msgstr[1] ""
 
 #: Users.php:115
-msgctxt "Noop"
 msgid "User Type"
 msgid_plural "User Types"
 msgstr[0] "نوع کاربری"

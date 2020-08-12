@@ -1,22 +1,23 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gEditorial Attachments 3.15.8\n"
-"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues/\n"
-"POT-Creation-Date: 2020-07-14T19:59:45+00:00\n"
-"PO-Revision-Date: 2020-07-15 00:37+0430\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"POT-Creation-Date: 2020-08-09T18:49:39+00:00\n"
+"PO-Revision-Date: 2020-08-10 02:31+0430\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.3.1\n"
+"X-Generator: Poedit 2.4\n"
 "X-Domain: geditorial-attachments\n"
+"X-Poedit-Basepath: ../../includes/Modules/Attachments\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
 
 #: Attachments.php:39
 msgctxt "Setting Title"
-msgid "Rewite Permalinks"
+msgid "Rewrite Permalinks"
 msgstr "بازنویسی پایاپیوندها"
 
 #: Attachments.php:40
@@ -95,32 +96,32 @@ msgctxt "Shortcode"
 msgid "Attachments of %s"
 msgstr "پیوست‌ها برای %s"
 
-#: Attachments.php:299
+#: Attachments.php:304
 msgctxt "Table Column"
 msgid "Custom"
 msgstr "سفارشی"
 
-#: Attachments.php:310
+#: Attachments.php:315
 msgctxt "Table Column"
 msgid "Search"
 msgstr "جست‌وجو"
 
-#: Attachments.php:322
+#: Attachments.php:327
 msgctxt "Table Column"
 msgid "Sizes"
 msgstr "اندازه‌ها"
 
-#: Attachments.php:342
+#: Attachments.php:347
 msgctxt "Table Column"
 msgid "Meta"
 msgstr "متا"
 
-#: Attachments.php:361
+#: Attachments.php:366
 msgctxt "Header"
 msgid "Overview of Attachments"
 msgstr "مروری بر پیوست‌ها"
 
-#: Attachments.php:362
+#: Attachments.php:367
 msgctxt "Message"
 msgid "No attachments found."
 msgstr "پیوستی پیدا نشد."

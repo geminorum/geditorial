@@ -1,45 +1,43 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gEditorial Gallery 3.15.8\n"
-"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues/\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "Last-Translator: NULL\n"
 "Language-Team: NULL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2020-07-13T20:33:09+00:00\n"
+"POT-Creation-Date: 2020-08-12T10:04:03+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.4.0\n"
+"X-Poedit-Basepath: ../../includes/Modules/Gallery\n"
 "X-Domain: geditorial-gallery\n"
 
 #: Gallery.php:61
-msgctxt "Noop"
 msgid "Photo Album"
 msgid_plural "Photo Albums"
 msgstr[0] ""
 msgstr[1] ""
 
 #: Gallery.php:62
-msgctxt "Noop"
 msgid "Album Gallery"
 msgid_plural "Album Galleries"
 msgstr[0] ""
 msgstr[1] ""
 
 #: Gallery.php:63
-msgctxt "Noop"
 msgid "Photo Tag"
 msgid_plural "Photo Tags"
 msgstr[0] ""
 msgstr[1] ""
 
 #: Gallery.php:72
-msgctxt "Photo Album CPT Labels: Menu Name"
+msgctxt "Posttype Menu"
 msgid "Gallery"
 msgstr ""
 
 #: Gallery.php:73
-msgctxt "Photo Album CPT: Featured"
+msgctxt "Posttype Featured"
 msgid "Featured Photo"
 msgstr ""
 

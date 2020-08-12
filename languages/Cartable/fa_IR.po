@@ -1,18 +1,19 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gEditorial Cartable 3.15.8\n"
-"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues/\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"POT-Creation-Date: 2020-07-17T10:40:12+00:00\n"
+"PO-Revision-Date: 2020-07-17 15:39+0430\n"
+"Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
+"Language: fa_IR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2020-07-14T21:27:02+00:00\n"
-"PO-Revision-Date: 2020-07-15 02:09+0430\n"
 "X-Generator: Poedit 2.3.1\n"
 "X-Domain: geditorial-cartable\n"
-"Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"Language: fa_IR\n"
+"X-Poedit-Basepath: ../../includes/Modules/Cartable\n"
 
 #: Cartable.php:47
 msgctxt "Setting Title"
@@ -162,7 +163,7 @@ msgstr[0] "کارپوشه‌های نوعی"
 msgstr[1] "کارپوشه نوعی"
 
 #: Cartable.php:184
-msgctxt "Setting Button"
+msgctxt "Button"
 msgid "Sync Users & Groups"
 msgstr "همگام‌سازی گروه‌ها و کاربران"
 

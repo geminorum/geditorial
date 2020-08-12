@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2020-07-17T11:48:53+00:00\n"
+"POT-Creation-Date: 2020-08-12T10:04:32+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.4.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Tube\n"
@@ -117,59 +117,59 @@ msgctxt "Field Description"
 msgid "Video Duration"
 msgstr ""
 
-#: Tube.php:274
+#: Tube.php:275
 msgctxt "Button"
 msgid "The date of this video"
 msgstr ""
 
-#: Tube.php:280
+#: Tube.php:281
 msgctxt "Button"
 msgid "Total time of this video"
 msgstr ""
 
-#: Tube.php:287
+#: Tube.php:288
 msgctxt "Button"
 msgid "Download this video"
 msgstr ""
 
-#: Tube.php:288
+#: Tube.php:289
 msgctxt "Button"
 msgid "Download"
 msgstr ""
 
-#: Tube.php:294
+#: Tube.php:295
 msgctxt "Button"
 msgid "View this video on YouTube"
 msgstr ""
 
-#: Tube.php:296
+#: Tube.php:297
 msgctxt "Button"
 msgid "YouTube"
 msgstr ""
 
-#: Tube.php:302
+#: Tube.php:303
 msgctxt "Button"
 msgid "View this video on Aparat"
 msgstr ""
 
-#: Tube.php:304
+#: Tube.php:305
 msgctxt "Button"
 msgid "Aparat"
 msgstr ""
 
-#: Tube.php:311
+#: Tube.php:312
 msgctxt "Button"
 msgid "Shortlink to this video"
 msgstr ""
 
-#: Tube.php:313
+#: Tube.php:314
 msgctxt "Button"
 msgid "Shortlink"
 msgstr ""
 
-#: Tube.php:318
-#: Tube.php:325
-#: Tube.php:332
+#: Tube.php:319
+#: Tube.php:326
+#: Tube.php:333
 msgctxt "Button"
 msgid "Share this video"
 msgstr ""

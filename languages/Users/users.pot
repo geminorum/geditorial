@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2020-07-17T11:48:55+00:00\n"
+"POT-Creation-Date: 2020-08-12T10:04:33+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.4.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Users\n"
@@ -64,8 +64,8 @@ msgid "Limits each author to post just on selected categories."
 msgstr ""
 
 #: Users.php:102
-msgctxt "Show Option All"
-msgid "All user groups"
+msgctxt "Taxonomy Menu"
+msgid "Groups"
 msgstr ""
 
 #: Users.php:103
@@ -75,18 +75,18 @@ msgid "Users"
 msgstr ""
 
 #: Users.php:104
-msgctxt "User Group Tax Labels: Menu Name"
-msgid "Groups"
+msgctxt "Show Option All"
+msgid "All user groups"
 msgstr ""
 
 #: Users.php:107
-msgctxt "Show Option All"
-msgid "All user types"
+msgctxt "Taxonomy Menu"
+msgid "Types"
 msgstr ""
 
 #: Users.php:109
-msgctxt "User Type Tax Labels: Menu Name"
-msgid "Types"
+msgctxt "Show Option All"
+msgid "All user types"
 msgstr ""
 
 #: Users.php:111
@@ -95,14 +95,12 @@ msgid "Summary"
 msgstr ""
 
 #: Users.php:114
-msgctxt "Noop"
 msgid "User Group"
 msgid_plural "User Groups"
 msgstr[0] ""
 msgstr[1] ""
 
 #: Users.php:115
-msgctxt "Noop"
 msgid "User Type"
 msgid_plural "User Types"
 msgstr[0] ""

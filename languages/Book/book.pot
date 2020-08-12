@@ -1,15 +1,16 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gEditorial Book 3.15.8\n"
-"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues/\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "Last-Translator: NULL\n"
 "Language-Team: NULL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2020-07-14T19:59:48+00:00\n"
+"POT-Creation-Date: 2020-08-12T10:03:46+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.4.0\n"
+"X-Poedit-Basepath: ../../includes/Modules/Book\n"
 "X-Domain: geditorial-book\n"
 
 #. translators: %1$s: plugin url, %2$s: plugin url
@@ -29,49 +30,42 @@ msgid "Connected To Title"
 msgstr ""
 
 #: Book.php:122
-msgctxt "Noop"
 msgid "Publication"
 msgid_plural "Publications"
 msgstr[0] ""
 msgstr[1] ""
 
 #: Book.php:123
-msgctxt "Noop"
 msgid "Subject"
 msgid_plural "Subjects"
 msgstr[0] ""
 msgstr[1] ""
 
 #: Book.php:124
-msgctxt "Noop"
 msgid "Library"
 msgid_plural "Libraries"
 msgstr[0] ""
 msgstr[1] ""
 
 #: Book.php:125
-msgctxt "Noop"
 msgid "Publisher"
 msgid_plural "Publishers"
 msgstr[0] ""
 msgstr[1] ""
 
 #: Book.php:126
-msgctxt "Noop"
 msgid "Publication Type"
 msgid_plural "Publication Types"
 msgstr[0] ""
 msgstr[1] ""
 
 #: Book.php:127
-msgctxt "Noop"
 msgid "Publication Status"
 msgid_plural "Publication Statuses"
 msgstr[0] ""
 msgstr[1] ""
 
 #: Book.php:128
-msgctxt "Noop"
 msgid "Publication Size"
 msgid_plural "Publication Sizes"
 msgstr[0] ""
@@ -110,7 +104,7 @@ msgid "Description"
 msgstr ""
 
 #: Book.php:165
-msgctxt "Publication CPT: Featured"
+msgctxt "Posttype Featured"
 msgid "Cover Image"
 msgstr ""
 

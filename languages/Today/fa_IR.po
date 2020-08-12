@@ -2,18 +2,18 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gEditorial Today 3.15.8\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"POT-Creation-Date: 2020-08-09T22:12:03+00:00\n"
+"PO-Revision-Date: 2020-08-10 02:50+0430\n"
+"Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
+"Language: fa_IR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2020-07-17T10:41:02+00:00\n"
-"PO-Revision-Date: 2020-07-17 16:15+0430\n"
-"X-Generator: Poedit 2.3.1\n"
+"X-Generator: Poedit 2.4\n"
 "X-Poedit-Basepath: ../../includes/Modules/Today\n"
 "X-Domain: geditorial-today\n"
-"Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"Language: fa_IR\n"
 
 #: Helper.php:374
 msgctxt "Meta Box Input"
@@ -107,17 +107,17 @@ msgid "Displays today list of connected posts on front-page."
 msgstr ""
 
 #: Today.php:98
-msgctxt "Day CPT: Featured"
+msgctxt "Posttype Featured"
 msgid "Cover Image"
 msgstr "تصویر کاور"
 
 #: Today.php:99
-msgctxt "Labels: Excerpt Box Title"
+msgctxt "MetaBox Title"
 msgid "Summary"
 msgstr "چکیده"
 
 #: Today.php:100
-msgctxt "Meta Box Title"
+msgctxt "MetaBox Title"
 msgid "The Day"
 msgstr "امروز"
 

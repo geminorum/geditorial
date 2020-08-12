@@ -1,18 +1,19 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gEditorial Book 3.15.8\n"
-"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues/\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"POT-Creation-Date: 2020-07-17T14:31:37+00:00\n"
+"PO-Revision-Date: 2020-07-18 02:54+0430\n"
+"Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
+"Language: fa_IR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2020-07-14T19:59:48+00:00\n"
-"PO-Revision-Date: 2020-07-15 00:59+0430\n"
 "X-Generator: Poedit 2.3.1\n"
 "X-Domain: geditorial-book\n"
-"Last-Translator: geminorum <contact@geminorum.ir>\n"
+"X-Poedit-Basepath: ../../includes/Modules/Book\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"Language: fa_IR\n"
 
 #. translators: %1$s: plugin url, %2$s: plugin url
 #: Book.php:36
@@ -33,49 +34,42 @@ msgid "Connected To Title"
 msgstr "عنوان مرتبط به"
 
 #: Book.php:122
-msgctxt "Noop"
 msgid "Publication"
 msgid_plural "Publications"
 msgstr[0] "نشرها"
 msgstr[1] "نشر"
 
 #: Book.php:123
-msgctxt "Noop"
 msgid "Subject"
 msgid_plural "Subjects"
 msgstr[0] "موضوعات"
 msgstr[1] "موضوع"
 
 #: Book.php:124
-msgctxt "Noop"
 msgid "Library"
 msgid_plural "Libraries"
 msgstr[0] "کتاب‌خانه‌ها"
 msgstr[1] "کتاب‌خانه"
 
 #: Book.php:125
-msgctxt "Noop"
 msgid "Publisher"
 msgid_plural "Publishers"
 msgstr[0] "ناشرین"
 msgstr[1] "ناشر"
 
 #: Book.php:126
-msgctxt "Noop"
 msgid "Publication Type"
 msgid_plural "Publication Types"
 msgstr[0] "نوع‌های نشر"
 msgstr[1] "نوع نشر"
 
 #: Book.php:127
-msgctxt "Noop"
 msgid "Publication Status"
 msgid_plural "Publication Statuses"
 msgstr[0] "وضعیت‌های نشر"
 msgstr[1] "وضعیت نشر"
 
 #: Book.php:128
-msgctxt "Noop"
 msgid "Publication Size"
 msgid_plural "Publication Sizes"
 msgstr[0] "قطع‌ها نشر"
@@ -114,7 +108,7 @@ msgid "Description"
 msgstr "توضیحات"
 
 #: Book.php:165
-msgctxt "Publication CPT: Featured"
+msgctxt "Posttype Featured"
 msgid "Cover Image"
 msgstr "تصویر روی جلد"
 

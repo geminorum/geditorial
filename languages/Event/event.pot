@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2020-07-17T11:48:15+00:00\n"
+"POT-Creation-Date: 2020-08-12T10:03:59+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.4.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Event\n"
@@ -88,45 +88,41 @@ msgid "Event Expire"
 msgstr ""
 
 #: Event.php:134
-msgctxt "Noop"
 msgid "Event"
 msgid_plural "Events"
 msgstr[0] ""
 msgstr[1] ""
 
 #: Event.php:135
-msgctxt "Noop"
 msgid "Event Type"
 msgid_plural "Event Types"
 msgstr[0] ""
 msgstr[1] ""
 
 #: Event.php:136
-msgctxt "Noop"
 msgid "Event Category"
 msgid_plural "Event Categories"
 msgstr[0] ""
 msgstr[1] ""
 
 #: Event.php:137
-msgctxt "Noop"
 msgid "Event Calendar"
 msgid_plural "Event Calendars"
 msgstr[0] ""
 msgstr[1] ""
 
 #: Event.php:141
-msgctxt "Calendar Type Tax Labels: Name"
+msgctxt "Taxonomy Label"
 msgid "Calendar Types"
 msgstr ""
 
 #: Event.php:151
-msgctxt "Event CPT: Featured"
+msgctxt "Posttype Featured"
 msgid "Poster Image"
 msgstr ""
 
 #: Event.php:152
-msgctxt "Event CPT: Meta Box Title"
+msgctxt "MetaBox Title"
 msgid "Date & Times"
 msgstr ""
 
@@ -141,106 +137,121 @@ msgid "Ends"
 msgstr ""
 
 #: Event.php:157
-msgctxt "Event Types Tax Labels: Menu Name"
-msgid "Types"
+msgctxt "Menu Title"
+msgid "Categories"
 msgstr ""
 
 #: Event.php:158
-msgctxt "Meta Box Title"
-msgid "Event Types"
+msgctxt "MetaBox Title"
+msgid "Event Categories"
 msgstr ""
 
 #: Event.php:159
 msgctxt "Column Title"
-msgid "Event Types"
+msgid "Event Categories"
 msgstr ""
 
 #: Event.php:162
-msgctxt "Event Calendars Tax Labels: Menu Name"
-msgid "Calendars"
+msgctxt "Menu Title"
+msgid "Types"
 msgstr ""
 
 #: Event.php:163
-msgctxt "Meta Box Title"
-msgid "Event Calendars"
+msgctxt "MetaBox Title"
+msgid "Event Types"
 msgstr ""
 
 #: Event.php:164
 msgctxt "Column Title"
+msgid "Event Types"
+msgstr ""
+
+#: Event.php:167
+msgctxt "Menu Title"
+msgid "Calendars"
+msgstr ""
+
+#: Event.php:168
+msgctxt "MetaBox Title"
 msgid "Event Calendars"
 msgstr ""
 
-#: Event.php:170
-msgctxt "Event Tax Defaults"
+#: Event.php:169
+msgctxt "Column Title"
+msgid "Event Calendars"
+msgstr ""
+
+#: Event.php:175
+msgctxt "Default Term"
 msgid "Holiday"
 msgstr ""
 
-#: Event.php:171
-msgctxt "Event Tax Defaults"
+#: Event.php:176
+msgctxt "Default Term"
 msgid "Birth"
 msgstr ""
 
-#: Event.php:172
-msgctxt "Event Tax Defaults"
+#: Event.php:177
+msgctxt "Default Term"
 msgid "Death"
 msgstr ""
 
-#: Event.php:173
-msgctxt "Event Tax Defaults"
+#: Event.php:178
+msgctxt "Default Term"
 msgid "Start"
 msgstr ""
 
-#: Event.php:174
-msgctxt "Event Tax Defaults"
+#: Event.php:179
+msgctxt "Default Term"
 msgid "End"
 msgstr ""
 
-#: Event.php:205
+#: Event.php:210
 msgctxt "Button"
 msgid "Install Default Event Types"
 msgstr ""
 
-#: Event.php:208
+#: Event.php:213
 msgctxt "Button"
 msgid "Install Default Calendar Types"
 msgstr ""
 
-#: Event.php:503
+#: Event.php:508
 msgctxt "Meta Box Input"
 msgid "Date Start"
 msgstr ""
 
-#: Event.php:504
+#: Event.php:509
 msgctxt "Meta Box Input Placeholder"
 msgid "Date Start"
 msgstr ""
 
-#: Event.php:513
+#: Event.php:518
 msgctxt "Meta Box Input"
 msgid "Time Start"
 msgstr ""
 
-#: Event.php:514
+#: Event.php:519
 msgctxt "Meta Box Input Placeholder"
 msgid "Time Start"
 msgstr ""
 
-#: Event.php:525
+#: Event.php:530
 msgctxt "Meta Box Input"
 msgid "Date End"
 msgstr ""
 
-#: Event.php:526
+#: Event.php:531
 msgctxt "Meta Box Input Placeholder"
 msgid "Date End"
 msgstr ""
 
-#: Event.php:535
+#: Event.php:540
 msgctxt "Meta Box Input"
 msgid "Time End"
 msgstr ""
 
-#: Event.php:536
+#: Event.php:541
 msgctxt "Meta Box Input Placeholder"
 msgid "Time End"
 msgstr ""

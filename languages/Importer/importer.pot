@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2020-07-17T10:40:33+00:00\n"
+"POT-Creation-Date: 2020-08-12T10:04:06+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.4.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Importer\n"
@@ -44,114 +44,119 @@ msgctxt "Javascript String"
 msgid "Select as Source"
 msgstr ""
 
-#: Importer.php:127
+#: Importer.php:85
+msgctxt "Tool Box"
+msgid "Helps with Importing contents from CSV files into any post-type, with meta support."
+msgstr ""
+
+#: Importer.php:132
 msgctxt "Button"
 msgid "Upload"
 msgstr ""
 
-#: Importer.php:177
+#: Importer.php:182
 msgctxt "Table Column"
 msgid "[Checks]"
 msgstr ""
 
-#: Importer.php:191
+#: Importer.php:196
 msgctxt "Table Column"
 msgid "Similar to Title:"
 msgstr ""
 
 #. translators: %s: count placeholder
-#: Importer.php:207
+#: Importer.php:212
 msgctxt "Header"
 msgid "%s Records Found"
 msgstr ""
 
-#: Importer.php:409
+#: Importer.php:414
 msgctxt "Button"
 msgid "Step 4: Import"
 msgstr ""
 
-#: Importer.php:411
+#: Importer.php:416
 msgctxt "Message"
 msgid "Check processed records and import, finally."
 msgstr ""
 
-#: Importer.php:429
+#: Importer.php:434
 msgctxt "Button"
 msgid "Import"
 msgstr ""
 
-#: Importer.php:431
+#: Importer.php:436
 msgctxt "Message"
 msgid "Select records to finally import."
 msgstr ""
 
-#: Importer.php:435
+#: Importer.php:440
 msgctxt "Header"
 msgid "Map the Importer"
 msgstr ""
 
-#: Importer.php:446
+#: Importer.php:451
 msgctxt "Button"
 msgid "Step 2: Map"
 msgstr ""
 
-#: Importer.php:448
+#: Importer.php:453
 msgctxt "Message"
 msgid "Map the file fields to the post-type fields."
 msgstr ""
 
-#: Importer.php:452
+#: Importer.php:457
 msgctxt "Header"
 msgid "Importer Tools"
 msgstr ""
 
-#: Importer.php:459
+#: Importer.php:464
 msgctxt "Button"
 msgid "Step 1: Attachment"
 msgstr ""
 
-#: Importer.php:461
+#: Importer.php:466
 msgctxt "Message"
 msgid "Upload or select a CSV file, post-type and user to map the import."
 msgstr ""
 
-#: Importer.php:467
+#: Importer.php:472
 msgctxt "Message"
 msgid "Imports are not supported for any of the post-types!"
 msgstr ""
 
-#: Importer.php:477
+#: Importer.php:482
 msgctxt "Post Field"
 msgid "Extra: Old ID"
 msgstr ""
 
-#: Importer.php:478
+#: Importer.php:483
 msgctxt "Post Field"
 msgid "Extra: Custom Meta"
 msgstr ""
 
-#: Importer.php:479
+#: Importer.php:484
 msgctxt "Post Field"
 msgid "Menu Order"
 msgstr ""
 
-#: Importer.php:480
+#: Importer.php:485
 msgctxt "Post Field"
 msgid "Post Title"
 msgstr ""
 
-#: Importer.php:481
+#: Importer.php:486
 msgctxt "Post Field"
 msgid "Post Content"
 msgstr ""
 
-#: Importer.php:482
+#: Importer.php:487
 msgctxt "Post Field"
 msgid "Post Excerpt"
 msgstr ""
 
 #. translators: %s: taxonomy name placeholder
-#: Importer.php:487
+#: Importer.php:492
 msgctxt "Post Field"
 msgid "Taxonomy: %s"
 msgstr ""

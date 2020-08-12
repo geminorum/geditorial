@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2020-07-17T11:48:51+00:00\n"
+"POT-Creation-Date: 2020-08-12T10:04:31+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.4.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Today\n"
@@ -105,17 +105,17 @@ msgid "Displays today list of connected posts on front-page."
 msgstr ""
 
 #: Today.php:98
-msgctxt "Day CPT: Featured"
+msgctxt "Posttype Featured"
 msgid "Cover Image"
 msgstr ""
 
 #: Today.php:99
-msgctxt "Labels: Excerpt Box Title"
+msgctxt "MetaBox Title"
 msgid "Summary"
 msgstr ""
 
 #: Today.php:100
-msgctxt "Meta Box Title"
+msgctxt "MetaBox Title"
 msgid "The Day"
 msgstr ""
 
