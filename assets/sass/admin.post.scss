@@ -43,6 +43,11 @@
     min-height: 10px; // to show the drop spot
     margin: 10px 0 0;
   }
+
+  > .empty-container {
+    height: 30px;
+    margin-bottom: 10px;
+  }
 }
 
 #wp-content-editor-tools {
@@ -86,5 +91,19 @@
 @media screen and (max-width: 782px) {
   .geditorial-admin-wrap.-revisions .-purge {
     float: left;
+  }
+
+  .geditorial-admin-wrap-inline.-revisions {
+    span.-datetime,
+    a.button .-text {
+      display: none;
+    }
+
+    a.button .dashicons {
+      width: 24px;
+      height: 24px;
+      font-size: 24px;
+      margin: 0;
+    }
   }
 }
