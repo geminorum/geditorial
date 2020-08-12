@@ -1,3 +1,51 @@
+### 3.15.9
+* main/helper: :warning: correct logic for domain absence on nooped strings
+* main/helper: empty string helper
+* main/helper: filter results on seperated strings
+* main/helper: post link helper
+* main/helper: table filter by search
+* main/module: apply setting on exclude from search
+* main/module: delegating textdomain loads
+* main/module: display field name after field title on settings
+* main/module: hide adjacent post links on custom templates
+* main/module: internal api for cards on tools page
+* main/module: passing root folder into module construct
+* main/module: refactoring supported posttypes helper
+* main/plugin: :new: separated pots for each module
+* main/shortcode: avoid linking to the same page
+* misc/walker page dropdown: check for enabled module
+* module/attachments: :warning: check for attr row option
+* module/attachments: search post contents for attachment url
+* module/entry: avoiding the links in autolink terms
+* module/estimated: adminbar summary
+* module/home: exclude from search posttypes
+* module/importer: :warning: correct key for stored field map
+* module/importer: better map table
+* module/importer: check for empty field values
+* module/importer: custom mete field
+* module/importer: extra field for old ids stored on meta
+* module/importer: filter bail-out on field values
+* module/importer: map taxonomies for the posttype
+* module/importer: passing posttype taxonomies
+* module/inquire: additional taxes
+* module/like: :warning: adminbar summary fixed
+* module/like: check settings outside of avatars logic
+* module/like: like count on admin list attr rows
+* module/like: reports page
+* module/magazine: meta fields for source title/url
+* module/meta: check for enabled module
+* module/meta: new field: published
+* module/meta: new field: abstract
+* module/meta: optional insert content
+* module/meta: refactoring sanitize meta before save
+* module/meta: revert to old type on dashboard field
+* module/modified: account for sites with no published content
+* module/ortho: :up: virastar 0.21.0
+* module/ortho: support for custom meta field on importer
+* module/revisions: :warning: correct post id for ajax nonce
+* module/revisions: revision row enhancements
+* module/specs: :warning: correct class for excerpt handling
+
 ### 3.15.8
 * main/listtable: restrict by author helper
 * main/metabox: :warning: display empty term select
