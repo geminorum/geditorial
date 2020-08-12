@@ -7,6 +7,7 @@
   var parseChangelog = require('parse-changelog');
   var prettyjson = require('prettyjson');
   var extend = require('xtend');
+  var template = require('lodash.template');
   var yaml = require('js-yaml');
   var log = require('fancy-log');
   var del = require('del');
@@ -20,7 +21,7 @@
   var env = config.env;
   var banner = config.banner.join('\n');
 
-  // var debug = /--debug/.test(process.argv.slice(2));
+  var debug = /--debug/.test(process.argv.slice(2));
   var patch = /--patch/.test(process.argv.slice(2)); // bump a patch?
 
   try {
@@ -60,12 +61,16 @@
   function i18nExtra (config) {
     return '--exclude="' + config.exclude.toString() + '"' +
           ' --file-comment="' + config.comment.toString() + '"' +
-          ' --headers=\'' + JSON.stringify(config.headers) + '\'' +
-          ' --skip-plugins --skip-themes --skip-packages';
+          ' --skip-plugins --skip-themes --skip-packages' +
+          (debug ? ' --debug' : '');
   }
 
   gulp.task('i18n:plugin', function (cb) {
-    exec('wp i18n make-pot . ' + i18nExtra(config.i18n.plugin), function (err, stdout, stderr) {
+    var command = 'wp i18n make-pot . ' +
+      i18nExtra(config.i18n.plugin) +
+      ' --headers=\'' + template(JSON.stringify(config.i18n.plugin.headers), { variable: 'data' })({ bugs: pkg.bugs.url }) + '\'';
+
+    exec(command, function (err, stdout, stderr) {
       if (stdout) {
         log.info('WP-CLI:');
         console.log(stdout);
@@ -91,7 +96,16 @@
           ' --domain=' + pkg.name + '-' + module +
           ' --subtract=./languages/' + pkg.name + '.pot' +
           ' --package-name="' + pkg.productName + ' ' + folder + ' ' + pkg.version + '" ' +
+          ' --headers=\'' + template(JSON.stringify(config.i18n.modules.headers), { variable: 'data' })({ bugs: pkg.bugs.url, folder: folder, module: module }) + '\' ' +
           extra;
+      }), {
+        continueOnError: false,
+        pipeStdout: false
+      })
+      .pipe(plugins.exec.reporter({
+        err: true,
+        stderr: true,
+        stdout: true
       }));
   });
 

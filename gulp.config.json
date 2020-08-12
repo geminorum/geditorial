@@ -119,7 +119,8 @@
       "headers": {
         "Last-Translator": "NULL",
         "Language-Team": "NULL",
-        "Report-Msgid-Bugs-To": "https://github.com/geminorum/geditorial/issues/"
+        "Report-Msgid-Bugs-To": "<%= data.bugs %>",
+        "X-Poedit-Basepath": ".."
       }
     },
     "modules": {
@@ -128,7 +129,8 @@
       "headers": {
         "Last-Translator": "NULL",
         "Language-Team": "NULL",
-        "Report-Msgid-Bugs-To": "https://github.com/geminorum/geditorial/issues/"
+        "Report-Msgid-Bugs-To": "<%= data.bugs %>",
+        "X-Poedit-Basepath": "../../includes/Modules/<%= data.folder %>"
       }
     }
   },
