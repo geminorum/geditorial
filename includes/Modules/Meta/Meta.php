@@ -209,7 +209,7 @@ class Meta extends gEditorial\Module
 
 		if ( count( $ct_tax_posttypes ) )
 			$this->register_taxonomy( 'ct_tax', [
-				'show_in_rest' => FALSE, // disables in block editor, temporarily!
+				'show_in_rest' => FALSE, // temporarily disable in block editor
 			], $ct_tax_posttypes );
 
 		// default fields for custom post types
@@ -579,7 +579,7 @@ class Meta extends gEditorial\Module
 
 		$this->store_postmeta( $post_id,
 			$this->sanitize_post_meta(
-				(array) $this->get_postmeta( $post->ID ),
+				(array) $this->get_postmeta( $post->ID, FALSE ),
 				$this->get_posttype_fields( $post->post_type ),
 				$post
 			)
@@ -609,7 +609,7 @@ class Meta extends gEditorial\Module
 		if ( ! $post = get_post( $post_id ) )
 			return;
 
-		$meta    = (array) $this->get_postmeta( $post->ID );
+		$meta    = (array) $this->get_postmeta( $post->ID, FALSE );
 		$fields  = $this->get_posttype_fields( $post->post_type );
 		$exclude = [ 'ot', 'st', 'highlight', 'as', 'ch', 'le', 'published', 'source_title', 'source_url', 'abstract' ];
 
@@ -948,7 +948,7 @@ class Meta extends gEditorial\Module
 		}
 
 		if ( $final ) {
-			$postmeta = (array) $this->get_postmeta( $post_id );
+			$postmeta = (array) $this->get_postmeta( $post_id, FALSE );
 			$postmeta[$field] = $final;
 			$this->store_postmeta( $post_id, $postmeta );
 		}

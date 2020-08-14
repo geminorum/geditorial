@@ -156,7 +156,7 @@ class Series extends gEditorial\Module
 			return;
 
 		$data = $this->sanitize_post_meta(
-			$this->get_postmeta( $post_id ),
+			$this->get_postmeta( $post_id, FALSE ),
 			$this->posttype_fields( $post->post_type ),
 			$post_id,
 			$post->post_type

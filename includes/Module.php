@@ -562,25 +562,25 @@ class Module extends Base
 	}
 
 	// get stored post meta by the field
-	public function get_postmeta( $post_id, $field = FALSE, $default = '', $key = NULL )
+	public function get_postmeta( $post_id, $field = FALSE, $default = '', $metakey = NULL )
 	{
 		global $gEditorialPostMeta;
 
-		if ( is_null( $key ) )
-			$key = $this->meta_key;
+		if ( is_null( $metakey ) )
+			$metakey = $this->meta_key;
 
-		if ( ! isset( $gEditorialPostMeta[$post_id][$key] ) )
-			$gEditorialPostMeta[$post_id][$key] = get_metadata( 'post', $post_id, $key, TRUE );
+		if ( ! isset( $gEditorialPostMeta[$post_id][$metakey] ) )
+			$gEditorialPostMeta[$post_id][$metakey] = get_metadata( 'post', $post_id, $metakey, TRUE );
 
-		if ( empty( $gEditorialPostMeta[$post_id][$key] ) )
+		if ( empty( $gEditorialPostMeta[$post_id][$metakey] ) )
 			return $default;
 
 		if ( FALSE === $field )
-			return $gEditorialPostMeta[$post_id][$key];
+			return $gEditorialPostMeta[$post_id][$metakey];
 
 		foreach ( $this->sanitize_meta_field( $field ) as $field_key )
-			if ( isset( $gEditorialPostMeta[$post_id][$key][$field_key] ) )
-				return $gEditorialPostMeta[$post_id][$key][$field_key];
+			if ( isset( $gEditorialPostMeta[$post_id][$metakey][$field_key] ) )
+				return $gEditorialPostMeta[$post_id][$metakey][$field_key];
 
 		return $default;
 	}
@@ -1856,6 +1856,7 @@ class Module extends Base
 		];
 	}
 
+	// @REF: https://developer.wordpress.org/reference/functions/register_taxonomy/
 	public function register_taxonomy( $constant, $atts = [], $posttypes = NULL, $caps = NULL )
 	{
 		$taxonomy = $this->constant( $constant );

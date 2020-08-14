@@ -18,8 +18,7 @@ use geminorum\gEditorial\WordPress\User;
 class Importer extends gEditorial\Module
 {
 
-	protected $disable_no_posttypes = TRUE;
-
+	protected $disable_no_posttypes    = TRUE;
 	protected $default_audit_attribute = 'imported';
 
 	public static function module()

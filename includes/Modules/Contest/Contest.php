@@ -43,7 +43,7 @@ class Contest extends gEditorial\Module
 					'type'        => 'url',
 					'title'       => _x( 'Redirect Archives', 'Settings', 'geditorial-contest' ),
 					'description' => _x( 'Redirects contest and apply archives to this URL. Leave empty to disable.', 'Settings', 'geditorial-contest' ),
-					'placeholder' => URL::trail( get_option( 'home' ) ).'archives',
+					'placeholder' => URL::home( 'archives' ),
 				],
 			],
 			'posttypes_option' => 'posttypes_option',
@@ -106,6 +106,9 @@ class Contest extends gEditorial\Module
 				'featured'              => _x( 'Poster Image', 'Posttype Featured', 'geditorial-contest' ),
 				'meta_box_title'        => _x( 'Metadata', 'MetaBox Title', 'geditorial-contest' ),
 				'children_column_title' => _x( 'Applies', 'Column Title', 'geditorial-contest' ),
+			],
+			'contest_tax' => [
+				'meta_box_title' => _x( 'In This Contest', 'MetaBox Title', 'geditorial-contest' ),
 			],
 			'contest_cat' => [
 				'tweaks_column_title' => _x( 'Contest Categories', 'Column Title', 'geditorial-contest' ),

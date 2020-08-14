@@ -836,6 +836,9 @@ class Helper extends Core\Base
 		if ( is_null( $title_attr ) )
 			$title_attr = _x( 'No Count', 'Helper: No Count Title Attribute', 'geditorial' );
 
+		if ( array( $count ) )
+			$count = count( $count );
+
 		return $count
 			? Number::format( $count )
 			: ( is_null( $empty ) ? self::htmlEmpty( 'column-count-empty', $title_attr ) : $empty );
