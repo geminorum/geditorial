@@ -593,17 +593,14 @@ class Module extends Base
 		if ( is_null( $prefix ) )
 			$prefix = $this->key;
 
-		if ( is_null( $metakey ) )
-			$metakey = $this->meta_key; // back-comp
-
-		$legacy = get_metadata( 'post', $post_id, $metakey, TRUE );
+		$legacy = $this->get_postmeta_legacy( $post_id, [], $metakey );
 
 		foreach ( $this->sanitize_postmeta_field( $field ) as $field_key ) {
 
-			if ( $data = $this->fetch_postmeta( $post_id, $default, $prefix.'_'.$field_key ) )
+			if ( $data = $this->fetch_postmeta( $post_id, $default, sprintf( '_%s_%s', $prefix, $field_key ) ) )
 				return $data;
 
-			if ( array_key_exists( $field_key, $legacy ) )
+			if ( is_array( $legacy ) && array_key_exists( $field_key, $legacy ) )
 				return $legacy[$field_key];
 		}
 
@@ -615,7 +612,7 @@ class Module extends Base
 		if ( is_null( $prefix ) )
 			$prefix = $this->key;
 
-		return $this->store_postmeta( $post_id, $data, $prefix.'_'.$field );
+		return $this->store_postmeta( $post_id, $data, sprintf( '_%s_%s', $prefix, $field ) );
 	}
 
 	// fetch module meta array
