@@ -554,8 +554,10 @@ class Meta extends gEditorial\Module
 			'over-title'           => [ 'over_title', 'ot' ],
 			'sub-title'            => [ 'sub_title', 'st' ],
 			'label'                => [ 'ch', 'label', 'column_header' ],
-			'lead'                 => [ 'le', 'lead' ],
-			'author'               => [ 'as', 'author' ],
+			'le'                   => [ 'lead', 'le' ],
+			'lead'                 => [ 'lead', 'le' ],
+			'as'                   => [ 'author', 'as' ],
+			'author'               => [ 'author', 'as' ],
 			'number'               => [ 'issue_number_line', 'number' ],
 			'pages'                => [ 'issue_total_pages', 'pages' ],
 			'start'                => [ 'in_issue_page_start', 'start' ],
@@ -770,8 +772,9 @@ class Meta extends gEditorial\Module
 		if ( ! $post = get_post() )
 			return $display_name;
 
-		if ( ! in_array( 'as', $this->posttype_fields( $post->post_type ) ) )
-			return $display_name;
+		// NO NEED
+		// if ( ! in_array( 'as', $this->posttype_fields( $post->post_type ) ) )
+		// 	return $display_name;
 
 		if ( $value = $this->get_postmeta_field( $post->ID, 'as' ) )
 			$display_name = $value;

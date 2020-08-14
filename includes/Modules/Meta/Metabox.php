@@ -90,7 +90,7 @@ class Meta extends gEditorial\MetaBox
 			'autocomplete' => 'off',
 			'name'         => 'geditorial-meta-'.$field.( FALSE === $key ? '' : '['.$key.']' ),
 			'id'           => 'geditorial-meta-'.$field.( FALSE === $key ? '' : '-'.$key ),
-			'value'        => self::getPostMeta( $post->ID, $field ),
+			'value'        => self::getPostMeta( $post->ID, $field, '' ),
 			'title'        => self::getString( $field, $post->post_type, 'descriptions', $title ), // FIXME: get from fields args
 			'placeholder'  => $title,
 			'class'        => [
@@ -126,7 +126,7 @@ class Meta extends gEditorial\MetaBox
 			'autocomplete' => 'off',
 			'name'         => 'geditorial-meta-'.$field.( FALSE === $key ? '' : '['.$key.']' ),
 			'id'           => 'geditorial-meta-'.$field.( FALSE === $key ? '' : '-'.$key ),
-			'value'        => self::getPostMeta( $post->ID, $field ),
+			'value'        => self::getPostMeta( $post->ID, $field, '' ),
 			'title'        => self::getString( $field, $post->post_type, 'descriptions', $title ), // FIXME: get from fields args
 			'placeholder'  => $title,
 			'class'        => [
@@ -214,7 +214,7 @@ class Meta extends gEditorial\MetaBox
 		else
 			$atts['data']['ortho'] = 'html';
 
-		$html = HTML::tag( 'textarea', $atts, esc_textarea( self::getPostMeta( $post->ID, $field ) ) );
+		$html = HTML::tag( 'textarea', $atts, esc_textarea( self::getPostMeta( $post->ID, $field, '' ) ) );
 
 		echo HTML::wrap( $html, 'field-wrap -textarea' );
 	}
@@ -233,7 +233,7 @@ class Meta extends gEditorial\MetaBox
 			'autocomplete' => 'off',
 			'name'         => 'geditorial-meta-'.$field.( FALSE === $key ? '' : '['.$key.']' ),
 			'id'           => 'geditorial-meta-'.$field.( FALSE === $key ? '' : '-'.$key ),
-			'value'        => self::getPostMeta( $post->ID, $field ),
+			'value'        => self::getPostMeta( $post->ID, $field, '' ),
 			'title'        => self::getString( $field, $post->post_type, 'descriptions', $title ), // FIXME: get from fields args
 			'placeholder'  => $title,
 			'tabindex'     => '0',
@@ -301,7 +301,7 @@ class Meta extends gEditorial\MetaBox
 		else
 			$atts['data']['ortho'] = 'html';
 
-		$html.= HTML::tag( 'textarea', $atts, esc_textarea( self::getPostMeta( $post->ID, $field ) ) );
+		$html.= HTML::tag( 'textarea', $atts, esc_textarea( self::getPostMeta( $post->ID, $field, '' ) ) );
 		$html.= '</div></div></div></div>';
 
 		echo $html;
@@ -320,6 +320,6 @@ class Meta extends gEditorial\MetaBox
 		if ( is_null( $title ) )
 			$title = self::getString( $field, $post->post_type );
 
-		parent::fieldEditorBox( self::getPostMeta( $post->ID, $field ), $id, $title, $atts );
+		parent::fieldEditorBox( self::getPostMeta( $post->ID, $field, '' ), $id, $title, $atts );
 	}
 }

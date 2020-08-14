@@ -620,9 +620,9 @@ class Module extends Base
 
 	// fetch module meta array
 	// back-comp only
-	public function get_postmeta_legacy( $post_id, $default = [] )
+	public function get_postmeta_legacy( $post_id, $default = [], $metakey = NULL )
 	{
-		return $this->fetch_postmeta( $post_id, $default, NULL );
+		return $this->fetch_postmeta( $post_id, $default, $metakey );
 	}
 
 	public function sanitize_postmeta_field( $field )
@@ -652,12 +652,10 @@ class Module extends Base
 		if ( is_null( $metakey ) )
 			$metakey = $this->meta_key; // back-comp
 
-		if ( ! empty( $data ) )
-			update_post_meta( $post_id, $metakey, $data );
-		else
-			delete_post_meta( $post_id, $metakey );
+		if ( empty( $data ) )
+			return delete_post_meta( $post_id, $metakey );
 
-		unset( $gEditorialPostMeta[$post_id][$this->meta_key][$metakey] ); // back-comp
+		return update_post_meta( $post_id, $metakey, $data );
 	}
 
 	public function fetch_postmeta( $post_id, $default = '', $metakey = NULL )
