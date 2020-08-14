@@ -26,9 +26,11 @@ class MetaBox extends Core\Base
 		return gEditorial()->{static::MODULE}->get_string( $string, $posttype, $group, $fallback );
 	}
 
-	protected static function getPostMeta( $post_id, $field = FALSE, $default = '', $key = NULL )
+	protected static function getPostMeta( $post_id, $field = FALSE, $default = [], $metakey = NULL )
 	{
-		return gEditorial()->{static::MODULE}->get_postmeta( $post_id, $field, $default, $key );
+		return FALSE === $field
+			? gEditorial()->{static::MODULE}->get_postmeta_legacy( $post_id, $default )
+			: gEditorial()->{static::MODULE}->get_postmeta_field( $post_id, $field, $default, $metakey );
 	}
 
 	public static function checkHidden( $metabox_id, $posttype = FALSE, $after = '' )

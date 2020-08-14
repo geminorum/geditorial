@@ -588,7 +588,7 @@ class Meta extends gEditorial\Module
 
 		$this->store_postmeta( $post_id,
 			$this->sanitize_post_meta(
-				(array) $this->get_postmeta( $post->ID, FALSE ),
+				$this->get_postmeta_legacy( $post->ID ),
 				$this->get_posttype_fields( $post->post_type ),
 				$post
 			)
@@ -618,7 +618,7 @@ class Meta extends gEditorial\Module
 		if ( ! $post = get_post( $post_id ) )
 			return;
 
-		$meta    = (array) $this->get_postmeta( $post->ID, FALSE );
+		$meta    = $this->get_postmeta_legacy( $post->ID );
 		$fields  = $this->get_posttype_fields( $post->post_type );
 		$exclude = [ 'ot', 'st', 'highlight', 'as', 'ch', 'le', 'published', 'source_title', 'source_url', 'abstract' ];
 
@@ -642,26 +642,26 @@ class Meta extends gEditorial\Module
 
 		foreach ( $rows as $field => $icon ) {
 
-			if ( array_key_exists( $field, $fields ) ) {
+			if ( ! array_key_exists( $field, $fields ) )
+				continue;
 
-				if ( $value = $this->get_postmeta( $post->ID, $field, '' ) ) {
+			if ( ! $value = $this->get_postmeta_field( $post->ID, $field ) )
+				continue;
 
-					echo '<li class="-row meta-'.$field.'">';
+			echo '<li class="-row meta-'.$field.'">';
 
-						echo $this->get_column_icon( FALSE, $icon, $this->get_string( $field, $post->post_type, 'titles', $field ) );
+				echo $this->get_column_icon( FALSE, $icon, $this->get_string( $field, $post->post_type, 'titles', $field ) );
 
-						echo HTML::escape( $value );
+				echo HTML::escape( $value );
 
-						if ( 'as' == $field && $author ) {
-							echo ' <small>('.$author.')</small>';
-							$author = FALSE;
-						}
-
-						echo '<div class="hidden geditorial-meta-'.$field.'-value">'.$value.'</div>';
-
-					echo '</li>';
+				if ( $author && in_array( $field, [ 'as', 'author' ] ) ) {
+					echo ' <small>('.$author.')</small>';
+					$author = FALSE;
 				}
-			}
+
+				echo '<div class="hidden geditorial-meta-'.$field.'-value">'.$value.'</div>';
+
+			echo '</li>';
 		}
 
 		if ( $author ) {
@@ -773,7 +773,7 @@ class Meta extends gEditorial\Module
 		if ( ! in_array( 'as', $this->posttype_fields( $post->post_type ) ) )
 			return $display_name;
 
-		if ( $value = $this->get_postmeta( $post->ID, 'as', '' ) )
+		if ( $value = $this->get_postmeta_field( $post->ID, 'as' ) )
 			$display_name = $value;
 
 		return $display_name;
@@ -957,7 +957,7 @@ class Meta extends gEditorial\Module
 		}
 
 		if ( $final ) {
-			$postmeta = (array) $this->get_postmeta( $post_id, FALSE );
+			$postmeta = $this->get_postmeta_legacy( $post_id );
 			$postmeta[$field] = $final;
 			$this->store_postmeta( $post_id, $postmeta );
 		}

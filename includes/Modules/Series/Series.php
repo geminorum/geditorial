@@ -156,7 +156,7 @@ class Series extends gEditorial\Module
 			return;
 
 		$data = $this->sanitize_post_meta(
-			$this->get_postmeta( $post_id, FALSE ),
+			$this->get_postmeta_legacy( $post_id ),
 			$this->posttype_fields( $post->post_type ),
 			$post_id,
 			$post->post_type
@@ -300,7 +300,9 @@ class Series extends gEditorial\Module
 
 	public function render_metabox_item( $counter, $term_id, $fields, $post )
 	{
-		$meta = ( $counter ? $this->get_postmeta( $post->ID, $term_id, [] ) : [] );
+		$meta = $counter
+			? $this->get_postmeta_field( $post->ID, $term_id, [] )
+			: [];
 
 		$field = 'in_series_title';
 		if ( in_array( $field, $fields ) ) {
@@ -388,7 +390,7 @@ class Series extends gEditorial\Module
 			$term = $term[0];
 
 		if ( 1 == count( $posts ) ) {
-			$posts[0]->series_meta = $this->get_postmeta( $posts[0]->ID, $term->term_id, [] );
+			$posts[0]->series_meta = $this->get_postmeta_field( $posts[0]->ID, $term->term_id, [] );
 			return $posts;
 		}
 
@@ -397,7 +399,7 @@ class Series extends gEditorial\Module
 
 		foreach ( $posts as &$post ) {
 
-			$post->series_meta = $this->get_postmeta( $post->ID, $term->term_id, [] );
+			$post->series_meta = $this->get_postmeta_field( $post->ID, $term->term_id, [] );
 
 			if ( isset( $post->series_meta['in_series_order'] )
 				&& $post->series_meta['in_series_order'] )

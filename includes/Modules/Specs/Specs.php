@@ -119,7 +119,7 @@ class Specs extends gEditorial\Module
 			return;
 
 		$postmeta = $this->sanitize_post_meta(
-			$this->get_postmeta( $post_id, FALSE ),
+			$this->get_postmeta_legacy( $post_id ),
 			$this->posttype_fields( $post->post_type ),
 			$post_id,
 			$post->post_type
@@ -136,14 +136,15 @@ class Specs extends gEditorial\Module
 		if ( ! $post = get_post( $post_id ) )
 			return FALSE;
 
-		$meta = $this->get_postmeta( $post_id, FALSE, [] );
+		$meta       = $this->get_postmeta_legacy( $post_id );
 		$spec_terms = Taxonomy::getTerms( $this->constant( 'specs_tax' ), FALSE, TRUE, 'slug' );
-		$terms = [];
+		$terms      = [];
 
 		foreach ( $meta as $meta_row )
 			$terms[] = intval( $meta_row['spec_term_id'] );
 
 		$counter = 1;
+
 		foreach ( $specs as $spec ) {
 			$row = [];
 
@@ -289,7 +290,7 @@ class Specs extends gEditorial\Module
 			return MetaBox::fieldEmptyTaxonomy( $taxonomy );
 
 		$terms = Taxonomy::getTerms( $taxonomy, $post->ID, TRUE );
-		$metas = $this->get_postmeta( $post->ID, FALSE, [] );
+		$metas = $this->get_postmeta_legacy( $post->ID );
 
 		$handle = sprintf( '<span data-icon="dashicons" class="-handle dashicons dashicons-move" title="%s"></span>',
 			_x( 'Sort me!', 'Sortable Handler', 'geditorial-specs' ) );
@@ -440,7 +441,7 @@ class Specs extends gEditorial\Module
 			return NULL;
 
 		$the_terms = Taxonomy::getTerms( $this->constant( 'specs_tax' ), $post->ID, TRUE );
-		$metas     = $this->get_postmeta( $post->ID, FALSE, [] );
+		$metas     = $this->get_postmeta_legacy( $post->ID );
 		$html      = '';
 
 		// FIXME: use table helper

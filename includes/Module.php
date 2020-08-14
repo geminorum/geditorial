@@ -561,9 +561,12 @@ class Module extends Base
 		];
 	}
 
+	// FIXME: DEPRECATED
 	// get stored post meta by the field
 	public function get_postmeta( $post_id, $field = FALSE, $default = '', $metakey = NULL )
 	{
+		self::_dep( '$this->get_postmeta_legacy() || $this->get_postmeta_field()' );
+
 		global $gEditorialPostMeta;
 
 		if ( is_null( $metakey ) )
@@ -583,6 +586,43 @@ class Module extends Base
 				return $gEditorialPostMeta[$post_id][$metakey][$field_key];
 
 		return $default;
+	}
+
+	public function get_postmeta_field( $post_id, $field, $default = FALSE, $prefix = NULL, $metakey = NULL )
+	{
+		if ( is_null( $prefix ) )
+			$prefix = $this->key;
+
+		if ( is_null( $metakey ) )
+			$metakey = $this->meta_key; // back-comp
+
+		$legacy = get_metadata( 'post', $post_id, $metakey, TRUE );
+
+		foreach ( $this->sanitize_postmeta_field( $field ) as $field_key ) {
+
+			if ( $data = $this->fetch_postmeta( $post_id, $default, $prefix.'_'.$field_key ) )
+				return $data;
+
+			if ( array_key_exists( $field_key, $legacy ) )
+				return $legacy[$field_key];
+		}
+
+		return $default;
+	}
+
+	public function set_postmeta_field( $post_id, $field, $data, $prefix = NULL )
+	{
+		if ( is_null( $prefix ) )
+			$prefix = $this->key;
+
+		return $this->store_postmeta( $post_id, $data, $prefix.'_'.$field );
+	}
+
+	// fetch module meta array
+	// back-comp only
+	public function get_postmeta_legacy( $post_id, $default = [] )
+	{
+		return $this->fetch_postmeta( $post_id, $default, NULL );
 	}
 
 	public function sanitize_postmeta_field( $field )
@@ -1600,7 +1640,7 @@ class Module extends Base
 		], $atts );
 
 		if ( ! array_key_exists( 'options', $args ) )
-			$args['options'] = get_post_meta( $post->ID ); //  $this->get_postmeta( $post->ID, FALSE, [] );
+			$args['options'] = get_post_meta( $post->ID ); //  $this->get_postmeta_legacy( $post->ID );
 
 		if ( empty( $args['cap'] ) )
 			$args['cap'] = empty( $this->caps[$args['option_group']] ) ? NULL : $this->caps[$args['option_group']];

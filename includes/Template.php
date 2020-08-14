@@ -463,7 +463,7 @@ class Template extends Core\Base
 		if ( ! $post = get_post( $args['id'] ) )
 			return $args['default'];
 
-		$meta = gEditorial()->meta->get_postmeta( $post->ID, $field, FALSE );
+		$meta = gEditorial()->meta->get_postmeta_field( $post->ID, $field );
 
 		if ( FALSE === $meta )
 			return $args['default'];
@@ -482,7 +482,7 @@ class Template extends Core\Base
 	// WARNING: caller must check for module
 	public static function getMetaFieldRaw( $field, $post_id, $module = 'meta' )
 	{
-		return gEditorial()->{$module}->get_postmeta( $post_id, $field, FALSE );
+		return gEditorial()->{$module}->get_postmeta_field( $post_id, $field );
 	}
 
 	public static function metaLabel( $atts = [], $module = NULL, $chack = TRUE )

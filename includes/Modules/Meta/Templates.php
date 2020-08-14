@@ -64,7 +64,7 @@ class Meta extends gEditorial\Template
 
 	// FIXME: DEPRECATED
 	// USE: self::metaField()
-	public static function meta( $fields, $before = '', $after = '', $filter = FALSE, $post_id = NULL, $args = [] )
+	public static function meta( $field, $before = '', $after = '', $filter = FALSE, $post_id = NULL, $args = [] )
 	{
 		self::_dev_dep( 'gEditorialMetaTemplates::metaField()' );
 
@@ -73,33 +73,28 @@ class Meta extends gEditorial\Template
 		if ( is_null( $post_id ) )
 			$post_id = $post->ID;
 
-		foreach ( self::sanitize_field( $fields ) as $field ) {
+		$meta = gEditorial()->meta->get_postmeta_field( $post_id, $field );
 
-			$meta = gEditorial()->meta->get_postmeta( $post_id, $field, FALSE );
+		if ( FALSE === $meta )
+			return FALSE;
 
-			if ( FALSE === $meta )
-				continue; // return FALSE;
+		$meta = apply_filters( 'gmeta_meta', $meta, $field );
 
-			$meta = apply_filters( 'gmeta_meta', $meta, $field );
+		if ( $filter && is_callable( $filter ) )
+			$meta = call_user_func( $filter, $meta );
 
-			if ( $filter && is_callable( $filter ) )
-				$meta = call_user_func( $filter, $meta );
+		$html = $before.$meta.$after;
 
-			$html = $before.$meta.$after;
+		if ( isset( $args['echo'] ) && ! $args['echo'] )
+			return $html;
 
-			if ( isset( $args['echo'] ) && ! $args['echo'] )
-				return $html;
-
-			echo $html;
-			return TRUE;
-		}
-
-		return FALSE;
+		echo $html;
+		return TRUE;
 	}
 
 	// FIXME: DEPRECATED
 	// USE: self::getMetaField()
-	public static function get_meta( $fields, $atts = [] )
+	public static function get_meta( $field, $atts = [] )
 	{
 		self::_dev_dep( 'gEditorialMetaTemplates::getMetaField()' );
 
@@ -113,11 +108,9 @@ class Meta extends gEditorial\Template
 			'def' => '',
 		], $atts );
 
-		foreach ( self::sanitize_field( $fields ) as $field )
-			if ( FALSE !== ( $meta = gEditorial()->meta->get_postmeta( $args['id'], $field, FALSE ) ) )
-				return $meta;
+		$meta = gEditorial()->meta->get_postmeta_field( $args['id'], $field );
 
-		return $args['def'];
+		return FALSE === $meta ? $args['def'] : $meta;
 	}
 
 	// FIXME: DEPRECATED

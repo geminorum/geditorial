@@ -888,8 +888,11 @@ class Collect extends gEditorial\Module
 					if ( ! gEditorial()->enabled( 'meta' ) )
 						WordPress::redirectReferer( 'wrong' );
 
-					$meta_key = isset( $_POST['collection_store_order'] ) ? 'in_collection_order' : 'in_collection_page_start';
 					$count = 0;
+
+					$field_key = isset( $_POST['collection_store_order'] )
+						? 'in_collection_order'
+						: 'in_collection_page_start';
 
 					foreach ( $_POST['_cb'] as $term_id ) {
 						foreach ( $this->get_linked_posts( NULL, 'collection_cpt', 'collection_tax', FALSE, $term_id ) as $post ) {
@@ -897,7 +900,7 @@ class Collect extends gEditorial\Module
 							if ( $post->menu_order )
 								continue;
 
-							if ( $order = gEditorial()->meta->get_postmeta( $post->ID, $meta_key, FALSE ) ) {
+							if ( $order = gEditorial()->meta->get_postmeta_field( $post->ID, $field_key ) ) {
 								wp_update_post( [
 									'ID'         => $post->ID,
 									'menu_order' => $order,
