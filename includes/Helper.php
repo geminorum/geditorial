@@ -836,7 +836,7 @@ class Helper extends Core\Base
 		if ( is_null( $title_attr ) )
 			$title_attr = _x( 'No Count', 'Helper: No Count Title Attribute', 'geditorial' );
 
-		if ( array( $count ) )
+		if ( is_array( $count ) )
 			$count = count( $count );
 
 		return $count

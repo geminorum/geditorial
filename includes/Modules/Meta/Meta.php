@@ -491,10 +491,8 @@ class Meta extends gEditorial\Module
 		if ( ! $this->nonce_verify( 'post_main' ) && ! $this->nonce_verify( 'post_raw' ) )
 			return $postmeta;
 
-		$cap = empty( $post->cap->edit_post ) ? 'edit_post' : $post->cap->edit_post;
-
-		// MAYBE: check for `edit_post_meta` cap
-		if ( ! current_user_can( $cap, $post->ID ) )
+		// MAYBE: check for `edit_post_meta`
+		if ( ! current_user_can( 'edit_post', $post->ID ) )
 			return $postmeta;
 
 		foreach ( $fields as $field => $args ) {
