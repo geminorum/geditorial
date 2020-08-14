@@ -785,19 +785,29 @@ class Module extends Base
 		}
 	}
 
-	public function settings_fields_option( $args )
+	// helps with renamed fields
+	private function get_settings_fields_option_val( $args )
 	{
-		$name = $this->base.'_'.$this->module->name.'[fields]['.$args['post_type'].']['.$args['field'].']';
-		$id   = $this->base.'_'.$this->module->name.'-fields-'.$args['post_type'].'-'.$args['field'];
+		$fields = array_reverse( $this->sanitize_postmeta_field( $args['field'] ) );
+
+		foreach ( $fields as $field_key )
+			if ( isset( $this->options->fields[$args['post_type']][$field_key] ) )
+				return $this->options->fields[$args['post_type']][$field_key];
 
 		if ( isset( $this->options->fields[$args['post_type']][$args['field']] ) )
-			$value = $this->options->fields[$args['post_type']][$args['field']];
+			return $this->options->fields[$args['post_type']][$args['field']];
 
-		else if ( ! empty( $args['default'] ) )
-			$value = $args['default'];
+		if ( ! empty( $args['default'] ) )
+			return $args['default'];
 
-		else
-			$value = FALSE;
+		return FALSE;
+	}
+
+	public function settings_fields_option( $args )
+	{
+		$name  = $this->base.'_'.$this->module->name.'[fields]['.$args['post_type'].']['.$args['field'].']';
+		$id    = $this->base.'_'.$this->module->name.'-fields-'.$args['post_type'].'-'.$args['field'];
+		$value = $this->get_settings_fields_option_val( $args );
 
 		$html = HTML::tag( 'input', [
 			'type'    => 'checkbox',
@@ -2979,25 +2989,28 @@ class Module extends Base
 	public function get_field_icon( $field, $posttype = 'post', $args = [] )
 	{
 		switch ( $field ) {
-			case 'ot': return 'arrow-up-alt2';
-			case 'st': return 'arrow-down-alt2';
-			case 'as': return 'admin-users';
+			case 'over_title': return 'arrow-up-alt2';
+			case 'sub_title' : return 'arrow-down-alt2';
+			case 'byline'    : return 'admin-users';
 		}
 
 		return 'admin-post';
 	}
 
 	// DEFAULT FILTER
-	public function meta_column_row( $post, $fields, $meta )
+	public function meta_column_row( $post, $fields, $excludes )
 	{
 		foreach ( $fields as $field => $args ) {
 
-			if ( empty( $meta[$field] ) )
+			if ( in_array( $field, $excludes ) )
+				continue;
+
+			if ( ! $value = $this->get_postmeta_field( $post->ID, $field ) )
 				continue;
 
 			echo '<li class="-row -'.$this->module->name.' -field-'.$field.'">';
 				echo $this->get_column_icon( FALSE, $args['icon'], $args['title'] );
-				echo $this->display_meta( $meta[$field], $field, $args );
+				echo $this->display_meta( $value, $field, $args );
 			echo '</li>';
 		}
 	}

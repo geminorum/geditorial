@@ -14,7 +14,7 @@ class Meta extends gEditorial\Template
 
 	public static function metaAuthor( $atts = [] )
 	{
-		return self::metaField( 'author', $atts );
+		return self::metaField( 'byline', $atts );
 	}
 
 	public static function metaSource( $atts = [] )
@@ -53,7 +53,7 @@ class Meta extends gEditorial\Template
 		$fields = [
 			'over-title' => [ 'ot', 'over-title' ],
 			'sub-title'  => [ 'st', 'sub-title' ],
-			'author'     => [ 'as', 'author' ],
+			'author'     => [ 'author', 'as' ],
 		];
 
 		if ( isset( $fields[$field] ) )

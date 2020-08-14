@@ -69,7 +69,7 @@ class Meta extends gEditorial\Module
 	protected function get_global_constants()
 	{
 		return [
-			'ct_tax' => 'label',
+			'label_tax' => 'label',
 		];
 	}
 
@@ -77,45 +77,42 @@ class Meta extends gEditorial\Module
 	{
 		$strings = [
 			'titles' => [
-				'post' => [
-					'ot'          => _x( 'OverTitle', 'Titles', 'geditorial-meta' ),
-					'st'          => _x( 'SubTitle', 'Titles', 'geditorial-meta' ),
-					'as'          => _x( 'Byline', 'Titles', 'geditorial-meta' ),
-					'le'          => _x( 'Lead', 'Titles', 'geditorial-meta' ),
-					'ch'          => _x( 'Column Header', 'Titles', 'geditorial-meta' ),
-					'ct'          => _x( 'Column Header Taxonomy', 'Titles', 'geditorial-meta' ),
-					'ch_override' => _x( 'Column Header Override', 'Titles', 'geditorial-meta' ),
+				'over_title' => _x( 'OverTitle', 'Titles', 'geditorial-meta' ),
+				'sub_title'  => _x( 'SubTitle', 'Titles', 'geditorial-meta' ),
+				'byline'     => _x( 'Byline', 'Titles', 'geditorial-meta' ),
+				'lead'       => _x( 'Lead', 'Titles', 'geditorial-meta' ),
+				'label'      => _x( 'Label', 'Titles', 'geditorial-meta' ),
+				'label_tax'  => _x( 'Label Taxonomy', 'Titles', 'geditorial-meta' ),
 
-					'published'    => _x( 'Published', 'Titles', 'geditorial-meta' ),
-					'source_title' => _x( 'Source Title', 'Titles', 'geditorial-meta' ),
-					'source_url'   => _x( 'Source URL', 'Titles', 'geditorial-meta' ),
-					'highlight'    => _x( 'Highlight', 'Titles', 'geditorial-meta' ),
-					'dashboard'    => _x( 'Dashboard', 'Titles', 'geditorial-meta' ),
-					'abstract'     => _x( 'Abstract', 'Titles', 'geditorial-meta' ),
-				],
-				'author' => _x( 'Author', 'Titles', 'geditorial-meta' ),
+				'published'    => _x( 'Published', 'Titles', 'geditorial-meta' ),
+				'source_title' => _x( 'Source Title', 'Titles', 'geditorial-meta' ),
+				'source_url'   => _x( 'Source URL', 'Titles', 'geditorial-meta' ),
+				'highlight'    => _x( 'Highlight', 'Titles', 'geditorial-meta' ),
+				'dashboard'    => _x( 'Dashboard', 'Titles', 'geditorial-meta' ),
+				'abstract'     => _x( 'Abstract', 'Titles', 'geditorial-meta' ),
+
+				// combined fields
 				'source' => _x( 'Source', 'Titles', 'geditorial-meta' ),
 			],
 			'descriptions' => [
-				'post' => [
-					'ot'          => _x( 'String to place over the post title', 'Descriptions', 'geditorial-meta' ),
-					'st'          => _x( 'String to place under the post title', 'Descriptions', 'geditorial-meta' ),
-					'as'          => _x( 'String to override the post author', 'Descriptions', 'geditorial-meta' ),
-					'le'          => _x( 'Editorial paragraph presented before post content', 'Descriptions', 'geditorial-meta' ),
-					'ch'          => _x( 'String to represent that the post is part of a column or a section', 'Descriptions', 'geditorial-meta' ),
-					'ct'          => _x( 'Taxonomy for better categorizing columns', 'Descriptions', 'geditorial-meta' ),
-					'ch_override' => _x( 'Column Header Override', 'Descriptions', 'geditorial-meta' ),
+				'over_title' => _x( 'Text to place over the content title', 'Descriptions', 'geditorial-meta' ),
+				'sub_title'  => _x( 'Text to place under the content title', 'Descriptions', 'geditorial-meta' ),
+				'byline'     => _x( 'Text to override the content author', 'Descriptions', 'geditorial-meta' ),
+				'lead'       => _x( 'Notes to place before the content text', 'Descriptions', 'geditorial-meta' ),
+				'label'      => _x( 'Text to indicate that the content is part of a column', 'Descriptions', 'geditorial-meta' ),
+				'label_tax'  => _x( 'Taxonomy for better categorizing columns', 'Descriptions', 'geditorial-meta' ),
 
-					'published'    => _x( 'Original date of publish', 'Descriptions', 'geditorial-meta' ),
-					'source_title' => _x( 'Original Title of Source Content', 'Descriptions', 'geditorial-meta' ),
-					'source_url'   => _x( 'Full URL to the Source of the Content', 'Descriptions', 'geditorial-meta' ),
-					'highlight'    => _x( 'A Short Note Highlighted About the Post', 'Descriptions', 'geditorial-meta' ),
-					'dashboard'    => _x( 'Custom HTML Content on the Dashboard', 'Descriptions', 'geditorial-meta' ),
-					'abstract'     => _x( 'A summary of the content', 'Descriptions', 'geditorial-meta' ),
-				],
+				'published'    => _x( 'Text to indicate the original date of the content', 'Descriptions', 'geditorial-meta' ),
+				'source_title' => _x( 'Custom title for the source of the content', 'Descriptions', 'geditorial-meta' ),
+				'source_url'   => _x( 'Custom URL to the source of the content', 'Descriptions', 'geditorial-meta' ),
+				'highlight'    => _x( 'Notes highlighted about the content', 'Descriptions', 'geditorial-meta' ),
+				'dashboard'    => _x( 'Custom HTML content on the dashboard', 'Descriptions', 'geditorial-meta' ),
+				'abstract'     => _x( 'Brief summary of the content', 'Descriptions', 'geditorial-meta' ),
+
+				'source' => _x( 'Source of the content', 'Descriptions', 'geditorial-meta' ),
 			],
 			'noops' => [
-				'ct_tax' => _n_noop( 'Column Header', 'Column Headers', 'geditorial-meta' ),
+				'label_tax' => _n_noop( 'Column Header', 'Column Headers', 'geditorial-meta' ),
 			],
 		];
 
@@ -130,7 +127,7 @@ class Meta extends gEditorial\Module
 		];
 
 		$strings['terms'] = [
-			'ct_tax' => [
+			'label_tax' => [
 				'introduction' => _x( 'Introduction', 'Default Term', 'geditorial-meta' ),
 				'interview'    => _x( 'Interview', 'Default Term', 'geditorial-meta' ),
 				'review'       => _x( 'Review', 'Default Term', 'geditorial-meta' ),
@@ -145,15 +142,12 @@ class Meta extends gEditorial\Module
 	{
 		return [
 			'post' => [
-				'ot' => [ 'type' => 'title_before' ],
-				'st' => [ 'type' => 'title_after' ],
-				'le' => [ 'type' => 'postbox_html' ], // OLD: 'postbox_legacy'
-				'as' => [ 'type' => 'text' ],
-				'ct' => [
-					'type' => 'term',
-					'tax'  => $this->constant( 'ct_tax' ),
-				],
-				'ch' => [ 'type' => 'text' ],
+				'over_title' => [ 'type' => 'title_before' ],
+				'sub_title'  => [ 'type' => 'title_after' ],
+				'byline'     => [ 'type' => 'text' ],
+				'lead'       => [ 'type' => 'postbox_html' ], // OLD: 'postbox_legacy'
+				'label'      => [ 'type' => 'text' ],
+				'label_tax'  => [ 'type' => 'term', 'tax' => $this->constant( 'label_tax' ) ],
 
 				'published'    => [ 'type' => 'text' ],
 				'source_title' => [ 'type' => 'text' ],
@@ -163,8 +157,8 @@ class Meta extends gEditorial\Module
 				'abstract'     => [ 'type' => 'postbox_html' ], // or 'postbox_tiny'
 			],
 			'page' => [
-				'ot' => [ 'type' => 'title_before' ],
-				'st' => [ 'type' => 'title_after' ],
+				'over_title' => [ 'type' => 'title_before' ],
+				'sub_title'  => [ 'type' => 'title_after' ],
 			],
 		];
 	}
@@ -185,33 +179,33 @@ class Meta extends gEditorial\Module
 
 	public function before_settings( $module = FALSE )
 	{
-		if ( isset( $_POST['install_def_ct_tax'] ) )
-			$this->insert_default_terms( 'ct_tax' );
+		if ( isset( $_POST['install_def_label_tax'] ) )
+			$this->insert_default_terms( 'label_tax' );
 
-		$this->help_tab_default_terms( 'ct_tax' );
+		$this->help_tab_default_terms( 'label_tax' );
 	}
 
 	public function default_buttons( $module = FALSE )
 	{
 		parent::default_buttons( $module );
 
-		$this->register_button( 'install_def_ct_tax', _x( 'Install Default Column Headers', 'Button', 'geditorial-meta' ) );
+		$this->register_button( 'install_def_label_tax', _x( 'Install Default Column Headers', 'Button', 'geditorial-meta' ) );
 	}
 
 	public function init()
 	{
 		parent::init();
 
-		$ct_tax_posttypes = [];
+		$label_tax_tax_posttypes = [];
 
 		foreach ( $this->posttypes() as $posttype )
-			if ( in_array( 'ct', $this->posttype_fields( $posttype ) ) )
-				$ct_tax_posttypes[] = $posttype;
+			if ( in_array( 'label_tax', $this->posttype_fields( $posttype ) ) )
+				$label_tax_tax_posttypes[] = $posttype;
 
-		if ( count( $ct_tax_posttypes ) )
-			$this->register_taxonomy( 'ct_tax', [
+		if ( count( $label_tax_tax_posttypes ) )
+			$this->register_taxonomy( 'label_tax', [
 				'show_in_rest' => FALSE, // temporarily disable in block editor
-			], $ct_tax_posttypes );
+			], $label_tax_tax_posttypes );
 
 		// default fields for custom post types
 		foreach ( $this->get_posttypes_support_meta() as $posttype )
@@ -330,6 +324,7 @@ class Meta extends gEditorial\Module
 		add_action( 'quick_edit_custom_box', [ $this, 'quick_edit_custom_box' ], 10, 2 );
 	}
 
+	// early and late actions to make room for other modules
 	private function _default_rows()
 	{
 		add_action( $this->hook( 'column_row' ), [ $this, 'column_row_default' ], 8, 3 );
@@ -546,31 +541,41 @@ class Meta extends gEditorial\Module
 			return $field;
 
 		$fields = [
-			'ot'                   => [ 'over_title', 'ot' ],
-			'st'                   => [ 'sub_title', 'st' ],
-			'over_title'           => [ 'over_title', 'ot' ],
-			'sub_title'            => [ 'sub_title', 'st' ],
-			'over-title'           => [ 'over_title', 'ot' ],
-			'sub-title'            => [ 'sub_title', 'st' ],
-			'label'                => [ 'ch', 'label', 'column_header' ],
-			'le'                   => [ 'lead', 'le' ],
-			'lead'                 => [ 'lead', 'le' ],
-			'as'                   => [ 'author', 'as' ],
-			'author'               => [ 'author', 'as' ],
-			'number'               => [ 'issue_number_line', 'number' ],
-			'pages'                => [ 'issue_total_pages', 'pages' ],
-			'start'                => [ 'in_issue_page_start', 'start' ],
-			'order'                => [ 'in_issue_order', 'in_collection_order', 'in_series_order', 'order' ],
+			// currents
+			'over_title'   => [ 'over_title', 'ot' ],
+			'sub_title'    => [ 'sub_title', 'st' ],
+			'byline'       => [ 'byline', 'author', 'as' ],
+			'lead'         => [ 'lead', 'le' ],
+			'label'        => [ 'label', 'ch', 'column_header' ],
+			'label_tax'    => [ 'label_tax', 'ct' ],
+			'start'        => [ 'in_issue_page_start', 'start' ],
+			'order'        => [ 'in_issue_order', 'in_collection_order', 'in_series_order', 'order' ],
+			'number_line'  => [ 'number_line', 'issue_number_line' ],
+			'total_pages'  => [ 'total_pages', 'issue_total_pages' ],
+			'source_title' => [ 'source_title', 'reshare_source_title' ],
+			'source_url'   => [ 'source_url', 'reshare_source_url', 'es', 'ol' ],
+
+			// module oldies
+			'ot' => [ 'over_title', 'ot' ],
+			'st' => [ 'sub_title', 'st' ],
+			'le' => [ 'lead', 'le' ],
+			'as' => [ 'byline', 'author', 'as' ],
+			'ch' => [ 'label', 'ch', 'column_header' ],
+			'ct' => [ 'label_tax', 'ct' ],
+			'es' => [ 'source_url', 'es' ],
+			'ol' => [ 'source_url', 'ol' ],
+
+			// other oldies
 			'issue_number_line'    => [ 'number_line', 'issue_number_line' ],
 			'issue_total_pages'    => [ 'total_pages', 'issue_total_pages' ],
-			'number_line'          => [ 'number_line', 'issue_number_line' ],
-			'total_pages'          => [ 'total_pages', 'issue_total_pages' ],
 			'reshare_source_title' => [ 'source_title', 'reshare_source_title' ],
 			'reshare_source_url'   => [ 'source_url', 'reshare_source_url' ],
-			'source_title'         => [ 'source_title', 'reshare_source_title' ],
-			'source_url'           => [ 'source_url', 'reshare_source_url', 'es', 'ol' ],
-			'es'                   => [ 'source_url', 'es' ],
-			'ol'                   => [ 'source_url', 'ol' ],
+
+			// fallbacks
+			'over-title' => [ 'over_title', 'ot' ],
+			'sub-title'  => [ 'sub_title', 'st' ],
+			'number'     => [ 'number_line', 'issue_number_line' ],
+			'pages'      => [ 'total_pages', 'issue_total_pages' ],
 		];
 
 		if ( isset( $fields[$field] ) )
@@ -676,7 +681,7 @@ class Meta extends gEditorial\Module
 
 	public function manage_posts_columns( $columns, $posttype )
 	{
-		if ( in_array( 'as', $this->posttype_fields( $posttype ) ) )
+		if ( in_array( 'byline', $this->posttype_fields( $posttype ) ) )
 			unset( $columns['author'] );
 
 		return Arraay::insert( $columns, [
@@ -692,26 +697,39 @@ class Meta extends gEditorial\Module
 		if ( ! $post = get_post( $post_id ) )
 			return;
 
-		$meta    = $this->get_postmeta_legacy( $post->ID );
-		$fields  = $this->get_posttype_fields( $post->post_type );
-		$exclude = [ 'ot', 'st', 'highlight', 'as', 'ch', 'le', 'published', 'source_title', 'source_url', 'abstract' ];
+		$fields = $this->get_posttype_fields( $post->post_type );
+
+		$excludes = [
+			'over_title',
+			'sub_title',
+			'byline',
+			'lead',
+			'label',
+			'published',
+			'source_title',
+			'source_url',
+			'highlight',
+			'dashboard',
+			'abstract',
+		];
 
 		echo '<div class="geditorial-admin-wrap-column -meta"><ul class="-rows">';
-			$this->actions( 'column_row', $post, $fields, array_diff_key( $meta, array_flip( $exclude ) ) );
+			$this->actions( 'column_row', $post, $fields, $excludes ); // excludes are for other modules
 		echo '</ul></div>';
 	}
 
-	public function column_row_default( $post, $fields, $meta )
+	public function column_row_default( $post, $fields, $excludes )
 	{
 		$author = $this->get_setting( 'author_row', FALSE )
 			? WordPress::getAuthorEditHTML( $post->post_type, $post->post_author )
 			: FALSE;
 
 		$rows = [
-			'ot'        => 'arrow-up-alt2',
-			'st'        => 'arrow-down-alt2',
-			'highlight' => 'pressthis',
-			'as'        => 'admin-users',
+			'over_title' => 'arrow-up-alt2',
+			'sub_title'  => 'arrow-down-alt2',
+			'highlight'  => 'pressthis',
+			'byline'     => 'admin-users',
+			'published'  => 'calendar-alt',
 		];
 
 		foreach ( $rows as $field => $icon ) {
@@ -728,7 +746,7 @@ class Meta extends gEditorial\Module
 
 				echo HTML::escape( $value );
 
-				if ( $author && in_array( $field, [ 'as', 'author' ] ) ) {
+				if ( $author && 'byline' === $field ) {
 					echo ' <small>('.$author.')</small>';
 					$author = FALSE;
 				}
@@ -739,29 +757,33 @@ class Meta extends gEditorial\Module
 		}
 
 		if ( $author ) {
-			echo '<li class="-row meta-author">';
-				echo $this->get_column_icon( FALSE, $rows['as'], $this->get_string( 'author', $post->post_type, 'titles', 'author' ) );
+			echo '<li class="-row meta-byline">';
+				echo $this->get_column_icon( FALSE, $rows['byline'], $this->get_string( 'byline', $post->post_type, 'titles', 'byline' ) );
 				echo $author;
 			echo '</li>';
 		}
 	}
 
-	public function column_row_extra( $post, $fields, $meta )
+	public function column_row_extra( $post, $fields, $exclude )
 	{
-		$label = $this->get_column_icon( FALSE, 'megaphone', $this->get_string( 'ch', $post->post_type, 'titles', 'label' ) );
+		$label = $this->get_column_icon( FALSE, 'megaphone', $this->get_string( 'label', $post->post_type, 'titles', 'label' ) );
+
 		ModuleTemplate::metaLabel( [
 			'before' => '<li class="-row meta-label">'.$label,
 			'after'  => '</li>',
 		], 'meta', FALSE );
 
 		$source = $this->get_column_icon( FALSE, 'external', $this->get_string( 'source', $post->post_type, 'titles', 'source' ) );
+
 		ModuleTemplate::metaSource( [
 			'before' => '<li class="-row meta-source">'.$source,
 			'after'  => '</li>',
 		] );
 
-		if ( 'excerpt' == $GLOBALS['mode'] && array_key_exists( 'le', $fields ) ) {
-			$lead = $this->get_column_icon( FALSE, 'editor-paragraph', $this->get_string( 'le', $post->post_type, 'titles', 'lead' ) );
+		if ( 'excerpt' == $GLOBALS['mode'] && array_key_exists( 'lead', $fields ) ) {
+
+			$lead = $this->get_column_icon( FALSE, 'editor-paragraph', $this->get_string( 'lead', $post->post_type, 'titles', 'lead' ) );
+
 			ModuleTemplate::metaLead( [
 				'before' => '<li class="-row meta-lead">'.$lead,
 				'after'  => '</li>',
@@ -799,7 +821,7 @@ class Meta extends gEditorial\Module
 
 		$fields = $this->posttype_fields( $posttype );
 
-		foreach ( [ 'ot', 'st', 'as' ] as $field ) {
+		foreach ( [ 'over_title', 'sub_title', 'byline' ] as $field ) {
 			if ( in_array( $field, $fields ) ) {
 				$selector = 'geditorial-meta-'.$field;
 				echo '<label class="'.$selector.'">';
@@ -845,10 +867,10 @@ class Meta extends gEditorial\Module
 			return $display_name;
 
 		// NO NEED
-		// if ( ! in_array( 'as', $this->posttype_fields( $post->post_type ) ) )
+		// if ( ! in_array( 'byline', $this->posttype_fields( $post->post_type ) ) )
 		// 	return $display_name;
 
-		if ( $value = $this->get_postmeta_field( $post->ID, 'as' ) )
+		if ( $value = $this->get_postmeta_field( $post->ID, 'byline' ) )
 			$display_name = $value;
 
 		return $display_name;
@@ -1006,8 +1028,8 @@ class Meta extends gEditorial\Module
 		$meta = (array) $this->filters( 'import_pre', $meta, $post_id, $field, $form_key );
 
 		switch ( $field ) {
-			case 'ct': $this->import_to_terms( $meta, $post_id, $this->constant( 'ct_tax' ) ); break;
-			default  : $this->import_to_fields( $meta, $post_id, $field ); break;
+			case 'label_tax': $this->import_to_terms( $meta, $post_id, $this->constant( 'label_tax' ) ); break;
+			default: $this->import_to_fields( $meta, $post_id, $field ); break;
 		}
 
 		return $meta;
@@ -1031,11 +1053,8 @@ class Meta extends gEditorial\Module
 			$final.= $kses ? Helper::kses( $formatted, 'text' ) : $formatted;
 		}
 
-		if ( $final ) {
-			$postmeta = $this->get_postmeta_legacy( $post_id );
-			$postmeta[$field] = $final;
-			$this->store_postmeta( $post_id, $postmeta );
-		}
+		if ( $final )
+			$this->set_postmeta_field( $post_id, $field, trim( $final ) );
 	}
 
 	protected function import_to_terms( $meta, $post_id, $taxonomy )

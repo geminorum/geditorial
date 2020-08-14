@@ -145,8 +145,8 @@ class Magazine extends gEditorial\Module
 	{
 		return [
 			$this->constant( 'issue_cpt' ) => [
-				'ot' => [ 'type' => 'title_before' ],
-				'st' => [ 'type' => 'title_after' ],
+				'over_title' => [ 'type' => 'title_before' ],
+				'sub_title'  => [ 'type' => 'title_after' ],
 
 				'issue_number_line' => [
 					'title'       => _x( 'Number Line', 'Field Title', 'geditorial-magazine' ),

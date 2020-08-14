@@ -125,8 +125,8 @@ class Tube extends gEditorial\Module
 	{
 		return [
 			$this->constant( 'video_cpt' ) => [
-				'ot' => [ 'type' => 'title_before' ],
-				'st' => [ 'type' => 'title_after' ],
+				'over_title' => [ 'type' => 'title_before' ],
+				'sub_title'  => [ 'type' => 'title_after' ],
 
 				'featured_people' => [
 					'title'       => _x( 'Featured People', 'Field Title', 'geditorial-tube' ),

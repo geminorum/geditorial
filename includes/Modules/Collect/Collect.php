@@ -144,8 +144,8 @@ class Collect extends gEditorial\Module
 	{
 		return [
 			$this->constant( 'collection_cpt' ) => [
-				'ot' => [ 'type' => 'title_before' ],
-				'st' => [ 'type' => 'title_after' ],
+				'over_title' => [ 'type' => 'title_before' ],
+				'sub_title'  => [ 'type' => 'title_after' ],
 
 				'number' => [
 					'title'       => _x( 'Number Line', 'Field Title', 'geditorial-collect' ),
