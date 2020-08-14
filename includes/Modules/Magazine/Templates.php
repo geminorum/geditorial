@@ -95,7 +95,7 @@ class Magazine extends gEditorial\Template
 	// FIXME: DEPRECATED
 	public static function sanitize_field( $field )
 	{
-		self::_dep( 'gEditorialMagazineTemplates::sanitizeField()' );
+		self::_dep( 'NO NEED!' );
 
 		if ( is_array( $field ) )
 			return $field;

@@ -578,14 +578,14 @@ class Module extends Base
 		if ( FALSE === $field )
 			return $gEditorialPostMeta[$post_id][$metakey];
 
-		foreach ( $this->sanitize_meta_field( $field ) as $field_key )
+		foreach ( $this->sanitize_postmeta_field( $field ) as $field_key )
 			if ( isset( $gEditorialPostMeta[$post_id][$metakey][$field_key] ) )
 				return $gEditorialPostMeta[$post_id][$metakey][$field_key];
 
 		return $default;
 	}
 
-	public function sanitize_meta_field( $field )
+	public function sanitize_postmeta_field( $field )
 	{
 		return (array) $field;
 	}

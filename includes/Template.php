@@ -446,7 +446,7 @@ class Template extends Core\Base
 		return TRUE;
 	}
 
-	public static function getMetaField( $fields, $atts = [], $check = TRUE )
+	public static function getMetaField( $field, $atts = [], $check = TRUE )
 	{
 		$args = self::atts( [
 			'id'      => NULL,
@@ -463,35 +463,26 @@ class Template extends Core\Base
 		if ( ! $post = get_post( $args['id'] ) )
 			return $args['default'];
 
-		foreach ( self::sanitizeField( $fields ) as $field ) {
+		$meta = gEditorial()->meta->get_postmeta( $post->ID, $field, FALSE );
 
-			$meta = gEditorial()->meta->get_postmeta( $post->ID, $field, FALSE );
+		if ( FALSE === $meta )
+			return $args['default'];
 
-			if ( FALSE === $meta )
-				continue;
+		$meta = apply_filters( static::BASE.'_meta_field', $meta, $field, $post, $args );
 
-			$meta = apply_filters( static::BASE.'_meta_field', $meta, $field, $post, $args );
+		if ( $args['filter'] && is_callable( $args['filter'] ) )
+			$meta = call_user_func( $args['filter'], $meta );
 
-			if ( $args['filter'] && is_callable( $args['filter'] ) )
-				$meta = call_user_func( $args['filter'], $meta );
-
-			if ( $meta )
-				return $args['before'].( $args['trim'] ? Helper::trimChars( $meta, $args['trim'] ) : $meta ).$args['after'];
-		}
+		if ( $meta )
+			return $args['before'].( $args['trim'] ? Helper::trimChars( $meta, $args['trim'] ) : $meta ).$args['after'];
 
 		return $args['default'];
 	}
 
 	// WARNING: caller must check for module
-	public static function getMetaFieldRaw( $fields, $post_id, $module = 'meta' )
+	public static function getMetaFieldRaw( $field, $post_id, $module = 'meta' )
 	{
-		foreach ( self::sanitizeField( $fields ) as $field ) {
-
-			$meta = gEditorial()->{$module}->get_postmeta( $post_id, $field, FALSE );
-
-			if ( FALSE !== $meta )
-				return $meta;
-		}
+		return gEditorial()->{$module}->get_postmeta( $post_id, $field, FALSE );
 	}
 
 	public static function metaLabel( $atts = [], $module = NULL, $chack = TRUE )
@@ -631,8 +622,11 @@ class Template extends Core\Base
 		return TRUE;
 	}
 
+	// FIXME: DEPRECATED
 	public static function sanitizeField( $field )
 	{
+		self::_dep( 'NO NEED!' );
+
 		if ( is_array( $field ) )
 			return $field;
 

@@ -45,7 +45,6 @@ class Meta extends gEditorial\Template
 	}
 
 	// FIXME: DEPRECATED
-	// USE: self::sanitizeField()
 	public static function sanitize_field( $field )
 	{
 		if ( is_array( $field ) )

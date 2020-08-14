@@ -541,7 +541,7 @@ class Meta extends gEditorial\Module
 		return $postmeta;
 	}
 
-	public function sanitize_meta_field( $field )
+	public function sanitize_postmeta_field( $field )
 	{
 		if ( is_array( $field ) )
 			return $field;
@@ -551,6 +551,15 @@ class Meta extends gEditorial\Module
 			'st'                   => [ 'sub_title', 'st' ],
 			'over_title'           => [ 'over_title', 'ot' ],
 			'sub_title'            => [ 'sub_title', 'st' ],
+			'over-title'           => [ 'over_title', 'ot' ],
+			'sub-title'            => [ 'sub_title', 'st' ],
+			'label'                => [ 'ch', 'label', 'column_header' ],
+			'lead'                 => [ 'le', 'lead' ],
+			'author'               => [ 'as', 'author' ],
+			'number'               => [ 'issue_number_line', 'number' ],
+			'pages'                => [ 'issue_total_pages', 'pages' ],
+			'start'                => [ 'in_issue_page_start', 'start' ],
+			'order'                => [ 'in_issue_order', 'in_collection_order', 'in_series_order', 'order' ],
 			'issue_number_line'    => [ 'number_line', 'issue_number_line' ],
 			'issue_total_pages'    => [ 'total_pages', 'issue_total_pages' ],
 			'number_line'          => [ 'number_line', 'issue_number_line' ],
