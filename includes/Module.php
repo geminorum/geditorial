@@ -625,6 +625,19 @@ class Module extends Base
 		return $this->fetch_postmeta( $post_id, $default, $metakey );
 	}
 
+	public function clean_postmeta_legacy( $post_id, $fields, $legacy = NULL, $metakey = NULL )
+	{
+		if ( is_null( $legacy ) )
+			$legacy = $this->get_postmeta_legacy( $post_id, [], $metakey );
+
+		foreach ( $fields as $field => $args )
+			foreach ( $this->sanitize_postmeta_field( $field ) as $field_key )
+				if ( array_key_exists( $field_key, $legacy ) )
+					unset( $legacy[$field_key] );
+
+		return $this->store_postmeta( $post_id, $legacy, $metakey );
+	}
+
 	public function sanitize_postmeta_field( $field )
 	{
 		return (array) $field;
