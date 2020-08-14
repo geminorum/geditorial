@@ -2166,6 +2166,11 @@ class Module extends Base
 		}
 	}
 
+	protected function _hook_store_metabox( $posttype )
+	{
+		add_action( 'save_post_'.$posttype, [ $this, 'store_metabox' ], 20, 3 );
+	}
+
 	// DEFAULT METHOD
 	// INTENDED HOOK: `save_post`, `save_post_[post_type]`
 	public function store_metabox( $post_id, $post, $update, $context = 'main' )

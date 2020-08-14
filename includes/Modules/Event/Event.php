@@ -304,7 +304,7 @@ class Event extends gEditorial\Module
 						'high'
 					);
 
-					add_action( 'save_post_'.$screen->post_type, [ $this, 'store_metabox' ], 20, 3 );
+					$this->_hook_store_metabox( $screen->post_type );
 					add_action( $this->hook( 'render_metabox' ), [ $this, 'render_metabox' ], 10, 4 );
 				}
 

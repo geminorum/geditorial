@@ -107,7 +107,7 @@ class Specs extends gEditorial\Module
 
 			$this->enqueue_asset_js( [], $screen, [ 'jquery', Scripts::pkgSortable() ] );
 
-			add_action( 'save_post_'.$screen->post_type, [ $this, 'store_metabox' ], 20, 3 );
+			$this->_hook_store_metabox( $screen->post_type );
 			add_action( $this->hook( 'render_metabox' ), [ $this, 'render_metabox' ], 10, 4 );
 			// add_action( $this->hook( 'render_metabox_item' ), [ $this, 'render_metabox_item' ], 5, 5 );
 		}

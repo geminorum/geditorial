@@ -348,7 +348,7 @@ class Today extends gEditorial\Module
 
 	private function _save_meta_supported( $posttype )
 	{
-		add_action( 'save_post_'.$posttype, [ $this, 'store_metabox' ], 20, 3 );
+		$this->_hook_store_metabox( $posttype );
 	}
 
 	public function page_row_actions( $actions, $post )

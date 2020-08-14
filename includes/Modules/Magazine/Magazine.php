@@ -351,7 +351,7 @@ class Magazine extends gEditorial\Module
 				$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
 			}
 
-			add_action( 'save_post_'.$screen->post_type, [ $this, 'store_metabox' ], 20, 3 );
+			$this->_hook_store_metabox( $screen->post_type );
 		}
 
 		if ( Settings::isDashboard( $screen ) )

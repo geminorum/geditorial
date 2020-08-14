@@ -84,7 +84,7 @@ class Estimated extends gEditorial\Module
 
 			if ( 'post' == $screen->base ) {
 
-				add_action( 'save_post_'.$screen->post_type, [ $this, 'store_metabox' ], 20, 3 );
+				$this->_hook_store_metabox( $screen->post_type );
 
 			} else if ( 'edit' == $screen->base ) {
 

@@ -291,7 +291,7 @@ class Contest extends gEditorial\Module
 			}
 
 			// interferes with default behavior of metabox save
-			// add_action( 'save_post_'.$screen->post_type, [ $this, 'store_metabox' ], 20, 3 );
+			// $this->_hook_store_metabox( $screen->post_type );
 		}
 	}
 

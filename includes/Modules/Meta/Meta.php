@@ -245,7 +245,7 @@ class Meta extends gEditorial\Module
 		if ( $this->is_inline_save( $_REQUEST, $this->posttypes() ) ) {
 			$this->_edit_screen( $_REQUEST['post_type'] );
 			$this->_default_rows();
-			add_action( 'save_post_'.$_REQUEST['post_type'], [ $this, 'store_metabox' ], 20, 3 );
+			$this->_hook_store_metabox( $_REQUEST['post_type'] );
 		}
 	}
 
@@ -315,8 +315,7 @@ class Meta extends gEditorial\Module
 				// 	$localize[$field] = $this->get_string( $field, $screen->post_type );
 
 				$this->enqueue_asset_js( $localize, $screen );
-
-				add_action( 'save_post_'.$screen->post_type, [ $this, 'store_metabox' ], 20, 3 );
+				$this->_hook_store_metabox( $screen->post_type );
 			}
 		}
 	}
