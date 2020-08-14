@@ -15,8 +15,6 @@ use geminorum\gEditorial\Core\WordPress;
 class Like extends gEditorial\Module
 {
 
-	public $meta_key = '_ge_like';
-
 	protected $disable_no_posttypes = TRUE;
 
 	protected $cookie  = 'geditorial-like';
@@ -428,17 +426,17 @@ class Like extends gEditorial\Module
 
 	private function get_liked_users( $post_id )
 	{
-		return $this->get_postmeta( $post_id, FALSE, [], $this->constant( 'metakey_liked_users' ) );
+		return $this->fetch_postmeta( $post_id, [], $this->constant( 'metakey_liked_users' ) );
 	}
 
 	private function get_liked_guests( $post_id )
 	{
-		return $this->get_postmeta( $post_id, FALSE, [], $this->constant( 'metakey_liked_guests' ) );
+		return $this->fetch_postmeta( $post_id, [], $this->constant( 'metakey_liked_guests' ) );
 	}
 
 	private function get_liked_total( $post_id )
 	{
-		return $this->get_postmeta( $post_id, FALSE, 0, $this->constant( 'metakey_liked_total' ) );
+		return $this->fetch_postmeta( $post_id, 0, $this->constant( 'metakey_liked_total' ) );
 	}
 
 	private function set_liked_users( $post_id, $data )

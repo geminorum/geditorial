@@ -620,6 +620,16 @@ class Module extends Base
 		unset( $gEditorialPostMeta[$post_id][$this->meta_key][$metakey] ); // back-comp
 	}
 
+	public function fetch_postmeta( $post_id, $default = '', $metakey = NULL )
+	{
+		if ( is_null( $metakey ) )
+			$metakey = $this->meta_key; // back-comp
+
+		$data = get_metadata( 'post', $post_id, $metakey, TRUE );
+
+		return $data ?: $default;
+	}
+
 	public function register_settings_posttypes_option( $title = NULL )
 	{
 		if ( is_null( $title ) )

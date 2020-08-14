@@ -22,8 +22,6 @@ class Importer extends gEditorial\Module
 
 	protected $default_audit_attribute = 'imported';
 
-	public $meta_key = '_geditorial_importer';
-
 	public static function module()
 	{
 		return [
@@ -96,7 +94,7 @@ class Importer extends gEditorial\Module
 		$parser   = new \KzykHys\CsvParser\CsvParser( $iterator, [ 'encoding' => 'UTF-8', 'limit' => 2 ] );
 
 		$items = $parser->parse();
-		$map   = $this->get_postmeta( $id, FALSE, [], $this->constant( 'metakey_source_map' ) );
+		$map   = $this->fetch_postmeta( $id, [], $this->constant( 'metakey_source_map' ) );
 
 		$taxonomies = Taxonomy::get( 2, [], $posttype );
 		$fields     = $this->get_importer_fields( $posttype, $taxonomies );
