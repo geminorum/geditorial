@@ -125,7 +125,7 @@ class Specs extends gEditorial\Module
 			$post->post_type
 		);
 
-		$this->set_meta( $post_id, $postmeta );
+		$this->store_postmeta( $post_id, $postmeta );
 		wp_cache_flush();
 	}
 
@@ -204,7 +204,7 @@ class Specs extends gEditorial\Module
 
 			ksort( $meta );
 
-			$this->set_meta( $post_id, $meta );
+			$this->store_postmeta( $post_id, $meta );
 			wp_set_object_terms( $post_id, ( count( $terms ) ? $terms : null ), $this->constant( 'specs_tax' ), FALSE );
 
 			return $post_id;

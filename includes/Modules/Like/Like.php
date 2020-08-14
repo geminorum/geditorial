@@ -84,6 +84,15 @@ class Like extends gEditorial\Module
 		];
 	}
 
+	protected function get_global_constants()
+	{
+		return [
+			'metakey_liked_users'  => '_ge_like_users',
+			'metakey_liked_guests' => '_ge_like_guests',
+			'metakey_liked_total'  => '_ge_like_total',
+		];
+	}
+
 	public function init()
 	{
 		parent::init();
@@ -165,9 +174,9 @@ class Like extends gEditorial\Module
 		if ( ! current_user_can( 'edit_post', $post_id ) )
 			return;
 
-		$users  = $this->get_postmeta( $post_id, FALSE, [], $this->meta_key.'_users' );
-		$guests = $this->get_postmeta( $post_id, FALSE, [], $this->meta_key.'_guests' );
-		// $total  = $this->get_postmeta( $post_id, FALSE, 0, $this->meta_key.'_total' ); // FIXME: display total
+		$users  = $this->get_liked_users( $post_id );
+		$guests = $this->get_liked_guests( $post_id );
+		// $total  = $this->get_liked_total( $post_id ); // FIXME: display total
 
 		if ( count( $users ) ) {
 
@@ -282,8 +291,8 @@ class Like extends gEditorial\Module
 
 	public function unlike( $post_id )
 	{
-		$users  = $this->get_postmeta( $post_id, FALSE, [], $this->meta_key.'_users' );
-		$guests = $this->get_postmeta( $post_id, FALSE, [], $this->meta_key.'_guests' );
+		$users  = $this->get_liked_users( $post_id );
+		$guests = $this->get_liked_guests( $post_id );
 		$total  = count( $users ) + count( $guests );
 		$cookie = $this->get_cookie();
 
@@ -296,8 +305,8 @@ class Like extends gEditorial\Module
 				$total--;
 				unset( $users[$key] );
 
-				$this->set_meta( $post_id, $users, '_users' );
-				$this->set_meta( $post_id, $total, '_total' );
+				$this->set_liked_users( $post_id, $users );
+				$this->set_liked_total( $post_id, $total );
 			}
 		}
 
@@ -308,8 +317,8 @@ class Like extends gEditorial\Module
 				$total--;
 				unset( $guests[$timestamp] );
 
-				$this->set_meta( $post_id, $guests, '_guests' );
-				$this->set_meta( $post_id, $total, '_total' );
+				$this->set_liked_guests( $post_id, $guests );
+				$this->set_liked_total( $post_id, $total );
 			}
 
 			unset( $cookie[$post_id] );
@@ -322,10 +331,10 @@ class Like extends gEditorial\Module
 
 	public function like( $post_id )
 	{
-		$users     = $this->get_postmeta( $post_id, FALSE, [], $this->meta_key.'_users' );
-		$guests    = $this->get_postmeta( $post_id, FALSE, [], $this->meta_key.'_guests' );
-		$total     = count( $users ) + count( $guests );
-		$timestamp = current_time( 'timestamp' );
+		$users  = $this->get_liked_users( $post_id );
+		$guests = $this->get_liked_guests( $post_id );
+		$total  = count( $users ) + count( $guests );
+		$time   = current_time( 'timestamp' );
 
 		if ( is_user_logged_in() ) {
 
@@ -334,10 +343,10 @@ class Like extends gEditorial\Module
 			if ( ! array_search( $user_id, $users ) ) {
 
 				$total++;
-				$users[$timestamp] = $user_id;
+				$users[$time] = $user_id;
 
-				$this->set_meta( $post_id, $users, '_users' );
-				$this->set_meta( $post_id, $total, '_total' );
+				$this->set_liked_users( $post_id, $users );
+				$this->set_liked_total( $post_id, $total );
 			}
 
 			return [ TRUE, $total ];
@@ -351,11 +360,11 @@ class Like extends gEditorial\Module
 				&& ! array_search( $ip, $guests ) ) {
 
 				$total++;
-				$guests[$timestamp] = $ip;
+				$guests[$time] = $ip;
 
-				$this->set_meta( $post_id, $guests, '_guests' );
-				$this->set_meta( $post_id, $total, '_total' );
-				$this->set_cookie( [ $post_id => $guests[$timestamp] ] );
+				$this->set_liked_guests( $post_id, $guests );
+				$this->set_liked_total( $post_id, $total );
+				$this->set_cookie( [ $post_id => $guests[$time] ] );
 			}
 
 			return [ TRUE, $total ];
@@ -364,8 +373,8 @@ class Like extends gEditorial\Module
 
 	public function check( $post_id )
 	{
-		$users  = $this->get_postmeta( $post_id, FALSE, [], $this->meta_key.'_users' );
-		$guests = $this->get_postmeta( $post_id, FALSE, [], $this->meta_key.'_guests' );
+		$users  = $this->get_liked_users( $post_id );
+		$guests = $this->get_liked_guests( $post_id );
 		$total  = count( $users ) + count( $guests );
 
 		return is_user_logged_in()
@@ -376,7 +385,7 @@ class Like extends gEditorial\Module
 	public function avatars( $post_id )
 	{
 		$html  = '';
-		$users = $this->get_postmeta( $post_id, FALSE, [], $this->meta_key.'_users' );
+		$users = $this->get_liked_users( $post_id );
 
 		if ( count( $users ) ) {
 
@@ -408,13 +417,43 @@ class Like extends gEditorial\Module
 
 	private function sync_counts( $post_id )
 	{
-		$users  = $this->get_postmeta( $post_id, FALSE, [], $this->meta_key.'_users' );
-		$guests = $this->get_postmeta( $post_id, FALSE, [], $this->meta_key.'_guests' );
+		$users  = $this->get_liked_users( $post_id );
+		$guests = $this->get_liked_guests( $post_id );
 		$total  = count( $users ) + count( $guests );
 
-		$this->set_meta( $post_id, $total, '_total' );
+		$this->set_liked_total( $post_id, $total );
 
 		return $total;
+	}
+
+	private function get_liked_users( $post_id )
+	{
+		return $this->get_postmeta( $post_id, FALSE, [], $this->constant( 'metakey_liked_users' ) );
+	}
+
+	private function get_liked_guests( $post_id )
+	{
+		return $this->get_postmeta( $post_id, FALSE, [], $this->constant( 'metakey_liked_guests' ) );
+	}
+
+	private function get_liked_total( $post_id )
+	{
+		return $this->get_postmeta( $post_id, FALSE, 0, $this->constant( 'metakey_liked_total' ) );
+	}
+
+	private function set_liked_users( $post_id, $data )
+	{
+		return $this->store_postmeta( $post_id, $data, $this->constant( 'metakey_liked_users' ) );
+	}
+
+	private function set_liked_guests( $post_id, $data )
+	{
+		return $this->store_postmeta( $post_id, $data, $this->constant( 'metakey_liked_guests' ) );
+	}
+
+	private function set_liked_total( $post_id, $data )
+	{
+		return $this->store_postmeta( $post_id, $data, $this->constant( 'metakey_liked_total' ) );
 	}
 
 	public function tweaks_column_attr( $post )
@@ -422,7 +461,7 @@ class Like extends gEditorial\Module
 		if ( ! current_user_can( 'read_post', $post->ID ) )
 			return;
 
-		$total = $this->get_postmeta( $post->ID, FALSE, 0, $this->meta_key.'_total' );
+		$total = $this->get_liked_total( $post_id );
 
 		if ( empty( $total ) )
 			return;
@@ -435,8 +474,8 @@ class Like extends gEditorial\Module
 			printf( _nx( '%s Like', '%s Likes', $total, 'Noop', 'geditorial-like' ), Number::format( $total ) );
 
 			$list   = [];
-			$users  = $this->get_postmeta( $post->ID, FALSE, [], $this->meta_key.'_users' );
-			$guests = $this->get_postmeta( $post->ID, FALSE, [], $this->meta_key.'_guests' );
+			$users  = $this->get_liked_users( $post->ID );
+			$guests = $this->get_liked_guests( $post->ID );
 
 			if ( ! empty( $users ) )
 				/* translators: %s: users count */
@@ -533,21 +572,19 @@ class Like extends gEditorial\Module
 			'total' => [
 				'title'    => _x( 'Total', 'Table Column', 'geditorial-like' ),
 				'callback' => function( $value, $row, $column, $index ){
-					return Helper::htmlCount( $this->get_postmeta( $row->ID, FALSE, 0, $this->meta_key.'_total' ) );
+					return Helper::htmlCount( $this->get_liked_total( $row->ID ) );
 				},
 			],
 			'guests' => [
 				'title'    => _x( 'Guests', 'Table Column', 'geditorial-like' ),
 				'callback' => function( $value, $row, $column, $index ){
-					$guests = $this->get_postmeta( $row->ID, FALSE, [], $this->meta_key.'_guests' );
-					return Helper::htmlCount( count( $guests ) );
+					return Helper::htmlCount( $this->get_liked_guests( $row->ID ) );
 				},
 			],
 			'users' => [
 				'title'    => _x( 'Users', 'Table Column', 'geditorial-like' ),
 				'callback' => function( $value, $row, $column, $index ){
-					$users = $this->get_postmeta( $row->ID, FALSE, [], $this->meta_key.'_users' );
-					return Helper::htmlCount( count( $users ) );
+					return Helper::htmlCount( $this->get_liked_users( $row->ID ) );
 				},
 			],
 			'avatars' => [

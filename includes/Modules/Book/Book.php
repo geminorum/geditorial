@@ -778,14 +778,6 @@ class Book extends gEditorial\Module
 		] );
 	}
 
-	public function set_meta( $post_id, $postmeta, $key_suffix = '' )
-	{
-		if ( $postmeta )
-			update_post_meta( $post_id, $key_suffix, $postmeta );
-		else
-			delete_post_meta( $post_id, $key_suffix );
-	}
-
 	private function get_importer_fields( $posttype = NULL )
 	{
 		if ( $posttype == $this->constant( 'publication_cpt' ) )
@@ -830,7 +822,7 @@ class Book extends gEditorial\Module
 				continue;
 
 			if ( $value = trim( Helper::kses( $raw[$offset], 'none' ) ) )
-				$this->set_meta( $post->ID, $value, $field );
+				$this->store_postmeta( $post->ID, $value, $field );
 		}
 	}
 }

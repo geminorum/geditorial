@@ -577,7 +577,7 @@ class Meta extends gEditorial\Module
 		// NOUNCES MUST CHECKED BY FILTERS
 		// CAPABILITIES MUST CHECKED BY FILTERS : if (current_user_can($post->cap->edit_post, $post_id))
 
-		$this->set_meta( $post_id,
+		$this->store_postmeta( $post_id,
 			$this->sanitize_post_meta(
 				(array) $this->get_postmeta( $post->ID ),
 				$this->get_posttype_fields( $post->post_type ),
@@ -950,7 +950,7 @@ class Meta extends gEditorial\Module
 		if ( $final ) {
 			$postmeta = (array) $this->get_postmeta( $post_id );
 			$postmeta[$field] = $final;
-			$this->set_meta( $post_id, $postmeta );
+			$this->store_postmeta( $post_id, $postmeta );
 		}
 	}
 

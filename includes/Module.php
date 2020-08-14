@@ -590,16 +590,34 @@ class Module extends Base
 		return (array) $field;
 	}
 
+	// FIXME: DEPRECATED
 	public function set_meta( $post_id, $postmeta, $key_suffix = '' )
 	{
+		self::_dep( '$this->store_postmeta()' );
+
 		global $gEditorialPostMeta;
 
-		if ( $postmeta && ! empty( $postmeta ) )
+		if ( ! empty( $postmeta ) )
 			update_post_meta( $post_id, $this->meta_key.$key_suffix, $postmeta );
 		else
 			delete_post_meta( $post_id, $this->meta_key.$key_suffix );
 
 		unset( $gEditorialPostMeta[$post_id][$this->meta_key.$key_suffix] );
+	}
+
+	public function store_postmeta( $post_id, $data, $metakey = NULL )
+	{
+		global $gEditorialPostMeta;
+
+		if ( is_null( $metakey ) )
+			$metakey = $this->meta_key; // back-comp
+
+		if ( ! empty( $data ) )
+			update_post_meta( $post_id, $metakey, $data );
+		else
+			delete_post_meta( $post_id, $metakey );
+
+		unset( $gEditorialPostMeta[$post_id][$this->meta_key][$metakey] ); // back-comp
 	}
 
 	public function register_settings_posttypes_option( $title = NULL )

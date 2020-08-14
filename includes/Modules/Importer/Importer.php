@@ -64,6 +64,7 @@ class Importer extends gEditorial\Module
 	protected function get_global_constants()
 	{
 		return [
+			'metakey_source_map'  => '_importer_source_map',
 			'metakey_source_data' => '_importer_source_data',
 			'metakey_attach_id'   => '_importer_attachment_id',
 			'metakey_old_id'      => '_importer_old_id',
@@ -95,7 +96,7 @@ class Importer extends gEditorial\Module
 		$parser   = new \KzykHys\CsvParser\CsvParser( $iterator, [ 'encoding' => 'UTF-8', 'limit' => 2 ] );
 
 		$items = $parser->parse();
-		$map   = $this->get_postmeta( $id, FALSE, [], $this->meta_key.'_map' );
+		$map   = $this->get_postmeta( $id, FALSE, [], $this->constant( 'metakey_source_map' ) );
 
 		$taxonomies = Taxonomy::get( 2, [], $posttype );
 		$fields     = $this->get_importer_fields( $posttype, $taxonomies );
@@ -165,7 +166,7 @@ class Importer extends gEditorial\Module
 
 		unset( $iterator, $parser, $items[0] );
 
-		$this->set_meta( $id, $map, '_map' );
+		$this->store_postmeta( $id, $map, $this->constant( 'metakey_source_map' ) );
 		$this->data_table( $items, $map, $posttype );
 	}
 

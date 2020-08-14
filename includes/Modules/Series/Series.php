@@ -155,14 +155,14 @@ class Series extends gEditorial\Module
 		if ( ! $this->is_save_post( $post, $this->posttypes() ) )
 			return;
 
-		$postmeta = $this->sanitize_post_meta(
+		$data = $this->sanitize_post_meta(
 			$this->get_postmeta( $post_id ),
 			$this->posttype_fields( $post->post_type ),
 			$post_id,
 			$post->post_type
 		);
 
-		$this->set_meta( $post_id, $postmeta );
+		$this->store_postmeta( $post_id, $data );
 		wp_cache_flush();
 	}
 
