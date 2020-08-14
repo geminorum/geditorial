@@ -158,7 +158,7 @@ class Collect extends gEditorial\Module
 					'icon'        => 'admin-page',
 				],
 			],
-			'post' => [
+			'_supported' => [
 				'in_collection_order' => [
 					'title'       => _x( 'Order', 'Field Title', 'geditorial-collect' ),
 					'description' => _x( 'Post order in the collection', 'Field Description', 'geditorial-collect' ),
@@ -376,7 +376,7 @@ class Collect extends gEditorial\Module
 	public function meta_init()
 	{
 		$this->add_posttype_fields( $this->constant( 'collection_cpt' ) );
-		$this->add_posttype_fields( $this->constant( 'post_cpt' ) );
+		$this->add_posttype_fields_supported();
 	}
 
 	public function dashboard_glance_items( $items )

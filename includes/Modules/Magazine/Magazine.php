@@ -162,7 +162,7 @@ class Magazine extends gEditorial\Module
 				'source_title' => [ 'type' => 'text' ],
 				'source_url'   => [ 'type' => 'link' ],
 			],
-			'post' => [
+			'_supported' => [
 				'in_issue_order' => [
 					'title'       => _x( 'Order', 'Field Title', 'geditorial-magazine' ),
 					'description' => _x( 'Post order in issue list', 'Field Description', 'geditorial-magazine' ),
@@ -378,7 +378,7 @@ class Magazine extends gEditorial\Module
 	public function meta_init()
 	{
 		$this->add_posttype_fields( $this->constant( 'issue_cpt' ) );
-		$this->add_posttype_fields( $this->constant( 'post_cpt' ) );
+		$this->add_posttype_fields_supported();
 	}
 
 	public function dashboard_glance_items( $items )

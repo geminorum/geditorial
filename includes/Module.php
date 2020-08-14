@@ -1226,6 +1226,18 @@ class Module extends Base
 		return $gEditorialPostTypeFields[$posttype];
 	}
 
+	public function add_posttype_fields_supported( $posttypes = NULL, $fields = NULL, $type = 'meta', $append = TRUE )
+	{
+		if ( is_null( $posttypes ) )
+			$posttypes = $this->posttypes();
+
+		if ( is_null( $fields ) )
+			$fields = $this->fields['_supported'];
+
+		foreach ( $posttypes as $posttype )
+			$this->add_posttype_fields( $posttype, $fields, $type, $append );
+	}
+
 	public function add_posttype_fields( $posttype, $fields = NULL, $type = 'meta', $append = TRUE )
 	{
 		if ( is_null( $fields ) )
