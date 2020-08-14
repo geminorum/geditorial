@@ -622,7 +622,7 @@ class Collect extends gEditorial\Module
 
 			$term = $this->get_linked_term( $post->ID, 'collection_cpt', 'collection_tax' );
 
-			if ( $list = MetaBox::getTermPosts( $this->constant( 'collection_tax' ), $term ) )
+			if ( $list = MetaBox::getTermPosts( $this->constant( 'collection_tax' ), $term, $this->posttypes() ) )
 				echo $list;
 
 			else

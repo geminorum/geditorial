@@ -324,7 +324,7 @@ class MetaBox extends Core\Base
 		return TRUE;
 	}
 
-	public static function getTermPosts( $taxonomy, $term_or_id, $title = FALSE, $current = FALSE, $exclude = [] )
+	public static function getTermPosts( $taxonomy, $term_or_id, $posttypes = NULL, $title = FALSE, $current = FALSE, $exclude = [] )
 	{
 		if ( ! $term_or_id || is_wp_error( $term_or_id ) )
 			return '';
@@ -336,6 +336,7 @@ class MetaBox extends Core\Base
 			'posts_per_page' => -1,
 			'orderby'        => [ 'menu_order', 'date' ],
 			'order'          => 'ASC',
+			'post_type'      => is_null( $posttypes ) ? 'any' : (array) $posttypes,
 			'post_status'    => [ 'publish', 'future', 'pending', 'draft' ],
 			'post__not_in'   => $exclude,
 			'tax_query'      => [ [

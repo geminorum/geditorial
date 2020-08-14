@@ -236,9 +236,10 @@ class Series extends gEditorial\Module
 		if ( ! Taxonomy::hasTerms( $taxonomy ) )
 			return MetaBox::fieldEmptyTaxonomy( $taxonomy );
 
-		$terms = Taxonomy::getTerms( $taxonomy, $post->ID, TRUE );
-		$posts = $dropdowns = $map = [];
-		$i     = 1;
+		$posttypes = $this->posttypes();
+		$terms     = Taxonomy::getTerms( $taxonomy, $post->ID, TRUE );
+		$posts     = $dropdowns = $map = [];
+		$i         = 1;
 
 		foreach ( $terms as $term ) {
 
@@ -254,7 +255,7 @@ class Series extends gEditorial\Module
 				'echo'             => 0,
 			] );
 
-			$posts[$i] = MetaBox::getTermPosts( $taxonomy, $term, TRUE, $post->ID );
+			$posts[$i] = MetaBox::getTermPosts( $taxonomy, $term, $posttypes, TRUE, $post->ID );
 			$map[$i]   = $term->term_id;
 			$i++;
 		}
