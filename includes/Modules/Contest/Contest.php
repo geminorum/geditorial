@@ -60,10 +60,10 @@ class Contest extends gEditorial\Module
 		return [
 			'contest_cpt'         => 'contest',
 			'contest_cpt_archive' => 'contests',
+			'contest_tax'         => 'contests',
 			'apply_cpt'           => 'apply',
 			'apply_cpt_archive'   => 'applies',
 			'contest_cat'         => 'contest_cat',
-			'contest_tax'         => 'contests',
 			'apply_cat'           => 'apply_cat',
 			'apply_status_tax'    => 'apply_status',
 		];
@@ -171,7 +171,8 @@ class Contest extends gEditorial\Module
 		], 'contest_cpt' );
 
 		$this->register_taxonomy( 'contest_tax', [
-			'show_ui'            => FALSE,
+			'show_ui'            => TRUE,
+			'show_in_menu'       => FALSE,
 			'hierarchical'       => TRUE,
 			'meta_box_cb'        => NULL, // default meta box
 			'show_admin_column'  => TRUE,
@@ -286,7 +287,8 @@ class Contest extends gEditorial\Module
 				$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
 			}
 
-			add_action( 'save_post_'.$screen->post_type, [ $this, 'store_metabox' ], 20, 3 );
+			// interferes with default behavior of metabox save
+			// add_action( 'save_post_'.$screen->post_type, [ $this, 'store_metabox' ], 20, 3 );
 		}
 	}
 
@@ -447,7 +449,7 @@ class Contest extends gEditorial\Module
 
 	public function post_updated( $post_id, $post_after, $post_before )
 	{
-		if ( ! $this->is_save_post( $post_after, 'contest_tax' ) )
+		if ( ! $this->is_save_post( $post_after, 'contest_cpt' ) )
 			return;
 
 		if ( 'trash' == $post_after->post_status )
@@ -507,6 +509,7 @@ class Contest extends gEditorial\Module
 			$this->set_linked_term( $post_id, $term['term_id'], 'contest_cpt', 'contest_tax' );
 	}
 
+	// FIXME: not used
 	public function store_metabox( $post_id, $post, $update, $context = 'main' )
 	{
 		if ( ! $this->is_save_post( $post, $this->posttypes() ) )
