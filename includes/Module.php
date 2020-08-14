@@ -1842,7 +1842,8 @@ class Module extends Base
 			'labels'                => $this->get_taxonomy_labels( $constant ),
 			'update_count_callback' => [ __NAMESPACE__.'\\WordPress\\Database', 'updateCountCallback' ],
 			'meta_box_cb'           => method_exists( $this, 'meta_box_cb_'.$constant ) ? [ $this, 'meta_box_cb_'.$constant ] : FALSE,
-			'meta_box_sanitize_cb'  => NULL, // @REF: https://make.wordpress.org/core/2019/01/23/improved-taxonomy-metabox-sanitization-in-5-1/
+			// @REF: https://make.wordpress.org/core/2019/01/23/improved-taxonomy-metabox-sanitization-in-5-1/
+			'meta_box_sanitize_cb'  => method_exists( $this, 'meta_box_sanitize_cb_'.$constant ) ? [ $this, 'meta_box_sanitize_cb_'.$constant ] : NULL,
 			'hierarchical'          => FALSE,
 			'public'                => TRUE,
 			'show_ui'               => TRUE,
