@@ -7,6 +7,7 @@ use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Core\Arraay;
+use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\Database;
@@ -480,6 +481,7 @@ class Meta extends gEditorial\Module
 		);
 	}
 
+	// FIXME: DROP THIS!
 	public function sanitize_post_meta( $postmeta, $fields, $post )
 	{
 		if ( ! count( $fields ) )
@@ -578,6 +580,79 @@ class Meta extends gEditorial\Module
 	}
 
 	public function store_metabox( $post_id, $post, $update, $context = 'main' )
+	{
+		if ( ! $this->is_save_post( $post, $this->posttypes() ) )
+			return;
+
+		if ( ! $this->nonce_verify( 'post_main' )
+			&& ! $this->nonce_verify( 'post_raw' ) )
+				return;
+
+		// MAYBE: check for `edit_post_meta`
+		if ( ! current_user_can( 'edit_post', $post->ID ) )
+			return;
+
+		$fields = $this->get_posttype_fields( $post->post_type );
+
+		if ( ! count( $fields ) )
+			return;
+
+		$prefix = 'geditorial-meta-';
+		$legacy = $this->get_postmeta_legacy( $post->ID );
+
+		foreach ( $fields as $field => $args ) {
+
+			switch ( $args['type'] ) {
+
+				case 'term':
+
+					if ( FALSE !== ( $data = self::req( $prefix.$field, FALSE ) ) )
+						wp_set_object_terms( $post->ID, empty( $data ) ? NULL : intval( $data ), $args['tax'], FALSE );
+
+				break;
+				case 'link': // MAYBEL `esc_url()`
+				case 'code':
+
+
+					if ( FALSE !== ( $data = self::req( $prefix.$field, FALSE ) ) )
+						$this->set_postmeta_field( $post->ID, $field, trim( $data ) );
+
+				break;
+				case 'number':
+
+					if ( FALSE !== ( $data = self::req( $prefix.$field, FALSE ) ) )
+						$this->set_postmeta_field( $post->ID, $field, Number::intval( trim( $data ) ) );
+
+				break;
+				case 'text':
+				case 'title_before':
+				case 'title_after':
+
+					if ( FALSE !== ( $data = self::req( $prefix.$field, FALSE ) ) )
+						$this->set_postmeta_field( $post->ID, $field, trim( Helper::kses( $data, 'none' ) ) );
+
+				break;
+				case 'note':
+				case 'textarea':
+
+					if ( FALSE !== ( $data = self::req( $prefix.$field, FALSE ) ) )
+						$this->set_postmeta_field( $post->ID, $field, trim( Helper::kses( $data, 'text' ) ) );
+
+				break;
+				case 'postbox_legacy':
+				case 'postbox_tiny':
+				case 'postbox_html':
+
+					if ( FALSE !== ( $data = self::req( $prefix.$field, FALSE ) ) )
+						$this->set_postmeta_field( $post->ID, $field, trim( Helper::kses( $data, 'html' ) ) );
+			}
+		}
+
+		$this->clean_postmeta_legacy( $post->ID, $fields, $legacy );
+	}
+
+	// FIXME: DROP THIS!
+	public function store_metabox_OLD( $post_id, $post, $update, $context = 'main' )
 	{
 		if ( ! $this->is_save_post( $post, $this->posttypes() ) )
 			return;
