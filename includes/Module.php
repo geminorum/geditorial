@@ -632,7 +632,7 @@ class Module extends Base
 				if ( array_key_exists( $field_key, $legacy ) )
 					unset( $legacy[$field_key] );
 
-		return $this->store_postmeta( $post_id, $legacy, $metakey );
+		return $this->store_postmeta( $post_id, array_filter( $legacy ), $metakey );
 	}
 
 	public function sanitize_postmeta_field( $field )
