@@ -1080,11 +1080,13 @@ class Meta extends gEditorial\Module
 
 	private function get_importer_fields( $posttype = NULL, $object = FALSE )
 	{
-		$fields = [];
+		/* translators: %s: title */
+		$template = _x( 'Meta: %s', 'Import Field', 'geditorial-meta' );
+		$fields   = [];
 
 		foreach ( $this->get_posttype_fields( $posttype ) as $field => $args )
-			/* translators: %s: title */
-			$fields['meta_'.$field] = $object ? $args : sprintf( _x( 'Meta: %s', 'Import Field', 'geditorial-meta' ), $args['title'] );
+			if ( ! in_array( $args['type'], [ 'term' ] ) )
+				$fields['meta_'.$field] = $object ? $args : sprintf( $template, $args['title'] );
 
 		return $fields;
 	}
