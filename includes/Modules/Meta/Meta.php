@@ -958,7 +958,24 @@ class Meta extends gEditorial\Module
 			echo '<br />';
 			HTML::tableList( [
 				'post_id' => Helper::tableColumnPostID(),
-				'meta'    => 'Meta :'.$args['custom_field'],
+				'type'   => [
+					'title'    => _x( 'Type', 'Table Column', 'geditorial-meta' ),
+					'args'     => [ 'types' => PostType::get( 2 ) ],
+					'callback' => function( $value, $row, $column, $index ){
+						$post = get_post( $row->post_id );
+						return isset( $column['args']['types'][$post->post_type] )
+							? $column['args']['types'][$post->post_type]
+							: $post->post_type;
+					},
+				],
+				'title'   => [
+					'title'    => _x( 'Title', 'Table Column', 'geditorial-meta' ),
+					'callback' => function( $value, $row, $column, $index ) {
+						return Helper::getPostTitle( $row->post_id );
+					},
+				],
+				/* translators: %s: title */
+				'meta' => sprintf( _x( 'Meta: %s', 'Table Column', 'geditorial-meta' ), '<code>'.$args['custom_field'].'</code>' ),
 			], Database::getPostMetaRows(
 				stripslashes( $args['custom_field'] ),
 				stripslashes( $args['custom_field_limit'] )
