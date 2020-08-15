@@ -48,18 +48,18 @@ class Meta extends gEditorial\Module
 				[
 					'field'       => 'author_row',
 					'title'       => _x( 'Author Meta Row', 'Setting Title', 'geditorial-meta' ),
-					'description' => _x( 'Displays author display name as meta row', 'Setting Description', 'geditorial-meta' ),
+					'description' => _x( 'Appends user display name on author meta row.', 'Setting Description', 'geditorial-meta' ),
 				],
 				[
 					'field'       => 'overwrite_author',
 					'title'       => _x( 'Overwrite Author', 'Setting Title', 'geditorial-meta' ),
-					'description' => _x( 'Replace author display name with author meta data.', 'Setting Description', 'geditorial-meta' ),
+					'description' => _x( 'Replaces user display name with author meta field data.', 'Setting Description', 'geditorial-meta' ),
 				],
 				[
 					'field'       => 'before_source',
 					'type'        => 'text',
 					'title'       => _x( 'Before Source', 'Setting Title', 'geditorial-meta' ),
-					'description' => _x( 'Default text before the source link', 'Setting Description', 'geditorial-meta' ),
+					'description' => _x( 'Used as default text before the source links.', 'Setting Description', 'geditorial-meta' ),
 					'default'     => _x( 'Source:', 'Setting Default', 'geditorial-meta' ),
 				],
 			],
@@ -207,7 +207,7 @@ class Meta extends gEditorial\Module
 				'show_in_rest' => FALSE, // temporarily disable in block editor
 			], $label_tax_tax_posttypes );
 
-		// default fields for custom post types
+		// default fields for custom posttypes
 		foreach ( $this->get_posttypes_support_meta() as $posttype )
 			$this->add_posttype_fields( $posttype, $this->fields['post'] );
 
