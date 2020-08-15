@@ -1145,8 +1145,10 @@ class Module extends Base
 	{
 		$list = [];
 
-		foreach ( $this->posttype_fields( $posttype ) as $field )
-			$list[$field] = $this->get_string( $field, $posttype );
+		foreach ( $this->posttype_fields_all( $posttype ) as $field => $args )
+			$list[$field] = array_key_exists( 'title', $args )
+				? $args['title']
+				: $this->get_string( $field, $posttype, 'titles', $field );
 
 		foreach ( $extra as $key => $val )
 			$list[$key] = $this->get_string( $val, $posttype );
