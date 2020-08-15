@@ -1104,11 +1104,10 @@ class Meta extends gEditorial\Module
 
 		$fields = $this->get_importer_fields( $posttype, TRUE );
 
-		if ( ! in_array( $field, array_keys( $fields ) ) )
+		if ( ! array_key_exists( $field, $fields ) )
 			return $value;
 
-		// FIXME: check for field type filter
-		return Helper::kses( $value, 'none' );
+		return $this->sanitize_posttype_field( $value, $fields[$field] );
 	}
 
 	public function importer_saved( $post, $data, $raw, $field_map, $attach_id )
@@ -1116,15 +1115,10 @@ class Meta extends gEditorial\Module
 		if ( ! $this->posttype_supported( $post->post_type ) )
 			return;
 
-		$fields = array_keys( $this->get_importer_fields( $post->post_type ) );
+		$fields = $this->get_importer_fields( $post->post_type, TRUE );
 
-		foreach ( $field_map as $offset => $field ) {
-
-			if ( ! in_array( $field, $fields ) )
-				continue;
-
-			if ( $value = trim( Helper::kses( $raw[$offset], 'none' ) ) )
-				$this->import_to_meta( $value, $post->ID, str_ireplace( 'meta_', '', $field ) );
-		}
+		foreach ( $field_map as $offset => $field )
+			if ( array_key_exists( $field, $fields ) )
+				$this->import_posttype_field( $raw[$offset], $fields[$field], $post );
 	}
 }
