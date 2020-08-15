@@ -11,6 +11,7 @@ use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\Database;
+use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\MetaBoxes\Meta as ModuleMetaBox;
 use geminorum\gEditorial\Templates\Meta as ModuleTemplate;
 
