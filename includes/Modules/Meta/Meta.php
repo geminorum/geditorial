@@ -622,11 +622,17 @@ class Meta extends gEditorial\Module
 					if ( FALSE !== ( $data = self::req( $prefix.$field, FALSE ) ) )
 						$this->set_postmeta_field( $post->ID, $field, trim( $data ) );
 
+					else if ( array_key_exists( $field, $legacy ) )
+						$this->set_postmeta_field( $post->ID, $field, trim( $legacy[$field] ) );
+
 				break;
 				case 'number':
 
 					if ( FALSE !== ( $data = self::req( $prefix.$field, FALSE ) ) )
 						$this->set_postmeta_field( $post->ID, $field, Number::intval( trim( $data ) ) );
+
+					else if ( array_key_exists( $field, $legacy ) )
+						$this->set_postmeta_field( $post->ID, $field, Number::intval( trim( $legacy[$field] ) ) );
 
 				break;
 				case 'text':
@@ -636,12 +642,18 @@ class Meta extends gEditorial\Module
 					if ( FALSE !== ( $data = self::req( $prefix.$field, FALSE ) ) )
 						$this->set_postmeta_field( $post->ID, $field, trim( Helper::kses( $data, 'none' ) ) );
 
+					else if ( array_key_exists( $field, $legacy ) )
+						$this->set_postmeta_field( $post->ID, $field, trim( Helper::kses( $legacy[$field], 'none' ) ) );
+
 				break;
 				case 'note':
 				case 'textarea':
 
 					if ( FALSE !== ( $data = self::req( $prefix.$field, FALSE ) ) )
 						$this->set_postmeta_field( $post->ID, $field, trim( Helper::kses( $data, 'text' ) ) );
+
+					else if ( array_key_exists( $field, $legacy ) )
+						$this->set_postmeta_field( $post->ID, $field, trim( Helper::kses( $legacy[$field], 'text' ) ) );
 
 				break;
 				case 'postbox_legacy':
@@ -650,6 +662,9 @@ class Meta extends gEditorial\Module
 
 					if ( FALSE !== ( $data = self::req( $prefix.$field, FALSE ) ) )
 						$this->set_postmeta_field( $post->ID, $field, trim( Helper::kses( $data, 'html' ) ) );
+
+					else if ( array_key_exists( $field, $legacy ) )
+						$this->set_postmeta_field( $post->ID, $field, trim( Helper::kses( $legacy[$field], 'html' ) ) );
 			}
 		}
 
