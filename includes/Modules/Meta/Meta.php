@@ -968,7 +968,7 @@ class Meta extends gEditorial\Module
 					$result = [];
 
 					if ( $post['custom_field'] && $post['custom_field_into'] )
-						$result = $this->import_from_meta(
+						$result = $this->import_field_meta(
 							$post['custom_field'],
 							$post['custom_field_into'],
 							$post['custom_field_limit'] );
@@ -1005,12 +1005,13 @@ class Meta extends gEditorial\Module
 		}
 	}
 
-	public function import_from_meta( $post_meta_key, $field, $limit = FALSE )
+	// OLD: `import_from_meta()`
+	public function import_field_meta( $post_meta_key, $field, $limit = FALSE )
 	{
 		$rows = Database::getPostMetaRows( $post_meta_key, $limit );
 
 		foreach ( $rows as $row )
-			$this->import_to_meta( explode( ',', $row->meta ), $row->post_id, $field, $post_meta_key );
+			$this->import_field_raw( explode( ',', $row->meta ), $field, $row->post_id );
 
 		return count( $rows );
 	}
@@ -1036,23 +1037,40 @@ class Meta extends gEditorial\Module
 
 			case 'term':
 
-				$this->import_field_terms( $data, $fields[$field], $post );
+				$this->import_field_raw_terms( $data, $fields[$field], $post );
 
 			break;
 			default:
 
-				$this->set_postmeta_field( $post->ID, $fields[$field]['name'],
-					$this->sanitize_posttype_field( $data, $fields[$field], $post ) );
+				$this->import_field_raw_strings( $data, $fields[$field], $post );
 		}
 
 		return $post->ID;
 	}
 
-	public function import_field_terms( $data, $field, $post )
+	public function import_field_raw_strings( $data, $field, $post )
+	{
+		$strings = [];
+
+		foreach ( (array) $data as $name ) {
+
+			$sanitized = $this->sanitize_posttype_field( $data, $field, $post );
+
+			if ( empty( $sanitized ) )
+				continue;
+
+			$strings[] = apply_filters( 'string_format_i18n', $sanitized );
+		}
+
+		return $this->set_postmeta_field( $post->ID, $field['name'], Helper::getJoined( $strings ) );
+	}
+
+	public function import_field_raw_terms( $data, $field, $post )
 	{
 		$terms = [];
 
-		foreach ( $data as $name ) {
+		foreach ( (array) $data as $name ) {
+
 			$sanitized = trim( Helper::kses( $name, 'none' ) );
 
 			if ( empty( $sanitized ) )
