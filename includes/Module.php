@@ -1204,8 +1204,10 @@ class Module extends Base
 				$args['icon'] = $this->get_field_icon( $field, $posttype, $args );
 
 			$fields[$field] = self::atts( [
+				'name'        => $field,
 				'title'       => $this->get_string( $field, $posttype, 'titles', $field ),
 				'description' => $this->get_string( $field, $posttype, 'descriptions' ),
+				'sanitize'    => NULL,
 				'icon'        => 'smiley',
 				'type'        => 'text',
 				'context'     => 'main',
@@ -1224,6 +1226,51 @@ class Module extends Base
 		] );
 
 		return $gEditorialPostTypeFields[$posttype];
+	}
+
+	// use for all modules
+	public function sanitize_posttype_field( $data, $field, $post = FALSE )
+	{
+		if ( ! empty( $field['sanitize'] ) && is_callable( $field['sanitize'] ) )
+			return $this->filters( 'sanitize_posttype_field',
+				call_user_func_array( $field['sanitize'], $data, $field, $post ),
+				$field, $post, $data );
+
+		$sanitized = $data;
+
+		switch ( $field['type'] ) {
+
+			case 'term':
+				$sanitized = empty( $data ) ? NULL : intval( $data );
+
+			break;
+			case 'link': // MAYBEL `esc_url()`
+			case 'code':
+				$sanitized = trim( $data );
+
+			break;
+			case 'number':
+				$sanitized = Number::intval( trim( $data ) );
+
+			break;
+			case 'text':
+			case 'title_before':
+			case 'title_after':
+				$sanitized = trim( Helper::kses( $data, 'none' ) );
+
+			break;
+			case 'note':
+			case 'textarea':
+				$sanitized = trim( Helper::kses( $data, 'text' ) );
+
+			break;
+			case 'postbox_legacy':
+			case 'postbox_tiny':
+			case 'postbox_html':
+				$sanitized = trim( Helper::kses( $data, 'html' ) );
+		}
+
+		return $this->filters( 'sanitize_posttype_field', $sanitized, $field, $post, $data );
 	}
 
 	public function add_posttype_fields_supported( $posttypes = NULL, $fields = NULL, $type = 'meta', $append = TRUE )

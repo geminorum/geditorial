@@ -7,7 +7,6 @@ use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Core\Arraay;
-use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\Database;
@@ -608,68 +607,29 @@ class Meta extends gEditorial\Module
 
 		foreach ( $fields as $field => $args ) {
 
-			switch ( $args['type'] ) {
+			if ( FALSE !== ( $data = self::req( $prefix.$field, FALSE ) ) )
+				$this->import_posttype_field( $data, $args, $post );
 
-				case 'term':
-
-					if ( FALSE !== ( $data = self::req( $prefix.$field, FALSE ) ) )
-						wp_set_object_terms( $post->ID, empty( $data ) ? NULL : intval( $data ), $args['tax'], FALSE );
-
-				break;
-				case 'link': // MAYBEL `esc_url()`
-				case 'code':
-
-
-					if ( FALSE !== ( $data = self::req( $prefix.$field, FALSE ) ) )
-						$this->set_postmeta_field( $post->ID, $field, trim( $data ) );
-
-					else if ( array_key_exists( $field, $legacy ) )
-						$this->set_postmeta_field( $post->ID, $field, trim( $legacy[$field] ) );
-
-				break;
-				case 'number':
-
-					if ( FALSE !== ( $data = self::req( $prefix.$field, FALSE ) ) )
-						$this->set_postmeta_field( $post->ID, $field, Number::intval( trim( $data ) ) );
-
-					else if ( array_key_exists( $field, $legacy ) )
-						$this->set_postmeta_field( $post->ID, $field, Number::intval( trim( $legacy[$field] ) ) );
-
-				break;
-				case 'text':
-				case 'title_before':
-				case 'title_after':
-
-					if ( FALSE !== ( $data = self::req( $prefix.$field, FALSE ) ) )
-						$this->set_postmeta_field( $post->ID, $field, trim( Helper::kses( $data, 'none' ) ) );
-
-					else if ( array_key_exists( $field, $legacy ) )
-						$this->set_postmeta_field( $post->ID, $field, trim( Helper::kses( $legacy[$field], 'none' ) ) );
-
-				break;
-				case 'note':
-				case 'textarea':
-
-					if ( FALSE !== ( $data = self::req( $prefix.$field, FALSE ) ) )
-						$this->set_postmeta_field( $post->ID, $field, trim( Helper::kses( $data, 'text' ) ) );
-
-					else if ( array_key_exists( $field, $legacy ) )
-						$this->set_postmeta_field( $post->ID, $field, trim( Helper::kses( $legacy[$field], 'text' ) ) );
-
-				break;
-				case 'postbox_legacy':
-				case 'postbox_tiny':
-				case 'postbox_html':
-
-					if ( FALSE !== ( $data = self::req( $prefix.$field, FALSE ) ) )
-						$this->set_postmeta_field( $post->ID, $field, trim( Helper::kses( $data, 'html' ) ) );
-
-					else if ( array_key_exists( $field, $legacy ) )
-						$this->set_postmeta_field( $post->ID, $field, trim( Helper::kses( $legacy[$field], 'html' ) ) );
-			}
+			else if ( array_key_exists( $field, $legacy ) )
+				$this->set_postmeta_field( $post->ID, $field, $this->sanitize_posttype_field( $legacy[$field], $args, $post ) );
 		}
 
 		$this->clean_postmeta_legacy( $post->ID, $fields, $legacy );
+	}
+
+	public function import_posttype_field( $data, $field, $post )
+	{
+		switch ( $field['type'] ) {
+
+			case 'term':
+
+				return wp_set_object_terms( $post->ID, $this->sanitize_posttype_field( $data, $field, $post ), $field['tax'], FALSE );
+
+			break;
+			default:
+
+				return $this->set_postmeta_field( $post->ID, $field['name'], $this->sanitize_posttype_field( $data, $field, $post ) );
+		}
 	}
 
 	// FIXME: DROP THIS!
