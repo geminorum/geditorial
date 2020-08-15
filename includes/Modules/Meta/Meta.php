@@ -1015,67 +1015,65 @@ class Meta extends gEditorial\Module
 		return count( $rows );
 	}
 
-	// used in gImporter
-	public function import_to_meta( $meta, $post_id, $field, $form_key = NULL )
+	// OLD: `import_to_meta()`
+	public function import_field_raw( $data, $field, $post )
 	{
-		$meta = (array) $this->filters( 'import_pre', $meta, $post_id, $field, $form_key );
+		if ( ! $post = Helper::getPost( $post ) )
+			return FALSE;
 
-		switch ( $field ) {
-			case 'label_tax': $this->import_to_terms( $meta, $post_id, $this->constant( 'label_tax' ) ); break;
-			default: $this->import_to_fields( $meta, $post_id, $field ); break;
+		$field = $this->sanitize_postmeta_field( $field )[0];
+		$data  = $this->filters( 'import_field_raw_pre', $data, $field, $post );
+
+		if ( FALSE === $data )
+			return FALSE;
+
+		$fields = $this->get_posttype_fields( $post->post_type );
+
+		if ( ! array_key_exists( $field, $fields ) )
+			return FALSE;
+
+		switch ( $fields[$field]['type'] ) {
+
+			case 'term':
+
+				$this->import_field_terms( $data, $fields[$field], $post );
+
+			break;
+			default:
+
+				$this->set_postmeta_field( $post->ID, $fields[$field]['name'],
+					$this->sanitize_posttype_field( $data, $fields[$field], $post ) );
 		}
 
-		return $meta;
+		return $post->ID;
 	}
 
-	public function import_to_fields( $meta, $post_id, $field, $kses = TRUE )
-	{
-		$final = '';
-
-		foreach ( $meta as $val ) {
-			$val = trim( $val );
-
-			if ( empty( $val ) )
-				continue;
-
-			$formatted = apply_filters( 'string_format_i18n', $val );
-
-			if ( $final )
-				$final.= ', ';
-
-			$final.= $kses ? Helper::kses( $formatted, 'text' ) : $formatted;
-		}
-
-		if ( $final )
-			$this->set_postmeta_field( $post_id, $field, trim( $final ) );
-	}
-
-	protected function import_to_terms( $meta, $post_id, $taxonomy )
+	public function import_field_terms( $data, $field, $post )
 	{
 		$terms = [];
 
-		foreach ( $meta as $term_name ) {
-			$term_name = trim( strip_tags( $term_name ) );
+		foreach ( $data as $name ) {
+			$sanitized = trim( Helper::kses( $name, 'none' ) );
 
-			if ( empty( $term_name ) )
+			if ( empty( $sanitized ) )
 				continue;
 
-			$formatted = apply_filters( 'string_format_i18n', $term_name );
-			$term = get_term_by( 'name', $formatted, $taxonomy, ARRAY_A );
+			$formatted = apply_filters( 'string_format_i18n', $sanitized );
 
-			if ( ! $term ) {
+			if ( ! $term = get_term_by( 'name', $formatted, $field['tax'] ) ) {
+
 				$term = wp_insert_term( $formatted, $taxonomy );
 
-				if ( is_wp_error( $term ) ) {
-					$this->errors[$term_name] = $term->get_error_message();
-					continue;
-				}
-			}
+				if ( ! is_wp_error( $term ) )
+					$terms[] = $term->term_id;
 
-			$terms[] = (int) $term['term_id'];
+			} else {
+
+				$terms[] = $term->term_id;
+			}
 		}
 
-		return wp_set_post_terms( $post_id, $terms, $taxonomy, TRUE );
+		return wp_set_object_terms( $post->ID, $this->sanitize_posttype_field( $terms, $field, $post ), $field['tax'], FALSE );
 	}
 
 	private function get_importer_fields( $posttype = NULL, $object = FALSE )
