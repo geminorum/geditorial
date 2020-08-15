@@ -619,11 +619,24 @@ class Module extends Base
 	// back-comp only
 	public function get_postmeta_legacy( $post_id, $default = [], $metakey = NULL )
 	{
-		return $this->fetch_postmeta( $post_id, $default, $metakey );
+		global $gEditorialPostMetaLegacy;
+
+		if ( is_null( $metakey ) )
+			$metakey = $this->meta_key;
+
+		if ( ! isset( $gEditorialPostMetaLegacy[$post_id][$metakey] ) )
+			$gEditorialPostMetaLegacy[$post_id][$metakey] = $this->fetch_postmeta( $post_id, $default, $metakey );
+
+		return $gEditorialPostMetaLegacy[$post_id][$metakey];
 	}
 
 	public function clean_postmeta_legacy( $post_id, $fields, $legacy = NULL, $metakey = NULL )
 	{
+		global $gEditorialPostMetaLegacy;
+
+		if ( is_null( $metakey ) )
+			$metakey = $this->meta_key;
+
 		if ( is_null( $legacy ) )
 			$legacy = $this->get_postmeta_legacy( $post_id, [], $metakey );
 
@@ -631,6 +644,8 @@ class Module extends Base
 			foreach ( $this->sanitize_postmeta_field( $field ) as $field_key )
 				if ( array_key_exists( $field_key, $legacy ) )
 					unset( $legacy[$field_key] );
+
+		unset( $gEditorialPostMetaLegacy[$post_id][$metakey] );
 
 		return $this->store_postmeta( $post_id, array_filter( $legacy ), $metakey );
 	}
@@ -657,8 +672,6 @@ class Module extends Base
 
 	public function store_postmeta( $post_id, $data, $metakey = NULL )
 	{
-		global $gEditorialPostMeta;
-
 		if ( is_null( $metakey ) )
 			$metakey = $this->meta_key; // back-comp
 
