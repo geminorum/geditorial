@@ -1275,6 +1275,10 @@ class Module extends Base
 				$sanitized = Number::intval( trim( $data ) );
 
 			break;
+			case 'float':
+				$sanitized = Number::floatval( trim( $data ) );
+
+			break;
 			case 'text':
 			case 'title_before':
 			case 'title_after':

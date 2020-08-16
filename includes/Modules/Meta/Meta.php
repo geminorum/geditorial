@@ -347,6 +347,7 @@ class Meta extends gEditorial\Module
 					ModuleMetaBox::legacy_fieldString( $field, [ $field ], $post, $args['ltr'], $args['title'], FALSE, $args['type'] );
 
 				break;
+				case 'float':
 				case 'code':
 				case 'link':
 
