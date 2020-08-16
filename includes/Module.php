@@ -1259,7 +1259,14 @@ class Module extends Base
 				$sanitized = empty( $data ) ? NULL : intval( $data );
 
 			break;
-			case 'link': // MAYBEL `esc_url()`
+			case 'link':
+				$sanitized = trim( $data );
+
+ 				// @SEE: `esc_url()`
+				if ( ! preg_match( '/^http(s)?:\/\//', $sanitized ) )
+					$sanitized = 'http://'.$sanitized;
+
+			break;
 			case 'code':
 				$sanitized = trim( $data );
 
