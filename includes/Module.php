@@ -1209,10 +1209,10 @@ class Module extends Base
 			if ( ! isset( $args['context'] ) && isset( $args['type'] ) ) {
 
 				if ( in_array( $args['type'], [ 'postbox_legacy', 'title_before', 'title_after' ] ) )
-					$args['context'] = 'raw';
+					$args['context'] = 'raw'; // 'nobox'
 
 				else if ( in_array( $args['type'], [ 'postbox_html', 'postbox_tiny' ] ) )
-					$args['context'] = 'lone';
+					$args['context'] = 'lone'; // 'lonebox'
 			}
 
 			if ( ! isset( $args['icon'] ) )
@@ -1225,7 +1225,7 @@ class Module extends Base
 				'sanitize'    => NULL,
 				'icon'        => 'smiley',
 				'type'        => 'text',
-				'context'     => 'main',
+				'context'     => 'main', // 'mainbox'
 				'values'      => [],
 				'repeat'      => FALSE,
 				'ltr'         => FALSE,

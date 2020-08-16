@@ -629,7 +629,7 @@ class Magazine extends gEditorial\Module
 				echo $list;
 
 			else
-				HTML::desc( _x( 'No items connected!', 'Message', 'geditorial-magazine' ), FALSE, '-empty' );
+				echo HTML::wrap( _x( 'No items connected!', 'Message', 'geditorial-magazine' ), 'field-wrap -empty' );
 
 		echo '</div>';
 	}

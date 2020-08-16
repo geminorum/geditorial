@@ -304,7 +304,7 @@ class Event extends gEditorial\Module
 						'high'
 					);
 
-					$this->_hook_store_metabox( $screen->post_type );
+					// $this->_hook_store_metabox( $screen->post_type ); // FIXME: not implemented yet!
 					add_action( $this->hook( 'render_metabox' ), [ $this, 'render_metabox' ], 10, 4 );
 				}
 

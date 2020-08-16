@@ -41,12 +41,12 @@ class MetaBox extends Core\Base
 		if ( ! in_array( $metabox_id, get_hidden_meta_boxes( get_current_screen() ) ) )
 			return FALSE;
 
-		echo HTML::tag( 'a', [
+		$html = HTML::tag( 'a', [
 			'href'  => add_query_arg( 'flush', '' ),
 			'class' => [ '-description', '-refresh' ],
 		], _x( 'Please refresh the page to generate the data.', 'MetaBox: Refresh Link', 'geditorial' ) );
 
-		echo $after;
+		echo HTML::wrap( $html, 'field-wrap -needs-refresh' ).$after;
 
 		return TRUE;
 	}

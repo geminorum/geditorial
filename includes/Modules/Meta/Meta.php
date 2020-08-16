@@ -254,9 +254,9 @@ class Meta extends gEditorial\Module
 
 			if ( 'post' == $screen->base ) {
 
-				$fields   = $this->get_posttype_fields( $screen->post_type );
-				$contexts = Arraay::column( $fields, 'context' );
-				$metabox  = $this->classs( $screen->post_type );
+				$fields     = $this->get_posttype_fields( $screen->post_type );
+				$contexts   = Arraay::column( $fields, 'context' );
+				$metabox_id = $this->classs( $screen->post_type );
 
 				$main_callback = $this->filters( 'box_callback', in_array( 'main', $contexts ), $screen->post_type );
 
@@ -264,15 +264,15 @@ class Meta extends gEditorial\Module
 					$main_callback = [ $this, 'render_metabox_main' ];
 
 				if ( $main_callback && is_callable( $main_callback ) )
-					add_meta_box( $metabox,
+					add_meta_box( $metabox_id,
 						$this->get_meta_box_title(),
 						$main_callback,
 						$screen,
 						'side',
 						'high',
 						[
-							'posttype' => $screen->post_type,
-							'metabox'  => $metabox,
+							'posttype'   => $screen->post_type,
+							'metabox_id' => $metabox_id,
 						]
 					);
 
@@ -301,8 +301,7 @@ class Meta extends gEditorial\Module
 				$this->_default_rows();
 			}
 
-			if ( 'post' == $screen->base
-				|| 'edit' == $screen->base ) {
+			if ( 'post' == $screen->base || 'edit' == $screen->base ) {
 
 				$localize = [ 'fields' => $this->posttype_fields( $screen->post_type, TRUE ) ];
 
@@ -379,7 +378,7 @@ class Meta extends gEditorial\Module
 
 	public function render_metabox_main( $post, $box )
 	{
-		if ( ! empty( $box['args']['metabox'] ) && MetaBox::checkHidden( $box['args']['metabox'], $post->post_type ) )
+		if ( ! empty( $box['args']['metabox_id'] ) && MetaBox::checkHidden( $box['args']['metabox_id'], $post->post_type ) )
 			return;
 
 		$fields = $this->get_posttype_fields( $post->post_type );
@@ -602,14 +601,16 @@ class Meta extends gEditorial\Module
 		if ( ! count( $fields ) )
 			return;
 
-		$prefix = 'geditorial-meta-';
 		$legacy = $this->get_postmeta_legacy( $post->ID );
 
 		foreach ( $fields as $field => $args ) {
 
-			if ( FALSE !== ( $data = self::req( $prefix.$field, FALSE ) ) )
+			$request = sprintf( '%s-%s-%s', $this->base, $this->module->name, $field );
+
+			if ( FALSE !== ( $data = self::req( $request, FALSE ) ) )
 				$this->import_posttype_field( $data, $args, $post );
 
+			// passing not enabled legacy data
 			else if ( array_key_exists( $field, $legacy ) )
 				$this->set_postmeta_field( $post->ID, $field, $this->sanitize_posttype_field( $legacy[$field], $args, $post ) );
 		}
@@ -1096,7 +1097,7 @@ class Meta extends gEditorial\Module
 
 	private function get_importer_fields( $posttype = NULL, $object = FALSE )
 	{
-		/* translators: %s: title */
+		/* translators: %s: field title */
 		$template = _x( 'Meta: %s', 'Import Field', 'geditorial-meta' );
 		$fields   = [];
 
