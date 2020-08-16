@@ -258,15 +258,15 @@ class Meta extends gEditorial\Module
 				$contexts   = Arraay::column( $fields, 'context' );
 				$metabox_id = $this->classs( $screen->post_type );
 
-				$main_callback = $this->filters( 'box_callback', in_array( 'main', $contexts ), $screen->post_type );
+				$mainbox = $this->filters( 'mainbox_callback', in_array( 'main', $contexts ), $screen->post_type );
 
-				if ( TRUE === $main_callback )
-					$main_callback = [ $this, 'render_metabox_main' ];
+				if ( TRUE === $mainbox )
+					$mainbox = [ $this, 'render_metabox_main' ];
 
-				if ( $main_callback && is_callable( $main_callback ) )
+				if ( $mainbox && is_callable( $mainbox ) )
 					add_meta_box( $metabox_id,
 						$this->get_meta_box_title(),
-						$main_callback,
+						$mainbox,
 						$screen,
 						'side',
 						'high',
@@ -276,21 +276,21 @@ class Meta extends gEditorial\Module
 						]
 					);
 
-				$raw_callback = $this->filters( 'raw_callback', in_array( 'raw', $contexts ), $screen->post_type );
+				$nobox = $this->filters( 'nobox_callback', in_array( 'raw', $contexts ), $screen->post_type );
 
-				if ( TRUE === $raw_callback )
+				if ( TRUE === $nobox )
 					add_action( 'dbx_post_sidebar', [ $this, 'render_raw_default' ], 10, 1 );
 
-				else if ( $raw_callback && is_callable( $raw_callback ) )
-					add_action( 'dbx_post_sidebar', $raw_callback, 10, 1 );
+				else if ( $nobox && is_callable( $nobox ) )
+					add_action( 'dbx_post_sidebar', $nobox, 10, 1 );
 
-				$lone_callback = $this->filters( 'lone_callback', in_array( 'lone', $contexts ), $screen->post_type );
+				$lonebox = $this->filters( 'lonebox_callback', in_array( 'lone', $contexts ), $screen->post_type );
 
-				if ( TRUE === $lone_callback )
+				if ( TRUE === $lonebox )
 					call_user_func_array( [ $this, 'register_lone_default' ], [ $screen ] );
 
-				else if ( $lone_callback && is_callable( $lone_callback ) )
-					call_user_func_array( $lone_callback, [ $screen ] );
+				else if ( $lonebox && is_callable( $lonebox ) )
+					call_user_func_array( $lonebox, [ $screen ] );
 
 				add_action( 'geditorial_meta_render_metabox', [ $this, 'render_posttype_fields' ], 10, 4 );
 

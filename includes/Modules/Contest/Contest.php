@@ -223,7 +223,7 @@ class Contest extends gEditorial\Module
 				$this->filter( 'post_updated_messages' );
 				$this->filter( 'get_default_comment_status', 3 );
 
-				$this->filter_false( 'geditorial_meta_box_callback', 12 );
+				$this->filter_false( 'geditorial_meta_mainbox_callback', 12 );
 				$this->filter_false( 'geditorial_tweaks_metabox_menuorder' );
 				$this->filter_false( 'geditorial_tweaks_metabox_parent' );
 				$this->class_metabox( $screen, 'main' );
