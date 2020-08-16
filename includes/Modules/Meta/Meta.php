@@ -239,7 +239,7 @@ class Meta extends gEditorial\Module
 	{
 		if ( $this->is_inline_save( $_REQUEST, $this->posttypes() ) ) {
 			$this->_edit_screen( $_REQUEST['post_type'] );
-			$this->_default_rows();
+			$this->_hook_default_rows();
 			$this->_hook_store_metabox( $_REQUEST['post_type'] );
 		}
 	}
@@ -292,13 +292,13 @@ class Meta extends gEditorial\Module
 				else if ( $lone_callback && is_callable( $lone_callback ) )
 					call_user_func_array( $lone_callback, [ $screen ] );
 
-				add_action( 'geditorial_meta_render_metabox', [ $this, 'render_metabox' ], 10, 4 );
+				add_action( 'geditorial_meta_render_metabox', [ $this, 'render_posttype_fields' ], 10, 4 );
 
 			} else if ( 'edit' == $screen->base ) {
 
 				$this->_admin_enabled();
 				$this->_edit_screen( $screen->post_type );
-				$this->_default_rows();
+				$this->_hook_default_rows();
 			}
 
 			if ( 'post' == $screen->base || 'edit' == $screen->base ) {
@@ -324,13 +324,13 @@ class Meta extends gEditorial\Module
 	}
 
 	// early and late actions to make room for other modules
-	private function _default_rows()
+	private function _hook_default_rows()
 	{
 		add_action( $this->hook( 'column_row' ), [ $this, 'column_row_default' ], 8, 3 );
 		add_action( $this->hook( 'column_row' ), [ $this, 'column_row_extra' ], 12, 3 );
 	}
 
-	public function render_metabox( $post, $box, $fields = NULL, $context = 'main' )
+	public function render_posttype_fields( $post, $box, $fields = NULL, $context = 'main' )
 	{
 		if ( is_null( $fields ) )
 			$fields = $this->get_posttype_fields( $post->post_type );
@@ -772,7 +772,7 @@ class Meta extends gEditorial\Module
 
 	public function tableColumnPostMeta( $author = NULL )
 	{
-		$this->_default_rows();
+		$this->_hook_default_rows();
 
 		if ( ! is_null( $author ) ) // force the author row
 			$this->options->settings['author_row'] = $author;

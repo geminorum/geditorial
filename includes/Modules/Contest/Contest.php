@@ -225,6 +225,7 @@ class Contest extends gEditorial\Module
 
 				$this->filter_false( 'geditorial_meta_box_callback', 12 );
 				$this->filter_false( 'geditorial_tweaks_metabox_menuorder' );
+				$this->filter_false( 'geditorial_tweaks_metabox_parent' );
 				$this->class_metabox( $screen, 'main' );
 
 				remove_meta_box( 'pageparentdiv', $screen, 'side' );

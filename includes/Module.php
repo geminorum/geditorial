@@ -2231,7 +2231,7 @@ class Module extends Base
 	}
 
 	// DEFAULT METHOD
-	public function render_metabox( $post, $box, $fields = NULL, $context = 'main' )
+	public function dISABLED_render_metabox( $post, $box, $fields = NULL, $context = 'main' )
 	{
 		if ( is_null( $fields ) )
 			$fields = $this->get_posttype_fields( $post->post_type );
@@ -2267,7 +2267,7 @@ class Module extends Base
 
 	// DEFAULT METHOD
 	// INTENDED HOOK: `save_post`, `save_post_[post_type]`
-	public function store_metabox( $post_id, $post, $update, $context = 'main' )
+	public function dISABLED_store_metabox( $post_id, $post, $update, $context = 'main' )
 	{
 		if ( ! $this->is_save_post( $post, $this->posttypes() ) )
 			return;
