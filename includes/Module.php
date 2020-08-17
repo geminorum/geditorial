@@ -1263,7 +1263,7 @@ class Module extends Base
 				$sanitized = trim( $data );
 
  				// @SEE: `esc_url()`
-				if ( ! preg_match( '/^http(s)?:\/\//', $sanitized ) )
+				if ( $sanitized && ! preg_match( '/^http(s)?:\/\//', $sanitized ) )
 					$sanitized = 'http://'.$sanitized;
 
 			break;
