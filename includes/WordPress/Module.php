@@ -104,6 +104,20 @@ class Module extends Core\Base
 			add_filter( $this->base.'_'.$module.'_'.$hook, array( $this, $method ), $priority, $args );
 	}
 
+	// USAGE: $this->action_self( 'saved', 5 );
+	protected function action_self( $hook, $args = 1, $priority = 10, $suffix = FALSE )
+	{
+		if ( $method = self::sanitize_hook( ( $suffix ? $hook.'_'.$suffix : $hook ) ) )
+			add_action( $this->base.'_'.$this->key.'_'.$hook, array( $this, $method ), $priority, $args );
+	}
+
+	// USAGE: $this->filter_self( 'prepare', 4 );
+	protected function filter_self( $hook, $args = 1, $priority = 10, $suffix = FALSE )
+	{
+		if ( $method = self::sanitize_hook( ( $suffix ? $hook.'_'.$suffix : $hook ) ) )
+			add_filter( $this->base.'_'.$this->key.'_'.$hook, array( $this, $method ), $priority, $args );
+	}
+
 	// @REF: https://gist.github.com/markjaquith/b752e3aa93d2421285757ada2a4869b1
 	protected function filter_once( $hook, $args = 1, $priority = 10, $suffix = FALSE )
 	{
@@ -128,6 +142,22 @@ class Module extends Core\Base
 	protected function filter_false( $hook, $priority = 10 )
 	{
 		add_filter( $hook, function( $first ){
+			return FALSE;
+		}, $priority, 1 );
+	}
+
+	// USAGE: $this->filter_true_module( 'meta', 'mainbox_callback' );
+	protected function filter_true_module( $module, $hook, $priority = 10 )
+	{
+		add_filter( $this->base.'_'.$module.'_'.$hook, function( $first ){
+			return TRUE;
+		}, $priority, 1 );
+	}
+
+	// USAGE: $this->filter_false_module( 'meta', 'mainbox_callback' );
+	protected function filter_false_module( $module, $hook, $priority = 10 )
+	{
+		add_filter( $this->base.'_'.$module.'_'.$hook, function( $first ){
 			return FALSE;
 		}, $priority, 1 );
 	}
