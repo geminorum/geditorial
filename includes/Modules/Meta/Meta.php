@@ -47,11 +47,6 @@ class Meta extends gEditorial\Module
 			'_general' => [
 				'insert_content_enabled',
 				[
-					'field'       => 'author_row',
-					'title'       => _x( 'Author Meta Row', 'Setting Title', 'geditorial-meta' ),
-					'description' => _x( 'Appends user display name on author meta row.', 'Setting Description', 'geditorial-meta' ),
-				],
-				[
 					'field'       => 'overwrite_author',
 					'title'       => _x( 'Overwrite Author', 'Setting Title', 'geditorial-meta' ),
 					'description' => _x( 'Replaces user display name with author meta field data.', 'Setting Description', 'geditorial-meta' ),
@@ -729,10 +724,6 @@ class Meta extends gEditorial\Module
 
 	public function column_row_default( $post, $fields, $excludes )
 	{
-		$author = $this->get_setting( 'author_row', FALSE )
-			? WordPress::getAuthorEditHTML( $post->post_type, $post->post_author )
-			: FALSE;
-
 		$rows = [
 			'over_title' => 'arrow-up-alt2',
 			'sub_title'  => 'arrow-down-alt2',
@@ -750,23 +741,8 @@ class Meta extends gEditorial\Module
 				continue;
 
 			echo '<li class="-row meta-'.$field.'">';
-
 				echo $this->get_column_icon( FALSE, $icon, $this->get_string( $field, $post->post_type, 'titles', $field ) );
-
 				echo HTML::escape( $value );
-
-				if ( $author && 'byline' === $field ) {
-					echo ' <small>('.$author.')</small>';
-					$author = FALSE;
-				}
-
-			echo '</li>';
-		}
-
-		if ( $author ) {
-			echo '<li class="-row meta-byline">';
-				echo $this->get_column_icon( FALSE, $rows['byline'], $this->get_string( 'byline', $post->post_type, 'titles', 'byline' ) );
-				echo $author;
 			echo '</li>';
 		}
 	}
@@ -800,12 +776,9 @@ class Meta extends gEditorial\Module
 		}
 	}
 
-	public function tableColumnPostMeta( $author = NULL )
+	public function tableColumnPostMeta()
 	{
 		$this->_hook_default_rows();
-
-		if ( ! is_null( $author ) ) // force the author row
-			$this->options->settings['author_row'] = $author;
 
 		if ( empty( $GLOBALS['mode'] ) )
 			$GLOBALS['mode'] = 'excerpt';
