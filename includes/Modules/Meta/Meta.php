@@ -325,8 +325,9 @@ class Meta extends gEditorial\Module
 
 	private function _edit_screen( $posttype )
 	{
-		add_filter( 'manage_posts_columns', [ $this, 'manage_posts_columns' ], 5, 2 );
-		add_filter( 'manage_pages_columns', [ $this, 'manage_pages_columns' ], 5, 1 );
+		$this->filter( 'manage_posts_columns', 2, 5 );
+		$this->filter( 'manage_pages_columns', 1, 5 );
+
 		add_action( 'manage_'.$posttype.'_posts_custom_column', [ $this, 'posts_custom_column' ], 10, 2 );
 
 		$this->action( 'quick_edit_custom_box', 2 );
@@ -460,7 +461,7 @@ class Meta extends gEditorial\Module
 							$title,
 							[ $this, 'render_lonebox_metabox' ],
 							$screen,
-							'after_title',
+							'after_title', // TODO: must defined on field args
 							'high',
 							[
 								'posttype'   => $screen->post_type,
@@ -723,6 +724,7 @@ class Meta extends gEditorial\Module
 
 	public function column_row_default( $post, $fields, $excludes )
 	{
+		$prefix = $this->classs().'-';
 		$author = $this->get_setting( 'author_row', FALSE )
 			? WordPress::getAuthorEditHTML( $post->post_type, $post->post_author )
 			: FALSE;
@@ -754,7 +756,8 @@ class Meta extends gEditorial\Module
 					$author = FALSE;
 				}
 
-				echo '<div class="hidden geditorial-meta-'.$field.'-value">'.$value.'</div>';
+				// for quick-edit
+				echo '<div class="hidden '.$prefix.$field.'-value">'.$value.'</div>';
 
 			echo '</li>';
 		}
@@ -829,11 +832,12 @@ class Meta extends gEditorial\Module
 			if ( ! $args['quickedit'] )
 				continue;
 
-			$selector = 'geditorial-meta-'.$field;
+			$name  = $this->classs().'-'.$field; // to protect key underlines
+			$class = HTML::prepClass( $name );
 
-			echo '<label class="'.$selector.'" style="display:none;">';
+			echo '<label class="hidden '.$class.'">';
 				echo '<span class="title">'.$args['title'].'</span>';
-				echo '<span class="input-text-wrap"><input type="text" name="'.$selector.'" class="'.HTML::prepClass( $selector ).'" value=""></span>';
+				echo '<span class="input-text-wrap"><input type="text" name="'.$name.'" class="'.$class.'" value=""></span>';
 			echo '</label>';
 		}
 

@@ -1216,7 +1216,8 @@ class Module extends Base
 
 			$args = isset( $all[$field] ) && is_array( $all[$field] ) ? $all[$field] : [];
 
-			if ( ! isset( $args['context'] ) && isset( $args['type'] ) ) {
+			if ( ! array_key_exists( 'context', $args )
+				&& array_key_exists( 'type', $args ) ) {
 
 				if ( in_array( $args['type'], [ 'postbox_legacy', 'title_before', 'title_after' ] ) )
 					$args['context'] = 'nobox'; // OLD: 'raw'
