@@ -493,7 +493,7 @@ class Template extends Core\Base
 		return gEditorial()->{$module}->get_postmeta_field( $post_id, $field );
 	}
 
-	public static function metaLabel( $atts = [], $module = NULL, $chack = TRUE )
+	public static function metaLabel( $atts = [], $module = NULL, $check = TRUE )
 	{
 		if ( is_null( $module ) && static::MODULE )
 			$module = static::MODULE;
@@ -506,13 +506,13 @@ class Template extends Core\Base
 			'after'       => '',
 			'echo'        => TRUE,
 			'field'       => 'label',
-			'taxonomy'    => gEditorial()->constant( $module, 'ct_tax', 'label' ),
+			'taxonomy'    => gEditorial()->constant( $module, 'label_tax', 'label' ),
 			'image'       => FALSE,
 			'link'        => NULL, // FALSE to disable
 			'description' => NULL, // FALSE to disable
 		], $atts );
 
-		if ( $chack && ! gEditorial()->enabled( 'meta' ) )
+		if ( $check && ! gEditorial()->enabled( 'meta' ) )
 			return $args['default'];
 
 		if ( ! $post = get_post( $args['id'] ) )

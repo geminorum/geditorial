@@ -3096,6 +3096,7 @@ class Module extends Base
 			case 'byline'    : return 'admin-users';
 			case 'published' : return 'calendar-alt';
 			case 'lead'      : return 'editor-paragraph';
+			case 'label'     : return 'megaphone';
 		}
 
 		return 'admin-post';

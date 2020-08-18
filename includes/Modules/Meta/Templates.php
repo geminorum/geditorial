@@ -218,8 +218,8 @@ class Meta extends gEditorial\Template
 			'desc'    => NULL, // FALSE to disable
 		], $atts );
 
-		$tax   = self::constant( 'ct_tax', 'label' );
-		$title = self::get_meta( 'ch', [ 'id' => $args['id'], 'def' => FALSE ] );
+		$tax   = self::constant( 'label_tax', 'label' );
+		$title = self::get_meta( 'label', [ 'id' => $args['id'], 'def' => FALSE ] );
 
 		if ( taxonomy_exists( $tax ) ) {
 			$term = Taxonomy::theTerm( $tax, $args['id'], TRUE );
@@ -268,7 +268,7 @@ class Meta extends gEditorial\Template
 
 		global $post;
 
-		$tax = self::constant( 'ct_tax', 'label' );
+		$tax = self::constant( 'label_tax', 'label' );
 		$id  = isset( $args['id'] ) ? $args['id'] : $post->ID;
 
 		$term  = Taxonomy::theTerm( $tax, $id, TRUE );
