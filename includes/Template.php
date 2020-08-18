@@ -432,6 +432,14 @@ class Template extends Core\Base
 		return $default;
 	}
 
+	public static function metaFieldHTML( $field, $atts = [] )
+	{
+		if ( ! array_key_exists( 'filter', $atts ) )
+			$atts['filter'] = [ 'geminorum\\gEditorial\\Helper', 'prepDescription' ];
+
+		return self::metaField( $field, $atts );
+	}
+
 	public static function metaField( $field, $atts = [] )
 	{
 		if ( ! array_key_exists( 'echo', $atts ) )

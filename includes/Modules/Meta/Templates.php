@@ -30,18 +30,12 @@ class Meta extends gEditorial\Template
 
 	public static function metaLead( $atts = [] )
 	{
-		if ( ! array_key_exists( 'filter', $atts ) )
-			$atts['filter'] = [ 'geminorum\\gEditorial\\Helper', 'prepDescription' ];
-
-		return self::metaField( 'lead', $atts );
+		return self::metaFieldHTML( 'lead', $atts );
 	}
 
 	public static function metaHighlight( $atts = [] )
 	{
-		if ( ! array_key_exists( 'filter', $atts ) )
-			$atts['filter'] = [ 'geminorum\\gEditorial\\Helper', 'prepDescription' ];
-
-		return self::metaField( 'highlight', $atts );
+		return self::metaFieldHTML( 'highlight', $atts );
 	}
 
 	// FIXME: DEPRECATED
