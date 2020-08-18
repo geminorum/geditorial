@@ -163,11 +163,13 @@ class Inquire extends gEditorial\Module
 		], 'inquiry_cpt' );
 
 		$this->register_taxonomy( 'status_tax', [
+			'hierarchical'       => TRUE, // required by `MetaBox::checklistTerms()`
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
 		], 'inquiry_cpt' );
 
 		$this->register_taxonomy( 'priority_tax', [
+			'hierarchical'       => TRUE, // required by `MetaBox::checklistTerms()`
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
 		], 'inquiry_cpt' );
@@ -284,6 +286,26 @@ class Inquire extends gEditorial\Module
 			'status_tax',
 			'priority_tax',
 		] );
+	}
+
+	public function meta_box_cb_status_tax( $post, $box )
+	{
+		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
+			return;
+
+		echo $this->wrap_open( '-admin-metabox' );
+			MetaBox::checklistTerms( $post->ID, $box['args'] );
+		echo '</div>';
+	}
+
+	public function meta_box_cb_priority_tax( $post, $box )
+	{
+		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
+			return;
+
+		echo $this->wrap_open( '-admin-metabox' );
+			MetaBox::checklistTerms( $post->ID, $box['args'] );
+		echo '</div>';
 	}
 
 	public function do_metabox_excerpt( $post, $box )
