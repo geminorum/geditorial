@@ -742,19 +742,19 @@ class Meta extends gEditorial\Module
 
 	public function column_row_extra( $post, $fields, $exclude )
 	{
-		$label = $this->get_column_icon( FALSE, 'megaphone', $this->get_string( 'label', $post->post_type, 'titles', 'label' ) );
+		if ( array_key_exists( 'label', $fields ) )
+			ModuleTemplate::metaLabel( [
+				'before' => '<li class="-row meta-label">'
+					.$this->get_column_icon( FALSE, $fields['label']['icon'], $fields['label']['title'] ),
+				'after'  => '</li>',
+			], 'meta', FALSE );
 
-		ModuleTemplate::metaLabel( [
-			'before' => '<li class="-row meta-label">'.$label,
-			'after'  => '</li>',
-		], 'meta', FALSE );
-
-		$source = $this->get_column_icon( FALSE, 'external', $this->get_string( 'source', $post->post_type, 'titles', 'source' ) );
-
-		ModuleTemplate::metaSource( [
-			'before' => '<li class="-row meta-source">'.$source,
-			'after'  => '</li>',
-		] );
+		if ( array_key_exists( 'source_title', $fields ) || array_key_exists( 'source_url', $fields ) )
+			ModuleTemplate::metaSource( [
+				'before' => '<li class="-row meta-source">'
+					.$this->get_column_icon( FALSE, 'external', $this->get_string( 'source', $post->post_type, 'titles', 'source' ) ),
+				'after'  => '</li>',
+			] );
 	}
 
 	// only on excerpt mode
