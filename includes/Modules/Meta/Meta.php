@@ -701,6 +701,7 @@ class Meta extends gEditorial\Module
 		if ( ! $post = get_post( $post_id ) )
 			return;
 
+		$prefix = $this->classs().'-';
 		$fields = $this->get_posttype_fields( $post->post_type );
 
 		$excludes = [
@@ -720,11 +721,14 @@ class Meta extends gEditorial\Module
 		echo '<div class="geditorial-admin-wrap-column -meta"><ul class="-rows">';
 			$this->actions( 'column_row', $post, $fields, $excludes ); // excludes are for other modules
 		echo '</ul></div>';
+
+		// for quick-edit
+		foreach ( wp_list_filter( $fields, [ 'quickedit' => TRUE ] ) as $field => $args )
+			echo '<div class="hidden '.$prefix.$field.'-value">'.$this->get_postmeta_field( $post->ID, $field ).'</div>';
 	}
 
 	public function column_row_default( $post, $fields, $excludes )
 	{
-		$prefix = $this->classs().'-';
 		$author = $this->get_setting( 'author_row', FALSE )
 			? WordPress::getAuthorEditHTML( $post->post_type, $post->post_author )
 			: FALSE;
@@ -755,9 +759,6 @@ class Meta extends gEditorial\Module
 					echo ' <small>('.$author.')</small>';
 					$author = FALSE;
 				}
-
-				// for quick-edit
-				echo '<div class="hidden '.$prefix.$field.'-value">'.$value.'</div>';
 
 			echo '</li>';
 		}
