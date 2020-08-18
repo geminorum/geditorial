@@ -636,7 +636,7 @@ class Template extends Core\Base
 			'label'                => [ 'ch', 'label', 'column_header' ],
 			'lead'                 => [ 'le', 'lead' ],
 			'author'               => [ 'as', 'author' ],
-			'number'               => [ 'issue_number_line', 'number' ],
+			'number'               => [ 'number_line', 'issue_number_line', 'number' ],
 			'pages'                => [ 'issue_total_pages', 'pages' ],
 			'start'                => [ 'in_issue_page_start', 'start' ],
 			'order'                => [ 'in_issue_order', 'in_collection_order', 'in_series_order', 'order' ],

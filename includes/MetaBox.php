@@ -434,7 +434,7 @@ class MetaBox extends Core\Base
 			'exclude'          => $exclude,
 			'echo'             => 0,
 			'walker'           => new Misc\Walker_PageDropdown(),
-			'title_with_meta'  => 'issue_number_line', // extra arg for the walker
+			'title_with_meta'  => 'number_line', // extra arg for the walker
 		] );
 
 		return $html ? HTML::wrap( $html, 'field-wrap -select' ) : FALSE;

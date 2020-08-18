@@ -251,11 +251,11 @@ class Book extends gEditorial\Module
 					'title'       => _x( 'Alternative Title', 'Field Title', 'geditorial-book' ),
 					'description' => _x( 'The Original Title or Title in Another Language', 'Field Description', 'geditorial-book' ),
 				],
-				'edition' => [
+				'publication_edition' => [
 					'title'       => _x( 'Edition', 'Field Title', 'geditorial-book' ),
 					'description' => _x( 'Edition of the Publication', 'Field Description', 'geditorial-book' ),
 				],
-				'print' => [
+				'publication_print' => [
 					'title'       => _x( 'Print', 'Field Title', 'geditorial-book' ),
 					'description' => _x( 'Specefic Print of the Publication', 'Field Description', 'geditorial-book' ),
 					'icon'        => 'book',
@@ -270,31 +270,31 @@ class Book extends gEditorial\Module
 					'description' => _x( 'Date Published', 'Field Description', 'geditorial-book' ),
 					'icon'        => 'calendar-alt',
 				],
-				'isbn' => [
+				'publication_isbn' => [
 					'title'       => _x( 'ISBN', 'Field Title', 'geditorial-book' ),
 					'description' => _x( 'International Standard Book Number', 'Field Description', 'geditorial-book' ),
 					'type'        => 'code',
 					'icon'        => 'menu',
 				],
-				'pages' => [
+				'total_pages' => [
 					'title'       => _x( 'Pages', 'Field Title', 'geditorial-book' ),
 					'description' => _x( 'Total Pages of the Publication', 'Field Description', 'geditorial-book' ),
 					'type'        => 'number',
 					'icon'        => 'admin-page',
 				],
-				'volumes' => [
+				'total_volumes' => [
 					'title'       => _x( 'Volumes', 'Field Title', 'geditorial-book' ),
 					'description' => _x( 'Total Volumes of the Publication', 'Field Description', 'geditorial-book' ),
 					'type'        => 'number',
 					'icon'        => 'book-alt',
 				],
-				'size' => [
+				'publication_size' => [
 					'title'       => _x( 'Size', 'Field Title', 'geditorial-book' ),
 					'description' => _x( 'The Size of the Publication, Mainly Books', 'Field Description', 'geditorial-book' ),
 					'type'        => 'term',
 					'tax'         => $this->constant( 'size_tax' ),
 				],
-				'reference' => [
+				'publication_reference' => [
 					'title'       => _x( 'Reference', 'Field Title', 'geditorial-book' ),
 					'description' => _x( 'Full reference to this publication', 'Field Description', 'geditorial-book' ),
 					'type'        => 'note',

@@ -147,7 +147,7 @@ class Collect extends gEditorial\Module
 				'over_title' => [ 'type' => 'title_before' ],
 				'sub_title'  => [ 'type' => 'title_after' ],
 
-				'number' => [
+				'number_line' => [
 					'title'       => _x( 'Number Line', 'Field Title', 'geditorial-collect' ),
 					'description' => _x( 'The collection number line', 'Field Description', 'geditorial-collect' ),
 					'icon'        => 'menu',
@@ -163,23 +163,23 @@ class Collect extends gEditorial\Module
 					'title'       => _x( 'Order', 'Field Title', 'geditorial-collect' ),
 					'description' => _x( 'Post order in the collection', 'Field Description', 'geditorial-collect' ),
 					'type'        => 'number',
-					'context'     => 'collection',
+					'context'     => 'linkedbox',
 					'icon'        => 'sort',
 				],
 				'in_collection_title' => [
 					'title'       => _x( 'Title', 'Field Title', 'geditorial-collect' ),
 					'description' => _x( 'Override post title in the collection', 'Field Description', 'geditorial-collect' ),
-					'context'     => 'collection',
+					'context'     => 'linkedbox',
 				],
 				'in_collection_subtitle' => [
 					'title'       => _x( 'Subtitle', 'Field Title', 'geditorial-collect' ),
 					'description' => _x( 'Post subtitle in the collection', 'Field Description', 'geditorial-collect' ),
-					'context'     => 'collection',
+					'context'     => 'linkedbox',
 				],
 				'in_collection_collaborator' => [
 					'title'       => _x( 'Collaborator', 'Field Title', 'geditorial-collect' ),
 					'description' => _x( 'Post collaborator in the collection', 'Field Description', 'geditorial-collect' ),
-					'context'     => 'collection',
+					'context'     => 'linkedbox',
 				],
 			],
 		];

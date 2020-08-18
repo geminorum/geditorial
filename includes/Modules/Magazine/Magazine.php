@@ -148,12 +148,12 @@ class Magazine extends gEditorial\Module
 				'over_title' => [ 'type' => 'title_before' ],
 				'sub_title'  => [ 'type' => 'title_after' ],
 
-				'issue_number_line' => [
+				'number_line' => [
 					'title'       => _x( 'Number Line', 'Field Title', 'geditorial-magazine' ),
 					'description' => _x( 'The issue number line', 'Field Description', 'geditorial-magazine' ),
 					'icon'        => 'menu',
 				],
-				'issue_total_pages' => [
+				'total_pages' => [
 					'title'       => _x( 'Total Pages', 'Field Title', 'geditorial-magazine' ),
 					'description' => _x( 'The issue total pages', 'Field Description', 'geditorial-magazine' ),
 					'icon'        => 'admin-page',
@@ -167,20 +167,20 @@ class Magazine extends gEditorial\Module
 					'title'       => _x( 'Order', 'Field Title', 'geditorial-magazine' ),
 					'description' => _x( 'Post order in issue list', 'Field Description', 'geditorial-magazine' ),
 					'type'        => 'number',
-					'context'     => 'issue',
+					'context'     => 'linkedbox',
 					'icon'        => 'sort',
 				],
 				'in_issue_page_start' => [
 					'title'       => _x( 'Page Start', 'Field Title', 'geditorial-magazine' ),
 					'description' => _x( 'Post start page on issue (printed)', 'Field Description', 'geditorial-magazine' ),
 					'type'        => 'number',
-					'context'     => 'issue',
+					'context'     => 'linkedbox',
 					'icon'        => 'media-default',
 				],
 				'in_issue_pages' => [
 					'title'       => _x( 'Total Pages', 'Field Title', 'geditorial-magazine' ),
 					'description' => _x( 'Post total pages on issue (printed)', 'Field Description', 'geditorial-magazine' ),
-					'context'     => 'issue',
+					'context'     => 'linkedbox',
 					'icon'        => 'admin-page',
 				],
 			],

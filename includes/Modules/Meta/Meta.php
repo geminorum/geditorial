@@ -549,11 +549,11 @@ class Meta extends gEditorial\Module
 			'byline'       => [ 'byline', 'author', 'as' ],
 			'lead'         => [ 'lead', 'le' ],
 			'label'        => [ 'label', 'ch', 'column_header' ],
-			'label_tax'    => [ 'label_tax', 'ct' ],
+			'label_tax'    => [ 'label_tax', 'ct' ],  // term type
 			'start'        => [ 'in_issue_page_start', 'start' ],
 			'order'        => [ 'in_issue_order', 'in_collection_order', 'in_series_order', 'order' ],
-			'number_line'  => [ 'number_line', 'issue_number_line' ],
-			'total_pages'  => [ 'total_pages', 'issue_total_pages' ],
+			'number_line'  => [ 'number_line', 'issue_number_line', 'number' ],
+			'total_pages'  => [ 'total_pages', 'issue_total_pages', 'pages' ],
 			'source_title' => [ 'source_title', 'reshare_source_title' ],
 			'source_url'   => [ 'source_url', 'reshare_source_url', 'es', 'ol' ],
 
@@ -567,6 +567,15 @@ class Meta extends gEditorial\Module
 			'es' => [ 'source_url', 'es' ],
 			'ol' => [ 'source_url', 'ol' ],
 
+			// book oldies
+			'publication_edition'   => [ 'publication_edition', 'edition' ],
+			'publication_print'     => [ 'publication_print', 'print' ],
+			'publication_isbn'      => [ 'publication_isbn', 'isbn' ],
+			'publication_reference' => [ 'publication_reference', 'reference' ],
+			'total_volumes'         => [ 'total_volumes', 'volumes' ],
+			'publication_size'      => [ 'publication_size', 'size' ], // term type
+
+
 			// other oldies
 			'issue_number_line'    => [ 'number_line', 'issue_number_line' ],
 			'issue_total_pages'    => [ 'total_pages', 'issue_total_pages' ],
@@ -576,8 +585,8 @@ class Meta extends gEditorial\Module
 			// fallbacks
 			'over-title' => [ 'over_title', 'ot' ],
 			'sub-title'  => [ 'sub_title', 'st' ],
-			'number'     => [ 'number_line', 'issue_number_line' ],
-			'pages'      => [ 'total_pages', 'issue_total_pages' ],
+			'pages'      => [ 'total_pages', 'pages' ],
+			'number'     => [ 'number_line', 'issue_number_line', 'number' ],
 		];
 
 		if ( isset( $fields[$field] ) )

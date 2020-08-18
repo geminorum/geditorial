@@ -103,7 +103,7 @@ class Magazine extends gEditorial\Template
 		$fields = [
 			'over-title' => [ 'ot', 'over-title' ],
 			'sub-title'  => [ 'st', 'sub-title' ],
-			'number'     => [ 'issue_number_line', 'number' ],
+			'number'     => [ 'number_line', 'issue_number_line', 'number' ],
 			'pages'      => [ 'issue_total_pages', 'pages' ],
 			'start'      => [ 'in_issue_page_start', 'start' ],
 			'order'      => [ 'in_issue_order', 'order' ],
