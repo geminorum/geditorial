@@ -613,7 +613,15 @@ class Module extends Base
 		if ( is_null( $prefix ) )
 			$prefix = $this->key;
 
-		return $this->store_postmeta( $post_id, $data, sprintf( '_%s_%s', $prefix, $field ) );
+		if ( ! $this->store_postmeta( $post_id, $data, sprintf( '_%s_%s', $prefix, $field ) ) )
+			return FALSE;
+
+		// tries to cleanup old field keys, upon changing in the future
+		foreach ( $this->sanitize_postmeta_field( $field ) as $offset => $field_key )
+			if ( $offset ) // skips the current key!
+				delete_post_meta( $post_id, sprintf( '_%s_%s', $prefix, $field_key ) );
+
+		return TRUE;
 	}
 
 	// fetch module meta array
@@ -679,7 +687,7 @@ class Module extends Base
 		if ( empty( $data ) )
 			return delete_post_meta( $post_id, $metakey );
 
-		return update_post_meta( $post_id, $metakey, $data );
+		return (bool) update_post_meta( $post_id, $metakey, $data );
 	}
 
 	public function fetch_postmeta( $post_id, $default = '', $metakey = NULL )
