@@ -23,7 +23,6 @@
               .find('div.' + prefix + field + '-value')
               .text())
             .parents('label')
-            .show()
             .insertBefore(postTitleLabel);
 
           break;
@@ -35,7 +34,6 @@
               .find('div.' + prefix + field + '-value')
               .text())
             .parents('label')
-            .show()
             .insertAfter(postTitleLabel);
 
           break;
@@ -47,7 +45,6 @@
               .find('div.' + prefix + field + '-value')
               .text())
             .parents('label')
-            .show()
             .insertAfter(postNameLabel);
       }
     }
