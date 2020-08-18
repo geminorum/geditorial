@@ -145,7 +145,7 @@ class Meta extends gEditorial\Module
 				'label'      => [ 'type' => 'text' ],
 				'label_tax'  => [ 'type' => 'term', 'tax' => $this->constant( 'label_tax' ) ],
 
-				'published'    => [ 'type' => 'text' ],
+				'published'    => [ 'type' => 'text', 'quickedit' => TRUE ],
 				'source_title' => [ 'type' => 'text' ],
 				'source_url'   => [ 'type' => 'link' ],
 				'highlight'    => [ 'type' => 'note' ],
@@ -724,24 +724,16 @@ class Meta extends gEditorial\Module
 
 	public function column_row_default( $post, $fields, $excludes )
 	{
-		$rows = [
-			'over_title' => 'arrow-up-alt2',
-			'sub_title'  => 'arrow-down-alt2',
-			'highlight'  => 'pressthis',
-			'byline'     => 'admin-users',
-			'published'  => 'calendar-alt',
-		];
+		foreach ( $fields as $field => $args ) {
 
-		foreach ( $rows as $field => $icon ) {
-
-			if ( ! array_key_exists( $field, $fields ) )
+			if ( ! $args['quickedit'] )
 				continue;
 
 			if ( ! $value = $this->get_postmeta_field( $post->ID, $field ) )
 				continue;
 
 			echo '<li class="-row meta-'.$field.'">';
-				echo $this->get_column_icon( FALSE, $icon, $this->get_string( $field, $post->post_type, 'titles', $field ) );
+				echo $this->get_column_icon( FALSE, $args['icon'], $args['title'] );
 				echo HTML::escape( $value );
 			echo '</li>';
 		}
