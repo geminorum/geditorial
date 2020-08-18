@@ -697,25 +697,24 @@ class Meta extends gEditorial\Module
 		if ( ! $post = get_post( $post_id ) )
 			return;
 
-		$prefix = $this->classs().'-';
-		$fields = $this->get_posttype_fields( $post->post_type );
+		$prefix   = $this->classs().'-';
+		$fields   = $this->get_posttype_fields( $post->post_type );
+		$excludes = []; // excludes are for other modules
 
-		$excludes = [
-			'over_title',
-			'sub_title',
-			'byline',
-			'lead',
-			'label',
-			'published',
-			'source_title',
-			'source_url',
-			'highlight',
-			'dashboard',
-			'abstract',
-		];
+		foreach ( $fields as $field => $args ) {
+
+			if ( $args['quickedit'] )
+				$excludes[] = $field;
+
+			else if ( in_array( $args['name'], [ 'label', 'label_tax', 'source_title', 'source_url' ] ) )
+				$excludes[] = $field;
+
+			else if ( in_array( $args['type'], [ 'postbox_html', 'postbox_tiny', 'postbox_legacy' ] ) )
+				$excludes[] = $field;
+		}
 
 		echo '<div class="geditorial-admin-wrap-column -meta"><ul class="-rows">';
-			$this->actions( 'column_row', $post, $fields, $excludes ); // excludes are for other modules
+			$this->actions( 'column_row', $post, $fields, $excludes );
 		echo '</ul></div>';
 
 		// for quick-edit
@@ -742,7 +741,7 @@ class Meta extends gEditorial\Module
 
 	public function column_row_extra( $post, $fields, $exclude )
 	{
-		if ( array_key_exists( 'label', $fields ) )
+		if ( array_key_exists( 'label', $fields ) || array_key_exists( 'label_tax', $fields ) )
 			ModuleTemplate::metaLabel( [
 				'before' => '<li class="-row meta-label">'
 					.$this->get_column_icon( FALSE, $fields['label']['icon'], $fields['label']['title'] ),
