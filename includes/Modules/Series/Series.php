@@ -122,9 +122,10 @@ class Series extends gEditorial\Module
 
 			if ( 'post' == $screen->base ) {
 
-				add_meta_box( $this->classs( 'supported' ),
+				$this->class_metabox( $screen, 'linkedbox' );
+				add_meta_box( $this->classs( 'linkedbox' ),
 					$this->get_meta_box_title_tax( 'series_tax' ),
-					[ $this, 'render_metabox_supported' ],
+					[ $this, 'render_linkedbox_metabox' ],
 					$screen,
 					'side'
 				);
@@ -150,7 +151,7 @@ class Series extends gEditorial\Module
 		$this->do_restrict_manage_posts_taxes( 'series_tax' );
 	}
 
-	public function store_metabox( $post_id, $post, $update, $context = 'main' )
+	public function store_metabox( $post_id, $post, $update, $context = NULL )
 	{
 		if ( ! $this->is_save_post( $post, $this->posttypes() ) )
 			return;
@@ -168,7 +169,7 @@ class Series extends gEditorial\Module
 
 	private function sanitize_post_meta( $postmeta, $fields, $post_id, $posttype )
 	{
-		if ( ! $this->nonce_verify( 'post_main' ) )
+		if ( ! $this->nonce_verify( 'mainbox' ) )
 			return $postmeta;
 
 		if ( ! isset( $_POST['geditorial-series-terms'] ) )
@@ -216,7 +217,7 @@ class Series extends gEditorial\Module
 	}
 
 	// TODO: list other post in this series by the order and link to their edit pages
-	public function render_metabox_supported( $post, $box )
+	public function render_linkedbox_metabox( $post, $box )
 	{
 		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
 			return;
@@ -224,12 +225,14 @@ class Series extends gEditorial\Module
 		$fields = $this->posttype_fields( $post->post_type );
 
 		echo $this->wrap_open( '-admin-metabox' );
-			$this->actions( 'render_metabox', $post, $box, $fields, 'main' );
-			$this->actions( 'render_metabox_after', $post, $box, $fields, 'main' );
+			$this->actions( 'render_metabox', $post, $box, $fields, 'linkedbox' );
+			$this->actions( 'render_metabox_after', $post, $box, $fields, 'linkedbox' );
 		echo '</div>';
+
+		$this->nonce_field( 'mainbox' );
 	}
 
-	public function render_metabox( $post, $box, $fields = NULL, $context = 'main' )
+	public function render_metabox( $post, $box, $fields = NULL, $context = NULL )
 	{
 		$taxonomy = $this->constant( 'series_tax' );
 
@@ -286,7 +289,7 @@ class Series extends gEditorial\Module
 
 					echo HTML::wrap( $dropdown, 'field-wrap -select' );
 
-					$this->actions( 'render_metabox_item', $index, $map[$index], $fields, $post );
+					$this->actions( 'render_metabox_item', $index, $map[$index], $fields, $post, $context );
 
 					if ( $index && $posts[$index] )
 						echo $posts[$index];
@@ -294,11 +297,9 @@ class Series extends gEditorial\Module
 				echo '</div>';
 			}
 		}
-
-		$this->nonce_field( 'post_main' );
 	}
 
-	public function render_metabox_item( $counter, $term_id, $fields, $post )
+	public function render_metabox_item( $counter, $term_id, $fields, $post, $context = NULL )
 	{
 		$meta = $counter
 			? $this->get_postmeta_field( $post->ID, $term_id, [] )

@@ -370,11 +370,10 @@ class Cartable extends gEditorial\Module
 
 			} else if ( 'post' == $screen->base ) {
 
-				$this->class_metabox( $screen, 'main' );
-
-				add_meta_box( $this->classs( 'main' ),
+				$this->class_metabox( $screen, 'mainbox' );
+				add_meta_box( $this->classs( 'mainbox' ),
 					$this->get_meta_box_title( 'users', $this->get_adminmenu( FALSE ), TRUE ),
-					[ $this, 'render_metabox_main' ],
+					[ $this, 'render_mainbox_metabox' ],
 					$screen,
 					'side',
 					'high'
@@ -729,7 +728,7 @@ class Cartable extends gEditorial\Module
 		$this->tableCartableSummary( $term, $box['args']['context'] );
 	}
 
-	public function render_metabox_main( $post, $box )
+	public function render_mainbox_metabox( $post, $box )
 	{
 		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
 			return;
@@ -740,7 +739,7 @@ class Cartable extends gEditorial\Module
 				HTML::desc( _x( 'You can see cartable details, once you\'ve saved it for the first time.', 'Message', 'geditorial-cartable' ) );
 
 			else if ( has_action( $this->hook( 'render_metabox' ) ) )
-				$this->actions( 'render_metabox', $post, $box, NULL, 'main' );
+				$this->actions( 'render_metabox', $post, $box, NULL, 'mainbox' );
 
 			else
 				echo $this->metabox_summary( $post );

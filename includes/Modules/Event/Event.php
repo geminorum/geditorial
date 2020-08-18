@@ -294,11 +294,10 @@ class Event extends gEditorial\Module
 
 				if ( $metadata ) {
 
-					$this->class_metabox( $screen, 'main' );
-
-					add_meta_box( $this->classs( 'main' ),
+					$this->class_metabox( $screen, 'mainbox' );
+					add_meta_box( $this->classs( 'mainbox' ),
 						$this->get_meta_box_title( 'event_cpt' ),
-						[ $this, 'render_metabox_main' ],
+						[ $this, 'render_mainbox_metabox' ],
 						$screen,
 						'side',
 						'high'
@@ -472,7 +471,7 @@ class Event extends gEditorial\Module
 		return array_merge( $messages, $this->get_bulk_post_updated_messages( 'event_cpt', $counts ) );
 	}
 
-	public function render_metabox_main( $post, $box )
+	public function render_mainbox_metabox( $post, $box )
 	{
 		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
 			return;
@@ -480,7 +479,7 @@ class Event extends gEditorial\Module
 		$fields = $this->get_posttype_fields( $post->post_type );
 
 		echo $this->wrap_open( '-admin-metabox' );
-			$this->actions( 'render_metabox', $post, $box, $fields, 'main' );
+			$this->actions( 'render_metabox', $post, $box, $fields, 'mainbox' );
 
 			// old way metas
 			// $this->render_box( $post ); // FIXME: add to module actions

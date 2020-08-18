@@ -239,12 +239,12 @@ class Workflow extends gEditorial\Module
 			if ( 'post' == $screen->base ) {
 
 				$edit = WordPress::getEditTaxLink( $this->constant( 'status_tax' ) );
-				$this->class_metabox( $screen, 'main' );
-
 				remove_meta_box( 'submitdiv', $screen, 'side' );
-				add_meta_box( $this->classs( 'main' ),
+
+				$this->class_metabox( $screen, 'mainbox' );
+				add_meta_box( $this->classs( 'mainbox' ),
 					$this->get_meta_box_title( $screen->post_type, $edit ),
-					[ $this, 'render_metabox_main' ],
+					[ $this, 'render_mainbox_metabox' ],
 					$screen,
 					'side',
 					'high'
@@ -369,7 +369,7 @@ class Workflow extends gEditorial\Module
 		return $states;
 	}
 
-	public function render_metabox_main( $post, $box )
+	public function render_mainbox_metabox( $post, $box )
 	{
 		if ( empty( $post->post_type ) )
 			return; // FIXME: add notice
@@ -383,7 +383,7 @@ class Workflow extends gEditorial\Module
 			$status = 'password';
 
 		echo $this->wrap_open( '-admin-metabox submitbox' );
-			$this->actions( 'render_metabox', $post, $box, NULL, 'main' );
+			$this->actions( 'render_metabox', $post, $box, NULL, 'mainbox' );
 
 			echo '<div id="minor-publishing">';
 
@@ -415,7 +415,7 @@ class Workflow extends gEditorial\Module
 
 			echo '<div class="clear"></div></div>';
 
-			$this->actions( 'render_metabox_after', $post, $box, FALSE );
+			$this->actions( 'render_metabox_after', $post, $box, 'mainbox' );
 		echo '</div>';
 	}
 

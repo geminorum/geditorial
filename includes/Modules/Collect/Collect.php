@@ -281,25 +281,24 @@ class Collect extends gEditorial\Module
 				$this->filter( 'post_updated_messages' );
 				$this->filter( 'get_default_comment_status', 3 );
 
-				$this->filter_false( 'geditorial_meta_mainbox_callback', 12 );
-				$this->filter_false( 'geditorial_tweaks_metabox_menuorder' );
-				$this->filter_false( 'geditorial_tweaks_metabox_parent' );
-				$this->class_metabox( $screen, 'main' );
-
+				$this->filter_false_module( 'meta', 'mainbox_callback', 12 );
+				$this->filter_false_module( 'tweaks', 'metabox_menuorder' );
+				$this->filter_false_module( 'tweaks', 'metabox_parent' );
 				remove_meta_box( 'pageparentdiv', $screen, 'side' );
-				add_meta_box( $this->classs( 'main' ),
+
+				$this->class_metabox( $screen, 'mainbox' );
+				add_meta_box( $this->classs( 'mainbox' ),
 					$this->get_meta_box_title( 'collection_cpt', FALSE ),
-					[ $this, 'render_metabox_main' ],
+					[ $this, 'render_mainbox_metabox' ],
 					$screen,
 					'side',
 					'high'
 				);
 
-				$this->class_metabox( $screen, 'list' );
-
-				add_meta_box( $this->classs( 'list' ),
+				$this->class_metabox( $screen, 'listbox' );
+				add_meta_box( $this->classs( 'listbox' ),
 					$this->get_meta_box_title( 'collection_tax' ),
-					[ $this, 'render_metabox_list' ],
+					[ $this, 'render_listbox_metabox' ],
 					$screen,
 					'advanced',
 					'low'
@@ -331,16 +330,15 @@ class Collect extends gEditorial\Module
 
 			if ( 'post' == $screen->base ) {
 
-				$this->class_metabox( $screen, 'supported' );
-
-				add_meta_box( $this->classs( 'supported' ),
+				$this->class_metabox( $screen, 'linkedbox' );
+				add_meta_box( $this->classs( 'linkedbox' ),
 					$this->get_meta_box_title_posttype( 'collection_cpt' ),
-					[ $this, 'render_metabox_supported' ],
+					[ $this, 'render_linkedbox_metabox' ],
 					$screen,
 					'side'
 				);
 
-				add_action( $this->hook( 'render_metabox_supported' ), [ $this, 'render_metabox' ], 10, 4 );
+				add_action( $this->hook( 'render_linkedbox_metabox' ), [ $this, 'render_metabox' ], 10, 4 );
 
 			} else if ( 'edit' == $screen->base ) {
 
@@ -488,7 +486,7 @@ class Collect extends gEditorial\Module
 		$this->do_before_delete_post( $post_id, 'collection_cpt', 'collection_tax' );
 	}
 
-	public function store_metabox( $post_id, $post, $update, $context = 'main' )
+	public function store_metabox( $post_id, $post, $update, $context = NULL )
 	{
 		if ( ! $this->is_save_post( $post, $this->posttypes() ) )
 			return;
@@ -558,7 +556,7 @@ class Collect extends gEditorial\Module
 		echo '</div>';
 	}
 
-	public function render_metabox_supported( $post, $box )
+	public function render_linkedbox_metabox( $post, $box )
 	{
 		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
 			return;
@@ -571,15 +569,15 @@ class Collect extends gEditorial\Module
 
 		} else {
 
-			$this->actions( 'render_metabox_supported', $post, $box, NULL, NULL );
+			$this->actions( 'render_linkedbox_metabox', $post, $box, NULL, 'linkedbox' );
 
-			do_action( 'geditorial_meta_render_metabox', $post, $box, NULL, 'collection' );
+			do_action( 'geditorial_meta_render_metabox', $post, $box, NULL, 'linkedbox' );
 		}
 
 		echo '</div>';
 	}
 
-	public function render_metabox( $post, $box, $fields = NULL, $context = 'main' )
+	public function render_metabox( $post, $box, $fields = NULL, $context = NULL )
 	{
 		$dropdowns = $excludes = [];
 		$posttype  = $this->constant( 'collection_cpt' );
@@ -598,13 +596,13 @@ class Collect extends gEditorial\Module
 				echo $dropdown;
 	}
 
-	public function render_metabox_main( $post, $box )
+	public function render_mainbox_metabox( $post, $box )
 	{
 		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
 			return;
 
 		echo $this->wrap_open( '-admin-metabox' );
-			$this->actions( 'render_metabox', $post, $box, NULL, 'main' );
+			$this->actions( 'render_metabox', $post, $box, NULL, 'mainbox' );
 
 			do_action( 'geditorial_meta_render_metabox', $post, $box, NULL );
 
@@ -614,13 +612,13 @@ class Collect extends gEditorial\Module
 		echo '</div>';
 	}
 
-	public function render_metabox_list( $post, $box )
+	public function render_listbox_metabox( $post, $box )
 	{
 		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
 			return;
 
 		echo $this->wrap_open( '-admin-metabox' );
-			$this->actions( 'render_metabox_list', $post, $box, NULL, NULL );
+			$this->actions( 'render_listbox_metabox', $post, $box, NULL, 'listbox' );
 
 			$term = $this->get_linked_term( $post->ID, 'collection_cpt', 'collection_tax' );
 

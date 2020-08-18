@@ -223,25 +223,24 @@ class Contest extends gEditorial\Module
 				$this->filter( 'post_updated_messages' );
 				$this->filter( 'get_default_comment_status', 3 );
 
-				$this->filter_false( 'geditorial_meta_mainbox_callback', 12 );
-				$this->filter_false( 'geditorial_tweaks_metabox_menuorder' );
-				$this->filter_false( 'geditorial_tweaks_metabox_parent' );
-				$this->class_metabox( $screen, 'main' );
-
+				$this->filter_false_module( 'meta', 'mainbox_callback', 12 );
+				$this->filter_false_module( 'tweaks', 'metabox_menuorder' );
+				$this->filter_false_module( 'tweaks', 'metabox_parent' );
 				remove_meta_box( 'pageparentdiv', $screen, 'side' );
-				add_meta_box( $this->classs( 'main' ),
+
+				$this->class_metabox( $screen, 'mainbox' );
+				add_meta_box( $this->classs( 'mainbox' ),
 					$this->get_meta_box_title( 'contest_cpt', FALSE ),
-					[ $this, 'render_metabox_main' ],
+					[ $this, 'render_mainbox_metabox' ],
 					$screen,
 					'side',
 					'high'
 				);
 
-				$this->class_metabox( $screen, 'list' );
-
-				add_meta_box( $this->classs( 'list' ),
+				$this->class_metabox( $screen, 'listbox' );
+				add_meta_box( $this->classs( 'listbox' ),
 					$this->get_meta_box_title( 'contest_tax' ),
-					[ $this, 'render_metabox_list' ],
+					[ $this, 'render_listbox_metabox' ],
 					$screen,
 					'advanced',
 					'low'
@@ -269,18 +268,18 @@ class Contest extends gEditorial\Module
 				if ( $screen->post_type == $this->constant( 'apply_cpt' ) )
 					add_filter( 'post_updated_messages', [ $this, 'post_updated_messages_supported' ] );
 
-				$this->filter_false( 'geditorial_tweaks_metabox_menuorder' );
-				$this->class_metabox( $screen, 'supported' );
-
+				$this->filter_false_module( 'tweaks', 'metabox_menuorder' );
 				remove_meta_box( 'pageparentdiv', $screen, 'side' );
-				add_meta_box( $this->classs( 'supported' ),
+
+				$this->class_metabox( $screen, 'linkedbox' );
+				add_meta_box( $this->classs( 'linkedbox' ),
 					$this->get_meta_box_title( 'apply_cpt' ),
-					[ $this, 'render_metabox_supported' ],
+					[ $this, 'render_linkedbox_metabox' ],
 					$screen,
 					'side'
 				);
 
-				add_action( $this->hook( 'render_metabox_supported' ), [ $this, 'render_metabox' ], 10, 4 );
+				add_action( $this->hook( 'render_linkedbox_metabox' ), [ $this, 'render_metabox' ], 10, 4 );
 
 			} else if ( 'edit' == $screen->base ) {
 
@@ -347,13 +346,13 @@ class Contest extends gEditorial\Module
 		}
 	}
 
-	public function render_metabox_main( $post, $box )
+	public function render_mainbox_metabox( $post, $box )
 	{
 		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
 			return;
 
 		echo $this->wrap_open( '-admin-metabox' );
-			$this->actions( 'render_metabox', $post, $box, NULL, 'main' );
+			$this->actions( 'render_metabox', $post, $box, NULL, 'mainbox' );
 
 			do_action( 'geditorial_meta_render_metabox', $post, $box, NULL );
 
@@ -363,13 +362,13 @@ class Contest extends gEditorial\Module
 		echo '</div>';
 	}
 
-	public function render_metabox_list( $post, $box )
+	public function render_listbox_metabox( $post, $box )
 	{
 		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
 			return;
 
 		echo $this->wrap_open( '-admin-metabox' );
-			$this->actions( 'render_metabox_list', $post, $box, NULL, NULL );
+			$this->actions( 'render_listbox_metabox', $post, $box, NULL, 'listbox' );
 
 			$term = $this->get_linked_term( $post->ID, 'contest_cpt', 'contest_tax' );
 
@@ -382,7 +381,7 @@ class Contest extends gEditorial\Module
 		echo '</div>';
 	}
 
-	public function render_metabox_supported( $post, $box )
+	public function render_linkedbox_metabox( $post, $box )
 	{
 		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
 			return;
@@ -395,15 +394,15 @@ class Contest extends gEditorial\Module
 
 		} else {
 
-			$this->actions( 'render_metabox_supported', $post, $box, NULL, NULL );
+			$this->actions( 'render_linkedbox_metabox', $post, $box, NULL, 'linkedbox' );
 
-			do_action( 'geditorial_meta_render_metabox', $post, $box, NULL, 'contest' );
+			do_action( 'geditorial_meta_render_metabox', $post, $box, NULL, 'linkedbox' );
 		}
 
 		echo '</div>';
 	}
 
-	public function render_metabox( $post, $box, $fields = NULL, $context = 'main' )
+	public function render_metabox( $post, $box, $fields = NULL, $context = NULL )
 	{
 		$dropdowns = $excludes = [];
 		$posttype  = $this->constant( 'contest_cpt' );
@@ -516,7 +515,7 @@ class Contest extends gEditorial\Module
 	}
 
 	// FIXME: not used
-	public function store_metabox( $post_id, $post, $update, $context = 'main' )
+	public function store_metabox( $post_id, $post, $update, $context = NULL )
 	{
 		if ( ! $this->is_save_post( $post, $this->posttypes() ) )
 			return;

@@ -259,10 +259,10 @@ class Meta extends gEditorial\Module
 				$contexts   = Arraay::column( $fields, 'context' );
 				$metabox_id = $this->classs( $screen->post_type );
 
-				$mainbox = $this->filters( 'mainbox_callback', in_array( 'main', $contexts ), $screen->post_type );
+				$mainbox = $this->filters( 'mainbox_callback', in_array( 'mainbox', $contexts ), $screen->post_type );
 
 				if ( TRUE === $mainbox )
-					$mainbox = [ $this, 'render_metabox_main' ];
+					$mainbox = [ $this, 'render_mainbox_metabox' ];
 
 				if ( $mainbox && is_callable( $mainbox ) )
 					add_meta_box( $metabox_id,
@@ -277,18 +277,18 @@ class Meta extends gEditorial\Module
 						]
 					);
 
-				$nobox = $this->filters( 'nobox_callback', in_array( 'raw', $contexts ), $screen->post_type );
+				$nobox = $this->filters( 'nobox_callback', in_array( 'nobox', $contexts ), $screen->post_type );
 
 				if ( TRUE === $nobox )
-					add_action( 'dbx_post_sidebar', [ $this, 'render_raw_default' ], 10, 1 );
+					add_action( 'dbx_post_sidebar', [ $this, 'render_nobox_fields' ], 10, 1 );
 
 				else if ( $nobox && is_callable( $nobox ) )
 					add_action( 'dbx_post_sidebar', $nobox, 10, 1 );
 
-				$lonebox = $this->filters( 'lonebox_callback', in_array( 'lone', $contexts ), $screen->post_type );
+				$lonebox = $this->filters( 'lonebox_callback', in_array( 'lonebox', $contexts ), $screen->post_type );
 
 				if ( TRUE === $lonebox )
-					call_user_func_array( [ $this, 'register_lone_default' ], [ $screen ] );
+					call_user_func_array( [ $this, 'register_lonebox_fields' ], [ $screen ] );
 
 				else if ( $lonebox && is_callable( $lonebox ) )
 					call_user_func_array( $lonebox, [ $screen ] );
@@ -331,7 +331,7 @@ class Meta extends gEditorial\Module
 		add_action( $this->hook( 'column_row' ), [ $this, 'column_row_extra' ], 12, 3 );
 	}
 
-	public function render_posttype_fields( $post, $box, $fields = NULL, $context = 'main' )
+	public function render_posttype_fields( $post, $box, $fields = NULL, $context = 'mainbox' )
 	{
 		if ( is_null( $fields ) )
 			$fields = $this->get_posttype_fields( $post->post_type );
@@ -374,11 +374,9 @@ class Meta extends gEditorial\Module
 						ModuleMetaBox::legacy_fieldString( $field, [ $field ], $post, $args['ltr'], $args['title'], FALSE, $args['type'] );
 			}
 		}
-
-		$this->nonce_field( 'post_main' );
 	}
 
-	public function render_metabox_main( $post, $box )
+	public function render_mainbox_metabox( $post, $box )
 	{
 		if ( ! empty( $box['args']['metabox_id'] ) && MetaBox::checkHidden( $box['args']['metabox_id'], $post->post_type ) )
 			return;
@@ -388,16 +386,18 @@ class Meta extends gEditorial\Module
 		echo $this->wrap_open( '-admin-metabox' );
 
 			if ( count( $fields ) )
-				$this->actions( 'render_metabox', $post, $box, $fields, 'main' );
+				$this->actions( 'render_metabox', $post, $box, $fields, 'mainbox' );
 
 			else
 				echo HTML::wrap( _x( 'No Meta Fields', 'Message', 'geditorial-meta' ), 'field-wrap -empty' );
 
-			$this->actions( 'render_metabox_after', $post, $box, $fields );
+			$this->actions( 'render_metabox_after', $post, $box, $fields, 'mainbox' );
 		echo '</div>';
+
+		$this->nonce_field( 'mainbox' );
 	}
 
-	public function render_raw_default( $post )
+	public function render_nobox_fields( $post )
 	{
 		$fields = $this->get_posttype_fields( $post->post_type );
 
@@ -422,10 +422,10 @@ class Meta extends gEditorial\Module
 		}
 
 		$this->actions( 'box_raw', $this->module, $post, $fields );
-		$this->nonce_field( 'post_raw' );
+		$this->nonce_field( 'nobox' );
 	}
 
-	public function register_lone_default( $screen )
+	public function register_lonebox_fields( $screen )
 	{
 		$fields = $this->get_posttype_fields( $screen->post_type );
 
@@ -444,7 +444,7 @@ class Meta extends gEditorial\Module
 
 						add_meta_box( $metabox,
 							$args['title'],
-							[ $this, 'lone_postbox_html_callback' ],
+							[ $this, 'render_lonebox_metabox' ],
 							$screen,
 							'after_title',
 							'high',
@@ -462,7 +462,7 @@ class Meta extends gEditorial\Module
 		}
 	}
 
-	public function lone_postbox_html_callback( $post, $box )
+	public function render_lonebox_metabox( $post, $box )
 	{
 		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
 			return;
@@ -486,8 +486,9 @@ class Meta extends gEditorial\Module
 		if ( ! $post = Helper::getPost( $post ) )
 			return $postmeta;
 
-		if ( ! $this->nonce_verify( 'post_main' ) && ! $this->nonce_verify( 'post_raw' ) )
-			return $postmeta;
+		if ( ! $this->nonce_verify( 'mainbox' )
+			&& ! $this->nonce_verify( 'nobox' ) )
+				return $postmeta;
 
 		// MAYBE: check for `edit_post_meta`
 		if ( ! current_user_can( 'edit_post', $post->ID ) )
@@ -585,13 +586,13 @@ class Meta extends gEditorial\Module
 		return [ $field ];
 	}
 
-	public function store_metabox( $post_id, $post, $update, $context = 'main' )
+	public function store_metabox( $post_id, $post, $update, $context = NULL )
 	{
 		if ( ! $this->is_save_post( $post, $this->posttypes() ) )
 			return;
 
-		if ( ! $this->nonce_verify( 'post_main' )
-			&& ! $this->nonce_verify( 'post_raw' ) )
+		if ( ! $this->nonce_verify( 'mainbox' )
+			&& ! $this->nonce_verify( 'nobox' ) )
 				return;
 
 		// MAYBE: check for `edit_post_meta`
@@ -636,7 +637,7 @@ class Meta extends gEditorial\Module
 	}
 
 	// FIXME: DROP THIS!
-	public function store_metabox_OLD( $post_id, $post, $update, $context = 'main' )
+	public function store_metabox_OLD( $post_id, $post, $update, $context = NULL )
 	{
 		if ( ! $this->is_save_post( $post, $this->posttypes() ) )
 			return;
@@ -810,7 +811,7 @@ class Meta extends gEditorial\Module
 			}
 		}
 
-		$this->nonce_field( 'post_raw' );
+		$this->nonce_field( 'nobox' );
 	}
 
 	public function content_before( $content )

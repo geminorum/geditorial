@@ -1192,6 +1192,7 @@ class Module extends Base
 	}
 
 	// this module enabled fields with args for a posttype
+	// contexts: `nobox`, `lonebox`, `mainbox`, `listbox`, `linkedbox`
 	public function get_posttype_fields( $posttype = 'post' )
 	{
 		global $gEditorialPostTypeFields;
@@ -1210,10 +1211,10 @@ class Module extends Base
 			if ( ! isset( $args['context'] ) && isset( $args['type'] ) ) {
 
 				if ( in_array( $args['type'], [ 'postbox_legacy', 'title_before', 'title_after' ] ) )
-					$args['context'] = 'raw'; // 'nobox'
+					$args['context'] = 'nobox'; // OLD: 'raw'
 
 				else if ( in_array( $args['type'], [ 'postbox_html', 'postbox_tiny' ] ) )
-					$args['context'] = 'lone'; // 'lonebox'
+					$args['context'] = 'lonebox'; // OLD: 'lone'
 			}
 
 			if ( ! isset( $args['icon'] ) )
@@ -1226,7 +1227,7 @@ class Module extends Base
 				'sanitize'    => NULL,
 				'icon'        => 'smiley',
 				'type'        => 'text',
-				'context'     => 'main', // 'mainbox'
+				'context'     => 'mainbox', // OLD: 'main'
 				'values'      => [],
 				'repeat'      => FALSE,
 				'ltr'         => FALSE,
@@ -2243,7 +2244,7 @@ class Module extends Base
 	}
 
 	// DEFAULT METHOD
-	public function dISABLED_render_metabox( $post, $box, $fields = NULL, $context = 'main' )
+	public function dISABLED_render_metabox( $post, $box, $fields = NULL, $context = NULL )
 	{
 		if ( is_null( $fields ) )
 			$fields = $this->get_posttype_fields( $post->post_type );
@@ -2279,7 +2280,7 @@ class Module extends Base
 
 	// DEFAULT METHOD
 	// INTENDED HOOK: `save_post`, `save_post_[post_type]`
-	public function dISABLED_store_metabox( $post_id, $post, $update, $context = 'main' )
+	public function dISABLED_store_metabox( $post_id, $post, $update, $context = NULL )
 	{
 		if ( ! $this->is_save_post( $post, $this->posttypes() ) )
 			return;
@@ -2399,7 +2400,7 @@ class Module extends Base
 			remove_meta_box( 'submitdiv', $posttype, 'side' );
 	}
 
-	protected function class_metabox( $screen, $context = 'main' )
+	protected function class_metabox( $screen, $context = 'mainbox' )
 	{
 		add_filter( 'postbox_classes_'.$screen->id.'_'.$this->classs( $context ), function( $classes ) use ( $context ) {
 			return array_merge( $classes, [ $this->base.'-wrap', '-admin-postbox', '-'.$this->key, '-'.$this->key.'-'.$context ] );

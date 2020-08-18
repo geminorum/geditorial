@@ -266,9 +266,9 @@ class Today extends gEditorial\Module
 				$this->filter( 'post_updated_messages' );
 				$this->action( 'edit_form_after_editor' );
 
-				add_meta_box( $this->classs( 'supported' ),
+				add_meta_box( $this->classs( 'linkedbox' ),
 					$this->get_meta_box_title( 'day_cpt' ),
-					[ $this, 'render_metabox_supported' ],
+					[ $this, 'render_linkedbox_metabox' ],
 					$screen,
 					'side',
 					'high'
@@ -291,9 +291,9 @@ class Today extends gEditorial\Module
 
 				$this->_save_meta_supported( $screen->post_type );
 
-				add_meta_box( $this->classs( 'supported' ),
+				add_meta_box( $this->classs( 'linkedbox' ),
 					$this->get_meta_box_title(),
-					[ $this, 'render_metabox_supported' ],
+					[ $this, 'render_linkedbox_metabox' ],
 					$screen,
 					'side',
 					'high'
@@ -391,13 +391,13 @@ class Today extends gEditorial\Module
 		return $this->get_adminmenu( FALSE, $the_day );
 	}
 
-	public function render_metabox_supported( $post, $box )
+	public function render_linkedbox_metabox( $post, $box )
 	{
 		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
 			return;
 
 		echo $this->wrap_open( '-admin-metabox' );
-			$this->actions( 'render_metabox', $post, $box, NULL, 'main' );
+			$this->actions( 'render_metabox', $post, $box, NULL, 'linkedbox' );
 
 			$display_year = $post->post_type != $this->constant( 'day_cpt' );
 			$default_type = $this->default_calendar();
@@ -418,8 +418,9 @@ class Today extends gEditorial\Module
 			// TODO: conversion buttons
 			// FIXME: must check for duplicate day and gave a green light via js
 
-			$this->nonce_field( 'post_main' );
 		echo '</div>';
+
+		$this->nonce_field( 'linkedbox' );
 	}
 
 	public function do_metabox_excerpt( $post, $box )
@@ -470,7 +471,7 @@ class Today extends gEditorial\Module
 
 		echo '</div>';
 
-		$this->nonce_field( 'post_raw' );
+		$this->nonce_field( 'nobox' );
 	}
 
 	public function sortable_columns( $columns )
@@ -579,7 +580,7 @@ class Today extends gEditorial\Module
 		}
 	}
 
-	public function store_metabox( $post_id, $post, $update, $context = 'main' )
+	public function store_metabox( $post_id, $post, $update, $context = NULL )
 	{
 		if ( ! $this->is_save_post( $post ) )
 			return;
@@ -592,8 +593,8 @@ class Today extends gEditorial\Module
 			&& $this->constant( 'day_cpt' ) != $post->post_type )
 				return;
 
-		if ( ! $this->nonce_verify( 'post_main' )
-			&& ! $this->nonce_verify( 'post_raw' ) )
+		if ( ! $this->nonce_verify( 'linkedbox' )
+			&& ! $this->nonce_verify( 'nobox' ) )
 				return;
 
 		$postmeta  = [];

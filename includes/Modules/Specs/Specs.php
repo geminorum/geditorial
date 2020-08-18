@@ -97,9 +97,10 @@ class Specs extends gEditorial\Module
 		if ( 'post' == $screen->base
 			&& $this->posttype_supported( $screen->post_type ) ) {
 
-			add_meta_box( $this->classs( 'supported' ),
+			$this->class_metabox( $screen, 'linkedbox' );
+			add_meta_box( $this->classs( 'linkedbox' ),
 				$this->get_meta_box_title_tax( 'specs_tax' ),
-				[ $this, 'render_metabox_supported' ],
+				[ $this, 'render_linkedbox_metabox' ],
 				$screen,
 				'side',
 				'high'
@@ -113,7 +114,7 @@ class Specs extends gEditorial\Module
 		}
 	}
 
-	public function store_metabox( $post_id, $post, $update, $context = 'main' )
+	public function store_metabox( $post_id, $post, $update, $context = NULL )
 	{
 		if ( ! $this->is_save_post( $post, $this->posttypes() ) )
 			return;
@@ -216,7 +217,7 @@ class Specs extends gEditorial\Module
 
 	private function sanitize_post_meta( $postmeta, $fields, $post_id, $posttype )
 	{
-		if ( ! $this->nonce_verify( 'post_main' ) )
+		if ( ! $this->nonce_verify( 'mainbox' ) )
 			return $postmeta;
 
 		if ( ! isset( $_POST['geditorial-specs_term_id'] ) )
@@ -269,7 +270,7 @@ class Specs extends gEditorial\Module
 		return $this->filters( 'sanitize_post_meta', $postmeta, $fields, $post_id, $posttype );
 	}
 
-	public function render_metabox_supported( $post, $box )
+	public function render_linkedbox_metabox( $post, $box )
 	{
 		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
 			return;
@@ -277,12 +278,14 @@ class Specs extends gEditorial\Module
 		$fields = $this->posttype_fields( $post->post_type );
 
 		echo $this->wrap_open( '-admin-metabox' );
-			$this->actions( 'render_metabox', $post, $box, $fields, NULL );
-			$this->actions( 'render_metabox_after', $post, $box, $fields, NULL );
+			$this->actions( 'render_metabox', $post, $box, $fields, 'linkedbox' );
+			$this->actions( 'render_metabox_after', $post, $box, $fields, 'linkedbox' );
 		echo '</div>';
+
+		$this->nonce_field( 'mainbox' );
 	}
 
-	public function render_metabox( $post, $box, $fields = NULL, $context = 'main' )
+	public function render_metabox( $post, $box, $fields = NULL, $context = NULL )
 	{
 		$taxonomy = $this->constant( 'specs_tax' );
 
@@ -371,8 +374,6 @@ class Specs extends gEditorial\Module
 				echo HTML::wrap( $html, 'field-wrap -select' );
 
 		echo '</div></div></li></ul>';
-
-		$this->nonce_field( 'post_main' );
 	}
 
 	public function render_metabox_item( $order, $fields, $post, $meta = [] )
