@@ -79,35 +79,78 @@ class Inquire extends gEditorial\Module
 
 	protected function get_global_strings()
 	{
-		return [
+		$strings = [
 			'noops' => [
 				'inquiry_cpt'  => _n_noop( 'Inquiry', 'Inquiries', 'geditorial-inquire' ),
 				'subject_tax'  => _n_noop( 'Inquiry Subject', 'Inquiry Subjects', 'geditorial-inquire' ),
 				'status_tax'   => _n_noop( 'Inquiry Status', 'Inquiry Statuses', 'geditorial-inquire' ),
 				'priority_tax' => _n_noop( 'Inquiry Priority', 'Inquiry Priorities', 'geditorial-inquire' ),
 			],
-			'misc' => [
-				'inquiry_cpt' => [
-					'menu_name'       => _x( 'Inquiries', 'Posttype Menu', 'geditorial-inquire' ),
-					'excerpt_metabox' => _x( 'Question', 'MetaBox Title', 'geditorial-inquire' ),
-				],
-				'subject_tax' => [
-					'menu_name'           => _x( 'Subjects', 'Menu Title', 'geditorial-inquire' ),
-					'meta_box_title'      => _x( 'Subject', 'MetaBox Title', 'geditorial-inquire' ),
-					'tweaks_column_title' => _x( 'Inquiry Subject', 'Column Title', 'geditorial-inquire' ),
-				],
-				'status_tax' => [
-					'menu_name'           => _x( 'Statuses', 'Menu Title', 'geditorial-inquire' ),
-					'meta_box_title'      => _x( 'Status', 'MetaBox Title', 'geditorial-inquire' ),
-					'tweaks_column_title' => _x( 'Inquiry Status', 'Column Title', 'geditorial-inquire' ),
-				],
-				'priority_tax' => [
-					'menu_name'           => _x( 'Priorities', 'Menu Title', 'geditorial-inquire' ),
-					'meta_box_title'      => _x( 'Priority', 'MetaBox Title', 'geditorial-inquire' ),
-					'tweaks_column_title' => _x( 'Inquiry Priority', 'Column Title', 'geditorial-inquire' ),
-				],
+		];
+
+		if ( ! is_admin() )
+			return $strings;
+
+
+		$strings['misc'] = [
+			'inquiry_cpt' => [
+				'menu_name'       => _x( 'Inquiries', 'Posttype Menu', 'geditorial-inquire' ),
+				'excerpt_metabox' => _x( 'Question', 'MetaBox Title', 'geditorial-inquire' ),
+			],
+			'subject_tax' => [
+				'menu_name'           => _x( 'Subjects', 'Menu Title', 'geditorial-inquire' ),
+				'meta_box_title'      => _x( 'Subject', 'MetaBox Title', 'geditorial-inquire' ),
+				'tweaks_column_title' => _x( 'Inquiry Subject', 'Column Title', 'geditorial-inquire' ),
+			],
+			'status_tax' => [
+				'menu_name'           => _x( 'Statuses', 'Menu Title', 'geditorial-inquire' ),
+				'meta_box_title'      => _x( 'Status', 'MetaBox Title', 'geditorial-inquire' ),
+				'tweaks_column_title' => _x( 'Inquiry Status', 'Column Title', 'geditorial-inquire' ),
+			],
+			'priority_tax' => [
+				'menu_name'           => _x( 'Priorities', 'Menu Title', 'geditorial-inquire' ),
+				'meta_box_title'      => _x( 'Priority', 'MetaBox Title', 'geditorial-inquire' ),
+				'tweaks_column_title' => _x( 'Inquiry Priority', 'Column Title', 'geditorial-inquire' ),
 			],
 		];
+
+		$strings['terms'] = [
+			'status_tax' => [
+				'status_approved'    => _x( 'Approved', 'Default Term', 'geditorial-inquire' ),
+				'status_pending'     => _x( 'Pending', 'Default Term', 'geditorial-inquire' ),
+				'status_maybe_later' => _x( 'Maybe Later', 'Default Term', 'geditorial-inquire' ),
+				'status_rejected'    => _x( 'Rejected', 'Default Term', 'geditorial-inquire' ),
+			],
+			'priority_tax' => [
+				'priority_immediate' => _x( 'Immediate', 'Default Term', 'geditorial-inquire' ),
+				'priority_high'      => _x( 'High', 'Default Term', 'geditorial-inquire' ),
+				'priority_normal'    => _x( 'Normal', 'Default Term', 'geditorial-inquire' ),
+				'priority_low'       => _x( 'Low', 'Default Term', 'geditorial-inquire' ),
+				'priority_zero'      => _x( 'Zero', 'Default Term', 'geditorial-inquire' ),
+			],
+		];
+
+		return $strings;
+	}
+
+	public function before_settings( $module = FALSE )
+	{
+		if ( isset( $_POST['install_def_status_tax'] ) )
+			$this->insert_default_terms( 'status_tax' );
+
+		else if ( isset( $_POST['install_def_priority_tax'] ) )
+			$this->insert_default_terms( 'priority_tax' );
+
+		$this->help_tab_default_terms( 'status_tax' );
+		$this->help_tab_default_terms( 'priority_tax' );
+	}
+
+	public function default_buttons( $module = FALSE )
+	{
+		parent::default_buttons( $module );
+
+		$this->register_button( 'install_def_status_tax', _x( 'Install Default Inquiry Statuses', 'Button', 'geditorial-inquire' ) );
+		$this->register_button( 'install_def_priority_tax', _x( 'Install Default Inquiry Priorities', 'Button', 'geditorial-inquire' ) );
 	}
 
 	public function init()
