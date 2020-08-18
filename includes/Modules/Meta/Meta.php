@@ -439,11 +439,17 @@ class Meta extends gEditorial\Module
 					case 'postbox_tiny':
 
 						$metabox = $this->classs( $screen->post_type, $field );
+						$title   = empty( $args['title'] ) ? $field : $args['title'];
+
+						if ( ! empty( $args['description'] ) )
+							$title.= ' <span class="postbox-title-info" data-title="info" title="'
+								.HTML::escape( $args['description'] ).'">'
+								.HTML::getDashicon( 'editor-help' ).'</span>';
 
 						MetaBox::classEditorBox( $screen, $metabox );
 
 						add_meta_box( $metabox,
-							$args['title'],
+							$title,
 							[ $this, 'render_lonebox_metabox' ],
 							$screen,
 							'after_title',
