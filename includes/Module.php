@@ -1225,6 +1225,10 @@ class Module extends Base
 					$args['context'] = 'lonebox'; // OLD: 'lone'
 			}
 
+			if ( ! array_key_exists( 'quickedit', $args )
+				&& array_key_exists( 'type', $args ) )
+					$args['quickedit'] = in_array( $args['type'], [ 'title_before', 'title_after' ] );
+
 			if ( ! isset( $args['icon'] ) )
 				$args['icon'] = $this->get_field_icon( $field, $posttype, $args );
 
@@ -1236,6 +1240,7 @@ class Module extends Base
 				'icon'        => 'smiley',
 				'type'        => 'text',
 				'context'     => 'mainbox', // OLD: 'main'
+				'quickedit'   => FALSE,
 				'values'      => [],
 				'repeat'      => FALSE,
 				'ltr'         => FALSE,

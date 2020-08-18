@@ -145,7 +145,7 @@ class Meta extends gEditorial\Module
 			'post' => [
 				'over_title' => [ 'type' => 'title_before' ],
 				'sub_title'  => [ 'type' => 'title_after' ],
-				'byline'     => [ 'type' => 'text' ],
+				'byline'     => [ 'type' => 'text', 'quickedit' => TRUE ],
 				'lead'       => [ 'type' => 'postbox_html' ], // OLD: 'postbox_legacy'
 				'label'      => [ 'type' => 'text' ],
 				'label_tax'  => [ 'type' => 'term', 'tax' => $this->constant( 'label_tax' ) ],
@@ -249,13 +249,17 @@ class Meta extends gEditorial\Module
 	{
 		if ( $this->posttype_supported( $screen->post_type ) ) {
 
+			if ( ! in_array( $screen->base, [ 'post', 'edit' ] ) )
+				return;
+
+			$fields = $this->get_posttype_fields( $screen->post_type );
+
 			// bail if no fields enabled for this posttype
-			if ( ! count( $this->posttype_fields( $screen->post_type ) ) )
+			if ( ! count( $fields ) )
 				return;
 
 			if ( 'post' == $screen->base ) {
 
-				$fields     = $this->get_posttype_fields( $screen->post_type );
 				$contexts   = Arraay::column( $fields, 'context' );
 				$metabox_id = $this->classs( $screen->post_type );
 
@@ -295,21 +299,25 @@ class Meta extends gEditorial\Module
 
 				add_action( 'geditorial_meta_render_metabox', [ $this, 'render_posttype_fields' ], 10, 4 );
 
+				$asset = [
+					// 'fields' => $fields, // not used yet!
+				];
+
+				$this->enqueue_asset_js( $asset, $screen );
+				$this->_hook_store_metabox( $screen->post_type );
+
 			} else if ( 'edit' == $screen->base ) {
 
 				$this->_admin_enabled();
 				$this->_edit_screen( $screen->post_type );
 				$this->_hook_default_rows();
-			}
 
-			if ( 'post' == $screen->base || 'edit' == $screen->base ) {
+				$asset = [
+					// 'fields' => $fields, // not used yet!
+					'fields' => array_filter( Arraay::column( wp_list_filter( $fields, [ 'quickedit' => TRUE ] ), 'type', 'name' ) ),
+				];
 
-				$localize = [ 'fields' => $this->posttype_fields( $screen->post_type, TRUE ) ];
-
-				// foreach ( $this->posttype_fields( $screen->post_type ) as $field )
-				// 	$localize[$field] = $this->get_string( $field, $screen->post_type );
-
-				$this->enqueue_asset_js( $localize, $screen );
+				$this->enqueue_asset_js( $asset, $screen );
 				$this->_hook_store_metabox( $screen->post_type );
 			}
 		}
@@ -321,7 +329,7 @@ class Meta extends gEditorial\Module
 		add_filter( 'manage_pages_columns', [ $this, 'manage_pages_columns' ], 5, 1 );
 		add_action( 'manage_'.$posttype.'_posts_custom_column', [ $this, 'posts_custom_column' ], 10, 2 );
 
-		add_action( 'quick_edit_custom_box', [ $this, 'quick_edit_custom_box' ], 10, 2 );
+		$this->action( 'quick_edit_custom_box', 2 );
 	}
 
 	// early and late actions to make room for other modules
@@ -814,16 +822,19 @@ class Meta extends gEditorial\Module
 		if ( $this->classs() != $column_name )
 			return FALSE;
 
-		$fields = $this->posttype_fields( $posttype );
+		$fields = $this->get_posttype_fields( $posttype );
 
-		foreach ( [ 'over_title', 'sub_title', 'byline' ] as $field ) {
-			if ( in_array( $field, $fields ) ) {
-				$selector = 'geditorial-meta-'.$field;
-				echo '<label class="'.$selector.'">';
-					echo '<span class="title">'.$this->get_string( $field, $posttype ).'</span>';
-					echo '<span class="input-text-wrap"><input type="text" name="'.$selector.'" class="'.HTML::prepClass( $selector ).'" value=""></span>';
-				echo '</label>';
-			}
+		foreach ( $fields as $field => $args ) {
+
+			if ( ! $args['quickedit'] )
+				continue;
+
+			$selector = 'geditorial-meta-'.$field;
+
+			echo '<label class="'.$selector.'" style="display:none;">';
+				echo '<span class="title">'.$args['title'].'</span>';
+				echo '<span class="input-text-wrap"><input type="text" name="'.$selector.'" class="'.HTML::prepClass( $selector ).'" value=""></span>';
+			echo '</label>';
 		}
 
 		$this->nonce_field( 'nobox' );

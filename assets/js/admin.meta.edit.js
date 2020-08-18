@@ -1,11 +1,10 @@
 /* global inlineEditPost */
 
-(function ($) {
-  var fields = $.extend({}, {
-    over_title: false,
-    sub_title: false,
-    byline: false
-  }, gEditorial.meta.fields);
+(function ($, p, module) {
+  // bail if no fields with quickedit support
+  if (!Object.keys(p[module].fields).length) return;
+
+  var prefix = p._base + '-' + module + '-';
 
   $('#the-list').on('click', '.editinline', function () {
     inlineEditPost.revert(); // revert Quick Edit menu so that it refreshes properly
@@ -14,40 +13,43 @@
     var postTitleLabel = $(':input[name="post_title"]', '.inline-edit-row').parents('label');
     var postNameLabel = $(':input[name="post_name"]', '.inline-edit-row').parents('label');
 
-    if (fields.over_title) {
-      var overTitle = $('#' + tagID)
-        .find('div.geditorial-meta-over_title-value')
-        .text();
+    for (var field in p[module].fields) {
+      switch (p[module].fields[field]) {
+        case 'title_before':
 
-      $('.inline-edit-row')
-        .find('input.geditorial-meta-over_title')
-        .val(overTitle)
-        .parents('label')
-        .insertBefore(postTitleLabel);
-    }
+          $('.inline-edit-row')
+            .find('input.' + prefix + field)
+            .val($('#' + tagID)
+              .find('div.' + prefix + field + '-value')
+              .text())
+            .parents('label')
+            .show()
+            .insertBefore(postTitleLabel);
 
-    if (fields.sub_title) {
-      var subTitle = $('#' + tagID)
-        .find('div.geditorial-meta-sub_title-value')
-        .text();
+          break;
+        case 'title_after':
 
-      $('.inline-edit-row')
-        .find('input.geditorial-meta-sub_title')
-        .val(subTitle)
-        .parents('label')
-        .insertAfter(postTitleLabel);
-    }
+          $('.inline-edit-row')
+            .find('input.' + prefix + field)
+            .val($('#' + tagID)
+              .find('div.' + prefix + field + '-value')
+              .text())
+            .parents('label')
+            .show()
+            .insertAfter(postTitleLabel);
 
-    if (fields.byline) {
-      var byline = $('#' + tagID)
-        .find('div.geditorial-meta-byline-value')
-        .text();
+          break;
+        default:
 
-      $('.inline-edit-row')
-        .find('input.geditorial-meta-byline')
-        .val(byline)
-        .parents('label')
-        .insertAfter(postNameLabel);
+          $('.inline-edit-row')
+            .find('input.' + prefix + field)
+            .val($('#' + tagID)
+              .find('div.' + prefix + field + '-value')
+              .text())
+            .parents('label')
+            .show()
+            .insertAfter(postNameLabel);
+      }
     }
   });
-}(jQuery));
+}(jQuery, gEditorial, 'meta'));
