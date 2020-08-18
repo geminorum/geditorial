@@ -331,8 +331,9 @@ class Meta extends gEditorial\Module
 	// early and late actions to make room for other modules
 	private function _hook_default_rows()
 	{
-		$this->action_self( 'column_row', 3, 8, 'default' );
-		$this->action_self( 'column_row', 3, 12, 'extra' );
+		$this->action_self( 'column_row', 3, 5, 'default' );
+		$this->action_self( 'column_row', 3, 15, 'extra' );
+		$this->action_self( 'column_row', 3, 20, 'excerpt' );
 	}
 
 	public function render_posttype_fields( $post, $box, $fields = NULL, $context = 'mainbox' )
@@ -754,13 +755,27 @@ class Meta extends gEditorial\Module
 			'before' => '<li class="-row meta-source">'.$source,
 			'after'  => '</li>',
 		] );
+	}
 
-		if ( 'excerpt' == $GLOBALS['mode'] && array_key_exists( 'lead', $fields ) ) {
+	// only on excerpt mode
+	public function column_row_excerpt( $post, $fields, $exclude )
+	{
+		if ( 'excerpt' !== $GLOBALS['mode'] )
+			return;
 
-			$lead = $this->get_column_icon( FALSE, 'editor-paragraph', $this->get_string( 'lead', $post->post_type, 'titles', 'lead' ) );
+		foreach ( $fields as $field => $args ) {
 
-			ModuleTemplate::metaLead( [
-				'before' => '<li class="-row meta-lead">'.$lead,
+			if ( ! in_array( $args['type'], [ 'postbox_html', 'postbox_tiny', 'postbox_legacy' ] ) )
+				continue;
+
+			// skip if empty
+			if ( ! $value = $this->get_postmeta_field( $post->ID, $field ) )
+				continue;
+
+			$icon = $this->get_column_icon( FALSE, $args['icon'], $args['title'] );
+
+			ModuleTemplate::metaFieldHTML( $field, [
+				'before' => '<li class="-row meta-'.$field.'">'.$icon,
 				'after'  => '</li>',
 				'filter' => FALSE,
 				'trim'   => 450,
