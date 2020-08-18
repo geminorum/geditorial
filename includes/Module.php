@@ -1231,7 +1231,7 @@ class Module extends Base
 					$args['quickedit'] = in_array( $args['type'], [ 'title_before', 'title_after' ] );
 
 			if ( ! isset( $args['icon'] ) )
-				$args['icon'] = $this->get_field_icon( $field, $posttype, $args );
+				$args['icon'] = $this->get_posttype_field_icon( $field, $posttype, $args );
 
 			$fields[$field] = self::atts( [
 				'name'        => $field,
@@ -3087,12 +3087,15 @@ class Module extends Base
 		return $info;
 	}
 
-	public function get_field_icon( $field, $posttype = 'post', $args = [] )
+	public function get_posttype_field_icon( $field, $posttype = 'post', $args = [] )
 	{
 		switch ( $field ) {
 			case 'over_title': return 'arrow-up-alt2';
 			case 'sub_title' : return 'arrow-down-alt2';
+			case 'highlight' : return 'pressthis';
 			case 'byline'    : return 'admin-users';
+			case 'published' : return 'calendar-alt';
+			case 'lead'      : return 'editor-paragraph';
 		}
 
 		return 'admin-post';

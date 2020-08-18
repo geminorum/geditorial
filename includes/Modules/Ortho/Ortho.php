@@ -404,7 +404,7 @@ class Ortho extends gEditorial\Module
 		];
 
 		if ( gEditorial()->enabled( 'meta' ) )
-			$columns['meta'] = gEditorial()->meta->tableColumnPostMeta( FALSE );
+			$columns['meta'] = gEditorial()->meta->tableColumnPostMeta();
 
 		return HTML::tableList( $columns, $posts, [
 			'navigation' => 'before',

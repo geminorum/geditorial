@@ -423,7 +423,7 @@ class Book extends gEditorial\Module
 				if ( $this->p2p )
 					$this->action_module( 'tweaks', 'column_row', 1, -25, 'p2p_to' );
 
-				$this->action_module( 'meta', 'column_row', 3, 12 );
+				$this->action_module( 'meta', 'column_row', 3 );
 				$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
 			}
 

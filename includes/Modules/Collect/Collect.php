@@ -321,7 +321,7 @@ class Collect extends gEditorial\Module
 
 				$this->_sync_linked( $screen->post_type );
 
-				$this->action_module( 'meta', 'column_row', 3, 12 );
+				$this->action_module( 'meta', 'column_row', 3 );
 				$this->action_module( 'tweaks', 'column_attr' );
 				$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
 			}
@@ -345,7 +345,7 @@ class Collect extends gEditorial\Module
 				if ( $this->get_setting( 'admin_restrict', FALSE ) )
 					add_action( 'restrict_manage_posts', [ $this, 'restrict_manage_posts_supported_cpt' ], 12, 2 );
 
-				$this->action_module( 'meta', 'column_row', 3, 12 );
+				$this->action_module( 'meta', 'column_row', 3 );
 				$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
 			}
 

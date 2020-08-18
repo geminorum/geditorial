@@ -178,7 +178,7 @@ class Team extends gEditorial\Module
 				$this->action( 'restrict_manage_posts', 2, 12 );
 				$this->action( 'parse_query' );
 
-				$this->action_module( 'meta', 'column_row', 3, 12 );
+				$this->action_module( 'meta', 'column_row', 3 );
 				$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
 			}
 		}
