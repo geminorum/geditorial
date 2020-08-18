@@ -31,6 +31,7 @@ class Module extends Base
 
 	protected $priority_init              = 10;
 	protected $priority_init_ajax         = 10;
+	protected $priority_current_screen    = 10;
 	protected $priority_admin_menu        = 10;
 	protected $priority_adminbar_init     = 10;
 	protected $priority_template_redirect = 10;
@@ -167,7 +168,7 @@ class Module extends Base
 				$this->action( 'add_meta_boxes', 2, 12 );
 
 			if ( $ui && method_exists( $this, 'current_screen' ) )
-				$this->action( 'current_screen' );
+				$this->action( 'current_screen', 1, $this->priority_current_screen );
 
 			if ( $ui && method_exists( $this, 'reports_settings' ) )
 				add_action( $this->base.'_reports_settings', [ $this, 'reports_settings' ] );

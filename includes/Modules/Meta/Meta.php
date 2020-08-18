@@ -18,7 +18,8 @@ class Meta extends gEditorial\Module
 {
 	public $meta_key = '_gmeta';
 
-	protected $priority_init = 12;
+	protected $priority_init           = 12;
+	protected $priority_current_screen = 12;
 
 	protected $partials = [ 'Metabox', 'Templates' ];
 
