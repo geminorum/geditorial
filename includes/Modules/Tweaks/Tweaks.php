@@ -217,6 +217,8 @@ class Tweaks extends gEditorial\Module
 			'follow_users',
 			'follow_groups',
 			'status',
+			'contests',
+			'courses'
 		] );
 	}
 
@@ -421,7 +423,7 @@ class Tweaks extends gEditorial\Module
 			remove_meta_box( 'authordiv', $screen, 'normal' );
 			remove_meta_box( 'slugdiv', $screen, 'normal' );
 
-			$this->filter_false( $this->base.'_module_metabox_author' );
+			$this->filter_false_module( 'module', 'metabox_parent' ); // for all modules
 
 			add_meta_box( $this->classs( 'mainbox' ),
 				$object->labels->attributes,

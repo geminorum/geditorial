@@ -65,7 +65,7 @@ class Contest extends gEditorial\Module
 			'apply_cpt_archive'   => 'applies',
 			'contest_cat'         => 'contest_cat',
 			'apply_cat'           => 'apply_cat',
-			'apply_status_tax'    => 'apply_status',
+			'status_tax'          => 'apply_status',
 		];
 	}
 
@@ -77,10 +77,10 @@ class Contest extends gEditorial\Module
 				'apply_cpt'   => 'portfolio',
 			],
 			'taxonomies' => [
-				'contest_cat'      => 'category',
-				'contest_tax'      => 'megaphone',
-				'apply_cat'        => 'category',
-				'apply_status_tax' => 'post-status', // 'portfolio',
+				'contest_cat' => 'category',
+				'contest_tax' => 'megaphone',
+				'apply_cat'   => 'category',
+				'status_tax'  => 'post-status', // 'portfolio',
 			],
 		];
 	}
@@ -89,12 +89,12 @@ class Contest extends gEditorial\Module
 	{
 		$strings = [
 			'noops' => [
-				'contest_cpt'      => _n_noop( 'Contest', 'Contests', 'geditorial-contest' ),
-				'contest_tax'      => _n_noop( 'Contest', 'Contests', 'geditorial-contest' ),
-				'contest_cat'      => _n_noop( 'Contest Category', 'Contest Categories', 'geditorial-contest' ),
-				'apply_cpt'        => _n_noop( 'Apply', 'Applies', 'geditorial-contest' ),
-				'apply_cat'        => _n_noop( 'Apply Category', 'Apply Categories', 'geditorial-contest' ),
-				'apply_status_tax' => _n_noop( 'Apply Status', 'Apply Statuses', 'geditorial-contest' ),
+				'contest_cpt' => _n_noop( 'Contest', 'Contests', 'geditorial-contest' ),
+				'contest_tax' => _n_noop( 'Contest', 'Contests', 'geditorial-contest' ),
+				'contest_cat' => _n_noop( 'Contest Category', 'Contest Categories', 'geditorial-contest' ),
+				'apply_cpt'   => _n_noop( 'Apply', 'Applies', 'geditorial-contest' ),
+				'apply_cat'   => _n_noop( 'Apply Category', 'Apply Categories', 'geditorial-contest' ),
+				'status_tax'  => _n_noop( 'Apply Status', 'Apply Statuses', 'geditorial-contest' ),
 			],
 		];
 
@@ -119,7 +119,7 @@ class Contest extends gEditorial\Module
 			'apply_cat' => [
 				'tweaks_column_title' => _x( 'Apply Categories', 'Column Title', 'geditorial-contest' ),
 			],
-			'apply_status_tax' => [
+			'status_tax' => [
 				'meta_box_title'      => _x( 'Apply Statuses', 'MetaBox Title', 'geditorial-contest' ),
 				'tweaks_column_title' => _x( 'Apply Statuses', 'Column Title', 'geditorial-contest' ),
 			],
@@ -128,9 +128,11 @@ class Contest extends gEditorial\Module
 		];
 
 		$strings['terms'] = [
-			'apply_status_tax' => [
-				'approved' => _x( 'Approved', 'Default Term', 'geditorial-contest' ),
-				'pending'  => _x( 'Pending', 'Default Term', 'geditorial-contest' ),
+			'status_tax' => [
+				'status_approved'    => _x( 'Approved', 'Default Term', 'geditorial-contest' ),
+				'status_pending'     => _x( 'Pending', 'Default Term', 'geditorial-contest' ),
+				'status_maybe_later' => _x( 'Maybe Later', 'Default Term', 'geditorial-contest' ),
+				'status_rejected'    => _x( 'Rejected', 'Default Term', 'geditorial-contest' ),
 			],
 		];
 
@@ -144,17 +146,17 @@ class Contest extends gEditorial\Module
 
 	public function before_settings( $module = FALSE )
 	{
-		if ( isset( $_POST['install_def_apply_status_tax'] ) )
-			$this->insert_default_terms( 'apply_status_tax' );
+		if ( isset( $_POST['install_def_status_tax'] ) )
+			$this->insert_default_terms( 'status_tax' );
 
-		$this->help_tab_default_terms( 'apply_status_tax' );
+		$this->help_tab_default_terms( 'status_tax' );
 	}
 
 	public function default_buttons( $module = FALSE )
 	{
 		parent::default_buttons( $module );
 
-		$this->register_button( 'install_def_apply_status_tax', _x( 'Install Default Apply Statuses', 'Button', 'geditorial-contest' ) );
+		$this->register_button( 'install_def_status_tax', _x( 'Install Default Apply Statuses', 'Button', 'geditorial-contest' ) );
 	}
 
 	public function after_setup_theme()
@@ -189,8 +191,8 @@ class Contest extends gEditorial\Module
 			'show_in_quick_edit' => TRUE,
 		], 'apply_cpt' );
 
-		$this->register_taxonomy( 'apply_status_tax', [
-			'hierarchical'       => TRUE,
+		$this->register_taxonomy( 'status_tax', [
+			'hierarchical'       => TRUE, // required by `MetaBox::checklistTerms()`
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
 		], 'apply_cpt' );
@@ -422,7 +424,7 @@ class Contest extends gEditorial\Module
 		MetaBox::fieldPostMenuOrder( $post );
 	}
 
-	public function meta_box_cb_apply_status_tax( $post, $box )
+	public function meta_box_cb_status_tax( $post, $box )
 	{
 		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
 			return;

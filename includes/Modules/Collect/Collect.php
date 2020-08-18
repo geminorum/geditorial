@@ -205,14 +205,14 @@ class Collect extends gEditorial\Module
 		] );
 
 		$this->register_taxonomy( 'group_tax', [
-			'hierarchical'       => TRUE,
+			'hierarchical'       => TRUE, // required by `MetaBox::checklistTerms()`
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
 		], 'collection_cpt' );
 
 		if ( $this->get_setting( 'collection_parts', FALSE ) )
 			$this->register_taxonomy( 'part_tax', [
-				'hierarchical'       => TRUE,
+				'hierarchical'       => TRUE, // required by `MetaBox::checklistTerms()`
 				'show_admin_column'  => TRUE,
 				'show_in_quick_edit' => TRUE,
 				'show_in_nav_menus'  => TRUE,

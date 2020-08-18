@@ -55,7 +55,7 @@ class MetaBox extends Core\Base
 	// CAUTION: tax must be cat (hierarchical)
 	// hierarchical taxonomies save by IDs,
 	// whereas non-hierarchical save by slugs
-	// WTF: because the core's not passing args into the waker!
+	// WTF: because the core's not passing args into the walker!
 	// @REF: `post_categories_meta_box()`, `wp_terms_checklist()`
 	public static function checklistTerms( $object_id = 0, $atts = [], $terms = NULL )
 	{

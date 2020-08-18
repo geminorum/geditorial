@@ -327,8 +327,8 @@ class Meta extends gEditorial\Module
 	// early and late actions to make room for other modules
 	private function _hook_default_rows()
 	{
-		add_action( $this->hook( 'column_row' ), [ $this, 'column_row_default' ], 8, 3 );
-		add_action( $this->hook( 'column_row' ), [ $this, 'column_row_extra' ], 12, 3 );
+		$this->action_self( 'column_row', 3, 8, 'default' );
+		$this->action_self( 'column_row', 3, 12, 'extra' );
 	}
 
 	public function render_posttype_fields( $post, $box, $fields = NULL, $context = 'mainbox' )

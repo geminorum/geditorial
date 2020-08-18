@@ -365,11 +365,11 @@ class Book extends gEditorial\Module
 		], 'publication_cpt' );
 
 		$this->register_taxonomy( 'type_tax', [
-			'hierarchical' => TRUE,
+			'hierarchical' => TRUE, // required by `MetaBox::checklistTerms()`
 		], 'publication_cpt' );
 
 		$this->register_taxonomy( 'status_tax', [
-			'hierarchical'       => TRUE,
+			'hierarchical'       => TRUE, // required by `MetaBox::checklistTerms()`
 			'show_in_quick_edit' => TRUE,
 		], 'publication_cpt' );
 

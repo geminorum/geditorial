@@ -99,7 +99,7 @@ class Pitches extends gEditorial\Module
 		], 'idea_cpt' );
 
 		$this->register_taxonomy( 'pool_tax', [
-			'hierarchical'       => TRUE,
+			'hierarchical'       => TRUE, // required by `MetaBox::checklistTerms()`
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
 		], 'idea_cpt' );

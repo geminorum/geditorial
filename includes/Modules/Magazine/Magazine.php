@@ -201,13 +201,8 @@ class Magazine extends gEditorial\Module
 	{
 		parent::init();
 
-		$this->register_taxonomy( 'issue_tax', [
-			'show_ui'      => FALSE,
-			'hierarchical' => TRUE,
-		] );
-
 		$this->register_taxonomy( 'span_tax', [
-			'hierarchical'       => TRUE,
+			'hierarchical'       => TRUE, // required by `MetaBox::checklistTerms()`
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
 		], 'issue_cpt' );
@@ -219,6 +214,11 @@ class Magazine extends gEditorial\Module
 				'show_in_quick_edit' => TRUE,
 				'show_in_nav_menus'  => TRUE,
 			], $this->posttypes( 'issue_cpt' ) );
+
+		$this->register_taxonomy( 'issue_tax', [
+			'show_ui'      => FALSE,
+			'hierarchical' => TRUE,
+		] );
 
 		$this->register_posttype( 'issue_cpt', [
 			'hierarchical' => TRUE,

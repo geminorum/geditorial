@@ -245,13 +245,13 @@ class Event extends gEditorial\Module
 		], 'event_cpt' );
 
 		$this->register_taxonomy( 'event_tag', [
-			'hierarchical'       => TRUE,
+			'hierarchical'       => TRUE, // required by `MetaBox::checklistTerms()`
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
 		], 'event_cpt' );
 
 		$this->register_taxonomy( 'cal_tax', [
-			'hierarchical' => TRUE,
+			'hierarchical' => TRUE, // required by `MetaBox::checklistTerms()`
 		], 'event_cpt' );
 
 		if ( $metadata )

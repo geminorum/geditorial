@@ -97,7 +97,7 @@ class IssueCover extends gEditorial\Widget
 		$this->form_image_size( $instance, $cpt.'-thumbnail', 'image_size', $cpt );
 
 		$this->form_checkbox( $instance, FALSE, 'latest_issue', _x( 'Always the latest issue', 'Widget: Issue Cover', 'geditorial-magazine' ) );
-		$this->form_checkbox( $instance, TRUE, 'number_line', _x( 'Display the Number Meta', 'Widget: Issue Cover', 'geditorial-magazine' ) );
+		$this->form_checkbox( $instance, TRUE, 'number_line', _x( 'Display the Number Line', 'Widget: Issue Cover', 'geditorial-magazine' ) );
 		$this->form_checkbox( $instance, TRUE, 'link_issue', _x( 'Link to the issue', 'Widget: Issue Cover', 'geditorial-magazine' ) );
 		$this->form_custom_link( $instance );
 

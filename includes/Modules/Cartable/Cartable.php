@@ -380,13 +380,13 @@ class Cartable extends gEditorial\Module
 				);
 
 				if ( $this->support_types )
-					add_action( $this->hook( 'render_metabox' ), [ $this, 'render_metabox_types' ], 10, 2 );
+					$this->action_self( 'render_metabox', 2, 10, 'types' );
 
 				if ( $this->support_groups )
-					add_action( $this->hook( 'render_metabox' ), [ $this, 'render_metabox_groups' ], 10, 2 );
+					$this->action_self( 'render_metabox', 2, 10, 'groups' );
 
 				if ( $this->support_users )
-					add_action( $this->hook( 'render_metabox' ), [ $this, 'render_metabox_users' ], 10, 2 );
+					$this->action_self( 'render_metabox', 2, 10, 'users' );
 			}
 		}
 	}
