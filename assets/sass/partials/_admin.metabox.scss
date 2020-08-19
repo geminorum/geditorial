@@ -92,6 +92,10 @@
       }
     }
 
+    &.-needs-refresh {
+      // TODO: add styles!
+    }
+
     &.-empty {
       margin-bottom: 0;
       padding: 4px 6px;
@@ -151,7 +155,11 @@
       textarea {
         display: block;
         width: 100%;
+        max-width: 100% !important; // avoid affecting by other plugins
+        min-height: 30px; // same as type text
         margin: 0;
+        padding: 4px 8px;
+        line-height: 1.4;
         resize: vertical;
       }
     }

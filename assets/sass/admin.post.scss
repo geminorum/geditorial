@@ -36,6 +36,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
+#titlediv {
+  #title-prompt-text {
+    z-index: 2; // ortho wrap make placeholder disappear
+  }
+}
+
 #postbox-container-after-title {
   float: none;
 
@@ -54,13 +60,13 @@
   padding-top: 0 !important;
 }
 
-.geditorial-wrap.-edit-form-after-title,
-.geditorial-wrap.-admin-postbox.geditorial-meta-field-le {
-  margin: 10px 0 0;
-}
+// .geditorial-wrap.-edit-form-after-title,
+// .geditorial-wrap.-admin-postbox.geditorial-meta-field-lead {
+//   margin: 10px 0 0;
+// }
 
 ////////////////////////////////////////////////////////////////////////////////
-.geditorial-wrap.-admin-postbox.-workflow-main {
+.geditorial-wrap.-admin-postbox.-workflow-mainbox {
   .inside,
   .-admin-metabox {
     margin: 0;
@@ -75,15 +81,16 @@
 // Module: Meta
 .geditorial-admin-posttitle {
   box-sizing: border-box;
-  font-size: 1.3em;
-  padding: 3px 8px;
   width: 100%;
+  // margin: 0;
+  padding: 3px 8px;
+  font-size: 1.3em;
 
-  &.geditorial-meta-field-ot {
+  &.geditorial-meta-type-title_before {
     margin: 0 0 5px;
   }
 
-  &.geditorial-meta-field-st {
+  &.geditorial-meta-type-title_after {
     margin: 2px 0 10px;
   }
 }

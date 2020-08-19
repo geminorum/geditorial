@@ -49,16 +49,16 @@
     }
   }
 
-  input.geditorial-meta-field-ot + a.do-ortho {
-    top: -3px;
-  }
-
-  input.geditorial-meta-field-st + a.do-ortho {
-    top: -7px;
+  input.geditorial-meta-type-title_before + a.do-ortho {
+    top: -4px;
   }
 
   input#title + a.do-ortho {
     top: -2px;
+  }
+
+  input.geditorial-meta-type-title_after + a.do-ortho {
+    top: -4px;
   }
 
   .geditorial-wrap.-admin-metabox & textarea + a.do-ortho {
