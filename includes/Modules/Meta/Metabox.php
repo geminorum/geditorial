@@ -170,7 +170,7 @@ class Meta extends gEditorial\MetaBox
 			'name'              => 'geditorial-meta-'.$field.( FALSE === $key ? '' : '['.$key.']' ),
 			'id'                => 'geditorial-meta-'.$field.( FALSE === $key ? '' : '-'.$key ),
 			'orderby'           => 'name',
-			'show_count'        => TRUE,
+			'show_count'        => FALSE, // FIXME: make this optional
 			'hide_empty'        => FALSE,
 			'hide_if_empty'     => TRUE,
 			'echo'              => TRUE,

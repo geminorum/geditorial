@@ -459,7 +459,7 @@ class Like extends gEditorial\Module
 		if ( ! current_user_can( 'read_post', $post->ID ) )
 			return;
 
-		$total = $this->get_liked_total( $post_id );
+		$total = $this->get_liked_total( $post->ID );
 
 		if ( empty( $total ) )
 			return;

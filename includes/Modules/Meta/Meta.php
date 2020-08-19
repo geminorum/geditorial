@@ -554,21 +554,21 @@ class Meta extends gEditorial\Module
 			return $field;
 
 		$fields = [
-			// currents
+			// meta currents
 			'over_title'   => [ 'over_title', 'ot' ],
 			'sub_title'    => [ 'sub_title', 'st' ],
 			'byline'       => [ 'byline', 'author', 'as' ],
 			'lead'         => [ 'lead', 'le' ],
 			'label'        => [ 'label', 'ch', 'column_header' ],
 			'label_tax'    => [ 'label_tax', 'ct' ],  // term type
-			'start'        => [ 'in_issue_page_start', 'start' ],
-			'order'        => [ 'in_issue_order', 'in_collection_order', 'in_series_order', 'order' ],
+			'start'        => [ 'start', 'in_issue_page_start' ], // general
+			'order'        => [ 'order', 'in_issue_order', 'in_collection_order', 'in_series_order' ], // general
 			'number_line'  => [ 'number_line', 'issue_number_line', 'number' ],
 			'total_pages'  => [ 'total_pages', 'issue_total_pages', 'pages' ],
 			'source_title' => [ 'source_title', 'reshare_source_title' ],
 			'source_url'   => [ 'source_url', 'reshare_source_url', 'es', 'ol' ],
 
-			// module oldies
+			// meta oldies
 			'ot' => [ 'over_title', 'ot' ],
 			'st' => [ 'sub_title', 'st' ],
 			'le' => [ 'lead', 'le' ],
@@ -578,7 +578,7 @@ class Meta extends gEditorial\Module
 			'es' => [ 'source_url', 'es' ],
 			'ol' => [ 'source_url', 'ol' ],
 
-			// book oldies
+			// book currents
 			'publication_edition'   => [ 'publication_edition', 'edition' ],
 			'publication_print'     => [ 'publication_print', 'print' ],
 			'publication_isbn'      => [ 'publication_isbn', 'isbn' ],
@@ -586,6 +586,13 @@ class Meta extends gEditorial\Module
 			'total_volumes'         => [ 'total_volumes', 'volumes' ],
 			'publication_size'      => [ 'publication_size', 'size' ], // term type
 
+			// book oldies
+			'edition'   => [ 'publication_edition', 'edition' ],
+			'print'     => [ 'publication_print', 'print' ],
+			'isbn'      => [ 'publication_isbn', 'isbn' ],
+			'reference' => [ 'publication_reference', 'reference' ],
+			'volumes'   => [ 'total_volumes', 'volumes' ],
+			'size'      => [ 'publication_size', 'size' ], // term type
 
 			// other oldies
 			'issue_number_line'    => [ 'number_line', 'issue_number_line' ],
