@@ -1,13 +1,13 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gEditorial Magazine 3.15.8\n"
+"Project-Id-Version: gEditorial Magazine 3.16.0\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "Last-Translator: NULL\n"
 "Language-Team: NULL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2020-08-12T10:04:08+00:00\n"
+"POT-Creation-Date: 2020-08-19T11:45:35+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.4.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Magazine\n"
@@ -181,82 +181,82 @@ msgctxt "Display"
 msgid "Total Pages: %s"
 msgstr ""
 
-#: Magazine.php:964
+#: Magazine.php:967
 msgctxt "Table Column"
 msgid "Linked Issue Post"
 msgstr ""
 
-#: Magazine.php:974
+#: Magazine.php:977
 msgctxt "Table Column"
 msgid "Same Slug Issue Post"
 msgstr ""
 
-#: Magazine.php:984
+#: Magazine.php:987
 msgctxt "Table Column"
 msgid "Count"
 msgstr ""
 
-#: Magazine.php:994
+#: Magazine.php:997
 msgctxt "Table Column"
 msgid "Desc. / Exce."
 msgstr ""
 
-#: Magazine.php:1020
+#: Magazine.php:1023
 msgctxt "Table Column"
 msgid "Thumbnail"
 msgstr ""
 
-#: Magazine.php:1032
+#: Magazine.php:1035
 msgctxt "Table Column"
 msgid "Image"
 msgstr ""
 
-#: Magazine.php:1040
+#: Magazine.php:1043
 msgctxt "Header"
 msgid "Magazine Tools"
 msgstr ""
 
-#: Magazine.php:1041
+#: Magazine.php:1044
 msgctxt "Message"
 msgid "No Terms Found!"
 msgstr ""
 
-#: Magazine.php:1048
+#: Magazine.php:1051
 msgctxt "Message"
 msgid "Check for issue terms and create corresponding issue posts."
 msgstr ""
 
-#: Magazine.php:1052
+#: Magazine.php:1055
 msgctxt "Button"
 msgid "Create Issue Posts"
 msgstr ""
 
-#: Magazine.php:1055
+#: Magazine.php:1058
 msgctxt "Button"
 msgid "Re-Connect Posts"
 msgstr ""
 
-#: Magazine.php:1058
+#: Magazine.php:1061
 msgctxt "Button"
 msgid "Sync Images"
 msgstr ""
 
-#: Magazine.php:1061
+#: Magazine.php:1064
 msgctxt "Button"
 msgid "Sync Descriptions"
 msgstr ""
 
-#: Magazine.php:1064
+#: Magazine.php:1067
 msgctxt "Button"
 msgid "Store Orders"
 msgstr ""
 
-#: Magazine.php:1067
+#: Magazine.php:1070
 msgctxt "Button"
 msgid "Empty Term Descriptions"
 msgstr ""
 
-#: Magazine.php:1070
+#: Magazine.php:1073
 msgctxt "Button"
 msgid "Delete Terms"
 msgstr ""
@@ -283,7 +283,7 @@ msgstr ""
 
 #: Widgets/Issue-Cover.php:100
 msgctxt "Widget: Issue Cover"
-msgid "Display the Number Meta"
+msgid "Display the Number Line"
 msgstr ""
 
 #: Widgets/Issue-Cover.php:101

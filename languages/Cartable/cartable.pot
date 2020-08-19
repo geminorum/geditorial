@@ -1,13 +1,13 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gEditorial Cartable 3.15.8\n"
+"Project-Id-Version: gEditorial Cartable 3.16.0\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "Last-Translator: NULL\n"
 "Language-Team: NULL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2020-08-12T10:03:48+00:00\n"
+"POT-Creation-Date: 2020-08-19T11:45:11+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.4.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Cartable\n"
@@ -165,114 +165,114 @@ msgctxt "Button"
 msgid "Sync Users & Groups"
 msgstr ""
 
-#: Cartable.php:422
-#: Cartable.php:492
+#: Cartable.php:421
+#: Cartable.php:491
 msgctxt "Page Title"
 msgid "Editorial Cartables"
 msgstr ""
 
-#: Cartable.php:423
+#: Cartable.php:422
 msgctxt "Menu Title"
 msgid "My Cartables"
 msgstr ""
 
-#: Cartable.php:445
+#: Cartable.php:444
 msgctxt "Sub"
 msgid "Personal"
 msgstr ""
 
-#: Cartable.php:514
-#: Cartable.php:727
+#: Cartable.php:513
+#: Cartable.php:726
 msgctxt "Message"
 msgid "Something's wrong!"
 msgstr ""
 
-#: Cartable.php:528
-#: Cartable.php:759
+#: Cartable.php:527
+#: Cartable.php:758
 msgctxt "Row Icon Title"
 msgid "User Cartables"
 msgstr ""
 
-#: Cartable.php:547
-#: Cartable.php:771
+#: Cartable.php:546
+#: Cartable.php:770
 msgctxt "Row Icon Title"
 msgid "Group Cartables"
 msgstr ""
 
-#: Cartable.php:566
+#: Cartable.php:565
 msgctxt "Row Icon Title"
 msgid "Type Cartables"
 msgstr ""
 
-#: Cartable.php:584
+#: Cartable.php:583
 msgctxt "Dashboard Widget Title"
 msgid "Your Personal Cartable"
+msgstr ""
+
+#: Cartable.php:585
+#: Cartable.php:606
+#: Cartable.php:628
+msgctxt "Dashboard Widget Title Action"
+msgid "Click to view all items in this cartable"
 msgstr ""
 
 #: Cartable.php:586
 #: Cartable.php:607
 #: Cartable.php:629
 msgctxt "Dashboard Widget Title Action"
-msgid "Click to view all items in this cartable"
-msgstr ""
-
-#: Cartable.php:587
-#: Cartable.php:608
-#: Cartable.php:630
-msgctxt "Dashboard Widget Title Action"
 msgid "All Items"
 msgstr ""
 
 #. translators: %s: term name placeholder
-#: Cartable.php:605
-#: Cartable.php:627
+#: Cartable.php:604
+#: Cartable.php:626
 msgctxt "Dashboard Widget Title"
 msgid "Cartable: %s"
 msgstr ""
 
-#: Cartable.php:740
+#: Cartable.php:739
 msgctxt "Message"
 msgid "You can see cartable details, once you've saved it for the first time."
 msgstr ""
 
-#: Cartable.php:760
+#: Cartable.php:759
 msgctxt "Message"
 msgid "This currently is on your cartable."
 msgstr ""
 
-#: Cartable.php:772
+#: Cartable.php:771
 msgctxt "Message"
 msgid "This currently is on your group cartable."
 msgstr ""
 
-#: Cartable.php:784
+#: Cartable.php:783
 msgctxt "Message"
 msgid "This currently is <b>not</b> on any of your cartables."
 msgstr ""
 
-#: Cartable.php:877
+#: Cartable.php:876
 msgctxt "Page Title"
 msgid "Your Cartable"
 msgstr ""
 
 #. translators: %s: term name placeholder
-#: Cartable.php:880
+#: Cartable.php:879
 msgctxt "Menu Title"
 msgid "Cartable: %s"
 msgstr ""
 
-#: Cartable.php:895
+#: Cartable.php:894
 msgctxt "Table Action"
 msgid "Empty Cartable"
 msgstr ""
 
-#: Cartable.php:907
+#: Cartable.php:906
 msgctxt "Table Column Title"
 msgid "Cartable"
 msgstr ""
 
-#: Cartable.php:915
-#: Cartable.php:957
+#: Cartable.php:914
+#: Cartable.php:956
 msgctxt "Message"
 msgid "The cartable is empty!"
 msgstr ""

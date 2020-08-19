@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gEditorial Reshare 3.15.8\n"
+"Project-Id-Version: gEditorial Reshare\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "Language-Team: NULL\n"
 "MIME-Version: 1.0\n"

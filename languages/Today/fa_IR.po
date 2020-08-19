@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gEditorial Today 3.15.8\n"
+"Project-Id-Version: gEditorial Today\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
-"POT-Creation-Date: 2020-08-09T22:12:03+00:00\n"
-"PO-Revision-Date: 2020-08-10 02:50+0430\n"
+"POT-Creation-Date: 2020-08-19T09:17:32+00:00\n"
+"PO-Revision-Date: 2020-08-19 15:45+0430\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -158,67 +158,67 @@ msgctxt "Action"
 msgid "Today"
 msgstr "امروز"
 
-#: Today.php:520
+#: Today.php:521
 msgctxt "Message"
 msgid "You can connect posts to this day once you've saved it for the first time."
 msgstr ""
 
-#: Today.php:546 Today.php:938
+#: Today.php:547 Today.php:939
 msgctxt "Message"
 msgid "No posts with day information found."
 msgstr "نوشته‌ای با اطلاعات روزانه پیدا نشد."
 
-#: Today.php:750
+#: Today.php:751
 msgctxt "Message"
 msgid "Nothing happened!"
 msgstr "هیچ اتفاقی نیفتاده است!"
 
-#: Today.php:921
+#: Today.php:922
 msgctxt "Table Column"
 msgid "The Day"
 msgstr "روز"
 
-#: Today.php:937
+#: Today.php:938
 msgctxt "Header"
 msgid "Overview of Post with Day Information"
 msgstr "مروری بر نوشته‌های همراه با اطلاعات روزانه"
 
-#: Today.php:983
+#: Today.php:984
 msgctxt "Header"
 msgid "Today Tools"
 msgstr "ابزارهای امروز"
 
-#: Today.php:986
+#: Today.php:987
 msgctxt "Header"
 msgid "Re-schedule by Day"
 msgstr ""
 
-#: Today.php:992
+#: Today.php:993
 msgctxt "Setting"
 msgid "Schedule"
 msgstr "زمان‌بندی"
 
-#: Today.php:994
+#: Today.php:995
 msgctxt "Message"
 msgid "Tries to re-set the date of posts based on it's day data."
 msgstr ""
 
-#: Today.php:1003
+#: Today.php:1004
 msgctxt "Import Field"
 msgid "Today: Calendar"
 msgstr "امروز:‌ تقویم"
 
-#: Today.php:1004
+#: Today.php:1005
 msgctxt "Import Field"
 msgid "Today: Year"
 msgstr "امروز:‌ سال"
 
-#: Today.php:1005
+#: Today.php:1006
 msgctxt "Import Field"
 msgid "Today: Month"
 msgstr "امروز:‌ ماه"
 
-#: Today.php:1006
+#: Today.php:1007
 msgctxt "Import Field"
 msgid "Today: Day"
 msgstr "امروز:‌ روز"

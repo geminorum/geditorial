@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gEditorial Magazine 3.15.8\n"
+"Project-Id-Version: gEditorial Magazine\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
-"POT-Creation-Date: 2020-08-09T22:11:38+00:00\n"
-"PO-Revision-Date: 2020-08-11 04:51+0430\n"
+"POT-Creation-Date: 2020-08-19T09:17:06+00:00\n"
+"PO-Revision-Date: 2020-08-19 15:47+0430\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -120,7 +120,7 @@ msgctxt "Field Description"
 msgid "The issue number line"
 msgstr "شماره مسلسل پرونده"
 
-#: Magazine.php:157 Magazine.php:178
+#: Magazine.php:157 Magazine.php:181
 msgctxt "Field Title"
 msgid "Total Pages"
 msgstr "تعداد صفحات"
@@ -130,135 +130,135 @@ msgctxt "Field Description"
 msgid "The issue total pages"
 msgstr "مجموع صفحات پرونده"
 
-#: Magazine.php:164
+#: Magazine.php:167
 msgctxt "Field Title"
 msgid "Order"
 msgstr "چینش"
 
-#: Magazine.php:165
+#: Magazine.php:168
 msgctxt "Field Description"
 msgid "Post order in issue list"
 msgstr "چینش این نوشته در فهرست پرونده"
 
-#: Magazine.php:171
+#: Magazine.php:174
 msgctxt "Field Title"
 msgid "Page Start"
 msgstr "صفحه شروع"
 
-#: Magazine.php:172
+#: Magazine.php:175
 msgctxt "Field Description"
 msgid "Post start page on issue (printed)"
 msgstr "صفحه شروع این نوشته در پرونده"
 
-#: Magazine.php:179
+#: Magazine.php:182
 msgctxt "Field Description"
 msgid "Post total pages on issue (printed)"
 msgstr "مجموع صفحات این نوشته در پرونده"
 
-#: Magazine.php:628
+#: Magazine.php:631
 msgctxt "Message"
 msgid "No items connected!"
 msgstr "چیزی مرتبط نشده است!"
 
-#: Magazine.php:683
+#: Magazine.php:686
 msgctxt "Title Attr"
 msgid "View the connected list"
 msgstr "دیدن فهرست مرتبط‌شده‌ها"
 
 #. translators: %s: order
-#: Magazine.php:696
+#: Magazine.php:699
 msgctxt "Display"
 msgid "Order in Issue: %s"
 msgstr "چیدمان در پرونده: %s"
 
 #. translators: %s: page
-#: Magazine.php:698
+#: Magazine.php:701
 msgctxt "Display"
 msgid "Page in Issue: %s"
 msgstr "صفحه شروع: %s"
 
 #. translators: %s: total count
-#: Magazine.php:700
+#: Magazine.php:703
 msgctxt "Display"
 msgid "Total Pages: %s"
 msgstr "مجموع صفحات: %s"
 
-#: Magazine.php:961
+#: Magazine.php:967
 msgctxt "Table Column"
 msgid "Linked Issue Post"
 msgstr "پرونده نوشته مرتبط"
 
-#: Magazine.php:971
+#: Magazine.php:977
 msgctxt "Table Column"
 msgid "Same Slug Issue Post"
 msgstr "پرونده نوشته هم‌نامک"
 
-#: Magazine.php:981
+#: Magazine.php:987
 msgctxt "Table Column"
 msgid "Count"
 msgstr "شمار"
 
-#: Magazine.php:991
+#: Magazine.php:997
 msgctxt "Table Column"
 msgid "Desc. / Exce."
 msgstr "توضـ/چکیـ"
 
-#: Magazine.php:1017
+#: Magazine.php:1023
 msgctxt "Table Column"
 msgid "Thumbnail"
 msgstr "بند‌انگشتی"
 
-#: Magazine.php:1029
+#: Magazine.php:1035
 msgctxt "Table Column"
 msgid "Image"
 msgstr "تصویر"
 
-#: Magazine.php:1037
+#: Magazine.php:1043
 msgctxt "Header"
 msgid "Magazine Tools"
 msgstr "ابزارهای مجله"
 
-#: Magazine.php:1038
+#: Magazine.php:1044
 msgctxt "Message"
 msgid "No Terms Found!"
 msgstr "رده‌ای پیدا نشد!"
 
-#: Magazine.php:1045
+#: Magazine.php:1051
 msgctxt "Message"
 msgid "Check for issue terms and create corresponding issue posts."
 msgstr "رده‌های پرونده را بررسی و نوشته‌های پرونده مرتبط با آن را بازسازی کنید."
 
-#: Magazine.php:1049
+#: Magazine.php:1055
 msgctxt "Button"
 msgid "Create Issue Posts"
 msgstr "ساختن نوشته‌های پرونده"
 
-#: Magazine.php:1052
+#: Magazine.php:1058
 msgctxt "Button"
 msgid "Re-Connect Posts"
 msgstr "بازپیوست نوشته‌ها"
 
-#: Magazine.php:1055
+#: Magazine.php:1061
 msgctxt "Button"
 msgid "Sync Images"
 msgstr "همگام‌سازی تصاویر"
 
-#: Magazine.php:1058
+#: Magazine.php:1064
 msgctxt "Button"
 msgid "Sync Descriptions"
 msgstr "همگام‌سازی توضیحات"
 
-#: Magazine.php:1061
+#: Magazine.php:1067
 msgctxt "Button"
 msgid "Store Orders"
 msgstr "ذخیره چیدمان"
 
-#: Magazine.php:1064
+#: Magazine.php:1070
 msgctxt "Button"
 msgid "Empty Term Descriptions"
 msgstr "خالی‌کردن توضیحات رده"
 
-#: Magazine.php:1067
+#: Magazine.php:1073
 msgctxt "Button"
 msgid "Delete Terms"
 msgstr "پاک‌کردن رده‌ها"
@@ -285,13 +285,17 @@ msgstr "استفاده از آخرین پرونده"
 
 #: Widgets/Issue-Cover.php:100
 msgctxt "Widget: Issue Cover"
-msgid "Display the Number Meta"
+msgid "Display the Number Line"
 msgstr "نمایش اطلاعات شمارهٔ پرونده"
 
 #: Widgets/Issue-Cover.php:101
 msgctxt "Widget: Issue Cover"
 msgid "Link to the issue"
 msgstr "پیوند به پرونده"
+
+#~ msgctxt "Widget: Issue Cover"
+#~ msgid "Display the Number Meta"
+#~ msgstr "نمایش اطلاعات شمارهٔ پرونده"
 
 #~ msgctxt "Setting Title"
 #~ msgid "Issue Sections"

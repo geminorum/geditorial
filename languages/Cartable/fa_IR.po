@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gEditorial Cartable 3.15.8\n"
+"Project-Id-Version: gEditorial Cartable\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: 2020-07-17T10:40:12+00:00\n"
 "PO-Revision-Date: 2020-07-17 15:39+0430\n"
