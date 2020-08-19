@@ -62,7 +62,8 @@ class Course extends gEditorial\Module
 			'course_tax'         => 'courses',
 			'lesson_cpt'         => 'lesson',
 			'lesson_cpt_archive' => 'lessons',
-			'course_cat'         => 'course_cat',
+			'course_cat'         => 'course_category',
+			'course_cat_slug'    => 'course-category',
 			'lesson_format'      => 'lesson_format',
 			'status_tax'         => 'lesson_status',
 		];

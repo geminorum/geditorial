@@ -63,8 +63,10 @@ class Contest extends gEditorial\Module
 			'contest_tax'         => 'contests',
 			'apply_cpt'           => 'apply',
 			'apply_cpt_archive'   => 'applies',
-			'contest_cat'         => 'contest_cat',
-			'apply_cat'           => 'apply_cat',
+			'contest_cat'         => 'contest_category',
+			'contest_cat_slug'    => 'contest-category',
+			'apply_cat'           => 'apply_category',
+			'apply_cat_slug'      => 'apply-category',
 			'status_tax'          => 'apply_status',
 		];
 	}
