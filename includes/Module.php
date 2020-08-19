@@ -1208,8 +1208,8 @@ class Module extends Base
 	{
 		global $gEditorialPostTypeFields;
 
-		if ( isset( $gEditorialPostTypeFields[$posttype] ) )
-			return $gEditorialPostTypeFields[$posttype];
+		if ( isset( $gEditorialPostTypeFields[$this->key][$posttype] ) )
+			return $gEditorialPostTypeFields[$this->key][$posttype];
 
 		$all     = $this->posttype_fields_all( $posttype );
 		$enabled = $this->posttype_fields( $posttype );
@@ -1254,12 +1254,12 @@ class Module extends Base
 			], $args );
 		}
 
-		$gEditorialPostTypeFields[$posttype] = Arraay::multiSort( $fields, [
+		$gEditorialPostTypeFields[$this->key][$posttype] = Arraay::multiSort( $fields, [
 			'group' => SORT_ASC,
 			'order' => SORT_ASC,
 		] );
 
-		return $gEditorialPostTypeFields[$posttype];
+		return $gEditorialPostTypeFields[$this->key][$posttype];
 	}
 
 	// use for all modules
