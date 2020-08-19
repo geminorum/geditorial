@@ -1,3 +1,50 @@
+### 3.16.0
+* main/metabox: passing supported posttypes for terms posts
+* main/module: add fields for supported posttypes
+* main/module: auto hook store metabox action
+* main/module: better sanitize links
+* main/module: clean empty legacy meta
+* main/module: clean postmeta legacy
+* main/module: cleanup old field keys data if updated
+* main/module: custom posttype field titles on the all list
+* main/module: dynamic contexts on posttype fields
+* main/module: getting single field post meta
+* main/module: internal cache for legacy meta data
+* main/module: limit posttype fields to current module
+* main/module: metabox contexts revised
+* main/module: new field type for float numbers
+* main/module: postmeta field api tweaks
+* main/module: priority for current screen hook
+* main/module: sanitize postmeta field on saved settings
+* main/module: separation of logic on getting post meta
+* main/module: set post meta revised
+* main/module: support for custom metabox sanitize callbacks on taxonomies
+* main/template: helper for meta field html
+* module/contest: :warning: fixed not saving metabox data
+* module/course: :new: module
+* module/inquire: default metabox for status/priority taxes
+* module/inquire: default terms for status/priority taxes
+* module/meta: avoid sending term types as importer fields
+* module/meta: avoiding double checks on field sanitize
+* module/meta: column rows based on quick-edit arg
+* module/meta: column rows extra proper checking
+* module/meta: column rows on excerpt mode based on type
+* module/meta: column rows proper exclusion of fields
+* module/meta: drop author row option on settings
+* module/meta: field description as info on lonebox metaboxes
+* module/meta: field names revised
+* module/meta: more info on import meta table
+* module/meta: no need for jquery show on quick-edit preps
+* module/meta: passing not enabled legacy data
+* module/meta: proper handling fields on quick-edit
+* module/meta: refine meta field names
+* module/meta: rename metabox context callbacks
+* module/meta: sanitize posttype fields revised
+* module/meta: storing meta fields separately
+* module/meta: upgrade posttype fields on importer filters
+* module/meta: upgrade posttype fields on raw imports
+* module/tweaks: avoid double input for menu order
+
 ### 3.15.9
 * main/helper: :warning: correct logic for domain absence on nooped strings
 * main/helper: empty string helper
