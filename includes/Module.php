@@ -2836,6 +2836,9 @@ class Module extends Base
 
 	public function p2p_get_meta( $p2p_id, $meta_key, $before = '', $after = '', $args = [] )
 	{
+		if ( ! $this->p2p )
+			return '';
+
 		if ( ! $meta = p2p_get_meta( $p2p_id, $meta_key, TRUE ) )
 			return '';
 
@@ -2853,6 +2856,9 @@ class Module extends Base
 
 	public function p2p_get_meta_row( $constant, $p2p_id, $before = '', $after = '' )
 	{
+		if ( ! $this->p2p )
+			return '';
+
 		$row = '';
 
 		if ( ! empty( $this->strings['p2p'][$constant]['fields'] ) )
@@ -2865,6 +2871,9 @@ class Module extends Base
 	// @REF: https://github.com/scribu/wp-posts-to-posts/wiki/Creating-connections-programmatically
 	public function p2p_connect( $constant, $from, $to, $meta = [] )
 	{
+		if ( ! $this->p2p )
+			return FALSE;
+
 		$type = p2p_type( $this->constant( $constant.'_p2p' ) );
 		// $id   = $type->connect( $from, $to, [ 'date' => current_time( 'mysql' ) ] );
 		$id   = $type->connect( $from, $to, $meta );
@@ -2880,6 +2889,9 @@ class Module extends Base
 
 	protected function column_row_p2p_to_posttype( $constant, $post )
 	{
+		if ( ! $this->p2p )
+			return;
+
 		$extra = [ 'p2p:per_page' => -1, 'p2p:context' => 'admin_column' ];
 		$type  = $this->constant( $constant.'_p2p' );
 
@@ -2931,6 +2943,9 @@ class Module extends Base
 
 	protected function column_row_p2p_from_posttype( $constant, $post )
 	{
+		if ( ! $this->p2p )
+			return;
+
 		if ( empty( $this->cache_column_icon ) )
 			$this->cache_column_icon = $this->get_column_icon( FALSE,
 				NULL, $this->strings['p2p'][$constant]['title']['from'] );
