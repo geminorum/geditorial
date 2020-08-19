@@ -1188,11 +1188,13 @@ class Module extends Base
 
 			foreach ( $this->options->fields[$posttype] as $field => $enabled ) {
 
+				$sanitized = $this->sanitize_postmeta_field( $field )[0];
+
 				if ( $js )
-					$fields[$field] = (bool) $enabled;
+					$fields[$sanitized] = (bool) $enabled;
 
 				else if ( $enabled )
-					$fields[] = $field;
+					$fields[] = $sanitized;
 			}
 		}
 
