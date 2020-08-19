@@ -163,23 +163,23 @@ class Collect extends gEditorial\Module
 					'title'       => _x( 'Order', 'Field Title', 'geditorial-collect' ),
 					'description' => _x( 'Post order in the collection', 'Field Description', 'geditorial-collect' ),
 					'type'        => 'number',
-					'context'     => 'linkedbox',
+					'context'     => 'linkedbox_collection',
 					'icon'        => 'sort',
 				],
 				'in_collection_title' => [
 					'title'       => _x( 'Title', 'Field Title', 'geditorial-collect' ),
 					'description' => _x( 'Override post title in the collection', 'Field Description', 'geditorial-collect' ),
-					'context'     => 'linkedbox',
+					'context'     => 'linkedbox_collection',
 				],
 				'in_collection_subtitle' => [
 					'title'       => _x( 'Subtitle', 'Field Title', 'geditorial-collect' ),
 					'description' => _x( 'Post subtitle in the collection', 'Field Description', 'geditorial-collect' ),
-					'context'     => 'linkedbox',
+					'context'     => 'linkedbox_collection',
 				],
 				'in_collection_collaborator' => [
 					'title'       => _x( 'Collaborator', 'Field Title', 'geditorial-collect' ),
 					'description' => _x( 'Post collaborator in the collection', 'Field Description', 'geditorial-collect' ),
-					'context'     => 'linkedbox',
+					'context'     => 'linkedbox_collection',
 				],
 			],
 		];
@@ -569,9 +569,9 @@ class Collect extends gEditorial\Module
 
 		} else {
 
-			$this->actions( 'render_linkedbox_metabox', $post, $box, NULL, 'linkedbox' );
+			$this->actions( 'render_linkedbox_metabox', $post, $box, NULL, 'linkedbox_collection' );
 
-			do_action( 'geditorial_meta_render_metabox', $post, $box, NULL, 'linkedbox' );
+			do_action( 'geditorial_meta_render_metabox', $post, $box, NULL, 'linkedbox_collection' );
 		}
 
 		echo '</div>';
@@ -618,7 +618,7 @@ class Collect extends gEditorial\Module
 			return;
 
 		echo $this->wrap_open( '-admin-metabox' );
-			$this->actions( 'render_listbox_metabox', $post, $box, NULL, 'listbox' );
+			$this->actions( 'render_listbox_metabox', $post, $box, NULL, 'listbox_collection' );
 
 			$term = $this->get_linked_term( $post->ID, 'collection_cpt', 'collection_tax' );
 

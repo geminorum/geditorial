@@ -225,8 +225,8 @@ class Series extends gEditorial\Module
 		$fields = $this->posttype_fields( $post->post_type );
 
 		echo $this->wrap_open( '-admin-metabox' );
-			$this->actions( 'render_metabox', $post, $box, $fields, 'linkedbox' );
-			$this->actions( 'render_metabox_after', $post, $box, $fields, 'linkedbox' );
+			$this->actions( 'render_metabox', $post, $box, $fields, 'linkedbox_series' );
+			$this->actions( 'render_metabox_after', $post, $box, $fields, 'linkedbox_series' );
 		echo '</div>';
 
 		$this->nonce_field( 'mainbox' );

@@ -397,7 +397,7 @@ class Today extends gEditorial\Module
 			return;
 
 		echo $this->wrap_open( '-admin-metabox' );
-			$this->actions( 'render_metabox', $post, $box, NULL, 'linkedbox' );
+			$this->actions( 'render_metabox', $post, $box, NULL, 'linkedbox_today' );
 
 			$display_year = $post->post_type != $this->constant( 'day_cpt' );
 			$default_type = $this->default_calendar();

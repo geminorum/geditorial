@@ -1202,7 +1202,8 @@ class Module extends Base
 	}
 
 	// this module enabled fields with args for a posttype
-	// contexts: `nobox`, `lonebox`, `mainbox`, `listbox`, `linkedbox`
+	// static contexts: `nobox`, `lonebox`, `mainbox`
+	// dynamic contexts: `listbox_{$posttype}`, `linkedbox_{$posttype}`, `linkedbox_{$module}`
 	public function get_posttype_fields( $posttype = 'post' )
 	{
 		global $gEditorialPostTypeFields;

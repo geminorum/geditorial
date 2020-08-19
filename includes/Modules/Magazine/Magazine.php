@@ -167,20 +167,20 @@ class Magazine extends gEditorial\Module
 					'title'       => _x( 'Order', 'Field Title', 'geditorial-magazine' ),
 					'description' => _x( 'Post order in issue list', 'Field Description', 'geditorial-magazine' ),
 					'type'        => 'number',
-					'context'     => 'linkedbox',
+					'context'     => 'linked_issue',
 					'icon'        => 'sort',
 				],
 				'in_issue_page_start' => [
 					'title'       => _x( 'Page Start', 'Field Title', 'geditorial-magazine' ),
 					'description' => _x( 'Post start page on issue (printed)', 'Field Description', 'geditorial-magazine' ),
 					'type'        => 'number',
-					'context'     => 'linkedbox',
+					'context'     => 'linked_issue',
 					'icon'        => 'media-default',
 				],
 				'in_issue_pages' => [
 					'title'       => _x( 'Total Pages', 'Field Title', 'geditorial-magazine' ),
 					'description' => _x( 'Post total pages on issue (printed)', 'Field Description', 'geditorial-magazine' ),
-					'context'     => 'linkedbox',
+					'context'     => 'linked_issue',
 					'icon'        => 'admin-page',
 				],
 			],
@@ -571,9 +571,9 @@ class Magazine extends gEditorial\Module
 
 		} else {
 
-			$this->actions( 'render_linkedbox_metabox', $post, $box, NULL, 'linkedbox' );
+			$this->actions( 'render_linkedbox_metabox', $post, $box, NULL, 'linked_issue' );
 
-			do_action( 'geditorial_meta_render_metabox', $post, $box, NULL, 'linkedbox' );
+			do_action( 'geditorial_meta_render_metabox', $post, $box, NULL, 'linked_issue' );
 		}
 
 		echo '</div>';
@@ -620,7 +620,7 @@ class Magazine extends gEditorial\Module
 			return;
 
 		echo $this->wrap_open( '-admin-metabox' );
-			$this->actions( 'render_listbox_metabox', $post, $box, NULL, 'listbox' );
+			$this->actions( 'render_listbox_metabox', $post, $box, NULL, 'listbox_issue' );
 
 			$term = $this->get_linked_term( $post->ID, 'issue_cpt', 'issue_tax' );
 
