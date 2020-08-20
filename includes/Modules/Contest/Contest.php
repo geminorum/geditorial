@@ -270,7 +270,7 @@ class Contest extends gEditorial\Module
 			if ( 'post' == $screen->base ) {
 
 				if ( $screen->post_type == $this->constant( 'apply_cpt' ) )
-					add_filter( 'post_updated_messages', [ $this, 'post_updated_messages_supported' ] );
+					$this->filter( 'post_updated_messages', 1, 10, 'supported' );
 
 				$this->filter_false_module( 'tweaks', 'metabox_menuorder' );
 				remove_meta_box( 'pageparentdiv', $screen, 'side' );
@@ -288,7 +288,7 @@ class Contest extends gEditorial\Module
 			} else if ( 'edit' == $screen->base ) {
 
 				if ( $screen->post_type == $this->constant( 'apply_cpt' ) )
-					add_filter( 'bulk_post_updated_messages', [ $this, 'bulk_post_updated_messages_supported' ], 10, 2 );
+					$this->filter( 'bulk_post_updated_messages', 2, 10, 'supported' );
 
 				if ( $this->get_setting( 'admin_restrict', FALSE ) )
 					add_action( 'restrict_manage_posts', [ $this, 'restrict_manage_posts_supported_cpt' ], 12, 2 );

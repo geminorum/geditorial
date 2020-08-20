@@ -295,7 +295,7 @@ class Course extends gEditorial\Module
 			if ( 'post' == $screen->base ) {
 
 				if ( $screen->post_type == $this->constant( 'lesson_cpt' ) )
-					add_filter( 'post_updated_messages', [ $this, 'post_updated_messages_supported' ] );
+					$this->filter( 'post_updated_messages', 1, 10, 'supported' );
 
 				$this->filter_false_module( 'tweaks', 'metabox_menuorder' );
 				remove_meta_box( 'pageparentdiv', $screen, 'side' );
@@ -313,10 +313,10 @@ class Course extends gEditorial\Module
 			} else if ( 'edit' == $screen->base ) {
 
 				if ( $screen->post_type == $this->constant( 'lesson_cpt' ) )
-					add_filter( 'bulk_post_updated_messages', [ $this, 'bulk_post_updated_messages_supported' ], 10, 2 );
+					$this->filter( 'bulk_post_updated_messages', 2, 10, 'supported' );
 
 				if ( $this->get_setting( 'admin_restrict', FALSE ) )
-					add_action( 'restrict_manage_posts', [ $this, 'restrict_manage_posts_supported_cpt' ], 12, 2 );
+					$this->action( 'restrict_manage_posts', 2, 12, 'supported' );
 
 				$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
 			}
@@ -606,7 +606,7 @@ class Course extends gEditorial\Module
 		$this->do_before_delete_post( $post_id, 'course_cpt', 'course_tax' );
 	}
 
-	public function restrict_manage_posts_supported_cpt( $posttype, $which )
+	public function restrict_manage_posts_supported( $posttype, $which )
 	{
 		$this->do_restrict_manage_posts_posts( 'course_tax', 'course_cpt' );
 	}
