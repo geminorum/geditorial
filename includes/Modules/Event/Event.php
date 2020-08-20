@@ -272,7 +272,7 @@ class Event extends gEditorial\Module
 		if ( is_admin() )
 			return;
 
-		$this->action( 'pre_get_posts' );
+		$this->action( 'pre_get_posts', 1, 20, 'front' );
 	}
 
 	public function init_ajax()
@@ -319,7 +319,7 @@ class Event extends gEditorial\Module
 
 				} else if ( $this->get_setting( 'admin_ordering', TRUE ) ) {
 
-					add_action( 'pre_get_posts', [ $this, 'pre_get_posts_admin' ] );
+					$this->action( 'pre_get_posts', 1, 20 );
 				}
 
 				$this->filter_true( 'disable_months_dropdown', 12 );
@@ -374,7 +374,7 @@ class Event extends gEditorial\Module
 	}
 
 	// FIXME: merge filters
-	public function pre_get_posts_admin( $wp_query )
+	public function pre_get_posts( &$wp_query )
 	{
 		if ( $this->constant( 'event_cpt' ) == $wp_query->get( 'post_type' ) ) {
 
@@ -551,7 +551,7 @@ class Event extends gEditorial\Module
 	// http://www.billerickson.net/customize-the-wordpress-query/
 	// https://gist.github.com/1238281
 	// http://www.billerickson.net/code/event-query/
-	public function pre_get_posts( &$wp_query )
+	public function pre_get_posts_front( &$wp_query )
 	{
 		// http://codex.wordpress.org/Function_Reference/current_time
 		// $current_time = current_time('mysql');

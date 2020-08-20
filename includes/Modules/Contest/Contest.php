@@ -291,7 +291,7 @@ class Contest extends gEditorial\Module
 					$this->filter( 'bulk_post_updated_messages', 2, 10, 'supported' );
 
 				if ( $this->get_setting( 'admin_restrict', FALSE ) )
-					add_action( 'restrict_manage_posts', [ $this, 'restrict_manage_posts_supported_cpt' ], 12, 2 );
+					$this->action( 'restrict_manage_posts', 2, 12, 'supported' );
 
 				$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
 			}
@@ -554,7 +554,7 @@ class Contest extends gEditorial\Module
 		$this->do_before_delete_post( $post_id, 'contest_cpt', 'contest_tax' );
 	}
 
-	public function restrict_manage_posts_supported_cpt( $posttype, $which )
+	public function restrict_manage_posts_supported( $posttype, $which )
 	{
 		$this->do_restrict_manage_posts_posts( 'contest_tax', 'contest_cpt' );
 	}

@@ -343,7 +343,7 @@ class Today extends gEditorial\Module
 		add_filter( 'manage_'.$posttype.'_posts_custom_column', [ $this, 'posts_custom_column' ], 10, 2 );
 		add_filter( 'manage_edit-'.$posttype.'_sortable_columns', [ $this, 'sortable_columns' ] );
 
-		add_action( 'quick_edit_custom_box', [ $this, 'quick_edit_custom_box' ], 10, 2 );
+		$this->action( 'quick_edit_custom_box', 2 );
 	}
 
 	private function _save_meta_supported( $posttype )
