@@ -44,6 +44,13 @@ class Course extends gEditorial\Module
 					'description' => _x( 'Redirects course and lesson archives to this URL. Leave empty to disable.', 'Settings', 'geditorial-course' ),
 					'placeholder' => URL::home( 'archives' ),
 				],
+				[
+					'field'       => 'redirect_spans',
+					'type'        => 'url',
+					'title'       => _x( 'Redirect Spans', 'Settings', 'geditorial-course' ),
+					'description' => _x( 'Redirects all span archives to this URL. Leave empty to disable.', 'Settings', 'geditorial-course' ),
+					'placeholder' => URL::home( 'archives' ),
+				],
 			],
 			'posttypes_option' => 'posttypes_option',
 			'_supports' => [
@@ -64,6 +71,8 @@ class Course extends gEditorial\Module
 			'lesson_cpt_archive' => 'lessons',
 			'course_cat'         => 'course_category',
 			'course_cat_slug'    => 'course-category',
+			'span_tax'           => 'course_span',
+			'span_tax_slug'      => 'course-span',
 			'format_tax'         => 'lesson_format',
 			'format_tax_slug'    => 'lesson-format',
 			'status_tax'         => 'lesson_status',
@@ -80,6 +89,7 @@ class Course extends gEditorial\Module
 			'taxonomies' => [
 				'course_tax' => 'welcome-learn-more',
 				'course_cat' => 'category',
+				'span_tax'   => 'backup',
 				'format_tax' => 'category',
 				'status_tax' => 'post-status',
 			],
@@ -93,6 +103,7 @@ class Course extends gEditorial\Module
 				'course_cpt' => _n_noop( 'Course', 'Courses', 'geditorial-course' ),
 				'course_tax' => _n_noop( 'Course', 'Courses', 'geditorial-course' ),
 				'course_cat' => _n_noop( 'Course Category', 'Course Categories', 'geditorial-course' ),
+				'span_tax'   => _n_noop( 'Course Span', 'Course Spans', 'geditorial-course' ),
 				'lesson_cpt' => _n_noop( 'Lesson', 'Lessons', 'geditorial-course' ),
 				'format_tax' => _n_noop( 'Lesson Format', 'Lesson Formats', 'geditorial-course' ),
 				'status_tax' => _n_noop( 'Lesson Status', 'Lesson Statuses', 'geditorial-course' ),
@@ -113,6 +124,10 @@ class Course extends gEditorial\Module
 			],
 			'course_cat' => [
 				'tweaks_column_title' => _x( 'Course Categories', 'Column Title', 'geditorial-course' ),
+			],
+			'span_tax' => [
+				'meta_box_title'      => _x( 'Spans', 'MetaBox Title', 'geditorial-course' ),
+				'tweaks_column_title' => _x( 'Course Spans', 'Column Title', 'geditorial-course' ),
 			],
 			'lesson_cpt' => [
 				'meta_box_title' => _x( 'Course', 'MetaBox Title', 'geditorial-course' ),
@@ -203,6 +218,12 @@ class Course extends gEditorial\Module
 			'show_in_quick_edit' => TRUE,
 		], 'course_cpt' );
 
+		$this->register_taxonomy( 'span_tax', [
+			'hierarchical'       => TRUE, // required by `MetaBox::checklistTerms()`
+			'show_admin_column'  => TRUE,
+			'show_in_quick_edit' => TRUE,
+		], 'course_cpt' );
+
 		$this->register_taxonomy( 'course_tax', [
 			'show_ui'            => TRUE,
 			'show_in_menu'       => FALSE,
@@ -280,6 +301,11 @@ class Course extends gEditorial\Module
 			} else if ( 'edit' == $screen->base ) {
 
 				$this->filter( 'bulk_post_updated_messages', 2 );
+
+				if ( $this->get_setting( 'admin_restrict', FALSE ) ) {
+					$this->action( 'restrict_manage_posts', 2, 12 );
+					$this->filter( 'parse_query' );
+				}
 
 				if ( $this->get_setting( 'admin_ordering', TRUE ) )
 					$this->action( 'pre_get_posts' );
@@ -372,6 +398,11 @@ class Course extends gEditorial\Module
 
 			if ( $post_id = $this->get_linked_post_id( $term, 'course_cpt', 'course_tax' ) )
 				WordPress::redirect( get_permalink( $post_id ), 301 );
+
+		} else if ( is_tax( $this->constant( 'span_tax' ) ) ) {
+
+			if ( $redirect = $this->get_setting( 'redirect_spans', FALSE ) )
+				WordPress::redirect( $redirect, 301 );
 
 		} else if ( is_post_type_archive( $this->constant( 'course_cpt' ) )
 			|| is_post_type_archive( $this->constant( 'lesson_cpt' ) ) ) {
@@ -606,9 +637,19 @@ class Course extends gEditorial\Module
 		$this->do_before_delete_post( $post_id, 'course_cpt', 'course_tax' );
 	}
 
+	public function restrict_manage_posts( $posttype, $which )
+	{
+		$this->do_restrict_manage_posts_taxes( 'span_tax' );
+	}
+
 	public function restrict_manage_posts_supported( $posttype, $which )
 	{
 		$this->do_restrict_manage_posts_posts( 'course_tax', 'course_cpt' );
+	}
+
+	public function parse_query( &$query )
+	{
+		$this->do_parse_query_taxes( $query, 'span_tax' );
 	}
 
 	public function pre_get_posts( &$wp_query )
