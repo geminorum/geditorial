@@ -64,7 +64,8 @@ class Course extends gEditorial\Module
 			'lesson_cpt_archive' => 'lessons',
 			'course_cat'         => 'course_category',
 			'course_cat_slug'    => 'course-category',
-			'lesson_format'      => 'lesson_format',
+			'format_tax'         => 'lesson_format',
+			'format_tax_slug'    => 'lesson-format',
 			'status_tax'         => 'lesson_status',
 		];
 	}
@@ -77,10 +78,10 @@ class Course extends gEditorial\Module
 				'lesson_cpt' => 'portfolio',
 			],
 			'taxonomies' => [
-				'course_tax'    => 'welcome-learn-more',
-				'course_cat'    => 'category',
-				'lesson_format' => 'category',
-				'status_tax'    => 'post-status',
+				'course_tax' => 'welcome-learn-more',
+				'course_cat' => 'category',
+				'format_tax' => 'category',
+				'status_tax' => 'post-status',
 			],
 		];
 	}
@@ -89,12 +90,12 @@ class Course extends gEditorial\Module
 	{
 		$strings = [
 			'noops' => [
-				'course_cpt'    => _n_noop( 'Course', 'Courses', 'geditorial-course' ),
-				'course_tax'    => _n_noop( 'Course', 'Courses', 'geditorial-course' ),
-				'course_cat'    => _n_noop( 'Course Category', 'Course Categories', 'geditorial-course' ),
-				'lesson_cpt'    => _n_noop( 'Lesson', 'Lessons', 'geditorial-course' ),
-				'lesson_format' => _n_noop( 'Lesson Format', 'Lesson Formats', 'geditorial-course' ),
-				'status_tax'    => _n_noop( 'Lesson Status', 'Lesson Statuses', 'geditorial-course' ),
+				'course_cpt' => _n_noop( 'Course', 'Courses', 'geditorial-course' ),
+				'course_tax' => _n_noop( 'Course', 'Courses', 'geditorial-course' ),
+				'course_cat' => _n_noop( 'Course Category', 'Course Categories', 'geditorial-course' ),
+				'lesson_cpt' => _n_noop( 'Lesson', 'Lessons', 'geditorial-course' ),
+				'format_tax' => _n_noop( 'Lesson Format', 'Lesson Formats', 'geditorial-course' ),
+				'status_tax' => _n_noop( 'Lesson Status', 'Lesson Statuses', 'geditorial-course' ),
 			],
 		];
 
@@ -116,7 +117,7 @@ class Course extends gEditorial\Module
 			'lesson_cpt' => [
 				'meta_box_title' => _x( 'Course', 'MetaBox Title', 'geditorial-course' ),
 			],
-			'lesson_format' => [
+			'format_tax' => [
 				'meta_box_title'      => _x( 'Lesson Format', 'MetaBox Title', 'geditorial-course' ),
 				'tweaks_column_title' => _x( 'Lesson Format', 'Column Title', 'geditorial-course' ),
 			],
@@ -211,7 +212,7 @@ class Course extends gEditorial\Module
 			'show_in_quick_edit' => TRUE,
 		] );
 
-		$this->register_taxonomy( 'lesson_format', [
+		$this->register_taxonomy( 'format_tax', [
 			'hierarchical'       => TRUE, // required by `MetaBox::checklistTerms()`
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
