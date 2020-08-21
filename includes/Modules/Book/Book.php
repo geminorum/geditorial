@@ -586,7 +586,7 @@ class Book extends gEditorial\Module
 
 	public function shortcode_item_after_cb( $post, $args, $item )
 	{
-		return $this->p2p_get_meta_row( 'publication_cpt', $post->p2p_id, ' &ndash; ', '' );
+		return $this->p2p ? $this->p2p_get_meta_row( 'publication_cpt', $post->p2p_id, ' &ndash; ', '' ) : '';
 	}
 
 	public function cover_shortcode( $atts = [], $content = NULL, $tag = '' )
@@ -617,6 +617,9 @@ class Book extends gEditorial\Module
 
 	public function insert_content( $content )
 	{
+		if ( ! $this->p2p )
+			return;
+
 		if ( ! $this->is_content_insert( $this->posttypes( 'publication_cpt' ) ) )
 			return;
 
@@ -657,6 +660,9 @@ class Book extends gEditorial\Module
 	// FIXME: DEPRECATED: use `publications_shortcode()`
 	public function list_p2p( $post = NULL, $class = '' )
 	{
+		if ( ! $this->p2p )
+			return;
+
 		if ( ! $post = get_post( $post ) )
 			return;
 
