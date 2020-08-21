@@ -519,6 +519,16 @@ class Course extends gEditorial\Module
 		echo '</div>';
 	}
 
+	public function meta_box_cb_span_tax( $post, $box )
+	{
+		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
+			return;
+
+		echo $this->wrap_open( '-admin-metabox' );
+			MetaBox::checklistTerms( $post->ID, $box['args'] );
+		echo '</div>';
+	}
+
 	public function post_updated_messages( $messages )
 	{
 		return array_merge( $messages, $this->get_post_updated_messages( 'course_cpt' ) );
