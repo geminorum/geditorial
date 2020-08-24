@@ -251,6 +251,11 @@ class Book extends gEditorial\Module
 					'title'       => _x( 'Alternative Title', 'Field Title', 'geditorial-book' ),
 					'description' => _x( 'The Original Title or Title in Another Language', 'Field Description', 'geditorial-book' ),
 				],
+				'publication_byline' => [
+					'title'       => _x( 'Publication By-Line', 'Field Title', 'geditorial-book' ),
+					'description' => _x( 'Text to override the publication author', 'Field Description', 'geditorial-book' ),
+					'type'        => 'note',
+				],
 				'publication_edition' => [
 					'title'       => _x( 'Edition', 'Field Title', 'geditorial-book' ),
 					'description' => _x( 'Edition of the Publication', 'Field Description', 'geditorial-book' ),
