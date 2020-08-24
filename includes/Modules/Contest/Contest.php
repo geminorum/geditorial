@@ -181,7 +181,6 @@ class Contest extends gEditorial\Module
 			'show_ui'            => TRUE,
 			'show_in_menu'       => FALSE,
 			'hierarchical'       => TRUE,
-			'meta_box_cb'        => NULL, // default meta box
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
 		] );
@@ -296,8 +295,7 @@ class Contest extends gEditorial\Module
 				$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
 			}
 
-			// interferes with default behavior of metabox save
-			// $this->_hook_store_metabox( $screen->post_type );
+			$this->_hook_store_metabox( $screen->post_type );
 		}
 	}
 
@@ -518,7 +516,6 @@ class Contest extends gEditorial\Module
 			$this->set_linked_term( $post_id, $term['term_id'], 'contest_cpt', 'contest_tax' );
 	}
 
-	// FIXME: not used
 	public function store_metabox( $post_id, $post, $update, $context = NULL )
 	{
 		if ( ! $this->is_save_post( $post, $this->posttypes() ) )
