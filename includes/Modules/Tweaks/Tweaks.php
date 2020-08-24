@@ -217,8 +217,6 @@ class Tweaks extends gEditorial\Module
 			'follow_users',
 			'follow_groups',
 			'status',
-			'contests',
-			'courses'
 		] );
 	}
 
