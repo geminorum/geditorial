@@ -228,7 +228,6 @@ class Course extends gEditorial\Module
 			'show_ui'            => TRUE,
 			'show_in_menu'       => FALSE,
 			'hierarchical'       => TRUE,
-			'meta_box_cb'        => NULL, // default meta box
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
 		] );
@@ -347,8 +346,7 @@ class Course extends gEditorial\Module
 				$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
 			}
 
-			// interferes with default behavior of metabox save
-			// $this->_hook_store_metabox( $screen->post_type );
+			$this->_hook_store_metabox( $screen->post_type );
 		}
 	}
 
@@ -486,17 +484,6 @@ class Course extends gEditorial\Module
 			echo $dropdown ?: '';
 
 		MetaBox::fieldPostMenuOrder( $post );
-	}
-
-	// FIXME: not used
-	public function meta_box_cb_course_tax( $post, $box )
-	{
-		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
-			return;
-
-		echo $this->wrap_open( '-admin-metabox' );
-			MetaBox::checklistTerms( $post->ID, $box['args'] );
-		echo '</div>';
 	}
 
 	public function meta_box_cb_lesson_format( $post, $box )
