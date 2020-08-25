@@ -92,7 +92,7 @@ class Book extends gEditorial\Module
 			'type_tax'                => 'publication_type',
 			'status_tax'              => 'publication_status',
 			'size_tax'                => 'publication_size',
-			'publications_shortcode'  => 'publications',
+			'publication_shortcode'   => 'publication',
 			'cover_shortcode'         => 'publication-cover',
 			'metakey_import_id'       => 'book_publication_id',
 			'metakey_import_title'    => 'book_publication_title',
@@ -380,7 +380,7 @@ class Book extends gEditorial\Module
 
 		$this->register_posttype( 'publication_cpt' );
 
-		$this->register_shortcode( 'publications_shortcode' );
+		$this->register_shortcode( 'publication_shortcode' );
 		$this->register_shortcode( 'cover_shortcode' );
 
 		if ( ! is_admin() )
@@ -547,12 +547,12 @@ class Book extends gEditorial\Module
 	public function template_get_archive_content( $atts = [] )
 	{
 		$html = $this->get_search_form( 'publication_cpt' );
-		$html.= $this->publications_shortcode( [ 'title' => FALSE, 'wrap' => FALSE ] );
+		$html.= $this->publication_shortcode( [ 'title' => FALSE, 'wrap' => FALSE ] );
 
 		return $html;
 	}
 
-	public function publications_shortcode( $atts = [], $content = NULL, $tag = '' )
+	public function publication_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
 		return ShortCode::listPosts(
 			'connected',
@@ -567,7 +567,7 @@ class Book extends gEditorial\Module
 				'title_link'    => FALSE,
 			], (array) $atts ),
 			$content,
-			$this->constant( 'publications_shortcode' )
+			$this->constant( 'publication_shortcode' )
 		);
 	}
 
@@ -662,7 +662,7 @@ class Book extends gEditorial\Module
 	}
 
 	// TODO: https://github.com/scribu/wp-posts-to-posts/wiki/Related-posts
-	// FIXME: DEPRECATED: use `publications_shortcode()`
+	// FIXME: DEPRECATED: use `publication_shortcode()`
 	public function list_p2p( $post = NULL, $class = '' )
 	{
 		if ( ! $this->p2p )
