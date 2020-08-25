@@ -172,14 +172,14 @@ class Course extends gEditorial\Module
 					'type'        => 'title_after',
 				],
 			],
-			'_supported' => [
+			$this->constant( 'lesson_cpt' ) => [
 				'over_title' => [ 'type' => 'title_before' ],
 				'sub_title'  => [
 					'title'       => _x( 'Subtitle', 'Field Title', 'geditorial-course' ),
 					'description' => _x( 'Subtitle of the Lesson', 'Field Description', 'geditorial-course' ),
 					'type'        => 'title_after',
 				],
-
+				'byline'       => [ 'type' => 'text' ],
 				'published'    => [ 'type' => 'text' ],
 				'source_title' => [ 'type' => 'text' ],
 				'source_url'   => [ 'type' => 'link' ],
@@ -373,7 +373,7 @@ class Course extends gEditorial\Module
 	public function meta_init()
 	{
 		$this->add_posttype_fields( $this->constant( 'course_cpt' ) );
-		$this->add_posttype_fields_supported();
+		$this->add_posttype_fields( $this->constant( 'lesson_cpt' ) );
 	}
 
 	public function dashboard_glance_items( $items )
