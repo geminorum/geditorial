@@ -614,7 +614,11 @@ class ShortCode extends Core\Base
 		if ( ! $count || ( 1 == $count && $skip ) )
 			return $content;
 
-		if ( 'assigned' == $list ) {
+		if ( FALSE === $args['title'] ) {
+
+			// do nothing, title is disabled by the args
+
+		} else if ( 'assigned' == $list ) {
 
 			$args['title'] = self::termTitle( $term, $taxonomy, $args );
 
