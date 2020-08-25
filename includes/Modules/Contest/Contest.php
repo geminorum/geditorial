@@ -6,6 +6,8 @@ use geminorum\gEditorial;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Settings;
+use geminorum\gEditorial\ShortCode;
+use geminorum\gEditorial\Template;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\URL;
@@ -48,6 +50,7 @@ class Contest extends gEditorial\Module
 			],
 			'posttypes_option' => 'posttypes_option',
 			'_supports' => [
+				'shortcode_support',
 				'thumbnail_support',
 				$this->settings_supports_option( 'contest_cpt', TRUE ),
 				$this->settings_supports_option( 'apply_cpt', TRUE ),
@@ -68,6 +71,8 @@ class Contest extends gEditorial\Module
 			'apply_cat'           => 'apply_category',
 			'apply_cat_slug'      => 'apply-category',
 			'status_tax'          => 'apply_status',
+			'contest_shortcode'   => 'contest',
+			'cover_shortcode'     => 'contest-cover',
 		];
 	}
 
@@ -203,6 +208,9 @@ class Contest extends gEditorial\Module
 		] );
 
 		$this->register_posttype( 'apply_cpt' );
+
+		$this->register_shortcode( 'contest_shortcode' );
+		$this->register_shortcode( 'cover_shortcode' );
 
 		if ( is_admin() )
 			return;
@@ -606,6 +614,44 @@ class Contest extends gEditorial\Module
 			echo Helper::getJoined( $list, ' <span class="-posttypes">(', ')</span>' );
 
 		echo '</li>';
+	}
+
+	// TODO: migrate to `Shortcode::listPosts( 'associated' );`
+	public function contest_shortcode( $atts = [], $content = NULL, $tag = '' )
+	{
+		return ShortCode::getAssocPosts(
+			$this->constant( 'contest_cpt' ),
+			$this->constant( 'contest_tax' ),
+			array_merge( [
+				'posttypes' => $this->posttypes(),
+				'orderby'   => 'menu_order', // order by meta
+			], (array) $atts ),
+			$content,
+			$this->constant( 'contest_shortcode' )
+		);
+	}
+
+	public function cover_shortcode( $atts = [], $content = NULL, $tag = '' )
+	{
+		$args = [
+			'size' => $this->get_image_size_key( 'contest_cpt', 'medium' ),
+			'type' => $this->constant( 'contest_cpt' ),
+			'echo' => FALSE,
+		];
+
+		if ( is_singular( $args['type'] ) )
+			$args['id'] = NULL;
+
+		else if ( is_singular() )
+			$args['id'] = 'assoc';
+
+		if ( ! $html = Template::postImage( array_merge( $args, (array) $atts ), $this->module->name ) )
+			return $content;
+
+		return ShortCode::wrap( $html,
+			$this->constant( 'cover_shortcode' ),
+			array_merge( [ 'wrap' => TRUE ], (array) $atts )
+		);
 	}
 
 	// FIXME: update from magazine module
