@@ -2,15 +2,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gEditorial\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
-"POT-Creation-Date: 2020-08-19T09:16:27+00:00\n"
-"PO-Revision-Date: 2020-08-19 15:44+0430\n"
+"POT-Creation-Date: 2020-08-26T08:36:48+00:00\n"
+"PO-Revision-Date: 2020-08-26 13:07+0430\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: geminorum <contact@geminorum.ir>\n"
 "Language: fa\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.4\n"
+"X-Generator: Poedit 2.4.1\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -1047,7 +1047,7 @@ msgid "Disable Module"
 msgstr "غیرفعال کردن پودمان"
 
 #. translators: %s: posts count
-#: includes/Module.php:1371
+#: includes/Module.php:1375
 msgctxt "Module: Noop"
 msgid "%s Post"
 msgid_plural "%s Posts"
@@ -1055,7 +1055,7 @@ msgstr[0] "%s نوشته"
 msgstr[1] "%s نوشته"
 
 #. translators: %s: items count
-#: includes/Module.php:1375
+#: includes/Module.php:1379
 msgctxt "Module: Noop"
 msgid "%s Item Connected"
 msgid_plural "%s Items Connected"
@@ -1063,115 +1063,115 @@ msgstr[0] "%s عنوان مرتبط"
 msgstr[1] "%s عنوان مرتبط"
 
 #. translators: %s: words count
-#: includes/Module.php:1379
+#: includes/Module.php:1383
 msgctxt "Module: Noop"
 msgid "%s Word"
 msgid_plural "%s Words"
 msgstr[0] "%s کلمه"
 msgstr[1] "%s کلمه"
 
-#: includes/Module.php:1434
+#: includes/Module.php:1438
 msgctxt "Module"
 msgid "Default Terms"
 msgstr "رده‌های پیش‌فرض"
 
-#: includes/Module.php:1441
+#: includes/Module.php:1445
 msgctxt "Module"
 msgid "No Default Terms"
 msgstr "رده پیش‌فرضی وجود ندارد"
 
 #. translators: %s: module title
-#: includes/Module.php:1594 includes/Module.php:3428
+#: includes/Module.php:1598 includes/Module.php:3447
 msgctxt "Module"
 msgid "Editorial: %s"
 msgstr "تحریریه: %s"
 
-#: includes/Module.php:1604
+#: includes/Module.php:1608
 msgctxt "Module"
 msgid "You need to flush rewrite rules!"
 msgstr "پایاپیوندها نیاز به بازسازی دارند!"
 
-#: includes/Module.php:1634
+#: includes/Module.php:1638
 msgctxt "Module: Setting Section Title"
 msgid "Defaults"
 msgstr "پیش‌فرض‌ها"
 
-#: includes/Module.php:1641
+#: includes/Module.php:1645
 msgctxt "Module: Setting Section Title"
 msgid "Front-end"
 msgstr "سمت‌کاربری"
 
-#: includes/Module.php:1648
+#: includes/Module.php:1652
 msgctxt "Module: Setting Section Title"
 msgid "Generated Contents"
 msgstr "محتوای تولیدشده"
 
-#: includes/Module.php:1655
+#: includes/Module.php:1659
 msgctxt "Module: Setting Section Title"
 msgid "Admin Dashboard"
 msgstr "پیشخوان مدیریت"
 
-#: includes/Module.php:1662
+#: includes/Module.php:1666
 msgctxt "Module: Setting Section Title"
 msgid "Admin Edit List"
 msgstr "فهرست مدیریت نوشته‌ها"
 
-#: includes/Module.php:1669
+#: includes/Module.php:1673
 msgctxt "Module: Setting Section Title"
 msgid "Admin List Columns"
 msgstr "مدیریت ستون‌های فهرست"
 
-#: includes/Module.php:1676
+#: includes/Module.php:1680
 msgctxt "Module: Setting Section Title"
 msgid "Admin Edit Post"
 msgstr "مدیریت ویرایش نوشته"
 
-#: includes/Module.php:1683
+#: includes/Module.php:1687
 msgctxt "Module: Setting Section Title"
 msgid "Admin Comment List"
 msgstr "فهرست مدیریت دیدگاه‌ها"
 
-#: includes/Module.php:1690
+#: includes/Module.php:1694
 msgctxt "Module: Setting Section Title"
 msgid "Custom Strings"
 msgstr "رشته‌های سفارشی"
 
-#: includes/Module.php:1697
+#: includes/Module.php:1701
 msgctxt "Module: Setting Section Title"
 msgid "Accessibility"
 msgstr "دسترسی‌ها"
 
-#: includes/Module.php:1698
+#: includes/Module.php:1702
 msgctxt "Module: Setting Section Description"
 msgid "Though Administrators have it all!"
 msgstr "هرچند مدیران به همه چیز دسترسی دارند!"
 
-#: includes/Module.php:2430
+#: includes/Module.php:2434
 msgctxt "Module: MetaBox Default Title"
 msgid "Settings"
 msgstr "تنظیمات"
 
-#: includes/Module.php:2449
+#: includes/Module.php:2453
 msgctxt "Module: MetaBox Default Action"
 msgid "Configure"
 msgstr "پیکربندی"
 
-#: includes/Module.php:2474 includes/Module.php:2499
+#: includes/Module.php:2478 includes/Module.php:2503
 msgctxt "Module: MetaBox Default Action"
 msgid "Manage"
 msgstr "مدیریت"
 
-#: includes/Module.php:2923
+#: includes/Module.php:2939
 msgctxt "Module: P2P"
 msgid "View the connected list"
 msgstr "دیدن فهرست مرتبط‌شده‌ها"
 
-#: includes/Module.php:2963
+#: includes/Module.php:2982
 msgctxt "Module: P2P"
 msgid "View all connected"
 msgstr "دیدن همه مرتبط‌شده‌ها"
 
-#: includes/Module.php:3317
+#: includes/Module.php:3336
 msgctxt "Module: Template Title"
 msgid "[Untitled]"
 msgstr "[بدون عنوان]"
@@ -1336,12 +1336,12 @@ msgctxt "Modules: Contacts"
 msgid "Editorial Contact List"
 msgstr "فهرست ارتباط‌های تحریریه"
 
-#: includes/Modules/Contest/Contest.php:23
+#: includes/Modules/Contest/Contest.php:25
 msgctxt "Modules: Contest"
 msgid "Contest"
 msgstr "فراخوان"
 
-#: includes/Modules/Contest/Contest.php:24
+#: includes/Modules/Contest/Contest.php:26
 msgctxt "Modules: Contest"
 msgid "Contest Management"
 msgstr "مدریت فراخوان‌ها"
@@ -1356,12 +1356,12 @@ msgctxt "Modules: Countries"
 msgid "The World by Country"
 msgstr "جهان به تقسیم کشورها"
 
-#: includes/Modules/Course/Course.php:22
+#: includes/Modules/Course/Course.php:24
 msgctxt "Modules: Course"
 msgid "Course"
 msgstr "دوره"
 
-#: includes/Modules/Course/Course.php:23
+#: includes/Modules/Course/Course.php:25
 msgctxt "Modules: Course"
 msgid "Course and Lesson Management"
 msgstr "مدیریت درس و دوره"
@@ -1976,12 +1976,12 @@ msgctxt "Modules: Users"
 msgid "Editorial Users"
 msgstr "کاربران تحریریه"
 
-#: includes/Modules/Venue/Venue.php:22
+#: includes/Modules/Venue/Venue.php:25
 msgctxt "Modules: Venue"
 msgid "Venue"
 msgstr "جای‌گاه"
 
-#: includes/Modules/Venue/Venue.php:23
+#: includes/Modules/Venue/Venue.php:26
 msgctxt "Modules: Venue"
 msgid "Place Listings"
 msgstr "فهرست‌بندی مکان‌ها"
@@ -2889,17 +2889,17 @@ msgid "Permanent link"
 msgstr "پیوند پایدار"
 
 #. translators: %s: search query
-#: includes/Template.php:543
+#: includes/Template.php:545
 msgctxt "Template: Search Link Title Attr"
 msgid "Search for %s"
 msgstr "جست‌وجو برای %s"
 
-#: includes/Template.php:592
+#: includes/Template.php:594
 msgctxt "Template: Meta Link Default Title"
 msgid "External Source"
 msgstr "پیوند بیرونی"
 
-#: includes/Template.php:593
+#: includes/Template.php:595
 msgctxt "Template: Meta Link Default Title Attr"
 msgid "Visit external source"
 msgstr "دیدن پیوند بیرونی"

@@ -1,13 +1,13 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gEditorial Book 3.16.0\n"
+"Project-Id-Version: gEditorial Book 3.16.1\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "Last-Translator: NULL\n"
 "Language-Team: NULL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2020-08-19T11:45:10+00:00\n"
+"POT-Creation-Date: 2020-08-26T08:37:02+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.4.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Book\n"
@@ -300,170 +300,180 @@ msgstr ""
 
 #: Book.php:255
 msgctxt "Field Title"
-msgid "Edition"
+msgid "Publication By-Line"
 msgstr ""
 
 #: Book.php:256
 msgctxt "Field Description"
-msgid "Edition of the Publication"
-msgstr ""
-
-#: Book.php:259
-msgctxt "Field Title"
-msgid "Print"
+msgid "Text to override the publication author"
 msgstr ""
 
 #: Book.php:260
+msgctxt "Field Title"
+msgid "Edition"
+msgstr ""
+
+#: Book.php:261
 msgctxt "Field Description"
-msgid "Specefic Print of the Publication"
+msgid "Edition of the Publication"
 msgstr ""
 
 #: Book.php:264
 msgctxt "Field Title"
-msgid "Publish Location"
+msgid "Print"
 msgstr ""
 
 #: Book.php:265
 msgctxt "Field Description"
-msgid "Location Published"
+msgid "Specefic Print of the Publication"
 msgstr ""
 
 #: Book.php:269
 msgctxt "Field Title"
-msgid "Publication Date"
+msgid "Publish Location"
 msgstr ""
 
 #: Book.php:270
 msgctxt "Field Description"
-msgid "Date Published"
+msgid "Location Published"
 msgstr ""
 
 #: Book.php:274
 msgctxt "Field Title"
-msgid "ISBN"
+msgid "Publication Date"
 msgstr ""
 
 #: Book.php:275
 msgctxt "Field Description"
-msgid "International Standard Book Number"
+msgid "Date Published"
+msgstr ""
+
+#: Book.php:279
+msgctxt "Field Title"
+msgid "ISBN"
 msgstr ""
 
 #: Book.php:280
+msgctxt "Field Description"
+msgid "International Standard Book Number"
+msgstr ""
+
+#: Book.php:285
 msgctxt "Field Title"
 msgid "Pages"
 msgstr ""
 
-#: Book.php:281
+#: Book.php:286
 msgctxt "Field Description"
 msgid "Total Pages of the Publication"
 msgstr ""
 
-#: Book.php:286
+#: Book.php:291
 msgctxt "Field Title"
 msgid "Volumes"
 msgstr ""
 
-#: Book.php:287
+#: Book.php:292
 msgctxt "Field Description"
 msgid "Total Volumes of the Publication"
 msgstr ""
 
-#: Book.php:292
+#: Book.php:297
 msgctxt "Field Title"
 msgid "Size"
 msgstr ""
 
-#: Book.php:293
+#: Book.php:298
 msgctxt "Field Description"
 msgid "The Size of the Publication, Mainly Books"
 msgstr ""
 
-#: Book.php:298
+#: Book.php:303
 msgctxt "Field Title"
 msgid "Reference"
 msgstr ""
 
-#: Book.php:299
+#: Book.php:304
 msgctxt "Field Description"
 msgid "Full reference to this publication"
 msgstr ""
 
-#: Book.php:324
+#: Book.php:329
 msgctxt "Button"
 msgid "Install Default Sizes"
 msgstr ""
 
 #. translators: %s: isbn placeholder
-#: Book.php:451
+#: Book.php:456
 msgctxt "Display"
 msgid "ISBN: %s"
 msgstr ""
 
 #. translators: %s: edition placeholder
-#: Book.php:453
+#: Book.php:458
 msgctxt "Display"
 msgid "%s Edition"
 msgstr ""
 
 #. translators: %s: print placeholder
-#: Book.php:455
+#: Book.php:460
 msgctxt "Display"
 msgid "%s Print"
 msgstr ""
 
 #. translators: %s: pages count placeholder
-#: Book.php:457
+#: Book.php:462
 msgctxt "Display"
 msgid "%s Pages"
 msgstr ""
 
 #. translators: %s: volumes count placeholder
-#: Book.php:459
+#: Book.php:464
 msgctxt "Display"
 msgid "%s Volumes"
 msgstr ""
 
-#: Book.php:743
+#: Book.php:754
 msgctxt "Table Column"
 msgid "Import Meta"
 msgstr ""
 
-#: Book.php:756
+#: Book.php:767
 msgctxt "Table Column"
 msgid "Import Related"
 msgstr ""
 
-#: Book.php:763
+#: Book.php:774
 msgctxt "Tools"
 msgid "By ID"
 msgstr ""
 
-#: Book.php:767
+#: Book.php:778
 msgctxt "Tools"
 msgid "By Title"
 msgstr ""
 
-#: Book.php:775
+#: Book.php:786
 msgctxt "Header"
 msgid "Overview of Meta Information about Related Publications"
 msgstr ""
 
-#: Book.php:788
+#: Book.php:799
 msgctxt "Import Field"
 msgid "Book: Publication ID"
 msgstr ""
 
-#: Book.php:789
+#: Book.php:800
 msgctxt "Import Field"
 msgid "Book: Publication Title"
 msgstr ""
 
-#: Book.php:790
+#: Book.php:801
 msgctxt "Import Field"
 msgid "Book: Publication Ref (P2P)"
 msgstr ""
 
-#: Book.php:791
+#: Book.php:802
 msgctxt "Import Field"
 msgid "Book: Publication Desc (P2P)"
 msgstr ""
