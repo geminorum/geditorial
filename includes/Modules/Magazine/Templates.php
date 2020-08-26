@@ -28,13 +28,13 @@ class Magazine extends gEditorial\Template
 
 	public static function theIssueTitleCB( $post, $args = [] )
 	{
-		return trim( strip_tags( self::getMetaField( 'number', [
+		return trim( strip_tags( self::getMetaField( 'number_line', [
 			'id'      => $post->ID,
 			'default' => $args['item_title'],
 		] ) ) );
 	}
 
-	public static function theIssueMeta( $field = 'number', $atts = [] )
+	public static function theIssueMeta( $field = 'number_line', $atts = [] )
 	{
 		if ( ! array_key_exists( 'echo', $atts ) )
 			$atts['echo'] = TRUE;

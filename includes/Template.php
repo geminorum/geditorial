@@ -493,6 +493,8 @@ class Template extends Core\Base
 		return gEditorial()->{$module}->get_postmeta_field( $post_id, $field );
 	}
 
+	// FIXME: rename to more generic title
+	// FIXME: move current title to meta module template
 	public static function metaLabel( $atts = [], $module = NULL, $check = TRUE )
 	{
 		if ( is_null( $module ) && static::MODULE )

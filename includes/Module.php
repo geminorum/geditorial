@@ -1318,6 +1318,7 @@ class Module extends Base
 		return $this->filters( 'sanitize_posttype_field', $sanitized, $field, $post, $data );
 	}
 
+	// for fields only in connection to the caller module
 	public function add_posttype_fields_supported( $posttypes = NULL, $fields = NULL, $type = 'meta', $append = TRUE )
 	{
 		if ( is_null( $posttypes ) )
@@ -1325,6 +1326,9 @@ class Module extends Base
 
 		if ( is_null( $fields ) )
 			$fields = $this->fields['_supported'];
+
+		if ( empty( $fields ) )
+			return;
 
 		foreach ( $posttypes as $posttype )
 			$this->add_posttype_fields( $posttype, $fields, $type, $append );

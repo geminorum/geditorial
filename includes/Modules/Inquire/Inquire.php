@@ -91,7 +91,6 @@ class Inquire extends gEditorial\Module
 		if ( ! is_admin() )
 			return $strings;
 
-
 		$strings['misc'] = [
 			'inquiry_cpt' => [
 				'menu_name'       => _x( 'Inquiries', 'Posttype Menu', 'geditorial-inquire' ),
