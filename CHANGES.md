@@ -1,3 +1,19 @@
+### 3.16.1
+* main/module: check for p2p before helpers
+* main/shortcode: disabling title on list posts
+* module/book: check for p2p before helpers
+* module/book: main posttype shortcode as singular form
+* module/book: new field for publication byline
+* module/contest: default shortcodes
+* module/contest: revert back to old metabox rendering
+* module/course: default shortcodes
+* module/course: limit meta fields to lesson posttype only
+* module/course: rename the constant key for lesson format
+* module/course: revert back to old metabox rendering
+* module/course: span tax for course posttype
+* module/tweaks: revert excluding essential taxes
+* module/venue: :new: module
+
 ### 3.16.0
 * main/metabox: passing supported posttypes for terms posts
 * main/module: add fields for supported posttypes
