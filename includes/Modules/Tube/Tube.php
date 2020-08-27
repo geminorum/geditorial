@@ -132,6 +132,7 @@ class Tube extends gEditorial\Module
 					'title'       => _x( 'Featured People', 'Field Title', 'geditorial-tube' ),
 					'description' => _x( 'Featured People', 'Field Description', 'geditorial-tube' ),
 					'icon'        => 'groups',
+					'quickedit'   => TRUE,
 				],
 				'creation_date' => [
 					'title'       => _x( 'Creation Date', 'Field Title', 'geditorial-tube' ),
@@ -144,7 +145,6 @@ class Tube extends gEditorial\Module
 					'icon'        => 'backup',
 				],
 
-				'published'    => [ 'type' => 'text' ],
 				'source_title' => [ 'type' => 'text' ],
 				'source_url'   => [ 'type' => 'link' ],
 				'highlight'    => [ 'type' => 'note' ],

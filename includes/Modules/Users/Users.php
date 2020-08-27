@@ -90,7 +90,7 @@ class Users extends gEditorial\Module
 			'type_tax'       => 'user_type',
 			'type_tax_slug'  => 'users/type',
 
-			'metakey_categories' => 'author_categories_',
+			'metakey_categories' => 'author_categories_%s',
 		];
 	}
 
@@ -475,7 +475,7 @@ class Users extends gEditorial\Module
 		if ( is_null( $blog_id ) )
 			$blog_id = get_current_blog_id();
 
-		$key = $this->constant( 'metakey_categories' ).$blog_id;
+		$key = sprintf( $this->constant( 'metakey_categories' ), $blog_id );
 
 		if ( $cats = get_user_meta( $user_id, $key, TRUE ) )
 			return (array) $cats;
@@ -501,7 +501,7 @@ class Users extends gEditorial\Module
 
 		if ( isset( $_POST['categories'] ) ) {
 
-			$key = $this->constant( 'metakey_categories' ).get_current_blog_id();
+			$key = sprintf( $this->constant( 'metakey_categories' ), get_current_blog_id() );
 			update_user_meta( $user_id, $key, array_filter( $_POST['categories'] ) );
 		}
 	}

@@ -15,7 +15,7 @@ use geminorum\gEditorial\WordPress\Taxonomy;
 class Venue extends gEditorial\Module
 {
 
-	protected $partials = [ 'Helper' ];
+	// protected $partials = [ 'Helper' ];
 
 	public static function module()
 	{
@@ -162,6 +162,7 @@ class Venue extends gEditorial\Module
 			'show_in_quick_edit' => TRUE,
 		], 'place_cpt' );
 
+		// FIXME: maybe show in quick box
 		$this->register_taxonomy( 'place_tax', [
 			'show_ui'      => TRUE,
 			'show_in_menu' => FALSE,
