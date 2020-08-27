@@ -233,11 +233,11 @@ class Course extends gEditorial\Module
 		], 'course_cpt' );
 
 		$this->register_taxonomy( 'course_tax', [
-			'show_ui'            => TRUE,
+			'show_ui'            => FALSE,
 			'show_in_menu'       => FALSE,
 			'hierarchical'       => TRUE,
 			'show_admin_column'  => TRUE,
-			'show_in_quick_edit' => TRUE,
+			'show_in_quick_edit' => FALSE,
 		] );
 
 		$this->register_taxonomy( 'format_tax', [
