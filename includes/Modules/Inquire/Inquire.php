@@ -58,11 +58,8 @@ class Inquire extends gEditorial\Module
 			'inquiry_cpt'         => 'inquiry',
 			'inquiry_cpt_archive' => 'inquiries',
 			'subject_tax'         => 'inquiry_subject',
-			'subject_tax_slug'    => 'inquiry-subject',
 			'status_tax'          => 'inquire_status',
-			'status_tax_slug'     => 'inquire-status',
 			'priority_tax'        => 'inquire_priority',
-			'priority_tax_slug'   => 'inquire-priority',
 		];
 	}
 

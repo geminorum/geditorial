@@ -1915,7 +1915,7 @@ class Module extends Base
 			'query_var'   => $this->constant( $constant.'_query_var', $posttype ),
 			'has_archive' => $this->constant( $constant.'_archive', FALSE ),
 			'rewrite'     => [
-				'slug'       => $this->constant( $constant.'_slug', $posttype ),
+				'slug'       => $this->constant( $constant.'_slug', str_replace( '_', '-', $posttype ) ),
 				'ep_mask'    => $this->constant( $constant.'_endpoint', EP_PERMALINK | EP_PAGES ), // https://make.wordpress.org/plugins?p=29
 				'with_front' => FALSE,
 				'feeds'      => TRUE,
@@ -2052,7 +2052,7 @@ class Module extends Base
 
 				// we can use `cpt/tax` if cpt registered after the tax
 				// @REF: https://developer.wordpress.org/reference/functions/register_taxonomy/#comment-2274
-				'slug'       => $this->constant( $constant.'_slug', $taxonomy ),
+				'slug'       => $this->constant( $constant.'_slug', str_replace( '_', '-', $taxonomy ) ),
 				'with_front' => FALSE,
 			],
 

@@ -65,7 +65,6 @@ class Entry extends gEditorial\Module
 			'entry_cpt'         => 'entry',
 			'entry_cpt_archive' => 'entries',
 			'section_tax'       => 'entry_section',
-			'section_tax_slug'  => 'entry-section',
 			'section_shortcode' => 'entry-section',
 		];
 	}

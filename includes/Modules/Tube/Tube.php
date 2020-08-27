@@ -54,20 +54,20 @@ class Tube extends gEditorial\Module
 	protected function get_global_constants()
 	{
 		return [
-			'video_cpt'             => 'video', // clip
-			'video_cpt_archive'     => 'videos',
-			'video_cpt_p2p'         => 'related_videos',
-			'video_cat'             => 'video_cat',
-			'video_cat_slug'        => 'video-category',
-			'video_cat_shortcode'   => 'video-category',
+			'video_cpt'           => 'video', // clip
+			'video_cpt_archive'   => 'videos',
+			'video_cpt_p2p'       => 'related_videos',
+			'video_cat'           => 'video_category',
+			'subject_tax'         => 'video_subject',
+			'channel_cpt'         => 'channel',
+			'channel_cpt_archive' => 'channels',
+			'channel_cpt_p2p'     => 'related_channels',
+			'channel_cat'         => 'channel_category', // MAYBE rename to `channel_subject`
+
 			'video_shortcode'       => 'tube-video',
-			'channel_cpt'           => 'channel',
-			'channel_cpt_archive'   => 'channels',
-			'channel_cpt_p2p'       => 'related_channels',
-			'channel_cat'           => 'channel_cat',
-			'channel_cat_slug'      => 'channel-category',
-			'channel_cat_shortcode' => 'channel-category',
+			'video_cat_shortcode'   => 'tube-video-category',
 			'channel_shortcode'     => 'tube-channel',
+			'channel_cat_shortcode' => 'tube-channel-category',
 		];
 	}
 
