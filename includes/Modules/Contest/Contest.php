@@ -183,11 +183,11 @@ class Contest extends gEditorial\Module
 		], 'contest_cpt' );
 
 		$this->register_taxonomy( 'contest_tax', [
-			'show_ui'            => TRUE,
+			'show_ui'            => FALSE,
 			'show_in_menu'       => FALSE,
 			'hierarchical'       => TRUE,
 			'show_admin_column'  => TRUE,
-			'show_in_quick_edit' => TRUE,
+			'show_in_quick_edit' => FALSE,
 		] );
 
 		$this->register_taxonomy( 'apply_cat', [
