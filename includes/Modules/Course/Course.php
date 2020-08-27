@@ -7,15 +7,17 @@ use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\ShortCode;
-use geminorum\gEditorial\Template;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\URL;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\Taxonomy;
+use geminorum\gEditorial\Templates\Course as ModuleTemplate;
 
 class Course extends gEditorial\Module
 {
+
+	protected $partials = [ 'Templates' ];
 
 	public static function module()
 	{
@@ -773,7 +775,7 @@ class Course extends gEditorial\Module
 		else if ( is_singular() )
 			$args['id'] = 'assoc';
 
-		if ( ! $html = Template::postImage( array_merge( $args, (array) $atts ), $this->module->name ) )
+		if ( ! $html = ModuleTemplate::postImage( array_merge( $args, (array) $atts ) ) )
 			return $content;
 
 		return ShortCode::wrap( $html,
