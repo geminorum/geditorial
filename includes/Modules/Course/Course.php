@@ -674,6 +674,28 @@ class Course extends gEditorial\Module
 		}
 	}
 
+	public function get_assoc_post( $post = NULL, $single = FALSE, $published = TRUE )
+	{
+		$posts = [];
+		$terms = Taxonomy::getTerms( $this->constant( 'course_tax' ), $post, TRUE );
+
+		foreach ( $terms as $term ) {
+
+			if ( ! $linked = $this->get_linked_post_id( $term, 'course_cpt', 'course_tax' ) )
+				continue;
+
+			if ( $single )
+				return $linked;
+
+			if ( $published && 'publish' != get_post_status( $linked ) )
+				continue;
+
+			$posts[$term->term_id] = $linked;
+		}
+
+		return count( $posts ) ? $posts : FALSE;
+	}
+
 	public function tweaks_column_attr( $post )
 	{
 		$posts = $this->get_linked_posts( $post->ID, 'course_cpt', 'course_tax' );
