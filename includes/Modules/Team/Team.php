@@ -36,8 +36,7 @@ class Team extends gEditorial\Module
 		return [
 			'member_cpt'         => 'team_member',
 			'member_cpt_archive' => 'team-members',
-			'member_cat'         => 'team_member_cat',
-			'member_cat_slug'    => 'team-member-category',
+			'member_group'       => 'team_member_group',
 
 			'o2o_name' => 'team_member_to_user',
 		];
@@ -47,7 +46,7 @@ class Team extends gEditorial\Module
 	{
 		return [
 			'taxonomies' => [
-				'member_cat' => NULL,
+				'member_group' => NULL,
 			],
 		];
 	}
@@ -59,11 +58,11 @@ class Team extends gEditorial\Module
 				'member_cpt' => [
 					'menu_name' => _x( 'Team Members', 'Posttype Menu', 'geditorial-team' ),
 				],
-				'tweaks_column_title' => _x( 'Team Member Categories', 'Column Title', 'geditorial-team' ),
+				'tweaks_column_title' => _x( 'Team Member Groups', 'Column Title', 'geditorial-team' ),
 			],
 			'noops' => [
-				'member_cpt' => _n_noop( 'Team Member', 'Team Members', 'geditorial-team' ),
-				'member_cat' => _n_noop( 'Team Member Category', 'Team Member Categories', 'geditorial-team' ),
+				'member_cpt'   => _n_noop( 'Team Member', 'Team Members', 'geditorial-team' ),
+				'member_group' => _n_noop( 'Team Member Group', 'Team Member Groups', 'geditorial-team' ),
 			],
 		];
 	}
@@ -132,7 +131,7 @@ class Team extends gEditorial\Module
 	{
 		parent::init();
 
-		$this->register_taxonomy( 'member_cat', [
+		$this->register_taxonomy( 'member_group', [
 			'hierarchical'       => TRUE,
 			'meta_box_cb'        => NULL, // default meta box
 			'show_admin_column'  => TRUE,
@@ -223,11 +222,11 @@ class Team extends gEditorial\Module
 
 	public function restrict_manage_posts( $posttype, $which )
 	{
-		$this->do_restrict_manage_posts_taxes( 'member_cat' );
+		$this->do_restrict_manage_posts_taxes( 'member_group' );
 	}
 
 	public function parse_query( &$query )
 	{
-		$this->do_parse_query_taxes( $query, 'member_cat' );
+		$this->do_parse_query_taxes( $query, 'member_group' );
 	}
 }
