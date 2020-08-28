@@ -1,13 +1,13 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gEditorial Entry 3.16.1\n"
+"Project-Id-Version: gEditorial Entry 3.16.2\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "Last-Translator: NULL\n"
 "Language-Team: NULL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2020-08-26T08:37:15+00:00\n"
+"POT-Creation-Date: 2020-08-28T02:33:59+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.4.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Entry\n"
@@ -23,44 +23,44 @@ msgctxt "Settings"
 msgid "Tries to linkify the section titles in the entry content."
 msgstr ""
 
-#: Entry.php:77
+#: Entry.php:76
 msgid "Entry"
 msgid_plural "Entries"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Entry.php:78
+#: Entry.php:77
 msgid "Section"
 msgid_plural "Sections"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Entry.php:86
+#: Entry.php:85
 msgctxt "Posttype Featured"
 msgid "Cover Image"
 msgstr ""
 
-#: Entry.php:87
+#: Entry.php:86
 msgctxt "MetaBox Title"
 msgid "Entry"
 msgstr ""
 
-#: Entry.php:88
+#: Entry.php:87
 msgctxt "Column Title"
 msgid "Section"
 msgstr ""
 
-#: Entry.php:169
+#: Entry.php:168
 msgctxt "Adminbar"
 msgid "Entry Sections"
 msgstr ""
 
-#: Entry.php:186
+#: Entry.php:185
 msgctxt "UI: Label"
 msgid "Entry Section"
 msgstr ""
 
-#: Entry.php:190
+#: Entry.php:189
 msgctxt "UI: Label"
 msgid "Section"
 msgstr ""

@@ -1,106 +1,106 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gEditorial Team 3.16.1\n"
+"Project-Id-Version: gEditorial Team 3.16.2\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "Last-Translator: NULL\n"
 "Language-Team: NULL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2020-08-26T08:37:51+00:00\n"
+"POT-Creation-Date: 2020-08-28T02:34:33+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.4.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Team\n"
 "X-Domain: geditorial-team\n"
 
-#: Team.php:60
+#: Team.php:59
 msgctxt "Posttype Menu"
 msgid "Team Members"
 msgstr ""
 
-#: Team.php:62
+#: Team.php:61
 msgctxt "Column Title"
-msgid "Team Member Categories"
+msgid "Team Member Groups"
 msgstr ""
 
-#: Team.php:65
+#: Team.php:64
 msgid "Team Member"
 msgid_plural "Team Members"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Team.php:66
-msgid "Team Member Category"
-msgid_plural "Team Member Categories"
+#: Team.php:65
+msgid "Team Member Group"
+msgid_plural "Team Member Groups"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Team.php:76
+#: Team.php:75
 msgctxt "Field Title"
 msgid "Role"
 msgstr ""
 
-#: Team.php:77
+#: Team.php:76
 msgctxt "Field Description"
 msgid "Enter a byline for the team member (for example: \"Director of Production\")."
 msgstr ""
 
-#: Team.php:82
+#: Team.php:81
 msgctxt "Field Title"
 msgid "Gravatar E-mail Address"
 msgstr ""
 
-#: Team.php:83
+#: Team.php:82
 msgctxt "Field Description"
 msgid "Enter an e-mail address, to use a Gravatar, instead of using the \"Featured Image\"."
 msgstr ""
 
-#: Team.php:88
+#: Team.php:87
 msgctxt "Field Title"
 msgid "Personal Site"
 msgstr ""
 
-#: Team.php:89
+#: Team.php:88
 msgctxt "Field Description"
 msgid "Enter this team member's URL (for example: https://geminorum.ir/)."
 msgstr ""
 
-#: Team.php:94
+#: Team.php:93
 msgctxt "Field Title"
 msgid "Contact E-mail Address"
 msgstr ""
 
-#: Team.php:95
+#: Team.php:94
 msgctxt "Field Description"
 msgid "Enter a contact email address for this team member to be displayed as a link on the frontend."
 msgstr ""
 
-#: Team.php:100
+#: Team.php:99
 msgctxt "Field Title"
 msgid "Telephone Number"
 msgstr ""
 
-#: Team.php:101
+#: Team.php:100
 msgctxt "Field Description"
 msgid "Enter a telephone number for this team member to be displayed as a link on the frontend."
 msgstr ""
 
-#: Team.php:106
+#: Team.php:105
 msgctxt "Field Title"
 msgid "Twitter Username"
 msgstr ""
 
-#: Team.php:107
+#: Team.php:106
 msgctxt "Field Description"
 msgid "Enter this team member's Twitter username without the @ (for example: geminorumir)."
 msgstr ""
 
-#: Team.php:112
+#: Team.php:111
 msgctxt "Field Title"
 msgid "Network Username"
 msgstr ""
 
-#: Team.php:113
+#: Team.php:112
 msgctxt "Field Description"
 msgid "Map this team member to a user on this site."
 msgstr ""
