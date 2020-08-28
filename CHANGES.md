@@ -1,3 +1,13 @@
+### 3.16.2
+* main/module: tidy-up constants for taxonomy slugs
+* main/widget: method for cache keys
+* module/contest: total hide of the assoc tax
+* module/course: missing assoc post helper
+* module/course: quickedit support for byline/published fields
+* module/course: template partial
+* module/course: total hide of the assoc tax
+* module/team: rename category taxonomy to group
+
 ### 3.16.1
 * main/module: check for p2p before helpers
 * main/shortcode: disabling title on list posts
