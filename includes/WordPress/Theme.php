@@ -82,12 +82,16 @@ class Theme extends Core\Base
 
 	public static function restLoopBefore()
 	{
-		add_filter( 'post_link', [ __CLASS__, 'restPost_permalink' ], 1 );
+		add_filter( 'post_link', [ __CLASS__, 'restPost_permalink' ], 9999 );
+		add_filter( 'page_link', [ __CLASS__, 'restPost_permalink' ], 9999 );
+		add_filter( 'post_type_link', [ __CLASS__, 'restPost_permalink' ], 9999 );
 	}
 
 	public static function restLoopAfter()
 	{
-		remove_filter( 'post_link', [ __CLASS__, 'restPost_permalink' ], 1 );
+		remove_filter( 'post_link', [ __CLASS__, 'restPost_permalink' ], 9999 );
+		remove_filter( 'page_link', [ __CLASS__, 'restPost_permalink' ], 9999 );
+		remove_filter( 'post_type_link', [ __CLASS__, 'restPost_permalink' ], 9999 );
 	}
 
 	// @SOURCE: `bp_set_theme_compat_active()`
