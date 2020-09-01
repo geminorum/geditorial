@@ -507,7 +507,7 @@ class Template extends Core\Base
 			'before'      => '',
 			'after'       => '',
 			'echo'        => TRUE,
-			'field'       => 'label',
+			'field'       => 'label', // FALSE to disable
 			'taxonomy'    => gEditorial()->constant( $module, 'label_tax', 'label' ),
 			'image'       => FALSE,
 			'link'        => NULL, // FALSE to disable
@@ -520,10 +520,10 @@ class Template extends Core\Base
 		if ( ! $post = get_post( $args['id'] ) )
 			return $args['default'];
 
-		$meta = self::getMetaField( $args['field'], [
+		$meta = $args['field'] ? self::getMetaField( $args['field'], [
 			'id'     => $post->ID,
 			'filter' => $args['filter'],
-		], FALSE );
+		], FALSE ) : FALSE;
 
 		if ( $term = Taxonomy::theTerm( $args['taxonomy'], $post->ID, TRUE ) ) {
 
