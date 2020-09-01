@@ -40,6 +40,56 @@ class Book extends gEditorial\Template
 		return parent::postImage( $atts, static::MODULE );
 	}
 
+	public static function barcodeISBN( $atts = [] )
+	{
+		$args = self::atts( [
+			'id'      => isset( $atts['post'] ) ? $atts['post'] : NULL,
+			'filter'  => FALSE,
+			'default' => FALSE,
+		], $atts );
+
+		if ( ! $isbn = self::getMetaField( 'publication_isbn', $args ) )
+			return $args['default'];
+
+		$args = self::atts( [
+			'link'   => FALSE, // NULL, FIXME!
+			'before' => '',
+			'after'  => '',
+			'echo'   => TRUE,
+		], $atts );
+
+		// FIXME: make this more stable!
+		$barcode = add_query_arg( [
+			'bcid'        => 'ean13',
+			// 'scaleX'      => '2',
+			// 'scale'      => '2',
+			'text'        => $isbn,
+			'includetext' => '', // to display the code
+		], 'http://bwipjs-api.metafloor.com' );
+
+		$html = HTML::img( $barcode, '-book-barcode-isbn', $isbn );
+
+		if ( is_null( $args['link'] ) )
+			$html = HTML::link( $html, self::lookupISBN( $isbn ) );
+
+		else if ( $args['link'] )
+			$html = HTML::link( $html, $args['link'] );
+
+		$html = $args['before'].$html.$args['after'];
+
+		if ( ! $args['before'] )
+			echo $html;
+
+		echo $html;
+		return TRUE;
+	}
+
+	// FIXME: temp
+	public static function lookupISBN( $isbn )
+	{
+		return '#';
+	}
+
 	// FIXME: DRAFT
 	// @SOURCE: http://wordpress.stackexchange.com/a/126928
 	function get_by_order()
