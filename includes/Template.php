@@ -640,6 +640,88 @@ class Template extends Core\Base
 		return TRUE;
 	}
 
+	public static function metaSummary( $atts = [], $module = NULL, $check = TRUE )
+	{
+		if ( is_null( $module ) && static::MODULE )
+			$module = static::MODULE;
+
+		$args = self::atts( [
+			'id'      => NULL,
+			'fields'  => NULL,
+			'type'    => NULL, // default to current post
+			'default' => FALSE,
+			'before'  => '',
+			'after'   => '',
+			'echo'    => TRUE,
+		], $atts );
+
+		if ( $check && ! gEditorial()->enabled( 'meta' ) )
+			return $args['default'];
+
+		if ( ! $post = get_post( $args['id'] ) )
+			return $args['default'];
+
+		$posttype = $args['type'] ?: $post->post_type;
+		$fields   = gEditorial()->meta->get_posttype_fields( $posttype );
+		$list     = $args['fields'] ?: wp_list_pluck( $fields, 'title', 'name' );
+		$rows     = [];
+
+		foreach ( $list as $key => $title ) {
+
+			if ( ! array_key_exists( $key, $fields ) )
+				continue;
+
+			$field = $fields[$key];
+
+			if ( is_null( $title ) )
+				$title = $field['title'];
+
+			if ( 'term' == $field['type'] )
+				$meta = self::metaTermField( [
+					'id'       => $post,
+					'field'    => FALSE,
+					'link'     => FALSE,
+					'echo'     => FALSE,
+					'taxonomy' => $field['tax'],
+				], 'meta', FALSE );
+
+			else
+				$meta = self::getMetaField( $key, [
+					'id' => $post,
+				], FALSE );
+
+			if ( $meta )
+				$rows[$title] = $meta;
+		}
+
+		if ( empty( $rows ) )
+			return $args['default'];
+
+		$html = $args['before'].self::getTableSummary( $rows ).$args['after'];
+
+		if ( ! $args['echo'] )
+			return $html;
+
+		echo $html;
+		return TRUE;
+	}
+
+	// FIXME: temp!
+	public static function getTableSummary( $data )
+	{
+		$html = '<table class="table table-bordered">';
+
+		foreach ( $data as $key => $value ) {
+			$html.= '<tr><td>';
+				$html.= $key;
+			$html.= '</td><td>';
+				$html.= $value;
+			$html.= '</td></tr>';
+		}
+
+		return $html.'</table>';
+	}
+
 	// FIXME: DEPRECATED
 	public static function sanitizeField( $field )
 	{
