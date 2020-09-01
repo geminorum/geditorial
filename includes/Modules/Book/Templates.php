@@ -10,22 +10,15 @@ class Book extends gEditorial\Template
 
 	const MODULE = 'book';
 
-	// FIXME: DRAFT / NOT USED
 	public static function summary( $atts = [] )
 	{
-		if ( ! gEditorial()->enabled( 'meta' ) )
-			return;
+		if ( ! array_key_exists( 'id', $atts ) )
+			$atts['id'] = NULL;
 
-		$posttype = self::constant( 'publication_cpt', 'publication' );
-		$fields   = gEditorial()->meta->posttype_fields_all( $posttype );
+		if ( ! array_key_exists( 'type', $atts ) )
+			$atts['type'] = self::constant( 'publication_cpt', 'publication' );
 
-		$rows = [];
-
-		foreach ( $fields as $field => $args )
-			if ( $meta = self::getMetaField( $field, [ 'id' => 116 ] ) )
-				$rows[$args['title']] = $meta;
-
-		echo HTML::tableCode( $rows );
+		return self::metaSummary( $atts );
 	}
 
 	public static function theCover( $atts = [] )
