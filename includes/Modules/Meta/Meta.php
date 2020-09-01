@@ -753,7 +753,7 @@ class Meta extends gEditorial\Module
 				'before' => '<li class="-row meta-label">'
 					.$this->get_column_icon( FALSE, $fields['label']['icon'], $fields['label']['title'] ),
 				'after'  => '</li>',
-			], 'meta', FALSE );
+			] );
 
 		if ( array_key_exists( 'source_title', $fields ) || array_key_exists( 'source_url', $fields ) )
 			ModuleTemplate::metaSource( [

@@ -493,9 +493,14 @@ class Template extends Core\Base
 		return gEditorial()->{$module}->get_postmeta_field( $post_id, $field );
 	}
 
-	// FIXME: rename to more generic title
-	// FIXME: move current title to meta module template
-	public static function metaLabel( $atts = [], $module = NULL, $check = TRUE )
+	// FIXME: DEPRECATED
+	public static function metaLabel( $atts = [] )
+	{
+		self::_dep( 'Must extend in sub template!' );
+		return self::metaTermField( $atts );
+	}
+
+	public static function metaTermField( $atts = [], $module = NULL, $check = TRUE )
 	{
 		if ( is_null( $module ) && static::MODULE )
 			$module = static::MODULE;

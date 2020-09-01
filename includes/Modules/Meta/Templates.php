@@ -17,6 +17,11 @@ class Meta extends gEditorial\Template
 		return self::metaField( 'byline', $atts );
 	}
 
+	public static function metaLabel( $atts = [] )
+	{
+		return self::metaTermField( $atts, 'meta', FALSE );
+	}
+
 	public static function metaSource( $atts = [] )
 	{
 		if ( ! array_key_exists( 'title_field', $atts ) )
