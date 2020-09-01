@@ -509,6 +509,7 @@ class Template extends Core\Base
 			'echo'        => TRUE,
 			'field'       => 'label', // FALSE to disable
 			'taxonomy'    => gEditorial()->constant( $module, 'label_tax', 'label' ),
+			'context'     => NULL, // to use `taxonomy`
 			'image'       => FALSE,
 			'link'        => NULL, // FALSE to disable
 			'description' => NULL, // FALSE to disable
@@ -519,6 +520,8 @@ class Template extends Core\Base
 
 		if ( ! $post = get_post( $args['id'] ) )
 			return $args['default'];
+
+		$context = $args['context'] ?: $args['taxonomy'];
 
 		$meta = $args['field'] ? self::getMetaField( $args['field'], [
 			'id'     => $post->ID,
@@ -545,7 +548,7 @@ class Template extends Core\Base
 				$args['description'] = sprintf( _x( 'Search for %s', 'Template: Search Link Title Attr', 'geditorial' ), $meta );
 		}
 
-		$html = $args['image'] ? HTML::img( $args['image'], '-label-image', $meta ) : $meta;
+		$html = $args['image'] ? HTML::img( $args['image'], '-'.$context.'-image', $meta ) : $meta;
 
 		if ( ! $html && $args['default'] )
 			$html = $args['default'];
@@ -558,7 +561,7 @@ class Template extends Core\Base
 			$html = $args['before'].HTML::tag( 'a', [
 				'href'  => $args['link'],
 				'title' => $args['description'] ? $args['description'] : FALSE,
-				'class' => '-label-link',
+				'class' => '-'.$context.'-link',
 				'data'  => $args['description'] ? [ 'toggle' => 'tooltip' ] : FALSE,
 			], $html ).$args['after'];
 
@@ -566,7 +569,7 @@ class Template extends Core\Base
 
 			$html = $args['before'].HTML::tag( 'span', [
 				'title' => $args['description'] ? $args['description'] : FALSE,
-				'class' => '-label-span',
+				'class' => '-'.$context.'-span',
 				'data'  => $args['description'] ? [ 'toggle' => 'tooltip' ] : FALSE,
 			], $html ).$args['after'];
 		}
