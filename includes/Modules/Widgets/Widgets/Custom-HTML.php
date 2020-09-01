@@ -63,6 +63,7 @@ class CustomHTML extends gEditorial\Widget
 
 		$this->form_title( $instance );
 		$this->form_title_link( $instance );
+		$this->form_title_image( $instance );
 		$this->form_class( $instance );
 
 		$this->form_content( $instance );
@@ -84,9 +85,10 @@ class CustomHTML extends gEditorial\Widget
 	{
 		$instance = $old;
 
-		$instance['title']      = sanitize_text_field( $new['title'] );
-		$instance['title_link'] = strip_tags( $new['title_link'] );
-		$instance['class']      = strip_tags( $new['class'] );
+		$instance['title']       = sanitize_text_field( $new['title'] );
+		$instance['title_link']  = strip_tags( $new['title_link'] );
+		$instance['title_image'] = strip_tags( $new['title_link'] );
+		$instance['class']       = strip_tags( $new['class'] );
 
 		if ( current_user_can( 'unfiltered_html' ) )
 			$instance['content'] = $new['content'];

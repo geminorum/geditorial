@@ -81,6 +81,7 @@ class GCalEvents extends gEditorial\Widget
 
 		$this->form_title( $instance );
 		$this->form_title_link( $instance );
+		$this->form_title_image( $instance );
 
 		$this->form_custom_code( $instance, '', 'calendar_id', _x( 'Calendar ID:', 'Widget: Google Calendar', 'geditorial-widgets' ) );
 		$this->form_custom_code( $instance, '', 'api_key', _x( 'Your API key:', 'Widget: Google Calendar', 'geditorial-widgets' ) );
@@ -103,11 +104,12 @@ class GCalEvents extends gEditorial\Widget
 	{
 		$instance = $old;
 
-		$instance['title']      = sanitize_text_field( $new['title'] );
-		$instance['title_link'] = strip_tags( $new['title_link'] );
-		$instance['context']    = strip_tags( $new['context'] );
-		$instance['class']      = strip_tags( $new['class'] );
-		$instance['empty']      = wp_kses_post( $new['empty'] ); // FIXME: use `Helper::kses()`
+		$instance['title']       = sanitize_text_field( $new['title'] );
+		$instance['title_link']  = strip_tags( $new['title_link'] );
+		$instance['title_image'] = strip_tags( $new['title_image'] );
+		$instance['context']     = strip_tags( $new['context'] );
+		$instance['class']       = strip_tags( $new['class'] );
+		$instance['empty']       = wp_kses_post( $new['empty'] ); // FIXME: use `Helper::kses()`
 
 		$instance['calendar_id']  = strip_tags( $new['calendar_id'] );
 		$instance['api_key']      = strip_tags( $new['api_key'] );

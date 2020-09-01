@@ -91,6 +91,7 @@ class CollectionPoster extends gEditorial\Widget
 
 		$this->form_title( $instance );
 		$this->form_title_link( $instance );
+		$this->form_title_image( $instance );
 
 		$this->form_page_id( $instance, '0', 'page_id', 'posttype', $cpt, _x( 'The Collection:', 'Widget: Collection Poster', 'geditorial-collect' ) );
 		$this->form_image_size( $instance, $cpt.'-thumbnail', 'image_size', $cpt );
@@ -112,6 +113,7 @@ class CollectionPoster extends gEditorial\Widget
 
 		$instance['title']             = strip_tags( $new_instance['title'] );
 		$instance['title_link']        = strip_tags( $new_instance['title_link'] );
+		$instance['title_image']       = strip_tags( $new_instance['title_image'] );
 		$instance['page_id']           = intval( $new_instance['page_id'] );
 		$instance['image_size']        = isset( $new_instance['image_size'] ) ? strip_tags( $new_instance['image_size'] ) : 'thumbnail';
 		$instance['latest_collection'] = isset( $new_instance['latest_collection'] );

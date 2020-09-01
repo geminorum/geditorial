@@ -143,6 +143,7 @@ class Widget extends \WP_Widget
 	{
 		$classes = isset( $instance['context'] ) && $instance['context'] ? 'context-'.sanitize_html_class( $instance['context'], 'general' ).' ' : '';
 		$classes.= isset( $instance['class'] ) && $instance['class'] ? $instance['class'].' ' : '';
+		$classes.= isset( $instance['title_image'] ) && $instance['title_image'] ? '-has-title-image ' : '';
 		$classes.= $extra_class.' ';
 
 		$html = preg_replace( '%{GEDITORIAL_WIDGET_CLASSNAME}%', $classes, $args['before_widget'] );
@@ -171,6 +172,9 @@ class Widget extends \WP_Widget
 
 		if ( ! $title )
 			return '';
+
+		if ( ! empty( $instance['title_image'] ) )
+			$title = HTML::img( $instance['title_image'], '-title-image', $title );
 
 		if ( ! empty( $instance['title_link'] ) )
 			$title = HTML::link( $title, $instance['title_link'] );
@@ -386,6 +390,20 @@ class Widget extends \WP_Widget
 		] );
 
 		HTML::label( _x( 'Title Link:', 'Widget Core', 'geditorial' ).$html, $this->get_field_id( $field ) );
+	}
+
+	public function form_title_image( $instance, $default = '', $field = 'title_image' )
+	{
+		$html = HTML::tag( 'input', [
+			'type'  => 'url',
+			'class' => 'widefat',
+			'name'  => $this->get_field_name( $field ),
+			'id'    => $this->get_field_id( $field ),
+			'value' => isset( $instance[$field] ) ? $instance[$field] : $default,
+			'dir'   => 'ltr',
+		] );
+
+		HTML::label( _x( 'Title Image:', 'Widget Core', 'geditorial' ).$html, $this->get_field_id( $field ) );
 	}
 
 	public function form_custom_link( $instance, $default = '', $field = 'custom_link', $label = NULL )

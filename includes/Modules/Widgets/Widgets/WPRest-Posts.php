@@ -106,6 +106,7 @@ class WPRestPosts extends gEditorial\Widget
 
 		$this->form_title( $instance );
 		$this->form_title_link( $instance );
+		$this->form_title_image( $instance );
 
 		$this->form_custom_link( $instance, '', 'resource', _x( 'Resource URL:', 'Widget: WP-REST Posts', 'geditorial-widgets' ) );
 		$this->form_custom_code( $instance, 'posts', 'endpoint', _x( 'Endpoint:', 'Widget: WP-REST Posts', 'geditorial-widgets' ) );
@@ -125,11 +126,12 @@ class WPRestPosts extends gEditorial\Widget
 	{
 		$instance = $old;
 
-		$instance['title']      = sanitize_text_field( $new['title'] );
-		$instance['title_link'] = strip_tags( $new['title_link'] );
-		$instance['context']    = strip_tags( $new['context'] );
-		$instance['class']      = strip_tags( $new['class'] );
-		$instance['empty']      = wp_kses_post( $new['empty'] ); // FIXME: use `Helper::kses()`
+		$instance['title']       = sanitize_text_field( $new['title'] );
+		$instance['title_link']  = strip_tags( $new['title_link'] );
+		$instance['title_image'] = strip_tags( $new['title_image'] );
+		$instance['context']     = strip_tags( $new['context'] );
+		$instance['class']       = strip_tags( $new['class'] );
+		$instance['empty']       = wp_kses_post( $new['empty'] ); // FIXME: use `Helper::kses()`
 
 		$instance['resource']   = esc_url( $new['resource'] );
 		$instance['endpoint']   = strip_tags( $new['endpoint'] );
