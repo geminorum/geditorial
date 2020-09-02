@@ -1,3 +1,13 @@
+### 3.16.3
+* main/template: customize context on term field helper
+* main/template: meta summary helper
+* main/template: optional ignore of co-fields with term type
+* main/template: rename term field helper
+* main/widget: :new: title image for widgets
+* main/widget: prep css classes
+* module/book: isbn barcode helper
+* module/book: meta summary helper
+
 ### 3.16.2
 * main/module: tidy-up constants for taxonomy slugs
 * main/widget: method for cache keys
