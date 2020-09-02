@@ -1,13 +1,13 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gEditorial Event 3.16.2\n"
+"Project-Id-Version: gEditorial Event 3.16.3\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "Last-Translator: NULL\n"
 "Language-Team: NULL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2020-08-28T02:34:01+00:00\n"
+"POT-Creation-Date: 2020-09-02T20:52:47+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.4.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Event\n"
@@ -266,20 +266,20 @@ msgctxt "Widget Description"
 msgid "Displays ongoing events."
 msgstr ""
 
-#: Widgets/Currents.php:92
-#: Widgets/Poster.php:92
+#: Widgets/Currents.php:93
+#: Widgets/Poster.php:93
 msgctxt "Widget: Event Poster"
 msgid "The Event:"
 msgstr ""
 
-#: Widgets/Currents.php:95
-#: Widgets/Poster.php:95
+#: Widgets/Currents.php:96
+#: Widgets/Poster.php:96
 msgctxt "Widget: Event Poster"
 msgid "Always the latest event"
 msgstr ""
 
-#: Widgets/Currents.php:96
-#: Widgets/Poster.php:96
+#: Widgets/Currents.php:97
+#: Widgets/Poster.php:97
 msgctxt "Widget: Event Poster"
 msgid "Link to the event"
 msgstr ""

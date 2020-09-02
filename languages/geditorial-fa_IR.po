@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gEditorial\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
-"POT-Creation-Date: 2020-08-28T02:33:29+00:00\n"
-"PO-Revision-Date: 2020-08-28 07:04+0430\n"
+"POT-Creation-Date: 2020-09-02T20:52:20+00:00\n"
+"PO-Revision-Date: 2020-09-03 01:23+0430\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: geminorum <contact@geminorum.ir>\n"
 "Language: fa\n"
@@ -2889,112 +2889,117 @@ msgid "Permanent link"
 msgstr "پیوند پایدار"
 
 #. translators: %s: search query
-#: includes/Template.php:545
+#: includes/Template.php:553
 msgctxt "Template: Search Link Title Attr"
 msgid "Search for %s"
 msgstr "جست‌وجو برای %s"
 
-#: includes/Template.php:594
+#: includes/Template.php:602
 msgctxt "Template: Meta Link Default Title"
 msgid "External Source"
 msgstr "پیوند بیرونی"
 
-#: includes/Template.php:595
+#: includes/Template.php:603
 msgctxt "Template: Meta Link Default Title Attr"
 msgid "Visit external source"
 msgstr "دیدن پیوند بیرونی"
 
-#: includes/Widget.php:252
+#: includes/Widget.php:262
 msgctxt "Widget Core"
 msgid "Custom HTML:"
 msgstr "HTML سفارشی:"
 
-#: includes/Widget.php:271
+#: includes/Widget.php:281
 msgctxt "Widget Core"
 msgid "Number of posts to show:"
 msgstr "تعداد نوشته‌ها:"
 
-#: includes/Widget.php:295
+#: includes/Widget.php:305
 msgctxt "Widget Core"
 msgid "Context:"
 msgstr "زمینه:"
 
-#: includes/Widget.php:309
+#: includes/Widget.php:319
 msgctxt "Widget Core"
 msgid "Class:"
 msgstr "کلاس:"
 
-#: includes/Widget.php:321
+#: includes/Widget.php:331
 msgctxt "Widget Core"
 msgid "&ndash; (Any)"
 msgstr "&ndash; (هرکدام)"
 
-#: includes/Widget.php:335
+#: includes/Widget.php:345
 msgctxt "Widget Core"
 msgid "PostType:"
 msgstr "نوع‌نوشته:"
 
-#: includes/Widget.php:347
+#: includes/Widget.php:357
 msgctxt "Widget Core"
 msgid "&ndash; All Taxonomies &ndash;"
 msgstr "&ndash; همهٔ رده‌بندی‌ها &ndash;"
 
-#: includes/Widget.php:361
+#: includes/Widget.php:371
 msgctxt "Widget Core"
 msgid "Taxonomy:"
 msgstr "رده‌بندی:"
 
-#: includes/Widget.php:374
+#: includes/Widget.php:384
 msgctxt "Widget Core"
 msgid "Title:"
 msgstr "عنوان:"
 
-#: includes/Widget.php:388
+#: includes/Widget.php:398
 msgctxt "Widget Core"
 msgid "Title Link:"
 msgstr "پیوند عنوان:"
 
-#: includes/Widget.php:394
+#: includes/Widget.php:412
+msgctxt "Widget Core"
+msgid "Title Image:"
+msgstr "تصویر عنوان:"
+
+#: includes/Widget.php:418
 msgctxt "Widget Core"
 msgid "Custom Link:"
 msgstr "پیوند سفارشی:"
 
-#: includes/Widget.php:411
+#: includes/Widget.php:435
 msgctxt "Widget Core"
 msgid "Custom Code:"
 msgstr "کد سفارشی:"
 
-#: includes/Widget.php:428
+#: includes/Widget.php:452
 msgctxt "Widget Core"
 msgid "Empty Message:"
 msgstr "پیام خالی:"
 
-#: includes/Widget.php:451
+#: includes/Widget.php:475
 msgctxt "Widget Core"
 msgid "Avatar Size:"
 msgstr "اندازه آواتار:"
 
-#: includes/Widget.php:475
+#: includes/Widget.php:499
 msgctxt "Widget Core"
 msgid "Image Size:"
 msgstr "اندازه تصویر:"
 
-#: includes/Widget.php:478
+#: includes/Widget.php:502
 msgctxt "Widget Core"
 msgid "No Image Size Available!"
 msgstr "اندازه‌ای برای تصاویر وجود ندارد!"
 
-#: includes/Widget.php:485
+#: includes/Widget.php:509
 msgctxt "Widget Core"
 msgid "Checked"
 msgstr "انتخاب کنید"
 
-#: includes/Widget.php:504
+#: includes/Widget.php:528
 msgctxt "Widget Core"
 msgid "Page:"
 msgstr "برگه:"
 
-#: includes/Widget.php:547
+#: includes/Widget.php:571
 msgctxt "Widget Core"
 msgid "Term:"
 msgstr "رده:"

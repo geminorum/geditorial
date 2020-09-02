@@ -1,13 +1,13 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gEditorial 3.16.2\n"
+"Project-Id-Version: gEditorial 3.16.3\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "Last-Translator: NULL\n"
 "Language-Team: NULL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2020-08-28T02:33:29+00:00\n"
+"POT-Creation-Date: 2020-09-02T20:52:20+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.4.0\n"
 "X-Poedit-Basepath: ..\n"
@@ -2896,112 +2896,117 @@ msgid "Permanent link"
 msgstr ""
 
 #. translators: %s: search query
-#: includes/Template.php:545
+#: includes/Template.php:553
 msgctxt "Template: Search Link Title Attr"
 msgid "Search for %s"
 msgstr ""
 
-#: includes/Template.php:594
+#: includes/Template.php:602
 msgctxt "Template: Meta Link Default Title"
 msgid "External Source"
 msgstr ""
 
-#: includes/Template.php:595
+#: includes/Template.php:603
 msgctxt "Template: Meta Link Default Title Attr"
 msgid "Visit external source"
 msgstr ""
 
-#: includes/Widget.php:252
+#: includes/Widget.php:262
 msgctxt "Widget Core"
 msgid "Custom HTML:"
 msgstr ""
 
-#: includes/Widget.php:271
+#: includes/Widget.php:281
 msgctxt "Widget Core"
 msgid "Number of posts to show:"
 msgstr ""
 
-#: includes/Widget.php:295
+#: includes/Widget.php:305
 msgctxt "Widget Core"
 msgid "Context:"
 msgstr ""
 
-#: includes/Widget.php:309
+#: includes/Widget.php:319
 msgctxt "Widget Core"
 msgid "Class:"
 msgstr ""
 
-#: includes/Widget.php:321
+#: includes/Widget.php:331
 msgctxt "Widget Core"
 msgid "&ndash; (Any)"
 msgstr ""
 
-#: includes/Widget.php:335
+#: includes/Widget.php:345
 msgctxt "Widget Core"
 msgid "PostType:"
 msgstr ""
 
-#: includes/Widget.php:347
+#: includes/Widget.php:357
 msgctxt "Widget Core"
 msgid "&ndash; All Taxonomies &ndash;"
 msgstr ""
 
-#: includes/Widget.php:361
+#: includes/Widget.php:371
 msgctxt "Widget Core"
 msgid "Taxonomy:"
 msgstr ""
 
-#: includes/Widget.php:374
+#: includes/Widget.php:384
 msgctxt "Widget Core"
 msgid "Title:"
 msgstr ""
 
-#: includes/Widget.php:388
+#: includes/Widget.php:398
 msgctxt "Widget Core"
 msgid "Title Link:"
 msgstr ""
 
-#: includes/Widget.php:394
+#: includes/Widget.php:412
+msgctxt "Widget Core"
+msgid "Title Image:"
+msgstr ""
+
+#: includes/Widget.php:418
 msgctxt "Widget Core"
 msgid "Custom Link:"
 msgstr ""
 
-#: includes/Widget.php:411
+#: includes/Widget.php:435
 msgctxt "Widget Core"
 msgid "Custom Code:"
 msgstr ""
 
-#: includes/Widget.php:428
+#: includes/Widget.php:452
 msgctxt "Widget Core"
 msgid "Empty Message:"
 msgstr ""
 
-#: includes/Widget.php:451
+#: includes/Widget.php:475
 msgctxt "Widget Core"
 msgid "Avatar Size:"
 msgstr ""
 
-#: includes/Widget.php:475
+#: includes/Widget.php:499
 msgctxt "Widget Core"
 msgid "Image Size:"
 msgstr ""
 
-#: includes/Widget.php:478
+#: includes/Widget.php:502
 msgctxt "Widget Core"
 msgid "No Image Size Available!"
 msgstr ""
 
-#: includes/Widget.php:485
+#: includes/Widget.php:509
 msgctxt "Widget Core"
 msgid "Checked"
 msgstr ""
 
-#: includes/Widget.php:504
+#: includes/Widget.php:528
 msgctxt "Widget Core"
 msgid "Page:"
 msgstr ""
 
-#: includes/Widget.php:547
+#: includes/Widget.php:571
 msgctxt "Widget Core"
 msgid "Term:"
 msgstr ""
