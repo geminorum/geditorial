@@ -72,12 +72,10 @@
 
     exec(command, function (err, stdout, stderr) {
       if (stdout) {
-        log.info('WP-CLI:');
-        console.log(stdout);
+        log('WP-CLI:', stdout.trim());
       }
       if (stderr) {
-        log.error('Errors:');
-        console.log(stderr);
+        log.error('Errors:', stderr.trim());
       }
       cb(err);
     });
@@ -231,7 +229,12 @@
     }
   ));
 
-  gulp.task('github:package', function () {
+  gulp.task('github:package', function (done) {
+    if (!env.github) {
+      log.error('Error: missing required token for github');
+      return done();
+    }
+
     var changes = parseChangelog(fs.readFileSync('CHANGES.md', { encoding: 'utf-8' }), { title: false });
     var options = {
       token: env.github,
