@@ -406,11 +406,11 @@ class Module extends Base
 		if ( empty( $this->options->post_types ) )
 			return $posttypes;
 
-		$enabled = array_keys( array_filter( $this->options->post_types ) );
+		$posttypes = array_merge( $posttypes, array_keys( array_filter( $this->options->post_types ) ) );
 
 		return did_action( 'wp_loaded' )
-			? array_filter( $enabled, 'post_type_exists' )
-			: $enabled;
+			? array_filter( $posttypes, 'post_type_exists' )
+			: $posttypes;
 	}
 
 	public function posttype_supported( $posttype )
