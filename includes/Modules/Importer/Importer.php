@@ -289,14 +289,16 @@ class Importer extends gEditorial\Module
 					$taxonomies     = Taxonomy::get( 4, [], $posttype );
 
 					$iterator = new \SplFileObject( File::normalize( $file ) );
+					$options  = [ 'encoding' => 'UTF-8', 'limit' => 1 ];
+					$parser   = new \KzykHys\CsvParser\CsvParser( $iterator, $options );
+					$items    = $parser->parse();
+					$headers  = array_pop( $items ); // used on maping cutom meta
+
+					unset( $parser, $items );
 
 					foreach ( $selected as $offset ) {
 
-						$options = [
-							'encoding' => 'UTF-8',
-							'offset'   => $offset,
-							'limit'    => 1,
-						];
+						$options['offset'] = $offset;
 
 						$parser = new \KzykHys\CsvParser\CsvParser( $iterator, $options );
 						$items  = $parser->parse();
@@ -334,7 +336,7 @@ class Importer extends gEditorial\Module
 
 								case 'importer_custom_meta':
 
-									if ( $custom_metakey = $this->filters( 'custom_metakey', $key, $posttype, $field, $raw, $taxonomies ) )
+									if ( $custom_metakey = $this->filters( 'custom_metakey', $headers[$key], $posttype, $field, $raw, $taxonomies ) )
 										$data['meta_input'][$custom_metakey] = $value;
 
 								break;
