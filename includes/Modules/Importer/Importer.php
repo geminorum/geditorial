@@ -159,31 +159,31 @@ class Importer extends gEditorial\Module
 		$iterator = new \SplFileObject( File::normalize( $file ) );
 		$parser   = new \KzykHys\CsvParser\CsvParser( $iterator, [ 'encoding' => 'UTF-8' ] );
 
-		$items = $parser->parse();
+		$items   = $parser->parse();
+		$headers = $items[0];
 
 		unset( $iterator, $parser, $items[0] );
 
 		$this->store_postmeta( $id, $map, $this->constant( 'metakey_source_map' ) );
-		$this->data_table( $items, $map, $posttype );
+		$this->data_table( $items, $headers, $map, $posttype );
 	}
 
-	private function data_table( $data, $map = [], $posttype = 'post' )
+	private function data_table( $data, $headers, $map = [], $posttype = 'post' )
 	{
 		$taxonomies = Taxonomy::get( 4, [], $posttype );
 		$fields     = $this->get_importer_fields( $posttype, $taxonomies );
-		$selected   = array_flip( Arraay::stripByValue( $map, 'none' ) );
-		$columns    = array_intersect_key( $fields, $selected );
 
-		$pre = [
+		$columns = [
 			'_cb' => '_index',
 			'_check_column' => [
 				'title'    => _x( '[Checks]', 'Table Column', 'geditorial-importer' ),
-				'args'     => [ 'map' => $selected ],
+				'args'     => [ 'map' => $map ],
 				'callback' => function( $value, $row, $column, $index ){
-					if ( ! array_key_exists( 'importer_post_title', $column['args']['map'] ) )
+
+					if ( ! $key = array_search( 'importer_post_title', $column['args']['map'] ) )
 						return Helper::htmlEmpty();
 
-					if ( ! $title = trim( $row[$column['args']['map']['importer_post_title']] ) )
+					if ( ! $title = trim( $row[$key] ) )
 						return Helper::htmlEmpty();
 
 					$posts = PostType::getIDsByTitle( $title );
@@ -201,13 +201,30 @@ class Importer extends gEditorial\Module
 			],
 		];
 
-		HTML::tableList( $pre + $columns, $data, [
-			'map'       => $selected,
-			'row_check' => [ $this, 'form_table_row_check' ],
-			'callback'  => [ $this, 'form_table_callback' ],
-			'extra'     => [ 'post_type' => $posttype, 'taxonomies' => $taxonomies ],
+		foreach ( $map as $key => $field ) {
+
+			if ( 'none' == $field )
+				continue;
+
+			if ( 'importer_custom_meta' == $field )
+				$columns[$key] = sprintf( '%s (%s)', $fields[$field], $headers[$key] );
+
+			else
+				$columns[$key] = $fields[$field];
+		}
+
+		HTML::tableList( $columns, $data, [
 			/* translators: %s: count placeholder */
 			'title'     => HTML::tag( 'h3', Helper::getCounted( count( $data ), _x( '%s Records Found', 'Header', 'geditorial-importer' ) ) ),
+			'callback'  => [ $this, 'form_table_callback' ],
+			'row_check' => [ $this, 'form_table_row_check' ],
+			'extra'     => [
+				'na'         => gEditorial()->na(),
+				'map'        => $map,
+				'headers'    => $headers,
+				'post_type'  => $posttype,
+				'taxonomies' => $taxonomies,
+			],
 		] );
 	}
 
@@ -218,10 +235,17 @@ class Importer extends gEditorial\Module
 
 	public function form_table_callback( $value, $row, $column, $index, $key, $args )
 	{
-		$filtered = $this->filters( 'prepare', $value, $args['extra']['post_type'], array_search( $key, $args['map'] ), $row, $args['extra']['taxonomies'] );
+		$filtered = $this->filters( 'prepare',
+			$value,
+			$args['extra']['post_type'],
+			$args['extra']['map'][$key],
+			$row,
+			$args['extra']['taxonomies'],
+			$args['extra']['headers'][$key]
+		);
 
 		if ( FALSE === $filtered )
-			$filtered = gEditorial()->na();
+			$filtered = $args['extra']['na'];
 
 		else if ( Helper::isEmptyString( $filtered ) )
 			$filtered = '';
@@ -239,14 +263,16 @@ class Importer extends gEditorial\Module
 
 		// https://github.com/kzykhys/PHPCsvParser
 		$iterator = new \SplFileObject( File::normalize( $file ) );
+		$options  = [ 'encoding' => 'UTF-8', 'limit' => 1 ];
+		$parser   = new \KzykHys\CsvParser\CsvParser( $iterator, $options );
+		$items    = $parser->parse();
+		$headers  = array_pop( $items ); // used on maping cutom meta
+
+		unset( $parser, $items );
 
 		foreach ( $selected as $offset ) {
 
-			$options = [
-				'encoding' => 'UTF-8',
-				'offset'   => $offset,
-				'limit'    => 1,
-			];
+			$options['offset'] = $offset;
 
 			$parser = new \KzykHys\CsvParser\CsvParser( $iterator, $options );
 			$items  = $parser->parse();
@@ -258,7 +284,7 @@ class Importer extends gEditorial\Module
 
 		unset( $iterator );
 
-		$this->data_table( $data, $map, $posttype );
+		$this->data_table( $data, $headers, $map, $posttype );
 	}
 
 	public function tools_settings( $sub )
