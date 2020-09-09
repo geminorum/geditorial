@@ -302,7 +302,7 @@ class Taxonomy extends Core\Base
 		if ( ! taxonomy_exists( $taxonomy ) )
 			return FALSE;
 
-		$count = 0;
+		$count = [];
 
 		foreach ( $terms as $slug => $term ) {
 
@@ -362,7 +362,7 @@ class Taxonomy extends Core\Base
 						add_term_meta( $existed['term_id'], $meta_key, $meta_value, TRUE );
 				}
 
-				$count++;
+				$count[] = $existed;
 			}
 		}
 
