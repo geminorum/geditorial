@@ -265,7 +265,7 @@ class Importer extends gEditorial\Module
 	{
 		if ( $this->check_settings( $sub, 'tools' ) ) {
 
-			add_filter( $this->hook( 'prepare' ), [ $this, 'importer_prepare' ], 9, 5 );
+			add_filter( $this->hook( 'prepare' ), [ $this, 'importer_prepare' ], 9, 6 );
 			add_action( $this->hook( 'saved' ), [ $this, 'importer_saved' ], 9, 5 );
 
 			if ( ! empty( $_POST ) ) {
@@ -321,7 +321,14 @@ class Importer extends gEditorial\Module
 
 						foreach ( $field_map as $key => $field )	{
 
-							$value = $this->filters( 'prepare', $raw[$key], $posttype, $field, $raw, $taxonomies );
+							$value = $this->filters( 'prepare',
+								$raw[$key],
+								$posttype,
+								$field,
+								$raw,
+								$taxonomies,
+								$headers[$key]
+							);
 
 							// filter bail-out!
 							if ( FALSE === $value )
@@ -502,7 +509,7 @@ class Importer extends gEditorial\Module
 		return $this->filters( 'fields', $fields, $posttype );
 	}
 
-	public function importer_prepare( $value, $posttype, $field, $raw, $taxonomies )
+	public function importer_prepare( $value, $posttype, $field, $raw, $taxonomies, $key )
 	{
 		switch ( $field ) {
 
