@@ -95,7 +95,7 @@ class Importer extends gEditorial\Module
 		$items = $parser->parse();
 		$map   = $this->fetch_postmeta( $id, [], $this->constant( 'metakey_source_map' ) );
 
-		$taxonomies = Taxonomy::get( 2, [], $posttype );
+		$taxonomies = Taxonomy::get( 4, [], $posttype );
 		$fields     = $this->get_importer_fields( $posttype, $taxonomies );
 
 		echo '<table class="base-table-raw"><tbody>';
@@ -169,7 +169,7 @@ class Importer extends gEditorial\Module
 
 	private function data_table( $data, $map = [], $posttype = 'post' )
 	{
-		$taxonomies = Taxonomy::get( 2, [], $posttype );
+		$taxonomies = Taxonomy::get( 4, [], $posttype );
 		$fields     = $this->get_importer_fields( $posttype, $taxonomies );
 		$selected   = array_flip( Arraay::stripByValue( $map, 'none' ) );
 		$columns    = array_intersect_key( $fields, $selected );
@@ -286,7 +286,7 @@ class Importer extends gEditorial\Module
 
 					$post_status    = $this->get_setting( 'post_status', 'pending' );
 					$comment_status = $this->get_setting( 'comment_status', 'closed' );
-					$taxonomies     = Taxonomy::get( 2, [], $posttype );
+					$taxonomies     = Taxonomy::get( 4, [], $posttype );
 
 					$iterator = new \SplFileObject( File::normalize( $file ) );
 
@@ -345,12 +345,20 @@ class Importer extends gEditorial\Module
 								case 'importer_post_excerpt': $data['post_excerpt'] = $value; break;
 							}
 
-							foreach ( $taxonomies as $taxonomy => $label ) {
+							foreach ( $taxonomies as $taxonomy => $taxonomy_object ) {
 
 								if ( $field != 'importer_tax_'.$taxonomy )
 									continue;
 
-								$data['tax_input'][$taxonomy] = (array) $value;
+								if ( $taxonomy_object->hierarchical ) {
+
+									if ( $terms = Taxonomy::insertDefaultTerms( $taxonomy, Arraay::sameKey( $value ) ) )
+										$data['tax_input'][$taxonomy] = wp_list_pluck( $terms, 'term_taxonomy_id' );
+
+								} else {
+
+									$data['tax_input'][$taxonomy] = (array) $value;
+								}
 
 								break;
 							}
@@ -485,9 +493,9 @@ class Importer extends gEditorial\Module
 			'importer_post_excerpt' => _x( 'Post Excerpt', 'Post Field', 'geditorial-importer' ),
 		];
 
-		foreach ( (array) $taxonomies as $taxonomy => $label )
+		foreach ( (array) $taxonomies as $taxonomy => $taxonomy_object )
 			/* translators: %s: taxonomy name placeholder */
-			$fields['importer_tax_'.$taxonomy] = sprintf( _x( 'Taxonomy: %s', 'Post Field', 'geditorial-importer' ), $label );
+			$fields['importer_tax_'.$taxonomy] = sprintf( _x( 'Taxonomy: %s', 'Post Field', 'geditorial-importer' ), $taxonomy_object->labels->singular_name );
 
 		return $this->filters( 'fields', $fields, $posttype );
 	}
@@ -505,7 +513,7 @@ class Importer extends gEditorial\Module
 			case 'importer_custom_meta': return Helper::kses( $value, 'text' );
 		}
 
-		foreach ( (array) $taxonomies as $taxonomy => $label )
+		foreach ( (array) $taxonomies as $taxonomy => $taxonomy_object )
 			if ( $field == 'importer_tax_'.$taxonomy )
 				return array_filter( Helper::ksesArray( Helper::getSeperated( $value ) ) );
 
