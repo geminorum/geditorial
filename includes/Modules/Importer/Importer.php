@@ -347,6 +347,9 @@ class Importer extends gEditorial\Module
 
 						foreach ( $field_map as $key => $field )	{
 
+							if ( 'none' == $field )
+								continue;
+
 							$value = $this->filters( 'prepare',
 								$raw[$key],
 								$posttype,
