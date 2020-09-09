@@ -345,7 +345,7 @@ class Importer extends gEditorial\Module
 							'post_author'    => $user_id,
 						];
 
-						foreach ( $field_map as $key => $field )	{
+						foreach ( $field_map as $key => $field ) {
 
 							if ( 'none' == $field )
 								continue;
@@ -441,7 +441,7 @@ class Importer extends gEditorial\Module
 		if ( $upload_id )
 			$attach_id = $upload_id;
 
-		// no need /  not used
+		// no need / not used
 		if ( isset( $_POST['csv_step_four'] ) && $attach_id ) {
 
 			HTML::inputHiddenArray( $selected, '_cb' );

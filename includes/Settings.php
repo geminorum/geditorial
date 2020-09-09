@@ -167,6 +167,8 @@ class Settings extends Core\Base
 			'guest-author', // Co-Authors Plus
 			'bp-email',
 			'wp_block',
+			'shop_order', // WooCommerce
+			'shop_coupon', // WooCommerce
 		], (array) $extra );
 	}
 

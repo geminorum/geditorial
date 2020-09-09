@@ -437,7 +437,7 @@ class MetaBox extends Core\Base
 			'title_with_meta'  => 'number_line', // extra arg for the walker
 		] );
 
-		return $html ? HTML::wrap( $html, 'field-wrap -select' ) : FALSE;
+		return $html ? HTML::wrap( $html, 'field-wrap -select' ) : '';
 	}
 
 	public static function fieldPostMenuOrder( $post )

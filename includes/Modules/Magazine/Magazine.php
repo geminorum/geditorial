@@ -205,7 +205,7 @@ class Magazine extends gEditorial\Module
 			'show_in_quick_edit' => TRUE,
 		], 'issue_cpt' );
 
-		if ( $this->get_setting( 'issue_sections', FALSE ) )
+		if ( $this->get_setting( 'issue_sections' ) )
 			$this->register_taxonomy( 'section_tax', [
 				'hierarchical'       => TRUE,
 				'show_admin_column'  => TRUE,

@@ -1461,7 +1461,7 @@ class Module extends Base
 		else if ( $added = Taxonomy::insertDefaultTerms( $this->constant( $constant ), $terms ) )
 			$message = [
 				'message' => 'created',
-				'count'   => $added,
+				'count'   => count( $added ),
 			];
 
 		else
