@@ -383,6 +383,10 @@ class Importer extends gEditorial\Module
 								case 'importer_post_excerpt': $data['post_excerpt'] = $value; break;
 							}
 
+							// skip empty values on terms
+							if ( ! $value )
+								continue;
+
 							foreach ( $taxonomies as $taxonomy => $taxonomy_object ) {
 
 								if ( $field != 'importer_tax_'.$taxonomy )
