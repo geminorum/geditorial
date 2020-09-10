@@ -33,6 +33,11 @@ class Contest extends gEditorial\Module
 		return [
 			'_general' => [
 				'multiple_instances',
+				[
+					'field'       => 'subterms_support',
+					'title'       => _x( 'Contest Sections', 'Settings', 'geditorial-contest' ),
+					'description' => _x( 'Section taxonomy for the contests and supported post-types.', 'Settings', 'geditorial-contest' ),
+				],
 				'comment_status',
 			],
 			'_editlist' => [
@@ -64,6 +69,7 @@ class Contest extends gEditorial\Module
 			'contest_cpt'         => 'contest',
 			'contest_cpt_archive' => 'contests',
 			'contest_tax'         => 'contests',
+			'section_tax'         => 'contest_section',
 			'apply_cpt'           => 'apply',
 			'apply_cpt_archive'   => 'applies',
 			'contest_cat'         => 'contest_category',
@@ -84,6 +90,7 @@ class Contest extends gEditorial\Module
 			'taxonomies' => [
 				'contest_cat' => 'category',
 				'contest_tax' => 'megaphone',
+				'section_tax' => 'category',
 				'apply_cat'   => 'category',
 				'status_tax'  => 'post-status', // 'portfolio',
 			],
@@ -97,6 +104,7 @@ class Contest extends gEditorial\Module
 				'contest_cpt' => _n_noop( 'Contest', 'Contests', 'geditorial-contest' ),
 				'contest_tax' => _n_noop( 'Contest', 'Contests', 'geditorial-contest' ),
 				'contest_cat' => _n_noop( 'Contest Category', 'Contest Categories', 'geditorial-contest' ),
+				'section_tax' => _n_noop( 'Section', 'Sections', 'geditorial-contest' ),
 				'apply_cpt'   => _n_noop( 'Apply', 'Applies', 'geditorial-contest' ),
 				'apply_cat'   => _n_noop( 'Apply Category', 'Apply Categories', 'geditorial-contest' ),
 				'status_tax'  => _n_noop( 'Apply Status', 'Apply Statuses', 'geditorial-contest' ),
@@ -117,6 +125,11 @@ class Contest extends gEditorial\Module
 			],
 			'contest_cat' => [
 				'tweaks_column_title' => _x( 'Contest Categories', 'Column Title', 'geditorial-contest' ),
+			],
+			'section_tax' => [
+				'meta_box_title'      => _x( 'Sections', 'MetaBox Title', 'geditorial-contest' ),
+				'tweaks_column_title' => _x( 'Contest Sections', 'Column Title', 'geditorial-contest' ),
+				'show_option_none'    => _x( '&ndash; Select Section &ndash;', 'Select Option None', 'geditorial-contest' ),
 			],
 			'apply_cpt' => [
 				'meta_box_title' => _x( 'Contest', 'MetaBox Title', 'geditorial-contest' ),
@@ -180,6 +193,15 @@ class Contest extends gEditorial\Module
 			'show_in_quick_edit' => TRUE,
 		], 'contest_cpt' );
 
+		if ( $this->get_setting( 'subterms_support' ) )
+			$this->register_taxonomy( 'section_tax', [
+				'hierarchical'       => TRUE,
+				'meta_box_cb'        => NULL,
+				'show_admin_column'  => FALSE,
+				'show_in_quick_edit' => FALSE,
+				'show_in_nav_menus'  => TRUE,
+			], $this->posttypes( 'contest_cpt' ) );
+
 		$this->register_taxonomy( 'contest_tax', [
 			'show_ui'            => FALSE,
 			'show_in_menu'       => FALSE,
@@ -224,6 +246,10 @@ class Contest extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
+		$section = $this->get_setting( 'subterms_support' )
+			? $this->constant( 'section_tax' )
+			: FALSE;
+
 		if ( $screen->post_type == $this->constant( 'contest_cpt' ) ) {
 
 			if ( 'post' == $screen->base ) {
@@ -274,6 +300,9 @@ class Contest extends gEditorial\Module
 
 			if ( 'post' == $screen->base ) {
 
+				if ( $section )
+					remove_meta_box( $section.'div', $screen->post_type, 'side' );
+
 				if ( $screen->post_type == $this->constant( 'apply_cpt' ) )
 					$this->filter( 'post_updated_messages', 1, 10, 'supported' );
 
@@ -303,6 +332,9 @@ class Contest extends gEditorial\Module
 
 			$this->_hook_store_metabox( $screen->post_type );
 		}
+
+		// only for supported posttypes
+		$this->remove_taxonomy_submenu( $section );
 	}
 
 	private function _sync_linked( $posttype )
@@ -412,22 +444,17 @@ class Contest extends gEditorial\Module
 
 	public function render_metabox( $post, $box, $fields = NULL, $context = NULL )
 	{
-		$dropdowns = $excludes = [];
-		$posttype  = $this->constant( 'contest_cpt' );
-		$terms     = Taxonomy::getTerms( $this->constant( 'contest_tax' ), $post->ID, TRUE );
-
-		foreach ( $terms as $term ) {
-			$dropdowns[$term->slug] = MetaBox::dropdownAssocPosts( $posttype, $term->slug, $this->classs() );
-			$excludes[] = $term->slug;
-		}
-
-		if ( empty( $dropdowns ) || $this->get_setting( 'multiple_instances' ) )
-			$dropdowns[0] = MetaBox::dropdownAssocPosts( $posttype, '0', $this->classs(), $excludes );
-
-		foreach ( $dropdowns as $dropdown )
-			echo $dropdown ?: '';
+		$this->do_render_metabox_assoc( $post, 'contest_cpt', 'contest_tax', 'section_tax' );
 
 		MetaBox::fieldPostMenuOrder( $post );
+	}
+
+	public function store_metabox( $post_id, $post, $update, $context = NULL )
+	{
+		if ( ! $this->is_save_post( $post, $this->posttypes() ) )
+			return;
+
+		$this->do_store_metabox_assoc( $post, 'contest_cpt', 'contest_tax', 'section_tax' );
 	}
 
 	public function meta_box_cb_status_tax( $post, $box )
@@ -520,26 +547,6 @@ class Contest extends gEditorial\Module
 
 		if ( ! is_wp_error( $term ) )
 			$this->set_linked_term( $post_id, $term['term_id'], 'contest_cpt', 'contest_tax' );
-	}
-
-	public function store_metabox( $post_id, $post, $update, $context = NULL )
-	{
-		if ( ! $this->is_save_post( $post, $this->posttypes() ) )
-			return;
-
-		$name = $this->classs( $this->constant( 'contest_cpt' ) );
-
-		if ( ! isset( $_POST[$name] ) )
-			return;
-
-		$terms = [];
-		$tax   = $this->constant( 'contest_tax' );
-
-		foreach ( (array) $_POST[$name] as $contest )
-			if ( trim( $contest ) && $term = get_term_by( 'slug', $contest, $tax ) )
-				$terms[] = intval( $term->term_id );
-
-		wp_set_object_terms( $post_id, ( count( $terms ) ? $terms : NULL ), $tax, FALSE );
 	}
 
 	public function wp_trash_post( $post_id )
