@@ -294,42 +294,6 @@ class Importer extends gEditorial\Module
 		return HTML::sanitizeDisplay( $filtered );
 	}
 
-	// no need / not used
-	protected function form_check( $selected, $id, $map = [], $posttype = 'post' )
-	{
-		if ( ! $file = get_attached_file( $id ) )
-			return FALSE;
-
-		$this->raise_resources();
-
-		$data = [];
-
-		// https://github.com/kzykhys/PHPCsvParser
-		$iterator = new \SplFileObject( File::normalize( $file ) );
-		$options  = [ 'encoding' => 'UTF-8', 'limit' => 1 ];
-		$parser   = new \KzykHys\CsvParser\CsvParser( $iterator, $options );
-		$items    = $parser->parse();
-		$headers  = array_pop( $items ); // used on maping cutom meta
-
-		unset( $parser, $items );
-
-		foreach ( $selected as $offset ) {
-
-			$options['offset'] = $offset;
-
-			$parser = new \KzykHys\CsvParser\CsvParser( $iterator, $options );
-			$items  = $parser->parse();
-
-			$data[$offset] = array_pop( $items );
-
-			unset( $parser, $items );
-		}
-
-		unset( $iterator );
-
-		$this->data_table( $data, $headers, $map, $posttype );
-	}
-
 	public function tools_settings( $sub )
 	{
 		if ( $this->check_settings( $sub, 'tools' ) ) {
@@ -423,15 +387,17 @@ class Importer extends gEditorial\Module
 
 							switch ( $field ) {
 
-								case 'importer_old_id': $data['meta_input'][$this->constant( 'metakey_old_id' )] = $value; break;
+								case 'importer_old_id':
 
+									$data['meta_input'][$this->constant( 'metakey_old_id' )] = $value;
+
+								break;
 								case 'importer_custom_meta':
 
 									if ( $custom_metakey = $this->filters( 'custom_metakey', $headers[$key], $posttype, $field, $raw, $taxonomies ) )
 										$data['meta_input'][$custom_metakey] = $value;
 
 								break;
-
 								case 'importer_menu_order': $data['menu_order'] = $value; break;
 								case 'importer_post_title': $data['post_title'] = $value; break;
 								case 'importer_post_content': $data['post_content'] = $value; break;
@@ -500,25 +466,7 @@ class Importer extends gEditorial\Module
 		if ( $upload_id )
 			$attach_id = $upload_id;
 
-		// no need / not used
-		if ( isset( $_POST['csv_step_four'] ) && $attach_id ) {
-
-			HTML::inputHiddenArray( $selected, '_cb' );
-			HTML::inputHiddenArray( $field_map, 'field_map' );
-			HTML::inputHidden( 'posttype', $posttype );
-			HTML::inputHidden( 'attach_id', $attach_id );
-			HTML::inputHidden( 'user_id', $user_id );
-
-			$this->form_check( $selected, $attach_id, $field_map, $posttype );
-
-			echo $this->wrap_open_buttons();
-
-			Settings::submitButton( 'csv_import',
-				_x( 'Step 4: Import', 'Button', 'geditorial-importer' ), TRUE );
-
-			HTML::desc( _x( 'Check processed records and import, finally.', 'Message', 'geditorial-importer' ), FALSE );
-
-		} else if ( isset( $_POST['csv_step_three'] ) && $attach_id ) {
+		if ( isset( $_POST['csv_step_three'] ) && $attach_id ) {
 
 			HTML::inputHiddenArray( $field_map, 'field_map' );
 			HTML::inputHidden( 'posttype', $posttype );
@@ -528,11 +476,6 @@ class Importer extends gEditorial\Module
 			$this->form_table( $attach_id, $field_map, $posttype );
 
 			echo $this->wrap_open_buttons();
-
-			// Settings::submitButton( 'csv_step_four',
-			// 	_x( 'Step 3: Select', 'Button', 'geditorial-importer' ), TRUE );
-
-			// HTML::desc( _x( 'Select records to check the process.', 'Message', 'geditorial-importer' ), FALSE );
 
 			Settings::submitButton( 'csv_import', _x( 'Import', 'Button', 'geditorial-importer' ), TRUE );
 
@@ -634,8 +577,5 @@ class Importer extends gEditorial\Module
 
 			gEditorial()->audit->set_terms( $post, $this->default_audit_attribute );
 		}
-
-		if ( WordPress::isDev() )
-			self::_log( [ 'IMPORTED', $post->ID, $data, $raw, $field_map, $attach_id ] );
 	}
 }
