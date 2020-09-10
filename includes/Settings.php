@@ -209,14 +209,15 @@ class Settings extends Core\Base
 	public static function fieldSeparate( $string = 'from' )
 	{
 		switch ( $string ) {
-			case 'from': $string = _x( 'from', 'Settings: Field Separate', 'geditorial' ); break;
-			case 'into': $string = _x( 'into', 'Settings: Field Separate', 'geditorial' ); break;
-			case 'like': $string = _x( 'like', 'Settings: Field Separate', 'geditorial' ); break;
-			case 'ex'  : $string = _x( 'ex', 'Settings: Field Separate', 'geditorial' );   break;
-			case 'in'  : $string = _x( 'in', 'Settings: Field Separate', 'geditorial' );   break;
-			case 'to'  : $string = _x( 'to', 'Settings: Field Separate', 'geditorial' );   break;
-			case 'as'  : $string = _x( 'as', 'Settings: Field Separate', 'geditorial' );   break;
-			case 'or'  : $string = _x( 'or', 'Settings: Field Separate', 'geditorial' );   break;
+			case 'count': $string = _x( 'count', 'Settings: Field Separate', 'geditorial' ); break;
+			case 'from' : $string = _x( 'from', 'Settings: Field Separate', 'geditorial' );  break;
+			case 'into' : $string = _x( 'into', 'Settings: Field Separate', 'geditorial' );  break;
+			case 'like' : $string = _x( 'like', 'Settings: Field Separate', 'geditorial' );  break;
+			case 'ex'   : $string = _x( 'ex', 'Settings: Field Separate', 'geditorial' );    break;
+			case 'in'   : $string = _x( 'in', 'Settings: Field Separate', 'geditorial' );    break;
+			case 'to'   : $string = _x( 'to', 'Settings: Field Separate', 'geditorial' );    break;
+			case 'as'   : $string = _x( 'as', 'Settings: Field Separate', 'geditorial' );    break;
+			case 'or'   : $string = _x( 'or', 'Settings: Field Separate', 'geditorial' );    break;
 		}
 
 		printf( '<span class="-field-sep">&nbsp;&mdash; %s &mdash;&nbsp;</span>', $string );
