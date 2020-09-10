@@ -2294,6 +2294,122 @@ class Module extends Base
 		}
 	}
 
+	// NOTE: subterms must be hierarchical
+	protected function do_render_metabox_assoc( $post, $posttype_constant, $tax_constant, $sub_tax_constant )
+	{
+		$sub_tax   = FALSE;
+		$dropdowns = $excludes = [];
+		$posttype  = $this->constant( $posttype_constant );
+		$terms     = Taxonomy::getTerms( $this->constant( $tax_constant ), $post->ID, TRUE );
+		$none_def  = Settings::showOptionNone();
+		$none_main = $this->get_string( 'show_option_none', $posttype_constant, 'misc', $none_def );
+
+		if ( $sub_tax_constant && $this->get_setting( 'subterms_support' ) ) {
+
+			$sub_tax  = $this->constant( $sub_tax_constant );
+			$none_sub = $this->get_string( 'show_option_none', $sub_tax_constant, 'misc', $none_def );
+			$subterms = Taxonomy::getTerms( $sub_tax, $post->ID );
+		}
+
+		foreach ( $terms as $term ) {
+
+			if ( ! $linked = $this->get_linked_post_id( $term, $posttype_constant, $tax_constant ) )
+				continue;
+
+			$dropdown = MetaBox::dropdownAssocPostsRedux( $posttype, $linked, $this->classs(), [], $none_main );
+
+			if ( $sub_tax ) {
+
+				if ( $this->get_setting( 'multiple_instances' ) ) {
+
+					$sub_meta = get_post_meta( $post->ID, sprintf( '_%s_subterm_%s', $posttype, $linked ), TRUE );
+					$selected = ( $sub_meta && $subterms && in_array( $sub_meta, $subterms ) ) ? $sub_meta : 0;
+
+				} else {
+
+					$selected = $subterms ? array_pop( $subterms ) : 0;
+				}
+
+				$dropdown.= MetaBox::dropdownAssocPostsSubTerms( $sub_tax, $linked, $this->classs( $sub_tax ), $selected, $none_sub );
+			}
+
+			$dropdowns[$linked] = $dropdown;
+			$excludes[] = $linked;
+		}
+
+		if ( empty( $dropdowns ) )
+			$dropdowns[0] = MetaBox::dropdownAssocPostsRedux( $posttype, 0, $this->classs(), $excludes, $none_main );
+
+		if ( $this->get_setting( 'multiple_instances' ) )
+			$dropdowns[] = MetaBox::dropdownAssocPostsRedux( $posttype, 0, $this->classs(), $excludes, $none_main );
+
+		foreach ( $dropdowns as $dropdown )
+			if ( $dropdown )
+				echo $dropdown;
+
+		if ( $sub_tax )
+			$this->enqueue_asset_js( 'subterms', 'module' );
+	}
+
+	protected function do_store_metabox_assoc( $post, $posttype_constant, $tax_constant, $sub_tax_constant )
+	{
+		$posttype = $this->constant( $posttype_constant );
+		$linked   = self::req( $this->classs( $posttype ), FALSE );
+
+		if ( FALSE === $linked )
+			return;
+
+		$terms = [];
+
+		foreach ( (array) $linked as $linked_id )
+			if ( $linked_id && ( $term = $this->get_linked_term( $linked_id, $posttype_constant, $tax_constant ) ) )
+				$terms[] = $term->term_id;
+
+		wp_set_object_terms( $post->ID, ( count( $terms ) ? $terms : NULL ), $this->constant( $tax_constant ), FALSE );
+
+		if ( ! $sub_tax_constant || ! $this->get_setting( 'subterms_support' ) )
+			return;
+
+		$sub_tax = $this->constant( $sub_tax_constant );
+
+		// no post, no subterm
+		if ( ! count( $terms ) )
+			return wp_set_object_terms( $post->ID, NULL, $sub_tax, FALSE );
+
+		$subterm = self::req( $this->classs( $sub_tax ), FALSE );
+
+		if ( FALSE === $subterm )
+			return;
+
+		$subterms = [];
+
+		foreach ( (array) $linked as $linked_id ) {
+
+			if ( ! $linked_id )
+				continue;
+
+			if ( ! array_key_exists( $linked_id, $subterm ) )
+				continue;
+
+			$sub_linked = $subterm[$linked_id];
+
+			if ( $this->get_setting( 'multiple_instances' ) ) {
+
+				$sub_metakey = sprintf( '_%s_subterm_%s', $posttype, $linked_id );
+
+				if ( $sub_linked )
+					update_post_meta( $post->ID, $sub_metakey, intval( $sub_linked ) );
+				else
+					delete_post_meta( $post->ID, $sub_metakey );
+			}
+
+			if ( $sub_linked )
+				$subterms[] = intval( $sub_linked );
+		}
+
+		wp_set_object_terms( $post->ID, ( count( $subterms ) ? $subterms : NULL ), $sub_tax, FALSE );
+	}
+
 	protected function _hook_store_metabox( $posttype )
 	{
 		add_action( 'save_post_'.$posttype, [ $this, 'store_metabox' ], 20, 3 );

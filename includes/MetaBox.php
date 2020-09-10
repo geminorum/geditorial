@@ -416,6 +416,59 @@ class MetaBox extends Core\Base
 		return $html;
 	}
 
+	public static function dropdownAssocPostsSubTerms( $taxonomy, $linked = 0, $prefix = '', $selected = 0, $none = NULL )
+	{
+		$name = sprintf( '%s[%s]', $prefix, $linked );
+
+		if ( ! $terms = Taxonomy::getTerms( $taxonomy, $linked, TRUE ) )
+			return HTML::tag( 'input', [ 'type' => 'hidden', 'value' => '0', 'name' => $name ] );
+
+		if ( is_null( $none ) )
+			$none = Settings::showOptionNone();
+
+		$html = HTML::dropdown( $terms, [
+			'class'      => static::BASE.'-assoc-post-subterms',
+			'name'       => $name,
+			'prop'       => 'name',
+			'value'      => 'term_id',
+			'selected'   => $selected,
+			'none_title' => $none,
+			'none_value' => '0',
+			'data'       => [ 'linked' => $linked ],
+		] );
+
+		return HTML::wrap( $html, 'field-wrap -select' );
+	}
+
+	public static function dropdownAssocPostsRedux( $posttype, $linked = 0, $prefix = '', $exclude = [], $none = NULL )
+	{
+		$posts = get_pages( [
+			'post_type'   => $posttype,
+			'exclude'     => $exclude,
+			'post_status' => [ 'publish', 'future', 'draft', 'pending' ],
+			'sort_column' => 'menu_order',
+			'sort_order'  => 'desc',
+		] );
+
+		if ( empty( $posts ) )
+			return '';
+
+		if ( is_null( $none ) )
+			$none = Settings::showOptionNone();
+
+		$html = $none ? HTML::tag( 'option', [ 'value' => '0' ], $none ) : '';
+		$html.= walk_page_dropdown_tree( $posts, 0, [ 'selected' => $linked ] ); // to handle sub-pages
+
+		$html = HTML::tag( 'select', [
+			'name'  => ( $prefix ? $prefix.'-' : '' ).$posttype.'[]',
+			'data'  => [ 'linked' => $linked ],
+			'class' => static::BASE.'-assoc-post-dropdown',
+		], $html );
+
+		return $html ? HTML::wrap( $html, 'field-wrap -select' ) : '';
+	}
+
+	// FIXME: DEPRECATED
 	public static function dropdownAssocPosts( $posttype, $selected = '', $prefix = '', $exclude = '' )
 	{
 		gEditorial()->files( 'misc/walker-page-dropdown' );
