@@ -188,6 +188,15 @@ class Settings extends Core\Base
 		return _x( '&ndash; Select &ndash;', 'Settings: Dropdown Select Option None', 'geditorial' );
 	}
 
+	public static function showRadioNone( $string = NULL )
+	{
+		if ( $string )
+			/* translators: %s: options */
+			return sprintf( _x( 'None %s', 'Settings: Radio Select Option None', 'geditorial' ), $string );
+
+		return _x( 'None', 'Settings: Radio Select Option None', 'geditorial' );
+	}
+
 	public static function showOptionAll( $string = NULL )
 	{
 		if ( $string )
