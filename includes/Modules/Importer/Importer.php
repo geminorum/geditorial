@@ -177,16 +177,26 @@ class Importer extends gEditorial\Module
 			'_cb' => '_index',
 			'_check_column' => [
 				'title'    => _x( '[Checks]', 'Table Column', 'geditorial-importer' ),
-				'args'     => [ 'map' => $map ],
-				'callback' => function( $value, $row, $column, $index ){
+				'callback' => function( $value, $row, $column, $index, $key, $args ){
 
-					if ( ! $key = array_search( 'importer_post_title', $column['args']['map'] ) )
+					$title_key = array_search( 'importer_post_title', $args['extra']['map'] );
+
+					if ( FALSE === $title_key )
 						return Helper::htmlEmpty();
 
-					if ( ! $title = trim( $row[$key] ) )
+					$title = $this->filters( 'prepare',
+						$row[$title_key],
+						$args['extra']['post_type'],
+						'importer_post_title',
+						$row,
+						$args['extra']['taxonomies'],
+						$args['extra']['headers'][$title_key]
+					);
+
+					if ( ! $title = trim( $title ) )
 						return Helper::htmlEmpty();
 
-					$posts = PostType::getIDsByTitle( $title );
+					$posts = PostType::getIDsByTitle( $title, [ 'post_type' => $args['extra']['post_type'] ] );
 
 					if ( empty( $posts ) )
 						return Helper::htmlEmpty();
