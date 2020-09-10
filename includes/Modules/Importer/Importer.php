@@ -248,7 +248,8 @@ class Importer extends gEditorial\Module
 				continue;
 
 			if ( 'importer_custom_meta' == $field )
-				$columns[$key] = sprintf( '%s (%s)', $fields[$field], $headers[$key] );
+				/* translators: %s: custom metakey */
+				$columns[$key] = sprintf( _x( 'Custom: %s', 'Post Field Column', 'geditorial-importer' ), '<code>'.$headers[$key].'</code>' );
 
 			else
 				$columns[$key] = $fields[$field];
