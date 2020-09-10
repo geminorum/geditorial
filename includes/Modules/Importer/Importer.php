@@ -95,17 +95,19 @@ class Importer extends gEditorial\Module
 
 		// https://github.com/kzykhys/PHPCsvParser
 		$iterator = new \SplFileObject( File::normalize( $file ) );
-		$parser   = new \KzykHys\CsvParser\CsvParser( $iterator, [ 'encoding' => 'UTF-8', 'limit' => 2 ] );
+		$parser   = new \KzykHys\CsvParser\CsvParser( $iterator, [ 'encoding' => 'UTF-8', 'l1imit' => 2 ] );
+		$items    = $parser->parse();
+		$headers  = $items[0];
 
-		$items = $parser->parse();
-		$map   = $this->fetch_postmeta( $id, [], $this->constant( 'metakey_source_map' ) );
+		unset( $items[0] );
 
 		$taxonomies = Taxonomy::get( 4, [], $posttype );
 		$fields     = $this->get_importer_fields( $posttype, $taxonomies );
+		$map        = $this->fetch_postmeta( $id, [], $this->constant( 'metakey_source_map' ) );
 
 		echo '<table class="base-table-raw"><tbody>';
 
-		foreach ( $items[0] as $key => $title ) {
+		foreach ( $headers as $key => $title ) {
 
 			echo '<tr><td class="-val"><code>'
 				.HTML::escape( $title )
@@ -124,10 +126,24 @@ class Importer extends gEditorial\Module
 
 			echo '</td><td class="-val"><code>'
 				.HTML::sanitizeDisplay( $items[1][$key] )
+			.'</code></td><td class="-sep">';
+
+				Settings::fieldSeparate( 'count' );
+
+			echo '</td><td class="-count"><code>'
+				.Helper::htmlCount( array_filter( Arraay::column( $items, $key ), [ $this, 'isNotEmptyString' ] ) )
 			.'</code></td></tr>';
 		}
 
 		echo '</tbody></table>';
+	}
+
+	private static function isNotEmptyString( $value )
+	{
+		if ( Helper::isEmptyString( $value ) )
+			return FALSE;
+
+		return ! empty( $value );
 	}
 
 	protected function from_attached( $id = 0, $posttype = 'post', $user_id = NULL )
