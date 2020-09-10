@@ -38,6 +38,11 @@ class Importer extends gEditorial\Module
 			'posttypes_option' => 'posttypes_option',
 			'_general' => [
 				[
+					'field'       => 'skip_same_title',
+					'title'       => _x( 'Skip Same Title', 'Setting Title', 'geditorial-importer' ),
+					'description' => _x( 'Tries to avoid creating posts with the same titles.', 'Setting Description', 'geditorial-importer' ),
+				],
+				[
 					'field'       => 'store_source_data',
 					'title'       => _x( 'Store Source Data', 'Setting Title', 'geditorial-importer' ),
 					'description' => _x( 'Stores raw source data and attchment reference as meta for each imported item.', 'Setting Description', 'geditorial-importer' ),
@@ -375,6 +380,14 @@ class Importer extends gEditorial\Module
 
 							if ( Helper::isEmptyString( $value ) )
 								continue;
+
+							if ( $field == 'importer_post_title' && $this->get_setting( 'skip_same_title' ) ) {
+
+								$posts = PostType::getIDsByTitle( $value, [ 'post_type' => $posttype ] );
+
+								if ( empty( $posts ) )
+									continue 2;
+							}
 
 							switch ( $field ) {
 
