@@ -2340,7 +2340,7 @@ class Module extends Base
 		if ( empty( $dropdowns ) )
 			$dropdowns[0] = MetaBox::dropdownAssocPostsRedux( $posttype, 0, $this->classs(), $excludes, $none_main );
 
-		if ( $this->get_setting( 'multiple_instances' ) )
+		else if ( $this->get_setting( 'multiple_instances' ) )
 			$dropdowns[] = MetaBox::dropdownAssocPostsRedux( $posttype, 0, $this->classs(), $excludes, $none_main );
 
 		foreach ( $dropdowns as $dropdown )

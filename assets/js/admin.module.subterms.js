@@ -1,12 +1,12 @@
 (function ($, plugin) {
-  var $subterm = $('select.' + plugin._base + '-assoc-post-subterms');
-  if (!$subterm.length) return;
-
   $('select.' + plugin._base + '-assoc-post-dropdown').change(function () {
-    if ($subterm.data('linked') == $(this).val()) { // eslint-disable-line eqeqeq
-      $subterm.parent('.-wrap').slideDown();
+    var linked = $(this).data('linked');
+    var target = $('select.' + plugin._base + '-assoc-post-subterms[data-linked=' + linked + ']');
+
+    if (linked == $(this).val()) { // eslint-disable-line eqeqeq
+      target.parent('.-wrap').slideDown();
     } else {
-      $subterm.parent('.-wrap').slideUp();
+      target.parent('.-wrap').slideUp();
     }
   });
 }(jQuery, gEditorial));
