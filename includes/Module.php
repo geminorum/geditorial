@@ -2201,6 +2201,18 @@ class Module extends Base
 		add_filter( 'geditorial_shortcode_'.$shortcode, $callback, 10, 3 );
 	}
 
+	// DEFAULT FILTER
+	public function calendar_post_row_title( $title, $post, $the_day, $calendar_args )
+	{
+		if ( ! $this->posttype_supported( $post->post_type ) )
+			return $title;
+
+		if ( ! $assoc = $this->get_assoc_post( $post->ID, TRUE ) )
+			return $title;
+
+		return $title.' – '.Helper::getPostTitle( $assoc );
+	}
+
 	public function get_calendars( $default = [ 'gregorian' ], $filtered = TRUE )
 	{
 		$settings = $this->get_setting( 'calendar_list', $default );

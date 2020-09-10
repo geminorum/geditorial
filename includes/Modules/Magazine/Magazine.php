@@ -691,17 +691,6 @@ class Magazine extends gEditorial\Module
 		return array_merge( $messages, $this->get_bulk_post_updated_messages( 'issue_cpt', $counts ) );
 	}
 
-	public function calendar_post_row_title( $title, $post, $the_day, $calendar_args )
-	{
-		if ( ! $this->posttype_supported( $post->post_type ) )
-			return $title;
-
-		if ( ! $issue = $this->get_assoc_post( $post->ID, TRUE ) )
-			return $title;
-
-		return $title.' – '.Helper::getPostTitle( $issue );
-	}
-
 	// TODO: migrate to `Shortcode::listPosts( 'associated' );`
 	public function issue_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
