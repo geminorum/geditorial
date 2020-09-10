@@ -34,6 +34,11 @@ class Course extends gEditorial\Module
 		return [
 			'_general' => [
 				'multiple_instances',
+				[
+					'field'       => 'subterms_support',
+					'title'       => _x( 'Course Topics', 'Settings', 'geditorial-course' ),
+					'description' => _x( 'Topic taxonomy for the courses and supported post-types.', 'Settings', 'geditorial-course' ),
+				],
 				'comment_status',
 			],
 			'_editlist' => [
@@ -78,6 +83,7 @@ class Course extends gEditorial\Module
 			'course_cat_slug'    => 'course-category',
 			'span_tax'           => 'course_span',
 			'span_tax_slug'      => 'course-span',
+			'topic_tax'          => 'course_topic',
 			'format_tax'         => 'lesson_format',
 			'format_tax_slug'    => 'lesson-format',
 			'status_tax'         => 'lesson_status',
@@ -98,6 +104,7 @@ class Course extends gEditorial\Module
 				'course_tax' => 'welcome-learn-more',
 				'course_cat' => 'category',
 				'span_tax'   => 'backup',
+				'topic_tax'  => 'category',
 				'format_tax' => 'category',
 				'status_tax' => 'post-status',
 			],
@@ -112,6 +119,7 @@ class Course extends gEditorial\Module
 				'course_tax' => _n_noop( 'Course', 'Courses', 'geditorial-course' ),
 				'course_cat' => _n_noop( 'Course Category', 'Course Categories', 'geditorial-course' ),
 				'span_tax'   => _n_noop( 'Course Span', 'Course Spans', 'geditorial-course' ),
+				'topic_tax'  => _n_noop( 'Course Topic', 'Course Topics', 'geditorial-course' ),
 				'lesson_cpt' => _n_noop( 'Lesson', 'Lessons', 'geditorial-course' ),
 				'format_tax' => _n_noop( 'Lesson Format', 'Lesson Formats', 'geditorial-course' ),
 				'status_tax' => _n_noop( 'Lesson Status', 'Lesson Statuses', 'geditorial-course' ),
@@ -126,6 +134,7 @@ class Course extends gEditorial\Module
 				'featured'              => _x( 'Poster Image', 'Posttype Featured', 'geditorial-course' ),
 				'meta_box_title'        => _x( 'Metadata', 'MetaBox Title', 'geditorial-course' ),
 				'children_column_title' => _x( 'Lessons', 'Column Title', 'geditorial-course' ),
+				'show_option_none'      => _x( '&ndash; Select Course &ndash;', 'Select Option None', 'geditorial-course' ),
 			],
 			'course_tax' => [
 				'meta_box_title' => _x( 'In This Course', 'MetaBox Title', 'geditorial-course' ),
@@ -136,6 +145,11 @@ class Course extends gEditorial\Module
 			'span_tax' => [
 				'meta_box_title'      => _x( 'Spans', 'MetaBox Title', 'geditorial-course' ),
 				'tweaks_column_title' => _x( 'Course Spans', 'Column Title', 'geditorial-course' ),
+			],
+			'topic_tax' => [
+				'meta_box_title'      => _x( 'Topics', 'MetaBox Title', 'geditorial-course' ),
+				'tweaks_column_title' => _x( 'Course Topics', 'Column Title', 'geditorial-course' ),
+				'show_option_none'    => _x( '&ndash; Select Topic &ndash;', 'Select Option None', 'geditorial-course' ),
 			],
 			'lesson_cpt' => [
 				'meta_box_title' => _x( 'Course', 'MetaBox Title', 'geditorial-course' ),
@@ -232,6 +246,15 @@ class Course extends gEditorial\Module
 			'show_in_quick_edit' => TRUE,
 		], 'course_cpt' );
 
+		if ( $this->get_setting( 'subterms_support' ) )
+			$this->register_taxonomy( 'topic_tax', [
+				'hierarchical'       => TRUE,
+				'meta_box_cb'        => NULL,
+				'show_admin_column'  => FALSE,
+				'show_in_quick_edit' => FALSE,
+				'show_in_nav_menus'  => TRUE,
+			], $this->posttypes( 'course_cpt' ) );
+
 		$this->register_taxonomy( 'course_tax', [
 			'show_ui'            => FALSE,
 			'show_in_menu'       => FALSE,
@@ -276,6 +299,10 @@ class Course extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
+		$subterms = $this->get_setting( 'subterms_support' )
+			? $this->constant( 'topic_tax' )
+			: FALSE;
+
 		if ( $screen->post_type == $this->constant( 'course_cpt' ) ) {
 
 			if ( 'post' == $screen->base ) {
@@ -334,6 +361,9 @@ class Course extends gEditorial\Module
 				if ( $screen->post_type == $this->constant( 'lesson_cpt' ) )
 					$this->filter( 'post_updated_messages', 1, 10, 'supported' );
 
+				if ( $subterms )
+					remove_meta_box( $subterms.'div', $screen->post_type, 'side' );
+
 				$this->filter_false_module( 'tweaks', 'metabox_menuorder' );
 				remove_meta_box( 'pageparentdiv', $screen, 'side' );
 
@@ -360,6 +390,12 @@ class Course extends gEditorial\Module
 
 			$this->_hook_store_metabox( $screen->post_type );
 		}
+
+		// only for supported posttypes
+		$this->remove_taxonomy_submenu( $subterms );
+
+		if ( Settings::isDashboard( $screen ) )
+			$this->filter_module( 'calendar', 'post_row_title', 4, 12 );
 	}
 
 	private function _sync_linked( $posttype )
@@ -480,22 +516,17 @@ class Course extends gEditorial\Module
 
 	public function render_metabox( $post, $box, $fields = NULL, $context = NULL )
 	{
-		$dropdowns = $excludes = [];
-		$posttype  = $this->constant( 'course_cpt' );
-		$terms     = Taxonomy::getTerms( $this->constant( 'course_tax' ), $post->ID, TRUE );
-
-		foreach ( $terms as $term ) {
-			$dropdowns[$term->slug] = MetaBox::dropdownAssocPosts( $posttype, $term->slug, $this->classs() );
-			$excludes[] = $term->slug;
-		}
-
-		if ( empty( $dropdowns ) || $this->get_setting( 'multiple_instances' ) )
-			$dropdowns[0] = MetaBox::dropdownAssocPosts( $posttype, '0', $this->classs(), $excludes );
-
-		foreach ( $dropdowns as $dropdown )
-			echo $dropdown ?: '';
+		$this->do_render_metabox_assoc( $post, 'course_cpt', 'course_tax', 'topic_tax' );
 
 		MetaBox::fieldPostMenuOrder( $post );
+	}
+
+	public function store_metabox( $post_id, $post, $update, $context = NULL )
+	{
+		if ( ! $this->is_save_post( $post, $this->posttypes() ) )
+			return;
+
+		$this->do_store_metabox_assoc( $post, 'course_cpt', 'course_tax', 'topic_tax' );
 	}
 
 	public function meta_box_cb_lesson_format( $post, $box )
@@ -608,27 +639,6 @@ class Course extends gEditorial\Module
 
 		if ( ! is_wp_error( $term ) )
 			$this->set_linked_term( $post_id, $term['term_id'], 'course_cpt', 'course_tax' );
-	}
-
-	// FIXME: not used
-	public function store_metabox( $post_id, $post, $update, $context = NULL )
-	{
-		if ( ! $this->is_save_post( $post, $this->posttypes() ) )
-			return;
-
-		$name = $this->classs( $this->constant( 'course_cpt' ) );
-
-		if ( ! isset( $_POST[$name] ) )
-			return;
-
-		$terms = [];
-		$tax   = $this->constant( 'course_tax' );
-
-		foreach ( (array) $_POST[$name] as $course )
-			if ( trim( $course ) && $term = get_term_by( 'slug', $course, $tax ) )
-				$terms[] = intval( $term->term_id );
-
-		wp_set_object_terms( $post_id, ( count( $terms ) ? $terms : NULL ), $tax, FALSE );
 	}
 
 	public function wp_trash_post( $post_id )
