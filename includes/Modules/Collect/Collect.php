@@ -36,7 +36,7 @@ class Collect extends gEditorial\Module
 			'_general' => [
 				'multiple_instances',
 				[
-					'field'       => 'collection_parts',
+					'field'       => 'subterms_support',
 					'title'       => _x( 'Collection Parts', 'Settings', 'geditorial-collect' ),
 					'description' => _x( 'Partition taxonomy for the collections and supported post-types.', 'Settings', 'geditorial-collect' ),
 				],
@@ -117,7 +117,8 @@ class Collect extends gEditorial\Module
 
 		$strings['misc'] = [
 			'collection_cpt' => [
-				'featured' => _x( 'Poster Image', 'Posttype Featured', 'geditorial-collect' ),
+				'featured'         => _x( 'Poster Image', 'Posttype Featured', 'geditorial-collect' ),
+				'show_option_none' => _x( '&ndash; Select Collection &ndash;', 'Select Option None', 'geditorial-collect' ),
 			],
 			'collection_tax' => [
 				'meta_box_title' => _x( 'In This Collection', 'MetaBox Title', 'geditorial-collect' ),
@@ -129,6 +130,7 @@ class Collect extends gEditorial\Module
 			'part_tax' => [
 				'meta_box_title'      => _x( 'Parts', 'MetaBox Title', 'geditorial-collect' ),
 				'tweaks_column_title' => _x( 'Collection Parts', 'Column Title', 'geditorial-collect' ),
+				'show_option_none'    => _x( '&ndash; Select Part &ndash;', 'Select Option None', 'geditorial-collect' ),
 			],
 			'meta_box_title'         => _x( 'The Collection', 'MetaBox Title', 'geditorial-collect' ),
 			'tweaks_column_title'    => _x( 'Collections', 'Column Title', 'geditorial-collect' ),
@@ -202,19 +204,20 @@ class Collect extends gEditorial\Module
 			'hierarchical' => TRUE,
 		] );
 
+		if ( $this->get_setting( 'subterms_support' ) )
+			$this->register_taxonomy( 'part_tax', [
+				'hierarchical'       => TRUE,
+				'meta_box_cb'        => NULL,
+				'show_admin_column'  => FALSE,
+				'show_in_quick_edit' => FALSE,
+				'show_in_nav_menus'  => TRUE,
+			], $this->posttypes( 'collection_cpt' ) );
+
 		$this->register_taxonomy( 'group_tax', [
 			'hierarchical'       => TRUE, // required by `MetaBox::checklistTerms()`
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
 		], 'collection_cpt' );
-
-		if ( $this->get_setting( 'collection_parts', FALSE ) )
-			$this->register_taxonomy( 'part_tax', [
-				'hierarchical'       => TRUE, // required by `MetaBox::checklistTerms()`
-				'show_admin_column'  => TRUE,
-				'show_in_quick_edit' => TRUE,
-				'show_in_nav_menus'  => TRUE,
-			], $this->posttypes( 'collection_cpt' ) );
 
 		$this->register_posttype( 'collection_cpt', [
 			'hierarchical' => TRUE,
@@ -271,6 +274,10 @@ class Collect extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
+		$subterms = $this->get_setting( 'subterms_support' )
+			? $this->constant( 'part_tax' )
+			: FALSE;
+
 		if ( $screen->post_type == $this->constant( 'collection_cpt' ) ) {
 
 			if ( 'post' == $screen->base ) {
@@ -328,6 +335,9 @@ class Collect extends gEditorial\Module
 
 			if ( 'post' == $screen->base ) {
 
+				if ( $subterms )
+					remove_meta_box( $subterms.'div', $screen->post_type, 'side' );
+
 				$this->class_metabox( $screen, 'linkedbox' );
 				add_meta_box( $this->classs( 'linkedbox' ),
 					$this->get_meta_box_title_posttype( 'collection_cpt' ),
@@ -349,6 +359,9 @@ class Collect extends gEditorial\Module
 
 			$this->_hook_store_metabox( $screen->post_type );
 		}
+
+		// only for supported posttypes
+		$this->remove_taxonomy_submenu( $subterms );
 
 		if ( Settings::isDashboard( $screen ) )
 			$this->filter_module( 'calendar', 'post_row_title', 4, 12 );
@@ -484,26 +497,6 @@ class Collect extends gEditorial\Module
 		$this->do_before_delete_post( $post_id, 'collection_cpt', 'collection_tax' );
 	}
 
-	public function store_metabox( $post_id, $post, $update, $context = NULL )
-	{
-		if ( ! $this->is_save_post( $post, $this->posttypes() ) )
-			return;
-
-		$name = $this->classs( $this->constant( 'collection_cpt' ) );
-
-		if ( ! isset( $_POST[$name] ) )
-			return;
-
-		$terms = [];
-		$tax   = $this->constant( 'collection_tax' );
-
-		foreach ( (array) $_POST[$name] as $collection )
-			if ( trim( $collection ) && $term = get_term_by( 'slug', $collection, $tax ) )
-				$terms[] = intval( $term->term_id );
-
-		wp_set_object_terms( $post_id, ( count( $terms ) ? $terms : NULL ), $tax, FALSE );
-	}
-
 	public function pre_get_posts( &$wp_query )
 	{
 		if ( $this->constant( 'collection_cpt' ) == $wp_query->get( 'post_type' ) ) {
@@ -544,16 +537,6 @@ class Collect extends gEditorial\Module
 		echo '</div>';
 	}
 
-	public function meta_box_cb_part_tax( $post, $box )
-	{
-		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
-			return;
-
-		echo $this->wrap_open( '-admin-metabox' );
-			MetaBox::checklistTerms( $post->ID, $box['args'] );
-		echo '</div>';
-	}
-
 	public function render_linkedbox_metabox( $post, $box )
 	{
 		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
@@ -577,21 +560,15 @@ class Collect extends gEditorial\Module
 
 	public function render_metabox( $post, $box, $fields = NULL, $context = NULL )
 	{
-		$dropdowns = $excludes = [];
-		$posttype  = $this->constant( 'collection_cpt' );
-		$terms     = Taxonomy::getTerms( $this->constant( 'collection_tax' ), $post->ID, TRUE );
+		$this->do_render_metabox_assoc( $post, 'collection_cpt', 'collection_tax', 'part_tax' );
+	}
 
-		foreach ( $terms as $term ) {
-			$dropdowns[$term->slug] = MetaBox::dropdownAssocPosts( $posttype, $term->slug, $this->classs() );
-			$excludes[] = $term->slug;
-		}
+	public function store_metabox( $post_id, $post, $update, $context = NULL )
+	{
+		if ( ! $this->is_save_post( $post, $this->posttypes() ) )
+			return;
 
-		if ( empty( $dropdowns ) || $this->get_setting( 'multiple_instances' ) )
-			$dropdowns[0] = MetaBox::dropdownAssocPosts( $posttype, '0', $this->classs(), $excludes );
-
-		foreach ( $dropdowns as $dropdown )
-			if ( $dropdown )
-				echo $dropdown;
+		$this->do_store_metabox_assoc( $post, 'collection_cpt', 'collection_tax', 'part_tax' );
 	}
 
 	public function render_mainbox_metabox( $post, $box )
