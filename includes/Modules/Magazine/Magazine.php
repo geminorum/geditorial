@@ -37,7 +37,7 @@ class Magazine extends gEditorial\Module
 			'_general' => [
 				'multiple_instances',
 				[
-					'field'       => 'issue_sections',
+					'field'       => 'subterms_support',
 					'title'       => _x( 'Issue Sections', 'Settings', 'geditorial-magazine' ),
 					'description' => _x( 'Section taxonomy for the issues and supported post-types.', 'Settings', 'geditorial-magazine' ),
 				],
@@ -118,7 +118,8 @@ class Magazine extends gEditorial\Module
 
 		$strings['misc'] = [
 			'issue_cpt' => [
-				'featured' => _x( 'Cover Image', 'Posttype Featured', 'geditorial-magazine' ),
+				'featured'         => _x( 'Cover Image', 'Posttype Featured', 'geditorial-magazine' ),
+				'show_option_none' => _x( '&ndash; Select Issue &ndash;', 'Select Option None', 'geditorial-magazine' ),
 			],
 			'issue_tax' => [
 				'meta_box_title' => _x( 'In This Issue', 'MetaBox Title', 'geditorial-magazine' ),
@@ -130,6 +131,7 @@ class Magazine extends gEditorial\Module
 			'section_tax' => [
 				'meta_box_title'      => _x( 'Sections', 'MetaBox Title', 'geditorial-magazine' ),
 				'tweaks_column_title' => _x( 'Issue Sections', 'Column Title', 'geditorial-magazine' ),
+				'show_option_none'    => _x( '&ndash; Select Section &ndash;', 'Select Option None', 'geditorial-magazine' ),
 			],
 			'meta_box_title'         => _x( 'The Issue', 'MetaBox Title', 'geditorial-magazine' ),
 			'tweaks_column_title'    => _x( 'Issues', 'Column Title', 'geditorial-magazine' ),
@@ -205,11 +207,12 @@ class Magazine extends gEditorial\Module
 			'show_in_quick_edit' => TRUE,
 		], 'issue_cpt' );
 
-		if ( $this->get_setting( 'issue_sections' ) )
+		if ( $this->get_setting( 'subterms_support' ) )
 			$this->register_taxonomy( 'section_tax', [
 				'hierarchical'       => TRUE,
-				'show_admin_column'  => TRUE,
-				'show_in_quick_edit' => TRUE,
+				'meta_box_cb'        => NULL,
+				'show_admin_column'  => FALSE,
+				'show_in_quick_edit' => FALSE,
 				'show_in_nav_menus'  => TRUE,
 			], $this->posttypes( 'issue_cpt' ) );
 
@@ -273,6 +276,10 @@ class Magazine extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
+		$section = $this->get_setting( 'subterms_support' )
+			? $this->constant( 'section_tax' )
+			: FALSE;
+
 		if ( $screen->post_type == $this->constant( 'issue_cpt' ) ) {
 
 			if ( 'post' == $screen->base ) {
@@ -330,6 +337,9 @@ class Magazine extends gEditorial\Module
 
 			if ( 'post' == $screen->base ) {
 
+				if ( $section )
+					remove_meta_box( $section.'div', $screen->post_type, 'side' );
+
 				$this->class_metabox( $screen, 'linkedbox' );
 				add_meta_box( $this->classs( 'linkedbox' ),
 					$this->get_meta_box_title_posttype( 'issue_cpt' ),
@@ -351,6 +361,9 @@ class Magazine extends gEditorial\Module
 
 			$this->_hook_store_metabox( $screen->post_type );
 		}
+
+		// only for supported posttypes
+		$this->remove_taxonomy_submenu( $section );
 
 		if ( Settings::isDashboard( $screen ) )
 			$this->filter_module( 'calendar', 'post_row_title', 4, 12 );
@@ -486,26 +499,6 @@ class Magazine extends gEditorial\Module
 		$this->do_before_delete_post( $post_id, 'issue_cpt', 'issue_tax' );
 	}
 
-	public function store_metabox( $post_id, $post, $update, $context = NULL )
-	{
-		if ( ! $this->is_save_post( $post, $this->posttypes() ) )
-			return;
-
-		$name = $this->classs( $this->constant( 'issue_cpt' ) );
-
-		if ( ! isset( $_POST[$name] ) )
-			return;
-
-		$terms = [];
-		$tax   = $this->constant( 'issue_tax' );
-
-		foreach ( (array) $_POST[$name] as $issue )
-			if ( trim( $issue ) && $term = get_term_by( 'slug', $issue, $tax ) )
-				$terms[] = intval( $term->term_id );
-
-		wp_set_object_terms( $post_id, ( count( $terms ) ? $terms : NULL ), $tax, FALSE );
-	}
-
 	public function pre_get_posts( &$wp_query )
 	{
 		if ( $this->constant( 'issue_cpt' ) == $wp_query->get( 'post_type' ) ) {
@@ -546,16 +539,6 @@ class Magazine extends gEditorial\Module
 		echo '</div>';
 	}
 
-	public function meta_box_cb_section_tax( $post, $box )
-	{
-		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
-			return;
-
-		echo $this->wrap_open( '-admin-metabox' );
-			MetaBox::checklistTerms( $post->ID, $box['args'] );
-		echo '</div>';
-	}
-
 	public function render_linkedbox_metabox( $post, $box )
 	{
 		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
@@ -579,21 +562,15 @@ class Magazine extends gEditorial\Module
 
 	public function render_metabox( $post, $box, $fields = NULL, $context = NULL )
 	{
-		$dropdowns = $excludes = [];
-		$posttype  = $this->constant( 'issue_cpt' );
-		$terms     = Taxonomy::getTerms( $this->constant( 'issue_tax' ), $post->ID, TRUE );
+		$this->do_render_metabox_assoc( $post, 'issue_cpt', 'issue_tax', 'section_tax' );
+	}
 
-		foreach ( $terms as $term ) {
-			$dropdowns[$term->slug] = MetaBox::dropdownAssocPosts( $posttype, $term->slug, $this->classs() );
-			$excludes[] = $term->slug;
-		}
+	public function store_metabox( $post_id, $post, $update, $context = NULL )
+	{
+		if ( ! $this->is_save_post( $post, $this->posttypes() ) )
+			return;
 
-		if ( empty( $dropdowns ) || $this->get_setting( 'multiple_instances' ) )
-			$dropdowns[0] = MetaBox::dropdownAssocPosts( $posttype, '0', $this->classs(), $excludes );
-
-		foreach ( $dropdowns as $dropdown )
-			if ( $dropdown )
-				echo $dropdown;
+		$this->do_store_metabox_assoc( $post, 'issue_cpt', 'issue_tax', 'section_tax' );
 	}
 
 	public function render_mainbox_metabox( $post, $box )
