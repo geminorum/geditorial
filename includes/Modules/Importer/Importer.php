@@ -88,10 +88,18 @@ class Importer extends gEditorial\Module
 		HTML::desc( _x( 'Helps with Importing contents from CSV files into any post-type, with meta support.', 'Tool Box', 'geditorial-importer' ) );
 	}
 
+	private function raise_resources()
+	{
+		@set_time_limit( 0 );
+		wp_raise_memory_limit( 'import' );
+	}
+
 	protected function form_map( $id, $posttype = 'post' )
 	{
 		if ( ! $file = get_attached_file( $id ) )
 			return FALSE;
+
+		$this->raise_resources();
 
 		// https://github.com/kzykhys/PHPCsvParser
 		$iterator = new \SplFileObject( File::normalize( $file ) );
@@ -175,6 +183,8 @@ class Importer extends gEditorial\Module
 	{
 		if ( ! $file = get_attached_file( $id ) )
 			return FALSE;
+
+		$this->raise_resources();
 
 		// https://github.com/kzykhys/PHPCsvParser
 		$iterator = new \SplFileObject( File::normalize( $file ) );
@@ -290,6 +300,8 @@ class Importer extends gEditorial\Module
 		if ( ! $file = get_attached_file( $id ) )
 			return FALSE;
 
+		$this->raise_resources();
+
 		$data = [];
 
 		// https://github.com/kzykhys/PHPCsvParser
@@ -322,6 +334,8 @@ class Importer extends gEditorial\Module
 	{
 		if ( $this->check_settings( $sub, 'tools' ) ) {
 
+			$this->filter( 'import_memory_limit' );
+
 			add_filter( $this->hook( 'prepare' ), [ $this, 'importer_prepare' ], 9, 6 );
 			add_action( $this->hook( 'saved' ), [ $this, 'importer_saved' ], 9, 5 );
 
@@ -344,6 +358,8 @@ class Importer extends gEditorial\Module
 					$post_status    = $this->get_setting( 'post_status', 'pending' );
 					$comment_status = $this->get_setting( 'comment_status', 'closed' );
 					$taxonomies     = Taxonomy::get( 4, [], $posttype );
+
+					$this->raise_resources();
 
 					$iterator = new \SplFileObject( File::normalize( $file ) );
 					$options  = [ 'encoding' => 'UTF-8', 'limit' => 1 ];
@@ -560,6 +576,11 @@ class Importer extends gEditorial\Module
 		}
 
 		echo '</p>';
+	}
+
+	public function import_memory_limit( $filtered_limit )
+	{
+		return -1;
 	}
 
 	public function get_importer_fields( $posttype = NULL, $taxonomies = [] )
