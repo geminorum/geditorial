@@ -320,6 +320,9 @@ class Venue extends gEditorial\Module
 
 		// only for supported posttypes
 		$this->remove_taxonomy_submenu( $subterms );
+
+		if ( Settings::isDashboard( $screen ) )
+			$this->filter_module( 'calendar', 'post_row_title', 4, 12 );
 	}
 
 	private function _sync_linked( $posttype )
