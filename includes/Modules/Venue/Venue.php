@@ -538,6 +538,28 @@ class Venue extends gEditorial\Module
 		echo '</div>';
 	}
 
+	public function get_assoc_post( $post = NULL, $single = FALSE, $published = TRUE )
+	{
+		$posts = [];
+		$terms = Taxonomy::getTerms( $this->constant( 'place_tax' ), $post, TRUE );
+
+		foreach ( $terms as $term ) {
+
+			if ( ! $linked = $this->get_linked_post_id( $term, 'place_cpt', 'place_tax' ) )
+				continue;
+
+			if ( $single )
+				return $linked;
+
+			if ( $published && 'publish' != get_post_status( $linked ) )
+				continue;
+
+			$posts[$term->term_id] = $linked;
+		}
+
+		return count( $posts ) ? $posts : FALSE;
+	}
+
 	public function tweaks_column_attr( $post )
 	{
 		$posts = $this->get_linked_posts( $post->ID, 'place_cpt', 'place_tax' );
