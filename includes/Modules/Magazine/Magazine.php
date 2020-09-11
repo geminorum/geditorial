@@ -95,7 +95,7 @@ class Magazine extends gEditorial\Module
 	{
 		return [
 			'taxonomies' => [
-				'issue_tax'   => 'book',
+				'issue_tax'   => NULL,
 				'span_tax'    => 'backup',
 				'section_tax' => 'category',
 			],
@@ -276,7 +276,7 @@ class Magazine extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
-		$section = $this->get_setting( 'subterms_support' )
+		$subterms = $this->get_setting( 'subterms_support' )
 			? $this->constant( 'section_tax' )
 			: FALSE;
 
@@ -337,8 +337,8 @@ class Magazine extends gEditorial\Module
 
 			if ( 'post' == $screen->base ) {
 
-				if ( $section )
-					remove_meta_box( $section.'div', $screen->post_type, 'side' );
+				if ( $subterms )
+					remove_meta_box( $subterms.'div', $screen->post_type, 'side' );
 
 				$this->class_metabox( $screen, 'linkedbox' );
 				add_meta_box( $this->classs( 'linkedbox' ),
@@ -363,7 +363,7 @@ class Magazine extends gEditorial\Module
 		}
 
 		// only for supported posttypes
-		$this->remove_taxonomy_submenu( $section );
+		$this->remove_taxonomy_submenu( $subterms );
 
 		if ( Settings::isDashboard( $screen ) )
 			$this->filter_module( 'calendar', 'post_row_title', 4, 12 );

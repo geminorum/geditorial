@@ -119,6 +119,7 @@ class Contest extends gEditorial\Module
 				'featured'              => _x( 'Poster Image', 'Posttype Featured', 'geditorial-contest' ),
 				'meta_box_title'        => _x( 'Metadata', 'MetaBox Title', 'geditorial-contest' ),
 				'children_column_title' => _x( 'Applies', 'Column Title', 'geditorial-contest' ),
+				'show_option_none'      => _x( '&ndash; Select Contest &ndash;', 'Select Option None', 'geditorial-contest' ),
 			],
 			'contest_tax' => [
 				'meta_box_title' => _x( 'In This Contest', 'MetaBox Title', 'geditorial-contest' ),
@@ -246,7 +247,7 @@ class Contest extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
-		$section = $this->get_setting( 'subterms_support' )
+		$subterms = $this->get_setting( 'subterms_support' )
 			? $this->constant( 'section_tax' )
 			: FALSE;
 
@@ -300,8 +301,8 @@ class Contest extends gEditorial\Module
 
 			if ( 'post' == $screen->base ) {
 
-				if ( $section )
-					remove_meta_box( $section.'div', $screen->post_type, 'side' );
+				if ( $subterms )
+					remove_meta_box( $subterms.'div', $screen->post_type, 'side' );
 
 				if ( $screen->post_type == $this->constant( 'apply_cpt' ) )
 					$this->filter( 'post_updated_messages', 1, 10, 'supported' );
@@ -334,7 +335,7 @@ class Contest extends gEditorial\Module
 		}
 
 		// only for supported posttypes
-		$this->remove_taxonomy_submenu( $section );
+		$this->remove_taxonomy_submenu( $subterms );
 
 		if ( Settings::isDashboard( $screen ) )
 			$this->filter_module( 'calendar', 'post_row_title', 4, 12 );

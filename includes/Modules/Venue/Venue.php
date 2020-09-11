@@ -184,10 +184,8 @@ class Venue extends gEditorial\Module
 			'show_in_quick_edit' => TRUE,
 		], 'place_cpt' );
 
-		// FIXME: maybe show in quick box
 		$this->register_taxonomy( 'place_tax', [
-			'show_ui'      => TRUE,
-			'show_in_menu' => FALSE,
+			'show_ui'      => FALSE,
 			'hierarchical' => TRUE,
 		] );
 
@@ -338,7 +336,7 @@ class Venue extends gEditorial\Module
 	public function meta_init()
 	{
 		$this->add_posttype_fields( $this->constant( 'place_cpt' ) );
-		// $this->add_posttype_fields_supported(); FIXME: add fields first
+		// $this->add_posttype_fields_supported(); // FIXME: add fields first
 	}
 
 	public function dashboard_glance_items( $items )

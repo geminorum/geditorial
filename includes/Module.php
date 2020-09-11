@@ -538,7 +538,7 @@ class Module extends Base
 		else if ( TRUE === $defaults )
 			$defaults = array_keys( $supports );
 
-		$singular = translate_nooped_plural( $this->strings['noops'][$constant], 1 );
+		$singular = @translate_nooped_plural( $this->strings['noops'][$constant], 1 );
 
 		return [
 			'field'       => $constant.'_supports',
