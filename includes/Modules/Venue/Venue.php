@@ -30,12 +30,25 @@ class Venue extends gEditorial\Module
 	protected function get_global_settings()
 	{
 		return [
-			'posttypes_option' => 'posttypes_option',
 			'_general' => [
-				'extra_metadata' => _x( 'Specifies location based on the actual latitude and longitude.', 'Settings', 'geditorial-venue' ),
 				'multiple_instances',
+				[
+					'field'       => 'subterms_support',
+					'title'       => _x( 'Place Facilities', 'Settings', 'geditorial-venue' ),
+					'description' => _x( 'Facility taxonomy for the places and supported post-types.', 'Settings', 'geditorial-venue' ),
+				],
+				'comment_status',
+			],
+			'_editlist' => [
 				'admin_ordering',
 				'admin_restrict',
+			],
+			'_editpost' => [
+				'extra_metadata' => _x( 'Specifies location based on the actual latitude and longitude.', 'Settings', 'geditorial-venue' ),
+			],
+			'_frontend' => [
+				'insert_cover',
+				'insert_priority',
 				'posttype_feeds',
 				'posttype_pages',
 				[
@@ -46,6 +59,7 @@ class Venue extends gEditorial\Module
 					'placeholder' => URL::home( 'campus' ),
 				],
 			],
+			'posttypes_option' => 'posttypes_option',
 			'_supports' => [
 				'thumbnail_support',
 				$this->settings_supports_option( 'place_cpt', [
@@ -66,6 +80,7 @@ class Venue extends gEditorial\Module
 			'place_cpt_archive' => 'places',
 			'place_tax'         => 'places',
 			'place_cat'         => 'place_category',
+			'facility_tax'      => 'place_facility',
 		];
 	}
 
@@ -73,8 +88,9 @@ class Venue extends gEditorial\Module
 	{
 		return [
 			'taxonomies' => [
-				'place_tax' => NULL,
-				'place_cat' => 'category',
+				'place_tax'    => NULL,
+				'place_cat'    => 'category',
+				'facility_tax' => 'building',
 			],
 		];
 	}
@@ -83,9 +99,10 @@ class Venue extends gEditorial\Module
 	{
 		$strings = [
 			'noops' => [
-				'place_tax' => _n_noop( 'Place', 'Places', 'geditorial-venue' ),
-				'place_cpt' => _n_noop( 'Place', 'Places', 'geditorial-venue' ),
-				'place_cat' => _n_noop( 'Place Category', 'Place Categories', 'geditorial-venue' ),
+				'place_tax'    => _n_noop( 'Place', 'Places', 'geditorial-venue' ),
+				'place_cpt'    => _n_noop( 'Place', 'Places', 'geditorial-venue' ),
+				'place_cat'    => _n_noop( 'Place Category', 'Place Categories', 'geditorial-venue' ),
+				'facility_tax' => _n_noop( 'Facility', 'Facilities', 'geditorial-venue' ),
 			],
 		];
 
@@ -96,9 +113,14 @@ class Venue extends gEditorial\Module
 			'place_tax' => [
 				'tweaks_column_title' => _x( 'Venue', 'Column Title', 'geditorial-venue' ),
 				'meta_box_title'      => _x( 'Connected to this Place', 'Column Title', 'geditorial-venue' ),
+				'show_option_none'    => _x( '&ndash; Select Place &ndash;', 'Select Option None', 'geditorial-venue' ),
 			],
 			'place_cat' => [
 				'tweaks_column_title' => _x( 'Place Categories', 'Column Title', 'geditorial-venue' ),
+			],
+			'facility_tax' => [
+				'tweaks_column_title' => _x( 'Place Facilities', 'Column Title', 'geditorial-venue' ),
+				'show_option_none'    => _x( '&ndash; Select Facility &ndash;', 'Select Option None', 'geditorial-venue' ),
 			],
 			'meta_box_title'         => _x( 'Place Details', 'MetaBox Title', 'geditorial-venue' ),
 			'tweaks_column_title'    => _x( 'Places', 'Column Title', 'geditorial-venue' ),
@@ -169,6 +191,15 @@ class Venue extends gEditorial\Module
 			'hierarchical' => TRUE,
 		] );
 
+		if ( $this->get_setting( 'subterms_support' ) )
+			$this->register_taxonomy( 'facility_tax', [
+				'hierarchical'       => TRUE,
+				'meta_box_cb'        => NULL,
+				'show_admin_column'  => FALSE,
+				'show_in_quick_edit' => FALSE,
+				'show_in_nav_menus'  => TRUE,
+			], $this->posttypes( 'place_cpt' ) );
+
 		$this->register_posttype( 'place_cpt', [
 			'hierarchical' => TRUE,
 			'rewrite'      => [
@@ -207,6 +238,10 @@ class Venue extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
+		$subterms = $this->get_setting( 'subterms_support' )
+			? $this->constant( 'facility_tax' )
+			: FALSE;
+
 		if ( $screen->post_type == $this->constant( 'place_cpt' ) ) {
 
 			if ( 'post' == $screen->base ) {
@@ -258,6 +293,9 @@ class Venue extends gEditorial\Module
 
 			if ( 'post' == $screen->base ) {
 
+				if ( $subterms )
+					remove_meta_box( $subterms.'div', $screen->post_type, 'side' );
+
 				$this->class_metabox( $screen, 'linkedbox' );
 				add_meta_box( $this->classs( 'linkedbox' ),
 					$this->get_meta_box_title_posttype( 'place_cpt' ),
@@ -279,6 +317,9 @@ class Venue extends gEditorial\Module
 
 			$this->_hook_store_metabox( $screen->post_type );
 		}
+
+		// only for supported posttypes
+		$this->remove_taxonomy_submenu( $subterms );
 	}
 
 	private function _sync_linked( $posttype )
@@ -393,26 +434,6 @@ class Venue extends gEditorial\Module
 		$this->do_before_delete_post( $post_id, 'place_cpt', 'place_tax' );
 	}
 
-	public function store_metabox( $post_id, $post, $update, $context = NULL )
-	{
-		if ( ! $this->is_save_post( $post, $this->posttypes() ) )
-			return;
-
-		$name = $this->classs( $this->constant( 'place_cpt' ) );
-
-		if ( ! isset( $_POST[$name] ) )
-			return;
-
-		$terms = [];
-		$tax   = $this->constant( 'place_tax' );
-
-		foreach ( (array) $_POST[$name] as $issue )
-			if ( trim( $issue ) && $term = get_term_by( 'slug', $issue, $tax ) )
-				$terms[] = intval( $term->term_id );
-
-		wp_set_object_terms( $post_id, ( count( $terms ) ? $terms : NULL ), $tax, FALSE );
-	}
-
 	public function post_updated_messages( $messages )
 	{
 		return array_merge( $messages, $this->get_post_updated_messages( 'place_cpt' ) );
@@ -471,21 +492,15 @@ class Venue extends gEditorial\Module
 
 	public function render_metabox( $post, $box, $fields = NULL, $context = NULL )
 	{
-		$dropdowns = $excludes = [];
-		$posttype  = $this->constant( 'place_cpt' );
-		$terms     = Taxonomy::getTerms( $this->constant( 'place_tax' ), $post->ID, TRUE );
+		$this->do_render_metabox_assoc( $post, 'place_cpt', 'place_tax', 'facility_tax' );
+	}
 
-		foreach ( $terms as $term ) {
-			$dropdowns[$term->slug] = MetaBox::dropdownAssocPosts( $posttype, $term->slug, $this->classs() );
-			$excludes[] = $term->slug;
-		}
+	public function store_metabox( $post_id, $post, $update, $context = NULL )
+	{
+		if ( ! $this->is_save_post( $post, $this->posttypes() ) )
+			return;
 
-		if ( empty( $dropdowns ) || $this->get_setting( 'multiple_instances' ) )
-			$dropdowns[0] = MetaBox::dropdownAssocPosts( $posttype, '0', $this->classs(), $excludes );
-
-		foreach ( $dropdowns as $dropdown )
-			if ( $dropdown )
-				echo $dropdown;
+		$this->do_store_metabox_assoc( $post, 'place_cpt', 'place_tax', 'facility_tax' );
 	}
 
 	public function render_mainbox_metabox( $post, $box )
