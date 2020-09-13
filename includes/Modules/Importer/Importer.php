@@ -103,7 +103,7 @@ class Importer extends gEditorial\Module
 
 		// https://github.com/kzykhys/PHPCsvParser
 		$iterator = new \SplFileObject( File::normalize( $file ) );
-		$parser   = new \KzykHys\CsvParser\CsvParser( $iterator, [ 'encoding' => 'UTF-8', 'l1imit' => 2 ] );
+		$parser   = new \KzykHys\CsvParser\CsvParser( $iterator, [ 'encoding' => 'UTF-8' ] );
 		$items    = $parser->parse();
 		$headers  = $items[0];
 
@@ -382,7 +382,7 @@ class Importer extends gEditorial\Module
 
 								$posts = PostType::getIDsByTitle( $value, [ 'post_type' => $posttype ] );
 
-								if ( empty( $posts ) )
+								if ( ! empty( $posts ) )
 									continue 2;
 							}
 
