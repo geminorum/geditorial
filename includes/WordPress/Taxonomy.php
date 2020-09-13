@@ -14,6 +14,11 @@ class Taxonomy extends Core\Base
 	// ALSO: trim term titles
 	// MUST USE: custom walker
 
+	public static function object( $taxonomy )
+	{
+		return is_object( $taxonomy ) ? $taxonomy : get_taxonomy( $taxonomy );
+	}
+
 	public static function get( $mod = 0, $args = array(), $object = FALSE )
 	{
 		$list = array();
