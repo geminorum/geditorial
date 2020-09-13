@@ -668,8 +668,26 @@ class Template extends Core\Base
 
 		foreach ( $list as $key => $title ) {
 
-			if ( ! array_key_exists( $key, $fields ) )
+			if ( ! array_key_exists( $key, $fields ) ) {
+
+				// fallback to taxonomy, only if fields are passed
+				if ( is_null( $args['fields'] ) )
+					continue;
+
+				if ( taxonomy_exists( $key ) && is_object_in_taxonomy( $posttype, $key ) ) {
+
+					if ( ! $term = Taxonomy::theTerm( $key, $post->ID, TRUE ) )
+						continue;
+
+					if ( is_null( $title ) )
+						$title = Taxonomy::object( $key )->labels->singular_name;
+
+					if ( $meta = sanitize_term_field( 'name', $term->name, $term->term_id, $key, 'display' ) )
+						$rows[$title] = HTML::link( $meta, get_term_link( $term, $key ) );
+				}
+
 				continue;
+			}
 
 			$field = $fields[$key];
 
