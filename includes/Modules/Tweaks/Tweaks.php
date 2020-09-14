@@ -288,7 +288,7 @@ class Tweaks extends gEditorial\Module
 		if ( 'post' == $screen->base
 			&& ! PostType::supportBlocks( $screen->post_type ) ) {
 
-			if ( in_array( $screen->post_type, $this->get_setting( 'post_modified', [] ) ) )
+			if ( $this->in_setting( $screen->post_type, 'post_modified' ) ) )
 				$this->action( 'post_submitbox_misc_actions', 1, 1 );
 
 			if ( $this->get_setting( 'checklist_tree', FALSE ) ) {
@@ -316,7 +316,7 @@ class Tweaks extends gEditorial\Module
 				$this->_edit_screen( $screen->post_type );
 			}
 
-			if ( in_array( $screen->post_type, $this->get_setting( 'search_meta', [] ) ) ) {
+			if ( $this->in_setting( $screen->post_type, 'search_meta' ) ) {
 				$this->filter( 'posts_join', 2, 9 );
 				$this->filter( 'posts_where', 2, 9 );
 				$this->filter( 'posts_distinct', 2, 9 );
@@ -362,7 +362,7 @@ class Tweaks extends gEditorial\Module
 		// add_filter( 'manage_'.$posttype.'_posts_columns', [ $this, 'manage_posts_columns_late' ], 999, 1 );
 		// add_filter( 'list_table_primary_column', [ $this, 'list_table_primary_column' ], 10, 2 );
 
-		if ( ! WordPress::isAJAX() && in_array( $posttype, $this->get_setting( 'column_thumb', [] ) ) )
+		if ( ! WordPress::isAJAX() && $this->in_setting( $posttype, 'column_thumb' ) )
 			Scripts::enqueueThickBox();
 
 		// INTERNAL HOOKS
@@ -397,7 +397,7 @@ class Tweaks extends gEditorial\Module
 		$screen = get_current_screen();
 		$object = PostType::object( $posttype );
 
-		if ( in_array( $posttype, $this->get_setting( 'post_mainbox', [] ) ) ) {
+		if ( $this->in_setting( $posttype, 'post_mainbox' ) ) {
 
 			remove_meta_box( 'pageparentdiv', $screen, 'side' );
 			// remove_meta_box( 'trackbacksdiv', $screen, 'normal' );
@@ -416,8 +416,8 @@ class Tweaks extends gEditorial\Module
 			);
 		}
 
-		if ( post_type_supports( $posttype, 'excerpt' )
-			&& in_array( $posttype, $this->get_setting( 'post_excerpt', [] ) ) ) {
+		if ( $this->in_setting( $posttype, 'post_excerpt' )
+			&& post_type_supports( $posttype, 'excerpt' ) ) {
 
 			// remove_meta_box( 'postexcerpt', $screen, 'normal' );
 
@@ -486,7 +486,7 @@ class Tweaks extends gEditorial\Module
 
 		foreach ( $columns as $key => $value ) {
 
-			if ( 'title' == $key && in_array( $posttype, $this->get_setting( 'column_thumb', [] ) ) )
+			if ( 'title' == $key && $this->in_setting( $posttype, 'column_thumb' ) )
 				$new[$this->classs( 'thumb' )] = $this->get_column_title( 'thumb', $posttype );
 
 			if ( ( 'comments' == $key && ! $added )
@@ -506,7 +506,7 @@ class Tweaks extends gEditorial\Module
 
 			$new[$key] = $value;
 
-			if ( 'cb' == $key && in_array( $posttype, $this->get_setting( 'column_order', [] ) ) )
+			if ( 'cb' == $key && $this->in_setting( $posttype, 'column_order' ) )
 				$new[$this->classs( 'order' )] = $this->get_column_title( 'order', $posttype );
 		}
 

@@ -708,7 +708,7 @@ class Cartable extends gEditorial\Module
 
 	public function add_user_to_blog( $user_id, $role, $blog_id )
 	{
-		if ( in_array( $role, $this->get_setting( 'excluded_roles', [] ) ) )
+		if ( $this->in_setting( $role, 'excluded_roles' ) )
 			return;
 
 		if ( ! $user = get_user_by( 'id', $user_id ) )

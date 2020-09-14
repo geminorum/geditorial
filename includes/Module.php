@@ -1814,6 +1814,20 @@ class Module extends Base
 		return $default;
 	}
 
+	// check arrays with support of old settings
+	public function in_setting( $item, $field, $default = [] )
+	{
+		$setting = $this->get_setting( $field );
+
+		if ( FALSE === $setting || TRUE === $setting )
+			return $setting;
+
+		if ( is_null( $setting ) )
+			$setting = $default;
+
+		return in_array( $item, (array) $setting, TRUE );
+	}
+
 	// for out of context manipulations
 	public function update_option( $key, $value )
 	{

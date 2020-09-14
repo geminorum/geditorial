@@ -150,7 +150,7 @@ class Workflow extends gEditorial\Module
 				if ( ! $this->posttype_supported( $post->post_type ) )
 					return $caps;
 
-				if ( ! in_array( $post->post_status, $this->get_setting( 'locking_statuses', [] ) ) )
+				if ( ! $this->in_setting( $post->post_status, 'locking_statuses' ) )
 					return $caps;
 
 				$list = $this->get_statuses( $user_id );

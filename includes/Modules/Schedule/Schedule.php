@@ -377,6 +377,6 @@ class Schedule extends gEditorial\Module
 
 	private function can_reschedule( $post )
 	{
-		return ! in_array( $post->post_status, $this->get_setting( 'noschedule_statuses', [ 'publish', 'future', 'private' ] ) );
+		return ! $this->in_setting( $post->post_status, 'noschedule_statuses', [ 'publish', 'future', 'private' ] );
 	}
 }

@@ -328,7 +328,7 @@ class Terms extends gEditorial\Module
 		$list = [];
 
 		foreach ( $this->supported as $field )
-			if ( FALSE === $taxonomy || in_array( $taxonomy, $this->get_setting( 'term_'.$field, [] ) ) )
+			if ( FALSE === $taxonomy || $this->in_setting( $taxonomy, 'term_'.$field ) )
 				$list[] = $field;
 
 		return $this->filters( 'supported_fields', $list, $taxonomy );
