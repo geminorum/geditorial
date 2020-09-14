@@ -228,7 +228,12 @@ class Terms extends gEditorial\Module
 
 		} else if ( 'edit-tags' == $screen->base ) {
 
-			foreach ( $this->get_supported( $screen->taxonomy ) as $field ) {
+			$fields = $this->get_supported( $screen->taxonomy );
+
+			foreach ( $fields as $field ) {
+
+				if ( $this->filters( 'disable_field_edit', FALSE, $field, $screen->taxonomy ) )
+					continue;
 
 				add_action( $screen->taxonomy.'_add_form_fields', function( $taxonomy ) use( $field ){
 					$this->add_form_field( $field, $taxonomy );
@@ -258,9 +263,6 @@ class Terms extends gEditorial\Module
 
 				$this->_admin_enabled();
 
-				$this->_edit_tags_screen( $screen->taxonomy );
-				add_filter( 'manage_edit-'.$screen->taxonomy.'_sortable_columns', [ $this, 'sortable_columns' ] );
-
 				wp_enqueue_media();
 
 				$this->enqueue_asset_js( [
@@ -268,13 +270,25 @@ class Terms extends gEditorial\Module
 				], NULL, [ 'jquery', 'media-upload' ] );
 			}
 
+			if ( count( $fields ) ) {
+				$this->_edit_tags_screen( $screen->taxonomy );
+				add_filter( 'manage_edit-'.$screen->taxonomy.'_sortable_columns', [ $this, 'sortable_columns' ] );
+			}
+
 		} else if ( 'term' == $screen->base ) {
 
-			foreach ( $this->get_supported( $screen->taxonomy ) as $field ) {
+			$fields = $this->get_supported( $screen->taxonomy );
 
-				add_action( $screen->taxonomy.'_edit_form_fields', function( $term, $taxonomy ) use( $field ){
-					$this->edit_form_field( $field, $taxonomy, $term );
+			foreach ( $fields as $field ) {
+
+				$disabled = $this->filters( 'disable_field_edit', FALSE, $field, $screen->taxonomy );
+
+				add_action( $screen->taxonomy.'_edit_form_fields', function( $term, $taxonomy ) use( $field, $disabled ){
+					$this->edit_form_field( $field, $taxonomy, $term, $disabled );
 				}, 8, 2 );
+
+				if ( $disabled )
+					continue;
 
 				if ( ! in_array( $field, [ 'roles', 'posttypes' ] ) )
 					$enqueue = TRUE;
@@ -383,160 +397,183 @@ class Terms extends gEditorial\Module
 		if ( ! $taxonomy = self::req( 'taxonomy' ) )
 			return;
 
+		$term = get_term_by( 'id', $term_id, $taxonomy );
+
 		foreach ( $this->get_supported( $taxonomy ) as $field ) {
 
 			if ( $this->classs( $field ) != $column )
 				continue;
 
-			$html = $meta = '';
-
-			switch ( $field ) {
-				case 'order':
-
-					$html = Listtable::columnOrder( get_term_meta( $term_id, $field, TRUE ) );
-
-				break;
-				case 'tagline':
-
-					if ( $meta = get_term_meta( $term_id, $field, TRUE ) ) {
-
-						$html = '<span class="'.$field.'" data-'.$field.'="'.HTML::escape( $meta ).'">'
-							.Helper::prepTitle( $meta ).'</span>';
-
-					} else {
-
-						$html = $this->field_empty( $field, '' );
-					}
-
-				break;
-				case 'contact':
-
-					if ( $meta = get_term_meta( $term_id, $field, TRUE ) ) {
-
-						$html = '<span class="'.$field.'" data-'.$field.'="'.HTML::escape( $meta )
-							.'" title="'.HTML::wrapLTR( HTML::escape( $meta ) ).'">'
-							.Helper::prepContact( $meta, HTML::getDashicon( 'phone' ) ).'</span>';
-
-					} else {
-
-						$html = $this->field_empty( $field, '' );
-					}
-
-				break;
-				case 'image':
-
-					// $sizes = Media::getPosttypeImageSizes( $post->post_type );
-					// $size  = isset( $sizes[$post->post_type.'-thumbnail'] ) ? $post->post_type.'-thumbnail' : 'thumbnail';
-					$size = [ 45, 72 ]; // FIXME
-
-					$html = $this->filters( 'column_image', Taxonomy::htmlFeaturedImage( $term_id, $size ), $term_id, $size );
-
-				break;
-				case 'author':
-
-					if ( $meta = get_term_meta( $term_id, $field, TRUE ) ) {
-
-						$user = get_user_by( 'id', $meta );
-						$html = '<span class="'.$field.'" data-'.$field.'="'.$meta.'">'.$user->display_name.'</span>';
-
-					} else {
-						$html = $this->field_empty( $field );
-					}
-
-				break;
-				case 'color':
-
-					if ( $meta = get_term_meta( $term_id, $field, TRUE ) )
-						$html = '<i class="-color" data-'.$field.'="'.HTML::escape( $meta )
-							.'" style="background-color:'.HTML::escape( $meta ).'"></i>';
-
-				break;
-				case 'role':
-
-					if ( empty( $this->all_roles ) )
-						$this->all_roles = User::getAllRoleList();
-
-					if ( $meta = get_term_meta( $term_id, $field, TRUE ) )
-						$html = '<span class="'.$field.'" data-'.$field.'="'.HTML::escape( $meta ).'">'
-							.( empty( $this->all_roles[$meta] )
-								? HTML::escape( $meta )
-								: $this->all_roles[$meta] )
-							.'</span>';
-
-					else
-						$html = $this->field_empty( 'role' );
-
-				break;
-				case 'roles':
-
-					if ( empty( $this->all_roles ) )
-						$this->all_roles = User::getAllRoleList();
-
-					if ( $meta = get_term_meta( $term_id, $field, TRUE ) ) {
-
-						$list = [];
-
-						foreach ( (array) $meta as $role )
-							$list[] = '<span class="'.$field.'" data-'.$field.'="'.HTML::escape( $role ).'">'
-								.( empty( $this->all_roles[$role] )
-									? HTML::escape( $role )
-									: $this->all_roles[$role] )
-								.'</span>';
-
-						$html = Helper::getJoined( $list );
-
-					} else {
-						$html = $this->field_empty( $field );
-					}
-
-				break;
-				case 'posttype':
-
-					if ( empty( $this->all_posttypes ) )
-						$this->all_posttypes = PostType::get( 2 );
-
-					if ( $meta = get_term_meta( $term_id, $field, TRUE ) )
-						$html = '<span class="'.$field.'" data-'.$field.'="'.HTML::escape( $meta ).'">'
-							.( empty( $this->all_posttypes[$meta] )
-								? HTML::escape( $meta )
-								: $this->all_posttypes[$meta] )
-							.'</span>';
-
-					else
-						$html = $this->field_empty( $field );
-
-				break;
-				case 'posttypes':
-
-					if ( empty( $this->all_posttypes ) )
-						$this->all_posttypes = PostType::get( 2 );
-
-					if ( $meta = get_term_meta( $term_id, $field, TRUE ) ) {
-
-						$list = [];
-
-						foreach ( (array) $meta as $posttype )
-							$list[] = '<span class="'.$field.'" data-'.$field.'="'.HTML::escape( $posttype ).'">'
-								.( empty( $this->all_posttypes[$posttype] )
-									? HTML::escape( $posttype )
-									: $this->all_posttypes[$posttype] )
-								.'</span>';
-
-						$html = Helper::getJoined( $list );
-
-					} else {
-						$html = $this->field_empty( $field );
-					}
-			}
-
-			echo $this->filters( 'supported_field_column', $html, $field, $taxonomy, $term_id, $meta );
+			$this->display_form_field( $field, $taxonomy, $term, TRUE );
 		}
 	}
 
-	private function field_empty( $field, $value = '0' )
+	// TODO: use readonly inputs on non-columns
+	private function display_form_field( $field, $taxonomy, $term, $column = TRUE )
 	{
-		return '<span class="column-'.$field.'-empty -empty">&mdash;</span>'
-			.'<span class="'.$field.'" data-'.$field.'="'.$value.'"></span>';
+		$html = $meta = '';
+
+		switch ( $field ) {
+			case 'order':
+
+				$meta = get_term_meta( $term->term_id, $field, TRUE );
+
+				if ( $meta || '0' === $meta ) {
+
+					$html = Listtable::columnOrder( $meta );
+
+				} else {
+
+					$html = $this->field_empty( $field, '', $column );
+				}
+
+			break;
+			case 'tagline':
+
+				if ( $meta = get_term_meta( $term->term_id, $field, TRUE ) ) {
+
+					$html = '<span class="'.$field.'" data-'.$field.'="'.HTML::escape( $meta ).'">'
+						.Helper::prepTitle( $meta ).'</span>';
+
+				} else {
+
+					$html = $this->field_empty( $field, '', $column );
+				}
+
+			break;
+			case 'contact':
+
+				if ( $meta = get_term_meta( $term->term_id, $field, TRUE ) ) {
+
+					$html = '<span class="'.$field.'" data-'.$field.'="'.HTML::escape( $meta )
+						.'" title="'.HTML::wrapLTR( HTML::escape( $meta ) ).'">'
+						.Helper::prepContact( $meta, HTML::getDashicon( 'phone' ) ).'</span>';
+
+				} else {
+
+					$html = $this->field_empty( $field, '', $column );
+				}
+
+			break;
+			case 'image':
+
+				// $sizes = Media::getPosttypeImageSizes( $post->post_type );
+				// $size  = isset( $sizes[$post->post_type.'-thumbnail'] ) ? $post->post_type.'-thumbnail' : 'thumbnail';
+				$size = [ 45, 72 ]; // FIXME
+
+				$html = $this->filters( 'column_image', Taxonomy::htmlFeaturedImage( $term->term_id, $size ), $term->term_id, $size );
+
+			break;
+			case 'author':
+
+				if ( $meta = get_term_meta( $term->term_id, $field, TRUE ) ) {
+
+					$user = get_user_by( 'id', $meta );
+					$html = '<span class="'.$field.'" data-'.$field.'="'.$meta.'">'.$user->display_name.'</span>';
+
+				} else {
+
+					$html = $this->field_empty( $field, '0', $column );
+				}
+
+			break;
+			case 'color':
+
+				if ( $meta = get_term_meta( $term->term_id, $field, TRUE ) )
+					$html = '<i class="-color" data-'.$field.'="'.HTML::escape( $meta )
+						.'" style="background-color:'.HTML::escape( $meta ).'"></i>';
+
+			break;
+			case 'role':
+
+				if ( empty( $this->all_roles ) )
+					$this->all_roles = User::getAllRoleList();
+
+				if ( $meta = get_term_meta( $term->term_id, $field, TRUE ) )
+					$html = '<span class="'.$field.'" data-'.$field.'="'.HTML::escape( $meta ).'">'
+						.( empty( $this->all_roles[$meta] )
+							? HTML::escape( $meta )
+							: $this->all_roles[$meta] )
+						.'</span>';
+
+				else
+					$html = $this->field_empty( 'role', '0', $column );
+
+			break;
+			case 'roles':
+
+				if ( empty( $this->all_roles ) )
+					$this->all_roles = User::getAllRoleList();
+
+				if ( $meta = get_term_meta( $term->term_id, $field, TRUE ) ) {
+
+					$list = [];
+
+					foreach ( (array) $meta as $role )
+						$list[] = '<span class="'.$field.'" data-'.$field.'="'.HTML::escape( $role ).'">'
+							.( empty( $this->all_roles[$role] )
+								? HTML::escape( $role )
+								: $this->all_roles[$role] )
+							.'</span>';
+
+					$html = Helper::getJoined( $list );
+
+				} else {
+
+					$html = $this->field_empty( $field, '0', $column );
+				}
+
+			break;
+			case 'posttype':
+
+				if ( empty( $this->all_posttypes ) )
+					$this->all_posttypes = PostType::get( 2 );
+
+				if ( $meta = get_term_meta( $term->term_id, $field, TRUE ) )
+					$html = '<span class="'.$field.'" data-'.$field.'="'.HTML::escape( $meta ).'">'
+						.( empty( $this->all_posttypes[$meta] )
+							? HTML::escape( $meta )
+							: $this->all_posttypes[$meta] )
+						.'</span>';
+
+				else
+					$html = $this->field_empty( $field, '0', $column );
+
+			break;
+			case 'posttypes':
+
+				if ( empty( $this->all_posttypes ) )
+					$this->all_posttypes = PostType::get( 2 );
+
+				if ( $meta = get_term_meta( $term->term_id, $field, TRUE ) ) {
+
+					$list = [];
+
+					foreach ( (array) $meta as $posttype )
+						$list[] = '<span class="'.$field.'" data-'.$field.'="'.HTML::escape( $posttype ).'">'
+							.( empty( $this->all_posttypes[$posttype] )
+								? HTML::escape( $posttype )
+								: $this->all_posttypes[$posttype] )
+							.'</span>';
+
+					$html = Helper::getJoined( $list );
+
+				} else {
+
+					$html = $this->field_empty( $field, '0', $column );
+				}
+		}
+
+		echo $this->filters( 'supported_field_column', $html, $field, $taxonomy, $term, $meta );
+	}
+
+	private function field_empty( $field, $value = '0', $column = TRUE )
+	{
+		if ( $column )
+			return '<span class="column-'.$field.'-empty -empty">&mdash;</span>'
+				.'<span class="'.$field.'" data-'.$field.'="'.$value.'"></span>';
+
+		return gEditorial()->na();
 	}
 
 	public function edit_term( $term_id, $tt_id, $taxonomy )
@@ -607,7 +644,7 @@ class Terms extends gEditorial\Module
 		echo '</div>';
 	}
 
-	private function edit_form_field( $field, $taxonomy, $term = FALSE )
+	private function edit_form_field( $field, $taxonomy, $term, $disabled = FALSE )
 	{
 		echo '<tr class="form-field term-'.$field.'-wrap"><th scope="row" valign="top">';
 		echo '<label for="term-'.$field.'">';
@@ -617,7 +654,10 @@ class Terms extends gEditorial\Module
 
 		echo '</label></th><td>';
 
-			$this->form_field( $field, $taxonomy, $term );
+			if ( $disabled )
+				$this->display_form_field( $field, $taxonomy, $term, FALSE );
+			else
+				$this->form_field( $field, $taxonomy, $term );
 
 			$desc = $this->get_string( $field, $taxonomy, 'descriptions', '' );
 			HTML::desc( $this->filters( 'field_'.$field.'_desc', $desc, $taxonomy, $field, $term ) );
