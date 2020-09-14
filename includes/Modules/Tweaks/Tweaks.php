@@ -63,61 +63,90 @@ class Tweaks extends gEditorial\Module
 			'_editlist' => [
 				[
 					'field'       => 'group_taxonomies',
+					'type'        => 'posttypes',
 					'title'       => _x( 'Group Taxonomies', 'Setting Title', 'geditorial-tweaks' ),
 					'description' => _x( 'Group selected taxonomies on selected post type edit pages', 'Setting Description', 'geditorial-tweaks' ),
+					'values'      => $this->get_posttypes_support_exclude(),
 				],
 				[
 					'field'       => 'group_attributes',
+					'type'        => 'posttypes',
 					'title'       => _x( 'Group Attributes', 'Setting Title', 'geditorial-tweaks' ),
 					'description' => _x( 'Group post attributes on selected post type edit pages', 'Setting Description', 'geditorial-tweaks' ),
+					'values'      => $this->get_posttypes_support_exclude(),
 				],
 				[
 					'field'       => 'author_attribute',
+					'type'        => 'posttypes',
 					'title'       => _x( 'Author Attribute', 'Setting Title', 'geditorial-tweaks' ),
 					'description' => _x( 'Displays author name as post type attribute', 'Setting Description', 'geditorial-tweaks' ),
+					'values'      => $this->get_posttypes_support_feature( 'author' ),
+				],
+				[
+					'field'       => 'post_status',
+					'type'        => 'posttypes',
+					'title'       => _x( 'Post Status', 'Setting Title', 'geditorial-tweaks' ),
+					'description' => _x( 'Displays post status as post type attribute', 'Setting Description', 'geditorial-tweaks' ),
+					'values'      => $this->get_posttypes_support_exclude(),
 				],
 				[
 					'field'       => 'slug_attribute',
+					'type'        => 'posttypes',
 					'title'       => _x( 'Slug Attribute', 'Setting Title', 'geditorial-tweaks' ),
 					'description' => _x( 'Displays post name as post type attribute.', 'Setting Description', 'geditorial-tweaks' ),
+					'values'      => $this->get_posttypes_support_exclude(),
 				],
 				[
 					'field'       => 'page_template',
+					'type'        => 'posttypes',
 					'title'       => _x( 'Page Template', 'Setting Title', 'geditorial-tweaks' ),
 					'description' => _x( 'Displays the template used for the post.', 'Setting Description', 'geditorial-tweaks' ),
+					'values'      => $this->get_posttypes_support_exclude(),
 				],
 				[
 					'field'       => 'comment_status',
+					'type'        => 'posttypes',
 					'title'       => _x( 'Comment Status', 'Setting Title', 'geditorial-tweaks' ),
 					'description' => _x( 'Displays only the closed comment status for the post.', 'Setting Description', 'geditorial-tweaks' ),
+					'values'      => $this->get_posttypes_support_feature( 'comments' ),
 				],
 				[
 					'field'       => 'search_meta',
 					'type'        => 'posttypes',
 					'title'       => _x( 'Search Meta', 'Setting Title', 'geditorial-tweaks' ),
 					'description' => _x( 'Extends admin search to include custom fields.', 'Setting Description', 'geditorial-tweaks' ),
-					'values'      => $this->get_posttypes_support_search_meta(),
+					'values'      => $this->get_posttypes_support_exclude( 'day' ),
 				],
 			],
 			'_columns' => [
 				[
 					'field'       => 'column_id',
+					'type'        => 'posttypes',
 					'title'       => _x( 'ID Column', 'Setting Title', 'geditorial-tweaks' ),
 					'description' => _x( 'Displays ID Column on the post list table.', 'Setting Description', 'geditorial-tweaks' ),
+					'values'      => $this->get_posttypes_support_exclude(),
 				],
 				[
 					'field'       => 'column_order',
 					'type'        => 'posttypes',
 					'title'       => _x( 'Order Column', 'Setting Title', 'geditorial-tweaks' ),
 					'description' => _x( 'Displays Order Column on the post list table.', 'Setting Description', 'geditorial-tweaks' ),
-					'values'      => $this->get_posttypes_support_order(),
+					'values'      => $this->get_posttypes_support_exclude( [
+						'publication',
+						'day',
+						'profile', // gPeople
+					] ),
 				],
 				[
 					'field'       => 'column_thumb',
 					'type'        => 'posttypes',
 					'title'       => _x( 'Thumbnail Column', 'Setting Title', 'geditorial-tweaks' ),
 					'description' => _x( 'Displays Thumbnail Column on the post list table.', 'Setting Description', 'geditorial-tweaks' ),
-					'values'      => $this->get_posttypes_support_thumbnail(),
+					'values'      => $this->get_posttypes_support_feature( 'thumbnail', [
+						'attachment:audio',
+						'attachment:video',
+						'profile', // gPeople
+					] ),
 				],
 			],
 			'_editpost' => [
@@ -126,21 +155,24 @@ class Tweaks extends gEditorial\Module
 					'type'        => 'posttypes',
 					'title'       => _x( 'Group Post-Boxes', 'Setting Title', 'geditorial-tweaks' ),
 					'description' => _x( 'Groups common post-boxes into one for simpler editing experience.', 'Setting Description', 'geditorial-tweaks' ),
-					'values'      => $this->get_posttypes_support_mainbox(),
+					'values'      => $this->get_posttypes_support_exclude(),
 				],
 				[
 					'field'       => 'post_modified',
 					'type'        => 'posttypes',
 					'title'       => _x( 'Modified Action', 'Setting Title', 'geditorial-tweaks' ),
 					'description' => _x( 'Displays last modified time as post misc action on publish metabox.', 'Setting Description', 'geditorial-tweaks' ),
-					'values'      => $this->get_posttypes_support_modified(),
+					'values'      => $this->get_posttypes_support_exclude(),
 				],
 				[
 					'field'       => 'post_excerpt',
 					'type'        => 'posttypes',
 					'title'       => _x( 'Advanced Excerpt', 'Setting Title', 'geditorial-tweaks' ),
 					'description' => _x( 'Replaces the default Post Excerpt meta box with a superior editing experience.', 'Setting Description', 'geditorial-tweaks' ),
-					'values'      => $this->get_posttypes_support_excerpt(),
+					'values'      => $this->get_posttypes_support_feature( 'excerpt', [
+						'inquiry',
+						'day',
+					] ),
 				],
 				[
 					'field'       => 'after_title_excerpt',
@@ -220,75 +252,27 @@ class Tweaks extends gEditorial\Module
 		] );
 	}
 
-	private function get_posttypes_support_search_meta()
-	{
-		$supported = PostType::get( 0, [ 'show_ui' => TRUE ] );
-		$excluded  = Settings::posttypesExcluded( 'day' );
-
-		return array_diff_key( $supported, array_flip( $excluded ) );
-	}
-
-	private function get_posttypes_support_order()
-	{
-		$supported = PostType::get( 0, [ 'show_ui' => TRUE ] );
-		$excluded  = Settings::posttypesExcluded( [
-			'publication',
-			'day',
-			'profile', // gPeople
-		] );
-
-		return array_diff_key( $supported, array_flip( $excluded ) );
-	}
-
-	private function get_posttypes_support_thumbnail()
+	// internal helper
+	private function get_posttypes_support_feature( $feature, $extra_excludes = [] )
 	{
 		$posttypes = [];
-		$supported = get_post_types_by_support( 'thumbnail' );
-		$excluded  = Settings::posttypesExcluded( [
-			'attachment:audio',
-			'attachment:video',
-			'profile', // gPeople
-		] );
+		$supported = get_post_types_by_support( $feature );
+		$excluded  = Settings::posttypesExcluded( $extra_excludes );
 
-		foreach ( PostType::get() as $posttype => $label )
-			if ( in_array( $posttype, $supported )
-				&& ! in_array( $posttype, $excluded ) )
-					$posttypes[$posttype] = $label;
+		foreach ( PostType::get( 0, [ 'show_ui' => TRUE ] ) as $posttype => $label )
+			if ( in_array( $posttype, $supported ) && ! in_array( $posttype, $excluded ) )
+				$posttypes[$posttype] = $label;
 
 		return $posttypes;
 	}
 
-	private function get_posttypes_support_mainbox()
+	// internal helper
+	private function get_posttypes_support_exclude( $extra_excludes = [] )
 	{
 		$supported = PostType::get( 0, [ 'show_ui' => TRUE ] );
-		$excluded  = Settings::posttypesExcluded();
+		$excluded  = Settings::posttypesExcluded( $extra_excludes );
 
 		return array_diff_key( $supported, array_flip( $excluded ) );
-	}
-
-	private function get_posttypes_support_modified()
-	{
-		$supported = PostType::get( 0, [ 'show_ui' => TRUE ] );
-		$excluded  = Settings::posttypesExcluded();
-
-		return array_diff_key( $supported, array_flip( $excluded ) );
-	}
-
-	private function get_posttypes_support_excerpt()
-	{
-		$posttypes = [];
-		$supported = get_post_types_by_support( 'excerpt' );
-		$excluded  = Settings::posttypesExcluded( [
-			'inquiry',
-			'day',
-		] );
-
-		foreach ( PostType::get() as $posttype => $label )
-			if ( in_array( $posttype, $supported )
-				&& ! in_array( $posttype, $excluded ) )
-					$posttypes[$posttype] = $label;
-
-		return $posttypes;
 	}
 
 	public function init_ajax()
@@ -382,25 +366,25 @@ class Tweaks extends gEditorial\Module
 			Scripts::enqueueThickBox();
 
 		// INTERNAL HOOKS
-		if ( $this->get_setting( 'group_taxonomies', FALSE ) )
+		if ( $this->in_setting( $posttype, 'group_taxonomies' ) )
 			add_action( $this->hook( 'column_row' ), [ $this, 'column_row_taxonomies' ] );
 
-		if ( $this->get_setting( 'author_attribute', TRUE ) && post_type_supports( $posttype, 'author' ) )
+		if ( $this->in_setting( $posttype, 'author_attribute' ) && post_type_supports( $posttype, 'author' ) )
 			add_action( $this->hook( 'column_attr' ), [ $this, 'column_attr_author' ], 1 );
 
-		if ( ! self::req( 'post_status' ) ) // if the view is NOT set
+		if ( $this->in_setting( $posttype, 'post_status' ) && ! self::req( 'post_status' ) ) // if the view is NOT set
 			add_action( $this->hook( 'column_attr' ), [ $this, 'column_attr_status' ], 2 );
 
-		if ( $this->get_setting( 'group_attributes', FALSE ) )
+		if ( $this->in_setting( $posttype, 'group_attributes' ) )
 			add_action( $this->hook( 'column_attr' ), [ $this, 'column_attr_default' ], 3 );
 
-		if ( $this->get_setting( 'page_template', FALSE ) )
+		if ( $this->in_setting( $posttype, 'page_template' ) )
 			add_action( $this->hook( 'column_attr' ), [ $this, 'column_attr_page_template' ], 50 );
 
-		if ( $this->get_setting( 'slug_attribute', FALSE ) && is_post_type_viewable( $posttype ) )
+		if ( $this->in_setting( $posttype, 'slug_attribute' ) && is_post_type_viewable( $posttype ) )
 			add_action( $this->hook( 'column_attr' ), [ $this, 'column_attr_slug' ], 50 );
 
-		if ( $this->get_setting( 'comment_status', FALSE ) && post_type_supports( $posttype, 'comments' ) )
+		if ( $this->in_setting( $posttype, 'comment_status' ) && post_type_supports( $posttype, 'comments' ) )
 			add_action( $this->hook( 'column_attr' ), [ $this, 'column_attr_comment_status' ], 15 );
 	}
 
@@ -517,7 +501,7 @@ class Tweaks extends gEditorial\Module
 					$added = TRUE;
 			}
 
-			if ( 'author' == $key && $atts && $this->get_setting( 'author_attribute', TRUE ) )
+			if ( 'author' == $key && $atts && $this->in_setting( $posttype, 'author_attribute' ) )
 				continue;
 
 			$new[$key] = $value;
@@ -526,7 +510,7 @@ class Tweaks extends gEditorial\Module
 				$new[$this->classs( 'order' )] = $this->get_column_title( 'order', $posttype );
 		}
 
-		if ( $this->get_setting( 'group_attributes', FALSE ) )
+		if ( $this->in_setting( $posttype, 'group_attributes' ) )
 			unset( $new['date'] );
 
 		if ( ! $added ) {
@@ -538,7 +522,7 @@ class Tweaks extends gEditorial\Module
 				$new['geditorial-tweaks-atts'] = $atts;
 		}
 
-		if ( $this->get_setting( 'column_id', FALSE ) )
+		if ( $this->in_setting( $posttype, 'column_id' ) )
 			$new['geditorial-tweaks-id'] = $this->get_column_title( 'id', $posttype );
 
 		return $new;
