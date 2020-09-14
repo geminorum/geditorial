@@ -5,11 +5,14 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Settings;
+use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Core\Arraay;
 use geminorum\gEditorial\Core\File;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
+use geminorum\gEditorial\Core\URL;
 use geminorum\gEditorial\Core\WordPress;
+use geminorum\gEditorial\WordPress\Database;
 use geminorum\gEditorial\WordPress\Media;
 use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\Taxonomy;
@@ -69,7 +72,7 @@ class Importer extends gEditorial\Module
 			'metakey_source_map'  => '_importer_source_map',
 			'metakey_source_data' => '_importer_source_data',
 			'metakey_attach_id'   => '_importer_attachment_id',
-			'metakey_old_id'      => '_importer_old_id',
+			'metakey_old_id'      => 'import_source_id', // '_importer_old_id'
 		];
 	}
 
@@ -94,7 +97,7 @@ class Importer extends gEditorial\Module
 		wp_raise_memory_limit( 'import' );
 	}
 
-	protected function form_map( $id, $posttype = 'post' )
+	protected function form_posts_map( $id, $posttype = 'post' )
 	{
 		if ( ! $file = get_attached_file( $id ) )
 			return FALSE;
@@ -154,7 +157,7 @@ class Importer extends gEditorial\Module
 		return ! empty( $value );
 	}
 
-	protected function from_attached( $id = 0, $posttype = 'post', $user_id = NULL )
+	protected function from_posts_attached( $id = 0, $posttype = 'post', $user_id = NULL )
 	{
 		echo '<input id="upload_csv_button" class="button" value="'._x( 'Upload', 'Button', 'geditorial-importer' ).'" type="button" />';
 		echo '<input id="upload_attach_id" type="hidden" name="upload_id" value="" />';
@@ -165,7 +168,7 @@ class Importer extends gEditorial\Module
 
 		Settings::fieldSeparate( 'into' );
 
-		echo HTML::dropdown( $this->list_posttypes(), [
+		echo HTML::dropdown( $this->list_posttypes( NULL, NULL, 'edit_posts' ), [
 			'selected' => $posttype,
 			'name'     => 'posttype',
 		] );
@@ -179,7 +182,51 @@ class Importer extends gEditorial\Module
 		] );
 	}
 
-	protected function form_table( $id, $map = [], $posttype = 'post' )
+	protected function form_images_table( $args )
+	{
+		$query = [ 'posts_per_page' => -1, 'meta_key' => $args['metakey'] ];
+
+		list( $posts, ) = $this->getTablePosts( $query, [], $args['posttype'] );
+
+		return HTML::tableList( [
+			'_cb'   => 'ID',
+			'import_image' => [
+				'title'    => _x( 'Image', 'Table Column', 'geditorial-importer' ),
+				'args'     => $args,
+				'class'    => 'image-column',
+				'callback' => function( $value, $row, $column, $index ) {
+
+					if ( ! $id = get_post_meta( $row->ID, $column['args']['metakey'], TRUE ) )
+						return Helper::htmlEmpty();
+
+					$src = sprintf( $column['args']['template'], $id );
+
+					return HTML::tag( 'a', [
+						'href'  => $src,
+						'title' => $src, // get_the_title( $row ),
+						'class' => 'thickbox',
+					], HTML::img( $src ) );
+				},
+			],
+			'ID'    => Helper::tableColumnPostID(),
+			'title' => Helper::tableColumnPostTitle(),
+			'type'  => Helper::tableColumnPostType(),
+			'thumb_image' => [
+				'title'    => _x( 'Thumbnail', 'Table Column', 'geditorial-importer' ),
+				'class'    => 'image-column',
+				'callback' => function( $value, $row, $column, $index ) {
+					$html = PostType::htmlFeaturedImage( $row->ID, [ 45, 72 ] );
+					return $html ?: Helper::htmlEmpty();
+				},
+			],
+		], $posts, [
+			/* translators: %s: count placeholder */
+			'title' => HTML::tag( 'h3', Helper::getCounted( count( $posts ), _x( '%s Records Found', 'Header', 'geditorial-importer' ) ) ),
+			'empty' => $this->get_posttype_label( $args['posttype'], 'not_found' ),
+		] );
+	}
+
+	protected function form_posts_table( $id, $map = [], $posttype = 'post' )
 	{
 		if ( ! $file = get_attached_file( $id ) )
 			return FALSE;
@@ -258,8 +305,8 @@ class Importer extends gEditorial\Module
 		HTML::tableList( $columns, $data, [
 			/* translators: %s: count placeholder */
 			'title'     => HTML::tag( 'h3', Helper::getCounted( count( $data ), _x( '%s Records Found', 'Header', 'geditorial-importer' ) ) ),
-			'callback'  => [ $this, 'form_table_callback' ],
-			'row_check' => [ $this, 'form_table_row_check' ],
+			'callback'  => [ $this, 'form_posts_table_callback' ],
+			'row_check' => [ $this, 'form_posts_table_row_check' ],
 			'extra'     => [
 				'na'         => gEditorial()->na(),
 				'map'        => $map,
@@ -270,12 +317,12 @@ class Importer extends gEditorial\Module
 		] );
 	}
 
-	public function form_table_row_check( $row, $index, $args )
+	public function form_posts_table_row_check( $row, $index, $args )
 	{
 		return count( $row ) > 1; // empty rows have one empty cells
 	}
 
-	public function form_table_callback( $value, $row, $column, $index, $key, $args )
+	public function form_posts_table_callback( $value, $row, $column, $index, $key, $args )
 	{
 		$filtered = $this->filters( 'prepare',
 			$value,
@@ -308,10 +355,38 @@ class Importer extends gEditorial\Module
 
 				$this->nonce_check( 'tools', $sub );
 
-				if ( $this->current_action( 'csv_import' ) ) {
+				if ( $this->current_action( 'images_import', TRUE )
+					|| $this->current_action( 'images_import_as_thumbnail', TRUE ) ) {
+
+					$count = 0;
+					$args  = $this->get_current_form_images();
+
+					$this->raise_resources();
+
+					foreach ( $_POST['_cb'] as $post_id ) {
+
+						if ( ! $id = get_post_meta( $post_id, $args['metakey'], TRUE ) )
+							continue;
+
+						$attachment = Media::sideloadImage( sprintf( $args['template'], $id ), $post_id, [ 'post_author' => $args['user_id'] ] );
+
+						if ( is_wp_error( $attachment ) )
+							continue;
+
+						if ( isset( $_POST['images_import_as_thumbnail'] ) )
+							set_post_thumbnail( $post_id, $attachment );
+
+						$count++;
+					}
+
+					WordPress::redirectReferer( [
+						'message' => 'imported',
+						'count'   => $count,
+					] );
+
+				} else if ( $this->current_action( 'posts_import', TRUE ) ) {
 
 					$count     = 0;
-					$selected  = self::req( '_cb', [] );
 					$field_map = self::req( 'field_map', [] );
 					$posttype  = self::req( 'posttype', $this->get_setting( 'post_type', 'post' ) );
 					$attach_id = self::req( 'attach_id', FALSE );
@@ -334,7 +409,7 @@ class Importer extends gEditorial\Module
 
 					unset( $parser, $items );
 
-					foreach ( $selected as $offset ) {
+					foreach ( $_POST['_cb'] as $offset ) {
 
 						$options['offset'] = $offset;
 
@@ -447,6 +522,7 @@ class Importer extends gEditorial\Module
 				}
 			}
 
+			Scripts::enqueueThickBox();
 			wp_enqueue_media();
 
 			$this->enqueue_asset_js( [
@@ -456,6 +532,32 @@ class Importer extends gEditorial\Module
 	}
 
 	protected function render_tools_html( $uri, $sub )
+	{
+		$for    = self::req( 'tools_for' );
+		$images = 'images' == $for || self::req( 'images_step_two' );
+		$posts  = 'posts' == $for || self::req( 'posts_step_two' );
+		$first  = ! $for && ! $images && ! $posts;
+
+		if ( $first )
+			HTML::h3( _x( 'Importer Tools', 'Header', 'geditorial-importer' ) );
+
+		if ( ! count( $this->posttypes() ) )
+			return HTML::desc( _x( 'Imports are not supported for any of the post-types!', 'Message', 'geditorial-importer' ) );
+
+		if ( $first )
+			echo HTML::tag( 'h4',  _x( 'Import Data from CSV into Posts', 'Header', 'geditorial-importer' ) );
+
+		if ( $first || $posts )
+			$this->render_tools_for_posts();
+
+		if ( $first )
+			echo '<br /><hr />'.HTML::tag( 'h4',  _x( 'Import Remote Files as Attachments', 'Header', 'geditorial-importer' ) );
+
+		if ( $first || $images )
+			$this->render_tools_for_images();
+	}
+
+	private function render_tools_for_posts()
 	{
 		$selected  = self::req( '_cb', [] );
 		$field_map = self::req( 'field_map', [] );
@@ -467,56 +569,138 @@ class Importer extends gEditorial\Module
 		if ( $upload_id )
 			$attach_id = $upload_id;
 
-		if ( isset( $_POST['csv_step_three'] ) && $attach_id ) {
+		if ( isset( $_POST['posts_step_three'] ) ) {
+
+			if ( ! $attach_id )
+				return HTML::desc( _x( 'Import source is not defined!', 'Message', 'geditorial-importer' ) );
+
+			if ( ! PostType::can( $posttype, 'edit_posts' ) )
+				return HTML::desc( _x( 'You are not allowed to edit this post-type!', 'Message', 'geditorial-importer' ) );
 
 			HTML::inputHiddenArray( $field_map, 'field_map' );
 			HTML::inputHidden( 'posttype', $posttype );
 			HTML::inputHidden( 'attach_id', $attach_id );
 			HTML::inputHidden( 'user_id', $user_id );
+			HTML::inputHidden( 'tools_for', 'posts' );
 
-			$this->form_table( $attach_id, $field_map, $posttype );
+			$this->form_posts_table( $attach_id, $field_map, $posttype );
 
 			echo $this->wrap_open_buttons();
-
-			Settings::submitButton( 'csv_import', _x( 'Import', 'Button', 'geditorial-importer' ), TRUE );
-
+			Settings::submitButton( 'posts_import', _x( 'Import', 'Button', 'geditorial-importer' ), TRUE );
 			HTML::desc( _x( 'Select records to finally import.', 'Message', 'geditorial-importer' ), FALSE );
 
-		} else if ( isset( $_POST['csv_step_two'] ) && $attach_id ) {
+		} else if ( isset( $_POST['posts_step_two'] ) ) {
+
+			if ( ! $attach_id )
+				return HTML::desc( _x( 'Import source is not defined!', 'Message', 'geditorial-importer' ) );
+
+			if ( ! PostType::can( $posttype, 'edit_posts' ) )
+				return HTML::desc( _x( 'You are not allowed to edit this post-type!', 'Message', 'geditorial-importer' ) );
 
 			HTML::h3( _x( 'Map the Importer', 'Header', 'geditorial-importer' ) );
 
 			HTML::inputHidden( 'posttype', $posttype );
 			HTML::inputHidden( 'attach_id', $attach_id );
 			HTML::inputHidden( 'user_id', $user_id );
+			HTML::inputHidden( 'tools_for', 'posts' );
 
-			$this->form_map( $attach_id, $posttype );
+			$this->form_posts_map( $attach_id, $posttype );
 
 			echo $this->wrap_open_buttons();
-
-			Settings::submitButton( 'csv_step_three',
-				_x( 'Step 2: Map', 'Button', 'geditorial-importer' ), TRUE );
-
+			Settings::submitButton( 'posts_step_three', _x( 'Step 2: Map', 'Button', 'geditorial-importer' ), TRUE );
 			HTML::desc( _x( 'Map the file fields to the post-type fields.', 'Message', 'geditorial-importer' ), FALSE );
-
-		} else if ( count( $this->posttypes() ) ) {
-
-			HTML::h3( _x( 'Importer Tools', 'Header', 'geditorial-importer' ) );
-
-			$this->from_attached( 0, $posttype );
-
-			echo $this->wrap_open_buttons();
-
-			Settings::submitButton( 'csv_step_two',
-				_x( 'Step 1: Attachment', 'Button', 'geditorial-importer' ), TRUE );
-
-			HTML::desc( _x( 'Upload or select a CSV file, post-type and user to map the import.', 'Message', 'geditorial-importer' ), FALSE );
 
 		} else {
 
-			echo $this->wrap_open_buttons();
+			$this->from_posts_attached( 0, $posttype );
 
-			HTML::desc( _x( 'Imports are not supported for any of the post-types!', 'Message', 'geditorial-importer' ), FALSE );
+			echo $this->wrap_open_buttons();
+			Settings::submitButton( 'posts_step_two', _x( 'Step 1: Attachment', 'Button', 'geditorial-importer' ), TRUE );
+			HTML::desc( _x( 'Upload or select a CSV file, post-type and user to map the import.', 'Message', 'geditorial-importer' ), FALSE );
+		}
+
+		echo '</p>';
+	}
+
+	private function get_current_form_images()
+	{
+		return $this->get_current_form( [
+			'user_id'  => gEditorial()->user( TRUE ),
+			'posttype' => $this->get_setting( 'post_type', 'post' ),
+			'metakey'  => $this->constant( 'metakey_old_id' ),
+			'template' => $this->filters( 'images_default_template', '' ), // FIXME: get default from settings
+		], 'forimages' );
+	}
+
+	private function render_tools_for_images()
+	{
+		if ( ! current_user_can( 'upload_files' ) )
+			return HTML::desc( _x( 'You are not allowed to upload files!', 'Message', 'geditorial-importer' ) );
+
+		$args = $this->get_current_form_images();
+
+		if ( isset( $_POST['images_step_two'] )  ) {
+
+			if ( empty( $args['metakey'] ) )
+				return HTML::desc( _x( 'Refrence meta-key is not defined!', 'Message', 'geditorial-importer' ) );
+
+			if ( ! PostType::can( $args['posttype'], 'edit_posts' ) )
+				return HTML::desc( _x( 'You are not allowed to edit this post-type!', 'Message', 'geditorial-importer' ) );
+
+			HTML::inputHidden( 'tools_for', 'images' );
+
+			$this->fields_current_form( $args, 'forimages' );
+			$this->form_images_table( $args );
+
+			echo $this->wrap_open_buttons();
+			Settings::submitButton( 'images_import_as_thumbnail', _x( 'Import & Set Thumbnail', 'Button', 'geditorial-importer' ), TRUE );
+			Settings::submitButton( 'images_import', _x( 'Import Only', 'Button', 'geditorial-importer' ) );
+			HTML::desc( _x( 'Select records to finally import.', 'Message', 'geditorial-importer' ), FALSE );
+
+		} else {
+
+			$this->do_settings_field( [
+				'type'         => 'select',
+				'field'        => 'metakey',
+				'values'       => Database::getPostMetaKeys( TRUE ),
+				'none_title'   => Settings::showOptionNone(),
+				'default'      => $args['metakey'],
+				'option_group' => 'forimages',
+			] );
+
+			Settings::fieldSeparate( 'from' );
+
+			$this->do_settings_field( [
+				'type'         => 'text',
+				'field'        => 'template',
+				'default'      => $args['template'],
+				'placeholder'  => URL::home( 'repo/%s.jpg' ),
+				'dir'          => 'ltr',
+				'option_group' => 'forimages',
+			] );
+
+			Settings::fieldSeparate( 'in' );
+
+			$this->do_settings_field( [
+				'type'         => 'select',
+				'field'        => 'posttype',
+				'values'       => $this->list_posttypes( NULL, NULL, 'edit_posts' ),
+				'default'      => $args['posttype'],
+				'option_group' => 'forimages',
+			] );
+
+			Settings::fieldSeparate( 'as' );
+
+			$this->do_settings_field( [
+				'type'         => 'user',
+				'field'        => 'user_id',
+				'default'      => $args['user_id'],
+				'option_group' => 'forimages',
+			] );
+
+			echo $this->wrap_open_buttons();
+			Settings::submitButton( 'images_step_two', _x( 'Step 1: Meta-key', 'Button', 'geditorial-importer' ), TRUE );
+			HTML::desc( _x( 'Select a meta-key for refrence on importing the attachments.', 'Message', 'geditorial-importer' ), FALSE );
 		}
 
 		echo '</p>';
