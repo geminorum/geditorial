@@ -1192,7 +1192,7 @@ class HTML extends Base
 	public static function dropdown( $list, $atts = array() )
 	{
 		$args = self::atts( array(
-			'id'         => '',
+			'id'         => FALSE,
 			'name'       => '',
 			'none_title' => NULL,
 			'none_value' => 0,
@@ -1203,6 +1203,7 @@ class HTML extends Base
 			'prop'       => FALSE,
 			'value'      => FALSE,
 			'exclude'    => array(),
+			'data'       => array(),
 		), $atts );
 
 		$html = '';
@@ -1245,6 +1246,7 @@ class HTML extends Base
 			'class'    => $args['class'],
 			'disabled' => $args['disabled'],
 			'dir'      => $args['dir'],
+			'data'     => $args['data'],
 		), $html );
 	}
 

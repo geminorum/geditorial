@@ -13,11 +13,26 @@ class PostType extends Core\Base
 		return is_object( $posttype ) ? $posttype : get_post_type_object( $posttype );
 	}
 
-	public static function get( $mod = 0, $args = array( 'public' => TRUE ) )
+	public static function can( $posttype, $capability = 'edit_posts', $user_id = NULL )
+	{
+		if ( is_null( $capability ) )
+			return TRUE;
+
+		$cap = self::object( $posttype )->cap->{$capability};
+
+		return is_null( $user_id )
+			? current_user_can( $cap )
+			: user_can( $user_id, $cap );
+	}
+
+	public static function get( $mod = 0, $args = array( 'public' => TRUE ), $capability = NULL, $user_id = NULL )
 	{
 		$list = array();
 
 		foreach ( get_post_types( $args, 'objects' ) as $posttype => $posttype_obj ) {
+
+			if ( ! self::can( $posttype_obj, $capability, $user_id ) )
+				continue;
 
 			// label
 			if ( 0 === $mod )

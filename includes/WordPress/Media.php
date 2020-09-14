@@ -11,10 +11,10 @@ class Media extends Core\Base
 	// TODO: get title if html is empty
 	public static function htmlAttachmentShortLink( $id, $html, $extra = '', $rel = 'attachment' )
 	{
-		return HTML::tag( 'a', [
-			'href'  => WordPress::getPostShortLink( $id ),
+		return Core\HTML::tag( 'a', [
+			'href'  => Core\WordPress::getPostShortLink( $id ),
 			'rel'   => $rel,
-			'class' => HTML::attrClass( $extra, '-attachment' ),
+			'class' => Core\HTML::attrClass( $extra, '-attachment' ),
 			'data'  => [ 'id' => $id ],
 		], $html );
 	}
@@ -133,6 +133,42 @@ class Media extends Core\Base
 		}
 
 		return $sizes;
+	}
+
+	// @REF: `media_sideload_image()`
+	public static function sideloadImage( $src, $post = 0, $extra = [] )
+	{
+		if ( empty( $src ) )
+			return FALSE;
+
+		// set variables for storage, fix file filename for query strings
+		preg_match( '/[^\?]+\.(jpe?g|jpe|gif|png)\b/i', $src, $matches );
+
+		if ( ! $matches )
+			return FALSE; // new WP_Error( 'image_sideload_failed', __( 'Invalid image URL.' ) );
+
+		// download file to temp location
+		$file = [ 'tmp_name' => download_url( $src ) ];
+
+		// if error storing temporarily, return the error
+		if ( is_wp_error( $file['tmp_name'] ) )
+			return $file['tmp_name'];
+
+		$file['name'] = Core\File::basename( $matches[0] );
+
+		// do the validation and storage stuff
+		$attachment = media_handle_sideload( $file, $post, NULL, $extra );
+
+		// if error storing permanently, unlink
+		if ( is_wp_error( $attachment ) ) {
+			@unlink( $file['tmp_name'] );
+			return $attachment;
+		}
+
+		// store the original attachment source in meta
+		add_post_meta( $attachment, '_source_url', $src );
+
+		return $attachment;
 	}
 
 	public static function upload( $post = FALSE )
