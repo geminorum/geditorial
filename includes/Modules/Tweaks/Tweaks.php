@@ -288,7 +288,7 @@ class Tweaks extends gEditorial\Module
 		if ( 'post' == $screen->base
 			&& ! PostType::supportBlocks( $screen->post_type ) ) {
 
-			if ( $this->in_setting( $screen->post_type, 'post_modified' ) ) )
+			if ( $this->in_setting( $screen->post_type, 'post_modified' ) )
 				$this->action( 'post_submitbox_misc_actions', 1, 1 );
 
 			if ( $this->get_setting( 'checklist_tree', FALSE ) ) {
