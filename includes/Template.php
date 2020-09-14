@@ -413,10 +413,15 @@ class Template extends Core\Base
 		if ( ! $term )
 			return $default;
 
-		if ( 'name' == $field )
-			return trim( strip_tags( sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' ) ) );
+		if ( in_array( $field, [ 'name', 'description', 'slug', 'count' ], TRUE ) )
+			return trim( strip_tags( sanitize_term_field( $field, $term->{$field}, $term->term_id, $term->taxonomy, 'display' ) ) );
 
-		// TODO: get other meta fields
+		// NOTE: meta field supported by Terms module
+		if ( ! in_array( $field, [ 'order', 'tagline', 'contact', 'image', 'author', 'color', 'role', 'roles', 'posttype', 'posttypes' ], TRUE ) )
+			return $default;
+
+		if ( $meta = get_term_meta( $term->term_id, $field, TRUE ) )
+			return trim( $meta );
 
 		return $default;
 	}
