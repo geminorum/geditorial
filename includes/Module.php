@@ -995,6 +995,17 @@ class Module extends Base
 		return self::atts( $defaults, $req );
 	}
 
+	protected function fields_current_form( $fields, $context = 'settings', $excludes = [] )
+	{
+		foreach ( $fields as $key => $value ) {
+
+			if ( in_array( $key, $excludes ) )
+				continue;
+
+			HTML::inputHidden( $this->base.'_'.$this->module->name.'['.$context.']['.$key.']', $value );
+		}
+	}
+
 	protected function render_form_fields( $sub, $action = 'update', $context = 'settings' )
 	{
 		HTML::inputHidden( 'base', $this->base );
