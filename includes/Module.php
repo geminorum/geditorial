@@ -1470,7 +1470,7 @@ class Module extends Base
 		WordPress::redirectReferer( $message );
 	}
 
-	protected function check_settings( $sub, $context = 'tools', $key = NULL )
+	protected function check_settings( $sub, $context = 'tools', $extra = [], $key = NULL )
 	{
 		if ( ! $this->cuc( $context ) )
 			return FALSE;
@@ -1481,10 +1481,13 @@ class Module extends Base
 		if ( $key == $this->key )
 			add_filter( $this->base.'_'.$context.'_subs', [ $this, 'append_sub' ], 10, 2 );
 
-		if ( $key != $sub )
+		$subs = array_merge( [ $key ], (array) $extra );
+
+		if ( ! in_array( $sub, $subs ) )
 			return FALSE;
 
-		add_action( $this->base.'_'.$context.'_sub_'.$sub, [ $this, $context.'_sub' ], 10, 2 );
+		foreach ( $subs as $supported )
+			add_action( $this->base.'_'.$context.'_sub_'.$supported, [ $this, $context.'_sub' ], 10, 2 );
 
 		if ( 'settings' != $context ) {
 
