@@ -192,6 +192,53 @@ class Template extends Core\Base
 		return FALSE;
 	}
 
+	public static function termContact( $atts = [], $module = NULL )
+	{
+		if ( is_null( $module ) && static::MODULE )
+			$module = static::MODULE;
+
+		$args = self::atts( [
+			'field'    => 'contact',
+			'id'       => NULL,
+			'class'    => '-term-contact',
+			'taxonomy' => '',
+			'title'    => _x( 'Contact', 'Template: Term Contact Title', 'geditorial' ), // or term core/meta field
+			'default'  => FALSE,
+			'before'   => '',
+			'after'    => '',
+			'echo'     => TRUE,
+		], $atts );
+
+		if ( FALSE === $args['id'] )
+			return $args['default'];
+
+		if ( ! $term = Taxonomy::getTerm( $args['id'], $args['taxonomy'] ) )
+			return $args['default'];
+
+		$args['id']       = $term->term_id;
+		$args['taxonomy'] = $term->taxonomy;
+
+		$title    = self::getTermField( $args['title'], $term, $args['taxonomy'], FALSE );
+		$viewable = Taxonomy::isViewable( $args['taxonomy'] );
+		$meta     = get_term_meta( $args['id'], $args['field'], TRUE );
+
+		if ( $html = Helper::prepContact( $meta, $title ) ) {
+
+			$html = $args['before'].$html.$args['after'];
+
+			if ( ! $args['echo'] )
+				return $html;
+
+			echo $html;
+			return TRUE;
+		}
+
+		if ( $args['default'] )
+			return $args['before'].$args['default'].$args['after'];
+
+		return FALSE;
+	}
+
 	public static function getPostImageSrc( $size = NULL, $post_id = NULL )
 	{
 		if ( ! $post = get_post( $post_id ) )

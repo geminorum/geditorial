@@ -14,4 +14,9 @@ class Terms extends gEditorial\Template
 	{
 		return parent::termImage( $atts, static::MODULE );
 	}
+
+	public static function termContact( $atts = [], $module = NULL )
+	{
+		return parent::termContact( $atts, static::MODULE );
+	}
 }
