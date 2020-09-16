@@ -11,9 +11,9 @@
       if (!modal) {
         // @REF: https://codex.wordpress.org/Javascript_Reference/wp.media
         modal = wp.media({
-          title: app.strings['modal_title'],
-          button: { text: app.strings['modal_button'] },
-          library: { type: [ 'application/vnd.ms-excel', 'text/csv' ] },
+          title: app.strings.modal_title,
+          button: { text: app.strings.modal_button },
+          library: { type: ['application/vnd.ms-excel', 'text/csv'] },
           multiple: false
         });
 
@@ -34,6 +34,6 @@
       modal.open();
     });
 
-    $(document).trigger('gEditorialReady', [ module, app ]);
+    $(document).trigger('gEditorialReady', [module, app]);
   });
 }(jQuery, gEditorial, 'importer', 'media'));
