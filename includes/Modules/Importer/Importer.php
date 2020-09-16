@@ -46,6 +46,11 @@ class Importer extends gEditorial\Module
 					'description' => _x( 'Tries to avoid creating posts with the same titles.', 'Setting Description', 'geditorial-importer' ),
 				],
 				[
+					'field'       => 'skip_has_thumbnail',
+					'title'       => _x( 'Skip Has Thumbnail', 'Setting Title', 'geditorial-importer' ),
+					'description' => _x( 'Tries to avoid importing attachments for posts with thumbnail images.', 'Setting Description', 'geditorial-importer' ),
+				],
+				[
 					'field'       => 'store_source_data',
 					'title'       => _x( 'Store Source Data', 'Setting Title', 'geditorial-importer' ),
 					'description' => _x( 'Stores raw source data and attchment reference as meta for each imported item.', 'Setting Description', 'geditorial-importer' ),
@@ -213,7 +218,21 @@ class Importer extends gEditorial\Module
 
 	protected function form_images_table( $args )
 	{
-		$query = [ 'posts_per_page' => -1, 'meta_key' => $args['metakey'] ];
+		$query = [
+			'posts_per_page' => -1,
+			'meta_query'     => [
+				[
+					'key'     => $args['metakey'],
+					'compare' => 'EXISTS',
+				]
+			],
+		];
+
+		if ( $this->get_setting( 'skip_has_thumbnail' ) )
+			$query['meta_query'][] = [
+				'key'     => '_thumbnail_id',
+				'compare' => 'NOT EXISTS',
+			];
 
 		list( $posts, ) = $this->getTablePosts( $query, [], $args['posttype'] );
 
