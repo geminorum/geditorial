@@ -47,8 +47,6 @@ class Template extends Core\Base
 
 	public static function getTermImageTag( $atts = [] )
 	{
-		$html = FALSE;
-
 		$args = self::atts( [
 			'id'       => NULL,
 			'taxonomy' => '',
@@ -58,9 +56,9 @@ class Template extends Core\Base
 		], $atts );
 
 		if ( $src = self::getTermImageSrc( $args['size'], $args['id'], $args['taxonomy'] ) )
-			$html = HTML::img( $src, apply_filters( 'get_image_tag_class', $args['class'], $args['id'], 'none', $args['size'] ), $args['alt'] );
+			return HTML::img( $src, apply_filters( 'get_image_tag_class', $args['class'], $args['id'], 'none', $args['size'] ), $args['alt'] );
 
-		return $html;
+		return FALSE;
 	}
 
 	public static function termImageCallback( $image, $link, $args, $status, $title, $module )
@@ -98,12 +96,11 @@ class Template extends Core\Base
 
 	public static function termImage( $atts = [], $module = NULL )
 	{
-		$html = '';
-
 		if ( is_null( $module ) && static::MODULE )
 			$module = static::MODULE;
 
 		$args = self::atts( [
+			'field'        => 'image',
 			'id'           => NULL,
 			'size'         => NULL,
 			'alt'          => NULL, // null for $args['title']
@@ -118,7 +115,6 @@ class Template extends Core\Base
 			'caption_link' => FALSE, // custom figcaption link / TRUE for default
 			'fallback'     => FALSE,
 			'default'      => FALSE,
-			'wrap'         => TRUE,
 			'before'       => '',
 			'after'        => '',
 			'echo'         => TRUE,
@@ -133,9 +129,9 @@ class Template extends Core\Base
 		$args['id']       = $term->term_id;
 		$args['taxonomy'] = $term->taxonomy;
 
-		$title     = self::getTermField( $args['title'], $term, $args['taxonomy'], FALSE );
-		$viewable  = Taxonomy::isViewable( $args['taxonomy'] );
-		$thumbnail = get_term_meta( $args['id'], 'image', TRUE );
+		$title    = self::getTermField( $args['title'], $term, $args['taxonomy'], FALSE );
+		$viewable = Taxonomy::isViewable( $args['taxonomy'] );
+		$meta     = get_term_meta( $args['id'], $args['field'], TRUE );
 
 		if ( $args['link'] ) {
 
@@ -143,15 +139,16 @@ class Template extends Core\Base
 				$args['link'] = $viewable ? get_term_link( $args['id'], $args['taxonomy'] ) : FALSE;
 
 			else if ( 'attachment' == $args['link'] )
-				$args['link'] = ( $thumbnail && $viewable ) ? get_attachment_link( $thumbnail ) : FALSE;
+				$args['link'] = ( $meta && $viewable ) ? get_attachment_link( $meta ) : FALSE;
 
 			else if ( 'url' == $args['link'] )
-				$args['link'] = ( $thumbnail && $viewable ) ? wp_get_attachment_url( $thumbnail ) : FALSE;
+				$args['link'] = ( $meta && $viewable ) ? wp_get_attachment_url( $meta ) : FALSE;
 		}
 
 		if ( is_null( $args['alt'] ) )
 			$args['alt'] = $title;
 
+		$html  = '';
 		$image = self::getTermImageTag( $args );
 
 		if ( $args['callback'] && is_callable( $args['callback'] ) ) {
