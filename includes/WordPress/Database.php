@@ -92,6 +92,7 @@ class Database extends Core\Base
 	}
 
 	// @REF: https://github.com/scribu/wp-custom-field-taxonomies
+	// FIXME: must limit to selected posttypes
 	public static function getPostMetaKeys( $same_key = FALSE )
 	{
 		global $wpdb;
