@@ -1,3 +1,42 @@
+### 3.17.0
+* main/module: :warning: fixed ignoring extra supported posttypes
+* main/module: check for cap on list of supported posttypes
+* main/module: default filter for calendar post row title
+* main/module: fields for current settings form helper
+* main/module: internal api for subterms
+* main/module: internal api for subterms
+* main/module: remove taxonomy submenu for supported pottypes
+* main/module: settings helper for arrays
+* main/module: support for extra subs on check for settings
+* main/settings: count on field separate helper
+* main/settings: show radio none helper
+* main/template: :new: term contact helper
+* main/template: fallback to taxonomies on meta summary fields
+* main/template: support for other core/meta term fields
+* module/collect: migrate to subterms api for collection parts
+* module/contest: :new: contest sections with subterms api
+* module/course: :new: course topics with subterms api
+* module/importer: :new: import remote files as attachments
+* module/importer: avoid updating terms
+* module/importer: better column name on custom meta fields
+* module/importer: check for hierarchical on tax input
+* module/importer: correct key for custom meta import
+* module/importer: count empty cells on mapping
+* module/importer: optional skip importing posts with same title
+* module/importer: passing original header key into prepare filter
+* module/importer: prepare title before search for duplicates
+* module/importer: raise resources helper
+* module/importer: skip empty values on terms
+* module/importer: skip none selected columns
+* module/importer: stroing fields map history
+* module/importer: support for custom meta on step three table
+* module/magazine: migrate to subterms api for issue sections
+* module/terms: filter support for disabling fields
+* module/tweaks: attr rows optional per posttype
+* module/venue: :new: place facilities with subterms api
+* module/venue: missing assoc post helper
+* module/venue: suffix for supported on calendar rows
+
 ### 3.16.3
 * main/template: customize context on term field helper
 * main/template: meta summary helper
