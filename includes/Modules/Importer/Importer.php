@@ -97,6 +97,32 @@ class Importer extends gEditorial\Module
 		wp_raise_memory_limit( 'import' );
 	}
 
+	private function guessed_fields_map( $headers, $key = 'source_map' )
+	{
+		if ( ! $stored = get_option( $this->hook( $key ), [] ) )
+			return [];
+
+		$samekey = Arraay::sameKey( $headers );
+
+		foreach ( array_reverse( $stored ) as $map )
+			if ( Arraay::equalKeys( $samekey, $map ) )
+				return array_values( $map );
+
+		return [];
+	}
+
+	private function store_fields_map( $file, $headers, $map, $key = 'source_map' )
+	{
+		$option = $this->hook( $key );
+		$stored = get_option( $option, [] );
+
+		// override the old data, if any
+		// key's better to be file-name than file-path
+		$stored[File::basename( $file )] = array_combine( $headers, $map );
+
+		return update_option( $option, $stored );
+	}
+
 	protected function form_posts_map( $id, $posttype = 'post' )
 	{
 		if ( ! $file = get_attached_file( $id ) )
@@ -115,6 +141,9 @@ class Importer extends gEditorial\Module
 		$taxonomies = Taxonomy::get( 4, [], $posttype );
 		$fields     = $this->get_importer_fields( $posttype, $taxonomies );
 		$map        = $this->fetch_postmeta( $id, [], $this->constant( 'metakey_source_map' ) );
+
+		if ( empty( $map ) )
+			$map = $this->guessed_fields_map( $headers );
 
 		echo '<table class="base-table-raw"><tbody>';
 
@@ -243,6 +272,8 @@ class Importer extends gEditorial\Module
 		unset( $iterator, $parser, $items[0] );
 
 		$this->store_postmeta( $id, $map, $this->constant( 'metakey_source_map' ) );
+		$this->store_fields_map( $file, $headers, $map );
+
 		$this->data_table( $items, $headers, $map, $posttype );
 	}
 
