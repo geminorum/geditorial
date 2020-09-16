@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gEditorial Venue\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
-"POT-Creation-Date: 2020-08-25T02:12:43+00:00\n"
-"PO-Revision-Date: 2020-08-25 06:45+0430\n"
+"POT-Creation-Date: 2020-09-11T03:20:14+00:00\n"
+"PO-Revision-Date: 2020-09-11 07:53+0430\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -15,121 +15,153 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Venue\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
 
-#: Venue.php:35
+#: Venue.php:38
+msgctxt "Settings"
+msgid "Place Facilities"
+msgstr "قسمت‌های مکان"
+
+#: Venue.php:39
+msgctxt "Settings"
+msgid "Facility taxonomy for the places and supported post-types."
+msgstr ""
+"رده‌بندی قسمت‌ها را برای مکان‌ها و نوع‌نوشته‌های پشتیبانی‌شده اضافه می‌کند."
+
+#: Venue.php:48
 msgctxt "Settings"
 msgid "Specifies location based on the actual latitude and longitude."
 msgstr "مکان را بر اساس طول و عرض جغرافیایی واقعی تعیین می‌کند."
 
-#: Venue.php:44
+#: Venue.php:58
 msgctxt "Settings"
 msgid "Redirect Archives"
 msgstr "بازگردانی بایگانی"
 
-#: Venue.php:45
+#: Venue.php:59
 msgctxt "Settings"
 msgid "Redirects place archives to this URL. Leave empty to disable."
 msgstr ""
 "بایگانی مکان‌ها را به این نشانی بازگردانی می‌کند. برای غیرفعال‌‌سازی خالی "
 "بگذارید."
 
-#: Venue.php:87 Venue.php:88
+#: Venue.php:103 Venue.php:104
 msgid "Place"
 msgid_plural "Places"
 msgstr[0] "مکان‌ها"
 msgstr[1] "مکان"
 
-#: Venue.php:89
+#: Venue.php:105
 msgid "Place Category"
 msgid_plural "Place Categories"
 msgstr[0] "دسته‌های مکان"
 msgstr[1] "دسته مکان"
 
-#: Venue.php:98
+#: Venue.php:106
+msgid "Facility"
+msgid_plural "Facilities"
+msgstr[0] "قسمت‌ها"
+msgstr[1] "قسمت"
+
+#: Venue.php:115
 msgctxt "Column Title"
 msgid "Venue"
 msgstr "محل"
 
-#: Venue.php:99
+#: Venue.php:116
 msgctxt "Column Title"
 msgid "Connected to this Place"
 msgstr "مرتبط با این مکان"
 
-#: Venue.php:102
+#: Venue.php:117
+msgctxt "Select Option None"
+msgid "&ndash; Select Place &ndash;"
+msgstr "&ndash; انتخاب مکان &ndash;"
+
+#: Venue.php:120
 msgctxt "Column Title"
 msgid "Place Categories"
 msgstr "دسته‌های مکان"
 
-#: Venue.php:104
+#: Venue.php:123
+msgctxt "Column Title"
+msgid "Place Facilities"
+msgstr "قسمت‌های مکان"
+
+#: Venue.php:124
+msgctxt "Select Option None"
+msgid "&ndash; Select Facility &ndash;"
+msgstr "&ndash; انتخاب قسمت &ndash;"
+
+#: Venue.php:126
 msgctxt "MetaBox Title"
 msgid "Place Details"
 msgstr "جزئیات مکانی"
 
-#: Venue.php:105
+#: Venue.php:127
 msgctxt "Column Title"
 msgid "Places"
 msgstr "مکان‌ها"
 
-#: Venue.php:106
+#: Venue.php:128
 msgctxt "Column Title"
 msgid "Connected Places"
 msgstr "مکان‌های مرتبط"
 
-#: Venue.php:117
+#: Venue.php:139
 msgctxt "Field Title"
 msgid "Parent Complex"
 msgstr "مجتمع مادر"
 
-#: Venue.php:118
+#: Venue.php:140
 msgctxt "Field Description"
 msgid "Parent complex title of the location"
 msgstr "عنوان مجتمع مادر مکان"
 
-#: Venue.php:122
+#: Venue.php:144
 msgctxt "Field Title"
 msgid "Full Title"
 msgstr "عنوان کامل"
 
-#: Venue.php:123
+#: Venue.php:145
 msgctxt "Field Description"
 msgid "Full title of the location"
 msgstr "عنوان کامل مکان"
 
-#: Venue.php:127
+#: Venue.php:149
 msgctxt "Field Title"
 msgid "Street Address"
 msgstr "نشانی پستی"
 
-#: Venue.php:128
+#: Venue.php:150
 msgctxt "Field Description"
 msgid "Full street address, including city, state etc."
 msgstr "آدرس خیابانی کامل، از جمله شهر، استان و غیره."
 
-#: Venue.php:133
+#: Venue.php:155
 msgctxt "Field Title"
 msgid "Latitude"
 msgstr "عرض جغرافیایی"
 
-#: Venue.php:134
+#: Venue.php:156
 msgctxt "Field Description"
 msgid "The latitude (in decimal notation) for this location."
 msgstr "عرض جغرافیایی (در نماد ده‌دهی) برای این مکان."
 
-#: Venue.php:138
+#: Venue.php:160
 msgctxt "Field Title"
 msgid "Longitude"
 msgstr "طول جغرافیایی"
 
-#: Venue.php:139
+#: Venue.php:161
 msgctxt "Field Description"
 msgid "The longitude (in decimal notation) for this location."
 msgstr "طول جغرافیایی (در نماد ده‌دهی) برای این مکان."
 
-#: Venue.php:521
+#: Venue.php:538
 msgctxt "Message"
 msgid "No items connected!"
 msgstr "چیزی مرتبط نشده است!"
 
-#: Venue.php:554
+#: Venue.php:593
 msgctxt "Title Attr"
 msgid "View the connected list"
 msgstr "دیدن فهرست مرتبط‌شده‌ها"

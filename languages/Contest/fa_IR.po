@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gEditorial Contest\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
-"POT-Creation-Date: 2020-08-25T02:11:51+00:00\n"
-"PO-Revision-Date: 2020-08-25 06:44+0430\n"
+"POT-Creation-Date: 2020-09-11T01:07:52+00:00\n"
+"PO-Revision-Date: 2020-09-11 05:41+0430\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -15,189 +15,223 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
 "X-Poedit-Basepath: ../../includes/Modules/Contest\n"
 
-#: Contest.php:46
+#: Contest.php:38
+msgctxt "Settings"
+msgid "Contest Sections"
+msgstr "بخش‌های فراخوان"
+
+#: Contest.php:39
+msgctxt "Settings"
+msgid "Section taxonomy for the contests and supported post-types."
+msgstr "رده‌بندی بخش‌ها را برای فراخوان‌ها و نوع‌نوشته‌های پشتیبانی‌شده اضافه می‌کند."
+
+#: Contest.php:51
 msgctxt "Settings"
 msgid "Redirect Archives"
 msgstr "بازگردانی بایگانی"
 
-#: Contest.php:47
+#: Contest.php:52
 msgctxt "Settings"
-msgid ""
-"Redirects contest and apply archives to this URL. Leave empty to disable."
+msgid "Redirects contest and apply archives to this URL. Leave empty to disable."
 msgstr ""
-"بایگانی فراخوان‌ها و درخواست‌ها را به این نشانی بازگردانی می‌کند. برای "
-"غیرفعال‌‌سازی خالی بگذارید."
+"بایگانی فراخوان‌ها و درخواست‌ها را به این نشانی بازگردانی می‌کند. برای غیرفعال‌‌سازی "
+"خالی بگذارید."
 
-#: Contest.php:99 Contest.php:100
+#: Contest.php:104 Contest.php:105
 msgid "Contest"
 msgid_plural "Contests"
 msgstr[0] "فراخوان‌ها"
 msgstr[1] "فراخوان"
 
-#: Contest.php:101
+#: Contest.php:106
 msgid "Contest Category"
 msgid_plural "Contest Categories"
 msgstr[0] "دسته‌های فراخوان"
 msgstr[1] "دسته‌ فراخوان"
 
-#: Contest.php:102
+#: Contest.php:107
+msgid "Section"
+msgid_plural "Sections"
+msgstr[0] "بخش‌ها"
+msgstr[1] "بخش"
+
+#: Contest.php:108
 msgid "Apply"
 msgid_plural "Applies"
 msgstr[0] "درخواست‌ها"
 msgstr[1] "درخواست"
 
-#: Contest.php:103
+#: Contest.php:109
 msgid "Apply Category"
 msgid_plural "Apply Categories"
 msgstr[0] "دسته‌های درخواست"
 msgstr[1] "دسته درخواست"
 
-#: Contest.php:104
+#: Contest.php:110
 msgid "Apply Status"
 msgid_plural "Apply Statuses"
 msgstr[0] "وضعیت‌های درخواست"
 msgstr[1] "وضعیت درخواست"
 
-#: Contest.php:113
+#: Contest.php:119
 msgctxt "Posttype Featured"
 msgid "Poster Image"
 msgstr "تصویر اعلان"
 
-#: Contest.php:114
+#: Contest.php:120
 msgctxt "MetaBox Title"
 msgid "Metadata"
 msgstr "فراداده"
 
-#: Contest.php:115
+#: Contest.php:121
 msgctxt "Column Title"
 msgid "Applies"
 msgstr "درخواست‌ها"
 
-#: Contest.php:118
+#: Contest.php:122
+msgctxt "Select Option None"
+msgid "&ndash; Select Contest &ndash;"
+msgstr "&ndash; انتخاب فراخوان &ndash;"
+
+#: Contest.php:125
 msgctxt "MetaBox Title"
 msgid "In This Contest"
 msgstr "در این فراخوان"
 
-#: Contest.php:121
+#: Contest.php:128
 msgctxt "Column Title"
 msgid "Contest Categories"
 msgstr "دسته‌ فراخوان"
 
-#: Contest.php:124
+#: Contest.php:131
+msgctxt "MetaBox Title"
+msgid "Sections"
+msgstr "بخش‌ها"
+
+#: Contest.php:132
+msgctxt "Column Title"
+msgid "Contest Sections"
+msgstr "بخش‌های فراخوان"
+
+#: Contest.php:133
+msgctxt "Select Option None"
+msgid "&ndash; Select Section &ndash;"
+msgstr "&ndash; انتخاب بخش &ndash;"
+
+#: Contest.php:136
 msgctxt "MetaBox Title"
 msgid "Contest"
 msgstr "فراخوان"
 
-#: Contest.php:127
+#: Contest.php:139
 msgctxt "Column Title"
 msgid "Apply Categories"
 msgstr "دسته‌های درخواست"
 
-#: Contest.php:130
+#: Contest.php:142
 msgctxt "MetaBox Title"
 msgid "Apply Statuses"
 msgstr "وضعیت‌های درخواست"
 
-#: Contest.php:131
+#: Contest.php:143
 msgctxt "Column Title"
 msgid "Apply Statuses"
 msgstr "وضعیت‌های درخواست"
 
-#: Contest.php:133
+#: Contest.php:145
 msgctxt "MetaBox Title"
 msgid "Contests"
 msgstr "فراخوان‌ها"
 
-#: Contest.php:134
+#: Contest.php:146
 msgctxt "Column Title"
 msgid "Contests"
 msgstr "فراخوان‌ها"
 
-#: Contest.php:139
+#: Contest.php:151
 msgctxt "Default Term"
 msgid "Approved"
 msgstr "تأییدشده"
 
-#: Contest.php:140
+#: Contest.php:152
 msgctxt "Default Term"
 msgid "Pending"
 msgstr "برای بازبینی"
 
-#: Contest.php:141
+#: Contest.php:153
 msgctxt "Default Term"
 msgid "Maybe Later"
 msgstr "شاید در آینده"
 
-#: Contest.php:142
+#: Contest.php:154
 msgctxt "Default Term"
 msgid "Rejected"
 msgstr "پذیرفته نشد"
 
-#: Contest.php:166
+#: Contest.php:178
 msgctxt "Button"
 msgid "Install Default Apply Statuses"
 msgstr "نصب وضعیت‌های درخواست پیش‌فرض"
 
-#: Contest.php:389
+#: Contest.php:423
 msgctxt "Message"
 msgid "No items connected!"
 msgstr "چیزی مرتبط نشده است!"
 
-#: Contest.php:610
+#: Contest.php:619
 msgctxt "Title Attr"
 msgid "View the connected list"
 msgstr "دیدن فهرست مرتبط‌شده‌ها"
 
-#: Contest.php:660
+#: Contest.php:669
 msgctxt "Header"
 msgid "Contest Tools"
 msgstr "ابزارهای فراخوان"
 
-#: Contest.php:664
+#: Contest.php:673
 msgctxt "Tools"
 msgid "From Terms"
 msgstr "از رده‌ها"
 
-#: Contest.php:673
+#: Contest.php:682
 msgctxt "Table Column"
 msgid "Linked Contest Post"
 msgstr "فراخوان نوشته مرتبط"
 
-#: Contest.php:683
+#: Contest.php:692
 msgctxt "Table Column"
 msgid "Same Slug Contest Post"
 msgstr "فراخوان نوشته هم‌نامک"
 
-#: Contest.php:693
+#: Contest.php:702
 msgctxt "Table Column"
 msgid "Count"
 msgstr "شمار"
 
-#: Contest.php:707
+#: Contest.php:716
 msgctxt "Button"
 msgid "Check Terms"
 msgstr "بررسی رده‌ها"
 
-#: Contest.php:710
+#: Contest.php:719
 msgctxt "Button"
 msgid "Create Contest Posts"
 msgstr "ساختن نوشته‌های فراخوان"
 
-#: Contest.php:713
+#: Contest.php:722
 msgctxt "Button"
 msgid "Re-Connect Posts"
 msgstr "بازپیوست نوشته‌ها"
 
-#: Contest.php:716
+#: Contest.php:725
 msgctxt "Button"
 msgid "Delete Terms"
 msgstr "پاک‌کردن رده‌ها"
 
-#: Contest.php:718
+#: Contest.php:727
 msgctxt "Message"
 msgid "Check for contest terms and create corresponding contest posts."
-msgstr ""
-"رده‌های فراخوان را بررسی و نوشته‌های فراخوان مرتبط با آن را بازسازی کنید."
+msgstr "رده‌های فراخوان را بررسی و نوشته‌های فراخوان مرتبط با آن را بازسازی کنید."
 
 #~ msgctxt "CoverBox Title"
 #~ msgid "Poster"

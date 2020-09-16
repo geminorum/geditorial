@@ -2,162 +2,246 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gEditorial Importer\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"POT-Creation-Date: 2020-09-16T08:32:52+00:00\n"
+"PO-Revision-Date: 2020-09-16 13:03+0430\n"
+"Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
+"Language: fa_IR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2020-07-17T10:40:33+00:00\n"
-"PO-Revision-Date: 2020-07-17 15:17+0430\n"
-"X-Generator: Poedit 2.3.1\n"
+"X-Generator: Poedit 2.4.1\n"
 "X-Poedit-Basepath: ../../includes/Modules/Importer\n"
 "X-Domain: geditorial-importer\n"
-"Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"Language: fa_IR\n"
 
 #: Importer.php:45
+msgctxt "Setting Title"
+msgid "Skip Same Title"
+msgstr "گذر از عنوان مشترک"
+
+#: Importer.php:46
+msgctxt "Setting Description"
+msgid "Tries to avoid creating posts with the same titles."
+msgstr "برای عدم درون‌ریزی نوشته‌ها با عناوین مشابه، تلاش می‌کند."
+
+#: Importer.php:50
 msgctxt "Setting Title"
 msgid "Store Source Data"
 msgstr "ذخیره دیتای منبع"
 
-#: Importer.php:46
+#: Importer.php:51
 msgctxt "Setting Description"
 msgid ""
-"Stores raw source data and attchment reference as meta for each imported "
-"item."
+"Stores raw source data and attchment reference as meta for each imported item."
 msgstr ""
+"داده‌های خام منبع و ارجاع به پیوست آن را به صورت متا در هر مورد درون‌ریزی شده، "
+"ذخیره می‌کند."
 
-#: Importer.php:50
+#: Importer.php:55
 msgctxt "Setting Title"
 msgid "Add Audit Attribute"
 msgstr "افزودن برچسب بازبینی"
 
 #. translators: %s: default term placeholder
-#: Importer.php:52
+#: Importer.php:57
 msgctxt "Setting Description"
 msgid "Appends %s audit attribute to each imported item."
-msgstr ""
+msgstr "ردهٔ بازبینی %s را برای هر مورد درون‌ریزی شده، اختصاص می‌دهد."
 
-#: Importer.php:77
+#: Importer.php:83
 msgctxt "Javascript String"
 msgid "Choose a Datasheet"
 msgstr "یک صفحه‌گسترده انتخاب کنید"
 
-#: Importer.php:78
+#: Importer.php:84
 msgctxt "Javascript String"
 msgid "Select as Source"
 msgstr "انتخاب به عنوان منبع"
 
-#: Importer.php:127
+#: Importer.php:91
+msgctxt "Tool Box"
+msgid ""
+"Helps with Importing contents from CSV files into any post-type, with meta "
+"support."
+msgstr ""
+"به شما در درون‌ریزی محتوا از پرونده‌های CSV به هر نوع‌نوشته‌ای، همراه با متا، کمک "
+"می‌کند."
+
+#: Importer.php:191
 msgctxt "Button"
 msgid "Upload"
 msgstr "بارگذاری"
 
-#: Importer.php:177
+#: Importer.php:223
 msgctxt "Table Column"
-msgid "[Checks]"
-msgstr "[بررسی‌ها]"
+msgid "Image"
+msgstr "تصویر"
 
-#: Importer.php:191
+#: Importer.php:244
 msgctxt "Table Column"
-msgid "Similar to Title:"
-msgstr "عناوین مشابه:"
+msgid "Thumbnail"
+msgstr "بند‌انگشتی"
 
 #. translators: %s: count placeholder
-#: Importer.php:207
+#: Importer.php:253 Importer.php:338
 msgctxt "Header"
 msgid "%s Records Found"
 msgstr "%s مورد پیدا شد"
 
-#: Importer.php:409
-msgctxt "Button"
-msgid "Step 4: Import"
-msgstr "قدم ۴: درون‌ریزی"
+#: Importer.php:288
+msgctxt "Table Column"
+msgid "[Checks]"
+msgstr "[بررسی‌ها]"
 
-#: Importer.php:411
-msgctxt "Message"
-msgid "Check processed records and import, finally."
-msgstr "موارد پردازش‌شده برای درون‌ریزی نهایی را بررسی کنید."
+#: Importer.php:313
+msgctxt "Table Column"
+msgid "Similar to Title:"
+msgstr "عناوین مشابه:"
 
-#: Importer.php:429
-msgctxt "Button"
-msgid "Import"
-msgstr "درون‌ریزی"
+#. translators: %s: custom metakey
+#: Importer.php:330
+msgctxt "Post Field Column"
+msgid "Custom: %s"
+msgstr "سفارشی: %s"
 
-#: Importer.php:431
-msgctxt "Message"
-msgid "Select records to finally import."
-msgstr "موارد نهایی برای درون‌ریزی را انتخاب کنید."
-
-#: Importer.php:435
-msgctxt "Header"
-msgid "Map the Importer"
-msgstr "نقشه درون‌ریزی را ترسیم کنید"
-
-#: Importer.php:446
-msgctxt "Button"
-msgid "Step 2: Map"
-msgstr "قدم ۲: نقشه"
-
-#: Importer.php:448
-msgctxt "Message"
-msgid "Map the file fields to the post-type fields."
-msgstr "نقشه فیلد‌های پرونده به فیلد‌های نوع‌نوشته را ترسیم کنید."
-
-#: Importer.php:452
+#: Importer.php:573
 msgctxt "Header"
 msgid "Importer Tools"
 msgstr "ابزارهای درون‌ریزی"
 
-#: Importer.php:459
-msgctxt "Button"
-msgid "Step 1: Attachment"
-msgstr "قدم ۱: پیوست"
-
-#: Importer.php:461
-msgctxt "Message"
-msgid "Upload or select a CSV file, post-type and user to map the import."
-msgstr ""
-"یک پرونده CSV را بارگیری و یا انتخاب کنید، تا همراه با نوع‌نوشته و کاربر "
-"در ترسیم نقشه درون‌ریزی استفاده شود."
-
-#: Importer.php:467
+#: Importer.php:576
 msgctxt "Message"
 msgid "Imports are not supported for any of the post-types!"
 msgstr "درون‌ریزی در هیچ نوع‌نوشته‌ای پشتیبانی نمی‌شود!"
 
-#: Importer.php:477
+#: Importer.php:579
+msgctxt "Header"
+msgid "Import Data from CSV into Posts"
+msgstr "درون‌ریزی داده‌ها از یک CSV به نوشته‌ها"
+
+#: Importer.php:585
+msgctxt "Header"
+msgid "Import Remote Files as Attachments"
+msgstr "درون‌ریزی پرونده‌های دوردست به‌عنوان پیوست"
+
+#: Importer.php:606 Importer.php:626
+msgctxt "Message"
+msgid "Import source is not defined!"
+msgstr "منبع درون‌ریزی مشخص نشده است!"
+
+#: Importer.php:609 Importer.php:629 Importer.php:679
+msgctxt "Message"
+msgid "You are not allowed to edit this post-type!"
+msgstr "شما اجازهٔ ویرایش این نوع‌نوشته را ندارید!"
+
+#: Importer.php:620
+msgctxt "Button"
+msgid "Import"
+msgstr "درون‌ریزی"
+
+#: Importer.php:621 Importer.php:689
+msgctxt "Message"
+msgid "Select records to finally import."
+msgstr "موارد نهایی برای درون‌ریزی را انتخاب کنید."
+
+#: Importer.php:631
+msgctxt "Header"
+msgid "Map the Importer"
+msgstr "نقشه درون‌ریزی را ترسیم کنید"
+
+#: Importer.php:641
+msgctxt "Button"
+msgid "Step 2: Map"
+msgstr "قدم ۲: نقشه"
+
+#: Importer.php:642
+msgctxt "Message"
+msgid "Map the file fields to the post-type fields."
+msgstr "نقشه فیلد‌های پرونده به فیلد‌های نوع‌نوشته را ترسیم کنید."
+
+#: Importer.php:649
+msgctxt "Button"
+msgid "Step 1: Attachment"
+msgstr "قدم ۱: پیوست"
+
+#: Importer.php:650
+msgctxt "Message"
+msgid "Upload or select a CSV file, post-type and user to map the import."
+msgstr ""
+"یک پرونده CSV را بارگیری و یا انتخاب کنید، تا همراه با نوع‌نوشته و کاربر در "
+"ترسیم نقشه درون‌ریزی استفاده شود."
+
+#: Importer.php:669
+msgctxt "Message"
+msgid "You are not allowed to upload files!"
+msgstr "شما اجازهٔ بارگذاری پرونده‌ها را ندارید!"
+
+#: Importer.php:676
+msgctxt "Message"
+msgid "Refrence meta-key is not defined!"
+msgstr "کلید متای ارجاع مشخص نشده است!"
+
+#: Importer.php:687
+msgctxt "Button"
+msgid "Import & Set Thumbnail"
+msgstr "درون‌ریزی و تنظیم بندانگشتی"
+
+#: Importer.php:688
+msgctxt "Button"
+msgid "Import Only"
+msgstr "فقط درون‌ریزی"
+
+#: Importer.php:733
+msgctxt "Button"
+msgid "Step 1: Meta-key"
+msgstr "قدم ۱: کلید متا"
+
+#: Importer.php:734
+msgctxt "Message"
+msgid "Select a meta-key for refrence on importing the attachments."
+msgstr "یکی از کلیدهای متا را به‌عنوان مرجع درون‌ریزی پیوست‌ها انتخاب کنید."
+
+#: Importer.php:749
 msgctxt "Post Field"
 msgid "Extra: Old ID"
 msgstr "افزوده: شناسه قدیمی"
 
-#: Importer.php:478
+#: Importer.php:750
 msgctxt "Post Field"
 msgid "Extra: Custom Meta"
 msgstr "افزوده: متای سفارشی"
 
-#: Importer.php:479
+#: Importer.php:751
 msgctxt "Post Field"
 msgid "Menu Order"
-msgstr "چینش منو (Menu Order)"
+msgstr "چینش منو"
 
-#: Importer.php:480
+#: Importer.php:752
 msgctxt "Post Field"
 msgid "Post Title"
-msgstr "عنوان نوشته (Post Title)"
+msgstr "عنوان نوشته"
 
-#: Importer.php:481
+#: Importer.php:753
 msgctxt "Post Field"
 msgid "Post Content"
-msgstr "متن نوشته (Post Content)"
+msgstr "متن نوشته"
 
-#: Importer.php:482
+#: Importer.php:754
 msgctxt "Post Field"
 msgid "Post Excerpt"
-msgstr "چکیده نوشته (Post Excerpt)"
+msgstr "چکیده نوشته"
 
 #. translators: %s: taxonomy name placeholder
-#: Importer.php:487
+#: Importer.php:759
 msgctxt "Post Field"
 msgid "Taxonomy: %s"
 msgstr "رده‌بندی: %s"
+
+#~ msgctxt "Button"
+#~ msgid "Step 4: Import"
+#~ msgstr "قدم ۴: درون‌ریزی"
+
+#~ msgctxt "Message"
+#~ msgid "Check processed records and import, finally."
+#~ msgstr "موارد پردازش‌شده برای درون‌ریزی نهایی را بررسی کنید."

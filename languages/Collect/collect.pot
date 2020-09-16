@@ -1,13 +1,13 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gEditorial Collect 3.16.3\n"
+"Project-Id-Version: gEditorial Collect 3.17.0\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "Last-Translator: NULL\n"
 "Language-Team: NULL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2020-09-02T20:52:35+00:00\n"
+"POT-Creation-Date: 2020-09-16T08:32:34+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.4.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Collect\n"
@@ -67,178 +67,188 @@ msgctxt "Posttype Featured"
 msgid "Poster Image"
 msgstr ""
 
-#: Collect.php:123
+#: Collect.php:121
+msgctxt "Select Option None"
+msgid "&ndash; Select Collection &ndash;"
+msgstr ""
+
+#: Collect.php:124
 msgctxt "MetaBox Title"
 msgid "In This Collection"
 msgstr ""
 
-#: Collect.php:126
+#: Collect.php:127
 msgctxt "MetaBox Title"
 msgid "Groups"
 msgstr ""
 
-#: Collect.php:127
+#: Collect.php:128
 msgctxt "Column Title"
 msgid "Collection Groups"
 msgstr ""
 
-#: Collect.php:130
+#: Collect.php:131
 msgctxt "MetaBox Title"
 msgid "Parts"
 msgstr ""
 
-#: Collect.php:131
+#: Collect.php:132
 msgctxt "Column Title"
 msgid "Collection Parts"
 msgstr ""
 
 #: Collect.php:133
+msgctxt "Select Option None"
+msgid "&ndash; Select Part &ndash;"
+msgstr ""
+
+#: Collect.php:135
 msgctxt "MetaBox Title"
 msgid "The Collection"
 msgstr ""
 
-#: Collect.php:134
+#: Collect.php:136
 msgctxt "Column Title"
 msgid "Collections"
 msgstr ""
 
-#: Collect.php:135
+#: Collect.php:137
 msgctxt "Column Title"
 msgid "Connected Items"
 msgstr ""
 
-#: Collect.php:149
+#: Collect.php:151
 msgctxt "Field Title"
 msgid "Number Line"
 msgstr ""
 
-#: Collect.php:150
+#: Collect.php:152
 msgctxt "Field Description"
 msgid "The collection number line"
 msgstr ""
 
-#: Collect.php:154
+#: Collect.php:156
 msgctxt "Field Title"
 msgid "Total Items"
 msgstr ""
 
-#: Collect.php:155
+#: Collect.php:157
 msgctxt "Field Description"
 msgid "The collection total items"
 msgstr ""
 
-#: Collect.php:161
+#: Collect.php:163
 msgctxt "Field Title"
 msgid "Order"
 msgstr ""
 
-#: Collect.php:162
+#: Collect.php:164
 msgctxt "Field Description"
 msgid "Post order in the collection"
 msgstr ""
 
-#: Collect.php:168
+#: Collect.php:170
 msgctxt "Field Title"
 msgid "Title"
 msgstr ""
 
-#: Collect.php:169
+#: Collect.php:171
 msgctxt "Field Description"
 msgid "Override post title in the collection"
 msgstr ""
 
-#: Collect.php:173
+#: Collect.php:175
 msgctxt "Field Title"
 msgid "Subtitle"
 msgstr ""
 
-#: Collect.php:174
+#: Collect.php:176
 msgctxt "Field Description"
 msgid "Post subtitle in the collection"
 msgstr ""
 
-#: Collect.php:178
+#: Collect.php:180
 msgctxt "Field Title"
 msgid "Collaborator"
 msgstr ""
 
-#: Collect.php:179
+#: Collect.php:181
 msgctxt "Field Description"
 msgid "Post collaborator in the collection"
 msgstr ""
 
-#: Collect.php:627
+#: Collect.php:604
 msgctxt "Message"
 msgid "No items connected!"
 msgstr ""
 
-#: Collect.php:682
+#: Collect.php:659
 msgctxt "Title Attr"
 msgid "View the connected list"
 msgstr ""
 
 #. translators: %s: count placeholder
-#: Collect.php:695
+#: Collect.php:672
 msgctxt "Display"
 msgid "Order in Collection: %s"
 msgstr ""
 
-#: Collect.php:776
+#: Collect.php:742
 msgctxt "Header"
 msgid "Collect Tools"
 msgstr ""
 
-#: Collect.php:779
+#: Collect.php:745
 msgctxt "Tools"
 msgid "From Terms"
 msgstr ""
 
-#: Collect.php:783
+#: Collect.php:749
 msgctxt "Button"
 msgid "Check Terms"
 msgstr ""
 
-#: Collect.php:786
+#: Collect.php:752
 msgctxt "Button"
 msgid "Create Collection Posts"
 msgstr ""
 
-#: Collect.php:789
+#: Collect.php:755
 msgctxt "Button"
 msgid "Re-Connect Posts"
 msgstr ""
 
-#: Collect.php:792
+#: Collect.php:758
 msgctxt "Button"
 msgid "Store Orders"
 msgstr ""
 
-#: Collect.php:795
+#: Collect.php:761
 msgctxt "Button"
 msgid "Delete Terms"
 msgstr ""
 
-#: Collect.php:808
+#: Collect.php:774
 msgctxt "Table Column"
 msgid "Linked Collection Post"
 msgstr ""
 
-#: Collect.php:818
+#: Collect.php:784
 msgctxt "Table Column"
 msgid "Same Slug Collection Post"
 msgstr ""
 
-#: Collect.php:828
+#: Collect.php:794
 msgctxt "Table Column"
 msgid "Count"
 msgstr ""
 
-#: Collect.php:837
+#: Collect.php:803
 msgctxt "Table Empty"
 msgid "No Terms Found!"
 msgstr ""
 
-#: Collect.php:841
+#: Collect.php:807
 msgctxt "Message"
 msgid "Check for collection terms and create corresponding collection posts."
 msgstr ""
