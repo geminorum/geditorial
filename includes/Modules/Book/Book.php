@@ -474,6 +474,7 @@ class Book extends gEditorial\Module
 		], 'publication_cpt' );
 
 		$this->add_posttype_fields( $this->constant( 'publication_cpt' ) );
+		$this->filter_module( 'meta', 'sanitize_posttype_field', 4 );
 
 		$this->support_meta = TRUE;
 	}
@@ -787,6 +788,15 @@ class Book extends gEditorial\Module
 			'empty'      => $this->get_posttype_label( 'publication_cpt', 'not_found' ),
 			'pagination' => $pagination,
 		] );
+	}
+
+	public function meta_sanitize_posttype_field( $sanitized, $field, $post, $data )
+	{
+		switch ( $field['name'] ) {
+			case 'publication_isbn': return trim( ModuleHelper::sanitizeISBN( $data, TRUE ) );
+		}
+
+		return $sanitized;
 	}
 
 	private function get_importer_fields( $posttype = NULL )

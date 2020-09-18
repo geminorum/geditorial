@@ -43,12 +43,16 @@ class Book extends gEditorial\Template
 	public static function barcodeISBN( $atts = [] )
 	{
 		$args = self::atts( [
-			'id'      => isset( $atts['post'] ) ? $atts['post'] : NULL,
-			'filter'  => FALSE,
-			'default' => FALSE,
+			'id'       => isset( $atts['post'] ) ? $atts['post'] : NULL,
+			'filter'   => FALSE,
+			'default'  => FALSE,
+			'validate' => TRUE,
 		], $atts );
 
 		if ( ! $isbn = self::getMetaField( 'publication_isbn', $args ) )
+			return $args['default'];
+
+		if ( $args['validate'] && ! ModuleHelper::validateISBN( $isbn ) )
 			return $args['default'];
 
 		$args = self::atts( [
@@ -58,19 +62,10 @@ class Book extends gEditorial\Template
 			'echo'   => TRUE,
 		], $atts );
 
-		// FIXME: make this more stable!
-		$barcode = add_query_arg( [
-			'bcid'        => 'ean13',
-			// 'scaleX'      => '2',
-			// 'scale'      => '2',
-			'text'        => $isbn,
-			'includetext' => '', // to display the code
-		], 'http://bwipjs-api.metafloor.com' );
-
-		$html = HTML::img( $barcode, '-book-barcode-isbn', $isbn );
+		$html = HTML::img( ModuleHelper::barcodeISBN( $isbn ), '-book-barcode-isbn', $isbn );
 
 		if ( is_null( $args['link'] ) )
-			$html = HTML::link( $html, self::lookupISBN( $isbn ) );
+			$html = HTML::link( $html, ModuleHelper::lookupISBN( $isbn ) );
 
 		else if ( $args['link'] )
 			$html = HTML::link( $html, $args['link'] );
@@ -82,12 +77,6 @@ class Book extends gEditorial\Template
 
 		echo $html;
 		return TRUE;
-	}
-
-	// FIXME: temp
-	public static function lookupISBN( $isbn )
-	{
-		return '#';
 	}
 
 	// FIXME: DRAFT
