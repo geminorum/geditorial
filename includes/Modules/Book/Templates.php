@@ -50,8 +50,10 @@ class Book extends gEditorial\Template
 			'validate' => TRUE,
 		], $atts );
 
-		if ( ! $isbn = self::getMetaField( 'publication_isbn', $args ) )
+		if ( ! $isbn = self::getMetaFieldRaw( 'publication_isbn', $args['id'], 'meta', TRUE ) )
 			return $args['default'];
+
+		$isbn = ModuleHelper::sanitizeISBN( $isbn, TRUE );
 
 		if ( $args['validate'] && ! ModuleHelper::validateISBN( $isbn ) )
 			return $args['default'];

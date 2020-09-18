@@ -475,6 +475,7 @@ class Book extends gEditorial\Module
 
 		$this->add_posttype_fields( $this->constant( 'publication_cpt' ) );
 		$this->filter_module( 'meta', 'sanitize_posttype_field', 4 );
+		$this->filter_module( 'meta', 'field', 4 ); // @SEE: `Template::getMetaField()`
 
 		$this->support_meta = TRUE;
 	}
@@ -797,6 +798,15 @@ class Book extends gEditorial\Module
 		}
 
 		return $sanitized;
+	}
+
+	public function meta_field( $meta, $field, $post, $args )
+	{
+		switch ( $field ) {
+			case 'publication_isbn': return ModuleHelper::ISBN( $meta );
+		}
+
+		return $meta;
 	}
 
 	private function get_importer_fields( $posttype = NULL )
