@@ -899,12 +899,12 @@ class Tweaks extends gEditorial\Module
 
 			echo '<li class="-row tweaks-user-contacts -contact-'.$method.'">';
 				echo $this->get_column_icon( FALSE, Icon::guess( $method, 'email-alt' ), $title );
-				echo $this->display_meta( $meta, $method );
+				echo $this->display_meta_row( $meta, $method );
 			echo '</li>';
 		}
 	}
 
-	public function display_meta( $value, $key = NULL, $field = [] )
+	public function display_meta_row( $value, $key = NULL, $field = [] )
 	{
 		switch ( $key ) {
 			case 'mobile'    : return HTML::tel( $value );
@@ -914,7 +914,7 @@ class Tweaks extends gEditorial\Module
 			case 'telegram'  : return Third::htmlHandle( $value, 'https://t.me/' );
 		}
 
-		return HTML::escape( $value );
+		return parent::display_meta_row( $value, $key, $field );
 	}
 
 	public function do_metabox_mainbox( $post, $box )

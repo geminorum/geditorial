@@ -183,7 +183,7 @@ class Team extends gEditorial\Module
 		}
 	}
 
-	public function display_meta( $value, $key = NULL, $field = [] )
+	public function display_meta_row( $value, $key = NULL, $field = [] )
 	{
 		switch ( $key ) {
 			case 'email_gravatar' : return HTML::mailto( $value );
@@ -194,7 +194,7 @@ class Team extends gEditorial\Module
 			case 'username'       : return '@'.$value; // FIXME
 		}
 
-		return HTML::escape( $value );
+		return parent::display_meta_row( $value, $key, $field );
 	}
 
 	public function meta_init()

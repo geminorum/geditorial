@@ -3316,13 +3316,13 @@ class Module extends Base
 
 			echo '<li class="-row -'.$this->module->name.' -field-'.$field.'">';
 				echo $this->get_column_icon( FALSE, $args['icon'], $args['title'] );
-				echo $this->display_meta( $value, $field, $args );
+				echo $this->display_meta_row( $value, $field, $args );
 			echo '</li>';
 		}
 	}
 
 	// DEFAULT METHOD
-	public function display_meta( $value, $key = NULL, $field = [] )
+	public function display_meta_row( $value, $key = NULL, $field = [] )
 	{
 		return HTML::escape( $value );
 	}

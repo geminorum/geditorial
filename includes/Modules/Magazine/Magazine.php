@@ -667,7 +667,7 @@ class Magazine extends gEditorial\Module
 		echo '</li>';
 	}
 
-	public function display_meta( $value, $key = NULL, $field = [] )
+	public function display_meta_row( $value, $key = NULL, $field = [] )
 	{
 		switch ( $key ) {
 			/* translators: %s: order */
@@ -678,7 +678,7 @@ class Magazine extends gEditorial\Module
 			case 'in_issue_pages'      : return Helper::getCounted( $value, _x( 'Total Pages: %s', 'Display', 'geditorial-magazine' ) );
 		}
 
-		return HTML::escape( $value );
+		return parent::display_meta_row( $value, $key, $field );
 	}
 
 	public function post_updated_messages( $messages )

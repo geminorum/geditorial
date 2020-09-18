@@ -665,14 +665,14 @@ class Collect extends gEditorial\Module
 		echo '</li>';
 	}
 
-	public function display_meta( $value, $key = NULL, $field = [] )
+	public function display_meta_row( $value, $key = NULL, $field = [] )
 	{
 		switch ( $key ) {
 			/* translators: %s: count placeholder */
 			case 'in_collection_order': return Helper::getCounted( $value, _x( 'Order in Collection: %s', 'Display', 'geditorial-collect' ) );
 		}
 
-		return HTML::escape( $value );
+		return parent::display_meta_row( $value, $key, $field );
 	}
 
 	public function post_updated_messages( $messages )
