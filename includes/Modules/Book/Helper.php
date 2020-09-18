@@ -16,7 +16,10 @@ class Book extends gEditorial\Helper
 
 	public static function lookupISBN( $string )
 	{
-		return sprintf( 'https://www.google.com/search?q=ISBN:%s', urlencode( self::sanitizeISBN( $string ) ) );
+		return add_query_arg( [
+			// 'q' => 'ISBN:'.urlencode( self::sanitizeISBN( $string ) ),
+			'q' => urlencode( self::sanitizeISBN( $string ) ),
+		], 'https://www.google.com/search' );
 	}
 
 	// TODO: make this more reliable!

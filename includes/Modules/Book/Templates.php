@@ -4,6 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core\HTML;
+use geminorum\gEditorial\Helpers\Book as ModuleHelper;
 
 class Book extends gEditorial\Template
 {
@@ -56,7 +57,7 @@ class Book extends gEditorial\Template
 			return $args['default'];
 
 		$args = self::atts( [
-			'link'   => FALSE, // NULL, FIXME!
+			'link'   => NULL,
 			'before' => '',
 			'after'  => '',
 			'echo'   => TRUE,
