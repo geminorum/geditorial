@@ -520,7 +520,7 @@ class Template extends Core\Base
 		if ( ! $post = get_post( $args['id'] ) )
 			return $args['default'];
 
-		$meta = gEditorial()->meta->get_postmeta_field( $post->ID, $field );
+		$meta = self::getMetaFieldRaw( $field, $post->ID, 'meta' );
 
 		if ( FALSE === $meta )
 			return $args['default'];
@@ -536,9 +536,19 @@ class Template extends Core\Base
 		return $args['default'];
 	}
 
-	// WARNING: caller must check for module
-	public static function getMetaFieldRaw( $field, $post_id, $module = 'meta' )
+	public static function getMetaFieldRaw( $field, $post_id, $module = 'meta', $check = FALSE )
 	{
+		if ( $check ) {
+
+			if ( ! gEditorial()->enabled( 'meta' ) )
+				return FALSE;
+
+			if ( ! $post = get_post( $post_id ) )
+				return FALSE;
+
+			$post_id = $post->ID;
+		}
+
 		return gEditorial()->{$module}->get_postmeta_field( $post_id, $field );
 	}
 
