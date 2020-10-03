@@ -1,13 +1,13 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gEditorial Importer 3.17.0\n"
+"Project-Id-Version: gEditorial Importer 3.17.1\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "Last-Translator: NULL\n"
 "Language-Team: NULL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2020-09-16T08:32:52+00:00\n"
+"POT-Creation-Date: 2020-10-03T15:01:27+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.4.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Importer\n"
@@ -25,209 +25,219 @@ msgstr ""
 
 #: Importer.php:50
 msgctxt "Setting Title"
-msgid "Store Source Data"
+msgid "Skip Has Thumbnail"
 msgstr ""
 
 #: Importer.php:51
 msgctxt "Setting Description"
-msgid "Stores raw source data and attchment reference as meta for each imported item."
+msgid "Tries to avoid importing attachments for posts with thumbnail images."
 msgstr ""
 
 #: Importer.php:55
+msgctxt "Setting Title"
+msgid "Store Source Data"
+msgstr ""
+
+#: Importer.php:56
+msgctxt "Setting Description"
+msgid "Stores raw source data and attchment reference as meta for each imported item."
+msgstr ""
+
+#: Importer.php:60
 msgctxt "Setting Title"
 msgid "Add Audit Attribute"
 msgstr ""
 
 #. translators: %s: default term placeholder
-#: Importer.php:57
+#: Importer.php:62
 msgctxt "Setting Description"
 msgid "Appends %s audit attribute to each imported item."
 msgstr ""
 
-#: Importer.php:83
+#: Importer.php:88
 msgctxt "Javascript String"
 msgid "Choose a Datasheet"
 msgstr ""
 
-#: Importer.php:84
+#: Importer.php:89
 msgctxt "Javascript String"
 msgid "Select as Source"
 msgstr ""
 
-#: Importer.php:91
+#: Importer.php:96
 msgctxt "Tool Box"
 msgid "Helps with Importing contents from CSV files into any post-type, with meta support."
 msgstr ""
 
-#: Importer.php:191
+#: Importer.php:196
 msgctxt "Button"
 msgid "Upload"
 msgstr ""
 
-#: Importer.php:223
+#: Importer.php:242
 msgctxt "Table Column"
 msgid "Image"
 msgstr ""
 
-#: Importer.php:244
+#: Importer.php:263
 msgctxt "Table Column"
 msgid "Thumbnail"
 msgstr ""
 
 #. translators: %s: count placeholder
-#: Importer.php:253
-#: Importer.php:338
+#: Importer.php:272
+#: Importer.php:357
 msgctxt "Header"
 msgid "%s Records Found"
 msgstr ""
 
-#: Importer.php:288
+#: Importer.php:307
 msgctxt "Table Column"
 msgid "[Checks]"
 msgstr ""
 
-#: Importer.php:313
+#: Importer.php:332
 msgctxt "Table Column"
 msgid "Similar to Title:"
 msgstr ""
 
 #. translators: %s: custom metakey
-#: Importer.php:330
+#: Importer.php:349
 msgctxt "Post Field Column"
 msgid "Custom: %s"
 msgstr ""
 
-#: Importer.php:573
+#: Importer.php:592
 msgctxt "Header"
 msgid "Importer Tools"
 msgstr ""
 
-#: Importer.php:576
+#: Importer.php:595
 msgctxt "Message"
 msgid "Imports are not supported for any of the post-types!"
 msgstr ""
 
-#: Importer.php:579
+#: Importer.php:598
 msgctxt "Header"
 msgid "Import Data from CSV into Posts"
 msgstr ""
 
-#: Importer.php:585
+#: Importer.php:604
 msgctxt "Header"
 msgid "Import Remote Files as Attachments"
 msgstr ""
 
-#: Importer.php:606
-#: Importer.php:626
+#: Importer.php:625
+#: Importer.php:645
 msgctxt "Message"
 msgid "Import source is not defined!"
 msgstr ""
 
-#: Importer.php:609
-#: Importer.php:629
-#: Importer.php:679
+#: Importer.php:628
+#: Importer.php:648
+#: Importer.php:698
 msgctxt "Message"
 msgid "You are not allowed to edit this post-type!"
 msgstr ""
 
-#: Importer.php:620
+#: Importer.php:639
 msgctxt "Button"
 msgid "Import"
 msgstr ""
 
-#: Importer.php:621
-#: Importer.php:689
+#: Importer.php:640
+#: Importer.php:708
 msgctxt "Message"
 msgid "Select records to finally import."
 msgstr ""
 
-#: Importer.php:631
+#: Importer.php:650
 msgctxt "Header"
 msgid "Map the Importer"
 msgstr ""
 
-#: Importer.php:641
+#: Importer.php:660
 msgctxt "Button"
 msgid "Step 2: Map"
 msgstr ""
 
-#: Importer.php:642
+#: Importer.php:661
 msgctxt "Message"
 msgid "Map the file fields to the post-type fields."
 msgstr ""
 
-#: Importer.php:649
+#: Importer.php:668
 msgctxt "Button"
 msgid "Step 1: Attachment"
 msgstr ""
 
-#: Importer.php:650
+#: Importer.php:669
 msgctxt "Message"
 msgid "Upload or select a CSV file, post-type and user to map the import."
 msgstr ""
 
-#: Importer.php:669
+#: Importer.php:688
 msgctxt "Message"
 msgid "You are not allowed to upload files!"
 msgstr ""
 
-#: Importer.php:676
+#: Importer.php:695
 msgctxt "Message"
 msgid "Refrence meta-key is not defined!"
 msgstr ""
 
-#: Importer.php:687
+#: Importer.php:706
 msgctxt "Button"
 msgid "Import & Set Thumbnail"
 msgstr ""
 
-#: Importer.php:688
+#: Importer.php:707
 msgctxt "Button"
 msgid "Import Only"
 msgstr ""
 
-#: Importer.php:733
+#: Importer.php:752
 msgctxt "Button"
 msgid "Step 1: Meta-key"
 msgstr ""
 
-#: Importer.php:734
+#: Importer.php:753
 msgctxt "Message"
 msgid "Select a meta-key for refrence on importing the attachments."
 msgstr ""
 
-#: Importer.php:749
+#: Importer.php:768
 msgctxt "Post Field"
 msgid "Extra: Old ID"
 msgstr ""
 
-#: Importer.php:750
+#: Importer.php:769
 msgctxt "Post Field"
 msgid "Extra: Custom Meta"
 msgstr ""
 
-#: Importer.php:751
+#: Importer.php:770
 msgctxt "Post Field"
 msgid "Menu Order"
 msgstr ""
 
-#: Importer.php:752
+#: Importer.php:771
 msgctxt "Post Field"
 msgid "Post Title"
 msgstr ""
 
-#: Importer.php:753
+#: Importer.php:772
 msgctxt "Post Field"
 msgid "Post Content"
 msgstr ""
 
-#: Importer.php:754
+#: Importer.php:773
 msgctxt "Post Field"
 msgid "Post Excerpt"
 msgstr ""
 
 #. translators: %s: taxonomy name placeholder
-#: Importer.php:759
+#: Importer.php:778
 msgctxt "Post Field"
 msgid "Taxonomy: %s"
 msgstr ""

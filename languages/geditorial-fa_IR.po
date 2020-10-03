@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gEditorial\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
-"POT-Creation-Date: 2020-09-16T08:32:23+00:00\n"
-"PO-Revision-Date: 2020-09-16 13:02+0430\n"
+"POT-Creation-Date: 2020-10-03T15:00:54+00:00\n"
+"PO-Revision-Date: 2020-10-03 18:32+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: geminorum <contact@geminorum.ir>\n"
 "Language: fa\n"
@@ -2920,17 +2920,17 @@ msgid "Contact"
 msgstr "ارتباط"
 
 #. translators: %s: search query
-#: includes/Template.php:602
+#: includes/Template.php:612
 msgctxt "Template: Search Link Title Attr"
 msgid "Search for %s"
 msgstr "جست‌وجو برای %s"
 
-#: includes/Template.php:651
+#: includes/Template.php:661
 msgctxt "Template: Meta Link Default Title"
 msgid "External Source"
 msgstr "پیوند بیرونی"
 
-#: includes/Template.php:652
+#: includes/Template.php:662
 msgctxt "Template: Meta Link Default Title Attr"
 msgid "Visit external source"
 msgstr "دیدن پیوند بیرونی"
