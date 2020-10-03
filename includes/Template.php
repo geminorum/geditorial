@@ -738,14 +738,20 @@ class Template extends Core\Base
 					if ( ! is_object_in_taxonomy( $posttype, $key ) )
 						continue;
 
-					if ( ! $term = Taxonomy::theTerm( $key, $post->ID, TRUE ) )
+					if ( ! $terms = get_the_terms( $post, $key ) )
 						continue;
 
 					if ( is_null( $title ) )
 						$title = Taxonomy::object( $key )->labels->singular_name;
 
-					if ( $meta = sanitize_term_field( 'name', $term->name, $term->term_id, $key, 'display' ) )
-						$rows[$title] = HTML::link( $meta, get_term_link( $term, $key ) );
+					$links = [];
+
+					foreach ( $terms as $term )
+						if ( $meta = sanitize_term_field( 'name', $term->name, $term->term_id, $key, 'display' ) )
+							$links[] = HTML::link( $meta, get_term_link( $term, $key ) );
+
+					if ( count( $links ) )
+						$rows[$title] = Helper::getJoined( $links );
 				}
 
 				continue;
