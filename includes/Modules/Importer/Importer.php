@@ -418,7 +418,7 @@ class Importer extends gEditorial\Module
 						if ( ! $id = get_post_meta( $post_id, $args['metakey'], TRUE ) )
 							continue;
 
-						$attachment = Media::sideloadImage( sprintf( $args['template'], $id ), $post_id, [ 'post_author' => $args['user_id'] ] );
+						$attachment = Media::sideloadImageURL( sprintf( $args['template'], $id ), $post_id, [ 'post_author' => $args['user_id'] ] );
 
 						if ( is_wp_error( $attachment ) )
 							continue;
@@ -542,7 +542,7 @@ class Importer extends gEditorial\Module
 								if ( $taxonomy_object->hierarchical ) {
 
 									if ( $terms = Taxonomy::insertDefaultTerms( $taxonomy, Arraay::sameKey( $value ), FALSE ) )
-										$data['tax_input'][$taxonomy] = wp_list_pluck( $terms, 'term_taxonomy_id' );
+										$data['tax_input'][$taxonomy] = array_map( 'intval', wp_list_pluck( $terms, 'term_taxonomy_id' ) );
 
 								} else {
 

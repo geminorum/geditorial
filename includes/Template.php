@@ -733,7 +733,10 @@ class Template extends Core\Base
 				if ( is_null( $args['fields'] ) )
 					continue;
 
-				if ( taxonomy_exists( $key ) && is_object_in_taxonomy( $posttype, $key ) ) {
+				if ( taxonomy_exists( $key ) ) {
+
+					if ( ! is_object_in_taxonomy( $posttype, $key ) )
+						continue;
 
 					if ( ! $term = Taxonomy::theTerm( $key, $post->ID, TRUE ) )
 						continue;
