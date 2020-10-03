@@ -135,20 +135,52 @@ class Media extends Core\Base
 		return $sizes;
 	}
 
-	// @REF: `media_sideload_image()`
-	public static function sideloadImage( $src, $post = 0, $extra = [] )
+	public static function handleUpload( $file, $post, $desc = NULL, $data = [] )
 	{
-		if ( empty( $src ) )
+		if ( ! function_exists( 'media_handle_upload' ) ) {
+			require_once ABSPATH.'wp-admin/includes/image.php';
+			require_once ABSPATH.'wp-admin/includes/file.php';
+			require_once ABSPATH.'wp-admin/includes/media.php';
+		}
+
+		return media_handle_sideload( $file, $post, $desc, $data );
+	}
+
+	public static function sideloadImageData( $name, $data, $post = 0, $extra = [] )
+	{
+		if ( ! $temp = Core\File::tempName( $name ) )
+			return FALSE; // new WP_Error( 'http_no_file', __( 'Could not create Temporary file.' ) );
+
+		if ( ! file_put_contents( $temp, $data ) )
+			return FALSE;
+
+		$file = [ 'name' => $name, 'tmp_name' => $temp ];
+
+		$attachment = self::handleUpload( $file, $post, NULL, $extra );
+
+		// if error storing permanently, unlink
+		if ( is_wp_error( $attachment ) ) {
+			@unlink( $file['tmp_name'] );
+			return $attachment;
+		}
+
+		return $attachment;
+	}
+
+	// @REF: `media_sideload_image()`
+	public static function sideloadImageURL( $url, $post = 0, $extra = [] )
+	{
+		if ( empty( $url ) )
 			return FALSE;
 
 		// set variables for storage, fix file filename for query strings
-		preg_match( '/[^\?]+\.(jpe?g|jpe|gif|png)\b/i', $src, $matches );
+		preg_match( '/[^\?]+\.(jpe?g|jpe|gif|png)\b/i', $url, $matches );
 
 		if ( ! $matches )
 			return FALSE; // new WP_Error( 'image_sideload_failed', __( 'Invalid image URL.' ) );
 
 		// download file to temp location
-		$file = [ 'tmp_name' => download_url( $src ) ];
+		$file = [ 'tmp_name' => download_url( $url ) ];
 
 		// if error storing temporarily, return the error
 		if ( is_wp_error( $file['tmp_name'] ) )
@@ -157,7 +189,7 @@ class Media extends Core\Base
 		$file['name'] = Core\File::basename( $matches[0] );
 
 		// do the validation and storage stuff
-		$attachment = media_handle_sideload( $file, $post, NULL, $extra );
+		$attachment = self::handleUpload( $file, $post, NULL, $extra );
 
 		// if error storing permanently, unlink
 		if ( is_wp_error( $attachment ) ) {
@@ -166,7 +198,7 @@ class Media extends Core\Base
 		}
 
 		// store the original attachment source in meta
-		add_post_meta( $attachment, '_source_url', $src );
+		add_post_meta( $attachment, '_source_url', $url );
 
 		return $attachment;
 	}
