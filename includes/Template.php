@@ -771,6 +771,8 @@ class Template extends Core\Base
 				$rows[$title] = $meta;
 		}
 
+		$rows = apply_filters( static::BASE.'_meta_summary_rows', $rows, $list, $post, $args );
+
 		if ( empty( $rows ) )
 			return $args['default'];
 
