@@ -1,3 +1,10 @@
+### 3.17.1
+* main/module: rename default method for display meta row
+* main/template: filter meta summary rows
+* main/template: get postmeta raw revised
+* module/book: better handling isbn data
+* module/importer: optional skip imports into posts with thumbnails
+
 ### 3.17.0
 * main/module: :warning: fixed ignoring extra supported posttypes
 * main/module: check for cap on list of supported posttypes
