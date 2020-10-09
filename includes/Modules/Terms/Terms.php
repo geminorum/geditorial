@@ -159,6 +159,8 @@ class Terms extends gEditorial\Module
 	{
 		parent::init();
 
+		$this->register_meta_fields();
+
 		if ( is_admin() ) {
 			add_action( 'create_term', [ $this, 'edit_term' ], 10, 3 );
 			add_action( 'edit_term', [ $this, 'edit_term' ], 10, 3 );
@@ -314,6 +316,64 @@ class Terms extends gEditorial\Module
 		}
 
 		return $this->filters( 'supported_field_position', $position, $field, $taxonomy );
+	}
+
+	protected function register_meta_fields()
+	{
+		foreach ( $this->supported as $field ) {
+
+			if ( ! $taxonomies = $this->get_setting( 'term_'.$field ) )
+				continue;
+
+			$prepare = 'register_prepare_callback_'.$field;
+
+			// 'string', 'boolean', 'integer', 'number', 'array', and 'object'
+			if ( in_array( $field, [ 'order', 'author', 'image' ] ) )
+				$defaults = [ 'type'=> 'integer', 'single' => TRUE, 'default' => 0 ];
+
+			else if ( in_array( $field, [ 'roles', 'posttypes' ] ) )
+				$defaults = [ 'type'=> 'array', 'single' => FALSE, 'default' => [] ];
+
+			else
+				$defaults = [ 'type'=> 'string', 'single' => TRUE, 'default' => '' ];
+
+			$defaults = array_merge( $defaults, [
+				'sanitize_callback' => [ $this, 'register_sanitize_callback' ],
+				'auth_callback'     => [ $this, 'register_auth_callback' ],
+				'show_in_rest'      => TRUE,
+			] );
+
+			if ( 'array' === $defaults['type'] )
+				$defaults['show_in_rest'] = [
+					'schema'           => [ 'type' => 'array', 'items' => [] ],
+					'prepare_callback' => method_exists( $this, $prepare ) ? [ $this, $prepare ] : NULL,
+				];
+
+			foreach ( $taxonomies as $taxonomy ) {
+
+				$args = array_merge( $defaults, [
+					'object_subtype' => $taxonomy,
+					'description'    => $this->get_string( $field, $taxonomy, 'descriptions', '' ),
+				] );
+
+				$filtred = $this->filters( 'register_field_args', $args, $field, $taxonomy );
+
+				if ( FALSE !== $filtred )
+					register_meta( 'term', $field, $filtred );
+			}
+		}
+	}
+
+	public function register_auth_callback( $allowed, $meta_key, $object_id, $user_id, $cap, $caps )
+	{
+		return $this->filters( 'disable_field_edit', FALSE, $meta_key, get_object_subtype( 'term', $object_id ) )
+			? FALSE
+			: $allowed;
+	}
+
+	public function register_sanitize_callback( $meta_value, $meta_key, $object_type )
+	{
+		return $this->filters( 'supported_field_edit', $meta_value, $meta_key, $object_type, NULL );
 	}
 
 	public function manage_columns( $columns )
