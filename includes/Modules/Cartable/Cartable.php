@@ -322,6 +322,9 @@ class Cartable extends gEditorial\Module
 			case 'delete_page':
 			// case 'publish_post':
 
+				if ( empty( $args[0] ) )
+					return $caps;
+
 				if ( ! $post = get_post( $args[0] ) )
 					return $caps;
 

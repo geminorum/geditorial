@@ -227,7 +227,7 @@ class Helper extends Core\Base
 			return $string;
 
 		if ( is_null( $delimiters ) )
-			$delimiters = [ '/', '،', '؛', ';', ',' ];
+			$delimiters = [ '/', '،', '؛', ';', ',', '-', '_', '|' ];
 
 		$string = str_ireplace( $delimiters, $delimiter, $string );
 

@@ -3606,7 +3606,8 @@ class Module extends Base
 			if ( FALSE !== $this->tool_box_content() ) {
 
 				$links = [];
-				foreach( $this->get_module_links() as $link )
+
+				foreach ( $this->get_module_links() as $link )
 					$links[] = HTML::tag( 'a' , [
 						'href'  => $link['url'],
 						'class' => [ 'button', '-button' ],
