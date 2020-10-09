@@ -37,78 +37,7 @@ class Terms extends gEditorial\Module
 	protected function get_global_settings()
 	{
 		return [
-			'_general' => [
-				[
-					'field'       => 'term_order',
-					'type'        => 'taxonomies',
-					'title'       => _x( 'Term Order', 'Setting Title', 'geditorial-terms' ),
-					'description' => _x( 'Supports order for terms in the selected taxonomies.', 'Setting Description', 'geditorial-terms' ),
-					'values'      => $this->get_taxonomies_support( 'order' ),
-				],
-				[
-					'field'       => 'term_tagline',
-					'type'        => 'taxonomies',
-					'title'       => _x( 'Term Tagline', 'Setting Title', 'geditorial-terms' ),
-					'description' => _x( 'Supports tagline for terms in the selected taxonomies.', 'Setting Description', 'geditorial-terms' ),
-					'values'      => $this->get_taxonomies_support( 'tagline' ),
-				],
-				[
-					'field'       => 'term_contact',
-					'type'        => 'taxonomies',
-					'title'       => _x( 'Term Contact', 'Setting Title', 'geditorial-terms' ),
-					'description' => _x( 'Supports contact for terms in the selected taxonomies.', 'Setting Description', 'geditorial-terms' ),
-					'values'      => $this->get_taxonomies_support( 'contact' ),
-				],
-				[
-					'field'       => 'term_image',
-					'type'        => 'taxonomies',
-					'title'       => _x( 'Term Image', 'Setting Title', 'geditorial-terms' ),
-					'description' => _x( 'Supports image for terms in the selected taxonomies.', 'Setting Description', 'geditorial-terms' ),
-					'values'      => $this->get_taxonomies_support( 'image' ),
-				],
-				[
-					'field'       => 'term_author',
-					'type'        => 'taxonomies',
-					'title'       => _x( 'Term Author', 'Setting Title', 'geditorial-terms' ),
-					'description' => _x( 'Supports author for terms in the selected taxonomies.', 'Setting Description', 'geditorial-terms' ),
-					'values'      => $this->get_taxonomies_support( 'author' ),
-				],
-				[
-					'field'       => 'term_color',
-					'type'        => 'taxonomies',
-					'title'       => _x( 'Term Color', 'Setting Title', 'geditorial-terms' ),
-					'description' => _x( 'Supports color for terms in the selected taxonomies.', 'Setting Description', 'geditorial-terms' ),
-					'values'      => $this->get_taxonomies_support( 'color' ),
-				],
-				[
-					'field'       => 'term_role',
-					'type'        => 'taxonomies',
-					'title'       => _x( 'Term Role', 'Setting Title', 'geditorial-terms' ),
-					'description' => _x( 'Supports user role for terms in the selected taxonomies.', 'Setting Description', 'geditorial-terms' ),
-					'values'      => $this->get_taxonomies_support( 'role' ),
-				],
-				[
-					'field'       => 'term_roles',
-					'type'        => 'taxonomies',
-					'title'       => _x( 'Term Roles', 'Setting Title', 'geditorial-terms' ),
-					'description' => _x( 'Supports multiple user roles for terms in the selected taxonomies.', 'Setting Description', 'geditorial-terms' ),
-					'values'      => $this->get_taxonomies_support( 'roles' ),
-				],
-				[
-					'field'       => 'term_posttype',
-					'type'        => 'taxonomies',
-					'title'       => _x( 'Term Posttype', 'Setting Title', 'geditorial-terms' ),
-					'description' => _x( 'Supports posttype for terms in the selected taxonomies.', 'Setting Description', 'geditorial-terms' ),
-					'values'      => $this->get_taxonomies_support( 'posttype' ),
-				],
-				[
-					'field'       => 'term_posttypes',
-					'type'        => 'taxonomies',
-					'title'       => _x( 'Term Posttypes', 'Setting Title', 'geditorial-terms' ),
-					'description' => _x( 'Supports multiple posttypes for terms in the selected taxonomies.', 'Setting Description', 'geditorial-terms' ),
-					'values'      => $this->get_taxonomies_support( 'posttypes' ),
-				],
-			],
+			'_general'  => $this->prep_fields_for_settings(),
 			'_frontend' => [
 				'adminbar_summary',
 			],
@@ -196,6 +125,34 @@ class Terms extends gEditorial\Module
 		}
 
 		return array_diff_key( $supported, array_flip( $excluded ) );
+	}
+
+	protected function prep_fields_for_settings( $fields = NULL )
+	{
+		if ( is_null( $fields ) )
+			$fields = $this->supported;
+
+		$list = [];
+
+		foreach ( $fields as $field ) {
+
+			$name = $this->get_string( $field, FALSE, 'titles' );
+			$desc = $this->get_string( $field, FALSE, 'descriptions', NULL );
+
+			/* translators: %s: field name */
+			$title = sprintf( _x( 'Term %s', 'Setting Title', 'geditorial-terms' ), $name );
+
+			$list[] = [
+				'field'       => 'term_'.$field,
+				'type'        => 'taxonomies',
+				'title'       => $title,
+				/* translators: %s: field name */
+				'description' => $desc ?: sprintf( _x( 'Supports %s for terms in the selected taxonomies.', 'Setting Description', 'geditorial-terms' ), $name ),
+				'values'      => $this->get_taxonomies_support( $field ),
+			];
+		}
+
+		return $list;
 	}
 
 	public function init()
