@@ -51,6 +51,7 @@ class Reshare extends gEditorial\Module
 			'reshare_cpt'         => 'reshare',
 			'reshare_cpt_archive' => 'reshares',
 			'reshare_cat'         => 'reshare_category',
+			'reshare_cat_slug'    => 'reshare-categories',
 
 			'o2o_name' => 'reshares_to_posts',
 		];

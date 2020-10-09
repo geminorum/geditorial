@@ -80,7 +80,9 @@ class Venue extends gEditorial\Module
 			'place_cpt_archive' => 'places',
 			'place_tax'         => 'places',
 			'place_cat'         => 'place_category',
+			'place_cat_slug'    => 'place-categories',
 			'facility_tax'      => 'place_facility',
+			'facility_tax_slug' => 'place-facilities',
 		];
 	}
 

@@ -2060,7 +2060,8 @@ class Module extends Base
 	// @REF: https://developer.wordpress.org/reference/functions/register_taxonomy/
 	public function register_taxonomy( $constant, $atts = [], $posttypes = NULL, $caps = NULL )
 	{
-		$taxonomy = $this->constant( $constant );
+		$taxonomy  = $this->constant( $constant );
+		$slug_base = $this->constant( $constant.'_slug', str_replace( '_', '-', $taxonomy.'s' ) );
 
 		if ( is_null( $posttypes ) )
 			$posttypes = $this->posttypes();
@@ -2087,12 +2088,12 @@ class Module extends Base
 
 				// we can use `cpt/tax` if cpt registered after the tax
 				// @REF: https://developer.wordpress.org/reference/functions/register_taxonomy/#comment-2274
-				'slug'       => $this->constant( $constant.'_slug', str_replace( '_', '-', $taxonomy ) ),
+				'slug'       => $slug_base,
 				'with_front' => FALSE,
 			],
 
 			'show_in_rest' => $this->get_setting( 'restapi_support', TRUE ),
-			'rest_base'    => $this->constant( $constant.'_rest', $taxonomy ),
+			'rest_base'    => $this->constant( $constant.'_rest', $slug_base ),
 		] );
 
 		$object = register_taxonomy( $taxonomy, $posttypes, $args );

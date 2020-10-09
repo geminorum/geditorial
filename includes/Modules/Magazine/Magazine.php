@@ -83,6 +83,7 @@ class Magazine extends gEditorial\Module
 			'issue_cpt'         => 'issue',
 			'issue_cpt_archive' => 'issues',
 			'issue_tax'         => 'issues',
+			'issue_tax_slug'    => 'issues',
 			'span_tax'          => 'issue_span',
 			'section_tax'       => 'issue_section',
 			'issue_shortcode'   => 'issue',

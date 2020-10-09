@@ -58,11 +58,13 @@ class Tube extends gEditorial\Module
 			'video_cpt_archive'   => 'videos',
 			'video_cpt_p2p'       => 'related_videos',
 			'video_cat'           => 'video_category',
+			'video_cat_slug'      => 'video-categories',
 			'subject_tax'         => 'video_subject',
 			'channel_cpt'         => 'channel',
 			'channel_cpt_archive' => 'channels',
 			'channel_cpt_p2p'     => 'related_channels',
 			'channel_cat'         => 'channel_category', // MAYBE rename to `channel_subject`
+			'channel_cat_slug'    => 'channel-categories',
 
 			'video_shortcode'       => 'tube-video',
 			'video_cat_shortcode'   => 'tube-video-category',

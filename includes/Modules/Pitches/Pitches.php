@@ -42,6 +42,7 @@ class Pitches extends gEditorial\Module
 			'idea_cpt'         => 'idea',
 			'idea_cpt_archive' => 'ideas',
 			'idea_cat'         => 'idea_category',
+			'idea_cat_slug'    => 'idea-categories',
 			'pool_tax'         => 'idea_pool',
 		];
 	}
