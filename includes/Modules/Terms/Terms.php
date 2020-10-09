@@ -161,13 +161,13 @@ class Terms extends gEditorial\Module
 
 		$this->register_meta_fields();
 
-		if ( is_admin() ) {
-			add_action( 'create_term', [ $this, 'edit_term' ], 10, 3 );
-			add_action( 'edit_term', [ $this, 'edit_term' ], 10, 3 );
+		$this->action( [ 'edit_term', 'create_term' ], 3 );
 
-			add_filter( 'gnetwork_taxonomy_bulk_actions', [ $this, 'taxonomy_bulk_actions' ], 14, 2 );
-			add_filter( 'gnetwork_taxonomy_bulk_callback', [ $this, 'taxonomy_bulk_callback' ], 14, 3 );
-		}
+		if ( ! is_admin() )
+			return;
+
+		add_filter( 'gnetwork_taxonomy_bulk_actions', [ $this, 'taxonomy_bulk_actions' ], 14, 2 );
+		add_filter( 'gnetwork_taxonomy_bulk_callback', [ $this, 'taxonomy_bulk_callback' ], 14, 3 );
 	}
 
 	public function init_ajax()
