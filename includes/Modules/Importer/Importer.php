@@ -176,19 +176,11 @@ class Importer extends gEditorial\Module
 				Settings::fieldSeparate( 'count' );
 
 			echo '</td><td class="-count"><code>'
-				.Helper::htmlCount( array_filter( Arraay::column( $items, $key ), [ $this, 'isNotEmptyString' ] ) )
+				.Helper::htmlCount( Helper::filterEmptyStrings( Arraay::column( $items, $key ) ) )
 			.'</code></td></tr>';
 		}
 
 		echo '</tbody></table>';
-	}
-
-	private static function isNotEmptyString( $value )
-	{
-		if ( Helper::isEmptyString( $value ) )
-			return FALSE;
-
-		return ! empty( $value );
 	}
 
 	protected function from_posts_attached( $id = 0, $posttype = 'post', $user_id = NULL )

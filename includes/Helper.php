@@ -185,6 +185,17 @@ class Helper extends Core\Base
 		return Text::trimChars( $text, $length, $append );
 	}
 
+	public static function filterEmptyStrings( $strings, $empties = NULL )
+	{
+		return array_filter( $strings, function( $value ) use ( $empties ) {
+
+			if ( self::isEmptyString( $value, $empties ) )
+				return FALSE;
+
+			return ! empty( $value );
+		} );
+	}
+
 	public static function isEmptyString( $string, $empties = NULL )
 	{
 		if ( ! is_string( $string ) )
