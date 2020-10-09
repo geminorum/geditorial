@@ -163,6 +163,9 @@ class Terms extends gEditorial\Module
 
 		$this->action( [ 'edit_term', 'create_term' ], 3 );
 
+		if ( $this->get_setting( 'term_author' ) )
+			$this->filter_self( 'supported_field_edit', 4, 8, 'author' );
+
 		if ( ! is_admin() )
 			return;
 
@@ -731,7 +734,7 @@ class Terms extends gEditorial\Module
 			break;
 			case 'author':
 
-				// on add term
+				// selected value on add new term form
 				if ( empty( $meta ) && FALSE === $term )
 					$meta = get_current_user_id();
 
@@ -1347,6 +1350,18 @@ class Terms extends gEditorial\Module
 			'empty'      => $this->get_posttype_label( 'post', 'not_found' ),
 			'pagination' => $pagination,
 		] );
+	}
+
+	public function supported_field_edit_author( $meta, $field, $taxonomy, $term_id )
+	{
+		if ( 'author' !== $field )
+			return $meta;
+
+		// already set by form input
+		if ( array_key_exists( 'term_author', $_REQUEST ) )
+			return $meta;
+
+		return empty( $meta ) ? get_current_user_id() : $meta;
 	}
 
 	public function taxonomy_bulk_actions( $actions, $taxonomy )
