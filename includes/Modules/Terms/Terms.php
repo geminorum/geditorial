@@ -601,7 +601,7 @@ class Terms extends gEditorial\Module
 				continue;
 
 			$meta = empty( $_REQUEST['term-'.$field] ) ? FALSE : $_REQUEST['term-'.$field];
-			$meta = $this->filters( 'supported_filed_edit', $meta, $field, $taxonomy, $term_id );
+			$meta = $this->filters( 'supported_field_edit', $meta, $field, $taxonomy, $term_id );
 
 			if ( $meta ) {
 
