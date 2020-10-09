@@ -1366,10 +1366,10 @@ class Module extends Base
 		add_post_type_support( $posttype, [ $type.'_fields' ], $fields );
 	}
 
-	public function get_string( $string, $posttype = 'post', $group = 'titles', $fallback = FALSE )
+	public function get_string( $string, $subgroup = 'post', $group = 'titles', $fallback = FALSE )
 	{
-		if ( isset( $this->strings[$group][$posttype][$string] ) )
-			return $this->strings[$group][$posttype][$string];
+		if ( $subgroup && isset( $this->strings[$group][$subgroup][$string] ) )
+			return $this->strings[$group][$subgroup][$string];
 
 		if ( isset( $this->strings[$group]['post'][$string] ) )
 			return $this->strings[$group]['post'][$string];
