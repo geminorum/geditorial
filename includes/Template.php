@@ -738,20 +738,13 @@ class Template extends Core\Base
 					if ( ! is_object_in_taxonomy( $posttype, $key ) )
 						continue;
 
-					if ( ! $terms = get_the_terms( $post, $key ) )
+					if ( ! $terms = self::getTheTermList( $key, $post ) )
 						continue;
 
 					if ( is_null( $title ) )
 						$title = Taxonomy::object( $key )->labels->singular_name;
 
-					$links = [];
-
-					foreach ( $terms as $term )
-						if ( $meta = sanitize_term_field( 'name', $term->name, $term->term_id, $key, 'display' ) )
-							$links[] = HTML::link( $meta, get_term_link( $term, $key ) );
-
-					if ( count( $links ) )
-						$rows[$title] = Helper::getJoined( $links );
+					$rows[$title] = $terms;
 				}
 
 				continue;
@@ -862,5 +855,27 @@ class Template extends Core\Base
 		ksort( $o );
 
 		return $o;
+	}
+
+	// @REF: `get_the_term_list()`
+	public static function getTheTermList( $taxonomy, $post = NULL, $before = '', $after = '' )
+	{
+		if ( ! $post = Helper::getPost( $post ) )
+			return FALSE;
+
+		$terms = get_the_terms( $post, $taxonomy );
+
+		if ( empty( $terms ) || is_wp_error( $terms ) )
+			return FALSE;
+
+		$list = [];
+
+		foreach ( $terms as $term )
+			$list[] = HTML::tag( 'a', [
+				'href'  => get_term_link( $term, $taxonomy ),
+				'class' => '-term',
+			], sanitize_term_field( 'name', $term->name, $term->term_id, $taxonomy, 'display' ) );
+
+		return Helper::getJoined( apply_filters( 'term_links-'.$taxonomy, $list ), $before, $after, FALSE );
 	}
 }
