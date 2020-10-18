@@ -192,22 +192,7 @@ class Meta extends gEditorial\Module
 	{
 		parent::init();
 
-		$label_tax_tax_posttypes = [];
-
-		foreach ( $this->posttypes() as $posttype )
-			if ( in_array( 'label_tax', $this->posttype_fields( $posttype ) ) )
-				$label_tax_tax_posttypes[] = $posttype;
-
-		if ( count( $label_tax_tax_posttypes ) )
-			$this->register_taxonomy( 'label_tax', [
-				'show_in_rest' => FALSE, // temporarily disable in block editor
-			], $label_tax_tax_posttypes );
-
-		// default fields for custom posttypes
-		foreach ( $this->get_posttypes_support_meta() as $posttype )
-			$this->add_posttype_fields( $posttype, $this->fields['post'] );
-
-		$this->add_posttype_fields( 'page' );
+		$this->init_meta_fields();
 
 		if ( ! is_admin() )
 			return;
@@ -334,6 +319,26 @@ class Meta extends gEditorial\Module
 		$this->action_self( 'column_row', 3, 5, 'default' );
 		$this->action_self( 'column_row', 3, 15, 'extra' );
 		$this->action_self( 'column_row', 3, 20, 'excerpt' );
+	}
+
+	protected function init_meta_fields()
+	{
+		$label_tax_tax_posttypes = [];
+
+		foreach ( $this->posttypes() as $posttype )
+			if ( in_array( 'label_tax', $this->posttype_fields( $posttype ) ) )
+				$label_tax_tax_posttypes[] = $posttype;
+
+		if ( count( $label_tax_tax_posttypes ) )
+			$this->register_taxonomy( 'label_tax', [
+				'show_in_rest' => FALSE, // temporarily disable in block editor
+			], $label_tax_tax_posttypes );
+
+		// default fields for custom posttypes
+		foreach ( $this->get_posttypes_support_meta() as $posttype )
+			$this->add_posttype_fields( $posttype, $this->fields['post'] );
+
+		$this->add_posttype_fields( 'page' );
 	}
 
 	public function render_posttype_fields( $post, $box, $fields = NULL, $context = 'mainbox' )
