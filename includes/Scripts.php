@@ -2,6 +2,8 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
+use geminorum\gEditorial\Core\WordPress;
+
 class Scripts extends Core\Base
 {
 
@@ -99,6 +101,22 @@ class Scripts extends Core\Base
 
 		wp_enqueue_script( $handle, '//cdn.jsdelivr.net/npm/autosize@'.$ver.'/dist/autosize.min.js', [], NULL, TRUE );
 		wp_add_inline_script( $handle, "autosize(document.querySelectorAll('textarea'));" );
+
+		return $handle;
+	}
+
+	public static function pkgVueJS( $enqueue = FALSE, $ver = '2.6.12' )
+	{
+		$handle = static::BASE.'-vuejs';
+
+		$url = WordPress::isDev()
+			? 'https://cdn.jsdelivr.net/npm/vue/dist/vue.js'
+			: 'https://cdn.jsdelivr.net/npm/vue@'.$ver.'/dist/vue.min.js';
+
+		if ( $enqueue )
+			wp_enqueue_script( $handle, $url, [], $ver, TRUE );
+		else
+			wp_register_script( $handle, $url, [], $ver, TRUE );
 
 		return $handle;
 	}
