@@ -204,7 +204,7 @@ class Text extends Base
 		return $has;
 	}
 
-	public static function start( $haystack, $needles, $operator = 'OR' )
+	public static function start( $haystack, $needles )
 	{
 		if ( ! $haystack )
 			return FALSE;
@@ -212,29 +212,26 @@ class Text extends Base
 		if ( ! is_array( $needles ) )
 			return 0 === stripos( $haystack, $needles );
 
-		if ( 'OR' == $operator ) {
-			foreach ( $needles as $needle )
-				if ( 0 === stripos( $haystack, $needle ) )
-					return TRUE;
-
-			return FALSE;
-		}
-
-		$start = FALSE;
-
 		foreach ( $needles as $needle )
 			if ( 0 === stripos( $haystack, $needle ) )
-				$start = TRUE;
+				return TRUE;
 
-		return $start;
+		return FALSE;
 	}
 
-	function endsWith( $haystack, $needle ) {
-	    $length = strlen( $needle );
-	    if( !$length ) {
-	        return true;
-	    }
-	    return substr( $haystack, -$length ) === $needle;
+	public static function ends( $haystack, $needles )
+	{
+		if ( ! $haystack )
+			return FALSE;
+
+		if ( ! is_array( $needles ) )
+			return $needles === substr( $haystack, ( strlen( $needles ) * -1 ) );
+
+		foreach ( $needles as $needle )
+			if ( $needle === substr( $haystack, ( strlen( $needle ) * -1 ) ) )
+				return TRUE;
+
+		return FALSE;
 	}
 
 	// @SEE: `mb_convert_case()`
