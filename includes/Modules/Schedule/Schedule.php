@@ -359,14 +359,14 @@ class Schedule extends gEditorial\Module
 
 	private function get_calendar_link( $post )
 	{
-		if ( ! is_callable( 'gPersianDateDate', 'getByCal' ) )
+		if ( ! is_callable( 'gPersianDateDate', 'getByPost' ) )
 			return FALSE;
 
 		if ( ! $this->role_can( 'adminmenu' ) )
 			return FALSE;
 
 		$cal  = $this->default_calendar();
-		$date = \gPersianDateDate::getByCal( strtotime( $post->post_date_gmt ), $cal );
+		$date = \gPersianDateDate::getByPost( $post, $cal );
 
 		return $this->get_adminmenu( FALSE, [
 			'cal'   => $cal,

@@ -50,10 +50,9 @@ class Datetime extends Core\Base
 		if ( FALSE === $context )
 			return $formats;
 
-		if ( isset( $formats[$context] ) )
-			return $formats[$context];
-
-		return $formats['default'];
+		return empty( $formats[$context] )
+			? $formats['default']
+			: $formats[$context];
 	}
 
 	public static function postModified( $post = NULL, $attr = FALSE )
@@ -373,6 +372,9 @@ class Datetime extends Core\Base
 		if ( ! is_callable( 'gPersianDateDate', 'make' ) )
 			return FALSE;
 
+		if ( ! $post = get_post( $post ) )
+			return FALSE;
+
 		$the_day = self::atts( [
 			'cal'   => $calendar,
 			'year'  => NULL,
@@ -385,9 +387,6 @@ class Datetime extends Core\Base
 			$the_day['year'] = \gPersianDateDate::to( 'Y', NULL, 'UTC', FALSE, FALSE, $the_day['cal'] );
 
 		if ( ! $the_day['cal'] || ! $the_day['year'] || ! $the_day['month'] || ! $the_day['day'] )
-			return FALSE;
-
-		if ( ! $post = get_post( $post ) )
 			return FALSE;
 
 		// persist the old hourstamp because we can't manipulate the exact time
@@ -415,10 +414,11 @@ class Datetime extends Core\Base
 			'post_modified_gmt' => current_time( 'mysql', 1 ),
 		];
 
-		// by default, changing a post on the calendar won't set the timestamp.
-		// if the user desires that to be the behaviour, they can set the result
-		// of this filter to 'true' with how WordPress works internally,
-		// setting 'post_date_gmt' will set the timestamp
+		// - by default, changing a post on the calendar won't set the timestamp
+		// - if the user desires that to be the behaviour, they can set the result
+		// of this filter to 'true'
+		// - with how WordPress works internally, setting 'post_date_gmt'
+		// will set the timestamp
 		if ( apply_filters( static::BASE.'_reschedule_set_timestamp', $set_timestamp ) )
 			$data['post_date_gmt'] = date( 'Y-m-d', $timestamp ).' '.date( 'H:i:s', strtotime( $post->post_date_gmt ) );
 
@@ -435,6 +435,8 @@ class Datetime extends Core\Base
 		return TRUE;
 	}
 
+	// NOT USED
+	// FIXME: DROP THIS
 	// returns array of post date in given cal
 	public static function getTheDayByPost( $post, $default_type = 'gregorian' )
 	{

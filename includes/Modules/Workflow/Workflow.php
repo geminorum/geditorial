@@ -83,7 +83,8 @@ class Workflow extends gEditorial\Module
 	protected function get_global_constants()
 	{
 		return [
-			'status_tax' => 'custom_status',
+			'status_tax'      => 'custom_status',
+			'status_tax_slug' => 'custom-statuses',
 		];
 	}
 

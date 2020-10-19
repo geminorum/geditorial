@@ -321,6 +321,8 @@ class Terms extends gEditorial\Module
 		return $this->filters( 'supported_field_position', $position, $field, $taxonomy );
 	}
 
+	// @REF: https://make.wordpress.org/core/2018/07/27/registering-metadata-in-4-9-8/
+	// @REF: https://developer.wordpress.org/rest-api/extending-the-rest-api/modifying-responses/
 	protected function register_meta_fields()
 	{
 		foreach ( $this->supported as $field ) {
@@ -348,7 +350,17 @@ class Terms extends gEditorial\Module
 
 			if ( 'array' === $defaults['type'] )
 				$defaults['show_in_rest'] = [
-					'schema'           => [ 'type' => 'array', 'items' => [] ],
+					'schema' => [
+
+						// @REF: https://developer.wordpress.org/reference/functions/register_term_meta/#comment-3969
+						// 'type'     => 'string',
+						// 'format'   => 'url',
+						// 'context'  => [ 'view', 'edit' ],
+						// 'readonly' => TRUE,
+
+						'type'  => 'array',
+						'items' => [],
+					],
 					'prepare_callback' => method_exists( $this, $prepare ) ? [ $this, $prepare ] : NULL,
 				];
 

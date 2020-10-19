@@ -221,6 +221,7 @@ class Today extends gEditorial\Helper
 	}
 
 	// NOT USED
+	// FIXME: DROP THIS
 	public static function getTheDayByPost( $post, $default_type = 'gregorian', $constants = NULL )
 	{
 		$the_day = [];

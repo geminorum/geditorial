@@ -88,7 +88,7 @@ class Template extends Core\Base
 			$html = '<figure'.( TRUE === $args['figure'] ? '' : ' class="'.HTML::prepClass( $args['figure'] ).'"' ).'>'.$html.'<figcaption>'.$caption.'</figcaption></figure>';
 		}
 
-		if ( ! $args['wrap'] )
+		if ( empty( $args['wrap'] ) )
 			return $html;
 
 		return '<div class="'.HTML::prepClass( static::BASE.'-wrap', ( $module ? '-'.$module : '' ), '-term-image-wrap' ).'">'.$html.'</div>';
