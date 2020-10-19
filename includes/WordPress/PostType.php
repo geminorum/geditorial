@@ -85,6 +85,25 @@ class PostType extends Core\Base
 		return $statuses;
 	}
 
+	public static function listPosts( $posttype = 'post', $fields = NULL, $extra = [] )
+	{
+		$args = array_merge( [
+			'fields'         => is_null( $fields ) ? 'id=>name' : $fields,
+			'post_type'      => $posttype,
+			'post_status'    => [ 'publish', 'future', 'draft', 'pending' ],
+			'posts_per_page' => -1,
+
+			'suppress_filters'       => TRUE,
+			'update_post_meta_cache' => FALSE,
+			'update_post_term_cache' => FALSE,
+			'lazy_load_term_meta'    => FALSE,
+		], $atts );
+
+		$query = new \WP_Query;
+
+		return (array) $query->query( $args );
+	}
+
 	public static function getIDsBySearch( $string, $atts = [] )
 	{
 		$args = array_merge( [
@@ -107,11 +126,12 @@ class PostType extends Core\Base
 	public static function getIDsByTitle( $title, $atts = [] )
 	{
 		$args = array_merge( [
-			'title'                  => $title,
-			'fields'                 => 'ids',
-			'post_type'              => 'any',
-			'post_status'            => 'any',
-			'posts_per_page'         => -1,
+			'title'          => $title,
+			'fields'         => 'ids',
+			'post_type'      => 'any',
+			'post_status'    => 'any',
+			'posts_per_page' => -1,
+
 			'suppress_filters'       => TRUE,
 			'update_post_meta_cache' => FALSE,
 			'update_post_term_cache' => FALSE,
@@ -123,9 +143,9 @@ class PostType extends Core\Base
 		return (array) $query->query( $args );
 	}
 
-	public static function getIDbySlug( $slug, $posttype, $url = FALSE )
+	public static function getIDbySlug( $slug, $posttype = 'post', $url = FALSE )
 	{
-		static $strings = array();
+		static $cache = [];
 
 		if ( $url ) {
 			$slug = rawurlencode( urldecode( $slug ) );
@@ -134,27 +154,19 @@ class PostType extends Core\Base
 
 		$slug = trim( $slug );
 
-		if ( isset( $strings[$posttype][$slug] ) )
-			return $strings[$posttype][$slug];
+		if ( isset( $cache[$posttype] ) && array_key_exists( $slug, $cache[$posttype] ) )
+			return $cache[$posttype][$slug];
 
 		global $wpdb;
 
-		$post_id = $wpdb->get_var(
-			$wpdb->prepare( "
-				SELECT ID
-				FROM {$wpdb->posts}
-				WHERE post_name = %s
-				AND post_type = %s
-			", $slug, $posttype )
-		);
+		$id = $wpdb->get_var( $wpdb->prepare( "
+			SELECT ID
+			FROM {$wpdb->posts}
+			WHERE post_name = %s
+			AND post_type = %s
+		", $slug, $posttype ) );
 
-		if ( is_array( $post_id ) )
-			return $strings[$posttype][$slug] = $post_id[0];
-
-		else if ( ! empty( $post_id ) )
-			return $post_id;
-
-		return $strings[$posttype][$slug] = FALSE;
+		return $cache[$posttype][$slug] = $id;
 	}
 
 	public static function getLastRevisionID( $post )

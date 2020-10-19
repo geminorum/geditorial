@@ -302,6 +302,21 @@ class Taxonomy extends Core\Base
 		return wp_insert_term( $term, $taxonomy, array( 'slug' => $slug ) );
 	}
 
+	public static function appendParentTermIDs( $term_ids, $taxonomy )
+	{
+		if ( ! self::object( $taxonomy )->hierarchical )
+			return $term_ids;
+
+		$terms = get_terms( [
+			'taxonomy'   => $taxonomy,
+			'include'    => $term_ids,
+			'fields'     => 'id=>parent',
+			'hide_empty' => FALSE,
+		] );
+
+		return array_filter( array_unique( array_merge( $term_ids, array_filter( array_keys( $terms ) ) ) ), 'intval' );
+	}
+
 	public static function insertDefaultTerms( $taxonomy, $terms, $update_terms = TRUE )
 	{
 		if ( ! taxonomy_exists( $taxonomy ) )

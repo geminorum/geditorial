@@ -172,6 +172,13 @@ class Text extends Base
 		return preg_replace( '/(width|height)="\d*"\s/', '', $string );
 	}
 
+	public static function stripPrefix( $string, $prefix )
+	{
+		return 0 === strpos( $string, $prefix )
+			? substr( $string, strlen( $prefix ) ).''
+			: $string;
+	}
+
 	public static function has( $haystack, $needles, $operator = 'OR' )
 	{
 		if ( ! $haystack )
@@ -220,6 +227,14 @@ class Text extends Base
 				$start = TRUE;
 
 		return $start;
+	}
+
+	function endsWith( $haystack, $needle ) {
+	    $length = strlen( $needle );
+	    if( !$length ) {
+	        return true;
+	    }
+	    return substr( $haystack, -$length ) === $needle;
 	}
 
 	// @SEE: `mb_convert_case()`
@@ -884,5 +899,50 @@ class Text extends Base
 	public static function unlinkify( $string )
 	{
 		return preg_replace( '/<a href=\"(.*?)\">(.*?)<\/a>/', "\\2", $string );
+	}
+
+	// case insensitive version of strtr
+	// by Alexander Peev
+	// @REF: https://www.php.net/manual/en/function.strtr.php#82051
+	public static function strtr( $string, $one = NULL, $two = NULL )
+	{
+		if ( is_string( $one ) ) {
+
+			$two = strval( $two );
+			$one = substr( $one, 0, min( strlen( $one ), strlen( $two ) ) );
+			$two = substr( $two, 0, min( strlen( $one ), strlen( $two ) ) );
+
+			return strtr( $string, ( strtoupper( $one ).strtolower( $one ) ), ( $two.$two ) );
+
+		} else if ( is_array( $one ) ) {
+
+			$pos1    = 0;
+			$product = $string;
+
+			while ( count( $one ) > 0 ) {
+
+				$positions = [];
+
+				foreach ( $one as $from => $to ) {
+					if ( FALSE === ( $pos2 = stripos( $product, $from, $pos1 ) ) ) {
+						unset( $one[$from] );
+					} else {
+						$positions[$from] = $pos2;
+					}
+				}
+
+				if ( count( $one ) <= 0 )
+					break;
+
+				$winner  = min( $positions );
+				$key     = array_search( $winner, $positions );
+				$product = substr( $product, 0, $winner ).$one[$key].substr( $product, ( $winner + strlen( $key ) ) );
+				$pos1    = $winner + strlen( $one[$key] );
+			}
+
+			return $product;
+		}
+
+		return $string;
 	}
 }

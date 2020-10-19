@@ -78,16 +78,22 @@ class Module extends Core\Base
 		return wp_hash( $this->base.$this->key.$suffix );
 	}
 
-	protected function action( $hook, $args = 1, $priority = 10, $suffix = FALSE )
+	protected function action( $hooks, $args = 1, $priority = 10, $suffix = FALSE )
 	{
-		if ( $method = self::sanitize_hook( ( $suffix ? $hook.'_'.$suffix : $hook ) ) )
-			add_action( $hook, array( $this, $method ), $priority, $args );
+		$hooks = (array) $hooks;
+
+		if ( $method = self::sanitize_hook( ( $suffix ? $hooks[0].'_'.$suffix : $hooks[0] ) ) )
+			foreach ( $hooks as $hook )
+				add_action( $hook, [ $this, $method ], $priority, $args );
 	}
 
-	protected function filter( $hook, $args = 1, $priority = 10, $suffix = FALSE )
+	protected function filter( $hooks, $args = 1, $priority = 10, $suffix = FALSE )
 	{
-		if ( $method = self::sanitize_hook( ( $suffix ? $hook.'_'.$suffix : $hook ) ) )
-			add_filter( $hook, array( $this, $method ), $priority, $args );
+		$hooks = (array) $hooks;
+
+		if ( $method = self::sanitize_hook( ( $suffix ? $hooks[0].'_'.$suffix : $hooks[0] ) ) )
+			foreach ( $hooks as $hook )
+				add_filter( $hook, [ $this, $method ], $priority, $args );
 	}
 
 	// USAGE: $this->action_module( 'importer', 'saved', 5 );
@@ -202,6 +208,16 @@ class Module extends Core\Base
 		add_filter( $hook, function( $first ) use( $items ){
 			foreach ( $items as $key => $value )
 				$first[$key] = $value;
+			return $first;
+		}, $priority, 1 );
+	}
+
+	// USAGE: $this->filter_unset( 'shortcode_atts_gallery', [ 'columns' ] );
+	protected function filter_unset( $hook, $items, $priority = 10 )
+	{
+		add_filter( $hook, function( $first ) use( $items ){
+			foreach ( (array) $items as $key )
+				unset( $first[$key] );
 			return $first;
 		}, $priority, 1 );
 	}
