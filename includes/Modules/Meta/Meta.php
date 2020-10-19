@@ -193,6 +193,7 @@ class Meta extends gEditorial\Module
 		parent::init();
 
 		$this->init_meta_fields();
+		$this->register_meta_fields();
 
 		if ( ! is_admin() )
 			return;
@@ -339,6 +340,107 @@ class Meta extends gEditorial\Module
 			$this->add_posttype_fields( $posttype, $this->fields['post'] );
 
 		$this->add_posttype_fields( 'page' );
+	}
+
+	protected function register_meta_fields()
+	{
+		foreach ( $this->posttypes() as $posttype ) {
+
+			// register general field for all meta data
+			// mainly for display purposes
+			register_rest_field( $posttype, $this->classs(), [
+				'get_callback' => [ $this, 'register_get_callback' ],
+			] );
+
+			// the post type must have `custom-fields` support
+			// otherwise the meta fields will not appear in the REST API
+			if ( ! post_type_supports( $posttype, 'custom-fields' ) )
+				continue;
+
+			$fields = $this->get_posttype_fields( $posttype );
+
+			foreach ( $fields as $field => $args ) {
+
+				if ( empty( $args['rest'] ) )
+					continue;
+
+				if ( $args['repeat'] )
+					$defaults = [ 'type'=> 'array', 'single' => FALSE, 'default' => [] ];
+
+				else if ( in_array( $args['type'], [ 'number', 'float' ] ) )
+					$defaults = [ 'type'=> 'integer', 'single' => TRUE, 'default' => 0 ];
+
+				else
+					$defaults = [ 'type'=> 'string', 'single' => TRUE, 'default' => $args['default'] ];
+
+				$register_args = array_merge( $defaults, [
+					'object_subtype'    => $posttype,
+					'description'       => sprintf( '%s: %s', $args['title'], $args['description'] ),
+					'auth_callback'     => [ $this, 'register_auth_callback' ],
+					'sanitize_callback' => [ $this, 'register_sanitize_callback' ],
+					// 'show_in_rest'      => [ 'prepare_callback' => [ $this, 'register_prepare_callback' ] ],
+					'show_in_rest'      => TRUE, // TODO: must prepare object scheme on repeatable fields
+				] );
+
+				$meta_key = sprintf( '_%s_%s', $this->key, $field );
+				$filtred  = $this->filters( 'register_field_args', $register_args, $meta_key, $posttype );
+
+				if ( FALSE !== $filtred )
+					register_meta( 'post', $meta_key, $filtred );
+			}
+		}
+	}
+
+	public function register_get_callback( $post, $attr, $request, $object_type )
+	{
+		$list   = [];
+		$fields = $this->get_posttype_fields( $post['type'] );
+
+		foreach ( $fields as $field => $args ) {
+
+			if ( empty( $args['rest'] ) )
+				continue;
+
+			$list[$args['rest']] = ModuleTemplate::getMetaField( $field, [
+				'id'      => $post['id'],
+				'default' => $args['default'],
+			] );
+		}
+
+		return $list;
+	}
+
+	// TODO: implement disable filter on our regular UI
+	public function register_auth_callback( $allowed, $meta_key, $object_id, $user_id, $cap, $caps )
+	{
+		$field = Text::stripPrefix( $meta_key, sprintf( '_%s_', $this->key ) );
+		return ! $this->filters( 'disable_field_edit', FALSE, $field, get_object_subtype( 'post', $object_id ) );
+	}
+
+	// WORKING BUT DISABLED
+	// NO NEED: we use original key, so the core will retrieve the value
+	public function register_prepare_callback( $value, $request, $args )
+	{
+		if ( ! $post = get_post() )
+			return $value;
+
+		$fields = $this->get_posttype_fields( $post->post_type );
+		$fields = wp_list_filter( $fields, [ 'rest' => $args['name'] ] );
+
+		foreach ( $fields as $field => $field_args )
+			return $this->get_postmeta_field( $post->ID, $field, $field_args['default'] );
+
+		return $value;
+	}
+
+	public function register_sanitize_callback( $meta_value, $meta_key, $object_type )
+	{
+		$fields = $this->get_posttype_fields( $object_type );
+		$field  = Text::stripPrefix( $meta_key, sprintf( '_%s_', $this->key ) );
+
+		return array_key_exists( $field, $fields )
+			? $this->sanitize_posttype_field( $meta_value, $fields[$field], get_post() )
+			: $meta_value;
 	}
 
 	public function render_posttype_fields( $post, $box, $fields = NULL, $context = 'mainbox' )

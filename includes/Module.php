@@ -1256,9 +1256,11 @@ class Module extends Base
 
 			$fields[$field] = self::atts( [
 				'name'        => $field,
+				'rest'        => str_replace( '_', '-', $field ), // FALSE to disable
 				'title'       => $this->get_string( $field, $posttype, 'titles', $field ),
 				'description' => $this->get_string( $field, $posttype, 'descriptions' ),
 				'sanitize'    => NULL,
+				'default'     => '', // currently only on rest
 				'icon'        => 'smiley',
 				'type'        => 'text',
 				'context'     => 'mainbox', // OLD: 'main'
