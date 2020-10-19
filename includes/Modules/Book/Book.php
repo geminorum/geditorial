@@ -556,12 +556,15 @@ class Book extends gEditorial\Module
 
 	public function publication_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
+		if ( ! $this->p2p )
+			return $content;
+
 		return ShortCode::listPosts(
 			'connected',
 			$this->constant( 'publication_cpt' ),
 			'',
 			array_merge( [
-				'connection'    => $this->constant( 'publication_cpt_p2p' ),
+				'connection'    => $this->p2p,
 				'posttypes'     => $this->posttypes(),
 				'title_cb'      => [ $this, 'shortcode_title_cb' ],
 				'item_after_cb' => [ $this, 'shortcode_item_after_cb' ],
