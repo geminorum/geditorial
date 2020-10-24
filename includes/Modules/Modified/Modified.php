@@ -310,7 +310,7 @@ class Modified extends gEditorial\Module
 				SELECT {$date}, {$gmt}
 				FROM {$wpdb->posts}
 				WHERE post_status = 'publish'
-				AND post_type IN ( '".join( "', '", esc_sql( $posttypes ) )."' )
+				AND post_type IN ( '".implode( "', '", esc_sql( $posttypes ) )."' )
 				ORDER BY {$gmt} DESC
 				LIMIT 1
 			";

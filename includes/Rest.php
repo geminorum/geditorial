@@ -39,18 +39,17 @@ class Rest extends Core\Base
 		$posttypes = array_diff_key( $posttypes, array_flip( $excluded ) );
 		$posttypes = apply_filters( static::BASE.'_rest_terms_rendered_posttypes', $posttypes );
 
-		foreach ( $posttypes as $posttype )
-			register_rest_field( $posttype, 'terms_rendered', [
-				'get_callback' => [ __NAMESPACE__.'\\Rest', 'terms_rendered_get_callback' ],
-			] );
+		register_rest_field( $posttypes, 'terms_rendered', [
+			'get_callback' => [ __NAMESPACE__.'\\Rest', 'terms_rendered_get_callback' ],
+		] );
 	}
 
 	public static function terms_rendered_get_callback( $post, $attr, $request, $object_type )
 	{
 		$rendered = [];
-		$ignored  = apply_filters( static::BASE.'_rest_terms_rendered_ignored', [ 'post_format' ], $post );
+		$ignored  = apply_filters( static::BASE.'_rest_terms_rendered_ignored', [ 'post_format' ], $post, $object_type );
 
-		foreach ( get_object_taxonomies( $post['type'], 'objects' ) as $taxonomy ) {
+		foreach ( get_object_taxonomies( $object_type, 'objects' ) as $taxonomy ) {
 
 			// @REF: `is_taxonomy_viewable()`
 			if ( ! $taxonomy->publicly_queryable )
@@ -62,7 +61,7 @@ class Rest extends Core\Base
 			$base = empty( $taxonomy->rest_base ) ? $taxonomy->name : $taxonomy->rest_base;
 			$list = Template::getTheTermList( $taxonomy->name, $post['id'] );
 
-			$rendered[$base] = apply_filters( static::BASE.'_rest_terms_rendered_html', $list, $post, $taxonomy );
+			$rendered[$base] = apply_filters( static::BASE.'_rest_terms_rendered_html', $list, $post, $taxonomy, $object_type );
 		}
 
 		return $rendered;

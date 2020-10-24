@@ -237,7 +237,7 @@ class Helper extends Core\Base
 	public static function getJoined( $items, $before = '', $after = '', $empty = '' )
 	{
 		if ( count( $items ) )
-			return $before.join( _x( ', ', 'Helper: Item Seperator', 'geditorial' ), $items ).$after;
+			return $before.implode( _x( ', ', 'Helper: Item Seperator', 'geditorial' ), $items ).$after;
 
 		return $empty;
 	}
