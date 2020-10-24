@@ -376,6 +376,23 @@ class Terms extends gEditorial\Module
 				if ( FALSE !== $filtred )
 					register_meta( 'term', $field, $filtred );
 			}
+
+			// register general field for prepared meta data
+			// mainly for display purposes
+			if ( in_array( $field, [ 'image' ] ) )
+				register_rest_field( $taxonomies, $field, [
+					'get_callback' => [ $this, 'register_rest_get_callback' ],
+				] );
+		}
+	}
+
+	public static function register_rest_get_callback( $term, $attr, $request, $object_type )
+	{
+		switch ( $attr ) {
+
+			case 'image':
+				return Media::prepAttachmentData( get_term_meta( $term['id'], 'image', TRUE ) );
+				break;
 		}
 	}
 
