@@ -7,6 +7,7 @@ use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\ShortCode;
+use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\Helpers\Book as ModuleHelper;
@@ -809,6 +810,8 @@ class Book extends gEditorial\Module
 	{
 		switch ( $field ) {
 			case 'publication_isbn': return ModuleHelper::ISBN( $meta );
+			case 'total_pages': return Number::format( $meta );
+			case 'total_volumes': return Number::format( $meta );
 		}
 
 		return $meta;
