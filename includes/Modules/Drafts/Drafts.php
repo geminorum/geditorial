@@ -332,8 +332,12 @@ class Drafts extends gEditorial\Module
 
 		if ( isset( $_GET['secret'] )
 			&& $wp_query->is_main_query()
-			&& get_post_meta( $wp_query->query_vars['p'], $this->constant( 'meta_secret' ), TRUE ) === $_GET['secret'] )
+			&& ( $wp_query->is_single || $wp_query->is_page )
+			&& ! empty( $wp_query->query_vars['p'] ) ) {
+
+			if ( $_GET['secret'] === get_post_meta( $wp_query->query_vars['p'], $this->constant( 'meta_secret' ), TRUE ) )
 				$posts = $wpdb->get_results( $wp_query->request );
+		}
 
 		return $posts;
 	}
