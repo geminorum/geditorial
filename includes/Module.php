@@ -1861,9 +1861,15 @@ class Module extends Base
 		setcookie( $this->cookie, '', time() - 3600, COOKIEPATH, COOKIE_DOMAIN, FALSE );
 	}
 
-	public function get_posttype_label( $constant, $label )
+	public function get_posttype_label( $constant, $label = 'name', $fallback = '' )
 	{
-		return PostType::object( $this->constant( $constant, $constant ) )->labels->{$label};
+		if ( ! $object = PostType::object( $this->constant( $constant, $constant ) ) )
+			return $fallback;
+
+		if ( ! isset( $object->labels->{$label} ) )
+			return $fallback;
+
+		return $object->labels->{$label};
 	}
 
 	public function get_posttype_labels( $constant )
