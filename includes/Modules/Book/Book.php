@@ -549,11 +549,15 @@ class Book extends gEditorial\Module
 		return $this->do_template_include( $template, 'publication_cpt' );
 	}
 
-	// TODO: use alphabet module for a-z list of all publications
 	public function template_get_archive_content( $atts = [] )
 	{
 		$html = $this->get_search_form( 'publication_cpt' );
-		$html.= $this->publication_shortcode( [ 'title' => FALSE, 'wrap' => FALSE ] );
+
+		if ( gEditorial()->enabled( 'alphabet' ) )
+			$html.= do_shortcode( sprintf( '[alphabet-posts post_type="%s" /]', $this->constant( 'publication_cpt' ) ) );
+
+		else
+			$html.= $this->publication_shortcode( [ 'title' => FALSE, 'wrap' => FALSE ] );
 
 		return $html;
 	}
