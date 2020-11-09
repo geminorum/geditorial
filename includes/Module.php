@@ -2229,9 +2229,9 @@ class Module extends Base
 			'assets/js/tinymce/'.$this->module->name.'.'.$plugin.'.js' );
 	}
 
-	protected function register_shortcode( $constant, $callback = NULL )
+	protected function register_shortcode( $constant, $callback = NULL, $force = FALSE )
 	{
-		if ( ! $this->get_setting( 'shortcode_support', FALSE ) )
+		if ( ! $force && ! $this->get_setting( 'shortcode_support', FALSE ) )
 			return;
 
 		if ( is_null( $callback ) && method_exists( $this, $constant ) )
