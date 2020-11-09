@@ -9,6 +9,7 @@ use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\HTML;
+use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\Helpers\Book as ModuleHelper;
 use geminorum\gEditorial\Templates\Book as ModuleTemplate;
@@ -240,7 +241,7 @@ class Book extends gEditorial\Module
 	{
 		return [
 			$this->constant( 'publication_cpt' ) => [
-				'collection' => [
+				'collection' => [ // FIXME: must prefixed
 					'title'       => _x( 'Collection Title', 'Field Title', 'geditorial-book' ),
 					'description' => _x( 'This Publication Is Part of a Collection', 'Field Description', 'geditorial-book' ),
 					'type'        => 'title_before',
@@ -812,6 +813,7 @@ class Book extends gEditorial\Module
 			case 'publication_isbn': return ModuleHelper::ISBN( $meta );
 			case 'total_pages': return Number::format( $meta );
 			case 'total_volumes': return Number::format( $meta );
+			case 'collection': return HTML::link( $meta, WordPress::getSearchLink( $meta ) );
 		}
 
 		return $meta;
