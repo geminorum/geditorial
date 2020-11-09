@@ -29,9 +29,6 @@ class Alphabet extends gEditorial\Module
 		return [
 			'posttypes_option'  => 'posttypes_option',
 			'taxonomies_option' => 'taxonomies_option',
-			'_supports' => [
-				'shortcode_support',
-			],
 		];
 	}
 
@@ -70,8 +67,8 @@ class Alphabet extends gEditorial\Module
 	{
 		parent::init();
 
-		$this->register_shortcode( 'shortcode_posts' );
-		$this->register_shortcode( 'shortcode_terms' );
+		$this->register_shortcode( 'shortcode_posts', NULL, TRUE );
+		$this->register_shortcode( 'shortcode_terms', NULL, TRUE );
 	}
 
 	public function shortcode_posts( $atts = [], $content = NULL, $tag = '' )
