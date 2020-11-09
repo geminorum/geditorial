@@ -113,6 +113,8 @@ class Alphabet extends gEditorial\Module
 			$query = new \WP_Query;
 			$posts = $query->query( $query_args );
 
+			// FIXME: check for empty
+
 			$current  = $html = $list = '';
 			$actives  = [];
 			$alphabet = self::getAlphabet( $args['locale'] );

@@ -24,7 +24,7 @@ class CustomHTML extends gEditorial\Widget
 	{
 		global $wp_embed;
 
-		if ( ! $content = trim( $instance['content'] ) )
+		if ( empty( $instance['content'] ) || ! ( $content = trim( $instance['content'] ) ) )
 			return FALSE;
 
 		if ( ! empty( $instance['embeds'] ) ) {

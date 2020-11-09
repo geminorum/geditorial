@@ -16,7 +16,8 @@ use geminorum\gNetwork\Core\Orthography;
 class Ortho extends gEditorial\Module
 {
 
-	protected $disable_no_customs = TRUE;
+	protected $disable_no_customs      = TRUE;
+	protected $priority_current_screen = 20;
 
 	private $virastar_version      = '0.21.0';
 	private $persiantools_version  = '0.1.0';
