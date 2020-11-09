@@ -335,7 +335,7 @@ class Entry extends gEditorial\Module
 		return $this->do_template_include( $template, 'entry_cpt' );
 	}
 
-	public function template_get_archive_content( $atts = [] )
+	public function template_get_archive_content()
 	{
 		$html = $this->get_search_form( 'entry_cpt' );
 

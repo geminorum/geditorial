@@ -3483,19 +3483,28 @@ class Module extends Base
 
 			$this->filter_append( 'post_class', 'empty-entry' );
 
+			// look again for template
+			// $again = get_singular_template();
+			$again = get_single_template();
+
 		} else {
 
 			Theme::resetQuery( [
 				'ID'         => 0,
 				'post_title' => $this->template_get_archive_title( $posttype ),
 				'post_type'  => $posttype,
-				'is_single'  => TRUE,
+				'is_page'    => TRUE,
 				'is_archive' => TRUE,
 			], [ $this, 'template_archive_content' ] );
 
 			$this->filter_append( 'post_class', 'archive-entry' );
 			$this->filter( 'post_type_archive_title', 2 );
 			$this->filter( 'gtheme_navigation_crumb_archive', 2 );
+
+			// look again for template
+			// $again = get_singular_template();
+			// $again = get_single_template();
+			$again = get_page_template();
 		}
 
 		$this->filter_empty_string( 'previous_post_link' );
@@ -3509,9 +3518,7 @@ class Module extends Base
 		defined( 'GEDITORIAL_DISABLE_CONTENT_ACTIONS' )
 			or define( 'GEDITORIAL_DISABLE_CONTENT_ACTIONS', TRUE );
 
-		// look again for template
-		// return get_singular_template();
-		return get_single_template();
+		return $again;
 	}
 
 	// DEFAULT METHOD: title for overrided empty page
@@ -3562,7 +3569,7 @@ class Module extends Base
 	}
 
 	// DEFAULT METHOD: content for overrided archive page
-	public function template_get_archive_content( $atts = [] )
+	public function template_get_archive_content()
 	{
 		return '';
 	}
@@ -3574,6 +3581,8 @@ class Module extends Base
 
 		if ( ! current_user_can( $object->cap->create_posts ) )
 			return '';
+
+		// FIXME: must check if post is unpublished
 
 		return HTML::tag( 'a', [
 			'href'          => WordPress::getPostNewLink( $object->name, [ 'post_title' => $title ] ),

@@ -549,7 +549,7 @@ class Book extends gEditorial\Module
 		return $this->do_template_include( $template, 'publication_cpt' );
 	}
 
-	public function template_get_archive_content( $atts = [] )
+	public function template_get_archive_content()
 	{
 		$html = $this->get_search_form( 'publication_cpt' );
 
