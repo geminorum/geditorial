@@ -335,11 +335,16 @@ class Entry extends gEditorial\Module
 		return $this->do_template_include( $template, 'entry_cpt' );
 	}
 
-	// TODO: use alphabet module for a-z list of all entries
 	public function template_get_archive_content( $atts = [] )
 	{
 		$html = $this->get_search_form( 'entry_cpt' );
-		$html.= $this->section_shortcode( [ 'id' => 'all', 'wrap' => FALSE ] );
+
+		if ( gEditorial()->enabled( 'alphabet' ) )
+			// $html.= do_shortcode( sprintf( '[alphabet-posts post_type="%s" /]', $this->constant( 'entry_cpt' ) ) );
+			$html.= gEditorial()->alphabet->shortcode_posts( [ 'post_type' => $this->constant( 'entry_cpt' ) ] );
+
+		else
+			$html.= $this->section_shortcode( [ 'id' => 'all', 'wrap' => FALSE ] );
 
 		return $html;
 	}
