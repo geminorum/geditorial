@@ -1,0 +1,39 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Archives 3.17.1\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Last-Translator: NULL\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2020-11-09T00:42:08+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.4.0\n"
+"X-Poedit-Basepath: ../../includes/Modules/Archives\n"
+"X-Domain: geditorial-archives\n"
+
+#: Archives.php:35
+msgctxt "Setting Title"
+msgid "Posttype Content"
+msgstr ""
+
+#: Archives.php:36
+msgctxt "Setting Description"
+msgid "Used as default content on the posttype archive pages."
+msgstr ""
+
+#: Archives.php:40
+msgctxt "Setting Description"
+msgid "Prepends a search form to the posttype archive pages."
+msgstr ""
+
+#: Archives.php:44
+msgctxt "Setting Title"
+msgid "Taxonomy Content"
+msgstr ""
+
+#: Archives.php:45
+msgctxt "Setting Description"
+msgid "Used as default content on the taxonomy archive pages."
+msgstr ""
