@@ -96,6 +96,7 @@ class Book extends gEditorial\Module
 			'status_tax'              => 'publication_status',
 			'status_tax_slug'         => 'publication-statuses',
 			'size_tax'                => 'publication_size',
+			'audience_tax'            => 'publication_audience',
 			'publication_shortcode'   => 'publication',
 			'cover_shortcode'         => 'publication-cover',
 			'metakey_import_id'       => 'book_publication_id',
@@ -115,6 +116,7 @@ class Book extends gEditorial\Module
 				'type_tax'      => 'admin-media',
 				'status_tax'    => 'post-status',
 				'size_tax'      => 'image-crop',
+				'audience_tax'  => 'groups',
 			],
 		];
 	}
@@ -130,6 +132,7 @@ class Book extends gEditorial\Module
 				'type_tax'        => _n_noop( 'Publication Type', 'Publication Types', 'geditorial-book' ),
 				'status_tax'      => _n_noop( 'Publication Status', 'Publication Statuses', 'geditorial-book' ),
 				'size_tax'        => _n_noop( 'Publication Size', 'Publication Sizes', 'geditorial-book' ),
+				'audience_tax'    => _n_noop( 'Publication Audience', 'Publication Audiences', 'geditorial-book' ),
 			],
 			'p2p' => [
 				'publication_cpt' => [
@@ -195,6 +198,10 @@ class Book extends gEditorial\Module
 			'size_tax' => [
 				'meta_box_title'      => _x( 'Size', 'MetaBox Title', 'geditorial-book' ),
 				'tweaks_column_title' => _x( 'Publication Size', 'Column Title', 'geditorial-book' ),
+			],
+			'audience_tax' => [
+				'meta_box_title'      => _x( 'Audience', 'MetaBox Title', 'geditorial-book' ),
+				'tweaks_column_title' => _x( 'Publication Audience', 'Column Title', 'geditorial-book' ),
 			],
 		];
 
@@ -382,6 +389,11 @@ class Book extends gEditorial\Module
 			'show_in_quick_edit' => TRUE,
 		], 'publication_cpt' );
 
+		$this->register_taxonomy( 'audience_tax', [
+			'hierarchical' => TRUE,
+			'meta_box_cb'  => NULL, // default meta box
+		], 'publication_cpt' );
+
 		$this->register_posttype( 'publication_cpt' );
 
 		$this->register_shortcode( 'publication_shortcode' );
@@ -499,6 +511,7 @@ class Book extends gEditorial\Module
 			'subject_tax',
 			'library_tax',
 			'status_tax',
+			'audience_tax',
 			'publisher_tax',
 		] );
 	}
@@ -510,6 +523,7 @@ class Book extends gEditorial\Module
 			'subject_tax',
 			'library_tax',
 			'status_tax',
+			'audience_tax',
 			'publisher_tax',
 		] );
 	}
