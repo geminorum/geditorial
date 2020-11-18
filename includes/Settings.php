@@ -513,6 +513,15 @@ class Settings extends Core\Base
 		];
 	}
 
+	public static function getSetting_summary_drafts( $description = NULL )
+	{
+		return [
+			'field'       => 'summary_drafts',
+			'title'       => _x( 'Include Drafts', 'Settings: Setting Title', 'geditorial' ),
+			'description' => $description ?: _x( 'Include drafted items in the content summary.', 'Settings: Setting Description', 'geditorial' ),
+		];
+	}
+
 	public static function getSetting_count_not( $description = NULL )
 	{
 		return [

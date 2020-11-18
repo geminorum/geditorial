@@ -98,11 +98,7 @@ class Audit extends gEditorial\Module
 			'_dashboard' => [
 				'dashboard_widgets',
 				'summary_scope',
-				[
-					'field'       => 'summary_drafts',
-					'title'       => _x( 'Include Drafts', 'Setting Title', 'geditorial-audit' ),
-					'description' => _x( 'Include drafted items in the content summary.', 'Setting Description', 'geditorial-audit' ),
-				],
+				'summary_drafts',
 				'count_not',
 			],
 			'_editlist' => [
