@@ -10,6 +10,7 @@ use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\Text;
 use geminorum\gEditorial\Core\URL;
 use geminorum\gEditorial\Core\WordPress;
+use geminorum\gEditorial\WordPress\Database;
 use geminorum\gEditorial\WordPress\Module as Base;
 use geminorum\gEditorial\WordPress\Media;
 use geminorum\gEditorial\WordPress\PostType;
@@ -2950,6 +2951,158 @@ class Module extends Base
 			$this->get_noop( $constant ),
 			'-'.$this->slug()
 		);
+	}
+
+	protected function do_dashboard_term_summary( $constant, $box, $posttypes = NULL )
+	{
+		if ( $this->check_hidden_metabox( $box ) )
+			return;
+
+		// using core styles
+		echo $this->wrap_open( [ '-admin-widget', '-core-styles' ], TRUE, 'dashboard_right_now' );
+
+		$scope  = $this->get_setting( 'summary_scope', 'all' );
+		$suffix = 'all' == $scope ? 'all' : get_current_user_id();
+		$key    = $this->hash( 'widgetsummary', $scope, $suffix );
+
+		if ( WordPress::isFlush( 'read' ) )
+			delete_transient( $key );
+
+		if ( FALSE === ( $html = get_transient( $key ) ) ) {
+
+			if ( $this->check_hidden_metabox( $box, FALSE, '</div>' ) )
+				return;
+
+			if ( $summary = $this->get_dashboard_summary( $constant, $posttypes, NULL, $scope ) ) {
+
+				$html = Text::minifyHTML( $summary );
+				set_transient( $key, $html, 12 * HOUR_IN_SECONDS );
+
+			} else {
+
+				HTML::desc( _x( 'No reports available!', 'Module: Message', 'geditorial' ), FALSE, '-empty' );
+			}
+		}
+
+		if ( $html )
+			echo '<div class="main"><ul>'.$html.'</ul></div>';
+
+		echo '</div>';
+	}
+
+	protected function get_dashboard_summary( $constant, $posttypes = NULL, $terms = NULL, $scope = 'all', $user_id = NULL, $list = 'li' )
+	{
+		$html     = '';
+		$check    = FALSE;
+		$all      = PostType::get( 3 );
+		$exclude  = Database::getExcludeStatuses();
+		$taxonomy = $this->constant( $constant );
+
+		if ( is_null( $posttypes ) )
+			$posttypes = $this->posttypes();
+
+		if ( is_null( $terms ) )
+			$terms = Taxonomy::getTerms( $taxonomy, FALSE, TRUE, 'slug', [ 'hide_empty' => TRUE ] );
+
+		if ( is_null( $user_id ) )
+			$user_id = get_current_user_id();
+
+		if ( 'roles' == $scope && $this->role_can( 'restricted', $user_id, FALSE, FALSE ) )
+			$check = TRUE; // 'hidden' == $this->get_setting( 'restricted', 'disabled' );
+
+		if ( $this->get_setting( 'summary_drafts', FALSE ) )
+			$exclude = array_diff( $exclude, [ 'draft' ] );
+
+		if ( count( $terms ) ) {
+
+			$counts  = Database::countPostsByTaxonomy( $terms, $posttypes, ( 'current' == $scope ? $user_id : 0 ), $exclude );
+			$objects = [];
+
+			foreach ( $counts as $term => $posts ) {
+
+				if ( $check && ( $roles = get_term_meta( $terms[$term]->term_id, 'roles', TRUE ) ) ) {
+
+					if ( ! User::hasRole( array_merge( [ 'administrator' ], (array) $roles ), $user_id ) )
+						continue;
+				}
+
+				$name = sanitize_term_field( 'name', $terms[$term]->name, $terms[$term]->term_id, $terms[$term]->taxonomy, 'display' );
+
+				foreach ( $posts as $type => $count ) {
+
+					if ( ! $count )
+						continue;
+
+					if ( count( $posttypes ) > 1 )
+						$text = sprintf( '<b>%3$s</b> %1$s (%2$s)', Helper::noopedCount( $count, $all[$type] ), Helper::trimChars( $name, 35 ), Number::format( $count ) );
+					else
+						$text = sprintf( '<b>%2$s</b> %1$s', $name, Number::format( $count ) );
+
+					if ( empty( $objects[$type] ) )
+						$objects[$type] = PostType::object( $type );
+
+					$classes = [
+						'geditorial-glance-item',
+						'-'.$this->key,
+						'-term',
+						'-taxonomy-'.$taxonomy,
+						'-term-'.$term.'-'.$type.'-count',
+					];
+
+					if ( $objects[$type] && current_user_can( $objects[$type]->cap->edit_posts ) )
+						$text = HTML::tag( 'a', [
+							'href'  => WordPress::getPostTypeEditLink( $type, ( 'current' == $scope ? $user_id : 0 ), [ $taxonomy => $term ] ),
+							'class' => $classes,
+						], $text );
+
+					else
+						$text = HTML::wrap( $text, $classes, FALSE );
+
+					$html.= HTML::tag( $list, $text );
+				}
+			}
+		}
+
+		if ( $this->get_setting( 'count_not', FALSE ) ) {
+
+			$none = $this->get_string( 'show_option_none', $constant, 'misc', sprintf( '(%s)', get_taxonomy( $taxonomy )->labels->no_terms ) );
+			$not  = Database::countPostsByNotTaxonomy( $taxonomy, $posttypes, ( 'current' == $scope ? $user_id : 0 ), $exclude );
+
+			foreach ( $not as $type => $count ) {
+
+				if ( ! $count )
+					continue;
+
+				if ( count( $posttypes ) > 1 )
+					$text = sprintf( '<b>%3$s</b> %1$s %2$s', Helper::noopedCount( $count, $all[$type] ), $none, Number::format( $count ) );
+				else
+					$text = sprintf( '<b>%2$s</b> %1$s', $none, Number::format( $count ) );
+
+				if ( empty( $objects[$type] ) )
+					$objects[$type] = PostType::object( $type );
+
+				$classes = [
+					'geditorial-glance-item',
+					'-'.$this->key,
+					'-not-in',
+					'-taxonomy-'.$taxonomy,
+					'-not-in-'.$type.'-count',
+				];
+
+				if ( $objects[$type] && current_user_can( $objects[$type]->cap->edit_posts ) )
+					$text = HTML::tag( 'a', [
+						'href'  => WordPress::getPostTypeEditLink( $type, ( 'current' == $scope ? $user_id : 0 ), [ $taxonomy => '-1' ] ),
+						'class' => $classes,
+					], $text );
+
+				else
+					$text = HTML::wrap( $text, $classes, FALSE );
+
+				$html.= HTML::tag( $list, [ 'class' => 'warning' ],  $text );
+			}
+		}
+
+		return $html;
 	}
 
 	public function get_column_icon( $link = FALSE, $icon = NULL, $title = NULL, $posttype = 'post' )

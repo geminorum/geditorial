@@ -4,15 +4,9 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Ajax;
-use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Core\HTML;
-use geminorum\gEditorial\Core\Number;
-use geminorum\gEditorial\Core\Text;
-use geminorum\gEditorial\Core\WordPress;
-use geminorum\gEditorial\WordPress\Database;
-use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\Taxonomy;
 use geminorum\gEditorial\WordPress\User;
 
@@ -426,147 +420,7 @@ class Audit extends gEditorial\Module
 
 	public function dashboard_widget_summary( $object, $box )
 	{
-		if ( $this->check_hidden_metabox( $box ) )
-			return;
-
-		// using core styles
-		echo '<div id="dashboard_right_now" class="geditorial-wrap -admin-widget -audit -core-styles">';
-
-		$scope  = $this->get_setting( 'summary_scope', 'all' );
-		$suffix = 'all' == $scope ? 'all' : get_current_user_id();
-		$key    = $this->hash( 'widgetsummary', $scope, $suffix );
-
-		if ( WordPress::isFlush( 'read' ) )
-			delete_transient( $key );
-
-		if ( FALSE === ( $html = get_transient( $key ) ) ) {
-
-			if ( $this->check_hidden_metabox( $box, FALSE, '</div>' ) )
-				return;
-
-			$terms = Taxonomy::getTerms( $this->constant( 'audit_tax' ), FALSE, TRUE, 'slug', [ 'hide_empty' => TRUE ] );
-
-			if ( $summary = $this->get_summary( $this->posttypes(), $terms, $scope ) ) {
-
-				$html = Text::minifyHTML( $summary );
-				set_transient( $key, $html, 12 * HOUR_IN_SECONDS );
-
-			} else {
-
-				HTML::desc( _x( 'No reports available!', 'Message', 'geditorial-audit' ), FALSE, '-empty' );
-			}
-		}
-
-		if ( $html )
-			echo '<div class="main"><ul>'.$html.'</ul></div>';
-
-		echo '</div>';
-	}
-
-	private function get_summary( $posttypes, $terms, $scope = 'all', $user_id = NULL, $list = 'li' )
-	{
-		$html    = '';
-		$check   = FALSE;
-		$tax     = $this->constant( 'audit_tax' );
-		$all     = PostType::get( 3 );
-		$exclude = Database::getExcludeStatuses();
-
-		if ( is_null( $user_id ) )
-			$user_id = get_current_user_id();
-
-		if ( 'roles' == $scope && $this->role_can( 'restricted', $user_id, FALSE, FALSE ) )
-			$check = TRUE; // 'hidden' == $this->get_setting( 'restricted', 'disabled' );
-
-		if ( $this->get_setting( 'summary_drafts', FALSE ) )
-			$exclude = array_diff( $exclude, [ 'draft' ] );
-
-		if ( count( $terms ) ) {
-
-			$counts  = Database::countPostsByTaxonomy( $terms, $posttypes, ( 'current' == $scope ? $user_id : 0 ), $exclude );
-			$objects = [];
-
-			foreach ( $counts as $term => $posts ) {
-
-				if ( $check && ( $roles = get_term_meta( $terms[$term]->term_id, 'roles', TRUE ) ) ) {
-
-					if ( ! User::hasRole( array_merge( [ 'administrator' ], (array) $roles ), $user_id ) )
-						continue;
-				}
-
-				$name = sanitize_term_field( 'name', $terms[$term]->name, $terms[$term]->term_id, $terms[$term]->taxonomy, 'display' );
-
-				foreach ( $posts as $type => $count ) {
-
-					if ( ! $count )
-						continue;
-
-					if ( count( $posttypes ) > 1 )
-						$text = vsprintf( '%3$s %1$s (%2$s)', [
-							Helper::noopedCount( $count, $all[$type] ),
-							Helper::trimChars( $name, 35 ),
-							Number::format( $count ),
-						] );
-
-					else
-						$text = sprintf( '%2$s %1$s', $name, Number::format( $count ) );
-
-					if ( empty( $objects[$type] ) )
-						$objects[$type] = PostType::object( $type );
-
-					$class = 'geditorial-glance-item -audit -term -taxonomy-'.$tax.' -term-'.$term.'-'.$type.'-count';
-
-					if ( $objects[$type] && current_user_can( $objects[$type]->cap->edit_posts ) )
-						$text = HTML::tag( 'a', [
-							'href'  => WordPress::getPostTypeEditLink( $type, ( 'current' == $scope ? $user_id : 0 ), [ $tax => $term ] ),
-							'class' => $class,
-						], $text );
-
-					else
-						$text = HTML::wrap( $text, $class, FALSE );
-
-					$html.= HTML::tag( $list, $text );
-				}
-			}
-		}
-
-		if ( $this->get_setting( 'count_not', FALSE ) ) {
-
-			$not = Database::countPostsByNotTaxonomy( $tax, $posttypes, ( 'current' == $scope ? $user_id : 0 ), $exclude );
-
-			foreach ( $not as $type => $count ) {
-
-				if ( ! $count )
-					continue;
-
-				if ( count( $posttypes ) > 1 )
-					$text = vsprintf( '%3$s %1$s %2$s', [
-						Helper::noopedCount( $count, $all[$type] ),
-						$this->get_string( 'show_option_none', 'audit_tax', 'misc' ),
-						Number::format( $count ),
-					] );
-
-				else
-					$text = sprintf( '%2$s %1$s', $this->get_string( 'show_option_none', 'audit_tax', 'misc' ), Number::format( $count ) );
-
-				if ( empty( $objects[$type] ) )
-					$objects[$type] = PostType::object( $type );
-
-				$class = 'geditorial-glance-item -audit -not-in -taxonomy-'.$tax.' -not-in-'.$type.'-count';
-
-				if ( $objects[$type] && current_user_can( $objects[$type]->cap->edit_posts ) )
-					$text = HTML::tag( 'a', [
-						'href'  => WordPress::getPostTypeEditLink( $type, ( 'current' == $scope ? $user_id : 0 ), [ $tax => '-1' ] ),
-						'class' => $class,
-					], $text );
-
-				else
-					$text = HTML::wrap( $text, $class, FALSE );
-
-				$html.= HTML::tag( $list, [ 'class' => 'warning' ],  $text );
-			}
-		}
-
-		return $html;
+		$this->do_dashboard_term_summary( 'audit_tax', $box );
 	}
 
 	public function restrict_manage_posts( $posttype, $which )
@@ -629,7 +483,7 @@ class Audit extends gEditorial\Module
 		Settings::submitButton( 'user_stats', _x( 'Apply Filter', 'Button', 'geditorial-audit' ) );
 
 		// FIXME: style this!
-		if ( $summary = $this->get_summary( $this->posttypes(), $terms, ( $args['user_id'] ? 'current' : 'all' ), $args['user_id'] ) )
+		if ( $summary = $this->get_dashboard_summary( 'audit_tax', NULL, $terms, ( $args['user_id'] ? 'current' : 'all' ), $args['user_id'] ) )
 			echo '<div><ul>'.$summary.'</ul></div>';
 
 		echo '</td></tr>';
