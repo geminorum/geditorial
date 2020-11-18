@@ -42,6 +42,12 @@ class Book extends gEditorial\Module
 	protected function get_global_settings()
 	{
 		$settings = [
+			'_dashboard' => [
+				'dashboard_widgets',
+				'summary_scope',
+				'summary_drafts',
+				'count_not',
+			],
 			'_frontend' => [
 				'insert_cover',
 				'insert_priority',
@@ -453,6 +459,22 @@ class Book extends gEditorial\Module
 
 			$this->action_module( 'tweaks', 'column_row', 1, -25, 'p2p_from' );
 		}
+	}
+
+	protected function dashboard_widgets()
+	{
+		$title = 'current' == $this->get_setting( 'summary_scope', 'all' )
+			? _x( 'Your Publications Summary', 'Dashboard Widget Title', 'geditorial-book' )
+			: _x( 'Editorial Publications Summary', 'Dashboard Widget Title', 'geditorial-book' );
+
+		$title.= MetaBox::titleActionRefresh();
+
+		wp_add_dashboard_widget( $this->classs( 'summary' ), $title, [ $this, 'dashboard_widget_summary' ] );
+	}
+
+	public function dashboard_widget_summary( $object, $box )
+	{
+		$this->do_dashboard_term_summary( 'status_tax', $box, [ $this->constant( 'publication_cpt' ) ] );
 	}
 
 	public function tweaks_column_row_p2p_to( $post )
