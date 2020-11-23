@@ -1,3 +1,37 @@
+### 3.18.0
+* main/helper: filter empty strings on arrays
+* main/module: avoid checking empty subgroups on strings api
+* main/module: better slug/rest base for taxonomies
+* main/module: dahsboard term summary as api
+* main/module: fallback for posttype labels
+* main/module: force register shortcodes
+* main/module: using page template for archives
+* main/rest: :new: term rendered field for each post
+* main/scripts: package vuejs
+* main/settings: setting helper for summary drafts
+* main/template: support multiple terms on meta summary
+* main/template: term list with core filter
+* module/alphabet: always register shortcodes
+* module/archives: :new: module
+* module/book: :warning: skip shortcode if p2p not enabled
+* module/book: display publication archives by alphabet
+* module/book: formatting on numeral fields
+* module/book: linkify collection meta
+* module/book: new taxonomy for publication audience
+* module/book: publication status summary widget on dashboard
+* module/countables: :new: module
+* module/drafts: more checks on public previews
+* module/entry: display entry archives by alphabet
+* module/meta: :new: register meta/rest fields
+* module/meta: logic separation on init fields
+* module/terms: :new: register fields as term meta
+* module/terms: :warning: fixed typo on filter name
+* module/terms: :wrench: simplify hooks
+* module/terms: prep fields settings from strings api
+* module/terms: register general fields for prepared meta data
+* module/terms: set current user as author of the term
+* module/widgets: :new: search terms widget
+
 ### 3.17.1
 * main/module: rename default method for display meta row
 * main/template: filter meta summary rows
