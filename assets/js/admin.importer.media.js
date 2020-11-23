@@ -1,7 +1,7 @@
 (function ($, plugin, module, section) {
-  var modal;
+  let modal;
 
-  var app = {
+  const app = {
     strings: $.extend({}, {
       modal_title: 'Choose a Datasheet',
       modal_button: 'Select as Source'
@@ -18,7 +18,7 @@
         });
 
         modal.on('select', function () {
-          var attachment = modal.state().get('selection').first().toJSON();
+          const attachment = modal.state().get('selection').first().toJSON();
           // $('.wpaparat_thumbnail').attr('src', attachment.url);
           $('#upload_attach_id').val(attachment.id);
           // console.log(attachment);

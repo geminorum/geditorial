@@ -1,5 +1,5 @@
 (function ($, plugin, module) {
-  var s = {
+  const s = {
     action: plugin._base + '_' + module,
     classs: plugin._base + '-' + module,
     wrap: 'ol.' + plugin._base + '-' + module + '-list',
@@ -7,11 +7,11 @@
     body: '.item-body'
   };
 
-  var app = {
+  const app = {
     // http://stackoverflow.com/a/14736775
     reOrder: function () {
-      var inputs = $('input.item-order');
-      var nbElems = inputs.length;
+      const inputs = $('input.item-order');
+      const nbElems = inputs.length;
       inputs.each(function (idx) {
         $(this).val(nbElems - idx);
       });
@@ -19,7 +19,7 @@
 
     expandItem: function (element) {
       $(s.body, s.wrap).slideUp();
-      var clicked = $(element).parent().parent().find(s.body);
+      const clicked = $(element).parent().parent().find(s.body);
       if (!clicked.is(':visible')) {
         clicked.slideDown();
       }
@@ -35,12 +35,12 @@
     newItem: function (element) {
       if ($(element).parents(s.wrap).length) return false;
 
-      var selectedVal = $(element).find(':selected').val();
+      const selectedVal = $(element).find(':selected').val();
 
       if (selectedVal === '-1') return false;
 
       $(s.body, s.wrap).slideUp();
-      var row = $('li', s.raw).clone(true);
+      const row = $('li', s.raw).clone(true);
 
       $(element).find(':selected').prop('disabled', true);
 

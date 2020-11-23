@@ -1,14 +1,14 @@
 (function ($, plugin, module) {
-  var s = {
+  const s = {
     action: plugin._base + '_' + module,
     button: '#wpadminbar .' + plugin._base + '-' + module + '.-action a',
     spinner: '.' + plugin._base + '-spinner'
   };
 
-  var app = {
+  const app = {
     action: function (el) {
-      var action = $(el).attr('rel');
-      var spinner = $(el).find(s.spinner);
+      const action = $(el).attr('rel');
+      const spinner = $(el).find(s.spinner);
 
       $.ajax({
         url: plugin._url,

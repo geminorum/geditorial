@@ -1,5 +1,5 @@
 (function ($, plugin, module) {
-  var s = {
+  const s = {
     action: plugin._base + '_' + module,
     classs: plugin._base + '-' + module,
     spinner: 'span.-loading',
@@ -9,12 +9,12 @@
     box: '#' + plugin._base + '-' + module + '-add-new'
   };
 
-  var app = {
+  const app = {
     rtl: false,
 
     append: function (el) {
-      var $box = $(s.box);
-      var $day = $(el).parents('td.-day')[0];
+      const $box = $(s.box);
+      const $day = $(el).parents('td.-day')[0];
 
       $box.appendTo($day).show();
       $('input[data-field="type"]', $box).val($(el).data('type'));
@@ -30,14 +30,14 @@
     },
 
     save: function () {
-      var $box = $(s.box);
-      var data = $(':input', $box).serialize();
-      var day = $('input[data-field="day"]', $box).val();
-      var nonce = $('input[data-field="nonce"]', $box).val();
-      var $day = $('td[data-day="' + day + '"]');
-      var $title = $('input[data-field="title"]', $box);
-      var $messages = $(s.msg);
-      var $spinner = $day.find(s.spinner);
+      const $box = $(s.box);
+      const data = $(':input', $box).serialize();
+      const day = $('input[data-field="day"]', $box).val();
+      const nonce = $('input[data-field="nonce"]', $box).val();
+      const $day = $('td[data-day="' + day + '"]');
+      const $title = $('input[data-field="title"]', $box);
+      const $messages = $(s.msg);
+      const $spinner = $day.find(s.spinner);
 
       $.ajax({
         url: plugin._url,
@@ -71,11 +71,11 @@
     },
 
     reschedule: function ($sortable, post, nonce, day, month, year) {
-      var $cal = $(s.cal);
-      var $day = $('td[data-day="' + day + '"]');
-      var $theday = $day.find(s.theday);
-      var $spinner = $day.find(s.spinner);
-      var $messages = $(s.msg);
+      const $cal = $(s.cal);
+      const $day = $('td[data-day="' + day + '"]');
+      const $theday = $day.find(s.theday);
+      const $spinner = $day.find(s.spinner);
+      const $messages = $(s.msg);
 
       $.ajax({
         url: plugin._url,
@@ -141,7 +141,7 @@
       }
     });
 
-    var sortable = $('ol.-sortable, td.-next-prev').sortable({
+    const sortable = $('ol.-sortable, td.-next-prev').sortable({
       group: s.classs,
       handle: 'span.-handle',
       containerSelector: 'ol, td',
@@ -150,11 +150,11 @@
       tolerance: 6,
       distance: 10,
       onDrop: function ($item, container, _super) {
-        // var data = sortable.sortable("serialize").get();
-        // var jsonString = JSON.stringify(data, null, ' ');
+        // const data = sortable.sortable("serialize").get();
+        // const jsonString = JSON.stringify(data, null, ' ');
 
-        var day = $($item).data('day');
-        var theday = $(container.el).data('day');
+        const day = $($item).data('day');
+        const theday = $(container.el).data('day');
 
         if (theday) {
           if (day !== theday) {

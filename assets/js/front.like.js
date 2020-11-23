@@ -1,12 +1,12 @@
 (function ($) {
   $(function () {
-    var $like = $('.geditorial-wrap.-like');
-    var $list = $like.data('avatars');
+    const $like = $('.geditorial-wrap.-like');
+    const $list = $like.data('avatars');
 
     if ($like.length > 0) {
-      var button = $like.find('a.like');
-      var counter = $like.find('span.like');
-      var avatars = $list ? $like.find('ul.like') : null;
+      const button = $like.find('a.like');
+      const counter = $like.find('span.like');
+      const avatars = $list ? $like.find('ul.like') : null;
 
       button.removeAttr('href');
 

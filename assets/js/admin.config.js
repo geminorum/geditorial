@@ -1,7 +1,7 @@
 /* global List */
 
 jQuery(function ($) {
-  var moduleList = new List('geditorial-settings', {
+  const moduleList = new List('geditorial-settings', {
     listClass: '-list',
     searchClass: '-search',
     valueNames: ['-title', '-description', '-th', '-module-key', '-module-title', 'status']
@@ -14,13 +14,13 @@ jQuery(function ($) {
 
     // every updated item take animation with their id
     list.matchingItems.forEach(function (element) {
-      var id = element.elm.id;
+      const id = element.elm.id;
       $('#' + id).addClass('animated fadeIn');
     });
   });
 
   $('input[data-filter]').change(function () {
-    var val = this.value;
+    const val = this.value;
     if (val === 'all') {
       moduleList.filter();
     } else {
@@ -41,11 +41,11 @@ jQuery(function ($) {
   $('input[data-do]').click(function (e) {
     e.preventDefault();
 
-    var module = $(this).data('module');
-    var action = $(this).data('do');
-    var $box = $("div[data-module='" + module + "']");
-    var $spinner = $box.find('.spinner');
-    var $icon = $box.find('[data-icon]');
+    const module = $(this).data('module');
+    const action = $(this).data('do');
+    const $box = $("div[data-module='" + module + "']");
+    const $spinner = $box.find('.spinner');
+    const $icon = $box.find('[data-icon]');
 
     $.ajax({
       url: gEditorial._url,

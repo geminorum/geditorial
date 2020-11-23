@@ -1,12 +1,12 @@
 (function ($, plugin, module) {
-  var s = {
+  const s = {
     action: plugin._base + '_' + module,
     wrap: '#wpadminbar .' + plugin._base + '-' + module + '.-wrap',
     button: '#wpadminbar .' + plugin._base + '-' + module + '.-action a.ab-item',
     spinner: '.geditorial-spinner'
   };
 
-  var app = {
+  const app = {
     empty: true,
 
     watch: function () {
@@ -16,8 +16,8 @@
     },
 
     store: function () {
-      var data = $(':input', s.wrap).serialize();
-      var spinner = $(s.button).find(s.spinner);
+      const data = $(':input', s.wrap).serialize();
+      const spinner = $(s.button).find(s.spinner);
 
       $.ajax({
         url: plugin._url,
@@ -46,7 +46,7 @@
     populate: function () {
       if (!app.empty) return;
 
-      var spinner = $(s.button).find(s.spinner);
+      const spinner = $(s.button).find(s.spinner);
 
       $.ajax({
         url: plugin._url,
@@ -73,15 +73,15 @@
     }
   };
 
-  var utils = {
+  const utils = {
     // @REF: https://remysharp.com/2010/07/21/throttling-function-calls
     // @OLD: https://stackoverflow.com/a/9424784
     debounce: function (fn, delay) {
-      var timer = null;
+      let timer = null;
       return function () {
-        // var context = this;
-        var context = app;
-        var args = arguments;
+        // const context = this;
+        const context = app;
+        const args = arguments;
         clearTimeout(timer);
         timer = setTimeout(function () {
           fn.apply(context, args);

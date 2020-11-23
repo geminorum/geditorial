@@ -1,12 +1,12 @@
 (function ($, plugin, module) {
-  var modal;
+  let modal;
 
-  var s = {
+  const s = {
     action: plugin._base + '_' + module,
     classs: plugin._base + '-' + module
   };
 
-  var app = {
+  const app = {
 
     strings: $.extend({}, {
       modal_title: 'Choose an Image',
@@ -25,7 +25,7 @@
         });
 
         modal.on('select', function () {
-          var image = modal.state().get('selection').first().toJSON();
+          const image = modal.state().get('selection').first().toJSON();
 
           if (image !== '') {
             if (!$(element).hasClass('-quick')) {
@@ -59,9 +59,9 @@
     },
 
     inlineImage: function (tag, event) {
-      var image = $('td.geditorial-terms-image img', '#' + tag);
-      var src = image.attr('src');
-      var id = image.data('attachment');
+      const image = $('td.geditorial-terms-image img', '#' + tag);
+      const src = image.attr('src');
+      const id = image.data('attachment');
 
       if (typeof id !== 'undefined') {
         $('a.-remove', '.inline-edit-row').show();
@@ -75,23 +75,23 @@
     },
 
     inlineColor: function (tag, event) {
-      var value = $('td.' + s.classs + '-color i', '#' + tag).attr('data-color');
+      const value = $('td.' + s.classs + '-color i', '#' + tag).attr('data-color');
       $(':input[name="term-color"]', '.inline-edit-row').val(value);
     },
 
     inlineOrder: function (tag, event) {
-      var value = $('td.' + s.classs + '-order span.order', '#' + tag).attr('data-order');
+      const value = $('td.' + s.classs + '-order span.order', '#' + tag).attr('data-order');
       $(':input[name="term-order"]', '.inline-edit-row').val(value);
     },
 
     inlineText: function (field, tag, event) {
-      var value = $('td.' + s.classs + '-' + field + ' span.' + field, '#' + tag).attr('data-' + field);
+      const value = $('td.' + s.classs + '-' + field + ' span.' + field, '#' + tag).attr('data-' + field);
       $(':input[name="term-' + field + '"]', '.inline-edit-row').val(value);
     },
 
     inlineSelect: function (field, tag, event) {
-      var value = $('td.' + s.classs + '-' + field + ' span.' + field, '#' + tag).attr('data-' + field);
-      var $el = $(':input[name="term-' + field + '"]', '.inline-edit-row');
+      const value = $('td.' + s.classs + '-' + field + ' span.' + field, '#' + tag).attr('data-' + field);
+      const $el = $(':input[name="term-' + field + '"]', '.inline-edit-row');
 
       $el.find('option:selected').attr('selected', false);
       $el.find('option[value="' + value + '"]').attr('selected', true);
@@ -108,7 +108,7 @@
       });
 
     $('#the-list').on('click', '.editinline', function (event) {
-      var tag = $(this).parents('tr').attr('id');
+      const tag = $(this).parents('tr').attr('id');
       app.inlineImage(tag, event);
       app.inlineColor(tag, event);
       app.inlineOrder(tag, event);

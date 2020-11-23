@@ -1,15 +1,15 @@
 (function ($, plugin, module) {
-  var s = {
+  const s = {
     action: plugin._base + '_' + module
   };
 
-  var app = {
+  const app = {
     action: function (el) {
-      var $el = $(el);
-      var $row = $el.parents('.geditorial-admin-wrap');
-      var $input = $row.find('input.-link');
-      var action = $el.data('action');
-      var $spinner = $row.find('.spinner');
+      const $el = $(el);
+      const $row = $el.parents('.geditorial-admin-wrap');
+      const $input = $row.find('input.-link');
+      const action = $el.data('action');
+      const $spinner = $row.find('.spinner');
 
       $.ajax({
         url: plugin._url,

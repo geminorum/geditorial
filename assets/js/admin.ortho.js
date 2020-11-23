@@ -1,24 +1,24 @@
 /* global QTags, Virastar */
 
 (function ($, p, module) {
-  var settings = $.extend({}, {
+  const settings = $.extend({}, {
     virastar_on_paste: false
   }, p[module].settings);
 
-  var types = {
+  const types = {
     text: '#titlewrap input, input#attachment_alt, input#tag-name, #edittag input#name, [data-' + module + '=\'text\']',
     markdown: '[data-' + module + '=\'markdown\']',
     html: 'textarea#excerpt:not(.wp-editor-area), textarea#attachment_caption, textarea#tag-description, #edittag textarea#description, [data-' + module + '=\'html\']'
   };
 
-  var inputs = {
+  const inputs = {
     number: '[data-' + module + '=\'number\']'
     // code: '[data-' + module + '=\'code\']',
     // color: '[data-' + module + '=\'color\']',
     // currency: '[data-' + module + '=\'currency\']'
   };
 
-  var strings = $.extend({}, {
+  const strings = $.extend({}, {
     button_virastar: '<span class="dashicons dashicons-text"></span>',
     button_virastar_title: 'Apply Virastar!',
     qtag_virastar: 'Virastar!',
@@ -33,12 +33,12 @@
     qtag_nbsp_title: 'Non-Breaking SPace'
   }, p[module].strings);
 
-  var doButton = '<a href="#" class="do-' + module + '" title="' + strings.button_virastar_title + '" tabindex="-1">' + strings.button_virastar + '</a>';
-  // var doWrap = '<span class="' + module + '-input-wrap"></span>';
+  const doButton = '<a href="#" class="do-' + module + '" title="' + strings.button_virastar_title + '" tabindex="-1">' + strings.button_virastar + '</a>';
+  // const doWrap = '<span class="' + module + '-input-wrap"></span>';
 
-  var options = p[module].virastar || {};
+  const options = p[module].virastar || {};
 
-  var virastar = {
+  const virastar = {
 
     text: new Virastar($.extend({}, options, {
       preserve_HTML: false,
@@ -63,7 +63,7 @@
   };
 
   function doFootnotes (content) {
-    var footnotes = {};
+    const footnotes = {};
     content = content.replace(/<a[^h]*(?=href="[^"]*#_(?:ftn|edn|etc)ref([0-9]+)")[^>]*>\[([0-9]+)\]<\/a>(.*)/g, function (m, p1, p2, p3) {
       footnotes[p1] = p3.replace(/^\s*./, '').trim();
       return '';
@@ -99,7 +99,7 @@
 
   // @REF: http://codepen.io/geminorum/pen/Ndzdqw
   function downloadText (filename, text) {
-    var element = document.createElement('a');
+    const element = document.createElement('a');
     element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
     element.setAttribute('download', filename);
     element.style.display = 'none';
@@ -108,10 +108,10 @@
     document.body.removeChild(element);
   }
 
-  var inputCallbacks = {
+  const inputCallbacks = {
 
     number: function () {
-      var $el = $(this);
+      const $el = $(this);
       try {
         $el.prop('type', 'text');
       } catch (e) {}
@@ -126,7 +126,7 @@
   };
 
   // map quicktag buttons to targeted editor id
-  var quickButtons = {
+  const quickButtons = {
     nbsp: '',
     virastar: '',
     swapquotes: 'content',
@@ -134,14 +134,14 @@
     download: 'content'
   };
 
-  var quickCallbacks = {
+  const quickCallbacks = {
 
     nbsp: function (e, c, ed) {
       QTags.insertContent('\n\n' + '&nbsp;' + '\n\n');
     },
 
     virastar: function (e, c, ed) {
-      var s = c.value.substring(c.selectionStart, c.selectionEnd);
+      const s = c.value.substring(c.selectionStart, c.selectionEnd);
       if (s !== '') {
         QTags.insertContent(virastar.html.cleanup(s));
       } else {
@@ -158,8 +158,8 @@
     },
 
     download: function (e, c, ed) {
-      var filename = 'Untitled';
-      var metadata = '';
+      let filename = 'Untitled';
+      let metadata = '';
 
       if ($('#title').length && $('#title').val()) {
         filename = $('#title').val().trim();
@@ -172,7 +172,7 @@
       }
 
       $('input[data-meta-title]').each(function (i) {
-        var text = $(this).val();
+        const text = $(this).val();
         if (text) metadata = metadata + $(this).data('meta-title') + ': ' + text + '\n';
       });
 
@@ -184,7 +184,7 @@
   };
 
   $(function () {
-    for (var type in types) {
+    for (var type in types) { // eslint-disable-line no-var
       $(types[type]).each(function () {
         $(this).data(module, type)
           .addClass('target-' + module)
@@ -194,29 +194,29 @@
 
       $('a.do-' + module).on('click', function (event) {
         event.preventDefault();
-        var target = $(this).closest('.' + module + '-input-wrap').find('.target-' + module);
+        const target = $(this).closest('.' + module + '-input-wrap').find('.target-' + module);
         target.val(virastar[target.data(module)].cleanup(target.val()));
       });
 
       if (settings.virastar_on_paste) {
         $('.target-' + module).on('paste', function () {
-          var el = this;
+          const el = this;
           setTimeout(function () {
-            var target = $(el);
+            const target = $(el);
             target.val(virastar[target.data(module)].cleanup(target.val()));
           }, 100);
         });
       }
     }
 
-    for (var input in inputs) {
+    for (var input in inputs) { // eslint-disable-line no-var
       $(inputs[input]).each(function () {
         inputCallbacks[input].call(this);
       });
     }
 
     if (typeof QTags !== 'undefined') {
-      for (var button in quickButtons) {
+      for (var button in quickButtons) { // eslint-disable-line no-var
         QTags.addButton(
           button,
           strings['qtag_' + button],

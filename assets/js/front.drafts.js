@@ -1,12 +1,12 @@
 (function ($, plugin, module) {
-  var s = {
+  const s = {
     action: plugin._base + '_' + module,
     wrap: '#' + plugin._base + '-' + module + '-wrap',
     button: '#wpadminbar .' + plugin._base + '-' + module + ' a.ab-item',
     spinner: '.' + plugin._base + '-spinner'
   };
 
-  var app = {
+  const app = {
     empty: true,
     wrap: '<div id="' + plugin._base + '-' + module + '-wrap" class="geditorial-wrap -drafts" style="display:none;"><div class="-content"></div></div>',
 
@@ -28,7 +28,7 @@
 
       $('body').append(app.wrap);
 
-      var spinner = $(s.button).find(s.spinner);
+      const spinner = $(s.button).find(s.spinner);
 
       $.ajax({
         url: plugin._url,

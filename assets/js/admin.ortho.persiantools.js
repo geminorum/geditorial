@@ -1,7 +1,7 @@
 /* global QTags, persianTools */
 
 (function ($, p, module, s) {
-  var o = {};
+  const o = {};
 
   o.s = $.extend({}, {
     qtag_orthography: 'Orthography!',
@@ -13,7 +13,7 @@
 
   o.u = {
     pF: function (c) {
-      var fn = {};
+      const fn = {};
       c = c.replace(/<a[^h]*(?=href="[^"]*#_(?:ftn|edn|etc)ref([0-9]+)")[^>]*>\[([0-9]+)\]<\/a>(.*)/g, function (m, p1, p2, p3) {
         fn[p1] = p3.replace(/^\s*./, '').trim();
         return '';
@@ -27,7 +27,7 @@
       return c.replace(/(»)(.+?)(«)/g, '«$2»').replace(/(”)(.+?)(“)/g, '“$2”');
     },
     tP: function (n) {
-      var p = '۰'.charCodeAt(0);
+      const p = '۰'.charCodeAt(0);
       return n.toString().replace(/\d+/g, function (m) {
         return m.split('').map(function (n) {
           return String.fromCharCode(p + parseInt(n));
@@ -43,7 +43,7 @@
     },
     // @REF: http://codepen.io/geminorum/pen/Ndzdqw
     downloadText: function (filename, text) {
-      var element = document.createElement('a');
+      const element = document.createElement('a');
       element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
       element.setAttribute('download', filename);
       element.style.display = 'none';
@@ -55,7 +55,7 @@
 
   o.q = {
     orthography: function (e, c, ed) {
-      var s = c.value.substring(c.selectionStart, c.selectionEnd);
+      const s = c.value.substring(c.selectionStart, c.selectionEnd);
       if (s !== '') {
         QTags.insertContent(persianTools.applyOrthography(s));
       } else {
@@ -63,7 +63,7 @@
       }
     },
     tostandard: function (e, c, ed) {
-      var s = c.value.substring(c.selectionStart, c.selectionEnd);
+      const s = c.value.substring(c.selectionStart, c.selectionEnd);
       if (s !== '') {
         QTags.insertContent(persianTools.toStandardPersianCharacters(s));
       } else {
@@ -74,7 +74,7 @@
 
   $(function () {
     if (typeof QTags !== 'undefined') {
-      for (var b in o.q) {
+      for (var b in o.q) { // eslint-disable-line no-var
         QTags.addButton(b, o.s['qtag_' + b], o.q[b], '', '', o.s['qtag_' + b + '_title']);
       }
     }

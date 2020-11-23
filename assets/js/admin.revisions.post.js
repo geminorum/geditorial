@@ -1,14 +1,14 @@
 (function ($, plugin, module) {
-  var s = {
+  const s = {
     action: plugin._base + '_' + module
   };
 
-  var app = {
+  const app = {
     purge: function (el) {
-      var $el = $(el);
-      var $row = $el.parent('.misc-pub-section');
-      var post = $el.data('parent');
-      var $spinner = $row.find('.spinner');
+      const $el = $(el);
+      const $row = $el.parent('.misc-pub-section');
+      const post = $el.data('parent');
+      const $spinner = $row.find('.spinner');
 
       if ($row.hasClass('-done')) return false;
 
@@ -44,11 +44,11 @@
     },
 
     del: function (el) {
-      var $el = $(el);
-      var $row = $el.parents('li');
-      var post = $el.data('parent');
-      var revision = $el.data('id');
-      var $spinner = $row.find('.spinner');
+      const $el = $(el);
+      const $row = $el.parents('li');
+      const post = $el.data('parent');
+      const revision = $el.data('id');
+      const $spinner = $row.find('.spinner');
 
       if ($row.hasClass('-done')) return false;
 
