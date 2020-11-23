@@ -36,6 +36,7 @@ class Widgets extends gEditorial\Module
 		return [
 			'Custom-HTML'  => 'CustomHTML',
 			'GCal-Events'  => 'GCalEvents',
+			'Search-Terms' => 'SearchTerms',
 			'WPRest-Posts' => 'WPRestPosts',
 		];
 	}
