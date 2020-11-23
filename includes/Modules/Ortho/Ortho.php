@@ -382,8 +382,8 @@ class Ortho extends gEditorial\Module
 		list( $posts, $pagination ) = $this->getTablePosts( $query, $extra );
 
 		$pagination['before'][] = HTML::dropdown( [
-			'ي' => _x( 'Arabic Letter Yeh U+064A', 'Char Title', 'geditorial-ortho' ),
-			'ك' => _x( 'Arabic Letter Kaf U+0643', 'Char Title', 'geditorial-ortho' ),
+			'ي' => _x( 'Arabic Yeh U+064A', 'Char Title', 'geditorial-ortho' ),
+			'ك' => _x( 'Arabic Kaf U+0643', 'Char Title', 'geditorial-ortho' ),
 		], [
 			'name'       => 'char',
 			'selected'   => self::req( 'char', 'none' ),

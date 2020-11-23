@@ -24,7 +24,7 @@ class Specs extends gEditorial\Module
 			'name'  => 'specs',
 			'title' => _x( 'Specifications', 'Modules: Specs', 'geditorial' ),
 			'desc'  => _x( 'Post Specifications', 'Modules: Specs', 'geditorial' ),
-			'icon'  => 'editor-ul',
+			'icon'  => 'list-view',
 		];
 	}
 
