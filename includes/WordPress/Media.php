@@ -173,8 +173,11 @@ class Media extends Core\Base
 		if ( empty( $url ) )
 			return FALSE;
 
+		// filters the list of allowed file extensions when sideloading an image from a URL @since 5.6.0
+		$extensions = apply_filters( 'image_sideload_extensions', [ 'jpg', 'jpeg', 'jpe', 'png', 'gif' ], $url );
+
 		// set variables for storage, fix file filename for query strings
-		preg_match( '/[^\?]+\.(jpe?g|jpe|gif|png)\b/i', $url, $matches );
+		preg_match( '/[^\?]+\.(' . implode( '|', array_map( 'preg_quote', $extensions ) ) . ')\b/i', $url, $matches );
 
 		if ( ! $matches )
 			return FALSE; // new WP_Error( 'image_sideload_failed', __( 'Invalid image URL.' ) );
@@ -288,5 +291,25 @@ class Media extends Core\Base
 		$attachment = $wpdb->get_col( $wpdb->prepare( "SELECT ID FROM {$wpdb->posts} WHERE guid='%s';", $url ) );
 
 		return empty( $attachment ) ? NULL : $attachment[0];
+	}
+
+	// @REF: https://wordpress.stackexchange.com/a/315447
+	public static function prepAttachmentData( $attachment_id )
+	{
+		if ( ! $attachment_id )
+			return [];
+
+		$uploads  = self::upload();
+		$metadata = wp_get_attachment_metadata( $attachment_id );
+		$prepared = [
+			'mime_type' => get_post_mime_type( $attachment_id ),
+			'url'       => $uploads['baseurl'].'/'.$metadata['file'],
+			'sizes'     => [],
+		];
+
+		foreach( $metadata['sizes'] as $size => $info )
+			$prepared['sizes'][$size] = $uploads['baseurl'].'/'.$info['file'];
+
+		return $prepared;
 	}
 }

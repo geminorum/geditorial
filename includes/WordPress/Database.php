@@ -32,8 +32,8 @@ class Database extends Core\Base
 		return (bool) $wpdb->get_var( "
 			SELECT 1 as test
 			FROM {$wpdb->posts}
-			WHERE post_type IN ( '".join( "', '", esc_sql( (array) $posttypes ) )."' )
-			AND post_status NOT IN ( '".join( "', '", esc_sql( self::getExcludeStatuses( $exclude_statuses ) ) )."' )
+			WHERE post_type IN ( '".implode( "', '", esc_sql( (array) $posttypes ) )."' )
+			AND post_status NOT IN ( '".implode( "', '", esc_sql( self::getExcludeStatuses( $exclude_statuses ) ) )."' )
 			LIMIT 1
 		" );
 	}
@@ -152,8 +152,8 @@ class Database extends Core\Base
 		$query = $wpdb->prepare( "
 			SELECT posts.post_type, COUNT( * ) AS total
 			FROM {$wpdb->posts} AS posts
-			WHERE posts.post_type IN ( '".join( "', '", esc_sql( $posttypes ) )."' )
-			AND posts.post_status NOT IN ( '".join( "', '", esc_sql( self::getExcludeStatuses( $exclude_statuses ) ) )."' )
+			WHERE posts.post_type IN ( '".implode( "', '", esc_sql( $posttypes ) )."' )
+			AND posts.post_status NOT IN ( '".implode( "', '", esc_sql( self::getExcludeStatuses( $exclude_statuses ) ) )."' )
 			{$author}
 			AND NOT EXISTS ( SELECT 1
 				FROM {$wpdb->term_relationships}
@@ -205,8 +205,8 @@ class Database extends Core\Base
 				INNER JOIN {$wpdb->term_relationships} AS tr ON tr.term_taxonomy_id = tt.term_taxonomy_id
 				WHERE t.term_id = %d
 				AND tr.object_id = posts.ID
-				AND posts.post_type IN ( '".join( "', '", esc_sql( $posttypes ) )."' )
-				AND posts.post_status NOT IN ( '".join( "', '", esc_sql( self::getExcludeStatuses( $exclude_statuses ) ) )."' )
+				AND posts.post_type IN ( '".implode( "', '", esc_sql( $posttypes ) )."' )
+				AND posts.post_status NOT IN ( '".implode( "', '", esc_sql( self::getExcludeStatuses( $exclude_statuses ) ) )."' )
 				{$author}
 				GROUP BY posts.post_type
 			", $term->term_id );

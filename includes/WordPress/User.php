@@ -76,6 +76,27 @@ class User extends Core\Base
 			self::cheatin();
 	}
 
+	public static function getIDbyMeta( $meta, $value )
+	{
+		static $results = [];
+
+		if ( isset( $results[$meta][$value] ) )
+			return $results[$meta][$value];
+
+		global $wpdb;
+
+		$post_id = $wpdb->get_var(
+			$wpdb->prepare( "
+				SELECT user_id
+				FROM {$wpdb->usermeta}
+				WHERE meta_key = %s
+				AND meta_value = %s
+			", $meta, $value )
+		);
+
+		return $results[$meta][$value] = $post_id;
+	}
+
 	// @REF: `get_blogs_of_user()`
 	public static function getUserBlogs( $user_id, $prefix )
 	{

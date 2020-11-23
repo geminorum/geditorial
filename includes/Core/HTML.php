@@ -19,6 +19,7 @@ class HTML extends Base
 			'class'  => '-link',
 			'href'   => $link,
 			'target' => $target_blank ? '_blank' : FALSE,
+			'dummy'  => 'wtf', // HACK: dummy attr to distract the `wordWrap()`!
 		), $html );
 	}
 
@@ -176,7 +177,7 @@ class HTML extends Base
 
 	public static function joined( $items, $before = '', $after = '', $sep = '|', $empty = '' )
 	{
-		return count( $items ) ? ( $before.join( $sep, $items ).$after ) : $empty;
+		return count( $items ) ? ( $before.implode( $sep, $items ).$after ) : $empty;
 	}
 
 	public static function tag( $tag, $atts = array(), $content = FALSE, $sep = '' )
@@ -484,9 +485,12 @@ class HTML extends Base
 		echo '</tbody></table>';
 	}
 
-	public static function tableSide( $array, $type = TRUE )
+	public static function tableSide( $array, $type = TRUE, $caption = FALSE )
 	{
 		echo '<table class="base-table-side">';
+
+		if ( $caption )
+			echo '<caption style="caption-side:top">'.$caption.'</caption>';
 
 		if ( ! empty( $array ) ) {
 
@@ -518,7 +522,8 @@ class HTML extends Base
 
 				} else if ( ! empty( $val ) ) {
 
-					echo '<td class="-val -not-table"><code>'.$val.'</code>';
+					// echo '<td class="-val -not-table"><code>'.$val.'</code>';
+					echo '<td class="-val -not-table"><code>'.nl2br( self::escape( $val ) ).'</code>';
 
 				} else {
 

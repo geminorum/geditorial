@@ -809,7 +809,7 @@ class Text extends Base
 			if ( ! is_string( $value ) && is_callable( $value ) )
 				$value = call_user_func( $value );
 
-			// tokens could be objects or arrays
+			// tokens can not be objects or arrays
 			if ( ! is_scalar( $value ) )
 				continue;
 
@@ -850,7 +850,7 @@ class Text extends Base
 					: $field;
 			}
 
-			$output.= join( $delimiter, $row )."\n";
+			$output.= implode( $delimiter, $row )."\n";
 		}
 
 		return $output;

@@ -89,6 +89,10 @@ class Icon extends Base
 
 		// @REF: https://linearicons.com/
 		'linearicons' => array(),
+
+		// @REF: https://heroicons.com/
+		'heroicons-medium' => [],
+		'heroicons-small' => [],
 	);
 
 	public static $viewboxes = array(
@@ -100,6 +104,8 @@ class Icon extends Base
 		'genericons-neue' => '0 0 16 16',
 		'gorbeh'          => '0 0 512 512',
 		'twentyseventeen' => '0 0 32 32',
+		'heroicons-medium' =>  '0 0 24 24',
+		'heroicons-small' =>  '0 0 20 20',
 	);
 
 	public static function guess( $for, $fallback = '' )

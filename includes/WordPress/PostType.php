@@ -85,6 +85,28 @@ class PostType extends Core\Base
 		return $statuses;
 	}
 
+	// @SEE: https://tommcfarlin.com/get-post-id-by-meta-value/
+	public static function getIDbyMeta( $meta, $value )
+	{
+		static $results = [];
+
+		if ( isset( $results[$meta][$value] ) )
+			return $results[$meta][$value];
+
+		global $wpdb;
+
+		$post_id = $wpdb->get_var(
+			$wpdb->prepare( "
+				SELECT post_id
+				FROM {$wpdb->postmeta}
+				WHERE meta_key = %s
+				AND meta_value = %s
+			", $meta, $value )
+		);
+
+		return $results[$meta][$value] = $post_id;
+	}
+
 	public static function listPosts( $posttype = 'post', $fields = NULL, $extra = [] )
 	{
 		$args = array_merge( [

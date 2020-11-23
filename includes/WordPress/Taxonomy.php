@@ -302,19 +302,59 @@ class Taxonomy extends Core\Base
 		return wp_insert_term( $term, $taxonomy, array( 'slug' => $slug ) );
 	}
 
+	public static function getIDbyMeta( $meta, $value )
+	{
+		static $results = [];
+
+		if ( isset( $results[$meta][$value] ) )
+			return $results[$meta][$value];
+
+		global $wpdb;
+
+		$post_id = $wpdb->get_var(
+			$wpdb->prepare( "
+				SELECT term_id
+				FROM {$wpdb->termmeta}
+				WHERE meta_key = %s
+				AND meta_value = %s
+			", $meta, $value )
+		);
+
+		return $results[$meta][$value] = $post_id;
+	}
+
 	public static function appendParentTermIDs( $term_ids, $taxonomy )
 	{
 		if ( ! self::object( $taxonomy )->hierarchical )
 			return $term_ids;
 
-		$terms = get_terms( [
-			'taxonomy'   => $taxonomy,
-			'include'    => $term_ids,
-			'fields'     => 'id=>parent',
-			'hide_empty' => FALSE,
-		] );
+		$terms = [];
 
-		return array_filter( array_unique( array_merge( $term_ids, array_filter( array_keys( $terms ) ) ) ), 'intval' );
+		foreach ( $term_ids as $term_id )
+			$terms = array_merge( $terms, self::getTermParents( $term_id, $taxonomy ) );
+
+		return array_filter( array_unique( array_merge( $term_ids, $terms ) ), 'intval' );
+	}
+
+	public static function getTermParents( $term_id, $taxonomy )
+	{
+		$parents = [];
+		$up      = TRUE;
+
+		while ( $up ) {
+
+			$term = get_term( (int) $term_id, $taxonomy );
+
+			if ( $term->parent )
+				$parents[] = (int) $term->parent;
+
+			else
+				$up = FALSE;
+
+			$term_id = $term->parent;
+		}
+
+		return $parents;
 	}
 
 	public static function insertDefaultTerms( $taxonomy, $terms, $update_terms = TRUE )
