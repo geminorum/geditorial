@@ -2,406 +2,358 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gEditorial Terms\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
-"POT-Creation-Date: 2020-08-19T09:17:31+00:00\n"
-"PO-Revision-Date: 2020-08-19 15:45+0430\n"
+"POT-Creation-Date: 2020-11-23T07:46:01+00:00\n"
+"PO-Revision-Date: 2020-11-23 21:01+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.4\n"
+"X-Generator: Poedit 2.4.2\n"
 "X-Domain: geditorial-terms\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
 "X-Poedit-Basepath: ../../includes/Modules/Terms\n"
 
-#: Terms.php:44
-msgctxt "Setting Title"
-msgid "Term Order"
-msgstr "چینش رده"
-
-#: Terms.php:45
-msgctxt "Setting Description"
-msgid "Supports order for terms in the selected taxonomies."
-msgstr ""
-
-#: Terms.php:51
-msgctxt "Setting Title"
-msgid "Term Tagline"
-msgstr "معرفی کوتاه رده"
-
 #: Terms.php:52
-msgctxt "Setting Description"
-msgid "Supports tagline for terms in the selected taxonomies."
-msgstr ""
-
-#: Terms.php:58
-msgctxt "Setting Title"
-msgid "Term Contact"
-msgstr "ارتباط رده"
-
-#: Terms.php:59
-msgctxt "Setting Description"
-msgid "Supports contact for terms in the selected taxonomies."
-msgstr ""
-
-#: Terms.php:65
-msgctxt "Setting Title"
-msgid "Term Image"
-msgstr "تصویر رده"
-
-#: Terms.php:66
-msgctxt "Setting Description"
-msgid "Supports image for terms in the selected taxonomies."
-msgstr ""
-
-#: Terms.php:72
-msgctxt "Setting Title"
-msgid "Term Author"
-msgstr "نویسنده رده"
-
-#: Terms.php:73
-msgctxt "Setting Description"
-msgid "Supports author for terms in the selected taxonomies."
-msgstr ""
-
-#: Terms.php:79
-msgctxt "Setting Title"
-msgid "Term Color"
-msgstr "رنگ رده"
-
-#: Terms.php:80
-msgctxt "Setting Description"
-msgid "Supports color for terms in the selected taxonomies."
-msgstr ""
-
-#: Terms.php:86
-msgctxt "Setting Title"
-msgid "Term Role"
-msgstr "نقش رده"
-
-#: Terms.php:87
-msgctxt "Setting Description"
-msgid "Supports user role for terms in the selected taxonomies."
-msgstr ""
-
-#: Terms.php:93
-msgctxt "Setting Title"
-msgid "Term Roles"
-msgstr "نقش‌های رده"
-
-#: Terms.php:94
-msgctxt "Setting Description"
-msgid "Supports multiple user roles for terms in the selected taxonomies."
-msgstr ""
-
-#: Terms.php:100
-msgctxt "Setting Title"
-msgid "Term Posttype"
-msgstr "نوع‌نوشته رده"
-
-#: Terms.php:101
-msgctxt "Setting Description"
-msgid "Supports posttype for terms in the selected taxonomies."
-msgstr ""
-
-#: Terms.php:107
-msgctxt "Setting Title"
-msgid "Term Posttypes"
-msgstr "نوع‌نوشته‌های رده"
-
-#: Terms.php:108
-msgctxt "Setting Description"
-msgid "Supports multiple posttypes for terms in the selected taxonomies."
-msgstr ""
-
-#: Terms.php:123
 msgctxt "Titles"
 msgid "Order"
 msgstr "چینش"
 
-#: Terms.php:124
+#: Terms.php:53
 msgctxt "Titles"
 msgid "Tagline"
 msgstr "معرفی کوتاه"
 
-#: Terms.php:125
+#: Terms.php:54
 msgctxt "Titles"
 msgid "Contact"
 msgstr "ارتباط"
 
-#: Terms.php:126
+#: Terms.php:55
 msgctxt "Titles"
 msgid "Image"
 msgstr "تصویر"
 
-#: Terms.php:127
+#: Terms.php:56
 msgctxt "Titles"
 msgid "Author"
 msgstr "نویسنده"
 
-#: Terms.php:128
+#: Terms.php:57
 msgctxt "Titles"
 msgid "Color"
 msgstr "رنگ"
 
-#: Terms.php:129
+#: Terms.php:58
 msgctxt "Titles"
 msgid "Role"
 msgstr "نقش"
 
-#: Terms.php:130
+#: Terms.php:59
 msgctxt "Titles"
 msgid "Posttype"
 msgstr "نوع‌نوشته"
 
-#: Terms.php:131
+#: Terms.php:60
 msgctxt "Titles"
 msgid "Roles"
 msgstr "نقش‌ها"
 
-#: Terms.php:132
+#: Terms.php:61
 msgctxt "Titles"
 msgid "Posttypes"
 msgstr "نوع‌نوشته‌ها"
 
-#: Terms.php:135
+#: Terms.php:64
 msgctxt "Descriptions"
 msgid ""
 "Terms are usually ordered alphabetically, but you can choose your own order by "
 "numbers."
 msgstr ""
 
-#: Terms.php:136
+#: Terms.php:65
 msgctxt "Descriptions"
 msgid "Gives more information about the term in a short phrase."
 msgstr ""
 
-#: Terms.php:137
+#: Terms.php:66
 msgctxt "Descriptions"
 msgid "Adds a way to contact someone about the term, by url, email or phone."
 msgstr ""
 
-#: Terms.php:138
+#: Terms.php:67
 msgctxt "Descriptions"
 msgid "Assigns a custom image to visually separate terms from each other."
 msgstr ""
 
-#: Terms.php:139
+#: Terms.php:68
 msgctxt "Descriptions"
 msgid ""
 "Sets a user as term author to help identify who created or owns each term."
 msgstr ""
 
-#: Terms.php:140
+#: Terms.php:69
 msgctxt "Descriptions"
 msgid "Terms can have unique colors to help separate them from each other."
 msgstr ""
 
-#: Terms.php:141
+#: Terms.php:70
 msgctxt "Descriptions"
 msgid ""
 "Terms can have unique role visibility to help separate them for user roles."
 msgstr ""
 
-#: Terms.php:142
+#: Terms.php:71
 msgctxt "Descriptions"
 msgid ""
 "Terms can have unique roles visibility to help separate them for user roles."
 msgstr ""
 
-#: Terms.php:143
+#: Terms.php:72
 msgctxt "Descriptions"
 msgid ""
 "Terms can have unique posttype visibility to help separate them on editing."
 msgstr ""
 
-#: Terms.php:144
+#: Terms.php:73
 msgctxt "Descriptions"
 msgid ""
 "Terms can have unique posttypes visibility to help separate them on editing."
 msgstr ""
 
-#: Terms.php:147
+#: Terms.php:76
 msgctxt "Column Title: Order"
 msgid "O"
 msgstr "چـ"
 
-#: Terms.php:148
+#: Terms.php:77
 msgctxt "Column Title: Tagline"
 msgid "Tagline"
 msgstr "معرفی"
 
-#: Terms.php:149
+#: Terms.php:78
 msgctxt "Column Title: Contact"
 msgid "C"
 msgstr "ارتـ"
 
-#: Terms.php:150
+#: Terms.php:79
 msgctxt "Column Title: Image"
 msgid "Image"
 msgstr "تصـ"
 
-#: Terms.php:151
+#: Terms.php:80
 msgctxt "Column Title: Author"
 msgid "Author"
 msgstr "نویسنده"
 
-#: Terms.php:152
+#: Terms.php:81
 msgctxt "Column Title: Color"
 msgid "C"
 msgstr "رنـ"
 
-#: Terms.php:153
+#: Terms.php:82
 msgctxt "Column Title: Role"
 msgid "Role"
 msgstr "نقش"
 
-#: Terms.php:154
+#: Terms.php:83
 msgctxt "Column Title: Roles"
 msgid "Roles"
 msgstr "نقش‌ها"
 
-#: Terms.php:155
+#: Terms.php:84
 msgctxt "Column Title: Posttype"
 msgid "Posttype"
 msgstr "نوع‌نوشته"
 
-#: Terms.php:156
+#: Terms.php:85
 msgctxt "Column Title: Posttypes"
 msgid "Posttypes"
 msgstr "نوع‌نوشته‌ها"
 
-#: Terms.php:157
+#: Terms.php:86
 msgctxt "Column Title: Posts"
 msgid "P"
 msgstr "تعـ"
 
-#: Terms.php:160
+#: Terms.php:89
 msgctxt "Javascript String"
 msgid "Choose an Image"
 msgstr "تصویری را انتخاب کنید"
 
-#: Terms.php:161
+#: Terms.php:90
 msgctxt "Javascript String"
 msgid "Set as image"
 msgstr "انتخاب تصویر"
 
-#: Terms.php:655 Terms.php:810
+#. translators: %s: field name
+#: Terms.php:143
+msgctxt "Setting Title"
+msgid "Term %s"
+msgstr "%s رده"
+
+#. translators: %s: field name
+#: Terms.php:150
+msgctxt "Setting Description"
+msgid "Supports %s for terms in the selected taxonomies."
+msgstr "%s را در رده‌بندی‌های انتخاب‌شده پشتیبانی می‌کند."
+
+#: Terms.php:744 Terms.php:899
 msgctxt "Button"
 msgid "Choose"
 msgstr "انتخاب کنید"
 
-#: Terms.php:660 Terms.php:816
+#: Terms.php:749 Terms.php:905
 msgctxt "Button"
 msgid "Remove"
 msgstr "پاک کنید"
 
-#: Terms.php:907
+#: Terms.php:996
 msgctxt "Adminbar"
 msgid "Term Summary"
 msgstr "گزارش رده"
 
-#: Terms.php:914
+#: Terms.php:1003
 msgctxt "Adminbar"
 msgid "Post Count"
 msgstr "شمار نوشته‌ها"
 
-#: Terms.php:925 Terms.php:944
+#: Terms.php:1014 Terms.php:1033
 msgctxt "Adminbar"
 msgid "Description"
 msgstr "توضیحات"
 
 #. translators: %s: meta title
-#: Terms.php:956
+#: Terms.php:1045
 msgctxt "Adminbar"
 msgid "Meta: %s"
 msgstr "متا: %s"
 
-#: Terms.php:1015
+#: Terms.php:1104
 msgctxt "Adminbar"
 msgid "Meta: Uknonwn"
 msgstr "متا: نامشخص"
 
-#: Terms.php:1037
+#: Terms.php:1126
 msgctxt "Adminbar"
 msgid "Summary of Terms"
 msgstr "گزارش رده‌ها"
 
-#: Terms.php:1145
+#: Terms.php:1234
 msgctxt "Header"
 msgid "Term Tools"
 msgstr "ابزارهای رده‌ها"
 
-#: Terms.php:1151
+#: Terms.php:1240
 msgctxt "Tools"
 msgid "Orphaned Terms"
 msgstr "رده‌های بدون رده‌بندی"
 
-#: Terms.php:1171
+#: Terms.php:1260
 msgctxt "Button"
 msgid "Convert"
 msgstr "تبدیل"
 
-#: Terms.php:1173
+#: Terms.php:1262
 msgctxt "Message"
 msgid "Converts orphaned terms into currently registered taxonomies."
 msgstr "رده‌های بدون رده‌بندی را، به رده‌بندی‌های فعال تبدیل می‌کند."
 
-#: Terms.php:1182
+#: Terms.php:1271
 msgctxt "Tools"
 msgid "Uncategorized Posts"
 msgstr "نوشته‌های دسته‌بندی‌نشده"
 
-#: Terms.php:1184
+#: Terms.php:1273
 msgctxt "Button"
 msgid "Cleanup Uncategorized"
 msgstr "پاک‌سازی دسته‌بندی‌نشده‌ها"
 
-#: Terms.php:1186
+#: Terms.php:1275
 msgctxt "Message"
 msgid "Checks for posts in uncategorized category and removes the unnecessaries."
 msgstr "نوشته‌ها در رده دسته‌بندی‌نشده‌ها را بررسی و موارد نالازم را حذف می‌کند."
 
-#: Terms.php:1203
+#: Terms.php:1292
 msgctxt "Message"
 msgid "Currently no tool available."
 msgstr "هم‌اکنون هیچ ابزاری در دسترس نیست."
 
-#: Terms.php:1256
+#: Terms.php:1345
 msgctxt "Table Action"
 msgid "Purge Unregistered"
 msgstr "پاک‌سازی ثبت‌نشده‌ها"
 
-#: Terms.php:1270
+#: Terms.php:1359
 msgctxt "Table Column"
 msgid "Raw"
 msgstr "خام"
 
-#: Terms.php:1289
+#: Terms.php:1378
 msgctxt "Header"
 msgid "Overview of Posts with Terms"
 msgstr "مروری بر نوشته‌های رده‌بندی‌شده"
 
-#: Terms.php:1301
+#: Terms.php:1402
 msgctxt "Bulk Actions"
 msgid "Sync Image Titles"
 msgstr "همگام‌سازی عنوان‌های تصویر"
 
-#: Terms.php:1304
+#: Terms.php:1405
 msgctxt "Bulk Actions"
 msgid "Move Tagline to Description"
 msgstr "انتقال معرفی به توضیحات"
 
 #. translators: %s: posts count
-#: Terms.php:1401
+#: Terms.php:1502
 msgctxt "Noop"
 msgid "%s Uncategorized Post"
 msgid_plural "%s Uncategorized Posts"
 msgstr[0] "%s نوشته دسته‌بندی‌نشده"
 msgstr[1] "%s نوشته دسته‌بندی‌نشده"
 
-#: Terms.php:1406
+#: Terms.php:1507
 msgctxt "Title Attr"
 msgid "You need to assign categories to some posts!"
 msgstr "لازم است بعضی نوشته‌ها را دسته‌بندی کنید!"
+
+#~ msgctxt "Setting Title"
+#~ msgid "Term Order"
+#~ msgstr "چینش رده"
+
+#~ msgctxt "Setting Title"
+#~ msgid "Term Tagline"
+#~ msgstr "معرفی کوتاه رده"
+
+#~ msgctxt "Setting Title"
+#~ msgid "Term Contact"
+#~ msgstr "ارتباط رده"
+
+#~ msgctxt "Setting Title"
+#~ msgid "Term Image"
+#~ msgstr "تصویر رده"
+
+#~ msgctxt "Setting Title"
+#~ msgid "Term Author"
+#~ msgstr "نویسنده رده"
+
+#~ msgctxt "Setting Title"
+#~ msgid "Term Color"
+#~ msgstr "رنگ رده"
+
+#~ msgctxt "Setting Title"
+#~ msgid "Term Role"
+#~ msgstr "نقش رده"
+
+#~ msgctxt "Setting Title"
+#~ msgid "Term Roles"
+#~ msgstr "نقش‌های رده"
+
+#~ msgctxt "Setting Title"
+#~ msgid "Term Posttype"
+#~ msgstr "نوع‌نوشته رده"
+
+#~ msgctxt "Setting Title"
+#~ msgid "Term Posttypes"
+#~ msgstr "نوع‌نوشته‌های رده"

@@ -1,13 +1,13 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gEditorial Widgets 3.17.0\n"
+"Project-Id-Version: gEditorial Widgets 3.18.0\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "Last-Translator: NULL\n"
 "Language-Team: NULL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2020-09-16T08:33:24+00:00\n"
+"POT-Creation-Date: 2020-11-23T18:15:54+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.4.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Widgets\n"
@@ -97,6 +97,21 @@ msgstr ""
 #: Widgets/GCal-Events.php:96
 msgctxt "Widget: Google Calendar"
 msgid "No events scheduled."
+msgstr ""
+
+#: Widgets/Search-Terms.php:19
+msgctxt "Widget Title"
+msgid "Editorial: Search Terms"
+msgstr ""
+
+#: Widgets/Search-Terms.php:20
+msgctxt "Widget Description"
+msgid "Displays the results of current search criteria on selected taxonomies."
+msgstr ""
+
+#: Widgets/Search-Terms.php:98
+msgctxt "Widget: Setting"
+msgid "Strip Hash-tags"
 msgstr ""
 
 #: Widgets/WPRest-Posts.php:23

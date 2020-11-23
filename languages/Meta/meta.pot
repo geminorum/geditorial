@@ -1,282 +1,282 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gEditorial Meta 3.17.0\n"
+"Project-Id-Version: gEditorial Meta 3.18.0\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "Last-Translator: NULL\n"
 "Language-Team: NULL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2020-09-16T08:32:57+00:00\n"
+"POT-Creation-Date: 2020-11-23T18:15:25+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.4.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Meta\n"
 "X-Domain: geditorial-meta\n"
 
-#: Meta.php:51
+#: Meta.php:52
 msgctxt "Setting Title"
 msgid "Overwrite Author"
 msgstr ""
 
-#: Meta.php:52
+#: Meta.php:53
 msgctxt "Setting Description"
 msgid "Replaces user display name with author meta field data."
 msgstr ""
 
-#: Meta.php:57
+#: Meta.php:58
 msgctxt "Setting Title"
 msgid "Before Source"
 msgstr ""
 
-#: Meta.php:58
+#: Meta.php:59
 msgctxt "Setting Description"
 msgid "Used as default text before the source links."
 msgstr ""
 
-#: Meta.php:59
+#: Meta.php:60
 msgctxt "Setting Default"
 msgid "Source:"
 msgstr ""
 
-#: Meta.php:76
+#: Meta.php:77
 msgctxt "Titles"
 msgid "OverTitle"
 msgstr ""
 
-#: Meta.php:77
+#: Meta.php:78
 msgctxt "Titles"
 msgid "SubTitle"
 msgstr ""
 
-#: Meta.php:78
+#: Meta.php:79
 msgctxt "Titles"
 msgid "Byline"
 msgstr ""
 
-#: Meta.php:79
+#: Meta.php:80
 msgctxt "Titles"
 msgid "Lead"
 msgstr ""
 
-#: Meta.php:80
+#: Meta.php:81
 msgctxt "Titles"
 msgid "Label"
 msgstr ""
 
-#: Meta.php:81
+#: Meta.php:82
 msgctxt "Titles"
 msgid "Label Taxonomy"
 msgstr ""
 
-#: Meta.php:83
+#: Meta.php:84
 msgctxt "Titles"
 msgid "Published"
 msgstr ""
 
-#: Meta.php:84
+#: Meta.php:85
 msgctxt "Titles"
 msgid "Source Title"
 msgstr ""
 
-#: Meta.php:85
+#: Meta.php:86
 msgctxt "Titles"
 msgid "Source URL"
 msgstr ""
 
-#: Meta.php:86
+#: Meta.php:87
 msgctxt "Titles"
 msgid "Highlight"
 msgstr ""
 
-#: Meta.php:87
+#: Meta.php:88
 msgctxt "Titles"
 msgid "Dashboard"
 msgstr ""
 
-#: Meta.php:88
+#: Meta.php:89
 msgctxt "Titles"
 msgid "Abstract"
 msgstr ""
 
-#: Meta.php:91
+#: Meta.php:92
 msgctxt "Titles"
 msgid "Source"
 msgstr ""
 
-#: Meta.php:94
+#: Meta.php:95
 msgctxt "Descriptions"
 msgid "Text to place over the content title"
 msgstr ""
 
-#: Meta.php:95
+#: Meta.php:96
 msgctxt "Descriptions"
 msgid "Text to place under the content title"
 msgstr ""
 
-#: Meta.php:96
+#: Meta.php:97
 msgctxt "Descriptions"
 msgid "Text to override the content author"
 msgstr ""
 
-#: Meta.php:97
+#: Meta.php:98
 msgctxt "Descriptions"
 msgid "Notes to place before the content text"
 msgstr ""
 
-#: Meta.php:98
+#: Meta.php:99
 msgctxt "Descriptions"
 msgid "Text to indicate that the content is part of a column"
 msgstr ""
 
-#: Meta.php:99
+#: Meta.php:100
 msgctxt "Descriptions"
 msgid "Taxonomy for better categorizing columns"
 msgstr ""
 
-#: Meta.php:101
+#: Meta.php:102
 msgctxt "Descriptions"
 msgid "Text to indicate the original date of the content"
 msgstr ""
 
-#: Meta.php:102
+#: Meta.php:103
 msgctxt "Descriptions"
 msgid "Custom title for the source of the content"
 msgstr ""
 
-#: Meta.php:103
+#: Meta.php:104
 msgctxt "Descriptions"
 msgid "Custom URL to the source of the content"
 msgstr ""
 
-#: Meta.php:104
+#: Meta.php:105
 msgctxt "Descriptions"
 msgid "Notes highlighted about the content"
 msgstr ""
 
-#: Meta.php:105
+#: Meta.php:106
 msgctxt "Descriptions"
 msgid "Custom HTML content on the dashboard"
 msgstr ""
 
-#: Meta.php:106
+#: Meta.php:107
 msgctxt "Descriptions"
 msgid "Brief summary of the content"
 msgstr ""
 
-#: Meta.php:108
+#: Meta.php:109
 msgctxt "Descriptions"
 msgid "Source of the content"
 msgstr ""
 
-#: Meta.php:111
+#: Meta.php:112
 msgid "Column Header"
 msgid_plural "Column Headers"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Meta.php:119
+#: Meta.php:120
 msgctxt "Column Title"
 msgid "Metadata"
 msgstr ""
 
-#: Meta.php:120
+#: Meta.php:121
 msgctxt "Column Title"
 msgid "Author"
 msgstr ""
 
-#: Meta.php:121
+#: Meta.php:122
 msgctxt "Meta Box Title"
 msgid "Metadata"
 msgstr ""
 
-#: Meta.php:122
+#: Meta.php:123
 msgctxt "Meta Box Action Title"
 msgid "Configure"
 msgstr ""
 
-#: Meta.php:127
+#: Meta.php:128
 msgctxt "Default Term"
 msgid "Introduction"
 msgstr ""
 
-#: Meta.php:128
+#: Meta.php:129
 msgctxt "Default Term"
 msgid "Interview"
 msgstr ""
 
-#: Meta.php:129
+#: Meta.php:130
 msgctxt "Default Term"
 msgid "Review"
 msgstr ""
 
-#: Meta.php:130
+#: Meta.php:131
 msgctxt "Default Term"
 msgid "Report"
 msgstr ""
 
-#: Meta.php:188
+#: Meta.php:189
 msgctxt "Button"
 msgid "Install Default Column Headers"
 msgstr ""
 
-#: Meta.php:397
+#: Meta.php:505
 msgctxt "Message"
 msgid "No Meta Fields"
 msgstr ""
 
-#: Meta.php:885
+#: Meta.php:993
 msgctxt "Header"
 msgid "Meta Tools"
 msgstr ""
 
-#: Meta.php:889
+#: Meta.php:997
 msgctxt "Header"
 msgid "Import Custom Fields"
 msgstr ""
 
-#: Meta.php:927
+#: Meta.php:1035
 msgctxt "Button"
 msgid "Check"
 msgstr ""
 
-#: Meta.php:930
+#: Meta.php:1038
 msgctxt "Button"
 msgid "Covert"
 msgstr ""
 
-#: Meta.php:933
+#: Meta.php:1041
 msgctxt "Button"
 msgid "Delete"
 msgstr ""
 
-#: Meta.php:935
+#: Meta.php:1043
 msgctxt "Message"
 msgid "Check for Custom Fields and import them into Meta"
 msgstr ""
 
-#: Meta.php:944
+#: Meta.php:1052
 msgctxt "Table Column"
 msgid "Type"
 msgstr ""
 
-#: Meta.php:954
+#: Meta.php:1062
 msgctxt "Table Column"
 msgid "Title"
 msgstr ""
 
 #. translators: %s: title
-#: Meta.php:960
+#: Meta.php:1068
 msgctxt "Table Column"
 msgid "Meta: %s"
 msgstr ""
 
-#: Meta.php:965
+#: Meta.php:1073
 msgctxt "Table Empty"
 msgid "No Meta Found!"
 msgstr ""
 
 #. translators: %s: field title
-#: Meta.php:1121
+#: Meta.php:1229
 msgctxt "Import Field"
 msgid "Meta: %s"
 msgstr ""

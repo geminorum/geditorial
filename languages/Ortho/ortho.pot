@@ -1,125 +1,125 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gEditorial Ortho 3.17.0\n"
+"Project-Id-Version: gEditorial Ortho 3.18.0\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "Last-Translator: NULL\n"
 "Language-Team: NULL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2020-09-16T08:33:00+00:00\n"
+"POT-Creation-Date: 2020-11-23T18:15:28+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.4.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Ortho\n"
 "X-Domain: geditorial-ortho\n"
 
-#: Ortho.php:43
+#: Ortho.php:44
 msgctxt "Help Tab Title"
 msgid "Virastar"
 msgstr ""
 
-#: Ortho.php:49
+#: Ortho.php:50
 msgctxt "Help Tab Title"
 msgid "PersianTools"
 msgstr ""
 
-#: Ortho.php:131
+#: Ortho.php:132
 msgctxt "Setting Title"
 msgid "Virastar Options"
 msgstr ""
 
-#: Ortho.php:132
+#: Ortho.php:133
 msgctxt "Setting Description"
 msgid "For more information, please see the library documentations."
 msgstr ""
 
-#: Ortho.php:138
+#: Ortho.php:139
 msgctxt "Setting Title"
 msgid "Virastar on Paste"
 msgstr ""
 
-#: Ortho.php:139
+#: Ortho.php:140
 msgctxt "Setting Description"
 msgid "Applies Virastar to pasted texts on targeted inputs."
 msgstr ""
 
-#: Ortho.php:148
+#: Ortho.php:149
 msgctxt "Setting Section Title"
 msgid "Virastar!"
 msgstr ""
 
-#: Ortho.php:157
-#: Ortho.php:159
+#: Ortho.php:158
+#: Ortho.php:160
 msgctxt "Javascript String"
 msgid "Apply Virastar!"
 msgstr ""
 
-#: Ortho.php:158
+#: Ortho.php:159
 msgctxt "Javascript String"
 msgid "Virastar!"
 msgstr ""
 
-#: Ortho.php:160
+#: Ortho.php:161
 msgctxt "Javascript String"
 msgid "Swap Quotes"
 msgstr ""
 
-#: Ortho.php:161
+#: Ortho.php:162
 msgctxt "Javascript String"
 msgid "Swap Not-Correct Quotes"
 msgstr ""
 
-#: Ortho.php:162
+#: Ortho.php:163
 msgctxt "Javascript String"
 msgid "Word Footnotes"
 msgstr ""
 
-#: Ortho.php:163
+#: Ortho.php:164
 msgctxt "Javascript String"
 msgid "MS Word Footnotes to WordPress [ref]"
 msgstr ""
 
-#: Ortho.php:164
+#: Ortho.php:165
 msgctxt "Javascript String"
 msgid "Download"
 msgstr ""
 
-#: Ortho.php:165
+#: Ortho.php:166
 msgctxt "Javascript String"
 msgid "Download text as markdown"
 msgstr ""
 
-#: Ortho.php:166
+#: Ortho.php:167
 msgctxt "Javascript String"
 msgid "nbsp"
 msgstr ""
 
-#: Ortho.php:167
+#: Ortho.php:168
 msgctxt "Javascript String"
 msgid "Non-Breaking SPace"
 msgstr ""
 
-#: Ortho.php:331
+#: Ortho.php:332
 msgctxt "Header"
 msgid "Orthography Sandbox"
 msgstr ""
 
-#: Ortho.php:368
+#: Ortho.php:369
 msgctxt "Button"
 msgid "Cleanup Chars"
 msgstr ""
 
-#: Ortho.php:384
-msgctxt "Char Title"
-msgid "Arabic Letter Yeh U+064A"
-msgstr ""
-
 #: Ortho.php:385
 msgctxt "Char Title"
-msgid "Arabic Letter Kaf U+0643"
+msgid "Arabic Yeh U+064A"
 msgstr ""
 
-#: Ortho.php:412
+#: Ortho.php:386
+msgctxt "Char Title"
+msgid "Arabic Kaf U+0643"
+msgstr ""
+
+#: Ortho.php:413
 msgctxt "Header"
 msgid "Overview of Post Orthography"
 msgstr ""

@@ -1,70 +1,70 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gEditorial Today 3.17.0\n"
+"Project-Id-Version: gEditorial Today 3.18.0\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "Last-Translator: NULL\n"
 "Language-Team: NULL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2020-09-16T08:33:19+00:00\n"
+"POT-Creation-Date: 2020-11-23T18:15:49+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.4.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Today\n"
 "X-Domain: geditorial-today\n"
 
-#: Helper.php:374
+#: Helper.php:375
 msgctxt "Meta Box Input"
 msgid "Day"
 msgstr ""
 
-#: Helper.php:375
+#: Helper.php:376
 msgctxt "Meta Box Input Placeholder"
 msgid "Day"
-msgstr ""
-
-#: Helper.php:388
-msgctxt "Meta Box Input"
-msgid "Month"
 msgstr ""
 
 #: Helper.php:389
+msgctxt "Meta Box Input"
+msgid "Month"
+msgstr ""
+
+#: Helper.php:390
 msgctxt "Meta Box Input Placeholder"
 msgid "Month"
 msgstr ""
 
-#: Helper.php:401
+#: Helper.php:402
 msgctxt "Meta Box Input"
 msgid "Year"
 msgstr ""
 
-#: Helper.php:402
+#: Helper.php:403
 msgctxt "Meta Box Input Placeholder"
 msgid "Year"
 msgstr ""
 
-#: Helper.php:411
+#: Helper.php:412
 msgctxt "Meta Box Input Option None"
 msgid "&ndash; Select Calendar &ndash;"
 msgstr ""
 
-#: Helper.php:423
+#: Helper.php:424
 msgctxt "Meta Box Input"
 msgid "Calendar"
 msgstr ""
 
 #. translators: %s: singular name
-#: Helper.php:451
+#: Helper.php:452
 msgctxt "Title Attr"
 msgid "New %s connected to this day"
 msgstr ""
 
-#: Helper.php:473
+#: Helper.php:474
 msgctxt "Title Attr"
 msgid "New Day!"
 msgstr ""
 
-#: Helper.php:489
+#: Helper.php:490
 msgctxt "Title Attr"
 msgid "Edit Day!"
 msgstr ""

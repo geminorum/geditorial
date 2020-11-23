@@ -1,13 +1,13 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gEditorial Course 3.17.0\n"
+"Project-Id-Version: gEditorial Course 3.18.0\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "Last-Translator: NULL\n"
 "Language-Team: NULL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2020-09-16T08:32:39+00:00\n"
+"POT-Creation-Date: 2020-11-23T18:15:06+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.4.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Course\n"
@@ -43,186 +43,186 @@ msgctxt "Settings"
 msgid "Redirects all span archives to this URL. Leave empty to disable."
 msgstr ""
 
-#: Course.php:115
-#: Course.php:116
+#: Course.php:117
+#: Course.php:118
 msgid "Course"
 msgid_plural "Courses"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Course.php:117
+#: Course.php:119
 msgid "Course Category"
 msgid_plural "Course Categories"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Course.php:118
+#: Course.php:120
 msgid "Course Span"
 msgid_plural "Course Spans"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Course.php:119
+#: Course.php:121
 msgid "Course Topic"
 msgid_plural "Course Topics"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Course.php:120
+#: Course.php:122
 msgid "Lesson"
 msgid_plural "Lessons"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Course.php:121
+#: Course.php:123
 msgid "Lesson Format"
 msgid_plural "Lesson Formats"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Course.php:122
+#: Course.php:124
 msgid "Lesson Status"
 msgid_plural "Lesson Statuses"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Course.php:131
+#: Course.php:133
 msgctxt "Posttype Featured"
 msgid "Poster Image"
 msgstr ""
 
-#: Course.php:132
+#: Course.php:134
 msgctxt "MetaBox Title"
 msgid "Metadata"
 msgstr ""
 
-#: Course.php:133
+#: Course.php:135
 msgctxt "Column Title"
 msgid "Lessons"
 msgstr ""
 
-#: Course.php:134
+#: Course.php:136
 msgctxt "Select Option None"
 msgid "&ndash; Select Course &ndash;"
 msgstr ""
 
-#: Course.php:137
+#: Course.php:139
 msgctxt "MetaBox Title"
 msgid "In This Course"
 msgstr ""
 
-#: Course.php:140
+#: Course.php:142
 msgctxt "Column Title"
 msgid "Course Categories"
 msgstr ""
 
-#: Course.php:143
+#: Course.php:145
 msgctxt "MetaBox Title"
 msgid "Spans"
 msgstr ""
 
-#: Course.php:144
+#: Course.php:146
 msgctxt "Column Title"
 msgid "Course Spans"
 msgstr ""
 
-#: Course.php:147
+#: Course.php:149
 msgctxt "MetaBox Title"
 msgid "Topics"
 msgstr ""
 
-#: Course.php:148
+#: Course.php:150
 msgctxt "Column Title"
 msgid "Course Topics"
 msgstr ""
 
-#: Course.php:149
+#: Course.php:151
 msgctxt "Select Option None"
 msgid "&ndash; Select Topic &ndash;"
 msgstr ""
 
-#: Course.php:152
+#: Course.php:154
 msgctxt "MetaBox Title"
 msgid "Course"
 msgstr ""
 
-#: Course.php:155
+#: Course.php:157
 msgctxt "MetaBox Title"
 msgid "Lesson Format"
 msgstr ""
 
-#: Course.php:156
+#: Course.php:158
 msgctxt "Column Title"
 msgid "Lesson Format"
 msgstr ""
 
-#: Course.php:159
+#: Course.php:161
 msgctxt "MetaBox Title"
-msgid "Lesson Statuses"
-msgstr ""
-
-#: Course.php:160
-msgctxt "Column Title"
 msgid "Lesson Statuses"
 msgstr ""
 
 #: Course.php:162
+msgctxt "Column Title"
+msgid "Lesson Statuses"
+msgstr ""
+
+#: Course.php:164
 msgctxt "MetaBox Title"
 msgid "Courses"
 msgstr ""
 
-#: Course.php:163
+#: Course.php:165
 msgctxt "Column Title"
 msgid "Courses"
 msgstr ""
 
-#: Course.php:168
+#: Course.php:170
 msgctxt "Default Term"
 msgid "Ongoing"
 msgstr ""
 
-#: Course.php:169
+#: Course.php:171
 msgctxt "Default Term"
 msgid "Planned"
 msgstr ""
 
-#: Course.php:170
+#: Course.php:172
 msgctxt "Default Term"
 msgid "Pending"
 msgstr ""
 
-#: Course.php:171
+#: Course.php:173
 msgctxt "Default Term"
 msgid "Cancelled"
 msgstr ""
 
-#: Course.php:183
-#: Course.php:191
+#: Course.php:185
+#: Course.php:193
 msgctxt "Field Title"
 msgid "Subtitle"
 msgstr ""
 
-#: Course.php:184
+#: Course.php:186
 msgctxt "Field Description"
 msgid "Subtitle of the Course"
 msgstr ""
 
-#: Course.php:192
+#: Course.php:194
 msgctxt "Field Description"
 msgid "Subtitle of the Lesson"
 msgstr ""
 
-#: Course.php:221
+#: Course.php:223
 msgctxt "Button"
 msgid "Install Default Lesson Statuses"
 msgstr ""
 
-#: Course.php:488
+#: Course.php:490
 msgctxt "Message"
 msgid "No items connected!"
 msgstr ""
 
-#: Course.php:736
+#: Course.php:738
 msgctxt "Title Attr"
 msgid "View the connected list"
 msgstr ""

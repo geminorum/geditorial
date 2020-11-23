@@ -2,15 +2,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gEditorial Widgets\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
-"POT-Creation-Date: 2020-07-21T18:55:21+00:00\n"
-"PO-Revision-Date: 2020-07-22 13:54+0430\n"
+"POT-Creation-Date: 2020-11-23T07:46:07+00:00\n"
+"PO-Revision-Date: 2020-11-23 11:16+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.3.1\n"
+"X-Generator: Poedit 2.4.2\n"
 "X-Domain: geditorial-widgets\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
 "X-Poedit-Basepath: ../../includes/Modules/Widgets\n"
@@ -30,27 +30,27 @@ msgctxt "Widget Description"
 msgid "Displays arbitrary HTML code with support for shortcodes and embeds."
 msgstr "نمایش کد HTML دلخواه، همراه با پشتیبانی از شورت‌کدها و جاسازها."
 
-#: Widgets/Custom-HTML.php:72
+#: Widgets/Custom-HTML.php:73
 msgctxt "Widget: Custom HTML"
 msgid "Process Embeds"
 msgstr "پردازش جاسازها"
 
-#: Widgets/Custom-HTML.php:73
+#: Widgets/Custom-HTML.php:74
 msgctxt "Widget: Custom HTML"
 msgid "Process Shortcodes"
 msgstr "پردازش شورت‌کدها"
 
-#: Widgets/Custom-HTML.php:74
+#: Widgets/Custom-HTML.php:75
 msgctxt "Widget: Custom HTML"
 msgid "Process Filters"
 msgstr "پردازش فیلترها"
 
-#: Widgets/Custom-HTML.php:75
+#: Widgets/Custom-HTML.php:76
 msgctxt "Widget: Custom HTML"
 msgid "Process Filters (Legacy)"
 msgstr "پردازش فیلترها (قدیمی)"
 
-#: Widgets/Custom-HTML.php:76
+#: Widgets/Custom-HTML.php:77
 msgctxt "Widget: Custom HTML"
 msgid "Automatic Paragraphs"
 msgstr "بندهای خودکار"
@@ -65,41 +65,56 @@ msgctxt "Widget Description"
 msgid "Displays list of events from a public Google Calendar."
 msgstr "نمایش فهرست رویدادها از یک تقویم گوگل عمومی."
 
-#: Widgets/GCal-Events.php:85
+#: Widgets/GCal-Events.php:86
 msgctxt "Widget: Google Calendar"
 msgid "Calendar ID:"
 msgstr "شناسه تقویم:"
 
-#: Widgets/GCal-Events.php:86
+#: Widgets/GCal-Events.php:87
 msgctxt "Widget: Google Calendar"
 msgid "Your API key:"
 msgstr "کلید API شما:"
 
 #. translators: %s: documents url
-#: Widgets/GCal-Events.php:89
+#: Widgets/GCal-Events.php:90
 msgctxt "Widget: Google Calendar"
 msgid "Get your API key <a href=\"%s\" target=\"_blank\">here</a>."
 msgstr "کلید API خود را از <a href=\"%s\" target=\"_blank\">اینجا</a> دریافت کنید."
 
-#: Widgets/GCal-Events.php:91
+#: Widgets/GCal-Events.php:92
 msgctxt "Widget: Google Calendar"
 msgid "Start from (YYYY-MM-DD):"
 msgstr "شروع از (YYYY-MM-DD):"
 
-#: Widgets/GCal-Events.php:92
+#: Widgets/GCal-Events.php:93
 msgctxt "Widget: Google Calendar"
 msgid "Max results:"
 msgstr "حداکثر رویدادها:"
 
-#: Widgets/GCal-Events.php:93
+#: Widgets/GCal-Events.php:94
 msgctxt "Widget: Google Calendar"
 msgid "Display Time"
 msgstr "نمایش زمان"
 
-#: Widgets/GCal-Events.php:95
+#: Widgets/GCal-Events.php:96
 msgctxt "Widget: Google Calendar"
 msgid "No events scheduled."
 msgstr "رویدادی زمان‌بندی نشده است."
+
+#: Widgets/Search-Terms.php:19
+msgctxt "Widget Title"
+msgid "Editorial: Search Terms"
+msgstr "تحریریه: جست‌وجوی رده‌ها"
+
+#: Widgets/Search-Terms.php:20
+msgctxt "Widget Description"
+msgid "Displays the results of current search criteria on selected taxonomies."
+msgstr "نتایج جست‌وجوی رده‌ها را بر اساس عبارت فعلی نمایش می‌دهد."
+
+#: Widgets/Search-Terms.php:98
+msgctxt "Widget: Setting"
+msgid "Strip Hash-tags"
+msgstr "پاک‌کردن هش‌تگ‌ها"
 
 #: Widgets/WPRest-Posts.php:23
 msgctxt "Widget Title"
@@ -111,32 +126,32 @@ msgctxt "Widget Description"
 msgid "Displays list of posts from a public WordPress site."
 msgstr "نمایش فهرست نوشته‌ها از یک سایت وردپرس عمومی."
 
-#: Widgets/WPRest-Posts.php:110
+#: Widgets/WPRest-Posts.php:111
 msgctxt "Widget: WP-REST Posts"
 msgid "Resource URL:"
 msgstr "نشانی منبع:"
 
-#: Widgets/WPRest-Posts.php:111
+#: Widgets/WPRest-Posts.php:112
 msgctxt "Widget: WP-REST Posts"
 msgid "Endpoint:"
 msgstr "پایانه:"
 
-#: Widgets/WPRest-Posts.php:112
+#: Widgets/WPRest-Posts.php:113
 msgctxt "Widget: WP-REST Posts"
 msgid "Tag IDs:"
 msgstr "شناسه برچسب‌ها:"
 
-#: Widgets/WPRest-Posts.php:113
+#: Widgets/WPRest-Posts.php:114
 msgctxt "Widget: WP-REST Posts"
 msgid "Category IDs:"
 msgstr "شناسه دسته‌ها:"
 
-#: Widgets/WPRest-Posts.php:114
+#: Widgets/WPRest-Posts.php:115
 msgctxt "Widget: WP-REST Posts"
 msgid "Extra Args:"
 msgstr "آرگیومنت‌های افزوده:"
 
-#: Widgets/WPRest-Posts.php:117
+#: Widgets/WPRest-Posts.php:118
 msgctxt "Widget: WP-REST Posts"
 msgid "No posts!"
 msgstr "خبری نیست!"
