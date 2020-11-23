@@ -1,28 +1,28 @@
 (function () {
-  var gulp = require('gulp');
-  var plugins = require('gulp-load-plugins')();
-  var cssnano = require('cssnano');
-  var autoprefixer = require('autoprefixer');
-  var rtlcss = require('rtlcss');
-  var parseChangelog = require('parse-changelog');
-  var prettyjson = require('prettyjson');
-  var extend = require('xtend');
-  var template = require('lodash.template');
-  var yaml = require('js-yaml');
-  var log = require('fancy-log');
-  var del = require('del');
-  var fs = require('fs');
-  var exec = require('child_process').exec;
-  var path = require('path');
+  const gulp = require('gulp');
+  const plugins = require('gulp-load-plugins')();
+  const cssnano = require('cssnano');
+  const autoprefixer = require('autoprefixer');
+  const rtlcss = require('rtlcss');
+  const parseChangelog = require('parse-changelog');
+  // const prettyjson = require('prettyjson');
+  const extend = require('xtend');
+  const template = require('lodash.template');
+  const yaml = require('js-yaml');
+  const log = require('fancy-log');
+  const del = require('del');
+  const fs = require('fs');
+  const exec = require('child_process').exec;
+  const path = require('path');
 
-  var pkg = require('./package.json');
-  var config = require('./gulp.config.json');
+  const pkg = require('./package.json');
+  const config = require('./gulp.config.json');
 
-  var env = config.env;
-  var banner = config.banner.join('\n');
+  let env = config.env;
+  const banner = config.banner.join('\n');
 
-  var debug = /--debug/.test(process.argv.slice(2));
-  var patch = /--patch/.test(process.argv.slice(2)); // bump a patch?
+  const debug = /--debug/.test(process.argv.slice(2));
+  const patch = /--patch/.test(process.argv.slice(2)); // bump a patch?
 
   try {
     env = extend(config.env, yaml.safeLoad(fs.readFileSync('./environment.yml', { encoding: 'utf-8' }), { json: true }));
@@ -66,7 +66,7 @@
   }
 
   gulp.task('i18n:plugin', function (cb) {
-    var command = 'wp i18n make-pot . ' +
+    const command = 'wp i18n make-pot . ' +
       i18nExtra(config.i18n.plugin) +
       ' --headers=\'' + template(JSON.stringify(config.i18n.plugin.headers), { variable: 'data' })({ bugs: pkg.bugs.url }) + '\'';
 
@@ -82,12 +82,12 @@
   });
 
   gulp.task('i18n:modules', function () {
-    var extra = i18nExtra(config.i18n.modules);
+    const extra = i18nExtra(config.i18n.modules);
 
     return gulp.src(config.input.modules)
       .pipe(plugins.exec(function (file) {
-        var folder = file.path.split(path.sep).pop();
-        var module = folder.toLowerCase();
+        const folder = file.path.split(path.sep).pop();
+        const module = folder.toLowerCase();
         log.info('Make pot for Module: ' + folder);
         return 'wp i18n make-pot ' + file.path +
           ' ./languages/' + folder + '/' + module + '.pot' +
@@ -166,6 +166,13 @@
       .pipe(gulp.dest(config.output.css)).on('error', log.error);
   });
 
+  gulp.task('dev:scripts', function () {
+    return gulp.src(config.input.js, { base: '.' })
+      .pipe(plugins.rename({ suffix: '.min' }))
+      .pipe(plugins.uglify())
+      .pipe(gulp.dest('.'));
+  });
+
   gulp.task('build:styles', function () {
     return gulp.src(config.input.sass)
       .pipe(plugins.sass(config.sass).on('error', plugins.sass.logError))
@@ -192,7 +199,8 @@
   gulp.task('build:scripts', function () {
     return gulp.src(config.input.js, { base: '.' })
       .pipe(plugins.rename({ suffix: '.min' }))
-      .pipe(plugins.uglify());
+      .pipe(plugins.uglify())
+      .pipe(gulp.dest('.'));
   });
 
   gulp.task('build:banner', function () {
@@ -235,8 +243,8 @@
       return done();
     }
 
-    var changes = parseChangelog(fs.readFileSync('CHANGES.md', { encoding: 'utf-8' }), { title: false });
-    var options = {
+    const changes = parseChangelog(fs.readFileSync('CHANGES.md', { encoding: 'utf-8' }), { title: false });
+    const options = {
       token: env.github,
       tag: pkg.version,
       notes: changes.versions[0].rawNote,
@@ -293,10 +301,10 @@
   gulp.task('default', function (done) {
     log.info('Hi, I\'m Gulp!');
     log.info('Sass is:\n' + require('node-sass').info);
-    log.info('\n');
-    console.log(prettyjson.render(pkg));
-    log.info('\n');
-    console.log(prettyjson.render(config));
+    // log.info('\n');
+    // console.log(prettyjson.render(pkg));
+    // log.info('\n');
+    // console.log(prettyjson.render(config));
     done();
   });
 }());
