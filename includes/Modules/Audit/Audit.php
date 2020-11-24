@@ -31,11 +31,10 @@ class Audit extends gEditorial\Module
 
 	protected function get_global_settings()
 	{
-		$taxonomy = $this->constant( 'audit_tax' );
-		$terms    = Taxonomy::listTerms( $taxonomy );
-		$empty    = get_taxonomy( $taxonomy )->labels->no_terms;
-		$roles    = User::getAllRoleList();
-		$exclude  = [ 'administrator', 'subscriber' ];
+		$terms   = Taxonomy::listTerms( $this->constant( 'audit_tax' ) );
+		$empty   = $this->get_taxonomy_label( 'audit_tax', 'no_terms', _x( 'There\'s no audit attributes available!', 'Setting', 'geditorial-audit' ) );
+		$roles   = User::getAllRoleList();
+		$exclude = [ 'administrator', 'subscriber' ];
 
 		return [
 			'posttypes_option' => 'posttypes_option',

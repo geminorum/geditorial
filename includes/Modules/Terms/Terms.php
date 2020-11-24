@@ -1130,12 +1130,13 @@ class Terms extends gEditorial\Module
 
 		foreach ( $this->taxonomies() as $taxonomy ) {
 
+			if ( ! $object = get_taxonomy( $taxonomy ) )
+				continue;
+
 			$terms = get_the_terms( $post_id, $taxonomy );
 
 			if ( ! $terms || is_wp_error( $terms ) )
 				continue;
-
-			$object = get_taxonomy( $taxonomy );
 
 			$nodes[] = [
 				'id'     => $this->classs( 'tax', $taxonomy ),

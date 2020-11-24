@@ -2007,6 +2007,17 @@ class Module extends Base
 		return $object;
 	}
 
+	public function get_taxonomy_label( $constant, $label = 'name', $fallback = '' )
+	{
+		if ( ! $object = Taxonomy::object( $this->constant( $constant, $constant ) ) )
+			return $fallback;
+
+		if ( ! isset( $object->labels->{$label} ) )
+			return $fallback;
+
+		return $object->labels->{$label};
+	}
+
 	public function get_taxonomy_labels( $constant )
 	{
 		if ( ! empty( $this->strings['labels'][$constant] ) )
@@ -2632,11 +2643,8 @@ class Module extends Base
 
 	public function get_meta_box_title_tax( $constant, $url = NULL, $title = NULL )
 	{
-		$taxonomy = $this->constant( $constant );
-		$object   = get_taxonomy( $taxonomy );
-
 		if ( is_null( $title ) )
-			$title = $object->labels->name;
+			$title = $this->get_taxonomy_label( $constant );
 
 		if ( $info = $this->get_string( 'meta_box_info', $constant, 'misc', NULL ) )
 			$title.= ' <span class="postbox-title-info" data-title="info" title="'.HTML::escape( $info ).'">'.HTML::getDashicon( 'info' ).'</span>';
@@ -2645,7 +2653,7 @@ class Module extends Base
 		return $title;
 
 		if ( is_null( $url ) )
-			$url = WordPress::getEditTaxLink( $taxonomy );
+			$url = WordPress::getEditTaxLink( $this->constant( $constant ) );
 
 		if ( $url ) {
 			$action = $this->get_string( 'meta_box_action', $constant, 'misc', _x( 'Manage', 'Module: MetaBox Default Action', 'geditorial' ) );
@@ -3006,6 +3014,9 @@ class Module extends Base
 		$exclude  = Database::getExcludeStatuses();
 		$taxonomy = $this->constant( $constant );
 
+		if ( ! $object = Taxonomy::object( $taxonomy ) )
+			return FALSE;
+
 		if ( is_null( $posttypes ) )
 			$posttypes = $this->posttypes();
 
@@ -3076,7 +3087,7 @@ class Module extends Base
 
 		if ( $this->get_setting( 'count_not', FALSE ) ) {
 
-			$none = $this->get_string( 'show_option_none', $constant, 'misc', sprintf( '(%s)', get_taxonomy( $taxonomy )->labels->no_terms ) );
+			$none = $this->get_string( 'show_option_none', $constant, 'misc', sprintf( '(%s)', $object->labels->no_terms ) );
 			$not  = Database::countPostsByNotTaxonomy( $taxonomy, $posttypes, ( 'current' == $scope ? $user_id : 0 ), $exclude );
 
 			foreach ( $not as $type => $count ) {
