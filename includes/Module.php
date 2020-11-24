@@ -3002,7 +3002,10 @@ class Module extends Base
 			$posttypes = $this->posttypes();
 
 		if ( is_null( $terms ) )
-			$terms = Taxonomy::getTerms( $taxonomy, FALSE, TRUE, 'slug', [ 'hide_empty' => TRUE ] );
+			$terms = Taxonomy::getTerms( $taxonomy, FALSE, TRUE, 'slug', [
+				'hide_empty' => TRUE,
+				'exclude'    => $this->get_setting( 'summary_excludes', '' ),
+			] );
 
 		if ( is_null( $user_id ) )
 			$user_id = get_current_user_id();
