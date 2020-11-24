@@ -2961,6 +2961,14 @@ class Module extends Base
 		// using core styles
 		echo $this->wrap_open( [ '-admin-widget', '-core-styles' ], TRUE, 'dashboard_right_now' );
 
+		$taxonomy = $this->constant( $constant );
+
+		if ( ! Taxonomy::hasTerms( $taxonomy ) ) {
+			HTML::desc( get_taxonomy( $taxonomy )->labels->no_terms, FALSE, '-empty' );
+			echo '</div>';
+			return;
+		}
+
 		$scope  = $this->get_setting( 'summary_scope', 'all' );
 		$suffix = 'all' == $scope ? 'all' : get_current_user_id();
 		$key    = $this->hash( 'widgetsummary', $scope, $suffix );

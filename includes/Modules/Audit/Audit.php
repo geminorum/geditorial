@@ -31,9 +31,11 @@ class Audit extends gEditorial\Module
 
 	protected function get_global_settings()
 	{
-		$terms   = Taxonomy::listTerms( $this->constant( 'audit_tax' ) );
-		$roles   = User::getAllRoleList();
-		$exclude = [ 'administrator', 'subscriber' ];
+		$taxonomy = $this->constant( 'audit_tax' );
+		$terms    = Taxonomy::listTerms( $taxonomy );
+		$empty    = get_taxonomy( $taxonomy )->labels->no_terms;
+		$roles    = User::getAllRoleList();
+		$exclude  = [ 'administrator', 'subscriber' ];
 
 		return [
 			'posttypes_option' => 'posttypes_option',
@@ -86,7 +88,7 @@ class Audit extends gEditorial\Module
 					'type'         => 'checkbox-panel',
 					'title'        => _x( 'Locking Terms', 'Setting Title', 'geditorial-audit' ),
 					'description'  => _x( 'Selected terms will lock editing the post to audit managers.', 'Setting Description', 'geditorial-audit' ),
-					'string_empty' => _x( 'There\'s no audit attributes available!', 'Setting', 'geditorial-audit' ),
+					'string_empty' => $empty,
 					'values'       => $terms,
 				],
 			],
@@ -100,7 +102,7 @@ class Audit extends gEditorial\Module
 					'type'         => 'checkbox-panel',
 					'title'        => _x( 'Summary Excludes', 'Setting Title', 'geditorial-audit' ),
 					'description'  => _x( 'Selected terms will be excluded on the content summary', 'Setting Description', 'geditorial-audit' ),
-					'string_empty' => _x( 'There\'s no audit attributes available!', 'Setting', 'geditorial-audit' ),
+					'string_empty' => $empty,
 					'values'       => $terms,
 				],
 			],
