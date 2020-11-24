@@ -492,7 +492,7 @@ class Audit extends gEditorial\Module
 		Settings::submitButton( 'user_stats', _x( 'Apply Filter', 'Button', 'geditorial-audit' ) );
 
 		// FIXME: style this!
-		if ( $summary = $this->get_dashboard_summary( 'audit_tax', NULL, $terms, ( $args['user_id'] ? 'current' : 'all' ), $args['user_id'] ) )
+		if ( $summary = $this->get_dashboard_term_summary( 'audit_tax', NULL, $terms, ( $args['user_id'] ? 'current' : 'all' ), $args['user_id'] ) )
 			echo '<div><ul>'.$summary.'</ul></div>';
 
 		echo '</td></tr>';

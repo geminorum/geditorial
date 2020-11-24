@@ -2973,7 +2973,7 @@ class Module extends Base
 			if ( $this->check_hidden_metabox( $box, FALSE, '</div>' ) )
 				return;
 
-			if ( $summary = $this->get_dashboard_summary( $constant, $posttypes, NULL, $scope ) ) {
+			if ( $summary = $this->get_dashboard_term_summary( $constant, $posttypes, NULL, $scope ) ) {
 
 				$html = Text::minifyHTML( $summary );
 				set_transient( $key, $html, 12 * HOUR_IN_SECONDS );
@@ -2990,7 +2990,7 @@ class Module extends Base
 		echo '</div>';
 	}
 
-	protected function get_dashboard_summary( $constant, $posttypes = NULL, $terms = NULL, $scope = 'all', $user_id = NULL, $list = 'li' )
+	protected function get_dashboard_term_summary( $constant, $posttypes = NULL, $terms = NULL, $scope = 'all', $user_id = NULL, $list = 'li' )
 	{
 		$html     = '';
 		$check    = FALSE;
