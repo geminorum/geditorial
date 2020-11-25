@@ -1405,7 +1405,7 @@ class Settings extends Core\Base
 
 				if ( FALSE === $args['values'] ) {
 
-					HTML::desc( $args['string_empty'] );
+					HTML::desc( $args['string_empty'], TRUE, '-empty' );
 
 				} else if ( count( $args['values'] ) ) {
 
@@ -1614,7 +1614,8 @@ class Settings extends Core\Base
 
 				} else if ( is_array( $args['values'] ) ) {
 
-					$args['description'] = $args['string_empty'];
+					$args['description'] = FALSE;
+					HTML::desc( $args['string_empty'], TRUE, '-empty' );
 				}
 
 			break;
@@ -1667,7 +1668,8 @@ class Settings extends Core\Base
 
 				} else if ( is_array( $args['values'] ) ) {
 
-					$args['description'] = $args['string_empty'];
+					$args['description'] = FALSE;
+					HTML::desc( $args['string_empty'], TRUE, '-empty' );
 				}
 
 			break;
