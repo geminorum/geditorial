@@ -89,6 +89,109 @@ class Tablelist extends Main
 		] );
 	}
 
+	public static function getPostRowActions( $post_id, $actions = NULL )
+	{
+		if ( is_null( $actions ) )
+			$actions = [ 'edit', 'view' ];
+
+		$list = [];
+		$edit = current_user_can( 'edit_post', $post_id );
+
+		foreach ( $actions as $action ) {
+
+			switch ( $action ) {
+
+				case 'attached':
+
+					if ( $attached = wp_get_attachment_url( $post_id ) )
+						$list['attached'] = HTML::tag( 'a', [
+							'href'   => $attached,
+							'class'  => '-link -row-link -row-link-attached',
+							'data'   => [ 'id' => $post_id, 'row' => 'attached' ],
+							'target' => '_blank',
+						], _x( 'Attached', 'Tablelist: Row Action', 'geditorial' ) );
+
+				case 'revisions':
+
+					if ( ! $edit )
+						continue 2;
+
+					if ( $revision_id = PostType::getLastRevisionID( $post_id ) )
+						$list['revisions'] = HTML::tag( 'a', [
+							'href'   => get_edit_post_link( $revision_id ),
+							'class'  => '-link -row-link -row-link-revisions',
+							'data'   => [ 'id' => $post_id, 'row' => 'revisions' ],
+							'target' => '_blank',
+						], _x( 'Revisions', 'Tablelist: Row Action', 'geditorial' ) );
+
+				break;
+				case 'edit':
+
+					if ( ! $edit )
+						continue 2;
+
+					$list['edit'] = HTML::tag( 'a', [
+						'href'   => WordPress::getPostEditLink( $post_id ),
+						'class'  => '-link -row-link -row-link-edit',
+						'data'   => [ 'id' => $post_id, 'row' => 'edit' ],
+						'target' => '_blank',
+					], _x( 'Edit', 'Tablelist: Row Action', 'geditorial' ) );
+
+				break;
+				case 'view':
+
+					$list['view'] = HTML::tag( 'a', [
+						'href'   => WordPress::getPostShortLink( $post_id ),
+						'class'  => '-link -row-link -row-link-view',
+						'data'   => [ 'id' => $post_id, 'row' => 'view' ],
+						'target' => '_blank',
+					], _x( 'View', 'Tablelist: Row Action', 'geditorial' ) );
+			}
+		}
+
+		return $list;
+	}
+
+	public static function getTermTitleRow( $term, $link = 'edit' )
+	{
+		$term = get_term( $term );
+
+		if ( ! $term || is_wp_error( $term ) )
+			return Plugin::na( FALSE );
+
+		$title = sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' );
+
+		if ( ! $link )
+			return HTML::escape( $title );
+
+		if ( 'edit' == $link ) {
+			if ( ! $edit = WordPress::getEditTaxLink( $term->taxonomy, $term->term_id ) )
+				$link = 'view';
+		}
+
+		if ( 'edit' == $link )
+			return HTML::tag( 'a', [
+				'href'   => $edit,
+				'title'  => urldecode( $term->slug ),
+				'class'  => '-link -row-link -row-link-edit',
+				'target' => '_blank',
+			], HTML::escape( $title ) );
+
+		if ( 'view' == $link )
+			return HTML::tag( 'a', [
+				'href'   => get_term_link( $term->term_id, $term->taxonomy ),
+				'class'  => '-link -row-link -row-link-view',
+				'target' => '_blank',
+				'title'  => _x( 'View', 'Tablelist: Row Action', 'geditorial' ),
+			], HTML::escape( $title ) );
+
+		return HTML::tag( 'a', [
+			'href'   => $link,
+			'class'  => '-link -row-link -row-link-custom',
+			'target' => '_blank',
+		], HTML::escape( $title ) );
+	}
+
 	public static function columnPostID()
 	{
 		return _x( 'ID', 'Tablelist: Column: Post ID', 'geditorial' );
@@ -177,7 +280,7 @@ class Tablelist extends Main
 				return $title;
 			},
 			'actions' => function( $value, $row, $column, $index ) use( $actions, $custom ){
-				return array_merge( Helper::getPostRowActions( $row->ID, $actions ), $custom );
+				return array_merge( self::getPostRowActions( $row->ID, $actions ), $custom );
 			},
 		];
 	}
@@ -269,7 +372,7 @@ class Tablelist extends Main
 		return [
 			'title'    => _x( 'Name', 'Tablelist: Column: Term Name', 'geditorial' ),
 			'callback' => function( $value, $row, $column, $index ){
-				return Helper::getTermTitleRow( $row );
+				return self::getTermTitleRow( $row );
 			},
 		];
 	}

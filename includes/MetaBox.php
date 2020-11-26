@@ -357,7 +357,7 @@ class MetaBox extends Core\Base
 		$statuses = PostType::getStatuses();
 
 		if ( TRUE === $title )
-			$html.= HTML::tag( 'h4', Helper::getTermTitleRow( $term ) );
+			$html.= HTML::tag( 'h4', Tablelist::getTermTitleRow( $term ) );
 
 		else if ( $title )
 			$html.= HTML::tag( 'h4', $title );
