@@ -2147,7 +2147,7 @@ class Module extends Base
 				$this->image_sizes[$posttype] = $sizes; // custom sizes
 
 			} else {
-				foreach ( Helper::getWPImageSizes() as $size => $args )
+				foreach ( Media::defaultImageSizes() as $size => $args )
 					$this->image_sizes[$posttype][$posttype.'-'.$size] = $args;
 			}
 		}

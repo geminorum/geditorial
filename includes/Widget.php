@@ -222,7 +222,7 @@ class Widget extends \WP_Widget
 						.Number::localize( $size['height'] ).')';
 
 			} else {
-				// foreach ( Helper::getWPImageSizes() as $name => $size ) {
+				// foreach ( Media::defaultImageSizes() as $name => $size ) {
 				// 	$images[$posttype.'-'.$name] = $size['n'].' ('.Number::localize( $size['w'] ).'&nbsp;&times;&nbsp;'.Number::localize( $size['h'] ).')';
 				// }
 			}

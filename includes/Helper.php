@@ -561,44 +561,6 @@ class Helper extends Core\Base
 		return gEditorial()->user( $fallback );
 	}
 
-	// WP default sizes from options
-	public static function getWPImageSizes()
-	{
-		global $gEditorial_WPImageSizes;
-
-		if ( ! empty( $gEditorial_WPImageSizes ) )
-			return $gEditorial_WPImageSizes;
-
-		$gEditorial_WPImageSizes = [
-			'thumbnail' => [
-				'n' => _x( 'Thumbnail', 'Helper', 'geditorial' ),
-				'w' => get_option( 'thumbnail_size_w' ),
-				'h' => get_option( 'thumbnail_size_h' ),
-				'c' => get_option( 'thumbnail_crop' ),
-			],
-			'medium' => [
-				'n' => _x( 'Medium', 'Helper', 'geditorial' ),
-				'w' => get_option( 'medium_size_w' ),
-				'h' => get_option( 'medium_size_h' ),
-				'c' => 0,
-			],
-			// 'medium_large' => [
-			// 	'n' => _x( 'Medium Large', 'Helper', 'geditorial' ),
-			// 	'w' => get_option( 'medium_large_size_w' ),
-			// 	'h' => get_option( 'medium_large_size_h' ),
-			// 	'c' => 0,
-			// ],
-			'large' => [
-				'n' => _x( 'Large', 'Helper', 'geditorial' ),
-				'w' => get_option( 'large_size_w' ),
-				'h' => get_option( 'large_size_h' ),
-				'c' => 0,
-			],
-		];
-
-		return $gEditorial_WPImageSizes;
-	}
-
 	public static function htmlEmpty( $class = '', $title_attr = NULL )
 	{
 		return is_null( $title_attr )
