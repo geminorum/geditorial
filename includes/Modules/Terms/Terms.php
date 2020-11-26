@@ -7,6 +7,7 @@ use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Listtable;
 use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Settings;
+use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\Core\Arraay;
 use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\HTML;
@@ -1279,9 +1280,9 @@ class Terms extends gEditorial\Module
 
 			HTML::tableList( [
 				'_cb'   => 'ID',
-				'ID'    => Helper::tableColumnPostID(),
-				'title' => Helper::tableColumnPostTitle(),
-				'terms' => Helper::tableColumnPostTerms(),
+				'ID'    => Tablelist::columnPostID(),
+				'title' => Tablelist::columnPostTitle(),
+				'terms' => Tablelist::columnPostTerms(),
 			], $uncategorized );
 
 			echo '</td></tr>';
@@ -1341,21 +1342,21 @@ class Terms extends gEditorial\Module
 
 	protected function render_reports_html( $uri, $sub )
 	{
-		list( $posts, $pagination ) = $this->getTablePosts( [], [], 'any' );
+		list( $posts, $pagination ) = Tablelist::getPosts( [], [], 'any', $this->get_sub_limit_option( $sub ) );
 
 		$pagination['actions']['purge_unregistered'] = _x( 'Purge Unregistered', 'Table Action', 'geditorial-terms' );
 
-		$pagination['before'][] = Helper::tableFilterPostTypes();
-		$pagination['before'][] = Helper::tableFilterAuthors();
-		$pagination['before'][] = Helper::tableFilterSearch();
+		$pagination['before'][] = Tablelist::filterPostTypes();
+		$pagination['before'][] = Tablelist::filterAuthors();
+		$pagination['before'][] = Tablelist::filterSearch();
 
 		return HTML::tableList( [
 			'_cb'   => 'ID',
-			'ID'    => Helper::tableColumnPostID(),
-			'date'  => Helper::tableColumnPostDate(),
-			'type'  => Helper::tableColumnPostType(),
-			'title' => Helper::tableColumnPostTitle(),
-			'terms' => Helper::tableColumnPostTerms(),
+			'ID'    => Tablelist::columnPostID(),
+			'date'  => Tablelist::columnPostDate(),
+			'type'  => Tablelist::columnPostType(),
+			'title' => Tablelist::columnPostTitle(),
+			'terms' => Tablelist::columnPostTerms(),
 			'raw' => [
 				'title'    => _x( 'Raw', 'Table Column', 'geditorial-terms' ),
 				'callback' => function( $value, $row, $column, $index ){

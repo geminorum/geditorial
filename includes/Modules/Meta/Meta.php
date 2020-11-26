@@ -6,6 +6,7 @@ use geminorum\gEditorial;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Settings;
+use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\Core\Arraay;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Text;
@@ -1047,7 +1048,7 @@ class Meta extends gEditorial\Module
 
 			echo '<br />';
 			HTML::tableList( [
-				'post_id' => Helper::tableColumnPostID(),
+				'post_id' => Tablelist::columnPostID(),
 				'type'   => [
 					'title'    => _x( 'Type', 'Table Column', 'geditorial-meta' ),
 					'args'     => [ 'types' => PostType::get( 2 ) ],

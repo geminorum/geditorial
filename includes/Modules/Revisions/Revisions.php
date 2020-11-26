@@ -6,6 +6,7 @@ use geminorum\gEditorial;
 use geminorum\gEditorial\Ajax;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Datetime;
+use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\Text;
@@ -400,15 +401,15 @@ class Revisions extends gEditorial\Module
 		list( $posts, $pagination ) = $this->getPostArray();
 
 		$pagination['actions']['cleanup_revisions'] = _x( 'Cleanup Revisions', 'Table Action', 'geditorial-revisions' );
-		$pagination['before'][] = Helper::tableFilterPostTypes( $list );
-		$pagination['before'][] = Helper::tableFilterAuthors( $list );
+		$pagination['before'][] = Tablelist::filterPostTypes( $list );
+		$pagination['before'][] = Tablelist::filterAuthors( $list );
 
 		return HTML::tableList( [
 			'_cb'   => 'ID',
-			'ID'    => Helper::tableColumnPostID(),
-			'date'  => Helper::tableColumnPostDate(),
-			'type'  => Helper::tableColumnPostType(),
-			'title' => Helper::tableColumnPostTitle( [ 'edit', 'view', 'revisions' ] ),
+			'ID'    => Tablelist::columnPostID(),
+			'date'  => Tablelist::columnPostDate(),
+			'type'  => Tablelist::columnPostType(),
+			'title' => Tablelist::columnPostTitle( [ 'edit', 'view', 'revisions' ] ),
 			'revisons' => [
 				'title'    => _x( 'Revisions', 'Table Column', 'geditorial-revisions' ),
 				'callback' => function( $value, $row, $column, $index ){
@@ -431,7 +432,7 @@ class Revisions extends gEditorial\Module
 					return $html;
 				},
 			],
-			'terms' => Helper::tableColumnPostTerms(),
+			'terms' => Tablelist::columnPostTerms(),
 		], $posts, [
 			'navigation' => 'before',
 			'search'     => 'before',
@@ -441,7 +442,7 @@ class Revisions extends gEditorial\Module
 		] );
 	}
 
-	// FIXME: better to use `getTablePosts()`
+	// FIXME: better to use `Tablelist::getPosts()`
 	protected function getPostArray()
 	{
 		global $wpdb;

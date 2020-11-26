@@ -7,6 +7,7 @@ use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\ShortCode;
+use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\Template;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
@@ -679,8 +680,8 @@ class Contest extends gEditorial\Module
 
 			HTML::tableList( [
 				'_cb'     => 'term_id',
-				'term_id' => Helper::tableColumnTermID(),
-				'name'    => Helper::tableColumnTermName(),
+				'term_id' => Tablelist::columnTermID(),
+				'name'    => Tablelist::columnTermName(),
 				'linked'   => [
 					'title' => _x( 'Linked Contest Post', 'Table Column', 'geditorial-contest' ),
 					'callback' => function( $value, $row, $column, $index ){
@@ -709,7 +710,7 @@ class Contest extends gEditorial\Module
 						return Number::format( $row->count );
 					},
 				],
-				'description' => Helper::tableColumnTermDesc(),
+				'description' => Tablelist::columnTermDesc(),
 			], Taxonomy::getTerms( $this->constant( 'contest_tax' ), FALSE, TRUE ) );
 
 			echo '<br />';

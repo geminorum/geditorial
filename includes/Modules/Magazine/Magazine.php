@@ -8,6 +8,7 @@ use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\ShortCode;
+use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\URL;
@@ -926,8 +927,8 @@ class Magazine extends gEditorial\Module
 	{
 		HTML::tableList( [
 			'_cb'     => 'term_id',
-			// 'term_id' => Helper::tableColumnTermID(),
-			'name'    => Helper::tableColumnTermName(),
+			// 'term_id' => Tablelist::columnTermID(),
+			'name'    => Tablelist::columnTermName(),
 			'linked'  => [
 				'title'    => _x( 'Linked Issue Post', 'Table Column', 'geditorial-magazine' ),
 				'callback' => function( $value, $row, $column, $index ){

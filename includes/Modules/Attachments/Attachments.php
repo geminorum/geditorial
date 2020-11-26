@@ -6,6 +6,7 @@ use geminorum\gEditorial;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\ShortCode;
+use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\Core\File;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
@@ -279,11 +280,11 @@ class Attachments extends gEditorial\Module
 		$query = $extra = [];
 		$list  = $this->list_posttypes();
 
-		list( $posts, $pagination ) = $this->getTablePosts( $query, $extra, 'attachment' );
+		list( $posts, $pagination ) = Tablelist::getPosts( $query, $extra, 'attachment', $this->get_sub_limit_option( $sub ) );
 
-		// $pagination['before'][] = Helper::tableFilterPostTypes( $list, 'type_parent' ); // FIXME: no support for parent type yet!
-		$pagination['before'][] = Helper::tableFilterAuthors( $list );
-		$pagination['before'][] = Helper::tableFilterSearch( $list );
+		// $pagination['before'][] = Tablelist::filterPostTypes( $list, 'type_parent' ); // FIXME: no support for parent type yet!
+		$pagination['before'][] = Tablelist::filterAuthors( $list );
+		$pagination['before'][] = Tablelist::filterSearch( $list );
 
 		$actions = [
 			// FIXME: must add ajax
@@ -297,9 +298,9 @@ class Attachments extends gEditorial\Module
 
 		return HTML::tableList( [
 			'_cb'    => 'ID',
-			'ID'     => Helper::tableColumnPostID(),
-			'date'   => Helper::tableColumnPostDate(),
-			'mime'   => Helper::tableColumnPostMime(),
+			'ID'     => Tablelist::columnPostID(),
+			'date'   => Tablelist::columnPostDate(),
+			'mime'   => Tablelist::columnPostMime(),
 			'custom' => [
 				'title'    => _x( 'Custom', 'Table Column', 'geditorial-attachments' ),
 				'class'    => '-attachment-custom',
@@ -310,7 +311,7 @@ class Attachments extends gEditorial\Module
 					return Helper::htmlEmpty();
 				},
 			],
-			'title'  => Helper::tableColumnPostTitle( NULL, TRUE, $actions ),
+			'title'  => Tablelist::columnPostTitle( NULL, TRUE, $actions ),
 			'search' => [
 				'title'    => _x( 'Search', 'Table Column', 'geditorial-attachments' ),
 				'class'    => '-attachment-search -has-list',

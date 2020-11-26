@@ -6,6 +6,7 @@ use geminorum\gEditorial;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Settings;
+use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Text;
 use geminorum\gEditorial\Core\WordPress;
@@ -379,7 +380,7 @@ class Ortho extends gEditorial\Module
 		if ( 'none' != $char )
 			$query['s'] = $extra['char'] = $char;
 
-		list( $posts, $pagination ) = $this->getTablePosts( $query, $extra );
+		list( $posts, $pagination ) = Tablelist::getPosts( $query, $extra, array_keys( $list ), $this->get_sub_limit_option( $sub ) );
 
 		$pagination['before'][] = HTML::dropdown( [
 			'ي' => _x( 'Arabic Yeh U+064A', 'Char Title', 'geditorial-ortho' ),
@@ -391,17 +392,17 @@ class Ortho extends gEditorial\Module
 			'none_title' => Settings::showOptionNone(),
 		] );
 
-		$pagination['before'][] = Helper::tableFilterPostTypes( $list );
-		$pagination['before'][] = Helper::tableFilterAuthors( $list );
-		$pagination['before'][] = Helper::tableFilterSearch( $list );
+		$pagination['before'][] = Tablelist::filterPostTypes( $list );
+		$pagination['before'][] = Tablelist::filterAuthors( $list );
+		$pagination['before'][] = Tablelist::filterSearch( $list );
 
 		$columns = [
 			'_cb'     => 'ID',
-			'ID'      => Helper::tableColumnPostID(),
-			'date'    => Helper::tableColumnPostDate(),
-			'type'    => Helper::tableColumnPostType(),
-			'title'   => Helper::tableColumnPostTitle(),
-			'excerpt' => Helper::tableColumnPostExcerpt(),
+			'ID'      => Tablelist::columnPostID(),
+			'date'    => Tablelist::columnPostDate(),
+			'type'    => Tablelist::columnPostType(),
+			'title'   => Tablelist::columnPostTitle(),
+			'excerpt' => Tablelist::columnPostExcerpt(),
 		];
 
 		if ( gEditorial()->enabled( 'meta' ) )

@@ -7,6 +7,7 @@ use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\ShortCode;
+use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\WordPress;
@@ -789,17 +790,17 @@ class Book extends gEditorial\Module
 			],
 		];
 
-		list( $posts, $pagination ) = $this->getTablePosts( $query, [], $list );
+		list( $posts, $pagination ) = Tablelist::getPosts( $query, [], array_keys( $list ), $this->get_sub_limit_option( $sub ) );
 
-		$pagination['before'][] = Helper::tableFilterPostTypes( $list );
-		$pagination['before'][] = Helper::tableFilterSearch( $list );
+		$pagination['before'][] = Tablelist::filterPostTypes( $list );
+		$pagination['before'][] = Tablelist::filterSearch( $list );
 
 		return HTML::tableList( [
 			'_cb'   => 'ID',
-			'ID'    => Helper::tableColumnPostID(),
-			'date'  => Helper::tableColumnPostDate(),
-			'type'  => Helper::tableColumnPostType(),
-			'title' => Helper::tableColumnPostTitle(),
+			'ID'    => Tablelist::columnPostID(),
+			'date'  => Tablelist::columnPostDate(),
+			'type'  => Tablelist::columnPostType(),
+			'title' => Tablelist::columnPostTitle(),
 			'metas' => [
 				'title'    => _x( 'Import Meta', 'Table Column', 'geditorial-book' ),
 				'args'     => [ 'fields' => $this->get_importer_fields() ],

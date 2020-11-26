@@ -4,8 +4,9 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Helper;
-use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Scripts;
+use geminorum\gEditorial\Settings;
+use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\Core\Arraay;
 use geminorum\gEditorial\Core\File;
 use geminorum\gEditorial\Core\HTML;
@@ -226,7 +227,7 @@ class Importer extends gEditorial\Module
 				'compare' => 'NOT EXISTS',
 			];
 
-		list( $posts, ) = $this->getTablePosts( $query, [], $args['posttype'] );
+		list( $posts, ) = Tablelist::getPosts( $query, [], $args['posttype'], $this->get_sub_limit_option( $sub ) );
 
 		return HTML::tableList( [
 			'_cb'   => 'ID',
@@ -248,9 +249,9 @@ class Importer extends gEditorial\Module
 					], HTML::img( $src ) );
 				},
 			],
-			'ID'    => Helper::tableColumnPostID(),
-			'title' => Helper::tableColumnPostTitle(),
-			'type'  => Helper::tableColumnPostType(),
+			'ID'    => Tablelist::columnPostID(),
+			'title' => Tablelist::columnPostTitle(),
+			'type'  => Tablelist::columnPostType(),
 			'thumb_image' => [
 				'title'    => _x( 'Thumbnail', 'Table Column', 'geditorial-importer' ),
 				'class'    => 'image-column',

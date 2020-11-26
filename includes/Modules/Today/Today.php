@@ -8,6 +8,7 @@ use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\Settings;
+use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\Core\Arraay;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
@@ -540,9 +541,9 @@ class Today extends gEditorial\Module
 
 			HTML::tableList( [
 				'_cb'   => 'ID',
-				'title' => Helper::tableColumnPostTitle(),
-				'terms' => Helper::tableColumnPostTerms(),
-				'type'  => Helper::tableColumnPostType(),
+				'title' => Tablelist::columnPostTitle(),
+				'terms' => Tablelist::columnPostTerms(),
+				'type'  => Tablelist::columnPostType(),
 			], $posts, [
 				'empty' => _x( 'No posts with day information found.', 'Message', 'geditorial-today' ),
 			] );
@@ -906,18 +907,18 @@ class Today extends gEditorial\Module
 		$list      = $this->list_posttypes();
 		$query     = $this->build_meta_query( $constants );
 
-		list( $posts, $pagination ) = $this->getTablePosts( $query );
+		list( $posts, $pagination ) = Tablelist::getPosts( $query, [], array_keys( $list ), $this->get_sub_limit_option( $sub ) );
 
-		$pagination['before'][] = Helper::tableFilterPostTypes( $list );
-		$pagination['before'][] = Helper::tableFilterAuthors( $list );
-		$pagination['before'][] = Helper::tableFilterSearch( $list );
+		$pagination['before'][] = Tablelist::filterPostTypes( $list );
+		$pagination['before'][] = Tablelist::filterAuthors( $list );
+		$pagination['before'][] = Tablelist::filterSearch( $list );
 
 		return HTML::tableList( [
 			'_cb'   => 'ID',
-			'ID'    => Helper::tableColumnPostID(),
-			'date'  => Helper::tableColumnPostDate(),
-			'type'  => Helper::tableColumnPostType(),
-			'title' => Helper::tableColumnPostTitle(),
+			'ID'    => Tablelist::columnPostID(),
+			'date'  => Tablelist::columnPostDate(),
+			'type'  => Tablelist::columnPostType(),
+			'title' => Tablelist::columnPostTitle(),
 			'theday' => [
 				'title'    => _x( 'The Day', 'Table Column', 'geditorial-today' ),
 				'args'     => [

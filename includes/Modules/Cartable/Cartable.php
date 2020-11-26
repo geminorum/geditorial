@@ -6,6 +6,7 @@ use geminorum\gEditorial;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\PostType;
@@ -892,19 +893,19 @@ class Cartable extends gEditorial\Module
 			] ],
 		];
 
-		list( $posts, $pagination ) = $this->getTablePosts( $query );
+		list( $posts, $pagination ) = Tablelist::getPosts( $query, [], array_keys( $list ), $this->get_sub_limit_option( $sub ) );
 
 		$pagination['actions']['empty_cartable'] = _x( 'Empty Cartable', 'Table Action', 'geditorial-cartable' );
-		$pagination['before'][] = Helper::tableFilterPostTypes( $list );
-		$pagination['before'][] = Helper::tableFilterSearch( $list );
+		$pagination['before'][] = Tablelist::filterPostTypes( $list );
+		$pagination['before'][] = Tablelist::filterSearch( $list );
 
 		return HTML::tableList( [
 			'_cb'   => 'ID',
-			// 'ID'    => Helper::tableColumnPostID(),
-			'date'  => Helper::tableColumnPostDate(),
-			// 'type'  => Helper::tableColumnPostType(), // FIXME: add setting for this
-			'title' => Helper::tableColumnPostTitle(),
-			'terms' => Helper::tableColumnPostTerms( Taxonomy::get( 4, [ 'public' => TRUE ] ) ),
+			// 'ID'    => Tablelist::columnPostID(),
+			'date'  => Tablelist::columnPostDate(),
+			// 'type'  => Tablelist::columnPostType(), // FIXME: add setting for this
+			'title' => Tablelist::clumnPostTitle(),
+			'terms' => Tablelist::columnPostTerms( Taxonomy::get( 4, [ 'public' => TRUE ] ) ),
 			'cartable' => [
 				'title'    => _x( 'Cartable', 'Table Column Title', 'geditorial-cartable' ),
 				'callback' => function( $value, $row, $column, $index ){
@@ -945,15 +946,15 @@ class Cartable extends gEditorial\Module
 
 		$query = new \WP_Query;
 
-		$columns = [ 'title' => Helper::tableColumnPostTitleSummary() ];
+		$columns = [ 'title' => Tablelist::columnPostTitleSummary() ];
 
 		if ( $this->get_setting( 'dashboard_statuses', FALSE ) )
-			$columns['status'] = Helper::tableColumnPostStatusSummary();
+			$columns['status'] = Tablelist::columnPostStatusSummary();
 
 		if ( $this->get_setting( 'dashboard_authors', FALSE ) )
-			$columns['author'] = Helper::tableColumnPostAuthorSummary();
+			$columns['author'] = Tablelist::columnPostAuthorSummary();
 
-		$columns['modified'] = Helper::tableColumnPostDateModified();
+		$columns['modified'] = Tablelist::columnPostDateModified();
 
 		HTML::tableList( $columns, $query->query( $args ), [
 			'empty' => _x( 'The cartable is empty!', 'Message', 'geditorial-cartable' ),

@@ -6,6 +6,7 @@ use geminorum\gEditorial;
 use geminorum\gEditorial\Ajax;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Settings;
+use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Text;
 use geminorum\gEditorial\Core\WordPress;
@@ -472,21 +473,21 @@ class Markdown extends gEditorial\Module
 	{
 		$list = $this->list_posttypes();
 
-		list( $posts, $pagination ) = $this->getTablePosts();
+		list( $posts, $pagination ) = Tablelist::getPosts( [], [], array_keys( $list ), $this->get_sub_limit_option( $sub ) );
 
 		$pagination['actions']['convert_markdown'] = _x( 'Convert into Markdown', 'Table Action', 'geditorial-markdown' );
 		$pagination['actions']['process_markdown'] = _x( 'Re-Process Markdown', 'Table Action', 'geditorial-markdown' );
 		$pagination['actions']['cleanup_markdown'] = _x( 'Cleanup Markdown', 'Table Action', 'geditorial-markdown' );
 		$pagination['actions']['discard_markdown'] = _x( 'Discard Markdown', 'Table Action', 'geditorial-markdown' );
-		$pagination['before'][] = Helper::tableFilterPostTypes( $list );
-		$pagination['before'][] = Helper::tableFilterAuthors( $list );
-		$pagination['before'][] = Helper::tableFilterSearch( $list );
+		$pagination['before'][] = Tablelist::filterPostTypes( $list );
+		$pagination['before'][] = Tablelist::filterAuthors( $list );
+		$pagination['before'][] = Tablelist::filterSearch( $list );
 
 		return HTML::tableList( [
 			'_cb'      => 'ID',
-			'ID'       => Helper::tableColumnPostID(),
-			'date'     => Helper::tableColumnPostDate(),
-			'type'     => Helper::tableColumnPostType(),
+			'ID'       => Tablelist::columnPostID(),
+			'date'     => Tablelist::columnPostDate(),
+			'type'     => Tablelist::columnPostType(),
 			'markdown' => [
 				'title'    => _x( 'Markdown', 'Table Column', 'geditorial-markdown' ),
 				'class'    => [ '-icon-column' ],
@@ -494,8 +495,8 @@ class Markdown extends gEditorial\Module
 					return $this->is_markdown( $row->ID ) ? Helper::getIcon( $this->module->icon ) : '';
 				},
 			],
-			'title' => Helper::tableColumnPostTitle(),
-			'terms' => Helper::tableColumnPostTerms(),
+			'title' => Tablelist::columnPostTitle(),
+			'terms' => Tablelist::columnPostTerms(),
 		], $posts, [
 			'navigation' => 'before',
 			'search'     => 'before',

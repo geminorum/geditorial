@@ -8,6 +8,7 @@ use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\ShortCode;
+use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\Core\Date;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Text;
@@ -137,15 +138,15 @@ class Modified extends gEditorial\Module
 
 		$query = new \WP_Query;
 
-		$columns = [ 'title' => Helper::tableColumnPostTitleSummary() ];
+		$columns = [ 'title' => Tablelist::columnPostTitleSummary() ];
 
 		if ( $this->get_setting( 'dashboard_statuses', FALSE ) )
-			$columns['status'] = Helper::tableColumnPostStatusSummary();
+			$columns['status'] = Tablelist::columnPostStatusSummary();
 
 		if ( $this->get_setting( 'dashboard_authors', FALSE ) )
-			$columns['author'] = Helper::tableColumnPostAuthorSummary();
+			$columns['author'] = Tablelist::columnPostAuthorSummary();
 
-		$columns['modified'] = Helper::tableColumnPostDateModified();
+		$columns['modified'] = Tablelist::columnPostDateModified();
 
 		HTML::tableList( $columns, $query->query( $args ), [
 			'empty' => $this->get_posttype_label( 'post', 'not_found' ),

@@ -7,6 +7,7 @@ use geminorum\gEditorial\Ajax;
 use geminorum\gEditorial\Datetime;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Settings;
+use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\HTTP;
 use geminorum\gEditorial\Core\Number;
@@ -552,21 +553,21 @@ class Like extends gEditorial\Module
 			'order'    => 'DESC',
 		];
 
-		list( $posts, $pagination ) = $this->getTablePosts( $query );
+		list( $posts, $pagination ) = Tablelist::getPosts( $query, [], array_keys( $list ), $this->get_sub_limit_option( $sub ) );
 
 		$pagination['actions']['sync_counts']     = _x( 'Sync Counts', 'Table Action', 'geditorial-like' );
 		$pagination['actions']['sync_counts_all'] = _x( 'Sync All Counts', 'Table Action', 'geditorial-like' );
 
-		$pagination['before'][] = Helper::tableFilterPostTypes( $list );
-		$pagination['before'][] = Helper::tableFilterAuthors( $list );
-		$pagination['before'][] = Helper::tableFilterSearch( $list );
+		$pagination['before'][] = Tablelist::filterPostTypes( $list );
+		$pagination['before'][] = Tablelist::filterAuthors( $list );
+		$pagination['before'][] = Tablelist::filterSearch( $list );
 
 		return HTML::tableList( [
 			'_cb'   => 'ID',
-			'ID'    => Helper::tableColumnPostID(),
-			'date'  => Helper::tableColumnPostDate(),
-			'type'  => Helper::tableColumnPostType(),
-			'title' => Helper::tableColumnPostTitle(),
+			'ID'    => Tablelist::columnPostID(),
+			'date'  => Tablelist::columnPostDate(),
+			'type'  => Tablelist::columnPostType(),
+			'title' => Tablelist::columnPostTitle(),
 			'total' => [
 				'title'    => _x( 'Total', 'Table Column', 'geditorial-like' ),
 				'callback' => function( $value, $row, $column, $index ){

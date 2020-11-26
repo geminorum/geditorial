@@ -5,6 +5,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Settings;
+use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\Core\HTML;
 
 class Shortcodes extends gEditorial\Module
@@ -82,7 +83,7 @@ class Shortcodes extends gEditorial\Module
 			$extra['shortcode'] = $shortcode;
 		}
 
-		list( $posts, $pagination ) = $this->getTablePosts( $query, $extra );
+		list( $posts, $pagination ) = Tablelist::getPosts( $query, $extra, array_keys( $list ), $this->get_sub_limit_option( $sub ) );
 
 		$pagination['before'][] = HTML::dropdown(
 			$this->get_shortcode_list(), [
@@ -92,16 +93,16 @@ class Shortcodes extends gEditorial\Module
 				'none_title' => _x( 'All Shortcodes', 'None Title', 'geditorial-shortcodes' ),
 			] );
 
-		$pagination['before'][] = Helper::tableFilterPostTypes( $list );
-		$pagination['before'][] = Helper::tableFilterAuthors( $list );
-		$pagination['before'][] = Helper::tableFilterSearch( $list );
+		$pagination['before'][] = Tablelist::filterPostTypes( $list );
+		$pagination['before'][] = Tablelist::filterAuthors( $list );
+		$pagination['before'][] = Tablelist::filterSearch( $list );
 
 		return HTML::tableList( [
 			'_cb'   => 'ID',
-			'ID'    => Helper::tableColumnPostID(),
-			'date'  => Helper::tableColumnPostDate(),
-			'type'  => Helper::tableColumnPostType(),
-			'title' => Helper::tableColumnPostTitle(),
+			'ID'    => Tablelist::columnPostID(),
+			'date'  => Tablelist::columnPostDate(),
+			'type'  => Tablelist::columnPostType(),
+			'title' => Tablelist::columnPostTitle(),
 			'shortcodes' => [
 				'title'    => _x( 'Shortcodes', 'Table Column', 'geditorial-shortcodes' ),
 				'args'     => [ 'regex' => get_shortcode_regex() ],

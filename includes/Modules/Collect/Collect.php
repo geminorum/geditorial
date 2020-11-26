@@ -7,6 +7,7 @@ use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\ShortCode;
+use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\URL;
@@ -768,8 +769,8 @@ class Collect extends gEditorial\Module
 
 			HTML::tableList( [
 				'_cb'     => 'term_id',
-				'term_id' => Helper::tableColumnTermID(),
-				'name'    => Helper::tableColumnTermName(),
+				'term_id' => Tablelist::columnTermID(),
+				'name'    => Tablelist::columnTermName(),
 				'linked'   => [
 					'title'    => _x( 'Linked Collection Post', 'Table Column', 'geditorial-collect' ),
 					'callback' => function( $value, $row, $column, $index ){
@@ -798,7 +799,7 @@ class Collect extends gEditorial\Module
 						return Number::format( $row->count );
 					},
 				],
-				'description' => Helper::tableColumnTermDesc(),
+				'description' => Tablelist::columnTermDesc(),
 			], Taxonomy::getTerms( $this->constant( 'collection_tax' ), FALSE, TRUE ), [
 				'empty' => HTML::warning( _x( 'No Terms Found!', 'Table Empty', 'geditorial-collect' ), FALSE ),
 			] );

@@ -3516,54 +3516,6 @@ class Module extends Base
 		return gEditorial()->icon( $name, ( is_null( $group ) ? $this->icon_group : $group ) );
 	}
 
-	public function getTablePosts( $atts = [], $extra = [], $posttypes = NULL, $sub = NULL )
-	{
-		if ( is_null( $posttypes ) )
-			$posttypes = $this->posttypes();
-
-		$limit  = $this->get_sub_limit_option( $sub );
-		$paged  = self::paged();
-		$offset = ( $paged - 1 ) * $limit;
-
-		$args = array_merge( [
-			'posts_per_page'   => $limit,
-			'offset'           => $offset,
-			'orderby'          => self::orderby( 'ID' ),
-			'order'            => self::order( 'DESC' ),
-			'post_type'        => $posttypes, // 'any',
-			'post_status'      => 'any', // [ 'publish', 'future', 'draft', 'pending' ],
-			'suppress_filters' => TRUE,
-		], $atts );
-
-		if ( ! empty( $_REQUEST['s'] ) )
-			$args['s'] = $extra['s'] = $_REQUEST['s'];
-
-		if ( ! empty( $_REQUEST['id'] ) )
-			$args['post__in'] = explode( ',', maybe_unserialize( $_REQUEST['id'] ) );
-
-		if ( ! empty( $_REQUEST['type'] ) )
-			$args['post_type'] = $extra['type'] = $_REQUEST['type'];
-
-		if ( ! empty( $_REQUEST['author'] ) )
-			$args['author'] = $extra['author'] = $_REQUEST['author'];
-
-		if ( ! empty( $_REQUEST['parent'] ) )
-			$args['post_parent'] = $extra['parent'] = $_REQUEST['parent'];
-
-		if ( 'attachment' == $args['post_type'] && is_array( $args['post_status'] ) )
-			$args['post_status'][] = 'inherit';
-
-		$query = new \WP_Query;
-		$posts = $query->query( $args );
-
-		$pagination = HTML::tablePagination( $query->found_posts, $query->max_num_pages, $limit, $paged, $extra );
-
-		$pagination['orderby'] = $args['orderby'];
-		$pagination['order']   = $args['order'];
-
-		return [ $posts, $pagination ];
-	}
-
 	// checks to bail early if metabox/widget is hidden
 	protected function check_hidden_metabox( $box, $posttype = FALSE, $after = '' )
 	{
