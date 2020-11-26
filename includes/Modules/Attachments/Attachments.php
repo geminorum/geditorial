@@ -270,7 +270,7 @@ class Attachments extends gEditorial\Module
 	{
 		if ( $this->check_settings( $sub, 'reports' ) ) {
 			Scripts::enqueueThickBox();
-			$this->screen_option( $sub );
+			$this->add_sub_screen_option( $sub );
 		}
 	}
 

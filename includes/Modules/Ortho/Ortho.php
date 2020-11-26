@@ -365,7 +365,7 @@ class Ortho extends gEditorial\Module
 				}
 			}
 
-			$this->screen_option( $sub );
+			$this->add_sub_screen_option( $sub );
 			$this->register_button( 'cleanup_chars', _x( 'Cleanup Chars', 'Button', 'geditorial-ortho' ), TRUE );
 		}
 	}

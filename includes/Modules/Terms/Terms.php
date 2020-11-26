@@ -1335,7 +1335,7 @@ class Terms extends gEditorial\Module
 				WordPress::redirectReferer( 'nochange' );
 			}
 
-			$this->screen_option( $sub );
+			$this->add_sub_screen_option( $sub );
 		}
 	}
 

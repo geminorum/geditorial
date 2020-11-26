@@ -539,7 +539,7 @@ class Like extends gEditorial\Module
 				}
 			}
 
-			$this->screen_option( $sub );
+			$this->add_sub_screen_option( $sub );
 		}
 	}
 

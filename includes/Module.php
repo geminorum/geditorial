@@ -3511,31 +3511,6 @@ class Module extends Base
 		return HTML::escape( $value );
 	}
 
-	protected function limit_sub( $sub = NULL, $default = 25, $key = 'limit', $option = 'per_page' )
-	{
-		if ( is_null( $sub ) )
-			$sub = $this->key;
-
-		$per_page = (int) get_user_option( $this->base.'_'.$sub.'_'.$option );
-
-		if ( empty( $per_page ) || $per_page < 1 )
-			$per_page = $default;
-
-		return intval( self::req( $key, $per_page ) );
-	}
-
-	public function screen_option( $sub = NULL, $option = 'per_page', $default = 25, $label = NULL )
-	{
-		if ( is_null( $sub ) )
-			$sub = $this->key;
-
-		add_screen_option( $option, [
-			'default' => $default,
-			'option'  => $this->base.'_'.$sub.'_'.$option,
-			'label'   => $label,
-		] );
-	}
-
 	public function icon( $name, $group = NULL )
 	{
 		return gEditorial()->icon( $name, ( is_null( $group ) ? $this->icon_group : $group ) );
@@ -3546,7 +3521,7 @@ class Module extends Base
 		if ( is_null( $posttypes ) )
 			$posttypes = $this->posttypes();
 
-		$limit  = $this->limit_sub( $sub );
+		$limit  = $this->get_sub_limit_option( $sub );
 		$paged  = self::paged();
 		$offset = ( $paged - 1 ) * $limit;
 

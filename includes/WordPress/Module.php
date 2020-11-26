@@ -321,6 +321,31 @@ class Module extends Core\Base
 		return check_admin_referer( $this->base.'-'.$key.'-'.$context, $name );
 	}
 
+	protected function get_sub_limit_option( $sub = NULL, $default = 25, $key = 'limit', $option = 'per_page' )
+	{
+		if ( is_null( $sub ) )
+			$sub = $this->key;
+
+		$per_page = (int) get_user_option( $this->base.'_'.$sub.'_'.$option );
+
+		if ( empty( $per_page ) || $per_page < 1 )
+			$per_page = $default;
+
+		return intval( self::req( $key, $per_page ) );
+	}
+
+	protected function add_sub_screen_option( $sub = NULL, $option = 'per_page', $default = 25, $label = NULL )
+	{
+		if ( is_null( $sub ) )
+			$sub = $this->key;
+
+		add_screen_option( $option, [
+			'default' => $default,
+			'option'  => $this->base.'_'.$sub.'_'.$option,
+			'label'   => $label,
+		] );
+	}
+
 	protected function wrap( $html, $class = '', $block = TRUE, $id = FALSE, $hide = FALSE )
 	{
 		return $block

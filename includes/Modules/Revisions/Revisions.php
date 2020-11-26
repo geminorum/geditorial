@@ -388,7 +388,7 @@ class Revisions extends gEditorial\Module
 				}
 			}
 
-			$this->screen_option( $sub );
+			$this->add_sub_screen_option( $sub );
 			// $this->register_button( 'cleanup_revisions', _x( 'Cleanup Revisions', 'Button', 'geditorial-revisions' ) );
 		}
 	}
@@ -448,7 +448,7 @@ class Revisions extends gEditorial\Module
 
 		$where  = '';
 		$extra  = [];
-		$limit  = $this->limit_sub();
+		$limit  = $this->get_sub_limit_option();
 		$order  = self::order( 'asc' );
 		$paged  = self::paged();
 		$offset = ( $paged - 1 ) * $limit;

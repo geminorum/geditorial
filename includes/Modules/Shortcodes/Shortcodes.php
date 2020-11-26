@@ -68,7 +68,7 @@ class Shortcodes extends gEditorial\Module
 	public function reports_settings( $sub )
 	{
 		if ( $this->check_settings( $sub, 'reports' ) )
-			$this->screen_option( $sub );
+			$this->add_sub_screen_option( $sub );
 	}
 
 	protected function render_reports_html( $uri, $sub )
