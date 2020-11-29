@@ -79,11 +79,11 @@ class Archives extends gEditorial\Module
 		if ( ! $object = Taxonomy::object( $taxonomy ) )
 			return FALSE;
 
-		if ( ! empty( $object->rewrite['slug'] ) )
-			return $object->rewrite['slug'];
-
 		if ( ! empty( $object->rest_base ) )
 			return $object->rest_base;
+
+		if ( ! empty( $object->rewrite['slug'] ) )
+			return $object->rewrite['slug'];
 
 		return $taxonomy;
 	}
