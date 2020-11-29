@@ -349,7 +349,7 @@ class Importer extends gEditorial\Module
 			/* translators: %s: count placeholder */
 			'title'     => HTML::tag( 'h3', Helper::getCounted( count( $data ), _x( '%s Records Found', 'Header', 'geditorial-importer' ) ) ),
 			'callback'  => [ $this, 'form_posts_table_callback' ],
-			'row_check' => [ $this, 'form_posts_table_row_check' ],
+			'row_prep' => [ $this, 'form_posts_table_row_prep' ],
 			'extra'     => [
 				'na'         => gEditorial()->na(),
 				'map'        => $map,
@@ -360,9 +360,10 @@ class Importer extends gEditorial\Module
 		] );
 	}
 
-	public function form_posts_table_row_check( $row, $index, $args )
+	public function form_posts_table_row_prep( $row, $index, $args )
 	{
-		return count( $row ) > 1; // empty rows have one empty cells
+		// empty rows have one empty cells
+		return count( $row ) > 1 ? $row : FALSE;
 	}
 
 	public function form_posts_table_callback( $value, $row, $column, $index, $key, $args )
