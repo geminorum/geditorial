@@ -19,6 +19,44 @@ class Media extends Core\Base
 		], $html );
 	}
 
+	// WP default sizes from options
+	public static function defaultImageSizes()
+	{
+		static $sizes = NULL;
+
+		if ( ! is_null( $sizes ) )
+			return $sizes;
+
+		$sizes = [
+			'thumbnail' => [
+				'n' => __( 'Thumbnail' ),
+				'w' => get_option( 'thumbnail_size_w' ),
+				'h' => get_option( 'thumbnail_size_h' ),
+				'c' => get_option( 'thumbnail_crop' ),
+			],
+			'medium' => [
+				'n' => __( 'Medium' ),
+				'w' => get_option( 'medium_size_w' ),
+				'h' => get_option( 'medium_size_h' ),
+				'c' => 0,
+			],
+			// 'medium_large' => [
+			// 	'n' => __( 'Medium Large' ),
+			// 	'w' => get_option( 'medium_large_size_w' ),
+			// 	'h' => get_option( 'medium_large_size_h' ),
+			// 	'c' => 0,
+			// ],
+			'large' => [
+				'n' => __( 'Large' ),
+				'w' => get_option( 'large_size_w' ),
+				'h' => get_option( 'large_size_h' ),
+				'c' => 0,
+			],
+		];
+
+		return $sizes;
+	}
+
 	// core dup with posttype/taxonomy/title
 	// @REF: `add_image_size()`
 	public static function registerImageSize( $name, $atts = array() )

@@ -190,6 +190,9 @@ class Theme extends Core\Base
 		$wp_query->post  = $post;
 		$wp_query->posts = array( $post );
 
+		$wp_query->queried_object    = $post;
+		$wp_query->queried_object_id = $post->ID;
+
 		// prevent comments form from appearing.
 		$wp_query->post_count = 1;
 		$wp_query->is_404     = $dummy['is_404'];
