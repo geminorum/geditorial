@@ -198,11 +198,23 @@ class Archives extends gEditorial\Module
 		return HTML::wrap( $html, '-taxonomy-archives-content' );
 	}
 
+	public function get_taxonomy_archive_link( $taxonomy )
+	{
+		if ( ! in_array( $taxonomy, $this->taxonomies() ) )
+			return FALSE;
+
+		if ( ! $slug = $this->taxonomy_archive_slug( $taxonomy ) )
+			return FALSE;
+
+		$link = sprintf( '%s/%s', get_bloginfo( 'url' ), $slug );
+
+		return $this->filters( 'taxonomy_archive_link', $link, $taxonomy, $slug );
+	}
+
 	public function countables_taxonomy_countbox_tokens( $tokens, $taxonomy, $count, $args )
 	{
-		if ( in_array( $taxonomy, $this->taxonomies() )
-			&& ( $slug = $this->taxonomy_archive_slug( $taxonomy ) ) )
-			$tokens['link'] = sprintf( '%s/%s', get_bloginfo( 'url' ), $slug );
+		if ( $link = $this->get_taxonomy_archive_link( $taxonomy ) )
+			$tokens['link'] = $link;
 
 		return $tokens;
 	}
