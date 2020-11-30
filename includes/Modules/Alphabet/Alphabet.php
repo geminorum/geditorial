@@ -408,7 +408,7 @@ class Alphabet extends gEditorial\Module
 
 	public static function firstLetter( $string, $alphabet )
 	{
-		$first = Text::subStr( $string, 0, 1 );
+		$first = strtoupper( Text::subStr( $string, 0, 1 ) );
 
 		foreach ( Arraay::column( $alphabet, 'search', 'letter' ) as $letter => $searchs )
 			if ( FALSE !== array_search( $first, $searchs ) )
