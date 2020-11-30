@@ -128,7 +128,7 @@ class Scripts extends Core\Base
 			: self::registerPackage( 'jquery-sortable', NULL, [ 'jquery' ], $ver );
 	}
 
-	public static function pkgListJS( $enqueue = FALSE, $ver = '1.5.0' )
+	public static function pkgListJS( $enqueue = FALSE, $ver = '2.3.0' )
 	{
 		return $enqueue
 			? self::enqueuePackage( 'listjs', 'list.js/list', [], $ver )
