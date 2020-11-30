@@ -30,9 +30,8 @@ class Statuses extends gEditorial\Module
 
 	protected function get_global_settings()
 	{
-		$roles    = User::getAllRoleList();
-		$exclude  = [ 'administrator', 'subscriber' ];
 		$statuses = Taxonomy::getTerms( $this->constant( 'status_tax' ), FALSE, TRUE );
+		$roles    = $this->get_settings_default_roles( [ 'administrator', 'subscriber' ] );
 
 		$settings = [
 			'posttypes_option' => 'posttypes_option',
@@ -69,7 +68,6 @@ class Statuses extends gEditorial\Module
 				'title'       => sprintf( _x( 'Roles for %s', 'Setting Title', 'geditorial-statuses' ), $status->name ),
 				/* translators: %s: status name */
 				'description' => sprintf( _x( 'The <b>%s</b> status will be visibile to the selected roles.', 'Setting Description', 'geditorial-statuses' ), $status->name ),
-				'exclude'     => $exclude,
 				'values'      => $roles,
 			];
 

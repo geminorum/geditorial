@@ -179,6 +179,15 @@ class Settings extends Core\Base
 		], (array) $extra );
 	}
 
+	public static function rolesExcluded( $extra = [] )
+	{
+		return array_merge( [
+			'backwpup_admin',
+			'backwpup_check',
+			'backwpup_helper',
+		], (array) $extra );
+	}
+
 	public static function showOptionNone( $string = NULL )
 	{
 		if ( $string )
@@ -642,7 +651,7 @@ class Settings extends Core\Base
 			'title'       => _x( 'Supported Roles', 'Settings: Setting Title', 'geditorial' ),
 			'description' => $description ?: '',
 			'default'     => [],
-			'exclude'     => [ 'administrator' ],
+			'exclude'     => self::rolesExcluded( [ 'administrator' ] ),
 			'values'      => User::getAllRoleList(),
 		];
 	}
@@ -655,7 +664,7 @@ class Settings extends Core\Base
 			'title'       => _x( 'Excluded Roles', 'Settings: Setting Title', 'geditorial' ),
 			'description' => $description ?: '',
 			'default'     => [],
-			'exclude'     => [ 'administrator' ],
+			'exclude'     => self::rolesExcluded( [ 'administrator' ] ),
 			'values'      => User::getAllRoleList(),
 		];
 	}
@@ -668,7 +677,7 @@ class Settings extends Core\Base
 			'title'       => _x( 'Admin Menu Roles', 'Settings: Setting Title', 'geditorial' ),
 			'description' => $description ?: '',
 			'default'     => [],
-			'exclude'     => [ 'administrator', 'subscriber' ],
+			'exclude'     => self::rolesExcluded( [ 'administrator', 'subscriber' ] ),
 			'values'      => User::getAllRoleList(),
 		];
 	}
@@ -681,7 +690,7 @@ class Settings extends Core\Base
 			'title'       => _x( 'Meta Box Roles', 'Settings: Setting Title', 'geditorial' ),
 			'description' => $description ?: '',
 			'default'     => [],
-			'exclude'     => [ 'administrator', 'subscriber' ],
+			'exclude'     => self::rolesExcluded( [ 'administrator', 'subscriber' ] ),
 			'values'      => User::getAllRoleList(),
 		];
 	}
@@ -694,7 +703,7 @@ class Settings extends Core\Base
 			'title'       => _x( 'Adminbar Roles', 'Settings: Setting Title', 'geditorial' ),
 			'description' => $description ?: '',
 			'default'     => [],
-			'exclude'     => [ 'administrator', 'subscriber' ],
+			'exclude'     => self::rolesExcluded( [ 'administrator', 'subscriber' ] ),
 			'values'      => User::getAllRoleList(),
 		];
 	}

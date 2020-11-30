@@ -2307,6 +2307,14 @@ class Module extends Base
 		return $form.'</form>';
 	}
 
+	protected function get_settings_default_roles( $extra_excludes = [], $filtered = TRUE )
+	{
+		$supported = User::getAllRoleList( $filtered );
+		$excluded  = Settings::rolesExcluded( $extra_excludes );
+
+		return array_diff_key( $supported, array_flip( $excluded ) );
+	}
+
 	protected function role_can( $what = 'supported', $user_id = NULL, $fallback = FALSE, $admins = TRUE, $prefix = '_roles' )
 	{
 		if ( is_null( $user_id ) )

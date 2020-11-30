@@ -7,7 +7,6 @@ use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Text;
 use geminorum\gEditorial\WordPress\PostType;
-use geminorum\gEditorial\WordPress\User;
 // use geminorum\gEditorial\Templates\Inquire as ModuleTemplate;
 
 class Inquire extends gEditorial\Module
@@ -27,8 +26,7 @@ class Inquire extends gEditorial\Module
 
 	protected function get_global_settings()
 	{
-		$roles   = User::getAllRoleList();
-		$exclude = [ 'administrator', 'subscriber' ];
+		$roles = $this->get_settings_default_roles( [ 'administrator', 'subscriber' ] );
 
 		return [
 			'_editpost' => [
@@ -37,7 +35,6 @@ class Inquire extends gEditorial\Module
 					'type'        => 'checkbox-panel',
 					'title'       => _x( 'Question Roles', 'Setting Title', 'geditorial-inquire' ),
 					'description' => _x( 'Roles that can change the question.', 'Setting Description', 'geditorial-inquire' ),
-					'exclude'     => $exclude,
 					'values'      => $roles,
 				],
 			],

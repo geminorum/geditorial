@@ -30,8 +30,7 @@ class Workflow extends gEditorial\Module
 
 	protected function get_global_settings()
 	{
-		$roles   = User::getAllRoleList();
-		$exclude = [ 'administrator', 'subscriber' ];
+		$roles = $this->get_settings_default_roles( [ 'administrator', 'subscriber' ] );
 
 		$settings = [
 			'posttypes_option' => 'posttypes_option',
@@ -51,7 +50,6 @@ class Workflow extends gEditorial\Module
 					'type'        => 'checkbox-panel',
 					'title'       => _x( 'Draft Roles', 'Setting Title', 'geditorial-workflow' ),
 					'description' => _x( 'Roles that can rollback to Draft status.', 'Setting Description', 'geditorial-workflow' ),
-					'exclude'     => $exclude,
 					'values'      => $roles,
 				],
 			],

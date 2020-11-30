@@ -7,7 +7,6 @@ use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Text;
 use geminorum\gEditorial\WordPress\PostType;
-use geminorum\gEditorial\WordPress\User;
 
 class Roles extends gEditorial\Module
 {
@@ -88,7 +87,7 @@ class Roles extends gEditorial\Module
 		$caps   = [];
 		$prefix = $this->constant( 'base_prefix' );
 
-		foreach ( User::getAllRoleList() as $role => $title )
+		foreach ( $this->get_settings_default_roles() as $role => $title )
 			if ( ! Text::has( $role, $prefix ) )
 				$caps[$role] = $title;
 
@@ -269,7 +268,7 @@ class Roles extends gEditorial\Module
 	private function duplicate_default_roles()
 	{
 		$count  = 0;
-		$roles  = User::getRoleList();
+		$roles  = $this->get_settings_default_roles();
 		$prefix = $this->constant( 'base_prefix' );
 		$map    = $this->map();
 
@@ -402,7 +401,7 @@ class Roles extends gEditorial\Module
 		Settings::submitButton( 'remove_duplicate_roles', _x( 'Remove Duplicates', 'Button', 'geditorial-roles' ), 'danger' );
 
 		if ( isset( $_POST['check_current_roles'] ) )
-			echo HTML::tableCode( User::getRoleList(), TRUE );
+			echo HTML::tableCode( $this->get_settings_default_roles(), TRUE );
 
 		if ( isset( $_POST['check_current_caps'] ) ) {
 			$prefix = $this->constant( 'base_prefix' );

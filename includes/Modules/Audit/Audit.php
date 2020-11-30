@@ -31,10 +31,9 @@ class Audit extends gEditorial\Module
 
 	protected function get_global_settings()
 	{
-		$terms   = Taxonomy::listTerms( $this->constant( 'audit_tax' ) );
-		$empty   = $this->get_taxonomy_label( 'audit_tax', 'no_terms', _x( 'There\'s no audit attributes available!', 'Setting', 'geditorial-audit' ) );
-		$roles   = User::getAllRoleList();
-		$exclude = [ 'administrator', 'subscriber' ];
+		$terms = Taxonomy::listTerms( $this->constant( 'audit_tax' ) );
+		$empty = $this->get_taxonomy_label( 'audit_tax', 'no_terms', _x( 'There\'s no audit attributes available!', 'Setting', 'geditorial-audit' ) );
+		$roles = $this->get_settings_default_roles( [ 'administrator', 'subscriber' ] );
 
 		return [
 			'posttypes_option' => 'posttypes_option',
@@ -44,7 +43,6 @@ class Audit extends gEditorial\Module
 					'type'        => 'checkboxes',
 					'title'       => _x( 'Manage Roles', 'Setting Title', 'geditorial-audit' ),
 					'description' => _x( 'Roles that can Manage, Edit and Delete Audit Attributes.', 'Setting Description', 'geditorial-audit' ),
-					'exclude'     => $exclude,
 					'values'      => $roles,
 				],
 				[
@@ -52,7 +50,6 @@ class Audit extends gEditorial\Module
 					'type'        => 'checkboxes',
 					'title'       => _x( 'Assign Roles', 'Setting Title', 'geditorial-audit' ),
 					'description' => _x( 'Roles that can Assign Audit Attributes.', 'Setting Description', 'geditorial-audit' ),
-					'exclude'     => $exclude,
 					'values'      => $roles,
 				],
 				[
@@ -60,7 +57,6 @@ class Audit extends gEditorial\Module
 					'type'        => 'checkboxes',
 					'title'       => _x( 'Reports Roles', 'Setting Title', 'geditorial-audit' ),
 					'description' => _x( 'Roles that can see Audit Attributes Reports.', 'Setting Description', 'geditorial-audit' ),
-					'exclude'     => $exclude,
 					'values'      => $roles,
 				],
 				[
@@ -68,7 +64,6 @@ class Audit extends gEditorial\Module
 					'type'        => 'checkboxes',
 					'title'       => _x( 'Restricted Roles', 'Setting Title', 'geditorial-audit' ),
 					'description' => _x( 'Roles that check for Audit Attributes visibility.', 'Setting Description', 'geditorial-audit' ),
-					'exclude'     => $exclude,
 					'values'      => $roles,
 				],
 				[

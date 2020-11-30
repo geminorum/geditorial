@@ -16,7 +16,6 @@ use geminorum\gEditorial\WordPress\Database;
 use geminorum\gEditorial\WordPress\Media;
 use geminorum\gEditorial\WordPress\Taxonomy;
 use geminorum\gEditorial\WordPress\PostType;
-use geminorum\gEditorial\WordPress\User;
 use geminorum\gEditorial\Templates\Terms as ModuleTemplate;
 
 class Terms extends gEditorial\Module
@@ -537,7 +536,7 @@ class Terms extends gEditorial\Module
 			case 'role':
 
 				if ( empty( $this->all_roles ) )
-					$this->all_roles = User::getAllRoleList();
+					$this->all_roles = $this->get_settings_default_roles();
 
 				if ( $meta = get_term_meta( $term->term_id, $field, TRUE ) )
 					$html = '<span class="'.$field.'" data-'.$field.'="'.HTML::escape( $meta ).'">'
@@ -553,7 +552,7 @@ class Terms extends gEditorial\Module
 			case 'roles':
 
 				if ( empty( $this->all_roles ) )
-					$this->all_roles = User::getAllRoleList();
+					$this->all_roles = $this->get_settings_default_roles();
 
 				if ( $meta = get_term_meta( $term->term_id, $field, TRUE ) ) {
 
@@ -776,7 +775,7 @@ class Terms extends gEditorial\Module
 			break;
 			case 'role':
 
-				$html.= HTML::dropdown( User::getRoleList(), [
+				$html.= HTML::dropdown( $this->get_settings_default_roles(), [
 					'id'         => $this->classs( $field, 'id' ),
 					'name'       => 'term-'.$field,
 					'selected'   => empty( $meta ) ? '0' : $meta,
@@ -788,7 +787,7 @@ class Terms extends gEditorial\Module
 
 				$html.= '<div class="wp-tab-panel"><ul>';
 
-				foreach ( User::getRoleList() as $role => $name ) {
+				foreach ( $this->get_settings_default_roles() as $role => $name ) {
 
 					$checkbox = HTML::tag( 'input', [
 						'type'    => 'checkbox',
@@ -944,7 +943,7 @@ class Terms extends gEditorial\Module
 			break;
 			case 'role':
 
-				$html.= HTML::dropdown( User::getRoleList(), [
+				$html.= HTML::dropdown( $this->get_settings_default_roles(), [
 					'name'       => 'term-'.$field,
 					'selected'   => '0',
 					'none_title' => Settings::showOptionNone(),

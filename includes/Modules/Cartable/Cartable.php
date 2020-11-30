@@ -11,7 +11,6 @@ use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\Taxonomy;
-use geminorum\gEditorial\WordPress\User;
 
 class Cartable extends gEditorial\Module
 {
@@ -37,8 +36,7 @@ class Cartable extends gEditorial\Module
 
 	protected function get_global_settings()
 	{
-		$roles   = User::getAllRoleList();
-		$exclude = [ 'administrator', 'subscriber' ];
+		$roles = $this->get_settings_default_roles( [ 'administrator', 'subscriber' ] );
 
 		$settings = [
 			'posttypes_option' => 'posttypes_option',
@@ -84,7 +82,6 @@ class Cartable extends gEditorial\Module
 				'type'        => 'checkboxes',
 				'title'       => _x( 'View User Cartable', 'Setting Title', 'geditorial-cartable' ),
 				'description' => _x( 'Roles that can view user cartables.', 'Setting Description', 'geditorial-cartable' ),
-				'exclude'     => $exclude,
 				'values'      => $roles,
 			];
 
@@ -94,7 +91,6 @@ class Cartable extends gEditorial\Module
 				'type'        => 'checkboxes',
 				'title'       => _x( 'View Group Cartable', 'Setting Title', 'geditorial-cartable' ),
 				'description' => _x( 'Roles that can view group cartables.', 'Setting Description', 'geditorial-cartable' ),
-				'exclude'     => $exclude,
 				'values'      => $roles,
 			];
 
@@ -104,7 +100,6 @@ class Cartable extends gEditorial\Module
 				'type'        => 'checkboxes',
 				'title'       => _x( 'View Type Cartable', 'Setting Title', 'geditorial-cartable' ),
 				'description' => _x( 'Roles that can view type cartables.', 'Setting Description', 'geditorial-cartable' ),
-				'exclude'     => $exclude,
 				'values'      => $roles,
 			];
 
@@ -114,7 +109,6 @@ class Cartable extends gEditorial\Module
 				'type'        => 'checkboxes',
 				'title'       => _x( 'Assign User Cartables', 'Setting Title', 'geditorial-cartable' ),
 				'description' => _x( 'Roles that can assign user cartables.', 'Setting Description', 'geditorial-cartable' ),
-				'exclude'     => $exclude,
 				'values'      => $roles,
 			];
 
@@ -124,7 +118,6 @@ class Cartable extends gEditorial\Module
 				'type'        => 'checkboxes',
 				'title'       => _x( 'Assign Group Cartables', 'Setting Title', 'geditorial-cartable' ),
 				'description' => _x( 'Roles that can assign gorup cartables.', 'Setting Description', 'geditorial-cartable' ),
-				'exclude'     => $exclude,
 				'values'      => $roles,
 			];
 
@@ -134,7 +127,6 @@ class Cartable extends gEditorial\Module
 				'type'        => 'checkboxes',
 				'title'       => _x( 'Assign Type Cartables', 'Setting Title', 'geditorial-cartable' ),
 				'description' => _x( 'Roles that can assign type cartables.', 'Setting Description', 'geditorial-cartable' ),
-				'exclude'     => $exclude,
 				'values'      => $roles,
 			];
 
@@ -144,7 +136,6 @@ class Cartable extends gEditorial\Module
 				'type'        => 'checkboxes',
 				'title'       => _x( 'Restricted Groups', 'Setting Title', 'geditorial-cartable' ),
 				'description' => _x( 'Roles that restricted to their group users.', 'Setting Description', 'geditorial-cartable' ),
-				'exclude'     => $exclude,
 				'values'      => $roles,
 			];
 
