@@ -112,6 +112,10 @@ class Archives extends gEditorial\Module
 
 			$this->template_include_extra( [ 'taxonomy-archives', 'taxonomy-archives-'.$taxonomy ] );
 
+			$this->filter( 'get_the_archive_title', 1, 12, 'taxonomy' );
+			$this->filter( 'document_title_parts', 1, 12, 'taxonomy' );
+			$this->filter_false( 'gtheme_navigation_crumb_archive' );
+
 			return get_page_template();
 
 		} else if ( is_embed() || is_search() || ! ( $posttype = $GLOBALS['wp_query']->get( 'post_type' ) ) ) {
@@ -132,8 +136,10 @@ class Archives extends gEditorial\Module
 			], [ $this, 'template_archive_content' ] );
 
 			$this->template_include_extra( 'archive-entry' );
-			$this->filter( 'post_type_archive_title', 2 );
-			$this->filter( 'gtheme_navigation_crumb_archive', 2 );
+
+			$this->filter( 'get_the_archive_title', 1, 12, 'posttype' );
+			$this->filter( 'document_title_parts', 1, 12, 'posttype' );
+			$this->filter_false( 'gtheme_navigation_crumb_archive' );
 
 			// return get_single_template();
 			return get_page_template();
@@ -158,14 +164,15 @@ class Archives extends gEditorial\Module
 			or define( 'GEDITORIAL_DISABLE_CONTENT_ACTIONS', TRUE );
 	}
 
-	public function post_type_archive_title( $name, $posttype )
-	{
-		return $this->template_get_archive_title( $posttype );
-	}
-
-	public function gtheme_navigation_crumb_archive( $crumb, $args )
+	public function get_the_archive_title_posttype( $name )
 	{
 		return $this->template_get_archive_title( $this->current );
+	}
+
+	public function document_title_parts_posttype( $title )
+	{
+		$title['title'] = $this->template_get_archive_title( $this->current );
+		return $title;
 	}
 
 	public function template_get_archive_title( $posttype )
@@ -182,6 +189,17 @@ class Archives extends gEditorial\Module
 		$html = $this->filters( 'posttype_archive_content', $html, $this->current );
 
 		return HTML::wrap( $form.$html, '-posttype-archives-content' );
+	}
+
+	public function get_the_archive_title_taxonomy( $title )
+	{
+		return $this->taxonomy_archive_title( $this->current );
+	}
+
+	public function document_title_parts_taxonomy( $title )
+	{
+		$title['title'] = $this->taxonomy_archive_title( $this->current );
+		return $title;
 	}
 
 	public function taxonomy_archive_title( $taxonomy )
