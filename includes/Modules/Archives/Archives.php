@@ -65,6 +65,7 @@ class Archives extends gEditorial\Module
 		$this->filter( 'query_vars' );
 
 		$this->filter_module( 'countables', 'taxonomy_countbox_tokens', 4, 9 );
+		$this->filter( 'gtheme_navigation_taxonomy_archive_link', 2, 9 );
 	}
 
 	private function do_add_rewrite_rules()
@@ -217,5 +218,13 @@ class Archives extends gEditorial\Module
 			$tokens['link'] = $link;
 
 		return $tokens;
+	}
+
+	public function gtheme_navigation_taxonomy_archive_link( $false, $taxonomy )
+	{
+		if ( $link = $this->get_taxonomy_archive_link( $taxonomy ) )
+			return $link;
+
+		return $false;
 	}
 }
