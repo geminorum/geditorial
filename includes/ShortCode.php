@@ -289,6 +289,7 @@ class ShortCode extends Core\Base
 			'item_after_cb' => FALSE,
 			'item_download' => TRUE, // only for attachments
 			'item_size'     => TRUE, // only for attachments
+			'trim_chars'    => FALSE,
 			'order_before'  => FALSE,
 			'order_zeroise' => FALSE,
 			'order_sep'     => ' &ndash; ',
@@ -314,11 +315,17 @@ class ShortCode extends Core\Base
 
 		if ( $item ) {
 
+			if ( $args['trim_chars'] )
+				$item = Text::trimChars( $item, ( TRUE === $args['trim_chars'] ? 45 : $args['trim_chars'] ) );
+
 			if ( $args['item_title_cb'] && is_callable( $args['item_title_cb'] ) )
 				$attr = call_user_func_array( $args['item_title_cb'], [ $post, $args, $text ] );
 
 			else if ( $args['item_title'] )
 				$attr = sprintf( $args['item_title'], $text );
+
+			else if ( $args['trim_chars'] )
+				$attr = $text;
 
 			else
 				$attr = FALSE;
