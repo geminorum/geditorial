@@ -84,6 +84,7 @@ class WPRestPosts extends gEditorial\Widget
 
 					echo ShortCode::postItem( $post, [
 						'item_anchor' => '',
+						'trim_chars'  => empty( $instance['trim_chars'] ) ? FALSE : $instance['trim_chars'],
 					] );
 				}
 			}
@@ -114,6 +115,7 @@ class WPRestPosts extends gEditorial\Widget
 		$this->form_custom_code( $instance, '', 'categories', _x( 'Category IDs:', 'Widget: WP-REST Posts', 'geditorial-widgets' ) );
 		$this->form_custom_code( $instance, '', 'extra', _x( 'Extra Args:', 'Widget: WP-REST Posts', 'geditorial-widgets' ) );
 		$this->form_number( $instance );
+		$this->form_trim_chars( $instance );
 
 		$this->form_custom_empty( $instance, _x( 'No posts!', 'Widget: WP-REST Posts', 'geditorial-widgets' ) );
 		$this->form_context( $instance );
@@ -139,6 +141,7 @@ class WPRestPosts extends gEditorial\Widget
 		$instance['categories'] = strip_tags( $new['categories'] );
 		$instance['extra']      = strip_tags( $new['extra'] );
 		$instance['number']     = intval( $new['number'] );
+		$instance['trim_chars'] = intval( $new['trim_chars'] );
 
 		$this->flush_widget_cache();
 
