@@ -291,6 +291,22 @@ class Widget extends \WP_Widget
 		HTML::label( $label.' '.$html, $this->get_field_id( $field ) );
 	}
 
+	public function form_trim_chars( $instance, $default = '', $field = 'trim_chars', $label = NULL )
+	{
+		if ( is_null( $label ) )
+			$label = _x( 'Trim Characters:', 'Widget Core', 'geditorial' );
+
+		$html = HTML::tag( 'input', [
+			'type'  => 'number',
+			'size'  => 3,
+			'name'  => $this->get_field_name( $field ),
+			'id'    => $this->get_field_id( $field ),
+			'value' => isset( $instance[$field] ) ? $instance[$field] : $default,
+		] );
+
+		HTML::label( $label.' '.$html, $this->get_field_id( $field ) );
+	}
+
 	public function form_context( $instance, $default = '', $field = 'context' )
 	{
 		$html = HTML::tag( 'input', [
