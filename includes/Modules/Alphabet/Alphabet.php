@@ -8,6 +8,7 @@ use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\Core\Arraay;
 use geminorum\gEditorial\Core\HTML;
+use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\Text;
 use geminorum\gEditorial\Core\WordPress;
 
@@ -189,6 +190,7 @@ class Alphabet extends gEditorial\Module
 
 			$html.= '</'.$args['list_tag'].'><div class="clearfix"></div></li>';
 
+			$list.= $this->get_alphabet_list_html( [ [ 'letter' => '#', 'key' => '#', 'name' => '#' ] ], $actives );
 			$list.= $this->get_alphabet_list_html( $alt, $actives );
 			$list.= $this->get_alphabet_list_html( $alphabet, $actives );
 
@@ -320,6 +322,7 @@ class Alphabet extends gEditorial\Module
 
 			$html.= '</'.$args['list_tag'].'><div class="clearfix"></div></li>';
 
+			$list.= $this->get_alphabet_list_html( [ [ 'letter' => '#', 'key' => '#', 'name' => '#' ] ], $actives );
 			$list.= $this->get_alphabet_list_html( $alt, $actives );
 			$list.= $this->get_alphabet_list_html( $alphabet, $actives );
 
@@ -444,6 +447,9 @@ class Alphabet extends gEditorial\Module
 	public static function firstLetter( $string, $alphabet, $alternative = FALSE )
 	{
 		$first = strtoupper( Text::subStr( $string, 0, 1 ) );
+
+		if ( in_array( Number::intval( $first, FALSE ), [ '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' ] ) )
+			return '#';
 
 		foreach ( Arraay::column( $alphabet, 'search', 'letter' ) as $letter => $searchs )
 			if ( FALSE !== array_search( $first, $searchs ) )
