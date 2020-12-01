@@ -75,6 +75,7 @@ class Alphabet extends gEditorial\Module
 	{
 		$args = shortcode_atts( [
 			'locale'            => get_locale(),
+			'alternative'       => 'en_US', // FALSE to disable
 			'post_type'         => $this->posttypes(),
 			'comments'          => FALSE,
 			'comments_template' => '&nbsp;(%s)',
@@ -115,10 +116,14 @@ class Alphabet extends gEditorial\Module
 
 			// FIXME: check for empty
 
-			$current  = $html = $list = '';
-			$actives  = [];
+			$current = $html = $list = '';
+			$actives = [];
+
 			$alphabet = self::getAlphabet( $args['locale'] );
 			$keys     = array_flip( Arraay::column( $alphabet, 'letter', 'key' ) );
+
+			$alt      = $args['alternative'] ? self::getAlphabet( $args['alternative'] ) : FALSE;
+			$alt_keys = $alt ? array_flip( Arraay::column( $alt, 'letter', 'key' ) ) : [];
 
 			if ( $args['heading_cb'] && ! is_callable( $args['heading_cb'] ) )
 				$args['heading_cb'] = FALSE;
@@ -128,11 +133,18 @@ class Alphabet extends gEditorial\Module
 
 			foreach ( $posts as $post ) {
 
-				$letter = self::firstLetter( $post->post_title, $alphabet );
+				$letter = self::firstLetter( $post->post_title, $alphabet, $alt );
 
 				if ( $current != $letter ) {
 
-					$id = isset( $keys[$letter] ) ? $keys[$letter] : $letter;
+					if ( $alt && array_key_exists( $letter, $alt_keys ) )
+						$id = $alt_keys[$letter];
+
+					else if ( array_key_exists( $letter, $keys ) )
+						$id = $keys[$letter];
+
+					else
+						$id = strtolower( $letter );
 
 					if ( $args['heading_cb'] ) {
 
@@ -177,12 +189,8 @@ class Alphabet extends gEditorial\Module
 
 			$html.= '</'.$args['list_tag'].'><div class="clearfix"></div></li>';
 
-			foreach ( $alphabet as $key => $info )
-				$list.= '<li>'.(
-					in_array( $info['letter'], $actives )
-					? HTML::scroll( $info['letter'], $info['key'], $info['name'] )
-					: '<span>'.$info['letter'].'</span>'
-				).'</li>';
+			$list.= $this->get_alphabet_list_html( $alt, $actives );
+			$list.= $this->get_alphabet_list_html( $alphabet, $actives );
 
 			$fields = '<input class="-search" type="search" style="display:none;" />';
 
@@ -202,6 +210,7 @@ class Alphabet extends gEditorial\Module
 	{
 		$args = shortcode_atts( [
 			'locale'         => get_locale(),
+			'alternative'    => 'en_US', // FALSE to disable
 			'taxonomy'       => $this->taxonomies(),
 			'description'    => FALSE,
 			'count'          => FALSE,
@@ -237,10 +246,14 @@ class Alphabet extends gEditorial\Module
 			$query = new \WP_Term_Query();
 			$terms = $query->query( $args );
 
-			$current  = $html = $list = '';
-			$actives  = [];
+			$current = $html = $list = '';
+			$actives = [];
+
 			$alphabet = self::getAlphabet( $args['locale'] );
 			$keys     = array_flip( Arraay::column( $alphabet, 'letter', 'key' ) );
+
+			$alt      = $args['alternative'] ? self::getAlphabet( $args['alternative'] ) : FALSE;
+			$alt_keys = $alt ? array_flip( Arraay::column( $alt, 'letter', 'key' ) ) : [];
 
 			if ( $args['heading_cb'] && ! is_callable( $args['heading_cb'] ) )
 				$args['heading_cb'] = FALSE;
@@ -250,11 +263,18 @@ class Alphabet extends gEditorial\Module
 
 			foreach ( $terms as $term ) {
 
-				$letter = self::firstLetter( $term->name, $alphabet );
+				$letter = self::firstLetter( $term->name, $alphabet, $alt );
 
 				if ( $current != $letter ) {
 
-					$id = isset( $keys[$letter] ) ? $keys[$letter] : $letter;
+					if ( $alt && array_key_exists( $letter, $alt_keys ) )
+						$id = $alt_keys[$letter];
+
+					else if ( array_key_exists( $letter, $keys ) )
+						$id = $keys[$letter];
+
+					else
+						$id = strtolower( $letter );
 
 					if ( $args['heading_cb'] ) {
 
@@ -300,12 +320,8 @@ class Alphabet extends gEditorial\Module
 
 			$html.= '</'.$args['list_tag'].'><div class="clearfix"></div></li>';
 
-			foreach ( $alphabet as $key => $info )
-				$list.= '<li>'.(
-					in_array( $info['letter'], $actives )
-					? HTML::scroll( $info['letter'], $info['key'], $info['name'] )
-					: '<span>'.$info['letter'].'</span>'
-				).'</li>';
+			$list.= $this->get_alphabet_list_html( $alt, $actives );
+			$list.= $this->get_alphabet_list_html( $alphabet, $actives );
 
 			$fields = '<input class="-search" type="search" style="display:none;" />';
 
@@ -319,6 +335,25 @@ class Alphabet extends gEditorial\Module
 		}
 
 		return $html;
+	}
+
+	private function get_alphabet_list_html( $alphabet, $actives = [], $tag = 'li' )
+	{
+		if ( empty( $alphabet ) )
+			return '';
+
+		// no actives on this alphabet
+		if ( empty( array_intersect( Arraay::column( $alphabet, 'letter' ), $actives ) ) )
+			return '';
+
+		$list = [];
+
+		foreach ( $alphabet as $key => $info )
+			$list[] = in_array( $info['letter'], $actives )
+				? HTML::scroll( $info['letter'], $info['key'], $info['name'] )
+				: HTML::tag( 'span', $info['letter'] );
+
+		return '<li>'.implode( '</li><li>', $list ).'</li>';
 	}
 
 	// sort array by value based on locale
@@ -406,11 +441,18 @@ class Alphabet extends gEditorial\Module
 		return $array;
 	}
 
-	public static function firstLetter( $string, $alphabet )
+	public static function firstLetter( $string, $alphabet, $alternative = FALSE )
 	{
 		$first = strtoupper( Text::subStr( $string, 0, 1 ) );
 
 		foreach ( Arraay::column( $alphabet, 'search', 'letter' ) as $letter => $searchs )
+			if ( FALSE !== array_search( $first, $searchs ) )
+				return $letter;
+
+		if ( ! $alternative )
+			return $first;
+
+		foreach ( Arraay::column( $alternative, 'search', 'letter' ) as $letter => $searchs )
 			if ( FALSE !== array_search( $first, $searchs ) )
 				return $letter;
 
