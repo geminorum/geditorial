@@ -468,12 +468,10 @@ class Book extends gEditorial\Module
 			? _x( 'Your Publications Summary', 'Dashboard Widget Title', 'geditorial-book' )
 			: _x( 'Editorial Publications Summary', 'Dashboard Widget Title', 'geditorial-book' );
 
-		$title.= MetaBox::titleActionRefresh();
-
-		wp_add_dashboard_widget( $this->classs( 'summary' ), $title, [ $this, 'dashboard_widget_summary' ] );
+		$this->add_dashboard_widget( 'term-summary', $title, 'refresh' );
 	}
 
-	public function dashboard_widget_summary( $object, $box )
+	public function render_widget_term_summary( $object, $box )
 	{
 		$this->do_dashboard_term_summary( 'status_tax', $box, [ $this->constant( 'publication_cpt' ) ] );
 	}

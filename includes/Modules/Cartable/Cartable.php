@@ -576,16 +576,18 @@ class Cartable extends gEditorial\Module
 		if ( $this->support_users && $this->role_can( 'view_user', $user_id ) ) {
 
 			$title = _x( 'Your Personal Cartable', 'Dashboard Widget Title', 'geditorial-cartable' );
-			$title.= ' <span class="postbox-title-action"><a href="'.esc_url( $this->get_adminmenu( FALSE ) ).'"';
-			$title.= ' title="'._x( 'Click to view all items in this cartable', 'Dashboard Widget Title Action', 'geditorial-cartable' ).'">';
-			$title.= _x( 'All Items', 'Dashboard Widget Title Action', 'geditorial-cartable' ).'</a></span>';
+			$title.= MetaBox::getTitleAction( [
+				'url'   => $this->get_adminmenu( FALSE ),
+				'title' => _x( 'Click to view all items in this cartable', 'Dashboard Widget Title Action', 'geditorial-cartable' ),
+				'link'  => _x( 'All Items', 'Dashboard Widget Title Action', 'geditorial-cartable' ),
+			] );
 
-			wp_add_dashboard_widget(
-				$this->classs( 'user-cartable' ),
+			$this->add_dashboard_widget(
+				'user-cartable',
 				$title,
-				[ $this, 'dashboard_widget_summary' ],
-				NULL,
-				[ 'context' => 'user', 'slug' => get_user_by( 'id', $user_id )->user_login ]
+				'refresh',
+				[ 'context' => 'user', 'slug' => get_user_by( 'id', $user_id )->user_login ],
+				[ $this, 'render_widget_summary' ],
 			);
 		}
 
@@ -593,20 +595,20 @@ class Cartable extends gEditorial\Module
 
 			foreach ( $this->get_user_groups( $user_id ) as $term ) {
 
-				$url = $this->get_adminmenu( FALSE, [ 'context' => 'group', 'slug' => $term->slug, 'sub' => 'group-'.$term->slug ] );
-
 				/* translators: %s: term name placeholder */
 				$title = sprintf( _x( 'Cartable: %s', 'Dashboard Widget Title', 'geditorial-cartable' ), $term->name );
-				$title.= ' <span class="postbox-title-action"><a href="'.esc_url( $url ).'"';
-				$title.= ' title="'._x( 'Click to view all items in this cartable', 'Dashboard Widget Title Action', 'geditorial-cartable' ).'">';
-				$title.= _x( 'All Items', 'Dashboard Widget Title Action', 'geditorial-cartable' ).'</a></span>';
+				$title.= MetaBox::getTitleAction( [
+					'url'   => $this->get_adminmenu( FALSE, [ 'context' => 'group', 'slug' => $term->slug, 'sub' => 'group-'.$term->slug ] ),
+					'title' => _x( 'Click to view all items in this cartable', 'Dashboard Widget Title Action', 'geditorial-cartable' ),
+					'link'  => _x( 'All Items', 'Dashboard Widget Title Action', 'geditorial-cartable' ),
+				] );
 
-				wp_add_dashboard_widget(
-					$this->classs( 'group-cartable', $term->slug ),
+				$this->add_dashboard_widget(
+					sprintf( 'group-cartable-%s', $term->term_id ),
 					$title,
-					[ $this, 'dashboard_widget_summary' ],
-					NULL,
-					[ 'context' => 'group', 'slug' => $term->slug ]
+					'refresh',
+					[ 'context' => 'group', 'slug' => $term->slug ],
+					[ $this, 'render_widget_summary' ],
 				);
 			}
 		}
@@ -615,20 +617,20 @@ class Cartable extends gEditorial\Module
 
 			foreach ( $this->get_types( FALSE, TRUE ) as $term ) {
 
-				$url = $this->get_adminmenu( FALSE, [ 'context' => 'type', 'slug' => $term->slug, 'sub' => 'type-'.$term->slug ] );
-
 				/* translators: %s: term name placeholder */
 				$title = sprintf( _x( 'Cartable: %s', 'Dashboard Widget Title', 'geditorial-cartable' ), $term->name );
-				$title.= ' <span class="postbox-title-action"><a href="'.esc_url( $url ).'"';
-				$title.= ' title="'._x( 'Click to view all items in this cartable', 'Dashboard Widget Title Action', 'geditorial-cartable' ).'">';
-				$title.= _x( 'All Items', 'Dashboard Widget Title Action', 'geditorial-cartable' ).'</a></span>';
+				$title.= MetaBox::getTitleAction( [
+					'url'   => $this->get_adminmenu( FALSE, [ 'context' => 'type', 'slug' => $term->slug, 'sub' => 'type-'.$term->slug ] ),
+					'title' => _x( 'Click to view all items in this cartable', 'Dashboard Widget Title Action', 'geditorial-cartable' ),
+					'link'  => _x( 'All Items', 'Dashboard Widget Title Action', 'geditorial-cartable' ),
+				] );
 
-				wp_add_dashboard_widget(
-					$this->classs( 'type-cartable', $term->slug ),
+				$this->add_dashboard_widget(
+					sprintf( 'type-cartable-%s', $term->term_id ),
 					$title,
-					[ $this, 'dashboard_widget_summary' ],
-					NULL,
-					[ 'context' => 'type', 'slug' => $term->slug ]
+					'refresh',
+					[ 'context' => 'type', 'slug' => $term->slug ],
+					[ $this, 'render_widget_summary' ],
 				);
 			}
 		}
@@ -712,7 +714,7 @@ class Cartable extends gEditorial\Module
 		Taxonomy::addTerm( $user->user_login, $this->constant( 'user_tax' ), FALSE );
 	}
 
-	public function dashboard_widget_summary( $object, $box )
+	public function render_widget_summary( $object, $box )
 	{
 		if ( $this->check_hidden_metabox( $box ) )
 			return;

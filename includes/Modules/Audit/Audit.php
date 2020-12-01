@@ -418,12 +418,10 @@ class Audit extends gEditorial\Module
 			? _x( 'Your Audit Summary', 'Dashboard Widget Title', 'geditorial-audit' )
 			: _x( 'Editorial Audit Summary', 'Dashboard Widget Title', 'geditorial-audit' );
 
-		$title.= MetaBox::titleActionRefresh();
-
-		wp_add_dashboard_widget( $this->classs( 'summary' ), $title, [ $this, 'dashboard_widget_summary' ] );
+		$this->add_dashboard_widget( 'term-summary', $title, 'refresh' );
 	}
 
-	public function dashboard_widget_summary( $object, $box )
+	public function render_widget_term_summary( $object, $box )
 	{
 		$this->do_dashboard_term_summary( 'audit_tax', $box );
 	}

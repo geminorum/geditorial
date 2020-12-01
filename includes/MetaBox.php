@@ -4,6 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
+use geminorum\gEditorial\Core\Text;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\Database;
 use geminorum\gEditorial\WordPress\PostType;
@@ -407,11 +408,28 @@ class MetaBox extends Core\Base
 		echo HTML::wrap( $html, 'field-wrap -empty' );
 	}
 
+	public static function getTitleAction( $action )
+	{
+		return ' <span class="postbox-title-action"><a href="'.esc_url( $action['url'] ).'" title="'.$action['title'].'">'.$action['link'].'</a></span>';
+	}
+
 	public static function titleActionRefresh()
 	{
-		$html = ' <span class="postbox-title-action"><a href="'.esc_url( add_query_arg( 'flush', '' ) ).'"';
-		$html.= ' title="'._x( 'Click to refresh the content', 'MetaBox: Title Action', 'geditorial' ).'">';
-		$html.= _x( 'Refresh', 'MetaBox: Title Action', 'geditorial' ).'</a></span>';
+		return self::getTitleAction( [
+			'url'   => add_query_arg( 'flush', '' ),
+			'title' => _x( 'Click to refresh the content', 'MetaBox: Title Action', 'geditorial' ),
+			'link'  => _x( 'Refresh', 'MetaBox: Title Action', 'geditorial' ),
+		] );
+	}
+
+	public static function titleActionInfo( $info )
+	{
+		if ( ! $info )
+			return '';
+
+		$html = ' <span class="postbox-title-action" data-tooltip="'.Text::wordWrap( $info ).'"';
+		$html.= ' data-tooltip-pos="'.( HTML::rtl() ? 'down-left' : 'down-right' ).'"';
+		$html.= ' data-tooltip-length="xlarge">'.HTML::getDashicon( 'info' ).'</span>';
 
 		return $html;
 	}

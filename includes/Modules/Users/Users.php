@@ -245,11 +245,11 @@ class Users extends gEditorial\Module
 	protected function dashboard_widgets()
 	{
 		$title = _x( 'Your Profile', 'Dashboard Widget Title', 'geditorial-users' );
-		$title.= ' <span class="postbox-title-action"><a href="'.esc_url( admin_url( 'profile.php' )  ).'"';
-		$title.= ' title="'._x( 'Edit your profile', 'Dashboard Widget Action', 'geditorial-users' ).'">';
-		$title.= _x( 'Edit', 'Dashboard Widget Action', 'geditorial-users' ).'</a></span>';
-
-		wp_add_dashboard_widget( $this->classs( 'profile-summary' ), $title, [ $this, 'dashboard_widget_summary' ] );
+		$this->add_dashboard_widget( 'profile-summary', $title, [
+			'url'   => admin_url( 'profile.php' ),
+			'title' => _x( 'Edit your profile', 'Dashboard Widget Action', 'geditorial-users' ),
+			'link'  => _x( 'Edit', 'Dashboard Widget Action', 'geditorial-users' ),
+		] );
 	}
 
 	public function restrict_manage_posts( $posttype, $which )
@@ -543,7 +543,7 @@ class Users extends gEditorial\Module
 		echo '</div>';
 	}
 
-	public function dashboard_widget_summary( $object, $box )
+	public function render_widget_profile_summary( $object, $box )
 	{
 		if ( $this->check_hidden_metabox( $box ) )
 			return;

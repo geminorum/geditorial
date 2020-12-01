@@ -60,11 +60,12 @@ class Module extends Base
 	protected $errors  = [];
 
 	protected $caps = [
-		'default'  => 'manage_options',
-		'settings' => 'manage_options',
-		'reports'  => 'edit_others_posts',
-		'tools'    => 'edit_others_posts',
-		'adminbar' => 'edit_others_posts',
+		'default'   => 'manage_options',
+		'settings'  => 'manage_options',
+		'reports'   => 'edit_others_posts',
+		'tools'     => 'edit_others_posts',
+		'adminbar'  => 'edit_others_posts',
+		'dashboard' => 'edit_others_posts',
 	];
 
 	protected $root_key = FALSE; // ROOT CONSTANT
@@ -2967,6 +2968,63 @@ class Module extends Base
 			$this->get_noop( $constant ),
 			'-'.$this->slug()
 		);
+	}
+
+	// @REF: `wp_add_dashboard_widget()`
+	protected function add_dashboard_widget( $name, $title, $action = FALSE, $extra = [], $callback = NULL, $context = 'dashboard' )
+	{
+		// FIXME: test this
+		// if ( ! $this->cuc( $context ) )
+		// 	return FALSE;
+
+		$screen = get_current_screen();
+		$hook   = self::sanitize_hook( $name );
+		$id     = $this->classs( $name );
+		$title  = $this->filters( 'dashboard_widget_title', $title, $name, $context );
+		$args   = array_merge( [
+			'__widget_basename' => $title, // passing title without extra markup
+		], $extra );
+
+		if ( is_array( $action ) ) {
+
+			$title.= MetaBox::getTitleAction( $action );
+
+		} else if ( $action ) {
+
+			switch ( $action ) {
+
+				case 'refresh':
+					$title.= MetaBox::titleActionRefresh( $hook );
+					break;
+
+				case 'info' :
+
+					if ( method_exists( $this, 'get_widget_'.$hook.'_info' ) )
+						$title.= MetaBox::titleActionInfo( call_user_func( [ $this, 'get_widget_'.$hook.'_info' ] ) );
+
+					break;
+			}
+		}
+
+		if ( is_null( $callback ) )
+			$callback = [ $this, 'render_widget_'.$hook ];
+
+		add_meta_box( $id, $title, $callback, $screen, 'normal', 'default', $args );
+
+		add_filter( 'postbox_classes_'.$screen->id.'_'.$id, function( $classes ) use ( $name ) {
+			return array_merge( $classes, [
+				$this->base.'-wrap',
+				'-admin-postbox',
+				'-admin-postbox'.'-'.$name,
+				'-'.$this->key,
+				'-'.$this->key.'-'.$name,
+			] );
+		} );
+
+		if ( in_array( $id, get_hidden_meta_boxes( $screen ) ) )
+			return FALSE; // prevent scripts
+
+		return TRUE;
 	}
 
 	protected function do_dashboard_term_summary( $constant, $box, $posttypes = NULL )

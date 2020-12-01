@@ -110,13 +110,11 @@ class Modified extends gEditorial\Module
 
 	protected function dashboard_widgets()
 	{
-		wp_add_dashboard_widget( $this->classs( 'summary' ),
-			_x( 'Latest Changes', 'Dashboard Widget Title', 'geditorial-modified' ),
-			[ $this, 'dashboard_widget_summary' ]
-		);
+		$title = _x( 'Latest Changes', 'Dashboard Widget Title', 'geditorial-modified' );
+		$this->add_dashboard_widget( 'latest-summary', $title );
 	}
 
-	public function dashboard_widget_summary( $object, $box )
+	public function render_widget_latest_summary( $object, $box )
 	{
 		if ( $this->check_hidden_metabox( $box ) )
 			return;
