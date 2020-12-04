@@ -217,6 +217,12 @@ class Book extends gEditorial\Module
 		];
 
 		$strings['terms'] = [
+			'type_tax' => [
+				'paperback' => _x( 'Paperback', 'Publication Type: Default Term', 'geditorial-book' ), // shomiz
+				'hardcover' => _x( 'Hardcover', 'Publication Type: Default Term', 'geditorial-book' ), // gallingor
+				'ebook'     => _x( 'E-Book', 'Publication Type: Default Term', 'geditorial-book' ),
+				'disc'      => _x( 'Disc', 'Publication Type: Default Term', 'geditorial-book' ),
+			],
 			'size_tax' => [
 				'octavo'      => _x( 'Octavo', 'Publication Size: Default Term', 'geditorial-book' ), // vaziri
 				'folio'       => _x( 'Folio', 'Publication Size: Default Term', 'geditorial-book' ), // soltani
@@ -333,15 +339,21 @@ class Book extends gEditorial\Module
 
 	public function before_settings( $module = FALSE )
 	{
+		if ( isset( $_POST['install_def_type_tax'] ) )
+			$this->insert_default_terms( 'type_tax' );
+
 		if ( isset( $_POST['install_def_size_tax'] ) )
 			$this->insert_default_terms( 'size_tax' );
 
+		$this->help_tab_default_terms( 'type_tax' );
 		$this->help_tab_default_terms( 'size_tax' );
 	}
 
 	public function default_buttons( $module = FALSE )
 	{
 		parent::default_buttons( $module );
+
+		$this->register_button( 'install_def_type_tax', _x( 'Install Default Types', 'Button', 'geditorial-book' ) );
 
 		if ( $this->support_meta )
 			$this->register_button( 'install_def_size_tax', _x( 'Install Default Sizes', 'Button', 'geditorial-book' ) );
