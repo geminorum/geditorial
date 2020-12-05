@@ -340,7 +340,6 @@ class Entry extends gEditorial\Module
 		$html = $this->get_search_form( 'entry_cpt' );
 
 		if ( gEditorial()->enabled( 'alphabet' ) )
-			// $html.= do_shortcode( sprintf( '[alphabet-posts post_type="%s" /]', $this->constant( 'entry_cpt' ) ) );
 			$html.= gEditorial()->alphabet->shortcode_posts( [ 'post_type' => $this->constant( 'entry_cpt' ) ] );
 
 		else

@@ -601,7 +601,6 @@ class Book extends gEditorial\Module
 		$html = $this->get_search_form( 'publication_cpt' );
 
 		if ( gEditorial()->enabled( 'alphabet' ) )
-			// $html.= do_shortcode( sprintf( '[alphabet-posts post_type="%s" /]', $this->constant( 'publication_cpt' ) ) );
 			$html.= gEditorial()->alphabet->shortcode_posts( [ 'post_type' => $this->constant( 'publication_cpt' ) ] );
 
 		else

@@ -204,6 +204,7 @@ add_theme_support( \'featured-content\', [
 		return $this->featured = $support[0];
 	}
 
+	// @SEE: https://developer.wordpress.org/reference/hooks/posts_where/#comment-3491
 	public function pre_get_posts( &$wp_query )
 	{
 		if ( ! $wp_query->is_main_query()

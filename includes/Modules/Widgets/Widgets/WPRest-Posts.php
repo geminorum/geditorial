@@ -77,7 +77,7 @@ class WPRestPosts extends gEditorial\Widget
 				if ( $template ) {
 
 					echo '<li>';
-						load_template( $template, FALSE );
+						load_template( $template, FALSE, [ 'widget_instance' => $instance ] );
 					echo '</li>';
 
 				} else {

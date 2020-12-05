@@ -587,7 +587,7 @@ class Cartable extends gEditorial\Module
 				$title,
 				'refresh',
 				[ 'context' => 'user', 'slug' => get_user_by( 'id', $user_id )->user_login ],
-				[ $this, 'render_widget_summary' ],
+				[ $this, 'render_widget_summary' ]
 			);
 		}
 
@@ -608,7 +608,7 @@ class Cartable extends gEditorial\Module
 					$title,
 					'refresh',
 					[ 'context' => 'group', 'slug' => $term->slug ],
-					[ $this, 'render_widget_summary' ],
+					[ $this, 'render_widget_summary' ]
 				);
 			}
 		}
@@ -630,7 +630,7 @@ class Cartable extends gEditorial\Module
 					$title,
 					'refresh',
 					[ 'context' => 'type', 'slug' => $term->slug ],
-					[ $this, 'render_widget_summary' ],
+					[ $this, 'render_widget_summary' ]
 				);
 			}
 		}

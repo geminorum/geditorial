@@ -98,6 +98,7 @@ class Archives extends gEditorial\Module
 
 	public function template_include( $template )
 	{
+		// no need to check for supported taxonomies
 		if ( $taxonomy = get_query_var( $this->constant( 'taxonomy_query' ) ) ) {
 
 			$this->current = $taxonomy;
