@@ -554,6 +554,7 @@ class Helper extends Main
 				$name,
 				Text::strToLower( $name.'s' ),
 				Text::strToLower( $name ),
+				'%s',
 			];
 
 		if ( array_key_exists( 'domain', $name ) )
@@ -571,7 +572,7 @@ class Helper extends Main
 		$strings[2] = Text::strToLower( $strings[0] );
 		$strings[3] = Text::strToLower( $strings[1] );
 
-		$strings[5] = '%s';
+		$strings[4] = '%s';
 
 		return $strings;
 	}
