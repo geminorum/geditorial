@@ -1087,7 +1087,7 @@ class Meta extends gEditorial\Module
 
 				$this->nonce_check( 'tools', $sub );
 
-				if ( $this->current_action( 'custom_fields_convert' ) ) {
+				if ( Tablelist::isAction( 'custom_fields_convert' ) ) {
 
 					$post = $this->get_current_form( [
 						'custom_field'       => FALSE,
@@ -1111,7 +1111,7 @@ class Meta extends gEditorial\Module
 							'count'   => count( $result ),
 						] );
 
-				} else if ( $this->current_action( 'custom_fields_delete' ) ) {
+				} else if ( Tablelist::isAction( 'custom_fields_delete' ) ) {
 
 					$post = $this->get_current_form( [
 						'custom_field'       => FALSE,

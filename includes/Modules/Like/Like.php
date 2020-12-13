@@ -497,7 +497,7 @@ class Like extends gEditorial\Module
 
 				$this->nonce_check( 'reports', $sub );
 
-				if ( $this->current_action( 'sync_counts_all' ) ) {
+				if ( Tablelist::isAction( 'sync_counts_all' ) ) {
 
 					$count = 0;
 					$query = new \WP_Query;
@@ -523,7 +523,7 @@ class Like extends gEditorial\Module
 						'count'   => $count,
 					] );
 
-				} else if ( $this->current_action( 'sync_counts', TRUE ) ) {
+				} else if ( Tablelist::isAction( 'sync_counts', TRUE ) ) {
 
 					$count = 0;
 

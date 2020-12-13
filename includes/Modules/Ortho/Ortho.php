@@ -352,7 +352,7 @@ class Ortho extends gEditorial\Module
 
 				$this->nonce_check( 'reports', $sub );
 
-				if ( $this->current_action( 'cleanup_chars', TRUE ) ) {
+				if ( Tablelist::isAction( 'cleanup_chars', TRUE ) ) {
 
 					$count = 0;
 

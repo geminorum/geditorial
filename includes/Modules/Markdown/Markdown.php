@@ -415,7 +415,7 @@ class Markdown extends gEditorial\Module
 
 				$count = 0;
 
-				if ( $this->current_action( 'convert_markdown', TRUE ) ) {
+				if ( Tablelist::isAction( 'convert_markdown', TRUE ) ) {
 
 					foreach ( $_POST['_cb'] as $post_id )
 						if ( $this->convert_post( $post_id ) )
@@ -427,7 +427,7 @@ class Markdown extends gEditorial\Module
 							'count'   => $count,
 						] );
 
-				} else if ( $this->current_action( 'process_markdown', TRUE ) ) {
+				} else if ( Tablelist::isAction( 'process_markdown', TRUE ) ) {
 
 					foreach ( $_POST['_cb'] as $post_id )
 						if ( $this->process_post( $post_id ) )
@@ -439,7 +439,7 @@ class Markdown extends gEditorial\Module
 							'count'   => $count,
 						] );
 
-				} else if ( $this->current_action( 'cleanup_markdown', TRUE ) ) {
+				} else if ( Tablelist::isAction( 'cleanup_markdown', TRUE ) ) {
 
 					foreach ( $_POST['_cb'] as $post_id )
 						if ( $this->cleanup_post( $post_id ) )
@@ -451,7 +451,7 @@ class Markdown extends gEditorial\Module
 							'count'   => $count,
 						] );
 
-				} else if ( $this->current_action( 'discard_markdown', TRUE ) ) {
+				} else if ( Tablelist::isAction( 'discard_markdown', TRUE ) ) {
 
 					foreach ( $_POST['_cb'] as $post_id )
 						if ( $this->discard_post( $post_id ) )

@@ -399,8 +399,8 @@ class Importer extends gEditorial\Module
 
 				$this->nonce_check( 'tools', $sub );
 
-				if ( $this->current_action( 'images_import', TRUE )
-					|| $this->current_action( 'images_import_as_thumbnail', TRUE ) ) {
+				if ( Tablelist::isAction( 'images_import', TRUE )
+					|| Tablelist::isAction( 'images_import_as_thumbnail', TRUE ) ) {
 
 					$count = 0;
 					$args  = $this->get_current_form_images();
@@ -428,7 +428,7 @@ class Importer extends gEditorial\Module
 						'count'   => $count,
 					] );
 
-				} else if ( $this->current_action( 'posts_import', TRUE ) ) {
+				} else if ( Tablelist::isAction( 'posts_import', TRUE ) ) {
 
 					$count     = 0;
 					$field_map = self::req( 'field_map', [] );

@@ -369,7 +369,7 @@ class Revisions extends gEditorial\Module
 
 				$this->nonce_check( 'reports', $sub );
 
-				if ( $this->current_action( 'cleanup_revisions', TRUE ) ) {
+				if ( Tablelist::isAction( 'cleanup_revisions', TRUE ) ) {
 
 					$count = 0;
 

@@ -1165,7 +1165,7 @@ class Terms extends gEditorial\Module
 
 				$count = 0;
 
-				if ( $this->current_action( 'clean_uncategorized', TRUE ) ) {
+				if ( Tablelist::isAction( 'clean_uncategorized', TRUE ) ) {
 
 					$uncategorized = get_option( 'default_category' );
 
@@ -1195,7 +1195,7 @@ class Terms extends gEditorial\Module
 							'count'   => $count,
 						] );
 
-				} else if ( $this->current_action( 'orphaned_terms' ) ) {
+				} else if ( Tablelist::isAction( 'orphaned_terms' ) ) {
 
 					$post = $this->get_current_form( [
 						'dead_tax' => FALSE,
@@ -1302,7 +1302,7 @@ class Terms extends gEditorial\Module
 
 				$this->nonce_check( 'reports', $sub );
 
-				if ( $this->current_action( 'purge_unregistered', TRUE ) ) {
+				if ( Tablelist::isAction( 'purge_unregistered', TRUE ) ) {
 
 					// FIXME: only purges no-longer-attached taxes, not orphaned
 

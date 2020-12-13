@@ -819,7 +819,7 @@ class Collect extends gEditorial\Module
 
 				$this->nonce_check( 'tools', $sub );
 
-				if ( $this->current_action( 'collection_post_create', TRUE ) ) {
+				if ( Tablelist::isAction( 'collection_post_create', TRUE ) ) {
 
 					$terms = Taxonomy::getTerms( $this->constant( 'collection_tax' ), FALSE, TRUE );
 					$posts = [];
@@ -847,8 +847,8 @@ class Collect extends gEditorial\Module
 						'count'   => count( $posts ),
 					] );
 
-				} else if ( $this->current_action( 'collection_store_order', TRUE )
-					|| $this->current_action( 'collection_store_start', TRUE ) ) {
+				} else if ( Tablelist::isAction( 'collection_store_order', TRUE )
+					|| Tablelist::isAction( 'collection_store_start', TRUE ) ) {
 
 					if ( ! gEditorial()->enabled( 'meta' ) )
 						WordPress::redirectReferer( 'wrong' );
@@ -880,7 +880,7 @@ class Collect extends gEditorial\Module
 						'count'   => $count,
 					] );
 
-				} else if ( $this->current_action( 'collection_post_connect', TRUE ) ) {
+				} else if ( Tablelist::isAction( 'collection_post_connect', TRUE ) ) {
 
 					$terms = Taxonomy::getTerms( $this->constant( 'collection_tax' ), FALSE, TRUE );
 					$count = 0;
@@ -904,7 +904,7 @@ class Collect extends gEditorial\Module
 						'count'   => $count,
 					] );
 
-				} else if ( $this->current_action( 'collection_tax_delete', TRUE ) ) {
+				} else if ( Tablelist::isAction( 'collection_tax_delete', TRUE ) ) {
 
 					$count = 0;
 

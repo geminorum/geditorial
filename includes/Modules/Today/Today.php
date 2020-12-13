@@ -949,7 +949,7 @@ class Today extends gEditorial\Module
 
 				$this->nonce_check( 'tools', $sub );
 
-				if ( $this->current_action( 'reschedule_by_day' ) ) {
+				if ( Tablelist::isAction( 'reschedule_by_day' ) ) {
 
 					$default   = $this->default_calendar();
 					$constants = $this->get_the_day_constants();

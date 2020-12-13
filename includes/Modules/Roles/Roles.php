@@ -370,15 +370,15 @@ class Roles extends gEditorial\Module
 
 				$this->nonce_check( 'tools', $sub );
 
-				if ( $this->current_action( 'duplicate_default_roles' ) ) {
+				if ( Tablelist::isAction( 'duplicate_default_roles' ) ) {
 
 					$this->duplicate_default_roles();
 
-				} else if ( $this->current_action( 'add_defaults_to_editor' ) ) {
+				} else if ( Tablelist::isAction( 'add_defaults_to_editor' ) ) {
 
 					$this->add_default_caps( 'editor' );
 
-				} else if ( $this->current_action( 'remove_duplicate_roles' ) ) {
+				} else if ( Tablelist::isAction( 'remove_duplicate_roles' ) ) {
 
 					$this->remove_duplicate_roles();
 				}

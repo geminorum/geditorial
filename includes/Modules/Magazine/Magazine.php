@@ -753,7 +753,7 @@ class Magazine extends gEditorial\Module
 
 				$this->nonce_check( 'tools', $sub );
 
-				if ( $this->current_action( 'issue_post_create', TRUE ) ) {
+				if ( Tablelist::isAction( 'issue_post_create', TRUE ) ) {
 
 					$terms = Taxonomy::getTerms( $this->constant( 'issue_tax' ), FALSE, TRUE );
 					$posts = [];
@@ -781,7 +781,7 @@ class Magazine extends gEditorial\Module
 						'count'   => count( $posts ),
 					] );
 
-				} else if ( $this->current_action( 'issue_resync_images', TRUE ) ) {
+				} else if ( Tablelist::isAction( 'issue_resync_images', TRUE ) ) {
 
 					$meta_key = $this->constant( 'metakey_term_image', 'image' );
 					$count    = 0;
@@ -805,7 +805,7 @@ class Magazine extends gEditorial\Module
 						'count'   => $count,
 					] );
 
-				} else if ( $this->current_action( 'issue_resync_desc', TRUE ) ) {
+				} else if ( Tablelist::isAction( 'issue_resync_desc', TRUE ) ) {
 
 					$count = 0;
 
@@ -826,8 +826,8 @@ class Magazine extends gEditorial\Module
 						'count'   => $count,
 					] );
 
-				} else if ( $this->current_action( 'issue_store_order', TRUE )
-					|| $this->current_action( 'issue_store_start', TRUE ) ) {
+				} else if ( Tablelist::isAction( 'issue_store_order', TRUE )
+					|| Tablelist::isAction( 'issue_store_start', TRUE ) ) {
 
 					if ( ! gEditorial()->enabled( 'meta' ) )
 						WordPress::redirectReferer( 'wrong' );
@@ -859,7 +859,7 @@ class Magazine extends gEditorial\Module
 						'count'   => $count,
 					] );
 
-				} else if ( $this->current_action( 'issue_empty_desc', TRUE ) ) {
+				} else if ( Tablelist::isAction( 'issue_empty_desc', TRUE ) ) {
 
 					$args  = [ 'description' => '' ];
 					$count = 0;
@@ -873,7 +873,7 @@ class Magazine extends gEditorial\Module
 						'count'   => $count,
 					] );
 
-				} else if ( $this->current_action( 'issue_post_connect', TRUE ) ) {
+				} else if ( Tablelist::isAction( 'issue_post_connect', TRUE ) ) {
 
 					$terms = Taxonomy::getTerms( $this->constant( 'issue_tax' ), FALSE, TRUE );
 					$count = 0;
@@ -897,7 +897,7 @@ class Magazine extends gEditorial\Module
 						'count'   => $count,
 					] );
 
-				} else if ( $this->current_action( 'issue_tax_delete', TRUE ) ) {
+				} else if ( Tablelist::isAction( 'issue_tax_delete', TRUE ) ) {
 
 					$count = 0;
 

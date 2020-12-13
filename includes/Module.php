@@ -873,14 +873,6 @@ class Module extends Base
 		Settings::moduleSectionEmpty( _x( 'No fields supported', 'Module', 'geditorial' ) );
 	}
 
-	public function current_action( $action, $check_cb = FALSE )
-	{
-		if ( $action == self::req( 'table_action' ) || isset( $_POST[$action] ) )
-			return $check_cb ? (bool) count( self::req( '_cb', [] ) ) : TRUE;
-
-		return FALSE;
-	}
-
 	public function settings_from()
 	{
 		echo '<form class="'.$this->base.'-form -form -'.$this->module->name
