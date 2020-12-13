@@ -311,7 +311,7 @@ class Taxonomy extends Core\Base
 
 		global $wpdb;
 
-		$post_id = $wpdb->get_var(
+		$term_id = $wpdb->get_var(
 			$wpdb->prepare( "
 				SELECT term_id
 				FROM {$wpdb->termmeta}
@@ -320,7 +320,7 @@ class Taxonomy extends Core\Base
 			", $meta, $value )
 		);
 
-		return $results[$meta][$value] = $post_id;
+		return $results[$meta][$value] = $term_id;
 	}
 
 	public static function appendParentTermIDs( $term_ids, $taxonomy )

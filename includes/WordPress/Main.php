@@ -7,6 +7,8 @@ use geminorum\gEditorial\Core;
 class Main extends Core\Base
 {
 
+	// TODO: make this a trait
+
 	const BASE   = '';
 	const MODULE = FALSE;
 
@@ -30,5 +32,14 @@ class Main extends Core\Base
 		return FALSE === $field
 			? self::factory()->{static::MODULE}->get_postmeta_legacy( $post_id, $default )
 			: self::factory()->{static::MODULE}->get_postmeta_field( $post_id, $field, $default, $metakey );
+	}
+
+	// FIXME: WTF?!
+	protected static function post_types( $posttypes = NULL )
+	{
+		// if ( static::MODULE && self::factory()->enabled( static::MODULE ) )
+			return self::factory()->{static::MODULE}->posttypes( $posttypes );
+
+		return [];
 	}
 }

@@ -135,11 +135,13 @@ class Theme extends Core\Base
 				'comment_count'         => $wp_query->post->comment_count,
 				'filter'                => $wp_query->post->filter,
 
-				'is_404'     => FALSE,
-				'is_page'    => FALSE,
-				'is_single'  => FALSE,
-				'is_archive' => FALSE,
-				'is_tax'     => FALSE,
+				'is_404'        => FALSE,
+				'is_page'       => FALSE,
+				'is_single'     => FALSE,
+				'is_archive'    => FALSE,
+				'is_tax'        => FALSE,
+				'is_home'       => FALSE,
+				'is_front_page' => FALSE,
 			), $args );
 
 		} else {
@@ -175,11 +177,13 @@ class Theme extends Core\Base
 				'comment_count'         => 0,
 				'filter'                => 'raw',
 
-				'is_404'     => FALSE,
-				'is_page'    => FALSE,
-				'is_single'  => FALSE,
-				'is_archive' => FALSE,
-				'is_tax'     => FALSE,
+				'is_404'        => FALSE,
+				'is_page'       => FALSE,
+				'is_single'     => FALSE,
+				'is_archive'    => FALSE,
+				'is_tax'        => FALSE,
+				'is_home'       => FALSE,
+				'is_front_page' => FALSE,
 			), $args );
 		}
 
@@ -194,12 +198,14 @@ class Theme extends Core\Base
 		$wp_query->queried_object_id = $post->ID;
 
 		// prevent comments form from appearing.
-		$wp_query->post_count = 1;
-		$wp_query->is_404     = $dummy['is_404'];
-		$wp_query->is_page    = $dummy['is_page'];
-		$wp_query->is_single  = $dummy['is_single'];
-		$wp_query->is_archive = $dummy['is_archive'];
-		$wp_query->is_tax     = $dummy['is_tax'];
+		$wp_query->post_count    = 1;
+		$wp_query->is_404        = $dummy['is_404'];
+		$wp_query->is_page       = $dummy['is_page'];
+		$wp_query->is_single     = $dummy['is_single'];
+		$wp_query->is_archive    = $dummy['is_archive'];
+		$wp_query->is_tax        = $dummy['is_tax'];
+		$wp_query->is_home       = $dummy['is_home'];
+		$wp_query->is_front_page = $dummy['is_front_page'];
 
 		unset( $dummy );
 
