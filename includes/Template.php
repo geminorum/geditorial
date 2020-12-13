@@ -4,26 +4,13 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\WordPress;
+use geminorum\gEditorial\WordPress\Main;
 use geminorum\gEditorial\WordPress\Taxonomy;
 
-class Template extends Core\Base
+class Template extends Main
 {
 
-	const BASE   = 'geditorial';
-	const MODULE = FALSE;
-
-	protected static function constant( $key, $default = FALSE )
-	{
-		return gEditorial()->constant( static::MODULE, $key, $default );
-	}
-
-	protected static function post_types( $posttypes = NULL )
-	{
-		if ( static::MODULE && gEditorial()->enabled( static::MODULE ) )
-			return gEditorial()->{static::MODULE}->posttypes( $posttypes );
-
-		return [];
-	}
+	const BASE = 'geditorial';
 
 	public static function getTermImageSrc( $size = NULL, $term_id = NULL, $taxonomy = '' )
 	{

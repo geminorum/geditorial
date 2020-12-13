@@ -7,14 +7,14 @@ use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\Text;
 use geminorum\gEditorial\Core\WordPress;
+use geminorum\gEditorial\WordPress\Main;
 use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\Taxonomy;
 
-class ShortCode extends Core\Base
+class ShortCode extends Main
 {
 
-	const BASE   = 'geditorial';
-	const MODULE = FALSE;
+	const BASE = 'geditorial';
 
 	public static function wrap( $html, $suffix = FALSE, $args = [], $block = TRUE, $extra = [] )
 	{

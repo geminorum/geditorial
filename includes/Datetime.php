@@ -4,17 +4,12 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core\Date;
 use geminorum\gEditorial\Core\HTML;
+use geminorum\gEditorial\WordPress\Main;
 
-class Datetime extends Core\Base
+class Datetime extends Main
 {
 
-	const BASE   = 'geditorial';
-	const MODULE = FALSE;
-
-	protected static function constant( $key, $default = FALSE )
-	{
-		return gEditorial()->constant( static::MODULE, $key, $default );
-	}
+	const BASE = 'geditorial';
 
 	public static function htmlCurrent( $format = NULL, $class = FALSE, $title = FALSE )
 	{

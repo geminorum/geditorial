@@ -3,12 +3,12 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core\WordPress;
+use geminorum\gEditorial\WordPress\Main;
 
-class Scripts extends Core\Base
+class Scripts extends Main
 {
 
-	const BASE   = 'geditorial';
-	const MODULE = FALSE;
+	const BASE = 'geditorial';
 
 	public static function enqueue( $asset, $dep = [ 'jquery' ], $version = GEDITORIAL_VERSION, $base = GEDITORIAL_URL, $path = 'assets/js' )
 	{

@@ -9,19 +9,13 @@ use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\Text;
 use geminorum\gEditorial\Core\URL;
 use geminorum\gEditorial\Core\WordPress;
+use geminorum\gEditorial\WordPress\Main;
 use geminorum\gEditorial\WordPress\PostType;
-use geminorum\gEditorial\WordPress\Taxonomy;
 
-class Helper extends Core\Base
+class Helper extends Main
 {
 
-	const BASE   = 'geditorial';
-	const MODULE = FALSE;
-
-	protected static function constant( $key, $default = FALSE )
-	{
-		return gEditorial()->constant( static::MODULE, $key, $default );
-	}
+	const BASE = 'geditorial';
 
 	public static function moduleClass( $module, $check = TRUE )
 	{

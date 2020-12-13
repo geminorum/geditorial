@@ -2,28 +2,12 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
-class Listtable extends Core\Base
+use geminorum\gEditorial\WordPress\Main;
+
+class Listtable extends Main
 {
 
-	const BASE   = 'geditorial';
-	const MODULE = FALSE;
-
-	protected static function constant( $key, $default = FALSE )
-	{
-		return gEditorial()->constant( static::MODULE, $key, $default );
-	}
-
-	protected static function getString( $string, $posttype = 'post', $group = 'titles', $fallback = FALSE )
-	{
-		return gEditorial()->{static::MODULE}->get_string( $string, $posttype, $group, $fallback );
-	}
-
-	protected static function getPostMeta( $post_id, $field = FALSE, $default = [], $metakey = NULL )
-	{
-		return FALSE === $field
-			? gEditorial()->{static::MODULE}->get_postmeta_legacy( $post_id, $default )
-			: gEditorial()->{static::MODULE}->get_postmeta_field( $post_id, $field, $default, $metakey );
-	}
+	const BASE = 'geditorial';
 
 	public static function columnCount( $count, $title_attr = NULL )
 	{

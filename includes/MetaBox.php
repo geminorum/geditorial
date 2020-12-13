@@ -7,32 +7,15 @@ use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\Text;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\Database;
+use geminorum\gEditorial\WordPress\Main;
 use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\Taxonomy;
 use geminorum\gEditorial\WordPress\User;
 
-class MetaBox extends Core\Base
+class MetaBox extends Main
 {
 
-	const BASE   = 'geditorial';
-	const MODULE = FALSE;
-
-	protected static function constant( $key, $default = FALSE )
-	{
-		return gEditorial()->constant( static::MODULE, $key, $default );
-	}
-
-	protected static function getString( $string, $posttype = 'post', $group = 'titles', $fallback = FALSE )
-	{
-		return gEditorial()->{static::MODULE}->get_string( $string, $posttype, $group, $fallback );
-	}
-
-	protected static function getPostMeta( $post_id, $field = FALSE, $default = [], $metakey = NULL )
-	{
-		return FALSE === $field
-			? gEditorial()->{static::MODULE}->get_postmeta_legacy( $post_id, $default )
-			: gEditorial()->{static::MODULE}->get_postmeta_field( $post_id, $field, $default, $metakey );
-	}
+	const BASE = 'geditorial';
 
 	public static function checkHidden( $metabox_id, $posttype = FALSE, $after = '' )
 	{
