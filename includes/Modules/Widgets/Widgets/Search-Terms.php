@@ -43,7 +43,7 @@ class SearchTerms extends gEditorial\Widget
 			}, $criteria );
 
 		$query = new \WP_Term_Query( [
-			'name__like' => $criteria,
+			'search'     => $criteria, // 'name__like'
 			'taxonomy'   => $taxonomies,
 			'orderby'    => 'name',
 			'hide_empty' => TRUE,
