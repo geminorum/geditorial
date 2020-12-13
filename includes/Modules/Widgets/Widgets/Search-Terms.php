@@ -26,7 +26,8 @@ class SearchTerms extends gEditorial\Widget
 		if ( ! is_search() )
 			return;
 
-		if ( ! $criteria = trim( get_search_query() ) )
+		// avoid filtering
+		if ( ! $criteria = trim( get_query_var( 's' ) ) )
 			return;
 
 		// FIXME: optional skip if paged
