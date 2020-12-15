@@ -237,7 +237,7 @@ class Workflow extends gEditorial\Module
 
 			if ( 'post' == $screen->base ) {
 
-				$edit = WordPress::getEditTaxLink( $this->constant( 'status_tax' ) );
+				$edit = WordPress::getEditTaxLink( $this->constant( 'status_tax' ), FALSE, [ 'post_type' => $screen->post_type ] );
 				remove_meta_box( 'submitdiv', $screen, 'side' );
 
 				$this->class_metabox( $screen, 'mainbox' );

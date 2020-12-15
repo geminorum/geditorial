@@ -99,7 +99,7 @@ class Specs extends gEditorial\Module
 
 			$this->class_metabox( $screen, 'linkedbox' );
 			add_meta_box( $this->classs( 'linkedbox' ),
-				$this->get_meta_box_title_tax( 'specs_tax' ),
+				$this->get_meta_box_title_tax( 'specs_tax', $screen->post_type ),
 				[ $this, 'render_linkedbox_metabox' ],
 				$screen,
 				'side',
@@ -290,7 +290,7 @@ class Specs extends gEditorial\Module
 		$taxonomy = $this->constant( 'specs_tax' );
 
 		if ( ! Taxonomy::hasTerms( $taxonomy ) )
-			return MetaBox::fieldEmptyTaxonomy( $taxonomy );
+			return MetaBox::fieldEmptyTaxonomy( $taxonomy, NULL, $post->post_type );
 
 		$terms = Taxonomy::getTerms( $taxonomy, $post->ID, TRUE );
 		$metas = $this->get_postmeta_legacy( $post->ID );

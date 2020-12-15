@@ -124,7 +124,7 @@ class Series extends gEditorial\Module
 
 				$this->class_metabox( $screen, 'linkedbox' );
 				add_meta_box( $this->classs( 'linkedbox' ),
-					$this->get_meta_box_title_tax( 'series_tax' ),
+					$this->get_meta_box_title_tax( 'series_tax', $screen->post_type ),
 					[ $this, 'render_linkedbox_metabox' ],
 					$screen,
 					'side'
@@ -237,7 +237,7 @@ class Series extends gEditorial\Module
 		$taxonomy = $this->constant( 'series_tax' );
 
 		if ( ! Taxonomy::hasTerms( $taxonomy ) )
-			return MetaBox::fieldEmptyTaxonomy( $taxonomy );
+			return MetaBox::fieldEmptyTaxonomy( $taxonomy, NULL, $post->post_type );
 
 		$posttypes = $this->posttypes();
 		$terms     = Taxonomy::getTerms( $taxonomy, $post->ID, TRUE );

@@ -441,11 +441,16 @@ class Audit extends gEditorial\Module
 		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
 			return;
 
+		$args = [
+			'taxonomy' => $box['args']['taxonomy'],
+			'posttype' => $post->post_type,
+		];
+
 		if ( $this->role_can( 'restricted', NULL, FALSE, FALSE ) )
-			$box['args']['role'] = $this->get_setting( 'restricted', 'disabled' );
+			$args['role'] = $this->get_setting( 'restricted', 'disabled' );
 
 		echo $this->wrap_open( '-admin-metabox' );
-			MetaBox::checklistTerms( $post->ID, $box['args'] );
+			MetaBox::checklistTerms( $post->ID, $args );
 		echo '</div>';
 	}
 

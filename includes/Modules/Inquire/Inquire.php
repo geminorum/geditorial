@@ -289,7 +289,7 @@ class Inquire extends gEditorial\Module
 			return;
 
 		echo $this->wrap_open( '-admin-metabox' );
-			MetaBox::checklistTerms( $post->ID, $box['args'] );
+			MetaBox::checklistTerms( $post->ID, [ 'taxonomy' => $box['args']['taxonomy'], 'posttype' => $post->post_type ] );
 		echo '</div>';
 	}
 
@@ -299,7 +299,7 @@ class Inquire extends gEditorial\Module
 			return;
 
 		echo $this->wrap_open( '-admin-metabox' );
-			MetaBox::checklistTerms( $post->ID, $box['args'] );
+			MetaBox::checklistTerms( $post->ID, [ 'taxonomy' => $box['args']['taxonomy'], 'posttype' => $post->post_type ] );
 		echo '</div>';
 	}
 

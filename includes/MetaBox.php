@@ -47,7 +47,7 @@ class MetaBox extends Main
 
 		$args = self::args( $atts, [
 			'taxonomy'             => NULL,
-			'posttype'             => FALSE, // posttype to check for block editor
+			'posttype'             => FALSE,
 			'metabox'              => NULL, // metabox id to check for hidden
 			'list_only'            => NULL,
 			'selected_only'        => NULL,
@@ -95,7 +95,7 @@ class MetaBox extends Main
 		}
 
 		if ( ! count( $terms ) )
-			return self::fieldEmptyTaxonomy( $args['taxonomy'], $args['edit'] );
+			return self::fieldEmptyTaxonomy( $args['taxonomy'], $args['edit'], $args['posttype'] );
 
 		$html = $hidden = '';
 		$tax  = get_taxonomy( $args['taxonomy'] );
@@ -193,7 +193,7 @@ class MetaBox extends Main
 	{
 		$args = self::args( $atts, [
 			'taxonomy'          => NULL,
-			'posttype'          => FALSE, // to check for block editor
+			'posttype'          => FALSE,
 			'metabox'           => NULL,
 			'edit'              => FALSE,
 			'role'              => NULL,
@@ -354,7 +354,7 @@ class MetaBox extends Main
 		return HTML::wrap( $html.'</ol>', 'field-wrap -list' );
 	}
 
-	public static function fieldEmptyTaxonomy( $taxonomy, $edit = NULL )
+	public static function fieldEmptyTaxonomy( $taxonomy, $edit = NULL, $posttype = FALSE )
 	{
 		if ( FALSE === $edit )
 			return FALSE;
@@ -362,8 +362,10 @@ class MetaBox extends Main
 		if ( ! is_object( $taxonomy ) )
 			$taxonomy = get_taxonomy( $taxonomy );
 
+		$extra = $posttype ? [ 'post_type' => $posttype ] : [];
+
 		if ( is_null( $edit ) )
-			$edit = WordPress::getEditTaxLink( $taxonomy->name );
+			$edit = WordPress::getEditTaxLink( $taxonomy->name, FALSE, $extra );
 
 		if ( $edit )
 			$html = HTML::tag( 'a', [
@@ -665,7 +667,7 @@ class MetaBox extends Main
 				'title' => $obj->labels->menu_name,
 			], $terms );
 		else
-			self::fieldEmptyTaxonomy( $obj, NULL );
+			self::fieldEmptyTaxonomy( $obj, NULL, $post->post_type );
 	}
 
 	public static function glancePosttype( $posttype, $noop, $extra_class = '' )

@@ -536,6 +536,7 @@ class Users extends gEditorial\Module
 
 			MetaBox::checklistTerms( $post->ID, [
 				'taxonomy'          => 'category',
+				'posttype'          => $post->post_type,
 				'edit'              => FALSE,
 				'selected_cats'     => 1 === count( $terms ) ? [ $terms[0]->term_id ] : FALSE,
 				'selected_preserve' => TRUE,

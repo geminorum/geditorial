@@ -2523,6 +2523,7 @@ class Module extends Base
 			'default',
 			[
 				'taxonomy' => $taxonomy,
+				'posttype' => $posttype,
 				'metabox'  => $metabox,
 				'edit'     => $edit,
 				'role'     => $role,
@@ -2642,7 +2643,7 @@ class Module extends Base
 		return $title;
 	}
 
-	public function get_meta_box_title_tax( $constant, $url = NULL, $title = NULL )
+	public function get_meta_box_title_tax( $constant, $posttype, $url = NULL, $title = NULL )
 	{
 		if ( is_null( $title ) )
 			$title = $this->get_taxonomy_label( $constant );
@@ -2654,7 +2655,7 @@ class Module extends Base
 		return $title;
 
 		if ( is_null( $url ) )
-			$url = WordPress::getEditTaxLink( $this->constant( $constant ) );
+			$url = WordPress::getEditTaxLink( $this->constant( $constant ), FALSE, [ 'post_type' => $posttype ] );
 
 		if ( $url ) {
 			$action = $this->get_string( 'meta_box_action', $constant, 'misc', _x( 'Manage', 'Module: MetaBox Default Action', 'geditorial' ) );

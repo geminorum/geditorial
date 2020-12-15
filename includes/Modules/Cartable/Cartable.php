@@ -824,6 +824,7 @@ class Cartable extends gEditorial\Module
 
 		MetaBox::checklistTerms( $post->ID, [
 			'taxonomy'          => $this->constant( 'group_tax' ),
+			'posttype'          => $post->post_type,
 			'edit'              => FALSE,
 			'list_only'         => $disable,
 			'selected_only'     => $disable,
@@ -837,6 +838,7 @@ class Cartable extends gEditorial\Module
 
 		MetaBox::checklistTerms( $post->ID, [
 			'taxonomy'          => $this->constant( 'type_tax' ),
+			'posttype'          => $post->post_type,
 			'edit'              => FALSE,
 			'list_only'         => $disable,
 			'selected_only'     => $disable,
