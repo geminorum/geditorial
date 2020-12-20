@@ -180,7 +180,7 @@ class Series extends gEditorial\Module
 
 		foreach ( $_POST['geditorial-series-terms'] as $offset => $term_id )
 			if ( $term_id && '-1' != $term_id )
-				$pre_terms[$offset] = intval( $term_id );
+				$pre_terms[$offset] = (int) $term_id;
 
 		wp_set_object_terms( $post_id, ( count( $pre_terms ) ? $pre_terms : NULL ), $this->constant( 'series_tax' ), FALSE );
 
@@ -404,7 +404,7 @@ class Series extends gEditorial\Module
 
 			if ( isset( $post->series_meta['in_series_order'] )
 				&& $post->series_meta['in_series_order'] )
-					$key = intval( $post->series_meta['in_series_order'] ) * $i;
+					$key = ( (int) $post->series_meta['in_series_order'] ) * $i;
 			else
 				$key = strtotime( $post->post_date );
 

@@ -1289,7 +1289,7 @@ class Module extends Base
 		switch ( $field['type'] ) {
 
 			case 'term':
-				$sanitized = empty( $data ) ? NULL : intval( $data );
+				$sanitized = empty( $data ) ? NULL : (int) $data;
 
 			break;
 			case 'link':
@@ -2467,13 +2467,13 @@ class Module extends Base
 				$sub_metakey = sprintf( '_%s_subterm_%s', $posttype, $linked_id );
 
 				if ( $sub_linked )
-					update_post_meta( $post->ID, $sub_metakey, intval( $sub_linked ) );
+					update_post_meta( $post->ID, $sub_metakey, (int) $sub_linked );
 				else
 					delete_post_meta( $post->ID, $sub_metakey );
 			}
 
 			if ( $sub_linked )
-				$subterms[] = intval( $sub_linked );
+				$subterms[] = (int) $sub_linked;
 		}
 
 		wp_set_object_terms( $post->ID, ( count( $subterms ) ? $subterms : NULL ), $sub_tax, FALSE );
@@ -2755,7 +2755,7 @@ class Module extends Base
 	public function get_linked_term( $post_id, $posttype_constant_key, $tax_constant_key )
 	{
 		$term_id = get_post_meta( $post_id, '_'.$this->constant( $posttype_constant_key ).'_term_id', TRUE );
-		return get_term_by( 'id', intval( $term_id ), $this->constant( $tax_constant_key ) );
+		return get_term_by( 'id', (int) $term_id, $this->constant( $tax_constant_key ) );
 	}
 
 	public function set_linked_term( $post_id, $term_or_id, $posttype_constant_key, $tax_constant_key )

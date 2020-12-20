@@ -114,7 +114,7 @@ class GCalEvents extends gEditorial\Widget
 		$instance['calendar_id']  = strip_tags( $new['calendar_id'] );
 		$instance['api_key']      = strip_tags( $new['api_key'] );
 		$instance['time_min']     = strip_tags( $new['time_min'] );
-		$instance['max_results']  = intval( $new['max_results'] );
+		$instance['max_results']  = (int) $new['max_results'];
 		$instance['display_time'] = isset( $new['display_time'] );
 
 		$this->flush_widget_cache();

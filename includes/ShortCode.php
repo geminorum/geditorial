@@ -581,7 +581,7 @@ class ShortCode extends Main
 				return $content;
 
 			if ( $term_id = get_post_meta( $post->ID, '_'.$posttype.'_term_id', TRUE ) )
-				$term = get_term_by( 'id', intval( $term_id ), $taxonomy );
+				$term = get_term_by( 'id', (int) $term_id, $taxonomy );
 
 			else
 				$term = get_term_by( 'slug', $post->post_name, $taxonomy );
@@ -904,7 +904,7 @@ class ShortCode extends Main
 		} else if ( $post && is_singular( $posttype ) ) {
 
 			if ( $term_id = get_post_meta( $post->ID, '_'.$posttype.'_term_id', TRUE ) )
-				$term = get_term_by( 'id', intval( $term_id ), $taxonomy );
+				$term = get_term_by( 'id', (int) $term_id, $taxonomy );
 
 			else
 				$term = get_term_by( 'slug', $post->post_name, $taxonomy );

@@ -71,7 +71,7 @@ class Meta extends gEditorial\MetaBox
 	public static function setPostMetaField_Term( $post_id, $field, $taxonomy, $prefix = 'geditorial-meta-' )
 	{
 		if ( isset( $_POST[$prefix.$field] ) && '0' != $_POST[$prefix.$field] )
-			wp_set_object_terms( $post_id, intval( $_POST[$prefix.$field] ), $taxonomy, FALSE );
+			wp_set_object_terms( $post_id, (int) $_POST[$prefix.$field], $taxonomy, FALSE );
 
 		else if ( isset( $_POST[$prefix.$field] ) && '0' == $_POST[$prefix.$field] )
 			wp_set_object_terms( $post_id, NULL, $taxonomy, FALSE );

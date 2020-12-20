@@ -76,7 +76,7 @@ class MetaBox extends Main
 
 		} else if ( $args['descendants_and_self'] ) {
 
-			$childs = intval( $args['descendants_and_self'] );
+			$childs = (int) $args['descendants_and_self'];
 
 			$terms = (array) get_terms( [
 				'taxonomy'     => $args['taxonomy'],

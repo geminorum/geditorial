@@ -139,6 +139,6 @@ class Views extends gEditorial\Module
 
 	private function report( $post_id, $event )
 	{
-		return intval( get_post_meta( $post_id, $this->meta_key.'_'.$event, TRUE ) );
+		return (int) get_post_meta( $post_id, $this->meta_key.'_'.$event, TRUE );
 	}
 }

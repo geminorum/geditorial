@@ -603,14 +603,14 @@ class Plugin
 			return gNetwork()->user( $fallback );
 
 		if ( defined( 'GNETWORK_SITE_USER_ID' ) && GNETWORK_SITE_USER_ID )
-			return intval( GNETWORK_SITE_USER_ID );
+			return (int) GNETWORK_SITE_USER_ID;
 
 		if ( function_exists( 'gtheme_get_option' )
 			&& ( $user_id = gtheme_get_option( 'default_user', 0 ) ) )
-				return intval( $user_id );
+				return (int) $user_id;
 
 		if ( $fallback )
-			return intval( get_current_user_id() );
+			return get_current_user_id();
 
 		return 0;
 	}

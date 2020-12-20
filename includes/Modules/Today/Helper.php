@@ -478,7 +478,7 @@ class Today extends gEditorial\Helper
 
 			} else if ( $the_post ) {
 
-				if ( current_user_can( 'edit_post', intval( $the_post ) ) ) {
+				if ( current_user_can( 'edit_post', (int) $the_post ) ) {
 
 					$title = $object->labels->edit_item;
 

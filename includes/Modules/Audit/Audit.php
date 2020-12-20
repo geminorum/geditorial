@@ -277,7 +277,7 @@ class Audit extends gEditorial\Module
 					return $caps;
 
 				foreach ( $locking as $term_id )
-					if ( is_object_in_term( $post->ID, $taxonomy, intval( $term_id ) ) )
+					if ( is_object_in_term( $post->ID, $taxonomy, (int) $term_id ) )
 						return $this->role_can( 'manage', $user_id ) ? $caps : [ 'do_not_allow' ];
 
 			break;

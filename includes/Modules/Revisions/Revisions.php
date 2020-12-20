@@ -455,7 +455,7 @@ class Revisions extends gEditorial\Module
 		$offset = ( $paged - 1 ) * $limit;
 
 		if ( $user = self::req( 'author' ) ) {
-			$where.= $wpdb->prepare( "AND post_author = %d", intval( $user ) );
+			$where.= $wpdb->prepare( "AND post_author = %d", (int) $user );
 			$extra['author'] = $user;
 		}
 

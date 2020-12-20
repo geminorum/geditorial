@@ -115,7 +115,7 @@ class IssueCover extends gEditorial\Widget
 		$instance['title']        = strip_tags( $new_instance['title'] );
 		$instance['title_link']   = strip_tags( $new_instance['title_link'] );
 		$instance['title_image']  = strip_tags( $new_instance['title_image'] );
-		$instance['page_id']      = intval( $new_instance['page_id'] );
+		$instance['page_id']      = (int) $new_instance['page_id'];
 		$instance['image_size']   = isset( $new_instance['image_size'] ) ? strip_tags( $new_instance['image_size'] ) : 'thumbnail';
 		$instance['latest_issue'] = isset( $new_instance['latest_issue'] );
 		$instance['number_line']  = isset( $new_instance['number_line'] );

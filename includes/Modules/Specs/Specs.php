@@ -142,7 +142,7 @@ class Specs extends gEditorial\Module
 		$terms      = [];
 
 		foreach ( $meta as $meta_row )
-			$terms[] = intval( $meta_row['spec_term_id'] );
+			$terms[] = (int) $meta_row['spec_term_id'];
 
 		$counter = 1;
 
@@ -228,7 +228,7 @@ class Specs extends gEditorial\Module
 
 		foreach ( $_POST['geditorial-specs_term_id'] as $offset => $term_id )
 			if ( $term_id && '-1' != $term_id )
-				$terms[$offset] = intval( $term_id );
+				$terms[$offset] = (int) $term_id;
 
 		wp_set_object_terms( $post_id, ( count( $terms ) ? $terms : null ), $this->constant( 'specs_tax' ), FALSE );
 

@@ -220,7 +220,7 @@ class Relation extends Main
 				],
 			],
 			'permission_callback' => function ( $request ) {
-				return current_user_can( 'edit_post', intval( $request['to'] ) );
+				return current_user_can( 'edit_post', (int) $request['to'] );
 			},
 		] );
 
@@ -245,7 +245,7 @@ class Relation extends Main
 				],
 			],
 			'permission_callback' => function ( $request ) {
-				return current_user_can( 'edit_post', intval( $request['to'] ) );
+				return current_user_can( 'edit_post', (int) $request['to'] );
 			},
 		] );
 	}

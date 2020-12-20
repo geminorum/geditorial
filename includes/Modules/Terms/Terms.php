@@ -640,8 +640,8 @@ class Terms extends gEditorial\Module
 				$meta = is_array( $meta ) ? array_filter( $meta ) : trim( HTML::escape( $meta ) );
 
 				if ( 'image' == $field ) {
-					update_post_meta( intval( $meta ), '_wp_attachment_is_term_image', $taxonomy );
-					do_action( 'clean_term_attachment_cache', intval( $meta ), $taxonomy, $term_id );
+					update_post_meta( (int) $meta, '_wp_attachment_is_term_image', $taxonomy );
+					do_action( 'clean_term_attachment_cache', (int) $meta, $taxonomy, $term_id );
 				}
 
 				update_term_meta( $term_id, $field, $meta );
@@ -649,8 +649,8 @@ class Terms extends gEditorial\Module
 			} else {
 
 				if ( 'image' == $field && $meta = get_term_meta( $term_id, $field, TRUE ) ) {
-					delete_post_meta( intval( $meta ), '_wp_attachment_is_term_image' );
-					do_action( 'clean_term_attachment_cache', intval( $meta ), $taxonomy, $term_id );
+					delete_post_meta( (int) $meta, '_wp_attachment_is_term_image' );
+					do_action( 'clean_term_attachment_cache', (int) $meta, $taxonomy, $term_id );
 				}
 
 				delete_term_meta( $term_id, $field );
@@ -1429,7 +1429,7 @@ class Terms extends gEditorial\Module
 
 		foreach ( $term_ids as $term_id ) {
 
-			$term = get_term( intval( $term_id ), $taxonomy );
+			$term = get_term( (int) $term_id, $taxonomy );
 
 			if ( self::isError( $term ) )
 				continue;
@@ -1468,7 +1468,7 @@ class Terms extends gEditorial\Module
 
 		foreach ( $term_ids as $term_id ) {
 
-			$term = get_term( intval( $term_id ), $taxonomy );
+			$term = get_term( (int) $term_id, $taxonomy );
 
 			if ( self::isError( $term ) )
 				continue;
@@ -1520,7 +1520,7 @@ class Terms extends gEditorial\Module
 			'tax_query'      => [ [
 				'taxonomy' => 'category',
 				'field'    => 'term_id',
-				'terms'    => [ intval( get_option( 'default_category' ) ) ],
+				'terms'    => [ (int) get_option( 'default_category' ) ],
 			] ],
 		];
 

@@ -140,8 +140,8 @@ class WPRestPosts extends gEditorial\Widget
 		$instance['tags']       = strip_tags( $new['tags'] );
 		$instance['categories'] = strip_tags( $new['categories'] );
 		$instance['extra']      = strip_tags( $new['extra'] );
-		$instance['number']     = intval( $new['number'] );
-		$instance['trim_chars'] = intval( $new['trim_chars'] );
+		$instance['number']     = (int) $new['number'];
+		$instance['trim_chars'] = (int) $new['trim_chars'];
 
 		$this->flush_widget_cache();
 
