@@ -916,12 +916,15 @@ class Module extends Base
 		];
 	}
 
-	protected function render_form_buttons( $module = FALSE, $wrap = '' )
+	protected function render_form_buttons( $module = FALSE, $wrap = '', $buttons = NULL )
 	{
 		if ( FALSE !== $wrap )
 			echo $this->wrap_open_buttons( $wrap );
 
-		foreach ( $this->buttons as $button )
+		if ( is_null( $buttons ) )
+			$buttons = $this->buttons;
+
+		foreach ( $buttons as $button )
 			Settings::submitButton( $button['key'], $button['value'], $button['type'], $button['atts'] );
 
 		if ( FALSE !== $wrap )

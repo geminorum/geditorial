@@ -13,7 +13,7 @@ class Ajax extends Core\Base
 
 	public static function checkReferer( $action = NULL, $key = 'nonce' )
 	{
-		check_ajax_referer( ( is_null( $action ) ? static::BASE : $action ), $key );
+		return check_ajax_referer( ( is_null( $action ) ? static::BASE : $action ), $key );
 	}
 
 	public static function success( $data = NULL, $status_code = NULL )

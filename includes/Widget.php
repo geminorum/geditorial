@@ -139,7 +139,7 @@ class Widget extends \WP_Widget
 		return FALSE;
 	}
 
-	public function before_widget( $args, $instance, $extra = '', $echo = TRUE )
+	public function before_widget( $args, $instance, $echo = TRUE, $extra = '' )
 	{
 		$classes = [];
 
@@ -168,7 +168,7 @@ class Widget extends \WP_Widget
 		echo $args['after_widget'];
 	}
 
-	public function widget_title( $args, $instance, $default = '', $echo = TRUE )
+	public function widget_title( $args, $instance, $echo = TRUE, $default = '' )
 	{
 		$title = apply_filters( 'widget_title',
 			empty( $instance['title'] ) ? $default : $instance['title'],
@@ -517,6 +517,24 @@ class Widget extends \WP_Widget
 		} else {
 			HTML::desc( _x( 'No Image Size Available!', 'Widget Core', 'geditorial' ) );
 		}
+	}
+
+	public function form_dropdown( $instance, $values, $default = '', $field = 'selected', $label = NULL )
+	{
+		$selected = isset( $instance[$field] ) ? $instance[$field] : $default;
+
+		if ( is_null( $label ) )
+			$label = '';
+
+		$html = HTML::dropdown( $values, [
+			'class'      => 'widefat',
+			'name'       => $this->get_field_name( $field ),
+			'id'         => $this->get_field_id( $field ),
+			'none_title' => _x( '&ndash; Select &ndash;', 'Widget Core', 'geditorial' ),
+			'selected'   => $selected,
+		] );
+
+		HTML::label( $label.$html, $this->get_field_id( $field ) );
 	}
 
 	public function form_checkbox( $instance, $default = FALSE, $field = 'checked', $label = NULL )

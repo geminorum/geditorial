@@ -142,7 +142,7 @@ class Taxonomy extends Core\Base
 
 		} else {
 
-			$id = intval( $object_id );
+			$id = (int) $object_id;
 		}
 
 		if ( $id ) {

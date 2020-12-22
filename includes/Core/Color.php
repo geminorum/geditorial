@@ -171,7 +171,7 @@ class Color extends Base
 				return FALSE;
 
 		// validate opacity data/number.
-		$opacity = intval( $opacity );
+		$opacity = (int) $opacity;
 
 		// "Opacity percentage error, valid numbers are between 0 - 100"
 		if ( $opacity > 100  || $opacity < 0 )
@@ -224,9 +224,9 @@ class Color extends Base
 			'b' => ( $b['b'] - $f['b'] ) / 100,
 		);
 
-		$f['r'] += intval( $add['r'] * $transparency );
-		$f['g'] += intval( $add['g'] * $transparency );
-		$f['b'] += intval( $add['b'] * $transparency );
+		$f['r'] += (int) ( $add['r'] * $transparency );
+		$f['g'] += (int) ( $add['g'] * $transparency );
+		$f['b'] += (int) ( $add['b'] * $transparency );
 
 		return sprintf( '%02X%02X%02X', $f['r'], $f['g'], $f['b'] );
 	}

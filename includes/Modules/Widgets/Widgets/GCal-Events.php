@@ -36,7 +36,7 @@ class GCalEvents extends gEditorial\Widget
 			return TRUE;
 
 		$this->before_widget( $args, $instance );
-		$this->widget_title( $args, $instance, $data->summary );
+		$this->widget_title( $args, $instance, TRUE, $data->summary );
 
 		if ( empty( $data->items ) ) {
 

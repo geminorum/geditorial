@@ -166,7 +166,7 @@ class Database extends Core\Base
 		", $taxonomy );
 
 		foreach ( (array) $wpdb->get_results( $query, ARRAY_A ) as $row )
-			$counts[$row['post_type']] = intval( $row['total'] );
+			$counts[$row['post_type']] = (int) $row['total'];
 
 		wp_cache_set( $key, $counts, 'counts' );
 
@@ -212,7 +212,7 @@ class Database extends Core\Base
 			", $term->term_id );
 
 			foreach ( (array) $wpdb->get_results( $query, ARRAY_A ) as $row )
-				$counts[$term->slug][$row['post_type']] = intval( $row['total'] );
+				$counts[$term->slug][$row['post_type']] = (int) $row['total'];
 		}
 
 		wp_cache_set( $key, $counts, 'counts' );
@@ -250,7 +250,7 @@ class Database extends Core\Base
 		$results = self::getResults( $query, ARRAY_A, 'counts' );
 
 		foreach ( (array) $results as $row )
-			$counts[$row['post_status']] = intval( $row['total'] );
+			$counts[$row['post_status']] = (int) $row['total'];
 
 		return $counts;
 	}
@@ -293,7 +293,7 @@ class Database extends Core\Base
 		$results = self::getResults( $query, ARRAY_A, 'counts' );
 
 		foreach ( (array) $results as $row )
-			$counts[$row['post_type']] = intval( $row['total'] );
+			$counts[$row['post_type']] = (int) $row['total'];
 
 		return $counts;
 	}

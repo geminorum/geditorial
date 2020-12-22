@@ -248,8 +248,17 @@ class Module extends Core\Base
 		return call_user_func_array( 'apply_filters', $args );
 	}
 
-	// USAGE: add_filter( 'body_class', self::__array_append( 'foo' ) );
-	protected static function __array_append( $item )
+	// `has_filter()` / `has_action()`
+	protected function hooked( $hook, $suffix = FALSE, $function_to_check = FALSE )
+	{
+		if ( $tag = $this->hook( $hook, $suffix ) )
+			return has_filter( $tag, $function_to_check );
+
+		return FALSE;
+	}
+
+	// USAGE: add_filter( 'body_class', self::_array_append( 'foo' ) );
+	protected static function _array_append( $item )
 	{
 		return function( $array ) use ( $item ) {
 			$array[] = $item;
@@ -257,8 +266,8 @@ class Module extends Core\Base
 		};
 	}
 
-	// USAGE: add_filter( 'shortcode_atts_gallery', self::__array_set( 'columns', 4 ) );
-	protected static function __array_set( $key, $value )
+	// USAGE: add_filter( 'shortcode_atts_gallery', self::_array_set( 'columns', 4 ) );
+	protected static function _array_set( $key, $value )
 	{
 		return function( $array ) use ( $key, $value ) {
 			$array[$key] = $value;
@@ -331,7 +340,7 @@ class Module extends Core\Base
 		if ( empty( $per_page ) || $per_page < 1 )
 			$per_page = $default;
 
-		return intval( self::req( $key, $per_page ) );
+		return (int) self::req( $key, $per_page );
 	}
 
 	protected function add_sub_screen_option( $sub = NULL, $option = 'per_page', $default = 25, $label = NULL )

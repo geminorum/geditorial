@@ -176,7 +176,7 @@ class WordPress extends Base
 			return 0;
 
 		if ( 'menu_order' == $key )
-			return intval( $post[0]->menu_order );
+			return (int) $post[0]->menu_order;
 
 		return $post[0]->{$key};
 	}
@@ -223,7 +223,7 @@ class WordPress extends Base
 		if ( $object )
 			return get_post( $post->post_parent );
 
-		return intval( $post->post_parent );
+		return (int) $post->post_parent;
 	}
 
 	public static function getFeaturedImage( $post_id, $size = 'thumbnail', $default = FALSE )
