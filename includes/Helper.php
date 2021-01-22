@@ -215,7 +215,7 @@ class Helper extends Main
 		return FALSE;
 	}
 
-	public static function getSeperated( $string, $delimiters = NULL, $delimiter = '|' )
+	public static function getSeperated( $string, $delimiters = NULL, $limit = NULL, $delimiter = '|' )
 	{
 		if ( is_array( $string ) )
 			return $string;
@@ -225,7 +225,11 @@ class Helper extends Main
 
 		$string = str_ireplace( $delimiters, $delimiter, $string );
 
-		return array_unique( array_filter( explode( $delimiter, $string ), 'trim' ) );
+		$seperated = is_null( $limit )
+			? explode( $delimiter, $string )
+			: explode( $delimiter, $string, $limit );
+
+		return array_unique( array_filter( $seperated, 'trim' ) );
 	}
 
 	public static function getJoined( $items, $before = '', $after = '', $empty = '' )
