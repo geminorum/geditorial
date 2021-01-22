@@ -215,13 +215,22 @@ class Helper extends Main
 		return FALSE;
 	}
 
-	public static function getSeperated( $string, $delimiters = NULL, $limit = NULL, $delimiter = '|' )
+	public static function getSeparated( $string, $delimiters = NULL, $limit = NULL, $delimiter = '|' )
 	{
 		if ( is_array( $string ) )
 			return $string;
 
 		if ( is_null( $delimiters ) )
-			$delimiters = [ '/', '،', '؛', ';', ',', '-', '|' ];
+			$delimiters = [
+				'/',
+				'،',
+				'؛',
+				';',
+				',',
+				'-',
+				// '_',
+				'|',
+			];
 
 		$string = str_ireplace( $delimiters, $delimiter, $string );
 
@@ -234,7 +243,7 @@ class Helper extends Main
 
 	public static function getJoined( $items, $before = '', $after = '', $empty = '' )
 	{
-		if ( count( $items ) )
+		if ( $items && count( $items ) )
 			return $before.implode( _x( ', ', 'Helper: Item Seperator', 'geditorial' ), $items ).$after;
 
 		return $empty;
@@ -400,7 +409,6 @@ class Helper extends Main
 			'title'  => is_null( $title_attr ) ? FALSE : $title_attr,
 		], HTML::escape( $title ) ).$after;
 	}
-
 
 	public static function getExtension( $mime_type, $extensions )
 	{

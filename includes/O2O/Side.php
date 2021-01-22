@@ -24,7 +24,7 @@ abstract class Side
 
 	abstract function is_indeterminate( $side );
 
-	final function is_same_type( $side )
+	function is_same_type( $side )
 	{
 		return $this->get_object_type() == $side->get_object_type();
 	}

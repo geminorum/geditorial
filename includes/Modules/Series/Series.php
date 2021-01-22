@@ -49,6 +49,8 @@ class Series extends gEditorial\Module
 	{
 		return [
 			'series_tax'       => 'series',
+			'series_tax_slug'  => 'serie',
+			'series_tax_rest'  => 'series',
 			'series_shortcode' => 'series',
 		];
 	}

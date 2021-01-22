@@ -34,7 +34,7 @@ class Ajax extends Core\Base
 	public static function successMessage( $message = NULL )
 	{
 		if ( is_null( $message ) )
-			$message = _x( 'Succesful!', 'Ajax: Ajax Notice', 'geditorial' );
+			$message = _x( 'Successful!', 'Ajax: Ajax Notice', 'geditorial' );
 
 		if ( $message )
 			self::success( HTML::success( $message ) );

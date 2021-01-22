@@ -469,7 +469,7 @@ class Config extends gEditorial\Module
 				$enabled = 'enable' == sanitize_key( $_POST['doing'] ) ? TRUE : FALSE;
 
 				if ( gEditorial()->update_module_option( $module->name, 'enabled', $enabled ) )
-					Ajax::successMessage( _x( 'Module state succesfully changed.', 'Ajax Notice', 'geditorial-config' ) );
+					Ajax::successMessage( _x( 'Module state successfully changed.', 'Ajax Notice', 'geditorial-config' ) );
 				else
 					Ajax::errorMessage( _x( 'Cannot change module state!', 'Ajax Notice', 'geditorial-config' ) );
 		}

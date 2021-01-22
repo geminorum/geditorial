@@ -2654,7 +2654,7 @@ class Module extends Base
 		if ( $info = $this->get_string( 'meta_box_info', $constant, 'misc', NULL ) )
 			$title.= ' <span class="postbox-title-info" data-title="info" title="'.HTML::escape( $info ).'">'.HTML::getDashicon( 'info' ).'</span>';
 
-		// problems with block editor
+		// FIXME: WTF: problems with block editor
 		return $title;
 
 		if ( is_null( $url ) )

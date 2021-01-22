@@ -789,7 +789,7 @@ class Importer extends gEditorial\Module
 
 		foreach ( (array) $taxonomies as $taxonomy => $taxonomy_object )
 			if ( $field == 'importer_tax_'.$taxonomy )
-				return array_filter( Helper::ksesArray( Helper::getSeperated( $value ) ) );
+				return array_filter( Helper::ksesArray( Helper::getSeparated( $value ) ) );
 
 		return $value;
 	}

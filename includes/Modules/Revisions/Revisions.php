@@ -459,6 +459,10 @@ class Revisions extends gEditorial\Module
 			$extra['author'] = $user;
 		}
 
+		// $this->posttypes(),
+		// FIXME: must limit to selected posttypes
+		// `WHERE post_type IN ( '".implode( "', '", esc_sql( (array) $posttypes ) )."' )`
+
 		$ids = $wpdb->get_col( "
 			SELECT DISTINCT post_parent
 			FROM {$wpdb->posts}
