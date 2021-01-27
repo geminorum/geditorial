@@ -340,6 +340,7 @@ class Terms extends gEditorial\Module
 			case 'role':
 			case 'posttype':
 			case 'code':
+			case 'arrow':
 
 				$position = [ 'name', 'before' ];
 
@@ -518,7 +519,13 @@ class Terms extends gEditorial\Module
 				if ( $meta || 'undefined' === $meta ) {
 
 					$dirs = $this->get_string( 'arrow_directions', FALSE, 'misc', [] );
-					$html = array_key_exists( $meta, $dirs ) ? $dirs[$meta] : $meta;
+
+					if ( array_key_exists( $meta, $dirs ) )
+						$icon = HTML::getDashicon( sprintf( 'arrow-%s-alt', $meta ), $dirs[$meta], 'icon-arrow' );
+					else
+						$icon = HTML::getDashicon( 'warning', $meta, 'icon-warning' );
+
+					$html = '<span class="field-'.$field.'" data-'.$field.'="'.HTML::escape( $meta ).'">'.$icon.'</span>';
 
 				} else {
 
