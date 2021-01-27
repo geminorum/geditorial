@@ -472,6 +472,29 @@ class Module extends Base
 			: array_keys( array_filter( $this->options->taxonomies ) );
 	}
 
+	public function list_taxonomies( $pre = NULL, $taxonomies = NULL, $capability = NULL, $args = [ 'show_ui' => TRUE ], $user_id = NULL )
+	{
+		if ( is_null( $pre ) )
+			$pre = [];
+
+		else if ( TRUE === $pre )
+			$pre = [ 'all' => _x( 'All Taxonomies', 'Module', 'geditorial' ) ];
+
+		$all = Taxonomy::get( 0, $args, FALSE, $capability, $user_id );
+
+		foreach ( $this->taxonomies( $taxonomies ) as $taxonomy ) {
+
+			if ( array_key_exists( $taxonomy, $all ) )
+				$pre[$taxonomy] = $all[$taxonomy];
+
+			// only if no checks required
+			else if ( is_null( $capability ) )
+				$pre[$taxonomy] = $taxonomy;
+		}
+
+		return $pre;
+	}
+
 	public function all_taxonomies( $args = [] )
 	{
 		$taxonomies = Taxonomy::get( 0, $args );
