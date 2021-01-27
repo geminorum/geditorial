@@ -531,7 +531,7 @@ class Terms extends gEditorial\Module
 
 				if ( $meta = get_term_meta( $term->term_id, $field, TRUE ) ) {
 
-					$html = '<code class="'.$field.'" data-'.$field.'="'.HTML::escape( $meta ).'">'.$meta.'</code>';
+					$html = '<code class="field-'.$field.'" data-'.$field.'="'.HTML::escape( $meta ).'">'.$meta.'</code>';
 
 				} else {
 
@@ -545,7 +545,7 @@ class Terms extends gEditorial\Module
 
 				if ( $meta = get_term_meta( $term->term_id, $field, TRUE ) ) {
 
-					$html = '<span class="'.$field.'" data-'.$field.'="'.HTML::escape( $meta ).'">'
+					$html = '<span class="field-'.$field.'" data-'.$field.'="'.HTML::escape( $meta ).'">'
 						.Helper::prepTitle( $meta ).'</span>';
 
 				} else {
@@ -558,7 +558,7 @@ class Terms extends gEditorial\Module
 
 				if ( $meta = get_term_meta( $term->term_id, $field, TRUE ) ) {
 
-					$html = '<span class="'.$field.'" data-'.$field.'="'.HTML::escape( $meta )
+					$html = '<span class="field-'.$field.'" data-'.$field.'="'.HTML::escape( $meta )
 						.'" title="'.HTML::wrapLTR( HTML::escape( $meta ) ).'">'
 						.Helper::prepContact( $meta, HTML::getDashicon( 'phone' ) ).'</span>';
 
@@ -582,7 +582,7 @@ class Terms extends gEditorial\Module
 				if ( $meta = get_term_meta( $term->term_id, $field, TRUE ) ) {
 
 					$user = get_user_by( 'id', $meta );
-					$html = '<span class="'.$field.'" data-'.$field.'="'.$meta.'">'.$user->display_name.'</span>';
+					$html = '<span class="field-'.$field.'" data-'.$field.'="'.$meta.'">'.$user->display_name.'</span>';
 
 				} else {
 
@@ -603,7 +603,7 @@ class Terms extends gEditorial\Module
 					$this->all_roles = $this->get_settings_default_roles();
 
 				if ( $meta = get_term_meta( $term->term_id, $field, TRUE ) )
-					$html = '<span class="'.$field.'" data-'.$field.'="'.HTML::escape( $meta ).'">'
+					$html = '<span class="field-'.$field.'" data-'.$field.'="'.HTML::escape( $meta ).'">'
 						.( empty( $this->all_roles[$meta] )
 							? HTML::escape( $meta )
 							: $this->all_roles[$meta] )
@@ -623,7 +623,7 @@ class Terms extends gEditorial\Module
 					$list = [];
 
 					foreach ( (array) $meta as $role )
-						$list[] = '<span class="'.$field.'" data-'.$field.'="'.HTML::escape( $role ).'">'
+						$list[] = '<span class="field-'.$field.'" data-'.$field.'="'.HTML::escape( $role ).'">'
 							.( empty( $this->all_roles[$role] )
 								? HTML::escape( $role )
 								: $this->all_roles[$role] )
@@ -643,7 +643,7 @@ class Terms extends gEditorial\Module
 					$this->all_posttypes = PostType::get( 2 );
 
 				if ( $meta = get_term_meta( $term->term_id, $field, TRUE ) )
-					$html = '<span class="'.$field.'" data-'.$field.'="'.HTML::escape( $meta ).'">'
+					$html = '<span class="field-'.$field.'" data-'.$field.'="'.HTML::escape( $meta ).'">'
 						.( empty( $this->all_posttypes[$meta] )
 							? HTML::escape( $meta )
 							: $this->all_posttypes[$meta] )
@@ -663,7 +663,7 @@ class Terms extends gEditorial\Module
 					$list = [];
 
 					foreach ( (array) $meta as $posttype )
-						$list[] = '<span class="'.$field.'" data-'.$field.'="'.HTML::escape( $posttype ).'">'
+						$list[] = '<span class="field-'.$field.'" data-'.$field.'="'.HTML::escape( $posttype ).'">'
 							.( empty( $this->all_posttypes[$posttype] )
 								? HTML::escape( $posttype )
 								: $this->all_posttypes[$posttype] )
@@ -684,7 +684,7 @@ class Terms extends gEditorial\Module
 	{
 		if ( $column )
 			return '<span class="column-'.$field.'-empty -empty">&mdash;</span>'
-				.'<span class="'.$field.'" data-'.$field.'="'.$value.'"></span>';
+				.'<span class="field-'.$field.'" data-'.$field.'="'.$value.'"></span>';
 
 		return gEditorial()->na();
 	}

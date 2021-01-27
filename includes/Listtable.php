@@ -12,14 +12,14 @@ class Listtable extends Main
 	public static function columnCount( $count, $title_attr = NULL )
 	{
 		return Helper::htmlCount( $count, $title_attr )
-			.'<span class="count" data-count="'
+			.'<span class="count field-count" data-count="'
 			.( FALSE === $count ? '' : $count ).'"></span>';
 	}
 
 	public static function columnOrder( $order, $title_attr = NULL )
 	{
 		return Helper::htmlOrder( $order, $title_attr )
-			.'<span class="order" data-order="'
+			.'<span class="order field-order" data-order="'
 			.( FALSE === $order ? '' : $order ).'"></span>';
 	}
 

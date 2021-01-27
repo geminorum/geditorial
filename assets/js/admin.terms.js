@@ -85,12 +85,17 @@
     },
 
     inlineText: function (field, tag, event) {
-      const value = $('td.' + s.classs + '-' + field + ' span.' + field, '#' + tag).attr('data-' + field);
+      const value = $('td.' + s.classs + '-' + field + ' span.field-' + field, '#' + tag).attr('data-' + field);
+      $(':input[name="term-' + field + '"]', '.inline-edit-row').val(value);
+    },
+
+    inlineCode: function (field, tag, event) {
+      const value = $('td.' + s.classs + '-' + field + ' code.field-' + field, '#' + tag).attr('data-' + field);
       $(':input[name="term-' + field + '"]', '.inline-edit-row').val(value);
     },
 
     inlineSelect: function (field, tag, event) {
-      const value = $('td.' + s.classs + '-' + field + ' span.' + field, '#' + tag).attr('data-' + field);
+      const value = $('td.' + s.classs + '-' + field + ' span.field-' + field, '#' + tag).attr('data-' + field);
       const $el = $(':input[name="term-' + field + '"]', '.inline-edit-row');
 
       $el.find('option:selected').attr('selected', false);
@@ -119,7 +124,7 @@
       app.inlineSelect('posttype', tag, event);
       app.inlineSelect('arrow', tag, event);
       app.inlineText('label', tag, event);
-      app.inlineText('code', tag, event);
+      app.inlineCode('code', tag, event);
     });
 
     // reset the form on submit
