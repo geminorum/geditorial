@@ -327,6 +327,12 @@ class Terms extends gEditorial\Module
 		return $this->filters( 'list_supported_fields', $list, $taxonomy );
 	}
 
+	// by default the metakey is the same as the field
+	private function get_supported_metakey( $field, $taxonomy = FALSE )
+	{
+		return $this->filters( 'supported_field_metakey', $field, $field, $taxonomy );
+	}
+
 	private function get_supported_position( $field, $taxonomy = FALSE )
 	{
 		switch ( $field ) {
@@ -425,7 +431,9 @@ class Terms extends gEditorial\Module
 		switch ( $attr ) {
 
 			case 'image':
-				return Media::prepAttachmentData( get_term_meta( $term['id'], 'image', TRUE ) );
+				$metakey = $this->get_supported_metakey( 'image', $object_type );
+				return Media::prepAttachmentData( get_term_meta( $term['id'], $metakey, TRUE ) );
+
 				break;
 		}
 	}
@@ -494,12 +502,13 @@ class Terms extends gEditorial\Module
 	// TODO: use readonly inputs on non-columns
 	private function display_form_field( $field, $taxonomy, $term, $column = TRUE )
 	{
-		$html = $meta = '';
+		$html    = $meta = '';
+		$metakey = $this->get_supported_metakey( $field, $taxonomy );
 
 		switch ( $field ) {
 			case 'order':
 
-				$meta = get_term_meta( $term->term_id, $field, TRUE );
+				$meta = get_term_meta( $term->term_id, $metakey, TRUE );
 
 				if ( $meta || '0' === $meta ) {
 
@@ -514,7 +523,7 @@ class Terms extends gEditorial\Module
 
 			case 'arrow':
 
-				$meta = get_term_meta( $term->term_id, $field, TRUE );
+				$meta = get_term_meta( $term->term_id, $metakey, TRUE );
 
 				if ( $meta || 'undefined' === $meta ) {
 
@@ -536,7 +545,7 @@ class Terms extends gEditorial\Module
 
 			case 'code':
 
-				if ( $meta = get_term_meta( $term->term_id, $field, TRUE ) ) {
+				if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) ) {
 
 					$html = '<code class="field-'.$field.'" data-'.$field.'="'.HTML::escape( $meta ).'">'.$meta.'</code>';
 
@@ -550,7 +559,7 @@ class Terms extends gEditorial\Module
 			case 'label':
 			case 'tagline':
 
-				if ( $meta = get_term_meta( $term->term_id, $field, TRUE ) ) {
+				if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) ) {
 
 					$html = '<span class="field-'.$field.'" data-'.$field.'="'.HTML::escape( $meta ).'">'
 						.Helper::prepTitle( $meta ).'</span>';
@@ -563,7 +572,7 @@ class Terms extends gEditorial\Module
 			break;
 			case 'contact':
 
-				if ( $meta = get_term_meta( $term->term_id, $field, TRUE ) ) {
+				if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) ) {
 
 					$html = '<span class="field-'.$field.'" data-'.$field.'="'.HTML::escape( $meta )
 						.'" title="'.HTML::wrapLTR( HTML::escape( $meta ) ).'">'
@@ -581,12 +590,12 @@ class Terms extends gEditorial\Module
 				// $size  = isset( $sizes[$post->post_type.'-thumbnail'] ) ? $post->post_type.'-thumbnail' : 'thumbnail';
 				$size = [ 45, 72 ]; // FIXME
 
-				$html = $this->filters( 'column_image', Taxonomy::htmlFeaturedImage( $term->term_id, $size ), $term->term_id, $size );
+				$html = $this->filters( 'column_image', Taxonomy::htmlFeaturedImage( $term->term_id, $size, TRUE, $metakey ), $term->term_id, $size );
 
 			break;
 			case 'author':
 
-				if ( $meta = get_term_meta( $term->term_id, $field, TRUE ) ) {
+				if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) ) {
 
 					$user = get_user_by( 'id', $meta );
 					$html = '<span class="field-'.$field.'" data-'.$field.'="'.$meta.'">'.$user->display_name.'</span>';
@@ -599,7 +608,7 @@ class Terms extends gEditorial\Module
 			break;
 			case 'color':
 
-				if ( $meta = get_term_meta( $term->term_id, $field, TRUE ) )
+				if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) )
 					$html = '<i class="-color" data-'.$field.'="'.HTML::escape( $meta )
 						.'" style="background-color:'.HTML::escape( $meta ).'"></i>';
 
@@ -609,7 +618,7 @@ class Terms extends gEditorial\Module
 				if ( empty( $this->all_roles ) )
 					$this->all_roles = $this->get_settings_default_roles();
 
-				if ( $meta = get_term_meta( $term->term_id, $field, TRUE ) )
+				if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) )
 					$html = '<span class="field-'.$field.'" data-'.$field.'="'.HTML::escape( $meta ).'">'
 						.( empty( $this->all_roles[$meta] )
 							? HTML::escape( $meta )
@@ -625,7 +634,7 @@ class Terms extends gEditorial\Module
 				if ( empty( $this->all_roles ) )
 					$this->all_roles = $this->get_settings_default_roles();
 
-				if ( $meta = get_term_meta( $term->term_id, $field, TRUE ) ) {
+				if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) ) {
 
 					$list = [];
 
@@ -649,7 +658,7 @@ class Terms extends gEditorial\Module
 				if ( empty( $this->all_posttypes ) )
 					$this->all_posttypes = PostType::get( 2 );
 
-				if ( $meta = get_term_meta( $term->term_id, $field, TRUE ) )
+				if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) )
 					$html = '<span class="field-'.$field.'" data-'.$field.'="'.HTML::escape( $meta ).'">'
 						.( empty( $this->all_posttypes[$meta] )
 							? HTML::escape( $meta )
@@ -665,7 +674,7 @@ class Terms extends gEditorial\Module
 				if ( empty( $this->all_posttypes ) )
 					$this->all_posttypes = PostType::get( 2 );
 
-				if ( $meta = get_term_meta( $term->term_id, $field, TRUE ) ) {
+				if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) ) {
 
 					$list = [];
 
@@ -703,8 +712,9 @@ class Terms extends gEditorial\Module
 			if ( ! array_key_exists( 'term-'.$field, $_REQUEST ) )
 				continue;
 
-			$meta = empty( $_REQUEST['term-'.$field] ) ? FALSE : $_REQUEST['term-'.$field];
-			$meta = $this->filters( 'supported_field_edit', $meta, $field, $taxonomy, $term_id );
+			$meta    = empty( $_REQUEST['term-'.$field] ) ? FALSE : $_REQUEST['term-'.$field];
+			$meta    = $this->filters( 'supported_field_edit', $meta, $field, $taxonomy, $term_id );
+			$metakey = $this->get_supported_metakey( $field, $taxonomy );
 
 			if ( $meta ) {
 
@@ -715,16 +725,16 @@ class Terms extends gEditorial\Module
 					do_action( 'clean_term_attachment_cache', (int) $meta, $taxonomy, $term_id );
 				}
 
-				update_term_meta( $term_id, $field, $meta );
+				update_term_meta( $term_id, $metakey, $meta );
 
 			} else {
 
-				if ( 'image' == $field && $meta = get_term_meta( $term_id, $field, TRUE ) ) {
+				if ( 'image' == $field && $meta = get_term_meta( $term_id, $metakey, TRUE ) ) {
 					delete_post_meta( (int) $meta, '_wp_attachment_is_term_image' );
 					do_action( 'clean_term_attachment_cache', (int) $meta, $taxonomy, $term_id );
 				}
 
-				delete_term_meta( $term_id, $field );
+				delete_term_meta( $term_id, $metakey );
 			}
 
 			// FIXME: experiment: since the action may trigger twice
@@ -789,7 +799,8 @@ class Terms extends gEditorial\Module
 	{
 		$html    = '';
 		$term_id = empty( $term->term_id ) ? 0 : $term->term_id;
-		$meta    = get_term_meta( $term_id, $field, TRUE );
+		$metakey = $this->get_supported_metakey( $field, $taxonomy );
+		$meta    = get_term_meta( $term_id, $metakey, TRUE );
 
 		switch ( $field ) {
 
@@ -1149,15 +1160,17 @@ class Terms extends gEditorial\Module
 					'parent' => $node['id'],
 				];
 
+				$metakey = get_supported_metakey( $field, $term->taxonomy );
+
 				switch ( $field ) {
 					case 'order':
 
-						$node['title'].= ': '.Helper::htmlOrder( get_term_meta( $term->term_id, $field, TRUE ) );
+						$node['title'].= ': '.Helper::htmlOrder( get_term_meta( $term->term_id, $metakey, TRUE ) );
 
 					break;
 					case 'image':
 
-						$image = Taxonomy::htmlFeaturedImage( $term->term_id, [ 45, 72 ] );
+						$image = Taxonomy::htmlFeaturedImage( $term->term_id, [ 45, 72 ], TRUE, $metakey );
 
 						$child['meta'] = [
 							'html'  => $image ?: gEditorial()->na( FALSE ),
@@ -1167,7 +1180,7 @@ class Terms extends gEditorial\Module
 					break;
 					case 'author':
 
-						if ( $meta = get_term_meta( $term->term_id, $field, TRUE ) )
+						if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) )
 							$node['title'].= ': '.get_user_by( 'id', $meta )->display_name;
 						else
 							$node['title'].= ': '.gEditorial\Plugin::na();
@@ -1175,7 +1188,7 @@ class Terms extends gEditorial\Module
 					break;
 					case 'color':
 
-						if ( $meta = get_term_meta( $term->term_id, $field, TRUE ) )
+						if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) )
 							$node['title'].= ': '.'<i class="-color" style="background-color:'.HTML::escape( $meta ).'"></i>';
 						else
 							$node['title'].= ': '.gEditorial\Plugin::na();
@@ -1183,7 +1196,7 @@ class Terms extends gEditorial\Module
 					break;
 					case 'tagline':
 
-						if ( $meta = get_term_meta( $term->term_id, $field, TRUE ) )
+						if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) )
 							$node['title'].= ': '.Helper::prepTitle( $meta );
 						else
 							$node['title'].= ': '.gEditorial\Plugin::na();
@@ -1191,7 +1204,7 @@ class Terms extends gEditorial\Module
 					break;
 					case 'contact':
 
-						if ( $meta = get_term_meta( $term->term_id, $field, TRUE ) )
+						if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) )
 							$node['title'].= ': '.Helper::prepContact( $meta );
 						else
 							$node['title'].= ': '.gEditorial\Plugin::na();
@@ -1528,7 +1541,8 @@ class Terms extends gEditorial\Module
 		if ( ! in_array( 'image', $this->get_supported( $taxonomy ) ) )
 			return FALSE;
 
-		$count = 0;
+		$count   = 0;
+		$metakey = $this->get_supported_metakey( 'image', $taxonomy );
 
 		foreach ( $term_ids as $term_id ) {
 
@@ -1537,7 +1551,7 @@ class Terms extends gEditorial\Module
 			if ( self::isError( $term ) )
 				continue;
 
-			if ( ! $attachment_id = get_term_meta( $term->term_id, 'image', TRUE ) )
+			if ( ! $attachment_id = get_term_meta( $term->term_id, $metakey, TRUE ) )
 				continue;
 
 			if ( ! wp_attachment_is_image( $attachment_id ) )
@@ -1567,7 +1581,8 @@ class Terms extends gEditorial\Module
 		if ( ! in_array( 'tagline', $this->get_supported( $taxonomy ) ) )
 			return FALSE;
 
-		$count = 0;
+		$count   = 0;
+		$metakey = $this->get_supported_metakey( 'tagline', $taxonomy );
 
 		foreach ( $term_ids as $term_id ) {
 
@@ -1576,7 +1591,7 @@ class Terms extends gEditorial\Module
 			if ( self::isError( $term ) )
 				continue;
 
-			if ( ! $meta = get_term_meta( $term->term_id, 'tagline', TRUE ) )
+			if ( ! $meta = get_term_meta( $term->term_id, $metakey, TRUE ) )
 				continue;
 
 			if ( ! empty( $taxonomy->description ) )
@@ -1589,7 +1604,7 @@ class Terms extends gEditorial\Module
 			if ( self::isError( $updated ) )
 				continue;
 
-			if ( delete_term_meta( $term->term_id, 'tagline' ) )
+			if ( delete_term_meta( $term->term_id, $metakey ) )
 				$count++;
 		}
 
