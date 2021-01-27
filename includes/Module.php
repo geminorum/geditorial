@@ -30,8 +30,11 @@ class Module extends Base
 	protected $cookie     = 'geditorial';
 	protected $icon_group = 'genericons-neue';
 
+	protected $rest_api_version = 'v1';
+
 	protected $priority_init              = 10;
 	protected $priority_init_ajax         = 10;
+	protected $priority_restapi_init      = 10;
 	protected $priority_current_screen    = 10;
 	protected $priority_admin_menu        = 10;
 	protected $priority_adminbar_init     = 10;
@@ -145,6 +148,9 @@ class Module extends Base
 			$this->action( 'after_setup_theme', 0, 20 );
 
 		$this->action( 'init', 0, $this->priority_init );
+
+		if ( method_exists( $this, 'setup_restapi' ) )
+			add_action( 'rest_api_init', [ $this, 'setup_restapi' ], $this->priority_restapi_init, 0 );
 
 		if ( $ui && method_exists( $this, 'adminbar_init' ) && $this->get_setting( 'adminbar_summary' ) )
 			add_action( $this->base.'_adminbar', [ $this, 'adminbar_init' ], $this->priority_adminbar_init, 2 );
@@ -2231,6 +2237,9 @@ class Module extends Base
 			TRUE
 		);
 
+		if ( ! array_key_exists( '_rest', $args ) )
+			$args['_rest'] = rest_url( $this->restapi_get_namespace() );
+
 		if ( ! array_key_exists( '_nonce', $args ) && is_user_logged_in() )
 			$args['_nonce'] = wp_create_nonce( $this->hook() );
 
@@ -3827,5 +3836,61 @@ class Module extends Base
 	protected function tool_box_title()
 	{
 		HTML::h2( sprintf( _x( 'Editorial: %s', 'Module', 'geditorial' ), $this->module->title ), 'title' );
+	}
+
+	protected function restapi_get_namespace()
+	{
+		return $this->classs().'/'.$this->rest_api_version;
+	}
+
+	// @REF: https://developer.wordpress.org/rest-api/extending-the-rest-api/adding-custom-endpoints/
+	protected function restapi_register_route( $route, $methods = 'GET', $suffix = '' )
+	{
+		$args = [];
+		$hook = self::sanitize_hook( $route );
+
+		foreach ( (array) $methods as $method ) {
+
+			switch ( strtolower( $method ) ) {
+
+				case 'post':
+
+					$args[] = [
+						'methods'  => \WP_REST_Server::CREATABLE,
+						'callback' => [ $this, 'restapi_'.$hook.'_post_callback' ],
+
+						'permission_callback' => method_exists( $this, 'restapi_'.$hook.'_permission_callback' )
+							? [ $this, 'restapi_'.$hook.'_permission_callback' ]
+							: [ $this, 'restapi_permission_callback' ],
+					];
+					break;
+
+				case 'get':
+					$args[] = [
+						'methods'  => \WP_REST_Server::READABLE,
+						'callback' => [ $this, 'restapi_'.$hook.'_get_callback' ],
+
+						'permission_callback' => method_exists( $this, 'restapi_'.$hook.'_permission_callback' )
+							? [ $this, 'restapi_'.$hook.'_permission_callback' ]
+							: [ $this, 'restapi_permission_callback' ],
+					];
+					break;
+			}
+		}
+
+		return register_rest_route(
+			$this->restapi_get_namespace(),
+			'/'.$route.( $suffix ? '/'.$suffix : '' ),
+			$args
+		);
+	}
+
+	// 'Authorization: Basic '. base64_encode("user:password")
+	public function restapi_permission_callback( $request )
+	{
+		if ( defined( 'GEDITORIAL_DISABLE_AUTH' ) && GEDITORIAL_DISABLE_AUTH )
+			return TRUE;
+
+		return current_user_can( 'read' ) || User::isSuperAdmin();
 	}
 }
