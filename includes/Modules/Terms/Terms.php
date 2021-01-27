@@ -169,6 +169,7 @@ class Terms extends gEditorial\Module
 		if ( ! is_admin() )
 			return;
 
+		add_filter( 'gnetwork_taxonomy_export_term_meta', [ $this, 'taxonomy_export_term_meta' ], 9, 2 );
 		add_filter( 'gnetwork_taxonomy_bulk_actions', [ $this, 'taxonomy_bulk_actions' ], 14, 2 );
 		add_filter( 'gnetwork_taxonomy_bulk_callback', [ $this, 'taxonomy_bulk_callback' ], 14, 3 );
 	}
@@ -294,6 +295,18 @@ class Terms extends gEditorial\Module
 				$list[] = $field;
 
 		return $this->filters( 'supported_fields', $list, $taxonomy );
+	}
+
+	// FALSE for all
+	private function list_supported( $taxonomy = FALSE )
+	{
+		$list = [];
+
+		foreach ( $this->supported as $field )
+			if ( FALSE === $taxonomy || $this->in_setting( $taxonomy, 'term_'.$field ) )
+				$list[$field] = $this->strings['titles'][$field];
+
+		return $this->filters( 'list_supported_fields', $list, $taxonomy );
 	}
 
 	private function get_supported_position( $field, $taxonomy = FALSE )
@@ -1392,6 +1405,11 @@ class Terms extends gEditorial\Module
 			return $meta;
 
 		return empty( $meta ) ? get_current_user_id() : $meta;
+	}
+
+	public function taxonomy_export_term_meta( $metas, $taxonomy )
+	{
+		return array_merge( $metas, $this->list_supported( $taxonomy ) );
 	}
 
 	public function taxonomy_bulk_actions( $actions, $taxonomy )
