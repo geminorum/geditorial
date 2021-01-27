@@ -332,10 +332,14 @@ class Meta extends gEditorial\Module
 			if ( in_array( 'label_tax', $this->posttype_fields( $posttype ) ) )
 				$label_tax_tax_posttypes[] = $posttype;
 
-		if ( count( $label_tax_tax_posttypes ) )
+		if ( count( $label_tax_tax_posttypes ) ) {
+
 			$this->register_taxonomy( 'label_tax', [
 				'show_in_rest' => FALSE, // temporarily disable in block editor
 			], $label_tax_tax_posttypes );
+
+			$this->register_default_terms( 'label_tax' );
+		}
 
 		// default fields for custom posttypes
 		foreach ( $this->get_posttypes_support_meta() as $posttype )

@@ -194,6 +194,8 @@ class Audit extends gEditorial\Module
 		] );
 
 		$this->filter( 'map_meta_cap', 4 );
+
+		$this->register_default_terms( 'audit_tax' );
 	}
 
 	public function init_ajax()

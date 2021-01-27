@@ -183,6 +183,9 @@ class Inquire extends gEditorial\Module
 			];
 
 		$this->register_posttype( 'inquiry_cpt', $args );
+
+		$this->register_default_terms( 'status_tax' );
+		$this->register_default_terms( 'priority_tax' );
 	}
 
 	// protected function get_module_templates()

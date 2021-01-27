@@ -264,6 +264,8 @@ class Event extends gEditorial\Module
 			'meta_box_cb'  => NULL, // default meta box
 		] );
 
+		$this->register_default_terms( 'event_tag' );
+
 		if ( $metadata )
 			$this->add_posttype_fields( $this->constant( 'event_cpt' ), NULL, $this->module->name );
 

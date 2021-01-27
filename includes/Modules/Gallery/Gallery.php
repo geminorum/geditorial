@@ -130,6 +130,8 @@ class Gallery extends gEditorial\Module
 		], [ 'attachments' ] );
 
 		$this->register_posttype( 'album_cpt' );
+
+		$this->register_default_terms( 'album_cat' );
 	}
 
 	public function current_screen( $screen )

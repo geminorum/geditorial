@@ -284,6 +284,8 @@ class Course extends gEditorial\Module
 		$this->register_shortcode( 'span_shortcode' );
 		$this->register_shortcode( 'cover_shortcode' );
 
+		$this->register_default_terms( 'status_tax' );
+
 		if ( is_admin() )
 			return;
 

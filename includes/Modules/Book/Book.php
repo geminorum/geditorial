@@ -424,6 +424,8 @@ class Book extends gEditorial\Module
 		$this->filter_module( 'importer', 'fields', 2 );
 		$this->filter_module( 'importer', 'prepare', 4 );
 		$this->action_module( 'importer', 'saved', 5 );
+
+		$this->register_default_terms( 'type_tax' );
 	}
 
 	public function template_redirect()
@@ -525,6 +527,8 @@ class Book extends gEditorial\Module
 		$this->add_posttype_fields( $this->constant( 'publication_cpt' ) );
 		$this->filter_module( 'meta', 'sanitize_posttype_field', 4 );
 		$this->filter_module( 'meta', 'field', 4 ); // @SEE: `Template::getMetaField()`
+
+		$this->register_default_terms( 'size_tax' );
 
 		$this->support_meta = TRUE;
 	}

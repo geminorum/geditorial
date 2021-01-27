@@ -1464,6 +1464,7 @@ class Module extends Base
 		get_current_screen()->add_help_tab( $tab );
 	}
 
+	// DEPRECATED: use `$this->register_default_terms()`
 	protected function insert_default_terms( $constant, $terms = NULL )
 	{
 		if ( ! $this->nonce_verify( 'settings' ) )
@@ -1485,6 +1486,24 @@ class Module extends Base
 			$message = 'wrong';
 
 		WordPress::redirectReferer( $message );
+	}
+
+	protected function register_default_terms( $constant, $terms = NULL )
+	{
+		if ( ! defined( 'GNETWORK_VERSION' ) )
+			return FALSE;
+
+		if ( ! is_admin() )
+			return FALSE;
+
+		if ( is_null( $terms ) && ! empty( $this->strings['terms'][$constant] ) )
+			$terms = $this->strings['terms'][$constant];
+
+		if ( ! $terms )
+			return FALSE;
+
+		add_filter( 'gnetwork_taxonomy_default_terms_'.$this->constant( $constant ),
+			function() use ( $terms ) { return $terms; } );
 	}
 
 	protected function check_settings( $sub, $context = 'tools', $extra = [], $key = NULL )

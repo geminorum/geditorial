@@ -237,6 +237,8 @@ class Contest extends gEditorial\Module
 		$this->register_shortcode( 'contest_shortcode' );
 		$this->register_shortcode( 'cover_shortcode' );
 
+		$this->register_default_terms( 'status_tax' );
+
 		if ( is_admin() )
 			return;
 
