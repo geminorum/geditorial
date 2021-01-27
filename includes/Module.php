@@ -3246,6 +3246,7 @@ class Module extends Base
 
 		$to  = $this->constant( $constant );
 		$p2p = $this->constant( $constant.'_p2p' );
+		$pre = empty( $this->strings['p2p'][$constant] ) ? [] : $this->strings['p2p'][$constant];
 
 		$args = array_merge( [
 			'name'            => $p2p,
@@ -3257,7 +3258,7 @@ class Module extends Base
 				'show'    => 'from',
 				'context' => 'advanced',
 			],
-		], $this->strings['p2p'][$constant] );
+		], $pre );
 
 		$hook = 'geditorial_'.$this->module->name.'_'.$to.'_p2p_args';
 
