@@ -117,6 +117,9 @@
       app.inlineSelect('author', tag, event);
       app.inlineSelect('role', tag, event);
       app.inlineSelect('posttype', tag, event);
+      app.inlineSelect('arrow', tag, event);
+      app.inlineText('label', tag, event);
+      app.inlineText('code', tag, event);
     });
 
     // reset the form on submit

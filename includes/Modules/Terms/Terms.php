@@ -22,7 +22,7 @@ class Terms extends gEditorial\Module
 {
 
 	protected $partials  = [ 'Templates' ];
-	protected $supported = [ 'order', 'tagline', 'contact', 'image', 'author', 'color', 'role', 'roles', 'posttype', 'posttypes' ];
+	protected $supported = [ 'order', 'tagline', 'contact', 'image', 'author', 'color', 'role', 'roles', 'posttype', 'posttypes', 'arrow', 'label', 'code' ];
 
 	public static function module()
 	{
@@ -59,6 +59,9 @@ class Terms extends gEditorial\Module
 				'posttype'  => _x( 'Posttype', 'Titles', 'geditorial-terms' ),
 				'roles'     => _x( 'Roles', 'Titles', 'geditorial-terms' ),
 				'posttypes' => _x( 'Posttypes', 'Titles', 'geditorial-terms' ),
+				'arrow'     => _x( 'Arrow', 'Titles', 'geditorial-terms' ),
+				'label'     => _x( 'Label', 'Titles', 'geditorial-terms' ),
+				'code'      => _x( 'Code', 'Titles', 'geditorial-terms' ),
 			],
 			'descriptions' => [
 				'order'     => _x( 'Terms are usually ordered alphabetically, but you can choose your own order by numbers.', 'Descriptions', 'geditorial-terms' ),
@@ -71,6 +74,9 @@ class Terms extends gEditorial\Module
 				'roles'     => _x( 'Terms can have unique roles visibility to help separate them for user roles.', 'Descriptions', 'geditorial-terms' ),
 				'posttype'  => _x( 'Terms can have unique posttype visibility to help separate them on editing.', 'Descriptions', 'geditorial-terms' ),
 				'posttypes' => _x( 'Terms can have unique posttypes visibility to help separate them on editing.', 'Descriptions', 'geditorial-terms' ),
+				'arrow'     => _x( 'Terms can have direction arrow to help orginize them.', 'Descriptions', 'geditorial-terms' ),
+				'label'     => _x( 'Terms can have text label to help orginize them.', 'Descriptions', 'geditorial-terms' ),
+				'code'      => _x( 'Terms can have text code to help orginize them.', 'Descriptions', 'geditorial-terms' ),
 			],
 			'misc' => [
 				'order_column_title'     => _x( 'O', 'Column Title: Order', 'geditorial-terms' ),
@@ -83,7 +89,18 @@ class Terms extends gEditorial\Module
 				'roles_column_title'     => _x( 'Roles', 'Column Title: Roles', 'geditorial-terms' ),
 				'posttype_column_title'  => _x( 'Posttype', 'Column Title: Posttype', 'geditorial-terms' ),
 				'posttypes_column_title' => _x( 'Posttypes', 'Column Title: Posttypes', 'geditorial-terms' ),
+				'arrow_column_title'     => _x( 'A', 'Column Title: Arrow', 'geditorial-terms' ),
+				'label_column_title'     => _x( 'Label', 'Column Title: Label', 'geditorial-terms' ),
+				'code_column_title'      => _x( 'Code', 'Column Title: Label', 'geditorial-terms' ),
 				'posts_column_title'     => _x( 'P', 'Column Title: Posts', 'geditorial-terms' ),
+
+				'arrow_directions' => [
+					'undefined' => _x( 'Undefined', 'Arrow Directions', 'geditorial-terms' ),
+					'up'        => _x( 'Up', 'Arrow Directions', 'geditorial-terms' ),
+					'right'     => _x( 'Right', 'Arrow Directions', 'geditorial-terms' ),
+					'down'      => _x( 'Down', 'Arrow Directions', 'geditorial-terms' ),
+					'left'      => _x( 'Left', 'Arrow Directions', 'geditorial-terms' ),
+				],
 			],
 			'js' => [
 				'modal_title'  => _x( 'Choose an Image', 'Javascript String', 'geditorial-terms' ),
@@ -122,6 +139,7 @@ class Terms extends gEditorial\Module
 		switch ( $field ) {
 			case 'role': $excluded[] = 'audit_attribute'; break;
 			case 'tagline': $excluded[] = 'post_tag'; break;
+			case 'arrow': return Arraay::keepByKeys( $supported, [ 'warehouse_placement' ] ); break; // override!
 		}
 
 		return array_diff_key( $supported, array_flip( $excluded ) );
@@ -321,10 +339,12 @@ class Terms extends gEditorial\Module
 			case 'color':
 			case 'role':
 			case 'posttype':
+			case 'code':
 
 				$position = [ 'name', 'before' ];
 
 			break;
+			case 'label':
 			case 'tagline':
 			case 'contact':
 			default:
@@ -448,7 +468,7 @@ class Terms extends gEditorial\Module
 			return $columns;
 
 		foreach ( $this->get_supported( $taxonomy ) as $field )
-			if ( ! in_array( $field, [ 'tagline', 'contact', 'image', 'roles', 'posttypes' ] ) )
+			if ( ! in_array( $field, [ 'tagline', 'contact', 'image', 'roles', 'posttypes', 'arrow', 'label', 'code' ] ) )
 				$columns[$this->classs( $field )] = 'meta_'.$field;
 
 		return $columns;
@@ -489,7 +509,38 @@ class Terms extends gEditorial\Module
 					$html = $this->field_empty( $field, '', $column );
 				}
 
-			break;
+				break;
+
+			case 'arrow':
+
+				$meta = get_term_meta( $term->term_id, $field, TRUE );
+
+				if ( $meta || 'undefined' === $meta ) {
+
+					$dirs = $this->get_string( 'arrow_directions', FALSE, 'misc', [] );
+					$html = array_key_exists( $meta, $dirs ) ? $dirs[$meta] : $meta;
+
+				} else {
+
+					$html = $this->field_empty( $field, '', $column );
+				}
+
+				break;
+
+			case 'code':
+
+				if ( $meta = get_term_meta( $term->term_id, $field, TRUE ) ) {
+
+					$html = '<code class="'.$field.'" data-'.$field.'="'.HTML::escape( $meta ).'">'.$meta.'</code>';
+
+				} else {
+
+					$html = $this->field_empty( $field, '', $column );
+				}
+
+				break;
+
+			case 'label':
 			case 'tagline':
 
 				if ( $meta = get_term_meta( $term->term_id, $field, TRUE ) ) {
@@ -871,7 +922,9 @@ class Terms extends gEditorial\Module
 					'data'  => [ 'ortho' => 'text' ],
 				] );
 
-			break;
+				break;
+
+			case 'code':
 			case 'contact':
 
 				$html.= HTML::tag( 'input', [
@@ -883,7 +936,19 @@ class Terms extends gEditorial\Module
 					'data'  => [ 'ortho' => 'code' ],
 				] );
 
-			break;
+				break;
+
+			case 'arrow':
+
+				$html.= HTML::dropdown( $this->get_string( 'arrow_directions', FALSE, 'misc', [] ), [
+					'id'       => $this->classs( $field, 'id' ),
+					'name'     => 'term-'.$field,
+					'selected' => empty( $meta ) ? 'undefined' : $meta,
+				] );
+
+				break;
+
+			case 'label':
 			default:
 
 				$html.= HTML::tag( 'input', [
@@ -971,7 +1036,9 @@ class Terms extends gEditorial\Module
 					'none_title' => Settings::showOptionNone(),
 				] );
 
-			break;
+				break;
+
+			case 'code':
 			case 'contact':
 
 				$html.= HTML::tag( 'input', [
@@ -982,7 +1049,18 @@ class Terms extends gEditorial\Module
 					'data'  => [ 'ortho' => 'code' ],
 				] );
 
-			break;
+				break;
+
+			case 'arrow':
+
+				$html.= HTML::dropdown( $this->get_string( 'arrow_directions', FALSE, 'misc', [] ), [
+					'name'     => 'term-'.$field,
+					'selected' => 'undefined',
+				] );
+
+				break;
+
+			case 'label':
 			case 'tagline':
 			default:
 				$html.= '<input type="text" class="ptitle" name="term-'.$field.'" value="" />';
