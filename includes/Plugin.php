@@ -5,6 +5,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial\Core\Arraay;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Icon;
+use geminorum\gEditorial\Core\L10n;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\User;
@@ -249,12 +250,10 @@ class Plugin
 		if ( FALSE === $orderby )
 			return (array) $this->_modules;
 
-		$callback = [ __NAMESPACE__.'\\Modules\Alphabet', 'sort' ];
+		if ( in_array( get_locale(), [ 'fa', 'fa_IR', 'fa_AF' ] ) )
+			return L10n::sortAlphabet( (array) $this->_modules, $orderby );
 
-		if ( ! is_callable( $callback ) || 'fa_IR' != get_locale() )
-			return wp_list_sort( (array) $this->_modules, $orderby );
-
-		return call_user_func_array( $callback, [ (array) $this->_modules, $orderby ] );
+		return wp_list_sort( (array) $this->_modules, $orderby );
 	}
 
 	public function constant( $module, $key, $default = NULL )
