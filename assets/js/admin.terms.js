@@ -125,6 +125,7 @@
       app.inlineSelect('arrow', tag, event);
       app.inlineText('label', tag, event);
       app.inlineCode('code', tag, event);
+      app.inlineText('barcode', tag, event);
     });
 
     // reset the form on submit

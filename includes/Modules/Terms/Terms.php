@@ -22,7 +22,7 @@ class Terms extends gEditorial\Module
 {
 
 	protected $partials  = [ 'Templates' ];
-	protected $supported = [ 'order', 'tagline', 'contact', 'image', 'author', 'color', 'role', 'roles', 'posttype', 'posttypes', 'arrow', 'label', 'code' ];
+	protected $supported = [ 'order', 'tagline', 'contact', 'image', 'author', 'color', 'role', 'roles', 'posttype', 'posttypes', 'arrow', 'label', 'code', 'barcode' ];
 
 	public static function module()
 	{
@@ -62,6 +62,7 @@ class Terms extends gEditorial\Module
 				'arrow'     => _x( 'Arrow', 'Titles', 'geditorial-terms' ),
 				'label'     => _x( 'Label', 'Titles', 'geditorial-terms' ),
 				'code'      => _x( 'Code', 'Titles', 'geditorial-terms' ),
+				'barcode'   => _x( 'Barcode', 'Titles', 'geditorial-terms' ),
 			],
 			'descriptions' => [
 				'order'     => _x( 'Terms are usually ordered alphabetically, but you can choose your own order by numbers.', 'Descriptions', 'geditorial-terms' ),
@@ -77,6 +78,7 @@ class Terms extends gEditorial\Module
 				'arrow'     => _x( 'Terms can have direction arrow to help orginize them.', 'Descriptions', 'geditorial-terms' ),
 				'label'     => _x( 'Terms can have text label to help orginize them.', 'Descriptions', 'geditorial-terms' ),
 				'code'      => _x( 'Terms can have text code to help orginize them.', 'Descriptions', 'geditorial-terms' ),
+				'barcode'   => _x( 'Terms can have barcode to help orginize them.', 'Descriptions', 'geditorial-terms' ),
 			],
 			'misc' => [
 				'order_column_title'     => _x( 'O', 'Column Title: Order', 'geditorial-terms' ),
@@ -92,6 +94,7 @@ class Terms extends gEditorial\Module
 				'arrow_column_title'     => _x( 'A', 'Column Title: Arrow', 'geditorial-terms' ),
 				'label_column_title'     => _x( 'Label', 'Column Title: Label', 'geditorial-terms' ),
 				'code_column_title'      => _x( 'Code', 'Column Title: Label', 'geditorial-terms' ),
+				'barcode_column_title'   => _x( 'BC', 'Column Title: Label', 'geditorial-terms' ),
 				'posts_column_title'     => _x( 'P', 'Column Title: Posts', 'geditorial-terms' ),
 
 				'arrow_directions' => [
@@ -346,6 +349,7 @@ class Terms extends gEditorial\Module
 			case 'role':
 			case 'posttype':
 			case 'code':
+			case 'barcode':
 			case 'arrow':
 
 				$position = [ 'name', 'before' ];
@@ -477,7 +481,7 @@ class Terms extends gEditorial\Module
 			return $columns;
 
 		foreach ( $this->get_supported( $taxonomy ) as $field )
-			if ( ! in_array( $field, [ 'tagline', 'contact', 'image', 'roles', 'posttypes', 'arrow', 'label', 'code' ] ) )
+			if ( ! in_array( $field, [ 'tagline', 'contact', 'image', 'roles', 'posttypes', 'arrow', 'label', 'code', 'barcode' ] ) )
 				$columns[$this->classs( $field )] = 'meta_'.$field;
 
 		return $columns;
@@ -534,6 +538,22 @@ class Terms extends gEditorial\Module
 					else
 						$icon = HTML::getDashicon( 'warning', $meta, 'icon-warning' );
 
+					$html = '<span class="field-'.$field.'" data-'.$field.'="'.HTML::escape( $meta ).'">'.$icon.'</span>';
+
+				} else {
+
+					$html = $this->field_empty( $field, '', $column );
+				}
+
+				break;
+
+			case 'barcode':
+
+				$meta = get_term_meta( $term->term_id, $metakey, TRUE );
+
+				if ( $meta ) {
+
+					$icon = HTML::getDashicon( 'tagcloud', $meta, 'icon-barcode' );
 					$html = '<span class="field-'.$field.'" data-'.$field.'="'.HTML::escape( $meta ).'">'.$icon.'</span>';
 
 				} else {
@@ -943,6 +963,7 @@ class Terms extends gEditorial\Module
 				break;
 
 			case 'code':
+			case 'barcode':
 			case 'contact':
 
 				$html.= HTML::tag( 'input', [
@@ -1057,6 +1078,7 @@ class Terms extends gEditorial\Module
 				break;
 
 			case 'code':
+			case 'barcode':
 			case 'contact':
 
 				$html.= HTML::tag( 'input', [
