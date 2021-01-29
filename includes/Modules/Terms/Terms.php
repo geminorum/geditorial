@@ -693,7 +693,7 @@ class Terms extends gEditorial\Module
 				}
 		}
 
-		echo $this->filters( 'supported_field_column', $html, $field, $taxonomy, $term, $meta );
+		echo $this->filters( 'supported_field_column', $html, $field, $taxonomy, $term, $meta, $metakey );
 	}
 
 	private function field_empty( $field, $value = '0', $column = TRUE )
@@ -712,9 +712,9 @@ class Terms extends gEditorial\Module
 			if ( ! array_key_exists( 'term-'.$field, $_REQUEST ) )
 				continue;
 
-			$meta    = empty( $_REQUEST['term-'.$field] ) ? FALSE : $_REQUEST['term-'.$field];
-			$meta    = $this->filters( 'supported_field_edit', $meta, $field, $taxonomy, $term_id );
 			$metakey = $this->get_supported_metakey( $field, $taxonomy );
+			$meta    = empty( $_REQUEST['term-'.$field] ) ? FALSE : $_REQUEST['term-'.$field];
+			$meta    = $this->filters( 'supported_field_edit', $meta, $field, $taxonomy, $term_id, $metakey );
 
 			if ( $meta ) {
 
