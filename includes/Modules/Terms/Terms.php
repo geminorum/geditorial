@@ -1160,7 +1160,7 @@ class Terms extends gEditorial\Module
 					'parent' => $node['id'],
 				];
 
-				$metakey = get_supported_metakey( $field, $term->taxonomy );
+				$metakey = $this->get_supported_metakey( $field, $term->taxonomy );
 
 				switch ( $field ) {
 					case 'order':
