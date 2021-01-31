@@ -25,7 +25,7 @@ jQuery(function ($) {
       const $row = $input.clone(true);
 
       $row.prependTo(this)
-        .bind('keyup', function (e) {
+        .on('keyup', function (e) {
           const val = $(this).val();
           const li = $(this).parent().find('ul.categorychecklist li');
           const list = $(this).parent().find('ul.categorychecklist');

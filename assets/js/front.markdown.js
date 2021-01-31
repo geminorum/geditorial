@@ -31,7 +31,7 @@
   };
 
   $(function () {
-    $(s.button).click(function (event) {
+    $(s.button).on('click', function (event) {
       event.preventDefault();
       app.action(this);
     });

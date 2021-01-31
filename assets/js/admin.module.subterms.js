@@ -1,5 +1,5 @@
 (function ($, plugin) {
-  $('select.' + plugin._base + '-assoc-post-dropdown').change(function () {
+  $('select.' + plugin._base + '-assoc-post-dropdown').on('change', function () {
     const linked = $(this).data('linked');
     const target = $('select.' + plugin._base + '-assoc-post-subterms[data-linked=' + linked + ']');
 

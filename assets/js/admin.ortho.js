@@ -116,7 +116,7 @@
       try {
         $el.prop('type', 'text');
       } catch (e) {}
-      $el.change(function () {
+      $el.on('change', function () {
         $el.val(toEnglish($el.val()).replace(/[^\d.-]/g, '').trim());
       });
     },

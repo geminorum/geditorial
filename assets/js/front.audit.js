@@ -10,7 +10,7 @@
     empty: true,
 
     watch: function () {
-      $(':input', s.wrap).change(utils.debounce(function () {
+      $(':input', s.wrap).on('change', utils.debounce(function () {
         app.store();
       }, 1000));
     },
@@ -91,7 +91,7 @@
   };
 
   $(function () {
-    $(s.button).click(function (event) {
+    $(s.button).on('click', function (event) {
       event.preventDefault();
       app.populate();
     });

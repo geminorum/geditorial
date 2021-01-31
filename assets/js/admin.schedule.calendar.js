@@ -21,7 +21,7 @@
       $('input[data-field="day"]', $box).val($($day).data('day'));
       $('input[data-field="month"]', $box).val($(s.cal).data('month'));
       $('input[data-field="year"]', $box).val($(s.cal).data('year'));
-      $('input[data-field="title"]', $box).attr('placeholder', $(el).data('title')).focus();
+      $('input[data-field="title"]', $box).attr('placeholder', $(el).data('title')).trigger('focus');
     },
 
     close: function (clear) {
@@ -114,26 +114,26 @@
   $(function () {
     app.rtl = $('html').attr('dir') === 'rtl';
 
-    $('a.-the-day-newpost', s.cal).click(function (e) {
+    $('a.-the-day-newpost', s.cal).on('click', function (e) {
       e.preventDefault();
       app.append(this);
     });
 
-    $('a[data-action="close"]', s.box).click(function (e) {
+    $('a[data-action="close"]', s.box).on('click', function (e) {
       e.preventDefault();
       app.close(true);
     });
 
-    $('a[data-action="save"]', s.box).click(function (e) {
+    $('a[data-action="save"]', s.box).on('click', function (e) {
       e.preventDefault();
       app.save();
     });
 
-    $('input[data-field="title"]', s.box).bind('enterKey', function (e) {
+    $('input[data-field="title"]', s.box).on('enterKey', function (e) {
       app.save();
     });
 
-    $('input[data-field="title"]', s.box).keyup(function (e) {
+    $('input[data-field="title"]', s.box).on('keyup', function (e) {
       if (e.keyCode === 13) {
         app.save();
       } else if (e.keyCode === 27) {

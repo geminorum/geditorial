@@ -19,7 +19,7 @@ jQuery(function ($) {
     });
   });
 
-  $('input[data-filter]').change(function () {
+  $('input[data-filter]').on('change', function () {
     const val = this.value;
     if (val === 'all') {
       moduleList.filter();
@@ -30,15 +30,15 @@ jQuery(function ($) {
     }
   });
 
-  $('.fields-check-all').click(function (e) {
+  $('.fields-check-all').on('click', function (e) {
     $(this).closest('table').find('.fields-check').prop('checked', this.checked);
   });
 
-  $('.fields-check').click(function (e) {
+  $('.fields-check').on('click', function (e) {
     $(this).closest('table').find('.fields-check-all').prop('checked', false);
   });
 
-  $('input[data-do]').click(function (e) {
+  $('input[data-do]').on('click', function (e) {
     e.preventDefault();
 
     const module = $(this).data('module');

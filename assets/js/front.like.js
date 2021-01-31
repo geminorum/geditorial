@@ -35,7 +35,7 @@
         }
       });
 
-      button.click(function (e) {
+      button.on('click', function (e) {
         e.preventDefault();
         $.post(gEditorial._url, {
           action: gEditorial._base + '_like',

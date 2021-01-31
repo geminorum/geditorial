@@ -52,14 +52,14 @@
       row.appendTo(s.wrap);
 
       row.find(s.body).slideDown();
-      row.find('textarea').focus();
+      row.find('textarea').trigger('focus');
 
       this.reOrder();
     }
   };
 
   $(function () {
-    $('select.item-dropdown-new', s.raw).change(function () {
+    $('select.item-dropdown-new', s.raw).on('change', function () {
       return app.newItem(this);
     });
 

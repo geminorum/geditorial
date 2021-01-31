@@ -28,7 +28,7 @@
   };
 
   $(function () {
-    $('#upload_csv_button').click(function (e) {
+    $('#upload_csv_button').on('click', function (e) {
       e.preventDefault();
       app.init();
       modal.open();

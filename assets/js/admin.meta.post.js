@@ -14,7 +14,7 @@ jQuery(function ($) {
   });
 
   // wait till post.js binds
-  $(window).bind('load', function () {
+  $(window).on('load', function () {
     if ($("[data-meta-type='title_after']").length) {
       $('#title').unbind('keydown.editor-focus');
 
@@ -28,9 +28,9 @@ jQuery(function ($) {
           editor = typeof tinymce !== 'undefined' && tinymce.get('content');
 
           if (editor && !editor.isHidden()) {
-            editor.focus();
+            editor.trigger('focus');
           } else if ($textarea.length) {
-            $textarea.focus();
+            $textarea.trigger('focus');
           } else {
             return;
           }

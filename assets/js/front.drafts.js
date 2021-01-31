@@ -55,7 +55,7 @@
   };
 
   $(function () {
-    $(s.button).click(function (e) {
+    $(s.button).on('click', function (e) {
       e.preventDefault();
       app.populate();
     });
