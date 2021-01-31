@@ -373,6 +373,7 @@ class Module extends Base
 		], $extra ), $url );
 	}
 
+	// DEPRECATED: use `$this->get_adminpage_url( FALSE )`
 	// OVERRIDE: if has no admin menu but using the hook
 	public function get_adminmenu( $page = TRUE, $extra = [] )
 	{
@@ -382,6 +383,95 @@ class Module extends Base
 		$url = get_admin_url( NULL, 'index.php' );
 
 		return add_query_arg( array_merge( [ 'page' => $this->classs() ], $extra ), $url );
+	}
+
+	protected function get_adminpage_url( $full = TRUE, $extra = [], $context = 'mainpage' )
+	{
+		$page = 'mainpage' == $context ? $this->classs() : $this->classs( $context );
+
+		return $full
+			? add_query_arg( array_merge( [ 'page' => $page ], $extra ), get_admin_url( NULL, 'admin.php' ) )
+			: $page;
+	}
+
+	protected function get_adminpage_subs( $context = 'mainpage' )
+	{
+		$subs = $this->get_string( 'subs', $context, 'settings', [] );
+
+		// FIXME: check capabilities
+		// $can  = $this->role_can( $context ) ? 'read' : 'do_not_allow';
+
+		return $this->filters( $context.'_subs', $subs );
+	}
+
+	protected function _hook_admin_mainpage( $context = 'mainpage' )
+	{
+		$slug  = $this->get_adminpage_url( FALSE );
+		$subs  = $this->get_adminpage_subs( $context );
+		$can   = $this->role_can( $context ) ? 'read' : 'do_not_allow';
+		$menu  = $this->get_string( 'menu_title', $context, 'settings', $this->key );
+		$first = Arraay::keyFirst( $subs );
+
+		$hook = add_menu_page(
+			$this->get_string( 'page_title', $context, 'settings', $this->key ),
+			$menu,
+			$can,
+			$slug,
+			[ $this, 'render_admin_'.$context ],
+			$this->get_posttype_icon(),
+			empty( $this->positions[$context] ) ? 3 : $this->positions[$context]
+		);
+
+		foreach ( $subs as $sub => $submenu )
+			add_submenu_page(
+				$slug,
+				/* translators: %1$s: menu title, %2$s: submenu title */
+				sprintf( _x( '%1$s &lsaquo; %2$s', 'Module: Page Title', 'geditorial' ), $submenu, $menu ), // FIXME: only shows the first sub
+				$submenu,
+				$can,
+				$slug.( $sub == $first ? '' : '&sub='.$sub ),
+				[ $this, 'render_admin_'.$context ]
+			);
+
+		add_action( 'load-'.$hook, [ $this, 'load_admin_'.$context ] );
+
+		return $slug;
+	}
+
+	public function load_admin_mainpage()
+	{
+		$first = Arraay::keyFirst( $this->get_adminpage_subs( 'mainpage' ) );
+		$page  = self::req( 'page', NULL );
+		$sub   = self::req( 'sub', $first );
+
+		if ( $sub && $sub != $first )
+			$GLOBALS['submenu_file'] = $this->get_adminpage_url( FALSE ).'&sub='.$sub;
+
+		$this->register_help_tabs();
+		$this->actions( 'load', $page, $sub );
+	}
+
+	public function render_admin_mainpage()
+	{
+		$uri   = $this->get_adminpage_url();
+		$subs  = $this->get_adminpage_subs( 'mainpage' );
+		$first = Arraay::keyFirst( $subs );
+		$sub   = self::req( 'sub', $first );
+
+		Settings::wrapOpen( $this->key, 'mainpage' );
+			$this->settings_header_title(); // TODO: add compact mode to hide this on user screen setting
+			HTML::headerNav( $uri, $sub, $subs );
+
+			$this->render_admin_mainpage_content( $sub, $uri );
+
+			$this->settings_signature( 'mainpage' );
+		Settings::wrapClose();
+	}
+
+	// DEFAULT CALLBACK
+	public function render_admin_mainpage_content( $sub = NULL, $uri = NULL )
+	{
+		HTML::desc( gEditorial()->na(), TRUE, '-empty' );
 	}
 
 	// @SEE: https://stackoverflow.com/questions/819416/adjust-width-and-height-of-iframe-to-fit-with-content-in-it
