@@ -474,6 +474,70 @@ class Module extends Base
 		HTML::desc( gEditorial()->na(), TRUE, '-empty' );
 	}
 
+	protected function get_printpage_url( $extra = [], $context = 'printpage' )
+	{
+		return add_query_arg( array_merge( [
+			'page' => $this->classs( $context ),
+		], $extra ), get_admin_url( NULL, 'index.php' ) );
+	}
+
+	protected function _hook_admin_printpage( $context = 'printpage' )
+	{
+		$hook = add_submenu_page(
+			NULL,
+			'',
+			'',
+			'read',
+			$this->classs( $context ),
+			function() {} // avoid wp die
+		);
+
+		add_action( 'load-'.$hook, [ $this, 'load_admin_'.$context ] );
+	}
+
+	// DEFAULT CALLBACK
+	public function load_admin_printpage()
+	{
+		$this->render_print_layout();
+	}
+
+	protected function get_print_layout_pagetitle()
+	{
+		return $this->filters( 'print_layout_pagetitle',
+			_x( 'Print Me!', 'Module', 'geditorial' ) );
+	}
+
+	protected function get_print_layout_bodyclass( $extra = [] )
+	{
+		return $this->filters( 'print_layout_bodyclass',
+			HTML::prepClass( 'printpage', ( is_rtl() ? 'rtl' : 'ltr' ), $extra ) );
+	}
+
+	// DEFAULT CALLBACK
+	protected function render_print_head()
+	{
+		$this->actions( 'print_head' );
+	}
+
+	// DEFAULT CALLBACK
+	protected function render_print_layout()
+	{
+		$head_callback = [ $this, 'render_print_head' ];
+		$head_title    = $this->get_print_layout_pagetitle();
+		$body_class    = $this->get_print_layout_bodyclass();
+		$rtl           = is_rtl();
+
+		if ( $header = Helper::getLayout( 'print.header' ) )
+			require_once( $header ); // to expose scope vars
+
+		$this->actions( 'print_contents' );
+
+		if ( $footer = Helper::getLayout( 'print.footer' ) )
+			require_once( $footer ); // to expose scope vars
+
+		die(); // avoiding query monitor output
+	}
+
 	// @SEE: https://stackoverflow.com/questions/819416/adjust-width-and-height-of-iframe-to-fit-with-content-in-it
 	protected function render_print_iframe( $printpage = NULL )
 	{
