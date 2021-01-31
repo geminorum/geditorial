@@ -866,6 +866,27 @@ class Helper extends Main
 		return $messages;
 	}
 
+	public static function getLayout( $name, $require = FALSE, $no_cache = FALSE )
+	{
+		$content = WP_CONTENT_DIR.'/'.$name.'.php';
+		$plugin  = GEDITORIAL_DIR.'includes/Layouts/'.$name.'.php';
+		$layout  = locate_template( 'editorial-layouts/'.$name );
+
+		if ( ! $layout && is_readable( $content ) )
+			$layout = $content;
+
+		if ( ! $layout && is_readable( $plugin ) )
+			$layout = $plugin;
+
+		if ( $no_cache && $layout )
+			WordPress::doNotCache();
+
+		if ( $require && $layout )
+			require_once( $layout );
+		else
+			return $layout;
+	}
+
 	// @SEE: https://github.com/bobthecow/mustache.php/wiki
 	public static function getMustache( $base = GEDITORIAL_DIR )
 	{
