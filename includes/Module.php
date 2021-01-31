@@ -2783,10 +2783,13 @@ class Module extends Base
 		return $this->get_string( $column.'_column_title', $constant, 'misc', ( is_null( $fallback ) ? $column : $fallback ) );
 	}
 
-	protected function require_code( $filenames = 'Templates' )
+	protected function require_code( $filenames = 'Templates', $once = TRUE )
 	{
 		foreach ( (array) $filenames as $filename )
-			require_once( $this->path.$filename.'.php' );
+			if ( $once )
+				require_once( $this->path.$filename.'.php' );
+			else
+				require( $this->path.$filename.'.php' );
 	}
 
 	public function is_current_posttype( $constant )
