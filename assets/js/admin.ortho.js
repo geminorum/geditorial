@@ -12,7 +12,8 @@
   };
 
   const inputs = {
-    number: '[data-' + module + '=\'number\']'
+    number: '[data-' + module + '=\'number\']',
+    alphabet: '[data-' + module + '=\'alphabet\']'
     // code: '[data-' + module + '=\'code\']',
     // color: '[data-' + module + '=\'color\']',
     // currency: '[data-' + module + '=\'currency\']'
@@ -117,6 +118,16 @@
       } catch (e) {}
       $el.change(function () {
         $el.val(toEnglish($el.val()).replace(/[^\d.-]/g, '').trim());
+      });
+    },
+
+    alphabet: function () {
+      const $el = $(this);
+      try {
+        $el.prop('type', 'text');
+      } catch (e) {}
+      $el.on('change', function () {
+        $el.val(toEnglish($el.val()).replace(/[^a-zA-Z]/gi, '').trim().toUpperCase());
       });
     }
 
