@@ -239,6 +239,32 @@ class Settings extends Core\Base
 		HTML::desc( $description );
 	}
 
+	public static function fieldAfterText( $text, $wrap = 'span', $class = '-text-wrap' )
+	{
+		return $text ? HTML::tag( $wrap, [ 'class' => '-field-after '.$class ], $text ) : '';
+	}
+
+	public static function fieldAfterIcon( $url = '', $title = NULL, $icon = 'info' )
+	{
+		if ( ! $url )
+			return '';
+
+		if ( is_null( $title ) )
+			$title = _x( 'See More Information', 'Settings', 'geditorial' );
+
+		$html = HTML::tag( 'a', [
+			'href'   => $url,
+			'target' => '_blank',
+			'rel'    => 'noreferrer',
+			'data'   => [
+				'tooltip'     => $title,
+				'tooltip-pos' => HTML::rtl() ? 'left' : 'right',
+			],
+		], HTML::getDashicon( $icon ) );
+
+		return '<span class="-field-after -icon-wrap">'.$html.'</span>';
+	}
+
 	public static function infoP2P()
 	{
 		/* translators: %s: code placeholder */
