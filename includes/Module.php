@@ -384,6 +384,58 @@ class Module extends Base
 		return add_query_arg( array_merge( [ 'page' => $this->classs() ], $extra ), $url );
 	}
 
+	// @SEE: https://stackoverflow.com/questions/819416/adjust-width-and-height-of-iframe-to-fit-with-content-in-it
+	protected function render_print_iframe( $printpage = NULL )
+	{
+		if ( is_null( $printpage ) )
+			$printpage = $this->get_printpage_url( [ 'single' => '1' ] );
+
+		// prefix to avoid conflicts
+		$function = $this->hook( 'resizeIframe' );
+
+		echo $this->wrap_open( '-iframe-wrap' );
+			echo HTML::tag( 'iframe', [
+				'src'    => $printpage,
+				'class'  => '-print-iframe',
+				'width'  => '100%',
+				'height' => '0',
+				'border' => '0',
+				'onload' => $function.'(this)',
+			], _x( 'Print Preview', 'Module', 'geditorial' ) );
+		echo '</div>';
+
+		// @REF: https://stackoverflow.com/a/9976309
+		echo '<script>function '.$function.'(obj){obj.style.height=obj.contentWindow.document.documentElement.scrollHeight+"px";}</script>';
+	}
+
+	protected function render_print_button( $printpage = NULL )
+	{
+		if ( is_null( $printpage ) )
+			$printpage = $this->get_printpage_url( [ 'single' => '1' ] );
+
+		// prefix to avoid conflicts
+		$function = $this->hook( 'printIframe' );
+		$id       = $this->classs( 'printiframe' );
+
+		echo HTML::tag( 'iframe', [
+			'id'     => $id,
+			'src'    => $printpage,
+			'class'  => '-hidden-print-iframe',
+			'width'  => '0',
+			'height' => '0',
+			'border' => '0',
+		], '' );
+
+		echo HTML::tag( 'a', [
+			'href'    => '#',
+			'class'   => 'button button-small',
+			'onclick' => $function.'("'.$id.'")',
+		], _x( 'Print!', 'Module', 'geditorial' ) );
+
+		// @REF: https://hdtuto.com/article/print-iframe-content-using-jquery-example
+		echo '<script>function '.$function.'(id){var frm=document.getElementById(id).contentWindow;frm.focus();frm.print();return false;}</script>';
+	}
+
 	// check if this module loaded as remote for another blog's editorial module
 	public function remote()
 	{
