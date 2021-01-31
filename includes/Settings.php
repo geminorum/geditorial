@@ -2116,6 +2116,42 @@ class Settings extends Core\Base
 				echo '</ul></div>';
 
 			break;
+			case 'object':
+
+				if ( $args['values'] ) {
+
+					if ( empty( $value ) )
+						$value = [];
+
+					echo '<div class="-wrap -type-object-wrap" data-setting="type-object" data-field="'.$args['field'].'">';
+
+						echo self::fieldType_getObjectForm( $args, $args['values'], $name );
+						echo '<div class="-body">';
+
+						foreach ( $value as $value_value )
+							echo self::fieldType_getObjectForm( $args, $args['values'], $name, $value_value );
+
+						echo '</div><p data-setting="object-controls" class="submit geditorial-wrap -wrap-buttons">';
+
+							echo HTML::tag( 'a', [
+								'href'  => '#',
+								'class' => '-icon-button',
+								'data'  => [
+									'setting' => 'object-addnew',
+									'target'  => $args['field'],
+								],
+							], HTML::getDashicon( 'plus-alt' ) );
+
+					echo '</p></div>';
+
+					Scripts::enqueue( 'settings.typeobject' );
+
+				} else {
+
+					HTML::desc( $args['string_empty'], TRUE, '-empty' );
+				}
+
+			break;
 			case 'callback':
 
 				if ( is_callable( $args['callback'] ) ) {
@@ -2166,6 +2202,116 @@ class Settings extends Core\Base
 		else if ( $args['wrap'] )
 			echo '</'.$args['wrap'].'>';
 	}
+
+	// FIXME: support more types!
+	private static function fieldType_getObjectForm( $args, $fields, $name_prefix = '', $options = [] )
+	{
+		$group = '';
+
+		foreach ( $fields as $index => $field ) {
+
+			$html = '';
+			$name = $name_prefix.'['.$field['field'].'][]';
+
+			$default     = array_key_exists( 'default', $field ) ? $field['default'] : '';
+			$value       = array_key_exists( $field['field'], $options ) ? $options[$field['field']] : $default;
+			$placeholder = array_key_exists( 'placeholder', $field ) ? $field['placeholder'] : FALSE;
+			$description = array_key_exists( 'description', $field ) ? $field['description'] : FALSE;
+			$values      = array_key_exists( 'values', $field ) ? $field['values'] : [];
+
+			switch ( $field['type'] ) {
+
+				case 'select':
+
+					if ( FALSE !== $values ) {
+
+						if ( empty( $field['field_class'] ) )
+							$field['field_class'] = '';
+
+						if ( empty( $field['dir'] ) )
+							$field['dir'] = FALSE;
+
+						foreach ( $values as $value_name => $value_title ) {
+
+							$html.= HTML::tag( 'option', [
+								'value'    => $value_name,
+								'selected' => $value == $value_name,
+							], $value_title );
+						}
+
+						$html = HTML::tag( 'select', [
+							'name'  => $name,
+							'class' => HTML::attrClass( $field['field_class'], '-type-select' ),
+							'dir'   => $field['dir'],
+						], $html );
+
+						$html.= '&nbsp;<span class="-field-after">'.$field['title'].'</span>';
+					}
+
+					break;
+
+				case 'number':
+
+					if ( empty( $field['field_class'] ) )
+						$field['field_class'] = 'small-text';
+
+					if ( empty( $field['dir'] ) )
+						$field['dir'] = 'ltr';
+
+					$html = HTML::tag( 'input', [
+						'type'        => 'text',
+						'name'        => $name,
+						'placeholder' => $placeholder,
+						'title'       => $description,
+						'value'       => $value,
+						'class'       => HTML::attrClass( $field['field_class'], '-type-number' ),
+						'dir'         => $field['dir'],
+					] );
+
+					$html.= '&nbsp;<span class="-field-after">'.$field['title'].'</span>';
+
+					break;
+
+				case 'text':
+				default:
+
+					if ( empty( $field['field_class'] ) )
+						$field['field_class'] = 'regular-text';
+
+					$html = HTML::tag( 'input', [
+						'type'        => 'text',
+						'name'        => $name,
+						'placeholder' => $placeholder,
+						'title'       => $description,
+						'value'       => $value,
+						'class'       => HTML::attrClass( $field['field_class'], '-type-text' ),
+						'dir'         => empty( $field['dir'] ) ? FALSE : $field['dir'],
+					] );
+
+					$html.= '&nbsp;<span class="-field-after">'.$field['title'].'</span>';
+			}
+
+			$group.= HTML::tag( 'p', $html );
+		}
+
+		$group.= '<div data-setting="object-group-controls" class="-group-controls">';
+			$group.= HTML::tag( 'a', [
+				'href'  => '#',
+				'class' => '-icon-button',
+				'data'  => [
+					'setting' => 'object-remove',
+					'target'  => $args['field'],
+				],
+			], HTML::getDashicon( 'dismiss' ) );
+		$group.= '</div>';
+
+		return HTML::tag( 'div', [
+			'class' => '-object-group',
+			'style' => empty( $options ) ? 'display:none' : FALSE,
+			'data'  => empty( $options ) ? [ 'setting' => 'object-empty' ] : FALSE,
+		], $group );
+	}
+
 	public static function fieldType_switchOnOff( $atts = [] )
 	{
 		$args = self::atts( [

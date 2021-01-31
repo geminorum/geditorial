@@ -1170,6 +1170,56 @@ class Module extends Base
 
 					$options['settings'][$setting] = (bool) $option;
 
+				} else if ( 'object' == $args['type'] ) {
+
+					if ( empty( $option ) || ! is_array( $option ) || empty( $args['values'] ) ) {
+
+						unset( $options['settings'][$setting] );
+
+					} else {
+
+						$sanitized = [];
+						$first_key = Arraay::keyFirst( $option );
+
+						foreach ( $option[$first_key] as $index => $unused ) {
+
+							// first one is empty
+							if ( ! $index )
+								continue;
+
+							$group = [];
+
+							foreach ( $args['values'] as $field ) {
+
+								if ( empty( $field['field'] ) )
+									continue;
+
+								$key  = $field['field'];
+								$type = empty( $field['type'] ) ? 'text' : $field['type'];
+
+								switch ( $type ) {
+
+									case 'number':
+										$group[$key] = Number::intval( trim( $option[$key][$index] ) );
+										break;
+
+									case 'text':
+									default:
+										$group[$key] = trim( self::unslash( $option[$key][$index] ) );
+								}
+							}
+
+							if ( count( $group ) )
+								$sanitized[] = $group;
+						}
+
+						if ( count( $sanitized ) )
+							$options['settings'][$setting] = $sanitized;
+
+						else
+							unset( $options['settings'][$setting] );
+					}
+
 				} else if ( is_array( $option ) ) {
 
 					if ( array_key_exists( 'type', $args ) && 'text' == $args['type'] ) {
