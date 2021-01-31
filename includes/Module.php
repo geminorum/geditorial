@@ -41,6 +41,8 @@ class Module extends Base
 	protected $priority_template_redirect = 10;
 	protected $priority_template_include  = 10;
 
+	protected $positions = []; // menu positions by context/constant
+
 	protected $constants = [];
 	protected $strings   = [];
 	protected $supports  = [];
@@ -2027,8 +2029,10 @@ class Module extends Base
 			'labels'        => $this->get_posttype_labels( $constant ),
 			'supports'      => $this->get_posttype_supports( $constant ),
 			'description'   => isset( $this->strings['labels'][$constant]['description'] ) ? $this->strings['labels'][$constant]['description'] : '',
+
+			'show_in_menu'  => NULL, // or TRUE or `$parent_slug`
 			'menu_icon'     => $this->get_posttype_icon( $constant ),
-			'menu_position' => 4,
+			'menu_position' => empty( $this->positions[$constant] ) ? 4 : $this->positions[$constant],
 
 			'query_var'   => $this->constant( $constant.'_query_var', $posttype ),
 			'has_archive' => $this->constant( $constant.'_archive', FALSE ),
