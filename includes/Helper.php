@@ -2,6 +2,7 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
+use geminorum\gEditorial\Core\File;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\HTTP;
 use geminorum\gEditorial\Core\Icon;
@@ -885,6 +886,34 @@ class Helper extends Main
 			require_once( $layout );
 		else
 			return $layout;
+	}
+
+	// @REF: https://github.com/kzykhys/PHPCsvParser
+	public static function parseCSV( $file_path, $limit = NULL )
+	{
+		if ( empty( $file_path ) )
+			return FALSE;
+
+		// $iterator = new \SplFileObject( File::normalize( $file_path ) );
+		// $parser   = new \KzykHys\CsvParser\CsvParser( $iterator, [ 'encoding' => 'UTF-8' ] );
+
+		$list = [];
+		$args = [ 'encoding' => 'UTF-8' ];
+
+		if ( ! is_null( $limit ) )
+			$args['limit'] =  (int) $limit;
+
+		$parser  = \KzykHys\CsvParser\CsvParser::fromFile( File::normalize( $file_path ), $args );
+		$items   = $parser->parse();
+		$headers = $items[0];
+
+		unset( $items[0] );
+
+		foreach ( $items as $index => $data )
+			if ( ! empty( $data ) )
+				$list[] = array_combine( $headers, $data );
+
+		return $list;
 	}
 
 	// @SEE: https://github.com/bobthecow/mustache.php/wiki
