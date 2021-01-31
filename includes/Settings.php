@@ -2166,4 +2166,45 @@ class Settings extends Core\Base
 		else if ( $args['wrap'] )
 			echo '</'.$args['wrap'].'>';
 	}
+	public static function fieldType_switchOnOff( $atts = [] )
+	{
+		$args = self::atts( [
+			'id'         => FALSE,
+			'name'       => '',
+			'class'      => FALSE,
+			'checked'    => FALSE,
+			'disabled'   => FALSE,
+			'string_on'  => _x( 'On', 'Settings: Switch On-Off', 'geditorial' ),
+			'string_off' => _x( 'Off', 'Settings: Switch On-Off', 'geditorial' ),
+			'echo'       => TRUE,
+		], $atts );
+
+		$input = HTML::tag( 'input', [
+			'type'     => 'checkbox',
+			'value'    => '1',
+			'id'       => $args['id'],
+			'name'     => $args['name'],
+			'checked'  => $args['checked'],
+			'disabled' => $args['disabled'],
+			'class'    => HTML::attrClass( $args['class'], '-type-switchonoff-input -checkbox' ), // `.checkbox`
+		] );
+
+		$html = '<span class="switch__circle"><span class="switch__circle-inner"></span></span>';
+		$html.= '<span class="switch__left">'.$args['string_off'].'</span>';
+		$html.= '<span class="switch__right">'.$args['string_on'].'</span>';
+
+		$label = HTML::tag( 'label', [
+			'for'   => $args['id'],
+			'class' => '-type-switchonoff-label -switch', // `.switch`
+		], $html );
+
+		$html = HTML::wrap( $input.$label, '-type-switchonoff' );
+
+		if ( ! $args['echo'] )
+			return $html;
+
+		echo $html;
+
+		return TRUE;
+	}
 }
