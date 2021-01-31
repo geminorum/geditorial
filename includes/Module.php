@@ -2260,6 +2260,31 @@ class Module extends Base
 			Media::registerImageSize( $name, array_merge( $size, [ 'p' => [ $posttype ] ] ) );
 	}
 
+	public function enqueue_asset_style( $name = NULL, $deps = [], $handle = NULL )
+	{
+		if ( is_null( $name ) )
+			$name = $this->key;
+
+		// screen passed
+		else if ( is_object( $name ) )
+			$name = $name->base;
+
+		else
+			$name = $this->key.'.'.$name;
+
+		$name = str_replace( '_', '-', $name );
+
+		if ( is_null( $handle ) )
+			$handle = strtolower( $this->base.'-'.str_replace( '.', '-', $name ) );
+
+		$prefix = is_admin() ? 'admin.' : 'front.';
+
+		wp_enqueue_style( $handle, GEDITORIAL_URL.'assets/css/'.$prefix.$name.'.css', $deps, GEDITORIAL_VERSION, 'all' );
+		wp_style_add_data( $handle, 'rtl', 'replace' );
+
+		return $handle;
+	}
+
 	// WARNING: every script must have a .min copy
 	public function enqueue_asset_js( $args = [], $name = NULL, $deps = [ 'jquery' ], $handle = NULL )
 	{
