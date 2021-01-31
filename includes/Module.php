@@ -510,6 +510,31 @@ class Module extends Base
 			: array_diff_key( $taxonomies, array_flip( $excluded ) );
 	}
 
+	// allows for filtering the page title
+	protected function settings_header_title( $title = NULL, $links = NULL, $icon = NULL, $context = 'mainpage' )
+	{
+		if ( is_null( $title ) )
+			$title = $this->get_string( 'page_title', $context, 'settings', NULL );
+
+		if ( is_null( $links ) )
+			$links = $this->settings_header_links( $context );
+
+		if ( is_null( $icon ) )
+			$icon = $this->module->icon;
+
+		if ( $title )
+			Settings::headerTitle( $title, $links, NULL, $icon );
+	}
+
+	// `array` for custom, `NULL` to settings, `FALSE` to disable
+	protected function settings_header_links( $context = 'mainpage' )
+	{
+		if ( $action = $this->get_string( 'page_action', $context, 'settings', NULL ) )
+			return [ $this->get_module_url( 'settings' ) => $action ];
+
+		return FALSE;
+	}
+
 	public function settings_posttypes_option()
 	{
 		if ( $before = $this->get_string( 'post_types_before', 'post', 'settings', NULL ) )
