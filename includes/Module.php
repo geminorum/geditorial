@@ -472,6 +472,11 @@ class Module extends Base
 			: array_keys( array_filter( $this->options->taxonomies ) );
 	}
 
+	public function taxonomy_supported( $taxonomy )
+	{
+		return $taxonomy && in_array( $taxonomy, $this->taxonomies(), TRUE );
+	}
+
 	public function list_taxonomies( $pre = NULL, $taxonomies = NULL, $capability = NULL, $args = [ 'show_ui' => TRUE ], $user_id = NULL )
 	{
 		if ( is_null( $pre ) )
