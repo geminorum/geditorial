@@ -629,8 +629,9 @@ class Terms extends gEditorial\Module
 			case 'color':
 
 				if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) )
-					$html = '<i class="-color" data-'.$field.'="'.HTML::escape( $meta )
-						.'" style="background-color:'.HTML::escape( $meta ).'"></i>';
+					$html = '<i class="field-color" data-'.$field.'="'.HTML::escape( $meta )
+						.'" style="background-color:'.HTML::escape( $meta )
+						.'" title="'.HTML::wrapLTR( HTML::escape( $meta ) ).'"></i>';
 
 			break;
 			case 'role':
@@ -1211,7 +1212,7 @@ class Terms extends gEditorial\Module
 					case 'color':
 
 						if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) )
-							$node['title'].= ': '.'<i class="-color" style="background-color:'.HTML::escape( $meta ).'"></i>';
+							$node['title'].= ': '.'<i class="field-color" style="background-color:'.HTML::escape( $meta ).'"></i>';
 						else
 							$node['title'].= ': '.gEditorial\Plugin::na();
 

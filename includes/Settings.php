@@ -175,7 +175,10 @@ class Settings extends Core\Base
 	public static function taxonomiesExcluded( $extra = [] )
 	{
 		return array_merge( [
-			'amp_validation_error',
+			'amp_validation_error',   // AMP
+			'product_type',           // WooCommerce
+			'product_visibility',     // WooCommerce
+			'product_shipping_class', // WooCommerce
 		], (array) $extra );
 	}
 
@@ -743,6 +746,7 @@ class Settings extends Core\Base
 	{
 		echo '<div id="'.static::BASE.'-'.$context.'" class="'.HTML::prepClass(
 			'wrap',
+			'-settings-wrap',
 			static::BASE.'-admin-wrap',
 			static::BASE.'-'.$context,
 			static::BASE.'-'.$context.'-'.$sub,
@@ -1241,7 +1245,7 @@ class Settings extends Core\Base
 		] );
 	}
 
-	public static function fieldType( $atts = [], &$scripts )
+	public static function fieldType( $atts, &$scripts )
 	{
 		$args = self::atts( [
 			'title'        => '&nbsp;',
@@ -1795,6 +1799,10 @@ class Settings extends Core\Base
 
 					if ( $args['readonly'] )
 						HTML::inputHidden( $name, $value );
+
+				} else {
+
+					HTML::desc( $args['string_empty'], TRUE, '-empty' );
 				}
 
 			break;

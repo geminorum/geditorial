@@ -501,6 +501,7 @@ class Audit extends gEditorial\Module
 	}
 
 	// API METHOD
+	// FIXME: move this up to main module
 	public function set_terms( $post, $terms, $append = TRUE )
 	{
 		if ( ! $post = get_post( $post ) )

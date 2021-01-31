@@ -881,14 +881,14 @@ class Cartable extends gEditorial\Module
 
 		$list  = $this->list_posttypes();
 		$query = [
-			'tax_query'      => [ [
+			'tax_query' => [ [
 				'taxonomy' => $this->constant( $context.'_tax' ),
 				'field'    => 'id',
 				'terms'    => [ $term->term_id ],
 			] ],
 		];
 
-		list( $posts, $pagination ) = Tablelist::getPosts( $query, [], array_keys( $list ), $this->get_sub_limit_option( $sub ) );
+		list( $posts, $pagination ) = Tablelist::getPosts( $query, [], array_keys( $list ), $this->get_sub_limit_option() );
 
 		$pagination['actions']['empty_cartable'] = _x( 'Empty Cartable', 'Table Action', 'geditorial-cartable' );
 		$pagination['before'][] = Tablelist::filterPostTypes( $list );
@@ -899,7 +899,7 @@ class Cartable extends gEditorial\Module
 			// 'ID'    => Tablelist::columnPostID(),
 			'date'  => Tablelist::columnPostDate(),
 			// 'type'  => Tablelist::columnPostType(), // FIXME: add setting for this
-			'title' => Tablelist::clumnPostTitle(),
+			'title' => Tablelist::columnPostTitle(),
 			'terms' => Tablelist::columnPostTerms( Taxonomy::get( 4, [ 'public' => TRUE ] ) ),
 			'cartable' => [
 				'title'    => _x( 'Cartable', 'Table Column Title', 'geditorial-cartable' ),

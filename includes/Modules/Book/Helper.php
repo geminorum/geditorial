@@ -14,15 +14,21 @@ class Book extends gEditorial\Helper
 		return HTML::link( self::getISBN( $string, TRUE ), self::lookupISBN( $string ), TRUE );
 	}
 
+	// http://books.google.com/books?vid=isbn9789646799950
 	public static function lookupISBN( $string )
 	{
+		// return add_query_arg( [
+		// 	// 'q' => 'ISBN:'.urlencode( self::sanitizeISBN( $string ) ),
+		// 	'q' => urlencode( self::sanitizeISBN( $string ) ),
+		// ], 'https://www.google.com/search' );
+
 		return add_query_arg( [
-			// 'q' => 'ISBN:'.urlencode( self::sanitizeISBN( $string ) ),
-			'q' => urlencode( self::sanitizeISBN( $string ) ),
-		], 'https://www.google.com/search' );
+			'vid' => urlencode( 'isbn'.self::sanitizeISBN( $string ) ),
+		], 'https://books.google.com/books' );
 	}
 
 	// TODO: make this more reliable!
+	// @REF: https://github.com/metafloor/bwip-js/wiki/Online-Barcode-API
 	public static function barcodeISBN( $string )
 	{
 		return add_query_arg( [

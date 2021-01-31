@@ -1428,7 +1428,7 @@ class Module extends Base
 
 				} else if ( is_array( $option ) ) {
 
-					if ( array_key_exists( 'type', $args ) && 'text' == $args['type'] ) {
+					if ( 'text' == $args['type'] ) {
 
 						// multiple texts
 						$options['settings'][$setting] = [];
@@ -3830,6 +3830,7 @@ class Module extends Base
 		return $data;
 	}
 
+	// FIXME: WTF, maybe just add `'show_in_menu' => FALSE` on taxonomy args!
 	protected function remove_taxonomy_submenu( $taxonomies, $posttypes = NULL )
 	{
 		if ( ! $taxonomies )
@@ -4184,6 +4185,7 @@ class Module extends Base
 		return $this->classs().'/'.$this->rest_api_version;
 	}
 
+	// FIXME: add extra args
 	// @REF: https://developer.wordpress.org/rest-api/extending-the-rest-api/adding-custom-endpoints/
 	protected function restapi_register_route( $route, $methods = 'GET', $suffix = '' )
 	{
@@ -4191,6 +4193,12 @@ class Module extends Base
 		$hook = self::sanitize_hook( $route );
 
 		foreach ( (array) $methods as $method ) {
+
+			// READABLE   = 'GET'; // Alias for GET transport method
+			// CREATABLE  = 'POST'; // Alias for POST transport method
+			// EDITABLE   = 'POST, PUT, PATCH'; // Alias for POST, PUT, PATCH transport methods together
+			// DELETABLE  = 'DELETE'; // Alias for DELETE transport method
+			// ALLMETHODS = 'GET, POST, PUT, PATCH, DELETE'; // Alias for GET, POST, PUT, PATCH & DELETE transport methods together
 
 			switch ( strtolower( $method ) ) {
 

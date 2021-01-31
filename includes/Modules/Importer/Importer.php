@@ -801,6 +801,7 @@ class Importer extends gEditorial\Module
 			update_post_meta( $post->ID, $this->constant( 'metakey_attach_id' ), $attach_id );
 		}
 
+		// FIXME: move this up to main module
 		if ( $this->get_setting( 'add_audit_attribute' )
 			&& gEditorial()->enabled( 'audit' ) ) {
 
