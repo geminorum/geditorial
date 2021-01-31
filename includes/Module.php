@@ -3922,6 +3922,17 @@ class Module extends Base
 					];
 					break;
 
+				case 'delete':
+					$args[] = [
+						'methods'  => \WP_REST_Server::DELETABLE,
+						'callback' => [ $this, 'restapi_'.$hook.'_delete_callback' ],
+
+						'permission_callback' => method_exists( $this, 'restapi_'.$hook.'_permission_callback' )
+							? [ $this, 'restapi_'.$hook.'_permission_callback' ]
+							: [ $this, 'restapi_permission_callback' ],
+					];
+					break;
+
 				case 'get':
 					$args[] = [
 						'methods'  => \WP_REST_Server::READABLE,
