@@ -137,6 +137,19 @@ class L10n extends Base
 		return $first;
 	}
 
+	public static function getAlphabetKeysByNumber( $slice = FALSE, $locale = NULL )
+	{
+		if ( is_null( $locale ) )
+			$locale = get_locale();
+
+		switch ( $locale ) {
+			case 'en': $alphabet = range( 'A', 'Z' ); break;
+			default: $alphabet = wp_list_pluck( self::getAlphabet( $locale ), 'letter' ); break;
+		}
+
+		return $slice ? array_slice( $alphabet, 0, $slice ) : $alphabet;
+	}
+
 	public static function getAlphabet( $locale = NULL )
 	{
 		if ( is_null( $locale ) )

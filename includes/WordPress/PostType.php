@@ -107,10 +107,11 @@ class PostType extends Core\Base
 		return $results[$meta][$value] = $post_id;
 	}
 
-	public static function listPosts( $posttype = 'post', $fields = NULL, $extra = [] )
+	// `WP_Query` does not support `id=>name` as fields
+	public static function getIDs( $posttype = 'post', $extra = [], $fields = NULL )
 	{
 		$args = array_merge( [
-			'fields'         => is_null( $fields ) ? 'id=>name' : $fields,
+			'fields'         => is_null( $fields ) ? 'ids' : $fields, // OR: `id=>parent`
 			'post_type'      => $posttype,
 			'post_status'    => [ 'publish', 'future', 'draft', 'pending' ],
 			'posts_per_page' => -1,
@@ -119,7 +120,7 @@ class PostType extends Core\Base
 			'update_post_meta_cache' => FALSE,
 			'update_post_term_cache' => FALSE,
 			'lazy_load_term_meta'    => FALSE,
-		], $atts );
+		], $extra );
 
 		$query = new \WP_Query;
 

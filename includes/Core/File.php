@@ -106,6 +106,80 @@ class File extends Base
 		return $path;
 	}
 
+	// ORIGINALLY BASED ON: Secure Folder wp-content/uploads v1.2
+	// BY: Daniel Satria : http://ruanglaba.com
+	// puts index.html on given folder and subs
+	public static function putIndexHTML( $base, $index )
+	{
+		copy( $index, $base.'/index.html' );
+
+		if ( $dir = opendir( $base ) )
+			while ( FALSE !== ( $file = readdir( $dir ) ) )
+				if ( is_dir( $base.'/'.$file ) && $file != '.' && $file != '..' )
+					self::putIndexHTML( $base.'/'. $file, $index );
+
+		closedir( $dir );
+	}
+
+	// puts .htaccess deny from all on a given folder
+	public static function putHTAccessDeny( $path, $check_folder = TRUE )
+	{
+		$content = '<Files ~ ".*\..*">'.PHP_EOL.
+				'<IfModule mod_access.c>'.PHP_EOL.
+					'Deny from all'.PHP_EOL.
+				'</IfModule>'.PHP_EOL.
+				'<IfModule !mod_access_compat>'.PHP_EOL.
+					'<IfModule mod_authz_host.c>'.PHP_EOL.
+						'Deny from all'.PHP_EOL.
+					'</IfModule>'.PHP_EOL.
+				'</IfModule>'.PHP_EOL.
+				'<IfModule mod_access_compat>'.PHP_EOL.
+					'Deny from all'.PHP_EOL.
+				'</IfModule>'.PHP_EOL.
+			'</Files>';
+
+		return self::putContents( '.htaccess', $content, $path, FALSE, $check_folder );
+	}
+
+	// wrapper for `file_get_contents()`
+	// TODO: use `$wp_filesystem`
+	// @REF: https://github.com/markjaquith/feedback/issues/33
+	// @REF: `$wp_filesystem->get_contents()`
+	public static function getContents( $filename )
+	{
+		return @file_get_contents( $filename );
+	}
+
+	// wrapper for file_put_contents()
+	public static function putContents( $filename, $contents, $path = NULL, $append = TRUE, $check_folder = FALSE )
+	{
+		$dir = FALSE;
+
+		if ( is_null( $path ) ) {
+
+			$dir = WP_CONTENT_DIR;
+
+		} else if ( $check_folder ) {
+
+			$dir = wp_mkdir_p( $path );
+
+			if ( TRUE === $dir )
+				$dir = $path;
+
+		} else if ( wp_is_writable( $path ) ) {
+
+			$dir = $path;
+		}
+
+		if ( ! $dir )
+			return $dir;
+
+		if ( $append )
+			return file_put_contents( self::join( $dir, $filename ), $contents.PHP_EOL, FILE_APPEND );
+
+		return file_put_contents( self::join( $dir, $filename ), $contents.PHP_EOL );
+	}
+
 	// WP core `size_format()` function without `number_format_i18n()`
 	public static function formatSize( $bytes, $decimals = 0 )
 	{
@@ -125,14 +199,5 @@ class File extends Base
 				return number_format( $bytes / $mag, $decimals ).' '.$unit;
 
 		return FALSE;
-	}
-
-	// wrapper for `file_get_contents()`
-	// TODO: use `$wp_filesystem`
-	// @REF: https://github.com/markjaquith/feedback/issues/33
-	// @REF: `$wp_filesystem->get_contents()`
-	public static function getContents( $filename )
-	{
-		return @file_get_contents( $filename );
 	}
 }

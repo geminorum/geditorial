@@ -19,7 +19,19 @@ class Taxonomy extends Core\Base
 		return is_object( $taxonomy ) ? $taxonomy : get_taxonomy( $taxonomy );
 	}
 
-	public static function get( $mod = 0, $args = array(), $object = FALSE )
+	public static function can( $taxonomy, $capability = 'manage_terms', $user_id = NULL )
+	{
+		if ( is_null( $capability ) )
+			return TRUE;
+
+		$cap = self::object( $taxonomy )->cap->{$capability};
+
+		return is_null( $user_id )
+			? current_user_can( $cap )
+			: user_can( $user_id, $cap );
+	}
+
+	public static function get( $mod = 0, $args = array(), $object = FALSE, $capability = NULL, $user_id = NULL )
 	{
 		$list = array();
 
@@ -29,6 +41,9 @@ class Taxonomy extends Core\Base
 			$objects = get_object_taxonomies( $object, 'objects' );
 
 		foreach ( $objects as $taxonomy => $taxonomy_obj ) {
+
+			if ( ! self::can( $taxonomy_obj, $capability, $user_id ) )
+				continue;
 
 			// label
 			if ( 0 === $mod )
@@ -94,7 +109,7 @@ class Taxonomy extends Core\Base
 		return (bool) count( $terms );
 	}
 
-	public static function getTerm( $term_or_id, $taxonomy )
+	public static function getTerm( $term_or_id, $taxonomy = '' )
 	{
 		if ( ! $term_or_id ) {
 
@@ -302,12 +317,12 @@ class Taxonomy extends Core\Base
 		return wp_insert_term( $term, $taxonomy, array( 'slug' => $slug ) );
 	}
 
-	public static function getIDbyMeta( $meta, $value )
+	public static function getIDbyMeta( $key, $value )
 	{
 		static $results = [];
 
-		if ( isset( $results[$meta][$value] ) )
-			return $results[$meta][$value];
+		if ( isset( $results[$key][$value] ) )
+			return $results[$key][$value];
 
 		global $wpdb;
 
@@ -317,10 +332,10 @@ class Taxonomy extends Core\Base
 				FROM {$wpdb->termmeta}
 				WHERE meta_key = %s
 				AND meta_value = %s
-			", $meta, $value )
+			", $key, $value )
 		);
 
-		return $results[$meta][$value] = $term_id;
+		return $results[$key][$value] = $term_id;
 	}
 
 	public static function appendParentTermIDs( $term_ids, $taxonomy )
@@ -355,6 +370,44 @@ class Taxonomy extends Core\Base
 		}
 
 		return $parents;
+	}
+
+	public static function getTargetTerm( $target, $taxonomy, $args = [] )
+	{
+		$target = trim( $target );
+
+		if ( is_numeric( $target ) ) {
+
+			if ( $term = term_exists( (int) $target, $taxonomy ) )
+				return get_term( $term['term_id'], $taxonomy );
+
+			else
+				return FALSE; // avoid inserting numbers as new terms!
+
+		} else if ( $term = term_exists( $target, $taxonomy ) ) {
+
+			return get_term( $term['term_id'], $taxonomy );
+
+		} else if ( $term = term_exists( apply_filters( 'string_format_i18n', $target ), $taxonomy ) ) {
+
+			return get_term( $term['term_id'], $taxonomy );
+
+		} else if ( $term = term_exists( Core\Text::formatName( $target ), $taxonomy ) ) {
+
+			return get_term( $term['term_id'], $taxonomy );
+
+		} else if ( $term = term_exists( Core\Text::reFormatName( $target ), $taxonomy ) ) {
+
+			return get_term( $term['term_id'], $taxonomy );
+		}
+
+		// avoid filtering the new term
+		$term = wp_insert_term( $target, $taxonomy, $args );
+
+		if ( self::isError( $term ) )
+			return FALSE;
+
+		return get_term( $term['term_id'], $taxonomy );
 	}
 
 	public static function insertDefaultTerms( $taxonomy, $terms, $update_terms = TRUE )
@@ -480,9 +533,9 @@ class Taxonomy extends Core\Base
 
 	// must add `add_thickbox()` for thickbox
 	// @SEE: `Scripts::enqueueThickBox()`
-	public static function htmlFeaturedImage( $term_id, $size = 'thumbnail', $link = TRUE )
+	public static function htmlFeaturedImage( $term_id, $size = 'thumbnail', $link = TRUE, $metakey = 'image' )
 	{
-		if ( ! $term_image_id = get_term_meta( $term_id, 'image', TRUE ) )
+		if ( ! $term_image_id = get_term_meta( $term_id, $metakey, TRUE ) )
 			return '';
 
 		if ( ! $term_thumbnail_img = wp_get_attachment_image_src( $term_image_id, $size ) )

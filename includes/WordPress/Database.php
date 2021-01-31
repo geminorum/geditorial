@@ -353,6 +353,7 @@ class Database extends Core\Base
 		return $list;
 	}
 
+	// @REF: `_update_generic_term_count()`
 	public static function updateCountCallback( $terms, $taxonomy )
 	{
 		global $wpdb;
@@ -361,11 +362,11 @@ class Database extends Core\Base
 
 			$count = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$wpdb->term_relationships} WHERE term_taxonomy_id = %d", $term ) );
 
-			do_action( 'edit_term_taxonomy', $term, $taxonomy );
+			do_action( 'edit_term_taxonomy', $term, $taxonomy->name );
 
 			$wpdb->update( $wpdb->term_taxonomy, compact( 'count' ), array( 'term_taxonomy_id' => $term ) );
 
-			do_action( 'edited_term_taxonomy', $term, $taxonomy );
+			do_action( 'edited_term_taxonomy', $term, $taxonomy->name );
 		}
 	}
 

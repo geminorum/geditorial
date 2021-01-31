@@ -173,7 +173,35 @@ class Media extends Core\Base
 		return $sizes;
 	}
 
-	public static function handleUpload( $file, $post, $desc = NULL, $data = [] )
+	// @REF: `wp_import_handle_upload()`
+	public static function handleImportUpload( $name = 'import' )
+	{
+		if ( ! isset( $_FILES[$name] ) )
+			return FALSE;
+
+		$_FILES[$name]['name'].= '.txt';
+
+		$upload = wp_handle_upload( $_FILES[$name], [ 'test_form' => FALSE, 'test_type' => FALSE ] );
+
+		if ( isset( $upload['error'] ) )
+			return FALSE; // $upload;
+
+		$id = wp_insert_attachment( [
+			'post_title'     => Core\File::basename( $upload['file'] ),
+			'post_content'   => $upload['url'],
+			'post_mime_type' => $upload['type'],
+			'guid'           => $upload['url'],
+			'context'        => 'import',
+			'post_status'    => 'private',
+		], $upload['file'] );
+
+		// schedule a cleanup for one day from now in case of failed import or missing `wp_import_cleanup()` call
+		wp_schedule_single_event( time() + DAY_IN_SECONDS, 'importer_scheduled_cleanup', [ $id ] );
+
+		return [ 'file' => $upload['file'], 'id' => $id ];
+	}
+
+	public static function handleSideload( $file, $post, $desc = NULL, $data = [] )
 	{
 		if ( ! function_exists( 'media_handle_upload' ) ) {
 			require_once ABSPATH.'wp-admin/includes/image.php';
@@ -194,7 +222,7 @@ class Media extends Core\Base
 
 		$file = [ 'name' => $name, 'tmp_name' => $temp ];
 
-		$attachment = self::handleUpload( $file, $post, NULL, $extra );
+		$attachment = self::handleSideload( $file, $post, NULL, $extra );
 
 		// if error storing permanently, unlink
 		if ( is_wp_error( $attachment ) ) {
@@ -230,7 +258,7 @@ class Media extends Core\Base
 		$file['name'] = Core\File::basename( $matches[0] );
 
 		// do the validation and storage stuff
-		$attachment = self::handleUpload( $file, $post, NULL, $extra );
+		$attachment = self::handleSideload( $file, $post, NULL, $extra );
 
 		// if error storing permanently, unlink
 		if ( is_wp_error( $attachment ) ) {
@@ -247,15 +275,49 @@ class Media extends Core\Base
 	public static function upload( $post = FALSE )
 	{
 		if ( FALSE === $post )
-			return wp_upload_dir();
+			return wp_upload_dir( NULL, FALSE, FALSE );
 
 		if ( ! $post = get_post( $post ) )
-			return wp_upload_dir();
+			return wp_upload_dir( NULL, TRUE, FALSE );
 
 		if ( 'page' === $post->post_type )
-			return wp_upload_dir();
+			return wp_upload_dir( NULL, TRUE, FALSE );
 
-		return wp_upload_dir( ( substr( $post->post_date, 0, 4 ) > 0 ? $post->post_date : NULL ) );
+		return wp_upload_dir( ( substr( $post->post_date, 0, 4 ) > 0 ? $post->post_date : NULL ), TRUE, FALSE );
+	}
+
+	public static function getUploadDirectory( $sub = '', $create = FALSE, $htaccess = TRUE )
+	{
+		$upload = wp_upload_dir( NULL, FALSE, FALSE );
+
+		if ( ! $sub )
+			return $upload['basedir'];
+
+		$folder = Core\File::join( $upload['basedir'], $sub );
+
+		if ( $create ) {
+
+			if ( ! is_dir( $folder ) || ! wp_is_writable( $folder ) ) {
+
+				if ( $htaccess )
+					Core\File::putHTAccessDeny( $folder, TRUE );
+				else
+					wp_mkdir_p( $folder );
+
+			} else if ( $htaccess && ! file_exists( $folder.'/.htaccess' ) ) {
+
+				Core\File::putHTAccessDeny( $folder, FALSE );
+			}
+		}
+
+		return $folder;
+	}
+
+	public static function getUploadURL( $sub = '' )
+	{
+		$upload = wp_upload_dir( NULL, FALSE, FALSE );
+		$base   = is_ssl() ? str_ireplace( 'http://', 'https://', $upload['baseurl'] ) : $upload['baseurl'];
+		return $sub ? $base.'/'.$sub : $base;
 	}
 
 	public static function getAttachments( $post_id, $mime_type = 'image' )
