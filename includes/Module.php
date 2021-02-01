@@ -1215,7 +1215,8 @@ class Module extends Base
 
 		echo '<form enctype="multipart/form-data" class="'.HTML::prepClass( $class ).'" method="post" action="">';
 
-			$this->render_form_fields( $sub, $action, $context );
+			if ( in_array( $context, [ 'settings', 'tools' ] ) )
+				$this->render_form_fields( $sub, $action, $context );
 
 			if ( $check && $sidebox ) {
 				echo '<div class="'.HTML::prepClass( '-sidebox', '-'.$this->module->name, '-sidebox-'.$sub ).'">';
