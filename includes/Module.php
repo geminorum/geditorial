@@ -412,7 +412,7 @@ class Module extends Base
 
 	protected function _hook_admin_mainpage( $context = 'mainpage' )
 	{
-		$slug  = $this->get_adminpage_url( FALSE );
+		$slug  = $this->get_adminpage_url( FALSE, [], $context );
 		$subs  = $this->get_adminpage_subs( $context );
 		$can   = $this->role_can( $context ) ? 'read' : 'do_not_allow';
 		$menu  = $this->get_string( 'menu_title', $context, 'settings', $this->key );
@@ -446,12 +446,13 @@ class Module extends Base
 
 	public function load_admin_mainpage()
 	{
-		$first = Arraay::keyFirst( $this->get_adminpage_subs( 'mainpage' ) );
-		$page  = self::req( 'page', NULL );
-		$sub   = self::req( 'sub', $first );
+		$context = 'mainpage';
+		$first   = Arraay::keyFirst( $this->get_adminpage_subs( $context ) );
+		$page    = self::req( 'page', NULL );
+		$sub     = self::req( 'sub', $first );
 
 		if ( $sub && $sub != $first )
-			$GLOBALS['submenu_file'] = $this->get_adminpage_url( FALSE ).'&sub='.$sub;
+			$GLOBALS['submenu_file'] = $this->get_adminpage_url( FALSE, [], $context ).'&sub='.$sub;
 
 		$this->register_help_tabs();
 		$this->actions( 'load', $page, $sub );
@@ -459,18 +460,19 @@ class Module extends Base
 
 	public function render_admin_mainpage()
 	{
-		$uri   = $this->get_adminpage_url();
-		$subs  = $this->get_adminpage_subs( 'mainpage' );
-		$first = Arraay::keyFirst( $subs );
-		$sub   = self::req( 'sub', $first );
+		$context = 'mainpage';
+		$uri     = $this->get_adminpage_url( TRUE, [], $context );
+		$subs    = $this->get_adminpage_subs( $context );
+		$first   = Arraay::keyFirst( $subs );
+		$sub     = self::req( 'sub', $first );
 
-		Settings::wrapOpen( $this->key, 'mainpage' );
+		Settings::wrapOpen( $this->key, $context );
 			$this->settings_header_title(); // TODO: add compact mode to hide this on user screen setting
 			HTML::headerNav( $uri, $sub, $subs );
 
 			$this->render_admin_mainpage_content( $sub, $uri );
 
-			$this->settings_signature( 'mainpage' );
+			$this->settings_signature( $context );
 		Settings::wrapClose();
 	}
 
