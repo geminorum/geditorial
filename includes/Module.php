@@ -488,12 +488,15 @@ class Module extends Base
 
 	protected function _hook_admin_printpage( $context = 'printpage' )
 	{
+		$slug = $this->get_adminpage_url( FALSE, [], $context );
+		$can  = $this->role_can( $context ) ? 'read' : 'do_not_allow';
+
 		$hook = add_submenu_page(
 			NULL,
+			$this->get_string( 'page_title', $context, 'adminpage', $this->key ),
 			'',
-			'',
-			'read',
-			$this->classs( $context ),
+			$can,
+			$slug,
 			function() {} // avoid wp die
 		);
 
@@ -540,7 +543,7 @@ class Module extends Base
 		if ( $footer = Helper::getLayout( 'print.footer' ) )
 			require_once( $footer ); // to expose scope vars
 
-		die(); // avoiding query monitor output
+		exit; // avoiding query monitor output
 	}
 
 	// @SEE: https://stackoverflow.com/questions/819416/adjust-width-and-height-of-iframe-to-fit-with-content-in-it
