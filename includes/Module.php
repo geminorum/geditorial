@@ -402,7 +402,7 @@ class Module extends Base
 
 	protected function get_adminpage_subs( $context = 'mainpage' )
 	{
-		$subs = $this->get_string( 'subs', $context, 'settings', [] );
+		$subs = $this->get_string( 'subs', $context, 'adminpage', [] );
 
 		// FIXME: check capabilities
 		// $can  = $this->role_can( $context ) ? 'read' : 'do_not_allow';
@@ -415,11 +415,11 @@ class Module extends Base
 		$slug  = $this->get_adminpage_url( FALSE, [], $context );
 		$subs  = $this->get_adminpage_subs( $context );
 		$can   = $this->role_can( $context ) ? 'read' : 'do_not_allow';
-		$menu  = $this->get_string( 'menu_title', $context, 'settings', $this->key );
+		$menu  = $this->get_string( 'menu_title', $context, 'adminpage', $this->key );
 		$first = Arraay::keyFirst( $subs );
 
 		$hook = add_menu_page(
-			$this->get_string( 'page_title', $context, 'settings', $this->key ),
+			$this->get_string( 'page_title', $context, 'adminpage', $this->key ),
 			$menu,
 			$can,
 			$slug,
@@ -454,8 +454,8 @@ class Module extends Base
 		if ( $sub && $sub != $first )
 			$GLOBALS['submenu_file'] = $this->get_adminpage_url( FALSE, [], $context ).'&sub='.$sub;
 
-		$this->register_help_tabs();
-		$this->actions( 'load', $page, $sub );
+		$this->register_help_tabs( NULL, $context );
+		$this->actions( 'load', $page, $sub, $context );
 	}
 
 	public function render_admin_mainpage()
@@ -463,11 +463,10 @@ class Module extends Base
 		$context = 'mainpage';
 		$uri     = $this->get_adminpage_url( TRUE, [], $context );
 		$subs    = $this->get_adminpage_subs( $context );
-		$first   = Arraay::keyFirst( $subs );
-		$sub     = self::req( 'sub', $first );
+		$sub     = self::req( 'sub', Arraay::keyFirst( $subs ) );
 
 		Settings::wrapOpen( $this->key, $context );
-			$this->settings_header_title(); // TODO: add compact mode to hide this on user screen setting
+			$this->render_adminpage_header_title( NULL, NULL, NULL, $context );
 			HTML::headerNav( $uri, $sub, $subs );
 
 			$this->render_admin_mainpage_content( $sub, $uri );
@@ -725,13 +724,14 @@ class Module extends Base
 	}
 
 	// allows for filtering the page title
-	protected function settings_header_title( $title = NULL, $links = NULL, $icon = NULL, $context = 'mainpage' )
+	// TODO: add compact mode to hide this on user screen setting
+	protected function render_adminpage_header_title( $title = NULL, $links = NULL, $icon = NULL, $context = 'mainpage' )
 	{
 		if ( is_null( $title ) )
-			$title = $this->get_string( 'page_title', $context, 'settings', NULL );
+			$title = $this->get_string( 'page_title', $context, 'adminpage', NULL );
 
 		if ( is_null( $links ) )
-			$links = $this->settings_header_links( $context );
+			$links = $this->get_adminpage_header_links( $context );
 
 		if ( is_null( $icon ) )
 			$icon = $this->module->icon;
@@ -741,10 +741,10 @@ class Module extends Base
 	}
 
 	// `array` for custom, `NULL` to settings, `FALSE` to disable
-	protected function settings_header_links( $context = 'mainpage' )
+	protected function get_adminpage_header_links( $context = 'mainpage' )
 	{
-		if ( $action = $this->get_string( 'page_action', $context, 'settings', NULL ) )
-			return [ $this->get_module_url( 'settings' ) => $action ];
+		if ( $action = $this->get_string( 'page_action', $context, 'adminpage', NULL ) )
+			return [ $this->get_adminpage_url() => $action ];
 
 		return FALSE;
 	}
