@@ -385,13 +385,19 @@ class Module extends Base
 		return add_query_arg( array_merge( [ 'page' => $this->classs() ], $extra ), $url );
 	}
 
-	protected function get_adminpage_url( $full = TRUE, $extra = [], $context = 'mainpage' )
+	protected function get_adminpage_url( $full = TRUE, $extra = [], $context = 'mainpage', $admin_base = NULL )
 	{
 		$page = 'mainpage' == $context ? $this->classs() : $this->classs( $context );
 
-		return $full
-			? add_query_arg( array_merge( [ 'page' => $page ], $extra ), get_admin_url( NULL, 'admin.php' ) )
-			: $page;
+		if ( ! $full )
+			return $page;
+
+		if ( is_null( $admin_base ) )
+			$admin_base = in_array( $context, [ 'printpage', 'framepage' ] )
+				? get_admin_url( NULL, 'index.php' )
+				: get_admin_url( NULL, 'admin.php' );
+
+		return add_query_arg( array_merge( [ 'page' => $page ], $extra ), $admin_base );
 	}
 
 	protected function get_adminpage_subs( $context = 'mainpage' )
@@ -476,9 +482,7 @@ class Module extends Base
 
 	protected function get_printpage_url( $extra = [], $context = 'printpage' )
 	{
-		return add_query_arg( array_merge( [
-			'page' => $this->classs( $context ),
-		], $extra ), get_admin_url( NULL, 'index.php' ) );
+		return $this->get_adminpage_url( TRUE, $extra, $context );
 	}
 
 	protected function _hook_admin_printpage( $context = 'printpage' )
