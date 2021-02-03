@@ -410,7 +410,7 @@ class Module extends Base
 		return $this->filters( $context.'_subs', $subs );
 	}
 
-	protected function _hook_admin_mainpage( $context = 'mainpage' )
+	protected function _hook_menu_adminpage( $context = 'mainpage' )
 	{
 		$slug  = $this->get_adminpage_url( FALSE, [], $context );
 		$subs  = $this->get_adminpage_subs( $context );
@@ -423,7 +423,7 @@ class Module extends Base
 			$menu,
 			$can,
 			$slug,
-			[ $this, 'render_admin_'.$context ],
+			[ $this, 'render_menu_adminpage' ],
 			$this->get_posttype_icon(),
 			empty( $this->positions[$context] ) ? 3 : $this->positions[$context]
 		);
@@ -436,99 +436,111 @@ class Module extends Base
 				$submenu,
 				$can,
 				$slug.( $sub == $first ? '' : '&sub='.$sub ),
-				[ $this, 'render_admin_'.$context ]
+				[ $this, 'render_menu_adminpage' ]
 			);
 
-		add_action( 'load-'.$hook, [ $this, 'load_admin_'.$context ] );
+		add_action( 'load-'.$hook, [ $this, 'load_menu_adminpage' ], 10, 0 );
 
 		return $slug;
 	}
 
-	public function load_admin_mainpage()
+	public function load_menu_adminpage( $context = 'mainpage' )
 	{
-		$context = 'mainpage';
-		$first   = Arraay::keyFirst( $this->get_adminpage_subs( $context ) );
-		$page    = self::req( 'page', NULL );
-		$sub     = self::req( 'sub', $first );
+		$first = Arraay::keyFirst( $this->get_adminpage_subs( $context ) );
+		$page  = self::req( 'page', NULL );
+		$sub   = self::req( 'sub', $first );
 
 		if ( $sub && $sub != $first )
 			$GLOBALS['submenu_file'] = $this->get_adminpage_url( FALSE, [], $context ).'&sub='.$sub;
 
 		$this->register_help_tabs( NULL, $context );
-		$this->actions( 'load', $page, $sub, $context );
+		$this->actions( 'load_adminpage', $page, $sub, $context );
 	}
 
-	public function render_admin_mainpage()
+	public function render_menu_adminpage()
 	{
-		$context = 'mainpage';
-		$uri     = $this->get_adminpage_url( TRUE, [], $context );
-		$subs    = $this->get_adminpage_subs( $context );
-		$sub     = self::req( 'sub', Arraay::keyFirst( $subs ) );
+		$this->render_adminpage( 'mainpage', 'update' );
+	}
+
+	public function render_adminpage( $context = 'mainpage', $action = 'update' )
+	{
+		$uri      = $this->get_adminpage_url( TRUE, [], $context );
+		$subs     = $this->get_adminpage_subs( $context );
+		$sub      = self::req( 'sub', Arraay::keyFirst( $subs ) );
+		$noheader = self::req( 'noheader' );
+
+		if ( $noheader ) {
+			self::define( 'IFRAME_REQUEST', TRUE );
+			iframe_header( $this->get_string( 'page_title', $context, 'adminpage', '' ) );
+		}
 
 		Settings::wrapOpen( $this->key, $context );
-			$this->render_adminpage_header_title( NULL, NULL, NULL, $context );
+
+			if ( ! $noheader )
+				$this->render_adminpage_header_title( NULL, NULL, NULL, $context );
+
 			HTML::headerNav( $uri, $sub, $subs );
 
-			$this->render_admin_mainpage_content( $sub, $uri );
+			$this->render_form_start( $uri, $sub, $action, $context, FALSE );
+				$this->nonce_field( $context );
 
-			$this->settings_signature( $context );
+				$this->render_adminpage_content( $sub, $uri, $context );
+			$this->render_form_end( $uri, $sub, $action, $context, FALSE );
+
+			if ( ! $noheader )
+				$this->settings_signature( $context );
+
 		Settings::wrapClose();
+
+		if ( $noheader ) {
+			iframe_footer();
+			exit;
+		}
 	}
 
 	// DEFAULT CALLBACK
-	public function render_admin_mainpage_content( $sub = NULL, $uri = NULL )
+	public function render_adminpage_content( $sub = NULL, $uri = NULL, $context = '' )
 	{
 		HTML::desc( gEditorial()->na(), TRUE, '-empty' );
 	}
 
-	protected function get_printpage_url( $extra = [], $context = 'printpage' )
-	{
-		return $this->get_adminpage_url( TRUE, $extra, $context );
-	}
-
-	protected function _hook_admin_printpage( $context = 'printpage' )
+	protected function _hook_submenu_adminpage( $context = 'framepage', $parent_slug = NULL )
 	{
 		$slug = $this->get_adminpage_url( FALSE, [], $context );
 		$can  = $this->role_can( $context ) ? 'read' : 'do_not_allow';
+		$cb   = 'printpage' == $context
+			? [ $this, 'render_print_adminpage' ]
+			: [ $this, 'render_submenu_adminpage' ];
 
 		$hook = add_submenu_page(
-			NULL,
+			$parent_slug, // or `index.php`
 			$this->get_string( 'page_title', $context, 'adminpage', $this->key ),
-			'',
+			$this->get_string( 'menu_title', $context, 'adminpage', '' ),
 			$can,
 			$slug,
-			function() {} // avoid wp die
+			$cb
 		);
 
-		add_action( 'load-'.$hook, [ $this, 'load_admin_'.$context ] );
+		add_action( 'load-'.$hook, [ $this, 'load_submenu_adminpage' ], 10, 0 );
+
+		return $slug;
 	}
 
-	// DEFAULT CALLBACK
-	public function load_admin_printpage()
+	public function load_submenu_adminpage( $context = 'framepage' )
 	{
-		$this->render_print_layout();
+		$page = self::req( 'page', NULL );
+		$sub  = self::req( 'sub', NULL );
+
+		$this->register_help_tabs( NULL, $context );
+		$this->actions( 'load_adminpage', $page, $sub, $context );
 	}
 
-	protected function get_print_layout_pagetitle()
+	public function render_submenu_adminpage()
 	{
-		return $this->filters( 'print_layout_pagetitle',
-			_x( 'Print Me!', 'Module', 'geditorial' ) );
+		$this->render_adminpage( 'framepage', 'update' );
 	}
 
-	protected function get_print_layout_bodyclass( $extra = [] )
-	{
-		return $this->filters( 'print_layout_bodyclass',
-			HTML::prepClass( 'printpage', ( is_rtl() ? 'rtl' : 'ltr' ), $extra ) );
-	}
-
-	// DEFAULT CALLBACK
-	protected function render_print_head()
-	{
-		$this->actions( 'print_head' );
-	}
-
-	// DEFAULT CALLBACK
-	protected function render_print_layout()
+	public function render_print_adminpage()
 	{
 		$head_callback = [ $this, 'render_print_head' ];
 		$head_title    = $this->get_print_layout_pagetitle();
@@ -544,6 +556,28 @@ class Module extends Base
 			require_once( $footer ); // to expose scope vars
 
 		exit; // avoiding query monitor output
+	}
+
+	protected function render_print_head()
+	{
+		$this->actions( 'print_head' );
+	}
+
+	protected function get_print_layout_pagetitle()
+	{
+		return $this->filters( 'print_layout_pagetitle',
+			_x( 'Print Me!', 'Module', 'geditorial' ) );
+	}
+
+	protected function get_print_layout_bodyclass( $extra = [] )
+	{
+		return $this->filters( 'print_layout_bodyclass',
+			HTML::prepClass( 'printpage', ( is_rtl() ? 'rtl' : 'ltr' ), $extra ) );
+	}
+
+	protected function get_printpage_url( $extra = [], $context = 'printpage' )
+	{
+		return $this->get_adminpage_url( TRUE, $extra, $context );
 	}
 
 	// @SEE: https://stackoverflow.com/questions/819416/adjust-width-and-height-of-iframe-to-fit-with-content-in-it
