@@ -410,13 +410,21 @@ class Module extends Base
 		return $this->filters( $context.'_subs', $subs );
 	}
 
+	protected function get_adminpage_default_sub( $subs = NULL, $context = 'mainpage' )
+	{
+		if ( is_null( $subs ) )
+			$subs = $this->get_adminpage_subs( $context );
+
+		return $this->filters( $context.'_default_sub', Arraay::keyFirst( $subs ) );
+	}
+
 	protected function _hook_menu_adminpage( $context = 'mainpage' )
 	{
-		$slug  = $this->get_adminpage_url( FALSE, [], $context );
-		$subs  = $this->get_adminpage_subs( $context );
-		$can   = $this->role_can( $context ) ? 'read' : 'do_not_allow';
-		$menu  = $this->get_string( 'menu_title', $context, 'adminpage', $this->key );
-		$first = Arraay::keyFirst( $subs );
+		$slug    = $this->get_adminpage_url( FALSE, [], $context );
+		$subs    = $this->get_adminpage_subs( $context );
+		$default = $this->get_adminpage_default_sub( $subs, $context );
+		$can     = $this->role_can( $context ) ? 'read' : 'do_not_allow';
+		$menu    = $this->get_string( 'menu_title', $context, 'adminpage', $this->key );
 
 		$hook = add_menu_page(
 			$this->get_string( 'page_title', $context, 'adminpage', $this->key ),
@@ -435,7 +443,7 @@ class Module extends Base
 				sprintf( _x( '%1$s &lsaquo; %2$s', 'Module: Page Title', 'geditorial' ), $submenu, $menu ), // FIXME: only shows the first sub
 				$submenu,
 				$can,
-				$slug.( $sub == $first ? '' : '&sub='.$sub ),
+				$slug.( $sub == $default ? '' : '&sub='.$sub ),
 				[ $this, 'render_menu_adminpage' ]
 			);
 
@@ -446,11 +454,12 @@ class Module extends Base
 
 	public function load_menu_adminpage( $context = 'mainpage' )
 	{
-		$first = Arraay::keyFirst( $this->get_adminpage_subs( $context ) );
-		$page  = self::req( 'page', NULL );
-		$sub   = self::req( 'sub', $first );
+		$subs    = $this->get_adminpage_subs( $context );
+		$default = $this->get_adminpage_default_sub( $subs, $context );
+		$page    = self::req( 'page', NULL );
+		$sub     = self::req( 'sub', $default );
 
-		if ( $sub && $sub != $first )
+		if ( $sub && $sub != $default )
 			$GLOBALS['submenu_file'] = $this->get_adminpage_url( FALSE, [], $context ).'&sub='.$sub;
 
 		$this->register_help_tabs( NULL, $context );
@@ -462,11 +471,12 @@ class Module extends Base
 		$this->render_adminpage( 'mainpage', 'update' );
 	}
 
-	public function render_adminpage( $context = 'mainpage', $action = 'update' )
+	protected function render_adminpage( $context = 'mainpage', $action = 'update' )
 	{
 		$uri      = $this->get_adminpage_url( TRUE, [], $context );
 		$subs     = $this->get_adminpage_subs( $context );
-		$sub      = self::req( 'sub', Arraay::keyFirst( $subs ) );
+		$default  = $this->get_adminpage_default_sub( $subs, $context );
+		$sub      = self::req( 'sub', $default );
 		$noheader = self::req( 'noheader' );
 
 		if ( $noheader ) {
@@ -476,19 +486,13 @@ class Module extends Base
 
 		Settings::wrapOpen( $this->key, $context );
 
-			if ( ! $noheader )
-				$this->render_adminpage_header_title( NULL, NULL, NULL, $context );
-
-			HTML::headerNav( $uri, $sub, $subs );
-
+			$this->render_adminpage_header_title( NULL, NULL, NULL, $context );
+			$this->render_adminpage_header_nav( $uri, $sub, $subs, $context );
 			$this->render_form_start( $uri, $sub, $action, $context, FALSE );
 				$this->nonce_field( $context );
-
-				$this->render_adminpage_content( $sub, $uri, $context );
+				$this->render_adminpage_content( $sub, $uri, $context, $subs );
 			$this->render_form_end( $uri, $sub, $action, $context, FALSE );
-
-			if ( ! $noheader )
-				$this->settings_signature( $context );
+			$this->render_adminpage_signature( $uri, $sub, $subs, $context );
 
 		Settings::wrapClose();
 
@@ -499,7 +503,7 @@ class Module extends Base
 	}
 
 	// DEFAULT CALLBACK
-	public function render_adminpage_content( $sub = NULL, $uri = NULL, $context = '' )
+	protected function render_adminpage_content( $sub = NULL, $uri = NULL, $context = '', $subs = [] )
 	{
 		HTML::desc( gEditorial()->na(), TRUE, '-empty' );
 	}
@@ -577,6 +581,7 @@ class Module extends Base
 
 	protected function get_printpage_url( $extra = [], $context = 'printpage' )
 	{
+		$extra['noheader'] = 1;
 		return $this->get_adminpage_url( TRUE, $extra, $context );
 	}
 
@@ -764,6 +769,9 @@ class Module extends Base
 	// TODO: add compact mode to hide this on user screen setting
 	protected function render_adminpage_header_title( $title = NULL, $links = NULL, $icon = NULL, $context = 'mainpage' )
 	{
+		if ( self::req( 'noheader' ) )
+			return;
+
 		if ( is_null( $title ) )
 			$title = $this->get_string( 'page_title', $context, 'adminpage', NULL );
 
@@ -775,6 +783,25 @@ class Module extends Base
 
 		if ( $title )
 			Settings::headerTitle( $title, $links, NULL, $icon );
+	}
+
+	protected function render_adminpage_header_nav( $uri = '', $sub = NULL, $subs = NULL, $context = 'mainpage' )
+	{
+		if ( self::req( 'noheader' ) ) {
+			echo '<div class="base-tabs-list -base nav-tab-base">';
+			HTML::tabNav( $sub, $subs );
+		} else {
+			echo $this->wrap_open( $context, $sub );
+			HTML::headerNav( $uri, $sub, $subs );
+		}
+	}
+
+	protected function render_adminpage_signature( $uri = '', $sub = NULL, $subs = NULL, $context = 'mainpage' )
+	{
+		if ( ! self::req( 'noheader' ) )
+			$this->settings_signature( $context );
+
+		echo '</div>';
 	}
 
 	// `array` for custom, `NULL` to settings, `FALSE` to disable
