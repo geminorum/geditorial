@@ -1053,7 +1053,7 @@ class Terms extends gEditorial\Module
 				$html.= HTML::tag( 'input', [
 					'name'  => 'term-'.$field,
 					'type'  => 'color',
-					'value' => '',
+					// 'value' => '', // do not set default value: @REF: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/color#value
 					'class' => [ 'small-text' ],
 					'data'  => [ 'ortho' => 'color' ],
 				] );

@@ -363,7 +363,7 @@ class Tablelist extends Main
 
 				foreach ( $column['args']['taxonomies'] as $taxonomy => $object )
 					if ( $object->label ) // only public taxes
-						$html.= Helper::getTermsEditRow( $row, $object, '<div>'.$object->label.': ', '</div>' );
+						$html.= Helper::getPostTermsEditRow( $row, $object, '<div>'.$object->label.': ', '</div>' );
 
 				return $html;
 			},

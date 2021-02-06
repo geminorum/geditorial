@@ -122,7 +122,7 @@ class Users extends gEditorial\Module
 	{
 		parent::init();
 
-		if ( $this->get_setting( 'user_groups', FALSE ) ) {
+		if ( $this->get_setting( 'user_groups' ) ) {
 
 			$this->register_taxonomy( 'group_tax', [
 				'show_admin_column'  => TRUE,
@@ -394,9 +394,8 @@ class Users extends gEditorial\Module
 
 		if ( $this->get_setting( 'author_categories' ) ) {
 
-			if ( user_can( $user, 'edit_posts' )
-				&& ! user_can( $user, 'edit_others_posts' ) )
-					$this->render_author_categories( $user );
+			if ( user_can( $user, 'edit_posts' ) && ! user_can( $user, 'edit_others_posts' ) )
+				$this->render_author_categories( $user );
 		}
 	}
 
@@ -492,7 +491,7 @@ class Users extends gEditorial\Module
 	{
 		$terms    = get_terms( [ 'taxonomy' => 'category', 'hide_empty' => FALSE ] );
 		$default  = get_option( 'default_category' );
-		$selected = $this->get_user_catecories( $user->ID );
+		$selected = $this->get_user_categories( $user->ID );
 
 		HTML::h2( _x( 'Site Categories', 'Header', 'geditorial-users' ) );
 		HTML::desc( _x( 'Restrict non editor users to post in selected categories only.', 'Message', 'geditorial-users' ) );
@@ -533,7 +532,7 @@ class Users extends gEditorial\Module
 		echo '</table>';
 	}
 
-	private function get_user_catecories( $user_id = NULL, $blog_id = NULL, $fallback = TRUE )
+	private function get_user_categories( $user_id = NULL, $blog_id = NULL, $fallback = TRUE )
 	{
 		if ( is_null( $user_id ) )
 			$user_id = get_current_user_id();
@@ -554,7 +553,7 @@ class Users extends gEditorial\Module
 		if ( ! current_user_can( 'edit_user', $user_id ) )
 			return FALSE;
 
-		if ( isset( $_POST['groups'] ) ) {
+		if ( $this->get_setting( 'user_groups' ) && isset( $_POST['groups'] ) ) {
 
 			$groups = get_taxonomy( $this->constant( 'group_tax' ) );
 
@@ -565,7 +564,6 @@ class Users extends gEditorial\Module
 			}
 		}
 
-		if ( isset( $_POST['categories'] ) ) {
 		if ( $this->get_setting( 'user_types' ) && isset( $_POST['types'] ) ) {
 
 			$types = get_taxonomy( $this->constant( 'type_tax' ) );
@@ -589,7 +587,7 @@ class Users extends gEditorial\Module
 		if ( current_user_can( 'edit_posts' )
 			&& ! current_user_can( 'edit_others_posts' ) ) {
 
-			$selected = $this->get_user_catecories( NULL, NULL, FALSE );
+			$selected = $this->get_user_categories( NULL, NULL, FALSE );
 
 			// only if user has one cat, otherwise fallback to default
 			if ( 1 === count( $selected ) )
@@ -606,7 +604,7 @@ class Users extends gEditorial\Module
 
 		$terms = [];
 
-		foreach ( $this->get_user_catecories() as $selected )
+		foreach ( $this->get_user_categories() as $selected )
 			$terms[] = Taxonomy::getTerm( $selected, 'category' );
 
 		echo $this->wrap_open( '-admin-metabox' );

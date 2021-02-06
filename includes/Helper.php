@@ -12,6 +12,7 @@ use geminorum\gEditorial\Core\URL;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\Main;
 use geminorum\gEditorial\WordPress\PostType;
+use geminorum\gEditorial\WordPress\Taxonomy;
 
 class Helper extends Main
 {
@@ -255,9 +256,10 @@ class Helper extends Main
 		return sprintf( $template, '<span class="-count" data-count="'.$count.'">'.Number::format( $count ).'</span>' );
 	}
 
-	public static function getTermsEditRow( $post, $taxonomy, $before = '', $after = '' )
+	public static function getPostTermsEditRow( $post, $taxonomy, $before = '', $after = '' )
 	{
-		$object = is_object( $taxonomy ) ? $taxonomy : get_taxonomy( $taxonomy );
+		if ( ! $object = Taxonomy::get( $taxonomy ) )
+			return;
 
 		if ( ! $terms = get_the_terms( $post, $object->name ) )
 			return;
@@ -644,6 +646,8 @@ class Helper extends Main
 			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
 			'filter_items_list'        => _x( 'Filter %3$s list', 'Helper: CPT Generator', 'geditorial' ),
 			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
+			'filter_by_date'           => _x( 'Filter by date', 'Helper: CPT Generator', 'geditorial' ),
+			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
 			'items_list_navigation'    => _x( '%1$s list navigation', 'Helper: CPT Generator', 'geditorial' ),
 			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
 			'items_list'               => _x( '%1$s list', 'Helper: CPT Generator', 'geditorial' ),
@@ -744,6 +748,8 @@ class Helper extends Main
 			'not_found'                  => _x( 'No %3$s found.', 'Helper: Tax Generator', 'geditorial' ),
 			/* translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder */
 			'no_terms'                   => _x( 'No %3$s', 'Helper: Tax Generator', 'geditorial' ),
+			/* translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder */
+			'filter_by_item'             => _x( 'Filter by %4$s', 'Helper: Tax Generator', 'geditorial' ),
 			/* translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder */
 			'items_list_navigation'      => _x( '%1$s list navigation', 'Helper: Tax Generator', 'geditorial' ),
 			/* translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder */

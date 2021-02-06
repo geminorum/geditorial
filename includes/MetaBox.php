@@ -359,10 +359,8 @@ class MetaBox extends Main
 		if ( FALSE === $edit )
 			return FALSE;
 
-		if ( ! is_object( $taxonomy ) )
-			$taxonomy = get_taxonomy( $taxonomy );
-
-		$extra = $posttype ? [ 'post_type' => $posttype ] : [];
+		$taxonomy = Taxonomy::get( $taxonomy );
+		$extra    = $posttype ? [ 'post_type' => $posttype ] : [];
 
 		if ( is_null( $edit ) )
 			$edit = WordPress::getEditTaxLink( $taxonomy->name, FALSE, $extra );

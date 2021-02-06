@@ -2477,8 +2477,10 @@ class Module extends Base
 
 		if ( ! is_null( $caps ) )
 			$posttype = $this->constant( $caps );
+
 		else if ( count( $posttypes ) )
 			$posttype = $posttypes[0];
+
 		else
 			return $defaults;
 

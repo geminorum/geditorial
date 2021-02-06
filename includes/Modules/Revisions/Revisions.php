@@ -461,6 +461,7 @@ class Revisions extends gEditorial\Module
 
 		// $this->posttypes(),
 		// FIXME: must limit to selected posttypes
+		// SEE `_update_post_term_count()` for parent status/posttype checks
 		// `WHERE post_type IN ( '".implode( "', '", esc_sql( (array) $posttypes ) )."' )`
 
 		$ids = $wpdb->get_col( "
