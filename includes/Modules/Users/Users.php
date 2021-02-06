@@ -127,13 +127,7 @@ class Users extends gEditorial\Module
 			$this->register_taxonomy( 'group_tax', [
 				'show_admin_column'  => TRUE,
 				'show_in_quick_edit' => TRUE,
-				'capabilities'       => [
-					'manage_terms' => 'list_users',
-					'edit_terms'   => 'list_users',
-					'delete_terms' => 'list_users',
-					'assign_terms' => 'list_users',
-				],
-			], [ 'user' ] );
+			], 'user' );
 
 			// no need, we use slash in slug
 			// add_filter( 'sanitize_user', [ $this, 'sanitize_user' ] );
@@ -145,18 +139,9 @@ class Users extends gEditorial\Module
 
 	public function admin_menu()
 	{
-		if ( ! $this->get_setting( 'user_groups' ) )
-			return;
+		if ( $this->get_setting( 'user_groups' ) )
+			$this->_hook_menu_user_taxonomy( 'group_tax' );
 
-		if ( ! $tax = get_taxonomy( $this->constant( 'group_tax' ) ) )
-			return;
-
-		add_users_page(
-			HTML::escape( $tax->labels->menu_name ),
-			HTML::escape( $tax->labels->menu_name ),
-			$tax->cap->manage_terms,
-			'edit-tags.php?taxonomy='.$tax->name
-		);
 	}
 
 	public function get_adminmenu( $page = TRUE, $extra = [] )

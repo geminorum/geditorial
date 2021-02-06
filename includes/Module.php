@@ -2459,6 +2459,19 @@ class Module extends Base
 			'assign_terms' => 'edit_posts',
 		];
 
+		// FIXME: `edit_users` is not working!
+		// maybe map meta cap
+		if ( 'user' == $posttypes )
+			return [
+				'manage_terms' => 'edit_users',
+				'edit_terms'   => 'list_users',
+				'delete_terms' => 'list_users',
+				'assign_terms' => 'list_users',
+			];
+
+		else if ( 'comment' == $posttypes )
+			return $defaults; // FIXME: WTF?!
+
 		if ( ! gEditorial()->enabled( 'roles' ) )
 			return $defaults;
 
@@ -2485,31 +2498,34 @@ class Module extends Base
 	// @REF: https://developer.wordpress.org/reference/functions/register_taxonomy/
 	public function register_taxonomy( $constant, $atts = [], $posttypes = NULL, $caps = NULL )
 	{
+		$cpt_tax   = TRUE;
 		$taxonomy  = $this->constant( $constant );
 		$slug_base = $this->constant( $constant.'_slug', str_replace( '_', '-', $taxonomy.'s' ) );
 
-		if ( is_null( $posttypes ) )
+		if ( is_string( $posttypes ) && in_array( $posttypes, [ 'user', 'comment' ] ) )
+			$cpt_tax = FALSE;
+
+		else if ( is_null( $posttypes ) )
 			$posttypes = $this->posttypes();
 
 		else if ( ! is_array( $posttypes ) )
 			$posttypes = [ $this->constant( $posttypes ) ];
 
 		$args = self::recursiveParseArgs( $atts, [
-			'labels'                => $this->get_taxonomy_labels( $constant ),
-			'update_count_callback' => [ __NAMESPACE__.'\\WordPress\\Database', 'updateCountCallback' ],
-			'meta_box_cb'           => method_exists( $this, 'meta_box_cb_'.$constant ) ? [ $this, 'meta_box_cb_'.$constant ] : FALSE,
+			'labels'               => $this->get_taxonomy_labels( $constant ),
+			'meta_box_cb'          => method_exists( $this, 'meta_box_cb_'.$constant ) ? [ $this, 'meta_box_cb_'.$constant ] : FALSE,
 			// @REF: https://make.wordpress.org/core/2019/01/23/improved-taxonomy-metabox-sanitization-in-5-1/
-			'meta_box_sanitize_cb'  => method_exists( $this, 'meta_box_sanitize_cb_'.$constant ) ? [ $this, 'meta_box_sanitize_cb_'.$constant ] : NULL,
-			'hierarchical'          => FALSE,
-			'public'                => TRUE,
-			'show_ui'               => TRUE,
-			'show_admin_column'     => FALSE,
-			'show_in_quick_edit'    => FALSE,
-			'show_in_nav_menus'     => FALSE,
-			'show_tagcloud'         => FALSE,
-			'capabilities'          => $this->get_taxonomy_caps( $caps, $posttypes ),
-			'query_var'             => $this->constant( $constant.'_query', $taxonomy ),
-			'rewrite'               => [
+			'meta_box_sanitize_cb' => method_exists( $this, 'meta_box_sanitize_cb_'.$constant ) ? [ $this, 'meta_box_sanitize_cb_'.$constant ] : NULL,
+			'hierarchical'         => FALSE,
+			'public'               => TRUE,
+			'show_ui'              => TRUE,
+			'show_admin_column'    => FALSE,
+			'show_in_quick_edit'   => FALSE,
+			'show_in_nav_menus'    => FALSE,
+			'show_tagcloud'        => FALSE,
+			'capabilities'         => $this->get_taxonomy_caps( $caps, $posttypes ),
+			'query_var'            => $this->constant( $constant.'_query', $taxonomy ),
+			'rewrite'              => [
 
 				// we can use `cpt/tax` if cpt registered after the tax
 				// @REF: https://developer.wordpress.org/reference/functions/register_taxonomy/#comment-2274
@@ -2520,6 +2536,18 @@ class Module extends Base
 			'show_in_rest' => $this->get_setting( 'restapi_support', TRUE ),
 			'rest_base'    => $this->constant( $constant.'_rest', $slug_base ),
 		] );
+
+		if ( ! array_key_exists( 'update_count_callback', $args ) ) {
+
+			if ( $cpt_tax )
+				$args['update_count_callback'] = [ __NAMESPACE__.'\\WordPress\\Database', 'updateCountCallback' ];
+
+			else if ( 'user' == $posttypes )
+				$args['update_count_callback'] = [ __NAMESPACE__.'\\WordPress\\Database', 'updateUserTermCountCallback' ];
+
+			else if ( 'comment' == $posttypes )
+				$args['update_count_callback'] = [ __NAMESPACE__.'\\WordPress\\Database', 'updateCountCallback' ];
+		}
 
 		$object = register_taxonomy( $taxonomy, $posttypes, $args );
 
@@ -3899,6 +3927,20 @@ class Module extends Base
 				( isset( $postarr['ID'] ) ? $postarr['ID'] : '' ) ) + 1;
 
 		return $data;
+	}
+
+	protected function _hook_menu_user_taxonomy( $constant, $context = 'userpage' )
+	{
+		if ( ! $taxonomy = get_taxonomy( $this->constant( $constant ) ) )
+			return FALSE;
+
+		return add_submenu_page(
+			'users.php',
+			HTML::escape( $this->get_string( 'page_title', $constant, $context, $taxonomy->labels->name ) ),
+			HTML::escape( $this->get_string( 'menu_title', $constant, $context, $taxonomy->labels->menu_name ) ),
+			$taxonomy->cap->manage_terms,
+			'edit-tags.php?taxonomy='.$taxonomy->name
+		);
 	}
 
 	// FIXME: WTF, maybe just add `'show_in_menu' => FALSE` on taxonomy args!
