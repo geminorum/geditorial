@@ -16,11 +16,11 @@ GitHub Plugin URI: https://github.com/geminorum/geditorial
 Release Asset: true
 Requires WP: 4.9
 Requires at least: 4.9
-Requires PHP: 5.6.20
+Requires PHP: 7.2
 */
 
 define( 'GEDITORIAL_VERSION', '3.18.0' );
-define( 'GEDITORIAL_MIN_PHP', '5.6.20' );
+define( 'GEDITORIAL_MIN_PHP', '7.2' );
 define( 'GEDITORIAL_DIR', plugin_dir_path( __FILE__ ) );
 define( 'GEDITORIAL_URL', plugin_dir_url( __FILE__ ) );
 define( 'GEDITORIAL_FILE', basename( GEDITORIAL_DIR ).'/'.basename( __FILE__ ) );
