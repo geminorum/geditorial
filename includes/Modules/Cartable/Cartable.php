@@ -165,9 +165,9 @@ class Cartable extends gEditorial\Module
 	protected function get_global_strings()
 	{
 		return [
-			'misc' => [
-				'meta_box_title'  => _x( 'Cartable', 'MetaBox Title', 'geditorial-cartable' ),
-				'meta_box_action' => _x( 'View All', 'MetaBox Action', 'geditorial-cartable' ),
+			'metabox' => [
+				'metabox_title'  => _x( 'Cartable', 'MetaBox Title', 'geditorial-cartable' ),
+				'metabox_action' => _x( 'View All', 'MetaBox Action', 'geditorial-cartable' ),
 			],
 			'noops' => [
 				'type_tax' => _nx_noop( 'Cartable Type', 'Cartable Types', 'Noop', 'geditorial-cartable' ),

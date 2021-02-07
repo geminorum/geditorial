@@ -117,11 +117,14 @@ class Meta extends gEditorial\Module
 		if ( ! is_admin() )
 			return $strings;
 
+		$strings['metabox'] = [
+			'metabox_title'  => _x( 'Metadata', 'MetaBox Title', 'geditorial-meta' ),
+			'metabox_action' => _x( 'Configure', 'MetaBox Action', 'geditorial-meta' ),
+		];
+
 		$strings['misc'] = [
 			'meta_column_title'   => _x( 'Metadata', 'Column Title', 'geditorial-meta' ),
 			'author_column_title' => _x( 'Author', 'Column Title', 'geditorial-meta' ),
-			'meta_box_title'      => _x( 'Metadata', 'Meta Box Title', 'geditorial-meta' ),
-			'meta_box_action'     => _x( 'Configure', 'Meta Box Action Title', 'geditorial-meta' ),
 		];
 
 		$strings['terms'] = [

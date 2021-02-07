@@ -3087,12 +3087,16 @@ class Module extends Base
 	public function get_meta_box_title( $constant = 'post', $url = NULL, $edit_cap = NULL, $title = NULL )
 	{
 		if ( is_null( $title ) )
+			$title = $this->get_string( 'metabox_title', $constant, 'metabox', NULL );
+
+		// DEPRECATED: for back-comp only
+		if ( is_null( $title ) )
 			$title = $this->get_string( 'meta_box_title', $constant, 'misc', _x( 'Settings', 'Module: MetaBox Default Title', 'geditorial' ) );
 
 		// problems with block editor
 		return $title;
 
-		if ( $info = $this->get_string( 'meta_box_info', $constant, 'misc', NULL ) )
+		if ( $info = $this->get_string( 'metabox_info', $constant, 'metabox', NULL ) )
 			$title.= ' <span class="postbox-title-info" data-title="info" title="'.HTML::escape( $info ).'">'.HTML::getDashicon( 'editor-help' ).'</span>';
 
 		if ( FALSE === $url || FALSE === $edit_cap )
@@ -3106,7 +3110,7 @@ class Module extends Base
 			if ( is_null( $url ) )
 				$url = $this->get_module_url( 'settings' );
 
-			$action = $this->get_string( 'meta_box_action', $constant, 'misc', _x( 'Configure', 'Module: MetaBox Default Action', 'geditorial' ) );
+			$action = $this->get_string( 'metabox_action', $constant, 'metabox', _x( 'Configure', 'Module: MetaBox Default Action', 'geditorial' ) );
 			$title.= ' <span class="postbox-title-action"><a href="'.esc_url( $url ).'" target="_blank">'.$action.'</a></span>';
 		}
 
@@ -3118,7 +3122,7 @@ class Module extends Base
 		if ( is_null( $title ) )
 			$title = $this->get_taxonomy_label( $constant );
 
-		if ( $info = $this->get_string( 'meta_box_info', $constant, 'misc', NULL ) )
+		if ( $info = $this->get_string( 'metabox_info', $constant, 'metabox', NULL ) )
 			$title.= ' <span class="postbox-title-info" data-title="info" title="'.HTML::escape( $info ).'">'.HTML::getDashicon( 'info' ).'</span>';
 
 		// FIXME: WTF: problems with block editor
@@ -3128,7 +3132,7 @@ class Module extends Base
 			$url = WordPress::getEditTaxLink( $this->constant( $constant ), FALSE, [ 'post_type' => $posttype ] );
 
 		if ( $url ) {
-			$action = $this->get_string( 'meta_box_action', $constant, 'misc', _x( 'Manage', 'Module: MetaBox Default Action', 'geditorial' ) );
+			$action = $this->get_string( 'metabox_action', $constant, 'metabox', _x( 'Manage', 'Module: MetaBox Default Action', 'geditorial' ) );
 			$title.= ' <span class="postbox-title-action"><a href="'.esc_url( $url ).'" target="_blank">'.$action.'</a></span>';
 		}
 
@@ -3140,12 +3144,16 @@ class Module extends Base
 		$object = PostType::object( $this->constant( $constant ) );
 
 		if ( is_null( $title ) )
+			$title = $this->get_string( 'metabox_title', $constant, 'metabox', NULL );
+
+		// DEPRECATED: for back-comp only
+		if ( is_null( $title ) )
 			$title = $this->get_string( 'meta_box_title', $constant, 'misc', $object->labels->name );
 
 		// problems with block editor
 			return $title;
 
-		if ( $info = $this->get_string( 'meta_box_info', $constant, 'misc', NULL ) )
+		if ( $info = $this->get_string( 'metabox_info', $constant, 'metabox', NULL ) )
 			$title.= ' <span class="postbox-title-info" data-title="info" title="'.HTML::escape( $info ).'">'.HTML::getDashicon( 'info' ).'</span>';
 
 		if ( current_user_can( $object->cap->edit_others_posts ) ) {
@@ -3153,7 +3161,7 @@ class Module extends Base
 			if ( is_null( $url ) )
 				$url = WordPress::getPostTypeEditLink( $object->name );
 
-			$action = $this->get_string( 'meta_box_action', $constant, 'misc', _x( 'Manage', 'Module: MetaBox Default Action', 'geditorial' ) );
+			$action = $this->get_string( 'metabox_action', $constant, 'metabox', _x( 'Manage', 'Module: MetaBox Default Action', 'geditorial' ) );
 			$title.= ' <span class="postbox-title-action"><a href="'.esc_url( $url ).'" target="_blank">'.$action.'</a></span>';
 		}
 

@@ -89,8 +89,8 @@ class Workflow extends gEditorial\Module
 	protected function get_global_strings()
 	{
 		return [
-			'misc' => [
-				'meta_box_title' => _x( 'Workflow', 'Meta Box Title', 'geditorial-workflow' ),
+			'metabox' => [
+				'metabox_title' => _x( 'Workflow', 'MetaBox Title', 'geditorial-workflow' ),
 			],
 		];
 	}
