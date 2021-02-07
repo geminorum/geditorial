@@ -1,11 +1,11 @@
 (function () {
   const gulp = require('gulp');
   const plugins = require('gulp-load-plugins')();
+  const sass = require('gulp-dart-sass');
   const cssnano = require('cssnano');
   const autoprefixer = require('autoprefixer');
   const rtlcss = require('rtlcss');
   const parseChangelog = require('parse-changelog');
-  // const prettyjson = require('prettyjson');
   const extend = require('xtend');
   const template = require('lodash.template');
   const yaml = require('js-yaml');
@@ -25,7 +25,7 @@
   const patch = /--patch/.test(process.argv.slice(2)); // bump a patch?
 
   try {
-    env = extend(config.env, yaml.safeLoad(fs.readFileSync('./environment.yml', { encoding: 'utf-8' }), { json: true }));
+    env = extend(config.env, yaml.load(fs.readFileSync('./environment.yml', { encoding: 'utf-8' }), { json: true }));
   } catch (e) {
     log.warn('no environment.yml loaded!');
   }
@@ -125,7 +125,7 @@
   gulp.task('dev:sass', function () {
     return gulp.src(config.input.sass)
       // .pipe(plugins.sourcemaps.init())
-      .pipe(plugins.sass.sync(config.sass).on('error', plugins.sass.logError))
+      .pipe(sass.sync(config.sass).on('error', sass.logError))
       .pipe(plugins.postcss([
         cssnano(config.cssnano.dev),
         autoprefixer(config.autoprefixer.dev)
@@ -151,7 +151,7 @@
   gulp.task('dev:styles', function () {
     return gulp.src(config.input.sass)
       // .pipe(plugins.sourcemaps.init())
-      .pipe(plugins.sass.sync(config.sass).on('error', plugins.sass.logError))
+      .pipe(sass.sync(config.sass).on('error', sass.logError))
       .pipe(plugins.postcss([
         cssnano(config.cssnano.dev),
         autoprefixer(config.autoprefixer.dev)
@@ -175,7 +175,7 @@
 
   gulp.task('build:styles', function () {
     return gulp.src(config.input.sass)
-      .pipe(plugins.sass(config.sass).on('error', plugins.sass.logError))
+      .pipe(sass(config.sass).on('error', sass.logError))
       .pipe(plugins.postcss([
         cssnano(config.cssnano.build),
         autoprefixer(config.autoprefixer.build)
@@ -186,7 +186,7 @@
   // seperated because of stripping rtl directives in compression
   gulp.task('build:rtl', function () {
     return gulp.src(config.input.sass)
-      .pipe(plugins.sass(config.sass).on('error', plugins.sass.logError))
+      .pipe(sass(config.sass).on('error', sass.logError))
       .pipe(plugins.postcss([
         rtlcss(),
         cssnano(config.cssnano.build),
@@ -300,11 +300,7 @@
 
   gulp.task('default', function (done) {
     log.info('Hi, I\'m Gulp!');
-    log.info('Sass is:\n' + require('node-sass').info);
-    // log.info('\n');
-    // console.log(prettyjson.render(pkg));
-    // log.info('\n');
-    // console.log(prettyjson.render(config));
+    log.info('Sass is:\n' + require('sass').info);
     done();
   });
 }());

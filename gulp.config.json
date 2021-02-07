@@ -30,6 +30,7 @@
       "./assets/js/**/*.js",
       "./assets/js/**/*.html",
       "./assets/packages/**/*",
+      "./assets/templates/**/*",
       "./assets/vendor/**/*.php",
       "!./assets/vendor/**/test/*",
       "!./assets/vendor/**/Tests/*",

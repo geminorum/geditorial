@@ -22,13 +22,12 @@
   },
   "require": {
     "php": ">=5.6.20",
-    "composer/installers": "^1.9",
+    "composer/installers": "^1.10",
     "mustache/mustache": "^2.13",
     "kzykhys/php-csv-parser": "^1.4",
     "nicmart/string-template": "^0.1.1",
     "michelf/php-markdown": "^1.9",
-    "league/html-to-markdown": "^4.9",
-    "rarst/wpdatetime": "^0.3.0"
+    "league/html-to-markdown": "^4.9"
   },
   "require-dev": {
     "nesbot/carbon": "^1.39",
@@ -40,7 +39,9 @@
     "lawondyss/moment-php": "dev-master",
     "amirhabibzadeh/intl-carbon": "dev-master",
     "addwiki/mediawiki-api": "^0.5.1",
-    "seboettg/citeproc-php": "^2"
+    "seboettg/citeproc-php": "^2",
+    "khanamiryan/qrcode-detector-decoder": "^1.0",
+    "tecnickcom/tc-lib-barcode": "^1.17"
   },
   "config": {
     "vendor-dir": "assets/vendor",
