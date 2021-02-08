@@ -769,6 +769,7 @@ class Users extends gEditorial\Module
 
 				if ( Tablelist::isAction( 'remap_post_authors' ) ) {
 
+					// FIXME: use `Media::handleImportUpload()`
 					$file = wp_import_handle_upload();
 
 					if ( isset( $file['error'] ) || empty( $file['file'] ) )
@@ -781,6 +782,7 @@ class Users extends gEditorial\Module
 					$users    = User::get( TRUE, TRUE, [], 'user_email' );
 					$currents = $wpdb->get_results( "SELECT post_author as user, GROUP_CONCAT( ID ) as posts FROM {$wpdb->posts} GROUP BY post_author", ARRAY_A );
 
+					// FIXME: use `Helper::parseCSV()`
 					$iterator = new \SplFileObject( File::normalize( $file['file'] ) );
 					$parser   = new \KzykHys\CsvParser\CsvParser( $iterator, [ 'encoding' => 'UTF-8', 'limit' => 1 ] );
 					$header   = $parser->parse();
@@ -836,13 +838,15 @@ class Users extends gEditorial\Module
 				'values'    => [ '.csv' ],
 			] );
 
-			echo '<br />';
-
 			$size = File::formatSize( apply_filters( 'import_upload_size_limit', wp_max_upload_size() ) );
 
-			Settings::submitButton( 'remap_post_authors', _x( 'Upload and Re-Map', 'Button', 'geditorial-users' ), 'danger' );
 			/* translators: %s: size */
 			HTML::desc( sprintf( _x( 'Checks for post authors and re-map them with current registered users. Maximum upload size: <b>%s</b>', 'Message', 'geditorial-users' ), HTML::wrapLTR( $size ) ) );
+
+			echo '<br />';
+			echo $this->wrap_open_buttons();
+				Settings::submitButton( 'remap_post_authors', _x( 'Upload and Re-Map', 'Button', 'geditorial-users' ), 'danger' );
+			echo '</p>';
 		}
 
 		echo '</td></tr>';

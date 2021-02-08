@@ -359,7 +359,7 @@ class MetaBox extends Main
 		if ( FALSE === $edit )
 			return FALSE;
 
-		$taxonomy = Taxonomy::get( $taxonomy );
+		$taxonomy = Taxonomy::object( $taxonomy );
 		$extra    = $posttype ? [ 'post_type' => $posttype ] : [];
 
 		if ( is_null( $edit ) )

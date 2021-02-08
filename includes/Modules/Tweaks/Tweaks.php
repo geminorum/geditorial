@@ -746,7 +746,7 @@ class Tweaks extends gEditorial\Module
 			$before = '<li class="-row tweaks-tax-'.$taxonomy.'">';
 			$before.= $this->get_column_icon( $info['edit'], $info['icon'], $info['title'] );
 
-			Helper::getTermsEditRow( $post, $object, $before, '</li>' );
+			Helper::getPostTermsEditRow( $post, $object, $before, '</li>' );
 		}
 	}
 

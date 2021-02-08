@@ -594,16 +594,15 @@ class Module extends Base
 		// prefix to avoid conflicts
 		$function = $this->hook( 'resizeIframe' );
 
-		echo $this->wrap_open( '-iframe-wrap' );
-			echo HTML::tag( 'iframe', [
-				'src'    => $printpage,
-				'class'  => '-print-iframe',
-				'width'  => '100%',
-				'height' => '0',
-				'border' => '0',
-				'onload' => $function.'(this)',
-			], _x( 'Print Preview', 'Module', 'geditorial' ) );
-		echo '</div>';
+		$html = HTML::tag( 'iframe', [
+			'src'    => $printpage,
+			'width'  => '100%',
+			'height' => '0',
+			'border' => '0',
+			'onload' => $function.'(this)',
+		], _x( 'Print Preview', 'Module', 'geditorial' ) );
+
+		echo HTML::wrap( $html, 'field-wrap -iframe -print-iframe' );
 
 		// @REF: https://stackoverflow.com/a/9976309
 		echo '<script>function '.$function.'(obj){obj.style.height=obj.contentWindow.document.documentElement.scrollHeight+"px";}</script>';
@@ -629,7 +628,7 @@ class Module extends Base
 
 		echo HTML::tag( 'a', [
 			'href'    => '#',
-			'class'   => 'button button-small',
+			'class'   => 'button', //  button-small',
 			'onclick' => $function.'("'.$id.'")',
 		], _x( 'Print!', 'Module', 'geditorial' ) );
 
@@ -3093,8 +3092,8 @@ class Module extends Base
 		if ( is_null( $title ) )
 			$title = $this->get_string( 'meta_box_title', $constant, 'misc', _x( 'Settings', 'Module: MetaBox Default Title', 'geditorial' ) );
 
-		// problems with block editor
-		return $title;
+		// FIXME: problems with block editor
+		return $title; // <--
 
 		if ( $info = $this->get_string( 'metabox_info', $constant, 'metabox', NULL ) )
 			$title.= ' <span class="postbox-title-info" data-title="info" title="'.HTML::escape( $info ).'">'.HTML::getDashicon( 'editor-help' ).'</span>';
@@ -3125,8 +3124,8 @@ class Module extends Base
 		if ( $info = $this->get_string( 'metabox_info', $constant, 'metabox', NULL ) )
 			$title.= ' <span class="postbox-title-info" data-title="info" title="'.HTML::escape( $info ).'">'.HTML::getDashicon( 'info' ).'</span>';
 
-		// FIXME: WTF: problems with block editor
-		return $title;
+		// FIXME: problems with block editor
+		return $title; // <--
 
 		if ( is_null( $url ) )
 			$url = WordPress::getEditTaxLink( $this->constant( $constant ), FALSE, [ 'post_type' => $posttype ] );
@@ -3150,8 +3149,8 @@ class Module extends Base
 		if ( is_null( $title ) )
 			$title = $this->get_string( 'meta_box_title', $constant, 'misc', $object->labels->name );
 
-		// problems with block editor
-			return $title;
+		// FIXME: problems with block editor
+		return $title; // <--
 
 		if ( $info = $this->get_string( 'metabox_info', $constant, 'metabox', NULL ) )
 			$title.= ' <span class="postbox-title-info" data-title="info" title="'.HTML::escape( $info ).'">'.HTML::getDashicon( 'info' ).'</span>';

@@ -258,7 +258,7 @@ class Helper extends Main
 
 	public static function getPostTermsEditRow( $post, $taxonomy, $before = '', $after = '' )
 	{
-		if ( ! $object = Taxonomy::get( $taxonomy ) )
+		if ( ! $object = Taxonomy::object( $taxonomy ) )
 			return;
 
 		if ( ! $terms = get_the_terms( $post, $object->name ) )
