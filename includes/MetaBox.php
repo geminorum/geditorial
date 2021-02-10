@@ -707,4 +707,49 @@ class MetaBox extends Main
 			$taxonomy,
 		] );
 	}
+
+	public static function tableRowObjectTaxonomy( $taxonomy, $object_id = 0, $name = NULL, $edit = NULL, $before = '', $after = '' )
+	{
+		if ( ! $object = Taxonomy::object( $taxonomy ) )
+			return FALSE;
+
+		if ( ! current_user_can( $object->cap->assign_terms ) )
+			return FALSE;
+
+		echo $before.'<tr class="form-field"><th scope="row">'.HTML::escape( $object->label ).'</th><td>';
+
+		self::checklistTerms( $object_id, [
+			'field_class' => 'wp-tab-panel',
+			'taxonomy'    => $object->name,
+			'edit'        => $edit,
+			'name'        => $name ?: sprintf( '%s-object_tax', static::BASE )
+		] );
+
+		echo '</td></tr>'.$after;
+	}
+
+	public static function storeObjectTaxonomy( $taxonomy, $object_id, $data = NULL, $name = NULL, $check = TRUE )
+	{
+		if ( ! $object = Taxonomy::object( $taxonomy ) )
+			return FALSE;
+
+		if ( $check && ! current_user_can( $object->cap->assign_terms ) )
+			return FALSE;
+
+		if ( is_null( $name ) )
+			$name = sprintf( '%s-object_tax', static::BASE );
+
+		if ( is_null( $data ) )
+			$data = self::req( $name, [] );
+
+		if ( ! array_key_exists( $object->name, $data ) )
+			return FALSE;
+
+		$terms  = array_map( 'intval', array_filter( $data[$object->name] ) );
+		$result = wp_set_object_terms( $object_id, $terms ?: NULL, $object->name, FALSE );
+
+		clean_object_term_cache( $object_id, $object->name );
+
+		return $result;
+	}
 }

@@ -395,104 +395,16 @@ class Users extends gEditorial\Module
 	public function edit_user_profile( $user )
 	{
 		if ( $this->get_setting( 'user_groups' ) )
-			$this->render_user_groups( $user );
+			MetaBox::tableRowObjectTaxonomy( $this->constant( 'group_tax' ), $user->ID, $this->classs( 'custom_tax' ), NULL, '<table class="form-table">', '</table>' );
 
 		if ( $this->get_setting( 'user_types' ) )
-			$this->render_user_types( $user );
+			MetaBox::tableRowObjectTaxonomy( $this->constant( 'type_tax' ), $user->ID, $this->classs( 'custom_tax' ), NULL, '<table class="form-table">', '</table>' );
 
 		if ( $this->get_setting( 'author_categories' ) ) {
 
 			if ( user_can( $user, 'edit_posts' ) && ! user_can( $user, 'edit_others_posts' ) )
 				$this->render_author_categories( $user );
 		}
-	}
-
-	private function render_user_groups( $user )
-	{
-		$tax = get_taxonomy( $this->constant( 'group_tax' ) );
-
-		if ( ! current_user_can( $tax->cap->assign_terms ) )
-			return;
-
-		$terms = get_terms( [ 'taxonomy' => $this->constant( 'group_tax' ), 'hide_empty' => FALSE ] );
-
-		HTML::h2( _x( 'Site Groups', 'Header', 'geditorial-users' ) );
-
-		echo '<table class="form-table">';
-			echo '<tr><th scope="row">'._x( 'User Groups', 'Header', 'geditorial-users' ).'</th><td>';
-
-			if ( ! empty( $terms ) ) {
-
-				echo '<div class="wp-tab-panel"><ul>';
-
-				foreach ( $terms as $term ) {
-
-					$html = HTML::tag( 'input', [
-						'type'    => 'checkbox',
-						'name'    => 'groups[]',
-						'id'      => 'groups-'.$term->slug,
-						'value'   => $term->slug,
-						'checked' => is_object_in_term( $user->ID, $this->constant( 'group_tax' ), $term ),
-					] );
-
-					HTML::label( $html.'&nbsp;'.HTML::escape( $term->name ), 'groups-'.$term->slug, 'li' );
-				 }
-
-				echo '</ul></div>';
-
-				// passing empty value for clearing up
-				echo '<input type="hidden" name="groups[]" value="0" />';
-
-			} else {
-				_ex( 'There are no groups available.', 'Message', 'geditorial-users' );
-			}
-
-		echo '</td></tr>';
-		echo '</table>';
-	}
-
-	private function render_user_types( $user )
-	{
-		$tax = get_taxonomy( $this->constant( 'type_tax' ) );
-
-		if ( ! current_user_can( $tax->cap->assign_terms ) )
-			return;
-
-		$terms = get_terms( [ 'taxonomy' => $this->constant( 'type_tax' ), 'hide_empty' => FALSE ] );
-
-		HTML::h2( _x( 'Site Types', 'Header', 'geditorial-users' ) );
-
-		echo '<table class="form-table">';
-			echo '<tr><th scope="row">'._x( 'User Types', 'Header', 'geditorial-users' ).'</th><td>';
-
-			if ( ! empty( $terms ) ) {
-
-				echo '<div class="wp-tab-panel"><ul>';
-
-				foreach ( $terms as $term ) {
-
-					$html = HTML::tag( 'input', [
-						'type'    => 'checkbox',
-						'name'    => 'types[]',
-						'id'      => 'types-'.$term->slug,
-						'value'   => $term->slug,
-						'checked' => is_object_in_term( $user->ID, $this->constant( 'type_tax' ), $term ),
-					] );
-
-					HTML::label( $html.'&nbsp;'.HTML::escape( $term->name ), 'types-'.$term->slug, 'li' );
-				 }
-
-				echo '</ul></div>';
-
-				// passing empty value for clearing up
-				echo '<input type="hidden" name="types[]" value="0" />';
-
-			} else {
-				_ex( 'There are no types available.', 'Message', 'geditorial-users' );
-			}
-
-		echo '</td></tr>';
-		echo '</table>';
 	}
 
 	private function render_author_categories( $user )
@@ -561,27 +473,13 @@ class Users extends gEditorial\Module
 		if ( ! current_user_can( 'edit_user', $user_id ) )
 			return FALSE;
 
-		if ( $this->get_setting( 'user_groups' ) && isset( $_POST['groups'] ) ) {
+		$selected = self::req( $this->classs( 'custom_tax' ), [] );
 
-			$groups = get_taxonomy( $this->constant( 'group_tax' ) );
+		if ( $this->get_setting( 'user_groups' ) )
+			MetaBox::storeObjectTaxonomy( $this->constant( 'group_tax' ), $user_id, $selected );
 
-			if ( current_user_can( $groups->cap->assign_terms ) ) {
-
-				wp_set_object_terms( $user_id, array_filter( $_POST['groups'] ), $groups->name, FALSE );
-				clean_object_term_cache( $user_id, $this->constant( 'group_tax' ) );
-			}
-		}
-
-		if ( $this->get_setting( 'user_types' ) && isset( $_POST['types'] ) ) {
-
-			$types = get_taxonomy( $this->constant( 'type_tax' ) );
-
-			if ( current_user_can( $types->cap->assign_terms ) ) {
-
-				wp_set_object_terms( $user_id, array_filter( $_POST['types'] ), $types->name, FALSE );
-				clean_object_term_cache( $user_id, $this->constant( 'type_tax' ) );
-			}
-		}
+		if ( $this->get_setting( 'user_types' ) )
+			MetaBox::storeObjectTaxonomy( $this->constant( 'type_tax' ), $user_id, $selected );
 
 		if ( $this->get_setting( 'author_categories' ) && isset( $_POST['categories'] ) ) {
 
