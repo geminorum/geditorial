@@ -55,12 +55,12 @@ class MetaBox extends Main
 			'descendants_and_self' => 0,
 			'selected_cats'        => FALSE,
 			'popular_cats'         => FALSE,
-			'walker'               => NULL,
 			'checked_ontop'        => TRUE,
 			'edit'                 => NULL, // manage page if has no terms, FALSE to disable
 			'role'                 => FALSE, // `disabled` / `hidden`
 			'name'                 => 'tax_input', // override if not saving by core
-			'walker'               => FALSE,
+			'field_class'          => '',
+			'walker'               => NULL,
 			'echo'                 => TRUE,
 		] );
 
@@ -179,7 +179,7 @@ class MetaBox extends Main
 			$hidden.= '<input type="hidden" name="'.$args['name'].'['.$tax->name.'][]" value="0" />';
 
 		if ( $html )
-			$html = HTML::wrap( '<ul>'.$html.'</ul>', 'field-wrap -list' );
+			$html = HTML::wrap( '<ul>'.$html.'</ul>', [ 'field-wrap', '-list', $args['field_class'] ] );
 
 		$html.= $hidden;
 
