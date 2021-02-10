@@ -55,14 +55,16 @@ class Team extends gEditorial\Module
 	{
 		return [
 			'misc' => [
-				'member_cpt' => [
-					'menu_name' => _x( 'Team Members', 'Posttype Menu', 'geditorial-team' ),
-				],
 				'tweaks_column_title' => _x( 'Team Member Groups', 'Column Title', 'geditorial-team' ),
 			],
 			'noops' => [
 				'member_cpt'   => _n_noop( 'Team Member', 'Team Members', 'geditorial-team' ),
 				'member_group' => _n_noop( 'Team Member Group', 'Team Member Groups', 'geditorial-team' ),
+			],
+			'labels' => [
+				'member_cpt' => [
+					'menu_name' => _x( 'Team Members', 'Posttype Menu', 'geditorial-team' ),
+				],
 			],
 		];
 	}

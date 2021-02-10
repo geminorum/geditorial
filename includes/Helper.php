@@ -677,7 +677,8 @@ class Helper extends Main
 		$strings = self::getStringsFromName( $name );
 
 		foreach ( $name_templates as $key => $template )
-			$pre[$key] = vsprintf( $template, $strings );
+			if ( ! array_key_exists( $key, $pre ) )
+				$pre[$key] = vsprintf( $template, $strings );
 
 		if ( ! array_key_exists( 'menu_name', $pre ) )
 			$pre['menu_name'] = $strings[0];
@@ -761,7 +762,8 @@ class Helper extends Main
 		$strings = self::getStringsFromName( $name );
 
 		foreach ( $templates as $key => $template )
-			$pre[$key] = vsprintf( $template, $strings );
+			if ( ! array_key_exists( $key, $pre ) )
+				$pre[$key] = vsprintf( $template, $strings );
 
 		if ( ! array_key_exists( 'menu_name', $pre ) )
 			$pre['menu_name'] = $strings[0];

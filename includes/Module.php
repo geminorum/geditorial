@@ -2277,17 +2277,24 @@ class Module extends Base
 
 	public function get_posttype_labels( $constant )
 	{
-		if ( ! empty( $this->strings['labels'][$constant] ) )
-			return $this->strings['labels'][$constant];
+		if ( isset( $this->strings['labels'] )
+			&& array_key_exists( $constant, $this->strings['labels'] ) )
+				$labels = $this->strings['labels'][$constant];
+		else
+			$labels = [];
 
-		$labels = [];
+		if ( FALSE === $labels )
+			return FALSE;
 
+		// DEPRECATED: back-comp
 		if ( $menu_name = $this->get_string( 'menu_name', $constant, 'misc', NULL ) )
 			$labels['menu_name'] = $menu_name;
 
+		// DEPRECATED: back-comp
 		if ( $author_metabox = $this->get_string( 'author_metabox', $constant, 'misc', NULL ) )
 			$labels['author_metabox'] = $author_metabox;
 
+		// DEPRECATED: back-comp
 		if ( $excerpt_metabox = $this->get_string( 'excerpt_metabox', $constant, 'misc', NULL ) )
 			$labels['excerpt_metabox'] = $excerpt_metabox;
 
@@ -2424,11 +2431,16 @@ class Module extends Base
 
 	public function get_taxonomy_labels( $constant )
 	{
-		if ( ! empty( $this->strings['labels'][$constant] ) )
-			return $this->strings['labels'][$constant];
+		if ( isset( $this->strings['labels'] )
+			&& array_key_exists( $constant, $this->strings['labels'] ) )
+				$labels = $this->strings['labels'][$constant];
+		else
+			$labels = [];
 
-		$labels = [];
+		if ( FALSE === $labels )
+			return FALSE;
 
+		// DEPRECATED: back-comp
 		if ( $menu_name = $this->get_string( 'menu_name', $constant, 'misc', NULL ) )
 			$labels['menu_name'] = $menu_name;
 

@@ -115,6 +115,14 @@ class Users extends gEditorial\Module
 				'group_tax' => _n_noop( 'User Group', 'User Groups', 'geditorial-users' ),
 				'type_tax'  => _n_noop( 'User Type', 'User Types', 'geditorial-users' ),
 			],
+			'labels' => [
+				'group_tax' => [
+					'not_found' => _x( 'There are no groups available.', 'Label: Not Found', 'geditorial-users' ),
+				],
+				'type_tax'  => [
+					'not_found' => _x( 'There are no types available.', 'Label: Not Found', 'geditorial-users' ),
+				],
+			],
 		];
 	}
 
