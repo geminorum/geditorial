@@ -468,10 +468,10 @@ class Module extends Base
 
 	public function render_menu_adminpage()
 	{
-		$this->render_adminpage( 'mainpage', 'update' );
+		$this->render_default_mainpage( 'mainpage', 'update' );
 	}
 
-	protected function render_adminpage( $context = 'mainpage', $action = 'update' )
+	protected function render_default_mainpage( $context = 'mainpage', $action = 'update' )
 	{
 		$uri      = $this->get_adminpage_url( TRUE, [], $context );
 		$subs     = $this->get_adminpage_subs( $context );
@@ -508,13 +508,18 @@ class Module extends Base
 		HTML::desc( gEditorial()->na(), TRUE, '-empty' );
 	}
 
-	protected function _hook_submenu_adminpage( $context = 'framepage', $parent_slug = NULL )
+	protected function _hook_submenu_adminpage( $context = 'subpage', $parent_slug = NULL )
 	{
 		$slug = $this->get_adminpage_url( FALSE, [], $context );
 		$can  = $this->role_can( $context ) ? 'read' : 'do_not_allow';
-		$cb   = 'printpage' == $context
-			? [ $this, 'render_print_adminpage' ]
-			: [ $this, 'render_submenu_adminpage' ];
+		$cb   = [ $this, 'render_submenu_adminpage' ];
+		$load = [ $this, 'load_submenu_adminpage' ];
+
+		if ( $context && method_exists( $this, 'render_'.$context.'_adminpage' ) )
+			$cb = [ $this, 'render_'.$context.'_adminpage' ];
+
+		if ( $context && method_exists( $this, 'load_'.$context.'_adminpage' ) )
+			$load = [ $this, 'load_'.$context.'_adminpage' ];
 
 		$hook = add_submenu_page(
 			$parent_slug, // or `index.php`
@@ -525,12 +530,12 @@ class Module extends Base
 			$cb
 		);
 
-		add_action( 'load-'.$hook, [ $this, 'load_submenu_adminpage' ], 10, 0 );
+		add_action( 'load-'.$hook, $load, 10, 0 );
 
 		return $slug;
 	}
 
-	public function load_submenu_adminpage( $context = 'framepage' )
+	public function load_submenu_adminpage( $context = 'subpage' )
 	{
 		$page = self::req( 'page', NULL );
 		$sub  = self::req( 'sub', NULL );
@@ -541,10 +546,15 @@ class Module extends Base
 
 	public function render_submenu_adminpage()
 	{
-		$this->render_adminpage( 'framepage', 'update' );
+		$this->render_default_mainpage( 'subpage', 'update' );
 	}
 
-	public function render_print_adminpage()
+	public function render_printpage_adminpage()
+	{
+		$this->render_content_printpage();
+	}
+
+	public function render_content_printpage()
 	{
 		$head_callback = [ $this, 'render_print_head' ];
 		$head_title    = $this->get_print_layout_pagetitle();
