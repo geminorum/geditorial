@@ -97,12 +97,6 @@ class Importer extends gEditorial\Module
 		HTML::desc( _x( 'Helps with Importing contents from CSV files into any post-type, with meta support.', 'Tool Box', 'geditorial-importer' ) );
 	}
 
-	private function raise_resources()
-	{
-		@set_time_limit( 0 );
-		wp_raise_memory_limit( 'import' );
-	}
-
 	private function guessed_fields_map( $headers, $key = 'source_map' )
 	{
 		if ( ! $stored = get_option( $this->hook( $key ), [] ) )

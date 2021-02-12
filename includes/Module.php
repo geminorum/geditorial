@@ -4403,4 +4403,10 @@ class Module extends Base
 	{
 		do_action( 'gnetwork_logger_site_'.$level, $this->classs(), $message, $context );
 	}
+
+	protected function raise_resources( $context = 'import', $time_limit = 0 )
+	{
+		@set_time_limit( $time_limit );
+		wp_raise_memory_limit( $context );
+	}
 }
