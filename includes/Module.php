@@ -2361,17 +2361,12 @@ class Module extends Base
 
 	public function register_posttype( $constant, $atts = [], $taxonomies = [ 'post_tag' ], $block_editor = FALSE )
 	{
-		if ( is_null( $taxonomies ) )
-			$taxonomies = $this->taxonomies();
-
 		$posttype = $this->constant( $constant );
 		$cap_type = $this->get_posttype_cap_type( $constant );
 
-		$args = [
-			'taxonomies'    => $taxonomies,
-			'labels'        => $this->get_posttype_labels( $constant ),
-			'supports'      => $this->get_posttype_supports( $constant ),
-			'description'   => isset( $this->strings['labels'][$constant]['description'] ) ? $this->strings['labels'][$constant]['description'] : '',
+		$args = array_merge( [
+			'labels'      => $this->get_posttype_labels( $constant ),
+			'description' => isset( $this->strings['labels'][$constant]['description'] ) ? $this->strings['labels'][$constant]['description'] : '',
 
 			'show_in_menu'  => NULL, // or TRUE or `$parent_slug`
 			'menu_icon'     => $this->get_posttype_icon( $constant ),
@@ -2409,13 +2404,19 @@ class Module extends Base
 			// only `%post_id%` and `%postname%`
 			// @SEE: https://github.com/torounit/simple-post-type-permalinks
 			'sptp_permalink_structure' => $this->constant( $constant.'_permalink', FALSE ), // will lock the permalink
-		];
+		], $atts );
+
+		if ( ! array_key_exists( 'taxonomies', $args ) )
+			$args['taxonomies'] = is_null( $taxonomies ) ? $this->taxonomies() : $taxonomies;
+
+		if ( ! array_key_exists( 'supports', $args ) )
+			$args['supports'] = $this->get_posttype_supports( $constant );
 
 		// @ALSO SEE: https://core.trac.wordpress.org/ticket/22895
-		if ( 'post' != $cap_type )
+		if ( ! array_key_exists( 'capabilities', $args ) && 'post' != $cap_type )
 			$args['capabilities'] = [ 'create_posts' => is_array( $cap_type ) ? 'create_'.$cap_type[1] : 'create_'.$cap_type.'s' ];
 
-		$object = register_post_type( $posttype, self::recursiveParseArgs( $atts, $args ) );
+		$object = register_post_type( $posttype, $args );
 
 		if ( is_wp_error( $object ) )
 			return FALSE;
