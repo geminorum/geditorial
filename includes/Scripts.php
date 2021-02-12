@@ -135,6 +135,15 @@ class Scripts extends Main
 			: self::registerPackage( 'listjs', 'list.js/list', [], $ver );
 	}
 
+	// @REF: https://github.com/axenox/onscan.js
+	// @REF: https://a.kabachnik.info/onscan-js.html
+	public static function pkgOnScanJS( $enqueue = FALSE, $ver = '1.5.2' )
+	{
+		return $enqueue
+			? self::enqueuePackage( 'onscanjs', 'onscan.js/onscan', [], $ver )
+			: self::registerPackage( 'onscanjs', 'onscan.js/onscan', [], $ver );
+	}
+
 	public static function getTinyMceStrings( $locale )
 	{
 		$strings = apply_filters( static::BASE.'_tinymce_strings', [] );
