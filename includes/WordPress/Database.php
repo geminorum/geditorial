@@ -354,6 +354,8 @@ class Database extends Core\Base
 	}
 
 	// @REF: `_update_generic_term_count()`
+	// @REF: `_update_post_term_count()`
+	// @SEE: `update_post_term_count_statuses` filter
 	public static function updateCountCallback( $terms, $taxonomy )
 	{
 		global $wpdb;
@@ -361,6 +363,23 @@ class Database extends Core\Base
 		foreach ( (array) $terms as $term ) {
 
 			$count = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$wpdb->term_relationships} WHERE term_taxonomy_id = %d", $term ) );
+
+			do_action( 'edit_term_taxonomy', $term, $taxonomy->name );
+
+			$wpdb->update( $wpdb->term_taxonomy, compact( 'count' ), array( 'term_taxonomy_id' => $term ) );
+
+			do_action( 'edited_term_taxonomy', $term, $taxonomy->name );
+		}
+	}
+
+	// ADOPTED FROM: LH User Taxonomies v1.6
+	public static function updateUserTermCountCallback( $terms, $taxonomy )
+	{
+		global $wpdb;
+
+		foreach ( (array) $terms as $term ) {
+
+			$count = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$wpdb->term_relationships}, {$wpdb->users} WHERE {$wpdb->term_relationships}.object_id = {$wpdb->users}.ID and {$wpdb->term_relationships}.term_taxonomy_id = %d", $term ) );
 
 			do_action( 'edit_term_taxonomy', $term, $taxonomy->name );
 

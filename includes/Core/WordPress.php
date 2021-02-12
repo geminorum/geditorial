@@ -5,20 +5,14 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 class WordPress extends Base
 {
 
-	public static function isMinWPv( $minimum_version )
-	{
-		self::_dep( 'WordPress::isWPcompatible()' );
-		return ( version_compare( $GLOBALS['wp_version'], $minimum_version ) >= 0 );
-	}
-
-	// Checks compatibility with the current WordPress version.
+	// checks compatibility with the current WordPress version
 	// @REF: `is_wp_version_compatible()`
 	public static function isWPcompatible( $required )
 	{
-		return empty( $required ) || version_compare( $GLOBALS['wp_version'], $required, '>=' );
+		return empty( $required ) || version_compare( get_bloginfo( 'version' ), $required, '>=' );
 	}
 
-	// Checks compatibility with the current PHP version.
+	// checks compatibility with the current php version
 	// @REF: `wp_is_php_compatible()`
 	public static function isPHPcompatible( $required )
 	{
@@ -42,7 +36,6 @@ class WordPress extends Base
 	}
 
 	// @REF: `vars.php`
-	// TODO: support arrays
 	public static function pageNow( $page = NULL )
 	{
 		$now = 'index.php';
@@ -50,7 +43,10 @@ class WordPress extends Base
 		if ( preg_match( '#([^/]+\.php)([?/].*?)?$#i', $_SERVER['PHP_SELF'], $matches ) )
 			$now = strtolower( $matches[1] );
 
-		return is_null( $page ) ? $now : ( $now == $page );
+		if ( is_null( $page ) )
+			return $now;
+
+		return in_array( $now, (array) $page );
 	}
 
 	// @REF: https://core.trac.wordpress.org/ticket/19898
@@ -161,114 +157,16 @@ class WordPress extends Base
 		defined( 'DONOTCACHEPAGE' ) || define( 'DONOTCACHEPAGE', TRUE );
 	}
 
-	// TODO: use db query
-	public static function getLastPostOrder( $posttype = 'post', $exclude = '', $key = 'menu_order', $status = array( 'publish', 'future', 'draft' ) )
-	{
-		$post = get_posts( array(
-			'posts_per_page' => 1,
-			'orderby'        => 'menu_order',
-			'exclude'        => $exclude,
-			'post_type'      => $posttype,
-			'post_status'    => $status,
-		) );
-
-		if ( empty( $post ) )
-			return 0;
-
-		if ( 'menu_order' == $key )
-			return (int) $post[0]->menu_order;
-
-		return $post[0]->{$key};
-	}
-
-	// TODO: use db query
-	public static function getRandomPostID( $posttype, $has_thumbnail = FALSE, $object = FALSE, $status = 'publish' )
-	{
-		$args = array(
-			'post_type'              => $posttype,
-			'post_status'            => $status,
-			'posts_per_page'         => 1,
-			'orderby'                => 'rand',
-			'ignore_sticky_posts'    => TRUE,
-			'no_found_rows'          => TRUE,
-			'suppress_filters'       => TRUE,
-			'update_post_meta_cache' => FALSE,
-			'update_post_term_cache' => FALSE,
-			'lazy_load_term_meta'    => FALSE,
-		);
-
-		if ( ! $object )
-			$args['fields'] = 'ids';
-
-		if ( $has_thumbnail )
-			$args['meta_query'] = array( array(
-				'key'     => '_thumbnail_id',
-				'compare' => 'EXISTS'
-			) );
-
-		$query = new \WP_Query;
-		$posts = $query->query( $args );
-
-		return empty( $posts ) ? FALSE : $posts[0];
-	}
-
-	public static function getParentPostID( $post_id = NULL, $object = FALSE )
-	{
-		if ( ! $post = get_post( $post_id ) )
-			return FALSE;
-
-		if ( empty( $post->post_parent ) )
-			return FALSE;
-
-		if ( $object )
-			return get_post( $post->post_parent );
-
-		return (int) $post->post_parent;
-	}
-
+	// FIXME: DEPRECATED: use `PostType::htmlFeaturedImage()`
 	public static function getFeaturedImage( $post_id, $size = 'thumbnail', $default = FALSE )
 	{
+		self::_dep( 'PostType::htmlFeaturedImage()' );
+
 		if ( ! $post_thumbnail_id = get_post_thumbnail_id( $post_id ) )
 			return $default;
 
 		$post_thumbnail_img = wp_get_attachment_image_src( $post_thumbnail_id, $size );
 		return $post_thumbnail_img[0];
-	}
-
-	public static function newPostFromTerm( $term, $taxonomy = 'category', $posttype = 'post', $user_id = 0 )
-	{
-		if ( ! is_object( $term ) && ! is_array( $term ) )
-			$term = get_term( $term, $taxonomy );
-
-		$new_post = array(
-			'post_title'   => $term->name,
-			'post_name'    => $term->slug,
-			'post_content' => $term->description,
-			'post_status'  => 'pending',
-			'post_author'  => $user_id ? $user_id : get_current_user_id(),
-			'post_type'    => $posttype,
-		);
-
-		return wp_insert_post( $new_post );
-	}
-
-	public static function currentPostType( $default = NULL )
-	{
-		global $post, $typenow, $pagenow, $current_screen;
-
-		if ( $post && $post->post_type )
-			return $post->post_type;
-
-		if ( $typenow )
-			return $typenow;
-
-		if ( $current_screen && isset( $current_screen->post_type ) )
-			return $current_screen->post_type;
-
-		if ( isset( $_REQUEST['post_type'] ) )
-			return sanitize_key( $_REQUEST['post_type'] );
-
-		return $default;
 	}
 
 	// @REF: `wp_referer_field()`

@@ -174,19 +174,24 @@ class Taxonomy extends Core\Base
 			$terms = get_terms( array_merge( array(
 				'taxonomy'   => $taxonomy,
 				'hide_empty' => FALSE,
-				'order'      => 'ASC',
-				'orderby'    => 'meta_value_num',
+				// 'order'      => 'ASC',
+				'order'      => 'DESC',
+				// 'orderby'    => 'meta_value_num',
+				'orderby'    => 'order_clause',
 				'meta_query' => [
 					// @REF: https://core.trac.wordpress.org/ticket/34996
+					// @SEE: https://wordpress.stackexchange.com/a/246206
+					// @SEE: https://wordpress.stackexchange.com/a/277755
 					'relation' => 'OR',
-					[
+					'order_clause' => [
 						'key'     => 'order',
-						'compare' => 'NOT EXISTS'
+						// 'value'   => 0,
+						// 'compare' => '>=',
+						'type'    => 'NUMERIC'
 					],
 					[
 						'key'     => 'order',
-						'value'   => 0,
-						'compare' => '>=',
+						'compare' => 'NOT EXISTS'
 					],
 				],
 				'update_term_meta_cache' => FALSE,
@@ -372,7 +377,7 @@ class Taxonomy extends Core\Base
 		return $parents;
 	}
 
-	public static function getTargetTerm( $target, $taxonomy, $args = [] )
+	public static function getTargetTerm( $target, $taxonomy, $args = [], $meta = [] )
 	{
 		$target = trim( $target );
 
@@ -406,6 +411,9 @@ class Taxonomy extends Core\Base
 
 		if ( self::isError( $term ) )
 			return FALSE;
+
+		foreach ( $meta as $meta_key => $meta_value )
+			add_term_meta( $term['term_id'], $meta_key, $meta_value, TRUE );
 
 		return get_term( $term['term_id'], $taxonomy );
 	}

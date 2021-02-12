@@ -211,6 +211,71 @@ class PostType extends Core\Base
 		);
 	}
 
+	// TODO: use db query
+	public static function getLastMenuOrder( $posttype = 'post', $exclude = '', $key = 'menu_order', $status = [ 'publish', 'future', 'draft' ] )
+	{
+		$post = get_posts( [
+			'posts_per_page' => 1,
+			'orderby'        => 'menu_order',
+			'exclude'        => $exclude,
+			'post_type'      => $posttype,
+			'post_status'    => $status,
+		] );
+
+		if ( empty( $post ) )
+			return 0;
+
+		if ( 'menu_order' == $key )
+			return (int) $post[0]->menu_order;
+
+		return $post[0]->{$key};
+	}
+
+	// TODO: use db query
+	public static function getRandomPostID( $posttype, $has_thumbnail = FALSE, $object = FALSE, $status = 'publish' )
+	{
+		$args = array(
+			'post_type'              => $posttype,
+			'post_status'            => $status,
+			'posts_per_page'         => 1,
+			'orderby'                => 'rand',
+			'ignore_sticky_posts'    => TRUE,
+			'no_found_rows'          => TRUE,
+			'suppress_filters'       => TRUE,
+			'update_post_meta_cache' => FALSE,
+			'update_post_term_cache' => FALSE,
+			'lazy_load_term_meta'    => FALSE,
+		);
+
+		if ( ! $object )
+			$args['fields'] = 'ids';
+
+		if ( $has_thumbnail )
+			$args['meta_query'] = array( array(
+				'key'     => '_thumbnail_id',
+				'compare' => 'EXISTS'
+			) );
+
+		$query = new \WP_Query;
+		$posts = $query->query( $args );
+
+		return empty( $posts ) ? FALSE : $posts[0];
+	}
+
+	public static function getParentPostID( $post_id = NULL, $object = FALSE )
+	{
+		if ( ! $post = get_post( $post_id ) )
+			return FALSE;
+
+		if ( empty( $post->post_parent ) )
+			return FALSE;
+
+		if ( $object )
+			return get_post( $post->post_parent );
+
+		return (int) $post->post_parent;
+	}
+
 	// like WP core but returns the actual array!
 	// @REF: `post_type_supports()`
 	public static function supports( $posttype, $feature )
@@ -273,5 +338,41 @@ class PostType extends Core\Base
 			return FALSE;
 
 		return use_block_editor_for_post_type( $posttype );
+	}
+
+	public static function newPostFromTerm( $term, $taxonomy = 'category', $posttype = 'post', $user_id = 0 )
+	{
+		if ( ! is_object( $term ) && ! is_array( $term ) )
+			$term = get_term( $term, $taxonomy );
+
+		$new_post = array(
+			'post_title'   => $term->name,
+			'post_name'    => $term->slug,
+			'post_content' => $term->description,
+			'post_status'  => 'pending',
+			'post_author'  => $user_id ? $user_id : get_current_user_id(),
+			'post_type'    => $posttype,
+		);
+
+		return wp_insert_post( $new_post );
+	}
+
+	public static function current( $default = NULL )
+	{
+		global $post, $typenow, $pagenow, $current_screen;
+
+		if ( $post && $post->post_type )
+			return $post->post_type;
+
+		if ( $typenow )
+			return $typenow;
+
+		if ( $current_screen && isset( $current_screen->post_type ) )
+			return $current_screen->post_type;
+
+		if ( isset( $_REQUEST['post_type'] ) )
+			return sanitize_key( $_REQUEST['post_type'] );
+
+		return $default;
 	}
 }
