@@ -759,7 +759,7 @@ class Contest extends gEditorial\Module
 						if ( FALSE !== $post_id )
 							continue;
 
-						$posts[] = WordPress::newPostFromTerm(
+						$posts[] = PostType::newPostFromTerm(
 							$terms[$term_id],
 							$this->constant( 'contest_tax' ),
 							$this->constant( 'contest_cpt' ),

@@ -768,7 +768,7 @@ class Magazine extends gEditorial\Module
 						if ( FALSE !== $post_id )
 							continue;
 
-						$posts[] = WordPress::newPostFromTerm(
+						$posts[] = PostType::newPostFromTerm(
 							$terms[$term_id],
 							$this->constant( 'issue_tax' ),
 							$this->constant( 'issue_cpt' ),

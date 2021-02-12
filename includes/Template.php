@@ -5,6 +5,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\Main;
+use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\Taxonomy;
 
 class Template extends Main
@@ -318,13 +319,13 @@ class Template extends Main
 		], $atts );
 
 		if ( 'latest' == $args['id'] )
-			$args['id'] = WordPress::getLastPostOrder( $args['type'], '', 'ID', [ 'publish' ] );
+			$args['id'] = PostType::getLastMenuOrder( $args['type'], '', 'ID', [ 'publish' ] );
 
 		else if ( 'random' == $args['id'] )
-			$args['id'] = WordPress::getRandomPostID( $args['type'], TRUE );
+			$args['id'] = PostType::getRandomPostID( $args['type'], TRUE );
 
 		else if ( 'parent' == $args['id'] )
-			$args['id'] = WordPress::getParentPostID();
+			$args['id'] = PostType::getParentPostID();
 
 		else if ( 'assoc' == $args['id'] && $module )
 			$args['id'] = gEditorial()->{$module}->get_assoc_post( NULL, TRUE );

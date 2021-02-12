@@ -325,7 +325,7 @@ class Tweaks extends gEditorial\Module
 		} else if ( 'users' == $screen->base ) {
 
 			$this->filter( 'manage_users_columns', 1, 1 );
-			$this->filter( 'manage_users_custom_column', 3, 1 );
+			$this->filter( 'manage_users_custom_column', 3, 99 );
 			$this->filter( 'manage_users_sortable_columns' );
 
 			// INTERNAL HOOKS
@@ -535,7 +535,7 @@ class Tweaks extends gEditorial\Module
 		foreach ( $columns as $key => $value )
 
 			if ( 'title' == $key )
-				$new['geditorial-tweaks-title'] = $this->get_column_title( 'title', WordPress::currentPostType( 'post' ) );
+				$new['geditorial-tweaks-title'] = $this->get_column_title( 'title', PostType::current( 'post' ) );
 
 			else
 				$new[$key] = $value;
@@ -746,7 +746,7 @@ class Tweaks extends gEditorial\Module
 			$before = '<li class="-row tweaks-tax-'.$taxonomy.'">';
 			$before.= $this->get_column_icon( $info['edit'], $info['icon'], $info['title'] );
 
-			Helper::getPostTermsEditRow( $post, $object, $before, '</li>' );
+			Helper::renderPostTermsEditRow( $post, $object, $before, '</li>' );
 		}
 	}
 

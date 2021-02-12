@@ -742,6 +742,10 @@ class MetaBox extends Main
 		if ( is_null( $data ) )
 			$data = self::req( $name, [] );
 
+		// for clearing must send `0` as term_id
+		if ( empty( $data ) || ! is_array( $data ) )
+			return FALSE;
+
 		if ( ! array_key_exists( $object->name, $data ) )
 			return FALSE;
 

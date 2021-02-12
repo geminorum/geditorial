@@ -834,7 +834,7 @@ class Collect extends gEditorial\Module
 						if ( FALSE !== $post_id )
 							continue;
 
-						$posts[] = WordPress::newPostFromTerm(
+						$posts[] = PostType::newPostFromTerm(
 							$terms[$term_id],
 							$this->constant( 'collection_tax' ),
 							$this->constant( 'collection_cpt' ),

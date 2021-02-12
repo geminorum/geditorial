@@ -359,13 +359,11 @@ class Tablelist extends Main
 			'title'    => _x( 'Terms', 'Tablelist: Column: Post Terms', 'geditorial' ),
 			'args'     => [ 'taxonomies' => $taxonomies ],
 			'callback' => function( $value, $row, $column, $index ){
-				$html = '';
-
 				foreach ( $column['args']['taxonomies'] as $taxonomy => $object )
 					if ( $object->label ) // only public taxes
-						$html.= Helper::getPostTermsEditRow( $row, $object, '<div>'.$object->label.': ', '</div>' );
+						Helper::renderPostTermsEditRow( $row, $object, '<div>'.$object->label.': ', '</div>' );
 
-				return $html;
+				return '';
 			},
 		];
 	}

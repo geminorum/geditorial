@@ -3,7 +3,7 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
-use geminorum\gEditorial\Core\WordPress;
+use geminorum\gEditorial\WordPress\PostType;
 
 class Collect extends gEditorial\Template
 {
@@ -12,7 +12,7 @@ class Collect extends gEditorial\Template
 
 	public static function getLatestCollectionID()
 	{
-		return WordPress::getLastPostOrder( self::constant( 'collection_cpt', 'collection' ), '', 'ID', 'publish' );
+		return PostType::getLastMenuOrder( self::constant( 'collection_cpt', 'collection' ), '', 'ID', 'publish' );
 	}
 
 	public static function theCollection( $atts = [] )

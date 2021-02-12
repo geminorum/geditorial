@@ -3206,7 +3206,7 @@ class Module extends Base
 
 	public function is_current_posttype( $constant )
 	{
-		return WordPress::currentPostType() == $this->constant( $constant );
+		return PostType::current() == $this->constant( $constant );
 	}
 
 	public function is_save_post( $post, $constant = FALSE )
@@ -3955,7 +3955,7 @@ class Module extends Base
 	public function wp_insert_post_data_menu_order( $data, $postarr )
 	{
 		if ( ! $data['menu_order'] && $postarr['post_type'] )
-			$data['menu_order'] = WordPress::getLastPostOrder( $postarr['post_type'],
+			$data['menu_order'] = PostType::getLastMenuOrder( $postarr['post_type'],
 				( isset( $postarr['ID'] ) ? $postarr['ID'] : '' ) ) + 1;
 
 		return $data;

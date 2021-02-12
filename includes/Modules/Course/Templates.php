@@ -3,7 +3,7 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
-use geminorum\gEditorial\Core\WordPress;
+use geminorum\gEditorial\WordPress\PostType;
 
 class Course extends gEditorial\Template
 {
@@ -12,7 +12,7 @@ class Course extends gEditorial\Template
 
 	public static function getLatestCourseID()
 	{
-		return WordPress::getLastPostOrder( self::constant( 'course_cpt', 'course' ), '', 'ID', 'publish' );
+		return PostType::getLastMenuOrder( self::constant( 'course_cpt', 'course' ), '', 'ID', 'publish' );
 	}
 
 	public static function theCourse( $atts = [] )

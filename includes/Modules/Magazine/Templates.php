@@ -3,7 +3,7 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
-use geminorum\gEditorial\Core\WordPress;
+use geminorum\gEditorial\WordPress\PostType;
 
 class Magazine extends gEditorial\Template
 {
@@ -12,7 +12,7 @@ class Magazine extends gEditorial\Template
 
 	public static function getLatestIssueID()
 	{
-		return WordPress::getLastPostOrder( self::constant( 'issue_cpt', 'issue' ), '', 'ID', 'publish' );
+		return PostType::getLastMenuOrder( self::constant( 'issue_cpt', 'issue' ), '', 'ID', 'publish' );
 	}
 
 	public static function theIssue( $atts = [] )

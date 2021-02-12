@@ -256,7 +256,7 @@ class Helper extends Main
 		return sprintf( $template, '<span class="-count" data-count="'.$count.'">'.Number::format( $count ).'</span>' );
 	}
 
-	public static function getPostTermsEditRow( $post, $taxonomy, $before = '', $after = '' )
+	public static function renderPostTermsEditRow( $post, $taxonomy, $before = '', $after = '' )
 	{
 		if ( ! $object = Taxonomy::object( $taxonomy ) )
 			return;
@@ -915,11 +915,13 @@ class Helper extends Main
 		$items   = $parser->parse();
 		$headers = $items[0];
 
-		unset( $items[0] );
+		unset( $parser, $items[0] );
 
 		foreach ( $items as $index => $data )
 			if ( ! empty( $data ) )
 				$list[] = array_combine( $headers, $data );
+
+		unset( $headers, $items );
 
 		return $list;
 	}
