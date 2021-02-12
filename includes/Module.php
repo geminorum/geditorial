@@ -4397,4 +4397,9 @@ class Module extends Base
 
 		return current_user_can( 'read' ) || User::isSuperAdmin();
 	}
+
+	protected function log( $level, $message = '', $context = [] )
+	{
+		do_action( 'gnetwork_logger_site_'.$level, $this->classs(), $message, $context );
+	}
 }
