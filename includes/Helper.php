@@ -291,6 +291,52 @@ class Helper extends Main
 		echo self::getJoined( $list, $before, $after );
 	}
 
+	public static function renderTaxonomyTermsEditRow( $object, $taxonomy, $before = '', $after = '' )
+	{
+		if ( ! $object = Taxonomy::getTerm( $object ) )
+			return;
+
+		if ( ! $taxonomy = Taxonomy::object( $taxonomy ) )
+			return;
+
+		if ( ! $terms = wp_get_object_terms( $object->term_id, $taxonomy->name, [ 'update_term_meta_cache' => FALSE ] ) )
+			return;
+
+		$list = [];
+		$link = sprintf( 'edit-tags.php?taxonomy=%s', $object->taxonomy );
+
+		foreach ( $terms as $term )
+			$list[] = HTML::tag( 'a', [
+				// better to pass the term_id instead of term slug
+				'href'  => add_query_arg( [ $term->taxonomy => $term->term_id ], $link ),
+				'title' => urldecode( $term->slug ),
+				'class' => '-term -taxonomy-term',
+			], HTML::escape( sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' ) ) );
+
+		echo self::getJoined( $list, $before, $after );
+	}
+
+	public static function renderUserTermsEditRow( $user_id, $taxonomy, $before = '', $after = '' )
+	{
+		if ( ! $taxonomy = Taxonomy::object( $taxonomy ) )
+			return;
+
+		if ( ! $terms = wp_get_object_terms( $user_id, $taxonomy->name, [ 'update_term_meta_cache' => FALSE ] ) )
+			return;
+
+		$list = [];
+		$link = 'users.php?%1$s=%2$s';
+
+		foreach ( $terms as $term )
+			$list[] = HTML::tag( 'a', [
+				'href'  => sprintf( $link, $taxonomy->name, $term->slug ),
+				'title' => urldecode( $term->slug ),
+				'class' => '-term -user-term',
+			], HTML::escape( sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' ) ) );
+
+		echo self::getJoined( $list, $before, $after );
+	}
+
 	public static function getAuthorsEditRow( $authors, $posttype = 'post', $before = '', $after = '' )
 	{
 		if ( empty( $authors ) )
