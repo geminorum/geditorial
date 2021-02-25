@@ -99,15 +99,18 @@ class Module extends Base
 			$this->setup();
 	}
 
-	protected function setup_textdomain( $locale = NULL )
+	protected function setup_textdomain( $locale = NULL, $domain = NULL )
 	{
 		if ( ! $this->textdomain_frontend && ! is_admin() )
 			return FALSE;
 
+		if ( is_null( $domain ) )
+			$domain = $this->classs();
+
 		if ( is_null( $locale ) )
 			$locale = apply_filters( 'plugin_locale', determine_locale(), $this->base );
 
-		load_textdomain( $this->base.'-'.$this->module->name, GEDITORIAL_DIR."languages/{$this->module->folder}/{$locale}.mo" );
+		load_textdomain( $domain, GEDITORIAL_DIR."languages/{$this->module->folder}/{$locale}.mo" );
 	}
 
 	protected function setup_remote( $args = [] )

@@ -62,7 +62,7 @@ class Alphabet extends gEditorial\Module
 		] );
 	}
 
-	protected function setup_textdomain( $locale = NULL ) {} // OVERRIDE
+	protected function setup_textdomain( $locale = NULL, $domain = NULL ) {} // OVERRIDE
 
 	public function init()
 	{
