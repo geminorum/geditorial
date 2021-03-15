@@ -54,6 +54,13 @@ class Helper extends Main
 		return $enabled;
 	}
 
+	public static function moduleCheckWooCommerce()
+	{
+		return WordPress::isPluginActive( 'woocommerce/woocommerce.php' )
+			? FALSE
+			: _x( 'Needs WooCommerce', 'Helper', 'geditorial' );
+	}
+
 	public static function getIcon( $icon, $fallback = 'admin-post' )
 	{
 		if ( is_array( $icon ) )
