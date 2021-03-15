@@ -654,70 +654,74 @@ class Helper extends Main
 	{
 		$name_templates = [
 			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
-			'name'                     => _x( '%1$s', 'Helper: CPT Generator: Name', 'geditorial' ),
-			// 'menu_name'                => _x( '%1$s', 'Helper: CPT Generator: Menu Name', 'geditorial' ),
-			// 'description'              => _x( '%1$s', 'Helper: CPT Generator: Description', 'geditorial' ),
+			'name'                     => _x( '%1$s', 'Helper: CPT Generator: `name`', 'geditorial' ),
+			// 'menu_name'                => _x( '%1$s', 'Helper: CPT Generator: `menu_name`', 'geditorial' ),
+			// 'description'              => _x( '%1$s', 'Helper: CPT Generator: `description`', 'geditorial' ),
 			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
-			'singular_name'            => _x( '%2$s', 'Helper: CPT Generator: Singular Name', 'geditorial' ),
+			'singular_name'            => _x( '%2$s', 'Helper: CPT Generator: `singular_name`', 'geditorial' ),
 			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
-			'add_new'                  => _x( 'Add New', 'Helper: CPT Generator', 'geditorial' ),
+			'add_new'                  => _x( 'Add New', 'Helper: CPT Generator: `add_new`', 'geditorial' ),
 			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
-			'add_new_item'             => _x( 'Add New %2$s', 'Helper: CPT Generator', 'geditorial' ),
+			'add_new_item'             => _x( 'Add New %2$s', 'Helper: CPT Generator: `add_new_item`', 'geditorial' ),
 			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
-			'edit_item'                => _x( 'Edit %2$s', 'Helper: CPT Generator', 'geditorial' ),
+			'edit_item'                => _x( 'Edit %2$s', 'Helper: CPT Generator: `edit_item`', 'geditorial' ),
 			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
-			'new_item'                 => _x( 'New %2$s', 'Helper: CPT Generator', 'geditorial' ),
+			'new_item'                 => _x( 'New %2$s', 'Helper: CPT Generator: `new_item`', 'geditorial' ),
 			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
-			'view_item'                => _x( 'View %2$s', 'Helper: CPT Generator', 'geditorial' ),
+			'view_item'                => _x( 'View %2$s', 'Helper: CPT Generator: `view_item`', 'geditorial' ),
 			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
-			'view_items'               => _x( 'View %1$s', 'Helper: CPT Generator', 'geditorial' ),
+			'view_items'               => _x( 'View %1$s', 'Helper: CPT Generator: `view_items`', 'geditorial' ),
 			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
-			'search_items'             => _x( 'Search %1$s', 'Helper: CPT Generator', 'geditorial' ),
+			'search_items'             => _x( 'Search %1$s', 'Helper: CPT Generator: `search_items`', 'geditorial' ),
 			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
-			'not_found'                => _x( 'No %3$s found.', 'Helper: CPT Generator', 'geditorial' ),
+			'not_found'                => _x( 'No %3$s found.', 'Helper: CPT Generator: `not_found`', 'geditorial' ),
 			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
-			'not_found_in_trash'       => _x( 'No %3$s found in Trash.', 'Helper: CPT Generator', 'geditorial' ),
+			'not_found_in_trash'       => _x( 'No %3$s found in Trash.', 'Helper: CPT Generator: `not_found_in_trash`', 'geditorial' ),
 			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
-			'parent_item_colon'        => _x( 'Parent %2$s:', 'Helper: CPT Generator', 'geditorial' ),
+			'parent_item_colon'        => _x( 'Parent %2$s:', 'Helper: CPT Generator: `parent_item_colon`', 'geditorial' ),
 			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
-			'all_items'                => _x( 'All %1$s', 'Helper: CPT Generator', 'geditorial' ),
+			'all_items'                => _x( 'All %1$s', 'Helper: CPT Generator: `all_items`', 'geditorial' ),
 			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
-			'archives'                 => _x( '%2$s Archives', 'Helper: CPT Generator', 'geditorial' ),
+			'archives'                 => _x( '%2$s Archives', 'Helper: CPT Generator: `archives`', 'geditorial' ),
 			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
-			'attributes'               => _x( '%2$s Attributes', 'Helper: CPT Generator', 'geditorial' ),
+			'attributes'               => _x( '%2$s Attributes', 'Helper: CPT Generator: `attributes`', 'geditorial' ),
 			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
-			'insert_into_item'         => _x( 'Insert into %4$s', 'Helper: CPT Generator', 'geditorial' ),
+			'insert_into_item'         => _x( 'Insert into %4$s', 'Helper: CPT Generator: `insert_into_item`', 'geditorial' ),
 			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
-			'uploaded_to_this_item'    => _x( 'Uploaded to this %4$s', 'Helper: CPT Generator', 'geditorial' ),
+			'uploaded_to_this_item'    => _x( 'Uploaded to this %4$s', 'Helper: CPT Generator: `uploaded_to_this_item`', 'geditorial' ),
 			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
-			'filter_items_list'        => _x( 'Filter %3$s list', 'Helper: CPT Generator', 'geditorial' ),
+			'filter_items_list'        => _x( 'Filter %3$s list', 'Helper: CPT Generator: `filter_items_list`', 'geditorial' ),
 			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
-			'filter_by_date'           => _x( 'Filter by date', 'Helper: CPT Generator', 'geditorial' ),
+			'filter_by_date'           => _x( 'Filter by date', 'Helper: CPT Generator: `filter_by_date`', 'geditorial' ),
 			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
-			'items_list_navigation'    => _x( '%1$s list navigation', 'Helper: CPT Generator', 'geditorial' ),
+			'items_list_navigation'    => _x( '%1$s list navigation', 'Helper: CPT Generator: `items_list_navigation`', 'geditorial' ),
 			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
-			'items_list'               => _x( '%1$s list', 'Helper: CPT Generator', 'geditorial' ),
+			'items_list'               => _x( '%1$s list', 'Helper: CPT Generator: `items_list`', 'geditorial' ),
 			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
-			'item_published'           => _x( '%2$s published.', 'Helper: CPT Generator', 'geditorial' ),
+			'item_published'           => _x( '%2$s published.', 'Helper: CPT Generator: `item_published`', 'geditorial' ),
 			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
-			'item_published_privately' => _x( '%2$s published privately.', 'Helper: CPT Generator', 'geditorial' ),
+			'item_published_privately' => _x( '%2$s published privately.', 'Helper: CPT Generator: `item_published_privately`', 'geditorial' ),
 			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
-			'item_reverted_to_draft'   => _x( '%2$s reverted to draft.', 'Helper: CPT Generator', 'geditorial' ),
+			'item_reverted_to_draft'   => _x( '%2$s reverted to draft.', 'Helper: CPT Generator: `item_reverted_to_draft`', 'geditorial' ),
 			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
-			'item_scheduled'           => _x( '%2$s scheduled.', 'Helper: CPT Generator', 'geditorial' ),
+			'item_scheduled'           => _x( '%2$s scheduled.', 'Helper: CPT Generator: `item_scheduled`', 'geditorial' ),
 			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
-			'item_updated'             => _x( '%2$s updated.', 'Helper: CPT Generator', 'geditorial' ),
+			'item_updated'             => _x( '%2$s updated.', 'Helper: CPT Generator: `item_updated`', 'geditorial' ),
+			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
+			'item_link'                => _x( '%2$s Link', 'Helper: CPT Generator: `item_link`', 'geditorial' ),
+			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
+			'item_link_description'    => _x( 'A link to a %4$s.', 'Helper: CPT Generator: `item_link_description`', 'geditorial' ),
 		];
 
 		$featured_templates = [
 			/* translators: %1$s: featured camel case, %2$s: featured lower case */
-			'featured_image'        => _x( '%1$s', 'Helper: CPT Generator: Featured', 'geditorial' ),
+			'featured_image'        => _x( '%1$s', 'Helper: CPT Generator: `featured_image`', 'geditorial' ),
 			/* translators: %1$s: featured camel case, %2$s: featured lower case */
-			'set_featured_image'    => _x( 'Set %2$s', 'Helper: CPT Generator: Featured', 'geditorial' ),
+			'set_featured_image'    => _x( 'Set %2$s', 'Helper: CPT Generator: `set_featured_image`', 'geditorial' ),
 			/* translators: %1$s: featured camel case, %2$s: featured lower case */
-			'remove_featured_image' => _x( 'Remove %2$s', 'Helper: CPT Generator: Featured', 'geditorial' ),
+			'remove_featured_image' => _x( 'Remove %2$s', 'Helper: CPT Generator: `remove_featured_image`', 'geditorial' ),
 			/* translators: %1$s: featured camel case, %2$s: featured lower case */
-			'use_featured_image'    => _x( 'Use as %2$s', 'Helper: CPT Generator: Featured', 'geditorial' ),
+			'use_featured_image'    => _x( 'Use as %2$s', 'Helper: CPT Generator: `use_featured_image`', 'geditorial' ),
 		];
 
 		$strings = self::getStringsFromName( $name );
@@ -761,48 +765,52 @@ class Helper extends Main
 	{
 		$templates = [
 			/* translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder */
-			'name'                       => _x( '%1$s', 'Helper: Tax Generator: Name', 'geditorial' ),
+			'name'                       => _x( '%1$s', 'Helper: Tax Generator: `name`', 'geditorial' ),
 			/* translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder */
-			// 'menu_name'                  => _x( '%1$s', 'Helper: Tax Generator: Menu Name', 'geditorial' ),
+			// 'menu_name'                  => _x( '%1$s', 'Helper: Tax Generator: `menu_name`', 'geditorial' ),
 			/* translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder */
-			'singular_name'              => _x( '%2$s', 'Helper: Tax Generator: Singular Name', 'geditorial' ),
+			'singular_name'              => _x( '%2$s', 'Helper: Tax Generator: `singular_name`', 'geditorial' ),
 			/* translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder */
-			'search_items'               => _x( 'Search %1$s', 'Helper: Tax Generator', 'geditorial' ),
-			'popular_items'              => NULL, // _x( 'Popular %1$s', 'Helper: Tax Generator', 'geditorial' ),
+			'search_items'               => _x( 'Search %1$s', 'Helper: Tax Generator: `search_items`', 'geditorial' ),
+			'popular_items'              => NULL, // _x( 'Popular %1$s', 'Helper: Tax Generator: `popular_items`', 'geditorial' ),
 			/* translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder */
-			'all_items'                  => _x( 'All %1$s', 'Helper: Tax Generator', 'geditorial' ),
+			'all_items'                  => _x( 'All %1$s', 'Helper: Tax Generator: `all_items`', 'geditorial' ),
 			/* translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder */
-			'parent_item'                => _x( 'Parent %2$s', 'Helper: Tax Generator', 'geditorial' ),
+			'parent_item'                => _x( 'Parent %2$s', 'Helper: Tax Generator: `parent_item`', 'geditorial' ),
 			/* translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder */
-			'parent_item_colon'          => _x( 'Parent %2$s:', 'Helper: Tax Generator', 'geditorial' ),
+			'parent_item_colon'          => _x( 'Parent %2$s:', 'Helper: Tax Generator: `parent_item_colon`', 'geditorial' ),
 			/* translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder */
-			'edit_item'                  => _x( 'Edit %2$s', 'Helper: Tax Generator', 'geditorial' ),
+			'edit_item'                  => _x( 'Edit %2$s', 'Helper: Tax Generator: `edit_item`', 'geditorial' ),
 			/* translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder */
-			'view_item'                  => _x( 'View %2$s', 'Helper: Tax Generator', 'geditorial' ),
+			'view_item'                  => _x( 'View %2$s', 'Helper: Tax Generator: `view_item`', 'geditorial' ),
 			/* translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder */
-			'update_item'                => _x( 'Update %2$s', 'Helper: Tax Generator', 'geditorial' ),
+			'update_item'                => _x( 'Update %2$s', 'Helper: Tax Generator: `update_item`', 'geditorial' ),
 			/* translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder */
-			'add_new_item'               => _x( 'Add New %2$s', 'Helper: Tax Generator', 'geditorial' ),
+			'add_new_item'               => _x( 'Add New %2$s', 'Helper: Tax Generator: `add_new_item`', 'geditorial' ),
 			/* translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder */
-			'new_item_name'              => _x( 'New %2$s Name', 'Helper: Tax Generator', 'geditorial' ),
+			'new_item_name'              => _x( 'New %2$s Name', 'Helper: Tax Generator: `new_item_name`', 'geditorial' ),
 			/* translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder */
-			'separate_items_with_commas' => _x( 'Separate %3$s with commas', 'Helper: Tax Generator', 'geditorial' ),
+			'separate_items_with_commas' => _x( 'Separate %3$s with commas', 'Helper: Tax Generator: `separate_items_with_commas`', 'geditorial' ),
 			/* translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder */
-			'add_or_remove_items'        => _x( 'Add or remove %3$s', 'Helper: Tax Generator', 'geditorial' ),
+			'add_or_remove_items'        => _x( 'Add or remove %3$s', 'Helper: Tax Generator: `add_or_remove_items`', 'geditorial' ),
 			/* translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder */
-			'choose_from_most_used'      => _x( 'Choose from the most used %3$s', 'Helper: Tax Generator', 'geditorial' ),
+			'choose_from_most_used'      => _x( 'Choose from the most used %3$s', 'Helper: Tax Generator: `choose_from_most_used`', 'geditorial' ),
 			/* translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder */
-			'not_found'                  => _x( 'No %3$s found.', 'Helper: Tax Generator', 'geditorial' ),
+			'not_found'                  => _x( 'No %3$s found.', 'Helper: Tax Generator: `not_found`', 'geditorial' ),
 			/* translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder */
-			'no_terms'                   => _x( 'No %3$s', 'Helper: Tax Generator', 'geditorial' ),
+			'no_terms'                   => _x( 'No %3$s', 'Helper: Tax Generator: `no_terms`', 'geditorial' ),
 			/* translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder */
-			'filter_by_item'             => _x( 'Filter by %4$s', 'Helper: Tax Generator', 'geditorial' ),
+			'filter_by_item'             => _x( 'Filter by %4$s', 'Helper: Tax Generator: `filter_by_item`', 'geditorial' ),
 			/* translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder */
-			'items_list_navigation'      => _x( '%1$s list navigation', 'Helper: Tax Generator', 'geditorial' ),
+			'items_list_navigation'      => _x( '%1$s list navigation', 'Helper: Tax Generator: `items_list_navigation`', 'geditorial' ),
 			/* translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder */
-			'items_list'                 => _x( '%1$s list', 'Helper: Tax Generator', 'geditorial' ),
+			'items_list'                 => _x( '%1$s list', 'Helper: Tax Generator: `items_list`', 'geditorial' ),
 			/* translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder */
-			'back_to_items'              => _x( '&larr; Back to %1$s', 'Helper: Tax Generator', 'geditorial' ),
+			'back_to_items'              => _x( '&larr; Back to %1$s', 'Helper: Tax Generator: `back_to_items`', 'geditorial' ),
+			/* translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder */
+			'item_link'                  => _x( '%2$s Link', 'Helper: Tax Generator: `item_link`', 'geditorial' ),
+			/* translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder */
+			'item_link_description'      => _x( 'A link to a %4$s.', 'Helper: Tax Generator: `item_link_description`', 'geditorial' ),
 		];
 
 		$strings = self::getStringsFromName( $name );
