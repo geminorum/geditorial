@@ -59,11 +59,18 @@ class SearchTerms extends gEditorial\Widget
 		echo '<div class="-list-wrap search-terms"><ul>';
 
 		foreach ( $query->terms as $term ) {
-			echo '<li>'.HTML::tag( 'a', [
+			echo '<li>';
+
+			if ( ! empty( $instance['prefix_with_name'] ) )
+				printf( '%s:&nbsp;', get_taxonomy( $term->taxonomy )->labels->singular_name );
+
+			echo HTML::tag( 'a', [
 				'href'  => get_term_link( $term->term_id, $term->taxonomy ),
-				'title' => $title ? get_taxonomy( $term->taxonomy )->labels->singular_name : FALSE,
+				'title' => $title && empty( $instance['prefix_with_name'] ) ? get_taxonomy( $term->taxonomy )->labels->singular_name : FALSE,
 				'class' => [ '-term', '-taxonomy-'.$term->taxonomy ],
-			], sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' ) ).'</li>';
+			], sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' ) );
+
+			echo '</li>';
 		}
 
 		echo '</ul></div>';
@@ -81,7 +88,8 @@ class SearchTerms extends gEditorial\Widget
 
 		$instance['taxonomy'] = strip_tags( $new['taxonomy'] );
 
-		$instance['strip_hashtags'] = isset( $new['strip_hashtags'] );
+		$instance['prefix_with_name'] = isset( $new['prefix_with_name'] );
+		$instance['strip_hashtags']   = isset( $new['strip_hashtags'] );
 
 		$this->flush_widget_cache();
 
@@ -99,6 +107,7 @@ class SearchTerms extends gEditorial\Widget
 
 		$this->form_taxonomy( $instance );
 
+		$this->form_checkbox( $instance, FALSE, 'prefix_with_name', _x( 'Prefix Terms with Taxonomy Name', 'Widget: Setting', 'geditorial-widgets' ) );
 		$this->form_checkbox( $instance, FALSE, 'strip_hashtags', _x( 'Strip Hash-tags', 'Widget: Setting', 'geditorial-widgets' ) );
 
 		$this->after_form( $instance );
