@@ -1,0 +1,90 @@
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+/// Print: Template: All
+
+
+////////////////////////////////////////////////////////////////////////////////
+div.-print-template {
+  @include mainwrap;
+
+  display: inline-block;
+  border: 1px solid $gray-light;
+  height: auto;
+
+  padding: 2mm;
+  margin: 0 0 1mm 1mm;
+
+  // @include theme-clearfix;
+
+  &.-book {}
+
+  &.-stand {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    // align-items: center;
+    padding: 0;
+
+    height: 25mm;
+    width: 73mm;
+
+    .-main {
+      padding: 0 2mm;
+
+      > span {
+        display: block;
+        text-align: center;
+      }
+
+      .-barcode {
+        font-size: 32pt;
+        transform: scale(1, 2.2);
+        margin-top: 8mm;
+      }
+
+      .-text {
+        margin-top: -2mm;
+        font-size: 12pt;
+        font-family: Arial, serif;
+      }
+    }
+
+    .-side {
+      text-align: center;
+      width: 15mm;
+      padding-top: 2mm;
+      // padding-left: 3mm;
+      // padding-top: 1mm;
+
+      > span {
+        display: block;
+        margin: 0 auto;
+        // text-align: center;
+      }
+
+      border-left: 1px solid $gray-light;
+      background-color: $gray-lighter;
+
+      .-arrow {
+        svg {
+          width: 12mm;
+          height: 12mm;
+
+          color: $gray;
+        }
+
+        + .-code {
+          margin-top: 2mm;
+        }
+      }
+
+      .-code {
+        font-size: 14pt;
+        font-weight: 800;
+        font-family: Arial, serif;
+        // letter-spacing: 1.1pt;
+      }
+    }
+  }
+}

@@ -1,0 +1,40 @@
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+/// Module: WC Purchased: Admin iFrame
+
+////////////////////////////////////////////////////////////////////////////////
+.geditorial-admin-wrap.sub-wc_purchased {
+  padding: 0;
+
+  th.-column-order_number {
+    width: 35px;
+  }
+
+  th.-column-date_paid {
+    // width: 65px;
+    width: 135px;
+  }
+
+  th.-column-total_price {
+    width: 85px;
+  }
+
+  td.-cell-total_price {
+    text-align: right;
+  }
+
+  .-wrap.-header {
+    // display: flex;
+    margin-bottom: 1rem;
+    // text-align: right;
+
+    .button {
+      float: right;
+    }
+
+    .-product-name {
+      margin: .6rem 0 0;
+    }
+  }
+}

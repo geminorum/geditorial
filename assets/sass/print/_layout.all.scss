@@ -1,0 +1,90 @@
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+/// Print: Layout: All
+
+
+////////////////////////////////////////////////////////////////////////////////
+/** SEEEEEE : http://jsfiddle.net/geminorum/qwn9z4os/      **/
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box; // 1
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// 'fullpage'   => _x( 'General Full-page', 'Print Layout', 'geditorial-datacodes' ),
+// 'w210h297m6' => _x( '210mm &times; 297mm (6mm)', 'Print Layout', 'geditorial-datacodes' ),
+// 'w189h255m5' => _x( '189mm &times; 255mm (5mm)', 'Print Layout', 'geditorial-datacodes' ),
+// 'w34h15m0'   => _x( '34mm &times; 15mm (0mm)', 'Print Layout', 'geditorial-datacodes' ),
+
+
+////////////////////////////////////////////////////////////////////////////////
+body {
+  background-color: #fff; // $gray-lighter;
+
+  > .wrap {
+    margin: 0 auto;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    align-content: flex-start;
+
+    background-color: $white;
+  }
+
+  &.-is-single > .wrap {
+    padding: 2mm;
+    border: .5mm dashed $gray-light;
+    justify-content: center;
+  }
+
+  &.-is-not-single > .wrap {
+  }
+
+  &.-is-not-single.-layout-fullpage,
+  &.-is-not-single.-layout-w210h297m6 {
+    width: 210mm;
+    height: 297mm;
+    padding: 4mm; // 6mm minus 2mm border
+    border: 2mm dashed $gray-light;
+  }
+
+  &.-is-not-single.-layout-w189h255m5 {
+    width: 189mm;
+    height: 255mm;
+    padding: 3mm;
+    border: 2mm dashed $gray-light;
+  }
+
+  &.-is-not-single.-layout-w34h15m0 {
+    width: 34mm;
+    height: 15mm;
+    padding: 0;
+    // border: 2mm dashed $gray-light;
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+@page {
+  size: a4;
+  margin: 0;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+@media print {
+  body > .wrap {
+    margin: 0;
+    border: initial;
+    border-radius: initial;
+    width: initial;
+    min-height: initial;
+    box-shadow: initial;
+    background: initial;
+    page-break-after: always;
+  }
+}

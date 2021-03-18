@@ -1,0 +1,91 @@
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+/// Module: Warehouse: Admin: Edit-Tags
+
+
+////////////////////////////////////////////////////////////////////////////////
+body.geditorial-warehouse-enabled {
+  .inline-edit-col {
+    input[name="name"] {
+      /* rtl:ignore */
+      direction: ltr;
+    }
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+.-wrap.placement-partials {
+  > .-input-wrap {
+    /* rtl:ignore */
+    direction: ltr;
+    text-align: left;
+  }
+
+  input[type="text"] {
+    display: inline-block;
+    // cursor: help;
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+
+////////////////////////////////////////////////////////////////////////////////
+th.column-geditorial-warehouse-partials {
+  width: 125px;
+}
+
+td.column-geditorial-warehouse-partials {
+  padding: 4px 5px;
+
+  table {
+    border: 1px dotted $gray-lighter;
+    // border-bottom: none;
+    // /*rtl:ignore*/
+    // direction: ltr !important;
+  }
+
+  tr {
+    // border-bottom: 1px dotted $gray-light;
+  }
+
+  td {
+    width: 50%;
+    border-bottom: 1px dotted $gray-lighter;
+
+    font-size: smaller;
+    padding: 0 2px !important;
+    vertical-align: baseline;
+
+    &.-var {
+
+      text-align: left;
+    }
+  }
+
+  code {
+    font-size: smaller;
+  }
+}
+
+th.column-geditorial-warehouse-reference {
+  width: 22px;
+  // padding-left: 2px !important;
+  // padding-right: 2px !important;
+}
+
+td.column-geditorial-warehouse-reference {
+  span[data-icon] {
+    // cursor: help;
+  }
+
+  span.icon-reference {
+    color: $brand-success;
+  }
+
+  span.icon-warning {
+    color: $brand-danger;
+    cursor: help;
+  }
+}

@@ -1,0 +1,281 @@
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+/// Module: Warehouse: Admin: Dashboard
+
+
+////////////////////////////////////////////////////////////////////////////////
+$spacer: 1rem !default;
+
+////////////////////////////////////////////////////////////////////////////////
+.-wrap.-warehouse.placement-ui {
+  display: flex;
+  margin-top: $spacer;
+  background: $gray-lighter;
+  border-radius: $spacer * .25;
+  border: 1px dashed $gray-light;
+
+  .-title {
+    margin: 0;
+    margin: ($spacer * .25) 0 ($spacer * .25) 0;
+
+    &.-title-failed {
+      padding: 0 ($spacer * .2);
+      // border-bottom: 1px dashed $gray-light;
+      color: $gray-light;
+    }
+  }
+
+  .-input-dispatch-wrap {
+    position: relative;
+
+    .spinner {
+      position: absolute;
+      margin: 0;
+      top: ($spacer * .3);
+      left: ($spacer * .5);
+      z-index: 99;
+    }
+  }
+
+  .-column {
+    // width: 33%;
+    padding: ($spacer * .5);
+
+    &.-input {
+      width: 25%;
+
+      input[type="text"] {
+        width: 100%;
+        border-radius: $spacer * .25;
+        // margin: ($spacer * .25) 0 0 0;
+        margin: 0 0 ($spacer * .25) 0;
+
+        /* rtl:ignore */
+        direction: ltr !important;
+
+        &::placeholder {
+          direction: ltr; // must not be ignored by RTLCSS
+          text-align: left; // for firefox
+        }
+      }
+    }
+
+    &.-current {
+      width: 25%;
+
+      .notice {
+        margin: 0 0 ($spacer * .5) 0;
+      }
+
+      .-wrap.-type-switchonoff {
+        margin-bottom: ($spacer * .5);
+      }
+    }
+
+    &.-history {
+      width: 50%;
+    }
+  }
+
+  ul.-target-queue,
+  ul.-input-queue,
+  ul.-input-failed {
+    /* rtl:ignore */
+    direction: ltr;
+    list-style: none;
+    // margin: ($spacer * .25) 0 0 0;
+    margin: 0;
+
+    &:empty {
+      display: none;
+    }
+
+    li {
+      border: 1px dotted #666;
+      border-radius: $spacer * .25;
+      background-color: $gray-lighter;
+      padding: ($spacer * .3) ($spacer * .5);
+      margin: 0 0 ($spacer * .25) 0;
+
+      // + li {
+      //   margin-top: $spacer * .25;
+      // }
+
+      span.ref,
+      span.query {
+        font-weight: 600;
+      }
+
+      span.qty {
+        margin-right: ($spacer * .25);
+
+        &:empty {
+          display: none;
+        }
+
+        &::before {
+          content: "\00D7";
+          margin-left: ($spacer * .25);
+        }
+      }
+
+      a.button {
+        padding: 0;
+        /* rtl:ignore */
+        float: right;
+        /* rtl:ignore */
+        padding-left: $spacer * .25;
+        border: none;
+        color: $gray-dark;
+        background-color: transparent;
+
+        &:active,
+        &:hover,
+        &:focus {
+          box-shadow: none;
+        }
+      }
+    }
+  }
+
+  ul.-input-queue {
+    li {
+      span.query {
+        color: darken($brand-success, 20);
+      }
+
+      a.remove {
+        color: $brand-danger;
+      }
+    }
+  }
+
+  ul.-input-failed {
+    li {
+      border-color: $brand-danger;
+
+      span.query {
+        cursor: help;
+        color: darken($brand-danger, 20);
+      }
+
+      a.resend {
+        color: $brand-success;
+      }
+
+      a.addnew {
+        color: $brand-info;
+      }
+
+      a.remove {
+        color: $brand-warning;
+      }
+    }
+  }
+
+  ul.-target-queue {
+    li {
+      > .head {
+        @include theme-clearfix;
+      }
+
+      .-summary {
+        direction: initial;
+        // text-align: center;
+
+        > div {
+          display: flex;
+        }
+      }
+
+      a.remove {
+        color: $brand-danger;
+      }
+
+      a.confirm {
+        color: $brand-success;
+      }
+
+      img {
+        margin-right: $spacer * .25;
+        max-width: 100%;
+        max-height: $spacer * 5;
+        // max-height: 70vh;
+        // height: auto;
+      }
+
+      &:first-of-type {
+        .-summary {
+          text-align: center;
+
+          > div {
+            display: block;
+          }
+        }
+
+        img {
+          margin: 0;
+          max-height: 70vh;
+        }
+      }
+    }
+  }
+
+  .-active-placement {
+    /* rtl:ignore */
+    direction: ltr;
+    margin-bottom: ($spacer * .5);
+
+    &:empty {
+      display: none;
+    }
+  }
+
+  .-current-stack,
+  .-current-placement {
+    border: 1px dashed #666;
+    border-radius: $spacer * .25;
+    min-height: $spacer * 2.5;
+    margin-bottom: ($spacer * .5);
+    padding: $spacer * .5;
+
+    &[data-active="invalid"] {
+      position: relative;
+
+      &::after {
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: 0;
+        position: absolute;
+        content: attr(data-invalid);
+        text-align: center;
+        padding: $spacer;
+        color: $brand-danger;
+        font-size: $spacer * 1.2;
+        font-weight: 600;
+      }
+    }
+
+    &[data-active=""] {
+      position: relative;
+
+      &::after {
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: 0;
+        position: absolute;
+        content: attr(data-empty);
+        text-align: center;
+        padding: $spacer;
+        color: $gray-light;
+        font-size: $spacer * 1.2;
+        font-weight: 600;
+      }
+    }
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////

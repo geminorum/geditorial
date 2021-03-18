@@ -1,0 +1,95 @@
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+/// Print: Layout: old layout for barcode
+
+
+////////////////////////////////////////////////////////////////////////////////
+/** SEEEEEE : http://jsfiddle.net/geminorum/qwn9z4os/      **/
+
+/**@page { size:297mm 210mm; margin: 2cm }**/
+
+
+/**@import url(http://fonts.googleapis.com/earlyaccess/droidarabicnaskh.css);
+*,*:after,*:before {-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;padding:0;margin:0;border:0;}
+**/
+
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent;margin:0;padding:0}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:none}:focus{outline:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+a, a:hover, a:visited {
+	text-decoration:none;
+}
+
+1body { margin:40px auto 0; width:600px; }
+1input[type="text"] {width:80%;}
+body {
+	XXdirection:rtl;
+	font-family:'Droid Arabic Naskh', Tahoma, "Iranian Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size:14.4px;
+	line-height:25.2px;
+
+
+	1margin:50px 0px; padding:0px; /* Need to set body margin and padding to get consistency between browsers. */
+	text-align:center; /* Hack for IE5/Win */
+}
+
+html { background:#eee; }
+b1ody { height:210mm; width:297mm; }
+
+.wrap {
+	1width:860px;
+	1margin:0px auto; /* Right and left margin widths set to "auto" */
+	1text-align:right; /* Counteract to IE5/Win Hack */
+	1padding:15px 15px 5px 15px;
+	border:1mm dashed #eee;
+	background-color:#fff;
+
+	1height:297mm;
+	1width:210mm;
+
+	height:287mm;
+	width:200mm;
+	padding:4mm;
+}
+
+
+table, table tr, table tr td {
+	border:1px solid #dedede;
+	border-collapse:collapse;
+
+}
+
+table {
+	width:100%;
+	1width:auto;
+	margin-bottom:20px;
+	font-size:0.89em;
+	1margin:1cm;
+}
+
+table caption {
+	font-size:0.68em;
+	text-align:right;
+	padding:0 5px 5px 0;
+}
+
+table tr {
+
+}
+table td {
+	padding:5px;
+	padding:10px 10px 10px 10px;
+	vertical-align:top;
+}
+
+table td.empty {
+	border:none;
+}
+
+table td.price {
+	width:24%;
+}
+
+table tr td img { float:left; 1width:400px; 1height:auto; }
+table tr td span { float:right; font-family:'Times New Roman'; font-weight:bold; font-size:1.85em; 1line-height:1.2em;  1padding-right:1px; 1margin-top:-4px;}
+table tr td span { font-size:2.8em; margin-right:5px; }

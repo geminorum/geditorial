@@ -1,0 +1,42 @@
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+/// Print: Template: Libre
+
+// @REF: https://github.com/graphicore/librebarcode
+
+////////////////////////////////////////////////////////////////////////////////
+div.-print-template {
+  // height: 120mm;
+
+  .code128-text {
+    font-family: "Libre Barcode 128 Text", cursive;
+  }
+
+  .code128 {
+    font-family: "Libre Barcode 128", cursive;
+    font-size: 44pt;
+    font-feature-settings: "calt" 1;
+    overflow: auto;
+
+    font-style: normal;
+    font-weight: 400;
+    text-align: center;
+    white-space: pre;
+    // background: #fff;
+  }
+
+  .ean13 {
+    font-family: "Libre Barcode EAN13 Text", "Adobe NotDef", serif;
+    // Setting this explicitly was necessary for IOS, version 13.7, Safari and Chrome.
+    font-size: 68pt;
+    font-feature-settings: "calt" 1;
+    overflow: auto;
+
+    font-style: normal;
+    font-weight: 400;
+    text-align: center;
+    white-space: pre;
+    // background: #fff;
+  }
+}
