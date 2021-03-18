@@ -625,7 +625,7 @@ class Module extends Base
 		echo '<script>function '.$function.'(obj){obj.style.height=obj.contentWindow.document.documentElement.scrollHeight+"px";}</script>';
 	}
 
-	protected function render_print_button( $printpage = NULL )
+	protected function render_print_button( $printpage = NULL, $button_class = '' )
 	{
 		if ( is_null( $printpage ) )
 			$printpage = $this->get_printpage_url( [ 'single' => '1' ] );
@@ -645,9 +645,9 @@ class Module extends Base
 
 		echo HTML::tag( 'a', [
 			'href'    => '#',
-			'class'   => 'button', //  button-small',
+			'class'   => [ 'button', $button_class ], //  button-small',
 			'onclick' => $function.'("'.$id.'")',
-		], _x( 'Print!', 'Module', 'geditorial' ) );
+		], _x( 'Print', 'Module', 'geditorial' ) );
 
 		// @REF: https://hdtuto.com/article/print-iframe-content-using-jquery-example
 		echo '<script>function '.$function.'(id){var frm=document.getElementById(id).contentWindow;frm.focus();frm.print();return false;}</script>';
