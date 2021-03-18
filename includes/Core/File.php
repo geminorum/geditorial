@@ -200,4 +200,19 @@ class File extends Base
 
 		return FALSE;
 	}
+
+	public static function prepName( $suffix = NULL, $prefix = NULL )
+	{
+		$name = '';
+
+		if ( $prefix )
+			$name.= $prefix.'-';
+
+		$name.= WordPress::currentSiteName().'-'.current_time( 'Y-m-d' );
+
+		if ( $suffix )
+			$name.= '-'.$suffix;
+
+		return $name;
+	}
 }

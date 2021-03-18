@@ -402,4 +402,9 @@ class WordPress extends Base
 
 		return FALSE;
 	}
+
+	public static function currentSiteName( $slash = TRUE )
+	{
+		return URL::prepTitle( get_option( 'home' ), $slash );
+	}
 }

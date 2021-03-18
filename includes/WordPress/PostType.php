@@ -116,6 +116,7 @@ class PostType extends Core\Base
 			'post_status'    => [ 'publish', 'future', 'draft', 'pending' ],
 			'posts_per_page' => -1,
 
+			'no_found_rows'          => TRUE,
 			'suppress_filters'       => TRUE,
 			'update_post_meta_cache' => FALSE,
 			'update_post_term_cache' => FALSE,
@@ -130,11 +131,13 @@ class PostType extends Core\Base
 	public static function getIDsBySearch( $string, $atts = [] )
 	{
 		$args = array_merge( [
-			's'                      => $string,
-			'fields'                 => 'ids',
-			'post_type'              => 'any',
-			'post_status'            => 'any',
-			'posts_per_page'         => -1,
+			's'              => $string,
+			'fields'         => 'ids',
+			'post_type'      => 'any',
+			'post_status'    => 'any',
+			'posts_per_page' => -1,
+
+			'no_found_rows'          => TRUE,
 			'suppress_filters'       => TRUE,
 			'update_post_meta_cache' => FALSE,
 			'update_post_term_cache' => FALSE,
@@ -155,6 +158,7 @@ class PostType extends Core\Base
 			'post_status'    => 'any',
 			'posts_per_page' => -1,
 
+			'no_found_rows'          => TRUE,
 			'suppress_filters'       => TRUE,
 			'update_post_meta_cache' => FALSE,
 			'update_post_term_cache' => FALSE,
@@ -220,6 +224,12 @@ class PostType extends Core\Base
 			'exclude'        => $exclude,
 			'post_type'      => $posttype,
 			'post_status'    => $status,
+
+			'no_found_rows'          => TRUE,
+			'suppress_filters'       => TRUE,
+			'update_post_meta_cache' => FALSE,
+			'update_post_term_cache' => FALSE,
+			'lazy_load_term_meta'    => FALSE,
 		] );
 
 		if ( empty( $post ) )
@@ -235,10 +245,11 @@ class PostType extends Core\Base
 	public static function getRandomPostID( $posttype, $has_thumbnail = FALSE, $object = FALSE, $status = 'publish' )
 	{
 		$args = array(
-			'post_type'              => $posttype,
-			'post_status'            => $status,
-			'posts_per_page'         => 1,
-			'orderby'                => 'rand',
+			'post_type'      => $posttype,
+			'post_status'    => $status,
+			'posts_per_page' => 1,
+			'orderby'        => 'rand',
+
 			'ignore_sticky_posts'    => TRUE,
 			'no_found_rows'          => TRUE,
 			'suppress_filters'       => TRUE,

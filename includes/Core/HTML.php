@@ -1216,6 +1216,7 @@ class HTML extends Base
 		$args = self::atts( array(
 			'id'         => FALSE,
 			'name'       => '',
+			'title'      => FALSE,
 			'none_title' => NULL,
 			'none_value' => 0,
 			'class'      => FALSE,
@@ -1261,6 +1262,7 @@ class HTML extends Base
 			'name'     => $args['name'],
 			'id'       => $args['id'],
 			'class'    => $args['class'],
+			'title'    => $args['title'],
 			'disabled' => $args['disabled'],
 			'dir'      => $args['dir'],
 			'data'     => $args['data'],
