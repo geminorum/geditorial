@@ -39,8 +39,6 @@
     "lawondyss/moment-php": "dev-master",
     "amirhabibzadeh/intl-carbon": "dev-master",
     "addwiki/mediawiki-api": "^0.5.1",
-    "citation-style-language/locales": "@dev",
-    "citation-style-language/styles-distribution": "@dev",
     "seboettg/citeproc-php": "^2",
     "khanamiryan/qrcode-detector-decoder": "^1.0",
     "tecnickcom/tc-lib-barcode": "^1.17",
