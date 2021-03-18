@@ -481,6 +481,10 @@ class Module extends Base
 		$default  = $this->get_adminpage_default_sub( $subs, $context );
 		$sub      = self::req( 'sub', $default );
 		$noheader = self::req( 'noheader' );
+		$content  = [ $this, 'render_mainpage_content' ];
+
+		if ( $context && method_exists( $this, 'render_'.$context.'_content' ) )
+			$content = [ $this, 'render_'.$context.'_content' ];
 
 		if ( $noheader ) {
 			self::define( 'IFRAME_REQUEST', TRUE );
@@ -493,7 +497,7 @@ class Module extends Base
 			$this->render_adminpage_header_nav( $uri, $sub, $subs, $context );
 			$this->render_form_start( $uri, $sub, $action, $context, FALSE );
 				$this->nonce_field( $context );
-				$this->render_adminpage_content( $sub, $uri, $context, $subs );
+				call_user_func_array( $content, [ $sub, $uri, $context, $subs ] );
 			$this->render_form_end( $uri, $sub, $action, $context, FALSE );
 			$this->render_adminpage_signature( $uri, $sub, $subs, $context );
 
@@ -506,7 +510,7 @@ class Module extends Base
 	}
 
 	// DEFAULT CALLBACK
-	protected function render_adminpage_content( $sub = NULL, $uri = NULL, $context = '', $subs = [] )
+	protected function render_mainpage_content() // ( $sub = NULL, $uri = NULL, $context = '', $subs = [] )
 	{
 		HTML::desc( gEditorial()->na(), TRUE, '-empty' );
 	}
