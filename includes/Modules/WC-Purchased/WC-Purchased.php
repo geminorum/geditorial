@@ -114,13 +114,16 @@ class WcPurchased extends gEditorial\Module
 		if ( ! $product_id = self::req( 'post' ) )
 			return HTML::desc( _x( 'No Product!', 'Message', 'geditorial-wc-purchased' ) );
 
-		if ( ! $orders = $this->get_product_purchased_orders( $product_id ) )
+		if ( ! $product = wc_get_product( $product_id ) )
+			return HTML::desc( _x( 'No Product!', 'Message', 'geditorial-wc-purchased' ) );
+
+		if ( ! $orders = $this->get_product_purchased_orders( $product->get_id() ) )
 			return HTML::desc( _x( 'No Orders!', 'Message', 'geditorial-wc-purchased' ) );
 
 		$export = $this->role_can( 'export' );
 
 		if ( isset( $_GET['export'] ) && $export )
-			Text::download( $this->get_product_purchased( $orders ), File::prepName( sprintf( 'product-%d-purchased.csv', $product_id ) ) );
+			Text::download( $this->get_product_purchased( $orders ), File::prepName( sprintf( 'product-%s.csv', $product->get_sku() ) ) );
 
 		echo $this->wrap_open( '-header' );
 
@@ -130,7 +133,7 @@ class WcPurchased extends gEditorial\Module
 					'class'   => [ 'button', 'button-small' ],
 				], _x( 'Export CSV', 'Button', 'geditorial-wc-purchased' ) );
 
-			HTML::h3( get_the_title( $product_id ), '-product-name' );
+			HTML::h3( $product->get_title(), '-product-name' );
 
 		echo '</div>';
 
@@ -213,13 +216,13 @@ class WcPurchased extends gEditorial\Module
 
 		foreach ( $orders as $object ) {
 
-			if ( ! $order = wc_get_order( $object->order_id ) )
 			if ( ! $order = $this->prep_product_data( $object ) )
 				continue;
 
 			$data[] = [
 				$order->get_id(),
 				// $order->get_user_id(),
+				// wp_date( $formats['datetime'], $order->get_date_created() ), // TODO: use `Datetime::dateFormat()`
 				wp_date( $formats['datetime'], $order->get_date_paid() ), // TODO: use `Datetime::dateFormat()`
 				$order->get_total(),
 				$order->get_formatted_shipping_full_name(),
@@ -231,6 +234,7 @@ class WcPurchased extends gEditorial\Module
 
 		return Text::toCSV( $data );
 	}
+
 	private function get_order_statuses()
 	{
 		$statuses = [];
