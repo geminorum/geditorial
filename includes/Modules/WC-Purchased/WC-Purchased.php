@@ -32,6 +32,17 @@ class WcPurchased extends gEditorial\Module
 		$roles = $this->get_settings_default_roles( [ 'administrator', 'subscriber' ] );
 
 		return [
+			'_general' => [
+				[
+					'field'       => 'order_statuses',
+					'type'        => 'checkboxes',
+					'title'       => _x( 'Order Statuses', 'Setting Title', 'geditorial-wc-purchased' ),
+					'description' => _x( 'Accepted statuses on order list reports.', 'Setting Description', 'geditorial-wc-purchased' ),
+					'default'     => [ 'completed' ],
+					'values'      => $this->get_order_statuses(),
+
+				],
+			],
 			'_roles' => [
 				[
 					'field'       => 'reports_roles',
@@ -150,9 +161,7 @@ class WcPurchased extends gEditorial\Module
 				},
 			],
 
-		], array_map(function ( $object ) {
-			return wc_get_order( $object->order_id );
-		}, $orders ), [
+		], array_filter( array_map( [ $this, 'prep_product_data' ], $orders ) ), [
 			'empty' => $this->get_posttype_label( 'shop_order', 'not_found' ),
 		] );
 	}
@@ -176,6 +185,17 @@ class WcPurchased extends gEditorial\Module
 		return $wpdb->get_results( $query );
 	}
 
+	private function prep_product_data( $object )
+	{
+		if ( ! $order = wc_get_order( $object->order_id ) )
+			return NULL;
+
+		if ( ! $order->has_status( $this->get_setting( 'order_statuses', [ 'completed' ] ) ) )
+			return NULL;
+
+		return $order;
+	}
+
 	private function get_product_purchased( $orders )
 	{
 		$formats = Datetime::dateFormats( FALSE );
@@ -194,6 +214,7 @@ class WcPurchased extends gEditorial\Module
 		foreach ( $orders as $object ) {
 
 			if ( ! $order = wc_get_order( $object->order_id ) )
+			if ( ! $order = $this->prep_product_data( $object ) )
 				continue;
 
 			$data[] = [
@@ -209,5 +230,14 @@ class WcPurchased extends gEditorial\Module
 		}
 
 		return Text::toCSV( $data );
+	}
+	private function get_order_statuses()
+	{
+		$statuses = [];
+
+		foreach ( wc_get_order_statuses() as $status => $name )
+			$statuses[( 'wc-' === substr( $status, 0, 3 ) ? substr( $status, 3 ) : $status )] = $name;
+
+		return $statuses;
 	}
 }
