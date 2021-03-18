@@ -1,13 +1,13 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gEditorial Course 3.18.0\n"
+"Project-Id-Version: gEditorial Course 3.19.0\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "Last-Translator: NULL\n"
 "Language-Team: NULL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2020-11-23T18:15:06+00:00\n"
+"POT-Creation-Date: 2021-03-18T15:48:47+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.4.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Course\n"
@@ -217,12 +217,12 @@ msgctxt "Button"
 msgid "Install Default Lesson Statuses"
 msgstr ""
 
-#: Course.php:490
+#: Course.php:492
 msgctxt "Message"
 msgid "No items connected!"
 msgstr ""
 
-#: Course.php:738
+#: Course.php:740
 msgctxt "Title Attr"
 msgid "View the connected list"
 msgstr ""

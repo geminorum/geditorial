@@ -81,7 +81,7 @@ msgid "There's no status available!"
 msgstr ""
 
 #: Workflow.php:94
-msgctxt "Meta Box Title"
+msgctxt "MetaBox Title"
 msgid "Workflow"
 msgstr "گردش کار"
 

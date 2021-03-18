@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gEditorial Widgets\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
-"POT-Creation-Date: 2020-11-23T07:46:07+00:00\n"
-"PO-Revision-Date: 2020-11-23 11:16+0330\n"
+"POT-Creation-Date: 2021-03-17T23:27:26+00:00\n"
+"PO-Revision-Date: 2021-03-18 02:58+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -15,10 +15,96 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
 "X-Poedit-Basepath: ../../includes/Modules/Widgets\n"
 
-#: Widgets.php:26
+#: Widgets.php:27
 msgctxt "Setting Title"
 msgid "Widgets"
 msgstr "ابزارک‌ها"
+
+#: Widgets.php:36
+msgctxt "Setting Title"
+msgid "Widget Areas"
+msgstr "مکان‌های ابزارک"
+
+#: Widgets.php:41
+msgctxt "Setting Title"
+msgid "Action"
+msgstr "کنش"
+
+#: Widgets.php:42
+msgctxt "Setting Description"
+msgid "Action hook where the widget appears on front-end."
+msgstr ""
+
+#: Widgets.php:49
+msgctxt "Setting Title"
+msgid "Priority"
+msgstr "اولویت"
+
+#: Widgets.php:50
+msgctxt "Setting Description"
+msgid "Action priority where the widget appears on the action."
+msgstr ""
+
+#: Widgets.php:56
+msgctxt "Setting Title"
+msgid "Name"
+msgstr "نام"
+
+#: Widgets.php:57
+msgctxt "Setting Description"
+msgid "The name or title of the sidebar displayed in the Widgets interface."
+msgstr ""
+
+#: Widgets.php:62
+msgctxt "Setting Title"
+msgid "Before Widget"
+msgstr "پیش از ابزارک"
+
+#: Widgets.php:63
+msgctxt "Setting Description"
+msgid "HTML opening before each widget markup on front-end."
+msgstr ""
+
+#: Widgets.php:70
+msgctxt "Setting Title"
+msgid "After Widget"
+msgstr "پس از ابزارک"
+
+#: Widgets.php:71
+msgctxt "Setting Description"
+msgid "HTML closing after each widget markup on front-end."
+msgstr ""
+
+#: Widgets.php:78
+msgctxt "Setting Title"
+msgid "Before Title"
+msgstr "پیش از عنوان"
+
+#: Widgets.php:79
+msgctxt "Setting Description"
+msgid "HTML opening before each widget title on front-end."
+msgstr ""
+
+#: Widgets.php:86
+msgctxt "Setting Title"
+msgid "After Title"
+msgstr "پس از عنوان"
+
+#: Widgets.php:87
+msgctxt "Setting Description"
+msgid "HTML closing after each widget title on front-end."
+msgstr ""
+
+#: Widgets.php:152
+msgctxt "Widget Area Unnamed"
+msgid "[Unnamed]"
+msgstr "(بی‌نام)"
+
+#. translators: %s: widget area name
+#: Widgets.php:161
+msgctxt "Widget Area Prefix"
+msgid "Editorial: %s"
+msgstr "تحریریه: %s"
 
 #: Widgets/Custom-HTML.php:18
 msgctxt "Widget Title"
@@ -111,7 +197,12 @@ msgctxt "Widget Description"
 msgid "Displays the results of current search criteria on selected taxonomies."
 msgstr "نتایج جست‌وجوی رده‌ها را بر اساس عبارت فعلی نمایش می‌دهد."
 
-#: Widgets/Search-Terms.php:98
+#: Widgets/Search-Terms.php:110
+msgctxt "Widget: Setting"
+msgid "Prefix Terms with Taxonomy Name"
+msgstr "عنوان رده‌بندی برای پیشوند رده‌ها"
+
+#: Widgets/Search-Terms.php:111
 msgctxt "Widget: Setting"
 msgid "Strip Hash-tags"
 msgstr "پاک‌کردن هش‌تگ‌ها"
@@ -126,32 +217,32 @@ msgctxt "Widget Description"
 msgid "Displays list of posts from a public WordPress site."
 msgstr "نمایش فهرست نوشته‌ها از یک سایت وردپرس عمومی."
 
-#: Widgets/WPRest-Posts.php:111
+#: Widgets/WPRest-Posts.php:112
 msgctxt "Widget: WP-REST Posts"
 msgid "Resource URL:"
 msgstr "نشانی منبع:"
 
-#: Widgets/WPRest-Posts.php:112
+#: Widgets/WPRest-Posts.php:113
 msgctxt "Widget: WP-REST Posts"
 msgid "Endpoint:"
 msgstr "پایانه:"
 
-#: Widgets/WPRest-Posts.php:113
+#: Widgets/WPRest-Posts.php:114
 msgctxt "Widget: WP-REST Posts"
 msgid "Tag IDs:"
 msgstr "شناسه برچسب‌ها:"
 
-#: Widgets/WPRest-Posts.php:114
+#: Widgets/WPRest-Posts.php:115
 msgctxt "Widget: WP-REST Posts"
 msgid "Category IDs:"
 msgstr "شناسه دسته‌ها:"
 
-#: Widgets/WPRest-Posts.php:115
+#: Widgets/WPRest-Posts.php:116
 msgctxt "Widget: WP-REST Posts"
 msgid "Extra Args:"
 msgstr "آرگیومنت‌های افزوده:"
 
-#: Widgets/WPRest-Posts.php:118
+#: Widgets/WPRest-Posts.php:120
 msgctxt "Widget: WP-REST Posts"
 msgid "No posts!"
 msgstr "خبری نیست!"

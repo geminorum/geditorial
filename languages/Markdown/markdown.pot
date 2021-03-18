@@ -1,104 +1,104 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gEditorial Markdown 3.18.0\n"
+"Project-Id-Version: gEditorial Markdown 3.19.0\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "Last-Translator: NULL\n"
 "Language-Team: NULL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2020-11-23T18:15:24+00:00\n"
+"POT-Creation-Date: 2021-03-18T15:49:12+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.4.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Markdown\n"
 "X-Domain: geditorial-markdown\n"
 
-#: Markdown.php:39
+#: Markdown.php:40
 msgctxt "Setting Title"
 msgid "Wiki Linking"
 msgstr ""
 
-#: Markdown.php:40
+#: Markdown.php:41
 msgctxt "Setting Description"
 msgid "Converts wiki like markup to internal links."
 msgstr ""
 
-#: Markdown.php:95
+#: Markdown.php:96
 msgctxt "Adminbar"
 msgid "Markdown Summary"
 msgstr ""
 
-#: Markdown.php:104
+#: Markdown.php:105
 msgctxt "Adminbar"
 msgid "Markdown Convert"
 msgstr ""
 
-#: Markdown.php:114
+#: Markdown.php:115
 msgctxt "Adminbar"
 msgid "Markdown Process"
 msgstr ""
 
-#: Markdown.php:122
+#: Markdown.php:123
 msgctxt "Adminbar"
 msgid "Markdown Cleanup"
 msgstr ""
 
-#: Markdown.php:130
+#: Markdown.php:131
 msgctxt "Adminbar"
 msgid "Markdown Discard"
 msgstr ""
 
-#: Markdown.php:160
+#: Markdown.php:161
 msgctxt "Message"
 msgid "Unable process Makrdown content into HTML. Please try again."
 msgstr ""
 
-#: Markdown.php:168
+#: Markdown.php:169
 msgctxt "Message"
 msgid "Unable convert content into Makrdown. Please try again."
 msgstr ""
 
-#: Markdown.php:177
+#: Markdown.php:178
 msgctxt "Message"
 msgid "Unable cleanup Makrdown content. Please try again."
 msgstr ""
 
-#: Markdown.php:185
+#: Markdown.php:186
 msgctxt "Message"
 msgid "Unable discard Makrdown content back into HTML. Please try again."
 msgstr ""
 
-#: Markdown.php:477
+#: Markdown.php:478
 msgctxt "Table Action"
 msgid "Convert into Markdown"
 msgstr ""
 
-#: Markdown.php:478
+#: Markdown.php:479
 msgctxt "Table Action"
 msgid "Re-Process Markdown"
 msgstr ""
 
-#: Markdown.php:479
+#: Markdown.php:480
 msgctxt "Table Action"
 msgid "Cleanup Markdown"
 msgstr ""
 
-#: Markdown.php:480
+#: Markdown.php:481
 msgctxt "Table Action"
 msgid "Discard Markdown"
 msgstr ""
 
-#: Markdown.php:491
+#: Markdown.php:492
 msgctxt "Table Column"
 msgid "Markdown"
 msgstr ""
 
-#: Markdown.php:502
+#: Markdown.php:503
 msgctxt "Header"
 msgid "Overview of Markdown Posts"
 msgstr ""
 
-#: Markdown.php:503
+#: Markdown.php:504
 msgctxt "Message"
 msgid "No markdown posts found."
 msgstr ""

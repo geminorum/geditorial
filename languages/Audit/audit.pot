@@ -1,24 +1,29 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gEditorial Audit 3.18.0\n"
+"Project-Id-Version: gEditorial Audit 3.19.0\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "Last-Translator: NULL\n"
 "Language-Team: NULL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2020-11-23T18:14:57+00:00\n"
+"POT-Creation-Date: 2021-03-18T15:48:35+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.4.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Audit\n"
 "X-Domain: geditorial-audit\n"
 
-#: Audit.php:43
+#: Audit.php:35
+msgctxt "Setting"
+msgid "There's no audit attributes available!"
+msgstr ""
+
+#: Audit.php:44
 msgctxt "Setting Title"
 msgid "Manage Roles"
 msgstr ""
 
-#: Audit.php:44
+#: Audit.php:45
 msgctxt "Setting Description"
 msgid "Roles that can Manage, Edit and Delete Audit Attributes."
 msgstr ""
@@ -33,188 +38,193 @@ msgctxt "Setting Description"
 msgid "Roles that can Assign Audit Attributes."
 msgstr ""
 
-#: Audit.php:59
+#: Audit.php:58
 msgctxt "Setting Title"
 msgid "Reports Roles"
 msgstr ""
 
-#: Audit.php:60
+#: Audit.php:59
 msgctxt "Setting Description"
 msgid "Roles that can see Audit Attributes Reports."
 msgstr ""
 
-#: Audit.php:67
+#: Audit.php:65
 msgctxt "Setting Title"
 msgid "Restricted Roles"
 msgstr ""
 
-#: Audit.php:68
+#: Audit.php:66
 msgctxt "Setting Description"
 msgid "Roles that check for Audit Attributes visibility."
 msgstr ""
 
-#: Audit.php:75
+#: Audit.php:72
 msgctxt "Setting Title"
 msgid "Restricted Terms"
 msgstr ""
 
-#: Audit.php:76
+#: Audit.php:73
 msgctxt "Setting Description"
 msgid "Handles visibility of each term based on meta values."
 msgstr ""
 
-#: Audit.php:79
+#: Audit.php:76
 msgctxt "Setting Option"
 msgid "Disabled"
 msgstr ""
 
-#: Audit.php:80
+#: Audit.php:77
 msgctxt "Setting Option"
 msgid "Hidden"
 msgstr ""
 
-#: Audit.php:86
+#: Audit.php:83
 msgctxt "Setting Title"
 msgid "Locking Terms"
 msgstr ""
 
-#: Audit.php:87
+#: Audit.php:84
 msgctxt "Setting Description"
 msgid "Selected terms will lock editing the post to audit managers."
 msgstr ""
 
-#: Audit.php:88
-msgctxt "Setting"
-msgid "There's no audit attributes available!"
+#: Audit.php:97
+msgctxt "Setting Title"
+msgid "Summary Excludes"
 msgstr ""
 
-#: Audit.php:127
+#: Audit.php:98
+msgctxt "Setting Description"
+msgid "Selected terms will be excluded on the content summary"
+msgstr ""
+
+#: Audit.php:132
 msgid "Audit Attribute"
 msgid_plural "Audit Attributes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Audit.php:130
+#: Audit.php:135
 msgctxt "Taxonomy Menu"
 msgid "Audit"
 msgstr ""
 
-#: Audit.php:131
+#: Audit.php:136
 msgctxt "Column Title"
 msgid "Audit Attributes"
 msgstr ""
 
-#: Audit.php:132
+#: Audit.php:137
 msgctxt "Show Option All"
 msgid "Audit"
 msgstr ""
 
-#: Audit.php:133
+#: Audit.php:138
 msgctxt "Show Option None"
 msgid "(Not audited)"
 msgstr ""
 
-#: Audit.php:142
+#: Audit.php:147
 msgctxt "Default Term"
 msgid "Audited"
 msgstr ""
 
-#: Audit.php:143
+#: Audit.php:148
 msgctxt "Default Term"
 msgid "Outdated"
 msgstr ""
 
-#: Audit.php:144
+#: Audit.php:149
 msgctxt "Default Term"
 msgid "Redundant"
 msgstr ""
 
-#: Audit.php:145
+#: Audit.php:150
 msgctxt "Default Term"
 msgid "Review SEO"
 msgstr ""
 
-#: Audit.php:146
+#: Audit.php:151
 msgctxt "Default Term"
 msgid "Review Style"
 msgstr ""
 
-#: Audit.php:147
+#: Audit.php:152
 msgctxt "Default Term"
 msgid "Trivial"
 msgstr ""
 
-#: Audit.php:148
+#: Audit.php:153
 msgctxt "Default Term"
 msgid "Initial Copy"
 msgstr ""
 
-#: Audit.php:149
+#: Audit.php:154
 msgctxt "Default Term"
 msgid "Unfinished"
 msgstr ""
 
-#: Audit.php:150
+#: Audit.php:155
 msgctxt "Default Term"
 msgid "No Content"
 msgstr ""
 
-#: Audit.php:151
+#: Audit.php:156
 msgctxt "Default Term"
 msgid "Imported"
 msgstr ""
 
-#: Audit.php:170
+#: Audit.php:175
 msgctxt "Button"
 msgid "Install Default Attributes"
 msgstr ""
 
-#: Audit.php:335
+#: Audit.php:342
 msgctxt "Adminbar"
 msgid "Audit Attributes"
 msgstr ""
 
-#: Audit.php:379
+#: Audit.php:386
 msgctxt "Adminbar: Title Attr"
 msgid "Auditing"
 msgstr ""
 
-#: Audit.php:386
+#: Audit.php:393
 msgctxt "Adminbar: Title Attr"
 msgid "Click to load attributes &hellip;"
 msgstr ""
 
-#: Audit.php:413
+#: Audit.php:420
 msgctxt "Dashboard Widget Title"
 msgid "Your Audit Summary"
 msgstr ""
 
-#: Audit.php:414
+#: Audit.php:421
 msgctxt "Dashboard Widget Title"
 msgid "Editorial Audit Summary"
 msgstr ""
 
-#: Audit.php:459
+#: Audit.php:469
 msgctxt "Message"
 msgid "No reports available!"
 msgstr ""
 
-#: Audit.php:465
+#: Audit.php:475
 msgctxt "Header"
 msgid "Audit Reports"
 msgstr ""
 
-#: Audit.php:469
+#: Audit.php:479
 msgctxt "Reports"
 msgid "By User"
 msgstr ""
 
-#: Audit.php:474
+#: Audit.php:484
 msgctxt "None"
 msgid "All Users"
 msgstr ""
 
-#: Audit.php:483
+#: Audit.php:493
 msgctxt "Button"
 msgid "Apply Filter"
 msgstr ""

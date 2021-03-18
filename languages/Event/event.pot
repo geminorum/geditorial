@@ -1,13 +1,13 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gEditorial Event 3.18.0\n"
+"Project-Id-Version: gEditorial Event 3.19.0\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "Last-Translator: NULL\n"
 "Language-Team: NULL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2020-11-23T18:15:12+00:00\n"
+"POT-Creation-Date: 2021-03-18T15:48:58+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.4.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Event\n"
@@ -216,42 +216,42 @@ msgctxt "Button"
 msgid "Install Default Calendar Types"
 msgstr ""
 
-#: Event.php:507
+#: Event.php:509
 msgctxt "Meta Box Input"
 msgid "Date Start"
 msgstr ""
 
-#: Event.php:508
+#: Event.php:510
 msgctxt "Meta Box Input Placeholder"
 msgid "Date Start"
 msgstr ""
 
-#: Event.php:517
+#: Event.php:519
 msgctxt "Meta Box Input"
 msgid "Time Start"
 msgstr ""
 
-#: Event.php:518
+#: Event.php:520
 msgctxt "Meta Box Input Placeholder"
 msgid "Time Start"
 msgstr ""
 
-#: Event.php:529
+#: Event.php:531
 msgctxt "Meta Box Input"
 msgid "Date End"
 msgstr ""
 
-#: Event.php:530
+#: Event.php:532
 msgctxt "Meta Box Input Placeholder"
 msgid "Date End"
 msgstr ""
 
-#: Event.php:539
+#: Event.php:541
 msgctxt "Meta Box Input"
 msgid "Time End"
 msgstr ""
 
-#: Event.php:540
+#: Event.php:542
 msgctxt "Meta Box Input Placeholder"
 msgid "Time End"
 msgstr ""

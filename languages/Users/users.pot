@@ -1,245 +1,240 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gEditorial Users 3.18.0\n"
+"Project-Id-Version: gEditorial Users 3.19.0\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "Last-Translator: NULL\n"
 "Language-Team: NULL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2020-11-23T18:15:52+00:00\n"
+"POT-Creation-Date: 2021-03-18T15:49:45+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.4.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Users\n"
 "X-Domain: geditorial-users\n"
 
-#: Users.php:49
+#: Users.php:50
 msgctxt "Setting Title"
 msgid "Posttype Counts"
 msgstr ""
 
-#: Users.php:50
+#: Users.php:51
 msgctxt "Setting Description"
 msgid "Displays posttype count for each user"
 msgstr ""
 
-#: Users.php:54
+#: Users.php:55
 msgctxt "Setting Title"
 msgid "User Groups"
 msgstr ""
 
-#: Users.php:55
+#: Users.php:56
 msgctxt "Setting Description"
 msgid "Taxonomy for organizing users in groups"
 msgstr ""
 
-#: Users.php:59
+#: Users.php:60
 msgctxt "Setting Title"
 msgid "User Types"
 msgstr ""
 
-#: Users.php:60
+#: Users.php:61
 msgctxt "Setting Description"
 msgid "Taxonomy for organizing users in types"
 msgstr ""
 
-#: Users.php:66
+#: Users.php:67
 msgctxt "Setting Title"
 msgid "Author Restrictions"
 msgstr ""
 
-#: Users.php:67
+#: Users.php:68
 msgctxt "Setting Description"
 msgid "Enhance admin edit page for authors"
 msgstr ""
 
-#: Users.php:71
+#: Users.php:72
 msgctxt "Setting Title"
 msgid "Author Categories"
 msgstr ""
 
-#: Users.php:72
+#: Users.php:73
 msgctxt "Setting Description"
 msgid "Limits each author to post just on selected categories."
 msgstr ""
 
-#: Users.php:102
+#: Users.php:103
 msgctxt "Taxonomy Menu"
 msgid "Groups"
 msgstr ""
 
-#: Users.php:103
-#: Users.php:108
+#: Users.php:104
+#: Users.php:109
 msgctxt "Column Title"
 msgid "Users"
 msgstr ""
 
-#: Users.php:104
+#: Users.php:105
 msgctxt "Show Option All"
 msgid "All user groups"
 msgstr ""
 
-#: Users.php:107
+#: Users.php:108
 msgctxt "Taxonomy Menu"
 msgid "Types"
 msgstr ""
 
-#: Users.php:109
+#: Users.php:110
 msgctxt "Show Option All"
 msgid "All user types"
 msgstr ""
 
-#: Users.php:111
+#: Users.php:112
 msgctxt "Column Title"
 msgid "Summary"
 msgstr ""
 
-#: Users.php:114
+#: Users.php:115
 msgid "User Group"
 msgid_plural "User Groups"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Users.php:115
+#: Users.php:116
 msgid "User Type"
 msgid_plural "User Types"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Users.php:247
+#: Users.php:120
+msgctxt "Label: Not Found"
+msgid "There are no groups available."
+msgstr ""
+
+#: Users.php:123
+msgctxt "Label: Not Found"
+msgid "There are no types available."
+msgstr ""
+
+#: Users.php:262
 msgctxt "Dashboard Widget Title"
 msgid "Your Profile"
 msgstr ""
 
-#: Users.php:249
+#: Users.php:265
 msgctxt "Dashboard Widget Action"
 msgid "Edit your profile"
 msgstr ""
 
-#: Users.php:250
+#: Users.php:266
 msgctxt "Dashboard Widget Action"
 msgid "Edit"
 msgstr ""
 
-#: Users.php:334
+#: Users.php:350
 msgctxt "Row Icon Title"
 msgid "Group"
 msgstr ""
 
-#: Users.php:348
+#: Users.php:364
 msgctxt "Row Icon Title"
 msgid "Type"
 msgstr ""
 
-#: Users.php:390
-msgctxt "Header"
-msgid "Site Groups"
-msgstr ""
-
-#: Users.php:393
-msgctxt "Header"
-msgid "User Groups"
-msgstr ""
-
-#: Users.php:418
-msgctxt "Message"
-msgid "There are no groups available."
-msgstr ""
-
-#: Users.php:431
+#: Users.php:417
 msgctxt "Header"
 msgid "Site Categories"
 msgstr ""
 
-#: Users.php:432
+#: Users.php:418
 msgctxt "Message"
 msgid "Restrict non editor users to post in selected categories only."
 msgstr ""
 
-#: Users.php:435
+#: Users.php:421
 msgctxt "Header"
 msgid "User Categories"
 msgstr ""
 
-#: Users.php:463
+#: Users.php:449
 msgctxt "Message"
 msgid "There are no categories available."
 msgstr ""
 
-#: Users.php:561
+#: Users.php:545
 msgctxt "Row Icon Title"
 msgid "Name"
 msgstr ""
 
-#: Users.php:568
+#: Users.php:552
 msgctxt "Row Icon Title"
 msgid "Email"
 msgstr ""
 
-#: Users.php:575
+#: Users.php:559
 msgctxt "Row Icon Title"
 msgid "URL"
 msgstr ""
 
-#: Users.php:593
+#: Users.php:577
 msgctxt "Row Icon Title"
 msgid "Registered"
 msgstr ""
 
 #. translators: %s: date
-#: Users.php:595
+#: Users.php:579
 msgctxt "Row"
 msgid "Registered on %s"
 msgstr ""
 
-#: Users.php:600
+#: Users.php:584
 msgctxt "Row Icon Title"
 msgid "Roles"
 msgstr ""
 
-#: Users.php:634
+#: Users.php:618
 msgctxt "Header"
 msgid "User Reports"
 msgstr ""
 
-#: Users.php:638
+#: Users.php:622
 msgctxt "Header"
 msgid "By PostType"
 msgstr ""
 
-#: Users.php:653
+#: Users.php:637
 msgctxt "None Title"
 msgid "All Users"
 msgstr ""
 
-#: Users.php:663
+#: Users.php:647
 msgctxt "None Title"
 msgid "All Months"
 msgstr ""
 
-#: Users.php:671
+#: Users.php:655
 msgctxt "Button"
 msgid "Query Stats"
 msgstr ""
 
-#: Users.php:744
+#: Users.php:730
 msgctxt "Header"
 msgid "Re-Map Authors"
 msgstr ""
 
 #. translators: %s: error
-#: Users.php:751
+#: Users.php:737
 msgctxt "Message"
 msgid "Before you can upload a file, you will need to fix the following error: %s"
 msgstr ""
 
-#: Users.php:766
-msgctxt "Button"
-msgid "Upload and Re-Map"
-msgstr ""
-
 #. translators: %s: size
-#: Users.php:768
+#: Users.php:751
 msgctxt "Message"
 msgid "Checks for post authors and re-map them with current registered users. Maximum upload size: <b>%s</b>"
+msgstr ""
+
+#: Users.php:755
+msgctxt "Button"
+msgid "Upload and Re-Map"
 msgstr ""

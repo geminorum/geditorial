@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gEditorial Book\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
-"POT-Creation-Date: 2020-11-19T13:06:07+00:00\n"
-"PO-Revision-Date: 2020-11-19 16:38+0330\n"
+"POT-Creation-Date: 2020-12-15T12:59:39+00:00\n"
+"PO-Revision-Date: 2020-12-15 16:31+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -16,494 +16,519 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
 
 #. translators: %1$s: plugin url, %2$s: plugin url
-#: Book.php:38
+#: Book.php:39
 msgctxt "Settings Intro"
 msgid ""
 "Please consider installing <a href=\"%1$s\" target=\"_blank\">Posts to "
 "Posts</a> or <a href=\"%2$s\" target=\"_blank\">Objects to Objects</a>."
 msgstr ""
 
-#: Book.php:78
+#: Book.php:79
 msgctxt "Setting Title"
 msgid "Connected From Title"
 msgstr "عنوان مرتبط از"
 
-#: Book.php:84
+#: Book.php:85
 msgctxt "Setting Title"
 msgid "Connected To Title"
 msgstr "عنوان مرتبط به"
 
-#: Book.php:134
+#: Book.php:135
 msgid "Publication"
 msgid_plural "Publications"
 msgstr[0] "نشرها"
 msgstr[1] "نشر"
 
-#: Book.php:135
+#: Book.php:136
 msgid "Subject"
 msgid_plural "Subjects"
 msgstr[0] "موضوعات"
 msgstr[1] "موضوع"
 
-#: Book.php:136
+#: Book.php:137
 msgid "Library"
 msgid_plural "Libraries"
 msgstr[0] "کتاب‌خانه‌ها"
 msgstr[1] "کتاب‌خانه"
 
-#: Book.php:137
+#: Book.php:138
 msgid "Publisher"
 msgid_plural "Publishers"
 msgstr[0] "ناشرین"
 msgstr[1] "ناشر"
 
-#: Book.php:138
+#: Book.php:139
 msgid "Publication Type"
 msgid_plural "Publication Types"
 msgstr[0] "نوع‌های نشر"
 msgstr[1] "نوع نشر"
 
-#: Book.php:139
+#: Book.php:140
 msgid "Publication Status"
 msgid_plural "Publication Statuses"
 msgstr[0] "وضعیت‌های نشر"
 msgstr[1] "وضعیت نشر"
 
-#: Book.php:140
+#: Book.php:141
 msgid "Publication Size"
 msgid_plural "Publication Sizes"
 msgstr[0] "قطع‌ها نشر"
 msgstr[1] "قطع نشر"
 
-#: Book.php:141
+#: Book.php:142
 msgid "Publication Audience"
 msgid_plural "Publication Audiences"
 msgstr[0] "مخاطبین"
 msgstr[1] "مخاطب"
 
-#: Book.php:147
+#: Book.php:148
 msgctxt "P2P"
 msgid "Pages"
 msgstr "صفحه"
 
 #. translators: %s: pages placeholder
-#: Book.php:150
+#: Book.php:151
 msgctxt "P2P"
 msgid "P. %s"
 msgstr "ص %s"
 
-#: Book.php:153
+#: Book.php:154
 msgctxt "P2P"
 msgid "Volume"
 msgstr "جلد"
 
 #. translators: %s: volumes placeholder
-#: Book.php:156
+#: Book.php:157
 msgctxt "P2P"
 msgid "Vol. %s"
 msgstr "ج %s"
 
-#: Book.php:159
+#: Book.php:160
 msgctxt "P2P"
 msgid "Reference"
 msgstr "ارجاع"
 
-#: Book.php:164
+#: Book.php:165
 msgctxt "P2P"
 msgid "Description"
 msgstr "توضیحات"
 
-#: Book.php:178
+#: Book.php:179
 msgctxt "Posttype Featured"
 msgid "Cover Image"
 msgstr "تصویر روی جلد"
 
-#: Book.php:179
+#: Book.php:180
 msgctxt "MetaBox Title"
 msgid "Metadata"
 msgstr "متا"
 
-#: Book.php:180
+#: Book.php:181
 msgctxt "MetaBox Title"
 msgid "Curator"
 msgstr "کتابدار"
 
-#: Book.php:181
+#: Book.php:182
 msgctxt "MetaBox Title"
 msgid "Summary"
 msgstr "خلاصه"
 
-#: Book.php:182
+#: Book.php:183
 msgctxt "Column Title"
 msgid "Cover"
 msgstr "جلد"
 
-#: Book.php:185
+#: Book.php:186
 msgctxt "MetaBox Title"
 msgid "Subject"
 msgstr "موضوع"
 
-#: Book.php:186
+#: Book.php:187
 msgctxt "Column Title"
 msgid "Publication Subject"
 msgstr "موضوع نشر"
 
-#: Book.php:189
+#: Book.php:190
 msgctxt "MetaBox Title"
 msgid "Library"
 msgstr "کتاب‌خانه"
 
-#: Book.php:190
+#: Book.php:191
 msgctxt "Column Title"
 msgid "Publication Library"
 msgstr "کتاب‌خانه نشر"
 
-#: Book.php:193
+#: Book.php:194
 msgctxt "MetaBox Title"
 msgid "Publisher"
 msgstr "ناشر"
 
-#: Book.php:194
+#: Book.php:195
 msgctxt "Column Title"
 msgid "Publication Publisher"
 msgstr "ناشر"
 
-#: Book.php:197
+#: Book.php:198
 msgctxt "MetaBox Title"
 msgid "Status"
 msgstr "وضعیت"
 
-#: Book.php:198
+#: Book.php:199
 msgctxt "Column Title"
 msgid "Publication Status"
 msgstr "وضعیت نشر"
 
-#: Book.php:201
+#: Book.php:202
 msgctxt "MetaBox Title"
 msgid "Type"
 msgstr "نوع"
 
-#: Book.php:202
+#: Book.php:203
 msgctxt "Column Title"
 msgid "Publication Type"
 msgstr "نوع نشر"
 
-#: Book.php:205
+#: Book.php:206
 msgctxt "MetaBox Title"
 msgid "Size"
 msgstr "قطع"
 
-#: Book.php:206
+#: Book.php:207
 msgctxt "Column Title"
 msgid "Publication Size"
 msgstr "اندازه انتشار"
 
-#: Book.php:209
+#: Book.php:210
 msgctxt "MetaBox Title"
 msgid "Audience"
 msgstr "مخاطب"
 
-#: Book.php:210
+#: Book.php:211
 msgctxt "Column Title"
 msgid "Publication Audience"
 msgstr "مخاطب نشر"
 
-#: Book.php:220
+#: Book.php:221
+msgctxt "Publication Type: Default Term"
+msgid "Paperback"
+msgstr "شومیز"
+
+#: Book.php:222
+msgctxt "Publication Type: Default Term"
+msgid "Hardcover"
+msgstr "گالینگور"
+
+#: Book.php:223
+msgctxt "Publication Type: Default Term"
+msgid "E-Book"
+msgstr "کتاب الکترونیک"
+
+#: Book.php:224
+msgctxt "Publication Type: Default Term"
+msgid "Disc"
+msgstr "دیسک"
+
+#: Book.php:227
 msgctxt "Publication Size: Default Term"
 msgid "Octavo"
 msgstr "وزیری"
 
-#: Book.php:221
+#: Book.php:228
 msgctxt "Publication Size: Default Term"
 msgid "Folio"
 msgstr "سلطانی"
 
-#: Book.php:222
+#: Book.php:229
 msgctxt "Publication Size: Default Term"
 msgid "Medium Octavo"
 msgstr "رقعی"
 
-#: Book.php:223
+#: Book.php:230
 msgctxt "Publication Size: Default Term"
 msgid "Quatro"
 msgstr "رحلی"
 
-#: Book.php:224
+#: Book.php:231
 msgctxt "Publication Size: Default Term"
 msgid "Duodecimo"
 msgstr "پالتویی"
 
-#: Book.php:225
+#: Book.php:232
 msgctxt "Publication Size: Default Term"
 msgid "Sextodecimo"
 msgstr "جیبی"
 
-#: Book.php:230
+#: Book.php:237
 msgctxt "P2P"
 msgid "Connected Publications"
 msgstr "منشورات مرتبط"
 
-#: Book.php:231
+#: Book.php:238
 msgctxt "P2P"
 msgid "Connected Posts"
 msgstr "نوشته‌های مرتبط"
 
-#: Book.php:235
+#: Book.php:242
 msgctxt "P2P"
 msgid "Post"
 msgstr "نوشته"
 
-#: Book.php:236
+#: Book.php:243
 msgctxt "P2P"
 msgid "Search Posts"
 msgstr "جست‌وجوی نوشته‌ها"
 
-#: Book.php:237
+#: Book.php:244
 msgctxt "P2P"
 msgid "No posts found."
 msgstr "پیدا نشد."
 
-#: Book.php:238
+#: Book.php:245
 msgctxt "P2P"
 msgid "Connect to a post"
 msgstr "ارتباط با یک نوشته"
 
-#: Book.php:242
+#: Book.php:249
 msgctxt "P2P"
 msgid "Publications"
 msgstr "منشورات"
 
-#: Book.php:243
+#: Book.php:250
 msgctxt "P2P"
 msgid "Search Publications"
 msgstr "جست‌وجوی منشورات"
 
-#: Book.php:244
+#: Book.php:251
 msgctxt "P2P"
 msgid "No publications found."
 msgstr "پیدا نشد."
 
-#: Book.php:245
+#: Book.php:252
 msgctxt "P2P"
 msgid "Connect to a publication"
 msgstr "ارتباط با یک نشر"
 
-#: Book.php:258
+#: Book.php:265
 msgctxt "Field Title"
 msgid "Collection Title"
 msgstr "عنوان مجموعه"
 
-#: Book.php:259
+#: Book.php:266
 msgctxt "Field Description"
 msgid "This Publication Is Part of a Collection"
 msgstr "این نشر بخشی از یک مجموعه است"
 
-#: Book.php:263
+#: Book.php:270
 msgctxt "Field Title"
 msgid "Subtitle"
 msgstr "عنوان فرعی"
 
-#: Book.php:264
+#: Book.php:271
 msgctxt "Field Description"
 msgid "Subtitle of the Publication"
 msgstr "عنوان فرعی نشر"
 
-#: Book.php:268
+#: Book.php:275
 msgctxt "Field Title"
 msgid "Alternative Title"
 msgstr "عنوان دیگر"
 
-#: Book.php:269
+#: Book.php:276
 msgctxt "Field Description"
 msgid "The Original Title or Title in Another Language"
 msgstr "عنوان اصلی یا عنوان در زبان دیگر"
 
-#: Book.php:272
+#: Book.php:279
 msgctxt "Field Title"
 msgid "Publication By-Line"
 msgstr "خط تألیف"
 
-#: Book.php:273
+#: Book.php:280
 msgctxt "Field Description"
 msgid "Text to override the publication author"
 msgstr "متنی برای جای‌گزینی مؤلف نشر"
 
-#: Book.php:277
+#: Book.php:284
 msgctxt "Field Title"
 msgid "Edition"
 msgstr "ویراست"
 
-#: Book.php:278
+#: Book.php:285
 msgctxt "Field Description"
 msgid "Edition of the Publication"
 msgstr "ویراست نشر"
 
-#: Book.php:281
+#: Book.php:288
 msgctxt "Field Title"
 msgid "Print"
 msgstr "چاپ"
 
-#: Book.php:282
+#: Book.php:289
 msgctxt "Field Description"
 msgid "Specefic Print of the Publication"
 msgstr "نسخه مشخص‌شده نشر"
 
-#: Book.php:286
+#: Book.php:293
 msgctxt "Field Title"
 msgid "Publish Location"
 msgstr "محل انتشار"
 
-#: Book.php:287
+#: Book.php:294
 msgctxt "Field Description"
 msgid "Location Published"
 msgstr "مکان انتشار"
 
-#: Book.php:291
+#: Book.php:298
 msgctxt "Field Title"
 msgid "Publication Date"
 msgstr "تاریخ انتشار"
 
-#: Book.php:292
+#: Book.php:299
 msgctxt "Field Description"
 msgid "Date Published"
 msgstr "تاریخ انتشار"
 
-#: Book.php:296
+#: Book.php:303
 msgctxt "Field Title"
 msgid "ISBN"
 msgstr "شابک"
 
-#: Book.php:297
+#: Book.php:304
 msgctxt "Field Description"
 msgid "International Standard Book Number"
 msgstr "شمارهٔ استاندارد بین‌المللی کتاب"
 
-#: Book.php:302
+#: Book.php:309
 msgctxt "Field Title"
 msgid "Pages"
 msgstr "صفحات"
 
-#: Book.php:303
+#: Book.php:310
 msgctxt "Field Description"
 msgid "Total Pages of the Publication"
 msgstr "شمار صفحات نشر"
 
-#: Book.php:308
+#: Book.php:315
 msgctxt "Field Title"
 msgid "Volumes"
 msgstr "مجلدات"
 
-#: Book.php:309
+#: Book.php:316
 msgctxt "Field Description"
 msgid "Total Volumes of the Publication"
 msgstr "شمار مجلدات نشر"
 
-#: Book.php:314
+#: Book.php:321
 msgctxt "Field Title"
 msgid "Size"
 msgstr "قطع"
 
-#: Book.php:315
+#: Book.php:322
 msgctxt "Field Description"
 msgid "The Size of the Publication, Mainly Books"
 msgstr "اندازه نشر"
 
-#: Book.php:320
+#: Book.php:327
 msgctxt "Field Title"
 msgid "Reference"
 msgstr "ارجاع"
 
-#: Book.php:321
+#: Book.php:328
 msgctxt "Field Description"
 msgid "Full reference to this publication"
 msgstr "متن کامل ارجاع به این نشر"
 
-#: Book.php:346
+#: Book.php:356
+msgctxt "Button"
+msgid "Install Default Types"
+msgstr "نصب انواع پیش‌فرض"
+
+#: Book.php:359
 msgctxt "Button"
 msgid "Install Default Sizes"
 msgstr "نصب اندازه‌های پیش‌فرض"
 
-#: Book.php:467
+#: Book.php:480
 msgctxt "Dashboard Widget Title"
 msgid "Your Publications Summary"
 msgstr "گزارش نشریات شما"
 
-#: Book.php:468
+#: Book.php:481
 msgctxt "Dashboard Widget Title"
 msgid "Editorial Publications Summary"
 msgstr "گزارش نشریات تحریریه"
 
 #. translators: %s: isbn placeholder
-#: Book.php:494
+#: Book.php:505
 msgctxt "Display"
 msgid "ISBN: %s"
 msgstr "شابک: %s"
 
 #. translators: %s: edition placeholder
-#: Book.php:496
+#: Book.php:507
 msgctxt "Display"
 msgid "%s Edition"
 msgstr "ویراست %s"
 
 #. translators: %s: print placeholder
-#: Book.php:498
+#: Book.php:509
 msgctxt "Display"
 msgid "%s Print"
 msgstr "چاپ %s"
 
 #. translators: %s: pages count placeholder
-#: Book.php:500
+#: Book.php:511
 msgctxt "Display"
 msgid "%s Pages"
 msgstr "%s صفحه"
 
 #. translators: %s: volumes count placeholder
-#: Book.php:502
+#: Book.php:513
 msgctxt "Display"
 msgid "%s Volumes"
 msgstr "%s جلد"
 
-#: Book.php:804
+#: Book.php:814
 msgctxt "Table Column"
 msgid "Import Meta"
 msgstr "متای درون‌ریزی"
 
-#: Book.php:817
+#: Book.php:827
 msgctxt "Table Column"
 msgid "Import Related"
 msgstr "ارتباط درون‌ریزی"
 
-#: Book.php:824
+#: Book.php:834
 msgctxt "Tools"
 msgid "By ID"
 msgstr "با شناسه"
 
-#: Book.php:828
+#: Book.php:838
 msgctxt "Tools"
 msgid "By Title"
 msgstr "با عنوان"
 
-#: Book.php:836
+#: Book.php:846
 msgctxt "Header"
 msgid "Overview of Meta Information about Related Publications"
 msgstr "مروری بر اطلاعات فراداده درباره نشرهای مرتبط"
 
-#: Book.php:870
+#: Book.php:880
 msgctxt "Import Field"
 msgid "Book: Publication ID"
 msgstr "کتاب: شناسه نشر مرتبط"
 
-#: Book.php:871
+#: Book.php:881
 msgctxt "Import Field"
 msgid "Book: Publication Title"
 msgstr "کتاب: عنوان نشر مرتبط"
 
-#: Book.php:872
+#: Book.php:882
 msgctxt "Import Field"
 msgid "Book: Publication Ref (P2P)"
 msgstr "کتاب: ارجاع نشر مرتبط"
 
-#: Book.php:873
+#: Book.php:883
 msgctxt "Import Field"
 msgid "Book: Publication Desc (P2P)"
 msgstr "کتاب: توضیحات نشر مرتبط"

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gEditorial Audit\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
-"POT-Creation-Date: 2020-11-19T13:06:06+00:00\n"
-"PO-Revision-Date: 2020-11-19 16:40+0330\n"
+"POT-Creation-Date: 2020-12-15T12:59:38+00:00\n"
+"PO-Revision-Date: 2020-12-15 16:30+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -15,12 +15,17 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Audit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
 
-#: Audit.php:43
+#: Audit.php:35
+msgctxt "Setting"
+msgid "There's no audit attributes available!"
+msgstr "برچسبی برای بازبینی در دسترس نیست!"
+
+#: Audit.php:44
 msgctxt "Setting Title"
 msgid "Manage Roles"
 msgstr "نقش‌های مدیریت بازبینی"
 
-#: Audit.php:44
+#: Audit.php:45
 msgctxt "Setting Description"
 msgid "Roles that can Manage, Edit and Delete Audit Attributes."
 msgstr "نقش‌هایی که میتوانند برچسب‌های بازبینی را مدیریت، ویرایش و یا حذف کنند."
@@ -35,188 +40,193 @@ msgctxt "Setting Description"
 msgid "Roles that can Assign Audit Attributes."
 msgstr "نقش‌هایی که میتوانند برچسب‌های بازبینی را به نوشته‌ها اختصاص دهند."
 
-#: Audit.php:59
+#: Audit.php:58
 msgctxt "Setting Title"
 msgid "Reports Roles"
 msgstr "نقش‌های بررسی گزارشات"
 
-#: Audit.php:60
+#: Audit.php:59
 msgctxt "Setting Description"
 msgid "Roles that can see Audit Attributes Reports."
 msgstr "نقش‌هایی که میتوانند برچسب‌های بازبینی را ببینند."
 
-#: Audit.php:67
+#: Audit.php:65
 msgctxt "Setting Title"
 msgid "Restricted Roles"
 msgstr "نقش‌های محدود‌شده"
 
-#: Audit.php:68
+#: Audit.php:66
 msgctxt "Setting Description"
 msgid "Roles that check for Audit Attributes visibility."
 msgstr "نقش‌هایی که سطح دسترسی هر برچسب بازبینی برای نمایش به آن‌ها بررسی میشود."
 
-#: Audit.php:75
+#: Audit.php:72
 msgctxt "Setting Title"
 msgid "Restricted Terms"
 msgstr "رده‌های محدود‌شده"
 
-#: Audit.php:76
+#: Audit.php:73
 msgctxt "Setting Description"
 msgid "Handles visibility of each term based on meta values."
 msgstr "بر اساس متای هر رده، نمایانی آن را مشخص میکند."
 
-#: Audit.php:79
+#: Audit.php:76
 msgctxt "Setting Option"
 msgid "Disabled"
 msgstr "غیرفعال"
 
-#: Audit.php:80
+#: Audit.php:77
 msgctxt "Setting Option"
 msgid "Hidden"
 msgstr "پنهان"
 
-#: Audit.php:86
+#: Audit.php:83
 msgctxt "Setting Title"
 msgid "Locking Terms"
 msgstr "رده‌های قفل‌کننده"
 
-#: Audit.php:87
+#: Audit.php:84
 msgctxt "Setting Description"
 msgid "Selected terms will lock editing the post to audit managers."
 msgstr "رده‌های انتخاب شده، نوشته را برای مدیران بازبینی قفل میکند."
 
-#: Audit.php:88
-msgctxt "Setting"
-msgid "There's no audit attributes available!"
-msgstr "برچسبی برای بازبینی در دسترس نیست!"
+#: Audit.php:97
+msgctxt "Setting Title"
+msgid "Summary Excludes"
+msgstr "استثنائات گزارش"
 
-#: Audit.php:127
+#: Audit.php:98
+msgctxt "Setting Description"
+msgid "Selected terms will be excluded on the content summary"
+msgstr "رده‌های انتخاب شده، از گزارش بازبینی کنار گذاشته می‌شوند."
+
+#: Audit.php:132
 msgid "Audit Attribute"
 msgid_plural "Audit Attributes"
 msgstr[0] "برچسب بازبینی"
 msgstr[1] "برچسب‌های بازبینی"
 
-#: Audit.php:130
+#: Audit.php:135
 msgctxt "Taxonomy Menu"
 msgid "Audit"
 msgstr "بازبینی"
 
-#: Audit.php:131
+#: Audit.php:136
 msgctxt "Column Title"
 msgid "Audit Attributes"
 msgstr "برچسب‌های بازبینی"
 
-#: Audit.php:132
+#: Audit.php:137
 msgctxt "Show Option All"
 msgid "Audit"
 msgstr "بازبینی"
 
-#: Audit.php:133
+#: Audit.php:138
 msgctxt "Show Option None"
 msgid "(Not audited)"
 msgstr "(بازبینی‌نشده)"
 
-#: Audit.php:142
+#: Audit.php:147
 msgctxt "Default Term"
 msgid "Audited"
 msgstr "تکمیل"
 
-#: Audit.php:143
+#: Audit.php:148
 msgctxt "Default Term"
 msgid "Outdated"
 msgstr "منسوخ"
 
-#: Audit.php:144
+#: Audit.php:149
 msgctxt "Default Term"
 msgid "Redundant"
 msgstr "نالازم"
 
-#: Audit.php:145
+#: Audit.php:150
 msgctxt "Default Term"
 msgid "Review SEO"
 msgstr "سئو بازبینی شود"
 
-#: Audit.php:146
+#: Audit.php:151
 msgctxt "Default Term"
 msgid "Review Style"
 msgstr "چینش بازبینی شود"
 
-#: Audit.php:147
+#: Audit.php:152
 msgctxt "Default Term"
 msgid "Trivial"
 msgstr "کم‌اهمیت"
 
-#: Audit.php:148
+#: Audit.php:153
 msgctxt "Default Term"
 msgid "Initial Copy"
 msgstr "کپی اولیه"
 
-#: Audit.php:149
+#: Audit.php:154
 msgctxt "Default Term"
 msgid "Unfinished"
 msgstr "ناتمام"
 
-#: Audit.php:150
+#: Audit.php:155
 msgctxt "Default Term"
 msgid "No Content"
 msgstr "بدون متن"
 
-#: Audit.php:151
+#: Audit.php:156
 msgctxt "Default Term"
 msgid "Imported"
 msgstr "درون‌ریزی‌شده"
 
-#: Audit.php:170
+#: Audit.php:175
 msgctxt "Button"
 msgid "Install Default Attributes"
 msgstr "نصب برچسب‌های پیش‌فرض بازبینی"
 
-#: Audit.php:335
+#: Audit.php:340
 msgctxt "Adminbar"
 msgid "Audit Attributes"
 msgstr "برچسب‌های بازبینی"
 
-#: Audit.php:379
+#: Audit.php:384
 msgctxt "Adminbar: Title Attr"
 msgid "Auditing"
 msgstr "بازبینی"
 
-#: Audit.php:386
+#: Audit.php:391
 msgctxt "Adminbar: Title Attr"
 msgid "Click to load attributes &hellip;"
 msgstr "برای بارگیری برچسب‌های بازبینی کلیک کنید &hellip;"
 
-#: Audit.php:413
+#: Audit.php:418
 msgctxt "Dashboard Widget Title"
 msgid "Your Audit Summary"
 msgstr "گزارش بازبینی شما"
 
-#: Audit.php:414
+#: Audit.php:419
 msgctxt "Dashboard Widget Title"
 msgid "Editorial Audit Summary"
 msgstr "گزارش بازبینی تحریریه"
 
-#: Audit.php:459
+#: Audit.php:462
 msgctxt "Message"
 msgid "No reports available!"
 msgstr "گزارشی در دسترس نیست!"
 
-#: Audit.php:465
+#: Audit.php:468
 msgctxt "Header"
 msgid "Audit Reports"
 msgstr "گزارش‌های بازبینی"
 
-#: Audit.php:469
+#: Audit.php:472
 msgctxt "Reports"
 msgid "By User"
 msgstr "به تفکیک کاربر"
 
-#: Audit.php:474
+#: Audit.php:477
 msgctxt "None"
 msgid "All Users"
 msgstr "همهٔ کاربران"
 
-#: Audit.php:483
+#: Audit.php:486
 msgctxt "Button"
 msgid "Apply Filter"
 msgstr "اعمال پالایه"

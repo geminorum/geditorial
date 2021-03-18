@@ -1,21 +1,107 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gEditorial Widgets 3.18.0\n"
+"Project-Id-Version: gEditorial Widgets 3.19.0\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "Last-Translator: NULL\n"
 "Language-Team: NULL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2020-11-23T18:15:54+00:00\n"
+"POT-Creation-Date: 2021-03-18T15:49:51+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.4.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Widgets\n"
 "X-Domain: geditorial-widgets\n"
 
-#: Widgets.php:26
+#: Widgets.php:27
 msgctxt "Setting Title"
 msgid "Widgets"
+msgstr ""
+
+#: Widgets.php:36
+msgctxt "Setting Title"
+msgid "Widget Areas"
+msgstr ""
+
+#: Widgets.php:41
+msgctxt "Setting Title"
+msgid "Action"
+msgstr ""
+
+#: Widgets.php:42
+msgctxt "Setting Description"
+msgid "Action hook where the widget appears on front-end."
+msgstr ""
+
+#: Widgets.php:49
+msgctxt "Setting Title"
+msgid "Priority"
+msgstr ""
+
+#: Widgets.php:50
+msgctxt "Setting Description"
+msgid "Action priority where the widget appears on the action."
+msgstr ""
+
+#: Widgets.php:56
+msgctxt "Setting Title"
+msgid "Name"
+msgstr ""
+
+#: Widgets.php:57
+msgctxt "Setting Description"
+msgid "The name or title of the sidebar displayed in the Widgets interface."
+msgstr ""
+
+#: Widgets.php:62
+msgctxt "Setting Title"
+msgid "Before Widget"
+msgstr ""
+
+#: Widgets.php:63
+msgctxt "Setting Description"
+msgid "HTML opening before each widget markup on front-end."
+msgstr ""
+
+#: Widgets.php:70
+msgctxt "Setting Title"
+msgid "After Widget"
+msgstr ""
+
+#: Widgets.php:71
+msgctxt "Setting Description"
+msgid "HTML closing after each widget markup on front-end."
+msgstr ""
+
+#: Widgets.php:78
+msgctxt "Setting Title"
+msgid "Before Title"
+msgstr ""
+
+#: Widgets.php:79
+msgctxt "Setting Description"
+msgid "HTML opening before each widget title on front-end."
+msgstr ""
+
+#: Widgets.php:86
+msgctxt "Setting Title"
+msgid "After Title"
+msgstr ""
+
+#: Widgets.php:87
+msgctxt "Setting Description"
+msgid "HTML closing after each widget title on front-end."
+msgstr ""
+
+#: Widgets.php:152
+msgctxt "Widget Area Unnamed"
+msgid "[Unnamed]"
+msgstr ""
+
+#. translators: %s: widget area name
+#: Widgets.php:161
+msgctxt "Widget Area Prefix"
+msgid "Editorial: %s"
 msgstr ""
 
 #: Widgets/Custom-HTML.php:18
@@ -109,7 +195,12 @@ msgctxt "Widget Description"
 msgid "Displays the results of current search criteria on selected taxonomies."
 msgstr ""
 
-#: Widgets/Search-Terms.php:98
+#: Widgets/Search-Terms.php:110
+msgctxt "Widget: Setting"
+msgid "Prefix Terms with Taxonomy Name"
+msgstr ""
+
+#: Widgets/Search-Terms.php:111
 msgctxt "Widget: Setting"
 msgid "Strip Hash-tags"
 msgstr ""
@@ -124,32 +215,32 @@ msgctxt "Widget Description"
 msgid "Displays list of posts from a public WordPress site."
 msgstr ""
 
-#: Widgets/WPRest-Posts.php:111
+#: Widgets/WPRest-Posts.php:112
 msgctxt "Widget: WP-REST Posts"
 msgid "Resource URL:"
 msgstr ""
 
-#: Widgets/WPRest-Posts.php:112
+#: Widgets/WPRest-Posts.php:113
 msgctxt "Widget: WP-REST Posts"
 msgid "Endpoint:"
 msgstr ""
 
-#: Widgets/WPRest-Posts.php:113
+#: Widgets/WPRest-Posts.php:114
 msgctxt "Widget: WP-REST Posts"
 msgid "Tag IDs:"
 msgstr ""
 
-#: Widgets/WPRest-Posts.php:114
+#: Widgets/WPRest-Posts.php:115
 msgctxt "Widget: WP-REST Posts"
 msgid "Category IDs:"
 msgstr ""
 
-#: Widgets/WPRest-Posts.php:115
+#: Widgets/WPRest-Posts.php:116
 msgctxt "Widget: WP-REST Posts"
 msgid "Extra Args:"
 msgstr ""
 
-#: Widgets/WPRest-Posts.php:118
+#: Widgets/WPRest-Posts.php:120
 msgctxt "Widget: WP-REST Posts"
 msgid "No posts!"
 msgstr ""

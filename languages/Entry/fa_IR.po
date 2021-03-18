@@ -2,15 +2,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gEditorial Entry\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
-"POT-Creation-Date: 2020-07-17T13:51:27+00:00\n"
-"PO-Revision-Date: 2020-07-17 18:22+0430\n"
+"POT-Creation-Date: 2021-01-30T13:06:55+00:00\n"
+"PO-Revision-Date: 2021-01-30 16:44+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.3.1\n"
+"X-Generator: Poedit 2.4.2\n"
 "X-Poedit-Basepath: ../../includes/Modules/Entry\n"
 "X-Domain: geditorial-entry\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
@@ -25,44 +25,44 @@ msgctxt "Settings"
 msgid "Tries to linkify the section titles in the entry content."
 msgstr "تلاش می‌کند عنوان بخش‌ها در متن ورودیه را پیوند‌دهی کند."
 
-#: Entry.php:77
+#: Entry.php:76
 msgid "Entry"
 msgid_plural "Entries"
 msgstr[0] "ورودیه‌ها"
 msgstr[1] "ورودیه"
 
-#: Entry.php:78
+#: Entry.php:77
 msgid "Section"
 msgid_plural "Sections"
 msgstr[0] "بخش‌ها"
 msgstr[1] "بخش"
 
-#: Entry.php:86
+#: Entry.php:85
 msgctxt "Posttype Featured"
 msgid "Cover Image"
 msgstr "تصویر کاور"
 
-#: Entry.php:87
+#: Entry.php:86
 msgctxt "MetaBox Title"
 msgid "Entry"
 msgstr "ورودیه"
 
-#: Entry.php:88
+#: Entry.php:87
 msgctxt "Column Title"
 msgid "Section"
 msgstr "بخش‌ها"
 
-#: Entry.php:169
+#: Entry.php:168
 msgctxt "Adminbar"
 msgid "Entry Sections"
 msgstr "بخش‌های ورودیه"
 
-#: Entry.php:186
+#: Entry.php:185
 msgctxt "UI: Label"
 msgid "Entry Section"
 msgstr "بخش ورودیه"
 
-#: Entry.php:190
+#: Entry.php:189
 msgctxt "UI: Label"
 msgid "Section"
 msgstr "بخش"
