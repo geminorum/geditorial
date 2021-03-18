@@ -67,6 +67,7 @@
     "tinypng": ""
   },
   "sass": {
+    "sourceComments": true,
     "errLogToConsole": true,
     "includePaths": [
       "./../../gnetwork/assets/sass",

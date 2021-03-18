@@ -186,9 +186,9 @@
   // seperated because of stripping rtl directives in compression
   gulp.task('build:rtl', function () {
     return gulp.src(config.input.sass)
-      .pipe(sass(config.sass).on('error', sass.logError))
+      .pipe(sass.sync(config.sass).on('error', sass.logError))
+      .pipe(plugins.postcss([rtlcss()])) // divided to avoid cssnano messing with rtl directives
       .pipe(plugins.postcss([
-        rtlcss(),
         cssnano(config.cssnano.build),
         autoprefixer(config.autoprefixer.build)
       ]))
