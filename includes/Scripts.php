@@ -10,6 +10,30 @@ class Scripts extends Main
 
 	const BASE = 'geditorial';
 
+	public static function enqueueStyle( $asset, $dep = [], $version = GEDITORIAL_VERSION, $base = GEDITORIAL_URL, $path = 'assets/css', $media = 'all' )
+	{
+		$handle = strtolower( static::BASE.'-'.str_replace( '.', '-', $asset ) );
+
+		wp_enqueue_style( $handle, $base.$path.'/'.$asset.'.css', $dep, $version, $media );
+		wp_style_add_data( $handle, 'rtl', 'replace' );
+
+		return $handle;
+	}
+
+	public static function inlineScript( $asset, $script, $dep = [ 'jquery' ] )
+	{
+		if ( empty( $script ) )
+			return;
+
+		$handle = strtolower( static::BASE.'-'.str_replace( '.', '-', $asset ) );
+
+		// @REF: https://core.trac.wordpress.org/ticket/44551
+		// @REF: https://wordpress.stackexchange.com/a/311279
+		wp_register_script( $handle, '', $dep, '', TRUE );
+		wp_enqueue_script( $handle ); // must register then enqueue
+		wp_add_inline_script( $handle, $script );
+	}
+
 	public static function enqueue( $asset, $dep = [ 'jquery' ], $version = GEDITORIAL_VERSION, $base = GEDITORIAL_URL, $path = 'assets/js' )
 	{
 		$handle  = strtolower( static::BASE.'-'.str_replace( '.', '-', $asset ) );
