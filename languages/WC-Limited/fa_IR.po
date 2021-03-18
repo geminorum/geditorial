@@ -1,0 +1,65 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial WC-Limited\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"POT-Creation-Date: 2021-03-18T15:42:04+00:00\n"
+"PO-Revision-Date: 2021-03-18 19:14+0330\n"
+"Last-Translator: geminorum <contact@geminorum.ir>\n"
+"Language-Team: NULL\n"
+"Language: fa_IR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.4.2\n"
+"X-Poedit-Basepath: ../../includes/Modules/WC-Limited\n"
+"X-Domain: geditorial-wc-limited\n"
+"Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
+
+#: WC-Limited.php:31
+msgctxt "Setting Title"
+msgid "Limited Terms"
+msgstr "رده‌های محدود"
+
+#: WC-Limited.php:32
+msgctxt "Setting Description"
+msgid ""
+"Products on the selected categories will be limited to only one per purchase."
+msgstr ""
+
+#: WC-Limited.php:38
+msgctxt "Setting Title"
+msgid "Limited Notice"
+msgstr "اخطار محدود‌شده"
+
+#: WC-Limited.php:39
+msgctxt "Setting Description"
+msgid ""
+"Customized string to notice customer that product is limited to one per "
+"purchase."
+msgstr ""
+
+#: WC-Limited.php:40 WC-Limited.php:82
+msgctxt "Setting Default"
+msgid ""
+"This product cannot be purchased with other products. Please, empty your "
+"cart first and then add it again."
+msgstr ""
+"خرید این کالا، به همراه کالاهای دیگر امکان‌پذیر نیست. لطفاً سبد خرید خود را "
+"خالی و دوباره تلاش کنید."
+
+#: WC-Limited.php:46
+msgctxt "Setting Title"
+msgid "Limited Already"
+msgstr "پیش‌از این محدودشده"
+
+#: WC-Limited.php:47
+msgctxt "Setting Description"
+msgid ""
+"Customized string to notice customer that cart has already a product that is "
+"limited to one per purchase."
+msgstr ""
+
+#: WC-Limited.php:48 WC-Limited.php:93
+msgctxt "Setting Default"
+msgid "You can only purchase one product at a time from limited categories."
+msgstr "در هر بار، فقط می‌توانید یک کالا از دسته‌های محدودشده را خریداری کنید."
