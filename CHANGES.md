@@ -1,3 +1,93 @@
+### 3.19.0
+* :wrench: php 7.2
+* assets/package: :new: libre barcode fonts
+* main/helper: better contexts for cpt/tax string generators
+* main/helper: get layout from current theme with fallback
+* main/helper: limit on get separated
+* main/helper: missing string part
+* main/helper: move up default image sizes
+* main/helper: parse csv from file path
+* main/helper: term edit row renderers
+* main/helper: woocommerce active checks
+* main/metabox: css class for checklist wrap
+* main/metabox: object taxonomy helper methods
+* main/metabox: passing posttype on taxonomy edit link
+* main/module: :new: internal api for rest endpoints
+* main/module: account for empty p2p strings
+* main/module: admin-page helpers
+* main/module: adminpage api revised
+* main/module: avoid recursive parse for register posttype args
+* main/module: better naming for get dashboard term summary
+* main/module: correct text-domain for multipart module names
+* main/module: dashboard widget api
+* main/module: default form fields only on main contexts
+* main/module: enqueue asset style helper
+* main/module: exclude terms from dashboard summary
+* main/module: explicitly passing context into helper methods
+* main/module: handle default terms using gnetwork taxonomy tabs
+* main/module: header titles for settings pages
+* main/module: initial support for user taxonomies
+* main/module: is taxonomy supported
+* main/module: list supported taxonomies with labels
+* main/module: menu position for posttypes/adminpages
+* main/module: metabox strings revised
+* main/module: move up screen option helpers
+* main/module: moving up raise resources method
+* main/module: no terms string from taxonomy labels
+* main/module: optional require once on core require
+* main/module: override callback for mainpage content
+* main/module: passing class to mainbutton
+* main/module: pre-configured labels from strings
+* main/module: print iframe helpers
+* main/module: print page helpers
+* main/module: roles excluded api
+* main/module: support delete on restapi
+* main/module: support gnetwork analog api
+* main/module: taxonomy label helper
+* main/module: unify adminpage url method
+* main/module: unifying printpage menu hook
+* main/scripts: :new: onscan.js packaged
+* main/scripts: :up: list.js v2.3.0
+* main/scripts: more enqueue helpers
+* main/settings: css class for empty strings
+* main/settings: field after helpers
+* main/settings: field taxonomies wrapped in tab panel
+* main/settings: field type for switch on-off
+* main/settings: support for object field types
+* main/shortcode: trim chars on post item
+* main/tablelist: action conditional
+* main/tablelist: new main for table list methods
+* main/widget: trim chars field
+* module/alphabet: :new: alternative alphabet in posts/terms
+* module/alphabet: :new: first letter numbers on posts/terms
+* module/alphabet: first letter uppercase
+* module/alphabet: moving up the helper methods
+* module/archives: better handling document title/navigation crumb
+* module/archives: get taxonomy archive link
+* module/archives: prioritize rest base over slugs on taxonomy archive links
+* module/archives: taxonomy archive link on gtheme navigation
+* module/book: default type terms
+* module/importer: better handling empty rows on tablelist
+* module/ortho: support for type alphabet inputs
+* module/terms: :new: support for barcode field
+* module/terms: :new: supported fields for arrow/label/code
+* module/terms: :warning: fixed fatal
+* module/terms: correct handling field classes
+* module/terms: display arrow icons
+* module/terms: filter meta fields for export
+* module/terms: filter supported field metakey
+* module/terms: passing metakey into filters
+* module/users: missing methods for type taxonomy
+* module/wc-limited: :new: module
+* module/wc-purchased: :new: module
+* module/widgets: :new: custom widget areas by action hooks
+* module/widgets: rest posts: trim chars option
+* module/widgets: search terms: avoid filtred search query
+* module/widgets: search terms: display empty terms
+* module/widgets: search terms: prefix with name
+* module/widgets: search terms: search names and slugs
+* module/widgets: search terms: singular name as title on multiple taxonomy setup
+
 ### 3.18.0
 * main/helper: filter empty strings on arrays
 * main/module: avoid checking empty subgroups on strings api
