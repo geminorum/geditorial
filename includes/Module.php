@@ -2141,8 +2141,15 @@ class Module extends Base
 	public function settings_section_roles()
 	{
 		Settings::fieldSection(
-			_x( 'Accessibility', 'Module: Setting Section Title', 'geditorial' ),
+			_x( 'Availability', 'Module: Setting Section Title', 'geditorial' ),
 			_x( 'Though Administrators have it all!', 'Module: Setting Section Description', 'geditorial' )
+		);
+	}
+
+	public function settings_section_printpage()
+	{
+		Settings::fieldSection(
+			_x( 'Printing', 'Module: Setting Section Title', 'geditorial' )
 		);
 	}
 

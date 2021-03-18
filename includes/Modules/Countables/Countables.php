@@ -49,6 +49,7 @@ class Countables extends gEditorial\Module
 		$this->register_shortcode( 'taxonomy_shortcode', NULL, TRUE );
 	}
 
+	// TODO: add setting
 	private function countbox_default_template( $type )
 	{
 		$template = '<div class="-countable {{countable}}" data-count="{{count}}">'
@@ -98,8 +99,8 @@ class Countables extends gEditorial\Module
 				'count'     => $count,
 				'formatted' => $args['counter'] ? '' : Number::format( $count ),
 				'link'      => $args['link'] ?: get_post_type_archive_link( $posttype ),
-				'title'     => $args['title'] ?: $this->get_posttype_label( $posttype, 'name' ),
-				'text'      => $content ?: $this->get_posttype_label( $posttype, 'description' ),
+				'title'     => is_null( $args['title'] ) ? $this->get_posttype_label( $posttype, 'name' ) : trim( $args['title'] ),
+				'text'      => $content ? trim( $content ) : $this->get_posttype_label( $posttype, 'description' ),
 			], $posttype, $count, $args );
 
 			$box  = Text::replaceTokens( $args['template'], $tokens );
@@ -144,8 +145,8 @@ class Countables extends gEditorial\Module
 				'count'     => $count,
 				'formatted' => $args['counter'] ? '' : Number::format( $count ),
 				'link'      => $args['link'] ?: '#',
-				'title'     => $args['title'] ?: Taxonomy::object( $taxonomy )->labels->name,
-				'text'      => $content ?: '',
+				'title'     => is_null( $args['title'] ) ? Taxonomy::object( $taxonomy )->labels->name : trim( $args['title'] ),
+				'text'      => $content ? trim( $content ) : '',
 			], $taxonomy, $count, $args );
 
 			$box  = Text::replaceTokens( $args['template'], $tokens );
