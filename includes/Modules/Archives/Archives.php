@@ -3,6 +3,7 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
+use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\Taxonomy;
@@ -25,29 +26,70 @@ class Archives extends gEditorial\Module
 
 	protected function get_global_settings()
 	{
-		return [
-			'posttypes_option'  => 'posttypes_option',
-			'taxonomies_option' => 'taxonomies_option',
-			'_content' => [
-				'display_searchform' => _x( 'Prepends a search form to the posttype archive pages.', 'Setting Description', 'geditorial-archives' ),
-				[
-					'field'       => 'posttype_content',
-					'type'        => 'text',
-					'title'       => _x( 'Posttype Content', 'Setting Title', 'geditorial-archives' ),
-					'description' => _x( 'Used as default content on the posttype archive pages.', 'Setting Description', 'geditorial-archives' ),
-					'default'     => '[alphabet-posts post_type="%s" /]', // FIXME: provide for fallback shortcode
-					'dir'         => 'ltr',
-				],
-				[
-					'field'       => 'taxonomy_content',
-					'type'        => 'text',
-					'title'       => _x( 'Taxonomy Content', 'Setting Title', 'geditorial-archives' ),
-					'description' => _x( 'Used as default content on the taxonomy archive pages.', 'Setting Description', 'geditorial-archives' ),
-					'default'     => '[alphabet-terms taxonomy="%s" /]', // FIXME: provide for fallback shortcode
-					'dir'         => 'ltr',
-				],
-			],
-		];
+		$settings   = [];
+		$posttypes  = $this->list_posttypes();
+		$taxonomies = $this->list_taxonomies();
+
+		$settings['posttypes_option'] = 'posttypes_option';
+
+		foreach ( $posttypes as $posttype_name => $posttype_label ) {
+
+			$settings['_posttypes'][] = [
+				'field'       => 'posttype_'.$posttype_name.'_title',
+				'type'        => 'text',
+				/* translators: %s: supported object label */
+				'title'       => sprintf( _x( 'Archives Title for %s', 'Setting Title', 'geditorial-archives' ), '<i>'.$posttype_label.'</i>' ),
+				'description' => _x( 'Used as title on the posttype archive pages.', 'Setting Description', 'geditorial-archives' ),
+				'placeholder' => $this->template_get_archive_title( $posttype_name ),
+			];
+
+			$settings['_posttypes'][] = [
+				'field'       => 'posttype_'.$posttype_name.'_content',
+				'type'        => 'textarea-quicktags',
+				/* translators: %s: supported object label */
+				'title'       => sprintf( _x( 'Archives Content for %s', 'Setting Title', 'geditorial-archives' ), '<i>'.$posttype_label.'</i>' ),
+				'description' => _x( 'Used as content on the posttype archive pages.', 'Setting Description', 'geditorial-archives' ),
+				'default'     => '[alphabet-posts post_type="%s" /]', // FIXME: provide for fallback shortcode
+			];
+		}
+
+		$settings['taxonomies_option'] = 'taxonomies_option';
+
+		foreach ( $taxonomies as $taxonomy_name => $taxonomy_label ) {
+
+			$settings['_taxonomies'][] = [
+				'field'       => 'taxonomy_'.$taxonomy_name.'_title',
+				'type'        => 'text',
+				/* translators: %s: supported object label */
+				'title'       => sprintf( _x( 'Archives Title for %s', 'Setting Title', 'geditorial-archives' ), '<i>'.$taxonomy_label.'</i>' ),
+				'description' => _x( 'Used as title on the taxonomy archive pages.', 'Setting Description', 'geditorial-archives' ),
+				'placeholder' => $this->taxonomy_archive_title( $taxonomy_name ),
+			];
+
+			$settings['_taxonomies'][] = [
+				'field'       => 'taxonomy_'.$taxonomy_name.'_content',
+				'type'        => 'textarea-quicktags',
+				/* translators: %s: supported object label */
+				'title'       => sprintf( _x( 'Archives Content for %s', 'Setting Title', 'geditorial-archives' ), '<i>'.$taxonomy_label.'</i>' ),
+				'description' => _x( 'Used as content on the taxonomy archive pages.', 'Setting Description', 'geditorial-archives' ),
+				'default'     => '[alphabet-terms taxonomy="%s" /]', // FIXME: provide for fallback shortcode
+			];
+
+			$settings['_taxonomies'][] = [
+				'field'       => 'taxonomy_'.$taxonomy_name.'_slug',
+				'type'        => 'text',
+				/* translators: %s: supported object label */
+				'title'       => sprintf( _x( 'Archives Slug for %s', 'Setting Title', 'geditorial-archives' ), '<i>'.$taxonomy_label.'</i>' ),
+				'description' => _x( 'Used as slug on the taxonomy archive pages.', 'Setting Description', 'geditorial-archives' ),
+				'after'       => Settings::fieldAfterIcon( $this->get_taxonomy_archive_link( $taxonomy_name ), _x( 'View Archives Page', 'Setting Icon', 'geditorial-archives' ), 'external' ),
+				'placeholder' => $this->taxonomy_archive_slug( $taxonomy_name, FALSE ),
+				'field_class' => [ 'regular-text', 'code-text' ],
+			];
+		}
+
+		$settings['_content']['display_searchform'] = _x( 'Prepends a search form to the posttype archive pages.', 'Setting Description', 'geditorial-archives' );
+
+		return $settings;
 	}
 
 	protected function get_global_constants()
@@ -75,8 +117,11 @@ class Archives extends gEditorial\Module
 				add_rewrite_rule( $slug.'/?$', sprintf( 'index.php?%s=%s', $this->constant( 'taxonomy_query' ), $taxonomy ), 'top' );
 	}
 
-	private function taxonomy_archive_slug( $taxonomy )
+	private function taxonomy_archive_slug( $taxonomy, $settings = TRUE )
 	{
+		if ( $settings && ( $custom = $this->get_setting( 'taxonomy_'.$taxonomy.'_slug' ) ) )
+			return trim( $custom );
+
 		if ( ! $object = Taxonomy::object( $taxonomy ) )
 			return FALSE;
 
@@ -98,7 +143,7 @@ class Archives extends gEditorial\Module
 
 	public function template_include( $template )
 	{
-		// no need to check for supported taxonomies
+		// no need to check for supported taxonomies, since we using `query_vars` filter
 		if ( $taxonomy = get_query_var( $this->constant( 'taxonomy_query' ) ) ) {
 
 			$this->current = $taxonomy;
@@ -178,12 +223,15 @@ class Archives extends gEditorial\Module
 
 	public function template_get_archive_title( $posttype )
 	{
-		return $this->filters( 'posttype_archive_title', PostType::object( $posttype )->labels->all_items, $posttype );
+		$default = PostType::object( $posttype )->labels->all_items;
+		$setting = $this->get_setting( 'posttype_'.$posttype.'_title', $default );
+
+		return $this->filters( 'posttype_archive_title', $setting ?: $default, $posttype );
 	}
 
 	public function template_get_archive_content()
 	{
-		$setting = $this->get_setting( 'posttype_content', '[alphabet-posts post_type="%s" /]' );
+		$setting = $this->get_setting( 'posttype_'.$this->current.'_content', '[alphabet-posts post_type="%s" /]' );
 
 		$form = $this->get_search_form( [ 'post_type[]' => $this->current ] );
 		$html = do_shortcode( sprintf( $setting, $this->current ) );
@@ -205,12 +253,15 @@ class Archives extends gEditorial\Module
 
 	public function taxonomy_archive_title( $taxonomy )
 	{
-		return $this->filters( 'taxonomy_archive_title', Taxonomy::object( $taxonomy )->labels->all_items, $taxonomy );
+		$default = Taxonomy::object( $taxonomy )->labels->all_items;
+		$setting = $this->get_setting( 'taxonomy_'.$taxonomy.'_title', $default );
+
+		return $this->filters( 'taxonomy_archive_title', $setting ?: $default, $taxonomy );
 	}
 
 	public function template_taxonomy_archives( $content )
 	{
-		$setting = $this->get_setting( 'taxonomy_content', '[alphabet-terms taxonomy="%s" /]' );
+		$setting = $this->get_setting( 'taxonomy_'.$this->current.'_content', '[alphabet-terms taxonomy="%s" /]' );
 
 		$html = do_shortcode( sprintf( $setting, $this->current ) );
 		$html = $this->filters( 'taxonomy_archive_content', $html, $this->current );
