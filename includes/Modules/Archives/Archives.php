@@ -40,7 +40,7 @@ class Archives extends gEditorial\Module
 				/* translators: %s: supported object label */
 				'title'       => sprintf( _x( 'Archives Title for %s', 'Setting Title', 'geditorial-archives' ), '<i>'.$posttype_label.'</i>' ),
 				'description' => _x( 'Used as title on the posttype archive pages.', 'Setting Description', 'geditorial-archives' ),
-				'placeholder' => $this->template_get_archive_title( $posttype_name ),
+				'placeholder' => $this->_get_posttype_archive_title( $posttype_name, FALSE ),
 			];
 
 			$settings['_posttypes'][] = [
@@ -63,7 +63,7 @@ class Archives extends gEditorial\Module
 				/* translators: %s: supported object label */
 				'title'       => sprintf( _x( 'Archives Title for %s', 'Setting Title', 'geditorial-archives' ), '<i>'.$taxonomy_label.'</i>' ),
 				'description' => _x( 'Used as title on the taxonomy archive pages.', 'Setting Description', 'geditorial-archives' ),
-				'placeholder' => $this->taxonomy_archive_title( $taxonomy_name ),
+				'placeholder' => $this->_get_taxonomy_archive_title( $taxonomy_name, FALSE ),
 			];
 
 			$settings['_taxonomies'][] = [
@@ -82,7 +82,7 @@ class Archives extends gEditorial\Module
 				'title'       => sprintf( _x( 'Archives Slug for %s', 'Setting Title', 'geditorial-archives' ), '<i>'.$taxonomy_label.'</i>' ),
 				'description' => _x( 'Used as slug on the taxonomy archive pages.', 'Setting Description', 'geditorial-archives' ),
 				'after'       => Settings::fieldAfterIcon( $this->get_taxonomy_archive_link( $taxonomy_name ), _x( 'View Archives Page', 'Setting Icon', 'geditorial-archives' ), 'external' ),
-				'placeholder' => $this->taxonomy_archive_slug( $taxonomy_name, FALSE ),
+				'placeholder' => $this->_taxonomy_archive_slug( $taxonomy_name, FALSE ),
 				'field_class' => [ 'regular-text', 'code-text' ],
 			];
 		}
@@ -103,21 +103,21 @@ class Archives extends gEditorial\Module
 	{
 		parent::init();
 
-		$this->do_add_rewrite_rules();
+		$this->_do_add_rewrite_rules();
 		$this->filter( 'query_vars' );
 
 		$this->filter_module( 'countables', 'taxonomy_countbox_tokens', 4, 9 );
 		$this->filter( 'gtheme_navigation_taxonomy_archive_link', 2, 9 );
 	}
 
-	private function do_add_rewrite_rules()
+	private function _do_add_rewrite_rules()
 	{
 		foreach ( $this->taxonomies() as $taxonomy )
-			if ( $slug = $this->taxonomy_archive_slug( $taxonomy ) )
+			if ( $slug = $this->_taxonomy_archive_slug( $taxonomy ) )
 				add_rewrite_rule( $slug.'/?$', sprintf( 'index.php?%s=%s', $this->constant( 'taxonomy_query' ), $taxonomy ), 'top' );
 	}
 
-	private function taxonomy_archive_slug( $taxonomy, $settings = TRUE )
+	private function _taxonomy_archive_slug( $taxonomy, $settings = TRUE )
 	{
 		if ( $settings && ( $custom = $this->get_setting( 'taxonomy_'.$taxonomy.'_slug' ) ) )
 			return trim( $custom );
@@ -150,7 +150,7 @@ class Archives extends gEditorial\Module
 
 			Theme::resetQuery( [
 				'ID'         => 0,
-				'post_title' => $this->taxonomy_archive_title( $taxonomy ),
+				'post_title' => $this->_get_taxonomy_archive_title( $taxonomy ),
 				'post_type'  => 'page',
 				'is_page'    => TRUE,
 				'is_archive' => TRUE,
@@ -175,7 +175,7 @@ class Archives extends gEditorial\Module
 
 			Theme::resetQuery( [
 				'ID'         => 0,
-				'post_title' => $this->template_get_archive_title( $posttype ),
+				'post_title' => $this->_get_posttype_archive_title( $posttype ),
 				'post_type'  => $posttype,
 				'is_page'    => TRUE,
 				'is_archive' => TRUE,
@@ -212,21 +212,26 @@ class Archives extends gEditorial\Module
 
 	public function get_the_archive_title_posttype( $name )
 	{
-		return $this->template_get_archive_title( $this->current );
+		return $this->_get_posttype_archive_title( $this->current );
 	}
 
 	public function document_title_parts_posttype( $title )
 	{
-		$title['title'] = $this->template_get_archive_title( $this->current );
+		$title['title'] = $this->_get_posttype_archive_title( $this->current );
 		return $title;
 	}
 
 	public function template_get_archive_title( $posttype )
 	{
-		$default = PostType::object( $posttype )->labels->all_items;
-		$setting = $this->get_setting( 'posttype_'.$posttype.'_title', $default );
+		return _get_posttype_archive_title( $posttype );
+	}
 
-		return $this->filters( 'posttype_archive_title', $setting ?: $default, $posttype );
+	private function _get_posttype_archive_title( $posttype, $settings = TRUE )
+	{
+		$default = PostType::object( $posttype )->labels->all_items;
+		$custom  = $settings ? $this->get_setting( 'posttype_'.$posttype.'_title', $default ) : $default;
+
+		return $this->filters( 'posttype_archive_title', $custom ?: $default, $posttype );
 	}
 
 	public function template_get_archive_content()
@@ -242,21 +247,21 @@ class Archives extends gEditorial\Module
 
 	public function get_the_archive_title_taxonomy( $title )
 	{
-		return $this->taxonomy_archive_title( $this->current );
+		return $this->_get_taxonomy_archive_title( $this->current );
 	}
 
 	public function document_title_parts_taxonomy( $title )
 	{
-		$title['title'] = $this->taxonomy_archive_title( $this->current );
+		$title['title'] = $this->_get_taxonomy_archive_title( $this->current );
 		return $title;
 	}
 
-	public function taxonomy_archive_title( $taxonomy )
+	private function _get_taxonomy_archive_title( $taxonomy, $settings = TRUE )
 	{
 		$default = Taxonomy::object( $taxonomy )->labels->all_items;
-		$setting = $this->get_setting( 'taxonomy_'.$taxonomy.'_title', $default );
+		$custom  = $settings ? $this->get_setting( 'taxonomy_'.$taxonomy.'_title', $default ) : $default;
 
-		return $this->filters( 'taxonomy_archive_title', $setting ?: $default, $taxonomy );
+		return $this->filters( 'taxonomy_archive_title', $custom ?: $default, $taxonomy );
 	}
 
 	public function template_taxonomy_archives( $content )
@@ -274,7 +279,7 @@ class Archives extends gEditorial\Module
 		if ( ! in_array( $taxonomy, $this->taxonomies() ) )
 			return FALSE;
 
-		if ( ! $slug = $this->taxonomy_archive_slug( $taxonomy ) )
+		if ( ! $slug = $this->_taxonomy_archive_slug( $taxonomy ) )
 			return FALSE;
 
 		$link = sprintf( '%s/%s', get_bloginfo( 'url' ), $slug );
