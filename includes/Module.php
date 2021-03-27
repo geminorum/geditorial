@@ -834,6 +834,8 @@ class Module extends Base
 		if ( $before = $this->get_string( 'post_types_before', 'post', 'settings', NULL ) )
 			HTML::desc( $before );
 
+		echo '<div class="wp-tab-panel"><ul>';
+
 		foreach ( $this->all_posttypes() as $posttype => $label ) {
 
 			$html = HTML::tag( 'input', [
@@ -847,8 +849,10 @@ class Module extends Base
 			$html.= '&nbsp;'.HTML::escape( $label );
 			$html.= ' &mdash; <code>'.$posttype.'</code>';
 
-			HTML::label( $html, 'type-'.$posttype );
+			HTML::label( $html, 'type-'.$posttype, 'li' );
 		}
+
+		echo '</ul></div>';
 
 		if ( $after = $this->get_string( 'post_types_after', 'post', 'settings', NULL ) )
 			HTML::desc( $after );
@@ -858,6 +862,8 @@ class Module extends Base
 	{
 		if ( $before = $this->get_string( 'taxonomies_before', 'post', 'settings', NULL ) )
 			HTML::desc( $before );
+
+		echo '<div class="wp-tab-panel"><ul>';
 
 		foreach ( $this->all_taxonomies() as $taxonomy => $label ) {
 
@@ -872,8 +878,10 @@ class Module extends Base
 			$html.= '&nbsp;'.HTML::escape( $label );
 			$html.= ' &mdash; <code>'.$taxonomy.'</code>';
 
-			HTML::label( $html, 'tax-'.$taxonomy );
+			HTML::label( $html, 'tax-'.$taxonomy, 'li' );
 		}
+
+		echo '</ul></div>';
 
 		if ( $after = $this->get_string( 'taxonomies_after', 'post', 'settings', NULL ) )
 			HTML::desc( $after );
