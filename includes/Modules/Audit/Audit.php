@@ -88,17 +88,10 @@ class Audit extends gEditorial\Module
 			],
 			'_dashboard' => [
 				'dashboard_widgets',
+				'summary_excludes' => [ NULL, $terms, $empty ],
 				'summary_scope',
 				'summary_drafts',
 				'count_not',
-				[
-					'field'        => 'summary_excludes',
-					'type'         => 'checkbox-panel',
-					'title'        => _x( 'Summary Excludes', 'Setting Title', 'geditorial-audit' ),
-					'description'  => _x( 'Selected terms will be excluded on the content summary', 'Setting Description', 'geditorial-audit' ),
-					'string_empty' => $empty,
-					'values'       => $terms,
-				],
 			],
 			'_editlist' => [
 				'admin_restrict',

@@ -560,6 +560,18 @@ class Settings extends Core\Base
 		];
 	}
 
+	public static function getSetting_summary_excludes( $description = NULL, $values = [], $empty = NULL )
+	{
+		return [
+			'field'        => 'summary_excludes',
+			'type'         => 'checkbox-panel',
+			'title'        => _x( 'Summary Excludes', 'Settings: Setting Title', 'geditorial' ),
+			'description'  => $description ?: _x( 'Selected terms will be excluded on the content summary.', 'Settings: Setting Description', 'geditorial' ),
+			'string_empty' => $empty ?: _x( 'There\'s no items available!', 'Settings: Setting Empty String', 'geditorial' ),
+			'values'       => $values,
+		];
+	}
+
 	public static function getSetting_count_not( $description = NULL )
 	{
 		return [
