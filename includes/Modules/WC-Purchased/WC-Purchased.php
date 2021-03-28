@@ -133,7 +133,10 @@ class WcPurchased extends gEditorial\Module
 					'class'   => [ 'button', 'button-small' ],
 				], _x( 'Export CSV', 'Button', 'geditorial-wc-purchased' ) );
 
-			HTML::h3( $product->get_title(), '-product-name' );
+			$sku   = $product->get_sku();
+			$title = $product->get_title();
+
+			HTML::h3( $sku ? sprintf( '%s &mdash; %s', $title, $sku ) : $title, '-product-name' );
 
 		echo '</div>';
 
