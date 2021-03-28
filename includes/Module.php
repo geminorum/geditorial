@@ -1557,27 +1557,23 @@ class Module extends Base
 
 			if ( is_array( $section ) ) {
 
-				foreach ( $section as $suffix => $field ) {
+				foreach ( $section as $key => $field ) {
 
-					if ( is_array( $field ) ) {
+					if ( FALSE === $field )
+						continue;
 
-						if ( isset( $field['field'] ) && $setting == $field['field'] )
-							return $field;
+					if ( is_string( $key ) && $setting == $key )
+						return method_exists( __NAMESPACE__.'\\Settings', 'getSetting_'.$key )
+							? call_user_func_array( [ __NAMESPACE__.'\\Settings', 'getSetting_'.$key ], (array) $field )
+							: [];
 
-					} else if ( is_string( $suffix ) && $setting == $suffix ) {
+					else if ( is_string( $field ) && $setting == $field )
+						return method_exists( __NAMESPACE__.'\\Settings', 'getSetting_'.$field )
+							? call_user_func( [ __NAMESPACE__.'\\Settings', 'getSetting_'.$field ] )
+							: [];
 
-						if ( method_exists( __NAMESPACE__.'\\Settings', 'getSetting_'.$suffix ) )
-							return call_user_func_array( [ __NAMESPACE__.'\\Settings', 'getSetting_'.$suffix ], [ $field ] );
-
-						return [];
-
-					} else if ( $setting == $field ) {
-
-						if ( method_exists( __NAMESPACE__.'\\Settings', 'getSetting_'.$field ) )
-							return call_user_func( [ __NAMESPACE__.'\\Settings', 'getSetting_'.$field ] );
-
-						return [];
-					}
+					else if ( is_array( $field ) && isset( $field['field'] ) && $setting == $field['field'] )
+						return $field;
 				}
 			}
 		}
@@ -1984,20 +1980,19 @@ class Module extends Base
 					'section_class' => 'settings_section',
 				] );
 
-				foreach ( $fields as $suffix => $field ) {
+				foreach ( $fields as $key => $field ) {
 
 					if ( FALSE === $field )
 						continue;
 
-					if ( is_array( $field ) )
-						$args = $field;
+					if ( is_string( $key ) && method_exists( __NAMESPACE__.'\\Settings', 'getSetting_'.$key ) )
+						$args = call_user_func_array( [ __NAMESPACE__.'\\Settings', 'getSetting_'.$key ], (array) $field );
 
-					// passing as custom variable
-					else if ( is_string( $suffix ) && method_exists( __NAMESPACE__.'\\Settings', 'getSetting_'.$suffix ) )
-						$args = call_user_func_array( [ __NAMESPACE__.'\\Settings', 'getSetting_'.$suffix ], [ $field ] );
-
-					else if ( method_exists( __NAMESPACE__.'\\Settings', 'getSetting_'.$field ) )
+					else if ( is_string( $field ) && method_exists( __NAMESPACE__.'\\Settings', 'getSetting_'.$field ) )
 						$args = call_user_func( [ __NAMESPACE__.'\\Settings', 'getSetting_'.$field ] );
+
+					else if ( ! is_string( $key ) && is_array( $field ) )
+						$args = $field;
 
 					else
 						continue;
