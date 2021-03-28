@@ -12,6 +12,7 @@ use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\PostType;
+use geminorum\gEditorial\WordPress\Taxonomy;
 use geminorum\gEditorial\Helpers\Book as ModuleHelper;
 use geminorum\gEditorial\Templates\Book as ModuleTemplate;
 
@@ -45,6 +46,11 @@ class Book extends gEditorial\Module
 		$settings = [
 			'_dashboard' => [
 				'dashboard_widgets',
+				'summary_excludes' => [
+					NULL,
+					Taxonomy::listTerms( $this->constant( 'status_tax' ) ),
+					$this->get_taxonomy_label( 'status_tax', 'no_terms' ),
+				],
 				'summary_scope',
 				'summary_drafts',
 				'count_not',
