@@ -11,6 +11,7 @@ use geminorum\gEditorial\Core\Arraay;
 use geminorum\gEditorial\Core\File;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Text;
+use geminorum\gEditorial\WordPress\WooCommerce;
 
 class WcPurchased extends gEditorial\Module
 {
@@ -39,8 +40,7 @@ class WcPurchased extends gEditorial\Module
 					'title'       => _x( 'Order Statuses', 'Setting Title', 'geditorial-wc-purchased' ),
 					'description' => _x( 'Accepted statuses on order list reports.', 'Setting Description', 'geditorial-wc-purchased' ),
 					'default'     => [ 'completed' ],
-					'values'      => $this->get_order_statuses(),
-
+					'values'      => WooCommerce::getOrderStatuses(),
 				],
 			],
 			'_roles' => [
@@ -233,15 +233,5 @@ class WcPurchased extends gEditorial\Module
 		}
 
 		return Text::toCSV( $data );
-	}
-
-	private function get_order_statuses()
-	{
-		$statuses = [];
-
-		foreach ( wc_get_order_statuses() as $status => $name )
-			$statuses[( 'wc-' === substr( $status, 0, 3 ) ? substr( $status, 3 ) : $status )] = $name;
-
-		return $statuses;
 	}
 }

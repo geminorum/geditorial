@@ -13,6 +13,7 @@ use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\Main;
 use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\Taxonomy;
+use geminorum\gEditorial\WordPress\WooCommerce;
 
 class Helper extends Main
 {
@@ -56,9 +57,7 @@ class Helper extends Main
 
 	public static function moduleCheckWooCommerce()
 	{
-		return WordPress::isPluginActive( 'woocommerce/woocommerce.php' )
-			? FALSE
-			: _x( 'Needs WooCommerce', 'Helper', 'geditorial' );
+		return WooCommerce::isActive() ? FALSE : _x( 'Needs WooCommerce', 'Helper', 'geditorial' );
 	}
 
 	public static function getIcon( $icon, $fallback = 'admin-post' )
