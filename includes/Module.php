@@ -3299,6 +3299,7 @@ class Module extends Base
 		return TRUE;
 	}
 
+	// PAIRED API
 	// OLD: `get_linked_term()`
 	public function paired_get_to_term( $post_id, $posttype_constant_key, $tax_constant_key )
 	{
@@ -3306,52 +3307,57 @@ class Module extends Base
 		return get_term_by( 'id', (int) $term_id, $this->constant( $tax_constant_key ) );
 	}
 
+	// PAIRED API
 	// OLD: `set_linked_term()`
-	public function paired_set_to_term( $post_id, $term_or_id, $posttype_constant_key, $tax_constant_key )
+	public function paired_set_to_term( $post_id, $term_or_id, $posttype_key, $taxonomy_key )
 	{
-		if ( ! $term = Taxonomy::getTerm( $term_or_id, $this->constant( $tax_constant_key ) ) )
+		if ( ! $post_id )
 			return FALSE;
 
-		update_post_meta( $post_id, '_'.$this->constant( $posttype_constant_key ).'_term_id', $term->term_id );
+		if ( ! $the_term = Taxonomy::getTerm( $term_or_id, $this->constant( $taxonomy_key ) ) )
+			return FALSE;
 
-		update_term_meta( $term->term_id, $this->constant( $posttype_constant_key ).'_linked', $post_id );
+		update_post_meta( $post_id, '_'.$this->constant( $posttype_key ).'_term_id', $the_term->term_id );
+		update_term_meta( $the_term->term_id, $this->constant( $posttype_key ).'_linked', $post_id );
 
 		if ( $this->get_setting( 'thumbnail_support' ) ) {
 
 			$meta_key = $this->constant( 'metakey_term_image', 'image' );
 
 			if ( $thumbnail = get_post_thumbnail_id( $post_id ) )
-				update_term_meta( $term->term_id, $meta_key, $thumbnail );
+				update_term_meta( $the_term->term_id, $meta_key, $thumbnail );
 
 			else
-				delete_term_meta( $term->term_id, $meta_key );
+				delete_term_meta( $the_term->term_id, $meta_key );
 		}
 
 		return TRUE;
 	}
 
+	// PAIRED API
 	// OLD: `remove_linked_term()`
-	public function paired_remove_to_term( $post_id, $term_or_id, $posttype_constant_key, $tax_constant_key )
+	public function paired_remove_to_term( $post_id, $term_or_id, $posttype_key, $taxonomy_key )
 	{
-		if ( ! $term = Taxonomy::getTerm( $term_or_id, $this->constant( $tax_constant_key ) ) )
+		if ( ! $the_term = Taxonomy::getTerm( $term_or_id, $this->constant( $taxonomy_key ) ) )
 			return FALSE;
 
 		if ( ! $post_id )
-			$post_id = $this->paired_get_to_post_id( $term, $posttype_constant_key, $tax_constant_key );
+			$post_id = $this->paired_get_to_post_id( $the_term, $posttype_key, $taxonomy_key );
 
-		if ( $post_id )
-			delete_post_meta( $post_id, '_'.$this->constant( $posttype_constant_key ).'_term_id' );
+		if ( $post_id ) {
+			delete_post_meta( $post_id, '_'.$this->constant( $posttype_key ).'_term_id' );
+		}
 
-		delete_term_meta( $term->term_id, $this->constant( $posttype_constant_key ).'_linked' );
+		delete_term_meta( $the_term->term_id, $this->constant( $posttype_key ).'_linked' );
 
 		if ( $this->get_setting( 'thumbnail_support' ) ) {
 
 			$meta_key  = $this->constant( 'metakey_term_image', 'image' );
-			$stored    = get_term_meta( $term->term_id, $meta_key, TRUE );
+			$stored    = get_term_meta( $the_term->term_id, $meta_key, TRUE );
 			$thumbnail = get_post_thumbnail_id( $post_id );
 
 			if ( $stored && $thumbnail && $thumbnail == $stored )
-				delete_term_meta( $term->term_id, $meta_key );
+				delete_term_meta( $the_term->term_id, $meta_key );
 		}
 
 		return TRUE;
@@ -3365,6 +3371,7 @@ class Module extends Base
 		return $this->paired_get_to_post_id( $term_or_id, $posttype_constant_key, $tax_constant_key, $check_slug );
 	}
 
+	// PAIRED API
 	// OLD: `get_linked_post_id()`
 	public function paired_get_to_post_id( $term_or_id, $posttype_constant_key, $tax_constant_key, $check_slug = TRUE )
 	{
@@ -3379,6 +3386,7 @@ class Module extends Base
 		return $post_id;
 	}
 
+	// PAIRED API
 	// FIXME: DEPRECATED
 	public function get_linked_posts( $post_id, $posttype_constant_key, $tax_constant_key, $count = FALSE, $term_id = NULL )
 	{
@@ -3455,64 +3463,74 @@ class Module extends Base
 		return count( $posts ) ? $posts : FALSE;
 	}
 
-	protected function paired_do_save_to_post_update( $post_after, $post_before, $posttype_constant_key, $taxonomy_constant_key )
+	// PAIRED API
+	protected function paired_do_save_to_post_update( $after, $before, $posttype_key, $taxonomy_key )
 	{
-		if ( ! $this->is_save_post( $post_after, $posttype_constant_key ) )
+		if ( ! $this->is_save_post( $after, $posttype_key ) )
 			return;
 
-		if ( 'trash' == $post_after->post_status )
+		if ( 'trash' == $after->post_status )
 			return;
 
-		if ( empty( $post_before->post_name ) )
-			$post_before->post_name = sanitize_title( $post_before->post_title );
+		if ( empty( $before->post_name ) )
+			$before->post_name = sanitize_title( $before->post_title );
 
-		if ( empty( $post_after->post_name ) )
-			$post_after->post_name = sanitize_title( $post_after->post_title );
+		if ( empty( $after->post_name ) )
+			$after->post_name = sanitize_title( $after->post_title );
 
-		$args = [
-			'name'        => $post_after->post_title,
-			'slug'        => $post_after->post_name,
-			'description' => $post_after->post_excerpt,
+		$term_args = [
+			'name'        => $after->post_title,
+			'slug'        => $after->post_name,
+			'description' => $after->post_excerpt,
 		];
 
-		$the_term = get_term_by( 'slug', $post_before->post_name, $this->constant( $taxonomy_constant_key ) );
+		$taxonomy = $this->constant( $taxonomy_key );
 
-		if ( FALSE === $the_term ) {
+		if ( $paired = $this->paired_get_to_term( $after->ID, $posttype_key, $taxonomy_key ) )
+			$the_term = wp_update_term( $paired->term_id, $taxonomy, $term_args );
 
-			$the_term = get_term_by( 'slug', $post_after->post_name, $this->constant( $taxonomy_constant_key ) );
+		else if ( $before_slug = get_term_by( 'slug', $before->post_name, $taxonomy ) )
+			$the_term = wp_update_term( $before_slug->term_id, $taxonomy, $term_args );
 
-			if ( FALSE === $the_term )
-				$term = wp_insert_term( $post_after->post_title, $this->constant( $taxonomy_constant_key ), $args );
+		else if ( $after_slug = get_term_by( 'slug', $after->post_name, $taxonomy ) )
+			$the_term = wp_update_term( $after_slug->term_id, $taxonomy, $term_args );
 
-			else
-				$term = wp_update_term( $the_term->term_id, $this->constant( $taxonomy_constant_key ), $args );
+		else
+			$the_term = wp_insert_term( $after->post_title, $taxonomy, $term_args );
 
-		} else {
-
-			$term = wp_update_term( $the_term->term_id, $this->constant( $taxonomy_constant_key ), $args );
-		}
-
-		if ( ! is_wp_error( $term ) )
-			$this->paired_set_to_term( $post_id, $term['term_id'], $posttype_constant_key, $taxonomy_constant_key );
+		if ( ! is_wp_error( $the_term ) )
+			$this->paired_set_to_term( $after->ID, $the_term['term_id'], $posttype_key, $taxonomy_key );
 	}
 
-	protected function paired_do_save_to_post_new( $post, $posttype_constant_key, $taxonomy_constant_key )
+	// PAIRED API
+	protected function paired_do_save_to_post_new( $post, $posttype_key, $taxonomy_key )
 	{
-		if ( ! $this->is_save_post( $post, $posttype_constant_key ) )
+		if ( ! $this->is_save_post( $post, $posttype_key ) )
 			return;
 
-		$args = [
+		if ( empty( $post->post_name ) )
+			$post->post_name = sanitize_title( $post->post_title );
+
+		$term_args = [
 			'name'        => $post->post_title,
-			'slug'        => empty( $post->post_name ) ? sanitize_title( $post->post_title ) : $post->post_name,
+			'slug'        => $post->post_name,
 			'description' => $post->post_excerpt,
 		];
 
-		$term = wp_insert_term( $post->post_title, $this->constant( $taxonomy_constant_key ), $args );
+		$taxonomy = $this->constant( $taxonomy_key );
 
-		if ( ! is_wp_error( $term ) )
-			$this->paired_set_to_term( $post_id, $term['term_id'], $posttype_constant_key, $taxonomy_constant_key );
+		// link to existing term
+		if ( $namesake = get_term_by( 'slug', $post->post_name, $taxonomy ) )
+			$the_term = wp_update_term( $namesake->term_id, $taxonomy, $term_args );
+
+		else
+			$the_term = wp_insert_term( $post->post_title, $taxonomy, $term_args );
+
+		if ( ! is_wp_error( $the_term ) )
+			$this->paired_set_to_term( $post->ID, $the_term['term_id'], $posttype_key, $taxonomy_key );
 	}
 
+	// PAIRED API:
 	// OLD: `do_trash_post()`
 	protected function paired_do_trash_to_post( $post_id, $posttype_constant_key, $taxonomy_constant_key )
 	{
@@ -3524,6 +3542,7 @@ class Module extends Base
 		}
 	}
 
+	// PAIRED API
 	// OLD: `do_untrash_post()`
 	protected function paired_do_untrash_to_post( $post_id, $posttype_constant_key, $taxonomy_constant_key )
 	{
@@ -3535,6 +3554,7 @@ class Module extends Base
 		}
 	}
 
+	// PAIRED API
 	// OLD: `do_before_delete_post()`
 	protected function paired_do_before_delete_to_post( $post_id, $posttype_constant_key, $taxonomy_constant_key )
 	{
