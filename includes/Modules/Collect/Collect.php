@@ -539,24 +539,7 @@ class Collect extends gEditorial\Module
 
 	public function paired_get_to_posts( $post = NULL, $single = FALSE, $published = TRUE )
 	{
-		$posts = [];
-		$terms = Taxonomy::getTerms( $this->constant( 'collection_tax' ), $post, TRUE );
-
-		foreach ( $terms as $term ) {
-
-			if ( ! $to_post_id = $this->paired_get_to_post_id( $term, 'collection_cpt', 'collection_tax' ) )
-				continue;
-
-			if ( $single )
-				return $to_post_id;
-
-			if ( $published && 'publish' != get_post_status( $to_post_id ) )
-				continue;
-
-			$posts[$term->term_id] = $to_post_id;
-		}
-
-		return count( $posts ) ? $posts : FALSE;
+		return $this->paired_do_get_to_posts( 'collection_cpt', 'collection_tax', $post, $single, $published );
 	}
 
 	public function tweaks_column_attr( $post )

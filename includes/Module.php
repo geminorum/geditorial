@@ -3440,6 +3440,29 @@ class Module extends Base
 		return FALSE;
 	}
 
+	// PAIRED API
+	public function paired_do_get_to_posts( $posttype_constant_key, $tax_constant_key, $post = NULL, $single = FALSE, $published = TRUE )
+	{
+		$posts = [];
+		$terms = Taxonomy::getTerms( $this->constant( $tax_constant_key ), $post, TRUE );
+
+		foreach ( $terms as $term ) {
+
+			if ( ! $to_post_id = $this->paired_get_to_post_id( $term, $posttype_constant_key, $tax_constant_key ) )
+				continue;
+
+			if ( $single )
+				return $to_post_id;
+
+			if ( $published && 'publish' != get_post_status( $to_post_id ) )
+				continue;
+
+			$posts[$term->term_id] = $to_post_id;
+		}
+
+		return count( $posts ) ? $posts : FALSE;
+	}
+
 	protected function paired_do_save_to_post_update( $post_after, $post_before, $posttype_constant_key, $taxonomy_constant_key )
 	{
 		if ( ! $this->is_save_post( $post_after, $posttype_constant_key ) )
