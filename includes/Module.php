@@ -3308,6 +3308,18 @@ class Module extends Base
 	}
 
 	// PAIRED API
+	protected function _hook_paired_to( $posttype )
+	{
+		add_action( 'save_post_'.$posttype, [ $this, 'save_post' ], 20, 3 );
+		// $this->action( 'save_post', 3, 20 );
+		$this->action( 'post_updated', 3, 20 );
+
+		$this->action( 'wp_trash_post' );
+		$this->action( 'untrash_post' );
+		$this->action( 'before_delete_post' );
+	}
+
+	// PAIRED API
 	// OLD: `get_linked_term()`
 	public function paired_get_to_term( $post_id, $posttype_constant_key, $tax_constant_key )
 	{

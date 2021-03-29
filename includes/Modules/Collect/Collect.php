@@ -250,7 +250,7 @@ class Collect extends gEditorial\Module
 	public function init_ajax()
 	{
 		if ( $this->is_inline_save( $_REQUEST, 'collection_cpt' ) )
-			$this->_sync_paired( $_REQUEST['post_type'] );
+			$this->_hook_paired_to( $_REQUEST['post_type'] );
 	}
 
 	public function current_screen( $screen )
@@ -290,8 +290,6 @@ class Collect extends gEditorial\Module
 					'low'
 				);
 
-				$this->_sync_paired( $screen->post_type );
-
 			} else if ( 'edit' == $screen->base ) {
 
 				$this->filter_true( 'disable_months_dropdown', 12 );
@@ -305,12 +303,12 @@ class Collect extends gEditorial\Module
 				if ( $this->get_setting( 'admin_ordering', TRUE ) )
 					$this->action( 'pre_get_posts' );
 
-				$this->_sync_paired( $screen->post_type );
-
 				$this->action_module( 'meta', 'column_row', 3 );
 				$this->action_module( 'tweaks', 'column_attr' );
 				$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
 			}
+
+			$this->_hook_paired_to( $screen->post_type );
 
 		} else if ( $this->posttype_supported( $screen->post_type ) ) {
 
@@ -346,16 +344,6 @@ class Collect extends gEditorial\Module
 
 		if ( Settings::isDashboard( $screen ) )
 			$this->filter_module( 'calendar', 'post_row_title', 4, 12 );
-	}
-
-	private function _sync_paired( $posttype )
-	{
-		$this->action( 'save_post', 3, 20 );
-		$this->action( 'post_updated', 3, 20 );
-
-		$this->action( 'wp_trash_post' );
-		$this->action( 'untrash_post' );
-		$this->action( 'before_delete_post' );
 	}
 
 	public function widgets_init()
