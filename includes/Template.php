@@ -327,8 +327,8 @@ class Template extends Main
 		else if ( 'parent' == $args['id'] )
 			$args['id'] = PostType::getParentPostID();
 
-		else if ( ( 'assoc' == $args['id'] || 'paired' == $args['id'] ) && $module )
-			$args['id'] = gEditorial()->{$module}->paired_get_to_posts( NULL, TRUE );
+		else if ( $module && in_array( $args['id'], [ 'assoc', 'linked', 'paired' ] ) )
+			$args['id'] = gEditorial()->{$module}->get_linked_to_posts( NULL, TRUE );
 
 		if ( FALSE === $args['id'] )
 			return $args['default'];
@@ -421,7 +421,7 @@ class Template extends Main
 			'echo'          => TRUE,
 		], $atts );
 
-		if ( ! $posts = gEditorial()->{$module}->paired_get_to_posts( $args['id'], $args['single'], $args['published'] ) )
+		if ( ! $posts = gEditorial()->{$module}->get_linked_to_posts( $args['id'], $args['single'], $args['published'] ) )
 			return $args['default'];
 
 		$links = [];

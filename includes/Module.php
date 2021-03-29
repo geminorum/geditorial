@@ -2794,10 +2794,10 @@ class Module extends Base
 		if ( ! $this->posttype_supported( $post->post_type ) )
 			return $title;
 
-		if ( ! $to_post = $this->paired_get_to_posts( $post->ID, TRUE ) )
+		if ( ! $linked = $this->get_linked_to_posts( $post->ID, TRUE ) )
 			return $title;
 
-		return $title.' – '.Helper::getPostTitle( $to_post );
+		return $title.' – '.Helper::getPostTitle( $linked );
 	}
 
 	public function get_calendars( $default = [ 'gregorian' ], $filtered = TRUE )
@@ -3427,15 +3427,13 @@ class Module extends Base
 	// FIXME: DEPRECATED
 	public function get_assoc_post( $post = NULL, $single = FALSE, $published = TRUE )
 	{
-		self::_dep( '$this->paired_get_to_posts()' );
+		self::_dep( '$this->get_linked_to_posts()' );
 
-		return $this->paired_get_to_posts( $post, $single, $published );
+		return $this->get_linked_to_posts( $post, $single, $published );
 	}
 
 	// DEFAULT METHOD
-	// used for issue/book/etc.
-	// PAIRED API: get (to) posts connected from the pair
-	public function paired_get_to_posts( $post = NULL, $single = FALSE, $published = TRUE )
+	public function get_linked_to_posts( $post = NULL, $single = FALSE, $published = TRUE )
 	{
 		return FALSE;
 	}

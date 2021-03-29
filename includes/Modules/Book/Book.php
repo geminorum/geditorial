@@ -701,7 +701,7 @@ class Book extends gEditorial\Module
 		$this->list_p2p( NULL, '-'.$this->get_setting( 'insert_content', 'none' ) );
 	}
 
-	public function paired_get_to_posts( $post = NULL, $single = FALSE, $published = TRUE )
+	public function get_linked_to_posts( $post = NULL, $single = FALSE, $published = TRUE )
 	{
 		if ( ! $post = get_post( $post ) )
 			return FALSE;

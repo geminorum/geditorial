@@ -618,7 +618,7 @@ class Course extends gEditorial\Module
 		}
 	}
 
-	public function paired_get_to_posts( $post = NULL, $single = FALSE, $published = TRUE )
+	public function get_linked_to_posts( $post = NULL, $single = FALSE, $published = TRUE )
 	{
 		return $this->paired_do_get_to_posts( 'course_cpt', 'course_tax', $post, $single, $published );
 	}
