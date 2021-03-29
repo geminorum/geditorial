@@ -3261,23 +3261,17 @@ class Module extends Base
 
 	public function is_save_post( $post, $constant = FALSE )
 	{
-		if ( wp_is_post_autosave( $post ) )
-			return FALSE;
+		if ( $constant ) {
 
-		if ( wp_is_post_revision( $post ) )
-			return FALSE;
-
-		if ( empty( $_POST ) )
-			return FALSE;
-
-		if ( is_array( $constant )
-			&& ! in_array( $post->post_type, $constant ) )
+			if ( is_array( $constant ) && ! in_array( $post->post_type, $constant ) )
 				return FALSE;
 
-		if ( $constant
-			&& ! is_array( $constant )
-			&& $post->post_type != $this->constant( $constant ) )
+			if ( ! is_array( $constant ) && $post->post_type != $this->constant( $constant ) )
 				return FALSE;
+		}
+
+		if ( empty( $_POST ) || wp_is_post_autosave( $post ) || wp_is_post_revision( $post ) )
+			return FALSE;
 
 		return TRUE;
 	}
