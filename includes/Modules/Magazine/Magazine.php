@@ -406,64 +406,14 @@ class Magazine extends gEditorial\Module
 
 	public function post_updated( $post_id, $post_after, $post_before )
 	{
-		if ( ! $this->is_save_post( $post_after, 'issue_cpt' ) )
-			return;
-
-		if ( 'trash' == $post_after->post_status )
-			return;
-
-		if ( empty( $post_before->post_name ) )
-			$post_before->post_name = sanitize_title( $post_before->post_title );
-
-		if ( empty( $post_after->post_name ) )
-			$post_after->post_name = sanitize_title( $post_after->post_title );
-
-		$args = [
-			'name'        => $post_after->post_title,
-			'slug'        => $post_after->post_name,
-			'description' => $post_after->post_excerpt,
-			// 'parent'      => ( isset( $parent_term_id ) ? $parent_term_id : 0 ),
-		];
-
-		$the_term = get_term_by( 'slug', $post_before->post_name, $this->constant( 'issue_tax' ) );
-
-		if ( FALSE === $the_term ) {
-			$the_term = get_term_by( 'slug', $post_after->post_name, $this->constant( 'issue_tax' ) );
-			if ( FALSE === $the_term )
-				$term = wp_insert_term( $post_after->post_title, $this->constant( 'issue_tax' ), $args );
-			else
-				$term = wp_update_term( $the_term->term_id, $this->constant( 'issue_tax' ), $args );
-		} else {
-			$term = wp_update_term( $the_term->term_id, $this->constant( 'issue_tax' ), $args );
-		}
-
-		if ( ! is_wp_error( $term ) )
-			$this->paired_set_to_term( $post_id, $term['term_id'], 'issue_cpt', 'issue_tax' );
+		$this->paired_do_save_to_post_update( $post_after, $post_before, 'issue_cpt', 'issue_tax' );
 	}
 
 	public function save_post( $post_id, $post, $update )
 	{
 		// we handle updates on another action, see : post_updated()
-		if ( $update )
-			return;
-
-		if ( ! $this->is_save_post( $post, 'issue_cpt' ) )
-			return;
-
-		if ( empty( $post->post_name ) )
-			$post->post_name = sanitize_title( $post->post_title );
-
-		$args = [
-			'name'        => $post->post_title,
-			'slug'        => $post->post_name,
-			'description' => $post->post_excerpt,
-			// 'parent'      => ( isset( $parent_term_id ) ? $parent_term_id : 0 ),
-		];
-
-		$term = wp_insert_term( $post->post_title, $this->constant( 'issue_tax' ), $args );
-
-		if ( ! is_wp_error( $term ) )
-			$this->paired_set_to_term( $post_id, $term['term_id'], 'issue_cpt', 'issue_tax' );
+		if ( ! $update )
+			$this->paired_do_save_to_post_new( $post, 'issue_cpt', 'issue_tax' );
 	}
 
 	public function wp_trash_post( $post_id )

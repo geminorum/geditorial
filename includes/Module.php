@@ -3440,6 +3440,64 @@ class Module extends Base
 		return FALSE;
 	}
 
+	protected function paired_do_save_to_post_update( $post_after, $post_before, $posttype_constant_key, $taxonomy_constant_key )
+	{
+		if ( ! $this->is_save_post( $post_after, $posttype_constant_key ) )
+			return;
+
+		if ( 'trash' == $post_after->post_status )
+			return;
+
+		if ( empty( $post_before->post_name ) )
+			$post_before->post_name = sanitize_title( $post_before->post_title );
+
+		if ( empty( $post_after->post_name ) )
+			$post_after->post_name = sanitize_title( $post_after->post_title );
+
+		$args = [
+			'name'        => $post_after->post_title,
+			'slug'        => $post_after->post_name,
+			'description' => $post_after->post_excerpt,
+		];
+
+		$the_term = get_term_by( 'slug', $post_before->post_name, $this->constant( $taxonomy_constant_key ) );
+
+		if ( FALSE === $the_term ) {
+
+			$the_term = get_term_by( 'slug', $post_after->post_name, $this->constant( $taxonomy_constant_key ) );
+
+			if ( FALSE === $the_term )
+				$term = wp_insert_term( $post_after->post_title, $this->constant( $taxonomy_constant_key ), $args );
+
+			else
+				$term = wp_update_term( $the_term->term_id, $this->constant( $taxonomy_constant_key ), $args );
+
+		} else {
+
+			$term = wp_update_term( $the_term->term_id, $this->constant( $taxonomy_constant_key ), $args );
+		}
+
+		if ( ! is_wp_error( $term ) )
+			$this->paired_set_to_term( $post_id, $term['term_id'], $posttype_constant_key, $taxonomy_constant_key );
+	}
+
+	protected function paired_do_save_to_post_new( $post, $posttype_constant_key, $taxonomy_constant_key )
+	{
+		if ( ! $this->is_save_post( $post, $posttype_constant_key ) )
+			return;
+
+		$args = [
+			'name'        => $post->post_title,
+			'slug'        => empty( $post->post_name ) ? sanitize_title( $post->post_title ) : $post->post_name,
+			'description' => $post->post_excerpt,
+		];
+
+		$term = wp_insert_term( $post->post_title, $this->constant( $taxonomy_constant_key ), $args );
+
+		if ( ! is_wp_error( $term ) )
+			$this->paired_set_to_term( $post_id, $term['term_id'], $posttype_constant_key, $taxonomy_constant_key );
+	}
+
 	// OLD: `do_trash_post()`
 	protected function paired_do_trash_to_post( $post_id, $posttype_constant_key, $taxonomy_constant_key )
 	{
