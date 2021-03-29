@@ -209,27 +209,7 @@ class Magazine extends gEditorial\Module
 			'show_in_quick_edit' => TRUE,
 		], 'issue_cpt' );
 
-		if ( $this->get_setting( 'subterms_support' ) )
-			$this->register_taxonomy( 'section_tax', [
-				'hierarchical'       => TRUE,
-				'meta_box_cb'        => NULL,
-				'show_admin_column'  => FALSE,
-				'show_in_quick_edit' => FALSE,
-				'show_in_nav_menus'  => TRUE,
-			], $this->posttypes( 'issue_cpt' ) );
-
-		$this->register_taxonomy( 'issue_tax', [
-			'show_ui'      => FALSE,
-			'hierarchical' => TRUE,
-		] );
-
-		$this->register_posttype( 'issue_cpt', [
-			'hierarchical' => TRUE,
-			'rewrite'      => [
-				'feeds' => (bool) $this->get_setting( 'posttype_feeds', FALSE ),
-				'pages' => (bool) $this->get_setting( 'posttype_pages', FALSE ),
-			],
-		] );
+		$this->paired_register_objects( 'issue_cpt', 'issue_tax', 'section_tax' );
 
 		$this->register_shortcode( 'issue_shortcode' );
 		$this->register_shortcode( 'span_shortcode' );

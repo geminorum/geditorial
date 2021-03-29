@@ -2598,6 +2598,35 @@ class Module extends Base
 		return $object;
 	}
 
+	// PAIRED API
+	protected function paired_register_objects( $posttype, $txonomy, $subterm = FALSE )
+	{
+		// supported + main cpt
+		$posttypes = $this->posttypes( $posttype );
+
+		if ( $subterm && $this->get_setting( 'subterms_support' ) )
+			$this->register_taxonomy( $subterm, [
+				'hierarchical'       => TRUE,
+				'meta_box_cb'        => NULL,
+				'show_admin_column'  => FALSE,
+				'show_in_nav_menus'  => TRUE,
+			], $posttypes );
+
+		$this->register_taxonomy( $txonomy, [
+			'show_ui'      => FALSE,
+			'hierarchical' => TRUE,
+		] );
+
+		$this->register_posttype( $posttype, [
+			'hierarchical'      => TRUE,
+			'show_in_admin_bar' => FALSE,
+			'rewrite'           => [
+				'feeds' => (bool) $this->get_setting( 'posttype_feeds', FALSE ),
+				'pages' => (bool) $this->get_setting( 'posttype_pages', FALSE ),
+			],
+		] );
+	}
+
 	protected function get_post_updated_messages( $constant )
 	{
 		return [ $this->constant( $constant ) => Helper::generatePostTypeMessages( $this->get_noop( $constant ) ) ];

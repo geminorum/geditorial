@@ -186,27 +186,7 @@ class Venue extends gEditorial\Module
 			'show_in_quick_edit' => TRUE,
 		], 'place_cpt' );
 
-		$this->register_taxonomy( 'place_tax', [
-			'show_ui'      => FALSE,
-			'hierarchical' => TRUE,
-		] );
-
-		if ( $this->get_setting( 'subterms_support' ) )
-			$this->register_taxonomy( 'facility_tax', [
-				'hierarchical'       => TRUE,
-				'meta_box_cb'        => NULL,
-				'show_admin_column'  => FALSE,
-				'show_in_quick_edit' => FALSE,
-				'show_in_nav_menus'  => TRUE,
-			], $this->posttypes( 'place_cpt' ) );
-
-		$this->register_posttype( 'place_cpt', [
-			'hierarchical' => TRUE,
-			'rewrite'      => [
-				'feeds' => (bool) $this->get_setting( 'posttype_feeds', FALSE ),
-				'pages' => (bool) $this->get_setting( 'posttype_pages', FALSE ),
-			],
-		] );
+		$this->paired_register_objects( 'place_cpt', 'place_tax', 'facility_tax' );
 
 		if ( is_admin() )
 			return;

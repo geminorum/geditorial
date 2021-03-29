@@ -245,23 +245,6 @@ class Course extends gEditorial\Module
 			'show_in_quick_edit' => TRUE,
 		], 'course_cpt' );
 
-		if ( $this->get_setting( 'subterms_support' ) )
-			$this->register_taxonomy( 'topic_tax', [
-				'hierarchical'       => TRUE,
-				'meta_box_cb'        => NULL,
-				'show_admin_column'  => FALSE,
-				'show_in_quick_edit' => FALSE,
-				'show_in_nav_menus'  => TRUE,
-			], $this->posttypes( 'course_cpt' ) );
-
-		$this->register_taxonomy( 'course_tax', [
-			'show_ui'            => FALSE,
-			'show_in_menu'       => FALSE,
-			'hierarchical'       => TRUE,
-			'show_admin_column'  => TRUE,
-			'show_in_quick_edit' => FALSE,
-		] );
-
 		$this->register_taxonomy( 'format_tax', [
 			'hierarchical'       => TRUE, // required by `MetaBox::checklistTerms()`
 			'show_admin_column'  => TRUE,
@@ -274,9 +257,7 @@ class Course extends gEditorial\Module
 			'show_in_quick_edit' => TRUE,
 		], 'lesson_cpt' );
 
-		$this->register_posttype( 'course_cpt', [
-			'hierarchical' => TRUE,
-		] );
+		$this->paired_register_objects( 'course_cpt', 'course_tax', 'topic_tax' );
 
 		$this->register_posttype( 'lesson_cpt' );
 

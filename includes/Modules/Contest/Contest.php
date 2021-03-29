@@ -198,23 +198,6 @@ class Contest extends gEditorial\Module
 			'show_in_quick_edit' => TRUE,
 		], 'contest_cpt' );
 
-		if ( $this->get_setting( 'subterms_support' ) )
-			$this->register_taxonomy( 'section_tax', [
-				'hierarchical'       => TRUE,
-				'meta_box_cb'        => NULL,
-				'show_admin_column'  => FALSE,
-				'show_in_quick_edit' => FALSE,
-				'show_in_nav_menus'  => TRUE,
-			], $this->posttypes( 'contest_cpt' ) );
-
-		$this->register_taxonomy( 'contest_tax', [
-			'show_ui'            => FALSE,
-			'show_in_menu'       => FALSE,
-			'hierarchical'       => TRUE,
-			'show_admin_column'  => TRUE,
-			'show_in_quick_edit' => FALSE,
-		] );
-
 		$this->register_taxonomy( 'apply_cat', [
 			'hierarchical'       => TRUE,
 			'meta_box_cb'        => NULL, // default meta box
@@ -228,9 +211,7 @@ class Contest extends gEditorial\Module
 			'show_in_quick_edit' => TRUE,
 		], 'apply_cpt' );
 
-		$this->register_posttype( 'contest_cpt', [
-			'hierarchical' => TRUE,
-		] );
+		$this->paired_register_objects( 'contest_cpt', 'contest_tax', 'section_tax' );
 
 		$this->register_posttype( 'apply_cpt' );
 

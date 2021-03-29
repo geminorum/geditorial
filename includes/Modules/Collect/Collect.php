@@ -200,33 +200,13 @@ class Collect extends gEditorial\Module
 	{
 		parent::init();
 
-		$this->register_taxonomy( 'collection_tax', [
-			'show_ui'      => FALSE,
-			'hierarchical' => TRUE,
-		] );
-
-		if ( $this->get_setting( 'subterms_support' ) )
-			$this->register_taxonomy( 'part_tax', [
-				'hierarchical'       => TRUE,
-				'meta_box_cb'        => NULL,
-				'show_admin_column'  => FALSE,
-				'show_in_quick_edit' => FALSE,
-				'show_in_nav_menus'  => TRUE,
-			], $this->posttypes( 'collection_cpt' ) );
-
 		$this->register_taxonomy( 'group_tax', [
 			'hierarchical'       => TRUE, // required by `MetaBox::checklistTerms()`
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
 		], 'collection_cpt' );
 
-		$this->register_posttype( 'collection_cpt', [
-			'hierarchical' => TRUE,
-			'rewrite'      => [
-				'feeds' => (bool) $this->get_setting( 'posttype_feeds', FALSE ),
-				'pages' => (bool) $this->get_setting( 'posttype_pages', FALSE ),
-			],
-		] );
+		$this->paired_register_objects( 'collection_cpt', 'collection_tax', 'part_tax' );
 
 		$this->register_shortcode( 'collection_shortcode' );
 		$this->register_shortcode( 'group_shortcode' );
