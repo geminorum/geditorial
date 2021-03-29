@@ -68,7 +68,7 @@ class IssueCover extends gEditorial\Widget
 			$atts['id'] = NULL;
 
 		else if ( is_singular() )
-			$atts['id'] = 'assoc';
+			$atts['id'] = 'paired';
 
 		else
 			return FALSE;

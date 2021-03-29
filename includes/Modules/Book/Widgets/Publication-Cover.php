@@ -59,7 +59,7 @@ class PublicationCover extends gEditorial\Widget
 			$atts['id'] = NULL;
 
 		else if ( is_singular() ) // FIXME: it's better to catch not supported here
-			$atts['id'] = 'assoc';
+			$atts['id'] = 'paired';
 
 		else
 			return FALSE;

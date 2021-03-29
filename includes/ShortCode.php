@@ -457,7 +457,7 @@ class ShortCode extends Main
 	}
 
 	// list: assigned: posts by terms
-	// list: associated: posts by meta
+	// list: paired: posts by meta (PAIRED API)
 	// list: connected: posts by o2o
 	// list: attached: posts by inheritance
 	// list: alphabetized: posts by alphabet
@@ -469,7 +469,11 @@ class ShortCode extends Main
 		if ( FALSE === $args['context'] )
 			return NULL;
 
-		$key   = md5( serialize( $args ) );
+		// back-comp
+		if ( 'associated' == $list )
+			$list = 'paired';
+
+		$key   = md5( $list.serialize( $args ) );
 		$cache = wp_cache_get( $key, $posttype );
 
 		if ( FALSE !== $cache )
@@ -575,7 +579,7 @@ class ShortCode extends Main
 				'terms'    => [ $term->term_id ],
 			] ];
 
-		} else if ( 'associated' == $list && is_singular( $posttype ) ) {
+		} else if ( 'paired' == $list && is_singular( $posttype ) ) {
 
 			if ( ! $post = get_post() )
 				return $content;
@@ -589,12 +593,13 @@ class ShortCode extends Main
 			if ( ! $term )
 				return $content;
 
-			$tax_query = [ [
+			$query['tax_query'] = [ [
 				'taxonomy' => $taxonomy,
 				'terms'    => [ $term->term_id ],
 			] ];
 
-		} else if ( 'associated' == $list || ( 'assigned' == $list && is_singular( $posttype ) ) ) {
+
+		} else if ( 'paired' == $list || ( 'assigned' == $list && is_singular( $posttype ) ) ) {
 
 			if ( ! $post = get_post() )
 				return $content;
@@ -631,7 +636,7 @@ class ShortCode extends Main
 
 			$ref = $term;
 
-		} else if ( 'associated' == $list || 'connected' == $list ) {
+		} else if ( 'paired' == $list || 'connected' == $list ) {
 
 			$args['title'] = self::postTitle( $post, $args );
 
@@ -841,10 +846,11 @@ class ShortCode extends Main
 		return $html;
 	}
 
-	// FIXME: DEPRECATED: use `Shortcode::listPosts( 'associated' )`
-	public static function getAssocPosts( $posttype, $taxonomy, $atts = [], $content = NULL, $tag = '' )
+	// FIXME: DEPRECATED: use `Shortcode::listPosts( 'paired' )`
+	// OLD: `::getAssocPosts()`
+	public static function getPairedPosts( $posttype, $taxonomy, $atts = [], $content = NULL, $tag = '' )
 	{
-		self::_dev_dep( 'ShortCode::listPosts()' );
+		self::_dev_dep( 'ShortCode::listPosts( \'paired\' )' );
 
 		$args = shortcode_atts( self::getDefaults( $posttype, $taxonomy ), $atts, $tag );
 

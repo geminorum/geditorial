@@ -164,23 +164,23 @@ class Collect extends gEditorial\Module
 					'title'       => _x( 'Order', 'Field Title', 'geditorial-collect' ),
 					'description' => _x( 'Post order in the collection', 'Field Description', 'geditorial-collect' ),
 					'type'        => 'number',
-					'context'     => 'linkedbox_collection',
+					'context'     => 'pairedbox_collection',
 					'icon'        => 'sort',
 				],
 				'in_collection_title' => [
 					'title'       => _x( 'Title', 'Field Title', 'geditorial-collect' ),
 					'description' => _x( 'Override post title in the collection', 'Field Description', 'geditorial-collect' ),
-					'context'     => 'linkedbox_collection',
+					'context'     => 'pairedbox_collection',
 				],
 				'in_collection_subtitle' => [
 					'title'       => _x( 'Subtitle', 'Field Title', 'geditorial-collect' ),
 					'description' => _x( 'Post subtitle in the collection', 'Field Description', 'geditorial-collect' ),
-					'context'     => 'linkedbox_collection',
+					'context'     => 'pairedbox_collection',
 				],
 				'in_collection_collaborator' => [
 					'title'       => _x( 'Collaborator', 'Field Title', 'geditorial-collect' ),
 					'description' => _x( 'Post collaborator in the collection', 'Field Description', 'geditorial-collect' ),
-					'context'     => 'linkedbox_collection',
+					'context'     => 'pairedbox_collection',
 				],
 			],
 		];
@@ -244,7 +244,7 @@ class Collect extends gEditorial\Module
 
 			$term = get_queried_object();
 
-			if ( $post_id = $this->get_linked_post_id( $term, 'collection_cpt', 'collection_tax' ) )
+			if ( $post_id = $this->paired_get_to_post_id( $term, 'collection_cpt', 'collection_tax' ) )
 				WordPress::redirect( get_permalink( $post_id ), 301 );
 
 		} else if ( is_tax( $this->constant( 'group_tax' ) ) ) {
@@ -270,7 +270,7 @@ class Collect extends gEditorial\Module
 	public function init_ajax()
 	{
 		if ( $this->is_inline_save( $_REQUEST, 'collection_cpt' ) )
-			$this->_sync_linked( $_REQUEST['post_type'] );
+			$this->_sync_paired( $_REQUEST['post_type'] );
 	}
 
 	public function current_screen( $screen )
@@ -310,7 +310,7 @@ class Collect extends gEditorial\Module
 					'low'
 				);
 
-				$this->_sync_linked( $screen->post_type );
+				$this->_sync_paired( $screen->post_type );
 
 			} else if ( 'edit' == $screen->base ) {
 
@@ -325,7 +325,7 @@ class Collect extends gEditorial\Module
 				if ( $this->get_setting( 'admin_ordering', TRUE ) )
 					$this->action( 'pre_get_posts' );
 
-				$this->_sync_linked( $screen->post_type );
+				$this->_sync_paired( $screen->post_type );
 
 				$this->action_module( 'meta', 'column_row', 3 );
 				$this->action_module( 'tweaks', 'column_attr' );
@@ -339,15 +339,15 @@ class Collect extends gEditorial\Module
 				if ( $subterms )
 					remove_meta_box( $subterms.'div', $screen->post_type, 'side' );
 
-				$this->class_metabox( $screen, 'linkedbox' );
-				add_meta_box( $this->classs( 'linkedbox' ),
+				$this->class_metabox( $screen, 'pairedbox' );
+				add_meta_box( $this->classs( 'pairedbox' ),
 					$this->get_meta_box_title_posttype( 'collection_cpt' ),
-					[ $this, 'render_linkedbox_metabox' ],
+					[ $this, 'render_pairedbox_metabox' ],
 					$screen,
 					'side'
 				);
 
-				add_action( $this->hook( 'render_linkedbox_metabox' ), [ $this, 'render_metabox' ], 10, 4 );
+				add_action( $this->hook( 'render_pairedbox_metabox' ), [ $this, 'render_metabox' ], 10, 4 );
 
 			} else if ( 'edit' == $screen->base ) {
 
@@ -368,7 +368,7 @@ class Collect extends gEditorial\Module
 			$this->filter_module( 'calendar', 'post_row_title', 4, 12 );
 	}
 
-	private function _sync_linked( $posttype )
+	private function _sync_paired( $posttype )
 	{
 		$this->action( 'save_post', 3, 20 );
 		$this->action( 'post_updated', 3, 20 );
@@ -404,7 +404,7 @@ class Collect extends gEditorial\Module
 		if ( $this->constant( 'collection_tax' ) != $taxonomy )
 			return $link;
 
-		if ( $post_id = $this->get_linked_post_id( $term, 'collection_cpt', 'collection_tax' ) )
+		if ( $post_id = $this->paired_get_to_post_id( $term, 'collection_cpt', 'collection_tax' ) )
 			return get_permalink( $post_id );
 
 		return $link;
@@ -455,7 +455,7 @@ class Collect extends gEditorial\Module
 		}
 
 		if ( ! is_wp_error( $term ) )
-			$this->set_linked_term( $post_id, $term['term_id'], 'collection_cpt', 'collection_tax' );
+			$this->paired_set_to_term( $post_id, $term['term_id'], 'collection_cpt', 'collection_tax' );
 	}
 
 	public function save_post( $post_id, $post, $update )
@@ -464,7 +464,7 @@ class Collect extends gEditorial\Module
 		if ( $update )
 			return;
 
-		if ( ! $this->is_save_post( $post ) )
+		if ( ! $this->is_save_post( $post, 'collection_cpt' ) )
 			return;
 
 		if ( empty( $post->post_name ) )
@@ -480,22 +480,22 @@ class Collect extends gEditorial\Module
 		$term = wp_insert_term( $post->post_title, $this->constant( 'collection_tax' ), $args );
 
 		if ( ! is_wp_error( $term ) )
-			$this->set_linked_term( $post_id, $term['term_id'], 'collection_cpt', 'collection_tax' );
+			$this->paired_set_to_term( $post_id, $term['term_id'], 'collection_cpt', 'collection_tax' );
 	}
 
 	public function wp_trash_post( $post_id )
 	{
-		$this->do_trash_post( $post_id, 'collection_cpt', 'collection_tax' );
+		$this->paired_do_trash_to_post( $post_id, 'collection_cpt', 'collection_tax' );
 	}
 
 	public function untrash_post( $post_id )
 	{
-		$this->do_untrash_post( $post_id, 'collection_cpt', 'collection_tax' );
+		$this->paired_do_untrash_to_post( $post_id, 'collection_cpt', 'collection_tax' );
 	}
 
 	public function before_delete_post( $post_id )
 	{
-		$this->do_before_delete_post( $post_id, 'collection_cpt', 'collection_tax' );
+		$this->paired_do_before_delete_to_post( $post_id, 'collection_cpt', 'collection_tax' );
 	}
 
 	public function pre_get_posts( &$wp_query )
@@ -538,7 +538,7 @@ class Collect extends gEditorial\Module
 		echo '</div>';
 	}
 
-	public function render_linkedbox_metabox( $post, $box )
+	public function render_pairedbox_metabox( $post, $box )
 	{
 		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
 			return;
@@ -551,9 +551,9 @@ class Collect extends gEditorial\Module
 
 		} else {
 
-			$this->actions( 'render_linkedbox_metabox', $post, $box, NULL, 'linkedbox_collection' );
+			$this->actions( 'render_pairedbox_metabox', $post, $box, NULL, 'pairedbox_collection' );
 
-			do_action( 'geditorial_meta_render_metabox', $post, $box, NULL, 'linkedbox_collection' );
+			do_action( 'geditorial_meta_render_metabox', $post, $box, NULL, 'pairedbox_collection' );
 		}
 
 		echo '</div>';
@@ -561,7 +561,7 @@ class Collect extends gEditorial\Module
 
 	public function render_metabox( $post, $box, $fields = NULL, $context = NULL )
 	{
-		$this->do_render_metabox_assoc( $post, 'collection_cpt', 'collection_tax', 'part_tax' );
+		$this->paired_do_render_metabox( $post, 'collection_cpt', 'collection_tax', 'part_tax' );
 	}
 
 	public function store_metabox( $post_id, $post, $update, $context = NULL )
@@ -569,7 +569,7 @@ class Collect extends gEditorial\Module
 		if ( ! $this->is_save_post( $post, $this->posttypes() ) )
 			return;
 
-		$this->do_store_metabox_assoc( $post, 'collection_cpt', 'collection_tax', 'part_tax' );
+		$this->paired_do_store_metabox( $post, 'collection_cpt', 'collection_tax', 'part_tax' );
 	}
 
 	public function render_mainbox_metabox( $post, $box )
@@ -596,7 +596,7 @@ class Collect extends gEditorial\Module
 		echo $this->wrap_open( '-admin-metabox' );
 			$this->actions( 'render_listbox_metabox', $post, $box, NULL, 'listbox_collection' );
 
-			$term = $this->get_linked_term( $post->ID, 'collection_cpt', 'collection_tax' );
+			$term = $this->paired_get_to_term( $post->ID, 'collection_cpt', 'collection_tax' );
 
 			if ( $list = MetaBox::getTermPosts( $this->constant( 'collection_tax' ), $term, $this->posttypes() ) )
 				echo $list;
@@ -607,23 +607,23 @@ class Collect extends gEditorial\Module
 		echo '</div>';
 	}
 
-	public function get_assoc_post( $post = NULL, $single = FALSE, $published = TRUE )
+	public function paired_get_to_posts( $post = NULL, $single = FALSE, $published = TRUE )
 	{
 		$posts = [];
 		$terms = Taxonomy::getTerms( $this->constant( 'collection_tax' ), $post, TRUE );
 
 		foreach ( $terms as $term ) {
 
-			if ( ! $linked = $this->get_linked_post_id( $term, 'collection_cpt', 'collection_tax' ) )
+			if ( ! $to_post_id = $this->paired_get_to_post_id( $term, 'collection_cpt', 'collection_tax' ) )
 				continue;
 
 			if ( $single )
-				return $linked;
+				return $to_post_id;
 
-			if ( $published && 'publish' != get_post_status( $linked ) )
+			if ( $published && 'publish' != get_post_status( $to_post_id ) )
 				continue;
 
-			$posts[$term->term_id] = $linked;
+			$posts[$term->term_id] = $to_post_id;
 		}
 
 		return count( $posts ) ? $posts : FALSE;
@@ -631,7 +631,7 @@ class Collect extends gEditorial\Module
 
 	public function tweaks_column_attr( $post )
 	{
-		$posts = $this->get_linked_posts( $post->ID, 'collection_cpt', 'collection_tax' );
+		$posts = $this->paired_get_from_posts( $post->ID, 'collection_cpt', 'collection_tax' );
 		$count = count( $posts );
 
 		if ( ! $count )
@@ -686,10 +686,10 @@ class Collect extends gEditorial\Module
 		return array_merge( $messages, $this->get_bulk_post_updated_messages( 'collection_cpt', $counts ) );
 	}
 
-	// TODO: migrate to `Shortcode::listPosts( 'associated' );`
+	// TODO: migrate to `Shortcode::listPosts( 'paired' );`
 	public function collection_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
-		return ShortCode::getAssocPosts(
+		return ShortCode::getPairedPosts(
 			$this->constant( 'collection_cpt' ),
 			$this->constant( 'collection_tax' ),
 			array_merge( [
@@ -726,7 +726,7 @@ class Collect extends gEditorial\Module
 			$args['id'] = NULL;
 
 		else if ( is_singular() )
-			$args['id'] = 'assoc';
+			$args['id'] = 'paired';
 
 		if ( ! $html = ModuleTemplate::postImage( array_merge( $args, (array) $atts ) ) )
 			return $content;
@@ -771,11 +771,11 @@ class Collect extends gEditorial\Module
 				'_cb'     => 'term_id',
 				'term_id' => Tablelist::columnTermID(),
 				'name'    => Tablelist::columnTermName(),
-				'linked'   => [
-					'title'    => _x( 'Linked Collection Post', 'Table Column', 'geditorial-collect' ),
+				'paired'   => [
+					'title'    => _x( 'Paired Collection Post', 'Table Column', 'geditorial-collect' ),
 					'callback' => function( $value, $row, $column, $index ){
 
-						if ( $post_id = $this->get_linked_post_id( $row, 'collection_cpt', 'collection_tax', FALSE ) )
+						if ( $post_id = $this->paired_get_to_post_id( $row, 'collection_cpt', 'collection_tax', FALSE ) )
 							return Helper::getPostTitleRow( $post_id ).' &ndash; <small>'.$post_id.'</small>';
 
 						return Helper::htmlEmpty();
@@ -795,7 +795,7 @@ class Collect extends gEditorial\Module
 					'title'    => _x( 'Count', 'Table Column', 'geditorial-collect' ),
 					'callback' => function( $value, $row, $column, $index ){
 						if ( $post_id = PostType::getIDbySlug( $row->slug, $this->constant( 'collection_cpt' ) ) )
-							return Number::format( $this->get_linked_posts( $post_id, 'collection_cpt', 'collection_tax', TRUE ) );
+							return Number::format( $this->paired_get_from_posts( $post_id, 'collection_cpt', 'collection_tax', TRUE ) );
 						return Number::format( $row->count );
 					},
 				],
@@ -860,7 +860,7 @@ class Collect extends gEditorial\Module
 						: 'in_collection_page_start';
 
 					foreach ( $_POST['_cb'] as $term_id ) {
-						foreach ( $this->get_linked_posts( NULL, 'collection_cpt', 'collection_tax', FALSE, $term_id ) as $post ) {
+						foreach ( $this->paired_get_from_posts( NULL, 'collection_cpt', 'collection_tax', FALSE, $term_id ) as $post ) {
 
 							if ( $post->menu_order )
 								continue;
@@ -895,7 +895,7 @@ class Collect extends gEditorial\Module
 						if ( FALSE === $post_id )
 							continue;
 
-						if ( $this->set_linked_term( $post_id, $terms[$term_id], 'collection_cpt', 'collection_tax' ) )
+						if ( $this->paired_set_to_term( $post_id, $terms[$term_id], 'collection_cpt', 'collection_tax' ) )
 							$count++;
 					}
 
@@ -910,7 +910,7 @@ class Collect extends gEditorial\Module
 
 					foreach ( $_POST['_cb'] as $term_id ) {
 
-						if ( $this->remove_linked_term( NULL, $term_id, 'collection_cpt', 'collection_tax' ) ) {
+						if ( $this->paired_remove_to_term( NULL, $term_id, 'collection_cpt', 'collection_tax' ) ) {
 
 							$deleted = wp_delete_term( $term_id, $this->constant( 'collection_tax' ) );
 

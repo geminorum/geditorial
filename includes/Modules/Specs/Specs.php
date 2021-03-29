@@ -97,10 +97,10 @@ class Specs extends gEditorial\Module
 		if ( 'post' == $screen->base
 			&& $this->posttype_supported( $screen->post_type ) ) {
 
-			$this->class_metabox( $screen, 'linkedbox' );
-			add_meta_box( $this->classs( 'linkedbox' ),
+			$this->class_metabox( $screen, 'supportedbox' );
+			add_meta_box( $this->classs( 'supportedbox' ),
 				$this->get_meta_box_title_tax( 'specs_tax', $screen->post_type ),
-				[ $this, 'render_linkedbox_metabox' ],
+				[ $this, 'render_supportedbox_metabox' ],
 				$screen,
 				'side',
 				'high'
@@ -270,7 +270,7 @@ class Specs extends gEditorial\Module
 		return $this->filters( 'sanitize_post_meta', $postmeta, $fields, $post_id, $posttype );
 	}
 
-	public function render_linkedbox_metabox( $post, $box )
+	public function render_supportedbox_metabox( $post, $box )
 	{
 		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
 			return;
@@ -278,8 +278,8 @@ class Specs extends gEditorial\Module
 		$fields = $this->posttype_fields( $post->post_type );
 
 		echo $this->wrap_open( '-admin-metabox' );
-			$this->actions( 'render_metabox', $post, $box, $fields, 'linkedbox_specs' );
-			$this->actions( 'render_metabox_after', $post, $box, $fields, 'linkedbox_specs' );
+			$this->actions( 'render_metabox', $post, $box, $fields, 'supportedbox' );
+			$this->actions( 'render_metabox_after', $post, $box, $fields, 'supportedbox' );
 		echo '</div>';
 
 		$this->nonce_field( 'mainbox' );

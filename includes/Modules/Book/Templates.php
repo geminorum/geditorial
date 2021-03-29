@@ -33,7 +33,7 @@ class Book extends gEditorial\Template
 	public static function cover( $atts = [] )
 	{
 		if ( ! array_key_exists( 'id', $atts ) )
-			$atts['id'] = 'assoc';
+			$atts['id'] = 'paired';
 
 		if ( ! array_key_exists( 'type', $atts ) )
 			$atts['type'] = self::constant( 'publication_cpt', 'publication' );

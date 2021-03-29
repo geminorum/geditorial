@@ -220,7 +220,7 @@ class Venue extends gEditorial\Module
 
 			$term = get_queried_object();
 
-			if ( $post_id = $this->get_linked_post_id( $term, 'place_cpt', 'place_tax' ) )
+			if ( $post_id = $this->paired_get_to_post_id( $term, 'place_cpt', 'place_tax' ) )
 				WordPress::redirect( get_permalink( $post_id ), 301 );
 
 		} else if ( is_post_type_archive( $this->constant( 'place_cpt' ) ) ) {
@@ -233,7 +233,7 @@ class Venue extends gEditorial\Module
 	public function init_ajax()
 	{
 		if ( $this->is_inline_save( $_REQUEST, 'place_cpt' ) )
-			$this->_sync_linked( $_REQUEST['post_type'] );
+			$this->_sync_paired( $_REQUEST['post_type'] );
 	}
 
 	public function current_screen( $screen )
@@ -287,7 +287,7 @@ class Venue extends gEditorial\Module
 				$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
 			}
 
-			$this->_sync_linked( $screen->post_type );
+			$this->_sync_paired( $screen->post_type );
 
 		} else if ( $this->posttype_supported( $screen->post_type ) ) {
 
@@ -296,15 +296,15 @@ class Venue extends gEditorial\Module
 				if ( $subterms )
 					remove_meta_box( $subterms.'div', $screen->post_type, 'side' );
 
-				$this->class_metabox( $screen, 'linkedbox' );
-				add_meta_box( $this->classs( 'linkedbox' ),
+				$this->class_metabox( $screen, 'pairedbox' );
+				add_meta_box( $this->classs( 'pairedbox' ),
 					$this->get_meta_box_title_posttype( 'place_cpt' ),
-					[ $this, 'render_linkedbox_metabox' ],
+					[ $this, 'render_pairedbox_metabox' ],
 					$screen,
 					'side'
 				);
 
-				add_action( $this->hook( 'render_linkedbox_metabox' ), [ $this, 'render_metabox' ], 10, 4 );
+				add_action( $this->hook( 'render_pairedbox_metabox' ), [ $this, 'render_metabox' ], 10, 4 );
 
 			} else if ( 'edit' == $screen->base ) {
 
@@ -325,7 +325,7 @@ class Venue extends gEditorial\Module
 			$this->filter_module( 'calendar', 'post_row_title', 4, 12 );
 	}
 
-	private function _sync_linked( $posttype )
+	private function _sync_paired( $posttype )
 	{
 		$this->action( 'save_post', 3, 20 );
 		$this->action( 'post_updated', 3, 20 );
@@ -354,7 +354,7 @@ class Venue extends gEditorial\Module
 		if ( $this->constant( 'place_tax' ) != $taxonomy )
 			return $link;
 
-		if ( $post_id = $this->get_linked_post_id( $term, 'place_cpt', 'place_tax' ) )
+		if ( $post_id = $this->paired_get_to_post_id( $term, 'place_cpt', 'place_tax' ) )
 			return get_permalink( $post_id );
 
 		return $link;
@@ -394,7 +394,7 @@ class Venue extends gEditorial\Module
 		}
 
 		if ( ! is_wp_error( $term ) )
-			$this->set_linked_term( $post_id, $term['term_id'], 'place_cpt', 'place_tax' );
+			$this->paired_set_to_term( $post_id, $term['term_id'], 'place_cpt', 'place_tax' );
 	}
 
 	public function save_post( $post_id, $post, $update )
@@ -403,7 +403,7 @@ class Venue extends gEditorial\Module
 		if ( $update )
 			return;
 
-		if ( ! $this->is_save_post( $post ) )
+		if ( ! $this->is_save_post( $post, 'place_cpt' ) )
 			return;
 
 		if ( empty( $post->post_name ) )
@@ -419,22 +419,22 @@ class Venue extends gEditorial\Module
 		$term = wp_insert_term( $post->post_title, $this->constant( 'place_tax' ), $args );
 
 		if ( ! is_wp_error( $term ) )
-			$this->set_linked_term( $post_id, $term['term_id'], 'place_cpt', 'place_tax' );
+			$this->paired_set_to_term( $post_id, $term['term_id'], 'place_cpt', 'place_tax' );
 	}
 
 	public function wp_trash_post( $post_id )
 	{
-		$this->do_trash_post( $post_id, 'place_cpt', 'place_tax' );
+		$this->paired_do_trash_to_post( $post_id, 'place_cpt', 'place_tax' );
 	}
 
 	public function untrash_post( $post_id )
 	{
-		$this->do_untrash_post( $post_id, 'place_cpt', 'place_tax' );
+		$this->paired_do_untrash_to_post( $post_id, 'place_cpt', 'place_tax' );
 	}
 
 	public function before_delete_post( $post_id )
 	{
-		$this->do_before_delete_post( $post_id, 'place_cpt', 'place_tax' );
+		$this->paired_do_before_delete_to_post( $post_id, 'place_cpt', 'place_tax' );
 	}
 
 	public function post_updated_messages( $messages )
@@ -472,7 +472,7 @@ class Venue extends gEditorial\Module
 		echo '</div>';
 	}
 
-	public function render_linkedbox_metabox( $post, $box )
+	public function render_pairedbox_metabox( $post, $box )
 	{
 		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
 			return;
@@ -485,9 +485,9 @@ class Venue extends gEditorial\Module
 
 		} else {
 
-			$this->actions( 'render_linkedbox_metabox', $post, $box, NULL, 'linkedbox_place' );
+			$this->actions( 'render_pairedbox_metabox', $post, $box, NULL, 'pairedbox_place' );
 
-			do_action( 'geditorial_meta_render_metabox', $post, $box, NULL, 'linkedbox_place' );
+			do_action( 'geditorial_meta_render_metabox', $post, $box, NULL, 'pairedbox_place' );
 		}
 
 		echo '</div>';
@@ -495,7 +495,7 @@ class Venue extends gEditorial\Module
 
 	public function render_metabox( $post, $box, $fields = NULL, $context = NULL )
 	{
-		$this->do_render_metabox_assoc( $post, 'place_cpt', 'place_tax', 'facility_tax' );
+		$this->paired_do_render_metabox( $post, 'place_cpt', 'place_tax', 'facility_tax' );
 	}
 
 	public function store_metabox( $post_id, $post, $update, $context = NULL )
@@ -503,7 +503,7 @@ class Venue extends gEditorial\Module
 		if ( ! $this->is_save_post( $post, $this->posttypes() ) )
 			return;
 
-		$this->do_store_metabox_assoc( $post, 'place_cpt', 'place_tax', 'facility_tax' );
+		$this->paired_do_store_metabox( $post, 'place_cpt', 'place_tax', 'facility_tax' );
 	}
 
 	public function render_mainbox_metabox( $post, $box )
@@ -530,7 +530,7 @@ class Venue extends gEditorial\Module
 		echo $this->wrap_open( '-admin-metabox' );
 			$this->actions( 'render_listbox_metabox', $post, $box, NULL, 'listbox_place' );
 
-			$term = $this->get_linked_term( $post->ID, 'place_cpt', 'place_tax' );
+			$term = $this->paired_get_to_term( $post->ID, 'place_cpt', 'place_tax' );
 
 			if ( $list = MetaBox::getTermPosts( $this->constant( 'place_tax' ), $term, $this->posttypes() ) )
 				echo $list;
@@ -541,23 +541,23 @@ class Venue extends gEditorial\Module
 		echo '</div>';
 	}
 
-	public function get_assoc_post( $post = NULL, $single = FALSE, $published = TRUE )
+	public function paired_get_to_posts( $post = NULL, $single = FALSE, $published = TRUE )
 	{
 		$posts = [];
 		$terms = Taxonomy::getTerms( $this->constant( 'place_tax' ), $post, TRUE );
 
 		foreach ( $terms as $term ) {
 
-			if ( ! $linked = $this->get_linked_post_id( $term, 'place_cpt', 'place_tax' ) )
+			if ( ! $to_post_id = $this->paired_get_to_post_id( $term, 'place_cpt', 'place_tax' ) )
 				continue;
 
 			if ( $single )
-				return $linked;
+				return $to_post_id;
 
-			if ( $published && 'publish' != get_post_status( $linked ) )
+			if ( $published && 'publish' != get_post_status( $to_post_id ) )
 				continue;
 
-			$posts[$term->term_id] = $linked;
+			$posts[$term->term_id] = $to_post_id;
 		}
 
 		return count( $posts ) ? $posts : FALSE;
@@ -565,7 +565,7 @@ class Venue extends gEditorial\Module
 
 	public function tweaks_column_attr( $post )
 	{
-		$posts = $this->get_linked_posts( $post->ID, 'place_cpt', 'place_tax' );
+		$posts = $this->paired_get_from_posts( $post->ID, 'place_cpt', 'place_tax' );
 		$count = count( $posts );
 
 		if ( ! $count )

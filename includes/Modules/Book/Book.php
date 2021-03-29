@@ -676,7 +676,7 @@ class Book extends gEditorial\Module
 			$args['id'] = NULL;
 
 		else if ( is_singular( $this->posttypes() ) )
-			$args['id'] = 'assoc';
+			$args['id'] = 'paired';
 
 		else // no publication/no p2p
 			return $content;
@@ -701,7 +701,7 @@ class Book extends gEditorial\Module
 		$this->list_p2p( NULL, '-'.$this->get_setting( 'insert_content', 'none' ) );
 	}
 
-	public function get_assoc_post( $post = NULL, $single = FALSE, $published = TRUE )
+	public function paired_get_to_posts( $post = NULL, $single = FALSE, $published = TRUE )
 	{
 		if ( ! $post = get_post( $post ) )
 			return FALSE;

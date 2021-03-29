@@ -267,9 +267,9 @@ class Today extends gEditorial\Module
 				$this->filter( 'post_updated_messages' );
 				$this->action( 'edit_form_after_editor' );
 
-				add_meta_box( $this->classs( 'linkedbox' ),
+				add_meta_box( $this->classs( 'supportedbox' ),
 					$this->get_meta_box_title( 'day_cpt' ),
-					[ $this, 'render_linkedbox_metabox' ],
+					[ $this, 'render_supportedbox_metabox' ],
 					$screen,
 					'side',
 					'high'
@@ -292,9 +292,9 @@ class Today extends gEditorial\Module
 
 				$this->_save_meta_supported( $screen->post_type );
 
-				add_meta_box( $this->classs( 'linkedbox' ),
+				add_meta_box( $this->classs( 'supportedbox' ),
 					$this->get_meta_box_title(),
-					[ $this, 'render_linkedbox_metabox' ],
+					[ $this, 'render_supportedbox_metabox' ],
 					$screen,
 					'side',
 					'high'
@@ -392,13 +392,13 @@ class Today extends gEditorial\Module
 		return $this->get_adminmenu( FALSE, $the_day );
 	}
 
-	public function render_linkedbox_metabox( $post, $box )
+	public function render_supportedbox_metabox( $post, $box )
 	{
 		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
 			return;
 
 		echo $this->wrap_open( '-admin-metabox' );
-			$this->actions( 'render_metabox', $post, $box, NULL, 'linkedbox_today' );
+			$this->actions( 'render_metabox', $post, $box, NULL, 'supportedbox' );
 
 			$display_year = $post->post_type != $this->constant( 'day_cpt' );
 			$default_type = $this->default_calendar();
@@ -421,7 +421,7 @@ class Today extends gEditorial\Module
 
 		echo '</div>';
 
-		$this->nonce_field( 'linkedbox' );
+		$this->nonce_field( 'supportedbox' );
 	}
 
 	public function do_metabox_excerpt( $post, $box )
@@ -594,7 +594,7 @@ class Today extends gEditorial\Module
 			&& $this->constant( 'day_cpt' ) != $post->post_type )
 				return;
 
-		if ( ! $this->nonce_verify( 'linkedbox' )
+		if ( ! $this->nonce_verify( 'supportedbox' )
 			&& ! $this->nonce_verify( 'nobox' ) )
 				return;
 

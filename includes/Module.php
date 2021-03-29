@@ -1626,7 +1626,7 @@ class Module extends Base
 
 	// this module enabled fields with args for a posttype
 	// static contexts: `nobox`, `lonebox`, `mainbox`
-	// dynamic contexts: `listbox_{$posttype}`, `linkedbox_{$posttype}`, `linkedbox_{$module}`
+	// dynamic contexts: `listbox_{$posttype}`, `pairedbox_{$posttype}`, `pairedbox_{$module}`
 	public function get_posttype_fields( $posttype = 'post' )
 	{
 		global $gEditorialPostTypeFields;
@@ -2765,10 +2765,10 @@ class Module extends Base
 		if ( ! $this->posttype_supported( $post->post_type ) )
 			return $title;
 
-		if ( ! $assoc = $this->get_assoc_post( $post->ID, TRUE ) )
+		if ( ! $to_post = $this->paired_get_to_posts( $post->ID, TRUE ) )
 			return $title;
 
-		return $title.' – '.Helper::getPostTitle( $assoc );
+		return $title.' – '.Helper::getPostTitle( $to_post );
 	}
 
 	public function get_calendars( $default = [ 'gregorian' ], $filtered = TRUE )
@@ -2872,8 +2872,10 @@ class Module extends Base
 		}
 	}
 
+	// PAIRED API
 	// NOTE: subterms must be hierarchical
-	protected function do_render_metabox_assoc( $post, $posttype_constant, $tax_constant, $sub_tax_constant )
+	// OLD: `do_render_metabox_assoc()`
+	protected function paired_do_render_metabox( $post, $posttype_constant, $tax_constant, $sub_tax_constant )
 	{
 		$sub_tax   = FALSE;
 		$dropdowns = $excludes = [];
@@ -2891,16 +2893,16 @@ class Module extends Base
 
 		foreach ( $terms as $term ) {
 
-			if ( ! $linked = $this->get_linked_post_id( $term, $posttype_constant, $tax_constant ) )
+			if ( ! $to_post_id = $this->paired_get_to_post_id( $term, $posttype_constant, $tax_constant ) )
 				continue;
 
-			$dropdown = MetaBox::dropdownAssocPostsRedux( $posttype, $linked, $this->classs(), [], $none_main );
+			$dropdown = MetaBox::paired_dropdownToPosts( $posttype, $to_post_id, $this->classs(), [], $none_main );
 
 			if ( $sub_tax ) {
 
 				if ( $this->get_setting( 'multiple_instances' ) ) {
 
-					$sub_meta = get_post_meta( $post->ID, sprintf( '_%s_subterm_%s', $posttype, $linked ), TRUE );
+					$sub_meta = get_post_meta( $post->ID, sprintf( '_%s_subterm_%s', $posttype, $to_post_id ), TRUE );
 					$selected = ( $sub_meta && $subterms && in_array( $sub_meta, $subterms ) ) ? $sub_meta : 0;
 
 				} else {
@@ -2908,18 +2910,18 @@ class Module extends Base
 					$selected = $subterms ? array_pop( $subterms ) : 0;
 				}
 
-				$dropdown.= MetaBox::dropdownAssocPostsSubTerms( $sub_tax, $linked, $this->classs( $sub_tax ), $selected, $none_sub );
+				$dropdown.= MetaBox::paired_dropdownSubTerms( $sub_tax, $to_post_id, $this->classs( $sub_tax ), $selected, $none_sub );
 			}
 
-			$dropdowns[$linked] = $dropdown;
-			$excludes[] = $linked;
+			$dropdowns[$to_post_id] = $dropdown;
+			$excludes[] = $to_post_id;
 		}
 
 		if ( empty( $dropdowns ) )
-			$dropdowns[0] = MetaBox::dropdownAssocPostsRedux( $posttype, 0, $this->classs(), $excludes, $none_main );
+			$dropdowns[0] = MetaBox::paired_dropdownToPosts( $posttype, 0, $this->classs(), $excludes, $none_main );
 
 		else if ( $this->get_setting( 'multiple_instances' ) )
-			$dropdowns[] = MetaBox::dropdownAssocPostsRedux( $posttype, 0, $this->classs(), $excludes, $none_main );
+			$dropdowns[] = MetaBox::paired_dropdownToPosts( $posttype, 0, $this->classs(), $excludes, $none_main );
 
 		foreach ( $dropdowns as $dropdown )
 			if ( $dropdown )
@@ -2929,18 +2931,20 @@ class Module extends Base
 			$this->enqueue_asset_js( 'subterms', 'module' );
 	}
 
-	protected function do_store_metabox_assoc( $post, $posttype_constant, $tax_constant, $sub_tax_constant )
+	// PAIRED API
+	// OLD: `do_store_metabox_assoc()`
+	protected function paired_do_store_metabox( $post, $posttype_constant, $tax_constant, $sub_tax_constant )
 	{
 		$posttype = $this->constant( $posttype_constant );
-		$linked   = self::req( $this->classs( $posttype ), FALSE );
+		$paired   = self::req( $this->classs( $posttype ), FALSE );
 
-		if ( FALSE === $linked )
+		if ( FALSE === $paired )
 			return;
 
 		$terms = [];
 
-		foreach ( (array) $linked as $linked_id )
-			if ( $linked_id && ( $term = $this->get_linked_term( $linked_id, $posttype_constant, $tax_constant ) ) )
+		foreach ( (array) $paired as $paired_id )
+			if ( $paired_id && ( $term = $this->paired_get_to_term( $paired_id, $posttype_constant, $tax_constant ) ) )
 				$terms[] = $term->term_id;
 
 		wp_set_object_terms( $post->ID, ( count( $terms ) ? $terms : NULL ), $this->constant( $tax_constant ), FALSE );
@@ -2961,28 +2965,28 @@ class Module extends Base
 
 		$subterms = [];
 
-		foreach ( (array) $linked as $linked_id ) {
+		foreach ( (array) $paired as $paired_id ) {
 
-			if ( ! $linked_id )
+			if ( ! $paired_id )
 				continue;
 
-			if ( ! array_key_exists( $linked_id, $subterm ) )
+			if ( ! array_key_exists( $paired_id, $subterm ) )
 				continue;
 
-			$sub_linked = $subterm[$linked_id];
+			$sub_paired = $subterm[$paired_id];
 
 			if ( $this->get_setting( 'multiple_instances' ) ) {
 
-				$sub_metakey = sprintf( '_%s_subterm_%s', $posttype, $linked_id );
+				$sub_metakey = sprintf( '_%s_subterm_%s', $posttype, $paired_id );
 
-				if ( $sub_linked )
-					update_post_meta( $post->ID, $sub_metakey, (int) $sub_linked );
+				if ( $sub_paired )
+					update_post_meta( $post->ID, $sub_metakey, (int) $sub_paired );
 				else
 					delete_post_meta( $post->ID, $sub_metakey );
 			}
 
-			if ( $sub_linked )
-				$subterms[] = (int) $sub_linked;
+			if ( $sub_paired )
+				$subterms[] = (int) $sub_paired;
 		}
 
 		wp_set_object_terms( $post->ID, ( count( $subterms ) ? $subterms : NULL ), $sub_tax, FALSE );
@@ -3272,13 +3276,15 @@ class Module extends Base
 		return TRUE;
 	}
 
-	public function get_linked_term( $post_id, $posttype_constant_key, $tax_constant_key )
+	// OLD: `get_linked_term()`
+	public function paired_get_to_term( $post_id, $posttype_constant_key, $tax_constant_key )
 	{
 		$term_id = get_post_meta( $post_id, '_'.$this->constant( $posttype_constant_key ).'_term_id', TRUE );
 		return get_term_by( 'id', (int) $term_id, $this->constant( $tax_constant_key ) );
 	}
 
-	public function set_linked_term( $post_id, $term_or_id, $posttype_constant_key, $tax_constant_key )
+	// OLD: `set_linked_term()`
+	public function paired_set_to_term( $post_id, $term_or_id, $posttype_constant_key, $tax_constant_key )
 	{
 		if ( ! $term = Taxonomy::getTerm( $term_or_id, $this->constant( $tax_constant_key ) ) )
 			return FALSE;
@@ -3301,13 +3307,14 @@ class Module extends Base
 		return TRUE;
 	}
 
-	public function remove_linked_term( $post_id, $term_or_id, $posttype_constant_key, $tax_constant_key )
+	// OLD: `remove_linked_term()`
+	public function paired_remove_to_term( $post_id, $term_or_id, $posttype_constant_key, $tax_constant_key )
 	{
 		if ( ! $term = Taxonomy::getTerm( $term_or_id, $this->constant( $tax_constant_key ) ) )
 			return FALSE;
 
 		if ( ! $post_id )
-			$post_id = $this->get_linked_post_id( $term, $posttype_constant_key, $tax_constant_key );
+			$post_id = $this->paired_get_to_post_id( $term, $posttype_constant_key, $tax_constant_key );
 
 		if ( $post_id )
 			delete_post_meta( $post_id, '_'.$this->constant( $posttype_constant_key ).'_term_id' );
@@ -3327,7 +3334,16 @@ class Module extends Base
 		return TRUE;
 	}
 
+	// FIXME: DEPRECATED
 	public function get_linked_post_id( $term_or_id, $posttype_constant_key, $tax_constant_key, $check_slug = TRUE )
+	{
+		self::_dep( '$this->paired_get_to_post_id()' );
+
+		return $this->paired_get_to_post_id( $term_or_id, $posttype_constant_key, $tax_constant_key, $check_slug );
+	}
+
+	// OLD: `get_linked_post_id()`
+	public function paired_get_to_post_id( $term_or_id, $posttype_constant_key, $tax_constant_key, $check_slug = TRUE )
 	{
 		if ( ! $term = Taxonomy::getTerm( $term_or_id, $this->constant( $tax_constant_key ) ) )
 			return FALSE;
@@ -3340,7 +3356,16 @@ class Module extends Base
 		return $post_id;
 	}
 
+	// FIXME: DEPRECATED
 	public function get_linked_posts( $post_id, $posttype_constant_key, $tax_constant_key, $count = FALSE, $term_id = NULL )
+	{
+		self::_dep( '$this->paired_get_from_posts()' );
+
+		return $this->paired_get_from_posts( $post_id, $posttype_constant_key, $tax_constant_key, $count, $term_id );
+	}
+
+	// PAIRED API: get (from) posts connected to the pair
+	public function paired_get_from_posts( $post_id, $posttype_constant_key, $tax_constant_key, $count = FALSE, $term_id = NULL )
 	{
 		if ( is_null( $term_id ) )
 			$term_id = get_post_meta( $post_id, '_'.$this->constant( $posttype_constant_key ).'_term_id', TRUE );
@@ -3370,16 +3395,26 @@ class Module extends Base
 		return $items;
 	}
 
+	// FIXME: DEPRECATED
+	public function get_assoc_post( $post = NULL, $single = FALSE, $published = TRUE )
+	{
+		self::_dep( '$this->paired_get_to_posts()' );
+
+		return $this->paired_get_to_posts( $post, $single, $published );
+	}
+
 	// DEFAULT METHOD
 	// used for issue/book/etc.
-	public function get_assoc_post( $post = NULL, $single = FALSE, $published = TRUE )
+	// PAIRED API: get (to) posts connected from the pair
+	public function paired_get_to_posts( $post = NULL, $single = FALSE, $published = TRUE )
 	{
 		return FALSE;
 	}
 
-	protected function do_trash_post( $post_id, $posttype_constant_key, $taxonomy_constant_key )
+	// OLD: `do_trash_post()`
+	protected function paired_do_trash_to_post( $post_id, $posttype_constant_key, $taxonomy_constant_key )
 	{
-		if ( $term = $this->get_linked_term( $post_id, $posttype_constant_key, $taxonomy_constant_key ) ) {
+		if ( $term = $this->paired_get_to_term( $post_id, $posttype_constant_key, $taxonomy_constant_key ) ) {
 			wp_update_term( $term->term_id, $this->constant( $taxonomy_constant_key ), [
 				'name' => $term->name.'___TRASHED',
 				'slug' => $term->slug.'-trashed',
@@ -3387,9 +3422,10 @@ class Module extends Base
 		}
 	}
 
-	protected function do_untrash_post( $post_id, $posttype_constant_key, $taxonomy_constant_key )
+	// OLD: `do_untrash_post()`
+	protected function paired_do_untrash_to_post( $post_id, $posttype_constant_key, $taxonomy_constant_key )
 	{
-		if ( $term = $this->get_linked_term( $post_id, $posttype_constant_key, $taxonomy_constant_key ) ) {
+		if ( $term = $this->paired_get_to_term( $post_id, $posttype_constant_key, $taxonomy_constant_key ) ) {
 			wp_update_term( $term->term_id, $this->constant( $taxonomy_constant_key ), [
 				'name' => str_ireplace( '___TRASHED', '', $term->name ),
 				'slug' => str_ireplace( '-trashed', '', $term->slug ),
@@ -3397,9 +3433,10 @@ class Module extends Base
 		}
 	}
 
-	protected function do_before_delete_post( $post_id, $posttype_constant_key, $taxonomy_constant_key )
+	// OLD: `do_before_delete_post()`
+	protected function paired_do_before_delete_to_post( $post_id, $posttype_constant_key, $taxonomy_constant_key )
 	{
-		if ( $term = $this->get_linked_term( $post_id, $posttype_constant_key, $taxonomy_constant_key ) ) {
+		if ( $term = $this->paired_get_to_term( $post_id, $posttype_constant_key, $taxonomy_constant_key ) ) {
 			wp_delete_term( $term->term_id, $this->constant( $taxonomy_constant_key ) );
 			delete_metadata( 'term', $term->term_id, $this->constant( $posttype_constant_key ).'_linked' );
 		}

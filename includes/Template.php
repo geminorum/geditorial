@@ -327,8 +327,8 @@ class Template extends Main
 		else if ( 'parent' == $args['id'] )
 			$args['id'] = PostType::getParentPostID();
 
-		else if ( 'assoc' == $args['id'] && $module )
-			$args['id'] = gEditorial()->{$module}->get_assoc_post( NULL, TRUE );
+		else if ( ( 'assoc' == $args['id'] || 'paired' == $args['id'] ) && $module )
+			$args['id'] = gEditorial()->{$module}->paired_get_to_posts( NULL, TRUE );
 
 		if ( FALSE === $args['id'] )
 			return $args['default'];
@@ -392,7 +392,15 @@ class Template extends Main
 		return FALSE;
 	}
 
+	// FIXME: DEPRECATED
 	public static function assocLink( $atts = [], $module = NULL )
+	{
+		self::_dep( 'Template::pairedLink()' );
+
+		return self::pairedLink( $atts, $module );
+	}
+
+	public static function pairedLink( $atts = [], $module = NULL )
 	{
 		if ( is_null( $module ) && static::MODULE )
 			$module = static::MODULE;
@@ -413,7 +421,7 @@ class Template extends Main
 			'echo'          => TRUE,
 		], $atts );
 
-		if ( ! $posts = gEditorial()->{$module}->get_assoc_post( $args['id'], $args['single'], $args['published'] ) )
+		if ( ! $posts = gEditorial()->{$module}->paired_get_to_posts( $args['id'], $args['single'], $args['published'] ) )
 			return $args['default'];
 
 		$links = [];

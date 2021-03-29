@@ -23,7 +23,7 @@ class Course extends gEditorial\Template
 		if ( ! array_key_exists( 'item_tag', $atts ) )
 			$atts['item_tag'] = FALSE;
 
-		return self::assocLink( $atts, static::MODULE );
+		return self::pairedLink( $atts, static::MODULE );
 	}
 
 	public static function theCourseTitleCB( $post, $args = [] )
@@ -45,7 +45,7 @@ class Course extends gEditorial\Template
 	public static function cover( $atts = [] )
 	{
 		if ( ! array_key_exists( 'id', $atts ) )
-			$atts['id'] = 'assoc';
+			$atts['id'] = 'paired';
 
 		if ( ! array_key_exists( 'type', $atts ) )
 			$atts['type'] = self::constant( 'course_cpt', 'course' );

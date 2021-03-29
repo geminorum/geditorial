@@ -23,7 +23,7 @@ class Magazine extends gEditorial\Template
 		if ( ! array_key_exists( 'item_tag', $atts ) )
 			$atts['item_tag'] = FALSE;
 
-		return self::assocLink( $atts, static::MODULE );
+		return self::pairedLink( $atts, static::MODULE );
 	}
 
 	public static function theIssueTitleCB( $post, $args = [] )
@@ -59,7 +59,7 @@ class Magazine extends gEditorial\Template
 	public static function cover( $atts = [] )
 	{
 		if ( ! array_key_exists( 'id', $atts ) )
-			$atts['id'] = 'assoc';
+			$atts['id'] = 'paired';
 
 		if ( ! array_key_exists( 'type', $atts ) )
 			$atts['type'] = self::constant( 'issue_cpt', 'issue' );
@@ -84,7 +84,7 @@ class Magazine extends gEditorial\Template
 		self::_dep( 'gEditorialMagazineTemplates::cover()' );
 
 		if ( ! array_key_exists( 'id', $atts ) )
-			$atts['id'] = 'assoc';
+			$atts['id'] = 'paired';
 
 		if ( ! array_key_exists( 'type', $atts ) )
 			$atts['type'] = self::constant( 'issue_cpt', 'issue' );

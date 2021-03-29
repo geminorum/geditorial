@@ -248,7 +248,7 @@ class Contest extends gEditorial\Module
 	public function init_ajax()
 	{
 		if ( $this->is_inline_save( $_REQUEST, 'contest_cpt' ) )
-			$this->_sync_linked( $_REQUEST['post_type'] );
+			$this->_sync_paired( $_REQUEST['post_type'] );
 	}
 
 	public function current_screen( $screen )
@@ -288,7 +288,7 @@ class Contest extends gEditorial\Module
 					'low'
 				);
 
-				$this->_sync_linked( $screen->post_type );
+				$this->_sync_paired( $screen->post_type );
 
 			} else if ( 'edit' == $screen->base ) {
 
@@ -297,7 +297,7 @@ class Contest extends gEditorial\Module
 				if ( $this->get_setting( 'admin_ordering', TRUE ) )
 					$this->action( 'pre_get_posts' );
 
-				$this->_sync_linked( $screen->post_type );
+				$this->_sync_paired( $screen->post_type );
 
 				$this->action_module( 'tweaks', 'column_attr' );
 				$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
@@ -316,15 +316,15 @@ class Contest extends gEditorial\Module
 				$this->filter_false_module( 'tweaks', 'metabox_menuorder' );
 				remove_meta_box( 'pageparentdiv', $screen, 'side' );
 
-				$this->class_metabox( $screen, 'linkedbox' );
-				add_meta_box( $this->classs( 'linkedbox' ),
+				$this->class_metabox( $screen, 'pairedbox' );
+				add_meta_box( $this->classs( 'pairedbox' ),
 					$this->get_meta_box_title( 'apply_cpt' ),
-					[ $this, 'render_linkedbox_metabox' ],
+					[ $this, 'render_pairedbox_metabox' ],
 					$screen,
 					'side'
 				);
 
-				add_action( $this->hook( 'render_linkedbox_metabox' ), [ $this, 'render_metabox' ], 10, 4 );
+				add_action( $this->hook( 'render_pairedbox_metabox' ), [ $this, 'render_metabox' ], 10, 4 );
 
 			} else if ( 'edit' == $screen->base ) {
 
@@ -347,7 +347,7 @@ class Contest extends gEditorial\Module
 			$this->filter_module( 'calendar', 'post_row_title', 4, 12 );
 	}
 
-	private function _sync_linked( $posttype )
+	private function _sync_paired( $posttype )
 	{
 		$this->action( 'save_post', 3, 20 );
 		$this->action( 'post_updated', 3, 20 );
@@ -373,7 +373,7 @@ class Contest extends gEditorial\Module
 		if ( $this->constant( 'contest_tax' ) != $taxonomy )
 			return $link;
 
-		if ( $post_id = $this->get_linked_post_id( $term, 'contest_cpt', 'contest_tax' ) )
+		if ( $post_id = $this->paired_get_to_post_id( $term, 'contest_cpt', 'contest_tax' ) )
 			return get_permalink( $post_id );
 
 		return $link;
@@ -385,7 +385,7 @@ class Contest extends gEditorial\Module
 
 			$term = get_queried_object();
 
-			if ( $post_id = $this->get_linked_post_id( $term, 'contest_cpt', 'contest_tax' ) )
+			if ( $post_id = $this->paired_get_to_post_id( $term, 'contest_cpt', 'contest_tax' ) )
 				WordPress::redirect( get_permalink( $post_id ), 301 );
 
 		} else if ( is_post_type_archive( $this->constant( 'contest_cpt' ) )
@@ -420,7 +420,7 @@ class Contest extends gEditorial\Module
 		echo $this->wrap_open( '-admin-metabox' );
 			$this->actions( 'render_listbox_metabox', $post, $box, NULL, 'listbox_contest' );
 
-			$term = $this->get_linked_term( $post->ID, 'contest_cpt', 'contest_tax' );
+			$term = $this->paired_get_to_term( $post->ID, 'contest_cpt', 'contest_tax' );
 
 			if ( $list = MetaBox::getTermPosts( $this->constant( 'contest_tax' ), $term, $this->posttypes() ) )
 				echo $list;
@@ -431,7 +431,7 @@ class Contest extends gEditorial\Module
 		echo '</div>';
 	}
 
-	public function render_linkedbox_metabox( $post, $box )
+	public function render_pairedbox_metabox( $post, $box )
 	{
 		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
 			return;
@@ -444,9 +444,9 @@ class Contest extends gEditorial\Module
 
 		} else {
 
-			$this->actions( 'render_linkedbox_metabox', $post, $box, NULL, 'linkedbox_contest' );
+			$this->actions( 'render_pairedbox_metabox', $post, $box, NULL, 'pairedbox_contest' );
 
-			do_action( 'geditorial_meta_render_metabox', $post, $box, NULL, 'linkedbox_contest' );
+			do_action( 'geditorial_meta_render_metabox', $post, $box, NULL, 'pairedbox_contest' );
 		}
 
 		echo '</div>';
@@ -454,7 +454,7 @@ class Contest extends gEditorial\Module
 
 	public function render_metabox( $post, $box, $fields = NULL, $context = NULL )
 	{
-		$this->do_render_metabox_assoc( $post, 'contest_cpt', 'contest_tax', 'section_tax' );
+		$this->paired_do_render_metabox( $post, 'contest_cpt', 'contest_tax', 'section_tax' );
 
 		MetaBox::fieldPostMenuOrder( $post );
 	}
@@ -464,7 +464,7 @@ class Contest extends gEditorial\Module
 		if ( ! $this->is_save_post( $post, $this->posttypes() ) )
 			return;
 
-		$this->do_store_metabox_assoc( $post, 'contest_cpt', 'contest_tax', 'section_tax' );
+		$this->paired_do_store_metabox( $post, 'contest_cpt', 'contest_tax', 'section_tax' );
 	}
 
 	public function meta_box_cb_status_tax( $post, $box )
@@ -531,7 +531,7 @@ class Contest extends gEditorial\Module
 		}
 
 		if ( ! is_wp_error( $term ) )
-			$this->set_linked_term( $post_id, $term['term_id'], 'contest_cpt', 'contest_tax' );
+			$this->paired_set_to_term( $post_id, $term['term_id'], 'contest_cpt', 'contest_tax' );
 	}
 
 	public function save_post( $post_id, $post, $update )
@@ -540,7 +540,7 @@ class Contest extends gEditorial\Module
 		if ( $update )
 			return;
 
-		if ( ! $this->is_save_post( $post ) )
+		if ( ! $this->is_save_post( $post, 'contest_cpt' ) )
 			return;
 
 		if ( empty( $post->post_name ) )
@@ -556,22 +556,22 @@ class Contest extends gEditorial\Module
 		$term = wp_insert_term( $post->post_title, $this->constant( 'contest_tax' ), $args );
 
 		if ( ! is_wp_error( $term ) )
-			$this->set_linked_term( $post_id, $term['term_id'], 'contest_cpt', 'contest_tax' );
+			$this->paired_set_to_term( $post_id, $term['term_id'], 'contest_cpt', 'contest_tax' );
 	}
 
 	public function wp_trash_post( $post_id )
 	{
-		$this->do_trash_post( $post_id, 'contest_cpt', 'contest_tax' );
+		$this->paired_do_trash_to_post( $post_id, 'contest_cpt', 'contest_tax' );
 	}
 
 	public function untrash_post( $post_id )
 	{
-		$this->do_untrash_post( $post_id, 'contest_cpt', 'contest_tax' );
+		$this->paired_do_untrash_to_post( $post_id, 'contest_cpt', 'contest_tax' );
 	}
 
 	public function before_delete_post( $post_id )
 	{
-		$this->do_before_delete_post( $post_id, 'contest_cpt', 'contest_tax' );
+		$this->paired_do_before_delete_to_post( $post_id, 'contest_cpt', 'contest_tax' );
 	}
 
 	public function restrict_manage_posts_supported( $posttype, $which )
@@ -596,7 +596,7 @@ class Contest extends gEditorial\Module
 
 	public function tweaks_column_attr( $post )
 	{
-		$posts = $this->get_linked_posts( $post->ID, 'contest_cpt', 'contest_tax' );
+		$posts = $this->paired_get_from_posts( $post->ID, 'contest_cpt', 'contest_tax' );
 		$count = count( $posts );
 
 		if ( ! $count )
@@ -631,10 +631,10 @@ class Contest extends gEditorial\Module
 		echo '</li>';
 	}
 
-	// TODO: migrate to `Shortcode::listPosts( 'associated' );`
+	// TODO: migrate to `Shortcode::listPosts( 'paired' );`
 	public function contest_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
-		return ShortCode::getAssocPosts(
+		return ShortCode::getPairedPosts(
 			$this->constant( 'contest_cpt' ),
 			$this->constant( 'contest_tax' ),
 			array_merge( [
@@ -658,7 +658,7 @@ class Contest extends gEditorial\Module
 			$args['id'] = NULL;
 
 		else if ( is_singular() )
-			$args['id'] = 'assoc';
+			$args['id'] = 'paired';
 
 		if ( ! $html = Template::postImage( array_merge( $args, (array) $atts ), $this->module->name ) )
 			return $content;
@@ -684,11 +684,11 @@ class Contest extends gEditorial\Module
 				'_cb'     => 'term_id',
 				'term_id' => Tablelist::columnTermID(),
 				'name'    => Tablelist::columnTermName(),
-				'linked'   => [
-					'title' => _x( 'Linked Contest Post', 'Table Column', 'geditorial-contest' ),
+				'paired'   => [
+					'title' => _x( 'Paired Contest Post', 'Table Column', 'geditorial-contest' ),
 					'callback' => function( $value, $row, $column, $index ){
 
-						if ( $post_id = $this->get_linked_post_id( $row, 'contest_cpt', 'contest_tax', FALSE ) )
+						if ( $post_id = $this->paired_get_to_post_id( $row, 'contest_cpt', 'contest_tax', FALSE ) )
 							return Helper::getPostTitleRow( $post_id ).' &ndash; <small>'.$post_id.'</small>';
 
 						return Helper::htmlEmpty();
@@ -708,7 +708,7 @@ class Contest extends gEditorial\Module
 					'title'    => _x( 'Count', 'Table Column', 'geditorial-contest' ),
 					'callback' => function( $value, $row, $column, $index ){
 						if ( $post_id = PostType::getIDbySlug( $row->slug, $this->constant( 'contest_cpt' ) ) )
-							return Number::format( $this->get_linked_posts( $post_id, 'contest_cpt', 'contest_tax', TRUE ) );
+							return Number::format( $this->paired_get_from_posts( $post_id, 'contest_cpt', 'contest_tax', TRUE ) );
 						return Number::format( $row->count );
 					},
 				],
@@ -787,7 +787,7 @@ class Contest extends gEditorial\Module
 						if ( FALSE === $post_id )
 							continue;
 
-						if ( $this->set_linked_term( $post_id, $terms[$term_id], 'contest_cpt', 'contest_tax' ) )
+						if ( $this->paired_set_to_term( $post_id, $terms[$term_id], 'contest_cpt', 'contest_tax' ) )
 							$count++;
 					}
 
@@ -802,7 +802,7 @@ class Contest extends gEditorial\Module
 
 					foreach ( $_POST['_cb'] as $term_id ) {
 
-						if ( $this->remove_linked_term( NULL, $term_id, 'contest_cpt', 'contest_tax' ) ) {
+						if ( $this->paired_remove_to_term( NULL, $term_id, 'contest_cpt', 'contest_tax' ) ) {
 
 							$deleted = wp_delete_term( $term_id, $this->constant( 'contest_tax' ) );
 
