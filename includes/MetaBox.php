@@ -417,31 +417,35 @@ class MetaBox extends Main
 		return $html;
 	}
 
-	public static function dropdownAssocPostsSubTerms( $taxonomy, $linked = 0, $prefix = '', $selected = 0, $none = NULL )
+	// PAIRED API
+	// @OLD: `dropdownAssocPostsSubTerms()`
+	public static function paired_dropdownSubTerms( $taxonomy, $paired = 0, $prefix = '', $selected = 0, $none = NULL )
 	{
-		$name = sprintf( '%s[%s]', $prefix, $linked );
+		$name = sprintf( '%s[%s]', $prefix, $paired );
 
-		if ( ! $terms = Taxonomy::getTerms( $taxonomy, $linked, TRUE ) )
+		if ( ! $terms = Taxonomy::getTerms( $taxonomy, $paired, TRUE ) )
 			return HTML::tag( 'input', [ 'type' => 'hidden', 'value' => '0', 'name' => $name ] );
 
 		if ( is_null( $none ) )
 			$none = Settings::showOptionNone();
 
 		$html = HTML::dropdown( $terms, [
-			'class'      => static::BASE.'-assoc-post-subterms',
+			'class'      => static::BASE.'-paired-subterms',
 			'name'       => $name,
 			'prop'       => 'name',
 			'value'      => 'term_id',
 			'selected'   => $selected,
 			'none_title' => $none,
 			'none_value' => '0',
-			'data'       => [ 'linked' => $linked ],
+			'data'       => [ 'paired' => $paired ],
 		] );
 
 		return HTML::wrap( $html, 'field-wrap -select' );
 	}
 
-	public static function dropdownAssocPostsRedux( $posttype, $linked = 0, $prefix = '', $exclude = [], $none = NULL )
+	// PAIRED API
+	// OLD: `dropdownAssocPostsRedux()`
+	public static function paired_dropdownToPosts( $posttype, $paired = 0, $prefix = '', $exclude = [], $none = NULL )
 	{
 		$posts = get_pages( [
 			'post_type'   => $posttype,
@@ -458,12 +462,15 @@ class MetaBox extends Main
 			$none = Settings::showOptionNone();
 
 		$html = $none ? HTML::tag( 'option', [ 'value' => '0' ], $none ) : '';
-		$html.= walk_page_dropdown_tree( $posts, 0, [ 'selected' => $linked ] ); // to handle sub-pages
+		$html.= walk_page_dropdown_tree( $posts, 0, [ 'selected' => $paired ] ); // to handle sub-pages
 
 		$html = HTML::tag( 'select', [
 			'name'  => ( $prefix ? $prefix.'-' : '' ).$posttype.'[]',
-			'data'  => [ 'linked' => $linked ],
-			'class' => static::BASE.'-assoc-post-dropdown',
+			'class' => [ static::BASE.'-paired-to-post-dropdown', empty( $posts ) ? 'hidden' : '' ],
+			'data'  => [
+				'type'   => $posttype,
+				'paired' => $paired,
+			],
 		], $html );
 
 		return $html ? HTML::wrap( $html, 'field-wrap -select' ) : '';
