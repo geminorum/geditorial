@@ -697,6 +697,14 @@ class Module extends Base
 		return $posttype && in_array( $posttype, $this->posttypes(), TRUE );
 	}
 
+	public function is_posttype( $posttype_key, $post = NULL )
+	{
+		if ( ! $post = Helper::getPost( $post ) )
+			return FALSE;
+
+		return $this->constant( $posttype_key ) == $post->post_type;
+	}
+
 	public function list_posttypes( $pre = NULL, $posttypes = NULL, $capability = NULL, $args = [ 'show_ui' => TRUE ], $user_id = NULL )
 	{
 		if ( is_null( $pre ) )
@@ -3532,35 +3540,42 @@ class Module extends Base
 
 	// PAIRED API:
 	// OLD: `do_trash_post()`
-	protected function paired_do_trash_to_post( $post_id, $posttype_constant_key, $taxonomy_constant_key )
+	protected function paired_do_trash_to_post( $post_id, $posttype_key, $taxonomy_key )
 	{
-		if ( $term = $this->paired_get_to_term( $post_id, $posttype_constant_key, $taxonomy_constant_key ) ) {
-			wp_update_term( $term->term_id, $this->constant( $taxonomy_constant_key ), [
-				'name' => $term->name.'___TRASHED',
-				'slug' => $term->slug.'-trashed',
+		if ( ! $this->is_posttype( $posttype_key, $post_id ) )
+			return;
+
+		if ( $the_term = $this->paired_get_to_term( $post_id, $posttype_key, $taxonomy_key ) )
+			wp_update_term( $the_term->term_id, $this->constant( $taxonomy_key ), [
+				'name' => $the_term->name.'___TRASHED',
+				'slug' => $the_term->slug.'-trashed',
 			] );
-		}
 	}
 
 	// PAIRED API
 	// OLD: `do_untrash_post()`
-	protected function paired_do_untrash_to_post( $post_id, $posttype_constant_key, $taxonomy_constant_key )
+	protected function paired_do_untrash_to_post( $post_id, $posttype_key, $taxonomy_key )
 	{
-		if ( $term = $this->paired_get_to_term( $post_id, $posttype_constant_key, $taxonomy_constant_key ) ) {
-			wp_update_term( $term->term_id, $this->constant( $taxonomy_constant_key ), [
-				'name' => str_ireplace( '___TRASHED', '', $term->name ),
-				'slug' => str_ireplace( '-trashed', '', $term->slug ),
+		if ( ! $this->is_posttype( $posttype_key, $post_id ) )
+			return;
+
+		if ( $the_term = $this->paired_get_to_term( $post_id, $posttype_key, $taxonomy_key ) )
+			wp_update_term( $the_term->term_id, $this->constant( $taxonomy_key ), [
+				'name' => str_ireplace( '___TRASHED', '', $the_term->name ),
+				'slug' => str_ireplace( '-trashed', '', $the_term->slug ),
 			] );
-		}
 	}
 
 	// PAIRED API
 	// OLD: `do_before_delete_post()`
-	protected function paired_do_before_delete_to_post( $post_id, $posttype_constant_key, $taxonomy_constant_key )
+	protected function paired_do_before_delete_to_post( $post_id, $posttype_key, $taxonomy_key )
 	{
-		if ( $term = $this->paired_get_to_term( $post_id, $posttype_constant_key, $taxonomy_constant_key ) ) {
-			wp_delete_term( $term->term_id, $this->constant( $taxonomy_constant_key ) );
-			delete_metadata( 'term', $term->term_id, $this->constant( $posttype_constant_key ).'_linked' );
+		if ( ! $this->is_posttype( $posttype_key, $post_id ) )
+			return;
+
+		if ( $the_term = $this->paired_get_to_term( $post_id, $posttype_key, $taxonomy_key ) ) {
+			wp_delete_term( $the_term->term_id, $this->constant( $taxonomy_key ) );
+			delete_metadata( 'term', $the_term->term_id, $this->constant( $taxonomy_key ).'_linked' );
 		}
 	}
 
