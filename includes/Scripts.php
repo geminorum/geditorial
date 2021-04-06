@@ -97,6 +97,7 @@ class Scripts extends Main
 		wp_enqueue_style( 'code-editor' );
 	}
 
+	// @SEE: https://codex.wordpress.org/Javascript_Reference/ThickBox
 	public static function enqueueThickBox()
 	{
 		if ( function_exists( 'add_thickbox' ) )

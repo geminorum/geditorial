@@ -236,7 +236,7 @@ class Audit extends gEditorial\Module
 
 	private function get_adminbar_checklist( $post_id )
 	{
-		require_once( ABSPATH.'wp-admin/includes/template.php' );
+		require_once ABSPATH.'wp-admin/includes/template.php';
 
 		$html = wp_terms_checklist( $post_id, [
 			'taxonomy'      => $this->constant( 'audit_tax' ),

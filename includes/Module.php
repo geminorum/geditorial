@@ -405,6 +405,7 @@ class Module extends Base
 
 	protected function get_adminpage_subs( $context = 'mainpage' )
 	{
+		// $subs = $this->list_posttypes( NULL, NULL, 'create_posts' );
 		$subs = $this->get_string( 'subs', $context, 'adminpage', [] );
 
 		// FIXME: check capabilities
@@ -569,12 +570,12 @@ class Module extends Base
 		$rtl           = is_rtl();
 
 		if ( $header = Helper::getLayout( 'print.header' ) )
-			require_once( $header ); // to expose scope vars
+			require_once $header; // to expose scope vars
 
 		$this->actions( 'print_contents' );
 
 		if ( $footer = Helper::getLayout( 'print.footer' ) )
-			require_once( $footer ); // to expose scope vars
+			require_once $footer; // to expose scope vars
 
 		exit; // avoiding query monitor output
 	}
@@ -3257,9 +3258,9 @@ class Module extends Base
 	{
 		foreach ( (array) $filenames as $filename )
 			if ( $once )
-				require_once( $this->path.$filename.'.php' );
+				require_once $this->path.$filename.'.php';
 			else
-				require( $this->path.$filename.'.php' );
+				require $this->path.$filename.'.php';
 	}
 
 	public function is_current_posttype( $constant )
@@ -4484,7 +4485,7 @@ class Module extends Base
 		$html = $this->template_get_empty_content();
 		$html.= $this->get_search_form( [ 'post_type[]' => $post->post_type ], $title );
 
-		// TODO: list other entries that linked to this title
+		// TODO: list other entries that linked to this title via content
 
 		if ( $add_new = $this->template_get_add_new( $post->post_type, $title ) )
 			$html.= '<p class="-actions">'.$add_new.'</p>';

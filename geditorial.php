@@ -36,9 +36,7 @@ if ( version_compare( GEDITORIAL_MIN_PHP, phpversion(), '>=' ) ) {
 	return FALSE;
 
 } else if ( file_exists( GEDITORIAL_DIR.'assets/vendor/autoload.php' ) ) {
-	require_once( GEDITORIAL_DIR.'assets/vendor/autoload.php' );
-
-	// require_once( GEDITORIAL_DIR.'includes/plugin.php' );
+	require_once GEDITORIAL_DIR.'assets/vendor/autoload.php';
 
 	function gEditorial() {
 		return \geminorum\gEditorial\Plugin::instance();

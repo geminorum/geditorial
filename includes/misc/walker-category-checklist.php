@@ -5,7 +5,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\WordPress\User;
 
-require_once( ABSPATH.'wp-admin/includes/class-walker-category-checklist.php' );
+require_once ABSPATH.'wp-admin/includes/class-walker-category-checklist.php';
 
 class Walker_Category_Checklist extends \Walker_Category_Checklist
 {
