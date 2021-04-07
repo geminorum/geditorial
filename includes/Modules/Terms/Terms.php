@@ -1050,12 +1050,15 @@ class Terms extends gEditorial\Module
 			break;
 			case 'color':
 
+				// NOTE: better not to use `input[typ=color]` since there is noway to leave it empty!
+				// @REF: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/color#value
 				$html.= HTML::tag( 'input', [
 					'name'  => 'term-'.$field,
-					'type'  => 'color',
-					// 'value' => '', // do not set default value: @REF: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/color#value
-					'class' => [ 'small-text' ],
+					'type'  => 'text',
+					'value' => '',
+					'class' => [ 'small-text', 'code' ],
 					'data'  => [ 'ortho' => 'color' ],
+					'style' => 'width:85px;', // to override forced width within the quickedit
 				] );
 
 			break;
