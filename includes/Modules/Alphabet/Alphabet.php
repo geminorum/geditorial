@@ -179,7 +179,7 @@ class Alphabet extends gEditorial\Module
 					if ( $args['comments'] && $post->comment_count )
 						$html.= '<span class="-comments-count">'.Helper::getCounted( $post->comment_count, $args['comments_template'] ).'</span>';
 
-					$html.= '</'.$args['term_tag'].'>';
+					$html.= '<span class="-dummy"></span></'.$args['term_tag'].'>';
 
 					if ( $args['excerpt'] && $post->post_excerpt )
 						$html.= '<'.$args['desc_tag'].' class="-excerpt">'
@@ -314,7 +314,7 @@ class Alphabet extends gEditorial\Module
 					if ( $args['count'] && $term->count )
 						$html.= '<span class="-term-count">'.Helper::getCounted( $term->count, $args['count_template'] ).'</span>';
 
-					$html.= '</'.$args['term_tag'].'>';
+					$html.= '<span class="-dummy"></span></'.$args['term_tag'].'>';
 
 					if ( $args['description'] && $term->description )
 						$html.= '<'.$args['desc_tag'].' class="-description">'
