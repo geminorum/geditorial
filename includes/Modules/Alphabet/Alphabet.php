@@ -103,6 +103,9 @@ class Alphabet extends gEditorial\Module
 
 		if ( FALSE === ( $html = get_transient( $key ) ) ) {
 
+			if ( $args['locale'] == $args['alternative'] )
+				$args['alternative'] = FALSE;
+
 			$query_args = [
 				'orderby'          => 'title',
 				'order'            => 'ASC',
@@ -238,6 +241,9 @@ class Alphabet extends gEditorial\Module
 			delete_transient( $key );
 
 		if ( FALSE === ( $html = get_transient( $key ) ) ) {
+
+			if ( $args['locale'] == $args['alternative'] )
+				$args['alternative'] = FALSE;
 
 			$query_args = [
 				'taxonomy' => $args['taxonomy'],
