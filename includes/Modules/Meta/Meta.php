@@ -67,7 +67,8 @@ class Meta extends gEditorial\Module
 	protected function get_global_constants()
 	{
 		return [
-			'label_tax' => 'label',
+			'label_tax'         => 'label',
+			'restapi_attribute' => 'meta_rendered',
 		];
 	}
 
@@ -357,7 +358,7 @@ class Meta extends gEditorial\Module
 
 			// register general field for all meta data
 			// mainly for display purposes
-			register_rest_field( $posttype, $this->classs(), [
+			register_rest_field( $posttype, $this->constant( 'restapi_attribute' ), [
 				'get_callback' => [ $this, 'register_get_callback' ],
 			] );
 
