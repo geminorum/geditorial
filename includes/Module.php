@@ -1670,7 +1670,7 @@ class Module extends Base
 
 			$fields[$field] = self::atts( [
 				'name'        => $field,
-				'rest'        => str_replace( '_', '-', $field ), // FALSE to disable
+				'rest'        => $field, // FALSE to disable
 				'title'       => $this->get_string( $field, $posttype, 'titles', $field ),
 				'description' => $this->get_string( $field, $posttype, 'descriptions' ),
 				'sanitize'    => NULL,
