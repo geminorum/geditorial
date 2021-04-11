@@ -134,8 +134,10 @@ add_theme_support( \'featured-content\', [
 
 		if ( is_admin() ) {
 
-			if ( count( $posttypes ) )
+			if ( count( $posttypes ) ) {
 				$this->filter( 'dashboard_recent_posts_query_args' );
+				$this->filter( 'dashboard_recent_drafts_query_args' );
+			}
 
 		} else {
 
@@ -341,6 +343,14 @@ add_theme_support( \'featured-content\', [
 	}
 
 	public function dashboard_recent_posts_query_args( $query_args )
+	{
+		if ( isset( $query_args['post_type'] ) && 'post' == $query_args['post_type'] )
+			$query_args['post_type'] = $this->posttypes();
+
+		return $query_args;
+	}
+
+	public function dashboard_recent_drafts_query_args( $query_args )
 	{
 		if ( isset( $query_args['post_type'] ) && 'post' == $query_args['post_type'] )
 			$query_args['post_type'] = $this->posttypes();
