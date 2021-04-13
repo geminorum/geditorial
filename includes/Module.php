@@ -2623,6 +2623,7 @@ class Module extends Base
 
 		$this->register_taxonomy( $txonomy, [
 			'show_ui'      => FALSE,
+			'show_in_rest' => FALSE,
 			'hierarchical' => TRUE,
 		] );
 
@@ -3279,7 +3280,7 @@ class Module extends Base
 				return FALSE;
 		}
 
-		if ( empty( $_POST ) || wp_is_post_autosave( $post ) || wp_is_post_revision( $post ) )
+		if ( wp_is_post_autosave( $post ) || wp_is_post_revision( $post ) )
 			return FALSE;
 
 		return TRUE;

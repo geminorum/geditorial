@@ -555,10 +555,9 @@ class Contest extends gEditorial\Module
 		echo '</li>';
 	}
 
-	// TODO: migrate to `Shortcode::listPosts( 'paired' );`
 	public function contest_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
-		return ShortCode::getPairedPosts(
+		return ShortCode::listPosts( 'paired',
 			$this->constant( 'contest_cpt' ),
 			$this->constant( 'contest_tax' ),
 			array_merge( [

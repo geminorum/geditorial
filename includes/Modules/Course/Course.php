@@ -648,10 +648,9 @@ class Course extends gEditorial\Module
 		echo '</li>';
 	}
 
-	// TODO: migrate to `Shortcode::listPosts( 'paired' );`
 	public function course_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
-		return ShortCode::getPairedPosts(
+		return ShortCode::listPosts( 'paired',
 			$this->constant( 'course_cpt' ),
 			$this->constant( 'course_tax' ),
 			array_merge( [
@@ -665,7 +664,7 @@ class Course extends gEditorial\Module
 
 	public function span_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
-		return ShortCode::getTermPosts(
+		return Shortcode::listPosts( 'assigned',
 			$this->constant( 'course_cpt' ),
 			$this->constant( 'span_tax' ),
 			$atts,

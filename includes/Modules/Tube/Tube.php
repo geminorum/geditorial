@@ -140,11 +140,13 @@ class Tube extends gEditorial\Module
 					'title'       => _x( 'Creation Date', 'Field Title', 'geditorial-tube' ),
 					'description' => _x( 'Creation Date', 'Field Description', 'geditorial-tube' ),
 					'icon'        => 'calendar-alt',
+					'quickedit'   => TRUE,
 				],
 				'video_duration' => [
 					'title'       => _x( 'Video Duration', 'Field Title', 'geditorial-tube' ),
 					'description' => _x( 'Video Duration', 'Field Description', 'geditorial-tube' ),
 					'icon'        => 'backup',
+					'quickedit'   => TRUE,
 				],
 
 				'source_title' => [ 'type' => 'text' ],
@@ -341,7 +343,7 @@ class Tube extends gEditorial\Module
 
 	public function video_cat_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
-		return ShortCode::getTermPosts(
+		return ShortCode::listPosts( 'assigned',
 			$this->constant( 'video_cpt' ),
 			$this->constant( 'video_cat' ),
 			$atts,
@@ -352,7 +354,7 @@ class Tube extends gEditorial\Module
 
 	public function channel_cat_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
-		return ShortCode::getTermPosts(
+		return ShortCode::listPosts( 'assigned',
 			$this->constant( 'channel_cpt' ),
 			$this->constant( 'channel_cat' ),
 			$atts,

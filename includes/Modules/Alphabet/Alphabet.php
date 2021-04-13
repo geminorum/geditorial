@@ -358,7 +358,7 @@ class Alphabet extends gEditorial\Module
 		$list = [];
 
 		foreach ( $alphabet as $key => $info )
-			$list[] = in_array( $info['letter'], $actives )
+			$list[] = in_array( $info['letter'], $actives, TRUE )
 				? HTML::scroll( $info['letter'], $info['key'], $info['name'] )
 				: HTML::tag( 'span', $info['letter'] );
 

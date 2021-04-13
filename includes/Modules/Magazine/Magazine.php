@@ -594,10 +594,9 @@ class Magazine extends gEditorial\Module
 		return array_merge( $messages, $this->get_bulk_post_updated_messages( 'issue_cpt', $counts ) );
 	}
 
-	// TODO: migrate to `Shortcode::listPosts( 'paired' );`
 	public function issue_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
-		return ShortCode::getPairedPosts(
+		return ShortCode::listPosts( 'paired',
 			$this->constant( 'issue_cpt' ),
 			$this->constant( 'issue_tax' ),
 			array_merge( [
@@ -614,7 +613,7 @@ class Magazine extends gEditorial\Module
 
 	public function span_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
-		return ShortCode::getTermPosts(
+		return Shortcode::listPosts( 'assigned',
 			$this->constant( 'issue_cpt' ),
 			$this->constant( 'span_tax' ),
 			$atts,

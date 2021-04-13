@@ -350,7 +350,7 @@ class Entry extends gEditorial\Module
 
 	public function section_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
-		return ShortCode::getTermPosts(
+		return ShortCode::listPosts( 'assigned',
 			$this->constant( 'entry_cpt' ),
 			$this->constant( 'section_tax' ),
 			$atts,

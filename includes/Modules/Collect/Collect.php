@@ -587,10 +587,9 @@ class Collect extends gEditorial\Module
 		return array_merge( $messages, $this->get_bulk_post_updated_messages( 'collection_cpt', $counts ) );
 	}
 
-	// TODO: migrate to `Shortcode::listPosts( 'paired' );`
 	public function collection_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
-		return ShortCode::getPairedPosts(
+		return ShortCode::listPosts( 'paired',
 			$this->constant( 'collection_cpt' ),
 			$this->constant( 'collection_tax' ),
 			array_merge( [
@@ -606,7 +605,7 @@ class Collect extends gEditorial\Module
 
 	public function group_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
-		return ShortCode::getTermPosts(
+		return Shortcode::listPosts( 'assigned',
 			$this->constant( 'collection_cpt' ),
 			$this->constant( 'group_tax' ),
 			$atts,

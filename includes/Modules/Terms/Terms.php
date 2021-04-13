@@ -70,7 +70,7 @@ class Terms extends gEditorial\Module
 				'contact'   => _x( 'Adds a way to contact someone about the term, by url, email or phone.', 'Descriptions', 'geditorial-terms' ),
 				'image'     => _x( 'Assigns a custom image to visually separate terms from each other.', 'Descriptions', 'geditorial-terms' ),
 				'author'    => _x( 'Sets a user as term author to help identify who created or owns each term.', 'Descriptions', 'geditorial-terms' ),
-				'color'     => _x( 'Terms can have unique colors to help separate them from each other.', 'Descriptions', 'geditorial-terms' ),
+				'color'     => _x( 'Assigns a custom color to visually separate terms from each other.', 'Descriptions', 'geditorial-terms' ),
 				'role'      => _x( 'Terms can have unique role visibility to help separate them for user roles.', 'Descriptions', 'geditorial-terms' ),
 				'roles'     => _x( 'Terms can have unique roles visibility to help separate them for user roles.', 'Descriptions', 'geditorial-terms' ),
 				'posttype'  => _x( 'Terms can have unique posttype visibility to help separate them on editing.', 'Descriptions', 'geditorial-terms' ),
@@ -430,7 +430,7 @@ class Terms extends gEditorial\Module
 		}
 	}
 
-	public static function register_rest_get_callback( $term, $attr, $request, $object_type )
+	public function register_rest_get_callback( $term, $attr, $request, $object_type )
 	{
 		switch ( $attr ) {
 
