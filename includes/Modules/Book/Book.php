@@ -102,6 +102,8 @@ class Book extends gEditorial\Module
 			'publication_cpt_archive' => 'publications',
 			'publication_cpt_p2p'     => 'related_publications',
 			'subject_tax'             => 'publication_subject',
+			'serie_tax'               => 'publication_serie',
+			'serie_tax_slug'          => 'publication_series',
 			'library_tax'             => 'publication_library',
 			'library_tax_slug'        => 'publication-libraries',
 			'publisher_tax'           => 'publication_publisher',
@@ -112,6 +114,7 @@ class Book extends gEditorial\Module
 			'audience_tax'            => 'publication_audience',
 			'publication_shortcode'   => 'publication',
 			'subject_shortcode'       => 'publication-subject',
+			'serie_shortcode'         => 'publication-serie',
 			'cover_shortcode'         => 'publication-cover',
 			'metakey_import_id'       => 'book_publication_id',
 			'metakey_import_title'    => 'book_publication_title',
@@ -125,6 +128,7 @@ class Book extends gEditorial\Module
 		return [
 			'taxonomies' => [
 				'subject_tax'   => 'tag',
+				'serie_tax'     => 'tag',
 				'library_tax'   => 'book-alt',
 				'publisher_tax' => 'book',
 				'type_tax'      => 'admin-media',
@@ -141,6 +145,7 @@ class Book extends gEditorial\Module
 			'noops' => [
 				'publication_cpt' => _n_noop( 'Publication', 'Publications', 'geditorial-book' ),
 				'subject_tax'     => _n_noop( 'Subject', 'Subjects', 'geditorial-book' ),
+				'serie_tax'       => _n_noop( 'Serie', 'Series', 'geditorial-book' ),
 				'library_tax'     => _n_noop( 'Library', 'Libraries', 'geditorial-book' ),
 				'publisher_tax'   => _n_noop( 'Publisher', 'Publishers', 'geditorial-book' ),
 				'type_tax'        => _n_noop( 'Publication Type', 'Publication Types', 'geditorial-book' ),
@@ -192,6 +197,10 @@ class Book extends gEditorial\Module
 			'subject_tax' => [
 				'meta_box_title'      => _x( 'Subject', 'MetaBox Title', 'geditorial-book' ),
 				'tweaks_column_title' => _x( 'Publication Subject', 'Column Title', 'geditorial-book' ),
+			],
+			'serie_tax' => [
+				'meta_box_title'      => _x( 'Serie', 'MetaBox Title', 'geditorial-book' ),
+				'tweaks_column_title' => _x( 'Publication Serie', 'Column Title', 'geditorial-book' ),
 			],
 			'library_tax' => [
 				'meta_box_title'      => _x( 'Library', 'MetaBox Title', 'geditorial-book' ),
@@ -397,6 +406,11 @@ class Book extends gEditorial\Module
 			'meta_box_cb'  => NULL, // default meta box
 		], 'publication_cpt' );
 
+		$this->register_taxonomy( 'serie_tax', [
+			'hierarchical' => TRUE,
+			'meta_box_cb'  => NULL, // default meta box
+		], 'publication_cpt' );
+
 		$this->register_taxonomy( 'library_tax', [
 			'hierarchical' => TRUE,
 			'meta_box_cb'  => NULL, // default meta box
@@ -424,6 +438,7 @@ class Book extends gEditorial\Module
 
 		$this->register_shortcode( 'publication_shortcode' );
 		$this->register_shortcode( 'subject_shortcode' );
+		$this->register_shortcode( 'serie_shortcode' );
 		$this->register_shortcode( 'cover_shortcode' );
 
 		if ( ! is_admin() )
@@ -554,6 +569,7 @@ class Book extends gEditorial\Module
 		$this->do_restrict_manage_posts_taxes( [
 			'type_tax',
 			'subject_tax',
+			'serie_tax',
 			'library_tax',
 			'status_tax',
 			'audience_tax',
@@ -566,6 +582,7 @@ class Book extends gEditorial\Module
 		$this->do_parse_query_taxes( $query, [
 			'type_tax',
 			'subject_tax',
+			'serie_tax',
 			'library_tax',
 			'status_tax',
 			'audience_tax',
@@ -629,6 +646,17 @@ class Book extends gEditorial\Module
 			$atts,
 			$content,
 			$this->constant( 'subject_shortcode' )
+		);
+	}
+
+	public function serie_shortcode( $atts = [], $content = NULL, $tag = '' )
+	{
+		return ShortCode::listPosts( 'assigned',
+			$this->constant( 'publication_cpt' ),
+			$this->constant( 'serie_tax' ),
+			$atts,
+			$content,
+			$this->constant( 'serie_shortcode' )
 		);
 	}
 
