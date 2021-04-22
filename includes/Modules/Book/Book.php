@@ -111,6 +111,7 @@ class Book extends gEditorial\Module
 			'size_tax'                => 'publication_size',
 			'audience_tax'            => 'publication_audience',
 			'publication_shortcode'   => 'publication',
+			'subject_shortcode'       => 'publication-subject',
 			'cover_shortcode'         => 'publication-cover',
 			'metakey_import_id'       => 'book_publication_id',
 			'metakey_import_title'    => 'book_publication_title',
@@ -422,6 +423,7 @@ class Book extends gEditorial\Module
 		$this->register_posttype( 'publication_cpt' );
 
 		$this->register_shortcode( 'publication_shortcode' );
+		$this->register_shortcode( 'subject_shortcode' );
 		$this->register_shortcode( 'cover_shortcode' );
 
 		if ( ! is_admin() )
@@ -614,9 +616,20 @@ class Book extends gEditorial\Module
 			$html.= gEditorial()->alphabet->shortcode_posts( [ 'post_type' => $this->constant( 'publication_cpt' ) ] );
 
 		else
-			$html.= $this->publication_shortcode( [ 'title' => FALSE, 'wrap' => FALSE ] );
+			$html.= $this->subject_shortcode( [ 'id' => 'all', 'wrap' => FALSE ] );
 
 		return $html;
+	}
+
+	public function subject_shortcode( $atts = [], $content = NULL, $tag = '' )
+	{
+		return ShortCode::listPosts( 'assigned',
+			$this->constant( 'publication_cpt' ),
+			$this->constant( 'subject_tax' ),
+			$atts,
+			$content,
+			$this->constant( 'subject_shortcode' )
+		);
 	}
 
 	public function publication_shortcode( $atts = [], $content = NULL, $tag = '' )
