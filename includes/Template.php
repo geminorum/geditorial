@@ -522,6 +522,7 @@ class Template extends Main
 			return $args['default'];
 
 		$meta = apply_filters( static::BASE.'_meta_field', $meta, $field, $post, $args );
+		$meta = apply_filters( static::BASE.'_meta_field_'.$field, $meta, $field, $post, $args );
 
 		if ( $args['filter'] && is_callable( $args['filter'] ) )
 			$meta = call_user_func( $args['filter'], $meta );
