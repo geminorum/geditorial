@@ -103,7 +103,7 @@ class Book extends gEditorial\Module
 			'publication_cpt_p2p'     => 'related_publications',
 			'subject_tax'             => 'publication_subject',
 			'serie_tax'               => 'publication_serie',
-			'serie_tax_slug'          => 'publication_series',
+			'serie_tax_slug'          => 'publication-series',
 			'library_tax'             => 'publication_library',
 			'library_tax_slug'        => 'publication-libraries',
 			'publisher_tax'           => 'publication_publisher',

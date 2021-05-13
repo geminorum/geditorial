@@ -2136,6 +2136,13 @@ class Module extends Base
 		);
 	}
 
+	public function settings_section_edittags()
+	{
+		Settings::fieldSection(
+			_x( 'Admin Edit Terms', 'Module: Setting Section Title', 'geditorial' )
+		);
+	}
+
 	public function settings_section_comments()
 	{
 		Settings::fieldSection(

@@ -37,7 +37,7 @@ class Terms extends gEditorial\Module
 	protected function get_global_settings()
 	{
 		return [
-			'_general'  => $this->prep_fields_for_settings(),
+			'_fields'   => $this->prep_fields_for_settings(),
 			'_frontend' => [
 				'adminbar_summary',
 			],
@@ -487,16 +487,16 @@ class Terms extends gEditorial\Module
 		return $columns;
 	}
 
-	public function custom_column( $display, $column, $term_id )
+	public function custom_column( $string, $column_name, $term_id )
 	{
 		if ( ! $taxonomy = self::req( 'taxonomy' ) )
-			return;
+			return $string;
 
 		$term = get_term_by( 'id', $term_id, $taxonomy );
 
 		foreach ( $this->get_supported( $taxonomy ) as $field ) {
 
-			if ( $this->classs( $field ) != $column )
+			if ( $this->classs( $field ) != $column_name )
 				continue;
 
 			$this->display_form_field( $field, $taxonomy, $term, TRUE );

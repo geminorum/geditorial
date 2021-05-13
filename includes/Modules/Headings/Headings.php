@@ -97,13 +97,15 @@ class Headings extends gEditorial\Module
 				return $match[0];
 
 		if ( ! empty( $atts['id'] ) ) {
+
 			$slug = $atts['id'];
 
 		} else {
-			$slug = $temp = sanitize_title( $title );
 
-			$i = 2;
-			while ( FALSE !== in_array( $slug, $this->anchors ) )
+			$slug = $temp = sanitize_title( $title );
+			$i    = 2;
+
+			while ( FALSE !== in_array( $slug, $this->anchors, TRUE ) )
 				$slug = sprintf( '%s-%d', $temp, $i++ );
 		}
 
@@ -119,7 +121,7 @@ class Headings extends gEditorial\Module
 		$html = HTML::tag( 'a', [
 			'href'  => '#'.$slug,
 			'class' => 'anchor-link anchorlink dashicons-before',
-			'title' => $this->get_setting( 'anchor_title', '' ),
+			'title' => $this->get_setting( 'anchor_title', FALSE ),
 		], NULL );
 
 		$html = HTML::tag( 'h'.$match[1], [
@@ -158,9 +160,12 @@ class Headings extends gEditorial\Module
 				$heading['page'] = FALSE;
 
 			if ( ! $last || $heading['niche'] <= $last['niche'] ) {
+
 				$tree[] = $heading;
 				$last = $heading;
+
 			} else {
+
 				$keys = array_keys( $tree );
 				$key = end( $keys );
 
