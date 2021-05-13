@@ -256,15 +256,23 @@ class Attachments extends gEditorial\Module
 			'attachment',
 			'',
 			array_merge( [
-				'title'        => _x( 'Attachments', 'Shortcode', 'geditorial-attachments' ),
+				'id'            => NULL,
+				'title'         => _x( 'Attachments', 'Shortcode', 'geditorial-attachments' ),
 				/* translators: %s: attachment parent title */
-				'title_title'  => _x( 'Attachments of %s', 'Shortcode', 'geditorial-attachments' ),
-				'title_anchor' => 'attachments',
-				'title_link'   => FALSE,
+				'title_title'   => _x( 'Attachments of %s', 'Shortcode', 'geditorial-attachments' ),
+				'title_anchor'  => 'attachments',
+				'title_link'    => FALSE,
+				'item_after_cb' => [ $this, 'attachments_shortcode_item_after_cb' ],
 			], (array) $atts ),
 			$content,
 			$this->constant( 'attachments_shortcode' )
 		);
+	}
+
+	public function attachments_shortcode_item_after_cb( $post, $args, $item )
+	{
+		$html = wp_get_attachment_caption( $post->ID );
+		return $html ? sprintf( '<div class="-caption">%s</div>', Helper::prepDescription( $html ) ) : '';
 	}
 
 	public function reports_settings( $sub )
