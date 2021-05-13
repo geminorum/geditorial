@@ -63,6 +63,7 @@ class ShortCode extends Main
 			'title_tag'      => 'h3',
 			'title_anchor'   => 'term-%2$s',
 			'title_class'    => '-title',
+			'title_dummy'    => '<span class="-dummy"></span>',
 			'title_after'    => '', // '<div class="-desc">%3$s</div>',
 		], $atts );
 
@@ -116,7 +117,7 @@ class ShortCode extends Main
 			$args['title'] = HTML::tag( $args['title_tag'], [
 				'id'    => $term ? sprintf( $args['title_anchor'], $term->term_id, $term->slug ) : FALSE,
 				'class' => $args['title_class'],
-			], $args['title'] )."\n";
+			], $args['title'].( $args['title_dummy'] ?: '' ) )."\n";
 
 		if ( $args['title_after'] ) {
 
@@ -145,6 +146,7 @@ class ShortCode extends Main
 			'item_tag'      => 'li',
 			'item_anchor'   => FALSE, // $term->taxonomy.'-%2$s',
 			'item_class'    => '-item do-sincethen',
+			'item_dummy'    => '<span class="-dummy"></span>',
 			'item_after'    => '',
 			'item_after_cb' => FALSE,
 		], $atts );
@@ -209,7 +211,7 @@ class ShortCode extends Main
 		return HTML::tag( $args['item_tag'], [
 			'id'    => $args['item_anchor'] ? sprintf( $args['item_anchor'], $term->term_id, $term->slug ) : FALSE,
 			'class' => $args['item_class'],
-		], $before.$title.$after );
+		], $before.$title.( $args['item_dummy'] ?: '' ).$after );
 	}
 
 	// post as title of the list
@@ -224,6 +226,7 @@ class ShortCode extends Main
 			'title_tag'      => 'h3',
 			'title_anchor'   => 'post-%2$s',
 			'title_class'    => '-title',
+			'title_dummy'    => '<span class="-dummy"></span>',
 		], $atts );
 
 		$text = Helper::getPostTitle( $post, FALSE );
@@ -265,7 +268,7 @@ class ShortCode extends Main
 			$args['title'] = HTML::tag( $args['title_tag'], [
 				'id'    => $post ? sprintf( $args['title_anchor'], $post->ID, $post->post_name ) : FALSE,
 				'class' => $args['title_class'],
-			], $args['title'] )."\n";
+			], $args['title'].( $args['title_dummy'] ?: '' ) )."\n";
 
 		return $args['title'];
 	}
@@ -285,6 +288,7 @@ class ShortCode extends Main
 			'item_tag'      => 'li',
 			'item_anchor'   => FALSE, // $post->post_type.'-%2$s',
 			'item_class'    => '-item do-sincethen',
+			'item_dummy'    => '<span class="-dummy"></span>',
 			'item_after'    => '',
 			'item_after_cb' => FALSE,
 			'item_download' => TRUE, // only for attachments
@@ -401,7 +405,7 @@ class ShortCode extends Main
 			'id'       => $args['item_anchor'] ? sprintf( $args['item_anchor'], $post->ID, $post->post_name ) : FALSE,
 			'class'    => $args['item_class'],
 			'datetime' => 'publish' == $post->post_status ? date( 'c', strtotime( $post->post_date_gmt ) ) : FALSE,
-		], $before.$item.$after );
+		], $before.$item.( $args['item_dummy'] ?: '' ).$after );
 	}
 
 	public static function getDefaults( $posttype, $taxonomy, $posttypes = [ 'post' ] )
@@ -417,6 +421,7 @@ class ShortCode extends Main
 			'title_tag'      => 'h3',
 			'title_anchor'   => $taxonomy.'-%2$s',
 			'title_class'    => '-title',
+			'title_dummy'    => '<span class="-dummy"></span>',
 			'title_after'    => '',
 			'item_cb'        => FALSE,
 			'item_link'      => TRUE,
@@ -427,6 +432,7 @@ class ShortCode extends Main
 			'item_tag'       => 'li',
 			'item_anchor'    => FALSE, // $posttype.'-%2$s',
 			'item_class'     => '-item do-sincethen',
+			'item_dummy'    => '<span class="-dummy"></span>',
 			'item_after'     => '',
 			'item_after_cb'  => FALSE,
 			'item_download'  => TRUE, // only for attachments
