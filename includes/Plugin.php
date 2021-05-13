@@ -100,7 +100,6 @@ class Plugin
 		$this->load_options();
 		$this->init_modules();
 
-		Rest::setup();
 		// Relation::setup();
 	}
 
