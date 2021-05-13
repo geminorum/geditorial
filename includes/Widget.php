@@ -604,4 +604,19 @@ class Widget extends \WP_Widget
 
 		HTML::label( _x( 'Term:', 'Widget Core', 'geditorial' ).$html, $this->get_field_id( $field ) );
 	}
+
+	public function form_has_thumbnail( $instance, $default = FALSE, $field = 'has_thumbnail', $label = NULL )
+	{
+		if ( is_null( $label ) )
+			$label = _x( 'Must has Thumbnail Image', 'Widget Core', 'geditorial' );
+
+		$html = HTML::tag( 'input', [
+			'type'    => 'checkbox',
+			'name'  => $this->get_field_name( $field ),
+			'id'    => $this->get_field_id( $field ),
+			'checked' => isset( $instance[$field] ) ? $instance[$field] : $default,
+		] );
+
+		HTML::label( $html.'&nbsp;'.$label, $this->get_field_id( $field ) );
+	}
 }
