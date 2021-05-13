@@ -164,21 +164,26 @@ class Settings extends Core\Base
 			'attachment',
 			'inbound_message',
 			'amp_validated_url',
-			'guest-author', // Co-Authors Plus
+			'guest-author',      // Co-Authors Plus
 			'bp-email',
 			'wp_block',
-			'shop_order', // WooCommerce
-			'shop_coupon', // WooCommerce
+			'shop_order',        // WooCommerce
+			'shop_coupon',       // WooCommerce
 		], (array) $extra );
 	}
 
 	public static function taxonomiesExcluded( $extra = [] )
 	{
 		return array_merge( [
+			'nav_menu',               // WP Core
+			'post_format',            // WP Core
 			'amp_validation_error',   // AMP
 			'product_type',           // WooCommerce
 			'product_visibility',     // WooCommerce
 			'product_shipping_class', // WooCommerce
+			'bp-email-type',          // BuddyPress
+			'bp_member_type',         // BuddyPress
+			'bp_group_type',          // BuddyPress
 		], (array) $extra );
 	}
 

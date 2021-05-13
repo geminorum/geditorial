@@ -223,13 +223,8 @@ class Tweaks extends gEditorial\Module
 
 	protected function taxonomies_excluded()
 	{
-		return Settings::taxonomiesExcluded( [
-			'nav_menu',
-			'post_format',
+		return $this->filters( 'taxonomies_excluded', Settings::taxonomiesExcluded( [
 			'link_category',
-			'bp_member_type',
-			'bp_group_type',
-			'bp-email-type',
 			'ef_editorial_meta',
 			'following_users',
 			'ef_usergroup',
@@ -249,7 +244,7 @@ class Tweaks extends gEditorial\Module
 			'follow_users',
 			'follow_groups',
 			'status',
-		] );
+		] ) );
 	}
 
 	// internal helper

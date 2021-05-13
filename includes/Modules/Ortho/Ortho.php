@@ -173,7 +173,7 @@ class Ortho extends gEditorial\Module
 
 	protected function taxonomies_excluded()
 	{
-		return Settings::taxonomiesExcluded( [
+		return $this->filters( 'taxonomies_excluded', Settings::taxonomiesExcluded( [
 			'system_tags',
 			'nav_menu',
 			'post_format',
@@ -187,7 +187,7 @@ class Ortho extends gEditorial\Module
 			'post_status',
 			'rel_people',
 			'rel_post',
-		] );
+		] ) );
 	}
 
 	public function init()

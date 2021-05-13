@@ -114,7 +114,7 @@ class Terms extends gEditorial\Module
 
 	protected function taxonomies_excluded()
 	{
-		return Settings::taxonomiesExcluded( [
+		return $this->filters( 'taxonomies_excluded', Settings::taxonomiesExcluded( [
 			'system_tags',
 			'nav_menu',
 			'post_format',
@@ -131,7 +131,7 @@ class Terms extends gEditorial\Module
 			'cartable_group',
 			'follow_users',
 			'follow_groups',
-		] );
+		] ) );
 	}
 
 	protected function get_taxonomies_support( $field )

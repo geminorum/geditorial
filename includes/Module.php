@@ -741,7 +741,7 @@ class Module extends Base
 
 	protected function taxonomies_excluded()
 	{
-		return Settings::taxonomiesExcluded();
+		return $this->filters( 'taxonomies_excluded', Settings::taxonomiesExcluded() );
 	}
 
 	// enabled post types for this module

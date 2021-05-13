@@ -43,7 +43,7 @@ class Alphabet extends gEditorial\Module
 
 	protected function taxonomies_excluded()
 	{
-		return Settings::taxonomiesExcluded( [
+		return $this->filters( 'taxonomies_excluded', Settings::taxonomiesExcluded( [
 			'system_tags',
 			'nav_menu',
 			'post_format',
@@ -59,7 +59,7 @@ class Alphabet extends gEditorial\Module
 			'rel_post',
 			'affiliation',
 			'specs',
-		] );
+		] ) );
 	}
 
 	protected function setup_textdomain( $locale = NULL, $domain = NULL ) {} // OVERRIDE
