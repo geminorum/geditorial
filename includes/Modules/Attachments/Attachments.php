@@ -360,11 +360,12 @@ class Attachments extends gEditorial\Module
 					if ( ! $meta = wp_get_attachment_metadata( $row->ID ) )
 						return Helper::htmlEmpty();
 
-					if ( wp_attachment_is( 'audio', $row->ID ) )
-						return HTML::tableCode( $meta );
-
 					if ( isset( $meta['image_meta'] ) )
 						return HTML::tableCode( $meta['image_meta'] );
+
+					if ( wp_attachment_is( 'audio', $row->ID )
+						|| wp_attachment_is( 'video', $row->ID ) )
+							return HTML::tableCode( $meta );
 
 					return Helper::htmlEmpty();
 				},
