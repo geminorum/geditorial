@@ -103,18 +103,21 @@ class Archives extends gEditorial\Module
 	{
 		parent::init();
 
-		$this->_do_add_rewrite_rules();
-		$this->filter( 'query_vars' );
+		$this->_do_add_custom_queries();
 
 		$this->filter_module( 'countables', 'taxonomy_countbox_tokens', 4, 9 );
 		$this->filter( 'gtheme_navigation_taxonomy_archive_link', 2, 9 );
 	}
 
-	private function _do_add_rewrite_rules()
+	private function _do_add_custom_queries()
 	{
+		$query = $this->constant( 'taxonomy_query' );
+
+		$this->filter_append( 'query_vars', $query );
+
 		foreach ( $this->taxonomies() as $taxonomy )
 			if ( $slug = $this->_taxonomy_archive_slug( $taxonomy ) )
-				add_rewrite_rule( $slug.'/?$', sprintf( 'index.php?%s=%s', $this->constant( 'taxonomy_query' ), $taxonomy ), 'top' );
+				add_rewrite_rule( $slug.'/?$', sprintf( 'index.php?%s=%s', $query, $taxonomy ), 'top' );
 	}
 
 	private function _taxonomy_archive_slug( $taxonomy, $settings = TRUE )
@@ -132,13 +135,6 @@ class Archives extends gEditorial\Module
 			return $object->rewrite['slug'];
 
 		return $taxonomy;
-	}
-
-	public function query_vars( $vars )
-	{
-		$vars[] = $this->constant( 'taxonomy_query' );
-
-		return $vars;
 	}
 
 	public function template_include( $template )
