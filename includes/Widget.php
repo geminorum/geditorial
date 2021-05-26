@@ -585,12 +585,26 @@ class Widget extends \WP_Widget
 		$taxonomy = isset( $instance[$taxonomy_field] ) ? $instance[$taxonomy_field] : $taxonomy_default;
 		$term_id  = isset( $instance[$field] ) ? $instance[$field] : $default;
 
+		if ( 'all' == $taxonomy )
+			return HTML::desc( '<br />'._x( 'Select taxonomy first!', 'Widget Core', 'geditorial' ), TRUE, '-empty' );
+
+		$terms = get_terms( [
+			'taxonomy'   => $taxonomy,
+			'hide_empty' => FALSE,
+		] );
+
+		if ( is_wp_error( $terms ) )
+			return HTML::desc( '<br />'._x( 'The taxonomy is not available!', 'Widget Core', 'geditorial' ), TRUE, '-empty' );
+
+		if ( empty( $terms ) )
+			return HTML::desc( '<br />'._x( 'No terms available!', 'Widget Core', 'geditorial' ), TRUE, '-empty' );
+
 		$html = HTML::tag( 'option', [
 			'value'    => '0',
 			'selected' => $term_id == '0',
 		], Settings::showOptionNone() );
 
-		foreach ( get_terms( [ 'taxonomy' => $taxonomy ] ) as $term )
+		foreach ( $terms as $term )
 			$html.= HTML::tag( 'option', [
 				'value'    => $term->term_id,
 				'selected' => $term_id == $term->term_id,
