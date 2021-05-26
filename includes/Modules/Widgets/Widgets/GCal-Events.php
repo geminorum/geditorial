@@ -46,7 +46,7 @@ class GCalEvents extends gEditorial\Widget
 
 			$formats = Datetime::dateFormats( FALSE );
 
-			echo '<ul>';
+			echo '<div class="-list-wrap gcal-events"><ul class="-items">';
 
 			foreach ( $data->items as $item ) {
 
@@ -67,7 +67,7 @@ class GCalEvents extends gEditorial\Widget
 				echo '</li>';
 			}
 
-			echo '</ul>';
+			echo '</ul></div>';
 		}
 
 		$this->after_widget( $args, $instance );

@@ -742,7 +742,7 @@ class Today extends gEditorial\Module
 
 		if ( count( $posts ) ) {
 
-			echo '<ul>';
+			echo '<ul class="-items">';
 			foreach ( $posts as $post )
 				echo ShortCode::postTitle( $post, [ 'title_tag' => 'li' ] );
 			echo '</ul>';

@@ -4391,7 +4391,8 @@ class Module extends Base
 
 			$this->filter_append( 'post_class', 'archive-entry' );
 			$this->filter( 'post_type_archive_title', 2 );
-			$this->filter( 'gtheme_navigation_crumb_archive', 2 );
+			// $this->filter( 'gtheme_navigation_crumb_archive', 2 );
+			$this->filter_false( 'gtheme_navigation_crumb_archive' );
 
 			// look again for template
 			// $again = get_singular_template();

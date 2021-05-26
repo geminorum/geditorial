@@ -56,7 +56,7 @@ class SearchTerms extends gEditorial\Widget
 
 		$this->before_widget( $args, $instance );
 		$this->widget_title( $args, $instance );
-		echo '<div class="-list-wrap search-terms"><ul>';
+		echo '<div class="-list-wrap search-terms"><ul class="-items">';
 
 		foreach ( $query->terms as $term ) {
 			echo '<li>';

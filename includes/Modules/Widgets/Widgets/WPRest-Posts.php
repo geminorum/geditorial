@@ -66,7 +66,7 @@ class WPRestPosts extends gEditorial\Widget
 
 			$template = locate_template( Theme::getPart( 'row', $context, FALSE ) );
 
-			echo '<ul>';
+			echo '<div class="-list-wrap wprest-posts"><ul class="-items">';
 
 			Theme::restLoopBefore();
 
@@ -93,7 +93,7 @@ class WPRestPosts extends gEditorial\Widget
 
 			wp_reset_postdata();
 
-			echo '</ul>';
+			echo '</ul></div>';
 		}
 
 		$this->after_widget( $args, $instance );
