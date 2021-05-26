@@ -16,7 +16,7 @@ jQuery(function ($) {
   // wait till post.js binds
   $(window).on('load', function () {
     if ($("[data-meta-type='title_after']").length) {
-      $('#title').unbind('keydown.editor-focus');
+      $('#title').off('keydown.editor-focus');
 
       // copy from post.js
       // This code is meant to allow tabbing from Title to Post content.

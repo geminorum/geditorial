@@ -76,7 +76,7 @@
 
     inlineColor: function (tag, event) {
       const value = $('td.' + s.classs + '-color i', '#' + tag).attr('data-color');
-      if (value) $(':input[name="term-color"]', '.inline-edit-row').val(value);
+      if (typeof value !== 'undefined') $(':input[name="term-color"]', '.inline-edit-row').val(value);
     },
 
     inlineOrder: function (tag, event) {
