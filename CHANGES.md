@@ -1,3 +1,41 @@
+### 3.20.0
+* main/module: better handling settings args
+* main/module: filtering taxonomy excluded
+* main/module: generalizing method for linked to posts
+* main/module: is save post logic revised
+* main/module: paired check for posttype before trashing
+* main/module: paired default hooks
+* main/module: paired get to posts
+* main/module: paired register objects
+* main/module: paired save to post
+* main/module: paired saving logic revised
+* main/module: tab panel for supported objects settings
+* main/module: unified naming for paired api
+* main/rest: dropped!
+* main/settings: summary excludes as general setting
+* main/shortcode: dummy markup after list items
+* main/template: targeted filter for meta fields
+* main/widget: form has thumbnail method
+* main/widget: handle empty taxonomies on form helper
+* module/alphabet: account for same locale as alternative
+* module/alphabet: dummy tag for styling titles
+* module/archives: better handling internal methods
+* module/archives: custom title/content/slug for each supported
+* module/archives: taxonomy rewrite rules revised
+* module/attachments: support caption in the shortcode
+* module/attachments: support videos meta on table-list
+* module/book: :new: direct isbn queries
+* module/book: :new: taxonomy/shortcode for publication series
+* module/book: optional summary excludes
+* module/book: shortcode for publication subjects
+* module/home: filter dashboard draft posttypes
+* module/home: support content rows on gtheme
+* module/meta: rename the rest field
+* module/terms: avoid using input type color
+* module/wc-purchased: product sku on export filename
+* module/wc-purchased: support order statuses
+* module/wc-purchased: titles with sku
+
 ### 3.19.0
 * :wrench: php 7.2
 * assets/package: :new: libre barcode fonts
