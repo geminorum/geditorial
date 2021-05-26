@@ -5,10 +5,10 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 .geditorial-admin-wrap.sub-wc_purchased {
-  padding: 0;
+  @include mainwrap();
 
   th.-column-order_number {
-    width: 35px;
+    width: 45px;
   }
 
   th.-column-date_paid {
@@ -17,7 +17,7 @@
   }
 
   th.-column-total_price {
-    width: 85px;
+    width: 95px;
   }
 
   td.-cell-total_price {
