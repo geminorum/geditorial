@@ -146,6 +146,7 @@ add_theme_support( \'featured-content\', [
 			if ( count( $posttypes ) ) {
 				add_filter( 'gpersiandate_calendar_posttypes', [ $this, 'calendar_posttypes' ] );
 				add_filter( 'gnetwork_search_404_posttypes', [ $this, 'search_404_posttypes' ] );
+				add_filter( 'gtheme_content_rows_posttypes', [ $this, 'content_rows_posttypes' ], 9, 2 );
 
 				$this->filter( 'widget_posts_args' );
 				$this->filter( 'widget_comments_args' );
@@ -366,6 +367,11 @@ add_theme_support( \'featured-content\', [
 	public function search_404_posttypes( $posttypes )
 	{
 		return $this->posttypes();
+	}
+
+	public function content_rows_posttypes( $posttypes, $context )
+	{
+		return 'latest' == $context ? $this->posttypes() : $posttypes;
 	}
 
 	public function widget_posts_args( $args )
