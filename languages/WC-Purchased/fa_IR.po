@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gEditorial WC-Purchased\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
-"POT-Creation-Date: 2021-03-18T15:42:05+00:00\n"
-"PO-Revision-Date: 2021-03-18 19:12+0330\n"
+"POT-Creation-Date: 2021-03-27T10:58:55+00:00\n"
+"PO-Revision-Date: 2021-03-27 15:32+0430\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -15,67 +15,77 @@ msgstr ""
 "X-Domain: geditorial-wc-purchased\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
 
-#: WC-Purchased.php:39
+#: WC-Purchased.php:40
+msgctxt "Setting Title"
+msgid "Order Statuses"
+msgstr "وضعیت‌های سفارش"
+
+#: WC-Purchased.php:41
+msgctxt "Setting Description"
+msgid "Accepted statuses on order list reports."
+msgstr ""
+
+#: WC-Purchased.php:50
 msgctxt "Setting Title"
 msgid "Reports Roles"
 msgstr "نقش‌های گزارشات"
 
-#: WC-Purchased.php:40
+#: WC-Purchased.php:51
 msgctxt "Setting Description"
 msgid "Roles that can view product purchase reports."
 msgstr ""
 
-#: WC-Purchased.php:46
+#: WC-Purchased.php:57
 msgctxt "Setting Title"
 msgid "Export Roles"
 msgstr "نقش‌های برون‌بری"
 
-#: WC-Purchased.php:47
+#: WC-Purchased.php:58
 msgctxt "Setting Description"
 msgid "Roles that can export product purchase reports."
 msgstr ""
 
-#: WC-Purchased.php:92
+#: WC-Purchased.php:103
 msgctxt "Title Attr"
 msgid "Product Purchase Reports"
 msgstr "گزارش خرید کالا"
 
-#: WC-Purchased.php:95
+#: WC-Purchased.php:106
 msgctxt "Action"
 msgid "Purchases"
 msgstr "خریدها"
 
-#: WC-Purchased.php:104
+#: WC-Purchased.php:115 WC-Purchased.php:118
 msgctxt "Message"
 msgid "No Product!"
 msgstr "بدون کالا!"
 
-#: WC-Purchased.php:107
+#: WC-Purchased.php:121
 msgctxt "Message"
 msgid "No Orders!"
 msgstr "بدون سفارش!"
 
-#: WC-Purchased.php:120
+#: WC-Purchased.php:134
 msgctxt "Button"
 msgid "Export CSV"
 msgstr "برون‌بری CSV"
 
-#: WC-Purchased.php:128
+#: WC-Purchased.php:142
 msgctxt "Column Title"
 msgid "#"
 msgstr ""
 
-#: WC-Purchased.php:134
+#: WC-Purchased.php:148
 msgctxt "Column Title"
 msgid "Paid On"
 msgstr "پرداخت"
 
-#: WC-Purchased.php:141
+#: WC-Purchased.php:155
 msgctxt "Column Title"
 msgid "Address"
 msgstr "نشانی"
 
-#: WC-Purchased.php:147
+#: WC-Purchased.php:161
 msgctxt "Column Title"
 msgid "Total"
 msgstr "مبلغ"

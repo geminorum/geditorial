@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gEditorial Terms\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
-"POT-Creation-Date: 2021-01-30T13:07:40+00:00\n"
-"PO-Revision-Date: 2021-01-30 16:40+0330\n"
+"POT-Creation-Date: 2021-03-27T11:05:55+00:00\n"
+"PO-Revision-Date: 2021-03-27 15:36+0430\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -284,121 +284,121 @@ msgctxt "Setting Description"
 msgid "Supports %s for terms in the selected taxonomies."
 msgstr "%s را در رده‌بندی‌های انتخاب‌شده پشتیبانی می‌کند."
 
-#: Terms.php:848 Terms.php:1018
+#: Terms.php:849 Terms.php:1019
 msgctxt "Button"
 msgid "Choose"
 msgstr "انتخاب کنید"
 
-#: Terms.php:853 Terms.php:1024
+#: Terms.php:854 Terms.php:1025
 msgctxt "Button"
 msgid "Remove"
 msgstr "پاک کنید"
 
-#: Terms.php:1129
+#: Terms.php:1130
 msgctxt "Adminbar"
 msgid "Term Summary"
 msgstr "گزارش رده"
 
-#: Terms.php:1136
+#: Terms.php:1137
 msgctxt "Adminbar"
 msgid "Post Count"
 msgstr "شمار نوشته‌ها"
 
-#: Terms.php:1147 Terms.php:1166
+#: Terms.php:1148 Terms.php:1167
 msgctxt "Adminbar"
 msgid "Description"
 msgstr "توضیحات"
 
 #. translators: %s: meta title
-#: Terms.php:1178
+#: Terms.php:1179
 msgctxt "Adminbar"
 msgid "Meta: %s"
 msgstr "متا: %s"
 
-#: Terms.php:1239
+#: Terms.php:1240
 msgctxt "Adminbar"
 msgid "Meta: Uknonwn"
 msgstr "متا: نامشخص"
 
-#: Terms.php:1261
+#: Terms.php:1262
 msgctxt "Adminbar"
 msgid "Summary of Terms"
 msgstr "گزارش رده‌ها"
 
-#: Terms.php:1370
+#: Terms.php:1371
 msgctxt "Header"
 msgid "Term Tools"
 msgstr "ابزارهای رده‌ها"
 
-#: Terms.php:1376
+#: Terms.php:1377
 msgctxt "Tools"
 msgid "Orphaned Terms"
 msgstr "رده‌های بدون رده‌بندی"
 
-#: Terms.php:1396
+#: Terms.php:1397
 msgctxt "Button"
 msgid "Convert"
 msgstr "تبدیل"
 
-#: Terms.php:1398
+#: Terms.php:1399
 msgctxt "Message"
 msgid "Converts orphaned terms into currently registered taxonomies."
 msgstr "رده‌های بدون رده‌بندی را، به رده‌بندی‌های فعال تبدیل می‌کند."
 
-#: Terms.php:1407
+#: Terms.php:1408
 msgctxt "Tools"
 msgid "Uncategorized Posts"
 msgstr "نوشته‌های دسته‌بندی‌نشده"
 
-#: Terms.php:1409
+#: Terms.php:1410
 msgctxt "Button"
 msgid "Cleanup Uncategorized"
 msgstr "پاک‌سازی دسته‌بندی‌نشده‌ها"
 
-#: Terms.php:1411
+#: Terms.php:1412
 msgctxt "Message"
 msgid "Checks for posts in uncategorized category and removes the unnecessaries."
 msgstr "نوشته‌ها در رده دسته‌بندی‌نشده‌ها را بررسی و موارد نالازم را حذف می‌کند."
 
-#: Terms.php:1428
+#: Terms.php:1429
 msgctxt "Message"
 msgid "Currently no tool available."
 msgstr "هم‌اکنون هیچ ابزاری در دسترس نیست."
 
-#: Terms.php:1481
+#: Terms.php:1482
 msgctxt "Table Action"
 msgid "Purge Unregistered"
 msgstr "پاک‌سازی ثبت‌نشده‌ها"
 
-#: Terms.php:1495
+#: Terms.php:1496
 msgctxt "Table Column"
 msgid "Raw"
 msgstr "خام"
 
-#: Terms.php:1514
+#: Terms.php:1515
 msgctxt "Header"
 msgid "Overview of Posts with Terms"
 msgstr "مروری بر نوشته‌های رده‌بندی‌شده"
 
-#: Terms.php:1580
+#: Terms.php:1592
 msgctxt "Bulk Actions"
 msgid "Sync Image Titles"
 msgstr "همگام‌سازی عنوان‌های تصویر"
 
-#: Terms.php:1583
+#: Terms.php:1595
 msgctxt "Bulk Actions"
 msgid "Move Tagline to Description"
 msgstr "انتقال معرفی به توضیحات"
 
 #. translators: %s: posts count
-#: Terms.php:1682
+#: Terms.php:1694
 msgctxt "Noop"
 msgid "%s Uncategorized Post"
 msgid_plural "%s Uncategorized Posts"
 msgstr[0] "%s نوشته دسته‌بندی‌نشده"
 msgstr[1] "%s نوشته دسته‌بندی‌نشده"
 
-#: Terms.php:1687
+#: Terms.php:1699
 msgctxt "Title Attr"
 msgid "You need to assign categories to some posts!"
 msgstr "لازم است بعضی نوشته‌ها را دسته‌بندی کنید!"

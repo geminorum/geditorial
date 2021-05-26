@@ -1,79 +1,90 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gEditorial WC-Purchased 3.19.0\n"
+"Project-Id-Version: gEditorial WC-Purchased 3.20.0\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "Last-Translator: NULL\n"
 "Language-Team: NULL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-03-18T15:49:50+00:00\n"
+"POT-Creation-Date: 2021-05-26T02:47:38+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.4.0\n"
+"X-Generator: WP-CLI 2.5.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/WC-Purchased\n"
 "X-Domain: geditorial-wc-purchased\n"
 
-#: WC-Purchased.php:39
+#: WC-Purchased.php:40
+msgctxt "Setting Title"
+msgid "Order Statuses"
+msgstr ""
+
+#: WC-Purchased.php:41
+msgctxt "Setting Description"
+msgid "Accepted statuses on order list reports."
+msgstr ""
+
+#: WC-Purchased.php:50
 msgctxt "Setting Title"
 msgid "Reports Roles"
 msgstr ""
 
-#: WC-Purchased.php:40
+#: WC-Purchased.php:51
 msgctxt "Setting Description"
 msgid "Roles that can view product purchase reports."
 msgstr ""
 
-#: WC-Purchased.php:46
+#: WC-Purchased.php:57
 msgctxt "Setting Title"
 msgid "Export Roles"
 msgstr ""
 
-#: WC-Purchased.php:47
+#: WC-Purchased.php:58
 msgctxt "Setting Description"
 msgid "Roles that can export product purchase reports."
 msgstr ""
 
-#: WC-Purchased.php:92
+#: WC-Purchased.php:103
 msgctxt "Title Attr"
 msgid "Product Purchase Reports"
 msgstr ""
 
-#: WC-Purchased.php:95
+#: WC-Purchased.php:106
 msgctxt "Action"
 msgid "Purchases"
 msgstr ""
 
-#: WC-Purchased.php:104
+#: WC-Purchased.php:115
+#: WC-Purchased.php:118
 msgctxt "Message"
 msgid "No Product!"
 msgstr ""
 
-#: WC-Purchased.php:107
+#: WC-Purchased.php:121
 msgctxt "Message"
 msgid "No Orders!"
 msgstr ""
 
-#: WC-Purchased.php:120
+#: WC-Purchased.php:134
 msgctxt "Button"
 msgid "Export CSV"
 msgstr ""
 
-#: WC-Purchased.php:128
+#: WC-Purchased.php:145
 msgctxt "Column Title"
 msgid "#"
 msgstr ""
 
-#: WC-Purchased.php:134
+#: WC-Purchased.php:151
 msgctxt "Column Title"
 msgid "Paid On"
 msgstr ""
 
-#: WC-Purchased.php:141
+#: WC-Purchased.php:158
 msgctxt "Column Title"
 msgid "Address"
 msgstr ""
 
-#: WC-Purchased.php:147
+#: WC-Purchased.php:164
 msgctxt "Column Title"
 msgid "Total"
 msgstr ""

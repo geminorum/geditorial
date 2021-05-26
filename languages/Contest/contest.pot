@@ -1,15 +1,15 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gEditorial Contest 3.19.0\n"
+"Project-Id-Version: gEditorial Contest 3.20.0\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "Last-Translator: NULL\n"
 "Language-Team: NULL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-03-18T15:48:44+00:00\n"
+"POT-Creation-Date: 2021-05-26T02:46:05+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.4.0\n"
+"X-Generator: WP-CLI 2.5.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Contest\n"
 "X-Domain: geditorial-contest\n"
 
@@ -170,62 +170,62 @@ msgctxt "Button"
 msgid "Install Default Apply Statuses"
 msgstr ""
 
-#: Contest.php:429
+#: Contest.php:398
 msgctxt "Message"
 msgid "No items connected!"
 msgstr ""
 
-#: Contest.php:625
+#: Contest.php:549
 msgctxt "Title Attr"
 msgid "View the connected list"
 msgstr ""
 
-#: Contest.php:675
+#: Contest.php:598
 msgctxt "Header"
 msgid "Contest Tools"
 msgstr ""
 
-#: Contest.php:679
+#: Contest.php:602
 msgctxt "Tools"
 msgid "From Terms"
 msgstr ""
 
-#: Contest.php:688
+#: Contest.php:611
 msgctxt "Table Column"
-msgid "Linked Contest Post"
+msgid "Paired Contest Post"
 msgstr ""
 
-#: Contest.php:698
+#: Contest.php:621
 msgctxt "Table Column"
 msgid "Same Slug Contest Post"
 msgstr ""
 
-#: Contest.php:708
+#: Contest.php:631
 msgctxt "Table Column"
 msgid "Count"
 msgstr ""
 
-#: Contest.php:722
+#: Contest.php:645
 msgctxt "Button"
 msgid "Check Terms"
 msgstr ""
 
-#: Contest.php:725
+#: Contest.php:648
 msgctxt "Button"
 msgid "Create Contest Posts"
 msgstr ""
 
-#: Contest.php:728
+#: Contest.php:651
 msgctxt "Button"
 msgid "Re-Connect Posts"
 msgstr ""
 
-#: Contest.php:731
+#: Contest.php:654
 msgctxt "Button"
 msgid "Delete Terms"
 msgstr ""
 
-#: Contest.php:733
+#: Contest.php:656
 msgctxt "Message"
 msgid "Check for contest terms and create corresponding contest posts."
 msgstr ""

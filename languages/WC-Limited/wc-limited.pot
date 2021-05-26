@@ -1,56 +1,56 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gEditorial WC-Limited 3.19.0\n"
+"Project-Id-Version: gEditorial WC-Limited 3.20.0\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "Last-Translator: NULL\n"
 "Language-Team: NULL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-03-18T15:49:49+00:00\n"
+"POT-Creation-Date: 2021-05-26T02:47:36+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.4.0\n"
+"X-Generator: WP-CLI 2.5.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/WC-Limited\n"
 "X-Domain: geditorial-wc-limited\n"
 
-#: WC-Limited.php:31
+#: WC-Limited.php:35
 msgctxt "Setting Title"
 msgid "Limited Terms"
 msgstr ""
 
-#: WC-Limited.php:32
+#: WC-Limited.php:36
 msgctxt "Setting Description"
 msgid "Products on the selected categories will be limited to only one per purchase."
 msgstr ""
 
-#: WC-Limited.php:38
+#: WC-Limited.php:42
 msgctxt "Setting Title"
 msgid "Limited Notice"
 msgstr ""
 
-#: WC-Limited.php:39
+#: WC-Limited.php:43
 msgctxt "Setting Description"
 msgid "Customized string to notice customer that product is limited to one per purchase."
 msgstr ""
 
-#: WC-Limited.php:40
-#: WC-Limited.php:82
+#: WC-Limited.php:44
+#: WC-Limited.php:86
 msgctxt "Setting Default"
 msgid "This product cannot be purchased with other products. Please, empty your cart first and then add it again."
 msgstr ""
 
-#: WC-Limited.php:46
+#: WC-Limited.php:50
 msgctxt "Setting Title"
 msgid "Limited Already"
 msgstr ""
 
-#: WC-Limited.php:47
+#: WC-Limited.php:51
 msgctxt "Setting Description"
 msgid "Customized string to notice customer that cart has already a product that is limited to one per purchase."
 msgstr ""
 
-#: WC-Limited.php:48
-#: WC-Limited.php:93
+#: WC-Limited.php:52
+#: WC-Limited.php:97
 msgctxt "Setting Default"
 msgid "You can only purchase one product at a time from limited categories."
 msgstr ""

@@ -2,15 +2,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gEditorial Tweaks\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
-"POT-Creation-Date: 2020-09-14T13:58:16+00:00\n"
-"PO-Revision-Date: 2020-09-14 18:28+0430\n"
+"POT-Creation-Date: 2021-05-13T20:22:42+00:00\n"
+"PO-Revision-Date: 2021-05-14 01:00+0430\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.4.1\n"
+"X-Generator: Poedit 2.4.3\n"
 "X-Domain: geditorial-tweaks\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
 "X-Poedit-Basepath: ../../includes/Modules/Tweaks\n"
@@ -258,89 +258,89 @@ msgctxt "Meta Box Search Placeholder"
 msgid "Search &hellip;"
 msgstr "جست‌وجو &hellip;"
 
-#: Tweaks.php:769
+#: Tweaks.php:763
 msgctxt "Row Icon Title"
 msgid "Page Template"
 msgstr "الگوی برگه"
 
-#: Tweaks.php:790
+#: Tweaks.php:784
 msgctxt "Row Icon Title"
 msgid "Comment Status"
 msgstr "وضعیت دیدگاه‌ها"
 
-#: Tweaks.php:793
+#: Tweaks.php:787
 msgctxt "Comment Status"
 msgid "Closed"
 msgstr "بسته است"
 
-#: Tweaks.php:796
+#: Tweaks.php:790
 msgctxt "Comment Status"
 msgid "Closed for Old Posts"
 msgstr "برای نوشته‌های قدیمی بسته است"
 
 #. translators: %s: status
-#: Tweaks.php:802
+#: Tweaks.php:796
 msgctxt "Comment Status"
 msgid "Comments are %s"
 msgstr "دیدگاه‌ها %s"
 
-#: Tweaks.php:816
+#: Tweaks.php:810
 msgctxt "Row Icon Title"
 msgid "Author"
 msgstr "نویسنده"
 
-#: Tweaks.php:827
+#: Tweaks.php:821
 msgctxt "Row Icon Title"
 msgid "Post Slug"
 msgstr "نامک نوشته"
 
-#: Tweaks.php:847
+#: Tweaks.php:841
 msgctxt "Attr: Status"
 msgid "Missed schedule"
 msgstr "زمان‌بندی ازدست‌رفته"
 
-#: Tweaks.php:851
+#: Tweaks.php:845
 msgctxt "Row Icon Title"
 msgid "Status"
 msgstr "وضعیت"
 
-#: Tweaks.php:859
+#: Tweaks.php:853
 msgctxt "Row Icon Title"
 msgid "Publish Date"
 msgstr "تاریخ انتشار"
 
-#: Tweaks.php:867
+#: Tweaks.php:861
 msgctxt "Row Icon Title"
 msgid "Last Edit"
 msgstr "آخرین ویرایش"
 
-#: Tweaks.php:877
+#: Tweaks.php:871
 msgctxt "Row Icon Title"
 msgid "Name"
 msgstr "نام"
 
-#: Tweaks.php:882
+#: Tweaks.php:876
 msgctxt "Row Icon Title"
 msgid "Roles"
 msgstr "نقش‌ها"
 
-#: Tweaks.php:890
+#: Tweaks.php:884
 msgctxt "Row Icon Title"
 msgid "Email"
 msgstr "ایمیل"
 
 #. translators: %s: codex url
-#: Tweaks.php:1003
+#: Tweaks.php:997
 msgctxt "MainBox"
 msgid "Allow <a href=\"%s\">trackbacks and pingbacks</a>"
 msgstr "پذیرفتن <a href=\"%s\">بازتاب و بازخوان</a>"
 
-#: Tweaks.php:1047
+#: Tweaks.php:1041
 msgctxt "Misc Action"
 msgid "Last Modified"
 msgstr "آخرین دست‌کاری"
 
-#: Tweaks.php:1048
+#: Tweaks.php:1042
 msgctxt "Misc Action"
 msgid "Modified:"
 msgstr "دست‌کاری:"

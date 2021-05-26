@@ -2,15 +2,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gEditorial Users\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
-"POT-Creation-Date: 2021-01-30T13:07:45+00:00\n"
-"PO-Revision-Date: 2021-01-30 16:46+0330\n"
+"POT-Creation-Date: 2021-04-22T22:29:14+00:00\n"
+"PO-Revision-Date: 2021-05-08 01:50+0430\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.4.2\n"
+"X-Generator: Poedit 2.4.3\n"
 "X-Domain: geditorial-users\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
 "X-Poedit-Basepath: ../../includes/Modules/Users\n"
@@ -98,152 +98,159 @@ msgstr "خلاصه"
 #: Users.php:115
 msgid "User Group"
 msgid_plural "User Groups"
-msgstr[0] "گروه کاربری"
-msgstr[1] ""
+msgstr[0] "گروه‌های کاربری"
+msgstr[1] "گروه کاربری"
 
 #: Users.php:116
 msgid "User Type"
 msgid_plural "User Types"
-msgstr[0] "نوع کاربری"
-msgstr[1] ""
+msgstr[0] "انواع کاربری"
+msgstr[1] "نوع کاربری"
 
-#: Users.php:248
+#: Users.php:120
+msgctxt "Label: Not Found"
+msgid "There are no groups available."
+msgstr "هیچ گروه کاربری در دسترس نیست."
+
+#: Users.php:123
+msgctxt "Label: Not Found"
+msgid "There are no types available."
+msgstr "هیچ نوع کاربری در دسترس نیست."
+
+#: Users.php:262
 msgctxt "Dashboard Widget Title"
 msgid "Your Profile"
 msgstr "نمایه شما"
 
-#: Users.php:251
+#: Users.php:265
 msgctxt "Dashboard Widget Action"
 msgid "Edit your profile"
 msgstr "ویرایش نمایه شما"
 
-#: Users.php:252
+#: Users.php:266
 msgctxt "Dashboard Widget Action"
 msgid "Edit"
 msgstr "ویرایش"
 
-#: Users.php:335
+#: Users.php:350
 msgctxt "Row Icon Title"
 msgid "Group"
 msgstr "گروه"
 
-#: Users.php:349
+#: Users.php:364
 msgctxt "Row Icon Title"
 msgid "Type"
 msgstr "نوع"
 
-#: Users.php:391
-msgctxt "Header"
-msgid "Site Groups"
-msgstr "گروه‌های سایت"
-
-#: Users.php:394
-msgctxt "Header"
-msgid "User Groups"
-msgstr "گروه‌های کاربری"
-
-#: Users.php:419
-msgctxt "Message"
-msgid "There are no groups available."
-msgstr "گروهی تعریف نشده است."
-
-#: Users.php:432
+#: Users.php:417
 msgctxt "Header"
 msgid "Site Categories"
 msgstr "دسته‌های سایت"
 
-#: Users.php:433
+#: Users.php:418
 msgctxt "Message"
 msgid "Restrict non editor users to post in selected categories only."
 msgstr "کاربران غیر ویرایشگر به دسته‌های اختصاصی خود محدود شوند."
 
-#: Users.php:436
+#: Users.php:421
 msgctxt "Header"
 msgid "User Categories"
 msgstr "دسته‌های کاربری"
 
-#: Users.php:464
+#: Users.php:449
 msgctxt "Message"
 msgid "There are no categories available."
 msgstr "دسته‌ای تعریف نشده است."
 
-#: Users.php:563
+#: Users.php:545
 msgctxt "Row Icon Title"
 msgid "Name"
 msgstr "نام"
 
-#: Users.php:570
+#: Users.php:552
 msgctxt "Row Icon Title"
 msgid "Email"
 msgstr "ایمیل"
 
-#: Users.php:577
+#: Users.php:559
 msgctxt "Row Icon Title"
 msgid "URL"
 msgstr "نشانی"
 
-#: Users.php:595
+#: Users.php:577
 msgctxt "Row Icon Title"
 msgid "Registered"
 msgstr "نام‌نویسی"
 
 #. translators: %s: date
-#: Users.php:597
+#: Users.php:579
 msgctxt "Row"
 msgid "Registered on %s"
 msgstr "نام‌نویسی در %s"
 
-#: Users.php:602
+#: Users.php:584
 msgctxt "Row Icon Title"
 msgid "Roles"
 msgstr "نقش‌ها"
 
-#: Users.php:636
+#: Users.php:618
 msgctxt "Header"
 msgid "User Reports"
 msgstr "گزارشات کاربران"
 
-#: Users.php:640
+#: Users.php:622
 msgctxt "Header"
 msgid "By PostType"
 msgstr "بر اساس نوع‌نوشته"
 
-#: Users.php:655
+#: Users.php:637
 msgctxt "None Title"
 msgid "All Users"
 msgstr "همهٔ کاربران"
 
-#: Users.php:665
+#: Users.php:647
 msgctxt "None Title"
 msgid "All Months"
 msgstr "همهٔ ماه‌ها"
 
-#: Users.php:673
+#: Users.php:655
 msgctxt "Button"
 msgid "Query Stats"
 msgstr "درخواست گزارش"
 
-#: Users.php:746
+#: Users.php:730
 msgctxt "Header"
 msgid "Re-Map Authors"
 msgstr "اتصال دوباره نویسندگان"
 
 #. translators: %s: error
-#: Users.php:753
+#: Users.php:737
 msgctxt "Message"
 msgid ""
 "Before you can upload a file, you will need to fix the following error: %s"
 msgstr ""
 
-#: Users.php:768
-msgctxt "Button"
-msgid "Upload and Re-Map"
-msgstr ""
-
 #. translators: %s: size
-#: Users.php:770
+#: Users.php:751
 msgctxt "Message"
 msgid ""
 "Checks for post authors and re-map them with current registered users. "
 "Maximum upload size: <b>%s</b>"
 msgstr ""
+
+#: Users.php:755
+msgctxt "Button"
+msgid "Upload and Re-Map"
+msgstr "بارگیری و بازنقش"
+
+#~ msgctxt "Header"
+#~ msgid "Site Groups"
+#~ msgstr "گروه‌های سایت"
+
+#~ msgctxt "Header"
+#~ msgid "User Groups"
+#~ msgstr "گروه‌های کاربری"
+
+#~ msgctxt "Message"
+#~ msgid "There are no groups available."
+#~ msgstr "گروهی تعریف نشده است."

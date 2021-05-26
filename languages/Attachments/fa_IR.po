@@ -2,126 +2,126 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gEditorial Attachments\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
-"POT-Creation-Date: 2020-08-18T16:03:27+00:00\n"
-"PO-Revision-Date: 2020-08-18 20:41+0430\n"
+"POT-Creation-Date: 2021-05-13T20:21:38+00:00\n"
+"PO-Revision-Date: 2021-05-14 01:01+0430\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.4\n"
+"X-Generator: Poedit 2.4.3\n"
 "X-Domain: geditorial-attachments\n"
 "X-Poedit-Basepath: ../../includes/Modules/Attachments\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
 
-#: Attachments.php:39
+#: Attachments.php:40
 msgctxt "Setting Title"
 msgid "Rewrite Permalinks"
 msgstr "بازنویسی پایاپیوندها"
 
-#: Attachments.php:40
+#: Attachments.php:41
 msgctxt "Setting Description"
 msgid "Changes default permalinks into attachment id."
 msgstr "پایاپیوندهای پیش‌فرض را به شناسه پیوست تغییر می‌دهد."
 
-#: Attachments.php:45
+#: Attachments.php:46
 msgctxt "Setting Title"
 msgid "Prefix Permalinks"
 msgstr "پیشوند پایاپیوندها"
 
-#: Attachments.php:46
+#: Attachments.php:47
 msgctxt "Setting Description"
 msgid "Adds to the permalink of attachments, before id."
 msgstr "به پایاپیوند پیوست‌ها، پس از شناسه، افزوده می‌شود."
 
-#: Attachments.php:55
+#: Attachments.php:56
 msgctxt "Setting Title"
 msgid "Attachment Count"
 msgstr "شمار پیوست‌ها"
 
-#: Attachments.php:56
+#: Attachments.php:57
 msgctxt "Setting Description"
 msgid "Displays attachment summary of the post."
 msgstr "نمایش گزارش پیوست‌های نوشته."
 
-#: Attachments.php:58
+#: Attachments.php:59
 msgctxt "Setting Description"
 msgid "Enhances author restrictions on media library list view."
 msgstr ""
 "امکان محدودیت بر اساس نویسندگان را در نمای فهرست کتابخانه رسانه‌ای، افزایش "
 "می‌دهد."
 
-#: Attachments.php:61
+#: Attachments.php:62
 msgctxt "Setting Title"
 msgid "Restrict Library"
 msgstr "محدودسازی کتاب‌خانه"
 
-#: Attachments.php:62
+#: Attachments.php:63
 msgctxt "Setting Description"
 msgid "Restricts Media Library access to user's own uploads."
 msgstr "محدود کردن کتابخانه چندرسانه‌ای به پرونده‌های هر کاربر."
 
-#: Attachments.php:175
+#: Attachments.php:176
 msgctxt "Adminbar"
 msgid "Attachment Summary"
 msgstr "گزارش پیوست‌ها"
 
-#: Attachments.php:223
+#: Attachments.php:224
 msgctxt "Row Icon Title"
 msgid "Attachments"
 msgstr "پیوست‌ها"
 
 #. translators: %s: attachments count
-#: Attachments.php:226
+#: Attachments.php:227
 msgctxt "Noop"
 msgid "%s Attachment"
 msgid_plural "%s Attachments"
 msgstr[0] "%s پیوست"
 msgstr[1] "%s پیوست"
 
-#: Attachments.php:231
+#: Attachments.php:232
 msgctxt "Title Attr"
 msgid "View the list of attachments"
 msgstr "نمایش فهرست پیوست‌ها"
 
-#: Attachments.php:258
+#: Attachments.php:260
 msgctxt "Shortcode"
 msgid "Attachments"
 msgstr "پیوست‌ها"
 
 #. translators: %s: attachment parent title
-#: Attachments.php:260
+#: Attachments.php:262
 msgctxt "Shortcode"
 msgid "Attachments of %s"
 msgstr "پیوست‌ها برای %s"
 
-#: Attachments.php:304
+#: Attachments.php:313
 msgctxt "Table Column"
 msgid "Custom"
 msgstr "سفارشی"
 
-#: Attachments.php:315
+#: Attachments.php:324
 msgctxt "Table Column"
 msgid "Search"
 msgstr "جست‌وجو"
 
-#: Attachments.php:327
+#: Attachments.php:336
 msgctxt "Table Column"
 msgid "Sizes"
 msgstr "اندازه‌ها"
 
-#: Attachments.php:347
+#: Attachments.php:356
 msgctxt "Table Column"
 msgid "Meta"
 msgstr "متا"
 
-#: Attachments.php:366
+#: Attachments.php:375
 msgctxt "Header"
 msgid "Overview of Attachments"
 msgstr "مروری بر پیوست‌ها"
 
-#: Attachments.php:367
+#: Attachments.php:376
 msgctxt "Message"
 msgid "No attachments found."
 msgstr "پیوستی پیدا نشد."

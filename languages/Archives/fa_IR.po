@@ -2,40 +2,84 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gEditorial Archives\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
-"POT-Creation-Date: 2020-11-23T07:45:15+00:00\n"
-"PO-Revision-Date: 2020-11-23 20:58+0330\n"
+"POT-Creation-Date: 2021-05-13T20:21:38+00:00\n"
+"PO-Revision-Date: 2021-05-14 01:02+0430\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.4.2\n"
+"X-Generator: Poedit 2.4.3\n"
 "X-Poedit-Basepath: ../../includes/Modules/Archives\n"
 "X-Domain: geditorial-archives\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
 
-#: Archives.php:32
+#. translators: %s: supported object label
+#: Archives.php:41 Archives.php:64
+msgctxt "Setting Title"
+msgid "Archives Title for %s"
+msgstr "عنوان بایگانی برای %s"
+
+#: Archives.php:42
+msgctxt "Setting Description"
+msgid "Used as title on the posttype archive pages."
+msgstr "برای عنوان در صفحات بایگانی نوع‌نوشته استفاده خواهد شد."
+
+#. translators: %s: supported object label
+#: Archives.php:50 Archives.php:73
+msgctxt "Setting Title"
+msgid "Archives Content for %s"
+msgstr "محتوای بایگانی برای %s"
+
+#: Archives.php:51
+msgctxt "Setting Description"
+msgid "Used as content on the posttype archive pages."
+msgstr "برای محتوا در صفحات بایگانی نوع‌نوشته استفاده خواهد شد."
+
+#: Archives.php:65
+msgctxt "Setting Description"
+msgid "Used as title on the taxonomy archive pages."
+msgstr "برای عنوان در صفحات بایگانی رده‌بندی استفاده خواهد شد."
+
+#: Archives.php:74
+msgctxt "Setting Description"
+msgid "Used as content on the taxonomy archive pages."
+msgstr "برای محتوا در صفحات بایگانی رده‌بندی استفاده خواهد شد."
+
+#. translators: %s: supported object label
+#: Archives.php:82
+msgctxt "Setting Title"
+msgid "Archives Slug for %s"
+msgstr "نامک بایگانی برای %s"
+
+#: Archives.php:83
+msgctxt "Setting Description"
+msgid "Used as slug on the taxonomy archive pages."
+msgstr "برای نامک در صفحات بایگانی رده‌بندی استفاده خواهد شد."
+
+#: Archives.php:84
+msgctxt "Setting Icon"
+msgid "View Archives Page"
+msgstr "نمایش صفحه بایگانی"
+
+#: Archives.php:90
 msgctxt "Setting Description"
 msgid "Prepends a search form to the posttype archive pages."
 msgstr "پیش از محتوای بایگانی نوع‌نوشته، فرم جست‌جو اضافه می‌کند."
 
-#: Archives.php:36
-msgctxt "Setting Title"
-msgid "Posttype Content"
-msgstr "محتوای نوع‌نوشته"
+#~ msgctxt "Setting Title"
+#~ msgid "Posttype Content"
+#~ msgstr "محتوای نوع‌نوشته"
 
-#: Archives.php:37
-msgctxt "Setting Description"
-msgid "Used as default content on the posttype archive pages."
-msgstr "به عنوان محتوای پیش‌فرض در صفحات بایگانی نوع‌نوشته استفاده خواهد شد."
+#~ msgctxt "Setting Description"
+#~ msgid "Used as default content on the posttype archive pages."
+#~ msgstr "به عنوان محتوای پیش‌فرض در صفحات بایگانی نوع‌نوشته استفاده خواهد شد."
 
-#: Archives.php:44
-msgctxt "Setting Title"
-msgid "Taxonomy Content"
-msgstr "محتوای رده‌بندی"
+#~ msgctxt "Setting Title"
+#~ msgid "Taxonomy Content"
+#~ msgstr "محتوای رده‌بندی"
 
-#: Archives.php:45
-msgctxt "Setting Description"
-msgid "Used as default content on the taxonomy archive pages."
-msgstr "به عنوان محتوای پیش‌فرض در صفحات بایگانی رده‌بندی استفاده خواهد شد."
+#~ msgctxt "Setting Description"
+#~ msgid "Used as default content on the taxonomy archive pages."
+#~ msgstr "به عنوان محتوای پیش‌فرض در صفحات بایگانی رده‌بندی استفاده خواهد شد."

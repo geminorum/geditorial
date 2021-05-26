@@ -1,15 +1,15 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gEditorial Tweaks 3.19.0\n"
+"Project-Id-Version: gEditorial Tweaks 3.20.0\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "Last-Translator: NULL\n"
 "Language-Team: NULL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-03-18T15:49:44+00:00\n"
+"POT-Creation-Date: 2021-05-26T02:47:28+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.4.0\n"
+"X-Generator: WP-CLI 2.5.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Tweaks\n"
 "X-Domain: geditorial-tweaks\n"
 
@@ -254,89 +254,89 @@ msgctxt "Meta Box Search Placeholder"
 msgid "Search &hellip;"
 msgstr ""
 
-#: Tweaks.php:769
+#: Tweaks.php:763
 msgctxt "Row Icon Title"
 msgid "Page Template"
 msgstr ""
 
-#: Tweaks.php:790
+#: Tweaks.php:784
 msgctxt "Row Icon Title"
 msgid "Comment Status"
 msgstr ""
 
-#: Tweaks.php:793
+#: Tweaks.php:787
 msgctxt "Comment Status"
 msgid "Closed"
 msgstr ""
 
-#: Tweaks.php:796
+#: Tweaks.php:790
 msgctxt "Comment Status"
 msgid "Closed for Old Posts"
 msgstr ""
 
 #. translators: %s: status
-#: Tweaks.php:802
+#: Tweaks.php:796
 msgctxt "Comment Status"
 msgid "Comments are %s"
 msgstr ""
 
-#: Tweaks.php:816
+#: Tweaks.php:810
 msgctxt "Row Icon Title"
 msgid "Author"
 msgstr ""
 
-#: Tweaks.php:827
+#: Tweaks.php:821
 msgctxt "Row Icon Title"
 msgid "Post Slug"
 msgstr ""
 
-#: Tweaks.php:847
+#: Tweaks.php:841
 msgctxt "Attr: Status"
 msgid "Missed schedule"
 msgstr ""
 
-#: Tweaks.php:851
+#: Tweaks.php:845
 msgctxt "Row Icon Title"
 msgid "Status"
 msgstr ""
 
-#: Tweaks.php:859
+#: Tweaks.php:853
 msgctxt "Row Icon Title"
 msgid "Publish Date"
 msgstr ""
 
-#: Tweaks.php:867
+#: Tweaks.php:861
 msgctxt "Row Icon Title"
 msgid "Last Edit"
 msgstr ""
 
-#: Tweaks.php:877
+#: Tweaks.php:871
 msgctxt "Row Icon Title"
 msgid "Name"
 msgstr ""
 
-#: Tweaks.php:882
+#: Tweaks.php:876
 msgctxt "Row Icon Title"
 msgid "Roles"
 msgstr ""
 
-#: Tweaks.php:890
+#: Tweaks.php:884
 msgctxt "Row Icon Title"
 msgid "Email"
 msgstr ""
 
 #. translators: %s: codex url
-#: Tweaks.php:1003
+#: Tweaks.php:997
 msgctxt "MainBox"
 msgid "Allow <a href=\"%s\">trackbacks and pingbacks</a>"
 msgstr ""
 
-#: Tweaks.php:1047
+#: Tweaks.php:1041
 msgctxt "Misc Action"
 msgid "Last Modified"
 msgstr ""
 
-#: Tweaks.php:1048
+#: Tweaks.php:1042
 msgctxt "Misc Action"
 msgid "Modified:"
 msgstr ""
