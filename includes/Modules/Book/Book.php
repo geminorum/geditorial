@@ -120,6 +120,7 @@ class Book extends gEditorial\Module
 			'metakey_import_title'    => 'book_publication_title',
 			'metakey_import_ref'      => 'book_publication_ref',
 			'metakey_import_desc'     => 'book_publication_desc',
+			'isbn_query'              => 'isbn',
 		];
 	}
 
@@ -441,6 +442,9 @@ class Book extends gEditorial\Module
 		$this->register_shortcode( 'serie_shortcode' );
 		$this->register_shortcode( 'cover_shortcode' );
 
+		$this->_do_add_custom_queries();
+		$this->action( 'pre_get_posts' );
+
 		if ( ! is_admin() )
 			return;
 
@@ -451,16 +455,63 @@ class Book extends gEditorial\Module
 		$this->register_default_terms( 'type_tax' );
 	}
 
-	public function template_redirect()
+	// @REF: https://gist.github.com/carlodaniele/1ca4110fa06902123349a0651d454057
+	private function _do_add_custom_queries()
 	{
-		if ( ! is_singular( $this->constant( 'publication_cpt' ) ) )
+		$query    = $this->constant( 'isbn_query' );
+		$posttype = $this->constant( 'publication_cpt' );
+
+		$this->filter_append( 'query_vars', $query );
+
+		add_rewrite_tag( '%'.$query.'%', '([^&]+)' );
+		add_rewrite_rule( '^'.$query.'/([^/]*)/?', 'index.php?'.$query.'=$matches[1]','top' );
+		add_rewrite_rule( '^'.$posttype.'/'.$query.'/([^/]*)/?', 'index.php?post_type='.$posttype.'&'.$query.'=$matches[1]','top' );
+	}
+
+	public function pre_get_posts( &$query )
+	{
+		if ( is_admin() || ! $query->is_main_query() )
 			return;
 
-		if ( $this->get_setting( 'insert_cover' ) )
-			add_action( $this->base.'_content_before',
-				[ $this, 'insert_cover' ],
-				$this->get_setting( 'insert_priority', -50 )
-			);
+		if ( ! is_post_type_archive( $this->constant( 'publication_cpt' ) ) )
+			return;
+
+		$isbn = get_query_var( $this->constant( 'isbn_query' ) );
+
+		if ( empty( $isbn ) )
+			return;
+
+		$query->set( 'meta_key', '_meta_publication_isbn' );
+		$query->set( 'meta_value', $isbn );
+		$query->set( 'meta_compare', 'LIKE' );
+	}
+
+	public function template_redirect()
+	{
+		if ( ( is_home() || is_404() ) && ( $isbn = get_query_var( $this->constant( 'isbn_query' ) ) ) ) {
+
+			if ( ! $post_id = PostType::getIDbyMeta( '_meta_publication_isbn', $isbn ) )
+				return;
+
+			if ( ! $post = get_post( $post_id ) )
+				return;
+
+			if ( ! in_array( $post->post_status, [ 'publish' ], TRUE ) )
+				return;
+
+			if ( $post->post_type != $this->constant( 'publication_cpt' ) )
+				return;
+
+			WordPress::redirect( get_page_link( $post->ID ), 302 );
+
+		} else if ( is_singular( $this->constant( 'publication_cpt' ) ) ) {
+
+			if ( $this->get_setting( 'insert_cover' ) )
+				add_action( $this->base.'_content_before',
+					[ $this, 'insert_cover' ],
+					$this->get_setting( 'insert_priority', -50 )
+				);
+		}
 	}
 
 	public function current_screen( $screen )
