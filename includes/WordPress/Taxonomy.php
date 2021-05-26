@@ -111,6 +111,9 @@ class Taxonomy extends Core\Base
 
 	public static function getTerm( $term_or_id, $taxonomy = '' )
 	{
+		if ( $term_or_id instanceof \WP_Term )
+			return $term_or_id;
+
 		if ( ! $term_or_id ) {
 
 			if ( is_admin() )
@@ -130,10 +133,7 @@ class Taxonomy extends Core\Base
 				return FALSE;
 		}
 
-		if ( $term_or_id instanceof \WP_Term )
-			$term = $term_or_id;
-
-		else if ( is_numeric( $term_or_id ) )
+		if ( is_numeric( $term_or_id ) )
 			$term = get_term_by( 'id', $term_or_id, $taxonomy );
 
 		else

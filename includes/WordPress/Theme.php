@@ -61,7 +61,8 @@ class Theme extends Core\Base
 			'filter'                => 'raw',
 
 			// extra
-			'link' => $data->link,
+			'_link'      => $data->link,
+			'_thumbnail' => isset( $data->thumbnail_data->url ) ? $data->thumbnail_data->url : FALSE,
 		);
 
 		$post = new \WP_Post( (object) $dummy );
@@ -77,7 +78,15 @@ class Theme extends Core\Base
 
 	public static function restPost_permalink( $permalink )
 	{
-		return $GLOBALS['post']->link;
+		return $GLOBALS['post']->_link;
+	}
+
+	public static function restPost_thumbnailHTML( $html, $post_id, $post_thumbnail_id, $size, $attr )
+	{
+		if ( empty( $html ) && ! empty( $GLOBALS['post']->_thumbnail ) )
+			return Core\HTML::img( $GLOBALS['post']->_thumbnail, '-thumbnail', $GLOBALS['post']->post_title );
+
+		return $html;
 	}
 
 	public static function restLoopBefore()
@@ -85,6 +94,7 @@ class Theme extends Core\Base
 		add_filter( 'post_link', [ __CLASS__, 'restPost_permalink' ], 9999 );
 		add_filter( 'page_link', [ __CLASS__, 'restPost_permalink' ], 9999 );
 		add_filter( 'post_type_link', [ __CLASS__, 'restPost_permalink' ], 9999 );
+		add_filter( 'post_thumbnail_html', [ __CLASS__, 'restPost_thumbnailHTML' ], 9999, 5 );
 	}
 
 	public static function restLoopAfter()
@@ -92,6 +102,7 @@ class Theme extends Core\Base
 		remove_filter( 'post_link', [ __CLASS__, 'restPost_permalink' ], 9999 );
 		remove_filter( 'page_link', [ __CLASS__, 'restPost_permalink' ], 9999 );
 		remove_filter( 'post_type_link', [ __CLASS__, 'restPost_permalink' ], 9999 );
+		remove_filter( 'post_thumbnail_html', [ __CLASS__, 'restPost_thumbnailHTML' ], 9999 );
 	}
 
 	// @SOURCE: `bp_set_theme_compat_active()`

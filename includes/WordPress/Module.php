@@ -78,22 +78,22 @@ class Module extends Core\Base
 		return wp_hash( $this->base.$this->key.$suffix );
 	}
 
-	protected function action( $hooks, $args = 1, $priority = 10, $suffix = FALSE )
+	protected function action( $hooks, $args = 1, $priority = 10, $suffix = FALSE, $base = FALSE )
 	{
 		$hooks = (array) $hooks;
 
 		if ( $method = self::sanitize_hook( ( $suffix ? $hooks[0].'_'.$suffix : $hooks[0] ) ) )
 			foreach ( $hooks as $hook )
-				add_action( $hook, [ $this, $method ], $priority, $args );
+				add_action( ( $base ? $base.'_'.$hook : $hook ), [ $this, $method ], $priority, $args );
 	}
 
-	protected function filter( $hooks, $args = 1, $priority = 10, $suffix = FALSE )
+	protected function filter( $hooks, $args = 1, $priority = 10, $suffix = FALSE, $base = FALSE )
 	{
 		$hooks = (array) $hooks;
 
 		if ( $method = self::sanitize_hook( ( $suffix ? $hooks[0].'_'.$suffix : $hooks[0] ) ) )
 			foreach ( $hooks as $hook )
-				add_filter( $hook, [ $this, $method ], $priority, $args );
+				add_filter( ( $base ? $base.'_'.$hook : $hook ), [ $this, $method ], $priority, $args );
 	}
 
 	// USAGE: $this->action_module( 'importer', 'saved', 5 );
@@ -303,7 +303,7 @@ class Module extends Core\Base
 			$key = $this->key;
 
 		if ( is_null( $nonce ) )
-			$nonce = @$_REQUEST['_'.$this->base.'-'.$key.'-'.$context]; // OLD: $_REQUEST['_wpnonce']
+			$nonce = self::req( '_'.$this->base.'-'.$key.'-'.$context, NULL ); // OLD: $_REQUEST['_wpnonce']
 
 		return wp_verify_nonce( $nonce, $this->base.'-'.$key.'-'.$context );
 	}

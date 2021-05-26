@@ -402,13 +402,15 @@ class Media extends Core\Base
 		$uploads  = self::upload();
 		$metadata = wp_get_attachment_metadata( $attachment_id );
 		$prepared = [
+			'caption'   => wp_get_attachment_caption( $attachment_id ),
 			'mime_type' => get_post_mime_type( $attachment_id ),
 			'url'       => $uploads['baseurl'].'/'.$metadata['file'],
 			'sizes'     => [],
 		];
 
-		foreach ( $metadata['sizes'] as $size => $info )
-			$prepared['sizes'][$size] = $uploads['baseurl'].'/'.$info['file'];
+		if ( ! empty( $metadata['sizes'] ) )
+			foreach ( $metadata['sizes'] as $size => $info )
+				$prepared['sizes'][$size] = $uploads['baseurl'].'/'.$info['file'];
 
 		return $prepared;
 	}

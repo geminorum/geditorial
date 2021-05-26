@@ -386,4 +386,24 @@ class PostType extends Core\Base
 
 		return $default;
 	}
+
+	public static function getEditLinkByTerm( $term_or_id, $posttype, $taxonomy = '' )
+	{
+		if ( ! self::object( $posttype )->show_ui )
+			return FALSE;
+
+		if ( ! $term = Taxonomy::getTerm( $term_or_id, $taxonomy ) )
+			return FALSE;
+
+		$object = Taxonomy::object( $term->taxonomy );
+
+		$args = $object->query_var
+			? [ $object->query_var => $term->slug ]
+			: [ 'taxonomy' => $object->name, 'term' => $term->slug ];
+
+		if ( 'post' !== $posttype )
+			$args['post_type'] = $posttype;
+
+		return add_query_arg( $args, ( 'attachment' === $posttype ? 'upload.php' : 'edit.php' ) );
+	}
 }
