@@ -130,6 +130,7 @@ class Media extends Core\Base
 						$sizes[$name] = $args;
 
 				} else if ( $args['post_type'] ) {
+
 					$sizes[$name] = $args;
 				}
 
@@ -410,7 +411,7 @@ class Media extends Core\Base
 
 		if ( ! empty( $metadata['sizes'] ) )
 			foreach ( $metadata['sizes'] as $size => $info )
-				$prepared['sizes'][$size] = $uploads['baseurl'].'/'.$info['file'];
+				$prepared['sizes'][$size] = $uploads['baseurl'].'/'.dirname( $metadata['file'] ).'/'.$info['file'];
 
 		return $prepared;
 	}

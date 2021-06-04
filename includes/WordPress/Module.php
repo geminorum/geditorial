@@ -97,14 +97,14 @@ class Module extends Core\Base
 	}
 
 	// USAGE: $this->action_module( 'importer', 'saved', 5 );
-	protected function action_module( $module, $hook = 'init', $args = 1, $priority = 10, $suffix = FALSE )
+	protected function action_module( $module, $hook, $args = 1, $priority = 10, $suffix = FALSE )
 	{
 		if ( $method = self::sanitize_hook( ( $suffix ? $module.'_'.$hook.'_'.$suffix : $module.'_'.$hook ) ) )
 			add_action( $this->base.'_'.$module.'_'.$hook, array( $this, $method ), $priority, $args );
 	}
 
 	// USAGE: $this->filter_module( 'importer', 'prepare', 4 );
-	protected function filter_module( $module, $hook = 'init', $args = 1, $priority = 10, $suffix = FALSE )
+	protected function filter_module( $module, $hook, $args = 1, $priority = 10, $suffix = FALSE )
 	{
 		if ( $method = self::sanitize_hook( ( $suffix ? $module.'_'.$hook.'_'.$suffix : $module.'_'.$hook ) ) )
 			add_filter( $this->base.'_'.$module.'_'.$hook, array( $this, $method ), $priority, $args );
@@ -219,6 +219,14 @@ class Module extends Core\Base
 			foreach ( (array) $items as $key )
 				unset( $first[$key] );
 			return $first;
+		}, $priority, 1 );
+	}
+
+	// USAGE: $this->filter_string( 'parent_file', 'options-general.php' );
+	protected function filter_string( $hook, $string, $priority = 10 )
+	{
+		add_filter( $hook, function( $first ) use( $string ){
+			return $string;
 		}, $priority, 1 );
 	}
 
@@ -343,6 +351,7 @@ class Module extends Core\Base
 		return (int) self::req( $key, $per_page );
 	}
 
+	// NOTE: `add_screen_option()` only accept 2 methods: `per_page` and `layout_columns`
 	protected function add_sub_screen_option( $sub = NULL, $option = 'per_page', $default = 25, $label = NULL )
 	{
 		if ( is_null( $sub ) )

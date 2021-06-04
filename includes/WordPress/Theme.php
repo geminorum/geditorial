@@ -19,8 +19,6 @@ class Theme extends Core\Base
 
 		$templates[] = "{$slug}.php";
 
-		$templates = apply_filters( 'get_template_part', $templates, $slug, $name );
-
 		if ( ! $locate )
 			return $templates;
 
@@ -61,8 +59,9 @@ class Theme extends Core\Base
 			'filter'                => 'raw',
 
 			// extra
-			'_link'      => $data->link,
-			'_thumbnail' => isset( $data->thumbnail_data->url ) ? $data->thumbnail_data->url : FALSE,
+			'_permalink' => $data->link,
+			'_metadata'  => isset( $data->meta ) ? $data->meta : [],
+			'_thumbnail' => isset( $data->thumbnail_data ) ? $data->thumbnail_data : [],
 		);
 
 		$post = new \WP_Post( (object) $dummy );
@@ -78,13 +77,28 @@ class Theme extends Core\Base
 
 	public static function restPost_permalink( $permalink )
 	{
-		return $GLOBALS['post']->_link;
+		return $GLOBALS['post']->_permalink;
+	}
+
+	public static function restPost_getMetaField( $meta, $field, $post_id, $module )
+	{
+		$prop = '_meta_'.$field;
+
+		if ( isset( $GLOBALS['post']->_metadata->{$prop} ) )
+			return $GLOBALS['post']->_metadata->{$prop};
+
+		return $meta;
 	}
 
 	public static function restPost_thumbnailHTML( $html, $post_id, $post_thumbnail_id, $size, $attr )
 	{
-		if ( empty( $html ) && ! empty( $GLOBALS['post']->_thumbnail ) )
-			return Core\HTML::img( $GLOBALS['post']->_thumbnail, '-thumbnail', $GLOBALS['post']->post_title );
+		$alt = isset( $GLOBALS['post']->_thumbnail->caption ) ? $GLOBALS['post']->_thumbnail->caption : $GLOBALS['post']->post_title;
+
+		if ( $size && isset( $GLOBALS['post']->_thumbnail->sizes->{$size} ) )
+			return Core\HTML::link( Core\HTML::img( $GLOBALS['post']->_thumbnail->sizes->{$size}, '-thumbnail', $alt ), $GLOBALS['post']->_permalink );
+
+		if ( ! empty( $GLOBALS['post']->_thumbnail->url ) )
+			return Core\HTML::link( Core\HTML::img( $GLOBALS['post']->_thumbnail->url, '-thumbnail', $alt ), $GLOBALS['post']->_permalink );
 
 		return $html;
 	}
@@ -95,6 +109,8 @@ class Theme extends Core\Base
 		add_filter( 'page_link', [ __CLASS__, 'restPost_permalink' ], 9999 );
 		add_filter( 'post_type_link', [ __CLASS__, 'restPost_permalink' ], 9999 );
 		add_filter( 'post_thumbnail_html', [ __CLASS__, 'restPost_thumbnailHTML' ], 9999, 5 );
+		add_filter( 'geditorial_get_meta_field', [ __CLASS__, 'restPost_getMetaField' ], 9999, 4 );
+		add_filter( 'gtheme_image_get_thumbnail_id', '__return_false', 9999, 2 );
 	}
 
 	public static function restLoopAfter()
@@ -103,6 +119,8 @@ class Theme extends Core\Base
 		remove_filter( 'page_link', [ __CLASS__, 'restPost_permalink' ], 9999 );
 		remove_filter( 'post_type_link', [ __CLASS__, 'restPost_permalink' ], 9999 );
 		remove_filter( 'post_thumbnail_html', [ __CLASS__, 'restPost_thumbnailHTML' ], 9999 );
+		remove_filter( 'geditorial_get_meta_field', [ __CLASS__, 'restPost_getMetaField' ], 9999 );
+		remove_filter( 'gtheme_image_get_thumbnail_id', '__return_false', 9999 );
 	}
 
 	// @SOURCE: `bp_set_theme_compat_active()`
