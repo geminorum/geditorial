@@ -546,7 +546,9 @@ class Template extends Main
 			$post_id = $post->ID;
 		}
 
-		return gEditorial()->{$module}->get_postmeta_field( $post_id, $field );
+		$meta = gEditorial()->{$module}->get_postmeta_field( $post_id, $field );
+
+		return apply_filters( static::BASE.'_get_meta_field', $meta, $field, $post_id, $module );
 	}
 
 	// FIXME: DEPRECATED
