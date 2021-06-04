@@ -134,7 +134,7 @@ class Specs extends gEditorial\Module
 	// it will append new specs to the old ones
 	public function set_post_specs( $post_id, $specs, $create = FALSE )
 	{
-		if ( ! $post = get_post( $post_id ) )
+		if ( ! $post = Helper::getPost( $post_id ) )
 			return FALSE;
 
 		$meta       = $this->get_postmeta_legacy( $post_id );

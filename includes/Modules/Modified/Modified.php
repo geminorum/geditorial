@@ -182,7 +182,7 @@ class Modified extends gEditorial\Module
 		if ( FALSE === $args['context'] )
 			return NULL;
 
-		if ( ! $post = get_post( $args['id'] ) )
+		if ( ! $post = Helper::getPost( $args['id'] ) )
 			return NULL;
 
 		$gmt   = strtotime( $post->post_modified_gmt );
@@ -205,7 +205,7 @@ class Modified extends gEditorial\Module
 
 	public function get_post_modified( $format = NULL, $post = NULL )
 	{
-		if ( ! $post = get_post( $post ) )
+		if ( ! $post = Helper::getPost( $post ) )
 			return FALSE;
 
 		$gmt     = strtotime( $post->post_modified_gmt );

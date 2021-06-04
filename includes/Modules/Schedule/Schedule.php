@@ -93,7 +93,7 @@ class Schedule extends gEditorial\Module
 
 				Ajax::checkReferer( $this->hook( $post['post_id'] ) );
 
-				if ( ! $target = get_post( $post['post_id'] ) )
+				if ( ! $target = Helper::getPost( $post['post_id'] ) )
 					Ajax::errorMessage( _x( 'Post not found.', 'Message', 'geditorial-schedule' ) );
 
 				if ( ! $this->can_reschedule( $target ) )
@@ -287,7 +287,7 @@ class Schedule extends gEditorial\Module
 
 	private function get_post_row( $the_day, $post, $calendar_args = [] )
 	{
-		if ( ! $post = get_post( $post ) )
+		if ( ! $post = Helper::getPost( $post ) )
 			return '';
 
 		$html = '<li data-day="'.$the_day.'" data-status="'.$post->post_status.'"';

@@ -2224,7 +2224,7 @@ class Module extends Base
 
 	public function do_posttype_field( $atts = [], $post = NULL )
 	{
-		if ( ! $post = get_post( $post ) )
+		if ( ! $post = Helper::getPost( $post ) )
 			return;
 
 		$args = array_merge( [
@@ -4488,7 +4488,7 @@ class Module extends Base
 	// DEFAULT FILTER
 	public function template_empty_content( $content )
 	{
-		$post  = get_post();
+		$post  = Helper::getPost();
 		$title = $this->template_get_empty_title( '' );
 
 		$html = $this->template_get_empty_content();

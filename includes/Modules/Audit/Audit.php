@@ -4,6 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Ajax;
+use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Core\HTML;
@@ -265,7 +266,7 @@ class Audit extends gEditorial\Module
 				if ( empty( $locking ) )
 					return $caps;
 
-				if ( ! $post = get_post( $args[0] ) )
+				if ( ! $post = Helper::getPost( $args[0] ) )
 					return $caps;
 
 				if ( ! $this->posttype_supported( $post->post_type ) )
@@ -497,7 +498,7 @@ class Audit extends gEditorial\Module
 	// FIXME: move this up to main module
 	public function set_terms( $post, $terms, $append = TRUE )
 	{
-		if ( ! $post = get_post( $post ) )
+		if ( ! $post = Helper::getPost( $post ) )
 			return FALSE;
 
 		if ( ! $this->posttype_supported( $post->post_type ) )

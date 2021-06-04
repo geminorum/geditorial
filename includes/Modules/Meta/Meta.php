@@ -431,7 +431,7 @@ class Meta extends gEditorial\Module
 	// NO NEED: we use original key, so the core will retrieve the value
 	public function register_prepare_callback( $value, $request, $args )
 	{
-		if ( ! $post = get_post() )
+		if ( ! $post = Helper::getPost() )
 			return $value;
 
 		$fields = $this->get_posttype_fields( $post->post_type );
@@ -449,7 +449,7 @@ class Meta extends gEditorial\Module
 		$field  = Text::stripPrefix( $meta_key, sprintf( '_%s_', $this->key ) );
 
 		return array_key_exists( $field, $fields )
-			? $this->sanitize_posttype_field( $meta_value, $fields[$field], get_post() )
+			? $this->sanitize_posttype_field( $meta_value, $fields[$field], Helper::getPost() )
 			: $meta_value;
 	}
 
@@ -818,7 +818,7 @@ class Meta extends gEditorial\Module
 		if ( $this->classs() != $column_name )
 			return;
 
-		if ( ! $post = get_post( $post_id ) )
+		if ( ! $post = Helper::getPost( $post_id ) )
 			return;
 
 		$prefix   = $this->classs().'-';
@@ -977,7 +977,7 @@ class Meta extends gEditorial\Module
 
 	public function the_author( $display_name )
 	{
-		if ( ! $post = get_post() )
+		if ( ! $post = Helper::getPost() )
 			return $display_name;
 
 		// NO NEED
@@ -1061,7 +1061,7 @@ class Meta extends gEditorial\Module
 					'title'    => _x( 'Type', 'Table Column', 'geditorial-meta' ),
 					'args'     => [ 'types' => PostType::get( 2 ) ],
 					'callback' => function( $value, $row, $column, $index ){
-						$post = get_post( $row->post_id );
+						$post = Helper::getPost( $row->post_id );
 						return isset( $column['args']['types'][$post->post_type] )
 							? $column['args']['types'][$post->post_type]
 							: $post->post_type;

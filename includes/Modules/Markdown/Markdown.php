@@ -203,7 +203,7 @@ class Markdown extends gEditorial\Module
 		$content = $this->parser->defaultTransform( $content );
 
 		if ( $this->get_setting( 'wiki_linking' ) )
-			$content = $this->linking( $content, get_post( $id ) );
+			$content = $this->linking( $content, Helper::getPost( $id ) );
 
 		// reference the post_id to make footnote ids unique
 		$content = preg_replace( '/fn(ref)?:/', "fn$1-$id:", $content );
@@ -269,7 +269,7 @@ class Markdown extends gEditorial\Module
 
 	public function process_post( $post )
 	{
-		if ( ! $post = get_post( $post ) )
+		if ( ! $post = Helper::getPost( $post ) )
 			return FALSE;
 
 		if ( empty( $post->post_content_filtered ) )
@@ -293,7 +293,7 @@ class Markdown extends gEditorial\Module
 
 	public function convert_post( $post )
 	{
-		if ( ! $post = get_post( $post ) )
+		if ( ! $post = Helper::getPost( $post ) )
 			return FALSE;
 
 		if ( $this->is_markdown( $post->ID ) )
@@ -322,7 +322,7 @@ class Markdown extends gEditorial\Module
 
 	public function cleanup_post( $post )
 	{
-		if ( ! $post = get_post( $post ) )
+		if ( ! $post = Helper::getPost( $post ) )
 			return FALSE;
 
 		if ( ! $this->is_markdown( $post->ID ) )
@@ -351,7 +351,7 @@ class Markdown extends gEditorial\Module
 
 	public function discard_post( $post )
 	{
-		if ( ! $post = get_post( $post ) )
+		if ( ! $post = Helper::getPost( $post ) )
 			return FALSE;
 
 		if ( empty( $post->post_content_filtered ) )
@@ -397,7 +397,7 @@ class Markdown extends gEditorial\Module
 		if ( ! $this->is_markdown( $post_id ) )
 			return $value;
 
-		$post = get_post( $post_id );
+		$post = Helper::getPost( $post_id );
 
 		if ( $post && ! empty( $post->post_content_filtered ) )
 			return $post->post_content_filtered;

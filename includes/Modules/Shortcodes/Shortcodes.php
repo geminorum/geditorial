@@ -143,7 +143,7 @@ class Shortcodes extends gEditorial\Module
 	// FIXME: add table action
 	protected function remove_shortcode( $post_id, $shortcode )
 	{
-		if ( ! $post = get_post( $post_id ) )
+		if ( ! $post = Helper::getPost( $post_id ) )
 			return FALSE;
 
 		$pattern = '#\['.$shortcode.'[^\]]*\]#i';

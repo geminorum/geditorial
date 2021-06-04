@@ -3,6 +3,7 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
+use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Helper;
@@ -317,7 +318,7 @@ class Cartable extends gEditorial\Module
 				if ( empty( $args[0] ) )
 					return $caps;
 
-				if ( ! $post = get_post( $args[0] ) )
+				if ( ! $post = Helper::getPost( $args[0] ) )
 					return $caps;
 
 				if ( ! $this->posttype_supported( $post->post_type ) )

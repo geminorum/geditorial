@@ -3,6 +3,7 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
+use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\Text;
@@ -158,7 +159,7 @@ class Estimated extends gEditorial\Module
 		if ( ! $this->is_content_insert( FALSE ) )
 			return;
 
-		if ( ! $post = get_post() )
+		if ( ! $post = Helper::getPost() )
 			return;
 
 		if ( $html = $this->get_estimated( $post->ID ) )

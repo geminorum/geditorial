@@ -281,7 +281,7 @@ class Ortho extends gEditorial\Module
 
 	public function cleanup_post( $post )
 	{
-		if ( ! $post = get_post( $post ) )
+		if ( ! $post = Helper::getPost( $post ) )
 			return FALSE;
 
 		$update = FALSE;

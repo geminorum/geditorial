@@ -448,7 +448,7 @@ class Today extends gEditorial\Module
 		if ( 'theday' == $column_name ) {
 
 			$the_day = ModuleHelper::getTheDayFromPost(
-				get_post( $post_id ),
+				Helper::getPost( $post_id ),
 				$this->default_calendar(),
 				$this->get_the_day_constants()
 			);
@@ -625,7 +625,7 @@ class Today extends gEditorial\Module
 		if ( $title )
 			return $title;
 
-		if ( ! $post = get_post( $post_id ) )
+		if ( ! $post = Helper::getPost( $post_id ) )
 			return $title;
 
 		if ( $this->constant( 'day_cpt' ) == $post->post_type ) {
@@ -648,7 +648,7 @@ class Today extends gEditorial\Module
 			return;
 
 		$the_day = ModuleHelper::getTheDayFromPost(
-			get_post(),
+			Helper::getPost(),
 			$this->default_calendar(),
 			$this->get_the_day_constants()
 		);

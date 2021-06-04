@@ -276,7 +276,7 @@ class ShortCode extends Main
 	// post as item in the list
 	public static function postItem( $post = NULL, $atts = [], $before = '', $after = '' )
 	{
-		if ( ! $post = get_post( $post ) )
+		if ( ! $post = Helper::getPost( $post ) )
 			return '';
 
 		$args = self::atts( [
@@ -337,7 +337,7 @@ class ShortCode extends Main
 			if ( TRUE === $args['item_link'] ) {
 
 				// avoid linking to the same page
-				if ( is_singular() && ( $current = get_post() ) )
+				if ( is_singular() && ( $current = Helper::getPost() ) )
 					$args['item_link'] = $current->ID !== $post->ID;
 			}
 
@@ -516,7 +516,7 @@ class ShortCode extends Main
 			$query['post_type'] = 'attachment';
 			$query['post_status'] = [ 'inherit' ];
 
-			if ( $parent = get_post( $args['id'] ) )
+			if ( $parent = Helper::getPost( $args['id'] ) )
 				$query['post_parent'] = $parent->ID;
 
 			if ( $args['mime_type'] )
@@ -531,7 +531,7 @@ class ShortCode extends Main
 
 				$query['post_type'] = $posttype;
 
-			} else if ( $post = get_post( $args['id'] ) ) {
+			} else if ( $post = Helper::getPost( $args['id'] ) ) {
 
 				$query['connected_type']  = $args['connection'];
 				$query['connected_items'] = $post;
@@ -587,7 +587,7 @@ class ShortCode extends Main
 
 		} else if ( 'paired' == $list && is_singular( $posttype ) ) {
 
-			if ( ! $post = get_post() )
+			if ( ! $post = Helper::getPost() )
 				return $content;
 
 			if ( $term_id = get_post_meta( $post->ID, '_'.$posttype.'_term_id', TRUE ) )
@@ -607,7 +607,7 @@ class ShortCode extends Main
 
 		} else if ( 'paired' == $list || ( 'assigned' == $list && is_singular( $posttype ) ) ) {
 
-			if ( ! $post = get_post() )
+			if ( ! $post = Helper::getPost() )
 				return $content;
 
 			if ( ! $term = get_the_terms( $post, $taxonomy ) )
@@ -735,7 +735,7 @@ class ShortCode extends Main
 
 		if ( in_array( 'attachment', (array) $args['posttypes'] ) ) {
 
-			if ( $post = get_post( $args['id'] ) )
+			if ( $post = Helper::getPost( $args['id'] ) )
 				$query_args['post_parent'] = $post->ID;
 
 			if ( $args['mime_type'] )
@@ -864,7 +864,7 @@ class ShortCode extends Main
 			return NULL;
 
 		$html = $term = $tax_query = $meta_query = '';
-		$post = get_post();
+		$post = Helper::getPost();
 
 		$key   = md5( serialize( $args ) );
 		$cache = wp_cache_get( $key, $posttype );

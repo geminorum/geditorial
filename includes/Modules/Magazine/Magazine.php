@@ -714,7 +714,7 @@ class Magazine extends gEditorial\Module
 						if ( ! $post_id = $this->paired_get_to_post_id( $term_id, 'issue_cpt', 'issue_tax' ) )
 							continue;
 
-						if ( ! $post = get_post( $post_id ) )
+						if ( ! $post = Helper::getPost( $post_id ) )
 							continue;
 
 						if ( wp_update_term( $term_id, $this->constant( 'issue_tax' ), [ 'description' => $post->post_excerpt ] ) )
@@ -873,7 +873,7 @@ class Magazine extends gEditorial\Module
 
 						$html.= '<hr />';
 
-						if ( ! $post = get_post( $post_id ) )
+						if ( ! $post = Helper::getPost( $post_id ) )
 							return $html.gEditorial()->na();
 
 						if ( empty( $post->post_excerpt ) )

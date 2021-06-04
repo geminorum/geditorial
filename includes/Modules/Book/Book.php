@@ -493,7 +493,7 @@ class Book extends gEditorial\Module
 			if ( ! $post_id = PostType::getIDbyMeta( '_meta_publication_isbn', $isbn ) )
 				return;
 
-			if ( ! $post = get_post( $post_id ) )
+			if ( ! $post = Helper::getPost( $post_id ) )
 				return;
 
 			if ( ! in_array( $post->post_status, [ 'publish' ], TRUE ) )
@@ -795,7 +795,7 @@ class Book extends gEditorial\Module
 
 	public function get_linked_to_posts( $post = NULL, $single = FALSE, $published = TRUE )
 	{
-		if ( ! $post = get_post( $post ) )
+		if ( ! $post = Helper::getPost( $post ) )
 			return FALSE;
 
 		if ( ! $this->posttype_supported( $post->post_type ) )
@@ -830,7 +830,7 @@ class Book extends gEditorial\Module
 		if ( ! $this->p2p )
 			return;
 
-		if ( ! $post = get_post( $post ) )
+		if ( ! $post = Helper::getPost( $post ) )
 			return;
 
 		$connected = new \WP_Query( [

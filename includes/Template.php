@@ -226,7 +226,7 @@ class Template extends Main
 
 	public static function getPostImageSrc( $size = NULL, $post_id = NULL )
 	{
-		if ( ! $post = get_post( $post_id ) )
+		if ( ! $post = Helper::getPost( $post_id ) )
 			return FALSE;
 
 		if ( ! $thumbnail_id = get_post_meta( $post->ID, '_thumbnail_id', TRUE ) )
@@ -333,7 +333,7 @@ class Template extends Main
 		if ( FALSE === $args['id'] )
 			return $args['default'];
 
-		if ( ! $post = get_post( $args['id'] ) )
+		if ( ! $post = Helper::getPost( $args['id'] ) )
 			return $args['default'];
 
 		$title     = self::getPostField( $args['title'], $post->ID, FALSE );
@@ -513,7 +513,7 @@ class Template extends Main
 		if ( $check && ! gEditorial()->enabled( 'meta' ) )
 			return $args['default'];
 
-		if ( ! $post = get_post( $args['id'] ) )
+		if ( ! $post = Helper::getPost( $args['id'] ) )
 			return $args['default'];
 
 		$meta = self::getMetaFieldRaw( $field, $post->ID, 'meta' );
@@ -540,7 +540,7 @@ class Template extends Main
 			if ( ! gEditorial()->enabled( 'meta' ) )
 				return FALSE;
 
-			if ( ! $post = get_post( $post_id ) )
+			if ( ! $post = Helper::getPost( $post_id ) )
 				return FALSE;
 
 			$post_id = $post->ID;
@@ -581,7 +581,7 @@ class Template extends Main
 		if ( $check && ! gEditorial()->enabled( 'meta' ) )
 			return $args['default'];
 
-		if ( ! $post = get_post( $args['id'] ) )
+		if ( ! $post = Helper::getPost( $args['id'] ) )
 			return $args['default'];
 
 		$context = $args['context'] ?: $args['taxonomy'];
@@ -666,7 +666,7 @@ class Template extends Main
 		if ( $check && ! gEditorial()->enabled( 'meta' ) )
 			return $args['default'];
 
-		if ( ! $post = get_post( $args['id'] ) )
+		if ( ! $post = Helper::getPost( $args['id'] ) )
 			return $args['default'];
 
 		$title = $args['title_field'] ? self::getMetaField( $args['title_field'], [
@@ -716,7 +716,7 @@ class Template extends Main
 		if ( $check && ! gEditorial()->enabled( 'meta' ) )
 			return $args['default'];
 
-		if ( ! $post = get_post( $args['id'] ) )
+		if ( ! $post = Helper::getPost( $args['id'] ) )
 			return $args['default'];
 
 		$posttype = $args['type'] ?: $post->post_type;
