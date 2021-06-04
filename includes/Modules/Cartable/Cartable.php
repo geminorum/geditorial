@@ -216,7 +216,7 @@ class Cartable extends gEditorial\Module
 		}
 
 		if ( $this->get_setting( 'support_groups' ) )
-			$this->action_module( 'users' );
+			$this->action_module( 'users', 'init' );
 
 		if ( $this->get_setting( 'support_types' ) ) {
 
@@ -347,9 +347,7 @@ class Cartable extends gEditorial\Module
 	{
 		if ( $this->constant( 'type_tax' ) == $screen->taxonomy ) {
 
-			add_filter( 'parent_file', function(){
-				return 'options-general.php';
-			} );
+			$this->filter_string( 'parent_file', 'options-general.php' );
 
 		} else if ( $this->posttype_supported( $screen->post_type ) ) {
 

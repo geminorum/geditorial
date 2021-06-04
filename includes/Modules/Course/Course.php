@@ -226,6 +226,7 @@ class Course extends gEditorial\Module
 	public function after_setup_theme()
 	{
 		$this->register_posttype_thumbnail( 'course_cpt' );
+		$this->register_posttype_thumbnail( 'lesson_cpt' );
 	}
 
 	public function init()

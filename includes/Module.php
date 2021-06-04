@@ -970,6 +970,9 @@ class Module extends Base
 
 	public function get_postmeta_field( $post_id, $field, $default = FALSE, $prefix = NULL, $metakey = NULL )
 	{
+		if ( ! $post_id )
+			return $default;
+
 		if ( is_null( $prefix ) )
 			$prefix = $this->key;
 

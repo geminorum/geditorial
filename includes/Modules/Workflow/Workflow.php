@@ -226,9 +226,7 @@ class Workflow extends gEditorial\Module
 	{
 		if ( $this->constant( 'status_tax' ) == $screen->taxonomy ) {
 
-			add_filter( 'parent_file', function(){
-				return 'options-general.php';
-			} );
+			$this->filter_string( 'parent_file', 'options-general.php' );
 
 			if ( 'edit-tags' == $screen->base )
 				$this->_edit_tags_screen( $screen->taxonomy );

@@ -207,14 +207,16 @@ class Widget extends \WP_Widget
 		$sizes  = gEditorial()->{$this->parent_module}->get_image_sizes( $posttype );
 
 		if ( count( $sizes ) ) {
-			foreach ( $sizes as $name => $size ) {
+
+			foreach ( $sizes as $name => $size )
 				$images[$name] = $size['n'].' ('.Number::localize( $size['w'] ).'&nbsp;&times;&nbsp;'.Number::localize( $size['h'] ).')';
-			}
+
 		} else {
 
 			$sizes = Media::getPosttypeImageSizes( $posttype );
 
 			if ( count( $sizes ) ) {
+
 				foreach ( $sizes as $name => $size )
 					$images[$name] = ( isset( $size['title'] ) ? $size['title'] : $name )
 						.' ('.Number::localize( $size['width'] )

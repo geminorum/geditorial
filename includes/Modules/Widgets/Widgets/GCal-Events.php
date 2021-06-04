@@ -5,6 +5,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial;
 use geminorum\gEditorial\Datetime;
 use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Core\Date;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Third;
@@ -109,7 +110,7 @@ class GCalEvents extends gEditorial\Widget
 		$instance['title_image'] = strip_tags( $new['title_image'] );
 		$instance['context']     = strip_tags( $new['context'] );
 		$instance['class']       = strip_tags( $new['class'] );
-		$instance['empty']       = wp_kses_post( $new['empty'] ); // FIXME: use `Helper::kses()`
+		$instance['empty']       = Helper::kses( $new['empty'], 'text' );
 
 		$instance['calendar_id']  = strip_tags( $new['calendar_id'] );
 		$instance['api_key']      = strip_tags( $new['api_key'] );

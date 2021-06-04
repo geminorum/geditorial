@@ -296,6 +296,8 @@ class Book extends gEditorial\Module
 					'title'       => _x( 'Publication By-Line', 'Field Title', 'geditorial-book' ),
 					'description' => _x( 'Text to override the publication author', 'Field Description', 'geditorial-book' ),
 					'type'        => 'note',
+					'icon'        => 'businessperson',
+					// 'quickedit'   => TRUE, // will lose the line breaks on quick edit
 				],
 				'publication_edition' => [
 					'title'       => _x( 'Edition', 'Field Title', 'geditorial-book' ),
@@ -321,6 +323,7 @@ class Book extends gEditorial\Module
 					'description' => _x( 'International Standard Book Number', 'Field Description', 'geditorial-book' ),
 					'type'        => 'code',
 					'icon'        => 'menu',
+					'quickedit'   => TRUE,
 				],
 				'total_pages' => [
 					'title'       => _x( 'Pages', 'Field Title', 'geditorial-book' ),
@@ -344,6 +347,8 @@ class Book extends gEditorial\Module
 					'title'       => _x( 'Reference', 'Field Title', 'geditorial-book' ),
 					'description' => _x( 'Full reference to this publication', 'Field Description', 'geditorial-book' ),
 					'type'        => 'note',
+					'icon'        => 'editor-break',
+					// 'quickedit'   => TRUE, // will lose the line breaks on quick edit
 				],
 			],
 		];

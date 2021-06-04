@@ -3,6 +3,7 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
+use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\HTTP;
@@ -30,7 +31,7 @@ class WPRestPosts extends gEditorial\Widget
 		if ( empty( $instance['resource'] ) )
 			return FALSE;
 
-		$context    = isset( $instance['context'] ) ? $instance['context'] : 'wprest-posts';
+		$context    = isset( $instance['context'] ) ? $instance['context'] : '';
 		$number     = empty( $instance['number'] ) ? 10 : absint( $instance['number'] );
 		$endpoint   = empty( $instance['endpoint'] ) ? 'posts' : $instance['endpoint'];
 		$tags       = empty( $instance['tags'] ) ? FALSE : $instance['tags'];
@@ -133,7 +134,7 @@ class WPRestPosts extends gEditorial\Widget
 		$instance['title_image'] = strip_tags( $new['title_image'] );
 		$instance['context']     = strip_tags( $new['context'] );
 		$instance['class']       = strip_tags( $new['class'] );
-		$instance['empty']       = wp_kses_post( $new['empty'] ); // FIXME: use `Helper::kses()`
+		$instance['empty']       = Helper::kses( $new['empty'], 'text' );
 
 		$instance['resource']   = esc_url( $new['resource'] );
 		$instance['endpoint']   = strip_tags( $new['endpoint'] );

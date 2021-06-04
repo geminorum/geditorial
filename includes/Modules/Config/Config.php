@@ -122,7 +122,7 @@ class Config extends gEditorial\Module
 	// @REF: https://core.trac.wordpress.org/changeset/47951
 	public function set_screen_option( $false, $option, $value )
 	{
-		return Text::has( $option, $this->base ) ? $value : $false;
+		return Text::start( $option, $this->base ) ? $value : $false;
 	}
 
 	public function admin_reports_page()

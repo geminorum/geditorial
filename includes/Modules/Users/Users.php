@@ -223,9 +223,7 @@ class Users extends gEditorial\Module
 
 			} else if ( $screen->taxonomy == $this->constant( 'group_tax' ) ) {
 
-				add_filter( 'parent_file', function(){
-					return 'users.php';
-				} );
+				$this->filter_string( 'parent_file', 'users.php' );
 
 				if ( 'edit-tags' == $screen->base ) {
 					add_filter( 'manage_edit-'.$screen->taxonomy.'_columns', [ $this, 'manage_columns_groups' ] );
@@ -234,9 +232,7 @@ class Users extends gEditorial\Module
 
 			} else if ( $screen->taxonomy == $this->constant( 'type_tax' ) ) {
 
-				add_filter( 'parent_file', function(){
-					return 'users.php';
-				} );
+				$this->filter_string( 'parent_file', 'users.php' );
 
 				if ( 'edit-tags' == $screen->base ) {
 					add_filter( 'manage_edit-'.$screen->taxonomy.'_columns', [ $this, 'manage_columns_types' ] );

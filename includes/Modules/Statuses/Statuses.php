@@ -236,9 +236,7 @@ class Statuses extends gEditorial\Module
 	{
 		if ( $this->constant( 'status_tax' ) == $screen->taxonomy ) {
 
-			add_filter( 'parent_file', function(){
-				return 'options-general.php';
-			} );
+			$this->filter_string( 'parent_file', 'options-general.php' );
 
 			if ( 'edit-tags' == $screen->base )
 				add_filter( 'manage_edit-'.$this->constant( 'status_tax' ).'_columns', [ $this, 'manage_columns' ] );
