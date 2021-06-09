@@ -280,6 +280,11 @@ class Course extends gEditorial\Module
 			$this->_hook_paired_to( $_REQUEST['post_type'] );
 	}
 
+	public function setup_restapi()
+	{
+		$this->_hook_paired_to( $this->constant( 'course_cpt' ) );
+	}
+
 	public function current_screen( $screen )
 	{
 		$subterms = $this->get_setting( 'subterms_support' )
