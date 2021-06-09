@@ -332,8 +332,8 @@ class Magazine extends gEditorial\Module
 
 			} else if ( 'edit' == $screen->base ) {
 
-				if ( $this->get_setting( 'admin_restrict', FALSE ) )
-					$this->action( 'restrict_manage_posts', 2, 12, 'supported' );
+				$this->action( 'restrict_manage_posts', 2, 12, 'restrict_paired' );
+				$this->_hook_screen_restrict_paired();
 
 				$this->action_module( 'meta', 'column_row', 3 );
 				$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
@@ -347,6 +347,11 @@ class Magazine extends gEditorial\Module
 
 		if ( Settings::isDashboard( $screen ) )
 			$this->filter_module( 'calendar', 'post_row_title', 4, 12 );
+	}
+
+	protected function paired_get_paired_constants()
+	{
+		return [ 'issue_cpt', 'issue_tax' ];
 	}
 
 	public function widgets_init()
@@ -437,11 +442,6 @@ class Magazine extends gEditorial\Module
 	public function restrict_manage_posts( $posttype, $which )
 	{
 		$this->do_restrict_manage_posts_taxes( 'span_tax' );
-	}
-
-	public function restrict_manage_posts_supported( $posttype, $which )
-	{
-		$this->do_restrict_manage_posts_posts( 'issue_tax', 'issue_cpt' );
 	}
 
 	public function parse_query( &$query )

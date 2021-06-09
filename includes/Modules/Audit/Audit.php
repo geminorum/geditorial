@@ -396,13 +396,18 @@ class Audit extends gEditorial\Module
 			if ( 'edit' == $screen->base ) {
 
 				if ( $this->get_setting( 'admin_restrict', FALSE ) && $this->role_can( 'assign' ) ) {
-					$this->action( 'restrict_manage_posts', 2, 20 );
-					$this->filter( 'parse_query' );
+					$this->action( 'restrict_manage_posts', 2, 20, 'restrict_taxonomy' );
+					$this->action( 'parse_query', 1, 12, 'restrict_taxonomy' );
 				}
 
 				$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
 			}
 		}
+	}
+
+	protected function get_taxonomies_for_restrict_manage_posts()
+	{
+		return [ 'audit_tax' ];
 	}
 
 	protected function dashboard_widgets()

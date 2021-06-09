@@ -9,7 +9,6 @@ use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\Core\HTML;
-use geminorum\gEditorial\Core\Text;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\Database;
 use geminorum\gEditorial\WordPress\User;
@@ -35,17 +34,9 @@ class Config extends gEditorial\Module
 		];
 	}
 
-	protected function setup( $args = [] )
+	public function init_ajax()
 	{
-		parent::setup( $args );
-
-		if ( WordPress::isAJAX() )
-			$this->_hook_ajax();
-
-		if ( ! is_admin() )
-			return;
-
-		$this->filter( 'set-screen-option', 3 );
+		$this->_hook_ajax();
 	}
 
 	public function admin_menu()
@@ -114,15 +105,6 @@ class Config extends gEditorial\Module
 	public function get_adminmenu( $page = TRUE, $extra = [] )
 	{
 		return FALSE;
-	}
-
-	// lets our screen options passing through
-	// @since WP 5.4.2 Only applied to options ending with '_page',
-	// or the 'layout_columns' option
-	// @REF: https://core.trac.wordpress.org/changeset/47951
-	public function set_screen_option( $false, $option, $value )
-	{
-		return Text::start( $option, $this->base ) ? $value : $false;
 	}
 
 	public function admin_reports_page()

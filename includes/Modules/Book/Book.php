@@ -538,8 +538,10 @@ class Book extends gEditorial\Module
 
 				$this->filter_true( 'disable_months_dropdown', 12 );
 				$this->filter( 'bulk_post_updated_messages', 2 );
-				$this->action( 'restrict_manage_posts', 2, 12 );
-				$this->action( 'parse_query' );
+
+				$this->_hook_screen_restrict_taxonomies();
+				$this->action( 'restrict_manage_posts', 2, 12, 'restrict_taxonomy' );
+				$this->action( 'parse_query', 1, 12, 'restrict_taxonomy' );
 
 				if ( $this->p2p )
 					$this->action_module( 'tweaks', 'column_row', 1, -25, 'p2p_to' );
@@ -553,6 +555,19 @@ class Book extends gEditorial\Module
 
 			$this->action_module( 'tweaks', 'column_row', 1, -25, 'p2p_from' );
 		}
+	}
+
+	protected function get_taxonomies_for_restrict_manage_posts()
+	{
+		return [
+			'type_tax',
+			'subject_tax',
+			'serie_tax',
+			'library_tax',
+			'status_tax',
+			'audience_tax',
+			'publisher_tax',
+		];
 	}
 
 	protected function dashboard_widgets()
@@ -618,32 +633,6 @@ class Book extends gEditorial\Module
 			$items[] = $glance;
 
 		return $items;
-	}
-
-	public function restrict_manage_posts( $posttype, $which )
-	{
-		$this->do_restrict_manage_posts_taxes( [
-			'type_tax',
-			'subject_tax',
-			'serie_tax',
-			'library_tax',
-			'status_tax',
-			'audience_tax',
-			'publisher_tax',
-		] );
-	}
-
-	public function parse_query( &$query )
-	{
-		$this->do_parse_query_taxes( $query, [
-			'type_tax',
-			'subject_tax',
-			'serie_tax',
-			'library_tax',
-			'status_tax',
-			'audience_tax',
-			'publisher_tax',
-		] );
 	}
 
 	public function post_updated_messages( $messages )

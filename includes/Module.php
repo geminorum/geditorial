@@ -3603,6 +3603,95 @@ class Module extends Base
 		}
 	}
 
+	// PAIRED API
+	protected function paired_get_paired_constants()
+	{
+		return [
+			FALSE, // posttype
+			FALSE, // taxonomy
+		];
+	}
+
+	protected function get_taxonomies_for_restrict_manage_posts()
+	{
+		return [];
+	}
+
+	// PAIRED API
+	protected function _hook_screen_restrict_paired( $priority = 10 )
+	{
+		$constants = $this->paired_get_paired_constants();
+
+		if ( ! empty( $constants[1] ) )
+			add_filter( $this->base.'_screen_restrict_taxonomies', function( $taxonomies, $screen ) use ( $constants ) {
+				return array_merge( $taxonomies, [ $this->constant( $constants[1] ) ] );
+			}, $priority, 2 );
+	}
+
+	protected function _hook_screen_restrict_taxonomies( $priority = 10 )
+	{
+		if ( $constants = $this->get_taxonomies_for_restrict_manage_posts() )
+			add_filter( $this->base.'_screen_restrict_taxonomies', function( $taxonomies, $screen ) use ( $constants ) {
+				return array_merge( $taxonomies, $this->constants( $constants ) );
+			}, $priority, 2 );
+	}
+
+	// DEFAULT FILTER
+	// USAGE: `$this->action( 'restrict_manage_posts', 2, 12, 'restrict_taxonomy' );`
+	public function restrict_manage_posts_restrict_taxonomy( $posttype, $which )
+	{
+		$constants = $this->get_taxonomies_for_restrict_manage_posts();
+
+		if ( empty( $constants ) )
+			return;
+
+		$selected = get_user_option( sprintf( '%s_restrict_%s', $this->base, $posttype ) );
+
+		foreach ( $constants as $constant ) {
+
+			$taxonomy = $this->constant( $constant );
+
+			if ( FALSE !== $selected && ! in_array( $taxonomy, (array) $selected ) )
+				continue;
+
+			Listtable::restrictByTaxonomy(
+				$taxonomy,
+				$this->get_string( 'show_option_all', $constant, 'misc', NULL ),
+				$this->get_string( 'show_option_none', $constant, 'misc', NULL )
+			);
+		}
+	}
+
+	// DEFAULT FILTER
+	// USAGE: `$this->action( 'restrict_manage_posts', 2, 12, 'restrict_paired' );`
+	public function restrict_manage_posts_restrict_paired( $posttype, $which )
+	{
+		$constants = $this->paired_get_paired_constants();
+
+		if ( empty( $constants[0] ) || empty( $constants[1] ) )
+			return;
+
+		$selected = get_user_option( sprintf( '%s_restrict_%s', $this->base, $posttype ) );
+		$taxonomy = $this->constant( $constants[1] );
+
+		if ( FALSE === $selected || in_array( $taxonomy, (array) $selected ) )
+			Listtable::restrictByPosttype( $taxonomy, $this->constant( $constants[0] ) );
+	}
+
+	// DEFAULT FILTER
+	// USAGE: `$this->action( 'parse_query', 1, 12, 'restrict_taxonomy' );`
+	public function parse_query_restrict_taxonomy( &$query )
+	{
+		$constants = $this->get_taxonomies_for_restrict_manage_posts();
+
+		if ( empty( $constants ) )
+			return;
+
+		foreach ( $constants as $constant )
+			Listtable::parseQueryTaxonomy( $query, $this->constant( $constant ) );
+	}
+
+	// FIXME: DEPRECATED
 	protected function do_restrict_manage_posts_taxes( $taxes, $posttype_constant_key = TRUE )
 	{
 		if ( TRUE === $posttype_constant_key ||
@@ -3617,6 +3706,7 @@ class Module extends Base
 		}
 	}
 
+	// FIXME: DEPRECATED
 	protected function do_parse_query_taxes( &$query, $taxes, $posttype_constant_key = TRUE )
 	{
 		if ( TRUE === $posttype_constant_key ||
@@ -3627,6 +3717,7 @@ class Module extends Base
 		}
 	}
 
+	// FIXME: DEPRECATED
 	protected function do_restrict_manage_posts_posts( $tax_constant_key, $posttype_constant_key )
 	{
 		Listtable::restrictByPosttype(
