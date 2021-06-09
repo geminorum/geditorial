@@ -2,6 +2,7 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
+use geminorum\gEditorial\Core\Arraay;
 use geminorum\gEditorial\Core\File;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
@@ -604,6 +605,8 @@ class ShortCode extends Main
 				'terms'    => [ $term->term_id ],
 			] ];
 
+			// exclude paired posttype
+			$query['post_type'] = Arraay::stripByValue( Taxonomy::object( $taxonomy )->object_type, $posttype );
 
 		} else if ( 'paired' == $list || ( 'assigned' == $list && is_singular( $posttype ) ) ) {
 

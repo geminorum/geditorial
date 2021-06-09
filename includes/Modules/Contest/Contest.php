@@ -331,6 +331,11 @@ class Contest extends gEditorial\Module
 			$this->filter_module( 'calendar', 'post_row_title', 4, 12 );
 	}
 
+	protected function paired_get_paired_constants()
+	{
+		return [ 'contest_cpt', 'contest_tax' ];
+	}
+
 	public function dashboard_glance_items( $items )
 	{
 		if ( $contests = $this->dashboard_glance_post( 'contest_cpt' ) )

@@ -384,6 +384,11 @@ class Course extends gEditorial\Module
 			$this->filter_module( 'calendar', 'post_row_title', 4, 12 );
 	}
 
+	protected function paired_get_paired_constants()
+	{
+		return [ 'course_cpt', 'course_tax' ];
+	}
+
 	public function meta_init()
 	{
 		$this->add_posttype_fields( $this->constant( 'course_cpt' ) );

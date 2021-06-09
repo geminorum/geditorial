@@ -2635,7 +2635,7 @@ class Module extends Base
 			'show_ui'      => FALSE,
 			'show_in_rest' => FALSE,
 			'hierarchical' => TRUE,
-		] );
+		], $posttypes );
 
 		$this->register_posttype( $posttype, [
 			'hierarchical'      => TRUE,
@@ -3352,6 +3352,8 @@ class Module extends Base
 		update_post_meta( $post_id, '_'.$this->constant( $posttype_key ).'_term_id', $the_term->term_id );
 		update_term_meta( $the_term->term_id, $this->constant( $posttype_key ).'_linked', $post_id );
 
+		wp_set_object_terms( (int) $post_id, $the_term->term_id, $the_term->taxonomy, FALSE );
+
 		if ( $this->get_setting( 'thumbnail_support' ) ) {
 
 			$meta_key = $this->constant( 'metakey_term_image', 'image' );
@@ -3378,6 +3380,7 @@ class Module extends Base
 
 		if ( $post_id ) {
 			delete_post_meta( $post_id, '_'.$this->constant( $posttype_key ).'_term_id' );
+			wp_set_object_terms( (int) $post_id, NULL, $the_term->taxonomy, FALSE );
 		}
 
 		delete_term_meta( $the_term->term_id, $this->constant( $posttype_key ).'_linked' );
@@ -4340,6 +4343,14 @@ class Module extends Base
 	// DEFAULT FILTER
 	public function tweaks_taxonomy_info( $info, $object, $posttype )
 	{
+		$paired = $this->paired_get_paired_constants();
+
+		// avoid paired tax on paired posttype's taxonomy column
+		if ( ! empty( $paired[0] ) && ! empty( $paired[1] )
+			&& $posttype === $this->constant( $paired[0] )
+			&& $object->name === $this->constant( $paired[1] ) )
+				return FALSE;
+
 		$icons = $this->get_module_icons();
 
 		if ( empty( $icons['taxonomies'] ) )

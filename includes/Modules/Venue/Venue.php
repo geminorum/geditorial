@@ -310,6 +310,11 @@ class Venue extends gEditorial\Module
 			$this->filter_module( 'calendar', 'post_row_title', 4, 12 );
 	}
 
+	protected function paired_get_paired_constants()
+	{
+		return [ 'place_cpt', 'place_tax' ];
+	}
+
 	public function meta_init()
 	{
 		$this->add_posttype_fields( $this->constant( 'place_cpt' ) );

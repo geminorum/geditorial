@@ -351,6 +351,11 @@ class Collect extends gEditorial\Module
 			$this->filter_module( 'calendar', 'post_row_title', 4, 12 );
 	}
 
+	protected function paired_get_paired_constants()
+	{
+		return [ 'collection_cpt', 'collection_tax' ];
+	}
+
 	public function widgets_init()
 	{
 		$this->require_code( 'Widgets/Collection-Poster' );
