@@ -1858,9 +1858,9 @@ class Module extends Base
 	{
 		foreach ( (array) $keys as $key )
 			if ( $constant = $this->constant( $key ) )
-				$pre = array_merge( $pre, $constant );
+				$pre[] = $constant;
 
-		return $pre;
+		return array_unique( $pre );
 	}
 
 	public function slug()

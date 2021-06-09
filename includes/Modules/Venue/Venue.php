@@ -259,7 +259,7 @@ class Venue extends gEditorial\Module
 
 				if ( $this->get_setting( 'admin_restrict', FALSE ) ) {
 					$this->action( 'restrict_manage_posts', 2, 12 );
-					$this->filter( 'parse_query' );
+					$this->action( 'parse_query' );
 				}
 
 				$this->action_module( 'meta', 'column_row', 3 );
