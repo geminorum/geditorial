@@ -41,7 +41,6 @@ class Venue extends gEditorial\Module
 			],
 			'_editlist' => [
 				'admin_ordering',
-				'admin_restrict',
 			],
 			'_editpost' => [
 				'extra_metadata' => _x( 'Specifies location based on the actual latitude and longitude.', 'Settings', 'geditorial-venue' ),
@@ -262,10 +261,9 @@ class Venue extends gEditorial\Module
 				$this->filter_true( 'disable_months_dropdown', 12 );
 				$this->filter( 'bulk_post_updated_messages', 2 );
 
-				if ( $this->get_setting( 'admin_restrict', FALSE ) ) {
-					$this->action( 'restrict_manage_posts', 2, 12 );
-					$this->action( 'parse_query' );
-				}
+				$this->_hook_screen_restrict_taxonomies();
+				$this->action( 'restrict_manage_posts', 2, 20, 'restrict_taxonomy' );
+				$this->action( 'parse_query', 1, 12, 'restrict_taxonomy' );
 
 				$this->action_module( 'meta', 'column_row', 3 );
 				$this->action_module( 'tweaks', 'column_attr' );
@@ -293,8 +291,8 @@ class Venue extends gEditorial\Module
 
 			} else if ( 'edit' == $screen->base ) {
 
-				if ( $this->get_setting( 'admin_restrict', FALSE ) )
-					$this->action( 'restrict_manage_posts', 2, 12, 'supported' );
+				$this->action( 'restrict_manage_posts', 2, 12, 'restrict_paired' );
+				$this->_hook_screen_restrict_paired();
 
 				$this->action_module( 'meta', 'column_row', 3 );
 				$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
@@ -312,7 +310,12 @@ class Venue extends gEditorial\Module
 
 	protected function paired_get_paired_constants()
 	{
-		return [ 'place_cpt', 'place_tax' ];
+		return [ 'place_cpt', 'place_tax', 'facility_tax' ];
+	}
+
+	protected function get_taxonomies_for_restrict_manage_posts()
+	{
+		return [ 'place_cat' ];
 	}
 
 	public function meta_init()
@@ -375,21 +378,6 @@ class Venue extends gEditorial\Module
 	public function bulk_post_updated_messages( $messages, $counts )
 	{
 		return array_merge( $messages, $this->get_bulk_post_updated_messages( 'place_cpt', $counts ) );
-	}
-
-	public function restrict_manage_posts( $posttype, $which )
-	{
-		$this->do_restrict_manage_posts_taxes( 'place_cat' );
-	}
-
-	public function restrict_manage_posts_supported( $posttype, $which )
-	{
-		$this->do_restrict_manage_posts_posts( 'place_tax', 'place_cpt' );
-	}
-
-	public function parse_query( &$query )
-	{
-		$this->do_parse_query_taxes( $query, 'place_cat' );
 	}
 
 	public function meta_box_cb_place_cat( $post, $box )

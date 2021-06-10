@@ -43,7 +43,6 @@ class Course extends gEditorial\Module
 			],
 			'_editlist' => [
 				'admin_ordering',
-				'admin_restrict',
 			],
 			'_frontend' => [
 				[
@@ -326,10 +325,9 @@ class Course extends gEditorial\Module
 
 				$this->filter( 'bulk_post_updated_messages', 2 );
 
-				if ( $this->get_setting( 'admin_restrict', FALSE ) ) {
-					$this->action( 'restrict_manage_posts', 2, 12 );
-					$this->action( 'parse_query' );
-				}
+				$this->_hook_screen_restrict_taxonomies();
+				$this->action( 'restrict_manage_posts', 2, 20, 'restrict_taxonomy' );
+				$this->action( 'parse_query', 1, 12, 'restrict_taxonomy' );
 
 				if ( $this->get_setting( 'admin_ordering', TRUE ) )
 					$this->action( 'pre_get_posts' );
@@ -368,8 +366,8 @@ class Course extends gEditorial\Module
 				if ( $screen->post_type == $this->constant( 'lesson_cpt' ) )
 					$this->filter( 'bulk_post_updated_messages', 2, 10, 'supported' );
 
-				if ( $this->get_setting( 'admin_restrict', FALSE ) )
-					$this->action( 'restrict_manage_posts', 2, 12, 'supported' );
+				$this->_hook_screen_restrict_paired();
+				$this->action( 'restrict_manage_posts', 2, 12, 'restrict_paired' );
 
 				$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
 			}
@@ -386,7 +384,12 @@ class Course extends gEditorial\Module
 
 	protected function paired_get_paired_constants()
 	{
-		return [ 'course_cpt', 'course_tax' ];
+		return [ 'course_cpt', 'course_tax', 'topic_tax' ];
+	}
+
+	protected function get_taxonomies_for_restrict_manage_posts()
+	{
+		return [ 'course_cat', 'span_tax' ];
 	}
 
 	public function meta_init()
@@ -585,21 +588,6 @@ class Course extends gEditorial\Module
 	public function before_delete_post( $post_id )
 	{
 		$this->paired_do_before_delete_to_post( $post_id, 'course_cpt', 'course_tax' );
-	}
-
-	public function restrict_manage_posts( $posttype, $which )
-	{
-		$this->do_restrict_manage_posts_taxes( 'span_tax' );
-	}
-
-	public function restrict_manage_posts_supported( $posttype, $which )
-	{
-		$this->do_restrict_manage_posts_posts( 'course_tax', 'course_cpt' );
-	}
-
-	public function parse_query( &$query )
-	{
-		$this->do_parse_query_taxes( $query, 'span_tax' );
 	}
 
 	public function pre_get_posts( &$wp_query )

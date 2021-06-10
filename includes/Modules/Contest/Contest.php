@@ -43,7 +43,6 @@ class Contest extends gEditorial\Module
 			],
 			'_editlist' => [
 				'admin_ordering',
-				'admin_restrict',
 			],
 			'_frontend' => [
 				[
@@ -315,8 +314,8 @@ class Contest extends gEditorial\Module
 				if ( $screen->post_type == $this->constant( 'apply_cpt' ) )
 					$this->filter( 'bulk_post_updated_messages', 2, 10, 'supported' );
 
-				if ( $this->get_setting( 'admin_restrict', FALSE ) )
-					$this->action( 'restrict_manage_posts', 2, 12, 'supported' );
+				$this->_hook_screen_restrict_paired();
+				$this->action( 'restrict_manage_posts', 2, 12, 'restrict_paired' );
 
 				$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
 			}
@@ -333,7 +332,7 @@ class Contest extends gEditorial\Module
 
 	protected function paired_get_paired_constants()
 	{
-		return [ 'contest_cpt', 'contest_tax' ];
+		return [ 'contest_cpt', 'contest_tax', 'section_tax' ];
 	}
 
 	public function dashboard_glance_items( $items )
@@ -501,11 +500,6 @@ class Contest extends gEditorial\Module
 	public function before_delete_post( $post_id )
 	{
 		$this->paired_do_before_delete_to_post( $post_id, 'contest_cpt', 'contest_tax' );
-	}
-
-	public function restrict_manage_posts_supported( $posttype, $which )
-	{
-		$this->do_restrict_manage_posts_posts( 'contest_tax', 'contest_cpt' );
 	}
 
 	public function pre_get_posts( &$wp_query )

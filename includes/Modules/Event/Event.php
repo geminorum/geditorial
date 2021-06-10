@@ -315,8 +315,10 @@ class Event extends gEditorial\Module
 
 				if ( $metadata ) {
 
-					$this->action( 'restrict_manage_posts', 2, 12 );
-					$this->action( 'parse_query' );
+					$this->_hook_screen_restrict_taxonomies();
+					$this->action( 'restrict_manage_posts', 2, 20, 'restrict_taxonomy' );
+					$this->action( 'parse_query', 1, 12, 'restrict_taxonomy' );
+
 					$this->filter( 'request' );
 
 				} else if ( $this->get_setting( 'admin_ordering', TRUE ) ) {
@@ -330,6 +332,11 @@ class Event extends gEditorial\Module
 				$this->_edit_screen( $screen->post_type );
 			}
 		}
+	}
+
+	protected function get_taxonomies_for_restrict_manage_posts()
+	{
+		return [ 'event_cat' ];
 	}
 
 	private function _edit_screen( $posttype )
@@ -370,11 +377,6 @@ class Event extends gEditorial\Module
 		echo '</div>';
 	}
 
-	public function restrict_manage_posts( $posttype, $which )
-	{
-		$this->do_restrict_manage_posts_taxes( 'event_cat' );
-	}
-
 	// FIXME: merge filters
 	public function pre_get_posts( &$wp_query )
 	{
@@ -389,11 +391,6 @@ class Event extends gEditorial\Module
 					$wp_query->set( 'order', 'DESC' );
 			}
 		}
-	}
-
-	public function parse_query( &$query )
-	{
-		$this->do_parse_query_taxes( $query, 'event_cat' );
 	}
 
 	public function manage_posts_columns( $columns )

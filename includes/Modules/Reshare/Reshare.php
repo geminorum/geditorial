@@ -132,12 +132,18 @@ class Reshare extends gEditorial\Module
 
 				$this->filter( 'bulk_post_updated_messages', 2 );
 
-				$this->action( 'restrict_manage_posts', 2, 12 );
-				$this->action( 'parse_query' );
+				$this->_hook_screen_restrict_taxonomies();
+				$this->action( 'restrict_manage_posts', 2, 20, 'restrict_taxonomy' );
+				$this->action( 'parse_query', 1, 12, 'restrict_taxonomy' );
 
 				$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
 			}
 		}
+	}
+
+	protected function get_taxonomies_for_restrict_manage_posts()
+	{
+		return [ 'reshare_cat' ];
 	}
 
 	public function dashboard_glance_items( $items )
@@ -156,15 +162,5 @@ class Reshare extends gEditorial\Module
 	public function bulk_post_updated_messages( $messages, $counts )
 	{
 		return array_merge( $messages, $this->get_bulk_post_updated_messages( 'reshare_cpt', $counts ) );
-	}
-
-	public function restrict_manage_posts( $posttype, $which )
-	{
-		$this->do_restrict_manage_posts_taxes( 'reshare_cat' );
-	}
-
-	public function parse_query( &$query )
-	{
-		$this->do_parse_query_taxes( $query, 'reshare_cat' );
 	}
 }

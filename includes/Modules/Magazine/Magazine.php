@@ -335,8 +335,8 @@ class Magazine extends gEditorial\Module
 
 			} else if ( 'edit' == $screen->base ) {
 
-				$this->action( 'restrict_manage_posts', 2, 12, 'restrict_paired' );
 				$this->_hook_screen_restrict_paired();
+				$this->action( 'restrict_manage_posts', 2, 12, 'restrict_paired' );
 
 				$this->action_module( 'meta', 'column_row', 3 );
 				$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
@@ -354,7 +354,7 @@ class Magazine extends gEditorial\Module
 
 	protected function paired_get_paired_constants()
 	{
-		return [ 'issue_cpt', 'issue_tax' ];
+		return [ 'issue_cpt', 'issue_tax', 'section_tax' ];
 	}
 
 	protected function get_taxonomies_for_restrict_manage_posts()

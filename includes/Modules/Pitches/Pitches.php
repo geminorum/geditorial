@@ -118,12 +118,18 @@ class Pitches extends gEditorial\Module
 
 				$this->filter( 'bulk_post_updated_messages', 2 );
 
-				$this->action( 'restrict_manage_posts', 2, 12 );
-				$this->action( 'parse_query' );
+				$this->_hook_screen_restrict_taxonomies();
+				$this->action( 'restrict_manage_posts', 2, 20, 'restrict_taxonomy' );
+				$this->action( 'parse_query', 1, 12, 'restrict_taxonomy' );
 
 				$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
 			}
 		}
+	}
+
+	protected function get_taxonomies_for_restrict_manage_posts()
+	{
+		return [ 'idea_cat', 'pool_tax' ];
 	}
 
 	public function meta_box_cb_idea_cat( $post, $box )
@@ -162,17 +168,5 @@ class Pitches extends gEditorial\Module
 	public function bulk_post_updated_messages( $messages, $counts )
 	{
 		return array_merge( $messages, $this->get_bulk_post_updated_messages( 'idea_cpt', $counts ) );
-	}
-
-	public function restrict_manage_posts( $posttype, $which )
-	{
-		$this->do_restrict_manage_posts_taxes( 'idea_cat' );
-		$this->do_restrict_manage_posts_taxes( 'pool_tax' );
-	}
-
-	public function parse_query( &$query )
-	{
-		$this->do_parse_query_taxes( $query, 'idea_cat' );
-		$this->do_parse_query_taxes( $query, 'pool_tax' );
 	}
 }

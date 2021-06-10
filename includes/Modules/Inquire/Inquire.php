@@ -222,10 +222,17 @@ class Inquire extends gEditorial\Module
 			} else if ( 'edit' == $screen->base ) {
 
 				$this->filter( 'bulk_post_updated_messages', 2 );
-				$this->action( 'restrict_manage_posts', 2, 12 );
-				$this->action( 'parse_query' );
+
+				$this->_hook_screen_restrict_taxonomies();
+				$this->action( 'restrict_manage_posts', 2, 20, 'restrict_taxonomy' );
+				$this->action( 'parse_query', 1, 12, 'restrict_taxonomy' );
 			}
 		}
+	}
+
+	protected function get_taxonomies_for_restrict_manage_posts()
+	{
+		return [ 'subject_tax', 'status_tax', 'priority_tax' ];
 	}
 
 	// FIXME: this is a hack for users with no `create_posts` cap
@@ -266,24 +273,6 @@ class Inquire extends gEditorial\Module
 	public function bulk_post_updated_messages( $messages, $counts )
 	{
 		return array_merge( $messages, $this->get_bulk_post_updated_messages( 'inquiry_cpt', $counts ) );
-	}
-
-	public function restrict_manage_posts( $posttype, $which )
-	{
-		$this->do_restrict_manage_posts_taxes( [
-			'subject_tax',
-			'status_tax',
-			'priority_tax',
-		] );
-	}
-
-	public function parse_query( &$query )
-	{
-		$this->do_parse_query_taxes( $query, [
-			'subject_tax',
-			'status_tax',
-			'priority_tax',
-		] );
 	}
 
 	public function meta_box_cb_status_tax( $post, $box )

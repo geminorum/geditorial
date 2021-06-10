@@ -3612,9 +3612,11 @@ class Module extends Base
 		return [
 			FALSE, // posttype
 			FALSE, // taxonomy
+			FALSE, // subterm
 		];
 	}
 
+	// for main posttypes
 	protected function get_taxonomies_for_restrict_manage_posts()
 	{
 		return [];
@@ -3697,6 +3699,8 @@ class Module extends Base
 	// FIXME: DEPRECATED
 	protected function do_restrict_manage_posts_taxes( $taxes, $posttype_constant_key = TRUE )
 	{
+		self::_dev_dep( 'restrict_manage_posts_restrict_taxonomy()' );
+
 		if ( TRUE === $posttype_constant_key ||
 			$this->is_current_posttype( $posttype_constant_key ) ) {
 
@@ -3712,6 +3716,8 @@ class Module extends Base
 	// FIXME: DEPRECATED
 	protected function do_parse_query_taxes( &$query, $taxes, $posttype_constant_key = TRUE )
 	{
+		self::_dev_dep( 'parse_query_restrict_taxonomy()' );
+
 		if ( TRUE === $posttype_constant_key ||
 			$this->is_current_posttype( $posttype_constant_key ) ) {
 
@@ -3723,6 +3729,8 @@ class Module extends Base
 	// FIXME: DEPRECATED
 	protected function do_restrict_manage_posts_posts( $tax_constant_key, $posttype_constant_key )
 	{
+		self::_dev_dep( 'restrict_manage_posts_restrict_paired()' );
+
 		Listtable::restrictByPosttype(
 			$this->constant( $tax_constant_key ),
 			$this->constant( $posttype_constant_key )

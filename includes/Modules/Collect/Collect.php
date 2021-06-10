@@ -45,7 +45,6 @@ class Collect extends gEditorial\Module
 			],
 			'_editlist' => [
 				'admin_ordering',
-				'admin_restrict',
 			],
 			'_frontend' => [
 				'insert_cover',
@@ -300,10 +299,9 @@ class Collect extends gEditorial\Module
 				$this->filter_true( 'disable_months_dropdown', 12 );
 				$this->filter( 'bulk_post_updated_messages', 2 );
 
-				if ( $this->get_setting( 'admin_restrict', FALSE ) ) {
-					$this->action( 'restrict_manage_posts', 2, 12 );
-					$this->action( 'parse_query' );
-				}
+				$this->_hook_screen_restrict_taxonomies();
+				$this->action( 'restrict_manage_posts', 2, 20, 'restrict_taxonomy' );
+				$this->action( 'parse_query', 1, 12, 'restrict_taxonomy' );
 
 				if ( $this->get_setting( 'admin_ordering', TRUE ) )
 					$this->action( 'pre_get_posts' );
@@ -334,8 +332,8 @@ class Collect extends gEditorial\Module
 
 			} else if ( 'edit' == $screen->base ) {
 
-				if ( $this->get_setting( 'admin_restrict', FALSE ) )
-					$this->action( 'restrict_manage_posts', 2, 12, 'supported' );
+				$this->_hook_screen_restrict_paired();
+				$this->action( 'restrict_manage_posts', 2, 12, 'restrict_paired' );
 
 				$this->action_module( 'meta', 'column_row', 3 );
 				$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
@@ -353,7 +351,12 @@ class Collect extends gEditorial\Module
 
 	protected function paired_get_paired_constants()
 	{
-		return [ 'collection_cpt', 'collection_tax' ];
+		return [ 'collection_cpt', 'collection_tax', 'part_tax' ];
+	}
+
+	protected function get_taxonomies_for_restrict_manage_posts()
+	{
+		return [ 'group_tax' ];
 	}
 
 	public function widgets_init()
@@ -439,21 +442,6 @@ class Collect extends gEditorial\Module
 					$wp_query->set( 'order', 'DESC' );
 			}
 		}
-	}
-
-	public function restrict_manage_posts( $posttype, $which )
-	{
-		$this->do_restrict_manage_posts_taxes( 'group_tax' );
-	}
-
-	public function restrict_manage_posts_supported( $posttype, $which )
-	{
-		$this->do_restrict_manage_posts_posts( 'collection_tax', 'collection_cpt' );
-	}
-
-	public function parse_query( &$query )
-	{
-		$this->do_parse_query_taxes( $query, 'group_tax' );
 	}
 
 	public function meta_box_cb_group_tax( $post, $box )

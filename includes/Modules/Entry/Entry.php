@@ -33,7 +33,6 @@ class Entry extends gEditorial\Module
 		return [
 			'_editlist' => [
 				'admin_ordering',
-				'admin_restrict',
 			],
 			'_frontend' => [
 				'adminbar_summary',
@@ -214,10 +213,9 @@ class Entry extends gEditorial\Module
 
 				$this->filter( 'bulk_post_updated_messages', 2 );
 
-				if ( $this->get_setting( 'admin_restrict', FALSE ) ) {
-					$this->action( 'restrict_manage_posts', 2, 12 );
-					$this->action( 'parse_query' );
-				}
+				$this->_hook_screen_restrict_taxonomies();
+				$this->action( 'restrict_manage_posts', 2, 20, 'restrict_taxonomy' );
+				$this->action( 'parse_query', 1, 12, 'restrict_taxonomy' );
 
 				if ( $this->get_setting( 'admin_ordering', TRUE ) )
 					$this->action( 'pre_get_posts' );
@@ -228,6 +226,11 @@ class Entry extends gEditorial\Module
 				add_filter( 'manage_edit-'.$screen->post_type.'_sortable_columns', [ $this, 'sortable_columns' ] );
 			}
 		}
+	}
+
+	protected function get_taxonomies_for_restrict_manage_posts()
+	{
+		return [ 'section_tax' ];
 	}
 
 	private function _edit_screen( $posttype )
@@ -246,11 +249,6 @@ class Entry extends gEditorial\Module
 		return $query_args;
 	}
 
-	public function restrict_manage_posts( $posttype, $which )
-	{
-		$this->do_restrict_manage_posts_taxes( 'section_tax' );
-	}
-
 	public function pre_get_posts( &$wp_query )
 	{
 		if ( $this->constant( 'entry_cpt' ) == $wp_query->get( 'post_type' ) ) {
@@ -264,11 +262,6 @@ class Entry extends gEditorial\Module
 					$wp_query->set( 'order', 'DESC' );
 			}
 		}
-	}
-
-	public function parse_query( &$query )
-	{
-		$this->do_parse_query_taxes( $query, 'section_tax' );
 	}
 
 	public function posts_clauses( $pieces, $wp_query )

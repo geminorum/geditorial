@@ -39,9 +39,6 @@ class Series extends gEditorial\Module
 			'_supports' => [
 				'shortcode_support',
 			],
-			'_editlist' => [
-				'admin_restrict',
-			],
 		];
 	}
 
@@ -142,15 +139,16 @@ class Series extends gEditorial\Module
 
 				$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
 
-				if ( $this->get_setting( 'admin_restrict' ) )
-					$this->action( 'restrict_manage_posts', 2, 12 );
+				$this->_hook_screen_restrict_taxonomies();
+				$this->action( 'restrict_manage_posts', 2, 20, 'restrict_taxonomy' );
+				$this->action( 'parse_query', 1, 12, 'restrict_taxonomy' );
 			}
 		}
 	}
 
-	public function restrict_manage_posts( $posttype, $which )
+	protected function get_taxonomies_for_restrict_manage_posts()
 	{
-		$this->do_restrict_manage_posts_taxes( 'series_tax' );
+		return [ 'series_tax' ];
 	}
 
 	public function store_metabox( $post_id, $post, $update, $context = NULL )
