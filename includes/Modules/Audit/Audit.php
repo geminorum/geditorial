@@ -94,9 +94,6 @@ class Audit extends gEditorial\Module
 				'summary_drafts',
 				'count_not',
 			],
-			'_editlist' => [
-				'admin_restrict',
-			],
 			'_frontend' => [
 				'adminbar_summary',
 			],
@@ -395,7 +392,8 @@ class Audit extends gEditorial\Module
 
 			if ( 'edit' == $screen->base ) {
 
-				if ( $this->get_setting( 'admin_restrict', FALSE ) && $this->role_can( 'assign' ) ) {
+				if ( $this->role_can( 'assign' ) ) {
+					$this->_hook_screen_restrict_taxonomies();
 					$this->action( 'restrict_manage_posts', 2, 20, 'restrict_taxonomy' );
 					$this->action( 'parse_query', 1, 12, 'restrict_taxonomy' );
 				}
@@ -425,16 +423,6 @@ class Audit extends gEditorial\Module
 	public function render_widget_term_summary( $object, $box )
 	{
 		$this->do_dashboard_term_summary( 'audit_tax', $box );
-	}
-
-	public function restrict_manage_posts( $posttype, $which )
-	{
-		$this->do_restrict_manage_posts_taxes( 'audit_tax' );
-	}
-
-	public function parse_query( &$query )
-	{
-		$this->do_parse_query_taxes( $query, 'audit_tax' );
 	}
 
 	public function meta_box_cb_audit_tax( $post, $box )
