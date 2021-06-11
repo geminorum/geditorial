@@ -319,6 +319,16 @@ class Settings extends Core\Base
 		];
 	}
 
+	public static function getSetting_thumbnail_fallback( $description = NULL )
+	{
+		return [
+			'field'       => 'thumbnail_fallback',
+			'title'       => _x( 'Thumbnail Fallback', 'Settings: Setting Title', 'geditorial' ),
+			'description' => $description ?: _x( 'Sets the parent post thumbnail image as fallback for the child post.', 'Settings: Setting Description', 'geditorial' ),
+			'default'     => '0',
+		];
+	}
+
 	public static function getSetting_restapi_support( $description = NULL )
 	{
 		return [

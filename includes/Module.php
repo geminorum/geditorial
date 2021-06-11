@@ -2705,6 +2705,48 @@ class Module extends Base
 			Media::registerImageSize( $name, array_merge( $size, [ 'p' => [ $posttype ] ] ) );
 	}
 
+	// PAIRED API
+	protected function _hook_paired_thumbnail_fallback( $posttypes = NULL )
+	{
+		if ( ! $this->get_setting( 'thumbnail_support', FALSE ) )
+			return;
+
+		if ( ! $this->get_setting( 'thumbnail_fallback', FALSE ) )
+			return;
+
+		if ( is_null( $posttypes ) )
+			$posttypes = $this->posttypes();
+
+		add_filter( 'gtheme_image_get_thumbnail_id', function( $thumbnail_id, $post_id ) use ( $posttypes ) {
+			return $this->get_paired_fallback_thumbnail_id( $thumbnail_id, $post_id, $posttypes );
+		}, 8, 2 );
+
+		add_filter( 'gnetwork_rest_thumbnail_id', function( $thumbnail_id, $post_array ) use ( $posttypes ) {
+			return $this->get_paired_fallback_thumbnail_id( $thumbnail_id, $post_array['id'], $posttypes );
+		}, 8, 2 );
+	}
+
+	// PAIRED API
+	protected function get_paired_fallback_thumbnail_id( $thumbnail_id, $post, $posttypes = NULL )
+	{
+		if ( $thumbnail_id || FALSE === $post )
+			return $thumbnail_id;
+
+		if ( is_null( $posttypes ) )
+			$posttypes = $this->posttypes();
+
+		if ( ! in_array( get_post_type( $post ), $posttypes, TRUE ) )
+			return $thumbnail_id;
+
+		if ( ! $parent = $this->get_linked_to_posts( $post, TRUE ) )
+			return $thumbnail_id;
+
+		if ( $parent_thumbnail = get_post_thumbnail_id( $parent ) )
+			return $parent_thumbnail;
+
+		return $thumbnail_id;
+	}
+
 	public function enqueue_asset_style( $name = NULL, $deps = [], $handle = NULL )
 	{
 		if ( is_null( $name ) )

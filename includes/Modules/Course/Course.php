@@ -64,6 +64,7 @@ class Course extends gEditorial\Module
 			'_supports' => [
 				'shortcode_support',
 				'thumbnail_support',
+				'thumbnail_fallback',
 				$this->settings_supports_option( 'course_cpt', TRUE ),
 				$this->settings_supports_option( 'lesson_cpt', TRUE ),
 			],
@@ -266,6 +267,7 @@ class Course extends gEditorial\Module
 		$this->register_shortcode( 'cover_shortcode' );
 
 		$this->register_default_terms( 'status_tax' );
+		$this->_hook_paired_thumbnail_fallback();
 
 		if ( is_admin() )
 			return;
