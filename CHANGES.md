@@ -1,3 +1,12 @@
+### 3.20.1
+* main/helper: using internal method for getting the post
+* main/module: :new: paired thumbnail fallback
+* main/module: hook paired to on rest api
+* main/module: paired tax also sets on paired posttype
+* main/plugin: :new: restrict posts api
+* main/template: filter for raw meta fields
+* module/widgets: :new: wprest-single widget
+
 ### 3.20.0
 * main/module: better handling settings args
 * main/module: filtering taxonomy excluded
