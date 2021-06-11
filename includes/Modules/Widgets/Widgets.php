@@ -1,4 +1,4 @@
-<?php namespace geminorum\gEditorial\Modules;
+<?php namespace geminorum\gEditorial\Modules\Widgets;
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
@@ -109,13 +109,11 @@ class Widgets extends gEditorial\Module
 	{
 		$list = [];
 
-		foreach ( $this->get_widgets() as $file => $class ) {
+		foreach ( $this->get_widgets() as $key => $class ) {
 
-			$this->require_code( 'Widgets/'.$file );
+			$widget = call_user_func( [ __NAMESPACE__.'\\Widgets\\'.$class, 'setup' ] );
 
-			$widget = call_user_func( [ '\\geminorum\\gEditorial\\Widgets\\Widgets\\'.$class, 'setup' ] );
-
-			$list[$file] = $widget['title'].': <em>'.$widget['desc'].'</em>';
+			$list[$key] = $widget['title'].': <em>'.$widget['desc'].'</em>';
 		}
 
 		return $list;
@@ -133,15 +131,9 @@ class Widgets extends gEditorial\Module
 	{
 		$widgets = $this->get_setting( 'widgets', [] );
 
-		foreach ( $this->get_widgets() as $file => $class ) {
-
-			if ( ! in_array( $file, $widgets ) )
-				continue;
-
-			$this->require_code( 'Widgets/'.$file );
-
-			register_widget( '\\geminorum\\gEditorial\\Widgets\\Widgets\\'.$class );
-		}
+		foreach ( $this->get_widgets() as $key => $class )
+			if ( in_array( $key, $widgets, TRUE ) )
+				register_widget( __NAMESPACE__.'\\Widgets\\'.$class );
 
 		foreach ( $this->get_setting( 'areas', [] ) as $index => $area ) {
 

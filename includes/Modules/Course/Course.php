@@ -1,4 +1,4 @@
-<?php namespace geminorum\gEditorial\Modules;
+<?php namespace geminorum\gEditorial\Modules\Course;
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
@@ -12,12 +12,9 @@ use geminorum\gEditorial\Core\URL;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\Taxonomy;
-use geminorum\gEditorial\Templates\Course as ModuleTemplate;
 
 class Course extends gEditorial\Module
 {
-
-	protected $partials = [ 'Templates' ];
 
 	public static function module()
 	{

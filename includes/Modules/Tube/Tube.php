@@ -1,4 +1,4 @@
-<?php namespace geminorum\gEditorial\Modules;
+<?php namespace geminorum\gEditorial\Modules\Tube;
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
@@ -9,12 +9,9 @@ use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\WordPress;
-use geminorum\gEditorial\Helpers\Tube as ModuleHelper;
 
 class Tube extends gEditorial\Module
 {
-
-	protected $partials = [ 'Helper' ];
 
 	public static function module()
 	{

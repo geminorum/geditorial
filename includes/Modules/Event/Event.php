@@ -1,4 +1,4 @@
-<?php namespace geminorum\gEditorial\Modules;
+<?php namespace geminorum\gEditorial\Modules\Event;
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
@@ -8,12 +8,9 @@ use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Core\Arraay;
 use geminorum\gEditorial\Core\HTML;
-use geminorum\gEditorial\Templates\Event as ModuleTemplate;
 
 class Event extends gEditorial\Module
 {
-
-	// protected $partials = [ 'Templates' ];
 
 	public static function module()
 	{
@@ -222,13 +219,8 @@ class Event extends gEditorial\Module
 	{
 		return; // FIXME
 
-		$this->require_code( [
-			'Widgets/Poster',
-			'Widgets/Currents',
-		] );
-
-		register_widget( '\\geminorum\\gEditorial\\Event\\Widgets\\Poster' );
-		register_widget( '\\geminorum\\gEditorial\\Event\\Widgets\\Currents' );
+		register_widget( __NAMESPACE__.'\\Widgets\\Poster' );
+		register_widget( __NAMESPACE__.'\\Widgets\\Currents' );
 	}
 
 	public function init()

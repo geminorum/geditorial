@@ -4,7 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 require_once ABSPATH.WPINC.'/class-walker-page-dropdown.php';
 
-class Walker_PageDropdown extends \Walker_PageDropdown
+class WalkerPageDropdown extends \Walker_PageDropdown
 {
 
 	public function start_el( &$output, $page, $depth = 0, $args = [], $id = 0 )

@@ -27,7 +27,7 @@ class Helper extends Main
 		foreach ( explode( '-', str_replace( '_', '-', $module ) ) as $word )
 			$class.= ucfirst( $word ).'';
 
-		$class = __NAMESPACE__.'\\Modules\\'.$class;
+		$class = __NAMESPACE__.'\\Modules\\'.$class.'\\'.$class;
 
 		if ( $check && ! class_exists( $class ) )
 			return FALSE;

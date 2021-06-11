@@ -1,4 +1,4 @@
-<?php namespace geminorum\gEditorial\Helpers;
+<?php namespace geminorum\gEditorial\Modules\Book;
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
@@ -6,7 +6,7 @@ use geminorum\gEditorial;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
 
-class Book extends gEditorial\Helper
+class ModuleHelper extends gEditorial\Helper
 {
 
 	public static function ISBN( $string )

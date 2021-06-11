@@ -7,7 +7,7 @@ use geminorum\gEditorial\WordPress\User;
 
 require_once ABSPATH.'wp-admin/includes/class-walker-category-checklist.php';
 
-class Walker_Category_Checklist extends \Walker_Category_Checklist
+class WalkerCategoryChecklist extends \Walker_Category_Checklist
 {
 	public $el_opened = TRUE;
 

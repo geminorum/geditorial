@@ -1,9 +1,9 @@
-<?php namespace geminorum\gEditorial\Collect\Widgets;
+<?php namespace geminorum\gEditorial\Modules\Collect\Widgets;
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
-use geminorum\gEditorial\Templates\Collect as ModuleTemplate;
+use geminorum\gEditorial\Modules\Collect\ModuleTemplate;
 
 class CollectionPoster extends gEditorial\Widget
 {

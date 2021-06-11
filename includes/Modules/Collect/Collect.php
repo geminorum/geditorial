@@ -1,4 +1,4 @@
-<?php namespace geminorum\gEditorial\Modules;
+<?php namespace geminorum\gEditorial\Modules\Collect;
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
@@ -14,12 +14,9 @@ use geminorum\gEditorial\Core\URL;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\Taxonomy;
-use geminorum\gEditorial\Templates\Collect as ModuleTemplate;
 
 class Collect extends gEditorial\Module
 {
-
-	protected $partials = [ 'Templates' ];
 
 	public static function module()
 	{
@@ -361,9 +358,7 @@ class Collect extends gEditorial\Module
 
 	public function widgets_init()
 	{
-		$this->require_code( 'Widgets/Collection-Poster' );
-
-		register_widget( '\\geminorum\\gEditorial\\Collect\\Widgets\\CollectionPoster' );
+		register_widget( __NAMESPACE__.'\\Widgets\\CollectionPoster' );
 	}
 
 	public function meta_init()

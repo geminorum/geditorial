@@ -1,10 +1,10 @@
-<?php namespace geminorum\gEditorial\Helpers;
+<?php namespace geminorum\gEditorial\Modules\Tube;
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 
-class Tube extends gEditorial\Helper
+class ModuleHelper extends gEditorial\Helper
 {
 
 	// @REF: https://gist.github.com/billerickson/82fb6f24599f95501d36b79a360ac8b1

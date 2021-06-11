@@ -5,7 +5,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\WordPress\Taxonomy;
 
-class Walker_User_Checklist extends \Walker
+class WalkerUserChecklist extends \Walker
 {
 	public $tree_type = 'user';
 	public $db_fields = [ 'parent' => 'parent', 'id' => 'ID' ];

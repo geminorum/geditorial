@@ -1,4 +1,4 @@
-<?php namespace geminorum\gEditorial\Modules;
+<?php namespace geminorum\gEditorial\Modules\Book;
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
@@ -13,13 +13,9 @@ use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\Taxonomy;
-use geminorum\gEditorial\Helpers\Book as ModuleHelper;
-use geminorum\gEditorial\Templates\Book as ModuleTemplate;
 
 class Book extends gEditorial\Module
 {
-
-	protected $partials = [ 'Templates', 'Helper', 'Query' ];
 
 	protected $support_meta = FALSE;
 
@@ -398,9 +394,7 @@ class Book extends gEditorial\Module
 
 	public function widgets_init()
 	{
-		$this->require_code( 'Widgets/Publication-Cover' );
-
-		register_widget( '\\geminorum\\gEditorial\\Book\\Widgets\\PublicationCover' );
+		register_widget( __NAMESPACE__.'\\Widgets\\PublicationCover' );
 	}
 
 	public function init()

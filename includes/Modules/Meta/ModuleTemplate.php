@@ -1,4 +1,4 @@
-<?php namespace geminorum\gEditorial\Templates;
+<?php namespace geminorum\gEditorial\Modules\Meta;
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
@@ -7,7 +7,7 @@ use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\Taxonomy;
 
-class Meta extends gEditorial\Template
+class ModuleTemplate extends gEditorial\Template
 {
 
 	const MODULE = 'meta';

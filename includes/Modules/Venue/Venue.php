@@ -1,4 +1,4 @@
-<?php namespace geminorum\gEditorial\Modules;
+<?php namespace geminorum\gEditorial\Modules\Venue;
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
@@ -14,8 +14,6 @@ use geminorum\gEditorial\WordPress\Taxonomy;
 
 class Venue extends gEditorial\Module
 {
-
-	// protected $partials = [ 'Helper' ];
 
 	public static function module()
 	{

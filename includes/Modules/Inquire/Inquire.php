@@ -1,4 +1,4 @@
-<?php namespace geminorum\gEditorial\Modules;
+<?php namespace geminorum\gEditorial\Modules\Inquire;
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
@@ -7,12 +7,9 @@ use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Text;
 use geminorum\gEditorial\WordPress\PostType;
-// use geminorum\gEditorial\Templates\Inquire as ModuleTemplate;
 
 class Inquire extends gEditorial\Module
 {
-
-	// protected $partials = [ 'Templates' ];
 
 	public static function module()
 	{

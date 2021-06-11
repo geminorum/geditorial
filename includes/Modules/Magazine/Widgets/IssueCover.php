@@ -1,9 +1,9 @@
-<?php namespace geminorum\gEditorial\Magazine\Widgets;
+<?php namespace geminorum\gEditorial\Modules\Magazine\Widgets;
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
-use geminorum\gEditorial\Templates\Magazine as ModuleTemplate;
+use geminorum\gEditorial\Modules\Magazine\ModuleTemplate;
 
 class IssueCover extends gEditorial\Widget
 {

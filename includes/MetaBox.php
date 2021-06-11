@@ -2,6 +2,7 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
+use geminorum\gEditorial\Misc;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\Text;
@@ -103,8 +104,7 @@ class MetaBox extends Main
 
 		if ( empty( $args['walker'] ) || ! ( $args['walker'] instanceof \Walker ) ) {
 
-			gEditorial()->files( 'misc/walker-category-checklist' );
-			$walker = new Misc\Walker_Category_Checklist;
+			$walker = new Misc\WalkerCategoryChecklist;
 
 		} else {
 
@@ -217,8 +217,7 @@ class MetaBox extends Main
 
 		if ( empty( $args['walker'] ) || ! ( $args['walker'] instanceof \Walker ) ) {
 
-			gEditorial()->files( 'misc/walker-user-checklist' );
-			$walker = new Misc\Walker_User_Checklist;
+			$walker = new Misc\WalkerUserChecklist;
 
 		} else {
 			$walker = $args['walker'];
@@ -479,8 +478,6 @@ class MetaBox extends Main
 	// FIXME: DEPRECATED
 	public static function dropdownAssocPosts( $posttype, $selected = '', $prefix = '', $exclude = '' )
 	{
-		gEditorial()->files( 'misc/walker-page-dropdown' );
-
 		$html = wp_dropdown_pages( [
 			'post_type'        => $posttype,
 			'selected'         => $selected,
@@ -494,7 +491,7 @@ class MetaBox extends Main
 			'value_field'      => 'post_name',
 			'exclude'          => $exclude,
 			'echo'             => 0,
-			'walker'           => new Misc\Walker_PageDropdown(),
+			'walker'           => new Misc\WalkerPageDropdown(),
 			'title_with_meta'  => 'number_line', // extra arg for the walker
 		] );
 

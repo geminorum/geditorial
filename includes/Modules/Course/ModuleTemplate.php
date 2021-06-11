@@ -1,11 +1,11 @@
-<?php namespace geminorum\gEditorial\Templates;
+<?php namespace geminorum\gEditorial\Modules\Course;
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\WordPress\PostType;
 
-class Course extends gEditorial\Template
+class ModuleTemplate extends gEditorial\Template
 {
 
 	const MODULE = 'course';

@@ -1,11 +1,11 @@
-<?php namespace geminorum\gEditorial\Templates;
+<?php namespace geminorum\gEditorial\Modules\Terms;
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core\HTML;
 
-class Terms extends gEditorial\Template
+class ModuleTemplate extends gEditorial\Template
 {
 
 	const MODULE = 'terms';

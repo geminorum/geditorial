@@ -112,12 +112,11 @@ class Plugin
 			if ( in_array( $module, [ '.', '..' ] ) )
 				continue;
 
-			if ( file_exists( $this->_path.$module.'/'.$module.'.php' ) ) {
-				include_once( $this->_path.$module.'/'.$module.'.php' );
+			if ( ! file_exists( $this->_path.$module.'/'.$module.'.php' ) )
+				continue;
 
-				if ( $class = Helper::moduleClass( $module ) )
-					$this->register_module( call_user_func( [ $class, 'module' ] ), $module, $class );
-			}
+			if ( $class = Helper::moduleClass( $module ) )
+				$this->register_module( call_user_func( [ $class, 'module' ] ), $module, $class );
 		}
 	}
 
@@ -480,7 +479,7 @@ class Plugin
 
 	public function mce_external_languages( $languages )
 	{
-		return array_merge( $languages, [ 'geditorial' => GEDITORIAL_DIR.'includes/misc/editor-languages.php' ] );
+		return array_merge( $languages, [ 'geditorial' => GEDITORIAL_DIR.'includes/Misc/TinyMceStrings.php' ] );
 	}
 
 	public function template_include( $template )

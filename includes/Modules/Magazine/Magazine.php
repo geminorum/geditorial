@@ -1,4 +1,4 @@
-<?php namespace geminorum\gEditorial\Modules;
+<?php namespace geminorum\gEditorial\Modules\Magazine;
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
@@ -15,12 +15,9 @@ use geminorum\gEditorial\Core\URL;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\Taxonomy;
-use geminorum\gEditorial\Templates\Magazine as ModuleTemplate;
 
 class Magazine extends gEditorial\Module
 {
-
-	protected $partials = [ 'Templates' ];
 
 	public static function module()
 	{
@@ -364,9 +361,7 @@ class Magazine extends gEditorial\Module
 
 	public function widgets_init()
 	{
-		$this->require_code( 'Widgets/Issue-Cover' );
-
-		register_widget( '\\geminorum\\gEditorial\\Magazine\\Widgets\\IssueCover' );
+		register_widget( __NAMESPACE__.'\\Widgets\\IssueCover' );
 	}
 
 	public function meta_init()

@@ -1,4 +1,4 @@
-<?php namespace geminorum\gEditorial\Modules;
+<?php namespace geminorum\gEditorial\Modules\Meta;
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
@@ -13,8 +13,6 @@ use geminorum\gEditorial\Core\Text;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\Database;
 use geminorum\gEditorial\WordPress\PostType;
-use geminorum\gEditorial\MetaBoxes\Meta as ModuleMetaBox;
-use geminorum\gEditorial\Templates\Meta as ModuleTemplate;
 
 class Meta extends gEditorial\Module
 {
@@ -22,8 +20,6 @@ class Meta extends gEditorial\Module
 
 	protected $priority_init           = 12;
 	protected $priority_current_screen = 12;
-
-	protected $partials = [ 'Metabox', 'Templates' ];
 
 	protected $disable_no_posttypes = TRUE;
 

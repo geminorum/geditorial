@@ -1,4 +1,4 @@
-<?php namespace geminorum\gEditorial\Helpers;
+<?php namespace geminorum\gEditorial\Modules\Today;
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
@@ -10,7 +10,7 @@ use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\PostType;
 
-class Today extends gEditorial\Helper
+class ModuleHelper extends gEditorial\Helper
 {
 
 	const MODULE = 'today';

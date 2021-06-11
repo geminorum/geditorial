@@ -2,6 +2,7 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
+use geminorum\gEditorial\Misc;
 use geminorum\gEditorial\WordPress\Main;
 
 class Listtable extends Main
@@ -136,8 +137,6 @@ SQL;
 		if ( ! $object = get_taxonomy( $taxonomy ) )
 			return;
 
-		gEditorial()->files( 'misc/walker-page-dropdown' );
-
 		wp_dropdown_pages( [
 			'post_type'        => $posttype,
 			'selected'         => isset( $_GET[$taxonomy] ) ? $_GET[$taxonomy] : '',
@@ -148,7 +147,7 @@ SQL;
 			'sort_order'       => 'desc',
 			'post_status'      => [ 'publish', 'future', 'draft', 'pending' ],
 			'value_field'      => 'post_name',
-			'walker'           => new Misc\Walker_PageDropdown(),
+			'walker'           => new Misc\WalkerPageDropdown(),
 		] );
 	}
 

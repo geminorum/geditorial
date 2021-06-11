@@ -1,4 +1,4 @@
-<?php namespace geminorum\gEditorial\Modules;
+<?php namespace geminorum\gEditorial\Modules\Terms;
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
@@ -16,12 +16,10 @@ use geminorum\gEditorial\WordPress\Database;
 use geminorum\gEditorial\WordPress\Media;
 use geminorum\gEditorial\WordPress\Taxonomy;
 use geminorum\gEditorial\WordPress\PostType;
-use geminorum\gEditorial\Templates\Terms as ModuleTemplate;
 
 class Terms extends gEditorial\Module
 {
 
-	protected $partials  = [ 'Templates' ];
 	protected $supported = [ 'order', 'tagline', 'contact', 'image', 'author', 'color', 'role', 'roles', 'posttype', 'posttypes', 'arrow', 'label', 'code', 'barcode' ];
 
 	public static function module()
