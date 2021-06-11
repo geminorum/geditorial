@@ -1,97 +1,97 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gEditorial Estimated 3.20.0\n"
+"Project-Id-Version: gEditorial Estimated 3.20.1\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "Last-Translator: NULL\n"
 "Language-Team: NULL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-05-26T02:46:20+00:00\n"
+"POT-Creation-Date: 2021-06-11T16:57:09+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.5.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Estimated\n"
 "X-Domain: geditorial-estimated\n"
 
-#: Estimated.php:35
+#: Estimated.php:36
 msgctxt "Setting Title"
 msgid "Reading Time"
 msgstr ""
 
-#: Estimated.php:36
+#: Estimated.php:37
 msgctxt "Setting Description"
 msgid "Average words per minute"
 msgstr ""
 
-#: Estimated.php:42
+#: Estimated.php:43
 msgctxt "Setting Title"
 msgid "Content Prefix"
 msgstr ""
 
-#: Estimated.php:43
+#: Estimated.php:44
 msgctxt "Setting Description"
 msgid "Custom string before the estimated time on the content."
 msgstr ""
 
-#: Estimated.php:44
-#: Estimated.php:198
+#: Estimated.php:45
+#: Estimated.php:199
 msgctxt "Setting Default"
 msgid "Estimated read time:"
 msgstr ""
 
-#: Estimated.php:49
+#: Estimated.php:50
 msgctxt "Setting Title"
 msgid "Content Teaser"
 msgstr ""
 
-#: Estimated.php:50
+#: Estimated.php:51
 msgctxt "Setting Description"
 msgid "Calculate teaser text along with rest of the content"
 msgstr ""
 
-#: Estimated.php:53
+#: Estimated.php:54
 msgctxt "Content Teaser Option"
 msgid "Ignore"
 msgstr ""
 
-#: Estimated.php:54
+#: Estimated.php:55
 msgctxt "Content Teaser Option"
 msgid "Include"
 msgstr ""
 
-#: Estimated.php:62
+#: Estimated.php:63
 msgctxt "Setting Title"
 msgid "Minimum Words"
 msgstr ""
 
-#: Estimated.php:63
+#: Estimated.php:64
 msgctxt "Setting Description"
 msgid "And above this number of words will show the notice"
 msgstr ""
 
-#: Estimated.php:102
+#: Estimated.php:103
 msgctxt "Row Icon Title"
 msgid "Estimated Time"
 msgstr ""
 
-#: Estimated.php:105
+#: Estimated.php:106
 msgctxt "Row Title"
 msgid "Word Count"
 msgstr ""
 
 #. translators: %s: words count
-#: Estimated.php:138
-#: Estimated.php:219
+#: Estimated.php:139
+#: Estimated.php:220
 msgctxt "Title Attr"
 msgid "If you try to read %s words per minute"
 msgstr ""
 
-#: Estimated.php:211
+#: Estimated.php:212
 msgid "less than 1 minute"
 msgstr ""
 
 #. translators: %s: number of minutes
-#: Estimated.php:214
+#: Estimated.php:215
 msgid "%s minute"
 msgid_plural "%s minutes"
 msgstr[0] ""

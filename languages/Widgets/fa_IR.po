@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gEditorial Widgets\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
-"POT-Creation-Date: 2021-05-13T20:22:53+00:00\n"
-"PO-Revision-Date: 2021-05-14 01:01+0430\n"
+"POT-Creation-Date: 2021-06-03T17:01:17+00:00\n"
+"PO-Revision-Date: 2021-06-03 21:32+0430\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -95,13 +95,13 @@ msgctxt "Setting Description"
 msgid "HTML closing after each widget title on front-end."
 msgstr ""
 
-#: Widgets.php:152
+#: Widgets.php:153
 msgctxt "Widget Area Unnamed"
 msgid "[Unnamed]"
 msgstr "(بی‌نام)"
 
 #. translators: %s: widget area name
-#: Widgets.php:161
+#: Widgets.php:162
 msgctxt "Widget Area Prefix"
 msgid "Editorial: %s"
 msgstr "تحریریه: %s"
@@ -246,3 +246,38 @@ msgstr "آرگیومنت‌های افزوده:"
 msgctxt "Widget: WP-REST Posts"
 msgid "No posts!"
 msgstr "خبری نیست!"
+
+#: Widgets/WPRest-Single.php:23
+msgctxt "Widget Title"
+msgid "Editorial: WP-REST Single"
+msgstr "تحریریه: نوشته وردپرس"
+
+#: Widgets/WPRest-Single.php:24
+msgctxt "Widget Description"
+msgid "Displays single post from a public WordPress site."
+msgstr "نمایش تک نوشته از یک سایت وردپرس عمومی."
+
+#: Widgets/WPRest-Single.php:92
+msgctxt "Widget: WP-REST Single"
+msgid "Resource URL:"
+msgstr "نشانی منبع:"
+
+#: Widgets/WPRest-Single.php:93
+msgctxt "Widget: WP-REST Single"
+msgid "Endpoint:"
+msgstr "پایانه:"
+
+#: Widgets/WPRest-Single.php:94
+msgctxt "Widget: WP-REST Single"
+msgid "Extra Args:"
+msgstr "آرگیومنت‌های افزوده:"
+
+#: Widgets/WPRest-Single.php:95
+msgctxt "Widget: WP-REST Single"
+msgid "Post ID:"
+msgstr "شناسه نوشته:"
+
+#: Widgets/WPRest-Single.php:97
+msgctxt "Widget: WP-REST Single"
+msgid "No post!"
+msgstr "چیزی اشتباه است!"

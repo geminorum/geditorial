@@ -1,13 +1,13 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gEditorial Users 3.20.0\n"
+"Project-Id-Version: gEditorial Users 3.20.1\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "Last-Translator: NULL\n"
 "Language-Team: NULL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-05-26T02:47:29+00:00\n"
+"POT-Creation-Date: 2021-06-11T16:58:07+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.5.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Users\n"
@@ -116,125 +116,125 @@ msgctxt "Label: Not Found"
 msgid "There are no types available."
 msgstr ""
 
-#: Users.php:262
+#: Users.php:258
 msgctxt "Dashboard Widget Title"
 msgid "Your Profile"
 msgstr ""
 
-#: Users.php:265
+#: Users.php:261
 msgctxt "Dashboard Widget Action"
 msgid "Edit your profile"
 msgstr ""
 
-#: Users.php:266
+#: Users.php:262
 msgctxt "Dashboard Widget Action"
 msgid "Edit"
 msgstr ""
 
-#: Users.php:350
+#: Users.php:346
 msgctxt "Row Icon Title"
 msgid "Group"
 msgstr ""
 
-#: Users.php:364
+#: Users.php:360
 msgctxt "Row Icon Title"
 msgid "Type"
 msgstr ""
 
-#: Users.php:417
+#: Users.php:413
 msgctxt "Header"
 msgid "Site Categories"
 msgstr ""
 
-#: Users.php:418
+#: Users.php:414
 msgctxt "Message"
 msgid "Restrict non editor users to post in selected categories only."
 msgstr ""
 
-#: Users.php:421
+#: Users.php:417
 msgctxt "Header"
 msgid "User Categories"
 msgstr ""
 
-#: Users.php:449
+#: Users.php:445
 msgctxt "Message"
 msgid "There are no categories available."
 msgstr ""
 
-#: Users.php:545
+#: Users.php:541
 msgctxt "Row Icon Title"
 msgid "Name"
 msgstr ""
 
-#: Users.php:552
+#: Users.php:548
 msgctxt "Row Icon Title"
 msgid "Email"
 msgstr ""
 
-#: Users.php:559
+#: Users.php:555
 msgctxt "Row Icon Title"
 msgid "URL"
 msgstr ""
 
-#: Users.php:577
+#: Users.php:573
 msgctxt "Row Icon Title"
 msgid "Registered"
 msgstr ""
 
 #. translators: %s: date
-#: Users.php:579
+#: Users.php:575
 msgctxt "Row"
 msgid "Registered on %s"
 msgstr ""
 
-#: Users.php:584
+#: Users.php:580
 msgctxt "Row Icon Title"
 msgid "Roles"
 msgstr ""
 
-#: Users.php:618
+#: Users.php:614
 msgctxt "Header"
 msgid "User Reports"
 msgstr ""
 
-#: Users.php:622
+#: Users.php:618
 msgctxt "Header"
 msgid "By PostType"
 msgstr ""
 
-#: Users.php:637
+#: Users.php:633
 msgctxt "None Title"
 msgid "All Users"
 msgstr ""
 
-#: Users.php:647
+#: Users.php:643
 msgctxt "None Title"
 msgid "All Months"
 msgstr ""
 
-#: Users.php:655
+#: Users.php:651
 msgctxt "Button"
 msgid "Query Stats"
 msgstr ""
 
-#: Users.php:730
+#: Users.php:726
 msgctxt "Header"
 msgid "Re-Map Authors"
 msgstr ""
 
 #. translators: %s: error
-#: Users.php:737
+#: Users.php:733
 msgctxt "Message"
 msgid "Before you can upload a file, you will need to fix the following error: %s"
 msgstr ""
 
 #. translators: %s: size
-#: Users.php:751
+#: Users.php:747
 msgctxt "Message"
 msgid "Checks for post authors and re-map them with current registered users. Maximum upload size: <b>%s</b>"
 msgstr ""
 
-#: Users.php:755
+#: Users.php:751
 msgctxt "Button"
 msgid "Upload and Re-Map"
 msgstr ""

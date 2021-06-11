@@ -1,13 +1,13 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gEditorial Course 3.20.0\n"
+"Project-Id-Version: gEditorial Course 3.20.1\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "Last-Translator: NULL\n"
 "Language-Team: NULL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-05-26T02:46:09+00:00\n"
+"POT-Creation-Date: 2021-06-11T16:57:00+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.5.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Course\n"
@@ -23,22 +23,22 @@ msgctxt "Settings"
 msgid "Topic taxonomy for the courses and supported post-types."
 msgstr ""
 
-#: Course.php:52
+#: Course.php:51
 msgctxt "Settings"
 msgid "Redirect Archives"
 msgstr ""
 
-#: Course.php:53
+#: Course.php:52
 msgctxt "Settings"
 msgid "Redirects course and lesson archives to this URL. Leave empty to disable."
 msgstr ""
 
-#: Course.php:59
+#: Course.php:58
 msgctxt "Settings"
 msgid "Redirect Spans"
 msgstr ""
 
-#: Course.php:60
+#: Course.php:59
 msgctxt "Settings"
 msgid "Redirects all span archives to this URL. Leave empty to disable."
 msgstr ""
@@ -217,12 +217,12 @@ msgctxt "Button"
 msgid "Install Default Lesson Statuses"
 msgstr ""
 
-#: Course.php:461
+#: Course.php:477
 msgctxt "Message"
 msgid "No items connected!"
 msgstr ""
 
-#: Course.php:642
+#: Course.php:643
 msgctxt "Title Attr"
 msgid "View the connected list"
 msgstr ""

@@ -1,60 +1,60 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gEditorial Series 3.20.0\n"
+"Project-Id-Version: gEditorial Series 3.20.1\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "Last-Translator: NULL\n"
 "Language-Team: NULL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-05-26T02:47:06+00:00\n"
+"POT-Creation-Date: 2021-06-11T16:57:49+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.5.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Series\n"
 "X-Domain: geditorial-series\n"
 
-#: Series.php:72
+#: Series.php:69
 msgctxt "Strings: Title"
 msgid "Title"
 msgstr ""
 
-#: Series.php:73
+#: Series.php:70
 msgctxt "Strings: Title"
 msgid "Order"
 msgstr ""
 
-#: Series.php:74
+#: Series.php:71
 msgctxt "Strings: Title"
 msgid "Description"
 msgstr ""
 
-#: Series.php:79
+#: Series.php:76
 msgctxt "Strings: Description"
 msgid "In Serie Title"
 msgstr ""
 
-#: Series.php:80
+#: Series.php:77
 msgctxt "Strings: Description"
 msgid "In Serie Order"
 msgstr ""
 
-#: Series.php:81
+#: Series.php:78
 msgctxt "Strings: Description"
 msgid "In Serie Description"
 msgstr ""
 
-#: Series.php:85
-#: Series.php:86
+#: Series.php:82
+#: Series.php:83
 msgctxt "Column Title"
 msgid "Series"
 msgstr ""
 
-#: Series.php:87
+#: Series.php:84
 msgctxt "Show Option None"
 msgid "&ndash; Choose a Series &ndash;"
 msgstr ""
 
-#: Series.php:90
+#: Series.php:87
 msgctxt "Noop"
 msgid "Serie"
 msgid_plural "Series"
