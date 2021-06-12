@@ -2717,6 +2717,10 @@ class Module extends Base
 		if ( is_null( $posttypes ) )
 			$posttypes = $this->posttypes();
 
+		add_filter( 'geditorial_get_post_thumbnail_id', function( $thumbnail_id, $post_id ) use ( $posttypes ) {
+			return $this->get_paired_fallback_thumbnail_id( $thumbnail_id, $post_id, $posttypes );
+		}, 8, 2 );
+
 		add_filter( 'gtheme_image_get_thumbnail_id', function( $thumbnail_id, $post_id ) use ( $posttypes ) {
 			return $this->get_paired_fallback_thumbnail_id( $thumbnail_id, $post_id, $posttypes );
 		}, 8, 2 );
