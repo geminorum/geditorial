@@ -8,8 +8,10 @@ use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\Tablelist;
+use geminorum\gEditorial\Core\Arraay;
 use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\HTML;
+use geminorum\gEditorial\Core\URL;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\Taxonomy;
@@ -50,6 +52,9 @@ class Book extends gEditorial\Module
 				'summary_scope',
 				'summary_drafts',
 				'count_not',
+			],
+			'_editlist' => [
+				'admin_rowactions',
 			],
 			'_frontend' => [
 				'insert_cover',
@@ -467,6 +472,18 @@ class Book extends gEditorial\Module
 		add_rewrite_rule( '^'.$posttype.'/'.$query.'/([^/]*)/?', 'index.php?post_type='.$posttype.'&'.$query.'=$matches[1]','top' );
 	}
 
+	public function get_isbn_link( $isbn, $extra = [] )
+	{
+		return get_option( 'permalink_structure' )
+			? add_query_arg( $extra, sprintf( '%s/%s/%s', URL::untrail( get_bloginfo( 'url' ) ), $this->constant( 'isbn_query' ), ModuleHelper::getISBN( $isbn ) ) )
+			: add_query_arg( array_merge( [ $this->constant( 'isbn_query' ) => ModuleHelper::getISBN( $isbn ) ], $extra ), get_bloginfo( 'url' ) );
+	}
+
+	public function get_isbn( $post = NULL )
+	{
+		return ModuleTemplate::getMetaFieldRaw( 'publication_isbn', $post, 'meta', TRUE );
+	}
+
 	public function pre_get_posts( &$query )
 	{
 		if ( is_admin() || ! $query->is_main_query() )
@@ -536,6 +553,9 @@ class Book extends gEditorial\Module
 				$this->_hook_screen_restrict_taxonomies();
 				$this->action( 'restrict_manage_posts', 2, 12, 'restrict_taxonomy' );
 				$this->action( 'parse_query', 1, 12, 'restrict_taxonomy' );
+
+				if ( $this->get_setting( 'admin_rowactions' ) )
+					$this->filter( 'post_row_actions', 2 );
 
 				if ( $this->p2p )
 					$this->action_module( 'tweaks', 'column_row', 1, -25, 'p2p_to' );
@@ -637,6 +657,27 @@ class Book extends gEditorial\Module
 	public function bulk_post_updated_messages( $messages, $counts )
 	{
 		return array_merge( $messages, $this->get_bulk_post_updated_messages( 'publication_cpt', $counts ) );
+	}
+
+	public function post_row_actions( $actions, $post )
+	{
+		if ( in_array( $post->post_status, [ 'trash', 'private', 'auto-draft' ], TRUE ) )
+			return $actions;
+
+		if ( ! $isbn = $this->get_isbn( $post ) )
+			return $actions;
+
+		if ( ! $link = $this->get_isbn_link( $isbn ) )
+			return $actions;
+
+		return Arraay::insert( $actions, [
+			$this->classs() => HTML::tag( 'a', [
+				'href'   => $link,
+				'title'  => _x( 'ISBN Link to this publication', 'Title Attr', 'geditorial-book' ),
+				'class'  => '-isbn-link',
+				'target' => '_blank',
+			], _x( 'ISBN', 'Action', 'geditorial-book' ) ),
+		], 'view', 'after' );
 	}
 
 	public function meta_box_cb_status_tax( $post, $box )
