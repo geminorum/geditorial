@@ -287,7 +287,7 @@ class Tweaks extends gEditorial\Module
 
 			if ( $this->get_setting( 'checklist_tree', FALSE ) ) {
 
-				add_filter( 'wp_terms_checklist_args', function( $args ){
+				add_filter( 'wp_terms_checklist_args', static function( $args ) {
 					return array_merge( $args, [ 'checked_ontop' => FALSE ] );
 				} );
 

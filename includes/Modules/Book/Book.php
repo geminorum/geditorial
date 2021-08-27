@@ -108,6 +108,7 @@ class Book extends gEditorial\Module
 			'library_tax'             => 'publication_library',
 			'library_tax_slug'        => 'publication-libraries',
 			'publisher_tax'           => 'publication_publisher',
+			// 'publisher_tax_slug'      => 'publishers', // FIXME: add settings fot this!
 			'type_tax'                => 'publication_type',
 			'status_tax'              => 'publication_status',
 			'status_tax_slug'         => 'publication-statuses',
@@ -944,11 +945,11 @@ class Book extends gEditorial\Module
 			'metas' => [
 				'title'    => _x( 'Import Meta', 'Table Column', 'geditorial-book' ),
 				'args'     => [ 'fields' => $this->get_importer_fields() ],
-				'callback' => function( $value, $row, $column, $index ){
+				'callback' => static function( $value, $row, $column, $index, $key, $args ) {
 					$html = '';
 
-					foreach ( $column['args']['fields'] as $key => $title )
-						if ( $meta = get_post_meta( $row->ID, $key, TRUE ) )
+					foreach ( $column['args']['fields'] as $field => $title )
+						if ( $meta = get_post_meta( $row->ID, $field, TRUE ) )
 							$html.= '<div><b>'.$title.'</b>: '.$meta.'</div>';
 
 					return $html ?: Helper::htmlEmpty();
@@ -957,7 +958,7 @@ class Book extends gEditorial\Module
 			'related' => [
 				'title'    => _x( 'Import Related', 'Table Column', 'geditorial-book' ),
 				'args'     => [ 'type' => $this->constant( 'publication_cpt' ) ],
-				'callback' => function( $value, $row, $column, $index ){
+				'callback' => static function( $value, $row, $column, $index, $key, $args ) {
 
 					$html = '';
 

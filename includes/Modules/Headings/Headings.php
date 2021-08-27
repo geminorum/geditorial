@@ -178,7 +178,7 @@ class Headings extends gEditorial\Module
 
 			HTML::h3( $title, '-toc-title' );
 
-			HTML::menu( $tree, function( $item ) {
+			HTML::menu( $tree, static function( $item ) {
 
 				if ( FALSE === $item['page'] )
 					return HTML::link( $item['title'], '#'.$item['slug'] );

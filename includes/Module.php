@@ -256,11 +256,9 @@ class Module extends Base
 			foreach ( $templates as $slug => $title )
 				$list[$this->key.'-'.$slug.'.php'] = $title;
 
-			add_filter( 'theme_'.$type.'_templates',
-				function( $filtered ) use( $list ) {
-					return array_merge( $filtered, $list );
-				}
-			);
+			add_filter( 'theme_'.$type.'_templates', static function( $filtered ) use ( $list ) {
+				return array_merge( $filtered, $list );
+			} );
 		}
 	}
 
@@ -2458,7 +2456,7 @@ class Module extends Base
 			return FALSE;
 
 		if ( ! $block_editor )
-			add_filter( 'use_block_editor_for_post_type', function( $edit, $type ) use( $posttype ) {
+			add_filter( 'use_block_editor_for_post_type', static function( $edit, $type ) use ( $posttype ) {
 				return $posttype === $type ? FALSE : $edit;
 			}, 12, 2 );
 
@@ -2647,11 +2645,13 @@ class Module extends Base
 		] );
 	}
 
+	// TODO: convert to auto hook
 	protected function get_post_updated_messages( $constant )
 	{
 		return [ $this->constant( $constant ) => Helper::generatePostTypeMessages( $this->get_noop( $constant ) ) ];
 	}
 
+	// TODO: convert to auto hook
 	protected function get_bulk_post_updated_messages( $constant, $bulk_counts )
 	{
 		return [ $this->constant( $constant ) => Helper::generateBulkPostTypeMessages( $this->get_noop( $constant ), $bulk_counts ) ];
@@ -2884,7 +2884,7 @@ class Module extends Base
 			return '';
 
 		if ( $search_query )
-			add_filter( 'get_search_query', function( $query ) use( $search_query ){
+			add_filter( 'get_search_query', static function( $query ) use ( $search_query ) {
 				return $query ? $query : $search_query;
 			} );
 
@@ -3235,7 +3235,7 @@ class Module extends Base
 		return $title; // <--
 
 		if ( $info = $this->get_string( 'metabox_info', $constant, 'metabox', NULL ) )
-			$title.= ' <span class="postbox-title-info" data-title="info" title="'.HTML::escape( $info ).'">'.HTML::getDashicon( 'editor-help' ).'</span>';
+			$title.= ' <span class="postbox-title-info" style="display:none" data-title="info" title="'.HTML::escape( $info ).'">'.HTML::getDashicon( 'editor-help' ).'</span>';
 
 		if ( FALSE === $url || FALSE === $edit_cap )
 			return $title;
@@ -3261,7 +3261,7 @@ class Module extends Base
 			$title = $this->get_taxonomy_label( $constant );
 
 		if ( $info = $this->get_string( 'metabox_info', $constant, 'metabox', NULL ) )
-			$title.= ' <span class="postbox-title-info" data-title="info" title="'.HTML::escape( $info ).'">'.HTML::getDashicon( 'info' ).'</span>';
+			$title.= ' <span class="postbox-title-info" style="display:none" data-title="info" title="'.HTML::escape( $info ).'">'.HTML::getDashicon( 'info' ).'</span>';
 
 		// FIXME: problems with block editor
 		return $title; // <--
@@ -3292,7 +3292,7 @@ class Module extends Base
 		return $title; // <--
 
 		if ( $info = $this->get_string( 'metabox_info', $constant, 'metabox', NULL ) )
-			$title.= ' <span class="postbox-title-info" data-title="info" title="'.HTML::escape( $info ).'">'.HTML::getDashicon( 'info' ).'</span>';
+			$title.= ' <span class="postbox-title-info" style="display:none" data-title="info" title="'.HTML::escape( $info ).'">'.HTML::getDashicon( 'info' ).'</span>';
 
 		if ( current_user_can( $object->cap->edit_others_posts ) ) {
 
@@ -4315,6 +4315,7 @@ class Module extends Base
 
 	// DEFAULT FILTER
 	// increases last menu_order for new posts
+	// USAGE: `$this->filter( 'wp_insert_post_data', 2, 9, 'menu_order' );`
 	public function wp_insert_post_data_menu_order( $data, $postarr )
 	{
 		if ( ! $data['menu_order'] && $postarr['post_type'] )

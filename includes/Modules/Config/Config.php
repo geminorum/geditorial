@@ -249,7 +249,7 @@ class Config extends gEditorial\Module
 
 					$result = gEditorial()->upgrade_old_options();
 
-					if ( count( $result ) )
+					if ( $result )
 						WordPress::redirectReferer( [
 							'message' => 'upgraded',
 							'count'   => count( $result ),
@@ -266,7 +266,7 @@ class Config extends gEditorial\Module
 
 						$result = Database::deleteEmptyMeta( gEditorial()->{$post['empty_module']}->meta_key );
 
-						if ( count( $result ) )
+						if ( $result )
 							WordPress::redirectReferer( [
 								'message' => 'emptied',
 								'count'   => count( $result ),

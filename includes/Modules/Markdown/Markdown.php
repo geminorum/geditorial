@@ -235,7 +235,7 @@ class Markdown extends gEditorial\Module
 		// $pattern = '/\[\[(.+?)\]\]/u';
 		$pattern = '/\[\[(.*?)\]\]/u';
 
-		return preg_replace_callback( $pattern, function( $match ) use( $content, $post ){
+		return preg_replace_callback( $pattern, function( $match ) use ( $content, $post ) {
 
 			list( $text, $link, $slug, $post_id ) = $this->make_link( $match[1], $post, $content );
 			$html = '<a href="'.$link.'" data-slug="'.$slug.'" class="-wikilink'.( $post_id ? '' : ' -notfound').'">'.$text.'</a>';
@@ -491,7 +491,7 @@ class Markdown extends gEditorial\Module
 			'markdown' => [
 				'title'    => _x( 'Markdown', 'Table Column', 'geditorial-markdown' ),
 				'class'    => [ '-icon-column' ],
-				'callback' => function( $value, $row, $column, $index ){
+				'callback' => function( $value, $row, $column, $index, $key, $args ) {
 					return $this->is_markdown( $row->ID ) ? Helper::getIcon( $this->module->icon ) : '';
 				},
 			],

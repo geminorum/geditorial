@@ -407,7 +407,7 @@ class Magazine extends gEditorial\Module
 
 	public function save_post( $post_id, $post, $update )
 	{
-		// we handle updates on another action, see : post_updated()
+		// we handle updates on another action, @SEE: `post_updated()`
 		if ( ! $update )
 			$this->paired_do_save_to_post_new( $post, 'issue_cpt', 'issue_tax' );
 	}
@@ -824,7 +824,7 @@ class Magazine extends gEditorial\Module
 			'name'    => Tablelist::columnTermName(),
 			'paired'  => [
 				'title'    => _x( 'Paired Issue Post', 'Table Column', 'geditorial-magazine' ),
-				'callback' => function( $value, $row, $column, $index ){
+				'callback' => function( $value, $row, $column, $index, $key, $args ) {
 
 					if ( $post_id = $this->paired_get_to_post_id( $row, 'issue_cpt', 'issue_tax', FALSE ) )
 						return Helper::getPostTitleRow( $post_id ).' &ndash; <small>'.$post_id.'</small>';
@@ -834,7 +834,7 @@ class Magazine extends gEditorial\Module
 			],
 			'slugged' => [
 				'title'    => _x( 'Same Slug Issue Post', 'Table Column', 'geditorial-magazine' ),
-				'callback' => function( $value, $row, $column, $index ){
+				'callback' => function( $value, $row, $column, $index, $key, $args ) {
 
 					if ( $post_id = PostType::getIDbySlug( $row->slug, $this->constant( 'issue_cpt' ) ) )
 						return Helper::getPostTitleRow( $post_id ).' &ndash; <small>'.$post_id.'</small>';
@@ -844,7 +844,7 @@ class Magazine extends gEditorial\Module
 			],
 			'count' => [
 				'title'    => _x( 'Count', 'Table Column', 'geditorial-magazine' ),
-				'callback' => function( $value, $row, $column, $index ){
+				'callback' => function( $value, $row, $column, $index, $key, $args ) {
 
 					if ( $post_id = PostType::getIDbySlug( $row->slug, $this->constant( 'issue_cpt' ) ) )
 						return Number::format( $this->paired_get_from_posts( $post_id, 'issue_cpt', 'issue_tax', TRUE ) );
@@ -855,7 +855,7 @@ class Magazine extends gEditorial\Module
 			'description' => [
 				'title'    => _x( 'Desc. / Exce.', 'Table Column', 'geditorial-magazine' ),
 				'class'    => 'html-column',
-				'callback' => function( $value, $row, $column, $index ){
+				'callback' => function( $value, $row, $column, $index, $key, $args ) {
 
 					if ( empty( $row->description ) )
 						$html = Helper::htmlEmpty();
@@ -881,7 +881,7 @@ class Magazine extends gEditorial\Module
 			'thumb_image' => [
 				'title'    => _x( 'Thumbnail', 'Table Column', 'geditorial-magazine' ),
 				'class'    => 'image-column',
-				'callback' => function( $value, $row, $column, $index ){
+				'callback' => function( $value, $row, $column, $index, $key, $args ) {
 					$html = '';
 
 					if ( $post_id = $this->paired_get_to_post_id( $row, 'issue_cpt', 'issue_tax', FALSE ) )
@@ -893,7 +893,7 @@ class Magazine extends gEditorial\Module
 			'term_image' => [
 				'title'    => _x( 'Image', 'Table Column', 'geditorial-magazine' ),
 				'class'    => 'image-column',
-				'callback' => function( $value, $row, $column, $index ){
+				'callback' => static function( $value, $row, $column, $index, $key, $args ) {
 					$html = Taxonomy::htmlFeaturedImage( $row->term_id, [ 45, 72 ] );
 					return $html ?: Helper::htmlEmpty();
 				},

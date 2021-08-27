@@ -204,22 +204,22 @@ class Relation extends Main
 			'callback' => [ __CLASS__, 'rest_connect' ],
 			'args'     => [
 				'name' => [
-					'validate_callback' => function( $param, $request, $key ) {
+					'validate_callback' => static function( $param, $request, $key ) {
 						return TRUE; // FIXME
 					}
 				],
 				'from' => [
-					'validate_callback' => function( $param, $request, $key ) {
+					'validate_callback' => static function( $param, $request, $key ) {
 						return is_numeric( $param );
 					}
 				],
 				'to' => [
-					'validate_callback' => function( $param, $request, $key ) {
+					'validate_callback' => static function( $param, $request, $key ) {
 						return is_numeric( $param );
 					}
 				],
 			],
-			'permission_callback' => function ( $request ) {
+			'permission_callback' => static function( $request ) {
 				return current_user_can( 'edit_post', (int) $request['to'] );
 			},
 		] );
@@ -229,22 +229,22 @@ class Relation extends Main
 			'callback' => [ __CLASS__, 'rest_disconnect' ],
 			'args'     => [
 				'name' => [
-					'validate_callback' => function( $param, $request, $key ) {
+					'validate_callback' => static function( $param, $request, $key ) {
 						return TRUE; // FIXME
 					}
 				],
 				'from' => [
-					'validate_callback' => function( $param, $request, $key ) {
+					'validate_callback' => static function( $param, $request, $key ) {
 						return is_numeric( $param );
 					}
 				],
 				'to' => [
-					'validate_callback' => function( $param, $request, $key ) {
+					'validate_callback' => static function( $param, $request, $key ) {
 						return is_numeric( $param );
 					}
 				],
 			],
-			'permission_callback' => function ( $request ) {
+			'permission_callback' => static function( $request ) {
 				return current_user_can( 'edit_post', (int) $request['to'] );
 			},
 		] );

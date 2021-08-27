@@ -583,7 +583,7 @@ class MetaBox extends Main
 
 	public static function classEditorBox( $screen, $id = 'postexcerpt' )
 	{
-		add_filter( 'postbox_classes_'.$screen->id.'_'.$id, function( $classes ) {
+		add_filter( 'postbox_classes_'.$screen->id.'_'.$id, static function( $classes ) {
 			return array_merge( $classes, [ static::BASE.'-wrap', '-admin-postbox', '-admin-postbox-editorbox' ] );
 		} );
 	}

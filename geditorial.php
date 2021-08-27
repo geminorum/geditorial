@@ -49,7 +49,7 @@ if ( version_compare( GEDITORIAL_MIN_PHP, phpversion(), '>=' ) ) {
 
 } else if ( is_admin() ) {
 
-	add_action( 'admin_notices', function(){
+	add_action( 'admin_notices', function() {
 		echo '<div class="notice notice-warning notice-alt is-dismissible"><p>';
 			printf( '<b>gEditorial</b> is not installed correctly. go grab the latest package <a href="%s" target="_blank">here</a>.', 'https://github.com/geminorum/geditorial/releases/latest' );
 		echo '</p></div>';

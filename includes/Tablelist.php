@@ -209,7 +209,7 @@ class Tablelist extends Main
 	{
 		return [
 			'title'    => _x( 'Date', 'Tablelist: Column: Post Date', 'geditorial' ),
-			'callback' => function( $value, $row, $column, $index ){
+			'callback' => static function( $value, $row, $column, $index, $key, $args ) {
 				return Datetime::humanTimeDiffRound( strtotime( $row->post_date ) );
 			},
 		];
@@ -219,7 +219,7 @@ class Tablelist extends Main
 	{
 		return [
 			'title'    => is_null( $title ) ? _x( 'On', 'Tablelist: Column: Post Date Modified', 'geditorial' ) : $title,
-			'callback' => function( $value, $row, $column, $index ){
+			'callback' => static function( $value, $row, $column, $index, $key, $args ) {
 				return Datetime::htmlHumanTime( $row->post_modified, TRUE );
 			},
 		];
@@ -230,7 +230,7 @@ class Tablelist extends Main
 		return [
 			'title'    => _x( 'Type', 'Tablelist: Column: Post Type', 'geditorial' ),
 			'args'     => [ 'types' => PostType::get( 2 ) ],
-			'callback' => function( $value, $row, $column, $index ){
+			'callback' => static function( $value, $row, $column, $index, $key, $args ) {
 				return isset( $column['args']['types'][$row->post_type] )
 					? $column['args']['types'][$row->post_type]
 					: $row->post_type;
@@ -243,7 +243,7 @@ class Tablelist extends Main
 		return [
 			'title'    => _x( 'Mime', 'Tablelist: Column: Post Mime', 'geditorial' ),
 			'args'     => [ 'mime_types' => wp_get_mime_types() ],
-			'callback' => function( $value, $row, $column, $index ){
+			'callback' => static function( $value, $row, $column, $index, $key, $args ) {
 				if ( $ext = Helper::getExtension( $row->post_mime_type, $column['args']['mime_types'] ) )
 					return '<span title="'.$row->post_mime_type.'">'.$ext.'</span>';
 
@@ -257,7 +257,7 @@ class Tablelist extends Main
 		return [
 			'title'    => _x( 'Title', 'Tablelist: Column: Post Title', 'geditorial' ),
 			'args'     => [ 'statuses' => PostType::getStatuses() ],
-			'callback' => function( $value, $row, $column, $index ) use( $excerpt ){
+			'callback' => static function( $value, $row, $column, $index, $key, $args ) use ( $excerpt ) {
 
 				$title = Helper::getPostTitle( $row );
 
@@ -287,7 +287,7 @@ class Tablelist extends Main
 
 				return $title;
 			},
-			'actions' => function( $value, $row, $column, $index ) use( $actions, $custom ){
+			'actions' => static function( $value, $row, $column, $index, $key, $args ) use ( $actions, $custom ) {
 				return array_merge( self::getPostRowActions( $row->ID, $actions ), $custom );
 			},
 		];
@@ -297,7 +297,7 @@ class Tablelist extends Main
 	{
 		return [
 			'title'    => _x( 'Excerpt', 'Tablelist: Column: Post Excerpt', 'geditorial' ),
-			'callback' => function( $value, $row, $column, $index ) {
+			'callback' => static function( $value, $row, $column, $index, $key, $args ) {
 				return $row->post_excerpt
 					? wpautop( Helper::prepDescription( $row->post_excerpt, FALSE, FALSE ), FALSE )
 					: Helper::htmlEmpty();
@@ -309,7 +309,7 @@ class Tablelist extends Main
 	{
 		return [
 			'title'    => _x( 'Title', 'Tablelist: Column: Post Title', 'geditorial' ),
-			'callback' => function( $value, $row, $column, $index ){
+			'callback' => static function( $value, $row, $column, $index, $key, $args ) {
 				return Helper::getPostTitleRow( $row, 'edit' );
 			},
 		];
@@ -320,7 +320,7 @@ class Tablelist extends Main
 		return [
 			'title'    => _x( 'Status', 'Tablelist: Column: Post Title', 'geditorial' ),
 			'args'     => [ 'statuses' => PostType::getStatuses() ],
-			'callback' => function( $value, $row, $column, $index ){
+			'callback' => static function( $value, $row, $column, $index, $key, $args ) {
 
 				if ( ! $row->post_status )
 					return gEditorial()->na();
@@ -337,7 +337,7 @@ class Tablelist extends Main
 	{
 		return [
 			'title'    => _x( 'Author', 'Tablelist: Column: Post Author', 'geditorial' ),
-			'callback' => function( $value, $row, $column, $index ){
+			'callback' => static function( $value, $row, $column, $index, $key, $args ) {
 
 				if ( current_user_can( 'edit_post', $row->ID ) )
 					return WordPress::getAuthorEditHTML( $row->post_type, $row->post_author );
@@ -358,7 +358,7 @@ class Tablelist extends Main
 		return [
 			'title'    => _x( 'Terms', 'Tablelist: Column: Post Terms', 'geditorial' ),
 			'args'     => [ 'taxonomies' => $taxonomies ],
-			'callback' => function( $value, $row, $column, $index ){
+			'callback' => static function( $value, $row, $column, $index, $key, $args ) {
 				foreach ( $column['args']['taxonomies'] as $taxonomy => $object )
 					if ( $object->label ) // only public taxes
 						Helper::renderPostTermsEditRow( $row, $object, '<div>'.$object->label.': ', '</div>' );
@@ -377,7 +377,7 @@ class Tablelist extends Main
 	{
 		return [
 			'title'    => _x( 'Name', 'Tablelist: Column: Term Name', 'geditorial' ),
-			'callback' => function( $value, $row, $column, $index ){
+			'callback' => static function( $value, $row, $column, $index, $key, $args ) {
 				return self::getTermTitleRow( $row );
 			},
 		];

@@ -217,13 +217,13 @@ class Terms extends gEditorial\Module
 				if ( $this->filters( 'disable_field_edit', FALSE, $field, $screen->taxonomy ) )
 					continue;
 
-				add_action( $screen->taxonomy.'_add_form_fields', function( $taxonomy ) use( $field ){
+				add_action( $screen->taxonomy.'_add_form_fields', function( $taxonomy ) use ( $field ) {
 					$this->add_form_field( $field, $taxonomy );
 				}, 8, 1 );
 
 				if ( ! in_array( $field, [ 'roles', 'posttypes' ] ) ) {
 
-					add_action( 'quick_edit_custom_box', function( $column, $screen, $taxonomy ) use( $field ){
+					add_action( 'quick_edit_custom_box', function( $column, $screen, $taxonomy ) use ( $field ) {
 						if ( $this->classs( $field ) == $column )
 							$this->quick_form_field( $field, $taxonomy );
 					}, 10, 3 );
@@ -265,7 +265,7 @@ class Terms extends gEditorial\Module
 
 				$disabled = $this->filters( 'disable_field_edit', FALSE, $field, $screen->taxonomy );
 
-				add_action( $screen->taxonomy.'_edit_form_fields', function( $term, $taxonomy ) use( $field, $disabled ){
+				add_action( $screen->taxonomy.'_edit_form_fields', function( $term, $taxonomy ) use ( $field, $disabled ) {
 					$this->edit_form_field( $field, $taxonomy, $term, $disabled );
 				}, 8, 2 );
 
@@ -1345,10 +1345,10 @@ class Terms extends gEditorial\Module
 							UPDATE {$wpdb->term_taxonomy} SET taxonomy = %s WHERE taxonomy = %s
 						", trim( $post['live_tax'] ), trim( $post['dead_tax'] ) ) );
 
-						if ( count( $result ) )
+						if ( FALSE !== $result )
 							WordPress::redirectReferer( [
 								'message' => 'changed',
-								'count'   => count( $result ),
+								'count'   => $result,
 							] );
 					}
 				}
@@ -1493,7 +1493,7 @@ class Terms extends gEditorial\Module
 			'terms' => Tablelist::columnPostTerms(),
 			'raw' => [
 				'title'    => _x( 'Raw', 'Table Column', 'geditorial-terms' ),
-				'callback' => function( $value, $row, $column, $index ){
+				'callback' => static function( $value, $row, $column, $index, $key, $args ) {
 
 					$query = new \WP_Term_Query( [ 'object_ids' => $row->ID, 'get' => 'all' ] );
 

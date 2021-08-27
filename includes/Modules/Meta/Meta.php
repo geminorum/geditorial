@@ -560,7 +560,7 @@ class Meta extends gEditorial\Module
 						$title   = empty( $args['title'] ) ? $field : $args['title'];
 
 						if ( ! empty( $args['description'] ) )
-							$title.= ' <span class="postbox-title-info" data-title="info" title="'
+							$title.= ' <span class="postbox-title-info" style="display:none" data-title="info" title="'
 								.HTML::escape( $args['description'] ).'">'
 								.HTML::getDashicon( 'editor-help' ).'</span>';
 
@@ -1056,7 +1056,7 @@ class Meta extends gEditorial\Module
 				'type'   => [
 					'title'    => _x( 'Type', 'Table Column', 'geditorial-meta' ),
 					'args'     => [ 'types' => PostType::get( 2 ) ],
-					'callback' => function( $value, $row, $column, $index ){
+					'callback' => static function( $value, $row, $column, $index, $key, $args ) {
 						$post = Helper::getPost( $row->post_id );
 						return isset( $column['args']['types'][$post->post_type] )
 							? $column['args']['types'][$post->post_type]
@@ -1065,7 +1065,7 @@ class Meta extends gEditorial\Module
 				],
 				'title'   => [
 					'title'    => _x( 'Title', 'Table Column', 'geditorial-meta' ),
-					'callback' => function( $value, $row, $column, $index ) {
+					'callback' => static function( $value, $row, $column, $index, $key, $args ) {
 						return Helper::getPostTitle( $row->post_id );
 					},
 				],
@@ -1099,7 +1099,7 @@ class Meta extends gEditorial\Module
 						'custom_field_limit' => '25',
 					], 'tools' );
 
-					$result = [];
+					$result = 0;
 
 					if ( $post['custom_field'] && $post['custom_field_into'] )
 						$result = $this->import_field_meta(
@@ -1107,12 +1107,12 @@ class Meta extends gEditorial\Module
 							$post['custom_field_into'],
 							$post['custom_field_limit'] );
 
-					if ( count( $result ) )
+					if ( $result )
 						WordPress::redirectReferer( [
 							'message' => 'converted',
 							'field'   => $post['custom_field'],
 							'limit'   => $post['custom_field_limit'],
-							'count'   => count( $result ),
+							'count'   => $result,
 						] );
 
 				} else if ( Tablelist::isAction( 'custom_fields_delete' ) ) {
@@ -1127,7 +1127,7 @@ class Meta extends gEditorial\Module
 					if ( $post['custom_field'] )
 						$result = Database::deletePostMeta( $post['custom_field'], $post['custom_field_limit'] );
 
-					if ( count( $result ) )
+					if ( $result )
 						WordPress::redirectReferer( [
 							'message' => 'deleted',
 							'field'   => $post['custom_field'],

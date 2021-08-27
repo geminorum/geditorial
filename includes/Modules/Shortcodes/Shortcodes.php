@@ -106,7 +106,7 @@ class Shortcodes extends gEditorial\Module
 			'shortcodes' => [
 				'title'    => _x( 'Shortcodes', 'Table Column', 'geditorial-shortcodes' ),
 				'args'     => [ 'regex' => get_shortcode_regex() ],
-				'callback' => function( $value, $row, $column, $index ){
+				'callback' => static function( $value, $row, $column, $index, $key, $args ) {
 
 					$html = '<div dir="ltr">';
 

@@ -710,7 +710,7 @@ class Today extends gEditorial\Module
 
 	public function the_day_content( $content = '' )
 	{
-		global $post;
+		// global $post;
 
 		$posttypes = $this->posttypes();
 
@@ -923,7 +923,7 @@ class Today extends gEditorial\Module
 					'constants'    => $constants,
 					'default_type' => $this->default_calendar(),
 				],
-				'callback' => function( $value, $row, $column, $index ){
+				'callback' => static function( $value, $row, $column, $index, $key, $args ) {
 					$the_day = ModuleHelper::getTheDayFromPost( $row,
 						$column['args']['default_type'],
 						$column['args']['constants'] );

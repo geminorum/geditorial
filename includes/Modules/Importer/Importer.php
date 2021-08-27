@@ -229,7 +229,7 @@ class Importer extends gEditorial\Module
 				'title'    => _x( 'Image', 'Table Column', 'geditorial-importer' ),
 				'args'     => $args,
 				'class'    => 'image-column',
-				'callback' => function( $value, $row, $column, $index ) {
+				'callback' => static function( $value, $row, $column, $index, $key, $args ) {
 
 					if ( ! $id = get_post_meta( $row->ID, $column['args']['metakey'], TRUE ) )
 						return Helper::htmlEmpty();
@@ -249,7 +249,7 @@ class Importer extends gEditorial\Module
 			'thumb_image' => [
 				'title'    => _x( 'Thumbnail', 'Table Column', 'geditorial-importer' ),
 				'class'    => 'image-column',
-				'callback' => function( $value, $row, $column, $index ) {
+				'callback' => static function( $value, $row, $column, $index, $key, $args ) {
 					$html = PostType::htmlFeaturedImage( $row->ID, [ 45, 72 ] );
 					return $html ?: Helper::htmlEmpty();
 				},
@@ -292,7 +292,7 @@ class Importer extends gEditorial\Module
 			'_cb' => '_index',
 			'_check_column' => [
 				'title'    => _x( '[Checks]', 'Table Column', 'geditorial-importer' ),
-				'callback' => function( $value, $row, $column, $index, $key, $args ){
+				'callback' => function( $value, $row, $column, $index, $key, $args ) {
 
 					$title_key = array_search( 'importer_post_title', $args['extra']['map'] );
 

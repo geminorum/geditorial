@@ -613,7 +613,7 @@ class Contest extends gEditorial\Module
 				'name'    => Tablelist::columnTermName(),
 				'paired'   => [
 					'title' => _x( 'Paired Contest Post', 'Table Column', 'geditorial-contest' ),
-					'callback' => function( $value, $row, $column, $index ){
+					'callback' => function( $value, $row, $column, $index, $key, $args ) {
 
 						if ( $post_id = $this->paired_get_to_post_id( $row, 'contest_cpt', 'contest_tax', FALSE ) )
 							return Helper::getPostTitleRow( $post_id ).' &ndash; <small>'.$post_id.'</small>';
@@ -623,7 +623,7 @@ class Contest extends gEditorial\Module
 				],
 				'slugged'   => [
 					'title' => _x( 'Same Slug Contest Post', 'Table Column', 'geditorial-contest' ),
-					'callback' => function( $value, $row, $column, $index ){
+					'callback' => function( $value, $row, $column, $index, $key, $args ) {
 
 						if ( $post_id = PostType::getIDbySlug( $row->slug, $this->constant( 'contest_cpt' ) ) )
 							return Helper::getPostTitleRow( $post_id ).' &ndash; <small>'.$post_id.'</small>';
@@ -633,7 +633,7 @@ class Contest extends gEditorial\Module
 				],
 				'count' => [
 					'title'    => _x( 'Count', 'Table Column', 'geditorial-contest' ),
-					'callback' => function( $value, $row, $column, $index ){
+					'callback' => function( $value, $row, $column, $index, $key, $args ) {
 						if ( $post_id = PostType::getIDbySlug( $row->slug, $this->constant( 'contest_cpt' ) ) )
 							return Number::format( $this->paired_get_from_posts( $post_id, 'contest_cpt', 'contest_tax', TRUE ) );
 						return Number::format( $row->count );

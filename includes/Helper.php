@@ -189,7 +189,7 @@ class Helper extends Main
 
 	public static function filterEmptyStrings( $strings, $empties = NULL )
 	{
-		return array_filter( $strings, function( $value ) use ( $empties ) {
+		return array_filter( $strings, static function( $value ) use ( $empties ) {
 
 			if ( self::isEmptyString( $value, $empties ) )
 				return FALSE;
@@ -249,10 +249,13 @@ class Helper extends Main
 		return array_unique( array_filter( $seperated, 'trim' ) );
 	}
 
-	public static function getJoined( $items, $before = '', $after = '', $empty = '' )
+	public static function getJoined( $items, $before = '', $after = '', $empty = '', $separator = NULL )
 	{
+		if ( is_null( $separator ) )
+			$separator = _x( ', ', 'Helper: Item Seperator', 'geditorial' );
+
 		if ( $items && count( $items ) )
-			return $before.implode( _x( ', ', 'Helper: Item Seperator', 'geditorial' ), $items ).$after;
+			return $before.implode( $separator, $items ).$after;
 
 		return $empty;
 	}
@@ -1006,7 +1009,7 @@ class Helper extends Main
 
 			'loader'          => new \Mustache_Loader_FilesystemLoader( $base.'assets/views' ),
 			'partials_loader' => new \Mustache_Loader_FilesystemLoader( $base.'assets/views/partials' ),
-			'escape'          => function( $value ) {
+			'escape'          => static function( $value ) {
 				return htmlspecialchars( $value, ENT_COMPAT, 'UTF-8' );
 			},
 		] );

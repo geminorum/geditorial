@@ -16,6 +16,13 @@ class Datetime extends Main
 		return Date::htmlCurrent( ( is_null( $format ) ? self::dateFormats( 'datetime' ) : $format ), $class, $title );
 	}
 
+	// @REF: https://unicode-table.com/en/060D/
+	// @SEE: https://www.compart.com/en/unicode/U+002F
+	public static function dateSeparator()
+	{
+		return _x( '/', 'Date Separator', 'geditorial' );
+	}
+
 	public static function dateFormat( $timestamp, $context = 'default' )
 	{
 		if ( ! ctype_digit( $timestamp ) )

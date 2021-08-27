@@ -666,7 +666,7 @@ class Collect extends gEditorial\Module
 				'name'    => Tablelist::columnTermName(),
 				'paired'   => [
 					'title'    => _x( 'Paired Collection Post', 'Table Column', 'geditorial-collect' ),
-					'callback' => function( $value, $row, $column, $index ){
+					'callback' => function( $value, $row, $column, $index, $key, $args ) {
 
 						if ( $post_id = $this->paired_get_to_post_id( $row, 'collection_cpt', 'collection_tax', FALSE ) )
 							return Helper::getPostTitleRow( $post_id ).' &ndash; <small>'.$post_id.'</small>';
@@ -676,7 +676,7 @@ class Collect extends gEditorial\Module
 				],
 				'slugged'   => [
 					'title' => _x( 'Same Slug Collection Post', 'Table Column', 'geditorial-collect' ),
-					'callback' => function( $value, $row, $column, $index ){
+					'callback' => function( $value, $row, $column, $index, $key, $args ) {
 
 						if ( $post_id = PostType::getIDbySlug( $row->slug, $this->constant( 'collection_cpt' ) ) )
 							return Helper::getPostTitleRow( $post_id ).' &ndash; <small>'.$post_id.'</small>';
@@ -686,7 +686,7 @@ class Collect extends gEditorial\Module
 				],
 				'count' => [
 					'title'    => _x( 'Count', 'Table Column', 'geditorial-collect' ),
-					'callback' => function( $value, $row, $column, $index ){
+					'callback' => function( $value, $row, $column, $index, $key, $args ) {
 						if ( $post_id = PostType::getIDbySlug( $row->slug, $this->constant( 'collection_cpt' ) ) )
 							return Number::format( $this->paired_get_from_posts( $post_id, 'collection_cpt', 'collection_tax', TRUE ) );
 						return Number::format( $row->count );

@@ -97,6 +97,9 @@ SQL;
 		return $pieces;
 	}
 
+	// TODO: our own `wp_dropdown_categories()` using cutom walker
+	// @SEE: https://developer.wordpress.org/reference/functions/wp_dropdown_categories/#comment-1823
+	// ALSO: trim term titles
 	public static function restrictByTaxonomy( $taxonomy, $option_all = NULL, $option_none = NULL )
 	{
 		global $wp_query;

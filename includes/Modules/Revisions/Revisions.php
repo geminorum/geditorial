@@ -298,6 +298,7 @@ class Revisions extends gEditorial\Module
 		return $count;
 	}
 
+	// @SEE: `wp_{$post->post_type}_revisions_to_keep` filter
 	public function wp_revisions_to_keep( $num, $post )
 	{
 		// if not supported then no revisions
@@ -412,7 +413,7 @@ class Revisions extends gEditorial\Module
 			'title' => Tablelist::columnPostTitle( [ 'edit', 'view', 'revisions' ] ),
 			'revisons' => [
 				'title'    => _x( 'Revisions', 'Table Column', 'geditorial-revisions' ),
-				'callback' => function( $value, $row, $column, $index ){
+				'callback' => static function( $value, $row, $column, $index, $key, $args ) {
 
 					$html = '';
 

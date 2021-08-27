@@ -108,10 +108,17 @@ class Inquire extends gEditorial\Module
 
 		$strings['terms'] = [
 			'status_tax' => [
+				'status_drafted'     => _x( 'Drafted', 'Default Term', 'geditorial-inquire' ),
 				'status_approved'    => _x( 'Approved', 'Default Term', 'geditorial-inquire' ),
 				'status_pending'     => _x( 'Pending', 'Default Term', 'geditorial-inquire' ),
 				'status_maybe_later' => _x( 'Maybe Later', 'Default Term', 'geditorial-inquire' ),
 				'status_rejected'    => _x( 'Rejected', 'Default Term', 'geditorial-inquire' ),
+				'status_assigned'    => _x( 'Assigned', 'Default Term', 'geditorial-inquire' ),
+				'status_answering'   => _x( 'Answering', 'Default Term', 'geditorial-inquire' ),
+				'status_reviewing'   => _x( 'Reviewing', 'Default Term', 'geditorial-inquire' ),
+				'status_archived'    => _x( 'Archived', 'Default Term', 'geditorial-inquire' ),
+				'status_ready'       => _x( 'Ready', 'Default Term', 'geditorial-inquire' ),
+				'status_final'       => _x( 'Final', 'Default Term', 'geditorial-inquire' ),
 			],
 			'priority_tax' => [
 				'priority_immediate' => _x( 'Immediate', 'Default Term', 'geditorial-inquire' ),

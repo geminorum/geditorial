@@ -312,7 +312,7 @@ class Attachments extends gEditorial\Module
 			'custom' => [
 				'title'    => _x( 'Custom', 'Table Column', 'geditorial-attachments' ),
 				'class'    => '-attachment-custom',
-				'callback' => function( $value, $row, $column, $index ){
+				'callback' => static function( $value, $row, $column, $index, $key, $args ) {
 					if ( $custom = Media::isCustom( $row->ID ) )
 						return strtoupper( str_replace( '_', ' ', $custom ) );
 
@@ -323,7 +323,7 @@ class Attachments extends gEditorial\Module
 			'search' => [
 				'title'    => _x( 'Search', 'Table Column', 'geditorial-attachments' ),
 				'class'    => '-attachment-search -has-list',
-				'callback' => function( $value, $row, $column, $index ){
+				'callback' => static function( $value, $row, $column, $index, $key, $args ) {
 					$list = [];
 
 					foreach ( $this->search_attachment( $row->ID ) as $post_id )
@@ -335,7 +335,7 @@ class Attachments extends gEditorial\Module
 			'sizes' => [
 				'title'    => _x( 'Sizes', 'Table Column', 'geditorial-attachments' ),
 				'class'    => '-attachment-sizes -has-table -has-table-ltr',
-				'callback' => function( $value, $row, $column, $index ){
+				'callback' => static function( $value, $row, $column, $index, $key, $args ) {
 
 					if ( ! $meta = wp_get_attachment_metadata( $row->ID ) )
 						return Helper::htmlEmpty();
@@ -346,8 +346,8 @@ class Attachments extends gEditorial\Module
 						$sizes['ORIGINAL'] = sprintf( '%s&times;%s', $meta['width'], $meta['height'] );
 
 					if ( ! empty( $meta['sizes'] ) )
-						foreach ( $meta['sizes'] as $size => $args )
-							$sizes[$size] = sprintf( '%s&times;%s', $args['width'], $args['height'] );
+						foreach ( $meta['sizes'] as $size_name => $size_args )
+							$sizes[$size_name] = sprintf( '%s&times;%s', $size_args['width'], $size_args['height'] );
 
 					return HTML::tableCode( $sizes, TRUE );
 				},
@@ -355,7 +355,7 @@ class Attachments extends gEditorial\Module
 			'meta' => [
 				'title'    => _x( 'Meta', 'Table Column', 'geditorial-attachments' ),
 				'class'    => '-attachment-meta -has-table -has-table-ltr',
-				'callback' => function( $value, $row, $column, $index ){
+				'callback' => static function( $value, $row, $column, $index, $key, $args ) {
 
 					if ( ! $meta = wp_get_attachment_metadata( $row->ID ) )
 						return Helper::htmlEmpty();
