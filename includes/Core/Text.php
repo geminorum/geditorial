@@ -680,7 +680,7 @@ class Text extends Base
 	// @SOURCE: http://php.net/manual/en/function.preg-replace-callback.php#96899
 	public static function hex2str( $string )
 	{
-		return preg_replace_callback( '#\%[a-zA-Z0-9]{2}#', function( $hex ) {
+		return preg_replace_callback( '#\%[a-zA-Z0-9]{2}#', static function( $hex ) {
 			$hex = substr( $hex[0], 1 );
 			$str = '';
 			for ( $i = 0; $i < strlen( $hex ); $i += 2 )
@@ -690,7 +690,7 @@ class Text extends Base
 	}
 
 	// @SOURCE: http://php.net/manual/en/function.preg-replace-callback.php#91950
-	// USAGE: echo Text::replaceWords( $words, $string, function( $matched ) { return "<strong>{$matched}</strong>"; } );
+	// USAGE: echo Text::replaceWords( $words, $string, static function( $matched ) { return "<strong>{$matched}</strong>"; } );
 	// FIXME: maybe space before/after the words
 	public static function replaceWords( $words, $string, $callback, $skip_links = TRUE )
 	{
@@ -699,15 +699,15 @@ class Text extends Base
 		if ( $skip_links )
 			$pattern = '<a[^>]*>.*?<\/a\s*>(*SKIP)(*FAIL)|'.$pattern;
 
-		return preg_replace_callback( '/'.$pattern.'/miu', function( $matched ) use ( $callback ) {
+		return preg_replace_callback( '/'.$pattern.'/miu', static function( $matched ) use ( $callback ) {
 			return $matched[1].call_user_func( $callback, $matched[2] ).$matched[3];
 		}, $string );
 	}
 
-	// USAGE: echo Text::replaceSymbols( [ '#', '$' ], $string, function( $matched, $string ) { return "<strong>{$matched}</strong>"; });
+	// USAGE: echo Text::replaceSymbols( [ '#', '$' ], $string, static function( $matched, $string ) { return "<strong>{$matched}</strong>"; });
 	public static function replaceSymbols( $symbols, $string, $callback, $skip_links = TRUE )
 	{
-		return preg_replace_callback( self::replaceSymbolsPattern( implode( ',', (array) $symbols ), $skip_links ), function ( $matches ) use ( $callback ) {
+		return preg_replace_callback( self::replaceSymbolsPattern( implode( ',', (array) $symbols ), $skip_links ), static function( $matches ) use ( $callback ) {
 			return call_user_func( $callback, $matches[0], $matches[1] );
 		}, $string );
 	}
@@ -886,7 +886,7 @@ class Text extends Base
 	// @SEE: https://github.com/neitanod/forceutf8
 	public static function correctMixedEncoding( $string )
 	{
-		return preg_replace_callback( '/\\P{Arabic}+/u', function( $matches ) {
+		return preg_replace_callback( '/\\P{Arabic}+/u', static function( $matches ) {
 			return iconv( 'UTF-8', 'ISO-8859-1', $matches[0] );
 		}, hex2bin( bin2hex( $string ) ) );
 	}

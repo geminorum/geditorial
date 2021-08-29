@@ -303,7 +303,7 @@ class PostType extends Core\Base
 	// @SEE: `Scripts::enqueueThickBox()`
 	public static function htmlFeaturedImage( $post_id, $size = 'thumbnail', $link = TRUE )
 	{
-		if ( ! $post_thumbnail_id = get_post_thumbnail_id( $post_id ) )
+		if ( ! $post_thumbnail_id = apply_filters( 'geditorial_get_post_thumbnail_id', get_post_thumbnail_id( $post_id ), $post_id ) )
 			return '';
 
 		if ( ! $post_thumbnail_img = wp_get_attachment_image_src( $post_thumbnail_id, $size ) )

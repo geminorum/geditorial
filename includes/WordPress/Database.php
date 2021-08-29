@@ -118,7 +118,7 @@ class Database extends Core\Base
 		else
 			$query = $wpdb->prepare( "DELETE FROM {$wpdb->postmeta} WHERE meta_key = %s", $meta_key );
 
-		return $wpdb->query( $query );
+		return $wpdb->query( $query, ARRAY_A );
 	}
 
 	public static function deleteEmptyMeta( $meta_key )
@@ -131,7 +131,7 @@ class Database extends Core\Base
 			AND meta_value = ''
 		" , $meta_key );
 
-		return $wpdb->get_results( $query );
+		return $wpdb->get_results( $query, ARRAY_A );
 	}
 
 	// @REF: https://core.trac.wordpress.org/ticket/29181

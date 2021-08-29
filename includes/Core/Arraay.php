@@ -152,7 +152,7 @@ class Arraay extends Base
 	// @REF: `_sort_priority_callback()`
 	public static function sortByPriority( $array, $priority_key )
 	{
-		uasort( $array, function( $a, $b ) use ( $priority_key ) {
+		uasort( $array, static function( $a, $b ) use ( $priority_key ) {
 
 			if ( ! isset( $a[$priority_key], $b[$priority_key] )
 				|| $a[$priority_key] === $b[$priority_key] )

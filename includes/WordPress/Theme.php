@@ -250,7 +250,7 @@ class Theme extends Core\Base
 			add_filter( 'the_content', $content_callback );
 
 		// if we are in theme compat, we don't need the 'Edit' post link.
-		add_filter( 'get_edit_post_link', function( $edit_link = '', $post_id = 0 ){
+		add_filter( 'get_edit_post_link', static function( $edit_link = '', $post_id = 0 ) {
 			return 0 === $post_id ? FALSE : $edit_link;
 		}, 10, 2 );
 	}

@@ -8,12 +8,6 @@ use geminorum\gEditorial\Core\HTML;
 class Taxonomy extends Core\Base
 {
 
-	// TODO: our version of `wp_dropdown_categories()`
-	// - https://developer.wordpress.org/reference/functions/wp_dropdown_categories/#comment-1823
-	// SEE: do_restrict_manage_posts_taxes()
-	// ALSO: trim term titles
-	// MUST USE: custom walker
-
 	public static function object( $taxonomy )
 	{
 		return is_object( $taxonomy ) ? $taxonomy : get_taxonomy( $taxonomy );
@@ -97,12 +91,30 @@ class Taxonomy extends Core\Base
 			|| ( $taxonomy->_builtin && $taxonomy->public );
 	}
 
+	public static function getDefaultTermID( $taxonomy, $fallback = FALSE )
+	{
+		return get_option( self::getDefaultTermOptionKey( $taxonomy ), $fallback );
+	}
+
+	public static function getDefaultTermOptionKey( $taxonomy )
+	{
+		if ( 'category' == $taxonomy )
+			return 'default_category'; // WordPress
+
+		if ( 'product_cat' == $taxonomy )
+			return 'default_product_cat'; // WooCommerce
+
+		return 'default_term_'.$taxonomy;
+	}
+
 	public static function hasTerms( $taxonomy, $empty = TRUE )
 	{
 		$terms = get_terms( array(
 			'taxonomy'               => $taxonomy,
 			'hide_empty'             => ! $empty,
 			'fields'                 => 'ids',
+			'orderby'                => 'none',
+			'suppress_filter'        => TRUE,
 			'update_term_meta_cache' => FALSE,
 		) );
 
@@ -222,8 +234,8 @@ class Taxonomy extends Core\Base
 				],
 				[
 					'key'     => 'order',
-					'value'   => 0,
 					'compare' => '>=',
+					'value'   => 0,
 				],
 			],
 			'fields'     => is_null( $fields ) ? 'id=>name' : $fields,

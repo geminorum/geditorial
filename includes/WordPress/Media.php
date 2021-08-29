@@ -309,6 +309,9 @@ class Media extends Core\Base
 
 				Core\File::putHTAccessDeny( $folder, FALSE );
 			}
+
+			if ( ! wp_is_writable( $folder ) )
+				return FALSE;
 		}
 
 		return $folder;
@@ -317,7 +320,7 @@ class Media extends Core\Base
 	public static function getUploadURL( $sub = '' )
 	{
 		$upload = wp_upload_dir( NULL, FALSE, FALSE );
-		$base   = is_ssl() ? str_ireplace( 'http://', 'https://', $upload['baseurl'] ) : $upload['baseurl'];
+		$base   = Core\WordPress::isSSL() ? str_ireplace( 'http://', 'https://', $upload['baseurl'] ) : $upload['baseurl'];
 		return $sub ? $base.'/'.$sub : $base;
 	}
 
