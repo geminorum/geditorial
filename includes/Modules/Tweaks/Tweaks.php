@@ -209,7 +209,7 @@ class Tweaks extends gEditorial\Module
 				'atts_column_title'     => _x( 'Attributes', 'Column Title', 'geditorial-tweaks' ),
 				'id_column_title'       => _x( 'ID', 'Column Title', 'geditorial-tweaks' ),
 				'thumb_column_title'    => _x( 'Featured', 'Column Title', 'geditorial-tweaks' ),
-				'order_column_title'    => _x( 'O', 'Column Title', 'geditorial-tweaks' ),
+				'order_column_title'    => _x( 'Order', 'Column Title', 'geditorial-tweaks' ),
 				'user_column_title'     => _x( 'User', 'Column Title', 'geditorial-tweaks' ),
 				'contacts_column_title' => _x( 'Contacts', 'Column Title', 'geditorial-tweaks' ),
 				'id_column_title'       => _x( 'ID', 'Column Title', 'geditorial-tweaks' ),
@@ -481,7 +481,7 @@ class Tweaks extends gEditorial\Module
 		foreach ( $columns as $key => $value ) {
 
 			if ( 'title' == $key && $this->in_setting( $posttype, 'column_thumb' ) )
-				$new[$this->classs( 'thumb' )] = $this->get_column_title( 'thumb', $posttype );
+				$new[$this->classs( 'thumb' )] = $this->get_column_title_icon( 'thumb', $posttype );
 
 			if ( ( 'comments' == $key && ! $added )
 				|| ( 'date' == $key && ! $added ) ) {
@@ -501,7 +501,7 @@ class Tweaks extends gEditorial\Module
 			$new[$key] = $value;
 
 			if ( 'cb' == $key && $this->in_setting( $posttype, 'column_order' ) )
-				$new[$this->classs( 'order' )] = $this->get_column_title( 'order', $posttype );
+				$new[$this->classs( 'order' )] = $this->get_column_title_icon( 'order', $posttype );
 		}
 
 		if ( $this->in_setting( $posttype, 'group_attributes' ) )
@@ -517,7 +517,7 @@ class Tweaks extends gEditorial\Module
 		}
 
 		if ( $this->in_setting( $posttype, 'column_id' ) )
-			$new['geditorial-tweaks-id'] = $this->get_column_title( 'id', $posttype );
+			$new['geditorial-tweaks-id'] = $this->get_column_title_icon( 'id', $posttype );
 
 		return $new;
 	}
@@ -621,7 +621,7 @@ class Tweaks extends gEditorial\Module
 
 			} else if ( 'posts' == $key ) {
 
-				$new[$this->classs( 'id' )] = $this->get_column_title( 'id', 'users' );
+				$new[$this->classs( 'id' )] = $this->get_column_title_icon( 'id', 'users' );
 
 			} else if ( in_array( $key, [
 				'name',

@@ -3311,6 +3311,12 @@ class Module extends Base
 		return $this->get_string( $column.'_column_title', $constant, 'misc', ( is_null( $fallback ) ? $column : $fallback ) );
 	}
 
+	public function get_column_title_icon( $column, $constant = NULL, $fallback = NULL )
+	{
+		$title = $this->get_string( $column.'_column_title', $constant, 'misc', ( is_null( $fallback ) ? $column : $fallback ) );
+		return sprintf( '<span class="-column-icon %3$s" title="%2$s">%1$s</span>', $title, esc_attr( $title ), $this->classs( $column ) );
+	}
+
 	protected function require_code( $filenames = 'Templates', $once = TRUE )
 	{
 		foreach ( (array) $filenames as $filename )

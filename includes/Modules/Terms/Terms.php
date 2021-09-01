@@ -79,21 +79,21 @@ class Terms extends gEditorial\Module
 				'barcode'   => _x( 'Terms can have barcode to help orginize them.', 'Descriptions', 'geditorial-terms' ),
 			],
 			'misc' => [
-				'order_column_title'     => _x( 'O', 'Column Title: Order', 'geditorial-terms' ),
+				'order_column_title'     => _x( 'Order', 'Column Title: Order', 'geditorial-terms' ),
 				'tagline_column_title'   => _x( 'Tagline', 'Column Title: Tagline', 'geditorial-terms' ),
-				'contact_column_title'   => _x( 'C', 'Column Title: Contact', 'geditorial-terms' ),
+				'contact_column_title'   => _x( 'Contact', 'Column Title: Contact', 'geditorial-terms' ),
 				'image_column_title'     => _x( 'Image', 'Column Title: Image', 'geditorial-terms' ),
 				'author_column_title'    => _x( 'Author', 'Column Title: Author', 'geditorial-terms' ),
-				'color_column_title'     => _x( 'C', 'Column Title: Color', 'geditorial-terms' ),
+				'color_column_title'     => _x( 'Color', 'Column Title: Color', 'geditorial-terms' ),
 				'role_column_title'      => _x( 'Role', 'Column Title: Role', 'geditorial-terms' ),
 				'roles_column_title'     => _x( 'Roles', 'Column Title: Roles', 'geditorial-terms' ),
 				'posttype_column_title'  => _x( 'Posttype', 'Column Title: Posttype', 'geditorial-terms' ),
 				'posttypes_column_title' => _x( 'Posttypes', 'Column Title: Posttypes', 'geditorial-terms' ),
-				'arrow_column_title'     => _x( 'A', 'Column Title: Arrow', 'geditorial-terms' ),
+				'arrow_column_title'     => _x( 'Arrow', 'Column Title: Arrow', 'geditorial-terms' ),
 				'label_column_title'     => _x( 'Label', 'Column Title: Label', 'geditorial-terms' ),
 				'code_column_title'      => _x( 'Code', 'Column Title: Label', 'geditorial-terms' ),
-				'barcode_column_title'   => _x( 'BC', 'Column Title: Label', 'geditorial-terms' ),
-				'posts_column_title'     => _x( 'P', 'Column Title: Posts', 'geditorial-terms' ),
+				'barcode_column_title'   => _x( 'Barcode', 'Column Title: Label', 'geditorial-terms' ),
+				'posts_column_title'     => _x( 'Posts', 'Column Title: Posts', 'geditorial-terms' ),
 
 				'arrow_directions' => [
 					'undefined' => _x( 'Undefined', 'Arrow Directions', 'geditorial-terms' ),
@@ -460,15 +460,18 @@ class Terms extends gEditorial\Module
 		foreach ( $this->get_supported( $taxonomy ) as $field ) {
 
 			$position = $this->get_supported_position( $field, $taxonomy );
+			$title    = in_array( $field, [ 'order', 'contact', 'image', 'author', 'color', 'role', 'roles', 'posttype', 'posttypes', 'arrow', 'label', 'code', 'barcode' ] )
+				? $this->get_column_title_icon( $field, $taxonomy )
+				: $this->get_column_title( $field, $taxonomy );
 
 			$columns = Arraay::insert( $columns, [
-				$this->classs( $field ) => $this->get_column_title( $field, $taxonomy ),
+				$this->classs( $field ) => $title,
 			], $position[0], $position[1] );
 		}
 
-		// smaller name for posts column
+		// icon for posts column
 		if ( array_key_exists( 'posts', $columns ) )
-			$columns['posts'] = $this->get_column_title( 'posts', $taxonomy );
+			$columns['posts'] = $this->get_column_title_icon( 'posts', $taxonomy );
 
 		return $columns;
 	}
