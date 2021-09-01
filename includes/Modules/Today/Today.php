@@ -680,7 +680,7 @@ class Today extends gEditorial\Module
 
 			$this->the_post = ModuleHelper::getDayPost( $this->the_day, $constants );
 
-			$title = trim( ModuleHelper::titleTheDay( $this->the_day ), '[]' );
+			$title = trim( ModuleHelper::titleTheDay( $this->the_day, '[]', FALSE ), '[]' );
 
 			if ( ! empty( $this->the_post[0] ) )
 				$title = Helper::getPostTitle( $this->the_post[0] ).' ['.$title.']';
