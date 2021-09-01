@@ -119,7 +119,7 @@ class ModuleHelper extends gEditorial\Helper
 		if ( ! $the_day['day'] && ! $the_day['month'] && ! $the_day['year'] ) {
 
 			if ( $empty )
-				echo '<div class="-today -date-icon-empty">'.$empty.'</div>';
+				echo '<div class="-today -date-badge-empty">'.$empty.'</div>';
 
 		} else {
 
@@ -129,7 +129,7 @@ class ModuleHelper extends gEditorial\Helper
 			if ( ! isset( $gEditorialTodayMonths[$the_day['cal']] ) )
 				$gEditorialTodayMonths[$the_day['cal']] = Datetime::getMonths( $the_day['cal'] );
 
-			echo '<div class="-today -date-icon">';
+			echo '<div class="-today -date-badge">';
 
 				if ( $the_day['day'] )
 					echo '<span class="-day" data-day="'.HTML::escape( $the_day['day'] )
