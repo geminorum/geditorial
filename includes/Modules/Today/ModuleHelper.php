@@ -55,7 +55,7 @@ class ModuleHelper extends gEditorial\Helper
 		return $the_day;
 	}
 
-	public static function titleTheDay( $stored, $empty = '&mdash;' )
+	public static function titleTheDay( $stored, $empty = '&mdash;', $display_cal = TRUE )
 	{
 		global $gEditorialTodayCalendars, $gEditorialTodayMonths;
 
@@ -97,12 +97,12 @@ class ModuleHelper extends gEditorial\Helper
 		if ( empty( $parts ) )
 			return $empty;
 
-		if ( $the_day['cal'] )
+		if ( $the_day['cal'] && $display_cal )
 			$parts['cal'] = empty( $gEditorialTodayCalendars[$the_day['cal']] )
 				? $the_day['cal']
 				: $gEditorialTodayCalendars[$the_day['cal']];
 
-		return Helper::getJoined( $parts, '[', ']' );
+		return Helper::getJoined( $parts, '[', ']', '', Datetime::dateSeparator() );
 	}
 
 	public static function displayTheDay( $stored, $empty = '&mdash;' )
