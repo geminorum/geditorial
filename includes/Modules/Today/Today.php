@@ -686,10 +686,11 @@ class Today extends gEditorial\Module
 				$title = Helper::getPostTitle( $this->the_post[0] ).' ['.$title.']';
 
 			Theme::resetQuery( [
-				'ID'         => 0,
-				'post_title' => $title,
-				'post_type'  => $this->constant( 'day_cpt' ),
-				'is_single'  => TRUE,
+				'ID'          => -9999,
+				'post_title'  => $title,
+				'post_author' => 0,
+				'post_type'   => $this->constant( 'day_cpt' ),
+				'is_single'   => TRUE,
 			], [ $this, 'the_day_content' ] );
 
 			$this->enqueue_styles();
