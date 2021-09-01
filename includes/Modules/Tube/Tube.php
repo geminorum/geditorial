@@ -150,6 +150,10 @@ class Tube extends gEditorial\Module
 				'source_url'   => [ 'type' => 'link' ],
 				'highlight'    => [ 'type' => 'note' ],
 			],
+			$this->constant( 'channel_cpt' ) => [
+				'over_title' => [ 'type' => 'title_before' ],
+				'sub_title'  => [ 'type' => 'title_after' ],
+			],
 		];
 	}
 
@@ -235,6 +239,9 @@ class Tube extends gEditorial\Module
 	public function meta_init()
 	{
 		$this->add_posttype_fields( $this->constant( 'video_cpt' ) );
+
+		if ( $this->get_setting( 'video_channels' ) )
+			$this->add_posttype_fields( $this->constant( 'channel_cpt' ) );
 	}
 
 	public function dashboard_glance_items( $items )
