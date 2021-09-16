@@ -678,4 +678,10 @@ class Plugin
 		$na = __( 'N/A', 'geditorial' );
 		return $wrap ? HTML::tag( $wrap, [ 'title' => __( 'Not Available', 'geditorial' ) ], $na ) : $na;
 	}
+
+	public static function denied( $wrap = 'p' )
+	{
+		$message = __( 'You don&#8217;t have permission to do this.' );
+		return $wrap ? HTML::tag( $wrap, [ 'class' => [ 'description', '-description', '-denied' ] ], $message ) : $message;
+	}
 }
