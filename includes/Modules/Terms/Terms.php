@@ -248,6 +248,7 @@ class Terms extends gEditorial\Module
 				wp_enqueue_media();
 
 				$this->enqueue_asset_js( [
+					'customs' => array_diff( $fields, $this->supported ),
 					'strings' => $this->strings['js'],
 				], NULL, [ 'jquery', 'media-upload' ] );
 			}
@@ -255,6 +256,14 @@ class Terms extends gEditorial\Module
 			if ( count( $fields ) ) {
 				$this->_edit_tags_screen( $screen->taxonomy );
 				add_filter( 'manage_edit-'.$screen->taxonomy.'_sortable_columns', [ $this, 'sortable_columns' ] );
+
+				// FIXME: add empty all term meta card for each field
+				// $this->filter( 'taxonomy_tab_extra_content', 2, 9, FALSE, 'gnetwork' );
+				// $this->filter( 'taxonomy_handle_tab_content_actions', 1, 8, FALSE, 'gnetwork' );
+
+				$this->filter( 'taxonomy_export_term_meta', 2, 8, FALSE, 'gnetwork' );
+				$this->filter( 'taxonomy_bulk_actions', 2, 14, FALSE, 'gnetwork' );
+				$this->filter( 'taxonomy_bulk_callback', 3, 14, FALSE, 'gnetwork' );
 			}
 
 		} else if ( 'term' == $screen->base ) {
@@ -334,6 +343,21 @@ class Terms extends gEditorial\Module
 		return $this->filters( 'supported_field_metakey', $field, $field, $taxonomy );
 	}
 
+	private function get_supported_taxonomies( $field )
+	{
+		return $this->filters( 'supported_field_taxonomies', $this->get_setting( 'term_'.$field ), $field );
+	}
+
+	private function get_supported_field_title( $field, $taxonomy, $term = FALSE )
+	{
+		return $this->filters( 'field_'.$field.'_title', $this->get_string( $field, $taxonomy, 'titles', $field ), $taxonomy, $field, FALSE );
+	}
+
+	private function get_supported_field_desc( $field, $taxonomy, $term = FALSE )
+	{
+		return $this->filters( 'field_'.$field.'_desc', $this->get_string( $field, $taxonomy, 'descriptions', '' ), $taxonomy, $field, $term );
+	}
+
 	private function get_supported_position( $field, $taxonomy = FALSE )
 	{
 		switch ( $field ) {
@@ -367,9 +391,8 @@ class Terms extends gEditorial\Module
 	// @REF: https://developer.wordpress.org/rest-api/extending-the-rest-api/modifying-responses/
 	protected function register_meta_fields()
 	{
-		foreach ( $this->supported as $field ) {
+		foreach ( $this->get_supported() as $field ) {
 
-			if ( ! $taxonomies = $this->get_setting( 'term_'.$field ) )
 				continue;
 
 			$prepare = 'register_prepare_callback_'.$field;
@@ -590,7 +613,7 @@ class Terms extends gEditorial\Module
 					$html = $this->field_empty( $field, '', $column );
 				}
 
-			break;
+				break;
 			case 'contact':
 
 				if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) ) {
@@ -604,7 +627,7 @@ class Terms extends gEditorial\Module
 					$html = $this->field_empty( $field, '', $column );
 				}
 
-			break;
+				break;
 			case 'image':
 
 				// $sizes = Media::getPosttypeImageSizes( $post->post_type );
@@ -613,7 +636,7 @@ class Terms extends gEditorial\Module
 
 				$html = $this->filters( 'column_image', Taxonomy::htmlFeaturedImage( $term->term_id, $size, TRUE, $metakey ), $term->term_id, $size );
 
-			break;
+				break;
 			case 'author':
 
 				if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) ) {
@@ -626,7 +649,7 @@ class Terms extends gEditorial\Module
 					$html = $this->field_empty( $field, '0', $column );
 				}
 
-			break;
+				break;
 			case 'color':
 
 				if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) )
@@ -634,7 +657,7 @@ class Terms extends gEditorial\Module
 						.'" style="background-color:'.HTML::escape( $meta )
 						.'" title="'.HTML::wrapLTR( HTML::escape( $meta ) ).'"></i>';
 
-			break;
+				break;
 			case 'role':
 
 				if ( empty( $this->all_roles ) )
@@ -650,7 +673,7 @@ class Terms extends gEditorial\Module
 				else
 					$html = $this->field_empty( 'role', '0', $column );
 
-			break;
+				break;
 			case 'roles':
 
 				if ( empty( $this->all_roles ) )
@@ -674,7 +697,7 @@ class Terms extends gEditorial\Module
 					$html = $this->field_empty( $field, '0', $column );
 				}
 
-			break;
+				break;
 			case 'posttype':
 
 				if ( empty( $this->all_posttypes ) )
@@ -690,7 +713,8 @@ class Terms extends gEditorial\Module
 				else
 					$html = $this->field_empty( $field, '0', $column );
 
-			break;
+				break;
+
 			case 'posttypes':
 
 				if ( empty( $this->all_posttypes ) )
@@ -713,6 +737,16 @@ class Terms extends gEditorial\Module
 
 					$html = $this->field_empty( $field, '0', $column );
 				}
+
+			default:
+
+				if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) )
+					$html = '<span class="field-'.$field.'" data-'.$field.'="'.HTML::escape( $meta ).'">'
+						.Helper::prepTitle( $meta ).'</span>';
+
+				else
+					$html = $this->field_empty( $field, '', $column );
+
 		}
 
 		echo $this->filters( 'supported_field_column', $html, $field, $taxonomy, $term, $meta, $metakey );
@@ -768,8 +802,7 @@ class Terms extends gEditorial\Module
 	{
 		echo '<fieldset><div class="inline-edit-col"><label><span class="title">';
 
-			$title = $this->get_string( $field, $taxonomy, 'titles', $field );
-			echo HTML::escape( $this->filters( 'field_'.$field.'_title', $title, $taxonomy, $field, FALSE ) );
+			echo HTML::escape( $this->get_supported_field_title( $field, $taxonomy ) );
 
 		echo '</span><span class="input-text-wrap">';
 
@@ -783,15 +816,12 @@ class Terms extends gEditorial\Module
 		echo '<div class="form-field term-'.$field.'-wrap">';
 		echo '<label for="term-'.$field.'">';
 
-			$title = $this->get_string( $field, $taxonomy, 'titles', $field );
-			echo HTML::escape( $this->filters( 'field_'.$field.'_title', $title, $taxonomy, $field, $term ) );
+			echo HTML::escape( $this->get_supported_field_title( $field, $taxonomy, $term ) );
 
 		echo '</label>';
 
 			$this->form_field( $field, $taxonomy, $term );
-
-			$desc = $this->get_string( $field, $taxonomy, 'descriptions', '' );
-			HTML::desc( $this->filters( 'field_'.$field.'_desc', $desc, $taxonomy, $field, $term ) );
+			HTML::desc( $this->get_supported_field_desc( $field, $taxonomy, $term ) );
 
 		echo '</div>';
 	}
@@ -801,8 +831,7 @@ class Terms extends gEditorial\Module
 		echo '<tr class="form-field term-'.$field.'-wrap"><th scope="row" valign="top">';
 		echo '<label for="term-'.$field.'">';
 
-			$title = $this->get_string( $field, $taxonomy, 'titles', $field );
-			echo HTML::escape( $this->filters( 'field_'.$field.'_title', $title, $taxonomy, $field, $term ) );
+			echo HTML::escape( $this->get_supported_field_title( $field, $taxonomy, $term ) );
 
 		echo '</label></th><td>';
 
@@ -811,8 +840,8 @@ class Terms extends gEditorial\Module
 			else
 				$this->form_field( $field, $taxonomy, $term );
 
-			$desc = $this->get_string( $field, $taxonomy, 'descriptions', '' );
 			HTML::desc( $this->filters( 'field_'.$field.'_desc', $desc, $taxonomy, $field, $term ) );
+			HTML::desc( $this->get_supported_field_desc( $field, $taxonomy, $term ) );
 
 		echo '</td></tr>';
 	}
@@ -1530,6 +1559,15 @@ class Terms extends gEditorial\Module
 			return $meta;
 
 		return empty( $meta ) ? get_current_user_id() : $meta;
+	}
+
+			$image_metakey = $this->get_supported_metakey( 'image', $term->taxonomy );
+
+			if ( $image = get_term_meta( $term->term_id, $image_metakey, TRUE ) )
+				$data['data']['image'] = $image;
+		}
+
+		return $data;
 	}
 
 	public function taxonomy_export_term_meta( $metas, $taxonomy )

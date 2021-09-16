@@ -13,6 +13,8 @@
       modal_button: 'Set as image'
     }, plugin[module].strings || {}),
 
+    customs: plugin[module].customs || [],
+
     modalImage: function (element, event) {
       event.preventDefault();
 
@@ -112,8 +114,10 @@
         app.resetImage(this, event);
       });
 
-    $('#the-list').on('click', '.editinline', function (event) {
+    $('#the-list').on('click', '.editinline', function (e) {
       const tag = $(this).parents('tr').attr('id');
+      const event = e;
+
       app.inlineImage(tag, event);
       app.inlineColor(tag, event);
       app.inlineOrder(tag, event);
@@ -126,6 +130,11 @@
       app.inlineText('label', tag, event);
       app.inlineCode('code', tag, event);
       app.inlineText('barcode', tag, event);
+
+      // FIXME: WTF: data attr cannot contain underscores!
+      app.customs.forEach(function (custom) {
+        app.inlineText(custom, tag, event); // only text supported for customs
+      });
     });
 
     // reset the form on submit
