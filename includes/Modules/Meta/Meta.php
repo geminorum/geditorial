@@ -3,12 +3,14 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
+use geminorum\gEditorial\Datetime;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\Core\Arraay;
 use geminorum\gEditorial\Core\HTML;
+use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\Text;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\Database;
@@ -346,6 +348,8 @@ class Meta extends gEditorial\Module
 			$this->add_posttype_fields( $posttype, $this->fields['post'] );
 
 		$this->add_posttype_fields( 'page' );
+
+		$this->filter( 'meta_field', 4, 5, FALSE, 'geditorial' );
 	}
 
 	protected function register_meta_fields()
@@ -942,6 +946,17 @@ class Meta extends gEditorial\Module
 		}
 
 		$this->nonce_field( 'nobox' );
+	}
+
+	// TODO: support more!
+	// @REF: `Template::getMetaField()`
+	public function meta_field( $meta, $field, $post, $args )
+	{
+		switch ( $field ) {
+			case 'published': return Number::localize( Datetime::stringFormat( $meta ) );
+		}
+
+		return $meta;
 	}
 
 	public function content_before( $content )
