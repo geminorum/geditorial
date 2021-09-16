@@ -107,6 +107,7 @@ class Archives extends gEditorial\Module
 
 		$this->filter_module( 'countables', 'taxonomy_countbox_tokens', 4, 9 );
 		$this->filter( 'gtheme_navigation_taxonomy_archive_link', 2, 9 );
+		$this->filter( 'navigation_general_items', 1, 10, FALSE, 'gnetwork' );
 	}
 
 	private function _do_add_custom_queries()
@@ -297,5 +298,26 @@ class Archives extends gEditorial\Module
 			return $link;
 
 		return $false;
+	}
+
+	public function navigation_general_items( $items )
+	{
+		foreach ( $this->list_posttypes() as $posttype_name => $posttype_label )
+			$items[] = [
+				/* translators: %s: supported object label */
+				'name' => sprintf( _x( '%s Archives', 'Navigation Metabox', 'geditorial-archives' ), $posttype_label ),
+				'slug' => sprintf( '%s_archives', $posttype_name ),
+				'link' => get_post_type_archive_link( $posttype_name ),
+			];
+
+		foreach ( $this->list_taxonomies() as $taxonomy_name => $taxonomy_label )
+			$items[] = [
+				/* translators: %s: supported object label */
+				'name' => sprintf( _x( '%s Archives', 'Navigation Metabox', 'geditorial-archives' ), $taxonomy_label ),
+				'slug' => sprintf( '%s_archives', $taxonomy_name ),
+				'link' => $this->get_taxonomy_archive_link( $taxonomy_name ),
+			];
+
+		return $items;
 	}
 }
