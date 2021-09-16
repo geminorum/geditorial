@@ -857,6 +857,7 @@ class Template extends Main
 	}
 
 	// @REF: `get_the_term_list()`
+	// FIXME: move this to Taxonomy
 	public static function getTheTermList( $taxonomy, $post = NULL, $before = '', $after = '' )
 	{
 		if ( ! $post = Helper::getPost( $post ) )

@@ -26,7 +26,7 @@ class Widgets extends gEditorial\Module
 					'field'  => 'widgets',
 					'title'  => _x( 'Widgets', 'Setting Title', 'geditorial-widgets' ),
 					'type'   => 'checkboxes',
-					'values' => $this->list_widgets(),
+					'values' => $this->_list_widgets(),
 				]
 			],
 			'_frontend' => [
@@ -47,7 +47,7 @@ class Widgets extends gEditorial\Module
 							'field'       => 'priority',
 							'type'        => 'number',
 							'title'       => _x( 'Priority', 'Setting Title', 'geditorial-widgets' ),
-							'description' => _x( 'Action priority where the widget appears on the action.', 'Setting Description', 'geditorial-widgets' ),
+							'description' => _x( 'Action priority where the widget runs on the action.', 'Setting Description', 'geditorial-widgets' ),
 							'default'     => 10,
 						],
 						[
@@ -105,7 +105,7 @@ class Widgets extends gEditorial\Module
 		];
 	}
 
-	private function list_widgets()
+	private function _list_widgets()
 	{
 		$list = [];
 

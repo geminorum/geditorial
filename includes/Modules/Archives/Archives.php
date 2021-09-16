@@ -26,13 +26,11 @@ class Archives extends gEditorial\Module
 
 	protected function get_global_settings()
 	{
-		$settings   = [];
-		$posttypes  = $this->list_posttypes();
-		$taxonomies = $this->list_taxonomies();
+		$settings = [];
 
 		$settings['posttypes_option'] = 'posttypes_option';
 
-		foreach ( $posttypes as $posttype_name => $posttype_label ) {
+		foreach ( $this->list_posttypes() as $posttype_name => $posttype_label ) {
 
 			$settings['_posttypes'][] = [
 				'field'       => 'posttype_'.$posttype_name.'_title',
@@ -55,7 +53,7 @@ class Archives extends gEditorial\Module
 
 		$settings['taxonomies_option'] = 'taxonomies_option';
 
-		foreach ( $taxonomies as $taxonomy_name => $taxonomy_label ) {
+		foreach ( $this->list_taxonomies() as $taxonomy_name => $taxonomy_label ) {
 
 			$settings['_taxonomies'][] = [
 				'field'       => 'taxonomy_'.$taxonomy_name.'_title',
@@ -106,7 +104,8 @@ class Archives extends gEditorial\Module
 		$this->_do_add_custom_queries();
 
 		$this->filter_module( 'countables', 'taxonomy_countbox_tokens', 4, 9 );
-		$this->filter( 'gtheme_navigation_taxonomy_archive_link', 2, 9 );
+
+		$this->filter( 'navigation_taxonomy_archive_link', 2, 9, FALSE, 'gtheme' );
 		$this->filter( 'navigation_general_items', 1, 10, FALSE, 'gnetwork' );
 	}
 
@@ -292,7 +291,7 @@ class Archives extends gEditorial\Module
 		return $tokens;
 	}
 
-	public function gtheme_navigation_taxonomy_archive_link( $false, $taxonomy )
+	public function navigation_taxonomy_archive_link( $false, $taxonomy )
 	{
 		if ( $link = $this->get_taxonomy_archive_link( $taxonomy ) )
 			return $link;

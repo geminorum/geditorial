@@ -153,7 +153,7 @@ class ShortCode extends Main
 		], $atts );
 
 		$text = sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' );
-		$link = get_term_link( $term, $term->taxonomy );
+		$link = get_term_link( $term );
 
 		if ( is_null( $args['item_text'] ) )
 			$title = $text;
@@ -207,12 +207,12 @@ class ShortCode extends Main
 		}
 
 		if ( ! $args['item_tag'] )
-			return $before.$title.$after;
+			return $before.$item.$after;
 
 		return HTML::tag( $args['item_tag'], [
 			'id'    => $args['item_anchor'] ? sprintf( $args['item_anchor'], $term->term_id, $term->slug ) : FALSE,
 			'class' => $args['item_class'],
-		], $before.$title.( $args['item_dummy'] ?: '' ).$after );
+		], $before.$item.( $args['item_dummy'] ?: '' ).$after );
 	}
 
 	// post as title of the list
@@ -409,9 +409,13 @@ class ShortCode extends Main
 		], $before.$item.( $args['item_dummy'] ?: '' ).$after );
 	}
 
-	public static function getDefaults( $posttype, $taxonomy, $posttypes = [ 'post' ] )
+	public static function getDefaults( $posttype = '', $taxonomy = '', $posttypes = [ 'post' ], $taxonomies = [ 'post_tag' ] )
 	{
 		return [
+			'taxonomy'       => $taxonomy,
+			'taxonomies'     => $taxonomies,
+			'posttype'       => $posttype,
+			'posttypes'      => $posttypes,
 			'id'             => '',
 			'slug'           => '',
 			'title'          => NULL, // FALSE to disable
@@ -433,7 +437,7 @@ class ShortCode extends Main
 			'item_tag'       => 'li',
 			'item_anchor'    => FALSE, // $posttype.'-%2$s',
 			'item_class'     => '-item do-sincethen',
-			'item_dummy'    => '<span class="-dummy"></span>',
+			'item_dummy'     => '<span class="-dummy"></span>',
 			'item_after'     => '',
 			'item_after_cb'  => FALSE,
 			'item_download'  => TRUE, // only for attachments
@@ -444,7 +448,6 @@ class ShortCode extends Main
 			'list_tag'       => 'ul',
 			'list_class'     => '-list',
 			'cover'          => FALSE, // must have thumbnail
-			'posttypes'      => $posttypes,
 			'future'         => 'on',
 			'mime_type'      => '', // only for attachments / like: `image`
 			'connection'     => '', // only for o2o
@@ -467,7 +470,7 @@ class ShortCode extends Main
 	// list: paired: posts by meta (PAIRED API)
 	// list: connected: posts by o2o
 	// list: attached: posts by inheritance
-	// list: alphabetized: posts by alphabet
+	// list: alphabetized: posts sorted by alphabet // TODO!
 	public static function listPosts( $list, $posttype, $taxonomy, $atts = [], $content = NULL, $tag = '' )
 	{
 		$defs = self::getDefaults( $posttype, $taxonomy, [ $posttype ] );
@@ -684,7 +687,7 @@ class ShortCode extends Main
 
 		if ( $args['list_tag'] )
 			$html = HTML::tag( $args['list_tag'], [
-				'class' => $args['list_class'],
+				'class' => HTML::attrClass( $args['list_class'], '-posts-list' ),
 			], $html );
 
 		if ( $args['title'] )

@@ -323,7 +323,7 @@ class Attachments extends gEditorial\Module
 			'search' => [
 				'title'    => _x( 'Search', 'Table Column', 'geditorial-attachments' ),
 				'class'    => '-attachment-search -has-list',
-				'callback' => static function( $value, $row, $column, $index, $key, $args ) {
+				'callback' => function( $value, $row, $column, $index, $key, $args ) {
 					$list = [];
 
 					foreach ( $this->search_attachment( $row->ID ) as $post_id )

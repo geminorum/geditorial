@@ -374,7 +374,7 @@ class Module extends Base
 		], $extra ), $url );
 	}
 
-	// DEPRECATED: use `$this->get_adminpage_url( FALSE )`
+	// FIXME: DEPRECATED: use `$this->get_adminpage_url( FALSE )`
 	// OVERRIDE: if has no admin menu but using the hook
 	public function get_adminmenu( $page = TRUE, $extra = [] )
 	{
@@ -1781,6 +1781,7 @@ class Module extends Base
 			$fields = array_merge( PostType::supports( $posttype, $type.'_fields' ), $fields );
 
 		add_post_type_support( $posttype, [ $type.'_fields' ], $fields );
+		add_post_type_support( $posttype, 'custom-fields' ); // must for rest meta fields
 	}
 
 	public function get_string( $string, $subgroup = 'post', $group = 'titles', $fallback = FALSE )
@@ -1921,7 +1922,7 @@ class Module extends Base
 			return FALSE;
 
 		add_filter( 'gnetwork_taxonomy_default_terms_'.$this->constant( $constant ),
-			function() use ( $terms ) { return $terms; } );
+			static function() use ( $terms ) { return $terms; } );
 	}
 
 	protected function check_settings( $sub, $context = 'tools', $extra = [], $key = NULL )
@@ -2851,7 +2852,7 @@ class Module extends Base
 		remove_shortcode( $shortcode );
 		add_shortcode( $shortcode, $callback );
 
-		add_filter( 'geditorial_shortcode_'.$shortcode, $callback, 10, 3 );
+		add_filter( $this->base.'_shortcode_'.$shortcode, $callback, 10, 3 );
 	}
 
 	// DEFAULT FILTER
@@ -2970,7 +2971,7 @@ class Module extends Base
 	// PAIRED API
 	// NOTE: subterms must be hierarchical
 	// OLD: `do_render_metabox_assoc()`
-	protected function paired_do_render_metabox( $post, $posttype_constant, $tax_constant, $sub_tax_constant )
+	protected function paired_do_render_metabox( $post, $posttype_constant, $tax_constant, $sub_tax_constant, $display_empty = FALSE )
 	{
 		$sub_tax   = FALSE;
 		$dropdowns = $excludes = [];
@@ -2991,7 +2992,7 @@ class Module extends Base
 			if ( ! $to_post_id = $this->paired_get_to_post_id( $term, $posttype_constant, $tax_constant ) )
 				continue;
 
-			$dropdown = MetaBox::paired_dropdownToPosts( $posttype, $to_post_id, $this->classs(), [], $none_main );
+			$dropdown = MetaBox::paired_dropdownToPosts( $posttype, $to_post_id, $this->classs(), [], $none_main, $display_empty );
 
 			if ( $sub_tax ) {
 
@@ -3013,10 +3014,10 @@ class Module extends Base
 		}
 
 		if ( empty( $dropdowns ) )
-			$dropdowns[0] = MetaBox::paired_dropdownToPosts( $posttype, 0, $this->classs(), $excludes, $none_main );
+			$dropdowns[0] = MetaBox::paired_dropdownToPosts( $posttype, '0', $this->classs(), $excludes, $none_main, $display_empty );
 
 		else if ( $this->get_setting( 'multiple_instances' ) )
-			$dropdowns[] = MetaBox::paired_dropdownToPosts( $posttype, 0, $this->classs(), $excludes, $none_main );
+			$dropdowns[] = MetaBox::paired_dropdownToPosts( $posttype, '0', $this->classs(), $excludes, $none_main, $display_empty );
 
 		foreach ( $dropdowns as $dropdown )
 			if ( $dropdown )
@@ -3288,7 +3289,7 @@ class Module extends Base
 		if ( is_null( $title ) )
 			$title = $this->get_string( 'meta_box_title', $constant, 'misc', $object->labels->name );
 
-		// FIXME: problems with block editor
+		// FIXME: problems with block editor(on panel settings)
 		return $title; // <--
 
 		if ( $info = $this->get_string( 'metabox_info', $constant, 'metabox', NULL ) )

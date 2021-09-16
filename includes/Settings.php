@@ -289,6 +289,16 @@ class Settings extends Core\Base
 		];
 	}
 
+	public static function getSetting_quick_newpost( $description = NULL )
+	{
+		return [
+			'field'       => 'quick_newpost',
+			'title'       => _x( 'Quick New Post', 'Settings: Setting Title', 'geditorial' ),
+			'description' => $description ?: '',
+			'default'     => '0',
+		];
+	}
+
 	public static function getSetting_widget_support( $description = NULL )
 	{
 		return [
@@ -335,6 +345,16 @@ class Settings extends Core\Base
 			'field'       => 'restapi_support',
 			'title'       => _x( 'REST API Support', 'Settings: Setting Title', 'geditorial' ),
 			'description' => $description ?: '',
+			'default'     => '0',
+		];
+	}
+
+	public static function getSetting_legacy_migration( $description = NULL )
+	{
+		return [
+			'field'       => 'legacy_migration',
+			'title'       => _x( 'Legacy Migration', 'Settings: Setting Title', 'geditorial' ),
+			'description' => $description ?: _x( 'Imports metadata from legacy plugin system.', 'Settings: Setting Description', 'geditorial' ),
 			'default'     => '0',
 		];
 	}

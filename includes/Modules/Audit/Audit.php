@@ -369,20 +369,34 @@ class Audit extends gEditorial\Module
 		] );
 	}
 
+	// @SEE: https://core.trac.wordpress.org/ticket/38636
 	public function admin_bar_menu( $wp_admin_bar )
 	{
+		// $post_id = get_queried_object_id();
+
 		$wp_admin_bar->add_node( [
 			'id'    => $this->classs( 'attributes' ),
 			'href'  => $this->get_module_url(),
 			'title' => _x( 'Auditing', 'Adminbar: Title Attr', 'geditorial-audit' ).Ajax::spinner(),
-			'meta'  => [ 'class' => 'geditorial-adminbar-node -action '.$this->classs() ],
+			'meta'  => [
+				'class' => 'geditorial-adminbar-node -action quick-assign-action '.$this->classs(),
+				// working but not implemented on js yet!
+				// 'html'  => HTML::tag( 'span', [
+				// 	'class' => 'quick-assign-data',
+				// 	'data'  => [
+				// 		'post'     => $post_id,
+				// 		'taxonomy' => $this->constant( 'audit_tax' ),
+				// 		'nonce'    => wp_create_nonce( $this->hook( $post_id ) ),
+				// 	],
+				// ] ),
+			],
 		] );
 
 		$wp_admin_bar->add_node( [
 			'id'     => $this->classs( 'box' ),
 			'parent' => $this->classs( 'attributes' ),
 			'title'  => _x( 'Click to load attributes &hellip;', 'Adminbar: Title Attr', 'geditorial-audit' ),
-			'meta'   => [ 'class' => 'geditorial-adminbar-wrap -wrap '.$this->classs() ],
+			'meta'   => [ 'class' => 'geditorial-adminbar-wrap -wrap quick-assign-box '.$this->classs() ],
 		] );
 	}
 

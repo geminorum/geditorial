@@ -448,12 +448,14 @@ class Helper extends Main
 				'class'  => '-link -row-link -row-link-edit',
 				'target' => '_blank',
 				'title'  => is_null( $title_attr ) ? _x( 'Edit', 'Helper: Row Action', 'geditorial' ) : $title_attr,
+				'data'   => [ 'post' => $post->ID, 'type' => $post->post_type ],
 			], HTML::escape( $title ) ).$after;
 
 		if ( 'view' == $link && ! $edit && 'publish' != get_post_status( $post ) )
 			return HTML::tag( 'span', [
 				'class' => '-row-span',
 				'title' => is_null( $title_attr ) ? FALSE : $title_attr,
+				// 'data'  => [ 'post' => $post->ID, 'type' => $post->post_type ],
 			], HTML::escape( $title ) ).$after;
 
 		if ( 'view' == $link )
@@ -462,6 +464,7 @@ class Helper extends Main
 				'class'  => '-link -row-link -row-link-view',
 				'target' => '_blank',
 				'title'  => is_null( $title_attr ) ? _x( 'View', 'Helper: Row Action', 'geditorial' ) : $title_attr,
+				'data'   => [ 'post' => $post->ID, 'type' => $post->post_type ],
 			], HTML::escape( $title ) ).$after;
 
 		return HTML::tag( 'a', [
@@ -469,6 +472,7 @@ class Helper extends Main
 			'class'  => '-link -row-link -row-link-custom',
 			'target' => '_blank',
 			'title'  => is_null( $title_attr ) ? FALSE : $title_attr,
+			'data'   => [ 'post' => $post->ID, 'type' => $post->post_type ],
 		], HTML::escape( $title ) ).$after;
 	}
 
@@ -738,6 +742,8 @@ class Helper extends Main
 		];
 
 		$strings = self::getStringsFromName( $name );
+
+		// TODO: add raw name strings on the object
 
 		foreach ( $name_templates as $key => $template )
 			if ( ! array_key_exists( $key, $pre ) )

@@ -518,6 +518,7 @@ class Importer extends gEditorial\Module
 								case 'importer_post_excerpt': $data['post_excerpt'] = $value; break;
 							}
 
+							// WTF: already `isEmptyString` applied!
 							// skip empty values on terms
 							if ( ! $value )
 								continue;

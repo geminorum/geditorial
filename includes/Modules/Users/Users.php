@@ -603,6 +603,7 @@ class Users extends gEditorial\Module
 		$this->check_settings( $sub, 'reports' );
 	}
 
+	// MAYBE: move to Statistics module
 	protected function render_reports_html( $uri, $sub )
 	{
 		$args = $this->get_current_form( [

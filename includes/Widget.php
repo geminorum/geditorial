@@ -38,6 +38,9 @@ class Widget extends \WP_Widget
 		parent::__construct( static::BASE.'_'.$args['name'], $args['title'], [
 			'description' => $args['desc'],
 			'classname'   => '{GEDITORIAL_WIDGET_CLASSNAME} '.'widget-'.static::BASE.'-'.$args['class'],
+
+			'customize_selective_refresh' => TRUE,
+			'show_instance_in_rest'       => TRUE,
 		], $args['control'] );
 
 		$this->alt_option_name = 'widget_'.static::BASE.'_'.$args['name'];

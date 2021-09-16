@@ -421,10 +421,10 @@ class Meta extends gEditorial\Module
 	}
 
 	// TODO: implement disable filter on our regular UI
+	// FIXME: `current_user_can('edit_posts')` and get it from posttype object caps
 	public function register_auth_callback( $allowed, $meta_key, $object_id, $user_id, $cap, $caps )
 	{
-		$field = Text::stripPrefix( $meta_key, sprintf( '_%s_', $this->key ) );
-		return ! $this->filters( 'disable_field_edit', FALSE, $field, get_object_subtype( 'post', $object_id ) );
+		return ! $this->filters( 'disable_field_edit', FALSE, $this->stripprefix( $meta_key ), get_object_subtype( 'post', $object_id ) );
 	}
 
 	// WORKING BUT DISABLED
@@ -446,7 +446,7 @@ class Meta extends gEditorial\Module
 	public function register_sanitize_callback( $meta_value, $meta_key, $object_type )
 	{
 		$fields = $this->get_posttype_fields( $object_type );
-		$field  = Text::stripPrefix( $meta_key, sprintf( '_%s_', $this->key ) );
+		$field  = $this->stripprefix( $meta_key );
 
 		return array_key_exists( $field, $fields )
 			? $this->sanitize_posttype_field( $meta_value, $fields[$field], Helper::getPost() )

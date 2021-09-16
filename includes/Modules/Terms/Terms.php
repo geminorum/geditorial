@@ -204,7 +204,7 @@ class Terms extends gEditorial\Module
 		if ( 'dashboard' == $screen->base ) {
 
 			if ( current_user_can( 'edit_others_posts' ) )
-				add_filter( 'gnetwork_dashboard_pointers', [ $this, 'dashboard_pointers' ] );
+				$this->filter( 'dashboard_pointers', 1, 10, FALSE, 'gnetwork' );
 
 		} else if ( 'edit-tags' == $screen->base ) {
 

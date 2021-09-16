@@ -636,7 +636,7 @@ class Book extends gEditorial\Module
 
 		$this->add_posttype_fields( $this->constant( 'publication_cpt' ) );
 		$this->filter_module( 'meta', 'sanitize_posttype_field', 4 );
-		$this->filter_module( 'meta', 'field', 4 ); // @SEE: `Template::getMetaField()`
+		$this->filter( 'meta_field', 4, 9, FALSE, 'geditorial' );
 
 		$this->filter_module( 'datacodes', 'default_posttype_barcode_metakey', 2 );
 		$this->filter_module( 'datacodes', 'default_posttype_barcode_type', 3 );
@@ -994,6 +994,7 @@ class Book extends gEditorial\Module
 		return $sanitized;
 	}
 
+	// @REF: `Template::getMetaField()`
 	public function meta_field( $meta, $field, $post, $args )
 	{
 		switch ( $field ) {

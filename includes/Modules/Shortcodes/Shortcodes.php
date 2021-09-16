@@ -12,8 +12,6 @@ use geminorum\gEditorial\Core\HTML;
 class Shortcodes extends gEditorial\Module
 {
 
-	protected $textdomain_frontend  = FALSE;
-
 	public static function module()
 	{
 		return [
@@ -92,6 +90,7 @@ class Shortcodes extends gEditorial\Module
 			'href'   => $this->get_module_url(),
 		];
 
+		// TODO: niche for each shortcode tag
 		foreach ( $matches[0] as $offset => $shortcode )
 			$nodes[] = [
 				'id'     => $this->classs( 'shortcode', $offset ),
