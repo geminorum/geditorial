@@ -158,6 +158,9 @@ class HTML extends Base
 	// useful when you want to pass on a complex data structure via a form
 	public static function inputHiddenArray( $array, $prefix = '' )
 	{
+		if ( empty( $array ) )
+			return;
+
 		if ( Arraay::hasStringKeys( $array ) ) {
 
 			foreach ( $array as $key => $value ) {

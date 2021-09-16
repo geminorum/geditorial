@@ -5,14 +5,17 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 class Text extends Base
 {
 
-	public static function formatName( $string, $separator = ', ' )
+	public static function nameFamilyFirst( $string, $separator = ', ' )
 	{
+		if ( empty( $string ) )
+			return $string;
+
 		// already formatted
 		if ( FALSE !== stripos( $string, trim( $separator ) ) )
 			return $string;
 
 		// remove NULL, FALSE and empty strings (""), but leave values of 0
-		$parts = array_filter( explode( ' ', $string, 2 ), 'strlen' );
+		$parts = array_filter( explode( ' ', trim( $string ), 2 ), 'strlen' );
 
 		if ( 1 == count( $parts ) )
 			return $string;
@@ -20,10 +23,23 @@ class Text extends Base
 		return $parts[1].$separator.$parts[0];
 	}
 
-	public static function reFormatName( $string, $separator = ', ' )
+	public static function nameFamilyLast( $string, $separator = ', ' )
 	{
+		if ( empty( $string ) )
+			return $string;
+
 		return preg_replace( '/(.*), (.*)/', '$2 $1', $string );
 		// return preg_replace( '/(.*)([,،;؛]) (.*)/u', '$3'.$separator.'$1', $string ); // Wrong!
+	}
+
+	public static function formatName( $string, $separator = ', ' )
+	{
+		return self::nameFamilyFirst( $string, $separator );
+	}
+
+	public static function reFormatName( $string, $separator = ', ' )
+	{
+		return self::nameFamilyLast( $string, $separator );
 	}
 
 	// simpler version of `wpautop()`

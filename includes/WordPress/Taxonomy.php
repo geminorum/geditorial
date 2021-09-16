@@ -3,7 +3,6 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Core\HTML;
 
 class Taxonomy extends Core\Base
 {
@@ -284,6 +283,76 @@ class Taxonomy extends Core\Base
 		return $new_terms;
 	}
 
+	public static function reorderTermsByMeta( $terms, $meta_key = 'order', $fields = 'all' )
+	{
+		if ( empty( $terms ) || count( $terms ) === 1 || 'count' === $fields )
+			return $terms;
+
+		$type = 'object';
+		$prop = '_order';
+		$list = [];
+
+		if ( in_array( $fields, [ 'ids', 'tt_ids' ], TRUE ) )
+			$type = 'array';
+
+		else if ( Core\Text::start( $fields, 'id=>' ) )
+			$type = 'assoc';
+
+		foreach ( $terms as $index => $data ) {
+
+			if ( 'array' == $type )
+				$term_id = $data;
+
+			else if ( 'assoc' == $type )
+				$term_id = $index;
+
+			else if ( isset( $data->term_id ) )
+				$term_id = $data->term_id;
+
+			else
+				continue;
+
+			if ( $meta = get_term_meta( $term_id, $meta_key, TRUE ) )
+				$order = (int) $meta;
+
+			else
+				$order = 0;
+
+			if ( 'array' == $type ) {
+
+				$list[] = [
+					'term_id' => $data,
+					$prop     => $order,
+				];
+
+			} else if ( 'assoc' == $type ) {
+
+				$list[] = [
+					'term_id' => $index,
+					'data'    => $data,
+					$prop     => $order,
+				];
+
+			} else if ( 'object' == $type ) {
+
+				$data->{$prop} = $order;
+				$list[] = $data;
+			}
+		}
+
+		// bail if cannot determine the term ids
+		if ( empty( $list ) )
+			return $terms;
+
+		if ( 'array' == $type )
+			return array_column( Core\Arraay::sortByPriority( $list, $prop ), 'term_id' );
+
+		if ( 'assoc' == $type )
+			return array_column( Core\Arraay::sortByPriority( $list, $prop ), 'data', 'term_id' );
+
+		return Core\Arraay::sortObjectByPriority( $list, $prop );
+	}
+
 	// EXPERIMENTAL: parsing: 'category:12,11|post_tag:3|people:58'
 	public static function parseTerms( $string )
 	{
@@ -389,6 +458,7 @@ class Taxonomy extends Core\Base
 		return $parents;
 	}
 
+	// TODO: must suport different parents
 	public static function getTargetTerm( $target, $taxonomy, $args = [], $meta = [] )
 	{
 		$target = trim( $target );
@@ -409,11 +479,11 @@ class Taxonomy extends Core\Base
 
 			return get_term( $term['term_id'], $taxonomy );
 
-		} else if ( $term = term_exists( Core\Text::formatName( $target ), $taxonomy ) ) {
+		} else if ( $term = term_exists( Core\Text::nameFamilyFirst( $target ), $taxonomy ) ) {
 
 			return get_term( $term['term_id'], $taxonomy );
 
-		} else if ( $term = term_exists( Core\Text::reFormatName( $target ), $taxonomy ) ) {
+		} else if ( $term = term_exists( Core\Text::nameFamilyLast( $target ), $taxonomy ) ) {
 
 			return get_term( $term['term_id'], $taxonomy );
 		}
@@ -561,7 +631,7 @@ class Taxonomy extends Core\Base
 		if ( ! $term_thumbnail_img = wp_get_attachment_image_src( $term_image_id, $size ) )
 			return '';
 
-		$image = HTML::tag( 'img', array(
+		$image = Core\HTML::tag( 'img', array(
 			'src'     => $term_thumbnail_img[0],
 			'alt'     => '',
 			'class'   => '-featured',
@@ -575,7 +645,7 @@ class Taxonomy extends Core\Base
 		if ( ! $link )
 			return $image;
 
-		return HTML::tag( 'a', array(
+		return Core\HTML::tag( 'a', array(
 			'href'   => wp_get_attachment_url( $term_image_id ),
 			'title'  => get_the_title( $term_image_id ),
 			'class'  => 'thickbox',

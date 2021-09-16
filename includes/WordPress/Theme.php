@@ -82,7 +82,7 @@ class Theme extends Core\Base
 
 	public static function restPost_getMetaField( $meta, $field, $post_id, $module )
 	{
-		$prop = '_meta_'.$field;
+		$prop = sprintf( '_meta_%s', $field );
 
 		if ( isset( $GLOBALS['post']->_metadata->{$prop} ) )
 			return $GLOBALS['post']->_metadata->{$prop};

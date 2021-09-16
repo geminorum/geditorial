@@ -149,7 +149,7 @@ class Arraay extends Base
 		return array_intersect_key( $array, array_flip( $keys ) );
 	}
 
-	// @REF: `_sort_priority_callback()`
+	// @REF: WooCommerce: `_sort_priority_callback()`
 	public static function sortByPriority( $array, $priority_key )
 	{
 		uasort( $array, static function( $a, $b ) use ( $priority_key ) {
@@ -159,6 +159,21 @@ class Arraay extends Base
 					return 0;
 
 			return ( $a[$priority_key] < $b[$priority_key] ) ? -1 : 1;
+		} );
+
+		return $array;
+	}
+
+	// @REF: WooCommerce: `_sort_priority_callback()`
+	public static function sortObjectByPriority( $array, $priority_key )
+	{
+		uasort( $array, static function( $a, $b ) use ( $priority_key ) {
+
+			if ( ! isset( $a->{$priority_key}, $b->{$priority_key} )
+				|| $a->{$priority_key} === $b->{$priority_key} )
+					return 0;
+
+			return ( $a->{$priority_key} < $b->{$priority_key} ) ? -1 : 1;
 		} );
 
 		return $array;

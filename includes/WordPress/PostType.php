@@ -8,9 +8,18 @@ use geminorum\gEditorial\Core\HTML;
 class PostType extends Core\Base
 {
 
-	public static function object( $posttype )
+	public static function object( $posttype_or_post )
 	{
-		return is_object( $posttype ) ? $posttype : get_post_type_object( $posttype );
+		if ( ! $posttype_or_post )
+			return FALSE;
+
+		if ( $posttype_or_post instanceof \WP_Post )
+			return get_post_type_object( $posttype_or_post->post_type );
+
+		if ( $posttype_or_post instanceof \WP_Post_Type )
+			return $posttype_or_post;
+
+		return get_post_type_object( $posttype_or_post );
 	}
 
 	public static function can( $posttype, $capability = 'edit_posts', $user_id = NULL )
@@ -107,7 +116,7 @@ class PostType extends Core\Base
 		return $results[$meta][$value] = $post_id;
 	}
 
-	// `WP_Query` does not support `id=>name` as fields
+	// WTF: `WP_Query` does not support `id=>name` as fields
 	public static function getIDs( $posttype = 'post', $extra = [], $fields = NULL )
 	{
 		$args = array_merge( [
@@ -285,6 +294,28 @@ class PostType extends Core\Base
 			return get_post( $post->post_parent );
 
 		return (int) $post->post_parent;
+	}
+
+	// @REF: `wp_dashboard_recent_drafts()`
+	public static function getRecent( $posttypes = [ 'post' ], $extra = [], $published = TRUE )
+	{
+		$args = array_merge( [
+			'post_type'      => $posttypes,
+			'post_status'    => $published ? 'publish' : [ 'publish', 'future', 'draft', 'pending' ],
+			// 'posts_per_page' => 7, // will use default
+			'orderby'        => 'modified',
+			'order'          => 'DESC',
+
+			'no_found_rows'          => TRUE,
+			'suppress_filters'       => TRUE,
+			'update_post_meta_cache' => FALSE,
+			'update_post_term_cache' => FALSE,
+			'lazy_load_term_meta'    => FALSE,
+		], $extra );
+
+		$query = new \WP_Query;
+
+		return (array) $query->query( $args );
 	}
 
 	// like WP core but returns the actual array!

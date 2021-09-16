@@ -134,6 +134,9 @@ class Database extends Core\Base
 		return $wpdb->get_results( $query, ARRAY_A );
 	}
 
+	// FIXME
+	// public static function getPostsByMultipleTerms( $taxonomy, $posttypes = array( 'post' ), $user_id = 0, $exclude_statuses = NULL ) {}
+
 	// @REF: https://core.trac.wordpress.org/ticket/29181
 	public static function countPostsByNotTaxonomy( $taxonomy, $posttypes = array( 'post' ), $user_id = 0, $exclude_statuses = NULL )
 	{

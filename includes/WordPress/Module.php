@@ -4,6 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Core\HTML;
+use geminorum\gEditorial\Core\Text;
 
 class Module extends Core\Base
 {
@@ -76,6 +77,11 @@ class Module extends Core\Base
 			$suffix.= maybe_serialize( $arg );
 
 		return wp_hash( $this->base.$this->key.$suffix );
+	}
+
+	protected function stripprefix( $string, $key = NULL, $template = '_%s_' )
+	{
+		return Text::stripPrefix( $string, sprintf( $template, is_null( $key ) ? $this->key : $key ) );
 	}
 
 	protected function action( $hooks, $args = 1, $priority = 10, $suffix = FALSE, $base = FALSE )
