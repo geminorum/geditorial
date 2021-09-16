@@ -6,12 +6,12 @@ use geminorum\gEditorial;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Tablelist;
+use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\Core\HTML;
 
 class Shortcodes extends gEditorial\Module
 {
 
-	protected $disable_no_posttypes = TRUE;
 	protected $textdomain_frontend  = FALSE;
 
 	public static function module()
@@ -28,10 +28,45 @@ class Shortcodes extends gEditorial\Module
 	{
 		return [
 			'_general' => [
+				[
+					'field'          => 'shortcodes',
+					'title'          => _x( 'Shortcodes', 'Setting Title', 'geditorial-shortcodes' ),
+					'description'    => _x( 'Enables the use of the selected short-codes.', 'Setting Description', 'geditorial-shortcodes' ),
+					'type'           => 'checkboxes-values',
+					'values'         => $this->_list_shortcodes(),
+					'template_value' => '[%s]',
+
+				],
+			],
+			'_frontend' => [
 				'adminbar_summary',
 			],
 			'posttypes_option' => 'posttypes_option',
 		];
+	}
+
+	// TODO: MAYBE: finally shortcode class!
+	// TODO: adopt general shortcodes from gTheme and gNetwork
+	private function _list_shortcodes()
+	{
+		return [
+			'display-terms' => _x( 'Display Terms', 'Shortcode Name', 'geditorial-shortcodes' ),
+		];
+	}
+
+	protected function get_global_constants()
+	{
+		return [
+			'display_terms_shortcode' => 'display-terms',
+		];
+	}
+
+	public function init()
+	{
+		parent::init();
+
+		foreach ( $this->get_setting( 'shortcodes', [] ) as $shortcode )
+			$this->register_shortcode( sprintf( '%s_shortcode', $this->sanitize_hook( $shortcode ) ), NULL, TRUE );
 	}
 
 	public function adminbar_init( &$nodes, $parent )
@@ -155,5 +190,11 @@ class Shortcodes extends gEditorial\Module
 			'ID'           => $post->ID,
 			'post_content' => preg_replace( $pattern, '', $post->post_content ),
 		] );
+	}
+
+	// @SEE: https://github.com/seothemes/display-terms-shortcode/blob/master/display-terms-shortcode.php
+	public function display_terms_shortcode( $atts = [], $content = NULL, $tag = '' )
+	{
+		return ShortCode::listTerms( 'listing', '', $atts, $content, $this->constant( 'display_terms_shortcode', $tag ) );
 	}
 }
