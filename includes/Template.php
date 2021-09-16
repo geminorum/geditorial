@@ -877,4 +877,34 @@ class Template extends Main
 
 		return Helper::getJoined( apply_filters( 'term_links-'.$taxonomy, $list ), $before, $after, FALSE );
 	}
+
+	public static function renderRecentByPosttype( $posttype, $link = 'view', $empty = NULL, $title_attr = NULL )
+	{
+		if ( ! $object = PostType::object( $posttype ) )
+			return;
+
+		$posts = PostType::getRecent( $object->name, [], current_user_can( $object->cap->edit_posts ) );
+
+		if ( count( $posts ) ) {
+
+			$list = [];
+
+			foreach ( $posts as $post )
+				$list[] = Helper::getPostTitleRow( $post, $link, FALSE, $title_attr );
+
+			/* translators: %s: posttype name */
+			HTML::h3( sprintf( _x( 'Recent %s', 'Template: Recents', 'geditorial' ), $object->labels->name ) );
+			echo HTML::renderList( $list );
+
+		} else if ( is_null( $empty ) ) {
+
+			/* translators: %s: posttype name */
+			HTML::h3( sprintf( _x( 'Recent %s', 'Template: Recents', 'geditorial' ), $object->labels->name ) );
+			HTML::desc( $object->labels->not_found, TRUE, '-empty -empty-posttype-'.$object->name );
+
+		} else if ( $empty ) {
+
+			echo $empty;
+		}
+	}
 }
