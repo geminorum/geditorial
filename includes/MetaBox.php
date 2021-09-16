@@ -444,7 +444,7 @@ class MetaBox extends Main
 
 	// PAIRED API
 	// OLD: `dropdownAssocPostsRedux()`
-	public static function paired_dropdownToPosts( $posttype, $paired = 0, $prefix = '', $exclude = [], $none = NULL )
+	public static function paired_dropdownToPosts( $posttype, $paired = '0', $prefix = '', $exclude = [], $none = NULL, $display_empty = TRUE )
 	{
 		$posts = get_pages( [
 			'post_type'   => $posttype,
@@ -454,7 +454,7 @@ class MetaBox extends Main
 			'sort_order'  => 'desc',
 		] );
 
-		if ( empty( $posts ) )
+		if ( empty( $posts ) && ! $display_empty )
 			return '';
 
 		if ( is_null( $none ) )
