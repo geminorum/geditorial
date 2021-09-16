@@ -20,6 +20,7 @@ class Book extends gEditorial\Module
 {
 
 	protected $support_meta = FALSE;
+	protected $barcode_type = 'ean13';
 
 	public static function module()
 	{
@@ -637,6 +638,9 @@ class Book extends gEditorial\Module
 		$this->filter_module( 'meta', 'sanitize_posttype_field', 4 );
 		$this->filter_module( 'meta', 'field', 4 ); // @SEE: `Template::getMetaField()`
 
+		$this->filter_module( 'datacodes', 'default_posttype_barcode_metakey', 2 );
+		$this->filter_module( 'datacodes', 'default_posttype_barcode_type', 3 );
+
 		$this->register_default_terms( 'size_tax' );
 
 		$this->support_meta = TRUE;
@@ -1000,6 +1004,22 @@ class Book extends gEditorial\Module
 		}
 
 		return $meta;
+	}
+
+	public function datacodes_default_posttype_barcode_metakey( $default, $posttype )
+	{
+		if ( $posttype == $this->constant( 'publication_cpt' ) )
+			return '_meta_publication_isbn';
+
+		return $default;
+	}
+
+	public function datacodes_default_posttype_barcode_type( $default, $posttype, $types )
+	{
+		if ( $posttype == $this->constant( 'publication_cpt' ) )
+			return $this->barcode_type;
+
+		return $default;
 	}
 
 	private function get_importer_fields( $posttype = NULL )
