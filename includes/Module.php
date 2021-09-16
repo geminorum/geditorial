@@ -3308,12 +3308,13 @@ class Module extends Base
 
 	public function get_column_title( $column, $constant = NULL, $fallback = NULL )
 	{
-		return $this->get_string( $column.'_column_title', $constant, 'misc', ( is_null( $fallback ) ? $column : $fallback ) );
+		$title = $this->get_string( $column.'_column_title', $constant, 'misc', ( is_null( $fallback ) ? $column : $fallback ) );
+		return $this->filters( 'column_title', $title, $column, $constant, $fallback );
 	}
 
 	public function get_column_title_icon( $column, $constant = NULL, $fallback = NULL )
 	{
-		$title = $this->get_string( $column.'_column_title', $constant, 'misc', ( is_null( $fallback ) ? $column : $fallback ) );
+		$title = $this->get_column_title( $column, $constant, $fallback );
 		return sprintf( '<span class="-column-icon %3$s" title="%2$s">%1$s</span>', $title, esc_attr( $title ), $this->classs( $column ) );
 	}
 
