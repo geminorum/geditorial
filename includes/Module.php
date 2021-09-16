@@ -4712,53 +4712,73 @@ class Module extends Base
 
 	// FIXME: add extra args
 	// @REF: https://developer.wordpress.org/rest-api/extending-the-rest-api/adding-custom-endpoints/
-	protected function restapi_register_route( $route, $methods = 'GET', $suffix = '' )
+	protected function restapi_register_route( $route, $methods = 'GET', $suffix = '', $extra = [] )
 	{
 		$args = [];
 		$hook = self::sanitize_hook( $route );
 
 		foreach ( (array) $methods as $method ) {
 
-			// READABLE   = 'GET'; // Alias for GET transport method
-			// CREATABLE  = 'POST'; // Alias for POST transport method
-			// EDITABLE   = 'POST, PUT, PATCH'; // Alias for POST, PUT, PATCH transport methods together
-			// DELETABLE  = 'DELETE'; // Alias for DELETE transport method
-			// ALLMETHODS = 'GET, POST, PUT, PATCH, DELETE'; // Alias for GET, POST, PUT, PATCH & DELETE transport methods together
+			$method = strtolower( $method );
 
-			switch ( strtolower( $method ) ) {
+			if ( method_exists( $this, 'restapi_'.$hook.'_'.$method.'_callback' ) )
+				$callback = [ $this, 'restapi_'.$hook.'_'.$method.'_callback' ];
+			else
+				continue;
+
+			if ( method_exists( $this, 'restapi_'.$hook.'_'.$method.'_arguments' ) )
+				$arguments = call_user_func( [ $this, 'restapi_'.$hook.'_'.$method.'_arguments' ] );
+
+			else if ( array_key_exists( '_'.$method, $extra ) )
+				$arguments = $extra['_'.$method];
+
+			else
+				$arguments = [];
+
+			if ( method_exists( $this, 'restapi_'.$hook.'_'.$method.'_permission' ) )
+				$permission = [ $this, 'restapi_'.$hook.'_'.$method.'_permission' ];
+			else
+				$permission = [ $this, 'restapi_default_permission_callback' ];
+
+			switch ( $method ) {
+
+				// READABLE   = 'GET'; // Alias for GET transport method
+				// CREATABLE  = 'POST'; // Alias for POST transport method
+				// EDITABLE   = 'POST, PUT, PATCH'; // Alias for POST, PUT, PATCH transport methods together
+				// DELETABLE  = 'DELETE'; // Alias for DELETE transport method
+				// ALLMETHODS = 'GET, POST, PUT, PATCH, DELETE'; // Alias for GET, POST, PUT, PATCH & DELETE transport methods together
 
 				case 'post':
 
 					$args[] = [
-						'methods'  => \WP_REST_Server::CREATABLE,
-						'callback' => [ $this, 'restapi_'.$hook.'_post_callback' ],
-
-						'permission_callback' => method_exists( $this, 'restapi_'.$hook.'_permission_callback' )
-							? [ $this, 'restapi_'.$hook.'_permission_callback' ]
-							: [ $this, 'restapi_permission_callback' ],
+						'methods'             => \WP_REST_Server::CREATABLE,
+						'callback'            => $callback,
+						'args'                => $arguments,
+						'permission_callback' => $permission,
 					];
+
 					break;
 
 				case 'delete':
-					$args[] = [
-						'methods'  => \WP_REST_Server::DELETABLE,
-						'callback' => [ $this, 'restapi_'.$hook.'_delete_callback' ],
 
-						'permission_callback' => method_exists( $this, 'restapi_'.$hook.'_permission_callback' )
-							? [ $this, 'restapi_'.$hook.'_permission_callback' ]
-							: [ $this, 'restapi_permission_callback' ],
+					$args[] = [
+						'methods'             => \WP_REST_Server::DELETABLE,
+						'callback'            => $callback,
+						'args'                => $arguments,
+						'permission_callback' => $permission,
 					];
+
 					break;
 
 				case 'get':
-					$args[] = [
-						'methods'  => \WP_REST_Server::READABLE,
-						'callback' => [ $this, 'restapi_'.$hook.'_get_callback' ],
 
-						'permission_callback' => method_exists( $this, 'restapi_'.$hook.'_permission_callback' )
-							? [ $this, 'restapi_'.$hook.'_permission_callback' ]
-							: [ $this, 'restapi_permission_callback' ],
+					$args[] = [
+						'methods'             => \WP_REST_Server::READABLE,
+						'callback'            => $callback,
+						'args'                => $arguments,
+						'permission_callback' => $permission,
 					];
+
 					break;
 			}
 		}
@@ -4771,7 +4791,7 @@ class Module extends Base
 	}
 
 	// 'Authorization: Basic '. base64_encode("user:password")
-	public function restapi_permission_callback( $request )
+	public function restapi_default_permission_callback( $request )
 	{
 		if ( defined( 'GEDITORIAL_DISABLE_AUTH' ) && GEDITORIAL_DISABLE_AUTH )
 			return TRUE;
