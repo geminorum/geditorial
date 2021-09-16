@@ -3,6 +3,7 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
+use geminorum\gEditorial\Datetime;
 use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\ShortCode;
@@ -246,6 +247,8 @@ class Tube extends gEditorial\Module
 
 		if ( $this->get_setting( 'video_channels' ) )
 			$this->add_posttype_fields( $this->constant( 'channel_cpt' ) );
+
+		$this->filter( 'meta_field', 4, 9, FALSE, 'geditorial' );
 	}
 
 	public function dashboard_glance_items( $items )
@@ -389,5 +392,15 @@ class Tube extends gEditorial\Module
 			$content,
 			$this->constant( 'channel_cat_shortcode' )
 		);
+	}
+
+	// @REF: `Template::getMetaField()`
+	public function meta_field( $meta, $field, $post, $args )
+	{
+		switch ( $field ) {
+			case 'creation_date': return Number::localize( Datetime::stringFormat( $meta ) );
+		}
+
+		return $meta;
 	}
 }
