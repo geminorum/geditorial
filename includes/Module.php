@@ -4705,6 +4705,55 @@ class Module extends Base
 		HTML::h2( sprintf( _x( 'Editorial: %s', 'Module', 'geditorial' ), $this->module->title ), 'title' );
 	}
 
+	// TODO: customize column position/sorting
+	protected function _hook_terms_meta_field( $constant, $field, $args = [] )
+	{
+		if ( ! gEditorial()->enabled( 'terms' ) )
+			return FALSE;
+
+		$taxonomy = $this->constant( $constant );
+		$title    = $this->get_string( 'field_title', $field, 'terms_meta_field', $field );
+		$desc     = $this->get_string( 'field_desc', $field, 'terms_meta_field', '' );
+
+		add_filter( $this->base.'_terms_supported_fields', static function( $list, $tax ) use ( $taxonomy, $field ) {
+
+			if ( FALSE === $tax || $tax === $taxonomy )
+				$list[] = $field;
+
+			return $list;
+		}, 12, 2 );
+
+		add_filter( $this->base.'_terms_list_supported_fields', static function( $list, $tax ) use ( $taxonomy, $field, $title ) {
+
+			if ( FALSE === $tax || $tax === $taxonomy )
+				$list[$field] = $title;
+
+			return $list;
+		}, 12, 2 );
+
+		add_filter( $this->base.'_terms_supported_field_taxonomies', static function( $taxonomies, $_field ) use ( $taxonomy, $field ) {
+
+			if ( $_field === $field )
+				$taxonomies[] = $taxonomy;
+
+			return $taxonomies;
+		}, 12, 2 );
+
+		if ( ! is_admin() )
+			return;
+
+		$this->filter_string( $this->base.'_terms_field_'.$field.'_title', $title );
+		$this->filter_string( $this->base.'_terms_field_'.$field.'_desc', $desc );
+
+		add_filter( $this->base.'_terms_column_title', static function( $_title, $column, $constant, $fallback ) use ( $taxonomy, $field, $title ) {
+
+			if ( $column === $field )
+				return $title;
+
+			return $_title;
+		}, 12, 4 );
+	}
+
 	protected function restapi_get_namespace()
 	{
 		return $this->classs().'/'.$this->rest_api_version;
