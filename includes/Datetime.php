@@ -20,7 +20,15 @@ class Datetime extends Main
 	// @SEE: https://www.compart.com/en/unicode/U+002F
 	public static function dateSeparator()
 	{
-		return _x( '/', 'Date Separator', 'geditorial' );
+		return _x( '/', 'Datetime: Date Separator', 'geditorial' );
+	}
+
+	// FIXME: use regex!
+	public static function stringFormat( $string )
+	{
+		$string = str_replace( '/', self::dateSeparator(), $string );
+
+		return trim( $string );
 	}
 
 	public static function dateFormat( $timestamp, $context = 'default' )
