@@ -1013,4 +1013,103 @@ class ShortCode extends Main
 
 		return $html;
 	}
+
+	// list: `listing`: terms for display
+	// list: `thepost`: terms for the post
+	// list: `alphabetized`: terms sorted by alphabet // TODO!
+	public static function listTerms( $list, $taxonomy, $atts = [], $content = NULL, $tag = '' )
+	{
+		$defs = self::getDefaults( '', $taxonomy );
+		$args = shortcode_atts( $defs, $atts, $tag );
+
+		if ( FALSE === $args['context'] )
+			return NULL;
+
+		$key   = md5( $list.serialize( $args ) );
+		$cache = wp_cache_get( $key, $taxonomy );
+
+		if ( FALSE !== $cache )
+			return $cache;
+
+		$html = $ref = $post = $term = $parent = $skip = '';
+
+		if ( $args['item_cb'] && ! is_callable( $args['item_cb'] ) )
+			$args['item_cb'] = FALSE;
+
+		$query = [
+			'order'   => $args['order'],
+			'orderby' => $args['orderby'] ?: 'name',
+		];
+
+		if ( 'listing' == $list ) {
+
+			if ( empty( $args['taxonomy'] ) )
+				return $content;
+
+			$query['taxonomy']   = $args['taxonomy'];
+			$query['hide_empty'] = FALSE;
+
+			$query['update_term_meta_cache'] = FALSE;
+
+		} else if ( 'thepost' == $list ) {
+
+			if ( ! $parent = Helper::getPost( $args['id'] ) )
+				return $content;
+
+			$query['object_ids'] = [ $parent->ID ];
+		}
+
+		$class = new \WP_Term_Query( $query );
+		$items = $class->terms;
+		$count = count( $items );
+
+		if ( ! $count || ( 1 == $count && $skip ) )
+			return $content;
+
+		if ( FALSE === $args['title'] ) {
+
+			// do nothing, title is disabled by the args
+
+		} else if ( 'listing' == $list ) {
+
+			// FIXME: get the title from taxonomy object
+
+		} else if ( 'thepost' == $list ) {
+
+			$args['title'] = self::postTitle( $parent, $args );
+			$ref = $parent;
+		}
+
+		if ( $args['orderby'] == 'order' ) {
+
+			// calback may change items, so even if one item
+			if ( $args['order_cb'] && is_callable( $args['order_cb'] ) )
+				$items = call_user_func_array( $args['order_cb'], [ $items, $args, $ref ] );
+
+			else if ( is_null( $args['order_cb'] ) && $count > 1 )
+				$items = Template::reorderPosts( $items, $args['field_module'], $args['order_start'], $args['order_order'] );
+		}
+
+		foreach ( $items as $item ) {
+
+			if ( $args['item_cb'] )
+				$html.= call_user_func_array( $args['item_cb'], [ $item, $args, $ref ] );
+
+			else
+				$html.= self::termItem( $item, $args );
+		}
+
+		if ( $args['list_tag'] )
+			$html = HTML::tag( $args['list_tag'], [
+				'class' => HTML::attrClass( $args['list_class'], '-terms-list' ),
+			], $html );
+
+		if ( $args['title'] )
+			$html = $args['title'].$html;
+
+		$html = self::wrap( $html, $tag, $args );
+		wp_cache_set( $key, $html, $taxonomy );
+
+		return $html;
+	}
 }
