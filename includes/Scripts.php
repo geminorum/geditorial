@@ -130,13 +130,30 @@ class Scripts extends Main
 		return $handle;
 	}
 
-	public static function pkgVueJS( $enqueue = FALSE, $ver = '2.6.12' )
+	public static function pkgVueJS2( $enqueue = FALSE, $ver = '2.6.14' )
 	{
 		$handle = static::BASE.'-vuejs';
 
 		$url = WordPress::isDev()
 			? 'https://cdn.jsdelivr.net/npm/vue/dist/vue.js'
 			: 'https://cdn.jsdelivr.net/npm/vue@'.$ver.'/dist/vue.min.js';
+
+		if ( $enqueue )
+			wp_enqueue_script( $handle, $url, [], $ver, TRUE );
+		else
+			wp_register_script( $handle, $url, [], $ver, TRUE );
+
+		return $handle;
+	}
+
+	// @REF: https://www.jsdelivr.com/package/npm/vue
+	public static function pkgVueJS3( $enqueue = FALSE, $ver = '3.2.11' )
+	{
+		$handle = static::BASE.'-vuejs';
+
+		$url = WordPress::isDev()
+			? 'https://unpkg.com/vue@next'
+			: 'https://cdn.jsdelivr.net/npm/vue@'.$ver.'/dist/vue.global.min.js';
 
 		if ( $enqueue )
 			wp_enqueue_script( $handle, $url, [], $ver, TRUE );
