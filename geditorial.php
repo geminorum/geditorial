@@ -3,6 +3,7 @@
 /*
 Plugin Name: gEditorial
 Plugin URI: https://geminorum.ir/wordpress/geditorial
+Update URI: https://github.com/geminorum/geditorial
 Description: Our Editorial in WordPress
 Version: 3.20.1
 License: GPLv3+
@@ -14,8 +15,8 @@ Domain Path: /languages
 RepoGitHub: geminorum/geditorial
 GitHub Plugin URI: https://github.com/geminorum/geditorial
 Release Asset: true
-Requires WP: 4.9
-Requires at least: 4.9
+Requires WP: 5.1.0
+Requires at least: 5.1.0
 Requires PHP: 7.2
 */
 
@@ -49,7 +50,7 @@ if ( version_compare( GEDITORIAL_MIN_PHP, phpversion(), '>=' ) ) {
 
 } else if ( is_admin() ) {
 
-	add_action( 'admin_notices', function() {
+	add_action( 'admin_notices', static function() {
 		echo '<div class="notice notice-warning notice-alt is-dismissible"><p>';
 			printf( '<b>gEditorial</b> is not installed correctly. go grab the latest package <a href="%s" target="_blank">here</a>.', 'https://github.com/geminorum/geditorial/releases/latest' );
 		echo '</p></div>';

@@ -113,6 +113,8 @@
         "assets/components",
         "assets/js/vendor",
         "assets/packages",
+        "assets/apps",
+        "assets/dev",
         "assets/blocks/**/src",
         "includes/Modules/**/.temp",
         "gulpfile.js"
@@ -173,5 +175,24 @@
     " * @license <%= pkg.license %>",
     " */",
     ""
-  ]
+  ],
+  "templates": {
+    "newmodule" : {
+      "src": "./assets/dev/templates/NewModule.template",
+      "dest": "./includes/Modules/",
+      "ext": "php",
+      "defaults": {
+        "namespaceAuthor": "geminorum",
+        "namespaceBase": "gEditorial",
+        "pluginTexdomain": "geditorial",
+        "moduleTextdomain": "geditorial-new-module",
+        "moduleBase": "geditorial",
+        "moduleTitle": "New Module",
+        "moduleCamelCase": "NewModule",
+        "moduleUnderline": "new_module",
+        "moduleTagline": "This is a New Module for Editorial",
+        "moduleDashicon": "smiley"
+      }
+    }
+  }
 }

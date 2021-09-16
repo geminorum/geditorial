@@ -15,6 +15,7 @@
   const exec = require('child_process').exec;
   const path = require('path');
 
+  const args = require('yargs').argv;
   const pkg = require('./package.json');
   const config = require('./gulp.config.json');
 
@@ -29,6 +30,39 @@
   } catch (e) {
     log.warn('no environment.yml loaded!');
   }
+
+  gulp.task('dev:newmodule', function (done) {
+    if (!('name' in args)) {
+      log.error('Error: missing required name for the module: `--name=NewModule`');
+      return done();
+    }
+
+    const name = args.name; // TODO: sanitize this!
+    const parts = name.split(/(?=[A-Z])/);
+
+    const data = extend(config.templates.newmodule.defaults, {
+      moduleTitle: parts.join(' '),
+      moduleCamelCase: name,
+      moduleUnderline: parts.join('_').toLowerCase(),
+      moduleTextdomain: config.templates.newmodule.defaults.pluginTexdomain + '-' + parts.join('-').toLowerCase()
+    });
+
+    const file = data.moduleCamelCase + '.' + config.templates.newmodule.ext;
+    const dest = path.join(config.templates.newmodule.dest, data.moduleCamelCase);
+
+    if (debug) log.info(data);
+
+    try {
+      fs.accessSync(path.join(dest, file));
+      log.error('Error: the module already exists');
+      return done();
+    } catch (e) {
+      return gulp.src(config.templates.newmodule.src)
+        .pipe(plugins.template(data))
+        .pipe(plugins.rename(file))
+        .pipe(gulp.dest(dest));
+    }
+  });
 
   gulp.task('dev:tinify', function () {
     return gulp.src(config.input.images)
@@ -87,14 +121,15 @@
     return gulp.src(config.input.modules)
       .pipe(plugins.exec(function (file) {
         const folder = file.path.split(path.sep).pop();
+        const domain = folder.split(/(?=[A-Z])/).join('-').toLowerCase(); // EXAMPLE: `DocumentRevisions` >> `document-revisions`
         const module = folder.toLowerCase();
         log.info('Make pot for Module: ' + folder);
         return 'wp i18n make-pot ' + file.path +
-          ' ./languages/' + folder + '/' + module + '.pot' +
-          ' --domain=' + pkg.name + '-' + module +
+          ' ./languages/' + folder + '/' + domain + '.pot' +
+          ' --domain=' + pkg.name + '-' + domain +
           ' --subtract=./languages/' + pkg.name + '.pot' +
           ' --package-name="' + pkg.productName + ' ' + folder + ' ' + pkg.version + '" ' +
-          ' --headers=\'' + template(JSON.stringify(config.i18n.modules.headers), { variable: 'data' })({ bugs: pkg.bugs.url, folder: folder, module: module }) + '\' ' +
+          ' --headers=\'' + template(JSON.stringify(config.i18n.modules.headers), { variable: 'data' })({ bugs: pkg.bugs.url, folder: folder, domain: domain, module: module }) + '\' ' +
           extra;
       }), {
         continueOnError: false,
@@ -187,8 +222,9 @@
   gulp.task('build:rtl', function () {
     return gulp.src(config.input.sass)
       .pipe(sass.sync(config.sass).on('error', sass.logError))
-      .pipe(plugins.postcss([rtlcss()])) // divided to avoid cssnano messing with rtl directives
+      // .pipe(plugins.postcss([rtlcss()])) // divided to avoid cssnano messing with rtl directives
       .pipe(plugins.postcss([
+        rtlcss(),
         cssnano(config.cssnano.build),
         autoprefixer(config.autoprefixer.build)
       ]))
