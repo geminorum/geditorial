@@ -188,9 +188,6 @@ class Terms extends gEditorial\Module
 		if ( ! is_admin() )
 			return;
 
-		add_filter( 'gnetwork_taxonomy_export_term_meta', [ $this, 'taxonomy_export_term_meta' ], 9, 2 );
-		add_filter( 'gnetwork_taxonomy_bulk_actions', [ $this, 'taxonomy_bulk_actions' ], 14, 2 );
-		add_filter( 'gnetwork_taxonomy_bulk_callback', [ $this, 'taxonomy_bulk_callback' ], 14, 3 );
 	}
 
 	public function init_ajax()
@@ -393,6 +390,7 @@ class Terms extends gEditorial\Module
 	{
 		foreach ( $this->get_supported() as $field ) {
 
+			if ( ! $taxonomies = $this->get_supported_taxonomies( $field ) )
 				continue;
 
 			$prepare = 'register_prepare_callback_'.$field;
@@ -447,6 +445,7 @@ class Terms extends gEditorial\Module
 			if ( in_array( $field, [ 'image' ] ) )
 				register_rest_field( $taxonomies, $field, [
 					'get_callback' => [ $this, 'register_rest_get_callback' ],
+					// 'auth_callback' // FIXME
 				] );
 		}
 	}
@@ -534,6 +533,7 @@ class Terms extends gEditorial\Module
 		$metakey = $this->get_supported_metakey( $field, $taxonomy );
 
 		switch ( $field ) {
+
 			case 'order':
 
 				$meta = get_term_meta( $term->term_id, $metakey, TRUE );
@@ -614,6 +614,7 @@ class Terms extends gEditorial\Module
 				}
 
 				break;
+
 			case 'contact':
 
 				if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) ) {
@@ -628,6 +629,7 @@ class Terms extends gEditorial\Module
 				}
 
 				break;
+
 			case 'image':
 
 				// $sizes = Media::getPosttypeImageSizes( $post->post_type );
@@ -637,6 +639,7 @@ class Terms extends gEditorial\Module
 				$html = $this->filters( 'column_image', Taxonomy::htmlFeaturedImage( $term->term_id, $size, TRUE, $metakey ), $term->term_id, $size );
 
 				break;
+
 			case 'author':
 
 				if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) ) {
@@ -650,6 +653,7 @@ class Terms extends gEditorial\Module
 				}
 
 				break;
+
 			case 'color':
 
 				if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) )
@@ -658,6 +662,7 @@ class Terms extends gEditorial\Module
 						.'" title="'.HTML::wrapLTR( HTML::escape( $meta ) ).'"></i>';
 
 				break;
+
 			case 'role':
 
 				if ( empty( $this->all_roles ) )
@@ -674,6 +679,7 @@ class Terms extends gEditorial\Module
 					$html = $this->field_empty( 'role', '0', $column );
 
 				break;
+
 			case 'roles':
 
 				if ( empty( $this->all_roles ) )
@@ -698,6 +704,7 @@ class Terms extends gEditorial\Module
 				}
 
 				break;
+
 			case 'posttype':
 
 				if ( empty( $this->all_posttypes ) )
@@ -840,7 +847,6 @@ class Terms extends gEditorial\Module
 			else
 				$this->form_field( $field, $taxonomy, $term );
 
-			HTML::desc( $this->filters( 'field_'.$field.'_desc', $desc, $taxonomy, $field, $term ) );
 			HTML::desc( $this->get_supported_field_desc( $field, $taxonomy, $term ) );
 
 		echo '</td></tr>';
