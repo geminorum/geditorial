@@ -188,6 +188,7 @@ class Terms extends gEditorial\Module
 		if ( ! is_admin() )
 			return;
 
+		$this->filter_module( 'datacodes', 'print_template_data', 4, 8 );
 	}
 
 	public function init_ajax()
@@ -1566,6 +1567,45 @@ class Terms extends gEditorial\Module
 
 		return empty( $meta ) ? get_current_user_id() : $meta;
 	}
+
+	public function datacodes_print_template_data( $data, $type, $term, $metakey )
+	{
+		if ( 'term' != $type )
+			return $data;
+
+		if ( empty( $data['barcode'] ) && in_array( 'barcode', $this->get_supported( $term->taxonomy ) ) ) {
+
+			$barcode_metakey = $this->get_supported_metakey( 'barcode', $term->taxonomy );
+
+			if ( $barcode = get_term_meta( $term->term_id, $barcode_metakey, TRUE ) )
+				$data['barcode'] = $barcode;
+		}
+
+		if ( empty( $data['data']['code'] ) && in_array( 'code', $this->get_supported( $term->taxonomy ) ) ) {
+
+			$code_metakey = $this->get_supported_metakey( 'code', $term->taxonomy );
+
+			if ( $code = get_term_meta( $term->term_id, $code_metakey, TRUE ) )
+				$data['data']['code'] = $code;
+		}
+
+		if ( empty( $data['data']['arrow'] ) && in_array( 'arrow', $this->get_supported( $term->taxonomy ) ) ) {
+
+			$arrow_metakey = $this->get_supported_metakey( 'arrow', $term->taxonomy );
+
+			if ( $arrow = get_term_meta( $term->term_id, $arrow_metakey, TRUE ) )
+				$data['data']['arrow'] = $arrow;
+		}
+
+		if ( empty( $data['data']['label'] ) && in_array( 'label', $this->get_supported( $term->taxonomy ) ) ) {
+
+			$label_metakey = $this->get_supported_metakey( 'label', $term->taxonomy );
+
+			if ( $label = get_term_meta( $term->term_id, $label_metakey, TRUE ) )
+				$data['data']['label'] = $label;
+		}
+
+		if ( empty( $data['data']['image'] ) && in_array( 'image', $this->get_supported( $term->taxonomy ) ) ) {
 
 			$image_metakey = $this->get_supported_metakey( 'image', $term->taxonomy );
 
