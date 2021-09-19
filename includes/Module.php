@@ -652,6 +652,40 @@ class Module extends Base
 		echo '<script>function '.$function.'(id){var frm=document.getElementById(id).contentWindow;frm.focus();frm.print();return false;}</script>';
 	}
 
+	// LEGACY: do not use thickbox anymore!
+	// NOTE: must `add_thickbox()` on load
+	public function do_render_thickbox_mainbutton( $post, $context = 'framepage', $extra = [], $inline = FALSE, $width = '600' )
+	{
+		// for inline only
+		// modal id must be: `{$base}-{$module}-thickbox-{$context}`
+		if ( $inline && $context && method_exists( $this, 'admin_footer_'.$context ) )
+			$this->action( 'admin_footer', 0, 20, $context );
+
+		$name  = PostType::object( $post->post_type )->labels->singular_name;
+		$title = $this->get_string( 'mainbutton_title', $context ?: $post->post_type, 'metabox', NULL );
+		$text  = $this->get_string( 'mainbutton_text', $context ?: $post->post_type, 'metabox', $name );
+
+		if ( $inline )
+			// WTF: thickbox bug: does not process the arg after `TB_inline`!
+			$link = '#TB_inline?dummy=dummy&width='.$width.'&inlineId='.$this->classs( 'thickbox', $context ).( $extra ? '&'.http_build_query( $extra ) : '' ); // &modal=true
+		else
+			// WTF: thickbox bug: does not pass the args after `TB_iframe`!
+			$link = $this->get_adminpage_url( TRUE, array_merge( [
+				'linked'   => $post->ID,
+				'noheader' => 1,
+				'width'    => $width,
+			], $extra, [ 'TB_iframe' => 'true' ] ), $context );
+
+		$html = HTML::tag( 'a', [
+			'href'  => $link,
+			'id'    => $this->classs( 'mainbutton', $context ),
+			'class' => [ 'button', '-button', '-button-full', '-button-icon', '-mainbutton', 'thickbox' ],
+			'title' => $title ? sprintf( $title, $name ) : FALSE,
+		], sprintf( $text, Helper::getIcon( $this->module->icon ), $name ) );
+
+		echo HTML::wrap( $html, 'field-wrap -buttons' );
+	}
+
 	// check if this module loaded as remote for another blog's editorial module
 	public function remote()
 	{
