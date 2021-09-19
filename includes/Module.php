@@ -776,6 +776,11 @@ class Module extends Base
 		return $this->filters( 'taxonomies_excluded', Settings::taxonomiesExcluded() );
 	}
 
+	protected function _hook_taxonomies_excluded( $constant, $module )
+	{
+		$this->filter_append( $this->base.'_'.$module.'_taxonomies_excluded', $this->constant( $constant ) );
+	}
+
 	// enabled post types for this module
 	public function taxonomies()
 	{
@@ -2642,7 +2647,7 @@ class Module extends Base
 				$args['update_count_callback'] = [ __NAMESPACE__.'\\WordPress\\Database', 'updateCountCallback' ];
 
 			if ( is_admin() && ( $cpt_tax || 'user' == $posttypes || 'comment' == $posttypes ) )
-				$this->filter_append( $this->base.'_recount_taxonomies_excluded', $taxonomy );
+				$this->_hook_taxonomies_excluded( $constant, 'recount' );
 		}
 
 		$object = register_taxonomy( $taxonomy, $posttypes, $args );
