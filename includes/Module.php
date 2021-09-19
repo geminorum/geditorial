@@ -394,7 +394,7 @@ class Module extends Base
 			return $page;
 
 		if ( is_null( $admin_base ) )
-			$admin_base = in_array( $context, [ 'printpage', 'framepage' ] )
+			$admin_base = in_array( $context, [ 'printpage', 'framepage', 'newpost' ] )
 				? get_admin_url( NULL, 'index.php' )
 				: get_admin_url( NULL, 'admin.php' );
 
@@ -555,6 +555,124 @@ class Module extends Base
 		$this->render_default_mainpage( 'subpage', 'update' );
 	}
 
+	public function render_newpost_adminpage()
+	{
+		$this->render_default_mainpage( 'newpost', 'insert' );
+	}
+
+	// TODO: link to edit posttype screen
+	// TODO: get default posttype/status somehow!
+	protected function render_newpost_content()
+	{
+		$posttype = self::req( 'type', 'post' );
+		$status   = self::req( 'status', 'draft' );
+		$target   = self::req( 'target', 'none' );
+		$linked   = self::req( 'linked', FALSE );
+		$meta     = self::req( 'meta', [] );
+		$object   = get_post_type_object( $posttype );
+		$post     = get_default_post_to_edit( $posttype );
+
+		if ( ! current_user_can( $object->cap->create_posts ) )
+			return HTML::desc( gEditorial()->denied( FALSE ), TRUE, '-denied' );
+
+		$meta = $this->filters( 'newpost_content_meta', $meta, $posttype, $target, $linked, $status );
+
+		echo $this->wrap_open( '-newpost-layout' );
+		echo '<div class="-main">';
+
+		$this->actions( 'newpost_content_before_title', $posttype, $post, $target, $linked, $status, $meta );
+
+		$field = $this->classs( $posttype, 'title' );
+		$label = $this->get_string( 'post_title', $posttype, 'newpost', __( 'Add title' ) );
+
+		$html = HTML::tag( 'input', [
+			'type'        => 'text',
+			'class'       => 'large-text',
+			'id'          => $field,
+			'name'        => 'title',
+			'placeholder' => apply_filters( 'enter_title_here', $label, $post ),
+		] );
+
+		HTML::label( $html, $field );
+
+		$this->actions( 'newpost_content_after_title', $posttype, $post, $target, $linked, $status, $meta );
+
+		$field = $this->classs( $posttype, 'excerpt' );
+		$label = $this->get_string( 'post_excerpt', $posttype, 'newpost', __( 'Excerpt' ) );
+
+		$html = HTML::tag( 'textarea', [
+			'id'           => $field,
+			'name'         => 'excerpt',
+			'placeholder'  => $label,
+			'class'        => [ 'mceEditor', 'large-text' ],
+			'rows'         => 2,
+			'cols'         => 15,
+			'autocomplete' => 'off',
+		], '' );
+
+		HTML::label( $html, $field );
+
+		$field = $this->classs( $posttype, 'content' );
+		$label = $this->get_string( 'post_content', $posttype, 'newpost', __( 'What&#8217;s on your mind?' ) );
+
+		$html = HTML::tag( 'textarea', [
+			'id'           => $field,
+			'name'         => 'content',
+			'placeholder'  => $label,
+			'class'        => [ 'mceEditor', 'large-text' ],
+			'rows'         => 6,
+			'cols'         => 15,
+			'autocomplete' => 'off',
+		], '' );
+
+		HTML::label( $html, $field );
+
+		$this->actions( 'newpost_content', $posttype, $post, $target, $linked, $status, $meta );
+
+		HTML::inputHidden( 'type', $posttype );
+		HTML::inputHidden( 'status', $status === 'publish' ? 'publish' : 'draft' ); // only publish/draft
+		HTML::inputHiddenArray( $meta, 'meta' );
+
+		echo $this->wrap_open_buttons();
+
+		echo '<span class="-message"></span>';
+		echo Ajax::spinner();
+
+		echo HTML::tag( 'a', [
+			'href'  => '#',
+			'class' => [ 'button', '-save-draft', 'disabled' ],
+			'data'  => [
+				'target'   => $target,
+				'type'     => $posttype,
+				'linked'   => $linked,
+				'endpoint' => rest_url( sprintf( '/wp/v2/%s', $object->rest_base ) ),
+			],
+		], _x( 'Save Draft & Close', 'Module', 'geditorial' ) );
+
+		echo '</p></div><div class="-side">';
+		echo '<div class="-recents">';
+
+			/* translators: %s: posttype singular name */
+			$hint = sprintf( _x( 'Or select this %s', 'Module: Recents', 'geditorial' ), $object->labels->singular_name );
+
+			Template::renderRecentByPosttype( $object, '#', NULL, $hint, [
+				'post_status' => [ 'publish', 'future', 'draft' ],
+			] );
+
+		echo '</div></div></div>';
+
+		$this->enqueue_asset_js( [
+			'strings' => [
+				'noparent' => _x( 'This frame has no parent window!', 'Module: NewPost: JS String', 'geditorial' ),
+				'notarget' => _x( 'Cannot handle the target window!', 'Module: NewPost: JS String', 'geditorial' ),
+				'closeme'  => _x( 'New post has been saved you may close this frame!', 'Module: NewPost: JS String', 'geditorial' ),
+			],
+		], 'module.newpost', [
+			'jquery',
+			'wp-api-request',
+		], '_newpost' );
+	}
+
 	public function render_printpage_adminpage()
 	{
 		$this->render_content_printpage();
@@ -684,6 +802,47 @@ class Module extends Base
 		], sprintf( $text, Helper::getIcon( $this->module->icon ), $name ) );
 
 		echo HTML::wrap( $html, 'field-wrap -buttons' );
+	}
+
+	// LEGACY: do not use thickbox anymore!
+	// NOTE: must `add_thickbox()` on load
+	public function do_render_thickbox_newpostbutton( $post, $constant, $context = 'newpost', $extra = [], $inline = FALSE, $width = '600' )
+	{
+		$posttype = $this->constant( $constant );
+		$object   = PostType::object( $posttype );
+
+		if ( ! current_user_can( $object->cap->create_posts ) )
+			return FALSE;
+
+		// for inline only
+		// modal id must be: `{$base}-{$module}-thickbox-{$context}`
+		if ( $inline && $context && method_exists( $this, 'admin_footer_'.$context ) )
+			$this->action( 'admin_footer', 0, 20, $context );
+
+		/* translators: %s: posttype singular name */
+		$title = $this->get_string( 'mainbutton_title', $constant, 'newpost', _x( 'Quick New %s', 'Module: Button Title', 'geditorial' ) );
+		$text  = $this->get_string( 'mainbutton_text', $constant, 'newpost', '%1$s '.$object->labels->add_new_item );
+
+		if ( $inline )
+			// WTF: thickbox bug: does not process the arg after `TB_inline`!
+			$link = '#TB_inline?dummy=dummy&width='.$width.'&inlineId='.$this->classs( 'thickbox', $context ).( $extra ? '&'.http_build_query( $extra ) : '' ); // &modal=true
+		else
+			// WTF: thickbox bug: does not pass the args after `TB_iframe`!
+			$link = $this->get_adminpage_url( TRUE, array_merge( [
+				'type'     => $posttype,
+				'linked'   => $post->ID,
+				'noheader' => 1,
+				'width'    => $width,
+			], $extra, [ 'TB_iframe' => 'true' ] ), $context );
+
+		$html = HTML::tag( 'a', [
+			'href'  => $link,
+			'id'    => $this->classs( 'newpostbutton', $context ),
+			'class' => [ 'button', '-button', '-button-full', '-button-icon', '-newpostbutton', 'thickbox' ],
+			'title' => $title ? sprintf( $title, $object->labels->singular_name ) : FALSE,
+		], sprintf( $text, Helper::getIcon( $this->module->icon ), $object->labels->singular_name ) );
+
+		echo HTML::wrap( $html, 'field-wrap -buttons hide-if-no-js' );
 	}
 
 	// check if this module loaded as remote for another blog's editorial module
@@ -4375,6 +4534,13 @@ class Module extends Base
 				( isset( $postarr['ID'] ) ? $postarr['ID'] : '' ) ) + 1;
 
 		return $data;
+	}
+
+	// DEFAULT FILTER
+	// USAGE: `$this->action_self( 'newpost_content', 4, 99, 'menu_order' );`
+	public function newpost_content_menu_order( $posttype, $post, $target, $linked )
+	{
+		HTML::inputHidden( 'menu_order', PostType::getLastMenuOrder( $posttype, $post->ID ) + 1 );
 	}
 
 	protected function _hook_menu_user_taxonomy( $constant, $context = 'userpage' )
