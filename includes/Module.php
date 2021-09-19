@@ -2640,6 +2640,9 @@ class Module extends Base
 
 			else if ( 'comment' == $posttypes )
 				$args['update_count_callback'] = [ __NAMESPACE__.'\\WordPress\\Database', 'updateCountCallback' ];
+
+			if ( is_admin() && ( $cpt_tax || 'user' == $posttypes || 'comment' == $posttypes ) )
+				$this->filter_append( $this->base.'_recount_taxonomies_excluded', $taxonomy );
 		}
 
 		$object = register_taxonomy( $taxonomy, $posttypes, $args );
