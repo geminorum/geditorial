@@ -2812,14 +2812,16 @@ class Module extends Base
 	}
 
 	// WARNING: every script must have a .min copy
-	public function enqueue_asset_js( $args = [], $name = NULL, $deps = [ 'jquery' ], $handle = NULL )
+	public function enqueue_asset_js( $args = [], $name = NULL, $deps = [ 'jquery' ], $key = NULL, $handle = NULL )
 	{
-		if ( is_null( $name ) )
-			$name = $this->key;
+		if ( is_null( $key ) )
+			$key = $this->key;
 
-		// screen passed
-		else if ( is_object( $name ) )
-			$name = $this->key.'.'.$name->base;
+		if ( is_null( $name ) )
+			$name = $key;
+
+		else if ( $name instanceof \WP_Screen )
+			$name = $key.'.'.$name->base;
 
 		if ( TRUE === $args ) {
 			$args = [];
@@ -2851,7 +2853,7 @@ class Module extends Base
 		if ( ! array_key_exists( '_nonce', $args ) && is_user_logged_in() )
 			$args['_nonce'] = wp_create_nonce( $this->hook() );
 
-		gEditorial()->enqueue_asset_config( $args, $this->key );
+		gEditorial()->enqueue_asset_config( $args, $key );
 
 		return $handle;
 	}
