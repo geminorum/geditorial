@@ -281,9 +281,9 @@ class Book extends gEditorial\Module
 	{
 		return [
 			$this->constant( 'publication_cpt' ) => [
-				'collection' => [ // FIXME: must prefixed
-					'title'       => _x( 'Collection Title', 'Field Title', 'geditorial-book' ),
-					'description' => _x( 'This Publication Is Part of a Collection', 'Field Description', 'geditorial-book' ),
+				'publication_tagline' => [
+					'title'       => _x( 'Cover Tagline', 'Field Title', 'geditorial-book' ),
+					'description' => _x( 'Promotional Text on the Cover of this Publication', 'Field Description', 'geditorial-book' ),
 					'type'        => 'title_before',
 				],
 				'sub_title' => [
@@ -294,6 +294,10 @@ class Book extends gEditorial\Module
 				'alt_title' => [
 					'title'       => _x( 'Alternative Title', 'Field Title', 'geditorial-book' ),
 					'description' => _x( 'The Original Title or Title in Another Language', 'Field Description', 'geditorial-book' ),
+				],
+				'collection' => [
+					'title'       => _x( 'Collection Title', 'Field Title', 'geditorial-book' ),
+					'description' => _x( 'This Publication Is Part of a Collection', 'Field Description', 'geditorial-book' ),
 				],
 				'publication_byline' => [
 					'title'       => _x( 'Publication By-Line', 'Field Title', 'geditorial-book' ),
