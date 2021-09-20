@@ -26,6 +26,11 @@ class WcLimited extends gEditorial\Module
 		return [
 			'_general' => [
 				[
+					'field'       => 'once_purchased',
+					'title'       => _x( 'Purchased Once', 'Setting Title', 'geditorial-wc-limited' ),
+					'description' => _x( 'Denies further sales if user has already purchased a product.', 'Setting Description', 'geditorial-wc-limited' ),
+				],
+				[
 					'field'        => 'limited_terms',
 					'type'         => 'checkbox-panel',
 					'title'        => _x( 'Limited Terms', 'Setting Title', 'geditorial-wc-limited' ),
@@ -52,11 +57,6 @@ class WcLimited extends gEditorial\Module
 		];
 	}
 
-	protected function setup_disabled()
-	{
-		return empty( $this->get_setting( 'limited_terms' ) );
-	}
-
 	public function init()
 	{
 		parent::init();
@@ -64,7 +64,11 @@ class WcLimited extends gEditorial\Module
 		if ( is_admin() )
 			return;
 
-		$this->filter( 'woocommerce_add_to_cart_validation', 3, 8 );
+		if ( ! empty( $this->get_setting( 'limited_terms' ) ) )
+			$this->filter( 'woocommerce_add_to_cart_validation', 3, 8 );
+
+		if ( $this->get_setting( 'once_purchased' ) )
+			$this->filter( 'woocommerce_is_purchasable', 2, 999 );
 	}
 
 	public function woocommerce_add_to_cart_validation( $passed, $product_id, $quantity )
@@ -94,5 +98,18 @@ class WcLimited extends gEditorial\Module
 		}
 
 		return $passed;
+	}
+
+	// @REF: https://www.businessbloomer.com/woocommerce-hide-add-to-cart-if-already-purchased/
+	public function woocommerce_is_purchasable( $is_purchasable, $product )
+	{
+		// not logged in
+		if ( ! $user_id = get_current_user_id() )
+			return $is_purchasable;
+
+		if ( wc_customer_bought_product( '', $user_id, $product->get_id() ) )
+			return FALSE;
+
+		return $is_purchasable;
 	}
 }
