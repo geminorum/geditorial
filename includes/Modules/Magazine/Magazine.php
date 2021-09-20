@@ -39,6 +39,7 @@ class Magazine extends gEditorial\Module
 					'title'       => _x( 'Issue Sections', 'Settings', 'geditorial-magazine' ),
 					'description' => _x( 'Section taxonomy for the issues and supported post-types.', 'Settings', 'geditorial-magazine' ),
 				],
+				'quick_newpost',
 				'comment_status',
 			],
 			'_editlist' => [
@@ -330,6 +331,9 @@ class Magazine extends gEditorial\Module
 
 				add_action( $this->hook( 'render_pairedbox_metabox' ), [ $this, 'render_metabox' ], 10, 4 );
 
+				if ( $this->get_setting( 'quick_newpost' ) )
+					Scripts::enqueueThickBox();
+
 			} else if ( 'edit' == $screen->base ) {
 
 				$this->_hook_screen_restrict_paired();
@@ -368,6 +372,19 @@ class Magazine extends gEditorial\Module
 	{
 		$this->add_posttype_fields( $this->constant( 'issue_cpt' ) );
 		$this->add_posttype_fields_supported();
+	}
+
+	public function admin_menu()
+	{
+		if ( $this->get_setting( 'quick_newpost' ) ) {
+			$this->_hook_submenu_adminpage( 'newpost' );
+			$this->action_self( 'newpost_content', 4, 10, 'menu_order' );
+		}
+	}
+
+	public function get_adminmenu( $page = TRUE, $extra = [] )
+	{
+		return FALSE;
 	}
 
 	public function dashboard_glance_items( $items )
@@ -459,23 +476,30 @@ class Magazine extends gEditorial\Module
 
 		echo $this->wrap_open( '-admin-metabox' );
 
-		if ( ! Taxonomy::hasTerms( $this->constant( 'issue_tax' ) ) ) {
-
-			MetaBox::fieldEmptyPostType( $this->constant( 'issue_cpt' ) );
-
-		} else {
+		if ( $this->get_setting( 'quick_newpost' ) ) {
 
 			$this->actions( 'render_pairedbox_metabox', $post, $box, NULL, 'pairedbox_issue' );
 
+		} else {
+
+			if ( ! Taxonomy::hasTerms( $this->constant( 'issue_tax' ) ) )
+				MetaBox::fieldEmptyPostType( $this->constant( 'issue_cpt' ) );
+
+			else
+				$this->actions( 'render_pairedbox_metabox', $post, $box, NULL, 'pairedbox_issue' );
 		}
-			do_action( 'geditorial_meta_render_metabox', $post, $box, NULL, 'pairedbox_issue' );
+
+		do_action( $this->base.'_meta_render_metabox', $post, $box, NULL, 'pairedbox_issue' );
 
 		echo '</div>';
 	}
 
 	public function render_metabox( $post, $box, $fields = NULL, $context = NULL )
 	{
-		$this->paired_do_render_metabox( $post, 'issue_cpt', 'issue_tax', 'section_tax' );
+		if ( $newpost = $this->get_setting( 'quick_newpost' ) )
+			$this->do_render_thickbox_newpostbutton( $post, 'issue_cpt', 'newpost', [ 'target' => 'paired' ] );
+
+		$this->paired_do_render_metabox( $post, 'issue_cpt', 'issue_tax', 'section_tax', $newpost );
 	}
 
 	public function store_metabox( $post_id, $post, $update, $context = NULL )
