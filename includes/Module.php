@@ -935,9 +935,10 @@ class Module extends Base
 		return $this->filters( 'taxonomies_excluded', Settings::taxonomiesExcluded() );
 	}
 
-	protected function _hook_taxonomies_excluded( $constant, $module )
+	protected function _hook_taxonomies_excluded( $constant, $module = NULL )
 	{
-		$this->filter_append( $this->base.'_'.$module.'_taxonomies_excluded', $this->constant( $constant ) );
+		$hook = sprintf( '%s_%s_taxonomies_excluded', $this->base, is_null( $module ) ? $this->module->name : $module );
+		$this->filter_append( $hook, $this->constant( $constant ) );
 	}
 
 	// enabled post types for this module
