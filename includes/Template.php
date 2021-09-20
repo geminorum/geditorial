@@ -879,12 +879,12 @@ class Template extends Main
 		return Helper::getJoined( apply_filters( 'term_links-'.$taxonomy, $list ), $before, $after, FALSE );
 	}
 
-	public static function renderRecentByPosttype( $posttype, $link = 'view', $empty = NULL, $title_attr = NULL )
+	public static function renderRecentByPosttype( $posttype, $link = 'view', $empty = NULL, $title_attr = NULL, $extra = [] )
 	{
 		if ( ! $object = PostType::object( $posttype ) )
 			return;
 
-		$posts = PostType::getRecent( $object->name, [], current_user_can( $object->cap->edit_posts ) );
+		$posts = PostType::getRecent( $object->name, $extra, current_user_can( $object->cap->edit_posts ) );
 
 		if ( count( $posts ) ) {
 

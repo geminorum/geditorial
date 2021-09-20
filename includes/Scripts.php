@@ -97,6 +97,9 @@ class Scripts extends Main
 		wp_enqueue_style( 'code-editor' );
 	}
 
+	// LEGACY: do not use thickbox anymore!
+	// @SEE: https://core.trac.wordpress.org/ticket/17249
+	// @SEE: http://web.archive.org/web/20130224045422/http://binarybonsai.com/blog/using-thickbox-in-the-wordpress-admin
 	// @SEE: https://codex.wordpress.org/Javascript_Reference/ThickBox
 	public static function enqueueThickBox()
 	{
@@ -104,6 +107,8 @@ class Scripts extends Main
 			add_thickbox();
 	}
 
+	// @REF: https://www.jacklmoore.com/colorbox/
+	// @REF: https://github.com/jackmoore/colorbox
 	public static function registerColorBox( $ver = '1.6.4' )
 	{
 		wp_register_style( 'jquery-colorbox', GEDITORIAL_URL.'assets/css/admin.colorbox.css', [], $ver, 'screen' );

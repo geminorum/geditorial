@@ -122,16 +122,17 @@ class Audit extends gEditorial\Module
 			'noops' => [
 				'audit_tax' => _n_noop( 'Audit Attribute', 'Audit Attributes', 'geditorial-audit' ),
 			],
-			'misc' => [
-				'menu_name'           => _x( 'Audit', 'Taxonomy Menu', 'geditorial-audit' ),
-				'tweaks_column_title' => _x( 'Audit Attributes', 'Column Title', 'geditorial-audit' ),
-				'show_option_all'     => _x( 'Audit', 'Show Option All', 'geditorial-audit' ),
-				'show_option_none'    => _x( '(Not audited)', 'Show Option None', 'geditorial-audit' ),
-			],
 		];
 
 		if ( ! is_admin() )
 			return $strings;
+
+		$strings['misc'] = [
+			'menu_name'           => _x( 'Audit', 'Taxonomy Menu', 'geditorial-audit' ),
+			'tweaks_column_title' => _x( 'Audit Attributes', 'Column Title', 'geditorial-audit' ),
+			'show_option_all'     => _x( 'Audit', 'Show Option All', 'geditorial-audit' ),
+			'show_option_none'    => _x( '(Not audited)', 'Show Option None', 'geditorial-audit' ),
+		];
 
 		$strings['terms'] = [
 			'audit_tax' => [

@@ -13,7 +13,8 @@ use geminorum\gEditorial\WordPress\PostType;
 class Recount extends gEditorial\Module
 {
 
-	protected $disable_no_taxonomies = TRUE; // not hooking module if has no taxonomies
+	protected $disable_no_taxonomies = TRUE;
+	protected $textdomain_frontend   = FALSE;
 
 	public static function module()
 	{

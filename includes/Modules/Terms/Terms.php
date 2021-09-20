@@ -385,6 +385,7 @@ class Terms extends gEditorial\Module
 		return $this->filters( 'supported_field_position', $position, $field, $taxonomy );
 	}
 
+	// TODO: `meta_rendered` just like meta module
 	// @REF: https://make.wordpress.org/core/2018/07/27/registering-metadata-in-4-9-8/
 	// @REF: https://developer.wordpress.org/rest-api/extending-the-rest-api/modifying-responses/
 	protected function register_meta_fields()
