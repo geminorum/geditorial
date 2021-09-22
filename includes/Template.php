@@ -732,13 +732,14 @@ class Template extends Main
 			$module = static::MODULE;
 
 		$args = self::atts( [
-			'id'      => NULL,
-			'fields'  => NULL,
-			'type'    => NULL, // default to current post
-			'default' => FALSE,
-			'before'  => '',
-			'after'   => '',
-			'echo'    => TRUE,
+			'id'       => NULL,
+			'fields'   => NULL,
+			'excludes' => NULL,
+			'type'     => NULL, // default to current post
+			'default'  => FALSE,
+			'before'   => '',
+			'after'    => '',
+			'echo'     => TRUE,
 		], $atts );
 
 		if ( $check && ! gEditorial()->enabled( 'meta' ) )
@@ -747,12 +748,22 @@ class Template extends Main
 		if ( ! $post = Helper::getPost( $args['id'] ) )
 			return $args['default'];
 
+		$rows     = [];
 		$posttype = $args['type'] ?: $post->post_type;
 		$fields   = gEditorial()->meta->get_posttype_fields( $posttype );
 		$list     = $args['fields'] ?: wp_list_pluck( $fields, 'title', 'name' );
-		$rows     = [];
+		$excludes = is_null( $args['excludes'] ) ? [
+			'over_title',
+			'sub_title',
+			'byline',
+			'source_title',
+			'source_url',
+		] : (array) $args['excludes'];
 
 		foreach ( $list as $key => $title ) {
+
+			if ( in_array( $key, $excludes ) )
+				continue;
 
 			if ( ! array_key_exists( $key, $fields ) ) {
 
