@@ -726,6 +726,20 @@ class Template extends Main
 		return self::metaLink( $atts, 'meta', FALSE );
 	}
 
+	public static function metaAction( $atts = [] )
+	{
+		if ( ! array_key_exists( 'title_field', $atts ) )
+			$atts['title_field'] = 'action_title';
+
+		if ( ! array_key_exists( 'url_field', $atts ) )
+			$atts['url_field'] = 'action_url';
+
+		if ( ! array_key_exists( 'link_class', $atts ) )
+			$atts['link_class'] = 'button -button';
+
+		return self::metaLink( $atts, 'meta', FALSE );
+	}
+
 	public static function metaSummary( $atts = [], $module = NULL, $check = TRUE )
 	{
 		if ( is_null( $module ) && static::MODULE )
@@ -758,6 +772,8 @@ class Template extends Main
 			'byline',
 			'source_title',
 			'source_url',
+			'action_title',
+			'action_url',
 		] : (array) $args['excludes'];
 
 		foreach ( $list as $key => $title ) {

@@ -58,6 +58,13 @@ class Meta extends gEditorial\Module
 					'description' => _x( 'Used as default text before the source links.', 'Setting Description', 'geditorial-meta' ),
 					'default'     => _x( 'Source:', 'Setting Default', 'geditorial-meta' ),
 				],
+				[
+					'field'       => 'before_action',
+					'type'        => 'text',
+					'title'       => _x( 'Before Action', 'Setting Title', 'geditorial-meta' ),
+					'description' => _x( 'Used as default text before the action buttons.', 'Setting Description', 'geditorial-meta' ),
+					'default'     => '',
+				],
 			],
 		];
 	}
@@ -84,12 +91,15 @@ class Meta extends gEditorial\Module
 				'published'    => _x( 'Published', 'Titles', 'geditorial-meta' ),
 				'source_title' => _x( 'Source Title', 'Titles', 'geditorial-meta' ),
 				'source_url'   => _x( 'Source URL', 'Titles', 'geditorial-meta' ),
+				'action_title' => _x( 'Action Title', 'Titles', 'geditorial-meta' ),
+				'action_url'   => _x( 'Action URL', 'Titles', 'geditorial-meta' ),
 				'highlight'    => _x( 'Highlight', 'Titles', 'geditorial-meta' ),
 				'dashboard'    => _x( 'Dashboard', 'Titles', 'geditorial-meta' ),
 				'abstract'     => _x( 'Abstract', 'Titles', 'geditorial-meta' ),
 
 				// combined fields
 				'source' => _x( 'Source', 'Titles', 'geditorial-meta' ),
+				'action' => _x( 'Action', 'Titles', 'geditorial-meta' ),
 			],
 			'descriptions' => [
 				'over_title' => _x( 'Text to place over the content title', 'Descriptions', 'geditorial-meta' ),
@@ -102,11 +112,14 @@ class Meta extends gEditorial\Module
 				'published'    => _x( 'Text to indicate the original date of the content', 'Descriptions', 'geditorial-meta' ),
 				'source_title' => _x( 'Custom title for the source of the content', 'Descriptions', 'geditorial-meta' ),
 				'source_url'   => _x( 'Custom URL to the source of the content', 'Descriptions', 'geditorial-meta' ),
+				'action_title' => _x( 'Custom title for the action of the content', 'Descriptions', 'geditorial-meta' ),
+				'action_url'   => _x( 'Custom URL to the action of the content', 'Descriptions', 'geditorial-meta' ),
 				'highlight'    => _x( 'Notes highlighted about the content', 'Descriptions', 'geditorial-meta' ),
 				'dashboard'    => _x( 'Custom HTML content on the dashboard', 'Descriptions', 'geditorial-meta' ),
 				'abstract'     => _x( 'Brief summary of the content', 'Descriptions', 'geditorial-meta' ),
 
 				'source' => _x( 'Source of the content', 'Descriptions', 'geditorial-meta' ),
+				'action' => _x( 'Action of the content', 'Descriptions', 'geditorial-meta' ),
 			],
 			'noops' => [
 				'label_tax' => _n_noop( 'Column Header', 'Column Headers', 'geditorial-meta' ),
@@ -152,6 +165,8 @@ class Meta extends gEditorial\Module
 				'published'    => [ 'type' => 'text', 'quickedit' => TRUE ],
 				'source_title' => [ 'type' => 'text' ],
 				'source_url'   => [ 'type' => 'link' ],
+				'action_title' => [ 'type' => 'text' ],
+				'action_url'   => [ 'type' => 'link' ],
 				'highlight'    => [ 'type' => 'note' ],
 				'dashboard'    => [ 'type' => 'postbox_html' ], // or 'postbox_tiny'
 				'abstract'     => [ 'type' => 'postbox_html' ], // or 'postbox_tiny'
@@ -830,7 +845,7 @@ class Meta extends gEditorial\Module
 			if ( $args['quickedit'] )
 				$excludes[] = $field;
 
-			else if ( in_array( $args['name'], [ 'label', 'label_tax', 'source_title', 'source_url' ] ) )
+			else if ( in_array( $args['name'], [ 'label', 'label_tax', 'source_title', 'source_url', 'action_title', 'action_url' ] ) )
 				$excludes[] = $field;
 
 			else if ( in_array( $args['type'], [ 'postbox_html', 'postbox_tiny', 'postbox_legacy' ] ) )
@@ -876,6 +891,13 @@ class Meta extends gEditorial\Module
 			ModuleTemplate::metaSource( [
 				'before' => '<li class="-row meta-source">'
 					.$this->get_column_icon( FALSE, 'external', $this->get_string( 'source', $post->post_type, 'titles', 'source' ) ),
+				'after'  => '</li>',
+			] );
+
+		if ( array_key_exists( 'action_title', $fields ) || array_key_exists( 'action_url', $fields ) )
+			ModuleTemplate::metaAction( [
+				'before' => '<li class="-row meta-action">'
+					.$this->get_column_icon( FALSE, 'cart', $this->get_string( 'action', $post->post_type, 'titles', 'action' ) ),
 				'after'  => '</li>',
 			] );
 	}
@@ -978,12 +1000,19 @@ class Meta extends gEditorial\Module
 		global $page, $pages;
 
 		// only on the last page
-		if ( $page == count( $pages ) )
+		if ( $page == count( $pages ) ) {
 			ModuleTemplate::metaSource( [
+				'after'  => '</div>',
 				'before' => $this->wrap_open( '-after entry-source' )
 					.$this->get_setting( 'before_source', '' ).' ',
-				'after'  => '</div>',
 			] );
+
+			ModuleTemplate::metaAction( [
+				'after'  => '</div>',
+				'before' => $this->wrap_open( '-after entry-action' )
+					.$this->get_setting( 'before_action', '' ).' ',
+			] );
+		}
 	}
 
 	public function the_author( $display_name )
