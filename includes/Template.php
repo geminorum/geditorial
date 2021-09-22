@@ -3,6 +3,7 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core\HTML;
+use geminorum\gEditorial\Core\URL;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\Main;
 use geminorum\gEditorial\WordPress\PostType;
@@ -656,11 +657,14 @@ class Template extends Main
 			'before'        => '',
 			'after'         => '',
 			'echo'          => TRUE,
+			'title_default' => '',
+			'title_attr'    => '',
 			'title_field'   => 'source_title',
-			'title_default' => _x( 'External Source', 'Template: Meta Link Default Title', 'geditorial' ),
-			'title_attr'    => _x( 'Visit external source', 'Template: Meta Link Default Title Attr', 'geditorial' ),
 			'url_field'     => 'source_url',
 			'url_default'   => FALSE,
+			'url_filter'    => FALSE,
+			'span_class'    => FALSE,
+			'link_class'    => FALSE,
 		], $atts );
 
 		if ( $check && ! gEditorial()->enabled( 'meta' ) )
@@ -669,25 +673,32 @@ class Template extends Main
 		if ( ! $post = Helper::getPost( $args['id'] ) )
 			return $args['default'];
 
-		$title = $args['title_field'] ? self::getMetaField( $args['title_field'], [
-			'id'      => $post->ID,
-			'filter'  => $args['filter'],
-			'default' => $args['title_default'],
-		], FALSE ) : $args['title_default'];
-
 		$url = $args['url_field'] ? self::getMetaField( $args['url_field'], [
 			'id'      => $post->ID,
+			'filter'  => $args['url_filter'],
 			'default' => $args['url_default'],
 		], FALSE ) : $args['url_default'];
 
+		$prepared = $url ? URL::prepTitle( $url ) : '';
+
+		$title = $args['title_field'] ? self::getMetaField( $args['title_field'], [
+			'id'      => $post->ID,
+			'filter'  => $args['filter'],
+			'default' => $args['title_default'] ?: $prepared,
+		], FALSE ) : ( $args['title_default'] ?: $prepared );
+
 		if ( $title && $url || ! $url && $title != $args['title_default'] ) {
+
 			$html = $args['before'].HTML::tag( ( $url ? 'a' : 'span' ), [
 				'href'  => $url,
+				'class' => $url ? $args['link_class'] : $args['span_class'],
 				'title' => $url ? $args['title_attr'] : FALSE,
 				'rel'   => $url ? 'nofollow' : 'source', // https://support.google.com/webmasters/answer/96569?hl=en
 				'data'  => $url && $args['title_attr'] ? [ 'toggle' => 'tooltip' ] : FALSE,
 			], $title ).$args['after'];
+
 		} else {
+
 			$html = $args['default'];
 		}
 
@@ -696,6 +707,23 @@ class Template extends Main
 
 		echo $html;
 		return TRUE;
+	}
+
+	public static function metaSource( $atts = [] )
+	{
+		if ( ! array_key_exists( 'title_field', $atts ) )
+			$atts['title_field'] = 'source_title';
+
+		if ( ! array_key_exists( 'url_field', $atts ) )
+			$atts['url_field'] = 'source_url';
+
+		if ( ! array_key_exists( 'title_default', $atts ) )
+			$atts['title_default'] = _x( 'External Source', 'Template: Meta Link Default Title', 'geditorial' );
+
+		if ( ! array_key_exists( 'title_attr', $atts ) )
+			$atts['title_attr'] = _x( 'Visit external source', 'Template: Meta Link Default Title Attr', 'geditorial' );
+
+		return self::metaLink( $atts, 'meta', FALSE );
 	}
 
 	public static function metaSummary( $atts = [], $module = NULL, $check = TRUE )
