@@ -503,12 +503,13 @@ class Template extends Main
 	public static function getMetaField( $field, $atts = [], $check = TRUE )
 	{
 		$args = self::atts( [
-			'id'      => NULL,
-			'default' => FALSE,
-			'filter'  => FALSE,
-			'trim'    => FALSE, // or number of chars
-			'before'  => '',
-			'after'   => '',
+			'id'       => NULL,
+			'fallback' => FALSE,
+			'default'  => FALSE,
+			'filter'   => FALSE,
+			'trim'     => FALSE, // or number of chars
+			'before'   => '',
+			'after'    => '',
 		], $atts );
 
 		if ( $check && ! gEditorial()->enabled( 'meta' ) )
@@ -518,6 +519,9 @@ class Template extends Main
 			return $args['default'];
 
 		$meta = self::getMetaFieldRaw( $field, $post->ID, 'meta' );
+
+		if ( FALSE === $meta && $args['fallback'] )
+			return self::getMetaField( $args['fallback'], array_merge( $atts, [ 'fallback' => FALSE ] ), FALSE );
 
 		if ( FALSE === $meta )
 			return $args['default'];
