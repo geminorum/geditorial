@@ -1924,6 +1924,7 @@ class Module extends Base
 				$sanitized = trim( $data );
 
 			break;
+			case 'price':
 			case 'number':
 				$sanitized = Number::intval( trim( $data ) );
 

@@ -63,7 +63,14 @@ class Meta extends gEditorial\Module
 					'type'        => 'text',
 					'title'       => _x( 'Before Action', 'Setting Title', 'geditorial-meta' ),
 					'description' => _x( 'Used as default text before the action buttons.', 'Setting Description', 'geditorial-meta' ),
-					'default'     => '',
+				],
+				[
+					'field'       => 'price_format',
+					'type'        => 'text',
+					'title'       => _x( 'Price Format', 'Setting Title', 'geditorial-meta' ),
+					'description' => _x( 'Used as default format on rendering prices.', 'Setting Description', 'geditorial-meta' ),
+					/* translators: %s: price number */
+					'default'     => _x( '%s Toman', 'Setting Default', 'geditorial-meta' ),
 				],
 			],
 		];
@@ -96,6 +103,8 @@ class Meta extends gEditorial\Module
 				'highlight'    => _x( 'Highlight', 'Titles', 'geditorial-meta' ),
 				'dashboard'    => _x( 'Dashboard', 'Titles', 'geditorial-meta' ),
 				'abstract'     => _x( 'Abstract', 'Titles', 'geditorial-meta' ),
+				'cover_blurb'  => _x( 'Cover Blurb', 'Titles', 'geditorial-meta' ),
+				'cover_price'  => _x( 'Cover Price', 'Titles', 'geditorial-meta' ),
 
 				// combined fields
 				'source' => _x( 'Source', 'Titles', 'geditorial-meta' ),
@@ -117,6 +126,8 @@ class Meta extends gEditorial\Module
 				'highlight'    => _x( 'Notes highlighted about the content', 'Descriptions', 'geditorial-meta' ),
 				'dashboard'    => _x( 'Custom HTML content on the dashboard', 'Descriptions', 'geditorial-meta' ),
 				'abstract'     => _x( 'Brief summary of the content', 'Descriptions', 'geditorial-meta' ),
+				'cover_blurb'  => _x( 'Description included on the inside cover or on the back', 'Descriptions', 'geditorial-meta' ),
+				'cover_price'  => _x( 'Cover Price of the content', 'Descriptions', 'geditorial-meta' ),
 
 				'source' => _x( 'Source of the content', 'Descriptions', 'geditorial-meta' ),
 				'action' => _x( 'Action of the content', 'Descriptions', 'geditorial-meta' ),
@@ -170,6 +181,8 @@ class Meta extends gEditorial\Module
 				'highlight'    => [ 'type' => 'note' ],
 				'dashboard'    => [ 'type' => 'postbox_html' ], // or 'postbox_tiny'
 				'abstract'     => [ 'type' => 'postbox_html' ], // or 'postbox_tiny'
+				'cover_blurb'  => [ 'type' => 'note' ],
+				'cover_price'  => [ 'type' => 'price' ],
 			],
 			'page' => [
 				'over_title' => [ 'type' => 'title_before' ],
@@ -392,7 +405,7 @@ class Meta extends gEditorial\Module
 				if ( $args['repeat'] )
 					$defaults = [ 'type'=> 'array', 'single' => FALSE, 'default' => [] ];
 
-				else if ( in_array( $args['type'], [ 'number', 'float' ] ) )
+				else if ( in_array( $args['type'], [ 'number', 'float', 'price' ] ) )
 					$defaults = [ 'type'=> 'integer', 'single' => TRUE, 'default' => 0 ];
 
 				else
@@ -492,6 +505,7 @@ class Meta extends gEditorial\Module
 					ModuleMetaBox::legacy_fieldString( $field, [ $field ], $post, TRUE, $args['title'], FALSE, $args['type'] );
 
 				break;
+				case 'price':
 				case 'number':
 
 					ModuleMetaBox::legacy_fieldNumber( $field, [ $field ], $post, TRUE, $args['title'], FALSE, $args['type'] );
@@ -656,6 +670,7 @@ class Meta extends gEditorial\Module
 					ModuleMetaBox::setPostMetaField_Code( $postmeta, $field );
 
 				break;
+				case 'price':
 				case 'number':
 
 					ModuleMetaBox::setPostMetaField_Number( $postmeta, $field );
@@ -976,6 +991,7 @@ class Meta extends gEditorial\Module
 	{
 		switch ( $field ) {
 			case 'published': return Number::localize( Datetime::stringFormat( $meta ) );
+			case 'cover_price': return Number::localize( sprintf( $this->get_setting( 'price_format', '%s' ), $meta ) ); // TODO: format numbers
 		}
 
 		return $meta;

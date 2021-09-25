@@ -778,6 +778,7 @@ class Template extends Main
 			'source_url',
 			'action_title',
 			'action_url',
+			'cover_blurb',
 		] : (array) $args['excludes'];
 
 		foreach ( $list as $key => $title ) {
