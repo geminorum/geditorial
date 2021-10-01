@@ -188,6 +188,7 @@ class Terms extends gEditorial\Module
 		if ( ! is_admin() )
 			return;
 
+		$this->filter( 'display_media_states', 2, 12 );
 		$this->filter_module( 'datacodes', 'print_template_data', 4, 8 );
 	}
 
@@ -1567,6 +1568,15 @@ class Terms extends gEditorial\Module
 			return $meta;
 
 		return empty( $meta ) ? get_current_user_id() : $meta;
+	}
+
+	public function display_media_states( $media_states, $post )
+	{
+		if ( $term_id = Taxonomy::getIDbyMeta( $post->ID, 'image' ) )
+			/* translators: %s: term name */
+			$media_states[] = sprintf( _x( 'Term Image for &ldquo;%s&rdquo;', 'Media State', 'geditorial-terms' ), get_term( $term_id )->name );
+
+		return $media_states;
 	}
 
 	public function datacodes_print_template_data( $data, $type, $term, $metakey )
