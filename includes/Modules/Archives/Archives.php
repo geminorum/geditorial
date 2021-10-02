@@ -305,7 +305,8 @@ class Archives extends gEditorial\Module
 			$items[] = [
 				/* translators: %s: supported object label */
 				'name' => sprintf( _x( '%s Archives', 'Navigation Metabox', 'geditorial-archives' ), $posttype_label ),
-				'slug' => sprintf( '%s_archives', $posttype_name ),
+				// NOTE: must have `custom-` prefix to whitelist in gNetwork Navigation
+				'slug' => sprintf( 'custom-%s_archives', $posttype_name ),
 				'link' => get_post_type_archive_link( $posttype_name ),
 			];
 
@@ -313,7 +314,8 @@ class Archives extends gEditorial\Module
 			$items[] = [
 				/* translators: %s: supported object label */
 				'name' => sprintf( _x( '%s Archives', 'Navigation Metabox', 'geditorial-archives' ), $taxonomy_label ),
-				'slug' => sprintf( '%s_archives', $taxonomy_name ),
+				// NOTE: must have `custom-` prefix to whitelist in gNetwork Navigation
+				'slug' => sprintf( 'custom-%s_archives', $taxonomy_name ),
 				'link' => $this->get_taxonomy_archive_link( $taxonomy_name ),
 			];
 
