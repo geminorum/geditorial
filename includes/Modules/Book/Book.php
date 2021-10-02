@@ -344,6 +344,12 @@ class Book extends gEditorial\Module
 					'type'        => 'number',
 					'icon'        => 'book-alt',
 				],
+				'total_discs' => [
+					'title'       => _x( 'Discs', 'Field Title', 'geditorial-book' ),
+					'description' => _x( 'Total Discs of the Publication', 'Field Description', 'geditorial-book' ),
+					'type'        => 'number',
+					'icon'        => 'album',
+				],
 				'publication_size' => [
 					'title'       => _x( 'Size', 'Field Title', 'geditorial-book' ),
 					'description' => _x( 'The Size of the Publication, Mainly Books', 'Field Description', 'geditorial-book' ),
@@ -357,6 +363,13 @@ class Book extends gEditorial\Module
 					'icon'        => 'editor-break',
 					// 'quickedit'   => TRUE, // will lose the line breaks on quick edit
 				],
+				'highlight'    => [ 'type' => 'note' ],
+				'source_title' => [ 'type' => 'text' ],
+				'source_url'   => [ 'type' => 'link' ],
+				'action_title' => [ 'type' => 'text' ],
+				'action_url'   => [ 'type' => 'link' ],
+				'cover_blurb'  => [ 'type' => 'note' ],
+				'cover_price'  => [ 'type' => 'price' ],
 			],
 		];
 	}
