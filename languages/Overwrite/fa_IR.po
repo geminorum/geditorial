@@ -1,0 +1,76 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Overwrite\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2021-10-02T21:06:59+03:30\n"
+"PO-Revision-Date: 2021-10-02 21:59+0330\n"
+"X-Generator: Poedit 3.0\n"
+"X-Poedit-Basepath: ../../includes/Modules/Overwrite\n"
+"X-Domain: geditorial-overwrite\n"
+"Last-Translator: geminorum <contact@geminorum.ir>\n"
+"Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
+"Language: fa_IR\n"
+
+#: Overwrite.php:31
+msgctxt "Setting Title"
+msgid "Translation"
+msgstr "ترجمه"
+
+#: Overwrite.php:32
+msgctxt "Setting Description"
+msgid "Checks against the translation string on the filter."
+msgstr "در پالایه با رشته ترجمه‌شده مقایسه خواهد شد."
+
+#: Overwrite.php:37
+msgctxt "Setting Title"
+msgid "Source"
+msgstr "منبع"
+
+#: Overwrite.php:38
+msgctxt "Setting Description"
+msgid "Checks against the original string on the filter."
+msgstr "در پالایه با رشته اصلی مقایسه خواهد شد."
+
+#: Overwrite.php:44
+msgctxt "Setting Title"
+msgid "Target"
+msgstr "هدف"
+
+#: Overwrite.php:45
+msgctxt "Setting Description"
+msgid "Replaces with the translation string on the filter."
+msgstr "در پالایه با رشته ترجمه‌شده جابه‌جا خواهد شد."
+
+#: Overwrite.php:50
+msgctxt "Setting Title"
+msgid "Context"
+msgstr "زمینه"
+
+#: Overwrite.php:51
+msgctxt "Setting Description"
+msgid "Checks against the context of the string on the filter."
+msgstr "در پالایه با زمینه رشته مقایسه خواهد شد."
+
+#: Overwrite.php:58
+msgctxt "Setting Title"
+msgid "Domain"
+msgstr "دامنه"
+
+#: Overwrite.php:59
+msgctxt "Setting Description"
+msgid "Checks against the domain of the string on the filter."
+msgstr "در پالایه با دامنه رشته مقایسه خواهد شد."
+
+#: Overwrite.php:71
+msgctxt "Setting Title"
+msgid "Back-end Strings"
+msgstr "رشته‌های پشت سایت"
+
+#: Overwrite.php:79
+msgctxt "Setting Title"
+msgid "Front-end Strings"
+msgstr "رشته‌های روی سایت"

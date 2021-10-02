@@ -1,0 +1,112 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial WcTracking 3.20.1\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Last-Translator: NULL\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2021-10-02T21:07:57+03:30\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.5.0\n"
+"X-Poedit-Basepath: ../../includes/Modules/WcTracking\n"
+"X-Domain: geditorial-wc-tracking\n"
+
+#: WcTracking.php:33
+msgctxt "Setting Title"
+msgid "Tracking Metakey"
+msgstr ""
+
+#: WcTracking.php:34
+msgctxt "Setting Description"
+msgid "Defines the meta-key that stored the tracking identifier data. Leave empty to use default."
+msgstr ""
+
+#: WcTracking.php:42
+msgctxt "Setting Title"
+msgid "Service Template"
+msgstr ""
+
+#: WcTracking.php:43
+msgctxt "Setting Description"
+msgid "Defines the template that used to build the url to the tracking service. Leave empty to use default."
+msgstr ""
+
+#: WcTracking.php:51
+msgctxt "Setting Title"
+msgid "Service Icon"
+msgstr ""
+
+#: WcTracking.php:52
+msgctxt "Setting Description"
+msgid "Defines the image that used as visual identifier of the tracking service. Leave empty to use default."
+msgstr ""
+
+#: WcTracking.php:55
+msgctxt "Setting Icon"
+msgid "View Default Icon"
+msgstr ""
+
+#: WcTracking.php:62
+msgctxt "Setting Title"
+msgid "Email Before Text"
+msgstr ""
+
+#: WcTracking.php:63
+msgctxt "Setting Description"
+msgid "String to use before tracking info button on email template of the order details. Leave empty to use default."
+msgstr ""
+
+#: WcTracking.php:64
+#: WcTracking.php:133
+msgctxt "Setting Default"
+msgid "You can view the status of package at any time by visiting this page:"
+msgstr ""
+
+#: WcTracking.php:69
+msgctxt "Setting Title"
+msgid "Email Button Text"
+msgstr ""
+
+#: WcTracking.php:70
+msgctxt "Setting Description"
+msgid "String to use as prefix to tracking info button on email template of the order details. Leave empty to use default."
+msgstr ""
+
+#: WcTracking.php:71
+#: WcTracking.php:137
+msgctxt "Setting Default"
+msgid "Tracking Postal Package"
+msgstr ""
+
+#: WcTracking.php:76
+msgctxt "Setting Title"
+msgid "Admin Button Title"
+msgstr ""
+
+#: WcTracking.php:77
+msgctxt "Setting Description"
+msgid "String to use as title of order action button on admin area. Leave empty to use default."
+msgstr ""
+
+#: WcTracking.php:78
+#: WcTracking.php:193
+msgctxt "Setting Default"
+msgid "Tracking Package"
+msgstr ""
+
+#: WcTracking.php:97
+msgctxt "Export Column"
+msgid "Tracking"
+msgstr ""
+
+#: WcTracking.php:172
+msgctxt "Action Title"
+msgid "Tracking Package ID:"
+msgstr ""
+
+#: WcTracking.php:182
+msgctxt "Action"
+msgid "Tracking"
+msgstr ""

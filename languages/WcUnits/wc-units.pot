@@ -1,0 +1,231 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial WcUnits 3.20.1\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Last-Translator: NULL\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2021-10-02T21:07:58+03:30\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.5.0\n"
+"X-Poedit-Basepath: ../../includes/Modules/WcUnits\n"
+"X-Domain: geditorial-wc-units\n"
+
+#: WcUnits.php:34
+msgctxt "Setting Title"
+msgid "Non-Admin Only"
+msgstr ""
+
+#: WcUnits.php:35
+msgctxt "Setting Description"
+msgid "Modifies filters only on non-administration areas of your site."
+msgstr ""
+
+#: WcUnits.php:41
+msgctxt "Setting Title"
+msgid "Decimal Point"
+msgstr ""
+
+#: WcUnits.php:42
+msgctxt "Setting Description"
+msgid "Formats decimal point in units with a custom character."
+msgstr ""
+
+#: WcUnits.php:43
+msgctxt "Setting Default: Decimal Point"
+msgid "."
+msgstr ""
+
+#: WcUnits.php:50
+msgctxt "Setting Title"
+msgid "Multiplication Sign"
+msgstr ""
+
+#: WcUnits.php:51
+msgctxt "Setting Description"
+msgid "Joins dimension units with a custom string."
+msgstr ""
+
+#: WcUnits.php:52
+msgctxt "Setting Default: Multiplication Sign"
+msgid "&nbsp;&times;&nbsp;"
+msgstr ""
+
+#: WcUnits.php:59
+#: WcUnits.php:114
+msgctxt "Setting Title"
+msgid "After All Attribiutes"
+msgstr ""
+
+#: WcUnits.php:60
+msgctxt "Setting Description"
+msgid "Moves the weight to the bottom of the product attributes table."
+msgstr ""
+
+#: WcUnits.php:65
+msgctxt "Setting Title"
+msgid "Not Available on Weights"
+msgstr ""
+
+#: WcUnits.php:66
+msgctxt "Setting Description"
+msgid "Used as not available string upon display of weights. Leave empty to disable."
+msgstr ""
+
+#. translators: %s: unit name
+#. translators: %s: unit name
+#. translators: %s: unit name
+#. translators: %s: unit name
+#. translators: %s: unit name
+#. translators: %s: unit name
+#. translators: %s: unit name
+#. translators: %s: unit name
+#. translators: %s: unit name
+#: WcUnits.php:74
+#: WcUnits.php:84
+#: WcUnits.php:94
+#: WcUnits.php:104
+#: WcUnits.php:129
+#: WcUnits.php:139
+#: WcUnits.php:149
+#: WcUnits.php:159
+#: WcUnits.php:169
+msgctxt "Setting Title"
+msgid "Template for %s"
+msgstr ""
+
+#: WcUnits.php:75
+msgctxt "Setting Description"
+msgid "Used as template upon display of weights in “Kilogram”."
+msgstr ""
+
+#. translators: %s: unit amount
+#: WcUnits.php:77
+msgctxt "Setting Default"
+msgid "%s kg"
+msgstr ""
+
+#: WcUnits.php:85
+msgctxt "Setting Description"
+msgid "Used as template upon display of weight in “Gram”."
+msgstr ""
+
+#. translators: %s: unit amount
+#: WcUnits.php:87
+msgctxt "Setting Default"
+msgid "%s g"
+msgstr ""
+
+#: WcUnits.php:95
+msgctxt "Setting Description"
+msgid "Used as template upon display of weights in “Pound”."
+msgstr ""
+
+#. translators: %s: unit amount
+#: WcUnits.php:97
+msgctxt "Setting Default"
+msgid "%s lbs"
+msgstr ""
+
+#: WcUnits.php:105
+msgctxt "Setting Description"
+msgid "Used as template upon display of weight in “Ounce”."
+msgstr ""
+
+#. translators: %s: unit amount
+#: WcUnits.php:107
+msgctxt "Setting Default"
+msgid "%s oz"
+msgstr ""
+
+#: WcUnits.php:115
+msgctxt "Setting Description"
+msgid "Moves the dimensions to the bottom of the product attributes table."
+msgstr ""
+
+#: WcUnits.php:120
+msgctxt "Setting Title"
+msgid "Not Available on Dimensions"
+msgstr ""
+
+#: WcUnits.php:121
+msgctxt "Setting Description"
+msgid "Used as not available string upon display of dimensions. Leave empty to disable."
+msgstr ""
+
+#: WcUnits.php:130
+msgctxt "Setting Description"
+msgid "Used as template upon display of dimensions in “Meter”."
+msgstr ""
+
+#. translators: %s: unit amount
+#: WcUnits.php:132
+msgctxt "Setting Default"
+msgid "%s m"
+msgstr ""
+
+#: WcUnits.php:140
+msgctxt "Setting Description"
+msgid "Used as template upon display of dimensions in “Centimetre”."
+msgstr ""
+
+#. translators: %s: unit amount
+#: WcUnits.php:142
+msgctxt "Setting Default"
+msgid "%s cm"
+msgstr ""
+
+#: WcUnits.php:150
+msgctxt "Setting Description"
+msgid "Used as template upon display of dimensions in “Millimetre”."
+msgstr ""
+
+#. translators: %s: unit amount
+#: WcUnits.php:152
+msgctxt "Setting Default"
+msgid "%s mm"
+msgstr ""
+
+#: WcUnits.php:160
+msgctxt "Setting Description"
+msgid "Used as template upon display of dimensions in “Inch”."
+msgstr ""
+
+#. translators: %s: unit amount
+#: WcUnits.php:162
+msgctxt "Setting Default"
+msgid "%s in"
+msgstr ""
+
+#: WcUnits.php:170
+msgctxt "Setting Description"
+msgid "Used as template upon display of dimensions in “Yard”."
+msgstr ""
+
+#. translators: %s: unit amount
+#: WcUnits.php:172
+msgctxt "Setting Default"
+msgid "%s yd"
+msgstr ""
+
+#: WcUnits.php:182
+msgctxt "Setting Section Title"
+msgid "Weight"
+msgstr ""
+
+#: WcUnits.php:183
+msgctxt "Setting Section Description"
+msgid "Format a weight for display."
+msgstr ""
+
+#: WcUnits.php:190
+msgctxt "Setting Section Title"
+msgid "Dimensions"
+msgstr ""
+
+#: WcUnits.php:191
+msgctxt "Setting Section Description"
+msgid "Format dimensions for display."
+msgstr ""
