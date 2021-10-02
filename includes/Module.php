@@ -2458,10 +2458,19 @@ class Module extends Base
 
 	public function get_setting( $field, $default = NULL )
 	{
-		if ( isset( $this->options->settings[$field] ) )
-			return $this->options->settings[$field];
+		if ( ! isset( $this->options->settings ) )
+			return $default;
 
-		return $default;
+		return array_key_exists( $field, $this->options->settings )
+			? $this->options->settings[$field]
+			: $default;
+	}
+
+	public function get_setting_fallback( $field, $fallback )
+	{
+		return empty( $this->options->settings[$field] )
+			? $fallback
+			: $this->options->settings[$field];
 	}
 
 	// check arrays with support of old settings
