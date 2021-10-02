@@ -2303,6 +2303,13 @@ class Module extends Base
 		);
 	}
 
+	public function settings_section_backend()
+	{
+		Settings::fieldSection(
+			_x( 'Back-end', 'Module: Setting Section Title', 'geditorial' )
+		);
+	}
+
 	public function settings_section_content()
 	{
 		Settings::fieldSection(

@@ -9,6 +9,8 @@ use geminorum\gEditorial\Core\Number;
 class ModuleHelper extends gEditorial\Helper
 {
 
+	const MODULE = 'book';
+
 	public static function ISBN( $string )
 	{
 		return HTML::link( self::getISBN( $string, TRUE ), self::lookupISBN( $string ), TRUE );

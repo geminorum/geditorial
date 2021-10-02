@@ -738,7 +738,7 @@ class Template extends Main
 		if ( ! array_key_exists( 'url_field', $atts ) )
 			$atts['url_field'] = 'action_url';
 
-		if ( ! array_key_exists( 'link_class', $atts ) )
+		if ( ! array_key_exists( 'link_class', $atts ) && ! is_admin() )
 			$atts['link_class'] = 'button -button';
 
 		return self::metaLink( $atts, 'meta', FALSE );
@@ -773,7 +773,8 @@ class Template extends Main
 		$excludes = is_null( $args['excludes'] ) ? [
 			'over_title',
 			'sub_title',
-			'byline',
+			// 'byline',
+			'highlight',
 			'source_title',
 			'source_url',
 			'action_title',
@@ -788,7 +789,7 @@ class Template extends Main
 
 			if ( ! array_key_exists( $key, $fields ) ) {
 
-				// fallback to taxonomy, only if fields are passed
+				// fallback to taxonomy, only on custom set of fields
 				if ( is_null( $args['fields'] ) )
 					continue;
 

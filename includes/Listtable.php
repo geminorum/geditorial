@@ -90,7 +90,7 @@ SQL;
 		$pieces['where'].= $wpdb->prepare( " AND (taxonomy = %s OR taxonomy IS NULL)", $taxonomy );
 
 		$pieces['orderby'] = "GROUP_CONCAT({$wpdb->terms}.name ORDER BY name ASC) ";
-		$pieces['orderby'].= ( 'ASC' == strtoupper( $query->get('order') ) ) ? 'ASC' : 'DESC';
+		$pieces['orderby'].= ( 'ASC' == strtoupper( $query->get( 'order' ) ) ) ? 'ASC' : 'DESC';
 
 		$pieces['groupby'] = "object_id";
 

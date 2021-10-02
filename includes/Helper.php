@@ -246,7 +246,7 @@ class Helper extends Main
 			? explode( $delimiter, $string )
 			: explode( $delimiter, $string, $limit );
 
-		return array_unique( array_filter( $seperated, 'trim' ) );
+		return array_unique( array_filter( array_map( 'trim', $seperated ) ) );
 	}
 
 	public static function getJoined( $items, $before = '', $after = '', $empty = '', $separator = NULL )

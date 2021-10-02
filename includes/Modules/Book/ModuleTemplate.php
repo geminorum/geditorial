@@ -105,11 +105,11 @@ class ModuleTemplate extends gEditorial\Template
 				[ // check to see if date has been filled out
 					'key'     => 'publication_date',
 					'compare' => '=',
-					'value'   => date('Y-m-d')
+					'value'   => date( 'Y-m-d' )
 				],
 				[ // if no date has been added show these posts too
 					'key'     => 'publication_date',
-					'value'   => date('Y-m-d'),
+					'value'   => date( 'Y-m-d' ),
 					'compare' => 'NOT EXISTS'
 				],
 			],

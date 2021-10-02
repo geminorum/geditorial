@@ -139,7 +139,7 @@ class SidePost extends Side
 	{
 		$list = new ListItems( $wp_query->posts, $this->item_type );
 
-		$list->current_page = max( 1, $wp_query->get('paged') );
+		$list->current_page = max( 1, $wp_query->get( 'paged' ) );
 		$list->total_pages  = $wp_query->max_num_pages;
 
 		return $list;

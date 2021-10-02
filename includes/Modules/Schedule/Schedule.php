@@ -241,8 +241,8 @@ class Schedule extends gEditorial\Module
 		$html.= HTML::tag( 'input', [ 'type' => 'hidden', 'name' => 'date_cal', 'data-field' => 'cal', 'value' => $calendar ] );
 		$html.= HTML::tag( 'input', [ 'type' => 'hidden', 'name' => 'nonce', 'data-field' => 'nonce', 'value' => wp_create_nonce( $this->hook( 'add-new' ) ) ] );
 
-		$actions = HTML::button( HTML::getDashicon( 'yes '), '#', _x( 'Save', 'Title Attr', 'geditorial-schedule' ), TRUE, [ 'action' => 'save' ] );
-		$actions.= HTML::button( HTML::getDashicon( 'no-alt '), '#', _x( 'Cancel', 'Title Attr', 'geditorial-schedule' ), TRUE, [ 'action' => 'close' ] );
+		$actions = HTML::button( HTML::getDashicon( 'yes' ), '#', _x( 'Save', 'Title Attr', 'geditorial-schedule' ), TRUE, [ 'action' => 'save' ] );
+		$actions.= HTML::button( HTML::getDashicon( 'no-alt' ), '#', _x( 'Cancel', 'Title Attr', 'geditorial-schedule' ), TRUE, [ 'action' => 'close' ] );
 
 		$html.= HTML::wrap( $actions, '-actions' );
 
