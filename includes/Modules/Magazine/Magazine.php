@@ -158,8 +158,13 @@ class Magazine extends gEditorial\Module
 					'icon'        => 'admin-page',
 				],
 
+				'highlight'    => [ 'type' => 'note' ],
 				'source_title' => [ 'type' => 'text' ],
 				'source_url'   => [ 'type' => 'link' ],
+				'action_title' => [ 'type' => 'text' ],
+				'action_url'   => [ 'type' => 'link' ],
+				'cover_blurb'  => [ 'type' => 'note' ],
+				'cover_price'  => [ 'type' => 'price' ],
 			],
 			'_supported' => [
 				'in_issue_order' => [
