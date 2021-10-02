@@ -202,12 +202,7 @@ class Terms extends gEditorial\Module
 	{
 		$enqueue = FALSE;
 
-		if ( 'dashboard' == $screen->base ) {
-
-			if ( current_user_can( 'edit_others_posts' ) )
-				$this->filter( 'dashboard_pointers', 1, 10, FALSE, 'gnetwork' );
-
-		} else if ( 'edit-tags' == $screen->base ) {
+		if ( 'edit-tags' == $screen->base ) {
 
 			$fields = $this->get_supported( $screen->taxonomy );
 
@@ -1339,39 +1334,7 @@ class Terms extends gEditorial\Module
 
 				$this->nonce_check( 'tools', $sub );
 
-				$count = 0;
-
-				if ( Tablelist::isAction( 'clean_uncategorized', TRUE ) ) {
-
-					$uncategorized = get_option( 'default_category' );
-
-					foreach ( $_POST['_cb'] as $post_id ) {
-
-						if ( ! $post = Helper::getPost( $post_id ) )
-							continue;
-
-						if ( ! in_array( 'category', get_object_taxonomies( $post ) ) )
-							continue;
-
-						$terms = wp_get_object_terms( $post->ID, 'category', [ 'fields' => 'ids' ] );
-						$diff  = array_diff( $terms, [ $uncategorized ] );
-
-						if ( empty( $diff ) )
-							continue;
-
-						$results = wp_set_object_terms( $post->ID, $diff, 'category' );
-
-						if ( ! self::isError( $results ) )
-							$count++;
-					}
-
-					if ( $count )
-						WordPress::redirectReferer( [
-							'message' => 'cleaned',
-							'count'   => $count,
-						] );
-
-				} else if ( Tablelist::isAction( 'orphaned_terms' ) ) {
+				if ( Tablelist::isAction( 'orphaned_terms' ) ) {
 
 					$post = $this->get_current_form( [
 						'dead_tax' => FALSE,
@@ -1402,11 +1365,10 @@ class Terms extends gEditorial\Module
 	// TODO: option to delete orphaned terms
 	protected function render_tools_html( $uri, $sub )
 	{
-		$available     = FALSE;
-		$uncategorized = $this->get_uncategorized_count();
-		$db_taxes      = Database::getTaxonomies( TRUE );
-		$live_taxes    = Taxonomy::get( 6 );
-		$dead_taxes    = array_diff_key( $db_taxes, $live_taxes );
+		$available  = FALSE;
+		$db_taxes   = Database::getTaxonomies( TRUE );
+		$live_taxes = Taxonomy::get( 6 );
+		$dead_taxes = array_diff_key( $db_taxes, $live_taxes );
 
 		HTML::h3( _x( 'Term Tools', 'Header', 'geditorial-terms' ) );
 
@@ -1437,28 +1399,6 @@ class Terms extends gEditorial\Module
 				Settings::submitButton( 'orphaned_terms', _x( 'Convert', 'Button', 'geditorial-terms' ) );
 
 				HTML::desc( _x( 'Converts orphaned terms into currently registered taxonomies.', 'Message', 'geditorial-terms' ) );
-
-			echo '</td></tr>';
-
-			$available = TRUE;
-		}
-
-		if ( count( $uncategorized ) ) {
-
-			echo '<tr><th scope="row">'._x( 'Uncategorized Posts', 'Tools', 'geditorial-terms' ).'</th><td>';
-
-			Settings::submitButton( 'clean_uncategorized', _x( 'Cleanup Uncategorized', 'Button', 'geditorial-terms' ) );
-
-			HTML::desc( _x( 'Checks for posts in uncategorized category and removes the unnecessaries.', 'Message', 'geditorial-terms' ) );
-
-			echo '<br />';
-
-			HTML::tableList( [
-				'_cb'   => 'ID',
-				'ID'    => Tablelist::columnPostID(),
-				'title' => Tablelist::columnPostTitle(),
-				'terms' => Tablelist::columnPostTerms(),
-			], $uncategorized );
 
 			echo '</td></tr>';
 
@@ -1731,40 +1671,5 @@ class Terms extends gEditorial\Module
 		}
 
 		return TRUE;
-	}
-
-	// already cap checked!
-	public function dashboard_pointers( $items )
-	{
-		if ( ! $list = $this->get_uncategorized_count( TRUE ) )
-			return $items;
-
-		/* translators: %s: posts count */
-		$noopd = _nx_noop( '%s Uncategorized Post', '%s Uncategorized Posts', 'Noop', 'geditorial-terms' );
-		$link  = $this->cuc( 'tools' ) ? $this->get_module_url( 'tools' ) : add_query_arg( [ 'cat' => get_option( 'default_category' ) ], admin_url( 'edit.php' ) );
-
-		$items[] = HTML::tag( 'a', [
-			'href'  => $link,
-			'title' => _x( 'You need to assign categories to some posts!', 'Title Attr', 'geditorial-terms' ),
-			'class' => '-uncategorized-count',
-		], sprintf( Helper::noopedCount( count( $list ), $noopd ), Number::format( count( $list ) ) ) );
-
-		return $items;
-	}
-
-	private function get_uncategorized_count( $lite = FALSE )
-	{
-		$args = [
-			'fields'         => $lite ? 'ids' : 'all',
-			'posts_per_page' => -1,
-			'tax_query'      => [ [
-				'taxonomy' => 'category',
-				'field'    => 'term_id',
-				'terms'    => [ (int) get_option( 'default_category' ) ],
-			] ],
-		];
-
-		$query = new \WP_Query;
-		return $query->query( $args );
 	}
 }
