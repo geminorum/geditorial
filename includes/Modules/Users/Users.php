@@ -154,10 +154,10 @@ class Users extends gEditorial\Module
 	public function admin_menu()
 	{
 		if ( $this->get_setting( 'user_groups' ) )
-			$this->_hook_menu_user_taxonomy( 'group_tax' );
+			$this->_hook_menu_taxonomy( 'group_tax', 'users.php' );
 
 		if ( $this->get_setting( 'user_types' ) )
-			$this->_hook_menu_user_taxonomy( 'type_tax' );
+			$this->_hook_menu_taxonomy( 'type_tax', 'users.php' );
 	}
 
 	public function get_adminmenu( $page = TRUE, $extra = [] )

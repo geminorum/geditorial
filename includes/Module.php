@@ -4572,13 +4572,13 @@ class Module extends Base
 		HTML::inputHidden( 'menu_order', PostType::getLastMenuOrder( $posttype, $post->ID ) + 1 );
 	}
 
-	protected function _hook_menu_user_taxonomy( $constant, $context = 'userpage' )
+	protected function _hook_menu_taxonomy( $constant, $parent_slug = 'index.php', $context = 'submenu' )
 	{
 		if ( ! $taxonomy = get_taxonomy( $this->constant( $constant ) ) )
 			return FALSE;
 
 		return add_submenu_page(
-			'users.php',
+			$parent_slug,
 			HTML::escape( $this->get_string( 'page_title', $constant, $context, $taxonomy->labels->name ) ),
 			HTML::escape( $this->get_string( 'menu_title', $constant, $context, $taxonomy->labels->menu_name ) ),
 			$taxonomy->cap->manage_terms,

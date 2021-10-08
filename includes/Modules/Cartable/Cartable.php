@@ -386,17 +386,8 @@ class Cartable extends gEditorial\Module
 
 	public function admin_menu()
 	{
-		if ( $this->support_types ) {
-
-			$tax = get_taxonomy( $this->constant( 'type_tax' ) );
-
-			add_options_page(
-				HTML::escape( $tax->labels->menu_name ),
-				HTML::escape( $tax->labels->menu_name ),
-				$tax->cap->manage_terms,
-				'edit-tags.php?taxonomy='.$tax->name
-			);
-		}
+		if ( $this->support_types )
+			$this->_hook_menu_taxonomy( 'type_tax', 'options-general.php' );
 
 		if ( ! $this->support_users
 			&& ! $this->support_groups
