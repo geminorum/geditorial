@@ -942,11 +942,22 @@ class Module extends Base
 	}
 
 	// enabled post types for this module
-	public function taxonomies()
+	public function taxonomies( $taxonomies = NULL )
 	{
-		return empty( $this->options->taxonomies )
-			? []
-			: array_keys( array_filter( $this->options->taxonomies ) );
+		if ( is_null( $taxonomies ) )
+			$taxonomies = [];
+
+		else if ( ! is_array( $taxonomies ) )
+			$taxonomies = [ $this->constant( $taxonomies ) ];
+
+		if ( empty( $this->options->taxonomies ) )
+			return $taxonomies;
+
+		$taxonomies = array_merge( $taxonomies, array_keys( array_filter( $this->options->taxonomies ) ) );
+
+		return did_action( 'wp_loaded' )
+			? array_filter( $taxonomies, 'taxonomy_exists' )
+			: $taxonomies;
 	}
 
 	public function taxonomy_supported( $taxonomy )
