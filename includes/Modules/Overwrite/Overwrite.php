@@ -151,7 +151,7 @@ class Overwrite extends gEditorial\Module
 			if ( ! empty( $string['domain'] ) && $domain != $string['domain'] )
 				continue;
 
-			if ( empty( $string['context'] ) || $context != $string['context'] )
+			if ( ! empty( $string['context'] ) && $context != $string['context'] )
 				continue;
 
 			if ( ! empty( $string['translation'] ) && $translation == $string['translation'] )
