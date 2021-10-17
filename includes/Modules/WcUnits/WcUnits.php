@@ -230,7 +230,7 @@ class WcUnits extends gEditorial\Module
 		if ( $admin )
 			$this->filter( 'products_general_settings', 1, 99, FALSE, 'woocommerce' );
 
-		if ( $admin && $this->get_setting( 'non_admin_only', TRUE ) )
+		if ( $admin && ! WordPress::isAJAX() && $this->get_setting( 'non_admin_only', TRUE ) )
 			return;
 
 		$this->filter( 'format_weight', 2, 12, FALSE, 'woocommerce' );
@@ -238,9 +238,6 @@ class WcUnits extends gEditorial\Module
 
 		if ( $this->get_setting( 'decimal_point' ) )
 			$this->filter( 'format_localized_decimal', 1, 12, FALSE, 'woocommerce' );
-
-		if ( $admin )
-			return;
 
 		if ( $this->get_setting( 'weight_attr_bottom' ) || $this->get_setting( 'dimensions_attr_bottom' ) )
 			$this->filter( 'display_product_attributes', 2, 999, FALSE, 'woocommerce' );
