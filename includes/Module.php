@@ -3022,26 +3022,29 @@ class Module extends Base
 		if ( TRUE === $args ) {
 			$args = [];
 
-		} else if ( ! is_array( $args ) && $args ) {
+		} else if ( $args && $name && is_string( $args ) ) {
 			$name.= '.'.$args;
 			$args = [];
 		}
 
-		$name = str_replace( '_', '-', $name );
+		if ( $name ) {
 
-		if ( is_null( $handle ) )
-			$handle = strtolower( $this->base.'-'.str_replace( '.', '-', $name ) );
+			$name = str_replace( '_', '-', $name );
 
-		$prefix = is_admin() ? 'admin.' : 'front.';
-		$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
+			if ( is_null( $handle ) )
+				$handle = strtolower( $this->base.'-'.str_replace( '.', '-', $name ) );
 
-		wp_enqueue_script(
-			$handle,
-			GEDITORIAL_URL.'assets/js/'.$prefix.$name.$suffix.'.js',
-			$deps,
-			GEDITORIAL_VERSION,
-			TRUE
-		);
+			$prefix = is_admin() ? 'admin.' : 'front.';
+			$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
+
+			wp_enqueue_script(
+				$handle,
+				GEDITORIAL_URL.'assets/js/'.$prefix.$name.$suffix.'.js',
+				$deps,
+				GEDITORIAL_VERSION,
+				TRUE
+			);
+		}
 
 		if ( ! array_key_exists( '_rest', $args ) )
 			$args['_rest'] = rest_url( $this->restapi_get_namespace() );
