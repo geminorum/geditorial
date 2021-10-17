@@ -102,23 +102,14 @@ class GCalEvents extends gEditorial\Widget
 
 	public function update( $new, $old )
 	{
-		$instance = $old;
-
-		$instance['title']       = sanitize_text_field( $new['title'] );
-		$instance['title_link']  = strip_tags( $new['title_link'] );
-		$instance['title_image'] = strip_tags( $new['title_image'] );
-		$instance['context']     = strip_tags( $new['context'] );
-		$instance['class']       = strip_tags( $new['class'] );
-		$instance['empty']       = Helper::kses( $new['empty'], 'text' );
-
-		$instance['calendar_id']  = strip_tags( $new['calendar_id'] );
-		$instance['api_key']      = strip_tags( $new['api_key'] );
-		$instance['time_min']     = strip_tags( $new['time_min'] );
-		$instance['max_results']  = (int) $new['max_results'];
-		$instance['display_time'] = isset( $new['display_time'] );
-
 		$this->flush_widget_cache();
 
-		return $instance;
+		return $this->handle_update( $new, $old, [ 'display_time' ], [
+			'calendar_id' => 'key',
+			'api_key'     => 'key',
+			'time_min'    => 'key',
+			'time_min'    => 'key',
+			'max_results' => 'digit',
+		] );
 	}
 }

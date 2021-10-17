@@ -43,6 +43,7 @@ class IssueCover extends gEditorial\Widget
 	public function widget_html( $args, $instance )
 	{
 		$link = 'parent';
+		$type = self::constant( 'issue_cpt', 'issue' );
 
 		if ( ! empty( $instance['custom_link'] ) )
 			$link = $instance['custom_link'];
@@ -51,8 +52,8 @@ class IssueCover extends gEditorial\Widget
 			$link = FALSE;
 
 		$atts = [
-			'type'  => self::constant( 'issue_cpt', 'issue' ),
-			'size'  => empty( $instance['image_size'] ) ? NULL : $instance['image_size'],
+			'type'  => $type,
+			'size'  => empty( $instance['image_size'] ) ? $type.'-thumbnail' : $instance['image_size'],
 			'title' => empty( $instance['number_line'] ) ? 'title' : 'number',
 			'link'  => $link,
 			'echo'  => FALSE,
@@ -86,7 +87,7 @@ class IssueCover extends gEditorial\Widget
 
 	public function form( $instance )
 	{
-		$cpt = self::constant( 'issue_cpt', 'issue' );
+		$type = self::constant( 'issue_cpt', 'issue' );
 
 		$this->before_form( $instance );
 
@@ -94,8 +95,8 @@ class IssueCover extends gEditorial\Widget
 		$this->form_title_link( $instance );
 		$this->form_title_image( $instance );
 
-		$this->form_page_id( $instance, '0', 'page_id', 'posttype', $cpt, _x( 'The Issue:', 'Widget: Issue Cover', 'geditorial-magazine' ) );
-		$this->form_image_size( $instance, $cpt.'-thumbnail', 'image_size', $cpt );
+		$this->form_page_id( $instance, '0', 'page_id', 'posttype', $type, _x( 'The Issue:', 'Widget: Issue Cover', 'geditorial-magazine' ) );
+		$this->form_image_size( $instance, $type.'-thumbnail', 'image_size', $type );
 
 		$this->form_checkbox( $instance, FALSE, 'latest_issue', _x( 'Always the latest issue', 'Widget: Issue Cover', 'geditorial-magazine' ) );
 		$this->form_checkbox( $instance, TRUE, 'number_line', _x( 'Display the Number Line', 'Widget: Issue Cover', 'geditorial-magazine' ) );
@@ -108,24 +109,14 @@ class IssueCover extends gEditorial\Widget
 		$this->after_form( $instance );
 	}
 
-	public function update( $new_instance, $old_instance )
+	public function update( $new, $old )
 	{
-		$instance = $old_instance;
-
-		$instance['title']        = strip_tags( $new_instance['title'] );
-		$instance['title_link']   = strip_tags( $new_instance['title_link'] );
-		$instance['title_image']  = strip_tags( $new_instance['title_image'] );
-		$instance['page_id']      = (int) $new_instance['page_id'];
-		$instance['image_size']   = isset( $new_instance['image_size'] ) ? strip_tags( $new_instance['image_size'] ) : 'thumbnail';
-		$instance['latest_issue'] = isset( $new_instance['latest_issue'] );
-		$instance['number_line']  = isset( $new_instance['number_line'] );
-		$instance['link_issue']   = isset( $new_instance['link_issue'] );
-		$instance['custom_link']  = strip_tags( $new_instance['custom_link'] );
-		$instance['context']      = strip_tags( $new_instance['context'] );
-		$instance['class']        = strip_tags( $new_instance['class'] );
-
 		$this->flush_widget_cache();
 
-		return $instance;
+		return $this->handle_update( $new, $old, [
+			'latest_issue',
+			'number_line',
+			'link_issue',
+		] );
 	}
 }

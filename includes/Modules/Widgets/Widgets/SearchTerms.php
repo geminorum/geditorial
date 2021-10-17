@@ -77,25 +77,6 @@ class SearchTerms extends gEditorial\Widget
 		$this->after_widget( $args, $instance );
 	}
 
-	public function update( $new, $old )
-	{
-		$instance = $old;
-
-		$instance['title']       = sanitize_text_field( $new['title'] );
-		$instance['title_link']  = strip_tags( $new['title_link'] );
-		$instance['title_image'] = strip_tags( $new['title_image'] );
-		$instance['class']       = strip_tags( $new['class'] );
-
-		$instance['taxonomy'] = strip_tags( $new['taxonomy'] );
-
-		$instance['prefix_with_name'] = isset( $new['prefix_with_name'] );
-		$instance['strip_hashtags']   = isset( $new['strip_hashtags'] );
-
-		$this->flush_widget_cache();
-
-		return $instance;
-	}
-
 	public function form( $instance )
 	{
 		$this->before_form( $instance );
@@ -111,5 +92,15 @@ class SearchTerms extends gEditorial\Widget
 		$this->form_checkbox( $instance, FALSE, 'strip_hashtags', _x( 'Strip Hash-tags', 'Widget: Setting', 'geditorial-widgets' ) );
 
 		$this->after_form( $instance );
+	}
+
+	public function update( $new, $old )
+	{
+		$this->flush_widget_cache();
+
+		return $this->handle_update( $new, $old, [
+			'prefix_with_name',
+			'strip_hashtags',
+		] );
 	}
 }

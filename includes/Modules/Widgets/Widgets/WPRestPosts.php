@@ -127,25 +127,14 @@ class WPRestPosts extends gEditorial\Widget
 
 	public function update( $new, $old )
 	{
-		$instance = $old;
-
-		$instance['title']       = sanitize_text_field( $new['title'] );
-		$instance['title_link']  = strip_tags( $new['title_link'] );
-		$instance['title_image'] = strip_tags( $new['title_image'] );
-		$instance['context']     = strip_tags( $new['context'] );
-		$instance['class']       = strip_tags( $new['class'] );
-		$instance['empty']       = Helper::kses( $new['empty'], 'text' );
-
-		$instance['resource']   = esc_url( $new['resource'] );
-		$instance['endpoint']   = strip_tags( $new['endpoint'] );
-		$instance['tags']       = strip_tags( $new['tags'] );
-		$instance['categories'] = strip_tags( $new['categories'] );
-		$instance['extra']      = strip_tags( $new['extra'] );
-		$instance['number']     = (int) $new['number'];
-		$instance['trim_chars'] = (int) $new['trim_chars'];
-
 		$this->flush_widget_cache();
 
-		return $instance;
+		return $this->handle_update( $new, $old, [], [
+			'resource'   => 'url',
+			'endpoint'   => 'key',
+			'tags'       => 'key',
+			'categories' => 'key',
+			'extra'      => 'key',
+		] );
 	}
 }

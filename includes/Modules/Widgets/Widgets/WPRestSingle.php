@@ -103,22 +103,12 @@ class WPRestSingle extends gEditorial\Widget
 
 	public function update( $new, $old )
 	{
-		$instance = $old;
-
-		$instance['title']       = sanitize_text_field( $new['title'] );
-		$instance['title_link']  = strip_tags( $new['title_link'] );
-		$instance['title_image'] = strip_tags( $new['title_image'] );
-		$instance['context']     = strip_tags( $new['context'] );
-		$instance['class']       = strip_tags( $new['class'] );
-		$instance['empty']       = Helper::kses( $new['empty'], 'text' );
-
-		$instance['resource'] = esc_url( $new['resource'] );
-		$instance['endpoint'] = strip_tags( $new['endpoint'] );
-		$instance['extra']    = strip_tags( $new['extra'] );
-		$instance['post_id']  = (int) $new['post_id'];
-
 		$this->flush_widget_cache();
 
-		return $instance;
+		return $this->handle_update( $new, $old, [], [
+			'resource' => 'url',
+			'endpoint' => 'key',
+			'extra'    => 'key',
+		] );
 	}
 }
