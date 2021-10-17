@@ -4,6 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core\HTML;
+use geminorum\gEditorial\WordPress\Taxonomy;
 
 class SearchTerms extends gEditorial\Widget
 {
@@ -23,14 +24,12 @@ class SearchTerms extends gEditorial\Widget
 
 	public function widget( $args, $instance )
 	{
-		if ( ! is_search() )
+		if ( ! is_search() || ( ! empty( $instance['hide_on_paged'] ) && is_paged() ) )
 			return;
 
 		// avoid filtering
 		if ( ! $criteria = trim( get_query_var( 's' ) ) )
 			return;
-
-		// FIXME: optional skip if paged
 
 		if ( empty( $instance['taxonomy'] ) || 'all' == $instance['taxonomy'] )
 			$taxonomies = get_taxonomies( [ 'public' => TRUE, 'show_ui' => TRUE ] );
@@ -42,11 +41,18 @@ class SearchTerms extends gEditorial\Widget
 				return str_replace( '_', ' ', $matches[1] );
 			}, $criteria );
 
+		$exclude = [];
+
+		if ( ! empty( $instance['exclude_defaults'] ) )
+			foreach ( $taxonomies as $taxonomy )
+				$exclude[] = (int) Taxonomy::getDefaultTermID( $taxonomy );
+
 		$query = new \WP_Term_Query( [
 			'search'     => $criteria, // 'name__like'
 			'taxonomy'   => $taxonomies,
+			'exclude'    => array_filter( $exclude ),
 			'orderby'    => 'name',
-			'hide_empty' => FALSE,
+			'hide_empty' => ! empty( $instance['include_empty'] ),
 		] );
 
 		if ( empty( $query->terms ) )
@@ -88,8 +94,13 @@ class SearchTerms extends gEditorial\Widget
 
 		$this->form_taxonomy( $instance );
 
+		echo '<div class="-group">';
 		$this->form_checkbox( $instance, FALSE, 'prefix_with_name', _x( 'Prefix Terms with Taxonomy Name', 'Widget: Setting', 'geditorial-widgets' ) );
 		$this->form_checkbox( $instance, FALSE, 'strip_hashtags', _x( 'Strip Hash-tags', 'Widget: Setting', 'geditorial-widgets' ) );
+		$this->form_checkbox( $instance, FALSE, 'exclude_defaults', _x( 'Exclude Default Terms', 'Widget: Setting', 'geditorial-widgets' ) );
+		$this->form_checkbox( $instance, FALSE, 'include_empty', _x( 'Include Empty Terms', 'Widget: Setting', 'geditorial-widgets' ) );
+		$this->form_checkbox( $instance, FALSE, 'hide_on_paged', _x( 'Hide on Paged Results', 'Widget: Setting', 'geditorial-widgets' ) );
+		echo '</div>';
 
 		echo '<div class="-group">';
 		$this->form_open_widget( $instance );
@@ -107,6 +118,9 @@ class SearchTerms extends gEditorial\Widget
 		return $this->handle_update( $new, $old, [
 			'prefix_with_name',
 			'strip_hashtags',
+			'exclude_defaults',
+			'include_empty',
+			'hide_on_paged',
 		] );
 	}
 }
