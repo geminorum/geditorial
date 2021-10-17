@@ -69,13 +69,17 @@ class CustomHTML extends gEditorial\Widget
 		$this->form_content( $instance );
 
 		echo '<div class="-group">';
-
 		$this->form_checkbox( $instance, FALSE, 'embeds', _x( 'Process Embeds', 'Widget: Custom HTML', 'geditorial-widgets' ) );
 		$this->form_checkbox( $instance, FALSE, 'shortcodes', _x( 'Process Shortcodes', 'Widget: Custom HTML', 'geditorial-widgets' ) );
 		$this->form_checkbox( $instance, FALSE, 'filters', _x( 'Process Filters', 'Widget: Custom HTML', 'geditorial-widgets' ) );
 		$this->form_checkbox( $instance, FALSE, 'legacy', _x( 'Process Filters (Legacy)', 'Widget: Custom HTML', 'geditorial-widgets' ) );
 		$this->form_checkbox( $instance, FALSE, 'autop', _x( 'Automatic Paragraphs', 'Widget: Custom HTML', 'geditorial-widgets' ) );
+		echo '</div>';
 
+		echo '<div class="-group">';
+		$this->form_open_widget( $instance );
+		$this->form_after_title( $instance );
+		$this->form_close_widget( $instance );
 		echo '</div>';
 
 		$this->after_form( $instance );

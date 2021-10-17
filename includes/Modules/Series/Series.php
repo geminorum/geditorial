@@ -164,7 +164,7 @@ class Series extends gEditorial\Module
 		);
 
 		$this->store_postmeta( $post_id, $data );
-		wp_cache_flush();
+		// wp_cache_flush();
 	}
 
 	private function sanitize_post_meta( $postmeta, $fields, $post_id, $posttype )

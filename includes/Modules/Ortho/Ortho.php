@@ -31,9 +31,9 @@ class Ortho extends gEditorial\Module
 			'name'     => 'ortho',
 			'title'    => _x( 'Ortho', 'Modules: Ortho', 'geditorial' ),
 			'desc'     => _x( 'Persian Orthography Tools', 'Modules: Ortho', 'geditorial' ),
-			'icon'     => [ 'old', 'pen' ],
+			'icon'     => [ 'misc-32', 'pen' ],
 			'frontend' => FALSE,
-			'disabled' => 'fa_IR' == get_locale() ? FALSE : _x( 'Only on Persian Locale', 'Modules: Ortho', 'geditorial' ),
+			'disabled' => 'fa_IR' == get_locale() ? FALSE : _x( 'Only on Persian Locale', 'Modules: Ortho', 'geditorial' ), // FIXME: move up to helper
 		];
 	}
 

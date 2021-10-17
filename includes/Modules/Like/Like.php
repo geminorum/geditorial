@@ -151,7 +151,7 @@ class Like extends gEditorial\Module
 		$html.= '<div><a class="like loading" title="'.HTML::escape( $title ).'" href="#" data-id="'.$post->ID.'">';
 
 		// $html.= $this->filters( 'icon', '<span class="genericon genericon-heart"></span>', $post->ID );
-		$html.= $this->icon( 'heart', 'old' );
+		$html.= $this->icon( 'heart', 'misc-32' );
 
 		$html.= '</a></div><div><span class="like"></span></div>';
 

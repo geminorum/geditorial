@@ -127,7 +127,7 @@ class Specs extends gEditorial\Module
 		);
 
 		$this->store_postmeta( $post_id, $postmeta );
-		wp_cache_flush();
+		// wp_cache_flush();
 	}
 
 	// programatically sets specs for the post

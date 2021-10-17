@@ -26,29 +26,29 @@ class Overwrite extends gEditorial\Module
 	{
 		$object = [
 			[
+				'field'       => 'target',
+				'type'        => 'text',
+				'title'       => _x( 'Target', 'Setting Title', 'geditorial-overwrite' ),
+				'description' => _x( 'Replaces with the translation string on the filter. Skips if empty.', 'Setting Description', 'geditorial-overwrite' ),
+			],
+			[
 				'field'       => 'translation',
 				'type'        => 'text',
 				'title'       => _x( 'Translation', 'Setting Title', 'geditorial-overwrite' ),
-				'description' => _x( 'Checks against the translation string on the filter.', 'Setting Description', 'geditorial-overwrite' ),
+				'description' => _x( 'Checks against the translation string on the filter. Leave empty to disable checks.', 'Setting Description', 'geditorial-overwrite' ),
 			],
 			[
 				'field'       => 'text',
 				'type'        => 'text',
 				'title'       => _x( 'Source', 'Setting Title', 'geditorial-overwrite' ),
-				'description' => _x( 'Checks against the original string on the filter.', 'Setting Description', 'geditorial-overwrite' ),
+				'description' => _x( 'Checks against the original string on the filter. Leave empty to disable checks', 'Setting Description', 'geditorial-overwrite' ),
 				'dir'         => 'ltr',
-			],
-			[
-				'field'       => 'target',
-				'type'        => 'text',
-				'title'       => _x( 'Target', 'Setting Title', 'geditorial-overwrite' ),
-				'description' => _x( 'Replaces with the translation string on the filter.', 'Setting Description', 'geditorial-overwrite' ),
 			],
 			[
 				'field'       => 'context',
 				'type'        => 'text',
 				'title'       => _x( 'Context', 'Setting Title', 'geditorial-overwrite' ),
-				'description' => _x( 'Checks against the context of the string on the filter.', 'Setting Description', 'geditorial-overwrite' ),
+				'description' => _x( 'Checks against the context of the string on the filter. Leave empty to disable checks', 'Setting Description', 'geditorial-overwrite' ),
 				'field_class' => [ 'regular-text', 'code-text' ],
 				'dir'         => 'ltr',
 			],
@@ -56,7 +56,7 @@ class Overwrite extends gEditorial\Module
 				'field'       => 'domain',
 				'type'        => 'text',
 				'title'       => _x( 'Domain', 'Setting Title', 'geditorial-overwrite' ),
-				'description' => _x( 'Checks against the domain of the string on the filter.', 'Setting Description', 'geditorial-overwrite' ),
+				'description' => _x( 'Checks against the domain of the string on the filter. Leave empty to disable checks', 'Setting Description', 'geditorial-overwrite' ),
 				'field_class' => [ 'regular-text', 'code-text' ],
 				'default'     => 'default',
 				'dir'         => 'ltr',

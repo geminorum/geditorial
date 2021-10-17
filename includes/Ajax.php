@@ -89,7 +89,7 @@ class Ajax extends Core\Base
 
 	?><script type="text/javascript">
 /* <![CDATA[ */
-	var <?php echo $object; ?> = <?php echo wp_json_encode( $props ); ?>;
+	window.<?php echo $object; ?> = <?php echo $object; ?> = <?php echo wp_json_encode( $props ); ?>;
 	<?php if ( WordPress::isDev() ) {
 		echo 'console.log("'.$object.'", '.$object.');'."\n";
 		echo "\t".'jQuery(document).on("gEditorialReady", function(e, module, app){console.log("'.$object.': "+module, app);});'."\n";

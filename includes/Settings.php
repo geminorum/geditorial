@@ -161,6 +161,7 @@ class Settings extends Core\Base
 	public static function posttypesExcluded( $extra = [] )
 	{
 		return array_merge( [
+			'wp_theme',
 			'attachment',
 			'inbound_message',
 			'amp_validated_url',
@@ -405,7 +406,7 @@ class Settings extends Core\Base
 			'description' => $description ?: '',
 			'default'     => 'post',
 			'values'      => PostType::get( 2 ),
-			'exclude'     => [ 'attachment' ],
+			'exclude'     => [ 'attachment', 'wp_theme' ],
 		];
 	}
 
@@ -1935,7 +1936,7 @@ class Settings extends Core\Base
 					'readonly'    => $args['readonly'],
 					'dir'         => $args['dir'],
 					'data'        => $args['data'],
-				], $value );
+				], esc_textarea( $value ) );
 
 			break;
 			case 'page':

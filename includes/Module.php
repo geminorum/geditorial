@@ -652,6 +652,11 @@ class Module extends Base
 		echo '</p></div><div class="-side">';
 		echo '<div class="-recents">';
 
+			// FIXME: do actions here
+			// FIXME: move recents to pre-conf action
+			// FIXME: correct the selectors
+			// TODO: hook action from Book module: suggestd the book by passed meta
+
 			/* translators: %s: posttype singular name */
 			$hint = sprintf( _x( 'Or select this %s', 'Module: Recents', 'geditorial' ), $object->labels->singular_name );
 
@@ -2833,6 +2838,8 @@ class Module extends Base
 
 			else if ( 'comment' == $posttypes )
 				$args['update_count_callback'] = [ __NAMESPACE__.'\\WordPress\\Database', 'updateCountCallback' ];
+
+			// WTF: if not else ?!
 
 			if ( is_admin() && ( $cpt_tax || 'user' == $posttypes || 'comment' == $posttypes ) )
 				$this->_hook_taxonomies_excluded( $constant, 'recount' );

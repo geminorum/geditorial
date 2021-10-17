@@ -471,6 +471,7 @@ class ShortCode extends Main
 	// list: connected: posts by o2o
 	// list: attached: posts by inheritance
 	// list: alphabetized: posts sorted by alphabet // TODO!
+	// list: `custom`: posts by id list // TODO!
 	public static function listPosts( $list, $posttype, $taxonomy, $atts = [], $content = NULL, $tag = '' )
 	{
 		$defs = self::getDefaults( $posttype, $taxonomy, [ $posttype ] );

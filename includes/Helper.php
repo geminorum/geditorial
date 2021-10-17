@@ -2,6 +2,7 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
+use geminorum\gEditorial\Core\Arraay;
 use geminorum\gEditorial\Core\File;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\HTTP;
@@ -246,7 +247,7 @@ class Helper extends Main
 			? explode( $delimiter, $string )
 			: explode( $delimiter, $string, $limit );
 
-		return array_unique( array_filter( array_map( 'trim', $seperated ) ) );
+		return Arraay::prepString( $seperated );
 	}
 
 	public static function getJoined( $items, $before = '', $after = '', $empty = '', $separator = NULL )
