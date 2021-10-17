@@ -8,6 +8,7 @@ use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\L10n;
 use geminorum\gEditorial\Core\Number;
+use geminorum\gEditorial\Core\WordPress;
 
 class WcUnits extends gEditorial\Module
 {
@@ -54,6 +55,12 @@ class WcUnits extends gEditorial\Module
 				],
 			],
 			'_weight' => [
+				[
+					'field'       => 'fallback_empty_weight',
+					'type'        => 'number',
+					'title'       => _x( 'Weight Empty Fallback', 'Setting Title', 'geditorial-wc-units' ),
+					'description' => _x( 'Sets a fallback value on products with empty <b>weight</b> field. Leave empty to disable.', 'Setting Description', 'geditorial-wc-units' ),
+				],
 				[
 					'field'       => 'weight_attr_bottom',
 					'title'       => _x( 'After All Attribiutes', 'Setting Title', 'geditorial-wc-units' ),
@@ -109,6 +116,24 @@ class WcUnits extends gEditorial\Module
 				],
 			],
 			'_dimensions' => [
+				[
+					'field'       => 'fallback_empty_length',
+					'type'        => 'number',
+					'title'       => _x( 'Length Empty Fallback', 'Setting Title', 'geditorial-wc-units' ),
+					'description' => _x( 'Sets a fallback value on products with empty <b>length</b> field. Leave empty to disable.', 'Setting Description', 'geditorial-wc-units' ),
+				],
+				[
+					'field'       => 'fallback_empty_width',
+					'type'        => 'number',
+					'title'       => _x( 'Width Empty Fallback', 'Setting Title', 'geditorial-wc-units' ),
+					'description' => _x( 'Sets a fallback value on products with empty <b>width</b> field. Leave empty to disable.', 'Setting Description', 'geditorial-wc-units' ),
+				],
+				[
+					'field'       => 'fallback_empty_height',
+					'type'        => 'number',
+					'title'       => _x( 'Height Empty Fallback', 'Setting Title', 'geditorial-wc-units' ),
+					'description' => _x( 'Sets a fallback value on products with empty <b>height</b> field. Leave empty to disable.', 'Setting Description', 'geditorial-wc-units' ),
+				],
 				[
 					'field'       => 'dimensions_attr_bottom',
 					'title'       => _x( 'After All Attribiutes', 'Setting Title', 'geditorial-wc-units' ),
@@ -198,6 +223,10 @@ class WcUnits extends gEditorial\Module
 
 		$admin = is_admin();
 
+		// @REF: https://wallydavid.com/set-a-default-length-width-height-weight-in-woocommerce/
+		foreach ( [ 'weight', 'length', 'width', 'height' ] as $measurement )
+			$this->filter( [ 'product_get_'.$measurement, 'product_variation_get_'.$measurement ], 2, 8, FALSE, 'woocommerce' );
+
 		if ( $admin )
 			$this->filter( 'products_general_settings', 1, 99, FALSE, 'woocommerce' );
 
@@ -215,6 +244,26 @@ class WcUnits extends gEditorial\Module
 
 		if ( $this->get_setting( 'weight_attr_bottom' ) || $this->get_setting( 'dimensions_attr_bottom' ) )
 			$this->filter( 'display_product_attributes', 2, 999, FALSE, 'woocommerce' );
+	}
+
+	public function product_get_weight( $value, $product )
+	{
+		return empty( $value ) ? $this->get_setting_fallback( 'fallback_empty_weight', $value ) : $value;
+	}
+
+	public function product_get_length( $value, $product )
+	{
+		return empty( $value ) ? $this->get_setting_fallback( 'fallback_empty_length', $value ) : $value;
+	}
+
+	public function product_get_width( $value, $product )
+	{
+		return empty( $value ) ? $this->get_setting_fallback( 'fallback_empty_width', $value ) : $value;
+	}
+
+	public function product_get_height( $value, $product )
+	{
+		return empty( $value ) ? $this->get_setting_fallback( 'fallback_empty_height', $value ) : $value;
 	}
 
 	public function format_weight( $string, $weight, $unit = NULL )
