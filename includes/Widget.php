@@ -157,6 +157,9 @@ class Widget extends \WP_Widget
 
 		$html = preg_replace( '%{GEDITORIAL_WIDGET_CLASSNAME}%', HTML::prepClass( $classes, $extra ), $args['before_widget'] );
 
+		if ( ! empty( $instance['open_widget_html'] ) )
+			$html.= trim( $instance['open_widget_html'] );
+
 		if ( ! $echo )
 			return $html;
 
@@ -165,10 +168,15 @@ class Widget extends \WP_Widget
 
 	public function after_widget( $args, $instance, $echo = TRUE )
 	{
-		if ( ! $echo )
-			return $args['after_widget'];
+		$html = $args['after_widget'];
 
-		echo $args['after_widget'];
+		if ( ! empty( $instance['close_widget_html'] ) )
+			$html = trim( $instance['close_widget_html'] ).$html;
+
+		if ( ! $echo )
+			return $html;
+
+		echo $html;
 	}
 
 	public function widget_title( $args, $instance, $echo = TRUE, $default = '' )
@@ -189,6 +197,9 @@ class Widget extends \WP_Widget
 			$title = HTML::link( $title, $instance['title_link'] );
 
 		$html = $args['before_title'].$title.$args['after_title'];
+
+		if ( ! empty( $instance['after_title_html'] ) )
+			$html.= trim( $instance['after_title_html'] );
 
 		if ( ! $echo )
 			return $html;
@@ -334,6 +345,63 @@ class Widget extends \WP_Widget
 
 		echo HTML::tag( 'textarea', [
 			'rows'  => '3',
+			'name'  => $this->get_field_name( $field ),
+			'id'    => $this->get_field_id( $field ),
+			'class' => 'widefat code textarea-autosize',
+		], isset( $instance[$field] ) ? $instance[$field] : $default );
+
+		echo '</p>';
+	}
+
+	public function form_open_widget( $instance, $default = '', $field = 'open_widget_html', $label = NULL )
+	{
+		if ( is_null( $label ) )
+			$label = _x( 'Custom HTML for Opening Widget:', 'Widget Core', 'geditorial' );
+
+		echo '<p>';
+
+		HTML::label( $label, $this->get_field_id( $field ), FALSE );
+
+		echo HTML::tag( 'textarea', [
+			'rows'  => '1',
+			'name'  => $this->get_field_name( $field ),
+			'id'    => $this->get_field_id( $field ),
+			'class' => 'widefat code textarea-autosize',
+		], isset( $instance[$field] ) ? $instance[$field] : $default );
+
+		echo '</p>';
+	}
+
+	public function form_close_widget( $instance, $default = '', $field = 'close_widget_html', $label = NULL )
+	{
+		if ( is_null( $label ) )
+			$label = _x( 'Custom HTML for Closing Widget:', 'Widget Core', 'geditorial' );
+
+		echo '<p>';
+
+		HTML::label( $label, $this->get_field_id( $field ), FALSE );
+
+		echo HTML::tag( 'textarea', [
+			'rows'  => '1',
+			'name'  => $this->get_field_name( $field ),
+			'id'    => $this->get_field_id( $field ),
+			'class' => 'widefat code textarea-autosize',
+		], isset( $instance[$field] ) ? $instance[$field] : $default );
+
+		echo '</p>';
+	}
+
+	public function form_after_title( $instance, $default = '', $field = 'after_title_html', $label = NULL )
+	{
+		if ( is_null( $label ) )
+			$label = _x( 'Custom HTML for After Title:', 'Widget Core', 'geditorial' );
+
+		echo '<p>';
+
+		HTML::label( $label, $this->get_field_id( $field ), FALSE );
+
+		echo HTML::tag( 'textarea', [
+			'rows'  => '1',
 			'name'  => $this->get_field_name( $field ),
 			'id'    => $this->get_field_id( $field ),
 			'class' => 'widefat code textarea-autosize',

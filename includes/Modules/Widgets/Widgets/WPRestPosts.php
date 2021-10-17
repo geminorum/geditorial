@@ -122,6 +122,12 @@ class WPRestPosts extends gEditorial\Widget
 		$this->form_context( $instance );
 		$this->form_class( $instance );
 
+		echo '<div class="-group">';
+		$this->form_open_widget( $instance );
+		$this->form_after_title( $instance );
+		$this->form_close_widget( $instance );
+		echo '</div>';
+
 		$this->after_form( $instance );
 	}
 

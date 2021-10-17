@@ -91,6 +91,12 @@ class SearchTerms extends gEditorial\Widget
 		$this->form_checkbox( $instance, FALSE, 'prefix_with_name', _x( 'Prefix Terms with Taxonomy Name', 'Widget: Setting', 'geditorial-widgets' ) );
 		$this->form_checkbox( $instance, FALSE, 'strip_hashtags', _x( 'Strip Hash-tags', 'Widget: Setting', 'geditorial-widgets' ) );
 
+		echo '<div class="-group">';
+		$this->form_open_widget( $instance );
+		$this->form_after_title( $instance );
+		$this->form_close_widget( $instance );
+		echo '</div>';
+
 		$this->after_form( $instance );
 	}
 
