@@ -12,6 +12,11 @@ class WooCommerce extends Core\Base
 		return Core\WordPress::isPluginActive( 'woocommerce/woocommerce.php' );
 	}
 
+	public static function getProductPosttype()
+	{
+		return 'product';
+	}
+
 	public static function getOrderStatuses()
 	{
 		$statuses = [];

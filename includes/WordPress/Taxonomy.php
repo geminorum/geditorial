@@ -247,6 +247,16 @@ class Taxonomy extends Core\Base
 		return $query->terms;
 	}
 
+	public static function listTermsJS( $taxonomy, $fields = NULL, $extra = [] )
+	{
+		if ( is_null( $fields ) )
+			$fields = [ 'term_id', 'name' ];
+
+		return array_map( function ( $term ) use ( $fields ) {
+			return Core\Arraay::keepByKeys( get_object_vars( $term ), $fields );
+		}, self::listTerms( $taxonomy, 'all', $extra ) );
+	}
+
 	public static function prepTerms( $taxonomy, $extra = array(), $terms = NULL, $key = 'term_id', $object = TRUE )
 	{
 		$new_terms = array();

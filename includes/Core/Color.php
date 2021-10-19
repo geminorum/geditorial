@@ -254,7 +254,7 @@ class Color extends Base
 	// #ff9900 -> 255 153 0
 	public static function hex2rgb_2( $hex )
 	{
-		return sscanf( $hex, '%2x%2x%2x'); // @REF: http://php.net/manual/en/function.sscanf.php#25190
+		return sscanf( $hex, '%2x%2x%2x' ); // @REF: http://php.net/manual/en/function.sscanf.php#25190
 		return sscanf( $hex, "#%02x%02x%02x" ); // @REF: https://stackoverflow.com/a/15202130
 	}
 

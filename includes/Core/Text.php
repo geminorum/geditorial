@@ -42,6 +42,11 @@ class Text extends Base
 		return self::nameFamilyLast( $string, $separator );
 	}
 
+	public static function readableKey( $string )
+	{
+		return $string ? ucwords( trim( str_replace( [ '_', '-', '.' ], ' ', $string ) ) ) : $string;
+	}
+
 	// simpler version of `wpautop()`
 	// @REF: https://stackoverflow.com/a/5240825
 	// @SEE: https://stackoverflow.com/a/7409591
@@ -418,7 +423,7 @@ class Text extends Base
 			$m = $i > 0 && mb_substr( $title, max( 0, $i - 2 ), 1, 'UTF-8' ) !== ':' && preg_match(
 				'/^(a(nd?|s|t)?|b(ut|y)|en|for|i[fn]|o[fnr]|t(he|o)|vs?\.?|via)[ \-]/i', $m
 			) ?	//…and convert them to lowercase
-				mb_strtolower ($m, 'UTF-8')
+				mb_strtolower( $m, 'UTF-8' )
 
 			// else: brackets and other wrappers
 			: (	preg_match( '/[\'"_{(\[‘“]/u', mb_substr( $title, max( 0, $i - 1 ), 3, 'UTF-8' ) )
@@ -957,5 +962,41 @@ class Text extends Base
 		}
 
 		return $string;
+	}
+
+	// it has the exact same interface as str_split, but works with any UTF-8 string
+	// @REF: https://www.php.net/manual/en/function.str-split.php#117112
+	/**
+	 * Converts an UTF-8 string to an array.
+	 *
+	 * E.g. mb_str_split("Hello Friend");
+	 * returns ['H', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd']
+	 *
+	 * @param string $string The input string.
+	 * @param int $split_length Maximum length of the chunk. If specified, the returned array will be broken down
+	 *        into chunks with each being split_length in length, otherwise each chunk will be one character in length.
+	 * @return array|boolean
+	 *         -
+	 *         - If the split_length length exceeds the length of string, the entire string is returned
+	 *           as the first (and only) array element.
+	 *         - False is returned if split_length is less than 1.
+	 */
+	public static function str_split( $string, $split_length = 1 )
+	{
+		if ( 1 === $split_length )
+			return preg_split( '//u', $string, -1, PREG_SPLIT_NO_EMPTY );
+
+		if ( $split_length > 1 ) {
+
+			$return_value  = [];
+			$string_length = mb_strlen( $string, 'UTF-8' );
+
+			for ( $i = 0; $i < $string_length; $i += $split_length )
+				$return_value[] = mb_substr( $string, $i, $split_length, 'UTF-8' );
+
+			return $return_value;
+		}
+
+		return FALSE;
 	}
 }

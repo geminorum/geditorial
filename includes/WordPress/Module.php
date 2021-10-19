@@ -61,12 +61,12 @@ class Module extends Core\Base
 
 	protected function hash()
 	{
-		$suffix = '';
+		$string = '';
 
 		foreach ( func_get_args() as $arg )
-			$suffix.= maybe_serialize( $arg );
+			$string.= maybe_serialize( $arg );
 
-		return md5( $this->base.$this->key.$suffix );
+		return md5( $this->base.$this->key.$string );
 	}
 
 	protected function hashwithsalt()

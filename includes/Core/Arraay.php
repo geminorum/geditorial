@@ -5,6 +5,20 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 class Arraay extends Base
 {
 
+	public static function prepString()
+	{
+		$args = func_get_args();
+
+		return empty( $args ) ? [] : array_unique( array_filter( array_map( 'trim', array_merge( ...$args ) ) ) );
+	}
+
+	public static function prepNumeral()
+	{
+		$args = func_get_args();
+
+		return empty( $args ) ? [] : array_unique( array_filter( array_map( 'intval', array_merge( ...$args ) ) ) );
+	}
+
 	// deep array_filter()
 	public static function filterArray( $input, $callback = NULL )
 	{

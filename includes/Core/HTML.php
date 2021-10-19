@@ -72,6 +72,11 @@ class HTML extends Base
 		if ( $html ) echo self::tag( 'h4', array( 'class' => $class ), ( $link ? self::link( $html, $link ) : $html ) );
 	}
 
+	public static function code( $string, $class = FALSE )
+	{
+		return empty( $string ) ? '' : self::tag( 'code', [ 'class' => $class ], $string );
+	}
+
 	public static function desc( $string, $block = TRUE, $class = '', $nl2br = TRUE )
 	{
 		if ( is_array( $string ) ) {
@@ -243,7 +248,7 @@ class HTML extends Base
 			else if ( $arg )
 				$classes = array_merge( $classes, preg_split( '#\s+#', $arg ) );
 
-		return array_unique( array_filter( $classes, 'trim' ) );
+		return Arraay::prepString( $classes );
 	}
 
 	public static function prepClass()
@@ -295,15 +300,18 @@ class HTML extends Base
 					continue;
 
 				if ( 'data' == $key ) {
+
 					$html.= self::propData( $att );
 
 					continue;
 
 				} else if ( 'class' == $key ) {
+
 					$att = self::prepClass( $att );
 
 				} else {
-					$att = implode( ' ', array_unique( array_filter( $att, 'trim' ) ) );
+
+					$att = implode( ' ', Arraay::prepString( $att ) );
 				}
 
 				$sanitized = TRUE;

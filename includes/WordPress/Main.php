@@ -17,6 +17,22 @@ class Main extends Core\Base
 		return gEditorial();
 	}
 
+	protected static function hash()
+	{
+		$string = '';
+
+		foreach ( func_get_args() as $arg )
+			$string.= maybe_serialize( $arg );
+
+		if ( static::MODULE )
+			$string = static::MODULE.$string;
+
+		if ( static::BASE )
+			$string = static::BASE.$string;
+
+		return md5( $string );
+	}
+
 	protected static function constant( $key, $default = FALSE )
 	{
 		return self::factory()->constant( static::MODULE, $key, $default );

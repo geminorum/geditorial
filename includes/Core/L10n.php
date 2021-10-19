@@ -5,6 +5,59 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 class L10n extends Base
 {
 
+	// FIXME: UNFINISHED!
+	// numeric formatting information
+	public static function localeconv( $field = FALSE, $fallback = NULL )
+	{
+		$locale = localeconv();
+
+		// returns all fields
+		if ( FALSE === $field )
+			return $locale;
+
+		if ( array_key_exists( $field, $locale ) )
+			return $locale[$field];
+
+		else if ( ! is_null( $fallback ) )
+			return $fallback;
+
+		$info = '';
+
+		switch ( $field ) {
+
+			case 'decimal_point': $info = mb_convert_encoding( '&#1643;', 'UTF-8', 'HTML-ENTITIES' ); break; // Decimal point character
+			case 'thousands_sep': $info = mb_convert_encoding( '&#1644;', 'UTF-8', 'HTML-ENTITIES' ); break; // Thousands separator
+			case 'grouping': $info = []; break; // Array containing numeric groupings
+			case 'int_curr_symbol': $info = 'ریال'; break; // International currency symbol (i.e. USD)
+			case 'currency_symbol': $info = mb_convert_encoding( '&#65020;', 'UTF-8', 'HTML-ENTITIES' ); break; // Local currency symbol (i.e. $)
+			case 'mon_decimal_point': $info = mb_convert_encoding( '&#1643;', 'UTF-8', 'HTML-ENTITIES' ); break; break; // Monetary decimal point character
+			case 'mon_thousands_sep': $info = mb_convert_encoding( '&#1644;', 'UTF-8', 'HTML-ENTITIES' ); break; // Monetary thousands separator
+			case 'mon_grouping': $info = []; break; // Array containing monetary groupings
+			case 'positive_sign': $info = ''; break; // Sign for positive values
+			case 'negative_sign': $info = '-'; break; // Sign for negative values
+			case 'int_frac_digits': $info = ''; break; // International fractional digits
+			case 'frac_digits': $info = ''; break; // Local fractional digits
+			case 'p_cs_precedes': $info = ''; break; // `true` if currency_symbol precedes a positive value, `false` if it succeeds one
+			case 'p_sep_by_space': $info = ''; break; // `true` if a space separates currency_symbol from a positive value, `false` otherwise
+			case 'n_cs_precedes': $info = ''; break; // `true` if currency_symbol precedes a negative value, `false` if it succeeds one
+			case 'n_sep_by_space': $info = ''; break; // `true` if a space separates currency_symbol from a negative value, `false` otherwise
+			case 'p_sign_posn': $info = ''; break;
+				// `0` - Parentheses surround the quantity and currency_symbol
+				// `1` - The sign string precedes the quantity and currency_symbol
+				// `2` - The sign string succeeds the quantity and currency_symbol
+				// `3` - The sign string immediately precedes the currency_symbol
+				// `4` - The sign string immediately succeeds the currency_symbol
+			case 'n_sign_posn': $info = ''; break;
+				// `0` - Parentheses surround the quantity and currency_symbol
+				// `1` - The sign string precedes the quantity and currency_symbol
+				// `2` - The sign string succeeds the quantity and currency_symbol
+				// `3` - The sign string immediately precedes the currency_symbol
+				// `4` - The sign string immediately succeeds the currency_symbol
+		}
+
+		return $info;
+	}
+
 	// @REF: https://en.wikipedia.org/wiki/ISO_639
 	// @REF: http://stackoverflow.com/a/16838443
 	// @REF: `bp_core_register_common_scripts()`
