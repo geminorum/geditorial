@@ -22,7 +22,7 @@
   },
   "require": {
     "php": ">=7.2",
-    "composer/installers": "^1.11",
+    "composer/installers": "^1.12",
     "mustache/mustache": "^2.13",
     "kzykhys/php-csv-parser": "^1.4",
     "nicmart/string-template": "^0.1.2",
@@ -43,7 +43,8 @@
     "seboettg/citeproc-php": "^2",
     "khanamiryan/qrcode-detector-decoder": "^1.0",
     "tecnickcom/tc-lib-barcode": "^1.17",
-    "hbgl/php-code-128-encoder": "^0.2.0"
+    "hbgl/php-code-128-encoder": "^0.2.0",
+    "mustangostang/spyc": "^0.6.3"
   },
   "config": {
     "vendor-dir": "assets/vendor",
