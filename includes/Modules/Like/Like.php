@@ -12,6 +12,7 @@ use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\HTTP;
 use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\WordPress;
+use geminorum\gEditorial\WordPress\Strings;
 
 class Like extends gEditorial\Module
 {
@@ -184,7 +185,7 @@ class Like extends gEditorial\Module
 			$nodes[] = [
 				'id'     => $this->classs( 'users' ),
 				/* translators: %s: count placeholder */
-				'title'  => Helper::getCounted( count( $users ), _x( 'Like Summary: Users %s', 'Adminbar', 'geditorial-like' ) ),
+				'title'  => Strings::getCounted( count( $users ), _x( 'Like Summary: Users %s', 'Adminbar', 'geditorial-like' ) ),
 				'parent' => $parent,
 				'href'   => $this->get_module_url(),
 			];
@@ -204,7 +205,7 @@ class Like extends gEditorial\Module
 			$nodes[] = [
 				'id'     => $this->classs( 'guests' ),
 				/* translators: %s: count placeholder */
-				'title'  => Helper::getCounted( count( $guests ), _x( 'Like Summary: Guests %s', 'Adminbar', 'geditorial-like' ) ),
+				'title'  => Strings::getCounted( count( $guests ), _x( 'Like Summary: Guests %s', 'Adminbar', 'geditorial-like' ) ),
 				'parent' => $parent,
 				'href'   => $this->get_module_url(),
 			];
@@ -484,7 +485,7 @@ class Like extends gEditorial\Module
 				/* translators: %s: guests count */
 				$list[] = sprintf( _nx( '%s Guest', '%s Guests', count( $guests ), 'Noop', 'geditorial-like' ), Number::format( count( $guests ) ) );
 
-			echo Helper::getJoined( $list, ' <span class="-like-counts">(', ')</span>' );
+			echo Strings::getJoined( $list, ' <span class="-like-counts">(', ')</span>' );
 
 		echo '</li>';
 	}

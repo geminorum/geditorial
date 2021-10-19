@@ -13,6 +13,7 @@ use geminorum\gEditorial\Core\URL;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\Main;
 use geminorum\gEditorial\WordPress\PostType;
+use geminorum\gEditorial\WordPress\Strings;
 use geminorum\gEditorial\WordPress\Taxonomy;
 use geminorum\gEditorial\WordPress\WooCommerce;
 
@@ -162,110 +163,6 @@ class Helper extends Main
 		return apply_filters( static::BASE.'_prep_contact', $prepared, $value, $title );
 	}
 
-	// @SOURCE: P2
-	public static function excerptedTitle( $content, $word_count )
-	{
-		$content = strip_tags( $content );
-		$words   = preg_split( '/([\s_;?!\/\(\)\[\]{}<>\r\n\t"]|\.$|(?<=\D)[:,.\-]|[:,.\-](?=\D))/', $content, $word_count + 1, PREG_SPLIT_NO_EMPTY );
-
-		if ( count( $words ) > $word_count ) {
-			array_pop( $words ); // remove remainder of words
-			$content = implode( ' ', $words );
-			$content.= '…';
-		} else {
-			$content = implode( ' ', $words );
-		}
-
-		$content = trim( strip_tags( $content ) );
-
-		return $content;
-	}
-
-	public static function trimChars( $text, $length = 45, $append = '&nbsp;&hellip;' )
-	{
-		$append = '<span title="'.HTML::escape( $text ).'">'.$append.'</span>';
-
-		return Text::trimChars( $text, $length, $append );
-	}
-
-	public static function filterEmptyStrings( $strings, $empties = NULL )
-	{
-		return array_filter( $strings, static function( $value ) use ( $empties ) {
-
-			if ( self::isEmptyString( $value, $empties ) )
-				return FALSE;
-
-			return ! empty( $value );
-		} );
-	}
-
-	public static function isEmptyString( $string, $empties = NULL )
-	{
-		if ( ! is_string( $string ) )
-			return FALSE;
-
-		$trimmed = trim( $string );
-
-		if ( '' === $trimmed )
-			return TRUE;
-
-		if ( is_null( $empties ) )
-			$empties = [
-				'.', '..', '...',
-				'-', '--', '---',
-				'–', '––', '–––',
-				'—', '——', '———',
-			];
-
-		foreach ( (array) $empties as $empty )
-			if ( $empty === $trimmed )
-				return TRUE;
-
-		return FALSE;
-	}
-
-	public static function getSeparated( $string, $delimiters = NULL, $limit = NULL, $delimiter = '|' )
-	{
-		if ( is_array( $string ) )
-			return $string;
-
-		if ( is_null( $delimiters ) )
-			$delimiters = [
-				'/',
-				'،',
-				'؛',
-				';',
-				',',
-				'-',
-				// '_',
-				'|',
-			];
-
-		$string = str_ireplace( $delimiters, $delimiter, $string );
-
-		$seperated = is_null( $limit )
-			? explode( $delimiter, $string )
-			: explode( $delimiter, $string, $limit );
-
-		return Arraay::prepString( $seperated );
-	}
-
-	public static function getJoined( $items, $before = '', $after = '', $empty = '', $separator = NULL )
-	{
-		if ( is_null( $separator ) )
-			$separator = _x( ', ', 'Helper: Item Seperator', 'geditorial' );
-
-		if ( $items && count( $items ) )
-			return $before.implode( $separator, $items ).$after;
-
-		return $empty;
-	}
-
-	public static function getCounted( $count, $template = '%s' )
-	{
-		return sprintf( $template, '<span class="-count" data-count="'.$count.'">'.Number::format( $count ).'</span>' );
-	}
-
 	public static function renderPostTermsEditRow( $post, $taxonomy, $before = '', $after = '' )
 	{
 		if ( ! $object = Taxonomy::object( $taxonomy ) )
@@ -298,7 +195,7 @@ class Helper extends Main
 			], HTML::escape( sanitize_term_field( 'name', $term->name, $term->term_id, $object->name, 'display' ) ) );
 		}
 
-		echo self::getJoined( $list, $before, $after );
+		echo Strings::getJoined( $list, $before, $after );
 	}
 
 	public static function renderTaxonomyTermsEditRow( $object, $taxonomy, $before = '', $after = '' )
@@ -323,7 +220,7 @@ class Helper extends Main
 				'class' => '-term -taxonomy-term',
 			], HTML::escape( sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' ) ) );
 
-		echo self::getJoined( $list, $before, $after );
+		echo Strings::getJoined( $list, $before, $after );
 	}
 
 	public static function renderUserTermsEditRow( $user_id, $taxonomy, $before = '', $after = '' )
@@ -344,7 +241,7 @@ class Helper extends Main
 				'class' => '-term -user-term',
 			], HTML::escape( sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' ) ) );
 
-		echo self::getJoined( $list, $before, $after );
+		echo Strings::getJoined( $list, $before, $after );
 	}
 
 	public static function getAuthorsEditRow( $authors, $posttype = 'post', $before = '', $after = '' )
@@ -358,7 +255,7 @@ class Helper extends Main
 			if ( $html = WordPress::getAuthorEditHTML( $posttype, $author ) )
 				$list[] = $html;
 
-		echo self::getJoined( $list, $before, $after );
+		echo Strings::getJoined( $list, $before, $after );
 	}
 
 	// simplified `get_post()`

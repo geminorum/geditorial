@@ -9,6 +9,7 @@ use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\PostType;
+use geminorum\gEditorial\WordPress\Strings;
 
 class ModuleHelper extends gEditorial\Helper
 {
@@ -102,7 +103,7 @@ class ModuleHelper extends gEditorial\Helper
 				? $the_day['cal']
 				: $gEditorialTodayCalendars[$the_day['cal']];
 
-		return Helper::getJoined( $parts, '[', ']', '', Datetime::dateSeparator() );
+		return Strings::getJoined( $parts, '[', ']', '', Datetime::dateSeparator() );
 	}
 
 	public static function displayTheDay( $stored, $empty = '&mdash;' )

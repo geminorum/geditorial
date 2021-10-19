@@ -11,6 +11,7 @@ use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\L10n;
 use geminorum\gEditorial\Core\Text;
 use geminorum\gEditorial\Core\WordPress;
+use geminorum\gEditorial\WordPress\Strings;
 
 class Alphabet extends gEditorial\Module
 {
@@ -177,7 +178,7 @@ class Alphabet extends gEditorial\Module
 					$html.= '<'.$args['term_tag'].'><span class="-title">'.HTML::link( $title, $link ).'</span>';
 
 					if ( $args['comments'] && $post->comment_count )
-						$html.= '<span class="-comments-count">'.Helper::getCounted( $post->comment_count, $args['comments_template'] ).'</span>';
+						$html.= '<span class="-comments-count">'.Strings::getCounted( $post->comment_count, $args['comments_template'] ).'</span>';
 
 					$html.= '<span class="-dummy"></span></'.$args['term_tag'].'>';
 
@@ -312,7 +313,7 @@ class Alphabet extends gEditorial\Module
 					$html.= '<'.$args['term_tag'].'><span class="-title">'.HTML::link( $title, $link ).'</span>';
 
 					if ( $args['count'] && $term->count )
-						$html.= '<span class="-term-count">'.Helper::getCounted( $term->count, $args['count_template'] ).'</span>';
+						$html.= '<span class="-term-count">'.Strings::getCounted( $term->count, $args['count_template'] ).'</span>';
 
 					$html.= '<span class="-dummy"></span></'.$args['term_tag'].'>';
 

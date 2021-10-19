@@ -14,8 +14,9 @@ use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\Database;
 use geminorum\gEditorial\WordPress\Media;
-use geminorum\gEditorial\WordPress\Taxonomy;
 use geminorum\gEditorial\WordPress\PostType;
+use geminorum\gEditorial\WordPress\Strings;
+use geminorum\gEditorial\WordPress\Taxonomy;
 
 class Terms extends gEditorial\Module
 {
@@ -694,7 +695,7 @@ class Terms extends gEditorial\Module
 								: $this->all_roles[$role] )
 							.'</span>';
 
-					$html = Helper::getJoined( $list );
+					$html = Strings::getJoined( $list );
 
 				} else {
 
@@ -736,7 +737,7 @@ class Terms extends gEditorial\Module
 								: $this->all_posttypes[$posttype] )
 							.'</span>';
 
-					$html = Helper::getJoined( $list );
+					$html = Strings::getJoined( $list );
 
 				} else {
 
@@ -1169,7 +1170,7 @@ class Terms extends gEditorial\Module
 
 			$nodes[] = [
 				'id'     => $this->classs( 'count' ),
-				'title'  => _x( 'Post Count', 'Adminbar', 'geditorial-terms' ).': '.Helper::getCounted( $term->count ),
+				'title'  => _x( 'Post Count', 'Adminbar', 'geditorial-terms' ).': '.Strings::getCounted( $term->count ),
 				'parent' => $this->classs(),
 				'href'   => FALSE,
 			];
@@ -1486,7 +1487,7 @@ class Terms extends gEditorial\Module
 					foreach ( $query->terms as $term )
 						$list[] = '<span title="'.$term->taxonomy.'">'.$term->name.'</span>';
 
-					return Helper::getJoined( $list );
+					return Strings::getJoined( $list );
 				},
 			],
 		], $posts, [

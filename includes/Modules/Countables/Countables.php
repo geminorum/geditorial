@@ -8,6 +8,7 @@ use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\Text;
 use geminorum\gEditorial\Core\HTML;
+use geminorum\gEditorial\WordPress\Strings;
 use geminorum\gEditorial\WordPress\Taxonomy;
 
 class Countables extends gEditorial\Module
@@ -83,7 +84,7 @@ class Countables extends gEditorial\Module
 		if ( is_null( $args['template'] ) )
 			$args['template'] = $this->countbox_default_template( 'posttype' );
 
-		foreach ( Helper::getSeparated( $args['post_type'] ) as $posttype ) {
+		foreach ( Strings::getSeparated( $args['post_type'] ) as $posttype ) {
 
 			if ( ! $posttype )
 				continue;
@@ -130,7 +131,7 @@ class Countables extends gEditorial\Module
 		if ( is_null( $args['template'] ) )
 			$args['template'] = $this->countbox_default_template( 'taxonomy' );
 
-		foreach ( Helper::getSeparated( $args['taxonomy'] ) as $taxonomy ) {
+		foreach ( Strings::getSeparated( $args['taxonomy'] ) as $taxonomy ) {
 
 			if ( ! $taxonomy )
 				continue;

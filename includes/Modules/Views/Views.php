@@ -4,9 +4,9 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Ajax;
-use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Core\HTML;
+use geminorum\gEditorial\WordPress\Strings;
 
 class Views extends gEditorial\Module
 {
@@ -73,7 +73,7 @@ class Views extends gEditorial\Module
 		foreach ( $this->events() as $event => $title )
 			$nodes[] = [
 				'id'     => $this->classs( 'event', $event ),
-				'title'  => Helper::getCounted( $this->report( $post_id, $event ), $title.' %s' ),
+				'title'  => Strings::getCounted( $this->report( $post_id, $event ), $title.' %s' ),
 				'parent' => $this->classs(),
 				'href'   => FALSE,
 			];

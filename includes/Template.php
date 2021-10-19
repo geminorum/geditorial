@@ -7,6 +7,7 @@ use geminorum\gEditorial\Core\URL;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\Main;
 use geminorum\gEditorial\WordPress\PostType;
+use geminorum\gEditorial\WordPress\Strings;
 use geminorum\gEditorial\WordPress\Taxonomy;
 
 class Template extends Main
@@ -431,7 +432,7 @@ class Template extends Main
 			if ( $link = ShortCode::postItem( $post_id, $args ) )
 				$links[] = $link;
 
-		if ( $html = Helper::getJoined( $links, $args['before'], $args['after'] ) ) {
+		if ( $html = Strings::getJoined( $links, $args['before'], $args['after'] ) ) {
 
 			if ( ! $args['echo'] )
 				return $html;
@@ -533,7 +534,7 @@ class Template extends Main
 			$meta = call_user_func( $args['filter'], $meta );
 
 		if ( $meta )
-			return $args['before'].( $args['trim'] ? Helper::trimChars( $meta, $args['trim'] ) : $meta ).$args['after'];
+			return $args['before'].( $args['trim'] ? Strings::trimChars( $meta, $args['trim'] ) : $meta ).$args['after'];
 
 		return $args['default'];
 	}
@@ -937,7 +938,7 @@ class Template extends Main
 				'class' => '-term',
 			], sanitize_term_field( 'name', $term->name, $term->term_id, $taxonomy, 'display' ) );
 
-		return Helper::getJoined( apply_filters( 'term_links-'.$taxonomy, $list ), $before, $after, FALSE );
+		return Strings::getJoined( apply_filters( 'term_links-'.$taxonomy, $list ), $before, $after, FALSE );
 	}
 
 	public static function renderRecentByPosttype( $posttype, $link = 'view', $empty = NULL, $title_attr = NULL, $extra = [] )

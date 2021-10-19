@@ -14,6 +14,7 @@ use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\URL;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\PostType;
+use geminorum\gEditorial\WordPress\Strings;
 use geminorum\gEditorial\WordPress\Taxonomy;
 
 class Book extends gEditorial\Module
@@ -637,9 +638,9 @@ class Book extends gEditorial\Module
 			/* translators: %s: print placeholder */
 			case 'print'   : return sprintf( _x( '%s Print', 'Display', 'geditorial-book' ), $value );
 			/* translators: %s: pages count placeholder */
-			case 'pages'   : return Helper::getCounted( $value, _x( '%s Pages', 'Display', 'geditorial-book' ) );
+			case 'pages'   : return Strings::getCounted( $value, _x( '%s Pages', 'Display', 'geditorial-book' ) );
 			/* translators: %s: volumes count placeholder */
-			case 'volumes' : return Helper::getCounted( $value, _x( '%s Volumes', 'Display', 'geditorial-book' ) );
+			case 'volumes' : return Strings::getCounted( $value, _x( '%s Volumes', 'Display', 'geditorial-book' ) );
 		}
 
 		return parent::display_meta_row( $value, $key, $field );

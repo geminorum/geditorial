@@ -4,6 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Misc;
 use geminorum\gEditorial\WordPress\Main;
+use geminorum\gEditorial\WordPress\Strings;
 
 class Listtable extends Main
 {
@@ -40,7 +41,7 @@ class Listtable extends Main
 				foreach ( $the_terms as $the_term )
 					$terms[] = $the_term->name;
 
-				return Helper::getJoined( $terms );
+				return Strings::getJoined( $terms );
 			}
 
 		} else {

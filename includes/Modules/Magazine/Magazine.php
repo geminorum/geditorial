@@ -14,6 +14,7 @@ use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\URL;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\PostType;
+use geminorum\gEditorial\WordPress\Strings;
 use geminorum\gEditorial\WordPress\Taxonomy;
 
 class Magazine extends gEditorial\Module
@@ -587,7 +588,7 @@ class Magazine extends gEditorial\Module
 					'target' => '_blank',
 				], $this->cache_posttypes[$posttype] );
 
-			echo Helper::getJoined( $list, ' <span class="-posttypes">(', ')</span>' );
+			echo Strings::getJoined( $list, ' <span class="-posttypes">(', ')</span>' );
 
 		echo '</li>';
 	}
@@ -596,11 +597,11 @@ class Magazine extends gEditorial\Module
 	{
 		switch ( $key ) {
 			/* translators: %s: order */
-			case 'in_issue_order'      : return Helper::getCounted( $value, _x( 'Order in Issue: %s', 'Display', 'geditorial-magazine' ) );
+			case 'in_issue_order'      : return Strings::getCounted( $value, _x( 'Order in Issue: %s', 'Display', 'geditorial-magazine' ) );
 			/* translators: %s: page */
-			case 'in_issue_page_start' : return Helper::getCounted( $value, _x( 'Page in Issue: %s', 'Display', 'geditorial-magazine' ) );
+			case 'in_issue_page_start' : return Strings::getCounted( $value, _x( 'Page in Issue: %s', 'Display', 'geditorial-magazine' ) );
 			/* translators: %s: total count */
-			case 'in_issue_pages'      : return Helper::getCounted( $value, _x( 'Total Pages: %s', 'Display', 'geditorial-magazine' ) );
+			case 'in_issue_pages'      : return Strings::getCounted( $value, _x( 'Total Pages: %s', 'Display', 'geditorial-magazine' ) );
 		}
 
 		return parent::display_meta_row( $value, $key, $field );

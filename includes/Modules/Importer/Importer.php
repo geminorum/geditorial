@@ -16,6 +16,7 @@ use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\Database;
 use geminorum\gEditorial\WordPress\Media;
 use geminorum\gEditorial\WordPress\PostType;
+use geminorum\gEditorial\WordPress\Strings;
 use geminorum\gEditorial\WordPress\Taxonomy;
 use geminorum\gEditorial\WordPress\User;
 
@@ -171,7 +172,7 @@ class Importer extends gEditorial\Module
 				Settings::fieldSeparate( 'count' );
 
 			echo '</td><td class="-count"><code>'
-				.Helper::htmlCount( Helper::filterEmptyStrings( Arraay::column( $items, $key ) ) )
+				.Helper::htmlCount( Strings::filterEmpty( Arraay::column( $items, $key ) ) )
 			.'</code></td></tr>';
 		}
 
@@ -256,7 +257,7 @@ class Importer extends gEditorial\Module
 			],
 		], $posts, [
 			/* translators: %s: count placeholder */
-			'title' => HTML::tag( 'h3', Helper::getCounted( count( $posts ), _x( '%s Records Found', 'Header', 'geditorial-importer' ) ) ),
+			'title' => HTML::tag( 'h3', Strings::getCounted( count( $posts ), _x( '%s Records Found', 'Header', 'geditorial-importer' ) ) ),
 			'empty' => $this->get_posttype_label( $args['posttype'], 'not_found' ),
 		] );
 	}
@@ -341,7 +342,7 @@ class Importer extends gEditorial\Module
 
 		HTML::tableList( $columns, $data, [
 			/* translators: %s: count placeholder */
-			'title'     => HTML::tag( 'h3', Helper::getCounted( count( $data ), _x( '%s Records Found', 'Header', 'geditorial-importer' ) ) ),
+			'title'     => HTML::tag( 'h3', Strings::getCounted( count( $data ), _x( '%s Records Found', 'Header', 'geditorial-importer' ) ) ),
 			'callback'  => [ $this, 'form_posts_table_callback' ],
 			'row_prep' => [ $this, 'form_posts_table_row_prep' ],
 			'extra'     => [
@@ -374,7 +375,7 @@ class Importer extends gEditorial\Module
 		if ( FALSE === $filtered )
 			$filtered = $args['extra']['na'];
 
-		else if ( Helper::isEmptyString( $filtered ) )
+		else if ( Strings::isEmpty( $filtered ) )
 			$filtered = '';
 
 		return HTML::sanitizeDisplay( $filtered );
@@ -488,7 +489,7 @@ class Importer extends gEditorial\Module
 							if ( FALSE === $value )
 								continue;
 
-							if ( Helper::isEmptyString( $value ) )
+							if ( Strings::isEmpty( $value ) )
 								continue;
 
 							if ( $field == 'importer_post_title' && $this->get_setting( 'skip_same_title' ) ) {
@@ -518,7 +519,7 @@ class Importer extends gEditorial\Module
 								case 'importer_post_excerpt': $data['post_excerpt'] = $value; break;
 							}
 
-							// WTF: already `isEmptyString` applied!
+							// WTF: already `Strings::isEmpty` applied!
 							// skip empty values on terms
 							if ( ! $value )
 								continue;
@@ -784,7 +785,7 @@ class Importer extends gEditorial\Module
 
 		foreach ( (array) $taxonomies as $taxonomy => $taxonomy_object )
 			if ( $field == 'importer_tax_'.$taxonomy )
-				return array_filter( Helper::ksesArray( Helper::getSeparated( $value ) ) );
+				return array_filter( Helper::ksesArray( Strings::getSeparated( $value ) ) );
 
 		return $value;
 	}

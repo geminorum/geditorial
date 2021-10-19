@@ -14,6 +14,7 @@ use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\URL;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\PostType;
+use geminorum\gEditorial\WordPress\Strings;
 use geminorum\gEditorial\WordPress\Taxonomy;
 
 class Contest extends gEditorial\Module
@@ -554,7 +555,7 @@ class Contest extends gEditorial\Module
 					'target' => '_blank',
 				], $this->cache_posttypes[$posttype] );
 
-			echo Helper::getJoined( $list, ' <span class="-posttypes">(', ')</span>' );
+			echo Strings::getJoined( $list, ' <span class="-posttypes">(', ')</span>' );
 
 		echo '</li>';
 	}

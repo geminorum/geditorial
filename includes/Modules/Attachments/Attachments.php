@@ -14,6 +14,7 @@ use geminorum\gEditorial\Core\URL;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\Media;
 use geminorum\gEditorial\WordPress\PostType;
+use geminorum\gEditorial\WordPress\Strings;
 
 class Attachments extends gEditorial\Module
 {
@@ -243,7 +244,7 @@ class Attachments extends gEditorial\Module
 					if ( $ext = Helper::getExtension( $mime_type, $extensions ) )
 						$list[] = $ext;
 
-				echo Helper::getJoined( $list, ' <span class="-mime-types">(', ')</span>' );
+				echo Strings::getJoined( $list, ' <span class="-mime-types">(', ')</span>' );
 			}
 
 		echo '</li>';

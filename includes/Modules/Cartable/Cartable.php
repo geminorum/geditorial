@@ -10,6 +10,7 @@ use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\PostType;
+use geminorum\gEditorial\WordPress\Strings;
 use geminorum\gEditorial\WordPress\Taxonomy;
 
 class Cartable extends gEditorial\Module
@@ -516,7 +517,7 @@ class Cartable extends gEditorial\Module
 				if ( $user = get_user_by( 'login', $slug ) )
 					$list[] = HTML::escape( $user->display_name ); // FIXME: make clickable
 
-			echo Helper::getJoined( $list );
+			echo Strings::getJoined( $list );
 		echo '</li>';
 	}
 
@@ -535,7 +536,7 @@ class Cartable extends gEditorial\Module
 				if ( $term = get_term_by( 'slug', $slug, $this->constant( 'group_tax' ) ) )
 					$list[] = HTML::escape( $term->name ); // FIXME: make clickable
 
-			echo Helper::getJoined( $list );
+			echo Strings::getJoined( $list );
 		echo '</li>';
 	}
 
@@ -554,7 +555,7 @@ class Cartable extends gEditorial\Module
 				if ( $term = get_term_by( 'slug', $slug, $this->constant( 'type_tax' ) ) )
 					$list[] = HTML::escape( $term->name ); // FIXME: make clickable
 
-			echo Helper::getJoined( $list );
+			echo Strings::getJoined( $list );
 		echo '</li>';
 	}
 

@@ -8,6 +8,7 @@ use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\Core\HTML;
+use geminorum\gEditorial\WordPress\Strings;
 
 class Shortcodes extends gEditorial\Module
 {
@@ -94,7 +95,7 @@ class Shortcodes extends gEditorial\Module
 		foreach ( $matches[0] as $offset => $shortcode )
 			$nodes[] = [
 				'id'     => $this->classs( 'shortcode', $offset ),
-				'title'  => '<span dir="ltr">'.$matches[2][$offset].': '.Helper::trimChars( strip_tags( $shortcode ), 125 ).'</span>',
+				'title'  => '<span dir="ltr">'.$matches[2][$offset].': '.Strings::trimChars( strip_tags( $shortcode ), 125 ).'</span>',
 				'parent' => $this->classs(),
 				'href'   => FALSE,
 			];

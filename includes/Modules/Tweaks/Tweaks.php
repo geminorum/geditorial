@@ -16,6 +16,7 @@ use geminorum\gEditorial\Core\URL;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\Media;
 use geminorum\gEditorial\WordPress\PostType;
+use geminorum\gEditorial\WordPress\Strings;
 use geminorum\gEditorial\WordPress\User;
 
 class Tweaks extends gEditorial\Module
@@ -874,7 +875,7 @@ class Tweaks extends gEditorial\Module
 		}
 
 		$role = $this->get_column_icon( FALSE, 'businessman', _x( 'Roles', 'Row Icon Title', 'geditorial-tweaks' ) );
-		echo Helper::getJoined( User::getRoleList( $user ), '<li class="-row tweaks-user-atts -roles">'.$role, '</li>' );
+		echo Strings::getJoined( User::getRoleList( $user ), '<li class="-row tweaks-user-atts -roles">'.$role, '</li>' );
 	}
 
 	public function column_contacts_default( $user )

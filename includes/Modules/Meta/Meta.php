@@ -14,6 +14,7 @@ use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\Text;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\Database;
+use geminorum\gEditorial\WordPress\Strings;
 use geminorum\gEditorial\WordPress\PostType;
 
 class Meta extends gEditorial\Module
@@ -1256,7 +1257,7 @@ class Meta extends gEditorial\Module
 			$strings[] = apply_filters( 'string_format_i18n', $sanitized );
 		}
 
-		return $this->set_postmeta_field( $post->ID, $field['name'], Helper::getJoined( $strings ) );
+		return $this->set_postmeta_field( $post->ID, $field['name'], Strings::getJoined( $strings ) );
 	}
 
 	public function import_field_raw_terms( $data, $field, $post )

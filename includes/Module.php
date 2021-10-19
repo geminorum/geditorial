@@ -14,6 +14,7 @@ use geminorum\gEditorial\WordPress\Database;
 use geminorum\gEditorial\WordPress\Module as Base;
 use geminorum\gEditorial\WordPress\Media;
 use geminorum\gEditorial\WordPress\PostType;
+use geminorum\gEditorial\WordPress\Strings;
 use geminorum\gEditorial\WordPress\Taxonomy;
 use geminorum\gEditorial\WordPress\Theme;
 use geminorum\gEditorial\WordPress\User;
@@ -4231,7 +4232,7 @@ class Module extends Base
 						continue;
 
 					if ( count( $posttypes ) > 1 )
-						$text = sprintf( '<b>%3$s</b> %1$s (%2$s)', Helper::noopedCount( $count, $all[$type] ), Helper::trimChars( $name, 35 ), Number::format( $count ) );
+						$text = sprintf( '<b>%3$s</b> %1$s (%2$s)', Helper::noopedCount( $count, $all[$type] ), Strings::trimChars( $name, 35 ), Number::format( $count ) );
 					else
 						$text = sprintf( '<b>%2$s</b> %1$s', $name, Number::format( $count ) );
 
@@ -4463,7 +4464,7 @@ class Module extends Base
 					'target' => '_blank',
 				], $this->cache_posttypes[$posttype] );
 
-			echo Helper::getJoined( $list, ' <span class="-posttypes">(', ')</span>' );
+			echo Strings::getJoined( $list, ' <span class="-posttypes">(', ')</span>' );
 
 		echo '</li>';
 	}
@@ -4504,7 +4505,7 @@ class Module extends Base
 					'href'   => WordPress::getPostTypeEditLink( $post->post_type, 0, $args ),
 					'title'  => _x( 'View all connected', 'Module: P2P', 'geditorial' ),
 					'target' => '_blank',
-				], Helper::trimChars( $item->get_title(), 85 ) );
+				], Strings::trimChars( $item->get_title(), 85 ) );
 
 				echo $this->p2p_get_meta_row( $constant, $item->p2p_id, ' &ndash; ', '' );
 

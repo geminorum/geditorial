@@ -11,6 +11,7 @@ use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\Database;
+use geminorum\gEditorial\WordPress\Strings;
 use geminorum\gEditorial\WordPress\User;
 use geminorum\gEditorial\O2O;
 
@@ -388,7 +389,7 @@ class Config extends gEditorial\Module
 				$empty = FALSE;
 
 				echo HTML::wrapLTR( '<code>'.$type.'</code>' );
-				echo ' &mdash; ('.Helper::getCounted( $count ).') &mdash; ';
+				echo ' &mdash; ('.Strings::getCounted( $count ).') &mdash; ';
 
 				$this->do_settings_field( [
 					'type'         => 'select',
