@@ -1,3 +1,67 @@
+### 3.21.0
+* :wrench: psr-4 autoloading comp
+* main/datetime: initial date string format helper
+* main/metabox: optional display empty dropdown on paired
+* main/module: :new: quick new post api
+* main/module: better get setting methods
+* main/module: custom meta fields for terms
+* main/module: default form fields on reports context
+* main/module: enqueue asset args only
+* main/module: extra checks for supported taxonomies api
+* main/module: filtering column title
+* main/module: general hook menu helper
+* main/module: hook taxonomies excluded
+* main/module: icon as column title
+* main/module: main button via thickbox
+* main/module: passing custom key into enqueue asset
+* main/module: restapi register route revised
+* main/module: thumnail fallack on admin thumb column
+* main/plugin: general denied helper
+* main/scripts: support for vuejs2/vuejs3
+* main/settings: template for field value display
+* main/shortcode: general list terms method
+* main/template: excludes on fields summary
+* main/template: moving up meta source
+* main/template: recent by posttype renderer
+* main/template: support for fallback meta field
+* main/widget: avoid using input type url for relatives
+* main/widget: custom html on open/close/after title
+* main/widget: handling update internal api
+* module/archives: slug prefix on custom menu items
+* module/archives: support for archive links on menu manager
+* module/attachments: display attachment desc after item
+* module/book: isbn link as post action
+* module/book: new meta field for tagline
+* module/book: new meta fields
+* module/book: support for upcoming datacodes module
+* module/magazine: new meta fields
+* module/magazine: support for quick new post
+* module/meta: new action title/url fields
+* module/meta: prep meta by field for display
+* module/meta: support for cover price/blurb  fields
+* module/overwrite: :new: module
+* module/recount: :new: module
+* module/shortcodes: :new: display terms shortcode
+* module/terms: media state if assigned to a term
+* module/terms: prevent empty term deletion if has meta
+* module/terms: support for registered custom fields
+* module/terms: support for upcoming datacodes module
+* module/today: :warning: correct use of trim
+* module/today: better css class naming
+* module/today: id/author for dummy posts
+* module/today: using date separator
+* module/tube: bulk/single post updated messages
+* module/tube: meta fields for channels
+* module/tube: prep meta by field for display
+* module/uncategorized: :new: module
+* module/wc-ilimited: once purchased
+* module/wc-purchased: summary of purchased on user dashboard
+* module/wc-related: :new: module
+* module/wc-tracking: :new: module
+* module/wc-units: :new: module
+* module/wc-widgets: :new: module
+* module/widgets: more options on search terms
+
 ### 3.20.1
 * main/helper: using internal method for getting the post
 * main/module: :new: paired thumbnail fallback
