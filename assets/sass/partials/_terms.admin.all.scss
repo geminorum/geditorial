@@ -11,6 +11,10 @@ body.geditorial-terms-enabled {
 
     .column-posts {
       width: 50px;
+
+      span.-column-icon::before {
+        content: "\f157";
+      }
     }
 
     .column-geditorial-terms-order {
@@ -19,16 +23,52 @@ body.geditorial-terms-enabled {
 
     th.column-geditorial-terms-code {
       width: 55px;
+
+      span.-column-icon::before {
+        content: "\f475";
+      }
     }
 
     th.column-geditorial-terms-image {
       width: 55px;
+
+      span.-column-icon {
+        margin: 0 auto;
+
+        &::before {
+          content: "\f128";
+        }
+      }
     }
 
-    th.column-geditorial-terms-arrow,
-    th.column-geditorial-terms-barcode,
+    th.column-geditorial-terms-arrow {
+      width: 22px;
+
+      span.-column-icon::before {
+        content: "\f545";
+      }
+    }
+
+    th.column-geditorial-terms-barcode {
+      width: 22px;
+
+      span.-column-icon::before {
+        content: "\f212";
+      }
+    }
+
     th.column-geditorial-terms-contact {
       width: 22px;
+
+      span.-column-icon::before {
+        content: "\f525";
+      }
+    }
+
+    th.column-geditorial-terms-label {
+      span.-column-icon::before {
+        content: "\f323";
+      }
     }
 
     .column-geditorial-terms-author,

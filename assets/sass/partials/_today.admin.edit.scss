@@ -10,7 +10,7 @@ body.geditorial-today-enabled {
     }
 
     td.column-theday {
-      @import "today.dateicon.all";
+      @import "today.datebadge.all";
     }
   }
 }
@@ -27,7 +27,7 @@ body.geditorial-today-enabled {
 
     &.is-expanded {
       td.column-theday {
-        .-date-icon {
+        .-date-badge {
           border: none !important;
           width: 100%;
 

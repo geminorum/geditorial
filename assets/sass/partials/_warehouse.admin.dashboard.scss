@@ -29,6 +29,10 @@ $spacer: 1rem !default;
   .-input-dispatch-wrap {
     position: relative;
 
+    input.-offline {
+      color: $brand-danger;
+    }
+
     .spinner {
       position: absolute;
       margin: 0;

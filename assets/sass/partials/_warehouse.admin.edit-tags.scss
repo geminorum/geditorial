@@ -73,6 +73,10 @@ th.column-geditorial-warehouse-reference {
   width: 22px;
   // padding-left: 2px !important;
   // padding-right: 2px !important;
+
+  span.-column-icon::before {
+    content: "\f332";
+  }
 }
 
 td.column-geditorial-warehouse-reference {

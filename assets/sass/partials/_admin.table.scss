@@ -3,6 +3,44 @@
 ////////////////////////////////////////////////////////////////////////////////
 /// gEditorial Partials: Admin Table -------------------------------------------
 
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+.wp-list-table {
+  th span.-column-icon {
+    display: block;
+    text-indent: -9999px;
+    position: relative;
+    height: $spacer;
+    width: $spacer;
+    // margin: 0 auto;
+
+    cursor: help;
+    text-decoration: none;
+
+    &::before {
+      @include theme-fonts-core-dashicons;
+      font-weight: 400;
+      text-transform: none;
+      line-height: 1;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-indent: 0;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      font-variant: normal;
+      margin: 0;
+      color: #3c434a;
+      content: "\f123";
+      font-size: $spacer;
+    }
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////
 .fixed {
   .-count-empty,
   .column-count-empty,
@@ -12,6 +50,7 @@
   }
 }
 
+////////////////////////////////////////////////////////////////////////////////
 table.base-table-list {
   th.-column {
     &.-attachment-custom {

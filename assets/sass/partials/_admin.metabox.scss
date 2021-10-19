@@ -444,6 +444,46 @@
     }
   }
 
+  .field-wrap.-text-preview {
+    padding: $spacer * .25;
+    border: 1px dashed $gray-light;
+    background-color: $gray-100;
+    border-radius: $spacer * .25;
+
+    &:empty {
+      min-height: $spacer * 1.75;
+
+      &::after {
+        left: 0;
+        right: 0;
+        // bottom: 0;
+        top: $spacer * .5;
+        position: absolute;
+        content: attr(data-empty);
+        text-align: center;
+        // padding: $spacer * .25;
+        color: $gray-light;
+        font-size: $spacer * .6;
+        font-weight: 600;
+        // z-index: 1;
+      }
+    }
+
+    &.-byline {
+      a {
+        color: #82878c; // #b4b9be;
+        transition: all 0.3s ease;
+        text-decoration: none;
+
+        &:hover {
+          color: $gray-dark;
+          transition: all 0.1s ease;
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+
   .nav-tab-wrapper {
     border-color: #eee;
     margin: 0 -12px 0 -12px;
@@ -470,6 +510,8 @@
   }
 }
 
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 // .geditorial-admin-wrap-metabox, // FIXME: DEPRECATED
 .geditorial-wrap.-admin-metabox {
   .field-wrap {

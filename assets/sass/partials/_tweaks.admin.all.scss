@@ -19,10 +19,22 @@
 
   th.column-geditorial-tweaks-order {
     width: 50px;
+
+    span.-column-icon::before {
+      content: "\f349";
+    }
   }
 
   th.column-geditorial-tweaks-thumb {
     width: 70px;
+
+    span.-column-icon {
+      margin: 0 auto;
+
+      &::before {
+        content: "\f128";
+      }
+    }
   }
 
   td.column-geditorial-tweaks-thumb {
@@ -51,6 +63,10 @@
 
   th.column-geditorial-tweaks-id {
     width: 5%;
+
+    span.-column-icon::before {
+      content: "\f157";
+    }
 
     a > span {
       float: right;
