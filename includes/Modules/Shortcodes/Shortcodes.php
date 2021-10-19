@@ -149,7 +149,7 @@ class Shortcodes extends gEditorial\Module
 						return $html.'&mdash;</div>';
 
 					foreach ( $matches[0] as $offset => $shortcode )
-						$html.= HTML::wrap( '<code>'.$matches[2][$offset].'</code> '.Helper::trimChars( $shortcode, 145 ) );
+						$html.= HTML::wrap( HTML::code( $matches[2][$offset] ).' '.Strings::trimChars( $shortcode, 145 ) );
 
 					return $html.'</div>';
 				},

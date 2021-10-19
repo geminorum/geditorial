@@ -6,6 +6,7 @@ use geminorum\gEditorial;
 use geminorum\gEditorial\Ajax;
 use geminorum\gEditorial\Datetime;
 use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Core\Arraay;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\PostType;
@@ -71,7 +72,7 @@ class Drafts extends gEditorial\Module
 		$viewables = [];
 
 		if ( ! empty( $excluded ) )
-			$posttypes = array_diff_key( $posttypes, array_flip( $excluded ) );
+			$posttypes = Arraay::stripByKeys( $posttypes, $excluded );
 
 		foreach ( $posttypes as $posttype => $label )
 			if ( is_post_type_viewable( $posttype ) )

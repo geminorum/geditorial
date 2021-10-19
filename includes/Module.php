@@ -931,9 +931,7 @@ class Module extends Base
 		$posttypes = PostType::get( 0, $args );
 		$excluded  = $this->posttypes_excluded();
 
-		return empty( $excluded )
-			? $posttypes
-			: array_diff_key( $posttypes, array_flip( $excluded ) );
+		return empty( $excluded ) ? $posttypes : Arraay::stripByKeys( $posttypes, $excluded );
 	}
 
 	protected function taxonomies_excluded()
@@ -2310,6 +2308,13 @@ class Module extends Base
 	{
 		Settings::fieldSection(
 			_x( 'Defaults', 'Module: Setting Section Title', 'geditorial' )
+		);
+	}
+
+	public function settings_section_misc()
+	{
+		Settings::fieldSection(
+			_x( 'Miscellaneous', 'Module: Setting Section Title', 'geditorial' )
 		);
 	}
 
