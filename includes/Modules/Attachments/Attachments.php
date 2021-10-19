@@ -270,10 +270,20 @@ class Attachments extends gEditorial\Module
 		);
 	}
 
+	// @SEE: `wp_prepare_attachment_for_js()`
 	public function attachments_shortcode_item_after_cb( $post, $args, $item )
 	{
-		$html = wp_get_attachment_caption( $post->ID );
-		return $html ? sprintf( '<div class="-caption">%s</div>', Helper::prepDescription( $html ) ) : '';
+		$html = '';
+
+		// TODO: default enabled on settings
+		if ( $caption = wp_get_attachment_caption( $post->ID ) )
+			$html.= sprintf( '<div class="-caption">%s</div>', Helper::prepDescription( $caption ) );
+
+		// TODO: default enabled on settings
+		if ( ! empty( $post->post_content ) )
+			$html.= sprintf( '<div class="-description">%s</div>', Helper::prepDescription( $post->post_content ) );
+
+		return $html;
 	}
 
 	public function reports_settings( $sub )
