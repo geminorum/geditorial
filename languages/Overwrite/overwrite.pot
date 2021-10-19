@@ -1,13 +1,13 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gEditorial Overwrite 3.20.1\n"
+"Project-Id-Version: gEditorial Overwrite 3.21.0\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "Last-Translator: NULL\n"
 "Language-Team: NULL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-10-02T21:06:59+03:30\n"
+"POT-Creation-Date: 2021-10-19T20:50:21+03:30\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.5.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Overwrite\n"
@@ -15,32 +15,32 @@ msgstr ""
 
 #: Overwrite.php:31
 msgctxt "Setting Title"
-msgid "Translation"
+msgid "Target"
 msgstr ""
 
 #: Overwrite.php:32
 msgctxt "Setting Description"
-msgid "Checks against the translation string on the filter."
+msgid "Replaces with the translation string on the filter. Skips if empty."
 msgstr ""
 
 #: Overwrite.php:37
 msgctxt "Setting Title"
-msgid "Source"
+msgid "Translation"
 msgstr ""
 
 #: Overwrite.php:38
 msgctxt "Setting Description"
-msgid "Checks against the original string on the filter."
+msgid "Checks against the translation string on the filter. Leave empty to disable checks."
+msgstr ""
+
+#: Overwrite.php:43
+msgctxt "Setting Title"
+msgid "Source"
 msgstr ""
 
 #: Overwrite.php:44
-msgctxt "Setting Title"
-msgid "Target"
-msgstr ""
-
-#: Overwrite.php:45
 msgctxt "Setting Description"
-msgid "Replaces with the translation string on the filter."
+msgid "Checks against the original string on the filter. Leave empty to disable checks"
 msgstr ""
 
 #: Overwrite.php:50
@@ -50,7 +50,7 @@ msgstr ""
 
 #: Overwrite.php:51
 msgctxt "Setting Description"
-msgid "Checks against the context of the string on the filter."
+msgid "Checks against the context of the string on the filter. Leave empty to disable checks"
 msgstr ""
 
 #: Overwrite.php:58
@@ -60,7 +60,7 @@ msgstr ""
 
 #: Overwrite.php:59
 msgctxt "Setting Description"
-msgid "Checks against the domain of the string on the filter."
+msgid "Checks against the domain of the string on the filter. Leave empty to disable checks"
 msgstr ""
 
 #: Overwrite.php:71

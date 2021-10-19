@@ -1,257 +1,257 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gEditorial Event 3.20.1\n"
+"Project-Id-Version: gEditorial Event 3.21.0\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "Last-Translator: NULL\n"
 "Language-Team: NULL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-06-11T16:57:10+00:00\n"
+"POT-Creation-Date: 2021-10-19T20:49:57+03:30\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.5.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Event\n"
 "X-Domain: geditorial-event\n"
 
-#: Event.php:32
+#: Event.php:29
 msgctxt "Setting Description"
 msgid "Specifies events based on the actual date and time."
 msgstr ""
 
-#: Event.php:34
+#: Event.php:31
 msgctxt "Settings"
 msgid "Metadata Fields"
 msgstr ""
 
-#: Event.php:38
+#: Event.php:35
 msgctxt "Setting Title"
 msgid "Display Calendar Type"
 msgstr ""
 
-#: Event.php:39
+#: Event.php:36
 msgctxt "Setting Description"
 msgid "For each event you can select the calendar type. Or else select default below."
 msgstr ""
 
-#: Event.php:62
-#: Event.php:63
+#: Event.php:59
+#: Event.php:60
 msgctxt "Fields"
 msgid "Event Start"
 msgstr ""
 
-#: Event.php:68
-#: Event.php:69
+#: Event.php:65
+#: Event.php:66
 msgctxt "Fields"
 msgid "Event End"
 msgstr ""
 
-#: Event.php:74
+#: Event.php:71
 msgctxt "Fields"
 msgid "Event All-Day"
 msgstr ""
 
-#: Event.php:75
+#: Event.php:72
 msgctxt "Fields"
 msgid "All-day event"
 msgstr ""
 
-#: Event.php:80
-#: Event.php:81
+#: Event.php:77
+#: Event.php:78
 msgctxt "Fields"
 msgid "Event Repeat"
 msgstr ""
 
-#: Event.php:85
+#: Event.php:82
 msgctxt "Fields"
 msgid "Never"
 msgstr ""
 
-#: Event.php:86
+#: Event.php:83
 msgctxt "Fields"
 msgid "Weekly"
 msgstr ""
 
-#: Event.php:87
+#: Event.php:84
 msgctxt "Fields"
 msgid "Monthly"
 msgstr ""
 
-#: Event.php:88
+#: Event.php:85
 msgctxt "Fields"
 msgid "Yearly"
 msgstr ""
 
-#: Event.php:92
-#: Event.php:93
+#: Event.php:89
+#: Event.php:90
 msgctxt "Fields"
 msgid "Event Expire"
 msgstr ""
 
-#: Event.php:134
+#: Event.php:131
 msgid "Event"
 msgid_plural "Events"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Event.php:135
+#: Event.php:132
 msgid "Event Type"
 msgid_plural "Event Types"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Event.php:136
+#: Event.php:133
 msgid "Event Category"
 msgid_plural "Event Categories"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Event.php:137
+#: Event.php:134
 msgid "Event Calendar"
 msgid_plural "Event Calendars"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Event.php:141
+#: Event.php:138
 msgctxt "Taxonomy Label"
 msgid "Calendar Types"
 msgstr ""
 
-#: Event.php:151
+#: Event.php:148
 msgctxt "Posttype Featured"
 msgid "Poster Image"
 msgstr ""
 
-#: Event.php:152
+#: Event.php:149
 msgctxt "MetaBox Title"
 msgid "Date & Times"
 msgstr ""
 
-#: Event.php:153
+#: Event.php:150
 msgctxt "Column Title"
 msgid "Starts"
 msgstr ""
 
-#: Event.php:154
+#: Event.php:151
 msgctxt "Column Title"
 msgid "Ends"
 msgstr ""
 
-#: Event.php:157
+#: Event.php:154
 msgctxt "Menu Title"
 msgid "Categories"
 msgstr ""
 
-#: Event.php:158
+#: Event.php:155
 msgctxt "MetaBox Title"
+msgid "Event Categories"
+msgstr ""
+
+#: Event.php:156
+msgctxt "Column Title"
 msgid "Event Categories"
 msgstr ""
 
 #: Event.php:159
-msgctxt "Column Title"
-msgid "Event Categories"
-msgstr ""
-
-#: Event.php:162
 msgctxt "Menu Title"
 msgid "Types"
 msgstr ""
 
-#: Event.php:163
+#: Event.php:160
 msgctxt "MetaBox Title"
+msgid "Event Types"
+msgstr ""
+
+#: Event.php:161
+msgctxt "Column Title"
 msgid "Event Types"
 msgstr ""
 
 #: Event.php:164
-msgctxt "Column Title"
-msgid "Event Types"
-msgstr ""
-
-#: Event.php:167
 msgctxt "Menu Title"
 msgid "Calendars"
 msgstr ""
 
-#: Event.php:168
+#: Event.php:165
 msgctxt "MetaBox Title"
 msgid "Event Calendars"
 msgstr ""
 
-#: Event.php:169
+#: Event.php:166
 msgctxt "Column Title"
 msgid "Event Calendars"
 msgstr ""
 
-#: Event.php:175
+#: Event.php:172
 msgctxt "Default Term"
 msgid "Holiday"
 msgstr ""
 
-#: Event.php:176
+#: Event.php:173
 msgctxt "Default Term"
 msgid "Birth"
 msgstr ""
 
-#: Event.php:177
+#: Event.php:174
 msgctxt "Default Term"
 msgid "Death"
 msgstr ""
 
-#: Event.php:178
+#: Event.php:175
 msgctxt "Default Term"
 msgid "Start"
 msgstr ""
 
-#: Event.php:179
+#: Event.php:176
 msgctxt "Default Term"
 msgid "End"
 msgstr ""
 
-#: Event.php:210
+#: Event.php:207
 msgctxt "Button"
 msgid "Install Default Event Types"
 msgstr ""
 
-#: Event.php:213
+#: Event.php:210
 msgctxt "Button"
 msgid "Install Default Calendar Types"
 msgstr ""
 
-#: Event.php:506
+#: Event.php:498
 msgctxt "Meta Box Input"
 msgid "Date Start"
 msgstr ""
 
-#: Event.php:507
+#: Event.php:499
 msgctxt "Meta Box Input Placeholder"
 msgid "Date Start"
 msgstr ""
 
-#: Event.php:516
+#: Event.php:508
 msgctxt "Meta Box Input"
 msgid "Time Start"
 msgstr ""
 
-#: Event.php:517
+#: Event.php:509
 msgctxt "Meta Box Input Placeholder"
 msgid "Time Start"
 msgstr ""
 
-#: Event.php:528
+#: Event.php:520
 msgctxt "Meta Box Input"
 msgid "Date End"
 msgstr ""
 
-#: Event.php:529
+#: Event.php:521
 msgctxt "Meta Box Input Placeholder"
 msgid "Date End"
 msgstr ""
 
-#: Event.php:538
+#: Event.php:530
 msgctxt "Meta Box Input"
 msgid "Time End"
 msgstr ""
 
-#: Event.php:539
+#: Event.php:531
 msgctxt "Meta Box Input Placeholder"
 msgid "Time End"
 msgstr ""
@@ -266,20 +266,20 @@ msgctxt "Widget Description"
 msgid "Displays ongoing events."
 msgstr ""
 
-#: Widgets/Currents.php:93
-#: Widgets/Poster.php:93
+#: Widgets/Currents.php:94
+#: Widgets/Poster.php:94
 msgctxt "Widget: Event Poster"
 msgid "The Event:"
 msgstr ""
 
-#: Widgets/Currents.php:96
-#: Widgets/Poster.php:96
+#: Widgets/Currents.php:97
+#: Widgets/Poster.php:97
 msgctxt "Widget: Event Poster"
 msgid "Always the latest event"
 msgstr ""
 
-#: Widgets/Currents.php:97
-#: Widgets/Poster.php:97
+#: Widgets/Currents.php:98
+#: Widgets/Poster.php:98
 msgctxt "Widget: Event Poster"
 msgid "Link to the event"
 msgstr ""

@@ -1,13 +1,13 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gEditorial Audit 3.20.1\n"
+"Project-Id-Version: gEditorial Audit 3.21.0\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "Last-Translator: NULL\n"
 "Language-Team: NULL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-06-11T16:56:49+00:00\n"
+"POT-Creation-Date: 2021-10-19T20:49:33+03:30\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.5.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Audit\n"
@@ -94,127 +94,127 @@ msgid_plural "Audit Attributes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Audit.php:126
+#: Audit.php:131
 msgctxt "Taxonomy Menu"
 msgid "Audit"
 msgstr ""
 
-#: Audit.php:127
+#: Audit.php:132
 msgctxt "Column Title"
 msgid "Audit Attributes"
 msgstr ""
 
-#: Audit.php:128
+#: Audit.php:133
 msgctxt "Show Option All"
 msgid "Audit"
 msgstr ""
 
-#: Audit.php:129
+#: Audit.php:134
 msgctxt "Show Option None"
 msgid "(Not audited)"
 msgstr ""
 
-#: Audit.php:138
+#: Audit.php:139
 msgctxt "Default Term"
 msgid "Audited"
 msgstr ""
 
-#: Audit.php:139
+#: Audit.php:140
 msgctxt "Default Term"
 msgid "Outdated"
 msgstr ""
 
-#: Audit.php:140
+#: Audit.php:141
 msgctxt "Default Term"
 msgid "Redundant"
 msgstr ""
 
-#: Audit.php:141
+#: Audit.php:142
 msgctxt "Default Term"
 msgid "Review SEO"
 msgstr ""
 
-#: Audit.php:142
+#: Audit.php:143
 msgctxt "Default Term"
 msgid "Review Style"
 msgstr ""
 
-#: Audit.php:143
+#: Audit.php:144
 msgctxt "Default Term"
 msgid "Trivial"
 msgstr ""
 
-#: Audit.php:144
+#: Audit.php:145
 msgctxt "Default Term"
 msgid "Initial Copy"
 msgstr ""
 
-#: Audit.php:145
+#: Audit.php:146
 msgctxt "Default Term"
 msgid "Unfinished"
 msgstr ""
 
-#: Audit.php:146
+#: Audit.php:147
 msgctxt "Default Term"
 msgid "No Content"
 msgstr ""
 
-#: Audit.php:147
+#: Audit.php:148
 msgctxt "Default Term"
 msgid "Imported"
 msgstr ""
 
-#: Audit.php:166
+#: Audit.php:167
 msgctxt "Button"
 msgid "Install Default Attributes"
 msgstr ""
 
-#: Audit.php:333
+#: Audit.php:334
 msgctxt "Adminbar"
 msgid "Audit Attributes"
 msgstr ""
 
-#: Audit.php:377
+#: Audit.php:381
 msgctxt "Adminbar: Title Attr"
 msgid "Auditing"
 msgstr ""
 
-#: Audit.php:384
+#: Audit.php:399
 msgctxt "Adminbar: Title Attr"
 msgid "Click to load attributes &hellip;"
 msgstr ""
 
-#: Audit.php:417
+#: Audit.php:432
 msgctxt "Dashboard Widget Title"
 msgid "Your Audit Summary"
 msgstr ""
 
-#: Audit.php:418
+#: Audit.php:433
 msgctxt "Dashboard Widget Title"
 msgid "Editorial Audit Summary"
 msgstr ""
 
-#: Audit.php:456
+#: Audit.php:471
 msgctxt "Message"
 msgid "No reports available!"
 msgstr ""
 
-#: Audit.php:462
+#: Audit.php:477
 msgctxt "Header"
 msgid "Audit Reports"
 msgstr ""
 
-#: Audit.php:466
+#: Audit.php:481
 msgctxt "Reports"
 msgid "By User"
 msgstr ""
 
-#: Audit.php:471
+#: Audit.php:486
 msgctxt "None"
 msgid "All Users"
 msgstr ""
 
-#: Audit.php:480
+#: Audit.php:495
 msgctxt "Button"
 msgid "Apply Filter"
 msgstr ""

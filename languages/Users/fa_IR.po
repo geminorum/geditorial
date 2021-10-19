@@ -2,15 +2,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gEditorial Users\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
-"POT-Creation-Date: 2021-04-22T22:29:14+00:00\n"
-"PO-Revision-Date: 2021-05-08 01:50+0430\n"
+"POT-Creation-Date: 2021-10-07T20:25:39+03:30\n"
+"PO-Revision-Date: 2021-10-07 20:39+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.4.3\n"
+"X-Generator: Poedit 3.0\n"
 "X-Domain: geditorial-users\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
 "X-Poedit-Basepath: ../../includes/Modules/Users\n"
@@ -117,128 +117,128 @@ msgctxt "Label: Not Found"
 msgid "There are no types available."
 msgstr "هیچ نوع کاربری در دسترس نیست."
 
-#: Users.php:262
+#: Users.php:258
 msgctxt "Dashboard Widget Title"
 msgid "Your Profile"
 msgstr "نمایه شما"
 
-#: Users.php:265
+#: Users.php:261
 msgctxt "Dashboard Widget Action"
 msgid "Edit your profile"
 msgstr "ویرایش نمایه شما"
 
-#: Users.php:266
+#: Users.php:262
 msgctxt "Dashboard Widget Action"
 msgid "Edit"
 msgstr "ویرایش"
 
-#: Users.php:350
+#: Users.php:346
 msgctxt "Row Icon Title"
 msgid "Group"
 msgstr "گروه"
 
-#: Users.php:364
+#: Users.php:360
 msgctxt "Row Icon Title"
 msgid "Type"
 msgstr "نوع"
 
-#: Users.php:417
+#: Users.php:413
 msgctxt "Header"
 msgid "Site Categories"
 msgstr "دسته‌های سایت"
 
-#: Users.php:418
+#: Users.php:414
 msgctxt "Message"
 msgid "Restrict non editor users to post in selected categories only."
 msgstr "کاربران غیر ویرایشگر به دسته‌های اختصاصی خود محدود شوند."
 
-#: Users.php:421
+#: Users.php:417
 msgctxt "Header"
 msgid "User Categories"
 msgstr "دسته‌های کاربری"
 
-#: Users.php:449
+#: Users.php:445
 msgctxt "Message"
 msgid "There are no categories available."
 msgstr "دسته‌ای تعریف نشده است."
 
-#: Users.php:545
+#: Users.php:541
 msgctxt "Row Icon Title"
 msgid "Name"
 msgstr "نام"
 
-#: Users.php:552
+#: Users.php:548
 msgctxt "Row Icon Title"
 msgid "Email"
 msgstr "ایمیل"
 
-#: Users.php:559
+#: Users.php:555
 msgctxt "Row Icon Title"
 msgid "URL"
 msgstr "نشانی"
 
-#: Users.php:577
+#: Users.php:573
 msgctxt "Row Icon Title"
 msgid "Registered"
 msgstr "نام‌نویسی"
 
 #. translators: %s: date
-#: Users.php:579
+#: Users.php:575
 msgctxt "Row"
 msgid "Registered on %s"
 msgstr "نام‌نویسی در %s"
 
-#: Users.php:584
+#: Users.php:580
 msgctxt "Row Icon Title"
 msgid "Roles"
 msgstr "نقش‌ها"
 
-#: Users.php:618
+#: Users.php:615
 msgctxt "Header"
 msgid "User Reports"
 msgstr "گزارشات کاربران"
 
-#: Users.php:622
+#: Users.php:619
 msgctxt "Header"
 msgid "By PostType"
 msgstr "بر اساس نوع‌نوشته"
 
-#: Users.php:637
+#: Users.php:634
 msgctxt "None Title"
 msgid "All Users"
 msgstr "همهٔ کاربران"
 
-#: Users.php:647
+#: Users.php:644
 msgctxt "None Title"
 msgid "All Months"
 msgstr "همهٔ ماه‌ها"
 
-#: Users.php:655
+#: Users.php:652
 msgctxt "Button"
 msgid "Query Stats"
 msgstr "درخواست گزارش"
 
-#: Users.php:730
+#: Users.php:727
 msgctxt "Header"
 msgid "Re-Map Authors"
 msgstr "اتصال دوباره نویسندگان"
 
 #. translators: %s: error
-#: Users.php:737
+#: Users.php:734
 msgctxt "Message"
 msgid ""
 "Before you can upload a file, you will need to fix the following error: %s"
 msgstr ""
 
 #. translators: %s: size
-#: Users.php:751
+#: Users.php:748
 msgctxt "Message"
 msgid ""
 "Checks for post authors and re-map them with current registered users. "
 "Maximum upload size: <b>%s</b>"
 msgstr ""
 
-#: Users.php:755
+#: Users.php:752
 msgctxt "Button"
 msgid "Upload and Re-Map"
 msgstr "بارگیری و بازنقش"

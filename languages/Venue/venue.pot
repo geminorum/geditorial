@@ -1,163 +1,163 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gEditorial Venue 3.20.1\n"
+"Project-Id-Version: gEditorial Venue 3.21.0\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "Last-Translator: NULL\n"
 "Language-Team: NULL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-06-11T16:58:08+00:00\n"
+"POT-Creation-Date: 2021-10-19T20:51:01+03:30\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.5.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Venue\n"
 "X-Domain: geditorial-venue\n"
 
-#: Venue.php:38
+#: Venue.php:36
 msgctxt "Settings"
 msgid "Place Facilities"
 msgstr ""
 
-#: Venue.php:39
+#: Venue.php:37
 msgctxt "Settings"
 msgid "Facility taxonomy for the places and supported post-types."
 msgstr ""
 
-#: Venue.php:47
+#: Venue.php:45
 msgctxt "Settings"
 msgid "Specifies location based on the actual latitude and longitude."
 msgstr ""
 
-#: Venue.php:57
+#: Venue.php:55
 msgctxt "Settings"
 msgid "Redirect Archives"
 msgstr ""
 
-#: Venue.php:58
+#: Venue.php:56
 msgctxt "Settings"
 msgid "Redirects place archives to this URL. Leave empty to disable."
 msgstr ""
 
-#: Venue.php:104
-#: Venue.php:105
+#: Venue.php:102
+#: Venue.php:103
 msgid "Place"
 msgid_plural "Places"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Venue.php:106
+#: Venue.php:104
 msgid "Place Category"
 msgid_plural "Place Categories"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Venue.php:107
+#: Venue.php:105
 msgid "Facility"
 msgid_plural "Facilities"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Venue.php:116
+#: Venue.php:114
 msgctxt "Column Title"
 msgid "Venue"
 msgstr ""
 
-#: Venue.php:117
+#: Venue.php:115
 msgctxt "Column Title"
 msgid "Connected to this Place"
 msgstr ""
 
-#: Venue.php:118
+#: Venue.php:116
 msgctxt "Select Option None"
 msgid "&ndash; Select Place &ndash;"
 msgstr ""
 
-#: Venue.php:121
+#: Venue.php:119
 msgctxt "Column Title"
 msgid "Place Categories"
 msgstr ""
 
-#: Venue.php:124
+#: Venue.php:122
 msgctxt "Column Title"
 msgid "Place Facilities"
 msgstr ""
 
-#: Venue.php:125
+#: Venue.php:123
 msgctxt "Select Option None"
 msgid "&ndash; Select Facility &ndash;"
 msgstr ""
 
-#: Venue.php:127
+#: Venue.php:125
 msgctxt "MetaBox Title"
 msgid "Place Details"
 msgstr ""
 
-#: Venue.php:128
+#: Venue.php:126
 msgctxt "Column Title"
 msgid "Places"
 msgstr ""
 
-#: Venue.php:129
+#: Venue.php:127
 msgctxt "Column Title"
 msgid "Connected Places"
 msgstr ""
 
-#: Venue.php:140
+#: Venue.php:138
 msgctxt "Field Title"
 msgid "Parent Complex"
 msgstr ""
 
-#: Venue.php:141
+#: Venue.php:139
 msgctxt "Field Description"
 msgid "Parent complex title of the location"
 msgstr ""
 
-#: Venue.php:145
+#: Venue.php:143
 msgctxt "Field Title"
 msgid "Full Title"
 msgstr ""
 
-#: Venue.php:146
+#: Venue.php:144
 msgctxt "Field Description"
 msgid "Full title of the location"
 msgstr ""
 
-#: Venue.php:150
+#: Venue.php:148
 msgctxt "Field Title"
 msgid "Street Address"
 msgstr ""
 
-#: Venue.php:151
+#: Venue.php:149
 msgctxt "Field Description"
 msgid "Full street address, including city, state etc."
 msgstr ""
 
-#: Venue.php:156
+#: Venue.php:154
 msgctxt "Field Title"
 msgid "Latitude"
 msgstr ""
 
-#: Venue.php:157
+#: Venue.php:155
 msgctxt "Field Description"
 msgid "The latitude (in decimal notation) for this location."
 msgstr ""
 
-#: Venue.php:161
+#: Venue.php:159
 msgctxt "Field Title"
 msgid "Longitude"
 msgstr ""
 
-#: Venue.php:162
+#: Venue.php:160
 msgctxt "Field Description"
 msgid "The longitude (in decimal notation) for this location."
 msgstr ""
 
-#: Venue.php:458
+#: Venue.php:456
 msgctxt "Message"
 msgid "No items connected!"
 msgstr ""
 
-#: Venue.php:496
+#: Venue.php:494
 msgctxt "Title Attr"
 msgid "View the connected list"
 msgstr ""

@@ -1,69 +1,79 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gEditorial Archives 3.20.1\n"
+"Project-Id-Version: gEditorial Archives 3.21.0\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "Last-Translator: NULL\n"
 "Language-Team: NULL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-06-11T16:56:45+00:00\n"
+"POT-Creation-Date: 2021-10-19T20:49:31+03:30\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.5.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Archives\n"
 "X-Domain: geditorial-archives\n"
 
 #. translators: %s: supported object label
-#: Archives.php:41
-#: Archives.php:64
+#. translators: %s: supported object label
+#: Archives.php:39
+#: Archives.php:62
 msgctxt "Setting Title"
 msgid "Archives Title for %s"
 msgstr ""
 
-#: Archives.php:42
+#: Archives.php:40
 msgctxt "Setting Description"
 msgid "Used as title on the posttype archive pages."
 msgstr ""
 
 #. translators: %s: supported object label
-#: Archives.php:50
-#: Archives.php:73
+#. translators: %s: supported object label
+#: Archives.php:48
+#: Archives.php:71
 msgctxt "Setting Title"
 msgid "Archives Content for %s"
 msgstr ""
 
-#: Archives.php:51
+#: Archives.php:49
 msgctxt "Setting Description"
 msgid "Used as content on the posttype archive pages."
 msgstr ""
 
-#: Archives.php:65
+#: Archives.php:63
 msgctxt "Setting Description"
 msgid "Used as title on the taxonomy archive pages."
 msgstr ""
 
-#: Archives.php:74
+#: Archives.php:72
 msgctxt "Setting Description"
 msgid "Used as content on the taxonomy archive pages."
 msgstr ""
 
 #. translators: %s: supported object label
-#: Archives.php:82
+#: Archives.php:80
 msgctxt "Setting Title"
 msgid "Archives Slug for %s"
 msgstr ""
 
-#: Archives.php:83
+#: Archives.php:81
 msgctxt "Setting Description"
 msgid "Used as slug on the taxonomy archive pages."
 msgstr ""
 
-#: Archives.php:84
+#: Archives.php:82
 msgctxt "Setting Icon"
 msgid "View Archives Page"
 msgstr ""
 
-#: Archives.php:90
+#: Archives.php:88
 msgctxt "Setting Description"
 msgid "Prepends a search form to the posttype archive pages."
+msgstr ""
+
+#. translators: %s: supported object label
+#. translators: %s: supported object label
+#: Archives.php:307
+#: Archives.php:316
+msgctxt "Navigation Metabox"
+msgid "%s Archives"
 msgstr ""

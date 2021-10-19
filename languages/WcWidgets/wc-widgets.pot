@@ -1,0 +1,66 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial WcWidgets 3.21.0\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Last-Translator: NULL\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2021-10-19T20:51:16+03:30\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.5.0\n"
+"X-Poedit-Basepath: ../../includes/Modules/WcWidgets\n"
+"X-Domain: geditorial-wc-widgets\n"
+
+#: WcWidgets.php:34
+msgctxt "Setting Title"
+msgid "Custom Areas"
+msgstr ""
+
+#: WcWidgets.php:35
+msgctxt "Setting Description"
+msgid "Registers widget area on the selected action hooks."
+msgstr ""
+
+#: WcWidgets.php:50
+msgctxt "Action Hook"
+msgid "Before Checkout Form"
+msgstr ""
+
+#: WcWidgets.php:55
+msgctxt "Action Hook"
+msgid "After Checkout Form"
+msgstr ""
+
+#: WcWidgets.php:60
+msgctxt "Action Hook"
+msgid "Before Order Notes"
+msgstr ""
+
+#: WcWidgets.php:65
+msgctxt "Action Hook"
+msgid "Review Order: Before Payment"
+msgstr ""
+
+#: WcWidgets.php:70
+msgctxt "Action Hook"
+msgid "Before Edit Account Address Form"
+msgstr ""
+
+#: WcWidgets.php:78
+msgctxt "Action Hook"
+msgid "Woodmart: Shop Filters Area"
+msgstr ""
+
+#. translators: %s: widget area name
+#: WcWidgets.php:115
+msgctxt "Widget Area Prefix"
+msgid "WooCommerce: %s"
+msgstr ""
+
+#. translators: %s: widget action hook
+#: WcWidgets.php:117
+msgctxt "Widget Area Description"
+msgid "Widgets in this area will appear on %s action hook."
+msgstr ""

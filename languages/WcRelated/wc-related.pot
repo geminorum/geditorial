@@ -1,0 +1,109 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial WcRelated 3.21.0\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Last-Translator: NULL\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2021-10-19T20:51:12+03:30\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.5.0\n"
+"X-Poedit-Basepath: ../../includes/Modules/WcRelated\n"
+"X-Domain: geditorial-wc-related\n"
+
+#: WcRelated.php:34
+msgctxt "Setting Title"
+msgid "Releated by Categories"
+msgstr ""
+
+#: WcRelated.php:35
+msgctxt "Setting Description"
+msgid "Sets products are related by product category."
+msgstr ""
+
+#: WcRelated.php:40
+msgctxt "Setting Title"
+msgid "Exclude Categories"
+msgstr ""
+
+#: WcRelated.php:41
+msgctxt "Setting Description"
+msgid "Strips category terms form list of releated by. Leave empty to disable."
+msgstr ""
+
+#: WcRelated.php:47
+msgctxt "Setting Title"
+msgid "Releated by Tags"
+msgstr ""
+
+#: WcRelated.php:48
+msgctxt "Setting Description"
+msgid "Sets products are related by product tag."
+msgstr ""
+
+#: WcRelated.php:53
+msgctxt "Setting Title"
+msgid "Exclude Tags"
+msgstr ""
+
+#: WcRelated.php:54
+msgctxt "Setting Description"
+msgid "Strips tag terms form list of releated by. Leave empty to disable."
+msgstr ""
+
+#: WcRelated.php:59
+msgctxt "Setting Title"
+msgid "Exclude Default Terms"
+msgstr ""
+
+#: WcRelated.php:60
+msgctxt "Setting Description"
+msgid "Strips default term form list of releated by."
+msgstr ""
+
+#: WcRelated.php:64
+msgctxt "Setting Title"
+msgid "Force Display Releated"
+msgstr ""
+
+#: WcRelated.php:65
+msgctxt "Setting Description"
+msgid "Sets all products are related."
+msgstr ""
+
+#: WcRelated.php:71
+msgctxt "Setting Title"
+msgid "Related on Tabs"
+msgstr ""
+
+#: WcRelated.php:72
+msgctxt "Setting Description"
+msgid "Displays Upsells and Related products on front-end product tabs."
+msgstr ""
+
+#: WcRelated.php:79
+msgctxt "Setting Title"
+msgid "Related by Attribute"
+msgstr ""
+
+#: WcRelated.php:84
+msgctxt "Setting Title"
+msgid "Attribute"
+msgstr ""
+
+#: WcRelated.php:85
+msgctxt "Setting Description"
+msgid "Target attribute for related products."
+msgstr ""
+
+#: WcRelated.php:92
+msgctxt "Setting Title"
+msgid "Heading"
+msgstr ""
+
+#: WcRelated.php:93
+msgctxt "Setting Description"
+msgid "Template for related products heading."
+msgstr ""

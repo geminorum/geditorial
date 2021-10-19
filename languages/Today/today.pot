@@ -1,224 +1,224 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gEditorial Today 3.20.1\n"
+"Project-Id-Version: gEditorial Today 3.21.0\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "Last-Translator: NULL\n"
 "Language-Team: NULL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-06-11T16:58:03+00:00\n"
+"POT-Creation-Date: 2021-10-19T20:50:55+03:30\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.5.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Today\n"
 "X-Domain: geditorial-today\n"
 
-#: Helper.php:375
+#: ModuleHelper.php:376
 msgctxt "Meta Box Input"
 msgid "Day"
 msgstr ""
 
-#: Helper.php:376
+#: ModuleHelper.php:377
 msgctxt "Meta Box Input Placeholder"
 msgid "Day"
 msgstr ""
 
-#: Helper.php:389
+#: ModuleHelper.php:390
 msgctxt "Meta Box Input"
 msgid "Month"
 msgstr ""
 
-#: Helper.php:390
+#: ModuleHelper.php:391
 msgctxt "Meta Box Input Placeholder"
 msgid "Month"
 msgstr ""
 
-#: Helper.php:402
+#: ModuleHelper.php:403
 msgctxt "Meta Box Input"
 msgid "Year"
 msgstr ""
 
-#: Helper.php:403
+#: ModuleHelper.php:404
 msgctxt "Meta Box Input Placeholder"
 msgid "Year"
 msgstr ""
 
-#: Helper.php:412
+#: ModuleHelper.php:413
 msgctxt "Meta Box Input Option None"
 msgid "&ndash; Select Calendar &ndash;"
 msgstr ""
 
-#: Helper.php:424
+#: ModuleHelper.php:425
 msgctxt "Meta Box Input"
 msgid "Calendar"
 msgstr ""
 
 #. translators: %s: singular name
-#: Helper.php:452
+#: ModuleHelper.php:453
 msgctxt "Title Attr"
 msgid "New %s connected to this day"
 msgstr ""
 
-#: Helper.php:474
+#: ModuleHelper.php:475
 msgctxt "Title Attr"
 msgid "New Day!"
 msgstr ""
 
-#: Helper.php:490
+#: ModuleHelper.php:491
 msgctxt "Title Attr"
 msgid "Edit Day!"
 msgstr ""
 
-#: Today.php:45
+#: Today.php:43
 msgctxt "Setting Title"
 msgid "Fill The Day"
 msgstr ""
 
-#: Today.php:46
+#: Today.php:44
 msgctxt "Setting Description"
 msgid "Fills the current day info on newly drafted supported posttypes."
 msgstr ""
 
-#: Today.php:54
+#: Today.php:52
 msgctxt "Settings"
 msgid "Displays today column on edit list for supported posttypes."
 msgstr ""
 
-#: Today.php:59
+#: Today.php:57
 msgctxt "Setting Title"
 msgid "Insert The Day"
 msgstr ""
 
-#: Today.php:60
+#: Today.php:58
 msgctxt "Setting Description"
 msgid "Displays the day info for supported posttypes."
 msgstr ""
 
-#: Today.php:67
+#: Today.php:65
 msgctxt "Setting Title"
 msgid "Override Front-Page"
 msgstr ""
 
-#: Today.php:68
+#: Today.php:66
 msgctxt "Setting Description"
 msgid "Displays today list of connected posts on front-page."
 msgstr ""
 
-#: Today.php:99
+#: Today.php:97
 msgctxt "Posttype Featured"
 msgid "Cover Image"
 msgstr ""
 
-#: Today.php:100
+#: Today.php:98
 msgctxt "MetaBox Title"
 msgid "Summary"
 msgstr ""
 
-#: Today.php:101
+#: Today.php:99
 msgctxt "MetaBox Title"
 msgid "The Day"
 msgstr ""
 
-#: Today.php:102
+#: Today.php:100
 msgctxt "Column Title"
 msgid "Day"
 msgstr ""
 
-#: Today.php:105
+#: Today.php:103
 msgctxt "Noop"
 msgid "Day"
 msgid_plural "Days"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Today.php:114
+#: Today.php:112
 msgctxt "Template Title"
 msgid "Editorial: Today: Front-page"
 msgstr ""
 
-#: Today.php:196
-#: Today.php:227
+#: Today.php:194
+#: Today.php:225
 msgctxt "Page Title"
 msgid "Editorial Today"
 msgstr ""
 
-#: Today.php:197
+#: Today.php:195
 msgctxt "Menu Title"
 msgid "My Today"
 msgstr ""
 
-#: Today.php:373
+#: Today.php:371
 msgctxt "Title Attr"
 msgid "View on Today"
 msgstr ""
 
-#: Today.php:376
+#: Today.php:374
 msgctxt "Action"
 msgid "Today"
 msgstr ""
 
-#: Today.php:522
+#: Today.php:520
 msgctxt "Message"
 msgid "You can connect posts to this day once you've saved it for the first time."
 msgstr ""
 
-#: Today.php:548
-#: Today.php:940
+#: Today.php:546
+#: Today.php:939
 msgctxt "Message"
 msgid "No posts with day information found."
 msgstr ""
 
-#: Today.php:752
+#: Today.php:751
 msgctxt "Message"
 msgid "Nothing happened!"
 msgstr ""
 
-#: Today.php:923
+#: Today.php:922
 msgctxt "Table Column"
 msgid "The Day"
 msgstr ""
 
-#: Today.php:939
+#: Today.php:938
 msgctxt "Header"
 msgid "Overview of Post with Day Information"
 msgstr ""
 
-#: Today.php:985
+#: Today.php:984
 msgctxt "Header"
 msgid "Today Tools"
 msgstr ""
 
-#: Today.php:988
+#: Today.php:987
 msgctxt "Header"
 msgid "Re-schedule by Day"
 msgstr ""
 
-#: Today.php:994
+#: Today.php:993
 msgctxt "Setting"
 msgid "Schedule"
 msgstr ""
 
-#: Today.php:996
+#: Today.php:995
 msgctxt "Message"
 msgid "Tries to re-set the date of posts based on it's day data."
 msgstr ""
 
-#: Today.php:1005
+#: Today.php:1004
 msgctxt "Import Field"
 msgid "Today: Calendar"
 msgstr ""
 
-#: Today.php:1006
+#: Today.php:1005
 msgctxt "Import Field"
 msgid "Today: Year"
 msgstr ""
 
-#: Today.php:1007
+#: Today.php:1006
 msgctxt "Import Field"
 msgid "Today: Month"
 msgstr ""
 
-#: Today.php:1008
+#: Today.php:1007
 msgctxt "Import Field"
 msgid "Today: Day"
 msgstr ""

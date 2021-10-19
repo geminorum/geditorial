@@ -2,90 +2,90 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gEditorial Workflow\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
-"POT-Creation-Date: 2020-07-21T18:55:22+00:00\n"
-"PO-Revision-Date: 2020-07-22 13:54+0430\n"
+"POT-Creation-Date: 2021-10-07T20:25:53+03:30\n"
+"PO-Revision-Date: 2021-10-07 20:34+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.3.1\n"
+"X-Generator: Poedit 3.0\n"
 "X-Domain: geditorial-workflow\n"
 "X-Poedit-Basepath: ../../includes/Modules/Workflow\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
 
-#: Workflow.php:41
+#: Workflow.php:40
 msgctxt "Setting Title"
 msgid "Hide Disabled"
 msgstr "غیرفعال‌ها پنهان شود"
 
-#: Workflow.php:42
+#: Workflow.php:41
 msgctxt "Setting Description"
 msgid "Hides statuses disabled for each role on the dropdown."
 msgstr ""
 
-#: Workflow.php:46
+#: Workflow.php:45
 msgctxt "Setting Title"
 msgid "Time Action"
 msgstr "گزینه زمان"
 
-#: Workflow.php:47
+#: Workflow.php:46
 msgctxt "Setting Description"
 msgid "Displays time action on the workflow meta-box."
 msgstr ""
 
-#: Workflow.php:52
+#: Workflow.php:51
 msgctxt "Setting Title"
 msgid "Draft Roles"
 msgstr "نقش‌های پیش‌نویس"
 
-#: Workflow.php:53
+#: Workflow.php:52
 msgctxt "Setting Description"
 msgid "Roles that can rollback to Draft status."
 msgstr ""
 
-#: Workflow.php:61
+#: Workflow.php:59
 msgctxt "Setting Title"
 msgid "Status Menu"
 msgstr "منوی وضعیت‌ها"
 
-#: Workflow.php:62
+#: Workflow.php:60
 msgctxt "Setting Description"
 msgid "Adds status links to the admin submenus for each supported posttype."
 msgstr ""
 
-#: Workflow.php:66
+#: Workflow.php:64
 msgctxt "Setting Title"
 msgid "Display States"
 msgstr "نمایش وضعیت‌ها"
 
-#: Workflow.php:67
+#: Workflow.php:65
 msgctxt "Setting Description"
 msgid "Appends current status to the end of the title."
 msgstr ""
 
-#: Workflow.php:72
+#: Workflow.php:70
 msgctxt "Setting Title"
 msgid "Locking Statuses"
 msgstr "وضعیت‌های قفل‌کننده"
 
-#: Workflow.php:73
+#: Workflow.php:71
 msgctxt "Setting Description"
 msgid "Selected statuses will lock editing the post to their assigned roles."
 msgstr ""
 
-#: Workflow.php:74
+#: Workflow.php:72
 msgctxt "Setting"
 msgid "There's no status available!"
 msgstr ""
 
-#: Workflow.php:94
+#: Workflow.php:93
 msgctxt "MetaBox Title"
 msgid "Workflow"
 msgstr "گردش کار"
 
-#: Workflow.php:107
+#: Workflow.php:106
 msgctxt "Taxonomy Label"
 msgid "Statuses"
 msgstr "وضعیت‌ها"

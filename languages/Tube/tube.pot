@@ -1,175 +1,175 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gEditorial Tube 3.20.1\n"
+"Project-Id-Version: gEditorial Tube 3.21.0\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "Last-Translator: NULL\n"
 "Language-Team: NULL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-06-11T16:58:05+00:00\n"
+"POT-Creation-Date: 2021-10-19T20:50:57+03:30\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.5.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Tube\n"
 "X-Domain: geditorial-tube\n"
 
-#: Tube.php:35
+#: Tube.php:33
 msgctxt "Setting Title"
 msgid "Channels Support"
 msgstr ""
 
-#: Tube.php:36
+#: Tube.php:34
 msgctxt "Setting Description"
 msgid "Supports channel post-type and related features."
 msgstr ""
 
-#: Tube.php:40
+#: Tube.php:38
 msgctxt "Setting Title"
 msgid "Video Toolbar"
 msgstr ""
 
-#: Tube.php:41
+#: Tube.php:39
 msgctxt "Setting Description"
 msgid "Displays customized toolbar after player."
 msgstr ""
 
-#: Tube.php:94
+#: Tube.php:92
 msgctxt "Noop"
 msgid "Video"
 msgid_plural "Videos"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Tube.php:95
+#: Tube.php:93
 msgctxt "Noop"
 msgid "Video Category"
 msgid_plural "Video Categories"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Tube.php:96
+#: Tube.php:94
 msgctxt "Noop"
 msgid "Channel"
 msgid_plural "Channels"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Tube.php:97
+#: Tube.php:95
 msgctxt "Noop"
 msgid "Channel Category"
 msgid_plural "Channel Categories"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Tube.php:104
+#: Tube.php:102
 msgctxt "Column Title"
 msgid "Video Categories"
 msgstr ""
 
-#: Tube.php:105
+#: Tube.php:103
 msgctxt "Column Title"
 msgid "Channel Categories"
 msgstr ""
 
-#: Tube.php:110
-#: Tube.php:117
+#: Tube.php:108
+#: Tube.php:115
 msgctxt "O2O"
 msgid "Connected Videos"
 msgstr ""
 
-#: Tube.php:111
+#: Tube.php:109
 msgctxt "O2O"
 msgid "Connected Posts"
 msgstr ""
 
-#: Tube.php:116
+#: Tube.php:114
 msgctxt "O2O"
 msgid "Connected Channels"
 msgstr ""
 
-#: Tube.php:134
+#: Tube.php:132
 msgctxt "Field Title"
 msgid "Featured People"
 msgstr ""
 
-#: Tube.php:135
+#: Tube.php:133
 msgctxt "Field Description"
 msgid "Featured People"
 msgstr ""
 
-#: Tube.php:140
+#: Tube.php:138
 msgctxt "Field Title"
 msgid "Creation Date"
 msgstr ""
 
-#: Tube.php:141
+#: Tube.php:139
 msgctxt "Field Description"
 msgid "Creation Date"
 msgstr ""
 
-#: Tube.php:146
+#: Tube.php:144
 msgctxt "Field Title"
 msgid "Video Duration"
 msgstr ""
 
-#: Tube.php:147
+#: Tube.php:145
 msgctxt "Field Description"
 msgid "Video Duration"
 msgstr ""
 
-#: Tube.php:279
+#: Tube.php:310
 msgctxt "Button"
 msgid "The date of this video"
 msgstr ""
 
-#: Tube.php:285
+#: Tube.php:316
 msgctxt "Button"
 msgid "Total time of this video"
 msgstr ""
 
-#: Tube.php:292
+#: Tube.php:323
 msgctxt "Button"
 msgid "Download this video"
 msgstr ""
 
-#: Tube.php:293
+#: Tube.php:324
 msgctxt "Button"
 msgid "Download"
 msgstr ""
 
-#: Tube.php:299
+#: Tube.php:330
 msgctxt "Button"
 msgid "View this video on YouTube"
 msgstr ""
 
-#: Tube.php:301
+#: Tube.php:332
 msgctxt "Button"
 msgid "YouTube"
 msgstr ""
 
-#: Tube.php:307
+#: Tube.php:338
 msgctxt "Button"
 msgid "View this video on Aparat"
 msgstr ""
 
-#: Tube.php:309
+#: Tube.php:340
 msgctxt "Button"
 msgid "Aparat"
 msgstr ""
 
-#: Tube.php:316
+#: Tube.php:347
 msgctxt "Button"
 msgid "Shortlink to this video"
 msgstr ""
 
-#: Tube.php:318
+#: Tube.php:349
 msgctxt "Button"
 msgid "Shortlink"
 msgstr ""
 
-#: Tube.php:323
-#: Tube.php:330
-#: Tube.php:337
+#: Tube.php:354
+#: Tube.php:361
+#: Tube.php:368
 msgctxt "Button"
 msgid "Share this video"
 msgstr ""

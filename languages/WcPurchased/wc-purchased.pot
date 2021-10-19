@@ -1,90 +1,121 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gEditorial WC-Purchased 3.20.1\n"
+"Project-Id-Version: gEditorial WcPurchased 3.21.0\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "Last-Translator: NULL\n"
 "Language-Team: NULL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-06-11T16:58:16+00:00\n"
+"POT-Creation-Date: 2021-10-19T20:51:12+03:30\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.5.0\n"
-"X-Poedit-Basepath: ../../includes/Modules/WC-Purchased\n"
+"X-Poedit-Basepath: ../../includes/Modules/WcPurchased\n"
 "X-Domain: geditorial-wc-purchased\n"
 
-#: WC-Purchased.php:40
+#: WcPurchased.php:39
 msgctxt "Setting Title"
 msgid "Order Statuses"
 msgstr ""
 
-#: WC-Purchased.php:41
+#: WcPurchased.php:40
 msgctxt "Setting Description"
 msgid "Accepted statuses on order list reports."
 msgstr ""
 
-#: WC-Purchased.php:50
+#: WcPurchased.php:49
 msgctxt "Setting Title"
 msgid "Reports Roles"
 msgstr ""
 
-#: WC-Purchased.php:51
+#: WcPurchased.php:50
 msgctxt "Setting Description"
 msgid "Roles that can view product purchase reports."
 msgstr ""
 
-#: WC-Purchased.php:57
+#: WcPurchased.php:56
 msgctxt "Setting Title"
 msgid "Export Roles"
 msgstr ""
 
-#: WC-Purchased.php:58
+#: WcPurchased.php:57
 msgctxt "Setting Description"
 msgid "Roles that can export product purchase reports."
 msgstr ""
 
-#: WC-Purchased.php:103
+#: WcPurchased.php:64
+msgctxt "Setting Title"
+msgid "Purchased on Dashboard"
+msgstr ""
+
+#: WcPurchased.php:65
+msgctxt "Setting Description"
+msgid "Displays recently purchased products on front-end account page."
+msgstr ""
+
+#: WcPurchased.php:70
+msgctxt "Setting Title"
+msgid "Dashboard Purchased Title"
+msgstr ""
+
+#: WcPurchased.php:71
+msgctxt "Setting Description"
+msgid "Appears as title of the purchased products menu on front-end account page."
+msgstr ""
+
+#: WcPurchased.php:72
+#: WcPurchased.php:283
+msgctxt "Default"
+msgid "Purchased Products"
+msgstr ""
+
+#: WcPurchased.php:142
 msgctxt "Title Attr"
 msgid "Product Purchase Reports"
 msgstr ""
 
-#: WC-Purchased.php:106
+#: WcPurchased.php:145
 msgctxt "Action"
 msgid "Purchases"
 msgstr ""
 
-#: WC-Purchased.php:115
-#: WC-Purchased.php:118
+#: WcPurchased.php:154
+#: WcPurchased.php:157
 msgctxt "Message"
 msgid "No Product!"
 msgstr ""
 
-#: WC-Purchased.php:121
+#: WcPurchased.php:160
 msgctxt "Message"
 msgid "No Orders!"
 msgstr ""
 
-#: WC-Purchased.php:134
+#: WcPurchased.php:173
 msgctxt "Button"
 msgid "Export CSV"
 msgstr ""
 
-#: WC-Purchased.php:145
+#: WcPurchased.php:184
 msgctxt "Column Title"
 msgid "#"
 msgstr ""
 
-#: WC-Purchased.php:151
+#: WcPurchased.php:190
 msgctxt "Column Title"
 msgid "Paid On"
 msgstr ""
 
-#: WC-Purchased.php:158
+#: WcPurchased.php:197
 msgctxt "Column Title"
 msgid "Address"
 msgstr ""
 
-#: WC-Purchased.php:164
+#: WcPurchased.php:203
 msgctxt "Column Title"
 msgid "Total"
+msgstr ""
+
+#: WcPurchased.php:341
+msgctxt "Message"
+msgid "Nothing purchased yet."
 msgstr ""
