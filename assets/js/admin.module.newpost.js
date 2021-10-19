@@ -61,6 +61,7 @@
         .change();
 
       // @REF: https://stackoverflow.com/a/4601362
+      // @REF: https://www.codeproject.com/Tips/1166607/Events-in-JavaScript-IFrame-vs-Parent-Window
       window.parent.jQuery(select).trigger('chosen:updated');
 
       self.parent.tb_remove();

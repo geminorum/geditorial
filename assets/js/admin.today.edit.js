@@ -8,10 +8,10 @@
     const editColCenter = $('fieldset.inline-edit-categories', '.inline-edit-row');
     const daySelect = $('.geditorial-admin-wrap-quickedit.-today', '.inline-edit-row');
 
-    const day = $('#' + tagID).find('div.-date-icon span.-day').data('day');
-    const month = $('#' + tagID).find('div.-date-icon span.-month').data('month');
-    const year = $('#' + tagID).find('div.-date-icon span.-year').data('year');
-    const cal = $('#' + tagID).find('div.-date-icon span.-cal').data('cal');
+    const day = $('#' + tagID).find('div.-date-badge span.-day').data('day');
+    const month = $('#' + tagID).find('div.-date-badge span.-month').data('month');
+    const year = $('#' + tagID).find('div.-date-badge span.-year').data('year');
+    const cal = $('#' + tagID).find('div.-date-badge span.-cal').data('cal');
 
     $(':input[name=geditorial-today-date-day]', daySelect).val(day);
     $(':input[name=geditorial-today-date-month]', daySelect).val(month);

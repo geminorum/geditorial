@@ -7,7 +7,7 @@
       modal_button: 'Select as Source'
     }, plugin[module].strings || {}),
 
-    init: function () {
+    openModal: function () {
       if (!modal) {
         // @REF: https://codex.wordpress.org/Javascript_Reference/wp.media
         modal = wp.media({
@@ -24,14 +24,15 @@
           // console.log(attachment);
         });
       }
+
+      modal.open();
     }
   };
 
   $(function () {
     $('#upload_csv_button').on('click', function (e) {
       e.preventDefault();
-      app.init();
-      modal.open();
+      app.openModal();
     });
 
     $(document).trigger('gEditorialReady', [module, app]);

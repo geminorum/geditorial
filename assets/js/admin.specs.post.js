@@ -77,9 +77,13 @@
       // disable: true,
       group: s.classs,
       handle: '.-handle',
-      stop: function () {
+      onDrop: function ($item, container, _super) {
         app.reOrder();
+        _super($item, container);
       }
+      // stop: function () {
+      //   app.reOrder();
+      // }
     // }).disableSelection();
     });
 

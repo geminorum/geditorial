@@ -132,6 +132,7 @@
       app.inlineText('barcode', tag, event);
 
       // FIXME: WTF: data attr cannot contain underscores!
+      // @SEE: https://www.sitepoint.com/how-why-use-html5-custom-data-attributes/
       app.customs.forEach(function (custom) {
         app.inlineText(custom, tag, event); // only text supported for customs
       });
