@@ -37,6 +37,14 @@ class Terms extends gEditorial\Module
 	{
 		return [
 			'_fields'   => $this->prep_fields_for_settings(),
+			'_edittags' => [
+				[
+					'field'       => 'prevent_deletion',
+					'title'       => _x( 'Prevent Deletion', 'Setting Title', 'geditorial-terms' ),
+					'description' => _x( 'Exempts the terms with meta-data from bulk empty deletions.', 'Setting Description', 'geditorial-terms' ),
+					'default'     => TRUE,
+				],
+			],
 			'_frontend' => [
 				'adminbar_summary',
 			],
@@ -259,6 +267,9 @@ class Terms extends gEditorial\Module
 				$this->filter( 'taxonomy_export_term_meta', 2, 8, FALSE, 'gnetwork' );
 				$this->filter( 'taxonomy_bulk_actions', 2, 14, FALSE, 'gnetwork' );
 				$this->filter( 'taxonomy_bulk_callback', 3, 14, FALSE, 'gnetwork' );
+
+				if ( $this->get_setting( 'prevent_deletion', TRUE ) )
+					$this->filter( 'taxonomy_delete_term', 4, 99, FALSE, 'gnetwork' );
 			}
 
 		} else if ( 'term' == $screen->base ) {
@@ -1672,5 +1683,17 @@ class Terms extends gEditorial\Module
 		}
 
 		return TRUE;
+	}
+
+	public function taxonomy_delete_term( $delete, $term, $taxonomy, $force )
+	{
+		if ( $force || ! $delete )
+			return $delete;
+
+		foreach ( $this->get_supported( $taxonomy ) as $field )
+			if ( get_term_meta( $term->term_id, $this->get_supported_metakey( $field, $taxonomy ), TRUE ) )
+				return FALSE;
+
+		return $delete;
 	}
 }
