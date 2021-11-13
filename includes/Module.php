@@ -43,6 +43,7 @@ class Module extends Base
 	protected $priority_template_include  = 10;
 
 	protected $positions = []; // menu positions by context/constant
+	protected $deafults  = []; // default settings
 
 	protected $constants = [];
 	protected $strings   = [];
@@ -2490,16 +2491,24 @@ class Module extends Base
 		if ( ! isset( $this->options->settings ) )
 			return $default;
 
-		return array_key_exists( $field, $this->options->settings )
-			? $this->options->settings[$field]
-			: $default;
+		if ( array_key_exists( $field, $this->options->settings ) )
+			return $this->options->settings[$field];
+
+		if ( array_key_exists( $field, $this->deafults ) )
+			return $this->deafults[$field];
+
+		return $default;
 	}
 
 	public function get_setting_fallback( $field, $fallback )
 	{
-		return empty( $this->options->settings[$field] )
-			? $fallback
-			: $this->options->settings[$field];
+		if ( ! empty( $this->options->settings[$field] ) )
+			return $this->options->settings[$field];
+
+		if ( array_key_exists( $field, $this->deafults ) )
+			return $this->deafults[$field];
+
+		return $fallback;
 	}
 
 	// check arrays with support of old settings

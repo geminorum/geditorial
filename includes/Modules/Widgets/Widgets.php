@@ -8,6 +8,8 @@ use geminorum\gEditorial\Core\Arraay;
 class Widgets extends gEditorial\Module
 {
 
+	protected $deafults = [ 'widget_support' => TRUE ];
+
 	public static function module()
 	{
 		return [
@@ -117,14 +119,6 @@ class Widgets extends gEditorial\Module
 		}
 
 		return $list;
-	}
-
-	protected function setup( $args = [] )
-	{
-		parent::setup( $args );
-
-		// override checks!
-		$this->action( 'widgets_init' );
 	}
 
 	public function widgets_init()
