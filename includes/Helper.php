@@ -287,12 +287,12 @@ class Helper extends Main
 		return apply_filters( 'the_permalink', get_permalink( $post ), $post );
 	}
 
-	public static function getPostTitle( $post, $fallback = NULL )
+	public static function getPostTitle( $post, $fallback = NULL, $filter = TRUE )
 	{
 		if ( ! $post = self::getPost( $post ) )
 			return Plugin::na( FALSE );
 
-		$title = apply_filters( 'the_title', $post->post_title, $post->ID );
+		$title = $filter ? apply_filters( 'the_title', $post->post_title, $post->ID ) : $post->post_title;
 
 		if ( ! empty( $title ) )
 			return $title;
