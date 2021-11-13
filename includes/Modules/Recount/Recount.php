@@ -56,8 +56,8 @@ class Recount extends gEditorial\Module
 
 			$this->filter( 'taxonomy_bulk_actions', 2, 14, FALSE, 'gnetwork' );
 			$this->filter( 'taxonomy_bulk_callback', 3, 14, FALSE, 'gnetwork' );
-			$this->filter( 'taxonomy_tab_maintenance_content', 2, 9, FALSE, 'gnetwork' );
-			$this->filter( 'taxonomy_handle_tab_content_actions', 1, 8, FALSE, 'gnetwork' );
+			$this->action( 'taxonomy_tab_maintenance_content', 2, 9, FALSE, 'gnetwork' );
+			$this->action( 'taxonomy_handle_tab_content_actions', 1, 8, FALSE, 'gnetwork' );
 		}
 	}
 

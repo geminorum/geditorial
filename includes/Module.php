@@ -4463,7 +4463,7 @@ class Module extends Base
 			'connected_items'     => $post->ID,
 		];
 
-		echo '<li class="-row -book -p2p -connected">';
+		echo '<li class="-row -p2p -connected">';
 
 			echo $this->cache_column_icon;
 
@@ -5121,6 +5121,6 @@ class Module extends Base
 	protected function raise_resources( $context = 'import', $time_limit = 0 )
 	{
 		@set_time_limit( $time_limit );
-		wp_raise_memory_limit( $context );
+		return wp_raise_memory_limit( $context );
 	}
 }

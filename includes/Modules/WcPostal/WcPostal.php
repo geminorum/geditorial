@@ -174,7 +174,7 @@ class WcPostal extends gEditorial\Module
 		if ( ! $tracking = $order->get_meta( $this->_tracking_metakey(), TRUE, 'edit' ) )
 			return;
 
-		echo $this->wrap_open( 'form-field form-field-wide' );
+		echo $this->wrap_open( 'form-field form-field-wide -tracking' );
 			echo HTML::img( $this->_service_icon(), '-before-icon' );
 			echo ' '._x( 'Tracking Package ID:', 'Action Title', 'geditorial-wc-postal' );
 			echo ' '.HTML::link( $tracking, $this->_service_url( $tracking ), TRUE );
@@ -184,7 +184,7 @@ class WcPostal extends gEditorial\Module
 	public function my_account_my_orders_actions( $actions, $order )
 	{
 		if ( $tracking = $order->get_meta( $this->_tracking_metakey(), TRUE, 'edit' ) )
-			$actions[$this->classs()] = [
+			$actions[$this->classs( 'tracking' )] = [
 				'url'  => $this->_service_url( $tracking ),
 				'name' => _x( 'Tracking', 'Action', 'geditorial-wc-postal' ), // NOTE: can not use image tag, the name will be escaped upon rendering
 			];
@@ -198,7 +198,7 @@ class WcPostal extends gEditorial\Module
 			echo HTML::tag( 'a', [
 				'href'   => $this->_service_url( $tracking ),
 				'title'  => $this->get_setting_fallback( 'admin_button_title', _x( 'Tracking Package', 'Setting Default', 'geditorial-wc-postal' ) ),
-				'class'  => [ 'button', $this->classs() ],
+				'class'  => [ 'button', $this->classs( 'tracking' ) ],
 				'target' => '_blank',
 			], HTML::img( $this->_service_icon() ) );
 	}

@@ -11,6 +11,8 @@ use geminorum\gEditorial\Core\Text;
 class WcWidgets extends gEditorial\Module
 {
 
+	protected $textdomain_frontend = FALSE;
+
 	public static function module()
 	{
 		return [

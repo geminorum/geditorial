@@ -261,8 +261,8 @@ class Terms extends gEditorial\Module
 				add_filter( 'manage_edit-'.$screen->taxonomy.'_sortable_columns', [ $this, 'sortable_columns' ] );
 
 				// FIXME: add empty all term meta card for each field
-				// $this->filter( 'taxonomy_tab_extra_content', 2, 9, FALSE, 'gnetwork' );
-				// $this->filter( 'taxonomy_handle_tab_content_actions', 1, 8, FALSE, 'gnetwork' );
+				// $this->action( 'taxonomy_tab_extra_content', 2, 9, FALSE, 'gnetwork' );
+				// $this->action( 'taxonomy_handle_tab_content_actions', 1, 8, FALSE, 'gnetwork' );
 
 				$this->filter( 'taxonomy_export_term_meta', 2, 8, FALSE, 'gnetwork' );
 				$this->filter( 'taxonomy_bulk_actions', 2, 14, FALSE, 'gnetwork' );

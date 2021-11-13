@@ -140,7 +140,7 @@ class ShortCode extends Main
 	{
 		$args = self::atts( [
 			'item_link'     => TRUE,
-			'item_text'     => NULL,  // callback or use %s for post title
+			'item_text'     => NULL, // callback or use %s for post title
 			'item_wrap'     => '', // use %s for item title / or html tag
 			'item_title'    => '', // use %s for post title
 			'item_title_cb' => FALSE,
@@ -168,7 +168,7 @@ class ShortCode extends Main
 			$title = $args['item_text'];
 
 		else
-			$title = '';
+			$title = ''; // FIXME: WTF: better to bail here!
 
 		if ( $term->count && $args['item_link'] )
 			$item = HTML::tag( 'a', [

@@ -13,6 +13,8 @@ use geminorum\gEditorial\WordPress\Taxonomy;
 class WcRelated extends gEditorial\Module
 {
 
+	protected $textdomain_frontend = FALSE;
+
 	public static function module()
 	{
 		return [

@@ -122,6 +122,7 @@ class Attachments extends gEditorial\Module
 		return ltrim( rtrim( $prefix, '/' ), '/' );
 	}
 
+	// TODO: add custom endpoint like `thumbnail` or `cover` for posttype thumbnail
 	private function add_rewrite_rule()
 	{
 		add_rewrite_rule(
@@ -202,6 +203,8 @@ class Attachments extends gEditorial\Module
 				'parent' => $this->classs(),
 				'href'   => wp_get_attachment_url( $attachment->ID ),
 			];
+
+			// TODO: add submenu for: title/caption/description/sizes
 		}
 	}
 
