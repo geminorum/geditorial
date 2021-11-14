@@ -31,10 +31,9 @@ class SearchTerms extends gEditorial\Widget
 		if ( ! $criteria = trim( get_query_var( 's' ) ) )
 			return;
 
-		if ( empty( $instance['taxonomy'] ) || 'all' == $instance['taxonomy'] )
-			$taxonomies = get_taxonomies( [ 'public' => TRUE, 'show_ui' => TRUE ] );
-		else
-			$taxonomies = [ $instance['taxonomy'] ];
+		$taxonomies = empty( $instance['taxonomies'] )
+			? get_taxonomies( [ 'public' => TRUE, 'show_ui' => TRUE ] )
+			: (array) $instance['taxonomies'];
 
 		if ( ! empty( $instance['strip_hashtags'] ) )
 			$criteria = preg_replace_callback( "/^#(.*)$/mu", function ( $matches ) {
@@ -92,7 +91,7 @@ class SearchTerms extends gEditorial\Widget
 		$this->form_title_image( $instance );
 		$this->form_class( $instance );
 
-		$this->form_taxonomy( $instance );
+			$this->form_taxonomies( $instance );
 
 		echo '<div class="-group">';
 		$this->form_checkbox( $instance, FALSE, 'prefix_with_name', _x( 'Prefix Terms with Taxonomy Name', 'Widget: Setting', 'geditorial-widgets' ) );
