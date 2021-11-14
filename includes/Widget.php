@@ -243,6 +243,9 @@ class Widget extends \WP_Widget
 			'context'    => 'key',
 			'image_size' => 'key',
 
+			'posttypes'  => 'keys',
+			'taxonomies' => 'keys',
+
 			'post_id'     => 'digit',
 			'page_id'     => 'digit',
 			'term_id'     => 'digit',
@@ -251,7 +254,7 @@ class Widget extends \WP_Widget
 			'avatar_size' => 'digit',
 		], $extra );
 
-		$instance   = $old;
+		$instance   = []; // $old; // apparently all necessary fields will pass on the new
 		$unfiltered = current_user_can( 'unfiltered_html' );
 
 		foreach ( $fields as $field => $type ) {
@@ -261,6 +264,7 @@ class Widget extends \WP_Widget
 
 			switch ( $type ) {
 				case 'key':   $instance[$field] = strip_tags( $new[$field] ); break;
+				case 'keys':  $instance[$field] = array_keys( array_filter( $new[$field] ) ); break;
 				case 'digit': $instance[$field] = (int) $new[$field]; break;
 				case 'text':  $instance[$field] = sanitize_text_field( $new[$field] ); break;
 				case 'url':   $instance[$field] = strip_tags( $new[$field] ); break;
