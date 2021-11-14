@@ -98,7 +98,7 @@ class Recount extends gEditorial\Module
 			return $columns;
 
 		$columns = Arraay::insert( $columns, [
-			$this->classs() => ( empty( $columns['posts'] ) ? _x( 'Count', 'Number/count of items' ) : $columns['posts'] ),
+			$this->classs() => $this->get_column_title_icon( 'posts', $taxonomy, ( empty( $columns['posts'] ) ? _x( 'Count', 'Number/count of items' ) : $columns['posts'] ) ),
 		], 'posts', 'after' );
 
 		unset( $columns['posts'] );
