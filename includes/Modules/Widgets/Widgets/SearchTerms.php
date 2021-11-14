@@ -86,26 +86,30 @@ class SearchTerms extends gEditorial\Widget
 	{
 		$this->before_form( $instance );
 
-		$this->form_title( $instance );
-		$this->form_title_link( $instance );
-		$this->form_title_image( $instance );
-		$this->form_class( $instance );
-
+		$this->form_open_group();
 			$this->form_taxonomies( $instance );
+		$this->form_close_group( _x( 'Select none for all taxonomies.', 'Widget: Setting', 'geditorial-widgets' ) );
 
-		echo '<div class="-group">';
+		$this->form_open_group( 'config' );
 		$this->form_checkbox( $instance, FALSE, 'prefix_with_name', _x( 'Prefix Terms with Taxonomy Name', 'Widget: Setting', 'geditorial-widgets' ) );
 		$this->form_checkbox( $instance, FALSE, 'strip_hashtags', _x( 'Strip Hash-tags', 'Widget: Setting', 'geditorial-widgets' ) );
 		$this->form_checkbox( $instance, FALSE, 'exclude_defaults', _x( 'Exclude Default Terms', 'Widget: Setting', 'geditorial-widgets' ) );
 		$this->form_checkbox( $instance, FALSE, 'include_empty', _x( 'Include Empty Terms', 'Widget: Setting', 'geditorial-widgets' ) );
 		$this->form_checkbox( $instance, FALSE, 'hide_on_paged', _x( 'Hide on Paged Results', 'Widget: Setting', 'geditorial-widgets' ) );
-		echo '</div>';
+		$this->form_close_group();
 
-		echo '<div class="-group">';
+		$this->form_open_group( 'heading' );
+		$this->form_title( $instance );
+		$this->form_title_link( $instance );
+		$this->form_title_image( $instance );
+		$this->form_class( $instance );
+		$this->form_close_group();
+
+		$this->form_open_group( 'customs' );
 		$this->form_open_widget( $instance );
 		$this->form_after_title( $instance );
 		$this->form_close_widget( $instance );
-		echo '</div>';
+		$this->form_close_group();
 
 		$this->after_form( $instance );
 	}
