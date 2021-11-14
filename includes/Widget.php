@@ -334,6 +334,28 @@ class Widget extends \WP_Widget
 		echo $html;
 	}
 
+	public function form_open_group( $title = FALSE )
+	{
+		echo '<div class="-group">';
+
+		if ( ! $title )
+			return;
+
+		switch ( $title ) {
+			case 'heading': HTML::h4( _x( 'Heading', 'Widget Core: Group', 'geditorial' ), '-title' ); break;
+			case 'misc'   : HTML::h4( _x( 'Miscellaneous', 'Widget Core: Group', 'geditorial' ), '-title' ); break;
+			case 'customs': HTML::h4( _x( 'Customs', 'Widget Core: Group', 'geditorial' ), '-title' ); break;
+			case 'config' : HTML::h4( _x( 'Configuration', 'Widget Core: Group', 'geditorial' ), '-title' ); break;
+			default: HTML::h4( $title, '-title' ); break;
+		}
+	}
+
+	public function form_close_group( $desc = FALSE )
+	{
+		HTML::desc( $desc );
+		echo '</div>';
+	}
+
 	public function form_content( $instance, $default = '', $field = 'content', $label = NULL )
 	{
 		if ( is_null( $label ) )
