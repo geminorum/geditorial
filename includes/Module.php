@@ -2970,6 +2970,11 @@ class Module extends Base
 		if ( is_null( $posttypes ) )
 			$posttypes = $this->posttypes();
 
+		// core filter @since WP 5.9.0
+		add_filter( 'post_thumbnail_id', function( $thumbnail_id, $post ) use ( $posttypes ) {
+			return $this->get_paired_fallback_thumbnail_id( $thumbnail_id, $post, $posttypes );
+		}, 8, 2 );
+
 		add_filter( 'geditorial_get_post_thumbnail_id', function( $thumbnail_id, $post_id ) use ( $posttypes ) {
 			return $this->get_paired_fallback_thumbnail_id( $thumbnail_id, $post_id, $posttypes );
 		}, 8, 2 );
