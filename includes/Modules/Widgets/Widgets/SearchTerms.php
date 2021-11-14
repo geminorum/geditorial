@@ -57,6 +57,7 @@ class SearchTerms extends gEditorial\Widget
 		if ( empty( $query->terms ) )
 			return;
 
+		$names = [];
 		$title = count( $taxonomies ) > 1;
 
 		$this->before_widget( $args, $instance );
@@ -66,14 +67,20 @@ class SearchTerms extends gEditorial\Widget
 		foreach ( $query->terms as $term ) {
 			echo '<li>';
 
+			if ( empty( $names[$term->taxonomy] ) )
+				$names[$term->taxonomy] = get_taxonomy( $term->taxonomy )->labels->singular_name;
+
 			if ( ! empty( $instance['prefix_with_name'] ) )
-				printf( '%s:&nbsp;', get_taxonomy( $term->taxonomy )->labels->singular_name );
+				printf( '%s:&nbsp;', $names[$term->taxonomy] );
 
 			echo HTML::tag( 'a', [
 				'href'  => get_term_link( $term->term_id, $term->taxonomy ),
-				'title' => $title && empty( $instance['prefix_with_name'] ) ? get_taxonomy( $term->taxonomy )->labels->singular_name : FALSE,
+				'title' => $title && empty( $instance['prefix_with_name'] ) ? $names[$term->taxonomy] : FALSE,
 				'class' => [ '-term', '-taxonomy-'.$term->taxonomy ],
 			], sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' ) );
+
+			if ( ! empty( $instance['tax_name_hint'] ) )
+				printf( '&nbsp;(%s)', $names[$term->taxonomy] );
 
 			echo '</li>';
 		}
@@ -92,6 +99,7 @@ class SearchTerms extends gEditorial\Widget
 
 		$this->form_open_group( 'config' );
 		$this->form_checkbox( $instance, FALSE, 'prefix_with_name', _x( 'Prefix Terms with Taxonomy Name', 'Widget: Setting', 'geditorial-widgets' ) );
+		$this->form_checkbox( $instance, FALSE, 'tax_name_hint', _x( 'Append Taxonomy Name after Terms', 'Widget: Setting', 'geditorial-widgets' ) );
 		$this->form_checkbox( $instance, FALSE, 'strip_hashtags', _x( 'Strip Hash-tags', 'Widget: Setting', 'geditorial-widgets' ) );
 		$this->form_checkbox( $instance, FALSE, 'exclude_defaults', _x( 'Exclude Default Terms', 'Widget: Setting', 'geditorial-widgets' ) );
 		$this->form_checkbox( $instance, FALSE, 'include_empty', _x( 'Include Empty Terms', 'Widget: Setting', 'geditorial-widgets' ) );
@@ -120,6 +128,7 @@ class SearchTerms extends gEditorial\Widget
 
 		return $this->handle_update( $new, $old, [
 			'prefix_with_name',
+			'tax_name_hint',
 			'strip_hashtags',
 			'exclude_defaults',
 			'include_empty',
