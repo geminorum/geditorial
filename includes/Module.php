@@ -247,20 +247,20 @@ class Module extends Base
 		if ( ! is_admin() )
 			return;
 
+		$prefix   = self::sanitize_base( $this->key );
+		$callback = static function( $key, $value ) use ( $prefix ) {
+			return [ sprintf( '%s-%s.php', $prefix, $key ) => $value ];
+		};
+
 		foreach ( $this->get_module_templates() as $constant => $templates ) {
 
 			if ( empty( $templates ) )
 				continue;
 
-			$list = [];
-			$type = $this->constant( $constant );
-
-			foreach ( $templates as $slug => $title )
-				$list[$this->key.'-'.$slug.'.php'] = $title;
-
-			add_filter( 'theme_'.$type.'_templates', static function( $filtered ) use ( $list ) {
-				return array_merge( $filtered, $list );
-			} );
+			$this->filter_set(
+				sprintf( 'theme_%s_templates', $this->constant( $constant ) ),
+				Arraay::mapAssoc( $callback, $templates )
+			);
 		}
 	}
 
