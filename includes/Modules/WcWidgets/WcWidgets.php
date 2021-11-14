@@ -10,6 +10,7 @@ use geminorum\gEditorial\Core\Text;
 
 class WcWidgets extends gEditorial\Module
 {
+	protected $deafults = [ 'widget_support' => TRUE ];
 
 	protected $textdomain_frontend = FALSE;
 
@@ -85,14 +86,6 @@ class WcWidgets extends gEditorial\Module
 		}
 
 		return (array) $this->filters( 'widget_action_hooks', $list );
-	}
-
-	protected function setup( $args = [] )
-	{
-		parent::setup( $args );
-
-		// override checks!
-		$this->action( 'widgets_init' );
 	}
 
 	public function widgets_init()
