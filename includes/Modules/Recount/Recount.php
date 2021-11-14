@@ -67,14 +67,21 @@ class Recount extends gEditorial\Module
 		add_filter( 'manage_'.$taxonomy.'_custom_column', [ $this, 'custom_taxonomy_column' ], 20, 3 );
 	}
 
-	// CAUTION: used beside the filter
+	// TODO: maybe it's better to override the taxonomy callback for count
 	public function edit_term_taxonomy( $term_id, $taxonomy )
+	{
+		$this->_do_recount_term( $term_id );
+	}
+
+	public function _do_recount_term( $term_id )
 	{
 		global $wpdb;
 
 		$count = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$wpdb->term_relationships} WHERE term_taxonomy_id = %d", $term_id ) );
 
 		update_term_meta( $term_id, 'count', $count );
+
+		return $count;
 	}
 
 	public function taxonomy_term_count( $count, $term, $taxonomy )
@@ -157,7 +164,7 @@ class Recount extends gEditorial\Module
 			if ( self::isError( $term ) )
 				continue;
 
-			$this->edit_term_taxonomy( (int) $term_id, $taxonomy );
+			$this->_do_recount_term( (int) $term_id );
 		}
 
 		return TRUE;
@@ -195,7 +202,7 @@ class Recount extends gEditorial\Module
 			] );
 
 			foreach ( $terms as $term_id ) {
-				$this->edit_term_taxonomy( (int) $term_id, $taxonomy );
+				$this->_do_recount_term( (int) $term_id );
 				$count++;
 			}
 
