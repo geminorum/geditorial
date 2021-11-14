@@ -934,4 +934,36 @@ class Helper extends Main
 
 		echo $html;
 	}
+
+	public static function getCacheDIR( $sub, $base = NULL )
+	{
+		if ( ! GEDITORIAL_CACHE_DIR )
+			return FALSE;
+
+		if ( is_null( $base ) )
+			$base = self::BASE;
+
+		$path = File::normalize( GEDITORIAL_CACHE_DIR.( $base ? '/'.$base.'/' : '/' ).$sub );
+
+		if ( file_exists( $path ) )
+			return URL::untrail( $path );
+
+		if ( ! wp_mkdir_p( $path ) )
+			return FALSE;
+
+		File::putIndexHTML( $path, GEDITORIAL_DIR.'index.html' );
+
+		return URL::untrail( $path );
+	}
+
+	public static function getCacheURL( $sub, $base = NULL )
+	{
+		if ( ! GEDITORIAL_CACHE_DIR ) // correct, we check for path constant
+			return FALSE;
+
+		if ( is_null( $base ) )
+			$base = self::BASE;
+
+		return URL::untrail( GEDITORIAL_CACHE_URL.( $base ? '/'.$base.'/' : '/' ).$sub );
+	}
 }
