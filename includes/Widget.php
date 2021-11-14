@@ -496,6 +496,33 @@ class Widget extends \WP_Widget
 		HTML::label( _x( 'PostType:', 'Widget Core', 'geditorial' ).$html, $this->get_field_id( $field ) );
 	}
 
+	public function form_taxonomies( $instance, $default = '', $field = 'taxonomies', $posttype_field = 'post_type', $posttype_default = 'any' )
+	{
+		$type  = isset( $instance[$posttype_field] ) ? $instance[$posttype_field] : $posttype_default;
+		$taxes = isset( $instance[$field] ) ? $instance[$field] : $default;
+
+		$name = $this->get_field_name( $field );
+		$id   = $this->get_field_id( $field );
+
+		echo '<div class="-label">'._x( 'Taxonomies:', 'Widget Core', 'geditorial' ).'</div>';
+		echo '<div class="wp-tab-panel"><ul>';
+
+		foreach ( Taxonomy::get( 0, [], $type ) as $value_name => $value_title ) {
+
+			$html = HTML::tag( 'input', [
+				'type'    => 'checkbox',
+				'id'      => $id.'-'.$value_name,
+				'name'    => $name.'['.$value_name.']',
+				'checked' => in_array( $value_name, (array) $taxes ),
+				'value'   => '1',
+			] );
+
+			HTML::label( $html.'&nbsp;'.$value_title, $id.'-'.$value_name, 'li' );
+		}
+
+		echo '</ul></div>';
+	}
+
 	public function form_taxonomy( $instance, $default = 'all', $field = 'taxonomy', $posttype_field = 'post_type', $posttype_default = 'any', $option_all = 'all' )
 	{
 		$html = '';
