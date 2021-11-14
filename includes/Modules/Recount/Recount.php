@@ -63,8 +63,8 @@ class Recount extends gEditorial\Module
 
 	private function _edit_tags_screen( $taxonomy )
 	{
-		add_filter( 'manage_edit-'.$taxonomy.'_columns', [ $this, 'manage_taxonomy_columns' ], 6 );
-		add_filter( 'manage_'.$taxonomy.'_custom_column', [ $this, 'custom_taxonomy_column' ], 10, 3 );
+		add_filter( 'manage_edit-'.$taxonomy.'_columns', [ $this, 'manage_taxonomy_columns' ], 12 );
+		add_filter( 'manage_'.$taxonomy.'_custom_column', [ $this, 'custom_taxonomy_column' ], 20, 3 );
 	}
 
 	// CAUTION: used beside the filter
