@@ -99,11 +99,12 @@ class Widgets extends gEditorial\Module
 	private function get_widgets()
 	{
 		return [
-			'Custom-HTML'   => 'CustomHTML',
-			'GCal-Events'   => 'GCalEvents',
-			'Search-Terms'  => 'SearchTerms',
-			'WPRest-Posts'  => 'WPRestPosts',
-			'WPRest-Single' => 'WPRestSingle',
+			'Custom-HTML'    => 'CustomHTML',
+			'GCal-Events'    => 'GCalEvents',
+			'Search-Terms'   => 'SearchTerms',
+			'Namesake-Terms' => 'NamesakeTerms',
+			'WPRest-Posts'   => 'WPRestPosts',
+			'WPRest-Single'  => 'WPRestSingle',
 		];
 	}
 
