@@ -11,6 +11,7 @@ use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\Core\Arraay;
 use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\HTML;
+use geminorum\gEditorial\Core\ISBN;
 use geminorum\gEditorial\Core\URL;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\PostType;
@@ -495,8 +496,8 @@ class Book extends gEditorial\Module
 	public function get_isbn_link( $isbn, $extra = [] )
 	{
 		return get_option( 'permalink_structure' )
-			? add_query_arg( $extra, sprintf( '%s/%s/%s', URL::untrail( get_bloginfo( 'url' ) ), $this->constant( 'isbn_query' ), ModuleHelper::getISBN( $isbn ) ) )
-			: add_query_arg( array_merge( [ $this->constant( 'isbn_query' ) => ModuleHelper::getISBN( $isbn ) ], $extra ), get_bloginfo( 'url' ) );
+			? add_query_arg( $extra, sprintf( '%s/%s/%s', URL::untrail( get_bloginfo( 'url' ) ), $this->constant( 'isbn_query' ), ISBN::prep( $isbn ) ) )
+			: add_query_arg( array_merge( [ $this->constant( 'isbn_query' ) => ISBN::prep( $isbn ) ], $extra ), get_bloginfo( 'url' ) );
 	}
 
 	public function get_isbn( $post = NULL )
@@ -1006,7 +1007,7 @@ class Book extends gEditorial\Module
 	public function meta_sanitize_posttype_field( $sanitized, $field, $post, $data )
 	{
 		switch ( $field['name'] ) {
-			case 'publication_isbn': return trim( ModuleHelper::sanitizeISBN( $data, TRUE ) );
+			case 'publication_isbn': return trim( ISBN::sanitize( $data, TRUE ) );
 		}
 
 		return $sanitized;

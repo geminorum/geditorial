@@ -4,6 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core\HTML;
+use geminorum\gEditorial\Core\ISBN;
 use geminorum\gEditorial\Helpers\Book as ModuleHelper;
 
 class ModuleTemplate extends gEditorial\Template
@@ -53,9 +54,9 @@ class ModuleTemplate extends gEditorial\Template
 		if ( ! $isbn = self::getMetaFieldRaw( 'publication_isbn', $args['id'], 'meta', TRUE ) )
 			return $args['default'];
 
-		$isbn = ModuleHelper::sanitizeISBN( $isbn, TRUE );
+		$isbn = ISBN::sanitize( $isbn, TRUE );
 
-		if ( $args['validate'] && ! ModuleHelper::validateISBN( $isbn ) )
+		if ( $args['validate'] && ! ISBN::validate( $isbn ) )
 			return $args['default'];
 
 		$args = self::atts( [
