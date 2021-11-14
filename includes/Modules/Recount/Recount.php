@@ -118,12 +118,12 @@ class Recount extends gEditorial\Module
 		if ( $column_name != $this->classs()  )
 			return $string;
 
-		$meta = get_term_meta( (int) $term_id, 'count', TRUE );
+		$count = get_term_meta( (int) $term_id, 'count', TRUE );
 
-		if ( FALSE === $meta )
-			return Helper::htmlEmpty();
+		if ( FALSE === $count )
+			$count = $this->_do_recount_term( (int) $term_id );
 
-		$html = Helper::htmlCount( (int) $meta );
+		$html = Helper::htmlCount( (int) $count );
 		$edit = PostType::getEditLinkByTerm(
 			(int) $term_id,
 			self::req( 'post_type', 'post' ),
