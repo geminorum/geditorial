@@ -98,11 +98,24 @@ class Plugin
 	{
 		load_plugin_textdomain( 'geditorial', FALSE, 'geditorial/languages' );
 
+		$this->define_constants();
 		$this->load_modules();
 		$this->load_options();
 		$this->init_modules();
 
 		// Relation::setup();
+	}
+
+	private function define_constants()
+	{
+		$constants = [
+			'GEDITORIAL_CACHE_DIR' => WP_CONTENT_DIR.'/cache', // FALSE to disable
+			'GEDITORIAL_CACHE_URL' => WP_CONTENT_URL.'/cache',
+			'GEDITORIAL_CACHE_TTL' => 60 * 60 * 12, // 12 hours
+		];
+
+		foreach ( $constants as $key => $val )
+			defined( $key ) || define( $key, $val );
 	}
 
 	private function load_modules()
