@@ -2700,8 +2700,8 @@ class Module extends Base
 
 		$object = register_post_type( $posttype, $args );
 
-		if ( is_wp_error( $object ) )
-			return FALSE;
+		if ( self::isError( $object ) )
+			return $this->log( 'CRITICAL', $object->get_error_message(), $args );
 
 		if ( ! $block_editor )
 			add_filter( 'use_block_editor_for_post_type', static function( $edit, $type ) use ( $posttype ) {
@@ -2872,8 +2872,8 @@ class Module extends Base
 
 		$object = register_taxonomy( $taxonomy, $posttypes, $args );
 
-		if ( is_wp_error( $object ) )
-			return FALSE;
+		if ( self::isError( $object ) )
+			return $this->log( 'CRITICAL', $object->get_error_message(), $args );
 
 		return $object;
 	}
@@ -5130,7 +5130,8 @@ class Module extends Base
 
 	protected function log( $level, $message = '', $context = [] )
 	{
-		do_action( 'gnetwork_logger_site_'.$level, $this->classs(), $message, $context );
+		do_action( 'gnetwork_logger_site_'.strtolower( $level ), $this->classs(), $message, $context );
+		return FALSE; // to help the caller!
 	}
 
 	protected function raise_resources( $context = 'import', $time_limit = 0 )
