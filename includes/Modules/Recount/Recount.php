@@ -37,7 +37,9 @@ class Recount extends gEditorial\Module
 	{
 		parent::init();
 
-		$this->action( 'edit_term_taxonomy', 10, 2 );
+		if ( ! $this->get_setting( 'thrift_mode' ) )
+			$this->action( 'edit_term_taxonomy', 10, 2 );
+
 		$this->filter( 'taxonomy_term_count', 3, 10, FALSE, 'gnetwork' );
 	}
 
