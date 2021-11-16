@@ -2843,15 +2843,21 @@ class Module extends Base
 			'query_var'            => $this->constant( $constant.'_query', $taxonomy ),
 			'rewrite'              => [
 
-				// we can use `cpt/tax` if cpt registered after the tax
+				// NOTE: we can use `example.com/cpt/tax` if cpt registered after the tax
 				// @REF: https://developer.wordpress.org/reference/functions/register_taxonomy/#comment-2274
-				'slug'       => $slug_base,
-				'with_front' => FALSE,
+
+				'slug'         => $slug_base,
+				'with_front'   => FALSE,
+				// 'hierarchical' => FALSE, // will set by `hierarchical` in args
+				// 'ep_mask'      => EP_NONE,
 			],
 
 			'show_in_rest' => $this->get_setting( 'restapi_support', TRUE ),
 			'rest_base'    => $this->constant( $constant.'_rest', $slug_base ),
 		] );
+
+		if ( is_array( $args['rewrite'] ) && ! array_key_exists( 'hierarchical', $args['rewrite'] ) )
+			$args['rewrite']['hierarchical'] = $args['hierarchical'];
 
 		if ( ! array_key_exists( 'update_count_callback', $args ) ) {
 
