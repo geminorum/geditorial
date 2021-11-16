@@ -30,6 +30,14 @@ class Recount extends gEditorial\Module
 	{
 		return [
 			'taxonomies_option' => 'taxonomies_option',
+			'_general' => [
+				[
+					'field'       => 'thrift_mode',
+					'type'        => 'disabled',
+					'title'       => _x( 'Thrift Mode', 'Setting Title', 'geditorial-recount' ),
+					'description' => _x( 'Delays counting till needed!', 'Setting Description', 'geditorial-recount' ),
+				],
+			],
 		];
 	}
 
@@ -72,7 +80,8 @@ class Recount extends gEditorial\Module
 	// TODO: maybe it's better to override the taxonomy callback for count
 	public function edit_term_taxonomy( $term_id, $taxonomy )
 	{
-		$this->_do_recount_term( $term_id );
+		if ( $this->taxonomy_supported( $taxonomy ) )
+			$this->_do_recount_term( $term_id );
 	}
 
 	public function _do_recount_term( $term_id )
