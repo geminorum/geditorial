@@ -171,19 +171,12 @@ class Audit extends gEditorial\Module
 	{
 		parent::init();
 
-		$taxonomy = $this->constant( 'audit_tax' );
-
 		$this->register_taxonomy( 'audit_tax', [
 			'public'             => FALSE,
 			'hierarchical'       => TRUE,
 			'show_in_quick_edit' => TRUE,
 			'show_in_rest'       => $this->role_can( 'assign' ), // QUESTION: what if auth by plugin
-		], NULL, [
-			'manage_terms' => 'manage_'.$taxonomy,
-			'edit_terms'   => 'edit_'.$taxonomy,
-			'delete_terms' => 'delete_'.$taxonomy,
-			'assign_terms' => 'assign_'.$taxonomy,
-		] );
+		], NULL, TRUE );
 
 		$this->filter( 'map_meta_cap', 4 );
 

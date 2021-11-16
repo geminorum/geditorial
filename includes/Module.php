@@ -2743,11 +2743,21 @@ class Module extends Base
 		return $labels;
 	}
 
-	public function get_taxonomy_caps( $caps, $posttypes )
+	protected function _get_taxonomy_caps( $taxonomy, $caps, $posttypes )
 	{
 		if ( is_array( $caps ) )
 			return $caps;
 
+		// custom capabilities
+		if ( TRUE === $caps )
+			return [
+				'manage_terms' => 'manage_'.$taxonomy,
+				'edit_terms'   => 'edit_'.$taxonomy,
+				'delete_terms' => 'delete_'.$taxonomy,
+				'assign_terms' => 'assign_'.$taxonomy,
+			];
+
+		// core default
 		if ( FALSE === $caps )
 			return [
 				'manage_terms' => 'manage_categories',
@@ -2829,7 +2839,7 @@ class Module extends Base
 			'show_in_quick_edit'   => FALSE,
 			'show_in_nav_menus'    => FALSE,
 			'show_tagcloud'        => FALSE,
-			'capabilities'         => $this->get_taxonomy_caps( $caps, $posttypes ),
+			'capabilities'         => $this->_get_taxonomy_caps( $taxonomy, $caps, $posttypes ),
 			'query_var'            => $this->constant( $constant.'_query', $taxonomy ),
 			'rewrite'              => [
 
