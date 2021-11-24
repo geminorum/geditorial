@@ -12,6 +12,18 @@ class WooCommerce extends Core\Base
 		return Core\WordPress::isPluginActive( 'woocommerce/woocommerce.php' );
 	}
 
+	public static function isActiveWoodMart()
+	{
+		if ( defined( 'WOODMART_CORE_VERSION' ) )
+			return TRUE;
+
+		// fallback/unnesseary db call
+		// if ( get_option( 'woodmart_is_activated' ) )
+		// 	return TRUE;
+
+		return FALSE;
+	}
+
 	public static function getProductPosttype()
 	{
 		return 'product';

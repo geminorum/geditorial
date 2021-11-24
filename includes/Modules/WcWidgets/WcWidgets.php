@@ -7,6 +7,7 @@ use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Core\Arraay;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Text;
+use geminorum\gEditorial\WordPress\WooCommerce;
 
 class WcWidgets extends gEditorial\Module
 {
@@ -73,7 +74,7 @@ class WcWidgets extends gEditorial\Module
 			],
 		];
 
-		if ( get_option( 'woodmart_is_activated' ) ) {
+		if ( WooCommerce::isActiveWoodMart() ) {
 			$list[] = [
 				'action'        => 'woodmart_shop_filters_area',
 				'title'         => _x( 'Woodmart: Shop Filters Area', 'Action Hook', 'geditorial-wc-widgets' ),

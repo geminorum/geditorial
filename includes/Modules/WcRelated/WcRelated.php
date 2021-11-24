@@ -9,6 +9,7 @@ use geminorum\gEditorial\Core\Text;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\Strings;
 use geminorum\gEditorial\WordPress\Taxonomy;
+use geminorum\gEditorial\WordPress\WooCommerce;
 
 class WcRelated extends gEditorial\Module
 {
@@ -130,7 +131,7 @@ class WcRelated extends gEditorial\Module
 
 			// TODO: support custom priority
 
-			if ( get_option( 'woodmart_is_activated' ) )
+			if ( WooCommerce::isActiveWoodMart() )
 				$this->action( 'woocommerce_after_sidebar', 0, 18, FALSE, 'woodmart' );
 
 			else
