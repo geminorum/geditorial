@@ -88,15 +88,15 @@ class WcRelated extends gEditorial\Module
 					'description' => _x( 'Enforces the visibility of out-of-stock items on related by attribute products.', 'Setting Description', 'geditorial-wc-related' ),
 				],
 				[
-					'field'  => 'related_by_attribute',
+					'field'  => 'related_by_taxonomy',
 					'type'   => 'object',
-					'title'  => _x( 'Related by Attribute', 'Setting Title', 'geditorial-wc-related' ),
+					'title'  => _x( 'Related by Taxonomy', 'Setting Title', 'geditorial-wc-related' ),
 					'values' => [
 						[
-							'field'       => 'attribute',
+							'field'       => 'taxonomy',
 							'type'        => 'text',
-							'title'       => _x( 'Attribute', 'Setting Title', 'geditorial-wc-related' ),
-							'description' => _x( 'Target attribute for related products.', 'Setting Description', 'geditorial-wc-related' ),
+							'title'       => _x( 'Taxonomy', 'Setting Title', 'geditorial-wc-related' ),
+							'description' => _x( 'Target taxonomy for related products.', 'Setting Description', 'geditorial-wc-related' ),
 							'field_class' => [ 'regular-text', 'code-text' ],
 							'dir'         => 'ltr',
 						],
@@ -138,7 +138,7 @@ class WcRelated extends gEditorial\Module
 			$this->filter( 'product_tabs', 1, 10, FALSE, 'woocommerce' );
 
 		// if not on tabs
-		else if ( ! empty( $this->get_setting( 'related_by_attribute' ) ) ) {
+		else if ( ! empty( $this->get_setting( 'related_by_taxonomy' ) ) ) {
 
 			// TODO: support custom priority
 
@@ -246,7 +246,7 @@ class WcRelated extends gEditorial\Module
 		if ( function_exists( 'woocommerce_upsell_display' ) )
 			woocommerce_upsell_display();
 
-		if ( ! empty( $this->get_setting( 'related_by_attribute' ) ) )
+		if ( ! empty( $this->get_setting( 'related_by_taxonomy' ) ) )
 			$this->after_single_product_summary();
 
 		if ( function_exists( 'woocommerce_output_related_products' ) )
@@ -276,27 +276,30 @@ class WcRelated extends gEditorial\Module
 
 		$product_id = $product->get_id();
 		$excludes   = $product->get_upsell_ids();
+		$columns    = apply_filters( 'woocommerce_related_products_columns', $args['columns'] );
 		$outofstock = $this->get_setting( 'hide_outofstock_attribute' ) ? '_return_string_yes' : '_return_string_no';
 
 		add_filter( 'pre_option_woocommerce_hide_out_of_stock_items', [ $this, $outofstock ] );
 
-		foreach ( $this->get_setting( 'related_by_attribute', [] ) as $index => $row ) {
+		foreach ( $this->get_setting( 'related_by_taxonomy', [] ) as $index => $row ) {
 
-			if ( empty( $row['attribute'] ) )
+			if ( empty( $row['taxonomy'] ) || ! taxonomy_exists( $row['taxonomy'] ) )
 				continue;
 
-			$attribute = Text::start( $row['attribute'], 'pa_' ) ? $row['attribute'] : sprintf( 'pa_%s', $row['attribute'] );
-
-			$related  = $this->get_related_products( $product_id, $attribute, $args['posts_per_page'], $excludes );
+			$related  = $this->get_related_products( $product_id, $row['taxonomy'], $args['posts_per_page'], $excludes );
 			$products = array_filter( array_map( 'wc_get_product', $related ), 'wc_products_array_filter_visible' );
 			$excludes = array_merge( $excludes, $related );
 
 			$args['related_products'] = wc_products_array_orderby( $products, $args['orderby'], $args['order'] );
 
-			wc_set_loop_prop( 'name', 'related_by_'.$attribute );
-			wc_set_loop_prop( 'columns', apply_filters( 'woocommerce_related_products_columns', $args['columns'] ) );
+			wc_set_loop_prop( 'name', 'related_by_'.$row['taxonomy'] );
+			wc_set_loop_prop( 'columns', $columns );
 
-			$heading  = sprintf( $row['heading'], wc_attribute_label( $attribute, $product ) );
+			$name = Text::start( $row['taxonomy'], 'pa_' )
+				? wc_attribute_label( $row['taxonomy'], $product )
+				: Taxonomy::object( $row['taxonomy'] )->labels->name;
+
+			$heading  = trim( sprintf( $row['heading'], $name ) );
 			$callback = static function() use ( $heading ) { return $heading; };
 
 			add_filter( 'woocommerce_product_related_products_heading', $callback );
