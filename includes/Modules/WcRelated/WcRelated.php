@@ -311,14 +311,14 @@ class WcRelated extends gEditorial\Module
 	}
 
 	// @REF: `wc_get_related_products()`
-	public function get_related_products( $product_id, $attribute, $limit = 5, $exclude_ids = [] )
+	public function get_related_products( $product_id, $taxonomy, $limit = 5, $exclude_ids = [] )
 	{
 		$product_id     = absint( $product_id );
 		$limit          = $limit >= -1 ? $limit : 5;
 		$exclude_ids    = array_merge( [ 0, $product_id ], $exclude_ids );
 		$transient_name = 'wc_related_'.$product_id;
 		$query_args     = http_build_query( [
-			'attribute'   => $attribute,
+			'taxonomy'    => $taxonomy,
 			'limit'       => $limit,
 			'exclude_ids' => $exclude_ids,
 		] );
@@ -330,7 +330,7 @@ class WcRelated extends gEditorial\Module
 		if ( FALSE === $related_products || count( $related_products ) < $limit ) {
 
 			$related_products   = [];
-			$attribute_terms = $this->filters( 'product_attribute_terms', wc_get_product_term_ids( $product_id, $attribute ), $product_id, $attribute );
+			$attribute_terms = $this->filters( 'product_attribute_terms', wc_get_product_term_ids( $product_id, $taxonomy ), $product_id, $taxonomy );
 
 			if ( ! empty( $attribute_terms ) ) {
 				$data_store    = \WC_Data_Store::load( 'product' );
@@ -350,7 +350,7 @@ class WcRelated extends gEditorial\Module
 			$related_products,
 			$product_id,
 			[
-				'attribute'    => $attribute,
+				'taxonomy'     => $taxonomy,
 				'limit'        => $limit,
 				'excluded_ids' => $exclude_ids,
 			]
