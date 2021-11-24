@@ -32,9 +32,10 @@ class WcRelated extends gEditorial\Module
 		return [
 			'_general' => [
 				[
-					'field'       => 'hide_out_of_stock',
+					'field'       => 'hide_outofstock_related',
 					'title'       => _x( 'Hide Out-of-Stock', 'Setting Title', 'geditorial-wc-related' ),
 					'description' => _x( 'Modifies the visibility of out-of-stock items on related products. Applicable only if out-of-stock items are not generally hidden.', 'Setting Description', 'geditorial-wc-related' ),
+					'default'     => '1',
 				],
 				[
 					'field'       => 'not_related_by_category',
@@ -81,6 +82,11 @@ class WcRelated extends gEditorial\Module
 				],
 			],
 			'_custom' => [
+				[
+					'field'       => 'hide_outofstock_attribute',
+					'title'       => _x( 'Hide Out-of-Stock', 'Setting Title', 'geditorial-wc-related' ),
+					'description' => _x( 'Enforces the visibility of out-of-stock items on related by attribute products.', 'Setting Description', 'geditorial-wc-related' ),
+				],
 				[
 					'field'  => 'related_by_attribute',
 					'type'   => 'object',
@@ -143,7 +149,7 @@ class WcRelated extends gEditorial\Module
 				$this->action( 'after_single_product_summary', 0, 18, FALSE, 'woocommerce' );
 		}
 
-		if ( $this->get_setting( 'hide_out_of_stock' ) )
+		if ( $this->get_setting( 'hide_outofstock_related', TRUE ) )
 			$this->_apply_hide_out_of_stock();
 	}
 
@@ -270,10 +276,9 @@ class WcRelated extends gEditorial\Module
 
 		$product_id = $product->get_id();
 		$excludes   = $product->get_upsell_ids();
-		$outofstock = $this->get_setting( 'hide_out_of_stock' ) && 'yes' !== get_option( 'woocommerce_hide_out_of_stock_items' );
+		$outofstock = $this->get_setting( 'hide_outofstock_attribute' ) ? '_return_string_yes' : '_return_string_no';
 
-		if ( $outofstock )
-			add_filter( 'pre_option_woocommerce_hide_out_of_stock_items', [ $this, '_return_string_yes' ] );
+		add_filter( 'pre_option_woocommerce_hide_out_of_stock_items', [ $this, $outofstock ] );
 
 		foreach ( $this->get_setting( 'related_by_attribute', [] ) as $index => $row ) {
 
@@ -299,8 +304,7 @@ class WcRelated extends gEditorial\Module
 			remove_filter( 'woocommerce_product_related_products_heading', $callback );
 		}
 
-		if ( $outofstock )
-			remove_filter( 'pre_option_woocommerce_hide_out_of_stock_items', [ $this, '_return_string_yes' ] );
+		remove_filter( 'pre_option_woocommerce_hide_out_of_stock_items', [ $this, $outofstock ] );
 	}
 
 	// @REF: `wc_get_related_products()`
