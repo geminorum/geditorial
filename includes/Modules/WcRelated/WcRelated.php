@@ -32,6 +32,11 @@ class WcRelated extends gEditorial\Module
 		return [
 			'_general' => [
 				[
+					'field'       => 'hide_out_of_stock',
+					'title'       => _x( 'Hide Out-of-Stock', 'Setting Title', 'geditorial-wc-related' ),
+					'description' => _x( 'Modifies the visibility of out-of-stock items on related products. Applicable only if out-of-stock items are not generally hidden.', 'Setting Description', 'geditorial-wc-related' ),
+				],
+				[
 					'field'       => 'not_related_by_category',
 					'type'        => 'disabled',
 					'title'       => _x( 'Releated by Categories', 'Setting Title', 'geditorial-wc-related' ),
@@ -137,6 +142,31 @@ class WcRelated extends gEditorial\Module
 			else
 				$this->action( 'after_single_product_summary', 0, 18, FALSE, 'woocommerce' );
 		}
+
+		if ( $this->get_setting( 'hide_out_of_stock' ) )
+			$this->_apply_hide_out_of_stock();
+	}
+
+	// the related output is on `20`
+	private function _apply_hide_out_of_stock( $priority = 20 )
+	{
+		// bail if already hidden
+		if ( 'yes' === get_option( 'woocommerce_hide_out_of_stock_items' ) )
+			return;
+
+		$before = function() { add_filter( 'pre_option_woocommerce_hide_out_of_stock_items', [ $this, '_return_string_yes' ] ); };
+		$after  = function() { remove_filter( 'pre_option_woocommerce_hide_out_of_stock_items', [ $this, '_return_string_yes' ] ); };
+
+		if ( WooCommerce::isActiveWoodMart() ) {
+
+			add_action( 'woodmart_woocommerce_after_sidebar', $before, ( $priority - 1 ) );
+			add_action( 'woodmart_woocommerce_after_sidebar', $after, ( $priority + 1 ) );
+
+		} else {
+
+			add_action( 'woocommerce_after_single_product_summary', $before, ( $priority - 1 ) );
+			add_action( 'woocommerce_after_single_product_summary', $after, ( $priority + 1 ) );
+		}
 	}
 
 	public function get_related_product_cat_terms( $term_ids, $product_id )
@@ -240,6 +270,10 @@ class WcRelated extends gEditorial\Module
 
 		$product_id = $product->get_id();
 		$excludes   = $product->get_upsell_ids();
+		$outofstock = $this->get_setting( 'hide_out_of_stock' ) && 'yes' !== get_option( 'woocommerce_hide_out_of_stock_items' );
+
+		if ( $outofstock )
+			add_filter( 'pre_option_woocommerce_hide_out_of_stock_items', [ $this, '_return_string_yes' ] );
 
 		foreach ( $this->get_setting( 'related_by_attribute', [] ) as $index => $row ) {
 
@@ -264,6 +298,9 @@ class WcRelated extends gEditorial\Module
 			wc_get_template( 'single-product/related.php', $args );
 			remove_filter( 'woocommerce_product_related_products_heading', $callback );
 		}
+
+		if ( $outofstock )
+			remove_filter( 'pre_option_woocommerce_hide_out_of_stock_items', [ $this, '_return_string_yes' ] );
 	}
 
 	// @REF: `wc_get_related_products()`
