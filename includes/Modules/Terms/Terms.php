@@ -158,7 +158,7 @@ class Terms extends gEditorial\Module
 	protected function prep_fields_for_settings( $fields = NULL )
 	{
 		if ( is_null( $fields ) )
-			$fields = $this->supported;
+			$fields = $this->_get_supported_raw();
 
 		$list = [];
 
@@ -251,7 +251,7 @@ class Terms extends gEditorial\Module
 				wp_enqueue_media();
 
 				$this->enqueue_asset_js( [
-					'customs' => array_diff( $fields, $this->supported ),
+					'customs' => array_diff( $fields, $this->_get_supported_raw( FALSE ) ),
 					'strings' => $this->strings['js'],
 				], NULL, [ 'jquery', 'media-upload' ] );
 			}
@@ -319,12 +319,17 @@ class Terms extends gEditorial\Module
 		add_filter( 'manage_'.$taxonomy.'_custom_column', [ $this, 'custom_column' ], 10, 3 );
 	}
 
+	private function _get_supported_raw( $filtred = TRUE )
+	{
+		return $filtred ? $this->filters( 'supported_raw', $this->supported ) : $this->supported;
+	}
+
 	// FALSE for all
 	private function get_supported( $taxonomy = FALSE )
 	{
 		$list = [];
 
-		foreach ( $this->supported as $field )
+		foreach ( $this->_get_supported_raw() as $field )
 			if ( FALSE === $taxonomy || $this->in_setting( $taxonomy, 'term_'.$field ) )
 				$list[] = $field;
 
@@ -336,7 +341,7 @@ class Terms extends gEditorial\Module
 	{
 		$list = [];
 
-		foreach ( $this->supported as $field )
+		foreach ( $this->_get_supported_raw() as $field )
 			if ( FALSE === $taxonomy || $this->in_setting( $taxonomy, 'term_'.$field ) )
 				$list[$field] = $this->strings['titles'][$field];
 
