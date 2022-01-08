@@ -38,9 +38,14 @@ class NamesakeTerms extends gEditorial\Widget
 		if ( ! in_array( $term->taxonomy, $taxonomies, TRUE ) )
 			return;
 
-		$criteria = sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' ); // WTF: if the name changed on filter?!
-		$search   = empty( $instance['name_like_only'] ) ? 'search' : 'name__like';
-		$exclude  = [ $term->term_id ]; // exclude only the current not the entire taxonomy
+		$criteria = sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' );
+		$criteria = self::filters( 'criteria', $criteria, $instance, $args, $term );
+
+		if ( ! $criteria )
+			return;
+
+		$search  = empty( $instance['name_like_only'] ) ? 'search' : 'name__like';
+		$exclude = [ $term->term_id ]; // exclude only the current not the entire taxonomy
 
 		if ( ! empty( $instance['exclude_defaults'] ) )
 			foreach ( $taxonomies as $taxonomy )
