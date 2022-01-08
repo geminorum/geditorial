@@ -37,6 +37,11 @@ class Recount extends gEditorial\Module
 					'title'       => _x( 'Thrift Mode', 'Setting Title', 'geditorial-recount' ),
 					'description' => _x( 'Delays counting till needed!', 'Setting Description', 'geditorial-recount' ),
 				],
+				[
+					'field'       => 'count_on_display',
+					'title'       => _x( 'Count on Display', 'Setting Title', 'geditorial-recount' ),
+					'description' => _x( 'Tries to re-count posts on empty data display.', 'Setting Description', 'geditorial-recount' ),
+				],
 			],
 		];
 	}
@@ -134,8 +139,11 @@ class Recount extends gEditorial\Module
 
 		$count = get_term_meta( (int) $term_id, 'count', TRUE );
 
-		if ( FALSE === $count )
+		if ( FALSE === $count && $this->get_setting( 'count_on_display' ) )
 			$count = $this->_do_recount_term( (int) $term_id );
+
+		if ( FALSE === $count )
+			return Helper::htmlEmpty();
 
 		$html = Helper::htmlCount( (int) $count );
 		$edit = PostType::getEditLinkByTerm(
