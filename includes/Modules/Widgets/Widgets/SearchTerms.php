@@ -28,8 +28,10 @@ class SearchTerms extends gEditorial\Widget
 		if ( ! is_search() || ( ! empty( $instance['hide_on_paged'] ) && is_paged() ) )
 			return;
 
-		// avoid filtering
-		if ( ! $criteria = trim( get_query_var( 's' ) ) )
+		$criteria = trim( get_query_var( 's' ) ); // avoid core filtering
+		$criteria = self::filters( 'criteria', $criteria, $instance, $args );
+
+		if ( ! $criteria )
 			return;
 
 		$taxonomies = empty( $instance['taxonomies'] )
