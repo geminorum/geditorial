@@ -164,8 +164,8 @@ class Terms extends gEditorial\Module
 
 		foreach ( $fields as $field ) {
 
-			$name = $this->get_string( $field, FALSE, 'titles' );
-			$desc = $this->get_string( $field, FALSE, 'descriptions', NULL );
+			$name = $this->get_supported_field_title( $field, FALSE );
+			$desc = $this->get_supported_field_desc( $field, FALSE );
 
 			/* translators: %s: field name */
 			$title = sprintf( _x( 'Term %s', 'Setting Title', 'geditorial-terms' ), $name );
