@@ -354,6 +354,12 @@ class Terms extends gEditorial\Module
 		return $this->filters( 'supported_field_metakey', $field, $field, $taxonomy );
 	}
 
+	// by default the metatype is the same as the field
+	private function get_supported_field_metatype( $field, $taxonomy )
+	{
+		return $this->filters( 'supported_field_metatype', $field, $field, $taxonomy );
+	}
+
 	private function get_supported_taxonomies( $field )
 	{
 		return $this->filters( 'supported_field_taxonomies', $this->get_setting( 'term_'.$field ), $field );
@@ -544,10 +550,11 @@ class Terms extends gEditorial\Module
 	// TODO: use readonly inputs on non-columns
 	private function display_form_field( $field, $taxonomy, $term, $column = TRUE )
 	{
-		$html    = $meta = '';
-		$metakey = $this->get_supported_metakey( $field, $taxonomy );
+		$html     = $meta = '';
+		$metakey  = $this->get_supported_metakey( $field, $taxonomy );
+		$metatype = $this->get_supported_field_metatype( $field, $taxonomy );
 
-		switch ( $field ) {
+		switch ( $metatype ) {
 
 			case 'order':
 
@@ -771,7 +778,7 @@ class Terms extends gEditorial\Module
 
 		}
 
-		echo $this->filters( 'supported_field_column', $html, $field, $taxonomy, $term, $meta, $metakey );
+		echo $this->filters( 'supported_field_column', $html, $field, $taxonomy, $term, $meta, $metakey, $metatype );
 	}
 
 	private function field_empty( $field, $value = '0', $column = TRUE )
@@ -869,12 +876,13 @@ class Terms extends gEditorial\Module
 
 	private function form_field( $field, $taxonomy, $term = FALSE )
 	{
-		$html    = '';
-		$term_id = empty( $term->term_id ) ? 0 : $term->term_id;
-		$metakey = $this->get_supported_metakey( $field, $taxonomy );
-		$meta    = get_term_meta( $term_id, $metakey, TRUE );
+		$html     = '';
+		$term_id  = empty( $term->term_id ) ? 0 : $term->term_id;
+		$metakey  = $this->get_supported_metakey( $field, $taxonomy );
+		$metatype = $this->get_supported_field_metatype( $field, $taxonomy );
+		$meta     = get_term_meta( $term_id, $metakey, TRUE );
 
-		switch ( $field ) {
+		switch ( $metatype ) {
 
 			case 'image':
 
@@ -1055,9 +1063,10 @@ class Terms extends gEditorial\Module
 
 	private function quickedit_field( $field, $taxonomy )
 	{
-		$html = '';
+		$html     = '';
+		$metatype = $this->get_supported_field_metatype( $field, $taxonomy );
 
-		switch ( $field ) {
+		switch ( $metatype ) {
 
 			case 'image':
 
@@ -1161,7 +1170,7 @@ class Terms extends gEditorial\Module
 				$html.= '<input type="text" class="ptitle" name="term-'.$field.'" value="" />';
 		}
 
-		echo $this->filters( 'supported_field_quickedit', $html, $field, $taxonomy );
+		echo $this->filters( 'supported_field_quickedit', $html, $field, $taxonomy, $metatype );
 	}
 
 	public function adminbar_init( &$nodes, $parent )
@@ -1237,9 +1246,10 @@ class Terms extends gEditorial\Module
 					'parent' => $node['id'],
 				];
 
-				$metakey = $this->get_supported_metakey( $field, $term->taxonomy );
+				$metakey  = $this->get_supported_metakey( $field, $term->taxonomy );
+				$metatype = $this->get_supported_field_metatype( $field, $term->taxonomy );
 
-				switch ( $field ) {
+				switch ( $metatype ) {
 					case 'order':
 
 						$node['title'].= ': '.Helper::htmlOrder( get_term_meta( $term->term_id, $metakey, TRUE ) );
