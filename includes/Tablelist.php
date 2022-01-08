@@ -200,9 +200,10 @@ class Tablelist extends Main
 		], HTML::escape( $title ) );
 	}
 
-	public static function columnPostID()
+	public static function columnPostID( $icon = TRUE )
 	{
-		return _x( 'ID', 'Tablelist: Column: Post ID', 'geditorial' );
+		$title = _x( 'ID', 'Tablelist: Column: Post ID', 'geditorial' );
+		return $icon ? sprintf( '<span class="-column-icon %3$s" title="%2$s">%1$s</span>', $title, esc_attr( $title ), '-post-id' ) : $title;
 	}
 
 	public static function columnPostDate()
