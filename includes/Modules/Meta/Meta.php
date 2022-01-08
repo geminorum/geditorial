@@ -14,8 +14,10 @@ use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\Text;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\Database;
+use geminorum\gEditorial\WordPress\Media;
 use geminorum\gEditorial\WordPress\Strings;
 use geminorum\gEditorial\WordPress\PostType;
+use geminorum\gEditorial\WordPress\Taxonomy;
 
 class Meta extends gEditorial\Module
 {
@@ -1161,6 +1163,7 @@ class Meta extends gEditorial\Module
 					], 'tools' );
 
 					$result = 0;
+					$this->_raise_resources();
 
 					if ( $post['custom_field'] && $post['custom_field_into'] )
 						$result = $this->import_field_meta(
@@ -1184,6 +1187,7 @@ class Meta extends gEditorial\Module
 					], 'tools' );
 
 					$result = [];
+					$this->_raise_resources();
 
 					if ( $post['custom_field'] )
 						$result = Database::deletePostMeta( $post['custom_field'], $post['custom_field_limit'] );
@@ -1333,5 +1337,16 @@ class Meta extends gEditorial\Module
 		foreach ( $field_map as $offset => $field )
 			if ( array_key_exists( $field, $fields ) )
 				$this->import_posttype_field( $raw[$offset], $fields[$field], $post );
+	}
+
+	private function _raise_resources( $count = 0 )
+	{
+		// Media::disableThumbnailGeneration();
+		Taxonomy::disableTermCounting();
+		wp_defer_comment_counting( TRUE );
+
+		do_action( 'qm/cease' ); // QueryMonitor: Cease data collections
+
+		$this->raise_resources( $count, 60, 'import' );
 	}
 }

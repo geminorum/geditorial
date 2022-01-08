@@ -129,7 +129,7 @@ class Importer extends gEditorial\Module
 		if ( ! $file = get_attached_file( $id ) )
 			return FALSE;
 
-		$this->raise_resources();
+		$this->_raise_resources();
 
 		// https://github.com/kzykhys/PHPCsvParser
 		$iterator = new \SplFileObject( File::normalize( $file ) );
@@ -267,7 +267,7 @@ class Importer extends gEditorial\Module
 		if ( ! $file = get_attached_file( $id ) )
 			return FALSE;
 
-		$this->raise_resources();
+		$this->_raise_resources();
 
 		// https://github.com/kzykhys/PHPCsvParser
 		$iterator = new \SplFileObject( File::normalize( $file ) );
@@ -400,7 +400,7 @@ class Importer extends gEditorial\Module
 					$count = 0;
 					$args  = $this->get_current_form_images();
 
-					$this->raise_resources();
+					$this->_raise_resources();
 
 					foreach ( $_POST['_cb'] as $post_id ) {
 
@@ -440,7 +440,7 @@ class Importer extends gEditorial\Module
 					$comment_status = $this->get_setting( 'comment_status', 'closed' );
 					$taxonomies     = Taxonomy::get( 4, [], $posttype );
 
-					$this->raise_resources();
+					$this->_raise_resources();
 
 					$iterator = new \SplFileObject( File::normalize( $file ) );
 					$options  = [ 'encoding' => 'UTF-8', 'limit' => 1 ];
@@ -805,5 +805,16 @@ class Importer extends gEditorial\Module
 
 			gEditorial()->audit->set_terms( $post, $this->default_audit_attribute );
 		}
+	}
+
+	private function _raise_resources( $count = 0 )
+	{
+		Media::disableThumbnailGeneration();
+		Taxonomy::disableTermCounting();
+		wp_defer_comment_counting( TRUE );
+
+		do_action( 'qm/cease' ); // QueryMonitor: Cease data collections
+
+		$this->raise_resources( $count, 60, 'import' );
 	}
 }
