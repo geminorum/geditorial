@@ -407,7 +407,17 @@ class Importer extends gEditorial\Module
 						if ( ! $id = get_post_meta( $post_id, $args['metakey'], TRUE ) )
 							continue;
 
-						$attachment = Media::sideloadImageURL( sprintf( $args['template'], $id ), $post_id, [ 'post_author' => $args['user_id'] ] );
+						if ( ! $post = get_post( $post_id ) )
+							continue;
+
+						$extra = [ 'post_author' => $args['user_id'] ];
+
+						if ( ! empty( $post->post_title ) ) {
+							$extra['post_title'] = $post->post_title;
+							$extra['meta_input']['_wp_attachment_image_alt'] = $post->post_title;
+						}
+
+						$attachment = Media::sideloadImageURL( sprintf( $args['template'], $id ), $post_id, $extra );
 
 						if ( is_wp_error( $attachment ) ) {
 							$this->log( 'NOTICE', $attachment->get_error_message() );
