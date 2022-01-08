@@ -14,6 +14,7 @@ class WPRestSingle extends gEditorial\Widget
 {
 
 	const MODULE = 'widgets';
+	const WIDGET = 'wprest_single';
 
 	public static function setup()
 	{

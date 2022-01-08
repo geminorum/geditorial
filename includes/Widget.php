@@ -14,10 +14,20 @@ class Widget extends \WP_Widget
 
 	const BASE   = 'geditorial';
 	const MODULE = FALSE;
+	const WIDGET = FALSE;
 
 	protected static function constant( $key, $default = FALSE )
 	{
 		return gEditorial()->constant( static::MODULE, $key, $default );
+	}
+
+	protected static function filters( $hook, ...$args )
+	{
+		return apply_filters( sprintf( '%s_%s_%s',
+			static::BASE,
+			static::WIDGET, // usually the widget name also contain the module name
+			$hook
+		), ...$args );
 	}
 
 	public function __construct()
@@ -45,6 +55,7 @@ class Widget extends \WP_Widget
 
 		$this->alt_option_name = 'widget_'.static::BASE.'_'.$args['name'];
 		$this->parent_module   = $args['module'];
+		$this->_widget_args    = $args;
 
 		foreach ( $args['flush'] as $action )
 			add_action( $action, [ $this, 'flush_widget_cache' ] );

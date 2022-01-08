@@ -9,6 +9,7 @@ class IssueCover extends gEditorial\Widget
 {
 
 	const MODULE = 'magazine';
+	const WIDGET = 'magazine_issue_cover';
 
 	public static function setup()
 	{

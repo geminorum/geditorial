@@ -8,6 +8,7 @@ class CustomHTML extends gEditorial\Widget
 {
 
 	const MODULE = 'widgets';
+	const WIDGET = 'custom_html';
 
 	public static function setup()
 	{

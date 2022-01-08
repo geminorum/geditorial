@@ -10,6 +10,7 @@ class NamesakeTerms extends gEditorial\Widget
 {
 
 	const MODULE = 'widgets';
+	const WIDGET = 'namesake_terms';
 
 	public static function setup()
 	{

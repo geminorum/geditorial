@@ -10,6 +10,7 @@ class SearchTerms extends gEditorial\Widget
 {
 
 	const MODULE = 'widgets';
+	const WIDGET = 'search_terms';
 
 	public static function setup()
 	{

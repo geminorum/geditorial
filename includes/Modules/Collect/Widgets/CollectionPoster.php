@@ -9,6 +9,7 @@ class CollectionPoster extends gEditorial\Widget
 {
 
 	const MODULE = 'collect';
+	const WIDGET = 'collect_collection_poster';
 
 	public static function setup()
 	{

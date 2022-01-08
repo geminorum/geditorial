@@ -13,6 +13,7 @@ class GCalEvents extends gEditorial\Widget
 {
 
 	const MODULE = 'widgets';
+	const WIDGET = 'gcal_events';
 
 	public static function setup()
 	{
