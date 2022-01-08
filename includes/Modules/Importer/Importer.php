@@ -222,7 +222,7 @@ class Importer extends gEditorial\Module
 				'compare' => 'NOT EXISTS',
 			];
 
-		list( $posts, ) = Tablelist::getPosts( $query, [], $args['posttype'], $this->get_sub_limit_option( $sub ) );
+		list( $posts, ) = Tablelist::getPosts( $query, [], $args['posttype'], $this->get_sub_limit_option( $this->key ) );
 
 		return HTML::tableList( [
 			'_cb'   => 'ID',
@@ -239,7 +239,7 @@ class Importer extends gEditorial\Module
 
 					return HTML::tag( 'a', [
 						'href'  => $src,
-						'title' => $src, // get_the_title( $row ),
+						'title' => $id, // get_the_title( $row ),
 						'class' => 'thickbox',
 					], HTML::img( $src ) );
 				},
@@ -409,8 +409,10 @@ class Importer extends gEditorial\Module
 
 						$attachment = Media::sideloadImageURL( sprintf( $args['template'], $id ), $post_id, [ 'post_author' => $args['user_id'] ] );
 
-						if ( is_wp_error( $attachment ) )
+						if ( is_wp_error( $attachment ) ) {
+							$this->log( 'NOTICE', $attachment->get_error_message() );
 							continue;
+						}
 
 						if ( isset( $_POST['images_import_as_thumbnail'] ) )
 							set_post_thumbnail( $post_id, $attachment );

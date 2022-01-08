@@ -48,6 +48,8 @@ class Recount extends gEditorial\Module
 		if ( ! $this->get_setting( 'thrift_mode' ) )
 			$this->action( 'edit_term_taxonomy', 10, 2 );
 
+		// TODO: maybe hook to `added_term_relationship` action
+
 		$this->filter( 'taxonomy_term_count', 3, 10, FALSE, 'gnetwork' );
 	}
 
@@ -78,6 +80,7 @@ class Recount extends gEditorial\Module
 	}
 
 	// TODO: maybe it's better to override the taxonomy callback for count
+	// `clean_term_cache( $term_id, $taxonomy, FALSE );`
 	public function edit_term_taxonomy( $term_id, $taxonomy )
 	{
 		if ( $this->taxonomy_supported( $taxonomy ) )

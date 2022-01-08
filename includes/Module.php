@@ -647,7 +647,7 @@ class Module extends Base
 				'target'   => $target,
 				'type'     => $posttype,
 				'linked'   => $linked,
-				'endpoint' => rest_url( sprintf( '/wp/v2/%s', $object->rest_base ) ),
+				'endpoint' => rest_url( sprintf( '/wp/v2/%s', $object->rest_base ) ), // TODO: use `rest_get_route_for_post_type_items()`
 			],
 		], _x( 'Save Draft & Close', 'Module', 'geditorial' ) );
 
@@ -2656,7 +2656,8 @@ class Module extends Base
 
 			'query_var'   => $this->constant( $constant.'_query_var', $posttype ),
 			'has_archive' => $this->constant( $constant.'_archive', FALSE ),
-			'rewrite'     => [
+
+			'rewrite' => [
 				'slug'       => $this->constant( $constant.'_slug', str_replace( '_', '-', $posttype ) ),
 				'ep_mask'    => $this->constant( $constant.'_endpoint', EP_PERMALINK | EP_PAGES ), // https://make.wordpress.org/plugins?p=29
 				'with_front' => FALSE,
@@ -2673,8 +2674,10 @@ class Module extends Base
 
 			'register_meta_box_cb' => method_exists( $this, 'add_meta_box_cb_'.$constant ) ? [ $this, 'add_meta_box_cb_'.$constant ] : NULL,
 
-			'show_in_rest' => $this->get_setting( 'restapi_support', TRUE ),
+			'show_in_rest' => $this->get_setting( 'restapi_support', TRUE ), // FIXME: DEPRECATE THIS
 			'rest_base'    => $this->constant( $constant.'_rest', $this->constant( $constant.'_archive', $posttype ) ),
+
+			// 'rest_namespace ' => 'wp/v2', // @SEE: https://core.trac.wordpress.org/ticket/54536
 
 			'can_export'          => TRUE,
 			'delete_with_user'    => FALSE,
@@ -2852,8 +2855,18 @@ class Module extends Base
 				// 'ep_mask'      => EP_NONE,
 			],
 
-			'show_in_rest' => $this->get_setting( 'restapi_support', TRUE ),
+			// 'default_term' => [
+			// 	'name'        => '',
+			// 	'slug'        => '',
+			// 	'description' => '',
+			// ],
+
+			// 'sort' => NULL, // Whether terms in this taxonomy should be sorted in the order they are provided to `wp_set_object_terms()`.
+			// 'args' => [], //  Array of arguments to automatically use inside `wp_get_object_terms()` for this taxonomy.
+
+			'show_in_rest' => $this->get_setting( 'restapi_support', TRUE ), // FIXME: DEPRECATE THIS
 			'rest_base'    => $this->constant( $constant.'_rest', $slug_base ),
+			// 'rest_namespace' => 'wp/v2', // @SEE: https://core.trac.wordpress.org/ticket/54536
 		] );
 
 		if ( is_array( $args['rewrite'] ) && ! array_key_exists( 'hierarchical', $args['rewrite'] ) )

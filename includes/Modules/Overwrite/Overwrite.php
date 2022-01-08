@@ -118,6 +118,7 @@ class Overwrite extends gEditorial\Module
 		return $this->_overwrite_with_context( $this->get_setting( 'frontend_strings' ), $translation, $text, $context, $domain );
 	}
 
+	// FIXME: support escaped entities
 	private function _overwrite_no_context( $strings, $translation, $text, $domain )
 	{
 		foreach ( $strings as $string ) {

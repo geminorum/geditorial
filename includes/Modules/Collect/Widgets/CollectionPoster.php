@@ -42,7 +42,7 @@ class CollectionPoster extends gEditorial\Widget
 	public function widget_html( $args, $instance )
 	{
 		$link = 'parent';
-		$type = self::constant( 'collection_cpt', 'collection' )
+		$type = self::constant( 'collection_cpt', 'collection' );
 
 		if ( ! empty( $instance['custom_link'] ) )
 			$link = $instance['custom_link'];

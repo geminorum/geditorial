@@ -131,6 +131,8 @@ class WcRelated extends gEditorial\Module
 		if ( $this->get_setting( 'exclude_default_terms' ) || $this->get_setting( 'exclude_product_cats' ) )
 			$this->filter( 'get_related_product_cat_terms', 2, 12, FALSE, 'woocommerce' );
 
+		// TODO: support for storefront: `storefront_single_product_pagination_excluded_terms`
+
 		if ( $this->get_setting( 'exclude_default_terms' ) || $this->get_setting( 'exclude_product_tags' ) )
 			$this->filter( 'get_related_product_tag_terms', 2, 12, FALSE, 'woocommerce' );
 

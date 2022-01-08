@@ -176,8 +176,10 @@ class Settings extends Core\Base
 	public static function taxonomiesExcluded( $extra = [] )
 	{
 		return array_merge( [
+			'wp_theme',               // WP Core
 			'nav_menu',               // WP Core
 			'post_format',            // WP Core
+			'wp_template_part_area',  // WP Core
 			'amp_validation_error',   // AMP
 			'product_type',           // WooCommerce
 			'product_visibility',     // WooCommerce

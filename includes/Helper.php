@@ -728,12 +728,20 @@ class Helper extends Main
 			'item_link'                  => _x( '%2$s Link', 'Helper: Tax Generator: `item_link`', 'geditorial' ),
 			/* translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder */
 			'item_link_description'      => _x( 'A link to a %4$s.', 'Helper: Tax Generator: `item_link_description`', 'geditorial' ),
+			/* translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder */
+			// 'name_field_description'     => _x( 'The name is how it appears on your site.', 'Helper: Tax Generator: `name_field_description`', 'geditorial' ),
+			/* translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder */
+			// 'slug_field_description'     => _x( 'The &#8220;slug&#8221; is the URL-friendly version of the name. It is usually all lowercase and contains only letters, numbers, and hyphens.', 'Helper: Tax Generator: `slug_field_description`', 'geditorial' ),
+			/* translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder */
+			// 'parent_field_description'   => _x( 'Assign a parent term to create a hierarchy. The term Jazz, for example, would be the parent of Bebop and Big Band.', 'Helper: Tax Generator: `parent_field_description`', 'geditorial' ),
+			/* translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder */
+			// 'desc_field_description'     => _x( 'The description is not prominent by default; however, some themes may show it.', 'Helper: Tax Generator: `desc_field_description`', 'geditorial' ),
 		];
 
 		$strings = self::getStringsFromName( $name );
 
 		foreach ( $templates as $key => $template )
-			if ( ! array_key_exists( $key, $pre ) )
+			if ( $template && ! array_key_exists( $key, $pre ) )
 				$pre[$key] = vsprintf( $template, $strings );
 
 		if ( ! array_key_exists( 'menu_name', $pre ) )
