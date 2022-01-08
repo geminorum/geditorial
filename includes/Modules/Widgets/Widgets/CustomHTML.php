@@ -55,7 +55,7 @@ class CustomHTML extends gEditorial\Widget
 		echo '</div>';
 		$this->after_widget( $args, $instance );
 
-		return TRUE;
+		return empty( $instance['bypasscache'] );
 	}
 
 	public function form( $instance )
@@ -75,6 +75,7 @@ class CustomHTML extends gEditorial\Widget
 		$this->form_checkbox( $instance, FALSE, 'filters', _x( 'Process Filters', 'Widget: Custom HTML', 'geditorial-widgets' ) );
 		$this->form_checkbox( $instance, FALSE, 'legacy', _x( 'Process Filters (Legacy)', 'Widget: Custom HTML', 'geditorial-widgets' ) );
 		$this->form_checkbox( $instance, FALSE, 'autop', _x( 'Automatic Paragraphs', 'Widget: Custom HTML', 'geditorial-widgets' ) );
+		$this->form_checkbox( $instance, FALSE, 'bypasscache', _x( 'Bypass Caching', 'Widget: Custom HTML', 'geditorial-widgets' ) );
 		echo '</div>';
 
 		echo '<div class="-group">';
@@ -96,6 +97,7 @@ class CustomHTML extends gEditorial\Widget
 			'filters',
 			'legacy',
 			'autop',
+			'bypasscache',
 		] );
 	}
 }
