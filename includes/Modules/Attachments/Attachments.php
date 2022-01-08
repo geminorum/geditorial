@@ -50,6 +50,11 @@ class Attachments extends gEditorial\Module
 					'placeholder' => 'media',
 					'dir'         => 'ltr',
 				],
+				[
+					'field'       => 'fallback_alt_to_title',
+					'title'       => _x( 'Fallback Alt to Title', 'Setting Title', 'geditorial-attachments' ),
+					'description' => _x( 'Tries to fill empty alt attribute with attachment title on images.', 'Setting Description', 'geditorial-attachments' ),
+				],
 			],
 			'_editlist' => [
 				[
@@ -88,6 +93,12 @@ class Attachments extends gEditorial\Module
 		}
 
 		$this->register_shortcode( 'attachments_shortcode' );
+
+		if ( is_admin() )
+			return;
+
+		if ( $this->get_setting( 'fallback_alt_to_title' ) )
+			$this->filter( 'wp_get_attachment_image_attributes', 3, 8 );
 	}
 
 	public function init_ajax()
@@ -251,6 +262,14 @@ class Attachments extends gEditorial\Module
 			}
 
 		echo '</li>';
+	}
+
+	public function wp_get_attachment_image_attributes( $attr, $attachment, $size )
+	{
+		if ( is_array( $attr ) && array_key_exists( 'alt', $attr ) && '' == $attr['alt'] )
+			$attr['alt'] = get_the_title( $attachment );
+
+		return $attr;
 	}
 
 	public function attachments_shortcode( $atts = [], $content = NULL, $tag = '' )
