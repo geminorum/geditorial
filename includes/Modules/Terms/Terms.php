@@ -502,8 +502,10 @@ class Terms extends gEditorial\Module
 
 		foreach ( $this->get_supported( $taxonomy ) as $field ) {
 
-			$position = $this->get_supported_position( $field, $taxonomy );
-			$title    = in_array( $field, [ 'order', 'contact', 'image', 'author', 'color', 'role', 'roles', 'posttype', 'posttypes', 'arrow', 'label', 'code', 'barcode' ] )
+			if ( FALSE === ( $position = $this->get_supported_position( $field, $taxonomy ) ) )
+				continue;
+
+			$title = in_array( $field, [ 'order', 'contact', 'image', 'author', 'color', 'role', 'roles', 'posttype', 'posttypes', 'arrow', 'label', 'code', 'barcode' ] )
 				? $this->get_column_title_icon( $field, $taxonomy )
 				: $this->get_column_title( $field, $taxonomy );
 
