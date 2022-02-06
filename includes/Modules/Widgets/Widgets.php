@@ -10,6 +10,8 @@ class Widgets extends gEditorial\Module
 
 	protected $deafults = [ 'widget_support' => TRUE ];
 
+	protected $textdomain_frontend = FALSE;
+
 	public static function module()
 	{
 		return [
@@ -124,12 +126,21 @@ class Widgets extends gEditorial\Module
 
 	public function widgets_init()
 	{
+		$this->_register_widgets();
+		$this->_register_areas();
+	}
+
+	private function _register_widgets()
+	{
 		$widgets = $this->get_setting( 'widgets', [] );
 
 		foreach ( $this->get_widgets() as $key => $class )
 			if ( in_array( $key, $widgets, TRUE ) )
 				register_widget( __NAMESPACE__.'\\Widgets\\'.$class );
+	}
 
+	private function _register_areas()
+	{
 		foreach ( $this->get_setting( 'areas', [] ) as $index => $area ) {
 
 			if ( empty( $area['action'] ) )

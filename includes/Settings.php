@@ -179,7 +179,11 @@ class Settings extends Core\Base
 			'wp_theme',               // WP Core
 			'nav_menu',               // WP Core
 			'post_format',            // WP Core
-			'wp_template_part_area',  // WP Core
+			// 'wp_template_part_area',  // WP Core
+			'wp_template',            // WP Core @since WP5.9
+			'wp_template_part',       // WP Core @since WP5.9
+			'wp_global_styles',       // WP Core @since WP5.9
+			'wp_navigation',          // WP Core @since WP5.9
 			'amp_validation_error',   // AMP
 			'product_type',           // WooCommerce
 			'product_visibility',     // WooCommerce

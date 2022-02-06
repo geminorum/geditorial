@@ -367,7 +367,7 @@ class Terms extends gEditorial\Module
 
 	private function get_supported_field_title( $field, $taxonomy, $term = FALSE )
 	{
-		return $this->filters( 'field_'.$field.'_title', $this->get_string( $field, $taxonomy, 'titles', $field ), $taxonomy, $field, FALSE );
+		return $this->filters( 'field_'.$field.'_title', $this->get_string( $field, $taxonomy, 'titles', $field ), $taxonomy, $field, $term );
 	}
 
 	private function get_supported_field_desc( $field, $taxonomy, $term = FALSE )

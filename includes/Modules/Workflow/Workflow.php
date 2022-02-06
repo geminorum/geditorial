@@ -310,6 +310,7 @@ class Workflow extends gEditorial\Module
 		return $this->statuses[$user_id];
 	}
 
+	// TODO: filter `is_post_status_viewable` @since WP 5.9.0
 	private function register_post_statuses()
 	{
 		$builtins = get_post_stati();

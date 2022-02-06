@@ -135,7 +135,7 @@ class ShortCode extends Main
 		return $args['title'];
 	}
 
-	// term as item in the list
+	// term as an item on the list
 	public static function termItem( $term, $atts = [], $before = '', $after = '', $fallback = '' )
 	{
 		if ( ! $term = Taxonomy::getTerm( $term ) )
@@ -1143,7 +1143,7 @@ class ShortCode extends Main
 		if ( FALSE !== $cache )
 			return $cache;
 
-		$html = $ref = $post = $term = $parent = $skip = '';
+		$html = $ref = $parent = '';
 
 		if ( $args['item_cb'] && ! is_callable( $args['item_cb'] ) )
 			$args['item_cb'] = FALSE;
@@ -1152,6 +1152,10 @@ class ShortCode extends Main
 			'order'   => $args['order'],
 			'orderby' => $args['orderby'] ?: 'name',
 		];
+
+		// FIXME: support sort by meta
+		if ( 'order' == $query['orderby'] )
+			$query['orderby'] = 'none'; // later sorting
 
 		if ( 'listing' == $list ) {
 
@@ -1188,7 +1192,7 @@ class ShortCode extends Main
 		$items = $class->terms;
 		$count = count( $items );
 
-		if ( ! $count || ( 1 == $count && $skip ) )
+		if ( ! $count )
 			return $content;
 
 		if ( FALSE === $args['title'] ) {
@@ -1211,8 +1215,8 @@ class ShortCode extends Main
 			if ( $args['order_cb'] && is_callable( $args['order_cb'] ) )
 				$items = call_user_func_array( $args['order_cb'], [ $items, $args, $ref ] );
 
-			else if ( is_null( $args['order_cb'] ) && $count > 1 )
-				$items = Template::reorderPosts( $items, $args['field_module'], $args['order_start'], $args['order_order'] );
+			// else if ( is_null( $args['order_cb'] ) && $count > 1 )
+			// 	$items = Template::reorderPosts( $items, $args['field_module'], $args['order_start'], $args['order_order'] );
 		}
 
 		foreach ( $items as $item ) {

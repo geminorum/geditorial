@@ -155,13 +155,16 @@ SQL;
 		] );
 	}
 
+	// @SEE: https://make.wordpress.org/core/2022/01/05/new-capability-queries-in-wordpress-5-9/
 	public static function restrictByAuthor( $selected = 0, $name = 'author', $extra = [] )
 	{
 		return wp_dropdown_users( array_merge( [
 			'name'     => $name,
 			'selected' => $selected,
-			'who'      => 'authors',
 			'show'     => 'display_name_with_login',
+
+			// 'who'        => 'authors',
+			'capability' => [ 'edit_posts' ],
 
 			'show_option_all'   => _x( 'All Authors', 'Listtable: Show Option All', 'geditorial' ),
 			'option_none_value' => 0,
