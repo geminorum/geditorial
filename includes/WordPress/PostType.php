@@ -34,9 +34,9 @@ class PostType extends Core\Base
 			: user_can( $user_id, $cap );
 	}
 
-	public static function get( $mod = 0, $args = array( 'public' => TRUE ), $capability = NULL, $user_id = NULL )
+	public static function get( $mod = 0, $args = [ 'public' => TRUE ], $capability = NULL, $user_id = NULL )
 	{
-		$list = array();
+		$list = [];
 
 		foreach ( get_post_types( $args, 'objects' ) as $posttype => $posttype_obj ) {
 
@@ -57,14 +57,14 @@ class PostType extends Core\Base
 
 			// nooped
 			else if ( 3 === $mod )
-				$list[$posttype] = array(
+				$list[$posttype] = [
 					0          => $posttype_obj->labels->singular_name,
 					1          => $posttype_obj->labels->name,
 					'singular' => $posttype_obj->labels->singular_name,
 					'plural'   => $posttype_obj->labels->name,
 					'context'  => NULL,
 					'domain'   => NULL,
-				);
+				];
 
 			// object
 			else if ( 4 === $mod )
@@ -95,25 +95,72 @@ class PostType extends Core\Base
 	}
 
 	// @SEE: https://tommcfarlin.com/get-post-id-by-meta-value/
-	public static function getIDbyMeta( $meta, $value )
+	public static function getIDbyMeta( $meta, $value, $single = TRUE )
 	{
-		static $results = [];
+		global $wpdb, $gEditorialIDbyMeta;
 
-		if ( isset( $results[$meta][$value] ) )
-			return $results[$meta][$value];
+		if ( empty( $meta ) )
+			return FALSE;
 
-		global $wpdb;
+		if ( empty( $gEditorialIDbyMeta ) )
+			$gEditorialIDbyMeta = [];
 
-		$post_id = $wpdb->get_var(
-			$wpdb->prepare( "
-				SELECT post_id
-				FROM {$wpdb->postmeta}
-				WHERE meta_key = %s
-				AND meta_value = %s
-			", $meta, $value )
-		);
+		if ( empty( $value ) )
+			return FALSE;
 
-		return $results[$meta][$value] = $post_id;
+		$group = $single ? 'single' : 'all';
+
+		if ( isset( $gEditorialIDbyMeta[$meta][$group][$value] ) )
+			return $gEditorialIDbyMeta[$meta][$group][$value];
+
+		$query = $wpdb->prepare( "
+			SELECT post_id
+			FROM {$wpdb->postmeta}
+			WHERE meta_key = %s
+			AND meta_value = %s
+		", $meta, $value );
+
+		$results = $single
+			? $wpdb->get_var( $query )
+			: $wpdb->get_col( $query );
+
+		return $gEditorialIDbyMeta[$meta][$group][$value] = $results;
+	}
+
+	public static function getIDListbyMeta( $meta, $values )
+	{
+		global $wpdb, $gEditorialIDbyMeta;
+
+		if ( empty( $meta ) )
+			return FALSE;
+
+		$filtred = array_filter( (array) $values );
+
+		if ( empty( $filtred ) )
+			return FALSE;
+
+		$query = $wpdb->prepare( "
+			SELECT post_id, meta_value
+			FROM {$wpdb->postmeta}
+			WHERE meta_key = %s
+			AND meta_value IN ( '".implode( "', '", esc_sql( $filtred ) )."' )
+		", $meta );
+
+		$results = $wpdb->get_results( $query, ARRAY_A );
+
+		if ( empty( $results ) )
+			return [];
+
+		$list = wp_list_pluck( $results, 'post_id', 'meta_value' );
+
+		if ( empty( $gEditorialIDbyMeta ) )
+			$gEditorialIDbyMeta = [];
+
+		// update cache
+		foreach ( $filtred as $value )
+			$gEditorialIDbyMeta[$meta]['single'][$value] = array_key_exists( $value, $list ) ? $list[$value] : FALSE;
+
+		return $list;
 	}
 
 	// WTF: `WP_Query` does not support `id=>name` as fields

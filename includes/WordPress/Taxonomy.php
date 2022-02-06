@@ -24,9 +24,9 @@ class Taxonomy extends Core\Base
 			: user_can( $user_id, $cap );
 	}
 
-	public static function get( $mod = 0, $args = array(), $object = FALSE, $capability = NULL, $user_id = NULL )
+	public static function get( $mod = 0, $args = [], $object = FALSE, $capability = NULL, $user_id = NULL )
 	{
-		$list = array();
+		$list = [];
 
 		if ( FALSE === $object || 'any' == $object )
 			$objects = get_taxonomies( $args, 'objects' );
@@ -52,14 +52,14 @@ class Taxonomy extends Core\Base
 
 			// nooped
 			else if ( 3 === $mod )
-				$list[$taxonomy] = array(
+				$list[$taxonomy] = [
 					0          => $taxonomy_obj->labels->singular_name,
 					1          => $taxonomy_obj->labels->name,
 					'singular' => $taxonomy_obj->labels->singular_name,
 					'plural'   => $taxonomy_obj->labels->name,
 					'context'  => NULL,
 					'domain'   => NULL,
-				);
+				];
 
 			// object
 			else if ( 4 === $mod )
@@ -140,7 +140,7 @@ class Taxonomy extends Core\Base
 				&& ! is_tax( $taxonomy ) )
 					return FALSE;
 
-			if ( ! $term_or_id = get_queried_object() )
+			if ( ! $term_or_id = get_queried_object_id() )
 				return FALSE;
 		}
 
@@ -444,17 +444,23 @@ class Taxonomy extends Core\Base
 		foreach ( $term_ids as $term_id )
 			$terms = array_merge( $terms, self::getTermParents( $term_id, $taxonomy ) );
 
-		return array_filter( array_unique( array_merge( $term_ids, $terms ) ), 'intval' );
+		return Core\Arraay::prepNumeral( $term_ids, $terms );
 	}
 
 	public static function getTermParents( $term_id, $taxonomy )
 	{
+		static $data = [];
+
+		if ( isset( $data[$taxonomy][$term_id] ) )
+			return $data[$taxonomy][$term_id];
+
+		$current = $term_id;
 		$parents = [];
 		$up      = TRUE;
 
 		while ( $up ) {
 
-			$term = get_term( (int) $term_id, $taxonomy );
+			$term = get_term( (int) $current, $taxonomy );
 
 			if ( $term->parent )
 				$parents[] = (int) $term->parent;
@@ -462,10 +468,10 @@ class Taxonomy extends Core\Base
 			else
 				$up = FALSE;
 
-			$term_id = $term->parent;
+			$current = $term->parent;
 		}
 
-		return $parents;
+		return $data[$taxonomy][$term_id] = $parents;
 	}
 
 	// TODO: must suport different parents
@@ -665,5 +671,16 @@ class Taxonomy extends Core\Base
 				'attachment' => $term_image_id,
 			),
 		), $image );
+	}
+
+	public static function disableTermCounting()
+	{
+		wp_defer_term_counting( TRUE );
+
+		// also avoids query for post terms
+		remove_action( 'transition_post_status', '_update_term_count_on_transition_post_status', 10 );
+
+		// WooCommerce
+		add_filter( 'woocommerce_product_recount_terms', '__return_false' );
 	}
 }

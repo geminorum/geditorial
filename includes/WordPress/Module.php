@@ -271,8 +271,11 @@ class Module extends Core\Base
 		return FALSE;
 	}
 
+	public function _return_string_yes() { return 'yes'; }
+	public function _return_string_no()  { return 'no'; }
+
 	// USAGE: add_filter( 'body_class', self::_array_append( 'foo' ) );
-	protected static function _array_append( $item )
+	public static function _array_append( $item )
 	{
 		return function( $array ) use ( $item ) {
 			$array[] = $item;
@@ -281,7 +284,7 @@ class Module extends Core\Base
 	}
 
 	// USAGE: add_filter( 'shortcode_atts_gallery', self::_array_set( 'columns', 4 ) );
-	protected static function _array_set( $key, $value )
+	public static function _array_set( $key, $value )
 	{
 		return function( $array ) use ( $key, $value ) {
 			$array[$key] = $value;

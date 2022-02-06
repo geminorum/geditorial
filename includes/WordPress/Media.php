@@ -388,6 +388,8 @@ class Media extends Core\Base
 	}
 
 	// @REF: https://pippinsplugins.com/retrieve-attachment-id-from-image-url/
+	// NOTE: doesn't really work if the guid gets out of sync
+	// or if the URL you have is for a cropped image.
 	public static function getAttachmentByURL( $url )
 	{
 		global $wpdb;
@@ -395,6 +397,46 @@ class Media extends Core\Base
 		$attachment = $wpdb->get_col( $wpdb->prepare( "SELECT ID FROM {$wpdb->posts} WHERE guid='%s';", $url ) );
 
 		return empty( $attachment ) ? NULL : $attachment[0];
+	}
+
+	// @REF: https://wpscholar.com/blog/get-attachment-id-from-wp-image-url/
+	// @SEE: `attachment_url_to_postid()`: Notably this will not work on image
+	// sizes, core version only searches "main" attached file.
+	public static function getAttachmentByURL_ALT( $url )
+	{
+		$upload = self::upload();
+
+		// Is URL in uploads directory?
+		if ( FALSE === strpos( $url, $dir['baseurl'] . '/' ) )
+			return 0;
+
+		$file  = Core\File::basename( $url );
+		$query = new \WP_Query( [
+			'post_type'   => 'attachment',
+			'post_status' => 'inherit',
+			'fields'      => 'ids',
+			'meta_query'  => [ [
+				'value'   => $file,
+				'compare' => 'LIKE',
+				'key'     => '_wp_attachment_metadata',
+			] ],
+		] );
+
+		if ( ! $query->have_posts() )
+			return 0;
+
+		foreach ( $query->posts as $post_id ) {
+
+			$meta = wp_get_attachment_metadata( $post_id );
+
+			$original = Core\File::basename( $meta['file'] );
+			$cropped  = wp_list_pluck( $meta['sizes'], 'file' );
+
+			if ( $original === $file || in_array( $file, $cropped ) )
+				return $post_id;
+		}
+
+		return 0;
 	}
 
 	// @REF: https://wordpress.stackexchange.com/a/315447
@@ -417,5 +459,11 @@ class Media extends Core\Base
 				$prepared['sizes'][$size] = $uploads['baseurl'].'/'.dirname( $metadata['file'] ).'/'.$info['file'];
 
 		return $prepared;
+	}
+
+	public static function disableThumbnailGeneration()
+	{
+		add_filter( 'intermediate_image_sizes', '__return_empty_array', 99 );
+		add_filter( 'intermediate_image_sizes_advanced', '__return_empty_array', 99 );
 	}
 }

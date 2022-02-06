@@ -103,12 +103,25 @@ class Theme extends Core\Base
 		return $html;
 	}
 
+	public static function restPost_thumbnailURL( $thumbnail_url, $post, $size )
+	{
+		if ( $size && isset( $GLOBALS['post']->_thumbnail->sizes->{$size} ) )
+			return $GLOBALS['post']->_thumbnail->sizes->{$size};
+
+		if ( ! empty( $GLOBALS['post']->_thumbnail->url ) )
+			return $GLOBALS['post']->_thumbnail->url;
+
+		return $thumbnail_url;
+	}
+
 	public static function restLoopBefore()
 	{
 		add_filter( 'post_link', [ __CLASS__, 'restPost_permalink' ], 9999 );
 		add_filter( 'page_link', [ __CLASS__, 'restPost_permalink' ], 9999 );
 		add_filter( 'post_type_link', [ __CLASS__, 'restPost_permalink' ], 9999 );
 		add_filter( 'post_thumbnail_html', [ __CLASS__, 'restPost_thumbnailHTML' ], 9999, 5 );
+		add_filter( 'post_thumbnail_url', [ __CLASS__, 'restPost_thumbnailURL' ], 9999, 3 );
+		add_filter( 'post_thumbnail_id', '__return_zero', 9999 );
 		add_filter( 'geditorial_get_meta_field', [ __CLASS__, 'restPost_getMetaField' ], 9999, 4 );
 		add_filter( 'gtheme_image_get_thumbnail_id', '__return_false', 9999, 2 );
 	}
@@ -119,6 +132,8 @@ class Theme extends Core\Base
 		remove_filter( 'page_link', [ __CLASS__, 'restPost_permalink' ], 9999 );
 		remove_filter( 'post_type_link', [ __CLASS__, 'restPost_permalink' ], 9999 );
 		remove_filter( 'post_thumbnail_html', [ __CLASS__, 'restPost_thumbnailHTML' ], 9999 );
+		remove_filter( 'post_thumbnail_url', [ __CLASS__, 'restPost_thumbnailURL' ], 9999 );
+		remove_filter( 'post_thumbnail_id', '__return_zero', 9999 );
 		remove_filter( 'geditorial_get_meta_field', [ __CLASS__, 'restPost_getMetaField' ], 9999 );
 		remove_filter( 'gtheme_image_get_thumbnail_id', '__return_false', 9999 );
 	}
