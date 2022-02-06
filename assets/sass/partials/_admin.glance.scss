@@ -43,6 +43,10 @@
   &.-posttype-apply::before {
     content: "\f322" !important;
   }
+
+  &.-posttype-quote::before {
+    content: "\f122" !important;
+  }
 }
 
 .gpeople-glance-item {
