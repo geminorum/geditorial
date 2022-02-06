@@ -251,11 +251,24 @@ class Drafts extends gEditorial\Module
 		return $query->posts;
 	}
 
+	// @SEE: `is_post_status_viewable()`
+	// @SEE: `is_post_publicly_viewable()`
+	// TODO: supported statuses must be optional via settings
+	private function _is_preview_status( $post )
+	{
+		$statuses = $this->filters( 'preview_statuses', [
+			'draft',
+			'pending',
+			'auto-draft',
+			'future',
+		], $post );
+
+		return (bool) in_array( get_post_status( $post ), $statuses, TRUE );
+	}
+
 	public function post_submitbox_minor_actions( $post )
 	{
-		$allowed = $this->filters( 'preview_statuses', [ 'draft', 'pending', 'auto-draft', 'future' ] );
-
-		if ( ! in_array( get_post_status( $post ), $allowed ) )
+		if ( ! $this->_is_preview_status( $post ) )
 			return;
 
 		$public = $this->is_public( $post->ID );
@@ -350,9 +363,7 @@ class Drafts extends gEditorial\Module
 
 	public function post_row_actions( $actions, $post )
 	{
-		$allowed = $this->filters( 'preview_statuses', [ 'draft', 'pending', 'auto-draft', 'future' ] );
-
-		if ( ! in_array( get_post_status( $post ), $allowed ) )
+		if ( ! $this->_is_preview_status( $post ) )
 			return $actions;
 
 		if ( $this->is_public( $post->ID ) )
@@ -366,6 +377,9 @@ class Drafts extends gEditorial\Module
 
 	public function tweaks_column_attr( $post )
 	{
+		if ( ! $this->_is_preview_status( $post ) )
+			return;
+
 		if ( ! $this->is_public( $post->ID ) )
 			return;
 
