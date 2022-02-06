@@ -50,6 +50,7 @@ class Shortcodes extends gEditorial\Module
 	{
 		return [
 			'display-terms' => _x( 'Display Terms', 'Shortcode Name', 'geditorial-shortcodes' ),
+			'term-tiles'    => _x( 'Term Tiles', 'Shortcode Name', 'geditorial-shortcodes' ),
 		];
 	}
 
@@ -57,6 +58,7 @@ class Shortcodes extends gEditorial\Module
 	{
 		return [
 			'display_terms_shortcode' => 'display-terms',
+			'term_tiles_shortcode'    => 'term-tiles',
 		];
 	}
 
@@ -196,5 +198,10 @@ class Shortcodes extends gEditorial\Module
 	public function display_terms_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
 		return ShortCode::listTerms( 'listing', '', $atts, $content, $this->constant( 'display_terms_shortcode', $tag ) );
+	}
+
+	public function term_tiles_shortcode( $atts = [], $content = NULL, $tag = '' )
+	{
+		return ShortCode::listTerms( 'tiles', '', $atts, $content, $this->constant( 'term_tiles_shortcode', $tag ) );
 	}
 }
