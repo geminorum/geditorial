@@ -136,8 +136,11 @@ class ShortCode extends Main
 	}
 
 	// term as item in the list
-	public static function termItem( $term, $atts = [], $before = '', $after = '' )
+	public static function termItem( $term, $atts = [], $before = '', $after = '', $fallback = '' )
 	{
+		if ( ! $term = Taxonomy::getTerm( $term ) )
+			return $fallback;
+
 		$args = self::atts( [
 			'item_link'     => TRUE,
 			'item_text'     => NULL, // callback or use %s for post title
