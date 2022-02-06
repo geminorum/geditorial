@@ -589,8 +589,9 @@ class ShortCode extends Main
 		if ( 'associated' == $list )
 			$list = 'paired';
 
-		$key   = md5( $list.serialize( $args ) );
-		$cache = wp_cache_get( $key, $posttype );
+		$key   = self::hash( $list, $args );
+		$group = sprintf( '%s_list_posts', static::BASE );
+		$cache = wp_cache_get( $key, $group );
 
 		if ( FALSE !== $cache )
 			return $cache;
@@ -802,7 +803,7 @@ class ShortCode extends Main
 		$html = self::wrap( $html, $tag, $args );
 
 		// wp_reset_postdata();
-		wp_cache_set( $key, $html, $posttype );
+		wp_cache_set( $key, $html, $group );
 
 		return $html;
 	}
@@ -1135,8 +1136,9 @@ class ShortCode extends Main
 		if ( FALSE === $args['context'] )
 			return NULL;
 
-		$key   = md5( $list.serialize( $args ) );
-		$cache = wp_cache_get( $key, $taxonomy );
+		$key   = self::hash( $list, $args );
+		$group = sprintf( '%s_list_terms', static::BASE );
+		$cache = wp_cache_get( $key, $group );
 
 		if ( FALSE !== $cache )
 			return $cache;
@@ -1234,7 +1236,7 @@ class ShortCode extends Main
 			$html = $args['title'].$html;
 
 		$html = self::wrap( $html, $tag, $args );
-		wp_cache_set( $key, $html, $taxonomy );
+		wp_cache_set( $key, $html, $group );
 
 		return $html;
 	}
