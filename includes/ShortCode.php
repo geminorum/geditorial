@@ -215,6 +215,104 @@ class ShortCode extends Main
 		], $before.$item.( $args['item_dummy'] ?: '' ).$after );
 	}
 
+	// term as an image on the list
+	public static function termImage( $term, $atts = [], $before = '', $after = '', $fallback = '' )
+	{
+		if ( ! $term = Taxonomy::getTerm( $term ) )
+			return $fallback;
+
+		$args = self::atts( [
+			'item_link'          => TRUE,
+			'item_text'          => NULL, // callback or use %s for post title
+			'item_wrap'          => '', // use %s for item title / or html tag
+			'item_title'         => '', // use %s for post title
+			'item_title_cb'      => FALSE,
+			'item_tag'           => 'li',
+			'item_anchor'        => FALSE, // $term->taxonomy.'-%2$s',
+			'item_class'         => '-item -tile do-sincethen',
+			'item_dummy'         => '<span class="-dummy"></span>',
+			'item_after'         => '',
+			'item_after_cb'      => FALSE,
+			'item_image_metakey' => 'image',
+			'item_image_size'    => 'thumbnail',
+			'item_image_loading' => 'lazy', // FALSE to disable
+		], $atts );
+
+		if ( ! $image_id = get_term_meta( $term->term_id, $args['item_image_metakey'], TRUE ) )
+			return $fallback;
+
+		if ( ! $thumbnail_img = wp_get_attachment_image_src( $image_id, $args['item_image_size'] ) )
+			return $fallback;
+
+		$text = sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' );
+		$link = get_term_link( $term );
+
+		if ( is_null( $args['item_text'] ) )
+			$title = $text;
+
+		else if ( $args['item_text'] && is_callable( $args['item_text'] ) )
+			$title = call_user_func_array( $args['item_text'], [ $term, $args, $text ] );
+
+		else if ( $args['item_text'] && Text::has( $args['item_text'], '%' ) )
+			$title = sprintf( $args['item_text'], $text );
+
+		else if ( $args['item_text'] )
+			$title = $args['item_text'];
+
+		else
+			$title = ''; // FIXME: WTF: better to bail here!
+
+		$image = HTML::tag( 'img', [
+			'src'     => $thumbnail_img[0],
+			'alt'     => $title,
+			'loading' => $args['item_image_loading'],
+		] );
+
+		if ( $term->count && $args['item_link'] )
+			$item = HTML::tag( 'a', [
+				'href'  => $link,
+				'title' => $args['item_title'] ? sprintf( $args['item_title'], $text ) : FALSE,
+				'class' => '-link -tax-'.$term->taxonomy,
+			], $image );
+
+		else
+			$item = HTML::tag( 'span', [
+				'title' => $args['item_title'] ? sprintf( $args['item_title'], $text ) : FALSE,
+				'class' => $args['item_link'] ? '-no-link -empty -tax-'.$term->taxonomy : FALSE,
+			], $image );
+
+		if ( $args['item_wrap'] && Text::has( $args['item_wrap'], '%' ) )
+			$item = sprintf( $args['item_wrap'], $item );
+
+		else if ( $args['item_wrap'] )
+			$item = HTML::tag( $args['item_wrap'], $item );
+
+		if ( $args['item_after_cb'] && is_callable( $args['item_after_cb'] ) ) {
+			$item.= call_user_func_array( $args['item_after_cb'], [ $term, $args, $item ] );
+
+		} else if ( $args['item_after'] ) {
+
+			if ( Text::has( $args['item_after'], '%' ) )
+				$args['item_after'] = sprintf( $args['item_after'],
+					$text,
+					HTML::escapeURL( $link ),
+					Helper::prepDescription( $term->description ),
+					Text::trimChars( $term->description )
+				);
+
+			if ( is_string( $args['item_after'] ) )
+				$item.= $args['item_after'];
+		}
+
+		if ( ! $args['item_tag'] )
+			return $before.$item.$after;
+
+		return HTML::tag( $args['item_tag'], [
+			'id'    => $args['item_anchor'] ? sprintf( $args['item_anchor'], $term->term_id, $term->slug ) : FALSE,
+			'class' => $args['item_class'],
+		], $before.$item.( $args['item_dummy'] ?: '' ).$after );
+	}
+
 	// post as title of the list
 	public static function postTitle( $post = NULL, $atts = [] )
 	{
@@ -412,57 +510,60 @@ class ShortCode extends Main
 	public static function getDefaults( $posttype = '', $taxonomy = '', $posttypes = [ 'post' ], $taxonomies = [ 'post_tag' ] )
 	{
 		return [
-			'taxonomy'       => $taxonomy,
-			'taxonomies'     => $taxonomies,
-			'posttype'       => $posttype,
-			'posttypes'      => $posttypes,
-			'id'             => '',
-			'slug'           => '',
-			'title'          => NULL, // FALSE to disable
-			'title_cb'       => FALSE,
-			'title_link'     => NULL, // FALSE to disable
-			'title_title'    => _x( 'Permanent link', 'ShortCode: Title Attr', 'geditorial' ),
-			'title_title_cb' => FALSE, // callback for title attr
-			'title_tag'      => 'h3',
-			'title_anchor'   => $taxonomy.'-%2$s',
-			'title_class'    => '-title',
-			'title_dummy'    => '<span class="-dummy"></span>',
-			'title_after'    => '',
-			'item_cb'        => FALSE,
-			'item_link'      => TRUE,
-			'item_text'      => NULL,  // callback or use %s for post title
-			'item_wrap'      => '', // use %s for item title / or html tag
-			'item_title'     => '', // use %s for post title
-			'item_title_cb'  => FALSE,
-			'item_tag'       => 'li',
-			'item_anchor'    => FALSE, // $posttype.'-%2$s',
-			'item_class'     => '-item do-sincethen',
-			'item_dummy'     => '<span class="-dummy"></span>',
-			'item_after'     => '',
-			'item_after_cb'  => FALSE,
-			'item_download'  => TRUE, // only for attachments
-			'item_filesize'  => TRUE, // only for attachments // OLD: `item_size`
-			'order_before'   => FALSE,
-			'order_zeroise'  => FALSE,
-			'order_sep'      => ' &ndash; ',
-			'list_tag'       => 'ul',
-			'list_class'     => '-list',
-			'cover'          => FALSE, // must have thumbnail
-			'future'         => 'on',
-			'mime_type'      => '', // only for attachments / like: `image`
-			'connection'     => '', // only for o2o
-			'orderby'        => '', // empty for default
-			'order'          => 'ASC',
-			'order_cb'       => FALSE, // NULL for default order ( by meta, like mag )
-			'order_start'    => 'start', // meta field for ordering
-			'order_order'    => 'order', // meta field for ordering
-			'limit'          => -1,
-			'field_module'   => 'meta', // getting meta field from
-			'context'        => NULL,
-			'wrap'           => TRUE,
-			'before'         => '', // html after wrap
-			'after'          => '', // html before wrap
-			'class'          => '', // wrap css class
+			'taxonomy'           => $taxonomy,
+			'taxonomies'         => $taxonomies,
+			'posttype'           => $posttype,
+			'posttypes'          => $posttypes,
+			'id'                 => '',
+			'slug'               => '',
+			'title'              => NULL, // FALSE to disable
+			'title_cb'           => FALSE,
+			'title_link'         => NULL, // FALSE to disable
+			'title_title'        => _x( 'Permanent link', 'ShortCode: Title Attr', 'geditorial' ),
+			'title_title_cb'     => FALSE, // callback for title attr
+			'title_tag'          => 'h3',
+			'title_anchor'       => $taxonomy.'-%2$s',
+			'title_class'        => '-title',
+			'title_dummy'        => '<span class="-dummy"></span>',
+			'title_after'        => '',
+			'item_cb'            => FALSE,
+			'item_link'          => TRUE,
+			'item_text'          => NULL,  // callback or use %s for post title
+			'item_wrap'          => '', // use %s for item title / or html tag
+			'item_title'         => '', // use %s for post title
+			'item_title_cb'      => FALSE,
+			'item_tag'           => 'li',
+			'item_anchor'        => FALSE, // $posttype.'-%2$s',
+			'item_class'         => '-item do-sincethen',
+			'item_dummy'         => '<span class="-dummy"></span>',
+			'item_after'         => '',
+			'item_after_cb'      => FALSE,
+			'item_download'      => TRUE, // only for attachments
+			'item_filesize'      => TRUE, // only for attachments // OLD: `item_size`
+			'item_image_metakey' => empty( $posttype ) ? 'image' : '_thumbnail_id',
+			'item_image_size'    => 'thumbnail',
+			'item_image_loading' => 'lazy', // FALSE to disable
+			'order_before'       => FALSE,
+			'order_zeroise'      => FALSE,
+			'order_sep'          => ' &ndash; ',
+			'list_tag'           => 'ul',
+			'list_class'         => '-list',
+			'cover'              => FALSE, // must have thumbnail
+			'future'             => 'on',
+			'mime_type'          => '', // only for attachments / like: `image`
+			'connection'         => '', // only for o2o
+			'orderby'            => '', // empty for default
+			'order'              => 'ASC',
+			'order_cb'           => FALSE, // NULL for default order ( by meta, like mag )
+			'order_start'        => 'start', // meta field for ordering
+			'order_order'        => 'order', // meta field for ordering
+			'limit'              => -1,
+			'field_module'       => 'meta', // getting meta field from
+			'context'            => NULL,
+			'wrap'               => TRUE,
+			'before'             => '', // html after wrap
+			'after'              => '', // html before wrap
+			'class'              => '', // wrap css class
 		];
 	}
 
@@ -472,6 +573,7 @@ class ShortCode extends Main
 	// list: attached: posts by inheritance
 	// list: alphabetized: posts sorted by alphabet // TODO!
 	// list: `custom`: posts by id list // TODO!
+	// list: `tiles`: post images for display // TODO!
 	public static function listPosts( $list, $posttype, $taxonomy, $atts = [], $content = NULL, $tag = '' )
 	{
 		$defs = self::getDefaults( $posttype, $taxonomy, [ $posttype ] );
@@ -1019,6 +1121,7 @@ class ShortCode extends Main
 	}
 
 	// list: `listing`: terms for display
+	// list: `tiles`: term images for display
 	// list: `thepost`: terms for the post
 	// list: `alphabetized`: terms sorted by alphabet // TODO!
 	public static function listTerms( $list, $taxonomy, $atts = [], $content = NULL, $tag = '' )
@@ -1055,6 +1158,19 @@ class ShortCode extends Main
 
 			$query['update_term_meta_cache'] = FALSE;
 
+		} else if ( 'tiles' == $list ) {
+
+			if ( empty( $args['taxonomy'] ) )
+				return $content;
+
+			$query['taxonomy']   = $args['taxonomy'];
+			$query['hide_empty'] = FALSE;
+
+			$query['meta_query'] = [ [
+				'key'     => $args['item_image_metakey'], // 'image',
+				'compare' => 'EXISTS'
+			] ];
+
 		} else if ( 'thepost' == $list ) {
 
 			if ( ! $parent = Helper::getPost( $args['id'] ) )
@@ -1074,7 +1190,7 @@ class ShortCode extends Main
 
 			// do nothing, title is disabled by the args
 
-		} else if ( 'listing' == $list ) {
+		} else if ( 'listing' == $list || 'tiles' == $list ) {
 
 			// FIXME: get the title from taxonomy object
 
@@ -1099,13 +1215,16 @@ class ShortCode extends Main
 			if ( $args['item_cb'] )
 				$html.= call_user_func_array( $args['item_cb'], [ $item, $args, $ref ] );
 
+			else if ( 'tiles' == $list )
+				$html.= self::termImage( $item, $args );
+
 			else
 				$html.= self::termItem( $item, $args );
 		}
 
 		if ( $args['list_tag'] )
 			$html = HTML::tag( $args['list_tag'], [
-				'class' => HTML::attrClass( $args['list_class'], '-terms-list' ),
+				'class' => HTML::attrClass( $args['list_class'], ( 'tiles' == $list ? '-term-tiles' : '-terms-list' ) ),
 			], $html );
 
 		if ( $args['title'] )
