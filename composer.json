@@ -23,12 +23,12 @@
   "require": {
     "php": ">=7.2",
     "composer/installers": "^1.12",
-    "mustache/mustache": "^2.13",
+    "mustache/mustache": "^2.14",
     "kzykhys/php-csv-parser": "^1.4",
     "nicmart/string-template": "^0.1.2",
     "michelf/php-markdown": "^1.9",
     "league/html-to-markdown": "^4.9",
-    "hbgl/php-code-128-encoder": "^0.2.0",
+    "hbgl/php-code-128-encoder": "^0.2.4",
     "rct567/dom-query": "^0.8.0"
   },
   "require-dev": {
@@ -51,6 +51,10 @@
     "vendor/bin": "assets/bin",
     "platform": {
       "php": "7.2"
+    },
+    "allow-plugins": {
+      "kylekatarnls/update-helper": true,
+      "composer/installers": true
     }
   },
   "autoload": {
