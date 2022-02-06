@@ -1,0 +1,104 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial WcDashboard\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"POT-Creation-Date: 2022-02-07T02:51:40+03:30\n"
+"PO-Revision-Date: 2022-02-07 02:52+0330\n"
+"Last-Translator: geminorum <contact@geminorum.ir>\n"
+"Language-Team: NULL\n"
+"Language: fa_IR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
+"X-Generator: Poedit 3.0.1\n"
+"X-Poedit-Basepath: ../../includes/Modules/WcDashboard\n"
+"X-Domain: geditorial-wc-dashboard\n"
+
+#: WcDashboard.php:32
+msgctxt "Setting Title"
+msgid "Main Message"
+msgstr "پیام اصلی"
+
+#: WcDashboard.php:33
+msgctxt "Setting Description"
+msgid "Displays as main dashboard message on front-end account page."
+msgstr ""
+
+#: WcDashboard.php:41
+msgctxt "Setting Title"
+msgid "Downloads on Dashboard"
+msgstr "دریافت‌ها روی پیشخوان"
+
+#: WcDashboard.php:42
+msgctxt "Setting Description"
+msgid "Displays purchased download products on front-end account page."
+msgstr ""
+
+#: WcDashboard.php:46
+msgctxt "Setting Title"
+msgid "Purchased on Dashboard"
+msgstr "خریدها روی پیشخوان"
+
+#: WcDashboard.php:47
+msgctxt "Setting Description"
+msgid "Displays recently purchased products on front-end account page."
+msgstr ""
+
+#: WcDashboard.php:52
+msgctxt "Setting Title"
+msgid "Dashboard Purchased Title"
+msgstr "عنوان خریدهای پیشخوان"
+
+#: WcDashboard.php:53
+msgctxt "Setting Description"
+msgid ""
+"Appears as title of the purchased products menu on front-end account page."
+msgstr ""
+
+#: WcDashboard.php:54 WcDashboard.php:120
+msgctxt "Default"
+msgid "Purchased"
+msgstr "خریدها"
+
+#: WcDashboard.php:59
+msgctxt "Setting Title"
+msgid "Dashboard Purchased Empty"
+msgstr "خریدهای پیشخوان خالی"
+
+#: WcDashboard.php:60
+msgctxt "Setting Description"
+msgid ""
+"Appears as message for empty purchased products on front-end account page."
+msgstr ""
+
+#: WcDashboard.php:61 WcDashboard.php:192
+msgctxt "Default"
+msgid "Nothing purchased yet."
+msgstr "هنوز چیزی خریداری نشده است."
+
+#: WcDashboard.php:66
+msgctxt "Setting Title"
+msgid "Overwrite Menu Titles"
+msgstr "رونویسی عنوان‌های فهرست"
+
+#: WcDashboard.php:67
+msgctxt "Setting Description"
+msgid ""
+"Changes default dashboard menu titles on front-end account page. Leave empty "
+"for default."
+msgstr ""
+
+#. translators: %1$s: user display name, %2$s: logout url
+#: WcDashboard.php:93
+msgctxt "Setting Default"
+msgid "Hello %1$s (not %1$s? <a href=\"%2$s\">Log out</a>)"
+msgstr "سلام %1$s (%1$s نیستید؟ <a href=\"%2$s\">خارج شوید</a>)"
+
+#~ msgctxt "Default"
+#~ msgid "Purchased Products"
+#~ msgstr "کالاهای خریداری‌شده"
+
+#~ msgctxt "Message"
+#~ msgid "Nothing purchased yet."
+#~ msgstr "هنوز کالایی خریداری نشده است."
