@@ -293,7 +293,7 @@ class ShortCode extends Main
 			'item_after'    => '',
 			'item_after_cb' => FALSE,
 			'item_download' => TRUE, // only for attachments
-			'item_size'     => TRUE, // only for attachments
+			'item_filesize' => TRUE, // only for attachments // OLD: `item_size`
 			'trim_chars'    => FALSE,
 			'order_before'  => FALSE,
 			'order_zeroise' => FALSE,
@@ -376,8 +376,8 @@ class ShortCode extends Main
 			}
 		}
 
-		if ( 'attachment' == $post->post_type && $args['item_size'] ) {
-			$size = TRUE === $args['item_size'] ? '&nbsp;<span class="-filesize">(%s)</span>' : $args['item_size'];
+		if ( 'attachment' == $post->post_type && $args['item_filesize'] ) {
+			$size = TRUE === $args['item_filesize'] ? '&nbsp;<span class="-filesize">(%s)</span>' : $args['item_filesize'];
 			$item.= sprintf( $size, HTML::wrapLTR( File::formatSize( filesize( get_attached_file( $post->ID ) ), 2 ) ) );
 		}
 
@@ -441,7 +441,7 @@ class ShortCode extends Main
 			'item_after'     => '',
 			'item_after_cb'  => FALSE,
 			'item_download'  => TRUE, // only for attachments
-			'item_size'      => TRUE, // only for attachments
+			'item_filesize'  => TRUE, // only for attachments // OLD: `item_size`
 			'order_before'   => FALSE,
 			'order_zeroise'  => FALSE,
 			'order_sep'      => ' &ndash; ',
