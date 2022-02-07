@@ -1,3 +1,52 @@
+### 3.22.0
+* main/helper: cache folder api
+* main/helper: optional skip filters on post titles
+* main/module: custom caps based on taxonomy
+* main/module: filter thumbnail id for paired fallback images
+* main/module: hierarchical slugs based on taxonomy args
+* main/module: logging failed register posttype/taxonomy
+* main/module: optimized page template registering
+* main/module: raise resources revised
+* main/module: support for default settings per module
+* main/plugin: default plugin constants
+* main/shortcode: better hash/group on list caching
+* main/shortcode: check for term on item helper
+* main/shortcode: rename item file size arg
+* main/shortcode: support tiles on list terms
+* main/tablelist: icon for post-id column
+* main/widget: internal api for filtering
+* main/widget: open/close group helpers
+* main/widget: support for keys field types on form update
+* main/widget: support for taxonomies in form
+* module/attachments: fallback alt to title
+* module/book: move up isbn methods
+* module/drafts: logic separation of preview status check
+* module/importer: set author/title/alt for image imports
+* module/quotation: :new: module
+* module/recount: icon on list table heading
+* module/recount: late filters for columns
+* module/recount: missed check for supported taxonomy before count
+* module/recount: optional count empty data on display
+* module/recount: recount on display for never counted
+* module/recount: separate count logic from the filter
+* module/recount: thrift mode
+* module/shortcodes: :new: shortcode `term-tiles`
+* module/terms: filtered supported raw fields
+* module/terms: filtering setting title/desc for fields
+* module/terms: meta-type for fields
+* module/terms: support hiding field columns by filter
+* module/wc-dashboard: :new: module
+* module/wc-related: hide outofstock items
+* module/wc-related: support for all taxonomies
+* module/wc-widgets: api for override settings
+* module/widgets: custom html: bypass cache optional
+* module/widgets: namesake terms: :new: widget
+* module/widgets: namesake terms: filtering the criteria
+* module/widgets: search terms: filtering the criteria
+* module/widgets: search terms: support for selective taxonomies
+* module/widgets: search terms: taxonomy name hint
+* module/widgets: search terms: widget form revised
+
 ### 3.21.0
 * :wrench: psr-4 autoloading comp
 * main/datetime: initial date string format helper
