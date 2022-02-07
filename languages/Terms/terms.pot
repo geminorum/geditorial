@@ -7,9 +7,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-10-19T20:50:52+03:30\n"
+"POT-Creation-Date: 2022-02-07T02:51:20+03:30\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.5.0\n"
+"X-Generator: WP-CLI 2.6.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Terms\n"
 "X-Domain: geditorial-terms\n"
 
@@ -285,102 +285,102 @@ msgctxt "Setting Description"
 msgid "Supports %s for terms in the selected taxonomies."
 msgstr ""
 
-#: Terms.php:893
-#: Terms.php:1063
+#: Terms.php:908
+#: Terms.php:1079
 msgctxt "Button"
 msgid "Choose"
 msgstr ""
 
-#: Terms.php:898
-#: Terms.php:1069
+#: Terms.php:913
+#: Terms.php:1085
 msgctxt "Button"
 msgid "Remove"
 msgstr ""
 
-#: Terms.php:1177
+#: Terms.php:1193
 msgctxt "Adminbar"
 msgid "Term Summary"
 msgstr ""
 
-#: Terms.php:1184
+#: Terms.php:1200
 msgctxt "Adminbar"
 msgid "Post Count"
 msgstr ""
 
-#: Terms.php:1195
-#: Terms.php:1214
+#: Terms.php:1211
+#: Terms.php:1230
 msgctxt "Adminbar"
 msgid "Description"
 msgstr ""
 
 #. translators: %s: meta title
-#: Terms.php:1226
+#: Terms.php:1242
 msgctxt "Adminbar"
 msgid "Meta: %s"
 msgstr ""
 
-#: Terms.php:1287
+#: Terms.php:1304
 msgctxt "Adminbar"
 msgid "Meta: Uknonwn"
 msgstr ""
 
-#: Terms.php:1309
+#: Terms.php:1326
 msgctxt "Adminbar"
 msgid "Summary of Terms"
 msgstr ""
 
-#: Terms.php:1385
+#: Terms.php:1402
 msgctxt "Header"
 msgid "Term Tools"
 msgstr ""
 
-#: Terms.php:1391
+#: Terms.php:1408
 msgctxt "Tools"
 msgid "Orphaned Terms"
 msgstr ""
 
-#: Terms.php:1411
+#: Terms.php:1428
 msgctxt "Button"
 msgid "Convert"
 msgstr ""
 
-#: Terms.php:1413
+#: Terms.php:1430
 msgctxt "Message"
 msgid "Converts orphaned terms into currently registered taxonomies."
 msgstr ""
 
-#: Terms.php:1421
+#: Terms.php:1438
 msgctxt "Message"
 msgid "Currently no tool available."
 msgstr ""
 
-#: Terms.php:1474
+#: Terms.php:1491
 msgctxt "Table Action"
 msgid "Purge Unregistered"
 msgstr ""
 
-#: Terms.php:1488
+#: Terms.php:1505
 msgctxt "Table Column"
 msgid "Raw"
 msgstr ""
 
-#: Terms.php:1507
+#: Terms.php:1524
 msgctxt "Header"
 msgid "Overview of Posts with Terms"
 msgstr ""
 
 #. translators: %s: term name
-#: Terms.php:1529
+#: Terms.php:1546
 msgctxt "Media State"
 msgid "Term Image for &ldquo;%s&rdquo;"
 msgstr ""
 
-#: Terms.php:1593
+#: Terms.php:1610
 msgctxt "Bulk Actions"
 msgid "Sync Image Titles"
 msgstr ""
 
-#: Terms.php:1596
+#: Terms.php:1613
 msgctxt "Bulk Actions"
 msgid "Move Tagline to Description"
 msgstr ""

@@ -2,116 +2,116 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gEditorial Widgets\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
-"POT-Creation-Date: 2021-10-07T20:25:53+03:30\n"
-"PO-Revision-Date: 2021-10-07 20:35+0330\n"
+"POT-Creation-Date: 2022-02-07T02:51:52+03:30\n"
+"PO-Revision-Date: 2022-02-07 03:03+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.0\n"
-"X-Domain: geditorial-widgets\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
+"X-Generator: Poedit 3.0.1\n"
+"X-Domain: geditorial-widgets\n"
 "X-Poedit-Basepath: ../../includes/Modules/Widgets\n"
 
-#: Widgets.php:27
+#: Widgets.php:31
 msgctxt "Setting Title"
 msgid "Widgets"
 msgstr "ابزارک‌ها"
 
-#: Widgets.php:36
+#: Widgets.php:40
 msgctxt "Setting Title"
 msgid "Widget Areas"
 msgstr "مکان‌های ابزارک"
 
-#: Widgets.php:41
+#: Widgets.php:45
 msgctxt "Setting Title"
 msgid "Action"
 msgstr "کنش"
 
-#: Widgets.php:42
+#: Widgets.php:46
 msgctxt "Setting Description"
 msgid "Action hook where the widget appears on front-end."
 msgstr ""
 
-#: Widgets.php:49
+#: Widgets.php:53
 msgctxt "Setting Title"
 msgid "Priority"
 msgstr "اولویت"
 
-#: Widgets.php:50
+#: Widgets.php:54
 msgctxt "Setting Description"
 msgid "Action priority where the widget runs on the action."
 msgstr ""
 
-#: Widgets.php:56
+#: Widgets.php:60
 msgctxt "Setting Title"
 msgid "Name"
 msgstr "نام"
 
-#: Widgets.php:57
+#: Widgets.php:61
 msgctxt "Setting Description"
 msgid "The name or title of the sidebar displayed in the Widgets interface."
 msgstr ""
 
-#: Widgets.php:62
+#: Widgets.php:66
 msgctxt "Setting Title"
 msgid "Before Widget"
 msgstr "پیش از ابزارک"
 
-#: Widgets.php:63
+#: Widgets.php:67
 msgctxt "Setting Description"
 msgid "HTML opening before each widget markup on front-end."
 msgstr ""
 
-#: Widgets.php:70
+#: Widgets.php:74
 msgctxt "Setting Title"
 msgid "After Widget"
 msgstr "پس از ابزارک"
 
-#: Widgets.php:71
+#: Widgets.php:75
 msgctxt "Setting Description"
 msgid "HTML closing after each widget markup on front-end."
 msgstr ""
 
-#: Widgets.php:78
+#: Widgets.php:82
 msgctxt "Setting Title"
 msgid "Before Title"
 msgstr "پیش از عنوان"
 
-#: Widgets.php:79
+#: Widgets.php:83
 msgctxt "Setting Description"
 msgid "HTML opening before each widget title on front-end."
 msgstr ""
 
-#: Widgets.php:86
+#: Widgets.php:90
 msgctxt "Setting Title"
 msgid "After Title"
 msgstr "پس از عنوان"
 
-#: Widgets.php:87
+#: Widgets.php:91
 msgctxt "Setting Description"
 msgid "HTML closing after each widget title on front-end."
 msgstr ""
 
-#: Widgets.php:145
+#: Widgets.php:151
 msgctxt "Widget Area Unnamed"
 msgid "[Unnamed]"
 msgstr "(بی‌نام)"
 
 #. translators: %s: widget area name
-#: Widgets.php:154
+#: Widgets.php:160
 msgctxt "Widget Area Prefix"
 msgid "Editorial: %s"
 msgstr "تحریریه: %s"
 
-#: Widgets/CustomHTML.php:18
+#: Widgets/CustomHTML.php:19
 msgctxt "Widget Title"
 msgid "Editorial: Custom HTML"
 msgstr "تحریریه: متن سفارشی"
 
-#: Widgets/CustomHTML.php:19
+#: Widgets/CustomHTML.php:20
 msgctxt "Widget Description"
 msgid "Displays arbitrary HTML code with support for shortcodes and embeds."
 msgstr "نمایش کد HTML دلخواه، همراه با پشتیبانی از شورت‌کدها و جاسازها."
@@ -141,158 +141,192 @@ msgctxt "Widget: Custom HTML"
 msgid "Automatic Paragraphs"
 msgstr "بندهای خودکار"
 
-#: Widgets/GCalEvents.php:23
+#: Widgets/CustomHTML.php:78
+msgctxt "Widget: Custom HTML"
+msgid "Bypass Caching"
+msgstr "نادیده‌گرفتن انباشت"
+
+#: Widgets/GCalEvents.php:24
 msgctxt "Widget Title"
 msgid "Editorial: Google Calendar"
 msgstr "تحریریه: تقویم گوگل"
 
-#: Widgets/GCalEvents.php:24
+#: Widgets/GCalEvents.php:25
 msgctxt "Widget Description"
 msgid "Displays list of events from a public Google Calendar."
 msgstr "نمایش فهرست رویدادها از یک تقویم گوگل عمومی."
 
-#: Widgets/GCalEvents.php:86
+#: Widgets/GCalEvents.php:87
 msgctxt "Widget: Google Calendar"
 msgid "Calendar ID:"
 msgstr "شناسه تقویم:"
 
-#: Widgets/GCalEvents.php:87
+#: Widgets/GCalEvents.php:88
 msgctxt "Widget: Google Calendar"
 msgid "Your API key:"
 msgstr "کلید API شما:"
 
 #. translators: %s: documents url
-#: Widgets/GCalEvents.php:90
+#: Widgets/GCalEvents.php:91
 msgctxt "Widget: Google Calendar"
 msgid "Get your API key <a href=\"%s\" target=\"_blank\">here</a>."
-msgstr "کلید API خود را از <a href=\"%s\" target=\"_blank\">اینجا</a> دریافت کنید."
+msgstr ""
+"کلید API خود را از <a href=\"%s\" target=\"_blank\">اینجا</a> دریافت کنید."
 
-#: Widgets/GCalEvents.php:92
+#: Widgets/GCalEvents.php:93
 msgctxt "Widget: Google Calendar"
 msgid "Start from (YYYY-MM-DD):"
 msgstr "شروع از (YYYY-MM-DD):"
 
-#: Widgets/GCalEvents.php:93
+#: Widgets/GCalEvents.php:94
 msgctxt "Widget: Google Calendar"
 msgid "Max results:"
 msgstr "حداکثر رویدادها:"
 
-#: Widgets/GCalEvents.php:94
+#: Widgets/GCalEvents.php:95
 msgctxt "Widget: Google Calendar"
 msgid "Display Time"
 msgstr "نمایش زمان"
 
-#: Widgets/GCalEvents.php:96
+#: Widgets/GCalEvents.php:97
 msgctxt "Widget: Google Calendar"
 msgid "No events scheduled."
 msgstr "رویدادی زمان‌بندی نشده است."
 
-#: Widgets/SearchTerms.php:20
+#: Widgets/NamesakeTerms.php:21
 msgctxt "Widget Title"
-msgid "Editorial: Search Terms"
-msgstr "تحریریه: جست‌وجوی رده‌ها"
+msgid "Editorial: Namesake Terms"
+msgstr "تحریریه: رده‌های هم‌نام"
 
-#: Widgets/SearchTerms.php:21
+#: Widgets/NamesakeTerms.php:22
 msgctxt "Widget Description"
-msgid "Displays the results of current search criteria on selected taxonomies."
-msgstr "نتایج جست‌وجوی رده‌ها را بر اساس عبارت فعلی نمایش می‌دهد."
+msgid ""
+"Displays the results of search for namesake to current term on selected "
+"taxonomies."
+msgstr "نتایج جست‌وجوی رده‌های مشابه رده فعلی را در رده‌بندی‌های منتخب نمایش می‌دهد."
 
-#: Widgets/SearchTerms.php:116
+#: Widgets/NamesakeTerms.php:103 Widgets/SearchTerms.php:101
+msgctxt "Widget: Setting"
+msgid "Select none for all taxonomies."
+msgstr "برای تمامی رده‌ها، هیچ رده‌ای را انتخاب نکنید."
+
+#: Widgets/NamesakeTerms.php:106 Widgets/SearchTerms.php:104
 msgctxt "Widget: Setting"
 msgid "Prefix Terms with Taxonomy Name"
 msgstr "عنوان رده‌بندی برای پیشوند رده‌ها"
 
-#: Widgets/SearchTerms.php:117
+#: Widgets/NamesakeTerms.php:107 Widgets/SearchTerms.php:105
 msgctxt "Widget: Setting"
-msgid "Strip Hash-tags"
-msgstr "پاک‌کردن هش‌تگ‌ها"
+msgid "Append Taxonomy Name after Terms"
+msgstr "پیوست نام رده‌بندی بعد از رده‌ها"
 
-#: Widgets/SearchTerms.php:118
+#: Widgets/NamesakeTerms.php:108
+msgctxt "Widget: Setting"
+msgid "Name-Like Only"
+msgstr "فقط مشابهت با نام"
+
+#: Widgets/NamesakeTerms.php:109 Widgets/SearchTerms.php:107
 msgctxt "Widget: Setting"
 msgid "Exclude Default Terms"
 msgstr "استنثنای رده‌های پیش‌فرض"
 
-#: Widgets/SearchTerms.php:119
+#: Widgets/NamesakeTerms.php:110 Widgets/SearchTerms.php:108
 msgctxt "Widget: Setting"
 msgid "Include Empty Terms"
-msgstr "اشتمال رده‌های خالی"
+msgstr "مشتمل بر رده‌های خالی"
 
-#: Widgets/SearchTerms.php:120
+#: Widgets/NamesakeTerms.php:111 Widgets/SearchTerms.php:109
 msgctxt "Widget: Setting"
 msgid "Hide on Paged Results"
 msgstr "پنهان‌سازی در صفحات شماره‌خورده"
 
-#: Widgets/WPRestPosts.php:24
+#: Widgets/SearchTerms.php:21
+msgctxt "Widget Title"
+msgid "Editorial: Search Terms"
+msgstr "تحریریه: جست‌وجوی رده‌ها"
+
+#: Widgets/SearchTerms.php:22
+msgctxt "Widget Description"
+msgid "Displays the results of current search criteria on selected taxonomies."
+msgstr ""
+"نتایج جست‌وجوی رده‌ها را بر اساس عبارت فعلی در رده‌بندی‌های منتخب نمایش می‌دهد."
+
+#: Widgets/SearchTerms.php:106
+msgctxt "Widget: Setting"
+msgid "Strip Hash-tags"
+msgstr "پاک‌کردن هش‌تگ‌ها"
+
+#: Widgets/WPRestPosts.php:25
 msgctxt "Widget Title"
 msgid "Editorial: WP-REST Posts"
 msgstr "تحریریه: نوشته‌های وردپرس"
 
-#: Widgets/WPRestPosts.php:25
+#: Widgets/WPRestPosts.php:26
 msgctxt "Widget Description"
 msgid "Displays list of posts from a public WordPress site."
 msgstr "نمایش فهرست نوشته‌ها از یک سایت وردپرس عمومی."
 
-#: Widgets/WPRestPosts.php:113
+#: Widgets/WPRestPosts.php:114
 msgctxt "Widget: WP-REST Posts"
 msgid "Resource URL:"
 msgstr "نشانی منبع:"
 
-#: Widgets/WPRestPosts.php:114
+#: Widgets/WPRestPosts.php:115
 msgctxt "Widget: WP-REST Posts"
 msgid "Endpoint:"
 msgstr "پایانه:"
 
-#: Widgets/WPRestPosts.php:115
+#: Widgets/WPRestPosts.php:116
 msgctxt "Widget: WP-REST Posts"
 msgid "Tag IDs:"
 msgstr "شناسه برچسب‌ها:"
 
-#: Widgets/WPRestPosts.php:116
+#: Widgets/WPRestPosts.php:117
 msgctxt "Widget: WP-REST Posts"
 msgid "Category IDs:"
 msgstr "شناسه دسته‌ها:"
 
-#: Widgets/WPRestPosts.php:117
+#: Widgets/WPRestPosts.php:118
 msgctxt "Widget: WP-REST Posts"
 msgid "Extra Args:"
 msgstr "آرگیومنت‌های افزوده:"
 
-#: Widgets/WPRestPosts.php:121
+#: Widgets/WPRestPosts.php:122
 msgctxt "Widget: WP-REST Posts"
 msgid "No posts!"
 msgstr "خبری نیست!"
 
-#: Widgets/WPRestSingle.php:24
+#: Widgets/WPRestSingle.php:25
 msgctxt "Widget Title"
 msgid "Editorial: WP-REST Single"
 msgstr "تحریریه: نوشته وردپرس"
 
-#: Widgets/WPRestSingle.php:25
+#: Widgets/WPRestSingle.php:26
 msgctxt "Widget Description"
 msgid "Displays single post from a public WordPress site."
 msgstr "نمایش تک نوشته از یک سایت وردپرس عمومی."
 
-#: Widgets/WPRestSingle.php:92
+#: Widgets/WPRestSingle.php:93
 msgctxt "Widget: WP-REST Single"
 msgid "Resource URL:"
 msgstr "نشانی منبع:"
 
-#: Widgets/WPRestSingle.php:93
+#: Widgets/WPRestSingle.php:94
 msgctxt "Widget: WP-REST Single"
 msgid "Endpoint:"
 msgstr "پایانه:"
 
-#: Widgets/WPRestSingle.php:94
+#: Widgets/WPRestSingle.php:95
 msgctxt "Widget: WP-REST Single"
 msgid "Extra Args:"
 msgstr "آرگیومنت‌های افزوده:"
 
-#: Widgets/WPRestSingle.php:95
+#: Widgets/WPRestSingle.php:96
 msgctxt "Widget: WP-REST Single"
 msgid "Post ID:"
 msgstr "شناسه نوشته:"
 
-#: Widgets/WPRestSingle.php:97
+#: Widgets/WPRestSingle.php:98
 msgctxt "Widget: WP-REST Single"
 msgid "No post!"
 msgstr "چیزی اشتباه است!"

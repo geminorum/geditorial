@@ -7,9 +7,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-10-19T20:50:07+03:30\n"
+"POT-Creation-Date: 2022-02-07T02:50:24+03:30\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.5.0\n"
+"X-Generator: WP-CLI 2.6.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Importer\n"
 "X-Domain: geditorial-importer\n"
 
@@ -85,7 +85,6 @@ msgid "Thumbnail"
 msgstr ""
 
 #. translators: %s: count placeholder
-#. translators: %s: count placeholder
 #: Importer.php:260
 #: Importer.php:345
 msgctxt "Header"
@@ -108,137 +107,137 @@ msgctxt "Post Field Column"
 msgid "Custom: %s"
 msgstr ""
 
-#: Importer.php:582
+#: Importer.php:594
 msgctxt "Header"
 msgid "Importer Tools"
 msgstr ""
 
-#: Importer.php:585
+#: Importer.php:597
 msgctxt "Message"
 msgid "Imports are not supported for any of the post-types!"
 msgstr ""
 
-#: Importer.php:588
+#: Importer.php:600
 msgctxt "Header"
 msgid "Import Data from CSV into Posts"
 msgstr ""
 
-#: Importer.php:594
+#: Importer.php:606
 msgctxt "Header"
 msgid "Import Remote Files as Attachments"
 msgstr ""
 
-#: Importer.php:615
-#: Importer.php:635
+#: Importer.php:627
+#: Importer.php:647
 msgctxt "Message"
 msgid "Import source is not defined!"
 msgstr ""
 
-#: Importer.php:618
-#: Importer.php:638
-#: Importer.php:688
+#: Importer.php:630
+#: Importer.php:650
+#: Importer.php:700
 msgctxt "Message"
 msgid "You are not allowed to edit this post-type!"
 msgstr ""
 
-#: Importer.php:629
+#: Importer.php:641
 msgctxt "Button"
 msgid "Import"
 msgstr ""
 
-#: Importer.php:630
-#: Importer.php:698
+#: Importer.php:642
+#: Importer.php:710
 msgctxt "Message"
 msgid "Select records to finally import."
 msgstr ""
 
-#: Importer.php:640
+#: Importer.php:652
 msgctxt "Header"
 msgid "Map the Importer"
 msgstr ""
 
-#: Importer.php:650
+#: Importer.php:662
 msgctxt "Button"
 msgid "Step 2: Map"
 msgstr ""
 
-#: Importer.php:651
+#: Importer.php:663
 msgctxt "Message"
 msgid "Map the file fields to the post-type fields."
 msgstr ""
 
-#: Importer.php:658
+#: Importer.php:670
 msgctxt "Button"
 msgid "Step 1: Attachment"
 msgstr ""
 
-#: Importer.php:659
+#: Importer.php:671
 msgctxt "Message"
 msgid "Upload or select a CSV file, post-type and user to map the import."
 msgstr ""
 
-#: Importer.php:678
+#: Importer.php:690
 msgctxt "Message"
 msgid "You are not allowed to upload files!"
 msgstr ""
 
-#: Importer.php:685
+#: Importer.php:697
 msgctxt "Message"
 msgid "Refrence meta-key is not defined!"
 msgstr ""
 
-#: Importer.php:696
+#: Importer.php:708
 msgctxt "Button"
 msgid "Import & Set Thumbnail"
 msgstr ""
 
-#: Importer.php:697
+#: Importer.php:709
 msgctxt "Button"
 msgid "Import Only"
 msgstr ""
 
-#: Importer.php:742
+#: Importer.php:754
 msgctxt "Button"
 msgid "Step 1: Meta-key"
 msgstr ""
 
-#: Importer.php:743
+#: Importer.php:755
 msgctxt "Message"
 msgid "Select a meta-key for refrence on importing the attachments."
 msgstr ""
 
-#: Importer.php:758
+#: Importer.php:770
 msgctxt "Post Field"
 msgid "Extra: Old ID"
 msgstr ""
 
-#: Importer.php:759
+#: Importer.php:771
 msgctxt "Post Field"
 msgid "Extra: Custom Meta"
 msgstr ""
 
-#: Importer.php:760
+#: Importer.php:772
 msgctxt "Post Field"
 msgid "Menu Order"
 msgstr ""
 
-#: Importer.php:761
+#: Importer.php:773
 msgctxt "Post Field"
 msgid "Post Title"
 msgstr ""
 
-#: Importer.php:762
+#: Importer.php:774
 msgctxt "Post Field"
 msgid "Post Content"
 msgstr ""
 
-#: Importer.php:763
+#: Importer.php:775
 msgctxt "Post Field"
 msgid "Post Excerpt"
 msgstr ""
 
 #. translators: %s: taxonomy name placeholder
-#: Importer.php:768
+#: Importer.php:780
 msgctxt "Post Field"
 msgid "Taxonomy: %s"
 msgstr ""

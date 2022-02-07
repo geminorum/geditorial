@@ -7,9 +7,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-10-19T20:49:32+03:30\n"
+"POT-Creation-Date: 2022-02-07T02:49:46+03:30\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.5.0\n"
+"X-Generator: WP-CLI 2.6.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Attachments\n"
 "X-Domain: geditorial-attachments\n"
 
@@ -33,91 +33,101 @@ msgctxt "Setting Description"
 msgid "Adds to the permalink of attachments, before id."
 msgstr ""
 
-#: Attachments.php:57
+#: Attachments.php:55
+msgctxt "Setting Title"
+msgid "Fallback Alt to Title"
+msgstr ""
+
+#: Attachments.php:56
+msgctxt "Setting Description"
+msgid "Tries to fill empty alt attribute with attachment title on images."
+msgstr ""
+
+#: Attachments.php:62
 msgctxt "Setting Title"
 msgid "Attachment Count"
 msgstr ""
 
-#: Attachments.php:58
+#: Attachments.php:63
 msgctxt "Setting Description"
 msgid "Displays attachment summary of the post."
 msgstr ""
 
-#: Attachments.php:60
+#: Attachments.php:65
 msgctxt "Setting Description"
 msgid "Enhances author restrictions on media library list view."
 msgstr ""
 
-#: Attachments.php:63
+#: Attachments.php:68
 msgctxt "Setting Title"
 msgid "Restrict Library"
 msgstr ""
 
-#: Attachments.php:64
+#: Attachments.php:69
 msgctxt "Setting Description"
 msgid "Restricts Media Library access to user's own uploads."
 msgstr ""
 
-#: Attachments.php:177
+#: Attachments.php:189
 msgctxt "Adminbar"
 msgid "Attachment Summary"
 msgstr ""
 
-#: Attachments.php:225
+#: Attachments.php:239
 msgctxt "Row Icon Title"
 msgid "Attachments"
 msgstr ""
 
 #. translators: %s: attachments count
-#: Attachments.php:228
+#: Attachments.php:242
 msgctxt "Noop"
 msgid "%s Attachment"
 msgid_plural "%s Attachments"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Attachments.php:233
+#: Attachments.php:247
 msgctxt "Title Attr"
 msgid "View the list of attachments"
 msgstr ""
 
-#: Attachments.php:261
+#: Attachments.php:283
 msgctxt "Shortcode"
 msgid "Attachments"
 msgstr ""
 
 #. translators: %s: attachment parent title
-#: Attachments.php:263
+#: Attachments.php:285
 msgctxt "Shortcode"
 msgid "Attachments of %s"
 msgstr ""
 
-#: Attachments.php:324
+#: Attachments.php:346
 msgctxt "Table Column"
 msgid "Custom"
 msgstr ""
 
-#: Attachments.php:335
+#: Attachments.php:357
 msgctxt "Table Column"
 msgid "Search"
 msgstr ""
 
-#: Attachments.php:347
+#: Attachments.php:369
 msgctxt "Table Column"
 msgid "Sizes"
 msgstr ""
 
-#: Attachments.php:367
+#: Attachments.php:389
 msgctxt "Table Column"
 msgid "Meta"
 msgstr ""
 
-#: Attachments.php:387
+#: Attachments.php:409
 msgctxt "Header"
 msgid "Overview of Attachments"
 msgstr ""
 
-#: Attachments.php:388
+#: Attachments.php:410
 msgctxt "Message"
 msgid "No attachments found."
 msgstr ""

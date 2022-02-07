@@ -7,9 +7,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-10-19T20:50:12+03:30\n"
+"POT-Creation-Date: 2022-02-07T02:50:31+03:30\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.5.0\n"
+"X-Generator: WP-CLI 2.6.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Magazine\n"
 "X-Domain: geditorial-magazine\n"
 
@@ -271,32 +271,32 @@ msgctxt "Button"
 msgid "Delete Terms"
 msgstr ""
 
-#: Widgets/IssueCover.php:19
+#: Widgets/IssueCover.php:20
 msgctxt "Widget Title"
 msgid "Editorial: Issue Cover"
 msgstr ""
 
-#: Widgets/IssueCover.php:20
+#: Widgets/IssueCover.php:21
 msgctxt "Widget Description"
 msgid "Displays latest, selected, connected or current issue cover."
 msgstr ""
 
-#: Widgets/IssueCover.php:98
+#: Widgets/IssueCover.php:99
 msgctxt "Widget: Issue Cover"
 msgid "The Issue:"
 msgstr ""
 
-#: Widgets/IssueCover.php:101
+#: Widgets/IssueCover.php:102
 msgctxt "Widget: Issue Cover"
 msgid "Always the latest issue"
 msgstr ""
 
-#: Widgets/IssueCover.php:102
+#: Widgets/IssueCover.php:103
 msgctxt "Widget: Issue Cover"
 msgid "Display the Number Line"
 msgstr ""
 
-#: Widgets/IssueCover.php:103
+#: Widgets/IssueCover.php:104
 msgctxt "Widget: Issue Cover"
 msgid "Link to the issue"
 msgstr ""

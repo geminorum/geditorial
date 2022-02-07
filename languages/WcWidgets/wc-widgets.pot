@@ -7,60 +7,85 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-10-19T20:51:16+03:30\n"
+"POT-Creation-Date: 2022-02-07T02:51:51+03:30\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.5.0\n"
+"X-Generator: WP-CLI 2.6.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/WcWidgets\n"
 "X-Domain: geditorial-wc-widgets\n"
 
-#: WcWidgets.php:34
+#: WcWidgets.php:35
+msgctxt "Setting Title"
+msgid "Widgets"
+msgstr ""
+
+#: WcWidgets.php:42
 msgctxt "Setting Title"
 msgid "Custom Areas"
 msgstr ""
 
-#: WcWidgets.php:35
+#: WcWidgets.php:43
 msgctxt "Setting Description"
 msgid "Registers widget area on the selected action hooks."
 msgstr ""
 
-#: WcWidgets.php:50
+#: WcWidgets.php:79
 msgctxt "Action Hook"
 msgid "Before Checkout Form"
 msgstr ""
 
-#: WcWidgets.php:55
+#: WcWidgets.php:84
 msgctxt "Action Hook"
 msgid "After Checkout Form"
 msgstr ""
 
-#: WcWidgets.php:60
+#: WcWidgets.php:89
 msgctxt "Action Hook"
 msgid "Before Order Notes"
 msgstr ""
 
-#: WcWidgets.php:65
+#: WcWidgets.php:94
 msgctxt "Action Hook"
 msgid "Review Order: Before Payment"
 msgstr ""
 
-#: WcWidgets.php:70
+#: WcWidgets.php:99
 msgctxt "Action Hook"
 msgid "Before Edit Account Address Form"
 msgstr ""
 
-#: WcWidgets.php:78
+#: WcWidgets.php:104
+msgctxt "Action Hook"
+msgid "Account Dashboard"
+msgstr ""
+
+#: WcWidgets.php:112
+msgctxt "Action Hook"
+msgid "Editorial: Dashboard Purchased Empty"
+msgstr ""
+
+#: WcWidgets.php:119
 msgctxt "Action Hook"
 msgid "Woodmart: Shop Filters Area"
 msgstr ""
 
 #. translators: %s: widget area name
-#: WcWidgets.php:115
+#: WcWidgets.php:154
 msgctxt "Widget Area Prefix"
 msgid "WooCommerce: %s"
 msgstr ""
 
 #. translators: %s: widget action hook
-#: WcWidgets.php:117
+#: WcWidgets.php:156
 msgctxt "Widget Area Description"
 msgid "Widgets in this area will appear on %s action hook."
+msgstr ""
+
+#: Widgets/WCMessage.php:21
+msgctxt "Widget Title"
+msgid "Editorial: WooCommerce Message"
+msgstr ""
+
+#: Widgets/WCMessage.php:22
+msgctxt "Widget Description"
+msgid "Displays a custom message in WooCommerce mark-up."
 msgstr ""

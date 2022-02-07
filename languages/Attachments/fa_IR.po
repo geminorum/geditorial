@@ -2,126 +2,136 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gEditorial Attachments\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
-"POT-Creation-Date: 2021-10-02T00:27:31+03:30\n"
-"PO-Revision-Date: 2021-10-02 00:38+0330\n"
+"POT-Creation-Date: 2022-01-24T18:04:06+03:30\n"
+"PO-Revision-Date: 2022-01-25 01:35+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.0\n"
+"Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
+"X-Generator: Poedit 3.0.1\n"
 "X-Domain: geditorial-attachments\n"
 "X-Poedit-Basepath: ../../includes/Modules/Attachments\n"
-"Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
 
-#: Attachments.php:40
+#: Attachments.php:41
 msgctxt "Setting Title"
 msgid "Rewrite Permalinks"
 msgstr "بازنویسی پایاپیوندها"
 
-#: Attachments.php:41
+#: Attachments.php:42
 msgctxt "Setting Description"
 msgid "Changes default permalinks into attachment id."
 msgstr "پایاپیوندهای پیش‌فرض را به شناسه پیوست تغییر می‌دهد."
 
-#: Attachments.php:46
+#: Attachments.php:47
 msgctxt "Setting Title"
 msgid "Prefix Permalinks"
 msgstr "پیشوند پایاپیوندها"
 
-#: Attachments.php:47
+#: Attachments.php:48
 msgctxt "Setting Description"
 msgid "Adds to the permalink of attachments, before id."
 msgstr "به پایاپیوند پیوست‌ها، پس از شناسه، افزوده می‌شود."
 
+#: Attachments.php:55
+msgctxt "Setting Title"
+msgid "Fallback Alt to Title"
+msgstr ""
+
 #: Attachments.php:56
+msgctxt "Setting Description"
+msgid "Tries to fill empty alt attribute with attachment title on images."
+msgstr ""
+
+#: Attachments.php:62
 msgctxt "Setting Title"
 msgid "Attachment Count"
 msgstr "شمار پیوست‌ها"
 
-#: Attachments.php:57
+#: Attachments.php:63
 msgctxt "Setting Description"
 msgid "Displays attachment summary of the post."
 msgstr "نمایش گزارش پیوست‌های نوشته."
 
-#: Attachments.php:59
+#: Attachments.php:65
 msgctxt "Setting Description"
 msgid "Enhances author restrictions on media library list view."
 msgstr ""
 "امکان محدودیت بر اساس نویسندگان را در نمای فهرست کتابخانه رسانه‌ای، افزایش "
 "می‌دهد."
 
-#: Attachments.php:62
+#: Attachments.php:68
 msgctxt "Setting Title"
 msgid "Restrict Library"
 msgstr "محدودسازی کتاب‌خانه"
 
-#: Attachments.php:63
+#: Attachments.php:69
 msgctxt "Setting Description"
 msgid "Restricts Media Library access to user's own uploads."
 msgstr "محدود کردن کتابخانه چندرسانه‌ای به پرونده‌های هر کاربر."
 
-#: Attachments.php:176
+#: Attachments.php:189
 msgctxt "Adminbar"
 msgid "Attachment Summary"
 msgstr "گزارش پیوست‌ها"
 
-#: Attachments.php:224
+#: Attachments.php:239
 msgctxt "Row Icon Title"
 msgid "Attachments"
 msgstr "پیوست‌ها"
 
 #. translators: %s: attachments count
-#: Attachments.php:227
+#: Attachments.php:242
 msgctxt "Noop"
 msgid "%s Attachment"
 msgid_plural "%s Attachments"
 msgstr[0] "%s پیوست"
 msgstr[1] "%s پیوست"
 
-#: Attachments.php:232
+#: Attachments.php:247
 msgctxt "Title Attr"
 msgid "View the list of attachments"
 msgstr "نمایش فهرست پیوست‌ها"
 
-#: Attachments.php:260
+#: Attachments.php:283
 msgctxt "Shortcode"
 msgid "Attachments"
 msgstr "پیوست‌ها"
 
 #. translators: %s: attachment parent title
-#: Attachments.php:262
+#: Attachments.php:285
 msgctxt "Shortcode"
 msgid "Attachments of %s"
 msgstr "پیوست‌ها برای %s"
 
-#: Attachments.php:313
+#: Attachments.php:346
 msgctxt "Table Column"
 msgid "Custom"
 msgstr "سفارشی"
 
-#: Attachments.php:324
+#: Attachments.php:357
 msgctxt "Table Column"
 msgid "Search"
 msgstr "جست‌وجو"
 
-#: Attachments.php:336
+#: Attachments.php:369
 msgctxt "Table Column"
 msgid "Sizes"
 msgstr "اندازه‌ها"
 
-#: Attachments.php:356
+#: Attachments.php:389
 msgctxt "Table Column"
 msgid "Meta"
 msgstr "متا"
 
-#: Attachments.php:376
+#: Attachments.php:409
 msgctxt "Header"
 msgid "Overview of Attachments"
 msgstr "مروری بر پیوست‌ها"
 
-#: Attachments.php:377
+#: Attachments.php:410
 msgctxt "Message"
 msgid "No attachments found."
 msgstr "پیوستی پیدا نشد."

@@ -2,55 +2,55 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gEditorial Headings\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"POT-Creation-Date: 2022-01-24T18:04:37+03:30\n"
+"PO-Revision-Date: 2022-01-25 01:33+0330\n"
+"Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
+"Language: fa_IR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2020-07-17T10:40:30+00:00\n"
-"PO-Revision-Date: 2020-07-17 15:14+0430\n"
-"X-Generator: Poedit 2.3.1\n"
+"Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
+"X-Generator: Poedit 3.0.1\n"
 "X-Poedit-Basepath: ../../includes/Modules/Headings\n"
 "X-Domain: geditorial-headings\n"
-"Last-Translator: geminorum <contact@geminorum.ir>\n"
-"Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"Language: fa_IR\n"
 
-#: Headings.php:33
+#: Headings.php:34
 msgctxt "Setting Title"
 msgid "ToC Title"
 msgstr "عنوان عنوان‌ها"
 
-#: Headings.php:34
+#: Headings.php:35
 msgctxt "Setting Description"
 msgid "Default text on the ToC box"
 msgstr "متن پیش‌فرض عنوان برای جعبه عنوان‌ها"
 
-#: Headings.php:35
+#: Headings.php:36
 msgctxt "Setting Default"
 msgid "Table of Contents"
 msgstr "فهرست مطالب"
 
-#: Headings.php:40
+#: Headings.php:41
 msgctxt "Setting Title"
 msgid "Anchor Title"
 msgstr "عنوان پیوند"
 
-#: Headings.php:41
+#: Headings.php:42
 msgctxt "Setting Description"
 msgid "Default text on the anchor link"
 msgstr "متن پیش‌فرض عنوان برای عنوان لینک‌ها"
 
-#: Headings.php:42
+#: Headings.php:43
 msgctxt "Setting Default"
 msgid "Permalink to this title"
 msgstr "پیوند پایدار به این عنوان"
 
-#: Headings.php:47
+#: Headings.php:48
 msgctxt "Setting Title"
 msgid "Minimum Headings"
 msgstr "حداقل عنوان‌ها"
 
-#: Headings.php:48
+#: Headings.php:49
 msgctxt "Setting Description"
 msgid "Threshold to Display ToC"
 msgstr "آستانه نمایش جعبه عنوان‌ها"

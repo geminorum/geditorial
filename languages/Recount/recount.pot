@@ -7,23 +7,43 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-10-19T20:50:30+03:30\n"
+"POT-Creation-Date: 2022-02-07T02:50:54+03:30\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.5.0\n"
+"X-Generator: WP-CLI 2.6.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Recount\n"
 "X-Domain: geditorial-recount\n"
 
-#: Recount.php:133
+#: Recount.php:37
+msgctxt "Setting Title"
+msgid "Thrift Mode"
+msgstr ""
+
+#: Recount.php:38
+msgctxt "Setting Description"
+msgid "Delays counting till needed!"
+msgstr ""
+
+#: Recount.php:42
+msgctxt "Setting Title"
+msgid "Count on Display"
+msgstr ""
+
+#: Recount.php:43
+msgctxt "Setting Description"
+msgid "Tries to re-count posts on empty data display."
+msgstr ""
+
+#: Recount.php:162
 msgctxt "Bulk Actions"
 msgid "Re-count Items"
 msgstr ""
 
-#: Recount.php:169
+#: Recount.php:198
 msgctxt "Tab Tools"
 msgid "Re-count Items"
 msgstr ""
 
-#: Recount.php:175
+#: Recount.php:204
 msgctxt "Tab Tools"
 msgid "Re-count Items for all Terms"
 msgstr ""

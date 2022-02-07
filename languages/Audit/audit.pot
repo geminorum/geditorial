@@ -7,9 +7,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-10-19T20:49:33+03:30\n"
+"POT-Creation-Date: 2022-02-07T02:49:48+03:30\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.5.0\n"
+"X-Generator: WP-CLI 2.6.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Audit\n"
 "X-Domain: geditorial-audit\n"
 
@@ -169,52 +169,62 @@ msgctxt "Button"
 msgid "Install Default Attributes"
 msgstr ""
 
-#: Audit.php:334
+#: Audit.php:327
 msgctxt "Adminbar"
 msgid "Audit Attributes"
 msgstr ""
 
-#: Audit.php:381
+#: Audit.php:374
 msgctxt "Adminbar: Title Attr"
 msgid "Auditing"
 msgstr ""
 
-#: Audit.php:399
+#: Audit.php:392
 msgctxt "Adminbar: Title Attr"
 msgid "Click to load attributes &hellip;"
 msgstr ""
 
-#: Audit.php:432
+#: Audit.php:425
 msgctxt "Dashboard Widget Title"
 msgid "Your Audit Summary"
 msgstr ""
 
-#: Audit.php:433
+#: Audit.php:426
 msgctxt "Dashboard Widget Title"
 msgid "Editorial Audit Summary"
 msgstr ""
 
-#: Audit.php:471
+#: Audit.php:462
+msgctxt "Header"
+msgid "Content Audit Tools"
+msgstr ""
+
+#: Audit.php:465
+msgctxt "Card Title"
+msgid "Empty Fields"
+msgstr ""
+
+#: Audit.php:480
 msgctxt "Message"
 msgid "No reports available!"
 msgstr ""
 
-#: Audit.php:477
+#: Audit.php:486
 msgctxt "Header"
 msgid "Audit Reports"
 msgstr ""
 
-#: Audit.php:481
+#: Audit.php:490
 msgctxt "Reports"
 msgid "By User"
 msgstr ""
 
-#: Audit.php:486
+#: Audit.php:495
 msgctxt "None"
 msgid "All Users"
 msgstr ""
 
-#: Audit.php:495
+#: Audit.php:504
 msgctxt "Button"
 msgid "Apply Filter"
 msgstr ""

@@ -7,103 +7,129 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-10-19T20:51:12+03:30\n"
+"POT-Creation-Date: 2022-02-07T02:51:45+03:30\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.5.0\n"
+"X-Generator: WP-CLI 2.6.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/WcRelated\n"
 "X-Domain: geditorial-wc-related\n"
 
-#: WcRelated.php:34
+#: WcRelated.php:36
+#: WcRelated.php:92
+msgctxt "Setting Title"
+msgid "Hide Out-of-Stock"
+msgstr ""
+
+#: WcRelated.php:37
+msgctxt "Setting Description"
+msgid "Modifies the visibility of out-of-stock items on related products. Applicable only if out-of-stock items are not generally hidden."
+msgstr ""
+
+#: WcRelated.php:42
+msgctxt "Setting Title"
+msgid "Hide No Thumbnail"
+msgstr ""
+
+#: WcRelated.php:43
+msgctxt "Setting Description"
+msgid "Modifies the visibility of items without thumbnail on related products. Applicable only if out-of-stock items are not generally hidden."
+msgstr ""
+
+#: WcRelated.php:48
 msgctxt "Setting Title"
 msgid "Releated by Categories"
 msgstr ""
 
-#: WcRelated.php:35
+#: WcRelated.php:49
 msgctxt "Setting Description"
 msgid "Sets products are related by product category."
 msgstr ""
 
-#: WcRelated.php:40
+#: WcRelated.php:54
 msgctxt "Setting Title"
 msgid "Exclude Categories"
 msgstr ""
 
-#: WcRelated.php:41
+#: WcRelated.php:55
 msgctxt "Setting Description"
 msgid "Strips category terms form list of releated by. Leave empty to disable."
 msgstr ""
 
-#: WcRelated.php:47
+#: WcRelated.php:61
 msgctxt "Setting Title"
 msgid "Releated by Tags"
 msgstr ""
 
-#: WcRelated.php:48
+#: WcRelated.php:62
 msgctxt "Setting Description"
 msgid "Sets products are related by product tag."
 msgstr ""
 
-#: WcRelated.php:53
+#: WcRelated.php:67
 msgctxt "Setting Title"
 msgid "Exclude Tags"
 msgstr ""
 
-#: WcRelated.php:54
+#: WcRelated.php:68
 msgctxt "Setting Description"
 msgid "Strips tag terms form list of releated by. Leave empty to disable."
 msgstr ""
 
-#: WcRelated.php:59
+#: WcRelated.php:73
 msgctxt "Setting Title"
 msgid "Exclude Default Terms"
 msgstr ""
 
-#: WcRelated.php:60
+#: WcRelated.php:74
 msgctxt "Setting Description"
 msgid "Strips default term form list of releated by."
 msgstr ""
 
-#: WcRelated.php:64
+#: WcRelated.php:78
 msgctxt "Setting Title"
 msgid "Force Display Releated"
 msgstr ""
 
-#: WcRelated.php:65
+#: WcRelated.php:79
 msgctxt "Setting Description"
 msgid "Sets all products are related."
 msgstr ""
 
-#: WcRelated.php:71
+#: WcRelated.php:85
 msgctxt "Setting Title"
 msgid "Related on Tabs"
 msgstr ""
 
-#: WcRelated.php:72
+#: WcRelated.php:86
 msgctxt "Setting Description"
 msgid "Displays Upsells and Related products on front-end product tabs."
 msgstr ""
 
-#: WcRelated.php:79
-msgctxt "Setting Title"
-msgid "Related by Attribute"
-msgstr ""
-
-#: WcRelated.php:84
-msgctxt "Setting Title"
-msgid "Attribute"
-msgstr ""
-
-#: WcRelated.php:85
+#: WcRelated.php:93
 msgctxt "Setting Description"
-msgid "Target attribute for related products."
+msgid "Enforces the visibility of out-of-stock items on related by attribute products."
 msgstr ""
 
-#: WcRelated.php:92
+#: WcRelated.php:98
+msgctxt "Setting Title"
+msgid "Related by Taxonomy"
+msgstr ""
+
+#: WcRelated.php:103
+msgctxt "Setting Title"
+msgid "Taxonomy"
+msgstr ""
+
+#: WcRelated.php:104
+msgctxt "Setting Description"
+msgid "Target taxonomy for related products."
+msgstr ""
+
+#: WcRelated.php:111
 msgctxt "Setting Title"
 msgid "Heading"
 msgstr ""
 
-#: WcRelated.php:93
+#: WcRelated.php:112
 msgctxt "Setting Description"
 msgid "Template for related products heading."
 msgstr ""

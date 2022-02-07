@@ -7,9 +7,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-10-19T20:51:15+03:30\n"
+"POT-Creation-Date: 2022-02-07T02:51:50+03:30\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.5.0\n"
+"X-Generator: WP-CLI 2.6.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/WcUnits\n"
 "X-Domain: geditorial-wc-units\n"
 
@@ -84,14 +84,6 @@ msgctxt "Setting Description"
 msgid "Used as not available string upon display of weights. Leave empty to disable."
 msgstr ""
 
-#. translators: %s: unit name
-#. translators: %s: unit name
-#. translators: %s: unit name
-#. translators: %s: unit name
-#. translators: %s: unit name
-#. translators: %s: unit name
-#. translators: %s: unit name
-#. translators: %s: unit name
 #. translators: %s: unit name
 #: WcUnits.php:81
 #: WcUnits.php:91

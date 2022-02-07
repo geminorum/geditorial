@@ -2,386 +2,386 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gEditorial Terms\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
-"POT-Creation-Date: 2021-10-19T11:17:41+03:30\n"
-"PO-Revision-Date: 2021-10-19 12:12+0330\n"
+"POT-Creation-Date: 2022-01-24T18:05:34+03:30\n"
+"PO-Revision-Date: 2022-01-24 18:08+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.0\n"
-"X-Domain: geditorial-terms\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
+"X-Generator: Poedit 3.0.1\n"
+"X-Domain: geditorial-terms\n"
 "X-Poedit-Basepath: ../../includes/Modules/Terms\n"
 
-#: Terms.php:42
+#: Terms.php:43
 msgctxt "Setting Title"
 msgid "Prevent Deletion"
 msgstr "جلوگیری از حذف"
 
-#: Terms.php:43
+#: Terms.php:44
 msgctxt "Setting Description"
 msgid "Exempts the terms with meta-data from bulk empty deletions."
 msgstr ""
 
-#: Terms.php:58
+#: Terms.php:59
 msgctxt "Titles"
 msgid "Order"
 msgstr "چینش"
 
-#: Terms.php:59
+#: Terms.php:60
 msgctxt "Titles"
 msgid "Tagline"
 msgstr "معرفی کوتاه"
 
-#: Terms.php:60
+#: Terms.php:61
 msgctxt "Titles"
 msgid "Contact"
 msgstr "ارتباط"
 
-#: Terms.php:61
+#: Terms.php:62
 msgctxt "Titles"
 msgid "Image"
 msgstr "تصویر"
 
-#: Terms.php:62
+#: Terms.php:63
 msgctxt "Titles"
 msgid "Author"
 msgstr "نویسنده"
 
-#: Terms.php:63
+#: Terms.php:64
 msgctxt "Titles"
 msgid "Color"
 msgstr "رنگ"
 
-#: Terms.php:64
+#: Terms.php:65
 msgctxt "Titles"
 msgid "Role"
 msgstr "نقش"
 
-#: Terms.php:65
+#: Terms.php:66
 msgctxt "Titles"
 msgid "Posttype"
 msgstr "نوع‌نوشته"
 
-#: Terms.php:66
+#: Terms.php:67
 msgctxt "Titles"
 msgid "Roles"
 msgstr "نقش‌ها"
 
-#: Terms.php:67
+#: Terms.php:68
 msgctxt "Titles"
 msgid "Posttypes"
 msgstr "نوع‌نوشته‌ها"
 
-#: Terms.php:68
+#: Terms.php:69
 msgctxt "Titles"
 msgid "Arrow"
 msgstr "جهت"
 
-#: Terms.php:69
+#: Terms.php:70
 msgctxt "Titles"
 msgid "Label"
 msgstr "برچسب"
 
-#: Terms.php:70
+#: Terms.php:71
 msgctxt "Titles"
 msgid "Code"
 msgstr "کد"
 
-#: Terms.php:71
+#: Terms.php:72
 msgctxt "Titles"
 msgid "Barcode"
 msgstr "بارکد"
 
-#: Terms.php:74
+#: Terms.php:75
 msgctxt "Descriptions"
 msgid ""
 "Terms are usually ordered alphabetically, but you can choose your own order by "
 "numbers."
 msgstr ""
 
-#: Terms.php:75
+#: Terms.php:76
 msgctxt "Descriptions"
 msgid "Gives more information about the term in a short phrase."
 msgstr ""
 
-#: Terms.php:76
+#: Terms.php:77
 msgctxt "Descriptions"
 msgid "Adds a way to contact someone about the term, by url, email or phone."
 msgstr ""
 
-#: Terms.php:77
+#: Terms.php:78
 msgctxt "Descriptions"
 msgid "Assigns a custom image to visually separate terms from each other."
 msgstr ""
 
-#: Terms.php:78
+#: Terms.php:79
 msgctxt "Descriptions"
 msgid "Sets a user as term author to help identify who created or owns each term."
 msgstr ""
 
-#: Terms.php:79
+#: Terms.php:80
 msgctxt "Descriptions"
 msgid "Assigns a custom color to visually separate terms from each other."
 msgstr ""
 
-#: Terms.php:80
+#: Terms.php:81
 msgctxt "Descriptions"
 msgid "Terms can have unique role visibility to help separate them for user roles."
 msgstr ""
 
-#: Terms.php:81
+#: Terms.php:82
 msgctxt "Descriptions"
 msgid "Terms can have unique roles visibility to help separate them for user roles."
 msgstr ""
 
-#: Terms.php:82
+#: Terms.php:83
 msgctxt "Descriptions"
 msgid "Terms can have unique posttype visibility to help separate them on editing."
 msgstr ""
 
-#: Terms.php:83
+#: Terms.php:84
 msgctxt "Descriptions"
 msgid "Terms can have unique posttypes visibility to help separate them on editing."
 msgstr ""
 
-#: Terms.php:84
+#: Terms.php:85
 msgctxt "Descriptions"
 msgid "Terms can have direction arrow to help orginize them."
 msgstr ""
 
-#: Terms.php:85
+#: Terms.php:86
 msgctxt "Descriptions"
 msgid "Terms can have text label to help orginize them."
 msgstr ""
 
-#: Terms.php:86
+#: Terms.php:87
 msgctxt "Descriptions"
 msgid "Terms can have text code to help orginize them."
 msgstr ""
 
-#: Terms.php:87
+#: Terms.php:88
 msgctxt "Descriptions"
 msgid "Terms can have barcode to help orginize them."
 msgstr ""
 
-#: Terms.php:90
+#: Terms.php:91
 msgctxt "Column Title: Order"
 msgid "Order"
 msgstr "چینش"
 
-#: Terms.php:91
+#: Terms.php:92
 msgctxt "Column Title: Tagline"
 msgid "Tagline"
 msgstr "معرفی"
 
-#: Terms.php:92
+#: Terms.php:93
 msgctxt "Column Title: Contact"
 msgid "Contact"
 msgstr "ارتباط"
 
-#: Terms.php:93
+#: Terms.php:94
 msgctxt "Column Title: Image"
 msgid "Image"
 msgstr "تصـ"
 
-#: Terms.php:94
+#: Terms.php:95
 msgctxt "Column Title: Author"
 msgid "Author"
 msgstr "نویسنده"
 
-#: Terms.php:95
+#: Terms.php:96
 msgctxt "Column Title: Color"
 msgid "Color"
 msgstr "رنگ"
 
-#: Terms.php:96
+#: Terms.php:97
 msgctxt "Column Title: Role"
 msgid "Role"
 msgstr "نقش"
 
-#: Terms.php:97
+#: Terms.php:98
 msgctxt "Column Title: Roles"
 msgid "Roles"
 msgstr "نقش‌ها"
 
-#: Terms.php:98
+#: Terms.php:99
 msgctxt "Column Title: Posttype"
 msgid "Posttype"
 msgstr "نوع‌نوشته"
 
-#: Terms.php:99
+#: Terms.php:100
 msgctxt "Column Title: Posttypes"
 msgid "Posttypes"
 msgstr "نوع‌نوشته‌ها"
 
-#: Terms.php:100
+#: Terms.php:101
 msgctxt "Column Title: Arrow"
 msgid "Arrow"
 msgstr "جهت"
 
-#: Terms.php:101
+#: Terms.php:102
 msgctxt "Column Title: Label"
 msgid "Label"
 msgstr "برچسب"
 
-#: Terms.php:102
+#: Terms.php:103
 msgctxt "Column Title: Label"
 msgid "Code"
 msgstr "کد"
 
-#: Terms.php:103
+#: Terms.php:104
 msgctxt "Column Title: Label"
 msgid "Barcode"
 msgstr "بارکد"
 
-#: Terms.php:104
+#: Terms.php:105
 msgctxt "Column Title: Posts"
 msgid "Posts"
 msgstr "نوشته‌ها"
 
-#: Terms.php:107
+#: Terms.php:108
 msgctxt "Arrow Directions"
 msgid "Undefined"
 msgstr "تعریف‌نشده"
 
-#: Terms.php:108
+#: Terms.php:109
 msgctxt "Arrow Directions"
 msgid "Up"
 msgstr "بالا"
 
-#: Terms.php:109
+#: Terms.php:110
 msgctxt "Arrow Directions"
 msgid "Right"
 msgstr "راست"
 
-#: Terms.php:110
+#: Terms.php:111
 msgctxt "Arrow Directions"
 msgid "Down"
 msgstr "پایین"
 
-#: Terms.php:111
+#: Terms.php:112
 msgctxt "Arrow Directions"
 msgid "Left"
 msgstr "چپ"
 
-#: Terms.php:115
+#: Terms.php:116
 msgctxt "Javascript String"
 msgid "Choose an Image"
 msgstr "تصویری را انتخاب کنید"
 
-#: Terms.php:116
+#: Terms.php:117
 msgctxt "Javascript String"
 msgid "Set as image"
 msgstr "انتخاب تصویر"
 
 #. translators: %s: field name
-#: Terms.php:170
+#: Terms.php:171
 msgctxt "Setting Title"
 msgid "Term %s"
 msgstr "%s رده"
 
 #. translators: %s: field name
-#: Terms.php:177
+#: Terms.php:178
 msgctxt "Setting Description"
 msgid "Supports %s for terms in the selected taxonomies."
 msgstr "%s را در رده‌بندی‌های انتخاب‌شده پشتیبانی می‌کند."
 
-#: Terms.php:892 Terms.php:1062
+#: Terms.php:908 Terms.php:1079
 msgctxt "Button"
 msgid "Choose"
 msgstr "انتخاب کنید"
 
-#: Terms.php:897 Terms.php:1068
+#: Terms.php:913 Terms.php:1085
 msgctxt "Button"
 msgid "Remove"
 msgstr "پاک کنید"
 
-#: Terms.php:1176
+#: Terms.php:1193
 msgctxt "Adminbar"
 msgid "Term Summary"
 msgstr "گزارش رده"
 
-#: Terms.php:1183
+#: Terms.php:1200
 msgctxt "Adminbar"
 msgid "Post Count"
 msgstr "شمار نوشته‌ها"
 
-#: Terms.php:1194 Terms.php:1213
+#: Terms.php:1211 Terms.php:1230
 msgctxt "Adminbar"
 msgid "Description"
 msgstr "توضیحات"
 
 #. translators: %s: meta title
-#: Terms.php:1225
+#: Terms.php:1242
 msgctxt "Adminbar"
 msgid "Meta: %s"
 msgstr "متا: %s"
 
-#: Terms.php:1286
+#: Terms.php:1304
 msgctxt "Adminbar"
 msgid "Meta: Uknonwn"
 msgstr "متا: نامشخص"
 
-#: Terms.php:1308
+#: Terms.php:1326
 msgctxt "Adminbar"
 msgid "Summary of Terms"
 msgstr "گزارش رده‌ها"
 
-#: Terms.php:1384
+#: Terms.php:1402
 msgctxt "Header"
 msgid "Term Tools"
 msgstr "ابزارهای رده‌ها"
 
-#: Terms.php:1390
+#: Terms.php:1408
 msgctxt "Tools"
 msgid "Orphaned Terms"
 msgstr "رده‌های بدون رده‌بندی"
 
-#: Terms.php:1410
+#: Terms.php:1428
 msgctxt "Button"
 msgid "Convert"
 msgstr "تبدیل"
 
-#: Terms.php:1412
+#: Terms.php:1430
 msgctxt "Message"
 msgid "Converts orphaned terms into currently registered taxonomies."
 msgstr "رده‌های بدون رده‌بندی را، به رده‌بندی‌های فعال تبدیل می‌کند."
 
-#: Terms.php:1420
+#: Terms.php:1438
 msgctxt "Message"
 msgid "Currently no tool available."
 msgstr "هم‌اکنون هیچ ابزاری در دسترس نیست."
 
-#: Terms.php:1473
+#: Terms.php:1491
 msgctxt "Table Action"
 msgid "Purge Unregistered"
 msgstr "پاک‌سازی ثبت‌نشده‌ها"
 
-#: Terms.php:1487
+#: Terms.php:1505
 msgctxt "Table Column"
 msgid "Raw"
 msgstr "خام"
 
-#: Terms.php:1506
+#: Terms.php:1524
 msgctxt "Header"
 msgid "Overview of Posts with Terms"
 msgstr "مروری بر نوشته‌های رده‌بندی‌شده"
 
 #. translators: %s: term name
-#: Terms.php:1528
+#: Terms.php:1546
 msgctxt "Media State"
 msgid "Term Image for &ldquo;%s&rdquo;"
 msgstr "تصویر رده برای &ldquo;%s&rdquo;"
 
-#: Terms.php:1592
+#: Terms.php:1610
 msgctxt "Bulk Actions"
 msgid "Sync Image Titles"
 msgstr "همگام‌سازی عنوان‌های تصویر"
 
-#: Terms.php:1595
+#: Terms.php:1613
 msgctxt "Bulk Actions"
 msgid "Move Tagline to Description"
 msgstr "انتقال معرفی به توضیحات"
