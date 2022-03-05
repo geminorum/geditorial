@@ -108,6 +108,9 @@
     "plugin": {
       "exclude": [
         ".temp",
+        ".git",
+        ".imdone",
+        ".build",
         ".github",
         "assets/vendor",
         "assets/components",

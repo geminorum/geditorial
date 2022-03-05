@@ -92,9 +92,9 @@
       .pipe(gulp.dest(config.output.images));
   });
 
-  function i18nExtra (config) {
-    return '--exclude="' + config.exclude.toString() + '"' +
-          ' --file-comment="' + config.comment.toString() + '"' +
+  function i18nExtra (i18n) {
+    return '--exclude="' + i18n.exclude.toString() + '"' +
+          ' --file-comment="' + i18n.comment.toString() + '"' +
           ' --skip-plugins --skip-themes --skip-packages' +
           (debug ? ' --debug' : '');
   }
