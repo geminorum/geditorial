@@ -1,3 +1,12 @@
+### 3.22.1
+* main/widget: :warning: passing new instance as base
+* main/widget: custom title on the form
+* main/widget: wrap as items on the form
+* module/book: :warning: missing return on isbn links
+* module/book: more preping meta fields data
+* module/importer: non-forced old id numbers
+* module/regional: :new: module
+
 ### 3.22.0
 * main/helper: cache folder api
 * main/helper: optional skip filters on post titles
