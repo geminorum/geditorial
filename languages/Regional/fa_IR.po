@@ -1,0 +1,60 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Regional\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"POT-Creation-Date: 2022-02-07T02:50:55+03:30\n"
+"PO-Revision-Date: 2022-03-04 02:58+0330\n"
+"Last-Translator: geminorum <contact@geminorum.ir>\n"
+"Language-Team: NULL\n"
+"Language: fa_IR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
+"X-Generator: Poedit 3.0.1\n"
+"X-Poedit-Basepath: ../../includes/Modules/Regional\n"
+"X-Domain: geditorial-regional\n"
+
+#: Regional.php:49
+msgid "Language"
+msgid_plural "Languages"
+msgstr[0] "زبان‌ها"
+msgstr[1] "زبان"
+
+#: Regional.php:57
+msgctxt "Show Option All"
+msgid "Language"
+msgstr "زبان"
+
+#: Regional.php:58
+msgctxt "Show Option None"
+msgid "(Uknonwn Language)"
+msgstr "(زبان نامشخص)"
+
+#: Regional.php:64
+msgctxt "Default Term: Language"
+msgid "Arabic"
+msgstr "عربی"
+
+#: Regional.php:65
+msgctxt "Default Term: Language"
+msgid "Farsi"
+msgstr "فارسی"
+
+#: Regional.php:66
+msgctxt "Default Term: Language"
+msgid "English"
+msgstr "انگلیسی"
+
+#: Regional.php:67
+msgctxt "Default Term: Language"
+msgid "French"
+msgstr "فرانسه"
+
+#~ msgctxt "Taxonomy Menu"
+#~ msgid "Regional"
+#~ msgstr "بومی"
+
+#~ msgctxt "Column Title"
+#~ msgid "Regional"
+#~ msgstr "بومی"

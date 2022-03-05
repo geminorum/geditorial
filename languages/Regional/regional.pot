@@ -1,0 +1,50 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Regional 3.22.1\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Last-Translator: NULL\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2022-03-05T22:03:04+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.6.0\n"
+"X-Poedit-Basepath: ../../includes/Modules/Regional\n"
+"X-Domain: geditorial-regional\n"
+
+#: Regional.php:49
+msgid "Language"
+msgid_plural "Languages"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Regional.php:57
+msgctxt "Show Option All"
+msgid "Language"
+msgstr ""
+
+#: Regional.php:58
+msgctxt "Show Option None"
+msgid "(Uknonwn Language)"
+msgstr ""
+
+#: Regional.php:64
+msgctxt "Default Term: Language"
+msgid "Arabic"
+msgstr ""
+
+#: Regional.php:65
+msgctxt "Default Term: Language"
+msgid "Farsi"
+msgstr ""
+
+#: Regional.php:66
+msgctxt "Default Term: Language"
+msgid "English"
+msgstr ""
+
+#: Regional.php:67
+msgctxt "Default Term: Language"
+msgid "French"
+msgstr ""
