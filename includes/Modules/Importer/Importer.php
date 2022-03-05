@@ -791,7 +791,7 @@ class Importer extends gEditorial\Module
 			case 'importer_post_content': return Helper::kses( $value, 'html' );
 			case 'importer_post_excerpt': return Helper::kses( $value, 'text' );
 
-			case 'importer_old_id': return Number::intval( $value );
+			case 'importer_old_id': return Number::intval( $value, FALSE );
 			case 'importer_custom_meta': return Helper::kses( $value, 'text' );
 		}
 
