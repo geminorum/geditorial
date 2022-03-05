@@ -2,18 +2,18 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gEditorial Specs\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
-"POT-Creation-Date: 2020-08-09T22:11:56+00:00\n"
-"PO-Revision-Date: 2020-08-11 03:32+0430\n"
+"POT-Creation-Date: 2022-02-07T02:51:10+03:30\n"
+"PO-Revision-Date: 2022-03-04 05:52+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.4\n"
+"Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
+"X-Generator: Poedit 3.0.1\n"
 "X-Poedit-Basepath: ../../includes/Modules/Specs\n"
 "X-Domain: geditorial-specs\n"
-"Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
 
 #: Specs.php:52
 msgctxt "Strings: Title"
@@ -62,17 +62,17 @@ msgid_plural "Specifications"
 msgstr[0] "ویژگی‌ها"
 msgstr[1] "ویژگی"
 
-#: Specs.php:295
+#: Specs.php:299
 msgctxt "Sortable Handler"
 msgid "Sort me!"
 msgstr "مرتب کن!"
 
-#: Specs.php:298
+#: Specs.php:302
 msgctxt "Sortable Trash"
 msgid "Trash me!"
 msgstr "حذف کن!"
 
-#: Specs.php:314 Specs.php:450
+#: Specs.php:318 Specs.php:452
 msgctxt "Modules: Specs"
 msgid "Unknown Field"
 msgstr "فیلد ناشناخته"

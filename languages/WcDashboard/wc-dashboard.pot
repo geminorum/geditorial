@@ -1,13 +1,13 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gEditorial WcDashboard 3.21.0\n"
+"Project-Id-Version: gEditorial WcDashboard 3.22.1\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "Last-Translator: NULL\n"
 "Language-Team: NULL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-02-07T02:51:40+03:30\n"
+"POT-Creation-Date: 2022-03-05T22:03:39+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/WcDashboard\n"
@@ -54,7 +54,7 @@ msgid "Appears as title of the purchased products menu on front-end account page
 msgstr ""
 
 #: WcDashboard.php:54
-#: WcDashboard.php:120
+#: WcDashboard.php:119
 msgctxt "Default"
 msgid "Purchased"
 msgstr ""
@@ -70,7 +70,7 @@ msgid "Appears as message for empty purchased products on front-end account page
 msgstr ""
 
 #: WcDashboard.php:61
-#: WcDashboard.php:192
+#: WcDashboard.php:191
 msgctxt "Default"
 msgid "Nothing purchased yet."
 msgstr ""

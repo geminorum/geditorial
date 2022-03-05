@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gEditorial Book\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
-"POT-Creation-Date: 2022-01-24T18:04:08+03:30\n"
-"PO-Revision-Date: 2022-01-25 01:36+0330\n"
+"POT-Creation-Date: 2022-03-04T03:26:44+00:00\n"
+"PO-Revision-Date: 2022-03-04 06:58+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -559,22 +559,38 @@ msgctxt "Header"
 msgid "Overview of Meta Information about Related Publications"
 msgstr "مروری بر اطلاعات فراداده درباره نشرهای مرتبط"
 
-#: Book.php:1062
+#. translators: %s: total pages
+#: Book.php:1034
+msgctxt "Noop"
+msgid "%s Page"
+msgid_plural "%s Pages"
+msgstr[0] "%s صفحه"
+msgstr[1] "%s صفحه"
+
+#. translators: %s: total volumes
+#: Book.php:1037
+msgctxt "Noop"
+msgid "%s Volume"
+msgid_plural "%s Volumes"
+msgstr[0] "%s جلد"
+msgstr[1] "%s جلد"
+
+#: Book.php:1066
 msgctxt "Import Field"
 msgid "Book: Publication ID"
 msgstr "کتاب: شناسه نشر مرتبط"
 
-#: Book.php:1063
+#: Book.php:1067
 msgctxt "Import Field"
 msgid "Book: Publication Title"
 msgstr "کتاب: عنوان نشر مرتبط"
 
-#: Book.php:1064
+#: Book.php:1068
 msgctxt "Import Field"
 msgid "Book: Publication Ref (P2P)"
 msgstr "کتاب: ارجاع نشر مرتبط"
 
-#: Book.php:1065
+#: Book.php:1069
 msgctxt "Import Field"
 msgid "Book: Publication Desc (P2P)"
 msgstr "کتاب: توضیحات نشر مرتبط"

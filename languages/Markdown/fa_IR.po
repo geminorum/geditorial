@@ -2,105 +2,105 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gEditorial Markdown\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
-"POT-Creation-Date: 2020-08-09T18:50:16+00:00\n"
-"PO-Revision-Date: 2020-08-10 02:33+0430\n"
+"POT-Creation-Date: 2022-02-07T02:50:32+03:30\n"
+"PO-Revision-Date: 2022-03-04 05:49+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.4\n"
+"Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
+"X-Generator: Poedit 3.0.1\n"
 "X-Poedit-Basepath: ../../includes/Modules/Markdown\n"
 "X-Domain: geditorial-markdown\n"
-"Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
 
-#: Markdown.php:39
+#: Markdown.php:40
 msgctxt "Setting Title"
 msgid "Wiki Linking"
 msgstr "پیونددهی ویکی"
 
-#: Markdown.php:40
+#: Markdown.php:41
 msgctxt "Setting Description"
 msgid "Converts wiki like markup to internal links."
 msgstr ""
 
-#: Markdown.php:95
+#: Markdown.php:96
 msgctxt "Adminbar"
 msgid "Markdown Summary"
 msgstr "مارک‌داون"
 
-#: Markdown.php:104
+#: Markdown.php:105
 msgctxt "Adminbar"
 msgid "Markdown Convert"
 msgstr "تبدیل به مارک‌داون"
 
-#: Markdown.php:114
+#: Markdown.php:115
 msgctxt "Adminbar"
 msgid "Markdown Process"
 msgstr "پردازش مارک‌داون"
 
-#: Markdown.php:122
+#: Markdown.php:123
 msgctxt "Adminbar"
 msgid "Markdown Cleanup"
 msgstr "پالایش مارک‌داون"
 
-#: Markdown.php:130
+#: Markdown.php:131
 msgctxt "Adminbar"
 msgid "Markdown Discard"
 msgstr "برگشت از مارک‌داون"
 
-#: Markdown.php:160
+#: Markdown.php:161
 msgctxt "Message"
 msgid "Unable process Makrdown content into HTML. Please try again."
 msgstr ""
 
-#: Markdown.php:168
+#: Markdown.php:169
 msgctxt "Message"
 msgid "Unable convert content into Makrdown. Please try again."
 msgstr ""
 
-#: Markdown.php:177
+#: Markdown.php:178
 msgctxt "Message"
 msgid "Unable cleanup Makrdown content. Please try again."
 msgstr ""
 
-#: Markdown.php:185
+#: Markdown.php:186
 msgctxt "Message"
 msgid "Unable discard Makrdown content back into HTML. Please try again."
 msgstr ""
 
-#: Markdown.php:477
+#: Markdown.php:478
 msgctxt "Table Action"
 msgid "Convert into Markdown"
 msgstr "تبدیل به مارک‌داون"
 
-#: Markdown.php:478
+#: Markdown.php:479
 msgctxt "Table Action"
 msgid "Re-Process Markdown"
 msgstr "پردازش دوباره مارک‌داون"
 
-#: Markdown.php:479
+#: Markdown.php:480
 msgctxt "Table Action"
 msgid "Cleanup Markdown"
 msgstr "پالایش مارک‌داون"
 
-#: Markdown.php:480
+#: Markdown.php:481
 msgctxt "Table Action"
 msgid "Discard Markdown"
 msgstr "برگشت از مارک‌داون"
 
-#: Markdown.php:491
+#: Markdown.php:492
 msgctxt "Table Column"
 msgid "Markdown"
 msgstr "مـ. د."
 
-#: Markdown.php:502
+#: Markdown.php:503
 msgctxt "Header"
 msgid "Overview of Markdown Posts"
 msgstr "مروری بر نوشته‌ها به مارک‌داون"
 
-#: Markdown.php:503
+#: Markdown.php:504
 msgctxt "Message"
 msgid "No markdown posts found."
 msgstr "نوشته‌ای با مارک‌داون پیدا نشد."
