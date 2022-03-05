@@ -3,6 +3,7 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
+use geminorum\gEditorial\Datetime;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Settings;
@@ -1018,9 +1019,17 @@ class Book extends gEditorial\Module
 	{
 		switch ( $field ) {
 			case 'publication_isbn': return ModuleHelper::ISBN( $meta );
-			case 'total_pages': return Number::format( $meta );
-			case 'total_volumes': return Number::format( $meta );
+			case 'publication_date': return Number::localize( Datetime::stringFormat( $meta ) );
 			case 'collection': return HTML::link( $meta, WordPress::getSearchLink( $meta ) );
+
+			/* translators: %s: total pages */
+			case 'total_pages': return sprintf( _nx( '%s Page', '%s Pages', $meta, 'Noop', 'geditorial-book' ), Number::format( $meta ) );
+
+			/* translators: %s: total volumes */
+			case 'total_volumes': return sprintf( _nx( '%s Volume', '%s Volumes', $meta, 'Noop', 'geditorial-book' ), Number::format( $meta ) );
+
+			/* translators: %s: total discs */
+			case 'total_discs': return sprintf( _nx( '%s Disc', '%s Discs', $meta, 'Noop', 'geditorial-book' ), Number::format( $meta ) );
 		}
 
 		return $meta;
