@@ -236,6 +236,7 @@ class Widget extends \WP_Widget
 	{
 		$fields = array_merge( [
 			'title' => 'text',
+			'custom_title' => 'text',
 
 			'title_link'  => 'url',
 			'title_image' => 'url',
@@ -652,6 +653,23 @@ class Widget extends \WP_Widget
 		$html = HTML::tag( 'input', [
 			'type'  => 'text',
 			'class' => [ 'widefat', 'code' ],
+			'name'  => $this->get_field_name( $field ),
+			'id'    => $this->get_field_id( $field ),
+			'value' => isset( $instance[$field] ) ? $instance[$field] : $default,
+			'dir'   => 'ltr',
+		] );
+
+		HTML::label( $label.$html, $this->get_field_id( $field ) );
+	}
+
+	public function form_custom_title( $instance, $default = '', $field = 'custom_title', $label = NULL )
+	{
+		if ( is_null( $label ) )
+			$label = _x( 'Custom Title:', 'Widget Core', 'geditorial' );
+
+		$html = HTML::tag( 'input', [
+			'type'  => 'text',
+			'class' => [ 'widefat' ],
 			'name'  => $this->get_field_name( $field ),
 			'id'    => $this->get_field_id( $field ),
 			'value' => isset( $instance[$field] ) ? $instance[$field] : $default,
