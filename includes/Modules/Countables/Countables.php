@@ -16,6 +16,8 @@ class Countables extends gEditorial\Module
 
  	// https://codepen.io/geminorum/pen/NWxqZKO
 
+	protected $textdomain_frontend = FALSE;
+
 	public static function module()
 	{
 		return [

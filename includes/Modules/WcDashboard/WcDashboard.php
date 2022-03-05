@@ -111,7 +111,6 @@ class WcDashboard extends gEditorial\Module
 
 	public function account_menu_items( $items, $endpoints )
 	{
-		self::_log($items);
 		if ( $this->get_setting( 'downloads_disabled' ) )
 			unset( $items['downloads'] );
 

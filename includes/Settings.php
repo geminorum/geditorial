@@ -161,29 +161,31 @@ class Settings extends Core\Base
 	public static function posttypesExcluded( $extra = [] )
 	{
 		return array_merge( [
-			'wp_theme',
-			'attachment',
-			'inbound_message',
-			'amp_validated_url',
-			'guest-author',      // Co-Authors Plus
-			'bp-email',
-			'wp_block',
+			'attachment',        // WP Core
+			'wp_theme',          // WP Core
+			'wp_block',          // WP Core
+			'wp_navigation',     // WP Core
+			'wp_global_styles',  // WP Core
+			'wp_template_part',  // WP Core
+			'wp_template',       // WP Core
+			'user_request',      // WP Core
+			'oembed_cache',      // WP Core
+			'bp-email',          // BuddyPress
 			'shop_order',        // WooCommerce
 			'shop_coupon',       // WooCommerce
+			'guest-author',      // Co-Authors Plus
+			'amp_validated_url', // AMP
+			'inbound_message',
 		], (array) $extra );
 	}
 
 	public static function taxonomiesExcluded( $extra = [] )
 	{
 		return array_merge( [
-			'wp_theme',               // WP Core
 			'nav_menu',               // WP Core
+			'wp_theme',               // WP Core
 			'post_format',            // WP Core
-			// 'wp_template_part_area',  // WP Core
-			'wp_template',            // WP Core @since WP5.9
-			'wp_template_part',       // WP Core @since WP5.9
-			'wp_global_styles',       // WP Core @since WP5.9
-			'wp_navigation',          // WP Core @since WP5.9
+			'wp_template_part_area',  // WP Core
 			'amp_validation_error',   // AMP
 			'product_type',           // WooCommerce
 			'product_visibility',     // WooCommerce

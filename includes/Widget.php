@@ -235,7 +235,7 @@ class Widget extends \WP_Widget
 	public function handle_update( $new, $old, $checkboxes = [], $extra = [] )
 	{
 		$fields = array_merge( [
-			'title' => 'text',
+			'title'        => 'text',
 			'custom_title' => 'text',
 
 			'title_link'  => 'url',

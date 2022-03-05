@@ -45,11 +45,13 @@ class Barcode extends Main
 
 		if ( ! file_exists( $path.'/'.$file ) ) {
 
+			$bypass = $tag ? HTML::img( $direct, [ '-barcode', sprintf( '-%s', $type ), '-direct' ] ) : $direct;
+
 			if ( ! $image = HTTP::getContents( $direct ) )
-				return $tag ? HTML::img( $direct, [ '-barcode', sprintf( '-%s', $type ), '-direct' ] ) : $direct;
+				return $bypass;
 
 			if ( FALSE === file_put_contents( $path.'/'.$file, $image ) )
-				return $tag ? HTML::img( $direct, [ '-barcode', sprintf( '-%s', $type ), '-direct' ] ) : $direct;
+				return $bypass;
 		}
 
 		return $tag ? HTML::img( $url, [ '-barcode', sprintf( '-%s', $type ), '-cached' ] ) : $url;

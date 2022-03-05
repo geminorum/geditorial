@@ -46,7 +46,7 @@ class Quotation extends gEditorial\Module
 	protected function get_global_constants()
 	{
 		return [
-			'quote_cpt'         => 'quote',
+			'quote_cpt'       => 'quote',
 			'topic_tax'       => 'quote_topic',
 			'topic_shortcode' => 'quote-topic',
 		];

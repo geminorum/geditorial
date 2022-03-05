@@ -17,7 +17,8 @@ class ModuleHelper extends gEditorial\Helper
 		return HTML::link( ISBN::prep( $string, TRUE ), self::lookupISBN( $string ), TRUE );
 	}
 
-	// http://books.google.com/books?vid=isbn9789646799950
+	// https://books.google.com/books?vid=isbn9789646799950
+	// https://www.google.com/search?tbm=bks&q=9786005334395
 	public static function lookupISBN( $isbn )
 	{
 		// $url = add_query_arg( [
