@@ -29,7 +29,7 @@ class ModuleHelper extends gEditorial\Helper
 			'vid' => urlencode( 'isbn'.ISBN::sanitize( $isbn ) ),
 		], 'https://books.google.com/books' );
 
-		apply_filters( static::BASE.'_'.static::MODULE.'_lookup_isbn', $url, $isbn );
+		return apply_filters( static::BASE.'_'.static::MODULE.'_lookup_isbn', $url, $isbn );
 	}
 
 	public static function barcodeISBN( $isbn )
