@@ -78,24 +78,29 @@ class Book extends gEditorial\Module
 			],
 		];
 
-		if ( defined( 'P2P_PLUGIN_VERSION' ) ) {
-
-			$settings['posttypes_option'] = 'posttypes_option';
-
-			$settings['_frontend'][] = 'insert_content';
-
-			$settings['_frontend'][] = [
-				'field' => 'p2p_title_from',
-				'type'  => 'text',
-				'title' => _x( 'Connected From Title', 'Setting Title', 'geditorial-book' ),
+		if ( defined( 'P2P_PLUGIN_VERSION' ) )
+			$settings['_p2p'] = [
+				[
+					'field'  => 'p2p_posttypes',
+					'type'   => 'posttypes',
+					'title'  => _x( 'Connected Post-types', 'Setting Title', 'geditorial-book' ),
+					'values' => $this->all_posttypes(),
+				],
+				[
+					'field' => 'p2p_insert_content',
+					'title' => _x( 'Insert in Content', 'Setting Title', 'geditorial-book' ),
+				],
+				[
+					'field' => 'p2p_title_from',
+					'type'  => 'text',
+					'title' => _x( 'Connected From Title', 'Setting Title', 'geditorial-book' ),
+				],
+				[
+					'field' => 'p2p_title_to',
+					'type'  => 'text',
+					'title' => _x( 'Connected To Title', 'Setting Title', 'geditorial-book' ),
+				],
 			];
-
-			$settings['_frontend'][] = [
-				'field' => 'p2p_title_to',
-				'type'  => 'text',
-				'title' => _x( 'Connected To Title', 'Setting Title', 'geditorial-book' ),
-			];
-		}
 
 		return $settings;
 	}
@@ -233,10 +238,6 @@ class Book extends gEditorial\Module
 				'meta_box_title'      => _x( 'Audience', 'MetaBox Title', 'geditorial-book' ),
 				'tweaks_column_title' => _x( 'Publication Audience', 'Column Title', 'geditorial-book' ),
 			],
-		];
-
-		$strings['settings'] = [
-			'post_types_after' => Settings::infoP2P(),
 		];
 
 		$strings['terms'] = [
@@ -411,12 +412,21 @@ class Book extends gEditorial\Module
 
 	public function p2p_init()
 	{
-		$this->p2p_register( 'publication_cpt' );
+		$posttypes = $this->get_setting( 'p2p_posttypes', [] );
+
+		if ( empty( $posttypes ) )
+			return FALSE;
+
+		$this->p2p_register( 'publication_cpt', $posttypes );
 
 		if ( is_admin() )
 			return;
 
-		$this->hook_insert_content( 100 );
+		if ( $this->get_setting( 'p2p_insert_content' ) )
+			add_action( $this->base.'_content_after',
+				[ $this, 'insert_content_p2p' ],
+				$this->get_setting( 'insert_priority', 100 )
+			);
 	}
 
 	public function widgets_init()
@@ -587,7 +597,7 @@ class Book extends gEditorial\Module
 			}
 
 		} else if ( $this->p2p && 'edit' == $screen->base
-			&& $this->posttype_supported( $screen->post_type ) ) {
+			&& $this->in_setting( $screen->post_type, 'p2p_posttypes' ) ) {
 
 			$this->action_module( 'tweaks', 'column_row', 1, -25, 'p2p_from' );
 		}
@@ -776,7 +786,7 @@ class Book extends gEditorial\Module
 			'',
 			array_merge( [
 				'connection'    => $this->p2p,
-				'posttypes'     => $this->posttypes(),
+				'posttypes'     => $this->get_setting( 'p2p_posttypes', [] ),
 				'title_cb'      => [ $this, 'shortcode_title_cb' ],
 				'item_after_cb' => [ $this, 'shortcode_item_after_cb' ],
 				'title_anchor'  => 'publications',
@@ -836,15 +846,15 @@ class Book extends gEditorial\Module
 		);
 	}
 
-	public function insert_content( $content )
+	public function insert_content_p2p( $content )
 	{
 		if ( ! $this->p2p )
 			return;
 
-		if ( ! $this->is_content_insert( $this->posttypes( 'publication_cpt' ) ) )
+		if ( ! $this->is_content_insert( $this->get_setting( 'p2p_posttypes', [] ) ) )
 			return;
 
-		$this->list_p2p( NULL, '-'.$this->get_setting( 'insert_content', 'none' ) );
+		$this->list_p2p( NULL, '-after' );
 	}
 
 	public function get_linked_to_posts( $post = NULL, $single = FALSE, $published = TRUE )
@@ -890,6 +900,7 @@ class Book extends gEditorial\Module
 		$connected = new \WP_Query( [
 			'connected_type'  => $this->constant( 'publication_cpt_p2p' ),
 			'connected_items' => $post,
+			'posts_per_page'  => -1,
 		] );
 
 		if ( $connected->have_posts() ) {
@@ -908,6 +919,7 @@ class Book extends gEditorial\Module
 				$connected->the_post();
 
 				echo ShortCode::postItem( $GLOBALS['post'], [
+					'item_link'  => Helper::getPostLink( NULL, FALSE ),
 					'item_after' => $this->p2p_get_meta_row( 'publication_cpt', $GLOBALS['post']->p2p_id, ' &ndash; ', '' ),
 				] );
 			}
